@@ -200,7 +200,7 @@ SettingNode >> menuBrowse [
 
 { #category : #accessing }
 SettingNode >> methodClass [
-	^ self pragma ifNotNil: [self pragma methodClass theNonMetaClass]
+	^ self pragma ifNotNil: [self pragma methodClass instanceSide]
 ]
 
 { #category : #accessing }

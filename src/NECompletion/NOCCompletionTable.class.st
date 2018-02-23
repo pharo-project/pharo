@@ -96,7 +96,7 @@ NOCCompletionTable >> compiled: selector in: class date: date [
 
 	| method |
 	self addEntry: selector date: date.
-	self class classes addEntry: class theNonMetaClass name date: date.
+	self class classes addEntry: class instanceSide name date: date.
 	(class canUnderstand: selector) ifFalse: [ ^self ].
 	method := class compiledMethodAt: selector ifAbsent: [ ^self ].
 	method messages do: [ :m | self  addEntry: m date: date ].
@@ -185,7 +185,7 @@ NOCCompletionTable >> quickFillWithCategoriesMatching: pattern [
 
 { #category : #protocol }
 NOCCompletionTable >> quickFillWithCategoryOf: cls [
-	(Smalltalk organization classesInCategory: cls theNonMetaClass category) do: [:e | self quickFillWithClass: e]
+	(Smalltalk organization classesInCategory: cls instanceSide category) do: [:e | self quickFillWithClass: e]
 ]
 
 { #category : #protocol }

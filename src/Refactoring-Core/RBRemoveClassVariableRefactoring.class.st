@@ -29,7 +29,7 @@ RBRemoveClassVariableRefactoring >> preconditions [
 										referencesToClassVariable: variableName
 										in: class realClass) ] ] ] ].
 			class withAllSubclasses do: block.
-			class theMetaClass withAllSubclasses do: block.
+			class classSide withAllSubclasses do: block.
 			true ])
 ]
 

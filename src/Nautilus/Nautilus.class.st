@@ -804,7 +804,7 @@ Nautilus >> registerHistoryNewEntry [
 		( lastEntry selectedClass isNil 
 		or: [ ( wrapper selectedClass notNil 
 			and: [ wrapper selectedMethod = lastEntry selectedMethod 
-			and: [ wrapper selectedClass theNonMetaClass = lastEntry selectedClass theNonMetaClass ] ] ) ] ) 
+			and: [ wrapper selectedClass instanceSide = lastEntry selectedClass instanceSide ] ] ) ] ) 
 				ifTrue: [ ^ self ] ].
 	
 	self browsingHistory add: wrapper.

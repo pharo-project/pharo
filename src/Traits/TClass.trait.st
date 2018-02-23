@@ -327,7 +327,7 @@ TClass >> compileAllFrom: oldClass [
 	subclasses). Also recompile the methods in the metaclass."
 
 	super compileAllFrom: oldClass.
-	self theMetaClass compileAllFrom: oldClass theMetaClass
+	self classSide compileAllFrom: oldClass classSide
 ]
 
 { #category : #copying }
@@ -452,7 +452,7 @@ TClass >> getName [
 TClass >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 
-	^ super hasAbstractMethods or: [ self theMetaClass hasAbstractMethods ]
+	^ super hasAbstractMethods or: [ self classSide hasAbstractMethods ]
 ]
 
 { #category : #'accessing parallel hierarchy' }
@@ -480,7 +480,7 @@ TClass >> hasMethods [
 	receiver (includes whether there are methods defined in the receiver's 
 	metaclass)."
 
-	^super hasMethods or: [ self theMetaClass hasMethods ]
+	^super hasMethods or: [ self classSide hasMethods ]
 ]
 
 { #category : #'pool variables' }
@@ -651,7 +651,7 @@ TClass >> obsolete [
 		[:i | self instVarAt: i put: nil]. "Store nil over class instVars."
 	self classPool: nil.
 	self sharedPools: nil.
-	self hasClassSide ifTrue: [ self theMetaClass obsolete].
+	self hasClassSide ifTrue: [ self classSide obsolete].
 	self propertyAt: #obsolete put: true.
 	super obsolete.
 ]
@@ -675,6 +675,11 @@ TClass >> private_subclass: t instanceVariableNames: f classVariableNames: d poo
 	^self explicitRequirement.
 ]
 
+{ #category : #'subclass creation' }
+TClass >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [ 
+	^self explicitRequirement.
+]
+
 { #category : #'class variables' }
 TClass >> readClassVariableNamed: aString [
 	"Answer the content of the Class Variable"
@@ -688,7 +693,7 @@ TClass >> reformatAll [
 	Leaves old code accessible to version browsing"
 
 	super reformatAll.		"me..."
-	self theMetaClass reformatAll.	"...and my metaclass"
+	self classSide reformatAll.	"...and my metaclass"
 ]
 
 { #category : #'class variables' }

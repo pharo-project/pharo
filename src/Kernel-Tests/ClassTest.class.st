@@ -41,7 +41,6 @@ ClassTest >> referencingMethod2 [
 
 { #category : #'referencing methods' }
 ClassTest >> referencingMethod3 [
-
 	"no reference"
 
 	^ self
@@ -80,55 +79,58 @@ ClassTest >> testAddClassSlot [
 
 { #category : #tests }
 ClassTest >> testAddInstVarName [
-	"self run: #testAddInstVarName"
 
 	| tutu |
 	tutu := Smalltalk globals at: #TUTU.
 	tutu addInstVarNamed: 'x'.
-	self assert: tutu instVarNames = #('x').
+	self assert: tutu instVarNames equals: #('x').
 	tutu addInstVarNamed: 'y'.
-	self assert: tutu instVarNames = #('x' 'y')
+	self assert: tutu instVarNames equals: #('x' 'y')
 ]
 
 { #category : #tests }
 ClassTest >> testAddSlot [
-	"self run: #testAddInstVarName"
 
 	| tutu |
 	tutu := Smalltalk globals at: #TUTU.
 	tutu addSlot: #x => InstanceVariableSlot.
-	self assert: tutu instVarNames = #('x').
-	self assert: tutu name = #TUTU.
+	self assert: tutu instVarNames equals: #('x').
+	self assert: tutu name equals: #TUTU.
 	tutu addSlot: #y => InstanceVariableSlot.
-	self assert: tutu instVarNames = #('x' 'y')
+	self assert: tutu instVarNames equals: #('x' 'y')
 ]
 
 { #category : #tests }
 ClassTest >> testAddSlotAnonymous [
-	"self run: #testAddInstVarName"
 
 	| tutu |
 	tutu := Object newAnonymousSubclass.
 	self assert: tutu getName isNil.
 	tutu := tutu addSlot: #x => InstanceVariableSlot.
-	self assert: tutu instVarNames = #('x').
+	self assert: tutu instVarNames equals: #('x').
 	self assert: tutu getName isNil.
 	tutu := tutu addSlot: #y => InstanceVariableSlot.
 	self assert: tutu getName isNil.
-	self assert: tutu instVarNames = #('x' 'y')
+	self assert: tutu instVarNames equals: #('x' 'y')
 ]
 
 { #category : #'tests - access' }
 ClassTest >> testAllSharedPools [
-	"self run: #testAllSharedPools"
 
-	self assert: Point allSharedPools = OrderedCollection new.
-	self assert: Date sharedPools first = ChronologyConstants.
-	self assert: Date sharedPools size = 1.	"a metaclass does not have shared pools since only classes have shared pools"
-	Date class sharedPools.
-	self assert: RootClassPoolUser sharedPools size = 1.
-	self assert: ClassMultiplePoolUser sharedPools size = 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
+	self assert: Point allSharedPools equals: OrderedCollection new.
+	self assert: Date sharedPools first equals: ChronologyConstants.
+	self assert: Date sharedPools size equals: 1.	"a metaclass does not have shared pools since only classes have shared pools"
+
+	self assert: RootClassPoolUser sharedPools size equals: 1.
+	self assert: ClassMultiplePoolUser sharedPools size equals: 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
 	self assert: SubclassPoolUser sharedPools isEmpty
+]
+
+{ #category : #'test - accessing parallel hierarchy' }
+ClassTest >> testClassSide [
+
+	self assert: Point classSide equals: Point class. 
+	self assert: Point class classSide equals: Point class. 
 ]
 
 { #category : #'tests - class variables' }
@@ -160,7 +162,6 @@ ClassTest >> testHasPoolVarNamed [
 
 { #category : #'tests - access' }
 ClassTest >> testHasSharedPools [
-	"self run: #testHasSharedPools"
 
 	self deny: Point hasSharedPools.
 	self assert: Date hasSharedPools.
@@ -172,6 +173,27 @@ ClassTest >> testHasSharedPools [
 	
 	"has shared pools does not take into account the fact that a superclass may use some shared pools"
 	self deny: SubclassPoolUser hasSharedPools.
+]
+
+{ #category : #'test - accessing parallel hierarchy' }
+ClassTest >> testInstanceSide [
+
+	self assert: Point instanceSide equals: Point. 
+	self assert: Point class instanceSide equals: Point. 
+]
+
+{ #category : #'test - accessing parallel hierarchy' }
+ClassTest >> testIsClassSide [
+
+	self deny: Point isClassSide.
+	self assert: Point class isClassSide
+]
+
+{ #category : #'test - accessing parallel hierarchy' }
+ClassTest >> testIsInstanceSide [
+
+	self assert: Point isInstanceSide.
+	self deny: Point class isInstanceSide
 ]
 
 { #category : #'tests - navigation' }
@@ -280,14 +302,13 @@ ClassTest >> testSharedPoolOfVarNamed [
 
 { #category : #'tests - access' }
 ClassTest >> testSharedPools [
-	"self run: #testSharedPools"
 
-	self assert: Point sharedPools = OrderedCollection new.
-	self assert: Date sharedPools first = ChronologyConstants.
-	self assert: Date sharedPools size = 1.	"a metaclass does not have shared pools since only classes have shared pools"
+	self assert: Point sharedPools equals: OrderedCollection new.
+	self assert: Date sharedPools first equals: ChronologyConstants.
+	self assert: Date sharedPools size equals: 1.	"a metaclass does not have shared pools since only classes have shared pools"
 	Date class sharedPools.
-	self assert: RootClassPoolUser sharedPools size = 1.
-	self assert: ClassMultiplePoolUser sharedPools size = 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
+	self assert: RootClassPoolUser sharedPools size equals: 1.
+	self assert: ClassMultiplePoolUser sharedPools size equals: 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
 	self assert: SubclassPoolUser sharedPools isEmpty
 ]
 
@@ -295,13 +316,13 @@ ClassTest >> testSharedPools [
 ClassTest >> testSubclass [
 	| cls |
 	(Smalltalk globals includesKey: #SubclassExample)
-		ifTrue: [ (Smalltalk at: #SubclassExample) removeFromSystem ].
+		ifTrue: [ (Smalltalk globals at: #SubclassExample) removeFromSystem ].
 	
 	self deny: (Smalltalk globals includesKey: #SubclassExample).
 	cls := Object subclass: #SubclassExample.
 	self assert: (Smalltalk globals includesKey: #SubclassExample).
 
-	self assert: (Smalltalk at: #SubclassExample) == cls.
+	self assert: (Smalltalk globals at: #SubclassExample) == cls.
 	self assert: cls category = #Unclassified.
 	self assert: cls instVarNames = #().
 	

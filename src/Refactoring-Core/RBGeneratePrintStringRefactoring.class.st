@@ -35,7 +35,7 @@ RBGeneratePrintStringRefactoring >> preconditions [
 
 { #category : #accessing }
 RBGeneratePrintStringRefactoring >> theClass [
-	^ (self classObjectFor: className) theNonMetaClass
+	^ (self classObjectFor: className) instanceSide
 ]
 
 { #category : #transforming }

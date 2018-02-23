@@ -39,6 +39,7 @@ MethodBrowser class >> defaultSpec2 [
 
 { #category : #example }
 MethodBrowser class >> example [
+	<sampleInstance>
 	| example |
 	example := MethodBrowser new.
 	example methods: Object methods;

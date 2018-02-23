@@ -26,6 +26,12 @@ RGTraitDefinition >> category: aSymbol [
 	category:= aSymbol
 ]
 
+{ #category : #'accessing - parallel hierarchy' }
+RGTraitDefinition >> classSide [
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+	^ metaClass
+]
+
 { #category : #accessing }
 RGTraitDefinition >> classVariables [
 
@@ -71,6 +77,12 @@ RGTraitDefinition >> hasStamp [
 	^self stamp isEmptyOrNil not
 ]
 
+{ #category : #'accessing - parallel hierarchy' }
+RGTraitDefinition >> instanceSide [
+	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
+	^ self
+]
+
 { #category : #accessing }
 RGTraitDefinition >> instanceVariables [
 
@@ -85,7 +97,7 @@ RGTraitDefinition >> isSameRevisionAs: aRGTraitDefinition [
 		and: [ self category = aRGTraitDefinition category 
 		and: [ self traitCompositionSource = aRGTraitDefinition traitCompositionSource 
 		and: [ ((self hasComment and: [ self comment isSameRevisionAs: aRGTraitDefinition comment ]) or:[ self hasComment not ])
-		and: [ (self theMetaClass isSameRevisionAs: aRGTraitDefinition theMetaClass) ] ] ] ]
+		and: [ (self classSide isSameRevisionAs: aRGTraitDefinition classSide) ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -124,13 +136,13 @@ RGTraitDefinition >> stamp: aString [
 						 stamp: aString ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 RGTraitDefinition >> theMetaClass [
 
 	^metaClass
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 RGTraitDefinition >> theNonMetaClass [
 
 	^self

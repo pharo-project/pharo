@@ -9,6 +9,7 @@ Class {
 
 { #category : #private }
 DocCommentIconStyler >> exampleIsFaulty: aNode [
+	<sampleInstance>
 	^ aNode comments
 		anySatisfy: [ :commentNode | commentNode pharoDocCommentNodes anySatisfy: [ :node |
 				node expression expressionCode isFaulty ]]

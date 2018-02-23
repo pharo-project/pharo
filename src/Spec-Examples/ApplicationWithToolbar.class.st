@@ -27,6 +27,7 @@ ApplicationWithToolbar class >> defaultSpec [
 
 { #category : #example }
 ApplicationWithToolbar class >> example [
+	<sampleInstance>
 	^ self new openWithSpec
 ]
 

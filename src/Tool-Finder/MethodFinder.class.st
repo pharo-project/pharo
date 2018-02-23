@@ -422,7 +422,7 @@ MethodFinder >> initialize [
 
 "ClassDescription"
 	#("initialize-release" 
-"accessing"  isMeta name theNonMetaClass
+"accessing"  isMeta name instanceSide
 "copying" 
 "printing" classVariablesString instanceVariablesString sharedPoolsString
 "instance variables"  

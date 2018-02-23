@@ -171,15 +171,6 @@ RubTextEditor >> afterSelectionInsertAndSelect: aString [
 ]
 
 { #category : #'menu messages' }
-RubTextEditor >> again [
-	"Text substitution. If the left shift key is down, the substitution is
-	made throughout the entire Paragraph. Otherwise, only the next 
-	possible substitution is made"
-	true.
-	
-]
-
-{ #category : #'menu messages' }
 RubTextEditor >> align [
 	"Align text according to the next greater alignment value,
 	cycling among leftFlush, rightFlush, center, and justified."

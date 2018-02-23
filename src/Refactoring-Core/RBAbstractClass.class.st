@@ -144,6 +144,13 @@ RBAbstractClass >> classBinding [
 	^ Smalltalk globals associationAt: self name
 ]
 
+{ #category : #accessing }
+RBAbstractClass >> classSide [
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+	
+	^ model metaclassNamed: self name
+]
+
 { #category : #'method accessing' }
 RBAbstractClass >> compile: aString [ 
 	^ self compile: aString withAttributesFrom: (self methodFor: (RBParser parseMethodPattern: aString))
@@ -360,6 +367,13 @@ RBAbstractClass >> initialize [
 ]
 
 { #category : #accessing }
+RBAbstractClass >> instanceSide [
+	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
+
+	^ model classNamed: self name
+]
+
+{ #category : #accessing }
 RBAbstractClass >> instanceVariableNames [
 	^self privateInstanceVariableNames copy
 ]
@@ -533,7 +547,7 @@ RBAbstractClass >> selectors [
 
 { #category : #accessing }
 RBAbstractClass >> soleInstance [
-	^ self theNonMetaClass
+	^ self instanceSide
 ]
 
 { #category : #'method accessing' }
@@ -588,12 +602,12 @@ RBAbstractClass >> superclass: aRBClass [
 	superclass notNil ifTrue: [superclass addSubclass: self].
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated' }
 RBAbstractClass >> theMetaClass [
 	^ model metaclassNamed: self name
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated' }
 RBAbstractClass >> theNonMetaClass [
 	^ model classNamed: self name
 ]

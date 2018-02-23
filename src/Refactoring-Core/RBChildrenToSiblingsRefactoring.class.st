@@ -120,7 +120,7 @@ RBChildrenToSiblingsRefactoring >> preconditions [
 { #category : #'private-variables' }
 RBChildrenToSiblingsRefactoring >> pullUpClassInstanceVariables [
 	| newSuperclass |
-	newSuperclass := self abstractSuperclass theMetaClass.
+	newSuperclass := self abstractSuperclass classSide.
 	parent theMetaClass instanceVariableNames do: 
 		[ :each | 
 		self performComponentRefactoring: (RBPullUpInstanceVariableRefactoring 
@@ -156,7 +156,7 @@ RBChildrenToSiblingsRefactoring >> pullUpInstanceVariables [
 { #category : #transforming }
 RBChildrenToSiblingsRefactoring >> pullUpMethods [
 	self pushUpMethodsFrom: parent.
-	self pushUpMethodsFrom: parent theMetaClass
+	self pushUpMethodsFrom: parent classSide
 ]
 
 { #category : #'private-variables' }
@@ -216,7 +216,7 @@ RBChildrenToSiblingsRefactoring >> selectorsToPushUpFrom: aClass [
 { #category : #'private-methods' }
 RBChildrenToSiblingsRefactoring >> shouldPushUp: aSelector from: aClass [ 
 	^ ((aClass isMeta 
-		ifTrue: [ subclasses collect: [ :each | each theMetaClass ] ]
+		ifTrue: [ subclasses collect: [ :each | each classSide ] ]
 		ifFalse: [ subclasses ]) 
 		detect: [ :each | (each directlyDefinesMethod: aSelector) not ]
 		ifNone: [ nil ]) notNil

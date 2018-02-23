@@ -39,12 +39,12 @@ RBRenameClassVariableTest >> testRenameClassVar [
 	class := refactoring model classNamed: #RBTransformationRuleTest.
 	self assert: (class directlyDefinesClassVariable: #RSR).
 	self deny: (class directlyDefinesClassVariable: #RecursiveSelfRule).
-	self assert: (class theMetaClass parseTreeFor: #initializeAfterLoad1) = (RBParser parseMethod: 'initializeAfterLoad1
+	self assert: (class classSide parseTreeFor: #initializeAfterLoad1) = (RBParser parseMethod: 'initializeAfterLoad1
 								RSR := RBParseTreeSearcher new.
 								RSR
 									addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
 											-> [:aNode :answer | true]').
-	self assert: (class theMetaClass parseTreeFor: #nuke) = (RBParser parseMethod: 'nuke
+	self assert: (class classSide parseTreeFor: #nuke) = (RBParser parseMethod: 'nuke
 								RSR := nil').
 	self assert: (class parseTreeFor: #checkMethod:) = (RBParser parseMethod: 'checkMethod: aSmalllintContext 
 								class := aSmalllintContext selectedClass.

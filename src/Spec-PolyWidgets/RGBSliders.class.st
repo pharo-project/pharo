@@ -33,6 +33,7 @@ RGBSliders class >> defaultSpec [
 
 { #category : #example }
 RGBSliders class >> example [
+	<sampleInstance>
 	| example |
 	example := self new.
 	example

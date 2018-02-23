@@ -91,7 +91,7 @@ SettingTreeBuilder >> systemsettings [
 	"Process a <systemsettings> pragma"
 
 	<settingPragmaProcessor>
-	currentPragma methodClass theNonMetaClass
+	currentPragma methodClass instanceSide
 		perform: currentPragma methodSelector
 		with: self
 ]

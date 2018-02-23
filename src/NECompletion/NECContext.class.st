@@ -290,7 +290,7 @@ NECContext >> guessClassVarClass: aSHRange [
 		ifNotNil: [^ aClass].
 	^ (NECClassVarTypeGuesser 
 		variableName: name 
-		class: theClass theMetaClass) perform
+		class: theClass classSide) perform
 ]
 
 { #category : #'private-type-guessing' }

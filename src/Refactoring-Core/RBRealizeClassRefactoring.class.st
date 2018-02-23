@@ -15,20 +15,20 @@ RBRealizeClassRefactoring >> preconditions [
 			(self theClass withAllSubclasses
 				detect: [ :each | 
 					(each whichSelectorsReferToSymbol: #subclassResponsibility) notEmpty 
-						or: [ (each theMetaClass whichSelectorsReferToSymbol: #subclassResponsibility) notEmpty ] ]
+						or: [ (each classSide whichSelectorsReferToSymbol: #subclassResponsibility) notEmpty ] ]
 				ifNone: [ nil ]) isNil ]
 		errorString: self theClass printString , ' is abstract or has abstract subclasses.'
 ]
 
 { #category : #accessing }
 RBRealizeClassRefactoring >> theClass [
-	^ (self classObjectFor: className) theNonMetaClass
+	^ (self classObjectFor: className) instanceSide
 ]
 
 { #category : #transforming }
 RBRealizeClassRefactoring >> transform [
 	self transform: self theClass.
-	self transform: self theClass theMetaClass
+	self transform: self theClass classSide
 ]
 
 { #category : #transforming }

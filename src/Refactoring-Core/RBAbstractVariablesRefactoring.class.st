@@ -44,7 +44,7 @@ RBAbstractVariablesRefactoring class >> model: aRBSmalltalk abstractVariablesIn:
 { #category : #transforming }
 RBAbstractVariablesRefactoring >> abstractClassVariable: aString [ 
 	| refactoring rewriter nonMetaClass |
-	nonMetaClass := fromClass theNonMetaClass.
+	nonMetaClass := fromClass instanceSide.
 	refactoring := RBCreateAccessorsForVariableRefactoring 
 		model: self model
 		variable: aString
@@ -129,7 +129,7 @@ RBAbstractVariablesRefactoring >> abstractVariablesIn: aBRProgramNode from: from
 { #category : #transforming }
 RBAbstractVariablesRefactoring >> classVariableNames [
 	| nonMetaClass |
-	nonMetaClass := fromClass theNonMetaClass.
+	nonMetaClass := fromClass instanceSide.
 	^ (nonMetaClass allClassVariableNames collect: [ :each | each asString ]) asSet
 ]
 
@@ -196,13 +196,13 @@ RBAbstractVariablesRefactoring >> processReferenceNode: aNode [
 { #category : #transforming }
 RBAbstractVariablesRefactoring >> removeDefinedClassVariables [
 	| selectionBlock nonMetaClass |
-	nonMetaClass := fromClass theNonMetaClass.
+	nonMetaClass := fromClass instanceSide.
 	selectionBlock := 
 	[ :varName | 
 	(toClasses 
 		detect: 
 			[ :each | 
-			(each theNonMetaClass includesClass: (nonMetaClass whoDefinesClassVariable: varName)) not ]
+			(each instanceSide includesClass: (nonMetaClass whoDefinesClassVariable: varName)) not ]
 		ifNone: [ nil ]) notNil ].
 	classVarReaders := classVarReaders select: selectionBlock.
 	classVarWriters := classVarWriters select: selectionBlock

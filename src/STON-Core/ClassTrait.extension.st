@@ -9,5 +9,5 @@ ClassTrait >> stonName [
 ClassTrait >> stonOn: stonWriter [
 	stonWriter
 		writeObject: self 
-		listSingleton: self theNonMetaClass name asSymbol
+		listSingleton: self instanceSide name asSymbol
 ]

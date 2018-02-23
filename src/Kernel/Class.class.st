@@ -142,13 +142,8 @@ Class >> addClassVariable: aGlobal [
 Class >> addInstVarNamed: aString [
 	"Add the argument, aString, as one of the receiver's instance variables."
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	aString substrings do: [ :each|
-		self addSlot: (InstanceVariableSlot named: each asSymbol)]
+		self addSlot: (InstanceVariableSlot named: each asSymbol) ]
 
 ]
 
@@ -223,13 +218,8 @@ Class >> applyChangesOfNewTraitCompositionReplacing: oldComposition [
 	^ changedSelectors
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing parallel hierarchy - deprecated' }
 Class >> baseClass [
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
 
 	^ self
 ]
@@ -250,21 +240,11 @@ Class >> basicLocalSelectors [
 	Since localSelectors is lazily initialized, this may 
 	return nil, which means that all selectors are local."
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	^ localSelectors
 ]
 
 { #category : #accessing }
 Class >> basicLocalSelectors: aSetOrNil [
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
 
 	localSelectors := aSetOrNil
 ]
@@ -337,15 +317,10 @@ Class >> classBuilder [
 		^ self classInstaller new builder
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing parallel hierarchy - deprecated' }
 Class >> classClass [
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
-	^self class.
+	^ self class
 ]
 
 { #category : #'subclass creation' }
@@ -368,6 +343,15 @@ Class >> classPool [
 { #category : #accessing }
 Class >> classPool: aDictionary [
 	classPool := aDictionary
+]
+
+{ #category : #'accessing parallel hierarchy' }
+Class >> classSide [
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+	"Point classSide >>> Point class"
+	"Point class classSide >>> Point class"
+	
+	^ self class
 ]
 
 { #category : #'class variables' }
@@ -426,7 +410,7 @@ Class >> compileAllFrom: oldClass [
 	subclasses). Also recompile the methods in the metaclass."
 
 	super compileAllFrom: oldClass.
-	self theMetaClass compileAllFrom: oldClass theMetaClass
+	self classSide compileAllFrom: oldClass classSide
 ]
 
 { #category : #copying }
@@ -490,11 +474,6 @@ Class >> definesClassVariableNamed: aString [
 Class >> definitionForNautilus [
 	"Answer a String that defines the receiver."
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	| aStream poolString |
 	((self usesSpecialSlot 
 		or: [ self usesSpecialClassVariables ])
@@ -553,12 +532,6 @@ Class >> definitionForNautilus [
 Class >> definitionForNautilusWithSlots [
 	"the class definition with a way to specify slots. Shown when the class defines special Slot
 	 NOTE: this is just for testing, the final solution will evolve and be cleaner later"
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 
 	| aStream poolString|
 
@@ -670,11 +643,6 @@ Class >> externalName [
 { #category : #private }
 Class >> getName [
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	^ name
 ]
 
@@ -682,7 +650,7 @@ Class >> getName [
 Class >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 
-	^ super hasAbstractMethods or: [ self theMetaClass hasAbstractMethods ]
+	^ super hasAbstractMethods or: [ self classSide hasAbstractMethods ]
 ]
 
 { #category : #'accessing parallel hierarchy' }
@@ -710,7 +678,7 @@ Class >> hasMethods [
 	receiver (includes whether there are methods defined in the receiver's 
 	metaclass)."
 
-	^super hasMethods or: [ self theMetaClass hasMethods ]
+	^super hasMethods or: [ self classSide hasMethods ]
 ]
 
 { #category : #'pool variables' }
@@ -802,11 +770,20 @@ Class >> innerBindingOf: aSymbol [
 	^ nil
 ]
 
+{ #category : #'accessing parallel hierarchy' }
+Class >> instanceSide [
+	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
+	"Point instanceSide >>> Point"
+	"Point class instanceSide >>> Point"
+	
+	^ self 
+]
+
 { #category : #testing }
 Class >> isAbstract [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 
-	^ super isAbstract or: [ self theMetaClass isAbstract ]
+	^ super isAbstract or: [ self classSide isAbstract ]
 ]
 
 { #category : #testing }
@@ -816,11 +793,6 @@ Class >> isAnonymous [
 
 { #category : #testing }
 Class >> isClass [
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
 
 	^ true
 ]
@@ -877,11 +849,6 @@ Class >> name: aString traitComposition: aComposition methodDict: aMethodDict lo
 { #category : #'subclass creation' }
 Class >> newAnonymousSubclass [
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	^ Smalltalk anonymousClassInstaller make: [ :builder |
 		builder
 			superclass: self ;
@@ -893,17 +860,16 @@ Class >> newAnonymousSubclass [
 Class >> newSubclass [
 	| i className |
 	i := 1.
-	[className := (self name , i printString) asSymbol.
-	 self environment includesKey: className]
-		whileTrue: [i := i + 1].
-
-	^ self subclass: className
+	[ className := (self name , i printString) asSymbol.
+	self environment includesKey: className ] whileTrue: [ i := i + 1 ].
+	^ self
+		subclass: className
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: 'Unclassified'
+		package: 'Unclassified'
 
-"Point newSubclass new"
+	"Point newSubclass new"
 ]
 
 { #category : #'initialize-release' }
@@ -916,7 +882,7 @@ Class >> obsolete [
 		[:i | self instVarAt: i put: nil]. "Store nil over class instVars."
 	self classPool: nil.
 	self sharedPools: nil.
-	self hasClassSide ifTrue: [ self theMetaClass obsolete].
+	self hasClassSide ifTrue: [ self classSide obsolete].
 	self propertyAt: #obsolete put: true.
 	super obsolete.
 ]
@@ -935,8 +901,20 @@ Class >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 			[ ^ self superclass possibleVariablesFor: misspelled continuedFrom: results ]
 ]
 
+{ #category : #'subclass creation - deprecated' }
+Class >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
+	"Deprecated!"
+
+	^ self
+		private_subclass: t
+		instanceVariableNames: f
+		classVariableNames: d
+		poolDictionaries: s
+		package: cat 
+]
+
 { #category : #'subclass creation' }
-Class >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [ 
+Class >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: package [ 
 	"This is the standard initialization message for creating a new class as a 
 	subclass of an existing class (the receiver)."
 	^ self classInstaller make: [ :builder |
@@ -947,7 +925,7 @@ Class >> private_subclass: t instanceVariableNames: f classVariableNames: d pool
 			slots: f asSlotCollection;
 			sharedVariablesFromString: d;
 			sharedPools: s;
-			category: cat;
+			category: package;
 			environment: self environment;
 			copyClassSlotsFromExistingClass ].
 
@@ -966,7 +944,7 @@ Class >> reformatAll [
 	Leaves old code accessible to version browsing"
 
 	super reformatAll.		"me..."
-	self theMetaClass reformatAll.	"...and my metaclass"
+	self classSide reformatAll.	"...and my metaclass"
 ]
 
 { #category : #'class variables' }
@@ -1127,11 +1105,6 @@ from Undeclared. Check them after this change.'].
 { #category : #private }
 Class >> setName: aSymbol [
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	name := aSymbol.
 ]
 
@@ -1207,23 +1180,34 @@ Class >> sharing: poolString [
 
 { #category : #'subclass creation' }
 Class >> subclass: t [
-	^ self subclass: t instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Unclassified' 
+	^ self
+		subclass: t
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		package: 'Unclassified'
 ]
 
 { #category : #'subclass creation' }
 Class >> subclass: t instanceVariableNames: ins [
-	^ self subclass: t instanceVariableNames: ins classVariableNames: '' poolDictionaries: '' category: 'Unclassified' 
+	^ self
+		subclass: t
+		instanceVariableNames: ins
+		classVariableNames: ''
+		poolDictionaries: ''
+		package: 'Unclassified'
 ]
 
-{ #category : #'subclass creation' }
+{ #category : #'subclass creation - deprecated' }
 Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNames classVariableNames: classVarNames category: aCategorySymbol [
 	"Added to allow for a simplified subclass creation experience. "
+
 	^ self
 		subclass: aSubclassSymbol
 		instanceVariableNames: instVarNames
 		classVariableNames: classVarNames
 		poolDictionaries: ''
-		category: aCategorySymbol
+		package: aCategorySymbol
 ]
 
 { #category : #'subclass creation' }
@@ -1238,7 +1222,7 @@ Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNames classVari
 		package: aPackageSymbol
 ]
 
-{ #category : #'subclass creation' }
+{ #category : #'subclass creation - deprecated' }
 Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
 	^ self
 		subclass: t
@@ -1246,7 +1230,7 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 		instanceVariableNames: f
 		classVariableNames: d
 		poolDictionaries: s
-		category: cat
+		package: cat
 ]
 
 { #category : #'subclass creation' }
@@ -1313,68 +1297,57 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 ]
 
 { #category : #'subclass creation' }
-Class >> subclass: t uses: aTraitComposition [ 
+Class >> subclass: className uses: aTraitComposition [
 	| cls |
 	cls := self
-				subclass: t
-				instanceVariableNames: ''
-				classVariableNames: ''
-				poolDictionaries: ''
-				category: 'Unclassified'.
+		subclass: className
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		package: 'Unclassified'.
 	cls setTraitComposition: aTraitComposition asTraitComposition.
 	^ cls
 ]
 
-{ #category : #'subclass creation' }
-Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [ 
-
+{ #category : #'subclass creation - deprecated' }
+Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
 	^ self
 		subclass: aTraitName
 		uses: aTraitCompositionOrArray
 		instanceVariableNames: instVarNames
 		classVariableNames: classVarNames
 		poolDictionaries: ''
-		category: cat 
+		package: cat 
 ]
 
 { #category : #'subclass creation' }
-Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames package: cat [
+Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames package: packageName [
 	^ self
-		subclass: aTraitName
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
-		classVariableNames: classVarNames
-		category: cat
+		subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames poolDictionaries: '' package: packageName
 ]
 
-{ #category : #'subclass creation' }
+{ #category : #'subclass creation - deprecated' }
 Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
-
 	^ self
 		subclass: aName
 		uses: aTraitCompositionOrArray
-		with: [ 
-			self
-				private_subclass: aName
-				instanceVariableNames: someInstanceVariableNames
-				classVariableNames: someClassVariableNames
-				poolDictionaries: someSharedPoolNames
-				category: aCategory ]
+		instanceVariableNames: someInstanceVariableNames
+		classVariableNames: someClassVariableNames
+		poolDictionaries: someSharedPoolNames
+		package: aCategory 
 ]
 
 { #category : #'subclass creation' }
-Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
-
+Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aPackageName [
 	^ self
 		subclass: aName
 		uses: aTraitCompositionOrArray
-		with: [ 
-			self
+		with: [ self
 				private_subclass: aName
 				instanceVariableNames: someInstanceVariableNames
 				classVariableNames: someClassVariableNames
 				poolDictionaries: someSharedPoolNames
-				category: aCategory ]
+				package: aPackageName ]
 ]
 
 { #category : #'subclass creation - slots' }
@@ -1512,22 +1485,12 @@ Class >> superclass: aClass methodDictionary: mDict format: fmt [
 { #category : #accessing }
 Class >> traitComposition [
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	traitComposition ifNil: [traitComposition := TraitComposition new].
-	^traitComposition
+	^ traitComposition
 ]
 
 { #category : #accessing }
 Class >> traitComposition: aTraitComposition [
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
 	
 	traitComposition := aTraitComposition
 ]

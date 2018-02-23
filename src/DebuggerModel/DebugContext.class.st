@@ -47,7 +47,7 @@ DebugContext class >> forContext: aContext [
 { #category : #private }
 DebugContext >> blockNotFoundDialog: aMethod with: aText [
 
-	| browser message result |
+	| message result newMethod |
 	
 	message := 'Method for block not found on stack, can''t edit and continue'.
 	
@@ -57,19 +57,14 @@ DebugContext >> blockNotFoundDialog: aMethod with: aText [
 			
 	result := UIManager default
 						confirm: message
-						trueChoice: 'Browse' translated
-						falseChoice: 'Cancel' translated.
+						trueChoice: 'Compile and Browse'
+						falseChoice: 'Cancel'.
 						
 	"possible return values are true | false | nil"
 	result == true ifFalse: [ ^ self ].
 		
-	"let's browse the given method with the edited contents"
-	browser := aMethod browse.
-	browser 
-		contents: aText; 
-		changed: #contents.
-	browser codeTextMorph 
-		hasUnacceptedEdits: true
+	newMethod := self recompileCurrentMethodTo: aText notifying: nil.
+	newMethod ifNotNil: [newMethod browse]
 ]
 
 { #category : #private }

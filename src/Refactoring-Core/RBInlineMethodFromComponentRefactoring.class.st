@@ -109,7 +109,7 @@ RBInlineMethodFromComponentRefactoring >> isOverridden [
 { #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> newNameForSelf [
 	| variableName index originalName nonMetaClass |
-	nonMetaClass := inlineClass theNonMetaClass.
+	nonMetaClass := inlineClass instanceSide.
 	variableName := originalName := (nonMetaClass name first isVowel 
 		ifTrue: [ 'an' ]
 		ifFalse: [ 'a' ]) , nonMetaClass name.

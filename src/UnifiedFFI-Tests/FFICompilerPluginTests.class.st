@@ -28,6 +28,7 @@ FFICompilerPluginTests >> ffiLibraryName [
 
 { #category : #running }
 FFICompilerPluginTests >> setUp [
+	super setUp.
 	self class recompile
 ]
 
