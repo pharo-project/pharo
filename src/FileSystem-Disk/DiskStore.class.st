@@ -118,9 +118,14 @@ DiskStore class >> startUp: resuming [
 { #category : #'class initialization' }
 DiskStore class >> useFilePlugin [
 	"Initialise the plugins required by the store and associated directory entries."
+
+	| fileAttributesClass |
+
 	Primitives := FilePluginPrims new.
-	FileAttributePrimitives := self activeClass fileAttributesPrimitivesClass new.
-	FileAttributePrimitives class reset.
+	"Initialise the FileAttributes primitives and set the default instance"
+	fileAttributesClass := self activeClass fileAttributesPrimitivesClass.
+	fileAttributesClass reset.
+	FileAttributePrimitives := fileAttributesClass new.
 	DiskDirectoryEntry initializeWithPrimitives: FileAttributePrimitives.
 ]
 
