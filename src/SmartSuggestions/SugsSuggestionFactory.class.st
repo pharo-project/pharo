@@ -244,6 +244,14 @@ SugsSuggestionFactory class >> createBrowseReferences [
 		position: 10
 ]
 
+{ #category : #class }
+SugsSuggestionFactory class >> createBrowseTraitUsers [
+	<classCommand>
+	^ SugsBrowseTraitUsers
+		icon: (self iconNamed: #smallInspectItIcon)
+		position: 10
+]
+
 { #category : #private }
 SugsSuggestionFactory class >> createCollector: key [ 
 	| collector |
