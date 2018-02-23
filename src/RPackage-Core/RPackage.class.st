@@ -276,12 +276,15 @@ RPackage >> addExtensionMethod: aCompiledMethod [
 { #category : #'compiled method handling' }
 RPackage >> addMethod: aCompiledMethod [ 
 	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
-	| methodClass |
-	
+	| methodClass oldPackage |
+	oldPackage := aCompiledMethod package.
+	self = oldPackage ifTrue: [ ^self ].
 	methodClass := aCompiledMethod methodClass. 
 	(self includesClass: methodClass ) 
 		ifTrue: [ self addNonExtensionMethod: aCompiledMethod ]
 		ifFalse: [self addExtensionMethod: aCompiledMethod].
+	oldPackage removeMethod: aCompiledMethod.
+	self fixExtensionProtocolOf: aCompiledMethod
 ]
 
 { #category : #'compiled method handling' }

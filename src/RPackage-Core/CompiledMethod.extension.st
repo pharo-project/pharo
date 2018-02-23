@@ -3,25 +3,13 @@ Extension { #name : #CompiledMethod }
 { #category : #'*rpackage-core' }
 CompiledMethod >> adoptToBeExtensionIn: aPackage [
 
-	| tagName |
-	self properties at: #package ifPresent: [ :existingPackage |
-		existingPackage = aPackage ifTrue: [ ^self ]].
-	
-	self properties at: #package put: aPackage.
-	self tags ifNotEmpty: [ :tags | 
-		tagName := tags anyOne asLowercase allButFirst.
-		(tagName includesSubstring: aPackage name caseSensitive: false) ifFalse: [ 
-			self tagWith: ('*', aPackage name) asSymbol]]
+	self properties at: #package put: aPackage
 ]
 
 { #category : #'*rpackage-core' }
 CompiledMethod >> adoptToNotBeExtension [
 
-	| previousPackage |
-	previousPackage := self properties removeKey: #package ifAbsent: [^self].
-	
-	self tags do: [ :each | 
-		(each beginsWith: '*') ifTrue: [ self untagFrom: each] ]
+	self properties removeKey: #package ifAbsent: [^self]
 ]
 
 { #category : #'*rpackage-core' }
