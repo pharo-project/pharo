@@ -355,7 +355,7 @@ TextMorph >> changeMargins: evt [
 			handle addMorph:
 				(LineMorph from: origin to: newPoint color: Color black width: 1).
 			newMargin := (newPoint - origin max: 0@0) // 5.
-			self margins: newMargin]
+			self margins: newMargin asMargin]
 		lastPointDo:
 			[:newPoint | handle deleteBalloon.
 			self halo ifNotNil: [:halo | halo addHandles]].
@@ -974,7 +974,7 @@ TextMorph >> initialize [
 	borderWidth := 0.
 	textStyle := TextStyle default copy.
 	wrapFlag := true.
-	margins := (0@0 corner: 0@0).
+	margins := Margin left: 0 right: 0 top: 0 bottom: 0.
 	
 	self attachKeymapCategory: #TextMorph.
 ]
@@ -1112,9 +1112,9 @@ TextMorph >> margins [
 
 { #category : #accessing }
 TextMorph >> margins: newMargins [
-	"newMargins can be a number, point or rectangle, as allowed by, eg, insetBy:."
+	"newMargins can be a number, point , as allowed by, eg, insetBy:."
 
-	margins := newMargins.
+	margins := newMargins asMargin.
 	self composeToBounds
 ]
 

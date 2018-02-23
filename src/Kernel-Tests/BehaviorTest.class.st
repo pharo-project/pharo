@@ -20,7 +20,6 @@ BehaviorTest >> sampleMessageWithFirstArgument: firstArgument "This is a comment
 
 { #category : #tests }
 BehaviorTest >> testAllLocalCallsOn [
-	" self debug: #testAllLocalCallsOn"
 	
 	self assert: (( Point allLocalCallsOn: #asPoint )  notEmpty).
 	self assert: (( Point allLocalCallsOn: #asPoint )  size = 4).
@@ -71,8 +70,7 @@ BehaviorTest >> testAllSelectors [
 
 { #category : #tests }
 BehaviorTest >> testAllSelectorsAbove [
-	"self debug: #testAllSelectorsAbove"
-	
+		
 	|sels |
 	sels := Date allSelectorsAbove.
 	self deny: (sels includes: #mmddyyyy). 
@@ -84,8 +82,7 @@ BehaviorTest >> testAllSelectorsAbove [
 
 { #category : #tests }
 BehaviorTest >> testAllSelectorsAboveUntil [
-	"self debug: #testAllSelectorsAboveUntil"
-	
+		
 	|sels |
 	sels := Date allSelectorsAboveUntil: Object..
 	self deny: (sels includes: #mmddyyyy). 
@@ -130,6 +127,15 @@ BehaviorTest >> testHasAbstractMethods [
 	self assert: ObjectLayout class hasAbstractMethods.
 	
 	
+]
+
+{ #category : #tests }
+BehaviorTest >> testIncludesMethod [
+	self assert: (Object includesMethod: Object>>#halt).
+	self deny: (Class includesMethod: Object>>#halt).
+
+	self assert: (Point includesMethod: Point>>#x).
+	self deny: (LookupKey includesMethod: Point>>#x).
 ]
 
 { #category : #tests }
@@ -228,8 +234,7 @@ BehaviorTest >> testWhichSelectorsAccess [
 
 { #category : #tests }
 BehaviorTest >> testallSuperclassesIncluding [
-	"self debug: #testallSuperclassesIncluding"
-	
+		
 	|cls |
 	cls := ArrayedCollection allSuperclassesIncluding: Collection.
 	self deny: (cls includes: ArrayedCollection).

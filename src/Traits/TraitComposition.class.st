@@ -157,7 +157,7 @@ TraitComposition >> errorIfNotAddable: aTraitTransformation [
 
 { #category : #private }
 TraitComposition >> includesMethod: aSelector [
-	^(self methodDescriptionForSelector: aSelector) isEmpty not
+	^ (self methodDescriptionForSelector: aSelector) isNotEmpty
 ]
 
 { #category : #private }

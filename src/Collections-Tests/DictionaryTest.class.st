@@ -44,6 +44,7 @@ DictionaryTest >> anIndex [
 
 { #category : #requirements }
 DictionaryTest >> anotherElementNotIn [
+	
 	^ 42
 ]
 
@@ -56,6 +57,7 @@ DictionaryTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 DictionaryTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
+	
 	^ associationNotIn 
 ]
 
@@ -249,7 +251,7 @@ DictionaryTest >> nonEmptyDifferentFromNonEmptyDict [
 ]
 
 { #category : #requirements }
-DictionaryTest >> nonEmptyWithCopyNonIdentical. [
+DictionaryTest >> nonEmptyWithCopyNonIdentical [
 " return a collection including elements for wich copy is not identical to the initial element ( this is not the cas of Integer )"
 ^nonEmptyWithFloat 
 ]
@@ -286,6 +288,7 @@ DictionaryTest >> result [
 
 { #category : #running }
 DictionaryTest >> setUp [
+	super setUp.
 	emptyDict := self classToBeTested new.
 	nonEmptyDict := self classToBeTested new.
 	nonEmptyDict
@@ -522,7 +525,7 @@ DictionaryTest >> testIncludesAssociationWithValue [
 
 { #category : #'tests - includes' }
 DictionaryTest >> testIncludesElementIsNotThere [
-	"self debug: #testIncludesElementIsNotThere"
+	
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
@@ -560,29 +563,23 @@ DictionaryTest >> testIsHealthy [
 
 { #category : #'tests - dictionary key access' }
 DictionaryTest >> testKeyAtIdentityValueIfAbsent [
-	"self run: #testKeyAtValue"
-
-	"self debug: #testKeyAtValue"
 
 	| dict value result |
 	dict := self nonEmpty.
 	value := dict values anyOne.
 	result := dict keyAtIdentityValue: value ifAbsent: [ nil ].
-	self assert: (dict at: result) = value.
+	self assert: (dict at: result) equals: value.
 	self assert: (dict keyAtIdentityValue: self valueNotIn ifAbsent: [ nil ]) isNil
 ]
 
 { #category : #'tests - dictionary key access' }
 DictionaryTest >> testKeyAtValueIfAbsent [
-	"self run: #testKeyAtValue"
-
-	"self debug: #testKeyAtValue"
-
+ 
 	| dict value result |
 	dict := self nonEmpty.
 	value := dict values anyOne.
 	result := dict keyAtValue: value ifAbsent: [ nil ].
-	self assert: (dict at: result) = value.
+	self assert: (dict at: result) equals: value.
 	self assert: (dict keyAtValue: self valueNotIn ifAbsent: [ nil ]) isNil
 ]
 
@@ -615,6 +612,30 @@ DictionaryTest >> testNewFrom [
 	assocs := self nonEmptyDict associations collect: [:each | each copy].
 	self assert: (self classToBeTested newFrom: assocs) = self nonEmptyDict.
 
+]
+
+{ #category : #'tests - new' }
+DictionaryTest >> testNewFromKeysAndValues [
+ 
+	| keys values newDict |
+	keys := self nonEmptyDict keys.
+	values := self nonEmptyDict values.
+	newDict := self classToBeTested newFromKeys: keys andValues: values.
+	self nonEmptyDict keysAndValuesDo: [:k :v|
+		self assert: (newDict at: k) equals: v ]. 
+]
+
+{ #category : #'tests - new' }
+DictionaryTest >> testNewFromKeysAndValues2 [
+ 
+	| dict newDict |
+	dict := self classToBeTested new
+		at: #a put: 1;
+		at: #b put: 2;
+		at: #c put: 3; yourself.
+	newDict := self classToBeTested newFromKeys: dict keys andValues: dict values.
+	dict keysAndValuesDo: [:k :v|
+		self assert: (newDict at: k) equals: v ]. 
 ]
 
 { #category : #'tests - new' }
@@ -651,7 +672,6 @@ DictionaryTest >> testNilHashCollision [
 
 { #category : #'tests - testing' }
 DictionaryTest >> testOccurrencesOf [
-	"self run:#testOccurrencesOf" 
 	
 	| dict |
 	dict := self collectionClass new.
@@ -661,12 +681,11 @@ DictionaryTest >> testOccurrencesOf [
 	dict at: #d put: 3.
 	dict at: nil put: nil.
 	dict at: #z put: nil.
-	
-	
+		
 	self assert: (dict occurrencesOf: 1 ) equals: 2.
 	self supportsNilKey 
-		ifTrue: [ 	self assert: (dict occurrencesOf: nil ) equals: 2 ]
-		ifFalse: [ 	self assert: (dict occurrencesOf: nil ) equals: 1 ].	
+		ifTrue: [ self assert: (dict occurrencesOf: nil ) equals: 2 ]
+		ifFalse: [ self assert: (dict occurrencesOf: nil ) equals: 1 ].	
 	
 	
 	
@@ -705,8 +724,7 @@ DictionaryTest >> testRemoveAll [
 
 { #category : #tests }
 DictionaryTest >> testSelectIsNotShallowCopy [
-	"self debug: #testSelectIsNotShallowCopy"
-	
+		
 	| original even |
 	original := self collectionClass new.
 	original at: #one put: 1.

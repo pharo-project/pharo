@@ -8,6 +8,7 @@ Class {
 FileTest >> tearDown [
 
 	'asd.txt' asFileReference ensureDelete.
+	super tearDown
 ]
 
 { #category : #tests }

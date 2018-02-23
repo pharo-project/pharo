@@ -14,13 +14,14 @@ TSubCollectionAccess >> moreThan3Elements [
 
 { #category : #'tests - fixture' }
 TSubCollectionAccess >> test0FixtureSubcollectionAccessTest [
+
 	self moreThan3Elements.
 	self assert: self moreThan3Elements size > 2
 ]
 
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testAllButFirst [
-	"self debug: #testAllButFirst"
+
 	| abf col |
 	col := self moreThan3Elements.
 	abf := col allButFirst.
@@ -30,7 +31,7 @@ TSubCollectionAccess >> testAllButFirst [
 
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testAllButFirstNElements [
-	"self debug: #testAllButFirst"
+
 	| abf col |
 	col := self moreThan3Elements.
 	abf := col allButFirst: 2.
@@ -42,17 +43,17 @@ TSubCollectionAccess >> testAllButFirstNElements [
 
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testAllButLast [
-	"self debug: #testAllButLast"
+
 	| abf col |
 	col := self moreThan3Elements.
 	abf := col allButLast.
 	self deny: abf last = col last.
-	self assert: abf size + 1 = col size
+	self assert: abf size + 1 equals: col size
 ]
 
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testAllButLastNElements [
-	"self debug: #testAllButFirst"
+
 	| abf col |
 	col := self moreThan3Elements.
 	abf := col allButLast: 2.
@@ -64,24 +65,22 @@ TSubCollectionAccess >> testAllButLastNElements [
 
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testFirstNElements [
-	"self debug: #testFirstNElements"
 
 	| result |
 	result := self moreThan3Elements first: self moreThan3Elements size - 1.
-	1 to: result size do: [ :i | self assert: (result at: i) = (self moreThan3Elements at: i) ].
-	self assert: result size = (self moreThan3Elements size - 1).
+	result withIndexDo: [:el :i | self assert: el equals: (self moreThan3Elements at: i) ].
+	
+	self assert: result size equals: (self moreThan3Elements size - 1).
 	self should: [ self moreThan3Elements first: self moreThan3Elements size + 1 ] raise: SubscriptOutOfBounds
 ]
 
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testLastNElements [
-	"self debug: #testLastNElements"
+
 	| result |
 	result := self moreThan3Elements last: self moreThan3Elements size - 1.
-	1 
-		to: result size
-		do: [ :i | self assert: (result at: i) = (self moreThan3Elements at: i + 1) ].
-	self assert: result size = (self moreThan3Elements size - 1).
+	result withIndexDo: [:el :i | self assert: el equals: (self moreThan3Elements at: i + 1) ].
+	self assert: result size equals: (self moreThan3Elements size - 1).
 	self 
 		should: [ self moreThan3Elements last: self moreThan3Elements size + 1 ]
 		raise: Error

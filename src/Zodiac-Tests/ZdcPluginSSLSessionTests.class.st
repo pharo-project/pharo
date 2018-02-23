@@ -22,6 +22,7 @@ ZdcPluginSSLSessionTests >> tearDown [
 
 	session destroy.
 	session := nil.
+	super tearDown 
 ]
 
 { #category : #tests }

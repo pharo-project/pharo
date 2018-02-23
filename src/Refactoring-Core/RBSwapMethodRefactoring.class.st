@@ -46,8 +46,8 @@ RBSwapMethodRefactoring >> preconditions [
 RBSwapMethodRefactoring >> swapMethod: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	target := self classObjectFor: (class isMeta 
-			ifTrue: [ class theNonMetaClass ]
-			ifFalse: [ class theMetaClass ]).
+			ifTrue: [ class instanceSide ]
+			ifFalse: [ class classSide ]).
 	selector := aSelector
 ]
 

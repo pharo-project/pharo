@@ -47,6 +47,7 @@ FileSystemTest >> markForCleanup: anObject [
 
 { #category : #running }
 FileSystemTest >> setUp [
+	super setUp.
 	filesystem := self createFileSystem.
 	toDelete := OrderedCollection new.
 ]
@@ -55,7 +56,8 @@ FileSystemTest >> setUp [
 FileSystemTest >> tearDown [
 	toDelete
 		select: [ :path | filesystem exists: path ]
-		thenDo: [ :path | filesystem delete: path ]
+		thenDo: [ :path | filesystem delete: path ].
+	super tearDown	
 ]
 
 { #category : #'tests-streams-compatibility' }

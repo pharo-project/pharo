@@ -5,6 +5,14 @@ Class {
 }
 
 { #category : #testing }
+ZnCharacterStreamTests >> assertUpToAll: array [
+	| utf8Stream |
+	utf8Stream := self utf8ReadStreamOn: array first.
+	self assert: (array first readStream upToAll: array second) equals: array third.
+	self assert: (utf8Stream upToAll: array second) equals: array third
+]
+
+{ #category : #testing }
 ZnCharacterStreamTests >> testNextLine [
 	| stream |
 	stream := ZnCharacterReadStream on: 'abc' asByteArray readStream.
@@ -112,4 +120,67 @@ ZnCharacterStreamTests >> testUTF8ReadStreamReadInto [
 	stream next: string size into: buffer. 
 	self assert: buffer equals: string.
 	self assert: stream atEnd	
+]
+
+{ #category : #testing }
+ZnCharacterStreamTests >> testUpToAll [
+	#(
+		('' '' '')
+		('' 'ß' '')
+		('' 'ße' '')
+		('ß' '' '')
+		('ße' '' '')
+		('ß' 'ß' '')
+		('ße' 'ß' '')
+		('ß' 'ße' 'ß')
+		('ß' 'e' 'ß')
+		('ße' 'e' 'ß')
+		('ßen' 'e' 'ß')
+		('ßen' 'en' 'ß')
+		('ßend' 'en' 'ß')
+		('iße' 'e' 'iß')
+		('ißen' 'e' 'iß')
+		('ißen' 'en' 'iß')
+		('ißend' 'en' 'iß')
+		('iß' 'ß' 'i')
+		('iße' 'ß' 'i')
+		('eißen' 'ßend' 'eißen')
+		('abcdefgh' 'cd' 'ab')
+		('a' '' '')
+		('a' 'a' '')
+		('a' 'b' 'a')
+		('ab' '' '')
+		('ab' 'a' '')
+		('ab' 'b' 'a')
+		('ab' 'c' 'ab')
+		('ab' 'ab' '')
+		('abc' '' '')
+		('abc' 'a' '')
+		('abc' 'b' 'a')
+		('abc' 'c' 'ab')
+		('abc' 'd' 'abc')
+		('abc' 'ab' '')
+		('abc' 'bc' 'a')
+		('abc' 'cd' 'abc')
+	) do: [ :array | self assertUpToAll: array ]
+
+]
+
+{ #category : #testing }
+ZnCharacterStreamTests >> testUpToAllTwice [
+	| utf8Stream stream |
+	utf8Stream := self utf8ReadStreamOn: 'eißendeße'.
+	self assert: (utf8Stream upToAll: 'ße') equals: 'ei'.
+	self assert: (utf8Stream upToAll: 'ße') equals: 'nde'.
+
+	stream := 'eißendeße' readStream.
+	self assert: (stream upToAll: 'ße') equals: 'ei'.
+	self assert: (stream upToAll: 'ße') equals: 'nde'
+]
+
+{ #category : #testing }
+ZnCharacterStreamTests >> utf8ReadStreamOn: string [
+	^ZnCharacterReadStream
+		on: (ZnUTF8Encoder new encodeString: string) readStream
+		encoding: #utf8
 ]

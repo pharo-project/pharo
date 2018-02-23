@@ -2,7 +2,6 @@ Extension { #name : #RGMethodDefinitionTest }
 
 { #category : #'*Ring-Tests-Monticello' }
 RGMethodDefinitionTest >> testAsFullMethodDefinition [
-	"self debug: #testAsFullMethodDefinition"
 	
 	| rgMethod |
 	rgMethod := (Trait >> #asRingDefinition) asRingDefinition.

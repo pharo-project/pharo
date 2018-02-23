@@ -21,20 +21,14 @@ TextEditorTest >> keyboardEvent [
 
 { #category : #accessing }
 TextEditorTest >> testCursorEnd [
-	| editor |
-	"
-	self debug: #testCursorEnd.
-	"
+	| editor |	 
 	editor := TextMorph new editor.
 	editor cursorEnd: self keyboardEvent
 ]
 
 { #category : #accessing }
 TextEditorTest >> testSetSearchString [
-	| editor |
-	"
-	self debug: #testSetSearchString.
-	"
+	| editor | 
 	editor := TextMorph new editor.
 	editor setSearchString
 ]

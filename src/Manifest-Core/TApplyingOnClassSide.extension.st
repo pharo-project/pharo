@@ -3,5 +3,5 @@ Extension { #name : #TApplyingOnClassSide }
 { #category : #'*Manifest-Core' }
 TApplyingOnClassSide >> criticTheNonMetaclassClass [
 
-	^self theNonMetaClass 
+	^self instanceSide 
 ]

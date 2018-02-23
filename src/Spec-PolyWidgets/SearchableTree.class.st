@@ -30,6 +30,7 @@ SearchableTree class >> defaultSpec [
 
 { #category : #examples }
 SearchableTree class >> example [
+	<sampleInstance>
 	^ self new
 		openWithSpec
 ]

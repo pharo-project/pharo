@@ -150,6 +150,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tests'.
 		spec package: 'Ring-Tests-Kernel'.
 		spec package: 'AST-Tests-Core'.
+		spec package: 'Compiler-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'FuelTests'.
 		spec package: 'Gofer-Tests'.
@@ -157,7 +158,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-Tests-WithCompiler'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
-		spec package: 'Monticello-Tests'.
 		spec package: 'OpalCompiler-Tests'.
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
@@ -183,6 +183,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Metacello-TestsReference'.	"standalone"
 
 		spec package: 'RPackage-Tests'.
+		spec package: 'Monticello-Tests'.
 
 		spec package: 'Glamour-Announcements'.
 		spec package: 'Glamour-Helpers'.
@@ -253,6 +254,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'NautilusGroupAutoBuilder'.
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
+		spec package: 'SmartSuggestions-Nautilus'.
 		
 		spec package: 'MonticelloMocks'.
 		spec package: 'NodeNavigation'.
@@ -347,8 +349,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Shout-Tests'.
 		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
+		spec package: 'SmartSuggestions-Nautilus-Tests'.
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
+		spec package: 'System-BasicCommandLineHandler-Tests'.
 		spec package: 'System-Caching-Tests'.
 		spec package: 'System-Hashing-Tests'.
 		spec package: 'System-History-Tests'.
@@ -488,6 +492,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
 	'System-Identification-Tests'		
 	'System-DependenciesTests'
+	'System-BasicCommandLineHandler-Tests'
 ).	
 
 spec group: 'FuzzyMatcher-Core-Group' with: #(
@@ -532,9 +537,11 @@ spec group: 'Reflectivity-Group' with: #(
 spec group: 'SmartSuggestions-Core-Group' with: #(
 	"depends on 'Glamour-Core-Group', circular dependency, needs fix"
 	'SmartSuggestions'
+	'SmartSuggestions-Nautilus'
 ).
 spec group: 'SmartSuggestions-Tests-Group' with: #(
 	'SmartSuggestions-Tests'
+	'SmartSuggestions-Nautilus-Tests'
 ).
 spec group: 'SmartSuggestions-Group' with: #(
 	'SmartSuggestions-Core-Group'
@@ -808,6 +815,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Kernel-Tests-WithCompiler' 
 	'AST-Tests-Core' "requires BlueInk-Core"
 	'Announcements-Tests-Core'
+	'Compiler-Tests'
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
@@ -894,7 +902,7 @@ spec group: #default with: #(
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v0.6.5';
+		repository: 'github://pharo-vcs/iceberg:v0.6.7';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 

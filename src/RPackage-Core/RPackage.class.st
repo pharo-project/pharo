@@ -199,7 +199,7 @@ RPackage >> addClass: aClass [
 RPackage >> addClassDefinition: aClass [
 	"Add only the class definition of aClass, as a class defined by the receiver. The term classdefinition denotes the fact that we do not treat its methods. aClass methods are not added to the package. aClass can be either a class or a metaclass"
 	
-	self addClassDefinitionName: aClass theNonMetaClass name.
+	self addClassDefinitionName: aClass instanceSide name.
 	
 ]
 
@@ -289,7 +289,7 @@ RPackage >> addMethod: aCompiledMethod [
 
 { #category : #'compiled method handling' }
 RPackage >> addNonExtensionMethod: aCompiledMethod [ 
-	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
+  "Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
 	| methodClass |
 	
 	methodClass := aCompiledMethod methodClass. 
@@ -624,7 +624,7 @@ RPackage >> definedMethodsShouldBecomeExtensionWhenRemovingClass: aClassName [
 RPackage >> definedSelectorsForClass: aClass [
 
 	^ aClass isMeta
-		ifTrue: [ metaclassDefinedSelectors at: aClass theNonMetaClass originalName ifAbsent: [ #() ] ]
+		ifTrue: [ metaclassDefinedSelectors at: aClass instanceSide originalName ifAbsent: [ #() ] ]
 		ifFalse: [ classDefinedSelectors at: aClass originalName ifAbsent: [ #() ] ]
 ]
 
@@ -641,9 +641,9 @@ RPackage >> definesOrExtendsClass: aClass [
 	if the receiver extends such class (that is defined in another package)"
 	
 	| canonizedName |
-	canonizedName := aClass theNonMetaClass name.
+	canonizedName := aClass instanceSide name.
 	^ (classes includes: canonizedName) 
-		or: [self extendedClassNames includes:  canonizedName]
+		or: [self extendedClassNames includes: canonizedName]
 
 ]
 
@@ -681,7 +681,7 @@ RPackage >> extendedClasses [
 	"Return classes and metaclasses that are extended in the receiver. They represent the classes of method extensions"
 	^ (metaclassExtensionSelectors keys 
 		select: [ :each| Smalltalk globals includesKey: each ]
-		thenCollect: [:each | (Smalltalk globals at: each) theMetaClass])
+		thenCollect: [:each | (Smalltalk globals at: each) classSide])
 			union:  (classExtensionSelectors keys 
 						select: [ :each| Smalltalk globals includesKey: each ]
 						thenCollect: [:each | Smalltalk globals at: each])
@@ -729,8 +729,8 @@ RPackage >> extendsClass: aClass [
 	"Returns true if the receiver extends aClass (that is defined in another package)"
 	
 	| canonizedName |
-	canonizedName := aClass theNonMetaClass name.
-	^ self extendedClassNames includes:  canonizedName
+	canonizedName := aClass instanceSide name.
+	^ self extendedClassNames includes: canonizedName
 ]
 
 { #category : #'system compatibility' }
@@ -755,7 +755,7 @@ RPackage >> extensionMethods [
 	classExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
 		methods do: [ :selector | allExtensionMethods add: ((Smalltalk globals at: classSymbol) >> selector) ] ].
 	metaclassExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
-		methods do: [ :selector | allExtensionMethods add: ((Smalltalk globals at: classSymbol) theMetaClass >> selector) ] ].	
+		methods do: [ :selector | allExtensionMethods add: ((Smalltalk globals at: classSymbol) classSide >> selector) ] ].	
 	
 	^ allExtensionMethods				
 ]
@@ -782,7 +782,7 @@ RPackage >> extensionSelectors [
 RPackage >> extensionSelectorsForClass: aClass [
 
 	^ aClass isMeta
-		ifTrue: [ metaclassExtensionSelectors at: aClass theNonMetaClass originalName ifAbsent: [ #() ] ]
+		ifTrue: [ metaclassExtensionSelectors at: aClass instanceSide originalName ifAbsent: [ #() ] ]
 		ifFalse: [ classExtensionSelectors at: aClass originalName ifAbsent: [ #() ] ]
 ]
 
@@ -801,7 +801,7 @@ RPackage >> importClass: aClass [
 	Pay attention that it will not import anything from the metaClass side"
 
 	self basicImportClass: aClass.
-	self basicImportClass: aClass theMetaClass.	
+	self basicImportClass: aClass classSide.	
 	self 
 		addClassDefinition:  aClass
 		toClassTag: (self toTagName: aClass category)
@@ -814,7 +814,7 @@ RPackage >> importClass: aClass inTag: aTag [
 	Pay attention that it will not import anything from the metaClass side"
 
 	self basicImportClass: aClass.
-	self basicImportClass: aClass theMetaClass.	
+	self basicImportClass: aClass classSide.	
 	self 
 		addClassDefinition:  aClass
 		toClassTag: aTag name
@@ -847,7 +847,7 @@ RPackage >> importProtocol: aProtocol forClass: aClass [
 RPackage >> includesClass: aClass [	
 	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
 	
-	^ self includesClassNamed: aClass theNonMetaClass name
+	^ self includesClassNamed: aClass instanceSide name
 ]
 
 { #category : #testing }
@@ -944,7 +944,7 @@ RPackage >> includesSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
 	
 	^ aClass isMeta
-		ifTrue: [ self includesSelector: aSelector ofMetaclassName: aClass theNonMetaClass name  ]
+		ifTrue: [ self includesSelector: aSelector ofMetaclassName: aClass instanceSide name  ]
 		ifFalse: [ self includesSelector: aSelector ofClassName: aClass name  ]
 	
 
@@ -1064,12 +1064,12 @@ RPackage >> methods [
 	methods := OrderedCollection new.
 	
 	metaclassExtensionSelectors keysAndValuesDo: [:key :val | 
-		val do: [:sel | 	methods add: ((Smalltalk globals at: key) theMetaClass >> sel)]].
+		val do: [:sel | 	methods add: ((Smalltalk globals at: key) classSide >> sel)]].
 	classExtensionSelectors keysAndValuesDo: [:key :val |
 		val do: [:sel | methods add: ((Smalltalk globals at: key) >> sel)]].
 	
 	metaclassDefinedSelectors keysAndValuesDo: [:key :val | 
-		val do: [:sel | methods add: ((Smalltalk globals at: key) theMetaClass >> sel)]].
+		val do: [:sel | methods add: ((Smalltalk globals at: key) classSide >> sel)]].
 	classDefinedSelectors keysAndValuesDo: [:key :val | 
 		val do: [:sel | methods add: ((Smalltalk globals at: key) >> sel)]].
 	
@@ -1133,7 +1133,7 @@ RPackage >> orderedClasses [
 	| tmp |
 	tmp := self definedClasses asArray sort: [:a :b | a name <= b name].
 	tmp := tmp, (self extendedClasses asArray sort: [:a :b | a name <= b name]).
-	^tmp collect: [:e | e theNonMetaClass ]
+	^tmp collect: [:e | e instanceSide ]
 
 ]
 
@@ -1178,7 +1178,7 @@ RPackage >> packageComment [
 
 { #category : #accessing }
 RPackage >> packageComment: aDescription [
-	^ self packageManifest theMetaClass
+	^ self packageManifest classSide
 		ifNil: [ '' ]
 		ifNotNil: [ :manifest | manifest compile: 'description ^ ' , aDescription classified: 'meta-data' ]
 ]
@@ -1298,7 +1298,7 @@ RPackage >> removeClass: aClass [
 { #category : #'class addition' }
 RPackage >> removeClassDefinition: aClass [
 	"Remove the class definition from the package but not its methods."
-	^ self removeClassDefinitionName: aClass theNonMetaClass originalName.
+	^ self removeClassDefinitionName: aClass instanceSide originalName.
 ]
 
 { #category : #'class tags' }
@@ -1357,7 +1357,7 @@ RPackage >> removeClassDefinitionWithoutCheckingMethods: aClass [
 	"Same than 'removeClassDefinition', excepts that it does not make any check to set defined methods as extensions"
 	
 	| removed aClassName|
-	aClassName := aClass theNonMetaClass name.
+	aClassName := aClass instanceSide name.
 	removed := classes remove: aClassName ifAbsent: [nil].
 	removed ifNotNil: [
 		self unregisterClass: aClass.] 
@@ -1419,7 +1419,7 @@ RPackage >> removeMethod: aCompiledMethod [
 		ifTrue: [
 			self 
 				removeSelector: aCompiledMethod selector 
-				ofMetaclassName: methodClass theNonMetaClass originalName ]
+				ofMetaclassName: methodClass instanceSide originalName ]
 		ifFalse: [
 			self 
 				removeSelector: aCompiledMethod selector 

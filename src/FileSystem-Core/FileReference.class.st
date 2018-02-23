@@ -87,6 +87,13 @@ FileReference >> binaryReadStream [
 	^ filesystem binaryReadStreamOn: self path
 ]
 
+{ #category : #'streams-compatibility' }
+FileReference >> binaryWriteStream [
+	"Answer a binary write stream on the receiver"
+
+	^ filesystem binaryWriteStreamOn: self path
+]
+
 { #category : #comparing }
 FileReference >> containsReference: aReference [
 	^  aReference fileSystem = filesystem and: [path contains: aReference path]

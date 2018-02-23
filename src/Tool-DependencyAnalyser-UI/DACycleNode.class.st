@@ -22,12 +22,6 @@ DACycleNode >> addMenuEntriesOn: aMenuGroup [
 									self saveGraphAndOpenWith: graphvizGenerator ])
 ]
 
-{ #category : #'browse-nautilus' }
-DACycleNode >> browseInNautilus [
-	"we cannot browse a cycle in Nautilus"
-	^ self
-]
-
 { #category : #accessing }
 DACycleNode >> childNodeClassFor: anItem [
 	^ DAPackageUnderAnalysisNode
@@ -46,4 +40,10 @@ DACycleNode >> icon [
 { #category : #accessing }
 DACycleNode >> isCycleNode [
 	^ true
+]
+
+{ #category : #'browse-nautilus' }
+DACycleNode >> selectInBrowser [
+	"we cannot browse a cycle in browser"
+	^ self
 ]

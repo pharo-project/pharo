@@ -258,7 +258,7 @@ SmalltalkImage >> backupImageInFileNamed: aFileReference [
 { #category : #saving }
 SmalltalkImage >> backupTo: newNameWithoutSuffix [
 	"Create a new backup of this image. 
-	Unlike #saveAs: do not transfer the default execution to the new image. 
+	Unlike #saveAs:, I do not transfer the default execution to the new image. 
 	Results:
 		true  when continuing in the new session
 		false for the current session"
@@ -777,7 +777,7 @@ SmalltalkImage >> image [
 SmalltalkImage >> imageDirectory [
 	"Answer the directory containing the current image."
 
-	^ (Path from: self primImagePath) parent
+	^ self primImagePath asFileReference parent
 ]
 
 { #category : #'image, changes name' }
@@ -1282,7 +1282,8 @@ SmalltalkImage >> newSpecialObjectsArray [
 							#'internal error in named primitive machinery'
 							#'object may move' #'resource limit exceeded'
 							#'object is pinned' #'primitive write beyond end of object'
-							#'object moved' #'object not pinned' #'callback error').
+							#'object moved' #'object not pinned' #'callback error'),
+							{PrimitiveError new errorName: #'operating system error'; yourself}.
 	"53 to 55 are for Alien"
 	newArray at: 53 put: (self at: #Alien ifAbsent: []).
 	newArray at: 54 put: #invokeCallbackContext:. "use invokeCallback:stack:registers:jmpbuf: for old Alien callbacks."

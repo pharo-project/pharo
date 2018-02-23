@@ -39,7 +39,7 @@ SDL2AthensExample >> destroy [
 ]
 
 { #category : #accessing }
-SDL2AthensExample >> initializeFromSurface. [
+SDL2AthensExample >> initializeFromSurface [
 	"Here we put all the things that needs the surface to be initialized."
 ]
 

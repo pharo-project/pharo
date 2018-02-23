@@ -17,7 +17,11 @@ Class {
 		'aCompiledMethod',
 		'aReceiver',
 		'aMethodContext',
-		'aSender'
+		'aSender',
+		'instVarForTestLookupSymbol'
+	],
+	#classVars : [
+		'classVarForTestLookupSymbol'
 	],
 	#category : #'Kernel-Tests-Methods'
 }
@@ -128,6 +132,28 @@ ContextTest >> testFindContextSuchThat [
 ContextTest >> testJump [
 	#(exampleClosure exampleSend exampleStore) do: [ :selector |
 		self verifyJumpWithSelector: selector ]
+]
+
+{ #category : #tests }
+ContextTest >> testLookupSymbol [
+	|localVar|
+	localVar := 2.
+	instVarForTestLookupSymbol := 3.
+	classVarForTestLookupSymbol := 4.
+	ContextTestAssistantA classVarForTestLookupSymbol: 5.
+	"Check lookup of local variable"
+	self assert: (thisContext lookupSymbol: #localVar) equals: 2.
+	"Check lookup of instance variable"
+	self assert: (thisContext lookupSymbol: #instVarForTestLookupSymbol) equals: 3.
+	"Check lookup of class variable"
+	self assert: (thisContext lookupSymbol: #classVarForTestLookupSymbol) equals: 4.
+	"Check lookup of global variable"
+	self assert: (thisContext lookupSymbol: #Smalltalk) equals: Smalltalk.
+	"Check lookup of class variable declared by a superclass"
+	self assert: (ContextTestAssistantB lookupSymbolInThisContext: #classVarForTestLookupSymbol) equals: 5.
+	"Check lookup of non-existant variable"
+	self assert: (thisContext lookupSymbol: #gibberishgibberish) equals: nil.
+	
 ]
 
 { #category : #tests }

@@ -122,7 +122,7 @@ RBGenerateEqualHashRefactoring >> preconditions [
 
 { #category : #accessing }
 RBGenerateEqualHashRefactoring >> theClass [
-	^ (self classObjectFor: className) theNonMetaClass
+	^ (self classObjectFor: className) instanceSide
 ]
 
 { #category : #transforming }

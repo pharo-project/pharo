@@ -5,12 +5,13 @@ I announce with a copy of the old class and the new class.
 Class {
 	#name : #ShClassChanged,
 	#superclass : #ShAbstractChange,
-	#category : 'Shift-Changes'
+	#category : #'Shift-Changes'
 }
 
 { #category : #announcing }
 ShClassChanged >> announceChanges [
 	SystemAnnouncer uniqueInstance classDefinitionChangedFrom: oldClass to: builder newClass.
+	SystemAnnouncer uniqueInstance classModificationAppliedTo: builder newClass
 ]
 
 { #category : #announcing }

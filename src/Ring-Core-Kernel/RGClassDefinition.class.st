@@ -71,10 +71,10 @@ RGClassDefinition >> addUser: aRGClassDefinition [
 	"The receiver registers the aRGClassDefinition as an user.  An reinforces its status as a shared pool."
 	
 	aRGClassDefinition isClass ifFalse:[ ^self ].
-	(aRGClassDefinition theNonMetaClass sharedPoolNamed: self name) isNil
-		ifTrue: [ aRGClassDefinition theNonMetaClass addSharedPoolNamed: self name ].
+	(aRGClassDefinition instanceSide sharedPoolNamed: self name) isNil
+		ifTrue: [ aRGClassDefinition instanceSide addSharedPoolNamed: self name ].
 	self isPool: true.
-	self users add: aRGClassDefinition theNonMetaClass
+	self users add: aRGClassDefinition instanceSide
 ]
 
 { #category : #'class variables' }
@@ -119,6 +119,12 @@ RGClassDefinition >> category: aSymbol [
 	"stores a tag for its package"
 
 	category := aSymbol
+]
+
+{ #category : #'accessing - parallel hierarchy' }
+RGClassDefinition >> classSide [
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+	^ metaClass
 ]
 
 { #category : #'class variables' }
@@ -200,6 +206,12 @@ RGClassDefinition >> initialize [
 	sharedPools:= OrderedCollection new.
 ]
 
+{ #category : #'accessing - parallel hierarchy' }
+RGClassDefinition >> instanceSide [
+	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
+	^ self
+]
+
 { #category : #'managing pool users' }
 RGClassDefinition >> isPool [
 	"The receiver is a shared pool if it inherits from SharedPool"
@@ -225,7 +237,7 @@ RGClassDefinition >> isSameRevisionAs: aRGClassDefinition [
 		and:[ self sharedPoolNames sorted = aRGClassDefinition sharedPoolNames sorted  
 		and:[ self traitCompositionSource = aRGClassDefinition traitCompositionSource 
 		and:[ ((self hasComment and:[ self comment isSameRevisionAs: aRGClassDefinition comment ]) or:[ self hasComment not ])
-		and:[ (self theMetaClass isSameRevisionAs: aRGClassDefinition theMetaClass) ] ] ] ] ] ] ]
+		and:[ (self classSide isSameRevisionAs: aRGClassDefinition classSide) ] ] ] ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -271,8 +283,8 @@ RGClassDefinition >> removeUser: aRGClassDefinition [
 	"Removes this RGClassDefinition from the users of the receiver"
 	
 	aRGClassDefinition isClass ifFalse:[ ^self ].
-	aRGClassDefinition theNonMetaClass removeSharedPoolNamed: self name.
-	self users remove: aRGClassDefinition theNonMetaClass ifAbsent:[ ]
+	aRGClassDefinition instanceSide removeSharedPoolNamed: self name.
+	self users remove: aRGClassDefinition instanceSide ifAbsent:[ ]
 ]
 
 { #category : #'shared pools' }
@@ -315,13 +327,13 @@ RGClassDefinition >> stamp: aString [
 						 stamp: aString ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 RGClassDefinition >> theMetaClass [
 	
 	^metaClass
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 RGClassDefinition >> theNonMetaClass [
 
 	^self

@@ -236,13 +236,6 @@ UndefinedObject >> subclassesDo: aBlock [
 			cl isMeta ifTrue: [aBlock value: cl soleInstance]].
 ]
 
-{ #category : #'dependents access' }
-UndefinedObject >> suspend [
-	"Kills off processes that didn't terminate properly"
-	"Display reverse; reverse."  "<-- So we can catch the suspend bug"
-	Processor terminateActive
-]
-
 { #category : #'class hierarchy' }
 UndefinedObject >> typeOfClass [
 	"Necessary to support disjoint class hierarchies."

@@ -19,10 +19,11 @@ RFASTTranslator >> classForValue [
 
 { #category : #'visitor-double dispatching' }
 RFASTTranslator >> emitMessageNode: aMessageNode [
-	self emitPrepareLinkAfter: aMessageNode.
+
 	aMessageNode isCascaded
 		ifFalse: [ valueTranslator visitNode: aMessageNode receiver ].
 	aMessageNode arguments do: [ :each | valueTranslator visitNode: each ].
+	self emitPrepareLinkAfter: aMessageNode.
 	self emitMetaLinkBefore: aMessageNode.
 	aMessageNode hasMetalinkInstead
 		ifTrue: [ self emitMetaLinkInstead: aMessageNode ]
@@ -228,7 +229,7 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 	
 	aMethodNode isPrimitive ifFalse: [self emitMetaLinkBefore: aMethodNode].
 
-	methodBuilder properties: aMethodNode properties.
+	methodBuilder properties: aMethodNode methodProperties.
 	methodBuilder irPrimitive: aMethodNode primitiveFromPragma.
 	aMethodNode pragmas do: [:each | self visitPragmaNode: each].
 	methodBuilder numArgs: aMethodNode arguments size.

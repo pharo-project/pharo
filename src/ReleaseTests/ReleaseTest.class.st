@@ -116,8 +116,8 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 { #category : #testing }
 ReleaseTest >> testLayoutIntegrity [
 	SystemNavigation default allClassesDo: [ :class |
-		class theNonMetaClass classLayout checkIntegrity.
-		class theMetaClass classLayout checkIntegrity ]
+		class instanceSide classLayout checkIntegrity.
+		class classSide classLayout checkIntegrity ]
 ]
 
 { #category : #testing }
@@ -216,18 +216,18 @@ ReleaseTest >> testThatAllMethodsArePackaged [
 
 { #category : #testing }
 ReleaseTest >> testUndeclared [
-	| undeclaredReferences |
+	| undeclaredBindings |
 	
 	Smalltalk cleanOutUndeclared. 
-	undeclaredReferences := Undeclared.
+	undeclaredBindings := Undeclared keys reject: [:each |
+			each includesSubstring: 'undeclaredStub' caseSensitive: false].
 	
 	self 
-		assert: undeclaredReferences isEmpty 
+		assert: undeclaredBindings isEmpty 
 		description: (String streamContents: [ :s|
 			s 
 				nextPutAll: 'Found undeclared references: ';
-				print: undeclaredReferences ])
-	
+				print: undeclaredBindings ])
 ]
 
 { #category : #testing }

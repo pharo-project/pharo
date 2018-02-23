@@ -395,15 +395,18 @@ Object >> at: index put: value [
 	stored. Essential. See Object documentation whatIsAPrimitive."
 
 	<primitive: 61>
-	index isInteger ifTrue:
-		[self class isVariable
+	index isInteger 
+		ifTrue: [self class isVariable
 			ifTrue: [(index between: 1 and: self size)
-					ifTrue: [self errorImproperStore]
-					ifFalse: [self errorSubscriptBounds: index]]
-			ifFalse: [self errorNotIndexable]].
-	index isNumber
-		ifTrue: [^self at: index asInteger put: value]
-		ifFalse: [self errorNonIntegerIndex]
+				ifFalse: [ ^ self errorSubscriptBounds: index]]
+			ifFalse: [ ^ self errorNotIndexable ]]
+		ifFalse: [  
+			^ index isNumber
+				ifTrue: [ self at: index asInteger put: value]
+				ifFalse: [ self errorNonIntegerIndex] ].
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: value ].
+	self errorImproperStore 
 ]
 
 { #category : #'write barrier' }
@@ -413,7 +416,7 @@ Object >> attemptToAssign: value withIndex: index [
 	performed, do it manually here in the call back with instVarAt:put:.
 	This method has to return *no* value by jumping to the context's sender"
 	
-	(ModificationForbidden for: self atInstVar: index with: value)	signal.
+	self modificationForbiddenFor: #instVarAt:put: index: index value: value.
 
 	thisContext sender jump
 	"CAN'T REACH"
@@ -443,13 +446,18 @@ Object >> basicAt: index put: value [
 	documentation whatIsAPrimitive."
 
 	<primitive: 61>
-	index isInteger
-		ifTrue: [(index between: 1 and: self size)
-					ifTrue: [self errorImproperStore]
-					ifFalse: [self errorSubscriptBounds: index]].
-	index isNumber
-		ifTrue: [^self basicAt: index asInteger put: value]
-		ifFalse: [self errorNonIntegerIndex]
+	index isInteger 
+		ifTrue: [self class isVariable
+			ifTrue: [(index between: 1 and: self size)
+				ifFalse: [ ^ self errorSubscriptBounds: index ]]
+			ifFalse: [ ^ self errorNotIndexable ]]
+		ifFalse: [  
+			^ index isNumber
+				ifTrue: [ self basicAt: index asInteger put: value ]
+				ifFalse: [ self errorNonIntegerIndex ] ].
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #basicAt:put: index: index value: value ].
+	self errorImproperStore 
 ]
 
 { #category : #accessing }
@@ -1008,7 +1016,11 @@ Object >> instVarAt: index put: anObject [
 	 variable or indexed variable. Essential. See Object documentation whatIsAPrimitive."
 
 	<primitive: 174 error: ec>
-	self primitiveFailed
+	 (index isInteger 
+		and: [ index between: 1 and: self class instSize + self basicSize]) 
+			ifFalse: [ ^ self errorSubscriptBounds: index ].
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #instVarAt:put: index: index value: anObject ]
 ]
 
 { #category : #introspection }
@@ -1231,7 +1243,7 @@ Object >> isReadOnlyObject [
 	 An attempt to modify a read-only object in a primitive will cause the
 	 primitive to fail with a #'no modification' error code."
 	<primitive: 163 error: ec>
-	^self primitiveFailed
+	^self class isImmediateClass 
 ]
 
 { #category : #testing }
@@ -1409,8 +1421,9 @@ Object >> modelWakeUpIn: aWindow [
 { #category : #'block support' }
 Object >> mustBeBoolean [
 	"Catches attempts to test truth of non-Booleans.  This message is sent from the VM.  The sending context is rewound to just before the jump causing this exception."
-
-	^ self mustBeBooleanInMagic: thisContext sender
+	^ Boolean mustBeBooleanDeOptimize
+		ifTrue: [ self mustBeBooleanDeOptimizeIn: thisContext sender  ]
+		ifFalse: [ self mustBeBooleanIn: thisContext sender ]
 ]
 
 { #category : #'block support' }
@@ -1430,7 +1443,7 @@ Object >> mustBeBooleanIn: context [
 		- recompile your method with the pragma : <compilerOptions: #(+ optIlineNone)>
 		- recompile your class with the method : MyClass class>>compiler 
 			^ super compiler options: #(+ optIlineNone)
-		- call from this method by Object>>#mustBeBooleanInMagic:"
+		- enable the option mustBeBooleanDeOptimize to call mustBeBooleanDeOptimizeIn: instead of this method "
 
 	| proceedValue |
 	
@@ -1664,6 +1677,8 @@ Object >> primitiveChangeClassTo: anObject [
 	The facility is really provided for certain, very specific applications (mostly related to classes changing shape) and not for casual use."
 
 	<primitive: 115>
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #primitiveChangeClassTo: value: anObject ]. 
 	self primitiveFailed
 ]
 

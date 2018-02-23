@@ -7,11 +7,6 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #'browse-nautilus' }
-DAClassToDependencyNode >> browseInOtherNautilus [
-	self browseClass: self content browse
-]
-
 { #category : #procotol }
 DAClassToDependencyNode >> childNodeClassFor: anItem [
 	 ^ anItem nodeClass
@@ -45,4 +40,9 @@ DAClassToDependencyNode >> package [
 { #category : #accessing }
 DAClassToDependencyNode >> package: anObject [
 	package := anObject
+]
+
+{ #category : #'browse-nautilus' }
+DAClassToDependencyNode >> spawnNewBrowser [
+	self browseClass: self content browse
 ]

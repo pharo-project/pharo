@@ -21,7 +21,8 @@ Class {
 		'DeferringUpdates',
 		'DisplayChangeSignature',
 		'LastScreenModeSelected',
-		'ScreenSave'
+		'ScreenSave',
+		'Title'
 	],
 	#category : #'Graphics-Display Objects'
 }
@@ -144,6 +145,17 @@ DisplayScreen class >> primitiveWindowTitle: id string: titleString [
 	"ignore failure"
 ]
 
+{ #category : #'host window access' }
+DisplayScreen class >> refreshHostWindowTitle [
+	Title ifNotNil: [ self hostWindowTitle: Title ]
+]
+
+{ #category : #'host window access' }
+DisplayScreen class >> setWindowTitle: aTitle [
+	Title := aTitle.
+	self refreshHostWindowTitle
+]
+
 { #category : #'system startup' }
 DisplayScreen class >> shutDown [ 
 	"Minimize Display memory saved in image"
@@ -151,9 +163,12 @@ DisplayScreen class >> shutDown [
 ]
 
 { #category : #'system startup' }
-DisplayScreen class >> startUp [  "DisplayScreen startUp"
+DisplayScreen class >> startUp [
+	"DisplayScreen startUp"
+
 	Display setExtent: self actualScreenSize depth: Display nativeDepth.
-	Display beDisplay
+	Display beDisplay.
+	self refreshHostWindowTitle
 ]
 
 { #category : #displaying }

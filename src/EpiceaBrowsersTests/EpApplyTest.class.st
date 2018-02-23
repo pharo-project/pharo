@@ -141,11 +141,11 @@ EpApplyTest >> testClassAdditionWithMetaclassInstanceVariablesChanged [
 	aClass := classFactory newClass.
 	self setHeadAsInputEntry.
 	
-	aClass theMetaClass instanceVariableNames: 'x'.
+	aClass classSide instanceVariableNames: 'x'.
 	
-	self assert: aClass theMetaClass instVarNames equals: #(x).
+	self assert: aClass classSide instVarNames equals: #(x).
 	self applyInputEntry.
-	self assert: aClass theMetaClass instVarNames equals: #()
+	self assert: aClass classSide instVarNames equals: #()
 ]
 
 { #category : #tests }

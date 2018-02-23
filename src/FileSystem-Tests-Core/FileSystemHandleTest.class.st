@@ -29,6 +29,7 @@ FileSystemHandleTest >> createFileSystem [
 
 { #category : #running }
 FileSystemHandleTest >> setUp [
+	super setUp.
 	filesystem := self createFileSystem.
 	reference := filesystem * 'plonk'.
 	handle := reference openWritable: true
@@ -38,6 +39,7 @@ FileSystemHandleTest >> setUp [
 FileSystemHandleTest >> tearDown [
 	handle ensureClosed.
 	reference ensureDelete.
+	super tearDown
 ]
 
 { #category : #tests }

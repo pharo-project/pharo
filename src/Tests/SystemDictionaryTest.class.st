@@ -29,21 +29,20 @@ SystemDictionaryTest >> testClassComment [
 
 { #category : #tests }
 SystemDictionaryTest >> testClassOrTraitNamedReturnsClassForClasses [
-	"self debug: #testClassOrTraitNamedReturnsClassForClasses"
+	
 	self assert: Object ==  (Smalltalk globals classOrTraitNamed: 'Object').
 	self assert: Object ==  (Smalltalk globals classOrTraitNamed: #Object).
 ]
 
 { #category : #tests }
 SystemDictionaryTest >> testClassOrTraitNamedReturnsNilForGlobals [
-	"self debug: #testClassOrTraitNamedReturnsNilForGlobals"
+	
 	self assert: nil = (Smalltalk globals classOrTraitNamed: 'Undeclared').
 	self assert: nil = (Smalltalk globals classOrTraitNamed: #Undeclared).
 ]
 
 { #category : #tests }
 SystemDictionaryTest >> testEnvironmentOfOrganization [
-	"self debug: #testEnvironmentOfOrganization"
 	
 	| aDictionary |	
 	aDictionary := SystemDictionary withOrganizer: SystemOrganizer new.
@@ -53,8 +52,7 @@ SystemDictionaryTest >> testEnvironmentOfOrganization [
 
 { #category : #tests }
 SystemDictionaryTest >> testOrganizationPerInstance [
-	"self debug: #testOrganizationPerInstance"
-	
+
 	| aDictionary otherDictionary |	
 	aDictionary := SystemDictionary withOrganizer: SystemOrganizer new.
 	otherDictionary := SystemDictionary withOrganizer: SystemOrganizer new.
@@ -79,8 +77,7 @@ SystemDictionaryTest >> testOtherInstancesOfSystemDictionarySelfEvaluating [
 
 { #category : #tests }
 SystemDictionaryTest >> testSetOrganizationSetBackPointer [
-	"self debug: #testSetOrganizationSetBackPointer"
-	
+
 	| sd so |
 	sd := SystemDictionary new.
 	so := SystemOrganizer new.

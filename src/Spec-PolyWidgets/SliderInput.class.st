@@ -22,6 +22,7 @@ Class {
 
 { #category : #example }
 SliderInput class >> example [
+	<sampleInstance>
 	| example |
 	example := self new
 		min: 0;

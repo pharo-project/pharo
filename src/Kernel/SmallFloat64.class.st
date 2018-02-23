@@ -140,6 +140,21 @@ SmallFloat64 >> arcTan [
 	^ theta
 ]
 
+{ #category : #comparing }
+SmallFloat64 >> basicIdentityHash [
+	"Answer an integer unique to the receiver."
+	"primitive 171 is the primitiveImmediateAsInteger primitive that converts SmallIntegers to themselves, Characters to their integer codes, and SmallFloat64 to an integer representing their bits.  e.g.
+
+#(-0.0 0.0 -1.0 1.0) collect: [:n| n -> n identityHash hex -> (n identityHash bitAnd: 2 << 64 - 1) hex]
+{-0.0->'-16r1000000000000000'->'16r1F000000000000000' .
+  0.0->'16r0'->'16r0' .
+ -1.0->'-16r810000000000000'->'16r1F7F0000000000000' .
+  1.0->'16r7F0000000000000'->'16r7F0000000000000'}"
+
+	<primitive: 171>
+	^self primitiveFailed
+]
+
 { #category : #copying }
 SmallFloat64 >> clone [
 	"Answer the receiver, because SmallFloat64s are unique."
@@ -224,9 +239,9 @@ SmallFloat64 >> fractionPart [
 
 { #category : #comparing }
 SmallFloat64 >> identityHash [
-	"Answer an integer unique to the receiver."
-	<primitive: 171>
-	^self primitiveFailed
+	"We need the override since basicIdentityHash is already in SmallInteger range,
+	 the bitShift: 8 of the super implementation would lead to a LargeInteger"
+	^ self basicIdentityHash
 ]
 
 { #category : #'mathematical functions' }

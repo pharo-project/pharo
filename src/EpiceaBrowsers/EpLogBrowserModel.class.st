@@ -130,12 +130,13 @@ EpLogBrowserModel >> applyChangesIn: entries [
 EpLogBrowserModel >> applyCompleteRefactoringInSelection [
 
 	| entries |
-	entries := self selectedEntryItems.
-	entries ifEmpty: [ ^ self inform: 'No code changes to apply' ].
+	entries := self selectedEntries.
+	entries size = 1 ifFalse: [ 
+		^ self inform: 'Please select one refactoring' ]. "Only implemented for one"
 	
 	EpLogBrowserOperationFactory new
 		logBrowserModel: self;
-		entries: { entries first };  "TODO: only first?"
+		entries: entries;
 		errorHandlerBlock: self operationsErrorHandlerBlock;	
 		applyCompleteRefactoring.
 
@@ -145,12 +146,13 @@ EpLogBrowserModel >> applyCompleteRefactoringInSelection [
 EpLogBrowserModel >> applyPropagateRefactoringInSelection [
 
 	| entries |
-	entries := self selectedEntryItems.
-	entries ifEmpty: [ ^ self inform: 'No code changes to apply' ].
+	entries := self selectedEntries.
+	entries size = 1 ifFalse: [ 
+		^ self inform: 'Please select one refactoring' ]. "Only implemented for one"
 	
 	EpLogBrowserOperationFactory new
 		logBrowserModel: self;
-		entries: { entries first };  "TODO: only first?"
+		entries: entries;
 		errorHandlerBlock: self operationsErrorHandlerBlock;
 		applyPropagateRefactoring.
 
@@ -220,7 +222,7 @@ EpLogBrowserModel >> cachedLogEntries [
 		ifFalse: [
 			'Reading log'
 				displayProgressFrom: 0 to: 1 
-				during: [ cachedLogEntries := log entries reversed ]
+				during: [ cachedLogEntries := log entries ]
 			]
 
 ]
@@ -331,7 +333,7 @@ EpLogBrowserModel >> eventsMenuActions [
 EpLogBrowserModel >> fileOutSelection [
 
 	| entries outputDirectory |
-	entries := (self selectedEntryItems collect: [ :each | each entry ]) reversed.
+	entries := self selectedEntryItems collect: [ :each | each entry ].
 	outputDirectory := log store directory.
 	
 	EpOmbuExporter askFileNameAndFileOut: entries in: outputDirectory.
@@ -342,7 +344,7 @@ EpLogBrowserModel >> filterAfter [
 
 	self selectedEntryItems ifNotEmpty: [ :items |
 		| time |
-		time := items last entry tags at: EpLog timeKey.
+		time := items first entry tags at: EpLog timeKey.
 		self addFilter: (EpPluggableFilter after: time) ]
 ]
 
@@ -386,7 +388,7 @@ EpLogBrowserModel >> filterBefore [
 
 	self selectedEntryItems ifNotEmpty: [ :items |
 		| time |
-		time := items first entry tags at: EpLog timeKey.
+		time := items last entry tags at: EpLog timeKey.
 		self addFilter: (EpPluggableFilter before: time) ]
 ]
 
@@ -729,7 +731,6 @@ EpLogBrowserModel >> openPreviewToApplySelectedChanges [
 
 	| entries previewLog |
 	entries := self selectedCodeChanges.
-	entries ifEmpty: [ entries := self filteredEntries ].
 	entries ifEmpty: [ ^ self inform: 'No changes to preview apply' ].
 
 	previewLog := EpLogBrowserOperationFactory new
@@ -748,7 +749,6 @@ EpLogBrowserModel >> openPreviewToRevertSelectedChanges [
 
 	| entries previewLog |
 	entries := self selectedCodeChanges.
-	entries ifEmpty: [ entries := self filteredEntries ].
 	entries ifEmpty: [ ^ self inform: 'No changes to preview revert' ].
 
 	previewLog := EpLogBrowserOperationFactory new
@@ -793,7 +793,7 @@ EpLogBrowserModel >> refresh [
 
 	"Refresh log"
 	itemsModel resetSelection. "Needed, else #items: can silently fail"
-	itemsModel items: self filteredEntryReferences.
+	itemsModel items: self filteredEntryReferences reversed.
 
 	"Refresh toolbar"	
 	toolbarModel refresh.
@@ -889,6 +889,12 @@ EpLogBrowserModel >> selectedCodeChanges [
 ]
 
 { #category : #'menu - accessing' }
+EpLogBrowserModel >> selectedEntries [
+
+	^ self selectedEntryItems collect: #entry
+]
+
+{ #category : #'menu - accessing' }
 EpLogBrowserModel >> selectedEntryItems [
 
 	^ self selectedEntryReferences collect: [:each |
@@ -897,9 +903,9 @@ EpLogBrowserModel >> selectedEntryItems [
 
 { #category : #'menu - accessing' }
 EpLogBrowserModel >> selectedEntryReferences [
-	self flag: #todo. "Workaround: FastTableModel can return nil"
+	self flag: #todo. "Workaround: FastTableModel might return nil items"
 
-	^ itemsModel selectedItemsSorted select: [:each | each isNotNil ]
+	^ itemsModel selectedItemsSorted reversed select: [:each | each isNotNil ]
 ]
 
 { #category : #accessing }

@@ -118,7 +118,7 @@ MBProjectInfo >> printOn: aStream [
 						ifFalse: [ aStream nextPutAll: ' [' , cv , ']' ] ] ]
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 MBProjectInfo >> repositories [
 	"Return the repositories associated with the configuration for the project."
 

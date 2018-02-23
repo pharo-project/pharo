@@ -2,7 +2,7 @@ Extension { #name : #TClass }
 
 { #category : #'*Nautilus' }
 TClass >> dropIn: aRPackage forNautilusUI: aNautilusUI [
-	aRPackage addClass: self theNonMetaClass.
+	aRPackage addClass: self instanceSide.
 	ActiveHand shiftPressed
 		ifTrue: [ aNautilusUI selectedClass: nil.
 			aNautilusUI updateClassView ]

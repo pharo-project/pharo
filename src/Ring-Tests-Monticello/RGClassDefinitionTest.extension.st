@@ -35,14 +35,13 @@ RGClassDefinitionTest >> testAsClassDefinition3 [
 	newSlice := newClass environment.
 	self assert: (newClass package name = #Kernel).
 	self assert: (newClass extensionMethods notEmpty).
-	self assert: (newSlice methods size = (newClass methods size + newClass theMetaClass methods size)).
+	self assert: (newSlice methods size = (newClass methods size + newClass classSide methods size)).
 	self assert: (newSlice packageNamed: #'Ring-Core-Kernel') methods size > 1.
 
 ]
 
 { #category : #'*Ring-Tests-Monticello' }
 RGClassDefinitionTest >> testAsFullClassDefinition [
-	"self debug: #testAsFullClassDefinition"
 	
 	| rgClass |
 	rgClass := Class asRingDefinition.
@@ -58,7 +57,7 @@ RGClassDefinitionTest >> testAsFullClassDefinition [
 	self assert: rgClass superclass name = #ClassDescription.
 	self assert: rgClass subclasses notEmpty.
 	self assert: rgClass package notNil.
-	self assert: rgClass package = rgClass theNonMetaClass package.
+	self assert: rgClass package = rgClass instanceSide package.
 	self assert: rgClass package name = #Kernel.
 	self assert: rgClass category = #'Kernel-Classes'.
 	self assert: rgClass extensionMethods notEmpty.
@@ -67,6 +66,6 @@ RGClassDefinitionTest >> testAsFullClassDefinition [
 	self assert: rgClass superclass package name equals: #Kernel.
 	self assert: rgClass subclasses first package name equals: #Kernel.
 	
-	rgClass := RGClassDefinition theMetaClass asFullRingDefinition.
-	self assert: rgClass package = rgClass theNonMetaClass package.
+	rgClass := RGClassDefinition classSide asFullRingDefinition.
+	self assert: rgClass package = rgClass instanceSide package.
 ]

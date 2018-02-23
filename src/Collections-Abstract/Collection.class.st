@@ -1030,7 +1030,7 @@ Collection >> printOn: aStream delimiter: delimString [
 	"Print elements on a stream separated
 	with a delimiter String like: 'a, b, c' "
 
-	self do: [:elem | aStream print: elem] separatedBy: [aStream print: delimString]
+	self do: [:elem | aStream print: elem] separatedBy: [aStream nextPutAll: delimString]
 		
 ]
 
@@ -1247,6 +1247,20 @@ Collection >> sum: aBlock [
 	sample := aBlock value: self anyOne.
 	sum := self inject: sample into: [ :previousValue :each |  previousValue + (aBlock value: each) ].
 	^ sum - sample
+]
+
+{ #category : #'math functions' }
+Collection >> sumNumbers [
+	"This is implemented using a variant of the normal inject:into: pattern
+	that is specific to handling numbers. The receiver should include only numbers.
+	
+	Different from the sum implementation, the default value is zero. While sum is 
+	more general, sumNumbers is meant to support the most often encountered use case of
+	dealing with numbers."
+
+	^ self 
+		inject: 0 
+		into: [ :sum :each |  sum + each ]
 ]
 
 { #category : #'math functions' }

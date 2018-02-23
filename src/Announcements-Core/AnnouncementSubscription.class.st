@@ -79,7 +79,7 @@ AnnouncementSubscription >> makeWeak [
 		].
 
 	^ announcer replace: self with: 
-		(LegacyWeakSubscription new
+		(WeakAnnouncementSubscription new
 			announcer: announcer;
 			action: action asWeakMessageSend;
 			subscriber: subscriber;

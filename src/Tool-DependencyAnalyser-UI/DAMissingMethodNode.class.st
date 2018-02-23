@@ -7,11 +7,6 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #'browse-nautilus' }
-DAMissingMethodNode >> browseInNautilus [
-	"Nothing to browse"
-]
-
 { #category : #api }
 DAMissingMethodNode >> buildChildren [
 	^ self messageSendNodes 
@@ -64,4 +59,9 @@ DAMissingMethodNode >> methodImplementationNodes [
 { #category : #private }
 DAMissingMethodNode >> packageMethods [
 	^ self messageSendAnalysis rPackage methods
+]
+
+{ #category : #'browse-nautilus' }
+DAMissingMethodNode >> selectInBrowser [
+	"Nothing to browse"
 ]

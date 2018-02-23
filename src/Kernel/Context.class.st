@@ -127,7 +127,7 @@ Context class >> initializePrimitiveSimulators [
 
 	Class allSubclassesDo: [:metaclass |
 		(metaclass includesSelector: #registerPrimitiveSimulators) ifTrue: [
-			metaclass theNonMetaClass registerPrimitiveSimulators.
+			metaclass instanceSide registerPrimitiveSimulators.
 			]
 		].
 ]
@@ -1121,6 +1121,21 @@ Context >> longStack [
 ]
 
 { #category : #accessing }
+Context >> lookupSymbol: aSymbol [
+	| scope var |
+	scope := self sourceNodeExecuted scope.
+	var := scope lookupVar: aSymbol asString.
+	"Local variables"
+	(var isKindOf: OCTempVariable) ifTrue: [^ var searchFromContext: self scope: scope].
+	"Instance variables"
+	(var isKindOf: OCSlotVariable) ifTrue: [^ self receiver instVarNamed: aSymbol].
+	"Class variables and globals"
+	(var isKindOf: OCLiteralVariable) ifTrue: [ ^ var assoc value ].
+	^ nil.
+	
+]
+
+{ #category : #accessing }
 Context >> method [
 
 	^method
@@ -1241,11 +1256,17 @@ Context >> object: anObject basicAt: index put: value [
 	<primitive: 61>
 	index isInteger
 		ifTrue: [(index >= 1 and: [index <= (self objectSize: anObject)])
-					ifTrue: [self errorImproperStore]
 					ifFalse: [self errorSubscriptBounds: index]].
 	index isNumber
 		ifTrue: [^self object: anObject basicAt: index asInteger put: value]
-		ifFalse: [self errorNonIntegerIndex]
+		ifFalse: [self errorNonIntegerIndex].
+	anObject isReadOnlyObject 
+		ifTrue: [ ^ (ModificationForbidden new
+				object: anObject;
+				fieldIndex: index;
+				newValue: value;
+				retrySelector: #basicAt:put:) signal ].
+	self errorImproperStore
 ]
 
 { #category : #'mirror primitives' }

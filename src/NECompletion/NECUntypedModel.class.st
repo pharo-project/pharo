@@ -79,7 +79,7 @@ NECUntypedModel >> initialize [
 { #category : #'initialize-release' }
 NECUntypedModel >> initializeClassVars [
 	(clazz isNil or: [ includeVariables not ]) ifTrue: [ ^ self ].
-	classVars := clazz theNonMetaClass allClassVarNames asSortedCollection.
+	classVars := clazz instanceSide allClassVarNames asSortedCollection.
 	classVars := classVars collect: 
 		[ :each | 
 		NECClassVarEntry contents: each ]

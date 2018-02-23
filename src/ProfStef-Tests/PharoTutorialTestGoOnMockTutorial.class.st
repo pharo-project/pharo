@@ -15,11 +15,12 @@ PharoTutorialTestGoOnMockTutorial >> setUp [
 
 { #category : #running }
 PharoTutorialTestGoOnMockTutorial >> tearDown [
-	ProfStef default close
+	ProfStef default close.
+	super tearDown
 ]
 
 { #category : #tests }
-PharoTutorialTestGoOnMockTutorial >> testFirstLessonShouldBeDisplayed. [
+PharoTutorialTestGoOnMockTutorial >> testFirstLessonShouldBeDisplayed [
  	self assert:  'First lesson' equals: ProfStef default lessonView text
 ]
 

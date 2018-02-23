@@ -391,7 +391,7 @@ FreeTypeFontProvider >> platformVMRelativeDirectories [
 ]
 
 { #category : #'loading and updating' }
-FreeTypeFontProvider >> prepareForUpdating. [
+FreeTypeFontProvider >> prepareForUpdating [
 	
 	tempFileInfos := fileInfos. "tempFileInfos will be used during update"
 	tempFamilies := families.   "tempFamilies will be used during update"
@@ -442,7 +442,7 @@ FreeTypeFontProvider >> updateEmbeddedFreeTypeFonts [
 ]
 
 { #category : #'loading and updating' }
-FreeTypeFontProvider >> updateFileCacheInfo. [
+FreeTypeFontProvider >> updateFileCacheInfo [
 	fileInfoCache values 
 		do:[ :col |
 			col copy do:[:each | | dir |

@@ -15,7 +15,7 @@ FLHookedSubstitutionTest >> testAvoidRecursion [
 	
 	result := self resultOfSerializeAndMaterialize: original.
 	
-	self assert: result index = 2
+	self assert: result index equals: 2
 ]
 
 { #category : #tests }

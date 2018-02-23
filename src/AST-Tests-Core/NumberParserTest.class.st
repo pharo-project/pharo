@@ -29,43 +29,43 @@ NumberParserTest >> testFloatFromStreamAsNumber [
 	| rs aFloat |
 	rs := '10r-12.3456' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: -12.3456 = aFloat.
+	self assert: -12.3456 equals: aFloat.
 	self assert: rs atEnd.
 
 	rs := '10r-12.3456e2' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: -1234.56 = aFloat.
+	self assert: -1234.56 equals: aFloat.
 	self assert: rs atEnd.
 
 	rs := '10r-12.3456e2e2' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: -1234.56 = aFloat.
-	self assert: rs upToEnd = 'e2'.
+	self assert: -1234.56 equals: aFloat.
+	self assert: rs upToEnd equals: 'e2'.
 
 	rs := '10r-12.3456d2' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: -1234.56 = aFloat.
+	self assert: -1234.56 equals: aFloat.
 	self assert: rs atEnd.
 
 	rs := '10r-12.3456q2' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: -1234.56 = aFloat.
+	self assert: -1234.56 equals: aFloat.
 	self assert: rs atEnd.
 
 	rs := '-12.3456q2' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: -1234.56 = aFloat.
+	self assert: -1234.56 equals: aFloat.
 	self assert: rs atEnd.
 
 	rs := '12.3456q2' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: 1234.56 = aFloat.
+	self assert: 1234.56 equals: aFloat.
 	self assert: rs atEnd.
 
 	rs := '12.3456z2' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: 12.3456 = aFloat.
-	self assert: rs upToEnd = 'z2'.
+	self assert: 12.3456 equals: aFloat.
+	self assert: rs upToEnd equals: 'z2'.
 
 ]
 
@@ -76,33 +76,33 @@ NumberParserTest >> testFloatFromStreamWithExponent [
 	| rs aFloat |
 	rs := '1.0e-14' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: 1.0e-14 = aFloat.
+	self assert: 1.0e-14 equals: aFloat.
 	self assert: rs atEnd.
 
 	rs := '1.0e-14 1' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: 1.0e-14 = aFloat.
-	self assert: rs upToEnd = ' 1'.
+	self assert: 1.0e-14 equals: aFloat.
+	self assert: rs upToEnd equals: ' 1'.
 
 	rs := '1.0e-14eee' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: 1.0e-14 = aFloat.
-	self assert: rs upToEnd = 'eee'.
+	self assert: 1.0e-14 equals: aFloat.
+	self assert: rs upToEnd equals: 'eee'.
 
 	rs := '1.0e14e10' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: 1.0e14 = aFloat.
-	self assert: rs upToEnd = 'e10'.
+	self assert: 1.0e14 equals: aFloat.
+	self assert: rs upToEnd equals: 'e10'.
 
 	rs := '1.0e+14e' readStream. "Plus sign is not parseable"
 	aFloat := NumberParser parse: rs.
-	self assert: 1.0 = aFloat.
-	self assert: rs upToEnd = 'e+14e'.
+	self assert: 1.0 equals: aFloat.
+	self assert: rs upToEnd equals: 'e+14e'.
 
 	rs := '1.0e' readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: 1.0 = aFloat.
-	self assert: rs upToEnd = 'e'.
+	self assert: 1.0 equals: aFloat.
+	self assert: rs upToEnd equals: 'e'.
 ]
 
 { #category : #'tests - Float' }
@@ -118,15 +118,15 @@ NumberParserTest >> testFloatGradualUnderflow [
 	float := self areLowercaseDigitsAllowed
 		ifFalse: [NumberParser parse: '16r2.D2593D58B4FC4e-256']
 		ifTrue: [trueFraction asFloat]..
-	self assert: float asTrueFraction = trueFraction.
-	self assert: float = trueFraction asFloat.
+	self assert: float asTrueFraction equals: trueFraction.
+	self assert: float equals: trueFraction asFloat.
 
 	"now print in base 10"
 	str := (String new: 32) writeStream.
 	float absPrintExactlyOn: str base: 10.
 	
 	"verify if SqNumberParser can read it back"
-	self assert: (NumberParser parse: str contents) = float. 
+	self assert: (NumberParser parse: str contents) equals: float. 
 ]
 
 { #category : #'tests - Float' }
@@ -137,24 +137,23 @@ NumberParserTest >> testFloatMaxAndMin [
 	rs := '2r0.0000000000000000000000000000000000000000000000000001e-1022'
 		readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: Float fminDenormalized = aFloat.
+	self assert: Float fminDenormalized equals: aFloat.
 	self assert: rs atEnd.
 	rs := '-2r0.0000000000000000000000000000000000000000000000000001e-1022'
 		readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: Float fminDenormalized negated = aFloat.
+	self assert: Float fminDenormalized negated equals: aFloat.
 	self assert: rs atEnd.
 	rs := '2r1.1111111111111111111111111111111111111111111111111111e1023'
 		readStream.
 	aFloat := NumberParser parse: rs.
-	self assert: Float fmax = aFloat.
+	self assert: Float fmax equals: aFloat.
 	self assert: rs atEnd
 ]
 
 { #category : #'tests - Float' }
 NumberParserTest >> testFloatPrintString [
-	"self debug: #testFloatPrintString"
-	
+		
 	| f r bases |
 	f := Float basicNew: 2.
 	r := Random new seed: 1234567.
@@ -203,19 +202,19 @@ NumberParserTest >> testFloatReadError [
 	| rs num |
 	rs := '1e' readStream.
 	num := NumberParser parse: rs.
-	self assert: 1 = num.
-	self assert: rs upToEnd = 'e'.
+	self assert: 1 equals: num.
+	self assert: rs upToEnd equals: 'e'.
 	
 	rs := '1s' readStream.
 	num := NumberParser parse: rs.
-	self assert: 1 = num.
-	self assert: rs upToEnd = ''.
+	self assert: 1 equals: num.
+	self assert: rs upToEnd equals: ''.
 
 	rs := '1.' readStream.
 	num := NumberParser parse: rs.
-	self assert: 1 = num.
+	self assert: 1 equals: num.
 	self assert: num isInteger.
-	self assert: rs upToEnd = '.'.
+	self assert: rs upToEnd equals: '.'.
 	
 	rs := '' readStream.
 	self should: [NumberParser parse: rs] raise: Error.
@@ -245,10 +244,10 @@ NumberParserTest >> testFloatReadWithRadix [
 	radix prefix). I am not sure if this is a feature, a bug, or both, but the
 	Squeak behavior is documented in this test. -dtl"
 	| rs |
-	self assert: (NumberParser parse: '2r1.0101e9') = (1.3125 * (2 raisedTo: 9)).
+	self assert: (NumberParser parse: '2r1.0101e9') equals: (1.3125 * (2 raisedTo: 9)).
 	rs := '2r1.0101e9e9' readStream.
-	self assert: (NumberParser parse: rs) = 672.0.
-	self assert: rs upToEnd = 'e9'
+	self assert: (NumberParser parse: rs) equals: 672.0.
+	self assert: rs upToEnd equals: 'e9'
 ]
 
 { #category : #'tests - Float' }
@@ -271,14 +270,14 @@ NumberParserTest >> testIntegerReadFrom [
 	| rs i s |
 	rs := '123s could be confused with a ScaledDecimal' readStream.
 	i := NumberParser parse: rs.
-	self assert: i = 123.
+	self assert: i equals: 123.
 	s := rs upToEnd.
-	self assert: ' could be confused with a ScaledDecimal' = s.
+	self assert: ' could be confused with a ScaledDecimal' equals: s.
 	rs := '123.s could be confused with a ScaledDecimal' readStream.
 	i := NumberParser parse: rs.
-	self assert: i = 123.
+	self assert: i equals: 123.
 	s := rs upToEnd.
-	self assert: '.s could be confused with a ScaledDecimal' = s
+	self assert: '.s could be confused with a ScaledDecimal' equals: s
 ]
 
 { #category : #'tests - Integer' }
@@ -291,10 +290,10 @@ NumberParserTest >> testIntegerReadWithRadix [
 	Squeak behavior is documented in this test. -dtl"
 
 	| rs |
-	self assert: (NumberParser parse: '2r1e26') = (2 raisedTo: 26).
+	self assert: (NumberParser parse: '2r1e26') equals: (2 raisedTo: 26).
 	rs := '2r1e26eee' readStream.
-	self assert: (NumberParser parse: rs) = 67108864.
-	self assert: rs upToEnd = 'eee'
+	self assert: (NumberParser parse: rs) equals: 67108864.
+	self assert: rs upToEnd equals: 'eee'
 
 ]
 
@@ -332,15 +331,15 @@ NumberParserTest >> testIsNumber [
 NumberParserTest >> testScaledDecimalWithTrailingZeroes [
 	"This is a non regression tests for http://bugs.squeak.org/view.php?id=7169"
 	
-	self assert: (NumberParser parse: '0.50s2') = (1/2).
-	self assert: (NumberParser parse: '0.500s3') = (1/2).
-	self assert: (NumberParser parse: '0.050s3') = (1/20).
+	self assert: (NumberParser parse: '0.50s2') equals: 1/2.
+	self assert: (NumberParser parse: '0.500s3') equals: 1/2.
+	self assert: (NumberParser parse: '0.050s3') equals: 1/20.
 ]
 
 { #category : #'tests - ScaledDecimal' }
 NumberParserTest >> testScaledDecimalWithoutScaleSpecification [
-	self assert: (NumberParser parse: '0.050s') = (1/20).
-	self assert: (NumberParser parse: '0.050s') scale= 3.
+	self assert: (NumberParser parse: '0.050s') equals: 1/20.
+	self assert: (NumberParser parse: '0.050s') scale equals: 3.
 ]
 
 { #category : #'tests - squeezing' }
@@ -357,14 +356,13 @@ NumberParserTest >> testSqueezingOutNumbers [
 ]
 
 { #category : #'tests - Integer' }
-NumberParserTest >> testcheckForCoverage [
-	"self debug: #testcheckForCoverage"
+NumberParserTest >> testcheckForCoverage [	
 	"Tests for old semantics of Number>>readFrom:"
 	
 	self should: [(NumberParser parse: '.') = 0 ] raise: Error.
-	self should: [(NumberParser parse: '.1') asNumber = 0.1] raise: Error.
-	self assert: (NumberParser parse: '0.0') asNumber = 0.
-	self assert: (NumberParser parse: '0.1') asNumber = 0.1.
-	self assert: (NumberParser parse: '1.1') asNumber = 1.1.
-	self assert: (NumberParser parse: '-1') asNumber = -1.
+	self should: [(NumberParser parse: '.1') asNumber ] raise: Error.
+	self assert: (NumberParser parse: '0.0') asNumber equals: 0.
+	self assert: (NumberParser parse: '0.1') asNumber equals: 0.1.
+	self assert: (NumberParser parse: '1.1') asNumber equals: 1.1.
+	self assert: (NumberParser parse: '-1') asNumber equals: -1.
 ]

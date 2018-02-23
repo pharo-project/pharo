@@ -22,6 +22,7 @@ LabelledInputTextDropList class >> defaultSpec [
 
 { #category : #example }
 LabelledInputTextDropList class >> example [
+	<sampleInstance>
 	| example |
 	example := self abstractExample.
 	example

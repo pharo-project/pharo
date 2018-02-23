@@ -58,14 +58,14 @@ EpApplyVisitor >> visitClassAddition: aClassCreation [
 
 	self compiler
 		evaluate: aClassCreation classAdded definitionSource;
-		evaluate: aClassCreation classAdded theMetaClass definitionSource.
+		evaluate: aClassCreation classAdded classSide definitionSource.
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitClassModification: aModifiedClassChange [
 	self compiler
 		evaluate: aModifiedClassChange newClass definitionSource;
-		evaluate: aModifiedClassChange newClass theMetaClass definitionSource.
+		evaluate: aModifiedClassChange newClass classSide definitionSource.
 		
 	self flag: #todo. "Workaround to issue 16836 in fogbugz."
 	self

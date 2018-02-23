@@ -27,22 +27,21 @@ ClassWidget >> abstractColorAdjust: aColor [
 
 { #category : #'item creation' }
 ClassWidget >> buildClassesList [
-	classesList := self class listClass new
+	^ classesList := self class listClass new
 				basicWrapSelector: #classWrapper:;
-				keystrokeSelector: #keyPressedOnList:shifted:;
-				getIconSelector: #classIconFor:;
-				getListSizeSelector: #classListSize;
-				
 				resetListSelector: #resetClassSelection;
+				keystrokeSelector: #keyPressedOnList:shifted:;
 				autoDeselect: true;
-				dropEnabled: true;
+				getListSizeSelector: #classListSize;
+
 				dropItemSelector: #dropInClass:inARow:;
-				doubleClickSelector: #doubleClick:;
-				dragEnabled: true;
+				dragEnabled: true; dropEnabled: true;
 				hResizing: #spaceFill;
 				vResizing: #spaceFill;
-				
-				model: self;
+
+				getIconSelector: #classIconFor:;
+				model: self;								
+				doubleClickSelector: #doubleClick:;
 				getIndexSelector: #selectedClassIndex;
 				setIndexSelector: #selectedClassIndex:;
 				getSelectionListSelector: #classSelectionAt:;
@@ -50,9 +49,12 @@ ClassWidget >> buildClassesList [
 				getMenuSelector: #classesMenu:shifted:;
 				beMultipleSelection;
 				
-				getListElementSelector: #getClassItem:.
-						
-	^ classesList
+				getListElementSelector: #getClassItem: ;
+				
+				changed;
+				
+				yourself					
+
 ]
 
 { #category : #private }
@@ -122,7 +124,8 @@ ClassWidget >> classSelectionAt: anIndex put: aBoolean [
 	aBoolean ifNil: [ ^ self ].
 	elt := self getClassesList at: anIndex ifAbsent: [ ^ self ].
 	self classesSelection at: elt put: aBoolean.
-	self model changed: #hasSelectedSelections
+			
+	^ aBoolean
 ]
 
 { #category : #'private list model' }
@@ -189,8 +192,8 @@ ClassWidget >> dropInClass: aCollection inARow: aRow [
 		receiver := self getClassesList at: aRow.
 		receiver := 
 		self model showInstance not
-			ifTrue: [ receiver theMetaClass ]
-			ifFalse: [ receiver theNonMetaClass ].
+			ifTrue: [ receiver classSide ]
+			ifFalse: [ receiver instanceSide ].
 		self model dropInAClass: aCollection into: receiver]
 ]
 
@@ -260,7 +263,7 @@ ClassWidget >> okToChange [
 { #category : #protocol }
 ClassWidget >> openFloatingEditorToRenameAtIndex: anIndex [
 	| selectedRowMorph ed clsMorph vScroll font cls |
-	cls := self model selectedClass theNonMetaClass.
+	cls := self model selectedClass instanceSide.
 	vScroll := self vScrollValue.
 	selectedRowMorph := classesList visibleRowMorphAtIndex: anIndex.
 	clsMorph := selectedRowMorph lastSubmorph lastSubmorph.
@@ -316,7 +319,7 @@ ClassWidget >> resetClassSelection [
 
 { #category : #protocol }
 ClassWidget >> selectClass: aClass [
-	self classesSelection at: aClass theNonMetaClass put: true.
+	self classesSelection at: aClass instanceSide put: true.
 
 ]
 
@@ -330,20 +333,18 @@ ClassWidget >> selectedClassIndex [
 	| item |
 	item := self selectedClass.
 	self model showInstance
-		ifFalse: [ item ifNotNil: [ item := item theNonMetaClass ] ].
+		ifFalse: [ item ifNotNil: [ item := item instanceSide ] ].
 	^ self getClassesList indexOf: item
 ]
 
 { #category : #'private list model' }
 ClassWidget >> selectedClassIndex: anInteger [
 	| selection |
-	
 	selection := self getClassesList at: anInteger ifAbsent: [nil].
 	
-	self model showInstance ifFalse: [selection ifNotNil: [selection := selection theMetaClass]].
+	self model showInstance ifFalse: [selection ifNotNil: [selection := selection classSide]].
 	self model selectedClassWithoutChangingSelection: selection.
 	
-	self changed: #selectedClassIndex.
 	self model changed: #currentHistoryIndex.
 ]
 

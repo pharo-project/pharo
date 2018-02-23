@@ -937,7 +937,7 @@ SHParserST80 >> resolve: aString [
 	Symbol
 		hasInterned: aString
 		ifTrue: [:sym | classOrMetaClass isBehavior
-				ifTrue: [classOrMetaClass theNonMetaClass withAllSuperclasses
+				ifTrue: [classOrMetaClass instanceSide withAllSuperclasses
 						do: [:c | 
 							(c classPool bindingOf: sym)
 								ifNotNil: [^ #classVar].
@@ -971,7 +971,7 @@ SHParserST80 >> resolvePartial: aString [
 		ifNotNil: [(workspace hasBindingThatBeginsWith: aString)
 				ifTrue: [^ #incompleteIdentifier]].
 	classOrMetaClass isBehavior
-		ifTrue: [classOrMetaClass theNonMetaClass withAllSuperclasses
+		ifTrue: [classOrMetaClass instanceSide withAllSuperclasses
 				do: [:c | 
 					(c classPool hasBindingThatBeginsWith: aString)
 						ifTrue: [^ #incompleteIdentifier].
@@ -994,7 +994,7 @@ SHParserST80 >> resolvePartialPragmaArgument: aString [
 			anySatisfy: [:each | each beginsWith: aString])
 		ifTrue: [^ #incompleteIdentifier].
 	classOrMetaClass isBehavior
-		ifTrue: [classOrMetaClass theNonMetaClass withAllSuperclasses
+		ifTrue: [classOrMetaClass instanceSide withAllSuperclasses
 				do: [:c | 
 					(c environment hasBindingThatBeginsWith: aString)
 						ifTrue: [^ #incompleteIdentifier].
@@ -1011,7 +1011,7 @@ SHParserST80 >> resolvePragmaArgument: aString [
 	Symbol
 		hasInterned: aString
 		ifTrue: [:sym | classOrMetaClass isBehavior
-				ifTrue: [classOrMetaClass theNonMetaClass withAllSuperclasses
+				ifTrue: [classOrMetaClass instanceSide withAllSuperclasses
 						do: [:c | (c environment bindingOf: sym)
 								ifNotNil: [^ #globalVar]]]
 				ifFalse: [(environment bindingOf: sym)

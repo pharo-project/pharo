@@ -10,14 +10,6 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #'browse-nautilus' }
-DAPotentialDependenciesNode >> browseInNautilus [
-	self browseMethodInNautilus:
-		([ self packageUnderAnalysis packageManifest class methodNamed: #manuallyResolvedDependencies ]
-			on: KeyNotFound
-			do: [ PackageManifest class>>#manuallyResolvedDependencies ])
-]
-
 { #category : #api }
 DAPotentialDependenciesNode >> buildChildren [
 	^ (self messageSendAnalysis unimplementedCallsInAllDependencies
@@ -71,4 +63,12 @@ DAPotentialDependenciesNode >> messageSendAnalysis [
 { #category : #compatibility }
 DAPotentialDependenciesNode >> numberOfDependencies [
 	^ 0
+]
+
+{ #category : #'browse-nautilus' }
+DAPotentialDependenciesNode >> selectInBrowser [
+	self selectMethod:
+		([ self packageUnderAnalysis packageManifest class methodNamed: #manuallyResolvedDependencies ]
+			on: KeyNotFound
+			do: [ PackageManifest class>>#manuallyResolvedDependencies ])
 ]

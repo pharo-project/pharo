@@ -10,7 +10,7 @@ selector <Symbol> selector that can be used to reproduce the mutation (typically
 "
 Class {
 	#name : #ModificationForbidden,
-	#superclass : #Error,
+	#superclass : #Exception,
 	#instVars : [
 		'object',
 		'fieldIndex',
@@ -20,24 +20,19 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
-{ #category : #'instance creation' }
-ModificationForbidden class >> for: anObject atIndex: fieldIndex with: newValue [
+{ #category : #'as yet unclassified' }
+ModificationForbidden class >> for: anObject atInstVar: fieldIndex with: newValue retrySelector: selector [
 
 	^self new 
 		object: anObject;
 		fieldIndex: fieldIndex;
 		newValue: newValue;
-		retrySelector: #at:put:
+		retrySelector: selector
 ]
 
-{ #category : #'instance creation' }
-ModificationForbidden class >> for: anObject atInstVar: fieldIndex with: newValue [
-
-	^self new 
-		object: anObject;
-		fieldIndex: fieldIndex;
-		newValue: newValue;
-		retrySelector: #instVarAt:put:
+{ #category : #accessing }
+ModificationForbidden >> defaultAction [
+	UnhandledError signalForException: self
 ]
 
 { #category : #accessing }
@@ -50,11 +45,15 @@ ModificationForbidden >> fieldIndex: anObject [
 	fieldIndex := anObject
 ]
 
-{ #category : #testing }
-ModificationForbidden >> isResumable [
-	"Determine whether an exception is resumable."
-
-	^true
+{ #category : #printing }
+ModificationForbidden >> indexedMessageText [
+	^ String streamContents: [ :s |
+		s << ' '.
+		self printObject: object on: s. 
+		s << ' is read-only, hence its field '.
+		fieldIndex printOn: s.
+		s << ' cannot be modified with '.
+		self printObject: newValue on: s]
 ]
 
 { #category : #printing }
@@ -74,6 +73,17 @@ ModificationForbidden >> newValue: anObject [
 	newValue := anObject
 ]
 
+{ #category : #printing }
+ModificationForbidden >> nonIndexedMessageText [
+	^ String streamContents: [ :s |
+		s << ' '.
+		self printObject: object on: s. 
+		s << ' is read-only, hence its selector '.
+		s << retrySelector.
+		s << ' cannot be executed with '.
+		self printObject: newValue on: s]
+]
+
 { #category : #accessing }
 ModificationForbidden >> object [
 	^ object
@@ -91,7 +101,9 @@ ModificationForbidden >> printObject: obj on: s [
 
 { #category : #retrying }
 ModificationForbidden >> retryModification [
-	object perform: retrySelector with: fieldIndex with: newValue.
+	fieldIndex notNil
+		ifTrue: [ object perform: retrySelector with: fieldIndex with: newValue ]
+		ifFalse: [object perform: retrySelector with: newValue ].
 	self resume: newValue
 ]
 
@@ -107,11 +119,7 @@ ModificationForbidden >> retrySelector: anObject [
 
 { #category : #printing }
 ModificationForbidden >> standardMessageText [
-	^ String streamContents: [ :s |
-		s << ' '.
-		self printObject: object on: s. 
-		s << ' is read-only, hence its field '.
-		fieldIndex printOn: s.
-		s << ' cannot be modified with '.
-		self printObject: newValue on: s]
+	^ fieldIndex isNil
+		ifTrue: [ self nonIndexedMessageText ]
+		ifFalse: [ self indexedMessageText  ]
 ]

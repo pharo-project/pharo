@@ -34,6 +34,11 @@ WriteBarrierTest >> alwaysWritableObjects [
 		Processor activeProcess }
 ]
 
+{ #category : #'expected failures' }
+WriteBarrierTest >> expectedFailures [
+	^ #( testMutateByteArrayUsingDoubleAtPut testMutateByteArrayUsingFloatAtPut )
+]
+
 { #category : #'guinea pigs' }
 WriteBarrierTest >> maybeReadOnlyObjects [
 	"ByteObject, Variable object, fixed sized object"
@@ -65,13 +70,118 @@ WriteBarrierTest >> testBasicWritable [
 ]
 
 { #category : #'tests - object' }
-WriteBarrierTest >> testMutateFirstInstVarOfObjectWithManyVars [
-	| guineaPig failure |
-	guineaPig := WriteBarrierStub new.
+WriteBarrierTest >> testMutateByteArrayUsingByteAtPut [
+	| guineaPig |
+	guineaPig := ByteArray new: 5.
 	guineaPig beReadOnlyObject.
-	failure := [ guineaPig var1: #test ] on: ModificationForbidden do: [:err | err].
+	
+	self 
+		should: [ guineaPig byteAt: 1 put: 12  ]
+		raise: ModificationForbidden.
+		
+	[ guineaPig byteAt: 1 put: 12 ] 
+		on: ModificationForbidden 
+		do: [:modification | 
+			self assert: modification fieldIndex equals: 1.
+			modification object beWritableObject.
+			modification retryModification ].
 
-	self assert: failure fieldIndex equals: 1
+	self assert: guineaPig first equals: 12
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateByteArrayUsingDoubleAtPut [
+	| guineaPig |
+	guineaPig := ByteArray new: 8.
+	guineaPig beReadOnlyObject.
+	
+	self 
+		should: [ guineaPig doubleAt: 1 put: (2 raisedTo: 65) asFloat ]
+		raise: ModificationForbidden.
+		
+	[ guineaPig doubleAt: 1 put: (2 raisedTo: 65) asFloat ] 
+		on: ModificationForbidden 
+		do: [:modification | 
+			self assert: modification fieldIndex equals: 1.
+			modification object beWritableObject.
+			modification retryModification ].
+
+	self assert: guineaPig first equals: (2 raisedTo: 65) asFloat
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateByteArrayUsingFloatAtPut [
+	| guineaPig |
+	guineaPig := ByteArray new: 5.
+	guineaPig beReadOnlyObject.
+	
+	self 
+		should: [ guineaPig floatAt: 1 put: 1.0  ]
+		raise: ModificationForbidden.
+		
+	[ guineaPig floatAt: 1 put: 1.0 ] 
+		on: ModificationForbidden 
+		do: [:modification | 
+			self assert: modification fieldIndex equals: 1.
+			modification object beWritableObject.
+			modification retryModification ].
+
+	self assert: guineaPig first equals: 1.0
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateByteStringyUsingAtPut [
+	| guineaPig |
+	guineaPig := ByteString new: 5.
+	guineaPig beReadOnlyObject.
+	
+	self 
+		should: [ guineaPig at: 1 put: $h  ]
+		raise: ModificationForbidden.
+		
+	[ guineaPig at: 1 put: $h ] 
+		on: ModificationForbidden 
+		do: [:modification | 
+			self assert: modification fieldIndex equals: 1.
+			modification object beWritableObject.
+			modification retryModification ].
+
+	self assert: guineaPig first equals: $h
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateByteStringyUsingByteAtPut [
+	| guineaPig |
+	guineaPig := ByteString new: 5.
+	guineaPig beReadOnlyObject.
+	
+	self 
+		should: [ guineaPig byteAt: 1 put: 100  ]
+		raise: ModificationForbidden.
+		
+	[ guineaPig byteAt: 1 put: 100 ] 
+		on: ModificationForbidden 
+		do: [:modification | 
+			self assert: modification fieldIndex equals: 1.
+			modification object beWritableObject.
+			modification retryModification ].
+
+	self assert: guineaPig first asciiValue equals: 100
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateByteSymbolUsingPrivateAtPut [
+	| guineaPig |
+	[ guineaPig := #hello.
+	guineaPig beReadOnlyObject.
+	
+	self 
+		should: [ guineaPig privateAt: 1 put: $q  ]
+		raise: ModificationForbidden ]
+	ensure: [  
+		guineaPig beWritableObject ].
+	
+	self assert: guineaPig first equals: $h
 ]
 
 { #category : #'tests - object' }
@@ -81,21 +191,50 @@ WriteBarrierTest >> testMutateIVObject [
 	guineaPig beReadOnlyObject.
 	[ guineaPig receiver: 1 ] 
 		on: ModificationForbidden 
-		do: [ "Surely a NoModification error" ].
+		do: [ :modification | "Surely a NoModification error" ].
 	guineaPig
 		beWritableObject;
 		selector: #+;
 		beReadOnlyObject.
 	[ guineaPig arguments: #(2) ] 
 		on: ModificationForbidden 
-		do: [ "Surely a NoModification error" ].
+		do: [  :modification |"Surely a NoModification error" ].
 	self assert: guineaPig receiver isNil.
 	self assert: guineaPig arguments isNil.
 	self assert: guineaPig selector == #+.
 ]
 
 { #category : #'tests - object' }
-WriteBarrierTest >> testMutateInstVarShouldCatchRightFailure [
+WriteBarrierTest >> testMutateObjectClass [
+	| guineaPig |
+	guineaPig := WriteBarrierStub new.
+	guineaPig beReadOnlyObject.
+	
+	self 
+		should: [ guineaPig primitiveChangeClassTo: WriteBarrierAnotherStub  new ]
+		raise: ModificationForbidden.
+		
+	[ guineaPig primitiveChangeClassTo: WriteBarrierAnotherStub  new ]
+		on: ModificationForbidden 
+		do: [ :modification |
+			modification object beWritableObject.
+			modification retryModification  ].
+	
+	self assert: guineaPig class equals: WriteBarrierAnotherStub 
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateObjectFirstInstVarWithManyVars [
+	| guineaPig failure |
+	guineaPig := WriteBarrierStub new.
+	guineaPig beReadOnlyObject.
+	failure := [ guineaPig var1: #test ] on: ModificationForbidden do: [:err | err].
+
+	self assert: failure fieldIndex equals: 1
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateObjectInstVarShouldCatchRightFailure [
 	| guineaPig failure |
 	guineaPig := MessageSend new.
 	guineaPig beReadOnlyObject.
@@ -107,7 +246,67 @@ WriteBarrierTest >> testMutateInstVarShouldCatchRightFailure [
 ]
 
 { #category : #'tests - object' }
-WriteBarrierTest >> testMutateLastInstVarOfObjectWithManyVars [
+WriteBarrierTest >> testMutateObjectInstVarUsingAtPut [
+	| guineaPig |
+	guineaPig := Array new: 5.
+	guineaPig beReadOnlyObject.
+	
+	self 
+		should: [ guineaPig at: 1 put: #test  ]
+		raise: ModificationForbidden.
+		
+	[ guineaPig at: 1 put: #test ] 
+		on: ModificationForbidden 
+		do: [:modification | 
+			self assert: modification fieldIndex equals: 1.
+			modification object beWritableObject.
+			modification retryModification ].
+
+	self assert: guineaPig first equals: #test
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateObjectInstVarUsingBasicAtPut [
+	| guineaPig |
+	guineaPig := Array new: 5.
+	guineaPig beReadOnlyObject.
+	
+	self 
+		should: [ guineaPig basicAt: 1 put: #test  ]
+		raise: ModificationForbidden.
+		
+	[ guineaPig at: 1 put: #test ] 
+		on: ModificationForbidden 
+		do: [:modification | 
+			self assert: modification fieldIndex equals: 1.
+			modification object beWritableObject.
+			modification retryModification ].
+
+	self assert: guineaPig first equals: #test
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateObjectInstVarUsingInstVarAtPut [
+	| guineaPig |
+	guineaPig := WriteBarrierStub new.
+	guineaPig beReadOnlyObject.
+	
+	self 
+		should: [ guineaPig instVarAt: 1 put: #test  ]
+		raise: ModificationForbidden.
+		
+	[ guineaPig instVarAt: 1 put: #test ] 
+		on: ModificationForbidden 
+		do: [:modification | 
+			self assert: modification fieldIndex equals: 1.
+			modification object beWritableObject.
+			modification retryModification ].
+
+	self assert: guineaPig var1 equals: #test
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateObjectLastInstVarWithManyVars [
 	| guineaPig failure |
 	guineaPig := WriteBarrierStub new.
 	guineaPig beReadOnlyObject.
@@ -123,18 +322,72 @@ WriteBarrierTest >> testMutateVariableObject [
 	guineaPigs do: [ :guineaPig | 
 		guineaPig beReadOnlyObject.
 		[guineaPig at: 1 put: 4] 
-			on: Error 
+			on: ModificationForbidden  
 			do: [ "Surely a NoModification error" ].
 		guineaPig
 			beWritableObject;
 			at: 2 put:  5;
 			beReadOnlyObject.
 		[guineaPig at: 3 put: 6] 
-			on: Error 
+			on: ModificationForbidden  
 			do: [ "Surely a NoModification error" ].
 		self assert: guineaPig first = 1.
 		self assert: guineaPig second = 5.
 		self assert: guineaPig third = 3 ]
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateWideStringUsingAtPut [
+	| guineaPig |
+	guineaPig := 'hello' asWideString.
+	guineaPig beReadOnlyObject.
+	
+	self 
+		should: [ guineaPig at: 1 put: $q  ]
+		raise: ModificationForbidden.
+		
+	[ guineaPig at: 1 put: $q ] 
+		on: ModificationForbidden 
+		do: [:modification | 
+			self assert: modification fieldIndex equals: 1.
+			modification object beWritableObject.
+			modification retryModification ].
+
+	self assert: guineaPig first equals: $q
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateWideStringUsingWordAtPut [
+	| guineaPig |
+	guineaPig := 'hello' asWideString.
+	guineaPig beReadOnlyObject.
+	
+	self 
+		should: [ guineaPig wordAt: 1 put: 65536  ]
+		raise: ModificationForbidden.
+		
+	[ guineaPig wordAt: 1 put: 65536 ] 
+		on: ModificationForbidden 
+		do: [:modification | 
+			self assert: modification fieldIndex equals: 1.
+			modification object beWritableObject.
+			modification retryModification ].
+
+	self assert: guineaPig first asciiValue equals: 65536
+]
+
+{ #category : #'tests - object' }
+WriteBarrierTest >> testMutateWideSymbolUsingPrivateAtPut [
+	| guineaPig |
+	[ guineaPig := ('hello', (Character codePoint: 8002) asString) asSymbol.
+	guineaPig beReadOnlyObject.
+	
+	self 
+		should: [ guineaPig privateAt: 1 put: 65  ]
+		raise: ModificationForbidden ]
+		ensure: [ guineaPig beWritableObject ].
+
+	self assert: guineaPig first  equals: $h
 ]
 
 { #category : #'tests - helper' }

@@ -54,8 +54,8 @@ RGClassDefinitionTest >> testAsClassDefinition [
 	self assert: (newClass category notNil).
 	self assert: (newClass superclassName notNil).
 	
-	self assert: (newClass theMetaClass isRingObject).
-	self assert: (newClass theMetaClass isClass).
+	self assert: (newClass classSide isRingObject).
+	self assert: (newClass classSide isClass).
 ]
 
 { #category : #testing }
@@ -71,9 +71,9 @@ RGClassDefinitionTest >> testAsClassDefinition2 [
 	self assert: (newClass superclassName notNil).
 	self assert: (newClass traitCompositionSource = 'Trait2').
 	
-	self assert: (newClass theMetaClass isRingObject).
-	self assert: (newClass theMetaClass isClass).
-	self assert: (newClass theMetaClass traitCompositionSource = 'Trait2 classTrait').
+	self assert: (newClass classSide isRingObject).
+	self assert: (newClass classSide isClass).
+	self assert: (newClass classSide traitCompositionSource = 'Trait2 classTrait').
 	
 ]
 
@@ -89,7 +89,7 @@ RGClassDefinitionTest >> testAsClassDefinitionSourceDefinition [
 	poolDictionaries: ''''
 	category: ''Tests-Traits-MOP''').
 	
-	self assert: (newClass theMetaClass definitionSource =  'MOPTestClassC class
+	self assert: (newClass classSide definitionSource =  'MOPTestClassC class
 	uses: Trait2 classTrait
 	instanceVariableNames: ''''').
 	
@@ -123,10 +123,10 @@ RGClassDefinitionTest >> testExistingClass [
 	
 	newClass withMetaclass.
 	self assert: (newClass hasMetaclass).
-	metaClass:= newClass theMetaClass.
+	metaClass:= newClass classSide.
 	self assert: (metaClass isMeta).
 	self assert: (metaClass name = 'OrderedCollection class').
-	self assert: (metaClass theNonMetaClass = newClass).
+	self assert: (metaClass instanceSide = newClass).
 	self assert: (metaClass realClass = OrderedCollection class).
 ]
 
@@ -156,9 +156,6 @@ RGClassDefinitionTest >> testNonExistingClass [
 
 { #category : #testing }
 RGClassDefinitionTest >> testReadFrom [
-	"self debug: #testReadFrom"
-	
-	
 	| st rg |
 	rg := Point asRingDefinition.
 	st := String streamContents: [:s |
@@ -202,9 +199,6 @@ RGClassDefinitionTest >> testRemovingMethods [
 
 { #category : #testing }
 RGClassDefinitionTest >> testStoreOn [
-	"self debug: #testStoreOn"
-	
-	
 	| st |
 	st := String streamContents: [:s |
 		
@@ -237,7 +231,7 @@ RGClassDefinitionTest >> testWithClassInstanceVariables [
 	
 	newClass:= RGClassDefinition named:  #HashTableSizes.
 	newClass withMetaclass.
-	metaClass:= newClass theMetaClass.
+	metaClass:= newClass classSide.
 	metaClass addInstanceVariables: #(sizes).
 	
 	self assert: (metaClass instanceVariables size = 1).
@@ -280,7 +274,7 @@ RGClassDefinitionTest >> testWithClassVariables [
 	self assert: (classVar realClass = Object).
 	
 	newClass withMetaclass.
-	self assert: (newClass theMetaClass allClassVarNames size = 2).
+	self assert: (newClass classSide allClassVarNames size = 2).
 	
 	newClass removeClassVarNamed: #DependentsFields.
 	self assert: (newClass classVariables size = 1).
@@ -373,7 +367,7 @@ RGClassDefinitionTest >> testWithPoolDictionaries [
 	self assert: (poolVar realClass = Text).
 	
 	newClass withMetaclass.
-	self assert: (newClass theMetaClass allSharedPoolNames size = 1).
+	self assert: (newClass classSide allSharedPoolNames size = 1).
 	
 	newClass removeSharedPoolNamed: #TextConstants.
 	self assert: (newClass sharedPools isEmpty).

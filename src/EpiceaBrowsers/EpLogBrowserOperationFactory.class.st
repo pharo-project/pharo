@@ -1,5 +1,7 @@
 "
-I implement behavior to apply and revert code changes.
+I implement behavior to apply and revert code changes. 
+
+Important Note: My #entries are expected to be ordered as ""the oldest first"" (as in EpLog>>entries).
 "
 Class {
 	#name : #EpLogBrowserOperationFactory,
@@ -14,10 +16,11 @@ Class {
 
 { #category : #public }
 EpLogBrowserOperationFactory >> applyCodeChanges [
+	"Note: This method is intended to be used from EpLogBrowser's preview mode, where the code changes were previously transformed at #newApplyPreviewLog."
 
 	self
 		trigger: [ 
-			self entries reverseDo: [:each |
+			self entries do: [:each |
 				self handleErrorDuring: [ 
 					each content applyCodeChange ]]] 
 		with: self newApplyEvent
@@ -27,7 +30,7 @@ EpLogBrowserOperationFactory >> applyCodeChanges [
 EpLogBrowserOperationFactory >> applyCompleteRefactoring [
 
 	| refactoringEntry refactoring |
-	refactoringEntry := self entries first entries first. "TODO: only first?"
+	refactoringEntry := self entries first. "Refactorings are applied one at time"
 	refactoring := refactoringEntry content asRBRefactoring.
 	
 	self applyRBRefactoring: refactoring
@@ -38,7 +41,7 @@ EpLogBrowserOperationFactory >> applyCompleteRefactoring [
 EpLogBrowserOperationFactory >> applyPropagateRefactoring [
 
 	| refactoringEntry refactoring |
-	refactoringEntry := self entries first entries first. "TODO: only first?"
+	refactoringEntry := self entries first. "Refactorings are applied one at time"
 	refactoring := EpRBPropagateRefactoring target: refactoringEntry content asRBRefactoring.
 
 	self applyRBRefactoring: refactoring
@@ -64,6 +67,8 @@ EpLogBrowserOperationFactory >> entries [
 
 { #category : #accessing }
 EpLogBrowserOperationFactory >> entries: aCollection [
+	"Important Note: My #entries must be sorted the oldest first."
+
 	entries := aCollection
 ]
 
@@ -77,6 +82,12 @@ EpLogBrowserOperationFactory >> errorHandlerBlock: aBlock [
 	errorHandlerBlock := aBlock
 ]
 
+{ #category : #accessing }
+EpLogBrowserOperationFactory >> events [
+
+	^ self entries collect: [:each | each content ]
+]
+
 { #category : #private }
 EpLogBrowserOperationFactory >> handleErrorDuring: aBlock [
 	"TODO: do not catch *all* Errors.
@@ -87,6 +98,21 @@ EpLogBrowserOperationFactory >> handleErrorDuring: aBlock [
 		on: Error
 		do: self errorHandlerBlock
 
+]
+
+{ #category : #private }
+EpLogBrowserOperationFactory >> latestEventsFrom: previewEventsTheOldestFirst [
+	"TODO: move method"
+	
+	| aLog filter |
+	aLog := EpLog newWithStore: (OmMemoryStore withAll: previewEventsTheOldestFirst).
+	logBrowserModel := EpLogBrowserModel newWithLog: aLog.
+	filter := EpLatestCodeChangeFilter new
+		logBrowserModel: logBrowserModel;
+		yourself.
+	^ aLog entries 
+		select: [ :each | filter accepts: each ] 
+		thenCollect: [ :each | each content ]
 ]
 
 { #category : #accessing }
@@ -110,26 +136,12 @@ EpLogBrowserOperationFactory >> newApplyEvent [
 EpLogBrowserOperationFactory >> newApplyPreviewLog [
 
 	| events |
-	events := self entries flatCollect: [:each | 
-		each content previewedApplyEvents ].
+	events := self latestEventsFrom: self events.
+
+	events := events flatCollect: [:each | 
+		each previewedApplyEvents ].
 	
-	^ self newPreviewLogFor: events
-
-]
-
-{ #category : #private }
-EpLogBrowserOperationFactory >> newPreviewLogFor: rawEvents [
-
-	| aLog filter latestEvents |
-	self flag: #fix.
-	aLog := EpLog newWithStore: (OmMemoryStore withAll: rawEvents).
-	logBrowserModel := EpLogBrowserModel newWithLog: aLog.
-	filter := EpLatestCodeChangeFilter new logBrowserModel: logBrowserModel; yourself.
-	latestEvents := aLog entries 
-		select: [:each | filter accepts: each ]
-		thenCollect: [:each | each content ].
-
-	^ EpLog newWithStore: (OmMemoryStore withAll: latestEvents)
+	^ EpLog newWithEvents: events
 
 ]
 
@@ -144,10 +156,12 @@ EpLogBrowserOperationFactory >> newRevertEvent [
 EpLogBrowserOperationFactory >> newRevertPreviewLog [
 
 	| events |
-	events := self entries reversed flatCollect: [:each | 
-		each content asRevertedCodeChange previewedApplyEvents ].
+	events := self latestEventsFrom: self events reversed.
 
-	^ self newPreviewLogFor: events
+	events := events flatCollect: [:each | 
+		each asRevertedCodeChange previewedApplyEvents ].
+
+	^ EpLog newWithEvents: events
 
 ]
 
@@ -156,7 +170,7 @@ EpLogBrowserOperationFactory >> revertCodeChanges [
 
 	self
 		trigger: [ 
-			self entries do: [:each | 
+			self entries reverseDo: [:each | 
 				self handleErrorDuring: [ 
 					each content asRevertedCodeChange applyCodeChange ]]]
 		with: self newRevertEvent
@@ -164,10 +178,11 @@ EpLogBrowserOperationFactory >> revertCodeChanges [
 
 { #category : #public }
 EpLogBrowserOperationFactory >> revertCodeChangesInPreviewMode [
+	"Note: This method is intended to be used from EpLogBrowser's preview mode, where the code changes were previously transformed at #newRevertPreviewLog. That's why here the transformed code changes are simply applied as if was a redo (apply) operation and not as an undo (revert)."
 
 	self
 		trigger: [ 
-			self entries reverseDo: [:each |
+			self entries do: [:each |
 				self handleErrorDuring: [ 
 					each content applyCodeChange ]]] 
 		with: self newRevertEvent

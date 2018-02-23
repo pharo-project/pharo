@@ -76,4 +76,5 @@ GTDebuggerSmokeTest >> tearDown [
 	window := nil.
 	debugger := nil.
 	session := nil.
+	super tearDown
 ]

@@ -48,7 +48,7 @@ ClassTestCase >> classToBeTested [
 	self subclassResponsibility
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 ClassTestCase >> differentMethodsWithSameSelectorBetween: firstClass and: secondClass [
 	| repeatedSelectors differentMethodsWithSameSelector |
 	
@@ -62,7 +62,7 @@ ClassTestCase >> differentMethodsWithSameSelectorBetween: firstClass and: second
 	^differentMethodsWithSameSelector.
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 ClassTestCase >> repeatedMethodsThatDoNotAccessInstanceVariablesBetween: firstClass and: secondClass [
 	| repeatedSelectors repeatedMethodsThatDoNotAccessInstanceVariables |
 	

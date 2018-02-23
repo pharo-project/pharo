@@ -657,6 +657,13 @@ RBProgramNode >> propertyAt: aKey ifAbsentPut: aBlock [
 ]
 
 { #category : #properties }
+RBProgramNode >> propertyAt: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
+	"Answer the property value associated with aKey or, if aKey is found, answer the result of evaluating aPresentBlock, else evaluates anAbsentBlock."
+
+	^ properties ifNil: [ anAbsentBlock ] ifNotNil: [ properties at: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock ]
+]
+
+{ #category : #properties }
 RBProgramNode >> propertyAt: aKey put: anObject [
 	"Set the property at aKey to be anObject. If aKey is not found, create a new entry for aKey and set is value to anObject. Answer anObject."
 

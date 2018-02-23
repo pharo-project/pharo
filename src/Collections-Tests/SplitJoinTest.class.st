@@ -126,12 +126,6 @@ SplitJoinTest class >> packageNamesUnderTest [
 	^ #('SplitJoin')
 ]
 
-{ #category : #tests }
-SplitJoinTest >> assert: result equals: expected [ 
-	result = expected
-		ifFalse: [self signalFailure: 'Assertion failed: (' , result asString , ') ~= (' , expected asString , ')']
-]
-
 { #category : #running }
 SplitJoinTest >> testJoinArrayUsingArray [
 	self assert: ((1 to: 4) joinUsing: #(8 9))

@@ -625,7 +625,6 @@ ArrayTest >> testCombinations [
 
 { #category : #tests }
 ArrayTest >> testComplexIsSelfEvaluating [
-	"self run: #testComplexIsSelfEvaluating"
 
 	| complexArray restoredArray |
 	complexArray := {1.
@@ -702,7 +701,7 @@ ArrayTest >> testIdentityIncludes [
 
 { #category : #'tests - index access' }
 ArrayTest >> testIdentityIndexOf [
-	"self debug: #testIdentityIndexOf"
+	
 	| collection element |
 	element := self elementInCollectionOfFloat copy.
 	self deny: self elementInCollectionOfFloat == element.
@@ -781,14 +780,21 @@ ArrayTest >> testPremultiply [
 
 { #category : #tests }
 ArrayTest >> testPrinting [
-	"self debug: #testPrinting"
-	
+		
 	self assert: literalArray printString = '#(1 true 3 #four)'.
 	self assert: (literalArray = (self class compiler evaluate: literalArray printString)).
 	self assert: (selfEvaluatingArray = (self class compiler evaluate: selfEvaluatingArray printString)).
 	self assert: nonSEArray1 printString =  'an Array(1 a Set(1))'.
 	self assert: nonSEarray2 printString = '{#Array->Array}'
 
+]
+
+{ #category : #'tests - arithmetic' }
+ArrayTest >> testSumNumberItemsWithoutBlock [
+	
+	self assert: #() sumNumbers equals: 0.
+	
+	self assert: #(1 2 3) sumNumbers equals: 6
 ]
 
 { #category : #requirements }

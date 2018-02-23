@@ -224,7 +224,7 @@ Behavior >> allInstancesOrNil [
 Behavior >> allLocalCallsOn: aSymbol [
 	"Answer a SortedCollection of all the methods that call on aSymbol, anywhere in my class hierarchy."
 
-	^(SystemNavigation new allLocalCallsOn: aSymbol ofClass: (self theNonMetaClass)).
+	^(SystemNavigation new allLocalCallsOn: aSymbol ofClass: (self instanceSide)).
 
 ]
 
@@ -443,7 +443,9 @@ Behavior >> basicAddSelector: selector withMethod: compiledMethod [
 
 { #category : #'reflective operations' }
 Behavior >> basicIdentityHash [
-	"Answer a SmallInteger whose value is related to the receiver's identity.
+	"Answer a 22 bits unsigned SmallInteger, whose value is related to the receiver's identity
+	 and unique among the behaviors (i.e. 2 different Behaviors cannot have the same identityHash).
+	
 	 Behavior implements identityHash to allow the VM to use an object representation which
 	 does not include a direct reference to an object's class in an object.  If the VM is using
 	 this implementation then classes are held in a class table and instances contain the index
@@ -779,7 +781,7 @@ Behavior >> dependentClasses [
 	self superclass ifNotNil: [ cll add: self superclass ].
 	
 	"We unify a class and its metaclass"
-	(self methods, self theMetaClass methods) 
+	(self methods, self classSide methods) 
 		do: [ :m | m literalsDo: [ :l | 
 					"We also check if the method is not an extension"
 					((((l isVariableBinding 
@@ -1029,6 +1031,14 @@ Behavior >> includesLocalSelector: aSymbol [
 	^self basicLocalSelectors 
 		ifNil: [self includesSelector: aSymbol]
 		ifNotNil: [self localSelectors includes: aSymbol]
+]
+
+{ #category : #'testing method dictionary' }
+Behavior >> includesMethod: aMethod [ 
+	"Answer whether aMethod is in the method dictionary. Use identityIncludes
+	as = of CompiledMethod is too weak (ignores the selector)"
+
+	^ self methodDict identityIncludes: aMethod
 ]
 
 { #category : #'testing method dictionary' }

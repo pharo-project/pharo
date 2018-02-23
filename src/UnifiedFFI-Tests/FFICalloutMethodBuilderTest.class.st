@@ -16,6 +16,7 @@ FFICalloutMethodBuilderTest >> builder [
 
 { #category : #running }
 FFICalloutMethodBuilderTest >> setUp [
+	super setUp.
 	architecture := FFIArchitecture forCurrentArchitecture
 ]
 

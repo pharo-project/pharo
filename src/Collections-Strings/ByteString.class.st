@@ -158,8 +158,12 @@ ByteString >> at: index put: aCharacter [
 		^self at: index put: aCharacter.
 	].
 	index isInteger
-		ifTrue: [self errorSubscriptBounds: index]
-		ifFalse: [self errorNonIntegerIndex]
+		ifTrue: [ (index between: 1 and: self size)
+				ifFalse: [ self errorSubscriptBounds: index ] ]
+		ifFalse: [self errorNonIntegerIndex].
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: aCharacter ].
+
 ]
 
 { #category : #comparing }

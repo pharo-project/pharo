@@ -18,8 +18,10 @@ RGMethodDefinitionTest >> runCase [
 
 { #category : #running }
 RGMethodDefinitionTest >> tearDown [
+
 	self class removeSelectorSilently: #foo.
 	self class removeProtocol: 'test'.
+	super tearDown 
 ]
 
 { #category : #'test - accessing source' }
@@ -157,7 +159,6 @@ RGMethodDefinitionTest >> testAsMethodDefinition [
 
 { #category : #testing }
 RGMethodDefinitionTest >> testAsMethodDefinition2 [
-	"self debug: #testAsMethodDefinition2"
 	
 	| newMethod |
 	newMethod := (Object >> #printOn:) asRingDefinition.
@@ -188,8 +189,7 @@ RGMethodDefinitionTest >> testAsPassive [
 
 { #category : #testing }
 RGMethodDefinitionTest >> testClassNameSelectorIsMetaSide [
-	"self debug: #testClassNameSelectorIsMetaSide"
-	
+		
 	| rg |
 	rg := RGMethodDefinition className: 'Point' selector: #x  isMetaSide: false. 	
 	self assert: (rg parentName = 'Point').
@@ -217,7 +217,7 @@ RGMethodDefinitionTest >> testCreatingMethodsWithoutFactory [
 	self assert: (newMethod sourceCode isNil).
 	self assert: (newMethod stamp isNil).
 	
-	newMethod := RGMethodDefinition realClass: OrderedCollection theMetaClass selector: #arrayType.
+	newMethod := RGMethodDefinition realClass: OrderedCollection classSide selector: #arrayType.
 	self assert: (newMethod isMethod).  
 	self assert: (newMethod selector == #arrayType).  
 	self assert: (newMethod protocol notNil).
@@ -227,8 +227,7 @@ RGMethodDefinitionTest >> testCreatingMethodsWithoutFactory [
 
 { #category : #testing }
 RGMethodDefinitionTest >> testDifferentObjectButSameMethodInSet [
-	"self debug: #testDifferentObjectButSameMethodInSet"
-
+	
 	| s rgmethod rgmethod2 |
 	s := Set new.
 	rgmethod := (OrderedCollection>>#size) asRingDefinition.
@@ -419,7 +418,7 @@ RGMethodDefinitionTest >> testNonExistingMethodWithClass [
 	newClass:= RGClassDefinition named: #OrderedCollection.
 	newClass withMetaclass.
 	
-	newMethod:= (RGMethodDefinition named: #foo) parent: newClass theMetaClass.
+	newMethod:= (RGMethodDefinition named: #foo) parent: newClass classSide.
 	newMethod sourceCode: 'foo
 									^true'.
 									
@@ -428,8 +427,8 @@ RGMethodDefinitionTest >> testNonExistingMethodWithClass [
 	self assert: (newMethod isMetaSide).
 	self assert: (newMethod protocol = nil).
 	
-	self assert: (newMethod parent = newClass theMetaClass).
-	self assert: (newMethod parentName = newClass theMetaClass name).
+	self assert: (newMethod parent = newClass classSide).
+	self assert: (newMethod parentName = newClass classSide name).
 	
 	self assert: (newMethod environment == Smalltalk globals).
 	self assert: (newMethod realClass = OrderedCollection class).
@@ -438,8 +437,7 @@ RGMethodDefinitionTest >> testNonExistingMethodWithClass [
 
 { #category : #testing }
 RGMethodDefinitionTest >> testSameMethodInSet [
-	"self debug: #testSameMethodInSet"
-
+	
 	| s rgmethod |
 	s := Set new.
 	rgmethod := (OrderedCollection>>#size) asRingDefinition.

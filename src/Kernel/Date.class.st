@@ -341,7 +341,7 @@ Date >> addDays: dayCount [
 	^ (self asDateAndTime + (dayCount days)) asDate
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 Date >> addMonths: monthCount [ 
 	|year month maxDaysInMonth day |
 	year := self year + (monthCount + self monthIndex - 1 // 12).
@@ -447,14 +447,14 @@ Date >> monthIndex [
 	^ super month
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 Date >> onNextMonth [
 
 	^ self addMonths: 1
 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 Date >> onPreviousMonth [
 
 	^ self addMonths: -1

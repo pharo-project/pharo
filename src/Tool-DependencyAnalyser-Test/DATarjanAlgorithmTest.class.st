@@ -91,7 +91,7 @@ DATarjanAlgorithmTest >> testRunTarjan [
 	aPDPackageRelation := DAPackageRelationGraph onPackages: anArray.
 	tarjanPackage run: aPDPackageRelation.
 	"we must find 3 sccs, five two and one nodes"
-	self assert: (tarjanPackage stronglyConnectedComponents  size = 3).
+	self assert: tarjanPackage stronglyConnectedComponents size equals: 3.
 	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :each | each packages size = 5 ]).
 	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :each | each packages size = 2 ]).
 	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :each | each packages size = 1 ]).
@@ -127,7 +127,7 @@ DATarjanAlgorithmTest >> testRunTarjanWikipedia [
 	aPDPackageRelation := DAPackageRelationGraph onPackages: anArray.
 	tarjanPackage run: aPDPackageRelation.
 	"we must find 4 sccs"
-	self assert: (tarjanPackage stronglyConnectedComponents  size = 4).
+	self assert: tarjanPackage stronglyConnectedComponents size equals: 4.
 	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :each | each packages size = 3 ]).
 	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :each | each packages size = 2 ]).
 	self assert: (tarjanPackage stronglyConnectedComponents anySatisfy: [ :each | each packages size = 1 ]).

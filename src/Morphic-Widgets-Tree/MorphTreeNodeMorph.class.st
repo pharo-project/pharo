@@ -442,14 +442,14 @@ MorphTreeNodeMorph >> expandItemPath: anArray [
 MorphTreeNodeMorph >> expandPath: anAssociation [
 
 	anAssociation ifNil: [ ^ false ].
-	^ anAssociation head = self complexContents withoutListWrapper
+	^ anAssociation treeNodeHead = self complexContents withoutListWrapper
 		ifFalse: [ false ]
 		ifTrue: [
-			anAssociation tail ifNil: [ ^ true ].
+			anAssociation treeNodeTail ifNil: [ ^ true ].
 			(self isExpanded not and: [ self canExpand ]) ifTrue: [
 				self toggleExpandedState.
 				container innerWidgetChanged ].
-			self children anySatisfy: [:child | child expandPath: anAssociation tail ]]
+			self children anySatisfy: [:child | child expandPath: anAssociation treeNodeTail ]]
 ]
 
 { #category : #accessing }
@@ -674,11 +674,11 @@ MorphTreeNodeMorph >> lineColor [
 MorphTreeNodeMorph >> matchPath: anAssociation [
 
 	anAssociation ifNil: [ ^ nil ].
-	^ anAssociation head = self complexContents withoutListWrapper
+	^ anAssociation treeNodeHead = self complexContents withoutListWrapper
 		ifFalse: [ nil ]
 		ifTrue: [ | matchingChildren |
-			anAssociation tail ifNil: [ ^ { self } ].
-			matchingChildren := self children collect: [:child | child matchPath: anAssociation tail ].
+			anAssociation treeNodeTail ifNil: [ ^ { self } ].
+			matchingChildren := self children collect: [:child | child matchPath: anAssociation treeNodeTail ].
 			^ matchingChildren select: [ :e | e notNil ] ]
 ]
 

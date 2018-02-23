@@ -5,7 +5,7 @@ I will not rest longer!!! I should go to the modular trait library.
 Class {
 	#name : #ShClassTraitCompositionChangedDetector,
 	#superclass : #ShTraitCompositionChangedDetector,
-	#category : 'Shift-Changes'
+	#category : #'Shift-Changes'
 }
 
 { #category : #initialization }

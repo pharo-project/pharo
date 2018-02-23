@@ -4,7 +4,7 @@ I detect if there is a change in the superclass
 Class {
 	#name : #ShSuperclassChangedDetector,
 	#superclass : #ShAbstractClassChangeDetector,
-	#category : 'Shift-Changes'
+	#category : #'Shift-Changes'
 }
 
 { #category : #initialization }

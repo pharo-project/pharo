@@ -554,80 +554,73 @@ OrderedCollectionTest >> testAddAfter [
 
 { #category : #'tests - public methods' }
 OrderedCollectionTest >> testAddAfterIndex [
-	"self run: #testAddAfterIndex"
-	| l |
-	l := #(1 2 3 4) asOrderedCollection.
-	l add: 77 afterIndex: 0.
-	self assert: (l =  #(77 1 2 3 4) asOrderedCollection).
-	l add: 88 afterIndex: 2.
-	self assert: (l =  #(77 1 88 2 3 4) asOrderedCollection). 
-	l add: 99 afterIndex: l size.
-	self assert: (l =  #(77 1 88 2 3 4 99) asOrderedCollection). 
-	self should:[l add: 666 afterIndex: -1] raise: Error.
-	self should:[l add: 666 afterIndex: l size+1] raise: Error.
+	| coll |
+	coll := #(1 2 3 4) asOrderedCollection.
+	coll add: 77 afterIndex: 0.
+	self assert: coll equals: #(77 1 2 3 4) asOrderedCollection.
+	coll add: 88 afterIndex: 2.
+	self assert: coll equals: #(77 1 88 2 3 4) asOrderedCollection. 
+	coll add: 99 afterIndex: coll size.
+	self assert: coll equals: #(77 1 88 2 3 4 99) asOrderedCollection. 
+	self should: [ coll add: 666 afterIndex: -1 ] raise: Error.
+	self should: [ coll add: 666 afterIndex: coll size+1 ] raise: Error.
 	
 	"Now make room by removing first two and last two elements,
 	and see if the illegal bounds test still fails"
-	(l first: 2) , (l last: 2) reversed do: [:e | l remove: e].
-	self should: [l add: 666 afterIndex: -1] raise: Error.
-	self should: [l add: 666 afterIndex: l size+1] raise: Error.
+	(coll first: 2), (coll last: 2) reversed do: [:e | coll remove: e].
+	self should: [ coll add: 666 afterIndex: -1 ] raise: Error.
+	self should: [ coll add: 666 afterIndex: coll size+1 ] raise: Error
 ]
 
 { #category : #'tests - adding' }
 OrderedCollectionTest >> testAddAll [
-	"Allows one to add each element of an orderedCollection at the end of another
-	orderedCollection "
-	"self run:#testAddAll" 
-	
+	"Allows one to add each element of an OrderedCollection at the end of another
+	 OrderedCollection"
+
 	| c1 c2 |
-	c1 := #(1 2 3 4 ) asOrderedCollection.
-	c2 := #(5 6 7 8 9 ) asOrderedCollection.
+	c1 := #(1 2 3 4) asOrderedCollection.
+	c2 := #(5 6 7 8 9) asOrderedCollection.
 	c1 addAll: c2.
-	self assert: c1 = #(1 2 3 4 5 6 7 8 9) asOrderedCollection
+	self assert: c1 equals: #(1 2 3 4 5 6 7 8 9) asOrderedCollection
 ]
 
 { #category : #'tests - adding' }
 OrderedCollectionTest >> testAddAllFirst [
-	"Allows one to add each element of an orderedCollection at the beginning of another
-	orderedCollection "
-	"self run:#testAddAllFirst" 
+	"Allows one to add each element of an OrderedCollection at the beginning of another OrderedCollection "
 	
 	| c1 c2 |
-	c1 := #(1 2 3 4 ) asOrderedCollection.
-	c2 := #(5 6 7 8 9 ) asOrderedCollection.
+	c1 := #(1 2 3 4) asOrderedCollection.
+	c2 := #(5 6 7 8 9) asOrderedCollection.
 	c2 addAllFirst: c1.
-	self assert: c2 = #(1 2 3 4 5 6 7 8 9) asOrderedCollection
+	self assert: c2 equals: #(1 2 3 4 5 6 7 8 9) asOrderedCollection
 ]
 
 { #category : #'tests - adding' }
 OrderedCollectionTest >> testAddAllFirstUnlessAlreadyPresent [
 	"Allows one to add each element of an orderedCollection at the beginning of
 	another orderedCollection preserving the order but no duplicate element"
-	"self run:#testAddAllFirstUnlessAlreadyPresent" 
 	
 	| c1 c2 c3 |
-	c1 := #(1 2 3 4 ) asOrderedCollection.
-	c2 := #(5 6 7 8 9 ) asOrderedCollection.
-	c3 := #(0 1 ) asOrderedCollection.
+	c1 := #(1 2 3 4) asOrderedCollection.
+	c2 := #(5 6 7 8 9) asOrderedCollection.
+	c3 := #(0 1) asOrderedCollection.
 	c2 addAllFirstUnlessAlreadyPresent: c1.
-	self assert: c2 = #(1 2 3 4 5 6 7 8 9 ) asOrderedCollection.
+	self assert: c2 equals: #(1 2 3 4 5 6 7 8 9) asOrderedCollection.
 	c1 addAllFirstUnlessAlreadyPresent: c3.
-	self deny: c1 = #(0 1 1 2 3 4 ) asOrderedCollection.
-	self assert: c1 = #(0 1 2 3 4 ) asOrderedCollection.
+	self deny: c1 = #(0 1 1 2 3 4) asOrderedCollection.
+	self assert: c1 equals: #(0 1 2 3 4) asOrderedCollection.
 	
 ]
 
 { #category : #'tests - adding' }
 OrderedCollectionTest >> testAddAllLast [
-	"Allows one to add each element of an orderedCollection at the beginning of another
-	orderedCollection "
-	"self run:#testAddAllLast" 
-	
+	"Allows one to add each element of an OrderedCollection at the beginning of another OrderedCollection"
+
 	| c1 c2 |
-	c1 := #(1 2 3 4 ) asOrderedCollection.
-	c2 := #(5 6 7 8 9 ) asOrderedCollection.
+	c1 := #(1 2 3 4) asOrderedCollection.
+	c2 := #(5 6 7 8 9) asOrderedCollection.
 	c1 addAllLast: c2.
-	self assert: c1 = #(1 2 3 4 5 6 7 8 9) asOrderedCollection
+	self assert: c1 equals: #(1 2 3 4 5 6 7 8 9) asOrderedCollection
 ]
 
 { #category : #'tests - adding' }
@@ -662,25 +655,23 @@ OrderedCollectionTest >> testAddBeforeAndRemove [
 
 { #category : #'tests - public methods' }
 OrderedCollectionTest >> testAddBeforeIndex [
-	"self run: #testAddBeforeIndex"
-	| l |
-	l := #(1 2 3 4) asOrderedCollection.
-	l add: 77 beforeIndex: 1.
-	self assert: (l =  #(77 1 2 3 4) asOrderedCollection).
-	l add: 88 beforeIndex: 3.
-	self assert: (l =  #(77 1 88 2 3 4) asOrderedCollection). 
-	l add: 99 beforeIndex: l size+1.
-	self assert: (l =  #(77 1 88 2 3 4 99) asOrderedCollection). 
-	self should:[l add: 666 beforeIndex: 0] raise: Error.
-	self should:[l add: 666 beforeIndex: l size+2] raise: Error.
+
+	| coll |
+	coll := #(1 2 3 4) asOrderedCollection.
+	coll add: 77 beforeIndex: 1.
+	self assert: coll equals: #(77 1 2 3 4) asOrderedCollection.
+	coll add: 88 beforeIndex: 3.
+	self assert: coll equals: #(77 1 88 2 3 4) asOrderedCollection. 
+	coll add: 99 beforeIndex: coll size+1.
+	self assert: coll equals: #(77 1 88 2 3 4 99) asOrderedCollection. 
+	self should:[ coll add: 666 beforeIndex: 0 ] raise: Error.
+	self should:[ coll add: 666 beforeIndex: coll size+2 ] raise: Error.
 	
 	"Now make room by removing first two and last two elements,
 	and see if the illegal bounds test still fails"
-	(l first: 2) , (l last: 2) reversed do: [:e | l remove: e].
-	self should:[l add: 666 beforeIndex: 0] raise: Error.
-	self should:[l add: 666 beforeIndex: l size+2] raise: Error.
-
-
+	(coll first: 2), (coll last: 2) reversed do: [:e | coll remove: e].
+	self should:[ coll add: 666 beforeIndex: 0 ] raise: Error.
+	self should:[ coll add: 666 beforeIndex: coll size+2 ] raise: Error
 ]
 
 { #category : #'tests - adding' }
@@ -774,36 +765,33 @@ OrderedCollectionTest >> testAt [
 OrderedCollectionTest >> testAtIfAbsentPut [
 	"Allows one to add an element at an index if no element exist at this index"
 
-	"self run:#testAtIfAbsentPut"
-
 	| c |
 	c := #(1 2 3 4) asOrderedCollection.
 	c at: 2 ifAbsentPut: [ 5 ].
-	self assert: c = #(1 2 3 4) asOrderedCollection.
+	self assert: c equals: #(1 2 3 4) asOrderedCollection.
 	c at: 5 ifAbsentPut: [ 5 ].
-	self assert: c = #(1 2 3 4 5) asOrderedCollection.
+	self assert: c equals: #(1 2 3 4 5) asOrderedCollection.
 	c at: 7 ifAbsentPut: [ 7 ].
-	self assert: c = #(1 2 3 4 5 nil 7) asOrderedCollection
+	self assert: c equals: #(1 2 3 4 5 nil 7) asOrderedCollection
 ]
 
 { #category : #'tests - accessing' }
 OrderedCollectionTest >> testAtPut [
 	"Allows one to replace an element but not at an off range index"
-	"self run:#testAtPut"
+
 	| c |
-	c := #(1 2 3 4 ) asOrderedCollection.
+	c := #(1 2 3 4) asOrderedCollection.
 	c at: 2 put: 5.
-	self assert: c = #(1 5 3 4 ) asOrderedCollection.
+	self assert: c equals: #(1 5 3 4) asOrderedCollection.
 	self
-		should: [c at: 5 put: 8]
+		should: [ c at: 5 put: 8 ]
 		raise: Error.
-	self deny: c = #(1 5 3 4 8 ) asOrderedCollection
+	self deny: c = #(1 5 3 4 8) asOrderedCollection
 ]
 
 { #category : #'tests - begin' }
 OrderedCollectionTest >> testBeginsWithAnyOf [
 	"We can't test SequenceableCollection directly. However, we can test a sampling of its descendants."
-	"self debug: #testBeginsWithAnyOf"
 	
 	| la oc |
 	la := #(1 2 3 4 5 6).
@@ -821,40 +809,35 @@ OrderedCollectionTest >> testBeginsWithAnyOf [
 { #category : #'tests - accessing' }
 OrderedCollectionTest >> testCapacityFromAsOrderedCollection [
 	"Allows one to check the current capacity of an Ordered collection"
-	"self run:#testCapacityFromAsOrderedCollection"
 	
 	| c1 c2 c3 |
 	c1 := #(1 2 ) asOrderedCollection.
-	self assert: (c1 capacity =  2).
+	self assert: c1 capacity equals: 2.
 	c2 := OrderedCollection new: 10.
 	c2 add: 3.
-	self assert: (c2 capacity = 10).	
+	self assert: c2 capacity equals: 10.	
 	c3 := OrderedCollection new.
-	self deny: (c3 capacity =  0).
-	
+	self deny: c3 capacity equals: 0
 ]
 
 { #category : #'tests - enumerating' }
 OrderedCollectionTest >> testCollect [
 	"Allows one to collect some element of a collection into another collection"
-	"self run: #testCollect"
-	 
 	| c1 c2 res |
 	c1 := #(-1 2 -3 4) asOrderedCollection.
 	c2 := #(1 2 3 4) asOrderedCollection.
 	res := c1 collect: [:each | each abs].
-	self assert: (c2 = res).
+	self assert: c2 equals: res
 ]
 
 { #category : #'tests - enumerating' }
 OrderedCollectionTest >> testCollectFromTo [
 	"Allows one to collect some element of a collection into another collection between a first index and an end index for the collect"
-	"self run: #testCollectFromTo"
 	
 	| c1 res |
 	c1 := #(-1 2 -3 4 -5 6 -7 8) asOrderedCollection.
 	res := c1 collect: [:each | each abs] from: 1 to: 3.
-	self assert: (res = #(1 2 3) asOrderedCollection).
+	self assert: res equals: #(1 2 3) asOrderedCollection.
 	self should: [c1 collect: [:each | each abs] from: 10 to: 13] raise: Error.
 	self should: [c1 collect: [:each | each abs] from: 5 to: 2] raise: Error.
 ]
@@ -862,23 +845,21 @@ OrderedCollectionTest >> testCollectFromTo [
 { #category : #'tests - copying' }
 OrderedCollectionTest >> testCopyEmptyOld [
 	"Allows one to create a copy of the receiver that contains no elements"
-	"self run:#testCopyEmpty"
-	
+
 	| c1 c2 |
 	c1 := #(1 2 3 4 ) asOrderedCollection.
 	c2 := c1 copyEmpty.
-	self assert: (c2 size = 0).
+	self assert: c2 size equals: 0
 ]
 
 { #category : #'tests - copying' }
 OrderedCollectionTest >> testCopyFromTo [
 	"Allows one to create a copy of the receiver that contains elements from position start to end"
-	"self run: #testCopyFromTo"
 	
 	| c1 c2 c3 | 
 	c1 := #(1 2 3 4) asOrderedCollection.
 	c2 := (c1 copyFrom: 1 to: 2).
-	self assert: c2 = #(1 2) asOrderedCollection.
+	self assert: c2 equals: #(1 2) asOrderedCollection.
 	self should: [c1 copyFrom: 10 to: 20] raise: Error.
 	
 	c3 := c1 copyFrom: 4 to: 2.
@@ -898,31 +879,27 @@ OrderedCollectionTest >> testCopyNonEmptyWithoutAllNotIncluded [
 
 { #category : #'tests - copying' }
 OrderedCollectionTest >> testCopyReplaceFromToWith [
-	"Allows one to create a copy from the receiver which elements between start and end of the 	receiver being replace by 	element of the collection after with:"
-	"self run:#testCopyReplaceFromToWith"
+	"Allows one to create a copy from the receiver which elements between start and end of the receiver being replace by element of the collection after with:"
 
 	| c1 c2 c3 c4 |
 	c1 := #(1 2 3 4) asOrderedCollection.
 	c2 := #(5 6 7 8 9) asOrderedCollection.
 	c3 := (c2 copyReplaceFrom: 1 to: 2 with: c1).
-	self assert: c3 = #(1 2 3 4 7 8 9) asOrderedCollection.
+	self assert: c3 equals: #(1 2 3 4 7 8 9) asOrderedCollection.
 	self should: [c2 copyReplaceFrom: 3 to: 1 with: c1] raise: Error.
 	
 	c4 := (c2 copyReplaceFrom: 10 to: 25 with: c1).
-	self assert: c4 = #(5 6 7 8 9 1 2 3 4) asOrderedCollection.
-	
-	
+	self assert: c4 equals: #(5 6 7 8 9 1 2 3 4) asOrderedCollection
 ]
 
 { #category : #'tests - copying' }
 OrderedCollectionTest >> testCopyWith [
 	"Allows one to create a copy of the receiver that contains the new element at the end"
-	"self run: #testCopyWith"
 	
 	| c1 | 
 	c1 := #(1 2 3 4) asOrderedCollection.
 	c1 := c1 copyWith: 6.
-	self assert: c1 = #(1 2 3 4 6) asOrderedCollection.
+	self assert: c1 equals: #(1 2 3 4 6) asOrderedCollection
 	
 	
 
@@ -935,7 +912,7 @@ OrderedCollectionTest >> testCopyWith [
 { #category : #'tests - begin' }
 OrderedCollectionTest >> testEndsWithAnyOf [
 	"We can't test SequenceableCollection directly. However, we can test a sampling of its descendants."
-	"self debug: #testEndsWithAnyOf"
+	
 	| la oc |
 	la := #(6 5 4 3 2 1).
 	oc := OrderedCollection new.
@@ -964,7 +941,7 @@ OrderedCollectionTest >> testIdentityIncludes [
 
 { #category : #'tests - includes' }
 OrderedCollectionTest >> testIncludesElementIsNotThere [
-	"self debug: #testIncludesElementIsNotThere"
+	
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
@@ -1016,30 +993,27 @@ OrderedCollectionTest >> testRemoveAllSuchThat [
 { #category : #'tests - removing' }
 OrderedCollectionTest >> testRemoveAt [
 	"Allows one to remove an element from a collection at an index"
-	"self run:#testRemoveAt" 
 	
 	| c1 |
 	c1 := #(2 3 4 6) asOrderedCollection.
 	c1 removeAt: 2.
-	self assert: (c1 = #(2 4 6) asOrderedCollection).
-	self should: [c1 removeAt: 10] raise: Error.
-	self should: [c1 removeAt: -1] raise: Error.
+	self assert: c1 equals: #(2 4 6) asOrderedCollection.
+	self should: [ c1 removeAt: 10 ] raise: Error.
+	self should: [ c1 removeAt: -1 ] raise: Error
 	
 ]
 
 { #category : #'tests - removing' }
 OrderedCollectionTest >> testRemoveFirst [
 	"Allows one to remove n element of a collection at the first"
-	"self run:#testRemoveFirst" 
 	
 	| c1 |
 	c1 := #(2 3 4 6) asOrderedCollection.
 	c1 removeFirst: 1.
-	self assert: (c1 = #(3 4 6) asOrderedCollection).
+	self assert: c1 equals: #(3 4 6) asOrderedCollection.
 	c1 removeFirst: 2.
-	self assert: (c1 = #(6) asOrderedCollection).
-	self should: [c1 removeFirst: 10] raise: Error.
-	
+	self assert: c1 equals: #(6) asOrderedCollection.
+	self should: [c1 removeFirst: 10] raise: Error
 	
 ]
 
@@ -1047,33 +1021,31 @@ OrderedCollectionTest >> testRemoveFirst [
 OrderedCollectionTest >> testRemoveIfAbsent [
 	"Allows one to remove an element from a collection and to copy it in another collection."
 	"If the element isn't in the first collection, the second collection copy the element after ifAbsent"
-	"self run:#testRemoveIfAbsent"
 	
 	| c1 c2 |
 	c1 := #(1 2 3 4) asOrderedCollection.
 	c2 := OrderedCollection new.
 	
 	c2 add: (c1 remove: 2 ifAbsent: [6]).
-	self assert: (c1 = #(1 3 4) asOrderedCollection).
-	self assert: (c2 = #(2) asOrderedCollection).
+	self assert: c1 equals: #(1 3 4) asOrderedCollection.
+	self assert: c2 equals: #(2) asOrderedCollection.
 	
 	c2 add: (c1 remove: 18 ifAbsent: [6]).
-	self assert: (c1 = #(1 3 4) asOrderedCollection).
-	self assert: (c2 = #(2 6) asOrderedCollection).
+	self assert: c1 equals: #(1 3 4) asOrderedCollection.
+	self assert: c2 equals: #(2 6) asOrderedCollection
 ]
 
 { #category : #'tests - removing' }
 OrderedCollectionTest >> testRemoveLast [
 	"Allows one to remove n element of a collection at the end"
-	"self run:#testRemoveLast" 
 	
 	| c1 |
 	c1 := #(2 3 4 6) asOrderedCollection.
 	c1 removeLast: 1.
-	self assert: (c1 = #(2 3 4) asOrderedCollection).
+	self assert: c1 equals: #(2 3 4) asOrderedCollection.
 	c1 removeLast: 2.
-	self assert: (c1 = #(2) asOrderedCollection).
-	self should: [c1 removeLast: 10] raise: Error.
+	self assert: c1 equals: #(2) asOrderedCollection.
+	self should: [ c1 removeLast: 10 ] raise: Error
 ]
 
 { #category : #'tests - copying' }
@@ -1086,32 +1058,26 @@ OrderedCollectionTest >> testReversed [
 ]
 
 { #category : #tests }
-OrderedCollectionTest >> testSort [
-	"self run: #testSort"
-	
+OrderedCollectionTest >> testSort [	
 	| ord |
 	ord := OrderedCollection new addAll: #(2 1 3 6 7 10 6); yourself.
-	self assert: ord sort asArray = #(1 2 3 6 6 7 10). 
-	self assert: ord sort = (OrderedCollection new addAll:#(1 2 3 6 6 7 10); yourself). 
-	self assert: (ord sort: [:a :b | a > b]) asArray = #(10 7 6 6 3 2 1).
+	self assert: ord sort asArray equals: #(1 2 3 6 6 7 10). 
+	self assert: ord sort equals: (OrderedCollection new addAll:#(1 2 3 6 6 7 10); yourself). 
+	self assert: (ord sort: [:a :b | a > b]) asArray equals: #(10 7 6 6 3 2 1).
 	ord := OrderedCollection new.
-	self assert: ord sort asArray = #(). 
+	self assert: ord sort asArray equals: #(). 
 
 ]
 
 { #category : #'tests - enumerating' }
 OrderedCollectionTest >> testWithCollect [
 	"Allows one to collect some element of two collections into another collection with element corresponding to the condition in the blocks"
-	"self run: #testWithCollect"
 	
 	| c1 c2 res |
 	c1 := #(-1 2 -3 4 -5 6 -7 8) asOrderedCollection.
 	c2 := #(-9 10 -11 12 -13 14 -15 16) asOrderedCollection.
-	res := c1 with: c2 collect: [:each1 :each2 | each1 < each2
-		ifTrue: [each1]
-		ifFalse: [each2]].
-	self assert: (res = #(-9 2 -11 4 -13 6 -15 8) asOrderedCollection).
-	
+	res := c1 with: c2 collect: [:each1 :each2 | each1 min: each2 ].
+	self assert: res equals: #(-9 2 -11 4 -13 6 -15 8) asOrderedCollection
 ]
 
 { #category : #requirements }

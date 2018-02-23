@@ -30,7 +30,7 @@ TIncludesForIdentityCollectionsTest >> testIdentityIncludesForIdentityCollection
 
 { #category : #'tests - including for identity collections' }
 TIncludesForIdentityCollectionsTest >> testIncludesAllOfForIdentityCollections [
-	"self debug: #testIncludesAllOfAllThere'"
+
 	| collection copyCollection |
 	collection := self identityCollectionWithElementsCopyNotIdentical .
 	copyCollection := OrderedCollection new.
@@ -42,7 +42,7 @@ TIncludesForIdentityCollectionsTest >> testIncludesAllOfForIdentityCollections [
 
 { #category : #'tests - including for identity collections' }
 TIncludesForIdentityCollectionsTest >> testIncludesAnyOfForIdentityCollections [
-	"self debug: #testIncludesAnyOfAllThere'"
+
 	| collection copyCollection |
 	collection := self identityCollectionWithElementsCopyNotIdentical .
 	copyCollection := OrderedCollection new.
@@ -53,7 +53,7 @@ TIncludesForIdentityCollectionsTest >> testIncludesAnyOfForIdentityCollections [
 
 { #category : #'tests - including for identity collections' }
 TIncludesForIdentityCollectionsTest >> testIncludesForIdentityCollections [
-	"self debug: #testIncludesElementIsThere"
+
 	| collection element elementCopy |
 	collection := self identityCollectionWithElementsCopyNotIdentical .
 	element := collection anyOne.

@@ -375,7 +375,7 @@ RubTextAreaExamples class >> smalltalkCodeWrappedWithSegments [
 ]
 
 { #category : #examples }
-RubTextAreaExamples class >> someSmallSmalltalkCode. [
+RubTextAreaExamples class >> someSmallSmalltalkCode [
 	^ '
 WorldState
 	addDeferredUIMessage: [ 
@@ -464,7 +464,7 @@ RubTextAreaExamples class >> wrappedTo400WithMarginsOf40 [
 	RubEditingArea new
 		beWrapped;
 		width: 400;
-		updateMarginsWith: (40@40 corner: 40@40);
+		updateMarginsWith: 40 asMargin;
 		updateTextWith: self smallLoremIpsum;
 		openInWorld
 ]

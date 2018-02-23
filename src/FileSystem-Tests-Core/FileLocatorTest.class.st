@@ -50,7 +50,6 @@ FileLocatorTest >> testContainsLocator [
 
 { #category : #'compatibility tests' }
 FileLocatorTest >> testContainsPath [
-	"self debug: #testContainsPath"
 	
 	locator := FileLocator image.
 	self assert: (locator contains: (locator resolve / 'griffle') path).
@@ -86,7 +85,7 @@ FileLocatorTest >> testFileSystem [
 { #category : #'resolution tests' }
 FileLocatorTest >> testImageDirectory [
 	locator := FileLocator image.
-	self assert: locator resolve = FileLocator image resolve
+	self assert: locator resolve equals: FileLocator image resolve
 ]
 
 { #category : #'compatibility tests' }

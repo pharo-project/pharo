@@ -27,13 +27,25 @@ RGMetatraitDefinition >> baseClass: anRGTraitDefinition [
 
 { #category : #accessing }
 RGMetatraitDefinition >> category [
-	^ self theNonMetaClass category
+	^ self instanceSide category
+]
+
+{ #category : #'accessing - parallel hierarchy' }
+RGMetatraitDefinition >> classSide [
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+	^ self
 ]
 
 { #category : #accessing }
 RGMetatraitDefinition >> environment [
 
 	^baseClass environment
+]
+
+{ #category : #'accessing - parallel hierarchy' }
+RGMetatraitDefinition >> instanceSide [
+	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
+	^ baseClass
 ]
 
 { #category : #testing }
@@ -59,16 +71,16 @@ RGMetatraitDefinition >> package [
 { #category : #accessing }
 RGMetatraitDefinition >> realClass [
 
-	^baseClass realClass theMetaClass
+	^baseClass realClass classSide
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 RGMetatraitDefinition >> theMetaClass [
 
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 RGMetatraitDefinition >> theNonMetaClass [
 
 	^baseClass

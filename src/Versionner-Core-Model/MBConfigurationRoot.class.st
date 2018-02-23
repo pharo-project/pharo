@@ -105,7 +105,7 @@ MBConfigurationRoot >> configurationClasses [
 { #category : #accessing }
 MBConfigurationRoot >> configurationInfoFor: aConfigurationClass [
 
-	self configurations do: [:info | info configurationClass == aConfigurationClass theNonMetaClass  ifTrue: [ ^info ]].
+	self configurations do: [:info | info configurationClass == aConfigurationClass instanceSide  ifTrue: [ ^info ]].
 	^nil
 ]
 

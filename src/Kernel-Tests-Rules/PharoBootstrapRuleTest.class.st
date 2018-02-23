@@ -19,6 +19,7 @@ PharoBootstrapRuleTest >> tearDown [
 	PharoBootstrapRule
 		classVarNamed: 'DependencyChecker' 
 		put: checkerBackup.
+	super tearDown
 ]
 
 { #category : #tests }

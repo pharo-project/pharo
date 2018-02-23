@@ -94,7 +94,7 @@ ReferenceFinder >> _object: anObject instVarAt: anInteger [
 
 { #category : #private }
 ReferenceFinder >> _objectClass: anObject [
-	"Answer the object which is the argument's class.."
+	"Answer the object which is the argument's class."
 
 	^anObject class
 ]

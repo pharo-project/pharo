@@ -2,7 +2,6 @@ Extension { #name : #CompiledMethodTest }
 
 { #category : #'*Kernel-Tests-WithCompiler' }
 CompiledMethodTest >> testCompiledMethodAsString [
-	"self debug: #testCompiledMethodAsString"
 
 	thisContext method asString
 ]
@@ -42,8 +41,7 @@ CompiledMethodTest >> testEqualityClassSideMethod [
 	method2 := TestCase class compiler
 			compile: 'aMethod'.
 			
-
- 	self assert: method1 = method2.
+ 	self assert: method1 equals: method2.
 
 
 ]
@@ -56,7 +54,7 @@ CompiledMethodTest >> testEqualityInstanceSideMethod [
 	method2 :=  TestCase compiler compile: 'aMethod'.
 
 	self assert: (method1 literalAt: method1 numLiterals) ==  (method2 literalAt: method2 numLiterals).
- 	self assert: method1 = method2.
+ 	self assert: method1 equals: method2.
 
 
 ]
@@ -88,7 +86,7 @@ CompiledMethodTest >> testIsInstalled [
 CompiledMethodTest >> testMethodClass [
 	| method cls |
 	method := self class >> #returnTrue.
-	self assert: method selector = #returnTrue.
+	self assert: method selector equals: #returnTrue.
 	"now make an orphaned method by just deleting the class.
 	old: #unknown
 	new semantics: return Absolete class"
@@ -102,7 +100,7 @@ CompiledMethodTest >> testMethodClass [
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
 	Smalltalk removeClassNamed: #TUTU.
-	self assert: method methodClass = cls
+	self assert: method methodClass equals: cls
 ]
 
 { #category : #'*Kernel-Tests-WithCompiler' }
@@ -113,7 +111,7 @@ CompiledMethodTest >> testSelector [
 		|  method cls |
 		
 		method := (self class)>>#returnTrue.
-		self assert: (method selector = #returnTrue).
+		self assert: method selector equals: #returnTrue.
 		
 		"now make an orphaned method. new semantics: return corrent name"	
 		Smalltalk removeClassNamed: #TUTU.

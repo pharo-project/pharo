@@ -80,7 +80,7 @@ ByteSymbol >> byteAt: index [
 { #category : #accessing }
 ByteSymbol >> byteAt: anInteger put: anObject [ 
 	"You cannot modify the receiver."
-	self errorNoModification
+	^ self modificationForbiddenFor: #byteAt:put: index: anInteger value: anObject
 ]
 
 { #category : #accessing }
@@ -142,8 +142,12 @@ ByteSymbol >> privateAt: index put: aCharacter [
 	aCharacter isCharacter 
 		ifFalse:[^self errorImproperStore].
 	index isInteger
-		ifTrue: [self errorSubscriptBounds: index]
-		ifFalse: [self errorNonIntegerIndex]
+		ifTrue: [ (index between: 1 and: self size)
+				ifFalse: [ self errorSubscriptBounds: index] ]
+		ifFalse: [self errorNonIntegerIndex].
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #privateAt:put: index: index value: aCharacter ].
+
 ]
 
 { #category : #accessing }

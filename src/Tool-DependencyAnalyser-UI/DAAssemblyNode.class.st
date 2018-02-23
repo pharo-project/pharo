@@ -18,11 +18,6 @@ DAAssemblyNode class >> newWith: aCollection [
 		yourself
 ]
 
-{ #category : #'browse-nautilus' }
-DAAssemblyNode >> browseInNautilus [
-	"nothing to browse"
-]
-
 { #category : #api }
 DAAssemblyNode >> childNodeClassFor: anItem [
 	^ DADependentPackageNode
@@ -67,4 +62,9 @@ DAAssemblyNode >> initializeWith: aCollection [
 { #category : #displaying }
 DAAssemblyNode >> label [
 	^ self content
+]
+
+{ #category : #'browse-nautilus' }
+DAAssemblyNode >> selectInBrowser [
+	"nothing to browse"
 ]
