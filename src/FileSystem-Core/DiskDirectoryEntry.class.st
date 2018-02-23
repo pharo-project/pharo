@@ -25,13 +25,11 @@ DiskDirectoryEntry class >> fileSystem: aFilesystem path: aPath [
 	^ self reference: (aFilesystem referenceTo: aPath)
 ]
 
-{ #category : #initialize }
-DiskDirectoryEntry class >> initializeWithPrimitives: fileAttributePrimitives [
-	"Specify the primitives to be used by the receiver."
-	"self initializeWithPrimitives: FileAttributesPluginPrims new"
+{ #category : #initialization }
+DiskDirectoryEntry class >> reset [
+	"Reset the Primitives on session startup and shutdown"
 
-	Primitives := fileAttributePrimitives.
-
+	Primitives := nil
 ]
 
 { #category : #'instance creation' }
@@ -312,7 +310,7 @@ DiskDirectoryEntry >> primitives [
 	"Answer the attribute primitives to be used by the receiver.
 	To avoid initialisation problems during testing, use lazy initialisation."
 
-	^Primitives ifNil: [ Primitives := DiskStore current fileAttributePrimitives ]
+	^Primitives ifNil: [ Primitives := FileAttributesPluginPrims default ]
 ]
 
 { #category : #accessing }

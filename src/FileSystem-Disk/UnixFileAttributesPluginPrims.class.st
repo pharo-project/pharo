@@ -6,3 +6,10 @@ Class {
 	#superclass : #FileAttributesPluginPrims,
 	#category : #'FileSystem-Disk'
 }
+
+{ #category : #testing }
+UnixFileAttributesPluginPrims class >> isActiveClass [
+	"Answer true if we are on a unix class"
+
+	^OSPlatform current isUnix
+]

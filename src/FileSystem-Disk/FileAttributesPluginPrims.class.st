@@ -38,6 +38,7 @@ Class {
 	#name : #FileAttributesPluginPrims,
 	#superclass : #Object,
 	#classVars : [
+		'Default',
 		'Encoder',
 		'S_IFBLK',
 		'S_IFCHR',
@@ -51,6 +52,26 @@ Class {
 	#category : #'FileSystem-Disk'
 }
 
+{ #category : #accessing }
+FileAttributesPluginPrims class >> activeClass [
+	"Answer the appropriate subclass for the current platform"
+
+	^self allSubclasses
+		detect: [ :each | each isActiveClass ]
+		ifNone: [ self ]
+]
+
+{ #category : #accessing }
+FileAttributesPluginPrims class >> default [
+	"Answer the default instance"
+
+	^Default ifNil: [ | activeClass |
+		activeClass := self activeClass.
+		Default := activeClass new.
+		activeClass loadMasks.
+		Default ]
+]
+
 { #category : #initialize }
 FileAttributesPluginPrims class >> initialize [
 
@@ -58,8 +79,15 @@ FileAttributesPluginPrims class >> initialize [
 	self reset.
 ]
 
+{ #category : #testing }
+FileAttributesPluginPrims class >> isActiveClass [
+	"Answer a boolean indicating whether the receiver is respondsible for the current platform"
+
+	^self subclassResponsibility 
+]
+
 { #category : #initialize }
-FileAttributesPluginPrims class >> reset [
+FileAttributesPluginPrims class >> loadMasks [
 	"Reload the masks"
 
 	| masks |
@@ -74,6 +102,13 @@ FileAttributesPluginPrims class >> reset [
 	S_IFCHR := masks at: 7.
 	S_IFIFO := masks at: 8.
 
+]
+
+{ #category : #initialize }
+FileAttributesPluginPrims class >> reset [
+	"Reload the masks"
+
+	Default := nil.
 ]
 
 { #category : #errors }

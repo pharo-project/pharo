@@ -12,13 +12,6 @@ UnixStore class >> delimiter [
 	^ $/
 ]
 
-{ #category : #'class initialization' }
-UnixStore class >> fileAttributesPrimitivesClass [
-	"Answer the primitives class to be used to access file attributes"
-
-	^UnixFileAttributesPluginPrims
-]
-
 { #category : #current }
 UnixStore class >> isActiveClass [
 	^ Smalltalk os isUnix and: [ super isActiveClass ]
@@ -53,12 +46,4 @@ UnixStore >> checkName: aFileName fixErrors: fixing [
 	fixing ifFalse: [self error:'Invalid file name'].
 	
 	^ fName copyReplaceAll: self delimiter asString with: '#'
-]
-
-{ #category : #private }
-UnixStore >> fileAttributePrimitives [
-	"Answer the primitives for file attribute and directory enumerating operations.
-	To facilitate testing and initialisation problems, use lazy initialisation for now."
-
-	^FileAttributePrimitives ifNil: [ FileAttributePrimitives := UnixFileAttributesPluginPrims new ]
 ]

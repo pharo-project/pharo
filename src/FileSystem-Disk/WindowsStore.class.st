@@ -18,13 +18,6 @@ WindowsStore class >> delimiter [
 	^ $\
 ]
 
-{ #category : #'class initialization' }
-WindowsStore class >> fileAttributesPrimitivesClass [
-	"Answer the primitives class to be used to access file attributes"
-
-	^WindowsFileAttributesPluginPrims
-]
-
 { #category : #accessing }
 WindowsStore class >> isCaseSensitive [
 	^ false
@@ -66,21 +59,13 @@ WindowsStore >> currentDisk [
 ]
 
 { #category : #private }
-WindowsStore >> fileAttributePrimitives [
-	"Answer the primitives for file attribute and directory enumerating operations.
-	To facilitate testing and initialisation problems, use lazy initialisation for now."
-
-	^FileAttributePrimitives ifNil: [ FileAttributePrimitives := WindowsFileAttributesPluginPrims new ]
-]
-
-{ #category : #private }
 WindowsStore >> nodesAt: aPath do: aBlock [
 
 	| mask drive node |
 
 	aPath isRoot ifFalse: [ ^super nodesAt: aPath do: aBlock ].
 
-	mask := FileAttributePrimitives primLogicalDrives.
+	mask := self fileAttributePrimitives primLogicalDrives.
 	0 to: 25 do: [ :i |
 		(mask bitAnd: (1 bitShift: i)) ~= 0 ifTrue: [ 
 			drive := String with: (Character value: ($A asciiValue + i)) with: $:.

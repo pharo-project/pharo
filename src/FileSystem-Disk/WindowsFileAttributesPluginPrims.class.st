@@ -15,6 +15,13 @@ Class {
 	#category : #'FileSystem-Disk'
 }
 
+{ #category : #testing }
+WindowsFileAttributesPluginPrims class >> isActiveClass [
+	"Answer true if we are on a unix class"
+
+	^OSPlatform current isWindows
+]
+
 { #category : #'private - encoding' }
 WindowsFileAttributesPluginPrims >> decode: aString [
 	"On Windows the primitives returned the string with native encoding.
