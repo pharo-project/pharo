@@ -309,6 +309,13 @@ RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
 		ifFalse: [ (self packageClass named: packageName capitalized) register ] 
 ]
 
+{ #category : #private }
+RPackageOrganizer >> checkPackageIsMine: aPackage [
+
+	(self includesPackage: aPackage) ifFalse: [ 
+		self error: 'Given package is not registered in this organizer! It should not happen!' ]
+]
+
 { #category : #'private testing' }
 RPackageOrganizer >> debuggingName [
 
@@ -733,9 +740,10 @@ RPackageOrganizer >> register [
 RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [ 
 
 	| cur |
-	cur := classExtendingPackagesMapping at: aClass instanceSide name ifAbsent: [nil].
+	self checkPackageIsMine: aPackage.
+	cur := classExtendingPackagesMapping at: aClass theNonMetaClass name ifAbsent: [nil].
 	cur isNil
-		ifTrue: [classExtendingPackagesMapping at: aClass instanceSide name put: (Set with: aPackage)]
+		ifTrue: [classExtendingPackagesMapping at: aClass theNonMetaClass name put: (Set with: aPackage)]
 		ifFalse: [cur add: aPackage]
 ]
 
@@ -743,6 +751,7 @@ RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [
 RPackageOrganizer >> registerExtendingPackage: aPackage forClassName: aClassName [ 
 
 	| cur |
+	self checkPackageIsMine: aPackage.
 	cur := classExtendingPackagesMapping at: aClassName asSymbol ifAbsent: [nil].
 	cur isNil
 		ifTrue: [classExtendingPackagesMapping at: aClassName asSymbol put: (Set with: aPackage)]
@@ -808,19 +817,16 @@ RPackageOrganizer >> registerPackage: aPackage [
 
 { #category : #'private registration' }
 RPackageOrganizer >> registerPackage: aPackage forClass: aClass [ 
-	(aPackage includesClass: aClass) 
-		ifFalse: 
-			[self error: aPackage name , ' does not includes the class ' , aClass name].
-	^classPackageMapping at: aClass instanceSide name put: aPackage
+	self checkPackageIsMine: aPackage.
+	
+	^classPackageMapping at: aClass theNonMetaClass name put: aPackage
 ]
 
 { #category : #'private registration' }
 RPackageOrganizer >> registerPackage: aPackage forClassName: aClassNameSymbol [
 	"Register aPackage as the package of the class aClassNameSymbol. The package should contain the class in its class definitions."
+	self checkPackageIsMine: aPackage.
 	
-	(aPackage includesClassNamed: aClassNameSymbol asSymbol) 
-		ifFalse: 
-			[self error: aPackage name , ' does not include the class ' , aClassNameSymbol].
 	^classPackageMapping at: aClassNameSymbol put: aPackage
 ]
 

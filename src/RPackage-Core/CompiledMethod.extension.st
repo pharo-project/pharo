@@ -1,8 +1,20 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*rpackage-core' }
-CompiledMethod >> isDefinedInPackage: anRPackage [
-	^ anRPackage includesDefinedSelector: self selector ofClass: self methodClass
+CompiledMethod >> adoptToBeExtensionIn: aPackage [
+
+	self properties at: #package put: aPackage
+]
+
+{ #category : #'*rpackage-core' }
+CompiledMethod >> adoptToNotBeExtension [
+
+	self properties removeKey: #package ifAbsent: [^self]
+]
+
+{ #category : #'*rpackage-core' }
+CompiledMethod >> isDefinedInPackage: aPackage [
+	^ aPackage includesDefinedSelector: self selector ofClass: self methodClass
 ]
 
 { #category : #'*rpackage-core' }
@@ -17,7 +29,19 @@ CompiledMethod >> isExtensionInPackage: anRPackage [
 
 { #category : #'*rpackage-core' }
 CompiledMethod >> package [
-	^ self packageFromOrganizer: RPackage organizer
+
+	^self properties 
+		at: #package 
+		ifAbsent: [ self origin package]
+]
+
+{ #category : #'*rpackage-core' }
+CompiledMethod >> package: aPackage [
+	self isInstalled ifFalse: [
+		self properties at: #package put: aPackage.
+		^self].
+	
+	aPackage addMethod: self
 ]
 
 { #category : #'*rpackage-core' }

@@ -76,10 +76,12 @@ RPackageReadOnlyCompleteSetupTest >> setUp [
 
 { #category : #'test tag class' }
 RPackageReadOnlyCompleteSetupTest >> testAddTag [
-	self assert: p1 classTags isEmpty.
+	"self debug: #testAddTag"
+	
+	self assert: p1 classTags size equals: 1.
 	p1 addClassTag: #baz. 
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
-	self assert: (p1 classTags size = 1).
+	self assert: (p1 classTags size = 2).
 	
 	p1 addClassDefinitionName: #A1DefinedInP1 toClassTag: #foo.
 	p1 addClassDefinitionName: #B1DefinedInP1 toClassTag: #foo.

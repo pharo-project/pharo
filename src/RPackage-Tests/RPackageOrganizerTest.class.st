@@ -250,10 +250,11 @@ RPackageOrganizerTest >> testFullUnregistration [
 
 { #category : #tests }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
+	"self debug: #testRegisteredIsThere"
 
 	| package1 package2 |
+
 	package1 := self createNewPackageNamed: 'P1'.
-	package1 register.
 	
 	package2 := self packageClass named: 'P1'.
 	self 
@@ -263,14 +264,14 @@ RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 { #category : #tests }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
+	"self debug: #testRegisteredIsThere"
 
 	| package1 package2 |
 
 	package1 := self createNewPackageNamed: 'P1'.
-	package1 register.
 	package1 addClassTag: #T1.
 	
-	package2 := self createNewPackageNamed: 'P1-T1'.
+	package2 := self packageClass named: 'P1-T1'.
 	self 
 		should: [ package2 register ]
 		raise: Error
@@ -281,7 +282,6 @@ RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 	| package1 package2 |
 
 	package1 := self createNewPackageNamed: 'P1-T1'.
-	package1 register.	
 	
 	package2 := self createNewPackageNamed: 'P1'.
 	self 
@@ -338,19 +338,6 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	self assert: self packageOrganizer packageNames size = 3.
 ]
 
-{ #category : #'tests extending' }
-RPackageOrganizerTest >> testRegistrationExtendingPackages [
-	| p |
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
-	p := self pointRectangleInGraphElement.
-	(self packageOrganizer
-					registerExtendingPackage:  p
-					forClass: self quadrangleClass).
-	self deny: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name = #GraphElement.
-	
-]
-
 { #category : #'tests extensions' }
 RPackageOrganizerTest >> testSilentlyRenameCategoryToBe [
 
@@ -381,20 +368,4 @@ RPackageOrganizerTest >> testUnregisterBasedOnNames [
 	{p1 . p2 . p3} do: [:each | 
 		(self packageOrganizer basicUnregisterPackageNamed: each name).
 		self deny:  (self packageOrganizer packageNames includes: each name)]
-]
-
-{ #category : #'tests extending' }
-RPackageOrganizerTest >> testUnregistrationExtendingPackages [
-	| p |	
-	p := self pointRectangleInGraphElement.
-	self packageOrganizer
-		registerExtendingPackage: p
-		forClass: self quadrangleClass.
-	self deny: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name = #GraphElement.
-	self packageOrganizer
-					unregisterExtendingPackage:  p
-					forClass: self quadrangleClass.
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
-	
 ]
