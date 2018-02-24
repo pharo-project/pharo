@@ -13,13 +13,23 @@ SugsBrowseTraitUsers >> execute [
 
 ]
 
+{ #category : #position }
+SugsBrowseTraitUsers >> icon [
+	^self iconNamed: #smallInspectItIcon
+]
+
 { #category : #execution }
 SugsBrowseTraitUsers >> isValidForContext [
 	^context bindedSelectedClass isTrait
 ]
 
-{ #category : #accessing }
+{ #category : #position }
 SugsBrowseTraitUsers >> label [
 	^ 'Browse Trait users' translated
 
+]
+
+{ #category : #position }
+SugsBrowseTraitUsers >> position [
+	^10
 ]

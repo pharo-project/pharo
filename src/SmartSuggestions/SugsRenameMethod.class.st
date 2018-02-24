@@ -13,6 +13,21 @@ SugsRenameMethod >> execute [
 ]
 
 { #category : #accessing }
+SugsRenameMethod >> icon [
+	^self iconNamed: #smallLanguageIcon
+]
+
+{ #category : #accessing }
+SugsRenameMethod >> keyText [
+	^'r,m'
+]
+
+{ #category : #accessing }
 SugsRenameMethod >> label [
 	^ 'Rename' translated
+]
+
+{ #category : #accessing }
+SugsRenameMethod >> position [
+	^10
 ]

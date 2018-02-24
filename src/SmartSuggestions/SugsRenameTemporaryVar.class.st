@@ -16,6 +16,21 @@ SugsRenameTemporaryVar >> execute [
 ]
 
 { #category : #accessing }
+SugsRenameTemporaryVar >> icon [
+	^self iconNamed: #smallLanguageIcon
+]
+
+{ #category : #accessing }
+SugsRenameTemporaryVar >> keyText [
+	^'r'
+]
+
+{ #category : #accessing }
 SugsRenameTemporaryVar >> label [
 	^  'Rename' translated
+]
+
+{ #category : #accessing }
+SugsRenameTemporaryVar >> position [
+	^10
 ]

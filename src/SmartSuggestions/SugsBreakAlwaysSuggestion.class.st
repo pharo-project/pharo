@@ -16,11 +16,21 @@ SugsBreakAlwaysSuggestion >> execute [
 		ifTrue: [ Breakpoint removeFrom: context selectedNode]
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsBreakAlwaysSuggestion >> keyText [
+	^'b,a'
+]
+
+{ #category : #display }
 SugsBreakAlwaysSuggestion >> label [
 	self hasUnacceptedEdits ifTrue: [ ^'Accept to enable breakpoints' ].
 
 	^self selectedNodeHasBreakpoint
 		ifFalse: [ 'Break' translated ]
 		ifTrue: [ 'Remove breakpoint' translated ]
+]
+
+{ #category : #display }
+SugsBreakAlwaysSuggestion >> position [
+	^15
 ]

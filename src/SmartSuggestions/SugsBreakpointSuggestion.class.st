@@ -14,7 +14,12 @@ SugsBreakpointSuggestion >> hasUnacceptedEdits [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsBreakpointSuggestion >> icon [
+	^self iconNamed: #smallCancelIcon
+]
+
+{ #category : #display }
 SugsBreakpointSuggestion >> label [
 	self subclassResponsibility
 ]

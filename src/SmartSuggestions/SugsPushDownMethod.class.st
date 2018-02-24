@@ -12,12 +12,22 @@ SugsPushDownMethod >> execute [
 	(NautilusRefactoring model: context) pushDownMethodsFor: (OrderedCollection with: context selectedMethod)
 ]
 
+{ #category : #display }
+SugsPushDownMethod >> icon [
+	^self iconNamed: #smallUndoIcon
+]
+
 { #category : #execution }
 SugsPushDownMethod >> isValidForContext [
 	^  context hasSubclasses
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsPushDownMethod >> label [
 	^'Push Down' translated
+]
+
+{ #category : #display }
+SugsPushDownMethod >> position [
+	^101
 ]

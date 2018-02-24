@@ -17,11 +17,21 @@ SugsExtractStatements >> execute [
 	(NautilusRefactoring model: context) extractBetween: selectedValidCodeInterval from: context selectedMethod
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsExtractStatements >> icon [
+	^self iconNamed: #smallUpdateIcon
+]
+
+{ #category : #display }
 SugsExtractStatements >> label [
 	^'Extract method' translated.
 	
 
+]
+
+{ #category : #display }
+SugsExtractStatements >> position [
+	^10
 ]
 
 { #category : #private }

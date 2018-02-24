@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsWatchpointSuggestion class >> nodes [
+	^{RBMethodNode . RBMessageNode . RBAssignmentNode . RBVariableNode }
+]
+
 { #category : #execution }
 SugsWatchpointSuggestion >> execute [
 	context ifNil: [ ^self ].
@@ -17,6 +22,11 @@ SugsWatchpointSuggestion >> execute [
 		ifTrue: [ Watchpoint removeFrom: context selectedNode]
 ]
 
+{ #category : #display }
+SugsWatchpointSuggestion >> icon [
+	^self iconNamed: #haloView
+]
+
 { #category : #execution }
 SugsWatchpointSuggestion >> isValidForContext [
 	context ifNil: [ ^false ].
@@ -24,12 +34,17 @@ SugsWatchpointSuggestion >> isValidForContext [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsWatchpointSuggestion >> label [
 	^self selectedNodeHasWatchpoint
 		ifFalse: [ 'Add Watchpoint' translated ]
 		ifTrue: [ 'Remove Watchpoint' translated ]
 	
+]
+
+{ #category : #display }
+SugsWatchpointSuggestion >> position [
+	^18
 ]
 
 { #category : #'private - testing' }

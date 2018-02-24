@@ -123,11 +123,13 @@ SugsMenuBuilderTest >> testSuggestionForAAssigmentNodeIncludesAllDeclared [
 
 { #category : #'tests - suggestions by selection' }
 SugsMenuBuilderTest >> testSuggestionForAClassNodeIncludesAllDeclared [
-	| suggestions expected|
+	| context suggestions expected|
 
-	suggestions :=SugsMenuBuilder findSuggestionsFor: SugsMockContext classContext.
+	context := SugsMockContext classContext.
+	suggestions :=SugsMenuBuilder findSuggestionsFor: context.
 
-	expected := SugsSuggestionFactory commandsForClass.	
+	expected := (SugsSuggestionFactory commandsForClass do: [:aSugg | aSugg context: context] )select: #isValidForContext.
+
 	self assert: (expected allSatisfy:[:expect | suggestions includes: expect]).
 ]
 

@@ -172,84 +172,58 @@ SugsSuggestionFactory class >> commandsForTemporaryVariable [
 	^self collectCommandsFrom: self collectorForTemporaryVariable .
 ]
 
-{ #category : #'unknown-var' }
-SugsSuggestionFactory class >> commandsForUndeclaredVariable [
-	^self collectCommandsFrom: self collectorForUndeclaredVariable  .
-]
-
 { #category : #'inst-var' }
 SugsSuggestionFactory class >> createAccesorsFor [
 	<instVarCommand>
-	^ SugsCreateInstanceVarAccessors
-		icon: (self iconNamed: #smallLanguageIcon)
-		position: 100
+	^ SugsCreateInstanceVarAccessors new
 ]
 
 { #category : #'inst-var' }
 SugsSuggestionFactory class >> createAccessesToVariable [
 	<instVarCommand>
-	^ SugsAccessesToInstVar
-		icon: (self iconNamed: #smallInspectItIcon)
-		position: 50
+	^ SugsAccessesToInstVar new
 ]
 
 { #category : #'class-var' }
 SugsSuggestionFactory class >> createAccessors [
 	<classVarCommand>
-	^ SugsCreateClassVarAccessors
-		icon: (self iconNamed: #smallLanguageIcon)
-		position: 30
+	^ SugsCreateClassVarAccessors new
 ]
 
 { #category : #methods }
 SugsSuggestionFactory class >> createAddParameter [
 	<methodCommand>
-	^ SugsAddParameter
-		icon: (self iconNamed: #smallPushpinIcon)
-		position: 200
+	^ SugsAddParameter new
 ]
 
 { #category : #methods }
 SugsSuggestionFactory class >> createBreakCommand [
 	<globalCommand>
-	^ SugsBreakAlwaysSuggestion
-		icon: (self iconNamed: #smallCancelIcon)
-		position: 15
-		keyText: 'b,a'
+	^ SugsBreakAlwaysSuggestion new
 ]
 
 { #category : #methods }
 SugsSuggestionFactory class >> createBreakConditionCommand [
 	<globalCommand>
-	^ SugsBreakConditionSuggestion
-		icon: (self iconNamed: #smallCancelIcon)
-		position: 17
-		keyText: 'b,c'
+	^ SugsBreakConditionSuggestion new
 ]
 
 { #category : #methods }
 SugsSuggestionFactory class >> createBreakOnceCommand [
 	<globalCommand>
-	^ SugsBreakOnceSuggestion
-		icon: (self iconNamed: #smallCancelIcon)
-		position: 16
-		keyText: 'b,o'
+	^ SugsBreakOnceSuggestion new
 ]
 
 { #category : #class }
 SugsSuggestionFactory class >> createBrowseReferences [
 	<classCommand>
-	^ SugsBrowseClassReferences
-		icon: (self iconNamed: #smallInspectItIcon)
-		position: 10
+	^ SugsBrowseClassReferences new
 ]
 
 { #category : #class }
 SugsSuggestionFactory class >> createBrowseTraitUsers [
 	<classCommand>
-	^ SugsBrowseTraitUsers
-		icon: (self iconNamed: #smallInspectItIcon)
-		position: 10
+	^ SugsBrowseTraitUsers new
 ]
 
 { #category : #private }
@@ -270,17 +244,13 @@ SugsSuggestionFactory class >> createCounterCommand [
 	<tempVarCommand>
 	<instVarCommand>
 	<classVarCommand>
-	^ SugsCounterSuggestion
-		icon: (self iconNamed: #classIcon)
-		position: 18
+	^ SugsCounterSuggestion new
 ]
 
 { #category : #methods }
 SugsSuggestionFactory class >> createDeprecateMethod [
 	<methodCommand>
-	^ SugsDeprecateMethod
-		icon: (self iconNamed: #smallLanguageIcon)
-		position: 125
+	^ SugsDeprecateMethod new
 ]
 
 { #category : #source }
@@ -288,17 +258,13 @@ SugsSuggestionFactory class >> createExtractMethod [
 	<messageCommand>
 	<literalCommand>
 	<blockCommand>
-	^ SugsExtractMethod
-		icon: (self iconNamed: #smallUpdateIcon)
-		position: 50
+	^ SugsExtractMethod new
 ]
 
 { #category : #source }
 SugsSuggestionFactory class >> createExtractSentences [
 	<sourceCodeCommand>
-	^ SugsExtractStatements
-		icon: (self iconNamed: #smallUpdateIcon)
-		position: 10
+	^ SugsExtractStatements new
 ]
 
 { #category : #source }
@@ -307,179 +273,117 @@ SugsSuggestionFactory class >> createExtractToLocalVariable [
 	<messageCommand>
 	<literalCommand>
 	<blockCommand>
-	^ SugsExtractToLocalVariable
-		icon: (self iconNamed: #smallJumpIcon)
-		position: 20
+	^ SugsExtractToLocalVariable new
 ]
 
 { #category : #messages }
 SugsSuggestionFactory class >> createFindImplementors [
 	<messageCommand>
-	^ SugsFindImplementors
-		icon: (self iconNamed: #smallFindIcon)
-		position: 11
-		keyText: 'm'
+	^ SugsFindImplementors new
 ]
 
 { #category : #messages }
 SugsSuggestionFactory class >> createFindSenders [
 	<methodCommand>
 	<messageCommand>
-	^ SugsFindSenders
-		icon: (self iconNamed: #smallFindIcon)
-		position: 10
-		keyText: 'n'
+	^ SugsFindSenders new
 ]
 
 { #category : #source }
 SugsSuggestionFactory class >> createFormatSourceCode [
 	<methodCommand>
 	<sourceCodeCommand>
-	^ SugsFormatCode
-		icon: (self iconNamed: #smallJustifiedIcon)
-		position: 0
-		keyText: 'u'
+	^ SugsFormatCode new
 ]
 
 { #category : #messages }
 SugsSuggestionFactory class >> createInline [
 	<messageCommand>
-	^ SugsInline
-		icon: (self iconNamed: #smallRightFlushIcon)
-		position: 100
+	^ SugsInline new
 ]
 
 { #category : #assignment }
 SugsSuggestionFactory class >> createInlineTemporary [
 	<assignmentCommand>
-	^ SugsInlineTemporary
-		icon: (self iconNamed: #smallLanguageIcon)
-		position: 10
+	^ SugsInlineTemporary new
 ]
 
 { #category : #methods }
 SugsSuggestionFactory class >> createMoveMethod [
 	<methodCommand>
-	^ SugsDelegateMethod
-		icon: (self iconNamed: #smallRedoIcon)
-		position: 210
+	^ SugsDelegateMethod new
 ]
 
 { #category : #methods }
 SugsSuggestionFactory class >> createPullUp [
 	<methodCommand>
-	^ SugsPullUpMethod
-		icon: (self iconNamed: #smallRedoIcon)
-		position: 100
+	^ SugsPullUpMethod new
 ]
 
 { #category : #methods }
 SugsSuggestionFactory class >> createPushDown [
 	<methodCommand>
-	^ SugsPushDownMethod
-		icon: (self iconNamed: #smallUndoIcon)
-		position: 101
+	^ SugsPushDownMethod new
 ]
 
 { #category : #methods }
 SugsSuggestionFactory class >> createRemoveMethod [
 	<methodCommand>
-	^ SugsRemoveMethod
-		icon: (self iconNamed: #smallCancelIcon)
-		position: 20
+	^ SugsRemoveMethod new
 ]
 
 { #category : #methods }
 SugsSuggestionFactory class >> createRemoveParameter [
 	<methodCommand>
-	^ SugsRemoveParameter
-		icon: (self iconNamed: #smallCancelIcon)
-		position: 210
+	^ SugsRemoveParameter new
 ]
 
 { #category : #class }
 SugsSuggestionFactory class >> createRenameClass [
 	<classCommand>
-	^ SugsRenameClass
-		icon: (self iconNamed: #smallLanguageIcon)
-		position: 20
-		keyText: 'r'
+	^ SugsRenameClass new
 ]
 
 { #category : #'class-var' }
 SugsSuggestionFactory class >> createRenameClassVariable [
 	<classVarCommand>
-	^ SugsRenameClassVar
-		icon: (self iconNamed: #smallLanguageIcon)
-		position: 10
-		keyText: 'r'
+	^ SugsRenameClassVar new
 ]
 
 { #category : #methods }
 SugsSuggestionFactory class >> createRenameMethod [
 	<methodCommand>
-	^ SugsRenameMethod
-		icon: (self iconNamed: #smallLanguageIcon)
-		position: 10
-		keyText: 'r,m'
+	^ SugsRenameMethod new
 ]
 
 { #category : #'temp-var' }
 SugsSuggestionFactory class >> createRenameTemporaryVariable [
 	<tempVarCommand>
-	^ SugsRenameTemporaryVar
-		icon: (self iconNamed: #smallLanguageIcon)
-		position: 10
-		keyText: 'r'
+	^ SugsRenameTemporaryVar new
 ]
 
 { #category : #'inst-var' }
 SugsSuggestionFactory class >> createRenameVariable [
 	<instVarCommand>
-	^ SugsRenameInstanceVar
-		icon: (self iconNamed: #smallLanguageIcon)
-		position: 10
-		keyText: 'r'
+	^ SugsRenameInstanceVar new
 ]
 
 { #category : #methods }
 SugsSuggestionFactory class >> createSwapMethod [
 	<methodCommand>
 	^ SugsSwapMethod new
-		icon: (self iconNamed: #smallRedoIcon);
-		position: 50
 ]
 
 { #category : #'class-var' }
 SugsSuggestionFactory class >> createUseAccessorToVar [
 	<classVarCommand>
-	^ SugsUseAccessorsForClassVar
-		icon: (self iconNamed: #smallLanguageIcon)
-		position: 10
-]
-
-{ #category : #'unknown-var' }
-SugsSuggestionFactory class >> createVariableCorrection [
-	"	<undeclaredVarCommand>"
-
-	"Unable because it's not fully implemented"
-
-	| variables index |
-	^ SugsSuggestion
-		for: [ :context | 
-			variables := context selectedClass allInstVarNames asArray sort.
-			index := UIManager default chooseFrom: variables.
-			UIManager default inform: (variables at: index) ]
-		named: 'Correct variable to...' translated
-		icon: (self iconNamed: #smallFindIcon)
+	^ SugsUseAccessorsForClassVar new
 ]
 
 { #category : #'inst-var' }
 SugsSuggestionFactory class >> createVariableStoresInto [
 	<instVarCommand>
-	^ SugsStoresIntoInstVar
-		icon: (self iconNamed: #smallInspectItIcon)
-		position: 60
+	^ SugsStoresIntoInstVar new
 ]
 
 { #category : #methods }
@@ -490,9 +394,7 @@ SugsSuggestionFactory class >> createWatchpointCommand [
 	<tempVarCommand>
 	<instVarCommand>
 	<classVarCommand>
-	^ SugsWatchpointSuggestion
-		icon: (self iconNamed: #haloView)
-		position: 18
+	^ SugsWatchpointSuggestion new
 ]
 
 { #category : #private }
