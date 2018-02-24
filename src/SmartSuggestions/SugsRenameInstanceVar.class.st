@@ -13,6 +13,21 @@ SugsRenameInstanceVar >> execute [
 ]
 
 { #category : #accessing }
+SugsRenameInstanceVar >> icon [
+	^self iconNamed: #smallLanguageIcon
+]
+
+{ #category : #accessing }
+SugsRenameInstanceVar >> keyText [
+	^'r'
+]
+
+{ #category : #accessing }
 SugsRenameInstanceVar >> label [
 	^'Rename' translated
+]
+
+{ #category : #accessing }
+SugsRenameInstanceVar >> position [
+	^10
 ]

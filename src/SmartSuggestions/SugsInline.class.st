@@ -12,7 +12,17 @@ SugsInline >> execute [
 	 (NautilusRefactoring model: context) inlineMethodBetween: context selectedInterval from: context selectedMethod
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsInline >> icon [
+	^self iconNamed: #smallRightFlushIcon
+]
+
+{ #category : #display }
 SugsInline >> label [
 	 ^'Inline method' translated
+]
+
+{ #category : #display }
+SugsInline >> position [
+	^100
 ]

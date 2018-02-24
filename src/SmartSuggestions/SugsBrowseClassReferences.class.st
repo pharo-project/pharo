@@ -14,7 +14,17 @@ SugsBrowseClassReferences >> execute [
 ]
 
 { #category : #accessing }
+SugsBrowseClassReferences >> icon [
+	^self iconNamed: #smallInspectItIcon
+]
+
+{ #category : #accessing }
 SugsBrowseClassReferences >> label [
 	^ 'Browse references' translated
 
+]
+
+{ #category : #accessing }
+SugsBrowseClassReferences >> position [
+	^10
 ]

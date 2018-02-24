@@ -12,12 +12,22 @@ SugsDelegateMethod >> execute [
 	 (NautilusRefactoring model: context) moveMethodFor: context selectedMethod
 ]
 
+{ #category : #display }
+SugsDelegateMethod >> icon [
+	^self iconNamed: #smallRedoIcon
+]
+
 { #category : #execution }
 SugsDelegateMethod >> isValidForContext [
 	^ context hasInstanceVariable
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsDelegateMethod >> label [
 	^'Delegate selected method' translated
+]
+
+{ #category : #display }
+SugsDelegateMethod >> position [
+	^210
 ]

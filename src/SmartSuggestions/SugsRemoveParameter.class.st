@@ -12,6 +12,11 @@ SugsRemoveParameter >> execute [
 	(NautilusRefactoring model: context) removeParameterFor: context selectedMethod 
 ]
 
+{ #category : #accessing }
+SugsRemoveParameter >> icon [
+	^self iconNamed: #smallCancelIcon
+]
+
 { #category : #execution }
 SugsRemoveParameter >> isValidForContext [
 	^ context hasParameters
@@ -20,4 +25,9 @@ SugsRemoveParameter >> isValidForContext [
 { #category : #accessing }
 SugsRemoveParameter >> label [
 	^'Remove parameter' translated
+]
+
+{ #category : #accessing }
+SugsRemoveParameter >> position [
+	^210
 ]

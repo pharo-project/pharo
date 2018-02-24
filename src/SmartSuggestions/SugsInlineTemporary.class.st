@@ -12,7 +12,17 @@ SugsInlineTemporary >> execute [
 	 (NautilusRefactoring model: context) inlineTemporaryBetween: context selectedInterval from: context selectedMethod
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsInlineTemporary >> icon [
+	^self iconNamed: #smallLanguageIcon
+]
+
+{ #category : #display }
 SugsInlineTemporary >> label [
 	 ^'Inline temporary' translated
+]
+
+{ #category : #display }
+SugsInlineTemporary >> position [
+	^10
 ]

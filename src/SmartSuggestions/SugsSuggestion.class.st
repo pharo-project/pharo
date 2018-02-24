@@ -17,61 +17,6 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #'instance creation' }
-SugsSuggestion class >> for: blockCommand named: label icon: icon [ 
-	^ self new 
-		blockCommand: blockCommand;
-		label: label;
-		icon: icon;
-		yourself.
-]
-
-{ #category : #'instance creation' }
-SugsSuggestion class >> for: blockCommand named: label icon: icon position: position [
-	^ (self for: blockCommand named: label icon: icon)
-	 	  position: position;
-		  yourself.
-]
-
-{ #category : #'instance creation' }
-SugsSuggestion class >> for: blockCommand named: label icon: icon position: position isValidBlock: validBlock [
-	^ (self for: blockCommand named: label icon: icon position: position)
-   		  isValidBlock: validBlock;
-		  yourself.
-]
-
-{ #category : #'instance creation' }
-SugsSuggestion class >> for: blockCommand named: label icon: icon position: position keyText: key [
-	^ (self for: blockCommand named: label icon: icon position: position)
-		  keyText: key;
-		  yourself.
-]
-
-{ #category : #'instance creation' }
-SugsSuggestion class >> for: blockCommand named: label icon: icon position: position keyText: key  isValidBlock: validBlock [
-	^ (self for: blockCommand named: label icon: icon position: position)
-		  keyText: key;
-		 isValidBlock: validBlock;
-		  yourself.
-]
-
-{ #category : #'instance creation' }
-SugsSuggestion class >> icon: icon position: position [
-	^ self new
-	 	icon: icon;	 
-		position: position;
-		yourself.
-]
-
-{ #category : #'instance creation' }
-SugsSuggestion class >> icon: icon position: position keyText: key [
-	^ self new
-	 	icon: icon;	 
-		position: position;
-		keyText: key;
-		yourself.
-]
-
 { #category : #comparing }
 SugsSuggestion >> = otherSuggestion [
 	otherSuggestion class = self class ifFalse: [  ^false ].

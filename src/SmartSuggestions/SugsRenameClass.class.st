@@ -13,6 +13,21 @@ SugsRenameClass >> execute [
 ]
 
 { #category : #accessing }
+SugsRenameClass >> icon [
+	^self iconNamed: #smallLanguageIcon
+]
+
+{ #category : #accessing }
+SugsRenameClass >> keyText [
+	^'r'
+]
+
+{ #category : #accessing }
 SugsRenameClass >> label [
 	^'Rename class' translated
+]
+
+{ #category : #accessing }
+SugsRenameClass >> position [
+	^20
 ]

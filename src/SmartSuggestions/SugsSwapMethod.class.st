@@ -14,10 +14,20 @@ SugsSwapMethod >> execute [
 ]
 
 { #category : #accessing }
+SugsSwapMethod >> icon [
+	^self iconNamed: #smallRedoIcon
+]
+
+{ #category : #accessing }
 SugsSwapMethod >> label [
 	
 	^ context selectedMethod 
 		ifNil: ['Swap method' translated] 
 		ifNotNil: [context selectedMethod methodClass isMeta ifTrue: ['Move to instance side' translated] ifFalse:['Move to class side' translated]]
 
+]
+
+{ #category : #accessing }
+SugsSwapMethod >> position [
+	^50
 ]

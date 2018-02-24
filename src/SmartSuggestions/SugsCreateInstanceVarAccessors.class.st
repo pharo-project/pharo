@@ -12,12 +12,22 @@ SugsCreateInstanceVarAccessors >> execute [
 	(NautilusRefactoring model: context) accessorsInstVarNamed: context selectedVariableName from: context selectedClass
 ]
 
+{ #category : #display }
+SugsCreateInstanceVarAccessors >> icon [
+	^self iconNamed: #smallLanguageIcon
+]
+
 { #category : #execution }
 SugsCreateInstanceVarAccessors >> isValidForContext [
 	^ context hasUnImplementedAccessors
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsCreateInstanceVarAccessors >> label [
 	^ 'Create Accesors' translated
+]
+
+{ #category : #display }
+SugsCreateInstanceVarAccessors >> position [
+	^100
 ]

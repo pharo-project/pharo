@@ -15,7 +15,22 @@ SugsFindSenders >> execute [
 				autoSelect: nil
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsFindSenders >> icon [
+	^self iconNamed: #smallFindIcon
+]
+
+{ #category : #display }
+SugsFindSenders >> keyText [
+	^'n'
+]
+
+{ #category : #display }
 SugsFindSenders >> label [
 	^ 'Senders' translated
+]
+
+{ #category : #display }
+SugsFindSenders >> position [
+	^10
 ]

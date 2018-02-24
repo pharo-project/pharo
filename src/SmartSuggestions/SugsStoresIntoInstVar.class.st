@@ -13,6 +13,16 @@ SugsStoresIntoInstVar >> execute [
 ]
 
 { #category : #accessing }
+SugsStoresIntoInstVar >> icon [
+	^self iconNamed: #smallInspectItIcon
+]
+
+{ #category : #accessing }
 SugsStoresIntoInstVar >> label [
 	^'Stores Into...' translated
+]
+
+{ #category : #accessing }
+SugsStoresIntoInstVar >> position [
+	^60
 ]
