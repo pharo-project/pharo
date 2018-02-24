@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsPushDownMethod class >> nodes [
+	^{RBMethodNode}
+]
+
 { #category : #execution }
 SugsPushDownMethod >> execute [
 	(NautilusRefactoring model: context) pushDownMethodsFor: (OrderedCollection with: context selectedMethod)

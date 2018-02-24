@@ -10,6 +10,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsExtractStatements class >> nodes [
+	^{RBSequenceNode}
+]
+
 { #category : #execution }
 SugsExtractStatements >> execute [
 	| selectedValidCodeInterval |

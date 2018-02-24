@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsRenameMethod class >> nodes [
+	^{RBMethodNode} 
+]
+
 { #category : #execution }
 SugsRenameMethod >> execute [
 	 (NautilusRefactoring model: context) renameMethodFor: context selectedMethod 

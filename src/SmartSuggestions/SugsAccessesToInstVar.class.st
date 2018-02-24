@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsAccessesToInstVar class >> nodes [
+	^{RBInstanceVariableNode}
+]
+
 { #category : #execution }
 SugsAccessesToInstVar >> execute [
 	^SystemNavigation default browseAllAccessesTo: context selectedVariableName from: context selectedClass

@@ -8,6 +8,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsDeprecateMethod class >> nodes [
+	^{RBMethodNode}
+]
+
 { #category : #execution }
 SugsDeprecateMethod >> execute [
 	(NautilusRefactoring model: context) deprecateMethodFor: context selectedMethod

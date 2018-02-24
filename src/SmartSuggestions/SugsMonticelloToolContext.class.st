@@ -19,7 +19,7 @@ SugsMonticelloToolContext >> selectedMethod [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : #refactoring }
 SugsMonticelloToolContext >> sourceTextArea [
-	^model sourceTextArea
+	^ model window submorphs detect: [:ea | ea respondsTo: #getTextSelector ].
 ]

@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsDelegateMethod class >> nodes [
+	^{RBMethodNode}
+]
+
 { #category : #execution }
 SugsDelegateMethod >> execute [
 	 (NautilusRefactoring model: context) moveMethodFor: context selectedMethod

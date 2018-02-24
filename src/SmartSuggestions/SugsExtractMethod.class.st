@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsExtractMethod class >> nodes [
+	^{RBMessageNode . RBLiteralNode . RBBlockNode}
+]
+
 { #category : #execution }
 SugsExtractMethod >> execute [
 	(NautilusRefactoring model: context) extractToMethodTextSelection

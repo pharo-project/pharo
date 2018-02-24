@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsInline class >> nodes [
+	^{RBMessageNode}
+]
+
 { #category : #execution }
 SugsInline >> execute [
 	 (NautilusRefactoring model: context) inlineMethodBetween: context selectedInterval from: context selectedMethod

@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsStoresIntoInstVar class >> nodes [
+	^{RBInstanceVariableNode}
+]
+
 { #category : #execution }
 SugsStoresIntoInstVar >> execute [
 	 SystemNavigation default browseAllStoresInto: context selectedVariableName from: context selectedClass

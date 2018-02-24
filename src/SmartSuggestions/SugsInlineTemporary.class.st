@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsInlineTemporary class >> nodes [
+	^{RBAssignmentNode}
+]
+
 { #category : #execution }
 SugsInlineTemporary >> execute [
 	 (NautilusRefactoring model: context) inlineTemporaryBetween: context selectedInterval from: context selectedMethod

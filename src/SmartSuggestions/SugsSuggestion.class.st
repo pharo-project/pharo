@@ -1,6 +1,21 @@
 "
 I'm the representation from a suggestion that can be executed.
-I have some information related to the suggestion.
+
+How to add a AST Menu:
+
+1) make a subclass of SugsSuggestion
+2) on the class side, #node returns the AST nodes you are interested in
+3) instance side:
+
+execute
+	the action to be performed
+label
+	the string used in the menu
+
+optional
+	icon		
+	position
+	
 "
 Class {
 	#name : #SugsSuggestion,
@@ -10,6 +25,21 @@ Class {
 	],
 	#category : #'SmartSuggestions-Suggestion'
 }
+
+{ #category : #'instance creation' }
+SugsSuggestion class >> for: aClass [
+	^(self suggestionsFor: aClass) collect: #new
+]
+
+{ #category : #accessing }
+SugsSuggestion class >> nodes [
+	^{RBProgramNode}
+]
+
+{ #category : #'instance creation' }
+SugsSuggestion class >> suggestionsFor: aClass [
+	^self subclasses select: [:suggestionClass |  suggestionClass nodes includes: aClass ]
+]
 
 { #category : #comparing }
 SugsSuggestion >> = otherSuggestion [
@@ -31,11 +61,6 @@ SugsSuggestion >> execute [
 { #category : #display }
 SugsSuggestion >> icon [
 	^nil
-]
-
-{ #category : #private }
-SugsSuggestion >> iconName: aSymbol [
-	self icon: (self iconNamed: aSymbol)
 ]
 
 { #category : #execution }

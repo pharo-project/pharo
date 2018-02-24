@@ -1,13 +1,8 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*SmartSuggestions' }
-RBProgramNode >> specialCommands [
-	^#().
-]
-
-{ #category : #'*SmartSuggestions' }
 RBProgramNode >> suggestions [
-	^SugsSuggestionFactory globalCommands addAll: self specialCommands; yourself 
+	^SugsSuggestion for: self class
 ]
 
 { #category : #'*SmartSuggestions' }

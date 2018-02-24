@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsBrowseTraitUsers class >> nodes [
+	^{RBGlobalNode}
+]
+
 { #category : #execution }
 SugsBrowseTraitUsers >> execute [
 	SystemNavigation default browseAllUsersOfTrait: context bindedSelectedClass.

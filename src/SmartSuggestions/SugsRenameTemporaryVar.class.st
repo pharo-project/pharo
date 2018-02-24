@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsRenameTemporaryVar class >> nodes [
+	^{RBTemporaryNode}
+]
+
 { #category : #execution }
 SugsRenameTemporaryVar >> execute [
 	(NautilusRefactoring model: context)

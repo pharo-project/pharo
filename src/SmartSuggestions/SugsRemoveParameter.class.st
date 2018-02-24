@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsRemoveParameter class >> nodes [
+	^{RBMethodNode}
+]
+
 { #category : #execution }
 SugsRemoveParameter >> execute [
 	(NautilusRefactoring model: context) removeParameterFor: context selectedMethod 

@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsSwapMethod class >> node [
+	^{RBMethodNode}
+]
+
 { #category : #execution }
 SugsSwapMethod >> execute [
 	^(NautilusRefactoring model: context) 
