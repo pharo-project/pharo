@@ -114,11 +114,6 @@ SugsAbstractContext >> hasUnacceptedEdits [
 	^self sourceTextArea hasUnacceptedEdits
 ]
 
-{ #category : #testing }
-SugsAbstractContext >> isMethodSelected [
-	^selectedNode isMethod 
-]
-
 { #category : #accessing }
 SugsAbstractContext >> model [
 	^ model
@@ -129,20 +124,10 @@ SugsAbstractContext >> model: aModel [
 	model := aModel
 ]
 
-{ #category : #accessing }
-SugsAbstractContext >> nodeStart [
-	^selectedNode start.
-]
-
-{ #category : #accessing }
-SugsAbstractContext >> nodeStop [
-	^selectedNode stop.
-]
-
 { #category : #selection }
 SugsAbstractContext >> selectTheTextForTheNode [
 	selectionPreviousHighligth := self selectedInterval .
-	selectedNode ifNotNil: [ self sourceTextArea selectFrom: self nodeStart to: self nodeStop]
+	selectedNode ifNotNil: [ self sourceTextArea selectFrom: self selectedNode start to: self selectedNode stop]
 ]
 
 { #category : #selection }

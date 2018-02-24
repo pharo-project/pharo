@@ -13,12 +13,12 @@ SugsSwapMethod >> execute [
 		swapMethodFor: (OrderedCollection with: context selectedMethod).
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsSwapMethod >> icon [
 	^self iconNamed: #smallRedoIcon
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsSwapMethod >> label [
 	
 	^ context selectedMethod 
@@ -27,7 +27,7 @@ SugsSwapMethod >> label [
 
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsSwapMethod >> position [
 	^50
 ]

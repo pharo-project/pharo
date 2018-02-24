@@ -8,12 +8,18 @@ Class {
 }
 
 { #category : #selection }
+SugsMonticelloToolContext >> selectedClass [
+	
+	^ model selectedClass
+]
+
+{ #category : #selection }
 SugsMonticelloToolContext >> selectedMethod [
 	
 	^ nil
 ]
 
-{ #category : #refactoring }
+{ #category : #accessing }
 SugsMonticelloToolContext >> sourceTextArea [
-	^ model window submorphs detect: [:ea | ea respondsTo: #getTextSelector ].
+	^model sourceTextArea
 ]

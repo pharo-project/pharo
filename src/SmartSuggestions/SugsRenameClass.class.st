@@ -12,22 +12,22 @@ SugsRenameClass >> execute [
 	(NautilusRefactoring model: context) renameClass: context bindedSelectedClass.
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameClass >> icon [
 	^self iconNamed: #smallLanguageIcon
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameClass >> keyText [
 	^'r'
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameClass >> label [
 	^'Rename class' translated
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameClass >> position [
 	^20
 ]

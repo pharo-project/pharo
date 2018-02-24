@@ -12,22 +12,22 @@ SugsRenameClassVar >> execute [
 	(NautilusRefactoring model: context) renameClassVarNamed: context selectedVariableName from: context selectedClass
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameClassVar >> icon [
 	^self iconNamed: #smallLanguageIcon
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameClassVar >> keyText [
 	^'r'
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameClassVar >> label [
 	^ 'Rename' translated
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameClassVar >> position [
 	^10
 ]
