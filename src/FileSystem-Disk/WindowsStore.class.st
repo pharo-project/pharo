@@ -65,7 +65,7 @@ WindowsStore >> nodesAt: aPath do: aBlock [
 
 	aPath isRoot ifFalse: [ ^super nodesAt: aPath do: aBlock ].
 
-	mask := self fileAttributePrimitives primLogicalDrives.
+	mask := FileAttributePrimitives primLogicalDrives.
 	0 to: 25 do: [ :i |
 		(mask bitAnd: (1 bitShift: i)) ~= 0 ifTrue: [ 
 			drive := String with: (Character value: ($A asciiValue + i)) with: $:.

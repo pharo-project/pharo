@@ -308,7 +308,7 @@ DiskDirectoryEntry >> posixPermissions [
 { #category : #'private - accessing' }
 DiskDirectoryEntry >> primitives [
 	"Answer the attribute primitives to be used by the receiver.
-	To avoid initialisation problems during testing, use lazy initialisation."
+	To avoid initialisation problems during bootstrap use lazy initialisation."
 
 	^Primitives ifNil: [ Primitives := FileAttributesPluginPrims default ]
 ]
