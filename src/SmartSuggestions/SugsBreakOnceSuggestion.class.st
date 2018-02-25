@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsBreakOnceSuggestion class >> nodes [
+	^{RBProgramNode}
+]
+
 { #category : #execution }
 SugsBreakOnceSuggestion >> execute [
 	context hasUnacceptedEdits ifTrue: [ ^context sourceTextArea acceptEdits].

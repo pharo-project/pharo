@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsFindSenders class >> nodes [
+	^{RBMethodNode . RBMessageNode}.
+]
+
 { #category : #execution }
 SugsFindSenders >> execute [
 	SystemNavigation default

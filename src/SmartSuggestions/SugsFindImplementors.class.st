@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsFindImplementors class >> nodes [
+	^{RBMessageNode}
+]
+
 { #category : #execution }
 SugsFindImplementors >> execute [
 	SystemNavigation default browseAllImplementorsOf: context selectedMessageName

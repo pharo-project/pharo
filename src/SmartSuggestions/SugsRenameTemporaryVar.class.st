@@ -7,30 +7,35 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsRenameTemporaryVar class >> nodes [
+	^{RBTemporaryNode}
+]
+
 { #category : #execution }
 SugsRenameTemporaryVar >> execute [
 	(NautilusRefactoring model: context)
 				renameTemporaryNamed: context selectedVariableName
-				Between: (context nodeStart to: context nodeStop)
+				Between: (context selectedNode start to: context selectedNode stop)
 				from: context selectedMethod
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameTemporaryVar >> icon [
 	^self iconNamed: #smallLanguageIcon
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameTemporaryVar >> keyText [
 	^'r'
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameTemporaryVar >> label [
 	^  'Rename' translated
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameTemporaryVar >> position [
 	^10
 ]

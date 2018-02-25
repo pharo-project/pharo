@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #selection }
+SugsMonticelloToolContext >> selectedClass [
+	
+	^ model selectedClass
+]
+
+{ #category : #selection }
 SugsMonticelloToolContext >> selectedMethod [
 	
 	^ nil

@@ -7,27 +7,37 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsRenameClass class >> nodes [
+	^{RBGlobalNode}
+]
+
 { #category : #execution }
 SugsRenameClass >> execute [
 	(NautilusRefactoring model: context) renameClass: context bindedSelectedClass.
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameClass >> icon [
 	^self iconNamed: #smallLanguageIcon
 ]
 
-{ #category : #accessing }
+{ #category : #execution }
+SugsRenameClass >> isValidForContext [
+	^context selectedNode binding value isClass
+]
+
+{ #category : #display }
 SugsRenameClass >> keyText [
 	^'r'
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameClass >> label [
 	^'Rename class' translated
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameClass >> position [
 	^20
 ]

@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsBreakConditionSuggestion class >> nodes [
+	^{RBProgramNode}
+]
+
 { #category : #breakpoints }
 SugsBreakConditionSuggestion >> breakpointForCondition [
 	(UIManager default 

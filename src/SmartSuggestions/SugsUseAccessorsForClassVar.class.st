@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsUseAccessorsForClassVar class >> nodes [
+	^{RBGlobalNode}
+]
+
 { #category : #execution }
 SugsUseAccessorsForClassVar >> execute [
 	(NautilusRefactoring model: context) abstractClassVarFrom: context selectedClass
@@ -15,6 +20,11 @@ SugsUseAccessorsForClassVar >> execute [
 { #category : #display }
 SugsUseAccessorsForClassVar >> icon [
 	^self iconNamed: #smallLanguageIcon
+]
+
+{ #category : #execution }
+SugsUseAccessorsForClassVar >> isValidForContext [
+	^context selectedNode binding isClassVariable
 ]
 
 { #category : #display }

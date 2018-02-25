@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsPullUpMethod class >> nodes [
+	^{RBMethodNode}
+]
+
 { #category : #execution }
 SugsPullUpMethod >> execute [
 	(NautilusRefactoring model: context) pullUpMethodsFor: (OrderedCollection with: context selectedMethod)

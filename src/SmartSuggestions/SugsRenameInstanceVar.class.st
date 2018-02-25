@@ -7,27 +7,32 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsRenameInstanceVar class >> nodes [
+	^{RBInstanceVariableNode} 
+]
+
 { #category : #execution }
 SugsRenameInstanceVar >> execute [
 	(NautilusRefactoring model: context) renameInstVarNamed: context selectedVariableName from: context selectedClass
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameInstanceVar >> icon [
 	^self iconNamed: #smallLanguageIcon
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameInstanceVar >> keyText [
 	^'r'
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameInstanceVar >> label [
 	^'Rename' translated
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsRenameInstanceVar >> position [
 	^10
 ]

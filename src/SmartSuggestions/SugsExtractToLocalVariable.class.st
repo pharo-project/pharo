@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsExtractToLocalVariable class >> nodes [
+	^{RBSequenceNode. RBMessageNode. RBLiteralNode . RBBlockNode }
+]
+
 { #category : #execution }
 SugsExtractToLocalVariable >> execute [
 	(NautilusRefactoring model: context) extractToTempTextSelection

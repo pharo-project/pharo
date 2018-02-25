@@ -7,18 +7,23 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsSwapMethod class >> nodes [
+	^{RBMethodNode}
+]
+
 { #category : #execution }
 SugsSwapMethod >> execute [
 	^(NautilusRefactoring model: context) 
 		swapMethodFor: (OrderedCollection with: context selectedMethod).
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsSwapMethod >> icon [
 	^self iconNamed: #smallRedoIcon
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsSwapMethod >> label [
 	
 	^ context selectedMethod 
@@ -27,7 +32,7 @@ SugsSwapMethod >> label [
 
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsSwapMethod >> position [
 	^50
 ]

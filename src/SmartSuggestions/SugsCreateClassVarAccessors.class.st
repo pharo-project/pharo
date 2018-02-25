@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsCreateClassVarAccessors class >> nodes [
+	^{RBGlobalNode}
+]
+
 { #category : #execution }
 SugsCreateClassVarAccessors >> execute [
 	(NautilusRefactoring model: context) accessorsClassVarNamed: context selectedVariableName from: context selectedClass
@@ -19,7 +24,7 @@ SugsCreateClassVarAccessors >> icon [
 
 { #category : #execution }
 SugsCreateClassVarAccessors >> isValidForContext [
-	^context hasClassUnImplementedAccessors 
+	^context selectedNode binding isClassVariable and: [context hasClassUnImplementedAccessors]
 ]
 
 { #category : #display }

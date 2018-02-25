@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsRemoveMethod class >> nodes [
+	^{RBMethodNode}
+]
+
 { #category : #execution }
 SugsRemoveMethod >> execute [
 	(NautilusRefactoring model: context) removeMethodsFor: (OrderedCollection with: context selectedMethod)

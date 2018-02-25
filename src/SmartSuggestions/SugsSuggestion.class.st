@@ -1,31 +1,53 @@
 "
 I'm the representation from a suggestion that can be executed.
-I have some information related to the suggestion.
+
+How to add to the AST Menu:
+
+1) make a subclass of SugsSuggestion
+2) on the class side, #nodes returns the AST nodes you are interested in
+3) instance side:
+
+execute
+	the action to be performed
+label
+	the string used in the menu
+
+optional
+	icon		
+	position
+	
 "
 Class {
 	#name : #SugsSuggestion,
 	#superclass : #Object,
 	#instVars : [
-		'blockCommand',
-		'context',
-		'label',
-		'icon',
-		'position',
-		'keyText',
-		'isValidBlock'
+		'context'
 	],
 	#category : #'SmartSuggestions-Suggestion'
 }
+
+{ #category : #'instance creation' }
+SugsSuggestion class >> for: aClass [
+	^(self subclassesForNode: aClass) collect: [:each |each new]
+]
+
+{ #category : #accessing }
+SugsSuggestion class >> nodes [
+	^{RBProgramNode}
+]
+
+{ #category : #private }
+SugsSuggestion class >> subclassesForNode: aClass [
+	"all menu defitions define in which ast nodes they are interested by defining #nodes.
+	Subclass relationship is taken into account"
+	^self allSubclasses select: [:suggestionClass |  
+		suggestionClass nodes anySatisfy: [:class | aClass == class or: [aClass inheritsFrom: class]]]
+]
 
 { #category : #comparing }
 SugsSuggestion >> = otherSuggestion [
 	otherSuggestion class = self class ifFalse: [  ^false ].
 	^  self label = otherSuggestion label.
-]
-
-{ #category : #private }
-SugsSuggestion >> blockCommand: aBlock [ 
-	blockCommand := aBlock.
 ]
 
 { #category : #private }
@@ -36,62 +58,32 @@ SugsSuggestion >> context: theContext [
 
 { #category : #execution }
 SugsSuggestion >> execute [
-	blockCommand value: context.
+	self subclassResponsibility 
 ]
 
 { #category : #display }
 SugsSuggestion >> icon [
-	^icon.
-]
-
-{ #category : #private }
-SugsSuggestion >> icon: anIcon [
-	icon := anIcon 
-]
-
-{ #category : #private }
-SugsSuggestion >> iconName: aSymbol [
-	self icon: (self iconNamed: aSymbol)
-]
-
-{ #category : #private }
-SugsSuggestion >> isValidBlock: aBlock [ 
-	isValidBlock := aBlock.
+	^nil
 ]
 
 { #category : #execution }
 SugsSuggestion >> isValidForContext [
-	^ isValidBlock ifNil:[true] ifNotNil:[isValidBlock value: context].
+	^ true
 ]
 
 { #category : #display }
 SugsSuggestion >> keyText [
-	^ keyText
-]
-
-{ #category : #display }
-SugsSuggestion >> keyText: key [
-	keyText := key.
+	^nil
 ]
 
 { #category : #display }
 SugsSuggestion >> label [
-	^label
-]
-
-{ #category : #private }
-SugsSuggestion >> label: aLabel [
-	label := aLabel.
+	^nil
 ]
 
 { #category : #display }
 SugsSuggestion >> position [
-	^ position ifNil:[10000] ifNotNil: [ position ].
-]
-
-{ #category : #private }
-SugsSuggestion >> position: aPosition [
-	position := aPosition .
+	^1000
 ]
 
 { #category : #printing }

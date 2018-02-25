@@ -10,7 +10,7 @@ Class {
 { #category : #selection }
 SugsGlamourCodeContext >> selectTheTextForTheNode [
 	selectionPreviousHighligth := self model primarySelectionInterval .
-	selectedNode ifNotNil: [ self model primarySelectionInterval: (self nodeStart to: self nodeStop)]
+	selectedNode ifNotNil: [ self model primarySelectionInterval: (self selectedNode start to: self selectedNode stop)]
 ]
 
 { #category : #selection }
