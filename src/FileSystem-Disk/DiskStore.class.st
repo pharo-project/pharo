@@ -11,6 +11,7 @@ Class {
 	#classVars : [
 		'CurrentFS',
 		'DefaultWorkingDirectory',
+		'FileAttributesPrimitives',
 		'Primitives'
 	],
 	#category : #'FileSystem-Disk'
@@ -21,6 +22,12 @@ DiskStore class >> activeClass [
 	self allSubclassesDo: [:ea | 
 		ea isActiveClass ifTrue: [^ ea]].
 	^ self
+]
+
+{ #category : #accessing }
+DiskStore class >> attributesClass [
+
+	^DiskFileAttributes 
 ]
 
 { #category : #'system startup' }
@@ -64,6 +71,14 @@ DiskStore class >> delimiter [
 	^ self current delimiter
 ]
 
+{ #category : #accessing }
+DiskStore class >> fileAttributesPrimitives [
+	"Answer the current file attribute primitives instance"
+
+	^FileAttributesPrimitives ifNil: 
+		[ FileAttributesPrimitives := FileAttributesPluginPrims default ]
+]
+
 { #category : #'class initialization' }
 DiskStore class >> initialize [
 	self useFilePlugin.
@@ -83,8 +98,14 @@ DiskStore class >> maxFileNameLength [
 
 { #category : #current }
 DiskStore class >> reset [
+	"Reset the class as part of session startup and shutdown"
+
 	DefaultWorkingDirectory := nil.
-	CurrentFS := nil
+	CurrentFS := nil.
+	FileAttributesPluginPrims reset.
+	DiskDirectoryEntry reset.
+	FileAttributesPrimitives := nil.
+
 ]
 
 { #category : #'system startup' }
@@ -103,12 +124,22 @@ DiskStore class >> startUp: resuming [
 
 { #category : #'class initialization' }
 DiskStore class >> useFilePlugin [
-	Primitives := FilePluginPrims new
+	"Initialise the plugins required by the store"
+
+	Primitives := FilePluginPrims new.
+
 ]
 
 { #category : #comparing }
 DiskStore >> = other [
 	^ self species = other species
+]
+
+{ #category : #accessing }
+DiskStore >> accessTimeOf: aPath [
+	"Return the date of last access of the File described by aPath"
+	^DateAndTime fromUnixTime:
+		(FileAttributesPrimitives fileAttribute: (self stringFromPath: aPath) number: 9).
 ]
 
 { #category : #private }
@@ -117,15 +148,28 @@ DiskStore >> basenameFromEntry: entry [
 ]
 
 { #category : #private }
+DiskStore >> basenameFromNode: aNode [
+	^ aNode at: 1
+]
+
+{ #category : #private }
 DiskStore >> basicCreationTimeOf: anEntry [
 	" the entry contains the seconds since the squeak epoch in local time"
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
 	^  (DateAndTime fromSeconds: (anEntry at: 2) offset: 0) translateTo: DateAndTime localOffset
 ]
 
 { #category : #private }
 DiskStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
 	| encodedPathString index entry pathString |
-		
+
+	self 
+		deprecated: 'Use #nodesAt:do: instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
 	index := 1.
 	pathString := self stringFromPath: aPath.
 	encodedPathString := Primitives encode: pathString.
@@ -153,17 +197,30 @@ DiskStore >> basicEntryAt: aPath [
 ]
 
 { #category : #private }
-DiskStore >> basicIsDirectory: anEntry [
-	^ anEntry at: 4
+DiskStore >> basicIsDirectory: aNode [
+	| mask statAttributes |
+
+	statAttributes := aNode at: 2.
+	statAttributes ifNil: [ ^false ].
+	mask := statAttributes at: 2.
+	^(mask bitAnd: FileAttributesPrimitives s_IFMT) = FileAttributesPrimitives s_IFDIR
 ]
 
 { #category : #private }
 DiskStore >> basicIsFile: anEntry [
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
 	^ (anEntry at: 4) not
 ]
 
 { #category : #private }
 DiskStore >> basicIsSymlink: anEntry [
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
 	^(anEntry size >= 7)
 		ifTrue: [ anEntry at: 7 ]
 		ifFalse: [ false ]
@@ -172,6 +229,10 @@ DiskStore >> basicIsSymlink: anEntry [
 { #category : #private }
 DiskStore >> basicModificationTimeOf: anEntry [
 	" the entry contains the seconds since the squeak epoch in local time"
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
 	^ (DateAndTime fromSeconds: (anEntry at: 3) offset: 0) translateTo: DateAndTime localOffset
 ]
 
@@ -185,6 +246,10 @@ DiskStore >> basicOpen: aPath writable: aBoolean [
 
 { #category : #private }
 DiskStore >> basicPosixPermissions: anEntry [
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
 	^ (anEntry size >= 6)
 		ifTrue: [ anEntry at: 6 ]
 		ifFalse: [ nil ].
@@ -192,7 +257,18 @@ DiskStore >> basicPosixPermissions: anEntry [
 
 { #category : #private }
 DiskStore >> basicSizeOf: anEntry [
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
 	^ (anEntry at: 5)
+]
+
+{ #category : #accessing }
+DiskStore >> changeTimeOf: aPath [
+
+	^DateAndTime fromUnixTime:
+		(FileAttributesPrimitives fileAttribute: (self stringFromPath: aPath) number: 11).
 ]
 
 { #category : #public }
@@ -235,6 +311,19 @@ DiskStore >> createDirectory: path [
 ]
 
 { #category : #accessing }
+DiskStore >> creationTimeOf: aPath [
+
+	| pathString unixTime |
+	
+	pathString := self stringFromPath: aPath.
+	"FileAttributesPluginPrims>>fileAttribute:number: v1.2.6 and earlier has a bug that results in a creationTime returning -1 instead of nil.  For now, treat -1 the same as nil"
+	unixTime := FileAttributesPrimitives fileAttribute: pathString number: 12.
+	(unixTime isNil or: [ unixTime = -1 ]) ifTrue: 
+		[ unixTime := FileAttributesPrimitives fileAttribute: pathString number: 11 ].
+	^DateAndTime fromUnixTime: unixTime.
+]
+
+{ #category : #accessing }
 DiskStore >> defaultWorkingDirectory [
 	"Answer the default working directory, which is defined as the directory where the image resides."
 
@@ -246,7 +335,7 @@ DiskStore >> defaultWorkingDirectory [
 DiskStore >> delete: path [
 	| pathString encodedPathString |
 	
-	(self exists: path)
+	((self exists: path) or: [ self isSymlink: path ])
 		ifFalse: [ ^ FileDoesNotExist signalWith: path ].
 		
 	pathString := self stringFromPath: path.
@@ -261,9 +350,51 @@ DiskStore >> delete: path [
 				forFileNamed: pathString ]
 ]
 
+{ #category : #accessing }
+DiskStore >> deviceIdOf: aPath [
+	"Return the device id of the File described by aPath"
+	^ FileAttributesPrimitives fileAttribute: (self stringFromPath: aPath) number: 4
+]
+
+{ #category : #private }
+DiskStore >> entryFor: aPath [
+	"Answer the Directory Entry for the supplied path"
+
+	^DiskDirectoryEntry reference: (FileReference fileSystem: FileSystem disk path: aPath)
+]
+
+{ #category : #public }
+DiskStore >> entryFromNode: node path: path for: aFileSystem [
+
+	| entryPath |
+	entryPath := path / (self basenameFromNode: node).
+	^DiskDirectoryEntry reference: (FileReference fileSystem: aFileSystem path: entryPath).
+
+]
+
+{ #category : #testing }
+DiskStore >> exists: aPath [
+
+	aPath isRoot ifTrue: [ ^true ].
+	^FileAttributesPrimitives exists: (self stringFromPath: aPath).
+]
+
+{ #category : #private }
+DiskStore >> fileAttributesPrimitives [
+	"Answer the file attributes instance"
+
+	^FileAttributesPrimitives ifNil: [ self class fileAttributesPrimitives ]
+]
+
 { #category : #printing }
 DiskStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'File @ '
+]
+
+{ #category : #accessing }
+DiskStore >> gidOf: aPath [
+	"Return the gid of the File described by aPath"
+	^FileAttributesPrimitives fileAttribute: (self stringFromPath: aPath) number: 7
 ]
 
 { #category : #accessing }
@@ -280,20 +411,32 @@ DiskStore >> hash [
 DiskStore >> initialize [
 	super initialize.
 	maxFileNameLength := Smalltalk vm maxFilenameLength ifNil: [ 255 ].
+	"Ensure that the FileAttributesPrimitives have been set"
+	self class fileAttributesPrimitives
 ]
 
-{ #category : #public }
+{ #category : #accessing }
+DiskStore >> inodeOf: aPath [
+	"Return the inode number of the File described by aPath"
+	^FileAttributesPrimitives fileAttribute: (self stringFromPath: aPath) number: 3
+]
+
+{ #category : #testing }
+DiskStore >> isBlock: aPath [
+	"Answer a boolean indicating whether the supplied path is a Block file"
+	^FileAttributesPrimitives isBlock: (self stringFromPath: aPath)
+]
+
+{ #category : #testing }
+DiskStore >> isCharacter: aPath [
+	"Answer a boolean indicating whether the supplied path is a Character file"
+	^FileAttributesPrimitives isCharacter: (self stringFromPath: aPath)
+]
+
+{ #category : #accessing }
 DiskStore >> isDirectory: aPath [
-	| entry |
-	
-	aPath isRoot ifTrue: [ ^ true ].
-	
-	entry := self  basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: [  false ]
-		ifFalse: [ self basicIsDirectory: entry ].
-	
+	"Answer a boolean indicating whether the supplied path is a Directory file"
+	^FileAttributesPrimitives isDirectory: (self stringFromPath: aPath)
 ]
 
 { #category : #testing }
@@ -302,53 +445,53 @@ DiskStore >> isDiskFileSystem [
 ]
 
 { #category : #public }
+DiskStore >> isExecutable: aPath [
+
+	^FileAttributesPrimitives isExecutable: (self stringFromPath: aPath)
+]
+
+{ #category : #testing }
+DiskStore >> isFIFO: aPath [
+	"Answer a boolean indicating whether the supplied path is a FIFO file"
+	^FileAttributesPrimitives isFIFO: (self stringFromPath: aPath)
+]
+
+{ #category : #public }
 DiskStore >> isFile: aPath [
-	| entry |
-	
-	aPath isRoot ifTrue: [ ^ false ].
-	
-	entry := self  basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: [  false ]
-		ifFalse: [ self basicIsFile: entry ].
-	
+	"Answer a boolean indicating whether the supplied path is a file, i.e. not a directory"
+
+	aPath isRoot ifTrue: [ ^false ].
+	^FileAttributesPrimitives isFile: (self stringFromPath: aPath)	
 ]
 
 { #category : #public }
 DiskStore >> isReadable: aPath [
-	(self exists: aPath) ifFalse: [ ^ false ].
-	self flag: 'TODO: we need a decent primitive for this...'.
-	(self basicOpen: aPath writable: false) 
-		ifNotNil: [ :id|
-			Primitives close: id.
-			^ true].
-	^ false
+
+	^FileAttributesPrimitives isReadable: (self stringFromPath: aPath)
 ]
 
-{ #category : #public }
+{ #category : #testing }
+DiskStore >> isRegular: aPath [
+	"Answer a boolean indicating whether the supplied path is a Regular file"
+	^FileAttributesPrimitives isRegular: (self stringFromPath: aPath)
+]
+
+{ #category : #testing }
+DiskStore >> isSocket: aPath [
+	"Answer a boolean indicating whether the supplied path is a Socket file"
+	^FileAttributesPrimitives isSocket: (self stringFromPath: aPath)
+]
+
+{ #category : #testing }
 DiskStore >> isSymlink: aPath [
-	| entry |
-	
-	aPath isRoot ifTrue: [ ^false ].
-	
-	entry := self  basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: [  false ]
-		ifFalse: [ self basicIsSymlink: entry ].
-	
+	"Answer a boolean indicating whether the supplied path is a Symlink file"
+	^FileAttributesPrimitives isSymlink: (self stringFromPath: aPath)
 ]
 
 { #category : #public }
 DiskStore >> isWritable: aPath [
-	(self exists: aPath) ifFalse: [ ^ false ].
-	self flag: 'TODO: we need a decent primitive for this...'.
-	(self basicOpen: aPath writable: true) 
-		ifNotNil: [ :id|
-			Primitives close: id.
-			^ true].
-	^ false
+
+	^FileAttributesPrimitives isWritable: (self stringFromPath: aPath)
 ]
 
 { #category : #public }
@@ -357,10 +500,29 @@ DiskStore >> maxFileNameLength [
 ]
 
 { #category : #private }
+DiskStore >> modeOf: aPath [
+	"Answer the statBuf.st_mode for the supplied path"
+	
+	^FileAttributesPrimitives fileAttribute: (self stringFromPath: aPath) number: 2
+]
+
+{ #category : #accessing }
+DiskStore >> modificationTimeOf: aPath [
+	"Return the date of last access of the File described by aPath"
+	^DateAndTime fromUnixTime:
+		(FileAttributesPrimitives fileAttribute: (self stringFromPath: aPath) number: 10).
+]
+
+{ #category : #private }
 DiskStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 	
 	| entry |
-	
+
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
+
 	aPath isRoot ifTrue: [ ^ presentBlock value: self rootNode ].
 	
 	entry := self basicEntryAt: aPath.
@@ -372,6 +534,39 @@ DiskStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 			presentBlock value: entry ].
 ]
 
+{ #category : #private }
+DiskStore >> nodesAt: aPath do: aBlock [
+
+	| pathString dirPointer entryData fileName attributes targetName |
+	
+	pathString := Primitives encode: (self stringFromPath: aPath).
+	(self isDirectory: aPath) ifFalse:
+		[ ^self signalDirectoryDoesNotExist: aPath ].
+
+	dirPointer := FileAttributesPrimitives primOpendir: pathString.
+	dirPointer ifNil: [ ^nil ].
+	[
+		entryData := FileAttributesPrimitives primReaddir: dirPointer.
+		[ entryData notNil ] whileTrue:
+			[
+				fileName := entryData first.
+				entryData at: 1 put: (FileAttributesPrimitives decode: fileName).
+				attributes := entryData at: 2.
+				attributes ifNotNil: 
+					[ targetName := attributes at: 1.
+					targetName ifNotNil: [ attributes at: 1 put: (Primitives decode: targetName) ] ].
+				aBlock value: entryData.
+				entryData := FileAttributesPrimitives primReaddir: dirPointer.
+			]
+	] ensure: [ FileAttributesPrimitives primClosedir: dirPointer ].
+]
+
+{ #category : #accessing }
+DiskStore >> numberOfHardLinks: aPath [
+	"Return the number of hard links for the File described by aPath"
+	^FileAttributesPrimitives fileAttribute: (self stringFromPath: aPath) number: 5
+]
+
 { #category : #public }
 DiskStore >> openFileStream: path writable: writable [
 	| fullPath |
@@ -380,6 +575,11 @@ DiskStore >> openFileStream: path writable: writable [
 	^ writable 
 		ifFalse: [ FileStream readOnlyFileNamed: fullPath ]
 		ifTrue: [ FileStream fileNamed: fullPath ]
+]
+
+{ #category : #accessing }
+DiskStore >> permissions: aPath [
+	^FileAttributesPrimitives permissions: (self stringFromPath: aPath)
 ]
 
 { #category : #public }
@@ -396,4 +596,23 @@ DiskStore >> rename: sourcePath to: destinationPath [
 { #category : #private }
 DiskStore >> rootNode [
 	^ #('' 0 0 true 0 8r555)
+]
+
+{ #category : #accessing }
+DiskStore >> sizeOf: aPath [
+	"Return the size of the File described by aPath"
+	^FileAttributesPrimitives fileAttribute: (self stringFromPath: aPath) number: 8.
+]
+
+{ #category : #private }
+DiskStore >> statAttributesFromNode: aNode [
+	"Answer the stat attributes array from the supplied node"
+	
+	^aNode at: 2
+]
+
+{ #category : #accessing }
+DiskStore >> uid: aPath [
+	"Return the uid of the File described by aPath"
+	^FileAttributesPrimitives fileAttribute: (self stringFromPath: aPath) number: 6.
 ]
