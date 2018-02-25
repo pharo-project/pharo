@@ -1,10 +1,10 @@
 "
 I'm the representation from a suggestion that can be executed.
 
-How to add a AST Menu:
+How to add to the AST Menu:
 
 1) make a subclass of SugsSuggestion
-2) on the class side, #node returns the AST nodes you are interested in
+2) on the class side, #nodes returns the AST nodes you are interested in
 3) instance side:
 
 execute
@@ -28,7 +28,7 @@ Class {
 
 { #category : #'instance creation' }
 SugsSuggestion class >> for: aClass [
-	^(self subclassesForNode: aClass) collect: #new
+	^(self subclassesForNode: aClass) collect: [:each |each new]
 ]
 
 { #category : #accessing }
@@ -38,7 +38,8 @@ SugsSuggestion class >> nodes [
 
 { #category : #private }
 SugsSuggestion class >> subclassesForNode: aClass [
-	"all menu defitions define in which ast nodes they are interested in #nodes"
+	"all menu defitions define in which ast nodes they are interested by defining #nodes.
+	Subclass relationship is taken into account"
 	^self allSubclasses select: [:suggestionClass |  
 		suggestionClass nodes anySatisfy: [:class | aClass == class or: [aClass inheritsFrom: class]]]
 ]
