@@ -24,7 +24,7 @@ SugsDelegateMethod >> icon [
 
 { #category : #execution }
 SugsDelegateMethod >> isValidForContext [
-	^ context hasInstanceVariable
+	^ context selectedClass allInstVarNames isNotEmpty
 ]
 
 { #category : #display }

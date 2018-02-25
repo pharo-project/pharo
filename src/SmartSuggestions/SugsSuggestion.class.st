@@ -28,7 +28,7 @@ Class {
 
 { #category : #'instance creation' }
 SugsSuggestion class >> for: aClass [
-	^(self suggestionsFor: aClass) collect: #new
+	^(self subclassesForNode: aClass) collect: #new
 ]
 
 { #category : #accessing }
@@ -36,9 +36,11 @@ SugsSuggestion class >> nodes [
 	^{RBProgramNode}
 ]
 
-{ #category : #'instance creation' }
-SugsSuggestion class >> suggestionsFor: aClass [
-	^self subclasses select: [:suggestionClass |  suggestionClass nodes includes: aClass ]
+{ #category : #private }
+SugsSuggestion class >> subclassesForNode: aClass [
+	"all menu defitions define in which ast nodes they are interested in #nodes"
+	^self allSubclasses select: [:suggestionClass |  
+		suggestionClass nodes anySatisfy: [:class | aClass == class or: [aClass inheritsFrom: class]]]
 ]
 
 { #category : #comparing }

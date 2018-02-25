@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #accessing }
-SugsSwapMethod class >> node [
+SugsSwapMethod class >> nodes [
 	^{RBMethodNode}
 ]
 

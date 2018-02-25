@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsBreakpointSuggestion class >> nodes [
+	^{}
+]
+
 { #category : #breakpoints }
 SugsBreakpointSuggestion >> hasUnacceptedEdits [
 	context ifNil: [ ^false ].

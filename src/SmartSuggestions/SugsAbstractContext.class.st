@@ -70,13 +70,6 @@ SugsAbstractContext >> hasClassUnImplementedAccessors [
 ]
 
 { #category : #testing }
-SugsAbstractContext >> hasInstanceVariable [
-	
-	^(RBCondition hasInstanceVariable: self selectedClass) check.
-
-]
-
-{ #category : #testing }
 SugsAbstractContext >> hasMoreSentences [
 	^ selectedNode parent isNotNil and: [ selectedNode parent isMethod not ]
 ]
