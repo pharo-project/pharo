@@ -97,7 +97,8 @@ BaselineOfIDE >> additionalInitialization [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
 	
-	self loadIceberg.
+	self loadIceberg.	
+	self loadCalypso.
 ]
 
 { #category : #baseline }
@@ -891,6 +892,20 @@ spec group: #default with: #(
 	"Importing tests of Shift"
 	'Shift'
 ).
+
+]
+
+{ #category : #actions }
+BaselineOfIDE >> loadCalypso [
+	Metacello new
+		baseline: 'Calypso';
+		repository: 'github://dionisiydk/Calypso:v0.9.1';
+		load.		
+	(Smalltalk classNamed: #ClyBrowser) beAllDefault.
+	
+	"unregister related repositories to do not expose system related repositories in Iceberg"
+	#(Calypso ClassAnnotation SystemCommands Commander) do: [ :repositoryName |
+		(IceRepository registry detect: [ :each | each name = repositoryName]) forget ].
 
 ]
 
