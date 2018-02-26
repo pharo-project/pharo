@@ -213,12 +213,15 @@ HDTestReport >> serializeError: error of: aTestCase [
 { #category : #running }
 HDTestReport >> setUp [
 
-	| aFile |
+	| aFile fileName |
 	
 	progressFile nextPutAll: 'running suite: ';
 		nextPutAll: suite name ; crlf; flush.
+
+	fileName := nodeName isEmptyOrNil ifTrue: [ '' ] ifFalse: [ nodeName ].
+	fileName := fileName , suite name , '-Test.xml'.
 		
-	aFile := File named: suite name , '-Test.xml'.
+	aFile := File named: fileName .
 	aFile delete.
 	stream := ZnCharacterWriteStream
 			on: (aFile writeStream setToEnd; yourself)
