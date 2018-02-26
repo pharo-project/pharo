@@ -1,3 +1,6 @@
+"
+An utility class for exporting code to changesets (*.cs) or Smalltalk source (*.st) files
+"
 Class {
 	#name : #CodeExporter,
 	#superclass : #Object,

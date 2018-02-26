@@ -31,7 +31,7 @@ BuilderManifestTest >> tearDown [
 			cl
 				removeFromChanges;
 				removeFromSystem ].
-
+	super tearDown.
 ]
 
 { #category : #tests }

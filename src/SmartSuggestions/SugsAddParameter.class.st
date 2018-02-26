@@ -7,12 +7,27 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsAddParameter class >> nodes [
+	^{RBMethodNode}
+]
+
 { #category : #execution }
 SugsAddParameter >> execute [
 	(NautilusRefactoring model: context) addAParameterFor: context selectedMethod
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsAddParameter >> icon [
+	^self iconNamed: #smallPushpinIcon
+]
+
+{ #category : #display }
 SugsAddParameter >> label [
 	^'Add a parameter' translated
+]
+
+{ #category : #display }
+SugsAddParameter >> position [
+	^200
 ]

@@ -7,12 +7,32 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsFormatCode class >> nodes [
+	^{RBSequenceNode . RBMethodNode}
+]
+
 { #category : #execution }
 SugsFormatCode >> execute [
 	context formatSourceCode
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsFormatCode >> icon [
+	^self iconNamed: #smallJustifiedIcon
+]
+
+{ #category : #display }
+SugsFormatCode >> keyText [
+	^'u'
+]
+
+{ #category : #display }
 SugsFormatCode >> label [
 	^'Format method' translated
+]
+
+{ #category : #display }
+SugsFormatCode >> position [
+	^0
 ]

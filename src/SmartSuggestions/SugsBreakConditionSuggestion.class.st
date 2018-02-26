@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsBreakConditionSuggestion class >> nodes [
+	^{RBProgramNode}
+]
+
 { #category : #breakpoints }
 SugsBreakConditionSuggestion >> breakpointForCondition [
 	(UIManager default 
@@ -64,9 +69,19 @@ SugsBreakConditionSuggestion >> isValidForContext [
 	^self selectedNodeHasBreakpoint not and: [self hasUnacceptedEdits not and:[ super isValidForContext ]]
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsBreakConditionSuggestion >> keyText [
+	^'b,c'
+]
+
+{ #category : #display }
 SugsBreakConditionSuggestion >> label [
 	^'Break on condition' translated
+]
+
+{ #category : #display }
+SugsBreakConditionSuggestion >> position [
+	^17
 ]
 
 { #category : #execution }

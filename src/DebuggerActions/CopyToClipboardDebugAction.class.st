@@ -5,7 +5,7 @@ A CopyToClipboardDebugAction copies a short debugging stack to the clipboard.
 Class {
 	#name : #CopyToClipboardDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
