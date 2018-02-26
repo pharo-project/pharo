@@ -897,16 +897,16 @@ spec group: #default with: #(
 
 { #category : #actions }
 BaselineOfIDE >> loadCalypso [
+
+	"Load Calypso without Iceberg Metacello integration"
+	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: false.
+
 	Metacello new
 		baseline: 'Calypso';
 		repository: 'github://dionisiydk/Calypso:v0.9.1';
 		load.		
-	(Smalltalk classNamed: #ClyBrowser) beAllDefault.
 	
-	"unregister related repositories to do not expose system related repositories in Iceberg"
-	#(Calypso ClassAnnotation SystemCommands Commander) do: [ :repositoryName |
-		(IceRepository registry detect: [ :each | each name = repositoryName]) forget ].
-
+	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 ]
 
 { #category : #actions }
