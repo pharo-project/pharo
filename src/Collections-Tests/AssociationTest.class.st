@@ -13,13 +13,15 @@ Class {
 
 { #category : #running }
 AssociationTest >> setUp [
+
 	super setUp.
 	a := 1 -> 'one'.
-	b := 1 -> 'een'.
+	b := 1 -> 'een'
 ]
 
 { #category : #tests }
 AssociationTest >> testComparison [
+
 	self assert: ((#a -> 'foo') < (#b -> 'zork'))
 ]
 
@@ -27,7 +29,7 @@ AssociationTest >> testComparison [
 AssociationTest >> testEquality [
 	
 	self 
-		assert: (a key = b key);
+		assert: a key equals: b key;
 		deny: (a value = b value);
 		deny: (a = b)
 
@@ -38,21 +40,21 @@ AssociationTest >> testEquality [
 AssociationTest >> testHash [
 
 	self 
-		assert: (a hash = a copy hash);
-		assert: (a hash = b hash)
+		assert: a hash equals: a copy hash;
+		assert: a hash equals: b hash
 ]
 
 { #category : #tests }
 AssociationTest >> testIsSelfEvaluating [
 	| anotherAssociation |
-	self assert: (a isSelfEvaluating).
+	self assert: a isSelfEvaluating.
 	
-	self assert: (a printString = '1->''one''').
+	self assert: a printString equals: '1->''one'''.
 	
 	anotherAssociation := Object new -> Object new.
-	anotherAssociation isSelfEvaluating ifTrue: [self
-		assert: (self class compiler evaluate: anotherAssociation printString) = anotherAssociation
-		description: 'a self evaluating should evaluate as self'].
+	anotherAssociation isSelfEvaluating 
+		ifTrue: [ self assert: (self class compiler evaluate: anotherAssociation printString) = anotherAssociation
+							description: 'a self evaluating should evaluate as self' ]
 
 ]
 
