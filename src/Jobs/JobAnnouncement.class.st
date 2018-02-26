@@ -15,7 +15,7 @@ Class {
 { #category : #'instance creation' }
 JobAnnouncement class >> on: aJob [ 
 
-	^ self new job: aJob.
+	^ self new job: aJob
 ]
 
 { #category : #accessing }
