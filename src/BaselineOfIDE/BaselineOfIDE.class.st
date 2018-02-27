@@ -903,7 +903,7 @@ BaselineOfIDE >> loadCalypso [
 
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://dionisiydk/Calypso:v0.9.1';
+		repository: 'github://dionisiydk/Calypso:v0.10.0';
 		load.		
 	
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
