@@ -1666,29 +1666,6 @@ Object >> primitiveChangeClassTo: anObject [
 	self primitiveFailed
 ]
 
-{ #category : #'primitive failure' }
-Object >> primitiveFail [
-	"primitiveFail may be invoked by certain methods whose code is translated in C. In such a case primitiveFail and not primitiveFailed
-	 should be invoked. The reason is that this code is translated to C by VMMaker. #primitiveFail is 
-	implemented in Interpreter of VMMaker."
-
-	^ self primitiveFailed
-]
-
-{ #category : #'primitive failure' }
-Object >> primitiveFailed [
-	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
-
-	self primitiveFailed: thisContext sender selector
-]
-
-{ #category : #'primitive failure' }
-Object >> primitiveFailed: selector [
-	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
-	
-	PrimitiveFailed signalFor: selector
-]
-
 { #category : #printing }
 Object >> printOn: aStream [
 	"Append to the argument, aStream, a sequence of characters that  
