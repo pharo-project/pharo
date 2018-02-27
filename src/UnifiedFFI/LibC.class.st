@@ -89,10 +89,11 @@ LibC >> parentProcessId [
 LibC >> pipe: command mode: mode [
 	"Initiate pipe streams to or from a process."
 
-	Smalltalk os isWindows
-		ifTrue: [ ^self ffiCall: #(ExternalAddress* _popen(char* command, char* mode))].
+	^self ffiCall: (Smalltalk os isWindows
+							ifTrue:  [ #(ExternalAddress* _popen(char* command, char* mode)) ]
+							ifFalse: [ #(ExternalAddress* popen(char* command, char* mode)) ])
 
-	^self ffiCall: #(ExternalAddress* popen(char* command, char* mode))			
+	
 			 
 ]
 
@@ -100,10 +101,9 @@ LibC >> pipe: command mode: mode [
 LibC >> pipeClose: stream [
 	"Close the given pipe stream."
 
-	Smalltalk os isWindows
-		ifTrue: [  ^self ffiCall: #(int* _pclose(ExternalAddress* stream)) ].
-			
-	 ^self ffiCall: #(int* pclose(ExternalAddress* stream))
+	^self ffiCall: (Smalltalk os isWindows
+							ifTrue: [ #(int* _pclose(ExternalAddress* stream)) ]
+							ifFalse: [ #(int* pclose(ExternalAddress* stream)) ])
 ]
 
 { #category : #'process actions' }
