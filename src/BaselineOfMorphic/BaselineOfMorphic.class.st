@@ -71,6 +71,8 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Keymapping-KeyCombinations'.
 		spec package: 'Keymapping-Pragmas'.
 
+		spec package: 'Transcript-Core'.
+
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Examples'.
 		spec package: 'Morphic-Widgets-Basic'.

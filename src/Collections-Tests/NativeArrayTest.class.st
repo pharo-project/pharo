@@ -1,6 +1,6 @@
 "
 SUnit tests for ByteArray, DoubleByteArray, WordArray and DoubleWordArray.
-" 
+"
 Class {
 	#name : #NativeArrayTest,
 	#superclass : #TestCase,
