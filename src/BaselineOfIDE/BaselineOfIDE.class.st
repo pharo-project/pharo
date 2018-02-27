@@ -97,7 +97,8 @@ BaselineOfIDE >> additionalInitialization [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
 	
-	self loadIceberg.
+	self loadIceberg.	
+	self loadCalypso.
 ]
 
 { #category : #baseline }
@@ -892,6 +893,22 @@ spec group: #default with: #(
 	'Shift'
 ).
 
+]
+
+{ #category : #actions }
+BaselineOfIDE >> loadCalypso [
+
+	"Load Calypso without Iceberg Metacello integration"
+	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
+
+	Metacello new
+		baseline: 'Calypso';
+		repository: 'github://dionisiydk/Calypso:v0.10.1';
+		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
+
+	(self class environment at: #ClyBrowser) beAllDefault.
+	
+	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
 ]
 
 { #category : #actions }
