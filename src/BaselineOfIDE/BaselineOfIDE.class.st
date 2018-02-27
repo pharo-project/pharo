@@ -899,16 +899,16 @@ spec group: #default with: #(
 BaselineOfIDE >> loadCalypso [
 
 	"Load Calypso without Iceberg Metacello integration"
-	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: false.
+	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
 
 	Metacello new
 		baseline: 'Calypso';
 		repository: 'github://dionisiydk/Calypso:v0.10.0';
 		load.	
 	
-	ClyBrowser beAllDefault.
+	(self class environment at: #ClyBrowser) beAllDefault.
 	
-	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
+	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
 ]
 
 { #category : #actions }
