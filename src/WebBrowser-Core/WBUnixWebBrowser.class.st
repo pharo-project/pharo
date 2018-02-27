@@ -1,5 +1,5 @@
 "
-Access to the web browser on Unix
+Provides native access to the web browser on Unix. Do not use directly, use class WebBrowser instead.
 "
 Class {
 	#name : #WBUnixWebBrowser,
@@ -7,26 +7,18 @@ Class {
 	#category : #'WebBrowser-Core-OS-Unix'
 }
 
-{ #category : #examples }
-WBUnixWebBrowser class >> example [
-
-	self openOn: 'http://www.pharo.org'
-]
-
 { #category : #testing }
 WBUnixWebBrowser class >> isForCurrentSystem [
 
 	^Smalltalk os isUnix  
 ]
 
-{ #category : #'instance creation' }
-WBUnixWebBrowser class >> openOn: anURLString [
-	"
-	self openOn: 'http://www.pharo.org'
-	"
+{ #category : #private }
+WBUnixWebBrowser class >> openNativeWebBrowserOn: anURLString [
+
 	| openCommand |
 	openCommand := 'xdg-open {1} &' format: { anURLString }.
-	self system: openCommand.
+	self system: openCommand
 ]
 
 { #category : #'private - uffi' }
