@@ -6,7 +6,7 @@ Class {
 	#superclass : #TestCase,
 	#category : #'OSWindow-Tests-Tests'
 }
-
+ 
 { #category : #tests }
 OSWindowAttributesTest >> testDefaults [
 
