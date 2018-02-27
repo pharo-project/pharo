@@ -903,9 +903,9 @@ BaselineOfIDE >> loadCalypso [
 
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://dionisiydk/Calypso:v0.10.0';
-		load.	
-	
+		repository: 'github://dionisiydk/Calypso:v0.10.1';
+		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
+
 	(self class environment at: #ClyBrowser) beAllDefault.
 	
 	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
