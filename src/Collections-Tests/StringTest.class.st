@@ -761,6 +761,24 @@ StringTest >> testExpandMacros [
 						nextPut: Character cr ])
 ]
 
+{ #category : #'tests - formatting' }
+StringTest >> testExpandMacrosSkip [
+	self assert: '%<' expandMacros equals: '<'
+]
+
+{ #category : #'tests - formatting' }
+StringTest >> testExpandMacrosTernary [
+	self assert: ('<1?success:error>' expandMacrosWith: true) equals: 'success'.
+	self assert: ('<1?success:error>' expandMacrosWith: false) equals: 'error'
+]
+
+{ #category : #'tests - formatting' }
+StringTest >> testExpandMacrosWithArguments [
+	self assert: ('<1s>' expandMacrosWithArguments: {'str''ing'}) equals: 'str''ing'.
+	self assert: ('<1p>' expandMacrosWithArguments: {'str''ing'}) equals: '''str''''ing'''.
+	self assert: ('<1p>: <2p>' expandMacrosWith: 'Number' with: 5) equals: '''Number'': 5'
+]
+
 { #category : #tests }
 StringTest >> testFindAnySubstringStartingAt [
 
