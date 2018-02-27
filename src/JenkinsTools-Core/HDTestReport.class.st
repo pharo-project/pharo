@@ -12,10 +12,19 @@ Class {
 		'suiteFailures',
 		'suiteErrors',
 		'progressFile',
-		'nodeName'
+		'nodeName',
+		'stageName'
+	],
+	#classVars : [
+		'CurrentStageName'
 	],
 	#category : #'JenkinsTools-Core'
 }
+
+{ #category : #running }
+HDTestReport class >> currentStageName: aStageName [
+	CurrentStageName := aStageName
+]
 
 { #category : #running }
 HDTestReport class >> runClasses: aCollectionOfClasses named: aString [
@@ -39,7 +48,8 @@ HDTestReport class >> runPackage: aString [
 { #category : #running }
 HDTestReport class >> runSuite: aTestSuite [
 	^ self new
-		initializeOn: aTestSuite; 
+		initializeOn: aTestSuite;
+		stageName: CurrentStageName;
 		run;
 		done
 ]
@@ -138,6 +148,7 @@ HDTestReport >> initialize [
 			encoding: 'utf8'.
 			
 	nodeName := self calculateNodeName.
+	stageName := ''
 ]
 
 { #category : #initialization }
@@ -218,7 +229,7 @@ HDTestReport >> setUp [
 	progressFile nextPutAll: 'running suite: ';
 		nextPutAll: suite name ; crlf; flush.
 
-	fileName := nodeName isEmptyOrNil ifTrue: [ '' ] ifFalse: [ nodeName ].
+	fileName := stageName isEmpty ifTrue: [ '' ] ifFalse: [ stageName , '-' ].
 	fileName := fileName , suite name , '-Test.xml'.
 		
 	aFile := File named: fileName .
@@ -249,6 +260,17 @@ HDTestReport >> stackTraceString: err of: aTestCase [
 		[ context isNil or: [ context receiver == aTestCase and: [ context methodSelector == #runCase ] ] ] whileFalse: [
 			[str print: context; lf.] ifError: [ str nextPutAll: 'PRINTING ERROR'; lf].
 			context := context sender ] ] 
+]
+
+{ #category : #accessing }
+HDTestReport >> stageName [
+	"The stage name is used by the CI to name the report files"
+	^ stageName
+]
+
+{ #category : #accessing }
+HDTestReport >> stageName: anObject [
+	stageName := anObject
 ]
 
 { #category : #accessing }
