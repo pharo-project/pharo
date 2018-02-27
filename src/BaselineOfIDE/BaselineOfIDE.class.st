@@ -904,7 +904,9 @@ BaselineOfIDE >> loadCalypso [
 	Metacello new
 		baseline: 'Calypso';
 		repository: 'github://dionisiydk/Calypso:v0.10.0';
-		load.		
+		load.	
+	
+	ClyBrowser beAllDefault.
 	
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 ]
