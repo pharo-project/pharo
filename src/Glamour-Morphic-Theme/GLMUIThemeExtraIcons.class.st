@@ -255,12 +255,12 @@ GLMUIThemeExtraIcons class >> glamourousNextProduction [
 	^ self iconNamed: #glamourousNextProduction
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 GLMUIThemeExtraIcons class >> icons [
 	^ icons ifNil: [icons := Dictionary new] 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 GLMUIThemeExtraIcons class >> resetIcons [
 	icons := nil
 ]

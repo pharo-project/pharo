@@ -23,8 +23,7 @@ TIdentityAddTest >> equalNotIdenticalElement [
 
 { #category : #'tests - identity adding' }
 TIdentityAddTest >> testIdentityAdd [
-	| added oldSize |
-	oldSize := self collection size.
+	| added |
 	self collection add: self element.
 	self deny: (self collection includes: self equalNotIdenticalElement).
 	

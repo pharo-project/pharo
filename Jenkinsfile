@@ -23,8 +23,8 @@ def runTests(architecture, prefix=''){
 		try {
 			cleanWs()
 			unstash "bootstrap${architecture}"
-			shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture}'"
-			junit allowEmptyResults: true, testResults: '*.xml'
+			shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
+			junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
 			success = !(currentBuild.result == 'UNSTABLE')
 			echo "Tests run with result ${currentBuild.result}"
 		} catch(e) {
@@ -40,7 +40,7 @@ def runTests(architecture, prefix=''){
 		}
 		return success || (tries == retryTimes)
 	}
-	archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
+	archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
 	cleanWs()
 }
 

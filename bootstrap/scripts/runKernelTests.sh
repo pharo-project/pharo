@@ -6,6 +6,9 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
+# The first parameter is the architecture
+# The second parameter is the stage name
+
 ARCHFLAG=""
 if [ ${1} = "64" ]; then
     ARCHFLAG="64/"
@@ -47,4 +50,4 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image loadHermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication=ignore
 
 #Running tests.
-./pharo bootstrap.image test --junit-xml-output SUnit-Core SUnit-Tests	
+./pharo bootstrap.image test --junit-xml-output --stage-name=${2} SUnit-Core SUnit-Tests	

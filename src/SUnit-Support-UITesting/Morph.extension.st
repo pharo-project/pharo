@@ -1,12 +1,12 @@
 Extension { #name : #Morph }
 
-{ #category : #'*SUnit-UITesting' }
+{ #category : #'*SUnit-Support-UITesting' }
 Morph >> simulateClick [
 
 	self simulateClickWith: MouseEvent redButton.
 ]
 
-{ #category : #'*SUnit-UITesting' }
+{ #category : #'*SUnit-Support-UITesting' }
 Morph >> simulateClickWith: buttons [
 	"Did you know there's #simulateClick (left), #simulateMiddleClick, and #simulateRightClick?
 	buttons - look at MouseEvent's class-side for button types"
@@ -23,7 +23,7 @@ Morph >> simulateClickWith: buttons [
 			stamp: Time millisecondClockValue) ].
 ]
 
-{ #category : #'*SUnit-UITesting' }
+{ #category : #'*SUnit-Support-UITesting' }
 Morph >> simulateClickWith: buttons position: position [
 	"Did you know there's #simulateClick (left), #simulateMiddleClick, and #simulateRightClick?
 	buttons - look at MouseEvent's class-side for button types"
@@ -42,13 +42,13 @@ Morph >> simulateClickWith: buttons position: position [
 			stamp: Time millisecondClockValue) ].
 ]
 
-{ #category : #'*SUnit-UITesting' }
+{ #category : #'*SUnit-Support-UITesting' }
 Morph >> simulateMiddleClick [
 
 	self simulateClickWith: MouseEvent blueButton.
 ]
 
-{ #category : #'*SUnit-UITesting' }
+{ #category : #'*SUnit-Support-UITesting' }
 Morph >> simulateRightClick [
 
 	self simulateClickWith: MouseEvent yellowButton.

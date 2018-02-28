@@ -4,7 +4,7 @@ All instances of UITestCase are skipped in headless mode.
 Class {
 	#name : #UITestCase,
 	#superclass : #TestCase,
-	#category : #'SUnit-UITesting'
+	#category : #'SUnit-Support-UITesting'
 }
 
 { #category : #running }

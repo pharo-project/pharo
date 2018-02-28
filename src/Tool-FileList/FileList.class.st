@@ -572,10 +572,7 @@ FileList >> dynamicButtonServices [
 FileList >> fileContentsMenu: aMenu shifted: shifted [
 	"Construct aMenu to have items appropriate for the file browser's code pane, given the shift state provided"
 
-	| shiftMenu services |
-	shifted ifTrue:
-		[shiftMenu := SmalltalkEditor shiftedYellowButtonMenu.
-		^ aMenu addAllFrom: shiftMenu].
+	| services |
 	reference ifNotNil:
 		[services := OrderedCollection new.
 		(#(briefHex briefFile needToGetBriefHex needToGetBrief) includes: brevityState) ifTrue:

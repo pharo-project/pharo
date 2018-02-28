@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'menu'
 	],
-	#category : #'SUnit-UITesting'
+	#category : #'SUnit-Support-UITesting'
 }
 
 { #category : #menu }

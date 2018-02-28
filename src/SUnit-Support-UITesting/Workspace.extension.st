@@ -1,6 +1,6 @@
 Extension { #name : #Workspace }
 
-{ #category : #'*SUnit-UITesting' }
+{ #category : #'*SUnit-Support-UITesting' }
 Workspace >> hasUnacceptedEdits [
 	"Answer true if any of the views on this model has unaccepted edits."
 
