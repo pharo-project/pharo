@@ -1,3 +1,6 @@
+"
+When there is a duplication, I do not do nothing. I keep the version already in the image
+"
 Class {
 	#name : #HEIgnoreOnDuplication,
 	#superclass : #HEDuplicationModeStrategy,

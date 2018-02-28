@@ -1,3 +1,9 @@
+"
+I represent a character.
+I serialize myself as a String of a single character.
+When I am readed back I just read the first character of the value.
+My value is always a String
+"
 Class {
 	#name : #HECharacter,
 	#superclass : #HEByteString,

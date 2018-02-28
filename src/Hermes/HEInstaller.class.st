@@ -1,3 +1,25 @@
+"
+I am the entry point to load a package of Hermes.
+
+I am the basic implementation, I can only handle basic cases:
+- If there is a new undeclared I produce an error.
+- If there is an existing element I produce an error.
+
+For more extended options check HEExtendedEnvironment
+
+Example: 
+
+	file := 'aFile.hermes'.
+	installer := HEInstaller new.
+	
+	reader := HEBinaryReader new
+		stream: (File named: file) readStream;
+		yourself.
+
+	readPackage := HEPackage readFrom: reader.
+
+	installer installPackage: readPackage
+"
 Class {
 	#name : #HEInstaller,
 	#superclass : #Object,
@@ -91,19 +113,28 @@ HEInstaller >> createdUndeclared [
 { #category : #'installing package' }
 HEInstaller >> doInstallPackage: aHEPackage [
 	| newTraits newClasses |
+	"Creating the package. It requires a number of steps.
+	1. Register the package in the organizer."
 	RPackageOrganizer default registerPackageNamed: aHEPackage packageName.
 
+	"2. Install the traits"
 	newTraits := aHEPackage traits collect: [ :exportedTrait | self buildTrait: exportedTrait ].
 
+	"3. Install traits methods"
 	aHEPackage traits with: newTraits do: [ :exportedTrait :newTrait | self installMethods: exportedTrait into: newTrait ].
 
+	"4. Install classes"
 	newClasses := aHEPackage classes
 		collect: [ :exportedClass | self build: exportedClass ].
 
+	"5. Install class methods"
 	aHEPackage classes with: newClasses do: [ :exportedClass :newClass | self installMethods: exportedClass into: newClass ].
 
+	"6. Install extension methods"
 	aHEPackage extensionMethods do: [ :e | self installExtensionMethod: e ].
 	
+	"7. After all I validate if there are no new undeclared variables created in the environment.
+	A new undeclared is a sign of an improper modularization."
 	self validateNoNewUndeclared
 ]
 

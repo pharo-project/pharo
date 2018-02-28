@@ -1,3 +1,11 @@
+"
+I represent the sending of a message.
+I store the selector, the receiver and the arguments.
+I am used to serialize the Trait compositions. 
+As a trait composition is a Smalltalk expression it is serialized as one or more message send.
+
+Each of my elements are HEExportedLiterals, so they can be any literal
+"
 Class {
 	#name : #HESendMessage,
 	#superclass : #HEExportedLiteral,

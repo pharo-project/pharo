@@ -1,3 +1,10 @@
+"
+I represent a Metaclass
+I am stored as a symbol.
+
+When serialized I get the name of the base class.
+When deserialized I find the metaclass in the target environment
+"
 Class {
 	#name : #HEExportedMetaclass,
 	#superclass : #HESymbol,

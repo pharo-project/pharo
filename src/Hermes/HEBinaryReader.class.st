@@ -1,3 +1,18 @@
+"
+I wrap a binary stream implementing helping methods to read basic types:
+
+ - Byte
+ - Int32
+ - ByteArray
+ - ByteString
+ - ByteSymbol
+ - Unsigned Int32
+
+The format is platform independent. It uses always 4 bytes per integer (32 bits).
+In this way the format can be used in any platform and architecture.
+
+The integers are stored in little endian style.
+"
 Class {
 	#name : #HEBinaryReader,
 	#superclass : #Object,
