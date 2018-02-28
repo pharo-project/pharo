@@ -139,8 +139,6 @@ TaAbstractComposition >> compile: selector into: aClass [
 	sourceCode := self sourceCodeAt: selector.
 	trailer := method trailer.
 	
-	(trailer sourceCode = sourceCode) ifFalse: [ trailer sourceCode: sourceCode  ].
-
 	newMethod := aClass compiler
 				source: sourceCode;
 				class: aClass ;
@@ -149,6 +147,11 @@ TaAbstractComposition >> compile: selector into: aClass [
 				compile.   "Assume OK after proceed from SyntaxError"
 				
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
+
+	"I have to check because during bootstrap there is no SouceFiles"
+	(sourceCode isNotNil and: [((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil])]) ifTrue: [ 
+		newMethod putSource: sourceCode
+				withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
 		
 	aClass basicAddSelector: selector withMethod: newMethod.
 

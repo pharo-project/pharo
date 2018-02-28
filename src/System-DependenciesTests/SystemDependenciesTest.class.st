@@ -149,7 +149,7 @@ SystemDependenciesTest >> knownSUnitDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization') sorted
+	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core') sorted
 ]
 
 { #category : #'known dependencies' }
