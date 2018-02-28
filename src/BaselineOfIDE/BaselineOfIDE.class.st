@@ -346,6 +346,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
 		spec package: 'SUnit-Tests'.
+		spec package: 'SUnit-Support-UITesting-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
@@ -473,6 +474,7 @@ spec group: 'General-Tests-Group' with: #(
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
 	'SUnit-Tests'
+	'SUnit-Support-UITesting-Tests' 
 	'Slot-Tests'
 	'Spec-Tests'
 	'System-Caching-Tests'

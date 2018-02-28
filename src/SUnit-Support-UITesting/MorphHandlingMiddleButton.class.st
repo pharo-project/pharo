@@ -9,7 +9,7 @@ Class {
 		'receivedBlueButtonUp',
 		'receivedBlueButtonDown'
 	],
-	#category : #'SUnit-UITesting'
+	#category : #'SUnit-Support-UITesting'
 }
 
 { #category : #'meta-actions' }

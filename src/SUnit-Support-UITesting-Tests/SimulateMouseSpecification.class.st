@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'morph'
 	],
-	#category : #'SUnit-UITesting'
+	#category : #'SUnit-Support-UITesting-Tests'
 }
 
 { #category : #helpers }

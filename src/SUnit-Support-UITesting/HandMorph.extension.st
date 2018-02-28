@@ -1,6 +1,6 @@
 Extension { #name : #HandMorph }
 
-{ #category : #'*SUnit-UITesting' }
+{ #category : #'*SUnit-Support-UITesting' }
 HandMorph >> simulateKeyStroke: aCharacterOrShortcut [
 
 	| shortcut |
