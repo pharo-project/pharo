@@ -28,13 +28,13 @@ ReProperMethodProtocolNameRule class >> use: valid insteadOf: arrayOfInvalid [
 { #category : #'private - accessing' }
 ReProperMethodProtocolNameRule >> badMethodProtocolNames [
 
-	^self protocolIdiom value
+	^self protocolIdiom value collect: #asSymbol
 ]
 
 { #category : #running }
 ReProperMethodProtocolNameRule >> check: aMethod forCritiquesDo: aCritiqueBlock [
 
-	(self badMethodProtocolNames includes: [ aMethod category ])
+	(self badMethodProtocolNames includes: aMethod category)
    		ifTrue: [ aCritiqueBlock cull: (self critiqueFor: aMethod) ]
 ]
 
