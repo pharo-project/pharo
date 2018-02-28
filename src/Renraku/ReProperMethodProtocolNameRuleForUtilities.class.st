@@ -1,3 +1,6 @@
+"
+Rule to favour 'utilities' method protocol over similar ones (like 'utils' or other)
+"
 Class {
 	#name : #ReProperMethodProtocolNameRuleForUtilities,
 	#superclass : #ReProperMethodProtocolNameRule,
