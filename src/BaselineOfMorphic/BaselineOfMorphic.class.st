@@ -296,7 +296,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	JPEGReadStream JPEGReadWriter Locale
 	MczInstaller MD5NonPrimitive MenuItemMorph MenuMorph  
 	RxMatcher RxParser RxsPredicate
-	SHA1 ShortIntegerArray SimpleEditor
+	SHA1 ShortIntegerArray
 	SystemProgressMorph SystemWindow TestCase TextContainer TextDiffBuilder
 	ThemeIcons ThumbnailMorph TransferMorph UITheme ZnByteEncoder
 	ZnConstants ZnMimeType ZnNetworkingUtils ZnServer ZnSingleThreadedServer
