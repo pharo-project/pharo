@@ -13,7 +13,7 @@ Class {
 		'subscriber',
 		'action'
 	],
-	#category : #'Announcements-Core-Subscription'
+	#category : #'Announcements-Core'
 }
 
 { #category : #accessing }

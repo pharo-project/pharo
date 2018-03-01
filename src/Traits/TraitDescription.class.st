@@ -217,7 +217,7 @@ TraitDescription >> asTraitComposition [
 TraitDescription >> authors [
 	"Returns a bag representing the author frequency based on the latest version of the methods of the receiver."
 
-	^(self methods, self theMetaClass methods) collect: [ :each | each author ] as: Bag
+	^(self methods, self classSide methods) collect: [ :each | each author ] as: Bag
 ]
 
 { #category : #'accessing parallel hierarchy' }
@@ -883,7 +883,7 @@ TraitDescription >> linesOfCode [
 	lines := self localMethods inject: 0 into: [ :sum :each | sum + each linesOfCode ].
 	^ self isMeta 
 		ifTrue: [ lines ]
-		ifFalse: [ lines + self theMetaClass linesOfCode ]
+		ifFalse: [ lines + self classSide linesOfCode ]
 ]
 
 { #category : #'accessing tags' }
@@ -1074,7 +1074,7 @@ TraitDescription >> numberOfMethods [
 	num := self localMethods size.
 	^ self isMeta  
 		ifTrue: [ num ]
-		ifFalse: [ num + self theMetaClass numberOfMethods ] 
+		ifFalse: [ num + self classSide numberOfMethods ] 
 ]
 
 { #category : #'initialize-release' }

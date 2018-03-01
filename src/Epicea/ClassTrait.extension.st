@@ -1,7 +1,7 @@
 Extension { #name : #ClassTrait }
 
-{ #category : #'*Epicea-Ring' }
+{ #category : #'*Epicea' }
 ClassTrait >> asEpiceaRingDefinition [
 
-	^ self instanceSide asEpiceaRingDefinition theMetaClass
+	^ self instanceSide asEpiceaRingDefinition classSide
 ]

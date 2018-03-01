@@ -7,32 +7,12 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #accessing }
-SugsRenameMethod class >> nodes [
-	^{RBMethodNode} 
-]
-
 { #category : #execution }
 SugsRenameMethod >> execute [
 	 (NautilusRefactoring model: context) renameMethodFor: context selectedMethod 
 ]
 
-{ #category : #display }
-SugsRenameMethod >> icon [
-	^self iconNamed: #smallLanguageIcon
-]
-
-{ #category : #display }
-SugsRenameMethod >> keyText [
-	^'r,m'
-]
-
-{ #category : #display }
+{ #category : #accessing }
 SugsRenameMethod >> label [
 	^ 'Rename' translated
-]
-
-{ #category : #display }
-SugsRenameMethod >> position [
-	^10
 ]

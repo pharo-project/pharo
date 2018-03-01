@@ -75,7 +75,7 @@ MirrorPrimitives class >> fixedFieldOf: anObject at: anIndex [
 ]
 
 { #category : #'fields accessing' }
-MirrorPrimitives class >> fixedFieldOf: anObject at: index put: value [ 
+MirrorPrimitives class >> fixedFieldOf: anObject at: anIndex put: aValue [ 
 	"Primitive. Store a value into a fixed variable in the argument anObject.
 	 The numbering of the variables corresponds to the named instance
 	 variables.  Fail if the index is not an Integer or is not the index of a
@@ -83,12 +83,6 @@ MirrorPrimitives class >> fixedFieldOf: anObject at: index put: value [
 
 	<primitive: 74>
 	"Access beyond fixed fields"
-	(self isObjectReadOnly: anObject) 
-		ifTrue: [ ^ (ModificationForbidden 
-							for: anObject
-							atInstVar: index
-							with: value
-							retrySelector: #indexableFieldOf:at:put:) signal ].
 	^self primitiveFail 
 ]
 
@@ -127,7 +121,7 @@ MirrorPrimitives class >> indexableFieldOf: anObject at: anIndex [
 ]
 
 { #category : #'fields accessing' }
-MirrorPrimitives class >> indexableFieldOf: anObject at: index put: value [
+MirrorPrimitives class >> indexableFieldOf: anObject at: anIndex put: newObject [
 	"Primitive. Assumes receiver is indexable. Store the argument value in 
 	the indexable element of the receiver indicated by index. Fail if the 
 	index is not an Integer or is out of bounds. Or fail if the value is not of 
@@ -135,22 +129,14 @@ MirrorPrimitives class >> indexableFieldOf: anObject at: index put: value [
 	stored"
 
 	<primitive: 61>
-	index isInteger 
-		ifTrue: [(self classOf: anObject) isVariable
-			ifTrue: [(index between: 1 and: (self indexableSizeOf: anObject))
-				ifFalse: [ ^ self errorSubscriptBounds: index]]
-			ifFalse: [ ^ self errorNotIndexable ]]
-		ifFalse: [  
-			^ index isNumber
-				ifTrue: [ self at: index asInteger put: value]
-				ifFalse: [ self errorNonIntegerIndex] ].
-	(self isObjectReadOnly: anObject) 
-		ifTrue: [ ^ (ModificationForbidden 
-							for: anObject
-							atInstVar: index
-							with: value
-							retrySelector: #indexableFieldOf:at:put:) signal ].
-	self errorImproperStore 
+	anIndex isInteger ifTrue:
+		[(self classOf: anObject) isVariable
+			ifTrue: [(anIndex between: 1 and: (self indexableSizeOf: anObject))
+					ifTrue: [self errorImproperStore]
+					ifFalse: [self errorSubscriptBounds: anIndex]]
+			ifFalse: [self errorNotIndexableFor: anObject]].
+	
+	self errorNonIntegerIndex
 ]
 
 { #category : #'fields accessing' }
@@ -196,12 +182,6 @@ MirrorPrimitives class >> setClass: classObject to: anObject [
 	"Change the class of anObject to classObject"
 	
 	<primitive: 160 error: ec>
-	(self isObjectReadOnly: anObject) 
-		ifTrue: [ ^ (ModificationForbidden 
-							for: anObject
-							atInstVar: nil
-							with: classObject
-							retrySelector: #setClass:to:) signal ]. 
 	self primitiveFailed
 ]
 

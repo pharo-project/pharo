@@ -7,19 +7,9 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #accessing }
-SugsPushDownMethod class >> nodes [
-	^{RBMethodNode}
-]
-
 { #category : #execution }
 SugsPushDownMethod >> execute [
 	(NautilusRefactoring model: context) pushDownMethodsFor: (OrderedCollection with: context selectedMethod)
-]
-
-{ #category : #display }
-SugsPushDownMethod >> icon [
-	^self iconNamed: #smallUndoIcon
 ]
 
 { #category : #execution }
@@ -27,12 +17,7 @@ SugsPushDownMethod >> isValidForContext [
 	^  context hasSubclasses
 ]
 
-{ #category : #display }
+{ #category : #accessing }
 SugsPushDownMethod >> label [
 	^'Push Down' translated
-]
-
-{ #category : #display }
-SugsPushDownMethod >> position [
-	^101
 ]

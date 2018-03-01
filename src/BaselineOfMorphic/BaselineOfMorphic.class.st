@@ -71,8 +71,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Keymapping-KeyCombinations'.
 		spec package: 'Keymapping-Pragmas'.
 
-		spec package: 'Transcript-Core'.
-
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Examples'.
 		spec package: 'Morphic-Widgets-Basic'.
@@ -296,7 +294,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	JPEGReadStream JPEGReadWriter Locale
 	MczInstaller MD5NonPrimitive MenuItemMorph MenuMorph  
 	RxMatcher RxParser RxsPredicate
-	SHA1 ShortIntegerArray
+	SHA1 ShortIntegerArray SimpleEditor
 	SystemProgressMorph SystemWindow TestCase TextContainer TextDiffBuilder
 	ThemeIcons ThumbnailMorph TransferMorph UITheme ZnByteEncoder
 	ZnConstants ZnMimeType ZnNetworkingUtils ZnServer ZnSingleThreadedServer

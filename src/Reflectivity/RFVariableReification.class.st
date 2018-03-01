@@ -23,18 +23,18 @@ RFVariableReification class >> key [
 { #category : #generate }
 RFVariableReification >> genForInstanceVariableSlot [
 	"entity in this case is the binding of the literal variable"
-	^RFLiteralVariableNode value: entity
+	^entity asLiteralNode
 ]
 
 { #category : #generate }
 RFVariableReification >> genForLiteralVariable [
 	"entity in this case is the binding of the literal variable"
-	^RFLiteralVariableNode value: entity
+	^entity asLiteralNode
 ]
 
 { #category : #generate }
 RFVariableReification >> genForRBVariableNode [
 	
 	entity isTemp ifTrue: [ ^self error: 'Temps can not be reified yet' ]. 
-	^RFLiteralVariableNode value: entity binding variable
+	^entity binding variable asLiteralNode
 ]

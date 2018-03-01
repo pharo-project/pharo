@@ -383,13 +383,6 @@ FileLocator >> binaryReadStream [
 	^ self resolve binaryReadStream
 ]
 
-{ #category : #'streams-compatibility' }
-FileLocator >> binaryWriteStream [
-	"Answer a binary write stream on the receiver"
-
-	^ self resolve binaryWriteStream
-]
-
 { #category : #copying }
 FileLocator >> copyWithPath: newPath [
 	^ self class origin: origin path: newPath

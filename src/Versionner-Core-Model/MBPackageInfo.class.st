@@ -148,7 +148,7 @@ MBPackageInfo >> printOn: aStream [
 								nextPutAll: refString ] ] ]
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 MBPackageInfo >> repositories [
 	"Return the repositories associated with the package."
 

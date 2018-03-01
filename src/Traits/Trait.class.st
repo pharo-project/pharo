@@ -391,7 +391,7 @@ Trait >> compileAllFrom: oldClass [
 	subclasses). Also recompile the methods in the metaclass."
 
 	super compileAllFrom: oldClass.
-	self theMetaClass compileAllFrom: oldClass theMetaClass
+	self classSide compileAllFrom: oldClass classSide
 ]
 
 { #category : #copying }
@@ -519,7 +519,7 @@ Trait >> getName [
 Trait >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 
-	^ super hasAbstractMethods or: [ self theMetaClass hasAbstractMethods ]
+	^ super hasAbstractMethods or: [ self classSide hasAbstractMethods ]
 ]
 
 { #category : #'accessing parallel hierarchy' }
@@ -547,7 +547,7 @@ Trait >> hasMethods [
 	receiver (includes whether there are methods defined in the receiver's 
 	metaclass)."
 
-	^super hasMethods or: [ self theMetaClass hasMethods ]
+	^super hasMethods or: [ self classSide hasMethods ]
 ]
 
 { #category : #'pool variables' }
@@ -657,7 +657,7 @@ Trait >> innerBindingOf: aSymbol [
 Trait >> isAbstract [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 
-	^ super isAbstract or: [ self theMetaClass isAbstract ]
+	^ super isAbstract or: [ self classSide isAbstract ]
 ]
 
 { #category : #testing }
@@ -766,7 +766,7 @@ Trait >> obsolete [
 		[:i | self instVarAt: i put: nil]. "Store nil over class instVars."
 	self classPool: nil.
 	self sharedPools: nil.
-	self hasClassSide ifTrue: [ self theMetaClass obsolete].
+	self hasClassSide ifTrue: [ self classSide obsolete].
 	self propertyAt: #obsolete put: true.
 	super obsolete.
 ]
@@ -810,7 +810,7 @@ Trait >> reformatAll [
 	Leaves old code accessible to version browsing"
 
 	super reformatAll.		"me..."
-	self theMetaClass reformatAll.	"...and my metaclass"
+	self classSide reformatAll.	"...and my metaclass"
 ]
 
 { #category : #'class variables' }

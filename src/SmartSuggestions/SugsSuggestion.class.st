@@ -1,53 +1,86 @@
 "
 I'm the representation from a suggestion that can be executed.
-
-How to add to the AST Menu:
-
-1) make a subclass of SugsSuggestion
-2) on the class side, #nodes returns the AST nodes you are interested in
-3) instance side:
-
-execute
-	the action to be performed
-label
-	the string used in the menu
-
-optional
-	icon		
-	position
-	
+I have some information related to the suggestion.
 "
 Class {
 	#name : #SugsSuggestion,
 	#superclass : #Object,
 	#instVars : [
-		'context'
+		'blockCommand',
+		'context',
+		'label',
+		'icon',
+		'position',
+		'keyText',
+		'isValidBlock'
 	],
 	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #'instance creation' }
-SugsSuggestion class >> for: aClass [
-	^(self subclassesForNode: aClass) collect: [:each |each new]
+SugsSuggestion class >> for: blockCommand named: label icon: icon [ 
+	^ self new 
+		blockCommand: blockCommand;
+		label: label;
+		icon: icon;
+		yourself.
 ]
 
-{ #category : #accessing }
-SugsSuggestion class >> nodes [
-	^{RBProgramNode}
+{ #category : #'instance creation' }
+SugsSuggestion class >> for: blockCommand named: label icon: icon position: position [
+	^ (self for: blockCommand named: label icon: icon)
+	 	  position: position;
+		  yourself.
 ]
 
-{ #category : #private }
-SugsSuggestion class >> subclassesForNode: aClass [
-	"all menu defitions define in which ast nodes they are interested by defining #nodes.
-	Subclass relationship is taken into account"
-	^self allSubclasses select: [:suggestionClass |  
-		suggestionClass nodes anySatisfy: [:class | aClass == class or: [aClass inheritsFrom: class]]]
+{ #category : #'instance creation' }
+SugsSuggestion class >> for: blockCommand named: label icon: icon position: position isValidBlock: validBlock [
+	^ (self for: blockCommand named: label icon: icon position: position)
+   		  isValidBlock: validBlock;
+		  yourself.
+]
+
+{ #category : #'instance creation' }
+SugsSuggestion class >> for: blockCommand named: label icon: icon position: position keyText: key [
+	^ (self for: blockCommand named: label icon: icon position: position)
+		  keyText: key;
+		  yourself.
+]
+
+{ #category : #'instance creation' }
+SugsSuggestion class >> for: blockCommand named: label icon: icon position: position keyText: key  isValidBlock: validBlock [
+	^ (self for: blockCommand named: label icon: icon position: position)
+		  keyText: key;
+		 isValidBlock: validBlock;
+		  yourself.
+]
+
+{ #category : #'instance creation' }
+SugsSuggestion class >> icon: icon position: position [
+	^ self new
+	 	icon: icon;	 
+		position: position;
+		yourself.
+]
+
+{ #category : #'instance creation' }
+SugsSuggestion class >> icon: icon position: position keyText: key [
+	^ self new
+	 	icon: icon;	 
+		position: position;
+		keyText: key;
+		yourself.
 ]
 
 { #category : #comparing }
 SugsSuggestion >> = otherSuggestion [
 	otherSuggestion class = self class ifFalse: [  ^false ].
 	^  self label = otherSuggestion label.
+]
+
+{ #category : #private }
+SugsSuggestion >> blockCommand: aBlock [ 
+	blockCommand := aBlock.
 ]
 
 { #category : #private }
@@ -58,32 +91,62 @@ SugsSuggestion >> context: theContext [
 
 { #category : #execution }
 SugsSuggestion >> execute [
-	self subclassResponsibility 
+	blockCommand value: context.
 ]
 
 { #category : #display }
 SugsSuggestion >> icon [
-	^nil
+	^icon.
+]
+
+{ #category : #private }
+SugsSuggestion >> icon: anIcon [
+	icon := anIcon 
+]
+
+{ #category : #private }
+SugsSuggestion >> iconName: aSymbol [
+	self icon: (self iconNamed: aSymbol)
+]
+
+{ #category : #private }
+SugsSuggestion >> isValidBlock: aBlock [ 
+	isValidBlock := aBlock.
 ]
 
 { #category : #execution }
 SugsSuggestion >> isValidForContext [
-	^ true
+	^ isValidBlock ifNil:[true] ifNotNil:[isValidBlock value: context].
 ]
 
 { #category : #display }
 SugsSuggestion >> keyText [
-	^nil
+	^ keyText
+]
+
+{ #category : #display }
+SugsSuggestion >> keyText: key [
+	keyText := key.
 ]
 
 { #category : #display }
 SugsSuggestion >> label [
-	^nil
+	^label
+]
+
+{ #category : #private }
+SugsSuggestion >> label: aLabel [
+	label := aLabel.
 ]
 
 { #category : #display }
 SugsSuggestion >> position [
-	^1000
+	^ position ifNil:[10000] ifNotNil: [ position ].
+]
+
+{ #category : #private }
+SugsSuggestion >> position: aPosition [
+	position := aPosition .
 ]
 
 { #category : #printing }

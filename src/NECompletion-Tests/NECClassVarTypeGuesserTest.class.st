@@ -4,7 +4,7 @@ Class {
 	#category : #'NECompletion-Tests'
 }
 
-{ #category : #utilities }
+{ #category : #utils }
 NECClassVarTypeGuesserTest >> guessVariable: aString in: aClass expected: theClassExpected [ 
 	| typeGuesser result |
 	typeGuesser := NECClassVarTypeGuesser 

@@ -58,7 +58,7 @@ MirrorPrimitivesTests >> testChangingFixedFieldOfWeakMessageSend [
 
 { #category : #'tests-fields accessing' }
 MirrorPrimitivesTests >> testChangingGeneralFieldOfArray [
-	<compilerOptions: #(#- #optionReadOnlyLiterals)>
+
 	| object |
 	object := #(10 20).
 	
@@ -109,7 +109,7 @@ MirrorPrimitivesTests >> testChangingGeneralFieldOfWeakMessageSend [
 
 { #category : #'tests-fields accessing' }
 MirrorPrimitivesTests >> testChangingIndexableFieldOfArray [
-	<compilerOptions: #(#- #optionReadOnlyLiterals)>
+
 	| object |
 	object := #(10 20).
 	
@@ -397,7 +397,7 @@ MirrorPrimitivesTests >> testMakingObjectReadOnly [
 	self assert: (MirrorPrimitives isObjectReadOnly: point).
 	
 	[MirrorPrimitives fieldOf: point at: 1 put: 100.
-	self assert: false description: 'should raise modification error'] on: ModificationForbidden do: [].
+	self assert: false description: 'should raise modification error'] ifError: [].
 	self assert: point equals: 10@20.
 
 	MirrorPrimitives makeObject: point readOnly: false.

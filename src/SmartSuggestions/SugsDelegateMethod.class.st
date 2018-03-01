@@ -7,32 +7,17 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #accessing }
-SugsDelegateMethod class >> nodes [
-	^{RBMethodNode}
-]
-
 { #category : #execution }
 SugsDelegateMethod >> execute [
 	 (NautilusRefactoring model: context) moveMethodFor: context selectedMethod
 ]
 
-{ #category : #display }
-SugsDelegateMethod >> icon [
-	^self iconNamed: #smallRedoIcon
-]
-
 { #category : #execution }
 SugsDelegateMethod >> isValidForContext [
-	^ context selectedClass allInstVarNames isNotEmpty
+	^ context hasInstanceVariable
 ]
 
-{ #category : #display }
+{ #category : #accessing }
 SugsDelegateMethod >> label [
 	^'Delegate selected method' translated
-]
-
-{ #category : #display }
-SugsDelegateMethod >> position [
-	^210
 ]

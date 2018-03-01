@@ -1,7 +1,7 @@
 "
 I am UI manager for a headless setup.
 I block all UI manager API that uses Morphs and will trow an error instead.
-" 
+"
 Class {
 	#name : #CommandLineUIManager,
 	#superclass : #UIManager,
@@ -175,7 +175,7 @@ CommandLineUIManager >> deny: aStringOrText title: aString [
 	"Open a denial dialog."
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 CommandLineUIManager >> exitFailure [
 	[
 		self class snapshotErrorImage ifTrue: [
@@ -236,7 +236,7 @@ CommandLineUIManager >> initialize [
 	doNotQuitOnRestart := false.
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 CommandLineUIManager >> logColored: anAnsiiColorCode during: aBlock [
 	
 	Smalltalk logStdErrorDuring: [:stderr |
@@ -250,7 +250,7 @@ CommandLineUIManager >> logColored: anAnsiiColorCode during: aBlock [
 	]
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 CommandLineUIManager >> logDuring: aBlock [
 	
 	Smalltalk logStdErrorDuring: [ :stderr | aBlock value: stderr ]
@@ -258,13 +258,13 @@ CommandLineUIManager >> logDuring: aBlock [
 
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 CommandLineUIManager >> logGreenDuring: aBlock [
 	
 	^ self logColored: '32' during: aBlock
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 CommandLineUIManager >> logRedDuring: aBlock [
 	
 	^ self logColored: '31' during: aBlock
@@ -280,7 +280,7 @@ CommandLineUIManager >> logTitle: aString andDescription: aStringOrText to: aStr
 		cr.
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 CommandLineUIManager >> logYellowDuring: aBlock [
 	
 	^ self logColored: '33' during: aBlock
@@ -347,7 +347,7 @@ CommandLineUIManager >> questionWithoutCancel: aStringOrText title: aString [
 	false if no and nil if cancelled."
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 CommandLineUIManager >> quitFrom: aContext withMessage: aString [
 
 	" log error and quit "

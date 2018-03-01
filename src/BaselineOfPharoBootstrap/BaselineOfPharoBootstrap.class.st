@@ -4,12 +4,12 @@ This baseline describes packages included in the bootstrapped Pharo image.
 It is not supposed to be part of bootstrapped image because it is dependent on Metacello.
 
 This baseline includes several utility methods required to prepare data for the bootstrapping and initial image initialization.
-"
+" 
 Class {
 	#name : #BaselineOfPharoBootstrap,
 	#superclass : #BaselineOf,
 	#category : #BaselineOfPharoBootstrap
-}
+} 
 
 { #category : #accessing }
 BaselineOfPharoBootstrap class >> compilerPackageNames [
@@ -87,6 +87,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-Sources'.
 		spec package: 'System-Support'.
 		spec package: 'Traits'.
+		spec package: 'Transcript-Core'.
 		spec package: 'UIManager'.
 		spec package: 'Zinc-Character-Encoding-Core'.
 		
@@ -153,6 +154,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-Sources'.
 			'System-Support'.
 			'Traits'.
+			'Transcript-Core'.
 			'UIManager'.
 			'Zinc-Character-Encoding-Core'.
 			'InitializePackagesCommandLineHandler'.

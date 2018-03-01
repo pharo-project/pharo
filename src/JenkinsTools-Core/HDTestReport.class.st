@@ -12,19 +12,10 @@ Class {
 		'suiteFailures',
 		'suiteErrors',
 		'progressFile',
-		'nodeName',
-		'stageName'
-	],
-	#classVars : [
-		'CurrentStageName'
+		'nodeName'
 	],
 	#category : #'JenkinsTools-Core'
 }
-
-{ #category : #running }
-HDTestReport class >> currentStageName: aStageName [
-	CurrentStageName := aStageName
-]
 
 { #category : #running }
 HDTestReport class >> runClasses: aCollectionOfClasses named: aString [
@@ -48,8 +39,7 @@ HDTestReport class >> runPackage: aString [
 { #category : #running }
 HDTestReport class >> runSuite: aTestSuite [
 	^ self new
-		initializeOn: aTestSuite;
-		stageName: CurrentStageName;
+		initializeOn: aTestSuite; 
 		run;
 		done
 ]
@@ -148,7 +138,6 @@ HDTestReport >> initialize [
 			encoding: 'utf8'.
 			
 	nodeName := self calculateNodeName.
-	stageName := ''
 ]
 
 { #category : #initialization }
@@ -224,15 +213,12 @@ HDTestReport >> serializeError: error of: aTestCase [
 { #category : #running }
 HDTestReport >> setUp [
 
-	| aFile fileName |
+	| aFile |
 	
 	progressFile nextPutAll: 'running suite: ';
 		nextPutAll: suite name ; crlf; flush.
-
-	fileName := stageName isEmpty ifTrue: [ '' ] ifFalse: [ stageName , '-' ].
-	fileName := fileName , suite name , '-Test.xml'.
 		
-	aFile := File named: fileName .
+	aFile := File named: suite name , '-Test.xml'.
 	aFile delete.
 	stream := ZnCharacterWriteStream
 			on: (aFile writeStream setToEnd; yourself)
@@ -260,17 +246,6 @@ HDTestReport >> stackTraceString: err of: aTestCase [
 		[ context isNil or: [ context receiver == aTestCase and: [ context methodSelector == #runCase ] ] ] whileFalse: [
 			[str print: context; lf.] ifError: [ str nextPutAll: 'PRINTING ERROR'; lf].
 			context := context sender ] ] 
-]
-
-{ #category : #accessing }
-HDTestReport >> stageName [
-	"The stage name is used by the CI to name the report files"
-	^ stageName
-]
-
-{ #category : #accessing }
-HDTestReport >> stageName: anObject [
-	stageName := anObject
 ]
 
 { #category : #accessing }

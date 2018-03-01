@@ -215,7 +215,7 @@ ThemeIcons >> blankIcon [
 	^ self blankIconOfWidth: 16
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 ThemeIcons >> blankIconOfWidth: aNumber [ 
 	^ self icons
 		at: ('blank-' , aNumber asString) asSymbol
@@ -249,7 +249,7 @@ ThemeIcons >> downloadFromUrl [
 	^ zipArchive
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 ThemeIcons >> form16x16FromContents: aByteArray [ 
 	^ Form
 	extent: 16@16

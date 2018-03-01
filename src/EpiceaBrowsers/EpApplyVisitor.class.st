@@ -72,7 +72,7 @@ EpApplyVisitor >> visitClassModification: aModifiedClassChange [
 		behaviorNamed: aModifiedClassChange behaviorAffectedName
 		ifPresent: [ :aClass | 
 			aClass traitComposition: aModifiedClassChange newClass traitComposition.
-			aClass theMetaClass traitComposition: aModifiedClassChange newClass theMetaClass traitComposition. ].
+			aClass classSide traitComposition: aModifiedClassChange newClass classSide traitComposition. ].
 
 ]
 

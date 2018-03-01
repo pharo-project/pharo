@@ -27,7 +27,7 @@ Class {
 		'needsSeparatorAfter',
 		'actionSelector'
 	],
-	#category : #'DebuggerActions-Actions'
+	#category : #DebuggerActions
 }
 
 { #category : #accessing }

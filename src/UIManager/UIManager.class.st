@@ -49,7 +49,7 @@ UIManager class >> isValidForCurrentSystemConfiguration [
 	^ false
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 UIManager class >> nonInteractiveDuring: aBlock [
 	| currentManager |
 	currentManager := self default.

@@ -70,6 +70,13 @@ SugsAbstractContext >> hasClassUnImplementedAccessors [
 ]
 
 { #category : #testing }
+SugsAbstractContext >> hasInstanceVariable [
+	
+	^(RBCondition hasInstanceVariable: self selectedClass) check.
+
+]
+
+{ #category : #testing }
 SugsAbstractContext >> hasMoreSentences [
 	^ selectedNode parent isNotNil and: [ selectedNode parent isMethod not ]
 ]
@@ -107,6 +114,11 @@ SugsAbstractContext >> hasUnacceptedEdits [
 	^self sourceTextArea hasUnacceptedEdits
 ]
 
+{ #category : #testing }
+SugsAbstractContext >> isMethodSelected [
+	^selectedNode isMethod 
+]
+
 { #category : #accessing }
 SugsAbstractContext >> model [
 	^ model
@@ -117,10 +129,20 @@ SugsAbstractContext >> model: aModel [
 	model := aModel
 ]
 
+{ #category : #accessing }
+SugsAbstractContext >> nodeStart [
+	^selectedNode start.
+]
+
+{ #category : #accessing }
+SugsAbstractContext >> nodeStop [
+	^selectedNode stop.
+]
+
 { #category : #selection }
 SugsAbstractContext >> selectTheTextForTheNode [
 	selectionPreviousHighligth := self selectedInterval .
-	selectedNode ifNotNil: [ self sourceTextArea selectFrom: self selectedNode start to: self selectedNode stop]
+	selectedNode ifNotNil: [ self sourceTextArea selectFrom: self nodeStart to: self nodeStop]
 ]
 
 { #category : #selection }

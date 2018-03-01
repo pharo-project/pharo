@@ -24,7 +24,6 @@ RFNewValueReification >> genForRBAssignmentNode [
 
 { #category : #generate }
 RFNewValueReification >> genForRBVariableNode [
-	"same as #value for variableNodes"
 	^RBTemporaryNode named: #RFNewValueReificationVar.
 ]
 

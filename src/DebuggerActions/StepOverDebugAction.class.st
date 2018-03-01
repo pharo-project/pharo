@@ -5,7 +5,7 @@ A StepOverDebugAction the current context.
 Class {
 	#name : #StepOverDebugAction,
 	#superclass : #DebugAction,
-	#category : #'DebuggerActions-Actions'
+	#category : #DebuggerActions
 }
 
 { #category : #registration }

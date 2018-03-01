@@ -331,7 +331,6 @@ StringTest >> secondIndex [
 
 { #category : #running }
 StringTest >> setUp [
-	<compilerOptions: #(#- #optionReadOnlyLiterals)>
 	super setUp.
 	string := 'Hi, I am a String'.
 	emptyString := ''.
@@ -759,24 +758,6 @@ StringTest >> testExpandMacros [
 						nextPut: Character tab;
 						nextPutAll: OSPlatform current lineEnding;
 						nextPut: Character cr ])
-]
-
-{ #category : #'tests - formatting' }
-StringTest >> testExpandMacrosSkip [
-	self assert: '%<' expandMacros equals: '<'
-]
-
-{ #category : #'tests - formatting' }
-StringTest >> testExpandMacrosTernary [
-	self assert: ('<1?success:error>' expandMacrosWith: true) equals: 'success'.
-	self assert: ('<1?success:error>' expandMacrosWith: false) equals: 'error'
-]
-
-{ #category : #'tests - formatting' }
-StringTest >> testExpandMacrosWithArguments [
-	self assert: ('<1s>' expandMacrosWithArguments: {'str''ing'}) equals: 'str''ing'.
-	self assert: ('<1p>' expandMacrosWithArguments: {'str''ing'}) equals: '''str''''ing'''.
-	self assert: ('<1p>: <2p>' expandMacrosWith: 'Number' with: 5) equals: '''Number'': 5'
 ]
 
 { #category : #tests }
@@ -1752,22 +1733,22 @@ StringTest >> testSubstrings [
 
 { #category : #tests }
 StringTest >> testTranslateToLowercase [
-	<compilerOptions: #(#- #optionReadOnlyLiterals)>
-	self assert: ('test this string' translateToLowercase) = 'test this string'.
-	self assert: (' Test THIS sTRing' translateToLowercase) = ' test this string'.
-	self assert: ('' translateToLowercase) = ''.
-	self assert: ('ÔÜÖ' translateToLowercase) = 'ôüö'.
-	self assert: ('123éàôüÖẞ' translateToLowercase) = '123éàôüöẞ'. 
+
+self assert: ('test this string' translateToLowercase) = 'test this string'.
+self assert: (' Test THIS sTRing' translateToLowercase) = ' test this string'.
+self assert: ('' translateToLowercase) = ''.
+self assert: ('ÔÜÖ' translateToLowercase) = 'ôüö'.
+self assert: ('123éàôüÖẞ' translateToLowercase) = '123éàôüöẞ'. 
 ]
 
 { #category : #tests }
 StringTest >> testTranslateToUppercase [
-	<compilerOptions: #(#- #optionReadOnlyLiterals)>
-	self assert: ('test this string' translateToUppercase) = 'TEST THIS STRING'.
-	self assert: (' Test THIS sTRing' translateToUppercase) = ' TEST THIS STRING'.
-	self assert: ('' translateToUppercase) = ''.
-	self assert: ('ÔÜÖ' translateToUppercase) = 'ÔÜÖ'.
-	self assert: ('123éàôüÖẞ' translateToUppercase) = '123ÉÀÔÜÖẞ'.
+
+self assert: ('test this string' translateToUppercase) = 'TEST THIS STRING'.
+self assert: (' Test THIS sTRing' translateToUppercase) = ' TEST THIS STRING'.
+self assert: ('' translateToUppercase) = ''.
+self assert: ('ÔÜÖ' translateToUppercase) = 'ÔÜÖ'.
+self assert: ('123éàôüÖẞ' translateToUppercase) = '123ÉÀÔÜÖẞ'.
 ]
 
 { #category : #'tests - converting' }

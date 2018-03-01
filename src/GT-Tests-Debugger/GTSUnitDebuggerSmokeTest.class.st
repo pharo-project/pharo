@@ -10,7 +10,7 @@ GTSUnitDebuggerSmokeTest >> debuggerToTest [
 	^ GTSUnitDebugger
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 GTSUnitDebuggerSmokeTest >> stepBlockForTestArrays [
 
 	^ [ :aProcess |
@@ -29,7 +29,7 @@ GTSUnitDebuggerSmokeTest >> stepBlockForTestArrays [
 
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 GTSUnitDebuggerSmokeTest >> stepBlockForTestWithHalt [
 
 	^ [ :aProcess |

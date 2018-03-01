@@ -400,7 +400,7 @@ GTSpotterStepTest >> testProcessorForPragmasThenDiveIn [
 	self assertProcessorByTitle: 'Pragmas'.
 	self assertProcessorNotEmpty.
 	self assertProcessorIncludes: (self pragma: #spotterOrder: of: (GTSpotter >> #spotterForFilesFor:)).
-	self assertProcessorIncludes: (self pragma: #spotterOrder: of: (FileReference lookupSelector: #spotterForFilesFor:)).
+	self assertProcessorIncludes: (self pragma: #spotterOrder: of: (FileReference >> #spotterForFilesFor:)).
 	
 	self assertDiveOut.
 	

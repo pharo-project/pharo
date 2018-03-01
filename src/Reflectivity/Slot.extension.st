@@ -84,7 +84,7 @@ Slot >> link: aMetaLink [
 	(aMetaLink checkForCompatibilityWith: self) ifFalse: [ self error: 'link requests reification that can not be provided by this node' ].
 	
 	methods := self usingMethods.
-	(self propertyAt: #links ifAbsentPut: [ OrderedCollection new ]) add: aMetaLink.
+	(self propertyAt: #links ifAbsentPut: [ IdentitySet new ]) add: aMetaLink.
 	aMetaLink installOnVariable: self.
 	methods
 		do: [ :method |  

@@ -7,11 +7,6 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #accessing }
-SugsBreakOnceSuggestion class >> nodes [
-	^{RBProgramNode}
-]
-
 { #category : #execution }
 SugsBreakOnceSuggestion >> execute [
 	context hasUnacceptedEdits ifTrue: [ ^context sourceTextArea acceptEdits].
@@ -26,17 +21,7 @@ SugsBreakOnceSuggestion >> isValidForContext [
 	^self selectedNodeHasBreakpoint not and: [self hasUnacceptedEdits not and:[ super isValidForContext ]]
 ]
 
-{ #category : #display }
-SugsBreakOnceSuggestion >> keyText [
-	^'b,o'
-]
-
-{ #category : #display }
+{ #category : #accessing }
 SugsBreakOnceSuggestion >> label [
 	^ 'Break once' translated
-]
-
-{ #category : #display }
-SugsBreakOnceSuggestion >> position [
-	^16
 ]

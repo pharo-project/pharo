@@ -1,5 +1,5 @@
 "
-Provides native access to the web browser on Windows. Do not use directly, use class WebBrowser instead.
+Access to the web browser on Windows
 "
 Class {
 	#name : #WBWindowsWebBrowser,
@@ -7,15 +7,23 @@ Class {
 	#category : #'WebBrowser-Core-OS-Windows'
 }
 
+{ #category : #examples }
+WBWindowsWebBrowser class >> example [
+
+	self openOn: 'http://www.pharo.org'
+]
+
 { #category : #testing }
 WBWindowsWebBrowser class >> isForCurrentSystem [
 
 	^Smalltalk os isWindows   
 ]
 
-{ #category : #private }
-WBWindowsWebBrowser class >> openNativeWebBrowserOn: anURLString [
-
+{ #category : #'instance creation' }
+WBWindowsWebBrowser class >> openOn: anURLString [
+	"
+	self openOn: 'http://www.pharo.org'
+	"
 	^self shellExecute: 'open' file: anURLString parameters: '' directory: '' show: 5 "SW_SHOW"
 ]
 

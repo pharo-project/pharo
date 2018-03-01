@@ -71,13 +71,6 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 ]
 
 { #category : #correcting }
-OCUndeclaredVariableWarning >> declareUndefined [
-
-	Undeclared add: (UndeclaredVariable named: node name asSymbol).
-	^OCUndeclaredVariable new name: node name asSymbol
-]
-
-{ #category : #correcting }
 OCUndeclaredVariableWarning >> defaultAction [
 	| varName className selector |
 	
@@ -175,9 +168,6 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 			labels add: 'Declare new instance variable'.
 			actions add: [ self declareInstVar: name ] ]
 		ifFalse: [ 
-			labels add: 'Leave variable undeclared'.
-			actions add: [ self declareUndefined ].
-			lines add: labels size.
 			labels add: 'Define new class'.
 			actions
 				add: [ 

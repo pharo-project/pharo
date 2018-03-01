@@ -352,7 +352,7 @@ ClassTrait >> obsoleteSubclasses [
 	"Answer the receiver's subclasses."
 
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
-	^ self instanceSide obsoleteSubclasses collect: [ :aSubclass | aSubclass theMetaClass ]
+	^ self instanceSide obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
 ]
 
 { #category : #compiling }
@@ -400,7 +400,7 @@ ClassTrait >> subclasses [
 	"Answer the receiver's subclasses."
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
-	^ self instanceSide subclasses collect: [ :aSubclass | aSubclass theMetaClass ].
+	^ self instanceSide subclasses collect: [ :aSubclass | aSubclass classSide ].
 ]
 
 { #category : #'class hierarchy' }
@@ -408,7 +408,7 @@ ClassTrait >> subclassesDo: aBlock [
 	"Evaluate aBlock for each of the receiver's immediate subclasses."
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ self ].
-	self instanceSide subclasses do: [ :each | aBlock value: each theMetaClass ]
+	self instanceSide subclasses do: [ :each | aBlock value: each classSide ]
 ]
 
 { #category : #composition }

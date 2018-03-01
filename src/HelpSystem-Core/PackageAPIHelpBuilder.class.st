@@ -7,27 +7,29 @@ Class {
 	#category : #'HelpSystem-Core-Builders'
 }
 
-{ #category : #'private - utilities' }
-PackageAPIHelpBuilder class >> buildPackageTopic: packageTopic [
+{ #category : #building }
+PackageAPIHelpBuilder >> build [ 
+	|pTopic|
+	topicToBuild := (HelpTopic named: rootToBuildFrom bookName).
+	rootToBuildFrom helpPackages do: [:package|
+		pTopic := HelpTopic named: package.
+		topicToBuild addSubtopic: pTopic.
+		self buildPackageTopic: pTopic.
+		
+	]
+
+]
+
+{ #category : #building }
+PackageAPIHelpBuilder >> buildPackageTopic: pTopic [
  
 	| classTopic classes |
-	classes := (RPackageSet named: packageTopic title) classes 
-		asSortedCollection: [:class1 :class2 | class1 name < class2 name].
+	classes := (RPackageSet named: pTopic title) classes 
+		asSortedCollection: [:cl1 :cl2 | cl1 name < cl2 name].
 	classes do: [ :aClass | 
 		classTopic := ClassAPIHelpBuilder 
 			buildHierarchicalHelpTopicFrom: aClass 
 			withSubclasses: false 
 			withMethods: true.
-		packageTopic addSubtopic: classTopic ]
-]
-
-{ #category : #building }
-PackageAPIHelpBuilder >> build [ 
-	| packageTopic |
-	topicToBuild := (HelpTopic named: rootToBuildFrom bookName).
-	rootToBuildFrom helpPackages do: [:package|
-		packageTopic := HelpTopic named: package.
-		topicToBuild addSubtopic: packageTopic.
-		self class buildPackageTopic: packageTopic ]
-
+		pTopic addSubtopic: classTopic ]
 ]

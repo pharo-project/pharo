@@ -2512,7 +2512,7 @@ Morph >> extent: aPoint [
 
 { #category : #viewer }
 Morph >> externalName [
-	^ self assureExtension externalName ifNil: [self printString]
+	^ self assureExtension externalName ifNil: [super externalName]
 ]
 
 { #category : #'visual properties' }

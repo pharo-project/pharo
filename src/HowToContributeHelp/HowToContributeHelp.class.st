@@ -1,6 +1,3 @@
-"
-A help topic on how to contribute
-"
 Class {
 	#name : #HowToContributeHelp,
 	#superclass : #CustomHelp,

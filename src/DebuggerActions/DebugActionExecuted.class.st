@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'debuggingAction'
 	],
-	#category : #'DebuggerActions-Announcements'
+	#category : #DebuggerActions
 }
 
 { #category : #'instance creation' }
