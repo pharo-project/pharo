@@ -1,12 +1,12 @@
-Extension { #name : #FileReference }
+Extension { #name : #AbstractFileReference }
 
 { #category : #'*GT-SpotterExtensions-Core' }
-FileReference >> isZipFile [
+AbstractFileReference >> isZipFile [
 	^ self isFile and: [ #('zip' 'jar' 'ear' 'war') includes: self extension ]
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-FileReference >> spotterForDirectoriesFor: aStep [
+AbstractFileReference >> spotterForDirectoriesFor: aStep [
 	<spotterOrder: 10>
 	^ self isDirectory ifTrue: [
 		aStep listProcessor
@@ -19,7 +19,7 @@ FileReference >> spotterForDirectoriesFor: aStep [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-FileReference >> spotterForFilesFor: aStep [
+AbstractFileReference >> spotterForFilesFor: aStep [
 	<spotterOrder: 20>
 	^ self isDirectory ifTrue: [
 		aStep listProcessor
@@ -32,7 +32,7 @@ FileReference >> spotterForFilesFor: aStep [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-FileReference >> spotterForZipDirectoriesFor: aStep [
+AbstractFileReference >> spotterForZipDirectoriesFor: aStep [
 	<spotterOrder: 10>
 	| zipFileSystem |
 	self isZipFile ifFalse: [ ^ self ].
@@ -48,7 +48,7 @@ FileReference >> spotterForZipDirectoriesFor: aStep [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-FileReference >> spotterForZipFilesFor: aStep [
+AbstractFileReference >> spotterForZipFilesFor: aStep [
 	<spotterOrder: 10>
 	| zipFileSystem |
 	self isZipFile ifFalse: [ ^ self ].
@@ -65,7 +65,7 @@ FileReference >> spotterForZipFilesFor: aStep [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-FileReference >> spotterPreviewContentsIn: aComposite [
+AbstractFileReference >> spotterPreviewContentsIn: aComposite [
 	<spotterPreview: 20>
 	
 	self isFile ifFalse: [ ^ self ].
@@ -83,7 +83,7 @@ FileReference >> spotterPreviewContentsIn: aComposite [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-FileReference >> spotterPreviewItemsIn: aComposite [
+AbstractFileReference >> spotterPreviewItemsIn: aComposite [
 	<spotterPreview: 10>
 	
 	self isDirectory ifFalse: [ ^ self ].
@@ -108,7 +108,7 @@ FileReference >> spotterPreviewItemsIn: aComposite [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-FileReference >> spotterPreviewPngIn: aComposite [
+AbstractFileReference >> spotterPreviewPngIn: aComposite [
 	<spotterPreview: 10>
 	
 	(self mimeTypes notNil and: [ 
@@ -120,7 +120,7 @@ FileReference >> spotterPreviewPngIn: aComposite [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-FileReference >> spotterPreviewStScriptIn: aComposite [
+AbstractFileReference >> spotterPreviewStScriptIn: aComposite [
 	<spotterPreview: 10>
 	
 	(self extension = 'st' or: [self extension = 'ph']) 
@@ -133,7 +133,7 @@ FileReference >> spotterPreviewStScriptIn: aComposite [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-FileReference >> spotterPreviewZipItemsIn: aComposite [
+AbstractFileReference >> spotterPreviewZipItemsIn: aComposite [
 	<spotterPreview: 10>
 
 	| zip |
