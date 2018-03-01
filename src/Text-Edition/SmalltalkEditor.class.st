@@ -102,20 +102,6 @@ SmalltalkEditor class >> initializeShiftCmdKeyShortcuts [
 ]
 
 { #category : #'menu declaration' }
-SmalltalkEditor class >> shiftedYellowButtonMenu [
-	^ (PragmaMenuBuilder 
-			pragmaKeyword: self smalltalkEditorShiftedMenuKeyword
-			model: nil) menu.
-
-]
-
-{ #category : #'menu declaration' }
-SmalltalkEditor class >> smalltalkEditorMenuKeyword [
-	^'smalltalkEditorMenu'
-
-]
-
-{ #category : #'menu declaration' }
 SmalltalkEditor class >> smalltalkEditorMenuOn: aBuilder [
 	"Specify the menu used when writing code. Try it with:
 	(PragmaMenuBuilder 
@@ -213,12 +199,6 @@ SmalltalkEditor class >> smalltalkEditorMenuOn: aBuilder [
 ]
 
 { #category : #'menu declaration' }
-SmalltalkEditor class >> smalltalkEditorShiftedMenuKeyword [
-	^ 'smalltalkEditorShiftedMenu'
-
-]
-
-{ #category : #'menu declaration' }
 SmalltalkEditor class >> smalltalkEditorShiftedMenuOn: aBuilder [ 
 	"Specify the menu used when writing code. Try it with:
 	(PragmaMenuBuilder 
@@ -254,14 +234,6 @@ SmalltalkEditor class >> smalltalkEditorShiftedMenuOn: aBuilder [
 		selector: #classNamesContainingIt.
 	(aBuilder item: #'class comments with it' translated) 
 		selector: #classCommentsContainingIt.
-
-]
-
-{ #category : #'menu declaration' }
-SmalltalkEditor class >> yellowButtonMenu [
-	^ (PragmaMenuBuilder 
-			pragmaKeyword: self smalltalkEditorMenuKeyword
-			model: nil) menu.
 
 ]
 
@@ -432,6 +404,12 @@ SmalltalkEditor >> doIt: aKeyboardEvent [
 { #category : #accessing }
 SmalltalkEditor >> editingStateClass [
 	^ SmalltalkEditingState
+]
+
+{ #category : #'menu declaration' }
+SmalltalkEditor >> editorMenuKeyword [
+	^'smalltalkEditorMenu'
+
 ]
 
 { #category : #'do-its' }
@@ -886,6 +864,12 @@ SmalltalkEditor >> sendersOfIt: aKeyboardEvent [
 	"Triggered by Cmd-n; browse implementors of the selector represented by the current selection, if plausible. 2/1/96 sw"
 	self sendersOfIt.
 	^ true
+]
+
+{ #category : #'menu declaration' }
+SmalltalkEditor >> shiftedMenuKeyword [
+	^ 'smalltalkEditorShiftedMenu'
+
 ]
 
 { #category : #'menu messages' }
