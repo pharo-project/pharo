@@ -31,7 +31,6 @@ Class {
 
 { #category : #examples }
 ShiftClassInstaller class >> example [
-	<sampleInstance>
 	^ Smalltalk classInstaller make: [ :aSlotClassBuilder |
 		aSlotClassBuilder
 			superclass: Object;
@@ -184,21 +183,25 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	].
 	
 	[ 	
-		(self builder hasToMigrateInstances) 
-			ifTrue: [self migrateInstancesTo: newClass].
-
+		self migrateInstancesTo: newClass.
+		
 		{ oldClass. builder oldMetaclass } elementsForwardIdentityTo: { newClass. builder newMetaclass }.	
 	] valueUninterruptably.
 
 ]
 
 { #category : #migrating }
-ShiftClassInstaller >> migrateInstancesTo: newClass [
-	| oldObjects newObjects |
-	oldObjects := oldClass allInstances.
-	newObjects := oldObjects collect: [ :e | self copyObject: e to: newClass ].
+ShiftClassInstaller >> migrateInstances: oldObjects to: aNewClass [
+	| newObjects |
+	newObjects := oldObjects collect: [ :e | self copyObject: e to: aNewClass ].
 
 	oldObjects elementsForwardIdentityTo: newObjects copyHash: true
+]
+
+{ #category : #migrating }
+ShiftClassInstaller >> migrateInstancesTo: newClass [
+	builder changes
+		do: [ :each | each migrateInstancesOf: oldClass to: newClass using: self ]
 ]
 
 { #category : #notifications }

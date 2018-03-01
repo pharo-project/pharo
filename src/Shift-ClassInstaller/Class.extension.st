@@ -3,7 +3,12 @@ Extension { #name : #Class }
 { #category : #'*Shift-ClassInstaller' }
 Class >> addClassSlot: aSlot [
 
-	^ self classInstaller update: self to: [ :builder |
+ 	<localClassMethod> 
+   "This method is supposed to be local in Class because of a good reason.
+   We use this pragma to test if Class does not contain some accidental 
+   local selectors."
+
+	^self classInstaller update: self to: [ :builder |
 		builder
 			superclass: self superclass;
 			name: self name;
@@ -13,13 +18,18 @@ Class >> addClassSlot: aSlot [
 			sharedVariablesFromString: self classVariablesString;
 			sharedPools: self sharedPoolsString;
 			category: self category;
-			environment: self environment]
+			environment: self environment].
 ]
 
 { #category : #'*Shift-ClassInstaller' }
 Class >> addSlot: aSlot [
 
-	^ self classInstaller update: self to: [ :builder |
+	<localClassMethod> 
+    "This method is supposed to be local in Class because of a good reason.
+    We use this pragma to test if Class does not contain some accidental 
+    local selectors."
+
+	^self classInstaller update: self to: [ :builder |
 		builder
 			superclass: self superclass;
 			name: self getName;
@@ -29,7 +39,7 @@ Class >> addSlot: aSlot [
 			sharedVariablesFromString: self classVariablesString;
 			sharedPools: self sharedPoolsString;
 			category: self category;
-			environment: self environment]
+			environment: self environment].
 ]
 
 { #category : #'*Shift-ClassInstaller' }
