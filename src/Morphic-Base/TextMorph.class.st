@@ -609,7 +609,7 @@ TextMorph >> editor [
 TextMorph >> editorClass [
 	"Answer the class used to create the receiver's editor"
 	
-	^TextEditor
+	^SmalltalkEditor
 ]
 
 { #category : #accessing }
@@ -849,8 +849,8 @@ TextMorph >> getLastCharacter [
 { #category : #'event handling' }
 TextMorph >> getMenu: shiftKeyState [ 
 	^ shiftKeyState not
-		ifTrue: [editor yellowButtonMenu]
-		ifFalse: [editor shiftedYellowButtonMenu]
+		ifTrue: [TextEditor yellowButtonMenu]
+		ifFalse: [TextEditor shiftedYellowButtonMenu]
 ]
 
 { #category : #'submorphs-add/remove' }

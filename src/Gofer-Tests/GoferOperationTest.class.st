@@ -7,7 +7,7 @@ Class {
 	#category : #'Gofer-Tests-Tests'
 }
 
-{ #category : #utilities }
+{ #category : #utils }
 GoferOperationTest >> allManagers [
 
 	^ MCWorkingCopy allManagers 

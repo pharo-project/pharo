@@ -7,27 +7,12 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #accessing }
-SugsInlineTemporary class >> nodes [
-	^{RBAssignmentNode}
-]
-
 { #category : #execution }
 SugsInlineTemporary >> execute [
 	 (NautilusRefactoring model: context) inlineTemporaryBetween: context selectedInterval from: context selectedMethod
 ]
 
-{ #category : #display }
-SugsInlineTemporary >> icon [
-	^self iconNamed: #smallLanguageIcon
-]
-
-{ #category : #display }
+{ #category : #accessing }
 SugsInlineTemporary >> label [
 	 ^'Inline temporary' translated
-]
-
-{ #category : #display }
-SugsInlineTemporary >> position [
-	^10
 ]

@@ -5,7 +5,7 @@ A WhereIsDebugAction highlights in the code editor the current instruction.
 Class {
 	#name : #WhereIsDebugAction,
 	#superclass : #DebugAction,
-	#category : #'DebuggerActions-Actions'
+	#category : #DebuggerActions
 }
 
 { #category : #registration }

@@ -4,7 +4,7 @@ Class {
 	#category : #'Tests-Traits'
 }
 
-{ #category : #utilities }
+{ #category : #utils }
 TraitTest >> createClassUsing: aTrait [
 	^ Object
 		subclass: #AClassForTests
@@ -15,7 +15,7 @@ TraitTest >> createClassUsing: aTrait [
 		category: 'AAA'
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 TraitTest >> createTrait [
 	| trait |
 	trait := Trait named: #ATraitForTests uses: {} category: 'AAA'.

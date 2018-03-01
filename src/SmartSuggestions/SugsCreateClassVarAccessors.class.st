@@ -7,32 +7,17 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #accessing }
-SugsCreateClassVarAccessors class >> nodes [
-	^{RBGlobalNode}
-]
-
 { #category : #execution }
 SugsCreateClassVarAccessors >> execute [
 	(NautilusRefactoring model: context) accessorsClassVarNamed: context selectedVariableName from: context selectedClass
 ]
 
-{ #category : #display }
-SugsCreateClassVarAccessors >> icon [
-	^self iconNamed: #smallLanguageIcon
-]
-
 { #category : #execution }
 SugsCreateClassVarAccessors >> isValidForContext [
-	^context selectedNode binding isClassVariable and: [context hasClassUnImplementedAccessors]
+	^context hasClassUnImplementedAccessors 
 ]
 
-{ #category : #display }
+{ #category : #accessing }
 SugsCreateClassVarAccessors >> label [
 	^'Create accessors' translated
-]
-
-{ #category : #display }
-SugsCreateClassVarAccessors >> position [
-	^30
 ]

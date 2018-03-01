@@ -79,7 +79,8 @@ IdentityBagTest >> testIdentity [
 
 { #category : #'tests - identity adding' }
 IdentityBagTest >> testIdentityAdd [
-	| added |
+	| added oldSize |
+	oldSize := self collection size.
 	self collection add: self elementToCopy .
 	self deny: (self collection includes: self equalNotIdenticalElement).
 	

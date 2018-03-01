@@ -4,9 +4,6 @@ Usage: test [--junit-xml-output] [--fail-on-failure] [<package> ...]
 	--fail-on-failure     if there is a test error or failure, it will exit with error code 1
 	--fail-on-error       if there is a test error it will exit with error code 1
 	--save                save after executing tests
-	--stage-name=aName	
-					it adds a prefix to the xml generated, this is useful 
-					when running in the CI infrastructure
 	 <package>            a String matching a package name
 	
 Examples:
@@ -126,10 +123,7 @@ TestCommandLineHandler >> runPackages [
 
 { #category : #private }
 TestCommandLineHandler >> testRunner [
-	
-	(self hasOption: 'junit-xml-output') ifTrue: [ 
-		HDTestReport currentStageName: ((self hasOption: 'stage-name') ifTrue: [ self optionAt: 'stage-name' ] ifFalse: [ '' ]). 	
-		^ HDTestReport ].
+	(self hasOption: 'junit-xml-output') ifTrue: [ ^ HDTestReport ].
 	
 	self class environment at: #CommandLineTestRunner ifPresent: [ :commandLineTestRunner |
 		(self hasOption: 'no-xterm') ifTrue: [ ^ commandLineTestRunner ].

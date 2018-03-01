@@ -4,7 +4,7 @@ SUnit tests for the Smart suggestions context
 Class {
 	#name : #SugsContextTest,
 	#superclass : #TestCase,
-	#category : #'SmartSuggestions-Tests'
+	#category : #'SmartSuggestions-Tests-Tests'
 }
 
 { #category : #'tests - valid context' }

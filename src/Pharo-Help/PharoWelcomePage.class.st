@@ -54,17 +54,6 @@ Class {
 	#category : #'Pharo-Help'
 }
 
-{ #category : #'world menu' }
-PharoWelcomePage class >> menuCommandOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #'Welcome to Pharo')
-		parent: #Help;
-		order: 1.2;
-		action: [ self open ];
-		icon: ((self iconNamed: #pharoIcon) scaledToSize: 16@16);
-		help: 'Welcome window for Pharo' 
-]
-
 { #category : #opening }
 PharoWelcomePage class >> open [
 	<script>

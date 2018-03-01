@@ -1,7 +1,7 @@
 Extension { #name : #Object }
 
 { #category : #'*OpalCompiler-Core' }
-Object >> mustBeBooleanDeOptimizeIn: context [
+Object >> mustBeBooleanInMagic: context [
 	"Permits to redefine methods inlined by compiler.
 	Take the ast node corresponding to the mustBeBoolean error, compile it on the fly and executes it as a DoIt. Then resume the execution of the context."
 

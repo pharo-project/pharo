@@ -250,29 +250,6 @@ ProtoObject >> pointsTo: anObject [
 	^ (self instVarsInclude: anObject) or: [ ^self class == anObject]
 ]
 
-{ #category : #'primitive failure' }
-ProtoObject >> primitiveFail [
-	"primitiveFail may be invoked by certain methods whose code is translated in C. In such a case primitiveFail and not primitiveFailed
-	 should be invoked. The reason is that this code is translated to C by VMMaker. #primitiveFail is 
-	implemented in Interpreter of VMMaker."
-
-	^ self primitiveFailed
-]
-
-{ #category : #'primitive failure' }
-ProtoObject >> primitiveFailed [
-	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
-
-	self primitiveFailed: thisContext sender selector
-]
-
-{ #category : #'primitive failure' }
-ProtoObject >> primitiveFailed: selector [
-	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
-	
-	PrimitiveFailed signalFor: selector
-]
-
 { #category : #debugging }
 ProtoObject >> rearmOneShot [
 	"Call this manually to arm the one-shot mechanism; use the mechanism in code by calling

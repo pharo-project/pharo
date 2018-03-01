@@ -7,11 +7,6 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #accessing }
-SugsFindSenders class >> nodes [
-	^{RBMethodNode . RBMessageNode}.
-]
-
 { #category : #execution }
 SugsFindSenders >> execute [
 	SystemNavigation default
@@ -20,22 +15,7 @@ SugsFindSenders >> execute [
 				autoSelect: nil
 ]
 
-{ #category : #display }
-SugsFindSenders >> icon [
-	^self iconNamed: #smallFindIcon
-]
-
-{ #category : #display }
-SugsFindSenders >> keyText [
-	^'n'
-]
-
-{ #category : #display }
+{ #category : #accessing }
 SugsFindSenders >> label [
 	^ 'Senders' translated
-]
-
-{ #category : #display }
-SugsFindSenders >> position [
-	^10
 ]

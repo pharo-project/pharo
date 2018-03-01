@@ -4,7 +4,7 @@ A RunToSelectionDebugAction resumes the execution until the selected position in
 Class {
 	#name : #RunToSelectionDebugAction,
 	#superclass : #DebugAction,
-	#category : #'DebuggerActions-Actions'
+	#category : #DebuggerActions
 }
 
 { #category : #registration }

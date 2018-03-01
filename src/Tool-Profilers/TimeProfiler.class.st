@@ -175,7 +175,9 @@ TimeProfiler >> codePaneMenu: aMenu shifted: shifted [
 	PluggableTextController will respond to all menu items in a 
 	text pane"
 	| donorMenu |
-   donorMenu := (PragmaMenuBuilder pragmaKeyword: RubSmalltalkCodeMode menuKeyword model: codeTabPane) menu.
+	donorMenu := shifted
+				ifTrue: [SmalltalkEditor shiftedYellowButtonMenu]
+				ifFalse: [SmalltalkEditor yellowButtonMenu].
 	^ aMenu addAllFrom: donorMenu
 ]
 

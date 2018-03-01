@@ -22,7 +22,7 @@ Class {
 	#classVars : [
 		'FinalizationList'
 	],
-	#category : #'Announcements-Core-Subscription'
+	#category : #'Announcements-Core'
 }
 
 { #category : #finalization }

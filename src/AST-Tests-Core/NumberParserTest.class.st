@@ -9,7 +9,7 @@ Class {
 	#category : #'AST-Tests-Core'
 }
 
-{ #category : #utilities }
+{ #category : #utility }
 NumberParserTest >> areLowercaseDigitsAllowed [
 	"Answer true if lowercase letter are allowed digits."
 	

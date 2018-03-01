@@ -181,8 +181,8 @@ HookGenerator >> wrapCondition: hook link: aLink [
 	linkBlock := self encloseInBlock: hook asSequenceNode.
 	conditionExpression := RBMessageNode 
 			receiver: ((self hasOption: #optionInlineCondition for: aLink)  
-				ifTrue: [RFLiteralVariableNode value: aLink condition]
-				ifFalse:[RBMessageNode receiver: (RFLiteralVariableNode value: aLink)
+				ifTrue: [aLink condition asLiteralNode]
+				ifFalse:[RBMessageNode receiver: (RBLiteralNode value: aLink)
 											 selector: #condition ])
 			selector: condSelector
 			arguments: condArguments.
@@ -195,7 +195,7 @@ HookGenerator >> wrapCondition: hook link: aLink [
 { #category : #'ast manipulation' }
 HookGenerator >> wrapInContext: hook link: aLink [
 	^RFMessageNode 
-		receiver: (RFLiteralVariableNode value: aLink)
+		receiver: aLink asLiteralNode
 		selector: #valueInContext:
 		arguments: {self encloseInBlock: hook}
 				

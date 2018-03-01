@@ -7,7 +7,7 @@ Class {
 	#category : #'WebBrowser-Core-Base'
 }
 
-{ #category : #examples }
+{ #category : #example }
 WebBrowser class >> example [
 
 	self openOn: 'http://www.pharo.org'
@@ -19,25 +19,16 @@ WebBrowser class >> isForCurrentSystem [
 	^self subclassResponsibility 
 ]
 
-{ #category : #private }
-WebBrowser class >> openNativeWebBrowserOn: aURL [
-
-	self subclassResponsibility
-]
-
-{ #category : #'instance creation' }
+{ #category : #'instance-creation' }
 WebBrowser class >> openOn: aURLString [
 	"Open the webbrowser on the given URL"
 	
-	^self webbrowserClassForPlatform 
-				openNativeWebBrowserOn: aURLString	
+	^self webbrowserClassForPlatform openOn: aURLString	
 
 ]
 
 { #category : #'private - accessing' }
 WebBrowser class >> webbrowserClassForPlatform [
 
-  ^ self allSubclasses 
-				detect: #isForCurrentSystem 
-				ifNone: [ self error: 'No web browser subclass for platform provided' ]
+  ^ self allSubclasses detect: #isForCurrentSystem ifNone: [ self error: 'No web browser subclass for platform provided' ]
 ]

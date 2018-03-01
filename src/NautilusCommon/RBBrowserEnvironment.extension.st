@@ -11,7 +11,7 @@ RBBrowserEnvironment >> asSystemNavigationEnvironment [
 	env := SystemDictionary new.
 	
 	self classesDo: [:each | 
-		env add: ( Smalltalk globals associationAt: each theNonMetaClass name )].
+		env add: ( Smalltalk globals associationAt: each instanceSide name )].
 	self traitsDo:  [:each | 
 		env add: ( Smalltalk globals associationAt: each name )].
 	globalsNames := Smalltalk globals keys asOrderedCollection.

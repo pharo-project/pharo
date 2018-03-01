@@ -5,7 +5,7 @@ A StepIntoDebugAction the current context.
 Class {
 	#name : #StepIntoDebugAction,
 	#superclass : #DebugAction,
-	#category : #'DebuggerActions-Actions'
+	#category : #DebuggerActions
 }
 
 { #category : #registration }

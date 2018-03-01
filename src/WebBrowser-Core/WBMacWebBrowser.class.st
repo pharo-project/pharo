@@ -1,5 +1,5 @@
 "
-Provides native access to the web browser on Mac. Do not use directly, use class WebBrowser instead.
+Access to the web browser on Mac
 "
 Class {
 	#name : #WBMacWebBrowser,
@@ -7,18 +7,26 @@ Class {
 	#category : #'WebBrowser-Core-OS-Mac'
 }
 
+{ #category : #examples }
+WBMacWebBrowser class >> example [
+
+	self openOn: 'http://www.pharo.org'
+]
+
 { #category : #testing }
 WBMacWebBrowser class >> isForCurrentSystem [
 
 	^Smalltalk os isMacOS 
 ]
 
-{ #category : #private }
-WBMacWebBrowser class >> openNativeBrowserOn: anURLString [
-
+{ #category : #'instance creation' }
+WBMacWebBrowser class >> openOn: anURLString [
+	"
+	self openOn: 'http://www.pharo.org'
+	"
 	| openCommand |
 	openCommand := 'open "{1}"' format: { anURLString }.
-	self system: openCommand
+	self system: openCommand.
 ]
 
 { #category : #'private - uffi' }

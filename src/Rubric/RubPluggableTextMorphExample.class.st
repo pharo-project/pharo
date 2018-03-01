@@ -106,7 +106,9 @@ RubPluggableTextMorphExample >> codePaneMenu: aMenu shifted: shifted [
 	"You should not use this way of getting menu. Because when you create a text area, you have a menu"
 
 	| donorMenu |
-	donorMenu := (PragmaMenuBuilder pragmaKeyword: RubSmalltalkCodeMode menuKeyword model: self) menu.
+	donorMenu := shifted
+		ifTrue: [ SmalltalkEditor shiftedYellowButtonMenu ]
+		ifFalse: [ SmalltalkEditor yellowButtonMenu ].
 	^ aMenu addAllFrom: donorMenu
 ]
 

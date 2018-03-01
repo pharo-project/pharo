@@ -7,27 +7,12 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #accessing }
-SugsInline class >> nodes [
-	^{RBMessageNode}
-]
-
 { #category : #execution }
 SugsInline >> execute [
 	 (NautilusRefactoring model: context) inlineMethodBetween: context selectedInterval from: context selectedMethod
 ]
 
-{ #category : #display }
-SugsInline >> icon [
-	^self iconNamed: #smallRightFlushIcon
-]
-
-{ #category : #display }
+{ #category : #accessing }
 SugsInline >> label [
 	 ^'Inline method' translated
-]
-
-{ #category : #display }
-SugsInline >> position [
-	^100
 ]

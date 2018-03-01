@@ -31,11 +31,29 @@ RubSmalltalkCommentMode class >> menuOn: aBuilder [
 ]
 
 { #category : #'initialize-release' }
+RubSmalltalkCommentMode >> editorClass [
+	^ RubSmalltalkEditor.
+
+]
+
+{ #category : #'initialize-release' }
 RubSmalltalkCommentMode >> formatMethodCode [
 	"do nothing for code comments"
 ]
 
-{ #category : #testing }
+{ #category : #'as yet unclassified' }
 RubSmalltalkCommentMode >> isCodeCompletionAllowed [
 	^ false
+]
+
+{ #category : #'initialize-release' }
+RubSmalltalkCommentMode >> updateTextAreaWhenPlugged [
+	super updateTextAreaWhenPlugged
+
+]
+
+{ #category : #'initialize-release' }
+RubSmalltalkCommentMode >> updateTextAreaWhenUnplugged [
+	super updateTextAreaWhenUnplugged
+
 ]

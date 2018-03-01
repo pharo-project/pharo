@@ -13,7 +13,6 @@ RBProgramNode >> afterLinks [
 { #category : #'*Reflectivity' }
 RBProgramNode >> allAfterAreWeak [
 	self hasMetalink ifFalse: [^false].
-	self isMessage ifFalse:  [^false]. "only sends are weak"
 	^self afterLinks allSatisfy: [ :link | link hasOption: #optionWeakAfter ].
 ]
 
@@ -94,7 +93,7 @@ RBProgramNode >> invalidate [
 { #category : #'*Reflectivity' }
 RBProgramNode >> link: aMetaLink [
 	(aMetaLink checkForCompatibilityWith: self) ifFalse: [ self error: 'link requests reification that can not be provided by this node' ].
-	(self propertyAt: #links ifAbsentPut: [ OrderedCollection new ]) add: aMetaLink.
+	(self propertyAt: #links ifAbsentPut: [ IdentitySet new ]) add: aMetaLink.
 	aMetaLink installOn: self.
 	self clearReflectivityAnnotations.
 	self methodNode method installLink: aMetaLink. 

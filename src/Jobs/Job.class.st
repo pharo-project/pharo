@@ -105,7 +105,7 @@ Job class >> jobAnnouncer [
 Job >> addChild: aJob [
 
 	children add: aJob.
-	aJob parent: self
+	aJob parent: self.
 ]
 
 { #category : #accessing }
@@ -113,14 +113,14 @@ Job >> announce: anAnnouncementClass [
 
 	| announcement |
 	announcement := anAnnouncementClass on: self.
-	self announcer announce: announcement
+	self announcer announce: announcement.
 ]
 
 { #category : #accessing }
 Job >> announceChange [
 
 	isRunning ifFalse: [ ^ self ].
-	self announce: JobChange
+	self announce: JobChange.
 ]
 
 { #category : #accessing }
@@ -138,34 +138,33 @@ Job >> block [
 { #category : #private }
 Job >> block: aBlock [
 	
-	block := aBlock
+	block := aBlock.
 ]
 
 { #category : #accessing }
 Job >> children [
 
-	^ children copy
+	^ children copy.
 ]
 
 { #category : #private }
 Job >> cleanupAfterRunning [
-
 	isRunning := false.
 	process := nil.
 	self announce: JobEnd.
-	parent ifNotNil: [ :job | job removeChild: self ]
+	parent ifNotNil: [ :job | job removeChild: self ].
 ]
 
 { #category : #compatibility }
 Job >> current [
 
-	^ self currentValue
+	^ self currentValue.
 ]
 
 { #category : #compatibility }
 Job >> current: aNumber [
 
-	self currentValue: aNumber
+	self currentValue: aNumber.
 ]
 
 { #category : #accessing }
@@ -178,7 +177,7 @@ Job >> currentValue [
 Job >> currentValue: aNumber [
 	
 	currentValue := aNumber.
-	self announceChange
+	self announceChange.
 ]
 
 { #category : #debugging }
@@ -189,7 +188,7 @@ Job >> debug [
 { #category : #compatibility }
 Job >> decrement [
 
-	self currentValue: self currentValue - 1
+	self currentValue: self currentValue - 1.
 ]
 
 { #category : #compatibility }
@@ -218,7 +217,7 @@ Job >> isRunning [
 { #category : #compatibility }
 Job >> label [
 
-	^ self title
+	^ self title.
 ]
 
 { #category : #compatibility }

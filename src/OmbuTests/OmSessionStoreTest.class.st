@@ -24,12 +24,11 @@ OmSessionStoreTest >> setUpStore [
 
 { #category : #running }
 OmSessionStoreTest >> tearDown [
-	
-	store flush. "Store needs to be flushed already to be able to delete"	
+		
+	super tearDown. "needs to be executed before"
 
 	(self directoryForTests / 'test-sessions-main') ensureDeleteAll.
-	(self directoryForTests / 'test-sessions-other') ensureDeleteAll.
-	super tearDown. 
+	(self directoryForTests / 'test-sessions-other') ensureDeleteAll
 ]
 
 { #category : #tests }

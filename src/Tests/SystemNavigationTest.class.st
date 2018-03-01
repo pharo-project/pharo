@@ -29,7 +29,7 @@ SystemNavigationTest >> createClassFactory [
 	^ ClassFactoryWithOrganization newWithOrganization: self organizationToTest
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 SystemNavigationTest >> createMethodNamed: selector realParent: class [
 
 	^ RGMethodDefinition realClass: class selector: selector

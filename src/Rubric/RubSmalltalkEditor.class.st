@@ -110,6 +110,13 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		do: [ :target | target formatMethodCode ]
 ]
 
+{ #category : #accessing }
+RubSmalltalkEditor class >> compilerFor: aClass [
+	^ (aClass respondsTo: #compiler) 
+		ifTrue: [aClass compiler]
+		ifFalse: [ aClass class evaluatorClass new ]
+]
+
 { #category : #NOcompletion }
 RubSmalltalkEditor >> atCompletionPosition [
 	"Return true if the cursor is at a possible completion position"

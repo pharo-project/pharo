@@ -5,7 +5,7 @@ A BrowseDebugAction is a debugging actions sending a unary message to the stack 
 Class {
 	#name : #BrowseDebugAction,
 	#superclass : #MessageSendDebugAction,
-	#category : #'DebuggerActions-Actions'
+	#category : #DebuggerActions
 }
 
 { #category : #'actions creation' }
@@ -59,12 +59,6 @@ BrowseDebugAction class >> debugActionsFor: aDebugger [
 			order: initilOrder + 40;
 			keymap: PharoShortcuts current browseShortcut;
 			label: 'Browse full'.
-		self new
-			id: #browseReceiver;
-			order: initilOrder + 41;
-			"keymap: PharoShortcuts current browseShortcut;"
-			label: 'Browse receiver'.
-		
 		self new
 			id: #fileOutMessage;
 			order: initilOrder + 45;

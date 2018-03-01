@@ -7,33 +7,13 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #accessing }
-SugsFindImplementors class >> nodes [
-	^{RBMessageNode}
-]
-
 { #category : #execution }
 SugsFindImplementors >> execute [
 	SystemNavigation default browseAllImplementorsOf: context selectedMessageName
 				
 ]
 
-{ #category : #display }
-SugsFindImplementors >> icon [
-	^self iconNamed: #smallFindIcon
-]
-
-{ #category : #display }
-SugsFindImplementors >> keyText [
-	^'m'
-]
-
-{ #category : #display }
+{ #category : #accessing }
 SugsFindImplementors >> label [
 	^  'Implementors' translated
-]
-
-{ #category : #display }
-SugsFindImplementors >> position [
-	^11
 ]

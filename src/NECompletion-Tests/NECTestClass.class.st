@@ -57,7 +57,7 @@ NECTestClass >> initialize: aRectangle [
 	complexInit2 := Dictionary new: aRectangle origin x. 
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 NECTestClass >> lowPriorityOverrides: aRectangle [ 
 	messageSend := aRectangle.
 	typeSuggestingParameter2 := aRectangle. 

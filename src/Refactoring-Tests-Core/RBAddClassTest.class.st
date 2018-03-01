@@ -78,8 +78,8 @@ RBAddClassTest >> testModelAddClass [
 	self assert: (superClass classSide subclasses includes: newClass classSide).
 	self assert: subclass superclass = newClass.
 	self assert: (newClass subclasses includes: subclass).
-	self assert: subclass theMetaClass superclass = newClass theMetaClass.
-	self assert: (newClass theMetaClass subclasses includes: subclass theMetaClass)
+	self assert: subclass classSide superclass = newClass classSide.
+	self assert: (newClass classSide subclasses includes: subclass classSide)
 ]
 
 { #category : #'failure tests' }

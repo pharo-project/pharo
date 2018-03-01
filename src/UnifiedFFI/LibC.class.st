@@ -88,22 +88,16 @@ LibC >> parentProcessId [
 { #category : #'api - piping' }
 LibC >> pipe: command mode: mode [
 	"Initiate pipe streams to or from a process."
-
-	^self ffiCall: (Smalltalk os isWindows
-							ifTrue:  [ #(ExternalAddress* _popen(char* command, char* mode)) ]
-							ifFalse: [ #(ExternalAddress* popen(char* command, char* mode)) ])
-
-	
+	 
+	 ^self ffiCall: #(ExternalAddress* popen(char* command, char* mode))			
 			 
 ]
 
 { #category : #'api - piping' }
 LibC >> pipeClose: stream [
 	"Close the given pipe stream."
-
-	^self ffiCall: (Smalltalk os isWindows
-							ifTrue: [ #(int* _pclose(ExternalAddress* stream)) ]
-							ifFalse: [ #(int* pclose(ExternalAddress* stream)) ])
+	 
+	 ^self ffiCall: #(int* pclose(ExternalAddress* stream))
 ]
 
 { #category : #'process actions' }
@@ -111,10 +105,10 @@ LibC >> resultOfCommand: cmd [
 	|file last s |
 	file := self pipe: cmd mode: 'r'.
 	s := String new writeStream.
-	[[ last := (self fgetc: file) value.
+	[ last := (self fgetc: file) value.
 	  last = 16rFFFFFFFF ] whileFalse: [ 	 
 			s nextPut: (Character value: last)
-	]] ensure: [ self pipeClose: file ].
+	] ensure: [ self pipeClose: file ].
 	^s contents
 ]
 

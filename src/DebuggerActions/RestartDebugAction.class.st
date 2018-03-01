@@ -5,7 +5,7 @@ A RestartDebugAction restarts the execution of the current context.
 Class {
 	#name : #RestartDebugAction,
 	#superclass : #DebugAction,
-	#category : #'DebuggerActions-Actions'
+	#category : #DebuggerActions
 }
 
 { #category : #registration }

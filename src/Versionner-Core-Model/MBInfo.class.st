@@ -83,7 +83,7 @@ MBInfo >> configurationRoot [
 	^self configurationInfo configurationRoot
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 MBInfo >> extractPackageSignatureFrom: aWorkingCopy [
 	| ref |
 	(aWorkingCopy isNil or: [ aWorkingCopy ancestors isEmpty ])
@@ -126,7 +126,7 @@ MBInfo >> project [
 	^nil
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 MBInfo >> repositories [
 	"Return the repositories associated with the receiver."
 

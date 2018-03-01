@@ -97,8 +97,7 @@ BaselineOfIDE >> additionalInitialization [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
 	
-	self loadIceberg.	
-	self loadCalypso.
+	self loadIceberg.
 ]
 
 { #category : #baseline }
@@ -255,6 +254,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'NautilusGroupAutoBuilder'.
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
+		spec package: 'SmartSuggestions-Nautilus'.
 		
 		spec package: 'MonticelloMocks'.
 		spec package: 'NodeNavigation'.
@@ -346,10 +346,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
 		spec package: 'SUnit-Tests'.
-		spec package: 'SUnit-Support-UITesting-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
+		spec package: 'SmartSuggestions-Nautilus-Tests'.
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
 		spec package: 'System-BasicCommandLineHandler-Tests'.
@@ -474,7 +474,6 @@ spec group: 'General-Tests-Group' with: #(
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
 	'SUnit-Tests'
-	'SUnit-Support-UITesting-Tests' 
 	'Slot-Tests'
 	'Spec-Tests'
 	'System-Caching-Tests'
@@ -538,9 +537,11 @@ spec group: 'Reflectivity-Group' with: #(
 spec group: 'SmartSuggestions-Core-Group' with: #(
 	"depends on 'Glamour-Core-Group', circular dependency, needs fix"
 	'SmartSuggestions'
+	'SmartSuggestions-Nautilus'
 ).
 spec group: 'SmartSuggestions-Tests-Group' with: #(
 	'SmartSuggestions-Tests'
+	'SmartSuggestions-Nautilus-Tests'
 ).
 spec group: 'SmartSuggestions-Group' with: #(
 	'SmartSuggestions-Core-Group'
@@ -898,26 +899,10 @@ spec group: #default with: #(
 ]
 
 { #category : #actions }
-BaselineOfIDE >> loadCalypso [
-
-	"Load Calypso without Iceberg Metacello integration"
-	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
-
-	Metacello new
-		baseline: 'Calypso';
-		repository: 'github://dionisiydk/Calypso:v0.10.2';
-		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
-
-	(self class environment at: #ClyBrowser) beAllDefault.
-	
-	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
-]
-
-{ #category : #actions }
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v0.6.8';
+		repository: 'github://pharo-vcs/iceberg:v0.6.7';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 

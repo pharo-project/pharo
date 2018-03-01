@@ -12,7 +12,7 @@ Class {
 		'subscriptions',
 		'monitor'
 	],
-	#category : #'Announcements-Core-Subscription'
+	#category : #'Announcements-Core'
 }
 
 { #category : #'add/remove' }

@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'announcer'
 	],
-	#category : #'Announcements-Core-Subscription'
+	#category : #'Announcements-Core'
 }
 
 { #category : #'instance creation' }

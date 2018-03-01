@@ -24,7 +24,7 @@ Class {
 	#category : #'Text-Core'
 }
 
-{ #category : #utilities }
+{ #category : #utils }
 TextAlignment class >> alignmentSymbol: alignmentCode [
 	^#(leftFlush rightFlush centered justified) at: (alignmentCode + 1)
 ]
@@ -77,7 +77,7 @@ TextAlignment >> hash [
 	^ alignment hash
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 TextAlignment >> writeScanOn: strm [
 
 	strm nextPut: $a.
