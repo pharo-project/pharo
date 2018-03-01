@@ -27,8 +27,8 @@ ShMetaclassChanged >> hasToMigrateInstances [
 
 { #category : #migration }
 ShMetaclassChanged >> migrateInstancesOf: anOldClass to: newClass using: aClassInstaller [
-	
-	aClassInstaller migrateInstancesOf: anOldClass classSide to: newClass classSide
+
+	aClassInstaller migrateInstances: { anOldClass } to: newClass classSide
 ]
 
 { #category : #propagating }

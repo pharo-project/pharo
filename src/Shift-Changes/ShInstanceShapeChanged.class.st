@@ -17,7 +17,7 @@ ShInstanceShapeChanged >> hasToMigrateInstances [
 { #category : #migration }
 ShInstanceShapeChanged >> migrateInstancesOf: anOldClass to: newClass using: aClassInstaller [
 
-	aClassInstaller migrateInstancesOf: anOldClass to: newClass
+	aClassInstaller migrateInstances: anOldClass allInstances to: newClass
 ]
 
 { #category : #testing }

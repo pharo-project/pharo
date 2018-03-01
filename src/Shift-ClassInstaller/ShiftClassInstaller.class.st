@@ -191,9 +191,8 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 ]
 
 { #category : #migrating }
-ShiftClassInstaller >> migrateInstancesOf: anOldClass to: aNewClass [
-	| oldObjects newObjects |
-	oldObjects := anOldClass allInstances.
+ShiftClassInstaller >> migrateInstances: oldObjects to: aNewClass [
+	| newObjects |
 	newObjects := oldObjects collect: [ :e | self copyObject: e to: aNewClass ].
 
 	oldObjects elementsForwardIdentityTo: newObjects copyHash: true
