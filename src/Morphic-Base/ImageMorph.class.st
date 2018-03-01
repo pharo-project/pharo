@@ -255,6 +255,12 @@ ImageMorph >> releaseCachedState [
 
 ]
 
+{ #category : #other }
+ImageMorph >> resize: newSize [
+
+	self form: (image scaledToSize: newSize)
+]
+
 { #category : #testing }
 ImageMorph >> shouldFlex [
 	^ true.
