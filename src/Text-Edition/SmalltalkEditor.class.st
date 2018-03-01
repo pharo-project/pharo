@@ -872,23 +872,6 @@ SmalltalkEditor >> shiftedMenuKeyword [
 
 ]
 
-{ #category : #'menu messages' }
-SmalltalkEditor >> spawn [
-	"Create and schedule a message browser for the code of the model's 
-	selected message. Retain any edits that have not yet been accepted."
-	| code |
-	code := self string.
-	self cancel.
-	model spawn: code.
-]
-
-{ #category : #'editing keys' }
-SmalltalkEditor >> spawnIt: aKeyboardEvent [
-	"Triggered by Cmd-o; spawn a new code window, if it makes sense."
-	self spawn.
-	^ true
-]
-
 { #category : #'do-its' }
 SmalltalkEditor >> tallyIt [
 

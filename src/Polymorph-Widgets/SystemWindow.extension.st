@@ -840,10 +840,6 @@ SystemWindow >> labelHeight [
 	If no label answer the class border width instead."
 
 	label ifNil: [^self isEmbedded ifTrue: [0] ifFalse: [self class borderWidth]].
-		
-	(model notNil and: [model respondsTo: #desiredWindowLabelHeightIn:]) ifTrue: [
-		(model desiredWindowLabelHeightIn: self) ifNotNil: [:h | ^h]].
-
 	^(label height + (self class borderWidth * 2)) max:
 		(collapseBox ifNotNil: [collapseBox height] ifNil: [10])
 ]

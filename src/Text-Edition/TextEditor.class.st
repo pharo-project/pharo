@@ -850,15 +850,6 @@ TextEditor >> compareToClipboard: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #'editing keys' }
-TextEditor >> copyHiddenInfo [
-	"In TextLinks, TextDoits, TextColor, and TextURLs, there is hidden
-info.  Copy that to the clipboard.  You can paste it and see what it is.
-Usually enclosed in <>."
-
-	^ self clipboardTextPut: self hiddenInfo asText
-]
-
 { #category : #'menu messages' }
 TextEditor >> copySelection [
 	"Copy the current selection and store it in the paste buffer, unless a caret.  Undoer & Redoer: undoCutCopy"
@@ -912,18 +903,6 @@ TextEditor >> currentCharacterStyleOrNil [
 	^self hasSelection
 		ifTrue: [ self text characterStyleOrNilAt: self startIndex ]
 		ifFalse: [ self text characterStyleOrNilIfApplying: self emphasisHere ]
-]
-
-{ #category : #accessing }
-TextEditor >> currentParagraphStyle [
-	"Answer the TextStyle for the current selection or cursor location if any"
-	
-	| i t |
-	i := self startIndex.
-	t := self text.
-	^i > t size
-		ifTrue: [ self text styleIfApplying: self emphasisHere ]
-		ifFalse: [ self text textStyleAt: i ]
 ]
 
 { #category : #'nonediting/nontyping keys' }
@@ -1463,22 +1442,6 @@ TextEditor >> handleKeystrokeAction: aBlock [
 { #category : #'accessing-selection' }
 TextEditor >> hasCaret [
 	^self editingState markBlock = self editingState pointBlock
-]
-
-{ #category : #'editing keys' }
-TextEditor >> hiddenInfo [
-	"In TextLinks, TextDoits, TextColor, and TextURLs, there is hidden info.  Return the entire string that was used by Cmd-6 to create this text attribute.  Usually enclosed in < >."
-
-	| attrList |
-	attrList := self text attributesAt: (self pointIndex + self markIndex)//2.
-	attrList do: [:attr |
-		attr forTextActionInfoDo: [ :info |
-			^ self selection asString, '<', info, '>']].
-	"If none of the above"
-	attrList do: [:attr |
-		attr forTextColorDo: [ :color |
-			^ self selection asString, '<', color printString, '>']].
-	^ self selection asString, '[No hidden info]'
 ]
 
 { #category : #'editing keys' }
