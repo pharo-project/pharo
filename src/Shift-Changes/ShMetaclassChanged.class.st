@@ -19,3 +19,19 @@ ShMetaclassChanged >> builder: anObject [
 	super builder: anObject.
 	oldClass := builder oldClass copy.
 ]
+
+{ #category : #testing }
+ShMetaclassChanged >> hasToMigrateInstances [
+	^ true
+]
+
+{ #category : #migration }
+ShMetaclassChanged >> migrateInstancesOf: anOldClass to: newClass using: aClassInstaller [
+	
+	aClassInstaller migrateInstancesOf: anOldClass classSide to: newClass classSide
+]
+
+{ #category : #propagating }
+ShMetaclassChanged >> propagateToSubclasses: anotherBuilder [
+	anotherBuilder changes add: self.
+]
