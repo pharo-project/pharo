@@ -57,7 +57,7 @@ ShAbstractChange >> hash [
 ]
 
 { #category : #migration }
-ShAbstractChange >> migrateInstancesOf: anObject to: newClass using: aClassInstaller [
+ShAbstractChange >> migrateInstancesOf: anOldClass to: newClass using: aClassInstaller [
 	"Concrete change can require class instances migration"
 ]
 
