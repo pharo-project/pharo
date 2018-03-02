@@ -668,9 +668,9 @@ Point >> rightRotated [
 
 { #category : #transforming }
 Point >> rotateBy: angle about: center [ 
-	"This method returns the point obtained after rotating myself around #center 
-	 point of an #angle given as parameter. The #angle provided as parameter is 
-	 interpreted as being in radian."
+	"This method returns the point obtained after rotating myself (counter clockwise) 
+	around the #center point of an #angle given as parameter. The #angle provided as 
+	parameter is interpreted as being in radian."
 	| p r theta |
 	p := self - center.
 	r := p r.
