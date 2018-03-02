@@ -24,6 +24,13 @@ Behavior >> isLocalAliasSelector: aSymbol [
 ]
 
 { #category : #'*TraitsV2' }
+Behavior >> localMethodNamed: selector ifAbsent: aBlock [
+	"Answer the locally defined method associated with the argument, selector (a Symbol), a message selector in the receiver's method dictionary. If the selector is not in the dictionary or it is not a local one, return the value of aBlock"
+
+	^ self compiledMethodAt: selector ifAbsent: aBlock.
+]
+
+{ #category : #'*TraitsV2' }
 Behavior >> localMethods [
 	"returns the methods of classes excluding the ones of the traits that the class uses" 
 	 

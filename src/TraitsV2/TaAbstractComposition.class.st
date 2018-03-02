@@ -14,17 +14,17 @@ Class {
 }
 
 { #category : #operations }
-TaAbstractComposition >> + anotherTalent [
-	"I create another TaSequence with me and then I concatenate anotherTalent to it. The new sequence includes both elements, me and the anotherTalent.
+TaAbstractComposition >> + anotherTrait [
+	"I create another TaSequence with me and then I concatenate anotherTrait to it. The new sequence includes both elements, me and the anotherTrait.
 	This operation creates a new sequence with copies. Does not affect the existing one."
-	^ (TaSequence with: self) + anotherTalent asTraitComposition
+	^ (TaSequence with: self) + anotherTrait asTraitComposition
 ]
 
 { #category : #operations }
-TaAbstractComposition >> , anotherTalent [
-	"I create another TaSequence with me and then I concatenate anotherTalent to it. The new sequence includes both elements, me and the anotherTalent.
+TaAbstractComposition >> , anotherTrait [
+	"I create another TaSequence with me and then I concatenate anotherTrait to it. The new sequence includes both elements, me and the anotherTrait.
 	This operation creates a new sequence with copies. Does not affect the existing one."
-	^ (TaSequence with: self) , anotherTalent asTraitComposition
+	^ (TaSequence with: self) , anotherTrait asTraitComposition
 ]
 
 { #category : #operations }
@@ -120,13 +120,13 @@ TaAbstractComposition >> changesSourceCode: aSelector [
 	self subclassResponsibility.
 ]
 
-{ #category : #'transforming selectors' }
+{ #category : #accessing }
 TaAbstractComposition >> classComposition [
 	"This is used to access to the classSide of the traitComposition. Used when creating a traited class without class side traitComposition"
 	^ self subclassResponsibility 
 ]
 
-{ #category : #operations }
+{ #category : #compiling }
 TaAbstractComposition >> compile: selector into: aClass [
 	"Compile the method associated with selector in aClass's method dictionary.
 	This version classify the method in the class passed as parameter"
@@ -142,7 +142,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 	newMethod := aClass compiler
 				source: sourceCode;
 				class: aClass ;
-				failBlock: [^ self];
+				failBlock: [^ false];
 				compiledMethodTrailer: trailer;
 				compile.   "Assume OK after proceed from SyntaxError"
 				
@@ -203,7 +203,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	 - If both methods have source code and if the source codes are not the same.
 	"
 	aClass methodDict at: aSelector ifPresent:[ :originalMethod | 
-		((replacing not and: [((originalMethod propertyAt: #traitSource) = traitDefining) and: [originalMethod hasSourceCode]]) and: [ source isNotNil and: [ source = originalMethod sourceCode ] ]) ifTrue: [ ^ false ]].
+		((replacing not and: [(originalMethod traitSource = traitDefining) and: [originalMethod hasSourceCode]]) and: [ source isNotNil and: [ source = originalMethod sourceCode ] ]) ifTrue: [ ^ false ]].
 	
 	newMethod := aCompiledMethod copy.
 	newMethod selector: aSelector.
@@ -250,10 +250,15 @@ TaAbstractComposition >> getSourceCodeOf: aCompiledMethod usingSelector: aSelect
 
 { #category : #accessing }
 TaAbstractComposition >> hasMethod: aSelector [
-	[ self compiledMethodAt: aSelector.
-	^ true ]
+	^ [ self compiledMethodAt: aSelector.
+	true ]
 		on: NotFound
 		do: [ ^ false ]
+]
+
+{ #category : #comparing }
+TaAbstractComposition >> hash [
+	^ self subclassResponsibility 
 ]
 
 { #category : #querying }
@@ -276,7 +281,7 @@ TaAbstractComposition >> initializeObject: anObject [
 		ifTrue: [ selector value: anObject ]
 ]
 
-{ #category : #initialization }
+{ #category : #'transforming selectors' }
 TaAbstractComposition >> initializeSelectorForMe [
 	"Calculates the name of the artificial selector added when a stateful trait includes a initialize method"
 

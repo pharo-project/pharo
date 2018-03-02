@@ -12,7 +12,7 @@ Class {
 	#category : #'TraitsV2-Compositions'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 TaAliasMethod class >> alias:anArrayOfAssociations to: aTrait [
 	^ self new
 		aliases: anArrayOfAssociations asDictionary;
@@ -38,7 +38,7 @@ TaAliasMethod >> aliases: anObject [
 	aliases := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #validation }
 TaAliasMethod >> checkAssociations [
 	"I check the validity of the associations used for aliasing"
 	self aliases
@@ -150,7 +150,7 @@ TaAliasMethod >> traitCompositionExpression [
 	^ self inner traitCompositionExpressionWithParens , ' @ ' , aliases associations printString
 ]
 
-{ #category : #accessing }
+{ #category : #querying }
 TaAliasMethod >> traitDefining: aSelector [
 	^ (self hasAliasForNew: aSelector)
 		ifTrue: [ inner traitDefining: (self oldSelectorFor: aSelector) ]

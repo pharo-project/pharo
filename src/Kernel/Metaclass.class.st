@@ -14,9 +14,7 @@ Class {
 	#name : #Metaclass,
 	#superclass : #ClassDescription,
 	#instVars : [
-		'thisClass',
-		'traitComposition',
-		'localSelectors'
+		'thisClass'
 	],
 	#category : #'Kernel-Classes'
 }
@@ -74,21 +72,6 @@ Metaclass >> adoptInstance: oldInstance from: oldMetaClass [
 Metaclass >> baseClass [
 
 	^thisClass.
-]
-
-{ #category : #accessing }
-Metaclass >> basicLocalSelectors [
-	"Direct accessor for the instance variable localSelectors.
-	Since localSelectors is lazily initialized, this may 
-	return nil, which means that all selectors are local."
-
-	^ localSelectors
-]
-
-{ #category : #accessing }
-Metaclass >> basicLocalSelectors: aSetOrNil [
-
-	localSelectors := aSetOrNil
 ]
 
 { #category : #compiling }
@@ -185,7 +168,6 @@ Metaclass >> hasClassSide [
 Metaclass >> initializeFrom: anotherClassTrait [
 	self traitComposition: self traitComposition copyTraitExpression.
 	self methodDict: self methodDict copy.
-	self localSelectors: self localSelectors copy.
 	self basicOrganization: self organization copy.
 ]
 

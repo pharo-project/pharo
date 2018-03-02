@@ -14,11 +14,11 @@ Class {
 }
 
 { #category : #'instance creation' }
-TaRenameSlot class >> from:oldName to: newName on: aTalent [
+TaRenameSlot class >> from:oldName to: newName on: aTrait [
 	^ self new 
 		oldName: oldName;
 		newName: newName;
-		inner: aTalent;
+		inner: aTrait;
 		yourself.
 ]
 

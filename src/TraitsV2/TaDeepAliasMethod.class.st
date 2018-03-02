@@ -19,11 +19,13 @@ TaDeepAliasMethod >> changesSourceCode: aSelector [
 { #category : #rewriting }
 TaDeepAliasMethod >> rewriteText: aSelector [
 	| stream |
-	aSelector numArgs == 0
-		ifTrue: [ ^ 'self ' , aSelector asString ].
-
 	stream := WriteStream on: String new.
 	stream nextPutAll: 'self '.
+
+	aSelector numArgs == 0
+		ifTrue: [ 
+			stream nextPutAll: aSelector asString.
+			^ stream contents ].
 
 	aSelector keywords
 		withIndexDo: [ :each :i | 

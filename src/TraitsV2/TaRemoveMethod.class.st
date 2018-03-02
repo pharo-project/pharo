@@ -12,10 +12,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-TaRemoveMethod class >> remove: anArrayOfSelectors to: aTalent [
+TaRemoveMethod class >> remove: anArrayOfSelectors to: aTrait [
 	^ self new
 		removedSelectors: anArrayOfSelectors;
-		inner: aTalent;
+		inner: aTrait;
 		yourself
 ]
 
@@ -52,16 +52,15 @@ TaRemoveMethod >> selectors [
 
 { #category : #printing }
 TaRemoveMethod >> traitCompositionExpression [
-	
-	^ String streamContents: [ :s |
-	  s 
-		nextPutAll: self inner traitCompositionExpressionWithParens ;
-		nextPutAll: ' - '.
-		removedSelectors printAsSelfEvaluatingFormOn: s.
-	]
+	^ String
+		streamContents: [ :s | 
+			s
+				nextPutAll: self inner traitCompositionExpressionWithParens;
+				nextPutAll: ' - '.
+			removedSelectors printAsSelfEvaluatingFormOn: s ]
 ]
 
-{ #category : #accessing }
+{ #category : #querying }
 TaRemoveMethod >> traitDefining: aSelector [
 	(removedSelectors includes: aSelector ) ifTrue:[NotFound signalFor: aSelector].
 	^ inner traitDefining: aSelector

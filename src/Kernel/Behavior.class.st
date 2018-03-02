@@ -100,7 +100,6 @@ Behavior >> addSelector: selector withMethod: compiledMethod notifying: requesto
 { #category : #'adding/removing methods' }
 Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	self basicAddSelector: selector withMethod: compiledMethod.
-	self registerLocalSelector: selector.
 
 ]
 
@@ -731,12 +730,6 @@ Behavior >> dependentClasses [
 	^ cll asArray
 ]
 
-{ #category : #'accessing method dictionary' }
-Behavior >> deregisterLocalSelector: aSymbol [
-	self basicLocalSelectors notNil ifTrue: [
-		self basicLocalSelectors remove: aSymbol ifAbsent: []]
-]
-
 { #category : #'accessing instances and variables' }
 Behavior >> elementSize [
 	"Answer the size in bytes of an element in the receiver.  The formats are
@@ -1334,24 +1327,6 @@ Behavior >> literalScannedAs: scannedLiteral notifying: requestor [
 "
 ]
 
-{ #category : #'accessing method dictionary' }
-Behavior >> localMethodNamed: selector ifAbsent: aBlock [
-	"Answer the locally defined method associated with the argument, selector (a Symbol), a message selector in the receiver's method dictionary. If the selector is not in the dictionary or it is not a local one, return the value of aBlock"
-	| method |
-	method := self compiledMethodAt: selector ifAbsent: aBlock.
-	
-	self basicLocalSelectors ifNil: [^method].
-	
-	(self basicLocalSelectors includes: selector) ifTrue: [ ^method ].
-	
-	^aBlock value
-]
-
-{ #category : #'accessing method dictionary' }
-Behavior >> localSelectors: aSet [ 
-	self basicLocalSelectors: aSet
-]
-
 { #category : #printing }
 Behavior >> longPrintOn: aStream [
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  But, not useful for a class with a method dictionary."
@@ -1606,12 +1581,6 @@ Behavior >> propertyAt: propName put: propValue [
 Behavior >> realClass [
 
 	^ self
-]
-
-{ #category : #'accessing method dictionary' }
-Behavior >> registerLocalSelector: aSymbol [
-	self basicLocalSelectors notNil ifTrue: [
-		self basicLocalSelectors add: aSymbol]
 ]
 
 { #category : #'obsolete subclasses' }

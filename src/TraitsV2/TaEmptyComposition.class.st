@@ -9,8 +9,8 @@ Class {
 }
 
 { #category : #operations }
-TaEmptyComposition >> , anotherTalent [
-	^ anotherTalent
+TaEmptyComposition >> , anotherTrait [
+	^ anotherTrait
 ]
 
 { #category : #operations }
@@ -61,7 +61,7 @@ TaEmptyComposition >> changesSourceCode: aString [
 	^ false
 ]
 
-{ #category : #operations }
+{ #category : #accessing }
 TaEmptyComposition >> classComposition [
 	^ self class new.
 ]
@@ -137,7 +137,7 @@ TaEmptyComposition >> traitCompositionExpressionWithParens [
 	^ self traitCompositionExpression
 ]
 
-{ #category : #accessing }
+{ #category : #querying }
 TaEmptyComposition >> traitDefining: aSelector [
 	NotFound signalFor: aSelector
 ]

@@ -60,7 +60,7 @@ TaSingleComposition >> hash [
 	^ inner hash
 ]
 
-{ #category : #accessing }
+{ #category : #'transforming selectors' }
 TaSingleComposition >> initializeSelectorForMe [
 	^ inner initializeSelectorForMe.
 ]
@@ -124,7 +124,7 @@ TaSingleComposition >> slots [
 	^ inner slots. 
 ]
 
-{ #category : #accessing }
+{ #category : #querying }
 TaSingleComposition >> traitDefining: selector [
 	^ inner traitDefining: selector
 ]
@@ -134,9 +134,10 @@ TaSingleComposition >> traits [
 	^ inner traits
 ]
 
-{ #category : #accessing }
-TaSingleComposition >> without: anotherTalent [
-	^ (anotherTalent = self or: [ inner = anotherTalent ])
+{ #category : #operations }
+TaSingleComposition >> without: anotherTrait [
+	"Returns a single composition without the trait passed as parameter"
+	^ (anotherTrait = self or: [ inner = anotherTrait ])
 		ifTrue: [ nil ]
 		ifFalse: [ self ]
 ]

@@ -107,8 +107,8 @@ TraitChange >> remove: aSelector into: aClass changes: results [
 	isLocal := aClass localSelectors includes: aSelector.
 	inTrait := aClass traitComposition traitDefining: aSelector ifNone: [ nil ].
 
-	"This is only true when the method is propagated, so we have to avoid destroying a locally defined method.
-	Check TraitedClass >> #removeSelecto: and you will see that the method is removed from the local method dict 
+	"This is only true when the update method is a propagation, so we have to avoid destroying a locally defined method.
+	Check TraitedClass >> #removeSelector: and you will see that the method is removed from the local method dict 
 	if it is local.
 	As the method is propagated and is local, we don't do nothing"
 	isLocal ifTrue: [ ^ self ].	

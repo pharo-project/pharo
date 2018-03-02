@@ -96,12 +96,6 @@ TraitBuilderEnhancer >> classTraitCompositionOfClass: aClass [
 ]
 
 { #category : #'class modifications' }
-TraitBuilderEnhancer >> compileMethodsFor: aBuilder [
-	
-	super compileMethodsFor: aBuilder.
-]
-
-{ #category : #'class modifications' }
 TraitBuilderEnhancer >> configureClass: newClass superclass: superclass withLayoutType: layoutType slots: slots [
 	| resultingSlots |
 	self validateTraitComposition: self traitComposition ofClass: builder oldClass.

@@ -11,7 +11,7 @@ Class {
 	#category : #'TraitsV2-Compositions'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 TaCompositionElement class >> for: aClass [
 	^ self new
 		innerClass: aClass;
@@ -23,11 +23,6 @@ TaCompositionElement >> = aTrait [
 	^ (aTrait species = self species)
 		ifTrue: [ aTrait innerClass = self innerClass ]
 		ifFalse: [ ^ false ]
-]
-
-{ #category : #operations }
-TaCompositionElement >> >> anAssociation [
-	^ TaRenameSlot from:anAssociation key to: anAssociation value on: self.
 ]
 
 { #category : #users }
@@ -56,7 +51,7 @@ TaCompositionElement >> changesSourceCode: aSelector [
 
 ]
 
-{ #category : #'transforming selectors' }
+{ #category : #accessing }
 TaCompositionElement >> classComposition [
 
 	^ TaClassCompositionElement for: innerClass class
@@ -137,12 +132,6 @@ TaCompositionElement >> name [
 	^ innerClass name
 ]
 
-{ #category : #querying }
-TaCompositionElement >> originSelectorOf: aSelector [ 
-	
-	^ aSelector
-]
-
 { #category : #users }
 TaCompositionElement >> removeUser: aClass [ 
 	"When a user is removed from me I propagate to the real Trait, as I am the root of the TraitComposition"	
@@ -183,7 +172,7 @@ TaCompositionElement >> traitCompositionExpressionWithParens [
 	^ self traitCompositionExpression
 ]
 
-{ #category : #accessing }
+{ #category : #querying }
 TaCompositionElement >> traitDefining: selector [
 	| newSelector |
 	newSelector := self dealiasSelector: selector.
@@ -200,6 +189,6 @@ TaCompositionElement >> traits [
 ]
 
 { #category : #operations }
-TaCompositionElement >> without: anotherTalent [
-	^ self = anotherTalent ifTrue:[nil] ifFalse:[self].
+TaCompositionElement >> without: anotherTrait [
+	^ self = anotherTrait ifTrue:[nil] ifFalse:[self].
 ]

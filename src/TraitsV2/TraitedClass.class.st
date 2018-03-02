@@ -22,26 +22,20 @@ Class {
 { #category : #'accessing method dictionary' }
 TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
 
-	| r |
-	r := super
+	super
 		addAndClassifySelector: selector
 		withMethod: compiledMethod
 		inProtocol: aCategory
 		notifying: requestor.
 
 	self propagateChangeOf: selector.
-
-	^ r
 	
 ]
 
 { #category : #'accessing method dictionary' }
 TraitedClass class >> addSelector: selector withMethod: compiledMethod notifying: requestor [
-	| r |
-	r := super addSelector: selector withMethod: compiledMethod notifying: requestor.
-	self propagateChangeOf: selector.
-	
-	^ r
+	super addSelector: selector withMethod: compiledMethod notifying: requestor.
+	self propagateChangeOf: selector
 ]
 
 { #category : #users }
@@ -60,7 +54,7 @@ TraitedClass class >> classTrait [
 	^ self class
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TraitedClass class >> isTrait [
 	^ true
 ]
@@ -82,46 +76,34 @@ TraitedClass class >> removeUser: aClass [
 	self basicUsers remove: aClass ifAbsent: [ ].
 ]
 
-{ #category : #accessing }
-TraitedClass class >> traitComposition [
-	
-	^ TaEmptyComposition new
-]
-
 { #category : #users }
 TraitedClass class >> traitUsers [
 	^ #()
 ]
 
 { #category : #'accessing method dictionary' }
-TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category notifying: requestor [
-	| r |
+TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
 	
 	"When a new methods is added, I add it to the localMethodDict and also propagate the changes to my users"
 	self localMethodDict at: selector put: compiledMethod.
 	
-	r := super
+	super
 		addAndClassifySelector: selector
 		withMethod: compiledMethod
-		inProtocol: category
+		inProtocol: aCategory
 		notifying: requestor.
 
-	TraitChange addSelector: selector on: self.
-	^ r
-	
+	TraitChange addSelector: selector on: self.	
 ]
 
 { #category : #'accessing method dictionary' }
 TraitedClass >> addSelector: selector withMethod: compiledMethod notifying: requestor [
-	| r |
-	
 	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
 	
 	self localMethodDict at: selector put: compiledMethod.
 
-	r := super addSelector: selector withMethod: compiledMethod notifying: requestor.
-	TraitChange addSelector: selector on: self..
-	^ r
+	super addSelector: selector withMethod: compiledMethod notifying: requestor.
+	TraitChange addSelector: selector on: self
 ]
 
 { #category : #querying }
@@ -138,7 +120,7 @@ TraitedClass >> doRebuildMethodDictionary [
 
 	"1. I recreate the local methodDict"
 	modified := false.
-	self methodDict valuesDo: [ :m | (m propertyAt: #traitSource) ifNil: [ self localMethodDict at: m selector put: m ]].
+	self methodDict valuesDo: [ :m | m traitSource ifNil: [ self localMethodDict at: m selector put: m ]].
 
 	"2. I filter the selectors from the trait composition, rejecting the ones that are locally defined.
 	And then I install the methods in myself. The trait composition only install the method if it is needed."
@@ -165,7 +147,7 @@ TraitedClass >> hasTraitComposition [
 
 { #category : #testing }
 TraitedClass >> includesLocalSelector: aSymbol [
-	^ self localMethodDict includesKey: aSymbol
+	^ self isLocalSelector: aSymbol
 ]
 
 { #category : #testing }
@@ -228,16 +210,17 @@ TraitedClass >> originMethod: aMethod [
 
 	"I return the original method for a aMethod.
 	If this is a local method, the original method is itself.
-	If it cames from a trait composition I look for the method in teh trait composition.
-	First I try with the trai staored in the traitSource. 
-	If it is an aliased or conflicting method the method is look up in the whole trait composition"
-	(self localMethodDict includesKey: aMethod selector)
+	If it cames from a trait composition I look for the method in the trait composition.
+	First I try with the trait stored in the traitSource. 
+	If it is an aliased or conflicting method, the method is look up in the whole trait composition"
+
+	(self includesLocalSelector: aMethod selector)
 		ifTrue: [ ^ aMethod ].
 
 	(aMethod hasProperty: #traitSource)
 		ifTrue: [ |newSelector|
 			newSelector := self traitComposition originSelectorOf: aMethod selector.
-			^ (aMethod propertyAt: #traitSource) compiledMethodAt: newSelector ifAbsent: [aMethod] ].
+			^ aMethod traitSource compiledMethodAt: newSelector ifAbsent: [aMethod] ].
 
 	^ (self traitComposition traitDefining: aMethod selector ifNone: [ self ])
 		compiledMethodAt: aMethod selector ifAbsent: [ ^ aMethod ]		
@@ -251,9 +234,9 @@ TraitedClass >> originOfMethod: aMethod [
 	If the method is an alias, the returned class includes the original aliased method"
 
 	(aMethod hasProperty: #traitSource) 
-		ifTrue: [ ^ (aMethod propertyAt: #traitSource) innerClass ]. 
+		ifTrue: [ ^ aMethod traitSource innerClass ]. 
 
-	(self localMethodDict includesKey: aMethod selector)
+	(self includesLocalSelector: aMethod selector)
 		ifTrue: [ ^ self ].
 
 	^ (self traitComposition traitDefining: aMethod selector ifNone: [ ^ self ]) innerClass

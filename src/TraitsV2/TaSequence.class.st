@@ -31,21 +31,20 @@ TaSequence class >> withAll: initialMembers [
 ]
 
 { #category : #operations }
-TaSequence >> + anotherTalent [
-	^ anotherTalent asTraitComposition addToSequence: self copyTraitExpression.
+TaSequence >> + anotherTrait [
+	^ anotherTrait asTraitComposition addToSequence: self copyTraitExpression.
 	
 ]
 
 { #category : #operations }
-TaSequence >> , anotherTalent [
-	^ anotherTalent addToSequence: self copy.
+TaSequence >> , anotherTrait [
+	^ anotherTrait addToSequence: self copy.
 
 ]
 
 { #category : #comparing }
-TaSequence >> = anotherTalent [
-	(anotherTalent class isKindOf: self class) ifFalse: [ ^false ].
-	^ self members = anotherTalent members
+TaSequence >> = anotherTrait [
+	^ anotherTrait species = self species and: [ self members = anotherTrait members ]
 ]
 
 { #category : #adding }
@@ -105,7 +104,7 @@ TaSequence >> changesSourceCode: aSelector [
 		or: [ self members anySatisfy: [ :e | e changesSourceCode: aSelector ] ]
 ]
 
-{ #category : #operations }
+{ #category : #accessing }
 TaSequence >> classComposition [
 	^ self class withAll: (members collect:#classComposition)
 ]
@@ -143,7 +142,7 @@ TaSequence >> initialize [
 	members := OrderedCollection new.
 ]
 
-{ #category : #initialization }
+{ #category : #operations }
 TaSequence >> initializeObject: anObject [
 	members do: [ :e | e initializeObject: anObject ]
 ]
@@ -186,7 +185,7 @@ TaSequence >> methods [
 	^ members flatCollect: #methods
 ]
 
-{ #category : #operations }
+{ #category : #accessing }
 TaSequence >> name [
 	^ '_' join: (members collect:#name) 
 ]
@@ -278,7 +277,7 @@ TaSequence >> traitCompositionExpression [
 		, (members allButFirst collect: #traitCompositionExpressionWithParens) joinUsing: ' + '
 ]
 
-{ #category : #accessing }
+{ #category : #querying }
 TaSequence >> traitDefining: aSelector [
 	^ (self memberForSelector: aSelector) traitDefining: aSelector
 ]
@@ -309,13 +308,13 @@ TaSequence >> validateMethods: aTrait [
 TaSequence >> validateSlots: anElement [
 	self slots do: [ :e | anElement slots do: [ :other | 
 					(e name = other name and: [ e ~= other ])
-						ifTrue: [ self error: 'The added talent duplicates an existing slot ' , e name printString ] ] ]
+						ifTrue: [ self error: 'The added trait duplicates an existing slot ' , e name printString ] ] ]
 ]
 
 { #category : #operations }
-TaSequence >> without: aTalent [
+TaSequence >> without: aTrait [
 	| newMembers |
-	newMembers := members collect:[:e | e without: aTalent] thenSelect:#isNotNil.
+	newMembers := members collect:[:e | e without: aTrait] thenSelect:#isNotNil.
 	
 	newMembers ifEmpty: [ ^ nil ].
 	

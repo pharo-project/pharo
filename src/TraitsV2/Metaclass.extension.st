@@ -25,7 +25,7 @@ Metaclass >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString
 
 { #category : #'*TraitsV2' }
 Metaclass >> uses: aTraitCompositionOrArray slots: slotArray [
-	| theClass builderEnhancer |
+	| theClass |
 	theClass := self instanceSide.
 	
 	theClass := theClass classInstaller

@@ -47,8 +47,7 @@ TBehavior >> addSelector: selector withMethod: compiledMethod notifying: request
 { #category : #'adding/removing methods' }
 TBehavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	self basicAddSelector: selector withMethod: compiledMethod.
-	self registerLocalSelector: selector.
-	self isTrait ifTrue: [ self notifyUsersOfChangedSelector: selector].
+
 ]
 
 { #category : #traits }
@@ -1554,7 +1553,6 @@ TBehavior >> removeSelector: aSelector [
 	changeFromLocalToTraitMethod
 		ifFalse: [self basicRemoveSelector: aSelector]
 		ifTrue: [self ensureLocalSelectors].
-	self deregisterLocalSelector: aSelector.
 	self noteChangedSelectors: (Array with: aSelector).
 	
 	self isTrait ifTrue: [ self notifyUsersOfChangedSelector: aSelector].
