@@ -19,3 +19,8 @@ ShMetaclassChanged >> builder: anObject [
 	super builder: anObject.
 	oldClass := builder oldClass copy.
 ]
+
+{ #category : #propagating }
+ShMetaclassChanged >> propagateToSubclasses: anotherBuilder [
+		anotherBuilder changes add: self.
+]
