@@ -43,6 +43,38 @@ T2TraitTest >> createT2 [
 ]
 
 { #category : #tests }
+T2TraitTest >> testClassTraits [
+	| t1 t2 aClass |
+
+	t1 := self newTrait: #T1 with: #().
+	t2 := self newTrait: #T2 with: #().
+
+	t1 classTrait compile: 'aSelector ^ 21'.
+	t1 classTrait compile: 'otherSelector ^ 42'.
+	
+	t2 classTrait compile: 'otherSelector2 ^ 42'.
+
+	aClass := self newClass: #C1 superclass: Object with: #() uses: {}.
+	aClass class setTraitComposition: t1 classSide - { #aSelector }. 
+	
+	self assert: aClass otherSelector equals: 42.	
+
+	aClass := self newClass: #C1 superclass: Object with: #() uses: {}.
+	aClass class setTraitComposition: t1 classSide + t2 classSide. 
+	
+	self assert: aClass otherSelector equals: 42.
+	self assert: aClass otherSelector2 equals: 42.
+	self assert: aClass aSelector equals: 21.
+	
+
+	aClass := self newClass: #C1 superclass: Object with: #() uses: {}.
+	aClass class setTraitComposition: t1 classSide @ {#anAlias -> #aSelector}. 
+	
+	self assert: aClass anAlias equals: 21.
+	self assert: aClass aSelector equals: 21.
+]
+
+{ #category : #tests }
 T2TraitTest >> testIndirectSequence [
 	| t1 t2 t3 c1 obj |
 	

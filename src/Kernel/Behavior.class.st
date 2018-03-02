@@ -774,6 +774,25 @@ Behavior >> environment [
 	^Smalltalk globals
 ]
 
+{ #category : #testing }
+Behavior >> findOriginClassOf: aMethod [
+
+	"I return the origin of my given method. In a basic class is always self.
+	Enhanced classes (eg. TraitedClasses) can do something else"
+	^ self	
+
+]
+
+{ #category : #testing }
+Behavior >> findOriginMethodOf: aMethod [
+	"I return the original method for a aMethod.
+	When in a normal class it is the same. Enhanced classes (eg. TraitedClasses)
+	can do something difference"
+
+	^ aMethod
+
+]
+
 { #category : #'accessing method dictionary' }
 Behavior >> firstCommentAt:  selector [
 	"Answer a string representing the first comment in the method associated with selector.  Return an empty string if the relevant source file is not available, or if the method's source code does not contain a comment.  Not smart enough to bypass quotes in string constants, but does map doubled quote into a single quote."
@@ -1478,25 +1497,6 @@ Behavior >> obsoleteSubclasses [
 	| obs |
 	obs := self basicObsoleteSubclasses at: self ifAbsent: [^ #()].
 	^ obs copyWithout: nil
-]
-
-{ #category : #testing }
-Behavior >> originMethod: aMethod [
-	"I return the original method for a aMethod.
-	When in a normal class it is the same. Enhanced classes (eg. TraitedClasses)
-	can do something difference"
-
-	^ aMethod
-
-]
-
-{ #category : #testing }
-Behavior >> originOfMethod: aMethod [
-
-	"I return the origin of my given method. In a basic class is always self.
-	Enhanced classes (eg. TraitedClasses) can do something else"
-	^ self	
-
 ]
 
 { #category : #copying }

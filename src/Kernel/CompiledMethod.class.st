@@ -700,12 +700,12 @@ CompiledMethod >> name [
 
 { #category : #accessing }
 CompiledMethod >> origin [
-	^ self methodClass originOfMethod: self
+	^ self methodClass findOriginClassOf: self
 ]
 
 { #category : #accessing }
 CompiledMethod >> originMethod [
-	^ self methodClass originMethod: self.
+	^ self methodClass findOriginMethodOf: self.
 	
 
 ]

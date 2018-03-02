@@ -29,7 +29,7 @@ Metaclass >> acceptsLoggingOfCompilation [
 ]
 
 { #category : #'instance variables' }
-Metaclass >> addInstVarNamxed: aString [ 
+Metaclass >> addInstVarNamed: aString [ 
 	"Add the argument, aString, as one of the receiver's instance variables."
 
 	| fullString |

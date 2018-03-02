@@ -17,6 +17,13 @@ MetaclassForTraits >> + anotherTrait [
 	^ self asTraitComposition + anotherTrait asTraitComposition
 ]
 
+{ #category : #operations }
+MetaclassForTraits >> - anArray [
+	"I return myself with a removed method. Check TaAbstractComposition >> #- for more details"
+
+	^ self asTraitComposition - anArray
+]
+
 { #category : #composition }
 MetaclassForTraits >> @ anArray [
 	"I return myself with an aliased method. Check TaAbstractComposition >> #@ for more details"

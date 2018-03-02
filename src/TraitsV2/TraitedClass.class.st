@@ -140,6 +140,43 @@ TraitedClass >> doRebuildMethodDictionary [
 ]
 
 { #category : #testing }
+TraitedClass >> findOriginClassOf: aMethod [
+
+	"I return the myself or the trait that has the original implementation of a method.
+	If the method is an alias, the returned class includes the original aliased method"
+
+	(aMethod hasProperty: #traitSource) 
+		ifTrue: [ ^ aMethod traitSource innerClass ]. 
+
+	(self includesLocalSelector: aMethod selector)
+		ifTrue: [ ^ self ].
+
+	^ (self traitComposition traitDefining: aMethod selector ifNone: [ ^ self ]) innerClass
+]
+
+{ #category : #testing }
+TraitedClass >> findOriginMethodOf: aMethod [
+
+	"I return the original method for a aMethod.
+	If this is a local method, the original method is itself.
+	If it cames from a trait composition I look for the method in the trait composition.
+	First I try with the trait stored in the traitSource. 
+	If it is an aliased or conflicting method, the method is look up in the whole trait composition"
+
+	(self includesLocalSelector: aMethod selector)
+		ifTrue: [ ^ aMethod ].
+
+	(aMethod hasProperty: #traitSource)
+		ifTrue: [ |newSelector|
+			newSelector := self traitComposition originSelectorOf: aMethod selector.
+			^ aMethod traitSource compiledMethodAt: newSelector ifAbsent: [aMethod] ].
+
+	^ (self traitComposition traitDefining: aMethod selector ifNone: [ self ])
+		compiledMethodAt: aMethod selector ifAbsent: [ ^ aMethod ]		
+
+]
+
+{ #category : #testing }
 TraitedClass >> hasTraitComposition [
 	
 	^ self traitComposition isEmpty not
@@ -203,43 +240,6 @@ TraitedClass >> localMethods [
 TraitedClass >> localSelectors [
 	
 	^ self localMethodDict keys
-]
-
-{ #category : #testing }
-TraitedClass >> originMethod: aMethod [
-
-	"I return the original method for a aMethod.
-	If this is a local method, the original method is itself.
-	If it cames from a trait composition I look for the method in the trait composition.
-	First I try with the trait stored in the traitSource. 
-	If it is an aliased or conflicting method, the method is look up in the whole trait composition"
-
-	(self includesLocalSelector: aMethod selector)
-		ifTrue: [ ^ aMethod ].
-
-	(aMethod hasProperty: #traitSource)
-		ifTrue: [ |newSelector|
-			newSelector := self traitComposition originSelectorOf: aMethod selector.
-			^ aMethod traitSource compiledMethodAt: newSelector ifAbsent: [aMethod] ].
-
-	^ (self traitComposition traitDefining: aMethod selector ifNone: [ self ])
-		compiledMethodAt: aMethod selector ifAbsent: [ ^ aMethod ]		
-
-]
-
-{ #category : #testing }
-TraitedClass >> originOfMethod: aMethod [
-
-	"I return the myself or the trait that has the original implementation of a method.
-	If the method is an alias, the returned class includes the original aliased method"
-
-	(aMethod hasProperty: #traitSource) 
-		ifTrue: [ ^ aMethod traitSource innerClass ]. 
-
-	(self includesLocalSelector: aMethod selector)
-		ifTrue: [ ^ self ].
-
-	^ (self traitComposition traitDefining: aMethod selector ifNone: [ ^ self ]) innerClass
 ]
 
 { #category : #initialization }
