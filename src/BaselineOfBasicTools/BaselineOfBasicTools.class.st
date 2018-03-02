@@ -50,7 +50,6 @@ BaselineOfBasicTools >> baseline: spec [
 
 		spec package: 'Morphic-Widgets-FastTable'.
 		
-		spec package: 'MessageBrowserRefactoringAddition'.
 		spec package: 'Tool-ExternalBrowser'.
 		spec package: 'HowToContributeHelp'.
 		spec package: 'ContributingToTheCatalogHelp'.

@@ -291,13 +291,6 @@ TextEditor class >> shiftCmdActions [
 ]
 
 { #category : #'menu declaration' }
-TextEditor class >> shiftedYellowButtonMenu [
-	"Answer the menu to be presented when the yellow button is pressed while the shift key is down"
-
-	^ (PragmaMenuBuilder pragmaKeyword: 'textEditorShiftedMenu' model: nil) menu
-]
-
-{ #category : #'menu declaration' }
 TextEditor class >> textEditorMenuOn: aBuilder [
 	"Specify the menu used when writing text. Try it with:
 	(PragmaMenuBuilder 
@@ -417,11 +410,6 @@ TextEditor class >> walkAlongDisplayedLine [
 { #category : #settings }
 TextEditor class >> walkAlongDisplayedLine: aBoolean [
 	WalkAlongDisplayedLine := aBoolean
-]
-
-{ #category : #'menu declaration' }
-TextEditor class >> yellowButtonMenu [
-	^ (PragmaMenuBuilder pragmaKeyword: 'textEditorMenu' model: nil) menu
 ]
 
 { #category : #'menu messages' }
@@ -1111,6 +1099,12 @@ TextEditor >> editingStateClass [
 	^ EditingState
 ]
 
+{ #category : #'menu declaration' }
+TextEditor >> editorMenuKeyword [
+	^'textEditorMenu'
+
+]
+
 { #category : #constants }
 TextEditor >> emphasisChoices [
 	"Return the list of emphasis that are possible to apply on the currently edited text morph"
@@ -1430,8 +1424,8 @@ TextEditor >> getPluggableYellowButtonMenu: shiftKeyState [
 		ifTrue: [customMenu]
 		ifFalse:
 			[shiftKeyState
-				ifTrue: [self class shiftedYellowButtonMenu]
-				ifFalse: [self class yellowButtonMenu]]
+				ifTrue: [self shiftedYellowButtonMenu]
+				ifFalse: [self yellowButtonMenu]]
 ]
 
 { #category : #events }
@@ -1791,7 +1785,7 @@ TextEditor >> mouseUp: evt [
 
 	(evt yellowButtonChanged or: [ evt commandKeyPressed]) 
 		ifTrue: [
-			(self morph editView yellowButtonActivity: evt shiftPressed) 
+			(self morph yellowButtonActivity: evt shiftPressed) 
 				ifTrue: [ ^ self ]].
 		
 	(self hasCaret and: [mouseDownInterval = self selectionInterval])
@@ -2294,11 +2288,25 @@ TextEditor >> setSelectorSearch: aStringOrText [
 	^ true
 ]
 
+{ #category : #'menu declaration' }
+TextEditor >> shiftedMenuKeyword [
+	^ 'textEditorShiftedMenu'
+
+]
+
 { #category : #'pluggable menus' }
 TextEditor >> shiftedTextPaneMenuRequest [
 	"The user chose the more... branch from the text-pane menu."
 
 	^ self pluggableYellowButtonActivity: true
+]
+
+{ #category : #'menu declaration' }
+TextEditor >> shiftedYellowButtonMenu [
+	^ (PragmaMenuBuilder 
+			pragmaKeyword: self shiftedMenuKeyword
+			model: nil) menu.
+
 ]
 
 { #category : #'accessing-selection' }
@@ -2562,6 +2570,13 @@ TextEditor >> yellowButtonDown: anEvent [
 		ifFalse: [
 			self mouseMove: anEvent.
 			self selectWord ].
+]
+
+{ #category : #'menu declaration' }
+TextEditor >> yellowButtonMenu [
+	^ (PragmaMenuBuilder 
+			pragmaKeyword: self editorMenuKeyword
+			model: nil) menu.
 ]
 
 { #category : #'mvc compatibility' }

@@ -319,7 +319,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-Tests-Rules'.
 		spec package: 'Keymapping-Tests'.
 		spec package: 'Manifest-Tests'.
-		spec package: 'MessageBrowserRefactoringAddition'.
 		spec package: 'Morphic-Tests'.
 		spec package: 'Multilingual-Tests'.
 		spec package: 'NECompletion-Tests'.
@@ -406,7 +405,6 @@ spec group: 'Optional-Group' with: #(
 	'System-CommandLine-TextSupport'	"standalone?"
 	'System-Serial Port'	"standalone?"
 	'Gofer-UI'	"standalone"
-	'MessageBrowserRefactoringAddition' 	"standalone"
 	'PerformMessageCommandLineHandler' 	"standalone"
 	'Files-Prompt'
 ).	
@@ -465,7 +463,6 @@ spec group: 'General-Tests-Group' with: #(
 	'IssueTracking-Tests'
 	'Keymapping-Tests'
 
-	'MessageBrowserRefactoringAddition'
 	'Morphic-Tests'
 	'NECompletion-Tests'
 	'Nautilus-Tests'
@@ -912,7 +909,7 @@ BaselineOfIDE >> loadCalypso [
 
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://dionisiydk/Calypso:v0.10.1';
+		repository: 'github://dionisiydk/Calypso:v0.10.2';
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
 	(self class environment at: #ClyBrowser) beAllDefault.
