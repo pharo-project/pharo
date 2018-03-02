@@ -14,7 +14,9 @@ Class {
 	#name : #Metaclass,
 	#superclass : #ClassDescription,
 	#instVars : [
-		'thisClass'
+		'thisClass',
+		'traitComposition',
+		'localSelectors'
 	],
 	#category : #'Kernel-Classes'
 }
@@ -27,7 +29,7 @@ Metaclass >> acceptsLoggingOfCompilation [
 ]
 
 { #category : #'instance variables' }
-Metaclass >> addInstVarNamed: aString [ 
+Metaclass >> addInstVarNamxed: aString [ 
 	"Add the argument, aString, as one of the receiver's instance variables."
 
 	| fullString |

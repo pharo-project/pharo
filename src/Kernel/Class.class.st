@@ -18,7 +18,9 @@ Class {
 		'classPool',
 		'sharedPools',
 		'environment',
-		'category'
+		'category',
+		'traitComposition',
+		'localSelectors'
 	],
 	#category : #'Kernel-Classes'
 }
