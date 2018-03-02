@@ -251,7 +251,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Athens-CairoPools'.
 		spec package: 'Athens-Cairo'.
 		spec package: 'Athens-Examples'.
-
+		spec package: 'Athens-Tests-Core'.
+		
 		spec package: 'NautilusGroupAutoBuilder'.
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
@@ -760,6 +761,7 @@ spec group: 'Athens-Group' with: #(
 	'Athens-CairoPools'
 	'Athens-Cairo'
 	'Athens-Examples'
+   'Athens-Tests-Core'
 ).		
 
 spec group: 'OSWindow-Core-Group' with: #(

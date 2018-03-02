@@ -1,7 +1,10 @@
+"
+A test for AthensCairoMatrix
+"
 Class {
 	#name : #AthensCairoMatrixTest,
 	#superclass : #TestCase,
-	#category : #'Athens-Cairo-Tests'
+	#category : #'Athens-Tests-Cairo'
 }
 
 { #category : #tests }
