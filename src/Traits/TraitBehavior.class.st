@@ -956,6 +956,11 @@ TraitBehavior >> isAnonymous [
 ]
 
 { #category : #testing }
+TraitBehavior >> isBehavior [
+	^true
+]
+
+{ #category : #testing }
 TraitBehavior >> isBits [
 	"Answer whether the receiver contains just bits (not pointers).
 	 Above Cog Spur the class format is
