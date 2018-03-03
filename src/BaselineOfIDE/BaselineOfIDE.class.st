@@ -251,7 +251,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Athens-CairoPools'.
 		spec package: 'Athens-Cairo'.
 		spec package: 'Athens-Examples'.
-		spec package: 'Athens-Tests-Core'.
+		spec package: 'Athens-Tests-Cairo'.
 		
 		spec package: 'NautilusGroupAutoBuilder'.
 		spec package: 'Kernel-Rules'.
