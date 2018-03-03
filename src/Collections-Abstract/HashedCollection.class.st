@@ -190,7 +190,7 @@ HashedCollection >> grow [
 	oldElements
 		do:
 			[ :each | 
-			each == nil
+			each isNil
 				ifFalse: [ self noCheckAdd: each ] ]
 ]
 
