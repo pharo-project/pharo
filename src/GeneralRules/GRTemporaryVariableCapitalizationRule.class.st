@@ -66,5 +66,5 @@ GRTemporaryVariableCapitalizationRule >> group [
 
 { #category : #accessing }
 GRTemporaryVariableCapitalizationRule >> name [
-	^ 'Temporary variable (or paramenter) capitalized'
+	^ 'Temporary variable (or parameter) capitalized'
 ]
