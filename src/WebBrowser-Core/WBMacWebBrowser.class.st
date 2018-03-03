@@ -14,7 +14,7 @@ WBMacWebBrowser class >> isForCurrentSystem [
 ]
 
 { #category : #private }
-WBMacWebBrowser class >> openNativeBrowserOn: anURLString [
+WBMacWebBrowser class >> openNativeWebBrowserOn: anURLString [
 
 	| openCommand |
 	openCommand := 'open "{1}"' format: { anURLString }.
