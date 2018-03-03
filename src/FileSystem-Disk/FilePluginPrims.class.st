@@ -177,6 +177,38 @@ FilePluginPrims >> open: fileName writable: writableFlag [
 ]
 
 { #category : #'file primitives' }
+FilePluginPrims >> openFileDescriptor: fileDescriptor writable: writableFlag [
+	"Open the file with fileDescriptor number, and return the file ID obtained"
+
+	<primitive: 'primitiveFileOpenUseFileDescriptor' module: 'FilePlugin' error: error>
+	error = #'bad argument' ifTrue: [ 
+		fileDescriptor isInteger ifFalse: 
+			[ ^self error: 'openFileDescriptor:writable: fileDescriptor must be an integer' ].
+		(writableFlag isKindOf: Boolean) ifFalse: 
+			[ ^self error: 'openFileDescriptor:writable: writableFlag must be a boolean' ] ].
+	OSPlatform current isWindows ifTrue: 
+			[ ^self error: 'openFileDescriptor:writable: not supported on Windows' ].
+	^ self primitiveFailed 
+
+]
+
+{ #category : #'file primitives' }
+FilePluginPrims >> openFileFile: filePointer writable: writableFlag [
+	"Open the file with the supplied FILE* pointer, and return the file ID obtained"
+
+	<primitive: 'primitiveFileOpenUseFile' module: 'FilePlugin' error: error>
+	error = #'bad argument' ifTrue: [ 
+		filePointer isBytes ifFalse: 
+			[ ^self error: 'openFileFile:writable: filePointer must be bytes with size void*' ].
+		(writableFlag isKindOf: Boolean) ifFalse: 
+			[ ^self error: 'openFileFile:writable: writableFlag must be a boolean' ] ].
+	OSPlatform current isWindows ifTrue: 
+			[ ^self error: 'openFileFile:writable: not supported on Windows' ].
+	^ self primitiveFailed 
+
+]
+
+{ #category : #'file primitives' }
 FilePluginPrims >> read: id into: byteArray startingAt: startIndex count: count [
 	"Read up to count bytes of data from this file into the given string or byte array starting at the given index. Answer the number of bytes actually read."
 
