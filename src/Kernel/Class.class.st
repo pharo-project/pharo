@@ -179,7 +179,7 @@ Class >> allClassVarNames [
 	defined in the superclasses of the receiver."
 
 	| aSet |
-	self superclass == nil
+	self superclass isNil
 		ifTrue: 
 			[^self classVarNames asSet]  "This is the keys so it is a new Set."
 		ifFalse: 
