@@ -30,12 +30,6 @@ CharacterSet class >> crlf [
 ]
 
 { #category : #'instance creation' }
-CharacterSet class >> empty [
- 	"return an empty set of characters"
-	^self new
-]
-
-{ #category : #'instance creation' }
 CharacterSet class >> newFrom: aCollection [
 	| newCollection |
 	newCollection := self new.
@@ -66,7 +60,7 @@ CharacterSet >> = anObject [
 		self byteArrayMap = anObject byteArrayMap ]
 ]
 
-{ #category : #'collection ops' }
+{ #category : #adding }
 CharacterSet >> add: aCharacter [
 	"I automatically become a WideCharacterSet if you add a wide character to myself"
 	
@@ -81,7 +75,7 @@ CharacterSet >> add: aCharacter [
 	^aCharacter
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 CharacterSet >> asString [
 	"Convert the receiver into a String"
 
@@ -97,24 +91,24 @@ CharacterSet >> byteArrayMap [
 	^map
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 CharacterSet >> byteComplement [
 	"return a character set containing precisely the single byte characters the receiver does not"
 	
 	| set |
-	set := CharacterSet allCharacters.
+	set := self class allCharacters.
 	self do: [ :c | set remove: c ].
 	^set
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 CharacterSet >> complement [
 	"return a character set containing precisely the characters the receiver does not"
 	
 	^CharacterSetComplement of: self copy
 ]
 
-{ #category : #'collection ops' }
+{ #category : #enumerating }
 CharacterSet >> do: aBlock [
 	"evaluate aBlock with each character in the set"
 
@@ -123,7 +117,7 @@ CharacterSet >> do: aBlock [
 
 ]
 
-{ #category : #'collection ops' }
+{ #category : #enumerating }
 CharacterSet >> findFirstInByteString: aByteString startingAt: startIndex [
 	"Double dispatching: since we know this is a ByteString, we can use a superfast primitive using a ByteArray map with 0 slots for byte characters not included and 1 for byte characters included in the receiver."
 	^ByteString
@@ -142,12 +136,13 @@ CharacterSet >> hash [
 	^self byteArrayMap hash
 ]
 
-{ #category : #'collection ops' }
+{ #category : #testing }
 CharacterSet >> includes: aCharacter [
-	aCharacter asciiValue >= 256
+
+	^aCharacter asciiValue >= 256
 		ifTrue: ["Guard against wide characters"
-			^false].
-	^(map at: aCharacter asciiValue + 1) > 0
+					^false]
+		ifFalse: [(map at: aCharacter asciiValue + 1) > 0 ]
 ]
 
 { #category : #initialization }
@@ -162,7 +157,7 @@ CharacterSet >> postCopy [
 	map := map copy
 ]
 
-{ #category : #'collection ops' }
+{ #category : #removing }
 CharacterSet >> remove: aCharacter [
 	aCharacter asciiValue >= 256
 		ifFalse: ["Guard against wide characters"
@@ -170,7 +165,7 @@ CharacterSet >> remove: aCharacter [
 	^aCharacter
 ]
 
-{ #category : #'collection ops' }
+{ #category : #removing }
 CharacterSet >> remove: aCharacter ifAbsent: aBlock [
 	(self includes: aCharacter) ifFalse: [^aBlock value].
 	^self remove: aCharacter
@@ -182,7 +177,7 @@ CharacterSet >> removeAll [
 	map atAllPut: 0
 ]
 
-{ #category : #'collection ops' }
+{ #category : #accessing }
 CharacterSet >> size [
 	^map sum
 ]
