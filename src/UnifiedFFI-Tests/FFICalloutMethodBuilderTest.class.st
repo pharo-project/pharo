@@ -1,10 +1,13 @@
+"
+Tests for FFICalloutMethodBuilder
+"
 Class {
 	#name : #FFICalloutMethodBuilderTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'architecture'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #factory }
