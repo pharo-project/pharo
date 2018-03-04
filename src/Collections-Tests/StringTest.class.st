@@ -1706,6 +1706,18 @@ StringTest >> testRepeat [
 	should: [('123' repeat: -1)] raise: Error.
 ]
 
+{ #category : #'tests - converting' }
+StringTest >> testRomanNumber [
+
+	self assert: 'I' romanNumber equals: 1.
+	self assert: 'V' romanNumber equals: 5.
+	self assert: 'XVI' romanNumber equals: 16.
+	self assert: 'XIV' romanNumber equals: 14.
+	self assert: 'MDCLXXXVII' romanNumber equals: 1687.
+	self assert: 'MCMXLII' romanNumber equals: 1942.
+	self assert: 'DCLXVI' romanNumber equals: 666.
+]
+
 { #category : #'tests - instance creation' }
 StringTest >> testSpace [
 		
