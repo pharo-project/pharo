@@ -32,12 +32,12 @@ TSubCollectionAccess >> testAllButFirst [
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testAllButFirstNElements [
 
-	| abf col |
-	col := self moreThan3Elements.
-	abf := col allButFirst: 2.
-	abf withIndexDo: 
-		 [:el :i | self assert: el equals: (col at: i + 2) ].
-	self assert: abf size + 2 = col size
+	| allButFirst collection |
+	collection := self moreThan3Elements.
+	allButFirst := collection allButFirst: 2.
+	allButFirst withIndexDo: 
+		 [:el :i | self assert: el equals: (collection at: i + 2) ].
+	self assert: allButFirst size + 2 = collection size
 ]
 
 { #category : #'tests - subcollections access' }
@@ -53,11 +53,11 @@ TSubCollectionAccess >> testAllButLast [
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testAllButLastNElements [
 
-	| abf col |
-	col := self moreThan3Elements.
-	abf := col allButLast: 2.
-	abf withIndexDo: [:el :i | self assert: el equals: (col at: i) ].
-	self assert: abf size + 2 = col size
+	| allButLast collection |
+	collection := self moreThan3Elements.
+	allButLast := collection allButLast: 2.
+	allButLast withIndexDo: [:el :i | self assert: el equals: (collection at: i) ].
+	self assert: allButLast size + 2 = collection size
 ]
 
 { #category : #'tests - subcollections access' }
