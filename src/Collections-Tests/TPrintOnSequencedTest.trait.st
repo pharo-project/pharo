@@ -40,7 +40,7 @@ TPrintOnSequencedTest >> testPrintNameOn [
 	aStream := ReadWriteStream on: result.
 	
 	self nonEmpty printNameOn: aStream.
-	Transcript show: result asString.
+
 	self nonEmpty class name first isVowel
 		ifTrue:[ self assert: aStream contents equals: ('an ',self nonEmpty class name ) ]
 		ifFalse:[ self assert: aStream contents equals: ('a ',self nonEmpty class name)].
