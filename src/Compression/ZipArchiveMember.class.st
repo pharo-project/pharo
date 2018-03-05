@@ -380,7 +380,7 @@ ZipArchiveMember >> extractInDirectory: aDirectory overwrite: overwriteAll [
 		file ensureDelete.
 		file := [file ensureCreateFile] on: Error do:[:ex| ^#failed].
 	].
-	file writeStreamDo: [ :str | self extractTo: str ].
+	file binaryWriteStreamDo: [ :str | self extractTo: str ].
 	^#okay
 ]
 
@@ -388,7 +388,6 @@ ZipArchiveMember >> extractInDirectory: aDirectory overwrite: overwriteAll [
 ZipArchiveMember >> extractTo: aStream [
 	| oldCompression |
 	self isEncrypted ifTrue: [ self error: 'encryption is unsupported' ].
-	aStream binary.
 	oldCompression := self desiredCompressionMethod: CompressionStored.
 	self rewindData.
 	self writeDataTo: aStream.
