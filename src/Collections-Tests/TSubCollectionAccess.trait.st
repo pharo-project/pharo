@@ -35,9 +35,8 @@ TSubCollectionAccess >> testAllButFirstNElements [
 	| abf col |
 	col := self moreThan3Elements.
 	abf := col allButFirst: 2.
-	1 
-		to: abf size
-		do: [ :i | self assert: (abf at: i) = (col at: i + 2) ].
+	abf withIndexDo: 
+		 [:el :i | self assert: el equals: (col at: i + 2) ].
 	self assert: abf size + 2 = col size
 ]
 
@@ -57,9 +56,7 @@ TSubCollectionAccess >> testAllButLastNElements [
 	| abf col |
 	col := self moreThan3Elements.
 	abf := col allButLast: 2.
-	1 
-		to: abf size
-		do: [ :i | self assert: (abf at: i) = (col at: i) ].
+	abf withIndexDo: [:el :i | self assert: el equals: (col at: i) ].
 	self assert: abf size + 2 = col size
 ]
 
