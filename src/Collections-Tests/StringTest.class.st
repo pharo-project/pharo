@@ -89,7 +89,7 @@ StringTest >> collectionMoreThan5Elements [
 { #category : #requirements }
 StringTest >> collectionNotIncluded [
 " return a collection for wich each element is not included in 'nonEmpty' "
-	^ notIn 
+	^ collectionNotIncluded  
 ]
 
 { #category : #requirements }
@@ -366,17 +366,6 @@ StringTest >> sortedInAscendingOrderCollection [
 StringTest >> subCollectionNotIn [
 " return a collection for which at least one element is not included in 'moreThan4Elements' "
 	^ collectionNotIncluded 
-]
-
-{ #category : #'tests - fixture' }
-StringTest >> test0CopyTest [
-	self empty.
-	self assert: self empty size = 0.
-	self nonEmpty.
-	self assert: (self nonEmpty size = 0) not.
-	self collectionWithElementsToRemove.
-	self assert: (self collectionWithElementsToRemove size = 0) not.
-	self elementToAdd
 ]
 
 { #category : #tests }
