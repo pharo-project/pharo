@@ -268,7 +268,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GeneralRules'.
 		spec package: 'ReflectionMirrors-Primitives'.
 		spec package: 'FuzzyMatcher'.
-		spec package: 'Versionner-Nautilus'.
 		spec package: 'STON-Text support'.
 		
 		"SortFunctions (standalone)"
@@ -800,7 +799,6 @@ spec group: 'Versionner-Group' with: #(
 	'Versionner-Core-Group'
 	'Versionner-Tests-Group'
 	'NautilusGroupAutoBuilder'	"required by Versionner-Nautilus"
-	'Versionner-Nautilus'	
 ).
 
 spec group: 'Kernel-Tests-Group' with: #(
