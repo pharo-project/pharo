@@ -1,5 +1,5 @@
 "
-I am thrown when the library I am looking for is not found
+I am thrown when the library I am looking for is not found.
 "
 Class {
 	#name : #NotFoundError,
