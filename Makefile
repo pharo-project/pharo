@@ -46,12 +46,12 @@ $(PHARO_IMAGE_PATH): $(METACELLO_IMAGE_PATH)
 	dd if="displaySize.bin" of="$(PHARO_IMAGE_PATH)" bs=1 seek=$(SEEK) count=4 conv=notrunc
 	$(VM) "$(PHARO_IMAGE_PATH)" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.5'; load: 'core'"
 	$(VM) "$(PHARO_IMAGE_PATH)" eval --save "Metacello new baseline: 'IDE';repository: 'tonel://src'; load"
-	$(VM) "$(PHARO_IMAGE_PATH)" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
-	$(VM) "$(PHARO_IMAGE_PATH)" clean --release
-	@echo "[Pharo] Configure resulting image"
-	$(VM) "$(PHARO_IMAGE_PATH)" st bootstrap/scripts/04-configure-resulting-image/fixPackageVersions.st --save --quit
-	$(VM) "$(PHARO_IMAGE_PATH)" save "Pharo"
-	zip "bootstrap-cache/$(PHARO_IMAGE_NAME).zip" bootstrap-cache/$(PHARO_IMAGE_NAME).*
+	$(VM) "$(PHARO_IMAGE_PATH)" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources. Smalltalk garbageCollect."
+	#$(VM) "$(PHARO_IMAGE_PATH)" clean --release
+	#@echo "[Pharo] Configure resulting image"
+	#$(VM) "$(PHARO_IMAGE_PATH)" st bootstrap/scripts/04-configure-resulting-image/fixPackageVersions.st --save --quit
+	#$(VM) "$(PHARO_IMAGE_PATH)" save "Pharo"
+	#zip "bootstrap-cache/$(PHARO_IMAGE_NAME).zip" bootstrap-cache/$(PHARO_IMAGE_NAME).*
 
 #Bootstrap Metacello
 $(METACELLO_IMAGE_PATH): $(MC_IMAGE_PATH)
