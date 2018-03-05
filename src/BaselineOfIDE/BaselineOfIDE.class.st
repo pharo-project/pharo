@@ -846,7 +846,7 @@ spec group: 'GT&QA-Group' with: #(
 	'Manifest-Group'
 	'DependencyAnalyser-Group'
 	'QualityAssistant-Group'
-	'Reflectivity-Group'	
+	'Reflectivity-Group'
 ).		
 
 
