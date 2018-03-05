@@ -18,7 +18,7 @@ DirectoryEntryTest >> testCreationTimeIsADateAndTimeInstance [
 
 	| creation |
 	creation := self entry creation.
-	self assert: creation class = DateAndTime.
+	self assert: creation class equals: DateAndTime
 	
 ]
 
@@ -55,7 +55,7 @@ DirectoryEntryTest >> testModificationTimeIsADateAndTimeInstance [
 
 	| modification |
 	modification := self entry modification.
-	self assert: modification class = DateAndTime.
+	self assert: modification class equals: DateAndTime
 	
 ]
 
@@ -64,7 +64,7 @@ DirectoryEntryTest >> testReference [
 	| ref entry |
 	ref := FileLocator image resolve.
 	entry := ref entry.
-	self assert: entry reference = ref
+	self assert: entry reference equals: ref
 ]
 
 { #category : #tests }
