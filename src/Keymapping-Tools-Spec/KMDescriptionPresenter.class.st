@@ -2,7 +2,7 @@
 A KMDescription is a window showing the description of shortcuts for a specified set of symbols reprensenting KMCategories
 "
 Class {
-	#name : #KMDescription,
+	#name : #KMDescriptionPresenter,
 	#superclass : #ComposablePresenter,
 	#instVars : [
 		'shortcutList',
@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : #specs }
-KMDescription class >> defaultSpec [
+KMDescriptionPresenter class >> defaultSpec [
 	<spec>
 	
 	^ SpecLayout composed
@@ -33,28 +33,28 @@ KMDescription class >> defaultSpec [
 ]
 
 { #category : #example }
-KMDescription class >> example [
+KMDescriptionPresenter class >> example [
 
 	| d |
-	d := KMDescription new.
+	d := self new.
 	d categories: #(GlobalShortcuts MonticelloShortcuts TextEditor).
 	d openWithSpec
 ]
 
 { #category : #specs }
-KMDescription class >> title [
+KMDescriptionPresenter class >> title [
 
 	^ 'Shortcuts description'
 ]
 
 { #category : #accessing }
-KMDescription >> categories [
+KMDescriptionPresenter >> categories [
 	
 	^ categories
 ]
 
 { #category : #api }
-KMDescription >> categories: aCollectionOfSymbols [
+KMDescriptionPresenter >> categories: aCollectionOfSymbols [
 	| cats |
 	
 	cats := aCollectionOfSymbols collect: [:e | KMRepository default categoryForName: e].
@@ -63,35 +63,35 @@ KMDescription >> categories: aCollectionOfSymbols [
 ]
 
 { #category : #accessing }
-KMDescription >> categoryList [
+KMDescriptionPresenter >> categoryList [
 	
 	^ categoryList
 ]
 
 { #category : #initialization }
-KMDescription >> collectDescriptionShortcut [
+KMDescriptionPresenter >> collectDescriptionShortcut [
 	collectingBlock := [ :e | {(e description asString) . ':' . (e shortcut asString)} ]
 ]
 
 { #category : #initialization }
-KMDescription >> collectShortcutDescription [
+KMDescriptionPresenter >> collectShortcutDescription [
 	collectingBlock := [:e | {e shortcut asString. ':'. e description asString} ]
 ]
 
 { #category : #initialization }
-KMDescription >> initCategoryList: aCollection [
+KMDescriptionPresenter >> initCategoryList: aCollection [
 	categoryList emptyList.
 	aCollection do: [ :cat | categoryList addItemLabeled: cat name do: [ self updateShortcutList ] ]
 ]
 
 { #category : #private }
-KMDescription >> initialExtent [
+KMDescriptionPresenter >> initialExtent [
 
 	^  (600@350)
 ]
 
 { #category : #initialization }
-KMDescription >> initialize [
+KMDescriptionPresenter >> initialize [
 
 	categories := nil asValueHolder.
 	sortingBlock := [:a :b | a first < b first ].
@@ -101,14 +101,14 @@ KMDescription >> initialize [
 ]
 
 { #category : #initialization }
-KMDescription >> initializePresenter [
+KMDescriptionPresenter >> initializePresenter [
 		
 	categories whenChangedDo: [:col | self initCategoryList:col ].
 	okToolbar okAction: [ self delete ].
 ]
 
 { #category : #initialization }
-KMDescription >> initializeWidgets [
+KMDescriptionPresenter >> initializeWidgets [
 
 	categoryList := self newDropList.
 	shortcutList := self newMultiColumnList.
@@ -133,25 +133,25 @@ KMDescription >> initializeWidgets [
 ]
 
 { #category : #accessing }
-KMDescription >> okToolbar [
+KMDescriptionPresenter >> okToolbar [
 	
 	^ okToolbar
 ]
 
 { #category : #accessing }
-KMDescription >> orderingList [
+KMDescriptionPresenter >> orderingList [
 	
 	^ orderingList
 ]
 
 { #category : #accessing }
-KMDescription >> shortcutList [
+KMDescriptionPresenter >> shortcutList [
 	
 	^ shortcutList
 ]
 
 { #category : #initialization }
-KMDescription >> updateShortcutList [
+KMDescriptionPresenter >> updateShortcutList [
 	| cat items |
 	cat := categories value at: self categoryList selectedIndex.
 	items := (cat entriesAt: #all) keymaps collect: [ :e | collectingBlock value: e ].

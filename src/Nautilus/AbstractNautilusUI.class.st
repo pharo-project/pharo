@@ -3307,7 +3307,7 @@ AbstractNautilusUI >> openGroupManager [
 { #category : #shortcuts }
 AbstractNautilusUI >> openShortcutDescription [
 
-	KMDescription new
+	KMDescriptionPresenter new
 		categories: #(NautilusGlobalShortcuts "NautilusClassShortcuts NautilusSourceCodeShortcuts NautilusPackageShortcuts NautilusProtocolShortcuts NautilusMethodShortcuts") sort;
 		openWithSpec
 ]
