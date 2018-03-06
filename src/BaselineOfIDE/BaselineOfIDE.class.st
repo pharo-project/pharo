@@ -911,13 +911,14 @@ BaselineOfIDE >> loadCalypso [
 	Metacello new
 		baseline: 'SystemCommands';
 		repository: 'github://dionisiydk/SystemCommands:v0.7.1';
+		onLock: [ :ex | ex honor ];
 		lock.
 			
-	Metacello new
+	[Metacello new
 		baseline: 'Calypso';
 		repository: 'github://dionisiydk/Calypso:v0.10.3';
-		onLock: [ :ex | ex honor ];
-		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
+		load: #('FullEnvironment' 'SystemBrowser' 'Tests') ]
+	on: MetacelloAllowLockedProjectChange do: [ :err |  err honor ].
 
 	(self class environment at: #ClyBrowser) beAllDefault.
 	
