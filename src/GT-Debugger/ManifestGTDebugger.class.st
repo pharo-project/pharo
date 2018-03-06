@@ -9,6 +9,5 @@ Class {
 
 { #category : #unloading }
 ManifestGTDebugger class >> preUnload [
-  GTGenericStackDebugger closeAllDebuggers.
-  GTGenericStackDebugger setGTDebuggerEnabledStatus: false.
+  GTGenericStackDebugger closeAllDebuggers
 ]
