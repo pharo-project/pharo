@@ -75,9 +75,15 @@ if [ -z "${ARCH_DESCRIPTION}" ]; then
   exit 1;
 fi
 
+# Script directory
+__this_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Repository directory
+BOOTSTRAP_REPOSITORY="${__this_dir}/../.."
+REPOSITORY="${BOOTSTRAP_REPOSITORY:-..}"
+
 
 PREFIX=Pharo7.0
-
 REPOSITORY="${BOOTSTRAP_REPOSITORY:-..}"
 
 if [[ -z "${BOOTSTRAP_REPOSITORY}" ]]; then

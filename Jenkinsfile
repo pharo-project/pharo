@@ -155,8 +155,7 @@ def bootstrapImage(){
     	    }
 
 			stage ("Full Image-${architecture}") {
-        def currentDirectory = pwd()
-				shell 'BOOTSTRAP_REPOSITORY=${currentDirectory} BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/build.sh -a ${architecture}'
+				shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/build.sh -a ${architecture}"
 				stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
 		    }
 	
