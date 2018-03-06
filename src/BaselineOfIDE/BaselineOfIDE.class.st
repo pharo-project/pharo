@@ -899,8 +899,24 @@ BaselineOfIDE >> loadCalypso [
 	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
 
 	Metacello new
+		baseline: 'ClassAnnotation';
+		repository: 'github://dionisiydk/ClassAnnotation:v0.3.1';
+		lock.
+		
+	Metacello new
+		baseline: 'Commander';
+		repository: 'github://dionisiydk/Commander:v0.5.3';
+		lock.
+	
+	Metacello new
+		baseline: 'SystemCommands';
+		repository: 'github://dionisiydk/SystemCommands:v0.7.1';
+		lock.
+			
+	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://dionisiydk/Calypso:v0.10.2';
+		repository: 'github://dionisiydk/Calypso:v0.10.3';
+		onLock: [ :ex | ex honor ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
 	(self class environment at: #ClyBrowser) beAllDefault.
