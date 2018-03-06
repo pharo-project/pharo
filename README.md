@@ -18,7 +18,7 @@ This repository contains only sources of the Pharo image. The virtual machine is
 
 ## Automated Builds
 
-This repository is being built on a [Jenkins server](https://ci.inria.fr/pharo-ci-jenkins2) and uploaded to [files.pharo.org](files.pharo.org).
+This repository is being built on a [Jenkins server](https://ci.inria.fr/pharo-ci-jenkins2) and uploaded to [files.pharo.org](https://files.pharo.org).
 
 - [Latest build - 64bit](http://files.pharo.org/image/70/latest-64.zip)
 - [Latest build - 32bit](http://files.pharo.org/image/70/latest.zip) 
@@ -39,7 +39,7 @@ The bootstrapping can be done using the following script:
 BUILD_NUMBER=42 BOOTSTRAP_ARCH=32 sh ./bootstrap/scripts/bootstrap.sh
 ```
 
-This will generate a very minimal image file named `bootstrap.image` in directory bootstrap-cache. To load the rest of Pharo environment you should afterwards execute:
+This will generate a very minimal image file named `bootstrap.image` in directory `bootstrap-cache`. To load the rest of Pharo environment you should afterwards execute:
 
 ```bash
 sh ./bootstrap/scripts/build.sh
