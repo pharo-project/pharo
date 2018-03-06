@@ -252,7 +252,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Athens-Cairo'.
 		spec package: 'Athens-Examples'.
 
-		spec package: 'NautilusGroupAutoBuilder'.
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
 		
@@ -798,7 +797,6 @@ spec group: 'Versionner-Tests-Group' with: #(
 spec group: 'Versionner-Group' with: #(
 	'Versionner-Core-Group'
 	'Versionner-Tests-Group'
-	'NautilusGroupAutoBuilder'	"required by Versionner-Nautilus"
 ).
 
 spec group: 'Kernel-Tests-Group' with: #(
