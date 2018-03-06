@@ -79,7 +79,7 @@ fi
 __this_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Repository directory
-BOOTSTRAP_REPOSITORY="${__this_dir}/../.."
+export BOOTSTRAP_REPOSITORY="${__this_dir}/../.."
 REPOSITORY="${BOOTSTRAP_REPOSITORY:-..}"
 
 
