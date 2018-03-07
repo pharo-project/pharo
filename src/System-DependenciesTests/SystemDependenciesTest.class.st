@@ -232,6 +232,7 @@ SystemDependenciesTest >> testExternalCompilerDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		BaselineOfPharoBootstrap kernelPackageNames,
+		BaselineOfPharoBootstrap multilingualPackageNames,		
 		BaselineOfPharoBootstrap compilerPackageNames).
 	
 	self assertCollection: dependencies equals: self knownCompilerDependencies.
@@ -262,6 +263,7 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		BaselineOfPharoBootstrap kernelPackageNames,
+		BaselineOfPharoBootstrap multilingualPackageNames,		
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames).
 	
@@ -297,13 +299,12 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalKernelDependencies [
-
-	| dependencies | 
-	
+	| dependencies |
 	self longTestCase.
-	
-	dependencies := self externalDependendiesOf: BaselineOfPharoBootstrap kernelPackageNames.
-	
+
+	dependencies := self
+		externalDependendiesOf: BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap multilingualPackageNames.
+
 	self assertCollection: dependencies equals: self knownKernelDependencies
 ]
 
@@ -318,6 +319,7 @@ SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 		BaselineOfTraits corePackages,	
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap compilerPackageNames,
+		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames,
 		BaselineOfMonticello corePackageNames).
 	
@@ -346,6 +348,7 @@ SystemDependenciesTest >> testExternalMonticelloDependencies [
 	dependencies := self externalDependendiesOf: (
 		BaselineOfTraits allPackageNames,		
 		BaselineOfPharoBootstrap kernelPackageNames,
+		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames,
 		BaselineOfMonticello corePackageNames,
@@ -419,6 +422,7 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 	dependencies := self externalDependendiesOf: (
 		BaselineOfTraits allPackageNames,
 		BaselineOfPharoBootstrap kernelPackageNames,
+		BaselineOfPharoBootstrap multilingualPackageNames,		
 		BaselineOfPharoBootstrap sUnitPackageNames).
 	
 	self assertCollection: dependencies equals: self knownSUnitKernelDependencies.
