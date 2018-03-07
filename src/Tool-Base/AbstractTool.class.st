@@ -379,7 +379,7 @@ AbstractTool >> defineTrait: defString notifying: aController [
 	envt := self class environment.
 	keywdIx := defTokens findFirst: [:x | x = 'named:'].
 	newTraitName := (defTokens at: keywdIx+1) copyWithoutAll: '#()'.
-	((oldTrait isNil or: [oldTrait baseTrait name asString ~= newTraitName])
+	((oldTrait isNil or: [oldTrait instanceSide name asString ~= newTraitName])
 		and: [envt includesKey: newTraitName asSymbol]) ifTrue:
 			["Attempting to define new class/trait over existing one when
 				not looking at the original one in this browser..."
