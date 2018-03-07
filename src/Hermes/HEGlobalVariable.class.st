@@ -24,6 +24,9 @@ HEGlobalVariable >> asLiteralIn: env [
 	
 	bind ifNotNil: [ ^ bind ].
 	
+	"If the Undeclared exists I should use the existing."
+	Undeclared associationAt: value ifPresent: [ :e | ^e  ].
+	
 	undec := UndeclaredVariable key: value value: nil.
 	Undeclared add: undec.
 	

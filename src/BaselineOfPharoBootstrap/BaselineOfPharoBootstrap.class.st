@@ -150,11 +150,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 
 			'UIManager'.
 			'Zinc-Character-Encoding-Core'.
-			'InitializePackagesCommandLineHandler'.
-			
-			'Multilingual-Languages'.
-			'Multilingual-Encodings'.
-			'Multilingual-TextConversion' }.
+			'InitializePackagesCommandLineHandler' }.
 
 		"These packages are added using hermes after bootstrap"
 		spec group: 'CompilerGroup' with: {
@@ -165,7 +161,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'CodeImport'.
 			'CodeImportCommandLineHandlers'.
 			'Jobs'.
-			'OpalCompiler-Core' }.
+			'OpalCompiler-Core'}.
 		
 		"These packages are added using the compiler after bootstrap"
 		spec group: 'FileSystemGroup' with: {

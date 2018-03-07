@@ -143,11 +143,13 @@ cd ..
 [[ -z "${BOOTSTRAP_CACHE}" ]] && ST_CACHE='st-cache' || ST_CACHE="${BOOTSTRAP_CACHE}/st-cache"
 
 # Installing RPackage
-echo "[Compiler] Installing RPackage"
+echo "[Compiler] Initializing Bootstraped Image"
 ${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
 
 echo "[Compiler] Adding more Kernel packages"
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Hermes-Extensions.hermes --save
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Multilingual-Encodings.hermes Multilingual-TextConversion.hermes Multilingual-Languages.hermes --save --no-fail-on-undeclared
+
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes Jobs.hermes --save --no-fail-on-undeclared
 
 echo "[Compiler] Initializing the packages in the Kernel"
@@ -158,7 +160,11 @@ echo "[Compiler] Installing compiler through Hermes"
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
-${VM} "${COMPILER_IMAGE_NAME}.image" st ${ST_CACHE}/Multilingual.st ${ST_CACHE}/DeprecatedFileStream.st ${ST_CACHE}/FileSystem.st --no-source --quit --save
+
+echo "[Compiler] Initializing Unicode"
+${VM} "${COMPILER_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit "${REPOSITORY}/resources/unicode/"
+
+${VM} "${COMPILER_IMAGE_NAME}.image" st ${ST_CACHE}/DeprecatedFileStream.st ${ST_CACHE}/FileSystem.st --no-source --quit --save
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "SourceFileArray initialize"
 zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 
@@ -173,7 +179,6 @@ zip "${TRAITS_IMAGE_NAME}.zip" "${TRAITS_IMAGE_NAME}.image"
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
 ${VM} "${TRAITS_IMAGE_NAME}.image" save ${CORE_IMAGE_NAME}
-${VM} "${CORE_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit "${REPOSITORY}/resources/unicode/UnicodeData.txt"
 zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 
 #Bootstrap Monticello Part 1: Core and Local repositories
