@@ -7,7 +7,7 @@ ClassDescription >> superclass: aSuperclass layout: aLayout [
 	
 	self
 		superclass: aSuperclass
-		methodDictionary: MethodDictionary new
+		methodDictionary: self emptyMethodDictionary
 		format: aLayout format.
 ]
 

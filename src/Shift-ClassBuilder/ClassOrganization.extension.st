@@ -4,9 +4,5 @@ Extension { #name : #ClassOrganization }
 ClassOrganization >> copyFrom: otherOrganization [
 	comment := otherOrganization instVarNamed: #comment.
 	commentStamp := otherOrganization commentStamp.
-	(otherOrganization protocols
-		collect: [ :e | 
-			(Protocol name: e name)
-				addAllMethodsFrom: e;
-				yourself ]) do: [ :e | protocolOrganizer addProtocol: e ]
+	otherOrganization protocols do: [ :p | p methods do: [ :m | protocolOrganizer classify: m inProtocolNamed: p name ] ].
 ]

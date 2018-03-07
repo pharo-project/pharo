@@ -12,7 +12,7 @@ Class {
 		'sharedVariables',
 		'builder'
 	],
-	#category : 'Shift-ClassBuilder'
+	#category : #'Shift-ClassBuilder'
 }
 
 { #category : #accessing }

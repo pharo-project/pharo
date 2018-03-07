@@ -1,3 +1,8 @@
+"
+I implement the custom behavior for exporting a trait.
+My header only includes the name of the trait.
+Mostly of my behavior is from HEMethodContainer.
+"
 Class {
 	#name : #HETrait,
 	#superclass : #HEMethodContainer,

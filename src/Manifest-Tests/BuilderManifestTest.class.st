@@ -17,7 +17,7 @@ BuilderManifestTest >> setUp [
 		ifNotNil: [ 
 			cl
 				removeFromChanges;
-				removeFromSystemUnlogged ].
+				removeFromSystem ].
 
 ]
 
@@ -30,9 +30,8 @@ BuilderManifestTest >> tearDown [
 		ifNotNil: [ 
 			cl
 				removeFromChanges;
-				removeFromSystemUnlogged ].
-	super tearDown		
-
+				removeFromSystem ].
+	super tearDown.
 ]
 
 { #category : #tests }

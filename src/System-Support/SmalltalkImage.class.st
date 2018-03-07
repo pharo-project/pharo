@@ -622,6 +622,10 @@ SmalltalkImage >> fileForImageNamed: aString [
 SmalltalkImage >> fixObsoleteBindings [
 	CompiledMethod allInstances do: [ :method |
 		| obsoleteBindings |
+		
+		"Added to check because sometimes the bootstrap fails to generate some methods."
+		self assert: (method header isKindOf: SmallInteger) description: (method name , ' has an invalid header:' , method header asString).
+		
 		obsoleteBindings := method literals select: [ :literal |
 				literal isVariableBinding and: [
 					literal value isBehavior and: [ 

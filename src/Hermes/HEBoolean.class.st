@@ -1,3 +1,7 @@
+"
+I represent a boolean.
+I am stored in the file as a byte with values 0 (false) and 1 (true).
+"
 Class {
 	#name : #HEBoolean,
 	#superclass : #HEExportedLiteral,

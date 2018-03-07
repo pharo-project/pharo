@@ -1,3 +1,11 @@
+"
+I wrap the target environment.
+I provide access to all the elements in the environment and also to:
+
+- The class being deserialized
+- The method being deserialized
+- The selector of the method being deserialized.
+"
 Class {
 	#name : #HEExtendedEnvironment,
 	#superclass : #Object,

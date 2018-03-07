@@ -70,5 +70,5 @@ RGMonticelloTest >> testConvertingMCTraitDefinition [
 	self assert: (ringClass isTrait).
 	self assert: (ringClass classSide realClass = TSortable classSide).
 	self assert: (ringClass isSameRevisionAs: TSortable asRingDefinition).
-	self deny: (ringClass isSameRevisionAs: TBehavior asRingDefinition)
+	self deny: (ringClass isSameRevisionAs: TAssertable asRingDefinition)
 ]

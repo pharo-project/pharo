@@ -86,7 +86,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-SessionManager'.
 		spec package: 'System-Sources'.
 		spec package: 'System-Support'.
-		spec package: 'Traits'.
+
 		spec package: 'UIManager'.
 		spec package: 'Zinc-Character-Encoding-Core'.
 		
@@ -111,13 +111,9 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'FFI-Pools'.
-		
-			'AST-Core'.
 			'Announcements-Core'.
 			'Colors'.
 			'Collections-Abstract'.
-			'Collections-Arithmetic'.
-			'Collections-Atomic'.
 			'Collections-Native'.
 			'Collections-Sequenceable'.
 			'Collections-Stack'.
@@ -129,7 +125,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Files'.
 			'FileSystem-Path'.
 			'Hermes'.
-			'Jobs'.
 			'Kernel'.
 			'Kernel-BytecodeEncoders'.
 			'Network-UUID'.
@@ -152,7 +147,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-SessionManager'.
 			'System-Sources'.
 			'System-Support'.
-			'Traits'.
+
 			'UIManager'.
 			'Zinc-Character-Encoding-Core'.
 			'InitializePackagesCommandLineHandler'.
@@ -163,9 +158,13 @@ BaselineOfPharoBootstrap >> baseline: spec [
 
 		"These packages are added using hermes after bootstrap"
 		spec group: 'CompilerGroup' with: {
+			'AST-Core'.
+			'Collections-Arithmetic'.
+			'Collections-Atomic'.
 			'CodeExport'.
 			'CodeImport'.
 			'CodeImportCommandLineHandlers'.
+			'Jobs'.
 			'OpalCompiler-Core' }.
 		
 		"These packages are added using the compiler after bootstrap"

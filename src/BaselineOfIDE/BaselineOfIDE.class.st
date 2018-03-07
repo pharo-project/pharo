@@ -120,6 +120,11 @@ BaselineOfIDE >> baseline: spec [
 			spec repository: repository
 		].
 
+		spec baseline: 'Traits' with: [
+			spec loads: 'traits-tests'. 
+			spec repository: repository
+		].
+
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
@@ -886,6 +891,8 @@ spec group: #default with: #(
 	
 	"Importing tests of Shift"
 	'Shift'
+	"Importing tests of Traits"
+	'Traits'
 ).
 
 ]

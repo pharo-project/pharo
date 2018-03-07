@@ -17,7 +17,7 @@ SmalllintManifestCheckerTest >> cleaningResources [
 		ifPresent: [ :cl | 
 			cl
 				removeFromChanges;
-				removeFromSystemUnlogged ]
+				removeFromSystem ]
 ]
 
 { #category : #private }
