@@ -59,7 +59,7 @@ ClassTraitTest >> testInitialization [
 	self assert: classTrait isClassTrait.
 	self assert: classTrait classSide = classTrait.
 	self deny: classTrait isBaseTrait.
-	self assert: classTrait baseTrait = self t1.
+	self assert: classTrait instanceSide = self t1.
 
 	"assert classtrait methods are propagated to users when setting traitComposition"
 	self assert: self t4 hasClassSide.

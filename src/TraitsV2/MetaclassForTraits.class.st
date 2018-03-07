@@ -41,12 +41,6 @@ MetaclassForTraits >> asTraitComposition [
 	^ TaClassCompositionElement for: self
 ]
 
-{ #category : #accessing }
-MetaclassForTraits >> baseTrait [
-	
-	^ self instanceSide 
-]
-
 { #category : #'fileIn/Out' }
 MetaclassForTraits >> definition [
 	^ String streamContents: [ :s | 
