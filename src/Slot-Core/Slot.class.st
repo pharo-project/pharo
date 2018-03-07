@@ -15,7 +15,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'name',
-		'definingClass'
+		'owningClass'
 	],
 	#classVars : [
 		'Properties'
@@ -115,16 +115,13 @@ Slot >> changingIn: aClass [
 { #category : #accessing }
 Slot >> definingClass [
 	
-	"^ self propertyAt: #definingClass ifAbsent: [ self slotOwnr]"
-
-	^definingClass
+	^ self propertyAt: #definingClass ifAbsent: [ self owningClass ]
 ]
 
 { #category : #accessing }
 Slot >> definingClass: aClass [
 
-	"self propertyAt: #definingClass put: aClass"
-	definingClass := aClass
+	self propertyAt: #definingClass put: aClass
 ]
 
 { #category : #printing }
@@ -162,7 +159,6 @@ Slot >> ensureInitalizeMethodExists: aClass [
 		aClass compile: 'initialize
 	super initialize.' classified: 'initialization'.
 		] 
-	
 ]
 
 { #category : #properties }
@@ -260,12 +256,12 @@ Slot >> name: aSymbol [
 
 { #category : #accessing }
 Slot >> owningClass [
-	^definingClass
+	^owningClass
 ]
 
 { #category : #accessing }
 Slot >> owningClass: aClass [
-	definingClass := aClass
+	owningClass := aClass
 ]
 
 { #category : #printing }
