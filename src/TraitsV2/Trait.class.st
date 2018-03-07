@@ -66,6 +66,16 @@ Trait class >> named: aSymbol uses: aTraitCompositionOrCollection package: aStri
 ]
 
 { #category : #'instance creation' }
+Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory [
+
+	^ self named: aName 
+		uses: aTraitCompositionOrCollection 
+		slots: someSlots 
+		category: aCategory 
+		env: self environment 
+]
+
+{ #category : #'instance creation' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory env: anEnvironment [ 
 
 	| trait |
@@ -141,11 +151,14 @@ Trait >> definition [
 		s 
 			nextPutAll: 'Trait named: ';
 			nextPutAll:	self name printString;
-			cr; tab;
+			cr; tab; 
 			nextPutAll: ' uses: ';
-			nextPutAll: self traitComposition traitCompositionExpression;
-			cr; tab;
-			nextPutAll: ' category: ';
+			nextPutAll: self traitComposition traitCompositionExpression; 
+			cr.
+		self classLayout visibleSlots ifNotEmpty: [ 
+			s tab; nextPutAll: ' slots: ';
+			nextPutAll: self slotDefinitionString; cr. ].
+		s tab; nextPutAll: ' category: ';
 			nextPutAll: self category asString printString
 	]
 ]
