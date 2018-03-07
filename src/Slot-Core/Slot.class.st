@@ -112,13 +112,18 @@ Slot >> changingIn: aClass [
 	"the slot was changed. Default is to do nothing"
 ]
 
-{ #category : #queries }
+{ #category : #accessing }
 Slot >> definingClass [
+	
+	"^ self propertyAt: #definingClass ifAbsent: [ self slotOwnr]"
+
 	^definingClass
 ]
 
-{ #category : #queries }
+{ #category : #accessing }
 Slot >> definingClass: aClass [
+
+	"self propertyAt: #definingClass put: aClass"
 	definingClass := aClass
 ]
 
@@ -253,6 +258,16 @@ Slot >> name: aSymbol [
 	name := aSymbol
 ]
 
+{ #category : #accessing }
+Slot >> owningClass [
+	^definingClass
+]
+
+{ #category : #accessing }
+Slot >> owningClass: aClass [
+	definingClass := aClass
+]
+
 { #category : #printing }
 Slot >> printOn: aStream [
 	aStream 
@@ -349,7 +364,7 @@ Slot >> storeOn: aStream [
 { #category : #queries }
 Slot >> usingMethods [
 	"All methods that read or write the slot"
-	^self definingClass 
+	^self owningClass 
 		ifNil: [ #() ]
 		ifNotNil: [:class | class allMethodsAccessingSlot: self].
 ]

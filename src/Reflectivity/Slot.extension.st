@@ -19,7 +19,7 @@ Slot >> assignmentNodes [
 
 { #category : #'*Reflectivity' }
 Slot >> astNodes [
-	^self definingClass variableNodes select: [ :each | each binding variable == self ]
+	^self owningClass variableNodes select: [ :each | each binding variable == self ]
 ]
 
 { #category : #'*Reflectivity' }
