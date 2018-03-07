@@ -1922,14 +1922,6 @@ SequenceableCollection >> sort: aSortBlock [
 ]
 
 { #category : #sorting }
-SequenceableCollection >> sorted [
-	"Return a new sequenceable collection which contains the same elements as self but its 
-elements are sorted in ascending order using the #'<=' operator."
-	
-	^self sorted: [ :a :b| a <= b ]
-]
-
-{ #category : #sorting }
 SequenceableCollection >> sorted: aSortBlockOrNil [
 	"Return a new sequenceable collection which contains the same elements as self but its 
 elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if 
