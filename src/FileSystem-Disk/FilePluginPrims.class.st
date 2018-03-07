@@ -25,6 +25,38 @@ FilePluginPrims >> close: id [
 	
 ]
 
+{ #category : #'file primitives' }
+FilePluginPrims >> connectToFile: filePointer writable: writableFlag [
+	"Open the file with the supplied FILE* pointer, and return the file ID obtained.
+	writeableFlag indicates whether to allow write operations and must be compatible with the way the file was opened.
+	It is the responsibility of the caller to coordinate closing the file."
+
+	<primitive: 'primitiveConnectToFile' module: 'FilePlugin' error: error>
+	error = #'bad argument' ifTrue: [ 
+		filePointer isBytes ifFalse: 
+			[ ^self error: 'openFileFile:writable: filePointer must be bytes' ].
+		(writableFlag isKindOf: Boolean) ifFalse: 
+			[ ^self error: 'openFileFile:writable: writableFlag must be a boolean' ] ].
+	^ self primitiveFailed 
+
+]
+
+{ #category : #'file primitives' }
+FilePluginPrims >> connectToFileDescriptor: fileDescriptor writable: writableFlag [
+	"Connect to the file with fileDescriptor number, and return the file ID obtained.
+	writeableFlag indicates whether to allow write operations and must be compatible with the way the file was opened.
+	It is the responsibility of the caller to coordinate closing the file."
+
+	<primitive: 'primitiveConnectToFileDescriptor' module: 'FilePlugin' error: error>
+	error = #'bad argument' ifTrue: [ 
+		fileDescriptor isInteger ifFalse: 
+			[ ^self error: 'openFileDescriptor:writable: fileDescriptor must be an integer' ].
+		(writableFlag isKindOf: Boolean) ifFalse: 
+			[ ^self error: 'openFileDescriptor:writable: writableFlag must be a boolean' ] ].
+	^ self primitiveFailed 
+
+]
+
 { #category : #'path primitives' }
 FilePluginPrims >> createDirectory: fullPath [
 	"Create a directory named by the given path. 
@@ -173,38 +205,6 @@ FilePluginPrims >> open: fileName writable: writableFlag [
 
 	<primitive: 'primitiveFileOpen' module: 'FilePlugin'>
 	^ nil
-
-]
-
-{ #category : #'file primitives' }
-FilePluginPrims >> openFileDescriptor: fileDescriptor writable: writableFlag [
-	"Open the file with fileDescriptor number, and return the file ID obtained"
-
-	<primitive: 'primitiveFileOpenUseFileDescriptor' module: 'FilePlugin' error: error>
-	error = #'bad argument' ifTrue: [ 
-		fileDescriptor isInteger ifFalse: 
-			[ ^self error: 'openFileDescriptor:writable: fileDescriptor must be an integer' ].
-		(writableFlag isKindOf: Boolean) ifFalse: 
-			[ ^self error: 'openFileDescriptor:writable: writableFlag must be a boolean' ] ].
-	OSPlatform current isWindows ifTrue: 
-			[ ^self error: 'openFileDescriptor:writable: not supported on Windows' ].
-	^ self primitiveFailed 
-
-]
-
-{ #category : #'file primitives' }
-FilePluginPrims >> openFileFile: filePointer writable: writableFlag [
-	"Open the file with the supplied FILE* pointer, and return the file ID obtained"
-
-	<primitive: 'primitiveFileOpenUseFile' module: 'FilePlugin' error: error>
-	error = #'bad argument' ifTrue: [ 
-		filePointer isBytes ifFalse: 
-			[ ^self error: 'openFileFile:writable: filePointer must be bytes with size void*' ].
-		(writableFlag isKindOf: Boolean) ifFalse: 
-			[ ^self error: 'openFileFile:writable: writableFlag must be a boolean' ] ].
-	OSPlatform current isWindows ifTrue: 
-			[ ^self error: 'openFileFile:writable: not supported on Windows' ].
-	^ self primitiveFailed 
 
 ]
 
