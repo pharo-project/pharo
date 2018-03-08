@@ -15,14 +15,6 @@ ReadWriteStream >> = other [
 	^ self position = other position and: [self contents = other contents]
 ]
 
-{ #category : #accessing }
-ReadWriteStream >> contents [
-	"Answer with a copy of my collection from 1 to readLimit."
-
-	readLimit := readLimit max: position.
-	^collection copyFrom: 1 to: readLimit
-]
-
 { #category : #comparing }
 ReadWriteStream >> hash [
 
