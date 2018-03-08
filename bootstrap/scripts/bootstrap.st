@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
 | options architecture repository packageNames environment fetcher buildNumber bootstrap repositoryReference |
 
@@ -41,3 +42,6 @@ fetcher buildNumber: buildNumber.
 environment bootstrapWith: fetcher architecture: architecture to: bootstrap imageReference.
 
 ] on: Warning do: #resume
+=======
+PBBootstrap fromCommandLine bootstrap
+>>>>>>> - Creating an independent Package for the clases that are not kernel of cronology

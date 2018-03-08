@@ -7,10 +7,11 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"architecture",
-		"kernelPackageNames",
 		"imageReference",
 		"buildNumber",
-		"sUnitPackageNames"
+		"originRepository",
+		"ringEnvironment",
+		"versionFetcher"
 	],
 	"name" : "PBBootstrap",
 	"type" : "normal"
