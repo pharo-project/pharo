@@ -6,9 +6,5 @@ prepareBootstrap
 		exportKernelPackageNames;
 		exportAllPackagesIntoMcz;
 		exportMonticelloInStFile;
-		exportMultilingualInStFile;
-		exportSUnitInStFile;
-		exportCoreTestsInStFile;
 		exportFileSystemInStFile;
-		exportDeprecatedInStFile;
-		exportJenkinsToolsInStFile.
+		exportDeprecatedInStFile.
