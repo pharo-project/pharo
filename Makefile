@@ -22,6 +22,9 @@ BOOTSTRAP_IMAGE_NAME=bootstrap
 COMPILER_IMAGE_NAME=$(PREFIX)-compiler-$(SUFFIX)
 COMPILER_IMAGE_PATH=bootstrap-cache/$(COMPILER_IMAGE_NAME).image
 
+TRAITS_IMAGE_NAME=$(PREFIX)-traits-$(SUFFIX)
+TRAITS_IMAGE_PATH=bootstrap-cache/$(TRAITS_IMAGE_NAME).image
+
 CORE_IMAGE_NAME=$(PREFIX)-core-$(SUFFIX)
 CORE_IMAGE_PATH=bootstrap-cache/$(CORE_IMAGE_NAME).image
 
@@ -44,8 +47,9 @@ $(PHARO_IMAGE_PATH): $(METACELLO_IMAGE_PATH)
 	# in older versions we must use octal representation
 	printf "\231\002\320\003" > displaySize.bin
 	dd if="displaySize.bin" of="$(PHARO_IMAGE_PATH)" bs=1 seek=$(SEEK) count=4 conv=notrunc
-	$(VM) "$(PHARO_IMAGE_PATH)" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.5'; load: 'core'"
-	$(VM) "$(PHARO_IMAGE_PATH)" eval --save "Metacello new baseline: 'IDE';repository: 'tonel://src'; load"
+	$(VM) "$(PHARO_IMAGE_PATH)" eval --save "Smalltalk vm parameterAt: 45 put: (Smalltalk vm parameterAt: 44) * 4"
+	$(VM) "$(PHARO_IMAGE_PATH)" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.5';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
+	$(VM) "$(PHARO_IMAGE_PATH)" eval --save "Metacello new baseline: 'IDE';repository: 'tonel://src';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load"
 	$(VM) "$(PHARO_IMAGE_PATH)" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources. Smalltalk garbageCollect."
 	#$(VM) "$(PHARO_IMAGE_PATH)" clean --release
 	#@echo "[Pharo] Configure resulting image"
@@ -74,28 +78,40 @@ $(MC_BOOTSTRAP_IMAGE_PATH): $(CORE_IMAGE_PATH) bootstrap-cache/PharoV60.sources
 	$(VM) "$(MC_BOOTSTRAP_IMAGE_PATH)" st bootstrap-cache/st-cache/Monticello.st --save --quit
 	$(VM) "$(MC_BOOTSTRAP_IMAGE_PATH)" st bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
 	cd bootstrap-cache && ./vm/pharo "$(MC_BOOTSTRAP_IMAGE_NAME).image" st ../bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
+	$(VM) "$(MC_BOOTSTRAP_IMAGE_PATH)" eval --save "TraitsBootstrap fixSourceCodeOfTraits "
 	zip "bootstrap-cache/$(MC_BOOTSTRAP_IMAGE_NAME).zip" bootstrap-cache/$(MC_BOOTSTRAP_IMAGE_NAME).*
 
 
 #Bootstrap Initialization: Class and RPackage initialization
-$(CORE_IMAGE_PATH): $(COMPILER_IMAGE_PATH)
-	@echo "[Core] Class and RPackage initialization"
-	$(VM) "$(COMPILER_IMAGE_PATH)" save $(CORE_IMAGE_NAME)
-	$(VM) "$(CORE_IMAGE_PATH)" st bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit "resources/unicode/UnicodeData.txt"
+$(CORE_IMAGE_PATH): $(TRAITS_IMAGE_PATH)
+	@echo "[Core] Class and RPackage initialization - REMOVE ME"
+	$(VM) "$(TRAITS_IMAGE_PATH)" save $(CORE_IMAGE_NAME)
 	zip "bootstrap-cache/$(CORE_IMAGE_NAME).zip" "$(CORE_IMAGE_PATH)"
+
+#Traits Initialization
+$(TRAITS_IMAGE_PATH): $(COMPILER_IMAGE_PATH)
+	@echo "[Core] Trait initialization"
+	$(VM) "$(COMPILER_IMAGE_PATH)" save $(TRAITS_IMAGE_NAME)
+	$(VM) "$(TRAITS_IMAGE_PATH)" loadHermes bootstrap-cache/TraitsV2.hermes --save
+	$(VM) "$(TRAITS_IMAGE_PATH)" loadHermes bootstrap-cache/Kernel-Traits.hermes bootstrap-cache/AST-Core-Traits.hermes bootstrap-cache/Collections-Abstract-Traits.hermes bootstrap-cache/Transcript-Core-Traits.hermes bootstrap-cache/SUnit-Core-Traits.hermes bootstrap-cache/CodeImport-Traits.hermes bootstrap-cache/RPackage-Traits.hermes bootstrap-cache/OpalCompiler-Traits.hermes bootstrap-cache/Slot-Traits.hermes bootstrap-cache/CodeExport-Traits.hermes bootstrap-cache/System-Sources-Traits.hermes bootstrap-cache/System-Support-Traits.hermes bootstrap-cache/TraitsV2-Compatibility.hermes --save
+	zip "bootstrap-cache/$(TRAITS_IMAGE_NAME).zip" "$(TRAITS_IMAGE_PATH)"
 
 # Installing compiler through Hermes 
 $(COMPILER_IMAGE_PATH): bootstrap-cache/bootstrap.image bootstrap-cache/vm
 	@echo "Prepare Bootstrap files"
 	cp "bootstrap-cache/bootstrap.image" "$(COMPILER_IMAGE_PATH)"
-	$(VM) "$(COMPILER_IMAGE_PATH)" --no-source # I have to run once the image so the next time it starts the CommandLineHandler.
-	$(VM) "$(COMPILER_IMAGE_PATH)" initializePackages --no-source --protocols=bootstrap-cache/protocolsKernel.txt --packages=bootstrap-cache/packagesKernel.txt --save
-	@echo "[Compiler] Installing compiler through Hermes"
+	$(VM) "$(COMPILER_IMAGE_PATH)" # I have to run once the image so the next time it starts the CommandLineHandler.
 	$(VM) "$(COMPILER_IMAGE_PATH)" loadHermes bootstrap-cache/Hermes-Extensions.hermes --save
+	$(VM) "$(COMPILER_IMAGE_PATH)" loadHermes bootstrap-cache/Multilingual-Encodings.hermes bootstrap-cache/Multilingual-TextConversion.hermes bootstrap-cache/Multilingual-Languages.hermes --save --no-fail-on-undeclared
+	
+	@echo "[Compiler] Installing compiler through Hermes"
+	$(VM) "$(COMPILER_IMAGE_PATH)" loadHermes bootstrap-cache/Collections-Atomic.hermes bootstrap-cache/Collections-Arithmetic.hermes bootstrap-cache/AST-Core.hermes bootstrap-cache/Jobs.hermes --save --no-fail-on-undeclared
+	$(VM) "$(COMPILER_IMAGE_PATH)" initializePackages --no-source --protocols=bootstrap-cache/protocolsKernel.txt --packages=bootstrap-cache/packagesKernel.txt --save
 	$(VM) "$(COMPILER_IMAGE_PATH)" loadHermes bootstrap-cache/OpalCompiler-Core.hermes bootstrap-cache/CodeExport.hermes bootstrap-cache/CodeImport.hermes bootstrap-cache/CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
 	$(VM) "$(COMPILER_IMAGE_PATH)" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
 	$(VM) "$(COMPILER_IMAGE_PATH)" st ./bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
-	$(VM) "$(COMPILER_IMAGE_PATH)" st bootstrap-cache/st-cache/Multilingual.st bootstrap-cache/st-cache/DeprecatedFileStream.st bootstrap-cache/st-cache/FileSystem.st --no-source --quit --save
+	$(VM) "$(COMPILER_IMAGE_PATH)" st bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit "resources/unicode/"
+	$(VM) "$(COMPILER_IMAGE_PATH)" st bootstrap-cache/st-cache/DeprecatedFileStream.st bootstrap-cache/st-cache/FileSystem.st --no-source --quit --save
 	$(VM) "$(COMPILER_IMAGE_PATH)" eval --save "SourceFileArray initialize"
 	zip "bootstrap-cache/$(COMPILER_IMAGE_NAME).zip" "$(COMPILER_IMAGE_PATH)"
 
@@ -114,6 +130,7 @@ bootstrap-cache/hermes: bootstrapImage.image
 	mkdir -p bootstrap-cache
 	$(bootstrap) ./bootstrap/scripts/generateKernelHermesFiles.st --quit
 	$(bootstrap) ./bootstrap/scripts/generateSUnitHermesFiles.st --quit
+	$(bootstrap) ./bootstrap/scripts/generateTraitsHermesFiles.st --quit
 	touch bootstrap-cache/hermes
 
 
@@ -122,8 +139,11 @@ bootstrapImage.image:	Pharo.image pharo-vm
 	$(bootstrap) ./bootstrap/scripts/prepare_image.st --save --quit
 
 Pharo.image:
-	wget https://github.com/guillep/PharoBootstrap/releases/download/v1.2.1/bootstrapImage.zip
+	wget https://github.com/guillep/PharoBootstrap/releases/download/v1.4/bootstrapImage.zip
 	unzip bootstrapImage.zip
 
 pharo-vm:
-	wget -O - get.pharo.org/vm61 | bash	
+	wget -O - get.pharo.org/vm61 | bash
+	
+clean:
+	rm -rf bootstrap-cache pharo pharo-ui pharo-vm Pharo.* bootstrapImage.* pharo-local
