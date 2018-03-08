@@ -136,7 +136,8 @@ ${REPOSITORY}/bootstrap/scripts/download_vm.sh
 echo "Prepare icons"
 mkdir icon-packs
 cd icon-packs
-wget http://github.com/pharo-project/pharo-icon-packs/archive/idea11.zip
+# update the commit hash as soon as you need a new version of the icons to be loaded
+wget http://github.com/pharo-project/pharo-icon-packs/archive/57fba57a02ef3b96c453fb9feba7b71c6a3e618e.zip -O idea11.zip
 cd ..
 
 # Find st-cache path
