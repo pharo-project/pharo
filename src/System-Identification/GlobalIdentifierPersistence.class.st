@@ -150,7 +150,7 @@ GlobalIdentifierPersistence >> preferences: anObject [
 { #category : #accessing }
 GlobalIdentifierPersistence >> preferencesContents [
 
-	self subclassResponsibility
+	^ self preferences binaryReadStreamDo: [ :stream | stream contents ]
 ]
 
 { #category : #accessing }

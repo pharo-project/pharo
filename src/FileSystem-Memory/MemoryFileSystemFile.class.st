@@ -62,7 +62,7 @@ MemoryFileSystemFile >> binaryReadStream [
 
 { #category : #streams }
 MemoryFileSystemFile >> binaryWriteStream [
-	^ WriteStream on: self bytes from: 1 to: size
+	^ WriteStream on: self from: 1 to: self size
 ]
 
 { #category : #accessing }
@@ -112,6 +112,12 @@ MemoryFileSystemFile >> isDirectory [
 { #category : #'stream-protocol' }
 MemoryFileSystemFile >> readStream [
 	^ ReadStream on: self bytes asString from: 1 to: size
+]
+
+{ #category : #accessing }
+MemoryFileSystemFile >> size [
+
+	^ size
 ]
 
 { #category : #accessing }
