@@ -5,11 +5,12 @@ then ensures that any TestResources made available during the run are reset.  Th
 "
 Class {
 	#name : #TestSuite,
-	#superclass : #Model,
+	#superclass : #Object,
 	#instVars : [
 		'tests',
 		'resources',
-		'name'
+		'name',
+		'announcer'
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -159,7 +160,7 @@ TestSuite >> tearDown [
 
 { #category : #announcements }
 TestSuite >> testSuiteAnnouncer [
-	^ self announcer
+	^ announcer ifNil: [ announcer := Announcer new. ]
 ]
 
 { #category : #accessing }

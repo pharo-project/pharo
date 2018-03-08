@@ -87,7 +87,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-CommandLineHandler'.
 		spec package: 'System-Finalization'.
 		spec package: 'System-Hashing'.
-		spec package: 'System-Model'.
 		spec package: 'System-Platforms'.
 		spec package: 'System-SessionManager'.
 		spec package: 'System-Sources'.
@@ -160,7 +159,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 
 		spec group: 'AdditionalPackages' with: {
 			'InitializePackagesCommandLineHandler'.
-			'System-Model'.
 		}.
 
 		spec group: 'MultilingualGroup' with: {
