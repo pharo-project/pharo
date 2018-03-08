@@ -281,12 +281,20 @@ TraitedClass >> removeFromComposition: aTrait [
 TraitedClass >> removeFromSystem: logged [
 	
 	"When a traited class is removed the traits it is using should be updated"
+	| mySubclasses |
 	self traitComposition removeUser: self.
 	self class traitComposition removeUser: self class.
 
 	TraitedClass removeUser: self class.
-
+	
+	mySubclasses := self subclasses.
+	
 	super removeFromSystem: logged.
+	
+	"As I am a traited class my subclasses does not have the basic traited class 
+	methods, so I add them."
+	mySubclasses do: [ :each | each class initializeBasicMethods ].
+
 ]
 
 { #category : #removing }
