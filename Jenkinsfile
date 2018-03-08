@@ -141,7 +141,7 @@ def bootstrapImage(){
     		stage ("Fetch Requirements-${architecture}") {	
     			checkout scm
     			shell 'wget -O - get.pharo.org/vm61 | bash	'
-    			shell 'wget https://github.com/guillep/PharoBootstrap/releases/download/v1.3/bootstrapImage.zip'
+    			shell 'wget https://github.com/guillep/PharoBootstrap/releases/download/v1.4/bootstrapImage.zip'
     			shell 'unzip bootstrapImage.zip'
     			shell './pharo Pharo.image bootstrap/scripts/prepare_image.st --save --quit'
     	    }
