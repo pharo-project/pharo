@@ -204,7 +204,8 @@ File >> openForWrite [
 { #category : #'open/close' }
 File >> openForWrite: writeMode [
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
-	| fileHandle rawStream |
+
+	| fileHandle |
 	fileHandle := self basicOpenForWrite: writeMode.
 	fileHandle ifNil: [
 		"Opening the file failed.
@@ -215,13 +216,9 @@ File >> openForWrite: writeMode [
 		CannotDeleteFileException signal: name
 	].
 
-	rawStream := (BinaryFileStream handle: fileHandle file: self forWrite: writeMode)
+	^ (BinaryFileStream handle: fileHandle file: self forWrite: writeMode)
 		register;
-		yourself.
-
-	^ writeMode
-		ifTrue:  [ ZnBufferedReadWriteStream on: rawStream ]
-		ifFalse: [ ZnBufferedReadStream on: rawStream ]
+		yourself
 ]
 
 { #category : #primitives }

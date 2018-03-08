@@ -76,26 +76,14 @@ FileHandle >> at: index write: buffer startingAt: start count: count [
 
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #public }
 FileHandle >> binaryReadStream [
-	^ (File named: reference fullName) readStream
+	^ ZnBufferedReadStream on: (File named: reference fullName) readStream
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #public }
 FileHandle >> binaryWriteStream [
-	^ (File named: reference fullName) writeStream
-]
-
-{ #category : #'streams-compatibility' }
-FileHandle >> binaryWriteStream [
-	"Answer a binary write stream on the reciver"
-
-	^ (FileStream onHandle: self)
-		ifNil: [ self streamError ]
-		ifNotNil: [ :stream | 
-			stream
-				binary;
-				yourself ]
+	^ ZnBufferedReadWriteStream on: (File named: reference fullName) writeStream
 ]
 
 { #category : #public }
@@ -142,7 +130,7 @@ FileHandle >> readStream [
 FileHandle >> readStreamEncoded: anEncoding [
 	
 	^ ZnCharacterReadStream
-		on: self binaryReadStream
+		on: (ZnBufferedReadStream on: self binaryReadStream)
 		encoding: anEncoding
 ]
 
