@@ -24,6 +24,12 @@ BaselineOfPharoBootstrap class >> fileSystemPackageNames [
 ]
 
 { #category : #accessing }
+BaselineOfPharoBootstrap class >> kernelAdditionalPackagesNames [
+
+	^ self packagesOfGroupNamed: #AdditionalPackages
+]
+
+{ #category : #accessing }
 BaselineOfPharoBootstrap class >> kernelPackageNames [
 
 	^ self packagesOfGroupNamed: #KernelGroup
@@ -142,17 +148,26 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-CommandLineHandler'.
 			'System-Finalization'.
 			'System-Hashing'.
-			'System-Model'.
 			'System-Platforms'.
 			'System-SessionManager'.
 			'System-Sources'.
 			'System-Support'.
 
 			'UIManager'.
-			'Zinc-Character-Encoding-Core'.
-			'InitializePackagesCommandLineHandler' }.
+			'Zinc-Character-Encoding-Core' }.
 
 		"These packages are added using hermes after bootstrap"
+
+		spec group: 'AdditionalPackages' with: {
+			'InitializePackagesCommandLineHandler'.
+			'System-Model'.
+		}.
+
+		spec group: 'MultilingualGroup' with: {
+			'Multilingual-Languages'.
+			'Multilingual-Encodings'.
+			'Multilingual-TextConversion'}.
+
 		spec group: 'CompilerGroup' with: {
 			'AST-Core'.
 			'Collections-Arithmetic'.
@@ -174,9 +189,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'SUnit-Tests'.
 			'JenkinsTools-Core'}.
 
-		spec group: 'MultilingualGroup' with: {
-			'Multilingual-Languages'.
-			'Multilingual-Encodings'.
-			'Multilingual-TextConversion'}.	]
+	]
 
 ]
