@@ -1,29 +1,26 @@
-"
-I am a button encapsulating a debug action. All my settings are set based on the corresponding debug action.
-"
 Class {
-	#name : #SpecDebugActionButton,
+	#name : #GTDebugActionButton,
 	#superclass : #ButtonPresenter,
 	#instVars : [
 		'debugActionHolder'
 	],
-	#category : #'Spec-Debugger'
+	#category : #'GT-Debugger-Model'
 }
 
 { #category : #accessing }
-SpecDebugActionButton >> debugAction [
+GTDebugActionButton >> debugAction [
 
 	^ debugActionHolder value 
 ]
 
 { #category : #accessing }
-SpecDebugActionButton >> debugAction: aDebugAction [
+GTDebugActionButton >> debugAction: aDebugAction [
 
 	debugActionHolder value: aDebugAction
 ]
 
 { #category : #initialization }
-SpecDebugActionButton >> initialize [
+GTDebugActionButton >> initialize [
 
 	super initialize.
 
@@ -35,7 +32,7 @@ SpecDebugActionButton >> initialize [
 ]
 
 { #category : #updating }
-SpecDebugActionButton >> update [
+GTDebugActionButton >> update [
 
 	self debugAction ifNotNil:  [ :aDebugAction | 
 		self label: aDebugAction label.
