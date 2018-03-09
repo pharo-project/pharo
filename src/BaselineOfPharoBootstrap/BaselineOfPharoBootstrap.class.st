@@ -138,7 +138,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'PharoBootstrap-Initialization'.
 			'RPackage-Core'.
 			'Random-Core'.
-			'ReflectionMirrors-Primitives'.
 			'Shift-Changes'.
 			'Shift-ClassBuilder'.
 			'Shift-ClassInstaller'.
@@ -160,6 +159,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		"These packages are added using hermes after bootstrap"
 
 		spec group: 'AdditionalPackages' with: {
+			'ReflectionMirrors-Primitives'.
 			'InitializePackagesCommandLineHandler'.
 		}.
 
