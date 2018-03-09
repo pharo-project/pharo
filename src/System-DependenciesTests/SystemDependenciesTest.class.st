@@ -190,6 +190,7 @@ SystemDependenciesTest >> metacelloPackageNames [
 	  BaselineOfPharoBootstrap compilerPackageNames,
 	  BaselineOfPharoBootstrap fileSystemPackageNames,
 	  BaselineOfPharoBootstrap multilingualPackageNames,
+	  BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 	  BaselineOfMonticello corePackageNames,
 	  BaselineOfMonticello remoteRepositoriesPackageNames,
 	  BaselineOfMetacello allPackageNames
@@ -321,6 +322,7 @@ SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames,
+		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfMonticello corePackageNames).
 	
 	self assertCollection: dependencies equals: self knownLocalMonticelloDependencies.
@@ -351,6 +353,7 @@ SystemDependenciesTest >> testExternalMonticelloDependencies [
 		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames,
+		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfMonticello corePackageNames,
 		BaselineOfMonticello remoteRepositoriesPackageNames).
 	
@@ -422,7 +425,8 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 	dependencies := self externalDependendiesOf: (
 		BaselineOfTraits allPackageNames,
 		BaselineOfPharoBootstrap kernelPackageNames,
-		BaselineOfPharoBootstrap multilingualPackageNames,		
+		BaselineOfPharoBootstrap multilingualPackageNames,
+		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfPharoBootstrap sUnitPackageNames).
 	
 	self assertCollection: dependencies equals: self knownSUnitKernelDependencies.
