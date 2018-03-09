@@ -77,6 +77,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'PharoBootstrap-Initialization'.
 		spec package: 'RPackage-Core'.
 		spec package: 'Random-Core'.
+		spec package: 'ReflectionMirrors-Primitives'.
 		spec package: 'Shift-Changes'.
 		spec package: 'Shift-ClassBuilder'.
 		spec package: 'Shift-ClassInstaller'.
@@ -137,6 +138,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'PharoBootstrap-Initialization'.
 			'RPackage-Core'.
 			'Random-Core'.
+			'ReflectionMirrors-Primitives'.
 			'Shift-Changes'.
 			'Shift-ClassBuilder'.
 			'Shift-ClassInstaller'.
