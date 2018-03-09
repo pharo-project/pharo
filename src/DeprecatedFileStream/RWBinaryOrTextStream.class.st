@@ -33,8 +33,9 @@ RWBinaryOrTextStream >> contents [
 	"Answer with a copy of my collection from 1 to readLimit."
 
 	| newArray |
-	isBinary ifFalse: [^ super contents].	"String"
 	readLimit := readLimit max: position.
+	isBinary ifFalse: [ "String"
+		^ collection copyFrom: 1 to: readLimit].
 	newArray := ByteArray new: readLimit.
 	^ newArray replaceFrom: 1
 		to: readLimit
