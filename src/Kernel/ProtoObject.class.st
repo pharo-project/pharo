@@ -182,7 +182,7 @@ ProtoObject >> isNil [
 ProtoObject >> modificationForbiddenFor: selector index: index value: value [
 	^ (ModificationForbidden 
 		for: self
-		atInstVar: index
+		at: index
 		with: value
 		retrySelector: selector) signal
 ]
