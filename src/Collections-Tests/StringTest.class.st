@@ -346,13 +346,15 @@ StringTest >> replacementCollectionSameSize [
 
 { #category : #requirements }
 StringTest >> secondCollection [
-" return a collection that will be the second part of the concatenation"
+	"Return a collection that will be the second part of the concatenation"
+	
 	^ nonEmpty1element 
 ]
 
 { #category : #requirements }
 StringTest >> secondIndex [
-" return an index between 'nonEmpty' bounds that is > to 'second index' "
+	"Return an index between 'nonEmpty' bounds that is > to 'second index'"
+	
 	^ self firstIndex 
 ]
 
@@ -391,7 +393,8 @@ StringTest >> sortedInAscendingOrderCollection [
 
 { #category : #requirements }
 StringTest >> subCollectionNotIn [
-" return a collection for which at least one element is not included in 'moreThan4Elements' "
+	"Return a collection for which at least one element is not included in 'moreThan4Elements'"
+	
 	^ collectionNotIncluded 
 ]
 
