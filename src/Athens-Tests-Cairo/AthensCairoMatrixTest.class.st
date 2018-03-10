@@ -5,7 +5,7 @@ Class {
 	#name : #AthensCairoMatrixTest,
 	#superclass : #TestCase,
 	#category : #'Athens-Tests-Cairo'
-}
+} 
 
 { #category : #tests }
 AthensCairoMatrixTest >> testCopy [
