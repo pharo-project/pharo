@@ -1514,9 +1514,9 @@ StringTest >> testLinesDoWithCrLf [
 StringTest >> testLinesDoWithCrLfBetween [
 
 	| aString |
-	aString := '-This is a test-', String crlf,'of line breaking'.
-	aString linesDo: [ :line |
-		self assert: ((line size) = 16)]
+	aString := '-This is a test-', String crlf, 'of line breaking'.
+	aString linesDo: [:line | 
+		self assert: line size equals: 16 ]
 ]
 
 { #category : #'tests - instance creation' }
