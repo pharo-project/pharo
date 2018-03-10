@@ -190,8 +190,7 @@ HashedCollection >> grow [
 	oldElements
 		do:
 			[ :each | 
-			each isNil
-				ifFalse: [ self noCheckAdd: each ] ]
+			each ifNotNil: [ self noCheckAdd: each ] ]
 ]
 
 { #category : #private }
