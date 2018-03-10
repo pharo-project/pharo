@@ -29,13 +29,15 @@ Class {
 
 { #category : #requirements }
 StringTest >> aValue [
-" return a value to put into nonEmpty"
+	"Return a value to put into nonEmpty"
+	
 	^ elementInNonEmpty 
 ]
 
 { #category : #requirements }
 StringTest >> anIndex [
-" return an index in nonEmpty bounds"
+	"Return an index in nonEmpty bounds"
+	
 	^ 2
 ]
 
@@ -58,8 +60,9 @@ StringTest >> anotherElementOrAssociationNotIn [
 
 { #category : #requirements }
 StringTest >> anotherValue [
-" return a value ( not eual to 'aValue' ) to put into nonEmpty "
-	^ self nonEmpty anyOne.
+	"Return a value (not equal to 'aValue') to put into nonEmpty"
+	
+	^ self nonEmpty anyOne
 ]
 
 { #category : #'tests - includes' }
@@ -88,20 +91,23 @@ StringTest >> collectionMoreThan5Elements [
 
 { #category : #requirements }
 StringTest >> collectionNotIncluded [
-" return a collection for wich each element is not included in 'nonEmpty' "
+	"Return a collection for wich each element is not included in 'nonEmpty'"
+
 	^ collectionNotIncluded  
 ]
 
 { #category : #requirements }
 StringTest >> collectionWith1TimeSubcollection [
-	" return a collection including 'oldSubCollection'  only one time "
+	"Return a collection including 'oldSubCollection' only one time"
+	
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> collectionWith2TimeSubcollection [
-	" return a collection including 'oldSubCollection'  two or many time "
-	^ nonEmpty5ElementsSorted , subcollection3ElementsSorted 
+	"Return a collection including 'oldSubCollection' two or many time"
+	
+	^ nonEmpty5ElementsSorted, subcollection3ElementsSorted 
 ]
 
 { #category : #requirements }
@@ -112,15 +118,16 @@ StringTest >> collectionWithElement [
 
 { #category : #requirements }
 StringTest >> collectionWithElementsToRemove [
-" return a collection of elements included in 'nonEmpty'  "
+	"Return a collection of elements included in 'nonEmpty'"
+
 	^ subcollection3ElementsSorted 
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithEqualElements [
-" return a collecition including atLeast two elements equal"
+	"Return a collecition including atLeast two elements equal"
 
-^ sameAtEndAndBegining 
+	^ sameAtEndAndBegining 
 ]
 
 { #category : #requirements }
