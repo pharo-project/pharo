@@ -318,26 +318,29 @@ StringTest >> nonEmptyMoreThan1Element [
 
 { #category : #requirements }
 StringTest >> oldSubCollection [
-" return a subCollection included in collectionWith1TimeSubcollection .
-ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
+	"Return a subCollection included in collectionWith1TimeSubcollection.
+		Example:  subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
+		
 	^ subcollection3ElementsSorted  
 ]
 
 { #category : #requirements }
 StringTest >> otherCollection [
 	"Returns a collection that does not include what is returned by #element."
+	
 	^ collectionNotIncluded 
 ]
 
 { #category : #requirements }
 StringTest >> replacementCollection [
-" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  " 
+	"Return a collection that will be used to replace 'oldSubcollection' in ' 	 collectionWith1TimeSubcollection'" 
 	^ string
 ]
 
 { #category : #requirements }
 StringTest >> replacementCollectionSameSize [
-" return a collection of size (secondIndex - firstIndex + 1)"
+	"Return a collection of size (secondIndex - firstIndex + 1)"
+	
 	^nonEmpty1element 
 ]
 
