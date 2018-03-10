@@ -1,3 +1,8 @@
+"
+I represent a Method stored as a literal.
+I am stored as a className and a selector.
+Both elements are stored as HEExportedLiterals.
+"
 Class {
 	#name : #HEMethodLiteral,
 	#superclass : #HEExportedLiteral,

@@ -27,7 +27,7 @@ classDefinitionFor: aClass
 			category: ''{category}'';
 			environment: {superClass} environment;
 			classSlots: ''{classInstanceVariablesString}'' asSlotCollection ].
-	newClass setTraitComposition: {aTraitComposition} asTraitComposition.
+	"newClass setTraitComposition: {aTraitComposition} asTraitComposition."
 	newClass'
 		format: { 
 			'superClass' -> (aClass superclass ifNil: ['nil'] ifNotNil: [ :superclass | superclass name ]).

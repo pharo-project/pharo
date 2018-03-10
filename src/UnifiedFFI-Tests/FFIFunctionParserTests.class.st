@@ -1,7 +1,10 @@
+"
+Tests for FFIFunctionParser
+"
 Class {
 	#name : #FFIFunctionParserTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #factory }

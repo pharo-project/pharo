@@ -24,6 +24,12 @@ BaselineOfPharoBootstrap class >> fileSystemPackageNames [
 ]
 
 { #category : #accessing }
+BaselineOfPharoBootstrap class >> kernelAdditionalPackagesNames [
+
+	^ self packagesOfGroupNamed: #AdditionalPackages
+]
+
+{ #category : #accessing }
 BaselineOfPharoBootstrap class >> kernelPackageNames [
 
 	^ self packagesOfGroupNamed: #KernelGroup
@@ -81,12 +87,11 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-CommandLineHandler'.
 		spec package: 'System-Finalization'.
 		spec package: 'System-Hashing'.
-		spec package: 'System-Model'.
 		spec package: 'System-Platforms'.
 		spec package: 'System-SessionManager'.
 		spec package: 'System-Sources'.
 		spec package: 'System-Support'.
-		spec package: 'Traits'.
+
 		spec package: 'UIManager'.
 		spec package: 'Zinc-Character-Encoding-Core'.
 		
@@ -111,13 +116,9 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'FFI-Pools'.
-		
-			'AST-Core'.
 			'Announcements-Core'.
 			'Colors'.
 			'Collections-Abstract'.
-			'Collections-Arithmetic'.
-			'Collections-Atomic'.
 			'Collections-Native'.
 			'Collections-Sequenceable'.
 			'Collections-Stack'.
@@ -129,7 +130,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Files'.
 			'FileSystem-Path'.
 			'Hermes'.
-			'Jobs'.
 			'Kernel'.
 			'Kernel-BytecodeEncoders'.
 			'Network-UUID'.
@@ -147,26 +147,34 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-CommandLineHandler'.
 			'System-Finalization'.
 			'System-Hashing'.
-			'System-Model'.
 			'System-Platforms'.
 			'System-SessionManager'.
 			'System-Sources'.
 			'System-Support'.
-			'Traits'.
+
 			'UIManager'.
-			'Zinc-Character-Encoding-Core'.
-			'InitializePackagesCommandLineHandler'.
-			
-			'Multilingual-Languages'.
-			'Multilingual-Encodings'.
-			'Multilingual-TextConversion' }.
+			'Zinc-Character-Encoding-Core' }.
 
 		"These packages are added using hermes after bootstrap"
+
+		spec group: 'AdditionalPackages' with: {
+			'InitializePackagesCommandLineHandler'.
+		}.
+
+		spec group: 'MultilingualGroup' with: {
+			'Multilingual-Languages'.
+			'Multilingual-Encodings'.
+			'Multilingual-TextConversion'}.
+
 		spec group: 'CompilerGroup' with: {
+			'AST-Core'.
+			'Collections-Arithmetic'.
+			'Collections-Atomic'.
 			'CodeExport'.
 			'CodeImport'.
 			'CodeImportCommandLineHandlers'.
-			'OpalCompiler-Core' }.
+			'Jobs'.
+			'OpalCompiler-Core'}.
 		
 		"These packages are added using the compiler after bootstrap"
 		spec group: 'FileSystemGroup' with: {
@@ -179,9 +187,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'SUnit-Tests'.
 			'JenkinsTools-Core'}.
 
-		spec group: 'MultilingualGroup' with: {
-			'Multilingual-Languages'.
-			'Multilingual-Encodings'.
-			'Multilingual-TextConversion'}.	]
+	]
 
 ]

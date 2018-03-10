@@ -140,7 +140,7 @@ ReflectivityExamples >> exampleSendNoReturn [
 { #category : #examples }
 ReflectivityExamples >> exampleSendTwoArgs [
 	<sampleInstance>
-	^ Array with: 1 with: 2.
+	^ Array with: 1 with: 2
 ]
 
 { #category : #examples }

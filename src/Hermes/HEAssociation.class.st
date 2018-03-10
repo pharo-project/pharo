@@ -1,3 +1,9 @@
+"
+I am simple representation of an association.
+I store both values, the key and the value.
+The key and the value are transformed as HEExportedLiterals.
+When writing or reading, the key is before of the value.
+"
 Class {
 	#name : #HEAssociation,
 	#superclass : #HEExportedLiteral,

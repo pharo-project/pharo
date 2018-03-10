@@ -4,7 +4,7 @@ A union for test purposes
 Class {
 	#name : #FFITestUnion,
 	#superclass : #FFIExternalUnion,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Test-Data'
 }
 
 { #category : #'as yet unclassified' }

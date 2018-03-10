@@ -26,8 +26,8 @@ ClassQueryTest >> testReferencedClasses [
 	
 	| refs |
 	refs := Metaclass referencedClasses.
-	self assert: (refs includes: SystemAnnouncer).
+	self assert: (refs includes: Slot).
 	
 	refs := self class referencedClasses.
-	self assert: (refs includesAll: { SystemAnnouncer. Metaclass })
+	self assert: (refs includesAll: { Slot. Metaclass })
 ]

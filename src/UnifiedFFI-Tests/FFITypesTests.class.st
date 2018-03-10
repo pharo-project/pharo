@@ -1,7 +1,10 @@
+"
+Tests for different FFI types
+"
 Class {
 	#name : #FFITypesTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #ranges }

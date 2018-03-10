@@ -28,6 +28,7 @@ BaselineOfMorphicCore >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 
+		spec baseline: 'Traits' with: [spec repository: repository].
 		spec baseline: 'SUnit' with: [spec repository: repository].
 		spec baseline: 'Display' with: [spec repository: repository].
 		spec baseline: 'UnifiedFFI' with: [spec repository: repository].

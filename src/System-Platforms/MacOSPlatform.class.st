@@ -10,7 +10,7 @@ Class {
 
 { #category : #testing }
 MacOSPlatform class >> isActivePlatform [
-	^ self isMacOS and: [ self currentVersion asNumber < 1000 ]
+	^ false
 ]
 
 { #category : #testing }

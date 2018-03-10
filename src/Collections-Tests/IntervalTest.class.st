@@ -306,19 +306,6 @@ IntervalTest >> subCollectionNotIn [
 ]
 
 { #category : #'tests - fixture' }
-IntervalTest >> test0CopyTest [
-	self empty.
-	self assert: self empty size = 0.
-	self nonEmpty.
-	self assert: (self nonEmpty size = 0) not.
-	self collectionWithElementsToRemove.
-	self assert: (self collectionWithElementsToRemove size = 0) not.
-	self elementToAdd.
-	self collectionNotIncluded.
-	self collectionNotIncluded do: [ :each | self deny: (self nonEmpty includes: each) ]
-]
-
-{ #category : #'tests - fixture' }
 IntervalTest >> test0IndexAccessingTest [
 	self accessCollection.
 	self assert: self accessCollection size = 5.
