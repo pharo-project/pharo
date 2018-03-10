@@ -154,25 +154,29 @@ StringTest >> collectionWithoutEqualElements [
 
 { #category : #requirements }
 StringTest >> collectionWithoutNilElements [
-	" return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
+	"Return a collection that doesn't include a nil element and that doesn't include equal elements'"
+
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> element [
 	"Returns an object that can be added to the collection returned by #collection."
+	
 	^ elementInNonEmpty 
 ]
 
 { #category : #requirements }
 StringTest >> elementInForElementAccessing [
-" return an element inculded in 'moreThan4Elements'"
+	"Return an element included in 'moreThan4Elements'"
+	
 	^ self moreThan4Elements anyOne
 ]
 
 { #category : #requirements }
 StringTest >> elementInForIncludesTest [
-" return an element included in nonEmpty "
+	"Return an element included in nonEmpty"
+	
 	^ elementInNonEmpty 
 ]
 
@@ -184,7 +188,7 @@ StringTest >> elementInForIndexAccessing [
 
 { #category : #requirements }
 StringTest >> elementNotIn [
-"return an element not included in 'nonEmpty' "
+	"Return an element not included in 'nonEmpty'"
 
 	^notIn 
 ]
