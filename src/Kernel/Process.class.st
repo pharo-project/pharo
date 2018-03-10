@@ -28,7 +28,8 @@ Class {
 		'name',
 		'env',
 		'effectiveProcess',
-		'terminating'
+		'terminating',
+		'level'
 	],
 	#classVars : [
 		'InheritablePSKeys',

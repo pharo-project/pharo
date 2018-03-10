@@ -31,7 +31,7 @@ ASTCache class >> initialize [
 	SessionManager default registerSystemClassNamed: self name
 ]
 
-{ #category : #accessing }
+{ #category : #'initialization-release' }
 ASTCache class >> reset [
 	default reset.
 	SystemAnnouncer uniqueInstance announce: ASTCacheReset new 
@@ -50,7 +50,7 @@ ASTCache >> at: aCompiledMethod [
 			aCompiledMethod parseTree doSemanticAnalysisIn: aCompiledMethod methodClass ]
 ]
 
-{ #category : #accessing }
+{ #category : #'initialization-release' }
 ASTCache >> reset [
 	self removeAll
 ]

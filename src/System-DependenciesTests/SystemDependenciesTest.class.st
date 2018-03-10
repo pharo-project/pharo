@@ -59,7 +59,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Athens-Morphic' #Compiler #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools'  #Shout)
+	^ #(#'Athens-Morphic' #Compiler #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout) sorted
 ]
 
 { #category : #'known dependencies' }
@@ -91,7 +91,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler).
+	^ #(#Compiler) sorted
 ]
 
 { #category : #'known dependencies' }
@@ -99,7 +99,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #'Transcript-Core')
+	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs #'Transcript-Core') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -139,7 +139,7 @@ SystemDependenciesTest >> knownMorphicDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler #FontChooser #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Rubric #Shout #'Spec-Core' #'Tool-Base' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers')
+	^ #(#Compiler #FontChooser #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Rubric #Shout #'Spec-Core' #'Tool-Base' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -147,7 +147,7 @@ SystemDependenciesTest >> knownSUnitDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
+	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -155,7 +155,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #'Transcript-Core')
+	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -171,7 +171,7 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Athens-Morphic' #Compiler #Komitter #MonticelloGUI #'Morphic-Widgets-FastTable' #NautilusRefactoring #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers')
+	^ #(#'Athens-Morphic' #Compiler #Komitter #MonticelloGUI #'Morphic-Widgets-FastTable' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
 ]
 
 { #category : #utility }
@@ -188,6 +188,7 @@ SystemDependenciesTest >> metacelloPackageNames [
 	  BaselineOfPharoBootstrap compilerPackageNames,
 	  BaselineOfPharoBootstrap fileSystemPackageNames,
 	  BaselineOfPharoBootstrap multilingualPackageNames,
+	  BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 	  BaselineOfMonticello corePackageNames,
 	  BaselineOfMonticello remoteRepositoriesPackageNames,
 	  BaselineOfMetacello allPackageNames
@@ -196,7 +197,7 @@ SystemDependenciesTest >> metacelloPackageNames [
 { #category : #accessing }
 SystemDependenciesTest >> specPackageNames [
 
-	^ #(#'Spec-Core' #'Spec-Layout' #'Keymapping-Pragmas' #'Keymapping-Core' #'Keymapping-KeyCombinations' #MenuRegistration #NewValueHolder)
+	^ #(#'Spec-Core' #'Spec-Layout' #'Keymapping-Pragmas' #'Keymapping-Core' #'Keymapping-KeyCombinations' #MenuRegistration #NewValueHolder) sorted
 ]
 
 { #category : #tests }
@@ -209,6 +210,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfTraits allPackageNames,
 		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
 		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
 		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
@@ -229,6 +231,7 @@ SystemDependenciesTest >> testExternalCompilerDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		BaselineOfPharoBootstrap kernelPackageNames,
+		BaselineOfPharoBootstrap multilingualPackageNames,		
 		BaselineOfPharoBootstrap compilerPackageNames).
 	
 	self assertCollection: dependencies equals: self knownCompilerDependencies.
@@ -244,6 +247,7 @@ SystemDependenciesTest >> testExternalDisplayDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfTraits allPackageNames,		
 		BaselineOfDisplay allPackageNames).
 	
 	self assertCollection: dependencies equals: self knownDisplayDependencies.
@@ -258,6 +262,7 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		BaselineOfPharoBootstrap kernelPackageNames,
+		BaselineOfPharoBootstrap multilingualPackageNames,		
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames).
 	
@@ -274,6 +279,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		{ BaselineOfTraits name }, BaselineOfTraits allPackageNames,		
 		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
 		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
 		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
@@ -292,13 +298,12 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalKernelDependencies [
-
-	| dependencies | 
-	
+	| dependencies |
 	self longTestCase.
-	
-	dependencies := self externalDependendiesOf: BaselineOfPharoBootstrap kernelPackageNames.
-	
+
+	dependencies := self
+		externalDependendiesOf: BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap multilingualPackageNames.
+
 	self assertCollection: dependencies equals: self knownKernelDependencies
 ]
 
@@ -310,9 +315,12 @@ SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 	self longTestCase.
 	
 	dependencies := self externalDependendiesOf: (
+		BaselineOfTraits corePackages,	
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap compilerPackageNames,
+		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames,
+		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfMonticello corePackageNames).
 	
 	self assertCollection: dependencies equals: self knownLocalMonticelloDependencies.
@@ -325,7 +333,7 @@ SystemDependenciesTest >> testExternalMetacelloDependencies [
 	
 	self longTestCase.
 	
-	dependencies := self externalDependendiesOf: self metacelloPackageNames.
+	dependencies := self externalDependendiesOf: self metacelloPackageNames, BaselineOfTraits allPackageNames.
 	
 	self assertCollection: dependencies equals: self knownMetacelloDependencies.
 ]
@@ -338,9 +346,12 @@ SystemDependenciesTest >> testExternalMonticelloDependencies [
 	self longTestCase.
 	
 	dependencies := self externalDependendiesOf: (
+		BaselineOfTraits allPackageNames,		
 		BaselineOfPharoBootstrap kernelPackageNames,
+		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames,
+		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfMonticello corePackageNames,
 		BaselineOfMonticello remoteRepositoriesPackageNames).
 	
@@ -357,6 +368,7 @@ SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfTraits allPackageNames,			
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
@@ -375,6 +387,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfTraits allPackageNames,		
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
@@ -392,6 +405,7 @@ SystemDependenciesTest >> testExternalSUnitDependencies [
 	self longTestCase.
 	
 	dependencies := self externalDependendiesOf: (
+		BaselineOfTraits allPackageNames,			
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
 		BaselineOfSUnit defaultPackageNames).
@@ -407,7 +421,10 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 	self longTestCase.
 	
 	dependencies := self externalDependendiesOf: (
+		BaselineOfTraits allPackageNames,
 		BaselineOfPharoBootstrap kernelPackageNames,
+		BaselineOfPharoBootstrap multilingualPackageNames,
+		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfPharoBootstrap sUnitPackageNames).
 	
 	self assertCollection: dependencies equals: self knownSUnitKernelDependencies.
@@ -422,6 +439,7 @@ SystemDependenciesTest >> testExternalSpecDependencies [
 	
 	dependencies := (self externalDependendiesOf: (
 			self metacelloPackageNames,
+			BaselineOfTraits allPackageNames,			
 			self specPackageNames )) 
 		copyWithoutAll: self knownMetacelloDependencies.
 	
@@ -438,6 +456,7 @@ SystemDependenciesTest >> testExternalUFFIDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfTraits allPackageNames,				
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfUnifiedFFI allPackageNames).
 	
@@ -454,6 +473,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 	dependencies := (self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfTraits allPackageNames,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,

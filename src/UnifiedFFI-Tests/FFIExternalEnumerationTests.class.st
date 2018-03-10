@@ -1,7 +1,10 @@
+"
+Tests for external enumerations
+"
 Class {
 	#name : #FFIExternalEnumerationTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #accessing }

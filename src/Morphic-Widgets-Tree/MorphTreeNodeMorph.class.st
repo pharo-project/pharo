@@ -894,6 +894,7 @@ MorphTreeNodeMorph >> selected [
 MorphTreeNodeMorph >> selected: aBoolean [
 	selected = aBoolean
 		ifTrue: [^ self].
+	container ifNil: [^ self].
 	aBoolean
 		ifTrue: [container selectedMorphList add: self]
 		ifFalse: [selected 

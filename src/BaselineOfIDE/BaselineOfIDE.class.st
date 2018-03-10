@@ -120,6 +120,11 @@ BaselineOfIDE >> baseline: spec [
 			spec repository: repository
 		].
 
+		spec baseline: 'Traits' with: [
+			spec loads: 'traits-tests'. 
+			spec repository: repository
+		].
+
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
@@ -250,10 +255,9 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Athens-Morphic'.
 		spec package: 'Athens-CairoPools'.
 		spec package: 'Athens-Cairo'.
-		spec package: 'Athens-Examples'.
+		spec package: 'Athens-Examples'. 
 		spec package: 'Athens-Tests-Cairo'.
-		
-		spec package: 'NautilusGroupAutoBuilder'.
+ 
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
 		
@@ -269,7 +273,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GeneralRules'.
 		spec package: 'ReflectionMirrors-Primitives'.
 		spec package: 'FuzzyMatcher'.
-		spec package: 'Versionner-Nautilus'.
 		spec package: 'STON-Text support'.
 		
 		"SortFunctions (standalone)"
@@ -318,7 +321,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Morphic-Tests'.
 		spec package: 'Multilingual-Tests'.
 		spec package: 'NECompletion-Tests'.
-		spec package: 'Nautilus-Tests'.
 		spec package: 'NodeNavigation-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
@@ -461,7 +463,6 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Morphic-Tests'
 	'NECompletion-Tests'
-	'Nautilus-Tests'
 	'OmbuTests'
 	'ProfStef-Tests'
 
@@ -801,8 +802,6 @@ spec group: 'Versionner-Tests-Group' with: #(
 spec group: 'Versionner-Group' with: #(
 	'Versionner-Core-Group'
 	'Versionner-Tests-Group'
-	'NautilusGroupAutoBuilder'	"required by Versionner-Nautilus"
-	'Versionner-Nautilus'	
 ).
 
 spec group: 'Kernel-Tests-Group' with: #(
@@ -848,7 +847,7 @@ spec group: 'GT&QA-Group' with: #(
 	'Manifest-Group'
 	'DependencyAnalyser-Group'
 	'QualityAssistant-Group'
-	'Reflectivity-Group'	
+	'Reflectivity-Group'
 ).		
 
 
@@ -892,6 +891,8 @@ spec group: #default with: #(
 	
 	"Importing tests of Shift"
 	'Shift'
+	"Importing tests of Traits"
+	'Traits'
 ).
 
 ]
@@ -903,8 +904,23 @@ BaselineOfIDE >> loadCalypso [
 	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
 
 	Metacello new
+		baseline: 'ClassAnnotation';
+		repository: 'github://dionisiydk/ClassAnnotation:v0.3.1';
+		load.
+		
+	Metacello new
+		baseline: 'Commander';
+		repository: 'github://dionisiydk/Commander:v0.5.3';
+		load: #(default #'Commander-SpecSupport' #'Commander-Examples').
+	
+	Metacello new
+		baseline: 'SystemCommands';
+		repository: 'github://dionisiydk/SystemCommands:v0.7.1';
+		load.
+			
+	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://dionisiydk/Calypso:v0.10.2';
+		repository: 'github://dionisiydk/Calypso:v0.10.3';
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
 	(self class environment at: #ClyBrowser) beAllDefault.

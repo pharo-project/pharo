@@ -41,6 +41,27 @@ ReflectivityReificationTest >> testAccessTemp [
 	self assert: tag equals: 3
 ]
 
+{ #category : #'tests - sends' }
+ReflectivityReificationTest >> testReifyArguments2level [
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleSendTwoArgs) ast body statements first
+		value.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		arguments: #(arguments);
+		level: 0.
+	sendNode link: link.
+	self assert: sendNode hasMetalink.
+	self assert: (ReflectivityExamples >> #exampleSendTwoArgs) class = ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self deny: (Processor activeProcess isMeta).
+	self assert: instance exampleSendTwoArgs = #(1 2).
+	self deny: (Processor activeProcess isMeta).
+	self assert: tag = #(1 2)
+]
+
 { #category : #'tests - variables' }
 ReflectivityReificationTest >> testReifyClassVariableClass [
 	| classVar instance |
@@ -677,6 +698,25 @@ ReflectivityReificationTest >> testReifySendArguments2 [
 	instance := ReflectivityExamples new.
 	self assert: instance exampleSendTwoArgs equals: #(1 2).
 	self assert: tag equals: #(1 2)
+]
+
+{ #category : #'tests - sends' }
+ReflectivityReificationTest >> testReifySendArgumentsLevel [
+	| sendNode instance|
+	sendNode := (ReflectivityExamples>>#exampleMethod) ast body statements first value.
+	link := MetaLink new 
+		metaObject: self; 
+		selector: #tagExec:;
+		arguments: #(arguments);
+		level: 0.
+	sendNode link: link.
+	self assert: sendNode hasMetalink.
+	self assert: (ReflectivityExamples>>#exampleMethod) class = ReflectiveMethod.
+	self assert: (tag isNil).
+	instance := ReflectivityExamples new .
+	self assert: (instance exampleMethod = 5).
+	self assert: (tag = #(3)).
+
 ]
 
 { #category : #'tests - sends' }

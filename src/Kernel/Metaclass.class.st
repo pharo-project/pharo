@@ -70,52 +70,10 @@ Metaclass >> adoptInstance: oldInstance from: oldMetaClass [
 		map: (self instVarMappingFrom: oldMetaClass)
 ]
 
-{ #category : #composition }
-Metaclass >> assertConsistantCompositionsForNew: aTraitComposition [
-	"Applying or modifying a trait composition on the class side
-	of a behavior has some restrictions."
-
-	| baseTraits notAddable message |
-	baseTraits := aTraitComposition traits select: [:each | each isBaseTrait].
-	baseTraits isEmpty ifFalse: [
-		notAddable := (baseTraits reject: [:each | each classSide methodDict isEmpty]).
-		notAddable isEmpty ifFalse: [
-			message := String streamContents: [:stream |
-				stream nextPutAll: 'You can not add the base trait(s)'; cr.
-				notAddable
-					do: [:each | stream nextPutAll: each name]
-					separatedBy: [ stream nextPutAll: ', '].
-				stream cr; nextPutAll: 'to this composition because it/they define(s) methods on the class side.'].
-		^TraitCompositionException signal: message]].
-		
-	(self instanceSide traitComposition traits asSet =
-			(aTraitComposition traits
-				select: [:each | each isClassTrait]
-				thenCollect: [:each | each baseTrait]) asSet) ifFalse: [
-				^TraitCompositionException signal: 'You can not add or remove class side traits on
-				the class side of a composition. (But you can specify aliases or exclusions
-				for existing traits or add a trait which does not have any methods on the class side.)']
-]
-
 { #category : #'accessing parallel hierarchy - deprecated' }
 Metaclass >> baseClass [
 
 	^thisClass.
-]
-
-{ #category : #accessing }
-Metaclass >> basicLocalSelectors [
-	"Direct accessor for the instance variable localSelectors.
-	Since localSelectors is lazily initialized, this may 
-	return nil, which means that all selectors are local."
-
-	^ localSelectors
-]
-
-{ #category : #accessing }
-Metaclass >> basicLocalSelectors: aSetOrNil [
-
-	localSelectors := aSetOrNil
 ]
 
 { #category : #compiling }
@@ -183,11 +141,6 @@ Metaclass >> definition [
 	^ String streamContents: 
 		[:strm |
 		strm print: self.
-		self hasTraitComposition ifTrue: [
-			strm
-				crtab;
-				nextPutAll: 'uses: ';
-				print: self traitComposition ].
 		
 		(self usesSpecialSlot or: [ Slot showSlotClassDefinition ])
 			ifFalse: [  
@@ -217,7 +170,6 @@ Metaclass >> hasClassSide [
 Metaclass >> initializeFrom: anotherClassTrait [
 	self traitComposition: self traitComposition copyTraitExpression.
 	self methodDict: self methodDict copy.
-	self localSelectors: self localSelectors copy.
 	self basicOrganization: self organization copy.
 ]
 
@@ -299,28 +251,6 @@ Metaclass >> newAnonymousSubclass [
 	^self instanceSide newAnonymousSubclass class
 ]
 
-{ #category : #composition }
-Metaclass >> noteNewBaseTraitCompositionApplied: aTraitComposition [
-	"The argument is the new trait composition of my base trait - add
-	the new traits or remove non existing traits on my class side composition.
-	(Each class trait in my composition has its base trait on the instance side
-	of the composition - manually added traits to the class side are always 
-	base traits.)"
-	
-	| newComposition traitsFromInstanceSide |
-	traitsFromInstanceSide := self traitComposition traits
-		select: [:each | each isClassTrait]
-		thenCollect: [:each | each baseTrait].
-		
-	newComposition := self traitComposition copyTraitExpression.
-	(traitsFromInstanceSide copyWithoutAll: aTraitComposition traits) do: [:each |
-		newComposition removeFromComposition: each classTrait].
-	(aTraitComposition traits copyWithoutAll: traitsFromInstanceSide) do: [:each |
-		newComposition add:  (each classTrait)].
-
-	self setTraitComposition: newComposition
-]
-
 { #category : #'class hierarchy' }
 Metaclass >> obsoleteSubclasses [
 	"Answer the receiver's subclasses."
@@ -368,22 +298,15 @@ Metaclass >> sharedPools [
 ]
 
 { #category : #'initialize-release' }
-Metaclass >> slots: slotsDefinition [ 
-	"Declare additional named variables for my instance."
+Metaclass >> slots: slotCollection [ 
+
 	| theClass |
 	theClass := self instanceSide.
-	
-	theClass := theClass classInstaller make: [ :builder |
+		
+	theClass := theClass classInstaller update: theClass to: [ :builder |
 		builder
-			superclass: theClass superclass;
-			name: theClass name;
-			layoutClass: theClass classLayout class;
-			slots: theClass slots;
-			sharedVariablesFromString: theClass classVariablesString;
-			sharedPools: theClass sharedPoolsString;
-			traitComposition: theClass traitComposition;
-			category: theClass category asString;
-			classSlots: slotsDefinition].
+			fillFor: theClass;
+			classSlots: slotCollection ].
 	^ theClass classSide
 ]
 
@@ -408,61 +331,6 @@ Metaclass >> subclassesDo: aBlock [
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ self ].
 	self instanceSide subclasses do: [ :each | aBlock value: each classSide ]
-]
-
-{ #category : #accessing }
-Metaclass >> traitComposition [
-
-	traitComposition ifNil: [traitComposition := TraitComposition new].
-	^traitComposition
-]
-
-{ #category : #accessing }
-Metaclass >> traitComposition: aTraitComposition [
-
-	traitComposition := aTraitComposition
-]
-
-{ #category : #composition }
-Metaclass >> uses: aTraitCompositionOrArray [
-	| copyOfOldTrait newComposition |
-	copyOfOldTrait := self copy.
-	newComposition := aTraitCompositionOrArray asTraitComposition.
-	self assertConsistantCompositionsForNew: newComposition.
-	self setTraitComposition: newComposition.
-	SystemAnnouncer uniqueInstance
-		traitDefinitionChangedFrom: copyOfOldTrait to: self;
-		classModificationAppliedTo: self
-]
-
-{ #category : #'initialize-release' }
-Metaclass >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString [ 
-	| newComposition newMetaClass copyOfOldMetaClass |
-	
-	copyOfOldMetaClass := self copy.
-	newMetaClass := self instanceVariableNames: instVarString.
-	
-	newComposition := aTraitCompositionOrArray asTraitComposition.
-	newMetaClass assertConsistantCompositionsForNew: newComposition.
-	newMetaClass setTraitComposition: newComposition.
-	
-	SystemAnnouncer uniqueInstance
-		classDefinitionChangedFrom: copyOfOldMetaClass to: newMetaClass
-]
-
-{ #category : #'initialize-release' }
-Metaclass >> uses: aTraitCompositionOrArray slots: slotArray [ 
-	| newComposition newMetaClass copyOfOldMetaClass |
-	
-	copyOfOldMetaClass := self copy.
-	newMetaClass := self slots: slotArray.
-	
-	newComposition := aTraitCompositionOrArray asTraitComposition.
-	newMetaClass assertConsistantCompositionsForNew: newComposition.
-	newMetaClass setTraitComposition: newComposition.
-	
-	SystemAnnouncer uniqueInstance
-		classDefinitionChangedFrom: copyOfOldMetaClass to: newMetaClass
 ]
 
 { #category : #copying }

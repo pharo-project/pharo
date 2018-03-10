@@ -1,3 +1,7 @@
+"
+I represent nil as a literal.
+I am only stored as my tag. I have no content.
+"
 Class {
 	#name : #HEUndefinedObject,
 	#superclass : #HEExportedLiteral,

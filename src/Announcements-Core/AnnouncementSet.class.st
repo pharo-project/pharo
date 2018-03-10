@@ -13,7 +13,7 @@ Class {
 	#category : #'Announcements-Core-Collections'
 }
 
-{ #category : #adding }
+{ #category : #copying }
 AnnouncementSet >> , anAnnouncementClass [
 	self add: anAnnouncementClass
 ]

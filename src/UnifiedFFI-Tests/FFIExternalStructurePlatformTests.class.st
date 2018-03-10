@@ -1,7 +1,10 @@
+"
+Tests for external structures on platform
+"
 Class {
 	#name : #FFIExternalStructurePlatformTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #'private - testing' }
