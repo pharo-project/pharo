@@ -195,13 +195,15 @@ StringTest >> elementNotIn [
 
 { #category : #requirements }
 StringTest >> elementNotInForElementAccessing [
-" return an element not included in 'moreThan4Elements' "
+	"Return an element not included in 'moreThan4Elements'"
+
 	^ notIn 
 ]
 
 { #category : #requirements }
 StringTest >> elementNotInForIndexAccessing [
-" return an element not included in 'accessCollection' "
+	"Return an element not included in 'accessCollection'"
+	
 	^ notIn 
 ]
 
@@ -234,57 +236,64 @@ StringTest >> findFirstInString: aString fromString: searchString [
 
 { #category : #requirements }
 StringTest >> firstCollection [
-	" return a collection that will be the first part of the concatenation"
+	"Return a collection that will be the first part of the concatenation"
+	
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> firstIndex [
-" return an index between 'nonEmpty' bounds that is < to 'second index' "
+	"Return an index between 'nonEmpty' bounds that is < to 'second index'"
+
 	^3
 ]
 
 { #category : #requirements }
 StringTest >> indexArray [
-" return a Collection including indexes between bounds of 'nonEmpty' "
+	"Return a Collection including indexes between bounds of 'nonEmpty'"
 
 	^ indexInNonEmptyArray 
 ]
 
 { #category : #requirements }
 StringTest >> indexInForCollectionWithoutDuplicates [
-" return an index between 'collectionWithoutEqualsElements'  bounds"
+	"Return an index between 'collectionWithoutEqualsElements' bounds"
+	
 	^ 2
 ]
 
 { #category : #requirements }
 StringTest >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index between bounds of 'nonEmpty'"
 
-	^ 2.
+	^ 2
 ]
 
 { #category : #requirements }
 StringTest >> integerCollectionWithoutEqualElements [
-	" return a collection of integer without equal elements"
+	"Return a collection of integer without equal elements"	
+		
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> moreThan3Elements [
-	" return a collection including atLeast 3 elements"
+	"Return a collection including at least 3 elements"
+	
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> moreThan4Elements [
-	" return a collection including at leat 4 elements"
+	"Return a collection including at least 4 elements"
+
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> newElement [
-"return an element that will be put in the collection in place of another"
+	"Return an element that will be put in the collection in place of another"
+	
 	^ elementInNonEmpty 
 ]
 
@@ -295,13 +304,15 @@ StringTest >> nonEmpty [
 
 { #category : #requirements }
 StringTest >> nonEmpty1Element [
-" return a collection of size 1 including one element"
+	"Return a collection of size 1 including one element"
+	
 	^ nonEmpty1element 
 ]
 
 { #category : #requirements }
 StringTest >> nonEmptyMoreThan1Element [
-	" return a collection that don't includes equl elements'"
+	"Return a collection that don't includes equal elements'"
+	
 	^ nonEmpty5ElementsSorted
 ]
 
