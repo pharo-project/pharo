@@ -1,7 +1,10 @@
+"
+Tests for FFIExternalPackedStructure
+"
 Class {
 	#name : #FFIExternalPackedStructureTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #tests }

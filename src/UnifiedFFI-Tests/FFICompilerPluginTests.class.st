@@ -1,7 +1,10 @@
+"
+Tests for FFICompilerPlugin
+"
 Class {
 	#name : #FFICompilerPluginTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #compiler }
