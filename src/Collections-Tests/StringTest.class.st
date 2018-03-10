@@ -132,21 +132,23 @@ StringTest >> collectionWithEqualElements [
 
 { #category : #requirements }
 StringTest >> collectionWithSameAtEndAndBegining [
-" return a collection with elements at end and begining equals .
-(others elements of the collection are not equal to those elements)"
+	"Return a collection with elements at end and begining equals
+	 (other elements of the collection are not equal to those elements)"
+
 	^ sameAtEndAndBegining 
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithSortableElements [
-	" return a collection only including elements that can be sorted (understanding '<' )"
+	"Return a collection only including elements that can be sorted (understanding '<')"
+
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithoutEqualElements [
-
-" return a collection not including equal elements "
+	"Return a collection not including equal elements"
+	
 	^ withoutEqualElements 
 ]
 
