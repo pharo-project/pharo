@@ -165,7 +165,7 @@ Trait >> allClassVarNames [
 	defined in the superclasses of the receiver."
 
 	| aSet |
-	self superclass isNil
+	self isRootInEnvironment
 		ifTrue: 
 			[^self classVarNames asSet]  "This is the keys so it is a new Set."
 		ifFalse: 
