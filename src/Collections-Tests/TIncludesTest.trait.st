@@ -48,12 +48,13 @@ TIncludesTest >> test0FixtureIncludeTest [
 
 { #category : #'tests - includes' }
 TIncludesTest >> testIdentityIncludesNonSpecificComportement [
-	" test the same comportement than 'includes: '  "
-	| collection |	
-	collection := self nonEmpty  .
+	"Test the same comportement than #includes:"
 	
-	self deny: (collection identityIncludes: self elementNotIn ).
-	self assert:(collection identityIncludes: collection anyOne)
+	| collection |	
+	collection := self nonEmpty.
+	
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
 
 ]
 
