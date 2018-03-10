@@ -338,6 +338,16 @@ SymbolTest >> testCopyNotSame [
 	self assert: copy  == self nonEmpty.
 ]
 
+{ #category : #'tests - testing' }
+SymbolTest >> testEndsWithAColon [
+	 
+	self assert: #fred: endsWithAColon.
+
+	self deny: #'fred' endsWithAColon.
+
+	self deny: #fred endsWithAColon. 
+]
+
 { #category : #tests }
 SymbolTest >> testIsLiteralSymbol [
 

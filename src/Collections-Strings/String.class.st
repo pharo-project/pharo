@@ -1040,15 +1040,11 @@ String >> endsWith: suffix [
 	   ifFalse: [ (self findString: suffix startingAt: extra + 1) > 0 ]
 ]
 
-{ #category : #'system primitives' }
+{ #category : #testing }
 String >> endsWithAColon [ 
-	"Answer whether the final character of the receiver is a colon
-	
-	#fred: endsWithAColon
-	'fred' endsWithAColon
-	"
+	"Answer whether the final character of the receiver is a colon"
 
-	^ self size > 0 and: [self last == $:]
+	^ self notEmpty and: [ self last == $: ]
 
 ]
 
