@@ -320,7 +320,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Morphic-Tests'.
 		spec package: 'Multilingual-Tests'.
 		spec package: 'NECompletion-Tests'.
-		spec package: 'Nautilus-Tests'.
 		spec package: 'NodeNavigation-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
@@ -463,7 +462,6 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Morphic-Tests'
 	'NECompletion-Tests'
-	'Nautilus-Tests'
 	'OmbuTests'
 	'ProfStef-Tests'
 
