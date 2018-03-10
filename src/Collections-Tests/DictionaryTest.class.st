@@ -685,7 +685,7 @@ DictionaryTest >> testOccurrencesOf [
 	self assert: (dict occurrencesOf: 1 ) equals: 2.
 	self supportsNilKey 
 		ifTrue: [ self assert: (dict occurrencesOf: nil ) equals: 2 ]
-		ifFalse: [ self assert: (dict occurrencesOf: nil ) equals: 1 ].	
+		ifFalse: [ self assert: (dict occurrencesOf: nil ) equals: 1 ]	
 	
 	
 	

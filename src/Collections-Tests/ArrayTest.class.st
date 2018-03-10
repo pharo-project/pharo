@@ -745,7 +745,7 @@ ArrayTest >> testOccurrencesOf [
 	result := self nonEmpty occurrencesOf: self elementInForOccurrences.
 	expected := 0.
 	self nonEmpty do: [ :each | self elementInForOccurrences = each ifTrue: [ expected := expected + 1 ] ].
-	self assert: result = expected
+	self assert: result equals: expected
 ]
 
 { #category : #'tests - occurrencesOf' }
