@@ -38,7 +38,7 @@ CompiledMethodTest >> categoryNameForTemporaryClasses [
 { #category : #coverage }
 CompiledMethodTest >> classToBeTested [
 	
-	^ CompiledMethod
+	^CompiledMethod
 ]
 
 { #category : #examples }

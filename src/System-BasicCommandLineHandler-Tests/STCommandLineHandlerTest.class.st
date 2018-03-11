@@ -6,7 +6,6 @@ Class {
 
 { #category : #coverage }
 STCommandLineHandlerTest >> classToBeTested [
-
 	^ STCommandLineHandler
 ]
 

@@ -13,10 +13,10 @@ LiteralDictionaryTest class >> shouldInheritSelectors [
 ^true
 ]
 
-{ #category : #coverage }
+{ #category : #requirements }
 LiteralDictionaryTest >> classToBeTested [
 
-	^ LiteralDictionary
+^ LiteralDictionary
 ]
 
 { #category : #'tests - literal specific behavior' }

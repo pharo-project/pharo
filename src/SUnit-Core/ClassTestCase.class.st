@@ -45,7 +45,7 @@ ClassTestCase >> categoriesForClass: aClass [
 { #category : #coverage }
 ClassTestCase >> classToBeTested [
 	
-	^ self subclassResponsibility
+	self subclassResponsibility
 ]
 
 { #category : #utilities }
