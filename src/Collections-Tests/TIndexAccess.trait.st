@@ -82,10 +82,10 @@ TIndexAccess >> testIndexOfIfAbsent [
 	collection := self collectionMoreThan1NoDuplicates.
 	self assert: (collection 
 			indexOf: collection first
-			ifAbsent: [ 33 ]) = 1.
+			ifAbsent: [ 33 ]) equals: 1.
 	self assert: (collection 
 			indexOf: self elementNotInForIndexAccessing
-			ifAbsent: [ 33 ]) = 33
+			ifAbsent: [ 33 ]) equals: 33
 ]
 
 { #category : #'tests - index access' }
@@ -97,15 +97,15 @@ TIndexAccess >> testIndexOfStartingAt [
 	self assert: (collection 
 			indexOf: element
 			startingAt: 2
-			ifAbsent: [ 99 ]) = 99.
+			ifAbsent: [ 99 ]) equals: 99.
 	self assert: (collection 
 			indexOf: element
 			startingAt: 1
-			ifAbsent: [ 99 ]) = 1.
+			ifAbsent: [ 99 ]) equals: 1.
 	self assert: (collection 
 			indexOf: self elementNotInForIndexAccessing
 			startingAt: 1
-			ifAbsent: [ 99 ]) = 99
+			ifAbsent: [ 99 ]) equals: 99
 ]
 
 { #category : #'tests - index access' }
