@@ -705,6 +705,14 @@ StringTest >> testEndsWith [
 
 ]
 
+{ #category : #'tests - testing' }
+StringTest >> testEndsWithAColon [
+
+	self assert: 'fred:' endsWithAColon.
+
+	self deny: 'fred' endsWithAColon
+]
+
 { #category : #tests }
 StringTest >> testEndsWithAnyOf [
 
