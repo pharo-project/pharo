@@ -73,7 +73,7 @@ TIndexAccess >> testIndexOf [
 		[ :each | 
 		each = self elementInForIndexAccessing ifTrue: [ index := tmp ].
 		tmp := tmp - 1 ].
-	self assert: (collection indexOf: self elementInForIndexAccessing) = index
+	self assert: (collection indexOf: self elementInForIndexAccessing) equals: index
 ]
 
 { #category : #'tests - index access' }
