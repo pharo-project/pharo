@@ -757,9 +757,10 @@ ArrayTest >> testOccurrencesOfEmpty [
 
 { #category : #'tests - occurrencesOf' }
 ArrayTest >> testOccurrencesOfNotIn [
+
 	| result |
 	result := self empty occurrencesOf: self elementNotInForOccurrences.
-	self assert: result = 0
+	self assert: result equals: 0
 ]
 
 { #category : #'tests - arithmetic' }
