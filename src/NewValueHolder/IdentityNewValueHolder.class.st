@@ -10,6 +10,5 @@ Class {
 { #category : #accessing }
 IdentityNewValueHolder >> value: anObject [
 
-	self value == anObject ifTrue: [ ^ anObject ].
-	super value: anObject
+	self value == anObject ifFalse: [	super value: anObject ].
 ]
