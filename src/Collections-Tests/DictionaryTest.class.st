@@ -97,7 +97,8 @@ DictionaryTest >> collection [
 
 { #category : #requirements }
 DictionaryTest >> collectionClass [
-" return the class to be used to create instances of the class tested"
+	"Return the class to be used to create instances of the class tested"
+
 	^ self classToBeTested
 ]
 
