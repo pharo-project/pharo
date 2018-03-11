@@ -919,7 +919,7 @@ StringTest >> testFindTokensEscapedBy01 [
 	| tokens |
 	string := 'this, is, "a, test"'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 3
+	self assert: tokens size equals: 3
 ]
 
 { #category : #'tests - tokenizing' }
@@ -937,7 +937,7 @@ StringTest >> testFindTokensEscapedBy03 [
 	| tokens |
 	string := 'this, is, a, test'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 4
+	self assert: tokens size equals: 4
 ]
 
 { #category : #'tests - tokenizing' }
@@ -946,8 +946,8 @@ StringTest >> testFindTokensEscapedBy04 [
 	| tokens |
 	string := 'this, is, a"," test'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 3.
-	self assert: tokens third = ' a, test'
+	self assert: tokens size equals: 3.
+	self assert: tokens third equals: ' a, test'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -956,9 +956,9 @@ StringTest >> testFindTokensEscapedBy05 [
 	| tokens |
 	string := 'this, /is, a"," test/'.
 	tokens := string findTokens: ',#' escapedBy: '"/'.
-	self assert: tokens size = 2.
-	self assert: tokens first = 'this'.
-	self assert: tokens second = ' is, a"," test'.
+	self assert: tokens size equals: 2.
+	self assert: tokens first equals: 'this'.
+	self assert: tokens second equals: ' is, a"," test'.
 ]
 
 { #category : #'tests - tokenizing' }
@@ -967,8 +967,8 @@ StringTest >> testFindTokensEscapedBy06 [
 	| tokens |
 	string := 'this, is, "a, test'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 3.
-	self assert: tokens third = ' a, test'
+	self assert: tokens size equals: 3.
+	self assert: tokens third equals: ' a, test'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -977,11 +977,11 @@ StringTest >> testFindTokensEscapedBy07 [
 	| tokens |
 	string := 'a:b::c'.
 	tokens := string findTokens: ':' escapedBy: '"'.
-	self assert: tokens size = 4.
-	self assert: tokens first = 'a'.
-	self assert: tokens second = 'b'.
-	self assert: tokens third = ''.
-	self assert: tokens fourth = 'c'
+	self assert: tokens size equals: 4.
+	self assert: tokens first equals: 'a'.
+	self assert: tokens second equals: 'b'.
+	self assert: tokens third equals: ''.
+	self assert: tokens fourth equals: 'c'
 ]
 
 { #category : #'tests - tokenizing' }
