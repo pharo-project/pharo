@@ -8,9 +8,9 @@ Trait {
 
 { #category : #requirements }
 TCopySequenceableWithOrWithoutSpecificElements >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index between bounds of 'nonEmpty'"
 
-	self explicitRequirement
+	^self explicitRequirement
 ]
 
 { #category : #requirements }

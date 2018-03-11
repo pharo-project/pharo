@@ -227,9 +227,9 @@ FloatArrayTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 FloatArrayTest >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index between bounds of 'nonEmpty'"
 
-	^ 3.
+	^ 3
 ]
 
 { #category : #requirements }

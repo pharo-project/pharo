@@ -199,7 +199,9 @@ IntervalTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 IntervalTest >> indexInNonEmpty [
-	^2.
+	"Return an index between bounds of 'nonEmpty'"
+	
+	^ 2
 ]
 
 { #category : #requirements }

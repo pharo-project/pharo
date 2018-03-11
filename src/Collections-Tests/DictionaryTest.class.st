@@ -194,7 +194,7 @@ DictionaryTest >> expectedSizeAfterReject [
 
 { #category : #requirements }
 DictionaryTest >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index key between bounds of 'nonEmpty'"
 
 	^ #a
 ]

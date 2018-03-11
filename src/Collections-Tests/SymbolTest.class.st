@@ -192,7 +192,7 @@ SymbolTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 SymbolTest >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index between bounds of 'nonEmpty'"
 
 	^ 2
 ]
