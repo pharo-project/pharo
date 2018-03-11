@@ -47,7 +47,7 @@ TIndexAccess >> testIdentityIndexOf [
 	| collection element |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
-	self assert: (collection identityIndexOf: element) = (collection indexOf: element)
+	self assert: (collection identityIndexOf: element) equals: (collection indexOf: element)
 ]
 
 { #category : #'tests - index access' }
