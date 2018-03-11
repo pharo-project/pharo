@@ -117,15 +117,15 @@ TIndexAccess >> testIndexOfStartingAtIfAbsent [
 	self assert: (collection 
 			indexOf: element
 			startingAt: 2
-			ifAbsent: [ 99 ]) = 99.
+			ifAbsent: [ 99 ]) equals: 99.
 	self assert: (collection 
 			indexOf: element
 			startingAt: 1
-			ifAbsent: [ 99 ]) = 1.
+			ifAbsent: [ 99 ]) equals: 1.
 	self assert: (collection 
 			indexOf: self elementNotInForIndexAccessing
 			startingAt: 1
-			ifAbsent: [ 99 ]) = 99
+			ifAbsent: [ 99 ]) equals: 99
 ]
 
 { #category : #'tests - index access' }
