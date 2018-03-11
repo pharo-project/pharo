@@ -78,7 +78,7 @@ TIncludesWithIdentityCheckTest >> testIdentityIncludes [
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIdentityIncludesNonSpecificComportement [
-	"Test the same comportement than 'includes: '."
+	"Test the same comportement than #includes:"
 	
 	| collection |	
 	collection := self nonEmpty.
