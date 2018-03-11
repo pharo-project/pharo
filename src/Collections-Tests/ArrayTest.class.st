@@ -358,6 +358,8 @@ ArrayTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 ArrayTest >> indexInNonEmpty [
+	"Return an index between bounds of 'nonEmpty'"
+	
 	^ 2 
 ]
 

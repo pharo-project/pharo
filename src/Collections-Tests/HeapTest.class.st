@@ -331,9 +331,9 @@ HeapTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 HeapTest >> indexInNonEmpty [
-	" return an index between bounds of 'nonEmpty' "
+	"Return an index between bounds of 'nonEmpty'"
 
-	^2
+	^ 2
 ]
 
 { #category : #requirements }

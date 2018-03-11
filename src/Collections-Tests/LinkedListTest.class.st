@@ -180,7 +180,7 @@ LinkedListTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 LinkedListTest >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index between bounds of 'nonEmpty'"
 
 	^ self nonEmpty size
 ]
