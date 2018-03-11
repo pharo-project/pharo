@@ -77,11 +77,12 @@ TPutTest >> testAtAllPutAll [
 
 { #category : #'tests - puting with indexes' }
 TPutTest >> testAtLastPut [
-	| result index |
-	index := self indexArray anyOne.
-	result := self nonEmpty atLast: index  put: self aValue.
-	
-	self assert: (self nonEmpty at: (self nonEmpty size +1 - index)) = self aValue .
+
+	| index |
+	index := self indexArray anyOne.	
+	self nonEmpty atLast: index put: self aValue.	
+
+	self assert: (self nonEmpty at: (self nonEmpty size + 1 - index)) equals: self aValue
 ]
 
 { #category : #'tests - puting with indexes' }
