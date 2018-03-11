@@ -45,8 +45,7 @@ InstructionClient >> doDup [
 
 { #category : #'instruction decoding' }
 InstructionClient >> doNop [
-
-	"do nothing"
+	"Do nothing (nop = no operation)"
 ]
 
 { #category : #'instruction decoding' }
