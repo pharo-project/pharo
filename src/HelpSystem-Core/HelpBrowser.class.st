@@ -138,7 +138,7 @@ HelpBrowser >> initWindow [
 	| toolbar dock contentMorph | 
 	window := StandardWindow new.
 	window model: self.
-	window title: 'Help Browser'.
+	window title: 'Help Browser' translated.
 	toolbar := window
 		newToolbar:
 			{(window
