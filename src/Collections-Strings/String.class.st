@@ -1056,11 +1056,11 @@ String >> endsWithAnyOf: aCollection [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 String >> endsWithDigit [
 	"Answer whether the receiver's final character represents a digit."
 
-	^ self size > 0 and: [self last isDigit]
+	^ self notEmpty and: [self last isDigit]
 ]
 
 { #category : #formatting }
