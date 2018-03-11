@@ -47,7 +47,7 @@ TIndexAccess >> testIdentityIndexOf [
 	| collection element |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
-	self assert: (collection identityIndexOf: element) = (collection indexOf: element)
+	self assert: (collection identityIndexOf: element) equals: (collection indexOf: element)
 ]
 
 { #category : #'tests - index access' }
@@ -73,7 +73,7 @@ TIndexAccess >> testIndexOf [
 		[ :each | 
 		each = self elementInForIndexAccessing ifTrue: [ index := tmp ].
 		tmp := tmp - 1 ].
-	self assert: (collection indexOf: self elementInForIndexAccessing) = index
+	self assert: (collection indexOf: self elementInForIndexAccessing) equals: index
 ]
 
 { #category : #'tests - index access' }
