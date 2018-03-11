@@ -1048,14 +1048,6 @@ String >> endsWithAColon [
 
 ]
 
-{ #category : #comparing }
-String >> endsWithAnyOf: aCollection [
-	aCollection do:[:suffix|
-		(self endsWith: suffix) ifTrue:[^true].
-	].
-	^false
-]
-
 { #category : #testing }
 String >> endsWithDigit [
 	"Answer whether the receiver's final character represents a digit."
