@@ -15,6 +15,7 @@ WeakSetTest class >> shouldInheritSelectors [
 
 { #category : #requirements }
 WeakSetTest >> classToBeTested [
+
 	^ WeakSet
 ]
 

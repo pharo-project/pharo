@@ -84,7 +84,7 @@ DictionaryTest >> canBeUnhealthy [
 	^ true
 ]
 
-{ #category : #setup }
+{ #category : #coverage }
 DictionaryTest >> classToBeTested [ 
 
 	^ Dictionary
