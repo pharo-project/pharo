@@ -74,18 +74,19 @@ TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithoutFirst [
 
 { #category : #'tests - copying with or without' }
 TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithoutIndex [
-	| result index |
-	index := self indexInNonEmpty .
-	result := self nonEmpty copyWithoutIndex: index .
+
+	| result index |	
+	index := self indexInNonEmpty.
+	result := self nonEmpty copyWithoutIndex: index.
 	
-	"verify content of 'result:'"
-	1 to: result size do:
-		[:i | 
-		i<( index ) ifTrue: [self assert: ((result at:i )= (self nonEmpty at:i))].
-		i>=( index ) ifTrue: [self assert: (result at:i )= (self nonEmpty at:(i+1))]].
+	"Verify content of result"
+	result withIndexDo: 
+		[:element :i | 
+		 i <  index ifTrue: [ self assert: element equals: (self nonEmpty at: i) ].
+		 i >= index ifTrue: [ self assert: element equals: (self nonEmpty at: (i + 1)) ]].
 	
-	"verify size of result : "
-	self assert: result size=(self nonEmpty size -1).
+	"Verify size of result"
+	self assert: result size equals: (self nonEmpty size - 1)
 ]
 
 { #category : #'tests - copying with or without' }
