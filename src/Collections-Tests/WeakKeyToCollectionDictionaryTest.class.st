@@ -8,8 +8,9 @@ Class {
 }
 
 { #category : #requirements }
-WeakKeyToCollectionDictionaryTest >> classToBeTested [ 
- ^ WeakKeyToCollectionDictionary
+WeakKeyToCollectionDictionaryTest >> classToBeTested [
+ 
+	^ WeakKeyToCollectionDictionary
 ]
 
 { #category : #'errors - those methods should be tested with collection keys' }

@@ -44,7 +44,8 @@ SetTest >> anotherElementOrAssociationNotIn [
 
 { #category : #coverage }
 SetTest >> classToBeTested [
-	^ Set.
+
+	^ Set
 ]
 
 { #category : #requirements }
