@@ -137,11 +137,11 @@ TIndexAccess >> testIndexOfSubCollectionStartingAt [
 	index := collection 
 		indexOfSubCollection: subcollection
 		startingAt: 1.
-	self assert: index = 1.
+	self assert: index equals: 1.
 	index := collection 
 		indexOfSubCollection: subcollection
 		startingAt: 2.
-	self assert: index = 0
+	self assert: index equals: 0
 ]
 
 { #category : #'tests - index access' }
@@ -175,10 +175,10 @@ TIndexAccess >> testLastIndexOfIfAbsent [
 	element := collection first.
 	self assert: (collection 
 			lastIndexOf: element
-			ifAbsent: [ 99 ]) = 1.
+			ifAbsent: [ 99 ]) equals: 1.
 	self assert: (collection 
 			lastIndexOf: self elementNotInForIndexAccessing
-			ifAbsent: [ 99 ]) = 99
+			ifAbsent: [ 99 ]) equals: 99
 ]
 
 { #category : #'tests - index access' }
@@ -190,13 +190,13 @@ TIndexAccess >> testLastIndexOfStartingAt [
 	self assert: (collection 
 			lastIndexOf: element
 			startingAt: collection size
-			ifAbsent: [ 99 ]) = collection size.
+			ifAbsent: [ 99 ]) equals: collection size.
 	self assert: (collection 
 			lastIndexOf: element
 			startingAt: collection size - 1
-			ifAbsent: [ 99 ]) = 99.
+			ifAbsent: [ 99 ]) equals: 99.
 	self assert: (collection 
 			lastIndexOf: self elementNotInForIndexAccessing
 			startingAt: collection size
-			ifAbsent: [ 99 ]) = 99
+			ifAbsent: [ 99 ]) equals: 99
 ]
