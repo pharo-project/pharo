@@ -48,7 +48,8 @@ SymbolTest >> collection [
 
 { #category : #'tests - set arithmetic' }
 SymbolTest >> collectionClass [
-
+	"Return the class to be used to create instances of the class tested"
+	
 	^ Symbol
 ]
 

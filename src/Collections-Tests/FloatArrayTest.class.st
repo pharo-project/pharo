@@ -69,6 +69,7 @@ FloatArrayTest >> collection [
 
 { #category : #requirements }
 FloatArrayTest >> collectionClass [ 
+	"Return the class to be used to create instances of the class tested"
 	
 	^ FloatArray
 ]

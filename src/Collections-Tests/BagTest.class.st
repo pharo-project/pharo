@@ -51,7 +51,8 @@ BagTest >> collection [
 
 { #category : #'tests - set arithmetic' }
 BagTest >> collectionClass [
-
+	"Return the class to be used to create instances of the class tested"
+	
 	^ Bag
 ]
 

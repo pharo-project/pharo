@@ -72,6 +72,7 @@ StringTest >> collection [
 
 { #category : #'tests - set arithmetic' }
 StringTest >> collectionClass [
+	"Return the class to be used to create instances of the class tested"
 
 	^ String
 ]

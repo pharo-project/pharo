@@ -113,7 +113,8 @@ ArrayTest >> collection [
 
 { #category : #'tests - creation' }
 ArrayTest >> collectionClass [ 
-	
+	"Return the class to be used to create instances of the class tested"
+		
 	^ Array
 ]
 
