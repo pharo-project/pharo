@@ -32,8 +32,11 @@ ZipArchiveTest >> setUp [
 { #category : #running }
 ZipArchiveTest >> tearDown [
 
+	"Must close the zipfile before deleting all files.
+	Otherwise in windows the file will not be deleted as long as the file is open."
+	zip close.
+	
 	fileToZip ensureDelete.
-	zip close.	
 	subdir ensureDeleteAll.
 	zipFile ensureDelete.
 	super tearDown 
