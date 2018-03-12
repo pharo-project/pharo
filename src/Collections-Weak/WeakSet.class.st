@@ -21,7 +21,7 @@ WeakSet >> add: newObject [
 
 	| index element |
 	index := self scanFor: newObject.
-	((element := array at: index) == flag or: [ element == nil ])
+	((element := array at: index) == flag or: [ element isNil ])
 		ifTrue: [self atNewIndex: index put: newObject asSetElement].
 	^newObject
 ]
