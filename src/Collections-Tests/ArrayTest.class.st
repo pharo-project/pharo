@@ -532,11 +532,11 @@ ArrayTest >> test0FixtureIncludeTest [
 	self elementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self elementNotIn ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn = false.
+	self assert: anElementIn equals: false.
 	self anotherElementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self anotherElementNotIn ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn = false.
+	self assert: anElementIn equals: false.
 	self collection.
 	self empty.
 	self assert: self empty isEmpty.
@@ -545,7 +545,7 @@ ArrayTest >> test0FixtureIncludeTest [
 	self elementInForIncludesTest.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self elementInForIncludesTest ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn = true
+	self assert: anElementIn equals: true
 ]
 
 { #category : #'tests - fixture' }
