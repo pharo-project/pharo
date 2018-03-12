@@ -9,7 +9,6 @@ MorphicUIManager >> fileDoesNotExistUserHandling: filename [
 			('choose another name' translated).
 			('cancel' translated)}
 		title: filename, ' does not exist.'.
-	self halt.
 	selection = 1
 		ifTrue: [ ^ File openForWriteFileNamed: filename ].
 	selection = 2
