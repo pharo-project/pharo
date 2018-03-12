@@ -151,7 +151,7 @@ File >> checkDoesNotExist [
 File >> delete [
 	"We retries with GC because in some platforms open files cannot be open"
 	self class
-		retryWithGC: [ self primDelete: name ]
+		retryWithGC: [ self primDelete: name utf8Encoded ]
 		until: [ :result | result notNil ]
 		forFileNamed: name.
 	self exists
