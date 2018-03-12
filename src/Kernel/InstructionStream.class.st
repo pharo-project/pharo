@@ -25,7 +25,6 @@ InstructionStream class >> initialize [
 	SpecialConstants := 
 		(Array with: true with: false with: nil)
 			, (Array with: -1 with: 0 with: 1 with: 2)	
-	"InstructionStream initialize."
 
 ]
 
@@ -582,7 +581,7 @@ InstructionStream >> interpretSistaV1JumpIfCond [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #decoding }
 InstructionStream >> interpretV3ClosuresExtension: offset in: method for: client [
 	| type offset2 byte2 byte3 byte4 |
 	offset <= 6 ifTrue: 
