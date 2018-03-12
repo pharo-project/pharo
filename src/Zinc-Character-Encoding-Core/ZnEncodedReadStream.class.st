@@ -29,6 +29,12 @@ ZnEncodedReadStream >> isBinary [
 	^ false
 ]
 
+{ #category : #testing }
+ZnEncodedReadStream >> isReadOnly [
+
+	^ true
+]
+
 { #category : #accessing }
 ZnEncodedReadStream >> next [
 	^ peeked
