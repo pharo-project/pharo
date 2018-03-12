@@ -1,13 +1,13 @@
 Extension { #name : #Point }
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> angle [
 	"Answer the angle in radians between the vectors represented by the receiver and (1, 0) from the origin."
 
 	^ self y arcTan: self x
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> angleWith: aPoint [
 	"Answer the angle in radians between the vectors represented by the receiver and aPoint from the origin."
 
@@ -19,7 +19,7 @@ Point >> angleWith: aPoint [
 		ifFalse: [ Float pi * 2 - ar + ap ]
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> bearingToPoint: anotherPoint [
     "Return the bearing, in degrees, from the receiver to anotherPoint."
 
@@ -33,7 +33,7 @@ Point >> bearingToPoint: anotherPoint [
 
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> degrees [
 	"Answer the angle the receiver makes with origin in degrees. right is 0; down is 90."
 	| tan theta |
@@ -53,7 +53,7 @@ Point >> degrees [
 				ifFalse: [ 180.0 + theta radiansToDegrees ] ]
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> dist: aPoint [ 
 	"Answer the distance between aPoint and the receiver."
 	| dx dy |
@@ -62,7 +62,7 @@ Point >> dist: aPoint [
 	^ (dx * dx + (dy * dy)) sqrt
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> distanceTo: aPoint [ 
 	"Answer the distance between aPoint and the receiver."
 	| dx dy |
@@ -71,7 +71,7 @@ Point >> distanceTo: aPoint [
 	^ (dx * dx + (dy * dy)) sqrt
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> normal [
 	"Answer a Point representing the unit vector rotated 90 deg clockwise. For the zero point return -1@0."
 
@@ -82,7 +82,7 @@ Point >> normal [
 	^ n / d sqrt
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> normalized [
 	"Optimized for speed"
 	| r |
@@ -90,12 +90,12 @@ Point >> normalized [
 	^ (x / r) @ (y / r)
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> onLineFrom: p1 to: p2 [
 	^ self onLineFrom: p1 to: p2 within: 2
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> onLineFrom: p1 to: p2 within: epsilon [
 	"Answer true if the receiver lies on the given line segment between p1 and p2 within a small epsilon."
 
@@ -115,21 +115,21 @@ Point >> onLineFrom: p1 to: p2 within: epsilon [
 	^ (self distanceTo: (self nearestPointAlongLineFrom: p1 to: p2)) <= epsilon
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> r [
 	"Answer the receiver's radius in polar coordinate system."
 
 	^ (self dotProduct: self) sqrt
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point class >> r: rho degrees: degrees [
 	"Answer an instance of me with polar coordinates rho and theta."
 
 	^ self basicNew setR: rho degrees: degrees
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> rotateBy: angle about: center [ 
 	"This method returns the point obtained after rotating myself (counter clockwise) 
 	around the #center point of an #angle given as parameter. The #angle provided as 
@@ -141,7 +141,7 @@ Point >> rotateBy: angle about: center [
 	^ (center x asFloat + (r * theta cos)) @ (center y asFloat - (r * theta sin))
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> rotateBy: direction centerAt: c [ 
 	"Answer a Point which is rotated according to direction, about the point c.
 	Direction must be one of #right (CW), #left (CCW) or #pi (180 degrees)."
@@ -153,7 +153,7 @@ Point >> rotateBy: direction centerAt: c [
 	self error: 'unrecognizable direction'
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> setR: rho degrees: degrees [ 
 	| radians |
 	radians := degrees asFloat degreesToRadians.
@@ -161,7 +161,7 @@ Point >> setR: rho degrees: degrees [
 	y := rho asFloat * radians sin
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Point >> theta [
 	"Answer the angle the receiver makes with origin in radians. right is 0; 
 	down is 90."

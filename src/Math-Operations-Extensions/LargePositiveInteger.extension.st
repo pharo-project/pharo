@@ -1,6 +1,6 @@
 Extension { #name : #LargePositiveInteger }
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 LargePositiveInteger >> ln [
 	"This function is defined because super ln might overflow."
 	| res h |
@@ -10,7 +10,7 @@ LargePositiveInteger >> ln [
 	^2 ln * h + (self / (1 << h)) asFloat ln
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 LargePositiveInteger >> log [
 	"This function is defined because super log might overflow."
 	| res h |
@@ -20,7 +20,7 @@ LargePositiveInteger >> log [
 	^2 log * h + (self / (1 << h)) asFloat log
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 LargePositiveInteger >> sqrt [
 	"If we know for sure no exact solution exists, then just answer the cheap float approximation without wasting time."
 	| selfAsFloat |

@@ -1,6 +1,6 @@
 Extension { #name : #SmallFloat64 }
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 SmallFloat64 >> arcTan [
 	"Answer the angle in radians.
 	 Optional. See Object documentation whatIsAPrimitive."
@@ -25,7 +25,7 @@ SmallFloat64 >> arcTan [
 	^ theta
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 SmallFloat64 >> exponent [
 	"Primitive. Consider the receiver to be represented as a power of two
 	multiplied by a mantissa (between one and two). Answer with the
@@ -45,7 +45,7 @@ SmallFloat64 >> exponent [
 	^self negated exponent
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 SmallFloat64 >> sin [
 	"Answer the sine of the receiver taken as an angle in radians.
 	 Optional. See Object documentation whatIsAPrimitive."
@@ -76,7 +76,7 @@ SmallFloat64 >> sin [
 	^ sum
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 SmallFloat64 >> sqrt [
 	"Answer the square root of the receiver. 
 	 Optional. See Object documentation whatIsAPrimitive."

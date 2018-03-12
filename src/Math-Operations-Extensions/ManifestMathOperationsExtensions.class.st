@@ -2,7 +2,7 @@
 I am the manifest of the Numbers-Extensions package
 "
 Class {
-	#name : #ManifestNumbersExtensions,
+	#name : #ManifestMathOperationsExtensions,
 	#superclass : #PackageManifest,
-	#category : #'Numbers-Extensions'
+	#category : #'Math-Operations-Extensions'
 }

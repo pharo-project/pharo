@@ -97,12 +97,13 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Kernel-BytecodeEncoders'.
 		spec package: 'Kernel-Chronology-Extras'.
 
+		spec package: 'Math-Operations-Extensions'.
+
 		spec package: 'Multilingual-Languages'.
 		spec package: 'Multilingual-Encodings'.
 		spec package: 'Multilingual-TextConversion'.
 
 		spec package: 'Network-UUID'.
-		spec package: 'Numbers-Extensions'.
 		
 		spec package: 'Transcript-NonInteractive'.
 		spec package: 'PharoBootstrap-Initialization'.
@@ -191,7 +192,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'AdditionalPackages' with: {
 			'InitializePackagesCommandLineHandler'.
 			'Kernel-Chronology-Extras'.
-			'Numbers-Extensions'.
+			'Math-Operations-Extensions'.
 			'Debugging-Core'.
 		}.
 

@@ -1,13 +1,13 @@
 Extension { #name : #SmallInteger }
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 SmallInteger >> sqrt [
 	self negative ifTrue: [
 		^ DomainError signal: 'sqrt undefined for number less than zero.' ].
 	^super sqrt
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 SmallInteger >> threeDigitName [
 
 	| units answer |

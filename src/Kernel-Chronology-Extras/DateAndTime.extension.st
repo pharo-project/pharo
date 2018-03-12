@@ -27,11 +27,6 @@ DateAndTime >> asLocal [
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-DateAndTime >> asLocalStringYMDHM [
-	^ self asLocal asStringYMDHM
-]
-
-{ #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> asMonth [
 
 	^ Month starting: self

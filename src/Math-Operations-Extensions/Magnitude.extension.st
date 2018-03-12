@@ -1,6 +1,6 @@
 Extension { #name : #Magnitude }
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Magnitude >> compareWith: anotherMagnitude ifLesser: lesserBlock ifEqual: equalBlock ifGreater: greaterBlock [
 
 	^ self < anotherMagnitude

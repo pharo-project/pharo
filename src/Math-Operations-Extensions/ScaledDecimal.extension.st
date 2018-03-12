@@ -1,6 +1,6 @@
 Extension { #name : #ScaledDecimal }
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 ScaledDecimal >> nthRoot: anInteger [
 	"Answer the nth root of the receiver.
 	Preserve receiver class and scale if answer is exact.
@@ -12,7 +12,7 @@ ScaledDecimal >> nthRoot: anInteger [
 		ifFalse: [nthRoot asScaledDecimal: scale]
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 ScaledDecimal >> round: numberOfWishedDecimal [
 	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal."
 	
@@ -22,7 +22,7 @@ ScaledDecimal >> round: numberOfWishedDecimal [
 	^(super round: numberOfWishedDecimal) asScaledDecimal: (scale max: numberOfWishedDecimal)
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 ScaledDecimal >> sqrt [
 	"Answer the square root of the receiver.
 	Preserve receiver class and scale if answer is exact.

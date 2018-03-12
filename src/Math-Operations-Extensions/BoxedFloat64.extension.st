@@ -1,6 +1,6 @@
 Extension { #name : #BoxedFloat64 }
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 BoxedFloat64 >> arcTan [
 	"Answer the angle in radians.
 	 Optional. See Object documentation whatIsAPrimitive."
@@ -25,7 +25,7 @@ BoxedFloat64 >> arcTan [
 	^ theta
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 BoxedFloat64 >> sin [
 	"Answer the sine of the receiver taken as an angle in radians.
 	 Optional. See Object documentation whatIsAPrimitive."
@@ -56,7 +56,7 @@ BoxedFloat64 >> sin [
 	^ sum
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 BoxedFloat64 >> sqrt [
 	"Answer the square root of the receiver. 
 	 Optional. See Object documentation whatIsAPrimitive."

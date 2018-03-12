@@ -1,6 +1,6 @@
 Extension { #name : #Fraction }
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Fraction >> ln [
 	"This function is defined because super ln might overflow."
 	| res |
@@ -12,7 +12,7 @@ Fraction >> ln [
 	^numerator ln - denominator ln
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Fraction >> log [
 	"This function is defined because super log might overflow."
 	| res |
@@ -24,7 +24,7 @@ Fraction >> log [
 	^numerator log - denominator log
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Fraction >> nthRoot: aPositiveInteger [
 	"Answer the nth root of the receiver."
 
@@ -35,7 +35,7 @@ Fraction >> nthRoot: aPositiveInteger [
 	^(self abs ln / aPositiveInteger) exp * self sign
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Fraction >> raisedToFraction: aFraction [
 	| root |
 	root := (self numerator nthRootTruncated: aFraction denominator) / (self denominator nthRootTruncated: aFraction denominator).
@@ -43,7 +43,7 @@ Fraction >> raisedToFraction: aFraction [
 	^super raisedToFraction: aFraction
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Fraction >> raisedToInteger: anInteger [ 
 	"See Number | raisedToInteger:"
 	anInteger = 0 ifTrue: [^ 1].
@@ -52,7 +52,7 @@ Fraction >> raisedToInteger: anInteger [
 		denominator: (denominator raisedToInteger: anInteger)
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Fraction >> sqrt [
 	| d n |
 	n := numerator sqrt.
@@ -64,7 +64,7 @@ Fraction >> sqrt [
 	^n / d
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Fraction >> squared [
 	"See Fraction (Number) | squared"
 	^ Fraction numerator: numerator squared denominator: denominator squared

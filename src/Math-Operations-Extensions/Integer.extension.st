@@ -1,6 +1,6 @@
 Extension { #name : #Integer }
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> asWords [
 	"SmallInteger maxVal asWords"
 	| mils minus three num answer milCount |
@@ -28,7 +28,7 @@ Integer >> asWords [
 	^minus,answer
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> benchFib [  "Handy send-heavy benchmark"
 	"(result // seconds to run) = approx calls per second"
 	" | r t |
@@ -41,7 +41,7 @@ Integer >> benchFib [  "Handy send-heavy benchmark"
 
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> benchmark [  "Handy bytecode-heavy benchmark"
 	"(500000 // time to run) = approx bytecodes per second"
 	"5000000 // (Time millisecondsToRun: [10 benchmark]) * 1000"
@@ -63,7 +63,7 @@ Integer >> benchmark [  "Handy bytecode-heavy benchmark"
     ^ count
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> decimalDigitAt: anExponent [
 
 	"Return number that represents digit at given decimal position.
@@ -76,14 +76,14 @@ Integer >> decimalDigitAt: anExponent [
 	^ self digitAt: anExponent base: 10
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> even [ 
 	"Refer to the comment in Number|even."
 
 	^((self digitAt: 1) bitAnd: 1) = 0
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> factorial [
 	"Answer the factorial of the receiver."
 
@@ -92,7 +92,7 @@ Integer >> factorial [
 	self error: 'Not valid for negative integers'
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> isPrime [
 	"Answer true if the receiver is a prime number. See isProbablyPrime for a probabilistic
 	implementation that is much faster for large integers, and that is correct to an extremely
@@ -105,7 +105,7 @@ Integer >> isPrime [
 	^true
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> isProbablyPrime [
 	"See isProbablyPrimeWithK:andQ:randomIndex: for the algoritm description."
 	
@@ -134,7 +134,7 @@ Integer >> isProbablyPrime [
 	^true
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> isProbablyPrimeWithK: k andQ: q randomIndex: aRandomFloat [
 	"Algorithm P, probabilistic primality test, from
 	Knuth, Donald E. 'The Art of Computer Programming', Vol 2,
@@ -160,13 +160,13 @@ Integer >> isProbablyPrimeWithK: k andQ: q randomIndex: aRandomFloat [
 	^false
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer class >> largePrimesUpTo: maxValue [
 	"Compute and return all the prime numbers up to maxValue"
 	^Array streamContents:[:s| self largePrimesUpTo: maxValue do:[:prime| s nextPut: prime]]
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer class >> largePrimesUpTo: max do: aBlock [
 	"Evaluate aBlock with all primes up to maxValue.
 	The Algorithm is adapted from http://www.rsok.com/~jrm/printprimes.html
@@ -240,20 +240,20 @@ Integer class >> largePrimesUpTo: max do: aBlock [
 
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> lcm: n [ 
 	"Answer the least common multiple of the receiver and n."
 
 	^self // (self gcd: n) * n
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> montgomeryDigitBase [
 	"Answer the base used by Montgomery algorithm."
 	^1 << self montgomeryDigitLength
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> montgomeryDigitLength [
 	"Answer the number of bits composing a digit in Montgomery algorithm.
 	Primitive use either 8 or 32 bits digits"
@@ -261,20 +261,20 @@ Integer >> montgomeryDigitLength [
 	^8 "Legacy plugin which did not have this primitive did use 8 bits digits"
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> montgomeryDigitMax [
 	"Answer the maximum value of a digit used in Montgomery algorithm."
 	
 	^1 << self montgomeryDigitLength - 1
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> montgomeryNumberOfDigits [
 	"Answer the number of montgomery digits required to represent the receiver."
 	^self digitLength * 8 + (self montgomeryDigitLength - 1) // self montgomeryDigitLength
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> montgomeryRaisedTo: n times: y modulo: m mInvModB: mInv [
 	"Private - do a Montgomery exponentiation of self modulo m.
 	The operation is equivalent to (self/y raisedTo: n)*y \\ m,
@@ -322,7 +322,7 @@ Integer >> montgomeryRaisedTo: n times: y modulo: m mInvModB: mInv [
 	^pow
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> montgomeryTimes: a modulo: m mInvModB: mInv [
 	"Answer the result of a Montgomery multiplication
 	self * a * (b raisedTo: m montgomeryNumberOfDigits) inv \\ m
@@ -338,7 +338,7 @@ Integer >> montgomeryTimes: a modulo: m mInvModB: mInv [
 	^nil
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> nthRoot: aPositiveInteger [
 	"Answer the nth root of the receiver.
 	Answer an Integer if root is exactly this Integer, else answer the Float nearest the exact root."
@@ -356,7 +356,7 @@ Integer >> nthRoot: aPositiveInteger [
 	^(guess / (1 << p)) asFloat
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> nthRootRounded: aPositiveInteger [
 	"Answer the integer nearest the nth root of the receiver."
 	| guess |
@@ -371,7 +371,7 @@ Integer >> nthRootRounded: aPositiveInteger [
 		ifFalse: [guess]
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> nthRootTruncated: aPositiveInteger [
 	"Answer the integer part of the nth root of the receiver."
 	| guess guessToTheNthMinusOne delta |
@@ -391,7 +391,7 @@ Integer >> nthRootTruncated: aPositiveInteger [
 	^guess
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> primeFactors [
 	"Return all primeFactors of myself"
 	"( 106260 primeFactors fold: [ :a :b | a * b ]) = 106260"
@@ -399,7 +399,7 @@ Integer >> primeFactors [
 	^ Array streamContents: [ :s | self primeFactorsOn: s ]
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> primeFactorsOn: aStream [
 	"Recursively calculate the primefactors of myself and put the factors into the given stream"
 	self = 1 
@@ -418,14 +418,14 @@ Integer >> primeFactorsOn: aStream [
 	aStream nextPut: self.
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer class >> primesUpTo: max [
 	"Return a list of prime integers up to the given integer."
 	"Integer primesUpTo: 100"
 	^Array streamContents:[:s| self primesUpTo: max do:[:prime| s nextPut: prime]]
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer class >> primesUpTo: max do: aBlock [
 	"Compute aBlock with all prime integers up to the given integer."
 	"Integer primesUpTo: 100"
@@ -447,7 +447,7 @@ Integer class >> primesUpTo: max do: aBlock [
 
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> printStringRoman [
 	| stream integer |
 	stream := String new writeStream.
@@ -460,7 +460,7 @@ Integer >> printStringRoman [
 	^stream contents
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> raisedTo: n modulo: m [
 	"Answer the modular exponential.
 	Note: this implementation is optimized for case of large integers raised to large powers."
@@ -491,7 +491,7 @@ Integer >> raisedTo: n modulo: m [
 	^a montgomeryTimes: 1 modulo: m mInvModB: mInv
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> raisedToFraction: aFraction [
 	| root |
 	root := self nthRootTruncated: aFraction denominator.
@@ -499,7 +499,7 @@ Integer >> raisedToFraction: aFraction [
 	^super raisedToFraction: aFraction
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> raisedToInteger: exp modulo: m [
 	(exp = 0) ifTrue: [^ 1].
 	exp even
@@ -507,7 +507,7 @@ Integer >> raisedToInteger: exp modulo: m [
 		ifFalse: [^ (self * (self raisedToInteger: (exp - 1) modulo: m)) \\ m].
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> romanDigits: digits for: base on: aStream [
 	| n |
 	n := self \\ (base * 10) // base.
@@ -517,7 +517,7 @@ Integer >> romanDigits: digits for: base on: aStream [
 	n \\ 5 timesRepeat: [aStream nextPut: digits last]
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> slidingLeftRightRaisedTo: n modulo: m [
 	"Private - compute (self raisedTo: n) \\ m,
 	Note: this method has to be fast because it is generally used with large integers in cryptography.
@@ -563,7 +563,7 @@ Integer >> slidingLeftRightRaisedTo: n modulo: m [
 	^pow
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> sqrt [
 	"Answer the square root of the receiver."
 
@@ -595,7 +595,7 @@ Integer >> sqrt [
 	^floatResult
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> sqrtFloor [
 	"Return the integer part of the square root of self"
 
@@ -610,7 +610,7 @@ Integer >> sqrtFloor [
 	^guess
 ]
 
-{ #category : #'*Numbers-Extensions' }
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> take: kk [
 	"Return the number of combinations of (self) elements taken kk at a time.  
 	For 6 take 3, this is 6*5*4 / (1*2*3).  Zero outside of Pascal's triangle.  Use a trick to go faster."
