@@ -15,8 +15,9 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
-{ #category : #api }
+{ #category : #decoding }
 SymbolicBytecodeBuilder class >> decode: aMethod [
+
 	^(self new method: aMethod) decode
 	
 ]
@@ -38,7 +39,7 @@ SymbolicBytecodeBuilder >> addBytecode: description [
 	 	description: description;
 		offset: oldPC.
 	symbolicBytecodes add: symbolic.
-	oldPC := scanner pc.
+	oldPC := scanner pc
 
 ]
 
@@ -60,7 +61,7 @@ SymbolicBytecodeBuilder >> callPrimitive: primNumber [
 	"Print the callPrimitive bytecode."
 	| isInlined |
 	isInlined := primNumber >= (1 << 15) ifTrue: [ 'Inlined' ] ifFalse: [ '' ].
-	self addBytecode: 'call' , isInlined , 'Primitive: ' , primNumber printString
+	self addBytecode: 'call', isInlined, 'Primitive: ', primNumber printString
 ]
 
 { #category : #api }
@@ -94,7 +95,7 @@ SymbolicBytecodeBuilder >> doPop [
 SymbolicBytecodeBuilder >> jump: offset [
 	"Print the Unconditional Jump bytecode."
 
-	self addBytecode: 'jumpTo: ' , (scanner pc + offset) printString.
+	self addBytecode: 'jumpTo: ', (scanner pc + offset) printString
 ]
 
 { #category : #'instruction decoding' }
@@ -110,19 +111,19 @@ SymbolicBytecodeBuilder >> jump: offset if: condition [
 
 { #category : #accessing }
 SymbolicBytecodeBuilder >> method [
-	^method.
+	^method
 ]
 
 { #category : #accessing }
 SymbolicBytecodeBuilder >> method: aMethod [
-	method :=  aMethod.
+	method :=  aMethod
 ]
 
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> methodReturnConstant: value [ 
 	"Print the Return Constant bytecode."
 
-	self addBytecode: 'return: ' , value printString
+	self addBytecode: 'return: ', value printString
 ]
 
 { #category : #'instruction decoding' }
@@ -143,7 +144,7 @@ SymbolicBytecodeBuilder >> methodReturnTop [
 SymbolicBytecodeBuilder >> popIntoLiteralVariable: anAssociation [ 
 	"Print the Remove Top Of Stack And Store Into Literal Variable bytecode."
 
-	self addBytecode: 'popIntoLit: ' , anAssociation key
+	self addBytecode: 'popIntoLit: ', anAssociation key
 ]
 
 { #category : #'instruction decoding' }
@@ -151,11 +152,12 @@ SymbolicBytecodeBuilder >> popIntoReceiverVariable: offset [
 	"Print the Remove Top Of Stack And Store Into Instance Variable 
 	bytecode."
 
-	self addBytecode: 'popIntoRcvr: ' , offset printString
+	self addBytecode: 'popIntoRcvr: ', offset printString
 ]
 
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> popIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
+
 	self addBytecode: 'popIntoTemp: ', remoteTempIndex printString, ' inVectorAt: ', tempVectorIndex printString
 ]
 
@@ -164,7 +166,7 @@ SymbolicBytecodeBuilder >> popIntoTemporaryVariable: offset [
 	"Print the Remove Top Of Stack And Store Into Temporary Variable 
 	bytecode."
 
-	self addBytecode: 'popIntoTemp: ' , offset printString
+	self addBytecode: 'popIntoTemp: ', offset printString
 ]
 
 { #category : #'instruction decoding' }
@@ -176,25 +178,29 @@ SymbolicBytecodeBuilder >> pushActiveContext [
 
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> pushActiveProcess [
+
 	self addBytecode: 'pushThisProcess'
 ]
 
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize [
+
 	self addBytecode: 'closureNumCopied: ', numCopied printString
 			, ' numArgs: ', numArgs printString
 			, ' bytes ', scanner pc printString
-			, ' to ', (scanner pc + blockSize - 1) printString.
+			, ' to ', (scanner pc + blockSize - 1) printString
 ]
 
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> pushClosureTemps: numTemps [
-	"push on stack nil numTemps times for the closure temps"
+	"Push on stack nil numTemps times for the closure temps."
+	
 	self addBytecode: 'pushClosureTemps:' , numTemps printString
 ]
 
 { #category : #'instruction decoding' }
-SymbolicBytecodeBuilder >> pushConsArrayWithElements: numElements [ 
+SymbolicBytecodeBuilder >> pushConsArrayWithElements: numElements [
+
 	self addBytecode: 'pop ', numElements printString, ' into (Array new: ', numElements printString, ')'
 ]
 
@@ -209,12 +215,13 @@ SymbolicBytecodeBuilder >> pushConstant: obj [
 					ifFalse: [obj printOn: s]
 					ifTrue: [obj key
 						ifNotNil: [s nextPutAll: '##'; nextPutAll: obj key]
-						ifNil: [s nextPutAll: '###'; nextPutAll: obj value soleInstance name]]]).
+						ifNil: [s nextPutAll: '###'; nextPutAll: obj value soleInstance name]]])
 
 ]
 
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> pushFullClosure: lit numCopied: numCopied receiverOnStack: rcvr ignoreOuterContext: ignore [
+
 	self addBytecode: 'fullClosure:' , lit printString , 'NumCopied: ', numCopied printString
 ]
 
@@ -226,7 +233,8 @@ SymbolicBytecodeBuilder >> pushLiteralVariable: anAssociation [
 ]
 
 { #category : #'instruction decoding' }
-SymbolicBytecodeBuilder >> pushNewArrayOfSize: numElements [ 
+SymbolicBytecodeBuilder >> pushNewArrayOfSize: numElements [
+ 
 	self addBytecode: 'push: (Array new: ', numElements printString, ')'
 ]
 
@@ -246,7 +254,8 @@ SymbolicBytecodeBuilder >> pushReceiverVariable: offset [
 ]
 
 { #category : #'instruction decoding' }
-SymbolicBytecodeBuilder >> pushRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [ 
+SymbolicBytecodeBuilder >> pushRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
+
 	self addBytecode: 'pushTemp: ', remoteTempIndex printString, ' inVectorAt: ', tempVectorIndex printString
 ]
 
@@ -255,7 +264,7 @@ SymbolicBytecodeBuilder >> pushTemporaryVariable: offset [
 	"Print the Push Contents Of Temporary Variable Whose Index Is the 
 	argument, offset, On Top Of Stack bytecode."
 
-	self addBytecode: 'pushTemp: ' , offset printString
+	self addBytecode: 'pushTemp: ', offset printString
 ]
 
 { #category : #'instruction decoding' }
@@ -266,25 +275,26 @@ SymbolicBytecodeBuilder >> send: selector super: supered numArgs: numberArgument
 	the top numArguments locations on the stack and the receiver just 
 	below them."
 
-	self addBytecode: (supered ifTrue: ['superSend: '] ifFalse: ['send: ']) , selector.
+	self addBytecode: (supered ifTrue: ['superSend: '] ifFalse: ['send: ']), selector
 ]
 
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> storeIntoLiteralVariable: anAssociation [ 
 	"Print the Store Top Of Stack Into Literal Variable Of Method bytecode."
 
-	self addBytecode: 'storeIntoLit: ' , anAssociation key
+	self addBytecode: 'storeIntoLit: ', anAssociation key
 ]
 
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> storeIntoReceiverVariable: offset [ 
 	"Print the Store Top Of Stack Into Instance Variable Of Method bytecode."
 
-	self addBytecode: 'storeIntoRcvr: ' , offset printString
+	self addBytecode: 'storeIntoRcvr: ', offset printString
 ]
 
 { #category : #'instruction decoding' }
-SymbolicBytecodeBuilder >> storeIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [ 
+SymbolicBytecodeBuilder >> storeIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
+
 	self addBytecode: 'storeIntoTemp: ', remoteTempIndex printString, ' inVectorAt: ', tempVectorIndex printString
 ]
 
@@ -293,12 +303,13 @@ SymbolicBytecodeBuilder >> storeIntoTemporaryVariable: offset [
 	"Print the Store Top Of Stack Into Temporary Variable Of Method 
 	bytecode."
 
-	self addBytecode: 'storeIntoTemp: ' , offset printString
+	self addBytecode: 'storeIntoTemp: ', offset printString
 ]
 
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> trap [ 
 	"send the class trap message to the current context."
+	
 	self addBytecode: 'trap'
 
 ]
