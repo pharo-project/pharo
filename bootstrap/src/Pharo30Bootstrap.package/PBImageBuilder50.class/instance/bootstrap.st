@@ -2,7 +2,6 @@ running
 bootstrap
 
 	self
-		exportBootPackagesFolder;
 		initializeBootstrapEnvironment;
 		createVMStubs;
 		flushNewSpace;

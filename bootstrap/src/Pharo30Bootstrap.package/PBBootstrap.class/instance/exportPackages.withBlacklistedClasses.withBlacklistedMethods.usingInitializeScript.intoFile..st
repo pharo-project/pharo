@@ -1,4 +1,4 @@
-preparation
+exporting
 exportPackages: packageList withBlacklistedClasses: blacklistedClasses withBlacklistedMethods: methods usingInitializeScript: aString intoFile: aFileName
 
 	| mcst | 	

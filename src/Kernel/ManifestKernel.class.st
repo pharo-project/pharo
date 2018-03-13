@@ -24,7 +24,7 @@ ManifestKernel class >> ignoredDependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestKernel class >> manuallyResolvedDependencies [
-	^ #(#'Regex-Core' #'System-Settings' #'Zinc-Character-Encoding-Core' #'FFI-Kernel' #'Multilingual-TextConversion' #'System-Platforms' #'Transcript-Core' #'AST-Core' #'System-Sources' #Reflectivity #'System-Localization')
+	^ #(#'System-Settings' #'System-Sources' #'System-Platforms' #'Transcript-Core' #'Multilingual-TextConversion' #'AST-Core' #'Shift-ClassBuilder' #'Regex-Core' #'System-Localization' #'RPackage-Core' #'Zinc-Character-Encoding-Core' #Reflectivity #'Shift-ClassInstaller' #'FFI-Kernel')
 ]
 
 { #category : #'meta-data' }

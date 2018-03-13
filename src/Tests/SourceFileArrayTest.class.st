@@ -223,7 +223,7 @@ SourceFileArrayTest >> testProtocol [
 	"Test that we can access protocol correctly"
 	
 	| okCm notOkCm |
-	okCm := Point>>#distanceTo: .
+	okCm := Point>>#dotProduct: .
 	self assert: (((SourceFiles sourcedDataAt: okCm sourcePointer)) beginsWith:   
  'Point methodsFor: ''point functions''').
 	self assert: (SourceFiles protocolAt: okCm sourcePointer) = 'point functions'.
@@ -355,7 +355,7 @@ SourceFileArrayTest >> testTimeStamp [
 	"Test that we can access timeStamp correctly"
 
 	| okCm |
-	okCm := Point>>#distanceTo: .
+	okCm := Point>>#dotProduct: .
 	self assert: (((SourceFiles sourcedDataAt: okCm sourcePointer)) beginsWith:   
  'Point methodsFor: ''point functions'' stamp: ''''').
 	

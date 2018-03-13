@@ -176,6 +176,9 @@ HEInstaller >> initialize [
 HEInstaller >> installExtensionMethod: extensionMethod [
 	| aClass |
 	aClass := self environment classNamed: extensionMethod className.
+	
+	aClass ifNil: [ self error: 'Required class named: ' , extensionMethod className, ' does not exists.' ].
+	
 	self rebuildMethod: extensionMethod into: aClass.
 ]
 

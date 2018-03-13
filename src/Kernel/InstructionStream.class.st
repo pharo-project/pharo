@@ -25,6 +25,7 @@ InstructionStream class >> initialize [
 	SpecialConstants := 
 		(Array with: true with: false with: nil)
 			, (Array with: -1 with: 0 with: 1 with: 2)	
+	"InstructionStream initialize."
 
 ]
 
@@ -56,81 +57,7 @@ InstructionStream class >> on: method [
 	^self new method: method pc: method initialPC
 ]
 
-{ #category : #scanning }
-InstructionStream >> addSelectorTo: set [ 
-	"If this instruction is a send, add its selector to set."
-
-	| selectorOrSelf |
-	(selectorOrSelf := self selectorToSendOrSelf) == self ifFalse:
-		[set add: selectorOrSelf]
-]
-
-{ #category : #decoding }
-InstructionStream >> atEnd [
-
-	^ pc > self method endPC
-]
-
-{ #category : #'debugger access' }
-InstructionStream >> debuggerMap [
-	^self method debuggerMap
-]
-
-{ #category : #scanning }
-InstructionStream >> firstByte [
-	"Answer the first byte of the current bytecode."
-
-	^self method at: pc
-]
-
-{ #category : #scanning }
-InstructionStream >> followingByte [
-	"Answer the next bytecode."
-
-	^self method at: pc + 1
-]
-
-{ #category : #scanning }
-InstructionStream >> followingBytecode [
-	"Answer the bytecode of the following bytecode (different to nextByte)."
-
-	^self method at: self followingPc
-]
-
-{ #category : #scanning }
-InstructionStream >> followingPc [
-	"Answer the pc of the following bytecode."
-
-	^self nextPc: (self method at: pc)
-]
-
-{ #category : #scanning }
-InstructionStream >> fourthByte [
-	"Answer the fourth byte of the current bytecode."
-
-	^self method at: pc + 3
-]
-
-{ #category : #decoding }
-InstructionStream >> interpret [
-	| endPC |
-	endPC := self method endPC.
-	[pc > endPC] whileFalse: [self interpretNextInstructionFor: self]
-]
-
-{ #category : #decoding }
-InstructionStream >> interpretJump [
-	^ self method encoderClass interpretJumpIn: self
-
-]
-
-{ #category : #decoding }
-InstructionStream >> interpretJumpIfCond [
-	^ self method encoderClass interpretJumpIfCondIn: self
-
-]
-
-{ #category : #decoding }
+{ #category : #interpreting }
 InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client extA: extA extB: extB startPC: startPC [
 	"Send to the argument, client, a message that specifies the next instruction.
 	 This method handles the two-byte codes.
@@ -188,7 +115,7 @@ InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client 
 	^self unusedBytecode: client at: startPC
 ]
 
-{ #category : #decoding }
+{ #category : #interpreting }
 InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client extA: extA extB: extB startPC: startPC [
 	"Send to the argument, client, a message that specifies the next instruction.
 	 This method handles the three-byte codes.
@@ -228,14 +155,14 @@ InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client 
 	^self unusedBytecode: client at: startPC
 ]
 
-{ #category : #decoding }
+{ #category : #interpreting }
 InstructionStream >> interpretNextInstructionFor: client [ 
 	"Send to the argument, client, a message that specifies the type of the 
 	next instruction."
 	^ self method encoderClass interpretNextInstructionFor: client  in: self
 ]
 
-{ #category : #decoding }
+{ #category : #interpreting }
 InstructionStream >> interpretNextSistaV1InstructionFor: client [
 	"Send to the argument, client, a message that specifies the next instruction."
 
@@ -342,7 +269,7 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 	^self interpretNext3ByteSistaV1Instruction: byte for: client extA: extA extB: extB startPC: savedPC
 ]
 
-{ #category : #decoding }
+{ #category : #interpreting }
 InstructionStream >> interpretNextV3PlusClosureInstructionFor: client [ 
 	"Send to the argument, client, a message that specifies the type of the 
 	next instruction."
@@ -486,7 +413,7 @@ InstructionStream >> interpretNextV3PlusClosureInstructionFor: client [
 					numArgs: type-13]"
 ]
 
-{ #category : #decoding }
+{ #category : #interpreting }
 InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [ 
 	"Implement the extended push for non-zero extensions."
 	"*	82			01010010			Push thisContext, (then Extend B = 1 => push
@@ -499,160 +426,7 @@ InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [
 
 ]
 
-{ #category : #decoding }
-InstructionStream >> interpretSistaV1Jump [
-	"If the instruction at pc is an unconditional jump, interpret it, advancing
-	the pc,
-	and answering the jump distance. Otherwise answer nil."
-	"176-183	10110 iii				Jump iii + 1 (i.e., 1 through 8)
-	*	225/16rE1	11100001	sbbbbbbb	Extend B (Ext B = Ext B prev *
-	256 + Ext B)
-	*	237		11101101	iiiiiiii		Jump #iiiiiiii (+ Extend B * 256, where
-	bbbbbbbb = sddddddd, e.g. -32768 = i=0, a=0, s=1)"
-	| method byte nextpc extB |
-	method := self method.
-	"consume and compute any extension first."
-	extB := 0.
-	nextpc := pc.
-	"must not advance pc unless this is a jump."
-	[byte := self method at: nextpc.
-	nextpc := nextpc + 1.
-	byte = 225]
-		whileTrue: [| extByte |
-			extByte := self method at: nextpc.
-			nextpc := nextpc + 1.
-			extB := (extB = 0
-							and: [extByte > 127])
-						ifTrue: [extByte - 256]
-						ifFalse: [(extB bitShift: 8)
-								+ extByte]].
-	(byte between: 176 and: 183)
-		ifTrue: [pc := nextpc.
-			^ byte - 191].
-	byte = 237
-		ifTrue: [byte := method at: nextpc.
-			pc := nextpc + 1.
-			^ (extB bitShift: 8)
-				+ byte].
-	^ nil
-
-]
-
-{ #category : #decoding }
-InstructionStream >> interpretSistaV1JumpIfCond [
-	"If the instruction at pc is a conditional jump, interpret it, advancing
-	the pc,
-	and answering the jump distance. Otherwise answer nil."
-	"184-191	10111 iii				Pop and Jump 0n True iii +1 (i.e., 1 through 8)
-	192-199	11000 iii				Pop and Jump 0n False iii +1 (i.e., 1 through 8)
-	*	225/E1		11100001	sbbbbbbb	Extend B (Ext B = Ext B prev * 256
-	+ Ext B)
-	*	238		11101110	iiiiiiii		Pop and Jump 0n True #iiiiiiii (+ Extend B *
-	256, where Extend B >= 0)
-	*	239		11101111	iiiiiiii		Pop and Jump 0n False #iiiiiiii (+ Extend B *
-	256, where Extend B >= 0)"
-	| method byte nextpc extB |
-	method := self method.
-	"consume and compute any extension first."
-	extB := 0.
-	nextpc := pc.
-	"must not advance pc unless this is a jump."
-	[byte := self method at: nextpc.
-	nextpc := nextpc + 1.
-	byte = 225]
-		whileTrue: [| extByte |
-			extByte := self method at: nextpc.
-			nextpc := nextpc + 1.
-			extB := (extB = 0
-							and: [extByte > 127])
-						ifTrue: [extByte - 256]
-						ifFalse: [(extB bitShift: 8)
-								+ extByte]].
-	(byte between: 184 and: 199)
-		ifTrue: [pc := nextpc.
-			^ (byte bitAnd: 7)
-				+ 1].
-	(byte between: 238 and: 239)
-		ifTrue: [byte := method at: nextpc.
-			pc := nextpc + 1.
-			^ (extB bitShift: 8)
-				+ byte].
-	^ nil
-
-]
-
-{ #category : #decoding }
-InstructionStream >> interpretV3ClosuresExtension: offset in: method for: client [
-	| type offset2 byte2 byte3 byte4 |
-	offset <= 6 ifTrue: 
-		["Extended op codes 128-134"
-		byte2 := method at: pc. pc := pc + 1.
-		offset <= 2 ifTrue:
-			["128-130:  extended pushes and pops"
-			type := byte2 // 64.
-			offset2 := byte2 \\ 64.
-			offset = 0 ifTrue: 
-				[type = 0 ifTrue: [^client pushReceiverVariable: offset2].
-				type = 1 ifTrue: [^client pushTemporaryVariable: offset2].
-				type = 2  ifTrue: [^client pushConstant: (method literalAt: offset2 + 1)].
-				type = 3 ifTrue: [^client pushLiteralVariable: (method literalAt: offset2 + 1)]].
-			offset = 1 ifTrue: 
-				[type = 0 ifTrue: [^client storeIntoReceiverVariable: offset2].
-				type = 1 ifTrue: [^client storeIntoTemporaryVariable: offset2].
-				type = 2 ifTrue: [self error: 'illegalStore'].
-				type = 3 ifTrue: [^client storeIntoLiteralVariable: (method literalAt: offset2 + 1)]].
-			offset = 2 ifTrue: 
-				[type = 0 ifTrue: [^client popIntoReceiverVariable: offset2].
-				type = 1 ifTrue: [^client popIntoTemporaryVariable: offset2].
-				type = 2 ifTrue: [self error: 'illegalStore'].
-				type = 3  ifTrue: [^client popIntoLiteralVariable: (method literalAt: offset2 + 1)]]].
-		"131-134: extended sends"
-		offset = 3 ifTrue:  "Single extended send"
-			[^client send: (method literalAt: byte2 \\ 32 + 1)
-					super: false numArgs: byte2 // 32].
-		offset = 4 ifTrue:    "Double extended do-anything"
-			[byte3 := method at: pc. pc := pc + 1.
-			type := byte2 // 32.
-			type = 0 ifTrue: [^client send: (method literalAt: byte3 + 1)
-									super: false numArgs: byte2 \\ 32].
-			type = 1 ifTrue: [^client send: (method literalAt: byte3 + 1)
-									super: true numArgs: byte2 \\ 32].
-			type = 2 ifTrue: [^client pushReceiverVariable: byte3].
-			type = 3 ifTrue: [^client pushConstant: (method literalAt: byte3 + 1)].
-			type = 4 ifTrue: [^client pushLiteralVariable: (method literalAt: byte3 + 1)].
-			type = 5 ifTrue: [^client storeIntoReceiverVariable: byte3].
-			type = 6 ifTrue: [^client popIntoReceiverVariable: byte3].
-			type = 7 ifTrue: [^client storeIntoLiteralVariable: (method literalAt: byte3 + 1)]].
-		offset = 5 ifTrue:  "Single extended send to super"
-			[^client send: (method literalAt: byte2 \\ 32 + 1)
-					super: true
-					numArgs: byte2 // 32].
-		offset = 6 ifTrue:   "Second extended send"
-			[^client send: (method literalAt: byte2 \\ 64 + 1)
-					super: false
-					numArgs: byte2 // 64]].
-	offset = 7 ifTrue: [^client doPop].
-	offset = 8 ifTrue: [^client doDup].
-	offset = 9 ifTrue: [^client pushActiveContext].
-	byte2 := method at: pc. pc := pc + 1.
-	offset = 10 ifTrue:
-		[^byte2 < 128
-			ifTrue: [client pushNewArrayOfSize: byte2]
-			ifFalse: [client pushConsArrayWithElements: byte2 - 128]].
-	byte3 := method at: pc.  pc := pc + 1.
-	offset = 11 ifTrue: [^client callPrimitive: byte2 + (byte3 bitShift: 8)].
-	offset = 12 ifTrue: [^client pushRemoteTemp: byte2 inVectorAt: byte3].
-	offset = 13 ifTrue: [^client storeIntoRemoteTemp: byte2 inVectorAt: byte3].
-	offset = 14 ifTrue: [^client popIntoRemoteTemp: byte2 inVectorAt: byte3].
-	"offset = 15"
-	byte4 := method at: pc.  pc := pc + 1.
-	^client
-		pushClosureCopyNumCopiedValues: (byte2 bitShift: -4)
-		numArgs: (byte2 bitAnd: 16rF)
-		blockSize: (byte3 * 256) + byte4
-]
-
-{ #category : #decoding }
+{ #category : #interpreting }
 InstructionStream >> interpretV3PlusClosureExtension: offset in: method for: client [
 	| type offset2 byte2 byte3 byte4 |
 	offset <= 6 ifTrue: 
@@ -721,30 +495,6 @@ InstructionStream >> interpretV3PlusClosureExtension: offset in: method for: cli
 		blockSize: (byte3 * 256) + byte4
 ]
 
-{ #category : #decoding }
-InstructionStream >> interpretV3PlusClosureJump [
-
-	| byte |
-	byte := self method at: pc.
-	(byte between: 144 and: 151) ifTrue:
-		[pc := pc + 1. ^byte - 143].
-	(byte between: 160 and: 167) ifTrue:
-		[pc := pc + 2. ^(byte - 164) * 256 + (self method at: pc - 1)].
-	^nil
-]
-
-{ #category : #decoding }
-InstructionStream >> interpretV3PlusClosureJumpIfCond [
-
-	| byte |
-	byte := self method at: pc.
-	(byte between: 152 and: 159) ifTrue:
-		[pc := pc + 1. ^byte - 151].
-	(byte between: 168 and: 175) ifTrue:
-		[pc := pc + 2. ^(byte bitAnd: 3) * 256 + (self method at: pc - 1)].
-	^nil
-]
-
 { #category : #scanning }
 InstructionStream >> method [
 	"Answer the compiled method that supplies the receiver's bytecodes."
@@ -761,28 +511,6 @@ InstructionStream >> method: method pc: startpc [
 ]
 
 { #category : #scanning }
-InstructionStream >> nextByte [
-	"Answer the next bytecode."
-
-	^self method at: pc
-]
-
-{ #category : #scanning }
-InstructionStream >> nextInstruction [
-	"Return the next bytecode instruction as a message that an InstructionClient would understand.  This advances the pc by one instruction."
-
-	^ self interpretNextInstructionFor: MessageCatcher new
-]
-
-{ #category : #private }
-InstructionStream >> nextPc: currentByte [
-	"Answer the pc of the next bytecode following the current one, given the current bytecode.
-	 Skips the extension bytecodes."
-	
-	^ pc + (self method encoderClass bytecodeSize: currentByte)
-]
-
-{ #category : #scanning }
 InstructionStream >> pc [
 	"Answer the index of the next bytecode."
 
@@ -793,147 +521,4 @@ InstructionStream >> pc [
 InstructionStream >> pc: anInteger [
 
 	pc := anInteger
-]
-
-{ #category : #scanning }
-InstructionStream >> peekInstruction [
-	"Return the next bytecode instruction as a message that an InstructionClient would understand.  The pc remains unchanged."
-
-	| currentPc instruction |
-	currentPc := self pc.
-	instruction := self nextInstruction.
-	self pc: currentPc.
-	^ instruction
-]
-
-{ #category : #scanning }
-InstructionStream >> previousPc [
-
-	^self method pcPreviousTo: pc
-]
-
-{ #category : #scanning }
-InstructionStream >> scanFor: scanBlock [
-	"Answer the index of the first bytecode for which scanBlock
-	 answers true when supplied with that bytecode."
-
-	| method end |
-	method := self method.
-	end := method endPC.
-	[pc <= end] whileTrue: 
-		[(scanBlock value: (method at: pc)) ifTrue: [^true].
-		[self method encoderClass isExtension: (self method at: pc)] whileTrue: [pc := pc + 2].
-		pc := self nextPc: (method at: pc)].
-	^false
-]
-
-{ #category : #scanning }
-InstructionStream >> secondByte [
-	"Answer the second byte of the current bytecode."
-
-	^self method at: pc + 1
-]
-
-{ #category : #scanning }
-InstructionStream >> selectorToSendOrSelf [
-	"If this instruction is a send, answer the selector, otherwise answer self."
- 
-	^ self method encoderClass selectorToSendOrItselfFor: self in: self method at: pc 
-]
-
-{ #category : #scanning }
-InstructionStream >> skipBackBeforeJump [
-	"Assuming that the receiver is positioned just after a jump, skip back one or two bytes,
-	 depending on the size of the previous jump instruction."
-	| scanner client prevPc |
-	scanner := InstructionStream on: self method.
-	client := InstructionClient new.
-	[scanner pc < pc] whileTrue:
-		[prevPc := scanner pc.
-		 scanner interpretNextInstructionFor: client].
-	scanner pc: prevPc.
-	(scanner willJumpIfTrue or: [scanner willJumpIfFalse]) ifFalse:
-		[self error: 'Where''s the jump??'].
-	self jump: prevPc - pc
-]
-
-{ #category : #scanning }
-InstructionStream >> thirdByte [
-	"Answer the third byte of the current bytecode."
-
-	^self method at: pc + 2
-]
-
-{ #category : #decoding }
-InstructionStream >> unusedBytecode: client at: startPC [
-	^ client unusedBytecode
-]
-
-{ #category : #testing }
-InstructionStream >> willBlockReturn [
-
-	^ self method encoderClass isBlockReturnAt: pc in: self method
-]
-
-{ #category : #testing }
-InstructionStream >> willCreateBlock [
-	"next bytecode is a block creation"
-
-	^ self method encoderClass isCreateBlockAt: pc in: self method
-]
-
-{ #category : #testing }
-InstructionStream >> willJump [
-	"unconditionally"
-
-	^ self method encoderClass isJumpAt: pc in: self method
-	
-]
-
-{ #category : #testing }
-InstructionStream >> willJumpIfFalse [
-	"Answer whether the next bytecode is a jump-if-false."
-
-	^ self method encoderClass isBranchIfFalseAt: pc in: self method
-]
-
-{ #category : #testing }
-InstructionStream >> willJumpIfTrue [ 
-	"Answer whether the next bytecode is a jump-if-true."
- 
-	^ self method encoderClass isBranchIfTrueAt: pc in: self method
-]
-
-{ #category : #testing }
-InstructionStream >> willJustPop [
-
-	^ self method encoderClass isJustPopAt: pc in: self method
-]
-
-{ #category : #testing }
-InstructionStream >> willReturn [
-	"Answer whether the next bytecode is a return."
-
-	^ self method encoderClass isReturnAt: pc in: self method
-]
-
-{ #category : #testing }
-InstructionStream >> willSend [
-	"Answer whether the next bytecode is a message-send."
-
-	^ self method encoderClass isSendAt: pc in: self method
-]
-
-{ #category : #testing }
-InstructionStream >> willStore [
-	"Answer whether the next bytecode is a store or store-pop"
-
-	^ self method encoderClass isStoreAt: pc in: self method
-]
-
-{ #category : #testing }
-InstructionStream >> willStorePop [
-	"Answer whether the next bytecode is a store-pop."
-
-	^ self method encoderClass isStorePopAt: pc in: self method
 ]
