@@ -537,7 +537,7 @@ Context >> completeCallee: aContext [
 		whileTrue: [
 			current := context.
 			nextContext := context quickStep.
-			nextContext ifNil: [ self error: 'Should not happens!' ].
+			nextContext ifNil: [ self error: 'Should not happen!' ].
 			context := nextContext ].
 	^ self stepToSendOrReturn
 ]
