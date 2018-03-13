@@ -103,10 +103,10 @@ $(COMPILER_IMAGE_PATH): bootstrap-cache/bootstrap.image bootstrap-cache/vm
 	$(VM) "$(COMPILER_IMAGE_PATH)" # I have to run once the image so the next time it starts the CommandLineHandler.
 	$(VM) "$(COMPILER_IMAGE_PATH)" loadHermes bootstrap-cache/Hermes-Extensions.hermes --save
 	$(VM) "$(COMPILER_IMAGE_PATH)" loadHermes bootstrap-cache/Multilingual-Encodings.hermes bootstrap-cache/Multilingual-TextConversion.hermes bootstrap-cache/Multilingual-Languages.hermes --save --no-fail-on-undeclared
-	
+	$(VM) "$(COMPILER_IMAGE_PATH)" loadHermes bootstrap-cache/InitializePackagesCommandLineHandler.hermes --save
 	@echo "[Compiler] Installing compiler through Hermes"
 	$(VM) "$(COMPILER_IMAGE_PATH)" loadHermes bootstrap-cache/Collections-Atomic.hermes bootstrap-cache/Collections-Arithmetic.hermes bootstrap-cache/AST-Core.hermes bootstrap-cache/Jobs.hermes --save --no-fail-on-undeclared
-	$(VM) "$(COMPILER_IMAGE_PATH)" initializePackages --no-source --protocols=bootstrap-cache/protocolsKernel.txt --packages=bootstrap-cache/packagesKernel.txt --save
+	$(VM) "$(COMPILER_IMAGE_PATH)" initializePackages --protocols=bootstrap-cache/protocolsKernel.txt --packages=bootstrap-cache/packagesKernel.txt --save
 	$(VM) "$(COMPILER_IMAGE_PATH)" loadHermes bootstrap-cache/OpalCompiler-Core.hermes bootstrap-cache/CodeExport.hermes bootstrap-cache/CodeImport.hermes bootstrap-cache/CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
 	$(VM) "$(COMPILER_IMAGE_PATH)" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
 	$(VM) "$(COMPILER_IMAGE_PATH)" st ./bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
