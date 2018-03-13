@@ -205,7 +205,7 @@ ContextTest >> verifyJumpWithSelector: selector [
 	guineaPig beReadOnlyObject.
 	[ readOnlyStackp := (guineaPig perform: selector) stackPtr ]
 		on: ModificationForbidden 
-		do: [ :ex | ex resume ].
+		do: [ :ex | ex resumeUnchecked: nil ].
 	self assert: normalStackp = readOnlyStackp.
 	
 ]

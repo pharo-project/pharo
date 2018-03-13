@@ -537,7 +537,7 @@ Context >> completeCallee: aContext [
 		whileTrue: [
 			current := context.
 			nextContext := context quickStep.
-			nextContext ifNil: [ self halt ].
+			nextContext ifNil: [ self error: 'Should not happen!' ].
 			context := nextContext ].
 	^ self stepToSendOrReturn
 ]
@@ -1337,7 +1337,7 @@ Context >> object: anObject perform: selector withArguments: argArray inClass: l
 	self primitiveFailed
 ]
 
-{ #category : #accessing }
+{ #category : #'mirror primitives' }
 Context >> objectClass: aReceiver [
 	<primitive: 111>
 	self primitiveFailed
