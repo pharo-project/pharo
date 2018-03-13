@@ -31,9 +31,15 @@ MemoryHandle >> at: first write: aCollection startingAt: start count: count [
 	entry at: first write: aCollection startingAt: start count: count.
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 MemoryHandle >> binaryReadStream [
 	^ entry binaryReadStream
+]
+
+{ #category : #streams }
+MemoryHandle >> binaryWriteStream [
+	
+	^ entry binaryWriteStream
 ]
 
 { #category : #public }

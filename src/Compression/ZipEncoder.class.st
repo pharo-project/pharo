@@ -17,7 +17,7 @@ Class {
 
 { #category : #positioning }
 ZipEncoder >> bitPosition [
-	^encodedStream position + position * 8 + bitPosition.
+	^ encodedStream position + position * 8 + bitPosition.
 ]
 
 { #category : #'open/close' }

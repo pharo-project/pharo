@@ -205,6 +205,11 @@ MCFileBasedRepository >> notCachedVersionWithInfo: aVersionInfo [
 	^ nil
 ]
 
+{ #category : #loading }
+MCFileBasedRepository >> pathForFileNamed: aFileName [
+  ^ aFileName
+]
+
 { #category : #accessing }
 MCFileBasedRepository >> possiblyNewerVersionsOfAnyOf: someVersions [
 	| pkgs |
@@ -302,12 +307,11 @@ MCFileBasedRepository >> versionNameFromFileName: aFileName [
 
 { #category : #actions }
 MCFileBasedRepository >> versionReaderForFileNamed: aString do: aBlock [
-	^ self
+^ self
 		readStreamForFileNamed: aString
 		do: [:s |
 			(MCVersionReader readerClassForFileNamed: aString) ifNotNil:
-				[:class | aBlock value: (class on: s fileName: aString)]]
-
+				[:class | aBlock value: (class on: s fileName: (self pathForFileNamed: aString))]]
 ]
 
 { #category : #interface }

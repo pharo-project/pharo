@@ -222,12 +222,11 @@ ChangeRecord >> stamp: threePartString [
 
 { #category : #access }
 ChangeRecord >> string [ 
-	| string |
-	file openReadOnly.
-	file position: position.
-	string := file nextChunk.
-	file close.
-	^ string
+	| copy |
+	copy := file readOnlyCopy.
+	copy position: position.
+	[ ^ (ChunkReadStream on: copy) next ]
+		ensure: [ copy close ]
 ]
 
 { #category : #access }

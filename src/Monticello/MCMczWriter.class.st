@@ -45,7 +45,6 @@ MCMczWriter >> addString: string at: path encodedTo: encodingName [
 { #category : #writing }
 MCMczWriter >> flush [
 	zip writeTo: stream.
-	stream close
 ]
 
 { #category : #accessing }

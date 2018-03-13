@@ -5,9 +5,9 @@ ChangeRecord >> text [
 	| text |
 	^ file ifNil: ['']
 		ifNotNil: [
-			file openReadOnly.
+			file tryOpenReadOnly: true.
 			file position: position.
-			text := file nextChunkText.
+			text := file nextChunk asText.
 			file close.
 			text]
 ]

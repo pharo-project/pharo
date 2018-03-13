@@ -42,7 +42,7 @@ MczInstaller class >> initialize [
 
 { #category : #installing }
 MczInstaller class >> installFileNamed: aFileName [
-	self installStream: (FileStream readOnlyFileNamed: aFileName)
+	self installStream: aFileName asFileReference binaryReadStream
 ]
 
 { #category : #installing }
