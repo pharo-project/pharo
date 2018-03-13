@@ -30,6 +30,8 @@ SourceFile >> atEnd [
 { #category : #'as yet unclassified' }
 SourceFile >> close [
 
+	stream ifNil: [ ^ self ].
+	
 	stream close.
 	stream := nil.
 ]
