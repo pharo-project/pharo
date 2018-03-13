@@ -222,6 +222,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'CompilerGroup'.
 			'FileSystemGroup'.
 			'Hermes-Extensions'.
+			'SUnitGroup'.
 		}.
 
 		spec group: 'SUnitGroup' with: {
