@@ -252,8 +252,11 @@ SourceFileArray >> emptyReadStreamsQueue [
 
 { #category : #'public - file system operations' }
 SourceFileArray >> ensureOpen [
-	"Ensure that the source and changes files are opened."
-
+	"Ensure that the source and changes files are opened.
+	Close them before re-opening them.
+	
+	This could be optimized by jut checking if they are open and doing nothing in that case."
+	self close.
 	files := Array
 		with: PharoFilesOpener default sourcesFileOrNil
 		with: PharoFilesOpener default changesFileOrNil.

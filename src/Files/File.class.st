@@ -133,7 +133,7 @@ File >> basicOpenForWrite: writeMode [
 		forFileNamed: name
 ]
 
-{ #category : #'open/close' }
+{ #category : #testing }
 File >> checkDoesNotExist [
 	"This method implements a backwards compatible logic to #newFileNamed:
 	
@@ -158,7 +158,7 @@ File >> delete [
 		ifTrue: [ (CannotDeleteFileException new messageText: 'Could not delete file ' , name,'. Check the file is not open.') signal ].
 ]
 
-{ #category : #'open/close' }
+{ #category : #testing }
 File >> exists [
 
 	| handle |
@@ -257,6 +257,12 @@ File >> readStreamDo: aBlock [
 	stream := self readStream.
 	^ [ aBlock value: stream ]
 		ensure: [ stream close ]
+]
+
+{ #category : #testing }
+File >> size [
+
+	^ self readStreamDo: [ :stream | stream size ]
 ]
 
 { #category : #registry }

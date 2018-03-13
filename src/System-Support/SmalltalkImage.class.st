@@ -89,8 +89,8 @@ SmalltalkImage class >> shutDown: isImageClosing [
 
 { #category : #initialization }
 SmalltalkImage class >> startUp: isImageStarting [
-	ChangesLog default.
-	isImageStarting ifTrue: [Smalltalk openSourceFiles]
+	
+	ChangesLog default
 ]
 
 { #category : #image }
