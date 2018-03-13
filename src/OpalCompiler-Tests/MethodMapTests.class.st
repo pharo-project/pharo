@@ -169,7 +169,7 @@ MethodMapTests >> testMethodSourceNodeAtInitialPC [
 
 { #category : #'testing - ast mapping' }
 MethodMapTests >> testMethodSourceNodeAtPC [
-	self assert: (((Object>>#halt) sourceNodeForPC:  22) isKindOf: RBMessageNode).
+	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: RBMessageNode).
 
 ]
 
@@ -190,7 +190,7 @@ MethodMapTests >> testSimpleSourceMapping [
 
 	method := Object>>('ha', 'lt') asSymbol.
 
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: 23.
+	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: (Smalltalk vm for32bit: 23 for64bit: 43).
 	highlight := method sourceCode copyFrom:  range first to: range last.
 	self assert: highlight equals: 'now'.
 
@@ -205,9 +205,15 @@ MethodMapTests >> testSourceMappingBlock [
 	method := MethodMapExamples>>#exampleTempNamedCopying.
 	
 	"Cannot check for class since those encoders are changing names all the time..."
-	pcs := (method encoderClass name endsWith: 'SistaV1')
-		ifTrue: [ 41 to: 45 ]
-		ifFalse: [ 42 to: 46 ].
+	pcs := (Smalltalk vm 
+		for32bit: [
+			(method encoderClass name endsWith: 'SistaV1')
+				ifTrue: [ 41 to: 45 ]
+				ifFalse: [ 42 to: 46 ] ] 
+		for64bit: [
+			(method encoderClass name endsWith: 'SistaV1')
+				ifTrue: [ 73 to: 77 ]
+				ifFalse: [ 74 to: 78 ] ]).		
 	
 	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs first.
 	highlight := method sourceCode copyFrom:  range first to: range last.

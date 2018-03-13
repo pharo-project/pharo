@@ -135,6 +135,17 @@ VirtualMachine >> flagInterpretedMethods: aBoolean [
 	self parameterAt: 48 put: ((self parameterAt: 48) bitClear: 2) + (aBoolean ifTrue: [2] ifFalse: [0])
 ]
 
+{ #category : #accessing }
+VirtualMachine >> for32bit: aBlockFor32bit for64bit: aBlockFor64bit [
+
+	"evaluates a block or returns a provided value depending on bitness of the current VM"
+
+	self is32bit ifTrue: [ ^ aBlockFor32bit value ].
+	self is64bit ifTrue: [ ^ aBlockFor64bit value ].
+
+	self error: 'Unknown VM bitness'
+]
+
 { #category : #modules }
 VirtualMachine >> forgetModule: aString [
 	"Primitive. If the module named aString is loaded, unloaded. If not, and it is marked an unloadable, unmark it so the VM will try to load it again next time. See comment for #unloadModule:."
