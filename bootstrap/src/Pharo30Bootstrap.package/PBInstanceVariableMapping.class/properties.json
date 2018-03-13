@@ -1,0 +1,33 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Pharo30Bootstrap",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"environment",
+		"contextPcIndex",
+		"contextReceiverIndex",
+		"processContextIndex",
+		"classMethodDictionaryIndex",
+		"classSuperclassIndex",
+		"processNameIndex",
+		"traitClassTraitIndex",
+		"traitMethodDictionaryIndex",
+		"contextSenderIndex",
+		"classPoolIndex",
+		"contextStackpIndex",
+		"contextMethodIndex",
+		"classNameIndex",
+		"processSchedulerActiveProcessIndex",
+		"processPriorityIndex",
+		"contextClosureOrNilIndex",
+		"classFormatIndex",
+		"processPriorityListIndex",
+		"processNextLinkIndex",
+		"traitNameIndex"
+	],
+	"name" : "PBInstanceVariableMapping",
+	"type" : "normal"
+}
