@@ -20,7 +20,8 @@ Class {
 		'collectionWithSubCollection',
 		'subCollectionInNonEmpty',
 		'collectionWithoutNil',
-		'collectResult'
+		'collectResult',
+		'collectionOfLargeIntegers'
 	],
 	#category : #'Collections-Tests-Sequenceable'
 }
@@ -76,7 +77,7 @@ IntervalTest >> collectionWith1TimeSubcollection [
 { #category : #requirements }
 IntervalTest >> collectionWithCopyNonIdentical [
 	" return a collection that include elements for which 'copy' return a different object (this is not the case of SmallInteger)"
-	^ collectionOfFloat
+	^ collectionOfLargeIntegers
 ]
 
 { #category : #requirements }
@@ -282,6 +283,7 @@ IntervalTest >> setUp [
 	collectionOfFloat := 1.5 to: 7.5 by: 1.
 	subCollection := 2 to: 8.
 	collectionWithSubCollection := 1 to: 10.
+	collectionOfLargeIntegers := 100 factorial to: 100 factorial + 5.
 ]
 
 { #category : #requirements }
