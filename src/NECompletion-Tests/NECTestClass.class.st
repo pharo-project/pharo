@@ -38,7 +38,7 @@ NECTestClass class >> initialize [
 { #category : #initialization }
 NECTestClass >> initialize: aRectangle [ 
 	constantInteger := 15.
-	constantLargeInteger := 1073741824.
+	constantLargeInteger := 1152921504606846976. "(SmallInteger maxVal + 1) on 64-bit"
 	constantString := 'Ruben'.
 	constantSymbol := #Symbol.
 	constantArray := #(15 16 17 28 ).
