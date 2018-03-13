@@ -13,10 +13,18 @@ initializeIndexes
 	contextStackpIndex := self lookup: #stackp in: #Context.
 	contextMethodIndex := self lookup: #method in: #Context.
 	classNameIndex := self lookup: #name in: #Class.
-	processSchedulerActiveProcessIndex := self lookup: #activeProcess in: #ProcessScheduler.
+	processSchedulerActiveProcessIndex := self lookup: #activeProcess in: #ProcessorScheduler.
 	processPriorityIndex := self lookup: #priority in: #Process.
 	contextClosureOrNilIndex := self lookup: #closureOrNil in: #Context.
 	classFormatIndex := self lookup: #format in: #Class.
 	processPriorityListIndex := self lookup: #myList in: #Process.
 	processNextLinkIndex := self lookup: #nextLink in: #Process.
-	traitNameIndex := self lookup: #name in: #Trait
+	traitNameIndex := self lookup: #name in: #Trait.
+
+	smalltalkImageGlobalsIndex := self lookup: #globals in: #SmalltalkImage.
+	classSharedPoolsIndex := self lookup: #sharedPools in: #Class.
+	classNumberOfVariables := self numberOfInstanceVariablesOf: #Class.
+	classInstanceVariableNamesIndex := self lookup: #instanceVariableNames in: #Class.
+	dictionaryArrayIndex := self lookup: #array in: #Dictionary.
+	
+	listOfClassSlots := self allSlotsOf: #Class.

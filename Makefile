@@ -139,7 +139,7 @@ bootstrapImage.image:	Pharo.image pharo-vm
 	$(bootstrap) ./bootstrap/scripts/prepare_image.st --save --quit
 
 Pharo.image:
-	wget https://github.com/guillep/PharoBootstrap/releases/download/v1.4/bootstrapImage.zip
+	wget https://github.com/guillep/PharoBootstrap/releases/download/v1.4.1/bootstrapImage.zip
 	unzip bootstrapImage.zip
 
 pharo-vm:

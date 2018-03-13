@@ -1,4 +1,4 @@
-initializing
+initialization
 lookup: anInstanceVariable in: aClass
 	| slot |
 	
@@ -6,5 +6,5 @@ lookup: anInstanceVariable in: aClass
 	If it explode we have a problem."
 	slot := (environment ask behaviorNamed: aClass ifAbsent: [ ^nil ]) allSlots
 		detect: [ :x | x name = anInstanceVariable ]
-		ifNone: [ self error: 'Cannot find:' , anInstanceVariable , ' in ' , aClass ].
+		ifNone: [ ^ nil ].
 	^ slot index

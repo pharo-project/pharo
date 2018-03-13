@@ -26,7 +26,13 @@
 		"classFormatIndex",
 		"processPriorityListIndex",
 		"processNextLinkIndex",
-		"traitNameIndex"
+		"traitNameIndex",
+		"smalltalkImageGlobalsIndex",
+		"classSharedPoolsIndex",
+		"classNumberOfVariables",
+		"classInstanceVariableNamesIndex",
+		"dictionaryArrayIndex",
+		"listOfClassSlots"
 	],
 	"name" : "PBInstanceVariableMapping",
 	"type" : "normal"

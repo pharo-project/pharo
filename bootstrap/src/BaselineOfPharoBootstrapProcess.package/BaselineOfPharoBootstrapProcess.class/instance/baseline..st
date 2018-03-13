@@ -9,9 +9,9 @@ baseline: spec
 		spec baseline: 'Hermes' with: [ spec
 			repository: 'github://tesonep/hermes:v2.4.1';
   			loads: 'ring' ].
+		spec
+			 package: 'Pharo30Bootstrap'.
 		spec baseline: 'Ring2' with: [ spec
 			repository: 'github://tesonep/Ring2:production-dev/src';
   			loads: 'bootstrap' ].  			
-
-		spec package: 'Pharo30Bootstrap' with: [ spec requires: #('Tonel' 'Ring2') ].
 ]
