@@ -293,6 +293,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'EmbeddedFreeType-Tests'.
 		spec package: 'FileSystem-Tests-Disk'.
 		spec package: 'FileSystem-Tests-Memory'.
+		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
 		spec package: 'Flashback-Decompiler-Tests'.
@@ -814,6 +815,8 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
+	'FileSystem-Tests-Memory'
+	'FileSystem-Tests-Attributes'
 	'Files-Tests' 
 	'Jobs-Tests' 
 	'Multilingual-Tests'
@@ -824,7 +827,6 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Ring-Tests-Containers' 
 	'Tests' 
 	'Zinc-Character-Encoding-Tests' 
-	'FileSystem-Tests-Memory'
 
 	'Text-Tests'		"required by Multilingual-Tests"
 ).
