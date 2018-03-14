@@ -260,11 +260,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 { #category : #'accessing comment' }
 ClassDescription >> classCommentBlank [
 
-	| existingComment stream |
-	existingComment := self instanceSide organization classComment.
-	existingComment isEmpty
-		ifFalse: [^existingComment].
-
+	| stream |
 	stream := (String new: 100) writeStream.
 	
 	stream nextPutAll: 'Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
