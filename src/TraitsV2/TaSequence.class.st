@@ -156,7 +156,12 @@ TaSequence >> isAliasSelector: aSelector [
 { #category : #testing }
 TaSequence >> isConflictingSelector: aSelector [
 	"I test if a given selector is defined in more than one of my members"
-	^ (self methods count: [ :e | e selector = aSelector and: [ e isRequired not ] ]) > 1
+
+	| possibleConflicts |
+	possibleConflicts := self methods select: [ :each | each selector = aSelector and: [ each isRequired not ] ].
+	possibleConflicts size = 1 ifTrue: [ ^ false ].
+	
+	^ (possibleConflicts collect: [:each | each originMethod ] as: Set) size > 1.
 ]
 
 { #category : #testing }
