@@ -14,7 +14,7 @@ converter forCrLf.
 converter forPlatformLineEnding.
 "
 Class {
-	#name : #ZnCrPortableWriteStream,
+	#name : #ZnNewLineWriterStream,
 	#superclass : #WriteStream,
 	#instVars : [
 		'stream',
@@ -27,7 +27,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-ZnCrPortableWriteStream class >> on: aStream [
+ZnNewLineWriterStream class >> on: aStream [
 
 	^ self basicNew
 		initialize;
@@ -36,31 +36,31 @@ ZnCrPortableWriteStream class >> on: aStream [
 ]
 
 { #category : #accessing }
-ZnCrPortableWriteStream >> forCr [
+ZnNewLineWriterStream >> forCr [
 
 	lineEnding := String cr
 ]
 
 { #category : #accessing }
-ZnCrPortableWriteStream >> forCrLf [
+ZnNewLineWriterStream >> forCrLf [
 
 	lineEnding := String crlf
 ]
 
 { #category : #accessing }
-ZnCrPortableWriteStream >> forLf [
+ZnNewLineWriterStream >> forLf [
 
 	lineEnding := String lf
 ]
 
 { #category : #accessing }
-ZnCrPortableWriteStream >> forPlatformLineEnding [
+ZnNewLineWriterStream >> forPlatformLineEnding [
 
 	lineEnding := OSPlatform current lineEnding
 ]
 
 { #category : #initialize }
-ZnCrPortableWriteStream >> initialize [
+ZnNewLineWriterStream >> initialize [
 
 	super initialize.
 	cr := Character cr.
@@ -69,13 +69,13 @@ ZnCrPortableWriteStream >> initialize [
 ]
 
 { #category : #accessing }
-ZnCrPortableWriteStream >> newLine [
+ZnNewLineWriterStream >> newLine [
 	previous := nil.
 	stream nextPutAll: lineEnding
 ]
 
 { #category : #accessing }
-ZnCrPortableWriteStream >> nextPut: aCharacter [
+ZnNewLineWriterStream >> nextPut: aCharacter [
 	"Write aCharacter to the receivers stream.
 	Convert all line end combinations, i.e cr, lf, crlf, to the platform convention"
 
@@ -89,6 +89,6 @@ ZnCrPortableWriteStream >> nextPut: aCharacter [
 ]
 
 { #category : #accessing }
-ZnCrPortableWriteStream >> stream: aWriteStream [ 
+ZnNewLineWriterStream >> stream: aWriteStream [ 
 	stream := aWriteStream
 ]
