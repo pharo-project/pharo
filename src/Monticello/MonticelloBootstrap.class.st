@@ -24,14 +24,14 @@ Class {
 	#category : #'Monticello-Base'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MonticelloBootstrap class >> bootstrapDefault [
 
 	(self inDirectory: 'pharo-local/package-cache')
 		bootstrap
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MonticelloBootstrap class >> inDirectory: aDirectory [
 
 	^ self new
