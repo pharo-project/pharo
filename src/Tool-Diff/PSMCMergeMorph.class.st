@@ -165,7 +165,7 @@ PSMCMergeMorph >> model: aMerger [
 	self patchMorph model: sorted
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 PSMCMergeMorph >> newButtonsMorph [
 	"Answer a new buttons morph."
 
@@ -179,7 +179,7 @@ PSMCMergeMorph >> newButtonsMorph [
 		layoutInset: 4
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 PSMCMergeMorph >> newCodeMorph [
 	"Answer a new code morph."
 
@@ -191,7 +191,7 @@ PSMCMergeMorph >> newCodeMorph [
 		setText: ''
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 PSMCMergeMorph >> newConflictsButton [
 	"Answer a new button for displaying the count
 	of outstanding conflicts and navigating to each.
@@ -208,7 +208,7 @@ PSMCMergeMorph >> newConflictsButton [
 		vResizing: #spaceFill "workaround until table  layout fixed"
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 PSMCMergeMorph >> newMergeButton [
 	"Answer a new button for performing the merge.
 	It will be disabled if any conflicts are unresolved."
@@ -221,7 +221,7 @@ PSMCMergeMorph >> newMergeButton [
 		help: 'Merge the version into the image' translated
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 PSMCMergeMorph >> newPatchMorph [
 	"Answer a new patch morph."
 
