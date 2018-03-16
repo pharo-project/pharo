@@ -180,11 +180,6 @@ LabelMorph >> initWithContents: aString font: aFont emphasis: emphasisCode [
 		enabled: true
 ]
 
-{ #category : #'as yet unclassified' }
-LabelMorph >> initialColorInSystemWindow: aSystemWindow [
-	^ self theme textColor
-]
-
 { #category : #initialization }
 LabelMorph >> initialize [
 	"Initialize the receiver."

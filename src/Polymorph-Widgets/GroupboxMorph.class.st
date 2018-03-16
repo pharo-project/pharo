@@ -100,13 +100,6 @@ GroupboxMorph >> getContentSelector: anObject [
 	getContentSelector := anObject
 ]
 
-{ #category : #accessing }
-GroupboxMorph >> initialColorInSystemWindow: aSystemWindow [
-	"Answer the colour the receiver should be when added to a SystemWindow."
-
-	^Color transparent
-]
-
 { #category : #initialization }
 GroupboxMorph >> initialize [
 	"Initialize the receiver."
