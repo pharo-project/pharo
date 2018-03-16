@@ -130,7 +130,7 @@ FileHandle >> readStream [
 FileHandle >> readStreamEncoded: anEncoding [
 	
 	^ ZnCharacterReadStream
-		on: (ZnBufferedReadStream on: self binaryReadStream)
+		on: self binaryReadStream
 		encoding: anEncoding
 ]
 
