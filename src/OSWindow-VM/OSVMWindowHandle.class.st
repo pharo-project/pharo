@@ -78,7 +78,7 @@ OSVMWindowHandle >> isValid [
 	^ true
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 OSVMWindowHandle >> newFormRenderer: form [ 
 	^ renderer := OSVMFormRenderer new 
 		form: form;
