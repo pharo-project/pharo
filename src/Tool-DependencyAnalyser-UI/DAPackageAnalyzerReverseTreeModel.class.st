@@ -28,7 +28,7 @@ DAPackageAnalyzerReverseTreeModel class >> defaultSpec [
 				add: #tree ] yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageAnalyzerReverseTreeModel class >> onRelationGraph: aRelationGraph [
 	^ self new
 		initializeWithRelationGraph: aRelationGraph;
