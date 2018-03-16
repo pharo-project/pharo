@@ -50,7 +50,7 @@ TestRunner class >> menuCommandOn: aBuilder [
 		icon: self taskbarIcon
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TestRunner class >> open [
 	^ self new open
 ]
