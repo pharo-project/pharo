@@ -55,7 +55,7 @@ ProgressBarMorph class >> defaultWidth: aNumber [
 
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 ProgressBarMorph class >> from: startNumber to: endNumber [
 
 	^ self new
