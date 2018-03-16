@@ -13,7 +13,7 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 RBSwapMethodRefactoring class >> model: aRBSmalltalk swapMethod: aSelector in: aClass [
 	^ self new 
 		model: aRBSmalltalk;
@@ -21,7 +21,7 @@ RBSwapMethodRefactoring class >> model: aRBSmalltalk swapMethod: aSelector in: a
 		yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 RBSwapMethodRefactoring class >> swapMethod: aSelector in: aClass [
 	^ self new swapMethod: aSelector in: aClass
 ]
