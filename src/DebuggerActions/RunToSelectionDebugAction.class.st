@@ -14,12 +14,6 @@ RunToSelectionDebugAction class >> actionType [
 ]
 
 { #category : #accessing }
-RunToSelectionDebugAction >> defaultHelp [
-
-	^ 'Execute methods up to the text cursor position and return debugger control.'
-]
-
-{ #category : #accessing }
 RunToSelectionDebugAction >> defaultLabel [
 
 	^ 'Run to here'
@@ -37,6 +31,11 @@ RunToSelectionDebugAction >> executeAction [
 	self session 
 		runToSelection: self debugger code getSelection 
 		inContext: self currentContext
+]
+
+{ #category : #accessing }
+RunToSelectionDebugAction >> help [
+	^ 'Execute methods up to the text cursor position and return debugger control.'
 ]
 
 { #category : #accessing }

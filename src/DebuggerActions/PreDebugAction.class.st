@@ -20,11 +20,13 @@ PreDebugAction class >> debugActionsFor: aDebugger [
 			id: #abandonAction;
 			selector: #close;
 			order: 10;
+			help: 'Close the debuggeur and ignore the exception';
 			label: 'Abandon'.
 		self new
 			id: #openFullDebuggerAction;
 			selector: #openFullDebugger;
 			order: 15;
+			help: 'Open a full debuggeur to navigate in the full bugged stack.';
 			label: 'Debug'
 	}
 ]

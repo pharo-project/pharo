@@ -46,6 +46,11 @@ FullStackDebugAction >> expandedStackSize [
 ]
 
 { #category : #accessing }
+FullStackDebugAction >> help [
+	^ 'Open a full debuggeur to navigate in the full bugged stack.'
+]
+
+{ #category : #accessing }
 FullStackDebugAction >> id [
 
 	^ #fullStack

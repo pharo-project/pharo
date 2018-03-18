@@ -40,6 +40,11 @@ ReturnValueDebugAction >> executeAction [
 ]
 
 { #category : #accessing }
+ReturnValueDebugAction >> help [
+	^ 'Forces a return of a given value to the previous context.'
+]
+
+{ #category : #accessing }
 ReturnValueDebugAction >> id [
 
 	^ #returnValue
