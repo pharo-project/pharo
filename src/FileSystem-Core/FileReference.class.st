@@ -324,7 +324,8 @@ FileReference >> printOn: aStream [
 
 { #category : #streams }
 FileReference >> readStream [
-	^ filesystem readStreamOn: self path
+
+	^ self readStreamEncoded: 'utf8'
 ]
 
 { #category : #operations }
@@ -381,5 +382,6 @@ FileReference >> size [
 
 { #category : #streams }
 FileReference >> writeStream [
-	^ filesystem writeStreamOn: self path
+	
+	^ self writeStreamEncoded: 'utf8'
 ]

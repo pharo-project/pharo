@@ -662,6 +662,22 @@ AbstractFileReference >> readStreamDo: doBlock ifAbsent: absentBlock [
 ]
 
 { #category : #streams }
+AbstractFileReference >> readStreamEncoded: anEncoding [
+
+	^ ZnCharacterReadStream
+		on: self binaryReadStream
+		encoding: anEncoding
+]
+
+{ #category : #streams }
+AbstractFileReference >> readStreamEncoded: anEncoding do: aBlock [
+	| stream |
+	stream := self readStreamEncoded: anEncoding.
+	^ [ aBlock value: stream ] 
+		ensure: [ stream close ]
+]
+
+{ #category : #streams }
 AbstractFileReference >> readStreamIfAbsent: absentBlock [
 	^ self isFile
 		ifTrue: [ self readStream ]
@@ -782,6 +798,22 @@ AbstractFileReference >> writeStreamDo: doBlock ifPresent: presentBlock [
 	^ self isFile
 		ifTrue: presentBlock
 		ifFalse: [ self writeStreamDo: doBlock ]
+]
+
+{ #category : #streams }
+AbstractFileReference >> writeStreamEncoded: anEncoding [
+
+	^ ZnCharacterWriteStream
+		on: self binaryWriteStream
+		encoding: anEncoding
+]
+
+{ #category : #streams }
+AbstractFileReference >> writeStreamEncoded: anEncoding do: aBlock [
+	| stream |
+	stream := self writeStreamEncoded: anEncoding.
+	^ [ aBlock value: stream ]
+		ensure: [ stream close ]
 ]
 
 { #category : #streams }

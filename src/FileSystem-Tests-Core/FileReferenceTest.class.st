@@ -14,7 +14,7 @@ Class {
 { #category : #support }
 FileReferenceTest >> createFile: aPath [
 	filesystem ensureCreateDirectory: aPath parent.
-	(filesystem writeStreamOn: aPath) close
+	(filesystem resolve: aPath) writeStream close
 ]
 
 { #category : #running }
