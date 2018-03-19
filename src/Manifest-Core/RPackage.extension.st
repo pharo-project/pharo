@@ -15,8 +15,27 @@ RPackage >> manifestBuilderForRuleChecker: aRuleChecker [
 ]
 
 { #category : #'*Manifest-Core' }
+RPackage >> packageComment [
+	^ self packageManifestOrNil ifNil: [ '' ] ifNotNil: [ :manifest | manifest comment ]
+]
+
+{ #category : #'*Manifest-Core' }
+RPackage >> packageComment: aDescription [
+	^ self packageManifest
+		ifNil: [ '' ]
+		ifNotNil: [ :manifest | manifest comment: aDescription stamp: Author changeStamp]
+]
+
+{ #category : #'*Manifest-Core' }
 RPackage >> packageManifest [
 	^ self definedClasses
 		detect: [ :each | each isManifest ]
 		ifNone: [ TheManifestBuilder new createManifestNamed: name]
+]
+
+{ #category : #'*Manifest-Core' }
+RPackage >> packageManifestOrNil [
+	^ self definedClasses
+		detect: [ :each | each isManifest ]
+		ifNone: [ nil ]
 ]
