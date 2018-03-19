@@ -563,7 +563,7 @@ TestRunner >> fileOutResults [
 		request: 'Enter the file name' 
 		initialAnswer: defaultFilename.
 	fileName ifNil: [^ self].
-	stream := ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+	stream := ZnNewLineWriterStream on: (ZnCharacterWriteStream
 			on: (File openForWriteFileNamed: fileName)
 			encoding: 'utf8').
 	[result fileOutOn: stream]
