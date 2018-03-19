@@ -34,7 +34,7 @@ FilePluginPrims >> connectToFile: filePointer writable: writableFlag [
 	<primitive: 'primitiveConnectToFile' module: 'FilePlugin' error: error>
 	error = #'bad argument' ifTrue: [ 
 		(filePointer isKindOf: ByteArray) ifFalse: 
-			[ ^self error: 'openFileFile:writable: filePointer must be a ByteArray' ].
+			[ ^self error: 'filePointer must be a ByteArray' ].
 		(writableFlag isKindOf: Boolean) ifFalse: 
 			[ ^self error: 'writableFlag must be a boolean' ] ].
 	^ self primitiveFailed 
@@ -50,7 +50,7 @@ FilePluginPrims >> connectToFileDescriptor: fileDescriptor writable: writableFla
 	<primitive: 'primitiveConnectToFileDescriptor' module: 'FilePlugin' error: error>
 	error = #'bad argument' ifTrue: [ 
 		fileDescriptor isInteger ifFalse: 
-			[ ^self error: 'openFileDescriptor:writable: fileDescriptor must be an integer' ].
+			[ ^self error: 'fileDescriptor must be an integer' ].
 		(writableFlag isKindOf: Boolean) ifFalse: 
 			[ ^self error: 'writableFlag must be a boolean' ] ].
 	^ self primitiveFailed 
