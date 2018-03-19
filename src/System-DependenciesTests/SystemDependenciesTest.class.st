@@ -217,6 +217,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
 		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
+		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames ).
 	
 	self assertCollection: dependencies equals: self knownBasicToolsDependencies.
@@ -290,6 +291,8 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfIDE name }, BaselineOfIDE allPackageNames,
+		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
+		{ BaselineOfVersionner name }, BaselineOfVersionner allPackageNames,
 		{ BaselineOfPharoBootstrap name. 
 		  BaselineOfMonticello name.
 		  BaselineOfMetacello name }
@@ -481,6 +484,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
+		BaselineOfSpec allPackageNames,
 		BaselineOfUI allPackageNames )).
 	
 	self assertCollection: dependencies equals: self knownUIDependencies.

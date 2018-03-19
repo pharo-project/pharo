@@ -16,6 +16,9 @@ Class {
 	#instVars : [
 		'initializersEnabled'
 	],
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfDisplay
 }
 
@@ -54,6 +57,9 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 
 	| display |
 	
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
+	
 	self installBitmap.
 
 	display := (Smalltalk classNamed: #DisplayScreen) new.
@@ -70,8 +76,8 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 	Form initialize.
 	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
-	
-	
+
+	Initialized := true.
 ]
 
 { #category : #actions }

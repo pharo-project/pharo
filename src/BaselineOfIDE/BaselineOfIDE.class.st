@@ -24,6 +24,9 @@ Installs:
 Class {
 	#name : #BaselineOfIDE,
 	#superclass : #BaselineOf,
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfIDE
 }
 
@@ -236,17 +239,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tool-DependencyAnalyser-UI'.
 		spec package: 'Tool-DependencyAnalyser-Test'.	"standalone"
 		spec package: 'Tool-DependencyAnalyser-Test-Data'.	"standalone"
-
-		spec package: 'Versionner-Core-Model'.
-		spec package: 'Versionner-Core-Commands'.
-		spec package: 'Versionner-Core-Announcements'.
-		spec package: 'Versionner-Core-DependenciesModel'.
-		spec package: 'Versionner-Spec-Browser'.
-		spec package: 'Versionner-Tests-Resources'.
-		spec package: 'Versionner-Tests-Core-Model'.
-		spec package: 'Versionner-Tests-Core-Commands'.			"standalone"
-		spec package: 'Versionner-Tests-Core-DependenciesModel'.	"standalone"
-		spec package: 'Versionner-Commit'.
 
 		spec package: 'Athens-Core'.
 		spec package: 'Athens-Text'.
@@ -768,28 +760,6 @@ spec group: 'OSWindow-Group' with: #(
 	'OSWindow-Tests-Group'
 ).
 
-
-spec group: 'Versionner-Core-Group' with: #(
-	'Glamour-Core-Group'	"dependency, cleanup needed"
-	'Versionner-Core-Model'
-	'Versionner-Core-Commands'
-	'Versionner-Core-Announcements'
-	'Versionner-Core-DependenciesModel'
-	'Versionner-Spec-Browser'
-	'Versionner-Commit'
-).
-spec group: 'Versionner-Tests-Group' with: #(
-	'Kernel-Tests-Group' "dependency"
-	'Versionner-Tests-Resources'
-	'Versionner-Tests-Core-Model'
-	'Versionner-Tests-Core-Commands'			
-	'Versionner-Tests-Core-DependenciesModel'	
-).
-spec group: 'Versionner-Group' with: #(
-	'Versionner-Core-Group'
-	'Versionner-Tests-Group'
-).
-
 spec group: 'Kernel-Tests-Group' with: #(
 	'BlueInk-Core-Group' "dependency"
 	'RPackage-Tests' 
@@ -867,7 +837,6 @@ spec group: #default with: #(
 	'Epicea-Group'
 	'Optional-Group'
 	'NodeNavigation-Group'
-	'Versionner-Group'
 	'General-Tests-Group'
 	'SortFunctions-Group'	
 	'ReferenceFinder-Group'
@@ -915,6 +884,9 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	| initializersEnabled repo gofer |
 
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
+
 	Author fullName: self class name.
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
@@ -955,4 +927,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 	
 	self additionalInitialization.
+
+	Initialized := true.
 ]

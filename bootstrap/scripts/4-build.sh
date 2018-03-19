@@ -219,7 +219,7 @@ ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Smalltalk vm parameterAt: 45 put:
 env 2>&1 > env.log
 
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.5';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'tonel://${REPOSITORY}/src';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Pharo';repository: 'tonel://${REPOSITORY}/src';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources. Smalltalk garbageCollect"
 ${VM} "${PHARO_IMAGE_NAME}.image" clean --release
 
