@@ -52,6 +52,7 @@ MetaLink class >> defaultOptions [
 	- optionOneShot                     "remove link after first activation"
 	- optionMetalevel                   "force level: 0 for the link"
 	- optionDisabledLink                "links are active by default"
+	+ optionWeakAfter 						  "do not use #ensure: for #after "
 	)
 ]
 
@@ -143,6 +144,31 @@ MetaLink >> control: aRFLinkControl [
 	self invalidate.
 ]
 
+{ #category : #printing }
+MetaLink >> definitionString [
+	^String streamContents: [ :str |
+		str nextPutAll: 'MetaLink new'.
+		str cr;tab.
+		str nextPutAll: 'metaObject: '; nextPutAll: metaObject printString; nextPut: $;.
+		str cr;tab.
+		str nextPutAll: 'selector: '; nextPutAll: selector printString; nextPut: $;.
+		str cr;tab.
+		str nextPutAll: 'arguments: '; nextPutAll: arguments printString; nextPut: $;.
+		str cr;tab.
+		str nextPutAll: 'control: '; nextPutAll: control printString; nextPut: $;.
+		self hasMetaLevel ifTrue: [  
+			str cr;tab.
+			str nextPutAll: 'level: '; nextPutAll: level printString; nextPut: $;.
+			].
+		self hasCondition ifTrue: [
+			str cr;tab.
+			str nextPutAll: 'condition: '; nextPutAll: condition printString; nextPut: $;.
+			].
+		str cr;tab.
+		str nextPutAll: 'options: '; nextPutAll: options asArray printString; nextPut: $..
+	]
+]
+
 { #category : #'reflecive api' }
 MetaLink >> disable [
 	"turn off link reflectively while keeping the condition"
@@ -218,6 +244,7 @@ MetaLink >> invalidate [
 
 { #category : #accessing }
 MetaLink >> level [
+	<metaLinkOptions: #( + optionDisabledLink)>
 	^ level
 ]
 
@@ -377,8 +404,11 @@ MetaLink >> uninstall [
 
 { #category : #ast }
 MetaLink >> valueInContext: aBlock [
-	(RFMetaContext current isActive: (self level ifNil: [0]))
+	| process |
+	process := Processor rfactiveProcess.
+	(process isActive: self level)
 		ifFalse: [ ^ self ].
-	RFMetaContext current shiftLevelUp.
-	^ aBlock ctxtEnsure: [ RFMetaContext current shiftLevelDown ]
+	process shiftLevelUp.
+	aBlock value.
+	process shiftLevelDown.
 ]

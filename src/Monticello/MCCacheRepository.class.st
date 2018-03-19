@@ -30,6 +30,13 @@ MCCacheRepository class >> cacheDirectory: directory [
 	default := self new directory: directory asFileReference.
 ]
 
+{ #category : #accessing }
+MCCacheRepository class >> default [
+	"This should be deleted as soon as Metacello is fixed"
+	self flag: #toBeDeleted.			
+	^ self uniqueInstance 
+]
+
 { #category : #defaults }
 MCCacheRepository class >> defaultDirectory [
 	| directories |
@@ -120,7 +127,7 @@ MCCacheRepository >> loadVersionFromFileNamed: aString [
 	^ self versionReaderForFileNamed: aString do: [:r | r version]
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MCCacheRepository >> newFileNames [ 
 	^ self allFileNames difference: self seenFileNames
 ]

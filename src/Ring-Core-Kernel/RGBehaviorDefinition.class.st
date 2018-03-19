@@ -192,6 +192,13 @@ RGBehaviorDefinition >> allSuperclassesDo: aBlock [
 	superclass allSuperclassesDo: aBlock
 ]
 
+{ #category : #'accessing - parallel hierarchy' }
+RGBehaviorDefinition >> classSide [
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+	
+	^ self subclassResponsibility
+]
+
 { #category : #'accessing methods' }
 RGBehaviorDefinition >> compiledMethodNamed: selector [
 	"Retrieves the compiled method from aRGMethodDefinition"
@@ -295,6 +302,13 @@ RGBehaviorDefinition >> initialize [
 	super initialize.
 	methods:= IdentityDictionary new.
 	protocols:= Set new.
+]
+
+{ #category : #'accessing - parallel hierarchy' }
+RGBehaviorDefinition >> instanceSide [
+	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
+	
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -442,7 +456,7 @@ RGBehaviorDefinition >> selectors [
 RGBehaviorDefinition >> soleInstance [
 	"to be depracated in the future"
 	
-	^self theNonMetaClass
+	^self instanceSide
 ]
 
 { #category : #printing }
@@ -484,7 +498,7 @@ RGBehaviorDefinition >> superclass: aRGBehaviorDefinition [
 	self superclassName: aRGBehaviorDefinition name.
 	aRGBehaviorDefinition addSubclass: self.
 	self hasMetaclass
-		ifTrue: [ self theMetaClass superclass: aRGBehaviorDefinition theMetaClass ]
+		ifTrue: [ self classSide superclass: aRGBehaviorDefinition classSide ]
 ]
 
 { #category : #annotations }
@@ -501,13 +515,13 @@ RGBehaviorDefinition >> superclassName: aSymbol [
 		put: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 RGBehaviorDefinition >> theMetaClass [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 RGBehaviorDefinition >> theNonMetaClass [
 
 	self subclassResponsibility

@@ -26,9 +26,25 @@ DecoratorStream >> atEnd [
 ]
 
 { #category : #accessing }
+DecoratorStream >> contents [
+	"Answer all of the contents of the receiver."
+
+	^decoratedStream contents
+]
+
+{ #category : #accessing }
 DecoratorStream >> next [
 
 	^ decoratedStream next
+]
+
+{ #category : #accessing }
+DecoratorStream >> nextPut: anObject [ 
+	"Insert the argument, anObject, as the next object accessible by the 
+	receiver. Answer anObject."
+	
+	decoratedStream nextPut: anObject.
+	^anObject 
 ]
 
 { #category : #'initialize - release' }

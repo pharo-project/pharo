@@ -23,16 +23,14 @@ FLPharo7Platform >> deleteFileNamed: aFilename [
 
 { #category : #'accessing-files' }
 FLPharo7Platform >> fileNamed: aFilename readStreamDo: aBlock [
-	^ ((Smalltalk at: #File) named: aFilename) readStreamDo: [ :stream |
-		stream binary.
-		aBlock value: stream ]
+	^ ((Smalltalk at: #File) named: aFilename)
+			readStreamDo: [ :stream | aBlock value: stream ]
 ]
 
 { #category : #'accessing-files' }
 FLPharo7Platform >> fileNamed: aFilename writeStreamDo: aBlock [
-	^ ((Smalltalk at: #File) named: aFilename) writeStreamDo: [ :stream |
-		stream binary.
-		aBlock value: stream ]
+	^ ((Smalltalk at: #File) named: aFilename)
+			writeStreamDo: [ :stream | aBlock value: stream ]
 ]
 
 { #category : #testing }

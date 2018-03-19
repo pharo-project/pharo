@@ -45,17 +45,17 @@ RGTraitDefinitionTest >> testAddingMethods [
 RGTraitDefinitionTest >> testAsTraitDefinition [
 
 	| newTrait |
-	newTrait:= TBehavior asRingDefinition.
+	newTrait:= TSortable asRingDefinition.
 	self assert: (newTrait isRingObject).
 	self assert: (newTrait isTrait).  
-	self assert: (newTrait name == #TBehavior).  
+	self assert: (newTrait name == #TSortable).  
 	self assert: (newTrait category notNil).
 	self assert: (newTrait superclassName notNil).
 	
 	
-	self assert: (newTrait theMetaClass isRingObject).
-	self assert: (newTrait theMetaClass isTrait).
-	self assert: (newTrait theMetaClass traitCompositionSource = '{}').
+	self assert: (newTrait classSide isRingObject).
+	self assert: (newTrait classSide isTrait).
+	self assert: (newTrait classSide traitCompositionSource = '{}').
 ]
 
 { #category : #testing }
@@ -88,11 +88,11 @@ RGTraitDefinitionTest >> testExistingTrait [
 	
 	newClass withMetaclass.
 	self assert: (newClass hasMetaclass).
-	metaClass:= newClass theMetaClass.
+	metaClass:= newClass classSide.
 	self assert: (metaClass isMeta).
 	self assert: (metaClass name = 'TSortable classTrait').
-	self assert: (metaClass theNonMetaClass = newClass).
-	self assert: (metaClass realClass = TSortable theMetaClass).
+	self assert: (metaClass instanceSide = newClass).
+	self assert: (metaClass realClass = TSortable classSide).
 ]
 
 { #category : #testing }

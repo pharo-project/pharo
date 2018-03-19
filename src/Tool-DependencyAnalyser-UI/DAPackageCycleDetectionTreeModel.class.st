@@ -33,7 +33,7 @@ DAPackageCycleDetectionTreeModel class >> defaultSpec [
 				add: #tree ] yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageCycleDetectionTreeModel class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
 			(RPackageOrganizer default packages
@@ -41,14 +41,14 @@ DAPackageCycleDetectionTreeModel class >> onPackagesMatch: match [
 				thenCollect: [ :package | package packageName ]) ) 
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageCycleDetectionTreeModel class >> onPackagesNamed: aCollection [
 	^ self new 
 		initializeWithPackageName: aCollection;
 		yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageCycleDetectionTreeModel class >> system [
 	^ self onPackagesNamed: 
 		(RPackageOrganizer default packages collect: [ :package | package packageName asString ])

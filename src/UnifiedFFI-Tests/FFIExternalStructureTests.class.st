@@ -1,7 +1,10 @@
+"
+Tests for external structures
+"
 Class {
 	#name : #FFIExternalStructureTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #tests }

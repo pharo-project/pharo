@@ -1,3 +1,7 @@
+"
+I represent a Fraction.
+I store myself as two exported literals: the numerator and the denominator.
+"
 Class {
 	#name : #HEFraction,
 	#superclass : #HEExportedLiteral,

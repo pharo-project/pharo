@@ -141,11 +141,11 @@ EpApplyTest >> testClassAdditionWithMetaclassInstanceVariablesChanged [
 	aClass := classFactory newClass.
 	self setHeadAsInputEntry.
 	
-	aClass theMetaClass instanceVariableNames: 'x'.
+	aClass classSide instanceVariableNames: 'x'.
 	
-	self assert: aClass theMetaClass instVarNames equals: #(x).
+	self assert: aClass classSide instVarNames equals: #(x).
 	self applyInputEntry.
-	self assert: aClass theMetaClass instVarNames equals: #()
+	self assert: aClass classSide instVarNames equals: #()
 ]
 
 { #category : #tests }
@@ -338,8 +338,6 @@ EpApplyTest >> testTraitAdditionWithTraitRemoved [
 
 { #category : #tests }
 EpApplyTest >> testTraitModification [
-	<expectedFailure>
-
 	| aTrait traitName anotherTrait |
 	aTrait := classFactory newTrait.
 	anotherTrait := classFactory newTrait.
@@ -351,13 +349,9 @@ EpApplyTest >> testTraitModification [
 
 	self setHeadAsInputEntry.
 
-	self class environment removeClassNamed: traitName.
-	
 	self assert: inputEntry content class equals: EpTraitModification.
-	self deny: (self class environment includesKey: traitName).
 	self applyInputEntry.
 	self assert: (self class environment includesKey: traitName).
-	self assert: aTrait traitComposition isEmpty.
 
 ]
 

@@ -5,7 +5,7 @@ A ResumeDebugAction resumes the execution of the interrupted process and closes 
 Class {
 	#name : #ResumeDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }

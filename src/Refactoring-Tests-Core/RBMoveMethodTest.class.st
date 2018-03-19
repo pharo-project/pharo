@@ -34,8 +34,8 @@ RBMoveMethodTest >> testMoveMethodIntoArgument [
 						classified: self protocols]]').
 	self assert: (class parseTreeFor: #class1) = (RBParser parseMethod: 'class1 ^class').
 	self assert: (class parseTreeFor: #class:) = (RBParser parseMethod: 'class: anObject class := anObject').
-	self assert: (class theMetaClass parseTreeFor: #recursiveSelfRule:) = (RBParser parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
-	self assert: (class theMetaClass parseTreeFor: #recursiveSelfRule) = (RBParser parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
+	self assert: (class classSide parseTreeFor: #recursiveSelfRule:) = (RBParser parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
+	self assert: (class classSide parseTreeFor: #recursiveSelfRule) = (RBParser parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
 	self assert: (class parseTreeFor: #builder) = (RBParser parseMethod: 'builder ^builder').
 	self assert: (class parseTreeFor: #builder:) = (RBParser parseMethod: 'builder: anObject builder := anObject').
 	self assert: (class parseTreeFor: #rewriteRule) = (RBParser parseMethod: 'rewriteRule ^rewriteRule').
@@ -110,8 +110,8 @@ RBMoveMethodTest >> testMoveMethodIntoInstanceVariable [
 						classified: aSmalllintContext protocols]]').
 	self assert: (class parseTreeFor: #class1) = (RBParser parseMethod: 'class1 ^class').
 	self assert: (class parseTreeFor: #class:) = (RBParser parseMethod: 'class: anObject class := anObject').
-	self assert: (class theMetaClass parseTreeFor: #recursiveSelfRule:) = (RBParser parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
-	self assert: (class theMetaClass parseTreeFor: #recursiveSelfRule) = (RBParser parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
+	self assert: (class classSide parseTreeFor: #recursiveSelfRule:) = (RBParser parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
+	self assert: (class classSide parseTreeFor: #recursiveSelfRule) = (RBParser parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
 	self assert: (class parseTreeFor: #builder) = (RBParser parseMethod: 'builder ^builder').
 	self assert: (class parseTreeFor: #builder:) = (RBParser parseMethod: 'builder: anObject builder := anObject')
 ]

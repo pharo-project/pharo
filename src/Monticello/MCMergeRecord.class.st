@@ -15,7 +15,7 @@ Class {
 	#category : #'Monticello-Versioning'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MCMergeRecord class >> version: aVersion [
 	^ self basicNew initializeWithVersion: aVersion
 ]

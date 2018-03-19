@@ -38,12 +38,12 @@ SystemNavigation >> allBehaviorsDo: aBlock [
 	self environment allClassesDo: [ :aClass | 
 		aBlock
 			value: aClass;
-			value: aClass theMetaClass ].
+			value: aClass classSide ].
 
 	self environment allTraitsDo: [ :aTrait | 
 		aBlock
 			value: aTrait;
-			value: aTrait theMetaClass ]
+			value: aTrait classSide ]
 ]
 
 { #category : #query }
@@ -130,13 +130,13 @@ SystemNavigation >> allExistingProtocolsFor: instanceSide [
 	"answer all protocols on instance or class side"
 	
 	| allExistingProtocols |
-	allExistingProtocols := Smalltalk allClassesAndTraits
+	allExistingProtocols := Smalltalk globals allClassesAndTraits
 		inject: IdentitySet new
 		into: [ :col :e | 
 			| class |
 			class := instanceSide
-				ifTrue: [ e theNonMetaClass ]
-				ifFalse: [ e theMetaClass ].
+				ifTrue: [ e instanceSide ]
+				ifFalse: [ e classSide ].
 			col
 				addAll: class protocols;
 				yourself ].
@@ -182,7 +182,7 @@ SystemNavigation >> allLocalCallsOn: aSymbol ofClass: aClass [
 	
 	| aSet cls |
 	aSet := Set new.
-	cls := aClass theNonMetaClass.
+	cls := aClass instanceSide.
 	cls withAllSuperAndSubclassesDo: [ :class |
 		(class whichSelectorsReferTo: aSymbol)
 			do: [:sel |

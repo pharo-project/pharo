@@ -58,21 +58,21 @@ EpApplyVisitor >> visitClassAddition: aClassCreation [
 
 	self compiler
 		evaluate: aClassCreation classAdded definitionSource;
-		evaluate: aClassCreation classAdded theMetaClass definitionSource.
+		evaluate: aClassCreation classAdded classSide definitionSource.
 ]
 
 { #category : #visitor }
 EpApplyVisitor >> visitClassModification: aModifiedClassChange [
 	self compiler
 		evaluate: aModifiedClassChange newClass definitionSource;
-		evaluate: aModifiedClassChange newClass theMetaClass definitionSource.
+		evaluate: aModifiedClassChange newClass classSide definitionSource.
 		
 	self flag: #todo. "Workaround to issue 16836 in fogbugz."
 	self
 		behaviorNamed: aModifiedClassChange behaviorAffectedName
 		ifPresent: [ :aClass | 
-			aClass traitComposition: aModifiedClassChange newClass traitComposition.
-			aClass theMetaClass traitComposition: aModifiedClassChange newClass theMetaClass traitComposition. ].
+			aClass setTraitComposition: aModifiedClassChange newClass traitComposition.
+			aClass theMetaClass setTraitComposition: aModifiedClassChange newClass theMetaClass traitComposition. ].
 
 ]
 

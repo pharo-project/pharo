@@ -84,6 +84,7 @@ OrderedCollectionTest >> collection [
 
 { #category : #'tests - creation' }
 OrderedCollectionTest >> collectionClass [ 
+	"Return the class to be used to create instances of the class tested"
 	
 	^ OrderedCollection
 ]
@@ -328,7 +329,7 @@ OrderedCollectionTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 OrderedCollectionTest >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index between bounds of 'nonEmpty'"
 
 	^ 2
 ]

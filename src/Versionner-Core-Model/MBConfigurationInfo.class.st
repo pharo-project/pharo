@@ -265,7 +265,7 @@ MBConfigurationInfo >> currentVersionMismatch [
 		or: [ self packages anySatisfy: [ :each | each currentVersionMismatch ] ]
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 MBConfigurationInfo >> extractBranchFrom: aWorkingCopy [
 	| ref |
 	(aWorkingCopy isNil or: [ aWorkingCopy ancestors isEmpty ])

@@ -15,6 +15,12 @@ ZnFileSystemUtils class >> baseNameFor: fileName [
 	^ fileName asFileReference basename 
 ]
 
+{ #category : #streams }
+ZnFileSystemUtils class >> binaryFileStreamFor: fileName [
+	^ fileName asFileReference 
+		binaryWriteStream
+]
+
 { #category : #defaults }
 ZnFileSystemUtils class >> defaultDirectory [
 	^ FileSystem disk workingDirectory
@@ -91,6 +97,13 @@ ZnFileSystemUtils class >> fullNameFor: fileName [
 { #category : #queries }
 ZnFileSystemUtils class >> modificationTimeFor: path [
 	^ path asFileReference entry modificationTime 
+]
+
+{ #category : #streams }
+ZnFileSystemUtils class >> newBinaryFileNamed: fileName do: block [
+	^ fileName asFileReference 
+		binaryWriteStreamDo: block 
+		ifPresent: [ FileExists signalWith: fileName asFileReference ]
 ]
 
 { #category : #streams }

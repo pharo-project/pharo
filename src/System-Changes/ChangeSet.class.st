@@ -613,7 +613,7 @@ ChangeSet >> changeClass: class from: oldClass [
 	class wantsChangeSetLogging ifFalse: [^ self]. 
 	class isMeta 
 		ifFalse: [self atClass: class add: #change]	"normal"
-		ifTrue: [((self classChangeAt: class theNonMetaClass name) includes: #add) 
+		ifTrue: [((self classChangeAt: class instanceSide name) includes: #add) 
 			ifTrue: [self atClass: class add: #add] 	"When a class is defined, the metaclass
 				is not recorded, even though it was added.  A further change is
 				really just part of the original add."
@@ -932,9 +932,9 @@ ChangeSet >> fileOutClassDefinition: class on: stream [
 				vars in this class, warn author when new ones are added." ] ].
 	(self atClass: class includes: #comment)
 		ifFalse: [ ^ self ].
-	class theNonMetaClass organization
+	class instanceSide organization
 		putCommentOnFile: stream
-		forClass: class theNonMetaClass.
+		forClass: class instanceSide.
 	stream cr
 ]
 
@@ -946,8 +946,8 @@ ChangeSet >> fileOutOn: stream [
 	(self isEmpty and: [stream isKindOf: FileStream])
 		ifTrue: [self inform: 'Warning: no changes to file out'].
 		
-	traits := self changedClasses reject: [:each | each isBehavior].
-	classes := self changedClasses select: [:each | each isBehavior].
+	traits := self changedClasses select: [:each | each isTrait].
+	classes := self changedClasses select: [:each | each isBehavior & each isTrait not].
 	traitList := self class traitsOrder: traits asOrderedCollection.
 	classList := self class classesOrder: classes asOrderedCollection.
 	list := OrderedCollection new

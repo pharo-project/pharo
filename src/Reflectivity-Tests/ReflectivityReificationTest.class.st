@@ -27,34 +27,58 @@ ReflectivityReificationTest >> tearDown [
 { #category : #'tests - variablenodes' }
 ReflectivityReificationTest >> testAccessTemp [
 	| varNode instance |
-	varNode := (ReflectivityExamples>>#exampleAssignment) ast body statements second.
-	link := MetaLink new 
-		metaObject: self; 
+	varNode := (ReflectivityExamples >> #exampleAssignment) ast body
+		statements second.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
-		arguments: {RBVariableNode named: #temp}.
+		arguments: {(RBVariableNode named: #temp)}.
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleAssignment = 3).
-	self assert: (tag = 3).
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignment equals: 3.
+	self assert: tag equals: 3
+]
+
+{ #category : #'tests - sends' }
+ReflectivityReificationTest >> testReifyArguments2level [
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleSendTwoArgs) ast body statements first
+		value.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		arguments: #(arguments);
+		level: 0.
+	sendNode link: link.
+	self assert: sendNode hasMetalink.
+	self assert: (ReflectivityExamples >> #exampleSendTwoArgs) class = ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self deny: (Processor activeProcess isMeta).
+	self assert: instance exampleSendTwoArgs = #(1 2).
+	self deny: (Processor activeProcess isMeta).
+	self assert: tag = #(1 2)
 ]
 
 { #category : #'tests - variables' }
 ReflectivityReificationTest >> testReifyClassVariableClass [
 	| classVar instance |
 	classVar := ReflectivityExamples classVariableNamed: #ClassVar.
-	link := MetaLink new 
-		metaObject: self; 
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(class).
 	classVar link: link.
 	self assert: classVar hasMetalink.
-	self assert: (ReflectivityExamples >> #exampleClassVarRead) class = ReflectiveMethod.
-	self assert: (tag isNil).
+	self
+		assert: (ReflectivityExamples >> #exampleClassVarRead) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
 	instance := ReflectivityExamples new.
-	self assert: (instance exampleClassVarRead = #AClassVar).
-	self assert: (tag == ReflectivityExamples).
+	self assert: instance exampleClassVarRead equals: #AClassVar.
+	self assert: tag == ReflectivityExamples
 ]
 
 { #category : #'tests - variables' }
@@ -179,67 +203,69 @@ ReflectivityReificationTest >> testReifyClassVariableVariable [
 { #category : #'tests - allnodes' }
 ReflectivityReificationTest >> testReifyEntity [
 	| varNode instance |
-	varNode := (ReflectivityExamples>>#exampleIvarRead) ast body statements last value.
-	link := MetaLink new 
-		metaObject: self; 
+	varNode := (ReflectivityExamples >> #exampleIvarRead) ast body
+		statements last value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(entity).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleIvarRead = 33).
-	self assert: (tag = varNode).
-
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleIvarRead equals: 33.
+	self assert: tag equals: varNode
 ]
 
 { #category : #'tests - variablenodes' }
 ReflectivityReificationTest >> testReifyGlobalName [
 	| varNode instance |
-	varNode := (ReflectivityExamples>>#exampleGlobalRead) ast body statements last value.
-	link := MetaLink new 
-		metaObject: self; 
+	varNode := (ReflectivityExamples >> #exampleGlobalRead) ast body
+		statements last value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(name).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleGlobalRead = GlobalForTesting).
-	self assert: (tag = #GlobalForTesting).
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleGlobalRead equals: GlobalForTesting.
+	self assert: tag equals: #GlobalForTesting
 ]
 
 { #category : #'tests - variablenodes' }
 ReflectivityReificationTest >> testReifyGlobalValue [
 	| varNode instance |
-	varNode := (ReflectivityExamples>>#exampleGlobalRead) ast body statements last value.
-	link := MetaLink new 
-		metaObject: self; 
+	varNode := (ReflectivityExamples >> #exampleGlobalRead) ast body
+		statements last value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(value).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleGlobalRead = GlobalForTesting).
-	self assert: (tag = GlobalForTesting).
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleGlobalRead equals: GlobalForTesting.
+	self assert: tag equals: GlobalForTesting
 ]
 
 { #category : #'tests - variablenodes' }
 ReflectivityReificationTest >> testReifyGlobalVariable [
 	| varNode instance |
-	varNode := (ReflectivityExamples>>#exampleGlobalRead) ast body statements last value.
-	link := MetaLink new 
-		metaObject: self; 
+	varNode := (ReflectivityExamples >> #exampleGlobalRead) ast body
+		statements last value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(variable).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleGlobalRead = GlobalForTesting).
-	self assert: (tag class == GlobalVariable).
-
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleGlobalRead equals: GlobalForTesting.
+	self assert: tag class == GlobalVariable
 ]
 
 { #category : #'tests - variables' }
@@ -262,49 +288,52 @@ ReflectivityReificationTest >> testReifyGlobalVariableValue [
 { #category : #'tests - variablenodes' }
 ReflectivityReificationTest >> testReifyIvarName [
 	| varNode instance |
-	varNode := (ReflectivityExamples>>#exampleIvarRead) ast body statements last value.
-	link := MetaLink new 
-		metaObject: self; 
+	varNode := (ReflectivityExamples >> #exampleIvarRead) ast body
+		statements last value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(name).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleIvarRead = 33).
-	self assert: (tag = 'ivar').
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleIvarRead equals: 33.
+	self assert: tag equals: 'ivar'
 ]
 
 { #category : #'tests - variablenodes' }
 ReflectivityReificationTest >> testReifyIvarValue [
 	| varNode instance |
-	varNode := (ReflectivityExamples>>#exampleIvarRead) ast body statements last value.
-	link := MetaLink new 
-		metaObject: self; 
+	varNode := (ReflectivityExamples >> #exampleIvarRead) ast body
+		statements last value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(value).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleIvarRead = 33).
-	self assert: (tag = 33).
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleIvarRead equals: 33.
+	self assert: tag equals: 33
 ]
 
 { #category : #'tests - variablenodes' }
 ReflectivityReificationTest >> testReifyIvarVariable [
 	| varNode instance |
-	varNode := (ReflectivityExamples>>#exampleIvarRead) ast body statements last value.
-	link := MetaLink new 
-		metaObject: self; 
+	varNode := (ReflectivityExamples >> #exampleIvarRead) ast body
+		statements last value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(variable).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleIvarRead = 33).
-	self assert: (tag isKindOf: Slot).
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleIvarRead equals: 33.
+	self assert: (tag isKindOf: Slot)
 ]
 
 { #category : #'tests - method' }
@@ -424,57 +453,115 @@ ReflectivityReificationTest >> testReifyMethodThisContext [
 ]
 
 { #category : #'tests - assignment' }
-ReflectivityReificationTest >> testReifyNewValueAssignment [
-	| varNode instance|
-	varNode := (ReflectivityExamples>>#exampleAssignment) assignmentNodes first.
-	link := MetaLink new 
-		metaObject: self; 
+ReflectivityReificationTest >> testReifyNewValueAssignmentAfter [
+	| varNode instance |
+	varNode := (ReflectivityExamples >> #exampleAssignment)
+		assignmentNodes first.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #after;
+		arguments: #(newValue).
+	varNode link: link.
+	self assert: varNode hasMetalink.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignment equals: 3.
+	self assert: tag equals: 3
+]
+
+{ #category : #'tests - assignment' }
+ReflectivityReificationTest >> testReifyNewValueAssignmentBefore [
+	| varNode instance |
+	varNode := (ReflectivityExamples >> #exampleAssignment)
+		assignmentNodes first.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(newValue).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleAssignment = 3).
-	self assert: (tag = 3).
-
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignment equals: 3.
+	self assert: tag equals: 3
 ]
 
 { #category : #'tests - allnodes' }
 ReflectivityReificationTest >> testReifyNode [
 	| varNode instance |
-	varNode := (ReflectivityExamples>>#exampleIvarRead) ast body statements last value.
-	link := MetaLink new 
-		metaObject: self; 
+	varNode := (ReflectivityExamples >> #exampleIvarRead) ast body
+		statements last value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(node).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleIvarRead = 33).
-	self assert: (tag = varNode).
-
-
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleIvarRead equals: 33.
+	self assert: tag equals: varNode
 ]
 
 { #category : #'tests - allnodes' }
 ReflectivityReificationTest >> testReifyObject [
-	| sendNode instance|
-	sendNode := (ReflectivityExamples>>#exampleMethod) ast body statements first value.
-	link := MetaLink new 
-		metaObject: self; 
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
+		statements first value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(object).
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
-	self assert: (ReflectivityExamples>>#exampleMethod) class = ReflectiveMethod.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleMethod = 5).
-	self assert: (tag = instance).
-	self assert: (ReflectivityExamples>>#exampleMethod) class = CompiledMethod. 
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod equals: 5.
+	self assert: tag equals: instance.
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: CompiledMethod
+]
 
+{ #category : #'tests - assignment' }
+ReflectivityReificationTest >> testReifyOldValueAssignmentAfter [
+	| varNode instance |
+	<expectedFailure>
+	varNode := (ReflectivityExamples >> #exampleAssignment)
+		assignmentNodes first.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #after;
+		arguments: #(oldValue).
+	varNode link: link.
+	self assert: varNode hasMetalink.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignment equals: 3.
+	self assert: tag equals: nil.
+]
+
+{ #category : #'tests - assignment' }
+ReflectivityReificationTest >> testReifyOldValueAssignmentBefore [
+	| varNode instance |
+	varNode := (ReflectivityExamples >> #exampleAssignment)
+		assignmentNodes first.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #before;
+		arguments: #(oldValue).
+	varNode link: link.
+	self assert: varNode hasMetalink.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignment equals: 3.
+	self assert: tag equals: nil.
 ]
 
 { #category : #'tests - sends' }
@@ -496,67 +583,132 @@ ReflectivityReificationTest >> testReifyReceiverOnSendWithArguments [
 	self assert: beforeSize equals: 2.
 ]
 
+{ #category : #'tests - sends' }
+ReflectivityReificationTest >> testReifyReceiverOnSendWithArgumentsAfter [
+	| sendNode instance beforeSize |
+	sendNode := (ReflectivityExamples>>#exampleSendNoReturn) ast body statements last.
+	beforeSize := 0.
+	link := MetaLink new 
+		metaObject: [:receiver | beforeSize := receiver size]; 
+		selector: #value:;
+		control: #after;
+		arguments: #(receiver).
+	sendNode link: link.
+	self assert: sendNode hasMetalink.
+	self assert: (ReflectivityExamples>>#exampleSendNoReturn) class equals: ReflectiveMethod.
+	self assert: beforeSize equals: 0.
+	instance := ReflectivityExamples new .
+	instance exampleSendNoReturn.
+	self assert: beforeSize equals: 1.
+]
+
 { #category : #'tests - return' }
 ReflectivityReificationTest >> testReifyReturnValue [
 	| returnNode instance |
-	returnNode := (ReflectivityExamples>>#exampleAssignment) ast body statements last.
-	link := MetaLink new 
-		metaObject: self; 
+	returnNode := (ReflectivityExamples >> #exampleAssignment) ast body
+		statements last.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(value).
 	returnNode link: link.
 	self assert: returnNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleAssignment = 3).
-	self assert: (tag = 3).
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignment equals: 3.
+	self assert: tag equals: 3
 ]
 
 { #category : #'tests - sends' }
 ReflectivityReificationTest >> testReifySendAll [
-	| sendNode instance|
-	sendNode := (ReflectivityExamples>>#exampleMethod) ast body statements first value.
-	link := MetaLink new 
-		metaObject: #receiver; 
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
+		statements first value.
+	link := MetaLink new
+		metaObject: #receiver;
 		selector: #perform:withArguments:;
 		arguments: #(selector arguments).
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
-	self assert: (ReflectivityExamples>>#exampleMethod) class = ReflectiveMethod.
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleMethod = 5).
-
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod equals: 5
 ]
 
 { #category : #'tests - sends' }
 ReflectivityReificationTest >> testReifySendArgsAsArray [
-	| sendNode instance|
-	sendNode := (ReflectivityExamples>>#exampleMethod) ast body statements first value.
-	link := MetaLink new 
-		metaObject: self; 
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
+		statements first value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(selector context);
 		options: #(argsAsArray).
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
-	self assert: (ReflectivityExamples>>#exampleMethod) class = ReflectiveMethod.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleMethod = 5).
-	self assert: (tag isArray).
-	self assert: (tag first == #+).
-	self assert: (tag second class == Context).
-	
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod equals: 5.
+	self assert: tag isArray.
+	self assert: tag first == #+.
+	self assert: tag second class == Context
 ]
 
 { #category : #'tests - sends' }
 ReflectivityReificationTest >> testReifySendArguments [
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
+		statements first value.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		arguments: #(arguments).
+	sendNode link: link.
+	self assert: sendNode hasMetalink.
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod equals: 5.
+	self assert: tag equals: #(3)
+]
+
+{ #category : #'tests - sends' }
+ReflectivityReificationTest >> testReifySendArguments2 [
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleSendTwoArgs) ast body
+		statements first value.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		arguments: #(arguments).
+	sendNode link: link.
+	self assert: sendNode hasMetalink.
+	self
+		assert: (ReflectivityExamples >> #exampleSendTwoArgs) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleSendTwoArgs equals: #(1 2).
+	self assert: tag equals: #(1 2)
+]
+
+{ #category : #'tests - sends' }
+ReflectivityReificationTest >> testReifySendArgumentsLevel [
 	| sendNode instance|
 	sendNode := (ReflectivityExamples>>#exampleMethod) ast body statements first value.
 	link := MetaLink new 
 		metaObject: self; 
 		selector: #tagExec:;
-		arguments: #(arguments).
+		arguments: #(arguments);
+		level: 0.
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
 	self assert: (ReflectivityExamples>>#exampleMethod) class = ReflectiveMethod.
@@ -568,92 +720,85 @@ ReflectivityReificationTest >> testReifySendArguments [
 ]
 
 { #category : #'tests - sends' }
-ReflectivityReificationTest >> testReifySendArguments2 [
-	| sendNode instance|
-	sendNode := (ReflectivityExamples>>#exampleSendTwoArgs) ast body statements first value.
-	link := MetaLink new 
-		metaObject: self; 
-		selector: #tagExec:;
-		arguments: #(arguments).
-	sendNode link: link.
-	self assert: sendNode hasMetalink.
-	self assert: (ReflectivityExamples>>#exampleSendTwoArgs) class = ReflectiveMethod.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleSendTwoArgs = #(1 2)).
-	self assert: (tag = #(1 2)).
-
-]
-
-{ #category : #'tests - sends' }
 ReflectivityReificationTest >> testReifySendReceiver [
-	| sendNode instance|
-	sendNode := (ReflectivityExamples>>#exampleMethod) ast body statements first value.
-	link := MetaLink new 
-		metaObject: self; 
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
+		statements first value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(receiver).
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
-	self assert: (ReflectivityExamples>>#exampleMethod) class = ReflectiveMethod.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleMethod = 5).
-	self assert: (tag = 2).
-
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod equals: 5.
+	self assert: tag equals: 2
 ]
 
 { #category : #'tests - sends' }
 ReflectivityReificationTest >> testReifySendSelector [
-	| sendNode instance|
-	sendNode := (ReflectivityExamples>>#exampleMethod) ast body statements first value.
-	link := MetaLink new 
-		metaObject: self; 
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
+		statements first value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(selector).
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
-	self assert: (ReflectivityExamples>>#exampleMethod) class = ReflectiveMethod.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleMethod = 5).
-	self assert: (tag = #+).
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod equals: 5.
+	self assert: tag equals: #+
 ]
 
 { #category : #'tests - sends' }
 ReflectivityReificationTest >> testReifySendThisContext [
-	| sendNode instance|
-	sendNode := (ReflectivityExamples>>#exampleMethod) ast body statements first value.
-	link := MetaLink new 
-		metaObject: self; 
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
+		statements first value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(context).
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
-	self assert: (ReflectivityExamples>>#exampleMethod) class = ReflectiveMethod.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleMethod = 5).
-	self assert: (tag class = Context).
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod equals: 5.
+	self assert: tag class equals: Context
 ]
 
 { #category : #'tests - sends' }
 ReflectivityReificationTest >> testReifySendValue [
-	| sendNode instance|
-	sendNode := (ReflectivityExamples>>#exampleMethod) ast body statements first value.
-	link := MetaLink new 
-		metaObject: self; 
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
+		statements first value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		control: #after;
 		option: #(+ optionWeakAfter);
 		arguments: #(value).
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
-	self assert: (ReflectivityExamples>>#exampleMethod) class = ReflectiveMethod.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleMethod = 5).
-	self assert: (tag = 5).
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod equals: 5.
+	self assert: tag equals: 5
 ]
 
 { #category : #'tests - variables' }
@@ -694,80 +839,124 @@ ReflectivityReificationTest >> testReifySlotName [
 ReflectivityReificationTest >> testReifySlotValue [
 	| iVar instance |
 	iVar := ReflectivityExamples slotNamed: #ivar.
-	link := MetaLink new 
-		metaObject: self; 
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(value).
 	iVar link: link.
 	self assert: iVar hasMetalink.
-	self assert: (ReflectivityExamples >> #exampleIvarRead) class = ReflectiveMethod.
-	self assert: (tag isNil).
+	self
+		assert: (ReflectivityExamples >> #exampleIvarRead) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
 	instance := ReflectivityExamples new.
-	self assert: (instance exampleIvarRead = 33).
-	self assert: (tag = 33).
+	self assert: instance exampleIvarRead equals: 33.
+	self assert: tag equals: 33
 ]
 
 { #category : #'tests - variables' }
 ReflectivityReificationTest >> testReifySlotVariable [
 	| iVar instance |
 	iVar := ReflectivityExamples slotNamed: #ivar.
-	link := MetaLink new 
-		metaObject: self; 
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(variable).
 	iVar link: link.
 	self assert: iVar hasMetalink.
-	self assert: (ReflectivityExamples >> #exampleIvarRead) class = ReflectiveMethod.
-	self assert: (tag isNil).
+	self
+		assert: (ReflectivityExamples >> #exampleIvarRead) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
 	instance := ReflectivityExamples new.
-	self assert: (instance exampleIvarRead = 33).
-	self assert: (tag = iVar).
+	self assert: instance exampleIvarRead equals: 33.
+	self assert: tag equals: iVar
 ]
 
 { #category : #'tests - variablenodes' }
 ReflectivityReificationTest >> testReifyTempName [
 	| varNode instance |
-	varNode := (ReflectivityExamples>>#exampleAssignment) ast body statements first variable.
-	link := MetaLink new 
-		metaObject: self; 
+	varNode := (ReflectivityExamples >> #exampleAssignment) ast body
+		statements first variable.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(name).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleAssignment = 3).
-	self assert: (tag ='temp').
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignment equals: 3.
+	self assert: tag equals: 'temp'
 ]
 
 { #category : #'tests - variablenodes' }
 ReflectivityReificationTest >> testReifyTempNewValue [
-	| varNode instance|
-	varNode := (ReflectivityExamples>>#exampleAssignment) ast body statements first variable.
-	link := MetaLink new 
-		metaObject: self; 
+	| varNode instance |
+	varNode := (ReflectivityExamples >> #exampleAssignment) ast body
+		statements first variable.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(newValue).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleAssignment = 3).
-	self assert: (tag = 3).
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignment equals: 3.
+	self assert: tag equals: 3
 ]
 
 { #category : #'tests - variablenodes' }
 ReflectivityReificationTest >> testReifyTempValue [
 	| varNode instance |
-	varNode := (ReflectivityExamples>>#exampleAssignment) ast body statements last value.
-	link := MetaLink new 
-		metaObject: self; 
+	varNode := (ReflectivityExamples >> #exampleAssignment) ast body
+		statements last value.
+	link := MetaLink new
+		metaObject: self;
 		selector: #tagExec:;
 		arguments: #(value).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (tag isNil).
-	instance := ReflectivityExamples new .
-	self assert: (instance exampleAssignment = 3).
-	self assert: (tag = 3).
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignment equals: 3.
+	self assert: tag equals: 3
+]
+
+{ #category : #'tests - assignment' }
+ReflectivityReificationTest >> testReifyValueAssignmentAfter [
+	"#value for Assignemnt is the new value when #after"
+	| varNode instance |
+	varNode := (ReflectivityExamples >> #exampleAssignment)
+		assignmentNodes first.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #after;
+		arguments: #(value).
+	varNode link: link.
+	self assert: varNode hasMetalink.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignment equals: 3.
+	self assert: tag equals: 3
+]
+
+{ #category : #'tests - assignment' }
+ReflectivityReificationTest >> testReifyValueAssignmentBefore [
+	"#value for Assignemnt is the old value, is that what we want?"
+	| varNode instance |
+	varNode := (ReflectivityExamples >> #exampleAssignment)
+		assignmentNodes first.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		arguments: #(value).
+	varNode link: link.
+	self assert: varNode hasMetalink.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignment equals: 3.
+	self assert: tag equals: nil
 ]

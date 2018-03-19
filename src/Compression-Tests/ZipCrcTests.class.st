@@ -1,3 +1,6 @@
+"
+Tests for correct CRC handling in ZipWriteStream
+"
 Class {
 	#name : #ZipCrcTests,
 	#superclass : #TestCase,
@@ -129,7 +132,7 @@ ZipCrcTests >> testMissingZipCrc [
 	bytes := writer encodedStream contents.
 	reader := ZipReadStream on: bytes.
 	readBytes := reader upToEnd.
-	self assert: readBytes = 'Hello World'.
+	self assert: readBytes equals: 'Hello World'.
 	reader := ZipReadStream on: bytes.
 	reader contents.
 	reader := ZipReadStream on: bytes.
@@ -145,7 +148,7 @@ ZipCrcTests >> testValidGZipCrc [
 
 	bytes := writer encodedStream contents.
 	reader := GZipReadStream on: bytes.
-	self assert: reader upToEnd = 'Hello World'.
+	self assert: reader upToEnd equals: 'Hello World'.
 ]
 
 { #category : #tests }
@@ -157,11 +160,11 @@ ZipCrcTests >> testValidZLibCrc [
 
 	bytes := writer encodedStream contents.
 	reader := ZLibReadStream on: bytes.
-	self assert: reader upToEnd = 'Hello World'.
+	self assert: reader upToEnd equals: 'Hello World'.
 	
 	bytes := writer encodedStream contents.
 	reader := ZLibReadStream on: bytes.
-	self assert: (reader next: 100) = 'Hello World'.
+	self assert: (reader next: 100) equals: 'Hello World'.
 ]
 
 { #category : #tests }
@@ -176,17 +179,17 @@ ZipCrcTests >> testValidZipCrc [
 	reader := ZipReadStream on: bytes.
 	reader expectedCrc: writer crc.
 	readBytes := reader upToEnd.
-	self assert: readBytes = 'Hello World'.
+	self assert: readBytes equals: 'Hello World'.
 	reader := ZipReadStream on: bytes.
 	reader expectedCrc: writer crc.
 	readBytes := reader contents.
-	self assert: readBytes = 'Hello World'.
+	self assert: readBytes equals: 'Hello World'.
 	reader := ZipReadStream on: bytes.
 	reader expectedCrc: writer crc.
 	readBytes := reader next: 11.
-	self assert: readBytes = 'Hello World'.
+	self assert: readBytes equals: 'Hello World'.
 	reader := ZipReadStream on: bytes.
 	reader expectedCrc: writer crc.
 	readBytes := reader next: 100.
-	self assert: readBytes = 'Hello World'
+	self assert: readBytes equals: 'Hello World'
 ]

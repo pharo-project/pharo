@@ -31,7 +31,7 @@ SHStyleElement class >> settingInputWidgetForNode: aSettingNode [
 			 width: 100}
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 SHStyleElement class >> withTokens: aCollection [ 
 	^ self new tokens: aCollection;
 		 yourself

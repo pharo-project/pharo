@@ -1601,11 +1601,9 @@ Color >> isTranslucentButNotTransparent [
 
 { #category : #queries }
 Color >> isTranslucentColor [
-	self
-		deprecated: 'Please use #isTranslucent instead'
-		transformWith: '`@receiver isTranslucentColor' -> '`@receiver isTranslucent'.
-
-	^ self isTranslucent
+	"This means: self isTranslucent, but isTransparent not"
+	self flag: #toremove.
+	^ false
 ]
 
 { #category : #queries }
@@ -2001,19 +1999,17 @@ Color >> setRed: r green: g blue: b range: range [
 Color >> shortPrintString [
 	"Return a short (but less precise) print string for use where space is tight."
 
-	| s |
-	s := String new writeStream.
-	s
-		nextPutAll: '(';
-		nextPutAll: self class name;
-		nextPutAll: ' r: ';
-		nextPutAll: (self red roundTo: 0.01) printString;
-		nextPutAll: ' g: ';
-		nextPutAll: (self green roundTo: 0.01) printString;
-		nextPutAll: ' b: ';
-		nextPutAll: (self blue roundTo: 0.01) printString;
-		nextPutAll: ')'.
-	^ s contents
+	^ String streamContents: [ :s |
+				s
+					nextPutAll: '(';
+					nextPutAll: self class name;
+					nextPutAll: ' r: '.
+				(self red roundTo: 0.01) printOn: s.
+				s nextPutAll: ' g: '.
+				(self green roundTo: 0.01) printOn: s.
+				s nextPutAll: ' b: '.
+				(self blue roundTo: 0.01) printOn: s.
+				s nextPutAll: ')' ]
 ]
 
 { #category : #transformations }

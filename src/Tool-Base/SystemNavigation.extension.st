@@ -31,8 +31,8 @@ SystemNavigation >> browseAllCallsOnClass: aClass [
 
 	^ self
 		browseMessageList: ((aClass allCallsOnIn: self) asSortedCollection)
-		name: 'Users of class ' , aClass theNonMetaClass name
-		autoSelect: aClass theNonMetaClass name
+		name: 'Users of class ' , aClass instanceSide name
+		autoSelect: aClass instanceSide name
 ]
 
 { #category : #'*Tool-Base' }

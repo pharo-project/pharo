@@ -5,7 +5,7 @@ I am used to generate the classes by the ShiftClassBuilder when it is using dire
 Class {
 	#name : #ShSmalltalkGlobalsEnvironment,
 	#superclass : #ShGlobalsEnvironment,
-	#category : 'Shift-ClassBuilder'
+	#category : #'Shift-ClassBuilder'
 }
 
 { #category : #accessing }

@@ -8,6 +8,18 @@ Class {
 	#category : #'FileSystem-Memory'
 }
 
+{ #category : #testing }
+MemoryWriteStream >> isReadOnly [
+	
+	^ false
+]
+
+{ #category : #accessing }
+MemoryWriteStream >> readOnlyCopy [
+	
+	^ collection readStream
+]
+
 { #category : #positioning }
 MemoryWriteStream >> truncate [
 	collection truncate

@@ -134,6 +134,7 @@ Alien class >> exampleCqsort [
 	"Call the libc qsort function (which requires a callback)."
 	"Alien exampleCqsort"
 	"(Time millisecondsToRun: [100 timesRepeat: [Alien exampleCqsort]]) / 100.0"
+	<sampleInstance>
 	| cb rand nElements sizeofDouble values orig sort |
 	rand := Random new.
 	values := Alien newC: (nElements := 100) * (sizeofDouble := 8).
@@ -159,6 +160,7 @@ Alien class >> exampleEnumFontFamiliesEx [
 	"Call the Win32 EnumFontFamiliesEx function."
 	"Alien exampleEnumFontFamiliesEx"
 	"(Time millisecondsToRun: [1000 timesRepeat: [Alien exampleEnumFontFamiliesEx]]) / 1000.0"
+	<sampleInstance>
 	| fontNames r gle err hDC cb |
 	fontNames := OrderedCollection new.
 	gle := self lookup: 'GetLastError' inLibrary: 'kernel32.dll'.
@@ -193,6 +195,7 @@ Alien class >> exampleEnumWindows [
 	Count how many windows.  Use an Alien to hold the counter on the C heap.
 	Answer the count of windows (number of callbacks)."
 	"Alien exampleEnumWindows"
+	<sampleInstance>
 	| counter cb |
 	counter := Alien newC: 4.
 	cb := Callback
@@ -214,6 +217,7 @@ Alien class >> exampleEnumWindowsCallbackPerformance [
 	Count how many windows using a Smalltalk counter.
 	Answer seconds -> callbacks -> microseconds per callback."
 	"Alien exampleEnumWindowsCallbackPerformance"
+	<sampleInstance>
 	| enumWin count ms cb |
 	Smalltalk garbageCollect.
 	enumWin := self lookup: 'EnumWindows' inLibrary: 'user32.dll'.
@@ -237,6 +241,7 @@ Alien class >> exampleEnumWindowsSimple [
 	Count how many windows.  Use an Alien to hold the counter on the C heap.
 	Answer the count of windows (number of callbacks)."
 	"Alien exampleEnumWindowsSimple"
+	<sampleInstance>
 	| count cb |
 	count := 0.
 	cb := Callback
@@ -254,6 +259,7 @@ Alien class >> exampleEnumWindowsSimple [
 Alien class >> exampleGetOpenFileName [
 	"Call the Win32 GetOpenFileNameA function."
 	"Alien exampleGetOpenFileName"
+	<sampleInstance>
 	| openstruct |
 	openstruct := OPENFILENAME newC.
 	(self lookup: 'GetOpenFileNameA' inLibrary: 'comdlg32.dll')
@@ -266,6 +272,7 @@ Alien class >> exampleGetOpenFileName [
 Alien class >> examplePrintf [
 	"Call the libc printf function."
 	"Alien examplePrintf"
+	<sampleInstance>
 	| r s |
 	(self lookup: 'printf' inLibrary: self libcName)
 		primFFICallResult: (r := Alien new: 4)
@@ -281,6 +288,7 @@ Alien class >> exampleVarArgsEnumFontFamiliesEx [
 	"Call the Win32 EnumFontFamiliesEx function."
 	"Alien exampleEnumFontFamiliesEx"
 	"(Time millisecondsToRun: [1000 timesRepeat: [Alien exampleEnumFontFamiliesEx]]) / 1000.0"
+	<sampleInstance>
 	| fontNames r gle err hDC cb |
 	fontNames := OrderedCollection new.
 	gle := self lookup: 'GetLastError' inLibrary: 'kernel32.dll'.

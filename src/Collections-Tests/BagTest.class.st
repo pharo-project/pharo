@@ -51,7 +51,8 @@ BagTest >> collection [
 
 { #category : #'tests - set arithmetic' }
 BagTest >> collectionClass [
-
+	"Return the class to be used to create instances of the class tested"
+	
 	^ Bag
 ]
 
@@ -323,17 +324,6 @@ BagTest >> speciesClass [
 	^ Bag
 ]
 
-{ #category : #'tests - fixture' }
-BagTest >> test0CopyTest [
-	self empty.
-	self assert: self empty size = 0.
-	self nonEmpty.
-	self assert: (self nonEmpty size = 0) not.
-	self collectionWithElementsToRemove.
-	self assert: (self collectionWithElementsToRemove size = 0) not.
-	self elementToAdd
-]
-
 { #category : #'basic tests' }
 BagTest >> testAdd [
 
@@ -395,7 +385,6 @@ BagTest >> testAsSet [
 
 { #category : #'basic tests' }
 BagTest >> testCopy [
-	"self run: #testCopy"
 	
 	| aBag newBag |
 	aBag := Bag new.
@@ -500,13 +489,12 @@ BagTest >> testOccurrencesOf [
 	aBag add: 'b'.
 	aBag add: 'b'.
 	aBag add: 'b'.	
-	self assert: (aBag occurrencesOf:'a') = 3.
-	self assert: (aBag occurrencesOf:'b') = 4.
-	self assert: (aBag occurrencesOf:'c') = 0.
-	self assert: (aBag occurrencesOf: nil) =0.
+	self assert: (aBag occurrencesOf: 'a') equals: 3.
+	self assert: (aBag occurrencesOf: 'b') equals: 4.
+	self assert: (aBag occurrencesOf: 'c') equals: 0.
+	self assert: (aBag occurrencesOf: nil) equals: 0.
 	aBag add: nil.
-	self assert: (aBag occurrencesOf: nil) =1.
-	
+	self assert: (aBag occurrencesOf: nil) equals: 1.
 ]
 
 { #category : #tests }

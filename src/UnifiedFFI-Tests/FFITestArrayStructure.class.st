@@ -10,7 +10,7 @@ Class {
 		'OFFSET_BYTE10',
 		'OFFSET_CHAR5'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Test-Data'
 }
 
 { #category : #'field definition' }

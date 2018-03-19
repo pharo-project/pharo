@@ -1,3 +1,12 @@
+"
+I represent a Pragma.
+I am stored as a methodLiteral, a keyword and an array of  arguments.
+The literals are exported as HEAbstractLiteral.
+
+The method is a HEMethodLiteral
+The keyword is a HESymbol
+and the arguments si a HEArray
+"
 Class {
 	#name : #HEPragma,
 	#superclass : #HEExportedLiteral,

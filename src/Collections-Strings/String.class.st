@@ -1025,7 +1025,7 @@ String >> encodeDoublingQuoteOn: aStream [
 	aStream print: $'
 ]
 
-{ #category : #comparing }
+{ #category : #testing }
 String >> endsWith: suffix [
 	"Answer whether the tail end of the receiver is the same as suffix.
 	The comparison is case-sensitive.
@@ -1034,36 +1034,25 @@ String >> endsWith: suffix [
 	"
 	
 	| extra |
-	(extra := self size - suffix size) < 0 
-		ifTrue: [^ false].
-	^ (self findString: suffix startingAt: extra + 1) > 0
+	extra := self size - suffix size.
+	^extra < 0 
+		ifTrue: [ false]
+	   ifFalse: [ (self findString: suffix startingAt: extra + 1) > 0 ]
 ]
 
-{ #category : #'system primitives' }
+{ #category : #testing }
 String >> endsWithAColon [ 
-	"Answer whether the final character of the receiver is a colon
-	
-	#fred: endsWithAColon
-	'fred' endsWithAColon
-	"
+	"Answer whether the final character of the receiver is a colon"
 
-	^ self size > 0 and: [self last == $:]
+	^ self notEmpty and: [ self last == $: ]
 
 ]
 
-{ #category : #comparing }
-String >> endsWithAnyOf: aCollection [
-	aCollection do:[:suffix|
-		(self endsWith: suffix) ifTrue:[^true].
-	].
-	^false
-]
-
-{ #category : #accessing }
+{ #category : #testing }
 String >> endsWithDigit [
 	"Answer whether the receiver's final character represents a digit."
 
-	^ self size > 0 and: [self last isDigit]
+	^ self notEmpty and: [self last isDigit]
 ]
 
 { #category : #formatting }
@@ -1101,6 +1090,31 @@ String >> expandMacrosWith: anObject with: anotherObject with: thirdObject with:
 
 { #category : #formatting }
 String >> expandMacrosWithArguments: anArray [
+	"
+	Arguments:
+	<Np> writes the N-th argument using #printString. Unused arguments are ignored.
+	('<1p>: <2p>' expandMacrosWith: 'Number' with: 5 with: nil) >>> '''Number'': 5'.
+	<Ns> writes the N-th argument, which is expected to be a String/collection of printable objects.
+	Note also important distinction for single-quotes inside the argument; with <p> they will be doubled.
+	('<1s> vs <1p>' expandMacrosWith: 'it''em') >>> 'it''em vs ''it''''em'''
+	
+	Whitespace characters:
+	'<t>' expandMacros >>> String tab.
+	'<r>' expandMacros >>> String cr.
+	'<n>' expandMacros >>> OSPlatform current lineEnding.
+	
+	Writing '<' character:
+	To write '<', prepend it with percent sign.
+	'%<n>' expandMacros >>> '<n>'.
+	
+	Ternary operator:
+	An if-else string can be written with <N?yes-string:no-string>.
+	The N-th argument bust be a Boolean.
+	Yes-string cannot contain colon ':', which terminates the yes-string.
+	No-string cannot contain closing angle bracket '>', which terminates the no-string.
+	('<1?success:error>' expandMacrosWith: true) >>> 'success'.
+	('<1?success:is error>' expandMacrosWith: false) >>> 'is error'
+	"
 	| readStream char index |
 	^ self class
 		new: self size
@@ -2078,9 +2092,9 @@ String >> romanNumber [
 	self reverseDo:
 		[:each |
 		v1 := #(1 5 10 50 100 500 1000) at: ('IVXLCDM' indexOf: each).
-		v1 >= v2
-			ifTrue: [value := value + v1]
-			ifFalse: [value := value - v1].
+		value := v1 >= v2
+			ifTrue: [ value + v1]
+			ifFalse: [ value - v1].
 		v2 := v1].
 	^ value
 ]

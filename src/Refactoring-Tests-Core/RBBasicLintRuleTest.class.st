@@ -120,9 +120,9 @@ RBBasicLintRuleTest class >> classNameInSelector [
 	detector name: 'Redundant class name in selector'.
 	detector methodBlock: 
 			[:context :result | 
-			(context selectedClass isMetaclass and: 
+			(context selectedClass isMeta and: 
 					[(context selector
-						indexOfSubCollection: context selectedClass theNonMetaClass name
+						indexOfSubCollection: context selectedClass instanceSide name
 						startingAt: 1) > 0])
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector
@@ -710,9 +710,9 @@ RBBasicLintRuleTest class >> refersToClass [
 	detector classBlock: 
 			[:context :result | 
 			| sels className |
-			className := context selectedClass theNonMetaClass name.
+			className := context selectedClass instanceSide name.
 			sels := context selectedClass
-						whichSelectorsReferTo: (Smalltalk associationAt: className).
+						whichSelectorsReferTo: (Smalltalk globals associationAt: className).
 			sels isEmpty ifFalse: 
 					[result addSearchString: className.
 					sels do: [:each | result addClass: context selectedClass selector: each]]].

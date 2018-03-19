@@ -55,7 +55,7 @@ GLMCollapsableBrick class >> createCollapsableArray: anInteger [
 
 { #category : #examples }
 GLMCollapsableBrick class >> exampleOpen [
-	
+
 	self gtExample openInBrickWindowLabeled: 'Collapsable Example'
 ]
 

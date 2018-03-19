@@ -63,7 +63,7 @@ TemporaryVariable >> insteadLinks [
 TemporaryVariable >> link: aMetaLink [
 	(aMetaLink checkForCompatibilityWith: self) ifFalse: [ self error: 'link requests reification that can not be provided by this node' ].
 	
-	(self propertyAt: #links ifAbsentPut: [ IdentitySet new ]) add: aMetaLink.
+	(self propertyAt: #links ifAbsentPut: [ OrderedCollection new ]) add: aMetaLink.
 	aMetaLink installOnVariable: self.
 	method 
 		createTwin;

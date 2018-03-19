@@ -8,9 +8,9 @@ Trait {
 
 { #category : #requirements }
 TCopySequenceableWithOrWithoutSpecificElements >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index between bounds of 'nonEmpty'"
 
-	self explicitRequirement
+	^self explicitRequirement
 ]
 
 { #category : #requirements }
@@ -20,6 +20,7 @@ TCopySequenceableWithOrWithoutSpecificElements >> nonEmpty [
 
 { #category : #'tests - fixture' }
 TCopySequenceableWithOrWithoutSpecificElements >> test0FixtureCopyWithOrWithoutSpecificElementsTest [
+
 	self nonEmpty.
 	self deny: self nonEmpty isEmpty.
 	self indexInNonEmpty.
@@ -48,16 +49,15 @@ TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithFirst [
 TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithSequenceable [
 
 	| result index element |
-	index := self indexInNonEmpty .
+	index := self indexInNonEmpty.
 	element := self nonEmpty at: index.
 	result := self nonEmpty copyWith: (element ).
 	
-	self assert: result size = (self nonEmpty size + 1).
-	self assert: result last = element .
+	self assert: result size equals: (self nonEmpty size + 1).
+	self assert: result last equals: element.
 	
 	1 to: (result size - 1) do:
-	[ :i |
-	self assert: (result at: i) = ( self nonEmpty at: ( i  ))].
+		[ :i | self assert: (result at: i) equals: ( self nonEmpty at: i)]
 ]
 
 { #category : #'tests - copying with or without' }
@@ -66,27 +66,27 @@ TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithoutFirst [
 	| result |
 	result := self nonEmpty copyWithoutFirst.
 	
-	self assert: result size = (self nonEmpty size - 1).
+	self assert: result size equals: (self nonEmpty size - 1).
 	
-	1 to: result size do:
-		[:i |
-		self assert: (result at: i)= (self nonEmpty at: (i + 1))].
+	result withIndexDo: 
+		[:el :i | self assert: (result at: i) equals: (self nonEmpty at: (i + 1))]
 ]
 
 { #category : #'tests - copying with or without' }
 TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithoutIndex [
-	| result index |
-	index := self indexInNonEmpty .
-	result := self nonEmpty copyWithoutIndex: index .
+
+	| result index |	
+	index := self indexInNonEmpty.
+	result := self nonEmpty copyWithoutIndex: index.
 	
-	"verify content of 'result:'"
-	1 to: result size do:
-		[:i | 
-		i<( index ) ifTrue: [self assert: ((result at:i )= (self nonEmpty at:i))].
-		i>=( index ) ifTrue: [self assert: (result at:i )= (self nonEmpty at:(i+1))]].
+	"Verify content of result"
+	result withIndexDo: 
+		[:element :i | 
+		 i <  index ifTrue: [ self assert: element equals: (self nonEmpty at: i) ].
+		 i >= index ifTrue: [ self assert: element equals: (self nonEmpty at: (i + 1)) ]].
 	
-	"verify size of result : "
-	self assert: result size=(self nonEmpty size -1).
+	"Verify size of result"
+	self assert: result size equals: (self nonEmpty size - 1)
 ]
 
 { #category : #'tests - copying with or without' }
@@ -111,16 +111,16 @@ TCopySequenceableWithOrWithoutSpecificElements >> testForceToPaddingStartWith [
 TCopySequenceableWithOrWithoutSpecificElements >> testForceToPaddingWith [
 
 	| result element |
-	element := self nonEmpty at: self indexInNonEmpty .
-	result := self nonEmpty forceTo: (self nonEmpty size+2) paddingWith: ( element ).
+	element := self nonEmpty at: self indexInNonEmpty.
+	result := self nonEmpty forceTo: (self nonEmpty size + 2) paddingWith: element.
 	
-	"verify content of 'result' : "
-	1 to: self nonEmpty  size do:
-		[:i | self assert: ( self nonEmpty at: i ) = ( result at:(i) ). ].
+	"Verify content of 'result'"
+	self nonEmpty withIndexDo:
+		[:el :index | self assert: el equals: (result at: index) ].
 	
 	(result size - 1) to: result size do:
-		[:i | self assert: ( result at:i ) = ( element ) ].
+		[:i | self assert: (result at:i) equals: element ].
 
-	"verify size of 'result' :"
-	self assert: result size = (self nonEmpty size + 2).
+	"Verify size of 'result'"
+	self assert: result size equals: self nonEmpty size + 2
 ]

@@ -31,7 +31,7 @@ RGMonticelloTest >> testConvertingMCClassDefinition [
 	ringClass := mcClass asRingDefinition.
 	
 	self assert: (ringClass isClass).
-	self assert: (ringClass theMetaClass realClass = OrderedCollection class).
+	self assert: (ringClass classSide realClass = OrderedCollection class).
 	self assert: (ringClass isSameRevisionAs: OrderedCollection asRingDefinition).
 	self deny: (ringClass isSameRevisionAs: SortedCollection asRingDefinition)
 ]
@@ -68,7 +68,7 @@ RGMonticelloTest >> testConvertingMCTraitDefinition [
 	ringClass := mcClass asRingDefinition.
 	
 	self assert: (ringClass isTrait).
-	self assert: (ringClass theMetaClass realClass = TSortable theMetaClass).
+	self assert: (ringClass classSide realClass = TSortable classSide).
 	self assert: (ringClass isSameRevisionAs: TSortable asRingDefinition).
-	self deny: (ringClass isSameRevisionAs: TBehavior asRingDefinition)
+	self deny: (ringClass isSameRevisionAs: TAssertable asRingDefinition)
 ]

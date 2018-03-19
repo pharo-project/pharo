@@ -39,23 +39,25 @@ TIncludesWithIdentityCheckTest >> nonEmpty [
 
 { #category : #'tests - fixture' }
 TIncludesWithIdentityCheckTest >> test0FixtureIncludeTest [
+
 	| anElementIn |
 	self nonEmpty.
 	self deny: self nonEmpty isEmpty.
 	self elementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self elementNotIn ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn = false.
+	self assert: anElementIn equals: false.
 	self anotherElementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self anotherElementNotIn ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn = false.
+	self assert: anElementIn equals: false.
 	self empty.
 	self assert: self empty isEmpty
 ]
 
 { #category : #'tests - fixture' }
 TIncludesWithIdentityCheckTest >> test0FixtureIncludeWithIdentityTest [
+
 	| anElement |
 	self collectionWithCopyNonIdentical.
 	anElement := self collectionWithCopyNonIdentical anyOne.
@@ -76,19 +78,20 @@ TIncludesWithIdentityCheckTest >> testIdentityIncludes [
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIdentityIncludesNonSpecificComportement [
-	" test the same comportement than 'includes: '  "
-	| collection |	
-	collection := self nonEmpty  .
+	"Test the same comportement than #includes:"
 	
-	self deny: (collection identityIncludes: self elementNotIn ).
-	self assert:(collection identityIncludes: collection anyOne)
+	| collection |	
+	collection := self nonEmpty.
+	
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
 
 ]
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesAllNoneThere [
 
-	self deny: (self empty includesAll: self nonEmpty ).
+	self deny: (self empty includesAll: self nonEmpty).
 	self deny: (self nonEmpty includesAll: { self elementNotIn. self anotherElementNotIn })
 ]
 
@@ -97,7 +100,7 @@ TIncludesWithIdentityCheckTest >> testIncludesAnyAllThere [
 
 	self deny: (self nonEmpty includesAny: self empty).
 	self assert: (self nonEmpty includesAny: { self nonEmpty anyOne }).
-	self assert: (self nonEmpty includesAny: self nonEmpty).
+	self assert: (self nonEmpty includesAny: self nonEmpty)
 ]
 
 { #category : #'tests - includes' }
@@ -118,5 +121,5 @@ TIncludesWithIdentityCheckTest >> testIncludesElementIsNotThere [
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesElementIsThere [
 	
-	self assert: (self nonEmpty includes: self nonEmpty anyOne).
+	self assert: (self nonEmpty includes: self nonEmpty anyOne)
 ]

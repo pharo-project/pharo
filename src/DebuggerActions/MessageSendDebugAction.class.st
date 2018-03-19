@@ -22,7 +22,7 @@ Class {
 		'id',
 		'selector'
 	],
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #accessing }

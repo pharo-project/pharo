@@ -42,20 +42,20 @@ Class {
 	#category : #'Morphic-Base-ProgressBar'
 }
 
-{ #category : #initialization }
+{ #category : #defaults }
 ProgressBarMorph class >> defaultHeight: aNumber [
 
 	DefaultHeight := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : #defaults }
 ProgressBarMorph class >> defaultWidth: aNumber [
 	
 	DefaultWidth := aNumber.
 
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 ProgressBarMorph class >> from: startNumber to: endNumber [
 
 	^ self new
@@ -63,12 +63,11 @@ ProgressBarMorph class >> from: startNumber to: endNumber [
 		endAt: endNumber.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ProgressBarMorph class >> initialize [
-	"ProgressBarMorph initialize"
 	
 	self defaultWidth: 120.
-	self defaultHeight: 10.
+	self defaultHeight: 10 
 ]
 
 { #category : #private }

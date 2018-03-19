@@ -57,7 +57,7 @@ WeakAnnouncerTest >> benchWeakSubscriptionStatic [
 	] timeToRun
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 WeakAnnouncerTest >> longTestCase [
 
 	self timeLimit: 60 seconds.
@@ -71,9 +71,9 @@ WeakAnnouncerTest >> testNoDeadWeakSubscriptions [
 
 	5 timesRepeat: [ Smalltalk garbageCollect ].		
 	
-	self assert: (WeakAnnouncementSubscription allSubInstances select: [ :sub | sub subscriber isNil ]) size isZero.
+	self assert: (WeakAnnouncementSubscription allInstances select: [ :sub | sub subscriber isNil ]) size isZero.
 	
-	self assert: (LegacyWeakSubscription allSubInstances select: [ :sub | sub subscriber isNil ]) size isZero
+	self assert: (WeakAnnouncementSubscription allInstances select: [ :sub | sub subscriber isNil ]) size isZero
 ]
 
 { #category : #tests }

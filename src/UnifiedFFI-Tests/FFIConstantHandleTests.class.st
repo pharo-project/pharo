@@ -1,10 +1,13 @@
+"
+Tests for FFIConstantHandle
+"
 Class {
 	#name : #FFIConstantHandleTests,
 	#superclass : #TestCase,
 	#classVars : [
 		'TIME_T_PTR'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #primitives }

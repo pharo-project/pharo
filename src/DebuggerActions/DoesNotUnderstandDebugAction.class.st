@@ -5,7 +5,7 @@ A DoesNotUnderstandDebugAction is a debugging action that can create a method if
 Class {
 	#name : #DoesNotUnderstandDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }

@@ -1,3 +1,6 @@
+"
+When there is a duplication I replace the existing version in the target image with the version I am loading from the hermes package.
+"
 Class {
 	#name : #HEReplaceOnDuplication,
 	#superclass : #HEDuplicationModeStrategy,

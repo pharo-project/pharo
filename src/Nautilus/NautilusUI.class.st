@@ -963,7 +963,7 @@ NautilusUI >> methodModified: anAnnouncement [
 	
 	collection := self classWidget getClassesList.
 	nonMetaMethodClass:=anAnnouncement methodClass.
-	self showInstance ifFalse:[nonMetaMethodClass:=nonMetaMethodClass theNonMetaClass].
+	self showInstance ifFalse:[nonMetaMethodClass:=nonMetaMethodClass instanceSide ].
 	((collection includes: nonMetaMethodClass) or: [ anAnnouncement methodClass users includes: self selectedClass  ])
 		ifTrue: [
 			| method selectedMethod oldMethod |
@@ -1364,7 +1364,7 @@ NautilusUI >> removeMethods [
 { #category : #'menus behavior' }
 NautilusUI >> removeNonLocalSelector: aSymbol [
 	| traits isAlias |
-	traits := self selectedClassOrMetaClass traitsProvidingSelector: aSymbol.
+	traits := self selectedClassOrMetaClass traitComposition traitDefining: aSymbol.
 	isAlias := self selectedClassOrMetaClass isLocalAliasSelector: aSymbol.
 	isAlias
 		ifTrue: [
@@ -1642,7 +1642,7 @@ NautilusUI >> selectedClassWithoutChangingSelection: aClass [
 		ifNotNil: [ 
 			acceptor := ClassOrMethodDefinitionAcceptor model: self.
 			self classWidget selectClass: aClass.
-			((self selectedPackageIncludes: aClass theNonMetaClass) or: [ model showHierarchy ])
+			((self selectedPackageIncludes: aClass instanceSide) or: [ model showHierarchy ])
 				ifTrue: [ 
 					self model
 						package: self selectedPackage
@@ -1812,7 +1812,7 @@ NautilusUI >> showHierarchy: aBoolean [
 	(selectedClass := self selectedClass) ifNil: [ ^ self ]. "Since the double clic comes after a simple clic and simple clic deselects selected item, we are forced to have this guard. A alternative would be to change the simple clic but the side effects are too big"
 	self resetClassesListSelection.
 	self resetClassesList.
-	self classWidget showHierarchy: aBoolean forClass: selectedClass theNonMetaClass.
+	self classWidget showHierarchy: aBoolean forClass: selectedClass instanceSide.
 
 	"If showPackages false(Hierarchy)-->true(Flat) then selected package needs to synch to that of selected class"
 	self packageWidget enabled: aBoolean not.

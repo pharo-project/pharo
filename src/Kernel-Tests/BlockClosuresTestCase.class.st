@@ -237,6 +237,7 @@ BlockClosuresTestCase >> example1: anInteger [
     Note that the recursive call precedes the multiplication. For the purpose of the test
     this is essential. (When you commute the factors, the example will work also in
     some system without block closures, but not in Pharo.) "
+	<sampleInstance>
 
     | factorial |
 
@@ -255,6 +256,7 @@ BlockClosuresTestCase >> example2: anInteger [
   " to complicate the example1, we set up a dynamic reference chain that is
     used to dump all calls of facorial when recursion depth is maximal.
     The return value is an instance of orderedCollection, the trace. "
+	<sampleInstance>
 
     | factorial trace |
 

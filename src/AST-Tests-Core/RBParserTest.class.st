@@ -20,6 +20,7 @@ RBParserTest >> compare: anObject to: anotherObject [
 
 { #category : #accessing }
 RBParserTest >> exampleClasses [
+	<sampleInstance>
 	^ Array with: RBParser with: RBScanner with: RBProgramNode with: BIConfigurableFormatter
 ]
 

@@ -89,8 +89,8 @@ SmalltalkImage class >> shutDown: isImageClosing [
 
 { #category : #initialization }
 SmalltalkImage class >> startUp: isImageStarting [
-	ChangesLog default.
-	isImageStarting ifTrue: [Smalltalk openSourceFiles]
+	
+	ChangesLog default
 ]
 
 { #category : #image }
@@ -258,11 +258,12 @@ SmalltalkImage >> backupImageInFileNamed: aFileReference [
 { #category : #saving }
 SmalltalkImage >> backupTo: newNameWithoutSuffix [
 	"Create a new backup of this image. 
-	Unlike #saveAs: do not transfer the default execution to the new image. 
+	Unlike #saveAs:, I do not transfer the default execution to the new image. 
 	Results:
 		true  when continuing in the new session
 		false for the current session"
-	SourceFiles changesFileStream ifNotNil:[
+	(SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
+    ifFalse: [
 		self 
 			closeSourceFiles; "so copying the changes file will always work"
 			saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix)].
@@ -622,6 +623,10 @@ SmalltalkImage >> fileForImageNamed: aString [
 SmalltalkImage >> fixObsoleteBindings [
 	CompiledMethod allInstances do: [ :method |
 		| obsoleteBindings |
+		
+		"Added to check because sometimes the bootstrap fails to generate some methods."
+		self assert: (method header isKindOf: SmallInteger) description: (method name , ' has an invalid header:' , method header asString).
+		
 		obsoleteBindings := method literals select: [ :literal |
 				literal isVariableBinding and: [
 					literal value isBehavior and: [ 
@@ -777,7 +782,7 @@ SmalltalkImage >> image [
 SmalltalkImage >> imageDirectory [
 	"Answer the directory containing the current image."
 
-	^ (Path from: self primImagePath) parent
+	^ self primImagePath asFileReference parent
 ]
 
 { #category : #'image, changes name' }
@@ -1674,7 +1679,8 @@ SmalltalkImage >> saveAs: newNameWithoutSuffix [
 		false for the current session "
 
 	newNameWithoutSuffix ifNil: [ ^ self ].
-	SourceFiles changesFileStream ifNotNil: [ 
+  (SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
+    ifFalse: [ 
 		self closeSourceFiles.
 		self saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix)	
 		"so copying the changes file will always work" ].

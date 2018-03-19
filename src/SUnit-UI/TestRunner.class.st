@@ -50,7 +50,7 @@ TestRunner class >> menuCommandOn: aBuilder [
 		icon: self taskbarIcon
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TestRunner class >> open [
 	^ self new open
 ]
@@ -386,23 +386,29 @@ TestRunner >> classesSearchFrame [
 
 { #category : #actions }
 TestRunner >> collectCoverageFor: methods [
-	| wrappers suite |
-	wrappers := methods collect: [ :each | TestCoverage on: each ].
+	| suite link notExecuted |
 	suite := self
 		resetResult;
 		suiteForAllSelected.
 	
-	[ wrappers do: [ :each | each install ].
-	[ self runSuite: suite ] ensure: [ wrappers do: [ :each | each uninstall ] ] ] valueUnpreemptively.
+	link := MetaLink new
+		selector: #tagExecuted;
+		metaObject: #node.
+	
+	[ methods do: [ :meth | meth ast link: link].
+	[ self runSuite: suite ] ensure: [ link uninstall ] ] valueUnpreemptively.
 
-	wrappers := wrappers reject: [:each | each hasRun].
-	wrappers := wrappers collect: [:each | each reference].
-	wrappers isEmpty 
+	notExecuted := methods reject: [:each | each ast hasBeenExecuted].
+	notExecuted isEmpty 
 		ifTrue:  [ UIManager default inform: 'Congratulations. Your tests cover all code under analysis.' ]
 		ifFalse: [ 
 			Smalltalk tools messageList 
-				browse: wrappers
-				title: 'Not Covered Code (' , (100 - (100 * wrappers size // methods size)) printString , '% Code Coverage)'].
+				browse: notExecuted
+				title: 'Not Covered Code (' , (100 - (100 * notExecuted size // methods size)) printString , '% Code Coverage)'].
+	
+	"cleanup the annotations"
+	methods do: [ :each | each ast removeProperty: #tagExecuted ifAbsent: [ ] ].
+	
 	self saveResultInHistory
 ]
 

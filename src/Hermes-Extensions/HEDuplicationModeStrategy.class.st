@@ -1,3 +1,9 @@
+"
+I am the abstract strategy to use when a duplication is produced loading a package.
+My subclasses gives different options that can be set by a command line parameter.
+Each subclass has a classSide message #keyword that identifies it self.
+I look up the corresponding subclass to use.
+"
 Class {
 	#name : #HEDuplicationModeStrategy,
 	#superclass : #Object,
@@ -9,6 +15,21 @@ HEDuplicationModeStrategy class >> forOption: keyword [
 	^ (self allSubclasses
 		detect: [ :e | e keyword = keyword ]
 		ifNone: [ self error: 'There is no duplication strategy for ''' , keyword , '''' ]) new
+]
+
+{ #category : #'validating existence' }
+HEDuplicationModeStrategy >> doExistingClass: aClass hermesClass: aHEClass installer: installer [
+	self subclassResponsibility 
+]
+
+{ #category : #'validating existence' }
+HEDuplicationModeStrategy >> doExistingTrait: aTrait hermesTrait: aHETrait installer: installer [
+	self subclassResponsibility 
+]
+
+{ #category : #'validating existence' }
+HEDuplicationModeStrategy >> doShouldBuildMethod: aHEMethod in: installer installer: aClass original: aMethod [
+	self subclassResponsibility 
 ]
 
 { #category : #'validating existence' }

@@ -1,3 +1,10 @@
+"
+I represent a ClassTrait.
+I am stored as a symbol.
+
+When serialized I get the name of the base trait.
+When deserialized I find the classTrait in the target environment
+"
 Class {
 	#name : #HEClassTrait,
 	#superclass : #HESymbol,
@@ -16,5 +23,5 @@ HEClassTrait >> asLiteralIn: env [
 
 { #category : #accessing }
 HEClassTrait >> value: aClassTrait [
-	value := aClassTrait baseTrait name.
+	value := aClassTrait instanceSide name.
 ]

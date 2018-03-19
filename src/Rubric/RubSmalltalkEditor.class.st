@@ -110,13 +110,6 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		do: [ :target | target formatMethodCode ]
 ]
 
-{ #category : #accessing }
-RubSmalltalkEditor class >> compilerFor: aClass [
-	^ (aClass respondsTo: #compiler) 
-		ifTrue: [aClass compiler]
-		ifFalse: [ aClass class evaluatorClass new ]
-]
-
 { #category : #NOcompletion }
 RubSmalltalkEditor >> atCompletionPosition [
 	"Return true if the cursor is at a possible completion position"
@@ -440,14 +433,12 @@ RubSmalltalkEditor >> exploreIt: aKeyboardEvent [
 RubSmalltalkEditor >> findClassFromAST [
 	"Try to make a class name out of the current text selection"
 
-	| node fallbackBlock className |		
+	| node className |		
 	
 	"Preserve original behavior - although could consider building AST from selection"
 	self hasSelection ifTrue: [ 
 		^(self selection string copyWithoutAll: CharacterSet crlf) trimBoth ].
 	
-	fallbackBlock := [^nil].
-
 	node := self bestNodeInTextArea.
 	
 	node ifNil: [ 
@@ -457,12 +448,12 @@ RubSmalltalkEditor >> findClassFromAST [
 			ifFalse: [ nil ] ].
 	
 	[node isVariable] whileFalse: [ 
-	 	(node := node parent) ifNil: fallbackBlock ].
+	 	(node := node parent) ifNil: [^nil]. ].
 	
 	className := node name.
 	
 	[ className first isUppercase ] whileFalse: [ 
-		(className := className allButFirst) ifEmpty: fallbackBlock  ].
+		(className := className allButFirst) ifEmpty: [^nil].  ].
 	
 	^className
 ]

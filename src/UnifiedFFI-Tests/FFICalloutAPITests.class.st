@@ -1,7 +1,10 @@
+"
+Tests for FFICalloutAPI
+"
 Class {
 	#name : #FFICalloutAPITests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #running }

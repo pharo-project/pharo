@@ -1,7 +1,10 @@
+"
+Tests for FFIOpaqueObjectType
+"
 Class {
 	#name : #FFIOpaqueObjectTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #private }

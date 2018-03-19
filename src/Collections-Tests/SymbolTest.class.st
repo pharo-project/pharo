@@ -48,7 +48,8 @@ SymbolTest >> collection [
 
 { #category : #'tests - set arithmetic' }
 SymbolTest >> collectionClass [
-
+	"Return the class to be used to create instances of the class tested"
+	
 	^ Symbol
 ]
 
@@ -192,7 +193,7 @@ SymbolTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 SymbolTest >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index between bounds of 'nonEmpty'"
 
 	^ 2
 ]
@@ -336,6 +337,16 @@ SymbolTest >> testCopyNotSame [
 	| copy | 
 	copy := self nonEmpty copy.
 	self assert: copy  == self nonEmpty.
+]
+
+{ #category : #'tests - testing' }
+SymbolTest >> testEndsWithAColon [
+	 
+	self assert: #fred: endsWithAColon.
+
+	self deny: #'fred' endsWithAColon.
+
+	self deny: #fred endsWithAColon. 
 ]
 
 { #category : #tests }

@@ -26,6 +26,7 @@ DynamicWidgetChange class >> defaultSpec [
 
 { #category : #example }
 DynamicWidgetChange class >> example [
+	<sampleInstance>
 	^ self new openWithSpec
 ]
 

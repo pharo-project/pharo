@@ -9,7 +9,7 @@ Class {
 
 { #category : #'meta-data' }
 ManifestKernel class >> dependencies [
-	^ #(#'System-Announcements' #'System-CommandLine' #'Collections-Strings' #'System-Localization' #Slot #'Collections-Unordered' #'Collections-Streams' #Files #'System-Object Events' #'Collections-Abstract' #'Collections-Native' #'Collections-Support' #'System-Support' #'Multilingual-Encodings' #'Collections-Sequenceable' #NewValueHolder #'System-Sources' #Compiler #'OpalCompiler-Core' #'System-Finalization' #Traits #'Collections-Weak' #UIManager)
+	^ #(#'System-Announcements' #'System-CommandLine' #'Collections-Strings' #'System-Localization' #'Slot-Core' #'Collections-Unordered' #'Collections-Streams' #Files #'System-Object Events' #'Collections-Abstract' #'Collections-Native' #'Collections-Support' #'System-Support' #'Multilingual-Encodings' #'Collections-Sequenceable' #NewValueHolder #'System-Sources' #Compiler #'OpalCompiler-Core' #'System-Finalization' #Traits #'Collections-Weak' #UIManager)
 ]
 
 { #category : #'meta-data' }
@@ -24,7 +24,7 @@ ManifestKernel class >> ignoredDependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestKernel class >> manuallyResolvedDependencies [
-	^ #(#'Regex-Core' #'System-Settings' #'Zinc-Character-Encoding-Core' #'FFI-Kernel' #'Multilingual-TextConversion' #'System-Platforms' #'Transcript-Core' #'AST-Core' #'System-Sources' #Reflectivity #'OpalCompiler-Core' #'System-Localization')
+	^ #(#'System-Settings' #'System-Sources' #'System-Platforms' #'Transcript-Core' #'Multilingual-TextConversion' #'AST-Core' #'Shift-ClassBuilder' #'Regex-Core' #'System-Localization' #'RPackage-Core' #'Zinc-Character-Encoding-Core' #Reflectivity #'Shift-ClassInstaller' #'FFI-Kernel')
 ]
 
 { #category : #'meta-data' }

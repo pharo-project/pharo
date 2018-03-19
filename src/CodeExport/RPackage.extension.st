@@ -19,7 +19,7 @@ RPackage >> fileOut [
 	metaclassExtensionSelectors keysAndValuesDo: [ :className :selectors | 
 		selectors do: [ :selector | | extendedClass |
 			extendedClass := (Smalltalk globals classNamed: className).
-			extendedClass theMetaClass fileOutMethod: selector on: internalStream ] ].
+			extendedClass classSide fileOutMethod: selector on: internalStream ] ].
 	
 	^ CodeExporter writeSourceCodeFrom: internalStream baseName: self name isSt: true.
 ]

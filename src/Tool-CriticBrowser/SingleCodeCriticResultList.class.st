@@ -155,7 +155,7 @@ SingleCodeCriticResultList >> browseCritic [
 			| entity |
 			entity := element sourceAnchor entity.
 			entity isBehavior 
-				ifTrue: [ entity theNonMetaClass browse ]
+				ifTrue: [ entity instanceSide browse ]
 				ifFalse: [ entity browse ] ] 
 ]
 

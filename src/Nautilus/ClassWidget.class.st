@@ -192,8 +192,8 @@ ClassWidget >> dropInClass: aCollection inARow: aRow [
 		receiver := self getClassesList at: aRow.
 		receiver := 
 		self model showInstance not
-			ifTrue: [ receiver theMetaClass ]
-			ifFalse: [ receiver theNonMetaClass ].
+			ifTrue: [ receiver classSide ]
+			ifFalse: [ receiver instanceSide ].
 		self model dropInAClass: aCollection into: receiver]
 ]
 
@@ -263,7 +263,7 @@ ClassWidget >> okToChange [
 { #category : #protocol }
 ClassWidget >> openFloatingEditorToRenameAtIndex: anIndex [
 	| selectedRowMorph ed clsMorph vScroll font cls |
-	cls := self model selectedClass theNonMetaClass.
+	cls := self model selectedClass instanceSide.
 	vScroll := self vScrollValue.
 	selectedRowMorph := classesList visibleRowMorphAtIndex: anIndex.
 	clsMorph := selectedRowMorph lastSubmorph lastSubmorph.
@@ -319,7 +319,7 @@ ClassWidget >> resetClassSelection [
 
 { #category : #protocol }
 ClassWidget >> selectClass: aClass [
-	self classesSelection at: aClass theNonMetaClass put: true.
+	self classesSelection at: aClass instanceSide put: true.
 
 ]
 
@@ -333,7 +333,7 @@ ClassWidget >> selectedClassIndex [
 	| item |
 	item := self selectedClass.
 	self model showInstance
-		ifFalse: [ item ifNotNil: [ item := item theNonMetaClass ] ].
+		ifFalse: [ item ifNotNil: [ item := item instanceSide ] ].
 	^ self getClassesList indexOf: item
 ]
 
@@ -342,7 +342,7 @@ ClassWidget >> selectedClassIndex: anInteger [
 	| selection |
 	selection := self getClassesList at: anInteger ifAbsent: [nil].
 	
-	self model showInstance ifFalse: [selection ifNotNil: [selection := selection theMetaClass]].
+	self model showInstance ifFalse: [selection ifNotNil: [selection := selection classSide]].
 	self model selectedClassWithoutChangingSelection: selection.
 	
 	self model changed: #currentHistoryIndex.
