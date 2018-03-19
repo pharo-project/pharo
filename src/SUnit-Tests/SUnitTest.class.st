@@ -86,8 +86,12 @@ SUnitTest >> expectedFailures [
 
 { #category : #private }
 SUnitTest >> failedChildProcessTest [
-
-	[self error: 'error from child process'] forkNamed: 'failed child for ', testSelector
+	"During this test forked process should signal error.
+	It means that after fork we should give the process control"
+	
+	[ self error: 'error from child process'] forkNamed: 'failed child for ', testSelector.
+	
+	Processor yield.
 ]
 
 { #category : #helpers }
