@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'zip',
 		'infoCache',
-    'filename'
+		'filename'
 	],
 	#category : #'Monticello-Storing'
 }

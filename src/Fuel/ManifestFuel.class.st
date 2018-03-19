@@ -1,6 +1,3 @@
-"
-Manifest for Fuel package
-"
 Class {
 	#name : #ManifestFuel,
 	#superclass : #PackageManifest,
