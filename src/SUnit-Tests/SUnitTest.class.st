@@ -25,22 +25,19 @@ SUnitTest class >> lastStoredRun [
 { #category : #private }
 SUnitTest >> assertForTestResult: aResult runCount: aRunCount passed: aPassedCount failed: aFailureCount errors: anErrorCount [
 
-	self
-		assert: aResult runCount = aRunCount;
-		assert: aResult passedCount = aPassedCount;
-		assert: aResult failureCount = aFailureCount;
-		assert: aResult errorCount = anErrorCount
+	self assert: aResult runCount equals: aRunCount.
+	self assert: aResult passedCount equals: aPassedCount.
+	self assert: aResult failureCount equals: aFailureCount.
+	self assert: aResult errorCount equals: anErrorCount
 ]
 
 { #category : #private }
 SUnitTest >> assertForTestResult: aResult runCount: aRunCount passed: aPassedCount failed: aFailureCount errors: anErrorCount expectedFailures: anExpectedFailureCount [
-
-	self
-		assert: aResult runCount = aRunCount;
-		assert: aResult expectedPassCount = aPassedCount;
-		assert: aResult failureCount = aFailureCount;
-		assert: aResult errorCount = anErrorCount;
-		assert: aResult expectedDefectCount = anExpectedFailureCount
+	self assert: aResult runCount equals: aRunCount.
+	self assert: aResult expectedPassCount equals: aPassedCount.
+	self assert: aResult failureCount equals: aFailureCount.
+	self assert: aResult errorCount equals: anErrorCount.
+	self assert: aResult expectedDefectCount equals: anExpectedFailureCount
 ]
 
 { #category : #helpers }
