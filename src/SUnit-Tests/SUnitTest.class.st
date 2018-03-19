@@ -102,7 +102,7 @@ SUnitTest >> failedChildProcesses [
 
 { #category : #private }
 SUnitTest >> failedTestWithFailedChildProcessTest [
-
+	"This failing test first launches a subprocess that fails and then fails."
 	self failedChildProcessTest.
 	Processor yield.
 	self error: 'failed test with failed child process'
