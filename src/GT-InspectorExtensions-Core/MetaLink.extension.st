@@ -4,6 +4,6 @@ Extension { #name : #MetaLink }
 MetaLink >> gtInspectorDefinitonIn: composite [
 	<gtInspectorPresentationOrder: 40>
 	composite text
- 		title: ['Definition' translate];
+ 		title: ['Definition' translated];
  		display: [self definitionString]
 ]
