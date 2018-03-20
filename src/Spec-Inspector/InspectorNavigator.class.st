@@ -107,8 +107,6 @@ InspectorNavigator >> customMenuActions [
 
 { #category : #accessing }
 InspectorNavigator >> defaultWindowModelClass [
-	Stdio stdout wantsLineEndConversion: true; converter.
-	Stdio stdout << self class name ; cr.
 	^ TickingWindowPresenter
 ]
 
