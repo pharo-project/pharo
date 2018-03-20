@@ -83,7 +83,7 @@ FileHandle >> binaryReadStream [
 
 { #category : #public }
 FileHandle >> binaryWriteStream [
-	^ ZnBufferedReadWriteStream on: (File named: reference fullName) writeStream
+	^ (File named: reference fullName) writeStream
 ]
 
 { #category : #public }

@@ -89,6 +89,12 @@ SourceFile >> nextChunk [
 	^ (ChunkReadStream on: stream) next
 ]
 
+{ #category : #'fileIn/Out' }
+SourceFile >> nextChunkPut: aChunk [
+
+	^ (ChunkWriteStream on: stream) nextPut: aChunk
+]
+
 { #category : #'as yet unclassified' }
 SourceFile >> nextPut: aCharacter [
 
@@ -200,19 +206,18 @@ SourceFile >> tryOpenReadOnly: readOnly [
 	| basename |
 	basename := path asFileReference basename.
 
-	"Open a read write stream only if read only access was not requested"
+	"Open a read write stream only if read only access was not requested.
+	We need to create the encoding and buffering streams manually because we need a read write stream."
 	readOnly ifFalse: [
 		potentialLocations
 			do: [ :each | 
 				[ stream := ZnCharacterReadWriteStream
-					on: (File named: (each asFileReference / basename) fullName) writeStream
+					on: (ZnBufferedReadWriteStream on: (each asFileReference / basename) binaryWriteStream)
 					encoding: 'utf8'.
 				^ self ] on: Error do: [  ] ] ].
 
 	potentialLocations do: [ :each | 
-			[ stream := ZnCharacterReadStream
-					on: (File named: (each asFileReference / basename) fullName) readStream
-					encoding: 'utf8'.
+			[ stream := (each asFileReference / basename) readStream.
 			^ self ] on: Error do: [  ] ]
 ]
 
