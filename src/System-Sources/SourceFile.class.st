@@ -31,7 +31,9 @@ SourceFile >> atEnd [
 SourceFile >> close [
 
 	stream ifNil: [ ^ self ].
-	
+	stream closed ifTrue: [ 
+		stream := nil.
+		^ self ].
 	stream close.
 	stream := nil.
 ]

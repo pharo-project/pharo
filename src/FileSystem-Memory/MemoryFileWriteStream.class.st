@@ -47,6 +47,12 @@ MemoryFileWriteStream >> isBinary [
 ]
 
 { #category : #writing }
+MemoryFileWriteStream >> nextPut: aCollection [ 
+	
+	^ self stream nextPut: aCollection
+]
+
+{ #category : #writing }
 MemoryFileWriteStream >> nextPutAll: aCollection [ 
 	
 	^ self stream nextPutAll: aCollection
