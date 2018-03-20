@@ -66,6 +66,14 @@ FreeTypeCache class >> shutDown: isImageQuitting [
 			current := nil ]
 ]
 
+{ #category : #'system startup' }
+FreeTypeCache class >> startUp: isImageStarting [
+
+	isImageStarting ifFalse: [ ^ self ].
+	self current removeAll.
+	current := nil 
+]
+
 { #category : #'add-remove' }
 FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag [ 
 	| entry charCodeTable typeTable |

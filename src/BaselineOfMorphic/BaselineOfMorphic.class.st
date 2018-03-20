@@ -288,7 +288,8 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	Stdio stdout nextPutAll: 'bitmap fonts loaded' asString; lf.
 
 	#(ProgressBarMorph BalloonBezierSimulation BalloonEngineConstants BalloonEngine 
-	CornerRounder  DigitalSignatureAlgorithm DummySoundSystem 
+	CornerRounder  DigitalSignatureAlgorithm DummySoundSystem
+	FT2Types FT2FFILibrary
 	FreeTypeCacheConstants FreeTypeCache FreeTypeSettings 
 	FreeTypeSubPixelAntiAliasedGlyphRenderer FT2Constants FT2Handle 
 	GIFReadWriter GlobalIdentifier

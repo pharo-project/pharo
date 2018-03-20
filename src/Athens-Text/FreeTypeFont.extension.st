@@ -43,6 +43,7 @@ FreeTypeFont >> getPreciseHeight [
 { #category : #'*Athens-Text' }
 FreeTypeFont >> glyphRendererOn: anAthensSurface [
 
+	self validate.
 	^ anAthensSurface getFreetypeFontRendererFor: self
 
 ]

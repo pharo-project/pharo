@@ -422,7 +422,7 @@ FreeTypeFont >> hasDistinctGlyphsForAll: asciiString [
 	self face isValid ifFalse:[^false].
 	setOfIndices := Set new.
 	asciiString asSet do:[:c | | i |
-		(i := self face primGetCharIndex: c asInteger) = 0
+		(i := self face ffiGetCharIndex: c asInteger) = 0
 			ifTrue:[^false]
 			ifFalse:[
 				(setOfIndices includes: i)
@@ -439,7 +439,7 @@ FreeTypeFont >> hasGlyphsForAll: asciiString [
 	
 	self face isValid ifFalse:[^false].
 	asciiString do:[:c |
-		(self face primGetCharIndex: c asInteger) = 0
+		(self face ffiGetCharIndex: c asInteger) = 0
 			ifTrue:[^false]].
 	^true
 ]
