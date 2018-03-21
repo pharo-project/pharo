@@ -1,5 +1,5 @@
 "
-I am a debugging action that inspects the currently selected bytecode.
+I am a debugging action that inspect the currently selected bytecode.
 
 "
 Class {
@@ -37,7 +37,7 @@ GTGoAndInspectBytecodeDebugAction >> executeAction [
 
 { #category : #accessing }
 GTGoAndInspectBytecodeDebugAction >> help [
-	^ 'Inspects the currently selected bytecode.'
+	^ 'Inspect the currently selected bytecode.'
 ]
 
 { #category : #accessing }

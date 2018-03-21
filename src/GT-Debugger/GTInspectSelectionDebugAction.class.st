@@ -61,7 +61,7 @@ GTInspectSelectionDebugAction >> executeAction [
 
 { #category : #accessing }
 GTInspectSelectionDebugAction >> help [
-	^ 'Inspecte the result of a selected piece of code from the code pane of the debugger.'
+	^ 'Inspect the result of a selected piece of code from the code pane of the debugger.'
 ]
 
 { #category : #accessing }

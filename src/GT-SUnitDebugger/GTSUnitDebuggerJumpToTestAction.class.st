@@ -43,7 +43,7 @@ GTSUnitDebuggerJumpToTestAction >> executeAction [
 
 { #category : #accessing }
 GTSUnitDebuggerJumpToTestAction >> help [
-	^ 'Select in the stack the context containing the test  method.'
+	^ 'Select in the stack the context containing the test method.'
 ]
 
 { #category : #accessing }

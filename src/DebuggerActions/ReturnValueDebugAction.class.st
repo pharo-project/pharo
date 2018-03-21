@@ -41,7 +41,7 @@ ReturnValueDebugAction >> executeAction [
 
 { #category : #accessing }
 ReturnValueDebugAction >> help [
-	^ 'Forces a return of a given value to the previous context.'
+	^ 'Return of a given value to the previous context.'
 ]
 
 { #category : #accessing }
