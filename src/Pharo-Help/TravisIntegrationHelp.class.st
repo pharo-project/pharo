@@ -4,7 +4,7 @@ Help for getting Travis running with Pharo.
 Class {
 	#name : #TravisIntegrationHelp,
 	#superclass : #CustomHelp,
-	#category : #TravisIntegrationHelp
+	#category : #'Pharo-Help'
 }
 
 { #category : #accessing }
