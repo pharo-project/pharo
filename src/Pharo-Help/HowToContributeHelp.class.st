@@ -4,7 +4,7 @@ A help topic on how to contribute
 Class {
 	#name : #HowToContributeHelp,
 	#superclass : #CustomHelp,
-	#category : #HowToContributeHelp
+	#category : #'Pharo-Help'
 }
 
 { #category : #accessing }
