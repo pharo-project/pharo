@@ -33,6 +33,7 @@ MemoryHandle >> at: first write: aCollection startingAt: start count: count [
 
 { #category : #streams }
 MemoryHandle >> binaryReadStream [
+
 	^ entry binaryReadStream
 ]
 
@@ -79,13 +80,6 @@ MemoryHandle >> open [
 	entry := self basicOpen.
 ]
 
-{ #category : #public }
-MemoryHandle >> readStream [
-	"Return a readstream on my contents.
-	Using myself as target collection allows to share the internal bytearray between multiple streams."
-	^ entry readStream
-]
-
 { #category : #accessing }
 MemoryHandle >> size [
 	"return the size for the interna"
@@ -105,11 +99,4 @@ MemoryHandle >> truncate [
 { #category : #public }
 MemoryHandle >> truncateTo: anInteger [
 	entry truncateTo: anInteger
-]
-
-{ #category : #public }
-MemoryHandle >> writeStream [
-	"Return a writestream on my contents.
-	Using myself as target collection allows to share the internal bytearray between multiple streams."
-	^ MemoryWriteStream on: self from: 1 to: entry fileSize
 ]

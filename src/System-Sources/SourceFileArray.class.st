@@ -189,7 +189,7 @@ SourceFileArray >> changesWriteStreamDo: aBlock [
 
 	| changesFile |
 	changesFile := self changesFileStream.
-  changesFile ifNil: [ ^ self ].
+	changesFile ifNil: [ ^ self ].
 	changesFile closed ifTrue: [ ^ self ].
 	changesFile isReadOnly ifTrue: [ ^ self ].
 	changesFile setToEnd.
