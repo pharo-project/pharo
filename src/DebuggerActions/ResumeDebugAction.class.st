@@ -15,11 +15,6 @@ ResumeDebugAction class >> actionType [
 ]
 
 { #category : #accessing }
-ResumeDebugAction >> defaultHelp [
-	^ 'Relinquish debugger control and proceed execution from the current point of debugger control.'
-]
-
-{ #category : #accessing }
 ResumeDebugAction >> defaultKeymap [
 
 	^ PharoShortcuts current resumeExecutionShortcut
@@ -50,6 +45,11 @@ ResumeDebugAction >> executeAction [
 		resume;
 		clear.
 	self debugger close. 
+]
+
+{ #category : #accessing }
+ResumeDebugAction >> help [
+	^ 'Relinquish debugger control and proceed execution from the current point of debugger control.'
 ]
 
 { #category : #accessing }

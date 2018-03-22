@@ -15,11 +15,6 @@ StepOverDebugAction class >> actionType [
 ]
 
 { #category : #accessing }
-StepOverDebugAction >> defaultHelp [
-	^ 'Step over the highlighted message, i.e. do not follow the sent message, taking debugger control after the method invoked returns.'
-]
-
-{ #category : #accessing }
 StepOverDebugAction >> defaultKeymap [
 
 	^ PharoShortcuts current stepOverShortcut
@@ -41,6 +36,11 @@ StepOverDebugAction >> defaultOrder [
 StepOverDebugAction >> executeAction [
 
 	self session stepOver: self currentContext
+]
+
+{ #category : #accessing }
+StepOverDebugAction >> help [
+	^ 'Step over the highlighted message, i.e. do not follow the sent message, taking debugger control after the method invoked returns.'
 ]
 
 { #category : #accessing }

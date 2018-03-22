@@ -42,6 +42,11 @@ GTExecuteSelectionDebugAction >> executeAction [
 ]
 
 { #category : #accessing }
+GTExecuteSelectionDebugAction >> help [
+	^ 'Execute a selected piece of code from the code pane of the debugger.'
+]
+
+{ #category : #accessing }
 GTExecuteSelectionDebugAction >> id [
 
 	^ #gTExecuteSelectionDebugAction
