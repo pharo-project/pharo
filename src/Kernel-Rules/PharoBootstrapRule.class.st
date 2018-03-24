@@ -46,9 +46,9 @@ PharoBootstrapRule >> bootstrapPackages [
 	#'OpalCompiler-Core'
 	#'Random-Core'
 	#'RPackage-Core'
-	#'Ring-Core-Containers'
-	#'Ring-Core-Kernel'
-	#'Ring-Monticello'
+	#'Ring-Deprecated-Core-Containers'
+	#'Ring-Deprecated-Core-Kernel'
+	#'Ring-Deprecated-Monticello'
 	#RingChunkImporter
 	#'Slot-Core'
 	#'System-Announcements'

@@ -154,7 +154,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Tests'.
-		spec package: 'Ring-Tests-Kernel'.
+		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'AST-Tests-Core'.
 		spec package: 'Compiler-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
@@ -168,8 +168,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
 		spec package: 'ReleaseTests'.
-		spec package: 'Ring-Tests-Containers'.
-		spec package: 'Ring-Tests-Kernel'.
+		spec package: 'Ring-Deprecated-Tests-Containers'.
+		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'System-DependenciesTests'.
 		
 		spec package: 'System-Serial Port'.
@@ -459,7 +459,7 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Reflectivity-Tools-Tests'
 	'Regex-Tests-Core'
-	'Ring-Tests-Monticello'
+	'Ring-Deprecated-Tests-Monticello'
 	'Rubric-Tests'
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
@@ -811,8 +811,8 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'OpalCompiler-Tests' 
 	'Random-Tests'
 	"'ReleaseTests'"
-	'Ring-Tests-Kernel'
-	'Ring-Tests-Containers' 
+	'Ring-Deprecated-Tests-Kernel'
+	'Ring-Deprecated-Tests-Containers' 
 	'Tests' 
 	'Zinc-Character-Encoding-Tests' 
 
