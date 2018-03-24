@@ -27,7 +27,7 @@ BaselineOfMonticello >> baseline: spec [
 		spec 
 			package: 'Ring-Deprecated-Core-Kernel';
 			package: 'Ring-Deprecated-Core-Containers';
-			package: 'RingChunkImporter';
+			package: 'Ring-Deprecated-ChunkImporter';
 			package: 'Zinc-Resource-Meta-Core';
 			package: 'System-Changes';
 			package: 'RingChunkImporter';
