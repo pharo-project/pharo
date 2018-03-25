@@ -13,10 +13,10 @@ WeakValueDictionaryTest class >> shouldInheritSelectors [
 ^true
 ]
 
-{ #category : #requirements }
+{ #category : #coverage }
 WeakValueDictionaryTest >> classToBeTested [
 
-^ WeakValueDictionary
+	^ WeakValueDictionary
 ]
 
 { #category : #accessing }

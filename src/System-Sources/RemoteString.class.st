@@ -21,7 +21,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'sourceFileNumber',
-		'filePositionHi'
+		'filePositionHi',
+		'sourceFileArray'
 	],
 	#category : #'System-Sources'
 }
@@ -79,6 +80,16 @@ RemoteString >> position [
 ]
 
 { #category : #accessing }
+RemoteString >> sourceFileArray [
+	^ sourceFileArray ifNil: [ SourceFiles ]
+]
+
+{ #category : #accessing }
+RemoteString >> sourceFileArray: anObject [
+	sourceFileArray := anObject
+]
+
+{ #category : #accessing }
 RemoteString >> sourceFileNumber [
 	"Answer the index of the file on which the string is stored."
 
@@ -95,18 +106,18 @@ RemoteString >> sourcePointer [
 RemoteString >> string [ 
 	"Answer the receiver's string if remote files are enabled, or nil."
 
-	^ SourceFiles 
+	^ self sourceFileArray 
 		readStreamAtFileIndex: sourceFileNumber 
 		atPosition: filePositionHi 
-		ifPresent: [ :readStream | readStream nextChunk ]
-		ifAbsent: [ nil ]	
+		ifPresent: [ :readStream | (ChunkReadStream on: readStream) next ]
+		ifAbsent: [ nil ]
 ]
 
 { #category : #private }
 RemoteString >> string: aString [
 	"Store this as my string if source files exist."
 
-	SourceFiles changesWriteStreamDo: [ :theFile |
+	self sourceFileArray changesWriteStreamDo: [ :theFile |
 		theFile cr.
 		self 
 			string: aString 
@@ -121,6 +132,6 @@ RemoteString >> string: aString onFileNumber: fileNumber toFile: aFileStream [
 	| position |
 	position := aFileStream position.
 	self fileNumber: fileNumber position: position.
-	aFileStream nextChunkPut: aString.
+	(ChunkWriteStream on: aFileStream) nextPut: aString.
 	^ self 
 ]

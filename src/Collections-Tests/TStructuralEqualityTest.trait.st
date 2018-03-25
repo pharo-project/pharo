@@ -6,13 +6,13 @@ Trait {
 	#category : #'Collections-Tests-Abstract'
 }
 
-{ #category : #'test - equality' }
+{ #category : #'tests - equality' }
 TStructuralEqualityTest >> empty [
 	
 	^ self explicitRequirement
 ]
 
-{ #category : #'test - equality' }
+{ #category : #'tests - equality' }
 TStructuralEqualityTest >> nonEmpty [
 	
 	^ self explicitRequirement
@@ -26,28 +26,28 @@ TStructuralEqualityTest >> test0TStructuralEqualityTest [
 	self deny: self nonEmpty isEmpty
 ]
 
-{ #category : #'test - equality' }
+{ #category : #'tests - equality' }
 TStructuralEqualityTest >> testEqualSign [
  
-	self deny: (self empty = self nonEmpty).
+	self deny: (self empty = self nonEmpty)
 ]
 
-{ #category : #'test - equality' }
+{ #category : #'tests - equality' }
 TStructuralEqualityTest >> testEqualSignIsTrueForNonIdenticalButEqualCollections [
 		
-	self assert: (self empty = self empty copy). 
-	self assert: (self empty copy = self empty).
-	self assert: (self empty copy = self empty copy).
+	self assert: self empty equals: self empty copy. 
+	self assert: self empty copy equals: self empty.
+	self assert: self empty copy equals: self empty copy.
 		
-	self assert: (self nonEmpty = self nonEmpty copy). 
-	self assert: (self nonEmpty copy = self nonEmpty).
-	self assert: (self nonEmpty copy = self nonEmpty copy).
+	self assert: self nonEmpty equals: self nonEmpty copy. 
+	self assert: self nonEmpty copy equals: self nonEmpty.
+	self assert: self nonEmpty copy equals: self nonEmpty copy
 ]
 
-{ #category : #'test - equality' }
+{ #category : #'tests - equality' }
 TStructuralEqualityTest >> testEqualSignOfIdenticalCollectionObjects [
 	
-	self assert: (self empty = self empty). 
-	self assert: (self nonEmpty = self nonEmpty). 
+	self assert: self empty equals: self empty. 
+	self assert: self nonEmpty equals: self nonEmpty 
 	
 ]

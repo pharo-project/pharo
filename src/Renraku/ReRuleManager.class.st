@@ -85,7 +85,7 @@ ReRuleManager class >> initialize [
 	self subscribe.
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 ReRuleManager class >> managerFor: aCodeEntity [ 
 	^ self managers
 		at: aCodeEntity package

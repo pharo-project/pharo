@@ -32,6 +32,11 @@ PeelToFirstDebugAction >> executeAction [
 ]
 
 { #category : #accessing }
+PeelToFirstDebugAction >> help [
+	^ 'Peels the stack back to the second occurance of the currently selected message.'
+]
+
+{ #category : #accessing }
 PeelToFirstDebugAction >> id [
 
 	^ #peelToFirst

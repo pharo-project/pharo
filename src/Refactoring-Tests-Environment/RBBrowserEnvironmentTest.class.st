@@ -197,8 +197,8 @@ RBBrowserEnvironmentTest >> testClassEnvironment [
 	
 	self assert: (RBClassEnvironment class: Class) selectors size 
     	  equals: Class methods size.
-	self assert: (RBClassEnvironment class: TBehavior) selectors size
-    	  equals: TBehavior methods size.
+	self assert: (RBClassEnvironment class: TSortable) selectors size
+    	  equals: TSortable methods size.
 ]
 
 { #category : #testing }

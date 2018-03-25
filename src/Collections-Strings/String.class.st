@@ -1025,7 +1025,7 @@ String >> encodeDoublingQuoteOn: aStream [
 	aStream print: $'
 ]
 
-{ #category : #comparing }
+{ #category : #testing }
 String >> endsWith: suffix [
 	"Answer whether the tail end of the receiver is the same as suffix.
 	The comparison is case-sensitive.
@@ -1034,36 +1034,25 @@ String >> endsWith: suffix [
 	"
 	
 	| extra |
-	(extra := self size - suffix size) < 0 
-		ifTrue: [^ false].
-	^ (self findString: suffix startingAt: extra + 1) > 0
+	extra := self size - suffix size.
+	^extra < 0 
+		ifTrue: [ false]
+	   ifFalse: [ (self findString: suffix startingAt: extra + 1) > 0 ]
 ]
 
-{ #category : #'system primitives' }
+{ #category : #testing }
 String >> endsWithAColon [ 
-	"Answer whether the final character of the receiver is a colon
-	
-	#fred: endsWithAColon
-	'fred' endsWithAColon
-	"
+	"Answer whether the final character of the receiver is a colon"
 
-	^ self size > 0 and: [self last == $:]
+	^ self notEmpty and: [ self last == $: ]
 
 ]
 
-{ #category : #comparing }
-String >> endsWithAnyOf: aCollection [
-	aCollection do:[:suffix|
-		(self endsWith: suffix) ifTrue:[^true].
-	].
-	^false
-]
-
-{ #category : #accessing }
+{ #category : #testing }
 String >> endsWithDigit [
 	"Answer whether the receiver's final character represents a digit."
 
-	^ self size > 0 and: [self last isDigit]
+	^ self notEmpty and: [self last isDigit]
 ]
 
 { #category : #formatting }
@@ -2103,9 +2092,9 @@ String >> romanNumber [
 	self reverseDo:
 		[:each |
 		v1 := #(1 5 10 50 100 500 1000) at: ('IVXLCDM' indexOf: each).
-		v1 >= v2
-			ifTrue: [value := value + v1]
-			ifFalse: [value := value - v1].
+		value := v1 >= v2
+			ifTrue: [ value + v1]
+			ifFalse: [ value - v1].
 		v2 := v1].
 	^ value
 ]

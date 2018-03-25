@@ -47,7 +47,6 @@ BaselineOfUI >> baseline: spec [
 		spec package: 'Tool-Workspace'.
 
 		spec package: 'Spec-Core'.
-		spec package: 'Spec-Debugger'.
 		spec package: 'Spec-Inspector'.
 		spec package: 'Spec-Layout'.
 		spec package: 'Spec-MorphicAdapters'.

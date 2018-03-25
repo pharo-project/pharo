@@ -20,5 +20,5 @@ GlobalIdentifierStonPersistence >> load [
 
 { #category : #'load and saving' }
 GlobalIdentifierStonPersistence >> save: aDictionary into: aWriteStream [
-	STON put: aDictionary onStreamPretty: aWriteStream
+	STON put: aDictionary onStreamPretty: (ZnCharacterWriteStream on: aWriteStream encoding: 'utf8')
 ]

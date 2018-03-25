@@ -7,8 +7,13 @@ Also I can configure the builder to add more comparers or do additional things.
 Class {
 	#name : #ShDefaultBuilderEnhancer,
 	#superclass : #Object,
-	#category : 'Shift-ClassBuilder'
+	#category : #'Shift-ClassBuilder'
 }
+
+{ #category : #testing }
+ShDefaultBuilderEnhancer class >> isApplicableFor: aBuilder [
+	^ false
+]
 
 { #category : #'class modifications' }
 ShDefaultBuilderEnhancer >> afterMethodsCompiled: builder [
@@ -44,7 +49,25 @@ ShDefaultBuilderEnhancer >> configureMetaclass: newMetaclass superclass: supercl
 ]
 
 { #category : #initialization }
+ShDefaultBuilderEnhancer >> fillBuilder: aBuilder from: aClass [ 
+]
+
+{ #category : #migrating }
+ShDefaultBuilderEnhancer >> hasToSkipSlot: aSlot [
+	^ Class hasSlotNamed: aSlot name
+]
+
+{ #category : #initialization }
 ShDefaultBuilderEnhancer >> initializeBuilder: aBuilder [
+
+	aBuilder addChangeComparer: ShSharedPoolChangeDetector.
+	aBuilder addChangeComparer: ShSharedVariablesChangeDetector.
+	aBuilder addChangeComparer: ShSlotChangeDetector.
+	aBuilder addChangeComparer: ShLayoutChangeDetector.
+	aBuilder addChangeComparer: ShBitLayoutChangeDetector.
+	aBuilder addChangeComparer: ShClassSlotChangeDetector.
+	aBuilder addChangeComparer: ShSuperclassChangedDetector.
+
 ]
 
 { #category : #events }

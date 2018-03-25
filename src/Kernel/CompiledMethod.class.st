@@ -377,11 +377,6 @@ CompiledMethod >> copyWithTrailerBytes: trailer [
 	^copy
 ]
 
-{ #category : #'debugger support' }
-CompiledMethod >> debuggerMap [
-	^self compilerClass debuggerMethodMapForMethod: self.
-]
-
 { #category : #accessing }
 CompiledMethod >> defaultSelector [ 
 	"Invent and answer an appropriate message selector (a Symbol) for me, 
@@ -700,25 +695,14 @@ CompiledMethod >> name [
 
 { #category : #accessing }
 CompiledMethod >> origin [
-	self properties 
-		at: #traitSource 
-		ifPresent: [ :traitMethod| ^ traitMethod origin].
-	^ self methodClass traitOrClassOfSelector: self selector
+	^ self methodClass findOriginClassOf: self
 ]
 
 { #category : #accessing }
 CompiledMethod >> originMethod [
-	| selector trait|
+	^ self methodClass findOriginMethodOf: self.
 	
-	self properties 
-		at: #traitSource 
-		ifPresent: [ :traitMethod | ^ traitMethod ].
-	
-	"Use the method dictionary because traits do not have method for accesing methods by selector"
-	selector := self methodClass traitComposition originSelectorOf: self selector.
-	trait := self methodClass traitOrClassOfSelector: selector.
-	(trait includesSelector:selector) ifTrue:[ ^trait>> selector].
-	^ self. 
+
 ]
 
 { #category : #private }

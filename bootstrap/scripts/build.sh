@@ -75,9 +75,15 @@ if [ -z "${ARCH_DESCRIPTION}" ]; then
   exit 1;
 fi
 
+# Script directory
+__this_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Repository directory
+export BOOTSTRAP_REPOSITORY="${__this_dir}/../.."
+REPOSITORY="${BOOTSTRAP_REPOSITORY:-..}"
+
 
 PREFIX=Pharo7.0
-
 REPOSITORY="${BOOTSTRAP_REPOSITORY:-..}"
 
 if [[ -z "${BOOTSTRAP_REPOSITORY}" ]]; then
@@ -101,6 +107,7 @@ RPACKAGE_ARCHIVE_NAME=${PREFIX}-rpackage-${SUFFIX}
 
 CORE_IMAGE_NAME=${PREFIX}-core-${SUFFIX}
 COMPILER_IMAGE_NAME=${PREFIX}-compiler-${SUFFIX}
+TRAITS_IMAGE_NAME=${PREFIX}-traits-${SUFFIX}
 MC_BOOTSTRAP_IMAGE_NAME=${PREFIX}-monticello_bootstrap-${SUFFIX}
 MC_IMAGE_NAME=${PREFIX}-monticello-${SUFFIX}
 METACELLO_IMAGE_NAME=${PREFIX}-metacello-${SUFFIX}
@@ -125,7 +132,8 @@ cp "${BOOTSTRAP_IMAGE_NAME}.image" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 zip "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.zip" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 
 # Archive binary Hermes packages
-zip "${HERMES_ARCHIVE_NAME}.zip" OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes SUnit-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes Hermes-Extensions.hermes
+zip "${HERMES_ARCHIVE_NAME}.zip" *.hermes
+
 # Archive RPackage definitions
 zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt packagesKernel.txt
 
@@ -134,41 +142,64 @@ ${REPOSITORY}/bootstrap/scripts/download_vm.sh
 echo "Prepare icons"
 mkdir icon-packs
 cd icon-packs
-wget http://github.com/pharo-project/pharo-icon-packs/archive/idea11.zip
+# update the commit hash as soon as you need a new version of the icons to be loaded
+wget http://github.com/pharo-project/pharo-icon-packs/archive/57fba57a02ef3b96c453fb9feba7b71c6a3e618e.zip -O idea11.zip
 cd ..
 
 # Find st-cache path
 [[ -z "${BOOTSTRAP_CACHE}" ]] && ST_CACHE='st-cache' || ST_CACHE="${BOOTSTRAP_CACHE}/st-cache"
 
 # Installing RPackage
-echo "[Compiler] Installing RPackage"
+echo "[Compiler] Initializing Bootstraped Image"
 ${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
+
+echo "[Compiler] Adding more Kernel packages"
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Hermes-Extensions.hermes --save
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Math-Operations-Extensions.hermes Debugging-Core.hermes Kernel-Chronology-Extras.hermes Multilingual-Encodings.hermes Multilingual-TextConversion.hermes Multilingual-Languages.hermes --save --no-fail-on-undeclared
+
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes InitializePackagesCommandLineHandler.hermes --save
+
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes Jobs.hermes --save --no-fail-on-undeclared
+
+echo "[Compiler] Initializing the packages in the Kernel"
 ${VM} "${COMPILER_IMAGE_NAME}.image" initializePackages --protocols=protocolsKernel.txt --packages=packagesKernel.txt --save
 
 # Installing compiler through Hermes 
 echo "[Compiler] Installing compiler through Hermes"
-${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Hermes-Extensions.hermes --save
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
-${VM} "${COMPILER_IMAGE_NAME}.image" st ${ST_CACHE}/Multilingual.st ${ST_CACHE}/DeprecatedFileStream.st ${ST_CACHE}/FileSystem.st --no-source --quit --save
+
+echo "[Compiler] Initializing Unicode"
+${VM} "${COMPILER_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit "${REPOSITORY}/resources/unicode/"
+
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes DeprecatedFileStream.hermes FileSystem-Core.hermes FileSystem-Disk.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "PharoBootstrapInitialization initializeFileSystem"
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "SourceFileArray initialize"
 zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 
+# Installing Traits through Hermes 
+echo "[Compiler] Installing Traits through Hermes"
+
+${VM} "${COMPILER_IMAGE_NAME}.image" save ${TRAITS_IMAGE_NAME}
+${VM} "${TRAITS_IMAGE_NAME}.image" loadHermes TraitsV2.hermes --save
+${VM} "${TRAITS_IMAGE_NAME}.image" loadHermes Kernel-Traits.hermes AST-Core-Traits.hermes Collections-Abstract-Traits.hermes Transcript-Core-Traits.hermes SUnit-Core-Traits.hermes CodeImport-Traits.hermes RPackage-Traits.hermes OpalCompiler-Traits.hermes Slot-Traits.hermes CodeExport-Traits.hermes System-Sources-Traits.hermes System-Support-Traits.hermes TraitsV2-Compatibility.hermes --save
+zip "${TRAITS_IMAGE_NAME}.zip" "${TRAITS_IMAGE_NAME}.image"
+
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
-${VM} "${COMPILER_IMAGE_NAME}.image" save ${CORE_IMAGE_NAME}
-${VM} "${CORE_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit "${REPOSITORY}/resources/unicode/UnicodeData.txt"
+${VM} "${TRAITS_IMAGE_NAME}.image" save ${CORE_IMAGE_NAME}
 zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 
 #Bootstrap Monticello Part 1: Core and Local repositories
 echo "[Monticello] Bootstrap Monticello Core and Local repositories"
 
-#${VM} "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
-cp "${CORE_IMAGE_NAME}.image" "${MC_BOOTSTRAP_IMAGE_NAME}.image"
+${VM} "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
+#cp "${CORE_IMAGE_NAME}.image" "${MC_BOOTSTRAP_IMAGE_NAME}.image"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${ST_CACHE}/Monticello.st --save --quit
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" eval --save "TraitsBootstrap fixSourceCodeOfTraits "
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 
 #Bootstrap Monticello Part 2: Networking Packages and Remote Repositories
@@ -205,7 +236,7 @@ ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Smalltalk vm parameterAt: 45 put:
 
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.5';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'tonel://${REPOSITORY}/src';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load"
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources. Smalltalk garbageCollect"
 ${VM} "${PHARO_IMAGE_NAME}.image" clean --release
 
 echo "[Pharo] Configure resulting image"

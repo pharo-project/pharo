@@ -89,8 +89,8 @@ SmalltalkImage class >> shutDown: isImageClosing [
 
 { #category : #initialization }
 SmalltalkImage class >> startUp: isImageStarting [
-	ChangesLog default.
-	isImageStarting ifTrue: [Smalltalk openSourceFiles]
+	
+	ChangesLog default
 ]
 
 { #category : #image }
@@ -262,7 +262,8 @@ SmalltalkImage >> backupTo: newNameWithoutSuffix [
 	Results:
 		true  when continuing in the new session
 		false for the current session"
-	SourceFiles changesFileStream ifNotNil:[
+	(SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
+    ifFalse: [
 		self 
 			closeSourceFiles; "so copying the changes file will always work"
 			saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix)].
@@ -622,6 +623,10 @@ SmalltalkImage >> fileForImageNamed: aString [
 SmalltalkImage >> fixObsoleteBindings [
 	CompiledMethod allInstances do: [ :method |
 		| obsoleteBindings |
+		
+		"Added to check because sometimes the bootstrap fails to generate some methods."
+		self assert: (method header isKindOf: SmallInteger) description: (method name , ' has an invalid header:' , method header asString).
+		
 		obsoleteBindings := method literals select: [ :literal |
 				literal isVariableBinding and: [
 					literal value isBehavior and: [ 
@@ -1106,7 +1111,7 @@ SmalltalkImage >> logStdErrorDuring: aBlock [
 	| stderr |
 	[
 		"install the line end conversion and force initialize the converter"
-		stderr := ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+		stderr := ZnNewLineWriterStream on: (ZnCharacterWriteStream
 			on: Stdio stderr
 			encoding: 'utf8').
 		
@@ -1327,7 +1332,7 @@ SmalltalkImage >> openLog [
 	Because it really belongs to logging facility,
 	we should delegate to it at some point "
 
-	^ [ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+	^ [ZnNewLineWriterStream on: (ZnCharacterWriteStream
 		on:
 			((File named: Smalltalk logFileName) writeStream
 				setToEnd;
@@ -1674,7 +1679,8 @@ SmalltalkImage >> saveAs: newNameWithoutSuffix [
 		false for the current session "
 
 	newNameWithoutSuffix ifNil: [ ^ self ].
-	SourceFiles changesFileStream ifNotNil: [ 
+  (SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
+    ifFalse: [ 
 		self closeSourceFiles.
 		self saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix)	
 		"so copying the changes file will always work" ].

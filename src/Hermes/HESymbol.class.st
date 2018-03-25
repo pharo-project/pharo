@@ -1,3 +1,8 @@
+"
+I represent the symbols.
+I just extend the HEByteString representation.
+I just add a conversion from String to Symbol after reading the value.
+"
 Class {
 	#name : #HESymbol,
 	#superclass : #HEByteString,

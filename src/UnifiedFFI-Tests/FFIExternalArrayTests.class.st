@@ -1,7 +1,10 @@
+"
+Tests for FFIExternalArray
+"
 Class {
 	#name : #FFIExternalArrayTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #tests }

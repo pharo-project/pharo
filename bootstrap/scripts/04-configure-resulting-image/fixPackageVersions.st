@@ -4,7 +4,7 @@
 
 "Create repository"
 
-repositoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: ['..']) asFileReference.
+repositoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: [FileSystem workingDirectory]) asFileReference.
 
 repo := IceRepositoryCreator new
 	location: repositoryReference;

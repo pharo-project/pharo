@@ -9,7 +9,7 @@ MyClass class>>fileReaderServicesForFile: fullName suffix: suffix
 	^ (FileStream isSourceFileSuffix: suffix)
 		ifTrue: [ { self mySimpleServiceEntry1 . self mySimpleServiceEntry2 }]
 		ifFalse: [#()]
-" 
+"
 Class {
 	#name : #FileServices,
 	#superclass : #Object,

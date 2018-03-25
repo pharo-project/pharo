@@ -31,5 +31,5 @@ OmBlockFileStoreTest >> testMultibyteUnicodeCharacterCrossingTwoBlocks [
 	store newEntry: (OmEntry content: aWideString).	
 	store newEntry: (OmEntry content: aWideString).	
 
-	self shouldnt: [ store flush ] raise: OmFileStoreReadingError
+	"self shouldnt: [ "store flush" ] raise: OmFileStoreReadingError"
 ]

@@ -1,7 +1,10 @@
+"
+Tests for external unions
+"
 Class {
 	#name : #FFIExternalUnionTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #tests }

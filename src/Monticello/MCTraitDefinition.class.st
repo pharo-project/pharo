@@ -7,7 +7,7 @@ Class {
 	#category : #'Monticello-Modeling'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MCTraitDefinition class >> name: classNameString traitComposition:  traitCompositionString category:  categoryString comment:  commentString commentStamp:   commentStamp [
 	^ self instanceLike:
 		(self new initializeWithName: classNameString 

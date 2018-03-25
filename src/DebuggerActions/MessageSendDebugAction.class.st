@@ -20,7 +20,8 @@ Class {
 	#superclass : #DebugAction,
 	#instVars : [
 		'id',
-		'selector'
+		'selector',
+		'help'
 	],
 	#category : #'DebuggerActions-Actions'
 }
@@ -37,6 +38,16 @@ MessageSendDebugAction >> executeAction [
 	self receiver 
 		perform: self selector
 		withEnoughArguments: self arguments
+]
+
+{ #category : #accessing }
+MessageSendDebugAction >> help [
+	^ help
+]
+
+{ #category : #accessing }
+MessageSendDebugAction >> help: anObject [
+	help := anObject
 ]
 
 { #category : #accessing }

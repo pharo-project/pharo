@@ -69,24 +69,19 @@ TraitTest >> testComposedBy [
 
 { #category : #testing }
 TraitTest >> testCompositionCopy [
-	| t6compositionCopyFirst c2compositionCopy |
+ 
+	| t6compositionCopyFirst |
 	self assert: (self t1 + self t2) allTraits 
-				= (self t1 + self t2) copyTraitExpression allTraits.
+				equals: (self t1 + self t2) copyTraitExpression allTraits.
 	self assert: (self t1 classTrait + self t2 classTrait) allTraits 
-				= (self t1 classTrait + self t2 classTrait) copyTraitExpression allTraits.
+				equals: (self t1 classTrait + self t2 classTrait) copyTraitExpression allTraits.
 	self assert: self t6 traitComposition allTraits 
-				= self t6 traitComposition copyTraitExpression allTraits.
+				equals: self t6 traitComposition copyTraitExpression allTraits.
 	self 
 		assert: (self t6 asTraitComposition copyTraitExpression allTraits includesAll: { (self t1). (self t2). (self t6) }).
 	"make no undue sharing happens of exclusions and aliases after an expression copy"
 	t6compositionCopyFirst := self t6 traitComposition copyTraitExpression.
-	t6compositionCopyFirst transformations at: 1 put: #m22Alias -> #m33.
-	self 
-		assert: self t6 traitComposition transformations second aliases first value 
-				= #m22.
-	c2compositionCopy := self c2 traitComposition copyTraitExpression.
-	c2compositionCopy transformations first exclusions at: 1 put: #m4.
-	self c2 traitComposition transformations first exclusions = #(#m11 )
+
 ]
 
 { #category : #testing }
@@ -266,9 +261,9 @@ TraitTest >> testLocalMethodWithSameCodeInTrait [
 		each hasTraitComposition ifTrue: [
 			each selectorsDo: [ :selector |
 				(each includesLocalSelector: selector) ifTrue: [
-					(each traitComposition traitProvidingSelector: selector) ifNotNil: [ :trait |
+					(each traitComposition traitDefining: selector ifNone: [nil] ) ifNotNil: [ :trait |
 						(trait selectors includes: selector) ifTrue: [
-							self deny: (trait >> selector = (each >> selector)) ] ] ] ] ] ]
+							self deny: ((trait compiledMethodAt: selector) = (each >> selector)) ] ] ] ] ] ]
 ]
 
 { #category : #testing }
@@ -286,7 +281,7 @@ TraitTest >> testMarkerMethods [
 
 { #category : #testing }
 TraitTest >> testOrigin [
-	| tr1 tr2 tr3 tr23 aMethodDescription |
+	| tr1 tr2 tr3 tr23 |
 	tr1 := self createTraitNamed: #TTT1 uses: {}.
 	tr2 := self createTraitNamed: #TTT2 uses: {tr1}.
 	tr3 := self createTraitNamed: #TTT3 uses: {tr1}.
@@ -299,33 +294,15 @@ TraitTest >> testOrigin [
 	
 	"-----------"
 	"For TR2"
-	aMethodDescription := tr2 traitComposition methodDescriptionForSelector: #foo.
-	self assert: (aMethodDescription locatedMethods size = 1).
-	self assert: (aMethodDescription locatedMethods includes: ( tr1 >>  #foo)).
-
-	self assert: (aMethodDescription providedLocatedMethod notNil).	
-	"The method is provided, it cannot be nil"
-	self assert: (aMethodDescription providedMethod notNil).	
-	self assert: (aMethodDescription isProvided).	
-		
-	self assert: (tr2 traitComposition traitProvidingSelector: #foo) == tr1.
+			
+	self assert: (tr2 traitComposition traitDefining: #foo) innerClass == tr1.
 	self assert: (tr2 >> #foo) origin == tr1.
 	"-----------"
 	
 	"-----------"
 	"For TR23"
-	aMethodDescription := tr23 traitComposition methodDescriptionForSelector: #foo.
-	self assert: (aMethodDescription locatedMethods size = 2).
-	self assert: (aMethodDescription locatedMethods includes: (tr2 >> #foo)).
-	self assert: (aMethodDescription locatedMethods includes: (tr3 >> #foo)).
-
-	self assert: (aMethodDescription providedLocatedMethod notNil).	
-	"The method is provided, it cannot be nil"
-	self assert: (aMethodDescription providedMethod notNil).	
-
-	self assert: (aMethodDescription isProvided).	
 		
-	self assert: (tr23 traitComposition traitProvidingSelector: #foo) == tr1.
+	self assert: (tr23 traitComposition traitDefining: #foo) innerClass == tr1.
 	self assert: (tr23 >> #foo) origin == tr1.
 	"----------"
 ]
@@ -454,7 +431,7 @@ TraitTest >> testUsers [
 	self assert: self t3 traitUsers isEmpty.
 	self assert: self t5 traitUsers size = 1.
 	self assert: self t5 traitUsers anyOne = self c2.
-	self c2 setTraitCompositionFrom: self t1 + self t5.
+	self c2 setTraitComposition: self t1 + self t5.
 	self assert: self t5 traitUsers size = 1.
 	self assert: self t5 traitUsers anyOne = self c2.
 	self c2 setTraitComposition: self t2 asTraitComposition.
@@ -464,8 +441,9 @@ TraitTest >> testUsers [
 { #category : #testing }
 TraitTest >> testUsersWithClassChanges [
 	"This documents bug http://code.google.com/p/pharo/issues/detail?id=443"
-		
-	self c2 setTraitCompositionFrom: self t5.
+	"self debug: #testUsersWithClassChanges"
+	
+	self c2 setTraitComposition: self t5 asTraitComposition.
 	self assert: self t5 traitUsers size = 1.
 	self assert: self t5 classSide traitUsers size = 1.
 	self assert: self c2 traits size = 1.

@@ -128,12 +128,12 @@ File class >> unregister: anObject [
 File >> basicOpenForWrite: writeMode [ 
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
 	^ self class
-		retryWithGC: [ self primOpen: name writable: writeMode ]
+		retryWithGC: [ self primOpen: name utf8Encoded writable: writeMode ]
 		until:[ :id | id notNil ] 
 		forFileNamed: name
 ]
 
-{ #category : #'open/close' }
+{ #category : #testing }
 File >> checkDoesNotExist [
 	"This method implements a backwards compatible logic to #newFileNamed:
 	
@@ -151,14 +151,14 @@ File >> checkDoesNotExist [
 File >> delete [
 	"We retries with GC because in some platforms open files cannot be open"
 	self class
-		retryWithGC: [ self primDelete: name ]
+		retryWithGC: [ self primDelete: name utf8Encoded ]
 		until: [ :result | result notNil ]
 		forFileNamed: name.
 	self exists
 		ifTrue: [ (CannotDeleteFileException new messageText: 'Could not delete file ' , name,'. Check the file is not open.') signal ].
 ]
 
-{ #category : #'open/close' }
+{ #category : #testing }
 File >> exists [
 
 	| handle |
@@ -207,13 +207,15 @@ File >> openForWrite: writeMode [
 
 	| fileHandle |
 	fileHandle := self basicOpenForWrite: writeMode.
-	fileHandle
-		ifNil: [ "Opening the file failed.
+	fileHandle ifNil: [
+		"Opening the file failed.
 		If the file does not exist, we throw an explicit FileDoesNotExistException.
 		Otherwise, we throw a generic FileException."
-			self exists
-				ifFalse: [ ^ FileDoesNotExistException signalWithFile: self writeMode: writeMode ].
-			CannotDeleteFileException signal: name ].
+		self exists
+			ifFalse: [ ^ FileDoesNotExistException signalWithFile: self writeMode: writeMode ].
+		CannotDeleteFileException signal: name
+	].
+
 	^ (BinaryFileStream handle: fileHandle file: self forWrite: writeMode)
 		register;
 		yourself
@@ -255,6 +257,12 @@ File >> readStreamDo: aBlock [
 	stream := self readStream.
 	^ [ aBlock value: stream ]
 		ensure: [ stream close ]
+]
+
+{ #category : #testing }
+File >> size [
+
+	^ self readStreamDo: [ :stream | stream size ]
 ]
 
 { #category : #registry }

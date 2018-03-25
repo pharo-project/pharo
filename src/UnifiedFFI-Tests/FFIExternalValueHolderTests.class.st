@@ -1,10 +1,13 @@
+"
+Tests for FFIExternalValueHolder
+"
 Class {
 	#name : #FFIExternalValueHolderTests,
 	#superclass : #TestCase,
 	#classVars : [
 		'TIME_T_PTR'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #primitives }

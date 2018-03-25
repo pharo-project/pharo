@@ -134,24 +134,22 @@ def bootstrapImage(){
 	    // Need to bind the label variable before the closure - can't do 'for (label in labels)'
 	    def architecture = arch
 
-		builders[architecture] = {
-			dir(architecture) {
-		
-			try{
-			stage ("Fetch Requirements-${architecture}") {	
-				checkout scm
-				shell 'wget -O - get.pharo.org/vm61 | bash	'
-				shell 'wget https://github.com/guillep/PharoBootstrap/releases/download/v1.2.1/bootstrapImage.zip'
-				shell 'unzip bootstrapImage.zip'
-				shell './pharo Pharo.image bootstrap/scripts/prepare_image.st --save --quit'
-		    }
+    	builders[architecture] = {
+    		dir(architecture) {
+			
+    		try{
+    		stage ("Fetch Requirements-${architecture}") {	
+    			checkout scm
+    			shell 'wget -O - get.pharo.org/vm61 | bash	'
+    			shell 'wget https://github.com/guillep/PharoBootstrap/releases/download/v1.4/bootstrapImage.zip'
+    			shell 'unzip bootstrapImage.zip'
+    			shell './pharo Pharo.image bootstrap/scripts/prepare_image.st --save --quit'
+    	    }
 
-			stage ("Bootstrap-${architecture}") {
-				shell "mkdir -p bootstrap-cache #required to generate hermes files"
-				shell "./pharo Pharo.image ./bootstrap/scripts/generateKernelHermesFiles.st --quit"
-				shell "./pharo Pharo.image ./bootstrap/scripts/generateSUnitHermesFiles.st --quit"
-				shell "./pharo ./Pharo.image bootstrap/scripts/bootstrap.st --ARCH=${architecture} --BUILD_NUMBER=${env.BUILD_ID} --quit"
-		    }
+    		stage ("Bootstrap-${architecture}") {
+    			shell "mkdir -p bootstrap-cache #required to generate hermes files"
+    			shell "./pharo ./Pharo.image bootstrap/scripts/bootstrap.st --ARCH=${architecture} --BUILD_NUMBER=${env.BUILD_ID} --quit"
+    	    }
 
 			stage ("Full Image-${architecture}") {
 				shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/build.sh -a ${architecture}"

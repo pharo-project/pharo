@@ -84,7 +84,7 @@ DictionaryTest >> canBeUnhealthy [
 	^ true
 ]
 
-{ #category : #setup }
+{ #category : #coverage }
 DictionaryTest >> classToBeTested [ 
 
 	^ Dictionary
@@ -97,7 +97,8 @@ DictionaryTest >> collection [
 
 { #category : #requirements }
 DictionaryTest >> collectionClass [
-" return the class to be used to create instances of the class tested"
+	"Return the class to be used to create instances of the class tested"
+
 	^ self classToBeTested
 ]
 
@@ -194,7 +195,7 @@ DictionaryTest >> expectedSizeAfterReject [
 
 { #category : #requirements }
 DictionaryTest >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index key between bounds of 'nonEmpty'"
 
 	^ #a
 ]
@@ -685,7 +686,7 @@ DictionaryTest >> testOccurrencesOf [
 	self assert: (dict occurrencesOf: 1 ) equals: 2.
 	self supportsNilKey 
 		ifTrue: [ self assert: (dict occurrencesOf: nil ) equals: 2 ]
-		ifFalse: [ self assert: (dict occurrencesOf: nil ) equals: 1 ].	
+		ifFalse: [ self assert: (dict occurrencesOf: nil ) equals: 1 ]	
 	
 	
 	

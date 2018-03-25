@@ -1,3 +1,11 @@
+"
+I represent a Global variable.
+I am stored as a symbol.
+
+When serialized I get the name of the variable.
+When deserialized I find the global variable in the target environment.
+I use the class being created to look up the binding. If there is no binding I create an undeclared. 
+"
 Class {
 	#name : #HEGlobalVariable,
 	#superclass : #HESymbol,
@@ -15,6 +23,9 @@ HEGlobalVariable >> asLiteralIn: env [
 	bind := env newClass bindingOf: value.
 	
 	bind ifNotNil: [ ^ bind ].
+	
+	"If the Undeclared exists I should use the existing."
+	Undeclared associationAt: value ifPresent: [ :e | ^e  ].
 	
 	undec := UndeclaredVariable key: value value: nil.
 	Undeclared add: undec.

@@ -1,5 +1,5 @@
 "
-I store metadata for this package. These meta data are used by other tools such as the SmalllintManifestChecker and the critics Browser
+All weak collections
 "
 Class {
 	#name : #ManifestCollectionsWeak,
@@ -10,11 +10,6 @@ Class {
 { #category : #'meta-data' }
 ManifestCollectionsWeak class >> dependencies [
 	^ #(#'System-Finalization' #'Collections-Support' #'Collections-Sequenceable' #'Collections-Unordered' #'Collections-Abstract' #Kernel)
-]
-
-{ #category : #'meta-data' }
-ManifestCollectionsWeak class >> description [
-	^ 'All weak collections'
 ]
 
 { #category : #'meta-data - dependency analyser' }

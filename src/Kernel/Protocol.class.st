@@ -32,7 +32,7 @@ Protocol class >> empty [
 Protocol class >> name: nm [
 
 	^ self new
-		name: nm;
+		name: nm asSymbol;
 		yourself
 ]
 
@@ -41,7 +41,7 @@ Protocol class >> name: nm methods: methods [
 
 	^ self new
 		methods: methods;
-		name: nm;
+		name: nm asSymbol;
 		yourself
 ]
 

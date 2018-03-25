@@ -31,7 +31,7 @@ DailyNonInteractiveTranscript >> fileNameWithDate [
 	^ newName
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DailyNonInteractiveTranscript >> initialize [
 	super initialize.
 	date := Date today
