@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'environment'
 	],
-	#category : 'Shift-ClassBuilder'
+	#category : #'Shift-ClassBuilder'
 }
 
 { #category : #accessing }

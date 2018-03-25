@@ -19,7 +19,7 @@ Class {
 	#classInstVars : [
 		'anInstanceVar'
 	],
-	#category : #'SmartSuggestions-Tests-Mocks'
+	#category : #'SmartSuggestions-Tests'
 }
 
 { #category : #'instance creation' }
@@ -178,8 +178,8 @@ SugsMockContext >> selectedMethod [
 ]
 
 { #category : #'api - context' }
-SugsMockContext >> selectedVariable: aVariableName. [
-	selectedVariable := aVariableName.
+SugsMockContext >> selectedVariable: aVariableName [
+	selectedVariable := aVariableName
 ]
 
 { #category : #'api - context' }

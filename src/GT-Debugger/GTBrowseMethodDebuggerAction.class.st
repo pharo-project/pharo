@@ -35,6 +35,11 @@ GTBrowseMethodDebuggerAction >> executeAction [
 ]
 
 { #category : #accessing }
+GTBrowseMethodDebuggerAction >> help [
+	^ 'Open a sytem browser on the current method.'
+]
+
+{ #category : #accessing }
 GTBrowseMethodDebuggerAction >> id [
 
 	^ #gtBrowseMethodDebuggerAction

@@ -1,3 +1,21 @@
+"
+Even though the format is intented to store any kind of objects as a root element.
+This is the root element expected by the command line tool and the installer.
+
+I represent an exported package.
+I store in myself the version of Hermes used to export me. 
+I also include: 
+	- the package name as an exported symbol
+	- the classes ordered by dependency
+	- the traits ordered by dependency
+	- the extension methods
+	
+I first load all the traits. 
+Then the classes
+
+Then the methods for all the classes and traits.
+And then the extension methods.
+"
 Class {
 	#name : #HEPackage,
 	#superclass : #HEAbstractExported,
@@ -13,7 +31,7 @@ Class {
 
 { #category : #formatting }
 HEPackage class >> formatVersion [
-	^ 1
+	^ 2
 ]
 
 { #category : #adding }

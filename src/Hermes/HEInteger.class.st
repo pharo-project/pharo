@@ -1,3 +1,11 @@
+"
+I represent an Integer.
+I am stored as:
+   - sign (1 for negative, 0 for possitive)
+   - a byte array of the content.
+
+This allows to serialize any given Integer in the image
+"
 Class {
 	#name : #HEInteger,
 	#superclass : #HEExportedLiteral,

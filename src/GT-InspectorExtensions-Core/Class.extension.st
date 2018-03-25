@@ -61,13 +61,12 @@ Class >> gtInspectorInstanceVariablesIn: composite [
 
 { #category : #'*GT-InspectorExtensions-Core' }
 Class >> gtInspectorInstancesOn: composite [
- 
 	<gtInspectorPresentationOrder: 40>
-	^composite table 
-		title: [ 'Instances' translated ];		
+	^ composite table
+		title: [ 'Instances' translated ];
 		display: [ self allInstances ];
-		column: 'Hash' evaluated: [:each | each hash asString ];
-		column: 'Object' evaluated: [:each | each printString ]
+		column: 'Hash' evaluated: [ :each | each hash asString ];
+		column: 'Object' evaluated: [ :each | each printString ]
 ]
 
 { #category : #'*GT-InspectorExtensions-Core' }

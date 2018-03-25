@@ -50,10 +50,7 @@ BaselineOfBasicTools >> baseline: spec [
 
 		spec package: 'Morphic-Widgets-FastTable'.
 		
-		spec package: 'MessageBrowserRefactoringAddition'.
 		spec package: 'Tool-ExternalBrowser'.
-		spec package: 'HowToContributeHelp'.
-		spec package: 'ContributingToTheCatalogHelp'.
 		spec package: 'BlueInk-Core'. 
 		spec package: 'BlueInk-Extras'.
 		spec package: 'Tool-ProcessBrowser'.
@@ -66,8 +63,9 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Nautilus-GroupManagerUI'.
 		spec package: 'Komitter'.
 		
-		spec package: 'Announcements-Help'.	
+		spec package: 'Announcements-Help'.
 		spec package: 'Metacello-FileTree'.
+		spec package: 'Metacello-Cypress'.
 		spec package: 'Metacello-ProfStef'.
 		spec package: 'Metacello-Reference'.
 		spec package: 'Metacello-Tutorial'.
@@ -81,7 +79,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Refactoring-Core'.
 		spec package: 'Refactoring-Environment'.
 		spec package: 'Regex-Help'.
-		spec package: 'ImportingResource-Help'.
 		spec package: 'IssueTracking'.
 		spec package: 'Monticello-OldDataStreamCompatibility'. 
 		spec package: 'MonticelloFileServices'.			
@@ -103,7 +100,10 @@ BaselineOfBasicTools >> baseline: spec [
 { #category : #actions }
 BaselineOfBasicTools >> postload: loader package: packageSpec [
 
+	"Registering Nautilus"
  	Nautilus registerToolsOn: Smalltalk tools.
+	SessionManager default registerToolClassNamed: #Nautilus.
+	
 	Smalltalk tools register: TestRunner as: #testRunner.
 	Smalltalk tools register: MCWorkingCopyBrowser as: #monticelloBrowser.
 	

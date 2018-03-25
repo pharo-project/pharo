@@ -52,34 +52,35 @@ FileTest >> testFileExists [
 FileTest >> testFilesAreRegisteredInWeakRegistry [
 
 	|  f |
-	f := (File named: 'asd.txt') writeStream.
-	self assert: (File registry keys includes: f)
+	[f := (File named: 'asd.txt') writeStream.
+	self assert: (File registry keys includes: f)]
+		ensure: [ f ifNotNil: #close ]
 ]
 
 { #category : #tests }
 FileTest >> testOpenFileForReadDoesNotDeleteExistingFile [
 
-	| file |
-	file := (File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
+	| size |
+	(File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
 
-	file := (File named: 'asd.txt') readStream.
-	self assert: file size equals: 3.
+	size := (File named: 'asd.txt') size.
+	self assert: size equals: 3.
 ]
 
 { #category : #tests }
 FileTest >> testOpeningFileNormallyDoesNotDeleteExistingFile [
 
-	| file |
-	file := (File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
+	| size |
+	(File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
 
-	file := (File named: 'asd.txt') readStream.
-	self assert: file size equals: 3.
+	size := (File named: 'asd.txt') size.
+	self assert: size equals: 3.
 ]
 
 { #category : #tests }
 FileTest >> testOpeningFileObjectCreatesFile [
 
-	(File named: 'asd.txt') writeStream.
+	(File named: 'asd.txt') writeStream close.
 	"Our File implementation should not cache anything.
 	This test is based on this assumption."
 	self assert: (File named: 'asd.txt') exists.
@@ -89,18 +90,20 @@ FileTest >> testOpeningFileObjectCreatesFile [
 FileTest >> testOpeningFileSetsPositionAtBeggining [
 
 	| file |
-	(File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
+	[(File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
 	file := (File named: 'asd.txt') openForWrite.
-	self assert: file position equals: 0.
+	self assert: file position equals: 0 
+		] ensure: [ file ifNotNil: #close ]
 ]
 
 { #category : #tests }
 FileTest >> testOpeningForAppendSetsPositionAtEnd [
 
 	| file |
-	(File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
+	[ (File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
 	file := (File named: 'asd.txt') openForAppend.
-	self assert: file position equals: 3.
+	self assert: file position equals: 3
+		] ensure: [ file ifNotNil: #close ]
 ]
 
 { #category : #tests }

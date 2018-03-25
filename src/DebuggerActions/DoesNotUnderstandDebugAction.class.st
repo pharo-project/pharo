@@ -5,7 +5,7 @@ A DoesNotUnderstandDebugAction is a debugging action that can create a method if
 Class {
 	#name : #DoesNotUnderstandDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
@@ -41,11 +41,6 @@ DoesNotUnderstandDebugAction >> askForSuperclassOf: aClass toImplement: aSelecto
 ]
 
 { #category : #accessing }
-DoesNotUnderstandDebugAction >> defaultHelp [
-    ^ 'Create the missing method in the user prompted class and restart the debugger at that location where it can be edited.'
-]
-
-{ #category : #accessing }
 DoesNotUnderstandDebugAction >> defaultLabel [
 
 	^  'Create'
@@ -77,6 +72,11 @@ DoesNotUnderstandDebugAction >> executeAction [
 		inClass: chosenClass 
 		forContext: self interruptedContext.
 	self debugger selectTopContext
+]
+
+{ #category : #accessing }
+DoesNotUnderstandDebugAction >> help [
+    ^ 'Create the missing method in the user prompted class and restart the debugger at that location where it can be edited.'
 ]
 
 { #category : #accessing }

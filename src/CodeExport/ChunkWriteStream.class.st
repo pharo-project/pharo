@@ -42,11 +42,6 @@ ChunkWriteStream >> nextPut: aString [
         decoratedStream nextPut: terminator.  "double imbedded terminators"
         remainder := remainder copyFrom: i+1 to: remainder size].
     decoratedStream nextPutAll: remainder. 
-    aString asString includesUnifiedCharacter ifTrue: [
-        decoratedStream nextPut: terminator.
-        decoratedStream nextPutAll: ']lang['.
-        aString asString writeLeadingCharRunsOn: decoratedStream.
-    ].
     decoratedStream nextPut: terminator.
     decoratedStream flush.
 ]

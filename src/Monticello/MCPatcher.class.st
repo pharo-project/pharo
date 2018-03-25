@@ -18,7 +18,7 @@ MCPatcher class >> apply: aPatch to: aSnapshot [
 	^ loader patchedSnapshot
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MCPatcher class >> snapshot: aSnapshot [
 	^ self new initializeWithSnapshot: aSnapshot
 ]

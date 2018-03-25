@@ -49,6 +49,11 @@ GTClearEditorDebugAction >> executeAction [
 ]
 
 { #category : #accessing }
+GTClearEditorDebugAction >> help [
+	^ 'Cancel editor changes.'
+]
+
+{ #category : #accessing }
 GTClearEditorDebugAction >> id [
 
 	^ #gtClearEditorDebugAction

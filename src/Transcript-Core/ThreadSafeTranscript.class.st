@@ -155,11 +155,12 @@ ThreadSafeTranscript >> initialize [
 	
 ]
 
-{ #category : #printing }
+{ #category : #'self evaluating' }
 ThreadSafeTranscript >> isSelfEvaluating [
 
-	self == Transcript ifTrue: [^true].
-	^super isSelfEvaluating
+	^self == Transcript 
+		ifTrue: [ true ]
+		ifFalse: [ super isSelfEvaluating ]
 ]
 
 { #category : #accessing }

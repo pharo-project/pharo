@@ -42,6 +42,11 @@ GTSelectionGoDebugAction >> executeAction [
 ]
 
 { #category : #accessing }
+GTSelectionGoDebugAction >> help [
+	^ 'Evaluate the selection in a code pane of a debugger and push the result in the inspector of the debugger.'
+]
+
+{ #category : #accessing }
 GTSelectionGoDebugAction >> id [
 
 	^ #gTOpenSelectionDebugAction

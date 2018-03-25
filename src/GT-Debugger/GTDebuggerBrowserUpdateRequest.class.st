@@ -10,7 +10,7 @@ Class {
 	#category : #'GT-Debugger-UI'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 GTDebuggerBrowserUpdateRequest class >> from: anAnnouncement [
 	^ self new from: anAnnouncement
 ]

@@ -16,7 +16,7 @@ IdentitySetTest class >> shouldInheritSelectors [
 ^true
 ]
 
-{ #category : #requirements }
+{ #category : #coverage }
 IdentitySetTest >> classToBeTested [
 
 	^ IdentitySet

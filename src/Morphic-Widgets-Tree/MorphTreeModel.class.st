@@ -19,6 +19,7 @@ Class {
 
 { #category : #examples }
 MorphTreeModel class >> exampleCheckList1 [
+	<sampleInstance>
 	"self exampleCheckList1"
 	Cursor wait 
 		showWhile: [
@@ -31,6 +32,7 @@ MorphTreeModel class >> exampleCheckList1 [
 
 { #category : #examples }
 MorphTreeModel class >> exampleCheckList2 [
+	<sampleInstance>
 	"self exampleCheckList2"
 	| model |
 	model := self new rootItems: Morph methods.
@@ -45,6 +47,7 @@ MorphTreeModel class >> exampleCheckList2 [
 
 { #category : #examples }
 MorphTreeModel class >> exampleCheckList3 [
+	<sampleInstance>
 	"self exampleCheckList3"
 	Cursor wait 
 		showWhile: [

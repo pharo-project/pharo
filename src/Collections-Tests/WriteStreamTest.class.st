@@ -14,6 +14,7 @@ WriteStreamTest class >> shouldInheritSelectors [
 
 { #category : #coverage }
 WriteStreamTest >> classToBeTested [
+
 	^ self streamClass
 ]
 

@@ -10,7 +10,7 @@ selector <Symbol> selector that can be used to reproduce the mutation (typically
 "
 Class {
 	#name : #ModificationForbidden,
-	#superclass : #Exception,
+	#superclass : #Error,
 	#instVars : [
 		'object',
 		'fieldIndex',
@@ -20,19 +20,14 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
-{ #category : #'as yet unclassified' }
-ModificationForbidden class >> for: anObject atInstVar: fieldIndex with: newValue retrySelector: selector [
+{ #category : #'instance creation' }
+ModificationForbidden class >> for: anObject at: fieldIndex with: newValue retrySelector: selector [
 
 	^self new 
 		object: anObject;
 		fieldIndex: fieldIndex;
 		newValue: newValue;
 		retrySelector: selector
-]
-
-{ #category : #accessing }
-ModificationForbidden >> defaultAction [
-	UnhandledError signalForException: self
 ]
 
 { #category : #accessing }
@@ -104,7 +99,7 @@ ModificationForbidden >> retryModification [
 	fieldIndex notNil
 		ifTrue: [ object perform: retrySelector with: fieldIndex with: newValue ]
 		ifFalse: [object perform: retrySelector with: newValue ].
-	self resume: newValue
+	self resumeUnchecked: newValue
 ]
 
 { #category : #accessing }

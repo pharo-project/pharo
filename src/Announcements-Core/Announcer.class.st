@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'registry'
 	],
-	#category : #'Announcements-Core'
+	#category : #'Announcements-Core-Base'
 }
 
 { #category : #announce }

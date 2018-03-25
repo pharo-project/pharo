@@ -15,14 +15,6 @@ ReadWriteStream >> = other [
 	^ self position = other position and: [self contents = other contents]
 ]
 
-{ #category : #accessing }
-ReadWriteStream >> contents [
-	"Answer with a copy of my collection from 1 to readLimit."
-
-	readLimit := readLimit max: position.
-	^collection copyFrom: 1 to: readLimit
-]
-
 { #category : #comparing }
 ReadWriteStream >> hash [
 
@@ -61,6 +53,29 @@ ReadWriteStream >> next: anInteger [
 	position := endPosition.
 	^ans
 
+]
+
+{ #category : #initialization }
+ReadWriteStream >> on: aCollection [
+
+	super on: aCollection.
+	readLimit := aCollection size
+]
+
+{ #category : #accessing }
+ReadWriteStream >> readInto: aCollection startingAt: startIndex count: n [
+	"Read n objects into the given collection. 
+	Return number of elements that have been read."
+	
+	| max |
+	max := (readLimit - position) min: n.
+	aCollection 
+		replaceFrom: startIndex 
+		to: startIndex + max - 1
+		with: collection
+		startingAt: position + 1.
+	position := position + max.
+	^ max
 ]
 
 { #category : #converting }

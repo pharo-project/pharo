@@ -29,6 +29,12 @@ ZnEncodedReadStream >> isBinary [
 	^ false
 ]
 
+{ #category : #testing }
+ZnEncodedReadStream >> isReadOnly [
+
+	^ true
+]
+
 { #category : #accessing }
 ZnEncodedReadStream >> next [
 	^ peeked
@@ -82,6 +88,16 @@ ZnEncodedReadStream >> nextElement [
 ]
 
 { #category : #accessing }
+ZnEncodedReadStream >> nextInto: collection [
+	"Read the next elements of the receiver into collection,
+	returning a copy if less elements are available"
+	
+	^ self
+		next: collection size
+		into: collection
+]
+
+{ #category : #accessing }
 ZnEncodedReadStream >> peek [
 	^ peeked
 		ifNil: [
@@ -95,6 +111,18 @@ ZnEncodedReadStream >> peekFor: object [
 			self next.
 			true ]
 		ifFalse: [ false ]
+]
+
+{ #category : #accessing }
+ZnEncodedReadStream >> position [
+
+	^ super position - (peeked ifNil: [ 0 ] ifNotNil: [ 1 ])
+]
+
+{ #category : #accessing }
+ZnEncodedReadStream >> position: anInteger [
+	super position: anInteger.
+	peeked := nil
 ]
 
 { #category : #accessing }

@@ -1,3 +1,23 @@
+"
+I represent a serialized method.
+
+I store all the information needed to regenerate the method in the target image.
+I store this information and all the bytecode as a byteArray.
+Also I store all the literals that have been transformed to HEExportedLiteral's subclasses
+
+I have:
+   - the name
+   - the class name
+   - the protocol
+   - the name of the encoderClass 
+   - the number of arguments (useful not to parse the selector, in the target system).
+   - the number of temporaries
+   - if it is a primitive.
+  - the bytecode
+  - the literals.
+
+Check the methods #readFrom: and #writeInto: for details of how it is written in the file.
+"
 Class {
 	#name : #HEMethod,
 	#superclass : #HEAbstractExported,
@@ -38,7 +58,7 @@ HEMethod >> className: anObject [
 { #category : #compiling }
 HEMethod >> headerFor: anEnvironment [
 	| encoderClass|
-	
+	"When a method is deserialized its header should be recalculated"
 	encoderClass := anEnvironment classNamed: encoderClassName.
 	
 	^ (CompiledMethod headerFlagForEncoder: encoderClass) + (numArgs bitShift: 24) + (numTemps bitShift: 18) + literals size + (hasPrimitive bitShift: 16)

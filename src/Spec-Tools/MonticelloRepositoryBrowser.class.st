@@ -15,7 +15,7 @@ Class {
 	#category : #'Spec-Tools-Monticello'
 }
 
-{ #category : #utils }
+{ #category : #utilities }
 MonticelloRepositoryBrowser class >> allManagers [ 
 
 	^ MCWorkingCopy allManagers 
@@ -40,12 +40,12 @@ MonticelloRepositoryBrowser class >> example [
 		workingCopies: (self allManagers)
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 MonticelloRepositoryBrowser class >> order [
 	^ Order ifNil: [ Order := 1 ]
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 MonticelloRepositoryBrowser class >> order: anInteger [
 	Order := anInteger
 ]

@@ -423,11 +423,11 @@ SlotIntegrationTest >> testSlotsAreInitializedWithDefiningAnonimousClass [
 			name: self aClassName;
 			slots: #(x)
 		].
-	self assert: aClass slots first definingClass equals: aClass.
+	self assert: aClass slots first owningClass equals: aClass.
 	
 	aClass addInstVarNamed: 'y'.
 	self assert: aClass slots size equals: 2.
-	self assert: (aClass slots collect: #definingClass as: Set) equals: {aClass} asSet
+	self assert: (aClass slots collect: #owningClass as: Set) equals: {aClass} asSet
 ]
 
 { #category : #tests }

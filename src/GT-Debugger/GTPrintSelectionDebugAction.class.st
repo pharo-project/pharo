@@ -42,6 +42,11 @@ GTPrintSelectionDebugAction >> executeAction [
 ]
 
 { #category : #accessing }
+GTPrintSelectionDebugAction >> help [
+	^ 'Print the result of a selected piece of code from the code pane of the debugger.'
+]
+
+{ #category : #accessing }
 GTPrintSelectionDebugAction >> id [
 
 	^ #gTPrintSelectionDebugAction

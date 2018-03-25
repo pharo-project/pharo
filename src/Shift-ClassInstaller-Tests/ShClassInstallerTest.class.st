@@ -77,6 +77,17 @@ ShClassInstallerTest >> testModifyingClassKeepsOrganizationOfMethods [
 ]
 
 { #category : #tests }
+ShClassInstallerTest >> testModifyingClassSideInstances [
+	superClass := self newClass:#ShCITestClass slots:#(anInstanceVariable).
+	newClass := self newClass: #ShCITestSubClass superclass: superClass slots: #().
+	
+	superClass class addInstVarNamed: #aVariable.
+
+	self assert: (superClass class hasSlotNamed: #aVariable).
+	self assert: (newClass class hasSlotNamed: #aVariable)
+]
+
+{ #category : #tests }
 ShClassInstallerTest >> testModifyingSuperclass [
 	superClass := self newClass:#ShCITestClass slots:#(anInstanceVariable).
 	newClass := self newClass: #ShCITestSubClass superclass: superClass slots: #().

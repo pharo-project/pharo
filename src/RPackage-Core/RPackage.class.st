@@ -349,9 +349,13 @@ RPackage >> basicImportClass: aClass [
 RPackage >> basicRemoveSelector: aSelector ofClassName: aClassName [
 	"Remove the method in the package but does not propagate to the class itself.  Note that this method does not remove the method from the class, it just records in the package that the method is not in the package anymore."
 	
-	( self includesClassNamed: aClassName)
-		ifFalse: [(classExtensionSelectors  at: aClassName ifAbsent: [ ^ Set new]) remove: aSelector.]
-		ifTrue: [(classDefinedSelectors  at: aClassName ifAbsent: [ ^ Set new]) remove: aSelector.].
+	| selectors |
+
+	selectors := ( self includesClassNamed: aClassName)
+		ifFalse: [(classExtensionSelectors  at: aClassName ifAbsent: [ ^ Set new])]
+		ifTrue: [(classDefinedSelectors  at: aClassName ifAbsent: [ ^ Set new])].
+		
+	selectors remove: aSelector ifAbsent: [ ].
 	
 	
 ]
@@ -360,10 +364,12 @@ RPackage >> basicRemoveSelector: aSelector ofClassName: aClassName [
 RPackage >> basicRemoveSelector: aSelector ofMetaclassName: aClassName [
 	"Remove the method in the package. Note that this method does not remove the method from the class, it just records in the package that the method is not in the package anymore. aClassName is the sole instance class name and not its metaclass one: i.e. adding Point class>>new is done as removeSelector: #new ofMetaclassName: #Point"
 	
-	( self includesClassNamed: aClassName)
-		ifFalse: [(metaclassExtensionSelectors  at: aClassName ifAbsent: [ ^ Set new]) remove: aSelector.]
-		ifTrue: [(metaclassDefinedSelectors  at: aClassName ifAbsent: [ ^ Set new]) remove: aSelector.].
-	
+	| selectors |
+	selectors := ( self includesClassNamed: aClassName)
+		ifFalse: [(metaclassExtensionSelectors  at: aClassName ifAbsent: [ ^ Set new])]
+		ifTrue: [(metaclassDefinedSelectors  at: aClassName ifAbsent: [ ^ Set new])].
+
+	selectors remove: aSelector ifAbsent: [  ].	
 	
 ]
 
@@ -1149,25 +1155,6 @@ RPackage >> overrideCategoriesForClass: aClass do: aBlock [
 	"Evaluates aBlock with all the *foo-override categories in aClass"
 	^ aClass organization categories do: [:cat |
 		(self isOverrideCategory: cat) ifTrue: [aBlock value: cat]]
-]
-
-{ #category : #accessing }
-RPackage >> packageComment [
-	^ self packageManifestOrNil ifNil: [ '' ] ifNotNil: [ :manifest | manifest description ]
-]
-
-{ #category : #accessing }
-RPackage >> packageComment: aDescription [
-	^ self packageManifest classSide
-		ifNil: [ '' ]
-		ifNotNil: [ :manifest | manifest compile: 'description ^ ' , aDescription classified: 'meta-data' ]
-]
-
-{ #category : #accessing }
-RPackage >> packageManifestOrNil [
-	^ self definedClasses
-		detect: [ :each | each isManifest ]
-		ifNone: [ nil ]
 ]
 
 { #category : #accessing }

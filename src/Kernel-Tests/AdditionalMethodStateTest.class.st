@@ -28,7 +28,7 @@ AdditionalMethodStateTest >> testAnalogousCodeTo [
 	state := AdditionalMethodState new: 1.
 	state 
 		basicAt: 1
-		put: #traitSource -> (TBehavior methodNamed: #>>).
+		put: #traitSource -> TSortable.
 		
 	self 
 		shouldnt: [ state analogousCodeTo: state ]

@@ -20,17 +20,17 @@ RFEntityReification class >> key [
 { #category : #generate }
 RFEntityReification >> genForInstanceVariableSlot [
 	
-	^entity asLiteralNode
+	^RFLiteralVariableNode value: entity
 ]
 
 { #category : #generate }
 RFEntityReification >> genForLiteralVariable [
 	"entity in this case is the binding of the literal variable"
-	^entity asLiteralNode
+	^RFLiteralVariableNode value: entity
 ]
 
 { #category : #generate }
 RFEntityReification >> genForRBProgramNode [
 	
-	^entity asLiteralNode
+	^RFLiteralVariableNode value: entity
 ]

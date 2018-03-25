@@ -7,7 +7,7 @@ Class {
 	#category : #'Athens-Text'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 SimpleTextGlyphInfo class >> fromFace: anFT2Face [
 	^(self new)
 		loadFrom: anFT2Face;

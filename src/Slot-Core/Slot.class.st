@@ -15,7 +15,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'name',
-		'definingClass'
+		'owningClass'
 	],
 	#classVars : [
 		'Properties'
@@ -112,14 +112,16 @@ Slot >> changingIn: aClass [
 	"the slot was changed. Default is to do nothing"
 ]
 
-{ #category : #queries }
+{ #category : #accessing }
 Slot >> definingClass [
-	^definingClass
+	
+	^ self propertyAt: #definingClass ifAbsent: [ self owningClass ]
 ]
 
-{ #category : #queries }
+{ #category : #accessing }
 Slot >> definingClass: aClass [
-	definingClass := aClass
+
+	self propertyAt: #definingClass put: aClass
 ]
 
 { #category : #printing }
@@ -157,7 +159,6 @@ Slot >> ensureInitalizeMethodExists: aClass [
 		aClass compile: 'initialize
 	super initialize.' classified: 'initialization'.
 		] 
-	
 ]
 
 { #category : #properties }
@@ -251,6 +252,16 @@ Slot >> name [
 { #category : #accessing }
 Slot >> name: aSymbol [
 	name := aSymbol
+]
+
+{ #category : #accessing }
+Slot >> owningClass [
+	^owningClass
+]
+
+{ #category : #accessing }
+Slot >> owningClass: aClass [
+	owningClass := aClass
 ]
 
 { #category : #printing }
@@ -349,7 +360,7 @@ Slot >> storeOn: aStream [
 { #category : #queries }
 Slot >> usingMethods [
 	"All methods that read or write the slot"
-	^self definingClass 
+	^self owningClass 
 		ifNil: [ #() ]
 		ifNotNil: [:class | class allMethodsAccessingSlot: self].
 ]

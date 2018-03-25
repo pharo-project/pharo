@@ -76,6 +76,11 @@ FuelOutStackDebugAction >> executeAction [
 ]
 
 { #category : #accessing }
+FuelOutStackDebugAction >> help [
+	^ 'Serialize a portion of the current stack trace using fuel.'
+]
+
+{ #category : #accessing }
 FuelOutStackDebugAction >> id [
 
 	^ #fuelOutStack

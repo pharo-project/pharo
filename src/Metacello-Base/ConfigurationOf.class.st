@@ -1,5 +1,6 @@
 "
-You must use a *configuration* when your project is stored in a repository using `.mcz` files.
+You must use a *configuration* when your project is stored in a
+repository using `.mcz` files.
 
 If you are using a source code manager (SCM) like [git][1] and have
 created a *baseline* (see the [**BaselineOf** class comment][3] for more info)
@@ -98,8 +99,8 @@ ConfigurationOf class >> bootstrapMetacelloFrom: repositoryUrl [
 { #category : #private }
 ConfigurationOf class >> bootstrapPackage: aString from: aPath [
     | repository version |
-    repository := (MCCacheRepository uniqueInstance includesVersionNamed: aString)
-        ifTrue: [ MCCacheRepository uniqueInstance ]
+    repository := (MCCacheRepository default includesVersionNamed: aString)
+        ifTrue: [ MCCacheRepository default ]
         ifFalse: [ MCHttpRepository location: aPath user: '' password: '' ].
     self
         retry: [ 

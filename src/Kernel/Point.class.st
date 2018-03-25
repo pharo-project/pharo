@@ -43,13 +43,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-Point class >> r: rho degrees: degrees [
-	"Answer an instance of me with polar coordinates rho and theta."
-
-	^ self basicNew setR: rho degrees: degrees
-]
-
-{ #category : #'instance creation' }
 Point class >> x: xInteger y: yInteger [ 
 	"Answer an instance of me with coordinates xInteger and yInteger."
 
@@ -169,25 +162,6 @@ Point >> adhereTo: aRectangle [
 		@ ((y max: aRectangle top) min: aRectangle bottom)
 ]
 
-{ #category : #geometry }
-Point >> angle [
-	"Answer the angle in radians between the vectors represented by the receiver and (1, 0) from the origin."
-
-	^ self y arcTan: self x
-]
-
-{ #category : #'point functions' }
-Point >> angleWith: aPoint [
-	"Answer the angle in radians between the vectors represented by the receiver and aPoint from the origin."
-
-	| ar ap |
-	ar := self angle.
-	ap := aPoint angle.
-	^ ap >= ar
-		ifTrue: [ ap - ar ]
-		ifFalse: [ Float pi * 2 - ar + ap ]
-]
-
 { #category : #converting }
 Point >> asFloatPoint [
 	"Convert me to a float point transforming both of my coordinates
@@ -223,20 +197,6 @@ Point >> asNonFractionalPoint [
 Point >> asPoint [
 	"Answer the receiver itself."
 	^self
-]
-
-{ #category : #'point functions' }
-Point >> bearingToPoint: anotherPoint [
-    "Return the bearing, in degrees, from the receiver to anotherPoint."
-
-    | deltaX deltaY  |
-    deltaX := anotherPoint x -  x.
-    deltaY := anotherPoint y - y.
-    deltaX abs < 0.001
-        ifTrue: [ ^ deltaY > 0 ifTrue: [ 180 ] ifFalse: [ 0 ]].
-    ^ ((deltaX >= 0 ifTrue: [90] ifFalse: [270])
-            - ((deltaY / deltaX) arcTan negated radiansToDegrees)) rounded
-
 ]
 
 { #category : #private }
@@ -280,26 +240,6 @@ Point >> deepCopy [
 	^ x deepCopy @ y deepCopy
 ]
 
-{ #category : #'polar coordinates' }
-Point >> degrees [
-	"Answer the angle the receiver makes with origin in degrees. right is 0; down is 90."
-	| tan theta |
-	^ x = 0 
-		ifTrue: 
-			[ y >= 0 
-				ifTrue: [ 90.0 ]
-				ifFalse: [ 270.0 ] ]
-		ifFalse: 
-			[ tan := y asFloat / x asFloat.
-			theta := tan arcTan.
-			x >= 0 
-				ifTrue: 
-					[ y >= 0 
-						ifTrue: [ theta radiansToDegrees ]
-						ifFalse: [ 360.0 + theta radiansToDegrees ] ]
-				ifFalse: [ 180.0 + theta radiansToDegrees ] ]
-]
-
 { #category : #'point functions' }
 Point >> directionToLineFrom: p1 to: p2 [
 	"Answer the direction of the line from the receiver position.
@@ -308,24 +248,6 @@ Point >> directionToLineFrom: p1 to: p2 [
 	> 0 => right (receiver to left)."
 
 	^((p2 x - p1 x) * (self y - p1 y)) - ((self x - p1 x) * (p2 y - p1 y))
-]
-
-{ #category : #'point functions' }
-Point >> dist: aPoint [ 
-	"Answer the distance between aPoint and the receiver."
-	| dx dy |
-	dx := aPoint x - x.
-	dy := aPoint y - y.
-	^ (dx * dx + (dy * dy)) sqrt
-]
-
-{ #category : #'point functions' }
-Point >> distanceTo: aPoint [ 
-	"Answer the distance between aPoint and the receiver."
-	| dx dy |
-	dx := aPoint x - x.
-	dy := aPoint y - y.
-	^ (dx * dx + (dy * dy)) sqrt
 ]
 
 { #category : #'point functions' }
@@ -545,25 +467,6 @@ Point >> negated [
 ]
 
 { #category : #'point functions' }
-Point >> normal [
-	"Answer a Point representing the unit vector rotated 90 deg clockwise. For the zero point return -1@0."
-
-	| n d |
-	n := y negated @ x.
-	(d := (n x * n x + (n y * n y))) = 0
-		 ifTrue: [ ^ -1 @0 ].
-	^ n / d sqrt
-]
-
-{ #category : #'point functions' }
-Point >> normalized [
-	"Optimized for speed"
-	| r |
-	r := (x * x + (y * y)) sqrt.
-	^ (x / r) @ (y / r)
-]
-
-{ #category : #'point functions' }
 Point >> octantOf: otherPoint [ 
 	"Return 1..8 indicating relative direction to otherPoint.  
 	1=ESE, 2=SSE, ... etc. clockwise to 8=ENE"
@@ -577,31 +480,6 @@ Point >> octantOf: otherPoint [
 	^ (quad even eqv: moreHoriz) 
 		ifTrue: [ quad * 2 ]
 		ifFalse: [ quad * 2 - 1 ]
-]
-
-{ #category : #'point functions' }
-Point >> onLineFrom: p1 to: p2 [
-	^ self onLineFrom: p1 to: p2 within: 2
-]
-
-{ #category : #'point functions' }
-Point >> onLineFrom: p1 to: p2 within: epsilon [
-	"Answer true if the receiver lies on the given line segment between p1 and p2 within a small epsilon."
-
-	"is this point within the box spanning p1 and p2 expanded by epsilon? (optimized)"
-	p1 x < p2 x
-		ifTrue: [
-			((x < (p1 x - epsilon)) or: [x > (p2 x + epsilon)]) ifTrue: [^ false]]
-		ifFalse: [
-			((x < (p2 x - epsilon)) or: [x > (p1 x + epsilon)]) ifTrue: [^ false]].
-	p1 y < p2 y
-		ifTrue: [
-			((y < (p1 y - epsilon)) or: [y > (p2 y + epsilon)]) ifTrue: [^ false]]
-		ifFalse: [
-			((y < (p2 y - epsilon)) or: [y > (p1 y + epsilon)]) ifTrue: [^ false]].
-
-	"it's in the box; is it on the line?"
-	^ (self distanceTo: (self nearestPointAlongLineFrom: p1 to: p2)) <= epsilon
 ]
 
 { #category : #printing }
@@ -627,13 +505,6 @@ Point >> quadrantOf: otherPoint [
 		ifTrue: [ y < otherPoint y ifTrue: [1] ifFalse: [4] ]
 		ifFalse: [ y <= otherPoint y ifTrue: [2] ifFalse: [3] ]
 
-]
-
-{ #category : #'polar coordinates' }
-Point >> r [
-	"Answer the receiver's radius in polar coordinate system."
-
-	^ (self dotProduct: self) sqrt
 ]
 
 { #category : #arithmetic }
@@ -664,30 +535,6 @@ Point >> reflectedAbout: aPoint [
 Point >> rightRotated [
 	"Return the receiver rotated 90 degrees, i.e. self rotateBy: #right centerAt: 0 asPoint. Compare to transposed and normal."
 	^ y negated @ x
-]
-
-{ #category : #transforming }
-Point >> rotateBy: angle about: center [ 
-	"This method returns the point obtained after rotating myself around #center 
-	 point of an #angle given as parameter. The #angle provided as parameter is 
-	 interpreted as being in radian."
-	| p r theta |
-	p := self - center.
-	r := p r.
-	theta := angle asFloat - p theta.
-	^ (center x asFloat + (r * theta cos)) @ (center y asFloat - (r * theta sin))
-]
-
-{ #category : #'point functions' }
-Point >> rotateBy: direction centerAt: c [ 
-	"Answer a Point which is rotated according to direction, about the point c.
-	Direction must be one of #right (CW), #left (CCW) or #pi (180 degrees)."
-	| offset |
-	offset := self - c.
-	direction == #right ifTrue: [ ^ offset y negated @ offset x + c ].
-	direction == #left ifTrue: [ ^ offset y @ offset x negated + c ].
-	direction == #pi ifTrue: [ ^ c - offset ].
-	self error: 'unrecognizable direction'
 ]
 
 { #category : #'truncation and round off' }
@@ -744,14 +591,6 @@ Point >> scaleFrom: rect1 to: rect2 [
 ]
 
 { #category : #private }
-Point >> setR: rho degrees: degrees [ 
-	| radians |
-	radians := degrees asFloat degreesToRadians.
-	x := rho asFloat * radians cos.
-	y := rho asFloat * radians sin
-]
-
-{ #category : #private }
 Point >> setX: xValue setY: yValue [ 
 	x := xValue.
 	y := yValue
@@ -793,26 +632,6 @@ Point >> storeOn: aStream [
 	self printOn: aStream.
 	aStream nextPut: $).
 
-]
-
-{ #category : #'polar coordinates' }
-Point >> theta [
-	"Answer the angle the receiver makes with origin in radians. right is 0; 
-	down is 90."
-
-	| tan theta |
-	^ x = 0
-		ifTrue: [y >= 0
-				ifTrue: [ 1.570796326794897 "90.0 degreesToRadians" ]
-				ifFalse: [ 4.71238898038469 "270.0 degreesToRadians" ] ]
-		ifFalse: 
-			[tan := y asFloat / x asFloat.
-			theta := tan arcTan.
-			x >= 0
-				ifTrue: [y >= 0
-						ifTrue: [ theta ]
-						ifFalse: [ "360.0 degreesToRadians" 6.283185307179586 + theta ]]
-				ifFalse: [ "180.0 degreesToRadians" 3.141592653589793 + theta ] ]
 ]
 
 { #category : #geometry }

@@ -62,8 +62,9 @@ WeakKeyDictionaryTest class >> timingMany [
 
 ]
 
-{ #category : #requirements }
+{ #category : #coverage }
 WeakKeyDictionaryTest >> classToBeTested [
+
 	^ WeakKeyDictionary
 ]
 

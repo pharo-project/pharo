@@ -12,12 +12,12 @@ Class {
 	#category : #'Monticello-Base'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MCSnapshot class >> empty [
 	^ self fromDefinitions: #()
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MCSnapshot class >> fromDefinitions: aCollection [
 	^ self new initializeWithDefinitions: aCollection
 ]

@@ -7,10 +7,10 @@ Class {
 	#category : #'Collections-Tests-Unordered'
 }
 
-{ #category : #'building suites' }
+{ #category : #coverage }
 PluggableDictionaryTest class >> classToBeTested [
 
-^ IdentitySet
+	^ IdentitySet
 ]
 
 { #category : #'building suites' }
@@ -19,10 +19,10 @@ PluggableDictionaryTest class >> shouldInheritSelectors [
 ^true
 ]
 
-{ #category : #requirements }
+{ #category : #coverage }
 PluggableDictionaryTest >> classToBeTested [
 
-^ PluggableDictionary
+	^ PluggableDictionary
 ]
 
 { #category : #'tests - copy - clone' }

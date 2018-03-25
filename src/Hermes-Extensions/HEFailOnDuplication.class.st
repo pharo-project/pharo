@@ -1,3 +1,7 @@
+"
+I implement the default behavior.
+Producing an error if there is a duplication.
+"
 Class {
 	#name : #HEFailOnDuplication,
 	#superclass : #HEDuplicationModeStrategy,

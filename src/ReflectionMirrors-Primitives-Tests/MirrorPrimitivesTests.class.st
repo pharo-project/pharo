@@ -38,6 +38,16 @@ MirrorPrimitivesTests >> testChangingFixedFieldOfFixedObject [
 	self should: [MirrorPrimitives fixedFieldOf: object at: 3 put: 500] raise: PrimitiveFailed
 ]
 
+{ #category : #'tests-write barrier' }
+MirrorPrimitivesTests >> testChangingFixedFieldOfReadOnlyObject [
+
+	| object |
+	object := 10@20.
+	object beReadOnlyObject.
+	
+	self should: [MirrorPrimitives fixedFieldOf: object at: 1 put: 500] raise: ModificationForbidden
+]
+
 { #category : #'tests-fields accessing' }
 MirrorPrimitivesTests >> testChangingFixedFieldOfWeakMessageSend [
 
@@ -58,7 +68,7 @@ MirrorPrimitivesTests >> testChangingFixedFieldOfWeakMessageSend [
 
 { #category : #'tests-fields accessing' }
 MirrorPrimitivesTests >> testChangingGeneralFieldOfArray [
-
+	<compilerOptions: #(#- #optionReadOnlyLiterals)>
 	| object |
 	object := #(10 20).
 	
@@ -109,7 +119,7 @@ MirrorPrimitivesTests >> testChangingGeneralFieldOfWeakMessageSend [
 
 { #category : #'tests-fields accessing' }
 MirrorPrimitivesTests >> testChangingIndexableFieldOfArray [
-
+	<compilerOptions: #(#- #optionReadOnlyLiterals)>
 	| object |
 	object := #(10 20).
 	
@@ -126,6 +136,16 @@ MirrorPrimitivesTests >> testChangingIndexableFieldOfArray [
 MirrorPrimitivesTests >> testChangingIndexableFieldOfFixedObject [
 	
 	self should: [MirrorPrimitives indexableFieldOf: 10@20 at: 1 put: 10] raise: Error
+]
+
+{ #category : #'tests-write barrier' }
+MirrorPrimitivesTests >> testChangingIndexableFieldOfReadOnlyArray [
+	
+	| array |
+	array := {10. 20}.
+	array beReadOnlyObject.
+	
+	self should: [MirrorPrimitives indexableFieldOf: array at: 1 put: 5] raise: ModificationForbidden
 ]
 
 { #category : #'tests-fields accessing' }
@@ -389,6 +409,16 @@ MirrorPrimitivesTests >> testGettingIndexibleSizeOfWeakMessageSend [
 	self assert: actual equals: 1 "receiver of weak message send is stored as first array item"
 ]
 
+{ #category : #'tests-comparison' }
+MirrorPrimitivesTests >> testIdenticalEquality [
+
+	| object |
+	object := 0@0.
+	
+	self assert: (MirrorPrimitives check: object identicalTo: object).
+	self deny: (MirrorPrimitives check: object identicalTo: 0@0)
+]
+
 { #category : #'tests-write barrier' }
 MirrorPrimitivesTests >> testMakingObjectReadOnly [
 	| point |
@@ -397,7 +427,8 @@ MirrorPrimitivesTests >> testMakingObjectReadOnly [
 	self assert: (MirrorPrimitives isObjectReadOnly: point).
 	
 	[MirrorPrimitives fieldOf: point at: 1 put: 100.
-	self assert: false description: 'should raise modification error'] ifError: [].
+	self assert: false description: 'should raise modification error'] 
+		on: ModificationForbidden do: [].
 	self assert: point equals: 10@20.
 
 	MirrorPrimitives makeObject: point readOnly: false.
@@ -432,4 +463,19 @@ MirrorPrimitivesTests >> testPrintingObject [
 	actual := MirrorPrimitives print: 0@0.
 	
 	self assert: actual equals: 'a Point'
+]
+
+{ #category : #'tests-write barrier' }
+MirrorPrimitivesTests >> testRetryingFixedFieldModificationOfReadOnlyObject [
+
+	| array actual |
+	array := {10. 20}.
+	array beReadOnlyObject.
+	
+	actual := [MirrorPrimitives indexableFieldOf: array at: 1 put: 5. #done] 
+		on: ModificationForbidden do: [ :err | 
+			array beWritableObject.
+			err retryModification ].
+	self assert: actual equals: #done.
+	self assert: array equals: #(5 20)
 ]

@@ -14,7 +14,7 @@ Class {
 { #category : #support }
 FileReferenceTest >> createFile: aPath [
 	filesystem ensureCreateDirectory: aPath parent.
-	(filesystem writeStreamOn: aPath) close
+	(filesystem resolve: aPath) writeStream close
 ]
 
 { #category : #running }
@@ -754,7 +754,7 @@ FileReferenceTest >> testReadStreamDoNotFound [
 	ref := filesystem / 'plonk'.
 	self
 		should: [ref readStreamDo: [:s]]
-		raise: FileDoesNotExist 
+		raise: FileDoesNotExistException
 ]
 
 { #category : #tests }
@@ -799,7 +799,7 @@ FileReferenceTest >> testReadStreamNotFound [
 	ref := filesystem * 'plonk'.
 	self
 		should: [ref readStream]
-		raise: FileDoesNotExist 
+		raise: FileDoesNotExistException
 ]
 
 { #category : #tests }

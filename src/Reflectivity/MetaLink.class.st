@@ -52,6 +52,7 @@ MetaLink class >> defaultOptions [
 	- optionOneShot                     "remove link after first activation"
 	- optionMetalevel                   "force level: 0 for the link"
 	- optionDisabledLink                "links are active by default"
+	+ optionWeakAfter 						  "do not use #ensure: for #after "
 	)
 ]
 
@@ -243,6 +244,7 @@ MetaLink >> invalidate [
 
 { #category : #accessing }
 MetaLink >> level [
+	<metaLinkOptions: #( + optionDisabledLink)>
 	^ level
 ]
 
@@ -402,8 +404,11 @@ MetaLink >> uninstall [
 
 { #category : #ast }
 MetaLink >> valueInContext: aBlock [
-	(RFMetaContext current isActive: (self level ifNil: [0]))
+	| process |
+	process := Processor rfactiveProcess.
+	(process isActive: self level)
 		ifFalse: [ ^ self ].
-	RFMetaContext current shiftLevelUp.
-	^ aBlock ctxtEnsure: [ RFMetaContext current shiftLevelDown ]
+	process shiftLevelUp.
+	aBlock value.
+	process shiftLevelDown.
 ]

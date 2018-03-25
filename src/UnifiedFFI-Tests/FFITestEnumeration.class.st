@@ -10,7 +10,7 @@ Class {
 		'CCC',
 		'DDD'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Test-Data'
 }
 
 { #category : #'accessing enum' }

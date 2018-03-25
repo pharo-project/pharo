@@ -17,6 +17,11 @@ SugsCounterSuggestion >> execute [
 		ifTrue: [ ExecutionCounter removeFrom: context selectedNode]
 ]
 
+{ #category : #display }
+SugsCounterSuggestion >> icon [
+	^self iconNamed: #classIcon
+]
+
 { #category : #execution }
 SugsCounterSuggestion >> isValidForContext [
 	context ifNil: [ ^false ].
@@ -24,12 +29,17 @@ SugsCounterSuggestion >> isValidForContext [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #display }
 SugsCounterSuggestion >> label [
 	^self selectedNodeHasExecutionCounter
 		ifFalse: [ 'Add Counter' translated ]
 		ifTrue: [ 'Remove Counter' translated ]
 	
+]
+
+{ #category : #display }
+SugsCounterSuggestion >> position [
+	^18
 ]
 
 { #category : #execution }

@@ -42,7 +42,8 @@ IntervalTest >> collection [
 
 { #category : #requirements }
 IntervalTest >> collectionClass [
-
+	"Return the class to be used to create instances of the class tested"
+	
 	^ Interval
 ]
 
@@ -199,7 +200,9 @@ IntervalTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 IntervalTest >> indexInNonEmpty [
-	^2.
+	"Return an index between bounds of 'nonEmpty'"
+	
+	^ 2
 ]
 
 { #category : #requirements }
@@ -303,19 +306,6 @@ IntervalTest >> speciesClass [
 IntervalTest >> subCollectionNotIn [
 
 	^subCollectionNotIn 
-]
-
-{ #category : #'tests - fixture' }
-IntervalTest >> test0CopyTest [
-	self empty.
-	self assert: self empty size = 0.
-	self nonEmpty.
-	self assert: (self nonEmpty size = 0) not.
-	self collectionWithElementsToRemove.
-	self assert: (self collectionWithElementsToRemove size = 0) not.
-	self elementToAdd.
-	self collectionNotIncluded.
-	self collectionNotIncluded do: [ :each | self deny: (self nonEmpty includes: each) ]
 ]
 
 { #category : #'tests - fixture' }

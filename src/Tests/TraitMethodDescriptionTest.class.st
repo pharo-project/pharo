@@ -81,7 +81,7 @@ TraitMethodDescriptionTest >> testConflictingCategories [
 	| t7 t8 |
 	self t2 compile: 'm11' classified: #catY.
 	self assert: (self t4 organization categoryOfElement: #m11) equals: #catX.
-	self assert: (self t5 organization categoryOfElement: #m11) equals: #cat1.
+	self assert: (self t5 organization categoryOfElement: #m11) equals: Protocol ambiguous.
 	t7 := self createTraitNamed: #T7 uses: self t1 + self t2.
 	self assert: (t7 organization categoryOfElement: #m11) 
 				equals: Protocol ambiguous.
@@ -95,16 +95,6 @@ TraitMethodDescriptionTest >> testConflictingCategories [
 	t8 organization classify: #m11 under: #cat1.
 	self t1 organization classify: #m11 under: #catZ.
 	self assert: (self t4 organization categoryOfElement: #m11) equals: #catX.
-	self assert: (self t5 organization categoryOfElement: #m11) equals: #catY.
+	self assert: (self t5 organization categoryOfElement: #m11) equals: Protocol ambiguous.
 	self assert: (t8 organization categoryOfElement: #m11) equals: #catZ
-]
-
-{ #category : #testing }
-TraitMethodDescriptionTest >> testInitialize [
-	| empty |
-	empty := TraitMethodDescription new.
-	self assert: empty isEmpty.
-	self deny: empty isConflict.
-	self deny: empty isProvided.
-	self deny: empty isRequired
 ]

@@ -87,7 +87,7 @@ Generator class >> examplePrimes [
 	[generator atEnd] whileFalse:[Transcript show: generator next; cr].
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 Generator class >> on: aBlock [
 	^ self basicNew initializeOn: aBlock
 ]

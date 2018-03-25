@@ -12,7 +12,7 @@ Class {
 	#category : #'NautilusCommon-Plugin'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 AnnotationRequest class >> onClass: aClass selector: aSelector [
 	^ self new
 		onClass: aClass selector: aSelector;

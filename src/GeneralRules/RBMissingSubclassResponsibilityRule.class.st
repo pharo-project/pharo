@@ -24,7 +24,7 @@ RBMissingSubclassResponsibilityRule >> check: aClass forCritiquesDo: aCritiqueBl
 	
 	| subs |
 	subs := aClass subclasses.
-	(subs size > 1 and: [ aClass isMeta not ]) ifTrue: 
+	(subs size > 1) ifTrue: 
 		[ | sels noSuperSels |
 		sels := Bag new.
 		subs do: [ :each | sels addAll: each selectors ].

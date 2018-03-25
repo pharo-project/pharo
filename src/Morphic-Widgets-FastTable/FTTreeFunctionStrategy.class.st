@@ -42,7 +42,7 @@ Class {
 	#category : #'Morphic-Widgets-FastTable-Tree'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 FTTreeFunctionStrategy class >> filterWith: aRegex dataSource: aDataSource [
 	^ self new
 		pattern: aRegex;
@@ -50,7 +50,7 @@ FTTreeFunctionStrategy class >> filterWith: aRegex dataSource: aDataSource [
 		filter
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 FTTreeFunctionStrategy class >> searchWith: aString dataSource: aDataSource [
 	^ self new pattern: aString; dataSource: aDataSource; search
 ]
