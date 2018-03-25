@@ -751,7 +751,7 @@ spec group: 'Athens-Group' with: #(
 	'Athens-CairoPools'
 	'Athens-Cairo'
 	'Athens-Examples'
-   'Athens-Tests-Core'
+   'Athens-Tests-Cairo'
 ).		
 
 spec group: 'OSWindow-Core-Group' with: #(
