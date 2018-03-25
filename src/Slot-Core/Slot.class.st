@@ -82,6 +82,7 @@ Slot class >> slotSetting: aBuilder [
 
 { #category : #comparing }
 Slot >> = other [
+	"Every subclass that adds state must redefine this method"
 	self == other
 		ifTrue: [ ^ true ].
 	^ (self species == other species) 
@@ -126,8 +127,8 @@ Slot >> definingClass: aClass [
 
 { #category : #printing }
 Slot >> definitionString [
-	"for Slots, the printString is the defintion"
-	^self printString
+	"Every subclass that adds state must redefine either this method or #printOn:"
+	^ self printString
 ]
 
 { #category : #'code generation' }
@@ -187,6 +188,7 @@ Slot >> hasProperty: aKey [
 
 { #category : #comparing }
 Slot >> hash [
+	"Every subclass that adds state must redefine this method"
 	^ self species hash bitXor: self name hash
 ]
 
@@ -266,6 +268,7 @@ Slot >> owningClass: aClass [
 
 { #category : #printing }
 Slot >> printOn: aStream [
+	"Every subclass that adds state must redefine either this method or #definitionString"
 	aStream 
 		store: self name;
 		nextPutAll: ' => ';
