@@ -138,11 +138,10 @@ CharacterSet >> hash [
 
 { #category : #testing }
 CharacterSet >> includes: aCharacter [
-
+	"Guard against wide characters"
 	^aCharacter asciiValue >= 256
-		ifTrue: ["Guard against wide characters"
-					^false]
-		ifFalse: [(map at: aCharacter asciiValue + 1) > 0 ]
+		ifTrue: [ false ]
+		ifFalse: [ (map at: aCharacter asciiValue + 1) > 0 ]
 ]
 
 { #category : #initialization }
