@@ -20,7 +20,7 @@ FLExtensionWrapper class >> fromPragma: aPragma [
 { #category : #private }
 FLExtensionWrapper >> compileInTarget [
 	| source |
-	source := self method methodClass theNonMetaClass
+	source := self method methodClass instanceSide
 		perform: self method selector
 		withArguments: (1 to: self method selector numArgs) asArray.
 	self targetClass organization
