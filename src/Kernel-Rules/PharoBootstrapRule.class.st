@@ -49,7 +49,7 @@ PharoBootstrapRule >> bootstrapPackages [
 	#'Ring-Deprecated-Core-Containers'
 	#'Ring-Deprecated-Core-Kernel'
 	#'Ring-Deprecated-Monticello'
-	#(Ring-Deprecated-ChunkImporter'
+	#'Ring-Deprecated-ChunkImporter'
 	#'Slot-Core'
 	#'System-Announcements'
 	#'System-BasicCommandLineHandler'
