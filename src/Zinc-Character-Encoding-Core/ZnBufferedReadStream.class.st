@@ -216,7 +216,7 @@ ZnBufferedReadStream >> position: anInteger [
 { #category : #accessing }
 ZnBufferedReadStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read requestedCount elements into collection starting at offset,
-	returning the number of elements read, there could be less elements available."
+	returning the number of elements read, there could be fewer elements available."
 
 	| read |
 	read := 0.
@@ -235,7 +235,7 @@ ZnBufferedReadStream >> readInto: collection startingAt: offset count: requested
 			(requestedCount - read < (buffer size / 2)
 				ifTrue: [ self nextBuffer.
 					limit = 0
-						ifTrue: [ ^ 0 ].	"No elements remain to be read."
+						ifTrue: [ ^ read ].	"All available elements have already been copied to collection."
 					self readInto: collection startingAt: offset + read count: requestedCount - read ]
 				ifFalse: [ stream readInto: collection startingAt: offset + read count: requestedCount - read ])
 ]
