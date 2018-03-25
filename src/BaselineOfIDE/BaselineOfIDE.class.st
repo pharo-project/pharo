@@ -339,7 +339,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Regex-Tests-Core'.
 		spec package: 'Renraku-Help'.
 		spec package: 'Renraku-Test'.
-		spec package: 'Ring-Tests-Monticello'.
+		spec package: 'Ring-Deprecated-Tests-Monticello'.
 		spec package: 'Rubric-Rules'.
 		spec package: 'Rubric-Tests'.
 		spec package: 'ScriptingExtensions-Tests'.
