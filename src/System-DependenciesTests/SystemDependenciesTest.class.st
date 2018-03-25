@@ -99,7 +99,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs #'Transcript-Core') sorted
+	^ #(#CodeExport #CodeImport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs #'Transcript-Core') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -155,7 +155,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core') sorted
+	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core' #CodeImport) sorted
 ]
 
 { #category : #'known dependencies' }
@@ -231,7 +231,8 @@ SystemDependenciesTest >> testExternalCompilerDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		BaselineOfPharoBootstrap kernelPackageNames,
-		BaselineOfPharoBootstrap multilingualPackageNames,		
+		BaselineOfPharoBootstrap multilingualPackageNames,
+		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,				
 		BaselineOfPharoBootstrap compilerPackageNames).
 	
 	self assertCollection: dependencies equals: self knownCompilerDependencies.
@@ -262,7 +263,8 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		BaselineOfPharoBootstrap kernelPackageNames,
-		BaselineOfPharoBootstrap multilingualPackageNames,		
+		BaselineOfPharoBootstrap multilingualPackageNames,
+		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,		
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames).
 	
@@ -302,7 +304,7 @@ SystemDependenciesTest >> testExternalKernelDependencies [
 	self longTestCase.
 
 	dependencies := self
-		externalDependendiesOf: BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap multilingualPackageNames.
+		externalDependendiesOf: BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap multilingualPackageNames, BaselineOfPharoBootstrap kernelAdditionalPackagesNames.
 
 	self assertCollection: dependencies equals: self knownKernelDependencies
 ]

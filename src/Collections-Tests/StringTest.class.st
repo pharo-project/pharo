@@ -29,13 +29,15 @@ Class {
 
 { #category : #requirements }
 StringTest >> aValue [
-" return a value to put into nonEmpty"
+	"Return a value to put into nonEmpty"
+	
 	^ elementInNonEmpty 
 ]
 
 { #category : #requirements }
 StringTest >> anIndex [
-" return an index in nonEmpty bounds"
+	"Return an index in nonEmpty bounds"
+	
 	^ 2
 ]
 
@@ -58,8 +60,9 @@ StringTest >> anotherElementOrAssociationNotIn [
 
 { #category : #requirements }
 StringTest >> anotherValue [
-" return a value ( not eual to 'aValue' ) to put into nonEmpty "
-	^ self nonEmpty anyOne.
+	"Return a value (not equal to 'aValue') to put into nonEmpty"
+	
+	^ self nonEmpty anyOne
 ]
 
 { #category : #'tests - includes' }
@@ -69,6 +72,7 @@ StringTest >> collection [
 
 { #category : #'tests - set arithmetic' }
 StringTest >> collectionClass [
+	"Return the class to be used to create instances of the class tested"
 
 	^ String
 ]
@@ -88,20 +92,23 @@ StringTest >> collectionMoreThan5Elements [
 
 { #category : #requirements }
 StringTest >> collectionNotIncluded [
-" return a collection for wich each element is not included in 'nonEmpty' "
+	"Return a collection for wich each element is not included in 'nonEmpty'"
+
 	^ collectionNotIncluded  
 ]
 
 { #category : #requirements }
 StringTest >> collectionWith1TimeSubcollection [
-	" return a collection including 'oldSubCollection'  only one time "
+	"Return a collection including 'oldSubCollection' only one time"
+	
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> collectionWith2TimeSubcollection [
-	" return a collection including 'oldSubCollection'  two or many time "
-	^ nonEmpty5ElementsSorted , subcollection3ElementsSorted 
+	"Return a collection including 'oldSubCollection' two or many time"
+	
+	^ nonEmpty5ElementsSorted, subcollection3ElementsSorted 
 ]
 
 { #category : #requirements }
@@ -112,58 +119,65 @@ StringTest >> collectionWithElement [
 
 { #category : #requirements }
 StringTest >> collectionWithElementsToRemove [
-" return a collection of elements included in 'nonEmpty'  "
+	"Return a collection of elements included in 'nonEmpty'"
+
 	^ subcollection3ElementsSorted 
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithEqualElements [
-" return a collecition including atLeast two elements equal"
+	"Return a collecition including atLeast two elements equal"
 
-^ sameAtEndAndBegining 
+	^ sameAtEndAndBegining 
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithSameAtEndAndBegining [
-" return a collection with elements at end and begining equals .
-(others elements of the collection are not equal to those elements)"
+	"Return a collection with elements at end and begining equals
+	 (other elements of the collection are not equal to those elements)"
+
 	^ sameAtEndAndBegining 
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithSortableElements [
-	" return a collection only including elements that can be sorted (understanding '<' )"
+	"Return a collection only including elements that can be sorted (understanding '<')"
+
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithoutEqualElements [
-
-" return a collection not including equal elements "
+	"Return a collection not including equal elements"
+	
 	^ withoutEqualElements 
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithoutNilElements [
-	" return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
+	"Return a collection that doesn't include a nil element and that doesn't include equal elements'"
+
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> element [
 	"Returns an object that can be added to the collection returned by #collection."
+	
 	^ elementInNonEmpty 
 ]
 
 { #category : #requirements }
 StringTest >> elementInForElementAccessing [
-" return an element inculded in 'moreThan4Elements'"
+	"Return an element included in 'moreThan4Elements'"
+	
 	^ self moreThan4Elements anyOne
 ]
 
 { #category : #requirements }
 StringTest >> elementInForIncludesTest [
-" return an element included in nonEmpty "
+	"Return an element included in nonEmpty"
+	
 	^ elementInNonEmpty 
 ]
 
@@ -175,20 +189,22 @@ StringTest >> elementInForIndexAccessing [
 
 { #category : #requirements }
 StringTest >> elementNotIn [
-"return an element not included in 'nonEmpty' "
+	"Return an element not included in 'nonEmpty'"
 
 	^notIn 
 ]
 
 { #category : #requirements }
 StringTest >> elementNotInForElementAccessing [
-" return an element not included in 'moreThan4Elements' "
+	"Return an element not included in 'moreThan4Elements'"
+
 	^ notIn 
 ]
 
 { #category : #requirements }
 StringTest >> elementNotInForIndexAccessing [
-" return an element not included in 'accessCollection' "
+	"Return an element not included in 'accessCollection'"
+	
 	^ notIn 
 ]
 
@@ -221,57 +237,64 @@ StringTest >> findFirstInString: aString fromString: searchString [
 
 { #category : #requirements }
 StringTest >> firstCollection [
-	" return a collection that will be the first part of the concatenation"
+	"Return a collection that will be the first part of the concatenation"
+	
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> firstIndex [
-" return an index between 'nonEmpty' bounds that is < to 'second index' "
+	"Return an index between 'nonEmpty' bounds that is < to 'second index'"
+
 	^3
 ]
 
 { #category : #requirements }
 StringTest >> indexArray [
-" return a Collection including indexes between bounds of 'nonEmpty' "
+	"Return a Collection including indexes between bounds of 'nonEmpty'"
 
 	^ indexInNonEmptyArray 
 ]
 
 { #category : #requirements }
 StringTest >> indexInForCollectionWithoutDuplicates [
-" return an index between 'collectionWithoutEqualsElements'  bounds"
+	"Return an index between 'collectionWithoutEqualsElements' bounds"
+	
 	^ 2
 ]
 
 { #category : #requirements }
 StringTest >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index between bounds of 'nonEmpty'"
 
-	^ 2.
+	^ 2
 ]
 
 { #category : #requirements }
 StringTest >> integerCollectionWithoutEqualElements [
-	" return a collection of integer without equal elements"
+	"Return a collection of integer without equal elements"	
+		
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> moreThan3Elements [
-	" return a collection including atLeast 3 elements"
+	"Return a collection including at least 3 elements"
+	
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> moreThan4Elements [
-	" return a collection including at leat 4 elements"
+	"Return a collection including at least 4 elements"
+
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> newElement [
-"return an element that will be put in the collection in place of another"
+	"Return an element that will be put in the collection in place of another"
+	
 	^ elementInNonEmpty 
 ]
 
@@ -282,50 +305,57 @@ StringTest >> nonEmpty [
 
 { #category : #requirements }
 StringTest >> nonEmpty1Element [
-" return a collection of size 1 including one element"
+	"Return a collection of size 1 including one element"
+	
 	^ nonEmpty1element 
 ]
 
 { #category : #requirements }
 StringTest >> nonEmptyMoreThan1Element [
-	" return a collection that don't includes equl elements'"
+	"Return a collection that don't includes equal elements'"
+	
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> oldSubCollection [
-" return a subCollection included in collectionWith1TimeSubcollection .
-ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
+	"Return a subCollection included in collectionWith1TimeSubcollection.
+		Example:  subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
+		
 	^ subcollection3ElementsSorted  
 ]
 
 { #category : #requirements }
 StringTest >> otherCollection [
 	"Returns a collection that does not include what is returned by #element."
+	
 	^ collectionNotIncluded 
 ]
 
 { #category : #requirements }
 StringTest >> replacementCollection [
-" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  " 
+	"Return a collection that will be used to replace 'oldSubcollection' in ' 	 collectionWith1TimeSubcollection'" 
 	^ string
 ]
 
 { #category : #requirements }
 StringTest >> replacementCollectionSameSize [
-" return a collection of size (secondIndex - firstIndex + 1)"
+	"Return a collection of size (secondIndex - firstIndex + 1)"
+	
 	^nonEmpty1element 
 ]
 
 { #category : #requirements }
 StringTest >> secondCollection [
-" return a collection that will be the second part of the concatenation"
+	"Return a collection that will be the second part of the concatenation"
+	
 	^ nonEmpty1element 
 ]
 
 { #category : #requirements }
 StringTest >> secondIndex [
-" return an index between 'nonEmpty' bounds that is > to 'second index' "
+	"Return an index between 'nonEmpty' bounds that is > to 'second index'"
+	
 	^ self firstIndex 
 ]
 
@@ -364,7 +394,8 @@ StringTest >> sortedInAscendingOrderCollection [
 
 { #category : #requirements }
 StringTest >> subCollectionNotIn [
-" return a collection for which at least one element is not included in 'moreThan4Elements' "
+	"Return a collection for which at least one element is not included in 'moreThan4Elements'"
+	
 	^ collectionNotIncluded 
 ]
 
@@ -705,6 +736,14 @@ StringTest >> testEndsWith [
 
 ]
 
+{ #category : #'tests - testing' }
+StringTest >> testEndsWithAColon [
+
+	self assert: 'fred:' endsWithAColon.
+
+	self deny: 'fred' endsWithAColon
+]
+
 { #category : #tests }
 StringTest >> testEndsWithAnyOf [
 
@@ -919,7 +958,7 @@ StringTest >> testFindTokensEscapedBy01 [
 	| tokens |
 	string := 'this, is, "a, test"'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 3
+	self assert: tokens size equals: 3
 ]
 
 { #category : #'tests - tokenizing' }
@@ -937,7 +976,7 @@ StringTest >> testFindTokensEscapedBy03 [
 	| tokens |
 	string := 'this, is, a, test'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 4
+	self assert: tokens size equals: 4
 ]
 
 { #category : #'tests - tokenizing' }
@@ -946,8 +985,8 @@ StringTest >> testFindTokensEscapedBy04 [
 	| tokens |
 	string := 'this, is, a"," test'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 3.
-	self assert: tokens third = ' a, test'
+	self assert: tokens size equals: 3.
+	self assert: tokens third equals: ' a, test'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -956,9 +995,9 @@ StringTest >> testFindTokensEscapedBy05 [
 	| tokens |
 	string := 'this, /is, a"," test/'.
 	tokens := string findTokens: ',#' escapedBy: '"/'.
-	self assert: tokens size = 2.
-	self assert: tokens first = 'this'.
-	self assert: tokens second = ' is, a"," test'.
+	self assert: tokens size equals: 2.
+	self assert: tokens first equals: 'this'.
+	self assert: tokens second equals: ' is, a"," test'.
 ]
 
 { #category : #'tests - tokenizing' }
@@ -967,8 +1006,8 @@ StringTest >> testFindTokensEscapedBy06 [
 	| tokens |
 	string := 'this, is, "a, test'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 3.
-	self assert: tokens third = ' a, test'
+	self assert: tokens size equals: 3.
+	self assert: tokens third equals: ' a, test'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -977,11 +1016,11 @@ StringTest >> testFindTokensEscapedBy07 [
 	| tokens |
 	string := 'a:b::c'.
 	tokens := string findTokens: ':' escapedBy: '"'.
-	self assert: tokens size = 4.
-	self assert: tokens first = 'a'.
-	self assert: tokens second = 'b'.
-	self assert: tokens third = ''.
-	self assert: tokens fourth = 'c'
+	self assert: tokens size equals: 4.
+	self assert: tokens first equals: 'a'.
+	self assert: tokens second equals: 'b'.
+	self assert: tokens third equals: ''.
+	self assert: tokens fourth equals: 'c'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1507,16 +1546,16 @@ StringTest >> testLinesDoWithCrLf [
 	| aString |
 	aString := 'This is a test of line breaking', String crlf.
 	aString linesDo: [ :line |
-		self assert: ((line size + 2) = aString size)]
+		self assert: (line size + 2) equals: aString size ]
 ]
 
 { #category : #'tests - line breaking' }
 StringTest >> testLinesDoWithCrLfBetween [
 
 	| aString |
-	aString := '-This is a test-', String crlf,'of line breaking'.
-	aString linesDo: [ :line |
-		self assert: ((line size) = 16)]
+	aString := '-This is a test-', String crlf, 'of line breaking'.
+	aString linesDo: [:line | 
+		self assert: line size equals: 16 ]
 ]
 
 { #category : #'tests - instance creation' }

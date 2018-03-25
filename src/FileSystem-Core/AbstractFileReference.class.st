@@ -154,14 +154,14 @@ AbstractFileReference >> binaryReadStreamIfAbsent: absentBlock [
 		ifFalse: absentBlock
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 AbstractFileReference >> binaryWriteStream [
 	"Answer a binary write stream on the receiver"
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 AbstractFileReference >> binaryWriteStreamDo: aBlock [
 	"Pass a binary write stream on the receiver to the supplied block, and ensure that the stream is closed after evaluation."
 
@@ -170,6 +170,13 @@ AbstractFileReference >> binaryWriteStreamDo: aBlock [
 	stream := self binaryWriteStream.
 	^ [ aBlock value: stream ] 
 		ensure: [ stream close ]
+]
+
+{ #category : #streams }
+AbstractFileReference >> binaryWriteStreamDo: doBlock ifPresent: presentBlock [
+	^ self isFile
+		ifTrue: presentBlock
+		ifFalse: [ self binaryWriteStreamDo: doBlock ]
 ]
 
 { #category : #delegated }
@@ -655,6 +662,22 @@ AbstractFileReference >> readStreamDo: doBlock ifAbsent: absentBlock [
 ]
 
 { #category : #streams }
+AbstractFileReference >> readStreamEncoded: anEncoding [
+
+	^ ZnCharacterReadStream
+		on: self binaryReadStream
+		encoding: anEncoding
+]
+
+{ #category : #streams }
+AbstractFileReference >> readStreamEncoded: anEncoding do: aBlock [
+	| stream |
+	stream := self readStreamEncoded: anEncoding.
+	^ [ aBlock value: stream ] 
+		ensure: [ stream close ]
+]
+
+{ #category : #streams }
 AbstractFileReference >> readStreamIfAbsent: absentBlock [
 	^ self isFile
 		ifTrue: [ self readStream ]
@@ -775,6 +798,22 @@ AbstractFileReference >> writeStreamDo: doBlock ifPresent: presentBlock [
 	^ self isFile
 		ifTrue: presentBlock
 		ifFalse: [ self writeStreamDo: doBlock ]
+]
+
+{ #category : #streams }
+AbstractFileReference >> writeStreamEncoded: anEncoding [
+
+	^ ZnCharacterWriteStream
+		on: self binaryWriteStream
+		encoding: anEncoding
+]
+
+{ #category : #streams }
+AbstractFileReference >> writeStreamEncoded: anEncoding do: aBlock [
+	| stream |
+	stream := self writeStreamEncoded: anEncoding.
+	^ [ aBlock value: stream ]
+		ensure: [ stream close ]
 ]
 
 { #category : #streams }

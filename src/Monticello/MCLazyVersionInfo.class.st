@@ -24,7 +24,7 @@ Class {
 	#category : #'Monticello-Versioning'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MCLazyVersionInfo class >> from: aVersionInfo [
 	^ self new
 		initializeWithName: aVersionInfo name

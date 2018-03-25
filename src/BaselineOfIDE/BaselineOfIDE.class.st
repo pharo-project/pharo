@@ -289,11 +289,11 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Compression-Tests'.
 		spec package: 'ConfigurationCommandLineHandler-Tests'.
 		spec package: 'MetacelloCommandLineHandler-Tests'.
-		spec package: 'ContributingToTheCatalogHelp'.
 		spec package: 'Debugger-Tests'.
 		spec package: 'EmbeddedFreeType-Tests'.
 		spec package: 'FileSystem-Tests-Disk'.
 		spec package: 'FileSystem-Tests-Memory'.
+		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
 		spec package: 'Flashback-Decompiler-Tests'.
@@ -311,8 +311,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Gofer-UI'.	
 		spec package: 'Graphics-Tests'.
 		spec package: 'HelpSystem-Tests'.
-		spec package: 'HowToContributeHelp'.
-		spec package: 'ImportingResource-Help'.
 		spec package: 'IssueTracking-Tests'.
 		spec package: 'Jobs-Tests'.
 		spec package: 'Kernel-Tests-Rules'.
@@ -367,12 +365,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
-		spec package: 'WorldMenuHelp'.	
 		spec package: 'WriteBarrier-Tests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
 		spec package: 'Zinc-Resource-Meta-FileSystem'.	
 		spec package: 'Zinc-Tests'.
-		spec package: 'TravisIntegrationHelp'.
 		spec package: 'System-Identification-Tests'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
@@ -431,13 +427,9 @@ spec group: 'Epicea-Group' with: #(
 
 spec group: 'General-Help-Group' with: #(
 	'Announcements-Help'
-	'HowToContributeHelp'
-	'ImportingResource-Help'
 	'Pharo-Help'
 	'Regex-Help'
 	'Spec-Help'	
-	'TravisIntegrationHelp'	
-	'WorldMenuHelp'
 ).	
 
 spec group: 'General-Tests-Group' with: #(
@@ -638,12 +630,9 @@ spec group: 'Catalog-Core-Group' with: #(
 	'GT-Core-Group'	"dependency"
 	'Tool-Catalog'
 ).
-spec group: 'Catalog-Help-Group' with: #(
-	'ContributingToTheCatalogHelp'
-).
+
 spec group: 'Catalog-Group' with: #(
 	'Catalog-Core-Group'
-	'Catalog-Help-Group'
 ).
 
 spec group: 'SortFunctions-Group' with: #(
@@ -816,6 +805,8 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
+	'FileSystem-Tests-Memory'
+	'FileSystem-Tests-Attributes'
 	'Files-Tests' 
 	'Jobs-Tests' 
 	'Multilingual-Tests'
@@ -826,7 +817,6 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Ring-Tests-Containers' 
 	'Tests' 
 	'Zinc-Character-Encoding-Tests' 
-	'FileSystem-Tests-Memory'
 
 	'Text-Tests'		"required by Multilingual-Tests"
 ).
@@ -902,25 +892,10 @@ BaselineOfIDE >> loadCalypso [
 
 	"Load Calypso without Iceberg Metacello integration"
 	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
-
-	Metacello new
-		baseline: 'ClassAnnotation';
-		repository: 'github://dionisiydk/ClassAnnotation:v0.3.1';
-		load.
 		
 	Metacello new
-		baseline: 'Commander';
-		repository: 'github://dionisiydk/Commander:v0.5.3';
-		load: #(default #'Commander-SpecSupport' #'Commander-Examples').
-	
-	Metacello new
-		baseline: 'SystemCommands';
-		repository: 'github://dionisiydk/SystemCommands:v0.7.1';
-		load.
-			
-	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://dionisiydk/Calypso:v0.10.3';
+		repository: 'github://dionisiydk/Calypso:v0.11.0';
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
 	(self class environment at: #ClyBrowser) beAllDefault.

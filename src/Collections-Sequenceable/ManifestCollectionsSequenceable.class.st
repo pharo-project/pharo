@@ -1,5 +1,5 @@
 "
-I store metadata for this package. These meta data are used by other tools such as the SmalllintManifestChecker and the critics Browser
+Sequenceable collections: arrays, intervals, ordered collections and dictionaries, etc.
 "
 Class {
 	#name : #ManifestCollectionsSequenceable,
@@ -10,11 +10,6 @@ Class {
 { #category : #'meta-data' }
 ManifestCollectionsSequenceable class >> dependencies [
 	^ #(#'Collections-Strings' #'Collections-Streams' #'Collections-Unordered' #Kernel #'Collections-Abstract')
-]
-
-{ #category : #'meta-data' }
-ManifestCollectionsSequenceable class >> description [
-	^ 'Sequenceable collections: arrays, intervals, ordered collections and dictionaries, etc.'
 ]
 
 { #category : #'meta-data - dependency analyser' }

@@ -28,7 +28,7 @@ ZipNewFileMember >> from: aFileName [
 	| entry |
 	"Now get the size, attributes, and timestamps, and see if the file exists"
 	stream := File openForReadFileNamed: aFileName.
-	self localFileName: (externalFileName := stream name).
+	self localFileName: (externalFileName := aFileName).
 	entry := aFileName asFileReference entry.
 	compressedSize := uncompressedSize := entry size.
 	desiredCompressionMethod := compressedSize > 0 ifTrue: [ CompressionDeflated ] ifFalse: [ CompressionStored ].

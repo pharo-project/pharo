@@ -13,7 +13,7 @@ SmallDictionaryTest class >> shouldInheritSelectors [
 ^true
 ]
 
-{ #category : #requirements }
+{ #category : #coverage }
 SmallDictionaryTest >> classToBeTested [
 
 	^ SmallDictionary

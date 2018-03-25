@@ -1040,31 +1040,19 @@ String >> endsWith: suffix [
 	   ifFalse: [ (self findString: suffix startingAt: extra + 1) > 0 ]
 ]
 
-{ #category : #'system primitives' }
+{ #category : #testing }
 String >> endsWithAColon [ 
-	"Answer whether the final character of the receiver is a colon
-	
-	#fred: endsWithAColon
-	'fred' endsWithAColon
-	"
+	"Answer whether the final character of the receiver is a colon"
 
-	^ self size > 0 and: [self last == $:]
+	^ self notEmpty and: [ self last == $: ]
 
 ]
 
-{ #category : #comparing }
-String >> endsWithAnyOf: aCollection [
-	aCollection do:[:suffix|
-		(self endsWith: suffix) ifTrue:[^true].
-	].
-	^false
-]
-
-{ #category : #accessing }
+{ #category : #testing }
 String >> endsWithDigit [
 	"Answer whether the receiver's final character represents a digit."
 
-	^ self size > 0 and: [self last isDigit]
+	^ self notEmpty and: [self last isDigit]
 ]
 
 { #category : #formatting }

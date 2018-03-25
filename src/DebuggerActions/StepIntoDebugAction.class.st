@@ -15,11 +15,6 @@ StepIntoDebugAction class >> actionType [
 ]
 
 { #category : #accessing }
-StepIntoDebugAction >> defaultHelp [
-	^ 'Step in the highlighted message, i.e. follow the sent message, taking debugger control in the method invoked.'
-]
-
-{ #category : #accessing }
 StepIntoDebugAction >> defaultKeymap [
 
 	^ PharoShortcuts current stepIntoShortcut
@@ -41,6 +36,11 @@ StepIntoDebugAction >> defaultOrder [
 StepIntoDebugAction >> executeAction [
 
 	self session stepInto: self currentContext
+]
+
+{ #category : #accessing }
+StepIntoDebugAction >> help [
+	^ 'Step in the highlighted message, i.e. follow the sent message, taking debugger control in the method invoked.'
 ]
 
 { #category : #accessing }

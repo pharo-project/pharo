@@ -255,10 +255,7 @@ DiskStore >> delete: path [
 	(self isDirectory: path)
 		ifTrue: [ Primitives deleteDirectory: encodedPathString ]
 		ifFalse: [ 
-			StandardFileStream
-				retryWithGC: [ Primitives deleteFile: encodedPathString ]
-				until: [ :result | result notNil ]
-				forFileNamed: pathString ]
+			(File named: pathString) delete ]
 ]
 
 { #category : #printing }

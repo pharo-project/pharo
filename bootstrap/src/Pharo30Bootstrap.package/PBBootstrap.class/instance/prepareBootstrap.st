@@ -6,5 +6,7 @@ prepareBootstrap
 		exportKernelPackageNames;
 		exportAllPackagesIntoMcz;
 		exportMonticelloInStFile;
-		exportFileSystemInStFile;
-		exportDeprecatedInStFile.
+		
+		prepareEnvironmentForHermes;
+		generateHermesFiles;
+		prepareEnvironmentForExport.

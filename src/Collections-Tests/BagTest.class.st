@@ -51,7 +51,8 @@ BagTest >> collection [
 
 { #category : #'tests - set arithmetic' }
 BagTest >> collectionClass [
-
+	"Return the class to be used to create instances of the class tested"
+	
 	^ Bag
 ]
 
@@ -488,13 +489,12 @@ BagTest >> testOccurrencesOf [
 	aBag add: 'b'.
 	aBag add: 'b'.
 	aBag add: 'b'.	
-	self assert: (aBag occurrencesOf:'a') = 3.
-	self assert: (aBag occurrencesOf:'b') = 4.
-	self assert: (aBag occurrencesOf:'c') = 0.
-	self assert: (aBag occurrencesOf: nil) =0.
+	self assert: (aBag occurrencesOf: 'a') equals: 3.
+	self assert: (aBag occurrencesOf: 'b') equals: 4.
+	self assert: (aBag occurrencesOf: 'c') equals: 0.
+	self assert: (aBag occurrencesOf: nil) equals: 0.
 	aBag add: nil.
-	self assert: (aBag occurrencesOf: nil) =1.
-	
+	self assert: (aBag occurrencesOf: nil) equals: 1.
 ]
 
 { #category : #tests }

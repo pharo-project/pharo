@@ -82,16 +82,17 @@ FileReference >> asFileReference [
 	^ self
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 FileReference >> binaryReadStream [
+	
 	^ filesystem binaryReadStreamOn: self path
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 FileReference >> binaryWriteStream [
 	"Answer a binary write stream on the receiver"
 
-	^ filesystem binaryWriteStreamOn: self path
+	^ ZnBufferedReadWriteStream on: (filesystem binaryWriteStreamOn: self path)
 ]
 
 { #category : #comparing }
@@ -323,7 +324,8 @@ FileReference >> printOn: aStream [
 
 { #category : #streams }
 FileReference >> readStream [
-	^ filesystem readStreamOn: self path
+
+	^ self readStreamEncoded: 'utf8'
 ]
 
 { #category : #operations }
@@ -380,5 +382,6 @@ FileReference >> size [
 
 { #category : #streams }
 FileReference >> writeStream [
-	^ filesystem writeStreamOn: self path
+	
+	^ self writeStreamEncoded: 'utf8'
 ]

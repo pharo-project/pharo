@@ -75,9 +75,15 @@ if [ -z "${ARCH_DESCRIPTION}" ]; then
   exit 1;
 fi
 
+# Script directory
+__this_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Repository directory
+export BOOTSTRAP_REPOSITORY="${__this_dir}/../.."
+REPOSITORY="${BOOTSTRAP_REPOSITORY:-..}"
+
 
 PREFIX=Pharo7.0
-
 REPOSITORY="${BOOTSTRAP_REPOSITORY:-..}"
 
 if [[ -z "${BOOTSTRAP_REPOSITORY}" ]]; then
@@ -149,7 +155,7 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next 
 
 echo "[Compiler] Adding more Kernel packages"
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Hermes-Extensions.hermes --save
-${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Multilingual-Encodings.hermes Multilingual-TextConversion.hermes Multilingual-Languages.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Math-Operations-Extensions.hermes Debugging-Core.hermes Kernel-Chronology-Extras.hermes Multilingual-Encodings.hermes Multilingual-TextConversion.hermes Multilingual-Languages.hermes --save --no-fail-on-undeclared
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes InitializePackagesCommandLineHandler.hermes --save
 
@@ -167,7 +173,8 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initi
 echo "[Compiler] Initializing Unicode"
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit "${REPOSITORY}/resources/unicode/"
 
-${VM} "${COMPILER_IMAGE_NAME}.image" st ${ST_CACHE}/DeprecatedFileStream.st ${ST_CACHE}/FileSystem.st --no-source --quit --save
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes DeprecatedFileStream.hermes FileSystem-Core.hermes FileSystem-Disk.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "PharoBootstrapInitialization initializeFileSystem"
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "SourceFileArray initialize"
 zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 

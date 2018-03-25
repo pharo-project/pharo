@@ -1090,11 +1090,8 @@ Behavior >> instancesSizeInMemory [
 { #category : #testing }
 Behavior >> isAbstract [
 	
-	self withAllSuperclassesDo: [ :eachClass | 
-		eachClass methodsDo: [ :eachMethod |
-			(eachMethod isAbstract and: [ (self lookupSelector: eachMethod selector) isAbstract ])
-				ifTrue: [ ^true ]]].
-	
+	"By default a class is not abstract.
+	Hook to mark your own subclasses as abstract."
 	^false
 ]
 

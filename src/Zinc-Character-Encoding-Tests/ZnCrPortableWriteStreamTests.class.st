@@ -15,7 +15,7 @@ ZnCrPortableWriteStreamTests >> testNextPut [
 		String lf.
 		String crlf. } do: [ :lineEnd |
 			stream := String new writeStream.
-			crStream := ZnCrPortableWriteStream on: stream.
+			crStream := ZnNewLineWriterStream on: stream.
 			crStream
 				<< 'a';
 				<< lineEnd;

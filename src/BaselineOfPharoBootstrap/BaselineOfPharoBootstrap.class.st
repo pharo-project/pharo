@@ -41,6 +41,26 @@ BaselineOfPharoBootstrap class >> multilingualPackageNames [
 	^ self packagesOfGroupNamed: #MultilingualGroup
 ]
 
+{ #category : #traversing }
+BaselineOfPharoBootstrap class >> packagesRecursiveIn: aGroupName [
+
+	| allMembers allPackagesInBaseline packages groups |
+	allMembers := self version groups detect: [ :g | g name = aGroupName ].
+	allPackagesInBaseline := self version packages collect: #name.
+	
+	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
+	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].
+		
+	^ packages , (groups flatCollect: [:aInnerGroupName | self packagesRecursiveIn: aInnerGroupName]).
+
+]
+
+{ #category : #accessing }
+BaselineOfPharoBootstrap class >> packagesToExportWithHermes [
+
+	^ self packagesRecursiveIn: 'ToLoadByHermes'
+]
+
 { #category : #accessing }
 BaselineOfPharoBootstrap class >> sUnitPackageNames [
 
@@ -66,13 +86,25 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Collections-Support'.
 		spec package: 'Collections-Unordered'.
 		spec package: 'Collections-Weak'.
+		spec package: 'Debugging-Core'.
 		spec package: 'Files'.
 		spec package: 'FileSystem-Path'.
 		spec package: 'Hermes'.
+		spec package: 'Hermes-Extensions'.
+
 		spec package: 'Jobs'.
 		spec package: 'Kernel'.
 		spec package: 'Kernel-BytecodeEncoders'.
+		spec package: 'Kernel-Chronology-Extras'.
+
+		spec package: 'Math-Operations-Extensions'.
+
+		spec package: 'Multilingual-Languages'.
+		spec package: 'Multilingual-Encodings'.
+		spec package: 'Multilingual-TextConversion'.
+
 		spec package: 'Network-UUID'.
+		
 		spec package: 'Transcript-NonInteractive'.
 		spec package: 'PharoBootstrap-Initialization'.
 		spec package: 'RPackage-Core'.
@@ -159,6 +191,9 @@ BaselineOfPharoBootstrap >> baseline: spec [
 
 		spec group: 'AdditionalPackages' with: {
 			'InitializePackagesCommandLineHandler'.
+			'Kernel-Chronology-Extras'.
+			'Math-Operations-Extensions'.
+			'Debugging-Core'.
 		}.
 
 		spec group: 'MultilingualGroup' with: {
@@ -176,11 +211,19 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Jobs'.
 			'OpalCompiler-Core'}.
 		
-		"These packages are added using the compiler after bootstrap"
 		spec group: 'FileSystemGroup' with: {
 			'FileSystem-Core'.
 			'FileSystem-Disk'.
 			'DeprecatedFileStream' }.
+
+		spec group: 'ToLoadByHermes' with: {
+			'AdditionalPackages'.
+			'MultilingualGroup'.
+			'CompilerGroup'.
+			'FileSystemGroup'.
+			'Hermes-Extensions'.
+			'SUnitGroup'.
+		}.
 
 		spec group: 'SUnitGroup' with: {
 			'SUnit-Core'.

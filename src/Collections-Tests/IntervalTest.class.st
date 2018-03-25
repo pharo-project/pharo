@@ -42,7 +42,8 @@ IntervalTest >> collection [
 
 { #category : #requirements }
 IntervalTest >> collectionClass [
-
+	"Return the class to be used to create instances of the class tested"
+	
 	^ Interval
 ]
 
@@ -199,7 +200,9 @@ IntervalTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 IntervalTest >> indexInNonEmpty [
-	^2.
+	"Return an index between bounds of 'nonEmpty'"
+	
+	^ 2
 ]
 
 { #category : #requirements }

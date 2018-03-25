@@ -72,14 +72,6 @@ Duration class >> minutes: aNumber [
 ]
 
 { #category : #'instance creation simple' }
-Duration class >> month: aMonth [
-	"aMonth is an Integer or a String"
-	
-	^ (Month month: aMonth) duration
-
-]
-
-{ #category : #'instance creation simple' }
 Duration class >> nanoSeconds: nanos [
 	"This method is slow. If you have nanos less than 10^6 you should use #seconds:nanoSeconds: instead."
 

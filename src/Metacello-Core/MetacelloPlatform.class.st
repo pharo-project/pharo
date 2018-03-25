@@ -201,7 +201,7 @@ MetacelloPlatform >> defaultDirectory [
 MetacelloPlatform >> defaultPackageCache [
   "Apparently the MCCacheRepository api is changing in Pharo"
 
-  ^ MCCacheRepository uniqueInstance
+  ^ MCCacheRepository default
 ]
 
 { #category : #attributes }

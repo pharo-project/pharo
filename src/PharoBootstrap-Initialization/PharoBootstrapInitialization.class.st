@@ -91,6 +91,15 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 ]
 
 { #category : #'public api' }
+PharoBootstrapInitialization class >> initializeFileSystem [
+
+	(Smalltalk at: #FileLocator) initialize.
+	(Smalltalk at: #DiskStore) initialize.
+	(Smalltalk at: #FileHandle) initialize.
+	(Smalltalk at: #MultiByteFileStream) initialize
+]
+
+{ #category : #'public api' }
 PharoBootstrapInitialization class >> initializeImageOfType: typeName majorVersion: major minor: minor suffix: suffix buid: build commitHash: hash [
 
 	"The image main entry point called by an image builder. The arguments specify the image

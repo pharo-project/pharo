@@ -68,17 +68,6 @@ Magnitude >> between: min and: max [
 ]
 
 { #category : #comparing }
-Magnitude >> compareWith: anotherMagnitude ifLesser: lesserBlock ifEqual: equalBlock ifGreater: greaterBlock [
-
-	^ self < anotherMagnitude
-		ifTrue: lesserBlock
-		ifFalse: [ 
-			self = anotherMagnitude
-				ifTrue: equalBlock
-				ifFalse: greaterBlock ]
-]
-
-{ #category : #comparing }
 Magnitude >> hash [
 	"Hash must be redefined whenever = is redefined."
 

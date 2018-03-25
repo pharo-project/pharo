@@ -37,23 +37,24 @@ TIncludesTest >> test0FixtureIncludeTest [
 	self elementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self elementNotIn ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn = false.
+	self assert: anElementIn equals: false.
 	self anotherElementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self anotherElementNotIn ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn = false.
+	self assert: anElementIn equals: false.
 	self empty.
 	self assert: self empty isEmpty
 ]
 
 { #category : #'tests - includes' }
 TIncludesTest >> testIdentityIncludesNonSpecificComportement [
-	" test the same comportement than 'includes: '  "
-	| collection |	
-	collection := self nonEmpty  .
+	"Test the same comportement than #includes:"
 	
-	self deny: (collection identityIncludes: self elementNotIn ).
-	self assert:(collection identityIncludes: collection anyOne)
+	| collection |	
+	collection := self nonEmpty.
+	
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
 
 ]
 
