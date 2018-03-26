@@ -3,7 +3,9 @@ I'm a meta-object for accessing a slot in an Object.
 
 I define a protocol to read (#read:) and to write (#write:to:) values. 
 
-For customizing a subclass can override the meta-object-protocol methods. See subclasses for examples.
+For customizing a subclass can override the meta-object-protocol methods. See subclasses for examples. If your subclass holds state, the following must be overridden:
+- Printing: #definitionString must return the source code string to reconstruct an instance. This will be displayed in the class definition. By default, #definitionString is the printString, so you can also override #printOn: instead.
+- Equality: #= and #hash must be customized taking account of additional state.
 
 Vocabulary:
 - variable: named accessor for a Slot
