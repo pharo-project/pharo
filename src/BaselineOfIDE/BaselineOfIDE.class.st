@@ -255,8 +255,9 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Athens-Morphic'.
 		spec package: 'Athens-CairoPools'.
 		spec package: 'Athens-Cairo'.
-		spec package: 'Athens-Examples'.
-
+		spec package: 'Athens-Examples'. 
+		spec package: 'Athens-Tests-Cairo'.
+ 
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
 		
@@ -750,6 +751,7 @@ spec group: 'Athens-Group' with: #(
 	'Athens-CairoPools'
 	'Athens-Cairo'
 	'Athens-Examples'
+   'Athens-Tests-Cairo'
 ).		
 
 spec group: 'OSWindow-Core-Group' with: #(
