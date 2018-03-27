@@ -4,17 +4,17 @@ Class {
 	#category : #'Tests-ObjectsAsMethods'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #example }
 ObjectsAsMethodsExample >> add: a with: b [
 	^a + b
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #example }
 ObjectsAsMethodsExample >> answer42 [
 	^42
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #evaluation }
 ObjectsAsMethodsExample >> run: oldSelector with: arguments in: aReceiver [
 	^self perform: oldSelector withArguments: arguments
 ]

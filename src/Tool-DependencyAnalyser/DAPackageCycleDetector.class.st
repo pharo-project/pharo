@@ -20,34 +20,34 @@ Class {
 	#category : #'Tool-DependencyAnalyser-Core'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageCycleDetector class >> collections [
 	^ (self onPackagesNamed: #('Collections-Abstract' 'Collections-Arithmetic' 'Collections-Arrayed' 'Collections-Atomic' 'Collections-Native' 'Collections-Sequenceable' 'Collections-Stack' 'Collections-Streams' 'Collections-Strings' 'Collections-Support' 'Collections-Traits' 'Collections-Unordered' 'Collections-Weak')) runAlgorithm.
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageCycleDetector class >> morphic [
 	^ (self onPackagesNamed: #('Morphic-Base' 'Morphic-Core' 'Morphic-Examples' 'MorphicTests' 'Spec-MorphicAdapters')) runAlgorithm.
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageCycleDetector class >> new [
 	^ self onPackagesNamed: #()
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageCycleDetector class >> onPackages: aCollection [
 	^ self basicNew 
 		initializeWithRPackageSet: aCollection;
 		yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageCycleDetector class >> onPackagesNamed: aCollection [
 	^ self onPackages: (aCollection collect: [ :each | RPackageSet named: each ])
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageCycleDetector class >> system [
 	^ (self onPackagesNamed: 
 		(RPackageOrganizer default packages collect: [ :package | package packageName asString ])) 			runAlgorithm.

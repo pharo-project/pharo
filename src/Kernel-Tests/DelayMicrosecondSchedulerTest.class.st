@@ -25,7 +25,8 @@ DelayMicrosecondSchedulerTest >> delaySchedulerClass [
 { #category : #running }
 DelayMicrosecondSchedulerTest >> tearDown [ 	
 	"Trigger system timingSempaphore, in case it was replaced"
-	Delay testCaseSupportTimingSemaphore signal
+	Delay testCaseSupportTimingSemaphore signal.
+	super tearDown
 ]
 
 { #category : #tests }

@@ -29,13 +29,15 @@ Class {
 
 { #category : #requirements }
 StringTest >> aValue [
-" return a value to put into nonEmpty"
+	"Return a value to put into nonEmpty"
+	
 	^ elementInNonEmpty 
 ]
 
 { #category : #requirements }
 StringTest >> anIndex [
-" return an index in nonEmpty bounds"
+	"Return an index in nonEmpty bounds"
+	
 	^ 2
 ]
 
@@ -58,8 +60,9 @@ StringTest >> anotherElementOrAssociationNotIn [
 
 { #category : #requirements }
 StringTest >> anotherValue [
-" return a value ( not eual to 'aValue' ) to put into nonEmpty "
-	^ self nonEmpty anyOne.
+	"Return a value (not equal to 'aValue') to put into nonEmpty"
+	
+	^ self nonEmpty anyOne
 ]
 
 { #category : #'tests - includes' }
@@ -69,6 +72,7 @@ StringTest >> collection [
 
 { #category : #'tests - set arithmetic' }
 StringTest >> collectionClass [
+	"Return the class to be used to create instances of the class tested"
 
 	^ String
 ]
@@ -88,20 +92,23 @@ StringTest >> collectionMoreThan5Elements [
 
 { #category : #requirements }
 StringTest >> collectionNotIncluded [
-" return a collection for wich each element is not included in 'nonEmpty' "
-	^ notIn 
+	"Return a collection for wich each element is not included in 'nonEmpty'"
+
+	^ collectionNotIncluded  
 ]
 
 { #category : #requirements }
 StringTest >> collectionWith1TimeSubcollection [
-	" return a collection including 'oldSubCollection'  only one time "
+	"Return a collection including 'oldSubCollection' only one time"
+	
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> collectionWith2TimeSubcollection [
-	" return a collection including 'oldSubCollection'  two or many time "
-	^ nonEmpty5ElementsSorted , subcollection3ElementsSorted 
+	"Return a collection including 'oldSubCollection' two or many time"
+	
+	^ nonEmpty5ElementsSorted, subcollection3ElementsSorted 
 ]
 
 { #category : #requirements }
@@ -112,58 +119,65 @@ StringTest >> collectionWithElement [
 
 { #category : #requirements }
 StringTest >> collectionWithElementsToRemove [
-" return a collection of elements included in 'nonEmpty'  "
+	"Return a collection of elements included in 'nonEmpty'"
+
 	^ subcollection3ElementsSorted 
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithEqualElements [
-" return a collecition including atLeast two elements equal"
+	"Return a collecition including atLeast two elements equal"
 
-^ sameAtEndAndBegining 
+	^ sameAtEndAndBegining 
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithSameAtEndAndBegining [
-" return a collection with elements at end and begining equals .
-(others elements of the collection are not equal to those elements)"
+	"Return a collection with elements at end and begining equals
+	 (other elements of the collection are not equal to those elements)"
+
 	^ sameAtEndAndBegining 
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithSortableElements [
-	" return a collection only including elements that can be sorted (understanding '<' )"
+	"Return a collection only including elements that can be sorted (understanding '<')"
+
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithoutEqualElements [
-
-" return a collection not including equal elements "
+	"Return a collection not including equal elements"
+	
 	^ withoutEqualElements 
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithoutNilElements [
-	" return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
+	"Return a collection that doesn't include a nil element and that doesn't include equal elements'"
+
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> element [
 	"Returns an object that can be added to the collection returned by #collection."
+	
 	^ elementInNonEmpty 
 ]
 
 { #category : #requirements }
 StringTest >> elementInForElementAccessing [
-" return an element inculded in 'moreThan4Elements'"
+	"Return an element included in 'moreThan4Elements'"
+	
 	^ self moreThan4Elements anyOne
 ]
 
 { #category : #requirements }
 StringTest >> elementInForIncludesTest [
-" return an element included in nonEmpty "
+	"Return an element included in nonEmpty"
+	
 	^ elementInNonEmpty 
 ]
 
@@ -175,20 +189,22 @@ StringTest >> elementInForIndexAccessing [
 
 { #category : #requirements }
 StringTest >> elementNotIn [
-"return an element not included in 'nonEmpty' "
+	"Return an element not included in 'nonEmpty'"
 
 	^notIn 
 ]
 
 { #category : #requirements }
 StringTest >> elementNotInForElementAccessing [
-" return an element not included in 'moreThan4Elements' "
+	"Return an element not included in 'moreThan4Elements'"
+
 	^ notIn 
 ]
 
 { #category : #requirements }
 StringTest >> elementNotInForIndexAccessing [
-" return an element not included in 'accessCollection' "
+	"Return an element not included in 'accessCollection'"
+	
 	^ notIn 
 ]
 
@@ -221,57 +237,64 @@ StringTest >> findFirstInString: aString fromString: searchString [
 
 { #category : #requirements }
 StringTest >> firstCollection [
-	" return a collection that will be the first part of the concatenation"
+	"Return a collection that will be the first part of the concatenation"
+	
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> firstIndex [
-" return an index between 'nonEmpty' bounds that is < to 'second index' "
+	"Return an index between 'nonEmpty' bounds that is < to 'second index'"
+
 	^3
 ]
 
 { #category : #requirements }
 StringTest >> indexArray [
-" return a Collection including indexes between bounds of 'nonEmpty' "
+	"Return a Collection including indexes between bounds of 'nonEmpty'"
 
 	^ indexInNonEmptyArray 
 ]
 
 { #category : #requirements }
 StringTest >> indexInForCollectionWithoutDuplicates [
-" return an index between 'collectionWithoutEqualsElements'  bounds"
+	"Return an index between 'collectionWithoutEqualsElements' bounds"
+	
 	^ 2
 ]
 
 { #category : #requirements }
 StringTest >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index between bounds of 'nonEmpty'"
 
-	^ 2.
+	^ 2
 ]
 
 { #category : #requirements }
 StringTest >> integerCollectionWithoutEqualElements [
-	" return a collection of integer without equal elements"
+	"Return a collection of integer without equal elements"	
+		
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> moreThan3Elements [
-	" return a collection including atLeast 3 elements"
+	"Return a collection including at least 3 elements"
+	
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> moreThan4Elements [
-	" return a collection including at leat 4 elements"
+	"Return a collection including at least 4 elements"
+
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> newElement [
-"return an element that will be put in the collection in place of another"
+	"Return an element that will be put in the collection in place of another"
+	
 	^ elementInNonEmpty 
 ]
 
@@ -282,55 +305,63 @@ StringTest >> nonEmpty [
 
 { #category : #requirements }
 StringTest >> nonEmpty1Element [
-" return a collection of size 1 including one element"
+	"Return a collection of size 1 including one element"
+	
 	^ nonEmpty1element 
 ]
 
 { #category : #requirements }
 StringTest >> nonEmptyMoreThan1Element [
-	" return a collection that don't includes equl elements'"
+	"Return a collection that don't includes equal elements'"
+	
 	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> oldSubCollection [
-" return a subCollection included in collectionWith1TimeSubcollection .
-ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
+	"Return a subCollection included in collectionWith1TimeSubcollection.
+		Example:  subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
+		
 	^ subcollection3ElementsSorted  
 ]
 
 { #category : #requirements }
 StringTest >> otherCollection [
 	"Returns a collection that does not include what is returned by #element."
+	
 	^ collectionNotIncluded 
 ]
 
 { #category : #requirements }
 StringTest >> replacementCollection [
-" return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  " 
+	"Return a collection that will be used to replace 'oldSubcollection' in ' 	 collectionWith1TimeSubcollection'" 
 	^ string
 ]
 
 { #category : #requirements }
 StringTest >> replacementCollectionSameSize [
-" return a collection of size (secondIndex - firstIndex + 1)"
+	"Return a collection of size (secondIndex - firstIndex + 1)"
+	
 	^nonEmpty1element 
 ]
 
 { #category : #requirements }
 StringTest >> secondCollection [
-" return a collection that will be the second part of the concatenation"
+	"Return a collection that will be the second part of the concatenation"
+	
 	^ nonEmpty1element 
 ]
 
 { #category : #requirements }
 StringTest >> secondIndex [
-" return an index between 'nonEmpty' bounds that is > to 'second index' "
+	"Return an index between 'nonEmpty' bounds that is > to 'second index'"
+	
 	^ self firstIndex 
 ]
 
 { #category : #running }
 StringTest >> setUp [
+	<compilerOptions: #(#- #optionReadOnlyLiterals)>
 	super setUp.
 	string := 'Hi, I am a String'.
 	emptyString := ''.
@@ -363,106 +394,96 @@ StringTest >> sortedInAscendingOrderCollection [
 
 { #category : #requirements }
 StringTest >> subCollectionNotIn [
-" return a collection for which at least one element is not included in 'moreThan4Elements' "
+	"Return a collection for which at least one element is not included in 'moreThan4Elements'"
+	
 	^ collectionNotIncluded 
-]
-
-{ #category : #'tests - fixture' }
-StringTest >> test0CopyTest [
-	self empty.
-	self assert: self empty size = 0.
-	self nonEmpty.
-	self assert: (self nonEmpty size = 0) not.
-	self collectionWithElementsToRemove.
-	self assert: (self collectionWithElementsToRemove size = 0) not.
-	self elementToAdd
 ]
 
 { #category : #tests }
 StringTest >> testAlike [
 
-self assert: ('test' alike: 'test') >= 8.   "twice second argument size is the best score"
-self assert: ('TEST' alike: 'test') >= 8.   "case is ignored"
-self assert: ('é è à ô ü ö ß ä ó ñ í á' alike: 'test') = 0. 
-self assert: ('é è à ô ü ö' alike: 'é è à ô ü ö ß ä ó ñ í á') >= 10. 
-self assert: ('eeeee' alike: 'ééééé') <= 1.  "evaluation based on ascii value"
+	self assert: ('test' alike: 'test') >= 8.   "twice second argument size is the best score"
+	self assert: ('TEST' alike: 'test') >= 8.   "case is ignored"
+	self assert: ('é è à ô ü ö ß ä ó ñ í á' alike: 'test') equals: 0. 
+	self assert: ('é è à ô ü ö' alike: 'é è à ô ü ö ß ä ó ñ í á') >= 10. 
+	self assert: ('eeeee' alike: 'ééééé') <= 1  "evaluation based on ascii value"
 ]
 
 { #category : #tests }
 StringTest >> testAllRangesOfSubstring [
 
-self assert: ('aabbccbb' allRangesOfSubstring: 'bb' ) = {(3 to: 4). (7 to: 8)}.
-self assert: ('é è à ô ü ö ß ä ó ñ í á' allRangesOfSubstring: 'ö ß ä') = {(11 to: 15)}.
-self assert: ('test' allRangesOfSubstring: '') = #().
+	self assert: ('aabbccbb' allRangesOfSubstring: 'bb' ) equals: {(3 to: 4). (7 to: 8)}.
+	self assert: ('é è à ô ü ö ß ä ó ñ í á' allRangesOfSubstring: 'ö ß ä') equals: {(11 to: 15)}.
+	self assert: ('test' allRangesOfSubstring: '') equals: #()
 ]
 
 { #category : #'tests - converting' }
 StringTest >> testAsCamelCase [
 
-       self assert: 'A man, a plan, a canal, panama' asCamelCase = 'AMan,APlan,ACanal,Panama'.
-       self assert: 'Here 123should % be 6 the name6 of the method' asCamelCase = 'Here123should%Be6TheName6OfTheMethod'.
+	self assert: 'A man, a plan, a canal, panama' asCamelCase equals: 'AMan,APlan,ACanal,Panama'.
+	self assert: 'Here 123should % be 6 the name6 of the method' asCamelCase equals: 'Here123should%Be6TheName6OfTheMethod'.
  
 ]
 
 { #category : #tests }
 StringTest >> testAsDate [
 
-self assert: ('Jan 1 2015' asDate asString) = '1 January 2015'. 
-self assert: ('1/1/2015' asDate asString) = '1 January 2015'.
-self assert: ('1 1 1' asDate asString) = '1 January 2001'.
-self assert: ('1 J 1' asDate asString) = '1 January 2001'.
-self should: ['' asDate] raise: Error.
-self should: ['1234' asDate] raise: Error. 
+	self assert: 'Jan 1 2015' asDate asString equals: '1 January 2015'. 
+	self assert: '1/1/2015' asDate asString equals: '1 January 2015'.
+	self assert: '1 1 1' asDate asString equals: '1 January 2001'.
+	self assert: '1 J 1' asDate asString equals: '1 January 2001'.
+	self should: [ '' asDate ] raise: Error.
+	self should: [ '1234' asDate ] raise: Error 
 ]
 
 { #category : #tests }
 StringTest >> testAsHTMLString [
 
-self assert: ('<a>' asHTMLString) = '&lt;a&gt;'.
-self assert: ('<!DOCTYPE html>' asHTMLString) = '&lt;!DOCTYPE html&gt;'. 
-self assert: ('é è à ô ü ö ß ä ó ñ í á' asHTMLString) = 'é è à ô ü ö ß ä ó ñ í á'.
-self assert: ('' asHTMLString) = ''.
+	self assert: '<a>' asHTMLString equals: '&lt;a&gt;'.
+	self assert: '<!DOCTYPE html>' asHTMLString equals: '&lt;!DOCTYPE html&gt;'. 
+	self assert: 'é è à ô ü ö ß ä ó ñ í á' asHTMLString equals: 'é è à ô ü ö ß ä ó ñ í á'.
+	self assert: '' asHTMLString equals: ''
 ]
 
 { #category : #'tests - converting' }
 StringTest >> testAsInteger [
 
-	self assert: '1796exportFixes-tkMX' asInteger = 1796.
+	self assert: '1796exportFixes-tkMX' asInteger equals: 1796.
 	self assert: 'donald' asInteger isNil.
-	self assert: 'abc234def567' asInteger = 234.
-	self assert: '-94' asInteger = -94.
-	self assert: 'foo-bar-92' asInteger = -92
+	self assert: 'abc234def567' asInteger equals: 234.
+	self assert: '-94' asInteger equals: -94.
+	self assert: 'foo-bar-92' asInteger equals: -92
 ]
 
 { #category : #tests }
 StringTest >> testAsLowercase [ 
 
-self assert: ('1 2 3 É È À Ô Ü Ö ẞ t e s T' asLowercase = '1 2 3 é è à ô ü ö ß t e s t').
-self assert: ('!@#$' asLowercase = '!@#$').
-self assert: ('' asLowercase = '').
+	self assert: '1 2 3 É È À Ô Ü Ö ẞ t e s T' asLowercase equals: '1 2 3 é è à ô ü ö ß t e s t'.
+	self assert: '!@#$' asLowercase equals: '!@#$'.
+	self assert: '' asLowercase equals: ''
 ]
 
 { #category : #tests }
 StringTest >> testAsPluralBasedOn [
 
-self assert: ('test' asPluralBasedOn: #(1)) = 'test'.
-self assert: ('test' asPluralBasedOn: #(1 2 3)) = 'tests'.
-self assert: ('test' asPluralBasedOn: 1) = 'test'.
-self assert: ('test' asPluralBasedOn: false) = 'tests'.
-self assert: ('é è à ô ü ö ß ä ó ñ í á' asPluralBasedOn: 10) = 'é è à ô ü ö ß ä ó ñ í ás'.
-self assert: ('' asPluralBasedOn: 1) = ''.
-self assert: ('%' asPluralBasedOn: 10) = '%s'.
+	self assert: ('test' asPluralBasedOn: #(1)) equals: 'test'.
+	self assert: ('test' asPluralBasedOn: #(1 2 3)) equals: 'tests'.
+	self assert: ('test' asPluralBasedOn: 1) equals: 'test'.
+	self assert: ('test' asPluralBasedOn: false) equals: 'tests'.
+	self assert: ('é è à ô ü ö ß ä ó ñ í á' asPluralBasedOn: 10) equals: 'é è à ô ü ö ß ä ó ñ í ás'.
+	self assert: ('' asPluralBasedOn: 1) equals: ''.
+	self assert: ('%' asPluralBasedOn: 10) equals: '%s'
 ]
 
 { #category : #tests }
 StringTest >> testAsSignedInteger [
 
-self assert: ('test' asSignedInteger) = nil.
-self assert: ('é è à ô ü ö ß ä ó ñ í á' asSignedInteger ) = nil.
-self assert: ('test-10test' asSignedInteger) = -10.
-self assert: ('' asSignedInteger) = nil.
-self assert: ('1234567890-1234567890' asSignedInteger) = 1234567890.
-self assert: ('--12345' asSignedInteger) = -12345.
+	self assert: 'test' asSignedInteger isNil.
+	self assert: 'é è à ô ü ö ß ä ó ñ í á' asSignedInteger isNil.
+	self assert: 'test-10test' asSignedInteger equals: -10.
+	self assert: ('' asSignedInteger) equals: nil.
+	self assert: '1234567890-1234567890' asSignedInteger equals: 1234567890.
+	self assert: '--12345' asSignedInteger equals: -12345
 ]
 
 { #category : #'tests - converting' }
@@ -489,70 +510,70 @@ StringTest >> testAsSmalltalkComment [
 
 	"check that the result has the same non-quote characters as the original"
 	exampleStrings do: [ :s |
-		self assert: ( (s copyWithout: $") = (s asComment copyWithout: $"))].
+		self assert: (s copyWithout: $") equals: (s asComment copyWithout: $")].
 
 	"finnaly, test for some common kinds of inputs"
-	self assert: ( 'abc' asComment = '"abc"').
-	self assert: ( 'abc"abc' asComment = '"abc""abc"').
-	self assert: ('abc""abc' asComment = '"abc""abc"' ).
+	self assert: 'abc' asComment equals: '"abc"'.
+	self assert: 'abc"abc' asComment equals: '"abc""abc"'.
+	self assert: 'abc""abc' asComment equals: '"abc""abc"'.
 		
 ]
 
 { #category : #tests }
 StringTest >> testAsString [ 
 
-self assert: (123 asString) = '123'.
-self assert: (#(1 2 3) asString) = '#(1 2 3)'.
-self assert: ((OrderedCollection new) asString) = 'an OrderedCollection()'.
-self assert: ((1 < 3) asString) = 'true'.
-self assert: ('é è à ô ü ö ß ä ó ñ í á' asString) = 'é è à ô ü ö ß ä ó ñ í á'.
-self assert: ('' asString) = ''.
+	self assert: 123 asString equals: '123'.
+	self assert: #(1 2 3) asString equals: '#(1 2 3)'.
+	self assert: (OrderedCollection new) asString equals: 'an OrderedCollection()'.
+	self assert: (1 < 3) asString equals: 'true'.
+	self assert: 'é è à ô ü ö ß ä ó ñ í á' asString equals: 'é è à ô ü ö ß ä ó ñ í á'.
+	self assert: '' asString equals: ''
 ]
 
 { #category : #tests }
 StringTest >> testAsSymbol [
 
-self assert: ('hel','lo' asSymbol) = #'hello'.
-self assert: ('é è à ô ü' asSymbol)  = #'é è à ô ü'.
-self assert: ('' asSymbol) = #''.
-self assert: ('test' asSymbol) == #'test'. 
+	self assert: 'hel','lo' asSymbol equals: #'hello'.
+	self assert: 'é è à ô ü' asSymbol equals: #'é è à ô ü'.
+	self assert: '' asSymbol equals: #''.
+	self assert: ('test' asSymbol) == #'test' 
 ]
 
 { #category : #tests }
 StringTest >> testAsTime [ 
 
-self assert: ('1:00:00' asTime asString) = '1:00 am'.
-self assert: ('1:00' asTime asString) = '1:00 am'.
-self assert: ('1' asTime asString) = '1:00 am'.
-self assert: ('13' asTime asString) = '1:00 pm'.
+	self assert: '1:00:00' asTime asString equals: '1:00 am'.
+	self assert: '1:00' asTime asString equals: '1:00 am'.
+	self assert: '1' asTime asString equals: '1:00 am'.
+	self assert: '13' asTime asString equals: '1:00 pm'
 
 ]
 
 { #category : #tests }
 StringTest >> testAsUppercase [ 
 
-self assert: ('éèàôütest' asUppercase) = 'ÉÈÀÔÜTEST'.
-self assert: ('123éàôüößTEST' asUppercase) = '123ÉÀÔÜÖẞTEST'.
-self assert: ('' asUppercase) = ''.
+	self assert: ('éèàôütest' asUppercase) equals: 'ÉÈÀÔÜTEST'.
+	self assert: ('123éàôüößTEST' asUppercase) equals: '123ÉÀÔÜÖẞTEST'.
+	self assert: ('' asUppercase) equals: ''
 ]
 
 { #category : #'tests - accessing' }
 StringTest >> testAt [
-	self assert: (string at: 1) = $H.
+	self assert: (string at: 1) equals: $H.
 ]
 
 { #category : #tests }
 StringTest >> testBeginsWithEmptyCaseSensitive [
 
-self deny: ('éèàôüößäóñíá' beginsWithEmpty: 'ß' caseSensitive: true).
-self assert: ('éèàôüößäóñíá' beginsWithEmpty: 'éèàô' caseSensitive: true).
-self assert: ('éèàôüö' beginsWithEmpty: '' caseSensitive: true).
-self deny: ('éèàôüö' beginsWithEmpty: 'ÉÈÀ' caseSensitive: true).
-self assert: ('ÉÈÀÔÜÖ' beginsWithEmpty: 'ÉÈÀ' caseSensitive: true).
-self assert: ('123test' beginsWithEmpty: '123' caseSensitive: true).
-self should: ('aaee' beginsWithEmpty: 'AA' caseSensitive: false).
-self should: ('???' beginsWithEmpty: '??' caseSensitive: false).
-"self assert: ('ÉÈÀÔÜÖ' beginsWithEmpty: 'éèà' caseSensitive: false)."
+	self deny: ('éèàôüößäóñíá' beginsWithEmpty: 'ß' caseSensitive: true).
+	self assert: ('éèàôüößäóñíá' beginsWithEmpty: 'éèàô' caseSensitive: true).
+	self assert: ('éèàôüö' beginsWithEmpty: '' caseSensitive: true).
+	self deny: ('éèàôüö' beginsWithEmpty: 'ÉÈÀ' caseSensitive: true).
+	self assert: ('ÉÈÀÔÜÖ' beginsWithEmpty: 'ÉÈÀ' caseSensitive: true).
+	self assert: ('123test' beginsWithEmpty: '123' caseSensitive: true).
+	self should: ('aaee' beginsWithEmpty: 'AA' caseSensitive: false).
+	self should: ('???' beginsWithEmpty: '??' caseSensitive: false)
+	"self assert: ('ÉÈÀÔÜÖ' beginsWithEmpty: 'éèà' caseSensitive: false)."
 ]
 
 { #category : #'tests - converting' }
@@ -562,8 +583,8 @@ StringTest >> testCapitalized [
 	uc := 'MElViN'.
 	lc := 'mElViN'.
 	empty := ' '.
-	self assert:  lc capitalized = uc.
-	self assert: uc capitalized = uc.
+	self assert: lc capitalized equals: uc.
+	self assert: uc capitalized equals: uc.
 	"the string gets copied"
 	self deny: uc capitalized == uc.
 	self deny: empty capitalized == empty.
@@ -572,53 +593,54 @@ StringTest >> testCapitalized [
 { #category : #tests }
 StringTest >> testCaseInsensitiveLessOrEqual [
 
-self assert: ('EEA' caseInsensitiveLessOrEqual: 'fgh').
-self deny: ('éèàôüößäóñíá' caseInsensitiveLessOrEqual: 'éèàôüöß').
-self assert: ('éèàôüößäóñíá' caseInsensitiveLessOrEqual: 'éèàôüößäóñíá').
-self deny: ('ÉÈÀÔÜÖ' caseInsensitiveLessOrEqual: 'èàôüö').
-self assert: ('eea' caseInsensitiveLessOrEqual: 'ÉÈÀ').
+	self assert: ('EEA' caseInsensitiveLessOrEqual: 'fgh').
+	self deny: ('éèàôüößäóñíá' caseInsensitiveLessOrEqual: 'éèàôüöß').
+	self assert: ('éèàôüößäóñíá' caseInsensitiveLessOrEqual: 'éèàôüößäóñíá').
+	self deny: ('ÉÈÀÔÜÖ' caseInsensitiveLessOrEqual: 'èàôüö').
+	self assert: ('eea' caseInsensitiveLessOrEqual: 'ÉÈÀ')
 ]
 
 { #category : #tests }
 StringTest >> testCaseSensitiveLessOrEqual [
 
-self assert: ('EEA' caseSensitiveLessOrEqual: 'fgh').
-self deny: ('éèàôüößäóñíá' caseSensitiveLessOrEqual: 'éèàôüöß'). 
-self assert: ('éèàôüößäóñíá' caseSensitiveLessOrEqual: 'éèàôüößäóñíá').
-self assert: ('ÉÈÀÔÜÖ' caseSensitiveLessOrEqual: 'èàôüö').
-self assert: ('eea' caseSensitiveLessOrEqual: 'ÉÈÀ').
+	self assert: ('EEA' caseSensitiveLessOrEqual: 'fgh').
+	self deny: ('éèàôüößäóñíá' caseSensitiveLessOrEqual: 'éèàôüöß'). 
+	self assert: ('éèàôüößäóñíá' caseSensitiveLessOrEqual: 'éèàôüößäóñíá').
+	self assert: ('ÉÈÀÔÜÖ' caseSensitiveLessOrEqual: 'èàôüö').
+	self assert: ('eea' caseSensitiveLessOrEqual: 'ÉÈÀ')
 ]
 
 { #category : #tests }
 StringTest >> testCharactersExactlyMatching [
+
 	self assert: 5 equals: ('voiture' charactersExactlyMatching: 'voituze').
 	self assert: 0 equals: ('voiture' charactersExactlyMatching: '').
 	self assert: 1 equals: ('voiture' charactersExactlyMatching: 'v').
-	self assert: 0 equals: ('voiture' charactersExactlyMatching: 'abcdef').
+	self assert: 0 equals: ('voiture' charactersExactlyMatching: 'abcdef')
 ]
 
 { #category : #tests }
 StringTest >> testCompare [
 
-self assert: ('EEA' compare: 'fgh') = 1.
-self assert: ('ABCDEFGH' compare: 'ABCDEFGH') = 2.
-self assert: ('fgh' compare: 'fg') = 3.
-self assert: ('éèàôüöß' compare: 'ÉÈÀÔÜÖẞ') = 1.
-self assert: ('éèàôüößäóñíá' compare: 'éèàôüößäóñíá') = 2.
-self assert: ('ÉÈÀÔÜ' compare: 'ÔÜÖ') = 1.
-self assert: ('eeao' compare: 'éèàô') = 1.
-self assert: ('!@#' compare: '123') = 1.
+	self assert: ('EEA' compare: 'fgh') equals: 1.
+	self assert: ('ABCDEFGH' compare: 'ABCDEFGH') equals: 2.
+	self assert: ('fgh' compare: 'fg') equals: 3.
+	self assert: ('éèàôüöß' compare: 'ÉÈÀÔÜÖẞ') equals: 1.
+	self assert: ('éèàôüößäóñíá' compare: 'éèàôüößäóñíá') equals: 2.
+	self assert: ('ÉÈÀÔÜ' compare: 'ÔÜÖ') equals: 1.
+	self assert: ('eeao' compare: 'éèàô') equals: 1.
+	self assert: ('!@#' compare: '123') equals: 1
 ]
 
 { #category : #tests }
 StringTest >> testCompareCaseSensitive [
 
-self assert: ('EEA' compare: 'fgh' caseSensitive: true) = 1.
-self assert: ('ABCDEFGH' compare: 'abcdefgh' caseSensitive: false) = 2.
-self assert: ('fgh' compare: 'fg' caseSensitive: false) = 3.
-self assert: ('éèàôüößäóñíá' compare: 'éèàôüößäóñíá' caseSensitive: false) = 2.
-self assert: ('ÉÈÀÔÜ' compare: 'ÔÜÖ' caseSensitive: true) = 1.
-self assert: ('éèàôüöß' compare: 'ÉÈÀÔÜÖẞ' caseSensitive: false) = 1.
+	self assert: ('EEA' compare: 'fgh' caseSensitive: true) equals: 1.
+	self assert: ('ABCDEFGH' compare: 'abcdefgh' caseSensitive: false) equals: 2.
+	self assert: ('fgh' compare: 'fg' caseSensitive: false) equals: 3.
+	self assert: ('éèàôüößäóñíá' compare: 'éèàôüößäóñíá' caseSensitive: false) equals: 2.
+	self assert: ('ÉÈÀÔÜ' compare: 'ÔÜÖ' caseSensitive: true) equals: 1.
+	self assert: ('éèàôüöß' compare: 'ÉÈÀÔÜÖẞ' caseSensitive: false) equals: 1
 ]
 
 { #category : #'tests - comparing' }
@@ -681,62 +703,70 @@ StringTest >> testCopyReplaceAllWith [
 { #category : #'tests - copy' }
 StringTest >> testCopyReplaceAllWithAsTokens [
 
-self assert: ('test te str' copyReplaceAll: 'te' with: 'longone' asTokens: true) = 'test longone str'.
-self assert: ('test te str' copyReplaceAll: 'te' with: 'longone' asTokens: false) = 'longonest longone str'.
-self assert: ('123 test xyz' copyReplaceAll: 'st' with: 'mper' asTokens: true) = '123 test xyz'.
-self assert: ('éèàôüößäóñíá' copyReplaceAll: 'àôüö' with: 'A' asTokens: false) = 'éèAßäóñíá'.
-self assert: ('éèàôü éèàôüt éèàôü' copyReplaceAll: ' ' with:  'ß' asTokens: false) = 'éèàôüßéèàôütßéèàôü'.
+	self assert: ('test te str' copyReplaceAll: 'te' with: 'longone' asTokens: true) equals: 'test longone str'.
+	self assert: ('test te str' copyReplaceAll: 'te' with: 'longone' asTokens: false) equals: 'longonest longone str'.
+	self assert: ('123 test xyz' copyReplaceAll: 'st' with: 'mper' asTokens: true) equals: '123 test xyz'.
+	self assert: ('éèàôüößäóñíá' copyReplaceAll: 'àôüö' with: 'A' asTokens: false) equals: 'éèAßäóñíá'.
+	self assert: ('éèàôü éèàôüt éèàôü' copyReplaceAll: ' ' with:  'ß' asTokens: false) equals: 'éèàôüßéèàôütßéèàôü'.
 ]
 
 { #category : #'tests - comparing' }
 StringTest >> testCorrectAgainst [
 
-| coll |
+	| coll |
+	coll := OrderedCollection new addAll: #('nest' 'temperature' 'text' 'Jupiter' 'denial' 'nest' 'tttt' 'e' 'alpha' 'beautest'); yourself.
 
-coll := OrderedCollection new addAll: #('nest' 'temperature' 'text' 'Jupiter' 'denial' 'nest' 'tttt' 'e' 'alpha' 'beautest'); yourself.
-self assert: ('test' correctAgainst: coll) asArray = #('beautest' 'nest' 'text' 'nest' 'tttt' 'temperature').
-self assert: ('123' correctAgainst: coll) asArray = #('tttt' 'nest' 'text' 'nest').
-coll := OrderedCollection new.
-self assert: ('test' correctAgainst: coll) asArray = #().
+	self assert: ('test' correctAgainst: coll) asArray equals: #('beautest' 'nest' 'text' 'nest' 'tttt' 'temperature').
+	self assert: ('123' correctAgainst: coll) asArray equals: #('tttt' 'nest' 'text' 'nest').
+
+	coll := OrderedCollection new.
+	self assert: ('test' correctAgainst: coll) asArray equals: #().
 ]
 
 { #category : #tests }
 StringTest >> testEndsWith [ 
 
-self deny: ('éèàôüößäóñíá' endsWith: 'ia').
-self deny: ('éèàôüößäóñíá' endsWith: '').
-self assert: ('éèàôüößäóñíá' endsWith: 'éèàôüößäóñíá').
-self deny: ('test' endsWith: 'ST').
-self assert: ('test' endsWith: 'st').
-self deny: ('ÉÈÀÔÜÖẞÄÓÑÍÁ' endsWith: 'íá').
-self deny: ('test' endsWith: 'tester').
+	self deny: ('éèàôüößäóñíá' endsWith: 'ia').
+	self deny: ('éèàôüößäóñíá' endsWith: '').
+	self assert: ('éèàôüößäóñíá' endsWith: 'éèàôüößäóñíá').
+	self deny: ('test' endsWith: 'ST').
+	self assert: ('test' endsWith: 'st').
+	self deny: ('ÉÈÀÔÜÖẞÄÓÑÍÁ' endsWith: 'íá').
+	self deny: ('test' endsWith: 'tester').
 
+]
+
+{ #category : #'tests - testing' }
+StringTest >> testEndsWithAColon [
+
+	self assert: 'fred:' endsWithAColon.
+
+	self deny: 'fred' endsWithAColon
 ]
 
 { #category : #tests }
 StringTest >> testEndsWithAnyOf [
 
-self deny: ('éèàôüößäóñíá' endsWithAnyOf: #('ia' 'ñí' '' 'áß')).
-self assert: ('éèàôüößäóñíá' endsWithAnyOf: #('test' 'ÉÈÀ' 'äóñíá')).
-self assert: ('test' endsWithAnyOf: #('tests' 'tester' 'testing' 't')).
+	self deny: ('éèàôüößäóñíá' endsWithAnyOf: #('ia' 'ñí' '' 'áß')).
+	self assert: ('éèàôüößäóñíá' endsWithAnyOf: #('test' 'ÉÈÀ' 'äóñíá')).
+	self assert: ('test' endsWithAnyOf: #('tests' 'tester' 'testing' 't')).
 
 ]
 
 { #category : #tests }
 StringTest >> testEndsWithDigit [
 
-self deny: ('éèàôüößäóñíá' endsWithDigit).
-self assert: ('éèàôüößäóñíá9' endsWithDigit).
-self deny: ('99test' endsWithDigit).
-self assert: ('  999' endsWithDigit).
+	self deny: ('éèàôüößäóñíá' endsWithDigit).
+	self assert: ('éèàôüößäóñíá9' endsWithDigit).
+	self deny: ('99test' endsWithDigit).
+	self assert: ('  999' endsWithDigit).
 ]
 
 { #category : #tests }
 StringTest >> testEquality [
-	"self run: #testEquality"
 	
-	self assert: 'abc' = 'abc' asWideString.
-	self assert: 'abc' asWideString = 'abc'.
+	self assert: 'abc' equals: 'abc' asWideString.
+	self assert: 'abc' asWideString equals: 'abc'.
 	self assert: ( #[97 0 0 0] asString ~= 'a000' asWideString).
 	self assert: ('a000' asWideString ~=  #[97 0 0 0] asString).
 
@@ -761,72 +791,89 @@ StringTest >> testExpandMacros [
 						nextPut: Character cr ])
 ]
 
+{ #category : #'tests - formatting' }
+StringTest >> testExpandMacrosSkip [
+	self assert: '%<' expandMacros equals: '<'
+]
+
+{ #category : #'tests - formatting' }
+StringTest >> testExpandMacrosTernary [
+	self assert: ('<1?success:error>' expandMacrosWith: true) equals: 'success'.
+	self assert: ('<1?success:error>' expandMacrosWith: false) equals: 'error'
+]
+
+{ #category : #'tests - formatting' }
+StringTest >> testExpandMacrosWithArguments [
+	self assert: ('<1s>' expandMacrosWithArguments: {'str''ing'}) equals: 'str''ing'.
+	self assert: ('<1p>' expandMacrosWithArguments: {'str''ing'}) equals: '''str''''ing'''.
+	self assert: ('<1p>: <2p>' expandMacrosWith: 'Number' with: 5) equals: '''Number'': 5'
+]
+
 { #category : #tests }
 StringTest >> testFindAnySubstringStartingAt [
 
-self assert: ('tester12345' findAnySubstring: #('st' $1) startingAt: 1) = 3.
-self assert: ('éèàôüößäóñíá1234' findAnySubstring: #('st' '' 'óñ' '123') startingAt:  1) = 9.
-self assert: ('éèàôüößäóñíá' findAnySubstring: #('') startingAt:  2) = 13.
-self assert: ('éèàôüößäóñíá' findAnySubstring: #('óñ') startingAt:  3) = 9.
-self assert: ('éèàôüößäóñíá' findAnySubstring: #() startingAt:  3) = 13.
-self assert: ('test12345' findAnySubstring: #('"' '@') startingAt: 12) = 10.
+	self assert: ('tester12345' findAnySubstring: #('st' $1) startingAt: 1) equals: 3.
+	self assert: ('éèàôüößäóñíá1234' findAnySubstring: #('st' '' 'óñ' '123') startingAt:  1) equals: 9.
+	self assert: ('éèàôüößäóñíá' findAnySubstring: #('') startingAt: 2) equals: 13.
+	self assert: ('éèàôüößäóñíá' findAnySubstring: #('óñ') startingAt: 3) equals: 9.
+	self assert: ('éèàôüößäóñíá' findAnySubstring: #() startingAt: 3) equals: 13.
+	self assert: ('test12345' findAnySubstring: #('"' '@') startingAt: 12) equals: 10
 ]
 
 { #category : #tests }
 StringTest >> testFindBetweenSubstrings [
  
-self assert: ('éèà ôüößäó ñíá' findBetweenSubstrings: #(' ')) asArray = #('éèà' 'ôüößäó' 'ñíá').
-self assert: ('ieaoftaaka' findBetweenSubstrings: #($a)) asArray = #('ie' 'oft' 'k').
-self assert: ('this is an issue is it not' findBetweenSubstrings: #('is' 'not')) asArray 
-                                               = #('th' ' ' ' an ' 'sue ' ' it ').
+	self assert: ('éèà ôüößäó ñíá' findBetweenSubstrings: #(' ')) asArray equals: #('éèà' 'ôüößäó' 'ñíá').
+	self assert: ('ieaoftaaka' findBetweenSubstrings: #($a)) asArray equals: #('ie' 'oft' 'k').
+	self assert: ('this is an issue is it not' findBetweenSubstrings: #('is' 'not')) asArray 
+                                               equals: #('th' ' ' ' an ' 'sue ' ' it ').
 ]
 
 { #category : #tests }
 StringTest >> testFindCloseParenthesisFor [
 
-self assert: ('(1 + 3(2 * 9) - 15)' findCloseParenthesisFor: 1) = 19.
-self assert: ('(1+(2-3))-3.14159' findCloseParenthesisFor: 1) = 9.
-self assert: ('(1+(2-3))-3.14159' findCloseParenthesisFor: 4) = 8.
-self assert: ('()' findCloseParenthesisFor: 10) = 3.
+	self assert: ('(1 + 3(2 * 9) - 15)' findCloseParenthesisFor: 1) equals: 19.
+	self assert: ('(1+(2-3))-3.14159' findCloseParenthesisFor: 1) equals: 9.
+	self assert: ('(1+(2-3))-3.14159' findCloseParenthesisFor: 4) equals: 8.
+	self assert: ('()' findCloseParenthesisFor: 10) equals: 3
 ]
 
 { #category : #tests }
 StringTest >> testFindDelimitersStartingAt [
 
-self assert: ('this is a string' findDelimiters: ' ' startingAt: 1) = 5.
-self assert: ('this is a string' findDelimiters: 'i' startingAt: 1) = 3.
-self assert: ('this is a string' findDelimiters: #($a $e $s) startingAt: 5) = 7.
-self assert: ('éèàôüöß éèàôüöß' findDelimiters: 'ß' startingAt: 2) = 7.
+	self assert: ('this is a string' findDelimiters: ' ' startingAt: 1) equals: 5.
+	self assert: ('this is a string' findDelimiters: 'i' startingAt: 1) equals: 3.
+	self assert: ('this is a string' findDelimiters: #($a $e $s) startingAt: 5) equals: 7.
+	self assert: ('éèàôüöß éèàôüöß' findDelimiters: 'ß' startingAt: 2) equals: 7
 ]
 
 { #category : #'tests - indexof' }
-StringTest >> testFindFirstInString [
-	
-	"These tests are more specific than thsoe in testIndexOf."
+StringTest >> testFindFirstInString [	
+	"These tests are more specific than those in testIndexOf."
 	
 	"more boundary tests"
-	self assert: (self findFirstInString: '' fromString: '') = 0.
-	self assert: (self findFirstInString: 'x' fromString: '') = 0.
-	self assert: (self findFirstInString: '' fromString: 'x') = 0.
+	self assert: (self findFirstInString: '' fromString: '') equals: 0.
+	self assert: (self findFirstInString: 'x' fromString: '') equals: 0.
+	self assert: (self findFirstInString: '' fromString: 'x') equals: 0.
 	
-	self assert: (self findFirstInString: 'x' fromString: 'x') = 1. "<- FIXED"
+	self assert: (self findFirstInString: 'x' fromString: 'x') equals: 1.
 	
-	self assert: (self findFirstInString: 'hello' fromString: 'hello') = 1.
-	self assert: (self findFirstInString: 'hello' fromString: 'ello') = 2.
-	self assert: (self findFirstInString: 'hello' fromString: 'llo') = 3.
-	self assert: (self findFirstInString: 'hello' fromString: 'o') = 5. "<- FIXED"
-	self assert: (self findFirstInString: 'hello' fromString: 'x') = 0.
+	self assert: (self findFirstInString: 'hello' fromString: 'hello') equals: 1.
+	self assert: (self findFirstInString: 'hello' fromString: 'ello') equals: 2.
+	self assert: (self findFirstInString: 'hello' fromString: 'llo') equals: 3.
+	self assert: (self findFirstInString: 'hello' fromString: 'o') equals: 5.
+	self assert: (self findFirstInString: 'hello' fromString: 'x') equals: 0.
 
 ]
 
 { #category : #tests }
 StringTest >> testFindLastOccurenceOfStringStartingAt [
 
-	self assert: ('Smalltalk' findLastOccurrenceOfString: 'al' startingAt: 2) = 7.
-	self assert: ('aaa' findLastOccurrenceOfString: 'aa' startingAt: 1) = 2.
-	self assert: ('Smalltalk' asWideString findLastOccurrenceOfString: 'al' startingAt: 2) = 7.
-	self assert: ('Smalltalk' asWideString findLastOccurrenceOfString: 'al' asWideString startingAt: 2) = 7.
-	self assert: (('Smalltalk' copyWith: 835 asCharacter) findLastOccurrenceOfString: 'al' asWideString startingAt: 2) = 7.
+	self assert: ('Smalltalk' findLastOccurrenceOfString: 'al' startingAt: 2) equals: 7.
+	self assert: ('aaa' findLastOccurrenceOfString: 'aa' startingAt: 1) equals: 2.
+	self assert: ('Smalltalk' asWideString findLastOccurrenceOfString: 'al' startingAt: 2) equals: 7.
+	self assert: ('Smalltalk' asWideString findLastOccurrenceOfString: 'al' asWideString startingAt: 2) equals: 7.
+	self assert: (('Smalltalk' copyWith: 835 asCharacter) findLastOccurrenceOfString: 'al' asWideString startingAt: 2) equals: 7
 ]
 
 { #category : #'tests - iterate on sequenced reable collections' }
@@ -843,66 +890,66 @@ StringTest >> testFindSelector [
 { #category : #tests }
 StringTest >> testFindString [
 
-self assert: ('éèàôüößäóñíá' findString: 'ÉÈ') = 0.
-self assert: ('éèàôüößäóñíá' findString: 'éè') = 1.
-self assert: ('salkjsdlkgfee' findString: 'EE') = 0.
-self assert: ('salkjsdlkgfee' findString: 'ee') = 12.
-self assert: (' ' findString: '') = 0.
+	self assert: ('éèàôüößäóñíá' findString: 'ÉÈ') equals: 0.
+	self assert: ('éèàôüößäóñíá' findString: 'éè') equals: 1.
+	self assert: ('salkjsdlkgfee' findString: 'EE') equals: 0.
+	self assert: ('salkjsdlkgfee' findString: 'ee') equals: 12.
+	self assert: (' ' findString: '') equals: 0
 ]
 
 { #category : #tests }
 StringTest >> testFindStringStartingAt [
 
-self assert: ('éèàôüößäóñíá' findString: 'ÉÈ' startingAt: 1) = 0.
-self assert: ('éèàôüößäóñíá' findString: 'éè' startingAt: 10) = 0.
-self assert: ('éèàôüößäóñíá' findString: 'ß' startingAt: 5) = 7.
-self assert: ('salkjsdlkgfee' findString: 'lke' startingAt: 1) = 0.
-self assert: ('salkjsdlkgfee' findString: 'ee'startingAt: 3) = 12.
-self assert: (' ' findString: '' startingAt: 1) = 0.
+	self assert: ('éèàôüößäóñíá' findString: 'ÉÈ' startingAt: 1) equals: 0.
+	self assert: ('éèàôüößäóñíá' findString: 'éè' startingAt: 10) equals: 0.
+	self assert: ('éèàôüößäóñíá' findString: 'ß' startingAt: 5) equals: 7.
+	self assert: ('salkjsdlkgfee' findString: 'lke' startingAt: 1) equals: 0.
+	self assert: ('salkjsdlkgfee' findString: 'ee'startingAt: 3) equals: 12.
+	self assert: (' ' findString: '' startingAt: 1) equals: 0
 ]
 
 { #category : #tests }
 StringTest >> testFindStringStartingAtCaseSensitive [
 
-self assert: ('éèàôüößäóñíá' findString: 'Á' startingAt: 1 caseSensitive: false) = 12.
-self assert: ('éèàôüößäóñíá' findString: 'Á' startingAt: 1 caseSensitive: true) = 0.
-self assert: ('suiehl5tlr' findString: 'r' startingAt:  5 caseSensitive: true) = 10.
-self assert: ('test' findString: 'T' startingAt: 3 caseSensitive: false) = 4.
-self assert: ('test' findString: '' startingAt: 1 caseSensitive: false) = 0.
+	self assert: ('éèàôüößäóñíá' findString: 'Á' startingAt: 1 caseSensitive: false) equals: 12.
+	self assert: ('éèàôüößäóñíá' findString: 'Á' startingAt: 1 caseSensitive: true) equals: 0.
+	self assert: ('suiehl5tlr' findString: 'r' startingAt:  5 caseSensitive: true) equals: 10.
+	self assert: ('test' findString: 'T' startingAt: 3 caseSensitive: false) equals: 4.
+	self assert: ('test' findString: '' startingAt: 1 caseSensitive: false) equals: 0
 ]
 
 { #category : #tests }
 StringTest >> testFindTokens [
 
-|s |
-s := OrderedCollection withAll: #( 'i' 'd toke' 's').
-self assert: (('find tokens' findTokens: #($a $f $n)) = s).
+	|s |
+	s := OrderedCollection withAll: #( 'i' 'd toke' 's').
+	self assert: ('find tokens' findTokens: #($a $f $n)) equals: s.
 
-s := OrderedCollection withAll: #('éèàôüößäóñí').
-self assert: (('éèàôüößäóñíá' findTokens: $á) = s).
+	s := OrderedCollection withAll: #('éèàôüößäóñí').
+	self assert: ('éèàôüößäóñíá' findTokens: $á) equals: s.
 
-s := OrderedCollection withAll: #().
-self assert: (('' findTokens: '') = s).
+	s := OrderedCollection withAll: #().
+	self assert: ('' findTokens: '') equals: s.
 
-s := OrderedCollection withAll: #('es' ' ' 'his').
-self assert: (('test this' findTokens: 't') = s).
+	s := OrderedCollection withAll: #('es' ' ' 'his').
+	self assert: ('test this' findTokens: 't') equals: s
 ]
 
 { #category : #tests }
 StringTest >> testFindTokensEscapedBy [
 
-|s|
-s := OrderedCollection withAll: #('éèà' 'üößä' 'íá').
-self assert: (('éèàôüößäóñíá' findTokens: #($ô $ó) escapedBy:'ñí') = s).
+	|s|
+	s := OrderedCollection withAll: #('éèà' 'üößä' 'íá').
+	self assert: ('éèàôüößäóñíá' findTokens: #($ô $ó) escapedBy:'ñí') equals: s.
 
-s := OrderedCollection withAll: #('ths,').
-self assert: (('this,is' findTokens: ',' escapedBy: 'is' ) = s).
+	s := OrderedCollection withAll: #('ths,').
+	self assert: ('this,is' findTokens: ',' escapedBy: 'is' ) equals: s.
 
-s := OrderedCollection withAll: #('this,is').
-self assert: (('this , is' findTokens: ',' escapedBy: ' ') = s).
+	s := OrderedCollection withAll: #('this,is').
+	self assert: ('this , is' findTokens: ',' escapedBy: ' ') equals: s.
 
-s := OrderedCollection withAll: #('ths , s').
-self assert: (('this , is' findTokens: ' ' escapedBy: $i) = s).
+	s := OrderedCollection withAll: #('ths , s').
+	self assert: ('this , is' findTokens: ' ' escapedBy: $i) equals: s
 ]
 
 { #category : #'tests - tokenizing' }
@@ -911,7 +958,7 @@ StringTest >> testFindTokensEscapedBy01 [
 	| tokens |
 	string := 'this, is, "a, test"'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 3
+	self assert: tokens size equals: 3
 ]
 
 { #category : #'tests - tokenizing' }
@@ -929,7 +976,7 @@ StringTest >> testFindTokensEscapedBy03 [
 	| tokens |
 	string := 'this, is, a, test'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 4
+	self assert: tokens size equals: 4
 ]
 
 { #category : #'tests - tokenizing' }
@@ -938,8 +985,8 @@ StringTest >> testFindTokensEscapedBy04 [
 	| tokens |
 	string := 'this, is, a"," test'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 3.
-	self assert: tokens third = ' a, test'
+	self assert: tokens size equals: 3.
+	self assert: tokens third equals: ' a, test'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -948,9 +995,9 @@ StringTest >> testFindTokensEscapedBy05 [
 	| tokens |
 	string := 'this, /is, a"," test/'.
 	tokens := string findTokens: ',#' escapedBy: '"/'.
-	self assert: tokens size = 2.
-	self assert: tokens first = 'this'.
-	self assert: tokens second = ' is, a"," test'.
+	self assert: tokens size equals: 2.
+	self assert: tokens first equals: 'this'.
+	self assert: tokens second equals: ' is, a"," test'.
 ]
 
 { #category : #'tests - tokenizing' }
@@ -959,8 +1006,8 @@ StringTest >> testFindTokensEscapedBy06 [
 	| tokens |
 	string := 'this, is, "a, test'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 3.
-	self assert: tokens third = ' a, test'
+	self assert: tokens size equals: 3.
+	self assert: tokens third equals: ' a, test'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -969,11 +1016,11 @@ StringTest >> testFindTokensEscapedBy07 [
 	| tokens |
 	string := 'a:b::c'.
 	tokens := string findTokens: ':' escapedBy: '"'.
-	self assert: tokens size = 4.
-	self assert: tokens first = 'a'.
-	self assert: tokens second = 'b'.
-	self assert: tokens third = ''.
-	self assert: tokens fourth = 'c'
+	self assert: tokens size equals: 4.
+	self assert: tokens first equals: 'a'.
+	self assert: tokens second equals: 'b'.
+	self assert: tokens third equals: ''.
+	self assert: tokens fourth equals: 'c'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -982,9 +1029,9 @@ StringTest >> testFindTokensEscapedBy08 [
 	| tokens |
 	string := 'this, is, ##a, test'.
 	tokens := string findTokens: ',' escapedBy: '#'.
-	self assert: tokens size = 4.
-	self assert: tokens third = ' a'.
-	self assert: tokens fourth = ' test'
+	self assert: tokens size equals: 4.
+	self assert: tokens third equals: ' a'.
+	self assert: tokens fourth equals: ' test'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -993,8 +1040,8 @@ StringTest >> testFindTokensEscapedBy09 [
 	| tokens |
 	string := 'this, is, ###a, test#'.
 	tokens := string findTokens: ',' escapedBy: '#'.
-	self assert: tokens size = 3.
-	self assert: tokens third = ' #a, test'
+	self assert: tokens size equals: 3.
+	self assert: tokens third equals: ' #a, test'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1003,8 +1050,8 @@ StringTest >> testFindTokensEscapedBy10 [
 	| tokens |
 	string := 'this, is, ###a, test'.
 	tokens := string findTokens: ',' escapedBy: '#'.
-	self assert: tokens size = 3.
-	self assert: tokens third = ' #a, test'
+	self assert: tokens size equals: 3.
+	self assert: tokens third equals: ' #a, test'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1013,8 +1060,8 @@ StringTest >> testFindTokensEscapedBy11 [
 	| tokens |
 	string := 'this, is, """a, test"'.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens size = 3.
-	self assert: tokens third = ' "a, test'
+	self assert: tokens size equals: 3.
+	self assert: tokens third equals: ' "a, test'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1023,8 +1070,8 @@ StringTest >> testFindTokensEscapedBy12 [
 	| tokens |
 	string := 'one, two# three; four. five'.
 	tokens := string findTokens: ',#;.' escapedBy: '"'.
-	self assert: tokens size = 5.
-	self assert: tokens third = ' three'
+	self assert: tokens size equals: 5.
+	self assert: tokens third equals: ' three'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1033,8 +1080,8 @@ StringTest >> testFindTokensEscapedBy13 [
 	| tokens |
 	string := 'one, two# three; four. five'.
 	tokens := string findTokens: ',#;.' escapedBy: nil.
-	self assert: tokens size = 5.
-	self assert: tokens third = ' three'
+	self assert: tokens size equals: 5.
+	self assert: tokens third equals: ' three'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1043,9 +1090,9 @@ StringTest >> testFindTokensEscapedBy14 [
 	| tokens |
 	string := 'one, "two# three"; &four. five&'.
 	tokens := string findTokens: ',#;.' escapedBy: '"&'.
-	self assert: tokens size = 3.
-	self assert: tokens second = ' two# three'.
-	self assert: tokens third = ' four. five'
+	self assert: tokens size equals: 3.
+	self assert: tokens second equals: ' two# three'.
+	self assert: tokens third equals: ' four. five'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1054,8 +1101,8 @@ StringTest >> testFindTokensEscapedBy15 [
 	| tokens |
 	string := 'one, "two# three"; &four. five&'.
 	tokens := string findTokens: nil escapedBy: '"&'.
-	self assert: tokens size = 1.
-	self assert: tokens first = 'one, two# three; four. five'
+	self assert: tokens size equals: 1.
+	self assert: tokens first equals: 'one, two# three; four. five'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1064,8 +1111,8 @@ StringTest >> testFindTokensEscapedBy16 [
 	| tokens |
 	string := 'one, "two# three"; &four. five&'.
 	tokens := string findTokens: nil escapedBy: nil.
-	self assert: tokens size = 1.
-	self assert: tokens first = string
+	self assert: tokens size equals: 1.
+	self assert: tokens first equals: string
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1074,7 +1121,7 @@ StringTest >> testFindTokensEscapedBy21 [
 	| tokens |
 	string := 'this, is, "a, test"'.
 	tokens := string findTokens: $, escapedBy: $".
-	self assert: tokens size = 3
+	self assert: tokens size equals: 3
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1083,7 +1130,7 @@ StringTest >> testFindTokensEscapedBy22 [
 	| tokens |
 	string := ''.
 	tokens := string findTokens: $, escapedBy: $".
-	self assert: tokens size = 0
+	self assert: tokens size equals: 0
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1092,7 +1139,7 @@ StringTest >> testFindTokensEscapedBy23 [
 	| tokens |
 	string := 'this, is, a, test'.
 	tokens := string findTokens: $, escapedBy: $".
-	self assert: tokens size = 4
+	self assert: tokens size equals: 4
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1101,8 +1148,8 @@ StringTest >> testFindTokensEscapedBy24 [
 	| tokens |
 	string := 'this, is, a"," test'.
 	tokens := string findTokens: $, escapedBy: $".
-	self assert: tokens size = 3.
-	self assert: tokens third = ' a, test'
+	self assert: tokens size equals: 3.
+	self assert: tokens third equals: ' a, test'
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1111,9 +1158,9 @@ StringTest >> testFindTokensEscapedBy25 [
 	| tokens |
 	string := 'this, /is, a"," test/'.
 	tokens := string findTokens: $, escapedBy: $/.
-	self assert: tokens size = 2.
-	self assert: tokens first = 'this'.
-	self assert: tokens second = ' is, a"," test'.
+	self assert: tokens size equals: 2.
+	self assert: tokens first equals: 'this'.
+	self assert: tokens second equals: ' is, a"," test'.
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1122,28 +1169,28 @@ StringTest >> testFindTokensEscapedBy26 [
 	| tokens |
 	string := 'this, is, "a, test'.
 	tokens := string findTokens: $, escapedBy: $".
-	self assert: tokens size = 3.
-	self assert: tokens third = ' a, test'
+	self assert: tokens size equals: 3.
+	self assert: tokens third equals: ' a, test'
 ]
 
 { #category : #tests }
 StringTest >> testFindTokensIncludes [
 
-self assert: (('test this' findTokens: 't' includes: 'his') = 'his').
-self assert: (('test this' findTokens: 's' includes: 'HI') isNil).
-self assert: (('test this' findTokens: 's' includes: 'hi') = 't thi').
-self assert: (('test that' findTokens: 't' includes: 'that') isNil).
-self assert: (('éèàôüößäóñíá' findTokens: #($ô $ó) includes:'ñí') = 'ñíá').
+	self assert: ('test this' findTokens: 't' includes: 'his') equals: 'his'.
+	self assert: ('test this' findTokens: 's' includes: 'HI') isNil.
+	self assert: ('test this' findTokens: 's' includes: 'hi') equals: 't thi'.
+	self assert: ('test that' findTokens: 't' includes: 'that') isNil.
+	self assert: ('éèàôüößäóñíá' findTokens: #($ô $ó) includes:'ñí') equals: 'ñíá'
 
 ]
 
 { #category : #tests }
 StringTest >> testFindWordStartStartingAt [
 
-self assert: ('test this string' findWordStart: 'th' startingAt: 1) = 6.
-self assert: ('test this string' findWordStart: 'st' startingAt: 1) = 11.
-self assert: ('test this string' findWordStart: 'st' startingAt: 12) = 0.
-self assert: ('test this string' findWordStart: '' startingAt: 1) = 0.
+	self assert: ('test this string' findWordStart: 'th' startingAt: 1) equals: 6.
+	self assert: ('test this string' findWordStart: 'st' startingAt: 1) equals: 11.
+	self assert: ('test this string' findWordStart: 'st' startingAt: 12) equals: 0.
+	self assert: ('test this string' findWordStart: '' startingAt: 1) equals: 0
 
 ]
 
@@ -1195,15 +1242,15 @@ StringTest >> testFormatFailures [
 { #category : #tests }
 StringTest >> testHasWideCharacterFromTo [
 
-self assert: ('te€st' hasWideCharacterFrom: 1 to: 3).
-self deny: ('test' hasWideCharacterFrom: 1 to: 4).  
-self assert: ('€₤' hasWideCharacterFrom: 1 to: 2).  
-self assert: ('test this string €₤' hasWideCharacterFrom: 18 to: 19).
+	self assert: ('te€st' hasWideCharacterFrom: 1 to: 3).
+	self deny: ('test' hasWideCharacterFrom: 1 to: 4).  
+	self assert: ('€₤' hasWideCharacterFrom: 1 to: 2).  
+	self assert: ('test this string €₤' hasWideCharacterFrom: 18 to: 19)
 ]
 
 { #category : #'tests - includes' }
 StringTest >> testIncludesElementIsNotThere [
-	"self debug: #testIncludesElementIsNotThere"
+	
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
@@ -1212,22 +1259,22 @@ StringTest >> testIncludesElementIsNotThere [
 { #category : #tests }
 StringTest >> testIncludesSubstring [
 
-self assert: ('testing this string' includesSubstring: 'ring'). 
-self assert: ('éèàôüößäóñíá' includesSubstring: '').
-self deny: ('éèàôüößäóñíá' includesSubstring: 'a'). 
-self assert: ('éèàôüößäóñíá' includesSubstring: 'ßä').
-self deny: ('kjdsnlksjdf' includesSubstring: 'K'). 
+	self assert: ('testing this string' includesSubstring: 'ring'). 
+	self assert: ('éèàôüößäóñíá' includesSubstring: '').
+	self deny: ('éèàôüößäóñíá' includesSubstring: 'a'). 
+	self assert: ('éèàôüößäóñíá' includesSubstring: 'ßä').
+	self deny: ('kjdsnlksjdf' includesSubstring: 'K') 
 
 ]
 
 { #category : #tests }
 StringTest >> testIncludesSubstringCaseSensitive [
 
-self deny: ('test this string' includesSubstring: 'Ring' caseSensitive: true ). 
-self assert: ('test this string' includesSubstring: 'Ring' caseSensitive: false). 
-self deny: ('123éàôüöß' includesSubstring: '' caseSensitive: false). 
-self assert: ('123éàôüöß' includesSubstring: 'öß' caseSensitive: true).
-self assert: ('123éàôüöß' includesSubstring: 'ÀÔ' caseSensitive: false).
+	self deny: ('test this string' includesSubstring: 'Ring' caseSensitive: true ). 
+	self assert: ('test this string' includesSubstring: 'Ring' caseSensitive: false). 
+	self deny: ('123éàôüöß' includesSubstring: '' caseSensitive: false). 
+	self assert: ('123éàôüöß' includesSubstring: 'öß' caseSensitive: true).
+	self assert: ('123éàôüöß' includesSubstring: 'ÀÔ' caseSensitive: false)
 
 
 ]
@@ -1235,73 +1282,73 @@ self assert: ('123éàôüöß' includesSubstring: 'ÀÔ' caseSensitive: false).
 { #category : #tests }
 StringTest >> testIndexOf [
 
-self assert: ('test this string' indexOf: $k) = 0.
-self assert: ('test this string' indexOf: 't') = 0.
-self assert: ('test this string' indexOf: $t) = 1.
-self assert: ('123éàôüöß' indexOf: $ß) = 9.
-self assert: ('123éàôüöß' indexOf: $E) = 0.
+	self assert: ('test this string' indexOf: $k) equals: 0.
+	self assert: ('test this string' indexOf: 't') equals: 0.
+	self assert: ('test this string' indexOf: $t) equals: 1.
+	self assert: ('123éàôüöß' indexOf: $ß) equals: 9.
+	self assert: ('123éàôüöß' indexOf: $E) equals: 0
  
 ]
 
 { #category : #tests }
 StringTest >> testIndexOfFirstUppercaseCharacter [
 
-self assert: ('test thiS strIng' indexOfFirstUppercaseCharacter) = 9.
-self assert: ('test this string' indexOfFirstUppercaseCharacter) = 0.
-self assert: ('123éàôüöß' indexOfFirstUppercaseCharacter) = 0.
-self assert: ('123éàôüÖẞ' indexOfFirstUppercaseCharacter) = 8.
+	self assert: 'test thiS strIng' indexOfFirstUppercaseCharacter equals: 9.
+	self assert: 'test this string' indexOfFirstUppercaseCharacter equals: 0.
+	self assert: '123éàôüöß' indexOfFirstUppercaseCharacter equals: 0.
+	self assert: '123éàôüÖẞ' indexOfFirstUppercaseCharacter equals: 8
  
 ]
 
 { #category : #tests }
 StringTest >> testIndexOfWideCharacterFromTo [
 
-self assert: ('123éàôüÖẞ' indexOfWideCharacterFrom: 1 to: 9)  = 9.
-self assert: ('te€st' indexOfWideCharacterFrom: 1 to: 5) = 3.
-self assert: ('te€st this string' indexOfWideCharacterFrom: 4 to: 10) = 0.
-self assert: ('€₤' indexOfWideCharacterFrom: 1 to: 2) = 1.
+	self assert: ('123éàôüÖẞ' indexOfWideCharacterFrom: 1 to: 9) equals: 9.
+	self assert: ('te€st' indexOfWideCharacterFrom: 1 to: 5) equals: 3.
+	self assert: ('te€st this string' indexOfWideCharacterFrom: 4 to: 10) equals: 0.
+	self assert: ('€₤' indexOfWideCharacterFrom: 1 to: 2) equals: 1
 ]
 
 { #category : #tests }
 StringTest >> testInitialIntegerOrNil [
 
-self assert: ('234Whoopie' initialIntegerOrNil) = 234.
-self assert: ('wimpy' initialIntegerOrNil) isNil.
-self assert: ('234' initialIntegerOrNil) = 234.
-self assert: ('2N' initialIntegerOrNil) = 2.
-self assert: ('  89Ten ' initialIntegerOrNil) isNil.
-self assert: ('78 92' initialIntegerOrNil) = 78.
-self assert: ('123éàôüÖẞ' initialIntegerOrNil) = 123.
+	self assert: '234Whoopie' initialIntegerOrNil equals: 234.
+	self assert: 'wimpy' initialIntegerOrNil isNil.
+	self assert: '234' initialIntegerOrNil equals: 234.
+	self assert: '2N' initialIntegerOrNil equals: 2.
+	self assert: '  89Ten ' initialIntegerOrNil isNil.
+	self assert: '78 92' initialIntegerOrNil equals: 78.
+	self assert: '123éàôüÖẞ' initialIntegerOrNil equals: 123
 ]
 
 { #category : #tests }
 StringTest >> testIsAllAlphaNumerics [
 
-self assert: ('123dwef890' isAllAlphaNumerics).
-self deny: ('12 34 top &^' isAllAlphaNumerics). 
-self assert: ('' isAllAlphaNumerics).
-self deny: (' 234 ' isAllAlphaNumerics).
-self deny: ('()' isAllAlphaNumerics). 
-self assert: ('123éàôüÖẞ' isAllAlphaNumerics).
+	self assert: '123dwef890' isAllAlphaNumerics.
+	self deny: '12 34 top &^' isAllAlphaNumerics. 
+	self assert: '' isAllAlphaNumerics.
+	self deny: ' 234 ' isAllAlphaNumerics.
+	self deny: '()' isAllAlphaNumerics. 
+	self assert: '123éàôüÖẞ' isAllAlphaNumerics
 ]
 
 { #category : #tests }
 StringTest >> testIsAllDigits [
-	"self run: #testIsAllDigits"
-	self assert: '' isAllDigits = false.
-	self assert: '1.23' isAllDigits = false.
-	self assert: '12 3' isAllDigits = false.
-	self assert: '-123' isAllDigits = false.
-	self assert: '0123456789' isAllDigits = true.
+
+	self assert: '' isAllDigits equals: false.
+	self assert: '1.23' isAllDigits equals: false.
+	self assert: '12 3' isAllDigits equals: false.
+	self assert: '-123' isAllDigits equals: false.
+	self assert: '0123456789' isAllDigits equals: true
 ]
 
 { #category : #tests }
 StringTest >> testIsAsciiString [
 	"Non-regression for https://pharo.fogbugz.com/f/cases/15232 "
-	self assert: '' isAsciiString = true.
-	self assert: 'abcdefGHIJKL 98765,./@#%$' isAsciiString = true.
-
-	self assert: 'éÀ' isAsciiString = false.
+	
+	self assert: '' isAsciiString equals: true.
+	self assert: 'abcdefGHIJKL 98765,./@#%$' isAsciiString equals: true.
+	self assert: 'éÀ' isAsciiString equals: false
 ]
 
 { #category : #tests }
@@ -1311,7 +1358,7 @@ StringTest >> testIsLiteralSymbol [
 		description: 'single letter binary symbols can be printed without string quotes'.
 		
 	self assert: (#('x' 'x:' 'x:y:' 'from:to:by:' 'yourself') allSatisfy: [:str | str asSymbol isLiteralSymbol])
-		description: 'valid ascii selector symbols can be printed without string quotes'.
+		description: 'valid ascii selector symbols can be printed without string quotes'
 ]
 
 { #category : #tests }
@@ -1323,7 +1370,7 @@ StringTest >> testIsPatternVariable [
 	self assert: 'pattern:`varible:' isPatternVariable.
 	
 	self deny: 'notAPattern:varible:' isPatternVariable.
-	self deny: 'notAPattern' isPatternVariable.
+	self deny: 'notAPattern' isPatternVariable
 		
 
 ]
@@ -1331,46 +1378,46 @@ StringTest >> testIsPatternVariable [
 { #category : #tests }
 StringTest >> testIsWideString [
 
-self assert: ('€₤' isWideString).
-self deny: ('test this string' isWideString). 
-self assert: (' test ₤' isWideString).
-self deny: ('' isWideString). 
-self assert: ('éàôüÖẞ' isWideString).
-self deny: ('éàôüÖ' isWideString). 
+	self assert: '€₤' isWideString.
+	self deny: 'test this string' isWideString. 
+	self assert: ' test ₤' isWideString.
+	self deny: '' isWideString. 
+	self assert: 'éàôüÖẞ' isWideString.
+	self deny: 'éàôüÖ' isWideString 
 ]
 
 { #category : #tests }
 StringTest >> testLastSpacePosition [
 
-self assert: ('fred the bear' lastSpacePosition) = 9.
-self assert: ('ziggie' lastSpacePosition) = 0.
-self assert: ('elvis ' lastSpacePosition) = 6.
-self assert: ('wimpy  ' lastSpacePosition) = 7.
-self assert: ('' lastSpacePosition) = 0.
-self assert: (' 123  éà ôüÖ ẞ' lastSpacePosition) = 13.
+	self assert: 'fred the bear' lastSpacePosition equals: 9.
+	self assert: 'ziggie' lastSpacePosition equals: 0.
+	self assert: 'elvis ' lastSpacePosition equals: 6.
+	self assert: 'wimpy  ' lastSpacePosition equals: 7.
+	self assert: '' lastSpacePosition equals: 0.
+	self assert: ' 123  éà ôüÖ ẞ' lastSpacePosition equals: 13
 ]
 
 { #category : #tests }
 StringTest >> testLeadingCharRunLengthAt [
 
-self assert: ('test' leadingCharRunLengthAt: 1) = 4.
-self assert: ('éà ôüÖ ẞ' leadingCharRunLengthAt: 2) = 7.
-self assert: ('123ea slkj jfek' leadingCharRunLengthAt: 1) = 15.
-self assert: ('te€st this string' leadingCharRunLengthAt: 1) = 17.
-self assert: (' ' leadingCharRunLengthAt: 1) = 1.
-self assert: ('te€st this string' leadingCharRunLengthAt: 10) = 8.
+	self assert: ('test' leadingCharRunLengthAt: 1) equals: 4.
+	self assert: ('éà ôüÖ ẞ' leadingCharRunLengthAt: 2) equals: 7.
+	self assert: ('123ea slkj jfek' leadingCharRunLengthAt: 1) equals: 15.
+	self assert: ('te€st this string' leadingCharRunLengthAt: 1) equals: 17.
+	self assert: (' ' leadingCharRunLengthAt: 1) equals: 1.
+	self assert: ('te€st this string' leadingCharRunLengthAt: 10) equals: 8
 ]
 
 { #category : #tests }
 StringTest >> testLessThan [
 
-self assert: ('@' < 'A').
-self assert: ('abcd' < 'à ô ü').
-self assert: ('xyz' < 'ß').
-self assert: ('ß t e s t' < 'à ô ü').
-self assert: ('' < 'a').
-self deny: ('à ô ü' < 'à ô ü').
-self deny: ('aaa' < 'AAA').
+	self assert: ('@' < 'A').
+	self assert: ('abcd' < 'à ô ü').
+	self assert: ('xyz' < 'ß').
+	self assert: ('ß t e s t' < 'à ô ü').
+	self assert: ('' < 'a').
+	self deny: ('à ô ü' < 'à ô ü').
+	self deny: ('aaa' < 'AAA')
 
 
 ]
@@ -1378,70 +1425,70 @@ self deny: ('aaa' < 'AAA').
 { #category : #'tests - lines' }
 StringTest >> testLineCorrespondingToIndex [
 	| sampleCRString sampleLFString sampleCRLFString anIndex |
-	sampleCRString := 'Fred', String cr , 'the' , String cr , 'Bear'.
-	sampleLFString := 'Fred', String lf , 'the' , String lf , 'Bear'.
-	sampleCRLFString := 'Fred', String crlf , 'the' , String crlf , 'Bear'.
+	sampleCRString := 'Fred', String cr, 'the', String cr, 'Bear'.
+	sampleLFString := 'Fred', String lf, 'the', String lf, 'Bear'.
+	sampleCRLFString := 'Fred', String crlf, 'the', String crlf, 'Bear'.
 	
 	anIndex := sampleCRString indexOf: $h.
-	self assert: (sampleCRString lineCorrespondingToIndex: anIndex) = 'the'.
+	self assert: (sampleCRString lineCorrespondingToIndex: anIndex) equals: 'the'.
 	anIndex := sampleLFString indexOf: $h.
-	self assert: (sampleLFString lineCorrespondingToIndex: anIndex) = 'the'.
+	self assert: (sampleLFString lineCorrespondingToIndex: anIndex) equals: 'the'.
 	anIndex := sampleCRLFString indexOf: $h.
-	self assert: (sampleCRLFString lineCorrespondingToIndex: anIndex) = 'the'.
+	self assert: (sampleCRLFString lineCorrespondingToIndex: anIndex) equals: 'the'.
 	
 	anIndex := sampleCRString indexOf: $B.
-	self assert: (sampleCRString lineCorrespondingToIndex: anIndex) = 'Bear'.
+	self assert: (sampleCRString lineCorrespondingToIndex: anIndex) equals: 'Bear'.
 	anIndex := sampleLFString indexOf: $B.
-	self assert: (sampleLFString lineCorrespondingToIndex: anIndex) = 'Bear'.
+	self assert: (sampleLFString lineCorrespondingToIndex: anIndex) equals: 'Bear'.
 	anIndex := sampleCRLFString indexOf: $B.
-	self assert: (sampleCRLFString lineCorrespondingToIndex: anIndex) = 'Bear'.
+	self assert: (sampleCRLFString lineCorrespondingToIndex: anIndex) equals: 'Bear'.
 	
 	anIndex := sampleCRString indexOf: $d.
-	self assert: (sampleCRString lineCorrespondingToIndex: anIndex) = 'Fred'.
+	self assert: (sampleCRString lineCorrespondingToIndex: anIndex) equals: 'Fred'.
 	anIndex := sampleLFString indexOf: $d.
-	self assert: (sampleLFString lineCorrespondingToIndex: anIndex) = 'Fred'.
+	self assert: (sampleLFString lineCorrespondingToIndex: anIndex) equals: 'Fred'.
 	anIndex := sampleCRLFString indexOf: $d.
-	self assert: (sampleCRLFString lineCorrespondingToIndex: anIndex) = 'Fred'.
+	self assert: (sampleCRLFString lineCorrespondingToIndex: anIndex) equals: 'Fred'.
 ]
 
 { #category : #'tests - lines' }
 StringTest >> testLineCount [
 	| sampleCRString sampleLFString sampleCRLFString |
-	sampleCRString := 'Fred', String cr , 'the' , String cr , 'Bear'.
-	sampleLFString := 'Fred', String lf , 'the' , String lf , 'Bear'.
-	sampleCRLFString := 'Fred', String crlf , 'the' , String crlf , 'Bear'.
+	sampleCRString := 'Fred', String cr, 'the', String cr, 'Bear'.
+	sampleLFString := 'Fred', String lf, 'the', String lf, 'Bear'.
+	sampleCRLFString := 'Fred', String crlf, 'the', String crlf, 'Bear'.
 	
-	self assert: sampleCRString lineCount = 3.
-	self assert: sampleLFString lineCount = 3.
-	self assert: sampleCRLFString lineCount = 3.
+	self assert: sampleCRString lineCount equals: 3.
+	self assert: sampleLFString lineCount equals: 3.
+	self assert: sampleCRLFString lineCount equals: 3.
 ]
 
 { #category : #'tests - lines' }
 StringTest >> testLineNumber [
 	| sampleCRString sampleLFString sampleCRLFString |
-	sampleCRString := 'Fred', String cr , 'the' , String cr , 'Bear'.
-	sampleLFString := 'Fred', String lf , 'the' , String lf , 'Bear'.
-	sampleCRLFString := 'Fred', String crlf , 'the' , String crlf , 'Bear'.
+	sampleCRString := 'Fred', String cr , 'the', String cr, 'Bear'.
+	sampleLFString := 'Fred', String lf , 'the', String lf, 'Bear'.
+	sampleCRLFString := 'Fred', String crlf, 'the', String crlf, 'Bear'.
 	
-	self assert: (sampleCRString lineNumber: 2) = 'the'.
-	self assert: (sampleLFString lineNumber: 2) = 'the'.
-	self assert: (sampleCRLFString lineNumber: 2) = 'the'.
+	self assert: (sampleCRString lineNumber: 2) equals: 'the'.
+	self assert: (sampleLFString lineNumber: 2) equals: 'the'.
+	self assert: (sampleCRLFString lineNumber: 2) equals: 'the'.
 ]
 
 { #category : #'tests - lines' }
 StringTest >> testLines [
 	| sampleCRString sampleLFString sampleCRLFString sampleMixedString sampleMixedString2 |
-	sampleCRString := 'Fred', String cr , 'the' , String cr , 'Bear'.
-	sampleLFString := 'Fred', String lf , 'the' , String lf , 'Bear'.
-	sampleCRLFString := 'Fred', String crlf , 'the' , String crlf , 'Bear'.
-	sampleMixedString := 'Fred', String lf , 'the' , String cr , 'Bear'.
-	sampleMixedString2 := 'Fred', String crlf , 'the' , String cr , 'Bear'.
+	sampleCRString := 'Fred', String cr, 'the', String cr, 'Bear'.
+	sampleLFString := 'Fred', String lf, 'the', String lf, 'Bear'.
+	sampleCRLFString := 'Fred', String crlf, 'the', String crlf, 'Bear'.
+	sampleMixedString := 'Fred', String lf, 'the', String cr, 'Bear'.
+	sampleMixedString2 := 'Fred', String crlf, 'the', String cr, 'Bear'.
 	
-	self assert: sampleCRString lines = #('Fred' 'the'  'Bear').
-	self assert: sampleLFString lines = #('Fred' 'the'  'Bear').
-	self assert: sampleCRLFString lines = #('Fred' 'the'  'Bear').
-	self assert: sampleMixedString lines = #('Fred' 'the'  'Bear').
-	self assert: sampleMixedString2 lines = #('Fred' 'the'  'Bear').
+	self assert: sampleCRString lines equals: #('Fred' 'the' 'Bear').
+	self assert: sampleLFString lines equals: #('Fred' 'the' 'Bear').
+	self assert: sampleCRLFString lines equals: #('Fred' 'the' 'Bear').
+	self assert: sampleMixedString lines equals: #('Fred' 'the' 'Bear').
+	self assert: sampleMixedString2 lines equals: #('Fred' 'the' 'Bear').
 ]
 
 { #category : #'tests - lines' }
@@ -1456,21 +1503,21 @@ StringTest >> testLinesDo [
 		self deny: (aLine includes: Character cr).
 		self deny: (aLine includes: Character lf).
 		lines add: aLine].
-	self assert: lines asArray = #('Fred' 'the' 'Bear').
+	self assert: lines asArray equals: #('Fred' 'the' 'Bear').
 	
 	lines := OrderedCollection new.
 	sampleLFString linesDo: [:aLine |
 		self deny: (aLine includes: Character cr).
 		self deny: (aLine includes: Character lf).
 		lines add: aLine].
-	self assert: lines asArray = #('Fred' 'the' 'Bear').
+	self assert: lines asArray equals: #('Fred' 'the' 'Bear').
 
 	lines := OrderedCollection new.
 	sampleCRLFString linesDo: [:aLine |
 		self deny: (aLine includes: Character cr).
 		self deny: (aLine includes: Character lf).
 		lines add: aLine].
-	self assert: lines asArray = #('Fred' 'the' 'Bear').
+	self assert: lines asArray equals: #('Fred' 'the' 'Bear').
 
 
 ]
@@ -1481,16 +1528,16 @@ StringTest >> testLinesDoWithCr [
 	| myString  |
 	myString := 'This is a test of line breaking', String cr.
 	myString linesDo: [ :line |
-		self assert: ((line size + 1) = myString size)]
+		self assert: (line size + 1) equals: myString size]
 ]
 
 { #category : #'tests - line breaking' }
 StringTest >> testLinesDoWithCrBetween [
 
 	| aString |
-	aString := ' This is a test ', String cr,'of line breaking'.
-	aString linesDo: [ :line |
-		self assert: ((line size) = 16)]
+	aString := ' This is a test ', String cr, 'of line breaking'.
+	aString linesDo: [:line |
+		self assert: line size equals: 16 ]
 ]
 
 { #category : #'tests - line breaking' }
@@ -1499,16 +1546,16 @@ StringTest >> testLinesDoWithCrLf [
 	| aString |
 	aString := 'This is a test of line breaking', String crlf.
 	aString linesDo: [ :line |
-		self assert: ((line size + 2) = aString size)]
+		self assert: (line size + 2) equals: aString size ]
 ]
 
 { #category : #'tests - line breaking' }
 StringTest >> testLinesDoWithCrLfBetween [
 
 	| aString |
-	aString := '-This is a test-', String crlf,'of line breaking'.
-	aString linesDo: [ :line |
-		self assert: ((line size) = 16)]
+	aString := '-This is a test-', String crlf, 'of line breaking'.
+	aString linesDo: [:line | 
+		self assert: line size equals: 16 ]
 ]
 
 { #category : #'tests - instance creation' }
@@ -1599,62 +1646,66 @@ StringTest >> testNumArgs [
 { #category : #tests }
 StringTest >> testNumericSuffix [
 
-self assert: ('abc98' numericSuffix) = 98.
-self assert: ('98abc' numericSuffix) = 0.
-self assert: ('  123abc456' numericSuffix) = 456.
-self assert: ('abc456 789' numericSuffix) = 789.
-self assert: ('012éà ôüÖ ẞ123' numericSuffix) = 123.
+	self assert: 'abc98' numericSuffix equals: 98.
+	self assert: '98abc' numericSuffix equals: 0.
+	self assert: '  123abc456' numericSuffix equals: 456.
+	self assert: 'abc456 789' numericSuffix equals: 789.
+	self assert: '012éà ôüÖ ẞ123' numericSuffix equals: 123
 ]
 
 { #category : #tests }
 StringTest >> testOccursInWithEmptyCaseSensitive [
 
-self assert: ('abc98def' occursInWithEmpty: 'abc' caseSensitive: true). 
-self deny: ('abc98def' occursInWithEmpty: 'Abc' caseSensitive: true). 
-self assert: ('abc98def' occursInWithEmpty: 'Abc' caseSensitive: false).
-self assert: ('012éà ôüÖ ẞ345' occursInWithEmpty: '012' caseSensitive: true).
-self deny: ('012éàôüÖ ẞ345' occursInWithEmpty: 'ÉÀÔÜÖ' caseSensitive: true).
+	self assert: ('abc98def' occursInWithEmpty: 'abc' caseSensitive: true). 
+	self deny: ('abc98def' occursInWithEmpty: 'Abc' caseSensitive: true). 
+	self assert: ('abc98def' occursInWithEmpty: 'Abc' caseSensitive: false).
+	self assert: ('012éà ôüÖ ẞ345' occursInWithEmpty: '012' caseSensitive: true).
+	self deny: ('012éàôüÖ ẞ345' occursInWithEmpty: 'ÉÀÔÜÖ' caseSensitive: true)
 
 ]
 
 { #category : #tests }
 StringTest >> testOnlyLetters [
 
-self assert: ('abc98def' onlyLetters) = 'abcdef'.
-self assert: ('abc 98 12 def' onlyLetters) = 'abcdef'.
-self assert: ('012éà ôüÖ ẞ345' onlyLetters) = 'éàôüÖẞ'.
-self assert: ('123 456' onlyLetters) = ''.
-self assert: ('' onlyLetters) = ''.
+	self assert: 'abc98def' onlyLetters equals: 'abcdef'.
+	self assert: 'abc 98 12 def' onlyLetters equals: 'abcdef'.
+	self assert: '012éà ôüÖ ẞ345' onlyLetters equals: 'éàôüÖẞ'.
+	self assert: '123 456' onlyLetters equals: ''.
+	self assert: '' onlyLetters equals: ''
 
 
 ]
 
 { #category : #tests }
 StringTest >> testPadLeftTo [
+
 	self assert: ('a' padLeftTo: 3) equals: '  a'. 
 	self assert: ('a' padLeftTo: 1) equals: 'a'. 
-	self assert: ('a' padLeftTo: 0) equals: 'a'.
+	self assert: ('a' padLeftTo: 0) equals: 'a'
 ]
 
 { #category : #tests }
 StringTest >> testPadLeftToWith [
+
 	self assert: ('a' padLeftTo: 3 with: $#) equals: '##a'. 
 	self assert: ('a' padLeftTo: 1 with: $#) equals: 'a'. 
-	self assert: ('a' padLeftTo: 0 with: $#) equals: 'a'.
+	self assert: ('a' padLeftTo: 0 with: $#) equals: 'a'
 ]
 
 { #category : #tests }
 StringTest >> testPadRightTo [
+
 	self assert: ('a' padRightTo: 3) equals: 'a  '. 
 	self assert: ('a' padRightTo: 1) equals: 'a'. 
-	self assert: ('a' padRightTo: 0) equals: 'a'.
+	self assert: ('a' padRightTo: 0) equals: 'a'
 ]
 
 { #category : #tests }
 StringTest >> testPadRightToWith [
+
 	self assert: ('a' padRightTo: 3 with: $#) equals: 'a##'. 
 	self assert: ('a' padRightTo: 1 with: $#) equals: 'a'. 
-	self assert: ('a' padRightTo: 0 with: $#) equals: 'a'.
+	self assert: ('a' padRightTo: 0 with: $#) equals: 'a'
 ]
 
 { #category : #tests }
@@ -1682,22 +1733,33 @@ StringTest >> testReadStreamDo [
 StringTest >> testRepeat [
 
 	self 
-	assert: ('123' repeat: 1) = '123';
-	assert: ('123' repeat: 2) = '123123';
-	assert: ('123' repeat: 0) = '';
-	should: [('123' repeat: -1)] raise: Error.
+	assert: ('123' repeat: 1) equals: '123';
+	assert: ('123' repeat: 2) equals: '123123';
+	assert: ('123' repeat: 0) equals: '';
+	should: [ '123' repeat: -1 ] raise: Error.
+]
+
+{ #category : #'tests - converting' }
+StringTest >> testRomanNumber [
+
+	self assert: 'I' romanNumber equals: 1.
+	self assert: 'V' romanNumber equals: 5.
+	self assert: 'XVI' romanNumber equals: 16.
+	self assert: 'XIV' romanNumber equals: 14.
+	self assert: 'MDCLXXXVII' romanNumber equals: 1687.
+	self assert: 'MCMXLII' romanNumber equals: 1942.
+	self assert: 'DCLXVI' romanNumber equals: 666.
 ]
 
 { #category : #'tests - instance creation' }
 StringTest >> testSpace [
-	"self debug: #testSpace"
-	
+		
 	string := String new.
-	self assert: string size = 0. "instead of #isEmpty to be consistent with the following test"
+	self assert: string size equals: 0. 
 	
 	string := String space.
-	self assert: string size = 1.
-	self assert: string = ' '
+	self assert: string size equals: 1.
+	self assert: string equals: ' '
 ]
 
 { #category : #'tests - converting' }
@@ -1716,7 +1778,7 @@ StringTest >> testSubstrings [
 		(substring, separators, substring) -> {substring. substring}.
 		(substring, separators, substring, separators) -> {substring. substring}.
 		(separators, substring, separators, substring) -> {substring. substring}}
-		do: [:each | self assert: (each key substrings: separators) = each value].
+		do: [:each | self assert: (each key substrings: separators) equals: each value].
 
 	"test the unary version"
 	substring := allByteCharacters reject: [:each | each isSeparator].
@@ -1730,54 +1792,56 @@ StringTest >> testSubstrings [
 		(substring, separators, substring) -> {substring. substring}.
 		(substring, separators, substring, separators) -> {substring. substring}.
 		(separators, substring, separators, substring) -> {substring. substring}}
-		do: [:each | self assert: each key substrings = each value].
+		do: [:each | self assert: each key substrings equals: each value].
 ]
 
 { #category : #tests }
 StringTest >> testTranslateToLowercase [
-
-self assert: ('test this string' translateToLowercase) = 'test this string'.
-self assert: (' Test THIS sTRing' translateToLowercase) = ' test this string'.
-self assert: ('' translateToLowercase) = ''.
-self assert: ('ÔÜÖ' translateToLowercase) = 'ôüö'.
-self assert: ('123éàôüÖẞ' translateToLowercase) = '123éàôüöẞ'. 
+	<compilerOptions: #(#- #optionReadOnlyLiterals)>
+	
+	self assert: 'test this string' translateToLowercase equals: 'test this string'.
+	self assert: ' Test THIS sTRing' translateToLowercase equals: ' test this string'.
+	self assert: '' translateToLowercase equals: ''.
+	self assert: 'ÔÜÖ' translateToLowercase equals: 'ôüö'.
+	self assert: '123éàôüÖẞ' translateToLowercase equals: '123éàôüöẞ'
 ]
 
 { #category : #tests }
 StringTest >> testTranslateToUppercase [
+	<compilerOptions: #(#- #optionReadOnlyLiterals)>
 
-self assert: ('test this string' translateToUppercase) = 'TEST THIS STRING'.
-self assert: (' Test THIS sTRing' translateToUppercase) = ' TEST THIS STRING'.
-self assert: ('' translateToUppercase) = ''.
-self assert: ('ÔÜÖ' translateToUppercase) = 'ÔÜÖ'.
-self assert: ('123éàôüÖẞ' translateToUppercase) = '123ÉÀÔÜÖẞ'.
+	self assert: 'test this string' translateToUppercase equals: 'TEST THIS STRING'.
+	self assert: ' Test THIS sTRing' translateToUppercase equals: ' TEST THIS STRING'.
+	self assert: '' translateToUppercase equals: ''.
+	self assert: 'ÔÜÖ' translateToUppercase equals: 'ÔÜÖ'.
+	self assert: '123éàôüÖẞ' translateToUppercase equals: '123ÉÀÔÜÖẞ'
 ]
 
 { #category : #'tests - converting' }
 StringTest >> testTrimBoth [
-	self assert: '' trimBoth = ''.
-	self assert: ' ' trimBoth = ''.
-	self assert: '	' trimBoth = ''.
-	self assert: 'foo' trimBoth = 'foo'.
-	self assert: ' foo ' trimBoth = 'foo'.
-	self assert: '  foo  ' trimBoth = 'foo'.
-	self assert: ((String with: Character cr), '   foo  ') trimBoth = 'foo'.
+	self assert: '' trimBoth equals: ''.
+	self assert: ' ' trimBoth equals: ''.
+	self assert: '	' trimBoth equals: ''.
+	self assert: 'foo' trimBoth equals: 'foo'.
+	self assert: ' foo ' trimBoth equals: 'foo'.
+	self assert: '  foo  ' trimBoth equals: 'foo'.
+	self assert: ((String with: Character cr), '   foo  ') trimBoth equals: 'foo'.
 	
-	self assert: ('aabbaa' trimBoth: [ :each | each = $a ]) = 'bb'.
-	self assert: ('bbaabb' trimBoth: [ :each | each = $a ]) = 'bbaabb'
+	self assert: ('aabbaa' trimBoth: [ :each | each = $a ]) equals: 'bb'.
+	self assert: ('bbaabb' trimBoth: [ :each | each = $a ]) equals: 'bbaabb'
 ]
 
 { #category : #'tests - converting' }
 StringTest >> testTrimLeft [
-	self assert: '' trimLeft = ''.
-	self assert: ' ' trimLeft = ''.
-	self assert: '	' trimLeft = ''.
-	self assert: 'foo' trimLeft = 'foo'.
-	self assert: ' foo ' trimLeft = 'foo '.
-	self assert: '  foo  ' trimLeft = 'foo  '.
+	self assert: '' trimLeft equals: ''.
+	self assert: ' ' trimLeft equals: ''.
+	self assert: '	' trimLeft equals: ''.
+	self assert: 'foo' trimLeft equals: 'foo'.
+	self assert: ' foo ' trimLeft equals: 'foo '.
+	self assert: '  foo  ' trimLeft equals: 'foo  '.
 	
-	self assert: ('aabbaa' trimLeft: [ :each | each = $a ]) = 'bbaa'.
-	self assert: ('bbaabb' trimLeft: [ :each | each = $a ]) = 'bbaabb'
+	self assert: ('aabbaa' trimLeft: [ :each | each = $a ]) equals: 'bbaa'.
+	self assert: ('bbaabb' trimLeft: [ :each | each = $a ]) equals: 'bbaabb'
 ]
 
 { #category : #'tests - converting' }
@@ -1792,20 +1856,20 @@ StringTest >> testTrimLineSpaces [
 
 { #category : #'tests - converting' }
 StringTest >> testTrimRight [
-	self assert: '' trimRight = ''.
-	self assert: ' ' trimRight = ''.
-	self assert: '	' trimRight = ''.
-	self assert: 'foo' trimRight = 'foo'.
-	self assert: ' foo ' trimRight = ' foo'.
-	self assert: '  foo  ' trimRight = '  foo'.
+	self assert: '' trimRight equals: ''.
+	self assert: ' ' trimRight equals: ''.
+	self assert: '	' trimRight equals: ''.
+	self assert: 'foo' trimRight equals: 'foo'.
+	self assert: ' foo ' trimRight equals: ' foo'.
+	self assert: '  foo  ' trimRight equals: '  foo'.
 	
-	self assert: ('aabbaa' trimRight: [ :each | each = $a ]) = 'aabb'.
-	self assert: ('bbaabb' trimRight: [ :each | each = $a ]) = 'bbaabb'
+	self assert: ('aabbaa' trimRight: [ :each | each = $a ]) equals: 'aabb'.
+	self assert: ('bbaabb' trimRight: [ :each | each = $a ]) equals: 'bbaabb'
 ]
 
 { #category : #'tests - copying' }
 StringTest >> testTrimmed [
-	self assert: '  a  ' trimmed = 'a'.
+	self assert: '  a  ' trimmed equals: 'a'.
 ]
 
 { #category : #'tests - converting' }
@@ -1815,8 +1879,8 @@ StringTest >> testUncapitalized [
 	uc := 'MElViN'.
 	lc := 'mElViN'.
 	empty := ' '.
-	self assert:  uc uncapitalized = lc.
-	self assert: lc uncapitalized = lc.
+	self assert:  uc uncapitalized equals: lc.
+	self assert: lc uncapitalized equals: lc.
 	"the string gets copied"
 	self deny: lc uncapitalized == lc.
 	self deny: empty uncapitalized == empty.
@@ -1824,11 +1888,11 @@ StringTest >> testUncapitalized [
 
 { #category : #'tests - converting' }
 StringTest >> testUpTo [
-	"self debug: #testUpTo"
-	self assert: #up:to: keywords = #(up: to:).
-	self assert: #copy:from:to: keywords = #(copy: from: to:).
-	self assert: #up keywords = #(up).
-	self assert: #at: keywords = #(at:).
+	
+	self assert: #up:to: keywords equals: #(up: to:).
+	self assert: #copy:from:to: keywords equals: #(copy: from: to:).
+	self assert: #up keywords equals: #(up).
+	self assert: #at: keywords equals: #(at:).
 	
 ]
 
@@ -1856,8 +1920,8 @@ StringTest >> testWithFirstCharacterDownshifted [
 	uc := 'MElViN'.
 	lc := 'mElViN'.
 	empty := ' '.
-	self assert:  uc uncapitalized  = lc.
-	self assert: lc uncapitalized = lc.
+	self assert: uc uncapitalized equals: lc.
+	self assert: lc uncapitalized equals: lc.
 	"the string gets copied"
 	self deny: lc uncapitalized == lc.
 	self deny: empty uncapitalized == empty.
@@ -1880,24 +1944,19 @@ StringTest >> testWithInternetLineEndings [
 		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String crlf, 'abc', String crlf, String crlf, 'abc', String crlf).
 		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String crlf, 'abc', String crlf, String crlf, 'abc', String crlf).
 	} do: [ :each |
-		self assert: each key withInternetLineEndings = each value ]
+		self assert: each key withInternetLineEndings equals: each value ]
 ]
 
 { #category : #'tests - converting' }
 StringTest >> testWithNoLineLongerThan [
-	"self run: #testWithNoLineLongerThan"
 
-	self assert: ('Hello World' withNoLineLongerThan: 5) = ('Hello' , String cr , 'World').
-	String crlf withNoLineLongerThan: 5.
-	'Hello' , String cr , String cr , 'World' withNoLineLongerThan: 5.
-	self
-		assert:
-			('Sample text to line break at some point' withNoLineLongerThan: 28)
-				= ('Sample text to line break at' , String cr , 'some point').
-	self
-		assert:
-			('Sample text' , String cr , 'to line break' , String cr , 'at some point' withNoLineLongerThan: 28)
-				= ('Sample text' , String cr , 'to line break' , String cr , 'at some point')
+	self assert: ('Hello World' withNoLineLongerThan: 5) equals: ('Hello' , String cr , 'World').
+
+	self assert: ('Sample text to line break at some point' withNoLineLongerThan: 28)
+		  equals: ('Sample text to line break at' , String cr , 'some point').
+		
+	self assert: ('Sample text' , String cr , 'to line break' , String cr , 'at some point' withNoLineLongerThan: 28)
+		  equals: ('Sample text' , String cr , 'to line break' , String cr , 'at some point')
 ]
 
 { #category : #'tests - converting' }
@@ -1934,7 +1993,7 @@ StringTest >> testWithSqueakLineEndings [
 		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
 		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
 	} do: [ :each |
-		self assert: each key withSqueakLineEndings = each value ]
+		self assert: each key withSqueakLineEndings equals: each value ]
 ]
 
 { #category : #'tests - internet' }
@@ -1954,7 +2013,7 @@ StringTest >> testWithUnixLineEndings [
 		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String lf, 'abc', String lf, String lf, 'abc', String lf).
 		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String lf, 'abc', String lf, String lf, 'abc', String lf).
 	} do: [ :each |
-		self assert: each key withUnixLineEndings = each value ]
+		self assert: each key withUnixLineEndings equals: each value ]
 ]
 
 { #category : #'tests - converting' }
@@ -1998,16 +2057,16 @@ StringTest >> testWithoutPrefix [
 
 { #category : #'tests - internet' }
 StringTest >> testWithoutQuoting [
- 	#(
-               '"foo"' 'foo'
-               '''foo''' 'foo'
-               '"foo''' '"foo'''
-               '''foo"' '''foo"'
-               '"foo' '"foo'
-               'foo"' 'foo"'
-               'foo' 'foo') 
+
+ 	#( '"foo"' 'foo'
+		'''foo''' 'foo'
+		'"foo''' '"foo'''
+		'''foo"' '''foo"'
+		'"foo' '"foo'
+		'foo"' 'foo"'
+		'foo' 'foo') 
 	pairsDo: [ :before :after |
-		self assert: before withoutQuoting = after ]
+		self assert: before withoutQuoting equals: after ]
 ]
 
 { #category : #'tests - converting' }
@@ -2027,9 +2086,10 @@ StringTest >> testWithoutTrailingDigits [
 
 { #category : #'tests - copying' }
 StringTest >> testWithoutTrailingNewlines [
-	self assert: ('123',String cr) withoutTrailingNewlines = '123'.
-	self assert: ('123',String lf) withoutTrailingNewlines = '123'.
-	self assert: ('123',String cr, String lf) withoutTrailingNewlines = '123'.
+
+	self assert: ('123',String cr) withoutTrailingNewlines equals: '123'.
+	self assert: ('123',String lf) withoutTrailingNewlines equals: '123'.
+	self assert: ('123',String cr, String lf) withoutTrailingNewlines equals: '123'.
 ]
 
 { #category : #'tests - converting' }
@@ -2042,7 +2102,7 @@ StringTest >> testWriteStreamConvertsToWideString [
 	newString := (String new: oldWideString size).
 	ws := newString writeStream.
 	oldWideString do: [:each | ws nextPut: each].
-	self assert: (newString = oldWideString).
+	self assert: newString equals: oldWideString.
 ]
 
 { #category : #'tests - streaming' }
@@ -2084,8 +2144,8 @@ StringTest >> testWthNoLineLongerThan [
 { #category : #'tests - converting' }
 StringTest >> testindexOfstartingAt [
 
-	self assert: ('aa aa éé aa aa' indexOf: $a startingAt: 8) = 10.
-	self assert: ('aa aa éé aa aa' indexOf: $z startingAt: 8) = 0.
+	self assert: ('aa aa éé aa aa' indexOf: $a startingAt: 8) equals: 10.
+	self assert: ('aa aa éé aa aa' indexOf: $z startingAt: 8) equals: 0.
 ]
 
 { #category : #requirements }

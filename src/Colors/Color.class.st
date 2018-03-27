@@ -1,22 +1,17 @@
 "
 This class represents abstract color, regardless of the depth of bitmap it will be shown in.  At the very last moment a Color is converted to a pixelValue that depends on the depth of the actual Bitmap inside the Form it will be used with.  The supported depths (in bits) are 1, 2, 4, 8, 16, and 32.  The number of actual colors at these depths are: 2, 4, 16, 256, 32768, and 16 million.  (See comment in BitBlt.)  To change the depth of the Display and set how many colors you can see, execute: (Display newDepth: 8).  (See comment in DisplayMedium)
+
 	Color is represented as the amount of light in red, green, and blue.  White is (1.0, 1.0, 1.0) and black is (0, 0, 0).  Pure red is (1.0, 0, 0).  These colors are ""additive"".  Think of Color's instance variables as:
 	r	amount of red, a Float between 0.0 and 1.0.
 	g	amount of green, a Float between 0.0 and 1.0.
 	b	amount of blue, a Float between 0.0 and 1.0.
 (But, in fact, the three are encoded as values from 0 to 1023 and combined in a single integer, rgb.  The user does not need to know this.)
+
 	Many colors are named.  You find a color by name by sending a message to class Color, for example (Color lightBlue).  Also, (Color red: 0.2 green: 0.6 blue: 1.0) or (Color r: 0.2 g: 0.6 b: 1.0) creates a color. (see below)
 	A color is essentially immutable.  Once you set red, green, and blue, you cannot change them.  Instead, create a new Color and use it.
+	
 	Applications such as contour maps and bar graphs will want to display one of a set of shades based on a number.  Convert the range of this number to an integer from 1 to N.  Then call (Color green lightShades: N) to get an Array of colors from white to green.  Use the Array messages at:, atPin:, or atWrap: to pull out the correct color from the array.  atPin: gives the first (or last) color if the index is out of range.  atWrap: wraps around to the other end if the index is out of range.
-	Here are some fun things to run in when your screen has color:
-		Pen new mandala: 30 diameter: Display height-100.
-		Pen new web  ""Draw with the mouse, opt-click to end""
-		Display fillWhite.  Pen new hilberts: 5.
-		Form toothpaste: 30  ""Draw with mouse, opt-click to end""
-You might also want to try the comment in
-	Form>class>examples>tinyText...
-
-
+		
 Messages:
 	mixed: proportion with: aColor	Answer this color mixed with the given color additively. The proportion, a number between 0.0 and 1.0, determines what what fraction of the receiver to use in the mix.
 
@@ -32,7 +27,6 @@ Messages:
 	brightness	Returns the brightness of the color.  0.0 to 1.0
 
 	name    Look to see if this Color has a name.
-	display	Show a swatch of this color tracking the cursor.
 
 	lightShades: thisMany		An array of thisMany colors from white to the receiver. 
 	darkShades: thisMany		An array of thisMany colors from black to the receiver.  Array is of length num.
@@ -53,15 +47,10 @@ Messages to Class Color.
 	canUnderstand: #brown	  Returns true if #brown is a defined color.
 	names		An OrderedCollection of the names of the colors.
 	named: #notAllThatGray put: aColor    Add a new color to the list and create an access message and a class variable for it.
-	fromUser	Shows the palette of colors available at this display depth.  Click anywhere to return the color you clicked on.
-
-	hotColdShades: thisMany	An array of thisMany colors showing temperature from blue to red to white hot.
-
-    stdColorsForDepth: d        An Array of colors available at this depth.  For 16 bit and 32 bits, returns a ColorGenerator.  It responds to at: with a Color for that index, simulating a very big Array. 
 
    colorFromPixelValue: value depth: d    Returns a Color whose bit pattern (inside a Bitmap) at this depth is the number specified.  Normal users do not need to use this.
 
-(See also comments in these classes: Form, Bitmap, BitBlt, Pattern, MaskedForm.)
+(See also comments in these classes: Form, Bitmap, BitBlt,.)
 "
 Class {
 	#name : #Color,
@@ -115,29 +104,31 @@ Color class >> brown [
 { #category : #'instance creation' }
 Color class >> colorFrom: parm [
 	"Return an instantiated color from parm.  If parm is already a color, return it, else return the result of my performing it if it's a symbol or, if it is a list, it can either be an array of three numbers, which will be interpreted as RGB values, or a list of symbols, the first of which is sent to me and then the others of which are in turn sent to the prior result, thus allowing entries of the form #(blue darker).  Else just return the thing"
+	"Color colorFrom: #(blue darker) >>> (Color r: 0.011 g: 0.23900000000000002 b: 0.795 alpha: 1.0) "
+	"(Color colorFrom: Color blue darker)>>>(Color r: 0.011 g: 0.23900000000000002 b: 0.795 alpha: 1.0)"
+	"(Color colorFrom: #blue)>>> (Color blue)"
+	"(Color colorFrom: #(0.0 0.0 1.0) >>> (Color blue)"
 
 	| aColor firstParm |
-	(parm isKindOf: Color) ifTrue: [^ parm].
-	(parm isSymbol) ifTrue: [^ self perform: parm].
-	(parm isString) ifTrue: [^ self fromString: parm].
-	((parm isKindOf: SequenceableCollection) and: [parm size > 0])
-		ifTrue:
-			[firstParm := parm first.
-			(firstParm isKindOf: Number) ifTrue:
-				[^ self fromRgbTriplet: parm].
+	(parm isKindOf: Color)
+		ifTrue: [ ^ parm ].
+	parm isSymbol
+		ifTrue: [ ^ self perform: parm ].
+	parm isString
+		ifTrue: [ ^ self fromString: parm ].
+	((parm isKindOf: SequenceableCollection) and: [ parm size > 0 ])
+		ifTrue: [ firstParm := parm first.
+			(firstParm isKindOf: Number)
+				ifTrue: [ ^ self fromRgbTriplet: parm ].
 			aColor := self colorFrom: firstParm.
-			parm doWithIndex:
-				[:sym :ind | ind > 1 ifTrue:
-					[aColor := aColor perform: sym]].
-			^ aColor].
+			parm
+				doWithIndex: [ :sym :ind | 
+					ind > 1
+						ifTrue: [ aColor := aColor perform: sym ] ].
+			^ aColor ].
 	^ parm
 
-"
-Color colorFrom: #(blue darker)
-Color colorFrom: Color blue darker
-Color colorFrom: #blue
-Color colorFrom: #(0.0 0.0 1.0)
-"
+
 ]
 
 { #category : #'instance creation' }
@@ -291,24 +282,31 @@ Color class >> fromArray: colorDef [
 
 { #category : #'instance creation' }
 Color class >> fromHexString: aColorHex [
+	"Returns a color instance from HEX (6 element elements)."
+
+	"(Color fromHexString: 'FFFFFF')>>> (Color white) "
+
 	| green red blue |
 	red := (Integer readFrom: (aColorHex first: 2) base: 16) / 255.
 	green := (Integer readFrom: (aColorHex copyFrom: 3 to: 4) base: 16) / 255.
 	blue := (Integer readFrom: (aColorHex last: 2) base: 16) / 255.
-	^self r: red g: green b: blue
+	^ self r: red g: green b: blue
 ]
 
 { #category : #'instance creation' }
 Color class >> fromRgbTriplet: list [
+	"Return a color from its RGB components (0 - 1.0 floats)"
+	"(Color colorFrom: #(1.0 1.0 1.0)) >>> (Color white)"
+
 	^ self r: list first g: list second b: list last
 ]
 
 { #category : #'instance creation' }
 Color class >> fromString: aString [
-	"for HTML color spec: #FFCCAA or white/black"
+	"Return a color for HTML color spec: #FFCCAA or white/black passed as string."
 
-	"Color fromString: '#FFCCAA'.
-	 Color fromString: 'orange'"
+	"(Color fromString: '#FFCCAA')>>> (Color r: 1.0 g: 0.8 b: 0.667 alpha: 1.0) "
+	"(Color fromString: 'orange') >>> Color orange"
 
 	| aColorHex |
 	aString isEmptyOrNil
@@ -319,8 +317,7 @@ Color class >> fromString: aString [
 	^ self registeredColorNames
 		detect: [ :each | each sameAs: aColorHex ]
 		ifFound: [ :namedColor | self named: namedColor ]
-		ifNone: [ 
-			(aColorHex size = 6 and: [ aColorHex allSatisfy: [ :character | '0123456789ABCDEFabcdef' includes: character ] ])
+		ifNone: [ (aColorHex size = 6 and: [ aColorHex allSatisfy: [ :character | '0123456789ABCDEFabcdef' includes: character ] ])
 				ifTrue: [ self fromHexString: aColorHex ]
 				ifFalse: [ self white ] ]
 ]
@@ -346,6 +343,7 @@ Color class >> green [
 { #category : #'instance creation' }
 Color class >> h: hue s: saturation l: lightness [
 	"Create a color with the given hue, saturation, and lightness. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and lightness are numbers in [0.0..1.0] where larger values are more saturated or lighter colors. The difference with brightness in the HSV coordinates is that colors go from black at lightness 0, through vivid hues at lightness 0.5, to white at lightness 1. For example, (Color h: 0 s: 1 l: 0.5) is pure red."
+	" (Color h: 0 s: 1 l: 0.5) >>> (Color r: 1 g: 0 b:0)"
 
 	^ self
 		h: hue
@@ -356,6 +354,7 @@ Color class >> h: hue s: saturation l: lightness [
 
 { #category : #'instance creation' }
 Color class >> h: hue s: saturation l: lightness alpha: alpha [
+	"Create a color with the given hue, saturation, lightness, and alpha. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and lightness are numbers in [0.0..1.0] where larger values are more saturated or lighter colors. The difference with brightness in the HSV coordinates is that colors go from black at lightness 0, through vivid hues at lightness 0.5, to white at lightness 1. For example, (Color h: 0 s: 1 l: 0.5) is pure red."
 	^ self basicNew
 		initializeHue: hue
 			saturation: saturation
@@ -368,12 +367,15 @@ Color class >> h: hue s: saturation l: lightness alpha: alpha [
 Color class >> h: hue s: saturation v: brightness [
 	"Create a color with the given hue, saturation, and brightness. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and brightness are numbers in [0.0..1.0] where larger values are more saturated or brighter colors. For example, (Color h: 0 s: 1 v: 1) is pure red."
 	"Note: By convention, brightness is abbreviated 'v' to to avoid confusion with blue."
-
+	"(Color h: 0 s: 1 v: 1) >>> (Color r: 1 g: 0 b:0)"
 	^ self h: hue s: saturation v: brightness alpha: 1.0
 ]
 
 { #category : #'instance creation' }
 Color class >> h: hue s: saturation v: brightness alpha: alpha [
+	"Create a color with the given hue, saturation, brightness, and alpha. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and brightness are numbers in [0.0..1.0] where larger values are more saturated or brighter colors. For example, (Color h: 0 s: 1 v: 1 alpha: 1) is pure red."
+	"(Color h: 0 s: 1 v: 1 alpha: 1) >>> Color red "
+	"(Color h: 0 s: 1 v: 1 alpha: 0.5) >>> (Color r: 1.0 g: 0.0 b: 0.0 alpha: 0.498) "
 	^ self basicNew
 		initializeHue: hue saturation: saturation brightness: brightness alpha: alpha ;
 		yourself 
@@ -384,9 +386,12 @@ Color class >> h: hue s: saturation v: brightness alpha: alpha [
 Color class >> hex: aFloat [
 	"Return an hexadecimal two-digits string between 00 and FF
 	for a float between 0.0 and 1.0"
+	" Color hex: 0.2>> '33' "
 	| str |
-	str := ((aFloat * 255) asInteger printStringHex) asLowercase.
-	str size = 1 ifTrue: [^'0',str] ifFalse: [^str]
+	str := (aFloat * 255) asInteger printStringHex asLowercase.
+	str size = 1
+		ifTrue: [ ^ '0' , str ]
+		ifFalse: [ ^ str ]
 ]
 
 { #category : #other }
@@ -687,10 +692,11 @@ Color class >> magenta [
 	^ ColorRegistry at: #magenta
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 Color class >> named: aColorName [
-	
-	^ ColorRegistry  at: aColorName asSymbol ifAbsent: nil 
+	"Return the color associated with the name aColorName and nil otherwise. Note that only a subsets of colors have a name."
+
+	^ ColorRegistry at: aColorName asSymbol ifAbsent: nil
 ]
 
 { #category : #'instance creation' }
@@ -762,13 +768,14 @@ Color class >> purple [
 { #category : #'instance creation' }
 Color class >> r: r g: g b: b [
 	"Return a color with the given r, g, and b components in the range [0.0..1.0]."
-
+	"(Color r: 1 g: 1 b: 1) >>> Color white"
+	
 	^ self r: r g: g b: b alpha: 1.0
 ]
 
 { #category : #'instance creation' }
 Color class >> r: r g: g b: b alpha: alpha [
-"Return a color with the given r, g, and b components in the range [0.0..1.0]."
+	"Return a color with the given r, g, and b components in the range [0.0..1.0]."
 	^ self basicNew
 		initializeRed: r green: g blue: b alpha: alpha ;
 		yourself.
@@ -778,9 +785,14 @@ Color class >> r: r g: g b: b alpha: alpha [
 Color class >> r: r g: g b: b range: range [
 	"Return a color with the given r, g, and b components specified as integers in the range [0..r]. This avoids the floating point arithmetic in the red:green:blue: message and is thus a bit faster for certain applications (such as computing a sequence of colors for a palette)."
 
+	"(Color r: 31 g: 0 b: 0 range: 31) >>> (Color r: 1.0 g: 0 b: 0)"
+
 	^ self basicNew
-		initializeRed: r green: g blue: b range: range;
-		yourself 
+		initializeRed: r
+			green: g
+			blue: b
+			range: range;
+		yourself
 ]
 
 { #category : #defaults }
@@ -796,15 +808,21 @@ Color class >> registerColor: aColor named: aName [
 
 { #category : #accessing }
 Color class >> registeredColorNames [
-	^ ColorRegistry keys collect: #asString 
+	"Returns all the available names of named colors."
+	
+	^ ColorRegistry keys collect: #asString
 ]
 
 { #category : #accessing }
-Color class >> registeredNameOf: aColor [ 
+Color class >> registeredNameOf: aColor [
+	"Return the name of a color if it has a name, else #unnamed"
 	| colorName |
 	colorName := #unnamed.
-	ColorRegistry keysAndValuesDo: [:key :value|  value = aColor ifTrue: [ colorName := key ] ].
-	^ colorName 
+	ColorRegistry
+		keysAndValuesDo: [ :key :value | 
+			value = aColor
+				ifTrue: [ colorName := key ] ].
+	^ colorName
 ]
 
 { #category : #'system startup' }
@@ -824,8 +842,9 @@ Color class >> transparent [
   ^   ColorRegistry at: #transparent 
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 Color class >> unregisterColorNamed: aName [
+	"Remove the color named aName from the list of named colors."
 	ColorRegistry removeKey: aName ifAbsent: nil
 ]
 
@@ -1017,12 +1036,16 @@ Color >> asColor [
 
 { #category : #conversions }
 Color >> asColorref [
-	"Convert the receiver into a colorref"
+	"Convert the receiver into a colorref, i.e, a number embedding r,g,b on 24 bits"
+	"(Color red asColorref) >>> 229"
+	"(Color white asColorref) >>>  16777215"
 	^(self red * 255) asInteger + ((self green * 255) asInteger << 8) + ((self blue * 255) asInteger << 16)
 ]
 
 { #category : #conversions }
 Color >> asHexString [
+	"Return a string representing the receiver in HEX (i.e., 6 elements in 16 basis)"
+	"(Color red asHexString) >>> 'E50000'"
 	| s |
 	s := '000000' copy.
 	s at: 1 put: (Character digitValue: ((rgb bitShift: -6 - RedShift) bitAnd: 15)).
@@ -1036,6 +1059,8 @@ Color >> asHexString [
 
 { #category : #conversions }
 Color >> asNontranslucentColor [
+	"Set the transparency of the receiver to opaque."
+	
 	^ self alpha: 1.0.
 ]
 
@@ -1247,9 +1272,9 @@ Color >> dansDarker [
 		h: self hue s: self saturation v: (self brightness - 0.16 max: 0.0)
 ]
 
-{ #category : #'groups of shades' }
+{ #category : #wheels }
 Color >> darkShades: thisMany [
-	"An array of thisMany colors from black to the receiver.  Array is of length num. Very useful for displaying color based on a variable in your program.  "
+	"Return an array of thisMany colors from black to the receiver.  Array is of length num. Very useful for displaying color based on a variable in your program.  "
 	"(Color red darkShades: 12) inspect"
 
 	^ self class black mix: self shades: thisMany
@@ -1266,7 +1291,9 @@ Color >> darker [
 { #category : #equality }
 Color >> diff: theOther [
 	"Returns a number between 0.0 and 1.0"
-
+	"(Color red diff: Color red) >>> 0.0"
+	"(Color white diff: Color black ) >>> 1.0"
+	
 	^ ((self privateRed - theOther privateRed) abs
 		+ (self privateGreen - theOther privateGreen) abs
 		+ (self privateBlue - theOther privateBlue) abs)
@@ -1370,7 +1397,7 @@ Color >> indexInMap: aColorMap [
 
 ]
 
-{ #category : #conversions }
+{ #category : #initialization }
 Color >> initializeHue: hue saturation: saturation brightness: brightness alpha: anAlpha [
 	"Initialize this color to the given hue, saturation, and brightness. See the comment in the instance creation method for details."
 
@@ -1441,7 +1468,7 @@ Color >> initializeHue: hue saturation: saturation brightness: brightness alpha:
 	self error: 'implementation error'
 ]
 
-{ #category : #conversions }
+{ #category : #initialization }
 Color >> initializeHue: hue saturation: saturation lightness: lightness alpha: anAlpha [
 	"Initialize this color to the given hue, saturation, and lightness. See the comment in the instance creation method for details."
 
@@ -1474,7 +1501,7 @@ Color >> initializeHue: hue saturation: saturation lightness: lightness alpha: a
 	self error: 'implementation error'
 ]
 
-{ #category : #conversions }
+{ #category : #initialization }
 Color >> initializePrivateRed: r green: g blue: b [ 
 	"Initialize this color's r, g, and b components to the given values in the range [0..ComponentMax].  Encoded in a single variable as 3 integers in [0..1023]."
 	rgb == nil ifFalse: [ self attemptToMutateError ].
@@ -1489,7 +1516,7 @@ Color >> initializePrivateRed: r green: g blue: b [
 	cachedBitPattern := nil
 ]
 
-{ #category : #conversions }
+{ #category : #initialization }
 Color >> initializeRed: r green: g blue: b alpha: anAlpha [ 
 	"Initialize this color's r, g, and b components to the given values in the range [0.0..1.0].  Encoded in a single variable as 3 integers in [0..1023]."
 	rgb == nil ifFalse: [ self attemptToMutateError ].
@@ -1499,7 +1526,7 @@ Color >> initializeRed: r green: g blue: b alpha: anAlpha [
 	self setAlpha: anAlpha.
 ]
 
-{ #category : #conversions }
+{ #category : #initialization }
 Color >> initializeRed: r green: g blue: b range: range [ 
 	"Initialize this color's r, g, and b components to the given values in the range [0..r]."
 	rgb == nil ifFalse: [ self attemptToMutateError ].
@@ -1585,9 +1612,9 @@ Color >> isTransparent [
 	^ alpha = 0
 ]
 
-{ #category : #'groups of shades' }
+{ #category : #wheels }
 Color >> lightShades: thisMany [
-	"An array of thisMany colors from white to self. Very useful for displaying color based on a variable in your program.  "
+	"Return an array of thisMany colors from white to self. Very useful for displaying color based on a variable in your program.  "
 	"(Color red lightShades: 12) inspect"
 
 	^ self class white mix: self shades: thisMany
@@ -1619,7 +1646,7 @@ Color >> luminance [
 
 ]
 
-{ #category : #'groups of shades' }
+{ #category : #wheels }
 Color >> mix: color2 shades: thisMany [ 
 	"Return an array of thisMany colors from self to color2. Very useful for displaying color based on a variable in your program.  "
 	"(Color red mix: Color green shades: 12) inspect"
@@ -1708,7 +1735,7 @@ Color >> paler [
 
 ]
 
-{ #category : #conversions }
+{ #category : #'pixels handling' }
 Color >> pixelValueForDepth: d [ 
 		 
 		"Return the pixel value for this color at the given depth. Translucency only works in RGB; this color will appear either opaque or transparent at all other depths."
@@ -1720,7 +1747,7 @@ Color >> pixelValueForDepth: d [
 		ifFalse: [ (basicPixelWord bitAnd: 16777215) bitOr: (alpha bitShift: 24) ]
 ]
 
-{ #category : #conversions }
+{ #category : #'pixels handling' }
 Color >> pixelWordFor: depth filledWith: pixelValue [ 
 	"Return to a 32-bit word that concatenates enough copies of the given pixel value to fill the word (i.e., 32/depth copies). Depth should be one of 1, 2, 4, 8, 16, or 32. The pixel value should be an integer in 0..2^depth-1."
 	| halfword |
@@ -1741,7 +1768,7 @@ Color >> pixelWordFor: depth filledWith: pixelValue [
 	^ halfword bitOr: (halfword bitShift: 16)
 ]
 
-{ #category : #conversions }
+{ #category : #'pixels handling' }
 Color >> pixelWordForDepth: depth [ 
 	"Return to a 32-bit word that concatenates enough copies of the receiver's pixel value to fill the word (i.e., 32/depth copies). Depth should be one of 1, 2, 4, 8, 16, or 32. The pixel value should be an integer in 0..2^depth-1."
 	| pixelValue basicPixelWord |
@@ -1856,7 +1883,7 @@ Color >> saturation [
 	^ self hsvSaturation
 ]
 
-{ #category : #conversions }
+{ #category : #'pixels handling' }
 Color >> scaledPixelValue32 [
 	"Return the alpha scaled pixel value for depth 32"
 	| pv32 a b g r |
@@ -1869,7 +1896,7 @@ Color >> scaledPixelValue32 [
 	^ b + (g bitShift: 8) + (r bitShift: 16) + (a bitShift: 24)
 ]
 
-{ #category : #conversions }
+{ #category : #accessing }
 Color >> setAlpha: aFloat [
 	alpha := ((255.0 * aFloat) asInteger  min: 255) max: 0.
 
@@ -1972,19 +1999,17 @@ Color >> setRed: r green: g blue: b range: range [
 Color >> shortPrintString [
 	"Return a short (but less precise) print string for use where space is tight."
 
-	| s |
-	s := String new writeStream.
-	s
-		nextPutAll: '(';
-		nextPutAll: self class name;
-		nextPutAll: ' r: ';
-		nextPutAll: (self red roundTo: 0.01) printString;
-		nextPutAll: ' g: ';
-		nextPutAll: (self green roundTo: 0.01) printString;
-		nextPutAll: ' b: ';
-		nextPutAll: (self blue roundTo: 0.01) printString;
-		nextPutAll: ')'.
-	^ s contents
+	^ String streamContents: [ :s |
+				s
+					nextPutAll: '(';
+					nextPutAll: self class name;
+					nextPutAll: ' r: '.
+				(self red roundTo: 0.01) printOn: s.
+				s nextPutAll: ' g: '.
+				(self green roundTo: 0.01) printOn: s.
+				s nextPutAll: ' b: '.
+				(self blue roundTo: 0.01) printOn: s.
+				s nextPutAll: ')' ]
 ]
 
 { #category : #transformations }
@@ -2071,9 +2096,12 @@ Color >> veryMuchLighter [
 
 ]
 
-{ #category : #'groups of shades' }
+{ #category : #wheels }
 Color >> wheel: thisMany [ 
 	"An array of thisMany colors around the color wheel starting at self and ending all the way around the hue space just before self.  Array is of length thisMany.  Very useful for displaying color based on a variable in your program.  "
+	"(Color wheel: 8) inspect"
+	"(Color wheel: 8) withIndexDo: [:c :i | Display fill: (i*10@20 extent: 10@20) fillColor: c]"
+	
 	| sat bri step hue |
 	sat := self saturation.
 	bri := self brightness.
@@ -2087,9 +2115,7 @@ Color >> wheel: thisMany [
 			v: bri.	"hue is taken mod 360"
 		hue := hue + step.
 		c ]
-	"
-(Color wheel: 8) withIndexDo: [:c :i | Display fill: (i*10@20 extent: 10@20) fillColor: c]
-"
+
 ]
 
 { #category : #transformations }

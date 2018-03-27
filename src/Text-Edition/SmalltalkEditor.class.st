@@ -102,20 +102,6 @@ SmalltalkEditor class >> initializeShiftCmdKeyShortcuts [
 ]
 
 { #category : #'menu declaration' }
-SmalltalkEditor class >> shiftedYellowButtonMenu [
-	^ (PragmaMenuBuilder 
-			pragmaKeyword: self smalltalkEditorShiftedMenuKeyword
-			model: nil) menu.
-
-]
-
-{ #category : #'menu declaration' }
-SmalltalkEditor class >> smalltalkEditorMenuKeyword [
-	^'smalltalkEditorMenu'
-
-]
-
-{ #category : #'menu declaration' }
 SmalltalkEditor class >> smalltalkEditorMenuOn: aBuilder [
 	"Specify the menu used when writing code. Try it with:
 	(PragmaMenuBuilder 
@@ -174,11 +160,6 @@ SmalltalkEditor class >> smalltalkEditorMenuOn: aBuilder [
 	(aBuilder item: #'Code search...' translated)
 		selector: #shiftedTextPaneMenuRequest;
 		withSeparatorAfter.
-	(aBuilder item: #'Do again' translated)
-		keyText: 'j';
-		selector: #again;
-		help: nil;
-		iconName: #smallRedoIcon.
 	(aBuilder item: #Undo translated)
 		keyText: 'z';
 		selector: #undo;
@@ -218,12 +199,6 @@ SmalltalkEditor class >> smalltalkEditorMenuOn: aBuilder [
 ]
 
 { #category : #'menu declaration' }
-SmalltalkEditor class >> smalltalkEditorShiftedMenuKeyword [
-	^ 'smalltalkEditorShiftedMenu'
-
-]
-
-{ #category : #'menu declaration' }
 SmalltalkEditor class >> smalltalkEditorShiftedMenuOn: aBuilder [ 
 	"Specify the menu used when writing code. Try it with:
 	(PragmaMenuBuilder 
@@ -259,14 +234,6 @@ SmalltalkEditor class >> smalltalkEditorShiftedMenuOn: aBuilder [
 		selector: #classNamesContainingIt.
 	(aBuilder item: #'class comments with it' translated) 
 		selector: #classCommentsContainingIt.
-
-]
-
-{ #category : #'menu declaration' }
-SmalltalkEditor class >> yellowButtonMenu [
-	^ (PragmaMenuBuilder 
-			pragmaKeyword: self smalltalkEditorMenuKeyword
-			model: nil) menu.
 
 ]
 
@@ -437,6 +404,12 @@ SmalltalkEditor >> doIt: aKeyboardEvent [
 { #category : #accessing }
 SmalltalkEditor >> editingStateClass [
 	^ SmalltalkEditingState
+]
+
+{ #category : #'menu declaration' }
+SmalltalkEditor >> editorMenuKeyword [
+	^'smalltalkEditorMenu'
+
 ]
 
 { #category : #'do-its' }
@@ -610,7 +583,7 @@ SmalltalkEditor >> methodNamesContainingIt: aKeyboardEvent [
 
 { #category : #'menu messages' }
 SmalltalkEditor >> methodSourceContainingIt [
-	"Open a browser on methods which contain the current selection in their source (case-sensitive full-text search of source).   EXTREMELY slow!"
+	"Open a browser on methods which contain the current selection in their source (case-sensitive full-text search of source)."
 	self lineSelectAndEmptyCheck: [^ self].
 	model systemNavigation  browseMethodsWithSourceString: self selection string matchCase: false.
 ]
@@ -893,21 +866,10 @@ SmalltalkEditor >> sendersOfIt: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #'menu messages' }
-SmalltalkEditor >> spawn [
-	"Create and schedule a message browser for the code of the model's 
-	selected message. Retain any edits that have not yet been accepted."
-	| code |
-	code := self string.
-	self cancel.
-	model spawn: code.
-]
+{ #category : #'menu declaration' }
+SmalltalkEditor >> shiftedMenuKeyword [
+	^ 'smalltalkEditorShiftedMenu'
 
-{ #category : #'editing keys' }
-SmalltalkEditor >> spawnIt: aKeyboardEvent [
-	"Triggered by Cmd-o; spawn a new code window, if it makes sense."
-	self spawn.
-	^ true
 ]
 
 { #category : #'do-its' }

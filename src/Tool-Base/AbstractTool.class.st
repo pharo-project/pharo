@@ -161,7 +161,7 @@ AbstractTool >> browseClassRefsOf: aClass [
 
 	| class |
 	aClass ifNil: [ ^self ].
-	class := aClass theNonMetaClass ifNil: [^self].
+	class := aClass instanceSide ifNil: [^self].
 	class isTrait 
 		ifTrue: [self systemNavigation browseAllUsersOfTrait: class]
 		ifFalse: [self systemNavigation browseAllCallsOnClass: class]
@@ -172,7 +172,7 @@ AbstractTool >> browseClassRefsOf: aClass [
 AbstractTool >> browseClassVarRefsOf: aClass [
 
 	| cls |
-	cls := aClass theNonMetaClass.
+	cls := aClass instanceSide.
 	(cls notNil and: [cls isTrait not])
 		ifTrue: [self systemNavigation browseClassVarRefs: cls]
 ]
@@ -280,7 +280,7 @@ AbstractTool >> compileANewClassFrom: aString notifying: aController startingFro
 	envt := Smalltalk globals.
 	keywdIx := defTokens findFirst: [:x | '*subclass*' match: x].
 	newClassName := (defTokens at: keywdIx+1) copyWithoutAll: '#()'.
-	((oldClass isNil or: [oldClass theNonMetaClass name asString ~= newClassName])
+	((oldClass isNil or: [oldClass instanceSide name asString ~= newClassName])
 		and: [envt includesKey: newClassName asSymbol]) ifTrue:
 			["Attempting to define new class over existing one when
 				not looking at the original one in this browser..."
@@ -379,7 +379,7 @@ AbstractTool >> defineTrait: defString notifying: aController [
 	envt := self class environment.
 	keywdIx := defTokens findFirst: [:x | x = 'named:'].
 	newTraitName := (defTokens at: keywdIx+1) copyWithoutAll: '#()'.
-	((oldTrait isNil or: [oldTrait baseTrait name asString ~= newTraitName])
+	((oldTrait isNil or: [oldTrait instanceSide name asString ~= newTraitName])
 		and: [envt includesKey: newTraitName asSymbol]) ifTrue:
 			["Attempting to define new class/trait over existing one when
 				not looking at the original one in this browser..."
@@ -420,7 +420,7 @@ AbstractTool >> fileOutClasses: aCollection [
 	category name followed by .st."
 
 	self 
-		do: [ :class | class theNonMetaClass fileOut ]
+		do: [ :class | class instanceSide fileOut ]
 		on: aCollection
 		displaying: 'Filing out classes...'.
 ]
@@ -513,7 +513,7 @@ AbstractTool >> removeClass: aClass [
 
 	| message className classToRemove result |
 	aClass ifNil: [ ^ false ].
-	classToRemove := aClass theNonMetaClass.
+	classToRemove := aClass instanceSide.
 	className := classToRemove name.
 	message := self removeClassMessageFor: className.
 	(result := self confirm: message)
@@ -542,7 +542,7 @@ AbstractTool >> removeClasses: aCollection [
 	| classNames classesToRemove result |
 	aCollection isEmptyOrNil
 		ifTrue: [ ^ false ].
-	classesToRemove := aCollection collect: #theNonMetaClass.
+	classesToRemove := aCollection collect: [:each | each instanceSide].
 	classNames := (classesToRemove collect: #name) joinUsing: ', '.
 	(result := self confirm: (self removeClassesMessageFor: classNames))
 		ifTrue: [ 

@@ -56,8 +56,9 @@ EpLostChangesDetector class >> startUp: isImageStarting [
 	| detector |
 	(isImageStarting and: [ 
 		self isEnabled and: [ "Detector can be disabled via system settings"
-		EpMonitor current isEnabled	and: [ "Nothing to recover if wasn't recording"
-		Smalltalk isHeadless not ]]])  "Can't browse if UI disabled"
+		EpMonitor hasCurrent and: [ "Nothing to recover if wasn't recording"
+		EpMonitor current isEnabled and: [ 
+		Smalltalk isHeadless not ]]]])  "Can't browse if UI disabled"
 			ifFalse: [ ^ self ].
 
 	detector := self new.

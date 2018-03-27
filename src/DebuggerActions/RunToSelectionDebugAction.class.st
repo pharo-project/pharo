@@ -4,19 +4,13 @@ A RunToSelectionDebugAction resumes the execution until the selected position in
 Class {
 	#name : #RunToSelectionDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
 RunToSelectionDebugAction class >> actionType [
 	<debuggingAction>
 	<contextMenuCodeDebuggingAction>
-]
-
-{ #category : #accessing }
-RunToSelectionDebugAction >> defaultHelp [
-
-	^ 'Execute methods up to the text cursor position and return debugger control.'
 ]
 
 { #category : #accessing }
@@ -37,6 +31,11 @@ RunToSelectionDebugAction >> executeAction [
 	self session 
 		runToSelection: self debugger code getSelection 
 		inContext: self currentContext
+]
+
+{ #category : #accessing }
+RunToSelectionDebugAction >> help [
+	^ 'Execute methods up to the text cursor position and return debugger control.'
 ]
 
 { #category : #accessing }

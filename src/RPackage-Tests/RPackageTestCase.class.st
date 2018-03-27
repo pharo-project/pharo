@@ -14,18 +14,18 @@ Class {
 	#category : #'RPackage-Tests'
 }
 
-{ #category : #utils }
+{ #category : #utilities }
 RPackageTestCase >> allManagers [
 
 	^ MCWorkingCopy allManagers
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageTestCase >> createNewClassNamed: aName [
 	^ self createNewClassNamed: aName inCategory: 'RPackageTest'
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 	
 	| cls |
@@ -39,7 +39,7 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 	^ cls
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 	
 	| cls |
@@ -48,7 +48,7 @@ RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 	^ cls
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageTestCase >> createNewPackageNamed: aName [
 
 	| pack |
@@ -58,12 +58,12 @@ RPackageTestCase >> createNewPackageNamed: aName [
 	^ pack
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageTestCase >> createNewTraitNamed: aName [
 	^ self createNewTraitNamed: aName inCategory: 'RPackageTest'
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 	
 	| cls |
@@ -75,7 +75,7 @@ RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 	^ cls
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
 	
 	| cls |
@@ -109,7 +109,7 @@ RPackageTestCase >> packageOrganizerClass [
 	^ RPackageOrganizer
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageTestCase >> removePackage: aName [
 	self packageClass organizer basicUnregisterPackageNamed: aName.
 	

@@ -47,9 +47,8 @@ GlobalIdentifierPersistenceTest >> setUpPreferencesAndChecker [
 
 { #category : #running }
 GlobalIdentifierPersistenceTest >> tearDown [
-	super tearDown.
 	preferences ensureDelete.
-
+	super tearDown.
 ]
 
 { #category : #tests }

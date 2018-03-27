@@ -62,8 +62,8 @@ RBNamespace >> addChangeToClass: aRBClass [
 	^ changedClasses 
 		at: aRBClass name
 		put: (Array 
-				with: aRBClass theNonMetaClass
-				with: aRBClass theMetaClass)
+				with: aRBClass instanceSide
+				with: aRBClass classSide)
 ]
 
 { #category : #'private-changes' }
@@ -95,13 +95,13 @@ RBNamespace >> allBehaviorsDo: aBlock [
 	environment classesDo: [ :each | 
 		each isObsolete ifFalse: [
 			| class |
-			class := each theNonMetaClass.
+			class := each instanceSide.
 			((seen includes: class name) or: [ self hasRemoved: (self classNameFor: class) ]) ifFalse: [
 				(class := self classFor: each) isNil ifFalse: [
 					seen add: class name.
 					aBlock
 						value: class;
-						value: class theMetaClass ] ] ] ]
+						value: class classSide ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -118,12 +118,12 @@ RBNamespace >> allClassesDo: aBlock [
 	environment classesDo: [ :each | 
 		each isObsolete ifFalse: [
 			| class |
-			class := each theNonMetaClass.
+			class := each instanceSide.
 			((seen includes: class name) or: [ self hasRemoved: (self classNameFor: class) ]) ifFalse: [
 				(class := self classFor: each) isNil ifFalse: [
 					seen add: class name.
 					aBlock value: class;
-						    value: class theMetaClass ] ] ] ]
+						    value: class classSide ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -152,8 +152,8 @@ RBNamespace >> allReferencesToClass: aRBClass do: aBlock [
 			[:each |
 			(each whichSelectorsReferToClass: aRBClass) 
 				do: [:sel | aBlock value: (each methodFor: sel)].
-			(each theMetaClass whichSelectorsReferToClass: aRBClass) 
-				do: [:sel | aBlock value: (each theMetaClass methodFor: sel)]]
+			(each classSide whichSelectorsReferToClass: aRBClass) 
+				do: [:sel | aBlock value: (each classSide methodFor: sel)]]
 ]
 
 { #category : #'private-changes' }
@@ -161,8 +161,8 @@ RBNamespace >> changeClass: aRBClass [
 	changedClasses 
 		at: aRBClass name
 		put: (Array 
-				with: aRBClass theNonMetaClass
-				with: aRBClass theMetaClass).
+				with: aRBClass instanceSide
+				with: aRBClass classSide).
 	self flushCaches
 ]
 
@@ -176,13 +176,13 @@ RBNamespace >> classFor: aBehavior [
 	aBehavior isNil 
 		ifTrue: [ ^ nil ].
 	^ aBehavior isMeta 
-		ifTrue: [ self metaclassNamed: aBehavior theNonMetaClass name ]
-		ifFalse: [ self classNamed: aBehavior theNonMetaClass name ]
+		ifTrue: [ self metaclassNamed: aBehavior instanceSide name ]
+		ifFalse: [ self classNamed: aBehavior instanceSide name ]
 ]
 
 { #category : #private }
 RBNamespace >> classNameFor: aBehavior [ 
-	^ aBehavior theNonMetaClass name
+	^ aBehavior instanceSide name
 ]
 
 { #category : #'accessing-classes' }
@@ -209,7 +209,7 @@ RBNamespace >> classNamed: aSymbol [
 			to: index - 1) asSymbol.
 	^ class isNil 
 		ifTrue: [ nil ]
-		ifFalse: [ class theMetaClass ]
+		ifFalse: [ class classSide ]
 ]
 
 { #category : #changes }
@@ -231,7 +231,7 @@ RBNamespace >> compile: aString in: aRBClass classified: aSymbol [
 { #category : #'accessing-classes' }
 RBNamespace >> createNewClassFor: aBehavior [ 
 	| nonMeta meta className |
-	className := aBehavior theNonMetaClass name.
+	className := aBehavior instanceSide name.
 	nonMeta := (RBClassModelFactory rbClass existingNamed: className)
 				model: self;
 				yourself.
@@ -260,9 +260,9 @@ RBNamespace >> defineClass: aString [
 	newClass superclass: (self classNamed: change superclassName).
 	newClass superclass isNil
 		ifTrue: [ self rootClasses add: newClass.
-			newClass theMetaClass
+			newClass classSide
 				superclass: (self classFor: Object class superclass) ]
-		ifFalse: [ newClass theMetaClass superclass: newClass superclass theMetaClass ].
+		ifFalse: [ newClass classSide superclass: newClass superclass classSide ].
 	newClass instanceVariableNames: change instanceVariableNames.
 	newClass classVariableNames: change classVariableNames.
 	newClass poolDictionaryNames: change sharedPoolNames.
@@ -384,8 +384,8 @@ RBNamespace >> privateImplementorsOf: aSelector [
 	self allClassesDo: [ :class |
 		(class directlyDefinesLocalMethod: aSelector)
 			ifTrue: [ classes add: class ].
-		(class theMetaClass directlyDefinesLocalMethod: aSelector)
-			ifTrue: [ classes add: class theMetaClass ] ].
+		(class classSide directlyDefinesLocalMethod: aSelector)
+			ifTrue: [ classes add: class classSide ] ].
 	^ classes
 ]
 

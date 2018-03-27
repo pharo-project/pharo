@@ -9,10 +9,10 @@ Class {
 
 { #category : #actions }
 MCDirectoryRepositoryTest >> addVersion: aVersion [
-	| file |
-	file := (directory / aVersion fileName) asFileReference writeStream.
-	aVersion fileOutOn: file.
-	file close.
+	
+	(directory / aVersion fileName) asFileReference
+		binaryWriteStreamDo: [ :stream |
+			aVersion fileOutOn: stream ]
 ]
 
 { #category : #accessing }
@@ -31,6 +31,7 @@ MCDirectoryRepositoryTest >> setUp [
 
 { #category : #running }
 MCDirectoryRepositoryTest >> tearDown [
+
 	self directory ensureDeleteAll.
-	
+	super tearDown
 ]

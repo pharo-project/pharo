@@ -13,7 +13,7 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 RBSwapMethodRefactoring class >> model: aRBSmalltalk swapMethod: aSelector in: aClass [
 	^ self new 
 		model: aRBSmalltalk;
@@ -21,7 +21,7 @@ RBSwapMethodRefactoring class >> model: aRBSmalltalk swapMethod: aSelector in: a
 		yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 RBSwapMethodRefactoring class >> swapMethod: aSelector in: aClass [
 	^ self new swapMethod: aSelector in: aClass
 ]
@@ -46,8 +46,8 @@ RBSwapMethodRefactoring >> preconditions [
 RBSwapMethodRefactoring >> swapMethod: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	target := self classObjectFor: (class isMeta 
-			ifTrue: [ class theNonMetaClass ]
-			ifFalse: [ class theMetaClass ]).
+			ifTrue: [ class instanceSide ]
+			ifFalse: [ class classSide ]).
 	selector := aSelector
 ]
 

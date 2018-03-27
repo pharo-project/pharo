@@ -12,8 +12,8 @@ SmallIdentityDictionaryTest >> canBeUnhealthy [
 	^ false
 ]
 
-{ #category : #requirements }
-SmallIdentityDictionaryTest >> classToBeTested [ 
-
-^ SmallIdentityDictionary
+{ #category : #coverage }
+SmallIdentityDictionaryTest >> classToBeTested [
+ 
+	^ SmallIdentityDictionary
 ]

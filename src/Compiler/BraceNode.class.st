@@ -22,6 +22,7 @@ Class {
 { #category : #examples }
 BraceNode class >> example [
 	"Test the {a. b. c} syntax."
+	<sampleInstance>
 
 	| x |
 	x := {1. {2. 3}. 4}.

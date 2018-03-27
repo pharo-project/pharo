@@ -17,7 +17,7 @@ Class {
 { #category : #examples }
 LabelMorph class >> example [
 	"self example"
-
+	<sampleInstance>
 	<exampleWidget>
 	^ (self newLabel: 'A Label') openInWindow
 ]
@@ -25,7 +25,7 @@ LabelMorph class >> example [
 { #category : #examples }
 LabelMorph class >> exampleDisable [
 	"self exampleDisable"
-
+	<sampleInstance>
 	<exampleWidget>
 	^ (self newLabel: 'A Label')
 		disable;
@@ -35,7 +35,7 @@ LabelMorph class >> exampleDisable [
 { #category : #examples }
 LabelMorph class >> exampleDisableInset [
 	"self exampleDisable"
-
+	<sampleInstance>
 	<exampleWidget>
 	^ (self newLabel: 'A Label')
 		disable;

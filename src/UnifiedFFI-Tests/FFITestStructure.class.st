@@ -1,3 +1,6 @@
+"
+A structure for test purposes
+"
 Class {
 	#name : #FFITestStructure,
 	#superclass : #FFIExternalStructure,
@@ -10,7 +13,7 @@ Class {
 		'OFFSET_SHORT',
 		'OFFSET_ULONG'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Test-Data'
 }
 
 { #category : #'field definition' }

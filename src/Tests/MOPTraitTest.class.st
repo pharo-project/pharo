@@ -5,8 +5,7 @@ Class {
 }
 
 { #category : #tests }
-MOPTraitTest >> testClass [
-	"self debug: #testClass"
+MOPTraitTest >> testClass [	
 	"The class of a compiled method is the class that contains it.
 	A compiled method is shared."
 	"methodClass could call 
@@ -25,7 +24,6 @@ MOPTraitTest >> testClass [
 
 { #category : #tests }
 MOPTraitTest >> testOrigin [
-	"self debug: #testClass"
 	"The origin of a compiledMethod is its defining class or trait."
 
 	| aliasedMethod |
@@ -43,8 +41,7 @@ MOPTraitTest >> testOrigin [
 ]
 
 { #category : #tests }
-MOPTraitTest >> testSelector [
-	"self debug: #testSelector"
+MOPTraitTest >> testSelector [	
 	"The selector of a compiled method should be its name. 
 	An aliased method should have the name of its alias name."
 	

@@ -5,9 +5,9 @@ Class {
 		'rewriter'
 	],
 	#category : #'AST-Tests-Core'
-} 
+}
 
-{ #category : #utils }
+{ #category : #utilities }
 RBParseTreeRewriterTest >> compare: anObject to: anotherObject [ 
 	self assert: anObject hash = anotherObject hash.
 	self assert: anObject = anotherObject
@@ -221,7 +221,7 @@ RBParseTreeRewriterTest >> testRewriteDynamicArray [
 
 	newSource := (rewriter executeTree: (RBParser parseRewriteExpression: ' {(1 @ 255).	(Color lightMagenta). 3}'))
 		ifTrue: [ rewriter tree formattedCode].
-	self assert: newSource = 'Array with: 1 @ 255 with: Color lightMagenta with: 3'.
+	self assert: newSource equals: 'Array with: 1 @ 255 with: Color lightMagenta with: 3'.
 ]
 
 { #category : #'tests - to be refined' }

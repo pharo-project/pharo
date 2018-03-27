@@ -1,3 +1,19 @@
+"
+I implement all the behavior to export a class.
+
+My header includes:
+
+	className
+	superclass
+	instanceVariables
+	classInstancevariables
+	classVariables
+	sharedPools
+	layoutClass
+	
+All exported as ByteStrings (and symbols).
+I do not support exporting special slots (yet).
+"
 Class {
 	#name : #HEClass,
 	#superclass : #HEMethodContainer,

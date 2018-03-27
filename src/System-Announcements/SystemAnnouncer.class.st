@@ -27,7 +27,7 @@ SystemAnnouncer class >> reset [
 
 	"unregister all current weak subscriptions because it can cause a memory leak"
 	announcer subscriptions subscriptions
- 		select: [:each | each isKindOf: LegacyWeakSubscription] 
+ 		select: [:each | each isKindOf: WeakAnnouncementSubscription] 
 		thenDo: [:each | each weakRegistry remove: each subscriber ifAbsent: []]. 
 	Smalltalk garbageCollect.
 		
@@ -43,7 +43,7 @@ SystemAnnouncer class >> restoreAllNotifications [
 	collector := PragmaCollector filter: [ :pragma | pragma keyword = #systemEventRegistration ].
 	collector reset.
 	collector do: [ :pragma |
-		pragma methodClass theNonMetaClass perform: pragma methodSelector ]
+		pragma methodClass instanceSide perform: pragma methodSelector ]
 ]
 
 { #category : #'instance creation' }

@@ -7,18 +7,21 @@ Class {
 	#category : #'Monticello-Tests-Base'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - accessing' }
 MCClassDefinitionTest class >> classAComment [
 	^ 'This is a mock class. The Monticello tests manipulated it to simulate a developer modifying code in the image.'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - accessing' }
 MCClassDefinitionTest class >> classACommentStamp [
 	^  'cwp 8/10/2003 16:43'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 MCClassDefinitionTest class >> restoreClassAComment [
+	"This is an utility class to restore the class comment in a mock class used by the test"
+	<script>
+	
 	Smalltalk globals
 		at: #MCMockClassA
 		ifPresent: [ :a | a classComment: self classAComment stamp: self classACommentStamp ]
@@ -44,7 +47,8 @@ MCClassDefinitionTest >> setUp [
 
 { #category : #running }
 MCClassDefinitionTest >> tearDown [
-	Smalltalk globals at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ]
+	Smalltalk globals at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ].
+	super tearDown
 ]
 
 { #category : #tests }
@@ -78,23 +82,23 @@ MCClassDefinitionTest >> testComparison [
 MCClassDefinitionTest >> testCreation [
 	| d |
 	d :=  self mockClassA asClassDefinition.
-	self assert: d className = #MCMockClassA.
-	self assert: d superclassName = #MCMock.
-	self assert: d type = #normal.
-	self assert: d category = self mockCategoryName.
-	self assert: d instVarNames asArray = #('ivar').
-	self assert: d classVarNames asArray = #('CVar' 'InitializationOrder').
-	self assert: d classInstVarNames asArray = #().
+	self assert: d className equals: #MCMockClassA.
+	self assert: d superclassName equals: #MCMock.
+	self assert: d type equals: #normal.
+	self assert: d category equals: self mockCategoryName.
+	self assert: d instVarNames asArray equals: #('ivar').
+	self assert: d classVarNames asArray equals: #('CVar' 'InitializationOrder').
+	self assert: d classInstVarNames asArray equals: #().
 	self assert: d comment isString.
-	self assert: d comment = self classAComment.
-	self assert: d commentStamp = self mockClassA organization commentStamp
+	self assert: d comment equals: self classAComment.
+	self assert: d commentStamp equals: self mockClassA organization commentStamp
 ]
 
 { #category : #tests }
 MCClassDefinitionTest >> testDefinitionString [
 	| d |
 	d := self mockClassA asClassDefinition.
-	self assert: d definitionString = self mockClassA definition.
+	self assert: d definitionString equals: self mockClassA definition.
 ]
 
 { #category : #tests }
@@ -102,7 +106,7 @@ MCClassDefinitionTest >> testEquals [
 	| a b |
 	a := self mockClass: 'ClassA' super: 'SuperA'.
 	b := self mockClass: 'ClassA' super: 'SuperA'.
-	self assert: a = b
+	self assert: a equals: b
 ]
 
 { #category : #tests }
@@ -128,7 +132,7 @@ MCClassDefinitionTest >> testKindOfSubclass [
 	classes := {self mockClassA. String. Context. WeakArray. Float}.
 	classes do: [:c | | d |
 		d :=  c asClassDefinition.
-		self assert: d kindOfSubclass = c kindOfSubclass.
+		self assert: d kindOfSubclass equals: c kindOfSubclass.
 	].
 ]
 
@@ -140,13 +144,13 @@ MCClassDefinitionTest >> testLoadAndUnload [
 	self assert: (Smalltalk hasClassNamed: 'MCMockClassC').
 	c := Smalltalk globals classNamed: 'MCMockClassC'.
 	self assert: (c isKindOf: Class).
-	self assert: c superclass = Object.
+	self assert: c superclass equals: Object.
 	self assert: c instVarNames isEmpty.
 	self assert: c classVarNames isEmpty.
 	self assert: c sharedPools isEmpty.
-	self assert: c category = self mockCategoryName.
-	self assert: c organization classComment = (self commentForClass: 'MCMockClassC').
-	self assert: c organization commentStamp = (self commentStampForClass: 'MCMockClassC').
+	self assert: c category equals: self mockCategoryName.
+	self assert: c organization classComment equals: (self commentForClass: 'MCMockClassC').
+	self assert: c organization commentStamp equals: (self commentStampForClass: 'MCMockClassC').
 	d unload.
 	self deny: (Smalltalk hasClassNamed: 'MCMockClassC')
 ]

@@ -1,3 +1,11 @@
+"
+I represent a Float number
+I am stored as two unsigned int32 numbers.
+These numbers are got from the instance (Float >> #at:)
+When readed back I always create a BoxedFloat. 
+Then this instance is operated to generate the correct immediate instance if required.
+This hack allows us to load the same hermes file in 32bits or 64 bits
+"
 Class {
 	#name : #HEFloat,
 	#superclass : #HEExportedLiteral,

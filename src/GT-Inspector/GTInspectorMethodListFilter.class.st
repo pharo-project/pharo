@@ -28,6 +28,7 @@ GTInspectorMethodListFilter class >> exampleASTBrowser [
 { #category : #examples }
 GTInspectorMethodListFilter class >> exampleCodeBrowser [
 	"An inspector showing only the Meta presentation for all objects"
+
 	|inspector|
 	
 	inspector := GTInspector new.

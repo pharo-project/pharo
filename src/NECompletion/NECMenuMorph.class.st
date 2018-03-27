@@ -775,7 +775,7 @@ NECMenuMorph >> updateDetail [
 ]
 
 { #category : #private }
-NECMenuMorph >> visibleItemsCount. [
+NECMenuMorph >> visibleItemsCount [
 
 	^ self lastVisible - self firstVisible + 1
 ]

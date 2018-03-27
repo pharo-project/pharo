@@ -28,11 +28,6 @@ DAPackageUnderAnalysisNode >> assemblyNodesFor: aListOfAssemblyManifest [
 		as: OrderedCollection
 ]
 
-{ #category : #'browse-nautilus' }
-DAPackageUnderAnalysisNode >> browseInNautilus [
-	self browsePackageInNautilus: self content rPackage
-]
-
 { #category : #api }
 DAPackageUnderAnalysisNode >> childNodeClassFor: anItem [
 	 ^ anItem nodeClass
@@ -89,6 +84,11 @@ DAPackageUnderAnalysisNode >> printOn: aStream [
 	self content printOn: aStream.
 	aStream nextPut: $)
 
+]
+
+{ #category : #'browse-nautilus' }
+DAPackageUnderAnalysisNode >> selectInBrowser [
+	self selectPackage: self content rPackage
 ]
 
 { #category : #dependencies }

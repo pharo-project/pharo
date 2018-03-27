@@ -123,7 +123,7 @@ GLMPortTest >> testSimplePort [
 
 { #category : #tests }
 GLMPortTest >> testTransientValue [
-	| port pane browser |
+	| browser |
 	browser := GLMTabulator new.
 	browser
 		column: #one;

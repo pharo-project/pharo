@@ -25,7 +25,7 @@ Class {
 Metaclass >> acceptsLoggingOfCompilation [
 	"Answer whether the receiver's method submisions and class defintions should be logged to the changes file and to the current change set.  The metaclass follows the rule of the class itself."
 
-	^ self theNonMetaClass acceptsLoggingOfCompilation
+	^ self instanceSide acceptsLoggingOfCompilation
 ]
 
 { #category : #'instance variables' }
@@ -47,12 +47,7 @@ Metaclass >> addObsoleteSubclass: aClass [
 { #category : #'instance variables' }
 Metaclass >> addSlot: aClassSlot [
 
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
-	^self theNonMetaClass addClassSlot: aClassSlot
+	^self instanceSide addClassSlot: aClassSlot
 ]
 
 { #category : #'class hierarchy' }
@@ -75,67 +70,10 @@ Metaclass >> adoptInstance: oldInstance from: oldMetaClass [
 		map: (self instVarMappingFrom: oldMetaClass)
 ]
 
-{ #category : #composition }
-Metaclass >> assertConsistantCompositionsForNew: aTraitComposition [
-	"Applying or modifying a trait composition on the class side
-	of a behavior has some restrictions."
-
-	| baseTraits notAddable message |
-	baseTraits := aTraitComposition traits select: [:each | each isBaseTrait].
-	baseTraits isEmpty ifFalse: [
-		notAddable := (baseTraits reject: [:each | each classSide methodDict isEmpty]).
-		notAddable isEmpty ifFalse: [
-			message := String streamContents: [:stream |
-				stream nextPutAll: 'You can not add the base trait(s)'; cr.
-				notAddable
-					do: [:each | stream nextPutAll: each name]
-					separatedBy: [ stream nextPutAll: ', '].
-				stream cr; nextPutAll: 'to this composition because it/they define(s) methods on the class side.'].
-		^TraitCompositionException signal: message]].
-		
-	(self instanceSide traitComposition traits asSet =
-			(aTraitComposition traits
-				select: [:each | each isClassTrait]
-				thenCollect: [:each | each baseTrait]) asSet) ifFalse: [
-				^TraitCompositionException signal: 'You can not add or remove class side traits on
-				the class side of a composition. (But you can specify aliases or exclusions
-				for existing traits or add a trait which does not have any methods on the class side.)']
-]
-
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing parallel hierarchy - deprecated' }
 Metaclass >> baseClass [
 
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
 	^thisClass.
-]
-
-{ #category : #accessing }
-Metaclass >> basicLocalSelectors [
-	"Direct accessor for the instance variable localSelectors.
-	Since localSelectors is lazily initialized, this may 
-	return nil, which means that all selectors are local."
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
-	^ localSelectors
-]
-
-{ #category : #accessing }
-Metaclass >> basicLocalSelectors: aSetOrNil [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
-	localSelectors := aSetOrNil
 ]
 
 { #category : #compiling }
@@ -150,7 +88,7 @@ Metaclass >> binding [
 { #category : #compiling }
 Metaclass >> bindingOf: varName [
 
-	^self theNonMetaClass classBindingOf: varName
+	^self instanceSide classBindingOf: varName
 ]
 
 { #category : #testing }
@@ -163,16 +101,11 @@ Metaclass >> canZapMethodDictionary [
 
 { #category : #accessing }
 Metaclass >> category [
-	^ self theNonMetaClass category
+	^ self instanceSide category
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing parallel hierarchy - deprecated' }
 Metaclass >> classClass [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
 
 	^self
 ]
@@ -181,15 +114,24 @@ Metaclass >> classClass [
 Metaclass >> classPool [
 	"Answer the dictionary of class variables."
 
-	^self theNonMetaClass classPool
+	^self instanceSide classPool
+]
+
+{ #category : #'accessing parallel hierarchy' }
+Metaclass >> classSide [
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+	"Point classSide >>> Point class"
+	"Point class classSide >>> Point class"
+	
+	^ self
 ]
 
 { #category : #'accessing instances and variables' }
 Metaclass >> classVarNames [
 	"Answer a set of the names of the class variables defined in the receiver's instance."
 	
-	self theNonMetaClass ifNil: [ ^ Set new ].
-	^self theNonMetaClass classVarNames
+	self instanceSide ifNil: [ ^ Set new ].
+	^self instanceSide classVarNames
 ]
 
 { #category : #'fileIn/Out' }
@@ -199,11 +141,6 @@ Metaclass >> definition [
 	^ String streamContents: 
 		[:strm |
 		strm print: self.
-		self hasTraitComposition ifTrue: [
-			strm
-				crtab;
-				nextPutAll: 'uses: ';
-				print: self traitComposition ].
 		
 		(self usesSpecialSlot or: [ Slot showSlotClassDefinition ])
 			ifFalse: [  
@@ -221,25 +158,28 @@ Metaclass >> definition [
 { #category : #accessing }
 Metaclass >> environment [
 
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
 	^thisClass environment
 ]
 
-{ #category : #'accessing hierarchy protocol' }
+{ #category : #'accessing parallel hierarchy - deprecated' }
 Metaclass >> hasClassSide [
-	^false
+	^ false
 ]
 
 { #category : #initialize }
 Metaclass >> initializeFrom: anotherClassTrait [
 	self traitComposition: self traitComposition copyTraitExpression.
 	self methodDict: self methodDict copy.
-	self localSelectors: self localSelectors copy.
 	self basicOrganization: self organization copy.
+]
+
+{ #category : #'accessing parallel hierarchy' }
+Metaclass >> instanceSide [
+	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
+	"Point instanceSide >>> Point"
+	"Point class instanceSide >>> Point"
+	
+	^ self soleInstance
 ]
 
 { #category : #testing }
@@ -249,11 +189,6 @@ Metaclass >> isAnonymous [
 
 { #category : #testing }
 Metaclass >> isClass [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
 
 	^ true
 ]
@@ -266,8 +201,7 @@ Metaclass >> isMeta [
 { #category : #'class hierarchy' }
 Metaclass >> isMetaclassOfClassOrNil [
 	
-	
-	^ self theNonMetaClass 
+	^ self instanceSide 
 		ifNil: [ true ] 
 		ifNotNil: [ :nonMetaClass | nonMetaClass == Class ] 
 ]
@@ -314,34 +248,7 @@ Metaclass >> new [
 { #category : #'instance creation' }
 Metaclass >> newAnonymousSubclass [
 
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
-	^self theNonMetaClass newAnonymousSubclass class
-]
-
-{ #category : #composition }
-Metaclass >> noteNewBaseTraitCompositionApplied: aTraitComposition [
-	"The argument is the new trait composition of my base trait - add
-	the new traits or remove non existing traits on my class side composition.
-	(Each class trait in my composition has its base trait on the instance side
-	of the composition - manually added traits to the class side are always 
-	base traits.)"
-	
-	| newComposition traitsFromInstanceSide |
-	traitsFromInstanceSide := self traitComposition traits
-		select: [:each | each isClassTrait]
-		thenCollect: [:each | each baseTrait].
-		
-	newComposition := self traitComposition copyTraitExpression.
-	(traitsFromInstanceSide copyWithoutAll: aTraitComposition traits) do: [:each |
-		newComposition removeFromComposition: each classTrait].
-	(aTraitComposition traits copyWithoutAll: traitsFromInstanceSide) do: [:each |
-		newComposition add:  (each classTrait)].
-
-	self setTraitComposition: newComposition
+	^self instanceSide newAnonymousSubclass class
 ]
 
 { #category : #'class hierarchy' }
@@ -349,25 +256,19 @@ Metaclass >> obsoleteSubclasses [
 	"Answer the receiver's subclasses."
 
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
-
-	^ self theNonMetaClass obsoleteSubclasses collect: [ :aSubclass | aSubclass theMetaClass ]
+	^ self instanceSide obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
 ]
 
 { #category : #compiling }
 Metaclass >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 
-	^ self theNonMetaClass possibleVariablesFor: misspelled continuedFrom: oldResults
+	^ self instanceSide possibleVariablesFor: misspelled continuedFrom: oldResults
 
 ]
 
 { #category : #copying }
 Metaclass >> postCopy [
 	"Don't share the reference to the sole instance."
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
 
 	super postCopy.
 	thisClass := nil.
@@ -397,23 +298,16 @@ Metaclass >> sharedPools [
 ]
 
 { #category : #'initialize-release' }
-Metaclass >> slots: slotsDefinition [ 
-	"Declare additional named variables for my instance."
+Metaclass >> slots: slotCollection [ 
+
 	| theClass |
-	theClass := self theNonMetaClass.
-	
-	theClass := theClass classInstaller make: [ :builder |
+	theClass := self instanceSide.
+		
+	theClass := theClass classInstaller update: theClass to: [ :builder |
 		builder
-			superclass: theClass superclass;
-			name: theClass name;
-			layoutClass: theClass classLayout class;
-			slots: theClass slots;
-			sharedVariablesFromString: theClass classVariablesString;
-			sharedPools: theClass sharedPoolsString;
-			traitComposition: theClass traitComposition;
-			category: theClass category asString;
-			classSlots: slotsDefinition].
-	^ theClass theMetaClass
+			fillFor: theClass;
+			classSlots: slotCollection ].
+	^ theClass classSide
 ]
 
 { #category : #accessing }
@@ -428,8 +322,7 @@ Metaclass >> subclasses [
 	"Answer the receiver's subclasses."
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
-	
-	^ self theNonMetaClass subclasses collect: [ :aSubclass | aSubclass theMetaClass ].
+	^ self instanceSide subclasses collect: [ :aSubclass | aSubclass classSide ].
 ]
 
 { #category : #'class hierarchy' }
@@ -437,82 +330,11 @@ Metaclass >> subclassesDo: aBlock [
 	"Evaluate aBlock for each of the receiver's immediate subclasses."
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ self ].
-	
-	self theNonMetaClass subclasses do: [ :each | aBlock value: each theMetaClass ]
-]
-
-{ #category : #accessing }
-Metaclass >> traitComposition [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
-	traitComposition ifNil: [traitComposition := TraitComposition new].
-	^traitComposition
-]
-
-{ #category : #accessing }
-Metaclass >> traitComposition: aTraitComposition [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
-	traitComposition := aTraitComposition
-]
-
-{ #category : #composition }
-Metaclass >> uses: aTraitCompositionOrArray [
-	| copyOfOldTrait newComposition |
-	copyOfOldTrait := self copy.
-	newComposition := aTraitCompositionOrArray asTraitComposition.
-	self assertConsistantCompositionsForNew: newComposition.
-	self setTraitComposition: newComposition.
-	SystemAnnouncer uniqueInstance
-		traitDefinitionChangedFrom: copyOfOldTrait to: self;
-		classModificationAppliedTo: self
-]
-
-{ #category : #'initialize-release' }
-Metaclass >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString [ 
-	| newComposition newMetaClass copyOfOldMetaClass |
-	
-	copyOfOldMetaClass := self copy.
-	newMetaClass := self instanceVariableNames: instVarString.
-	
-	newComposition := aTraitCompositionOrArray asTraitComposition.
-	newMetaClass assertConsistantCompositionsForNew: newComposition.
-	newMetaClass setTraitComposition: newComposition.
-	
-	SystemAnnouncer uniqueInstance
-		classDefinitionChangedFrom: copyOfOldMetaClass to: newMetaClass
-]
-
-{ #category : #'initialize-release' }
-Metaclass >> uses: aTraitCompositionOrArray slots: slotArray [ 
-	| newComposition newMetaClass copyOfOldMetaClass |
-	
-	copyOfOldMetaClass := self copy.
-	newMetaClass := self slots: slotArray.
-	
-	newComposition := aTraitCompositionOrArray asTraitComposition.
-	newMetaClass assertConsistantCompositionsForNew: newComposition.
-	newMetaClass setTraitComposition: newComposition.
-	
-	SystemAnnouncer uniqueInstance
-		classDefinitionChangedFrom: copyOfOldMetaClass to: newMetaClass
+	self instanceSide subclasses do: [ :each | aBlock value: each classSide ]
 ]
 
 { #category : #copying }
 Metaclass >> veryDeepCopyWith: deepCopier [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
 
 	"Return self.  Must be created, not copied.  Do not record me."
 ]
@@ -521,12 +343,12 @@ Metaclass >> veryDeepCopyWith: deepCopier [
 Metaclass >> wantsChangeSetLogging [
 	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism.The metaclass follows the rule of the class itself."
 
-	^ self theNonMetaClass wantsChangeSetLogging
+	^ self instanceSide wantsChangeSetLogging
 ]
 
 { #category : #compiling }
 Metaclass >> wantsRecompilationProgressReported [
 	"The metaclass follows the rule of the class itself."
 
-	^ self theNonMetaClass wantsRecompilationProgressReported
+	^ self instanceSide wantsRecompilationProgressReported
 ]

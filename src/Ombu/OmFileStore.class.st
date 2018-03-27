@@ -198,8 +198,9 @@ OmFileStore >> entryPositionsByLocalName [
 
 { #category : #accessing }
 OmFileStore >> entryReferences [
+	"Optimized implementation for potentially large files"
 	
-	^ (self entriesCount to: 1 by: -1) collect: [:index |
+	^ (1 to: self entriesCount) collect: [:index |
 			self referenceToLocalName: index asString ]
 ]
 
@@ -230,26 +231,22 @@ OmFileStore >> flushEntryBuffer [
 		| initialPosition initialLocalName |
 		self entryBuffer isEmpty ifTrue: [ ^self ].
 		
-		fileReference writeStreamDo: [:fileStream |
+		fileReference writeStreamDo: [:fileStream | | anEntryWriter |
 			fileStream setToEnd.
 			
 			initialPosition := fileStream position.
 			initialLocalName := self entryBuffer first value.
-		
-			ZnBufferedWriteStream on: fileStream do: [:aWriteStream |
-				| anEntryWriter |
-				anEntryWriter := self newEntryWriter.
+			anEntryWriter := self newEntryWriter.
 
-				[ self entryBuffer isEmpty ] whileFalse: [
-					| next entry |
-					next := self entryBuffer removeFirst.
-					entry := next key.
+			[ self entryBuffer isEmpty ] whileFalse: [
+				| next entry |
+				next := self entryBuffer removeFirst.
+				entry := next key.
 
-					"Write entry to file"
-					anEntryWriter
-						on: aWriteStream 
-						nextEntryPut: entry.
-					].
+				"Write entry to file"
+				anEntryWriter
+					on: fileStream
+					nextEntryPut: entry.
 				].
 
 			"In Linux it was necessary to explicitely flush the file stream"
@@ -374,7 +371,7 @@ OmFileStore >> printOn: aStream [
 OmFileStore >> readEntriesWith: aBlockClosure [
 
 	self fileReference readStreamDo: [ :readStream | [
-		^ aBlockClosure value: readStream ascii ]
+		^ aBlockClosure value: readStream ]
 			on: Error
 			do: [ :error |
 				(OmFileStoreReadingError 

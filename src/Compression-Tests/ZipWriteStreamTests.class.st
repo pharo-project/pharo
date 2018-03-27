@@ -1,3 +1,6 @@
+"
+Unit tests for ZipWriteStream
+"
 Class {
 	#name : #ZipWriteStreamTests,
 	#superclass : #TestCase,

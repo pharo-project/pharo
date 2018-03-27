@@ -115,29 +115,19 @@ SmallFloat64 >> >= aNumber [
 	^ aNumber adaptToFloat: self andCompare: #>=
 ]
 
-{ #category : #'mathematical functions' }
-SmallFloat64 >> arcTan [
-	"Answer the angle in radians.
-	 Optional. See Object documentation whatIsAPrimitive."
+{ #category : #comparing }
+SmallFloat64 >> basicIdentityHash [
+	"Answer an integer unique to the receiver."
+	"primitive 171 is the primitiveImmediateAsInteger primitive that converts SmallIntegers to themselves, Characters to their integer codes, and SmallFloat64 to an integer representing their bits.  e.g.
 
-	| theta eps step sinTheta cosTheta |
-	<primitive: 557>
+#(-0.0 0.0 -1.0 1.0) collect: [:n| n -> n identityHash hex -> (n identityHash bitAnd: 2 << 64 - 1) hex]
+{-0.0->'-16r1000000000000000'->'16r1F000000000000000' .
+  0.0->'16r0'->'16r0' .
+ -1.0->'-16r810000000000000'->'16r1F7F0000000000000' .
+  1.0->'16r7F0000000000000'->'16r7F0000000000000'}"
 
-	"Newton-Raphson"
-	self < 0.0 ifTrue: [ ^ 0.0 - (0.0 - self) arcTan ].
-
-	"first guess"
-	theta := (self * Halfpi) / (self + 1.0).
-
-	"iterate"
-	eps := Halfpi * Epsilon.
-	step := theta.
-	[(step * step) > eps] whileTrue: [
-		sinTheta := theta sin.
-		cosTheta := theta cos.
-		step := (sinTheta * cosTheta) - (self * cosTheta * cosTheta).
-		theta := theta - step].
-	^ theta
+	<primitive: 171>
+	^self primitiveFailed
 ]
 
 { #category : #copying }
@@ -193,26 +183,6 @@ SmallFloat64 >> exp [
 ]
 
 { #category : #'truncation and round off' }
-SmallFloat64 >> exponent [
-	"Primitive. Consider the receiver to be represented as a power of two
-	multiplied by a mantissa (between one and two). Answer with the
-	SmallInteger to whose power two is raised. Optional. See Object
-	documentation whatIsAPrimitive."
-
-	| positive |
-	<primitive: 553>
-	self >= 1.0 ifTrue: [^self floorLog: 2].
-	self > 0.0
-		ifTrue: 
-			[positive := (1.0 / self) exponent.
-			self = (1.0 / (1.0 timesTwoPower: positive))
-				ifTrue: [^positive negated]
-				ifFalse: [^positive negated - 1]].
-	self = 0.0 ifTrue: [^-1].
-	^self negated exponent
-]
-
-{ #category : #'truncation and round off' }
 SmallFloat64 >> fractionPart [
 	"Primitive. Answer a Float whose value is the difference between the 
 	receiver and the receiver's asInteger value. Optional. See Object 
@@ -224,9 +194,9 @@ SmallFloat64 >> fractionPart [
 
 { #category : #comparing }
 SmallFloat64 >> identityHash [
-	"Answer an integer unique to the receiver."
-	<primitive: 171>
-	^self primitiveFailed
+	"We need the override since basicIdentityHash is already in SmallInteger range,
+	 the bitShift: 8 of the super implementation would lead to a LargeInteger"
+	^ self basicIdentityHash
 ]
 
 { #category : #'mathematical functions' }
@@ -274,63 +244,6 @@ SmallFloat64 >> ln [
 SmallFloat64 >> shallowCopy [
 	"Answer the receiver, because SmallFloat64s are unique."
 	^self
-]
-
-{ #category : #'mathematical functions' }
-SmallFloat64 >> sin [
-	"Answer the sine of the receiver taken as an angle in radians.
-	 Optional. See Object documentation whatIsAPrimitive."
-
-	| sum delta self2 i |
-	<primitive: 556>
-
-	"Taylor series"
-	"normalize to the range [0..Pi/2]"
-	self < 0.0 ifTrue: [^ (0.0 - ((0.0 - self) sin))].
-	self > Twopi ifTrue: [^ (self \\ Twopi) sin].
-	self > Pi ifTrue: [^ (0.0 - (self - Pi) sin)].
-	self > Halfpi ifTrue: [^ (Pi - self) sin].
-
-	"unroll loop to avoid use of abs"
-	sum := delta := self.
-	self2 := 0.0 - (self * self).
-	i := 2.0.
-	[delta > Epsilon] whileTrue: [
-		"once"
-		delta := (delta * self2) / (i * (i + 1.0)).
-		i := i + 2.0.
-		sum := sum + delta.
-		"twice"
-		delta := (delta * self2) / (i * (i + 1.0)).
-		i := i + 2.0.
-		sum := sum + delta].
-	^ sum
-]
-
-{ #category : #'mathematical functions' }
-SmallFloat64 >> sqrt [
-	"Answer the square root of the receiver. 
-	 Optional. See Object documentation whatIsAPrimitive."
-	| exp guess eps delta |
-	<primitive: 555>
-	"Newton-Raphson"
-	self <= 0.0
-		ifTrue: [self = 0.0
-				ifTrue: [^ 0.0]
-				ifFalse: ["v Chg"
-					^ DomainError signal: 'sqrt undefined for number less than zero.']].
-	"first guess is half the exponent"
-	exp := self exponent // 2.
-	guess := self timesTwoPower: 0 - exp.
-	"get eps value"
-	eps := guess * Epsilon.
-	eps := eps * eps.
-	delta := self - (guess * guess) / (guess * 2.0).
-	[delta * delta > eps]
-		whileTrue: 
-			[guess := guess + delta.
-			delta := self - (guess * guess) / (guess * 2.0)].
-	^ guess
 ]
 
 { #category : #'mathematical functions' }

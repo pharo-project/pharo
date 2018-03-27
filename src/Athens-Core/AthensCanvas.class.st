@@ -37,13 +37,6 @@ AthensCanvas >> cacheAt: anObject ifAbsentPut: aBlock [
 	^ surface cacheAt: anObject ifAbsentPut: aBlock
 ]
 
-{ #category : #masking }
-AthensCanvas >> clearMask: aShape [
-	"set mask pixels to 0 for all pixels covered by shape, aShape"
-	^ aShape paintFillsUsing: surface clearMaskPaint on: self
-
-]
-
 { #category : #clipping }
 AthensCanvas >> clipBy: aRectangle during: aBlock [
 	
@@ -177,14 +170,6 @@ AthensCanvas >> setFont: aFont [
 	"Set the current font of receiver. Font object should answer a glyph renderer instance,
 	compatible with glyph renderer protocol" 
 	^ fontRenderer := aFont glyphRendererOn: surface.
-]
-
-{ #category : #masking }
-AthensCanvas >> setMask: aShape [
-	"set mask pixels to 1 for all pixels covered by shape, aShape"
-
-	^ aShape paintFillsUsing: surface setMaskPaint on: self
-
 ]
 
 { #category : #paint }

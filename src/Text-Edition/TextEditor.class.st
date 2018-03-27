@@ -291,13 +291,6 @@ TextEditor class >> shiftCmdActions [
 ]
 
 { #category : #'menu declaration' }
-TextEditor class >> shiftedYellowButtonMenu [
-	"Answer the menu to be presented when the yellow button is pressed while the shift key is down"
-
-	^ (PragmaMenuBuilder pragmaKeyword: 'textEditorShiftedMenu' model: nil) menu
-]
-
-{ #category : #'menu declaration' }
 TextEditor class >> textEditorMenuOn: aBuilder [
 	"Specify the menu used when writing text. Try it with:
 	(PragmaMenuBuilder 
@@ -317,10 +310,6 @@ TextEditor class >> textEditorMenuOn: aBuilder [
 	(aBuilder item: #'Set search string' translated)
 		keyText: 'h';
 		selector: #setSearchString.
-	(aBuilder item: #'Do again' translated)
-		keyText: 'j';
-		selector: #again;
-		iconNamed: #smallRedoIcon.
 	(aBuilder item: #Undo translated)
 		keyText: 'z';
 		selector: #undo;
@@ -423,11 +412,6 @@ TextEditor class >> walkAlongDisplayedLine: aBoolean [
 	WalkAlongDisplayedLine := aBoolean
 ]
 
-{ #category : #'menu declaration' }
-TextEditor class >> yellowButtonMenu [
-	^ (PragmaMenuBuilder pragmaKeyword: 'textEditorMenu' model: nil) menu
-]
-
 { #category : #'menu messages' }
 TextEditor >> accept [
 	"Save the current text of the text being edited as the current acceptable version for purposes of canceling.  Allow my morph to take appropriate action"
@@ -491,15 +475,6 @@ TextEditor >> addTypeInUndoRecord [
 TextEditor >> afterSelectionInsertAndSelect: aString [
 
 	self insertAndSelect: aString at: self stopIndex 
-]
-
-{ #category : #'menu messages' }
-TextEditor >> again [
-	"Text substitution. If the left shift key is down, the substitution is
-	made throughout the entire Paragraph. Otherwise, only the next 
-	possible substitution is made"
-	true.
-	
 ]
 
 { #category : #'menu messages' }
@@ -875,15 +850,6 @@ TextEditor >> compareToClipboard: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #'editing keys' }
-TextEditor >> copyHiddenInfo [
-	"In TextLinks, TextDoits, TextColor, and TextURLs, there is hidden
-info.  Copy that to the clipboard.  You can paste it and see what it is.
-Usually enclosed in <>."
-
-	^ self clipboardTextPut: self hiddenInfo asText
-]
-
 { #category : #'menu messages' }
 TextEditor >> copySelection [
 	"Copy the current selection and store it in the paste buffer, unless a caret.  Undoer & Redoer: undoCutCopy"
@@ -937,18 +903,6 @@ TextEditor >> currentCharacterStyleOrNil [
 	^self hasSelection
 		ifTrue: [ self text characterStyleOrNilAt: self startIndex ]
 		ifFalse: [ self text characterStyleOrNilIfApplying: self emphasisHere ]
-]
-
-{ #category : #accessing }
-TextEditor >> currentParagraphStyle [
-	"Answer the TextStyle for the current selection or cursor location if any"
-	
-	| i t |
-	i := self startIndex.
-	t := self text.
-	^i > t size
-		ifTrue: [ self text styleIfApplying: self emphasisHere ]
-		ifFalse: [ self text textStyleAt: i ]
 ]
 
 { #category : #'nonediting/nontyping keys' }
@@ -1122,6 +1076,12 @@ TextEditor >> editingState [
 { #category : #accessing }
 TextEditor >> editingStateClass [
 	^ EditingState
+]
+
+{ #category : #'menu declaration' }
+TextEditor >> editorMenuKeyword [
+	^'textEditorMenu'
+
 ]
 
 { #category : #constants }
@@ -1443,8 +1403,8 @@ TextEditor >> getPluggableYellowButtonMenu: shiftKeyState [
 		ifTrue: [customMenu]
 		ifFalse:
 			[shiftKeyState
-				ifTrue: [self class shiftedYellowButtonMenu]
-				ifFalse: [self class yellowButtonMenu]]
+				ifTrue: [self shiftedYellowButtonMenu]
+				ifFalse: [self yellowButtonMenu]]
 ]
 
 { #category : #events }
@@ -1482,22 +1442,6 @@ TextEditor >> handleKeystrokeAction: aBlock [
 { #category : #'accessing-selection' }
 TextEditor >> hasCaret [
 	^self editingState markBlock = self editingState pointBlock
-]
-
-{ #category : #'editing keys' }
-TextEditor >> hiddenInfo [
-	"In TextLinks, TextDoits, TextColor, and TextURLs, there is hidden info.  Return the entire string that was used by Cmd-6 to create this text attribute.  Usually enclosed in < >."
-
-	| attrList |
-	attrList := self text attributesAt: (self pointIndex + self markIndex)//2.
-	attrList do: [:attr |
-		attr forTextActionInfoDo: [ :info |
-			^ self selection asString, '<', info, '>']].
-	"If none of the above"
-	attrList do: [:attr |
-		attr forTextColorDo: [ :color |
-			^ self selection asString, '<', color printString, '>']].
-	^ self selection asString, '[No hidden info]'
 ]
 
 { #category : #'editing keys' }
@@ -1804,7 +1748,7 @@ TextEditor >> mouseUp: evt [
 
 	(evt yellowButtonChanged or: [ evt commandKeyPressed]) 
 		ifTrue: [
-			(self morph editView yellowButtonActivity: evt shiftPressed) 
+			(self morph yellowButtonActivity: evt shiftPressed) 
 				ifTrue: [ ^ self ]].
 		
 	(self hasCaret and: [mouseDownInterval = self selectionInterval])
@@ -2307,11 +2251,25 @@ TextEditor >> setSelectorSearch: aStringOrText [
 	^ true
 ]
 
+{ #category : #'menu declaration' }
+TextEditor >> shiftedMenuKeyword [
+	^ 'textEditorShiftedMenu'
+
+]
+
 { #category : #'pluggable menus' }
 TextEditor >> shiftedTextPaneMenuRequest [
 	"The user chose the more... branch from the text-pane menu."
 
 	^ self pluggableYellowButtonActivity: true
+]
+
+{ #category : #'menu declaration' }
+TextEditor >> shiftedYellowButtonMenu [
+	^ (PragmaMenuBuilder 
+			pragmaKeyword: self shiftedMenuKeyword
+			model: nil) menu.
+
 ]
 
 { #category : #'accessing-selection' }
@@ -2575,6 +2533,13 @@ TextEditor >> yellowButtonDown: anEvent [
 		ifFalse: [
 			self mouseMove: anEvent.
 			self selectWord ].
+]
+
+{ #category : #'menu declaration' }
+TextEditor >> yellowButtonMenu [
+	^ (PragmaMenuBuilder 
+			pragmaKeyword: self editorMenuKeyword
+			model: nil) menu.
 ]
 
 { #category : #'mvc compatibility' }

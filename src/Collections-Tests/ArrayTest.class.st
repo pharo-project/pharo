@@ -113,7 +113,8 @@ ArrayTest >> collection [
 
 { #category : #'tests - creation' }
 ArrayTest >> collectionClass [ 
-	
+	"Return the class to be used to create instances of the class tested"
+		
 	^ Array
 ]
 
@@ -358,6 +359,8 @@ ArrayTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 ArrayTest >> indexInNonEmpty [
+	"Return an index between bounds of 'nonEmpty'"
+	
 	^ 2 
 ]
 
@@ -523,17 +526,6 @@ ArrayTest >> subCollectionNotIn [
 ]
 
 { #category : #'tests - fixture' }
-ArrayTest >> test0CopyTest [
-	self empty.
-	self assert: self empty size = 0.
-	self nonEmpty.
-	self assert: (self nonEmpty size = 0) not.
-	self collectionWithElementsToRemove.
-	self assert: (self collectionWithElementsToRemove size = 0) not.
-	self elementToAdd
-]
-
-{ #category : #'tests - fixture' }
 ArrayTest >> test0FixtureIncludeTest [
 	| anElementIn |
 	self nonEmpty.
@@ -541,11 +533,11 @@ ArrayTest >> test0FixtureIncludeTest [
 	self elementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self elementNotIn ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn = false.
+	self assert: anElementIn equals: false.
 	self anotherElementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self anotherElementNotIn ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn = false.
+	self assert: anElementIn equals: false.
 	self collection.
 	self empty.
 	self assert: self empty isEmpty.
@@ -554,7 +546,7 @@ ArrayTest >> test0FixtureIncludeTest [
 	self elementInForIncludesTest.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self elementInForIncludesTest ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn = true
+	self assert: anElementIn equals: true
 ]
 
 { #category : #'tests - fixture' }
@@ -625,7 +617,6 @@ ArrayTest >> testCombinations [
 
 { #category : #tests }
 ArrayTest >> testComplexIsSelfEvaluating [
-	"self run: #testComplexIsSelfEvaluating"
 
 	| complexArray restoredArray |
 	complexArray := {1.
@@ -702,12 +693,12 @@ ArrayTest >> testIdentityIncludes [
 
 { #category : #'tests - index access' }
 ArrayTest >> testIdentityIndexOf [
-	"self debug: #testIdentityIndexOf"
+	
 	| collection element |
 	element := self elementInCollectionOfFloat copy.
 	self deny: self elementInCollectionOfFloat == element.
 	collection := self collectionOfFloat copyWith: element.
-	self assert: (collection identityIndexOf: element) = collection size
+	self assert: (collection identityIndexOf: element) equals: collection size
 ]
 
 { #category : #tests }
@@ -757,7 +748,7 @@ ArrayTest >> testOccurrencesOf [
 	result := self nonEmpty occurrencesOf: self elementInForOccurrences.
 	expected := 0.
 	self nonEmpty do: [ :each | self elementInForOccurrences = each ifTrue: [ expected := expected + 1 ] ].
-	self assert: result = expected
+	self assert: result equals: expected
 ]
 
 { #category : #'tests - occurrencesOf' }
@@ -769,9 +760,10 @@ ArrayTest >> testOccurrencesOfEmpty [
 
 { #category : #'tests - occurrencesOf' }
 ArrayTest >> testOccurrencesOfNotIn [
+
 	| result |
 	result := self empty occurrencesOf: self elementNotInForOccurrences.
-	self assert: result = 0
+	self assert: result equals: 0
 ]
 
 { #category : #'tests - arithmetic' }
@@ -781,8 +773,7 @@ ArrayTest >> testPremultiply [
 
 { #category : #tests }
 ArrayTest >> testPrinting [
-	"self debug: #testPrinting"
-	
+		
 	self assert: literalArray printString = '#(1 true 3 #four)'.
 	self assert: (literalArray = (self class compiler evaluate: literalArray printString)).
 	self assert: (selfEvaluatingArray = (self class compiler evaluate: selfEvaluatingArray printString)).

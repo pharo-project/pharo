@@ -35,6 +35,11 @@ GTProfileSelectionDebugAction >> executeAction [
 ]
 
 { #category : #accessing }
+GTProfileSelectionDebugAction >> help [
+	^ 'Profile the execution of a selected piece of code from the code pane of the debugger.'
+]
+
+{ #category : #accessing }
 GTProfileSelectionDebugAction >> id [
 
 	^ #gTProfileSelectionDebugAction

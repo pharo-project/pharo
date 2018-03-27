@@ -31,6 +31,8 @@ ByteArray >> doubleAt: byteOffset [
 { #category : #'*FFI-Kernel' }
 ByteArray >> doubleAt: byteOffset put: value [
 	<primitive:'primitiveFFIDoubleAtPut' module:'SqueakFFIPrims'>
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #doubleAt:put: index: byteOffset value: value ].
 	^self primitiveFailed
 ]
 
@@ -43,6 +45,8 @@ ByteArray >> floatAt: byteOffset [
 { #category : #'*FFI-Kernel' }
 ByteArray >> floatAt: byteOffset put: value [
 	<primitive:'primitiveFFIFloatAtPut' module:'SqueakFFIPrims'>
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #floatAt:put: index: byteOffset value: value ].
 	^self primitiveFailed
 ]
 

@@ -88,7 +88,6 @@ Base64MimeConverter class >> mimeDecodeToBytes: aStream [
 	me := self new mimeStream: aStream.
 	me dataStream: (RWBinaryOrTextStream on: (ByteArray new: aStream size * 3 // 4)).
 	me mimeDecodeToByteArray.
-	me dataStream position: 0.
 	^ me dataStream
 ]
 
@@ -101,7 +100,6 @@ Base64MimeConverter class >> mimeDecodeToChars: aStream [
 	me := self new mimeStream: aStream.
 	me dataStream: (ReadWriteStream on: (String new: aStream size * 3 // 4)).
 	me mimeDecode.
-	me dataStream position: 0.
 	^ me dataStream
 ]
 
@@ -121,7 +119,6 @@ Base64MimeConverter class >> mimeEncode: aStream multiLine: aBool [
 	me multiLine: aBool.
 	me mimeStream: (ReadWriteStream on: (String new: aStream size + 20 * 4 // 3)).
 	me mimeEncode.
-	me mimeStream position: 0.
 	^ me mimeStream
 ]
 

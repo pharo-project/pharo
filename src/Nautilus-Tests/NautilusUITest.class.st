@@ -24,8 +24,8 @@ NautilusUITest >> setUp [
 NautilusUITest >> tearDown [
 	"Tearing down code for NautilusUITest"
 
-
 	nautilusUI := nil.
+	super tearDown 
 ]
 
 { #category : #tests }

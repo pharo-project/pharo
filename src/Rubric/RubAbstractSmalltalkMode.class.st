@@ -7,27 +7,13 @@ Class {
 	#category : #'Rubric-Editing-Code'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #accessing }
 RubAbstractSmalltalkMode >> editorClass [
 	^ RubSmalltalkEditor.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RubAbstractSmalltalkMode >> isCodeCompletionAllowed [
 	^ true
-]
-
-{ #category : #'initialize-release' }
-RubAbstractSmalltalkMode >> updateTextAreaWhenPlugged [
-	super updateTextAreaWhenPlugged
-
-
-]
-
-{ #category : #'initialize-release' }
-RubAbstractSmalltalkMode >> updateTextAreaWhenUnplugged [
-	super updateTextAreaWhenUnplugged
-
-
 ]

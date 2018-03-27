@@ -619,7 +619,6 @@ GLMWizard >> updateBrowserTitle [
 { #category : #events }
 GLMWizard >> updatePane [
 
-	|tmpPane|
 	self notifyAndSetAsCurrentPane: self computePane.
 ]
 
@@ -643,7 +642,6 @@ GLMWizard >> updateWhenNext [
 { #category : #events }
 GLMWizard >> updateWhenPrevious [
 
-	|tmpPane|
 	self notifyAndRemoveCurrentPane.
 	self stepToUse decrementNumberOfDisplay.
 	self stepToUse overBeginning 

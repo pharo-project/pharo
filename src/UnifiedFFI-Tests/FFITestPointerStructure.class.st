@@ -1,3 +1,6 @@
+"
+A pointer structure for test purposes
+"
 Class {
 	#name : #FFITestPointerStructure,
 	#superclass : #FFIExternalStructure,
@@ -7,7 +10,7 @@ Class {
 		'OFFSET_POINTER',
 		'OFFSET_TWO'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Test-Data'
 }
 
 { #category : #'field definition' }

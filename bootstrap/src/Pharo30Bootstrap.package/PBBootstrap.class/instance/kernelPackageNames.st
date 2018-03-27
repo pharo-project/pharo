@@ -1,6 +1,5 @@
-accessing
+package-names
 kernelPackageNames
 
-	kernelPackageNames ifNotNil: [ ^ kernelPackageNames ]. 
 	self ensureBaselineOfPharoBootstrap.
-	^ kernelPackageNames := #BaselineOfPharoBootstrap asClass kernelPackageNames
+	^ #BaselineOfPharoBootstrap asClass kernelPackageNames

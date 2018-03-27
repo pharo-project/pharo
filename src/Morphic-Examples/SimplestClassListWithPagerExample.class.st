@@ -9,6 +9,7 @@ Class {
 
 { #category : #examples }
 SimplestClassListWithPagerExample class >> example [
+	<sampleInstance>
 
 	^SimplestClassListWithPagerExample new openOn: Object
 ]

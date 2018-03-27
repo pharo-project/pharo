@@ -15,6 +15,7 @@ TPrintOnSequencedTest >> nonEmpty [
 
 { #category : #'tests - fixture' }
 TPrintOnSequencedTest >> test0FixturePrintTest [
+
 	self nonEmpty
 ]
 
@@ -22,66 +23,63 @@ TPrintOnSequencedTest >> test0FixturePrintTest [
 TPrintOnSequencedTest >> testPrintElementsOn [
 
 	| aStream result allElementsAsString |
-	result:=''.
-	aStream:= ReadWriteStream on: result.
+	result := ''.
+	aStream := ReadWriteStream on: result.
 	
-	self nonEmpty printElementsOn: aStream .
-	allElementsAsString:=(result findBetweenSubstrings: ' ' ).
-	1 to: allElementsAsString size do:
-		[:i | 
-		self assert: (allElementsAsString at:i)=((self nonEmpty at:i)asString).
-			].
+	self nonEmpty printElementsOn: aStream.
+	allElementsAsString:=(result findBetweenSubstrings: ' ').
+	allElementsAsString withIndexDo: 
+		[:el :i | self assert: el equals: ((self nonEmpty at: i)asString) ]
 ]
 
 { #category : #'tests - printing' }
 TPrintOnSequencedTest >> testPrintNameOn [
 
 	| aStream result |
-	result:=''.
-	aStream:= ReadWriteStream on: result.
+	result := ''.
+	aStream := ReadWriteStream on: result.
 	
-	self nonEmpty printNameOn: aStream .
-	Transcript show: result asString.
+	self nonEmpty printNameOn: aStream.
+
 	self nonEmpty class name first isVowel
-		ifTrue:[ self assert: aStream contents =('an ',self nonEmpty class name ) ]
-		ifFalse:[self assert: aStream contents =('a ',self nonEmpty class name)].
+		ifTrue:[ self assert: aStream contents equals: ('an ',self nonEmpty class name ) ]
+		ifFalse:[ self assert: aStream contents equals: ('a ',self nonEmpty class name)].
 ]
 
 { #category : #'tests - printing' }
 TPrintOnSequencedTest >> testPrintOn [
+
 	| aStream result allElementsAsString |
-	result:=''.
-	aStream:= ReadWriteStream on: result.
+	result := ''.
+	aStream := ReadWriteStream on: result.
 	
 	self nonEmpty printOn: aStream .
 	allElementsAsString:=(result findBetweenSubstrings: ' ' ).
-	1 to: allElementsAsString size do:
-		[:i | 
+	allElementsAsString withIndexDo: 
+		[:el :i | 
 		i=1
 			ifTrue:[
-			self accessCollection class name first isVowel 
-				ifTrue:[self assert: (allElementsAsString at:i)='an' ]
-				ifFalse:[self assert: (allElementsAsString at:i)='a'].].
+				self accessCollection class name first isVowel 
+					ifTrue:[self assert: el equals: 'an' ]
+					ifFalse:[self assert: el equals: 'a'].].
 		i=2
-			ifTrue:[self assert: (allElementsAsString at:i)=self accessCollection class name].
+			ifTrue:[self assert: el equals: self accessCollection class name].
 		i>2
-			ifTrue:[self assert: (allElementsAsString at:i)=((self nonEmpty at:i)asString).].	
-			].
+			ifTrue:[self assert: (allElementsAsString at:i)=((self nonEmpty at:i)asString)]]
 ]
 
 { #category : #'tests - printing' }
 TPrintOnSequencedTest >> testPrintOnDelimiter [
+
 	| aStream result allElementsAsString |
-	result:=''.
-	aStream:= ReadWriteStream on: result.
+	result := ''.
+	aStream := ReadWriteStream on: result.
 	
-	self nonEmpty printOn: aStream delimiter: ', ' .
+	self nonEmpty printOn: aStream delimiter: ', '.
 	
-	allElementsAsString:=(result findBetweenSubstrings: ', ' ).
-	1 to: allElementsAsString size do:
-		[:i | 
-		self assert: (allElementsAsString at:i)=((self nonEmpty at:i)asString).
-			].
+	allElementsAsString := (result findBetweenSubstrings: ', ' ).
+	allElementsAsString withIndexDo: 
+		[:el :i |  self assert: el equals: ((self nonEmpty at:i)asString)]
 ]
 
 { #category : #'tests - printing' }
@@ -93,16 +91,15 @@ TPrintOnSequencedTest >> testPrintOnDelimiterLast [
 	
 	self nonEmpty printOn: aStream delimiter: ', ' last: 'and'.
 	
-	allElementsAsString:=(result findBetweenSubstrings: ', ' ).
-	1 to: allElementsAsString size do:
-		[:i | 
+	allElementsAsString:=(result findBetweenSubstrings: ', ').
+	allElementsAsString withIndexDo: 
+		[:el :i | 
 		i<(allElementsAsString size-1 )
-			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:i)asString)].
+			ifTrue: [self assert: (allElementsAsString at:i) equals: ((self nonEmpty at:i)asString)].
 		i=(allElementsAsString size-1)
-			ifTrue:[ self deny: (allElementsAsString at:i)=('and')asString].
+			ifTrue:[ self deny: (allElementsAsString at:i) equals: ('and')asString].
 		i=(allElementsAsString size)
-			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:(i-1))asString)].
-			].
+			ifTrue: [self assert: (allElementsAsString at:i) equals: ((self nonEmpty at:(i-1))asString)]]
 ]
 
 { #category : #'tests - printing' }

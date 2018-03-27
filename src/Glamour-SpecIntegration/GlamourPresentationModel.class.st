@@ -22,6 +22,7 @@ GlamourPresentationModel class >> defaultSpec [
 
 { #category : #example }
 GlamourPresentationModel class >> exampleGLMExamples [
+	<sampleInstance>
 	"open the Glamour Examples Browser"
 	|ui|
 	ui := GlamourPresentationModel new.
@@ -31,6 +32,7 @@ GlamourPresentationModel class >> exampleGLMExamples [
 
 { #category : #example }
 GlamourPresentationModel class >> exampleGLMPharoScript [
+	<sampleInstance>
 	^ GlamourPresentationModel new openWithSpec.
 ]
 

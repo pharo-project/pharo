@@ -46,10 +46,10 @@ OmStoreTest >> setUpStore [
 
 { #category : #running }
 OmStoreTest >> tearDown [
-	super tearDown.
 	
 	store flush.
 	otherStore flush.
+	super tearDown
 
 ]
 
@@ -140,16 +140,19 @@ OmStoreTest >> testEntryForPresentEntry [
 
 { #category : #tests }
 OmStoreTest >> testEntryReferences [
-	| entryReferences |
+	| entryReferences entries |
 
 	1 to: 7 do: [ :each | store newEntry: (OmEntry content: each) ].
 
 	entryReferences := store entryReferences.
+	entries := store entries.
 	
-	entryReferences do: [:each |
+	entryReferences withIndexDo: [:each :index |	
 		store
 			entryFor: each
-			ifPresent: [:entry | "ok" ]
+			ifPresent: [:entry | 
+				self assert: entry equals: (entries at: index) 
+				"They must have the same order" ]
 			ifAbsent: [ self fail ] ].
 
 	self assert: entryReferences size equals: 7. "To be sure it tests something"

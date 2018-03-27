@@ -42,14 +42,14 @@ PharoSourcesCondenser >> installFreshChangesFile [
 	changesFile := Smalltalk changesFile.
 	changesFile moveTo: (changesFile , 'bak') nextVersion.
 	
-	"create a fresh changes file "
+	"Force the creation of a fresh changes file "
 	changesFile writeStreamDo: [ :strm |
-		 strm timeStamp ].
+		 "Nothing, just create the file" ].
 ]
 
 { #category : #public }
 PharoSourcesCondenser >> newSourceNamed: aString [
-	"Create a new version of the .soruces file by copying the existing file to a new location"
+	"Create a new version of the .sources file by copying the existing file to a new location"
 	| originalSourcesFile newSourcesFile |
 	
 	"Create a copy with the new name"

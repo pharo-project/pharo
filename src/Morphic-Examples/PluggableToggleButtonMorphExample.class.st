@@ -9,6 +9,7 @@ Class {
 
 { #category : #examples }
 PluggableToggleButtonMorphExample class >> exampleToggleButton [
+	<sampleInstance>
 	<example>
 	^ self new buildToggleButton openInWindow
 	
@@ -16,6 +17,7 @@ PluggableToggleButtonMorphExample class >> exampleToggleButton [
 
 { #category : #examples }
 PluggableToggleButtonMorphExample class >> exampleToggleButtonNoLabel [
+	<sampleInstance>
 	<example>
 	^ self new buildToggleButtonNoLabel openInWindow
 	
@@ -23,6 +25,7 @@ PluggableToggleButtonMorphExample class >> exampleToggleButtonNoLabel [
 
 { #category : #examples }
 PluggableToggleButtonMorphExample class >> exampleToggleButtonWithIcon [
+	<sampleInstance>
 	<example>
 	^ self new buildToggleButtonWithIcon openInWindow
 	

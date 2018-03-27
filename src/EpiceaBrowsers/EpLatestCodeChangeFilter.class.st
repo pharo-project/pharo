@@ -30,20 +30,13 @@ EpLatestCodeChangeFilter >> accepts: anOmEntry [
 	finalReference := log referenceTo: anOmEntry.
 	anOmEntry content isCodeChange ifFalse: [ ^ false ].
 
-	self entriesFromHead do: [:each |
+	logBrowserModel cachedLogEntries reverseDo: [:each |
 		(log referenceTo: each) = finalReference ifTrue: [ ^ true ].
 		(each content isCodeChange and: [
 			each content doesOverride: anOmEntry content ]) ifTrue: [ ^ false ].
 	].
 
 	^ false "shouldn't happen"
-]
-
-{ #category : #private }
-EpLatestCodeChangeFilter >> entriesFromHead [
-	"Answer a cached collection of entries where first is the most recent one."
-	
-	^ logBrowserModel cachedLogEntries
 ]
 
 { #category : #comparing }

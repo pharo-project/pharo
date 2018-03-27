@@ -15,7 +15,7 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'System-FileRegistry';
 			package: 'FileSystem-Memory';
 			package: 'Regex-Core';
-			package: 'Ring-Core-Containers';
+			package: 'Ring-Deprecated-Core-Containers';
 			package: 'StartupPreferences';
 			package: 'ConfigurationCommandLineHandler-Core';
 			package: 'PragmaCollector';
@@ -32,6 +32,7 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'STON-Core';
 			package: 'Metacello-GitBasedRepository';
 			package: 'Metacello-GitHub';
+			package: 'Metacello-Gitlab';
 			package: 'Metacello-Bitbucket';
 			package: 'Metacello-Platform';
 			package: 'Metacello-ToolBox';

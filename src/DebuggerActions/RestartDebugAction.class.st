@@ -5,18 +5,13 @@ A RestartDebugAction restarts the execution of the current context.
 Class {
 	#name : #RestartDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
 RestartDebugAction class >> actionType [
 	<debuggingAction>
 	<contextMenuDebuggingAction>
-]
-
-{ #category : #accessing }
-RestartDebugAction >> defaultHelp [
-	^ 'Go back the start of the current execution context, resetting all local variables and take debugger control.'
 ]
 
 { #category : #accessing }
@@ -41,6 +36,11 @@ RestartDebugAction >> defaultOrder [
 RestartDebugAction >> executeAction [
 
 	self session restart: self currentContext
+]
+
+{ #category : #accessing }
+RestartDebugAction >> help [
+	^ 'Go back the start of the current execution context, resetting all local variables and take debugger control.'
 ]
 
 { #category : #accessing }

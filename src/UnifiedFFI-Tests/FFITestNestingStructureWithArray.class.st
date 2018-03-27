@@ -1,10 +1,13 @@
+"
+A nesting structure with an array for test purposes
+"
 Class {
 	#name : #FFITestNestingStructureWithArray,
 	#superclass : #FFIExternalStructure,
 	#classVars : [
 		'OFFSET_NESTED'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Test-Data'
 }
 
 { #category : #'as yet unclassified' }

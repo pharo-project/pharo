@@ -32,20 +32,20 @@ Class {
 	#category : #'System-CommandLine'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 VTermOutputDriver class >> on: anOutputStream [
 	^ self new
-		outStream: (ZnCrPortableWriteStream on:
+		outStream: (ZnNewLineWriterStream on:
 			(ZnCharacterWriteStream on: anOutputStream encoding: 'utf8'));
 		yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 VTermOutputDriver class >> stderr [
 	^ self on: Stdio stderr
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 VTermOutputDriver class >> stdout [
 	^ self on: Stdio stdout
 ]

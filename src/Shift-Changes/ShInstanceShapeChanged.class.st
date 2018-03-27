@@ -6,7 +6,7 @@ I propagate the changes adding a change like me in the subclasses.
 Class {
 	#name : #ShInstanceShapeChanged,
 	#superclass : #ShAbstractChange,
-	#category : 'Shift-Changes'
+	#category : #'Shift-Changes'
 }
 
 { #category : #testing }

@@ -24,12 +24,12 @@ ProtoObject >> == anObject [
 
 { #category : #'reflective operations' }
 ProtoObject >> basicIdentityHash [
-	"Answer a SmallInteger whose value is related to the receiver's identity.
-	This method must not be overridden, except by SmallInteger.
-	Primitive. Fails if the receiver is a SmallInteger. Essential.
+	"Answer a 22 bits unsigned SmallInteger whose value is related to the receiver's identity.
+	
+	Primitive. Fails if the receiver is an immediate. Essential.
 	See Object documentation whatIsAPrimitive.
-
-	Do not override. Use #identityHash unless you really know what you're doing.'"
+	
+	Do not override, use #identityHash instead"
 
 	<primitive: 75>
 	self primitiveFailed
@@ -178,6 +178,22 @@ ProtoObject >> isNil [
 	^false
 ]
 
+{ #category : #'write barrier' }
+ProtoObject >> modificationForbiddenFor: selector index: index value: value [
+	^ (ModificationForbidden 
+		for: self
+		at: index
+		with: value
+		retrySelector: selector) signal
+]
+
+{ #category : #'write barrier' }
+ProtoObject >> modificationForbiddenFor: selector value: value [
+	^ self modificationForbiddenFor: selector index: nil value: value 
+	
+
+]
+
 { #category : #'memory scanning' }
 ProtoObject >> nextInstance [
 	"Primitive. Answer the next instance after the receiver in the 
@@ -232,6 +248,29 @@ ProtoObject >> pointsTo: anObject [
 	via the compact classes array"
 
 	^ (self instVarsInclude: anObject) or: [ ^self class == anObject]
+]
+
+{ #category : #'primitive failure' }
+ProtoObject >> primitiveFail [
+	"primitiveFail may be invoked by certain methods whose code is translated in C. In such a case primitiveFail and not primitiveFailed
+	 should be invoked. The reason is that this code is translated to C by VMMaker. #primitiveFail is 
+	implemented in Interpreter of VMMaker."
+
+	^ self primitiveFailed
+]
+
+{ #category : #'primitive failure' }
+ProtoObject >> primitiveFailed [
+	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
+
+	self primitiveFailed: thisContext sender selector
+]
+
+{ #category : #'primitive failure' }
+ProtoObject >> primitiveFailed: selector [
+	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
+	
+	PrimitiveFailed signalFor: selector
 ]
 
 { #category : #debugging }

@@ -25,22 +25,19 @@ SUnitTest class >> lastStoredRun [
 { #category : #private }
 SUnitTest >> assertForTestResult: aResult runCount: aRunCount passed: aPassedCount failed: aFailureCount errors: anErrorCount [
 
-	self
-		assert: aResult runCount = aRunCount;
-		assert: aResult passedCount = aPassedCount;
-		assert: aResult failureCount = aFailureCount;
-		assert: aResult errorCount = anErrorCount
+	self assert: aResult runCount equals: aRunCount.
+	self assert: aResult passedCount equals: aPassedCount.
+	self assert: aResult failureCount equals: aFailureCount.
+	self assert: aResult errorCount equals: anErrorCount
 ]
 
 { #category : #private }
 SUnitTest >> assertForTestResult: aResult runCount: aRunCount passed: aPassedCount failed: aFailureCount errors: anErrorCount expectedFailures: anExpectedFailureCount [
-
-	self
-		assert: aResult runCount = aRunCount;
-		assert: aResult expectedPassCount = aPassedCount;
-		assert: aResult failureCount = aFailureCount;
-		assert: aResult errorCount = anErrorCount;
-		assert: aResult expectedDefectCount = anExpectedFailureCount
+	self assert: aResult runCount equals: aRunCount.
+	self assert: aResult expectedPassCount equals: aPassedCount.
+	self assert: aResult failureCount equals: aFailureCount.
+	self assert: aResult errorCount equals: anErrorCount.
+	self assert: aResult expectedDefectCount equals: anExpectedFailureCount
 ]
 
 { #category : #helpers }
@@ -86,8 +83,12 @@ SUnitTest >> expectedFailures [
 
 { #category : #private }
 SUnitTest >> failedChildProcessTest [
-
-	[self error: 'error from child process'] forkNamed: 'failed child for ', testSelector
+	"During this test forked process should signal error.
+	It means that after fork we should give the process control"
+	
+	[ self error: 'error from child process'] forkNamed: 'failed child for ', testSelector.
+	
+	Processor yield.
 ]
 
 { #category : #helpers }
@@ -98,7 +99,7 @@ SUnitTest >> failedChildProcesses [
 
 { #category : #private }
 SUnitTest >> failedTestWithFailedChildProcessTest [
-
+	"This failing test first launches a subprocess that fails and then fails."
 	self failedChildProcessTest.
 	Processor yield.
 	self error: 'failed test with failed child process'

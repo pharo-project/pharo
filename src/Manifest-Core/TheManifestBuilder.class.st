@@ -13,27 +13,27 @@ Class {
 	#category : #'Manifest-Core'
 }
 
-{ #category : #utils }
+{ #category : #utilities }
 TheManifestBuilder class >> allManifestClasses [
 
 	^ PackageManifest subclasses
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TheManifestBuilder class >> falsePositiveBeginningTag [
 	"the string that identifies uniquely the beginning of a selector who give  the set of false positive for a rule"
 	
 	^ 'rule'
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TheManifestBuilder class >> falsePositiveEndTag [
 	"the string that identifies uniquely the end of a selector who give  the set of false positive for a rule"
 	
 	^ 'FalsePositive'
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TheManifestBuilder class >> falsePositiveMiddleTag [
 	"the string that identifies uniquely the middle of a selector who give  the set of false positive for a rule"
 	
@@ -55,13 +55,13 @@ TheManifestBuilder class >> hasPackageNamed: aPackageName [
 	
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TheManifestBuilder class >> manifestClassComment [
 	
 	^ 'I store metadata for this package. These meta data are used by other tools such as the SmalllintManifestChecker and the critics Browser'
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TheManifestBuilder class >> manifestTag [
 	"the string that identifies uniquely the beginning of a Manifest class name"
 	
@@ -90,42 +90,42 @@ TheManifestBuilder class >> ofPackageNamed: aPackageName [
 	^ builder
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TheManifestBuilder class >> rejectClassesTag [
 	"the string that identifies uniquely the beginning of a selector who give  the set of rejected classes"
 	
 	^ 'rejectClasses'
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TheManifestBuilder class >> rejectRulesTag [
 	"the string that identifies uniquely the beginning of a selector who give  the set of rejected rules"
 	
 	^ 'rejectRules'
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TheManifestBuilder class >> toDoBeginningTag [
 	"the string that identifies uniquely the beginning of a selector who give  the set of TODO for a rule"
 	
 	^ 'rule'
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TheManifestBuilder class >> toDoEndTag [
 	"the string that identifies uniquely the end of a selector who give  the set of TODO for a rule"
 	
 	^ 'TODO'
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TheManifestBuilder class >> toDoMiddleTag [
 	"the string that identifies uniquely the middle of a selector who give  the set of TODO for a rule"
 	
 	^ 'V'
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TheManifestBuilder class >> truePositiveEndTag [
 	"the string that identifies uniquely the end of a selector who give  the set of false positive for a rule"
 	

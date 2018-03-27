@@ -45,7 +45,7 @@ UserInterruptHandler >> handleEvent: evt [
 
 	| buf |
 	buf := evt shallowCopy.
-	(self isKbdEvent: evt)
+	(self isKeyboardEvent: evt)
 		ifTrue: [ 
 			| keycode modifiers |
 			"Check if the event is a user interrupt"

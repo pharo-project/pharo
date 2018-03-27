@@ -7,17 +7,32 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsSwapMethod class >> nodes [
+	^{RBMethodNode}
+]
+
 { #category : #execution }
 SugsSwapMethod >> execute [
 	^(NautilusRefactoring model: context) 
 		swapMethodFor: (OrderedCollection with: context selectedMethod).
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsSwapMethod >> icon [
+	^self iconNamed: #smallRedoIcon
+]
+
+{ #category : #display }
 SugsSwapMethod >> label [
 	
 	^ context selectedMethod 
 		ifNil: ['Swap method' translated] 
 		ifNotNil: [context selectedMethod methodClass isMeta ifTrue: ['Move to instance side' translated] ifFalse:['Move to class side' translated]]
 
+]
+
+{ #category : #display }
+SugsSwapMethod >> position [
+	^50
 ]

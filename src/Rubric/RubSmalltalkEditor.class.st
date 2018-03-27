@@ -110,13 +110,6 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		do: [ :target | target formatMethodCode ]
 ]
 
-{ #category : #accessing }
-RubSmalltalkEditor class >> compilerFor: aClass [
-	^ (aClass respondsTo: #compiler) 
-		ifTrue: [aClass compiler]
-		ifFalse: [ aClass class evaluatorClass new ]
-]
-
 { #category : #NOcompletion }
 RubSmalltalkEditor >> atCompletionPosition [
 	"Return true if the cursor is at a possible completion position"
@@ -132,7 +125,7 @@ RubSmalltalkEditor >> basicInspectIt [
 ]
 
 { #category : #'menu messages' }
-RubSmalltalkEditor >> bestNodeInTextAreaOnError: aBlock [
+RubSmalltalkEditor >> bestNodeInTextArea [
 	"Find the best node in the editor text area at the current pointer location"
 	
 	| node start stop |
@@ -140,8 +133,9 @@ RubSmalltalkEditor >> bestNodeInTextAreaOnError: aBlock [
 	start := self textArea startIndex.
 	stop := self textArea stopIndex.
 	
-	node := RBParser parseMethod: self textArea string onError: [ 
-		RBParser parseExpression: self textArea string  onError: aBlock].
+	[node := RBParser parseMethod: self textArea string onError: [ 
+		RBParser parseFaultyExpression: self textArea string]
+	] on: Error do: [^nil].
 	
 	^node bestNodeFor: (start to: stop).
 	
@@ -439,15 +433,13 @@ RubSmalltalkEditor >> exploreIt: aKeyboardEvent [
 RubSmalltalkEditor >> findClassFromAST [
 	"Try to make a class name out of the current text selection"
 
-	| node fallbackBlock className |		
+	| node className |		
 	
 	"Preserve original behavior - although could consider building AST from selection"
 	self hasSelection ifTrue: [ 
 		^(self selection string copyWithoutAll: CharacterSet crlf) trimBoth ].
 	
-	fallbackBlock := [^nil].
-
-	node := self bestNodeInTextAreaOnError: fallbackBlock.
+	node := self bestNodeInTextArea.
 	
 	node ifNil: [ 
 		self selectLine.
@@ -456,12 +448,12 @@ RubSmalltalkEditor >> findClassFromAST [
 			ifFalse: [ nil ] ].
 	
 	[node isVariable] whileFalse: [ 
-	 	(node := node parent) ifNil: fallbackBlock ].
+	 	(node := node parent) ifNil: [^nil]. ].
 	
 	className := node name.
 	
 	[ className first isUppercase ] whileFalse: [ 
-		(className := className allButFirst) ifEmpty: fallbackBlock  ].
+		(className := className allButFirst) ifEmpty: [^nil].  ].
 	
 	^className
 ]
@@ -470,18 +462,15 @@ RubSmalltalkEditor >> findClassFromAST [
 RubSmalltalkEditor >> findSelectorFromAST [
 	"Try to make a selector out of the current text selection"
 
-	| node fallbackBlock |
-
-	fallbackBlock := [^ ''].
-	node := self bestNodeInTextAreaOnError: fallbackBlock.
+	| node |
+	node := self bestNodeInTextArea.
 	(node isNil or: [node isSequence]) ifTrue: [
 		self selectLine.
-		node := self bestNodeInTextAreaOnError: fallbackBlock]. 
+		^ RBParser parseFaultyExpression: self selection string.]. 
 	node isMethod ifFalse: [ 
 		[ node isMessage ] whileFalse: [ 
-	 		(node := node parent) ifNil: fallbackBlock ]].
-	
-	^node selector
+	 		(node := node parent) ]].
+	^node 
 ]
 
 { #category : #private }
@@ -644,7 +633,7 @@ RubSmalltalkEditor >> methodNamesContainingIt: aKeyboardEvent [
 
 { #category : #'menu messages' }
 RubSmalltalkEditor >> methodSourceContainingIt [
-	"Open a browser on methods which contain the current selection in their source (case-sensitive full-text search of source).   EXTREMELY slow!"
+	"Open a browser on methods which contain the current selection in their source (case-sensitive full-text search of source)."
 
 	self lineSelectAndEmptyCheck: [ ^ self ].
 	self model interactionModel systemNavigation
@@ -834,10 +823,10 @@ RubSmalltalkEditor >> selectedSelector [
 
 	| node |
 	
-	self hasSelection ifFalse: [ ^self findSelectorFromAST ].
-	node := RBParser parseFaultyExpression: self selection string.
-	node
-		nodesDo: [ :n | 
+	node := self hasSelection 
+		ifTrue: [ RBParser parseFaultyExpression: self selection string. ]
+		ifFalse: [ self findSelectorFromAST ].
+	node nodesDo: [ :n | 
 			n isMessage
 				ifTrue: [ ^ n selector ].
 			n isVariable

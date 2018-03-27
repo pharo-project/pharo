@@ -36,6 +36,7 @@ SocketStreamTest >> setUp [
 SocketStreamTest >> tearDown [
 	clientStream ifNotNil:[clientStream destroy].
 	serverStream ifNotNil:[serverStream destroy].
+	super tearDown 
 ]
 
 { #category : #'stream protocol' }

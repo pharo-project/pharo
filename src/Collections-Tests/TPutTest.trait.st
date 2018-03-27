@@ -56,11 +56,11 @@ TPutTest >> testAtAllIndexesPut [
 
 { #category : #'tests - puting with indexes' }
 TPutTest >> testAtAllPut [
-	| |
-	self nonEmpty atAll: self indexArray put: self aValue..
+ 
+	self nonEmpty atAll: self indexArray put: self aValue.
 	
 	self indexArray do:
-		[:i | self assert: (self nonEmpty at: i)=self aValue ].
+		[:i | self assert: (self nonEmpty at: i) equals: self aValue ]
 	
 ]
 
@@ -71,37 +71,37 @@ TPutTest >> testAtAllPutAll [
 	aValueArray := self valueArray .
 	self nonEmpty atAll: self indexArray putAll: aValueArray  .
 	
-	1 to: self indexArray size do:
-		[:i |
-		self assert: (self nonEmpty at:(self indexArray at: i))= (aValueArray  at:i) ]
+	self indexArray withIndexDo: [:element :index |
+		self assert: (self nonEmpty at: element) equals: (aValueArray  at: index) ]
 ]
 
 { #category : #'tests - puting with indexes' }
 TPutTest >> testAtLastPut [
-	| result index |
-	index := self indexArray anyOne.
-	result := self nonEmpty atLast: index  put: self aValue.
-	
-	self assert: (self nonEmpty at: (self nonEmpty size +1 - index)) = self aValue .
+
+	| index |
+	index := self indexArray anyOne.	
+	self nonEmpty atLast: index put: self aValue.	
+
+	self assert: (self nonEmpty at: (self nonEmpty size + 1 - index)) equals: self aValue
 ]
 
 { #category : #'tests - puting with indexes' }
 TPutTest >> testAtWrapPut [
-	"self debug: #testAtWrapPut"
+	 
 	| index |
 	index := self indexArray anyOne.
 	
 	self nonEmpty atWrap: 0 put: self aValue.
-	self assert: (self nonEmpty at:(self nonEmpty size))=self aValue.
+	self assert: self nonEmpty last equals: self aValue.
 	
-	self nonEmpty atWrap: (self nonEmpty size+1) put: self aValue.
-	self assert: (self nonEmpty at:(1))=self aValue.
+	self nonEmpty atWrap: (self nonEmpty size + 1) put: self aValue.
+	self assert: self nonEmpty first equals: self aValue.
 	
-	self nonEmpty atWrap: (index  ) put: self aValue.
-	self assert: (self nonEmpty at: index ) = self aValue.
+	self nonEmpty atWrap: index put: self aValue.
+	self assert: (self nonEmpty at: index) equals: self aValue.
 	
-	self nonEmpty atWrap: (self nonEmpty size+index  ) put: self aValue .
-	self assert: (self nonEmpty at:(index ))=self aValue .
+	self nonEmpty atWrap: (self nonEmpty size + index) put: self aValue .
+	self assert: (self nonEmpty at: index) equals: self aValue.
 ]
 
 { #category : #'tests - puting with indexes' }
@@ -119,7 +119,7 @@ TPutTest >> testFromToPut [
 
 { #category : #'tests - puting with indexes' }
 TPutTest >> testSwapWith [
-	"self debug: #testSwapWith"
+ 
 	| result index |
 	index := self indexArray anyOne.
 	result:= self nonEmpty copy .

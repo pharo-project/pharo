@@ -43,14 +43,14 @@ BalloonEngine class >> allocateOrRecycleBuffer: initialSize [
 	^buffer ifNil:[BalloonBuffer new: initialSize]
 ]
 
-{ #category : #accessing }
+{ #category : #debugging }
 BalloonEngine class >> debug: aBoolean [
-	"BalloonEngine debug: true"
-	"BalloonEngine debug: false"
+	<script: 'BalloonEngine debug: (UIManager default confirm: ''Debug BalloonEngine?'')'>
+
 	Debug := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : #profiling }
 BalloonEngine class >> doProfileStats: aBool [
 	"Note: On Macintosh systems turning on profiling can significantly
 	degrade the performance of Balloon since we're using the high
@@ -79,20 +79,19 @@ BalloonEngine class >> primitiveSetBitBltPlugin: pluginName [
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : #profiling }
 BalloonEngine class >> printBezierStats [
-	"BalloonEngine printBezierStats"
-	"BalloonEngine resetBezierStats"
+	<script>
 	Transcript 
 		cr; nextPutAll:'Bezier statistics:';
-		crtab; print: (BezierStats at: 1); tab; nextPutAll:' non-monoton curves splitted';
-		crtab; print: (BezierStats at: 2); tab; nextPutAll:' curves splitted for numerical accuracy';
-		crtab; print: (BezierStats at: 3); tab; nextPutAll:' curves splitted to avoid integer overflow';
-		crtab; print: (BezierStats at: 4); tab; nextPutAll:' curves internally converted to lines';
+		cr; tab; print: (BezierStats at: 1); tab; nextPutAll:' non-monoton curves splitted';
+		cr; tab; print: (BezierStats at: 2); tab; nextPutAll:' curves splitted for numerical accuracy';
+		cr; tab; print: (BezierStats at: 3); tab; nextPutAll:' curves splitted to avoid integer overflow';
+		cr; tab; print: (BezierStats at: 4); tab; nextPutAll:' curves internally converted to lines';
 	endEntry.
 ]
 
-{ #category : #accessing }
+{ #category : #profiling }
 BalloonEngine class >> printStat: time count: n string: aString [
 	Transcript
 		cr;
@@ -105,11 +104,13 @@ BalloonEngine class >> printStat: time count: n string: aString [
 		nextPutAll: aString.
 ]
 
-{ #category : #accessing }
+{ #category : #profiling }
 BalloonEngine class >> printStats [
-	"BalloonEngine doProfileStats: true"
-	"BalloonEngine printStats"
-	"BalloonEngine resetStats"
+	<script: '
+	BalloonEngine doProfileStats: true.
+	BalloonEngine printStats.
+	BalloonEngine resetStats'>
+	
 	Transcript cr; nextPutAll:'/************** BalloonEngine statistics ****************/'.
 	self printStat: (Times at: 1) count: (Counts at: 1) string: 'Initialization'.
 	self printStat: (Times at: 2) count: (Counts at: 2) string: 'Finish test'.
@@ -136,13 +137,15 @@ BalloonEngine class >> recycleBuffer: balloonBuffer [
 	].
 ]
 
-{ #category : #accessing }
+{ #category : #profiling }
 BalloonEngine class >> resetBezierStats [
+	<script>
 	BezierStats := WordArray new: 4.
 ]
 
-{ #category : #accessing }
+{ #category : #profiling }
 BalloonEngine class >> resetStats [
+	<script>
 	Times := WordArray new: 10.
 	Counts := WordArray new: 10.
 ]

@@ -44,15 +44,13 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutLocalMethodsInCategory: aSymbol on: aFileStream [
-	"File out only the local (non-trait) methods for this category."
-
-	| selectors localSelectors |
+	"File out methods for this category."
+	
+	| selectors |
 	aFileStream cr.
 	selectors := self selectorsToFileOutCategory: aSymbol.
-   localSelectors := selectors select:[:s | self isLocalSelector: s ].
-	"Overridden to preserve author stamps in sources file regardless"
-	localSelectors do: [:sel |
-		self printMethodChunk: sel on: aFileStream ].
+
+	selectors do: [:sel | self printMethodChunk: sel on: aFileStream ].
 	^ self
 ]
 
@@ -92,13 +90,6 @@ ClassDescription >> fileOutOrganizationOn: aFileStream [
 	aFileStream cr; nextPut: $!.
 	aFileStream nextChunkPut: self name, ' reorganize'; cr.
 	aFileStream nextChunkPut: self organization stringForFileOut ; cr
-]
-
-{ #category : #'*CodeExport' }
-ClassDescription >> isLocalSelector: aSelector [
-	| method |
-	method := self methodDict at: aSelector ifAbsent: [ ^ false ].
-	^ method isFromTrait not
 ]
 
 { #category : #'*CodeExport' }

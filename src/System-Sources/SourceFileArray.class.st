@@ -36,7 +36,7 @@ SourceFileArray >> changeRecordsFor: aMethodDefinition [
 
 	^ self 
 		changeRecordsFrom: aMethodDefinition sourcePointer 
-		className: aMethodDefinition methodClass theNonMetaClass name
+		className: aMethodDefinition methodClass instanceSide name
 		isMeta: aMethodDefinition methodClass isMeta
 ]
 
@@ -58,7 +58,7 @@ SourceFileArray >> changeRecordsFor: aMethodDefinition do: aUnaryBlock [
 
 	^ self 
 		changeRecordsFrom: aMethodDefinition sourcePointer
-		className: aMethodDefinition theNonMetaClassName
+		className: aMethodDefinition instanceSideParentName
 		isMeta: aMethodDefinition isMetaSide
 		do: aUnaryBlock
 ]
@@ -96,7 +96,8 @@ SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMeta
 		[ filePosition notNil & file notNil ]
 			whileTrue: [ 
 				file position: (0 max: filePosition - 150).	"Skip back to before the preamble"
-				[ file position < (filePosition - 1) ] whileTrue: [ preamble := file nextPreamble ].	"then pick it up from the front"	
+				[ file position < (filePosition - 1) ] whileTrue: [ 
+					preamble := (ChunkReadStream on: file) next ].	"then pick it up from the front"	
 					"Preamble is likely a linked method preamble, if we're in
 					a changes file (not the sources file).  Try to parse it
 					for prior source position and file index"
@@ -189,25 +190,21 @@ SourceFileArray >> changesWriteStreamDo: aBlock [
 	| changesFile |
 	changesFile := self changesFileStream.
 	changesFile ifNil: [ ^ self ].
+	changesFile closed ifTrue: [ ^ self ].
 	changesFile isReadOnly ifTrue: [ ^ self ].
 	changesFile setToEnd.
 	
-	^ aBlock value: changesFile
+	[ ^ aBlock value: changesFile] ensure: [ self emptyReadStreamsQueue ]
 ]
 
 { #category : #'public - file system operations' }
 SourceFileArray >> close [
 		
-	| oldFiles oldQueue | 
-	
+	| oldFiles |
 	oldFiles := files.
-	oldQueue := readOnlyQueue.
 	files := Array new: 2.
-	readOnlyQueue := SharedQueue new.
-
 	self closeFileArray: oldFiles.
-
-	oldQueue flushAllSuchThat: [ :each | self closeFileArray: each. true]
+	self emptyReadStreamsQueue
 ]
 
 { #category : #private }
@@ -216,24 +213,17 @@ SourceFileArray >> closeFileArray: anArray [
 	anArray 
 		reject: [ :file | file isNil ] 
 		thenDo: [ :file | file close ]
-		
 ]
 
 { #category : #private }
 SourceFileArray >> createReadOnlyFiles [
-
-	| readOnly failed |
-	
-	failed := false.
-	readOnly := files collect: [ :file | 
-		file 
-			ifNil: [  failed := true. nil ]
-			ifNotNil: [ [ file readOnlyCopy ] 
-        		on: FileDoesNotExistException
-        		do: [ failed := true. nil ] ]
-	].
-
-	^ failed ifFalse: [ readOnly ] ifTrue: [ self closeFileArray: readOnly. nil ]
+	| readOnly |
+	readOnly := {
+		self sourcesFileStream ifNotNil: [self sourcesFileStream readOnlyCopy].
+		self sourcesFileStream ifNotNil: [self changesFileStream readOnlyCopy] }.
+	^ (readOnly anySatisfy: [ :any | any isNil or: [any closed] ])
+			ifTrue: [ self closeFileArray: readOnly ]
+			ifFalse: [ readOnly ]
 ]
 
 { #category : #'public - string writing' }
@@ -245,13 +235,28 @@ SourceFileArray >> deferFlushDuring: aBlock [
 	
 	flushChanges := false.
 	
-	^ [ aBlock value ] ensure: [ flushChanges := true . self flushChangesFile ]
+	^ [ aBlock value ] ensure: [
+		flushChanges := true.
+		self flushChangesFile.
+		self emptyReadStreamsQueue ]
+]
+
+{ #category : #'public - file system operations' }
+SourceFileArray >> emptyReadStreamsQueue [
+		
+	| oldQueue | 
+	oldQueue := readOnlyQueue.
+	readOnlyQueue := SharedQueue new.
+	oldQueue flushAllSuchThat: [ :each | self closeFileArray: each. true]
 ]
 
 { #category : #'public - file system operations' }
 SourceFileArray >> ensureOpen [
-	"Ensure that the source and changes files are opened."
-
+	"Ensure that the source and changes files are opened.
+	Close them before re-opening them.
+	
+	This could be optimized by jut checking if they are open and doing nothing in that case."
+	self close.
 	files := Array
 		with: PharoFilesOpener default sourcesFileOrNil
 		with: PharoFilesOpener default changesFileOrNil.
@@ -305,8 +310,8 @@ SourceFileArray >> finishedReading: aReadOnlyFileArray from: aQueue [
 SourceFileArray >> flushChangesFile [
 	
 	flushChanges ifFalse: [ ^ self ].
-	
-	self changesFileStream ifNotNil: [:f | f flush ]
+	self changesFileStream ifNotNil: #flush.
+	self emptyReadStreamsQueue.
 ]
 
 { #category : #'public - file system operations' }
@@ -317,8 +322,9 @@ SourceFileArray >> forceChangesToDisk [
 	changesFile := self changesFileStream.
 	changesFile flush.
 	changesFile close.
-	changesFile open: changesFile name forWrite: true.
+	changesFile tryOpen.
 	changesFile setToEnd.
+	self emptyReadStreamsQueue
 ]
 
 { #category : #'public - string reading' }
@@ -331,7 +337,7 @@ SourceFileArray >> getPreambleFrom: aFileStream at: position [
 	| startIndex |
 	startIndex := position.
 	[startIndex >= 0 and: [aFileStream position: startIndex.
-	aFileStream basicNext ~~ $!] ] whileTrue: [ startIndex := startIndex - 1 ].
+	aFileStream next ~~ $!] ] whileTrue: [ startIndex := startIndex - 1 ].
 
 	^String streamContents: [ :result | 
 		[aFileStream position <= position] whileTrue: [result nextPut: aFileStream next]]
@@ -379,8 +385,8 @@ SourceFileArray >> readOnlyCopy [
 	"Answer a read only copy of self. The caller is responsible of closing it."
 
 	^ self species new
-		sourcesFileStream: (self sourcesFileStream ifNotNil: [:aStream | aStream readOnlyCopy]);
-		changesFileStream: (self changesFileStream ifNotNil: [:aStream | aStream readOnlyCopy]);
+		sourcesFileStream: self sourcesFileStream readOnlyCopy;
+		changesFileStream: self changesFileStream readOnlyCopy;
 		yourself
 ]
 
@@ -460,7 +466,10 @@ SourceFileArray >> remoteStringAt: sourcePointer [
 { #category : #'public - string writing' }
 SourceFileArray >> remoteStringForNewString: aString [
 
-	^ RemoteString newString: aString
+	^ RemoteString new
+		sourceFileArray: self;
+		string: aString;
+		yourself
 ]
 
 { #category : #printing }
@@ -478,7 +487,7 @@ SourceFileArray >> sourceCodeAt: sourcePointer [
 	
 	^ self
 		readStreamAt: sourcePointer 
-		ifPresent: [ :stream | stream nextChunk ]
+		ifPresent: [ :stream | (ChunkReadStream on: stream) next ]
 		ifAbsent: [ '' ]
 ]
 
@@ -560,16 +569,17 @@ SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlo
 
 	| file position |
 	file := self changesFileStream.
-	(file isNil or: [ file isReadOnly ]) ifTrue: [ ^ failBlock value ].
+	(file isNil or: [file closed or: [ file isReadOnly ] ]) ifTrue: [ ^ failBlock value ].
 
 	ChangesLog default assureStartupStampLogged.
 	
 	file setToEnd.
 	file nextPutAll: preamble.
 	position := file position.
-	file nextChunkPut: aString.
+	(ChunkWriteStream on: file) nextChunkPut: aString.
 
 	self flushChangesFile.
+	self emptyReadStreamsQueue.
 
 	successBlock value: (self sourcePointerFromFileIndex: 2 andPosition: position)
 ]

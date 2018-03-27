@@ -6,9 +6,8 @@ Class {
 	#superclass : #TreeNodePresenter,
 	#instVars : [
 		'treeModelParent',
-		'packageTreeNautilus',
-		'packageTreeNautilusUI',
-		'cycle'
+		'cycle',
+		'browser'
 	],
 	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
@@ -23,48 +22,14 @@ DANode >> browseClass: classToBrowse [
 	Smalltalk tools browser openOnClass: classToBrowse
 ]
 
-{ #category : #'browse-nautilus' }
-DANode >> browseClassInNautilus: aClass [
-	| nautilus |
-	
-	nautilus := self rootNode packageTreeNautilus.
-	self setSelectionOnMethod: nil class: aClass with: nautilus.
-	self refreshNautilus: nautilus.
-	self rootNode packageTreeNautilusUI sourceTextModel announce: NautilusClassSelected.
+{ #category : #accessing }
+DANode >> browser [
+	^ browser
 ]
 
-{ #category : #'browse-nautilus' }
-DANode >> browseInNautilus [
-	^ self subclassResponsibility
-]
-
-{ #category : #'browse-nautilus' }
-DANode >> browseInOtherNautilus [
-	"do nothing by default"
-]
-
-{ #category : #'browse-nautilus' }
-DANode >> browseMethodInNautilus: aMethod [
-	| classToBrowse nautilus compiledMethod nautilusUI |
-	nautilus := self rootNode packageTreeNautilus.
-	nautilusUI := self rootNode packageTreeNautilusUI.
-	classToBrowse := aMethod methodClass.
-	compiledMethod := classToBrowse>>aMethod selector.
-	self setSelectionOnMethod: compiledMethod class: classToBrowse with: nautilus.
-	nautilusUI updateCategoryAndMethodList.
-	nautilusUI sourceTextModel announce: NautilusMethodSelected.	
-	
-	
-]
-
-{ #category : #'browse-nautilus' }
-DANode >> browsePackageInNautilus: aPackage [
-	| classToBrowse classFromPackage classesToBrowse |
-	classFromPackage := aPackage classes.
-	classesToBrowse := classFromPackage reject: [ :class | classFromPackage includes: class superclass ].
-	classToBrowse := classesToBrowse isEmpty
-		ifFalse: [ (classesToBrowse sorted: [ :a :b | a asString < b asString ]) first ].
-	classToBrowse ifNotNil: [ self browseClassInNautilus: classToBrowse ]
+{ #category : #accessing }
+DANode >> browser: anObject [
+	browser := anObject
 ]
 
 { #category : #accessing }
@@ -103,36 +68,8 @@ DANode >> label [
 ]
 
 { #category : #accessing }
-DANode >> packageTreeNautilus [
-	^ packageTreeNautilus
-]
-
-{ #category : #accessing }
-DANode >> packageTreeNautilus: anObject [
-	packageTreeNautilus := anObject
-]
-
-{ #category : #accessing }
-DANode >> packageTreeNautilusUI [
-	^ packageTreeNautilusUI
-]
-
-{ #category : #accessing }
-DANode >> packageTreeNautilusUI: anObject [
-	packageTreeNautilusUI := anObject
-]
-
-{ #category : #accessing }
 DANode >> packageUnderAnalysis [
 	^ self rootNode daPackage rPackageSet packages first
-]
-
-{ #category : #'browse-nautilus' }
-DANode >> refreshNautilus: nautilus [
-
-	| nautilusUI |
-	nautilusUI := self rootNode packageTreeNautilusUI.
-	nautilusUI updatePackageGroupAndClassList.
 ]
 
 { #category : #private }
@@ -148,22 +85,37 @@ DANode >> rootNode [
 ]
 
 { #category : #'browse-nautilus' }
-DANode >> setSelectionOnMethod: aMethod class: aClass with: nautilus [
-	| protocol nautilusUI |
-	aMethod ifNotNil: [ protocol := aMethod protocol ].
-	nautilusUI := self rootNode packageTreeNautilusUI.
-	self refreshNautilus: nautilus.
-	nautilus
-		browsedEnvironment: Nautilus defaultBrowsedEnvironment;
-		showInstance: aClass isMeta not.
-	nautilus
-		package: aClass package
-		class: aClass
-		protocol: protocol
-		method: aMethod.
-	nautilusUI
-		showHierarchy: false;
-		giveFocusToMethod
+DANode >> selectClass: aClass [
+	| aBrowser |
+	
+	aBrowser := self rootNode browser.
+	aBrowser selectClass: aClass
+]
+
+{ #category : #'browse-nautilus' }
+DANode >> selectInBrowser [
+	^ self subclassResponsibility
+]
+
+{ #category : #'browse-nautilus' }
+DANode >> selectMethod: aMethod [
+	| classToBrowse aBrowser compiledMethod |
+	aBrowser := self rootNode browser.
+	classToBrowse := aMethod methodClass.
+	compiledMethod := classToBrowse>>aMethod selector.
+	aBrowser selectMethod: compiledMethod
+]
+
+{ #category : #'browse-nautilus' }
+DANode >> selectPackage: aPackage [
+	| aBrowser |
+	aBrowser := self rootNode browser.
+	aBrowser selectPackage: aPackage
+]
+
+{ #category : #'browse-nautilus' }
+DANode >> spawnNewBrowser [
+	"do nothing by default"
 ]
 
 { #category : #accessing }

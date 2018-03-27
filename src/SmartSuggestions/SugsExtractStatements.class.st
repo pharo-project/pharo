@@ -10,6 +10,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsExtractStatements class >> nodes [
+	^{RBSequenceNode}
+]
+
 { #category : #execution }
 SugsExtractStatements >> execute [
 	| selectedValidCodeInterval |
@@ -17,11 +22,21 @@ SugsExtractStatements >> execute [
 	(NautilusRefactoring model: context) extractBetween: selectedValidCodeInterval from: context selectedMethod
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsExtractStatements >> icon [
+	^self iconNamed: #smallUpdateIcon
+]
+
+{ #category : #display }
 SugsExtractStatements >> label [
 	^'Extract method' translated.
 	
 
+]
+
+{ #category : #display }
+SugsExtractStatements >> position [
+	^10
 ]
 
 { #category : #private }

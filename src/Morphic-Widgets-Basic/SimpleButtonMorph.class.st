@@ -48,7 +48,9 @@ Class {
 { #category : #'instance creation' }
 SimpleButtonMorph class >> newWithLabel: labelString [
 
-	^ self new label:  labelString
+	^(self new) 
+		label: labelString;
+		yourself
 
 ]
 

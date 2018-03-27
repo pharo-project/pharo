@@ -13,7 +13,7 @@ Class {
 		'subscriber',
 		'action'
 	],
-	#category : #'Announcements-Core'
+	#category : #'Announcements-Core-Subscription'
 }
 
 { #category : #accessing }
@@ -79,7 +79,7 @@ AnnouncementSubscription >> makeWeak [
 		].
 
 	^ announcer replace: self with: 
-		(LegacyWeakSubscription new
+		(WeakAnnouncementSubscription new
 			announcer: announcer;
 			action: action asWeakMessageSend;
 			subscriber: subscriber;

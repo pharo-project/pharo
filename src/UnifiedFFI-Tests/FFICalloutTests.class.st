@@ -1,3 +1,6 @@
+"
+Tests for FFICallout
+"
 Class {
 	#name : #FFICalloutTests,
 	#superclass : #TestCase,
@@ -8,7 +11,7 @@ Class {
 		'CLASSVAR',
 		'TYPEVAR'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #private }
@@ -41,6 +44,7 @@ FFICalloutTests >> ffiBindingOf: aName [
 
 { #category : #running }
 FFICalloutTests >> setUp [
+	super setUp.
 	architecture := FFIArchitecture forCurrentArchitecture
 ]
 

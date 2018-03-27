@@ -19,7 +19,7 @@ Slot >> assignmentNodes [
 
 { #category : #'*Reflectivity' }
 Slot >> astNodes [
-	^self definingClass variableNodes select: [ :each | each binding variable == self ]
+	^self owningClass variableNodes select: [ :each | each binding variable == self ]
 ]
 
 { #category : #'*Reflectivity' }
@@ -84,7 +84,7 @@ Slot >> link: aMetaLink [
 	(aMetaLink checkForCompatibilityWith: self) ifFalse: [ self error: 'link requests reification that can not be provided by this node' ].
 	
 	methods := self usingMethods.
-	(self propertyAt: #links ifAbsentPut: [ IdentitySet new ]) add: aMetaLink.
+	(self propertyAt: #links ifAbsentPut: [ OrderedCollection new ]) add: aMetaLink.
 	aMetaLink installOnVariable: self.
 	methods
 		do: [ :method |  

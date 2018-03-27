@@ -28,10 +28,10 @@ OmFileStoreTest >> setUpStore [
 
 { #category : #running }
 OmFileStoreTest >> tearDown [
-	super tearDown.
 	
 	store fileReference ensureDelete.
 	otherStore fileReference ensureDelete.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -139,8 +139,8 @@ OmFileStoreTest >> testLoadFromCorruptFile4 [
 	store flush.
 	
 	"Override first characters"
-	store fileReference writeStreamDo: [ :stream | 
-		stream 
+	store fileReference binaryWriteStreamDo: [ :stream | 
+		(ZnCharacterReadWriteStream on: stream encoding: 'utf8')
 			upToAll: '41';
 			skip: -1;
 			nextPutAll: '**'.

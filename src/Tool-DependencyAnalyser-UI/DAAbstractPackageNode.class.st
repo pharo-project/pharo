@@ -7,12 +7,14 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #'browse-nautilus' }
-DAAbstractPackageNode >> browseInNautilus [
-	self browsePackageInNautilus: self rPackage.
-]
-
 { #category : #accessing }
 DAAbstractPackageNode >> packageName [
 	^ self content target packageName
+]
+
+{ #category : #'browse-nautilus' }
+DAAbstractPackageNode >> selectInBrowser [
+	"rPackage is always a RPackageSet"
+	
+	self selectPackage: self rPackage packages last.
 ]

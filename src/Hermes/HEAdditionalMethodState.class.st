@@ -1,3 +1,14 @@
+"
+I represent an AdditionMethodState.
+I serialize myself into a stream with the following fields:
+
+    - method
+    - selector
+    - an array containing all the elements in the original additional method state.
+
+Each of this elements is exported as a HEExportedLiteral.
+My value contains the array of elements in the AdditionalMethodState.
+"
 Class {
 	#name : #HEAdditionalMethodState,
 	#superclass : #HEExportedLiteral,
@@ -15,6 +26,7 @@ HEAdditionalMethodState class >> tag [
 
 { #category : #converting }
 HEAdditionalMethodState >> asLiteralIn: env [
+	"When the literal is deserialized in the environment, the method is the actual method that is currently deserialized (this #newMethod message)."
 	| additionalMethodState |
 	additionalMethodState := AdditionalMethodState new: value value size.
 	additionalMethodState method: env newMethod.
@@ -34,6 +46,7 @@ HEAdditionalMethodState >> doReadFrom: aReader [
 
 { #category : #accessing }
 HEAdditionalMethodState >> value: anAdditionalMethodState [
+	"I extract the information from the additional method state and convert it to exported literals."
 	method := anAdditionalMethodState method asExportedLiteral.
 	selector := anAdditionalMethodState selector asExportedLiteral.
 

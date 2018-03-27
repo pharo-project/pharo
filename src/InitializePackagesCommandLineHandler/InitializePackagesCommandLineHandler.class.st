@@ -81,9 +81,9 @@ InitializePackagesCommandLineHandler >> initializeProtocolsFrom: aFileName [
 			line := stream upTo: Character cr.
 			items := line findTokens: String tab.
 			class := (items second = 'true') 
-				ifTrue: [(Smalltalk classOrTraitNamed: items first) theMetaClass]
+				ifTrue: [(Smalltalk classOrTraitNamed: items first) classSide]
 				ifFalse: [Smalltalk classOrTraitNamed: items first].
 			selector := items third asSymbol.
-			(class localSelectors includes: selector)
+			(class selectors includes: selector)
 				ifTrue: [class organization classify: selector under: items fourth]]].
 ]

@@ -190,7 +190,7 @@ IRBytecodeGenerator >> compiledMethodWith: trailer [
 	lits := self literals.
 	quickPrimitive := self quickMethodPrim.
 	(primNumber = 0 and: [quickPrimitive > 0]) ifTrue: [
-		"if we are a quick method we need to add a byteocde at the beginning. #bytecodes
+		"if we are a quick method we need to add a bytecode at the beginning. #bytecodes
 		takes primitiveBytes into account" 
 		primitiveBytes := (ByteArray new: 4) writeStream.
 		encoder stream: primitiveBytes.

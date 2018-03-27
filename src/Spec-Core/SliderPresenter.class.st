@@ -50,6 +50,7 @@ SliderPresenter class >> defaultSpec [
 
 { #category : #specs }
 SliderPresenter class >> example [
+	<sampleInstance>
 	| slider |
 	slider := self new.
 	slider

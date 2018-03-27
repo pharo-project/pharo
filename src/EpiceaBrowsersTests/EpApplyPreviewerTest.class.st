@@ -7,7 +7,7 @@ Class {
 { #category : #resources }
 EpApplyPreviewerTest >> assertEmptyPreviewLog [
 
-	self assert: self outputEvents isEmpty.
+	self assert: self outputEvents isEmpty description: 'Shouldn''t find anything to apply'.
 ]
 
 { #category : #resources }
@@ -48,7 +48,7 @@ EpApplyPreviewerTest >> outputEvents [
 	outputLog :=
 		EpLogBrowserOperationFactory new
 			logBrowserModel: logBrowserModel;
-			entries: { inputEntry };
+			entries: inputEntries;
 			errorHandlerBlock: [:error | error signal ];
 			newApplyPreviewLog.
 	
@@ -427,6 +427,19 @@ EpApplyPreviewerTest >> testRedundantBehaviorCategoryChangeWithAbsentBehavior [
 ]
 
 { #category : #tests }
+EpApplyPreviewerTest >> testRedundantBehaviorCommentChange [
+
+	| aClass |
+	aClass := classFactory newClass.
+	aClass classComment: 'before'.
+	aClass classComment: 'after'.
+	aClass classComment: 'before'.
+	self setHeadAsInputEntry.
+
+	self assertEmptyPreviewLog.
+]
+
+{ #category : #tests }
 EpApplyPreviewerTest >> testRedundantBehaviorCommentChangeWithAbsentBehavior [
 
 	| aClass |
@@ -566,6 +579,19 @@ EpApplyPreviewerTest >> testRedundantProtocolRemoval [
 ]
 
 { #category : #'tests - multiple changes' }
+EpApplyPreviewerTest >> testRedundantSequenceOfMethodModifications [
+
+	| aClass |
+	aClass := classFactory newClass.
+	aClass compile: 'fortyTwo ^42' classified: 'number'.
+	aClass compile: 'fortyTwo ^43' classified: 'number'.
+	aClass compile: 'fortyTwo ^44' classified: 'number'.
+	self setMonitorLogAsInputEntries.
+
+	self assertEmptyPreviewLog
+]
+
+{ #category : #'tests - multiple changes' }
 EpApplyPreviewerTest >> testSequenceOfClassAndMethodAddition [
 
 	| aClass |
@@ -580,6 +606,28 @@ EpApplyPreviewerTest >> testSequenceOfClassAndMethodAddition [
 		| outputClasses |
 		outputClasses := output collect: #class as: Array.
 		self assert: outputClasses equals: { EpClassAddition. EpMethodAddition }.
+		]
+
+]
+
+{ #category : #'tests - multiple changes' }
+EpApplyPreviewerTest >> testSequenceOfMethodModifications [
+
+	| aClass |
+	aClass := classFactory newClass.
+	aClass compile: 'fortyTwo ^42' classified: 'number'.
+	aClass compile: 'fortyTwo ^43' classified: 'number'.
+	aClass compile: 'fortyTwo ^44' classified: 'number'.
+	self setMonitorLogAsInputEntries.
+
+	aClass removeSelector: #fortyTwo.
+	aClass removeFromSystem.
+
+	self assertOutputsEventsWith: [:output | 
+		| outputClasses |
+		outputClasses := output collect: #class as: Array.
+		self assert: outputClasses equals: { EpClassAddition. EpMethodModification }.
+		self assert: output last methodAffectedSourceCode equals: 'fortyTwo ^44'.
 		]
 
 ]

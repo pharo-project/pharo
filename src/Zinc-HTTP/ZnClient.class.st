@@ -367,9 +367,8 @@ ZnClient >> downloadEntityTo: path [
 	self entity ifNil: [ ^ self ].
 	target := ZnFileSystemUtils downloadPathTo: path for: self request uri lastPathSegment.
 	ZnFileSystemUtils
-		newFileNamed: target
-		do: [ :fileStream | 
-			fileStream binary.
+		newBinaryFileNamed: target
+		do: [ :fileStream |
 			self withProgressDo: [ self entity writeOn: fileStream ] ]
 ]
 
@@ -1486,8 +1485,7 @@ ZnClient >> uploadEntityFrom: path [
 	You can then use #put or #post to actually do an upload."
 	
 	| stream type length |
-	stream := ZnFileSystemUtils fileStreamFor: path.
-	stream binary.
+	stream := ZnFileSystemUtils binaryFileStreamFor: path.
 	type := ZnMimeType forFilenameExtension: (ZnFileSystemUtils extensionFor: path).
 	length := ZnFileSystemUtils fileSizeFor: path.
 	self entity: (ZnStreamingEntity readFrom: stream usingType: type andLength: length)

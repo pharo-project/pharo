@@ -11,6 +11,16 @@ Class {
 }
 
 { #category : #bordering }
+DisplayMedium >> border: aRectangle margins: insets rule: combinationRule fillColor: aHalfTone [
+	"Paint a border whose rectangular area is defined by aRectangle. The 
+	width of each edge of the border is determined by the four coordinates 
+	of insets. Uses aHalfTone and combinationRule for drawing the border."
+
+	(aRectangle areasOutside: (insets insetRectangle: aRectangle )) do:
+		[:edgeStrip | self fill: edgeStrip rule: combinationRule fillColor: aHalfTone]
+]
+
+{ #category : #bordering }
 DisplayMedium >> border: aRectangle width: borderWidth [ 
 	"Paint a border whose rectangular area is defined by aRectangle. The 
 	width of the border of each side is borderWidth. Uses theme borderColor for 
@@ -25,30 +35,21 @@ DisplayMedium >> border: aRectangle width: borderWidth [
 
 { #category : #bordering }
 DisplayMedium >> border: aRectangle width: borderWidth fillColor: aHalfTone [ 
-	"Paint a border whose rectangular area is defined by aRectangle. The 
-	width of the border of each side is borderWidth. Uses aHalfTone for 
-	drawing the border."
+	"Paint a border whose rectangular area is defined by aRectangle. The width of the border of each side is borderWidth. Uses aHalfTone for drawing the border."
 
 	self border: aRectangle
-		widthRectangle: 
-			(Rectangle
-				left: borderWidth
-				right: borderWidth
-				top: borderWidth
-				bottom: borderWidth)
+		width: borderWidth
 		rule: Form over
 		fillColor: aHalfTone
 ]
 
 { #category : #bordering }
 DisplayMedium >> border: aRectangle width: borderWidth rule: combinationRule fillColor: aHalfTone [ 
-	"Paint a border whose rectangular area is defined by aRectangle. The 
-	width of the border of each side is borderWidth. Uses aHalfTone for 
-	drawing the border."
+	"Paint a border whose rectangular area is defined by aRectangle. The width of the border of each side is borderWidth. Uses aHalfTone for drawing the border."
 
 	self border: aRectangle
-		widthRectangle: 
-			(Rectangle
+		margins: 
+			(Margin
 				left: borderWidth
 				right: borderWidth
 				top: borderWidth
@@ -63,8 +64,20 @@ DisplayMedium >> border: aRectangle widthRectangle: insets rule: combinationRule
 	width of each edge of the border is determined by the four coordinates 
 	of insets. Uses aHalfTone and combinationRule for drawing the border."
 
-	(aRectangle areasOutside: (aRectangle insetBy: insets)) do:
-		[:edgeStrip | self fill: edgeStrip rule: combinationRule fillColor: aHalfTone]
+	| deprecationMessage |
+	deprecationMessage := 'Use #border:margins:rule:fillColor: instead'.
+	insets class = Rectangle
+		ifTrue:
+			[ deprecationMessage := deprecationMessage
+				,
+					'\Change sender to use Margin instead of Rectangle. \ Rectangles are now normalized, and can no longer interchangeably be used as margins'
+						withCRs ].
+	self deprecated: deprecationMessage on: '10 December 2017' in: 'Pharo70'.
+	^ self
+		border: aRectangle
+		margins: insets asMargin
+		rule: combinationRule
+		fillColor: aHalfTone
 ]
 
 { #category : #displaying }

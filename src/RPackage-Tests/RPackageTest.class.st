@@ -5,21 +5,22 @@ Class {
 	#name : #RPackageTest,
 	#superclass : #RPackageTestCase,
 	#category : #'RPackage-Tests'
-}
+} 
 
 { #category : #running }
 RPackageTest >> tearDown [ 
-	super tearDown.
+	
 	#(TestClass TestClassOther) 
 		do: [ :each | 
-			self class environment at: each ifPresent: #removeFromSystem ]
+			self class environment at: each ifPresent: #removeFromSystem ].
+	super tearDown	
 ]
 
 { #category : #tests }
 RPackageTest >> testActualClassTags [
 
 	| packageWithoutClassTags packageWithClassTags |
-	packageWithoutClassTags := RPackageOrganizer default packageOf: Announcement.
+	packageWithoutClassTags := RPackageOrganizer default packageOf: StartupAction.
 	self deny: packageWithoutClassTags classTags isEmpty.
 	self assert: packageWithoutClassTags actualClassTags isEmpty.
 	

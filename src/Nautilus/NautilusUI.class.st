@@ -224,6 +224,13 @@ NautilusUI >> basicRemoveClasses: aCollection [
 		aCollection do: #removeFromSystem.
 ]
 
+{ #category : #refactorings }
+NautilusUI >> basicRenameClass: aClass [
+	" Override to set the class rename with RB by default "
+
+	self renameClassWithRefactoringEngine: aClass
+]
+
 { #category : #private }
 NautilusUI >> basicRenamePackage: aPackage [ 
 
@@ -956,7 +963,7 @@ NautilusUI >> methodModified: anAnnouncement [
 	
 	collection := self classWidget getClassesList.
 	nonMetaMethodClass:=anAnnouncement methodClass.
-	self showInstance ifFalse:[nonMetaMethodClass:=nonMetaMethodClass theNonMetaClass].
+	self showInstance ifFalse:[nonMetaMethodClass:=nonMetaMethodClass instanceSide ].
 	((collection includes: nonMetaMethodClass) or: [ anAnnouncement methodClass users includes: self selectedClass  ])
 		ifTrue: [
 			| method selectedMethod oldMethod |
@@ -1232,6 +1239,18 @@ NautilusUI >> promoteSelectedPackageTagAsPackage [
 	self selectedPackage item promoteAsRPackage
 ]
 
+{ #category : #refactorings }
+NautilusUI >> refactor [
+
+	^ NautilusRefactoring model: self
+]
+
+{ #category : #refactorings }
+NautilusUI >> refactorCode: aText [
+	acceptor := CodeRefactoringAcceptor model: self.
+	self sourceCode: aText
+]
+
 { #category : #'private dispatch' }
 NautilusUI >> registerSelectionGroup: aSelection [
 	self model selectedGroup: aSelection item.
@@ -1292,6 +1311,12 @@ NautilusUI >> removeClassCategory: packageTag [
 	packageTag asNautilusSelection item removeFromPackage.
 ]
 
+{ #category : #refactorings }
+NautilusUI >> removeClassWithRefactoringEngine: aCollection [
+
+	^ self refactor removeClasses: aCollection 
+]
+
 { #category : #'menus behavior' }
 NautilusUI >> removeGroups [
 	self okToChange ifFalse: [ ^ self ].
@@ -1339,7 +1364,7 @@ NautilusUI >> removeMethods [
 { #category : #'menus behavior' }
 NautilusUI >> removeNonLocalSelector: aSymbol [
 	| traits isAlias |
-	traits := self selectedClassOrMetaClass traitsProvidingSelector: aSymbol.
+	traits := self selectedClassOrMetaClass traitComposition traitDefining: aSymbol.
 	isAlias := self selectedClassOrMetaClass isLocalAliasSelector: aSymbol.
 	isAlias
 		ifTrue: [
@@ -1419,6 +1444,12 @@ NautilusUI >> renameClassCategory: packageTag [
 
 ]
 
+{ #category : #refactorings }
+NautilusUI >> renameClassWithRefactoringEngine: aClass [
+
+	self refactor renameClass: aClass 
+]
+
 { #category : #private }
 NautilusUI >> renamePackage: aSelection [
 	aSelection asNautilusSelection renameTarget: self. 
@@ -1483,6 +1514,13 @@ NautilusUI >> restrictedBrowsePackages: selections [
 	^ super restrictedBrowsePackages: (selections collect: [ :each | each asNautilusSelection item ])
 ]
 
+{ #category : #refactorings }
+NautilusUI >> rewriteCode: aText [
+
+	acceptor := CodeRewritingAcceptor model: self.
+	self sourceCode: aText
+]
+
 { #category : #private }
 NautilusUI >> runPackagesTestsNotifying: aBoolean [
 	| packages classes label |
@@ -1504,6 +1542,13 @@ NautilusUI >> runPackagesTestsNotifying: aBoolean [
 { #category : #'menus behavior' }
 NautilusUI >> runTestForAMethod: aMethod notifying: aBoolean [
 	^self class runTestForAMethod: aMethod notifying: aBoolean
+]
+
+{ #category : #refactorings }
+NautilusUI >> searchCode: aText [
+	acceptor := CodeSearchingAcceptor model: self.
+	self setStylerClass: nil.
+	self pendingText: aText
 ]
 
 { #category : #selection }
@@ -1597,7 +1642,7 @@ NautilusUI >> selectedClassWithoutChangingSelection: aClass [
 		ifNotNil: [ 
 			acceptor := ClassOrMethodDefinitionAcceptor model: self.
 			self classWidget selectClass: aClass.
-			((self selectedPackageIncludes: aClass theNonMetaClass) or: [ model showHierarchy ])
+			((self selectedPackageIncludes: aClass instanceSide) or: [ model showHierarchy ])
 				ifTrue: [ 
 					self model
 						package: self selectedPackage
@@ -1767,7 +1812,7 @@ NautilusUI >> showHierarchy: aBoolean [
 	(selectedClass := self selectedClass) ifNil: [ ^ self ]. "Since the double clic comes after a simple clic and simple clic deselects selected item, we are forced to have this guard. A alternative would be to change the simple clic but the side effects are too big"
 	self resetClassesListSelection.
 	self resetClassesList.
-	self classWidget showHierarchy: aBoolean forClass: selectedClass theNonMetaClass.
+	self classWidget showHierarchy: aBoolean forClass: selectedClass instanceSide.
 
 	"If showPackages false(Hierarchy)-->true(Flat) then selected package needs to synch to that of selected class"
 	self packageWidget enabled: aBoolean not.

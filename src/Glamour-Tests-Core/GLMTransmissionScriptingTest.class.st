@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 GLMTransmissionScriptingTest >> setUp [
+	super setUp.
 	browser := GLMExplicitBrowser new.
 	browser addPane: (GLMPane new name: #one).
 	browser addPane: (GLMPane new name: #two).

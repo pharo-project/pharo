@@ -65,6 +65,6 @@ MethodIsScriptAction >> runScript [
 { #category : #'private - actions' }
 MethodIsScriptAction >> runScriptForPragma: pragma [
 
-	method methodClass theNonMetaClass perform: method selector.
+	method methodClass instanceSide perform: method selector.
 	 
 ]

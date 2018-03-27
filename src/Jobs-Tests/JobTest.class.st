@@ -11,7 +11,8 @@ Class {
 JobTest >> tearDown [
 
 	Smalltalk globals at: #SystemProgressMorph ifPresent: [:spm | 
-		spm uniqueInstance bars do: [ :e | e close ]] 
+		spm uniqueInstance bars do: [ :e | e close ]].
+	super tearDown
 ]
 
 { #category : #tests }
@@ -21,16 +22,15 @@ JobTest >> testChildJob [
 	
 	wasRun := false.
 	
-	[ :job | 
-	
+	[ :job | 	
 		[ :job2 | 
-			self assert: job children size = 1.
-			self assert: job children first = job2.
+			self assert: job children size equals: 1.
+			self assert: job children first equals: job2.
 			wasRun := true ] asJob run.
 	
 		self assert: job children isEmpty ] asJob run.
 	
-	self assert: wasRun.
+	self assert: wasRun
 ]
 
 { #category : #tests }
@@ -64,7 +64,7 @@ JobTest >> testJobAnnouncements [
 		assert: (announcements collect: #class as: Array)
 		equals: {JobStart. JobChange. JobEnd}.
 
-	Job jobAnnouncer unsubscribe: announcements.
+	Job jobAnnouncer unsubscribe: announcements
 ]
 
 { #category : #tests }
@@ -83,7 +83,7 @@ JobTest >> testLookupJob [
 			self deny: noneFound.
 
 			result := job lookup: [ :aJob | aJob == job2 ] ifNone: [ noneFound := true. 42 ].
-			self assert: result = 42.
+			self assert: result equals: 42.
 			self assert: noneFound.
 
 			] asJob run.
@@ -101,7 +101,7 @@ JobTest >> testOwner [
 			self assert: job owner == self.
 			self assert: job2 owner == self.
  		] asJob run.
-	] asJob run.
+	] asJob run
 
 ]
 
@@ -113,7 +113,7 @@ JobTest >> testProgress [
 	job min: 0; max: 1.
 	self assert: job progress equals: 0.0.
 	job currentValue: 1.
-	self assert: job progress equals: 1.0.
+	self assert: job progress equals: 1.0
 ]
 
 { #category : #tests }
@@ -125,7 +125,7 @@ JobTest >> testProgressChangeByCurrentValue [
 	job currentValue: 6.
 	self assert: job progress equals: 0.5.
 	job currentValue: 11.
-	self assert: job progress equals: 1.0.
+	self assert: job progress equals: 1.0
 ]
 
 { #category : #tests }
@@ -136,5 +136,5 @@ JobTest >> testSingleJob [
 	[ :job | 
 		self assert: job children isEmpty.
 		wasRun := true ] asJob run.	
-	self assert: wasRun.
+	self assert: wasRun
 ]

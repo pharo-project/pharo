@@ -7,7 +7,7 @@ Class {
 	#category : #'Athens-Text'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 SimpleTextGlyphInfo class >> fromFace: anFT2Face [
 	^(self new)
 		loadFrom: anFT2Face;
@@ -25,6 +25,6 @@ SimpleTextGlyphInfo >> loadFrom: anFT2Face [
 	
 	face := anFT2Face.
 	self primLoadFrom: anFT2Face.
-	format := ((Smalltalk isLittleEndian) ifTrue: [ format reversed ] ifFalse: [ format ]) asString.
+	format := (EndianDetector isLittleEndian ifTrue: [ format reversed ] ifFalse: [ format ]) asString.
 
 ]

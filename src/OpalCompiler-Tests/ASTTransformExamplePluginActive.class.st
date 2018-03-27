@@ -17,5 +17,6 @@ ASTTransformExamplePluginActive class >> compiler [
 
 { #category : #example }
 ASTTransformExamplePluginActive >> example42 [
+	<sampleInstance>
 	^42
 ]

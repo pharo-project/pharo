@@ -5,18 +5,13 @@ A StepThroughDebugAction through the execution until control returns to the curr
 Class {
 	#name : #StepThroughDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
 StepThroughDebugAction class >> actionType [
 	<debuggingAction>
 	<contextMenuDebuggingAction>
-]
-
-{ #category : #accessing }
-StepThroughDebugAction >> defaultHelp [
-	^ 'Step over the highlighted message, i.e. do not follow the sent message, taking debugger control after the method invoked returns or whenever execution should return inside a block used as an argument before that.'
 ]
 
 { #category : #accessing }
@@ -41,6 +36,11 @@ StepThroughDebugAction >> defaultOrder [
 StepThroughDebugAction >> executeAction [
 
 	self session stepThrough: self currentContext
+]
+
+{ #category : #accessing }
+StepThroughDebugAction >> help [
+	^ 'Step over the highlighted message, i.e. do not follow the sent message, taking debugger control after the method invoked returns or whenever execution should return inside a block used as an argument before that.'
 ]
 
 { #category : #accessing }

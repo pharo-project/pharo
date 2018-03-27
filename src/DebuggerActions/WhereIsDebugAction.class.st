@@ -5,19 +5,13 @@ A WhereIsDebugAction highlights in the code editor the current instruction.
 Class {
 	#name : #WhereIsDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
 WhereIsDebugAction class >> actionType [
 	<debuggingAction>
 	<contextMenuDebuggingAction>
-]
-
-{ #category : #accessing }
-WhereIsDebugAction >> defaultHelp [
-
-	^ 'Highligh the next method to be executed (step) by the debugger.'
 ]
 
 { #category : #accessing }
@@ -37,6 +31,11 @@ WhereIsDebugAction >> executeAction [
 
 	self debugger code setSelection: (self session 
 		pcRangeForContext:  self currentContext)	
+]
+
+{ #category : #accessing }
+WhereIsDebugAction >> help [
+	^ 'Highligh the next method to be executed (step) by the debugger.'
 ]
 
 { #category : #accessing }
