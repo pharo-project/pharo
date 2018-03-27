@@ -143,8 +143,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Reflectivity-Tools'.
 
 		spec package: 'Rubric-Styling'.
-
-		spec package: 'FuelTools-Debugger'.
 		
 		spec package: 'Deprecated70'.
 		spec package: 'Flashback-Decompiler'.
@@ -154,11 +152,12 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Tests'.
-		spec package: 'Ring-Tests-Kernel'.
+		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'AST-Tests-Core'.
 		spec package: 'Compiler-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
-		spec package: 'FuelTests'.
+		spec package: 'Fuel-Tests-Core'.
+		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'Kernel-Tests-WithCompiler'.
@@ -168,8 +167,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
 		spec package: 'ReleaseTests'.
-		spec package: 'Ring-Tests-Containers'.
-		spec package: 'Ring-Tests-Kernel'.
+		spec package: 'Ring-Deprecated-Tests-Containers'.
+		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'System-DependenciesTests'.
 		
 		spec package: 'System-Serial Port'.
@@ -255,8 +254,9 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Athens-Morphic'.
 		spec package: 'Athens-CairoPools'.
 		spec package: 'Athens-Cairo'.
-		spec package: 'Athens-Examples'.
-
+		spec package: 'Athens-Examples'. 
+		spec package: 'Athens-Tests-Cairo'.
+ 
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
 		
@@ -339,7 +339,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Regex-Tests-Core'.
 		spec package: 'Renraku-Help'.
 		spec package: 'Renraku-Test'.
-		spec package: 'Ring-Tests-Monticello'.
+		spec package: 'Ring-Deprecated-Tests-Monticello'.
 		spec package: 'Rubric-Rules'.
 		spec package: 'Rubric-Tests'.
 		spec package: 'ScriptingExtensions-Tests'.
@@ -385,7 +385,7 @@ BaselineOfIDE >> baseline: spec [
 BaselineOfIDE >> groups: spec [ 
     
 spec group: 'Mandatory-Group' with: #(
-	'FuelTools-Debugger'	"required by GT-Debugger HudsonBuildTools20"
+	'Fuel-Tools-Pharo'	"required by GT-Debugger HudsonBuildTools20"
 	'Network-Tests'		"required by Multilingual-Tests"
 	'Gofer-Tests'		"required by EpiceaTests Metacello-TestsMC, depends on 'Metacello-Tests-Group', cleanup needed?"
 ). 
@@ -435,7 +435,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Kernel-Tests-Group' "dependency"
 	'Monticello-Tests'	"required by MonticelloMocks"
 	'MonticelloMocks'
-	'FuelTests'
+	'Fuel-Tests-Core'
 	'Balloon-Tests'
 	'Collections-DoubleLinkedList-Tests'
 	'ConfigurationCommandLineHandler-Tests'
@@ -459,7 +459,7 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Reflectivity-Tools-Tests'
 	'Regex-Tests-Core'
-	'Ring-Tests-Monticello'
+	'Ring-Deprecated-Tests-Monticello'
 	'Rubric-Tests'
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
@@ -750,6 +750,7 @@ spec group: 'Athens-Group' with: #(
 	'Athens-CairoPools'
 	'Athens-Cairo'
 	'Athens-Examples'
+   'Athens-Tests-Cairo'
 ).		
 
 spec group: 'OSWindow-Core-Group' with: #(
@@ -811,8 +812,8 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'OpalCompiler-Tests' 
 	'Random-Tests'
 	"'ReleaseTests'"
-	'Ring-Tests-Kernel'
-	'Ring-Tests-Containers' 
+	'Ring-Deprecated-Tests-Kernel'
+	'Ring-Deprecated-Tests-Containers' 
 	'Tests' 
 	'Zinc-Character-Encoding-Tests' 
 

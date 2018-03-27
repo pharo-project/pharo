@@ -89,7 +89,7 @@ ZnBufferedReadStream >> isBinary [
 	^ stream isBinary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 ZnBufferedReadStream >> isStream [
 	^ true
 ]
@@ -213,36 +213,59 @@ ZnBufferedReadStream >> position: anInteger [
 			stream position: anInteger ]
 ]
 
-{ #category : #accessing }
-ZnBufferedReadStream >> readInto: collection startingAt: offset count: requestedCount [
-	"Read requestedCount elements into collection starting at offset,
-	returning the number of elements read, there could be less elements available."
+{ #category : #private }
+ZnBufferedReadStream >> readFromBufferInto: collection startingAt: offset count: requestedCount [
+	"Read up to requestedCount elements into collection starting at offset,
+	from my buffer, answering the number of elements read.
+	There could be fewer elements buffered."
 
 	| read |
 	read := 0.
 	position <= limit
-		ifTrue: [ 
-			read := (limit - position + 1) min: requestedCount.
-			collection replaceFrom: offset to: offset + read - 1 with: buffer startingAt: position.
-			position := position + read.
-			read = requestedCount ifTrue: [ ^ requestedCount ] ].
+		ifTrue: [ read := limit - position + 1 min: requestedCount.
+			collection
+				replaceFrom: offset
+				to: offset + read - 1
+				with: buffer
+				startingAt: position.
+			position := position + read ].
 	^ read
-		+
-			(requestedCount - read < (buffer size / 2)
-				ifTrue: [ 
-					stream atEnd
-						ifTrue: [ 0 ]
-						ifFalse: [ 
-							self
-								nextBuffer;
-								readInto: collection startingAt: offset + read count: requestedCount - read ] ]
-				ifFalse: [ stream readInto: collection startingAt: offset + read count: requestedCount - read ])
+]
+
+{ #category : #accessing }
+ZnBufferedReadStream >> readInto: collection startingAt: offset count: requestedCount [
+	"Read requestedCount elements into collection starting at offset,
+	answering the number of elements read, there could be fewer elements available."
+
+	| countRead countYetToRead |
+	"First, read from elements already in my buffer."
+	countRead := self readFromBufferInto: collection startingAt: offset count: requestedCount.
+	countYetToRead := requestedCount - countRead.
+	countYetToRead > 0
+		ifTrue: [ "See if there are more elements to be read from the underlying stream"
+			| newOffset |
+			newOffset := offset + countRead.
+			(self shouldBufferReadOfCount: countYetToRead)
+				ifTrue: [ self nextBuffer.
+					limit > 0
+						ifTrue:
+							[ countRead := countRead + (self readInto: collection startingAt: newOffset count: countYetToRead) ] ]
+				ifFalse:
+					[ countRead := countRead + (stream readInto: collection startingAt: newOffset count: countYetToRead) ] ].
+	^ countRead
 ]
 
 { #category : #accessing }
 ZnBufferedReadStream >> setToEnd [
 	
 	stream setToEnd
+]
+
+{ #category : #private }
+ZnBufferedReadStream >> shouldBufferReadOfCount: elementCount [
+	"For larger read requests, buffering fails to give an advantage."
+
+	^ elementCount < (buffer size / 2)
 ]
 
 { #category : #accessing }

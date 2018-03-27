@@ -3,7 +3,9 @@ I'm a meta-object for accessing a slot in an Object.
 
 I define a protocol to read (#read:) and to write (#write:to:) values. 
 
-For customizing a subclass can override the meta-object-protocol methods. See subclasses for examples.
+For customizing a subclass can override the meta-object-protocol methods. See subclasses for examples. If your subclass holds state, the following must be overridden:
+- Printing: #definitionString must return the source code string to reconstruct an instance. This will be displayed in the class definition. By default, #definitionString is the printString, so you can also override #printOn: instead.
+- Equality: #= and #hash must be customized taking account of additional state.
 
 Vocabulary:
 - variable: named accessor for a Slot
@@ -82,6 +84,7 @@ Slot class >> slotSetting: aBuilder [
 
 { #category : #comparing }
 Slot >> = other [
+	"Every subclass that adds state must redefine this method"
 	self == other
 		ifTrue: [ ^ true ].
 	^ (self species == other species) 
@@ -126,8 +129,8 @@ Slot >> definingClass: aClass [
 
 { #category : #printing }
 Slot >> definitionString [
-	"for Slots, the printString is the defintion"
-	^self printString
+	"Every subclass that adds state must redefine either this method or #printOn:"
+	^ self printString
 ]
 
 { #category : #'code generation' }
@@ -187,6 +190,7 @@ Slot >> hasProperty: aKey [
 
 { #category : #comparing }
 Slot >> hash [
+	"Every subclass that adds state must redefine this method"
 	^ self species hash bitXor: self name hash
 ]
 
@@ -266,6 +270,7 @@ Slot >> owningClass: aClass [
 
 { #category : #printing }
 Slot >> printOn: aStream [
+	"Every subclass that adds state must redefine either this method or #definitionString"
 	aStream 
 		store: self name;
 		nextPutAll: ' => ';
