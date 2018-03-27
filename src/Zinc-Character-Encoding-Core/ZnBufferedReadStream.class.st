@@ -89,7 +89,7 @@ ZnBufferedReadStream >> isBinary [
 	^ stream isBinary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 ZnBufferedReadStream >> isStream [
 	^ true
 ]
@@ -245,13 +245,13 @@ ZnBufferedReadStream >> readInto: collection startingAt: offset count: requested
 		ifTrue: [ "See if there are more elements to be read from the underlying stream"
 			| newOffset |
 			newOffset := offset + countRead.
-			countRead := countRead
-				+
-					((self shouldBufferReadOfCount: countYetToRead)
-						ifTrue: [ self nextBuffer.
-							limit > 0
-								ifTrue: [ self readInto: collection startingAt: newOffset count: countYetToRead ] ]
-						ifFalse: [ stream readInto: collection startingAt: newOffset count: countYetToRead ]) ].
+			(self shouldBufferReadOfCount: countYetToRead)
+				ifTrue: [ self nextBuffer.
+					limit > 0
+						ifTrue:
+							[ countRead := countRead + (self readInto: collection startingAt: newOffset count: countYetToRead) ] ]
+				ifFalse:
+					[ countRead := countRead + (stream readInto: collection startingAt: newOffset count: countYetToRead) ] ].
 	^ countRead
 ]
 
