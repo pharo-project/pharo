@@ -1157,11 +1157,6 @@ Integer >> print: positiveNumberString on: aStream prefix: prefix length: minimu
 	
 ]
 
-{ #category : #printing }
-Integer >> printOn: aStream [
-	^self printOn: aStream base: 10
-]
-
 { #category : #'printing-numerative' }
 Integer >> printOn: aStream base: base length: minimum padded: zeroFlag [
 	| prefix |
