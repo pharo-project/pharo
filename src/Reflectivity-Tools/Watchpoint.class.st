@@ -151,13 +151,13 @@ Watchpoint >> printOn: aStream [
 { #category : #recording }
 Watchpoint >> start [
 	recording := true.
-	SystemAnnouncer uniqueInstance announce: (MetalinkChanged new link: link)
+	link announceChanged
 ]
 
 { #category : #recording }
 Watchpoint >> stop [
 	recording := false.
-	SystemAnnouncer uniqueInstance announce: (MetalinkChanged new link: link)
+	link announceChanged
 ]
 
 { #category : #accessing }
