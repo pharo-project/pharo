@@ -928,6 +928,24 @@ FileReferenceTest >> testUnequalSize [
 ]
 
 { #category : #tests }
+FileReferenceTest >> testUpToAll [
+	| testString filename  |
+	testString := 'ße'.
+	filename := 'test-file-' , 99 atRandom printString , '.txt'.
+
+	[  
+	filename asFileReference
+		writeStreamEncoded: 'utf8' do: [ :stream | 
+			stream nextPutAll: testString ].
+
+	filename asFileReference
+		readStreamDo: [ :stream |
+			self assert: (stream upToAll: 'e') equals: 'ß'.
+		] ]
+	ensure: [ filename asFileReference ensureDelete ] 
+]
+
+{ #category : #tests }
 FileReferenceTest >> testWithExtentionAddsExtension [
 	| ref result |
 	ref := filesystem * 'plonk'.
