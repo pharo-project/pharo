@@ -76,6 +76,11 @@ MetaLink >> allReifications [
 	^reifications
 ]
 
+{ #category : #installing }
+MetaLink >> announceChanged [
+	SystemAnnouncer uniqueInstance announce: (MetalinkChanged new link: self)	
+]
+
 { #category : #accessing }
 MetaLink >> arguments [
 	^arguments
