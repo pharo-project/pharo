@@ -295,9 +295,7 @@ TClassDescription >> classesThatImplementAllOf: selectorSet [
 { #category : #'accessing comment' }
 TClassDescription >> comment [
     "Answer the receiver's comment. (If missing, supply a template) "
-    ^self instanceSide organization classComment
-        ifNotEmpty: [:str | str] 
-        ifEmpty: [self classCommentBlank]
+    ^self instanceSide organization classComment ifEmpty: [ self classCommentBlank ]
 ]
 
 { #category : #'accessing comment' }
