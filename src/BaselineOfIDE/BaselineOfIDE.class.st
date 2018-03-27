@@ -364,7 +364,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
-		spec package: 'WriteBarrier-Tests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
 		spec package: 'Zinc-Resource-Meta-FileSystem'.	
 		spec package: 'Zinc-Tests'.
@@ -476,8 +475,7 @@ spec group: 'General-Tests-Group' with: #(
 	'System-Support-Tests'
 	'Text-Edition-Tests'
 	'Tool-FileList-Tests'
-	'Tools-Test'	
-	'WriteBarrier-Tests'
+	'Tools-Test'
 	'Zinc-Resource-Meta-FileSystem'	
 	'Zinc-Resource-Meta-Tests'
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"

@@ -1,5 +1,5 @@
 Class {
-	#name : #WriteBarrierStub,
+	#name : #WriteBarrierAnotherStub,
 	#superclass : #Object,
 	#instVars : [
 		'var1',
@@ -13,25 +13,25 @@ Class {
 		'var9',
 		'var10'
 	],
-	#category : #'WriteBarrier-Tests'
+	#category : #'Kernel-Tests-WriteBarrier'
 }
 
 { #category : #accessing }
-WriteBarrierStub >> var1 [
+WriteBarrierAnotherStub >> var1 [
 	^ var1
 ]
 
 { #category : #accessing }
-WriteBarrierStub >> var10 [
+WriteBarrierAnotherStub >> var10 [
 	^ var10
 ]
 
 { #category : #accessing }
-WriteBarrierStub >> var10: anObject [
+WriteBarrierAnotherStub >> var10: anObject [
 	var10 := anObject
 ]
 
 { #category : #accessing }
-WriteBarrierStub >> var1: anObject [
+WriteBarrierAnotherStub >> var1: anObject [
 	var1 := anObject
 ]
