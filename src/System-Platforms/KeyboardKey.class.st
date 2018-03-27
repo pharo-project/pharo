@@ -2,7 +2,7 @@
 I represent a keyboard Key. I am mapped from the platform specific keycodes into a common keycode base, by using my class side methods.
 "
 Class {
-	#name : #Key,
+	#name : #KeyboardKey,
 	#superclass : #Object,
 	#instVars : [
 		'value',
@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : #'class initialization' }
-Key class >> initialize [
+KeyboardKey class >> initialize [
 	self
 		initializeKeyTable;
 		initializeMacOSVirtualKeyTable;
@@ -27,7 +27,7 @@ Key class >> initialize [
 ]
 
 { #category : #'key table' }
-Key class >> initializeKeyTable [
+KeyboardKey class >> initializeKeyTable [
 	KeyTable := Dictionary new.
 	#(
 		16r08f6 Function "XK_function"
@@ -261,7 +261,7 @@ Key class >> initializeKeyTable [
 ]
 
 { #category : #macos }
-Key class >> initializeMacOSVirtualKeyTable [
+KeyboardKey class >> initializeMacOSVirtualKeyTable [
 	MacosVirtualKeyTable := Dictionary new.
 	MacosVirtualKeyTable
 		at: 16r24 put: (self value: 16rff0d); " kVK_Return                    = 0x24"
@@ -373,7 +373,7 @@ Key class >> initializeMacOSVirtualKeyTable [
 ]
 
 { #category : #unix }
-Key class >> initializeUnixVirtualKeyTable [
+KeyboardKey class >> initializeUnixVirtualKeyTable [
 	UnixVirtualKeyTable := Dictionary new.
 	UnixVirtualKeyTable
 		at: Character cr asciiValue put: (self value: 16rff0d); " kVK_Return                    = 0x24"
@@ -486,7 +486,7 @@ Key class >> initializeUnixVirtualKeyTable [
 ]
 
 { #category : #windows }
-Key class >> initializeWindowsVirtualKeyTable [
+KeyboardKey class >> initializeWindowsVirtualKeyTable [
 	WindowsVirtualKeyTable := Dictionary new.
 	WindowsVirtualKeyTable
 		at: 16r0d put: (self value: 16rff0d); " kVK_Return                    = 0x24"
@@ -599,63 +599,63 @@ Key class >> initializeWindowsVirtualKeyTable [
 ]
 
 { #category : #macos }
-Key class >> macOSVirtualKeyTable [
+KeyboardKey class >> macOSVirtualKeyTable [
 	MacosVirtualKeyTable ifNil: [ self initializeMacOSVirtualKeyTable. ].
 	^MacosVirtualKeyTable
 ]
 
 { #category : #unix }
-Key class >> unixVirtualKeyTable [
+KeyboardKey class >> unixVirtualKeyTable [
 	^KeyTable
 ]
 
 { #category : #unknownKeys }
-Key class >> unknownKeyName [
+KeyboardKey class >> unknownKeyName [
 	^#Unknown
 ]
 
 { #category : #'instance creation' }
-Key class >> value: aKeyValue [
+KeyboardKey class >> value: aKeyValue [
 	^KeyTable at: aKeyValue
 ]
 
 { #category : #macos }
-Key class >> valueForMacOSXPlatform: aKeyValue [
+KeyboardKey class >> valueForMacOSXPlatform: aKeyValue [
 
 	^self macOSVirtualKeyTable at: aKeyValue ifAbsent: [ (self basicNew withValue: aKeyValue andName: #Unknown) ] 
 ]
 
 { #category : #unix }
-Key class >> valueForUnixPlatform: aKeyValue [
+KeyboardKey class >> valueForUnixPlatform: aKeyValue [
 
 	^self unixVirtualKeyTable at: aKeyValue ifAbsent: [ (self basicNew withValue: aKeyValue) ] 
 ]
 
 { #category : #windows }
-Key class >> valueForWindowsPlatform: aKeyCode [
+KeyboardKey class >> valueForWindowsPlatform: aKeyCode [
 
 	^self windowsVirtualKeyTable at: aKeyCode ifAbsent: [ (self basicNew withValue: aKeyCode andName: #Unknown) ] 
 ]
 
 { #category : #windows }
-Key class >> windowsVirtualKeyTable [
+KeyboardKey class >> windowsVirtualKeyTable [
 
 	WindowsVirtualKeyTable ifNil: [ self initializeWindowsVirtualKeyTable. ].
 	^WindowsVirtualKeyTable
 ]
 
 { #category : #testing }
-Key >> isUnkownKey [
+KeyboardKey >> isUnkownKey [
 	 ^self name == self class unknownKeyName
 ]
 
 { #category : #accessing }
-Key >> name [
+KeyboardKey >> name [
 	^name
 ]
 
 { #category : #printing }
-Key >> printOn: aStream [
+KeyboardKey >> printOn: aStream [
 	aStream
 		nextPutAll: 'Key ';
 		nextPutAll: name;
@@ -665,12 +665,12 @@ Key >> printOn: aStream [
 ]
 
 { #category : #'initialize-release' }
-Key >> withValue: aValue [
+KeyboardKey >> withValue: aValue [
 	self withValue: aValue andName: self class unknownKeyName
 ]
 
 { #category : #'initialize-release' }
-Key >> withValue: aValue andName: aName [
+KeyboardKey >> withValue: aValue andName: aName [
 	value := aValue.
 	name := aName
 ]
