@@ -53,6 +53,7 @@ MetaLink class >> defaultOptions [
 	- optionMetalevel                   "force level: 0 for the link"
 	- optionDisabledLink                "links are active by default"
 	+ optionWeakAfter 						  "do not use #ensure: for #after "
+	- optionAnnounce                    "do we announce adding / removing links? Slow!"
 	)
 ]
 
@@ -77,8 +78,8 @@ MetaLink >> allReifications [
 ]
 
 { #category : #installing }
-MetaLink >> announceChanged [
-	SystemAnnouncer uniqueInstance announce: (MetalinkChanged new link: self)	
+MetaLink >> announceChange [
+	self optionAnnounce ifTrue: [SystemAnnouncer uniqueInstance announce: (MetalinkChanged new link: self)]
 ]
 
 { #category : #accessing }
@@ -292,6 +293,18 @@ MetaLink >> methods [
 { #category : #accessing }
 MetaLink >> option: anArray [ 
 	self parseOptions: anArray
+]
+
+{ #category : #options }
+MetaLink >> optionAnnounce [
+	^ options includes: #optionAnnounce
+]
+
+{ #category : #options }
+MetaLink >> optionAnnounce: aBoolean [
+	aBoolean
+		ifTrue: [ options add: #optionAnnounce ] 
+		ifFalse: [ options remove: #optionAnnounce ifAbsent:[] ]
 ]
 
 { #category : #options }
