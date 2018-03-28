@@ -143,8 +143,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Reflectivity-Tools'.
 
 		spec package: 'Rubric-Styling'.
-
-		spec package: 'FuelTools-Debugger'.
 		
 		spec package: 'Deprecated70'.
 		spec package: 'Flashback-Decompiler'.
@@ -154,11 +152,12 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Tests'.
-		spec package: 'Ring-Tests-Kernel'.
+		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'AST-Tests-Core'.
 		spec package: 'Compiler-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
-		spec package: 'FuelTests'.
+		spec package: 'Fuel-Tests-Core'.
+		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'Kernel-Tests-WithCompiler'.
@@ -168,8 +167,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
 		spec package: 'ReleaseTests'.
-		spec package: 'Ring-Tests-Containers'.
-		spec package: 'Ring-Tests-Kernel'.
+		spec package: 'Ring-Deprecated-Tests-Containers'.
+		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'System-DependenciesTests'.
 		
 		spec package: 'System-Serial Port'.
@@ -255,8 +254,9 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Athens-Morphic'.
 		spec package: 'Athens-CairoPools'.
 		spec package: 'Athens-Cairo'.
-		spec package: 'Athens-Examples'.
-
+		spec package: 'Athens-Examples'. 
+		spec package: 'Athens-Tests-Cairo'.
+ 
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
 		
@@ -288,7 +288,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Compression-Tests'.
 		spec package: 'ConfigurationCommandLineHandler-Tests'.
 		spec package: 'MetacelloCommandLineHandler-Tests'.
-		spec package: 'ContributingToTheCatalogHelp'.
 		spec package: 'Debugger-Tests'.
 		spec package: 'EmbeddedFreeType-Tests'.
 		spec package: 'FileSystem-Tests-Disk'.
@@ -311,8 +310,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Gofer-UI'.	
 		spec package: 'Graphics-Tests'.
 		spec package: 'HelpSystem-Tests'.
-		spec package: 'HowToContributeHelp'.
-		spec package: 'ImportingResource-Help'.
 		spec package: 'IssueTracking-Tests'.
 		spec package: 'Jobs-Tests'.
 		spec package: 'Kernel-Tests-Rules'.
@@ -342,7 +339,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Regex-Tests-Core'.
 		spec package: 'Renraku-Help'.
 		spec package: 'Renraku-Test'.
-		spec package: 'Ring-Tests-Monticello'.
+		spec package: 'Ring-Deprecated-Tests-Monticello'.
 		spec package: 'Rubric-Rules'.
 		spec package: 'Rubric-Tests'.
 		spec package: 'ScriptingExtensions-Tests'.
@@ -367,12 +364,9 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
-		spec package: 'WorldMenuHelp'.	
-		spec package: 'WriteBarrier-Tests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
 		spec package: 'Zinc-Resource-Meta-FileSystem'.	
 		spec package: 'Zinc-Tests'.
-		spec package: 'TravisIntegrationHelp'.
 		spec package: 'System-Identification-Tests'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
@@ -390,7 +384,7 @@ BaselineOfIDE >> baseline: spec [
 BaselineOfIDE >> groups: spec [ 
     
 spec group: 'Mandatory-Group' with: #(
-	'FuelTools-Debugger'	"required by GT-Debugger HudsonBuildTools20"
+	'Fuel-Tools-Pharo'	"required by GT-Debugger HudsonBuildTools20"
 	'Network-Tests'		"required by Multilingual-Tests"
 	'Gofer-Tests'		"required by EpiceaTests Metacello-TestsMC, depends on 'Metacello-Tests-Group', cleanup needed?"
 ). 
@@ -431,20 +425,16 @@ spec group: 'Epicea-Group' with: #(
 
 spec group: 'General-Help-Group' with: #(
 	'Announcements-Help'
-	'HowToContributeHelp'
-	'ImportingResource-Help'
 	'Pharo-Help'
 	'Regex-Help'
 	'Spec-Help'	
-	'TravisIntegrationHelp'	
-	'WorldMenuHelp'
 ).	
 
 spec group: 'General-Tests-Group' with: #(
 	'Kernel-Tests-Group' "dependency"
 	'Monticello-Tests'	"required by MonticelloMocks"
 	'MonticelloMocks'
-	'FuelTests'
+	'Fuel-Tests-Core'
 	'Balloon-Tests'
 	'Collections-DoubleLinkedList-Tests'
 	'ConfigurationCommandLineHandler-Tests'
@@ -468,7 +458,7 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Reflectivity-Tools-Tests'
 	'Regex-Tests-Core'
-	'Ring-Tests-Monticello'
+	'Ring-Deprecated-Tests-Monticello'
 	'Rubric-Tests'
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
@@ -485,8 +475,7 @@ spec group: 'General-Tests-Group' with: #(
 	'System-Support-Tests'
 	'Text-Edition-Tests'
 	'Tool-FileList-Tests'
-	'Tools-Test'	
-	'WriteBarrier-Tests'
+	'Tools-Test'
 	'Zinc-Resource-Meta-FileSystem'	
 	'Zinc-Resource-Meta-Tests'
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
@@ -638,12 +627,9 @@ spec group: 'Catalog-Core-Group' with: #(
 	'GT-Core-Group'	"dependency"
 	'Tool-Catalog'
 ).
-spec group: 'Catalog-Help-Group' with: #(
-	'ContributingToTheCatalogHelp'
-).
+
 spec group: 'Catalog-Group' with: #(
 	'Catalog-Core-Group'
-	'Catalog-Help-Group'
 ).
 
 spec group: 'SortFunctions-Group' with: #(
@@ -762,6 +748,7 @@ spec group: 'Athens-Group' with: #(
 	'Athens-CairoPools'
 	'Athens-Cairo'
 	'Athens-Examples'
+   'Athens-Tests-Cairo'
 ).		
 
 spec group: 'OSWindow-Core-Group' with: #(
@@ -823,8 +810,8 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'OpalCompiler-Tests' 
 	'Random-Tests'
 	"'ReleaseTests'"
-	'Ring-Tests-Kernel'
-	'Ring-Tests-Containers' 
+	'Ring-Deprecated-Tests-Kernel'
+	'Ring-Deprecated-Tests-Containers' 
 	'Tests' 
 	'Zinc-Character-Encoding-Tests' 
 

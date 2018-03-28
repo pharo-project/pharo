@@ -15,12 +15,6 @@ WhereIsDebugAction class >> actionType [
 ]
 
 { #category : #accessing }
-WhereIsDebugAction >> defaultHelp [
-
-	^ 'Highligh the next method to be executed (step) by the debugger.'
-]
-
-{ #category : #accessing }
 WhereIsDebugAction >> defaultLabel [
 
 	^ 'Where is?'
@@ -37,6 +31,11 @@ WhereIsDebugAction >> executeAction [
 
 	self debugger code setSelection: (self session 
 		pcRangeForContext:  self currentContext)	
+]
+
+{ #category : #accessing }
+WhereIsDebugAction >> help [
+	^ 'Highligh the next method to be executed (step) by the debugger.'
 ]
 
 { #category : #accessing }

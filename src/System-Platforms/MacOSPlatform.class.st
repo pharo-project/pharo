@@ -55,7 +55,7 @@ MacOSPlatform >> isMacOS [
 
 { #category : #accessing }
 MacOSPlatform >> keyForValue: aKeyValue [
-	^Key valueForMacOSXPlatform: aKeyValue.
+	^KeyboardKey valueForMacOSXPlatform: aKeyValue.
 ]
 
 { #category : #accessing }

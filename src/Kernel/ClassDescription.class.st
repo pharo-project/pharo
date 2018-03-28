@@ -349,11 +349,8 @@ ClassDescription >> classesThatImplementAllOf: selectorSet [
 
 { #category : #'accessing comment' }
 ClassDescription >> comment [
-	"Answer the receiver's comment. (If missing, supply a template) "
-	| aString |
-	aString := self instanceSide organization classComment.
-	aString isEmpty ifFalse: [^ aString].
-	^self classCommentBlank
+    "Answer the receiver's comment. (If missing, supply a template) "
+    ^self instanceSide organization classComment ifEmpty: [ self classCommentBlank ]
 ]
 
 { #category : #'accessing comment' }

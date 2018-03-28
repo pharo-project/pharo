@@ -1,5 +1,5 @@
 "
-I store metadata for this package. These meta data are used by other tools such as the SmalllintManifestChecker and the critics Browser
+Core classes of Pharo Smalltalk including basic objects, types, exceptions, process, etc.
 "
 Class {
 	#name : #ManifestKernel,
@@ -10,11 +10,6 @@ Class {
 { #category : #'meta-data' }
 ManifestKernel class >> dependencies [
 	^ #(#'System-Announcements' #'System-CommandLine' #'Collections-Strings' #'System-Localization' #'Slot-Core' #'Collections-Unordered' #'Collections-Streams' #Files #'System-Object Events' #'Collections-Abstract' #'Collections-Native' #'Collections-Support' #'System-Support' #'Multilingual-Encodings' #'Collections-Sequenceable' #NewValueHolder #'System-Sources' #Compiler #'OpalCompiler-Core' #'System-Finalization' #Traits #'Collections-Weak' #UIManager)
-]
-
-{ #category : #'meta-data' }
-ManifestKernel class >> description [
-	^ 'Core classes of Pharo Smalltalk including basic objects, types, exceptions, process, etc.'
 ]
 
 { #category : #'meta-data - dependency analyser' }

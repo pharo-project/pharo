@@ -84,6 +84,11 @@ SubclassResponsabilityDebugAction >> executeAction [
 ]
 
 { #category : #accessing }
+SubclassResponsabilityDebugAction >> help [
+	^ 'Create a method in a class having the responsability to implement it.'
+]
+
+{ #category : #accessing }
 SubclassResponsabilityDebugAction >> id [
 
 	^ #subclassResponsability

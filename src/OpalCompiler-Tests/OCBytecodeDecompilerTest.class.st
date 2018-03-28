@@ -5,7 +5,7 @@ Class {
 		'currentCompiler'
 	],
 	#category : #'OpalCompiler-Tests-Bytecode'
-} 
+}
 
 { #category : #examples }
 OCBytecodeDecompilerTest >> pushClosureCopyNoCopied [

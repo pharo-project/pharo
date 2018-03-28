@@ -174,11 +174,11 @@ FileSystemTest >> testCopy [
 		markForCleanup: 'gooly';
 		markForCleanup: 'plonk'.
 		
-	out := filesystem writeStreamOn: 'gooly'.
+	out := (filesystem workingDirectory / 'gooly') writeStream.
 	[ out nextPutAll: 'gooly' ] ensure: [ out close ].
 	filesystem copy: 'gooly' to: 'plonk'.
 	
-	in := filesystem readStreamOn: 'plonk'.
+	in := (filesystem workingDirectory / 'plonk') readStream.
 	contents := [ in contents asString ] ensure: [ in close ].
 	self assert: contents equals: 'gooly'
 ]
@@ -216,10 +216,10 @@ FileSystemTest >> testCopyDestExists [
 		markForCleanup: 'gooly'; 
 		markForCleanup: 'plonk'.
 		
-	out := (filesystem open: 'gooly' writable: true) writeStream.
+	out := (filesystem  workingDirectory / 'gooly') writeStream.
 	[out nextPutAll: 'gooly'] ensure: [out close].
 
-	(filesystem open: 'plonk' writable: true) writeStream close.
+	(filesystem  workingDirectory / 'plonk') writeStream close.
 	
 	self 
 		should: [filesystem copy: 'gooly' to: 'plonk']
@@ -447,7 +447,7 @@ FileSystemTest >> testFile [
 	path := Path * 'gooly'.
 	self markForCleanup: path.
 	
-	(filesystem open: path writable: true) writeStream close.
+	(filesystem workingDirectory resolve: path) writeStream close.
 	self assert: (filesystem exists: path).
 	self deny: (filesystem isDirectory: path).
 	self assert: (filesystem isFile: path).

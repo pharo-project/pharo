@@ -51,11 +51,6 @@ Class >> gtInspectorDefinitionIn: composite [
 Class >> gtInspectorInstanceVariablesIn: composite [
 	"This provides a list of all class instance variables and the corresponding values"
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	<gtInspectorPresentationOrder: 21>
 	composite table
 		title: 'InstVars';
@@ -77,11 +72,6 @@ Class >> gtInspectorInstancesOn: composite [
 { #category : #'*GT-InspectorExtensions-Core' }
 Class >> gtInspectorMethodsIn: composite [
 	"This provides a list of all methods provided by the current class"
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
 
 	<gtInspectorPresentationOrder: 20>
 	composite list 

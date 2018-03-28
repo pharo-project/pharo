@@ -62,7 +62,8 @@ MemoryFileSystemFile >> binaryReadStream [
 
 { #category : #streams }
 MemoryFileSystemFile >> binaryWriteStream [
-	^ WriteStream on: self from: 1 to: self size
+
+	^ MemoryFileWriteStream on: self
 ]
 
 { #category : #accessing }
@@ -139,6 +140,13 @@ MemoryFileSystemFile >> truncateTo: aSize [
 			ifFalse: [bytes copyFrom: 1 to: aSize]].
 	size := bytes size.
 	self modified.
+]
+
+{ #category : #private }
+MemoryFileSystemFile >> updateContents: aCollection [ 
+	
+	bytes := aCollection.
+	self updateSize: aCollection size.
 ]
 
 { #category : #private }

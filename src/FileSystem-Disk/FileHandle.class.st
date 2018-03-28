@@ -83,7 +83,7 @@ FileHandle >> binaryReadStream [
 
 { #category : #public }
 FileHandle >> binaryWriteStream [
-	^ ZnBufferedReadWriteStream on: (File named: reference fullName) writeStream
+	^ (File named: reference fullName) writeStream
 ]
 
 { #category : #public }
@@ -118,20 +118,6 @@ FileHandle >> open [
 	id ifNil: 	[
 		reference exists ifFalse: [FileDoesNotExist signalWith: reference].
 		self error: 'Unable to open file ' , reference printString]"
-]
-
-{ #category : #public }
-FileHandle >> readStream [
-
-	^ self readStreamEncoded: 'utf8'
-]
-
-{ #category : #public }
-FileHandle >> readStreamEncoded: anEncoding [
-	
-	^ ZnCharacterReadStream
-		on: self binaryReadStream
-		encoding: anEncoding
 ]
 
 { #category : #finalization }
@@ -182,18 +168,4 @@ FileHandle >> truncateTo: anInteger [
 	Primitives setPosition: id to: anInteger.
 	Primitives truncate: id to: anInteger.
 	self reopen
-]
-
-{ #category : #public }
-FileHandle >> writeStream [
-	
-	^ self writeStreamEncoded: 'utf8'
-]
-
-{ #category : #public }
-FileHandle >> writeStreamEncoded: anEncoding [
-
-	^ ZnCharacterWriteStream
-		on: self binaryWriteStream
-		encoding: anEncoding
 ]

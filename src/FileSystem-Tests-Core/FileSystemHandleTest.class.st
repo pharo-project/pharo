@@ -176,6 +176,6 @@ FileSystemHandleTest >> testTruncate [
 { #category : #tests }
 FileSystemHandleTest >> testWriteStream [
 	| stream |
-	stream := handle writeStream.
+	stream := handle binaryWriteStream.
 	self assert: (stream respondsTo: #nextPut:)
 ]

@@ -240,8 +240,8 @@ SourceFileArrayTest >> testRemoteStringReadsInGivenSourceFileArray [
 	fs := FileSystem memory.
 
 	array := SourceFileArray new.
-	array changesFileStream: (fs / 'changes.chunk') writeStream.
-	array sourcesFileStream: (fs / 'sources.chunk') writeStream.
+	array changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: { fs root }) tryOpen.
+	array sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: { fs root }) tryOpen.
 	
 	remoteString := array remoteStringForNewString: 'test'.
 	
@@ -264,8 +264,8 @@ SourceFileArrayTest >> testRemoteStringWritesInGivenSourceFileArray [
 	fs := FileSystem memory.
 
 	array := SourceFileArray new.
-	array changesFileStream: (fs / 'changes.chunk') writeStream.
-	array sourcesFileStream: (fs / 'sources.chunk') writeStream.
+	array changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: { fs root }) tryOpen.
+	array sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: { fs root }) tryOpen.
 	
 	array remoteStringForNewString: 'test'.
 	
@@ -368,8 +368,8 @@ SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArray [
 	fs := FileSystem memory.
 
 	array := SourceFileArray new.
-	array changesFileStream: (fs / 'changes.chunk') writeStream.
-	array sourcesFileStream: (fs / 'sources.chunk') writeStream.
+	array changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: { fs root }) tryOpen.
+	array sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: { fs root }) tryOpen.
 	
 	array
 		writeSource: 'some source'
@@ -412,8 +412,8 @@ SourceFileArrayTest >> testWriteToChangesFileInGivenSourceFileArray [
 	fs := FileSystem memory.
 
 	array := SourceFileArray new.
-	array changesFileStream: (fs / 'changes.chunk') writeStream.
-	array sourcesFileStream: (fs / 'sources.chunk') writeStream.
+	array changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: { fs root }) tryOpen.
+	array sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: { fs root }) tryOpen.
 	
 	array changesWriteStreamDo: [ :changesFile |
 		changesFile cr; cr;
@@ -424,6 +424,5 @@ SourceFileArrayTest >> testWriteToChangesFileInGivenSourceFileArray [
 		assert: (fs / 'changes.chunk') contents
 		equals: '
 
-test!
-'
+test!'
 ]

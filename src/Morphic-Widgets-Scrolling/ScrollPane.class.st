@@ -556,7 +556,7 @@ ScrollPane >> initializeScrollBars [
 { #category : #initialization }
 ScrollPane >> initializeScroller [
 	scroller := self newTransformMorph color: Color transparent.
-	scroller offset: -3 @ 0.
+	scroller offset: (self hMargin negated) @ 0.
 	self addMorph: scroller
 ]
 
@@ -724,7 +724,7 @@ ScrollPane >> scrollBy: delta [
 	
 	"Set the offset on the scroller"
 	newYoffset := scroller offset y - delta y max: 0.
-	newXoffset := scroller offset x - delta x max: -3.
+	newXoffset := scroller offset x - delta x max: (self hMargin negated).
 	
 	scroller offset: newXoffset@ newYoffset.
 
@@ -733,7 +733,7 @@ ScrollPane >> scrollBy: delta [
 		ifTrue: [scrollBar value: 0.0]
 		ifFalse: [scrollBar value: newYoffset asFloat / r].
 	(r := self hLeftoverScrollRange) = 0
-		ifTrue: [hScrollBar value: -3.0]
+		ifTrue: [hScrollBar value: 0.0]
 		ifFalse: [hScrollBar value: newXoffset asFloat / r]
 
 ]
