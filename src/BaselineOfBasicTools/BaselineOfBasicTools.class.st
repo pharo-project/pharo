@@ -24,6 +24,9 @@ Installs:
 Class {
 	#name : #BaselineOfBasicTools,
 	#superclass : #BaselineOf,
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfBasicTools
 }
 
@@ -100,8 +103,12 @@ BaselineOfBasicTools >> baseline: spec [
 { #category : #actions }
 BaselineOfBasicTools >> postload: loader package: packageSpec [
 
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
+
 	"Registering Nautilus"
- 	Nautilus registerToolsOn: Smalltalk tools.
+	AbstractNautilusUI	initialize.
+	Nautilus registerToolsOn: Smalltalk tools.
 	SessionManager default registerToolClassNamed: #Nautilus.
 	
 	Smalltalk tools register: TestRunner as: #testRunner.
@@ -114,6 +121,7 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 
 	Author reset.
 
+	Initialized := true.
 ]
 
 { #category : #baseline }

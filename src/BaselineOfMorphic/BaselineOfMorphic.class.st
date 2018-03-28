@@ -21,6 +21,9 @@ Class {
 	#instVars : [
 		'initializersEnabled'
 	],
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfMorphic
 }
 
@@ -259,6 +262,9 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	| array |
+	
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
 
 	'Starting postload action' logCr.
 
@@ -344,11 +350,16 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	Author reset.
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 
-	UIManager default restoreDisplay. 
+	UIManager default restoreDisplay.
+	
+	Initialized := true.
 ]
 
 { #category : #actions }
 BaselineOfMorphic >> preload: loader package: packageSpec [
+
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
 
 	'Starting preload action' logCr.
 	
