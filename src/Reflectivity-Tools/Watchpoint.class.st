@@ -110,7 +110,7 @@ Watchpoint >> install [
 				arguments: #(value);
 				control: #after;
 				condition: [ recording ];
-				option: #(+ optionWeakAfter).
+				option: #(+ optionWeakAfter +optionAnnounce).
 	node link: link.
 	self class allWatchpoints at: node put: self.
 ]
@@ -151,13 +151,13 @@ Watchpoint >> printOn: aStream [
 { #category : #recording }
 Watchpoint >> start [
 	recording := true.
-	link announceChanged
+	link announceChange
 ]
 
 { #category : #recording }
 Watchpoint >> stop [
 	recording := false.
-	link announceChanged
+	link announceChange
 ]
 
 { #category : #accessing }
