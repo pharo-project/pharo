@@ -10,7 +10,7 @@ createInitialObjects
 	"We initialize the hash table sizes by hand.
 	The AST interpreter is too slow to interpret HashTableSizes>>#initialize"
 	PBSubStepFinishedSignal log: 'initializing hash table sizes'.
-	self flag: 'check if it works faster with the optimized interpreter'.
+	
 	(self classNamed: #HashTableSizes) mirror
 		instanceVariableAtIndex: (self classInstanceVariableIndexAt: 1)
 		put: (objectSpace newArrayWithAll: (HashTableSizes sizes collect: [:each | objectSpace backend smallIntegerMirrorOn: each ])).
@@ -68,20 +68,18 @@ createInitialObjects
 	
 	PBSubStepFinishedSignal log: 'Bootstrapping class layouts'.
 	bootstrapInterpreter evaluateCode:
-		'| superLayout |
+		('| superLayout |
 		superLayout := EmptyLayout instance.
 		Class
 			instVarAt: 4
 			put: (FixedLayout
 					extending: superLayout 
-					scope: (superLayout slotScope extend: #(superclass methodDict format layout instanceVariables organization subclasses name classPool sharedPools environment category traitComposition localSelectors))
+					scope: (superLayout slotScope extend: #({1}))
 					host: Class).
-		Class
-			instVarAt: 5 put: #(superclass methodDict format layout instanceVariables organization subclasses name classPool sharedPools environment category traitComposition localSelectors).
-			
+		
 		SmallInteger
 			instVarAt: 4
-			put: (ImmediateLayout new).'.
+			put: (ImmediateLayout new).' format: {self espellBackend instanceVariableMapping listOfClassSlots}).
 			
 	PBStepFinishedSignal log: 'Class builder ready to create classes'.
 	classLoader useClassBuilder.

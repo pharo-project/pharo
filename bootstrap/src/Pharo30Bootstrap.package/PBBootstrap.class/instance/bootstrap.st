@@ -3,10 +3,9 @@ bootstrap
 
 	PBStepStartedSignal log: 'Starting  Process.'.
 
-	self
-		prepareBootstrap;
-		createImage;
-		initializeImage.
+	self prepareBootstrap.
+	[self createImage ] on:AssertionFailure do: [ :e | e resume ].
+	self initializeImage.
 		
 	PBStepFinishedSignal log: 'Process ended.'
 	
