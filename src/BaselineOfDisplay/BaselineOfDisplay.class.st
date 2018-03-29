@@ -83,6 +83,9 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 { #category : #actions }
 BaselineOfDisplay >> preload: loader package: packageSpec [
 
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
+
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.
 	
