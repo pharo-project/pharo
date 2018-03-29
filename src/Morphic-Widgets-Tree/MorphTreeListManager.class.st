@@ -167,7 +167,7 @@ MorphTreeListManager >> autoMultiSelect: aTargetMorph [
 				selHolder := self newSelectionHolderWithNodePath: nil.
 				self listModel selection: selHolder].
 			self selectionChanged.
-			self scrollToShow: aTargetMorph bounds]
+			self scrollToShow: aTargetMorph contentBounds]
 ]
 
 { #category : #accessing }
@@ -234,7 +234,7 @@ MorphTreeListManager >> basicKeyPressed: aChar [
 
     lastSelection := nextSelection.
     "change scrollbarvalue"
-    self scrollToShow: nextSelectionNodeMorph.
+    self scrollToShow: nextSelectionNodeMorph contentBounds.
     self selectionChanged
 ]
 
@@ -833,7 +833,7 @@ MorphTreeListManager >> setSelectionIndexFromKeyboard: index multiSelection: mul
 		ifTrue: [lastClickedMorph highlightForMouseDown: true].
 
 	self selectionChanged.
-	self scrollToShow: targetMorph
+	self scrollToShow: targetMorph contentBounds
 	
 
 ]

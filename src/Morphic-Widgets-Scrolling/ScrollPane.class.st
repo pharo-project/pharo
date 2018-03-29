@@ -771,17 +771,15 @@ ScrollPane >> scrollDeltaWidth [
 { #category : #scrolling }
 ScrollPane >> scrollToShow: aRectangle [
 	"scroll to include as much of aRectangle as possible, where aRectangle is in the scroller's local space"
-	| range |
-	((aRectangle top - scroller offset y) >= 0 and: [
-		(aRectangle bottom - scroller offset y) <= (self innerBounds height) ])
-		ifTrue:[ "already visible"^self ].
-
-	range := self vLeftoverScrollRange.
-	scrollBar value: (range > 0
-		ifTrue: [((aRectangle top) / self vLeftoverScrollRange)
-							truncateTo: scrollBar scrollDelta]
-		ifFalse: [0]).
-	scroller offset: (self hMargin negated) @ (range * scrollBar value).
+	| visibleRect dx dy |
+	visibleRect := Rectangle origin: scroller offset extent: self innerBounds extent.
+	dx := (aRectangle width < visibleRect width)
+		ifTrue: [ (visibleRect right - aRectangle right) min: 0 max: (visibleRect left - aRectangle left) ]
+		ifFalse: [ (visibleRect left - aRectangle left) min: 0 max: (visibleRect right - aRectangle right) ].
+	dy := (aRectangle height < visibleRect height)
+		ifTrue: [ (visibleRect bottom - aRectangle bottom) min: 0 max: (visibleRect top - aRectangle top) ]
+		ifFalse: [ (visibleRect top - aRectangle top) min: 0 max: (visibleRect bottom - aRectangle bottom) ].
+	self scrollBy: dx@dy.
 ]
 
 { #category : #access }
