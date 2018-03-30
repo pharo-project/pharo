@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'globals'
 	],
-	#category : 'Fuel-Core-Mappers'
+	#category : #'Fuel-Core-Mappers'
 }
 
 { #category : #'instance creation' }

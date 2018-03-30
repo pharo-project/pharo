@@ -4,7 +4,7 @@ I am the generic cluster for storing and loading variable byte objects.
 Class {
 	#name : #FLByteObjectCluster,
 	#superclass : #FLBitsObjectCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }

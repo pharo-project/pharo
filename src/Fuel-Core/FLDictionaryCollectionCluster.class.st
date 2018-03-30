@@ -4,7 +4,7 @@ A FLDictionaryCollectionCluster is a special optional cluster that rather than u
 Class {
 	#name : #FLDictionaryCollectionCluster,
 	#superclass : #FLAbstractCollectionCluster,
-	#category : 'Fuel-Core-Clusters-Optionals'
+	#category : #'Fuel-Core-Clusters-Optionals'
 }
 
 { #category : #'serialize/materialize' }

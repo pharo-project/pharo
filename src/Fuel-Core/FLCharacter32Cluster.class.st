@@ -4,7 +4,7 @@ I'm a cluster for Unicode characters.
 Class {
 	#name : #FLCharacter32Cluster,
 	#superclass : #FLPrimitiveCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }

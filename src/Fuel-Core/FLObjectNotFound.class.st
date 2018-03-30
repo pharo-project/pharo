@@ -8,7 +8,7 @@ Another possible cause is a bug in the analysis step of serialization.
 Class {
 	#name : #FLObjectNotFound,
 	#superclass : #FLSerializationError,
-	#category : 'Fuel-Core-Errors'
+	#category : #'Fuel-Core-Errors'
 }
 
 { #category : #signaling }

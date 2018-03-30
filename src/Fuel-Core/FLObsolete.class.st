@@ -4,7 +4,7 @@ I am an error produced during serialization, signaled when trying to serialize a
 Class {
 	#name : #FLObsolete,
 	#superclass : #FLSerializationError,
-	#category : 'Fuel-Core-Errors'
+	#category : #'Fuel-Core-Errors'
 }
 
 { #category : #signaling }

@@ -4,7 +4,7 @@ I am a cluster for objects with weak indexable variables.
 Class {
 	#name : #FLWeakVariableObjectCluster,
 	#superclass : #FLVariableObjectCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #analyzing }

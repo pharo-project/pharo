@@ -4,7 +4,7 @@ I am a cluster for MethodContexts.
 Class {
 	#name : #FLContextCluster,
 	#superclass : #FLVariableObjectCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }

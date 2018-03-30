@@ -11,7 +11,7 @@ Class {
 		'variables',
 		'targetClass'
 	],
-	#category : 'Fuel-Core-Base'
+	#category : #'Fuel-Core-Base'
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ I represent a cluster of objects grouped by some specific similarity. I know how
 Class {
 	#name : #FLCluster,
 	#superclass : #Object,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #analyzing }

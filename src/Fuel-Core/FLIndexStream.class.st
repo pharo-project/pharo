@@ -8,7 +8,7 @@ Class {
 		'stream',
 		'digits'
 	],
-	#category : 'Fuel-Core-Streams'
+	#category : #'Fuel-Core-Streams'
 }
 
 { #category : #'instance creation' }

@@ -8,7 +8,7 @@ Class {
 		'next',
 		'analysis'
 	],
-	#category : 'Fuel-Core-Mappers'
+	#category : #'Fuel-Core-Mappers'
 }
 
 { #category : #accessing }

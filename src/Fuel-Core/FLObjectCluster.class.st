@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'theClass'
 	],
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #analyzing }

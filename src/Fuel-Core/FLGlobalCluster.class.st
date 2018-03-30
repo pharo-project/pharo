@@ -4,7 +4,7 @@ I am a cluster for objects that are reachables from Smalltalk global dictionary.
 Class {
 	#name : #FLGlobalCluster,
 	#superclass : #FLPrimitiveCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #analyzing }

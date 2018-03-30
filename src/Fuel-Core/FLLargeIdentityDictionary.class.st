@@ -8,7 +8,7 @@ Class {
 		'keys',
 		'values'
 	],
-	#category : 'Fuel-Core-Collections'
+	#category : #'Fuel-Core-Collections'
 }
 
 { #category : #accessing }

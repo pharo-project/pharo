@@ -13,7 +13,7 @@ Class {
 		'postMaterializationActions',
 		'materialization'
 	],
-	#category : 'Fuel-Core-Base'
+	#category : #'Fuel-Core-Base'
 }
 
 { #category : #accessing }

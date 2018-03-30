@@ -4,7 +4,7 @@ I am a generic cluster for objects without indexable variables.
 Class {
 	#name : #FLFixedObjectCluster,
 	#superclass : #FLPointerObjectCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }
