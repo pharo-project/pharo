@@ -7,6 +7,11 @@ Class {
 	#category : #'Ring-Deprecated-Tests-Containers'
 }
 
+{ #category : #deprecation }
+RGPackageTest class >> isDeprecated [
+	^true
+]
+
 { #category : #testing }
 RGPackageTest >> testAddingClass [
 	| newPackage newClass |

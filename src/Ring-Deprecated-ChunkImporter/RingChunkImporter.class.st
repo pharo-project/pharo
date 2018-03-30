@@ -32,6 +32,11 @@ RingChunkImporter class >> fromStream: aStream [
 	^ self new fileInFrom: aStream; yourself
 ]
 
+{ #category : #deprecation }
+RingChunkImporter class >> isDeprecated [
+	^true
+]
+
 { #category : #private }
 RingChunkImporter >> classDefinition: aString with: chgRec [
 	| tokens theClass |

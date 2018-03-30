@@ -7,6 +7,11 @@ Class {
 	#category : #'Ring-Deprecated-Tests-Kernel'
 }
 
+{ #category : #deprecation }
+RGVariableDefinitionTest class >> isDeprecated [
+	^true
+]
+
 { #category : #testing }
 RGVariableDefinitionTest >> testClassInstanceVariable [
 	| instVar newClass metaClass |

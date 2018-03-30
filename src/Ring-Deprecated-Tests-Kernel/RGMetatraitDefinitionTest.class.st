@@ -7,6 +7,11 @@ Class {
 	#category : #'Ring-Deprecated-Tests-Kernel'
 }
 
+{ #category : #deprecation }
+RGMetatraitDefinitionTest class >> isDeprecated [
+	^true
+]
+
 { #category : #testing }
 RGMetatraitDefinitionTest >> testAsClassTraitfinition [
 	| rgCTrait cTrait |

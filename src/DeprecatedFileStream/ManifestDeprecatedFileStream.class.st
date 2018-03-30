@@ -3,3 +3,8 @@ Class {
 	#superclass : #PackageManifest,
 	#category : #DeprecatedFileStream
 }
+
+{ #category : #deprecation }
+ManifestDeprecatedFileStream class >> isDeprecated [
+	^true
+]

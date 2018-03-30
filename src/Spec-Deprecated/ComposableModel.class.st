@@ -6,3 +6,8 @@ Class {
 	#superclass : #ComposablePresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+ComposableModel class >> isDeprecated [
+	^self name = 'ComposableModel' "to avoid referencing itself"
+]

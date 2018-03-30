@@ -7,6 +7,11 @@ Class {
 	#category : #'Ring-Deprecated-Tests-Monticello'
 }
 
+{ #category : #deprecation }
+RGMonticelloTest class >> isDeprecated [
+	^true
+]
+
 { #category : #testing }
 RGMonticelloTest >> testAsMCMethodDefinition [
 	

@@ -12,6 +12,11 @@ Class {
 	#category : #DeprecatedFileStream
 }
 
+{ #category : #deprecation }
+RWBinaryOrTextStream class >> isDeprecated [
+	^true
+]
+
 { #category : #converting }
 RWBinaryOrTextStream >> asBinaryOrTextStream [
 

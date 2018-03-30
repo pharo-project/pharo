@@ -17,6 +17,11 @@ MultiByteBinaryOrTextStream class >> defaultConverter [
 
 ]
 
+{ #category : #deprecation }
+MultiByteBinaryOrTextStream class >> isDeprecated [
+	^true
+]
+
 { #category : #'instance creation' }
 MultiByteBinaryOrTextStream class >> on: aCollection encoding: encodingName [ 
 	| aTextConverter |

@@ -6,3 +6,8 @@ Class {
 	#superclass : #DatePresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+DateModel class >> isDeprecated [
+	^true
+]
