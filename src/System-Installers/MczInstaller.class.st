@@ -203,16 +203,11 @@ MczInstaller >> stream: aStream [
 { #category : #utilities }
 MczInstaller >> useNewChangeSetDuring: aBlock [
 	| changeHolder oldChanges newChanges |
-	changeHolder := (ChangeSet respondsTo: #newChanges:)
-						ifTrue: [ChangeSet]
-						ifFalse: [Smalltalk].
-	oldChanges := (ChangeSet respondsTo: #current)
-						ifTrue: [ChangeSet current]
-						ifFalse: [Smalltalk changes].
-
+	changeHolder := ChangeSet.
+	oldChanges := ChangeSet current.
 	newChanges := ChangeSet new name: (ChangeSet uniqueNameLike: self extractPackageName).
 	changeHolder newChanges: newChanges.
-	[aBlock value] ensure: [changeHolder newChanges: oldChanges].
+	[ aBlock value ] ensure: [changeHolder newChanges: oldChanges].
 ]
 
 { #category : #utilities }
