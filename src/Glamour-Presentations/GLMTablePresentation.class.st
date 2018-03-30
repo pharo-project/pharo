@@ -112,7 +112,7 @@ GLMTablePresentation >> exportToCSV [
 							nextPutAll: (self titleValueOfColumn: column);
 							nextPut: $" ]
 						separatedBy: [ stream nextPut: $, ].
-		stream cr.
+		stream newLine.
 		self displayValue 
 			do: [ :each |
 				self columns 
@@ -122,7 +122,7 @@ GLMTablePresentation >> exportToCSV [
 							nextPutAll: (self column: column valueFor: each) asString;
 							nextPut: $" ]
 					separatedBy: [ stream nextPut: $, ].
-				stream cr ]
+				stream newLine ]
 			displayingProgress: 'Exporting' ]
 ]
 

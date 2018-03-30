@@ -24,7 +24,7 @@ MorphTreeNavigationBar class >> createIconMethods [
 	#('smallToLeft' 'smallToRight' 'smallToLeftEnd' 'smallToRightEnd' 'smallDieze' 'smallVerticalResizing')
 		do: [:n | | form |
 			form := PNGReadWriter formFromFileNamed: n, '.png'.
-			self class compile: (n, 'Icon', String cr, String tab, '^ ', form storeString) classified: #icons]
+			self class compile: (n, 'Icon', String newLine, String tab, '^ ', form storeString) classified: #icons]
 ]
 
 { #category : #'instance creation' }

@@ -15,8 +15,8 @@ IRInstruction >> gtInspectorSourceCodeIn: composite [
 
 { #category : #'*OpalCompiler-Tools' }
 IRInstruction >> gtInspectorTreeIn: composite [
-	<gtInspectorPresentationOrder: 30> 
-	^composite tree
+	<gtInspectorPresentationOrder: 30>
+	^ composite tree
 		rootsExpanded;
 		title: 'SourceNode';
 		display: [ :anObject | {anObject sourceNode} ];
@@ -26,11 +26,11 @@ IRInstruction >> gtInspectorTreeIn: composite [
 			entitled: 'Open'
 			with: [ :tree | tree selection ];
 		format: [ :each | 
-					String
-						streamContents: [ :stream | 
-							stream
-								nextPutAll: each class name;
-								nextPut: $(;
-								nextPutAll: ((each formattedCode truncateTo: 50) copyReplaceAll: String cr with: String space);
-								nextPut: $) ] ]
+			String
+				streamContents: [ :stream | 
+					stream
+						nextPutAll: each class name;
+						nextPut: $(;
+						nextPutAll: ((each formattedCode truncateTo: 50) copyReplaceAll: String newLine with: String space);
+						nextPut: $) ] ]
 ]

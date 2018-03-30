@@ -302,6 +302,11 @@ VTermOutputDriver >> lines [
 	^ termcap getnum: 'li'
 ]
 
+{ #category : #writing }
+VTermOutputDriver >> newLine [
+	outStream newLine
+]
+
 { #category : #printing }
 VTermOutputDriver >> nextPut: aCharacter [ 
 	outStream nextPut: aCharacter.

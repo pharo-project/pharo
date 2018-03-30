@@ -51,7 +51,7 @@ TelnetProtocolClient >> fetchNextResponse [
 						and: [(response at: 4) = Character space]]] 
 					whileFalse: 
 						[result
-							cr;
+							newLine;
 							nextPutAll: response]].
 	self lastResponse: result contents
 ]

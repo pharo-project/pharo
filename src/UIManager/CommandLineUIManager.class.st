@@ -104,14 +104,20 @@ CommandLineUIManager >> choose: questionsAnswerDict title: queryString [
 CommandLineUIManager >> chooseFrom: aList lines: linesArray title: aString [
 	| maxPad |
 	maxPad := aList size asString size.
-	self stdout 
-		nextPutAll: aString; nextPut: $:; cr.
-	aList withIndexDo: [ :item :index |
-		self stdout 
-			nextPutAll: '    ['; nextPutAll: (index asString padLeftTo: maxPad); nextPutAll: '] ';
-			print: item; cr].
-	self stdout nextPutAll: '> '.	
-	^ aList at: (self stdin upToAnyOf: String crlf do: [ :chr| ]) asInteger.
+	self stdout
+		nextPutAll: aString;
+		nextPut: $:;
+		newLine.
+	aList
+		withIndexDo: [ :item :index | 
+			self stdout
+				nextPutAll: '    [';
+				nextPutAll: (index asString padLeftTo: maxPad);
+				nextPutAll: '] ';
+				print: item;
+				newLine ].
+	self stdout nextPutAll: '> '.
+	^ aList at: (self stdin upToAnyOf: String crlf do: [ :chr |  ]) asInteger
 ]
 
 { #category : #'ui requests' }
@@ -150,19 +156,17 @@ CommandLineUIManager >> confirm: queryString trueChoice: trueLabel falseChoice: 
 { #category : #debug }
 CommandLineUIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
 	| description |
-	description := String streamContents: [ :stream |
-		stream
-			nextPutAll: 'debugging process: ';
-			nextPutAll: process name;
-			cr;
-			nextPutAll: 'context:';
-			cr;
-			print: context.
-		notificationString ifNotNil: [ stream nextPutAll: notificationString ] ].
-	self 
-		logTitle: title
-		andDescription: description 
-		to: self stderr
+	description := String
+		streamContents: [ :stream | 
+			stream
+				nextPutAll: 'debugging process: ';
+				nextPutAll: process name;
+				newLine;
+				nextPutAll: 'context:';
+				newLine;
+				print: context.
+			notificationString ifNotNil: [ stream nextPutAll: notificationString ] ].
+	self logTitle: title andDescription: description to: self stderr
 ]
 
 { #category : #'ui TEasilyThemed' }
@@ -206,21 +210,21 @@ CommandLineUIManager >> headlessManager [
 
 { #category : #'ui requests' }
 CommandLineUIManager >> inform: aString [
-
 	| logBlock |
-
 	"Just log notifications"
-	(ProvideAnswerNotification signal: aString) ifNotNil: [:answer | ^true].
-	
-	logBlock := [:logger |
-		logger cr;
-			nextPutAll: (String new: 79 withAll: $= ); cr;
-			nextPutAll: 'Notice: ';
-			nextPutAll: aString; cr;
-			nextPutAll: (String new: 79 withAll: $= ); cr].
-
-	Smalltalk logDuring: logBlock.		
-	aString logCr.
+	(ProvideAnswerNotification signal: aString) ifNotNil: [ :answer | ^ true ].
+	logBlock := [ :logger | 
+	logger
+		newLine;
+		nextPutAll: (String new: 79 withAll: $=);
+		newLine;
+		nextPutAll: 'Notice: ';
+		nextPutAll: aString;
+		newLine;
+		nextPutAll: (String new: 79 withAll: $=);
+		newLine ].
+	Smalltalk logDuring: logBlock.
+	aString logCr
 ]
 
 { #category : #'ui requests' }
@@ -277,7 +281,7 @@ CommandLineUIManager >> logTitle: aString andDescription: aStringOrText to: aStr
 		nextPutAll: aString;
 		nextPutAll: ': ';
 		nextPutAll: aStringOrText asString;
-		cr.
+		newLine.
 ]
 
 { #category : #utilities }
@@ -349,26 +353,40 @@ CommandLineUIManager >> questionWithoutCancel: aStringOrText title: aString [
 
 { #category : #utilities }
 CommandLineUIManager >> quitFrom: aContext withMessage: aString [
-
 	" log error and quit "
-	[ Smalltalk 
-		logError: aString
-		inContext: aContext.
-		
-	" Print stacks of all current processes "
 
-	Smalltalk logDuring: [:logger | 
-		logger nextPutAll: 'Processes and their stacks: ';cr.
-		
-		Process allInstances do: [:each | | ctx |
-			logger nextPutAll: 'Process: '; print: each; cr; nextPutAll: '  stack:'; cr; cr.
-		
-			ctx := each isActiveProcess ifTrue: [ thisContext sender ] ifFalse: [ each suspendedContext ].
-			ctx ifNotNil: [
-				(ctx stackOfSize: 20) do: [:s | logger print: s; cr ]].
-			logger nextPutAll: '------------------------------'; cr; cr.	
-		]].
-	] ensure: [ self exitFailure ]
+	[ Smalltalk logError: aString inContext: aContext.
+
+	" Print stacks of all current processes "
+	Smalltalk
+		logDuring: [ :logger | 
+			logger
+				nextPutAll: 'Processes and their stacks: ';
+				newLine.
+			Process allInstances
+				do: [ :each | 
+					| ctx |
+					logger
+						nextPutAll: 'Process: ';
+						print: each;
+						newLine;
+						nextPutAll: '  stack:';
+						newLine;
+						newLine.
+					ctx := each isActiveProcess
+						ifTrue: [ thisContext sender ]
+						ifFalse: [ each suspendedContext ].
+					ctx
+						ifNotNil: [ (ctx stackOfSize: 20)
+								do: [ :s | 
+									logger
+										print: s;
+										newLine ] ].
+					logger
+						nextPutAll: '------------------------------';
+						newLine;
+						newLine ] ] ]
+		ensure: [ self exitFailure ]
 ]
 
 { #category : #private }
@@ -412,12 +430,15 @@ CommandLineUIManager >> stdout [
 { #category : #'ui requests' }
 CommandLineUIManager >> syntaxErrorNotificationDefaultAction: aSyntaxErrorNotification [
 	"log the syntax notificaiton and print a nicely formatted and colored syntax error on stderr"
-	Smalltalk logDuring: [ :logger |
-		logger print: aSyntaxErrorNotification; cr.
-		aSyntaxErrorNotification signalerContext errorReportOn: logger ].
-	
+
+	Smalltalk
+		logDuring: [ :logger | 
+			logger
+				print: aSyntaxErrorNotification;
+				newLine.
+			aSyntaxErrorNotification signalerContext errorReportOn: logger ].
 	STCommandLineHandler printCompilerWarning: aSyntaxErrorNotification.
-			
+
 	"in noninteractive mode simply quit"
 	^ self exitFailure
 ]
@@ -459,18 +480,13 @@ CommandLineUIManager >> unhandledErrorDefaultAction: anException [
 CommandLineUIManager >> warningDefaultAction: aWarning [
 	| logBlock |
 	"Pass all warnings, but log them"
-	
-	logBlock := [:logger |
-		logger 
-			cr;
-			nextPutAll: '*** Warning: ';
-			nextPutAll: aWarning description;
-			cr ].
-	
+	logBlock := [ :logger | 
+	logger
+		newLine;
+		nextPutAll: '*** Warning: ';
+		nextPutAll: aWarning description;
+		newLine ].
 	Smalltalk logDuring: logBlock.
 	self logYellowDuring: logBlock.
-	
-	aWarning resume.
-
-	
+	aWarning resume
 ]

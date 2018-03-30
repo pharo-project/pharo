@@ -113,7 +113,7 @@ ChangeRecord >> fileOutOn: aFileStream [
 			stamp ifNotNil:
 				[aString := aString, ' stamp: ''', stamp, ''''].
 			aFileStream nextChunkPut: aString.
-			aFileStream cr].
+			aFileStream newLine].
 
 	type == #preamble ifTrue: [aFileStream nextPut: $!].
 
@@ -121,11 +121,11 @@ ChangeRecord >> fileOutOn: aFileStream [
 		ifTrue:
 			[aFileStream nextPut: $!.
 			aFileStream nextChunkPut: class asString, ' commentStamp: ', stamp storeString.
-			aFileStream cr].
+			aFileStream newLine].
 
 	aFileStream nextChunkPut: self string.
 	type == #method ifTrue: [aFileStream nextChunkPut: ' '].
-	aFileStream cr
+	aFileStream newLine
 ]
 
 { #category : #access }

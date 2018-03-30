@@ -261,22 +261,24 @@ ConfigurationCommandLineHandler >> printConfigurations: configurations [
 	
 	configurations do: [ :name | 
 			self << name. 
-			self stdout lf ].
+			self stdout newLine ].
 	
 ]
 
 { #category : #printing }
 ConfigurationCommandLineHandler >> printMetacelloProjectDetails: metacelloProject [
 	| versions |
-	self inform: 'Available versions for ', self configurationName.
-	
+	self inform: 'Available versions for ' , self configurationName.
 	versions := metacelloProject symbolicVersionMap keys asSet.
 	versions addAll: metacelloProject map keys.
 	versions add: #last.
-	
+
 	"print the found version sorted alphabetically"
-	versions asArray sorted do:[ :key|
-		self stdout nextPutAll: key; lf ]
+	versions asArray sorted
+		do: [ :key | 
+			self stdout
+				nextPutAll: key;
+				newLine ]
 ]
 
 { #category : #accessing }

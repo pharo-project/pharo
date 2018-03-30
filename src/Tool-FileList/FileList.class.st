@@ -276,14 +276,14 @@ FileList >> acceptDroppingMorph: aTransferMorph event: evt inMorph: dest [
 			s nextPutAll: 'destination file ';
 				nextPutAll: newEntry parent fullName;
 				nextPutAll: ' exists already,';
-				cr;
+				newLine;
 				nextPutAll: 'and is ';
 				nextPutAll: (oldEntry modificationTime < newEntry modificationTime
 					ifTrue: [ 'newer' ] ifFalse: [ 'not newer' ]);
 				nextPutAll: ' than source file ';
 				nextPutAll: oldEntry parent fullName;
 				nextPut: $.;
-				cr;
+				newLine;
 				nextPutAll: 'Overwrite file ';
 				nextPutAll: newEntry basename;
 				nextPut: $?
@@ -317,13 +317,12 @@ FileList >> addNew: aString byEvaluating: aBlock [
 	#addNewFile.  Fixes the bug in each that pushing the cancel button
 	in the FillInTheBlank dialog gave a walkback."
 
-	| response newName index |
+	| newName index |
 	self okToChange ifFalse: [^ self].
-	(response := UIManager default
+	(newName := UIManager default
 						request: ('New {1} Name?' translated format: {aString translated})
 						initialAnswer: ('{1}Name' translated format: {aString translated}))
 		isEmptyOrNil ifTrue: [^ self].
-	newName := response asFileName.
 	Cursor wait showWhile: [
 		aBlock value: newName].
 	self updateFileList.
@@ -475,9 +474,9 @@ FileList >> defaultContents [
 		ifTrue: [String new]
 		ifFalse: [
 			String streamContents: [:s | 
-				s << 'NO FILE SELECTED' translated; cr.
-				s << '  -- Folder Summary --' translated; cr.
-				list do: [:item | s << item basename; cr]]].
+				s << 'NO FILE SELECTED' translated; newLine.
+				s << '  -- Folder Summary --' translated; newLine.
+				list do: [:item | s << item basename; newLine]]].
 	brevityState := #FileList.
 	^ contents
 ]
@@ -1193,7 +1192,7 @@ FileList >> readContentsHex: brevity [
 			[:loc | s nextPutAll: loc printStringHex; space;
 				nextPut: $(; print: loc; nextPut: $); space; tab.
 			loc+1 to: (loc+16 min: data size) do: [:i | s nextPutAll: (data at: i) printStringHex; space].
-			s cr].
+			s newLine].
 		hexData := s contents].
 	
 	^ contents := ((size > 5000) & brevity
@@ -1241,13 +1240,12 @@ FileList >> reference: dir [
 { #category : #'file menu action' }
 FileList >> renameFile [
 	"Rename the currently selected file"
-	| newName response |
+	| newName |
 	listIndex = 0 ifTrue: [^ self].
 	self okToChange ifFalse: [^ self].
-	(response := UIManager default request: 'NewFileName?' translated
+	(newName := UIManager default request: 'NewFileName?' translated
  					initialAnswer: reference basename)
 		isEmptyOrNil ifTrue: [^ self].
-	newName := response asFileName.
 	newName = reference basename ifTrue: [^ self].
 	reference renameTo: newName.
 	self updateFileList.

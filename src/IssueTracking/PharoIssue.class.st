@@ -35,15 +35,17 @@ PharoIssue >> changesFromSliceCommitMessage [
 	| messageHeaderLines changesLines |
 	messageHeaderLines := 3.
 	changesLines := self sliceCommitMessage lines allButFirst: messageHeaderLines.
-	^ changesLines joinUsing: Character cr
+	^ changesLines joinUsing: String newLine
 ]
 
 { #category : #communicating }
 PharoIssue >> creationNotification [
-	^ String streamContents: [ :str |
-		str nextPutAll: self headerString;
-		cr;
-		print: self trackerUrl ]
+	^ String
+		streamContents: [ :str | 
+			str
+				nextPutAll: self headerString;
+				newLine;
+				print: self trackerUrl ]
 ]
 
 { #category : #private }
@@ -85,13 +87,14 @@ PharoIssue >> sliceCommitMessage [
 
 { #category : #communicating }
 PharoIssue >> sliceNotification [
-	^ String streamContents: [ :str |
-		str
-			nextPutAll: 'Fix in inbox: ';
-			nextPutAll: self slice workingCopy versionInfo name;
-		cr;
-		cr;
-		nextPutAll: self changesFromSliceCommitMessage ]
+	^ String
+		streamContents: [ :str | 
+			str
+				nextPutAll: 'Fix in inbox: ';
+				nextPutAll: self slice workingCopy versionInfo name;
+				newLine;
+				newLine;
+				nextPutAll: self changesFromSliceCommitMessage ]
 ]
 
 { #category : #accessing }

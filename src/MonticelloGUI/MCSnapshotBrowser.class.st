@@ -75,16 +75,16 @@ MCSnapshotBrowser >> classCommentString [
 { #category : #text }
 MCSnapshotBrowser >> classDefinitionString [
 	| defs |
-	defs := items select: [:ea | (ea isClassDefinition or: [ea isClassDefinitionExtension])
-			and: [ea className = classSelection]].
-
-	defs isEmpty ifTrue: [^ 'This class is defined elsewhere.'].
-
-	^ String streamContents: [:stream | 
-		defs asArray sort 
-			do: [:ea | ea printDefinitionOn: stream]
-			separatedBy: [stream nextPut: $.; cr]
-	].
+	defs := items select: [ :ea | (ea isClassDefinition or: [ ea isClassDefinitionExtension ]) and: [ ea className = classSelection ] ].
+	defs isEmpty
+		ifTrue: [ ^ 'This class is defined elsewhere.' ].
+	^ String
+		streamContents: [ :stream | 
+			defs asArray sort
+				do: [ :ea | ea printDefinitionOn: stream ]
+				separatedBy: [ stream
+						nextPut: $.;
+						newLine ] ]
 ]
 
 { #category : #listing }
@@ -177,16 +177,16 @@ MCSnapshotBrowser >> loadProtocolSelection [
 { #category : #text }
 MCSnapshotBrowser >> metaclassDefinitionString [
 	| defs |
-	defs := items select: [:ea | (ea isClassDefinition or: [ea isClassDefinitionExtension])
-			and: [ea className = classSelection]].
-
-	defs isEmpty ifTrue: [^ 'This class is defined elsewhere.'].
-
-	^ String streamContents: [:stream | 
-		defs asArray sort 
-			do: [:ea | ea printClassDefinitionOn: stream]
-			separatedBy: [stream nextPut: $.; cr]
-	].
+	defs := items select: [ :ea | (ea isClassDefinition or: [ ea isClassDefinitionExtension ]) and: [ ea className = classSelection ] ].
+	defs isEmpty
+		ifTrue: [ ^ 'This class is defined elsewhere.' ].
+	^ String
+		streamContents: [ :stream | 
+			defs asArray sort
+				do: [ :ea | ea printClassDefinitionOn: stream ]
+				separatedBy: [ stream
+						nextPut: $.;
+						newLine ] ]
 ]
 
 { #category : #listing }
@@ -290,16 +290,21 @@ MCSnapshotBrowser >> protocolSelection: anInteger [
 { #category : #text }
 MCSnapshotBrowser >> scriptDefinitionString [
 	| defs |
-	defs := items select: [:ea | ea isScriptDefinition].
-	defs isEmpty ifTrue: [^'(package defines no scripts)'].
-	
-	^ String streamContents: [:stream | 
-		defs asArray sort 
-			do: [:ea | stream nextPutAll: '---------- package ';
-					nextPutAll: ea scriptSelector;
-					nextPutAll: ' ----------'; cr;
-					nextPutAll: ea script; cr]
-			separatedBy: [stream cr]].
+	defs := items select: [ :ea | ea isScriptDefinition ].
+	defs isEmpty
+		ifTrue: [ ^ '(package defines no scripts)' ].
+	^ String
+		streamContents: [ :stream | 
+			defs asArray sort
+				do: [ :ea | 
+					stream
+						nextPutAll: '---------- package ';
+						nextPutAll: ea scriptSelector;
+						nextPutAll: ' ----------';
+						newLine;
+						nextPutAll: ea script;
+						newLine ]
+				separatedBy: [ stream newLine ] ]
 ]
 
 { #category : #accessing }

@@ -23,7 +23,7 @@ EpContentStringVisitor >> printProtocol: protocol sourceCode: sourceCode [
 		stream
 			nextPutAll: '"protocol: '; 
 			nextPutAll: protocol printString;
-			nextPut: $"; cr; cr;
+			nextPut: $"; newLine; newLine;
 			nextPutAll: sourceCode ]	
 ]
 
@@ -34,7 +34,7 @@ EpContentStringVisitor >> stringForBehavior: aClassOrTrait [
 		stream
 			nextPutAll: aClassOrTrait definitionSource;
 			nextPut: $.;
-			cr; cr;
+			newLine; newLine;
 			nextPutAll: aClassOrTrait classSide definitionSource ]
 ]
 

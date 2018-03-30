@@ -50,11 +50,11 @@ GTSimpleRBTreeBrowser >> treeIn: a [
 			entitled: 'Open'
 			with: [ :tree | tree selection ];
 		format: [ :each | 
-					String
-						streamContents: [ :stream | 
-							stream
-								nextPutAll: each class name;
-								nextPut: $(;
-								nextPutAll: ((each formattedCode truncateTo: 50) copyReplaceAll: String cr with: String space);
-								nextPut: $) ] ]
+			String
+				streamContents: [ :stream | 
+					stream
+						nextPutAll: each class name;
+						nextPut: $(;
+						nextPutAll: ((each formattedCode truncateTo: 50) copyReplaceAll: String newLine with: String space);
+						nextPut: $) ] ]
 ]

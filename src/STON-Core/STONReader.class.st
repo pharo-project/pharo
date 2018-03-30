@@ -100,7 +100,7 @@ STONReader >> initialize [
 	objects := IdentityDictionary new.
 	classes := IdentityDictionary new.
 	acceptUnknownClasses := convertNewLines := false.
-	newLine := String cr.
+	newLine := String newLine.
 	unresolvedReferences := 0
 ]
 

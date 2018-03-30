@@ -35,28 +35,6 @@ ZipWriteStream class >> baseLength [
 	^BaseLength
 ]
 
-{ #category : #'regression test' }
-ZipWriteStream class >> compressAndDecompress: aFile using: tempFile stats: stats [
-
-	| fileSize tempStream result |
-	aFile ifNil: [^nil].
-	fileSize := aFile size.
-	(fileSize < 1"00000" "or:[fileSize > 1000000]") ifTrue:[aFile close. ^nil].
-	Transcript cr; show:'Testing ', aFile name,' ... '.
-	tempStream := File openForWriteFileNamed: tempFile fullName.
-	'Compressing ', aFile name,'...' displayProgressFrom:  1 to: aFile size during: [ :bar |
-			result := self regressionCompress: aFile into: tempStream notifiying: bar stats: stats].
-	result ifTrue: [
-		'Validating ', aFile name,'...' displayProgressFrom: 0 to: aFile size during: [ :bar |
-				result := self regressionDecompress: aFile from: tempStream notifying: bar stats: stats]].
-	aFile close.
-	tempStream close.
-	tempFile delete.
-	result ~~ false ifTrue: [
-		Transcript show:' ok (', (result * 100 truncateTo: 0.01) printString,')'].
-	^result
-]
-
 { #category : #accessing }
 ZipWriteStream class >> distanceCodes [
 	^DistanceCodes
@@ -76,19 +54,6 @@ ZipWriteStream class >> extraLengthBits [
 ZipWriteStream class >> initialize [
 	"ZipWriteStream initialize"
 	VerboseLevel := 0
-]
-
-{ #category : #'regression test' }
-ZipWriteStream class >> logProblem: reason for: aFile [
-	| errFile |
-	errFile := FileStream fileNamed:'problems.log'.
-	errFile position: errFile size.
-	errFile cr; nextPutAll: aFile name;
-			cr; nextPutAll: reason.
-	errFile close.
-	self trace:' failed (', reason,')'.
-	aFile close.
-	^false
 ]
 
 { #category : #accessing }
@@ -113,10 +78,10 @@ ZipWriteStream class >> printRegressionStats: stats from: fd [
 	raw = 0 ifTrue:[^self].
 	compressed := stats at: #compressedSize ifAbsent:[0].
 	numFiles := stats at: #numFiles ifAbsent:[0].
-	Transcript cr; nextPutAll: fd fullName.
-	Transcript cr; tab; nextPutAll:'Files compressed: ', numFiles asStringWithCommas.
-	Transcript cr; tab; nextPutAll:'Bytes compressed: ', raw asStringWithCommas.
-	Transcript cr; tab; nextPutAll:'Avg. compression ratio: ';
+	fd fullName crLog.
+	Transcript newLine; tab; nextPutAll:'Files compressed: ', numFiles asStringWithCommas.
+	Transcript newLine; tab; nextPutAll:'Bytes compressed: ', raw asStringWithCommas.
+	Transcript newLine; tab; nextPutAll:'Avg. compression ratio: ';
 		print: ((compressed / raw asFloat * 100.0) truncateTo: 0.01).
 	Transcript endEntry.
 ]
@@ -140,72 +105,6 @@ ZipWriteStream class >> regressionCompress: aFile into: tempFile notifiying: pro
 	zip close.
 	tempFile nextPutAll: encoded contents.
 	^true
-]
-
-{ #category : #'regression test' }
-ZipWriteStream class >> regressionDecompress: aFile from: tempFile notifying: progressBar stats: stats [
-	"Validate aFile as decompressed from tempFile"
-
-	| unzip rawSize compressedSize buffer1 buffer2 |
-	rawSize := aFile size.
-	compressedSize := tempFile size.
-	aFile ascii.
-	aFile position: 0.
-	tempFile ascii.
-	tempFile position: 0.
-	buffer1 := ByteArray new: 4096.
-	buffer2 := buffer1 copy.
-	unzip := FastInflateStream on: tempFile.
-	[ aFile atEnd ]
-		whileFalse: [ 
-			progressBar current: aFile position.
-			buffer1 := aFile nextInto: buffer1.
-			buffer2 := unzip nextInto: buffer2.
-			buffer1 = buffer2
-				ifFalse: [ ^ self logProblem: 'contents ' for: aFile ] ].
-	unzip next ifNotNil: [ ^ self logProblem: 'EOF' for: aFile ].
-	stats at: #rawSize put: (stats at: #rawSize ifAbsent: [ 0 ]) + rawSize.
-	stats at: #compressedSize put: (stats at: #compressedSize ifAbsent: [ 0 ]) + compressedSize.
-	^ compressedSize asFloat / rawSize asFloat
-]
-
-{ #category : #'regression test' }
-ZipWriteStream class >> regressionTest [ "ZipWriteStream regressionTest"
-	"Compress and decompress everything we can 
-	find to validate that compression works as expected."
-	self regressionTestFrom: FileSystem workingDirectory.
-]
-
-{ #category : #'regression test' }
-ZipWriteStream class >> regressionTestFrom: fd [
-	"ZipWriteStream regressionTestFrom: FileSystem disk workingDirectory"
-	"ZipWriteStream regressionTestFrom: (FileSystem disk root)"
-	| tempFile stats |
-	Transcript clear.
-	stats := Dictionary new.
-	tempFile := FileSystem disk workingDirectory / '$$sqcompress$$'.
-	tempFile delete.
-	self regressionTestFrom: fd using: tempFile stats: stats.
-]
-
-{ #category : #'regression test' }
-ZipWriteStream class >> regressionTestFrom: fd using: tempFile stats: stats [
-	| files |
-	files := fd files asSortedCollection.
-	files do: [ :file | 
-		file = tempFile ifFalse: [
-			self 
-				compressAndDecompress: (File openForReadFileNamed: file fullName) 
-				using: tempFile 
-				stats: stats]].
-	
-	stats at: #numFiles put: (stats at: #numFiles ifAbsent:[0]) + files size.
-	files := nil.
-	
-	self printRegressionStats: stats from: fd.
-	fd directories asSortedCollection do:[:directory|
-		self regressionTestFrom: directory using: tempFile stats: stats.
-	].
 ]
 
 { #category : #crc }
@@ -347,18 +246,18 @@ ZipWriteStream >> flushBlock [
 { #category : #encoding }
 ZipWriteStream >> flushBlock: lastBlock [
 	"Send the current block"
-	| lastFlag bitsRequired method bitsSent
-	storedLength fixedLength dynamicLength 
-	blTree lTree dTree blBits blFreq |
 
-	lastFlag := lastBlock ifTrue:[1] ifFalse:[0].
+	| lastFlag bitsRequired method bitsSent storedLength fixedLength dynamicLength blTree lTree dTree blBits blFreq |
+	lastFlag := lastBlock
+		ifTrue: [ 1 ]
+		ifFalse: [ 0 ].
 
 	"Compute the literal/length and distance tree"
 	lTree := ZipEncoderTree buildTreeFrom: literalFreq maxDepth: MaxBits.
 	dTree := ZipEncoderTree buildTreeFrom: distanceFreq maxDepth: MaxBits.
 
 	"Compute the bit length tree"
-	blBits := lTree bitLengths, dTree bitLengths.
+	blBits := lTree bitLengths , dTree bitLengths.
 	blFreq := WordArray new: MaxBitLengthCodes.
 	self scanBitLengths: blBits into: blFreq.
 	blTree := ZipEncoderTree buildTreeFrom: blFreq maxDepth: MaxBitLengthBits.
@@ -368,54 +267,66 @@ ZipWriteStream >> flushBlock: lastBlock [
 	really ugly in this case so we do it afterwards."
 	storedLength := self storedBlockSize.
 	fixedLength := self fixedBlockSizeFor: lTree and: dTree.
-	dynamicLength := self dynamicBlockSizeFor: lTree and: dTree 
-							using: blTree and: blFreq.
-	VerboseLevel > 1 ifTrue:[
-		Transcript cr; show:'Block sizes (S/F/D):';
-			space; print: storedLength // 8; 
-			nextPut:$/; print: fixedLength // 8; 
-			nextPut:$/; print: dynamicLength // 8; space; endEntry].
+	dynamicLength := self
+		dynamicBlockSizeFor: lTree
+		and: dTree
+		using: blTree
+		and: blFreq.
+	VerboseLevel > 1
+		ifTrue: [ Transcript
+				newLine;
+				show: 'Block sizes (S/F/D):';
+				space;
+				print: storedLength // 8;
+				nextPut: $/;
+				print: fixedLength // 8;
+				nextPut: $/;
+				print: dynamicLength // 8;
+				space;
+				endEntry ].
 
 	"Check which method to use"
 	method := self forcedMethod.
-	method ifNil:[
-		method := (storedLength < fixedLength and:[storedLength < dynamicLength]) 
-			ifTrue:[#stored]
-			ifFalse:[fixedLength < dynamicLength ifTrue:[#fixed] ifFalse:[#dynamic]]].
-	(method == #stored and:[blockStart < 0]) ifTrue:[
-		"Cannot use #stored if the block is not available"
-		method := fixedLength < dynamicLength ifTrue:[#fixed] ifFalse:[#dynamic]].
-
-	bitsSent := encoder bitPosition. "# of bits sent before this block"
+	method
+		ifNil: [ method := (storedLength < fixedLength and: [ storedLength < dynamicLength ])
+				ifTrue: [ #stored ]
+				ifFalse: [ fixedLength < dynamicLength
+						ifTrue: [ #fixed ]
+						ifFalse: [ #dynamic ] ] ].
+	(method == #stored and: [ blockStart < 0 ])
+		ifTrue: [ "Cannot use #stored if the block is not available"
+			method := fixedLength < dynamicLength
+				ifTrue: [ #fixed ]
+				ifFalse: [ #dynamic ] ].
+	bitsSent := encoder bitPosition.	"# of bits sent before this block"
 	bitsRequired := nil.
-
-	(method == #stored) ifTrue:[
-		VerboseLevel > 0 ifTrue:[Transcript show:'S'].
-		bitsRequired := storedLength.
-		encoder nextBits: 3 put: StoredBlock << 1 + lastFlag.
-		self sendStoredBlock].
-
-	(method == #fixed) ifTrue:[
-		VerboseLevel > 0 ifTrue:[Transcript show:'F'].
-		bitsRequired := fixedLength.
-		encoder nextBits: 3 put: FixedBlock << 1 + lastFlag.
-		self sendFixedBlock].
-
-	(method == #dynamic) ifTrue:[
-		VerboseLevel > 0 ifTrue:[Transcript show:'D'].
-		bitsRequired := dynamicLength.
-		encoder nextBits: 3 put: DynamicBlock << 1 + lastFlag.
-		self sendDynamicBlock: blTree 
-			literalTree: lTree 
-			distanceTree: dTree 
-			bitLengths: blBits].
-
+	method == #stored
+		ifTrue: [ VerboseLevel > 0
+				ifTrue: [ Transcript show: 'S' ].
+			bitsRequired := storedLength.
+			encoder nextBits: 3 put: (StoredBlock << 1) + lastFlag.
+			self sendStoredBlock ].
+	method == #fixed
+		ifTrue: [ VerboseLevel > 0
+				ifTrue: [ Transcript show: 'F' ].
+			bitsRequired := fixedLength.
+			encoder nextBits: 3 put: (FixedBlock << 1) + lastFlag.
+			self sendFixedBlock ].
+	method == #dynamic
+		ifTrue: [ VerboseLevel > 0
+				ifTrue: [ Transcript show: 'D' ].
+			bitsRequired := dynamicLength.
+			encoder nextBits: 3 put: (DynamicBlock << 1) + lastFlag.
+			self
+				sendDynamicBlock: blTree
+				literalTree: lTree
+				distanceTree: dTree
+				bitLengths: blBits ].
 	bitsRequired = (encoder bitPosition - bitsSent)
-		ifFalse:[self error:'Bits size mismatch'].
-
-	lastBlock 
-		ifTrue:[self release]
-		ifFalse:[self initializeNewBlock].
+		ifFalse: [ self error: 'Bits size mismatch' ].
+	lastBlock
+		ifTrue: [ self release ]
+		ifFalse: [ self initializeNewBlock ]
 ]
 
 { #category : #accessing }

@@ -37,7 +37,7 @@ PerformMessageCommandLineHandler class >> description [
 PerformMessageCommandLineHandler class >> printReversed: aString times: aStringWithNumber [
 
 	aStringWithNumber asInteger timesRepeat: [ 
-		Stdio stdout nextPutAll: aString reversed; lf. ]
+		Stdio stdout nextPutAll: aString reversed; newLine ]
 ]
 
 { #category : #activation }

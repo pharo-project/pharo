@@ -38,7 +38,7 @@ GTInspectorHelp class >> extensionsString [
 		((GTInspector inspectorExtendingMethods groupedBy: #methodClass)
 		associations sorted: [ :a :b | a key name < b key name ]) 
 		do: [ :classMethodsAssociation |
-			s nextPutAll: classMethodsAssociation key name; cr.
+			s nextPutAll: classMethodsAssociation key name; newLine.
 			methods := classMethodsAssociation value.
 			methods do: [ :each | 
 				title := each ast allChildren 
@@ -52,8 +52,8 @@ GTInspectorHelp class >> extensionsString [
 					nextPutAll: ' ('; 
 					nextPutAll: each selector; 
 					nextPut: $);
-					cr ].
-			s cr ] ]
+					newLine ].
+			s newLine ] ]
 ]
 
 { #category : #accessing }

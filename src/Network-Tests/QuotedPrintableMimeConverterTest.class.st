@@ -83,7 +83,7 @@ QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreak [
 QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakCR [
 
 	self 
-		assert: (self decode: 'This is text may not be=', String cr, ' decoded as two lines')
+		assert: (self decode: 'This is text may not be=', String newLine, ' decoded as two lines')
 		equals: 'This is text may not be decoded as two lines'
 ]
 
@@ -107,7 +107,7 @@ QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakLF [
 QuotedPrintableMimeConverterTest >> testEncodeCR [
 
 	self 
-		assert: (self encode: 'This is the first line', String cr, 'and this is the second')
+		assert: (self encode: 'This is the first line', String newLine, 'and this is the second')
 		equals: 'This is the first line=0D=0Aand this is the second'
 ]
 

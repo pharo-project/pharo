@@ -55,7 +55,7 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 		delta := 0.
 	] ifFalse: [
 		"No bars - insert some with CR, tab"
-		insertion := '| ' , name , ' |',String cr.
+		insertion := '| ' , name , ' |',String newLine.
 		delta := 2.	"the bar and CR"
 		characterBeforeMark = Character tab ifTrue: [
 			insertion := insertion , String tab.
@@ -85,9 +85,10 @@ OCUndeclaredVariableWarning >> defaultAction [
 	selector := self methodNode selector. 
 	varName := node name.
 
-	self methodNode selector ifNotNil: [self crTrace: className, '>>', selector, ' ']
-			ifNil: [self traceCr:''].
-	self traceCr: '(' , varName , ' is Undeclared) '.
+	(self methodNode selector
+		ifNotNil: [ className, '>>', selector, ' ' ]
+		ifNil: [ '' ]) logCr.
+	'(' , varName , ' is Undeclared) ' logCr.
 
 	^super defaultAction ifNil: [
 		Undeclared add: (UndeclaredVariable named: varName asSymbol).

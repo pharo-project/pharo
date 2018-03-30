@@ -129,7 +129,7 @@ OSWindow >> createWindow [
 OSWindow >> deliverEvent: anEvent [
 	"TODO..."
 	
-	TraceEvents == true ifTrue: [ Transcript show: anEvent; cr ].
+	TraceEvents == true ifTrue: [ Transcript show: anEvent; newLine ].
 	eventHandler ifNotNil: [ 
 		eventHandler handleEvent: anEvent ].
 	anEvent performDefaultAction 
@@ -140,7 +140,7 @@ OSWindow >> deliverEvent: anEvent [
 OSWindow >> deliverGlobalEvent: aGlobalEvent [
 	"TODO..."
 	
-	TraceEvents == true ifTrue: [ Transcript show: aGlobalEvent; cr ].
+	TraceEvents == true ifTrue: [ Transcript show: aGlobalEvent; newLine ].
 	eventHandler ifNotNil: [ 
 		eventHandler handleEvent: aGlobalEvent ].
 

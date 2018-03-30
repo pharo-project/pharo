@@ -53,11 +53,14 @@ GTEventRecorderHelp class >> bookName [
 
 { #category : #pages }
 GTEventRecorderHelp class >> client [
-	^HelpTopic 
+	^ HelpTopic
 		title: 'Client'
-		contents:	 (String streamContents: [ :aStream | aStream 
-nextPutAll: 
-'	The client includes four main objects: GTEventRecorder, GTEventCollector, GTEventAnnouncement, and GTEventTool. The last one is described in the Data Analysis section.
+		contents:
+			(String
+				streamContents: [ :aStream | 
+					aStream
+						nextPutAll:
+							'	The client includes four main objects: GTEventRecorder, GTEventCollector, GTEventAnnouncement, and GTEventTool. The last one is described in the Data Analysis section.
 		
 !! GTEventRecorder
 
@@ -66,10 +69,10 @@ nextPutAll:
 	It sends data to the server every twenty minutes. If you want to send data immediately, you can execute `GTEventRecorder uniqueInstance deliverNow`.
 
 	Here is the class description:';
-nextPutAll: GTEventRecorder comment;
-cr;
-nextPutAll: 
-'!! GTEventCollector
+						nextPutAll: GTEventRecorder comment;
+						newLine;
+						nextPutAll:
+							'!! GTEventCollector
 
 	GTEventCollector is a data collector which you want to use. You can create a new instance, register it to the GTEventRecorder and starts to collect data. Here is a basic example:
 	
@@ -86,7 +89,7 @@ nextPutAll:
 	Before the data are sent to the server, it is serialized and kept by an GTEventAnnouncement object who also keeps additional information, e.g., computer-id, data and time. The additional information helps you to group collected data per computer and order them according to time. For that reason, we recommend you to collect objects that responds to #infoAt:put:. If so, the additional information is passed to your extracted data.  GTBasicRecorderEvent class represents a basic example that we recommend to use, e.g., subclass it. 
 
 	Here is the class description:';
-nextPutAll: GTEventCollector comment ])
+						nextPutAll: GTEventCollector comment ])
 ]
 
 { #category : #pages }

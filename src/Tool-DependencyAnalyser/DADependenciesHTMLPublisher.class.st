@@ -44,31 +44,38 @@ DADependenciesHTMLPublisher class >> publishReportFrom: aCGODependencyReport str
 
 { #category : #'html utilities' }
 DADependenciesHTMLPublisher >> accordion: id name: name headingContent: heading body: body [
-	stream 
-		<< '<div class="panel-group" id="' << id << '" role="tablist" aria-multiselectable="true">'.
-
-	stream << '  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="heading' << name << '">
+	stream << '<div class="panel-group" id="' << id << '" role="tablist" aria-multiselectable="true">'.
+	(stream
+		<<
+		'  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading' << name
+		<<
+		'">
       <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#' << id << '" href="#collapse' << name << '" aria-expanded="true" aria-controls="collapse' << name << '">' ; lf.
-	stream
-		<< heading
-<< '
+        <a role="button" data-toggle="collapse" data-parent="#' << id << '" href="#collapse' << name
+		<< '" aria-expanded="true" aria-controls="collapse' << name)
+		<< '">';
+		newLine.
+	stream << heading
+		<<
+			'
         </a>
       </h4>
     </div>
-    <div id="collapse' << name << '" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading' << name << '">
+    <div id="collapse' << name << '" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading' << name
+		<<
+			'">
       <div class="panel-body">
       		'.
-	stream 
-		<< body
-		<< '
+	stream << body
+		<<
+			'
       </div>
     </div>
   </div>'.
-		
 	stream
-		<< '</div>'; lf
+		<< '</div>';
+		newLine
 ]
 
 { #category : #'html utilities' }
@@ -130,10 +137,9 @@ DADependenciesHTMLPublisher >> initializeWithReport: aCGODependencyReport stream
 
 { #category : #'html utilities' }
 DADependenciesHTMLPublisher >> javaScript: scriptFileName [
-	stream 
-		<< '<script type="text/javascript" language="javascript" src="'
-		<< scriptFileName 
-		<< '"></script>'; lf
+	(stream << '<script type="text/javascript" language="javascript" src="' << scriptFileName)
+		<< '"></script>';
+		newLine
 ]
 
 { #category : #publishing }
@@ -152,31 +158,44 @@ DADependenciesHTMLPublisher >> publish [
 { #category : #publishing }
 DADependenciesHTMLPublisher >> publish: aPackageName dependants: dependants [
 	| dependantLinks |
-	
 	dependants ifEmpty: [ ^ self ].
-	
-	dependantLinks := dependants sorted collect: [ :name | '<a href="#', name , '">' , name , '</a>' ].	
-	stream << 
-'						<tr>
-							<td id="' << aPackageName << '">' << (self htmlForPackage: aPackageName) << '</td>
-							<td> ' << (self badgeFor: 'N/A') << ' </td>
-							<td>' << (self sizeBadgeFor: dependants) << Character space << (Character space join: dependantLinks) << '</td>
-						</tr>'; lf.
+	dependantLinks := dependants sorted collect: [ :name | '<a href="#' , name , '">' , name , '</a>' ].
+	(stream
+		<<
+		'						<tr>
+							<td id="' << aPackageName << '">' << (self htmlForPackage: aPackageName)
+		<<
+		'</td>
+							<td> ' << (self badgeFor: 'N/A')
+		<<
+		' </td>
+							<td>' << (self sizeBadgeFor: dependants) << Character space << (Character space join: dependantLinks))
+		<<
+			'</td>
+						</tr>';
+		newLine
 ]
 
 { #category : #publishing }
 DADependenciesHTMLPublisher >> publish: aPackageName dependencies: dependencies dependants: dependants [
 	| dependantLinks |
-	dependantLinks := dependants sorted collect: [ :name | '<a href="#', name , '">' , name , '</a>' ].
-	
-	stream << 
-'						<tr>
-							<td id="' << aPackageName << '">' << (self htmlForPackage: aPackageName) << '</td>
-							<td>' << (self sizeBadgeFor: dependencies) << Character space 
-							<< (self htmlForDependencies: dependencies sorted of: aPackageName) << Character space
-							<< (self htmlForIgnoredDependenciesOf: aPackageName) << '</td>
-							<td>' << (self sizeBadgeFor: dependants) << Character space << (Character space join: dependantLinks) << '</td>
-						</tr>'; lf.
+	dependantLinks := dependants sorted collect: [ :name | '<a href="#' , name , '">' , name , '</a>' ].
+	(stream
+		<<
+		'						<tr>
+							<td id="' << aPackageName << '">' << (self htmlForPackage: aPackageName)
+		<<
+		'</td>
+							<td>' << (self sizeBadgeFor: dependencies) << Character space
+		<< (self htmlForDependencies: dependencies sorted of: aPackageName) << Character space
+		<< (self htmlForIgnoredDependenciesOf: aPackageName)
+		<<
+		'</td>
+							<td>' << (self sizeBadgeFor: dependants) << Character space << (Character space join: dependantLinks))
+		<<
+			'</td>
+						</tr>';
+		newLine
 ]
 
 { #category : #publishing }
@@ -192,50 +211,57 @@ DADependenciesHTMLPublisher >> publishDependencies [
 						</tr>
 					</thead>
 					<tbody>';
-		lf.
+		newLine.
 	report
 		dependenciesAndKnownDependantsDo:
-			[ :packageName :dependencies :dependants | self
-				publish: packageName
-				dependencies: dependencies
-				dependants: dependants ].
+			[ :packageName :dependencies :dependants | self publish: packageName dependencies: dependencies dependants: dependants ].
 	self publishPackagesToRemoveDependants.
 	stream
 		<<
 			'					</tbody>
 				</table>';
-		lf
+		newLine
 ]
 
 { #category : #publishing }
 DADependenciesHTMLPublisher >> publishDependenciesCaption [
-	self stream lf;
-		<< (self warningLabel: 'Ignored dependency'); lf
+	self stream
+		newLine;
+		<< (self warningLabel: 'Ignored dependency');
+		newLine
 ]
 
 { #category : #publishing }
 DADependenciesHTMLPublisher >> publishHTMLFooter [
-	self stream lf;
-		<< '</div>'; lf;
-		<< '</body>'; lf;
-		<< '</html>'; lf
+	self stream
+		newLine;
+		<< '</div>';
+		newLine;
+		<< '</body>';
+		newLine;
+		<< '</html>';
+		newLine
 ]
 
 { #category : #publishing }
 DADependenciesHTMLPublisher >> publishHTMLHeader [
 	self stream
-		<< '<!DOCTYPE html>'; lf;
-		<< '<html lang="en">'; lf;
-		<< '<head>'; lf;
-		<< '<title>Dependencies Report: </title>'; lf.
-
+		<< '<!DOCTYPE html>';
+		newLine;
+		<< '<html lang="en">';
+		newLine;
+		<< '<head>';
+		newLine;
+		<< '<title>Dependencies Report: </title>';
+		newLine.
 	self styleSheet: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'.
 	self styleSheet: 'https://cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css'.
 	self javaScript: 'https://code.jquery.com/jquery-1.11.3.min.js'.
 	self javaScript: 'https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js'.
 	self javaScript: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'.
-			
-	stream << '<script type="text/javascript" class="init">
+	stream
+		<<
+			'<script type="text/javascript" class="init">
 $(document).ready(function() {
 	$(''#example'').DataTable( {
 		"paging": false,
@@ -243,13 +269,16 @@ $(document).ready(function() {
 	});
 } );
 	</script>'.
-		
 	self stream
-		lf;
-		<< '</head>'; lf;
-		<< '<body>'; lf;
-		<< '<div class="container">'; lf;
-		<< '<h1>Dependency analysis</h1>'; lf.
+		newLine;
+		<< '</head>';
+		newLine;
+		<< '<body>';
+		newLine;
+		<< '<div class="container">';
+		newLine;
+		<< '<h1>Dependency analysis</h1>';
+		newLine
 ]
 
 { #category : #publishing }
@@ -274,17 +303,16 @@ DADependenciesHTMLPublisher >> publishSetup [
 { #category : #publishing }
 DADependenciesHTMLPublisher >> publishWarnings [
 	| body |
-	body := String streamContents: [ :str |
-		(report warnings sorted: [ :a :b | a package < b package ])
-			do: [ :warning | str << warning messageText << '<br/>' ] ].
-	self 
+	body := String
+		streamContents: [ :str | (report warnings sorted: [ :a :b | a package < b package ]) do: [ :warning | str << warning messageText << '<br/>' ] ].
+	self
 		accordion: 'accordionWarnings'
 		name: 'Warnings'
 		headingContent: 'Warnings ' , (self sizeBadgeFor: report warnings)
-		body: body.		
+		body: body.
 	stream
-		<< '</br>'; lf.
-	
+		<< '</br>';
+		newLine
 ]
 
 { #category : #'html utilities' }
@@ -299,10 +327,9 @@ DADependenciesHTMLPublisher >> stream [
 
 { #category : #'html utilities' }
 DADependenciesHTMLPublisher >> styleSheet: styleSheetUrl [
-	stream 
-		<< '<link rel="stylesheet" type="text/css" href="'
-		<< styleSheetUrl 
-		<< '">'; lf
+	(stream << '<link rel="stylesheet" type="text/css" href="' << styleSheetUrl)
+		<< '">';
+		newLine
 ]
 
 { #category : #'html utilities' }

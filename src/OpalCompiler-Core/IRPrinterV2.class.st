@@ -14,10 +14,10 @@ Class {
 IRPrinterV2 >> label: seqNum [
 
 	"add tab and cr since this does not get called within interpretInstruction:"
-	stream cr.  "extra cr just to space out sequences"
+	stream newLine.  "extra cr just to space out sequences"
 	stream nextPutAll: 'label: '.
 	seqNum printOn: stream.
-	stream cr.
+	stream newLine.
 
 ]
 
@@ -38,7 +38,7 @@ IRPrinterV2 >> visitBlockReturnTop: blockReturnTop [
 { #category : #visiting }
 IRPrinterV2 >> visitInstruction: aNode [
 	self visitNode: aNode.
-	stream cr.
+	stream newLine.
 ]
 
 { #category : #visiting }

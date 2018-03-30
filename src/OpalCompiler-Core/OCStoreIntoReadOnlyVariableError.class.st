@@ -15,15 +15,15 @@ OCStoreIntoReadOnlyVariableError >> description [
 	^ String
 		streamContents: [ :stream | 
 			stream << super description asString.
-			stream cr.
+			stream newLine.
 			stream << self methodClass asString.
-			stream cr.
+			stream newLine.
 			stream << self methodNode asString ]
 ]
 
 { #category : #signaling }
 OCStoreIntoReadOnlyVariableError >> signal [
 	compilationContext interactive
-		ifFalse: [ ^ self crTrace ].
+		ifFalse: [ ^ self crLog ].
 	^ super signal
 ]

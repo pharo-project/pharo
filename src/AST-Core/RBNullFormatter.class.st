@@ -52,6 +52,6 @@ RBNullFormatter >> initialize [
 RBNullFormatter >> visitMethodNode: aMethodNode [
 	codeStream 
 		nextPutAll: aMethodNode selector;
-		cr;
+		newLine;
 		nextPutAll: '	''no source and no formatter available!'''
 ]

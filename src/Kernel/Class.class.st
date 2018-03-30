@@ -359,16 +359,24 @@ Class >> classVarNames [
 { #category : #'class variables' }
 Class >> classVariableDefinitionString [
 	"Answer a string that evaluates to the definition of the class Variables"
-	
-	^String streamContents: [ :str | | special |
-		str nextPutAll: '{ '.
-		self classVariables do: [:global |
-				str nextPutAll: global definitionString.
-				special := global isSpecial]				
-			separatedBy: [ 
-				str nextPutAll: '. '.  
-				special ifTrue: [ str cr;tab;tab;tab;tab ]].
-		str nextPutAll: ' }'. ]
+
+	^ String
+		streamContents: [ :str | 
+			| special |
+			str nextPutAll: '{ '.
+			self classVariables
+				do: [ :global | 
+					str nextPutAll: global definitionString.
+					special := global isSpecial ]
+				separatedBy: [ str nextPutAll: '. '.
+					special
+						ifTrue: [ str
+								newLine;
+								tab;
+								tab;
+								tab;
+								tab ] ].
+			str nextPutAll: ' }' ]
 ]
 
 { #category : #'class variables' }
@@ -456,52 +464,45 @@ Class >> definitionForNautilus [
 	"Answer a String that defines the receiver."
 
 	| aStream poolString |
-	((self usesSpecialSlot 
-		or: [ self usesSpecialClassVariables ])
-		or: [ Slot showSlotClassDefinition ])
+	((self usesSpecialSlot or: [ self usesSpecialClassVariables ]) or: [ Slot showSlotClassDefinition ])
 		ifTrue: [ ^ self definitionForNautilusWithSlots ].
 	poolString := self sharedPoolsString.
 	aStream := (String new: 800) writeStream.
-	superclass
-		ifNil: [ aStream nextPutAll: 'ProtoObject' ]
-		ifNotNil: [ aStream nextPutAll: superclass name ].
+	superclass ifNil: [ aStream nextPutAll: 'ProtoObject' ] ifNotNil: [ aStream nextPutAll: superclass name ].
 	aStream
 		nextPutAll: self kindOfSubclass;
 		store: self name.
 	self hasTraitComposition
-		ifTrue:
-			[ aStream
-				cr;
+		ifTrue: [ aStream
+				newLine;
 				tab;
 				nextPutAll: 'uses: ';
 				nextPutAll: self traitCompositionString ].
 	aStream
-		cr;
+		newLine;
 		tab;
 		nextPutAll: 'instanceVariableNames: ';
 		store: self instanceVariablesString.
 	aStream
-		cr;
+		newLine;
 		tab;
 		nextPutAll: 'classVariableNames: ';
 		store: self classVariablesString.
 	poolString = ''
-		ifFalse:
-			[ aStream
-				cr;
+		ifFalse: [ aStream
+				newLine;
 				tab;
 				nextPutAll: 'poolDictionaries: ';
 				store: poolString ].
 	aStream
-		cr;
+		newLine;
 		tab;
 		nextPutAll: 'package: ';
 		store: self category asString.
 	superclass
-		ifNil:
-			[ aStream
+		ifNil: [ aStream
 				nextPutAll: '.';
-				cr.
+				newLine.
 			aStream nextPutAll: self name.
 			aStream
 				space;
@@ -514,38 +515,54 @@ Class >> definitionForNautilusWithSlots [
 	"the class definition with a way to specify slots. Shown when the class defines special Slot
 	 NOTE: this is just for testing, the final solution will evolve and be cleaner later"
 
-	| aStream poolString|
-
+	| aStream poolString |
 	poolString := self sharedPoolsString.
-
 	aStream := (String new: 800) writeStream.
-	superclass 
-		ifNil: [aStream nextPutAll: 'ProtoObject']
-		ifNotNil: [aStream nextPutAll: superclass name].
-	aStream nextPutAll: ' subclass: ';
-			store: self name.
-	(self hasTraitComposition) ifTrue: [
-		aStream cr; tab; nextPutAll: 'uses: ';
-			nextPutAll: self traitCompositionString].
-			
-	(self classLayout isKindOf: FixedLayout) ifFalse: [
-		aStream cr; tab; nextPutAll: 'layout: ';
-			nextPutAll: self classLayout class name].
-	aStream cr; tab; nextPutAll: 'slots: ';
-			nextPutAll: self slotDefinitionString.
-	aStream cr; tab; nextPutAll: 'classVariables: ';
-			nextPutAll: self classVariableDefinitionString.
-	poolString = '' ifFalse: [
-		aStream cr; tab; nextPutAll: 'poolDictionaries: ';
-			store: poolString].
-	aStream cr; tab; nextPutAll: 'category: ';
-			store: self category asString.
-
-	superclass ifNil: [ 
-		aStream nextPutAll: '.'; cr.
-		aStream nextPutAll: self name.
-		aStream space; nextPutAll: 'superclass: nil'. ].
-
+	superclass ifNil: [ aStream nextPutAll: 'ProtoObject' ] ifNotNil: [ aStream nextPutAll: superclass name ].
+	aStream
+		nextPutAll: ' subclass: ';
+		store: self name.
+	self hasTraitComposition
+		ifTrue: [ aStream
+				newLine;
+				tab;
+				nextPutAll: 'uses: ';
+				nextPutAll: self traitCompositionString ].
+	(self classLayout isKindOf: FixedLayout)
+		ifFalse: [ aStream
+				newLine;
+				tab;
+				nextPutAll: 'layout: ';
+				nextPutAll: self classLayout class name ].
+	aStream
+		newLine;
+		tab;
+		nextPutAll: 'slots: ';
+		nextPutAll: self slotDefinitionString.
+	aStream
+		newLine;
+		tab;
+		nextPutAll: 'classVariables: ';
+		nextPutAll: self classVariableDefinitionString.
+	poolString = ''
+		ifFalse: [ aStream
+				newLine;
+				tab;
+				nextPutAll: 'poolDictionaries: ';
+				store: poolString ].
+	aStream
+		newLine;
+		tab;
+		nextPutAll: 'category: ';
+		store: self category asString.
+	superclass
+		ifNil: [ aStream
+				nextPutAll: '.';
+				newLine.
+			aStream nextPutAll: self name.
+			aStream
+				space;
+				nextPutAll: 'superclass: nil' ].
 	^ aStream contents
 ]
 
@@ -894,7 +911,7 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 			ifFalse: [ ^ self ] ].
 	
 	varUserClass 
-		ifNotNil: [self crTrace: self name , ' (' , aString , ' is Undeclared) '.
+		ifNotNil: [ (self name , ' (' , aString , ' is Undeclared) ') crLog.
 			Undeclared declare: aSymbol from: self classPool]
 		ifNil: [ self classPool removeKey: aSymbol].
 		

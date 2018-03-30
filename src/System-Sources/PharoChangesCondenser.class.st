@@ -105,9 +105,9 @@ PharoChangesCondenser >> nextChunkDo: aBlock [
 
 { #category : #helper }
 PharoChangesCondenser >> nextCommentChunkDo: aBlock [
-	stream cr; nextPut: $!.
+	stream newLine; nextPut: $!.
 	self nextChunkDo: aBlock.
-	stream cr
+	stream newLine
 ]
 
 { #category : #accessing }
@@ -221,7 +221,7 @@ PharoChangesCondenser >> writeMethodSource: aMethod [
 		writeRemoteString: aMethod sourceCode
 		for: aMethod.
 		
-	stream nextPutAll: ' !'; cr.
+	stream nextPutAll: ' !'; newLine.
 ]
 
 { #category : #'private - 1 writing' }

@@ -103,7 +103,7 @@ DynamicMessageImplementor >> writeArgumentNameIfNecessaryOf: aKeyword at: anInde
 DynamicMessageImplementor >> writeGetterSourceCode [
 
 	stream 
-		cr;
+		newLine;
 		tab;
 		nextPutAll: '^ ';
 		nextPutAll: message selector 
@@ -125,7 +125,7 @@ DynamicMessageImplementor >> writeMethodName [
 DynamicMessageImplementor >> writeSetterSourceCode [
 
 	stream 
-		cr;
+		newLine;
 		tab;
 		nextPutAll: message selector allButLast;
 		nextPutAll: ' := ';
@@ -142,7 +142,7 @@ DynamicMessageImplementor >> writeSetterSourceCodeIfNecessary [
 DynamicMessageImplementor >> writeShouldBeImplemented [
 
 	stream
-		cr;
+		newLine;
 		tab;
 		nextPutAll: 'self ';
 		nextPutAll: #shouldBeImplemented;

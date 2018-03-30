@@ -12,7 +12,7 @@ CodeExporter class >> writeSourceCodeFrom: aStream baseName: baseName isSt: stOr
 
 	| extension targetFile |
 	extension := stOrCsFlag ifTrue: ['st']  ifFalse: ['cs'].
-	targetFile := FileLocator imageDirectory / baseName asFileName, extension.
+	targetFile := FileLocator imageDirectory / baseName, extension.
 
 	self writeSourceCodeFrom: aStream toFileReference: targetFile
 ]
@@ -21,10 +21,7 @@ CodeExporter class >> writeSourceCodeFrom: aStream baseName: baseName isSt: stOr
 CodeExporter class >> writeSourceCodeFrom: aStream toFileReference: aFileReference [
 	"Write the supplied changes to aFileReference"
 
-	aFileReference binaryWriteStreamDo: [ :outputStream |
-		(ZnCharacterWriteStream on: outputStream encoding: 'utf8')
-			nextPutAll: aStream contents.
-	].
-
-	self inform: 'Filed out to: ', String cr, aFileReference pathString
+	aFileReference
+		binaryWriteStreamDo: [ :outputStream | (ZnCharacterWriteStream on: outputStream encoding: 'utf8') nextPutAll: aStream contents ].
+	self inform: 'Filed out to: ' , String newLine , aFileReference pathString
 ]

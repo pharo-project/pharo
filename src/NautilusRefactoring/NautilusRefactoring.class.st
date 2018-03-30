@@ -1483,7 +1483,7 @@ NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
 NautilusRefactoring >> selectVariableTypesFrom: aCollectionOfTypes selected: aSelectedCollection for: aRefactoring [
 	| stream result |
 	stream := WriteStream on: String new.
-	aCollectionOfTypes do: [ :each | stream nextPutAll: each name ] separatedBy: [ stream cr ].
+	aCollectionOfTypes do: [ :each | stream nextPutAll: each name ] separatedBy: [ stream newLine ].
 	result := Smalltalk ui theme
 		textEditorIn: self model window
 		text: 'Select classes to move to: (one class per line)'
@@ -1567,7 +1567,7 @@ NautilusRefactoring >> typeClassTextFor: aCollectionOfClass [
 	^ String streamContents: [:s |
 		aCollectionOfClass do: [:class |
 			s << (RBRefactoryTyper new runOn: class) printString.
-			s cr; cr ]]
+			s newLine; newLine ]]
 ]
 
 { #category : #'undo-redo' }

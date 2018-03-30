@@ -151,13 +151,13 @@ Trait >> definition [
 		s 
 			nextPutAll: 'Trait named: ';
 			nextPutAll:	self name printString;
-			cr; tab; 
+			newLine; tab; 
 			nextPutAll: ' uses: ';
 			nextPutAll: self traitComposition traitCompositionExpression; 
-			cr.
+			newLine.
 		self classLayout visibleSlots ifNotEmpty: [ 
 			s tab; nextPutAll: ' slots: ';
-			nextPutAll: self slotDefinitionString; cr. ].
+			nextPutAll: self slotDefinitionString; newLine. ].
 		s tab; nextPutAll: ' category: ';
 			nextPutAll: self category asString printString
 	]

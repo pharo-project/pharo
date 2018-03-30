@@ -200,7 +200,7 @@ StrikeFont class >> hostFontFromUser [
 	labels := (String new: 100) writeStream.
 	fontNames 
 		do: [ :fn | labels nextPutAll: fn ]
-		separatedBy: [ labels cr ].
+		separatedBy: [ labels newLine ].
 	index := UIManager default 
 		chooseFrom: labels contents substrings
 		title: 'Choose your font'.

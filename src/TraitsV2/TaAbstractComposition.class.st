@@ -151,7 +151,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 	"I have to check because during bootstrap there is no SouceFiles"
 	(sourceCode isNotNil and: [((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil])]) ifTrue: [ 
 		newMethod putSource: sourceCode
-				withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
+				withPreamble: [:f | f newLine; nextPut: $!; nextChunkPut: 'Trait method'; newLine]].
 		
 	aClass basicAddSelector: selector withMethod: newMethod.
 
@@ -213,7 +213,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	
 	(source isNotNil and: [((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil])]) ifTrue: [ 
 		newMethod putSource: source
-			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
+			withPreamble: [:f | f newLine; nextPut: $!; nextChunkPut: 'Trait method'; newLine]].
 
 	aClass basicAddSelector: aSelector withMethod: newMethod.
 

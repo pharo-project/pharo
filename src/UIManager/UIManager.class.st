@@ -163,7 +163,7 @@ UIManager >> chooseFrom: aList lines: linesArray message: messageString title: a
 		lines: linesArray
 		title: (aString 
 				ifEmpty: [messageString]
-				ifNotEmpty: [aString, String cr, messageString])
+				ifNotEmpty: [aString, String newLine, messageString])
 ]
 
 { #category : #'ui requests' }
@@ -221,7 +221,7 @@ UIManager >> chooseFrom: labelList values: valueList lines: linesArray message: 
 		lines: linesArray
 		title: (aString 
 				ifEmpty: [messageString]
-				ifNotEmpty: [aString, String cr, messageString])
+				ifNotEmpty: [aString, String newLine, messageString])
 ]
 
 { #category : #'ui requests' }

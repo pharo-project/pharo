@@ -981,18 +981,18 @@ TestRunner >> showDiffWith: aTestResult [
 
 	diff := result diff: aTestResult.
 	string := String streamContents: [:str|
-		str nextPutAll: '----------------'; cr.
-		str nextPutAll: 'Diff between current result with: ', aTestResult asString; cr.
+		str nextPutAll: '----------------'; newLine.
+		str nextPutAll: 'Diff between current result with: ', aTestResult asString; newLine.
 		str nextPutAll: 'New passed: '.
 		diff first do: [:s| str nextPutAll: s printString, ' '].
-		str cr.
+		str newLine.
 		str nextPutAll: 'New failures: '.
 		diff second do: [:s| str nextPutAll: s printString, ' '].
-		str cr.
+		str newLine.
 		
 		str nextPutAll: 'New errors: '.
 		diff third do: [:s| str nextPutAll: s printString, ' '].
-		str cr].
+		str newLine].
 	
 	UIManager default edit: string label: 'SUnit Progress'. 
 	
@@ -1047,18 +1047,18 @@ TestRunner >> showProgress [
 		
 			
 	string := String streamContents: [:str|
-		str nextPutAll: '----------------'; cr.
-		str nextPutAll: 'Diff between current result and saved result'; cr.
+		str nextPutAll: '----------------'; newLine.
+		str nextPutAll: 'Diff between current result and saved result'; newLine.
 		str nextPutAll: 'New passed: '.
 		(d at: #passed) do: [:s| str nextPutAll: s printString, ' '].
-		str cr.
+		str newLine.
 		str nextPutAll: 'New failures: '.
 		(d at: #failures) do: [:s| str nextPutAll: s printString, ' '].
-		str cr.
+		str newLine.
 		
 		str nextPutAll: 'New errors: '.
 		(d at: #errors) do: [:s| str nextPutAll: s printString, ' '].
-		str cr].
+		str newLine].
 	
 	UIManager default edit: string label: 'SUnit Progress'. 
 

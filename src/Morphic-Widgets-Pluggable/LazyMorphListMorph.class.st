@@ -148,5 +148,5 @@ LazyMorphListMorph >> userString [
 		streamContents: [ :stream | 
 			1 to: self getListSize do: [ :i | 
 				(self getListItem: i) submorphs detect: [ :morph | morph userString notNil ] ifFound: [ :morph | stream nextPutAll: morph userString ].
-				stream cr ] ]
+				stream newLine ] ]
 ]

@@ -84,12 +84,6 @@ String class >> crlf [
 ]
 
 { #category : #'instance creation' }
-String class >> crlfcrlf [
-	^self crlf , self crlf.
-
-]
-
-{ #category : #'instance creation' }
 String class >> empty [
 	"A canonicalized empty String instance."
 	^ ''
@@ -99,7 +93,7 @@ String class >> empty [
 String class >> expandMacro: macroType argument: argument withExpansions: expansions [ 
 	macroType = $s ifTrue: [^expansions at: argument].
 	macroType = $p ifTrue: [^(expansions at: argument) printString].
-	macroType = $n ifTrue: [^String cr].
+	macroType = $n ifTrue: [^String newLine].
 	macroType = $t ifTrue: [^String tab].
 	self error: 'unknown expansion type'
 ]
@@ -316,6 +310,14 @@ String class >> newCrLfExchangeTable [
 				each = Character lf
 					ifTrue: [ Character cr ]
 					ifFalse:[ each ]]]
+]
+
+{ #category : #accessing }
+String class >> newLine [
+	"Pharo uses internally cr as new line.
+	When there is an exchange with an external source (files, sockets),
+	users should explicitly use newline conversions."
+	^ self cr
 ]
 
 { #category : #initialization }
@@ -2373,7 +2375,7 @@ String >> trimLineSpaces [
 	^ self class streamContents: [ :str |
 		self lines 
 			do: [ :line | str nextPutAll: line trimRight]
-			separatedBy: [str cr]]
+			separatedBy: [str newLine]]
 		
 
 ]
@@ -2517,7 +2519,7 @@ String >> withNoLineLongerThan: aNumber [
 				"eliminate spaces at beginning of next line"
 				lineStart := self indexOfAnyOf: CSNonSeparators startingAt: lineEnd ifAbsent: [pastEnd].
 				lineStart <= endWithoutDelimiters ]
-					whileTrue: [stream cr].
+					whileTrue: [stream newLine].
 				stream nextPutAll: (self copyFrom: pastEnd to: end) ] ]
 ]
 
@@ -2553,7 +2555,7 @@ String >> withSqueakLineEndings [
 	(self includes: Character lf) ifFalse: [ ^self ].
 	(self includes: Character cr) ifFalse: [
 		^self translateWith: String crLfExchangeTable ].
-	^self withLineEndings: String cr
+	^self withLineEndings: String newLine
 ]
 
 { #category : #'platform conventions' }

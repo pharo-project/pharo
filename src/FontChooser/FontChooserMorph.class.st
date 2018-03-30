@@ -453,9 +453,9 @@ FontChooserMorph >> previewText [
 		| pangram |
 		pangram := self selectedPangram.
 		sample 
-			nextPutAll: pangram; cr;
+			nextPutAll: pangram; newLine;
 			nextPutAll: pangram asUppercase;
-			cr ].
+			newLine ].
 	i := 0.
 	maxLineLength := 30.
 	endOfLineCharacters := '@Z`z'.
@@ -466,7 +466,7 @@ FontChooserMorph >> previewText [
 		((endOfLineCharacters includes: character) or: [ i = maxLineLength ]) 
 			ifTrue: [ 
 				i := 0.
-				sample cr ] ].
+				sample newLine ] ].
 	^ sample contents.
 ]
 

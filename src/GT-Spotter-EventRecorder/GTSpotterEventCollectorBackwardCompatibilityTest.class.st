@@ -52,20 +52,20 @@ GTSpotterEventCollectorBackwardCompatibilityTest class >> storeSerializedAnnounc
 	| methodSource |
 	methodSource := (String streamContents: [ :aStream |
 		aStream 
-			nextPutAll: aSymbol asString; cr; 
+			nextPutAll: aSymbol asString; newLine; 
 			tab; 
 			nextPutAll: '"Automatically created by class method #storeSerializedAnnouncementIntoMethod: ';
 			print: aSymbol;
 			nextPutAll: ' using: aGTEventRecorder ';
 			nextPutAll: aGTEventRecorder technologyName;
 			nextPut: $.;
-			cr; tab;
+			newLine; tab;
 			nextPutAll: 'It is a serialized instance of GTEventAnnouncement.';
-			cr; tab;
+			newLine; tab;
 			nextPutAll: 'It contains all instances of the Spotter recorder events."';
-			cr; tab;
+			newLine; tab;
 			nextPutAll: '<spotterEventRecorderSerializedData>';
-			cr; tab;
+			newLine; tab;
 			nextPutAll: '^ '.
 		(self serializeAnnouncementWithAllEventsUsing: aGTEventRecorder) storeOn: aStream. ]).
 	self compile: methodSource classified: 'serialized data'.
@@ -137,10 +137,10 @@ GTSpotterEventCollectorBackwardCompatibilityTest >> testMaterializeVersions [
 		yourself.
 	self
 		assert: notMaterializedEvents isEmpty
-		description: [ 'Some events are not tested for backward compatibility.' , String cr
+		description: [ 'Some events are not tested for backward compatibility.' , String newLine
 				,
 					'You should create new version using method #storeSerializedAnnouncementIntoMethod:.'
-				, String cr , 'Do not override the existing serialized versions!' ]
+				, String newLine , 'Do not override the existing serialized versions!' ]
 ]
 
 { #category : #'serialized data' }

@@ -102,7 +102,7 @@ TraitMethodDescription >> generateMethod: aSelector withMarker: aSymbol forArgs:
 						stream
 							nextPutAll: (keywords at: argumentNumber); space;
 							nextPutAll: 'arg'; nextPutAll: argumentNumber asString; space]]].
-		stream cr; tab; nextPutAll: 'self '; nextPutAll: aSymbol].
+		stream newLine; tab; nextPutAll: 'self '; nextPutAll: aSymbol].
 	
 	node := self class compiler
 		source: source;

@@ -348,7 +348,7 @@ RBSelectorEnvironment >> storeOn: aStream [
 						nextPut: $ ].
 			aStream
 				nextPutAll: '))';
-				cr].
+				newLine].
 	classSelectors keysAndValuesDo: classBlock.
 	aStream nextPutAll: ') metaClasses: #('.
 	metaClassSelectors keysAndValuesDo: classBlock.

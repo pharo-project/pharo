@@ -60,7 +60,7 @@ SmalltalkImage >> reportCPUandRAM [
 	stream := FileStream 
 				forceNewFileNamed: 'Log-ProcessList.txt' 
 				do: [ :aStream |  self tools processBrowser new processNameList 
-								do: [ :each | aStream nextPutAll: each; cr ]].
+								do: [ :each | aStream nextPutAll: each; newLine ]].
 
 "Fork all these, so they run in sequence, as the system is back running"
 [

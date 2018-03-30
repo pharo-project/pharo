@@ -50,15 +50,17 @@ RBRefactoringManager >> initialize [
 ]
 
 { #category : #printing }
-RBRefactoringManager >> printOn: aStream [ 
-	aStream nextPutAll: '#		Refactoring';
-		cr;
+RBRefactoringManager >> printOn: aStream [
+	aStream
+		nextPutAll: '#		Refactoring';
+		newLine;
 		nextPutAll: '---		-----------------------------------------------';
-		cr.
-	refactorings asSet asSortedCollection do: 
-			[:name | 
-			aStream nextPutAll: (refactorings occurrencesOf: name) printString;
+		newLine.
+	refactorings asSet asSortedCollection
+		do: [ :name | 
+			aStream
+				nextPutAll: (refactorings occurrencesOf: name) printString;
 				nextPutAll: '		';
 				nextPutAll: name;
-				cr]
+				newLine ]
 ]

@@ -308,7 +308,7 @@ TestCase class >> lastRun [
 TestCase class >> lastRunMethodNamed: aSelector [
 	
 	^ String streamContents: [:str |
-		str nextPutAll: aSelector asString ;cr.
+		str nextPutAll: aSelector asString ;newLine.
 		str tab; nextPutAll: '^ ', (self lastRun) storeString]
 
 ]
@@ -626,7 +626,7 @@ TestCase >> isLogging [
 TestCase >> logFailure: aString [
 	self isLogging ifTrue: [
 		self failureLog 
-			cr; 
+			newLine; 
 			nextPutAll: aString; 
 			flush]
 			

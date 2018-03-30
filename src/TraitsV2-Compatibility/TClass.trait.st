@@ -303,7 +303,7 @@ TClass >> classVariableDefinitionString [
 				special := global isSpecial]				
 			separatedBy: [ 
 				str nextPutAll: '. '.  
-				special ifTrue: [ str cr;tab;tab;tab;tab ]].
+				special ifTrue: [ str newLine;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 ]
 
@@ -711,7 +711,7 @@ TClass >> removeClassVarNamed: aString interactive: interactive [
 			ifFalse: [ ^ self ] ].
 	
 	varUserClass 
-		ifNotNil: [self crTrace: self name , ' (' , aString , ' is Undeclared) '.
+		ifNotNil: [ (self name , ' (' , aString , ' is Undeclared) ') crLog.
 			Undeclared declare: aSymbol from: self classPool]
 		ifNil: [ self classPool removeKey: aSymbol].
 		

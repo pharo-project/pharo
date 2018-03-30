@@ -113,7 +113,8 @@ BasicCommandLineHandler >> checkPassword [
 { #category : #commands }
 BasicCommandLineHandler >> copyright [
 	self stdout 
-		nextPutAll: Smalltalk licenseString; cr.
+		nextPutAll: Smalltalk licenseString;
+		newLine.
 	self quit.
 ]
 
@@ -127,18 +128,15 @@ BasicCommandLineHandler >> default [
 { #category : #commands }
 BasicCommandLineHandler >> error [
 	self arguments size = 1
-		ifTrue:  [
-			(self arguments first beginsWith: '-')
-				ifTrue:  [ self << 'Invalid option: ']
-				ifFalse: [ self << 'Invalid sub command: ']]
-		ifFalse: [ self << 'Invalid arguments: "'].
-		
-	(self << (' ' join: self arguments)) 
-		nextPutAll: '"'; cr.
-		
+		ifTrue: [ (self arguments first beginsWith: '-')
+				ifTrue: [ self << 'Invalid option: ' ]
+				ifFalse: [ self << 'Invalid sub command: ' ] ]
+		ifFalse: [ self << 'Invalid arguments: "' ].
+	(self << (' ' join: self arguments))
+		nextPutAll: '"';
+		newLine.
 	self printHelp.
-	
-	self exitFailure.
+	self exitFailure
 ]
 
 { #category : #activation }
@@ -232,21 +230,21 @@ BasicCommandLineHandler >> initialize [
 { #category : #commands }
 BasicCommandLineHandler >> list [
 	| handlers shortNames maxShortNameSize |
-	self stdout 
-		nextPutAll: 'Currently installed Command Line Handlers:'; lf.
-
-	handlers := self allHandlers reject: [ :cls | 
-			cls includesBehavior: BasicCommandLineHandler ].
+	self stdout
+		nextPutAll: 'Currently installed Command Line Handlers:';
+		newLine.
+	handlers := self allHandlers reject: [ :cls | cls includesBehavior: BasicCommandLineHandler ].
 	shortNames := handlers collect: #commandName.
-	maxShortNameSize := (shortNames detectMax: [ :name|  name size ]) size.
-	
-	handlers do: [ :handler|
-		self stdout 
-			nextPutAll: '    ';
-			nextPutAll: (handler commandName padRightTo: maxShortNameSize); 
-			nextPutAll: '    ';
-			nextPutAll: (handler description ifNil: [ '--']); lf].
-	self quit.
+	maxShortNameSize := (shortNames detectMax: [ :name | name size ]) size.
+	handlers
+		do: [ :handler | 
+			self stdout
+				nextPutAll: '    ';
+				nextPutAll: (handler commandName padRightTo: maxShortNameSize);
+				nextPutAll: '    ';
+				nextPutAll: (handler description ifNil: [ '--' ]);
+				newLine ].
+	self quit
 ]
 
 { #category : #commands }
@@ -284,8 +282,12 @@ BasicCommandLineHandler >> subCommandsRoot [
 
 { #category : #commands }
 BasicCommandLineHandler >> version [
-	self stdout 
-		nextPutAll: 'Image: '; print: SystemVersion current; cr;
-		nextPutAll: 'VM:    '; nextPutAll: Smalltalk vm version; cr.
-	self quit.
+	self stdout
+		nextPutAll: 'Image: ';
+		print: SystemVersion current;
+		newLine;
+		nextPutAll: 'VM:    ';
+		nextPutAll: Smalltalk vm version;
+		newLine.
+	self quit
 ]

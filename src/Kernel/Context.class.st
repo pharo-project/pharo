@@ -512,7 +512,7 @@ Context >> debugStack: stackSize on: aStream [
 	(self stackOfSize: stackSize)
 		do: [ :item | 
 			item printDebugOn: aStream.
-			aStream cr ]
+			aStream newLine ]
 ]
 
 { #category : #printing }
@@ -666,48 +666,62 @@ Context >> errorReportOn: stream [
 	"Write a detailed error report on the stack (above me) on a  
 	stream.  For both the error file, and emailing a bug report.   
 	Suppress any errors while getting printStrings.  Limit the length."
-	
+
 	| stackDepth aContext |
-	stream print: Date today; space; print: Time now; cr.
-	stream cr.
-	stream nextPutAll: 'VM: ';
+	stream
+		print: Date today;
+		space;
+		print: Time now;
+		newLine.
+	stream newLine.
+	stream
+		nextPutAll: 'VM: ';
 		nextPutAll: Smalltalk os name asString;
-		nextPutAll: ' - ';	
+		nextPutAll: ' - ';
 		nextPutAll: Smalltalk os subtype asString;
 		nextPutAll: ' - ';
 		nextPutAll: Smalltalk os version asString;
 		nextPutAll: ' - ';
 		nextPutAll: Smalltalk vm version asString;
-		cr.	
-	stream nextPutAll: 'Image: ';
-		nextPutAll:  SystemVersion current version asString;
+		newLine.
+	stream
+		nextPutAll: 'Image: ';
+		nextPutAll: SystemVersion current version asString;
 		nextPutAll: ' [';
 		nextPutAll: Smalltalk lastUpdateString asString;
 		nextPutAll: ']';
-		cr.
-	stream cr.
-	"Note: The following is an open-coded version of  Context>>stackOfSize: since this method may be called during a  low space condition and we might run out of space for allocating the  full stack."	
-	stackDepth := 0.  
-	aContext := self.
-	[ aContext notNil and: [ (stackDepth := stackDepth + 1) < 40 ]] 
-		whileTrue: [
-			"variable values"
-			aContext printDetails: stream.
-			stream cr.
-			aContext := aContext sender ].
-	stream cr; nextPutAll: '--- The full stack ---'; cr.
-	aContext := self.	
+		newLine.
+	stream newLine.
+	"Note: The following is an open-coded version of  Context>>stackOfSize: since this method may be called during a  low space condition and we might run out of space for allocating the  full stack."
 	stackDepth := 0.
-	[ aContext == nil ] whileFalse:	[
-		stackDepth := stackDepth + 1.	
-		stackDepth = 40 ifTrue: [ stream nextPutAll: ' - - - - - - - - - - - - - - -  
-			- - - - - - - - - - - - - - - - - -'; cr ].
-		"just class>>selector"	
-		stream print: aContext; cr. 		
-		stackDepth > 200 ifTrue: [
-			stream nextPutAll: '-- and more not shown --'.
-			^  self ].
-		aContext := aContext sender ].
+	aContext := self.
+	[ aContext notNil and: [ (stackDepth := stackDepth + 1) < 40 ] ]
+		whileTrue: [ "variable values"
+			aContext printDetails: stream.
+			stream newLine.
+			aContext := aContext sender ].
+	stream
+		newLine;
+		nextPutAll: '--- The full stack ---';
+		newLine.
+	aContext := self.
+	stackDepth := 0.
+	[ aContext == nil ]
+		whileFalse: [ stackDepth := stackDepth + 1.
+			stackDepth = 40
+				ifTrue: [ stream
+						nextPutAll:
+							' - - - - - - - - - - - - - - -  
+			- - - - - - - - - - - - - - - - - -';
+						newLine ].
+			"just class>>selector"
+			stream
+				print: aContext;
+				newLine.
+			stackDepth > 200
+				ifTrue: [ stream nextPutAll: '-- and more not shown --'.
+					^ self ].
+			aContext := aContext sender ]
 ]
 
 { #category : #'private-exceptions' }
@@ -1024,9 +1038,13 @@ Context >> jump: distance if: condition [
 Context >> longStack [
 	"Answer a String showing the top 100 contexts on my sender chain."
 
-	^ String streamContents: [ :stream |
-		(self stackOfSize: 100) do: [ :item | 
-			stream print: item; cr ]]
+	^ String
+		streamContents: [ :stream | 
+			(self stackOfSize: 100)
+				do: [ :item | 
+					stream
+						print: item;
+						newLine ] ]
 ]
 
 { #category : #accessing }
@@ -1302,7 +1320,7 @@ Context >> printDebugOn: aStream [
 	
 	blockSource := closureOrNil printStringLimitedTo: 50.
 	blockSourceSize := blockSource size.
-	blockSource := blockSource copyUpTo: Character cr.
+	blockSource := blockSource copyUpTo: Character newLine.
 	
 	aStream nextPutAll: blockSource.
 	blockSource size < blockSourceSize
@@ -1315,23 +1333,28 @@ Context >> printDetails: stream [
 
 	| errorMessage string |
 	self printOn: stream.
-	stream cr.
-	stream tab; nextPutAll: 'Receiver: '.
+	stream newLine.
+	stream
+		tab;
+		nextPutAll: 'Receiver: '.
 	errorMessage := '<<error during printing>>'.
-	stream nextPutAll: ([receiver printStringLimitedTo: 90] ifError: [errorMessage]).
-
-	stream cr; tab; nextPutAll: 'Arguments and temporary variables: '; cr.
-	string := [(self tempsAndValuesLimitedTo: 80 indent: 2) 
-				padRightTo:1 with: $x] ifError: [errorMessage].
-	stream nextPutAll: (string allButLast).
-
-	stream cr; tab; nextPutAll: 'Receiver''s instance variables: '; cr.
-	receiver class allInstVarNames isEmpty ifTrue: [ 
-		stream nextPutAll: ([receiver printStringLimitedTo: 90] ifError: [ errorMessage ]).
-	] ifFalse: [
-		[receiver longPrintOn: stream limitedTo: 80 indent: 2] ifError: [ stream nextPutAll: errorMessage ].
-	].
-	stream cr
+	stream nextPutAll: ([ receiver printStringLimitedTo: 90 ] ifError: [ errorMessage ]).
+	stream
+		newLine;
+		tab;
+		nextPutAll: 'Arguments and temporary variables: ';
+		newLine.
+	string := [ (self tempsAndValuesLimitedTo: 80 indent: 2) padRightTo: 1 with: $x ] ifError: [ errorMessage ].
+	stream nextPutAll: string allButLast.
+	stream
+		newLine;
+		tab;
+		nextPutAll: 'Receiver''s instance variables: ';
+		newLine.
+	receiver class allInstVarNames isEmpty
+		ifTrue: [ stream nextPutAll: ([ receiver printStringLimitedTo: 90 ] ifError: [ errorMessage ]) ]
+		ifFalse: [ [ receiver longPrintOn: stream limitedTo: 80 indent: 2 ] ifError: [ stream nextPutAll: errorMessage ] ].
+	stream newLine
 ]
 
 { #category : #printing }
@@ -1849,9 +1872,13 @@ Context >> shortDebugStackOn: aStream [
 Context >> shortStack [
 	"Answer a String showing the top ten contexts on my sender chain."
 
-	^ String streamContents: [ :stream |
-		(self stackOfSize: 10) do: [ :item |
-			stream print: item; cr]]
+	^ String
+		streamContents: [ :stream | 
+			(self stackOfSize: 10)
+				do: [ :item | 
+					stream
+						print: item;
+						newLine ] ]
 ]
 
 { #category : #'debugger access' }

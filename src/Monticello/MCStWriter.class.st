@@ -33,9 +33,9 @@ MCStWriter >> basicChunkContents: aBlock [
 { #category : #writing }
 MCStWriter >> chunkContents: aBlock [
 	stream
-		cr;
+		newLine;
 		nextPut: (String streamContents: aBlock);
-		cr
+		newLine
 ]
 
 { #category : #'initialize-release' }
@@ -53,13 +53,15 @@ MCStWriter >> visitClassDefinition: definition [
 
 { #category : #visiting }
 MCStWriter >> visitClassTraitDefinition: definition [
-	self chunkContents: [:s | s
-		nextPutAll: definition baseTrait;
-		nextPutAll: ' classTrait';
-		cr; tab;
-		nextPutAll: 'uses: ';
-		nextPutAll: (definition classTraitComposition ifNil: ['{}'])]
-
+	self
+		chunkContents: [ :s | 
+			s
+				nextPutAll: definition baseTrait;
+				nextPutAll: ' classTrait';
+				newLine;
+				tab;
+				nextPutAll: 'uses: ';
+				nextPutAll: (definition classTraitComposition ifNil: [ '{}' ]) ]
 ]
 
 { #category : #visiting }
@@ -97,21 +99,22 @@ MCStWriter >> visitTraitDefinition: definition [
 { #category : #writing }
 MCStWriter >> writeCategory: categoryName [
 	stream
-		nextChunkPut: 'SystemOrganization addCategory: ', categoryName printString;
-		cr
+		nextChunkPut: 'SystemOrganization addCategory: ' , categoryName printString;
+		newLine
 ]
 
 { #category : #writing }
 MCStWriter >> writeClassComment: definition [
-
-	self chunkContents: [ :str |
-		stream bang.
-		str nextPutAll: definition className;
-			nextPutAll: ' commentStamp: ';
-			store: definition commentStamp;
-			nextPutAll: ' prior: 0' ].
+	self
+		chunkContents: [ :str | 
+			stream bang.
+			str
+				nextPutAll: definition className;
+				nextPutAll: ' commentStamp: ';
+				store: definition commentStamp;
+				nextPutAll: ' prior: 0' ].
 	self basicChunkContents: [ :str | str nextPutAll: definition comment ].
-	stream cr.
+	stream newLine
 ]
 
 { #category : #writing }
@@ -161,17 +164,23 @@ MCStWriter >> writeInitializers: aBoolean [
 
 { #category : #writing }
 MCStWriter >> writeMetaclassDefinition: definition [
-	self chunkContents: [:str |
-		str	 nextPutAll: definition className;
-			nextPutAll: ' class';
-			cr; tab.
-			definition hasClassTraitComposition ifTrue: [
-				str	 nextPutAll: 'uses: ';
-					nextPutAll: definition classTraitCompositionString;
-					cr; tab].
-			str	 nextPutAll: 'instanceVariableNames: ''';
+	self
+		chunkContents: [ :str | 
+			str
+				nextPutAll: definition className;
+				nextPutAll: ' class';
+				newLine;
+				tab.
+			definition hasClassTraitComposition
+				ifTrue: [ str
+						nextPutAll: 'uses: ';
+						nextPutAll: definition classTraitCompositionString;
+						newLine;
+						tab ].
+			str
+				nextPutAll: 'instanceVariableNames: ''';
 				nextPutAll: definition classInstanceVariablesString;
-				nextPut: $']
+				nextPut: $' ]
 ]
 
 { #category : #writing }
@@ -186,8 +195,8 @@ MCStWriter >> writeMethodInitializer: aMethodDefinition [
 
 { #category : #writing }
 MCStWriter >> writeMethodPostscript [
-	self basicChunkContents: [:str | str space ].
-	stream cr.
+	self basicChunkContents: [ :str | str space ].
+	stream newLine
 ]
 
 { #category : #writing }

@@ -107,50 +107,68 @@ MCConfigurationBrowser >> checkDependencies [
 { #category : #dependencies }
 MCConfigurationBrowser >> checkMissing [
 	| missing |
-	missing := (self dependencies collect: [:ea | ea versionInfo name]) asSet.
-
+	missing := (self dependencies collect: [ :ea | ea versionInfo name ]) asSet.
 	self repositories
-		do: [:repo |
-			repo allVersionNames
-				do: [:found | missing remove: found ifAbsent: []]]
+		do: [ :repo | repo allVersionNames do: [ :found | missing remove: found ifAbsent: [  ] ] ]
 		displayingProgress: 'searching versions'.
-
-	^missing isEmpty or: [
-		self selectDependency: missing anyOne.
-		self confirm: (String streamContents: [:strm |
-			strm nextPutAll: 'No repository found for'; cr.
-			missing do: [:r | strm nextPutAll: r; cr].
-			strm nextPutAll: 'Do you still want to store?'])]
-	
+	^ missing isEmpty
+		or: [ self selectDependency: missing anyOne.
+			self
+				confirm:
+					(String
+						streamContents: [ :strm | 
+							strm
+								nextPutAll: 'No repository found for';
+								newLine.
+							missing
+								do: [ :r | 
+									strm
+										nextPutAll: r;
+										newLine ].
+							strm nextPutAll: 'Do you still want to store?' ]) ]
 ]
 
 { #category : #dependencies }
 MCConfigurationBrowser >> checkModified [
 	| modified |
-	modified := self dependencies select: [:dep |
-		dep isFulfilled and: [dep package workingCopy modified]].
-	
-	^modified isEmpty or: [
-		self selectDependency: modified anyOne.
-		self confirm: (String streamContents: [:strm |
-			strm nextPutAll: 'These packages are modified:'; cr.
-			modified do: [:dep | strm nextPutAll: dep package name; cr].
-			strm nextPutAll: 'Do you still want to store?'])]
-	
+	modified := self dependencies select: [ :dep | dep isFulfilled and: [ dep package workingCopy modified ] ].
+	^ modified isEmpty
+		or: [ self selectDependency: modified anyOne.
+			self
+				confirm:
+					(String
+						streamContents: [ :strm | 
+							strm
+								nextPutAll: 'These packages are modified:';
+								newLine.
+							modified
+								do: [ :dep | 
+									strm
+										nextPutAll: dep package name;
+										newLine ].
+							strm nextPutAll: 'Do you still want to store?' ]) ]
 ]
 
 { #category : #repositories }
 MCConfigurationBrowser >> checkRepositories [
 	| bad |
-	bad := self repositories reject: [:repo | repo isKindOf: MCHttpRepository].
-	^bad isEmpty or: [
-		self selectRepository: bad first.
-		self inform: (String streamContents: [:strm |
-			strm nextPutAll: 'Please remove these repositories:'; cr.
-			bad do: [:r | strm nextPutAll: r description; cr].
-			strm nextPutAll: '(only HTTP repositories are supported)']).
-		false].
-
+	bad := self repositories reject: [ :repo | repo isKindOf: MCHttpRepository ].
+	^ bad isEmpty
+		or: [ self selectRepository: bad first.
+			self
+				inform:
+					(String
+						streamContents: [ :strm | 
+							strm
+								nextPutAll: 'Please remove these repositories:';
+								newLine.
+							bad
+								do: [ :r | 
+									strm
+										nextPutAll: r description;
+										newLine ].
+							strm nextPutAll: '(only HTTP repositories are supported)' ]).
+			false ]
 ]
 
 { #category : #repositories }
@@ -161,8 +179,8 @@ MCConfigurationBrowser >> checkRepositoryTemplates [
 	^bad isEmpty or: [
 		self selectRepository: bad first.
 		self inform: (String streamContents: [:strm |
-			strm nextPutAll: 'Creation template missing for'; cr.
-			bad do: [:r | strm nextPutAll: r description; cr].
+			strm nextPutAll: 'Creation template missing for'; newLine.
+			bad do: [:r | strm nextPutAll: r description; newLine].
 			strm nextPutAll: 'Please fill in the details first!']).
 		false].
 
@@ -231,7 +249,7 @@ MCConfigurationBrowser >> dependencyMenu: aMenu [
 
 { #category : #description }
 MCConfigurationBrowser >> description [
-	self selectedDependency ifNotNil: [:dep | ^ ('Package: ', dep package name, String cr,
+	self selectedDependency ifNotNil: [:dep | ^ ('Package: ', dep package name, String newLine,
 		dep versionInfo summary) asText].
 	self selectedRepository ifNotNil: [:repo | ^repo creationTemplate
 		ifNotNil: [repo creationTemplate asText]
@@ -350,7 +368,7 @@ MCConfigurationBrowser >> migrate [
 
 	self pickRepository ifNotNil: [:aRepository |
 		versions do: [:eachVersion |
-			Transcript cr; show: '',aRepository,' storeVersion: ', eachVersion.
+			(aRepository,' storeVersion: ', eachVersion) crLog.
 			aRepository storeVersion: eachVersion
 		]
 	]

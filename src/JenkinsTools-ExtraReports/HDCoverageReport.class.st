@@ -37,91 +37,167 @@ HDCoverageReport >> generate [
 { #category : #generating }
 HDCoverageReport >> generateDataOn: aStream [
 	| items |
-	aStream tab; nextPutAll: '<data>'; nextPut: Character lf.
-	aStream tab; tab; nextPutAll: '<all name="all classes">'; nextPut: Character lf.
+	aStream
+		tab;
+		nextPutAll: '<data>';
+		newLine.
+	aStream
+		tab;
+		tab;
+		nextPutAll: '<all name="all classes">';
+		newLine.
 	self
-		generateType: 'class' indent: 3
+		generateType: 'class'
+		indent: 3
 		total: (items := (packages flatCollect: [ :each | each classes ]) asSet) size
-		actual: ((covered collect: [ :each | each actualClass instanceSide ]) asSet
-			count: [ :each | items includes: each ])
+		actual: ((covered collect: [ :each | each actualClass instanceSide ]) asSet count: [ :each | items includes: each ])
 		on: aStream.
 	self
-		generateType: 'method' indent: 3
-		total: (items := (packages flatCollect: [ :each | each methods ]) asSet) size 
+		generateType: 'method'
+		indent: 3
+		total: (items := (packages flatCollect: [ :each | each methods ]) asSet) size
 		actual: (covered count: [ :each | items includes: each ])
 		on: aStream.
 	packages do: [ :each | self generatePackage: each on: aStream ].
-	aStream tab; tab; nextPutAll: '</all>'; nextPut: Character lf.
-	aStream tab; nextPutAll: '</data>'; nextPut: Character lf
+	aStream
+		tab;
+		tab;
+		nextPutAll: '</all>';
+		newLine.
+	aStream
+		tab;
+		nextPutAll: '</data>';
+		newLine
 ]
 
 { #category : #generating }
 HDCoverageReport >> generateOn: aStream [
-	aStream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'; nextPut: Character lf.
-	aStream nextPutAll: '<report>'; nextPut: Character lf.
+	aStream
+		nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>';
+		newLine.
+	aStream
+		nextPutAll: '<report>';
+		newLine.
 	self generateStatsOn: aStream.
 	self generateDataOn: aStream.
-	aStream nextPutAll: '</report>'; nextPut: Character lf
+	aStream
+		nextPutAll: '</report>';
+		newLine
 ]
 
 { #category : #generating }
 HDCoverageReport >> generatePackage: aPackage class: aClass on: aStream [
 	| items |
-	aStream tab: 4; nextPutAll: '<class name="'; nextPutAll: (self encode: aClass name); nextPutAll: '">'; nextPut: Character lf.
+	aStream
+		tab: 4;
+		nextPutAll: '<class name="';
+		nextPutAll: aClass name;
+		nextPutAll: '">';
+		newLine.
 	self
-		generateType: 'class' indent: 5
+		generateType: 'class'
+		indent: 5
 		total: 1
-		actual: ((covered anySatisfy: [ :each | each actualClass instanceSide = aClass ])
-			ifTrue: [ 1 ] ifFalse: [ 0 ])
+		actual:
+			((covered anySatisfy: [ :each | each actualClass instanceSide = aClass ])
+				ifTrue: [ 1 ]
+				ifFalse: [ 0 ])
 		on: aStream.
 	self
-		generateType: 'method' indent: 5
+		generateType: 'method'
+		indent: 5
 		total: (items := aPackage definedMethodsForClass: aClass) size
 		actual: (covered count: [ :each | items includes: each ])
 		on: aStream.
-	items do: [ :each | self generatePackage: each method: each on: aStream ].	
-	aStream tab: 4; nextPutAll: '</class>'; nextPut: Character lf
+	items do: [ :each | self generatePackage: each method: each on: aStream ].
+	aStream
+		tab: 4;
+		nextPutAll: '</class>';
+		newLine
 ]
 
 { #category : #generating }
 HDCoverageReport >> generatePackage: aPackage method: aReference on: aStream [
- 
-	aStream tab: 5; nextPutAll: '<method name="'; nextPutAll: (self encode: aReference selector); nextPutAll: '">'; nextPut: Character lf.
+	aStream
+		tab: 5;
+		nextPutAll: '<method name="';
+		nextPutAll: aReference selector;
+		nextPutAll: '">';
+		newLine.
 	self
-		generateType: 'method' indent: 6
+		generateType: 'method'
+		indent: 6
 		total: 1
-		actual: ((covered includes: aReference) ifTrue: [ 1 ] ifFalse: [ 0 ])
+		actual:
+			((covered includes: aReference)
+				ifTrue: [ 1 ]
+				ifFalse: [ 0 ])
 		on: aStream.
-	aStream tab: 5; nextPutAll: '</method>'; nextPut: Character lf
+	aStream
+		tab: 5;
+		nextPutAll: '</method>';
+		newLine
 ]
 
 { #category : #generating }
 HDCoverageReport >> generatePackage: aPackage on: aStream [
 	| items |
-	aStream tab: 3; nextPutAll: '<package name="'; nextPutAll: (self encode: (aPackage packageName copyReplaceAll: '-' with: '.')); nextPutAll: '">'; nextPut: Character lf.
+	aStream
+		tab: 3;
+		nextPutAll: '<package name="';
+		nextPutAll: (aPackage packageName copyReplaceAll: '-' with: '.');
+		nextPutAll: '">';
+		newLine.
 	self
-		generateType: 'class' indent: 4
+		generateType: 'class'
+		indent: 4
 		total: (items := aPackage classes asSet) size
-		actual: ((covered collect: [ :each | each actualClass instanceSide ]) asSet
-			count: [ :each | items includes: each ])
+		actual: ((covered collect: [ :each | each actualClass instanceSide ]) asSet count: [ :each | items includes: each ])
 		on: aStream.
 	self
-		generateType: 'method' indent: 4
+		generateType: 'method'
+		indent: 4
 		total: (items := aPackage methods asSet) size
 		actual: (covered count: [ :each | items includes: each ])
 		on: aStream.
-	aPackage classes 
-		do: [ :class | self generatePackage: aPackage class: class on: aStream ].
-	aStream tab: 3; nextPutAll: '</package>'; nextPut: Character lf
+	aPackage classes do: [ :class | self generatePackage: aPackage class: class on: aStream ].
+	aStream
+		tab: 3;
+		nextPutAll: '</package>';
+		newLine
 ]
 
 { #category : #generating }
 HDCoverageReport >> generateStatsOn: aStream [
-	aStream tab; nextPutAll: '<stats>'; nextPut: Character lf.
-	aStream tab; tab; nextPutAll: '<packages value="'; print: (packages size); nextPutAll: '"/>'; nextPut: Character lf.
-	aStream tab; tab; nextPutAll: '<classes value="'; print: (packages detectSum: [ :each | each classes size ]); nextPutAll: '"/>'; nextPut: Character lf.
-	aStream tab; tab; nextPutAll: '<methods value="'; print: (packages detectSum: [ :each | each methods size ]); nextPutAll: '"/>'; nextPut: Character lf.
-	aStream tab; nextPutAll: '</stats>'; nextPut: Character lf.
+	aStream
+		tab;
+		nextPutAll: '<stats>';
+		newLine.
+	aStream
+		tab;
+		tab;
+		nextPutAll: '<packages value="';
+		print: packages size;
+		nextPutAll: '"/>';
+		newLine.
+	aStream
+		tab;
+		tab;
+		nextPutAll: '<classes value="';
+		print: (packages detectSum: [ :each | each classes size ]);
+		nextPutAll: '"/>';
+		newLine.
+	aStream
+		tab;
+		tab;
+		nextPutAll: '<methods value="';
+		print: (packages detectSum: [ :each | each methods size ]);
+		nextPutAll: '"/>';
+		newLine.
+	aStream
+		tab;
+		nextPutAll: '</stats>';
+		newLine
 ]
 
 { #category : #generating }
@@ -130,7 +206,7 @@ HDCoverageReport >> generateType: aString indent: anInteger total: totalInteger 
 		nextPutAll: '<coverage type="'; nextPutAll: aString; 
 		nextPutAll: ', %" value="'; print: (totalInteger = 0 ifTrue: [ 0 ] ifFalse: [ (100.0 * actualInteger / totalInteger) rounded ]); 
 		nextPutAll: '% ('; print: actualInteger; nextPut: $/; print: totalInteger; nextPutAll: ')"/>'; 
-		nextPut: Character lf
+		newLine
 ]
 
 { #category : #private }

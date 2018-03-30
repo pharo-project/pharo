@@ -4,7 +4,7 @@ Extension { #name : #TraitedMetaclass }
 TraitedMetaclass >> fileOutLocalMethodsInCategory: aSymbol on: aFileStream [
 	| selectors |
 	
-	aFileStream cr.
+	aFileStream newLine.
 	selectors := self selectorsToFileOutCategory: aSymbol.
 	
 	selectors do: [:sel | 

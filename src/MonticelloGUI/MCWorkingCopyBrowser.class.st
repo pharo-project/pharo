@@ -435,7 +435,7 @@ MCWorkingCopyBrowser >> flushAllCaches [
 		afterBytes := Smalltalk garbageCollect.
 		afterVersions := MCVersion allSubInstances size.
 	].
-	^self inform: (beforeVersions - afterVersions) asString, ' versions flushed', String cr,
+	^self inform: (beforeVersions - afterVersions) asString, ' versions flushed', String newLine,
  		(afterBytes - beforeBytes) asStringWithCommas, ' bytes reclaimed'
 ]
 
@@ -754,7 +754,7 @@ MCWorkingCopyBrowser >> saveRepositories [
 	FileStream forceNewFileNamed: 'MCRepositories.st' do: [:f |
 		MCRepositoryGroup default repositoriesDo: [:r |
 			r asCreationTemplate ifNotNil: [:template |
-				f nextPutAll: 'MCRepositoryGroup default addRepository: (', template , ')!'; cr]]]
+				f nextPutAll: 'MCRepositoryGroup default addRepository: (', template , ')!'; newLine]]]
 ]
 
 { #category : #actions }
@@ -839,16 +839,18 @@ MCWorkingCopyBrowser >> viewHistory [
 MCWorkingCopyBrowser >> viewPastComments [
 	"Visualize past comments on a package."
 
-       workingCopy ifNotNil:
-               [(UIManager default
-                       edit: (String streamContents:
-                                       [:s|
-                                       "Ignore the initial MCWorkingAncestry instance."
-                                       workingCopy ancestry topologicalAncestors allButFirst
-                                               do: [:versionInfo|
-                                                       s nextPutAll: versionInfo summary]
-                                               separatedBy: [s cr; cr"; next: 32 put: $-; cr; cr"]])
-                       label: 'Version History: ',  workingCopy packageName) ]
+	workingCopy
+		ifNotNil: [ UIManager default
+				edit:
+					(String
+						streamContents: [ :s | 
+							"Ignore the initial MCWorkingAncestry instance."
+							workingCopy ancestry topologicalAncestors allButFirst
+								do: [ :versionInfo | s nextPutAll: versionInfo summary ]
+								separatedBy: [ s
+										newLine;
+										newLine ] ])
+				label: 'Version History: ' , workingCopy packageName ]
 ]
 
 { #category : #'menu spec' }

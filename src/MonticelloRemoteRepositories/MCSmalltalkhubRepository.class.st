@@ -28,13 +28,26 @@ MCSmalltalkhubRepository class >> creationTemplate [
 
 { #category : #'creation template' }
 MCSmalltalkhubRepository class >> creationTemplateOwner: owner project: project user: user password: password [
-	^ String streamContents: [ :s|
-		s 
-			nextPutAll: self name; cr;
-			tab; nextPutAll: 'owner: '; print: owner; cr;
-			tab; nextPutAll: 'project: '; print: project; cr;
-			tab; nextPutAll: 'user: '; print: user; cr;
-			tab; nextPutAll: 'password: '; print: password ].
+	^ String
+		streamContents: [ :s | 
+			s
+				nextPutAll: self name;
+				newLine;
+				tab;
+				nextPutAll: 'owner: ';
+				print: owner;
+				newLine;
+				tab;
+				nextPutAll: 'project: ';
+				print: project;
+				newLine;
+				tab;
+				nextPutAll: 'user: ';
+				print: user;
+				newLine;
+				tab;
+				nextPutAll: 'password: ';
+				print: password ]
 ]
 
 { #category : #accessing }

@@ -215,10 +215,10 @@ VSCommitBrowser >> configure [
 VSCommitBrowser >> informValidationError: anError [
 	UIManager default inform: (String streamContents: [ :stream |
 		stream 
-			<< anError project name << ' has errors:'; cr. 
+			<< anError project name << ' has errors:'; newLine. 
 		anError issues 
 			do: [ :each | stream << each ]
-			separatedBy: [ stream cr ] ])
+			separatedBy: [ stream newLine ] ])
 ]
 
 { #category : #accessing }

@@ -71,9 +71,9 @@ MCModification >> obsoletion [
 MCModification >> printAnnotations: request on: aStream [
 	aStream nextPutAll: 'old: '.
 	obsoletion printAnnotations: request on: aStream.
-	aStream cr.
+	aStream newLine.
 	aStream nextPutAll: 'new: '.
-	modification printAnnotations: request on: aStream.
+	modification printAnnotations: request on: aStream
 ]
 
 { #category : #accessing }

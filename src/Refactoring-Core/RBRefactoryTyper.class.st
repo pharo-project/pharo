@@ -276,12 +276,12 @@ RBRefactoryTyper >> model: aRBSmalltalk [
 ]
 
 { #category : #printing }
-RBRefactoryTyper >> printOn: aStream [ 
+RBRefactoryTyper >> printOn: aStream [
 	aStream
 		nextPutAll: class name;
-		cr.
-	class instanceVariableNames do: 
-			[:each | 
+		newLine.
+	class instanceVariableNames
+		do: [ :each | 
 			aStream
 				tab;
 				nextPutAll: each;
@@ -290,7 +290,7 @@ RBRefactoryTyper >> printOn: aStream [
 			self printTypeFor: each on: aStream.
 			aStream
 				nextPut: $>;
-				cr]
+				newLine ]
 ]
 
 { #category : #printing }

@@ -277,13 +277,13 @@ MCHttpRepository >> password [
 		| answer |
 		user isEmptyOrNil ifTrue: [
 			"Give the user a chance to change the login"
-			answer := UIManager default request: 'User name for ', String cr, location
+			answer := UIManager default request: 'User name for ', String newLine, location
 				initialAnswer: ''.
 			answer isEmptyOrNil
 				ifTrue: [^password]
 				ifFalse: [self user: answer] ].
 		
-		password := UIManager default requestPassword: 'Password for "', self user, '" at ', String cr, self location.
+		password := UIManager default requestPassword: 'Password for "', self user, '" at ', String newLine, self location.
 		"The user doesn't care about logging into this repo. Clear the username so they will not be prompted every time"
 		password isEmptyOrNil ifTrue: [ user := '' ].
 	].

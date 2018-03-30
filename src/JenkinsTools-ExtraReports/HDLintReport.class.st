@@ -41,10 +41,10 @@ HDLintReport >> generateClass: aClass on: aStream [
 	| sourceStream sourceName |
 	sourceStream := WriteStream on: String new.
 	sourceName := environment label , '-' , aClass name , '.st'.
-	aStream tab; nextPutAll: '<file name="'; nextPutAll: (self encode: sourceName); nextPutAll: '">'; nextPut: Character lf.
+	aStream tab; nextPutAll: '<file name="'; nextPutAll: sourceName; nextPutAll: '">'; newLine.
 	self generateClass: aClass source: sourceStream on: aStream.
 	self generateClass: aClass class source: sourceStream on: aStream.
-	aStream tab; nextPutAll: '</file>'; nextPut: Character lf.
+	aStream tab; nextPutAll: '</file>'; newLine.
 	sourceName asFileReference ensureDelete writeStreamDo: [ :stream | 
 		stream nextPutAll: sourceStream contents ]
 ]
@@ -56,8 +56,9 @@ HDLintReport >> generateClass: aClass selector: aSelector source: sourceStream o
 		lineAndColumn: sourceStream contents
 		at: sourceStream position.
 	sourceStream
-		nextPutAll: (source := self convert: (aClass sourceCodeAt: aSelector));
-		nextPut: Character lf; nextPut: Character lf.
+		nextPutAll: (source := aClass sourceCodeAt: aSelector);
+		newLine;
+		newLine.
 	matching := rules select: [ :each | 
 		(self isSelectorEnvironment: each result)
 			and: [ each result includesSelector: aSelector in: aClass ] ].
@@ -71,8 +72,9 @@ HDLintReport >> generateClass: aClass source: sourceStream on: aStream [
 		lineAndColumn: sourceStream contents
 		at: sourceStream position.
 	sourceStream
-		nextPutAll: (source := self convert: aClass definition);
-		nextPut: Character lf; nextPut: Character lf.
+		nextPutAll: (source := aClass definition);
+		newLine;
+		newLine.
 	(environment definesClass: aClass) ifTrue: [
 		matching := rules select: [ :rule |
 			(self isClassEnvironment: rule result)
@@ -84,34 +86,58 @@ HDLintReport >> generateClass: aClass source: sourceStream on: aStream [
 
 { #category : #generating }
 HDLintReport >> generateOn: aStream [
-	aStream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'; nextPut: Character lf.
-	aStream nextPutAll: '<checkstyle version="5.2">'; nextPut: Character lf.
-	(environment allClasses asSortedCollection: [ :a :b | a name <= b name ])
-		do: [ :class | self generateClass: class on: aStream ].
+	aStream
+		nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>';
+		newLine.
+	aStream
+		nextPutAll: '<checkstyle version="5.2">';
+		newLine.
+	(environment allClasses asSortedCollection: [ :a :b | a name <= b name ]) do: [ :class | self generateClass: class on: aStream ].
 	aStream nextPutAll: '</checkstyle>'
 ]
 
 { #category : #generating }
 HDLintReport >> generateViolations: aCollection source: aString offset: aPoint on: aStream [
-	aCollection do: [ :rule |
-		| interval start |
-		interval := (rule result selectionIntervalFor: aString)
-			ifNil: [ 1 to: aString size ].
-		start := self lineAndColumn: aString at: interval first.
-		aStream tab; tab; nextPutAll: '<error'.
-		aStream nextPutAll: ' source="'; nextPutAll: (self encode: rule class name); nextPut: $".
-		aStream nextPutAll: ' message="'; nextPutAll: (self encode: rule group); nextPutAll: ' - '; nextPutAll: (self encode: rule name); nextPut: $".
-		aStream nextPutAll: ' severity="'; nextPutAll: (rule
-			severity = #information 
-				ifTrue: [ 'info' ]
-				ifFalse: [ 
-					rule severity = #warning
-						ifTrue: [ 'warning' ]
-						ifFalse: [ 'error' ] ]); nextPut: $".
-		aStream nextPutAll: ' line="'; print: aPoint x + start x; nextPut: $".
-		aPoint y + start y - 1 <= 1
-			ifFalse: [ aStream nextPutAll: ' column="'; print: aPoint y + start y - 1; nextPut: $" ].
-		aStream nextPutAll: '/>'; nextPut: Character lf ]
+	aCollection
+		do: [ :rule | 
+			| interval start |
+			interval := (rule result selectionIntervalFor: aString) ifNil: [ 1 to: aString size ].
+			start := self lineAndColumn: aString at: interval first.
+			aStream
+				tab;
+				tab;
+				nextPutAll: '<error'.
+			aStream
+				nextPutAll: ' source="';
+				nextPutAll: rule class name;
+				nextPut: $".
+			aStream
+				nextPutAll: ' message="';
+				nextPutAll: rule group;
+				nextPutAll: ' - ';
+				nextPutAll: rule name;
+				nextPut: $".
+			aStream
+				nextPutAll: ' severity="';
+				nextPutAll:
+					(rule severity = #information
+						ifTrue: [ 'info' ]
+						ifFalse: [ rule severity = #warning
+								ifTrue: [ 'warning' ]
+								ifFalse: [ 'error' ] ]);
+				nextPut: $".
+			aStream
+				nextPutAll: ' line="';
+				print: aPoint x + start x;
+				nextPut: $".
+			aPoint y + start y - 1 <= 1
+				ifFalse: [ aStream
+						nextPutAll: ' column="';
+						print: aPoint y + start y - 1;
+						nextPut: $" ].
+			aStream
+				nextPutAll: '/>';
+				newLine ]
 ]
 
 { #category : #initialization }

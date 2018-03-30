@@ -63,12 +63,14 @@ Exit >> isSuccess [
 
 { #category : #accessing }
 Exit >> printMessage [
-	|stderr|
+	| stderr |
 	stderr := VTermOutputDriver stderr.
-	self isSuccess ifFalse: [ stderr red ].
+	self isSuccess
+		ifFalse: [ stderr red ].
 	stderr
-		nextPutAll: self messageText; lf;
-		clear.
+		nextPutAll: self messageText;
+		newLine;
+		clear
 ]
 
 { #category : #printing }

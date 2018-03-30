@@ -16,24 +16,20 @@ MCModification >> diff [
 MCModification >> diffFromSource [
 	"Answer fromSource of the modification. If a class patch then answer
 	the fromSource with the class-side definition and comment appended."
-	
-	^self isClassPatch
-		ifTrue: [self fromSource, String cr, String cr,
-				obsoletion classDefinitionString, String cr, String cr,
-				obsoletion commentStamp, String cr,
-				obsoletion comment]
-		ifFalse: [obsoletion diffSource]
+
+	^ self isClassPatch
+		ifTrue: [ self fromSource , String newLine , String newLine , obsoletion classDefinitionString , String newLine , String newLine
+				, obsoletion commentStamp , String newLine , obsoletion comment ]
+		ifFalse: [ obsoletion diffSource ]
 ]
 
 { #category : #'*Tool-Diff' }
 MCModification >> diffToSource [
 	"Answer toSource of the modification. If a class patch then answer
 	the toSource with the class-side definition and comment appended."
-	
-	^self isClassPatch
-		ifTrue: [self toSource, String cr, String cr, 
-				modification classDefinitionString, String cr, String cr,
-				modification commentStamp, String cr,
-				modification comment]
-		ifFalse: [self toSource]
+
+	^ self isClassPatch
+		ifTrue: [ self toSource , String newLine , String newLine , modification classDefinitionString , String newLine , String newLine
+				, modification commentStamp , String newLine , modification comment ]
+		ifFalse: [ self toSource ]
 ]

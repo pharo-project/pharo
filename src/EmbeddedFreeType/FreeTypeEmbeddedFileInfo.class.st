@@ -71,5 +71,5 @@ FreeTypeEmbeddedFileInfo >> printOn: aStream [
 		nextPutAll: ' ',(fixedWidth ifTrue:['Monospaced'] ifFalse:['']);
 		nextPutAll: ' ',(stretchValue asString);
 		nextPutAll: ' ',(weightValue asString);	
-		cr
+		newLine
 ]

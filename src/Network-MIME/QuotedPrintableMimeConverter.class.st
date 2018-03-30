@@ -39,7 +39,7 @@ Class {
 { #category : #initialize }
 QuotedPrintableMimeConverter >> initialize [
 	super initialize.
-	newline := String cr
+	newline := String newLine
 ]
 
 { #category : #conversion }

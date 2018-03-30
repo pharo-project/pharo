@@ -31,18 +31,3 @@ HDReport class >> runPackage: aString [
 HDReport class >> runPackages: aCollectionOfStrings [
 	^ aCollectionOfStrings collect: [ :each | self runPackage: each ]
 ]
-
-{ #category : #private }
-HDReport >> convert: aString [
-	^ (aString asString 
-		copyReplaceAll: (String with: Character cr with: Character lf) with: (String with: Character lf))
-		copyReplaceAll: (String with: Character cr) with: (String with: Character lf)
-]
-
-{ #category : #private }
-HDReport >> encode: aString [
-	^ ((aString asString 
-		copyReplaceAll: '&' with: '&amp;') 
-		copyReplaceAll: '"' with: '&quot;') 
-		copyReplaceAll: '<' with: '&lt;'
-]

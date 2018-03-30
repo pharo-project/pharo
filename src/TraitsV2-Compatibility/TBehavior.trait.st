@@ -74,7 +74,7 @@ TBehavior >> addTraitSelector: aSymbol withMethod: aCompiledMethod [
 	"write source to changes file only if we have it (not available during bootstrap)"	
 	((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil]) ifTrue: [ 
 		method putSource: source
-			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
+			withPreamble: [:f | f newLine; nextPut: $!; nextChunkPut: 'Trait method'; newLine]].
 	
 	method properties at: #traitSource put: aCompiledMethod.
 	
@@ -1221,7 +1221,7 @@ TBehavior >> localSelectors: aSet [
 TBehavior >> longPrintOn: aStream [
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  But, not useful for a class with a method dictionary."
 
-	aStream nextPutAll: '<<too complex to show>>'; cr.
+	aStream nextPutAll: '<<too complex to show>>'; newLine.
 ]
 
 { #category : #'accessing method dictionary' }
@@ -1429,7 +1429,7 @@ TBehavior >> printHierarchy [
 		aStream nextPutAll: aClass name.
 		aStream space.
 		aStream print: aClass instVarNames].
-	aStream cr.
+	aStream newLine.
 	self printSubclassesOn: aStream level: index.
 	^aStream contents
 ]

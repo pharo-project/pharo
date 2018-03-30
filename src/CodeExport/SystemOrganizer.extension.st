@@ -1,20 +1,21 @@
 Extension { #name : #SystemOrganizer }
 
 { #category : #'*CodeExport' }
-SystemOrganizer >> fileOut [  
+SystemOrganizer >> fileOut [
 	"SystemOrganization fileOut"
 
 	| internalStream |
 	internalStream := (String new: 30000) writeStream.
-	internalStream nextPutAll: 'SystemOrganization changeFromCategorySpecs: #('; cr;
-		print: SystemOrganization;  "ends with a cr"
-		nextPutAll: ')!'; cr.
-
-	CodeExporter 
-		writeSourceCodeFrom: internalStream 
-		baseName: 'SystemOrganization.st' asFileReference nextVersion basenameWithoutExtension 
+	internalStream
+		nextPutAll: 'SystemOrganization changeFromCategorySpecs: #(';
+		newLine;
+		print: SystemOrganization;
+		nextPutAll: ')!';
+		newLine.
+	CodeExporter
+		writeSourceCodeFrom: internalStream
+		baseName: 'SystemOrganization.st' asFileReference nextVersion basenameWithoutExtension
 		isSt: true
-
 ]
 
 { #category : #'*CodeExport' }
@@ -56,6 +57,6 @@ SystemOrganizer >> fileOutCategory: category on: aFileStream initializing: aBool
 			each
 				fileOutOn: aFileStream
 				initializing: false ]
-		separatedBy: [ aFileStream cr; nextPut: Character newPage; cr ].
+		separatedBy: [ aFileStream newLine; nextPut: Character newPage; newLine ].
 	aBool ifTrue: [classes do: [:cls | cls fileOutInitializerOn: aFileStream]].
 ]

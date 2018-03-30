@@ -36,9 +36,9 @@ VSSaveProjectCommand class >> validateBeforeSaving: aBoolean [
 VSSaveProjectCommand >> alertValidationErrors: errors for: configClassName [
 	| message |
 	
-	message :=  'There are critical issues in configuration ' , configClassName printString, '. Configuration not saved!' , Character cr asString.
+	message :=  'There are critical issues in configuration ' , configClassName printString, '. Configuration not saved!' , String newLine.
 	errors do: [ :error |
-		 message := message , Character cr asString, error asString ]. 
+		 message := message , String newLine, error asString ]. 
 	UIManager default 
 		alert: message
 		title: 'Critical Issues'

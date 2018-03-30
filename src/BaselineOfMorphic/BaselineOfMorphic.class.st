@@ -278,9 +278,9 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	FLLargeIdentityHashedCollection initialize.
 	FLPlatform classPool at: #Current put: FLPharo7Platform new.
 
-	Stdio stdout nextPutAll: 'starting...'; lf.
+	Stdio stdout nextPutAll: 'starting...'; newLine.
 
-	Stdio stdout nextPutAll: Smalltalk ui asString; lf.
+	Stdio stdout nextPutAll: Smalltalk ui asString; newLine.
 
 	SparseLargeTable recompile. 
 	
@@ -290,7 +290,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	
 	#(TextStyle) do: [:each | (Smalltalk globals at: each) initialize. ].
 
-	Stdio stdout nextPutAll: 'bitmap fonts loaded' asString; lf.
+	Stdio stdout nextPutAll: 'bitmap fonts loaded' asString; newLine.
 
 	#(ProgressBarMorph BalloonBezierSimulation BalloonEngineConstants BalloonEngine 
 	CornerRounder  DigitalSignatureAlgorithm DummySoundSystem 
@@ -327,12 +327,12 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	"Install the right UIManager"
 	UIManager default: UIManager forCurrentSystemConfiguration.
-	Stdio stdout nextPutAll: 'UIManager changed:' ; nextPutAll: UIManager default class name ; lf.
+	Stdio stdout nextPutAll: 'UIManager changed:' ; nextPutAll: UIManager default class name ; newLine.
 
 	TextEditor initialize.
 	SmalltalkEditor initialize.
 
-	Stdio stdout nextPutAll: 'SmalltalkEditor initialized.'; lf.
+	Stdio stdout nextPutAll: 'SmalltalkEditor initialized.'; newLine.
 
 	PolymorphSystemSettings showDesktopLogo: false.
 	PolymorphSystemSettings showDesktopLogo: true.

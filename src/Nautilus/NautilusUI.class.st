@@ -1391,10 +1391,10 @@ NautilusUI >> removePackages [
 	
 	names := (packages 
 		collect: [:package | package name ])
-		joinUsing: String cr.
+		joinUsing: String newLine.
 
 	(UIManager default 
-		confirm: ('Are you sure you want to delete the selection(s) named ', String cr, names, ' and their classes ?'))
+		confirm: ('Are you sure you want to delete the selection(s) named ', String newLine, names, ' and their classes ?'))
 		ifTrue: [ packages do: [ :each | each asNautilusSelection removeTarget: self ].
 			self updatePackageView ]
 ]

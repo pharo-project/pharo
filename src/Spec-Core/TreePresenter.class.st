@@ -74,7 +74,7 @@ TreePresenter class >> example [
 				show: transfer passenger content; 
 				show: ' to node '; 
 				show: receiver content; 
-				cr ].
+				newLine ].
 		
 	^ m
 ]

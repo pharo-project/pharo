@@ -178,14 +178,14 @@ TClassDescription >> classComment: aString stamp: aStamp [
 			ifNotNil: [oldCommentRemoteString sourcePointer].
 	
 	preamble := String streamContents: [ :file |
-		file cr; nextPut: $!.
+		file newLine; nextPut: $!.
 		header := String streamContents: [:strm | 
 			strm 
 				nextPutAll: self name;
 				nextPutAll: ' commentStamp: '.
 			aStamp storeOn: strm.
 			strm nextPutAll: ' prior: '; nextPutAll: pointer printString ].
-		file nextChunkPut: header; cr ].
+		file nextChunkPut: header; newLine ].
 
 	SourceFiles
 		writeSource: aString
@@ -229,16 +229,16 @@ Public API and Key Messages
 Internal Representation and Key Implementation Points.'.
 			
 	(self instVarNames size > 0)
-		 ifTrue: [stream cr; cr; nextPutAll: '    Instance Variables'.  ].
+		 ifTrue: [stream newLine; newLine; nextPutAll: '    Instance Variables'.  ].
 		
 	self instVarNames asSortedCollection do: [:each |
 		stream
-			cr; tab; nextPutAll: each;
+			newLine; tab; nextPutAll: each;
 			nextPut: $:;
 			tab; tab;
 			nextPutAll: '<Object>'].
-	stream cr.
-stream cr; cr; nextPutAll: '    Implementation Points'.
+	stream newLine.
+stream newLine; newLine; nextPutAll: '    Implementation Points'.
 	^stream contents
 ]
 
@@ -1085,7 +1085,7 @@ TClassDescription >> slotDefinitionString [
 				special := slot isSpecial]				
 			separatedBy: [ 
 				str nextPutAll: '. '.  
-				special ifTrue: [ str cr;tab;tab;tab;tab ]].
+				special ifTrue: [ str newLine;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 
 ]

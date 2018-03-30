@@ -165,7 +165,7 @@ KMKeymap >> printOn: aStream [
 		nextPutAll: self shortcut printString;
 		nextPutAll: ' do ' ;
 		nextPutAll: self action printString;
-		cr.    
+		newLine.    
 ]
 
 { #category : #'enabling/disabling' }

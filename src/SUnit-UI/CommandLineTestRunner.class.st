@@ -145,9 +145,9 @@ CommandLineTestRunner >> setUp [
 { #category : #helper }
 CommandLineTestRunner >> shortStackDescriptionFor: anError [
 	^ (String streamContents: [ :s| 
-			s << anError printString; cr.
+			s << anError printString; newLine.
 			anError signalerContext shortDebugStackOn: s ])
-		copyReplaceAll: String cr
+		copyReplaceAll: String newLine
 		with: OSPlatform current lineEnding
 ]
 

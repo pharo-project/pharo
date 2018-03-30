@@ -132,8 +132,8 @@ DigitalSignatureAlgorithm class >> testExamplesFromDisk [
 				msg := file nextChunk.
 				publicKey := self class compiler evaluate: file nextChunk.
 				(self verify: sig isSignatureOf: msg publicKey: publicKey) 
-					ifTrue: [Transcript show: 'SUCCESS: ',msg; cr.]
-					ifFalse: [self error: 'ERROR! Signature verification failed']]]
+					ifTrue: [ ('SUCCESS: ', msg) logCr]
+					ifFalse: [ self error: 'ERROR! Signature verification failed']]]
 ]
 
 { #category : #examples }
@@ -183,11 +183,7 @@ DigitalSignatureAlgorithm class >> timeDecode: count [
 
 { #category : #testing }
 DigitalSignatureAlgorithm class >> timeDirect: aBlock as: aString count: anInteger [
-
-	Transcript show: anInteger asStringWithCommas,'  ',
-		aString ,' took ',
-		(Time millisecondsToRun: aBlock) asStringWithCommas,' ms'; cr
-
+	(anInteger asStringWithCommas , '  ' , aString , ' took ' , (Time millisecondsToRun: aBlock) asStringWithCommas , ' ms') logCr
 ]
 
 { #category : #public }
@@ -273,12 +269,12 @@ DigitalSignatureAlgorithm >> generateKeySet [
 	exp := (p - 1) / q.
 	h := 2.
 	[g := h raisedTo: exp modulo: p. g = 1] whileTrue: [h := h + 1].
-	Transcript show: 'done.'; cr.
+	Transcript show: 'done.'; newLine.
 	Transcript show: 'Computing x and y...'.
 	x := self nextRandom160.
 	y := g raisedTo: x modulo: p.
-	Transcript show: 'done.'; cr.
-	Transcript show: 'Key generation complete!'; cr.
+	Transcript show: 'done.'; newLine.
+	Transcript show: 'Key generation complete!'; newLine.
 	^ Array
 		with: (Array with: p with: q with: g with: x)
 		with: (Array with: p with: q with: g with: y).
@@ -294,10 +290,10 @@ DigitalSignatureAlgorithm >> generateQandP [
 	halfTwoToTheP := 2 raisedTo: (pBits - 1).
 	chunkCount := pBits // 160.
 
-	Transcript show: 'Searching for primes q and p...'; cr.
+	Transcript show: 'Searching for primes q and p...'; newLine.
 	[true] whileTrue: [
 		sAndq := self generateSandQ.
-		Transcript show: '  Found a candidate q.'; cr.
+		Transcript show: '  Found a candidate q.'; newLine.
 		s := sAndq first.
 		q := sAndq last.
 		twoQ := q bitShift: 1.
@@ -308,9 +304,9 @@ DigitalSignatureAlgorithm >> generateQandP [
 			x := w + halfTwoToTheP.
 			p := (x - ( x \\ twoQ)) + 1.
 			p highBit = pBits ifTrue: [
-				Transcript show: '    Testing potential p ', (c + 1) printString, '...'; cr.
+				Transcript show: '    Testing potential p ', (c + 1) printString, '...'; newLine.
 				(self isProbablyPrime: p) ifTrue: [
-					Transcript show: '  Found p!'; cr.
+					Transcript show: '  Found p!'; newLine.
 					^ Array with: q with: p with: s]].
 			n := n + chunkCount + 1.
 			c := c + 1]].
@@ -358,7 +354,7 @@ DigitalSignatureAlgorithm >> initRandom: randomInteger [
 
 	randSeed := 16rEFCDAB8998BADCFE10325476C3D2E1F067452301.  "initial seed"
 	randKey := randomInteger.
-	Transcript show: 'Random seed: ', randomInteger printString; cr.
+	('Random seed: ', randomInteger printString) logCr.
 
 ]
 
@@ -472,9 +468,7 @@ DigitalSignatureAlgorithm >> isProbablyPrime: p [
 			whileFalse: [ 
 				z = 1
 					ifTrue: [ 
-						Transcript
-							show: 'failed!';
-							cr.
+						'failed!' logCr.
 						^ false ].	"not prime"
 				z = pMinusOne
 					ifTrue: [ couldBePrime := true ]
@@ -482,13 +476,9 @@ DigitalSignatureAlgorithm >> isProbablyPrime: p [
 						(j := j + 1) < b
 							ifTrue: [ z := z * z \\ p ]
 							ifFalse: [ 
-								Transcript
-									show: 'failed!';
-									cr.
+								'failed!' logCr.
 								^ false ] ] ] ].	"not prime"
-	Transcript
-		show: 'passed!';
-		cr.
+	'passed!' logCr.
 	^ true	"passed all tests; probably prime"
 ]
 

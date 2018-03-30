@@ -144,7 +144,7 @@ RubCharacterBlock >> printOn: aStream [
 	textLine
 		ifNotNil: [ 
 			aStream
-				cr;
+				newLine;
 				nextPutAll: ' in '.
 			textLine printOn: aStream ]
 ]

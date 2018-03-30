@@ -152,7 +152,7 @@ Delay class >> systemSettingOn: aBuilder [
 		label: 'Delay Scheduler' ;
 		domainValues: DelayScheduler allSubclasses ;
 		description: 'Choose the class to use for Delay scheduling.' , 
-			String crlf, 'You can observe which is running from Tools > Process Browser.'
+			String newLine, 'You can observe which is running from Tools > Process Browser.'
 	
 ]
 

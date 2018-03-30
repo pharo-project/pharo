@@ -1787,14 +1787,17 @@ AbstractNautilusUI >> buildHierarchyButton [
 ]
 
 { #category : #'menus behavior' }
-AbstractNautilusUI >> buildInitializeCodeFor: aClass [ 
-
-	^ String streamContents: [:str | 
-		str << 'initialize';cr.
-		aClass isMeta ifFalse: [str cr tab << 'super initialize.';cr.].
-		aClass instVarNames sorted do: [ :name | 
-			str cr tab << name << ' := nil.' ]].
-	
+AbstractNautilusUI >> buildInitializeCodeFor: aClass [
+	^ String
+		streamContents: [ :str | 
+			str
+				<< 'initialize';
+				newLine.
+			aClass isMeta
+				ifFalse: [ str newLine tab
+						<< 'super initialize.';
+						newLine ].
+			aClass instVarNames sorted do: [ :name | str newLine tab << name << ' := nil.' ] ]
 ]
 
 { #category : #'build ui buttons' }
@@ -1970,21 +1973,31 @@ AbstractNautilusUI >> buildSecondColumn: aWindow [
 ]
 
 { #category : #'menus behavior' }
-AbstractNautilusUI >> buildSetUpCodeFor: aClass [ 
-	
-	^ String streamContents: [:str | str << 'setUp';cr.
-		str tab << '"Setting up code for '<<aClass name<<'"';cr;cr.
-		aClass instVarNames sorted do: [:name | str cr tab << name << ' := nil.' ]].
-	
+AbstractNautilusUI >> buildSetUpCodeFor: aClass [
+	^ String
+		streamContents: [ :str | 
+			str
+				<< 'setUp';
+				newLine.
+			(str tab << '"Setting up code for ' << aClass name)
+				<< '"';
+				newLine;
+				newLine.
+			aClass instVarNames sorted do: [ :name | str newLine tab << name << ' := nil.' ] ]
 ]
 
 { #category : #'menus behavior' }
-AbstractNautilusUI >> buildTearDownCodeFor: aClass [ 
-	
-	^ String streamContents: [:str | str << 'tearDown';cr.
-		str tab << '"Tearing down code for '<<aClass name<<'"';cr;cr.
-		aClass instVarNames sorted do: [:name | str cr tab << name << ' := nil.' ]].
-	
+AbstractNautilusUI >> buildTearDownCodeFor: aClass [
+	^ String
+		streamContents: [ :str | 
+			str
+				<< 'tearDown';
+				newLine.
+			(str tab << '"Tearing down code for ' << aClass name)
+				<< '"';
+				newLine;
+				newLine.
+			aClass instVarNames sorted do: [ :name | str newLine tab << name << ' := nil.' ] ]
 ]
 
 { #category : #'test creation' }
@@ -3636,8 +3649,8 @@ AbstractNautilusUI >> removePackages [
 	self selectedPackages 
 		ifNotEmpty: [:packages |
 			names := packages collect: [:package | package name ].
-			names := names joinUsing: String cr.
-			(UIManager default confirm: ('Are you sure you want to delete the package(s) named ', String cr, names, ' and their classes ?'))
+			names := names joinUsing: String newLine.
+			(UIManager default confirm: ('Are you sure you want to delete the package(s) named ', String newLine, names, ' and their classes ?'))
 				ifTrue: [| scroll |
 					packages do: [:package |
 						package definedClasses do:[: classToRemove |

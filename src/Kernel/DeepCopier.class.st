@@ -108,19 +108,19 @@ DeepCopier >> checkDeep [
 	DeepCopier new checkDeep 	"
 
 	Transcript
-		cr;
+		newLine;
 		show: 'Instance variables shared with the original object when it is copied'.
-	(self systemNavigation allClassesImplementing: #veryDeepInner:) do: 
-		[:aClass | | mm |
-		(mm := aClass instVarNames size) > 0 ifTrue:
-			[aClass instSize - mm + 1 to: aClass instSize do: 
-				[:index | 
-				((aClass compiledMethodAt: #veryDeepInner:) writesField: index) ifFalse: 
-					[Transcript
-						cr;
-						show: aClass name;
-						space;
-						show: (aClass allInstVarNames at: index)]]]]
+	(self systemNavigation allClassesImplementing: #veryDeepInner:)
+		do: [ :aClass | 
+			| mm |
+			(mm := aClass instVarNames size) > 0
+				ifTrue: [ aClass instSize - mm + 1 to: aClass instSize do: [ :index | 
+						((aClass compiledMethodAt: #veryDeepInner:) writesField: index)
+							ifFalse: [ Transcript
+									newLine;
+									show: aClass name;
+									space;
+									show: (aClass allInstVarNames at: index) ] ] ] ]
 ]
 
 { #category : #checking }

@@ -302,14 +302,13 @@ FinderUI >> buildBrowseToolBar: aWindow [
 { #category : #'text areas behavior' }
 FinderUI >> buildDescriptionOf: aClass [
 	^ String
-		streamContents:
-			[ :stream | 
+		streamContents: [ :stream | 
 			stream nextPutAll: aClass definition.
 			aClass hasComment
 				ifTrue: [ stream
-						cr;
-						cr;
-						cr;
+						newLine;
+						newLine;
+						newLine;
 						nextPutAll: aClass comment ] ]
 ]
 

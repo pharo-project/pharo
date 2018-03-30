@@ -441,10 +441,11 @@ FTTableMorph >> horizontalScrollBarHeight [
 
 { #category : #private }
 FTTableMorph >> horizontalScrollBarValue: aNumber [
-	trialHSB ifNotNil: [ 
-		self inform: 'FTTableMorph>>#horizontalScrollBarValue: ', aNumber printString , String cr, 
-			'Does nothing yet.' , String cr, 'Need some advise here.'
-	].
+	trialHSB
+		ifNotNil: [ self
+				inform:
+					'FTTableMorph>>#horizontalScrollBarValue: ' , aNumber printString , String newLine , 'Does nothing yet.' , String cr
+						, 'Need some advise here.' ]
 ]
 
 { #category : #initialization }

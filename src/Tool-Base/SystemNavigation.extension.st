@@ -177,7 +177,7 @@ SystemNavigation >> browseClassVarRefs: aClass [
 		vars := class classVarNames.
 		vars do:
 			[:var |
-			labelStream nextPutAll: var; cr.
+			labelStream nextPutAll: var; newLine.
 			allVars add: var.
 			owningClasses add: class].
 		vars isEmpty ifFalse: [lines add: allVars size]].
@@ -261,7 +261,7 @@ SystemNavigation >> browseMessageList: messageList name: labelString autoSelect:
 	"Do not show trait methods"
 	methods := messageList reject: [ :each| each isFromTrait ].
 	methods isEmpty ifTrue: 
-		[^ self inform: 'There are no ', String cr, labelString].
+		[^ self inform: 'There are no ', String newLine, labelString].
 	
 	^ Smalltalk tools messageList new
 		messages: methods; 
@@ -410,13 +410,13 @@ instance variables.'].
 		ifTrue:
 			[lines add: 1.
 			allVars add: 'show alphabetically'.
-			labelStream nextPutAll: allVars first; cr].
+			labelStream nextPutAll: allVars first; newLine].
 	aClass withAllSuperclasses reverseDo:
 		[:class | | vars |
 		vars := class instVarNames.
 		vars do:
 			[:var |
-			labelStream nextPutAll: var; cr.
+			labelStream nextPutAll: var; newLine.
 			allVars add: var].
 		vars isEmpty ifFalse: [lines add: allVars size]].
 	labelStream skip: -1 "cut last CR".

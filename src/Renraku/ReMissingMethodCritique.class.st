@@ -37,10 +37,8 @@ ReMissingMethodCritique >> beSubclassResponsibility [
 { #category : #accessing }
 ReMissingMethodCritique >> change [
 	"an 'add method' change that create the missing method"
-	
-	^ RBAddMethodChange 
-		compile: (self methodHeader), String cr, String tab, source
-		in: class
+
+	^ RBAddMethodChange compile: self methodHeader , String newLine , String tab , source in: class
 ]
 
 { #category : #initialization }

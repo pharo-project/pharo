@@ -118,7 +118,7 @@ RemoteString >> string: aString [
 	"Store this as my string if source files exist."
 
 	self sourceFileArray changesWriteStreamDo: [ :theFile |
-		theFile cr.
+		theFile newLine.
 		self 
 			string: aString 
 			onFileNumber: 2

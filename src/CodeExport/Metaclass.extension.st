@@ -2,9 +2,9 @@ Extension { #name : #Metaclass }
 
 { #category : #'*CodeExport' }
 Metaclass >> fileOutInitializerOn: aStream [
-	(self includesSelector: #initialize) ifTrue: 
-		[aStream cr.
-		aStream nextChunkPut: self soleInstance name , ' initialize'].
+	(self includesSelector: #initialize)
+		ifTrue: [ aStream newLine.
+			aStream nextChunkPut: self soleInstance name , ' initialize' ]
 ]
 
 { #category : #'*CodeExport' }
@@ -15,13 +15,12 @@ Metaclass >> fileOutOn: aFileStream [
 
 { #category : #'*CodeExport' }
 Metaclass >> fileOutOn: aFileStream initializing: aBool [
-
 	super fileOutOn: aFileStream.
-	(aBool and:[ self includesSelector: #initialize ]) ifTrue: [
-		aFileStream cr.
-		aFileStream cr.
-		aFileStream nextChunkPut: thisClass name , ' initialize'.
-		aFileStream cr ]
+	(aBool and: [ self includesSelector: #initialize ])
+		ifTrue: [ aFileStream newLine.
+			aFileStream newLine.
+			aFileStream nextChunkPut: thisClass name , ' initialize'.
+			aFileStream newLine ]
 ]
 
 { #category : #'*CodeExport' }

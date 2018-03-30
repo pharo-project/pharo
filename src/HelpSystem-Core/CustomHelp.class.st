@@ -24,7 +24,7 @@ CustomHelp class >> accept: aSelector title: title contents: text [
 		s crtab; nextPutAll: '^HelpTopic'.
 		s crtab: 2; nextPutAll: 'title: ', title storeString.
 		s crtab: 2; nextPutAll: 'contents: '.
-		s cr; nextPutAll: (String streamContents:[:c| c nextChunkPut: text]) storeString.
+		s newLine; nextPutAll: (String streamContents:[:c| c nextChunkPut: text]) storeString.
 		s nextPutAll:' readStream nextChunkText'.
 	].
 
@@ -142,7 +142,7 @@ CustomHelp class >> heading: aString [
 	color := Color fromHexString: '3196D3'.
 
 	aString ifEmpty: [ self errorEmptyString ].
-	^ (aString asText, String cr, String cr)
+	^ (aString asText, String newLine, String newLine)
 		addAttribute: (TextFontReference toFont: font) from: 1 to: aString size;
 		addAttribute: TextEmphasis bold from: 1 to: aString size;
 		addAttribute: (TextColor new color: color) from: 1 to: aString size;
@@ -229,7 +229,7 @@ CustomHelp class >> subheading: aString [
 	
 	font := (LogicalFont familyName: 'Source Sans Pro' pointSize:16).
 	color := Color fromHexString: '3196D3'.
-	text := (String cr asText, String cr, aString, String cr, String cr).
+	text := (String newLine asText, String newLine, aString, String newLine, String newLine).
 	
 	^ text
 		addAttribute: (TextFontReference toFont: font) from: 3 to: text size - 1;

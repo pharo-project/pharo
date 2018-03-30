@@ -28,12 +28,10 @@ WeakActionSequence >> asMinimalRepresentation [
 
 { #category : #printing }
 WeakActionSequence >> printOn: aStream [
-
-	self size < 2 ifTrue: [^super printOn: aStream].
+	self size < 2
+		ifTrue: [ ^ super printOn: aStream ].
 	aStream nextPutAll: '#('.
-	self
-		do: [:each | each printOn: aStream]
-		separatedBy: [aStream cr].
+	self do: [ :each | each printOn: aStream ] separatedBy: [ aStream newLine ].
 	aStream nextPut: $)
 ]
 

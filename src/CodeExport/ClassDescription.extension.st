@@ -20,12 +20,11 @@ ClassDescription >> fileOutCategory: aSymbol on: aFileStream [
 	.sources file, and should only write one preamble per method category."
 
 	| selectors |
-	aFileStream cr.
+	aFileStream newLine.
 	selectors := self selectorsToFileOutCategory: aSymbol.
 
 	"Overridden to preserve author stamps in sources file regardless"
-	selectors do: [:sel |
-		self printMethodChunk: sel on: aFileStream ].
+	selectors do: [ :sel | self printMethodChunk: sel on: aFileStream ].
 	^ self
 ]
 
@@ -45,12 +44,11 @@ ClassDescription >> fileOutChangedMessages: aSet on: aFileStream [
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutLocalMethodsInCategory: aSymbol on: aFileStream [
 	"File out methods for this category."
-	
-	| selectors |
-	aFileStream cr.
-	selectors := self selectorsToFileOutCategory: aSymbol.
 
-	selectors do: [:sel | self printMethodChunk: sel on: aFileStream ].
+	| selectors |
+	aFileStream newLine.
+	selectors := self selectorsToFileOutCategory: aSymbol.
+	selectors do: [ :sel | self printMethodChunk: sel on: aFileStream ].
 	^ self
 ]
 
@@ -87,9 +85,15 @@ ClassDescription >> fileOutOn: aFileStream [
 ClassDescription >> fileOutOrganizationOn: aFileStream [
 	"File a description of the receiver's organization on aFileStream."
 
-	aFileStream cr; nextPut: $!.
-	aFileStream nextChunkPut: self name, ' reorganize'; cr.
-	aFileStream nextChunkPut: self organization stringForFileOut ; cr
+	aFileStream
+		newLine;
+		nextPut: $!.
+	aFileStream
+		nextChunkPut: self name , ' reorganize';
+		newLine.
+	aFileStream
+		nextChunkPut: self organization stringForFileOut;
+		newLine
 ]
 
 { #category : #'*CodeExport' }
@@ -100,7 +104,7 @@ ClassDescription >> printCategoryChunk: category on: aFileStream withStamp: chan
 
 "The current design is that changeStamps and prior source links are preserved in the changes file.  All fileOuts include changeStamps.  Condensing sources, however, eliminates all stamps (and links, natch)."
 
-	aFileStream cr; nextPut: $!.
+	aFileStream newLine; nextPut: $!.
 	aFileStream nextChunkPut: (String streamContents:
 		[:strm |
 		strm nextPutAll: self name; nextPutAll: ' methodsFor: '; print: category asString.
@@ -117,36 +121,41 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 	"Copy the source code for the method associated with selector onto the fileStream."
 
 	| preamble method |
-	preamble := self name, ' methodsFor: ', (self organization categoryOfElement: selector) asString printString.
+	preamble := self name , ' methodsFor: ' , (self organization categoryOfElement: selector) asString printString.
 	method := self methodDict
 		at: selector
-		ifAbsent: [ 
-			outStream
+		ifAbsent: [ outStream
 				nextPutAll: selector;
-				cr.
+				newLine.
 			outStream
 				tab;
 				nextPutAll: '** ERROR!  THIS SCRIPT IS MISSING ** ' translated;
-				cr;
-				cr.
+				newLine;
+				newLine.
 			outStream nextPutAll: '  '.
 			^ outStream ].
 
 	"Print the preamble"
-	outStream cr; nextChunkPut: ''.
-	outStream nextChunkPut: (String streamContents: [ :strm | 
-		strm nextPutAll: preamble.
-		method stamp ifNotEmpty: [ :stamp | 
-			strm
-				nextPutAll: ' stamp: ';
-				print: stamp ] ]).
-	outStream cr.
+	outStream
+		newLine;
+		nextChunkPut: ''.
+	outStream
+		nextChunkPut:
+			(String
+				streamContents: [ :strm | 
+					strm nextPutAll: preamble.
+					method stamp
+						ifNotEmpty: [ :stamp | 
+							strm
+								nextPutAll: ' stamp: ';
+								print: stamp ] ]).
+	outStream newLine.
 
 	"Print the source code"
-	outStream 
+	outStream
 		nextChunkPut: method sourceCode;
-		nextChunkPut: ' '; cr.
-	
+		nextChunkPut: ' ';
+		newLine.
 	^ outStream
 ]
 

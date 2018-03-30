@@ -901,7 +901,7 @@ ChangeSet >> fileOutChangesFor: class on: stream [
 	changes isEmpty
 		ifTrue: [ ^ self ].
 	class fileOutChangedMessages: changes on: stream.
-	stream cr
+	stream newLine
 ]
 
 { #category : #private }
@@ -909,63 +909,58 @@ ChangeSet >> fileOutClassDefinition: class on: stream [
 	"Write out class definition for the given class on the given stream, if the class definition was added or changed."
 
 	(self atClass: class includes: #rename)
-		ifTrue: [ 
-			stream
+		ifTrue: [ stream
 				nextChunkPut: 'Smalltalk renameClassNamed: #' , (self oldNameFor: class) , ' as: #' , class name;
-				cr ].
+				newLine ].
 	(self atClass: class includes: #change)
-		ifTrue: [ 
-			"fat definition only needed for changes"
+		ifTrue: [ "fat definition only needed for changes"
 			stream
 				nextChunkPut: (self fatDefForClass: class);
-				cr.
+				newLine.
 			DeepCopier new checkClass: class	"If veryDeepCopy weakly copies some inst 
 			vars in this class, warn author when new ones are added." ]
-		ifFalse: [ 
-			(self atClass: class includes: #add)
-				ifTrue: [ 
-					"use current definition for add"
+		ifFalse: [ (self atClass: class includes: #add)
+				ifTrue: [ "use current definition for add"
 					stream
 						nextChunkPut: class definition;
-						cr.
+						newLine.
 					DeepCopier new checkClass: class	"If veryDeepCopy weakly copies some inst 
 				vars in this class, warn author when new ones are added." ] ].
 	(self atClass: class includes: #comment)
 		ifFalse: [ ^ self ].
-	class instanceSide organization
-		putCommentOnFile: stream
-		forClass: class instanceSide.
-	stream cr
+	class instanceSide organization putCommentOnFile: stream forClass: class instanceSide.
+	stream newLine
 ]
 
 { #category : #'filein/out' }
-ChangeSet >> fileOutOn: stream [ 
+ChangeSet >> fileOutOn: stream [
 	"Write out all the changes the receiver knows about"
 
 	| classList traits classes traitList list |
-	(self isEmpty and: [stream isKindOf: FileStream])
-		ifTrue: [self inform: 'Warning: no changes to file out'].
-		
-	traits := self changedClasses select: [:each | each isTrait].
-	classes := self changedClasses select: [:each | each isBehavior & each isTrait not].
+	(self isEmpty and: [ stream isKindOf: FileStream ])
+		ifTrue: [ self inform: 'Warning: no changes to file out' ].
+	traits := self changedClasses select: [ :each | each isTrait ].
+	classes := self changedClasses select: [ :each | each isBehavior & each isTrait not ].
 	traitList := self class traitsOrder: traits asOrderedCollection.
 	classList := self class classesOrder: classes asOrderedCollection.
 	list := OrderedCollection new
 		addAll: traitList;
 		addAll: classList;
 		yourself.
-	
+
 	"First put out rename, max classDef and comment changes."
-	list do: [:aClass | self fileOutClassDefinition: aClass on: stream].
+	list do: [ :aClass | self fileOutClassDefinition: aClass on: stream ].
 
 	"Then put out all the method changes"
-	list do: [:aClass | self fileOutChangesFor: aClass on: stream].
+	list do: [ :aClass | self fileOutChangesFor: aClass on: stream ].
 
 	"Finally put out removals, final class defs and reorganization if any"
-	list reverseDo: [:aClass | self fileOutPSFor: aClass on: stream].
-
-	self classRemoves asSortedCollection do:
-		[:aClassName | stream nextChunkPut: 'Smalltalk removeClassNamed: #', aClassName; cr].
+	list reverseDo: [ :aClass | self fileOutPSFor: aClass on: stream ].
+	self classRemoves asSortedCollection
+		do: [ :aClassName | 
+			stream
+				nextChunkPut: 'Smalltalk removeClassNamed: #' , aClassName;
+				newLine ]
 ]
 
 { #category : #'filein/out' }
@@ -980,25 +975,21 @@ ChangeSet >> fileOutPSFor: class on: stream [
 			| changeType |
 			changeType := dict at: key.
 			(#(#remove #addedThenRemoved) includes: changeType)
-				ifTrue: [ 
-					stream
+				ifTrue: [ stream
 						nextChunkPut: class name , ' removeSelector: ' , key storeString;
-						cr ]
-				ifFalse: [ 
-					(key = #initialize and: [ class isMeta ])
-						ifTrue: [ 
-							stream
+						newLine ]
+				ifFalse: [ (key = #initialize and: [ class isMeta ])
+						ifTrue: [ stream
 								nextChunkPut: class soleInstance name , ' initialize';
-								cr ] ] ].
+								newLine ] ] ].
 	((classRecord includesChangeType: #change) and: [ (currentDef := class definition) ~= (self fatDefForClass: class) ])
-		ifTrue: [ 
-			stream
+		ifTrue: [ stream
 				nextChunkPut: currentDef;
-				cr ].
+				newLine ].
 	(classRecord includesChangeType: #reorganize)
 		ifFalse: [ ^ self ].
 	class fileOutOrganizationOn: stream.
-	stream cr
+	stream newLine
 ]
 
 { #category : #'filein/out' }
@@ -1011,8 +1002,8 @@ ChangeSet >> fileOutPostscriptOn: stream [
 		ifFalse: [ ^ self ].
 	stream nextChunkPut: aString.	"surroundedBySingleQuotes"
 	stream
-		cr;
-		cr
+		newLine;
+		newLine
 ]
 
 { #category : #'filein/out' }
@@ -1025,8 +1016,8 @@ ChangeSet >> fileOutPreambleOn: stream [
 		ifFalse: [ ^ self ].
 	stream nextChunkPut: aString.	"surroundedBySingleQuotes"
 	stream
-		cr;
-		cr
+		newLine;
+		newLine
 ]
 
 { #category : #'moving changes' }
@@ -1319,13 +1310,34 @@ ChangeSet >> preambleTemplate [
 	"Answer a string that will form the default contents for a change set's preamble.
 	Just a first stab at what the content should be."
 
-	^ String streamContents: [:strm |
-		strm nextPutAll: '"Change Set:'.  "NOTE: fileIn recognizes preambles by this string."
-		strm tab;tab; nextPutAll: self name.
-		strm cr; nextPutAll: 'Date:'; tab; tab; tab; nextPutAll: Date today printString.
-		strm cr; nextPutAll: 'Author:'; tab; tab; tab; nextPutAll:  Author fullName.
-		strm cr; cr; nextPutAll: '<your descriptive text goes here>"']
-"ChangeSet current preambleTemplate"
+	"ChangeSet current preambleTemplate"
+
+	^ String
+		streamContents: [ :strm | 
+			"NOTE: fileIn recognizes preambles by this string below"
+			strm nextPutAll: '"Change Set:'.
+			strm
+				tab;
+				tab;
+				nextPutAll: self name.
+			strm
+				newLine;
+				nextPutAll: 'Date:';
+				tab;
+				tab;
+				tab;
+				nextPutAll: Date today printString.
+			strm
+				newLine;
+				nextPutAll: 'Author:';
+				tab;
+				tab;
+				tab;
+				nextPutAll: Author fullName.
+			strm
+				newLine;
+				newLine;
+				nextPutAll: '<your descriptive text goes here>"' ]
 ]
 
 { #category : #printing }

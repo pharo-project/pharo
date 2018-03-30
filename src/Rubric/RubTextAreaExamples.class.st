@@ -89,7 +89,7 @@ RubTextAreaExamples class >> centered [
 	RubEditingArea new
 		beWrapped;
 		width: 300;
-		updateTextWith: 'AAAAAA' , Character cr asString , 'BBBB';
+		updateTextWith: 'AAAAAA' , String newLine, 'BBBB';
 		selectFrom: 5 to: 8;
 		centered;
 		openInWorld
@@ -218,7 +218,7 @@ RubTextAreaExamples class >> rightFlushed [
 	RubEditingArea new
 		beWrapped;
 		width: 300;
-		updateTextWith: 'AAAAAA' , Character cr asString , 'BBBB';
+		updateTextWith: 'AAAAAA' , String newLine, 'BBBB';
 		rightFlush;
 		openInWorld
 ]
@@ -393,7 +393,7 @@ RubTextAreaExamples class >> someSmalltalkCode [
 
 { #category : #accessing }
 RubTextAreaExamples class >> someSmalltalkScript [
-	^ '" Enter some code here as in a workspace"' , String cr , 'RubTextArea new
+	^ '" Enter some code here as in a workspace"' , String newLine , 'RubTextArea new
 		beWrapped;
 		smalltalkScriptingModel: self;
 		width: 500;

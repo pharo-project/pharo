@@ -313,22 +313,22 @@ CompiledCode >> headerDescription [
 	| s |
 	s := '' writeStream.
 	self header printOn: s.
-	s cr; nextPutAll: '"signFlag: '.
+	s newLine; nextPutAll: '"signFlag: '.
 	self signFlag printOn: s.
 	s nextPutAll: ' ('.
 	self encoderClass name printOn: s.
 	s nextPut: $).
-	s cr; nextPutAll: 'primitive: '.
+	s newLine; nextPutAll: 'primitive: '.
 	self primitive printOn: s.
-	s cr; nextPutAll: ' numArgs: '.
+	s newLine; nextPutAll: ' numArgs: '.
 	self numArgs printOn: s.
-	s cr; nextPutAll: ' numTemps: '.
+	s newLine; nextPutAll: ' numTemps: '.
 	self numTemps printOn: s.
-	s cr; nextPutAll: ' numLiterals: '.
+	s newLine; nextPutAll: ' numLiterals: '.
 	self numLiterals printOn: s.
-	s cr; nextPutAll: ' frameSize: '.
+	s newLine; nextPutAll: ' frameSize: '.
 	self frameSize printOn: s.
-	s nextPut: $"; cr.
+	s nextPut: $"; newLine.
 	^ s contents
 ]
 
@@ -487,19 +487,15 @@ CompiledCode >> localWritesRef: literalAssociation [
 
 { #category : #printing }
 CompiledCode >> longPrintOn: aStream [
-	"List of all the byte codes in a method with a short description of each" 
+	"List of all the byte codes in a method with a short description of each"
 
-	self isQuick ifTrue: 
-		[self isReturnSpecial ifTrue:
-			[^ aStream nextPutAll: 'Quick return ' , 
-				(#('self' 'true' 'false' 'nil' '-1' '0' '1' '2') at: self primitive - 255)].
-		^ aStream nextPutAll: 'Quick return field ' , self returnField printString , ' (0-based)'].
-
-	self isPrimitive ifTrue: [
-		self printPrimitiveOn: aStream.
-	].
-	self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ]
-
+	self isQuick
+		ifTrue: [ self isReturnSpecial
+				ifTrue: [ ^ aStream nextPutAll: 'Quick return ' , (#('self' 'true' 'false' 'nil' '-1' '0' '1' '2') at: self primitive - 255) ].
+			^ aStream nextPutAll: 'Quick return field ' , self returnField printString , ' (0-based)' ].
+	self isPrimitive
+		ifTrue: [ self printPrimitiveOn: aStream ].
+	self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream newLine ]
 ]
 
 { #category : #'initialize-release' }

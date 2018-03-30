@@ -23,30 +23,38 @@ Class {
 { #category : #utilities }
 MCConfiguration class >> changesIn: aPackage from: oldInfo to: newInfo on: aStream [
 	| printBlock newVersion |
-	(newInfo = oldInfo)
-		ifTrue: [^self].
-	aStream cr; nextPutAll: '----------------- ', aPackage name, ' ------------------'; cr.
-
-	newInfo 
-		ifNil: [^aStream cr; nextPutAll: 'REMOVED'; cr].
-
-	oldInfo 
-		ifNil: [^aStream cr; nextPutAll: 'ADDED'; cr].
+	newInfo = oldInfo
+		ifTrue: [ ^ self ].
+	aStream
+		newLine;
+		nextPutAll: '----------------- ' , aPackage name , ' ------------------';
+		newLine.
+	newInfo
+		ifNil: [ ^ aStream
+				newLine;
+				nextPutAll: 'REMOVED';
+				newLine ].
+	oldInfo
+		ifNil: [ ^ aStream
+				newLine;
+				nextPutAll: 'ADDED';
+				newLine ].
 
 	"get actual version for full ancestry"
 	newVersion := MCRepositoryGroup default versionWithInfo: newInfo.
-
-	printBlock := [:ver | 
-		aStream cr; 
-			nextPutAll: (ver name copyAfterLast: $-);
-			nextPutAll:  ' (', (ver date printFormat: #(1 2 0 $. 1 1 2)), ', '.
-		ver time print24: true showSeconds: false on: aStream.
-		aStream nextPutAll: ')'; cr; 
-			nextPutAll: ver message; cr].
-
+	printBlock := [ :ver | 
+	aStream
+		newLine;
+		nextPutAll: (ver name copyAfterLast: $-);
+		nextPutAll: ' (' , (ver date printFormat: #(1 2 0 $. 1 1 2)) , ', '.
+	ver time print24: true showSeconds: false on: aStream.
+	aStream
+		nextPutAll: ')';
+		newLine;
+		nextPutAll: ver message;
+		newLine ].
 	(newVersion info hasAncestor: oldInfo)
-		ifTrue: [(newVersion info allAncestorsOnPathTo: oldInfo)
-			reverseDo: printBlock].
+		ifTrue: [ (newVersion info allAncestorsOnPathTo: oldInfo) reverseDo: printBlock ].
 	newVersion info in: printBlock.
 	aStream flush
 ]
@@ -283,35 +291,47 @@ MCConfiguration >> log: aStream [
 { #category : #private }
 MCConfiguration >> logError: aString [
 	self log
-		cr; nextPutAll: 'ERROR: ';
-		nextPutAll: aString; cr;
-		flush.
-
+		newLine;
+		nextPutAll: 'ERROR: ';
+		nextPutAll: aString;
+		newLine;
+		flush
 ]
 
 { #category : #private }
 MCConfiguration >> logUpdate: aPackage with: aVersion [
 	self log
-		cr; nextPutAll: '========== ', aVersion info name, ' =========='; cr;
-		cr; nextPutAll: aVersion info message asString; cr;
+		newLine;
+		nextPutAll: '========== ' , aVersion info name , ' ==========';
+		newLine;
+		newLine;
+		nextPutAll: aVersion info message asString;
+		newLine;
 		flush.
-
-	aPackage hasWorkingCopy ifFalse: [^self].
-
-	aPackage workingCopy ancestors do: [:each |
-		(aVersion info hasAncestor: each)
-			ifTrue: [(aVersion info allAncestorsOnPathTo: each)
-				do: [:ver | self log cr; nextPutAll: '>>> ', ver name, ' <<<'; cr;
-							nextPutAll: ver message; cr; flush]]]
+	aPackage hasWorkingCopy
+		ifFalse: [ ^ self ].
+	aPackage workingCopy ancestors
+		do: [ :each | 
+			(aVersion info hasAncestor: each)
+				ifTrue: [ (aVersion info allAncestorsOnPathTo: each)
+						do: [ :ver | 
+							self log
+								newLine;
+								nextPutAll: '>>> ' , ver name , ' <<<';
+								newLine;
+								nextPutAll: ver message;
+								newLine;
+								flush ] ] ]
 ]
 
 { #category : #private }
 MCConfiguration >> logWarning: aString [
 	self log
-		cr; nextPutAll: 'WARNING: ';
-		nextPutAll: aString; cr;
-		flush.
-
+		newLine;
+		nextPutAll: 'WARNING: ';
+		nextPutAll: aString;
+		newLine;
+		flush
 ]
 
 { #category : #actions }
@@ -392,9 +412,13 @@ MCConfiguration >> repositories: aCollection [
 
 { #category : #accessing }
 MCConfiguration >> summary [
-	^String streamContents: [:stream |
-		self dependencies
-			do: [:ea | stream nextPutAll: ea versionInfo name; cr ]]
+	^ String
+		streamContents: [ :stream | 
+			self dependencies
+				do: [ :ea | 
+					stream
+						nextPutAll: ea versionInfo name;
+						newLine ] ]
 ]
 
 { #category : #private }

@@ -187,7 +187,7 @@ NECMenuMorph class >> section: aString on: aTextStream [
 	aTextStream
 		withAttributes: self sectionAttributes
 		do: [aTextStream nextPutAll: aString].
-	aTextStream cr
+	aTextStream newLine
 ]
 
 { #category : #'help text' }
@@ -219,11 +219,11 @@ NECMenuMorph class >> shortcut: aString text: secondString on: aTextStream [
 	aTextStream
 		withAttributes: self shortcutAttributes
 		do: [aTextStream nextPutAll: aString;
-				 cr].
+				 newLine].
 	aTextStream
 		withAttributes: self explanationAttributes
 		do: [aTextStream nextPutAll: secondString;
-				 cr].
+				 newLine].
 
 ]
 

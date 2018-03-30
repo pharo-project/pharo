@@ -561,7 +561,7 @@ Matrix >> printOn: aStream [
 				(self atRow: r) 
 					do: [ :each | aStream nextPutAll: each printString ] 
 					separatedBy: [ aStream space ]]
-		separatedBy: [ aStream cr ].
+		separatedBy: [ aStream newLine ].
 	aStream nextPutAll: ' )'.
 ]
 

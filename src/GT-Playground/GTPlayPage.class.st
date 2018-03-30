@@ -142,7 +142,7 @@ GTPlayPage >> ensureStashPersistency [
 
 { #category : #ui }
 GTPlayPage >> gtDisplayOn: stream [
-	stream nextPutAll: (self contentString copyReplaceAll: String cr with: String space)
+	stream nextPutAll: (self contentString copyReplaceAll: String newLine with: String space)
 ]
 
 { #category : #ui }

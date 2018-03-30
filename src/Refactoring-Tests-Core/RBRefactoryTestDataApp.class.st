@@ -61,7 +61,7 @@ RBRefactoryTestDataApp >> called: anObject on1: aBlock [
 	each := anObject printString.
 	Transcript
 		show: each;
-		cr.
+		newLine.
 	aBlock value: each
 ]
 
@@ -69,7 +69,7 @@ RBRefactoryTestDataApp >> called: anObject on1: aBlock [
 RBRefactoryTestDataApp >> called: anObject on: aBlock [ 
 	Transcript
 		show: anObject printString;
-		cr.
+		newLine.
 	aBlock value
 ]
 
@@ -480,11 +480,11 @@ RBRefactoryTestDataApp >> sendsDifferentSuper [
 { #category : #lint }
 RBRefactoryTestDataApp >> sizeCheck [
 	self isEmpty
-		ifFalse: [self do: 
-					[:each | 
+		ifFalse: [ self
+				do: [ :each | 
 					Transcript
 						show: each;
-						cr]]
+						newLine ] ]
 ]
 
 { #category : #lint }

@@ -74,6 +74,12 @@ SourceFile >> isReadOnly [
 ]
 
 { #category : #'as yet unclassified' }
+SourceFile >> newLine [
+
+	stream cr
+]
+
+{ #category : #'as yet unclassified' }
 SourceFile >> next [
 
 	^ stream next
