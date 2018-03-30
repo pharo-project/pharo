@@ -57,7 +57,7 @@ RPackageOrganizer default basicInitializeFromPackagesList: #(
      ''FileSystem-Core'' ''FileSystem-Disk''
      ''Jobs''   ''Multilingual-Encodings'' ''Multilingual-Languages''
     ''Multilingual-TextConversion'' ''Network-UUID'' ''OpalCompiler-Core'' ''Random-Core'' ''RPackage-Core'' 
-    ''Ring-Core-Containers'' ''Ring-Core-Kernel'' ''RingChunkImporter''
+    ''Ring-Deprecated-Core-Containers'' ''Ring-Deprecated-Core-Kernel'' ''Ring-Deprecated-ChunkImporter''
     ''Slot'' ''System-Announcements'' ''System-BasicCommandLineHandler'' ''System-Changes'' 
     ''System-CommandLine'' ''System-CommandLineHandler'' ''System-Finalization''
     ''System-Hashing'' ''System-Localization'' ''System-Model'' ''System-Platforms'' 

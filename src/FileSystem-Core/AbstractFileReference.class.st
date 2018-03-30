@@ -605,7 +605,7 @@ AbstractFileReference >> moveTo: aReference [
 	^ self resolve moveTo: aReference
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 AbstractFileReference >> nextVersion [
 	^ self resolve nextVersion
 ]

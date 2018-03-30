@@ -140,21 +140,18 @@ def bootstrapImage(){
     		try{
     		stage ("Fetch Requirements-${architecture}") {	
     			checkout scm
-    			shell 'wget -O - get.pharo.org/vm61 | bash	'
-    			shell 'wget https://github.com/guillep/PharoBootstrap/releases/download/v1.4/bootstrapImage.zip'
-    			shell 'unzip bootstrapImage.zip'
-    			shell './pharo Pharo.image bootstrap/scripts/prepare_image.st --save --quit'
-    	    }
+			// Stage 1 is to remove any artefacts, not required for Jenkins
+			shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/2-download.sh"
+    	    	}
 
     		stage ("Bootstrap-${architecture}") {
-    			shell "mkdir -p bootstrap-cache #required to generate hermes files"
-    			shell "./pharo ./Pharo.image bootstrap/scripts/bootstrap.st --ARCH=${architecture} --BUILD_NUMBER=${env.BUILD_ID} --quit"
-    	    }
+			shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/3-prepare.sh"
+    	    	}
 
-			stage ("Full Image-${architecture}") {
-				shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/build.sh -a ${architecture}"
-				stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
-		    }
+		stage ("Full Image-${architecture}") {
+			shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/4-build.sh"
+			stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
+		}
 	
 		    if (architecture == "32") {
 				stage ("Convert Image - 32->64") {

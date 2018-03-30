@@ -17,9 +17,9 @@ FFIExternalUnionTests >> testUnionAccess [
 	self deny: union isNull.
 	
 	union long: 16r04030201.
-	self assert: (union byte = 16r01).
-	self assert: (union short = 16r0201).
-	self assert: (union long = 16r04030201).
+	self assert: union byte equals: 16r01.
+	self assert: union short equals: 16r0201.
+	self assert: union long equals: 16r04030201.
 	self assert: (union float ~= 0).
 	self assert: (union double ~= 0).
 	

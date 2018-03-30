@@ -10,7 +10,7 @@ source bootstrap/scripts/envvars.sh
 mkdir -p "${CACHE}" #required to generate hermes files
 
 wget -O - get.pharo.org/vm61 | bash
-wget https://github.com/guillep/PharoBootstrap/releases/download/v1.4/bootstrapImage.zip
+wget https://github.com/guillep/PharoBootstrap/releases/download/v1.4.1/bootstrapImage.zip
 unzip bootstrapImage.zip
 
 pushd "${CACHE}"

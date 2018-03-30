@@ -13,6 +13,9 @@ Installs:
 Class {
 	#name : #BaselineOfMorphicCore,
 	#superclass : #BaselineOf,
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfMorphicCore
 }
 
@@ -45,6 +48,9 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 
 	| world hand |
 
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
+
 	IdentityTransform initialize.
 
 	EventSensorConstants initialize.
@@ -70,7 +76,7 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 
 	world viewBox: Display boundingBox.
 
-	Smalltalk at: #Sensor put: InputEventSensor basicNew.
+	Smalltalk at: #Sensor put: InputEventSensor new.
 	InputEventSensor installEventSensorFramework.
 	InputEventSensor installMouseDecodeTable.
 
@@ -92,7 +98,7 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 
 	(world instVarNamed: #worldState) canvas: nil.
 
-	(Smalltalk at: #ActiveHand) instVarNamed: #targetOffset put: 0@0.
+	hand instVarNamed: #targetOffset put: 0@0.
 
 	WorldMorph initialize.
 	ExternalDropHandler initialize.
@@ -101,4 +107,5 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	
 	WorldMorph recompile.
 
+	Initialized := true.
 ]
