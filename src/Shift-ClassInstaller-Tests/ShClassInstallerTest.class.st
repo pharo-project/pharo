@@ -5,7 +5,8 @@ Class {
 		'newClass',
 		'superClass',
 		'subClass',
-		'newClass2'
+		'newClass2',
+		'superClass2'
 	],
 	#category : #'Shift-ClassInstaller-Tests'
 }
@@ -36,8 +37,25 @@ ShClassInstallerTest >> tearDown [
 
 	subClass ifNotNil: #removeFromSystem.
 	superClass ifNotNil: #removeFromSystem.
+	superClass2 ifNotNil: #removeFromSystem.
 	
 	super tearDown.
+]
+
+{ #category : #tests }
+ShClassInstallerTest >> testChangingSuperclassToOther [
+
+	superClass := self newClass:#ShCITestClass slots:#(var1).
+	superClass2 := self newClass:#ShCITestClass2 slots:#(var1).
+	subClass := self newClass:#ShCISubTestClass superclass: superClass2 slots:#().
+
+	subClass := 	self newClass:#ShCISubTestClass superclass: superClass slots:#().
+
+	self deny: superClass subclasses isEmpty.
+	self assert: superClass2 subclasses isEmpty.
+	self assertCollection: superClass subclasses equals: { subClass }. 
+	self assert: subClass superclass equals: superClass.
+
 ]
 
 { #category : #tests }
