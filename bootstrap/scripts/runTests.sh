@@ -18,7 +18,7 @@ CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
 find ${CACHE}
 
-wget -O- get.pharo.org/${ARCHFLAG}vm70 | bash
+wget -O- get.pharo.org/${ARCHFLAG}vmLatest70 | bash
 					
 IMAGE_ARCHIVE=$(find ${CACHE} -name Pharo7.0-${1}bit-*.zip)
 unzip $IMAGE_ARCHIVE
