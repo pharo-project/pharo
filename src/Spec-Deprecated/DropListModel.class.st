@@ -6,3 +6,8 @@ Class {
 	#superclass : #DropListPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+DropListModel class >> isDeprecated [
+	^true
+]

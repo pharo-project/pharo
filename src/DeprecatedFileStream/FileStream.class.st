@@ -146,6 +146,11 @@ FileStream class >> isChangesFileSuffix: suffix [
 
 ]
 
+{ #category : #deprecation }
+FileStream class >> isDeprecated [
+	^true
+]
+
 { #category : #'file reader services' }
 FileStream class >> isSourceFileSuffix: suffix [
 

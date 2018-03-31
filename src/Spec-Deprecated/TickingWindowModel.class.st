@@ -6,3 +6,8 @@ Class {
 	#superclass : #TickingWindowPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+TickingWindowModel class >> isDeprecated [
+	^true
+]

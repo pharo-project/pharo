@@ -6,3 +6,8 @@ Class {
 	#superclass : #DiffPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+DiffModel class >> isDeprecated [
+	^true
+]

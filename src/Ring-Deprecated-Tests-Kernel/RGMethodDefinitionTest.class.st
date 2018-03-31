@@ -7,6 +7,11 @@ Class {
 	#category : #'Ring-Deprecated-Tests-Kernel'
 }
 
+{ #category : #deprecation }
+RGMethodDefinitionTest class >> isDeprecated [
+	^true
+]
+
 { #category : #running }
 RGMethodDefinitionTest >> runCase [
 

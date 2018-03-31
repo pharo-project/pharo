@@ -6,3 +6,8 @@ Class {
 	#superclass : #PickListPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+PickListModel class >> isDeprecated [
+	^true
+]

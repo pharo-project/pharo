@@ -7,6 +7,11 @@ Class {
 	#category : #'Ring-Deprecated-Tests-Containers'
 }
 
+{ #category : #deprecation }
+RGNamespaceTest class >> isDeprecated [
+	^true
+]
+
 { #category : #testing }
 RGNamespaceTest >> testCreatingNamespace [
 	| newNamespace newPackage newClass |

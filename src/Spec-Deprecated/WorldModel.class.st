@@ -6,3 +6,8 @@ Class {
 	#superclass : #WorldPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+WorldModel class >> isDeprecated [
+	^true
+]

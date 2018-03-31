@@ -6,3 +6,8 @@ Class {
 	#superclass : #TestCase,
 	#category : #'Ring-Deprecated-Tests-Containers'
 }
+
+{ #category : #deprecation }
+RGContainerTest class >> isDeprecated [
+	^true
+]
