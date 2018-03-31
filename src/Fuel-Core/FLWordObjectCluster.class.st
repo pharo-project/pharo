@@ -18,7 +18,7 @@ Future work: maybe we can modify and use the Bitmap hackBits:   not only for mat
 Class {
 	#name : #FLWordObjectCluster,
 	#superclass : #FLBitsObjectCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }

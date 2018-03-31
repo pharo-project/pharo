@@ -22,7 +22,7 @@ Class {
 		'globalMappers',
 		'globalEnvironment'
 	],
-	#category : 'Fuel-Core-Base'
+	#category : #'Fuel-Core-Base'
 }
 
 { #category : #accessing }

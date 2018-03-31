@@ -4,7 +4,7 @@ I represent an error produced during materialization when the serialized signatu
 Class {
 	#name : #FLBadSignature,
 	#superclass : #FLMaterializationError,
-	#category : 'Fuel-Core-Errors'
+	#category : #'Fuel-Core-Errors'
 }
 
 { #category : #signaling }

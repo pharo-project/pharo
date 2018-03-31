@@ -4,7 +4,7 @@ I am a cluster for classes that should be present when materializing. In other w
 Class {
 	#name : #FLGlobalClassCluster,
 	#superclass : #FLGlobalCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }

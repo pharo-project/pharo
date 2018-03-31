@@ -8,7 +8,7 @@ Class {
 		'objects',
 		'references'
 	],
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #analyzing }

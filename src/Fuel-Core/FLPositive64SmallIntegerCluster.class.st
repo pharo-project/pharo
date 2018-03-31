@@ -4,7 +4,7 @@ unsigned, 64-bit integer
 Class {
 	#name : #FLPositive64SmallIntegerCluster,
 	#superclass : #FLSmallIntegerCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }

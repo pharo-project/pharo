@@ -4,7 +4,7 @@ I am a cluster for those Metaclasses and ClassTrait who are not stored in detail
 Class {
 	#name : #FLGlobalClassSideCluster,
 	#superclass : #FLGlobalCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }

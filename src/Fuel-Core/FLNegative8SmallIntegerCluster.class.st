@@ -4,7 +4,7 @@ A cluster of unsigned int 8bit
 Class {
 	#name : #FLNegative8SmallIntegerCluster,
 	#superclass : #FLSmallIntegerCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }

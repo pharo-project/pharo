@@ -4,7 +4,7 @@ I represent an error happened during serialization.
 Class {
 	#name : #FLSerializationError,
 	#superclass : #FLError,
-	#category : 'Fuel-Core-Errors'
+	#category : #'Fuel-Core-Errors'
 }
 
 { #category : #exceptioninstantiator }

@@ -11,7 +11,7 @@ Class {
 		'decoder',
 		'header'
 	],
-	#category : 'Fuel-Core-Base'
+	#category : #'Fuel-Core-Base'
 }
 
 { #category : #'instance creation' }

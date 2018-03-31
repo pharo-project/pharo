@@ -4,7 +4,7 @@ unsigned, 16-bit integer cluster
 Class {
 	#name : #FLPositive16SmallIntegerCluster,
 	#superclass : #FLSmallIntegerCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }

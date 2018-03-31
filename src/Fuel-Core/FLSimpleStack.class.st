@@ -12,7 +12,7 @@ Class {
 		'array',
 		'slotIndex'
 	],
-	#category : 'Fuel-Core-Collections'
+	#category : #'Fuel-Core-Collections'
 }
 
 { #category : #'instance creation' }
