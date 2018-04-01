@@ -7,9 +7,9 @@ Class {
 	#category : #'FileSystem-Core-Public'
 }
 
-{ #category : #copying }
-AbstractFileReference >> , extensionString [
-	^ self withExtension: extensionString
+{ #category : #navigating }
+AbstractFileReference >> , extension [
+	^ self withPath: self path, extension
 ]
 
 { #category : #navigating }
