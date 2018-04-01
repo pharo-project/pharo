@@ -22,7 +22,8 @@ Class {
 		'removeTestCase',
 		'cache',
 		'resetButton',
-		'logButton'
+		'logButton',
+		'updateButton'
 	],
 	#category : #'Tool-CriticBrowser'
 }
@@ -52,6 +53,7 @@ CriticBrowser class >> defaultSpec [
 							c1 add: #rulesModel.
 							c1 newRow: [:c2 |
 								c2 add: #resetButton.
+								c2 add: #updateButton.
 								c2 add: #logButton
 							] height: 25
 						];
@@ -360,10 +362,12 @@ CriticBrowser >> initializeWidgets [
 	title := self defaultTitle.
 	rulesModel := self newTree.
 	resetButton := self newButton.
+	updateButton := self newButton.
 	logButton := self newButton.
 	
 	self setLogButton.
 	self setResetButton.
+	self setUpdateButton.
 	 
 	criticModel := SingleCodeCriticResultList new.
 	rulesModel childrenBlock: [ :rule | 
@@ -559,7 +563,7 @@ CriticBrowser >> rulesModel [
 ]
 
 { #category : #initialization }
-CriticBrowser >> setActionLogButtom [
+CriticBrowser >> setActionLogButton [
 	
 	^ [(UIManager default confirm:  'Do you want to save all false positive and toDo in the Manifests ?
 (this action may generate new manifest classes and make dirty your package)')
@@ -567,7 +571,7 @@ CriticBrowser >> setActionLogButtom [
 ]
 
 { #category : #initialization }
-CriticBrowser >> setActionResetButtom [
+CriticBrowser >> setActionResetButton [
 	
 	^ [(UIManager default confirm: 'Do you want to delete the current configuration
  and create a new configuration ?')
@@ -576,12 +580,17 @@ CriticBrowser >> setActionResetButtom [
 ]
 
 { #category : #initialization }
+CriticBrowser >> setActionUpdateButton [
+	^ [ self reapplyAllRules ]
+]
+
+{ #category : #initialization }
 CriticBrowser >> setLogButton [
 
 	logButton 
 		state: false;
 		label: 'Save Critics';
-		action: self setActionLogButtom 
+		action: self setActionLogButton 
 ]
 
 { #category : #initialization }
@@ -590,7 +599,7 @@ CriticBrowser >> setResetButton [
 	resetButton 
 		state: false;
 		label: 'Run new configuration';
-		action: self setActionResetButtom.
+		action: self setActionResetButton.
 ]
 
 { #category : #api }
@@ -600,6 +609,15 @@ CriticBrowser >> setTitle: aTitle [
 	
 	self window updateTitle 
 	
+]
+
+{ #category : #initialization }
+CriticBrowser >> setUpdateButton [
+
+	updateButton 
+		state: false;
+		label: 'Update';
+		action: self setActionUpdateButton.
 ]
 
 { #category : #private }
@@ -635,6 +653,11 @@ CriticBrowser >> title [
 CriticBrowser >> unregisterFromAnnouncements [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self
+]
+
+{ #category : #accessing }
+CriticBrowser >> updateButton [
+	^ updateButton 
 ]
 
 { #category : #thread }
