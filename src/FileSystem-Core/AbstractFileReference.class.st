@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #copying }
-AbstractFileReference >> , extension [
-	^ self resolve, extension
+AbstractFileReference >> , extensionString [
+	^ self withExtension: extensionString
 ]
 
 { #category : #navigating }
