@@ -109,6 +109,24 @@ Halt class >> if: condition [
 ]
 
 { #category : #halting }
+Halt class >> ifInsideTest [
+	<debuggerCompleteToSender>
+	"This is the typical message to use for inserting breakpoints during 
+	debugging."
+	CurrentExecutionEnvironment value isTest ifTrue: [self signalIn: thisContext home sender ].
+
+]
+
+{ #category : #halting }
+Halt class >> ifOutsideTest [
+	<debuggerCompleteToSender>
+	"This is the typical message to use for inserting breakpoints during 
+	debugging."
+	CurrentExecutionEnvironment value isTest ifFalse: [self signalIn: thisContext home sender ].
+
+]
+
+{ #category : #halting }
 Halt class >> now [
 	<debuggerCompleteToSender>
 	self signal.

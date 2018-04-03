@@ -33,6 +33,11 @@ ExecutionEnvironment >> deactivated [
 	Any cleanup logic could be here"
 ]
 
+{ #category : #testing }
+ExecutionEnvironment >> isTest [
+	^false
+]
+
 { #category : #controlling }
 ExecutionEnvironment >> prepareForNewProcess: aProcess [
 	self subclassResponsibility 
