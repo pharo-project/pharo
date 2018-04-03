@@ -138,9 +138,8 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next 
 
 echo "[Compiler] Adding more Kernel packages"
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Hermes-Extensions.hermes --save
-${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Math-Operations-Extensions.hermes Debugging-Core.hermes Kernel-Chronology-Extras.hermes Multilingual-Encodings.hermes Multilingual-TextConversion.hermes Multilingual-Languages.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Math-Operations-Extensions.hermes Debugging-Core.hermes Kernel-Chronology-Extras.hermes Multilingual-Encodings.hermes Multilingual-TextConversion.hermes Multilingual-Languages.hermes ReflectionMirrors-Primitives.hermes --save --no-fail-on-undeclared
 
-${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes ReflectionMirrors-Primitives.hermes --save
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes InitializePackagesCommandLineHandler.hermes --save
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes Jobs.hermes --save --no-fail-on-undeclared
