@@ -42,7 +42,7 @@ PharoChangesCondenser >> basicCondense [
 PharoChangesCondenser >> condense [
 	job := [ 
 		newChangesFile writeStreamDo: [ :aStream |
-			  stream := aStream.
+			  stream := (ZnNewLineWriterStream on: aStream) forCr.
 			  self basicCondense ].
   		self
         installNewChangesFile;
