@@ -4,7 +4,7 @@ I have shared behavior of some optional clusters.
 Class {
 	#name : #FLOptimizedObjectCluster,
 	#superclass : #FLIteratingCluster,
-	#category : 'Fuel-Core-Clusters-Optionals'
+	#category : #'Fuel-Core-Clusters-Optionals'
 }
 
 { #category : #analyzing }

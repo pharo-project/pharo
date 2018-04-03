@@ -41,7 +41,7 @@ Class {
 		'stream',
 		'header'
 	],
-	#category : 'Fuel-Core-Base'
+	#category : #'Fuel-Core-Base'
 }
 
 { #category : #protected }

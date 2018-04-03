@@ -1,7 +1,7 @@
 Class {
 	#name : #ManifestFuel,
 	#superclass : #PackageManifest,
-	#category : 'Fuel-Core-Fuel-Core'
+	#category : #'Fuel-Core-Fuel-Core'
 }
 
 { #category : #'meta data' }

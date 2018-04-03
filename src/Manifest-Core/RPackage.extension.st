@@ -8,6 +8,13 @@ RPackage >> criticNameOn: aStream [
 ]
 
 { #category : #'*Manifest-Core' }
+RPackage >> isDeprecated [
+	^self packageManifestOrNil 
+		ifNil: [ ^false ]
+		ifNotNil: [ :manifest | manifest isDeprecated ]
+]
+
+{ #category : #'*Manifest-Core' }
 RPackage >> manifestBuilderForRuleChecker: aRuleChecker [
 	"Return the manifestsince the rulechecker is keeping a cache, we ask it back"
 

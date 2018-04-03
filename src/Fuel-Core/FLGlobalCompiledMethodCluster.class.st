@@ -5,7 +5,7 @@ I clusterize CompiledMethods that will be obtained on materialization accessing 
 Class {
 	#name : #FLGlobalCompiledMethodCluster,
 	#superclass : #FLGlobalCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }

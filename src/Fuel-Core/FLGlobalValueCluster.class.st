@@ -6,7 +6,7 @@ For example, Transcript could be serialized and materialized by me.
 Class {
 	#name : #FLGlobalValueCluster,
 	#superclass : #FLGlobalCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }

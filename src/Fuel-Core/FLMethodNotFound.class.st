@@ -4,7 +4,7 @@ I represent an error produced during materialization when a serialized method in
 Class {
 	#name : #FLMethodNotFound,
 	#superclass : #FLMaterializationError,
-	#category : 'Fuel-Core-Errors'
+	#category : #'Fuel-Core-Errors'
 }
 
 { #category : #signaling }

@@ -4,7 +4,7 @@ unsigned, 8-bit integer
 Class {
 	#name : #FLPositive8SmallIntegerCluster,
 	#superclass : #FLSmallIntegerCluster,
-	#category : 'Fuel-Core-Clusters'
+	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }
