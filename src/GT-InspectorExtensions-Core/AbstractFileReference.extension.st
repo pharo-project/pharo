@@ -18,15 +18,31 @@ AbstractFileReference >> gtInspectorContentsIn: composite [
 	<gtInspectorPresentationOrder: 5>
 	composite text
 			title: 'Contents';
-			display: [ 
-				self readStreamDo: [ :stream | 
-					| result |
-					result := [(stream next: 10000) asString]
-						on: Error 
-						do: [ (stream binary next: 10000) asString ].
-					stream size > 10000
-						ifTrue: [ result, '  ... truncated ...' ]
-						ifFalse: [ result ] ] ];
+			format: #asText;
+			display: [ | maxBytes buffer atEnd stringContents displayStream displayString |
+				maxBytes := 10000.
+				self binaryReadStreamDo: [ :stream | 
+					buffer := stream next: maxBytes.
+					atEnd := stream atEnd ].
+				"Separate out the utf8 decoding and error handling so we can use the hex dump stream to add the truncated message"
+				stringContents := [ ZnCharacterEncoder utf8 decodeBytes: buffer ]
+							on: Error 
+							do: [ nil ].
+				stringContents ifNotNil: [ 
+					displayString := atEnd ifTrue: 
+						[ stringContents ]
+					ifFalse:
+						[ stringContents, '  ... truncated ...' ] ]
+				ifNil: [ 
+					displayStream := (String new: maxBytes * 5) writeStream.
+					self hexDump: buffer on: displayStream max: maxBytes.
+					atEnd ifFalse: [ displayStream nextPutAll: '  ... truncated ...' ].
+					displayString := displayStream contents asText.
+					displayString addAttribute: (TextFontReference
+						toFont: (LogicalFont 
+							familyName: 'Source Code Pro' 
+							pointSize: StandardFonts defaultFont pointSize)) ].
+				displayString asText ];
 			withLineNumbers: true;
 			act: [ :text |
 				self ensureDelete; writeStreamDo: [ :s | s nextPutAll: text text asString ] ]
