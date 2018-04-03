@@ -22,9 +22,8 @@ CodeExporter class >> writeSourceCodeFrom: aStream toFileReference: aFileReferen
 	"Write the supplied changes to aFileReference"
 
 	aFileReference binaryWriteStreamDo: [ :outputStream |
-		(ZnCrPortableWriteStream on: (ZnCharacterWriteStream
-			on: outputStream
-			encoding: 'utf8')) nextPutAll: aStream contents.
+		(ZnCharacterWriteStream on: outputStream encoding: 'utf8')
+			nextPutAll: aStream contents.
 	].
 
 	self inform: 'Filed out to: ', String cr, aFileReference pathString

@@ -16,10 +16,10 @@ SystemDictionaryTest >> canBeUnhealthy [
 	^ false
 ]
 
-{ #category : #requirements }
+{ #category : #coverage }
 SystemDictionaryTest >> classToBeTested [
 
-^ SystemDictionary
+	^ SystemDictionary
 ]
 
 { #category : #problems }

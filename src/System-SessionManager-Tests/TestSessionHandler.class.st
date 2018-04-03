@@ -12,7 +12,7 @@ Class {
 	#category : #'System-SessionManager-Tests'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TestSessionHandler class >> onShutdown: aBlockClosure [ 
 	
 	^ self new
@@ -20,7 +20,7 @@ TestSessionHandler class >> onShutdown: aBlockClosure [
 		yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TestSessionHandler class >> onStartup: aBlockClosure [ 
 	
 	^ self new

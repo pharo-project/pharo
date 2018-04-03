@@ -377,11 +377,6 @@ CompiledMethod >> copyWithTrailerBytes: trailer [
 	^copy
 ]
 
-{ #category : #'debugger support' }
-CompiledMethod >> debuggerMap [
-	^self compilerClass debuggerMethodMapForMethod: self.
-]
-
 { #category : #accessing }
 CompiledMethod >> defaultSelector [ 
 	"Invent and answer an appropriate message selector (a Symbol) for me, 

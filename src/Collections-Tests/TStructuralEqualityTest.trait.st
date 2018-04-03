@@ -6,13 +6,13 @@ Trait {
 	#category : #'Collections-Tests-Abstract'
 }
 
-{ #category : #'test - equality' }
+{ #category : #'tests - equality' }
 TStructuralEqualityTest >> empty [
 	
 	^ self explicitRequirement
 ]
 
-{ #category : #'test - equality' }
+{ #category : #'tests - equality' }
 TStructuralEqualityTest >> nonEmpty [
 	
 	^ self explicitRequirement
@@ -26,13 +26,13 @@ TStructuralEqualityTest >> test0TStructuralEqualityTest [
 	self deny: self nonEmpty isEmpty
 ]
 
-{ #category : #'test - equality' }
+{ #category : #'tests - equality' }
 TStructuralEqualityTest >> testEqualSign [
  
 	self deny: (self empty = self nonEmpty)
 ]
 
-{ #category : #'test - equality' }
+{ #category : #'tests - equality' }
 TStructuralEqualityTest >> testEqualSignIsTrueForNonIdenticalButEqualCollections [
 		
 	self assert: self empty equals: self empty copy. 
@@ -44,7 +44,7 @@ TStructuralEqualityTest >> testEqualSignIsTrueForNonIdenticalButEqualCollections
 	self assert: self nonEmpty copy equals: self nonEmpty copy
 ]
 
-{ #category : #'test - equality' }
+{ #category : #'tests - equality' }
 TStructuralEqualityTest >> testEqualSignOfIdenticalCollectionObjects [
 	
 	self assert: self empty equals: self empty. 

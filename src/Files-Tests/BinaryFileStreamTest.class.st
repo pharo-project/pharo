@@ -197,5 +197,5 @@ BinaryFileStreamTest >> testWriteToClosedFileFails [
 	| fileStream |
 	fileStream := self fileStreamForFileNamed: 'testFile'.
 	fileStream close.
-	self should: [ fileStream nextPut: 1 ] raise: Error.
+	self should: [ fileStream wrappedStream nextPut: 1 ] raise: Error.
 ]

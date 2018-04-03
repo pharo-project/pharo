@@ -1601,11 +1601,9 @@ Color >> isTranslucentButNotTransparent [
 
 { #category : #queries }
 Color >> isTranslucentColor [
-	self
-		deprecated: 'Please use #isTranslucent instead'
-		transformWith: '`@receiver isTranslucentColor' -> '`@receiver isTranslucent'.
-
-	^ self isTranslucent
+	"This means: self isTranslucent, but isTransparent not"
+	self flag: #toremove.
+	^ false
 ]
 
 { #category : #queries }

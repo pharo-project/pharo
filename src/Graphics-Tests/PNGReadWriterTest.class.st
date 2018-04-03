@@ -173,6 +173,7 @@ PNGReadWriterTest >> decodeColors: colorsAndFiles depth: requiredDepth [
 
 { #category : #helpers }
 PNGReadWriterTest >> deleteFile [
+
 	fileName asFileReference ensureDelete
 ]
 
@@ -227,7 +228,7 @@ PNGReadWriterTest >> encodeAndDecode: original [
 
 	"decode"
 	stream := self readEncoded: bytes.
-	decoded := (PNGReadWriter new on: stream) nextImage.
+	[decoded := (PNGReadWriter new on: stream) nextImage.
 	decoded display.
 
 	"compare"
@@ -245,7 +246,7 @@ PNGReadWriterTest >> encodeAndDecode: original [
 			self assert: ((c1 blue * 255) truncated - (c2 blue * 255) truncated) abs <= maxErr.
 			self assert: ((c1 alpha * 255) truncated - (c2 alpha * 255) truncated) abs <= maxErr.
 		].
-	].
+	]] ensure: [ stream close ].
 ]
 
 { #category : #helpers }
@@ -391,10 +392,7 @@ PNGReadWriterTest >> readEncoded: bytes [
 	"Answer a ReadStream on the file named by fileName, if possible; else a ReadStream on bytes"
 
 	fileName ifNil:[^ bytes readStream ].
-	^(FileStream oldFileOrNoneNamed: fileName) ifNil: [ 
-		Transcript nextPutAll: 'can''t open ', fileName; cr.
-		bytes readStream ].
-
+	^(File named: fileName) readStream
 ]
 
 { #category : #running }
@@ -674,6 +672,8 @@ PNGReadWriterTest >> testRed8 [
 { #category : #helpers }
 PNGReadWriterTest >> writeEncoded: bytes [
 	
-	fileName ifNil:[^self].
-	FileStream forceNewFileNamed: fileName do: [:file | file nextPutAll: bytes]
+	fileName ifNil: [ ^self ].
+	fileName asFileReference
+		ensureDelete;
+		binaryWriteStreamDo: [ :file | file nextPutAll: bytes ]
 ]

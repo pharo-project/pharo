@@ -14,7 +14,7 @@ Class {
 { #category : #support }
 FileReferenceTest >> createFile: aPath [
 	filesystem ensureCreateDirectory: aPath parent.
-	(filesystem writeStreamOn: aPath) close
+	(filesystem resolve: aPath) writeStream close
 ]
 
 { #category : #running }
@@ -754,7 +754,7 @@ FileReferenceTest >> testReadStreamDoNotFound [
 	ref := filesystem / 'plonk'.
 	self
 		should: [ref readStreamDo: [:s]]
-		raise: FileDoesNotExist 
+		raise: FileDoesNotExistException
 ]
 
 { #category : #tests }
@@ -799,7 +799,7 @@ FileReferenceTest >> testReadStreamNotFound [
 	ref := filesystem * 'plonk'.
 	self
 		should: [ref readStream]
-		raise: FileDoesNotExist 
+		raise: FileDoesNotExistException
 ]
 
 { #category : #tests }
@@ -925,6 +925,24 @@ FileReferenceTest >> testUnequalSize [
 	a := filesystem * 'plonk'.
 	b := filesystem / 'plonk' / 'griffle'.
 	self deny: a = b.
+]
+
+{ #category : #tests }
+FileReferenceTest >> testUpToAll [
+	| testString filename  |
+	testString := 'ße'.
+	filename := 'test-file-' , 99 atRandom printString , '.txt'.
+
+	[  
+	filename asFileReference
+		writeStreamEncoded: 'utf8' do: [ :stream | 
+			stream nextPutAll: testString ].
+
+	filename asFileReference
+		readStreamDo: [ :stream |
+			self assert: (stream upToAll: 'e') equals: 'ß'.
+		] ]
+	ensure: [ filename asFileReference ensureDelete ] 
 ]
 
 { #category : #tests }

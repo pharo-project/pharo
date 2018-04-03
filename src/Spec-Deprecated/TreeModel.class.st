@@ -6,3 +6,8 @@ Class {
 	#superclass : #TreePresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+TreeModel class >> isDeprecated [
+	^true
+]

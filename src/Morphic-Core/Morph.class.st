@@ -103,7 +103,7 @@ Morph class >> halosEnabled: aBoolean [
 	HalosEnabled := aBoolean
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 Morph class >> initialize [
 	"Morph initialize"
 

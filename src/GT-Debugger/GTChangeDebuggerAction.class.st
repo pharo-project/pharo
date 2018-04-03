@@ -65,6 +65,11 @@ GTChangeDebuggerAction >> executeAction [
 	 newDebugger := self debugger debug: self interruptedContext using: debuggerClass
 ]
 
+{ #category : #accessing }
+GTChangeDebuggerAction >> help [
+	^ 'Switch to another debugger'
+]
+
 { #category : #initialization }
 GTChangeDebuggerAction >> initialize [
 	super initialize.

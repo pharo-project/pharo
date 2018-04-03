@@ -21,6 +21,9 @@ Class {
 	#instVars : [
 		'initializersEnabled'
 	],
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfMorphic
 }
 
@@ -50,13 +53,12 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'FileSystem-Zip'.
 		spec package: 'FontInfrastructure'.
 		spec package: 'FreeType'.
-		spec package: 'Fuel'.
-		spec package: 'FuelPlatform-Core'.
-		spec package: 'FuelPlatform-Pharo-Core'.
-		spec package: 'FuelPlatform-Pharo-07'.
+		spec package: 'Fuel-Core'.
+		spec package: 'Fuel-Platform-Core'.
+		spec package: 'Fuel-Platform-Pharo-Core'.
+		spec package: 'Fuel-Platform-Pharo-07'.
 	
-		spec package: 'FuelCommandLineHandler'.
-		spec package: 'FuelSystem-FileRegistry'.
+		spec package: 'Fuel-Tools-Pharo'.
 
 		spec package: 'Fonts-Abstract'.
 
@@ -212,7 +214,7 @@ BaselineOfMorphic >> loadBitmapFontFamily: familyName sizes: pointSizes [
 
 	| fonts styleNames fileName directoryReference |
 
-	directoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: ['..']) asFileReference / 'resources' / 'fonts'.
+	directoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: [ FileSystem workingDirectory ]) asFileReference / 'resources' / 'fonts'.
 
 	fonts := pointSizes collect: [ :pointSize | 	
 		| regular bold italic boldItalic |
@@ -260,6 +262,9 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	| array |
+	
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
 
 	'Starting postload action' logCr.
 
@@ -345,11 +350,16 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	Author reset.
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 
-	UIManager default restoreDisplay. 
+	UIManager default restoreDisplay.
+	
+	Initialized := true.
 ]
 
 { #category : #actions }
 BaselineOfMorphic >> preload: loader package: packageSpec [
+
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
 
 	'Starting preload action' logCr.
 	

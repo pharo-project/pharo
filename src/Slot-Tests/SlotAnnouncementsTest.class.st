@@ -132,8 +132,9 @@ SlotAnnouncementsTest >> testChangeInSuperclassShouldNotAnnounceSubclassModified
 			name: self aClassName;
 			slots: #(a b c) ].
 
-	self assert: self collectedAnnouncements size equals: 1.
-	self assert: self collectedAnnouncements first newClassDefinition equals: aClass.
+	self assert: self collectedAnnouncements size equals: 2.
+	self assert: self collectedAnnouncements second newClassDefinition equals: aClass.
+	self assert: self collectedAnnouncements first newClassDefinition equals: anotherClass.	
 ]
 
 { #category : #'tests-integration' }

@@ -115,7 +115,7 @@ ChunkImportTestCase >> testExportAMethodWithLangTag [
     ปฏิบัติประพฤติกฎกำหนดใจ
     พูดจาให้จ๊ะ ๆ จ๋า ๆ น่าฟังเอยฯ'';
 		add: ''Turkish'' -> ''Pijamalı hasta, yağız şoföre çabucak güvendi'';
-		yourself!]lang[(2798)0!'
+		yourself!'
 ]
 
 { #category : #'importing-code' }

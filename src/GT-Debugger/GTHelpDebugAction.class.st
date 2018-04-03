@@ -41,6 +41,11 @@ GTHelpDebugAction >> executeAction [
 				each title = 'Overview' ] ] ]
 ]
 
+{ #category : #accessing }
+GTHelpDebugAction >> help [
+	^ 'Open an help browser for the currently active debugger.'
+]
+
 { #category : #initialization }
 GTHelpDebugAction >> initialize [
 	super initialize.

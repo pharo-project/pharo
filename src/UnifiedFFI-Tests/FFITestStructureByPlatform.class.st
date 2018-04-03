@@ -8,7 +8,7 @@ Class {
 		'OFFSET_LONG',
 		'OFFSET_POINTER'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Test-Data'
 }
 
 { #category : #'field definition' }

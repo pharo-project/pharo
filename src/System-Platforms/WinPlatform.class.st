@@ -55,7 +55,7 @@ WinPlatform >> isWindows [
 
 { #category : #accessing }
 WinPlatform >> keyForValue: aKeyValue [
-	^Key valueForWindowsPlatform: aKeyValue.
+	^KeyboardKey valueForWindowsPlatform: aKeyValue.
 ]
 
 { #category : #accessing }

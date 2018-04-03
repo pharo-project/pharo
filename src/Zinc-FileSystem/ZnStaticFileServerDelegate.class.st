@@ -183,8 +183,7 @@ ZnStaticFileServerDelegate >> responseForFile: filename fromRequest: aRequest [
 	modified
 		ifTrue: [ 
 			mimeType := ZnMimeType forFilenameExtension: file extension.
-			fileStream := file readStream.
-			fileStream binary.
+			fileStream := file binaryReadStream.
 			(entity := ZnStreamingEntity type: mimeType length: size) 
 				stream: fileStream.
 			(response := ZnResponse ok: entity) 

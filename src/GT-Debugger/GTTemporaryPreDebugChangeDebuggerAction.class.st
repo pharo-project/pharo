@@ -49,6 +49,11 @@ GTTemporaryPreDebugChangeDebuggerAction >> executeAction [
 ]
 
 { #category : #accessing }
+GTTemporaryPreDebugChangeDebuggerAction >> help [
+	^ 'Open a GTDebugger from the PreDebugWindow.'
+]
+
+{ #category : #accessing }
 GTTemporaryPreDebugChangeDebuggerAction >> id [
 
 	^ #gtChangeDebuggerPreDebug

@@ -16,6 +16,9 @@ Class {
 	#instVars : [
 		'initializersEnabled'
 	],
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfUnifiedFFI
 }
 
@@ -43,6 +46,9 @@ BaselineOfUnifiedFFI >> baseline: spec [
 { #category : #actions }
 BaselineOfUnifiedFFI >> postload: loader package: packageSpec [
 
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
+
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 	
 	
@@ -50,6 +56,9 @@ BaselineOfUnifiedFFI >> postload: loader package: packageSpec [
 
 { #category : #actions }
 BaselineOfUnifiedFFI >> preload: loader package: packageSpec [
+
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
 
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: true.

@@ -6,3 +6,8 @@ Class {
 	#superclass : #ImagePresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+ImageModel class >> isDeprecated [
+	^true
+]

@@ -350,7 +350,7 @@ DiffMorph >> defaultTitle [
 	^'Diff' translated
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> destTextModel [
 	^ destTextModel ifNil: [ destTextModel := RubScrolledTextModel new interactionModel: self ].
 ]
@@ -406,7 +406,7 @@ DiffMorph >> edgeColor [
 	^ self theme diffEdgeColor
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> from: old to: new [
 	"Set the old (src) and new (dst) text."
 
@@ -422,7 +422,7 @@ DiffMorph >> from: old to: new [
 		applyMap
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> from: old to: new contextClass: aClass [
 	"Set the old (src) and new (dst) text."
 
@@ -583,7 +583,7 @@ DiffMorph >> modificationColor [
 	^ self theme diffModificatedLineBackgroundColor
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newDstMorph [
 	"Answer a new dst text morph."
 
@@ -595,7 +595,7 @@ DiffMorph >> newDstMorph [
 		yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newHighlight [
 	"Anewser a new highlight."
 
@@ -605,7 +605,7 @@ DiffMorph >> newHighlight [
 		borderColor: self edgeColor
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newHighlight: type [
 	"Anewser a new highlight."
 
@@ -616,7 +616,7 @@ DiffMorph >> newHighlight: type [
 		fillWidth: true
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newJoinMorph [
 	"Answer a new join morph."
 
@@ -630,7 +630,7 @@ DiffMorph >> newJoinMorph [
 		color: self joinColor
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newJoinSection [
 	"Answer a new join section."
 
@@ -645,7 +645,7 @@ DiffMorph >> newJoinSection [
 		yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newJoinSectionFrom: srcRange to: dstRange [
 	"Answer a new join section."
 
@@ -686,7 +686,7 @@ DiffMorph >> newJoinSectionFrom: srcRange to: dstRange [
 		to: self dstMorph textMorph paragraph
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newMapMorph [
 	"Answer a new map morph."
 
@@ -701,7 +701,7 @@ DiffMorph >> newMapMorph [
 			to: self
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newMatchJoinSectionFrom: srcRange to: dstRange [
 	"Answer a new match join section."
 
@@ -725,7 +725,7 @@ DiffMorph >> newMatchJoinSectionFrom: srcRange to: dstRange [
 		createHighlightsFrom: self srcMorph textMorph paragraph to: self dstMorph textMorph paragraph
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newPrettyPrintCheckboxMorph [
 	"Answer a new checkbox for specifying whether to use
 	pretty printing for the diff texts."
@@ -739,7 +739,7 @@ DiffMorph >> newPrettyPrintCheckboxMorph [
 		help: 'If selected, pretty print will be applied to any displayed method source (eliminates trivial formatting changes)' translated
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newScrollbarMorph [
 	"Answer a new scrollbar morph."
 
@@ -750,7 +750,7 @@ DiffMorph >> newScrollbarMorph [
 		width: self theme scrollbarThickness
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newSrcMorph [
 	"Answer a new src text morph."
 
@@ -886,7 +886,7 @@ DiffMorph >> showOptions: aBoolean [
 		ifFalse: [ self removeOptionsPanel ]
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> sourceTextModel [
 	^ sourceTextModel ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ].
 ]

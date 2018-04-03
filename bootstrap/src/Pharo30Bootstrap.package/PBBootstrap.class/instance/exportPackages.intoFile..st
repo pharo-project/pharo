@@ -1,4 +1,4 @@
-preparation
+exporting
 exportPackages: packageList intoFile: aFileName
 
 	self

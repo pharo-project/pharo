@@ -154,14 +154,14 @@ AbstractFileReference >> binaryReadStreamIfAbsent: absentBlock [
 		ifFalse: absentBlock
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 AbstractFileReference >> binaryWriteStream [
 	"Answer a binary write stream on the receiver"
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 AbstractFileReference >> binaryWriteStreamDo: aBlock [
 	"Pass a binary write stream on the receiver to the supplied block, and ensure that the stream is closed after evaluation."
 
@@ -170,6 +170,13 @@ AbstractFileReference >> binaryWriteStreamDo: aBlock [
 	stream := self binaryWriteStream.
 	^ [ aBlock value: stream ] 
 		ensure: [ stream close ]
+]
+
+{ #category : #streams }
+AbstractFileReference >> binaryWriteStreamDo: doBlock ifPresent: presentBlock [
+	^ self isFile
+		ifTrue: presentBlock
+		ifFalse: [ self binaryWriteStreamDo: doBlock ]
 ]
 
 { #category : #delegated }
@@ -489,6 +496,51 @@ AbstractFileReference >> hash [
 	^ self path  hash
 ]
 
+{ #category : #private }
+AbstractFileReference >> hexDump: buffer on: aStream max: maxBytes [
+	"Print a hex dump of the receiver on the supplied stream, up to maxBytes long"
+
+	| ch i string remainder |
+
+	i := 0.
+	buffer readStreamDo: [ :stream |
+		ch := stream next.
+		[ch notNil and: [ i < maxBytes ]] whileTrue: [ 
+			remainder := i \\ 16.
+			remainder = 0 ifTrue: [ 
+				i = 0 ifFalse: [ aStream cr ].
+				aStream 
+					<< (i printPaddedWith: $0 to: 8 base: 16);
+					<< '  '.
+				string := String new writeStream ].
+			aStream
+				<< (ch printPaddedWith: $0 to: 2 base: 16);
+				<< ' '.
+			ch := Character value: ch.
+			ch isAlphaNumeric ifTrue: 
+				[ string nextPut: ch ]
+			ifFalse:
+				[ string nextPut: $. ].
+			remainder = 15 ifTrue: [ 
+				aStream
+					<< '  |';
+					<< string contents;
+					<< '|' ].
+			ch := stream next.
+			i := i + 1 ].
+		remainder := i \\ 16.
+		(ch isNil and: [remainder between: 1 and: 14]) ifTrue: [ 
+			(16 - remainder) timesRepeat: [ aStream nextPutAll: '   ' ].
+			aStream
+				<< '  |';
+				<< string contents.
+			(16 - remainder timesRepeat: [ aStream nextPut: Character space ]).
+			aStream
+				<< '|' ].
+		aStream cr ].
+
+]
+
 { #category : #accessing }
 AbstractFileReference >> humanReadableSize [
 	^ self size humanReadableSIByteSize
@@ -598,7 +650,7 @@ AbstractFileReference >> moveTo: aReference [
 	^ self resolve moveTo: aReference
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 AbstractFileReference >> nextVersion [
 	^ self resolve nextVersion
 ]
@@ -652,6 +704,22 @@ AbstractFileReference >> readStreamDo: doBlock ifAbsent: absentBlock [
 	^ self isFile 
 		ifTrue: [ self readStreamDo: doBlock ]
 		ifFalse: absentBlock
+]
+
+{ #category : #streams }
+AbstractFileReference >> readStreamEncoded: anEncoding [
+
+	^ ZnCharacterReadStream
+		on: self binaryReadStream
+		encoding: anEncoding
+]
+
+{ #category : #streams }
+AbstractFileReference >> readStreamEncoded: anEncoding do: aBlock [
+	| stream |
+	stream := self readStreamEncoded: anEncoding.
+	^ [ aBlock value: stream ] 
+		ensure: [ stream close ]
 ]
 
 { #category : #streams }
@@ -775,6 +843,22 @@ AbstractFileReference >> writeStreamDo: doBlock ifPresent: presentBlock [
 	^ self isFile
 		ifTrue: presentBlock
 		ifFalse: [ self writeStreamDo: doBlock ]
+]
+
+{ #category : #streams }
+AbstractFileReference >> writeStreamEncoded: anEncoding [
+
+	^ ZnCharacterWriteStream
+		on: self binaryWriteStream
+		encoding: anEncoding
+]
+
+{ #category : #streams }
+AbstractFileReference >> writeStreamEncoded: anEncoding do: aBlock [
+	| stream |
+	stream := self writeStreamEncoded: anEncoding.
+	^ [ aBlock value: stream ]
+		ensure: [ stream close ]
 ]
 
 { #category : #streams }

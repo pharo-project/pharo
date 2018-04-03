@@ -1,4 +1,4 @@
-preparation
+exporting
 exportPackages: packageList usingInitializeScript: aScriptString intoFile: aFileName
 
 	self

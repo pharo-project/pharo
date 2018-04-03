@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Pharo30Bootstrap",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"repository",
+		"commitHash",
+		"buildNumber",
+		"major",
+		"minor"
+	],
+	"name" : "PBRepositoryVersionReader",
+	"type" : "normal"
+}

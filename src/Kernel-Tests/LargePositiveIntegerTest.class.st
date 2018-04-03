@@ -67,8 +67,8 @@ LargePositiveIntegerTest >> testNormalize [
 { #category : #'tests-printing' }
 LargePositiveIntegerTest >> testStoreOn [
 	| integer |
-	integer := 1073741824.
+	integer := SmallInteger maxVal + 1.
 	self
 		assert: integer class equals: LargePositiveInteger;
-		assert: (String streamContents: [ :s | integer storeOn: s ]) equals: '1073741824'.
+		assert: (String streamContents: [ :s | integer storeOn: s ]) equals: integer asString
 ]

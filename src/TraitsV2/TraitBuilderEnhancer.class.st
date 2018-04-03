@@ -89,7 +89,7 @@ TraitBuilderEnhancer >> classTraitCompositionOf: aBuilder [
 	^ aBuilder classTraitComposition asTraitComposition
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TraitBuilderEnhancer >> classTraitCompositionOfClass: aClass [ 
 	
 	^ aClass class traitComposition asTraitComposition
@@ -119,7 +119,7 @@ TraitBuilderEnhancer >> configureMetaclass: newMetaclass superclass: superclass 
 	newMetaclass superclass: superclass withLayoutType: aLayoutType slots: resultingSlots
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TraitBuilderEnhancer >> eliminateDuplicates: aSlotCollection withSuperclassSlots: superclassSlots [
 	| resultingSlots |
 	resultingSlots := OrderedCollection new.
@@ -172,7 +172,7 @@ TraitBuilderEnhancer >> traitCompositionOf: aBuilder [
 	^ aBuilder traitComposition asTraitComposition
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TraitBuilderEnhancer >> traitCompositionOfClass: aClass [ 
 	
 	^ aClass traitComposition asTraitComposition

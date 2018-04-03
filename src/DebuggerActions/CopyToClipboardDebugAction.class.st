@@ -33,6 +33,11 @@ CopyToClipboardDebugAction >> executeAction [
 ]
 
 { #category : #accessing }
+CopyToClipboardDebugAction >> help [
+	^ 'Copy a short debugging stack to the clipboard.'
+]
+
+{ #category : #accessing }
 CopyToClipboardDebugAction >> id [
 
 	^ #copyToClipboard

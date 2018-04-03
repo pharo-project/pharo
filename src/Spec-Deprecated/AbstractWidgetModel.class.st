@@ -6,3 +6,8 @@ Class {
 	#superclass : #AbstractWidgetPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+AbstractWidgetModel class >> isDeprecated [
+	^true
+]

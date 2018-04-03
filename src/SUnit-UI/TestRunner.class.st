@@ -50,7 +50,7 @@ TestRunner class >> menuCommandOn: aBuilder [
 		icon: self taskbarIcon
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TestRunner class >> open [
 	^ self new open
 ]
@@ -563,7 +563,7 @@ TestRunner >> fileOutResults [
 		request: 'Enter the file name' 
 		initialAnswer: defaultFilename.
 	fileName ifNil: [^ self].
-	stream := ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+	stream := ZnNewLineWriterStream on: (ZnCharacterWriteStream
 			on: (File openForWriteFileNamed: fileName)
 			encoding: 'utf8').
 	[result fileOutOn: stream]

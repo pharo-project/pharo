@@ -302,7 +302,7 @@ SortedCollectionTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 SortedCollectionTest >> indexInNonEmpty [
-	"Return an index between bounds of 'nonEmpty'."
+	"Return an index between bounds of 'nonEmpty'"
 
 	^ 2
 ]
