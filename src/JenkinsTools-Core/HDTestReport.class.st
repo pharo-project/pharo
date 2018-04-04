@@ -239,12 +239,12 @@ HDTestReport >> setUp [
 	fileName := fileName , suite name , '-Test.xml'.
 	aFile := File named: fileName.
 	aFile delete.
-	stream := ZnCharacterWriteStream
+	stream := ZnNewLineWriterStream on: (ZnCharacterWriteStream
 		on:
 			(aFile writeStream
 				setToEnd;
 				yourself)
-		encoding: 'utf8'.
+		encoding: 'utf8').
 	stream
 		nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>';
 		newLine.
