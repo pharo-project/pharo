@@ -38,8 +38,7 @@ ZnEncodedReadStream >> isReadOnly [
 { #category : #accessing }
 ZnEncodedReadStream >> next [
 	^ peeked
-		ifNil: [ 
-			stream atEnd ifFalse: [ self nextElement ] ]
+		ifNil: [ self nextElement ]
 		ifNotNil: [ | character |
 			character := peeked.
 			peeked := nil.
@@ -153,6 +152,8 @@ ZnEncodedReadStream >> upTo: anObject [
 { #category : #accessing }
 ZnEncodedReadStream >> upToEnd [
 	^ self collectionSpecies
-		streamContents: [ :collectionStream | 
-			[ self atEnd ] whileFalse: [ collectionStream nextPut: self next ] ]
+		streamContents: [ :collectionStream | | element |
+			[ (element := self next) ] whileNotNil: 
+				[ collectionStream nextPut: element ].
+			self atEnd ifFalse: [ self error: 'Error while reading stream' ] ]
 ]

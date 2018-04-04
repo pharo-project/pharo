@@ -59,6 +59,7 @@ ZnUTF32Encoder >> nextCodePointFromStream: stream [
 
 	| codePoint |
 	codePoint := self readCodePointFrom: stream.
+	codePoint ifNil: [ ^nil ].
 	(self processByteOrderMark: codePoint)
 		ifTrue: [ codePoint := self readCodePointFrom: stream ].
 	((self isSurrogateCodePoint: codePoint) or: [ codePoint > self maximumUTFCode ]) 
@@ -93,10 +94,11 @@ ZnUTF32Encoder >> processByteOrderMark: codePoint [
 ZnUTF32Encoder >> readCodePointFrom: stream [
 	| byte1 byte2 byte3 byte4 |
 	byte1 := stream next.
+	byte1 ifNil: [ ^nil ].
 	byte2 := stream next.
 	byte3 := stream next.
 	byte4 := stream next.
-	(byte1 isNil or: [ byte2 isNil or: [ byte3 isNil or: [ byte4 isNil ] ] ])
+	(byte2 isNil or: [ byte3 isNil or: [ byte4 isNil ] ])
 		ifTrue: [ self errorIncomplete ].
 	^ self isBigEndian
 		ifTrue: [ 

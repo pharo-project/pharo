@@ -71,6 +71,7 @@ ZnUTF16Encoder >> nextCodePointFromStream: stream [
 
 	| word leadSurrogate trailSurrogate code |
 	word := self read16BitWordFromStream: stream.
+	word ifNil: [ ^nil ].
 	(self processByteOrderMark: word)
 		ifTrue: [ word := self read16BitWordFromStream: stream ].
 	^ (word < 16rD800 or: [ word > 16rDBFF ])
@@ -117,9 +118,9 @@ ZnUTF16Encoder >> processByteOrderMark: word [
 ZnUTF16Encoder >> read16BitWordFromStream: stream [
 	| firstByte secondByte |
 	firstByte := stream next.
+	firstByte ifNil: [ ^nil ].
 	secondByte := stream next.
-	(firstByte isNil or: [ secondByte isNil ])
-		ifTrue: [ self errorIncomplete ].
+	secondByte ifNil: [ self errorIncomplete ].
 	^ self isBigEndian 
 		ifTrue: [ secondByte + (firstByte << 8) ]
 		ifFalse: [ firstByte + (secondByte << 8) ]
