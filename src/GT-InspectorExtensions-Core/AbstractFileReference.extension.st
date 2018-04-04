@@ -24,24 +24,21 @@ AbstractFileReference >> gtInspectorContentsIn: composite [
 				self binaryReadStreamDo: [ :stream | 
 					buffer := stream next: maxBytes.
 					atEnd := stream atEnd ].
-				"Separate out the utf8 decoding and error handling so we can use the hex dump stream to add the truncated message"
-				stringContents := [ ZnCharacterEncoder utf8 decodeBytes: buffer ]
-							on: Error 
-							do: [ nil ].
-				stringContents ifNotNil: [ 
-					displayString := atEnd ifTrue: 
+				displayString := [ 
+					stringContents := ZnCharacterEncoder utf8 decodeBytes: buffer.
+					atEnd ifTrue: 
 						[ stringContents ]
 					ifFalse:
 						[ stringContents, '  ... truncated ...' ] ]
-				ifNil: [ 
-					displayStream := (String new: maxBytes * 5) writeStream.
-					self hexDump: buffer on: displayStream max: maxBytes.
-					atEnd ifFalse: [ displayStream nextPutAll: '  ... truncated ...' ].
-					displayString := displayStream contents asText.
-					displayString addAttribute: (TextFontReference
-						toFont: (LogicalFont 
-							familyName: 'Source Code Pro' 
-							pointSize: StandardFonts defaultFont pointSize)) ].
+							on: Error 
+							do: [ 
+								displayStream := (String new: maxBytes * 5) writeStream.
+								buffer hexDumpOn: displayStream max: maxBytes.
+								displayString := displayStream contents asText.
+								displayString addAttribute: (TextFontReference
+									toFont: (LogicalFont 
+										familyName: 'Source Code Pro' 
+										pointSize: StandardFonts defaultFont pointSize)) ].
 				displayString asText ];
 			withLineNumbers: true;
 			act: [ :text |
