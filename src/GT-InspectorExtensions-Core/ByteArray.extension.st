@@ -27,3 +27,21 @@ ByteArray >> gtInspectorBytesIn: composite [
 		column: 'Value' evaluated: #value;
 		send: #value
 ]
+
+{ #category : #'*GT-InspectorExtensions-Core' }
+ByteArray >> gtInspectorHexDumpIn: composite [
+	<gtInspectorPresentationOrder: 40>
+	composite text
+			title: 'Hex Dump';
+			format: #asText;
+			display: [ | maxBytes displayStream displayString |
+				maxBytes := 10000.
+				displayStream := (String new: maxBytes * 5) writeStream.
+				self hexDumpOn: displayStream max: maxBytes.
+				displayString := displayStream contents asText.
+				displayString addAttribute: (TextFontReference
+						toFont: (LogicalFont 
+							familyName: 'Source Code Pro' 
+							pointSize: StandardFonts defaultFont pointSize)).
+				displayString asText ]
+]
