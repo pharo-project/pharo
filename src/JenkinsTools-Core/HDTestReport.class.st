@@ -147,9 +147,9 @@ HDTestReport >> initialize [
 	
 	aFile := File named: 'progress.log'.
 	aFile delete.
-	progressFile := ZnCharacterWriteStream
-			on: (aFile writeStream setToEnd; yourself)
-			encoding: 'utf8'.
+	progressFile := ZnNewLineWriterStream on: (ZnCharacterWriteStream
+		on: (aFile writeStream setToEnd; yourself)
+		encoding: 'utf8').
 			
 	nodeName := self calculateNodeName.
 	stageName := ''
