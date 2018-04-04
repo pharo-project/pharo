@@ -232,7 +232,8 @@ ZnSimplifiedByteEncoder >> nextCodePointFromStream: stream [
 	"In non-strict mode, we let byte values for holes in our mapping pass through"
 
 	| byteValue |
-	^ (byteValue := stream next) < 128
+	(byteValue := stream next) ifNil: [ ^nil ].
+	^byteValue < 128
 		ifTrue: [ byteValue ]
 		ifFalse: [ 
 			(byteToUnicode at: byteValue - 127 ifAbsent: [ nil ])

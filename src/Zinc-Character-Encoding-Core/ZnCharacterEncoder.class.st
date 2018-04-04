@@ -258,8 +258,10 @@ ZnCharacterEncoder >> nextFromStream: stream [
 	"Read and return the next character from stream"
 	
 	"We should use #codePoint: but #value: is faster"
-	
-	^ Character value: (self nextCodePointFromStream: stream)
+
+	| codePoint |
+	codePoint := self nextCodePointFromStream: stream.
+	^ codePoint ifNotNil: [ Character value: codePoint ]
 ]
 
 { #category : #converting }
