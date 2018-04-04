@@ -290,6 +290,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Flashback-Decompiler-Tests'.
 		spec package: 'FontInfrastructure-Tests'.
 		spec package: 'FreeType-Tests'.
+		spec package: 'FreeType-Help'.
 		spec package: 'FuzzyMatcher-Tests'.
 		spec package: 'GT-EventRecorder-Tests'.
 		spec package: 'GT-Spotter-EventRecorder'.
@@ -436,6 +437,7 @@ spec group: 'General-Tests-Group' with: #(
 	'FileSystem-Tests-Memory'
 	'FontInfrastructure-Tests'
 	'FreeType-Tests'
+	'FreeType-Help'
 
 	'Gofer-UI'	
 	'Graphics-Tests'

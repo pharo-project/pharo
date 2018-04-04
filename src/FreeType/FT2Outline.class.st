@@ -72,12 +72,25 @@ FT2Outline >> pointCollection [
 
 { #category : #private }
 FT2Outline >> primLoadArraysFrom: anFT2Face [
-	<primitive: 'primitiveLoadOutlineArraysFromFace' module: 'FT2Plugin'>
-	^self primitiveFailed.
+	| outline contoursArray pointsArray |
+	outline := anFT2Face outline.
+	contoursArray := FFIExternalArray externalNewType: 'short' size: outline n_contours.
+	
+	1 to: outline n_contours do: [ :idx |
+		contours at: 1 put: (contoursArray at: 1).	
+	].
+
+	pointsArray := FFIExternalArray externalNewType: 'int' size: outline n_points * 2.
+
+	1 to: (outline n_points * 2) do: [ :idx |
+		points at: 1 put: (pointsArray at: 1).
+	].
+
 ]
 
 { #category : #private }
 FT2Outline >> primLoadSizesFrom: anFT2Face [
-	<primitive: 'primitiveLoadOutlineSizesFromFace' module: 'FT2Plugin'>
-	^self primitiveFailed.
+	
+	contoursSize := anFT2Face outline n_contours.
+	pointsSize := anFT2Face outline n_points.
 ]
