@@ -21,7 +21,9 @@ Class {
 		'showOptions',
 		'showOnlySource',
 		'sourceTextModel',
-		'destTextModel'
+		'destTextModel',
+		'leftCaption',
+		'rightCaption'
 	],
 	#category : #'Tool-Diff'
 }
@@ -48,8 +50,10 @@ DiffMorph class >> from: old to: new contextClass: aClass [
 ]
 
 { #category : #initialization }
-DiffMorph >> addMainMorphsWith: topOffset [ 
-	| halfWidth leftFraction leftOffset rightFraction rightOffset |
+DiffMorph >> addMainMorphsWith: initialOffset [ 
+	| halfWidth leftFraction leftOffset rightFraction rightOffset topOffset |
+
+	topOffset := self addTitlePanel: initialOffset.
 	
 	halfWidth := self joinMorph width / 2.
 	leftFraction := showOnlyDestination
@@ -107,10 +111,13 @@ DiffMorph >> addMainMorphsWith: topOffset [
 			leftFraction: 1;
 			leftOffset: self mapMorph width negated;
 			topOffset: topOffset).
+
 ]
 
 { #category : #initialization }
 DiffMorph >> addMorphsWithOptions [
+
+	self createOptionsPanel.
 
 	self 
 		addMainMorphsWith: optionsPanel height.
@@ -133,6 +140,50 @@ DiffMorph >> addOptionsPanel [
 	showOptions := true.
 	self removeAllMorphs.
 	self addMorphsWithOptions
+]
+
+{ #category : #initialization }
+DiffMorph >> addTitlePanel: initialOffset [
+
+	"Add the title panel and returns the top offset for the rest of the window."
+
+	| titlePanel titleRow rightLabel |
+	(leftCaption isNotNil and: [ rightCaption isNotNil ]) ifFalse: [ ^ initialOffset ].
+	
+	"If we are showing only one panel there is no need for title"
+	showOnlyDestination ifTrue: [ ^ initialOffset ].
+	showOnlySource ifTrue: [ ^ initialOffset ].
+	
+	titlePanel := self newPanel. 	
+	
+	titleRow := self newPanel.
+	
+	titleRow changeProportionalLayout.
+	titleRow hResizing: #spaceFill.
+	titleRow vResizing: #shrinkWrap.	
+	
+	rightLabel := (self newRow: { self newLabel: rightCaption }) listCentering: #bottomRight; yourself.
+	titleRow addMorph: rightLabel fullFrame: (LayoutFrame identity leftFraction: 0.5; rightOffset: mapMorph width negated - 5). 
+	titleRow addMorph: (self newLabel: leftCaption) fullFrame: (LayoutFrame identity leftFraction: 0; rightFraction: 0.5; leftOffset: 10). 
+
+		
+	titlePanel addMorph: titleRow.
+	titleRow extent: titlePanel minExtent.
+
+	titlePanel vResizing: #shrinkWrap.
+	titlePanel hResizing: #spaceFill.
+				
+	self addMorph: titlePanel
+		fullFrame:(LayoutFrame identity
+			topOffset: initialOffset;
+			bottomFraction: 0;
+			bottomOffset: titlePanel height + initialOffset).
+
+	titlePanel extent: titlePanel minExtent.	
+				
+	^ initialOffset + titlePanel height.
+				
+
 ]
 
 { #category : #'accessing colors' }
@@ -343,6 +394,21 @@ DiffMorph >> contextClass: aClass [
 	contextClass := aClass
 ]
 
+{ #category : #initialization }
+DiffMorph >> createOptionsPanel [
+
+	| ppCheckbox |
+	ppCheckbox := self newPrettyPrintCheckboxMorph.
+
+	optionsPanel := self newPanel
+		addMorph: ((self newRow: {ppCheckbox}) listCentering: #bottomRight);
+		color: self defaultColor.
+		
+	optionsPanel vResizing: #shrinkWrap.
+	optionsPanel extent: optionsPanel minExtent.
+
+]
+
 { #category : #accessing }
 DiffMorph >> defaultTitle [
 	"Answer the default title label for the receiver."
@@ -466,7 +532,6 @@ DiffMorph >> initialExtent [
 DiffMorph >> initialize [
 	"Initialize the receiver."
 
-	| ppCheckbox |
 	super initialize.
 	showOnlyDestination := false.
 	showOnlySource := false.
@@ -479,12 +544,6 @@ DiffMorph >> initialize [
 		mapMorph: self newMapMorph;
 		changeProportionalLayout.
 	self prettyPrint: TextDiffBuilder diffsWithPrettyPrint.
-	ppCheckbox := self newPrettyPrintCheckboxMorph.
-	optionsPanel := self newPanel
-		addMorph: ((self newRow: {ppCheckbox}) listCentering: #bottomRight);
-		color: self defaultColor.
-	optionsPanel vResizing: #shrinkWrap.
-	optionsPanel extent: optionsPanel minExtent.
 	self addMorphsWithOptions.
 	self srcMorph scrollPane announcer 
 		when: RubVerticalScrolled send: #verticalScroll: to: self;
@@ -547,6 +606,15 @@ DiffMorph >> joinSectionClass [
 	"Answer the class to use for a new join section."
 
 	^JoinSection
+]
+
+{ #category : #accessing }
+DiffMorph >> leftLabel: aLeftLabel rightLabel: aRigthLabel [
+
+	leftCaption := aLeftLabel.
+	rightCaption := aRigthLabel.
+	
+	self updateMorphs
 ]
 
 { #category : #'event handling' }

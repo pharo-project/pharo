@@ -17,6 +17,7 @@ MorphicDiffAdapter >> buildWidget [
 		vResizing: #spaceFill;
 		setBalloonText: self  help;
 		showOptions: self showOptions;
+		leftLabel: self leftLabel rightLabel: self rightLabel;
 		showOnlyDestination: self showOnlyDestination;
 		yourself
 ]
@@ -36,6 +37,19 @@ MorphicDiffAdapter >> contextClass: aClass [
 ]
 
 { #category : #'widget API' }
+MorphicDiffAdapter >> leftLabel [
+
+	^ self model leftLabel
+]
+
+{ #category : #'spec protocol' }
+MorphicDiffAdapter >> leftLabel: aText [
+
+	self widgetDo: [ :w | 
+		w leftLabel: aText rightLabel: self rightLabel ]
+]
+
+{ #category : #'widget API' }
 MorphicDiffAdapter >> leftText [
 
 	^ self model leftText
@@ -47,6 +61,19 @@ MorphicDiffAdapter >> leftText: aText [
 	self widgetDo: [ :w | 
 		w sourceTextModel setText: aText.
 		w updateText ]
+]
+
+{ #category : #'widget API' }
+MorphicDiffAdapter >> rightLabel [
+
+	^ self model rightLabel
+]
+
+{ #category : #'spec protocol' }
+MorphicDiffAdapter >> rightLabel: aText [
+
+	self widgetDo: [ :w | 
+		w leftLabel: self leftLabel rightLabel: aText ]
 ]
 
 { #category : #'widget API' }
