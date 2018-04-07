@@ -809,6 +809,13 @@ StringTest >> testExpandMacrosWithArguments [
 	self assert: ('<1p>: <2p>' expandMacrosWith: 'Number' with: 5) equals: '''Number'': 5'
 ]
 
+{ #category : #'tests - formatting' }
+StringTest >> testExpandMacrosWithArgumentsLongText [
+	"printString truncates strings"
+	self assert: ('<1p>' expandMacrosWith: ('a' repeat: 10)) size equals: 12.
+	self assert: ('<1p>' expandMacrosWith: ('a' repeat: 100000)) size equals: 100002
+]
+
 { #category : #tests }
 StringTest >> testFindAnySubstringStartingAt [
 
