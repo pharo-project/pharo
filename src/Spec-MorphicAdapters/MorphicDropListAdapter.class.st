@@ -9,14 +9,14 @@ Class {
 
 { #category : #factory }
 MorphicDropListAdapter >> buildWidget [
-
 	^ SpecDropListMorph new
-		wrapSelector:	 #wrap:withIndex:; 
-	    	on: self list: #getList selected: #getIndex changeSelected: #setIndex:;
-		hResizing: #spaceFill ;
-		vResizing: #spaceFill ;
+		wrapSelector: #wrap:withIndex:;
+		on: self list: #getList selected: #getIndex 	changeSelected: #setIndex:;
+		hResizing: #spaceFill;
+		vResizing: #spaceFill;
 		dragEnabled: self dragEnabled;
-		dropEnabled: self dropEnabled;	
+		dropEnabled: self dropEnabled;
+		enabled: self enabled;
 		setBalloonText: self help;
 		yourself
 ]
