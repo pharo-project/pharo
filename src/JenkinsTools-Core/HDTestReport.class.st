@@ -256,7 +256,7 @@ HDTestReport >> setUp [
 		nextPutAll: '">'.
 
 	"Now this is ugly. We want to update the time and the number of failures and errors, but still at the same time stream a valid XML. So remember this position and add some whitespace, that we can fill later."
-	suitePosition := stream wrappedStream position - 1.
+	suitePosition := stream position - 1.
 	stream
 		nextPutAll: (String new: 100 withAll: $ );
 		newLine.

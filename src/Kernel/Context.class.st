@@ -1320,7 +1320,7 @@ Context >> printDebugOn: aStream [
 	
 	blockSource := closureOrNil printStringLimitedTo: 50.
 	blockSourceSize := blockSource size.
-	blockSource := blockSource copyUpTo: Character newLine.
+	blockSource := blockSource copyUpTo: Character cr.
 	
 	aStream nextPutAll: blockSource.
 	blockSource size < blockSourceSize
