@@ -223,9 +223,6 @@ ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Pharo';r
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources. Smalltalk garbageCollect"
 ${VM} "${PHARO_IMAGE_NAME}.image" clean --release
 
-echo "[Pharo] Configure resulting image"
-${VM} "${PHARO_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/04-configure-resulting-image/fixPackageVersions.st --save --quit
-
 ${VM} "${PHARO_IMAGE_NAME}.image" save "Pharo"
 
 # clean bak sources files
