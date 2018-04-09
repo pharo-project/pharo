@@ -58,7 +58,6 @@ FFIMethodRegistry class >> shutDown: quitting [
 { #category : #'system startup' }
 FFIMethodRegistry class >> startUp: isImageStarting [
 	isImageStarting ifFalse: [ ^ self ].
-	uniqueInstance ifNil: [ ^self ].
 	
 	self resetAll
 ]

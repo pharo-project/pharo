@@ -1092,9 +1092,11 @@ String >> expandMacrosWith: anObject with: anotherObject with: thirdObject with:
 String >> expandMacrosWithArguments: anArray [
 	"
 	Arguments:
-	<Np> writes the N-th argument using #printString. Unused arguments are ignored.
+	Unused arguments are ignored.
+	
+	<Np> writes the N-th argument using #printString, but without trancating it.
 	('<1p>: <2p>' expandMacrosWith: 'Number' with: 5 with: nil) >>> '''Number'': 5'.
-	<Ns> writes the N-th argument, which is expected to be a String/collection of printable objects.
+	<Ns> writes the N-th argument, which should be a String, or a collection of printable objects.
 	Note also important distinction for single-quotes inside the argument; with <p> they will be doubled.
 	('<1s> vs <1p>' expandMacrosWith: 'it''em') >>> 'it''em vs ''it''''em'''
 	
@@ -1104,14 +1106,14 @@ String >> expandMacrosWithArguments: anArray [
 	'<n>' expandMacros >>> OSPlatform current lineEnding.
 	
 	Writing '<' character:
-	To write '<', prepend it with percent sign.
+	To write '<', prepend it with a percent sign.
 	'%<n>' expandMacros >>> '<n>'.
 	
 	Ternary operator:
 	An if-else string can be written with <N?yes-string:no-string>.
-	The N-th argument bust be a Boolean.
-	Yes-string cannot contain colon ':', which terminates the yes-string.
-	No-string cannot contain closing angle bracket '>', which terminates the no-string.
+	The N-th argument must be a Boolean.
+	Yes-string cannot contain colon ':', as it terminates the yes-string.
+	No-string cannot contain closing angle bracket '>', as it terminates the no-string.
 	('<1?success:error>' expandMacrosWith: true) >>> 'success'.
 	('<1?success:is error>' expandMacrosWith: false) >>> 'is error'
 	"
@@ -1151,7 +1153,7 @@ String >> expandMacrosWithArguments: anArray [
 												ifTrue: [ trueString ]
 												ifFalse: [ falseString ]) ].
 							nextChar == $P
-								ifTrue: [ newStream nextPutAll: (anArray at: index) printString ].
+								ifTrue: [ (anArray at: index) printOn: newStream  ].
 							nextChar == $S
 								ifTrue: [ newStream nextPutAll: (anArray at: index) ].
 							readStream skipTo: $> ]

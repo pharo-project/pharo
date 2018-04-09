@@ -18,15 +18,28 @@ AbstractFileReference >> gtInspectorContentsIn: composite [
 	<gtInspectorPresentationOrder: 5>
 	composite text
 			title: 'Contents';
-			display: [ 
-				self readStreamDo: [ :stream | 
-					| result |
-					result := [(stream next: 10000) asString]
-						on: Error 
-						do: [ (stream binary next: 10000) asString ].
-					stream size > 10000
-						ifTrue: [ result, '  ... truncated ...' ]
-						ifFalse: [ result ] ] ];
+			format: #asText;
+			display: [ | maxBytes buffer atEnd stringContents displayStream displayString |
+				maxBytes := 10000.
+				self binaryReadStreamDo: [ :stream | 
+					buffer := stream next: maxBytes.
+					atEnd := stream atEnd ].
+				displayString := [ 
+					stringContents := ZnCharacterEncoder utf8 decodeBytes: buffer.
+					atEnd ifTrue: 
+						[ stringContents ]
+					ifFalse:
+						[ stringContents, '  ... truncated ...' ] ]
+							on: Error 
+							do: [ 
+								displayStream := (String new: maxBytes * 5) writeStream.
+								buffer hexDumpOn: displayStream max: maxBytes.
+								displayString := displayStream contents asText.
+								displayString addAttribute: (TextFontReference
+									toFont: (LogicalFont 
+										familyName: 'Source Code Pro' 
+										pointSize: StandardFonts defaultFont pointSize)) ].
+				displayString asText ];
 			withLineNumbers: true;
 			act: [ :text |
 				self ensureDelete; writeStreamDo: [ :s | s nextPutAll: text text asString ] ]

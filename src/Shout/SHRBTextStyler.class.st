@@ -173,6 +173,18 @@ SHRBTextStyler >> resolveTextLinkFor: aVariableNode [
 ]
 
 { #category : #private }
+SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
+	| textLink global |
+	textLink := self resolveTextLinkFor: aVariableNode.
+	aVariableNode binding isGlobalVariable ifFalse: [ ^{textLink}] .
+	
+	global :=	aVariableNode binding value.
+	(global isClass and: [ global isDeprecated ]) ifFalse: [ ^{textLink} ].
+	
+	^{textLink. TextEmphasis struckOut}
+]
+
+{ #category : #private }
 SHRBTextStyler >> style: aText ast: ast [
 	text := aText.	
 	charAttr := Array new: aText size withAll: (self attributesFor: #default).
@@ -427,7 +439,7 @@ SHRBTextStyler >> visitThisContextNode: aThisContextNode [
 SHRBTextStyler >> visitVariableNode: aVariableNode [
 	self 
 		addStyle: (self resolveStyleFor: aVariableNode) 
-		attribute: (self resolveTextLinkFor:aVariableNode)
+		attributes: (self resolveVariableAttributesFor: aVariableNode)
 		forNode: aVariableNode.
 	
 	

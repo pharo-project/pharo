@@ -78,16 +78,16 @@ EmbeddedFreeTypeFontInstaller >> addFromFileContents: bytes baseName:  originalF
 	externalMem validate.
 	face := FreeTypeFace basicNew fileContentsExternalMemory: externalMem .
 	[ "we use the primNewFaceFromFile:index: method because we want to do this as fast as possible and we don't need the face registered because it will be explicitly destroyed later"
-	face primNewFaceFromExternalMemory: externalMem size: bytes size index: i.
+	face newFaceFromExternalMemory: externalMem index: i.
 	face loadFields] 
 		on: FT2Error 
 		do:[:e | 
 			self failedToOpen:face index: i.
-			^externalMem destroyHandle.].
+			^ self].
 	(face height notNil  and:[face hasFamilyName and:[face hasStyleName and:[face isValid]]])
 		ifFalse:[
 			self failedToOpen:face index: i.
-			^ externalMem destroyHandle.]
+			^ self]
 		ifTrue:[ 
 			numFaces ifNil: [numFaces := face numFaces].
 			info := FreeTypeEmbeddedFileInfo new
@@ -105,9 +105,7 @@ EmbeddedFreeTypeFontInstaller >> addFromFileContents: bytes baseName:  originalF
 				yourself.
 			self addFirstFileInfo: info index: i.
 			self cacheEmbeddedFileInfo: info index: i.
-			"Transcript show: 'from file : ', info asString."
-			face destroyHandle.
-			externalMem destroyHandle].
+			"Transcript show: 'from file : ', info asString."].
 	i := i + 1.
 	i < numFaces "note, we use < rather than <= , because i is zero based"] whileTrue:[].
 ]
@@ -143,7 +141,6 @@ EmbeddedFreeTypeFontInstaller >> embedFilesInDirectory: aDirectory [
 
 { #category : #'error handling' }
 EmbeddedFreeTypeFontInstaller >> failedToOpen: face index: index [
-	face destroyHandle.
 	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."
 	"remove all cache entries for path with index >= i"
 ]
