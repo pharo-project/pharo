@@ -31,6 +31,11 @@ OSWindowDriver class >> current [
 	
 ]
 
+{ #category : #'class initialization' }
+OSWindowDriver class >> initialize [
+	SessionManager default registerSystemClassNamed: self name
+]
+
 { #category : #testing }
 OSWindowDriver class >> isSuitable [
 	"Answer true if receiver is most suitable for using in current session/platform"
@@ -47,6 +52,24 @@ OSWindowDriver class >> isSupported [
 OSWindowDriver class >> pickDriver [
 	self subclassesDo: [ :s | s isSuitable ifTrue: [ ^ s new ] ].
 	^ OSNullWindowDriver new
+]
+
+{ #category : #'system startup' }
+OSWindowDriver class >> shutDown: quitting [
+	quitting ifFalse: [ ^ self ].
+	Current ifNil: [ ^ self ].
+
+	"Clean driver"
+	Current shutDown.
+	Current := nil.
+	
+	"clean OSWindow worlds"
+	WorldMorph extraWorldList copy 
+		select: [ :each | each isKindOf: OSWindowWorldMorph ]
+		thenDo: [ :each | WorldMorph removeExtraWorld: each ].
+	"Clean also active world"
+	(ActiveWorld isKindOf: OSWindowWorldMorph)
+		ifTrue: [ ActiveWorld := nil ]
 ]
 
 { #category : #'window creation' }
