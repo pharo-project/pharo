@@ -1,6 +1,6 @@
 Extension { #name : #InputEventHandler }
 
-{ #category : #'*Deprecated70' } 
+{ #category : #'*Deprecated70' }
 InputEventHandler >> isKbdEvent: bufEvt [
 	
 	self
