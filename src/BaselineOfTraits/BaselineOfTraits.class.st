@@ -57,7 +57,6 @@ BaselineOfTraits >> baseline: spec [
 					'Collections-Abstract-Traits'
 					'Transcript-Core-Traits'
 					'CodeImport-Traits'
-					'OpalCompiler-Traits'
 					'Slot-Traits'
 					'CodeExport-Traits'
 					'System-Sources-Traits'
