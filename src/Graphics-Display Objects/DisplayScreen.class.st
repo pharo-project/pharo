@@ -97,6 +97,11 @@ DisplayScreen class >> hostWindowIndex [
 ]
 
 { #category : #'host window access' }
+DisplayScreen class >> hostWindowLogo: aPath [
+	^ self primitiveWindowLogo: self hostWindowIndex path: aPath
+]
+
+{ #category : #'host window access' }
 DisplayScreen class >> hostWindowSize: aPoint [ 
 	self primitiveWindowSize: self hostWindowIndex width: aPoint x heigth: aPoint y
 
@@ -131,6 +136,21 @@ DisplayScreen class >> primitiveDeferUpdates: aBoolean [
 
 	<primitive: 126>
 	^ nil  "answer nil if primitive fails"
+]
+
+{ #category : #'host window access' }
+DisplayScreen class >> primitiveWindowLogo: id path: pathString [
+
+	<primitive: 'primitiveHostWindowLogo' module: 'HostWindowPlugin' error: ec>
+	(pathString isKindOf: AbstractFileReference)
+		ifTrue: [ ^ self primitiveWindowLogo: id path: pathString fullName ].
+	ec == #'bad argument'
+		ifTrue: [ pathString isString
+				ifFalse: [ ^ self error: 'The path should be a String' ].
+			pathString asFileReference exists
+				ifTrue: [ ^ self error: 'File existing but not found by the VM sorry, try another location...' "Not reproductible in the tests but can happen"]
+				ifFalse: [ ^ FileDoesNotExistException signalOnFile: pathString asFileReference ] ].
+	self primitiveFailed
 ]
 
 { #category : #'host window access' }
