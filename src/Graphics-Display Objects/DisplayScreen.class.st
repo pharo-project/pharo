@@ -92,13 +92,13 @@ DisplayScreen class >> displaySettingsOn: aBuilder [
 ]
 
 { #category : #'host window access' }
-DisplayScreen class >> hostWindowIndex [
-	^ 1
+DisplayScreen class >> hostWindowIcon: aPath [
+	^ self primitiveWindowIcon: self hostWindowIndex path: aPath
 ]
 
 { #category : #'host window access' }
-DisplayScreen class >> hostWindowLogo: aPath [
-	^ self primitiveWindowLogo: self hostWindowIndex path: aPath
+DisplayScreen class >> hostWindowIndex [
+	^ 1
 ]
 
 { #category : #'host window access' }
@@ -139,11 +139,11 @@ DisplayScreen class >> primitiveDeferUpdates: aBoolean [
 ]
 
 { #category : #'host window access' }
-DisplayScreen class >> primitiveWindowLogo: id path: pathString [
+DisplayScreen class >> primitiveWindowIcon: id path: pathString [
 
-	<primitive: 'primitiveHostWindowLogo' module: 'HostWindowPlugin' error: ec>
+	<primitive: 'primitiveHostWindowIcon' module: 'HostWindowPlugin' error: ec>
 	(pathString isKindOf: AbstractFileReference)
-		ifTrue: [ ^ self primitiveWindowLogo: id path: pathString fullName ].
+		ifTrue: [ ^ self primitiveWindowIcon: id path: pathString fullName ].
 	ec == #'bad argument'
 		ifTrue: [ pathString isString
 				ifFalse: [ ^ self error: 'The path should be a String' ].

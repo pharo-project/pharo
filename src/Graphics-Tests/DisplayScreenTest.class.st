@@ -29,28 +29,28 @@ DisplayScreenTest >> tearDown [
 ]
 
 { #category : #tests }
-DisplayScreenTest >> testHostWindowLogo [
+DisplayScreenTest >> testHostWindowIcon [
 	self class saveIcoFileTo: self icoPath.
-	self assert: (DisplayScreen hostWindowLogo: self icoPath) equals: DisplayScreen.
+	self assert: (DisplayScreen hostWindowIcon: self icoPath) equals: DisplayScreen.
 ]
 
 { #category : #tests }
-DisplayScreenTest >> testHostWindowLogoNotExistingFile [
+DisplayScreenTest >> testHostWindowIconNotExistingFile [
 	self
-		should: [ DisplayScreen hostWindowLogo: self icoPath ]
+		should: [ DisplayScreen hostWindowIcon: self icoPath ]
 		raise: FileDoesNotExistException
 ]
 
 { #category : #tests }
-DisplayScreenTest >> testHostWindowLogoWithNotAString [
+DisplayScreenTest >> testHostWindowIconWithNotAString [
 	self
-		should: [ DisplayScreen hostWindowLogo: self class icoFile ]
+		should: [ DisplayScreen hostWindowIcon: self class icoFile ]
 		raise: Error
 ]
 
 { #category : #tests }
-DisplayScreenTest >> testHostWindowLogoWrongTypeOfArgument [
+DisplayScreenTest >> testHostWindowIconWrongTypeOfArgument [
 	self class saveIcoFileTo: self icoPath.
-	self assert: (DisplayScreen hostWindowLogo: self icoPath asFileReference) equals: DisplayScreen.
+	self assert: (DisplayScreen hostWindowIcon: self icoPath asFileReference) equals: DisplayScreen.
 	
 ]
