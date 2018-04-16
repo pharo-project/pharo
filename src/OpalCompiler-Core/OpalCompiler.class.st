@@ -198,7 +198,10 @@ OpalCompiler >> compile [
 				self source: notification newSourceCode. 
 				notification retry. 
 			]. 
-		cm := ast generate: self compilationContext compiledMethodTrailer 
+		cm := compilationContext optionEmbeddSources
+			ifTrue: [ ast generateWithSource ]
+			ifFalse: [ast generate: self compilationContext compiledMethodTrailer   ]
+		
 	]	on: SyntaxErrorNotification 
 		do: [ :exception | 
 			self compilationContext requestor
