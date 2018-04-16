@@ -184,6 +184,14 @@ PointerLayout >> hash [
 	^ self class hash bitXor: self slotScope hash
 ]
 
+{ #category : #accessing }
+PointerLayout >> host: aClass [
+
+	super host: aClass.
+	self slots do: [ :aSlot | aSlot owningClass: aClass ]
+	
+]
+
 { #category : #'instance initialization' }
 PointerLayout >> initializeInstance: anInstance [
 	self allSlotsDo: [ :slot | slot initialize: anInstance ]
