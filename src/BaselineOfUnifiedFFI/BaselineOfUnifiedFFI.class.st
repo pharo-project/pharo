@@ -31,9 +31,9 @@ BaselineOfUnifiedFFI >> baseline: spec [
 		spec postLoadDoIt: #'postload:package:'.
 		spec 
 			"alien"
-			package: 'Alien';
+			package: 'Alien-Core';
 			"unified ffi"
-			package: 'UnifiedFFI' with: [ spec requires: #('Alien') ];
+			package: 'UnifiedFFI' with: [ spec requires: #('Alien-Core') ];
 			package: 'UnifiedFFI-Tests' with: [ spec requires: #('UnifiedFFI') ];
 			package: 'UnifiedFFI-Legacy' with: [ spec requires: #('UnifiedFFI') ].
 			
