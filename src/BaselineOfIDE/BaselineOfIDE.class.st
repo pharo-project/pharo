@@ -902,25 +902,10 @@ BaselineOfIDE >> loadCalypso [
 
 	"Load Calypso without Iceberg Metacello integration"
 	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
-
-	Metacello new
-		baseline: 'ClassAnnotation';
-		repository: 'github://dionisiydk/ClassAnnotation:v0.3.1';
-		load.
 		
 	Metacello new
-		baseline: 'Commander';
-		repository: 'github://dionisiydk/Commander:v0.5.3';
-		load: #(default #'Commander-SpecSupport' #'Commander-Examples').
-	
-	Metacello new
-		baseline: 'SystemCommands';
-		repository: 'github://dionisiydk/SystemCommands:v0.7.1';
-		load.
-			
-	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://dionisiydk/Calypso:v0.10.3';
+		repository: 'github://dionisiydk/Calypso:v0.11.1';
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
 	(self class environment at: #ClyBrowser) beAllDefault.
