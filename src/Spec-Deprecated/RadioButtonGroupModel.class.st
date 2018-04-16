@@ -6,3 +6,8 @@ Class {
 	#superclass : #RadioButtonGroupPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+RadioButtonGroupModel class >> isDeprecated [
+	^true
+]

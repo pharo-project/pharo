@@ -1158,25 +1158,6 @@ RPackage >> overrideCategoriesForClass: aClass do: aBlock [
 ]
 
 { #category : #accessing }
-RPackage >> packageComment [
-	^ self packageManifestOrNil ifNil: [ '' ] ifNotNil: [ :manifest | manifest description ]
-]
-
-{ #category : #accessing }
-RPackage >> packageComment: aDescription [
-	^ self packageManifest classSide
-		ifNil: [ '' ]
-		ifNotNil: [ :manifest | manifest compile: 'description ^ ' , aDescription classified: 'meta-data' ]
-]
-
-{ #category : #accessing }
-RPackage >> packageManifestOrNil [
-	^ self definedClasses
-		detect: [ :each | each isManifest ]
-		ifNone: [ nil ]
-]
-
-{ #category : #accessing }
 RPackage >> packageName [
 
 	^ name

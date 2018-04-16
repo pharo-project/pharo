@@ -17,7 +17,7 @@ LucidaGrandeRegular class >> canBeInstalled [
 { #category : #accessing }
 LucidaGrandeRegular class >> fontContents [
 	^ self fontReference 
-		readStreamDo: [ :stream | stream binary; contents ]
+		binaryReadStreamDo: [ :stream | stream contents ]
 	
 	
 ]

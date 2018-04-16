@@ -47,8 +47,20 @@ Class {
 		'encodingId',
 		'size'
 	],
+	#pools : [
+		'FT2Types'
+	],
 	#category : #'FreeType-Base'
 }
+
+{ #category : #finalization }
+FT2Face class >> finalizeResourceData: handle [
+	handle isNil ifTrue: [ ^ self ].
+	handle isNull ifTrue: [ ^ self ].
+
+	FT2Library current ffiDoneFace: handle. 
+	handle beNull
+]
 
 { #category : #rendering }
 FT2Face >> angle: angle scale: scale offset: aPoint [
@@ -168,9 +180,6 @@ FT2Face >> availableSizes [
 
 { #category : #accessing }
 FT2Face >> bbox [
-	bbox
-		ifNil: [bbox := Rectangle new.
-			self primLoadBbox: bbox].
 	^ bbox
 ]
 
@@ -195,7 +204,15 @@ FT2Face >> descender [
 
 { #category : #rendering }
 FT2Face >> emboldenOutline: strength [
-	^self primEmboldenGlyphSlotOutline: (strength * 64) rounded
+	| returnCode outline faceRec |
+
+	self validate.
+	faceRec := FTFaceRec fromHandle: handle.
+	outline := FTOutline fromHandle: faceRec glyph outline getHandle asExternalAddress.
+	returnCode := self ffiOutline: outline embolden:  (strength * 64) rounded.
+
+	returnCode ~= 0
+		ifTrue: [ FT2Error errorCode: returnCode signal: 'Error embolding glyph' ]
 ]
 
 { #category : #accessing }
@@ -219,14 +236,103 @@ FT2Face >> familyName [
 	^familyName
 ]
 
+{ #category : #'private-ffi-calls' }
+FT2Face >> ffiGetCharIndex: charIndex [
+	^ self ffiCall: #(FT_UInt FT_Get_Char_Index(self, FT_ULong charIndex))
+]
+
+{ #category : #'private-ffi-calls' }
+FT2Face >> ffiGetKerningLeft: left_glyph right: right_glyph result: akerning [
+	self
+		ffiCall: #(FT_Error FT_Get_Kerning(self, FT_UInt left_glyph, FT_UInt right_glyph, 2, FT_Vector  *akerning ))
+]
+
+{ #category : #'private-ffi-calls' }
+FT2Face >> ffiGetPostscriptName [
+	self ffiCall: #(char* FT_Get_Postscript_Name(self))
+]
+
+{ #category : #'private-ffi-calls' }
+FT2Face >> ffiLoadChar: char_code flags: load_flags [
+	^ self ffiCall: #(FT_Error FT_Load_Char(self, FT_ULong  char_code, FT_Int32  load_flags ))
+]
+
+{ #category : #'private-ffi-calls' }
+FT2Face >> ffiLoadGlyph: glyph_index flags: load_flags [
+	^ self ffiCall: #(FT_Error FT_Load_Glyph(self, FT_UInt glyph_index,FT_Int32  load_flags ))
+]
+
+{ #category : #'private-ffi-calls' }
+FT2Face >> ffiOutline: outline embolden: strength. [
+
+	^ self ffiCall: #(FT_Error FT_Outline_Embolden(FT_Outline*  outline, FT_Pos strength ))
+]
+
+{ #category : #'private-ffi-calls' }
+FT2Face >> ffiOutline: outline transformByMatrix: matrix. [
+	^ self ffiCall: #(void FT_Outline_Transform( FT_Outline*  outline, FT_Matrix*   matrix ))
+]
+
+{ #category : #'private-ffi-calls' }
+FT2Face >> ffiSelectCharmap: encoding_value [
+	self ffiCall: #(FT_Error FT_Select_Charmap(self, FT_Encoding  encoding_value ))
+]
+
+{ #category : #'private-ffi-calls' }
+FT2Face >> ffiSetPixelWidth: pixel_width height: pixel_height [
+	^ self ffiCall: #(long FT_Set_Pixel_Sizes(self,
+                      FT_UInt  pixel_width,
+                      FT_UInt  pixel_height ))
+]
+
+{ #category : #'private-ffi-calls' }
+FT2Face >> ffiTransformMatrix: matrix delta: delta [
+	self ffiCall: #(void FT_Set_Transform(self, FT_Matrix*  matrix, FT_Vector*  delta ))
+]
+
+{ #category : #'private-ffi-calls' }
+FT2Face >> ffiTranslateOutline: outline x: xOffset y: yOffset [
+	self ffiCall: #(void FT_Outline_Translate (FT_Outline * outline , FT_Pos xOffset , FT_Pos yOffset))
+]
+
+{ #category : #glyphs }
+FT2Face >> fillGlyph: aGlyphSlot [
+	| faceRec |
+	
+	self validate.
+	
+	aGlyphSlot face: self.	
+	faceRec := FTFaceRec fromHandle: handle.
+	aGlyphSlot fillFromGlyphSlotRec: faceRec glyph. 
+]
+
 { #category : #charmaps }
 FT2Face >> getCharMap [
-	self primGetCharMap.
+	|faceRec|
+	self isValid ifFalse: [ self error: 'The Face is not valid.' ].
+	faceRec := FTFaceRec fromHandle: handle.
+	
+	faceRec charmap isNull ifTrue: [ ^ self ].
+	encoding := faceRec charmap encoding asByteArray asString.
+	platformId := faceRec charmap platform_id.
+	encodingId := faceRec charmap encoding_id.
 ]
 
 { #category : #charmaps }
 FT2Face >> getCharMapsInto: array [
-	self primGetCharMapsInto: array.
+	| faceRec charmap external |
+	
+	faceRec := FTFaceRec fromHandle: handle.
+
+	external := FFIExternalArray fromHandle: faceRec charmaps getHandle type: 'void*' size: faceRec num_charmaps.
+	
+	1 to: faceRec num_charmaps do: [ :idx |
+		charmap := FTCharMapRec fromHandle: (external at: idx).
+		array at: idx put: charmap encoding asByteArray asString		
+	].
+
+	^ array.
+
 ]
 
 { #category : #accessing }
@@ -296,9 +402,9 @@ FT2Face >> isRegular [
 
 { #category : #kerning }
 FT2Face >> kerningLeft: leftCharacter right: rightCharacter [
-	[^self primGetKerningLeft: (self primGetCharIndex: leftCharacter asInteger)  
-		right: (self primGetCharIndex: rightCharacter asInteger) 
-	] on: FT2Error do:[:e | ^0@0]
+	^ self
+		primGetKerningLeft: (self ffiGetCharIndex: leftCharacter asInteger)
+		right: (self ffiGetCharIndex: rightCharacter asInteger)
 ]
 
 { #category : #glyphs }
@@ -326,14 +432,50 @@ FT2Face >> loadCharacterOutline: index flags: flags [
 
 { #category : #private }
 FT2Face >> loadFields [
+	| faceRect |
 	self isValid 
 		ifFalse: [ ^ self error: 'I cannot load face fields because face is not valid.' ].
-	self primLoadFields.
+
+	faceRect := FTFaceRec fromHandle: handle.
+	
+	numFaces := faceRect num_faces.	
+	faceIndex := faceRect face_index.
+	faceFlags := faceRect face_flags.
+	styleFlags := faceRect style_flags.
+	numGlyphs := faceRect num_glyphs.
+	familyName := faceRect family_name readString.
+	styleName := faceRect style_name readString. 
+	
+	numFixedSizes := faceRect num_fixed_sizes.
+	numCharmaps := faceRect num_charmaps.
+	charmaps := nil.
+	encoding := nil.
+	
+	"FT_FACE_FLAG_SCALABLE = 1 "
+	(faceRect face_flags bitAnd: 1) ~= 0 ifTrue: [  
+		unitsPerEm := faceRect units_per_EM.
+		ascender := faceRect ascender.
+		descender := faceRect descender.
+		height := faceRect height.
+		maxAdvanceWidth := faceRect max_advance_width.
+		maxAdvanceHeight := faceRect max_advance_height.
+		underlinePosition := faceRect underline_position.
+		underlineThickness := faceRect underline_thickness.
+	].
+	
+	bbox := Rectangle 
+		origin: ( Point x: faceRect bbox xMin y: faceRect bbox yMin )
+		corner: ( Point x: faceRect bbox xMax y: faceRect bbox yMax ).
+
 ]
 
 { #category : #glyphs }
 FT2Face >> loadGlyph: index flags: flags [
-	self primLoadGlyph: index flags: flags.
+	| returnCode |
+	
+	returnCode := self ffiLoadGlyph: index flags: flags.
+	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Loading glyph'  ].
+	
 	glyph
 		ifNil: [ glyph := FT2GlyphSlot fromFace: self ]
 		ifNotNil: [ glyph loadFrom: self ].
@@ -350,30 +492,37 @@ FT2Face >> maxAdvanceWidth [
 	^maxAdvanceWidth
 ]
 
-{ #category : #accessing }
-FT2Face >> memoryFaceData [
-	self subclassResponsibility
-]
-
 { #category : #'initialize-release' }
 FT2Face >> newFaceFromExternalMemory: aFreeTypeExternalMemory index: anInteger [
-	| memSize |
+	| memSize holder returnCode |
 
 	aFreeTypeExternalMemory validate.
 	memSize := aFreeTypeExternalMemory bytes size.
-	self 
-		primNewFaceFromExternalMemory: aFreeTypeExternalMemory 
-		size: memSize 
-		index: anInteger.
+	holder := PointerHolder new.
 	
-	self isValid
-		ifTrue:[ self class register: self ]
+	FT2Library current checkLibrary.
+	returnCode := FT2Library current ffiNewFace: holder fromMemory: aFreeTypeExternalMemory handle size: memSize  index: anInteger.
+	returnCode ~= 0
+		ifTrue: [ FT2Error errorCode: returnCode signal: 'Error reading new face from memory'].
+		
+	handle := holder value.
+	self autoRelease.
 ]
 
 { #category : #'initialize-release' }
-FT2Face >> newFaceFromFile: fileName index: anInteger [
-	self primNewFaceFromFile: fileName fullName index: anInteger.
-	self class register: self.
+FT2Face >> newFaceFromFile: file index: anInteger [
+	| holder returnCode fileName |
+	
+	holder := PointerHolder new.
+	fileName := file asFileReference pathString.
+	
+	FT2Library current checkLibrary.
+	returnCode := FT2Library current ffiNewFace: holder fromFilename: fileName index: anInteger.
+	returnCode ~= 0
+		ifTrue: [ FT2Error errorCode: returnCode signal: 'Error reading new face from file'].
+		
+	handle := holder value.
+	self autoRelease.
 ]
 
 { #category : #accessing }
@@ -397,137 +546,39 @@ FT2Face >> numGlyphs [
 ]
 
 { #category : #accessing }
+FT2Face >> outline [
+	self validate.
+	^ FTOutline fromHandle: (FTFaceRec fromHandle: handle) glyph outline getHandle asExternalAddress
+]
+
+{ #category : #accessing }
 FT2Face >> postscriptName [
-	^self primGetPostscriptName
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primDestroyHandle [
-	<primitive: 'primitiveDoneFacePreserveFields' module: 'FT2Plugin'>
-	^self primitiveFailed.
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primEmboldenGlyphSlotOutline: strengthInteger [
-	<primitive: 'primitiveEmboldenFaceGlyphSlotOutline' module: 'FT2Plugin'>
-	^self primitiveFailed.
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primGetCharIndex: characterCode [
-	"Return the glyph index of a given character code"
-	<primitive: 'primitiveGetFaceCharIndex' module: 'FT2Plugin'>
-	^self primitiveFailed.
-
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primGetCharMap [
-	<primitive: 'primitiveGetFaceCharMap' module: 'FT2Plugin'>
-	^self primitiveFailed
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primGetCharMapsInto: array [
-	<primitive: 'primitiveGetFaceCharMapsIntoArray' module: 'FT2Plugin'>
-	^self primitiveFailed.
+	self isValid ifFalse: [ ^ nil ].	
+	^self ffiGetPostscriptName
 ]
 
 { #category : #'private-primitives' }
 FT2Face >> primGetKerningLeft: leftGlyphIndex right: rightGlyphIndex [
-	"self primGetKerningLeft: $V asInteger  right: $a asInteger "
-	<primitive: 'primitiveGetKerningLeftRight' module: 'FT2Plugin'>
-	^self primitiveFailed.
-]
+	| result returnCode |
+	result := FTVector new.
 
-{ #category : #'private-primitives' }
-FT2Face >> primGetPostscriptName [ 
-	<primitive: 'primitiveGetPostscriptName' module: 'FT2Plugin'>
-	^nil
-]
+	returnCode := self
+		ffiGetKerningLeft: leftGlyphIndex
+		right: rightGlyphIndex
+		result: result.
 
-{ #category : #'private-primitives' }
-FT2Face >> primGetTrackKerningPointSize: pointSize degree: degree [
-	<primitive: 'primitiveGetTrackKerningPointSizeDegree' module: 'FT2Plugin'>
-	^self primitiveFailed.
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primHasKerning [
-	<primitive: 'primitiveHasKerning' module: 'FT2Plugin'>
-	^self primitiveFailed.
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primLoadBbox: aRectangle [
-	<primitive: 'primitiveLoadFaceBbox' module: 'FT2Plugin'>
-	^self primitiveFailed.
+	returnCode ~= 0
+		ifTrue: [ ^ 0 @ 0 ].
+	
+	^ result x @ result y
 ]
 
 { #category : #'private-primitives' }
 FT2Face >> primLoadCharacter: index flags: flags [
-	<primitive: 'primitiveLoadCharacter' module: 'FT2Plugin'>
-	^self primitiveFailed
-]
-
-{ #category : #private }
-FT2Face >> primLoadFields [
-	<primitive: 'primitiveLoadFaceFields' module: 'FT2Plugin'>
-	^self primitiveFailed
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primLoadGlyph: index flags: flags [
-	<primitive: 'primitiveLoadGlyph' module: 'FT2Plugin'>
-	^self primitiveFailed
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primNewFaceFromExternalMemory: aFreeTypeExternalMemory size: anInteger index: anInteger2 [
-	<primitive: 'primitiveNewMemoryFaceFromExternalMemoryAndIndex' module: 'FT2Plugin'>
-	^self primitiveFailed
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primNewFaceFromFile: fileName index: anInteger [
-	<primitive: 'primitiveNewFaceFromFileAndIndex' module: 'FT2Plugin'>
-	^self primitiveFailed
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primNewMemoryFaceByteSize: anInteger index: anInteger2 [
-	<primitive: 'primitiveNewMemoryFaceByteSizeAndIndex' module: 'FT2Plugin'>
-	^self primitiveFailed
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primRenderGlyphIntoForm: aForm [
-	<primitive: 'primitiveRenderGlyphIntoForm' module: 'FT2Plugin'>
-	^self primitiveFailed
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primRenderGlyphIntoForm: aForm pixelMode: anInteger [
-	<primitive: 'primitiveRenderGlyphIntoFormWithRenderMode' module: 'FT2Plugin'>
-	^self primitiveFailed
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primSetBitmapLeft: x top: y [
-	<primitive: 'primitiveSetBitmapLefttop' module: 'FT2Plugin'>
-	^self primitiveFailed.
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primSetCharMap: encodingString [
-	<primitive: 'primitiveSetFaceCharMap' module: 'FT2Plugin'>
-	^self primitiveFailed
-]
-
-{ #category : #'private-primitives' }
-FT2Face >> primSetPixelWidth: x height: y [
-	<primitive: 'primitiveSetPixelSizes' module: 'FT2Plugin'>
-	^self primitiveFailed.
+	| returnCode |
+	self validate.
+	returnCode := self ffiLoadChar: index flags: flags.
+	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error loading character' ].
 ]
 
 { #category : #'private-primitives' }
@@ -539,20 +590,43 @@ FT2Face >> primSetTransform: matrixWordArray delta: deltaWordArray [
 		x' = x + d[0]
 		y' = y + d[1]
 	"
-	<primitive: 'primitiveSetTransform' module: 'FT2Plugin'>
-	^self primitiveFailed.
+	
+	| matrix delta |
+	matrix := FTMatrix new.
+	delta := FTVector new.
+
+	delta x: (deltaWordArray at: 1).
+	delta y: (deltaWordArray at: 2).
+	
+	matrix xx: (matrixWordArray at: 1).
+	matrix xy: (matrixWordArray at: 2).
+	matrix yx: (matrixWordArray at: 3).
+	matrix yy: (matrixWordArray at: 4).
+		
+	self ffiTransformMatrix: matrix delta: delta.
 ]
 
 { #category : #'private-primitives' }
 FT2Face >> primTransformGlyphSlotOutline:  anIntegerArray [
-	<primitive: 'primitiveTransformFaceGlyphSlotOutline' module: 'FT2Plugin'>
-	^self primitiveFailed.
+	| faceRec outline matrix |
+	faceRec := FTFaceRec fromHandle: handle.
+	matrix := FTMatrix new.
+	
+	matrix xx: (anIntegerArray at:1). 
+	matrix xy: (anIntegerArray at:2). 
+	matrix yx: (anIntegerArray at:3). 
+	matrix yy: (anIntegerArray at:4).  
+	
+	"I need to obtain the real address of the struct inside the struct"
+	outline := FTOutline fromHandle: faceRec glyph outline getHandle asExternalAddress.
+	
+	self ffiOutline: outline transformByMatrix: matrix.
 ]
 
 { #category : #'private-primitives' }
 FT2Face >> primTranslateGlyphSlotOutline:  anIntegerArray [
-	<primitive: 'primitiveTranslateFaceGlyphSlotOutline' module: 'FT2Plugin'>
-	^self primitiveFailed.
+	self ffiTranslateOutline: self outline x: (anIntegerArray at: 1) y: (anIntegerArray at: 2).
+	
 ]
 
 { #category : #printing }
@@ -571,28 +645,55 @@ FT2Face >> printOn: aStream [
 { #category : #rendering }
 FT2Face >> renderGlyphIntoForm: aForm [
 	"render the current glyph (selected by loadChar/loadGlyph into the given form (1 or 8 bpp)"
-	self primRenderGlyphIntoForm: aForm
+	self validate.
+	self renderGlyphIntoForm: aForm pixelMode: nil
 
 ]
 
 { #category : #rendering }
-FT2Face >> renderGlyphIntoForm: aForm pixelMode: anInteger [
+FT2Face >> renderGlyphIntoForm: aForm pixelMode: pixelMode [
 	"render the current glyph (selected by loadChar/loadGlyph into the given form (1 or 8 bpp)
 	with pixel mode anInteger "
-	self primRenderGlyphIntoForm: aForm pixelMode: anInteger
 
+	| ftBitmap buffer outline ftFace |
+
+	ftBitmap := FTBitmap new.
+
+	ftFace := FTFaceRec fromHandle: handle.
+	outline := self outline.
+
+	buffer := ExternalAddress allocate: aForm bits byteSize.
+	1 to: aForm bits byteSize do: [ :i | buffer byteAt: i put: 0 ].
+	buffer autoRelease.
+
+	ftBitmap setBuffer: buffer.
+	ftBitmap initializeFromForm: aForm pixelMode: pixelMode.
+
+	FT2Library current getBitmap: ftBitmap getHandle fromOutline: outline getHandle.
+
+	aForm bits copyFromByteArray: (buffer copyFrom: 1 to: aForm bits byteSize)
 ]
 
 { #category : #charmaps }
 FT2Face >> setCharMap: encodingString [
-	self primSetCharMap: encodingString.
-	self primGetCharMap.
+	| returnCode |
+	
+	self validate.
+	
+	returnCode := self ffiSelectCharmap: encodingString asByteArray asInteger.
+	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error selecting charmap' ].	
+
+	self getCharMap.
 
 ]
 
 { #category : #glyphs }
 FT2Face >> setPixelWidth: x height: y [
-	self primSetPixelWidth: x height: y
+	| returnCode |
+	self isValid ifFalse: [ self error: 'The Face is not valid' ].
+	returnCode := self ffiSetPixelWidth: x height: y.
+	
+	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error setting the pixel width and height.' ].
 ]
 
 { #category : #accessing }

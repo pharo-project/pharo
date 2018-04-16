@@ -6,3 +6,8 @@ Class {
 	#superclass : #DynamicComposablePresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+DynamicComposableModel class >> isDeprecated [
+	^true
+]

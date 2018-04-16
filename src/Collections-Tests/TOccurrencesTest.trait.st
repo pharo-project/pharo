@@ -43,7 +43,7 @@ TOccurrencesTest >> testOccurrencesOf [
 	| collection |
 	collection := self collectionWithoutEqualElements .
 	
-	collection do: [ :each | self assert: (collection occurrencesOf: each) = 1 ].
+	collection do: [ :each | self assert: (collection occurrencesOf: each) equals: 1 ]
 ]
 
 { #category : #'tests - occurrencesOf' }
@@ -55,7 +55,8 @@ TOccurrencesTest >> testOccurrencesOfEmpty [
 
 { #category : #'tests - occurrencesOf' }
 TOccurrencesTest >> testOccurrencesOfNotIn [
+
 	| result |
 	result := self collectionWithoutEqualElements occurrencesOf: self elementNotInForOccurrences.
-	self assert: result = 0
+	self assert: result equals: 0
 ]

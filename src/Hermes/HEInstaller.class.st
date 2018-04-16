@@ -55,7 +55,7 @@ HEInstaller >> asSlots: aString [
 
 { #category : #'creating classes' }
 HEInstaller >> build: aHEClass [
-	| newMetaclass newClass superclass layoutType  |
+	| newClass superclass layoutType  |
 
 	(self existingClass: aHEClass) ifNotNil: [ :x | ^ x ].
 
@@ -176,6 +176,9 @@ HEInstaller >> initialize [
 HEInstaller >> installExtensionMethod: extensionMethod [
 	| aClass |
 	aClass := self environment classNamed: extensionMethod className.
+	
+	aClass ifNil: [ self error: 'Required class named: ' , extensionMethod className, ' does not exists.' ].
+	
 	self rebuildMethod: extensionMethod into: aClass.
 ]
 

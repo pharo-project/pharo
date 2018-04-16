@@ -95,6 +95,64 @@ T2TraitTest >> testIndirectSequence [
 ]
 
 { #category : #tests }
+T2TraitTest >> testMethodsAddedInMetaclass [
+	| t1 c1 |
+	
+	t1 := self createT1.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
+	
+	self assertCollection: c1 class selectors sorted equals: TraitedClass selectors sorted.
+
+]
+
+{ #category : #tests }
+T2TraitTest >> testMethodsAddedInMetaclassNotPresentInSubclasses [
+	| t1 c1 c2 |
+	
+	t1 := self createT1.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
+	c2 := self newClass: #C2 superclass: c1 with: #() uses: {}.
+	
+	self assertCollection: c2 class selectors sorted equals: #().
+
+]
+
+{ #category : #tests }
+T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSuperclass [
+	| t1 c1 c2 t2 |
+	
+	t1 := self createT1.
+	t2 := self createT2.
+	
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
+	c2 := self newClass: #C2 superclass: c1 with: #() uses: {t2}.
+	
+	self assertCollection: c2 class selectors sorted equals: #().
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {}.
+
+	"When a class that uses traits has a empty traitComposition it still keeps being a TraitedClass"
+	self assertCollection: c2 class selectors sorted equals: #().
+
+]
+
+{ #category : #tests }
+T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperclass [
+	| t1 c1 c2 t2 |
+	
+	t1 := self createT1.
+	t2 := self createT2.
+	
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
+	c2 := self newClass: #C2 superclass: c1 with: #() uses: {t2}.
+	
+	self assertCollection: c2 class selectors sorted equals: #().
+	c1 removeFromSystem.
+
+	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted.
+
+]
+
+{ #category : #tests }
 T2TraitTest >> testSequence [
 	| t1 t2 c1 obj |
 	

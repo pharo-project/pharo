@@ -141,9 +141,9 @@ BehaviorTest >> testIncludesMethod [
 { #category : #tests }
 BehaviorTest >> testIsAbstract [
 
-	self assert: Behavior isAbstract.	
+	self deny: Behavior isAbstract.	
 	self deny: Behavior class isAbstract.
-	self assert: ClassDescription isAbstract.
+	self deny: ClassDescription isAbstract.
 	self deny: ClassDescription class isAbstract.
 	
 	self deny: Class isAbstract.

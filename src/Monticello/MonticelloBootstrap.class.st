@@ -24,14 +24,14 @@ Class {
 	#category : #'Monticello-Base'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MonticelloBootstrap class >> bootstrapDefault [
 
 	(self inDirectory: 'pharo-local/package-cache')
 		bootstrap
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MonticelloBootstrap class >> inDirectory: aDirectory [
 
 	^ self new
@@ -88,7 +88,7 @@ MonticelloBootstrap >> fileNameForPackageNamed: name [
 		select: [ :fileName | (fileName basename copyUpToLast: $-) = name ].
 	
 	versionInfos
-		ifEmpty: [ self error: 'No versionInfo for package: ', name ].
+		ifEmpty: [ self error: 'No versionInfo for package: ', name,' in ', self localRepository directory asString ].
 	versionInfos size > 1
 		ifTrue: [ self error: 'More than one versionInfo for package "', name , '": ', versionInfos asArray asString ].
 	

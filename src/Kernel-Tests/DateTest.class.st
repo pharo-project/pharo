@@ -133,6 +133,18 @@ DateTest >> testAsSeconds [
 ]
 
 { #category : #tests }
+DateTest >> testBasicPrinting [
+	| printer |
+	printer := BasicDatePrinter new.
+	self
+		assert: (String streamContents: [ :s | printer printDate: january23rd2004 format: #() on: s ])
+		equals: '2004-01-23'.
+	self
+		assert: (String streamContents: [ :s | printer printDate: june2nd1973 format: #() on: s ])
+		equals: '1973-06-02'
+]
+
+{ #category : #tests }
 DateTest >> testComparing [
 
 	| sameDate laterDate earlierDate |

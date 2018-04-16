@@ -16,6 +16,13 @@ Class {
 }
 
 { #category : #accessing }
+ShLayoutDefinition >> allSlots [
+	| superclass | 
+	superclass := builder superclass.
+	^ (superclass ifNil: [ ^#() ] ifNotNil: [ superclass allSlots ]) , slots.
+]
+
+{ #category : #accessing }
 ShLayoutDefinition >> builder: anObject [
 	builder := anObject
 ]

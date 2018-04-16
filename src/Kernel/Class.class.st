@@ -18,9 +18,7 @@ Class {
 		'classPool',
 		'sharedPools',
 		'environment',
-		'category',
-		'traitComposition',
-		'localSelectors'
+		'category'
 	],
 	#category : #'Kernel-Classes'
 }
@@ -179,7 +177,7 @@ Class >> allClassVarNames [
 	defined in the superclasses of the receiver."
 
 	| aSet |
-	self superclass == nil
+	self isRootInEnvironment
 		ifTrue: 
 			[^self classVarNames asSet]  "This is the keys so it is a new Set."
 		ifFalse: 
@@ -207,6 +205,13 @@ Class >> anyUserOfClassVarNamed: aSymbol [
 				ifNotEmpty: [ ^classOrMeta ]]].
 				
 	^nil
+]
+
+{ #category : #deprecation }
+Class >> applyDeprecation [
+
+	self deprecationRefactorings do: #execute.	
+	
 ]
 
 { #category : #'accessing parallel hierarchy - deprecated' }
@@ -544,6 +549,19 @@ Class >> definitionForNautilusWithSlots [
 	^ aStream contents
 ]
 
+{ #category : #deprecation }
+Class >> deprecationRefactorings [
+
+	"Return a list of refactorings that will apply class deprecation in the system. E.g. to
+	move installed extension methods to a proper class to which the deprecated class was renamed.
+	For default deprecation use the following refactoring:
+	^ { RBApplyClassDeprecationRefactoring rename: self to: #NewName } "	
+	
+	^ #()
+	
+
+]
+
 { #category : #copying }
 Class >> duplicateClassWithNewName: aSymbol [
 	| copysName class |
@@ -738,6 +756,12 @@ Class >> isClass [
 { #category : #testing }
 Class >> isClassOrTrait [
 	^true
+]
+
+{ #category : #deprecation }
+Class >> isDeprecated [
+
+	^ false
 ]
 
 { #category : #testing }

@@ -1,6 +1,3 @@
-"
-This is the Manifest for Opal for recording false positive of the code critique tool
-"
 Class {
 	#name : #ManifestOpalCompilerCore,
 	#superclass : #PackageManifest,

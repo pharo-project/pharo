@@ -12,7 +12,6 @@ Class {
 	#name : #ClassDescription,
 	#superclass : #Behavior,
 	#instVars : [
-		'instanceVariables',
 		'organization'
 	],
 	#category : #'Kernel-Classes'
@@ -260,11 +259,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 { #category : #'accessing comment' }
 ClassDescription >> classCommentBlank [
 
-	| existingComment stream |
-	existingComment := self instanceSide organization classComment.
-	existingComment isEmpty
-		ifFalse: [^existingComment].
-
+	| stream |
 	stream := (String new: 100) writeStream.
 	
 	stream nextPutAll: 'Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
@@ -353,11 +348,8 @@ ClassDescription >> classesThatImplementAllOf: selectorSet [
 
 { #category : #'accessing comment' }
 ClassDescription >> comment [
-	"Answer the receiver's comment. (If missing, supply a template) "
-	| aString |
-	aString := self instanceSide organization classComment.
-	aString isEmpty ifFalse: [^ aString].
-	^self classCommentBlank
+    "Answer the receiver's comment. (If missing, supply a template) "
+    ^self instanceSide organization classComment ifEmpty: [ self classCommentBlank ]
 ]
 
 { #category : #'accessing comment' }
@@ -771,8 +763,8 @@ ClassDescription >> instanceVariablesString [
 	"Answer a string of my instance variable names separated by spaces."
 
 	^String streamContents: [ :stream |
-		self instVarNames 
-			do: [ :each | stream nextPutAll: each ]
+		self localSlots
+			do: [ :each | stream nextPutAll: each name ]
 			separatedBy: [ stream space ] ]
 ]
 
@@ -814,6 +806,13 @@ ClassDescription >> linesOfCode [
 	^ self isMeta 
 		ifTrue: [ lines ]
 		ifFalse: [ lines + self classSide linesOfCode ]
+]
+
+{ #category : #slots }
+ClassDescription >> localSlots [
+
+	^ self slots select: [ :aSlot | 
+		aSlot definingClass = self ]
 ]
 
 { #category : #'accessing tags' }
@@ -1102,7 +1101,7 @@ ClassDescription >> slotDefinitionString [
 	
 	^String streamContents: [ :str | | special |
 		str nextPutAll: '{ '.
-		self slots do: [:slot |
+		self localSlots do: [:slot |
 				str nextPutAll: slot definitionString.
 				special := slot isSpecial]				
 			separatedBy: [ 

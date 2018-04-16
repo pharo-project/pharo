@@ -1,19 +1,28 @@
 Extension { #name : #BlockClosure }
 
 { #category : #'*Reflectivity' }
-BlockClosure >> ctxtEnsure: aBlock [
-	"Evaluate a termination block after evaluating the receiver, regardless of whether the receiver's evaluation completes."
+BlockClosure >> rfEnsure: aBlock [
+	"same as #esure, carefully written to never have active meta-links as it is called in the code path that checks for recursion"
 
 	<primitive: 198>
+	<metaLinkOptions: #( + optionDisabledLink)>
 	| returnValue b |
-	returnValue := self value.
+	returnValue := self rfvalue.
 	aBlock isNil
 		ifFalse: [ 
 			"nil out aBlock temp before evaluating aBlock so it is not executed again if aBlock remote returns"
 			b := aBlock.
-			thisContext tempAt: 1 put: nil.
-			b value ].
+			thisContext rftempAt: 1 put: nil.
+			b rfvalue ].
 	^ returnValue
+]
+
+{ #category : #'*Reflectivity' }
+BlockClosure >> rfvalue [
+	"same as value, for recursion stopping metalinks"
+	<primitive: 201>
+	<metaLinkOptions: #( + optionDisabledLink)>
+	^self primitiveFailed
 ]
 
 { #category : #'*Reflectivity' }

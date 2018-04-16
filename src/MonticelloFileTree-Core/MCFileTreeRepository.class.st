@@ -391,7 +391,6 @@ MCFileTreeRepository >> writeRepositoryProperties [
         ifNil: [ repositoryProperties := self defaultRepositoryProperties ].
       keyCount := repositoryProperties size.
       propertyCount := 0.
-      fileStream lineEndConvention: #'lf'.
       fileStream nextPutAll: '{'.
       repositoryProperties
         keysAndValuesDo: [ :propertyName :propertyValue | 
@@ -407,7 +406,7 @@ MCFileTreeRepository >> writeRepositoryProperties [
             ifTrue: [ 
               fileStream
                 nextPutAll: ',';
-                cr ] ].
+                lf ] ].
       fileStream nextPutAll: ' }' ]
 
 ]

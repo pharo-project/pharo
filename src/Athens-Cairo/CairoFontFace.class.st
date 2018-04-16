@@ -42,8 +42,7 @@ void                cairo_font_face_destroy             (cairo_font_face_t *font
 { #category : #'instance creation' }
 CairoFontFace class >> fromFreetypeFace: aFace [
 	| handle cairoFace |
-	
-	handle := aFace handle pointerAt: 1.
+	handle := aFace getHandle.
  	cairoFace := self primFtFace: handle loadFlags: ( LoadNoHinting | LoadTargetLCD | LoadNoAutohint | LoadNoBitmap). 
 	
 	^ cairoFace initializeWithFreetypeFace: aFace

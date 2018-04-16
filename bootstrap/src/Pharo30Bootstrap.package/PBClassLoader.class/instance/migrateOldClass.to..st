@@ -9,7 +9,7 @@ migrateOldClass: oldClass to: newClass
 	
 	"We migrate the class instance variables"
 	"A class has at least 14 instances variables (cf class description, behavior). Starting from 15, we get user defined class instances variables."
-	15 to: oldClass fixedSize do: [ :index |
+	((newClass instanceVariableMapping classNumberOfVariables) + 1) to: oldClass fixedSize do: [ :index |
 		newClass instanceVariableAtIndex: index put: (oldClass instanceVariableAtIndex: index).
 	].
 

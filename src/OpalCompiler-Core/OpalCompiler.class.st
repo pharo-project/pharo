@@ -198,7 +198,10 @@ OpalCompiler >> compile [
 				self source: notification newSourceCode. 
 				notification retry. 
 			]. 
-		cm := ast generate: self compilationContext compiledMethodTrailer 
+		cm := compilationContext optionEmbeddSources
+			ifTrue: [ ast generateWithSource ]
+			ifFalse: [ast generate: self compilationContext compiledMethodTrailer   ]
+		
 	]	on: SyntaxErrorNotification 
 		do: [ :exception | 
 			self compilationContext requestor
@@ -275,7 +278,8 @@ OpalCompiler >> evaluate [
 		ifTrue: [ itsSelectionString ]
 		ifFalse: [ source ].
 	self source: selectedSource.
-	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod:  self translate generate.
+	compilationContext parseOptions: #(+ #optionEmbeddSources). 
+	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod: self compile.
 	self compilationContext logged
 		ifTrue: [ Smalltalk globals 
 			at: #SystemAnnouncer 

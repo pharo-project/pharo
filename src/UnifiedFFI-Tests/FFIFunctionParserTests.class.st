@@ -1,7 +1,10 @@
+"
+Tests for FFIFunctionParser
+"
 Class {
 	#name : #FFIFunctionParserTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #factory }
@@ -20,19 +23,19 @@ FFIFunctionParserTests >> testParseAnonymousFunction [
 		
 		self assert: parser isAnonymous.
 		self assert: parser functionName isNil.
-		self assert: parser returnType = #('int' 2).
+		self assert: parser returnType equals: #('int' 2).
 		
 		args := parser arguments.
-		self assert: args size = 8.
+		self assert: args size equals: 8.
 
-		self assert: (args at: 1) = 0. 
-		self assert: (args at: 2) = #(nil nil 'nil' 0). 
-		self assert: (args at: 3) = -10. 
-		self assert: (args at: 4) = #(nil nil 'FOO_BAR' 0). 
-		self assert: (args at: 5) = #('a' nil 'int' 0). 
-		self assert: (args at: 6) = #('_b' nil 'int' 1). 
-		self assert: (args at: 7) = #('c' nil 'char' 2). 
-		self assert: (args at: 8) = #('d_' nil 'void' 3 ) ]
+		self assert: (args at: 1) equals: 0. 
+		self assert: (args at: 2) equals: #(nil nil 'nil' 0). 
+		self assert: (args at: 3) equals: -10. 
+		self assert: (args at: 4) equals: #(nil nil 'FOO_BAR' 0). 
+		self assert: (args at: 5) equals: #('a' nil 'int' 0). 
+		self assert: (args at: 6) equals: #('_b' nil 'int' 1). 
+		self assert: (args at: 7) equals: #('c' nil 'char' 2). 
+		self assert: (args at: 8) equals: #('d_' nil 'void' 3 ) ]
 ]
 
 { #category : #tests }
@@ -46,10 +49,10 @@ FFIFunctionParserTests >> testParseAnonymousFunctionNoArguments [
 		
 		self assert: parser isAnonymous.
 		self assert: parser functionName isNil.
-		self assert: parser returnType = #('int' 2).
+		self assert: parser returnType equals: #('int' 2).
 	
 		args := parser arguments.
-		self assert: args size = 0 ]
+		self assert: args size equals: 0 ]
 ]
 
 { #category : #tests }
@@ -61,20 +64,20 @@ FFIFunctionParserTests >> testParseFunction [
 	do: [:spec |
 		parser := self newParser parseNamedFunction: spec.
 		
-		self assert: parser functionName = 'function_n$a$m$e'.
-		self assert: parser returnType = #('int' 2).
+		self assert: parser functionName equals: 'function_n$a$m$e'.
+		self assert: parser returnType equals: #('int' 2).
 		
 		args := parser arguments.
-		self assert: args size = 8.
+		self assert: args size equals: 8.
 
-		self assert: (args at: 1) = 0. 
-		self assert: (args at: 2) = #(nil nil 'nil' 0). 
-		self assert: (args at: 3) = -10. 
-		self assert: (args at: 4) = #(nil nil 'FOO_BAR' 0). 
-		self assert: (args at: 5) = #('a' nil 'int' 0). 
-		self assert: (args at: 6) = #('_b' nil 'int' 1). 
-		self assert: (args at: 7) = #('c' nil 'char' 2). 
-		self assert: (args at: 8) = #('d_' nil 'void' 3 ). 
+		self assert: (args at: 1) equals: 0. 
+		self assert: (args at: 2) equals: #(nil nil 'nil' 0). 
+		self assert: (args at: 3) equals: -10. 
+		self assert: (args at: 4) equals: #(nil nil 'FOO_BAR' 0). 
+		self assert: (args at: 5) equals: #('a' nil 'int' 0). 
+		self assert: (args at: 6) equals: #('_b' nil 'int' 1). 
+		self assert: (args at: 7) equals: #('c' nil 'char' 2). 
+		self assert: (args at: 8) equals: #('d_' nil 'void' 3 )
 	].
 
 ]
@@ -88,9 +91,9 @@ FFIFunctionParserTests >> testParseFunctionNoArguments [
 	do: [:spec |
 		parser := self newParser parseNamedFunction: spec.
 		
-		self assert: parser functionName = 'function_name'.
-		self assert: parser returnType = #('int' 2).
+		self assert: parser functionName equals: 'function_name'.
+		self assert: parser returnType equals: #('int' 2).
 	
 		args := parser arguments.
-		self assert: args size = 0 ]
+		self assert: args size equals: 0 ]
 ]

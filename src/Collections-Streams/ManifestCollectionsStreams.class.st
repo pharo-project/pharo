@@ -1,5 +1,5 @@
 "
-I store metadata for this package. These meta data are used by other tools such as the SmalllintManifestChecker and the critics Browser
+All Stream hierarchy: read/write stream
 "
 Class {
 	#name : #ManifestCollectionsStreams,
@@ -10,11 +10,6 @@ Class {
 { #category : #'meta-data' }
 ManifestCollectionsStreams class >> dependencies [
 	^ #(#'Collections-Strings' #'Multilingual-TextConversion' #'Collections-Support' #'Collections-Sequenceable' #Kernel #'Collections-Native')
-]
-
-{ #category : #'meta-data' }
-ManifestCollectionsStreams class >> description [
-	^ 'All Stream hierarchy: read/write stream'
 ]
 
 { #category : #'meta-data - dependency analyser' }

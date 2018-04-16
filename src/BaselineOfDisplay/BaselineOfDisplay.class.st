@@ -16,6 +16,9 @@ Class {
 	#instVars : [
 		'initializersEnabled'
 	],
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfDisplay
 }
 
@@ -45,6 +48,7 @@ BaselineOfDisplay >> installBitmap [
 	
 	array := Smalltalk specialObjectsArray copy.
 	array at: 5 put: Bitmap.
+
 	Smalltalk specialObjectsArray becomeForward: array.
 ]
 
@@ -52,6 +56,9 @@ BaselineOfDisplay >> installBitmap [
 BaselineOfDisplay >> postload: loader package: packageSpec [
 
 	| display |
+	
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
 	
 	self installBitmap.
 
@@ -69,12 +76,15 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 	Form initialize.
 	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
-	
-	
+
+	Initialized := true.
 ]
 
 { #category : #actions }
 BaselineOfDisplay >> preload: loader package: packageSpec [
+
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
 
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.

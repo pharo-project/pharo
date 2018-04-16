@@ -6,3 +6,8 @@ Class {
 	#superclass : #TextInputFieldPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+TextInputFieldModel class >> isDeprecated [
+	^true
+]

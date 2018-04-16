@@ -24,6 +24,12 @@ BaselineOfPharoBootstrap class >> fileSystemPackageNames [
 ]
 
 { #category : #accessing }
+BaselineOfPharoBootstrap class >> kernelAdditionalPackagesNames [
+
+	^ self packagesOfGroupNamed: #AdditionalPackages
+]
+
+{ #category : #accessing }
 BaselineOfPharoBootstrap class >> kernelPackageNames [
 
 	^ self packagesOfGroupNamed: #KernelGroup
@@ -33,6 +39,26 @@ BaselineOfPharoBootstrap class >> kernelPackageNames [
 BaselineOfPharoBootstrap class >> multilingualPackageNames [
 
 	^ self packagesOfGroupNamed: #MultilingualGroup
+]
+
+{ #category : #traversing }
+BaselineOfPharoBootstrap class >> packagesRecursiveIn: aGroupName [
+
+	| allMembers allPackagesInBaseline packages groups |
+	allMembers := self version groups detect: [ :g | g name = aGroupName ].
+	allPackagesInBaseline := self version packages collect: #name.
+	
+	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
+	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].
+		
+	^ packages , (groups flatCollect: [:aInnerGroupName | self packagesRecursiveIn: aInnerGroupName]).
+
+]
+
+{ #category : #accessing }
+BaselineOfPharoBootstrap class >> packagesToExportWithHermes [
+
+	^ self packagesRecursiveIn: 'ToLoadByHermes'
 ]
 
 { #category : #accessing }
@@ -60,13 +86,25 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Collections-Support'.
 		spec package: 'Collections-Unordered'.
 		spec package: 'Collections-Weak'.
+		spec package: 'Debugging-Core'.
 		spec package: 'Files'.
 		spec package: 'FileSystem-Path'.
 		spec package: 'Hermes'.
+		spec package: 'Hermes-Extensions'.
+
 		spec package: 'Jobs'.
 		spec package: 'Kernel'.
 		spec package: 'Kernel-BytecodeEncoders'.
+		spec package: 'Kernel-Chronology-Extras'.
+
+		spec package: 'Math-Operations-Extensions'.
+
+		spec package: 'Multilingual-Languages'.
+		spec package: 'Multilingual-Encodings'.
+		spec package: 'Multilingual-TextConversion'.
+
 		spec package: 'Network-UUID'.
+		
 		spec package: 'Transcript-NonInteractive'.
 		spec package: 'PharoBootstrap-Initialization'.
 		spec package: 'RPackage-Core'.
@@ -81,7 +119,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-CommandLineHandler'.
 		spec package: 'System-Finalization'.
 		spec package: 'System-Hashing'.
-		spec package: 'System-Model'.
 		spec package: 'System-Platforms'.
 		spec package: 'System-SessionManager'.
 		spec package: 'System-Sources'.
@@ -142,17 +179,28 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-CommandLineHandler'.
 			'System-Finalization'.
 			'System-Hashing'.
-			'System-Model'.
 			'System-Platforms'.
 			'System-SessionManager'.
 			'System-Sources'.
 			'System-Support'.
 
 			'UIManager'.
-			'Zinc-Character-Encoding-Core'.
-			'InitializePackagesCommandLineHandler' }.
+			'Zinc-Character-Encoding-Core' }.
 
 		"These packages are added using hermes after bootstrap"
+
+		spec group: 'AdditionalPackages' with: {
+			'InitializePackagesCommandLineHandler'.
+			'Kernel-Chronology-Extras'.
+			'Math-Operations-Extensions'.
+			'Debugging-Core'.
+		}.
+
+		spec group: 'MultilingualGroup' with: {
+			'Multilingual-Languages'.
+			'Multilingual-Encodings'.
+			'Multilingual-TextConversion'}.
+
 		spec group: 'CompilerGroup' with: {
 			'AST-Core'.
 			'Collections-Arithmetic'.
@@ -163,20 +211,25 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Jobs'.
 			'OpalCompiler-Core'}.
 		
-		"These packages are added using the compiler after bootstrap"
 		spec group: 'FileSystemGroup' with: {
 			'FileSystem-Core'.
 			'FileSystem-Disk'.
 			'DeprecatedFileStream' }.
+
+		spec group: 'ToLoadByHermes' with: {
+			'AdditionalPackages'.
+			'MultilingualGroup'.
+			'CompilerGroup'.
+			'FileSystemGroup'.
+			'Hermes-Extensions'.
+			'SUnitGroup'.
+		}.
 
 		spec group: 'SUnitGroup' with: {
 			'SUnit-Core'.
 			'SUnit-Tests'.
 			'JenkinsTools-Core'}.
 
-		spec group: 'MultilingualGroup' with: {
-			'Multilingual-Languages'.
-			'Multilingual-Encodings'.
-			'Multilingual-TextConversion'}.	]
+	]
 
 ]

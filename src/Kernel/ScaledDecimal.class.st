@@ -152,18 +152,6 @@ ScaledDecimal >> negated [
 	^self class newFromNumber: super negated scale: scale
 ]
 
-{ #category : #'mathematical functions' }
-ScaledDecimal >> nthRoot: anInteger [
-	"Answer the nth root of the receiver.
-	Preserve receiver class and scale if answer is exact.
-	Otherwise, answer a Float to denote inexactness."
-	| nthRoot |
-	nthRoot := self asFraction nthRoot: anInteger.
-	^nthRoot isFloat
-		ifTrue: [nthRoot]
-		ifFalse: [nthRoot asScaledDecimal: scale]
-]
-
 { #category : #printing }
 ScaledDecimal >> printOn: aStream [
 	"Append an approximated representation of the receiver on aStream.
@@ -178,7 +166,7 @@ ScaledDecimal >> printOn: aStream [
 { #category : #printing }
 ScaledDecimal >> printOn: aStream base: base [
 	base = 10 ifFalse: [self error: 'ScaledDecimals should be printed only in base 10'].
-	^self printOn: aStream
+	self printOn: aStream
 ]
 
 { #category : #'mathematical functions' }
@@ -205,16 +193,6 @@ ScaledDecimal >> reciprocal [
 	^self class newFromNumber: super reciprocal scale: scale
 ]
 
-{ #category : #'truncation and round off' }
-ScaledDecimal >> round: numberOfWishedDecimal [
-	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal."
-	
-   "10.156s round: 2 >>> 10.160s3 "
-   "1/3.0s round: 4 >>> 0.3333s4 "
-
-	^(super round: numberOfWishedDecimal) asScaledDecimal: (scale max: numberOfWishedDecimal)
-]
-
 { #category : #accessing }
 ScaledDecimal >> scale [
 	^scale
@@ -225,18 +203,6 @@ ScaledDecimal >> setNumerator: n denominator: d scale: s [
 
 	self setNumerator: n denominator: d.
 	scale := s
-]
-
-{ #category : #'mathematical functions' }
-ScaledDecimal >> sqrt [
-	"Answer the square root of the receiver.
-	Preserve receiver class and scale if answer is exact.
-	Otherwise, answer a Float to denote inexactness."
-	| squareRoot |
-	squareRoot := self asFraction sqrt.
-	^squareRoot isFloat
-		ifTrue: [squareRoot]
-		ifFalse: [squareRoot asScaledDecimal: scale]
 ]
 
 { #category : #arithmetic }

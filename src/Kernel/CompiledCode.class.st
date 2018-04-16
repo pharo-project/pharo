@@ -72,47 +72,6 @@ CompiledCode >> = aCompiledMethod [
 ]
 
 { #category : #scanning }
-CompiledCode >> abstractBytecodeMessageAt: pc [
-	"Answer the abstract bytecode message at pc in the receiver."
-	^[(InstructionStream new method: self pc: pc) interpretNextInstructionFor: nil]
-		on: MessageNotUnderstood
-		do: [:ex| ex message]
-]
-
-{ #category : #scanning }
-CompiledCode >> abstractBytecodeMessagesDo: aBlock [
-	"Evaluate aBlock with the sequence of abstract bytecodes in the receiver"
-	self abstractBytecodeMessagesFrom: self initialPC
-		to: self endPC
-		do: aBlock
-
-	"| msgs |
-	 msgs := OrderedCollection new.
-	 CompiledMethod >> #abstractBytecodeMessagesFrom:to: abstractBytecodeMessagesDo:
-		[:msg| msgs add: msg selector].
-	 msgs"
-]
-
-{ #category : #scanning }
-CompiledCode >> abstractBytecodeMessagesFrom: startpc to: endpc do: aBlock [
-	"Evaluate aBlock with the sequence of abstract bytecodes from startpc through endpc in the receiver"
-	| scanner |
-	scanner := InstructionStream new method: self pc: startpc.
-	[scanner pc <= endpc] whileTrue:
-		[[scanner interpretNextInstructionFor: nil]
-			on: MessageNotUnderstood
-			do: [:ex| aBlock value: ex message]]
-
-	"| m msgs |
-	 msgs := OrderedCollection new.
-	 (m := CompiledMethod >> #abstractBytecodeMessagesFrom:to:)
-		abstractBytecodeMessagesFrom: m initialPC
-		to: m endPC
-		do: [:msg| msgs add: msg selector].
-	 msgs"
-]
-
-{ #category : #scanning }
 CompiledCode >> accessesSlot: aSlot [
 	self ast nodesDo: [ :node | 
 		node isVariable and: [
@@ -254,12 +213,6 @@ CompiledCode >> frameSize [
 		ifTrue: [^ SmallFrame]
 		ifFalse: [^ LargeFrame]
 
-]
-
-{ #category : #scanning }
-CompiledCode >> hasInstVarRef [
-	self localHasInstVarRef ifTrue: [ ^ true ].
-	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb hasInstVarRef ]
 ]
 
 { #category : #literals }
@@ -496,35 +449,6 @@ CompiledCode >> literalsDo: aBlock [
 ]
 
 { #category : #scanning }
-CompiledCode >> localHasInstVarRef [
-	"Answer whether the method references an instance variable."
-
-	| scanner end printer |
-
-	scanner := InstructionStream on: self.
-	printer := InstVarRefLocator new.
-	end := self endPC.
-
-	[scanner pc <= end] whileTrue: [
-		(printer interpretNextInstructionUsing: scanner) ifTrue: [^true].
-	].
-	^false
-]
-
-{ #category : #scanning }
-CompiledCode >> localMessages [
-	"Answer a Set of all the message selectors sent by this method."
-
-	| scanner aSet |
-	aSet := IdentitySet new.
-	scanner := InstructionStream on: self.
-	scanner	scanFor: [:x | 
-			scanner addSelectorTo: aSet.
-			false	"keep scanning"].
-	^aSet
-]
-
-{ #category : #scanning }
 CompiledCode >> localReadsRef: literalAssociation [ 
 	"Answer whether the receiver loads the argument."
 	| litIndex scanner |
@@ -578,15 +502,6 @@ CompiledCode >> longPrintOn: aStream [
 
 ]
 
-{ #category : #scanning }
-CompiledCode >> messages [
-	"Answer a Set of all the message selectors sent by this method."
-	| aSet |
-	aSet := self localMessages.
-	self innerCompiledBlocksDo: [ :cb | aSet := aSet , cb messages ].
-	^ aSet 
-]
-
 { #category : #'initialize-release' }
 CompiledCode >> needsFrameSize: newFrameSize [
 	"Set the largeFrameBit to accomodate the newFrameSize"
@@ -637,18 +552,6 @@ CompiledCode >> objectAt: index put: value [
 
 	<primitive: 69>
 	self primitiveFailed
-]
-
-{ #category : #'debugger support' }
-CompiledCode >> pcPreviousTo: pc [
-	| scanner client prevPc |
-	pc > self endPC ifTrue: [^self endPC].
-	scanner := InstructionStream on: self.
-	client := InstructionClient new.
-	[scanner pc < pc] whileTrue:
-		[prevPc := scanner pc.
-		 scanner interpretNextInstructionFor: client].
-	^prevPc
 ]
 
 { #category : #printing }
@@ -835,13 +738,6 @@ CompiledCode >> symbolic [
 	"Answer a String that contains a list of all the byte codes in a method with a short description of each."
 
 	^self longPrintString.
-]
-
-{ #category : #printing }
-CompiledCode >> symbolicBytecodes [
-	"Answer Collection that contains of all the byte codes in a method as an instance of SymbolicInstruction"
-
-	^SymbolicBytecodeBuilder decode: self
 ]
 
 { #category : #printing }

@@ -858,7 +858,7 @@ TabMorph >> softRetrieveMorph [
 { #category : #protocol }
 TabMorph >> themeChanged [
 	super themeChanged.
-	morph themeChanged.
+	morph ifNotNil: #themeChanged
 ]
 
 { #category : #private }

@@ -44,7 +44,7 @@ TIndexAccessForMultipliness >> testIdentityIndexOfDuplicate [
 		i > 1 & (i < collection size)
 			ifTrue: [ self deny: (collection at: i) = collection first ] ].
 	element := collection last.	" floatCollectionWithSameAtEndAndBegining first and last elements are equals but are not the same object"
-	self assert: (collection identityIndexOf: element) = collection size
+	self assert: (collection identityIndexOf: element) equals: collection size
 ]
 
 { #category : #'tests - index accessing for multipliness' }

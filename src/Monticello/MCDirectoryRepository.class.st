@@ -94,10 +94,15 @@ MCDirectoryRepository >> loadAllFileNames [
 	^ (directory entries sort: [:a :b | a modificationTime >= b modificationTime]) collect: [:ea | ea basename]
 ]
 
+{ #category : #loading }
+MCDirectoryRepository >> pathForFileNamed: aFileName [
+  ^ (directory / aFileName) fullName
+]
+
 { #category : #'i/o' }
 MCDirectoryRepository >> readStreamForFileNamed: aString do: aBlock [
 	| val |
-	directory / aString readStreamDo: [ :stream|
+	directory / aString binaryReadStreamDo: [ :stream|
 		val := aBlock value: stream ].
 	^ val
 ]
@@ -110,6 +115,5 @@ MCDirectoryRepository >> writeStreamForFileNamed: aString replace: shouldReplace
 
 	shouldReplace ifTrue: [ file ensureDelete ].
 
-	file writeStreamDo:  [ :stream | 
-		aBlock value: stream ].
+	file binaryWriteStreamDo: aBlock
 ]

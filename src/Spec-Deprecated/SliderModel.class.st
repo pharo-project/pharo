@@ -6,3 +6,8 @@ Class {
 	#superclass : #SliderPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+SliderModel class >> isDeprecated [
+	^true
+]

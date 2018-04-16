@@ -15,7 +15,7 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageAnalyzerWindow class >> onPackagesNamed: aCollection [
 	^ self new 
 		initializeWithPackageNames: aCollection;

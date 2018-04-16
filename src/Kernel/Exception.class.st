@@ -257,35 +257,6 @@ Exception >> resumeUnchecked: resumptionValue [
 ]
 
 { #category : #handling }
-Exception >> retry [
-	"Abort an exception handler and re-evaluate its protected block."
-
-	handlerContext restart
-]
-
-{ #category : #handling }
-Exception >> retryUsing: alternativeBlock [
-	"Abort an exception handler and evaluate a new block in place of the handler's protected block."
-
-	handlerContext restartWithNewReceiver: alternativeBlock
-
-]
-
-{ #category : #handling }
-Exception >> return [
-	"Return nil as the value of the block protected by the active exception handler."
-
-	self return: self defaultReturnValue
-]
-
-{ #category : #handling }
-Exception >> return: returnValue [
-	"Return the argument as the value of the block protected by the active exception handler."
-
-	handlerContext return: returnValue
-]
-
-{ #category : #handling }
 Exception >> searchFrom: aContext [
 	" Set the context where the handler search will start. "
 

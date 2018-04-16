@@ -210,12 +210,25 @@ TraitedMetaclass >> isLocalSelector: aSelector [
 TraitedMetaclass >> isRejectedMethod: aSelector [
 	"The method is not installed in method dictionary if:
 	 - It is in the localMethods.
-	 - It is from Class (we already have them) and are not overriden in TraitedClass.
+	 - It is from Class (we already have them) and they are not overriden in TraitedClass.
+	 - If it is in TraitedClass and it is in my superclass.
 	"
 
-	^ (self isLocalSelector: aSelector)
-		or: [ (Class canUnderstand: aSelector)
-				and: [ (TraitedClass methodDict includesKey: aSelector) not ] ]
+	| isFromClass isFromTraitedClass isMySuperclassTraitedClass |
+	(self isLocalSelector: aSelector)
+		ifTrue: [ ^ true ].
+
+	isFromClass := Class canUnderstand: aSelector.
+	isFromTraitedClass := TraitedClass methodDict includesKey: aSelector.
+	isMySuperclassTraitedClass := (superclass isKindOf: TraitedMetaclass) and: [superclass isObsolete not].
+
+	(isFromClass and: [ isFromTraitedClass not ])
+		ifTrue: [ ^ true ].
+
+	(isFromTraitedClass and: isMySuperclassTraitedClass)
+		ifTrue: [ ^ true ].
+
+	^ false
 ]
 
 { #category : #testing }

@@ -16,19 +16,8 @@ Class {
 
 { #category : #'instance creation' }
 FT2Version class >> current [
-	"
-	FT2Version current
-	"
-	^ [(self new)
-		libraryVersion;
-		yourself] on: Error do: [:ex | ex return: nil]
-]
-
-{ #category : #primitives }
-FT2Version >> libraryVersion [
-	<primitive: 'primitiveVersion' module: 'FT2Plugin'>
-	^self primitiveFailed.
-
+	
+	^ FT2Library current libraryVersion
 ]
 
 { #category : #accessing }
@@ -37,13 +26,28 @@ FT2Version >> major [
 ]
 
 { #category : #accessing }
+FT2Version >> major: anObject [
+	major := anObject
+]
+
+{ #category : #accessing }
 FT2Version >> minor [
 	^minor
 ]
 
 { #category : #accessing }
+FT2Version >> minor: anObject [
+	minor := anObject
+]
+
+{ #category : #accessing }
 FT2Version >> patch [
 	^patch
+]
+
+{ #category : #accessing }
+FT2Version >> patch: anObject [
+	patch := anObject
 ]
 
 { #category : #printing }

@@ -1716,7 +1716,7 @@ MorphTreeMorph >> scrollDeltaWidth [
 MorphTreeMorph >> scrollSelectionIntoView [
 	"make sure that the current selection is visible"
 	self listManager selectedMorph
-		ifNotNil: [:morph | self scrollToShow: morph bounds ]
+		ifNotNil: [:morph | self scrollToShow: morph contentBounds ]
 ]
 
 { #category : #'events-processing' }

@@ -15,7 +15,7 @@ Class {
 	#category : #'Monticello-Merging'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MCThreeWayMerger class >> base: aSnapshot patch: aPatch [
 	aPatch isEmpty ifTrue: [MCNoChangesException signal].
 	^ self new
@@ -25,7 +25,7 @@ MCThreeWayMerger class >> base: aSnapshot patch: aPatch [
 		
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MCThreeWayMerger class >> base: aSnapshot target: targetSnapshot ancestor: ancestorSnapshot [
 	^ self base: aSnapshot patch: (targetSnapshot patchRelativeToBase: ancestorSnapshot)
 ]

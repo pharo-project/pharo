@@ -6,3 +6,8 @@ Class {
 	#superclass : #TransferPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+TransferModel class >> isDeprecated [
+	^true
+]
