@@ -811,7 +811,10 @@ ClassDescription >> linesOfCode [
 { #category : #slots }
 ClassDescription >> localSlots [
 
-	^ self slots select: [ :aSlot | aSlot definingClass = self ]
+	^ self slots select: [ :aSlot | 
+		aSlot definingClass name = self name 
+		"we are checking the class name here and not only the class identity itself because then this
+		method can return false results during the classes migration" ]
 ]
 
 { #category : #'accessing tags' }
