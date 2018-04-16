@@ -188,12 +188,14 @@ ProfStef class >> pharoZenValues [
 { #category : #zen }
 ProfStef class >> pharoZenValuesContents [
 	"Return a string with CRs listing the Pharo Zen values in random order"
- 	
-	^ String streamContents: [ :stream | 
-			stream << (self class >> #pharoZenValues) comment withoutQuoting; cr; cr.
-			self pharoZenValues shuffled 
-				do: [ :each | stream << each ] 
-				separatedBy: [ stream cr ]]
+
+	^ String
+		streamContents: [ :stream | 
+			stream
+				<< (self class >> #pharoZenValues) comment withoutQuoting;
+				newLine;
+				newLine.
+			self pharoZenValues shuffled do: [ :each | stream << each ] separatedBy: [ stream newLine ] ]
 ]
 
 { #category : #navigating }

@@ -117,7 +117,7 @@ MCDiffyVersion >> snapshot [
 
 { #category : #accessing }
 MCDiffyVersion >> summary [
-	^ '(Diff against ', self baseInfo name, ')', String cr, super summary
+	^ '(Diff against ' , self baseInfo name , ')' , String newLine , super summary
 ]
 
 { #category : #accessing }

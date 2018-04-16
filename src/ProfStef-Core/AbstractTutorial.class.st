@@ -24,12 +24,12 @@ AbstractTutorial class >> contentsOfTutorials [
 				do: [ :aTutorial | 
 					aStream
 						nextPutAll: aTutorial title;
-						cr;
+						newLine;
 						tab;
 						nextPutAll: 'ProfStef goOn: ';
 						nextPutAll: aTutorial name;
-						cr;
-						cr ] ]
+						newLine;
+						newLine ] ]
 ]
 
 { #category : #'tutorial metainfo' }

@@ -317,13 +317,13 @@ Process >> isTerminating [
 Process >> longPrintOn: stream [
 	| ctxt |
 	super printOn: stream.
-	stream cr.
+	stream newLine.
 	ctxt := self suspendedContext.
 	[ ctxt isNil ]
 		whileFalse: [ 
 			stream space.
 			ctxt printOn: stream.
-			stream cr.
+			stream newLine.
 			ctxt := ctxt sender ]
 ]
 

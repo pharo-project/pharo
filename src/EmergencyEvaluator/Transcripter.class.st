@@ -25,14 +25,21 @@ Class {
 }
 
 { #category : #launching }
-Transcripter class >> askForEmergencyEvaluatorOrExitWithText: aText [ 
+Transcripter class >> askForEmergencyEvaluatorOrExitWithText: aText [
 	| m |
-	m := String streamContents: [:s | 
-					s nextPutAll: aText.
-					s cr; nextPutAll: '-----------------------------------------------------------------'.
-					s cr; nextPutAll: 'Type CR to enter an emergency evaluator.'.
-					s cr; nextPutAll: 'Type any other character to restart.'].
-	Display getCanvas 
+	m := String
+		streamContents: [ :s | 
+			s nextPutAll: aText.
+			s
+				newLine;
+				nextPutAll: '-----------------------------------------------------------------'.
+			s
+				newLine;
+				nextPutAll: 'Type CR to enter an emergency evaluator.'.
+			s
+				newLine;
+				nextPutAll: 'Type any other character to restart.' ].
+	Display getCanvas
 		drawString: m
 		from: 1
 		to: m size
@@ -40,7 +47,7 @@ Transcripter class >> askForEmergencyEvaluatorOrExitWithText: aText [
 		font: nil
 		color: Color black.
 	self nextChar = Character cr
-		ifTrue: [self emergencyEvaluator]
+		ifTrue: [ self emergencyEvaluator ]
 ]
 
 { #category : #utilities }
@@ -218,25 +225,30 @@ Transcripter >> readEvalPrint [
 	| line okToRevert |
 	okToRevert := true.
 	Sensor flushKeyboard.
-	[#('quit' 'exit' 'done' ) includes: (line := self request: '> ')]
-		whileFalse: [line = 'revert'
-				ifTrue: [okToRevert
-						ifTrue: [(self confirm: 'Revert: ' , RecentMessageList uniqueInstance lastEntry asString , ' ?')
-								ifTrue: [RecentMessageList uniqueInstance revertLastMethodSubmission.
-									self cr; show: 'reverted: ' , RecentMessageList uniqueInstance lastEntry asString.
-									okToRevert := false]]
-						ifFalse: [self cr; show: 'Only one level of revert currently supported']]
-				ifFalse: [self cr;
-						show: ([self class compiler evaluate: line]
-								ifError: [:err | err])]]. 
-	self cr; show: 'Done'.
-
+	[ #('quit' 'exit' 'done') includes: (line := self request: '> ') ]
+		whileFalse: [ line = 'revert'
+				ifTrue: [ okToRevert
+						ifTrue: [ (self confirm: 'Revert: ' , RecentMessageList uniqueInstance lastEntry asString , ' ?')
+								ifTrue: [ RecentMessageList uniqueInstance revertLastMethodSubmission.
+									self
+										newLine;
+										show: 'reverted: ' , RecentMessageList uniqueInstance lastEntry asString.
+									okToRevert := false ] ]
+						ifFalse: [ self
+								newLine;
+								show: 'Only one level of revert currently supported' ] ]
+				ifFalse: [ self
+						newLine;
+						show: ([ self class compiler evaluate: line ] ifError: [ :err | err ]) ] ].
+	self
+		newLine;
+		show: 'Done'
 ]
 
 { #category : #'command line' }
 Transcripter >> request: prompt [ 
 	| startPos char contents |
-	self cr; show: prompt.
+	self newLine; show: prompt.
 	startPos := position.
 	Sensor flushKeyboard.
 	[(char := self nextChar) = Character cr]

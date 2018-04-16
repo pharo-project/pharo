@@ -125,7 +125,7 @@ MCClassTraitDefinition >> printDefinitionOn: stream [
 	stream
 		nextPutAll: self baseTrait;
 		nextPutAll: ' classTrait';
-		cr;
+		newLine;
 		tab;
 		nextPutAll: 'uses: ';
 		nextPutAll: self classTraitCompositionString

@@ -141,13 +141,13 @@ SystemReporter >> enumerate: aBlock startAt: first on: aStream [
 				nextPutAll: idx printString;
 				tab;
 				nextPutAll: value;
-				cr.
+				newLine.
 			idx := idx + 1 ].
 	idx = first
 		ifTrue: [ 
 			aStream
 				nextPutAll: 'none';
-				cr ]
+				newLine ]
 ]
 
 { #category : #'accessing-ui' }
@@ -158,9 +158,9 @@ SystemReporter >> extent [
 { #category : #'printing-report' }
 SystemReporter >> header: aString on: aStream [
 	aStream withAttribute: TextEmphasis bold do: [	
-		aStream nextPutAll: aString; cr.
+		aStream nextPutAll: aString; newLine.
 		aString size timesRepeat: [aStream nextPut: $-].
-		aStream cr]
+		aStream newLine]
 ]
 
 { #category : #'accessing-ui' }
@@ -231,11 +231,10 @@ SystemReporter >> reportFrame [
 SystemReporter >> reportImage: aStream [
 	self header: 'Image' on: aStream.
 	aStream 
-		nextPutAll: Smalltalk image imagePath; cr;
-		nextPutAll: SystemVersion current version; cr;
-		nextPutAll: Smalltalk image lastUpdateString; cr;
-		nextPutAll: ChangeSet current name; cr
-
+		nextPutAll: Smalltalk image imagePath; newLine;
+		nextPutAll: SystemVersion current version; newLine;
+		nextPutAll: Smalltalk image lastUpdateString; newLine;
+		nextPutAll: ChangeSet current name; newLine
 ]
 
 { #category : #reporting }
@@ -258,10 +257,10 @@ SystemReporter >> reportLinuxOSDetails: aStream [
 { #category : #reporting }
 SystemReporter >> reportModules: aStream [
 	self header: 'Loaded VM Modules' on: aStream.
-	Smalltalk vm listLoadedModules asSortedCollection do: [:each | aStream nextPutAll: each; cr].
-	aStream cr.
+	Smalltalk vm listLoadedModules asSortedCollection do: [:each | aStream nextPutAll: each; newLine].
+	aStream newLine.
 	self header: 'VM Built-in Modules' on: aStream.
-	Smalltalk vm listBuiltinModules asSortedCollection do: [:each | aStream nextPutAll: each; cr].
+	Smalltalk vm listBuiltinModules asSortedCollection do: [:each | aStream nextPutAll: each; newLine].
 
 
 ]
@@ -272,7 +271,7 @@ SystemReporter >> reportOS: aStream [
 	aStream
 		nextPutAll: Smalltalk os platformName; space;
 		nextPutAll: Smalltalk os version; space;
-		nextPutAll: Smalltalk os subtype; cr
+		nextPutAll: Smalltalk os subtype; newLine
 
 ]
 
@@ -282,20 +281,20 @@ SystemReporter >> reportOSEnvironment: aStream [
 	self header: 'Operating System Environment' on: aStream.
 	env := [Smalltalk os environment] on: Error do: [^self].
 	env keys asSortedCollection do: [:name |
-		aStream nextPutAll: name; nextPut: $=; nextPutAll: (env at: name); cr]
+		aStream nextPutAll: name; nextPut: $=; nextPutAll: (env at: name); newLine]
 	
 ]
 
 { #category : #reporting }
 SystemReporter >> reportRepositories: aStream [
 	self header: 'Monticello Repositories' on: aStream.
-	MCRepositoryGroup default repositories do: [:each | aStream nextPutAll: each description; cr]
+	MCRepositoryGroup default repositories do: [:each | aStream nextPutAll: each description; newLine]
 ]
 
 { #category : #reporting }
 SystemReporter >> reportSources: aStream [
 	self header: 'Image Sources' on: aStream.
-	aStream nextPutAll: SourceFiles class printString; cr.
+	aStream nextPutAll: SourceFiles class printString; newLine.
 	aStream nextPutAll: SourceFiles reportString.
 ]
 
@@ -304,21 +303,21 @@ SystemReporter >> reportVM: aStream [
 	self header: 'Virtual Machine' on: aStream.
 	aStream
 		nextPutAll: Smalltalk vm vmFileName;
-		cr;
+		newLine;
 		nextPutAll: Smalltalk vm version;
-		cr.
+		newLine.
 	Smalltalk vm buildDate
 		ifNotNil: [ :string | 
 			aStream
 				nextPutAll: string;
-				cr ].
+				newLine ].
 	[ 
 	Smalltalk vm platformSourceVersion
 		ifNotNil: [ :v | 
 			aStream
 				nextPutAll: 'platform sources revision ';
 				nextPutAll: v;
-				cr ] ]
+				newLine ] ]
 		on: Warning
 		do: [ 
 			"unsupported primitive"
@@ -329,7 +328,7 @@ SystemReporter >> reportVM: aStream [
 			aStream
 				nextPutAll: 'VMMaker versionString ';
 				nextPutAll: v;
-				cr ] ]
+				newLine ] ]
 		on: Warning
 		do: [ 
 			"unsupported primitive"
@@ -339,12 +338,12 @@ SystemReporter >> reportVM: aStream [
 		ifNotNil: [ :string | 
 			aStream
 				nextPutAll: string;
-				cr ].
+				newLine ].
 	Smalltalk vm cogitClass
 		ifNotNil: [ :string | 
 			aStream
 				nextPutAll: string;
-				cr ] ]
+				newLine ] ]
 		on: Error
 		do: [ 
 			"unsupported primitives"
@@ -439,7 +438,7 @@ SystemReporter >> reportVMParameters: aStream [
 			nextPutAll: (vmParameters at: idx) printString;
 			tab;
 			nextPutAll: desc;
-			cr]
+			newLine]
 ]
 
 { #category : #reporting }
@@ -473,7 +472,7 @@ SystemReporter >> reportWin32VMConfig: aStream [
 	self header: 'VM Configuration' on: aStream.
 	exePath := Smalltalk vm vmFileName.
 	iniPath := (exePath copyUpToLast: $.), '.ini'.
-	aStream nextPutAll: iniPath; cr.
+	aStream nextPutAll: iniPath; newLine.
 	self writeContentsSafelyFromFile: iniPath on: aStream.
 
 ]
@@ -483,7 +482,7 @@ SystemReporter >> reportWorkingCopies: aStream [
 	| list |
 	self header: 'Monticello Working Copies' on: aStream.
 	list := MCWorkingCopy allManagers asSortedCollection: [:a :b | a packageName <= b packageName]  .
-	list do: [:each | aStream nextPutAll: each description; cr]
+	list do: [:each | aStream nextPutAll: each description; newLine]
 ]
 
 { #category : #accessing }
@@ -498,7 +497,7 @@ SystemReporter >> updateReport [
 						self categoryList do: [:each |
 							(categoriesSelected includes: each) ifTrue: [
 								self perform: (categories at: each) with: stream.
-								stream cr]]])
+								stream newLine]]])
 
 ]
 

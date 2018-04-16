@@ -27,7 +27,7 @@ RBRenameClassVariableChange >> printOn: aStream [
 		nextPutAll: self displayClassName;
 		nextPutAll: ' removeClassVarName: ';
 		print: self oldName;
-		nextPut: $!; cr.
+		nextPut: $!; newLine.
 	aStream
 		nextPutAll: self displayClassName; 
 		nextPutAll: ' addClassVarName: '; 

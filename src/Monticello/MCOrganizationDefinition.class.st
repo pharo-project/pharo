@@ -135,7 +135,7 @@ MCOrganizationDefinition >> sortKey [
 MCOrganizationDefinition >> source [
 	^ String streamContents:
 		[:s |
-		categories do: [:ea | s nextPutAll: ea] separatedBy: [s cr]]
+		categories do: [:ea | s nextPutAll: ea] separatedBy: [s newLine]]
 ]
 
 { #category : #accessing }

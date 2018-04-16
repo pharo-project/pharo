@@ -25,15 +25,15 @@ FFICallbackType >> offsetReadFieldAt: offsetVariableName [
 
 { #category : #'emitting code' }
 FFICallbackType >> offsetWriteFieldAt: offsetVariableName with: valueName [
-	| cr tab |
-	cr := String cr.
+	| newLine tab |
+	newLine := String newLine.
 	tab := String tab.
 	^ String streamContents: [ :stream | 
 		stream 
-			<< 'handle ' << cr 
-			<< tab << tab << 'pointerAt: ' << offsetVariableName << cr 
-			<< tab << tab << 'put: (anObject ' << cr 
-			<< tab << tab << tab << 'ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]' << cr
+			<< 'handle ' << newLine 
+			<< tab << tab << 'pointerAt: ' << offsetVariableName << newLine 
+			<< tab << tab << 'put: (anObject ' << newLine 
+			<< tab << tab << tab << 'ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]' << newLine
 			<< tab << tab << tab << 'ifNil: [ ExternalAddress null ])' ]
 ]
 

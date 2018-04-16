@@ -33,16 +33,16 @@ MCMcmWriter >> writeConfiguration: aConfiguration [
 	stream nextPut: $(.
 
 	aConfiguration repositories do: [:ea | 
-		stream cr.
+		stream newLine.
 		stream nextPutAll: 'repository '.
 		(MCConfiguration repositoryToArray: ea) printElementsOn: stream].
 
 	aConfiguration dependencies do: [:ea | 
-		stream cr.
+		stream newLine.
 		stream nextPutAll: 'dependency '.
 		(MCConfiguration dependencyToArray: ea) printElementsOn: stream].
 
-	stream cr.
+	stream newLine.
 	stream nextPut: $).
-	stream cr.
+	stream newLine.
 ]

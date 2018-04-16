@@ -271,7 +271,7 @@ TaSequence >> sourceCodeForConflictFor: selector [
 		streamContents: [ :s | 
 			s
 				nextPutAll: (self selectorForConflict: selector);
-				cr;
+				newLine;
 				tab;
 				nextPutAll: 'self traitConflict' ]
 ]

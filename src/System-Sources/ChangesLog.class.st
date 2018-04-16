@@ -45,14 +45,14 @@ ChangesLog >> assureStartupStampLogged [
 	"If there is a startup stamp not yet actually logged to disk, do it now."
 
 	startupStamp ifNil: [ ^ self ].
-
-	SourceFiles changesWriteStreamDo: [ :changesFile |
-		changesFile
-			cr; cr;
-			nextChunkPut: startupStamp asString;
-			cr.
-		startupStamp := nil ].
-
+	SourceFiles
+		changesWriteStreamDo: [ :changesFile | 
+			changesFile
+				newLine;
+				newLine;
+				nextChunkPut: startupStamp asString;
+				newLine.
+			startupStamp := nil ].
 	SourceFiles forceChangesToDisk
 ]
 
@@ -62,21 +62,17 @@ ChangesLog >> logChange: aStringOrText [
 
 	| aString |
 	(SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
-    ifTrue: [ ^ self ].
-	
+		ifTrue: [ ^ self ].
 	self assureStartupStampLogged.
-
 	aString := aStringOrText asString.
 	(aString findFirst: [ :char | char isSeparator not ]) = 0
 		ifTrue: [ ^ self ].	"null doits confuse replay"
-
-	SourceFiles changesWriteStreamDo: [ :changesFile |
-		changesFile
-			cr; cr.
-			
-		(ChunkWriteStream on: changesFile)
-			nextPut: aString ].
-
+	SourceFiles
+		changesWriteStreamDo: [ :changesFile | 
+			changesFile
+				newLine;
+				newLine.
+			(ChunkWriteStream on: changesFile) nextPut: aString ].
 	SourceFiles forceChangesToDisk
 ]
 

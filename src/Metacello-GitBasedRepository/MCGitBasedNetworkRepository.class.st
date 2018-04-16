@@ -397,11 +397,8 @@ MCGitBasedNetworkRepository >> flushCache [
   [ super flushCache ]
     on: Error
     do: [ :ex | 
-      Transcript
-        cr;
-        show:
-            'Error for: ' , self description printString , ' during flushCache: '
-                , ex description printString ].
+      ('Error for: ' , self description printString , ' during flushCache: '
+                , ex description printString) crLog ].
   self class flushDownloadCache.
   directory := nil
 ]

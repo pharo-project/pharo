@@ -17,7 +17,7 @@ Class {
 { #category : #logging }
 AnnouncementLogger >> logAnnouncement: ann [
 
-	Transcript show: ann printString ; cr
+	ann logCr
 ]
 
 { #category : #subscription }

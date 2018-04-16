@@ -212,57 +212,55 @@ ClassDescription >> classComment: aString stamp: aStamp [
 	| pointer header oldCommentRemoteString oldComment oldStamp preamble |
 	oldComment := self organization classComment.
 	oldStamp := self organization commentStamp.
-
-	aString string = oldComment string ifTrue: [ ^ self ].
-
-	aString isRemoteString ifTrue: [
-		SystemAnnouncer uniqueInstance 
-			class: self 
-			oldComment: oldComment 
-			newComment: aString string 
-			oldStamp: oldStamp 
-			newStamp: aStamp.
-		^ self organization classComment: aString stamp: aStamp].
-
+	aString string = oldComment string
+		ifTrue: [ ^ self ].
+	aString isRemoteString
+		ifTrue: [ SystemAnnouncer uniqueInstance
+				class: self
+				oldComment: oldComment
+				newComment: aString string
+				oldStamp: oldStamp
+				newStamp: aStamp.
+			^ self organization classComment: aString stamp: aStamp ].
 	oldCommentRemoteString := self organization commentRemoteString.
-	pointer := oldCommentRemoteString 
-			ifNil: [0] 
-			ifNotNil: [oldCommentRemoteString sourcePointer].
-	
-	preamble := String streamContents: [ :file |
-		file cr; nextPut: $!.
-		header := String streamContents: [:strm | 
-			strm 
-				nextPutAll: self name;
-				nextPutAll: ' commentStamp: '.
-			aStamp storeOn: strm.
-			strm nextPutAll: ' prior: '; nextPutAll: pointer printString ].
-		file nextChunkPut: header; cr ].
-
+	pointer := oldCommentRemoteString ifNil: [ 0 ] ifNotNil: [ oldCommentRemoteString sourcePointer ].
+	preamble := String
+		streamContents: [ :file | 
+			file
+				newLine;
+				nextPut: $!.
+			header := String
+				streamContents: [ :strm | 
+					strm
+						nextPutAll: self name;
+						nextPutAll: ' commentStamp: '.
+					aStamp storeOn: strm.
+					strm
+						nextPutAll: ' prior: ';
+						nextPutAll: pointer printString ].
+			file
+				nextChunkPut: header;
+				newLine ].
 	SourceFiles
 		writeSource: aString
 		preamble: preamble
-		onSuccess: [ :newSourcePointer | 
-			self organization 
-				classComment: (SourceFiles remoteStringAt: newSourcePointer) 
-				stamp: aStamp ]
+		onSuccess: [ :newSourcePointer | self organization classComment: (SourceFiles remoteStringAt: newSourcePointer) stamp: aStamp ]
 		onFail: [ "ignore" ].
-	
-	SystemAnnouncer uniqueInstance 
-		class: self 
-		oldComment: oldComment 
-		newComment: aString 
-		oldStamp: oldStamp 
+	SystemAnnouncer uniqueInstance
+		class: self
+		oldComment: oldComment
+		newComment: aString
+		oldStamp: oldStamp
 		newStamp: aStamp
 ]
 
 { #category : #'accessing comment' }
 ClassDescription >> classCommentBlank [
-
 	| stream |
 	stream := (String new: 100) writeStream.
-	
-	stream nextPutAll: 'Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
+	stream
+		nextPutAll:
+			'Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
 
 For the Class part:  State a one line summary. For example, "I represent a paragraph of text".
 
@@ -279,19 +277,27 @@ Public API and Key Messages
    One simple example is simply gorgeous.
  
 Internal Representation and Key Implementation Points.'.
-			
-	(self instVarNames size > 0)
-		 ifTrue: [stream cr; cr; nextPutAll: '    Instance Variables'.  ].
-		
-	self instVarNames asSortedCollection do: [:each |
-		stream
-			cr; tab; nextPutAll: each;
-			nextPut: $:;
-			tab; tab;
-			nextPutAll: '<Object>'].
-	stream cr.
-stream cr; cr; nextPutAll: '    Implementation Points'.
-	^stream contents
+	self instVarNames size > 0
+		ifTrue: [ stream
+				newLine;
+				newLine;
+				nextPutAll: '    Instance Variables' ].
+	self instVarNames asSortedCollection
+		do: [ :each | 
+			stream
+				newLine;
+				tab;
+				nextPutAll: each;
+				nextPut: $:;
+				tab;
+				tab;
+				nextPutAll: '<Object>' ].
+	stream newLine.
+	stream
+		newLine;
+		newLine;
+		nextPutAll: '    Implementation Points'.
+	^ stream contents
 ]
 
 { #category : #'accessing parallel hierarchy' }
@@ -579,28 +585,44 @@ ClassDescription >> definition [
 
 	| aStream |
 	aStream := (String new: 800) writeStream.
-	superclass 
-		ifNil: [aStream nextPutAll: 'ProtoObject']
-		ifNotNil: [aStream nextPutAll: superclass name].
-	aStream nextPutAll: self kindOfSubclass;
-			store: self name.
-	(self hasTraitComposition) ifTrue: [
-		aStream cr; tab; nextPutAll: 'uses: ';
-			nextPutAll: self traitCompositionString].
-	aStream cr; tab; nextPutAll: 'instanceVariableNames: ';
-			store: self instanceVariablesString.
-	aStream cr; tab; nextPutAll: 'classVariableNames: ';
-			store: self classVariablesString.
-	aStream cr; tab; nextPutAll: 'poolDictionaries: ';
-			store: self sharedPoolsString.
-	aStream cr; tab; nextPutAll: 'category: ';
-			store: self category asString.
-
-	superclass ifNil: [ 
-		aStream nextPutAll: '.'; cr.
-		aStream nextPutAll: self name.
-		aStream space; nextPutAll: 'superclass: nil'. ].
-
+	superclass ifNil: [ aStream nextPutAll: 'ProtoObject' ] ifNotNil: [ aStream nextPutAll: superclass name ].
+	aStream
+		nextPutAll: self kindOfSubclass;
+		store: self name.
+	self hasTraitComposition
+		ifTrue: [ aStream
+				newLine;
+				tab;
+				nextPutAll: 'uses: ';
+				nextPutAll: self traitCompositionString ].
+	aStream
+		newLine;
+		tab;
+		nextPutAll: 'instanceVariableNames: ';
+		store: self instanceVariablesString.
+	aStream
+		newLine;
+		tab;
+		nextPutAll: 'classVariableNames: ';
+		store: self classVariablesString.
+	aStream
+		newLine;
+		tab;
+		nextPutAll: 'poolDictionaries: ';
+		store: self sharedPoolsString.
+	aStream
+		newLine;
+		tab;
+		nextPutAll: 'category: ';
+		store: self category asString.
+	superclass
+		ifNil: [ aStream
+				nextPutAll: '.';
+				newLine.
+			aStream nextPutAll: self name.
+			aStream
+				space;
+				nextPutAll: 'superclass: nil' ].
 	^ aStream contents
 ]
 
@@ -1091,17 +1113,24 @@ ClassDescription >> slotDefinitionString [
 	"Answer a string that contains an executable description of my Slots"
 
 	"^self slots ifNotEmpty: [self slots asString] ifEmpty: ['{}']"
-	
-	^String streamContents: [ :str | | special |
-		str nextPutAll: '{ '.
-		self slots do: [:slot |
-				str nextPutAll: slot definitionString.
-				special := slot isSpecial]				
-			separatedBy: [ 
-				str nextPutAll: '. '.  
-				special ifTrue: [ str cr;tab;tab;tab;tab ]].
-		str nextPutAll: ' }'. ]
 
+	^ String
+		streamContents: [ :str | 
+			| special |
+			str nextPutAll: '{ '.
+			self slots
+				do: [ :slot | 
+					str nextPutAll: slot definitionString.
+					special := slot isSpecial ]
+				separatedBy: [ str nextPutAll: '. '.
+					special
+						ifTrue: [ str
+								newLine;
+								tab;
+								tab;
+								tab;
+								tab ] ].
+			str nextPutAll: ' }' ]
 ]
 
 { #category : #slots }

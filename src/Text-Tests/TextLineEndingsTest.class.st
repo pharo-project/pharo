@@ -43,7 +43,7 @@ TextLineEndingsTest >> testDecoratedTextConversionJustLF [
 TextLineEndingsTest >> testDecoratedTextConversionNoLF [
 
 	| text newText |
-	text := ('123456', String cr, '901234') asText.
+	text := ('123456', String newLine, '901234') asText.
 	text addAttribute: TextColor blue from: 4 to: 10.
 	text addAttribute: TextColor red from: 6 to: 9.
 	text addAttribute: TextEmphasis bold.
@@ -68,7 +68,7 @@ TextLineEndingsTest >> testSimpleTextConversionCrLF [
 TextLineEndingsTest >> testSimpleTextConversionJustCR [
 
 	| string newText |
-	string := 'This is a test', String cr, 'of the conversion'.
+	string := 'This is a test', String newLine, 'of the conversion'.
 	newText := string asText withSqueakLineEndings.
 	self assert: ((string size) = newText size).
 	self assert: (newText size = newText runs size).
@@ -106,7 +106,7 @@ TextLineEndingsTest >> testStringConversionJustLF [
 TextLineEndingsTest >> testStringConversionNoLF [
 
 	| string newString |
-	string := 'This is a test', String cr, 'of the conversion'.
+	string := 'This is a test', String newLine, 'of the conversion'.
 	newString := string withSqueakLineEndings.
 	self assert: (string = newString).
 ]

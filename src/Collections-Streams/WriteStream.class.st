@@ -149,6 +149,15 @@ WriteStream >> lf [
 	self nextPut: Character lf
 ]
 
+{ #category : #'character writing' }
+WriteStream >> newLine [
+	"Pharo uses its own new line convention inside, defined in String.
+	When there is an exchange with an external source (files, sockets),
+	users should explicitly use newline conversions."
+
+	self nextPutAll: String newLine
+]
+
 { #category : #accessing }
 WriteStream >> next [
 

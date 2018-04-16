@@ -175,7 +175,7 @@ Base64MimeConverter >> mimeEncode [
 	phase1 := phase2 := false.
 	lineLength := 0.
 	[dataStream atEnd] whileFalse: [
-		(multiLine and:[lineLength >= 70]) ifTrue: [ mimeStream cr.  lineLength := 0. ].
+		(multiLine and:[lineLength >= 70]) ifTrue: [ mimeStream newLine.  lineLength := 0. ].
 		data := raw := dataStream next asInteger.
 		nib := (data bitAnd: 16rFC) bitShift: -2.
 		mimeStream nextPut: (ToCharTable at: nib+1).

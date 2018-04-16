@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'path',
 		'stream',
-		'potentialLocations'
+		'potentialLocations',
+		'reference'
 	],
 	#category : #'System-Sources'
 }
@@ -27,7 +28,7 @@ SourceFile >> atEnd [
 	^ stream atEnd
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> close [
 
 	stream ifNil: [ ^ self ].
@@ -43,43 +44,62 @@ SourceFile >> closed [
 	^ stream isNil or: [ stream closed ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> cr [
 
 	stream cr
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> flush [
 
 	stream flush
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SourceFile >> fullName [
 
 	^ path asString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 SourceFile >> isOpen [
 
 	^ stream notNil and: [ stream closed not ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 SourceFile >> isReadOnly [
 
 	^ stream isReadOnly
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
+SourceFile >> isResolved [
+
+	^ reference notNil
+]
+
+{ #category : #actions }
+SourceFile >> moveTo: aDestination [
+
+	self isResolved ifFalse: [ self error: 'Cannot move a non resolved source file' ].
+	reference moveTo: aDestination
+]
+
+{ #category : #'instance creation' }
+SourceFile >> newLine [
+
+	stream cr
+]
+
+{ #category : #stream }
 SourceFile >> next [
 
 	^ stream next
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> next: anInteger [
 
 	^ stream next: anInteger
@@ -97,13 +117,13 @@ SourceFile >> nextChunkPut: aChunk [
 	^ (ChunkWriteStream on: stream) nextPut: aChunk
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> nextPut: aCharacter [
 
 	stream nextPut: aCharacter
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> nextPutAll: aString [
 
 	stream nextPutAll: aString
@@ -125,31 +145,31 @@ SourceFile >> peek [
 	^ stream peek
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> position [
 
 	^ stream position
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> position: anInteger [
 
 	stream position: anInteger
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SourceFile >> potentialLocations [
 
 	^ potentialLocations
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SourceFile >> potentialLocations: aCollection [
 
 	potentialLocations := aCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 SourceFile >> printOn: aStream [
 
 	aStream
@@ -159,7 +179,7 @@ SourceFile >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SourceFile >> readOnlyCopy [
 
 	^ (self species on: path potentialLocations: potentialLocations)
@@ -167,25 +187,25 @@ SourceFile >> readOnlyCopy [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> setToEnd [
 
 	stream setToEnd
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> size [
 
 	^ stream size
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> skip: anInteger [
 
 	stream skip: anInteger
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> space [
 
 	stream space
@@ -197,30 +217,36 @@ SourceFile >> stream: aStream [
 	stream := aStream
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> tryOpen [
 
 	self tryOpenReadOnly: false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #stream }
 SourceFile >> tryOpenReadOnly: readOnly [
-	| basename |
+	| basename potentialReference |
 	basename := path asFileReference basename.
 
 	"Open a read write stream only if read only access was not requested.
 	We need to create the encoding and buffering streams manually because we need a read write stream."
-	readOnly ifFalse: [
-		potentialLocations
-			do: [ :each | 
-				[ stream := ZnCharacterReadWriteStream
-					on: (ZnBufferedReadWriteStream on: (each asFileReference / basename) binaryWriteStream)
-					encoding: 'utf8'.
-				^ self ] on: Error do: [  ] ] ].
-
-	potentialLocations do: [ :each | 
-			[ stream := (each asFileReference / basename) readStream.
-			^ self ] on: Error do: [  ] ]
+	readOnly
+		ifFalse: [ potentialLocations
+				do: [ :each | 
+					[ potentialReference := each asFileReference / basename.
+					stream := ZnCharacterReadWriteStream on: (ZnBufferedReadWriteStream on: potentialReference binaryWriteStream) encoding: 'utf8'.
+					reference := potentialReference.
+					^ self ]
+						on: Error
+						do: [  ] ] ].
+	potentialLocations
+		do: [ :each | 
+			[ potentialReference := each asFileReference / basename.
+			stream := potentialReference readStream.
+			reference := potentialReference.
+			^ self ]
+				on: Error
+				do: [  ] ]
 ]
 
 { #category : #accessing }

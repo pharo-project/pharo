@@ -774,7 +774,7 @@ BIConfigurableFormatter >> handleLineForArgument: anArgument [
 		ifFalse: [ ((self willBeMultiline: anArgument)
 				or: [ anArgument sourceInterval size > self maxLineLength ])
 				ifTrue: [ self isInCascadeNode
-						ifTrue: [ codeStream nextPut: Character cr.
+						ifTrue: [ codeStream newLine.
 							self indent - 1 timesRepeat: [ codeStream nextPutAll: self indentString ] ]
 						ifFalse: [ self newLine ] ]
 				ifFalse: [ self space ] ].
@@ -1066,16 +1066,10 @@ BIConfigurableFormatter >> newLineBeforeFirstKeyword: aBoolean [
 { #category : #private }
 BIConfigurableFormatter >> newLines: anInteger [
 	anInteger + self indentString size = 0
-		ifTrue: 
-			[ codeStream space ].
-	anInteger
-		timesRepeat: 
-			[ codeStream cr ].
+		ifTrue: [ codeStream space ].
+	anInteger timesRepeat: [ codeStream newLine ].
 	lineStart := codeStream position.
-	self
-		indent
-		timesRepeat: 
-			[ codeStream nextPutAll: self indentString ]
+	self indent timesRepeat: [ codeStream nextPutAll: self indentString ]
 ]
 
 { #category : #accessing }
@@ -1223,7 +1217,7 @@ BIConfigurableFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 	codeStream nextPutAll: selectors first.
 	self space.
 	self visitNode: arguments first.
-	codeStream nextPut: Character cr.
+	codeStream newLine.
 	self
 		with: selectors allButFirst
 		and: arguments allButFirst

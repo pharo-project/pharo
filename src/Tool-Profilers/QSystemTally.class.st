@@ -81,7 +81,7 @@ QSystemTally >> copyWithTally: hitCount [
 QSystemTally >> fullPrintOn: aStream tallyExact: isExact orThreshold: perCent time: totalTime [
 	| threshold |  
 	isExact ifFalse: [threshold := (perCent asFloat / 100 * tally) rounded].
-	aStream nextPutAll: '**Tree**'; cr.
+	aStream nextPutAll: '**Tree**'; newLine.
 	self treePrintOn: aStream
 		tabs: OrderedCollection new
 		thisTab: ''
@@ -89,8 +89,8 @@ QSystemTally >> fullPrintOn: aStream tallyExact: isExact orThreshold: perCent ti
 		totalTime: totalTime
 		tallyExact: isExact
 		orThreshold: threshold.
-	aStream nextPut: Character newPage; cr.
-	aStream nextPutAll: '**Leaves**'; cr.
+	aStream nextPut: Character newPage; newLine.
+	aStream nextPutAll: '**Leaves**'; newLine.
 	self leavesPrintOn: aStream
 		tallyExact: isExact
 		orThreshold: threshold
@@ -185,31 +185,34 @@ QSystemTally >> printOn: aStream [
 ]
 
 { #category : #report }
-QSystemTally >> printOn: aStream total: total totalTime: totalTime tallyExact: isExact [ 
+QSystemTally >> printOn: aStream total: total totalTime: totalTime tallyExact: isExact [
 	| className myTally aClass percentage |
-	isExact ifTrue:[
-		myTally := tally.
-		receivers ifNotNil: [ receivers asArray do: [ :r | myTally := myTally - r tally ] ].
-		aStream print: myTally; space.
-	] ifFalse:[
-		percentage := tally asFloat / total * 100.0 roundTo: 0.1.
-		aStream print: percentage; nextPutAll: ' (';
+	isExact
+		ifTrue: [ myTally := tally.
+			receivers ifNotNil: [ receivers asArray do: [ :r | myTally := myTally - r tally ] ].
+			aStream
+				print: myTally;
+				space ]
+		ifFalse: [ percentage := tally asFloat / total * 100.0 roundTo: 0.1.
+			aStream
+				print: percentage;
+				nextPutAll: ' (';
 				nextPutAll: (percentage * totalTime / 100) rounded asStringWithCommas;
-				nextPutAll: ')  '.
-	].
-	self isPrimitives ifTrue:[
-		aStream nextPutAll: 'primitives'; cr
-	] ifFalse:[
-		aClass := method methodClass.
-		className := aClass name contractTo: self maxClassNameSize.
-		aStream nextPutAll: class name;
-				nextPutAll: (aClass = class 
-							ifTrue: ['  ']
-							ifFalse: [' [' , aClass name , ']  ']);
-				nextPutAll: (method selector
-							contractTo: self maxClassPlusSelectorSize - className size);
-				cr.
-	].
+				nextPutAll: ')  ' ].
+	self isPrimitives
+		ifTrue: [ aStream
+				nextPutAll: 'primitives';
+				newLine ]
+		ifFalse: [ aClass := method methodClass.
+			className := aClass name contractTo: self maxClassNameSize.
+			aStream
+				nextPutAll: class name;
+				nextPutAll:
+					(aClass = class
+						ifTrue: [ '  ' ]
+						ifFalse: [ ' [' , aClass name , ']  ' ]);
+				nextPutAll: (method selector contractTo: self maxClassPlusSelectorSize - className size);
+				newLine ]
 ]
 
 { #category : #report }

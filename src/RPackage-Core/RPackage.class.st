@@ -98,12 +98,12 @@ RPackage class >> help [
 	stream 
 		nextPut: $!;
 		nextPutAll: self name asString;
-		cr;
+		newLine;
 		nextPutAll: self comment;
-		cr;
+		newLine;
 		nextPut: $!;
 		nextPutAll: self packageOrganizerClass name asString;
-		cr;
+		newLine;
 		nextPutAll: self packageOrganizerClass comment.		
 	^stream contents
 	

@@ -269,7 +269,8 @@ CommandLineHandler >> optionAt: aString ifPresent: presentBlock ifAbsent: absent
 { #category : #printing }
 CommandLineHandler >> printHelp [
 	self stderr
-		nextPutAll: self class comment; lf
+		nextPutAll: self class comment;
+		newLine
 ]
 
 { #category : #utility }

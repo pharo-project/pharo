@@ -90,15 +90,15 @@ ProcessBrowser class >> dumpPigStackOn: aStream andClose: aBoolean [
 	promise := Processor tallyCPUUsageFor: 1 every: 10.
 	tally := promise value.
 	"WorldState addDeferredUIMessage: [self dumpTallyOnTranscript: tally]."
-	aStream nextPutAll: '====Al processes===='; cr.
+	aStream nextPutAll: '====Al processes===='; newLine.
 	self dumpTally: tally on: aStream.
-	aStream cr; nextPutAll: '====Process using most CPU===='; cr.
+	aStream newLine; nextPutAll: '====Process using most CPU===='; newLine.
 	process := tally sortedCounts first value.
 	(100.0 * (tally occurrencesOf: process) / tally size) rounded printOn: aStream.
 	aStream
 		nextPutAll: ' % ';
 		nextPutAll: (process browserPrintStringWith: (self nameAndRulesFor: process) first);
-		cr.
+		newLine.
 	depth := 20.
 	stack := process == Processor activeProcess
 		ifTrue: [thisContext stackOfSize: depth]
@@ -106,11 +106,11 @@ ProcessBrowser class >> dumpPigStackOn: aStream andClose: aBoolean [
 			suspendedContext
 				ifNotNil: [suspendedContext stackOfSize: depth]].
 	stack 
-		ifNil: [ aStream nextPutAll: 'No context'; cr]
+		ifNil: [ aStream nextPutAll: 'No context'; newLine]
 		ifNotNil: [
 			stack do: [ :c | 
 				c printOn: aStream.
-				aStream cr]].
+				aStream newLine]].
 	aBoolean ifTrue: [aStream close]
 ]
 
@@ -126,7 +126,7 @@ ProcessBrowser class >> dumpTally: tally on: aStream [
 			nextPutAll: '%   ';
 			print: assoc value identityHash; space;
 			nextPutAll: procName;
-			cr.
+			newLine.
 	]
 ]
 

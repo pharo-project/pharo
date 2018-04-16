@@ -273,19 +273,19 @@ StartupPreferencesLoader >> buildStreamFor: aCollection [
 			[ :stream | 
 			stream
 				nextPutAll: 'StartupPreferencesLoader default executeAtomicItems: {';
-				crlf.
+				newLine.
 			aCollection
 				do: [ :item | 
 					stream
 						tab;
 						nextPutAll: item storeString;
 						nextPut: $.;
-						crlf ].
+						newLine ].
 			stream
 				nextPut: $};
 				nextPut: $.;
-				crlf;
-				crlf ]
+				newLine;
+				newLine ]
 ]
 
 { #category : #cleaning }

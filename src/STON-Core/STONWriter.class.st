@@ -250,7 +250,7 @@ STONWriter >> initialize [
 	super initialize.
 	stonCharacters := STONCharacters.
 	prettyPrint := false.
-	newLine := String cr.
+	newLine := String newLine.
 	level := 0.
 	referencePolicy := #normal.
 	jsonMode := keepNewLines := asciiOnly := false.

@@ -238,10 +238,10 @@ TestResult >> fileOutOn: aFileStream [
 	Errors:"	
 	| printer |
 	printer := [:title :testCases | 
-				aFileStream cr; nextPutAll: title; cr.
+				aFileStream newLine; nextPutAll: title; newLine.
 				testCases do: [:aTestCase| 
 								aTestCase printOn: aFileStream.
-								aFileStream cr]].
+								aFileStream newLine]].
 				
 	self printOn: aFileStream.	
 	printer value: 'Failures:' value: self failures.

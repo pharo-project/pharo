@@ -143,7 +143,7 @@ RBAddMethodChange >> printOn: aStream [
 		nextPutAll: ''' stamp: ';
 		print: self changeStamp;
 		nextPut: $!;
-		cr;
+		newLine;
 		nextPutAll: (source copyReplaceAll: '!' with: '!!');
 		nextPutAll: '! !'
 ]

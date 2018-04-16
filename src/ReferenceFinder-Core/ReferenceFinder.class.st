@@ -184,7 +184,7 @@ ReferenceFinder >> initialize [
 { #category : #private }
 ReferenceFinder >> printToDoNotice [
 	Transcript
-		cr;
+		newLine;
 		show: 'Level ';
 		show: backlinks size printString;
 		show: ' with ';

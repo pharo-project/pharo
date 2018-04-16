@@ -336,16 +336,10 @@ BISimpleFormatter >> newLine [
 { #category : #private }
 BISimpleFormatter >> newLines: anInteger [
 	anInteger + self indentString size = 0
-		ifTrue: 
-			[ codeStream space ].
-	anInteger
-		timesRepeat: 
-			[ codeStream cr ].
+		ifTrue: [ codeStream space ].
+	anInteger timesRepeat: [ codeStream newLine ].
 	lineStart := codeStream position.
-	self
-		indent
-		timesRepeat: 
-			[ codeStream nextPutAll: self indentString ]
+	self indent timesRepeat: [ codeStream nextPutAll: self indentString ]
 ]
 
 { #category : #private }

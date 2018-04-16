@@ -194,7 +194,7 @@ LimitingLineStreamWrapper >> upToEnd [
 	
 	^String streamContents: [:strm | | ln |
 		[(ln := self nextLine) isNil] whileFalse: [ 
-			strm nextPutAll: ln; cr]]
+			strm nextPutAll: ln; newLine]]
 ]
 
 { #category : #accessing }

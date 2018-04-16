@@ -34,5 +34,5 @@ OmSTONEntryWriter >> on: aStream nextEntryPut: anEntry [
 				on: aStream;
 				nextPut: anEntry.
 
-			aStream cr;cr ]
+			aStream cr; cr ]
 ]

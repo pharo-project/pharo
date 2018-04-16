@@ -31,15 +31,13 @@ ExceptionTester >> clearLog [
 
 { #category : #logging }
 ExceptionTester >> contents [
-
-	^( self log
+	^ (self log
 		inject: (String new: 80) writeStream
-		into: 
-			[:result :item |
-			result 
-				cr; 
+		into: [ :result :item | 
+			result
+				newLine;
 				nextPutAll: item;
-				yourself] ) contents
+				yourself ]) contents
 ]
 
 { #category : #'pseudo actions' }

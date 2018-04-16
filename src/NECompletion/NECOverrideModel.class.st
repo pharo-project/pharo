@@ -13,7 +13,7 @@ NECOverrideModel >> completionAt: aNumber [
 	source :=  (self methodAt: aNumber) sourceCode.
 	declaration := (source lineCorrespondingToIndex: 1) trimRight.
 	output := WriteStream on: String new.
-	output nextPutAll: declaration; cr; tab.
+	output nextPutAll: declaration; newLine; tab.
 	(source includesSubstring: 'subclassResponsibility') ifFalse: [
 		(source includes: $^)
 			ifTrue: [ output nextPutAll: '^ ' ].

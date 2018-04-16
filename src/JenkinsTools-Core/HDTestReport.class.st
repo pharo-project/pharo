@@ -68,16 +68,15 @@ HDTestReport >> beginTestCase: aTestCase runBlock: aBlock [
 	stream
 		tab;
 		nextPutAll: '<testcase classname="';
-		nextPutAll:
-			(self encode: (self generateTestName: aTestCase));
+		nextPutAll: (self generateTestName: aTestCase);
 		nextPut: $.;
-		nextPutAll: (self encode: aTestCase class name);
+		nextPutAll: aTestCase class name;
 		nextPutAll: '" name="';
-		nextPutAll: (self encode: aTestCase selector);
+		nextPutAll: aTestCase selector;
 		nextPutAll: '" time="';
 		print: time asMilliSeconds / 1000.0;
 		nextPutAll: '">';
-		lf
+		newLine
 ]
 
 { #category : #private }
@@ -107,9 +106,14 @@ HDTestReport >> done [
 
 { #category : #private }
 HDTestReport >> endTestCase [
-	stream tab; nextPutAll: '</testcase>'; lf.
-	progressFile nextPutAll: 'finished' ; crlf; flush.
-
+	stream
+		tab;
+		nextPutAll: '</testcase>';
+		newLine.
+	progressFile
+		nextPutAll: 'finished';
+		newLine;
+		flush
 ]
 
 { #category : #private }
@@ -143,9 +147,9 @@ HDTestReport >> initialize [
 	
 	aFile := File named: 'progress.log'.
 	aFile delete.
-	progressFile := ZnCharacterWriteStream
-			on: (aFile writeStream setToEnd; yourself)
-			encoding: 'utf8'.
+	progressFile := ZnNewLineWriterStream on: (ZnCharacterWriteStream
+		on: (aFile writeStream setToEnd; yourself)
+		encoding: 'utf8').
 			
 	nodeName := self calculateNodeName.
 	stageName := ''
@@ -223,43 +227,61 @@ HDTestReport >> serializeError: error of: aTestCase [
 
 { #category : #running }
 HDTestReport >> setUp [
-
 	| aFile fileName |
-	
-	progressFile nextPutAll: 'running suite: ';
-		nextPutAll: suite name ; crlf; flush.
-
-	fileName := stageName isEmpty ifTrue: [ '' ] ifFalse: [ stageName , '-' ].
+	progressFile
+		nextPutAll: 'running suite: ';
+		nextPutAll: suite name;
+		newLine;
+		flush.
+	fileName := stageName isEmpty
+		ifTrue: [ '' ]
+		ifFalse: [ stageName , '-' ].
 	fileName := fileName , suite name , '-Test.xml'.
-		
-	aFile := File named: fileName .
+	aFile := File named: fileName.
 	aFile delete.
-	stream := ZnCharacterWriteStream
-			on: (aFile writeStream setToEnd; yourself)
-			encoding: 'utf8'.	
-		
-	stream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'; lf.
-	stream nextPutAll: '<testsuite name="'; nextPutAll: (self encode: suite name); 
-		nextPutAll: '" tests="'; print: suite tests size; nextPutAll: '">'.
-	
+	stream := ZnNewLineWriterStream on: (ZnCharacterWriteStream
+		on:
+			(aFile writeStream
+				setToEnd;
+				yourself)
+		encoding: 'utf8').
+	stream
+		nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>';
+		newLine.
+	stream
+		nextPutAll: '<testsuite name="';
+		nextPutAll: suite name;
+		nextPutAll: '" tests="';
+		print: suite tests size;
+		nextPutAll: '">'.
+
 	"Now this is ugly. We want to update the time and the number of failures and errors, but still at the same time stream a valid XML. So remember this position and add some whitespace, that we can fill later."
-	suitePosition := stream wrappedStream position - 1.
-	stream nextPutAll: (String new: 100 withAll: $ ); lf.
-	
+	suitePosition := stream position - 1.
+	stream
+		nextPutAll: (String new: 100 withAll: $ );
+		newLine.
+
 	"Initialize the test resources."
-	suite resources do: [ :each |
-		each isAvailable
-			ifFalse: [ each signalInitializationError ] ]
+	suite resources
+		do: [ :each | 
+			each isAvailable
+				ifFalse: [ each signalInitializationError ] ]
 ]
 
 { #category : #private }
 HDTestReport >> stackTraceString: err of: aTestCase [
-	^ String streamContents: [ :str | 
-		| context |
-		context := err signalerContext.
-		[ context isNil or: [ context receiver == aTestCase and: [ context methodSelector == #runCase ] ] ] whileFalse: [
-			[str print: context; lf.] ifError: [ str nextPutAll: 'PRINTING ERROR'; lf].
-			context := context sender ] ] 
+	^ String
+		streamContents: [ :str | 
+			| context |
+			context := err signalerContext.
+			[ context isNil or: [ context receiver == aTestCase and: [ context methodSelector == #runCase ] ] ]
+				whileFalse: [ [ str
+						print: context;
+						newLine ]
+						ifError: [ str
+								nextPutAll: 'PRINTING ERROR';
+								newLine ].
+					context := context sender ] ]
 ]
 
 { #category : #accessing }
@@ -297,22 +319,27 @@ HDTestReport >> suiteTotal [
 
 { #category : #running }
 HDTestReport >> tearDown [
-	suite resources 
-		do: [ :each | each reset ].
-		
-	stream tab; nextPutAll: '<system-out><![CDATA[]]></system-out>'; lf.
-	stream tab; nextPutAll: '<system-err><![CDATA[]]></system-err>'; lf.
+	suite resources do: [ :each | each reset ].
+	stream
+		tab;
+		nextPutAll: '<system-out><![CDATA[]]></system-out>';
+		newLine.
+	stream
+		tab;
+		nextPutAll: '<system-err><![CDATA[]]></system-err>';
+		newLine.
 	stream nextPutAll: '</testsuite>'.
-	
 	stream wrappedStream position: suitePosition.
-	stream 
-		nextPutAll: ' failures="'; print: suiteFailures; 
-		nextPutAll: '" errors="'; print: suiteErrors; 
-		nextPutAll: '" time="'; print: suiteTime asMilliSeconds / 1000.0; 
+	stream
+		nextPutAll: ' failures="';
+		print: suiteFailures;
+		nextPutAll: '" errors="';
+		print: suiteErrors;
+		nextPutAll: '" time="';
+		print: suiteTime asMilliSeconds / 1000.0;
 		nextPutAll: '">'.
 	stream close.
-	
-	progressFile 
+	progressFile
 		nextPutAll: 'finished running suite: ';
 		nextPutAll: suite name;
 		close
@@ -335,25 +362,35 @@ HDTestReport >> writeError: anError andStack: aString for: aTestCase [
 { #category : #private }
 HDTestReport >> writeError: error stack: stack [
 	suiteErrors := suiteErrors + 1.
-	stream tab; tab; nextPutAll: '<error type="'.
+	stream
+		tab;
+		tab;
+		nextPutAll: '<error type="'.
 	self writeException: error stack: stack.
-	stream nextPutAll: '</error>'; lf
+	stream
+		nextPutAll: '</error>';
+		newLine
 ]
 
 { #category : #private }
 HDTestReport >> writeException: error stack: stack. [
 
 	stream 
-		nextPutAll: (self encode: error class name); 
-		nextPutAll: '" message="'; nextPutAll: (self encode: (error messageText ifNil: [ error description ])); 
+		nextPutAll: error class name;
+		nextPutAll: '" message="'; nextPutAll: (error messageText ifNil: [ error description ]);
 		nextPutAll: '">'; 
-		nextPutAll: (self encode: stack).
+		nextPutAll: stack
 ]
 
 { #category : #private }
 HDTestReport >> writeFailure: error stack: stack [
 	suiteFailures := suiteFailures + 1.
-	stream tab; tab; nextPutAll: '<failure type="'.
-	self writeException: error stack: stack.  
-	stream	nextPutAll: '</failure>'; lf
+	stream
+		tab;
+		tab;
+		nextPutAll: '<failure type="'.
+	self writeException: error stack: stack.
+	stream
+		nextPutAll: '</failure>';
+		newLine
 ]

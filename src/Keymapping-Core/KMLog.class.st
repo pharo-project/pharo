@@ -17,7 +17,7 @@ KMLog class >> log: aKeyEvent [
 	
 	self logger
 		nextPutAll: aKeyEvent printString;
-		cr;
+		newLine;
 		flush.
 ]
 
@@ -29,7 +29,7 @@ KMLog class >> logCompleteMatch: aKeymap [
 	self logger 
 		nextPutAll: 'Complete match: ';
 		nextPutAll: aKeymap printString;
-		cr;
+		newLine;
 		flush.
 ]
 
@@ -42,7 +42,7 @@ KMLog class >> logCompleteMatchBetween: aMorph and: aKeymap [
 		nextPutAll: aMorph printString;
 		nextPutAll: ' Complete match: ';
 		nextPutAll: aKeymap printString;
-		cr;
+		newLine;
 		flush.
 ]
 
@@ -54,7 +54,7 @@ KMLog class >> logPartialMatch: anEvent [
 	self logger 
 		nextPutAll: 'Partial match: ';
 		nextPutAll: anEvent printString;
-		cr;
+		newLine;
 		flush.
 ]
 

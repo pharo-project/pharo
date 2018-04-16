@@ -221,10 +221,8 @@ ExternalBrowser >> protocolsOfClass: aClass [
 { #category : #initialize }
 ExternalBrowser >> refreshClasses: pack [
 	self resetClassSelection.
-	pack 
-		ifNil: [ classes items: #() ] 
-		ifNotNil: [ classes items: (self classesOfPackage: pack)]. 
-	Transcript show: pack printString;cr
+	pack ifNil: [ classes items: #() ] ifNotNil: [ classes items: (self classesOfPackage: pack) ].
+	pack logCr
 ]
 
 { #category : #'selection operation' }

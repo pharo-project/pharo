@@ -802,10 +802,7 @@ AbstractFileReference >> writeStreamDo: doBlock ifPresent: presentBlock [
 
 { #category : #streams }
 AbstractFileReference >> writeStreamEncoded: anEncoding [
-
-	^ ZnCharacterWriteStream
-		on: self binaryWriteStream
-		encoding: anEncoding
+	^ ZnCharacterWriteStream on: self binaryWriteStream encoding: anEncoding
 ]
 
 { #category : #streams }

@@ -725,13 +725,13 @@ class variables in
 			aStream
 				nextPutAll: 'Unreferenced class variable(s) in ' translated;
 				nextPutAll: aClass name;
-				cr.
+				newLine.
 			aList
 				do: [ :el | 
 					aStream
 						tab;
 						nextPutAll: el;
-						cr ] ].
+						newLine ] ].
 	UIManager default inform: aReport
 ]
 
@@ -739,15 +739,27 @@ class variables in
 AbstractTool >> showUnreferencedInstVarsOf: aClass [
 	"Search for all instance variables known to the selected class, and put up a list of those that have no references anywhere in the system.  The search includes superclasses, so that you don't need to navigate your way to the class that defines each inst variable in order to determine whether it is unreferenced"
 
-	|  aList aReport |
-	(aClass isNil or: [aClass isTrait]) ifTrue: [^ self].
+	| aList aReport |
+	(aClass isNil or: [ aClass isTrait ])
+		ifTrue: [ ^ self ].
 	aList := aClass allUnreferencedInstanceVariables.
-	aList isEmpty ifTrue: [^ UIManager default inform: 'There are no unreferenced
+	aList isEmpty
+		ifTrue: [ ^ UIManager default
+				inform:
+					'There are no unreferenced
 instance variables in
-', aClass name].
-	aReport := String streamContents:
-		[:aStream |
-			aStream nextPutAll: 'Unreferenced instance variable(s) in ' translated, aClass name; cr.
-			aList do: [:el | aStream tab; nextPutAll: el; cr]].
+' , aClass name ].
+	aReport := String
+		streamContents: [ :aStream | 
+			aStream
+				nextPutAll: 'Unreferenced instance variable(s) in ' translated;
+				nextPutAll: aClass name;
+				newLine.
+			aList
+				do: [ :el | 
+					aStream
+						tab;
+						nextPutAll: el;
+						newLine ] ].
 	UIManager default inform: aReport
 ]

@@ -478,7 +478,7 @@ SourceFileArray >> reportString [
 	^ String streamContents: [ :aStream | 
 		{ self sourcesFileStream. self changesFileStream } 
 			do: [:each | each ifNotNil: [
-				aStream nextPutAll: each printString; cr ] ] ]
+				aStream nextPutAll: each printString; newLine ] ] ]
 ]
 
 { #category : #'public - string reading' }

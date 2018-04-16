@@ -48,11 +48,17 @@ GTUrlProvider class >> urlProvider: aUrlObject [
 ]
 
 { #category : #public }
-GTUrlProvider >> get: url [	
+GTUrlProvider >> get: url [
 	| contents |
 	contents := self httpClient get: url.
-	^ String new: contents size streamContents: [ :stream |
-		contents linesDo: [ :each | stream nextPutAll: each; cr ] ]
+	^ String
+		new: contents size
+		streamContents: [ :stream | 
+			contents
+				linesDo: [ :each | 
+					stream
+						nextPutAll: each;
+						newLine ] ]
 ]
 
 { #category : #private }

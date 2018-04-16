@@ -269,7 +269,7 @@ GrowlMorph >> is: rect saneWithRespectTo: morphs [
 GrowlMorph >> label: labelString contents: contentsString [
 
 	self streamDo: [ :w |
-		w withAttributes: self labelAttributes do: [w nextPutAll: labelString asString; cr].
+		w withAttributes: self labelAttributes do: [w nextPutAll: labelString asString; newLine].
 		w withAttributes: self contentsAttributes do: [w nextPutAll: contentsString asString].
 		].
 ]

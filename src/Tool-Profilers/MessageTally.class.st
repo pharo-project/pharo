@@ -355,7 +355,7 @@ MessageTally class >> tallySendsTo: receiver inBlock: aBlock showTree: treeOptio
 			withText: (String streamContents:
 				[:s |
 				s nextPutAll: 'This simulation took ' , totalTime printString
-								, ' seconds.'; cr.
+								, ' seconds.'; newLine.
 				treeOption
 					ifTrue: [ tallies fullPrintExactOn: s ]
 					ifFalse: [ tallies leavesPrintExactOn: s ].
@@ -448,7 +448,7 @@ MessageTally >> copyWithTally: hitCount [
 
 { #category : #printing }
 MessageTally >> fullPrintExactOn: aStream [
-	aStream nextPutAll: '**Tree**'; cr.
+	aStream nextPutAll: '**Tree**'; newLine.
 	self
 		treePrintOn: aStream
 		tabs: OrderedCollection new
@@ -457,8 +457,8 @@ MessageTally >> fullPrintExactOn: aStream [
 		totalTime: time
 		tallyExact: true
 		orThreshold: nil.
-	aStream nextPut: Character newPage; cr.
-	aStream nextPutAll: '**Leaves**'; cr.
+	aStream nextPut: Character newPage; newLine.
+	aStream nextPutAll: '**Leaves**'; newLine.
 	self leavesPrintExactOn: aStream
 ]
 
@@ -466,14 +466,14 @@ MessageTally >> fullPrintExactOn: aStream [
 MessageTally >> fullPrintOn: aStream threshold: perCent [
 	| threshold |  
 	threshold := (perCent asFloat / 100 * tally) rounded.
-	aStream nextPutAll: '**Tree**'; cr.
+	aStream nextPutAll: '**Tree**'; newLine.
 	self
 		rootPrintOn: aStream
 		total: tally
 		totalTime: time
 		threshold: threshold.
-	aStream nextPut: Character newPage; cr.
-	aStream nextPutAll: '**Leaves**'; cr.
+	aStream nextPut: Character newPage; newLine.
+	aStream nextPutAll: '**Leaves**'; newLine.
 	self
 		leavesPrintOn: aStream
 		threshold: threshold
@@ -641,7 +641,7 @@ MessageTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 		ifNil: [
 			aStream
 				nextPutAll: 'primitives';
-				cr]
+				newLine]
 		ifNotNil: [
 			| className aSelector aClass |
 			aSelector := method selector.
@@ -654,7 +654,7 @@ MessageTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 							ifFalse: ['(' , aClass name , ')>>']);
 				nextPutAll: (aSelector 
 							contractTo: self maxClassPlusSelectorSize - className size);
-				cr]
+				newLine]
 ]
 
 { #category : #printing }
@@ -701,7 +701,7 @@ MessageTally >> report: strm cutoff: threshold [
 	tally = 0
 		ifTrue: [strm nextPutAll: ' - no tallies obtained']
 		ifFalse: 
-			[strm nextPutAll: ' - '; print: tally; nextPutAll: ' tallies, ', time printString, ' msec.'; cr; cr.
+			[strm nextPutAll: ' - '; print: tally; nextPutAll: ' tallies, ', time printString, ' msec.'; newLine; newLine.
 			self fullPrintOn: strm threshold: threshold].
 		
 	time isZero ifFalse:	
@@ -712,61 +712,85 @@ MessageTally >> report: strm cutoff: threshold [
 MessageTally >> reportGCStatsOn: str [
 	| oldSpaceEnd youngSpaceEnd memoryEnd fullGCs fullGCTime incrGCs incrGCTime tenureCount upTime rootOverflows |
 	upTime := time.
-	oldSpaceEnd			:= gcStats at: 1.
-	youngSpaceEnd		:= gcStats at: 2.
-	memoryEnd			:= gcStats at: 3.
-	fullGCs				:= gcStats at: 7.
-	fullGCTime			:= gcStats at: 8.
-	incrGCs				:= gcStats at: 9.
-	incrGCTime			:= gcStats at: 10.
-	tenureCount			:= gcStats at: 11.
-	rootOverflows		:= gcStats at: 22.
-
-	str cr.
-	str	nextPutAll: '**Memory**'; cr.
-	str	nextPutAll:	'	old			'.
-	oldSpaceEnd printWithCommasSignedOn: str. 
-	str nextPutAll: ' bytes'; cr.
-	str	nextPutAll: '	young		'.
-	(youngSpaceEnd - oldSpaceEnd) printWithCommasSignedOn: str. 
-	str  nextPutAll: ' bytes'; cr.
-	str	nextPutAll: '	used		'.
-	youngSpaceEnd printWithCommasSignedOn: str. 
-	str  nextPutAll: ' bytes'; cr.
-	str	nextPutAll: '	free		'.
-	(memoryEnd - youngSpaceEnd) printWithCommasSignedOn: str. 
-	str  nextPutAll: ' bytes'; cr.
-
-	str cr.
-	str	nextPutAll: '**GCs**'; cr.
-	str	nextPutAll: '	full			';
-		print: fullGCs; nextPutAll: ' totalling '.
+	oldSpaceEnd := gcStats at: 1.
+	youngSpaceEnd := gcStats at: 2.
+	memoryEnd := gcStats at: 3.
+	fullGCs := gcStats at: 7.
+	fullGCTime := gcStats at: 8.
+	incrGCs := gcStats at: 9.
+	incrGCTime := gcStats at: 10.
+	tenureCount := gcStats at: 11.
+	rootOverflows := gcStats at: 22.
+	str newLine.
+	str
+		nextPutAll: '**Memory**';
+		newLine.
+	str nextPutAll: '	old			'.
+	oldSpaceEnd printWithCommasSignedOn: str.
+	str
+		nextPutAll: ' bytes';
+		newLine.
+	str nextPutAll: '	young		'.
+	youngSpaceEnd - oldSpaceEnd printWithCommasSignedOn: str.
+	str
+		nextPutAll: ' bytes';
+		newLine.
+	str nextPutAll: '	used		'.
+	youngSpaceEnd printWithCommasSignedOn: str.
+	str
+		nextPutAll: ' bytes';
+		newLine.
+	str nextPutAll: '	free		'.
+	memoryEnd - youngSpaceEnd printWithCommasSignedOn: str.
+	str
+		nextPutAll: ' bytes';
+		newLine.
+	str newLine.
+	str
+		nextPutAll: '**GCs**';
+		newLine.
+	str
+		nextPutAll: '	full			';
+		print: fullGCs;
+		nextPutAll: ' totalling '.
 	fullGCTime printWithCommasOn: str.
-	str nextPutAll: 'ms (';
-		print: ((fullGCTime / upTime * 100) roundTo: 1.0);
+	str
+		nextPutAll: 'ms (';
+		print: (fullGCTime / upTime * 100 roundTo: 1.0);
 		nextPutAll: '% uptime)'.
-	fullGCs = 0 ifFalse:
-		[str	nextPutAll: ', avg '; print: ((fullGCTime / fullGCs) roundTo: 1.0); nextPutAll: 'ms'].
-	str	cr.
-	str	nextPutAll: '	incr		';
-		print: incrGCs; nextPutAll: ' totalling '.
+	fullGCs = 0
+		ifFalse: [ str
+				nextPutAll: ', avg ';
+				print: (fullGCTime / fullGCs roundTo: 1.0);
+				nextPutAll: 'ms' ].
+	str newLine.
+	str
+		nextPutAll: '	incr		';
+		print: incrGCs;
+		nextPutAll: ' totalling '.
 	incrGCTime printWithCommasOn: str.
-	str nextPutAll: 'ms (';
-		print: ((incrGCTime / upTime * 100) roundTo: 1.0);
+	str
+		nextPutAll: 'ms (';
+		print: (incrGCTime / upTime * 100 roundTo: 1.0);
 		nextPutAll: '% uptime)'.
-	incrGCs = 0 ifFalse:
-		[str nextPutAll:', avg '; print: ((incrGCTime / incrGCs) roundTo: 1.0); nextPutAll: 'ms'].
-	str cr.
-	str	nextPutAll: '	tenures		'.
+	incrGCs = 0
+		ifFalse: [ str
+				nextPutAll: ', avg ';
+				print: (incrGCTime / incrGCs roundTo: 1.0);
+				nextPutAll: 'ms' ].
+	str newLine.
+	str nextPutAll: '	tenures		'.
 	tenureCount printWithCommasOn: str.
-	tenureCount = 0 ifFalse:
-		[str nextPutAll: ' (avg '; print: (incrGCs / tenureCount) asInteger; nextPutAll: ' GCs/tenure)'].
-	str	cr.
-	str	nextPutAll: '	root table	'.
+	tenureCount = 0
+		ifFalse: [ str
+				nextPutAll: ' (avg ';
+				print: (incrGCs / tenureCount) asInteger;
+				nextPutAll: ' GCs/tenure)' ].
+	str newLine.
+	str nextPutAll: '	root table	'.
 	rootOverflows printWithCommasOn: str.
-	str nextPutAll:' overflows'.
-	str cr.
-
+	str nextPutAll: ' overflows'.
+	str newLine
 ]
 
 { #category : #accessing }
@@ -789,9 +813,9 @@ MessageTally >> rootPrintOn: aStream total: total totalTime: totalTime threshold
 		sons := g asArray sort.
 		p := g anyOne process.
 		(reportOtherProcesses or: [ p notNil ]) ifTrue: [
-			aStream nextPutAll: '--------------------------------'; cr.
-			aStream nextPutAll: 'Process: ',  (p ifNil: [ 'other processes'] ifNotNil: [ p browserPrintString]); cr.
-			aStream nextPutAll: '--------------------------------'; cr.
+			aStream nextPutAll: '--------------------------------'; newLine.
+			aStream nextPutAll: 'Process: ',  (p ifNil: [ 'other processes'] ifNotNil: [ p browserPrintString]); newLine.
+			aStream nextPutAll: '--------------------------------'; newLine.
 			sons do: [ :son |
 				son
 					treePrintOn: aStream

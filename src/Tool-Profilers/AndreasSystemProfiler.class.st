@@ -116,91 +116,144 @@ AndreasSystemProfiler >> report: strm [
 ]
 
 { #category : #reporting }
-AndreasSystemProfiler >> report: strm cutoff: threshold [ 
-	tallyRoot ifNil: [ strm nextPutAll: 'The profiler has not been run'. ^ self ].
-	
+AndreasSystemProfiler >> report: strm cutoff: threshold [
+	tallyRoot
+		ifNil: [ strm nextPutAll: 'The profiler has not been run'.
+			^ self ].
 	tallyRoot tally isZero
-		ifTrue: [ strm nextPutAll: ' - no tallies obtained' ] 
-		ifFalse: [
-			strm nextPutAll: 'Reporting - ', totalTally asStringWithCommas,' tallies, ',
-							 totalTime asStringWithCommas, ' msec.'; cr; cr.
-			tallyRoot fullPrintOn: strm tallyExact: false orThreshold: threshold time: totalTime.
-	].
-
-	totalTime isZero ifFalse: [
-		self reportGCStatsOn: strm.
-		self reportProcessStatsOn: strm.
-	].
+		ifTrue: [ strm nextPutAll: ' - no tallies obtained' ]
+		ifFalse: [ strm
+				nextPutAll: 'Reporting - ' , totalTally asStringWithCommas , ' tallies, ' , totalTime asStringWithCommas , ' msec.';
+				newLine;
+				newLine.
+			tallyRoot
+				fullPrintOn: strm
+				tallyExact: false
+				orThreshold: threshold
+				time: totalTime ].
+	totalTime isZero
+		ifFalse: [ self reportGCStatsOn: strm.
+			self reportProcessStatsOn: strm ]
 ]
 
 { #category : #reporting }
 AndreasSystemProfiler >> reportGCStatsOn: str [
 	| oldSpaceEnd youngSpaceEnd memoryEnd fullGCs fullGCTime incrGCs incrGCTime tenureCount upTime rootOverflows |
 	upTime := totalTime.
-	oldSpaceEnd			:= vmStats at: 1.
-	youngSpaceEnd		:= vmStats at: 2.
-	memoryEnd			:= vmStats at: 3.
-	fullGCs				:= vmStats at: 7.
-	fullGCTime			:= vmStats at: 8.
-	incrGCs				:= vmStats at: 9.
-	incrGCTime			:= vmStats at: 10.
-	tenureCount			:= vmStats at: 11.
-	rootOverflows		:= vmStats at: 22.
-
-	str cr.
-	str	nextPutAll: '**Memory**'; cr.
-	str	nextPutAll:	'	old			';
-		nextPutAll: oldSpaceEnd asStringWithCommasSigned; nextPutAll: ' bytes'; cr.
-	str	nextPutAll: '	young		';
-		nextPutAll: (youngSpaceEnd - oldSpaceEnd) asStringWithCommasSigned; nextPutAll: ' bytes'; cr.
-	str	nextPutAll: '	used		';
-		nextPutAll: youngSpaceEnd asStringWithCommasSigned; nextPutAll: ' bytes'; cr.
-	str	nextPutAll: '	free		';
-		nextPutAll: (memoryEnd - youngSpaceEnd) asStringWithCommasSigned; nextPutAll: ' bytes'; cr.
-
-	str cr.
-	str	nextPutAll: '**GCs**'; cr.
-	str	nextPutAll: '	full			';
-		print: fullGCs; nextPutAll: ' totalling '; nextPutAll: fullGCTime asStringWithCommas; nextPutAll: 'ms (';
-		print: ((fullGCTime / upTime * 100) roundTo: 1.0);
+	oldSpaceEnd := vmStats at: 1.
+	youngSpaceEnd := vmStats at: 2.
+	memoryEnd := vmStats at: 3.
+	fullGCs := vmStats at: 7.
+	fullGCTime := vmStats at: 8.
+	incrGCs := vmStats at: 9.
+	incrGCTime := vmStats at: 10.
+	tenureCount := vmStats at: 11.
+	rootOverflows := vmStats at: 22.
+	str newLine.
+	str
+		nextPutAll: '**Memory**';
+		newLine.
+	str
+		nextPutAll: '	old			';
+		nextPutAll: oldSpaceEnd asStringWithCommasSigned;
+		nextPutAll: ' bytes';
+		newLine.
+	str
+		nextPutAll: '	young		';
+		nextPutAll: (youngSpaceEnd - oldSpaceEnd) asStringWithCommasSigned;
+		nextPutAll: ' bytes';
+		newLine.
+	str
+		nextPutAll: '	used		';
+		nextPutAll: youngSpaceEnd asStringWithCommasSigned;
+		nextPutAll: ' bytes';
+		newLine.
+	str
+		nextPutAll: '	free		';
+		nextPutAll: (memoryEnd - youngSpaceEnd) asStringWithCommasSigned;
+		nextPutAll: ' bytes';
+		newLine.
+	str newLine.
+	str
+		nextPutAll: '**GCs**';
+		newLine.
+	str
+		nextPutAll: '	full			';
+		print: fullGCs;
+		nextPutAll: ' totalling ';
+		nextPutAll: fullGCTime asStringWithCommas;
+		nextPutAll: 'ms (';
+		print: (fullGCTime / upTime * 100 roundTo: 1.0);
 		nextPutAll: '% uptime)'.
-	fullGCs = 0 ifFalse:
-		[str	nextPutAll: ', avg '; print: ((fullGCTime / fullGCs) roundTo: 1.0); nextPutAll: 'ms'].
-	str	cr.
-	str	nextPutAll: '	incr		';
-		print: incrGCs; nextPutAll: ' totalling '; nextPutAll: incrGCTime asStringWithCommas; nextPutAll: 'ms (';
-		print: ((incrGCTime / upTime * 100) roundTo: 1.0);
+	fullGCs = 0
+		ifFalse: [ str
+				nextPutAll: ', avg ';
+				print: (fullGCTime / fullGCs roundTo: 1.0);
+				nextPutAll: 'ms' ].
+	str newLine.
+	str
+		nextPutAll: '	incr		';
+		print: incrGCs;
+		nextPutAll: ' totalling ';
+		nextPutAll: incrGCTime asStringWithCommas;
+		nextPutAll: 'ms (';
+		print: (incrGCTime / upTime * 100 roundTo: 1.0);
 		nextPutAll: '% uptime)'.
-	incrGCs = 0 ifFalse:
-		[str nextPutAll:', avg '; print: ((incrGCTime / incrGCs) roundTo: 1.0); nextPutAll: 'ms'].
-	str cr.
-	str	nextPutAll: '	tenures		';
+	incrGCs = 0
+		ifFalse: [ str
+				nextPutAll: ', avg ';
+				print: (incrGCTime / incrGCs roundTo: 1.0);
+				nextPutAll: 'ms' ].
+	str newLine.
+	str
+		nextPutAll: '	tenures		';
 		nextPutAll: tenureCount asStringWithCommas.
-	tenureCount = 0 ifFalse:
-		[str nextPutAll: ' (avg '; print: (incrGCs / tenureCount) asInteger; nextPutAll: ' GCs/tenure)'].
-	str	cr.
-	str	nextPutAll: '	root table	';
-		nextPutAll: rootOverflows asStringWithCommas; nextPutAll:' overflows'.
-	str cr.
-
+	tenureCount = 0
+		ifFalse: [ str
+				nextPutAll: ' (avg ';
+				print: (incrGCs / tenureCount) asInteger;
+				nextPutAll: ' GCs/tenure)' ].
+	str newLine.
+	str
+		nextPutAll: '	root table	';
+		nextPutAll: rootOverflows asStringWithCommas;
+		nextPutAll: ' overflows'.
+	str newLine
 ]
 
 { #category : #reporting }
 AndreasSystemProfiler >> reportProcessStatsOn: str [
 	| totalSwitches pageOverflows pageDivorces actualSwitches |
-	vmStats size >= 61 ifFalse: [ ^ self ]. "don't try this on the closure VM"
+	vmStats size >= 61
+		ifFalse: [ ^ self ].	"don't try this on the closure VM"
 	totalSwitches := vmStats at: 56.
-	actualSwitches := totalSwitches - (2*totalTally). "exclude to/from profiler"
+	actualSwitches := totalSwitches - (2 * totalTally).	"exclude to/from profiler"
 	pageOverflows := vmStats at: 60.
 	pageDivorces := vmStats at: 61.
-
-	str cr.
-	str nextPutAll: '**Processes**'; cr.
-	str tab; nextPutAll: 'Total process switches: ', totalSwitches printString; cr.
-	str tab; nextPutAll: 'Without Profiler: ', actualSwitches printString; cr.
-	str tab; nextPutAll: 'Stack page overflows: ', pageOverflows printString; cr.
-	str tab; nextPutAll: 'Stack page divorces: ', pageDivorces printString; cr.
-
+	str newLine.
+	str
+		nextPutAll: '**Processes**';
+		newLine.
+	str
+		tab;
+		nextPutAll: 'Total process switches: ';
+		nextPutAll: totalSwitches printString;
+		newLine.
+	str
+		tab;
+		nextPutAll: 'Without Profiler: ';
+		nextPutAll: actualSwitches printString;
+		newLine.
+	str
+		tab;
+		nextPutAll: 'Stack page overflows: ';
+		nextPutAll: pageOverflows printString;
+		newLine.
+	str
+		tab;
+		nextPutAll: 'Stack page divorces: ';
+		nextPutAll: pageDivorces printString;
+		newLine
 ]
 
 { #category : #profiling }

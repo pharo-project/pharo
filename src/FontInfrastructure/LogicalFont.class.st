@@ -707,16 +707,16 @@ LogicalFont >> pointSize: aNumber [
 LogicalFont >> printOn: aStream [
 	super printOn: aStream.
 	aStream
-		cr;
+		newLine;
 		nextPutAll: ' familyName: ';
 		nextPutAll: familyName asString;
-		cr;
+		newLine;
 		nextPutAll: ' emphasis: ';
 		nextPutAll: emphasis asString;
-		cr;
+		newLine;
 		nextPutAll: ' pointSize: ';
 		nextPutAll: pointSize asString;
-		cr;
+		newLine;
 		nextPutAll: ' realFont: ';
 		nextPutAll: realFont asString;
 		nextPutAll: ' weight: ';

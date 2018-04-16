@@ -447,60 +447,70 @@ MCClassDefinition >> printAnnotations: requests on: aStream [
 MCClassDefinition >> printClassDefinitionOn: stream [
 	"Print a class-side definition of the receiver on the given stream.
 	Class instance variables and class traits."
-	
-		stream
-			nextPutAll: self className;
-			nextPutAll: ' class';
-			cr; tab.
-		self hasClassTraitComposition ifTrue: [
-			stream 
+
+	stream
+		nextPutAll: self className;
+		nextPutAll: ' class';
+		newLine;
+		tab.
+	self hasClassTraitComposition
+		ifTrue: [ stream
 				nextPutAll: 'uses: ';
-		 		nextPutAll: self classTraitCompositionString;
-				cr; tab ].
-		stream
-			nextPutAll: 'instanceVariableNames: ';
-			store: self classInstanceVariablesString
+				nextPutAll: self classTraitCompositionString;
+				newLine;
+				tab ].
+	stream
+		nextPutAll: 'instanceVariableNames: ';
+		store: self classInstanceVariablesString
 ]
 
 { #category : #printing }
 MCClassDefinition >> printDefinitionOn: stream [
-		stream 
-			nextPutAll: self superclassName;
-			nextPutAll: self kindOfSubclass;
-			nextPut: $# ;
-			nextPutAll: self className;
-			cr; tab.
-		self hasTraitComposition ifTrue: [
-			stream 
+	stream
+		nextPutAll: self superclassName;
+		nextPutAll: self kindOfSubclass;
+		nextPut: $#;
+		nextPutAll: self className;
+		newLine;
+		tab.
+	self hasTraitComposition
+		ifTrue: [ stream
 				nextPutAll: 'uses: ';
-		 		nextPutAll: self traitCompositionString;
-				cr; tab ].
-		stream
-			nextPutAll: 'instanceVariableNames: ';
-			store: self instanceVariablesString;
-			cr; tab;
-			nextPutAll: 'classVariableNames: ';
-			store: self classVariablesString;
-			cr; tab;
-			nextPutAll: 'poolDictionaries: ';
-			store: self sharedPoolsString;
-			cr; tab;
-			nextPutAll: 'category: ';
-			store: self category asString
+				nextPutAll: self traitCompositionString;
+				newLine;
+				tab ].
+	stream
+		nextPutAll: 'instanceVariableNames: ';
+		store: self instanceVariablesString;
+		newLine;
+		tab;
+		nextPutAll: 'classVariableNames: ';
+		store: self classVariablesString;
+		newLine;
+		tab;
+		nextPutAll: 'poolDictionaries: ';
+		store: self sharedPoolsString;
+		newLine;
+		tab;
+		nextPutAll: 'category: ';
+		store: self category asString
 ]
 
 { #category : #printing }
 MCClassDefinition >> printMetaDefinitionOn: stream [
-	stream 
-		nextPutAll: self className;
-		nextPutAll: ' class'; cr; tab.
-	self hasClassTraitComposition ifTrue: [
-		stream
-			nextPutAll: 'uses: ';
-			nextPutAll: self classTraitCompositionString;
-			cr; tab ].
 	stream
-		nextPutAll: ' instanceVariableNames: '; 
+		nextPutAll: self className;
+		nextPutAll: ' class';
+		newLine;
+		tab.
+	self hasClassTraitComposition
+		ifTrue: [ stream
+				nextPutAll: 'uses: ';
+				nextPutAll: self classTraitCompositionString;
+				newLine;
+				tab ].
+	stream
+		nextPutAll: ' instanceVariableNames: ';
 		store: self classInstanceVariablesString
 ]
 

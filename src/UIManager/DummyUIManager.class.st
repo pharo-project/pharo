@@ -90,7 +90,7 @@ DummyUIManager >> informUserDuring: aBlock [
 { #category : #'default actions' }
 DummyUIManager >> lowSpaceWatcherDefaultAction [
 
-	Transcript show: '*** LOW SPACE ***'; cr.
+	Transcript show: '*** LOW SPACE ***'; newLine.
 
 ]
 
@@ -157,17 +157,20 @@ DummyUIManager >> restoreDisplayAfter: aBlock [
 { #category : #'default actions' }
 DummyUIManager >> syntaxErrorNotificationDefaultAction: anException [
 
-	Transcript show: '*** SYNTAX ERROR ***'; cr.
-	Transcript show: anException; cr.
-	Transcript show: (thisContext stack first: (20 min: thisContext stack size)); cr.
+	Transcript show: '*** SYNTAX ERROR ***'; newLine.
+	Transcript show: anException; newLine.
+	Transcript show: (thisContext stack first: (20 min: thisContext stack size)); newLine.
 	anException return.
 ]
 
 { #category : #'default actions' }
 DummyUIManager >> unhandledErrorDefaultAction: anException [
-
-	Transcript show: '*** EXCEPTION ***'; cr.
-	Transcript show: anException; cr.
+	Transcript
+		show: '*** EXCEPTION ***';
+		newLine.
+	Transcript
+		show: anException;
+		newLine.
 	anException signalerContext errorReportOn: Transcript.
 	Smalltalk exitFailure
 ]

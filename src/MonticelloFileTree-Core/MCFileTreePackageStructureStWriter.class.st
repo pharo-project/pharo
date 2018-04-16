@@ -62,14 +62,14 @@ MCFileTreePackageStructureStWriter >> writeDefinitions: aCollection [
 
 { #category : #writing }
 MCFileTreePackageStructureStWriter >> writeMethodPreamble: definition [
-    stream
-        cr;
-        nextPut: $!;
-        nextPutAll: definition fullClassName;
-        nextPutAll: ' methodsFor: ';
-        nextPutAll: definition category asString printString;
-        nextPutAll: '!';
-        cr
+	stream
+		newLine;
+		nextPut: $!;
+		nextPutAll: definition fullClassName;
+		nextPutAll: ' methodsFor: ';
+		nextPutAll: definition category asString printString;
+		nextPutAll: '!';
+		newLine
 ]
 
 { #category : #writing }
@@ -85,13 +85,13 @@ MCFileTreePackageStructureStWriter >> writePresentInitializers [
 
 { #category : #writing }
 MCFileTreePackageStructureStWriter >> writeProperties [
-    stream
-        nextPut: ${;
-        cr;
-        nextPutAll: '    "noMethodMetaData" : true,';
-        cr;
-        nextPutAll: '    "separateMethodMetaAndSource" : false';
-        cr;
-        nextPut: $};
-        cr
+	stream
+		nextPut: ${;
+		newLine;
+		nextPutAll: '    "noMethodMetaData" : true,';
+		newLine;
+		nextPutAll: '    "separateMethodMetaAndSource" : false';
+		newLine;
+		nextPut: $};
+		newLine
 ]

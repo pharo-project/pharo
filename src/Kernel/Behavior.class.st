@@ -1347,7 +1347,9 @@ Behavior >> literalScannedAs: scannedLiteral notifying: requestor [
 Behavior >> longPrintOn: aStream [
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  But, not useful for a class with a method dictionary."
 
-	aStream nextPutAll: '<<too complex to show>>'; cr.
+	aStream
+		nextPutAll: '<<too complex to show>>';
+		newLine
 ]
 
 { #category : #'accessing method dictionary' }
@@ -1528,12 +1530,14 @@ Behavior >> printHierarchy [
 	aStream := (String new: 16) writeStream.
 	self allSuperclasses reverseDo: 
 		[:aClass | 
-		aStream crtab: index.
+		aStream
+			newLine;
+			tab: index.
 		index := index + 1.
 		aStream nextPutAll: aClass name.
 		aStream space.
 		aStream print: aClass instVarNames].
-	aStream cr.
+	aStream newLine.
 	self printSubclassesOn: aStream level: index.
 	^aStream contents
 ]

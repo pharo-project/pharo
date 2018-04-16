@@ -277,7 +277,7 @@ HeapTest >> heapExample [	"HeapTest new heapExample"
 			sorted removeFirst.
 			sorted add: rnd next].
 	].
-	Transcript cr; show:'Time for Heap: ', time printString,' msecs'.
+	Transcript newLine; show:'Time for Heap: ', time printString,' msecs'.
 	"The quicksort version"
 	time := Time millisecondsToRun:[
 		sorted := SortedCollection withAll: array.
@@ -285,7 +285,7 @@ HeapTest >> heapExample [	"HeapTest new heapExample"
 			sorted removeFirst.
 			sorted add: rnd next].
 	].
-	Transcript cr; show:'Time for SortedCollection: ', time printString,' msecs'.
+	Transcript newLine; show:'Time for SortedCollection: ', time printString,' msecs'.
 
 ]
 
@@ -303,17 +303,17 @@ HeapTest >> heapSortExample [	"HeapTest new heapSortExample"
 		sorted := Heap withAll: array.
 		1 to: n do:[:i| sorted removeFirst].
 	].
-	Transcript cr; show:'Time for heap-sort: ', time printString,' msecs'.
+	Transcript newLine; show:'Time for heap-sort: ', time printString,' msecs'.
 	"The quicksort version"
 	time := Time millisecondsToRun:[
 		sorted := SortedCollection withAll: array.
 	].
-	Transcript cr; show:'Time for quick-sort: ', time printString,' msecs'.
+	Transcript newLine; show:'Time for quick-sort: ', time printString,' msecs'.
 	"The merge-sort version"
 	time := Time millisecondsToRun:[
 		array mergeSortFrom: 1 to: array size by: [:v1 :v2| v1 <= v2].
 	].
-	Transcript cr; show:'Time for merge-sort: ', time printString,' msecs'.
+	Transcript newLine; show:'Time for merge-sort: ', time printString,' msecs'.
 
 ]
 

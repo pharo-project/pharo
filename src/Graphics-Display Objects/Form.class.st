@@ -2417,7 +2417,7 @@ Form >> store15To24HexBitsOn:aStream [
 		buf at: (i := i + 1) put: ((word bitShift: -6) bitAnd: 8) asHexDigit.
 		aStream nextPutAll: buf.
 		lineWidth := lineWidth + 12.
-		lineWidth > 100 ifTrue: [ aStream cr. lineWidth := 0 ].
+		lineWidth > 100 ifTrue: [ aStream newLine. lineWidth := 0 ].
 		"#( 31 26 21 15 10 5 )  do:[:startBit | ]"
 	].
 ]

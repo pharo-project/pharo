@@ -224,15 +224,18 @@ MCVersion >> snapshot [
 
 { #category : #accessing }
 MCVersion >> summary [
-	^ String streamContents:
-		[:s |
-		s nextPutAll: info summaryHeader.
-		(dependencies isNil or: [dependencies isEmpty]) ifFalse:
-			[s cr; nextPutAll: 'Dependencies: '.
-			dependencies
-				do: [:ea | s nextPutAll: ea versionInfo name]
-				separatedBy: [s nextPutAll: ', ']].
-		s cr; cr; nextPutAll: info message]
+	^ String
+		streamContents: [ :s | 
+			s nextPutAll: info summaryHeader.
+			(dependencies isNil or: [ dependencies isEmpty ])
+				ifFalse: [ s
+						newLine;
+						nextPutAll: 'Dependencies: '.
+					dependencies do: [ :ea | s nextPutAll: ea versionInfo name ] separatedBy: [ s nextPutAll: ', ' ] ].
+			s
+				newLine;
+				newLine;
+				nextPutAll: info message ]
 ]
 
 { #category : #enumerating }

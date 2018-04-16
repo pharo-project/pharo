@@ -35,35 +35,35 @@ SpaceTally >> compareTallyIn: beforeFileName to: afterFileName [
 
 	| answer beforeDict a afterDict allKeys |
 	beforeDict := Dictionary new.
-	beforeFileName asFileReference readStreamDo: [ :s|
-		[s atEnd] whileFalse: [
-			a := Array readFrom: s nextLine.
-			beforeDict at: a first put: a allButFirst ]].
+	beforeFileName asFileReference
+		readStreamDo: [ :s | 
+			[ s atEnd ]
+				whileFalse: [ a := Array readFrom: s nextLine.
+					beforeDict at: a first put: a allButFirst ] ].
 	afterDict := Dictionary new.
-	
-	afterFileName asFileReference readStreamDo: [ :s|
-		[s atEnd] whileFalse: [
-			a := Array readFrom: s nextLine.
-			afterDict at: a first put: a allButFirst ]].
-
+	afterFileName asFileReference
+		readStreamDo: [ :s | 
+			[ s atEnd ]
+				whileFalse: [ a := Array readFrom: s nextLine.
+					afterDict at: a first put: a allButFirst ] ].
 	answer := String new writeStream.
-	allKeys := (Set new addAll: beforeDict keys; addAll: afterDict keys; yourself) asSortedCollection.
-	allKeys do: [ :each | | before diff after |
-		before := beforeDict at: each ifAbsent: [#(0 0 0)].
-		after := afterDict at: each ifAbsent: [#(0 0 0)].
-		diff := before with: after collect: [ :vBefore :vAfter | vAfter - vBefore].
-		diff = #(0 0 0) ifFalse: [
-			answer nextPutAll: each,'  ',diff printString; cr.
-		].
-	].
+	allKeys := (Set new
+		addAll: beforeDict keys;
+		addAll: afterDict keys;
+		yourself) asSortedCollection.
+	allKeys
+		do: [ :each | 
+			| before diff after |
+			before := beforeDict at: each ifAbsent: [ #(0 0 0) ].
+			after := afterDict at: each ifAbsent: [ #(0 0 0) ].
+			diff := before with: after collect: [ :vBefore :vAfter | vAfter - vBefore ].
+			diff = #(0 0 0)
+				ifFalse: [ answer
+						nextPutAll: each , '  ' , diff printString;
+						newLine ] ].
 	StandardWindow new
-		withText: answer contents
-		label: 'space diffs';
+		withText: answer contents label: 'space diffs';
 		openInWorld
-	
-
-
-
 ]
 
 { #category : #fileout }
@@ -119,7 +119,7 @@ SpaceTally >> printHeader: aStream [
 		nextPutAll: ('inst space' padLeftTo: 12);
 		nextPutAll: ('percent' padLeftTo: 12);
 		nextPutAll: ('inst average size' padLeftTo: 20);
-		cr
+		newLine
 ]
 
 { #category : #fileout }
@@ -181,7 +181,7 @@ SpaceTally >> printSpaceAnalysis: threshold on: aStream [
 			totalPercent := totalPercent + percent.
 			self printSpaceTallyItem: s percent: percent on: aStream ].
 	aStream
-		cr;
+		newLine;
 		nextPutAll: ('Total' padRightTo: 45);
 		nextPutAll: (totalCodeSpace printString padLeftTo: 12);
 		nextPutAll: (totalInstCount printString padLeftTo: 12);
@@ -214,11 +214,11 @@ SpaceTally >> printSpaceDifferenceFrom: fileName1 to: fileName2 [
 	StandardWindow new 
 		withText: (String streamContents: 
 			[:s | 
-			s nextPutAll: fileName1; cr.
-			coll1 do: [:x | s nextPutAll: x; cr].
-			s cr; cr.
-			s nextPutAll: fileName2; cr.
-			coll2 do: [:x | s nextPutAll: x; cr]])
+			s nextPutAll: fileName1; newLine.
+			coll1 do: [:x | s nextPutAll: x; newLine].
+			s newLine; newLine.
+			s nextPutAll: fileName2; newLine.
+			coll2 do: [:x | s nextPutAll: x; newLine]])
 		 label: 'Differential Space Analysis';
 		openInWorld
 ]
@@ -233,7 +233,7 @@ SpaceTally >> printSpaceTallyItem: aSpaceTallyItem percent: percent on: aStream 
 	aStream 
 		nextPutAll: ((percent printShowingDecimalPlaces: 2) padLeftTo: 12);
 		nextPutAll: (((aSpaceTallyItem spaceForInstances / (aSpaceTallyItem instanceCount max: 1)) asFloat printShowingDecimalPlaces: 2) padLeftTo: 20);
-		cr
+		newLine
 ]
 
 { #category : #accessing }
@@ -256,7 +256,7 @@ SpaceTally >> saveTo: aFileName [
 		results do: [:each | s nextPutAll: each analyzedClassName asString ; 
 						nextPutAll: ' '; nextPutAll: each codeSize printString; 
 						nextPutAll: ' '; nextPutAll: each instanceCount printString; 
-						nextPutAll: ' '; nextPutAll: each spaceForInstances printString; cr]].
+						nextPutAll: ' '; nextPutAll: each spaceForInstances printString; newLine]].
 ]
 
 { #category : #utilities }

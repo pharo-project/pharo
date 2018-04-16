@@ -59,9 +59,9 @@ NonInteractiveUIManager >> chooseFullFileNameMatching: patterns label: labelStri
 { #category : #'ui requests' }
 NonInteractiveUIManager >> chooseOrRequestFrom: labelList values: valueList lines: linesArray title: aString [
 	 ^ self nonInteractiveWarning: (String streamContents: [ :s|
-			s nextPutAll: 'Choice Request: '; nextPutAll: aString; cr.
+			s nextPutAll: 'Choice Request: '; nextPutAll: aString; newLine.
 			labelList with: valueList do: [ :label :value| 
-				s tab; nextPutAll: label asString; nextPutAll: ':'; tab; print: value; cr ]])
+				s tab; nextPutAll: label asString; nextPutAll: ':'; tab; print: value; newLine ]])
 ]
 
 { #category : #'ui requests' }
@@ -105,10 +105,20 @@ NonInteractiveUIManager >> debugProcess: process context: context label: title f
 { #category : #'ui requests' }
 NonInteractiveUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 	"Open an editor on the given string/text"
-	^self nonInteractiveWarning: (String streamContents: [ :s |
-		s  nextPutAll: 'Editing Text: '.
-		labelString ifNotNil: [ s nextPutAll: '[ '; nextPutAll: labelString; nextPutAll: ' ] '].
-		s cr; nextPutAll: aText])
+
+	^ self
+		nonInteractiveWarning:
+			(String
+				streamContents: [ :s | 
+					s nextPutAll: 'Editing Text: '.
+					labelString
+						ifNotNil: [ s
+								nextPutAll: '[ ';
+								nextPutAll: labelString;
+								nextPutAll: ' ] ' ].
+					s
+						newLine;
+						nextPutAll: aText ])
 ]
 
 { #category : #'ui requests' }

@@ -83,35 +83,40 @@ BalloonEngine class >> primitiveSetBitBltPlugin: pluginName [
 BalloonEngine class >> printBezierStats [
 	<script>
 	Transcript 
-		cr; nextPutAll:'Bezier statistics:';
-		cr; tab; print: (BezierStats at: 1); tab; nextPutAll:' non-monoton curves splitted';
-		cr; tab; print: (BezierStats at: 2); tab; nextPutAll:' curves splitted for numerical accuracy';
-		cr; tab; print: (BezierStats at: 3); tab; nextPutAll:' curves splitted to avoid integer overflow';
-		cr; tab; print: (BezierStats at: 4); tab; nextPutAll:' curves internally converted to lines';
+		newLine; nextPutAll:'Bezier statistics:';
+		newLine; tab; print: (BezierStats at: 1); tab; nextPutAll:' non-monoton curves splitted';
+		newLine; tab; print: (BezierStats at: 2); tab; nextPutAll:' curves splitted for numerical accuracy';
+		newLine; tab; print: (BezierStats at: 3); tab; nextPutAll:' curves splitted to avoid integer overflow';
+		newLine; tab; print: (BezierStats at: 4); tab; nextPutAll:' curves internally converted to lines';
 	endEntry.
 ]
 
 { #category : #profiling }
 BalloonEngine class >> printStat: time count: n string: aString [
 	Transcript
-		cr;
-		print: time; tab;
-		nextPutAll:' mSecs -- ';
-		print: n; tab;
-		nextPutAll:' ops -- ';
-		print: ((time asFloat / (n max: 1) asFloat) roundTo: 0.01); tab;
+		newLine;
+		print: time;
+		tab;
+		nextPutAll: ' mSecs -- ';
+		print: n;
+		tab;
+		nextPutAll: ' ops -- ';
+		print: (time asFloat / (n max: 1) asFloat roundTo: 0.01);
+		tab;
 		nextPutAll: ' avg. mSecs/op -- ';
-		nextPutAll: aString.
+		nextPutAll: aString
 ]
 
 { #category : #profiling }
 BalloonEngine class >> printStats [
-	<script: '
+	<script:
+		'
 	BalloonEngine doProfileStats: true.
 	BalloonEngine printStats.
 	BalloonEngine resetStats'>
-	
-	Transcript cr; nextPutAll:'/************** BalloonEngine statistics ****************/'.
+	Transcript
+		newLine;
+		nextPutAll: '/************** BalloonEngine statistics ****************/'.
 	self printStat: (Times at: 1) count: (Counts at: 1) string: 'Initialization'.
 	self printStat: (Times at: 2) count: (Counts at: 2) string: 'Finish test'.
 	self printStat: (Times at: 3) count: (Counts at: 3) string: 'Fetching/Adding GET entries'.
@@ -121,9 +126,15 @@ BalloonEngine class >> printStats [
 	self printStat: (Times at: 7) count: (Counts at: 7) string: 'Displaying span buffer'.
 	self printStat: (Times at: 8) count: (Counts at: 8) string: 'Fetching/Updating AET entries'.
 	self printStat: (Times at: 9) count: (Counts at: 9) string: 'Changing AET entries'.
-	Transcript cr; print: Times sum; nextPutAll:' mSecs for all operations'.
-	Transcript cr; print: Counts sum; nextPutAll: ' overall operations'.
-	Transcript endEntry.
+	Transcript
+		newLine;
+		print: Times sum;
+		nextPutAll: ' mSecs for all operations'.
+	Transcript
+		newLine;
+		print: Counts sum;
+		nextPutAll: ' overall operations'.
+	Transcript endEntry
 ]
 
 { #category : #private }

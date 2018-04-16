@@ -41,9 +41,8 @@ PharoChangesCondenser >> basicCondense [
 { #category : #public }
 PharoChangesCondenser >> condense [
 	job := [ 
-		newChangesFile writeStreamDo: [ :aStream |
-			  stream := aStream.
-			  self basicCondense ].
+		stream := newChangesFile tryOpen.
+		self basicCondense.
   		self
         installNewChangesFile;
   		  reset
@@ -100,14 +99,14 @@ PharoChangesCondenser >> installNewChangesFile [
 
 { #category : #helper }
 PharoChangesCondenser >> nextChunkDo: aBlock [
-	(ChunkWriteStream on: stream) nextPut: (String streamContents: aBlock)
+	stream nextChunkPut: (String streamContents: aBlock)
 ]
 
 { #category : #helper }
 PharoChangesCondenser >> nextCommentChunkDo: aBlock [
-	stream cr; nextPut: $!.
+	stream newLine; nextPut: $!.
 	self nextChunkDo: aBlock.
-	stream cr
+	stream newLine
 ]
 
 { #category : #accessing }
@@ -118,7 +117,9 @@ PharoChangesCondenser >> originalFile [
 { #category : #initialization }
 PharoChangesCondenser >> reset [
 	remoteStringMap := IdentityDictionary new.
-	newChangesFile := self temporaryFile.
+	newChangesFile := SourceFile on: self temporaryFile potentialLocations: {
+			FileLocator imageDirectory.
+			FileLocator workingDirectory }.
 	
 	"Keep a copy of the source streams for performance"
 	sourceStreams := Array
@@ -221,7 +222,7 @@ PharoChangesCondenser >> writeMethodSource: aMethod [
 		writeRemoteString: aMethod sourceCode
 		for: aMethod.
 		
-	stream nextPutAll: ' !'; cr.
+	stream nextPutAll: ' !'; newLine.
 ]
 
 { #category : #'private - 1 writing' }

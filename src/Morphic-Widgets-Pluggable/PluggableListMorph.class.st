@@ -308,7 +308,7 @@ PluggableListMorph >> copyListToClipboard [
 
 	| stream |
 	stream := (String new: self getList size * 40) writeStream.
-	list do: [:ea | stream nextPutAll: ea asString] separatedBy: [stream nextPut: Character cr].
+	list do: [:ea | stream nextPutAll: ea asString] separatedBy: [stream nextPutAll: String newLine].
 	Clipboard clipboardText: stream contents
 ]
 
@@ -1718,7 +1718,7 @@ PluggableListMorph >> userString [
 	^list ifNotNil: [ 
 		String streamContents: [:strm |
 			list do: [:i |
-				strm nextPutAll: (i string); cr
+				strm nextPutAll: (i string); newLine
 			]
 		]
 	]

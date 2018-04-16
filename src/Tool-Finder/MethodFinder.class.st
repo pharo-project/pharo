@@ -625,7 +625,7 @@ MethodFinder >> initialize2 [
 "accessing" byteAt: endsWithDigit #findAnySubstring:startingAt: #findBetweenSubstrings: findDelimiters:startingAt: findString:startingAt: findString:startingAt:caseSensitive: findTokens: findTokens:includes: findTokens:keep: #includesSubstring: includesSubstring:caseSensitive: indexOf:startingAt: indexOfAnyOf: indexOfAnyOf:ifAbsent: indexOfAnyOf:startingAt: indexOfAnyOf:startingAt:ifAbsent: lineCorrespondingToIndex: lineCount lineNumber: #skipAnySubstring:startingAt: skipDelimiters:startingAt: startsWithDigit
 "comparing" alike: beginsWith: caseSensitiveLessOrEqual: charactersExactlyMatching: compare: endsWith: endsWithAnyOf: sameAs: startingAt:match:startingAt:
 "copying" copyReplaceTokens:with: padLeftTo: padRightTo: padLeftTo:with: padRightTo:with:
-"converting" asByteArray asDate asFileName asText asTime asUrl capitalized compressWithTable: contractTo: correctAgainst: initialIntegerOrNil keywords quoted withoutPeriodSuffix splitInteger stemAndNumericSuffix substrings surroundedBySingleQuotes truncateWithElipsisTo: trimBoth uncapitalized withNoLineLongerThan: withSeparatorsCompacted withoutLeadingDigits trimRight trimLeft
+"converting" asByteArray asDate asText asTime asUrl capitalized compressWithTable: contractTo: correctAgainst: initialIntegerOrNil keywords quoted withoutPeriodSuffix splitInteger stemAndNumericSuffix substrings surroundedBySingleQuotes truncateWithElipsisTo: trimBoth uncapitalized withNoLineLongerThan: withSeparatorsCompacted withoutLeadingDigits trimRight trimLeft
 "displaying" "printing"
 "system primitives" compare:with:collated: 
 "Celeste" withCRs
@@ -977,7 +977,7 @@ MethodFinder >> testFromTuple: nth [
 			even ifTrue: [other := tuple shallowCopy]
 				ifFalse: [self load: (aa := Array with: tuple with: 1 with: other with: 7).
 					(cnt := cnt+1) \\ 50 = 0 ifTrue: [
-						Transcript cr; show: aa first printString].
+						aa first crLog].
 					self search: true.
 					self test2: aa.
 					self test2: nonRepeating.

@@ -10,7 +10,7 @@ CompiledMethod >> putSource: sourceStr class: class category: catName withStamp:
 				on: file
 				withStamp: changeStamp
 				priorMethod: priorMethod.
-			file cr ]
+			file newLine ]
 ]
 
 { #category : #'*System-Sources' }

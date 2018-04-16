@@ -30,7 +30,7 @@ RBRenameInstanceVariableChange >> printOn: aStream [
 		nextPutAll: self displayClassName;
 		nextPutAll: ' removeInstVarName: ';
 		print: self oldName;
-		nextPut: $!; cr.
+		nextPut: $!; newLine.
 	aStream
 		nextPutAll: self displayClassName;
 		nextPutAll: ' addInstVarName: ';

@@ -792,7 +792,7 @@ CompiledMethod >> printPrimitiveOn: aStream [
 	self isPrimitive ifFalse: [ ^self ].
 
 	self isExternalCallPrimitive ifTrue:
-		[^aStream print: (self literalAt: 1); cr].
+		[^aStream print: (self literalAt: 1); newLine].
 	aStream nextPutAll: '<primitive: '.
 	self isNamedPrimitive
 		ifTrue:
@@ -807,7 +807,7 @@ CompiledMethod >> printPrimitiveOn: aStream [
 	self primitiveErrorVariableName ifNotNil:
 		[:primitiveErrorVariableName|
 		 aStream nextPutAll: ' error: '; nextPutAll: primitiveErrorVariableName].
-	aStream nextPut: $>; cr
+	aStream nextPut: $>; newLine
 ]
 
 { #category : #accessing }

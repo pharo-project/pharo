@@ -77,13 +77,17 @@ FLFuelCommandLineHandler >> fileExtension [
 
 { #category : #manage }
 FLFuelCommandLineHandler >> manageFile: aFileReference [
-
-	aFileReference readStreamDo: [ :stream |
-		stream binary.
-		FileStream stdout nextPutAll: 'Materializing from file: ', aFileReference fullName; lf.
-		FLMaterializer new materializeFrom: stream.
-		FileStream stdout nextPutAll: 'Materialization finished'; lf.
-		].
+	aFileReference
+		readStreamDo: [ :stream | 
+			stream binary.
+			Stdio stdout
+				nextPutAll: 'Materializing from file: ';
+				nextPutAll: aFileReference fullName;
+				newLine.
+			FLMaterializer new materializeFrom: stream.
+			Stdio stdout
+				nextPutAll: 'Materialization finished';
+				newLine ]
 ]
 
 { #category : #manage }

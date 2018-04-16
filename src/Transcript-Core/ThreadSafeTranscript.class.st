@@ -103,16 +103,15 @@ ThreadSafeTranscript >> contents [
 
 { #category : #streaming }
 ThreadSafeTranscript >> cr [
-	"Output a cr on the receiver, buffered and not yet shown"
-	
-	self nextPut: Character cr
+
+	self newLine
 ]
 
 { #category : #streaming }
 ThreadSafeTranscript >> crShow: anObject [
 	"Output anObject asString on the receiver preceded by a cr and show the output"
 	
-	self critical: [ self cr; show: anObject ]
+	self critical: [ self newLine; show: anObject ]
 ]
 
 { #category : #streaming }
@@ -167,6 +166,13 @@ ThreadSafeTranscript >> isSelfEvaluating [
 ThreadSafeTranscript >> menu [
 	" return nil to let the editing mode build the right menu"
 	^nil
+]
+
+{ #category : #streaming }
+ThreadSafeTranscript >> newLine [
+	"Output a cr on the receiver, buffered and not yet shown"
+	
+	self nextPut: Character cr
 ]
 
 { #category : #streaming }

@@ -97,7 +97,7 @@ RBDeprecateMethodRefactoring >> storeOn: aStream [
 RBDeprecateMethodRefactoring >> transform [
 	| protocol deprecatedSource |
 	protocol := (class methodFor: newSelector) protocols.
-	deprecatedSource := self formOldName , String cr , String tab
+	deprecatedSource := self formOldName ,String newLine , String tab
 		,
 			'self 
 		deprecated: ''Use ' , newSelector asString

@@ -65,8 +65,8 @@ Clipboard >> chooseRecentClipping [
 	recent ifNil: [^ nil].
 	^ UIManager default
 		chooseFrom: (recent collect: [:txt | ((txt asString contractTo: 50)
-									copyReplaceAll: Character cr asString with: '\')
-									copyReplaceAll: Character tab asString with: '|'])
+									copyReplaceAll: String newLine with: '\')
+									copyReplaceAll: String tab with: '|'])
 		values: recent
 ]
 

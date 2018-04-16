@@ -32,15 +32,14 @@ Class >> fileOutOn: aFileStream [
 { #category : #'*CodeExport' }
 Class >> fileOutOn: aFileStream initializing: aBool [
 	"File a description of the receiver on aFileStream."
-
-	self crTrace: self name.
 	super fileOutOn: aFileStream.
 	self class nonTrivial
-		ifTrue: [
-			aFileStream cr; nextPutAll: '"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!'; cr; cr.
-			self class
-				fileOutOn: aFileStream
-				initializing: aBool ]
+		ifTrue: [ aFileStream
+				newLine;
+				nextPutAll: '"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!';
+				newLine;
+				newLine.
+			self class fileOutOn: aFileStream initializing: aBool ]
 ]
 
 { #category : #'*CodeExport' }
@@ -48,9 +47,9 @@ Class >> fileOutPool: aPool onFileStream: aFileStream [
 	| aPoolName |
 	(aPool  isKindOf: SharedPool class) ifTrue:[^self notify: 'we do not fileout SharedPool type shared pools for now'].
 	aPoolName := self environment keyAtIdentityValue: aPool.
-	self crTrace: aPoolName.
-	aFileStream nextPutAll: 'Transcript show: ''' , aPoolName , '''; cr!'; cr.
-	aFileStream nextPutAll: 'Smalltalk at: #' , aPoolName , ' put: Dictionary new!'; cr.
+	aPoolName crLog.
+	aFileStream nextPutAll: 'Transcript show: ''' , aPoolName , '''; newLine!'; newLine.
+	aFileStream nextPutAll: 'Smalltalk at: #' , aPoolName , ' put: Dictionary new!'; newLine.
 	aPool keys asSortedCollection do: [ :aKey | | aValue |
 		aValue := aPool at: aKey.
 		aFileStream nextPutAll: aPoolName , ' at: #''' , aKey asString , '''', ' put:  '.
@@ -59,8 +58,8 @@ Class >> fileOutPool: aPool onFileStream: aFileStream [
 			ifFalse: [aFileStream nextPutAll: '('.
 					aValue printOn: aFileStream.
 					aFileStream nextPutAll: ')'].
-		aFileStream nextPutAll: '!'; cr].
-	aFileStream cr
+		aFileStream nextPutAll: '!'; newLine].
+	aFileStream newLine
 ]
 
 { #category : #'*CodeExport' }

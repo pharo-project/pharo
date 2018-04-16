@@ -13,7 +13,7 @@ TextDiffBuilderTest >> convertToString: array [
 
 	^String streamContents: [ :stream |
 		array do: [ :each |
-			stream nextPutAll: each asString; cr ] ]
+			stream nextPutAll: each asString; newLine ] ]
 ]
 
 { #category : #private }

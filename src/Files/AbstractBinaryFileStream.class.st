@@ -128,6 +128,19 @@ AbstractBinaryFileStream >> name [
 	^ file name
 ]
 
+{ #category : #'character writing' }
+AbstractBinaryFileStream >> newLine [
+	"By default a file will write the platform line ending.
+	If you want to use a different line ending convention, wrap this stream with a ZnNewLineWriterStream.
+	E.g.,
+		(ZnNewLineWriterStream on: Stdio stdout)
+			forLn;
+			nextPutAll: '...';
+			newLine;
+			yourself"
+	self nextPutAll: OSPlatform current lineEnding
+]
+
 { #category : #accessing }
 AbstractBinaryFileStream >> next [
 	"Answer the next byte from this file, or nil if at the end of the file."

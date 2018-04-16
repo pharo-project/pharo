@@ -83,7 +83,7 @@ NECSelectorEntry >> implementorsDescription: aSymbol [
 	implementors do: [ :each | 
 		output
 			nextPutAll: each className printString;
-			cr ].
+			newLine ].
 	^ NECEntryDescription 
 		label: self label
 		title: '(Implementors)'

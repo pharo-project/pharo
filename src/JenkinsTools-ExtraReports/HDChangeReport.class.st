@@ -39,51 +39,53 @@ HDChangeReport >> changesFor: aResolvedVersion [
 ]
 
 { #category : #generating }
-HDChangeReport >> generateChange: aPatch on: aStream [
-	aPatch isAddition
-		ifTrue: [ ^ self generateChangeAddition: aPatch on: aStream ].
-	aPatch isModification
-		ifTrue: [ ^ self generateChangeModification: aPatch on: aStream ].
-	aPatch isRemoval
-		ifTrue: [ ^ self generateChangeRemoval: aPatch on: aStream ]
-]
-
-{ #category : #generating }
-HDChangeReport >> generateChangeAddition: aPatch on: aStream [
-	aStream tab; tab; tab; nextPutAll: '<item action="add">'; nextPutAll: (self encode: (self convert: aPatch summary)); nextPutAll: '</item>'; nextPut: Character lf
-]
-
-{ #category : #generating }
-HDChangeReport >> generateChangeModification: aPatch on: aStream [
-	aStream tab; tab; tab; nextPutAll: '<item action="change">'; nextPutAll: (self encode: (self convert: aPatch summary)); nextPutAll: '</item>'; nextPut: Character lf
-]
-
-{ #category : #generating }
-HDChangeReport >> generateChangeRemoval: aPatch on: aStream [
-	aStream tab; tab; tab; nextPutAll: '<item action="remove">'; nextPutAll: (self encode: (self convert: aPatch summary)); nextPutAll: '</item>'; nextPut: Character lf
-]
-
-{ #category : #generating }
 HDChangeReport >> generateChangeSet: aResolvedVersion on: aStream [
 	| info |
 	info := aResolvedVersion version info.
-	aStream tab; nextPutAll: '<logentry version="'; nextPutAll: (self encode: info name); nextPutAll: '">'; nextPut: Character lf.
-	aStream tab; tab; nextPutAll: '<date>'; nextPutAll: (self encode: info date yyyymmdd); space; nextPutAll: (self encode: info time print24); nextPutAll: '</date>'; nextPut: Character lf.
-	aStream tab; tab; nextPutAll: '<author>'; nextPutAll: (self encode: info author); nextPutAll: '</author>'; nextPut: Character lf.
-	aStream tab; tab; nextPutAll: '<msg>'; nextPutAll: (self encode: (self convert: info message)); nextPutAll: '</msg>'; nextPut: Character lf.
-	"aStream tab; tab; nextPutAll: '<items>'; nextPut: Character lf.
-	(self changesFor: aResolvedVersion)
-		do: [ :each | self generateChange: each on: aStream ].
-	aStream tab; tab; nextPutAll: '</items>'; nextPut: Character lf."
-	aStream tab; nextPutAll: '</logentry>'; nextPut: Character lf
+	aStream
+		tab;
+		nextPutAll: '<logentry version="';
+		nextPutAll: info name;
+		nextPutAll: '">';
+		newLine.
+	aStream
+		tab;
+		tab;
+		nextPutAll: '<date>';
+		nextPutAll: info date yyyymmdd;
+		space;
+		nextPutAll: info time print24;
+		nextPutAll: '</date>';
+		newLine.
+	aStream
+		tab;
+		tab;
+		nextPutAll: '<author>';
+		nextPutAll: info author;
+		nextPutAll: '</author>';
+		newLine.
+	aStream
+		tab;
+		tab;
+		nextPutAll: '<msg>';
+		nextPutAll: info message;
+		nextPutAll: '</msg>';
+		newLine.
+	aStream
+		tab;
+		nextPutAll: '</logentry>';
+		newLine
 ]
 
 { #category : #generating }
 HDChangeReport >> generateOn: aStream [
-	aStream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'; nextPut: Character lf.
-	aStream nextPutAll: '<changelog>'; nextPut: Character lf.
-	self resolved
-		do: [ :each | self generateChangeSet: each on: aStream ].
+	aStream
+		nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>';
+		newLine.
+	aStream
+		nextPutAll: '<changelog>';
+		newLine.
+	self resolved do: [ :each | self generateChangeSet: each on: aStream ].
 	aStream nextPutAll: '<changelog>'
 ]
 

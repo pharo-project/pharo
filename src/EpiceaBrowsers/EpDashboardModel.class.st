@@ -215,10 +215,10 @@ EpDashboardModel >> refreshCurrentSessionInfoModel [
 
 	text := String streamContents: [:stream |
 		stream
-			nextPutAll: 'Current Log: '; cr;
+			nextPutAll: 'Current Log: '; newLine;
 			nextPutAll: sessionStore writingFileReference basename;
-			cr; cr;
-			nextPutAll: 'Directory: '; cr;
+			newLine; newLine;
+			nextPutAll: 'Directory: '; newLine;
 			nextPutAll: sessionStore writingFileReference parent fullName.
 		].
 

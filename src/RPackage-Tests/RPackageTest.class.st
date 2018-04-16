@@ -5,7 +5,7 @@ Class {
 	#name : #RPackageTest,
 	#superclass : #RPackageTestCase,
 	#category : #'RPackage-Tests'
-} 
+}
 
 { #category : #running }
 RPackageTest >> tearDown [ 

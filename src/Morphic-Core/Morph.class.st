@@ -1879,7 +1879,7 @@ Morph >> clipText [
 		list := self allStringsAfter: nil.
 		list notEmpty ifTrue: [
 			content := String streamContents: [:stream |
-				list do: [:each | stream nextPutAll: each; cr]]]].
+				list do: [:each | stream nextPutAll: each; newLine]]]].
 	"Did we find something?"
 	content
 		ifNil: [self flash "provide feedback"]
@@ -4830,7 +4830,7 @@ Morph >> printStructureOn: aStream indent: tabCount [
 
 	tabCount timesRepeat: [aStream tab].
 	self printOn: aStream.
-	aStream cr.
+	aStream newLine.
 	self submorphsDo: [:m | m printStructureOn: aStream indent: tabCount + 1].
 
 ]

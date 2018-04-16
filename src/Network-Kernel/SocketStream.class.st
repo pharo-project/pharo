@@ -82,11 +82,11 @@ SocketStream class >> finger: userName [
 	| addr s |
 	addr := NetNameResolver promptUserForHostAddress.
 	s := SocketStream openConnectionToHost: addr port: 79.  "finger port number"
-	Transcript show: '---------- Connecting ----------'; cr.
+	Transcript show: '---------- Connecting ----------'; newLine.
 	s sendCommand: userName.
 	Transcript show: s nextLineCrLf.
 	s close.
-	Transcript show: '---------- Connection Closed ----------'; cr; endEntry.
+	Transcript show: '---------- Connection Closed ----------'; newLine; endEntry.
 
 ]
 
@@ -275,11 +275,11 @@ SocketStream >> debug [
 	data := self inBufferSize.
 	^String streamContents: [:s |
 		s
-			nextPutAll: 'Buffer size: ', inBuffer size asString;cr;
-			nextPutAll: 'InBuffer data size: ', data asString; cr;
-			nextPutAll: 'In data (20):', (inBuffer copyFrom: lastRead + 1 to: lastRead + (data min: 20)); cr;
-			nextPutAll: 'OutBuffer data size: ', (outNextToWrite - 1) asString; cr;
-			nextPutAll: 'Out data (20):', (outBuffer copyFrom: 1 to: ((outNextToWrite - 1) min: 20)); cr]
+			nextPutAll: 'Buffer size: ', inBuffer size asString; newLine;
+			nextPutAll: 'InBuffer data size: ', data asString; newLine;
+			nextPutAll: 'In data (20):', (inBuffer copyFrom: lastRead + 1 to: lastRead + (data min: 20)); newLine;
+			nextPutAll: 'OutBuffer data size: ', (outNextToWrite - 1) asString; newLine;
+			nextPutAll: 'Out data (20):', (outBuffer copyFrom: 1 to: ((outNextToWrite - 1) min: 20)); newLine]
 ]
 
 { #category : #control }

@@ -257,7 +257,7 @@ StandardFonts class >> printStandardSystemFonts [
 			print: font pointSize;
 			nextPutAll: ' height: ';
 			print: font height;
-			cr
+			newLine
 		]].
 	UIManager default  
 		longMessage: string

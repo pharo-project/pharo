@@ -286,7 +286,7 @@ TheManifestBuilder >> compileSelector: selector returnValue: aLiteral classified
 	source := String streamContents: [ :stream | 
 		stream 
 			nextPutAll: selector asString;
-			nextPut: Character cr;
+			nextPutAll: String newLine;
 			nextPut: Character tab;
 			nextPutAll: '^ ';
 			nextPutAll: aLiteral ].

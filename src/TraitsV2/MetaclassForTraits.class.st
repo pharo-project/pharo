@@ -47,7 +47,7 @@ MetaclassForTraits >> definition [
 		s 
 			nextPutAll: self instanceSide name;
 			nextPutAll: ' classTrait';
-			cr; tab;
+			newLine; tab;
 			nextPutAll: 'uses: ';
 			nextPutAll: composition traitCompositionExpression.
 	]

@@ -69,6 +69,13 @@ TTranscript >> flush [
 ]
 
 { #category : #streaming }
+TTranscript >> newLine [
+	"Output a cr on the receiver, buffered and not yet shown"
+	
+	self nextPut: Character cr
+]
+
+{ #category : #streaming }
 TTranscript >> nextPut: character [
 	"Output character on the receiver, buffered, not yet shown"
 

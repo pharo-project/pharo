@@ -59,7 +59,7 @@ more; go get coffee.
 	ntrys*nbuckets timesRepeat: [ | slot |
 		slot := (randy next * nbuckets) floor + 1.
 		buckets at: slot put: (buckets at: slot) + 1 ].
-	Transcript cr.
+	Transcript newLine.
 	1 to: nbuckets do: [ :nb |
 		Transcript show: (buckets at: nb) printString, ' ' ]
 ]

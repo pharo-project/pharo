@@ -102,18 +102,26 @@ MCPackageLoader >> basicLoadDefinitions [
 MCPackageLoader >> dependencyWarning [
 	^ String streamContents:
 		[:s |
-		s nextPutAll: 'This package depends on the following classes:'; cr.
-		requirements do: [:ea | s space; space; nextPutAll: ea; cr].
-		s nextPutAll: 'You must resolve these dependencies before you will be able to load these definitions: '; cr.
-		unloadableDefinitions do: [:ea | s space; space; nextPutAll: ea summary; cr]] 
+		s nextPutAll: 'This package depends on the following classes:'; newLine.
+		requirements do: [:ea | s space; space; nextPutAll: ea; newLine].
+		s nextPutAll: 'You must resolve these dependencies before you will be able to load these definitions: '; newLine.
+		unloadableDefinitions do: [:ea | s space; space; nextPutAll: ea summary; newLine]] 
 ]
 
 { #category : #private }
 MCPackageLoader >> errorDefinitionWarning [
-	^ String streamContents:
-		[:s |
-		s nextPutAll: 'The following definitions had errors while loading.  Press Proceed to try to load them again (they may work on a second pass):'; cr.
-		errorDefinitions do: [:ea | s space; space; nextPutAll: ea summary; cr]] 
+	^ String
+		streamContents: [ :s | 
+			s
+				nextPutAll: 'The following definitions had errors while loading.  Press Proceed to try to load them again (they may work on a second pass):';
+				newLine.
+			errorDefinitions
+				do: [ :ea | 
+					s
+						space;
+						space;
+						nextPutAll: ea summary;
+						newLine ] ]
 ]
 
 { #category : #initialization }

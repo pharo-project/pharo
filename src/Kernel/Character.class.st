@@ -101,7 +101,13 @@ Character class >> constantNameFor: aCharacter [
 
 { #category : #private }
 Character class >> constantNames [
-	"Added the rest of them!"
+	"This method returns the names of the possible constants that can be obtained from Character.
+	For each of them, Character class should implement one method. For example, see
+	
+	Character cr.
+	Character delete.
+	
+	Most of these characters are mapped to their ascii value."
 	
 	^#(backspace cr delete escape lf newPage space tab
 		arrowDown arrowLeft arrowRight arrowUp

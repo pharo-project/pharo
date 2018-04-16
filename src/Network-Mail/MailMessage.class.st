@@ -226,12 +226,12 @@ MailMessage >> asSendableText [
 							["at or after an attachment line; no more 
 							wrapping for the rest of the message"
 							result nextPutAll: line.
-							result cr]
+							result newLine]
 						ifFalse: [(line beginsWith: '>')
 								ifTrue: 
 									["it's quoted text; don't wrap it"
 									result nextPutAll: line.
-									result cr]
+									result newLine]
 								ifFalse: 
 									["regular old line.  Wrap it to multiple 
 									lines "
@@ -249,16 +249,16 @@ MailMessage >> asSendableText [
 												end := start + width - 1].
 											"copy the line to the output"
 											result nextPutAll: (line copyFrom: start to: end).
-											result cr.
+											result newLine.
 											"get ready for next iteration"
 											start := end + 1.
 											(line at: start) isSeparator ifTrue: [start := start + 1]].
 									"write out the final part of the line"
 									result nextPutAll: (line copyFrom: start to: line size).
-									result cr]]]
+									result newLine]]]
 				ifFalse: 
 					[result nextPutAll: line.
-					result cr]].
+					result newLine]].
 	^ result contents
 ]
 

@@ -223,7 +223,7 @@ PasteUpMorph >> cleanseOtherworldlySteppers [
 		do: [:m | m delete].
 	self currentWorld cleanseStepList.
 	(delta := old - self currentWorld stepListSize) > 0
-		ifTrue: [ self crTrace: delta asString , ' morphs removed from steplist' ]
+		ifTrue: [ (delta asString , ' morphs removed from steplist') crLog ]
 ]
 
 { #category : #'Morphic-Base-Windows' }

@@ -256,7 +256,7 @@ ReleaseTest >> testUnpackagedClasses [
 			s nextPutAll: 'Found the following unpackaged classes: '.
 			unpackagedClasses
 				do: [ :cls| s tab print: cls ]
-				separatedBy: [ s cr ]])
+				separatedBy: [ s newLine ]])
 
 ]
 

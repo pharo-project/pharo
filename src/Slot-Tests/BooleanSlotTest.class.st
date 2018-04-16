@@ -27,7 +27,7 @@ BooleanSlotTest >> testExampleBooleanSlot [
 	reader := String streamContents: [ :str |
 		str 
 			nextPutAll: slot name;
-			cr;tab;
+			newLine;tab;
 			nextPutAll: ' ^';
 			nextPutAll: slot name.
 		 ].
@@ -35,7 +35,7 @@ BooleanSlotTest >> testExampleBooleanSlot [
 		str 
 			nextPutAll: slot name;
 			nextPutAll: ': anObject';
-			cr;tab;
+			newLine;tab;
 			nextPutAll: slot name;
 			nextPutAll: ':= anObject.'.
 		].

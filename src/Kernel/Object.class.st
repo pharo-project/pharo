@@ -670,28 +670,54 @@ Object >> copySameFrom: otherObject [
 
 ]
 
-{ #category : #'logging-Deprecated' }
+{ #category : #logging }
 Object >> crLog [
-      self crTrace: self printString
+	"Log a newline and then the receiver.
+	Use 
+		anObject crLog
+	instead of 
+		Transcript
+			show: self;
+			newLine
+	"
+
+	self crLog: self printString
 ]
 
-{ #category : #'logging-Deprecated' }
+{ #category : #logging }
 Object >> crLog: aString [
-	"Log the argument. Use self log: instead of Transcript cr; show: "
+	"Log a newline and then the argument.
+	Use 
+		anObject crLog: 'something'
+	instead of 
+		Transcript
+			newLine;
+			show: 'something'
+	"
 	
-	Transcript cr; show: aString.
+	Transcript
+		newLine;
+		show: aString.
 ]
 
-{ #category : #tracing }
+{ #category : #logging }
 Object >> crTrace [
-      self crTrace: self printString
+
+	self
+		deprecated: 'Please use #crLog instead'
+		transformWith: '`@receiver crTrace' 
+						-> '`@receiver crLog'.
+	self crLog
 ]
 
-{ #category : #tracing }
-Object >> crTrace: aString [
-	"Log the argument. Use self crTrace: instead of Transcript cr; show: "
-	
-	Transcript cr; show: aString.
+{ #category : #logging }
+Object >> crTrace: anObject [
+
+	self
+		deprecated: 'Please use #crLog instead'
+		transformWith: '`@receiver crTrace: @arguments' 
+						-> '`@arguments crLog'.
+	self crLog
 ]
 
 { #category : #copying }
@@ -1325,51 +1351,63 @@ Object >> literalEqual: other [
 	^ self class == other class and: [self = other]
 ]
 
-{ #category : #'logging-Deprecated' }
+{ #category : #logging }
 Object >> log: aString [
-	"Log the argument. Use self log: instead of Transcript show: "
+	"Log the argument.
+	Use 
+		anObject log: 'something'
+	instead of 
+		Transcript show: 'something'
+	"
 	
 	Transcript show: aString.
 ]
 
-{ #category : #'logging-Deprecated' }
+{ #category : #logging }
 Object >> logCr [
-      self logCr: self printString
+	"Log the receiver and then a newline.
+	Use 
+		'something' logCr
+	instead of 
+		Transcript
+			show: 'something';
+			newLine
+	"
+	self logCr: self printString
 ]
 
-{ #category : #'logging-Deprecated' }
+{ #category : #logging }
 Object >> logCr: aString [
-	"Log the argument. Use self logCr: 'something' instead of Transcript show: 'something'  ; cr "
+	"Log the argument and then a newline.
+	Use 
+		anObject logCr: 'something'
+	instead of 
+		Transcript
+			show: 'something';
+			newLine
+	"
 	
-	Transcript show: aString ; cr
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> logCrTab: aString [
-	"Log the argument. Use self logCr: 'something' instead of Transcript show: 'something'  ; cr ; tab"
-	
-	Transcript show: aString ; cr ; tab
+	Transcript
+		show: aString ;
+		newLine
 ]
 
 { #category : #flagging }
 Object >> logEntry [
 
-	Transcript show: 'Entered ', thisContext sender printString; cr.
-
+	('Entered ', thisContext sender printString) logCr
 ]
 
 { #category : #flagging }
 Object >> logExecution [
 
-	Transcript show: 'Executing ', thisContext sender printString; cr.
-
+	('Executing ', thisContext sender printString) logCr
 ]
 
 { #category : #flagging }
 Object >> logExit [
 
-	Transcript show:  'Exited ', thisContext sender printString; cr.
-
+	('Exited ', thisContext sender printString) logCr
 ]
 
 { #category : #printing }
@@ -1377,50 +1415,56 @@ Object >> longPrintOn: aStream [
 	"Append to the argument, aStream, the names and values of all 
 	of the receiver's instance variables."
 
-	self class allInstVarNames doWithIndex:
-		[:title :index |
-		aStream nextPutAll: title;
-		 nextPut: $:;
-		 space;
-		 tab;
-		 print: (self instVarAt: index);
-		 cr]
+	self class allInstVarNames
+		doWithIndex: [ :title :index | 
+			aStream
+				nextPutAll: title;
+				nextPut: $:;
+				space;
+				tab;
+				print: (self instVarAt: index);
+				newLine ]
 ]
 
 { #category : #printing }
 Object >> longPrintOn: aStream limitedTo: sizeLimit indent: indent [
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  Limit is the length limit for each inst var."
 
-	self class allInstVarNames doWithIndex:
-		[:title :index |
-		indent timesRepeat: [aStream tab].
-		aStream nextPutAll: title;
-		 nextPut: $:;
-		 space;
-		 tab;
-		 nextPutAll: 
-			((self instVarAt: index) printStringLimitedTo: (sizeLimit -3 -title size max: 1));
-		 cr]
+	self class allInstVarNames
+		doWithIndex: [ :title :index | 
+			indent timesRepeat: [ aStream tab ].
+			aStream
+				nextPutAll: title;
+				nextPut: $:;
+				space;
+				tab;
+				nextPutAll: ((self instVarAt: index) printStringLimitedTo: (sizeLimit - 3 - title size max: 1));
+				newLine ]
 ]
 
 { #category : #printing }
 Object >> longPrintString [
 	"Answer a String whose characters are a description of the receiver."
-	
+
 	| str |
-	str := String streamContents: [:aStream | self longPrintOn: aStream].
+	str := String streamContents: [ :aStream | self longPrintOn: aStream ].
 	"Objects without inst vars should return something"
-	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
+	^ str isEmpty
+		ifTrue: [ self printString , String newLine ]
+		ifFalse: [ str ]
 ]
 
 { #category : #printing }
 Object >> longPrintStringLimitedTo: aLimitValue [
 	"Answer a String whose characters are a description of the receiver."
-	
+
 	| str |
-	str := String streamContents: [:aStream | self longPrintOn: aStream limitedTo: aLimitValue indent: 0].
+	str := String streamContents: [ :aStream | self longPrintOn: aStream limitedTo: aLimitValue indent: 0 ].
+
 	"Objects without inst vars should return something"
-	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
+	^ str isEmpty
+		ifTrue: [ self printString , String newLine ]
+		ifFalse: [ str ]
 ]
 
 { #category : #'block support' }
@@ -1993,28 +2037,24 @@ Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 			argument: aResourceHandle)
 ]
 
-{ #category : #tracing }
-Object >> trace [
-      self trace: self printString
-]
-
-{ #category : #tracing }
-Object >> trace: aString [
-	"Log the argument. Use self trace: instead of Transcript show: "
-	
-	Transcript show: aString.
-]
-
-{ #category : #tracing }
+{ #category : #logging }
 Object >> traceCr [
-      self traceCr: self printString
+
+	self
+		deprecated: 'Please use #logCr instead'
+		transformWith: '`@receiver traceCr' 
+						-> '`@receiver logCr'.
+	self crLog
 ]
 
-{ #category : #tracing }
-Object >> traceCr: aString [
-	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
-	
-	Transcript show: aString ; cr
+{ #category : #logging }
+Object >> traceCr: anObject [
+
+	self
+		deprecated: 'Please use #logCr instead'
+		transformWith: '`@receiver traceCr: @arguments' 
+						-> '`@arguments logCr'.
+	self crLog
 ]
 
 { #category : #'error handling' }

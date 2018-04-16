@@ -14,7 +14,7 @@ ByteArray >> gtInspectorBytesIn: composite [
 					'hex lines' -> (String streamContents: [ :out |
 						self withIndexDo: [ :each :index |
 							index = 1 ifFalse: [ 
-								index - 1 \\ 8 = 0 ifTrue: [ out cr ] ifFalse: [ out space ] ].
+								index - 1 \\ 8 = 0 ifTrue: [ out newLine ] ifFalse: [ out space ] ].
 								each printOn: out base: 16 nDigits: 2 ] ]).
 					'latin1' -> ([ ZnCharacterEncoder latin1 decodeBytes: self ]
 											on: ZnCharacterEncodingError do: [ :exception | exception ]).

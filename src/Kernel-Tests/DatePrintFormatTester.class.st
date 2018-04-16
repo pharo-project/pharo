@@ -95,9 +95,9 @@ DatePrintFormatTester >> assertCollection: actual hasSameElements: expected [
 		description: (String streamContents: 
 			[:stream |
 			stream
-				nextPutAll: 'Given Collections do not match!'; lf;
-				tab; nextPutAll: 'additions : '; print: additionalElements asArray; lf;
-				tab; nextPutAll: 'missing: '; print: missingElements asArray; lf ])
+				nextPutAll: 'Given Collections do not match!'; newLine;
+				tab; nextPutAll: 'additions : '; print: additionalElements asArray; newLine;
+				tab; nextPutAll: 'missing: '; print: missingElements asArray; newLine ])
 ]
 
 { #category : #asserting }
@@ -117,17 +117,17 @@ DatePrintFormatTester >> comparingCollectionBetween: left and: right [
 	
 	^ String streamContents: [:stream |
 		stream
-			nextPutAll: 'Given Collections do not match. Got '; lf;
-			tab; nextPutAll: 'left := '; print: left; nextPut: $.; lf;
+			nextPutAll: 'Given Collections do not match. Got '; newLine;
+			tab; nextPutAll: 'left := '; print: left; nextPut: $.; newLine;
 			nextPutAll: ' instead of ';
-			tab; nextPutAll: ' right :='; print: left; nextPut: $.; lf.
+			tab; nextPutAll: ' right :='; print: left; nextPut: $.; newLine.
 		left size = right size
 			ifFalse: [ 
 				stream 
 					nextPutAll: 'Collection size does not match: left='; 
 					print: left size;
 					nextPutAll: ' vs. right=';
-					print: right size; lf ].
+					print: right size; newLine ].
 		additionalLeft isEmpty
 			ifFalse: [ 
 				stream 

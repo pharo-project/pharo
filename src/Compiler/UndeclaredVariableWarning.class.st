@@ -18,9 +18,10 @@ UndeclaredVariableWarning >> defaultAction [
 	 given an option of continuing or aborting the computation. The description of the
 	 occurrence should include any text specified as the argument of the #signal: message."
 	
-	selector ifNotNil: [self crTrace: class name, '>>', selector, ' ']
-			ifNil: [self traceCr:''].
-	self traceCr: '(' , name , ' is Undeclared) '.
+	(selector
+		ifNotNil: [ class name, '>>', selector, ' ' ]
+		ifNil: [ '' ]) logCr.
+	'(' , name , ' is Undeclared) ' logCr.
 	^true
 ]
 
@@ -32,11 +33,19 @@ UndeclaredVariableWarning >> defaultResumeValue [
 
 { #category : #exceptionDescription }
 UndeclaredVariableWarning >> messageText [
-	^ String streamContents: [ :s | 
-		selector 
-			ifNotNil: [ s print: class; nextPutAll:  '>>'; print: selector; space]
-			ifNil: [ s cr ].
-		s nextPut: $(; print: name; nextPutAll: ' is Undeclared) ' ]
+	^ String
+		streamContents: [ :s | 
+			selector
+				ifNotNil: [ s
+						print: class;
+						nextPutAll: '>>';
+						print: selector;
+						space ]
+				ifNil: [ s newLine ].
+			s
+				nextPut: $(;
+				print: name;
+				nextPutAll: ' is Undeclared) ' ]
 ]
 
 { #category : #'initialize-release' }

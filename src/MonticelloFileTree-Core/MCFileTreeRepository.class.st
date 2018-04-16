@@ -406,7 +406,7 @@ MCFileTreeRepository >> writeRepositoryProperties [
             ifTrue: [ 
               fileStream
                 nextPutAll: ',';
-                lf ] ].
+                newLine ] ].
       fileStream nextPutAll: ' }' ]
 
 ]

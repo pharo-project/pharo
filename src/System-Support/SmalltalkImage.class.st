@@ -634,9 +634,8 @@ SmalltalkImage >> fixObsoleteBindings [
 		obsoleteBindings do: [ :binding |
 			| obsName realName realClass |
 			obsName := binding value name.
-			self 
-				trace: 'Binding: ';
-				traceCr: obsName.
+			'Binding: ' logCr.
+			obsName logCr.
 			realName := obsName copyReplaceAll: 'AnObsolete' with: ''.
 			realClass := Smalltalk globals at: realName asSymbol ifAbsent: [ UndefinedObject ].
 			binding key: binding key value: realClass ].
@@ -1073,25 +1072,32 @@ SmalltalkImage >> logDuring: aMonadicBlock [
 
 { #category : #miscellaneous }
 SmalltalkImage >> logError: errMsg inContext: aContext [
-
 	" we should think about integrating a toothpick here someday"
-	self logStdErrorDuring: [ :stderr|
-		"install the line end conversion and force initialize the converter"
-		stderr
-			nextPutAll: errMsg; cr;
-			"reset the color"
-			nextPut: Character escape; nextPutAll: '[0m'.
-		aContext shortDebugStackOn: stderr.].
-				
-	self logDuring: [:logger | 
-		logger	
-			nextPutAll: 'THERE_BE_DRAGONS_HERE'; cr; 
-		  	nextPutAll: errMsg; cr.
+
+	self
+		logStdErrorDuring: [ :stderr | 
+			"install the line end conversion and force initialize the converter"
+			stderr
+				nextPutAll: errMsg;
+				newLine;
+				"reset the color"
+					nextPut: Character escape;
+				nextPutAll: '[0m'.
+			aContext shortDebugStackOn: stderr ].
+	self
+		logDuring: [ :logger | 
+			logger
+				nextPutAll: 'THERE_BE_DRAGONS_HERE';
+				newLine;
+				nextPutAll: errMsg;
+				newLine.
 			"just print the error message if no context is given"
-			aContext ifNotNil: [
-				aContext errorReportOn: logger ].
-		" write some type of separator"
-		logger nextPutAll: (String new: 79 withAll: $- ); cr; cr]
+			aContext ifNotNil: [ aContext errorReportOn: logger ].
+			" write some type of separator"
+			logger
+				nextPutAll: (String new: 79 withAll: $-);
+				newLine;
+				newLine ]
 ]
 
 { #category : #log }
@@ -1450,30 +1456,6 @@ SmalltalkImage >> printOn: aStream [
 	aStream nextPutAll: 'Smalltalk'
 ]
 
-{ #category : #private }
-SmalltalkImage >> privSaveImageWithCleanup [
-
-	"Do not use this method for common image saving. This method is designated for saving the image during the shrinking process in headless images."
-
-	20 timesRepeat: [
-		(Delay forMilliseconds: 50) wait.
-		Processor yield.
-		Smalltalk garbageCollect. ].
- 
-	[
-		self snapshot: true andQuit: true.
-	] ifError: [:e |
-		| rep |
-		rep := FileStream forceNewFileNamed: 'PharoDebug.log'.
-		rep nextPutAll: 'Error:'; cr.
-		rep nextPutAll: e asString; cr.
-  		rep nextPutAll: thisContext stack size asString.
- 	  	thisContext stack copy withIndexDo: [:stck :i |
-			[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] ifError: []].
-		rep close. 
-		Smalltalk exitFailure ]
-]
-
 { #category : #'snapshot and quit' }
 SmalltalkImage >> quitPrimitive [
 	"Primitive. Exit to another operating system on the host machine, if one
@@ -1520,55 +1502,6 @@ SmalltalkImage >> registerExternalObject: anObject [
 	"Register the given object in the external objects array and return its index. If it is already there, just return its index."
 
 	^ExternalSemaphoreTable registerExternalObject: anObject
-]
-
-{ #category : #housekeeping }
-SmalltalkImage >> removeAllLineFeedsQuietly [
-	"Smalltalk removeAllLineFeedsQuietly"
-	"Scan all methods for source code with lineFeeds.
-	Replaces all occurrences of <CR><LF> or <LF> by <CR>.
-	Answer a Dictionary keyed by author name containing sets of affected method names,
-	as well as (at the key 'OK') a list of methods that still contain LF characters inside literal strings or characters."
-	^self removeAllLineFeedsQuietlyCalling: [].
-]
-
-{ #category : #housekeeping }
-SmalltalkImage >> removeAllLineFeedsQuietlyCalling: aBlock [
-	"Smalltalk removeAllLineFeedsQuietly"
-	"Scan all methods for source code with lineFeeds.
-	Replaces all occurrences of <CR><LF> or <LF> by <CR>.
-	Answer a Dictionary keyed by author name containing sets of affected method names,
-	as well as (at the key 'OK') a list of methods that still contain LF characters inside literal strings or characters.
-	Evaluate aBlock for each method so that status can be updated."
-	| authors |
-	authors := Dictionary new.
-	authors at: 'OK' put: Set new.
-	self systemNavigation
-		allBehaviorsDo: [:cls | cls selectorsAndMethodsDo: [:selector :method |
-					| oldStamp newCodeString oldCodeString oldCategory nameString | 
-					aBlock cull: cls cull: selector.
-					oldCodeString := cls sourceCodeAt: selector.
-					(oldCodeString includes: Character lf)
-						ifTrue: [
-							newCodeString := oldCodeString withSqueakLineEndings.
-							nameString := cls name , '>>' , selector.
-							((cls compiledMethodAt: selector) hasLiteralSuchThat: [ :lit | lit asString includes: Character lf ])
-								ifTrue: [(authors at: 'OK')
-										add: nameString]
-								ifFalse: [oldStamp := (method timeStamp)
-												copy replaceAll: Character cr
-												with: Character space.
-									(authors
-										at: (oldStamp copyFrom: 1 to: (oldStamp findFirst: [ :c | c isAlphaNumeric not ]))
-										ifAbsentPut: [Set new])
-										add: nameString.
-									oldCategory := cls whichCategoryIncludesSelector: selector.
-									cls
-										compile: newCodeString
-										classified: oldCategory
-										withStamp: oldStamp
-										notifying: nil ]]]].
-	^ authors
 ]
 
 { #category : #'class and trait names' }
@@ -1645,7 +1578,7 @@ SmalltalkImage >> renameClassNamed: oldName as: newName [
 	| oldClass |
 	(oldClass := self at: oldName asSymbol ifAbsent: [ nil ]) 
 		ifNil: [ 
-			self crTrace: 'Class-rename for ' , oldName , ' ignored because ' , oldName , ' does not exist.'.
+			('Class-rename for ' , oldName , ' ignored because ' , oldName , ' does not exist.') crLog.
 			^ self ].
 	oldClass rename: newName
 ]
@@ -1737,16 +1670,6 @@ SmalltalkImage >> saveImageInFileNamed: aFile [
 		closeSourceFiles;
 		openSourceFiles;  "so SNAPSHOT appears in new changes file"
 		snapshot: true andQuit: false
-]
-
-{ #category : #saving }
-SmalltalkImage >> saveImageInNewContext [
-
-	" This method is used for saving the Smalltalk image in a new process so the current process with all stack information may be forgotten.
-	
-	Do not use this method for common image saving. This method is designated for saving the image during the shrinking process in headless images. "
-
-	[ self privSaveImageWithCleanup ] forkAt: 40.
 ]
 
 { #category : #saving }
@@ -1852,20 +1775,26 @@ SmalltalkImage >> sourcesSuffix [
 { #category : #'memory space' }
 SmalltalkImage >> spaceLeftAfterGarbageCollection [
 	"Return a string describing the amount of memory available"
+
 	| availInternal availPhysical availTotal |
 	self garbageCollect.
 	availInternal := self primBytesLeft.
 	availPhysical := self bytesLeft: false.
 	availTotal := self bytesLeft: true.
-	(availTotal > (availInternal + 10000)) "compensate for mini allocations inbetween"
-		ifFalse:[^availInternal asStringWithCommas, ' bytes available'].
-	^String streamContents:[:s|
-		availInternal printWithCommasOn: s.
-		s nextPutAll: ' bytes (internal) '; cr.
-		 availPhysical printWithCommasOn: s.
-		s nextPutAll: ' bytes (physical) '; cr.
-		availTotal printWithCommasOn: s.
-		s nextPutAll: ' bytes (total)     '].
+	availTotal > (availInternal + 10000)
+		ifFalse: [ ^ availInternal asStringWithCommas , ' bytes available' ].	"compensate for mini allocations inbetween"
+	^ String
+		streamContents: [ :s | 
+			availInternal printWithCommasOn: s.
+			s
+				nextPutAll: ' bytes (internal) ';
+				newLine.
+			availPhysical printWithCommasOn: s.
+			s
+				nextPutAll: ' bytes (physical) ';
+				newLine.
+			availTotal printWithCommasOn: s.
+			s nextPutAll: ' bytes (total)     ' ]
 ]
 
 { #category : #'special objects' }
@@ -1952,7 +1881,8 @@ SmalltalkImage >> supportsQueueingFinalization: aBoolean [
 
 { #category : #'sources, change log' }
 SmalltalkImage >> systemInformationString [
-	^ String cr, 'Pharo ', SystemVersion current dottedMajorMinor,  String cr, self lastUpdateString, String cr, String cr, String cr, self licenseString
+	^ String newLine , 'Pharo ' , SystemVersion current dottedMajorMinor , String newLine , self lastUpdateString , String newLine
+		, String newLine , String newLine , self licenseString
 ]
 
 { #category : #'sources, change log' }

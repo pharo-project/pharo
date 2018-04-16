@@ -16,7 +16,7 @@ OCNewCompilerWithChangesFunctionalTests >> testBlockReturning [
 									class: OCMockCompilationClass;
 									compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '29 <70> self'.
 	self assert: (bytecode at: (index := index + 1)) = '30 <D0> send: announcements'.
@@ -49,7 +49,7 @@ OCNewCompilerWithChangesFunctionalTests >> testBlockTemp [
 									class: OCMockCompilationClass;
 									compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '17 <8F 01 00 08> closureNumCopied: 0 numArgs: 1 bytes 21 to 28'.
 self assert: (bytecode at: (index := index + 1)) = '21 <10> pushTemp: 0'.
@@ -102,7 +102,7 @@ OCNewCompilerWithChangesFunctionalTests >> testDifferentBlocksWithSameArgumentNa
 									class: OCMockCompilationClass;
 									compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '13 <8A 01> push: (Array new: 1)'.
 	self assert: (bytecode at: (index := index + 1)) = '15 <6A> popIntoTemp: 2'.
@@ -149,7 +149,7 @@ OCNewCompilerWithChangesFunctionalTests >> testMethodArgument [
 											class: OCMockCompilationClass;
 											compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '17 <8A 01> push: (Array new: 1)'.
 	self assert: (bytecode at: (index := index + 1)) = '19 <69> popIntoTemp: 1'.
@@ -198,7 +198,7 @@ OCNewCompilerWithChangesFunctionalTests >> testMethodTemp [
 									class: OCMockCompilationClass;
 									compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '21 <70> self'.
 	self assert: (bytecode at: (index := index + 1)) = '22 <76> pushConstant: 1'.
@@ -242,7 +242,7 @@ OCNewCompilerWithChangesFunctionalTests >> testModulePrimitive [
 	class: MockForCompilation;
 	compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '<primitive: ''primitiveCopyBits'' module: ''BitBltPlugin''>'.
 	self assert: (bytecode at: (index := index + 1)) = '21 <8B 75 00> callPrimitive: 117'.
@@ -263,7 +263,7 @@ OCNewCompilerWithChangesFunctionalTests >> testMultiElementArray [
 	^{1. 2. 3. 4. 5. 6 }';
 									class: OCMockCompilationClass;
 									compile.
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '29 <76> pushConstant: 1'.
 	self assert: (bytecode at: (index := index + 1)) = '30 <77> pushConstant: 2'.
@@ -289,7 +289,7 @@ OCNewCompilerWithChangesFunctionalTests >> testOneFloat [
 	compile.
 
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '17 <20> pushConstant: 1.0'.
 	self assert: (bytecode at: (index := index + 1)) = '18 <7C> returnTop'.
@@ -307,7 +307,7 @@ OCNewCompilerWithChangesFunctionalTests >> testPragma [
 									class:  OCMockCompilationClass;
 									compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = 'Quick return self'.
 
@@ -325,7 +325,7 @@ OCNewCompilerWithChangesFunctionalTests >> testReturnBlockInMethod [
 											class: OCMockCompilationClass;
 											compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '13 <10> pushTemp: 0'.
 	self assert: (bytecode at: (index := index + 1)) = '14 <8F 10 00 02> closureNumCopied: 1 numArgs: 0 bytes 18 to 19'.
@@ -349,7 +349,7 @@ OCNewCompilerWithChangesFunctionalTests >> testSetUp [
 									class: OCMockCompilationClass;
 									compile.
 	
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) =  '21 <70> self'.
 	self assert: (bytecode at: (index := index + 1)) =  '22 <85 00> superSend: setUp'.
@@ -372,7 +372,7 @@ OCNewCompilerWithChangesFunctionalTests >> testSimpleArray [
 									class: OCMockCompilationClass;
 									compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '13 <76> pushConstant: 1'.
 	self assert: (bytecode at: (index := index + 1)) = '14 <8A 81> pop 1 into (Array new: 1)'.
@@ -395,7 +395,7 @@ OCNewCompilerWithChangesFunctionalTests >> testSteamContentsLimitedToSequenceabl
 									class: SequenceableCollection class;
 									compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '37 <40> pushLit: LimitedWriteStream'.
 	self assert: (bytecode at: (index := index + 1)) = '38 <70> self'.
@@ -438,7 +438,7 @@ OCNewCompilerWithChangesFunctionalTests >> testToDoArgumentNotInlined [
 													self assertValues: #(1 2 3 4 5)';
 									class: OCMockCompilationClass;
 									compile.
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '33 <8F 01 00 0A> closureNumCopied: 0 numArgs: 1 bytes 37 to 46'.
 	self assert: (bytecode at: (index := index + 1)) = '37 <00> pushRcvr: 0'.
@@ -479,7 +479,7 @@ OCNewCompilerWithChangesFunctionalTests >> testToDoInsideTempNotInlined [
 	class: OCMockCompilationClass;
 	compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '33 <8F 01 00 0D> closureNumCopied: 0 numArgs: 1 bytes 37 to 49'.
 	self assert: (bytecode at: (index := index + 1)) = '37 <73> pushConstant: nil'.
@@ -525,7 +525,7 @@ OCNewCompilerWithChangesFunctionalTests >> testToDoOutsideTempNotInlined [
 	class: OCMockCompilationClass;
 	compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '33 <8A 01> push: (Array new: 1)'.
 	self assert: (bytecode at: (index := index + 1)) = '35 <69> popIntoTemp: 1'.
@@ -574,7 +574,7 @@ OCNewCompilerWithChangesFunctionalTests >> testWhileModificationAfterNotInlined 
 	class: OCMockCompilationClass;
 	compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '33 <8A 01> push: (Array new: 1)'.
 	self assert: (bytecode at: (index := index + 1)) = '35 <69> popIntoTemp: 1'.
@@ -633,7 +633,7 @@ OCNewCompilerWithChangesFunctionalTests >> testWhileModificationBeforeNotInlined
 	class: OCMockCompilationClass;
 	compile.
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '33 <8A 01> push: (Array new: 1)'.
 	self assert: (bytecode at: (index := index + 1)) = '35 <69> popIntoTemp: 1'.
@@ -693,7 +693,7 @@ OCNewCompilerWithChangesFunctionalTests >> testWhileWithTempNotInlined [
 	compile.
 	
 									
-	bytecode := aCompiledMethod symbolic asString substrings: String cr.
+	bytecode := aCompiledMethod symbolic asString substrings: String newLine.
 	index := 0.
 	self assert: (bytecode at: (index := index + 1)) = '33 <8A 01> push: (Array new: 1)'.
 	self assert: (bytecode at: (index := index + 1)) = '35 <69> popIntoTemp: 1'.
