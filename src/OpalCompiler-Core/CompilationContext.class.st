@@ -126,6 +126,16 @@ CompilationContext class >> initialize [
 ]
 
 { #category : #'options - settings API' }
+CompilationContext class >> optionEmbeddSources [
+	^ self readDefaultOption: #optionEmbeddSources
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionEmbeddSources: aBoolean [
+	^ self writeDefaultOption: #optionEmbeddSources value: aBoolean
+]
+
+{ #category : #'options - settings API' }
 CompilationContext class >> optionFullBlockClosure [
 	^ self readDefaultOption: #optionFullBlockClosure
 ]
@@ -285,6 +295,8 @@ CompilationContext class >> optionsDescription [
 	(- optionInlineTimesRepeat 		'Inline timesRepeat: if specific conditions are met (See isInlineTimesRepeat)')
 	(- optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
+	
+	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
 	
 	(- optionReadOnlyLiterals 			'Compiler sets literals as read-only')
 	(- optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
@@ -459,6 +471,12 @@ CompilationContext >> noPattern [
 { #category : #accessing }
 CompilationContext >> noPattern: anObject [
 	noPattern := anObject
+]
+
+{ #category : #options }
+CompilationContext >> optionEmbeddSources [
+	^ options includes: #optionEmbeddSources
+
 ]
 
 { #category : #options }
