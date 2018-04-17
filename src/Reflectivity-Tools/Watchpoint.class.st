@@ -48,6 +48,24 @@ Watchpoint class >> from: aNode ifAbsent: aBlock [
 	^self allWatchpoints at: aNode ifAbsent: aBlock.
 ]
 
+{ #category : #'system announcements' }
+Watchpoint class >> handleClassRemoved: anAnnouncement [
+	Watchpoints copy do: [ :breakpoint |
+		breakpoint link methods
+			detect: [ :m | m methodClass = anAnnouncement classRemoved ]
+			ifFound: [ Watchpoints remove: breakpoint ] ]
+]
+
+{ #category : #'system announcements' }
+Watchpoint class >> handleMethodModified: anAnnouncement [
+	self removeWatchpointsFromMethod: anAnnouncement oldMethod
+]
+
+{ #category : #'system announcements' }
+Watchpoint class >> handleMethodRemoved: anAnnouncement [
+	self removeWatchpointsFromMethod: anAnnouncement method
+]
+
 { #category : #'instance creation' }
 Watchpoint class >> in: aRBProgramNode [
 	^self in: aRBProgramNode named: ''.
@@ -62,6 +80,21 @@ Watchpoint class >> in: aRBProgramNode named: aName [
 		install.
 ]
 
+{ #category : #'class initialization' }
+Watchpoint class >> initialize [
+	self registerInsterestToSystemAnnouncement 
+]
+
+{ #category : #'class initialization' }
+Watchpoint class >> registerInsterestToSystemAnnouncement [
+	<systemEventRegistration>
+	SystemAnnouncer uniqueInstance
+		unsubscribe: self.
+	SystemAnnouncer uniqueInstance weak subscribe: MethodRemoved send: #handleMethodRemoved: to: self.
+	SystemAnnouncer uniqueInstance weak subscribe: MethodModified send: #handleMethodModified: to: self.
+	SystemAnnouncer uniqueInstance weak subscribe: ClassRemoved send: #handleClassRemoved: to: self.
+]
+
 { #category : #cleanup }
 Watchpoint class >> removeAll [
 	self allWatchpoints values do: [ :aWatchpoint| aWatchpoint uninstall].
@@ -72,6 +105,14 @@ Watchpoint class >> removeAll [
 Watchpoint class >> removeFrom: aNode [
 
 	(self allWatchpoints at: aNode ifAbsent: [ ^self ]) uninstall
+]
+
+{ #category : #'system announcements' }
+Watchpoint class >> removeWatchpointsFromMethod: aMethod [ 
+	Watchpoints copy do: [ :breakpoint |
+		breakpoint link methods
+			detect: [ :m | m == aMethod ]
+			ifFound: [ Watchpoints remove: breakpoint ] ]
 ]
 
 { #category : #adding }
@@ -118,6 +159,11 @@ Watchpoint >> install [
 { #category : #recording }
 Watchpoint >> isRecording [
 	^recording
+]
+
+{ #category : #accessing }
+Watchpoint >> link [
+	^link
 ]
 
 { #category : #accessing }
