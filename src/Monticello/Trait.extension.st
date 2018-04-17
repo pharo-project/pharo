@@ -2,12 +2,23 @@ Extension { #name : #Trait }
 
 { #category : #'*Monticello' }
 Trait >> asClassDefinition [
+	self usesSpecialVariables ifFalse: [  
+		^ MCTraitDefinition
+			name: self name
+			traitComposition: self traitCompositionString
+			category: self category 
+			instVarNames: self instVarNames
+			comment: self organization classComment asString
+			commentStamp: self organization commentStamp ].
+		
 	^ MCTraitDefinition
-		name: self name
-		traitComposition: self traitCompositionString
-		category: self category 
-		comment: self organization classComment asString
-		commentStamp: self organization commentStamp.
+			name: self name
+			traitComposition: self traitCompositionString
+			category: self category 
+			instVarNames: (self slots collect: #definitionString)
+			comment: self organization classComment asString
+			commentStamp: self organization commentStamp.
+		
 ]
 
 { #category : #'*Monticello' }

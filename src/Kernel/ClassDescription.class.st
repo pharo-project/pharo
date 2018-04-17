@@ -727,7 +727,7 @@ ClassDescription >> instVarNameForIndex: index [
 ClassDescription >> instVarNames [
 	"Answer an Array of the receiver's instance variable names."
 
-	^self classLayout instVarNames
+	^self localSlots collect: [ :each | each name ]
 ]
 
 { #category : #compiling }
