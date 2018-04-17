@@ -376,26 +376,6 @@ ReflectivityReificationTest >> testReifyMethodArgsAfter [
 ]
 
 { #category : #'tests - method' }
-ReflectivityReificationTest >> testReifyMethodArgsByNameBefore [
-	| methodNode instance |
-	methodNode := (ReflectivityExamples >> #exampleWithArg:) ast.
-	link := MetaLink new
-		metaObject: self;
-		selector: #tagExec:;
-		control: #before;
-		arguments: methodNode arguments.
-	methodNode link: link.
-	self assert: methodNode hasMetalink.
-	self
-		assert: (ReflectivityExamples >> #exampleWithArg:) class
-		equals: ReflectiveMethod.
-	self assert: tag isNil.
-	instance := ReflectivityExamples new.
-	self assert: (instance exampleWithArg: 3) equals: 5.
-	self assert: tag equals: 3
-]
-
-{ #category : #'tests - method' }
 ReflectivityReificationTest >> testReifyMethodReceiver [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast.
@@ -450,6 +430,27 @@ ReflectivityReificationTest >> testReifyMethodThisContext [
 	instance := ReflectivityExamples new.
 	self assert: instance exampleMethod equals: 5.
 	self assert: tag class equals: Context
+]
+
+{ #category : #'tests - method' }
+ReflectivityReificationTest >> testReifyMethodThisContextAfter [
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #after;
+		arguments: #(context).
+	sendNode link: link.
+	self assert: sendNode hasMetalink.
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod equals: 5.
+	self assert: tag class equals: Context.
+	self deny: tag isBlockContext.
 ]
 
 { #category : #'tests - assignment' }
@@ -760,6 +761,26 @@ ReflectivityReificationTest >> testReifySendSelector [
 ]
 
 { #category : #'tests - sends' }
+ReflectivityReificationTest >> testReifySendSender [
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
+		statements first value.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		arguments: #(sender).
+	sendNode link: link.
+	self assert: sendNode hasMetalink.
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod equals: 5.
+	self assert: tag equals: instance
+]
+
+{ #category : #'tests - sends' }
 ReflectivityReificationTest >> testReifySendThisContext [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
@@ -776,7 +797,31 @@ ReflectivityReificationTest >> testReifySendThisContext [
 	self assert: tag isNil.
 	instance := ReflectivityExamples new.
 	self assert: instance exampleMethod equals: 5.
-	self assert: tag class equals: Context
+	self assert: tag class equals: Context.
+	
+]
+
+{ #category : #'tests - sends' }
+ReflectivityReificationTest >> testReifySendThisContextAfter [
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
+		statements first value.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #after;
+		arguments: #(context).
+	sendNode link: link.
+	self assert: sendNode hasMetalink.
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod equals: 5.
+	self assert: tag class equals: Context.
+	self deny: tag isBlockContext.
+	
 ]
 
 { #category : #'tests - sends' }
