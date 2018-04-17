@@ -51,6 +51,14 @@ ComputedSlot >> read: anObject [
 	
 ]
 
+{ #category : #comparing }
+ComputedSlot >> sameDefinitionAs: otherSlot [
+
+	^ (super sameDefinitionAs: otherSlot) 
+		and: [ block printString = otherSlot block printString ]
+
+]
+
 { #category : #'instance creation' }
 ComputedSlot >> with: aBlock [
 	block := aBlock

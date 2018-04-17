@@ -42,6 +42,14 @@ BaseSlot >> isVisible [
 	^ false
 ]
 
+{ #category : #comparing }
+BaseSlot >> sameDefinitionAs: otherSlot [
+
+	^ (super sameDefinitionAs: otherSlot) 
+		and: [ default = otherSlot default ]
+
+]
+
 { #category : #'meta-object-protocol' }
 BaseSlot >> wantsInitalization [
 	"if a slot wants to hable initalization, return true here"

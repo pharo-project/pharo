@@ -166,6 +166,14 @@ RelationSlot >> removeAssociationFrom: ownerObject to: otherObject [
 		ifFalse: [ (inverseSlot read: otherObject) inverseRemove: ownerObject ]
 ]
 
+{ #category : #comparing }
+RelationSlot >> sameDefinitionAs: otherSlot [
+
+	^ (super sameDefinitionAs: otherSlot) 
+		and: [ self targetClassName = otherSlot targetClassName 
+		and: [ inverseName = otherSlot inverseName ] ]
+]
+
 { #category : #accessing }
 RelationSlot >> targetClass [
 

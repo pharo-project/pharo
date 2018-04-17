@@ -50,6 +50,14 @@ ExampleSlotWithDefaultValue >> printOn: aStream [
 		store: default
 ]
 
+{ #category : #comparing }
+ExampleSlotWithDefaultValue >> sameDefinitionAs: otherSlot [
+
+	^ (super sameDefinitionAs: otherSlot) 
+		and: [ default = otherSlot default ]
+
+]
+
 { #category : #'meta-object-protocol' }
 ExampleSlotWithDefaultValue >> wantsInitalization [
 	^ true
