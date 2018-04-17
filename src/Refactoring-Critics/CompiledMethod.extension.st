@@ -2,30 +2,11 @@ Extension { #name : #CompiledMethod }
 
 { #category : #'*Refactoring-Critics' }
 CompiledMethod >> selfMessages [
-
-	|  selfMessages searcher |
-	selfMessages := Set new.
-	searcher := RBParseTreeSearcher new.
-	searcher
-		matches: 'self `@message: ``@args'
-			do: [:aNode :answer | selfMessages add: aNode selector].
-
-	searcher executeTree: self parseTree initialAnswer: nil.
-	
-	^ selfMessages
+	^self ast sendNodes select: [ :node | node isSelfSend ] thenCollect: [ :node | node selector ] 
 ]
 
 { #category : #'*Refactoring-Critics' }
 CompiledMethod >> superMessages [
 
-	|  superMessages searcher |
-	superMessages := Set new.
-	searcher := RBParseTreeSearcher new.
-	searcher
-		matches: 'super `@message: ``@args'
-			do: [:aNode :answer | superMessages add: aNode selector].
-
-	searcher executeTree: self parseTree initialAnswer: nil.
-	
-	^ superMessages
+	^self ast sendNodes select: [ :node | node isSuperSend ] thenCollect: [ :node | node selector ] 
 ]
