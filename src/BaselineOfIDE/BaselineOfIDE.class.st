@@ -262,7 +262,6 @@ BaselineOfIDE >> baseline: spec [
 				
 		spec package: 'System-CommandLine-TextSupport'.
 		spec package: 'GeneralRules'.
-		spec package: 'ReflectionMirrors-Primitives'.
 		spec package: 'FuzzyMatcher'.
 		spec package: 'STON-Text support'.
 		
@@ -500,15 +499,10 @@ spec group: 'Zodiac-Group' with: #(
 	'Zodiac-Extras-Group'
 	'Zodiac-Tests-Group'
 ).
-
-spec group: 'ReflectionMirrors-Core-Group' with: #(
-	'ReflectionMirrors-Primitives'
-).
 spec group: 'ReflectionMirrors-Tests-Group' with: #(
 	'ReflectionMirrors-Primitives-Tests'
 ).
 spec group: 'ReflectionMirrors-Group' with: #(
-	'ReflectionMirrors-Core-Group'
 	'ReflectionMirrors-Tests-Group'
 ).
 
