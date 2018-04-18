@@ -90,6 +90,14 @@ RelationSlot >> hasInverse [
 ]
 
 { #category : #comparing }
+RelationSlot >> hasSameDefinitionAs: otherSlot [
+
+	^ (super hasSameDefinitionAs: otherSlot) 
+		and: [ self targetClassName = otherSlot targetClassName 
+		and: [ inverseName = otherSlot inverseName ] ]
+]
+
+{ #category : #comparing }
 RelationSlot >> hash [
 	^ ((self species hash bitXor: self name hash) 
 			bitXor: (self index ifNil: [ 0 ])) 
