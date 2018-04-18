@@ -38,7 +38,7 @@ ShAbstractClassChangeDetector >> compareSlotCollection: a with: b [
 	(a size = b size) ifFalse: [ ^ false].
 
 	a with: b do: [ :aSlot :bSlot | 
-			(aSlot sameDefinitionAs: bSlot) ifFalse: [ ^ false ] ].
+			(aSlot hasSameDefinitionAs: bSlot) ifFalse: [ ^ false ] ].
 
 	^ true
 ]

@@ -189,6 +189,17 @@ Slot >> hasProperty: aKey [
 ]
 
 { #category : #comparing }
+Slot >> hasSameDefinitionAs: otherSlot [
+
+	"similar to #= but does not take a slot index into count"
+	self == otherSlot
+		ifTrue: [ ^ true ].
+	^ (self species == otherSlot species) 
+			and: [ name = otherSlot name ]
+
+]
+
+{ #category : #comparing }
 Slot >> hash [
 	"Every subclass that adds state must redefine this method"
 	^ self species hash bitXor: self name hash
@@ -343,17 +354,6 @@ Slot >> removeProperty: propName ifAbsent: aBlock [
 { #category : #'class building' }
 Slot >> removingFrom: aClass [
 	"I am called by the class builder. This way a Slot can change the class it is installed in"
-]
-
-{ #category : #comparing }
-Slot >> sameDefinitionAs: otherSlot [
-
-	"similar to #= but does not take a slot index into count"
-	self == otherSlot
-		ifTrue: [ ^ true ].
-	^ (self species == otherSlot species) 
-			and: [ name = otherSlot name ]
-
 ]
 
 { #category : #accessing }

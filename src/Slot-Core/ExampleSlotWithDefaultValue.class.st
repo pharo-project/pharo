@@ -30,6 +30,14 @@ ExampleSlotWithDefaultValue >> default: anObject [
 ]
 
 { #category : #comparing }
+ExampleSlotWithDefaultValue >> hasSameDefinitionAs: otherSlot [
+
+	^ (super hasSameDefinitionAs: otherSlot) 
+		and: [ default = otherSlot default ]
+
+]
+
+{ #category : #comparing }
 ExampleSlotWithDefaultValue >> hash [
 	^super hash bitXor: default hash
 ]
@@ -48,14 +56,6 @@ ExampleSlotWithDefaultValue >> printOn: aStream [
 		nextPutAll: self class name;
 		nextPutAll: ' default: ';
 		store: default
-]
-
-{ #category : #comparing }
-ExampleSlotWithDefaultValue >> sameDefinitionAs: otherSlot [
-
-	^ (super sameDefinitionAs: otherSlot) 
-		and: [ default = otherSlot default ]
-
 ]
 
 { #category : #'meta-object-protocol' }

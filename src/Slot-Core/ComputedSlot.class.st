@@ -31,6 +31,14 @@ ComputedSlot >> block [
 ]
 
 { #category : #comparing }
+ComputedSlot >> hasSameDefinitionAs: otherSlot [
+
+	^ (super hasSameDefinitionAs: otherSlot) 
+		and: [ block printString = otherSlot block printString ]
+
+]
+
+{ #category : #comparing }
 ComputedSlot >> hash [
 	^super hash bitXor: block hash
 ]
@@ -49,14 +57,6 @@ ComputedSlot >> printOn: aStream [
 ComputedSlot >> read: anObject [
 	^block value: anObject
 	
-]
-
-{ #category : #comparing }
-ComputedSlot >> sameDefinitionAs: otherSlot [
-
-	^ (super sameDefinitionAs: otherSlot) 
-		and: [ block printString = otherSlot block printString ]
-
 ]
 
 { #category : #'instance creation' }

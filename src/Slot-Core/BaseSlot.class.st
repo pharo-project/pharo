@@ -28,6 +28,14 @@ BaseSlot >> default: anObject [
 ]
 
 { #category : #comparing }
+BaseSlot >> hasSameDefinitionAs: otherSlot [
+
+	^ (super hasSameDefinitionAs: otherSlot) 
+		and: [ default = otherSlot default ]
+
+]
+
+{ #category : #comparing }
 BaseSlot >> hash [
 	^super hash bitXor: default hash
 ]
@@ -40,14 +48,6 @@ BaseSlot >> initialize: anObject [
 { #category : #testing }
 BaseSlot >> isVisible [
 	^ false
-]
-
-{ #category : #comparing }
-BaseSlot >> sameDefinitionAs: otherSlot [
-
-	^ (super sameDefinitionAs: otherSlot) 
-		and: [ default = otherSlot default ]
-
 ]
 
 { #category : #'meta-object-protocol' }

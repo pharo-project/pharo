@@ -90,6 +90,14 @@ RelationSlot >> hasInverse [
 ]
 
 { #category : #comparing }
+RelationSlot >> hasSameDefinitionAs: otherSlot [
+
+	^ (super hasSameDefinitionAs: otherSlot) 
+		and: [ self targetClassName = otherSlot targetClassName 
+		and: [ inverseName = otherSlot inverseName ] ]
+]
+
+{ #category : #comparing }
 RelationSlot >> hash [
 	^ ((self species hash bitXor: self name hash) 
 			bitXor: (self index ifNil: [ 0 ])) 
@@ -164,14 +172,6 @@ RelationSlot >> removeAssociationFrom: ownerObject to: otherObject [
 	self inverseSlot isToOneSlot
 		ifTrue: [ inverseSlot writeInverse: nil to: otherObject ]
 		ifFalse: [ (inverseSlot read: otherObject) inverseRemove: ownerObject ]
-]
-
-{ #category : #comparing }
-RelationSlot >> sameDefinitionAs: otherSlot [
-
-	^ (super sameDefinitionAs: otherSlot) 
-		and: [ self targetClassName = otherSlot targetClassName 
-		and: [ inverseName = otherSlot inverseName ] ]
 ]
 
 { #category : #accessing }
