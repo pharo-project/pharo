@@ -69,6 +69,22 @@ RBValueNode >> evaluateForContext: aContext [
 
 ]
 
+{ #category : #evaluating }
+RBValueNode >> evaluateForReceiver: aReceicer [
+	"evaluate the AST without taking variables into account"
+	| methodNode |
+	
+	methodNode := RBMethodNode 
+		selector: #DoIt
+		body: (RBReturnNode value: self) asSequenceNode.
+	
+	methodNode methodClass: aReceicer class.
+	
+	^methodNode generateWithSource valueWithReceiver: aReceicer arguments: #().
+
+
+]
+
 { #category : #testing }
 RBValueNode >> hasParentheses [
 	^self parentheses notEmpty

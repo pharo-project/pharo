@@ -74,7 +74,7 @@ RBPatternBlockNode >> createReplacingBlock [
 	newBlock := RBBlockNode arguments: arguments body: body.
 	self arguments isEmpty 
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
-	^newBlock evaluate
+	^newBlock evaluateForReceiver: self.
 ]
 
 { #category : #'testing-matching' }
