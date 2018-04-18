@@ -61,7 +61,7 @@ RBPatternBlockNode >> createMatchingBlock [
 		ifTrue: [self addArgumentWithNameBasedOn: 'aNode' to: newBlock].
 	newBlock arguments size = 1 
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
-	^newBlock evaluate.
+	^newBlock evaluateForReceiver: self.
 ]
 
 { #category : #matching }
