@@ -630,7 +630,7 @@ MCClassDefinition >> usesSpecialVariables [
 
 { #category : #accessing }
 MCClassDefinition >> variables [
-	^ variables
+	^ variables ifNil: [ variables := OrderedCollection  new ]
 ]
 
 { #category : #installing }

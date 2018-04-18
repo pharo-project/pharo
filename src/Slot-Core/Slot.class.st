@@ -211,6 +211,12 @@ Slot >> isGlobal [
 ]
 
 { #category : #testing }
+Slot >> isLocal [
+
+	^ self owningClass = self definingClass
+]
+
+{ #category : #testing }
 Slot >> isReadIn: aCompiledCode [
 	^aCompiledCode readsSlot: self
 ]
