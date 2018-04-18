@@ -65,7 +65,7 @@ RBValueNode >> evaluateForContext: aContext [
 
 	methodNode methodClass: aContext receiver class.
 	methodNode rewriteTempsForContext: aContext.
-	^methodNode generate valueWithReceiver: aContext receiver arguments: {aContext}.
+	^methodNode generateWithSource valueWithReceiver: aContext receiver arguments: {aContext}.
 
 
 ]
@@ -80,7 +80,6 @@ RBValueNode >> evaluateForReceiver: aReceicer [
 		body: (RBReturnNode value: self) asSequenceNode.
 	
 	methodNode methodClass: aReceicer class.
-	
 	^methodNode generateWithSource valueWithReceiver: aReceicer arguments: #().
 
 
