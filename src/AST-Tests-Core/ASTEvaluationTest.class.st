@@ -1,3 +1,6 @@
+"
+I am testing AST evaluation 
+"
 Class {
 	#name : #ASTEvaluationTest,
 	#superclass : #TestCase,
@@ -15,6 +18,10 @@ ASTEvaluationTest >> testeEvaluateForContext [
 	varForTesting := 4@5.
 	node := thisContext method variableNodes first.
 	self assert: (node evaluateForContext: thisContext) equals: varForTesting.
+	node := RBVariableNode named: 'self'.
+	self assert: (node evaluateForContext: thisContext) equals: thisContext receiver.
+	node := RBVariableNode named: 'testSelector'.
+	self assert: (node evaluateForContext: thisContext) equals: #testeEvaluateForContext.
 ]
 
 { #category : #tests }
@@ -23,20 +30,6 @@ ASTEvaluationTest >> testeEvaluateForReceiver [
 	receiver := 4@5.
 	node := (receiver class>>#x) variableNodes first.
 	self assert: (node evaluateForReceiver: receiver) equals: 4.
-]
-
-{ #category : #tests }
-ASTEvaluationTest >> testeEvaluateForReceiverSelf [
-	| receiver node |
-	receiver := 4@5.
-	node := RBVariableNode named: 'self'.
-	self assert: (node evaluateForReceiver: receiver) equals: receiver.
-]
-
-{ #category : #tests }
-ASTEvaluationTest >> testeEvaluateForReceiverSelfSuper [
-	| receiver node |
-	receiver := 4@5.
 	node := RBVariableNode named: 'self'.
 	self assert: (node evaluateForReceiver: receiver) equals: receiver.
 	node := RBVariableNode named: 'super'.
