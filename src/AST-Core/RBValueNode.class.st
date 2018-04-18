@@ -39,6 +39,36 @@ RBValueNode >> containedBy: anInterval [
 		and: [anInterval last >= self stopWithoutParentheses]
 ]
 
+{ #category : #evaluating }
+RBValueNode >> evaluate [
+	"evaluate the AST without taking variables into account"
+	| methodNode |
+	
+	methodNode := RBMethodNode 
+		selector: #DoIt
+		body: (RBReturnNode value: self) asSequenceNode.
+	
+	^methodNode generateWithSource valueWithReceiver: nil arguments: #().
+
+
+]
+
+{ #category : #evaluating }
+RBValueNode >> evaluateForContext: aContext [
+	"evaluate the AST taking variables from the context"
+	| methodNode |
+	
+	methodNode := RBMethodNode 
+		selector: #DoItIn:
+		arguments: { RBVariableNode named: 'ThisContext' } 
+		body: (RBReturnNode value: self) asSequenceNode.
+
+	methodNode rewriteTempsForContext: aContext.
+	^methodNode generate valueWithReceiver: aContext receiver arguments: {aContext}.
+
+
+]
+
 { #category : #testing }
 RBValueNode >> hasParentheses [
 	^self parentheses notEmpty
