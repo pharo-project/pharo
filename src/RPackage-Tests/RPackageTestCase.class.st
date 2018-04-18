@@ -14,7 +14,7 @@ Class {
 	#category : #'RPackage-Tests'
 }
 
-{ #category : #utilities }
+{ #category : #accessing }
 RPackageTestCase >> allManagers [
 
 	^ MCWorkingCopy allManagers
