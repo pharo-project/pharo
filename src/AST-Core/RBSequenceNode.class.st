@@ -262,7 +262,7 @@ RBSequenceNode >> initialize [
 
 { #category : #testing }
 RBSequenceNode >> isFaulty [
-	^self statements anySatisfy: #isFaulty.
+	^self statements anySatisfy: #isFaulty
 ]
 
 { #category : #testing }

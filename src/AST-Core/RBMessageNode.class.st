@@ -104,7 +104,7 @@ RBMessageNode >> copyInContext: aDictionary [
 	^self class
 		receiver: (self receiver copyInContext: aDictionary)
 		selector: self selector
-		arguments: (self arguments collect: [ :each | each copyInContext: aDictionary ]).
+		arguments: (self arguments collect: [ :each | each copyInContext: aDictionary ])
 ]
 
 { #category : #accessing }
@@ -210,10 +210,10 @@ RBMessageNode >> keywordsPositions: aPositionsList [
 
 { #category : #testing }
 RBMessageNode >> lastIsReturn [
-	(self isInlineIf or: [ self isInlineIfNil]) ifFalse: [^false  ].
+	(self isInlineIf or: [ self isInlineIfNil]) ifFalse: [ ^false ].
 	arguments size = 1 ifTrue: [ ^false ].
 	^ arguments first isBlock and: [ arguments first body lastIsReturn 
-		and: [ arguments last isBlock and: [ arguments last body lastIsReturn ] ] ] 
+		and: [ arguments last isBlock and: [ arguments last body lastIsReturn ]]] 
 ]
 
 { #category : #matching }
