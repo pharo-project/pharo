@@ -50,16 +50,6 @@ RBPatternBlockNode >> copyInContext: aDictionary [
 ]
 
 { #category : #matching }
-RBPatternBlockNode >> createBlockFor: aRBBlockNode [ 
-	aRBBlockNode left: self left; right:self right.
-	self replacePatternNodesIn: aRBBlockNode.
-	^Smalltalk compiler 
-		source: aRBBlockNode formattedCode;
-		receiver: self;
-		evaluate
-]
-
-{ #category : #matching }
 RBPatternBlockNode >> createMatchingBlock [
 	| newBlock |
 	self arguments size > 2 
@@ -71,7 +61,7 @@ RBPatternBlockNode >> createMatchingBlock [
 		ifTrue: [self addArgumentWithNameBasedOn: 'aNode' to: newBlock].
 	newBlock arguments size = 1 
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
-	^self createBlockFor: newBlock
+	^newBlock evaluateForReceiver: self.
 ]
 
 { #category : #matching }
@@ -84,7 +74,7 @@ RBPatternBlockNode >> createReplacingBlock [
 	newBlock := RBBlockNode arguments: arguments body: body.
 	self arguments isEmpty 
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
-	^self createBlockFor: newBlock
+	^newBlock evaluateForReceiver: self.
 ]
 
 { #category : #'testing-matching' }
