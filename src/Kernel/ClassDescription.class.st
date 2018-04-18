@@ -811,8 +811,7 @@ ClassDescription >> linesOfCode [
 { #category : #slots }
 ClassDescription >> localSlots [
 
-	^ self slots select: [ :aSlot | 
-		aSlot definingClass = aSlot owningClass ]
+	^ self slots select: [ :aSlot | aSlot isLocal ]
 ]
 
 { #category : #'accessing tags' }
