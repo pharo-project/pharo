@@ -14,7 +14,7 @@ Class {
 	#category : #FontChooser
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 FreeTypeFontSelectorDialogWindow >> defaultFontFamilies [
 	"Answer the set of available fonts families that are supported in the font that they represent."
 	
@@ -33,7 +33,7 @@ FreeTypeFontSelectorDialogWindow >> defaultFontFamilies [
 			addAttribute: (TextFontReference toFont: dispFont)]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FreeTypeFontSelectorDialogWindow >> matchingFont [
 	"Answer the font that matches the selections."
 
@@ -65,7 +65,7 @@ FreeTypeFontSelectorDialogWindow >> newFontStyleButtonRowMorph [
 		self newItalicButtonMorph}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 FreeTypeFontSelectorDialogWindow >> updateFromSelectedFont [
 	"Update our state based on the selected font."
 
