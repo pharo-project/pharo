@@ -1,3 +1,6 @@
+"
+SUnit tests on string extensions used for packages
+"
 Class {
 	#name : #RPackageStringExtensionTest,
 	#superclass : #TestCase,
