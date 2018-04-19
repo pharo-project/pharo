@@ -31,7 +31,7 @@ RBParseTreeRule class >> search: aString [
 		yourself
 ]
 
-{ #category : #matching }
+{ #category : #testing }
 RBParseTreeRule >> canMatch: aProgramNode [ 
 	^true
 ]

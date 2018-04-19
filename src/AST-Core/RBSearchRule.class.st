@@ -36,19 +36,19 @@ RBSearchRule >> canMatch: aProgramNode [
 	^true
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - searching' }
 RBSearchRule >> searchFor: aString thenDo: aBlock [ 
 	self searchString: aString.
 	answerBlock := aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - searching' }
 RBSearchRule >> searchForMethod: aString thenDo: aBlock [ 
 	self methodSearchString: aString.
 	answerBlock := aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - searching' }
 RBSearchRule >> searchForTree: aBRProgramNode thenDo: aBlock [ 
 	searchTree := aBRProgramNode.
 	answerBlock := aBlock

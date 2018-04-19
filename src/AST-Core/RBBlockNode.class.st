@@ -84,7 +84,7 @@ RBBlockNode >> arguments [
 { #category : #accessing }
 RBBlockNode >> arguments: argCollection [ 
 	arguments := argCollection.
-	arguments do: [:each | each parent: self]
+	arguments do: [:each | each parent: self ]
 ]
 
 { #category : #'accessing-token' }

@@ -13,7 +13,8 @@ RBAssignmentToken >> isAssignment [
 	^true
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 RBAssignmentToken >> length [
-	^2
+
+	^ 2
 ]
