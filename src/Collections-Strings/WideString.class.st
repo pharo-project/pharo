@@ -156,7 +156,7 @@ WideString >> byteSize [
 
 ]
 
-{ #category : #converting }
+{ #category : #copying }
 WideString >> copyFrom: start to: stop [
 
 	| n |

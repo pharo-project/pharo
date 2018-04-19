@@ -128,7 +128,7 @@ ArrayedCollection >> add: newObject [
 	self shouldNotImplement
 ]
 
-{ #category : #'objects from disk' }
+{ #category : #accessing }
 ArrayedCollection >> byteSize [
 	^self basicSize * self bytesPerBasicElement
 

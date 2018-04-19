@@ -26,7 +26,7 @@ WeakValueAssociation >> key: aKey value: anObject [
 	self value: anObject
 ]
 
-{ #category : #accessing }
+{ #category : #evaluating }
 WeakValueAssociation >> value [
 	^self at: 1
 ]

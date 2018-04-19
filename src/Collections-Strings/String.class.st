@@ -1695,7 +1695,7 @@ String >> isByteString [
 	^false
 ]
 
-{ #category : #printing }
+{ #category : #testing }
 String >> isLiteral [
 
 	^true
