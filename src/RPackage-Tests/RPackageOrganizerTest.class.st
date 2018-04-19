@@ -16,6 +16,20 @@ Class {
 	#category : #'RPackage-Tests'
 }
 
+{ #category : #utilities }
+RPackageOrganizerTest class >> removeClassNamedIfExists: aClassNameSymbol [
+
+	Smalltalk globals at: aClassNameSymbol asSymbol ifPresent: [ :c | c removeFromSystem ]
+]
+
+{ #category : #utilities }
+RPackageOrganizerTest class >> removePackageIfExist: aName [
+
+	self packageOrganizer basicUnregisterPackageNamed: aName asSymbol.
+		
+	
+]
+
 { #category : #tests }
 RPackageOrganizerTest >> p1Name [
 	^ 'RPackageTestP1'
@@ -31,7 +45,7 @@ RPackageOrganizerTest >> p3Name [
 	^ 'RPackageTestP3'
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageOrganizerTest >> packageOrganizer [
 
 	^ packageOrganizer 
@@ -49,23 +63,9 @@ RPackageOrganizerTest >> pointRectangleInGraphElement [
 	^ p
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageOrganizerTest >> quadrangleClass [
 	^ self class environment at: #QuadrangleForTesting 
-]
-
-{ #category : #utility }
-RPackageOrganizerTest >> removeClassNamedIfExists: aClassNameSymbol [
-
-	Smalltalk globals at: aClassNameSymbol asSymbol ifPresent: [ :c | c removeFromSystem ]
-]
-
-{ #category : #utility }
-RPackageOrganizerTest >> removePackageIfExist: aName [
-
-	self packageOrganizer basicUnregisterPackageNamed: aName asSymbol.
-		
-	
 ]
 
 { #category : #running }
@@ -121,7 +121,7 @@ RPackageOrganizerTest >> testAccessingPackage [
 	p1 addClassDefinition: Point.
 	p1 addMethod: Point>>#x.
 	p1 addMethod: Point class>>#x:y:. 
-	self assert: (self packageOrganizer packageNamed: #P1) = p1.
+	self assert: (self packageOrganizer packageNamed: #P1) equals: p1.
 	self should: [(self packageOrganizer packageNamed: #P22)] raise: Error
 ]
 
@@ -134,15 +134,15 @@ RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 	p1 addClassDefinition: Point.
 	p1 addMethod: Point>>#x.
 	p1 addMethod: Point class>>#x:y:. 
-	self assert: self packageOrganizer packageNames size = 2.
-	self assert: self packageOrganizer packages size = 2.
-	self assert: (self packageOrganizer packageNamed: #P1) definedClasses size = 1
+	self assert: self packageOrganizer packageNames size equals: 2.
+	self assert: self packageOrganizer packages size equals: 2.
+	self assert: (self packageOrganizer packageNamed: #P1) definedClasses size equals: 1
 ]
 
 { #category : #tests }
 RPackageOrganizerTest >> testEmpty [
 	
-	self assert: self packageOrganizer packageNames size = 1.
+	self assert: self packageOrganizer packageNames size equals: 1.
 	self assert: (self packageOrganizer packageNames includes: self packageClass defaultPackageName)
 
 ]
@@ -299,7 +299,7 @@ RPackageOrganizerTest >> testRegisteredIsIncludedInPackageNames [
 	self packageOrganizer registerPackage: p1.
 	self packageOrganizer registerPackage: p2.
 	self packageOrganizer registerPackage: p3.
-	self assert: self packageOrganizer packageNames size = 4.
+	self assert: self packageOrganizer packageNames size equals: 4.
 	self assert: (self packageOrganizer includesPackage: p1). 
 	self assert: (self packageOrganizer includesPackageNamed: p1 name). 
 	{p1 . p2 . p3} do: [:each | self assert:  (self packageOrganizer packageNames includes: each name)]
@@ -317,7 +317,7 @@ RPackageOrganizerTest >> testRegisteredIsThere [
 	self packageOrganizer basicRegisterPackage: p1.
 	self packageOrganizer basicRegisterPackage: p2.
 	self packageOrganizer basicRegisterPackage: p3.
-	self assert: self packageOrganizer packageNames size = 4.
+	self assert: self packageOrganizer packageNames size equals: 4.
 	
 	{p1 . p2 . p3} do: [:each | 
 		self assert:  (self packageOrganizer packageNames includes: each name)]
@@ -333,9 +333,9 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	self packageOrganizer basicRegisterPackage: p1.
 	self packageOrganizer basicRegisterPackage: p2.
 	self packageOrganizer basicRegisterPackage: p3.
-	self assert: self packageOrganizer packageNames size = 4.
+	self assert: self packageOrganizer packageNames size equals: 4.
 	self packageOrganizer basicUnregisterPackage: p3.
-	self assert: self packageOrganizer packageNames size = 3.
+	self assert: self packageOrganizer packageNames size equals: 3.
 ]
 
 { #category : #'tests extending' }
@@ -347,7 +347,7 @@ RPackageOrganizerTest >> testRegistrationExtendingPackages [
 					registerExtendingPackage:  p
 					forClass: self quadrangleClass).
 	self deny: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name = #GraphElement.
+	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement.
 	
 ]
 
@@ -376,7 +376,7 @@ RPackageOrganizerTest >> testUnregisterBasedOnNames [
 	self packageOrganizer basicRegisterPackage: p1.
 	self packageOrganizer basicRegisterPackage: p2.
 	self packageOrganizer basicRegisterPackage: p3.
-	self assert: self packageOrganizer packageNames size = 4.
+	self assert: self packageOrganizer packageNames size equals: 4.
 
 	{p1 . p2 . p3} do: [:each | 
 		(self packageOrganizer basicUnregisterPackageNamed: each name).
@@ -391,7 +391,7 @@ RPackageOrganizerTest >> testUnregistrationExtendingPackages [
 		registerExtendingPackage: p
 		forClass: self quadrangleClass.
 	self deny: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name = #GraphElement.
+	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement.
 	self packageOrganizer
 					unregisterExtendingPackage:  p
 					forClass: self quadrangleClass.

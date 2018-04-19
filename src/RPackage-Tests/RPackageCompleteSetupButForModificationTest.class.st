@@ -69,19 +69,19 @@ RPackageCompleteSetupButForModificationTest >> testBasicRemoveClass [
 
 	|  size |
 	size := p1 definedClasses size. 
-	self assert: size = 2.
+	self assert: size equals: 2.
 	self assert: (p1 includesClass: a1).
 	self assert: (p1 includesClass: a1 class).
 	p1 removeClassDefinition: a1.
-	self assert: p1 definedClasses size = (size - 1).
+	self assert: p1 definedClasses size equals: (size - 1).
 	self assert: (p1 includesClass: b1).
 	self assert: (p1 includesClass: b1 class).
 	self deny: (p1 includesClass: a1).
 	self deny: (p1 includesClass: a1 class).
 	p1 removeClassDefinition: b1.
-	self assert: p1 definedClasses size = (size - 2).
+	self assert: p1 definedClasses size equals: (size - 2).
 	self deny: (p1 includesClass: b1).
-	self deny: (p1 includesClass: b1 class).
+	self deny: (p1 includesClass: b1 class)
 
 
 ]
@@ -101,18 +101,18 @@ RPackageCompleteSetupButForModificationTest >> testExtensionMethodOfClass [
 		A3DefinedInP3	
 		A2DefinedInP2>>methodDefinedInP3  (was *P2*)"
 		
-	self assert: a2 selectors size = 3.
+	self assert: a2 selectors size equals: 3.
 	"the class contains methods defined by several packages 
 	however when looking with a package view we only see the package 
 	extension."
 		
-	self assert: (p2 extensionMethodsForClass: a2) size = 0.
-	self assert: (p1 extensionMethodsForClass: a1) size = 0.
+	self assert: (p2 extensionMethodsForClass: a2) size equals: 0.
+	self assert: (p1 extensionMethodsForClass: a1) size equals: 0.
 	"show that extensionMethodsForClass: does works for methods of class
 	defined in the package"
 	
-	self assert: (p1 extensionMethodsForClass: a2) size = 1.
-	self assert: (p3 extensionMethodsForClass: a2) size = 1.
+	self assert: (p1 extensionMethodsForClass: a2) size equals: 1.
+	self assert: (p3 extensionMethodsForClass: a2) size equals: 1.
 ]
 
 { #category : #'test addition' }
@@ -135,7 +135,7 @@ RPackageCompleteSetupButForModificationTest >> testRemoveMethodDoesNotRemoveFrom
 { #category : #'test addition' }
 RPackageCompleteSetupButForModificationTest >> testRemoveShouldRaiseErrorWhenMethodIsNotInPackage [
 	
-	self should: [p2 removeMethod: a2>>#methodDefinedZork] raise: Error
+	self should: [ p2 removeMethod: a2>>#methodDefinedZork ] raise: Error
 ]
 
 { #category : #'test starting situation' }
