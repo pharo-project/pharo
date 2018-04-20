@@ -430,6 +430,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Fuel-Tests-Core'
 	'Balloon-Tests'
 	'Collections-DoubleLinkedList-Tests'
+	'Collections-Arithmetic-Tests'
 	'ConfigurationCommandLineHandler-Tests'
 	'MetacelloCommandLineHandler-Tests'
 	'Debugger-Tests'
