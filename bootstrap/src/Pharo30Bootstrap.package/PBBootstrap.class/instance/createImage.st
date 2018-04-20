@@ -8,5 +8,6 @@ createImage
 	builder buildNumber: buildNumber.
 	builder imageFileReference: imageReference.
 	builder systemDefinition: ringEnvironment.
+	builder espellBackend instanceVariableMapping: (PBInstanceVariableMapping onEnvironment: ringEnvironment ).
 		
 	builder bootstrap

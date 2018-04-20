@@ -21,6 +21,11 @@ Class {
 	#category : #'System-VMEvents'
 }
 
+{ #category : #'events - testing' }
+InputEventHandler class >> isKeyboardEvent: eventBuffer [
+	^ eventBuffer first = EventTypeKeyboard and: [ eventBuffer fourth = EventKeyChar ]
+]
+
 { #category : #events }
 InputEventHandler >> flushEvents [
 ]
@@ -30,9 +35,10 @@ InputEventHandler >> handleEvent: eventBuffer [
 	self subclassResponsibility
 ]
 
-{ #category : #events }
-InputEventHandler >> isKbdEvent: bufEvt [
-	^ bufEvt first = EventTypeKeyboard and: [ bufEvt fourth = EventKeyChar ]
+{ #category : #'events - testing' }
+InputEventHandler >> isKeyboardEvent: eventBuffer [
+
+	^self class isKeyboardEvent: eventBuffer
 ]
 
 { #category : #'initialize-release' }

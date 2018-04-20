@@ -134,6 +134,11 @@ RBProgramNode >> asReturn [
 	^parent addReturn
 ]
 
+{ #category : #querying }
+RBProgramNode >> assignmentNodes [
+	^self allChildren select: [:each | each isAssignment].
+]
+
 { #category : #testing }
 RBProgramNode >> assigns: aVariableName [ 
 	^self children anySatisfy: [:each | each assigns: aVariableName]
@@ -156,6 +161,11 @@ RBProgramNode >> bestNodeFor: anInterval [
 	^ selectedChildren size = 1 
 		ifTrue: [ selectedChildren first bestNodeFor: anInterval ]
 		ifFalse: [ self ]
+]
+
+{ #category : #querying }
+RBProgramNode >> blockNodes [
+	^self allChildren select: [:each | each isBlock].
 ]
 
 { #category : #accessing }
@@ -346,6 +356,16 @@ RBProgramNode >> hasProperty: aKey [
 { #category : #comparing }
 RBProgramNode >> hashForCollection: aCollection [
 	^ aCollection isEmpty ifTrue: [ 0 ] ifFalse: [ aCollection first hash ]
+]
+
+{ #category : #querying }
+RBProgramNode >> instanceVariableReadNodes [
+		^self variableReadNodes select: [:each | each isInstance]
+]
+
+{ #category : #querying }
+RBProgramNode >> instanceVariableWriteNodes [
+		^self variableWriteNodes select: [:each | each isInstance]
 ]
 
 { #category : #testing }
@@ -749,15 +769,12 @@ RBProgramNode >> replaceWith: aNode [
 
 { #category : #querying }
 RBProgramNode >> selfMessages [
-	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: 'self `@msg: ``@args'
-		do: 
-			[:aNode :answer | 
-			answer
-				add: aNode selector;
-				yourself].
-	^searcher executeTree: self initialAnswer: Set new
+	^(self sendNodes select: [ :node | node isSelfSend ] thenCollect: [ :node | node selector ]) asSet
+]
+
+{ #category : #accessing }
+RBProgramNode >> sendNodes [
+	^self allChildren select: [:each | each isMessage].
 ]
 
 { #category : #accessing }
@@ -820,15 +837,12 @@ RBProgramNode >> stop [
 
 { #category : #querying }
 RBProgramNode >> superMessages [
-	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: 'super `@msg: ``@args'
-		do: 
-			[:aNode :answer | 
-			answer
-				add: aNode selector;
-				yourself].
-	^searcher executeTree: self initialAnswer: Set new
+	^(self sendNodes select: [ :node | node isSuperSend ] thenCollect: [ :node | node selector ]) asSet
+]
+
+{ #category : #querying }
+RBProgramNode >> tempVariableReadNodes [
+		^self variableReadNodes select: [:each | each isTemp]
 ]
 
 { #category : #accessing }
@@ -839,6 +853,22 @@ RBProgramNode >> temporaryVariables [
 { #category : #testing }
 RBProgramNode >> uses: aNode [
 	^true
+]
+
+{ #category : #querying }
+RBProgramNode >> variableNodes [
+		^self allChildren select: [:each | 
+			each isVariable and: [each isDefinition not]].
+]
+
+{ #category : #querying }
+RBProgramNode >> variableReadNodes [
+	^self variableNodes select: [:each | each isRead]
+]
+
+{ #category : #querying }
+RBProgramNode >> variableWriteNodes [
+		^self variableNodes select: [:each | each isWrite]
 ]
 
 { #category : #querying }

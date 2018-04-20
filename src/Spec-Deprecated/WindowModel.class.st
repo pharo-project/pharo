@@ -6,3 +6,8 @@ Class {
 	#superclass : #WindowPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+WindowModel class >> isDeprecated [
+	^true
+]

@@ -15,7 +15,7 @@ GTStepToBytecodeDebugAction class >> gtBytecodeDebuggerActionFor: aDebugger [
 			icon: GLMUIThemeExtraIcons glamorousPlay
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 GTStepToBytecodeDebugAction >> appliesToDebugger: aDebugger [
 
 	^ (aDebugger session isContextPostMortem: aDebugger currentContext) not and: [ 
@@ -40,6 +40,11 @@ GTStepToBytecodeDebugAction >> executeAction [
 	self session
 		runToBytecode: self debugger bytecodePresentation selection 
 		inContext: self currentContext
+]
+
+{ #category : #accessing }
+GTStepToBytecodeDebugAction >> help [
+	^ 'Step to a selected bytecode.'
 ]
 
 { #category : #accessing }

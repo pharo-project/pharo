@@ -148,16 +148,6 @@ RBMethodNode >> asSequenceNode [
 ]
 
 { #category : #accessing }
-RBMethodNode >> assignmentNodes [
-	^self allChildren select: [:each | each isAssignment].
-]
-
-{ #category : #accessing }
-RBMethodNode >> blockNodes [
-	^self allChildren select: [:each | each isBlock].
-]
-
-{ #category : #accessing }
 RBMethodNode >> body [
 	^body
 ]
@@ -298,16 +288,6 @@ RBMethodNode >> initialize [
 					a startPosition < b startPosition 
 						or: [a startPosition = b startPosition and: [a stopPosition < b stopPosition]]].
 	nodeReplacements := IdentityDictionary new
-]
-
-{ #category : #accessing }
-RBMethodNode >> instanceVariableReadNodes [
-		^self variableReadNodes select: [:each | each isInstance]
-]
-
-{ #category : #accessing }
-RBMethodNode >> instanceVariableWriteNodes [
-		^self variableWriteNodes select: [:each | each isInstance]
 ]
 
 { #category : #testing }
@@ -565,11 +545,6 @@ RBMethodNode >> selectorParts [
 ]
 
 { #category : #accessing }
-RBMethodNode >> sendNodes [
-	^self allChildren select: [:each | each isMessage].
-]
-
-{ #category : #accessing }
 RBMethodNode >> source [
 	^source
 ]
@@ -606,11 +581,6 @@ RBMethodNode >> stop [
 ]
 
 { #category : #accessing }
-RBMethodNode >> tempVariableReadNodes [
-		^self variableReadNodes select: [:each | each isTemp]
-]
-
-{ #category : #accessing }
 RBMethodNode >> temporaries [
 	^ self body temporaries
 ]
@@ -623,20 +593,4 @@ RBMethodNode >> temporaryNames [
 { #category : #testing }
 RBMethodNode >> uses: aNode [ 
 	^body == aNode and: [aNode lastIsReturn]
-]
-
-{ #category : #accessing }
-RBMethodNode >> variableNodes [
-		^self allChildren select: [:each | 
-			each isVariable and: [each isDefinition not]].
-]
-
-{ #category : #accessing }
-RBMethodNode >> variableReadNodes [
-	^self variableNodes select: [:each | each isRead]
-]
-
-{ #category : #accessing }
-RBMethodNode >> variableWriteNodes [
-		^self variableNodes select: [:each | each isWrite]
 ]

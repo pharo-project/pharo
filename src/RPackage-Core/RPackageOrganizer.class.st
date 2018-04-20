@@ -203,6 +203,9 @@ RPackageOrganizer >> addMethod: method [
 	
 	protocol := method protocol ifNil: [ Error signal: 'Should not happen' ].
 	
+	"If the class is not packaged yet, ignore the situation. This method is created during the creation of the class or on an anonymous class"
+	(method methodClass package name = RPackage defaultPackageName) ifTrue: [ ^ self ].
+	
 	rPackage := (self hasPackageForProtocol: protocol inClass: method methodClass)
 		ifTrue: [ self packageForProtocol: protocol inClass: method methodClass ]
 		ifFalse: [ self registerPackage: (self packageClass named: (protocol copyWithout: $*)) ].

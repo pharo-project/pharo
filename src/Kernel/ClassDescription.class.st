@@ -12,7 +12,6 @@ Class {
 	#name : #ClassDescription,
 	#superclass : #Behavior,
 	#instVars : [
-		'instanceVariables',
 		'organization'
 	],
 	#category : #'Kernel-Classes'
@@ -349,11 +348,8 @@ ClassDescription >> classesThatImplementAllOf: selectorSet [
 
 { #category : #'accessing comment' }
 ClassDescription >> comment [
-	"Answer the receiver's comment. (If missing, supply a template) "
-	| aString |
-	aString := self instanceSide organization classComment.
-	aString isEmpty ifFalse: [^ aString].
-	^self classCommentBlank
+    "Answer the receiver's comment. (If missing, supply a template) "
+    ^self instanceSide organization classComment ifEmpty: [ self classCommentBlank ]
 ]
 
 { #category : #'accessing comment' }
@@ -731,7 +727,7 @@ ClassDescription >> instVarNameForIndex: index [
 ClassDescription >> instVarNames [
 	"Answer an Array of the receiver's instance variable names."
 
-	^self classLayout instVarNames
+	^self localSlots collect: [ :each | each name ]
 ]
 
 { #category : #compiling }
@@ -767,8 +763,8 @@ ClassDescription >> instanceVariablesString [
 	"Answer a string of my instance variable names separated by spaces."
 
 	^String streamContents: [ :stream |
-		self instVarNames 
-			do: [ :each | stream nextPutAll: each ]
+		self localSlots
+			do: [ :each | stream nextPutAll: each name ]
 			separatedBy: [ stream space ] ]
 ]
 
@@ -810,6 +806,12 @@ ClassDescription >> linesOfCode [
 	^ self isMeta 
 		ifTrue: [ lines ]
 		ifFalse: [ lines + self classSide linesOfCode ]
+]
+
+{ #category : #slots }
+ClassDescription >> localSlots [
+
+	^ self slots select: [ :aSlot | aSlot isLocal ]
 ]
 
 { #category : #'accessing tags' }
@@ -1098,7 +1100,7 @@ ClassDescription >> slotDefinitionString [
 	
 	^String streamContents: [ :str | | special |
 		str nextPutAll: '{ '.
-		self slots do: [:slot |
+		self localSlots do: [:slot |
 				str nextPutAll: slot definitionString.
 				special := slot isSpecial]				
 			separatedBy: [ 

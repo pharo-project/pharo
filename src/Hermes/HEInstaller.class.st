@@ -55,7 +55,7 @@ HEInstaller >> asSlots: aString [
 
 { #category : #'creating classes' }
 HEInstaller >> build: aHEClass [
-	| newMetaclass newClass superclass layoutType  |
+	| newClass superclass layoutType  |
 
 	(self existingClass: aHEClass) ifNotNil: [ :x | ^ x ].
 

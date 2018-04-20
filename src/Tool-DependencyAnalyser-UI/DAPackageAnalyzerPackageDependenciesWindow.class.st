@@ -21,7 +21,7 @@ DAPackageAnalyzerPackageDependenciesWindow class >> collections [
 	^ (self onPackagesMatch: '*Collections*') open
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageAnalyzerPackageDependenciesWindow class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
 			(RPackageOrganizer default packages

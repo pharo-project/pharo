@@ -75,6 +75,11 @@ okay
 ' readStream
 ]
 
+{ #category : #deprecation }
+LimitingLineStreamWrapper class >> isDeprecated [
+	^true
+]
+
 { #category : #'instance creation' }
 LimitingLineStreamWrapper class >> on: aStream delimiter: aString [
 

@@ -260,6 +260,14 @@ ReleaseTest >> testUnpackagedClasses [
 
 ]
 
+{ #category : #'testing - rpackage' }
+ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
+	| unpackagePackage |
+	unpackagePackage := RPackageOrganizer default packageNamed: (RPackage defaultPackageName ).
+	"The unpackage package should not have any defined class or extended classes"
+	self assert: unpackagePackage classes isEmpty.
+]
+
 { #category : #testing }
 ReleaseTest >> testWorldMenuHasHelpForAllEntries [
 	"In this test we check that at least every terminal menu entry of the world menu has an help."

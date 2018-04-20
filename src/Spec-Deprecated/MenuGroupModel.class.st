@@ -6,3 +6,8 @@ Class {
 	#superclass : #MenuGroupPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+MenuGroupModel class >> isDeprecated [
+	^true
+]

@@ -67,37 +67,37 @@ RBBlockReplaceRule >> initialize [
 	replaceBlock := [:aNode | aNode]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - searching' }
 RBBlockReplaceRule >> searchFor: searchString replaceWith: aBlock [ 
 	self searchString: searchString.
 	replaceBlock := aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - searching' }
 RBBlockReplaceRule >> searchFor: searchString replaceWith: replBlock when: verifyBlock [ 
 	self searchFor: searchString replaceWith: replBlock.
 	verificationBlock := verifyBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - searching' }
 RBBlockReplaceRule >> searchForMethod: searchString replaceWith: aBlock [ 
 	self methodSearchString: searchString.
 	replaceBlock := aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - searching' }
 RBBlockReplaceRule >> searchForMethod: searchString replaceWith: replBlock when: verifyBlock [ 
 	self searchForMethod: searchString replaceWith: replBlock.
 	verificationBlock := verifyBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - searching' }
 RBBlockReplaceRule >> searchForTree: aBRProgramNode replaceWith: aBlock [ 
 	searchTree := aBRProgramNode.
 	replaceBlock := aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - searching' }
 RBBlockReplaceRule >> searchForTree: aBRProgramNode replaceWith: replBlock when: verifyBlock [ 
 	self searchForTree: aBRProgramNode replaceWith: replBlock.
 	verificationBlock := verifyBlock

@@ -57,7 +57,7 @@ and values with Colors, for example:
 	colorRamp := aRamp copy.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GradientPaint >> initialize [
 	super initialize.
 	colorRamp := OrderedCollection new.

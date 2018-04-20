@@ -24,6 +24,9 @@ Installs:
 Class {
 	#name : #BaselineOfBasicTools,
 	#superclass : #BaselineOf,
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfBasicTools
 }
 
@@ -51,8 +54,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Morphic-Widgets-FastTable'.
 		
 		spec package: 'Tool-ExternalBrowser'.
-		spec package: 'HowToContributeHelp'.
-		spec package: 'ContributingToTheCatalogHelp'.
 		spec package: 'BlueInk-Core'. 
 		spec package: 'BlueInk-Extras'.
 		spec package: 'Tool-ProcessBrowser'.
@@ -81,7 +82,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Refactoring-Core'.
 		spec package: 'Refactoring-Environment'.
 		spec package: 'Regex-Help'.
-		spec package: 'ImportingResource-Help'.
 		spec package: 'IssueTracking'.
 		spec package: 'Monticello-OldDataStreamCompatibility'. 
 		spec package: 'MonticelloFileServices'.			
@@ -103,8 +103,12 @@ BaselineOfBasicTools >> baseline: spec [
 { #category : #actions }
 BaselineOfBasicTools >> postload: loader package: packageSpec [
 
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
+
 	"Registering Nautilus"
- 	Nautilus registerToolsOn: Smalltalk tools.
+	AbstractNautilusUI	initialize.
+	Nautilus registerToolsOn: Smalltalk tools.
 	SessionManager default registerToolClassNamed: #Nautilus.
 	
 	Smalltalk tools register: TestRunner as: #testRunner.
@@ -117,6 +121,7 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 
 	Author reset.
 
+	Initialized := true.
 ]
 
 { #category : #baseline }

@@ -61,6 +61,12 @@ FileSystemHandle >> basicOpen [
 ]
 
 { #category : #streams }
+FileSystemHandle >> binaryReadStream [
+	
+	self subclassResponsibility 
+]
+
+{ #category : #streams }
 FileSystemHandle >> binaryWriteStream [
 	
 	self subclassResponsibility 
@@ -106,11 +112,6 @@ FileSystemHandle >> open [
 	self subclassResponsibility
 ]
 
-{ #category : #public }
-FileSystemHandle >> readStream [
-	self subclassResponsibility
-]
-
 { #category : #accessing }
 FileSystemHandle >> reference [
 	^ reference
@@ -135,10 +136,5 @@ FileSystemHandle >> sync [
 
 { #category : #public }
 FileSystemHandle >> truncateTo: anInteger [
-	self subclassResponsibility
-]
-
-{ #category : #public }
-FileSystemHandle >> writeStream [
 	self subclassResponsibility
 ]

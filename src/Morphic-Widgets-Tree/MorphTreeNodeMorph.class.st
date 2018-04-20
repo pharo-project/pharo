@@ -233,6 +233,12 @@ MorphTreeNodeMorph >> computeCheckTopLeft [
 ]
 
 { #category : #accessing }
+MorphTreeNodeMorph >> contentBounds [
+	"return bounds of drawn content, i.e. fullBounds except the gap"
+	^ self fullBounds insetOriginBy: (self indentGap)@0 cornerBy: 0@0.
+]
+
+{ #category : #accessing }
 MorphTreeNodeMorph >> controls [
 	^ controls
 ]

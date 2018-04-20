@@ -42,10 +42,20 @@ FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAb
 ]
 
 { #category : #'instance creation' }
+FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger [
+	^self fromBytes: aByteArray pointSize: anInteger index: 0
+]
+
+{ #category : #'instance creation' }
 FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger  index: i [
 	^self new
 		setFace: (FreeTypeFace fromBytes: aByteArray index: i) pointSize: anInteger; 
 		yourself
+]
+
+{ #category : #'instance creation' }
+FreeTypeFont class >> fromFile: aFileName pointSize: anInteger [ 
+	^ self fromFile: aFileName pointSize: anInteger index: 0
 ]
 
 { #category : #'instance creation' }
@@ -413,6 +423,22 @@ FreeTypeFont >> glyphOf: aCharacter destDepth: destDepth colorValue: aColorValue
 						subpixelPosition: validSub]]
 ]
 
+{ #category : #preview }
+FreeTypeFont >> gtInspectorFontIn: composite [
+	<gtInspectorPresentationOrder: 0>
+	composite morph
+		title: 'Font';
+		display: [ :x | | pane |
+			pane := ScrollPane new
+						alwaysShowScrollBars: true;
+						yourself.
+			pane scroller addMorph:
+					((String streamContents: [ :s | 22 to: 255 do: [ :idx | s nextPut: idx asCharacter ] ]) asMorph
+						font: x;
+						yourself).
+			pane ]
+]
+
 { #category : #testing }
 FreeTypeFont >> hasDistinctGlyphsForAll: asciiString [
 	"Answer true if the receiver has glyphs for all the characters
@@ -422,7 +448,7 @@ FreeTypeFont >> hasDistinctGlyphsForAll: asciiString [
 	self face isValid ifFalse:[^false].
 	setOfIndices := Set new.
 	asciiString asSet do:[:c | | i |
-		(i := self face primGetCharIndex: c asInteger) = 0
+		(i := self face ffiGetCharIndex: c asInteger) = 0
 			ifTrue:[^false]
 			ifFalse:[
 				(setOfIndices includes: i)
@@ -439,7 +465,7 @@ FreeTypeFont >> hasGlyphsForAll: asciiString [
 	
 	self face isValid ifFalse:[^false].
 	asciiString do:[:c |
-		(self face primGetCharIndex: c asInteger) = 0
+		(self face ffiGetCharIndex: c asInteger) = 0
 			ifTrue:[^false]].
 	^true
 ]

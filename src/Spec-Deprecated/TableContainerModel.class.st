@@ -6,3 +6,8 @@ Class {
 	#superclass : #TableContainerPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+TableContainerModel class >> isDeprecated [
+	^true
+]

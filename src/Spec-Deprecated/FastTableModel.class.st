@@ -6,3 +6,8 @@ Class {
 	#superclass : #FastTablePresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+FastTableModel class >> isDeprecated [
+	^true
+]

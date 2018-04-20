@@ -25,7 +25,7 @@ RBUnaryAccessingMethodWithoutReturnRule >> check: aMethod forCritiquesDo: aCriti
 	((aMethod methodClass organization categoryOfElement: aMethod selector) asString
 		beginsWith: 'accessing')
 		ifFalse: [ ^ self ].
-	aMethod parseTree
+	aMethod ast
 		nodesDo: [ :each | 
 			each isReturn
 				ifTrue: [ ^ self ] ].

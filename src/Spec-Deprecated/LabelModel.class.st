@@ -6,3 +6,8 @@ Class {
 	#superclass : #LabelPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+LabelModel class >> isDeprecated [
+	^true
+]

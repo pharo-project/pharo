@@ -367,6 +367,8 @@ MCFileTreeStCypressWriter >> writeTraitDefinition: definition [
                 ifTrue: [ properties at: 'classtraitcomposition' put: compositionString ] .
     properties at: 'category' put: definition category.
     properties at: 'commentStamp' put: definition commentStamp.
+    properties at: 'instvars' put: definition instVarNames asArray.
+    properties at: 'classinstvars' put: definition classInstVarNames asArray.
     STON put: properties asJsonOnStreamPretty: fileStream
 ]
 

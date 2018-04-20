@@ -5,7 +5,7 @@ RBProgramNode >> gtInspectorSourceCodeIn: composite [
 	<gtInspectorPresentationOrder: 30> 
 
 	^ composite pharoMethod 
-		title: 'Source code';
+		title: [ 'Source code' translated ];
 		display: [ self source ];
 		smalltalkClass: [ 
 			self parents first compilationContext ifNotNil: [ :ctx | ctx getClass ] ]; 
@@ -19,5 +19,5 @@ RBProgramNode >> gtInspectorSourceCodeIn: composite [
 RBProgramNode >> gtInspectorTreeIn: composite [
 	<gtInspectorPresentationOrder: 30> 
 	^ (GTSimpleRBTreeBrowser new treeIn: composite)
-		title: 'Tree'
+		title: [ 'Tree' translated ]
 ]

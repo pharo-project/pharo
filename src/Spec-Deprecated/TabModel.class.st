@@ -6,3 +6,8 @@ Class {
 	#superclass : #TabPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+TabModel class >> isDeprecated [
+	^true
+]

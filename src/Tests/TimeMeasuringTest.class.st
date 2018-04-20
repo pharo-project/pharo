@@ -38,7 +38,7 @@ TimeMeasuringTest >> openDebuggerOnFailingTestMethod [
 { #category : #performance }
 TimeMeasuringTest >> reportPerformance [
 	| str |
-	str := ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+	str := ZnNewLineWriterStream on: (ZnCharacterWriteStream
 			on: (File openForWriteFileNamed: 'performanceReports.txt')
 			encoding: 'utf8').
 	

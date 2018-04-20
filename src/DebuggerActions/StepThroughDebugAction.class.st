@@ -15,11 +15,6 @@ StepThroughDebugAction class >> actionType [
 ]
 
 { #category : #accessing }
-StepThroughDebugAction >> defaultHelp [
-	^ 'Step over the highlighted message, i.e. do not follow the sent message, taking debugger control after the method invoked returns or whenever execution should return inside a block used as an argument before that.'
-]
-
-{ #category : #accessing }
 StepThroughDebugAction >> defaultKeymap [
 
 	^ PharoShortcuts current stepThroughShortcut
@@ -41,6 +36,11 @@ StepThroughDebugAction >> defaultOrder [
 StepThroughDebugAction >> executeAction [
 
 	self session stepThrough: self currentContext
+]
+
+{ #category : #accessing }
+StepThroughDebugAction >> help [
+	^ 'Step over the highlighted message, i.e. do not follow the sent message, taking debugger control after the method invoked returns or whenever execution should return inside a block used as an argument before that.'
 ]
 
 { #category : #accessing }

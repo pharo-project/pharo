@@ -349,6 +349,13 @@ PointTest >> testRightRotated [
 ]
 
 { #category : #'tests - testing' }
+PointTest >> testScaleTo [
+	self assert: (200@200 scaleTo: 400@400) equals:(2.0@2.0).
+	self assert: (40@40 scaleTo: 400@400) equals: (10.0@10.0)
+	
+]
+
+{ #category : #'tests - testing' }
 PointTest >> testSideOf [
 	| p1 p2 p3 p4 p5 p6 o|
 	

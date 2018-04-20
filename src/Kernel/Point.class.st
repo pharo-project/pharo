@@ -590,6 +590,22 @@ Point >> scaleFrom: rect1 to: rect2 [
 					@ ((y-rect1 top) * rect2 height // rect1 height))
 ]
 
+{ #category : #transforming }
+Point >> scaleTo: anExtent [
+	"Return a Point scalefactor for shrinking a thumbnail of the receiver's extent to fit within anExtent. self and anExtent are expected to have positive nonZero x and y."
+    "200@200 scaleTo: 400@400 >>> (2.0@2.0)"
+	 "40@40 scaleTo: 400@400 >>> (10.0@10.0)"
+	
+    | factor  sX sY | 
+    factor :=  3.0 reciprocal. "EccentricityThreshhold reciprical"
+    sX := anExtent x / self  x asFloat.
+    sY :=  anExtent y / self  y asFloat.
+    sX = sY ifTrue: [ ^ sX @ sY ]. "Same aspect ratio"
+    ^ sX < sY 
+        ifTrue: [ sX @ (sX max: sY * factor) ] 
+        ifFalse: [ (sY max: sX * factor ) @ sY  ]
+]
+
 { #category : #private }
 Point >> setX: xValue setY: yValue [ 
 	x := xValue.

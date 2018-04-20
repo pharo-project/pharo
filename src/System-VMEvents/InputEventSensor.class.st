@@ -192,7 +192,7 @@ InputEventSensor >> flushKeyboard [
 InputEventSensor >> flushNonKbdEvents [
 	eventQueue ifNil: [^ self].
 	eventQueue flushAllSuchThat:
-		[:buf | (self isKbdEvent: buf) not]
+		[:buf | (self isKeyboardEvent: buf) not]
 ]
 
 { #category : #events }
@@ -211,12 +211,12 @@ InputEventSensor >> hasTablet [
 
 { #category : #initialization }
 InputEventSensor >> initialize [
-        "Initialize the receiver"
-        super initialize.
-        eventQueue := WaitfreeQueue new.
-        mouseButtons := 0.
-        mousePosition := 0 @ 0.
-        modifiers := 0
+	"Initialize the receiver"
+	super initialize.
+	eventQueue := WaitfreeQueue new.
+	mouseButtons := 0.
+	mousePosition := 0 @ 0.
+	modifiers := 0
 ]
 
 { #category : #joystick }
@@ -329,7 +329,7 @@ InputEventSensor >> nextKeyboardEvent [
 	as when running kbdTest or the InterpreterSimulator in Morphic"
 
 	| evtBuf |
-	evtBuf := eventQueue findFirst: [:buf | self isKbdEvent: buf].
+	evtBuf := eventQueue findFirst: [:buf | self isKeyboardEvent: buf].
 	self flushNonKbdEvents.
 	^evtBuf
 ]
@@ -356,7 +356,7 @@ InputEventSensor >> peekKeyboardEvent [
 	"Allows for use of old Sensor protocol to get at the keyboard,
 	as when running kbdTest or the InterpreterSimulator in Morphic"
 
-	^eventQueue findFirst: [:buf | self isKbdEvent: buf]
+	^eventQueue findFirst: [:buf | self isKeyboardEvent: buf]
 ]
 
 { #category : #private }

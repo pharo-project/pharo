@@ -35,7 +35,7 @@ Class {
 { #category : #'instance creation' }
 VTermOutputDriver class >> on: anOutputStream [
 	^ self new
-		outStream: (ZnCrPortableWriteStream on:
+		outStream: (ZnNewLineWriterStream on:
 			(ZnCharacterWriteStream on: anOutputStream encoding: 'utf8'));
 		yourself
 ]

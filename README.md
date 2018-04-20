@@ -39,11 +39,9 @@ The bootstrapping can be done using the following script:
 BUILD_NUMBER=42 BOOTSTRAP_ARCH=32 sh ./bootstrap/scripts/bootstrap.sh
 ```
 
-This will generate a very minimal image file named `bootstrap.image` in directory `bootstrap-cache`. To load the rest of Pharo environment you should afterwards execute:
+This will generate and archive images at various stages of the bootstrap process up to the full image in Pharo7.0-32bit-hhhhhhh.zip where hhhhhhh is the identifying hash.
 
-```bash
-sh ./bootstrap/scripts/build.sh
-```
+Additional information on the stages of the bootstrap and how to snapshot during the process are provided as comments in bootstrap.sh.
 
 __Tip:__ You can set `BOOTSTRAP_REPOSITORY` and `BOOTSTRAP_CACHE` environment variables to do the bootstrap outside of the source repository.
 

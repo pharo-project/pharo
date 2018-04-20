@@ -53,6 +53,7 @@ MetaLink class >> defaultOptions [
 	- optionMetalevel                   "force level: 0 for the link"
 	- optionDisabledLink                "links are active by default"
 	+ optionWeakAfter 						  "do not use #ensure: for #after "
+	- optionAnnounce                    "do we announce adding / removing links? Slow!"
 	)
 ]
 
@@ -74,6 +75,11 @@ MetaLink >> allReifications [
 		ifNotNil: [reifications addAll: self conditionArguments ].
 	
 	^reifications
+]
+
+{ #category : #installing }
+MetaLink >> announceChange [
+	self optionAnnounce ifTrue: [SystemAnnouncer uniqueInstance announce: (MetalinkChanged new link: self)]
 ]
 
 { #category : #accessing }
@@ -290,6 +296,18 @@ MetaLink >> option: anArray [
 ]
 
 { #category : #options }
+MetaLink >> optionAnnounce [
+	^ options includes: #optionAnnounce
+]
+
+{ #category : #options }
+MetaLink >> optionAnnounce: aBoolean [
+	aBoolean
+		ifTrue: [ options add: #optionAnnounce ] 
+		ifFalse: [ options remove: #optionAnnounce ifAbsent:[] ]
+]
+
+{ #category : #options }
 MetaLink >> optionCompileOnLinkInstallation [
 	^ options includes: #optionCompileOnLinkInstallation
 ]
@@ -405,10 +423,11 @@ MetaLink >> uninstall [
 { #category : #ast }
 MetaLink >> valueInContext: aBlock [
 	| process |
+	"We need to take care that all code called here can not have active metalinks. We use copies of methods if we call system methods"
 	process := Processor rfactiveProcess.
 	(process isActive: self level)
 		ifFalse: [ ^ self ].
 	process shiftLevelUp.
-	aBlock value.
-	process shiftLevelDown.
+	[aBlock value] rfEnsure: [process shiftLevelDown]
+	
 ]

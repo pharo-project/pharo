@@ -1111,7 +1111,7 @@ SmalltalkImage >> logStdErrorDuring: aBlock [
 	| stderr |
 	[
 		"install the line end conversion and force initialize the converter"
-		stderr := ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+		stderr := ZnNewLineWriterStream on: (ZnCharacterWriteStream
 			on: Stdio stderr
 			encoding: 'utf8').
 		
@@ -1332,7 +1332,7 @@ SmalltalkImage >> openLog [
 	Because it really belongs to logging facility,
 	we should delegate to it at some point "
 
-	^ [ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+	^ [ZnNewLineWriterStream on: (ZnCharacterWriteStream
 		on:
 			((File named: Smalltalk logFileName) writeStream
 				setToEnd;
