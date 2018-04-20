@@ -186,7 +186,7 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPoo
 
 	x1 := SharedPool subclass: #X1.
 
-	c1 := Object subclass: #C1 uses: t1 slots: #(aSlot) classVariables: '' poolDictionaries: 'X1' category: 'TraitsV2-Tests-TestClasses' . 
+	c1 := Object subclass: #C1 uses: t1 slots: #(aSlot) classVariables: #() poolDictionaries: 'X1' category: 'TraitsV2-Tests-TestClasses' . 
 
 	
 	self assert: c2 classLayout slotScope parentScope == c2 superclass classLayout slotScope. 
@@ -204,7 +204,7 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedvar
 	c1 := self newClass: #C1 with: #(aSlot) uses: t1.
 	c2 := self newClass: #C2 superclass: c1 with: #(otherSlot)  uses: t2.
 
-	c1 := Object subclass: #C1 uses: t1 slots: #(aSlot) classVariables: 'ClassVar' poolDictionaries: '' category: 'TraitsV2-Tests-TestClasses' . 
+	c1 := Object subclass: #C1 uses: t1 slots: #(aSlot) classVariables: #(ClassVar) poolDictionaries: '' category: 'TraitsV2-Tests-TestClasses' . 
 
 	self assert: c2 classLayout slotScope parentScope == c2 superclass classLayout slotScope. 
 	self assert: c2 class classLayout slotScope parentScope == c2 class superclass classLayout slotScope. 	

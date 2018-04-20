@@ -21,7 +21,7 @@ Class >> immediateSubclass: aName uses: aTraitComposition instanceVariableNames:
 		uses: aTraitComposition
 		layout: ImmediateLayout
 		slots: someInstanceVariableNames asSlotCollection 
-		classVariables: someClassVariableNames
+		classVariablesNames: someClassVariableNames
 		poolDictionaries: someSharedPoolNames
 		category: aCategory
 ]
@@ -80,7 +80,7 @@ Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: s
 		uses: aTraitCompositionOrArray
 		layout: self classLayout class
 		slots: someInstanceVariableNames asSlotCollection
-		classVariables: someClassVariableNames
+		classVariablesNames: someClassVariableNames
 		poolDictionaries: someSharedPoolNames
 		category: aCategory
 ]
@@ -93,7 +93,7 @@ Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: s
 		uses: aTraitCompositionOrArray
 		layout: self classLayout class
 		slots: someInstanceVariableNames asSlotCollection
-		classVariables: someClassVariableNames
+		classVariablesNames: someClassVariableNames
 		poolDictionaries: someSharedPoolNames
 		category: aCategory
 ]
@@ -121,7 +121,25 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				superclass: self;
 				slots: someSlots;
 				layoutClass: aLayout;
-				sharedVariablesFromString: someClassVariables;
+				sharedVariables: someClassVariables;
+				sharedPools: somePoolDictionaries;
+				traitComposition: aTraitComposition asTraitComposition;
+				classTraitComposition: aTraitComposition asTraitComposition classComposition;
+				category: aCategory;
+				copyClassSlotsFromExistingClass ]
+]
+
+{ #category : #'*TraitsV2' }
+Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: someSlots classVariablesNames: someClassVariablesNames poolDictionaries: somePoolDictionaries category: aCategory [
+	
+	^ self classInstaller
+		make: [ :builder | 
+			builder
+				name: subclassName;
+				superclass: self;
+				slots: someSlots;
+				layoutClass: aLayout;
+				sharedVariablesFromString: someClassVariablesNames;
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
@@ -180,7 +198,7 @@ Class >> variableByteSubclass: aName uses: aTraitComposition instanceVariableNam
 		uses: aTraitComposition
 		layout: actualLayoutClass
 		slots: someInstanceVariableNames asSlotCollection
-		classVariables: someClassVariableNames
+		classVariablesNames: someClassVariableNames
 		poolDictionaries: someSharedPoolNames
 		category: aCategory
 ]
@@ -216,7 +234,7 @@ Class >> variableSubclass: aName uses: aTraitComposition instanceVariableNames: 
 		uses: aTraitComposition
 		layout: VariableLayout
 		slots: someInstanceVariableNames asSlotCollection
-		classVariables: someClassVariableNames
+		classVariablesNames: someClassVariableNames
 		poolDictionaries: someSharedPoolNames
 		category: aCategory
 ]
@@ -275,7 +293,7 @@ Class >> variableWordSubclass: aName uses: aTraitComposition instanceVariableNam
 		uses: aTraitComposition
 		layout: WordLayout
 		slots: someInstanceVariableNames asSlotCollection
-		classVariables: someClassVariableNames
+		classVariablesNames: someClassVariableNames
 		poolDictionaries: someSharedPoolNames
 		category: aCategory
 ]
@@ -311,7 +329,7 @@ Class >> weakSubclass: aName uses: aTraitComposition instanceVariableNames: some
 		uses: aTraitComposition
 		layout: WeakLayout
 		slots: someInstanceVariableNames asSlotCollection
-		classVariables: someClassVariableNames
+		classVariablesNames: someClassVariableNames
 		poolDictionaries: someSharedPoolNames
 		category: aCategory
 ]
