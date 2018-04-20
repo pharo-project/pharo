@@ -857,7 +857,7 @@ BaselineOfIDE >> loadCalypso [
 		
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://dionisiydk/Calypso:v0.11.1';
+		repository: 'github://dionisiydk/Calypso:v0.11.2';
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
 	(self class environment at: #ClyBrowser) beAllDefault.
