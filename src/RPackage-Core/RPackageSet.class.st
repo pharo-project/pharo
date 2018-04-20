@@ -209,11 +209,6 @@ RPackageSet >> methods [
 	^methods ifNil: [ methods := (self collectFromAllPackages: #methods) collect: #asRingDefinition ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> overriddenMethods [
-	^overriddenMethods ifNil: [ overriddenMethods := self collectFromAllPackages: #overriddenMethods ]
-]
-
 { #category : #accessing }
 RPackageSet >> packageName [
 	^packageName
