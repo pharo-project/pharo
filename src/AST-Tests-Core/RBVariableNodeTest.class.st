@@ -1,3 +1,6 @@
+"
+SUnit tests for RBVariableNode
+"
 Class {
 	#name : #RBVariableNodeTest,
 	#superclass : #TestCase,

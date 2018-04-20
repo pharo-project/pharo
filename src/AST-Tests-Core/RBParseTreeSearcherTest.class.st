@@ -1,3 +1,6 @@
+"
+SUnit tests for RBParseTreeSearcher
+"
 Class {
 	#name : #RBParseTreeSearcherTest,
 	#superclass : #TestCase,
