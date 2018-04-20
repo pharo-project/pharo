@@ -11,6 +11,21 @@ Class {
 	#category : #'Tool-Base'
 }
 
+{ #category : #settings }
+PharoCommonTools class >> browsingSettingsOn: aBuilder [
+	<systemsettings>
+	
+	"create empty #codeBrowsing and #qualityAssistant settings groups so the tools can use it"
+	
+	(aBuilder group: #codeBrowsing)
+		label: 'Code Browsing';
+		description: 'All settings concerned with code browsing look''n feel'.
+	
+	(aBuilder group: #qualityAssistant)
+		label: 'QualityAssistant';
+		parent: #codeBrowsing.
+]
+
 { #category : #initialization }
 PharoCommonTools class >> initialize [
 	SessionManager default
