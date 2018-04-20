@@ -111,10 +111,12 @@ SystemDictionary >> bindingOf: varName [
 
 { #category : #'class and trait names' }
 SystemDictionary >> classAndTraitNames [
-	"Answer a sorted collection of all class and trait (not including class-traits) names. Do not bother to sort"
+	"Answer a sorted collection of all class and trait (not including class-traits) names. 
+	Now traits are normal classes. So they are in same class list.
+	Do not bother to sort"
 
 	
-	^self classNames, self traitNames
+	^self classNames
 	
 ]
 
