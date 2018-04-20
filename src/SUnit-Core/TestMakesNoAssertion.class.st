@@ -1,3 +1,8 @@
+"
+I am the exception raised when a test was run and made no assertion.
+
+I allow the TestResult instance to record this fact.
+"
 Class {
 	#name : #TestMakesNoAssertion,
 	#superclass : #TestFailure,
