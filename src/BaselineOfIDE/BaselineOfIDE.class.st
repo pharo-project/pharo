@@ -316,7 +316,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'PharoDocComment'.
 		spec package: 'Polymorph-Widgets-Rules'.
 		spec package: 'ProfStef-Tests'.
-		spec package: 'QualityAssistant-Test'.
 		spec package: 'Random-Tests'.
 		spec package: 'Refactoring-Help'.
 		spec package: 'Refactoring-Tests-Changes'.
@@ -394,7 +393,7 @@ spec group: 'Optional-Group' with: #(
 spec group: 'NodeNavigation-Group' with: #(
 	'NodeNavigation'	"standalone?"
 	'NodeNavigation-Tests'	
-).	
+).					
 
 spec group: 'Epicea-Core-Group' with: #(
 	'Athens-Group' "dependency of Hiedra"
