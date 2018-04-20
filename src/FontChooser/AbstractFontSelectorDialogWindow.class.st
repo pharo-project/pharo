@@ -26,14 +26,14 @@ AbstractFontSelectorDialogWindow class >> taskbarIconName [
 	^ #smallFontsIcon
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 AbstractFontSelectorDialogWindow >> defaultFontFamilies [
 	"Answer the set of available fonts families that are supported in the font that they represent."
 	
 	self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 AbstractFontSelectorDialogWindow >> defaultPreviewText [
 	"Answer the default text to use for the preview of the font."
 
@@ -105,7 +105,7 @@ AbstractFontSelectorDialogWindow >> fontSizeIndex: anObject [
 	self updateSelectedFont
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AbstractFontSelectorDialogWindow >> fontSizes [
 	"Answer the set of available fonts sizes that are supported."
 
@@ -187,7 +187,7 @@ AbstractFontSelectorDialogWindow >> isUnderlined: anObject [
 	self changed: #isUnderlined
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AbstractFontSelectorDialogWindow >> matchingFont [
 	"Answer the font that matches the selections."
 
@@ -360,7 +360,7 @@ AbstractFontSelectorDialogWindow >> selectedFont: anObject [
 	self updateFromSelectedFont
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AbstractFontSelectorDialogWindow >> textEmphasisCode [
 	"Answer the current bitmask for the text emphasis."
 
@@ -384,7 +384,7 @@ AbstractFontSelectorDialogWindow >> textPreviewMorph: anObject [
 	textPreviewMorph := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 AbstractFontSelectorDialogWindow >> toggleBold [
 	"Toggle the font bold emphasis."
 
@@ -392,7 +392,7 @@ AbstractFontSelectorDialogWindow >> toggleBold [
 	self updateSelectedFont
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 AbstractFontSelectorDialogWindow >> toggleItalic [
 	"Toggle the font italic emphasis."
 
@@ -400,7 +400,7 @@ AbstractFontSelectorDialogWindow >> toggleItalic [
 	self updateSelectedFont
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 AbstractFontSelectorDialogWindow >> toggleStruckOut [
 	"Toggle the font struck out emphasis."
 
@@ -408,7 +408,7 @@ AbstractFontSelectorDialogWindow >> toggleStruckOut [
 	self updateSelectedFont
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 AbstractFontSelectorDialogWindow >> toggleUnderlined [
 	"Toggle the font underlined emphasis."
 
@@ -416,14 +416,14 @@ AbstractFontSelectorDialogWindow >> toggleUnderlined [
 	self updateSelectedFont
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 AbstractFontSelectorDialogWindow >> updateFromSelectedFont [
 	"Update our state based on the selected font."
 
 	self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 AbstractFontSelectorDialogWindow >> updateSelectedFont [
 	"Update the selected font to reflect the choices."
 
