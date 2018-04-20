@@ -1014,6 +1014,13 @@ String >> deepCopy [
 	^self shallowCopy
 ]
 
+{ #category : #displaying }
+String >> displayStringOn: aStream [
+	
+	aStream nextPutAll: self
+	
+]
+
 { #category : #printing }
 String >> encodeDoublingQuoteOn: aStream [ 
 	"Print inside string quotes, doubling inbedded quotes."

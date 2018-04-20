@@ -723,6 +723,14 @@ StringTest >> testCorrectAgainst [
 	self assert: ('test' correctAgainst: coll) asArray equals: #().
 ]
 
+{ #category : #'tests - printing' }
+StringTest >> testDisplayString [
+
+	| actual |
+	actual := 'some string' displayString.
+	self assert: actual equals: 'some string'
+]
+
 { #category : #tests }
 StringTest >> testEndsWith [ 
 

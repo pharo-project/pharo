@@ -339,6 +339,14 @@ SymbolTest >> testCopyNotSame [
 	self assert: copy  == self nonEmpty.
 ]
 
+{ #category : #tests }
+SymbolTest >> testDisplayString [
+
+	| actual |
+	actual := #'some symbol' displayString.
+	self assert: actual equals: 'some symbol'
+]
+
 { #category : #'tests - testing' }
 SymbolTest >> testEndsWithAColon [
 	 
