@@ -11,6 +11,9 @@ Override my class-side #isLogging in subclasses to have failed assertion descrip
 Class {
 	#name : #TestAsserter,
 	#superclass : #Object,
+	#instVars : [
+		'assertionMade'
+	],
 	#category : #'SUnit-Core-Kernel'
 }
 
@@ -65,6 +68,7 @@ TestAsserter class >> suiteClass [
 
 { #category : #asserting }
 TestAsserter >> assert: aBoolean [
+	assertionMade := true.
 	aBoolean ifFalse:
 		[self logFailure: 'Assertion failed'.
 		self defaultTestFailure signal: 'Assertion failed'].
@@ -79,6 +83,7 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 
 { #category : #asserting }
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
+	assertionMade := true.
 	aBooleanOrBlock value ifFalse: [
 		| aString |
 		aString := aStringOrBlock value.

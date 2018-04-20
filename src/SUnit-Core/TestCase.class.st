@@ -650,7 +650,10 @@ TestCase >> openDebuggerOnFailingTestMethod [
 
 { #category : #private }
 TestCase >> performTest [
-	self perform: testSelector asSymbol
+	assertionMade := false.
+	self perform: testSelector asSymbol.
+	(assertionMade not and: [ (self class lookupSelector: testSelector asSymbol) isStaticallyCallingOneOfTheAssertMethods ])
+		ifTrue: [ TestResult makesNoAssertion signal: 'This test method made no assertion.' ]
 ]
 
 { #category : #running }
