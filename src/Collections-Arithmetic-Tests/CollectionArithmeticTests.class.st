@@ -19,12 +19,22 @@ CollectionArithmeticTests >> testAverageIfEmpty [
 ]
 
 { #category : #tests }
+CollectionArithmeticTests >> testAverageIfEmptyWithEmptyArray [
+	self assert: (#() averageIfEmpty: [ 0 ]) equals: 0
+]
+
+{ #category : #tests }
 CollectionArithmeticTests >> testAverageIfEmptyWithEmptyCollection [
 	self should: [#() averageIfEmpty: [ CollectionIsEmpty signal: 'Collection empty' ]] raise: CollectionIsEmpty
 ]
 
 { #category : #tests }
 CollectionArithmeticTests >> testAverageWithEmptyArray [
+	self should: [ #() average ] raise: CollectionIsEmpty
+]
+
+{ #category : #tests }
+CollectionArithmeticTests >> testAverageWithEmptyArrayShouldRaiseExecption [
 	self should: [ #() average ] raise: CollectionIsEmpty
 ]
 
