@@ -136,6 +136,16 @@ Trait >> asTraitComposition [
 	^ TaCompositionElement for: self.
 ]
 
+{ #category : #'instance creation' }
+Trait >> basicNew [
+	"Traits should never be instantiated.
+	They are naked object: superclass = nil. 
+	They not understand any Object messages 
+	and any DNU crashes VM because there are no methods doesNotUnderstand: or cannotInterpret:"
+	
+	self error: 'Traits should not be instantiated!'
+]
+
 { #category : #'accessing parallel hierarchy' }
 Trait >> classTrait [
 
