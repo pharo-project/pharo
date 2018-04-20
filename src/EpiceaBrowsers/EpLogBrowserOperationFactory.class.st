@@ -51,7 +51,7 @@ EpLogBrowserOperationFactory >> applyPropagateRefactoring [
 { #category : #private }
 EpLogBrowserOperationFactory >> applyRBRefactoring: aRBRefactoring [
 
-	self error: 'This function is currenlty not supported'
+	self error: 'This function is currently not supported'
 ]
 
 { #category : #accessing }
