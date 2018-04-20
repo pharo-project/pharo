@@ -28,11 +28,6 @@ RBValueNode >> addParenthesis: anInterval [
 	parentheses add: anInterval
 ]
 
-{ #category : #converting }
-RBValueNode >> asSequenceNode [
-	^RBSequenceNode statements: {self} 
-]
-
 { #category : #testing }
 RBValueNode >> containedBy: anInterval [ 
 	^anInterval first <= self startWithoutParentheses 
@@ -42,13 +37,7 @@ RBValueNode >> containedBy: anInterval [
 { #category : #evaluating }
 RBValueNode >> evaluate [
 	"evaluate the AST without taking variables into account"
-	| methodNode |
-	
-	methodNode := RBMethodNode 
-		selector: #DoIt
-		body: (RBReturnNode value: self) asSequenceNode.
-	
-	^methodNode generateWithSource valueWithReceiver: nil arguments: #().
+	^self asDoit generateWithSource valueWithReceiver: nil arguments: #().
 
 
 ]
@@ -58,11 +47,7 @@ RBValueNode >> evaluateForContext: aContext [
 	"evaluate the AST taking variables from the context"
 	| methodNode |
 	
-	methodNode := RBMethodNode 
-		selector: #DoItIn:
-		arguments: { RBVariableNode named: 'ThisContext' } 
-		body: (RBReturnNode value: self) asSequenceNode.
-
+	methodNode := self asDoitIn.
 	methodNode methodClass: aContext receiver class.
 	methodNode rewriteTempsForContext: aContext.
 	^methodNode generateWithSource valueWithReceiver: aContext receiver arguments: {aContext}.
@@ -75,10 +60,7 @@ RBValueNode >> evaluateForReceiver: aReceicer [
 	"evaluate the AST without taking variables into account"
 	| methodNode |
 	
-	methodNode := RBMethodNode 
-		selector: #DoIt
-		body: (RBReturnNode value: self) asSequenceNode.
-	
+	methodNode := self asDoit.
 	methodNode methodClass: aReceicer class.
 	^methodNode generateWithSource valueWithReceiver: aReceicer arguments: #().
 
