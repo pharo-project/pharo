@@ -19,7 +19,7 @@ T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aCom
 { #category : #'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aComposition category: category [
 	| class |
-	class := aSuperclass subclass: aName uses: aComposition slots: slots classVariables: '' poolDictionaries: '' category: category. 
+	class := aSuperclass subclass: aName uses: aComposition slots: slots classVariables: #() poolDictionaries: '' category: category. 
 	createdClasses add:class.
 	
 	^class.
