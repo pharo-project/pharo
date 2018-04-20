@@ -77,6 +77,12 @@ RGTraitDefinition >> hasStamp [
 	^self stamp isEmptyOrNil not
 ]
 
+{ #category : #accessing }
+RGTraitDefinition >> inheritsFrom: aClass [
+
+	^ self realClass inheritsFrom: aClass
+]
+
 { #category : #'accessing - parallel hierarchy' }
 RGTraitDefinition >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
