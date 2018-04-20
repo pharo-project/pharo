@@ -230,8 +230,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tool-CriticBrowser'.
 
 		spec package: 'Renraku'.
-		spec package: 'QualityAssistant'.
-		spec package: 'QualityAssistantRecording'.
 		spec package: 'SUnit-Rules'.	
 
 		spec package: 'Moose-Algos-Graph'.
@@ -396,7 +394,7 @@ spec group: 'Optional-Group' with: #(
 spec group: 'NodeNavigation-Group' with: #(
 	'NodeNavigation'	"standalone?"
 	'NodeNavigation-Tests'	
-).					
+).	
 
 spec group: 'Epicea-Core-Group' with: #(
 	'Athens-Group' "dependency of Hiedra"
@@ -636,12 +634,9 @@ spec group: 'QualityAssistant-Core-Group' with: #(
 	'DependencyAnalyser-Core-Group' "dependency"
 	'GT-Core-Group'	"dependency"
 	'Renraku'		
-	'QualityAssistant'
-	'QualityAssistantRecording'
 	'Tool-CriticBrowser'
 ).
 spec group: 'QualityAssistant-Tests-Group' with: #(
-	'QualityAssistant-Test'
 	'Renraku-Test'
 ).
 spec group: 'QualityAssistant-Help-Group' with: #(
