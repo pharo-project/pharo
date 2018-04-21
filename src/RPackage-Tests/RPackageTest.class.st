@@ -98,7 +98,7 @@ RPackageTest >> testDemoteToRPackageNamed [
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
-	package1 demoteToRPackageNamed: 'Test1'.
+	package1 demoteToTagInPackageNamed: 'Test1'.
 
 	self deny: (self packageClass organizer includesPackage: package1).
 	package2 := self packageClass organizer packageNamed: 'Test1'.
@@ -116,7 +116,7 @@ RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
-	package1 demoteToRPackageNamed: 'Test1'.
+	package1 demoteToTagInPackageNamed: 'Test1'.
 
 	self deny: (self packageClass organizer includesPackage: package1).
 	package2 := self packageClass organizer packageNamed: 'Test1'.
@@ -134,7 +134,7 @@ RPackageTest >> testDemoteToRPackageNamedMultilevelPackage1 [
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1-X1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
-	package1 demoteToRPackageNamed: 'Test1'.
+	package1 demoteToTagInPackageNamed: 'Test1'.
 
 	self deny: (self packageClass organizer includesPackage: package1).
 	package2 := self packageClass organizer packageNamed: 'Test1'.
@@ -151,7 +151,7 @@ RPackageTest >> testDemoteToRPackageNamedMultilevelPackage2 [
 	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1-X1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
-	package1 demoteToRPackageNamed: 'Test1-TAG1'.
+	package1 demoteToTagInPackageNamed: 'Test1-TAG1'.
 
 	self deny: (self packageClass organizer includesPackage: package1).
 	package2 := self packageClass organizer packageNamed: 'Test1-TAG1'.
@@ -171,7 +171,7 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 	classOther := self createNewClassNamed: 'TestClassOther' inCategory: 'XXXX'.
 	classOther compile: 'bar ^42' classified: #'*Test1-TAG1'.
 
-	packageOriginal demoteToRPackageNamed: 'Test1'.
+	packageOriginal demoteToTagInPackageNamed: 'Test1'.
 
 	self deny: (RPackage organizer includesPackage: packageOriginal).
 	packageDemoted := RPackage organizer packageNamed: 'Test1'.
