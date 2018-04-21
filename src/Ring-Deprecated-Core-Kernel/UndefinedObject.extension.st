@@ -1,6 +1,6 @@
 Extension { #name : #UndefinedObject }
 
-{ #category : #'*NautilusCommon' }
+{ #category : #'*Ring-Deprecated-Core-Kernel' }
 UndefinedObject >> asRingDefinition [
 	
 	^ self

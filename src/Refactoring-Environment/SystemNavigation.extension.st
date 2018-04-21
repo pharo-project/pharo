@@ -1,6 +1,6 @@
 Extension { #name : #SystemNavigation }
 
-{ #category : #'*NautilusCommon' }
+{ #category : #'*Refactoring-Environment' }
 SystemNavigation >> browsedEnvironment: aBrowserEnvironment [
 
 	environment := aBrowserEnvironment asSystemNavigationEnvironment

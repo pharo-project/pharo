@@ -230,8 +230,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tool-CriticBrowser'.
 
 		spec package: 'Renraku'.
-		spec package: 'QualityAssistant'.
-		spec package: 'QualityAssistantRecording'.
 		spec package: 'SUnit-Rules'.	
 
 		spec package: 'Moose-Algos-Graph'.
@@ -318,7 +316,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'PharoDocComment'.
 		spec package: 'Polymorph-Widgets-Rules'.
 		spec package: 'ProfStef-Tests'.
-		spec package: 'QualityAssistant-Test'.
 		spec package: 'Random-Tests'.
 		spec package: 'Refactoring-Help'.
 		spec package: 'Refactoring-Tests-Changes'.
@@ -636,12 +633,9 @@ spec group: 'QualityAssistant-Core-Group' with: #(
 	'DependencyAnalyser-Core-Group' "dependency"
 	'GT-Core-Group'	"dependency"
 	'Renraku'		
-	'QualityAssistant'
-	'QualityAssistantRecording'
 	'Tool-CriticBrowser'
 ).
 spec group: 'QualityAssistant-Tests-Group' with: #(
-	'QualityAssistant-Test'
 	'Renraku-Test'
 ).
 spec group: 'QualityAssistant-Help-Group' with: #(
