@@ -39,11 +39,6 @@ RBReturnNode >> acceptVisitor: aProgramNodeVisitor [
 	^aProgramNodeVisitor visitReturnNode: self
 ]
 
-{ #category : #converting }
-RBReturnNode >> asSequenceNode [
-	^RBSequenceNode statements: {self} 
-]
-
 { #category : #accessing }
 RBReturnNode >> children [
 	^Array with: value
