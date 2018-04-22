@@ -45,12 +45,8 @@ RBValueNode >> evaluate [
 { #category : #evaluating }
 RBValueNode >> evaluateForContext: aContext [
 	"evaluate the AST taking variables from the context"
-	| methodNode |
-	
-	methodNode := self asDoitIn.
-	methodNode methodClass: aContext receiver class.
-	methodNode rewriteTempsForContext: aContext.
-	^methodNode generateWithSource valueWithReceiver: aContext receiver arguments: {aContext}.
+	^(self asDoitForContext: aContext) 
+		generateWithSource valueWithReceiver: aContext receiver arguments: {aContext}.
 
 
 ]

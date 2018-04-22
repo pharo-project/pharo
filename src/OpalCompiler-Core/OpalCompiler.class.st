@@ -324,19 +324,9 @@ OpalCompiler >> options: anOptionsArray [
 
 { #category : #'public access' }
 OpalCompiler >> parse [
-	| expression selector arguments method |
-	self compilationContext noPattern ifFalse: [ ^ self parseMethod ].
-	expression := self parseExpression asSequenceNode transformLastToReturn.
-	context
-		ifNil: [ 
-			selector := #DoIt.
-			arguments := #() ] 
-		ifNotNil: [ 
-			selector := #DoItIn:.
-			arguments := { RBVariableNode named: 'ThisContext' } ].
-	method := RBMethodNode selector: selector arguments: arguments body: expression.
-	context ifNotNil: [ method rewriteTempsForContext: context ].
-	^ method
+	^self compilationContext noPattern 
+		ifTrue: [ self parseExpression ]
+		ifFalse: [ self parseMethod ].
 ]
 
 { #category : #'public access' }
@@ -349,13 +339,18 @@ OpalCompiler >> parse: textOrString [
 
 { #category : #private }
 OpalCompiler >> parseExpression [
-	| parseClass |
+	| parseClass expression |
 	
 	parseClass := self compilationContext parserClass.
 
-	^self compilationContext optionParseErrors 
+	expression := self compilationContext optionParseErrors 
 		ifTrue: [parseClass parseFaultyExpression: source contents]
-		ifFalse: [parseClass parseExpression: source contents]
+		ifFalse: [parseClass parseExpression: source contents].
+		
+	^context 
+		ifNil: [expression asDoit] 
+		ifNotNil: [expression asDoitForContext: context].
+
 ]
 
 { #category : #'public access' }
@@ -368,7 +363,7 @@ OpalCompiler >> parseMethod [
 	| parseClass |
 	
 	parseClass := self compilationContext parserClass.
-
+	
 	^self compilationContext optionParseErrors 
 		ifTrue: [parseClass parseFaultyMethod: source contents]
 		ifFalse: [parseClass parseMethod: source contents]

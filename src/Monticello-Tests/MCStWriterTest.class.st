@@ -21,7 +21,7 @@ MCStWriterTest >> assertChunkIsWellFormed: chunk [
 		class: UndefinedObject;
 		noPattern: true;
 		failBlock:  [self assert: false];
-		translate.
+		compile.
 ]
 
 { #category : #asserting }
@@ -38,7 +38,7 @@ MCStWriterTest >> assertMethodChunkIsWellFormed: chunk [
 		source: chunk readStream;
 		class: UndefinedObject;
 		failBlock: [self assert: false];
-		translate.
+		compile.
 	
 ]
 

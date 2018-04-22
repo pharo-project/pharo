@@ -10,6 +10,6 @@ SmallDictionaryTest >> testStoreOnRoundTrip [
 		add: #c -> 1;
 		add: #d -> -2.
 	storeString := String streamContents: [ :s | dictionary storeOn: s ].
-	evalutated := Compiler evaluate: storeString.
+	evalutated := Smalltalk compiler evaluate: storeString.
 	self assert: dictionary equals: evalutated
 ]
