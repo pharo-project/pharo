@@ -102,6 +102,18 @@ PharoCommonTools class >> shutDown: aboutToQuit [
 	self allInstancesDo: #cleanUp
 ]
 
+{ #category : #'world menu' }
+PharoCommonTools class >> worldMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #'System Browser')
+		parent: #MostUsedTools;
+		action: [ Smalltalk tools openClassBrowser ];
+		order: 0.1;
+		keyText: 'o, b';
+		help: 'System browser to browse and edit code.';
+		icon: Smalltalk tools browser taskbarIcon
+]
+
 { #category : #'registry access' }
 PharoCommonTools >> basicInspector [
 
