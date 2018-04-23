@@ -273,6 +273,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
 		spec package: 'Collections-DoubleLinkedList-Tests'.
+		spec package: 'Collections-Arithmetic-Tests'.
 		spec package: 'Compression-Tests'.
 		spec package: 'ConfigurationCommandLineHandler-Tests'.
 		spec package: 'MetacelloCommandLineHandler-Tests'.
@@ -425,6 +426,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Fuel-Tests-Core'
 	'Balloon-Tests'
 	'Collections-DoubleLinkedList-Tests'
+	'Collections-Arithmetic-Tests'
 	'ConfigurationCommandLineHandler-Tests'
 	'MetacelloCommandLineHandler-Tests'
 	'Debugger-Tests'
