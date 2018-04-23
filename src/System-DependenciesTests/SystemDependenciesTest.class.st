@@ -292,7 +292,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfIDE name }, BaselineOfIDE allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
-		{ BaselineOfVersionner name }, BaselineOfVersionner allPackageNames,
 		{ BaselineOfPharoBootstrap name. 
 		  BaselineOfMonticello name.
 		  BaselineOfMetacello name }
