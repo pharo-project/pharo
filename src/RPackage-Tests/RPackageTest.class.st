@@ -184,6 +184,15 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 
 ]
 
+{ #category : #'test-queries' }
+RPackageTest >> testHierarchyRoots [
+	| roots |
+	roots := (RPackageOrganizer default packageNamed: #'RPackage-Tests') hierarchyRoots. 
+	roots := roots collect: [ :each | each name ].
+	#(RPackageTestCase)
+		do: [ :each | roots includes: each ]
+]
+
 { #category : #'tests-MC' }
 RPackageTest >> testMcPackage [
 
@@ -227,4 +236,12 @@ RPackageTest >> testRenameToMakesMCDirty [
 	package renameTo: 'Test2'.
 	
 	
+]
+
+{ #category : #'test-queries' }
+RPackageTest >> testRoots [
+	| roots |
+	roots := (RPackageOrganizer default packageNamed: #'RPackage-Tests') roots.
+	roots := roots collect: [ :each | each name ].
+	#(RPackageStringExtensionTest RPackageRenameTest TestRPackagePrequisites PackageChecker RPackageTestCase RPackageWithDoTest) do: [ :each | roots includes: each ]
 ]
