@@ -147,7 +147,6 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'Rubric-Styling'.
 		
-		spec package: 'Deprecated70'.
 		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		
@@ -520,10 +519,6 @@ spec group: 'SmartSuggestions-Group' with: #(
 	'SmartSuggestions-Tests-Group'
 ).
 
-spec group: 'Deprecated-Group' with: #(
-	'Deprecated70'
-).
-
 spec group: 'Manifest-Core-Group' with: #(
 	'Manifest-Core'
 ).
@@ -813,7 +808,6 @@ spec group: #default with: #(
 	'Metacello-Tests-Group'		 
 	'General-Help-Group'
 	'ReflectionMirrors-Group'
-	'Deprecated-Group'
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
 	'Flashback-Group'
