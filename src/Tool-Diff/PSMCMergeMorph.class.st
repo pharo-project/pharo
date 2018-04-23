@@ -96,13 +96,6 @@ PSMCMergeMorph >> fromDescription: aString [
 	self patchMorph fromDescription: aString
 ]
 
-{ #category : #accessing }
-PSMCMergeMorph >> initialColorInSystemWindow: aSystemWindow [
-	"Answer the colour the receiver should be when added to a SystemWindow."
-
-	^Color transparent
-]
-
 { #category : #initialization }
 PSMCMergeMorph >> initialize [
 	"Initialize the receiver."

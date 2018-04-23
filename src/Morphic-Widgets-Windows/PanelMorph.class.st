@@ -111,13 +111,6 @@ PanelMorph >> handleMouseOver: anEvent [
 ]
 
 { #category : #initialization }
-PanelMorph >> initialColorInSystemWindow: aSystemWindow [
-	"Answer the colour the receiver should be when added to a SystemWindow."
-
-	^Color transparent
-]
-
-{ #category : #initialization }
 PanelMorph >> initialize [
 	"Initialize the receiver."
 

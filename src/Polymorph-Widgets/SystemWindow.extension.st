@@ -162,8 +162,7 @@ SystemWindow >> addMorph: aMorph fullFrame: aLayoutFrame [
 	paneMorphs := paneMorphs copyReplaceFrom: 1 to: 0 with: (Array with: aMorph).
 	"aMorph adoptPaneColor: self paneColor."
 	aMorph
-		borderStyle: (self theme windowPaneBorderStyleFor: aMorph in: self)";
-		color: (aMorph initialColorInSystemWindow: self)".
+		borderStyle: (self theme windowPaneBorderStyleFor: aMorph in: self).
 	self addMorphBack: aMorph. "reorder panes so flop-out right-side scrollbar is visible"
 		
 	self owner ifNotNil: [self addPaneSplitters] "do when opened for performance"
