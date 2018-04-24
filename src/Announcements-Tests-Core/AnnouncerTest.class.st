@@ -173,7 +173,7 @@ AnnouncerTest >> testSubscribeSend [
 		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
-	self assert: announcement = instance.
+	self assert: announcement equals: instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB new.

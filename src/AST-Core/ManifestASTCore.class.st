@@ -1,3 +1,6 @@
+"
+Manifest for AST-Core package
+"
 Class {
 	#name : #ManifestASTCore,
 	#superclass : #PackageManifest,

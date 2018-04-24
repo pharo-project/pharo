@@ -11,8 +11,7 @@ BaselineOfPharo >> baseline: spec [
 	repository := self packageRepositoryURL.
 
 	spec for: #common do: [
-		
-		spec baseline: 'Versionner' with: [spec repository: repository].
-		spec baseline: 'IDE' with: [spec repository: repository]
+		spec baseline: 'IDE' with: [spec repository: repository].
+		spec package: 'Deprecated70'.
 	]
 ]

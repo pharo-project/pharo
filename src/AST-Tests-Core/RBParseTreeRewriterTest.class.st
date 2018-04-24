@@ -1,3 +1,6 @@
+"
+SUnit tests for RBParseTreeRewriter
+"
 Class {
 	#name : #RBParseTreeRewriterTest,
 	#superclass : #TestCase,

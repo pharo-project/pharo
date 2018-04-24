@@ -240,6 +240,16 @@ TraitTest >> testExplicitRequirementWithSuperclassImplementatiosAlwaysReturnsThe
 ]
 
 { #category : #testing }
+TraitTest >> testForbidInstantiation [
+
+   | tmpCategory trait |
+tmpCategory := 'TemporaryGeneratedClasses'.
+   trait := Trait named: #TMyTrait uses: {} category: tmpCategory.
+    
+	self should: [ trait basicNew ] raise: Error 
+]
+
+{ #category : #testing }
 TraitTest >> testIsRootInEnvironment [
 	self assert: self t1 isRootInEnvironment.
 	self assert: self t2 isRootInEnvironment

@@ -30,6 +30,14 @@ ExampleSlotWithDefaultValue >> default: anObject [
 ]
 
 { #category : #comparing }
+ExampleSlotWithDefaultValue >> hasSameDefinitionAs: otherSlot [
+
+	^ (super hasSameDefinitionAs: otherSlot) 
+		and: [ default = otherSlot default ]
+
+]
+
+{ #category : #comparing }
 ExampleSlotWithDefaultValue >> hash [
 	^super hash bitXor: default hash
 ]

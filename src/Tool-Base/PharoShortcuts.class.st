@@ -337,11 +337,6 @@ PharoShortcuts >> openFontMenuShortcut [
 ]
 
 { #category : #'keymaps - Tools' }
-PharoShortcuts >> openKomitterShortcut [
-	^ $o meta, $k meta
-]
-
-{ #category : #'keymaps - Tools' }
 PharoShortcuts >> openMonticielloShortcut [
 	^ $o meta, $p meta
 ]

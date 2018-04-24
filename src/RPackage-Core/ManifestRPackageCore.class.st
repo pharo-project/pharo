@@ -1,3 +1,6 @@
+"
+Manifest for RPackage-Core
+"
 Class {
 	#name : #ManifestRPackageCore,
 	#superclass : #PackageManifest,

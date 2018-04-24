@@ -14,7 +14,6 @@ Installs:
 - NECompletion
 - ProcessBrowsers
 - profillers
-- Komitter
 - different Metacello repositories
 - Monticello GUI
 - ProfStef
@@ -60,11 +59,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Tool-Profilers'.
 		spec package: 'Tool-SystemReporter'.
 		spec package: 'NECompletion'.
-		spec package: 'Nautilus'.
-		spec package: 'NautilusCommon'.
-		spec package: 'Nautilus-GroupManager'.
-		spec package: 'Nautilus-GroupManagerUI'.
-		spec package: 'Komitter'.
 		
 		spec package: 'Announcements-Help'.
 		spec package: 'Metacello-FileTree'.
@@ -105,11 +99,6 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
-
-	"Registering Nautilus"
-	AbstractNautilusUI	initialize.
-	Nautilus registerToolsOn: Smalltalk tools.
-	SessionManager default registerToolClassNamed: #Nautilus.
 	
 	Smalltalk tools register: TestRunner as: #testRunner.
 	Smalltalk tools register: MCWorkingCopyBrowser as: #monticelloBrowser.
