@@ -22,9 +22,9 @@ TaClassCompositionElement >> selectors [
 
 { #category : #accessing }
 TaClassCompositionElement >> slots [
-	^ (innerClass slots
-		reject: [ :e | TraitedClass slots anySatisfy: [ :x | x name = e name ] ])
-		collect: [ :e | self copySlot: e ]
+	^ innerClass slots
+		reject: [ :e | TraitedClass slots anySatisfy: [ :x | x name = e name ] ]
+		
 ]
 
 { #category : #printing }

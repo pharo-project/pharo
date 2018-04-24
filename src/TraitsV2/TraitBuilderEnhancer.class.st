@@ -101,7 +101,7 @@ TraitBuilderEnhancer >> configureClass: newClass superclass: superclass withLayo
 	self validateTraitComposition: self traitComposition ofClass: builder oldClass.
 
 	resultingSlots := self
-		eliminateDuplicates: slots , self traitComposition slots
+		eliminateDuplicates: slots , self traitComposition slotsCopy
 		withSuperclassSlots: (superclass ifNil: [#()] ifNotNil:[ :x | x allSlots]).
 
 	newClass superclass: superclass withLayoutType: layoutType slots: resultingSlots
@@ -113,7 +113,7 @@ TraitBuilderEnhancer >> configureMetaclass: newMetaclass superclass: superclass 
 	self validateTraitComposition: self classTraitComposition ofClass: builder oldMetaclass.
 
 	resultingSlots := self
-		eliminateDuplicates: classSlots , self classTraitComposition slots
+		eliminateDuplicates: classSlots , self classTraitComposition slotsCopy
 		withSuperclassSlots: superclass allSlots.
 
 	newMetaclass superclass: superclass withLayoutType: aLayoutType slots: resultingSlots

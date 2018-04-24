@@ -229,6 +229,16 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 ]
 
 { #category : #copying }
+TaAbstractComposition >> copySlot: aSlot [
+	"This is a utitlity method to handle the copy of a slot. It is used for instance side and class side slots."
+	| newOne |
+	newOne := aSlot copy.
+	newOne isVirtual ifFalse: [ newOne index: nil ].
+	newOne definingClass: aSlot definingClass.
+	^ newOne
+]
+
+{ #category : #copying }
 TaAbstractComposition >> copyTraitExpression [
 	"I should copy all the elements in the traitComposition"
 	^ self subclassResponsibility 
@@ -387,6 +397,12 @@ TaAbstractComposition >> semanticallyEquals: another [
 { #category : #accessing }
 TaAbstractComposition >> slots [
 	self subclassResponsibility 
+]
+
+{ #category : #copying }
+TaAbstractComposition >> slotsCopy [
+
+	^ self slots collect: [ :each | self copySlot: each ]
 ]
 
 { #category : #accessing }
