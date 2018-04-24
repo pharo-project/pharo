@@ -183,7 +183,7 @@ RPackage >> actualClassTags [
 	^classTags
 ]
 
-{ #category : #accessing }
+{ #category : #'add class' }
 RPackage >> addClass: aClass [
 	"TODO: deprecate system category / replace this with a direct call to moveClass:fromPackage:toTag:"
 	
@@ -195,7 +195,7 @@ RPackage >> addClass: aClass [
 	aClass category: (self addClassTag: self categoryName) categoryName
 ]
 
-{ #category : #'class addition' }
+{ #category : #'add class' }
 RPackage >> addClassDefinition: aClass [
 	"Add only the class definition of aClass, as a class defined by the receiver. The term classdefinition denotes the fact that we do not treat its methods. aClass methods are not added to the package. aClass can be either a class or a metaclass"
 	
@@ -210,7 +210,7 @@ RPackage >> addClassDefinition: aClass toClassTag: aSymbol [
 	self addClassDefinitionName: aClass name toClassTag: aSymbol
 ]
 
-{ #category : #'class addition' }
+{ #category : #'add class' }
 RPackage >> addClassDefinitionName: aClassName [
 	"aClassName should only be a class (and not a metaclass name)"
 
@@ -251,7 +251,7 @@ RPackage >> addClassTag: aSymbol [
 			^newTag]
 ]
 
-{ #category : #'compiled method handling' }
+{ #category : #'add method - compiled method' }
 RPackage >> addMethod: aCompiledMethod [ 
 	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
 	| methodClass |
@@ -288,7 +288,7 @@ RPackage >> addMethod: aCompiledMethod [
 	^ aCompiledMethod.
 ]
 
-{ #category : #'selector handling' }
+{ #category : #'add method - selector' }
 RPackage >> addSelector: aSelector ofClassName: aClassName [
 	"Add the method to the receiver. If the class is not locally defined in that package then the method is defined as a method extension: ie extending another package. Note that this method does not add the method to the class, it just records in the package that the method is packaged."
 	
@@ -298,7 +298,7 @@ RPackage >> addSelector: aSelector ofClassName: aClassName [
 	^ aSelector.
 ]
 
-{ #category : #'selector handling' }
+{ #category : #'add method - selector' }
 RPackage >> addSelector: aSelector ofMetaclassName: aClassName [
 	"Add the method to the receiver. If the class is not locally defined in that package then the method is defined as a method extension: ie extending another package. Note that this method does not add the method to the class, it just records in the package that the method is packaged. aClassName is the sole instance class name and not its metaclass one: i.e. adding Point class>>new is done as addSelector: #new ofMetaclassName: #Point"
 	
@@ -337,7 +337,7 @@ RPackage >> basicImportClass: aClass [
 	protocols do: [ :each | self importProtocol: each forClass: aClass ]
 ]
 
-{ #category : #'selector handling' }
+{ #category : #'add method - selector' }
 RPackage >> basicRemoveSelector: aSelector ofClassName: aClassName [
 	"Remove the method in the package but does not propagate to the class itself.  Note that this method does not remove the method from the class, it just records in the package that the method is not in the package anymore."
 	
@@ -352,7 +352,7 @@ RPackage >> basicRemoveSelector: aSelector ofClassName: aClassName [
 	
 ]
 
-{ #category : #'selector handling' }
+{ #category : #'add method - selector' }
 RPackage >> basicRemoveSelector: aSelector ofMetaclassName: aClassName [
 	"Remove the method in the package. Note that this method does not remove the method from the class, it just records in the package that the method is not in the package anymore. aClassName is the sole instance class name and not its metaclass one: i.e. adding Point class>>new is done as removeSelector: #new ofMetaclassName: #Point"
 	
@@ -389,7 +389,7 @@ RPackage >> category: categoryName matches: prefix [
 	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
 ]
 
-{ #category : #accessing }
+{ #category : #'under deprecation' }
 RPackage >> categoryName [
 	^ self name
 ]
@@ -516,7 +516,7 @@ RPackage >> classesForClassTag: aSymbol [
 		classes
 ]
 
-{ #category : #'simple symbol tags' }
+{ #category : #queries }
 RPackage >> classesTaggedWith: aSymbol [
 	"Any class could be tagged for user purpose.
 	This method select all classes which are tagged by given symbol"
@@ -772,6 +772,14 @@ RPackage >> extensionsForTag: aRPackageTag [
 		self category:  category matches: aRPackageTag categoryName ]
 ]
 
+{ #category : #accessing }
+RPackage >> hierarchyRoots [
+	"Returns all the hiearchy roots (by opposition to single classes inheriting from class outside the package) of a package"
+
+	^ self definedClasses
+		select: [ :each | (each superclass isNil or: [ each superclass package ~~ self ]) and: [ each hasSubclasses ] ]
+]
+
 { #category : #private }
 RPackage >> importClass: aClass [
 	"import a class already created but not attached to a package to the receiver. 
@@ -983,7 +991,7 @@ RPackage >> isYourClassExtension: categoryName [
 	^ categoryName notNil and: [self category: categoryName asLowercase matches: self methodCategoryPrefix]
 ]
 
-{ #category : #statistics }
+{ #category : #queries }
 RPackage >> linesOfCode [
 	"An approximate measure of lines of code.
 	Includes comments, but excludes blank lines."
@@ -1103,7 +1111,7 @@ RPackage >> orderedClasses [
 
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 RPackage >> organizer [
 	^ self class organizer
 ]
@@ -1167,7 +1175,7 @@ RPackage >> referenceForMethod: aSymbol ofClass: aClass [
 	^ (aClass >> aSymbol) asRingDefinition
 ]
 
-{ #category : #accessing }
+{ #category : #register }
 RPackage >> register [
 	self organizer registerPackage: self
 ]
@@ -1198,7 +1206,7 @@ RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 	metaclassExtensionSelectors removeKey: aClassNameSymbol ifAbsent: [nil].
 ]
 
-{ #category : #accessing }
+{ #category : #removing }
 RPackage >> removeClass: aClass [
 	"Remove the class and all its methods from the receiver. If we have a protocol which looks like an extension of us, rename it to 'as yet unclassified' to avoid breaking things afterwards."
 
@@ -1213,7 +1221,7 @@ RPackage >> removeClass: aClass [
 	self removeClassTagsForClassNamed: aClass name
 ]
 
-{ #category : #'class addition' }
+{ #category : #'add class' }
 RPackage >> removeClassDefinition: aClass [
 	"Remove the class definition from the package but not its methods."
 	^ self removeClassDefinitionName: aClass instanceSide originalName.
@@ -1228,7 +1236,7 @@ RPackage >> removeClassDefinition: aClass fromClassTag: aSymbol [
 		fromClassTag: aSymbol
 ]
 
-{ #category : #'class addition' }
+{ #category : #'add class' }
 RPackage >> removeClassDefinitionName: aClassName [
 	"remove the class definition from the package but not its method"
 	
@@ -1282,7 +1290,7 @@ RPackage >> removeClassDefinitionWithoutCheckingMethods: aClass [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #removing }
 RPackage >> removeClassNamed: className [
 	self removeClassDefinitionName: className.
 	self removeAllMethodsFromClassNamed: className. 
@@ -1327,7 +1335,7 @@ RPackage >> removeFromSystem [
 	self unregister.
 ]
 
-{ #category : #'compiled method handling' }
+{ #category : #'add method - compiled method' }
 RPackage >> removeMethod: aCompiledMethod [ 
 	"Remove the method to the receiver as a defined method."
 	|  methodClass |
@@ -1346,7 +1354,7 @@ RPackage >> removeMethod: aCompiledMethod [
 	^ aCompiledMethod.
 ]
 
-{ #category : #'compiled method handling' }
+{ #category : #'add method - compiled method' }
 RPackage >> removeMethods: aCollection [ 
 	aCollection do: [ :each | self removeMethod: each ]
 	
@@ -1376,7 +1384,7 @@ RPackage >> removeProperty: propName ifAbsent: aBlock [
 	^ property
 ]
 
-{ #category : #'selector handling' }
+{ #category : #'add method - selector' }
 RPackage >> removeSelector: aSelector ofClassName: aClassName [
 	"Remove the method in the package but does not propagate to the class itself.  Note that this method does not remove the method from the class, it just records in the package that the method is not in the package anymore."
 	
@@ -1394,7 +1402,7 @@ RPackage >> removeSelector: aSelector ofClassName: aClassName [
 	]
 ]
 
-{ #category : #'selector handling' }
+{ #category : #'add method - selector' }
 RPackage >> removeSelector: aSelector ofMetaclassName: aClassName [
 	"Remove the method in the package. Note that this method does not remove the method from the class, it just records in the package that the method is not in the package anymore. aClassName is the sole instance class name and not its metaclass one: i.e. adding Point class>>new is done as removeSelector: #new ofMetaclassName: #Point"
 	
@@ -1444,7 +1452,7 @@ RPackage >> renameTagsPrefixedWith: oldName to: newName [
 				category: newPrefix, (each name) ]
 ]
 
-{ #category : #accessing }
+{ #category : #register }
 RPackage >> renameTo: aSymbol [
 	"Rename a package with a different name, provided as a symbol"
 	| oldName newName oldCategoryNames repositoryGroup |
@@ -1484,6 +1492,16 @@ RPackage >> renameTo: aSymbol [
 RPackage >> reportBogusBehaviorOf: aSelector [
 
 	self logCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'.
+]
+
+{ #category : #accessing }
+RPackage >> roots [
+	"Returns all the root classes of a package. A root class is a class whose superclass is not defined in the package. 
+	Root classes are potentially root of inheritance trees defined in a package."
+
+	^ self definedClasses
+		select: [ :each | each superclass isNil or: [ each superclass package ~~ self ] ]
+
 ]
 
 { #category : #accessing }
@@ -1528,7 +1546,7 @@ RPackage >> systemOrganization [
 	^ Smalltalk globals organization
 ]
 
-{ #category : #'simple symbol tags' }
+{ #category : #queries }
 RPackage >> tagsForClasses [
 	"Any class could be tagged for user purpose.
 	Now we implement it on top of RPackageTag"
@@ -1543,7 +1561,7 @@ RPackage >> toTagName: aSymbol [
 		ifFalse: [ aSymbol ]
 ]
 
-{ #category : #accessing }
+{ #category : #register }
 RPackage >> unregister [
 	self organizer unregisterPackage: self
 ]
