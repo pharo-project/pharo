@@ -42,8 +42,9 @@ SystemSettingsPersistenceTest >> systemSettingNodeList [
 
 { #category : #running }
 SystemSettingsPersistenceTest >> tearDown [
-	super tearDown.
+	
 	MockSettings cleanUp.
+	super tearDown.
 
 ]
 
@@ -252,6 +253,5 @@ SystemSettingsPersistenceTest >> testWriteStream [
 	self deny: preferences parent exists.
 	writeStream := systemSettings writeStream.
 	self assert: writeStream isStream.
-	self assert: writeStream isEmpty.
 	writeStream close.
 ]

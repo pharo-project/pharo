@@ -411,8 +411,8 @@ MenuItemMorph >> invokeWithEvent: evt [
 			ifFalse:
 				[selArgCount = arguments size
 					ifTrue: [target perform: selector withArguments: arguments]
-					ifFalse: [target perform: selector withArguments: (arguments copyWith: evt)].
-		self showShortcut ].
+					ifFalse: [target perform: selector withArguments: (arguments copyWith: evt)]].
+		self showShortcut.
 		self changed].
 ]
 

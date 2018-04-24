@@ -1,3 +1,8 @@
+"
+I represent a byte string.
+Readers and writers knows how to handle byte strings.
+I just use them and I provide an entry point to my subclasses to convert the readed value.
+"
 Class {
 	#name : #HEByteString,
 	#superclass : #HEExportedLiteral,
@@ -16,6 +21,7 @@ HEByteString >> asLiteralIn: env [
 
 { #category : #reading }
 HEByteString >> doConvertValue: aValue [
+	"My subclasses are able to do something else to convert the readed value"
 	^ aValue.
 ]
 

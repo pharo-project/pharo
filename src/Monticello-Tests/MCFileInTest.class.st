@@ -68,12 +68,13 @@ MCFileInTest >> setUp [
 MCFileInTest >> tearDown [
 	(diff isNil or: [diff isEmpty not])
 		 ifTrue: [expected updatePackage: self mockPackage].
-	MCDataStream initialize
+	MCDataStream initialize.
+	super tearDown
 ]
 
 { #category : #testing }
 MCFileInTest >> testStWriter [
-	"self debug: #testStWriter"
+	
 	self
 		assertFileOutFrom: MCStWriter
 		canBeFiledInWith: [ CodeImporter evaluateReadStream: stream readStream].

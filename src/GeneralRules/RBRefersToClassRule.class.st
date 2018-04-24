@@ -23,7 +23,7 @@ RBRefersToClassRule class >> uniqueIdentifierName [
 { #category : #running }
 RBRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| class |
-	class := aMethod methodClass theNonMetaClass.
+	class := aMethod methodClass instanceSide.
 	(aMethod hasLiteral: (class environment associationAt: class name ifAbsent: [ ^ self ])) ifTrue: [ 
 		aCriticBlock cull: (self critiqueFor: aMethod) ]
 	

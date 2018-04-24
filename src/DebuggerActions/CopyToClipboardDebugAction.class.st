@@ -5,7 +5,7 @@ A CopyToClipboardDebugAction copies a short debugging stack to the clipboard.
 Class {
 	#name : #CopyToClipboardDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
@@ -30,6 +30,11 @@ CopyToClipboardDebugAction >> executeAction [
 
 	Clipboard clipboardText: (String streamContents: [ :s| 
 		self debugger interruptedContext shortDebugStackOn: s ])
+]
+
+{ #category : #accessing }
+CopyToClipboardDebugAction >> help [
+	^ 'Copy a short debugging stack to the clipboard.'
 ]
 
 { #category : #accessing }

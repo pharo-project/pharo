@@ -22,7 +22,7 @@ Class {
 	#classVars : [
 		'FinalizationList'
 	],
-	#category : #'Announcements-Core'
+	#category : #'Announcements-Core-Subscription'
 }
 
 { #category : #finalization }
@@ -130,12 +130,13 @@ WeakAnnouncementSubscription >> makeStrong [
 	sub := self subscriber.
 	sub ifNil: [ ^ self error: 'Subscriber is nil, cannot make strong subscription' ].
 	
-	^ announcer replace: self with: 
-		(AnnouncementSubscription new
-			announcer: announcer;
-			action: action asMessageSend;
-			subscriber: sub;
-			announcementClass: announcementClass)
+	self unregister.
+
+	^ self becomeForward: (AnnouncementSubscription new
+		announcer: announcer;
+		action: action asMessageSend;
+		subscriber: sub;
+		announcementClass: announcementClass)
 
 ]
 
@@ -160,6 +161,12 @@ WeakAnnouncementSubscription >> printOn: stream [
 		nextPut: $).
 ]
 
+{ #category : #finalization }
+WeakAnnouncementSubscription >> register [
+	self weakRegistry 
+		add: self subscriber executor: self
+]
+
 { #category : #accessing }
 WeakAnnouncementSubscription >> subscriber [
 
@@ -170,8 +177,15 @@ WeakAnnouncementSubscription >> subscriber [
 WeakAnnouncementSubscription >> subscriber: anObject [
 
 	self subscriber ifNotNil: [ self error: 'subscriber already set' ].
+	self basicAt: 1 put: anObject.
+	self register
+]
 
-	self basicAt: 1 put: anObject
+{ #category : #finalization }
+WeakAnnouncementSubscription >> unregister [
+
+	self subscriber ifNotNil: [:sub |  self weakRegistry remove: sub ]
+		
 ]
 
 { #category : #accessing }
@@ -179,4 +193,9 @@ WeakAnnouncementSubscription >> valuable: aValuable [
 	"Used when subscriber should be extracted from valuable object"
 	self action:  aValuable.
 	self subscriber: aValuable receiver.
+]
+
+{ #category : #finalization }
+WeakAnnouncementSubscription >> weakRegistry [
+	^ WeakRegistry default
 ]

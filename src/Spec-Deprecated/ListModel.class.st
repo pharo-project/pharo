@@ -6,3 +6,8 @@ Class {
 	#superclass : #ListPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+ListModel class >> isDeprecated [
+	^true
+]

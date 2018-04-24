@@ -4,21 +4,8 @@ I define the public API of compilers that can be used as system compilers (e.g. 
 Class {
 	#name : #AbstractCompiler,
 	#superclass : #Object,
-	#classInstVars : [
-		'compileWithErrors'
-	],
 	#category : #'OpalCompiler-Core-FrontEnd'
 }
-
-{ #category : #settings }
-AbstractCompiler class >> compileWithErrors [
-	^compileWithErrors ifNil: [ false ] 
-]
-
-{ #category : #settings }
-AbstractCompiler class >> compileWithErrors: aBoolean [
-	compileWithErrors := aBoolean 
-]
 
 { #category : #settings }
 AbstractCompiler class >> compilerSettingsOn: aBuilder [
@@ -26,24 +13,14 @@ AbstractCompiler class >> compilerSettingsOn: aBuilder [
 	(aBuilder group: #compiler)
 		label: 'Compiler';
 		description: 'All Compiler Settings';
-		with: [ (aBuilder setting: #compileWithErrors) 
-						label: 'Allow code with syntax errors';
-						description: 'If checked then code with syntax errros can be compiled';
-						target: self.
-					(aBuilder pickOne: #compilerClass)
+		with: [ (aBuilder pickOne: #compilerClass)
 						target: SmalltalkImage;
 						label: 'Default Compiler';
 						domainValues: AbstractCompiler subclasses.
-					(aBuilder pickOne: #bytecodeBackend)
-						target: CompilationContext;
-						label: 'Bytecode Backend';
-						domainValues:
-								{#V3PlusClosures -> EncoderForV3PlusClosures.
-								#SistaV1 -> EncoderForSistaV1 }.
-					(aBuilder setting: #usesFullBlockClosure)
-						target: CompilationContext;
-						label: 'FullBlockClosure';
-						default: CompilationContext usesFullBlockClosure.]
+					(aBuilder group: #opalCompiler)
+						label: 'Opal Compiler settings';
+						with: [ OpalCompiler compilerSpecificSettingsOn: aBuilder ] ]
+					
 ]
 
 { #category : #plugins }

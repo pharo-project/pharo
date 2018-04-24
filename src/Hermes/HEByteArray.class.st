@@ -1,3 +1,8 @@
+"
+I represent a byteArray. 
+The Hermes streams knows how to store byte arrays. 
+I only use them.
+"
 Class {
 	#name : #HEByteArray,
 	#superclass : #HEExportedLiteral,

@@ -35,7 +35,8 @@ ASTCacheResetTest >> setUp [
 { #category : #running }
 ASTCacheResetTest >> tearDown [
 	ASTCache default: cache.
-	node removeLink: link
+	node removeLink: link.
+	super tearDown
 ]
 
 { #category : #tests }

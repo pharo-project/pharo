@@ -27,7 +27,7 @@ Class {
 		'needsSeparatorAfter',
 		'actionSelector'
 	],
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #accessing }
@@ -121,12 +121,6 @@ DebugAction >> defaultCategory [
 ]
 
 { #category : #accessing }
-DebugAction >> defaultHelp [
-
-	^ 'No help, sorry.'
-]
-
-{ #category : #accessing }
 DebugAction >> defaultIcon [
 
 	^ self class defaultIcon
@@ -195,8 +189,7 @@ DebugAction >> forDebugger: aDebugger [
 
 { #category : #accessing }
 DebugAction >> help [
-
-	^ self defaultHelp
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

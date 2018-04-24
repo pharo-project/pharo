@@ -194,7 +194,7 @@ ComposablePresenter class >> toolbarHeight [
 { #category : #api }
 ComposablePresenter >> aboutText [
 
-	^ aboutText value ifNil: [ aboutText value: 'The about text for this window has not been set.']
+	^ aboutText value ifNil: [ aboutText value: 'The about text for this window has not been set.'; value]
 ]
 
 { #category : #api }

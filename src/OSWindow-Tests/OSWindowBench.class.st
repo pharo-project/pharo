@@ -1,35 +1,35 @@
+"
+Benchmark for window processing
+"
 Class {
 	#name : #OSWindowBench,
 	#superclass : #TestCase,
-	#category : #'OSWindow-Tests'
+	#category : #'OSWindow-Tests-Benchmarks'
 }
 
 { #category : #benchmarking }
 OSWindowBench >> benchEventProcessing [
-	"self new benchEventProcessing"
+	<script: 'self new benchEventProcessing'>
+	
 	| window sema |
 	
 	window := World osWindow.
 	sema := Semaphore new.
 	[ 
-"		TimeProfiler spyAllOn:[ sema wait ]. 
-"		AndreasSystemProfiler spyOn: [ sema wait ].
+		"TimeProfiler spyAllOn:[ sema wait ]"		
+		AndreasSystemProfiler spyOn: [ sema wait ].
 	] forkAt: Processor userInterruptPriority.
 	
-	[  
-		20 timesRepeat: [  
-		1 to: 500 do: [ :i | | event |
-		
-		
-			event := OSMouseMoveEvent for: window.
-			event position: i @ 100;
-				delta: 1 @ 0.
-
-			event deliver.
-		].
-	(Delay forMilliseconds: 20) wait.
-	].
-		sema signal.
+	[ 20 timesRepeat: [  
+			1 to: 500 do: [ :i | 
+				| event |
+				event := OSMouseMoveEvent for: window.
+				event 
+					position: i @ 100;
+					delta: 1 @ 0.
+				event deliver ].
+			(Delay forMilliseconds: 20) wait ].
+		sema signal
 	] forkAt: 60.
 
 	

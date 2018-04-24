@@ -62,7 +62,7 @@ RBBrowserEnvironment >> allClasses [
 	| allClasses |
 	allClasses := IdentitySet new: 4096.
 	self classesDo: [ :each | 
-		allClasses add: each theNonMetaClass].
+		allClasses add: each instanceSide].
 	^ allClasses asArray
 ]
 
@@ -96,7 +96,7 @@ RBBrowserEnvironment >> allMetaClasses [
 	self
 		classesDo: [ :each | 
 			each isMeta
-				ifTrue: [ allMetaClasses add: each theNonMetaClass ] ].
+				ifTrue: [ allMetaClasses add: each instanceSide ] ].
 	^ allMetaClasses asArray
 ]
 
@@ -115,6 +115,29 @@ RBBrowserEnvironment >> allNonMetaClasses [
 { #category : #accessing }
 RBBrowserEnvironment >> asSelectorEnvironment [
 	^(RBClassEnvironment onEnvironment: self classes: self classes) asSelectorEnvironment
+]
+
+{ #category : #conversion }
+RBBrowserEnvironment >> asSystemNavigationEnvironment [
+
+	| env globalsNames |
+	"Optimization for the default environment AKA Smalltalk"
+	self class == RBBrowserEnvironment 
+		ifTrue: [ ^ Smalltalk globals ].
+	
+	env := SystemDictionary new.
+	
+	self classesDo: [:each | 
+		env add: ( Smalltalk globals associationAt: each theNonMetaClass name )].
+	self traitsDo:  [:each | 
+		env add: ( Smalltalk globals associationAt: each name )].
+	globalsNames := Smalltalk globals keys asOrderedCollection.
+	globalsNames removeAll: ( Smalltalk globals classNames ).
+	 globalsNames removeAll: ( Smalltalk globals traitNames ).
+	globalsNames do: [:each | 
+		env add: ( Smalltalk globals associationAt: each )].
+
+	^ env
 ]
 
 { #category : #'accessing-classes' }
@@ -161,7 +184,7 @@ RBBrowserEnvironment >> categories [
 RBBrowserEnvironment >> classNames [
 	| names |
 	names := IdentitySet new: 4096.
-	self classesDo: [ :each | names add: each theNonMetaClass name ].
+	self classesDo: [ :each | names add: each instanceSide name ].
 	^ names
 ]
 
@@ -276,8 +299,7 @@ RBBrowserEnvironment >> forClasses: classCollection [
 	classes := OrderedCollection new: classCollection size * 2.
 	classCollection do: 
 			[:each | 
-			classes add: each theNonMetaClass;
-				add: each theMetaClass].
+			classes add: each instanceSide; add: each classSide].
 	^RBClassEnvironment onEnvironment: self classes: classes
 ]
 
@@ -652,7 +674,23 @@ RBBrowserEnvironment >> systemDictionary [
 { #category : #private }
 RBBrowserEnvironment >> systemDictionaryClassesDo: aBlock [
 	self systemDictionary allClassesDo:[:class |
-		 aBlock value: class; value: class theMetaClass]
+		 aBlock value: class; value: class classSide]
+]
+
+{ #category : #'accessing-classes' }
+RBBrowserEnvironment >> traits [
+	| traits |
+	traits := IdentitySet new: 4096.
+	self traitsDo: [ :each | traits add: each ].
+	^ traits
+]
+
+{ #category : #'accessing-classes' }
+RBBrowserEnvironment >> traitsDo: aBlock [
+
+	self systemDictionary allTraitsDo: [ :each | 
+		(self includesClass: each)
+			ifTrue: [ aBlock value: each ]  ]
 ]
 
 { #category : #accessing }

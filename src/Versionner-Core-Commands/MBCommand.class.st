@@ -289,7 +289,7 @@ MBCommand >> repositoryOfPackageNamed: packageName [
 	| mcPackage workingCopy repositories repository repositoryIndex username password |
 	mcPackage := MCPackage named: packageName.
 	workingCopy := mcPackage workingCopy.
-	repositories := workingCopy repositoryGroup repositories reject: [ :rep | rep == MCCacheRepository default ].
+	repositories := workingCopy repositoryGroup repositories reject: [ :rep | rep == MCCacheRepository uniqueInstance ].
 	repositories
 		ifEmpty: [ 
 			| projectName answer squeakSourceURL |

@@ -1,7 +1,7 @@
 "
 I'm an example of how metalinks can be used to show the coverage of an execution.
 
-self new openWithSpec
+CoverageDemo open
 "
 Class {
 	#name : #CoverageDemo,
@@ -29,6 +29,12 @@ CoverageDemo class >> defaultSpec [
 				row add: #runCodeButton.	
 			] height:  (self toolbarHeight)
 		]
+]
+
+{ #category : #open }
+CoverageDemo class >> open [
+	<script>
+	self new openWithSpec
 ]
 
 { #category : #specs }

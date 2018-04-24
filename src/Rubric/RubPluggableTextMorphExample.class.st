@@ -106,9 +106,7 @@ RubPluggableTextMorphExample >> codePaneMenu: aMenu shifted: shifted [
 	"You should not use this way of getting menu. Because when you create a text area, you have a menu"
 
 	| donorMenu |
-	donorMenu := shifted
-		ifTrue: [ SmalltalkEditor shiftedYellowButtonMenu ]
-		ifFalse: [ SmalltalkEditor yellowButtonMenu ].
+	donorMenu := (PragmaMenuBuilder pragmaKeyword: RubSmalltalkCodeMode menuKeyword model: self) menu.
 	^ aMenu addAllFrom: donorMenu
 ]
 
@@ -289,8 +287,8 @@ RubPluggableTextMorphExample >> scrollValueChanged: anAnnouncement [
 { #category : #'view creation' }
 RubPluggableTextMorphExample >> selectedClass [
 	| cls |
-	cls := (Smalltalk at: (self selectedClassName getString ifEmpty: [ ^ nil ]) asSymbol ifAbsent: [ ^ nil ])
-		theNonMetaClass.
+	cls := (Smalltalk globals at: (self selectedClassName getString ifEmpty: [ ^ nil ]) asSymbol ifAbsent: [ ^ nil ])
+		instanceSide.
 	^ self classIsMeta
 		ifTrue: [ cls class ]
 		ifFalse: [ cls ]

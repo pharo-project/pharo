@@ -6,30 +6,33 @@ Trait {
 	#category : #'Collections-Tests-Abstract'
 }
 
-{ #category : #'tests - converting' }
-TConvertTest >> assertNoDuplicates: aCollection whenConvertedTo: aClass [ 
+{ #category : #'as yet unclassified' }
+TConvertTest >> assertNoDuplicates: aCollection whenConvertedTo: aClass [
+
 	| result |
 	result := self collectionWithEqualElements asIdentitySet.
 	self assert: (result class includesBehavior: IdentitySet).
-	self collectionWithEqualElements do: [ :initial | self assert: (result occurrencesOf: initial) = 1 ]
+	self collectionWithEqualElements do: [ :initial | self assert: (result occurrencesOf: initial) equals: 1 ]
 ]
 
 { #category : #'tests - converting' }
-TConvertTest >> assertNonDuplicatedContents: aCollection whenConvertedTo: aClass [ 
+TConvertTest >> assertNonDuplicatedContents: aCollection whenConvertedTo: aClass [
+
 	| result |
 	result := aCollection perform: ('as' , aClass name) asSymbol.
 	self assert: (result class includesBehavior: aClass).
 	result do: 
 		[ :each | 
-		self assert: (aCollection occurrencesOf: each) = (result occurrencesOf: each) ].
+		self assert: (aCollection occurrencesOf: each) equals: (result occurrencesOf: each) ].
 	^ result
 ]
 
 { #category : #'tests - converting' }
-TConvertTest >> assertSameContents: aCollection whenConvertedTo: aClass [ 
+TConvertTest >> assertSameContents: aCollection whenConvertedTo: aClass [
+
 	| result |
 	result := self assertNonDuplicatedContents: aCollection whenConvertedTo: aClass.
-	self assert: result size = aCollection size
+	self assert: result size equals: aCollection size
 ]
 
 { #category : #requirements }
@@ -46,7 +49,7 @@ TConvertTest >> integerCollectionWithoutEqualElements [
 
 { #category : #'tests - fixture' }
 TConvertTest >> test0FixtureTConvertTest [
-	"a collection of number without equal elements:"
+	"A collection of number without equal elements:"
 
 	| res |
 	self collectionWithoutEqualElements.
@@ -59,7 +62,7 @@ TConvertTest >> test0FixtureTConvertTest [
 
 { #category : #'tests - converting' }
 TConvertTest >> testAsArray [
-	"self debug: #testAsArray3"
+
 	self 
 		assertSameContents: self collectionWithoutEqualElements
 		whenConvertedTo: Array
@@ -73,6 +76,7 @@ TConvertTest >> testAsBag [
 
 { #category : #'tests - converting' }
 TConvertTest >> testAsByteArray [
+
 	| res |
 	self integerCollectionWithoutEqualElements.
 	self integerCollectionWithoutEqualElements do: [ :each | self assert: each class = SmallInteger ].
@@ -86,10 +90,11 @@ TConvertTest >> testAsByteArray [
 
 { #category : #'tests - converting' }
 TConvertTest >> testAsIdentitySet [
-	"test with a collection without equal elements :"
+	"Test with a collection without equal elements :"
+
 	self 
 		assertSameContents: self collectionWithoutEqualElements
-		whenConvertedTo: IdentitySet.
+		whenConvertedTo: IdentitySet
 
 ]
 
@@ -101,8 +106,8 @@ TConvertTest >> testAsOrderedCollection [
 
 { #category : #'tests - converting' }
 TConvertTest >> testAsSet [
-	| |
-	"test with a collection without equal elements :"
-	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set.
+ 	"Test with a collection without equal elements"
+	
+	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set
 	
 ]

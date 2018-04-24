@@ -12,11 +12,23 @@ Class {
 
 { #category : #'instance creation' }
 FreeTypeExternalMemory class >> bytes: aByteArray [
-	| answer |
-	answer := self basicNew
+	^ self basicNew
 		bytes: aByteArray;
-		yourself.
-	^answer
+		autoRelease;
+		yourself
+]
+
+{ #category : #finalization }
+FreeTypeExternalMemory class >> finalizeResourceData: handle [
+	handle isNil ifTrue: [ ^ self ].
+	handle isNull ifTrue: [ ^ self ].
+	handle free.
+	handle beNull
+]
+
+{ #category : #'instance creation' }
+FreeTypeExternalMemory class >> new [
+	self error: 'Use #bytes:'
 ]
 
 { #category : #accessing }
@@ -33,14 +45,9 @@ FreeTypeExternalMemory >> bytes: aByteArray [
 FreeTypeExternalMemory >> primCopyToExternalMemory: aByteArray [
 	"copy aByteArray into newly allocated, external memory, and store the
 	address of that memory in the receiver's handle"
-	<primitive: 'primitiveCopyToExternalMemory' module: 'FT2Plugin'>
-	^self primitiveFailed
-]
 
-{ #category : #primitives }
-FreeTypeExternalMemory >> primDestroyHandle [
-	<primitive: 'primitiveFreeExternalMemory' module: 'FT2Plugin'>
-	^self primitiveFailed
+	handle := ExternalAddress allocate: aByteArray size.
+	LibC memCopy: aByteArray to: handle size: aByteArray size.
 ]
 
 { #category : #validation }
@@ -49,5 +56,6 @@ FreeTypeExternalMemory >> validate [
 	bytes ifNil: [ ^ self  ].
 	
 	self primCopyToExternalMemory: bytes.
-	self isValid ifTrue: [ self class register: self ]
+	self autoRelease
+
 ]

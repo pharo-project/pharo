@@ -29,14 +29,23 @@ Class {
 		'metaclassClass',
 		'extensibleProperties',
 		'changeComparers',
-		'changes'
+		'changes',
+		'metaSuperclass'
 	],
-	#category : 'Shift-ClassBuilder'
+	#classVars : [
+		'BuilderEnhancer'
+	],
+	#category : #'Shift-ClassBuilder'
 }
 
 { #category : #'as yet unclassified' }
 ShiftClassBuilder class >> defaultBuildEnhancer [
-	^ ShOldTraitsBuilderEnhancer
+	^ BuilderEnhancer ifNil: [ ShDefaultBuilderEnhancer ]
+]
+
+{ #category : #accessing }
+ShiftClassBuilder class >> setDefaultBuilderEnhancer: aClass [ 
+	BuilderEnhancer := aClass
 ]
 
 { #category : #changes }
@@ -52,6 +61,8 @@ ShiftClassBuilder >> addChangeComparer: aChangeComparer [
 { #category : #building }
 ShiftClassBuilder >> build [	
 	self tryToFillOldClass.
+	self detectBuilderEnhancer.
+	
 	self validateSuperclass.
 	self compareWithOldClass.
 
@@ -65,9 +76,9 @@ ShiftClassBuilder >> build [
 	self oldClass ifNotNil: [ 
 			self newClass basicCategory: self oldClass basicCategory.
 			self copyOrganization.
-			builderEnhancer compileMethodsFor: self. ].
+			self builderEnhancer compileMethodsFor: self. ].
 
-	builderEnhancer afterMethodsCompiled: self.
+	self builderEnhancer afterMethodsCompiled: self.
 	
 	self installSlots.
 	
@@ -86,12 +97,14 @@ ShiftClassBuilder >> buildEnvironment: anObject [
 
 { #category : #accessing }
 ShiftClassBuilder >> builderEnhancer [
-	^ builderEnhancer
+	^ builderEnhancer ifNil: [ self detectBuilderEnhancer ]
 ]
 
 { #category : #accessing }
 ShiftClassBuilder >> builderEnhancer: anObject [
-	builderEnhancer := anObject
+	builderEnhancer := anObject.
+	
+	builderEnhancer initializeBuilder: self
 ]
 
 { #category : #accessing }
@@ -126,7 +139,7 @@ ShiftClassBuilder >> classSlots: aSlotCollection [
 
 { #category : #accessing }
 ShiftClassBuilder >> classTraitComposition [
-	^ extensibleProperties at: #classTraitComposition
+	^ extensibleProperties at: #classTraitComposition ifAbsent: {}
 ]
 
 { #category : #accessing }
@@ -196,7 +209,7 @@ ShiftClassBuilder >> createClass [
 	newClass := newMetaclass new.
 	newClass setName: self name.
 
-	builderEnhancer 
+	self builderEnhancer 
 		configureClass: newClass
 		superclass: self superclass
 		withLayoutType: self layoutDefinition layoutClass
@@ -204,29 +217,41 @@ ShiftClassBuilder >> createClass [
 
 	newClass environment: self buildEnvironment environment.
 	
-	builderEnhancer classCreated: self.
+	self builderEnhancer classCreated: self.
 ]
 
 { #category : #building }
 ShiftClassBuilder >> createMetaclass [
 	newMetaclass := self metaclassClass new.
 	
-	builderEnhancer 
+	self builderEnhancer 
 		configureMetaclass: newMetaclass 	
-		superclass: (superclass ifNil: [ Class ] ifNotNil: [ superclass class ])
+		superclass: self metaSuperclass
 		withLayoutType: FixedLayout
 		slots: self layoutDefinition classSlots.
 		
-	builderEnhancer metaclassCreated: self.
+	self builderEnhancer metaclassCreated: self.
 ]
 
 { #category : #building }
 ShiftClassBuilder >> createSharedVariables [
-	builderEnhancer 
+	self builderEnhancer 
 		on: newClass
 		declareClassVariables: self layoutDefinition sharedVariables
 		sharing: self layoutDefinition sharedPoolsString.
 	
+]
+
+{ #category : #initialization }
+ShiftClassBuilder >> detectBuilderEnhancer [
+	
+	| builderEnhancerClass |
+	
+	builderEnhancerClass := ShDefaultBuilderEnhancer allSubclasses detect: [ :e | e isApplicableFor: self ] ifNone: [ self class defaultBuildEnhancer ].
+	builderEnhancer := builderEnhancerClass new.
+	
+	builderEnhancer initializeBuilder: self.
+	^ builderEnhancer
 ]
 
 { #category : #'reflective operations' }
@@ -264,14 +289,18 @@ ShiftClassBuilder >> environment: anEnvironment [
 ShiftClassBuilder >> fillFor: aClass [
 	self
 		superclass: aClass superclass;
-		name: aClass name;
+		name: aClass getName;
 		layoutClass: aClass classLayout class;
 		slots: aClass slots ;
 		sharedVariablesFromString: aClass classVariablesString;
 		sharedPools: aClass sharedPoolsString;
 		category: aClass category;
 		environment: aClass environment;
-		copyClassSlotsFromExistingClass
+		copyClassSlotsFromExistingClass;
+		oldClass: aClass.
+		
+	self builderEnhancer fillBuilder: self from: aClass.
+
 ]
 
 { #category : #testing }
@@ -284,7 +313,6 @@ ShiftClassBuilder >> initialize [
 	super initialize.
 	
 	superclassName := #Object.
-	builderEnhancer := self class defaultBuildEnhancer new.
 
 	layoutDefinition := ShLayoutDefinition new.
 	layoutDefinition builder: self.
@@ -293,16 +321,6 @@ ShiftClassBuilder >> initialize [
 	
 	changeComparers := OrderedCollection new.
 	changes := Set new.
-	
-	self addChangeComparer: ShSharedPoolChangeDetector.
-	self addChangeComparer: ShSharedVariablesChangeDetector.
-	self addChangeComparer: ShSlotChangeDetector.
-	self addChangeComparer: ShLayoutChangeDetector.
-	self addChangeComparer: ShBitLayoutChangeDetector.
-	self addChangeComparer: ShClassSlotChangeDetector.
-	self addChangeComparer: ShSuperclassChangedDetector.
-	
-	builderEnhancer initializeBuilder: self.
 ]
 
 { #category : #building }
@@ -322,6 +340,18 @@ ShiftClassBuilder >> layoutClass: aLayoutClass [
 { #category : #accessing }
 ShiftClassBuilder >> layoutDefinition [
 	^ layoutDefinition
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> metaSuperclass [
+
+	^ metaSuperclass ifNil:[ (superclass ifNil: [ Class ] ifNotNil: [ superclass class ]) ]
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> metaSuperclass: aClass [
+	
+	metaSuperclass := aClass
 ]
 
 { #category : #accessing }
@@ -434,7 +464,7 @@ ShiftClassBuilder >> superclassName: anObject [
 
 { #category : #accessing }
 ShiftClassBuilder >> traitComposition [
-	^ extensibleProperties at: #traitComposition
+	^ extensibleProperties at: #traitComposition ifAbsent: {}
 ]
 
 { #category : #accessing }

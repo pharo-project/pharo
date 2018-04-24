@@ -60,8 +60,7 @@ TDictionaryRemovingTest >> testRemove [
 
 { #category : #'tests - removing' }
 TDictionaryRemovingTest >> testRemoveKey [
-	"self debug: #testRemoveKey"
-
+	
 	| collection oldSize keyIn |
 	collection := self nonEmptyDict .
 	oldSize := collection size.

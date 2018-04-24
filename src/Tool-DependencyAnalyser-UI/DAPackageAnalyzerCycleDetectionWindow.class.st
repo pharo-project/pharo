@@ -13,7 +13,7 @@ DAPackageAnalyzerCycleDetectionWindow class >> collections [
 		open
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageAnalyzerCycleDetectionWindow class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:	self systemPackages) 
 		open

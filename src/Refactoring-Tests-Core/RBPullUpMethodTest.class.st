@@ -35,13 +35,13 @@ RBPullUpMethodTest >> testPullUpClassMethod [
 	| class |
 	class := model classNamed: #Object.
 	class addClassVariable: #Foo.
-	class theMetaClass 
+	class classSide 
 		compile: 'foo ^Foo'
 		classified: #(#accessing ).
 	self shouldFail: (RBPullUpMethodRefactoring 
 			model: model
 			pullUp: #(#foo )
-			from: class theMetaClass)
+			from: class classSide)
 ]
 
 { #category : #tests }

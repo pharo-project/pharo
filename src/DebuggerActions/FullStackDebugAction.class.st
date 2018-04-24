@@ -5,7 +5,7 @@ A FullStackDebugAction displays the entire stack in the stack widget.
 Class {
 	#name : #FullStackDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
@@ -43,6 +43,11 @@ FullStackDebugAction >> executeAction [
 FullStackDebugAction >> expandedStackSize [
 
 	^ 100000
+]
+
+{ #category : #accessing }
+FullStackDebugAction >> help [
+	^ 'Open a full debugger to navigate in the full bugged stack.'
 ]
 
 { #category : #accessing }

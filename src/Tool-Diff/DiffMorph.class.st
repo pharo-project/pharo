@@ -21,7 +21,9 @@ Class {
 		'showOptions',
 		'showOnlySource',
 		'sourceTextModel',
-		'destTextModel'
+		'destTextModel',
+		'leftCaption',
+		'rightCaption'
 	],
 	#category : #'Tool-Diff'
 }
@@ -48,8 +50,10 @@ DiffMorph class >> from: old to: new contextClass: aClass [
 ]
 
 { #category : #initialization }
-DiffMorph >> addMainMorphsWith: topOffset [ 
-	| halfWidth leftFraction leftOffset rightFraction rightOffset |
+DiffMorph >> addMainMorphsWith: initialOffset [ 
+	| halfWidth leftFraction leftOffset rightFraction rightOffset topOffset |
+
+	topOffset := self addTitlePanel: initialOffset.
 	
 	halfWidth := self joinMorph width / 2.
 	leftFraction := showOnlyDestination
@@ -107,10 +111,13 @@ DiffMorph >> addMainMorphsWith: topOffset [
 			leftFraction: 1;
 			leftOffset: self mapMorph width negated;
 			topOffset: topOffset).
+
 ]
 
 { #category : #initialization }
 DiffMorph >> addMorphsWithOptions [
+
+	self createOptionsPanel.
 
 	self 
 		addMainMorphsWith: optionsPanel height.
@@ -133,6 +140,50 @@ DiffMorph >> addOptionsPanel [
 	showOptions := true.
 	self removeAllMorphs.
 	self addMorphsWithOptions
+]
+
+{ #category : #initialization }
+DiffMorph >> addTitlePanel: initialOffset [
+
+	"Add the title panel and returns the top offset for the rest of the window."
+
+	| titlePanel titleRow rightLabel |
+	(leftCaption isNotNil and: [ rightCaption isNotNil ]) ifFalse: [ ^ initialOffset ].
+	
+	"If we are showing only one panel there is no need for title"
+	showOnlyDestination ifTrue: [ ^ initialOffset ].
+	showOnlySource ifTrue: [ ^ initialOffset ].
+	
+	titlePanel := self newPanel. 	
+	
+	titleRow := self newPanel.
+	
+	titleRow changeProportionalLayout.
+	titleRow hResizing: #spaceFill.
+	titleRow vResizing: #shrinkWrap.	
+	
+	rightLabel := (self newRow: { self newLabel: rightCaption }) listCentering: #bottomRight; yourself.
+	titleRow addMorph: rightLabel fullFrame: (LayoutFrame identity leftFraction: 0.5; rightOffset: mapMorph width negated - 5). 
+	titleRow addMorph: (self newLabel: leftCaption) fullFrame: (LayoutFrame identity leftFraction: 0; rightFraction: 0.5; leftOffset: 10). 
+
+		
+	titlePanel addMorph: titleRow.
+	titleRow extent: titlePanel minExtent.
+
+	titlePanel vResizing: #shrinkWrap.
+	titlePanel hResizing: #spaceFill.
+				
+	self addMorph: titlePanel
+		fullFrame:(LayoutFrame identity
+			topOffset: initialOffset;
+			bottomFraction: 0;
+			bottomOffset: titlePanel height + initialOffset).
+
+	titlePanel extent: titlePanel minExtent.	
+				
+	^ initialOffset + titlePanel height.
+				
+
 ]
 
 { #category : #'accessing colors' }
@@ -343,6 +394,21 @@ DiffMorph >> contextClass: aClass [
 	contextClass := aClass
 ]
 
+{ #category : #initialization }
+DiffMorph >> createOptionsPanel [
+
+	| ppCheckbox |
+	ppCheckbox := self newPrettyPrintCheckboxMorph.
+
+	optionsPanel := self newPanel
+		addMorph: ((self newRow: {ppCheckbox}) listCentering: #bottomRight);
+		color: self defaultColor.
+		
+	optionsPanel vResizing: #shrinkWrap.
+	optionsPanel extent: optionsPanel minExtent.
+
+]
+
 { #category : #accessing }
 DiffMorph >> defaultTitle [
 	"Answer the default title label for the receiver."
@@ -350,7 +416,7 @@ DiffMorph >> defaultTitle [
 	^'Diff' translated
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> destTextModel [
 	^ destTextModel ifNil: [ destTextModel := RubScrolledTextModel new interactionModel: self ].
 ]
@@ -406,7 +472,7 @@ DiffMorph >> edgeColor [
 	^ self theme diffEdgeColor
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> from: old to: new [
 	"Set the old (src) and new (dst) text."
 
@@ -422,7 +488,7 @@ DiffMorph >> from: old to: new [
 		applyMap
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> from: old to: new contextClass: aClass [
 	"Set the old (src) and new (dst) text."
 
@@ -466,7 +532,6 @@ DiffMorph >> initialExtent [
 DiffMorph >> initialize [
 	"Initialize the receiver."
 
-	| ppCheckbox |
 	super initialize.
 	showOnlyDestination := false.
 	showOnlySource := false.
@@ -479,12 +544,6 @@ DiffMorph >> initialize [
 		mapMorph: self newMapMorph;
 		changeProportionalLayout.
 	self prettyPrint: TextDiffBuilder diffsWithPrettyPrint.
-	ppCheckbox := self newPrettyPrintCheckboxMorph.
-	optionsPanel := self newPanel
-		addMorph: ((self newRow: {ppCheckbox}) listCentering: #bottomRight);
-		color: self defaultColor.
-	optionsPanel vResizing: #shrinkWrap.
-	optionsPanel extent: optionsPanel minExtent.
 	self addMorphsWithOptions.
 	self srcMorph scrollPane announcer 
 		when: RubVerticalScrolled send: #verticalScroll: to: self;
@@ -549,6 +608,15 @@ DiffMorph >> joinSectionClass [
 	^JoinSection
 ]
 
+{ #category : #accessing }
+DiffMorph >> leftLabel: aLeftLabel rightLabel: aRigthLabel [
+
+	leftCaption := aLeftLabel.
+	rightCaption := aRigthLabel.
+	
+	self updateMorphs
+]
+
 { #category : #'event handling' }
 DiffMorph >> mapClicked: aFloat [
 	"Update the scrollbar value to match a click in the map."
@@ -583,7 +651,7 @@ DiffMorph >> modificationColor [
 	^ self theme diffModificatedLineBackgroundColor
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newDstMorph [
 	"Answer a new dst text morph."
 
@@ -595,7 +663,7 @@ DiffMorph >> newDstMorph [
 		yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newHighlight [
 	"Anewser a new highlight."
 
@@ -605,7 +673,7 @@ DiffMorph >> newHighlight [
 		borderColor: self edgeColor
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newHighlight: type [
 	"Anewser a new highlight."
 
@@ -616,7 +684,7 @@ DiffMorph >> newHighlight: type [
 		fillWidth: true
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newJoinMorph [
 	"Answer a new join morph."
 
@@ -630,7 +698,7 @@ DiffMorph >> newJoinMorph [
 		color: self joinColor
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newJoinSection [
 	"Answer a new join section."
 
@@ -645,7 +713,7 @@ DiffMorph >> newJoinSection [
 		yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newJoinSectionFrom: srcRange to: dstRange [
 	"Answer a new join section."
 
@@ -686,7 +754,7 @@ DiffMorph >> newJoinSectionFrom: srcRange to: dstRange [
 		to: self dstMorph textMorph paragraph
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newMapMorph [
 	"Answer a new map morph."
 
@@ -701,7 +769,7 @@ DiffMorph >> newMapMorph [
 			to: self
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newMatchJoinSectionFrom: srcRange to: dstRange [
 	"Answer a new match join section."
 
@@ -725,7 +793,7 @@ DiffMorph >> newMatchJoinSectionFrom: srcRange to: dstRange [
 		createHighlightsFrom: self srcMorph textMorph paragraph to: self dstMorph textMorph paragraph
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newPrettyPrintCheckboxMorph [
 	"Answer a new checkbox for specifying whether to use
 	pretty printing for the diff texts."
@@ -739,7 +807,7 @@ DiffMorph >> newPrettyPrintCheckboxMorph [
 		help: 'If selected, pretty print will be applied to any displayed method source (eliminates trivial formatting changes)' translated
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newScrollbarMorph [
 	"Answer a new scrollbar morph."
 
@@ -750,7 +818,7 @@ DiffMorph >> newScrollbarMorph [
 		width: self theme scrollbarThickness
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> newSrcMorph [
 	"Answer a new src text morph."
 
@@ -886,7 +954,7 @@ DiffMorph >> showOptions: aBoolean [
 		ifFalse: [ self removeOptionsPanel ]
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DiffMorph >> sourceTextModel [
 	^ sourceTextModel ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ].
 ]

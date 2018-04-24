@@ -10,7 +10,7 @@ Class {
 	#category : #'Monticello-Patching'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MCAddition class >> of: aDefinition [
 	^ self new intializeWithDefinition: aDefinition
 ]

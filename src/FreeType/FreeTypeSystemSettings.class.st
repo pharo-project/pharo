@@ -18,7 +18,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 		iconName: #smallConfigurationIcon;
 		type: #Label;
 		label: 'Free type';
-		precondition: [ FT2Library current isNil ];
+		precondition: [ FT2Library current isAvailable not ];
 		parent: #appearance;
 		order: 3;
 		description:
@@ -35,7 +35,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 		order: 3;
 		with: [ (aBuilder pickOne: #monitorType)
 				label: 'Monitor type';
-				description: 'LCD is generally better for laptops, CRT for others';
+				description: 'LCD is generally better for flat screens';
 				target: FreeTypeSettings;
 				targetSelector: #current;
 				order: 0;
@@ -96,7 +96,7 @@ FreeTypeSystemSettings class >> ft2LibraryVersion [
 	^ Smalltalk ui theme 
 		newLabelIn: World 
 		for: self 
-		label: 'Available version: ', FT2Version current libraryVersion asString 
+		label: 'Available version: ', FT2Version current asString 
 		getEnabled: nil.
 ]
 

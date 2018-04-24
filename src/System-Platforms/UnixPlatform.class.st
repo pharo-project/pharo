@@ -55,7 +55,7 @@ UnixPlatform >> isUnix [
 
 { #category : #accessing }
 UnixPlatform >> keyForValue: aKeyValue [
-	^Key valueForUnixPlatform: aKeyValue.
+	^KeyboardKey valueForUnixPlatform: aKeyValue.
 ]
 
 { #category : #accessing }

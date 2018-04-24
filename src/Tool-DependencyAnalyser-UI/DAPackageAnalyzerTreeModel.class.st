@@ -54,7 +54,7 @@ DAPackageAnalyzerTreeModel class >> defaultSpec [
 					  yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageAnalyzerTreeModel class >> onPackages: aCollection [
 	^ self new
 		initializeWithRPackageSet: aCollection;
@@ -69,7 +69,7 @@ DAPackageAnalyzerTreeModel class >> onPackagesMatch: match [
 				thenCollect: [ :package | package packageName ]) )
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageAnalyzerTreeModel class >> onPackagesNamed: aCollection [
 	^ self onPackages: (aCollection collect: [ :each | RPackageSet named: each ])
 ]

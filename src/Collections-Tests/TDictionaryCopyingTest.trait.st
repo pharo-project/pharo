@@ -65,7 +65,6 @@ TDictionaryCopyingTest >> test0FixtureDictionaryCopyingTest [
 
 { #category : #'tests - copy - clone' }
 TDictionaryCopyingTest >> testCopyCreatesNewObject [
-	"self debug: #testCopyCreatesNewObject"
 	
 	| copy | 
 	copy := self nonEmpty copy.
@@ -75,7 +74,6 @@ TDictionaryCopyingTest >> testCopyCreatesNewObject [
 
 { #category : #'tests - copy - clone' }
 TDictionaryCopyingTest >> testCopyEmpty [
-	"self debug: #testCopyEmpty"
 	
 	| copy | 
 	copy := self empty copy.
@@ -84,7 +82,6 @@ TDictionaryCopyingTest >> testCopyEmpty [
 
 { #category : #'tests - copy - clone' }
 TDictionaryCopyingTest >> testCopyNonEmpty [
-	"self debug: #testCopyNonEmpty"
 	
 	| copy | 
 	copy := self nonEmpty copy.

@@ -162,8 +162,7 @@ SystemWindow >> addMorph: aMorph fullFrame: aLayoutFrame [
 	paneMorphs := paneMorphs copyReplaceFrom: 1 to: 0 with: (Array with: aMorph).
 	"aMorph adoptPaneColor: self paneColor."
 	aMorph
-		borderStyle: (self theme windowPaneBorderStyleFor: aMorph in: self)";
-		color: (aMorph initialColorInSystemWindow: self)".
+		borderStyle: (self theme windowPaneBorderStyleFor: aMorph in: self).
 	self addMorphBack: aMorph. "reorder panes so flop-out right-side scrollbar is visible"
 		
 	self owner ifNotNil: [self addPaneSplitters] "do when opened for performance"
@@ -840,10 +839,6 @@ SystemWindow >> labelHeight [
 	If no label answer the class border width instead."
 
 	label ifNil: [^self isEmbedded ifTrue: [0] ifFalse: [self class borderWidth]].
-		
-	(model notNil and: [model respondsTo: #desiredWindowLabelHeightIn:]) ifTrue: [
-		(model desiredWindowLabelHeightIn: self) ifNotNil: [:h | ^h]].
-
 	^(label height + (self class borderWidth * 2)) max:
 		(collapseBox ifNotNil: [collapseBox height] ifNil: [10])
 ]

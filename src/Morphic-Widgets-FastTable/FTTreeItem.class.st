@@ -37,7 +37,7 @@ Class {
 	#category : #'Morphic-Widgets-FastTable-Tree'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 FTTreeItem class >> data: aData from: aDataSource [
 	^ self new
 		dataSource: aDataSource;

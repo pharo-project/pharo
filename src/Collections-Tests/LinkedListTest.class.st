@@ -62,7 +62,8 @@ LinkedListTest >> collection [
 
 { #category : #requirements }
 LinkedListTest >> collectionClass [
-" return the class to be used to create instances of the class tested"
+	"Return the class to be used to create instances of the class tested"
+	
 	^ LinkedList
 ]
 
@@ -180,7 +181,7 @@ LinkedListTest >> indexInForCollectionWithoutDuplicates [
 
 { #category : #requirements }
 LinkedListTest >> indexInNonEmpty [
-" return an index between bounds of 'nonEmpty' "
+	"Return an index between bounds of 'nonEmpty'"
 
 	^ self nonEmpty size
 ]
@@ -322,7 +323,7 @@ LinkedListTest >> tearDown [
 	nonEmpty := nil.
 	otherList := nil.
 	
-	^ super tearDown
+	super tearDown
 ]
 
 { #category : #tests }

@@ -13,6 +13,7 @@ Class {
 
 { #category : #examples }
 ClassListExample class >> example [
+	<sampleInstance>
 
 	^self new openOn: self
 ]

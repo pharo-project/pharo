@@ -13,7 +13,7 @@ Class {
 	#category : #'AST-Core-Pattern'
 }
 
-{ #category : #visitor }
+{ #category : #visiting }
 RBPatternWrapperBlockNode >> acceptVisitor: aProgramNodeVisitor [ 
 	^aProgramNodeVisitor visitPatternWrapperBlockNode: self
 ]

@@ -29,7 +29,7 @@ SystemNavigationTest >> createClassFactory [
 	^ ClassFactoryWithOrganization newWithOrganization: self organizationToTest
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 SystemNavigationTest >> createMethodNamed: selector realParent: class [
 
 	^ RGMethodDefinition realClass: class selector: selector
@@ -71,15 +71,15 @@ SystemNavigationTest >> systemNavigationToTest [
 
 { #category : #running }
 SystemNavigationTest >> tearDown [
-	super tearDown.
+	
 	self classFactory cleanUp. 
 	SystemAnnouncer announcer: oldSystemAnnouncer.
+	super tearDown.
 	
 ]
 
 { #category : #testing }
 SystemNavigationTest >> testAllClassesUsingSharedPool [
-	"self debug: #testAllClassesUsingSharedPool"
 
 	| res |
 	res := SystemNavigation new allClassesUsingSharedPool: 'ChronologyConstants'.

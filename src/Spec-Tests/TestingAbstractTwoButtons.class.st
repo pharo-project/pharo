@@ -9,6 +9,7 @@ Class {
 
 { #category : #examples }
 TestingAbstractTwoButtons class >> example [
+	<sampleInstance>
 	^ self abstractExample openWithSpec 
 ]
 

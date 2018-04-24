@@ -7,4 +7,5 @@ executeDefinitionFor: aRFiDefinition
 	] ifFalse: [
 		aRFiDefinition definition.
 	].
+
 	^ builder bootstrapInterpreter evaluateCode: definition.

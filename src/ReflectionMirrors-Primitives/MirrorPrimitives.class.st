@@ -12,6 +12,18 @@ Class {
 	#category : #'ReflectionMirrors-Primitives'
 }
 
+{ #category : #comparison }
+MirrorPrimitives class >> check: anObject identicalTo: anotherObject [
+	"Answer whether the first and second arguments are the same object (have the
+	 same object pointer) without sending a message to the first argument.  This
+	 mimics the action of the VM when it compares two object pointers.  Used to
+	 simulate the execution machinery by, for example, the debugger.
+	 Primitive.  See Object documentation whatIsAPrimitive."
+
+	<primitive: 110>
+	self primitiveFailed
+]
+
 { #category : #'class relationship' }
 MirrorPrimitives class >> classOf: anObject [
 	"Primitive. Answer the object which is the receiver's class"
@@ -24,7 +36,7 @@ MirrorPrimitives class >> classOf: anObject [
 MirrorPrimitives class >> errorNotIndexableFor: anObject [
 	"Create an error notification that the receiver is not indexable."
 
-	self error: ('Instances of {1} are not indexable' translated format: {(self classOf: anObject) name})
+	self error: ('Instances of {1} are not indexable' format: {(self classOf: anObject) name})
 ]
 
 { #category : #'fields accessing' }
@@ -75,15 +87,24 @@ MirrorPrimitives class >> fixedFieldOf: anObject at: anIndex [
 ]
 
 { #category : #'fields accessing' }
-MirrorPrimitives class >> fixedFieldOf: anObject at: anIndex put: aValue [ 
+MirrorPrimitives class >> fixedFieldOf: anObject at: anIndex put: newValue [ 
 	"Primitive. Store a value into a fixed variable in the argument anObject.
 	 The numbering of the variables corresponds to the named instance
 	 variables.  Fail if the index is not an Integer or is not the index of a
 	 fixed variable.  Answer the value stored as the result"
 
 	<primitive: 74>
-	"Access beyond fixed fields"
-	^self primitiveFail 
+	anIndex isInteger ifTrue: [
+		(anIndex between: 1 and: (self fixedSizeOf: anObject)) 
+			ifTrue: [
+				(self isObjectReadOnly: anObject) ifTrue: [ 
+					^self 
+						modificationForbiddenFor: anObject 
+						at: anIndex 
+						with: newValue
+						selector: #fixedFieldOf:at:put:]].
+		^self primitiveFail].		
+	self errorNonIntegerIndex
 ]
 
 { #category : #'fields accessing' }
@@ -121,18 +142,24 @@ MirrorPrimitives class >> indexableFieldOf: anObject at: anIndex [
 ]
 
 { #category : #'fields accessing' }
-MirrorPrimitives class >> indexableFieldOf: anObject at: anIndex put: newObject [
+MirrorPrimitives class >> indexableFieldOf: anObject at: anIndex put: newValue [
 	"Primitive. Assumes receiver is indexable. Store the argument value in 
 	the indexable element of the receiver indicated by index. Fail if the 
 	index is not an Integer or is out of bounds. Or fail if the value is not of 
 	the right type for this kind of collection. Answer the value that was 
 	stored"
-
 	<primitive: 61>
 	anIndex isInteger ifTrue:
 		[(self classOf: anObject) isVariable
 			ifTrue: [(anIndex between: 1 and: (self indexableSizeOf: anObject))
-					ifTrue: [self errorImproperStore]
+					ifTrue: [
+						(self isObjectReadOnly: anObject) ifTrue: [
+							^self 
+								modificationForbiddenFor: anObject 
+								at: anIndex 
+								with: newValue
+								selector: #indexableFieldOf:at:put:].
+						^self errorImproperStore]
 					ifFalse: [self errorSubscriptBounds: anIndex]]
 			ifFalse: [self errorNotIndexableFor: anObject]].
 	
@@ -161,6 +188,16 @@ MirrorPrimitives class >> makeObject: anObject readOnly: aBoolean [
 	^ self primitiveFail
 ]
 
+{ #category : #errors }
+MirrorPrimitives class >> modificationForbiddenFor: anObject at: fieldIndex with: newObject selector: selector [
+	
+	^(MirrorModificationForbidden 
+		for: anObject 
+		at: fieldIndex 
+		with: newObject 
+		retrySelector: selector) signal
+]
+
 { #category : #printing }
 MirrorPrimitives class >> print: anObject [
 	
@@ -182,6 +219,12 @@ MirrorPrimitives class >> setClass: classObject to: anObject [
 	"Change the class of anObject to classObject"
 	
 	<primitive: 160 error: ec>
+	(self isObjectReadOnly: anObject) 
+		ifTrue: [ ^ (ModificationForbidden 
+							for: anObject
+							at: nil
+							with: classObject
+							retrySelector: #setClass:to:) signal ]. 
 	self primitiveFailed
 ]
 
@@ -220,6 +263,8 @@ MirrorPrimitives class >> withReceiver: receiver perform: selector withArguments
 	<primitive: 100 error: error>
 	(selector isSymbol)
 		ifFalse: [^ self error: 'selector argument must be a Symbol'].
+	((self classOf: argArray) == Array) ifFalse:
+		[^self error: 'argArray must be an Array'].
 	(selector numArgs = self indexableSizeOf: argArray)
 		ifFalse: [^ self error: 'incorrect number of arguments'].
 	((self classOf: receiver) == lookupClass or: [(self classOf: receiver) inheritsFrom: lookupClass])

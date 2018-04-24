@@ -48,6 +48,7 @@ TimeTest >> setUp [
 { #category : #running }
 TimeTest >> tearDown [
 	DateAndTime localTimeZone: localTimeZoneToRestore.
+	super tearDown 
 
 ]
 
@@ -176,8 +177,7 @@ TimeTest >> testDuration [
 
 { #category : #tests }
 TimeTest >> testEqual [
-	"self debug: #testEqual"
-	
+		
 	self assert: aTime = (Time readFrom: '12:34:56' readStream).
 	self assert: aTime = (Time readFrom: '12:34:56.00' readStream).
 	self assert: aTime = (Time readFrom: '12:34:56.0000' readStream)
@@ -330,8 +330,7 @@ TimeTest >> testPrinting [
 
 { #category : #'tests - input' }
 TimeTest >> testReadFrom [
-	"self debug: #testReadFrom"
-	
+		
 	| string t |
 	string := '4:02:47 am'.
 	t := self timeClass readFrom: string readStream.
@@ -341,8 +340,7 @@ TimeTest >> testReadFrom [
 
 { #category : #'tests - input' }
 TimeTest >> testReadFromWithError [
-	"self debug: #testReadFromWithError"
-	
+		
 	| string |
 	string := 'invalid'.
 	self should: [self timeClass readFrom: string readStream] raise: Error.
@@ -353,8 +351,7 @@ TimeTest >> testReadFromWithError [
 
 { #category : #'tests - input' }
 TimeTest >> testReadFromWithNanos [
-	"self debug: #testReadFromWithNanos"
-	
+		
 	#('4:02:47.5 am'
 	'4:02:55.521 pm'
 		"there is a bug with 520 instead of 521"

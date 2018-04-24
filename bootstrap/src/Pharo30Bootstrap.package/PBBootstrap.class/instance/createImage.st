@@ -1,8 +1,13 @@
-bootstrap
+bootstrapping
 createImage
 
-	(PBImageBuilderSpur50 forArchitecture: architecture)
-		gitRepositoryUrl: 'git@github.com:pharo-project/pharo.git' location: '.' subdirectory: 'src';
-	 	imageFileReference: imageReference;
-		buildNumber: self buildNumber;
-		bootstrap.
+	| builder |
+
+	builder := PBImageBuilderSpur50 forArchitecture: architecture.
+	builder definitionFetcher: versionFetcher.
+	builder buildNumber: buildNumber.
+	builder imageFileReference: imageReference.
+	builder systemDefinition: ringEnvironment.
+	builder espellBackend instanceVariableMapping: (PBInstanceVariableMapping onEnvironment: ringEnvironment ).
+		
+	builder bootstrap

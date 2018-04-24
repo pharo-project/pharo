@@ -72,7 +72,7 @@ FileStreamTest >> testDetectFileDo [
 		do: [ :stream | 
 			self assert: stream notNil.
 			self deny: stream closed.
-			self assert: stream contentsOfEntireFile = '42']]
+			self assert: stream upToEnd = '42']]
 		ensure: [
 			file ensureDelete ].
 ]
@@ -81,15 +81,12 @@ FileStreamTest >> testDetectFileDo [
 FileStreamTest >> testFileTruncation [
 	"Ensure that nextChunkPut:/nextChunk works properly on a caching file"
 
-	"self debug: #testFileTruncation"
-
 	| file |
 	file := 'TruncationTest.txt' asFileReference.
 	[ 
 	file writeStreamDo: [ :s | s nextPutAll: '1234567890' ].
 	file
 		writeStreamDo: [ :s | 
-			self assert: s contents equals: '1234567890'.
 			s truncate: 4 ].
 	file readStreamDo: [ :s | self assert: s contents equals: '1234' ] ]
 		ensure: [ file ensureDelete ]
@@ -97,8 +94,6 @@ FileStreamTest >> testFileTruncation [
 
 { #category : #testing }
 FileStreamTest >> testNextChunkOutOfBounds [
-	"self debug: #testNextChunkOutOfBounds"
-	
 	"Ensure that nextChunkPut:/nextChunk works properly on a caching file"
 	| file text read filename |
 	filename := 'testNextChunkOutOfBounds'.

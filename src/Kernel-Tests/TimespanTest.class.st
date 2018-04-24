@@ -56,217 +56,219 @@ TimespanTest >> setUp [
 { #category : #running }
 TimespanTest >> tearDown [
 	DateAndTime localTimeZone: localTimeZoneToRestore.
-	timespan := nil
+	timespan := nil.
+	super tearDown 
 
 ]
 
 { #category : #tests }
 TimespanTest >> testAccessing [
-
-	self 
-		assert: (timespan start =
-				 (DateAndTime year: 2003 month: 03 day: 22 hour: 12 minute: 0 second: 0));
-		assert: timespan duration = (Duration hours: 100);
-		assert: timespan month = 3;
-		assert: timespan monthName = 'March';
-		assert: timespan monthAbbreviation = 'Mar'
-		
-
-
+	self
+		assert: timespan start
+			equals:
+			(DateAndTime
+				year: 2003
+				month: 03
+				day: 22
+				hour: 12
+				minute: 0
+				second: 0);
+		assert: timespan duration equals: (Duration hours: 100);
+		assert: timespan month equals: 3;
+		assert: timespan monthName equals: 'March';
+		assert: timespan monthAbbreviation equals: 'Mar'
 ]
 
 { #category : #tests }
 TimespanTest >> testArithmetic [
-
 	| ts1 ts2 d |
+
 	ts1 := timespan + 2 days.
 	ts2 := ts1 - 2 days.
-	d := ts1 - (DateAndTime year: 2003 month: 03 day: 20).
-
-	self 
-		assert: (ts1 start = 
-				 (DateAndTime year: 2003 month: 03 day: 24 hour: 12 minute: 0 second: 0));
-		assert: (ts1 duration = timespan duration);
-		assert: (ts2 start = timespan start);
-		assert: (ts2 duration = timespan duration).
+	d := ts1
+		-
+			(DateAndTime
+				year: 2003
+				month: 03
+				day: 20).
 
 	self
-		assert: d = (Duration days: 4 hours: 12 minutes: 0 seconds: 0)
+		assert: ts1 start
+			equals:
+			(DateAndTime
+				year: 2003
+				month: 03
+				day: 24
+				hour: 12
+				minute: 0
+				second: 0);
+		assert: ts1 duration equals: timespan duration;
+		assert: ts2 start equals: timespan start;
+		assert: ts2 duration equals: timespan duration.
 
-
+	self
+		assert: d
+		equals:
+			(Duration
+				days: 4
+				hours: 12
+				minutes: 0
+				seconds: 0)
 ]
 
 { #category : #tests }
 TimespanTest >> testAsDate [
-	self assert: aTimespan asDate =   jan01 asDate.
+	self assert: aTimespan asDate equals: jan01 asDate
 	"MessageNotUnderstood: Date class>>starting:"
-
 ]
 
 { #category : #tests }
 TimespanTest >> testAsDateAndTime [
-	self assert: aTimespan asDateAndTime =   jan01.
+	self assert: aTimespan asDateAndTime equals: jan01
 	"MessageNotUnderstood: Date class>>starting:"
-	
-
 ]
 
 { #category : #tests }
 TimespanTest >> testAsDuration [
-	self assert: aTimespan asDuration =  aWeek.
-
-	
-	
-
+	self assert: aTimespan asDuration equals: aWeek
 ]
 
 { #category : #tests }
 TimespanTest >> testAsMonth [
-	self assert: aTimespan asMonth =   jan01 asMonth.
-
+	self assert: aTimespan asMonth equals: jan01 asMonth
 ]
 
 { #category : #tests }
 TimespanTest >> testAsTime [
-	self assert: aTimespan asTime =  jan01 asTime
+	self assert: aTimespan asTime equals: jan01 asTime
 	"MessageNotUnderstood: Time class>>seconds:nanoSeconds:"
- 
 ]
 
 { #category : #tests }
 TimespanTest >> testAsWeek [
-	self assert: aTimespan asWeek =   jan01 asWeek.
+	self assert: aTimespan asWeek equals: jan01 asWeek
 	"DateAndTime new asWeek
-	 MessageNotUnderstood: Week class>>starting:"
-
+	MessageNotUnderstood: Week class>>starting:"
 ]
 
 { #category : #tests }
 TimespanTest >> testAsYear [
-	self assert: aTimespan asYear =   jan01 asYear.
-
-
+	self assert: aTimespan asYear equals: jan01 asYear
 ]
 
 { #category : #tests }
 TimespanTest >> testClockPrecisionDuration [
 	| ts |
+
 	ts := Timespan starting: Date today duration: DateAndTime clockPrecision.
-	self
-		assert: ts start = ts end
+	self assert: ts start equals: ts end
 ]
 
 { #category : #tests }
 TimespanTest >> testCurrent [
-	self assert: (Timespan starting: DateAndTime current)
-			<= Timespan current.
-	self assert:  Timespan current
-			<= (Timespan starting: DateAndTime current)
+	self assert: (Timespan starting: DateAndTime current) <= Timespan current.
+	self assert: Timespan current <= (Timespan starting: DateAndTime current)
 ]
 
 { #category : #tests }
 TimespanTest >> testDay [
-	self assert: aTimespan day =   jan01 day
-
+	self assert: aTimespan day equals: jan01 day
 ]
 
 { #category : #tests }
 TimespanTest >> testDayOfMonth [
-	self assert: aTimespan dayOfMonth  = 1.
-
+	self assert: aTimespan dayOfMonth equals: 1
 ]
 
 { #category : #tests }
 TimespanTest >> testDayOfWeek [
-	self assert: aTimespan  dayOfWeek  = 7.
-	self assert: aTimespan  dayOfWeekName = 'Saturday'.
-
+	self assert: aTimespan dayOfWeek equals: 7.
+	self assert: aTimespan dayOfWeekName equals: 'Saturday'
 ]
 
 { #category : #tests }
 TimespanTest >> testDayOfYear [
-	self assert: aTimespan  dayOfYear  = 1.
+	self assert: aTimespan dayOfYear equals: 1
 	"MessageNotUnderstood: UndefinedObject>>year:, Undefined object is Year class"
-
 ]
 
 { #category : #tests }
 TimespanTest >> testDaysInMonth [
-	self assert: aTimespan  daysInMonth  = 31.
+	self assert: aTimespan daysInMonth equals: 31
 	"MessageNotUnderstood: Month class>>starting:"
-
 ]
 
 { #category : #tests }
 TimespanTest >> testDaysInYear [
-	self assert: aTimespan  daysInYear  = 365.
+	self assert: aTimespan daysInYear equals: 365
 	"MessageNotUnderstood: UndefinedObject>>starting:  UndefinedObject is Year class"
-
 ]
 
 { #category : #tests }
 TimespanTest >> testDaysLeftInYear [
-	self assert: aTimespan  daysLeftInYear  = 364.
+	self assert: aTimespan daysLeftInYear equals: 364
 	"MessageNotUnderstood: UndefinedObject>>starting:  UndefinedObject is Year class"
-
 ]
 
 { #category : #tests }
 TimespanTest >> testDoWith [
 	| count |
+
 	count := 0.
-	aTimespan
-		do: [:each | count := count + 1]
-		with: (Timespan starting: jan01 duration: aDay).
-	self assert: count = 7
+	aTimespan do: [ :each | count := count + 1 ] with: (Timespan starting: jan01 duration: aDay).
+	self assert: count equals: 7
 ]
 
 { #category : #tests }
 TimespanTest >> testDoWithWhen [
 	| count |
+
 	count := 0.
 	aTimespan
-		do: [:each | count := count + 1]
+		do: [ :each | count := count + 1 ]
 		with: (Timespan starting: jan01 duration: aDay)
-		when: [:each | count < 5].
-	self assert: count = 5
+		when: [ :each | count < 5 ].
+	self assert: count equals: 5
 ]
 
 { #category : #tests }
 TimespanTest >> testDuration [
-	self assert: aTimespan duration  = aWeek.
+	self assert: aTimespan duration equals: aWeek.
 	aTimespan duration: aDay.
-	self assert: aTimespan duration =  aDay.
-
-
+	self assert: aTimespan duration equals: aDay
 ]
 
 { #category : #tests }
 TimespanTest >> testEnd [
-	"self debug: #testEnd"
-	self assert: aTimespan end + (Duration  nanoSeconds: 1) =  aDisjointTimespan start.
-	self assert: aTimespan end = (DateAndTime year: 2005 month: 1 day: 7 hour: 23 minute: 59 second: 59 nanoSecond: 999999999 offset: 0 hours).
-	
-
-
+	self assert: aTimespan end + (Duration nanoSeconds: 1) equals: aDisjointTimespan start.
+	self
+		assert: aTimespan end
+		equals:
+			(DateAndTime
+				year: 2005
+				month: 1
+				day: 7
+				hour: 23
+				minute: 59
+				second: 59
+				nanoSecond: 999999999
+				offset: 0 hours)
 ]
 
 { #category : #tests }
 TimespanTest >> testEveryDo [
 	| count duration |
+
 	count := 0.
 	duration := 7 days.
-	aTimespan
-		every: duration
-		do: [:each | count := count + 1].
-	self assert: count = 1
+	aTimespan every: duration do: [ :each | count := count + 1 ].
+	self assert: count equals: 1
 ]
 
 { #category : #tests }
 TimespanTest >> testFirstDayOfMonth [
-	self assert: aTimespan firstDayOfMonth =   1. 
-	self assert: aDisjointTimespan firstDayOfMonth =   1
-
+	self assert: aTimespan firstDayOfMonth equals: 1.
+	self assert: aDisjointTimespan firstDayOfMonth equals: 1
 ]
 
 { #category : #tests }
@@ -331,36 +333,71 @@ TimespanTest >> testIntersectionWithDisjoint [
 
 { #category : #tests }
 TimespanTest >> testIntersectionWithIncluded [
-	self assert: (aTimespan intersection: anIncludedTimespan)  = 
-	(Timespan starting: jan01 duration: (Duration days: 0 hours: 23 minutes: 59 seconds: 59 nanoSeconds: 999999999)).		
-	self deny: (aTimespan intersection: anIncludedTimespan)	= anIncludedTimespan
-
+	self
+		assert: (aTimespan intersection: anIncludedTimespan)
+		equals:
+			(Timespan
+				starting: jan01
+				duration:
+					(Duration
+						days: 0
+						hours: 23
+						minutes: 59
+						seconds: 59
+						nanoSeconds: 999999999)).
+	self deny: (aTimespan intersection: anIncludedTimespan) equals: anIncludedTimespan
 ]
 
 { #category : #tests }
 TimespanTest >> testIntersectionWithOverlapping [
-	self assert: (aTimespan intersection: anOverlappingTimespan)  = 
-	(Timespan starting: jan01 duration: (Duration days: 5 hours: 23 minutes: 59 seconds: 59 nanoSeconds: 999999999)).		
-
-
+	self
+		assert: (aTimespan intersection: anOverlappingTimespan)
+		equals:
+			(Timespan
+				starting: jan01
+				duration:
+					(Duration
+						days: 5
+						hours: 23
+						minutes: 59
+						seconds: 59
+						nanoSeconds: 999999999))
 ]
 
 { #category : #tests }
 TimespanTest >> testIntersectionWithSelf [
-	self assert: (aTimespan intersection: aTimespan)  = 
-	(Timespan starting: jan01 duration: (Duration days: 6 hours: 23 minutes: 59 seconds: 59 nanoSeconds: 999999999)).		
-	self deny: (aTimespan intersection: anIncludedTimespan)	= aTimespan
-
+	self
+		assert: (aTimespan intersection: aTimespan)
+		equals:
+			(Timespan
+				starting: jan01
+				duration:
+					(Duration
+						days: 6
+						hours: 23
+						minutes: 59
+						seconds: 59
+						nanoSeconds: 999999999)).
+	self deny: (aTimespan intersection: anIncludedTimespan) equals: aTimespan
 ]
 
 { #category : #tests }
 TimespanTest >> testIntersectionWithSeparate [
 	self assert: (aTimespan intersection: aDisjointTimespan) isNil.
 	self deny: (aTimespan intersection: anOverlappingTimespan) isNil.
-	self assert: (aTimespan intersection: anIncludedTimespan)  = 
-	(Timespan starting: jan01 duration: (Duration days: 0 hours: 23 minutes: 59 seconds: 59 nanoSeconds: 999999999)).		
-	self deny: (aTimespan intersection: anIncludedTimespan)	= anIncludedTimespan
-
+	self
+		assert: (aTimespan intersection: anIncludedTimespan)
+		equals:
+			(Timespan
+				starting: jan01
+				duration:
+					(Duration
+						days: 0
+						hours: 23
+						minutes: 59
+						seconds: 59
+						nanoSeconds: 999999999)).
+	self deny: (aTimespan intersection: anIncludedTimespan) equals: anIncludedTimespan
 ]
 
 { #category : #tests }
@@ -373,8 +410,7 @@ TimespanTest >> testIsLeapYear [
 
 { #category : #tests }
 TimespanTest >> testJulianDayNumber [
-	self assert: aTimespan julianDayNumber =  (jan01 julianDayNumber).
-
+	self assert: aTimespan julianDayNumber equals: jan01 julianDayNumber
 ]
 
 { #category : #tests }
@@ -387,53 +423,46 @@ TimespanTest >> testLessThan [
 { #category : #tests }
 TimespanTest >> testMinusADateAndTime [
 	"It appears that subtracting a date from a Timespan gives you a duration = to the difference between the start of the timespan and the date "
-	self assert: aTimespan - dec31 =  aDay.
-	self assert: aDisjointTimespan - jan01 =  aWeek.
 
-
-
+	self assert: aTimespan - dec31 equals: aDay.
+	self assert: aDisjointTimespan - jan01 equals: aWeek
 ]
 
 { #category : #tests }
 TimespanTest >> testMinusADuration [
 	"It appears that subtracting a duration from a Timespan gives you a Timespan shifted by the duration"
-	self assert: aTimespan - aDay =  anOverlappingTimespan.
-	self assert: aDisjointTimespan - aWeek =  aTimespan.	
 
-
-
+	self assert: aTimespan - aDay equals: anOverlappingTimespan.
+	self assert: aDisjointTimespan - aWeek equals: aTimespan
 ]
 
 { #category : #tests }
 TimespanTest >> testMonth [
-	self assert: aTimespan month  = 1.
-	self assert: aTimespan monthName = 'January'.
-	self assert: aTimespan monthIndex = 1.
+	self assert: aTimespan month equals: 1.
+	self assert: aTimespan monthName equals: 'January'.
+	self assert: aTimespan monthIndex equals: 1
 ]
 
 { #category : #tests }
 TimespanTest >> testNew [
-	self assert: Timespan new = (Timespan starting: '01-01-1901' asDate)
+	self assert: Timespan new equals: (Timespan starting: '01-01-1901' asDate)
 ]
 
 { #category : #tests }
 TimespanTest >> testNext [
-	self assert: aTimespan next = aDisjointTimespan
-
+	self assert: aTimespan next equals: aDisjointTimespan
 ]
 
 { #category : #tests }
 TimespanTest >> testPlus [
-	self assert: aTimespan + aWeek = aDisjointTimespan.
-	self assert: anOverlappingTimespan + aDay = aTimespan.
-
+	self assert: aTimespan + aWeek equals: aDisjointTimespan.
+	self assert: anOverlappingTimespan + aDay equals: aTimespan
 ]
 
 { #category : #tests }
 TimespanTest >> testPrevious [
-	self assert: aTimespan  = aDisjointTimespan previous.
-	self assert: aTimespan next previous = aTimespan 
-
+	self assert: aTimespan equals: aDisjointTimespan previous.
+	self assert: aTimespan next previous equals: aTimespan
 ]
 
 { #category : #tests }
@@ -443,97 +472,77 @@ TimespanTest >> testPrintOn [
 
 { #category : #tests }
 TimespanTest >> testStart [
-	self assert: aTimespan start =   jan01.
+	self assert: aTimespan start equals: jan01.
 	aTimespan start: jan08.
-	self assert: aTimespan start =   jan08.
+	self assert: aTimespan start equals: jan08
 ]
 
 { #category : #tests }
 TimespanTest >> testStartingEnding [
-	self assert: aTimespan  = (Timespan starting: jan01 ending: jan08)
-
+	self assert: aTimespan equals: (Timespan starting: jan01 ending: jan08)
 ]
 
 { #category : #tests }
 TimespanTest >> testTo [
-	self assert: (anIncludedTimespan to: jan08) = aTimespan 
-
+	self assert: (anIncludedTimespan to: jan08) equals: aTimespan
 ]
 
 { #category : #tests }
 TimespanTest >> testUnion [
-
 	| union |
-	union := timespan union: timespan.
-	
-	self 
-		assert: (union start = timespan start);
-		assert: (union duration = timespan duration)
 
+	union := timespan union: timespan.
+
+	self
+		assert: union start equals: timespan start;
+		assert: union duration equals: timespan duration
 ]
 
 { #category : #tests }
 TimespanTest >> testUnionWithDisjoint [
-
-	self assert: (aTimespan union: aDisjointTimespan)  = 
-		(Timespan starting: jan01 duration: (14 days)).	
-			
-
+	self assert: (aTimespan union: aDisjointTimespan) equals: (Timespan starting: jan01 duration: 14 days)
 ]
 
 { #category : #tests }
 TimespanTest >> testUnionWithIncluded [
-
-	self 
-		assert: (aTimespan union: anIncludedTimespan) = aTimespan 	
+	self assert: (aTimespan union: anIncludedTimespan) equals: aTimespan
 ]
 
 { #category : #tests }
 TimespanTest >> testUnionWithOverlapping [
-
-	self 
-		assert: (aTimespan union: anOverlappingTimespan)  = 
-				(Timespan starting: dec31 duration: (8 days))
+	self assert: (aTimespan union: anOverlappingTimespan) equals: (Timespan starting: dec31 duration: 8 days)
 ]
 
 { #category : #tests }
 TimespanTest >> testUnionWithSelf [
-	self assert: (aTimespan union: aTimespan) = aTimespan
-	
+	self assert: (aTimespan union: aTimespan) equals: aTimespan
 ]
 
 { #category : #tests }
 TimespanTest >> testUnionWithSeparate [
-
-	self 
-		assert: (anOverlappingTimespan union: aDisjointTimespan) = 
-			(Timespan 
-				starting: anOverlappingTimespan start
-				ending:  (aDisjointTimespan end + DateAndTime clockPrecision))
-			
-
+	self
+		assert: (anOverlappingTimespan union: aDisjointTimespan)
+		equals: (Timespan starting: anOverlappingTimespan start ending: aDisjointTimespan end + DateAndTime clockPrecision)
 ]
 
 { #category : #tests }
 TimespanTest >> testWorkDatesDo [
 	| count |
+
 	count := 0.
-	aTimespan
-		workDatesDo: [:each | count := count + 1].
-	self assert: count = 5
+	aTimespan workDatesDo: [ :each | count := count + 1 ].
+	self assert: count equals: 5
 ]
 
 { #category : #tests }
 TimespanTest >> testYear [
-	self assert: aTimespan year = 2005.
-
-	
+	self assert: aTimespan year equals: 2005
 ]
 
 { #category : #tests }
 TimespanTest >> testZeroDuration [
 	| ts |
+
 	ts := Timespan starting: Date today duration: Duration zero.
-	self
-		assert: ts start = ts end
+	self assert: ts start equals: ts end
 ]

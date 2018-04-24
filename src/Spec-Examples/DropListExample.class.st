@@ -12,24 +12,28 @@ Class {
 		'morph2',
 		'morph3',
 		'uniformDropList',
-		'heterogeneousDropList'
+		'heterogeneousDropList',
+		'disabledDropList'
 	],
 	#category : #'Spec-Examples-Morphic'
 }
 
 { #category : #specs }
 DropListExample class >> defaultSpec [
-
-	^ { #ContainerPresenter.
-			#add:.	{ self topSpec . #layout: . #(#SpecLayoutFrame
-													bottomFraction: 0
-													bottomOffset: 30) }.
-			#add:.	{{#model . #container } . #layout: .  #(#SpecLayoutFrame
-													topOffset: 42). }}
+	^ SpecColumnLayout composed
+		newRow: [ :r | 
+			r
+				add: #uniformDropList;
+				add: #heterogeneousDropList ]
+			height: self toolbarHeight;
+		newRow: [ :r | r add: #disabledDropList ] height: self toolbarHeight;
+		newRow: [ :r | r add: #container ] yourself
 ]
 
 { #category : #example }
 DropListExample class >> example [
+	<sampleInstance>
+	
 	^ self new openWithSpec
 ]
 
@@ -39,21 +43,16 @@ DropListExample class >> title [
 	^ 'Drop list'
 ]
 
-{ #category : #specs }
-DropListExample class >> topSpec [
-
-	^ SpecLayout composed
-		newRow: [ :r |
-			r 
-				add: #uniformDropList;
-				add: #heterogeneousDropList ];
-		yourself
-]
-
 { #category : #accessing }
 DropListExample >> container [
 
 	^ container asSpecAdapter
+]
+
+{ #category : #accessing }
+DropListExample >> disabledDropList [
+
+	^ disabledDropList
 ]
 
 { #category : #accessing }
@@ -79,6 +78,10 @@ DropListExample >> initialize [
 DropListExample >> initializeWidgets [
 	uniformDropList := self newDropList.
 	heterogeneousDropList := self newDropList.
+	(disabledDropList := self newDropList)
+		items: #('Disabled' 'Two' 'Three');
+		displayBlock: [ :each | each ];
+		disable.
 	uniformDropList
 		items:
 			{morph1.
@@ -127,7 +130,8 @@ DropListExample >> setFocus [
 	
 	self focusOrder
 		add: uniformDropList;
-		add: heterogeneousDropList.
+		add: heterogeneousDropList;
+		add: disabledDropList.
 	
 ]
 

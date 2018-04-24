@@ -32,5 +32,6 @@ MorphicUIBugTest >> setUp [
 MorphicUIBugTest >> tearDown [
 	"default. tests will add morphs to list. Teardown will delete."
 
-	cases do: [ :each | each delete ]
+	cases do: [ :each | each delete ].
+	super tearDown
 ]

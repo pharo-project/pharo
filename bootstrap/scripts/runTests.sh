@@ -6,6 +6,9 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
+# The first parameter is the architecture
+# The second parameter is the stage name
+
 ARCHFLAG=""
 if [ ${1} = "64" ]; then
     ARCHFLAG="64/"
@@ -25,5 +28,7 @@ CHANGES_FILE=$(find . -name Pharo7.0-${1}bit-*.changes)
 cp ${CACHE}/*.sources .
 mv $IMAGE_FILE Pharo.image
 mv $CHANGES_FILE Pharo.changes
+
+export PHARO_CI_TESTING_ENVIRONMENT=1
 					
-./pharo Pharo.image test --junit-xml-output '.*'
+./pharo Pharo.image test --junit-xml-output --stage-name=${2} '.*'

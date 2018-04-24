@@ -14,12 +14,6 @@ ToolShortcutsCategory class >> isGlobalCategory [
 ]
 
 { #category : #keymaps }
-ToolShortcutsCategory >> openKomitter [
-	<shortcut>
-	^ KMKeymap shortcut: PharoShortcuts current openKomitterShortcut action: [ Komitter openAndCommitToMonticello ]
-]
-
-{ #category : #keymaps }
 ToolShortcutsCategory >> openMonticelloPackageBrowser [
 	<shortcut>
 	^ KMKeymap shortcut: PharoShortcuts current openMonticielloShortcut action: [ Smalltalk tools openMonticelloBrowser ]

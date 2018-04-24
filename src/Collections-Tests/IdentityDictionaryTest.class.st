@@ -18,7 +18,7 @@ IdentityDictionaryTest >> canBeUnhealthy [
 	^ false
 ]
 
-{ #category : #requirements }
+{ #category : #coverage }
 IdentityDictionaryTest >> classToBeTested [
 
 	^ IdentityDictionary

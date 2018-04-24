@@ -15,11 +15,6 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
-{ #category : #accessing }
-CompiledBlock >> debuggerMap [
-	^self compilerClass debuggerMethodMapForMethod: self.
-]
-
 { #category : #scanning }
 CompiledBlock >> hasMethodReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
@@ -79,19 +74,6 @@ CompiledBlock >> outerCode [
 { #category : #accessing }
 CompiledBlock >> outerCode: aCompiledCode [
 	^self literalAt: self numLiterals put: aCompiledCode
-]
-
-{ #category : #scanning }
-CompiledBlock >> pcInOuter [
-	| outer end instructionStream |
-	outer := self outerCode.
-	instructionStream := InstructionStream on: outer.
-	end := outer endPC.
-	[instructionStream pc <= end] whileTrue: 
-		[ (self encoderClass isCreateFullBlock: self code: outer at: instructionStream pc)
-			ifTrue: [ ^ instructionStream pc ].
-			instructionStream pc: (instructionStream nextPc: (outer at: instructionStream pc))].
-	self error: 'block not installed in outer code'.
 ]
 
 { #category : #accessing }

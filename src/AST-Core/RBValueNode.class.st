@@ -28,15 +28,39 @@ RBValueNode >> addParenthesis: anInterval [
 	parentheses add: anInterval
 ]
 
-{ #category : #converting }
-RBValueNode >> asSequenceNode [
-	^RBSequenceNode statements: {self} 
-]
-
 { #category : #testing }
 RBValueNode >> containedBy: anInterval [ 
 	^anInterval first <= self startWithoutParentheses 
 		and: [anInterval last >= self stopWithoutParentheses]
+]
+
+{ #category : #evaluating }
+RBValueNode >> evaluate [
+	"evaluate the AST without taking variables into account"
+	^self asDoit generateWithSource valueWithReceiver: nil arguments: #().
+
+
+]
+
+{ #category : #evaluating }
+RBValueNode >> evaluateForContext: aContext [
+	"evaluate the AST taking variables from the context"
+	^(self asDoitForContext: aContext) 
+		generateWithSource valueWithReceiver: aContext receiver arguments: {aContext}.
+
+
+]
+
+{ #category : #evaluating }
+RBValueNode >> evaluateForReceiver: aReceicer [
+	"evaluate the AST without taking variables into account"
+	| methodNode |
+	
+	methodNode := self asDoit.
+	methodNode methodClass: aReceicer class.
+	^methodNode generateWithSource valueWithReceiver: aReceicer arguments: #().
+
+
 ]
 
 { #category : #testing }

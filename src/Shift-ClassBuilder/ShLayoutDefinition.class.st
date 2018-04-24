@@ -12,8 +12,15 @@ Class {
 		'sharedVariables',
 		'builder'
 	],
-	#category : 'Shift-ClassBuilder'
+	#category : #'Shift-ClassBuilder'
 }
+
+{ #category : #accessing }
+ShLayoutDefinition >> allSlots [
+	| superclass | 
+	superclass := builder superclass.
+	^ (superclass ifNil: [ ^#() ] ifNotNil: [ superclass allSlots ]) , slots.
+]
 
 { #category : #accessing }
 ShLayoutDefinition >> builder: anObject [

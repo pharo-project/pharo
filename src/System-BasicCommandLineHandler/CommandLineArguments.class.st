@@ -20,7 +20,7 @@ Class {
 
 { #category : #'instance creation' }
 CommandLineArguments class >> default [
-	^ singleton ifNil: [singleton := self new initialize]
+	^singleton ifNil: [ singleton := self new ]
 ]
 
 { #category : #'instance creation' }
@@ -63,6 +63,11 @@ CommandLineArguments >> commandLineArguments [
 CommandLineArguments >> copySubcommand [
 	"return a new copy of this CommandLine without the first arguments"
 	^ self class withArguments: arguments allButFirst
+]
+
+{ #category : #copying }
+CommandLineArguments >> copyWithoutPassword [
+	^ self class withArguments: (arguments reject: [ :each | each beginsWith: '--deploymentPassword' ])
 ]
 
 { #category : #testing }

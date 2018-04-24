@@ -1,3 +1,8 @@
+"
+I represent a scaled decimal.
+I am stored as a Fraction (check HEFraction class) but also adding the scale.
+The scale is stored as a exported literal.
+"
 Class {
 	#name : #HEScaledDecimal,
 	#superclass : #HEFraction,

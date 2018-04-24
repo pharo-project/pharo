@@ -51,13 +51,6 @@ Morph >> embeddedInMorphicWindowLabeled: labelString [
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
-Morph >> initialColorInSystemWindow: aSystemWindow [
-	"Answer the colour the receiver should be when added to a SystemWindow."
-
-	^Color white
-]
-
-{ #category : #'*Morphic-Widgets-Windows' }
 Morph >> isInSystemWindow [
 	"answer if the receiver is in a system window"
 	^ owner isMorph and:[owner isSystemWindow or:[owner isInSystemWindow]]

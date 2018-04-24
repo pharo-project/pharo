@@ -1,7 +1,10 @@
+"
+Tests for FFITypeArray
+"
 Class {
 	#name : #FFITypeArrayTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #tests }

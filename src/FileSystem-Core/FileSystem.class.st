@@ -67,6 +67,14 @@ FileSystem >> binaryReadStreamOn: aResolvable [
 ]
 
 { #category : #public }
+FileSystem >> binaryWriteStreamOn: aResolvable [
+	"Resolve the argument into an absolute path and open a file handle on the file
+	at that path. Ask the handle to give us a binary write stream for reading the file."
+
+	^ (self open: aResolvable writable: true) binaryWriteStream.
+]
+
+{ #category : #public }
 FileSystem >> checkName: aString fixErrors: fixErrors [
 	^ store checkName: aString fixErrors: fixErrors
 ]
@@ -149,7 +157,7 @@ FileSystem >> copy: aPath toReference: destinationReference [
 FileSystem >> copy: aPath toRemote: destRef [
 	| inputStream path |
 	path := self resolve: aPath.
-	[ inputStream := self readStreamOn: path.
+	[ inputStream := self binaryReadStreamOn: path.
 	inputStream ifNil: [ store signalFileDoesNotExist: path ].
 	destRef fileSystem copyFrom: inputStream to: destRef path ]
 		ensure: [ inputStream ifNotNil: [ inputStream close ] ]
@@ -178,7 +186,7 @@ FileSystem >> copyFrom: inputStream to: destPath [
 	(self exists: destPath)
 		ifTrue: [ store signalFileExists: destPath ].
 	^ [ 
-	out := self writeStreamOn: destPath.
+	out := self binaryWriteStreamOn: destPath.
 	buffer := ByteArray new: 1024.
 	[ inputStream atEnd ]
 		whileFalse: [ 

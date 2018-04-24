@@ -1,10 +1,13 @@
+"
+Tests for callbacks
+"
 Class {
 	#name : #FFICallbackTests,
 	#superclass : #TestCase,
 	#pools : [
 		'FFITestEnumeration'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #accessing }

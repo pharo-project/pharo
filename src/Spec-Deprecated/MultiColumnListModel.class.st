@@ -6,3 +6,8 @@ Class {
 	#superclass : #MultiColumnListPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+MultiColumnListModel class >> isDeprecated [
+	^true
+]

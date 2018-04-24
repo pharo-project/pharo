@@ -32,7 +32,7 @@ CompiledMethod >> packageFromOrganizer: anRPackageOrganizer [
 	^self origin packages 
 		detect: [ :each | 
 			self origin isMeta
-				ifFalse: [ each includesSelector: originSelector ofClassName: self origin theNonMetaClass originalName]
-				ifTrue: [ each includesSelector: originSelector ofMetaclassName: self origin theNonMetaClass originalName]] 
+				ifFalse: [ each includesSelector: originSelector ofClassName: self origin instanceSide originalName]
+				ifTrue: [ each includesSelector: originSelector ofMetaclassName: self origin instanceSide originalName]] 
 		ifNone: [ nil ]
 ]

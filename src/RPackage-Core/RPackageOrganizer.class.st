@@ -147,7 +147,7 @@ RPackageOrganizer class >> methodAdded: anEvent [
 	(methodCategory isEmptyOrNil or:[ methodCategory first ~= $* ]) 
 		ifFalse: [
 			(self isPackageDefinedForClass: anEvent methodClass)
-					ifFalse: [self packageClass new named: (Smalltalk organization categoryOfElement: anEvent methodClass theNonMetaClass asSymbol) ].
+					ifFalse: [self packageClass new named: (Smalltalk organization categoryOfElement: anEvent methodClass instanceSide asSymbol) ].
 		].
 ]
 
@@ -203,6 +203,9 @@ RPackageOrganizer >> addMethod: method [
 	
 	protocol := method protocol ifNil: [ Error signal: 'Should not happen' ].
 	
+	"If the class is not packaged yet, ignore the situation. This method is created during the creation of the class or on an anonymous class"
+	(method methodClass package name = RPackage defaultPackageName) ifTrue: [ ^ self ].
+	
 	rPackage := (self hasPackageForProtocol: protocol inClass: method methodClass)
 		ifTrue: [ self packageForProtocol: protocol inClass: method methodClass ]
 		ifFalse: [ self registerPackage: (self packageClass named: (protocol copyWithout: $*)) ].
@@ -232,7 +235,7 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 	Smalltalk allClassesAndTraits 
 		do: [ :eachBehavior | 
 			self initializeMethodsFor: eachBehavior.
-			self initializeMethodsFor: eachBehavior theMetaClass ]
+			self initializeMethodsFor: eachBehavior classSide ]
 		displayingProgress: 'Importing methods'.
 
 	Smalltalk allClassesAndTraits 
@@ -241,9 +244,9 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 				self 
 					initializeExtensionsFor: eachBehavior 
 					protocol: eachProtocol ].
-			eachBehavior theMetaClass organization extensionProtocols do: [ :eachProtocol | 
+			eachBehavior classSide organization extensionProtocols do: [ :eachProtocol | 
 				self 
-					initializeExtensionsFor: eachBehavior theMetaClass 
+					initializeExtensionsFor: eachBehavior classSide 
 					protocol: eachProtocol ] ]
 		displayingProgress: 'Importing extensions'.
 ]
@@ -349,7 +352,7 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 { #category : #'package access from class' }
 RPackageOrganizer >> extendingPackagesOf: aClass [
 	"Returns the packages extending the class aClass"
-	^ classExtendingPackagesMapping at: aClass theNonMetaClass name ifAbsent: [#()]
+	^ classExtendingPackagesMapping at: aClass instanceSide name ifAbsent: [#()]
 ]
 
 { #category : #'package access from class' }
@@ -692,7 +695,7 @@ RPackageOrganizer >> packageNamesDo: aBlock [
 RPackageOrganizer >> packageOf: aClass [
 
 	^ classPackageMapping 
-		at: aClass theNonMetaClass originalName
+		at: aClass instanceSide originalName
 		ifAbsent: [self packageNamed: self packageClass defaultPackageName]
 ]
 
@@ -733,9 +736,9 @@ RPackageOrganizer >> register [
 RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [ 
 
 	| cur |
-	cur := classExtendingPackagesMapping at: aClass theNonMetaClass name ifAbsent: [nil].
+	cur := classExtendingPackagesMapping at: aClass instanceSide name ifAbsent: [nil].
 	cur isNil
-		ifTrue: [classExtendingPackagesMapping at: aClass theNonMetaClass name put: (Set with: aPackage)]
+		ifTrue: [classExtendingPackagesMapping at: aClass instanceSide name put: (Set with: aPackage)]
 		ifFalse: [cur add: aPackage]
 ]
 
@@ -811,7 +814,7 @@ RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
 	(aPackage includesClass: aClass) 
 		ifFalse: 
 			[self error: aPackage name , ' does not includes the class ' , aClass name].
-	^classPackageMapping at: aClass theNonMetaClass name put: aPackage
+	^classPackageMapping at: aClass instanceSide name put: aPackage
 ]
 
 { #category : #'private registration' }
@@ -1089,7 +1092,7 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 	method := ann method.
 	method ifNil: [ ^ self ].
 	method origin = ann methodClass ifFalse: [ ^ self].
-	(self packageOfClassNamed: ann methodClass theNonMetaClass name) ifNil: [ ^ self ].
+	(self packageOfClassNamed: ann methodClass instanceSide name) ifNil: [ ^ self ].
 
 	newProtocol := ann  newProtocol.
 	newProtocol ifNil: [ ^ self ].
@@ -1134,14 +1137,14 @@ RPackageOrganizer >> systemMethodRemovedActionFrom: ann [
 
 	ann methodClass isMeta
 		ifFalse: [ 
-			methodPackage := self packageDefiningOrExtendingSelector: ann selector inClassNamed: ann methodClass theNonMetaClass originalName.
+			methodPackage := self packageDefiningOrExtendingSelector: ann selector inClassNamed: ann methodClass instanceSide originalName.
 			methodPackage ifNotNil: [ 
-				methodPackage removeSelector: ann selector ofClassName: ann methodClass theNonMetaClass originalName].
+				methodPackage removeSelector: ann selector ofClassName: ann methodClass instanceSide originalName].
 		]
 		ifTrue: [ 
-			methodPackage := self packageDefiningOrExtendingSelector: ann selector inMetaclassNamed: ann methodClass theNonMetaClass originalName.
+			methodPackage := self packageDefiningOrExtendingSelector: ann selector inMetaclassNamed: ann methodClass instanceSide originalName.
 			methodPackage ifNotNil: [ 
-				methodPackage removeSelector: ann selector ofMetaclassName: ann methodClass theNonMetaClass originalName].
+				methodPackage removeSelector: ann selector ofMetaclassName: ann methodClass instanceSide originalName].
 		]
 ]
 
@@ -1168,7 +1171,7 @@ RPackageOrganizer >> unregisterExtendingPackage: aPackage forClass: aClass [
 	| extendingPackageForClass |
 	
 	extendingPackageForClass := classExtendingPackagesMapping 
-		at: aClass theNonMetaClass name 
+		at: aClass instanceSide name 
 		ifAbsent: [ nil ].
 	extendingPackageForClass ifNotNil: [ 
 		extendingPackageForClass 
@@ -1211,7 +1214,7 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 	"unregister the back pointer mapping from classes to packages."
 		
 	^classPackageMapping 
-		removeKey: aClass theNonMetaClass name 
+		removeKey: aClass instanceSide name 
 		ifAbsent: [ self reportExtraRemovalOf: aClass ]
 ]
 

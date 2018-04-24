@@ -7,7 +7,7 @@ Class {
 	#category : #'Gofer-Tests-Tests'
 }
 
-{ #category : #utils }
+{ #category : #utilities }
 GoferOperationTest >> allManagers [
 
 	^ MCWorkingCopy allManagers 
@@ -32,11 +32,6 @@ GoferOperationTest >> hasPackage: aString [
 { #category : #utilities }
 GoferOperationTest >> hasVersion: aString [
 	^ self allManagers anySatisfy: [ :version | version ancestry ancestorString = aString ]
-]
-
-{ #category : #running }
-GoferOperationTest >> runCase [
-	^ "SystemAnnouncer uniqueInstance suspendAllWhile: [ "super runCase "]"
 ]
 
 { #category : #running }

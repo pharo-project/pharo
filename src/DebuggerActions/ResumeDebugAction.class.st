@@ -5,18 +5,13 @@ A ResumeDebugAction resumes the execution of the interrupted process and closes 
 Class {
 	#name : #ResumeDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
 ResumeDebugAction class >> actionType [
 	<debuggingAction>
 	<contextMenuDebuggingAction>
-]
-
-{ #category : #accessing }
-ResumeDebugAction >> defaultHelp [
-	^ 'Relinquish debugger control and proceed execution from the current point of debugger control.'
 ]
 
 { #category : #accessing }
@@ -50,6 +45,11 @@ ResumeDebugAction >> executeAction [
 		resume;
 		clear.
 	self debugger close. 
+]
+
+{ #category : #accessing }
+ResumeDebugAction >> help [
+	^ 'Relinquish debugger control and proceed execution from the current point of debugger control.'
 ]
 
 { #category : #accessing }

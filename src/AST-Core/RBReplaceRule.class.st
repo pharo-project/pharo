@@ -19,7 +19,7 @@ Class {
 	#category : #'AST-Core-Matching'
 }
 
-{ #category : #matching }
+{ #category : #testing }
 RBReplaceRule >> canMatch: aProgramNode [ 
 	^verificationBlock value: aProgramNode
 ]
@@ -40,37 +40,37 @@ RBReplaceRule >> replace: aProgramNode with: newNode [
 	aProgramNode replaceMethodSource: newNode
 ]
 
-{ #category : #matching }
+{ #category : #'private - searching' }
 RBReplaceRule >> searchFor: searchString replaceWith: replaceString [ 
 
 	self subclassResponsibility
 ]
 
-{ #category : #matching }
+{ #category : #'private - searching' }
 RBReplaceRule >> searchFor: searchString replaceWith: replaceString when: aBlock [ 
 
 	self subclassResponsibility
 ]
 
-{ #category : #matching }
+{ #category : #'private - searching' }
 RBReplaceRule >> searchForMethod: searchString replaceWith: replaceString [ 
 
 	self subclassResponsibility
 ]
 
-{ #category : #matching }
+{ #category : #'private - searching' }
 RBReplaceRule >> searchForMethod: searchString replaceWith: replaceString when: aBlock [ 
 
 	self subclassResponsibility
 ]
 
-{ #category : #matching }
+{ #category : #'private - searching' }
 RBReplaceRule >> searchForTree: aBRProgramNode replaceWith: replaceNode [ 
 
 	self subclassResponsibility
 ]
 
-{ #category : #matching }
+{ #category : #'private - searching' }
 RBReplaceRule >> searchForTree: aBRProgramNode replaceWith: replaceString when: aBlock [ 
 
 	self subclassResponsibility

@@ -52,6 +52,8 @@ MetaLink class >> defaultOptions [
 	- optionOneShot                     "remove link after first activation"
 	- optionMetalevel                   "force level: 0 for the link"
 	- optionDisabledLink                "links are active by default"
+	+ optionWeakAfter 						  "do not use #ensure: for #after "
+	- optionAnnounce                    "do we announce adding / removing links? Slow!"
 	)
 ]
 
@@ -73,6 +75,11 @@ MetaLink >> allReifications [
 		ifNotNil: [reifications addAll: self conditionArguments ].
 	
 	^reifications
+]
+
+{ #category : #installing }
+MetaLink >> announceChange [
+	self optionAnnounce ifTrue: [SystemAnnouncer uniqueInstance announce: (MetalinkChanged new link: self)]
 ]
 
 { #category : #accessing }
@@ -141,6 +148,31 @@ MetaLink >> control [
 MetaLink >> control: aRFLinkControl [
 	control:= aRFLinkControl.
 	self invalidate.
+]
+
+{ #category : #printing }
+MetaLink >> definitionString [
+	^String streamContents: [ :str |
+		str nextPutAll: 'MetaLink new'.
+		str cr;tab.
+		str nextPutAll: 'metaObject: '; nextPutAll: metaObject printString; nextPut: $;.
+		str cr;tab.
+		str nextPutAll: 'selector: '; nextPutAll: selector printString; nextPut: $;.
+		str cr;tab.
+		str nextPutAll: 'arguments: '; nextPutAll: arguments printString; nextPut: $;.
+		str cr;tab.
+		str nextPutAll: 'control: '; nextPutAll: control printString; nextPut: $;.
+		self hasMetaLevel ifTrue: [  
+			str cr;tab.
+			str nextPutAll: 'level: '; nextPutAll: level printString; nextPut: $;.
+			].
+		self hasCondition ifTrue: [
+			str cr;tab.
+			str nextPutAll: 'condition: '; nextPutAll: condition printString; nextPut: $;.
+			].
+		str cr;tab.
+		str nextPutAll: 'options: '; nextPutAll: options asArray printString; nextPut: $..
+	]
 ]
 
 { #category : #'reflecive api' }
@@ -218,6 +250,7 @@ MetaLink >> invalidate [
 
 { #category : #accessing }
 MetaLink >> level [
+	<metaLinkOptions: #( + optionDisabledLink)>
 	^ level
 ]
 
@@ -260,6 +293,18 @@ MetaLink >> methods [
 { #category : #accessing }
 MetaLink >> option: anArray [ 
 	self parseOptions: anArray
+]
+
+{ #category : #options }
+MetaLink >> optionAnnounce [
+	^ options includes: #optionAnnounce
+]
+
+{ #category : #options }
+MetaLink >> optionAnnounce: aBoolean [
+	aBoolean
+		ifTrue: [ options add: #optionAnnounce ] 
+		ifFalse: [ options remove: #optionAnnounce ifAbsent:[] ]
 ]
 
 { #category : #options }
@@ -377,8 +422,12 @@ MetaLink >> uninstall [
 
 { #category : #ast }
 MetaLink >> valueInContext: aBlock [
-	(RFMetaContext current isActive: (self level ifNil: [0]))
+	| process |
+	"We need to take care that all code called here can not have active metalinks. We use copies of methods if we call system methods"
+	process := Processor rfactiveProcess.
+	(process isActive: self level)
 		ifFalse: [ ^ self ].
-	RFMetaContext current shiftLevelUp.
-	^ aBlock ctxtEnsure: [ RFMetaContext current shiftLevelDown ]
+	process shiftLevelUp.
+	[aBlock value] rfEnsure: [process shiftLevelDown]
+	
 ]

@@ -67,6 +67,6 @@ ClassHierarchyTest >> testSubclasses [
 	SystemNavigation new
 		allClassesDo: [ :cls | 
 			self
-				assert: (cls superclass subclasses includes: cls)
+				assert: (cls superclass isNil or: [ cls superclass subclasses includes: cls ])
 				description: cls name , ' is not in ' , (cls superclass ifNotNil: [ :superclass | superclass name ] ifNil: [ 'nil' ]) , '''s subclasses' ]
 ]

@@ -39,11 +39,6 @@ RBReturnNode >> acceptVisitor: aProgramNodeVisitor [
 	^aProgramNodeVisitor visitReturnNode: self
 ]
 
-{ #category : #converting }
-RBReturnNode >> asSequenceNode [
-	^RBSequenceNode statements: {self} 
-]
-
 { #category : #accessing }
 RBReturnNode >> children [
 	^Array with: value
@@ -83,7 +78,7 @@ RBReturnNode >> initialize [
 
 { #category : #testing }
 RBReturnNode >> isFaulty [
-	^self value isFaulty.
+	^self value isFaulty
 ]
 
 { #category : #testing }
@@ -140,7 +135,7 @@ RBReturnNode >> stop: anInteger [
 	self value stop: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : #evaluating }
 RBReturnNode >> value [
 	^value
 ]

@@ -69,10 +69,6 @@ RubPlainTextMode class >> menuOn: aBuilder [
 		selector: #setSearchString.
 	aBuilder model canChangeText
 		ifTrue: [ 
-			(aBuilder item: #'Do again' translated)
-				keyText: 'j';
-				selector: #again;
-				iconName: #smallRedoIcon.
 			(aBuilder item: #Undo translated)
 				keyText: 'z';
 				selector: #undo;

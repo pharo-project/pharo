@@ -5,7 +5,7 @@ A ReturnValueDebugAction forces a return of a given value to the previous contex
 Class {
 	#name : #ReturnValueDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
@@ -37,6 +37,11 @@ ReturnValueDebugAction >> executeAction [
 			evaluate.
 
 	self session returnValue: value from: self currentContext
+]
+
+{ #category : #accessing }
+ReturnValueDebugAction >> help [
+	^ 'Return of a given value to the previous context.'
 ]
 
 { #category : #accessing }

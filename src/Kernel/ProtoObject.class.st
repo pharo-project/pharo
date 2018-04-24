@@ -182,7 +182,7 @@ ProtoObject >> isNil [
 ProtoObject >> modificationForbiddenFor: selector index: index value: value [
 	^ (ModificationForbidden 
 		for: self
-		atInstVar: index
+		at: index
 		with: value
 		retrySelector: selector) signal
 ]
@@ -248,6 +248,29 @@ ProtoObject >> pointsTo: anObject [
 	via the compact classes array"
 
 	^ (self instVarsInclude: anObject) or: [ ^self class == anObject]
+]
+
+{ #category : #'primitive failure' }
+ProtoObject >> primitiveFail [
+	"primitiveFail may be invoked by certain methods whose code is translated in C. In such a case primitiveFail and not primitiveFailed
+	 should be invoked. The reason is that this code is translated to C by VMMaker. #primitiveFail is 
+	implemented in Interpreter of VMMaker."
+
+	^ self primitiveFailed
+]
+
+{ #category : #'primitive failure' }
+ProtoObject >> primitiveFailed [
+	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
+
+	self primitiveFailed: thisContext sender selector
+]
+
+{ #category : #'primitive failure' }
+ProtoObject >> primitiveFailed: selector [
+	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
+	
+	PrimitiveFailed signalFor: selector
 ]
 
 { #category : #debugging }

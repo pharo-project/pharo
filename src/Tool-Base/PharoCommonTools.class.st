@@ -11,6 +11,21 @@ Class {
 	#category : #'Tool-Base'
 }
 
+{ #category : #settings }
+PharoCommonTools class >> browsingSettingsOn: aBuilder [
+	<systemsettings>
+	
+	"create empty #codeBrowsing and #qualityAssistant settings groups so the tools can use it"
+	
+	(aBuilder group: #codeBrowsing)
+		label: 'Code Browsing';
+		description: 'All settings concerned with code browsing look''n feel'.
+	
+	(aBuilder group: #qualityAssistant)
+		label: 'QualityAssistant';
+		parent: #codeBrowsing.
+]
+
 { #category : #initialization }
 PharoCommonTools class >> initialize [
 	SessionManager default
@@ -85,6 +100,18 @@ PharoCommonTools class >> settingsOn: aBuilder [
 { #category : #'system startup' }
 PharoCommonTools class >> shutDown: aboutToQuit [
 	self allInstancesDo: #cleanUp
+]
+
+{ #category : #'world menu' }
+PharoCommonTools class >> worldMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #'System Browser')
+		parent: #MostUsedTools;
+		action: [ Smalltalk tools openClassBrowser ];
+		order: 0.1;
+		keyText: 'o, b';
+		help: 'System browser to browse and edit code.';
+		icon: Smalltalk tools browser taskbarIcon
 ]
 
 { #category : #'registry access' }

@@ -1,5 +1,15 @@
 "
-value of a variable read or assignment
+value
+
+Assignment:  the orginal value for before, new value for after. 
+
+Variables: current value (same for before and after)
+
+Message: result of the message, only availabe for *after* links.
+
+Return: what will be returned
+
+
 "
 Class {
 	#name : #RFValueReification,
@@ -20,17 +30,22 @@ RFValueReification class >> key [
 { #category : #generate }
 RFValueReification >> genForInstanceVariableSlot [
 	"entity in this case is the binding of the instance variable"
-	^RBMessageNode receiver: entity asLiteralNode selector: #read: arguments: { RBVariableNode named: 'self' }
+
+	^ RBMessageNode
+		receiver: (RFLiteralVariableNode value: entity)
+		selector: #read:
+		arguments: {(RBVariableNode named: 'self')}
 ]
 
 { #category : #generate }
 RFValueReification >> genForLiteralVariable [
 	"entity in this case is the binding of the literal variable"
-	^entity value asLiteralNode
+	^RFLiteralVariableNode value: entity value
 ]
 
 { #category : #generate }
 RFValueReification >> genForRBAssignmentNode [
+	"#value for Assignemnt is the old value, is that what we want?"
 	^RBVariableNode named: entity variable name
 ]
 
@@ -46,7 +61,7 @@ RFValueReification >> genForRBReturnNode [
 
 { #category : #generate }
 RFValueReification >> genForRBVariableNode [
-	entity isGlobal ifTrue: [^entity binding value asLiteralNode]. 
+	entity isGlobal ifTrue: [^RFLiteralVariableNode value: entity binding value]. 
 	^RBVariableNode named: entity name.
 ]
 

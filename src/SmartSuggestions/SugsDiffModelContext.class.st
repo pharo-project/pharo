@@ -1,17 +1,25 @@
+"
+I know how to  extract the information needed for the suggestions from a DiffModel
+"
 Class {
 	#name : #SugsDiffModelContext,
 	#superclass : #SugsAbstractContext,
-	#category : #SmartSuggestions
+	#category : #'SmartSuggestions-Menu'
 }
 
-{ #category : #accessing }
-SugsDiffModelContext >> selectedInterval [
-
-	^ 1 to: 0
+{ #category : #selection }
+SugsDiffModelContext >> selectedClass [
+	
+	^ model selectedClass
 ]
 
 { #category : #selection }
 SugsDiffModelContext >> selectedMethod [
 	
 	^ nil
+]
+
+{ #category : #accessing }
+SugsDiffModelContext >> sourceTextArea [
+	^model sourceTextArea
 ]

@@ -7,12 +7,24 @@ Class {
 	#category : #'Monticello-Modeling'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MCTraitDefinition class >> name: classNameString traitComposition:  traitCompositionString category:  categoryString comment:  commentString commentStamp:   commentStamp [
 	^ self instanceLike:
 		(self new initializeWithName: classNameString 
 			traitComposition:  traitCompositionString
 			category:  categoryString
+			comment:  commentString  
+			commentStamp:   commentStamp)
+
+]
+
+{ #category : #'instance creation' }
+MCTraitDefinition class >> name: classNameString traitComposition:  traitCompositionString category:  categoryString instVarNames: ivarArray  comment:  commentString commentStamp:   commentStamp [
+	^ self instanceLike:
+		(self new initializeWithName: classNameString 
+			traitComposition:  traitCompositionString
+			category:  categoryString
+			instVarNames: ivarArray
 			comment:  commentString  
 			commentStamp:   commentStamp)
 
@@ -41,6 +53,7 @@ MCTraitDefinition >> createClass [
 	trait := Trait
 		named: name
 		uses: (Smalltalk compiler evaluate: self traitCompositionString)
+		slots: self instanceVariables
 		category: category.
 	trait ifNotNil: [trait classComment: comment stamp: commentStamp].
 	^trait
@@ -75,6 +88,43 @@ MCTraitDefinition >> initializeWithName: classNameString
 	     category := categoryString.
 		comment := commentString withSqueakLineEndings.
 		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp]
+
+]
+
+{ #category : #initializing }
+MCTraitDefinition >> initializeWithName: classNameString 
+	traitComposition:  traitCompositionString
+	category:  categoryString
+	instVarNames: ivarArray
+	classInstVarNames: civarArray
+	comment:  commentString  
+	commentStamp:   commentStampString [
+					
+		name := classNameString asSymbol.
+		traitComposition := traitCompositionString.
+	    category := categoryString.
+		comment := commentString withSqueakLineEndings.
+		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp].
+		variables := OrderedCollection  new.
+		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
+		self addVariables: civarArray ofType: MCClassInstanceVariableDefinition.
+]
+
+{ #category : #initializing }
+MCTraitDefinition >> initializeWithName: classNameString 
+	traitComposition:  traitCompositionString
+	category:  categoryString
+	instVarNames: ivarArray
+	comment:  commentString  
+	commentStamp:   commentStampString [
+					
+		name := classNameString asSymbol.
+		traitComposition := traitCompositionString.
+	    category := categoryString.
+		comment := commentString withSqueakLineEndings.
+		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp].
+		variables := OrderedCollection  new.
+		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
 
 ]
 

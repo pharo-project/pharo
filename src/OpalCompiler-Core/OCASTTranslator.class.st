@@ -485,7 +485,7 @@ OCASTTranslator >> visitBlockNode: aBlockNode [
 	
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
 	
-	self compilationContext usesFullBlockClosure ifTrue: [ ^ self visitFullBlockNode: aBlockNode ].
+	self compilationContext optionFullBlockClosure ifTrue: [ ^ self visitFullBlockNode: aBlockNode ].
 		
 	argumentNames := aBlockNode argumentNames asArray.
 	tempNames := (aBlockNode scope tempVars asArray collect: [ :each | each name]) copyWithoutAll: argumentNames.
@@ -611,7 +611,7 @@ OCASTTranslator >> visitMethodNode: aMethodNode [
 	methodBuilder compilationContext: aMethodNode compilationContext.
 	methodBuilder addTemps: aMethodNode scope tempVarNames.
 		
-	methodBuilder properties: aMethodNode properties.
+	methodBuilder properties: aMethodNode methodProperties.
 	methodBuilder irPrimitive: aMethodNode primitiveFromPragma.
 	aMethodNode pragmas do: [:each | self visitPragmaNode: each].
 	methodBuilder numArgs: aMethodNode arguments size.

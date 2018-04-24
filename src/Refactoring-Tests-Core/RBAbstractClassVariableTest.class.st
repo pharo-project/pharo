@@ -18,7 +18,7 @@ RBAbstractClassVariableTest >> testAbstractClassVariable [
 		class: RBTransformationRuleTest.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTest.
-	meta := class theMetaClass.
+	meta := class classSide.
 	self assert: (meta parseTreeFor: #recursiveSelfRule) = (RBParser parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
 	self assert: (meta parseTreeFor: #recursiveSelfRule:) = (RBParser parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
 	self assert: (meta parseTreeFor: #nuke) = (RBParser parseMethod: 'nuke
@@ -56,7 +56,7 @@ RBAbstractClassVariableTest >> testMetaClassFailure [
 RBAbstractClassVariableTest >> testModelAbstractClassVariable [
 	| refactoring meta class |
 	class := model classNamed: #Foo.
-	meta := class theMetaClass.
+	meta := class classSide.
 	refactoring := RBAbstractClassVariableRefactoring 
 		model: model
 		variable: 'ClassVarName1'
@@ -82,7 +82,7 @@ RBAbstractClassVariableTest >> testModelAbstractClassVariable [
 RBAbstractClassVariableTest >> testModelAbstractClassVariableOverridenMethodsInSubclass [
 	| refactoring meta class |
 	class := model classNamed: #Foo.
-	meta := class theMetaClass.
+	meta := class classSide.
 	refactoring := RBAbstractClassVariableRefactoring 
 		model: model
 		variable: 'ClassVarName2'

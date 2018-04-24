@@ -173,7 +173,6 @@ FreeTypeFontProvider >> cacheFileInfo: aFreeTypeFileInfo index: i [
 
 { #category : #'error handling' }
 FreeTypeFontProvider >> failedToOpen: face from: path index: i [
-	face destroyHandle.
 	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."
 	"remove all cache entries for path with index >= i"
 	
@@ -186,7 +185,6 @@ FreeTypeFontProvider >> failedToOpen: face from: path index: i [
 
 { #category : #'error handling' }
 FreeTypeFontProvider >> failedToOpen: face index: i [
-	face destroyHandle.
 	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."
 	"remove all cache entries for path with index >= i"
 	
@@ -233,7 +231,7 @@ FreeTypeFontProvider >> fontFor: aLogicalFont familyName: familyName [
 	| info answer simulatedSqueakEmphasis needsSimulatedBold needsSimulatedSlant
 	squeakBoldEmphasis squeakItalicEmphasis |
 	
-	FT2Library current ifNil:[^nil].
+	FT2Library current isAvailable ifFalse:[^nil].
 	info:= self fontInfoFor: aLogicalFont familyName: familyName.
 	info ifNil:[^nil].
 	answer := FreeTypeFont forLogicalFont: aLogicalFont fileInfo: info.
@@ -455,7 +453,7 @@ FreeTypeFontProvider >> updateFileCacheInfo [
 FreeTypeFontProvider >> updateFontsFromSystem [
 	| done |
 	"Add all the embedded file infos"
-	FT2Library current ifNil: [ ^ self ].
+	FT2Library current isAvailable ifFalse: [ ^ self ].
 	self updateEmbeddedFreeTypeFonts.
 	done := Set new.	"visited directories are tracked in done, so that they are not processed twice"
 	self platformImageRelativeDirectories
@@ -503,7 +501,7 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 	path := aFile fullName convertToWithConverter: UTF8TextConverter new .
 	[face := FreeTypeFace basicNew filename: path; index:  i.
 	["we use the primNewFaceFromFile:index: method because we want to do this as fast as possible and we don't need the face registered because it will be explicitly destroyed later"
-	face primNewFaceFromFile: path index: i.
+	face newFaceFromFile: path index: i.
 	face loadFields]
 		on: FT2Error
 		do: [:e | ^self failedToOpen: face from: path index: i ].
@@ -529,8 +527,7 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 				yourself.
 			self addFileInfo: info index: i.
 			self cacheFileInfo: info index: i.
-			"Transcript show: 'from file : ', info asString."
-			face destroyHandle].
+			"Transcript show: 'from file : ', info asString."].
 	i := i + 1.
 	i < numFaces "note, we use < rather than <= , because i is zero based"] whileTrue:[].
 	

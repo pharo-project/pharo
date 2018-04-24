@@ -138,24 +138,11 @@ Number class >> readScaledDecimal: integerPart fractionPart: fractionPart digits
 			^decimalFraction asScaledDecimal: scale]
 ]
 
-{ #category : #'mathematical functions' }
-Number >> % aNumber [ 
-	"modulo. Remainder defined in terms of //. Answer a Number with the 
-	same sign as aNumber. e.g. 9\\4 = 1, -9\\4 = 3, 9\\-4 = -3, 0.9\\0.4 = 0.1."
-	^ self \\ aNumber
-]
-
 { #category : #arithmetic }
 Number >> * aNumber [ 
 	"Answer the result of multiplying the receiver by aNumber."
 
 	self subclassResponsibility
-]
-
-{ #category : #'mathematical functions' }
-Number >> ** exponent [ 
-	" A shortcut methog for raisedTo: "
-	^ self raisedTo: exponent
 ]
 
 { #category : #arithmetic }
@@ -188,7 +175,7 @@ Number >> // aNumber [
 	^(self / aNumber) floor
 ]
 
-{ #category : #converting }
+{ #category : #arithmetic }
 Number >> @ y [ 
 	"Primitive. Answer a Point whose x value is the receiver and whose y 
 	value is the argument. Optional. No Lookup. See Object documentation 
@@ -214,14 +201,6 @@ Number >> abs [
 	self < 0
 		ifTrue: [^self negated]
 		ifFalse: [^self]
-]
-
-{ #category : #converting }
-Number >> adaptToCollection: rcvr andSend: selector [
-	"If I am involved in arithmetic with a Collection, return a Collection of
-	the results of each element combined with me in that expression."
-
-	^ rcvr collect: [:element | element perform: selector with: self]
 ]
 
 { #category : #converting }
@@ -259,44 +238,6 @@ Number >> adaptToFraction: rcvr andSend: selector [
 Number >> adaptToInteger: rcvr andSend: selector [
 	"If I am involved in arithmetic with a Integer, convert us and evaluate exprBlock."
 	^ self subclassResponsibility
-]
-
-{ #category : #converting }
-Number >> adaptToPoint: rcvr andSend: selector [
-	"If I am involved in arithmetic with a Point, convert me to a Point."
-	^ rcvr perform: selector with: self@self
-]
-
-{ #category : #'mathematical functions' }
-Number >> arcCos [ 
-	"The receiver is the cosine of an angle. Answer the angle measured in 
-	radians."
-
-	^self asFloat arcCos
-]
-
-{ #category : #'mathematical functions' }
-Number >> arcSin [
-	"The receiver is the sine of an angle. Answer the angle measured in 
-	radians."
-
-	^self asFloat arcSin
-]
-
-{ #category : #'mathematical functions' }
-Number >> arcTan [
-	"The receiver is the tangent of an angle. Answer the angle measured in 
-	radians."
-
-	^self asFloat arcTan
-]
-
-{ #category : #'mathematical functions' }
-Number >> arcTan: denominator [
-	"The receiver is the tangent of an angle. Answer the angle measured in 
-	radians."
-
-	^(self asFloat) arcTan: denominator.
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -391,36 +332,13 @@ Number >> ceiling [
                ifFalse: [ truncation + 1 ]
 ]
 
-{ #category : #comparing }
-Number >> closeTo: num [
-	"Tell whether the receiver and arguments are close from each."
-
-	num isFloat ifTrue: [ ^ num closeTo: self asFloat ].
-	^ [ self = num ] ifError: [ false ]
-]
-
-{ #category : #comparing }
-Number >> closeTo: num precision: aPrecision [
-	"are these two numbers close?"
-
-	num isFloat ifTrue: [ ^ num closeTo: self asFloat precision: aPrecision ].
-	^ [ self = num ] ifError: [ false ]
-]
-
-{ #category : #'mathematical functions' }
+{ #category : #converting }
 Number >> copySignTo: aNumber [
 	"Return a number with same magnitude as aNumber and same sign as self."
 
 	^ self signBit = 0
 		ifTrue: [aNumber abs]
 		ifFalse: [aNumber abs negated].
-]
-
-{ #category : #'mathematical functions' }
-Number >> cos [
-	"The receiver represents an angle measured in radians. Answer its cosine."
-
-	^self asFloat cos
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -433,28 +351,6 @@ Number >> day [
 Number >> days [
  
  	^ Duration days: self
-]
-
-{ #category : #'mathematical functions' }
-Number >> degreeCos [
-	"Answer the cosine of the receiver taken as an angle in degrees."
-	
-	^ (90 - (180 + self \\ 360 - 180) abs) degreesToRadians sin
-]
-
-{ #category : #'mathematical functions' }
-Number >> degreeSin [
-	"Answer the sine of the receiver taken as an angle in degrees."
-	
-	^(90 - self) degreeCos
-]
-
-{ #category : #converting }
-Number >> degreesToRadians [
-	"The receiver is assumed to represent degrees. Answer the conversion to 
-	radians."
-
-	^self asFloat degreesToRadians
 ]
 
 { #category : #'truncation and round off' }
@@ -476,13 +372,6 @@ Number >> detentBy: detent atMultiplesOf: grid snap: snap [
 "
 ]
 
-{ #category : #testing }
-Number >> even [
-	"Answer whether the receiver is an even number."
-
-	^self \\ 2 = 0
-]
-
 { #category : #'mathematical functions' }
 Number >> exp [
 	"Answer the exponential of the receiver as a floating point number."
@@ -500,13 +389,6 @@ Number >> floor [
 	self = truncation
 		ifTrue: [^truncation]
 		ifFalse: [^truncation - 1]
-]
-
-{ #category : #'mathematical functions' }
-Number >> floorLog: radix [
-	"Answer the floor of the log base radix of the receiver."
-
-	^(self log: radix) floor
 ]
 
 { #category : #'truncation and round off' }
@@ -533,18 +415,6 @@ Number >> integerPart [
 	^self truncated
 ]
 
-{ #category : #'mathematical functions' }
-Number >> interpolateTo: aNumber at: param [
-    ^  self * (1 - param) + (aNumber * param)
-]
-
-{ #category : #testing }
-Number >> isDivisibleBy: aNumber [
-	aNumber = 0 ifTrue: [^ false].
-	aNumber isInteger ifFalse: [^ false].
-	^ (self \\ aNumber) = 0
-]
-
 { #category : #testing }
 Number >> isInfinite [
 
@@ -564,27 +434,6 @@ Number >> isNumber [
 { #category : #testing }
 Number >> isZero [
 	^self = 0
-]
-
-{ #category : #'mathematical functions' }
-Number >> ln [
-	"Answer the natural log of the receiver."
-
-	^self asFloat ln
-]
-
-{ #category : #'mathematical functions' }
-Number >> log [
-	"Answer the base-10 log of the receiver."
-
-	^self asFloat log
-]
-
-{ #category : #'mathematical functions' }
-Number >> log: aNumber [ 
-	"Answer the log base aNumber of the receiver."
-
-	^self ln / aNumber ln
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -641,26 +490,6 @@ Number >> negative [
 	^ self < 0
 ]
 
-{ #category : #'mathematical functions' }
-Number >> nthRoot: aPositiveInteger [
-	"Answer the nth root of the receiver."
-
-	self subclassResponsibility
-]
-
-{ #category : #testing }
-Number >> odd [
-	"Answer whether the receiver is an odd number."
-
-	^self even == false
-]
-
-{ #category : #converting }
-Number >> percent [
-
-	^ self / 100
-]
-
 { #category : #testing }
 Number >> positive [
 	"Answer whether the receiver is positive or equal to 0. (ST-80 protocol).
@@ -679,7 +508,7 @@ Number >> printOn: aStream base: base [
 	"This method should print a representation of the number for the given base,
 	excluding the base prefix (and the letter r for radix)"
 	
-	^self subclassResponsibility
+	self subclassResponsibility
 ]
 
 { #category : #printing }
@@ -736,20 +565,12 @@ Number >> printStringBase: base [
 Number >> quo: aNumber [ 
 	"Integer quotient defined by division with truncation toward zero. 
 	
-	-9 quo: 4 = -2.
-	-0.9 quo: 0.4 = -2. 
+	(-9 quo: 4) = -2.
+	(-0.9 quo: 0.4) = -2. 
 	
 	rem: answers the remainder from this division."
 
 	^(self / aNumber) truncated
-]
-
-{ #category : #converting }
-Number >> radiansToDegrees [
-	"The receiver is assumed to represent radians. Answer the conversion to 
-	degrees."
-
-	^self asFloat radiansToDegrees
 ]
 
 { #category : #'mathematical functions' }
@@ -890,7 +711,7 @@ Number >> seconds [
  	^ Duration seconds: self
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : #converting }
 Number >> sign [
 	"Answer 1 if the receiver is greater than 0, -1 if less than 0, else 0."
 
@@ -899,7 +720,7 @@ Number >> sign [
 	^self
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : #converting }
 Number >> sign: aNumber [
  	"Return a Number with the same sign as aNumber"
  
@@ -912,27 +733,6 @@ Number >> signBit [
 
 	self < 0 ifTrue: [^1].
 	^0
-]
-
-{ #category : #'mathematical functions' }
-Number >> sin [
-	"The receiver represents an angle measured in radians. Answer its sine."
-
-	^self asFloat sin
-]
-
-{ #category : #'mathematical functions' }
-Number >> sqrt [
-	"Answer the square root of the receiver."
-
-	self subclassResponsibility
-]
-
-{ #category : #'mathematical functions' }
-Number >> squared [
-	"Answer the receiver multiplied by itself."
-
-	^self * self
 ]
 
 { #category : #printing }
@@ -953,71 +753,9 @@ Number >> storeStringBase: base [
 	^ String streamContents: [:strm | self storeOn: strm base: base]
 ]
 
-{ #category : #testing }
-Number >> strictlyPositive [
-	"Answer whether the receiver is mathematically positive."
-
-	^ self > 0
-]
-
 { #category : #printing }
 Number >> stringForReadout [
 	^ self rounded printString
-]
-
-{ #category : #'mathematical functions' }
-Number >> tan [
-	"The receiver represents an angle measured in radians. Answer its 
-	tangent."
-
-	^self asFloat tan
-]
-
-{ #category : #intervals }
-Number >> to: stop [
-	"Answer an Interval from the receiver up to the argument, stop, 
-	incrementing by 1."
-
-	^Interval from: self to: stop by: 1
-]
-
-{ #category : #intervals }
-Number >> to: stop by: step [
-	"Answer an Interval from the receiver up to the argument, stop, 
-	incrementing by step."
-
-	^Interval from: self to: stop by: step
-]
-
-{ #category : #intervals }
-Number >> to: stop by: step do: aBlock [ 
-	"Normally compiled in-line, and therefore not overridable.
-	Evaluate aBlock for each element of the interval (self to: stop by: 
-step)."
-	| nextValue |
-	nextValue := self.
-	step = 0 ifTrue: [self error: 'step must be non-zero'].
-	step < 0
-		ifTrue: [[stop <= nextValue]
-				whileTrue: 
-					[aBlock value: nextValue.
-					nextValue := nextValue + step]]
-		ifFalse: [[stop >= nextValue]
-				whileTrue: 
-					[aBlock value: nextValue.
-					nextValue := nextValue + step]]
-]
-
-{ #category : #intervals }
-Number >> to: stop do: aBlock [ 
-	"Normally compiled in-line, and therefore not overridable.
-	Evaluate aBlock for each element of the interval (self to: stop by: 1)."
-	| nextValue |
-	nextValue := self.
-	[nextValue <= stop]
-		whileTrue: 
-			[aBlock value: nextValue.
-			nextValue := nextValue + 1]
 ]
 
 { #category : #'truncation and round off' }

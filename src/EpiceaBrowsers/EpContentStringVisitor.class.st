@@ -35,7 +35,7 @@ EpContentStringVisitor >> stringForBehavior: aClassOrTrait [
 			nextPutAll: aClassOrTrait definitionSource;
 			nextPut: $.;
 			cr; cr;
-			nextPutAll: aClassOrTrait theMetaClass definitionSource ]
+			nextPutAll: aClassOrTrait classSide definitionSource ]
 ]
 
 { #category : #visitor }

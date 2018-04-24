@@ -11,22 +11,44 @@ Class {
 	#category : #'FreeType-Base'
 }
 
+{ #category : #'instance creation' }
+FT2Error class >> errorCode: code errorString: str signal: message [
+	^ self new
+		messageText: message;
+		errorCode: code;
+		errorString: str;
+		signal
+]
+
+{ #category : #'instance creation' }
+FT2Error class >> errorCode: code signal: message [
+	^ self new
+		messageText: message;
+		errorCode: code;
+		errorString: (FT2FFILibrary translateErrorCode: code);
+		signal
+]
+
 { #category : #accessing }
 FT2Error >> errorCode [
-	errorCode
-		ifNotNil: [^ errorCode].
-	^ errorCode := [FT2Library errorCode]
-				on: Error
-				do: [:ex | ex return: -1]
+	^ errorCode
+
+]
+
+{ #category : #accessing }
+FT2Error >> errorCode: anObject [
+	errorCode := anObject
 ]
 
 { #category : #accessing }
 FT2Error >> errorString [
-	errorString
-		ifNotNil: [^ errorString].
-	^ errorString := [FT2Library errorString]
-				on: Error
-				do: [:ex | ex return: 'can''t get error string']
+	^ errorString
+
+]
+
+{ #category : #accessing }
+FT2Error >> errorString: anObject [
+	errorString := anObject
 ]
 
 { #category : #accessing }

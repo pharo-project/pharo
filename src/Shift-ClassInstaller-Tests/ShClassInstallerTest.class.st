@@ -5,7 +5,8 @@ Class {
 		'newClass',
 		'superClass',
 		'subClass',
-		'newClass2'
+		'newClass2',
+		'superClass2'
 	],
 	#category : #'Shift-ClassInstaller-Tests'
 }
@@ -36,8 +37,45 @@ ShClassInstallerTest >> tearDown [
 
 	subClass ifNotNil: #removeFromSystem.
 	superClass ifNotNil: #removeFromSystem.
+	superClass2 ifNotNil: #removeFromSystem.
 	
 	super tearDown.
+]
+
+{ #category : #tests }
+ShClassInstallerTest >> testChangingSuperclassInTheHierarchy [
+
+	superClass := self newClass:#ShCITestClass slots:#(var1 var2).
+	superClass2 := self newClass:#ShCITestClass2 slots:#().
+	subClass := self newClass:#ShCISubTestClass superclass: superClass2 slots:#().
+
+   superClass2 := self newClass:#ShCITestClass2 superclass: superClass slots:#().
+
+	self deny: superClass subclasses isEmpty.
+	self assertCollection: superClass2 subclasses equals: { subClass }. 
+	self assertCollection: superClass subclasses equals: { superClass2 }. 
+	self assert: subClass superclass equals: superClass2.
+	self assert: superClass2 superclass equals: superClass.
+
+]
+
+{ #category : #tests }
+ShClassInstallerTest >> testChangingSuperclassToOther [
+
+	superClass := self newClass:#ShCITestClass slots:#(var1).
+	superClass2 := self newClass:#ShCITestClass2 slots:#().
+	subClass := self newClass:#ShCISubTestClass superclass: superClass2 slots:#().
+
+	subClass := 	self newClass:#ShCISubTestClass superclass: superClass slots:#().
+
+   superClass2 := self newClass:#ShCITestClass2 superclass: superClass slots:#().
+
+	self deny: superClass subclasses isEmpty.
+	self assert: superClass2 subclasses isEmpty.
+	self assertCollection: superClass subclasses equals: { subClass. superClass2 }. 
+	self assert: subClass superclass equals: superClass.
+	self assert: superClass2 superclass equals: superClass.
+
 ]
 
 { #category : #tests }
@@ -74,6 +112,17 @@ ShClassInstallerTest >> testModifyingClassKeepsOrganizationOfMethods [
 	self assert: (newClass >> #aMethod) protocol equals: #'useful-message'.
 	self assert: (newClass class >> #aClassMethod) protocol equals: #'useful-message'.	
 
+]
+
+{ #category : #tests }
+ShClassInstallerTest >> testModifyingClassSideInstances [
+	superClass := self newClass:#ShCITestClass slots:#(anInstanceVariable).
+	newClass := self newClass: #ShCITestSubClass superclass: superClass slots: #().
+	
+	superClass class addInstVarNamed: #aVariable.
+
+	self assert: (superClass class hasSlotNamed: #aVariable).
+	self assert: (newClass class hasSlotNamed: #aVariable)
 ]
 
 { #category : #tests }

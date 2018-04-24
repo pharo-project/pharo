@@ -8,6 +8,13 @@ RPackage >> criticNameOn: aStream [
 ]
 
 { #category : #'*Manifest-Core' }
+RPackage >> isDeprecated [
+	^self packageManifestOrNil 
+		ifNil: [ ^false ]
+		ifNotNil: [ :manifest | manifest isDeprecated ]
+]
+
+{ #category : #'*Manifest-Core' }
 RPackage >> manifestBuilderForRuleChecker: aRuleChecker [
 	"Return the manifestsince the rulechecker is keeping a cache, we ask it back"
 
@@ -15,8 +22,27 @@ RPackage >> manifestBuilderForRuleChecker: aRuleChecker [
 ]
 
 { #category : #'*Manifest-Core' }
+RPackage >> packageComment [
+	^ self packageManifestOrNil ifNil: [ '' ] ifNotNil: [ :manifest | manifest comment ]
+]
+
+{ #category : #'*Manifest-Core' }
+RPackage >> packageComment: aDescription [
+	^ self packageManifest
+		ifNil: [ '' ]
+		ifNotNil: [ :manifest | manifest comment: aDescription stamp: Author changeStamp]
+]
+
+{ #category : #'*Manifest-Core' }
 RPackage >> packageManifest [
 	^ self definedClasses
 		detect: [ :each | each isManifest ]
 		ifNone: [ TheManifestBuilder new createManifestNamed: name]
+]
+
+{ #category : #'*Manifest-Core' }
+RPackage >> packageManifestOrNil [
+	^ self definedClasses
+		detect: [ :each | each isManifest ]
+		ifNone: [ nil ]
 ]

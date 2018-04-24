@@ -118,8 +118,9 @@ MetacelloRepositorySqueakCommonTestCase >> setUp [
 
 { #category : #running }
 MetacelloRepositorySqueakCommonTestCase >> tearDown [
-    super tearDown.
-    Smalltalk globals removeKey: #'Metacello_Platform_Test_GlobalDictionary' ifAbsent: [  ]
+    
+    Smalltalk globals removeKey: #'Metacello_Platform_Test_GlobalDictionary' ifAbsent: [  ].
+	super tearDown
 ]
 
 { #category : #tests }

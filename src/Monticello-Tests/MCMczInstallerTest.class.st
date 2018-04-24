@@ -58,7 +58,9 @@ MCMczInstallerTest >> fileName [
 
 { #category : #accessing }
 MCMczInstallerTest >> fileStream [
-	^ FileStream forceNewFileNamed: self fileName.
+	^ self fileName asFileReference
+		ensureDelete;
+		binaryWriteStream.
 ]
 
 { #category : #running }
@@ -72,11 +74,16 @@ MCMczInstallerTest >> setUp [
 MCMczInstallerTest >> tearDown [
 	expected snapshot updatePackage: self mockPackage.
 	self deleteFile.
+	super tearDown
 ]
 
 { #category : #tests }
 MCMczInstallerTest >> testInstallFromFile [
-	MCMczWriter fileOut: expected on: self fileStream.
+	| stream |
+	stream := self fileStream.
+	MCMczWriter fileOut: expected on: stream.
+	stream close.
+	
 	MczInstaller installFileNamed: self fileName.
 	self assertNoChange.
 ]
@@ -84,7 +91,7 @@ MCMczInstallerTest >> testInstallFromFile [
 { #category : #tests }
 MCMczInstallerTest >> testInstallFromStream [
 	| stream |
-	stream := RWBinaryOrTextStream on: String new.
+	stream := RWBinaryOrTextStream on: ByteArray new.
 	MCMczWriter fileOut: expected on: stream.
 	MczInstaller installStream: stream reset.
 	self assertNoChange.

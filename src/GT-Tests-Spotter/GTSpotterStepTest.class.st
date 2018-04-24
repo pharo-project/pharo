@@ -283,9 +283,9 @@ GTSpotterStepTest >> subclassesOf: aClass inPackage: aPackageName [
 
 { #category : #running }
 GTSpotterStepTest >> tearDown [
-	super tearDown.
 	
-	spotter := currentStep := currentProcessor := currentCandidate := nil
+	spotter := currentStep := currentProcessor := currentCandidate := nil.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -400,7 +400,7 @@ GTSpotterStepTest >> testProcessorForPragmasThenDiveIn [
 	self assertProcessorByTitle: 'Pragmas'.
 	self assertProcessorNotEmpty.
 	self assertProcessorIncludes: (self pragma: #spotterOrder: of: (GTSpotter >> #spotterForFilesFor:)).
-	self assertProcessorIncludes: (self pragma: #spotterOrder: of: (FileReference >> #spotterForFilesFor:)).
+	self assertProcessorIncludes: (self pragma: #spotterOrder: of: (FileReference lookupSelector: #spotterForFilesFor:)).
 	
 	self assertDiveOut.
 	

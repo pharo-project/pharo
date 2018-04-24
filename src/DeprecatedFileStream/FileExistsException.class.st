@@ -17,6 +17,11 @@ FileExistsException class >> fileName: aFileName fileClass: aClass [
 		fileClass: aClass
 ]
 
+{ #category : #deprecation }
+FileExistsException class >> isDeprecated [
+	^true
+]
+
 { #category : #exceptiondescription }
 FileExistsException >> defaultAction [
 	"The default action taken if the exception is signaled."

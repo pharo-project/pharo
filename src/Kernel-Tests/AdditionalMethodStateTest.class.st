@@ -5,7 +5,7 @@ Class {
 	#name : #AdditionalMethodStateTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'atState'
+		'amState'
 	],
 	#category : #'Kernel-Tests-Methods'
 }
@@ -17,7 +17,7 @@ AdditionalMethodStateTest >> setUp [
 	super setUp.
 	pragma := (Object compiledMethodAt: #at:) penultimateLiteral at: #primitive:.
 	
-	atState := AdditionalMethodState selector: #at: with: pragma copy.
+	amState := AdditionalMethodState selector: #at: with: pragma copy.
 
 ]
 
@@ -28,7 +28,7 @@ AdditionalMethodStateTest >> testAnalogousCodeTo [
 	state := AdditionalMethodState new: 1.
 	state 
 		basicAt: 1
-		put: #traitSource -> (TBehavior methodNamed: #>>).
+		put: #traitSource -> TSortable.
 		
 	self 
 		shouldnt: [ state analogousCodeTo: state ]
@@ -39,14 +39,14 @@ AdditionalMethodStateTest >> testAnalogousCodeTo [
 AdditionalMethodStateTest >> testCopy [
 
 	| copy |
-	copy := atState copy.
+	copy := amState copy.
 
-	self deny: atState == copy.
-	self assert: atState method == copy method.
-	self assert: atState selector == copy selector.
+	self deny: amState == copy.
+	self assert: amState method == copy method.
+	self assert: amState selector == copy selector.
 
-	self assert: atState pragmas = copy pragmas.
-	self assert: atState properties = copy properties.
+	self assert: amState pragmas equals: copy pragmas.
+	self assert: amState properties equals: copy properties.
 
-	1 to: atState pragmas size do: [:index | self deny: (atState pragmas at: index) == (copy pragmas at: index)].
+	amState pragmas withIndexDo: [:el :index| self deny: el == (copy pragmas at: index)].
 ]
