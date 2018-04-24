@@ -14,7 +14,7 @@ Class {
 		'expired',
 		'finalizer'
 	],
-	#category : #'Collections-Weak'
+	#category : #'Collections-Weak-Dictionaries'
 }
 
 { #category : #adding }
