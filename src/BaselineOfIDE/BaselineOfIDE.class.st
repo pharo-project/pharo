@@ -34,7 +34,7 @@ Class {
 BaselineOfIDE >> addPharoProjectToIceberg [
 	"It will take all packages corresponding to Pharo project and it will create an iceberg 
 	 project with it"
-	| packageNames extraPackageNames repository |
+	| packageNames extraPackageNames repository commit |
 	
 	self flag: #TODO. "Refactor into something better (a class and a hierarchy, so we can add 
 	other packages)"
@@ -62,13 +62,18 @@ BaselineOfIDE >> addPharoProjectToIceberg [
 	"for some reason, there are packages loaded manually and not from a baseline"
 	extraPackageNames := #('Compiler').
 	"declare project"
+	
+	commit := (IceUnknownCommit new 
+			id: SystemVersion current commitHash;
+ 			yourself).
+	
 	repository := IceLibgitRepository new
 		name: 'pharo';
 		workingCopy: (IceWorkingCopy new
-		referenceCommit: (IceUnknownCommit new 
-			id: SystemVersion current commitHash;
- 			yourself);
+		referenceCommit: commit
 		yourself).
+		
+	commit repository: repository.
 	"add packages to project"
 	(packageNames, extraPackageNames)
 		do: [ :each |
