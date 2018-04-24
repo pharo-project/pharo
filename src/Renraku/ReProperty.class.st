@@ -16,6 +16,12 @@ ReProperty >> actions [
 	^ #()
 ]
 
+{ #category : #accessing }
+ReProperty >> color [
+
+	^ Color black alpha: 0.1
+]
+
 { #category : #actions }
 ReProperty >> gtInspectorActions [
 	^ (self actions collect: [ :act | 

@@ -1,3 +1,6 @@
+"
+SUnit tests on renaming packages
+"
 Class {
 	#name : #RPackageRenameTest,
 	#superclass : #TestCase,

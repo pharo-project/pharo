@@ -189,6 +189,17 @@ Slot >> hasProperty: aKey [
 ]
 
 { #category : #comparing }
+Slot >> hasSameDefinitionAs: otherSlot [
+
+	"similar to #= but does not take a slot index into count"
+	self == otherSlot
+		ifTrue: [ ^ true ].
+	^ (self species == otherSlot species) 
+			and: [ name = otherSlot name ]
+
+]
+
+{ #category : #comparing }
 Slot >> hash [
 	"Every subclass that adds state must redefine this method"
 	^ self species hash bitXor: self name hash
@@ -208,6 +219,12 @@ Slot >> installingIn: aClass [
 { #category : #testing }
 Slot >> isGlobal [
 	^false
+]
+
+{ #category : #testing }
+Slot >> isLocal [
+
+	^ self owningClass = self definingClass
 ]
 
 { #category : #testing }

@@ -21,7 +21,7 @@ EpRefactoring >> asRBRefactoring [
 
 { #category : #testing }
 EpRefactoring >> canBuildRBRefactoring [
-	^ true
+	^ false "should be true but this function is currently broken so let's not expose it to the users"
 ]
 
 { #category : #testing }

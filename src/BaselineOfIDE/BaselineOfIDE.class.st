@@ -147,7 +147,6 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'Rubric-Styling'.
 		
-		spec package: 'Deprecated70'.
 		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		
@@ -230,8 +229,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tool-CriticBrowser'.
 
 		spec package: 'Renraku'.
-		spec package: 'QualityAssistant'.
-		spec package: 'QualityAssistantRecording'.
 		spec package: 'SUnit-Rules'.	
 
 		spec package: 'Moose-Algos-Graph'.
@@ -262,7 +259,6 @@ BaselineOfIDE >> baseline: spec [
 				
 		spec package: 'System-CommandLine-TextSupport'.
 		spec package: 'GeneralRules'.
-		spec package: 'ReflectionMirrors-Primitives'.
 		spec package: 'FuzzyMatcher'.
 		spec package: 'STON-Text support'.
 		
@@ -277,6 +273,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
 		spec package: 'Collections-DoubleLinkedList-Tests'.
+		spec package: 'Collections-Arithmetic-Tests'.
 		spec package: 'Compression-Tests'.
 		spec package: 'ConfigurationCommandLineHandler-Tests'.
 		spec package: 'MetacelloCommandLineHandler-Tests'.
@@ -319,7 +316,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'PharoDocComment'.
 		spec package: 'Polymorph-Widgets-Rules'.
 		spec package: 'ProfStef-Tests'.
-		spec package: 'QualityAssistant-Test'.
 		spec package: 'Random-Tests'.
 		spec package: 'Refactoring-Help'.
 		spec package: 'Refactoring-Tests-Changes'.
@@ -430,6 +426,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Fuel-Tests-Core'
 	'Balloon-Tests'
 	'Collections-DoubleLinkedList-Tests'
+	'Collections-Arithmetic-Tests'
 	'ConfigurationCommandLineHandler-Tests'
 	'MetacelloCommandLineHandler-Tests'
 	'Debugger-Tests'
@@ -500,15 +497,10 @@ spec group: 'Zodiac-Group' with: #(
 	'Zodiac-Extras-Group'
 	'Zodiac-Tests-Group'
 ).
-
-spec group: 'ReflectionMirrors-Core-Group' with: #(
-	'ReflectionMirrors-Primitives'
-).
 spec group: 'ReflectionMirrors-Tests-Group' with: #(
 	'ReflectionMirrors-Primitives-Tests'
 ).
 spec group: 'ReflectionMirrors-Group' with: #(
-	'ReflectionMirrors-Core-Group'
 	'ReflectionMirrors-Tests-Group'
 ).
 
@@ -527,10 +519,6 @@ spec group: 'SmartSuggestions-Tests-Group' with: #(
 spec group: 'SmartSuggestions-Group' with: #(
 	'SmartSuggestions-Core-Group'
 	'SmartSuggestions-Tests-Group'
-).
-
-spec group: 'Deprecated-Group' with: #(
-	'Deprecated70'
 ).
 
 spec group: 'Manifest-Core-Group' with: #(
@@ -642,12 +630,9 @@ spec group: 'QualityAssistant-Core-Group' with: #(
 	'DependencyAnalyser-Core-Group' "dependency"
 	'GT-Core-Group'	"dependency"
 	'Renraku'		
-	'QualityAssistant'
-	'QualityAssistantRecording'
 	'Tool-CriticBrowser'
 ).
 spec group: 'QualityAssistant-Tests-Group' with: #(
-	'QualityAssistant-Test'
 	'Renraku-Test'
 ).
 spec group: 'QualityAssistant-Help-Group' with: #(
@@ -825,7 +810,6 @@ spec group: #default with: #(
 	'Metacello-Tests-Group'		 
 	'General-Help-Group'
 	'ReflectionMirrors-Group'
-	'Deprecated-Group'
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
 	'Flashback-Group'
@@ -863,7 +847,7 @@ BaselineOfIDE >> loadCalypso [
 		
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://dionisiydk/Calypso:v0.11.0';
+		repository: 'github://dionisiydk/Calypso:v0.11.2';
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
 	(self class environment at: #ClyBrowser) beAllDefault.

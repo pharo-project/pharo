@@ -907,24 +907,6 @@ SHTextStylerST80 >> pixelHeight [
 ]
 
 { #category : #private }
-SHTextStylerST80 >> privateStyle: aText [ 
-	(self rangesIn: aText setWorkspace: true)
-		ifNotNil: [ :ranges| self setAttributesIn: aText fromRanges: ranges].
-	^aText.
-]
-
-{ #category : #private }
-SHTextStylerST80 >> rangesIn: aText setWorkspace: aBoolean [ 
-	parser ifNil: [parser := SHParserST80 new on: (view ifNotNil: [ view model ]) ].
-	^ parser
-		rangesIn: aText asString
-		classOrMetaClass: classOrMetaClass
-		workspace: (aBoolean
-				ifTrue: [workspace]) 
-		environment: environment
-]
-
-{ #category : #private }
 SHTextStylerST80 >> setAttributesIn: aText fromRanges: ranges [ 
 	"use the . to find and assign TextAttributes to aText"
 	

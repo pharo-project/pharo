@@ -31,6 +31,14 @@ ComputedSlot >> block [
 ]
 
 { #category : #comparing }
+ComputedSlot >> hasSameDefinitionAs: otherSlot [
+
+	^ (super hasSameDefinitionAs: otherSlot) 
+		and: [ block printString = otherSlot block printString ]
+
+]
+
+{ #category : #comparing }
 ComputedSlot >> hash [
 	^super hash bitXor: block hash
 ]

@@ -7,7 +7,7 @@ AssociationTest >> testStoreOnNegativeIntegerRoundtrip [
 	
 	storeString := String streamContents: [ :s | association storeOn: s ].
 	
-	evaluated := Compiler evaluate: storeString.
+	evaluated := Smalltalk compiler evaluate: storeString.
 	
 	self assert: association equals: evaluated
 ]
@@ -18,7 +18,7 @@ AssociationTest >> testStoreOnPositiveIntegerRoundtrip [
 	association := 'a'-> 1.
 	storeString := String streamContents: [ :s | association storeOn: s ].
 	
-	evaluated := Compiler evaluate: storeString.
+	evaluated := Smalltalk compiler evaluate: storeString.
 	
 	self assert: association equals: evaluated
 ]

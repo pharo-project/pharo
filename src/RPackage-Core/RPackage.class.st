@@ -308,14 +308,6 @@ RPackage >> addSelector: aSelector ofMetaclassName: aClassName [
 	^ aSelector.
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> allOverriddenMethodsDo: aBlock [
-	"Evaluates aBlock with all the overridden methods in the system"
-	^ ProtoObject withAllSubclassesDo: [:class | 
-		self overriddenMethodsInClass: class do: aBlock]
-
-]
-
 { #category : #private }
 RPackage >> basicAddClassTag: tagName [
 	| packageTag |
@@ -987,18 +979,6 @@ RPackage >> isForeignClassExtension: categoryName [
 ]
 
 { #category : #'system compatibility' }
-RPackage >> isOverrideCategory: aString [
-	^ aString endsWith: '-override'
-]
-
-{ #category : #'system compatibility' }
-RPackage >> isOverrideOfYourMethod: aMethodReference [
-	"Answers true if the argument overrides a method in this package"
-	^ (self isYourClassExtension: aMethodReference category) not and:
-		[(self changeRecordForOverriddenMethod: aMethodReference) notNil]
-]
-
-{ #category : #'system compatibility' }
 RPackage >> isYourClassExtension: categoryName [
 	^ categoryName notNil and: [self category: categoryName asLowercase matches: self methodCategoryPrefix]
 ]
@@ -1126,35 +1106,6 @@ RPackage >> orderedClasses [
 { #category : #accessing }
 RPackage >> organizer [
 	^ self class organizer
-]
-
-{ #category : #'system compatibility' }
-RPackage >> overriddenMethods [
-	^ Array streamContents: [:stream |
-		self overriddenMethodsDo: [:each | stream nextPut: each]]
-
-]
-
-{ #category : #'system compatibility' }
-RPackage >> overriddenMethodsDo: aBlock [
-	"Enumerates the methods the receiver contains which have been overridden by other packages"
-	^ self allOverriddenMethodsDo: [:ea |
-		(self isOverrideOfYourMethod: ea)
-			ifTrue: [aBlock value: ea]]
-]
-
-{ #category : #'system compatibility' }
-RPackage >> overriddenMethodsInClass: aClass do: aBlock [
-	"Evaluates aBlock with the overridden methods in aClass"
-	^ self overrideCategoriesForClass: aClass do: [:cat |
-		self methodsInCategory: cat ofClass: aClass do: aBlock]
-]
-
-{ #category : #'system compatibility' }
-RPackage >> overrideCategoriesForClass: aClass do: aBlock [
-	"Evaluates aBlock with all the *foo-override categories in aClass"
-	^ aClass organization categories do: [:cat |
-		(self isOverrideCategory: cat) ifTrue: [aBlock value: cat]]
 ]
 
 { #category : #accessing }

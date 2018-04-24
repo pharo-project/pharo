@@ -54,6 +54,12 @@ RGMetaclassDefinition >> environment [
 	^baseClass environment
 ]
 
+{ #category : #accessing }
+RGMetaclassDefinition >> inheritsFrom: aClass [
+
+	^ self realClass inheritsFrom: aClass
+]
+
 { #category : #'accessing - parallel hierarchy' }
 RGMetaclassDefinition >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."

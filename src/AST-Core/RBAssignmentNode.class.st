@@ -125,7 +125,7 @@ RBAssignmentNode >> isAssignment [
 
 { #category : #testing }
 RBAssignmentNode >> isFaulty [
-	^self variable isFaulty or: [ self value isFaulty].
+	^self variable isFaulty or: [ self value isFaulty ]
 ]
 
 { #category : #matching }

@@ -51,13 +51,7 @@ EpLogBrowserOperationFactory >> applyPropagateRefactoring [
 { #category : #private }
 EpLogBrowserOperationFactory >> applyRBRefactoring: aRBRefactoring [
 
-	self 
-		trigger: [
-			self handleErrorDuring: [
-				| aNautilusUI |
-				aNautilusUI := NautilusUI on: Nautilus new.
-				(NautilusRefactoring model: aNautilusUI) performRefactoring: aRBRefactoring ]]
-		with: self newApplyEvent
+	self error: 'This function is currently not supported'
 ]
 
 { #category : #accessing }

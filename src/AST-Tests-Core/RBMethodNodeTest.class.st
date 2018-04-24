@@ -1,3 +1,6 @@
+"
+SUnit tests for RBMethodNode
+"
 Class {
 	#name : #RBMethodNodeTest,
 	#superclass : #TestCase,

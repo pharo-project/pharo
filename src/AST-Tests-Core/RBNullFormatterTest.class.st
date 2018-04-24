@@ -1,3 +1,6 @@
+"
+SUnit tests for RBNullFormatter
+"
 Class {
 	#name : #RBNullFormatterTest,
 	#superclass : #TestCase,

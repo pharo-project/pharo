@@ -95,7 +95,7 @@ ClassTestCase >> selectorsTested [
 
 { #category : #coverage }
 ClassTestCase >> selectorsToBeIgnored [
-	^ #(#DoIt #DoItIn:)
+	^ #()
 ]
 
 { #category : #coverage }

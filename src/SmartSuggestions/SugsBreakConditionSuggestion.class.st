@@ -18,7 +18,6 @@ SugsBreakConditionSuggestion >> breakpointForCondition [
 		request: 'Break on what condition?
 - This expression will be evaluated in the context of the position of this breakpoint
 - `thisContext` and `self` work as you would expect
-- `ThisContext` is an alias for `thisContext`
 - := and accessing Pool variables are not supported'
 		initialAnswer: 'true'
 	)	
@@ -90,12 +89,13 @@ SugsBreakConditionSuggestion >> rewriteASTToSimulateExecutionInADifferentContext
 	"AnAST is the AST of a method returning a block taking a context as its argument named `ThisContext` and whose body is the condition of this conditional breakpoint.
 	The goal is to rewrite this AST so that evaluating the block by passing it a context as argument will evaluate its body as it would have been evaluated in the passed context.
 	To do this, we rewrite anAST following these three rules:
-	1) Rewriting references to undeclared variables into context lookup
+	1) Rewriting references to undeclared variables (and variables named 'ThisContext' if there are, to avoid conflicts with the 'ThisContext' argument of the block) into context lookup
 		For example, a reference to a variable named flower is rewritten into `ThisContext lookupSymbol: #flower`
 	2) Rewriting references to `thisContext` into references to `ThisContext`
 	3) Rewriting references to `self` into references to `ThisContext receiver`"
 	semanticallyAnalysedMethodAST := anAST doSemanticAnalysis. "To find which variables are undefined"
 	allUndeclaredVariableNodes := (semanticallyAnalysedMethodAST allChildren) select: [:astElem | astElem isVariable and: [astElem isUndeclared]].
+	allUndeclaredVariableNodes add: (RBVariableNode named: #ThisContext).
 	allUndeclaredVariableSymbols := (allUndeclaredVariableNodes collect: [ :varNode | varNode name ]) asSet asArray.
 	rewriter := RBParseTreeRewriter new.
 	allUndeclaredVariableSymbols withIndexDo: [:tempName :index | 

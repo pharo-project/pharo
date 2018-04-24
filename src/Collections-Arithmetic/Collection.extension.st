@@ -57,14 +57,24 @@ Collection >> arcTan [
 	^self collect: [:each | each arcTan]
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : #'*Collections-Arithmetic' }
 Collection >> average [
 	"
+	Calculate the average of a collection, return a CollectionIsEmpty exception if the collection is empty.
+	Look averageIfEmpty: aBlock
 	#(3 5 7) average 
 	>>> 5
 	"
 
 	^ self sum / self size
+]
+
+{ #category : #'*Collections-Arithmetic' }
+Collection >> averageIfEmpty: aBlock [ 
+	"This method return the average of the collection if it is not empty. In the other case,
+	it return the value of the block. It means the user the user of this method decide of the return value. #() averageIfEmpty: [ 0 ]"
+	self ifEmpty: [ ^ aBlock value ].
+	^ self average
 ]
 
 { #category : #'*Collections-arithmetic-collectors' }
@@ -178,6 +188,8 @@ Collection >> sum [
 	Consider a collection of measurement objects, 0 would be the unitless 
 	value and would not be appropriate to add with the unit-ed objects."
 	| sum sample |
+	
+	self emptyCheck.
 	sample := self anyOne.
 	sum := self inject: sample into: [:accum :each | accum + each].
 	^ sum - sample

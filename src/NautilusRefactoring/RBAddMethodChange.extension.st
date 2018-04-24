@@ -14,7 +14,7 @@ RBAddMethodChange >> accept: aText notifying: aController [
 		class:  self changeClass;
 		requestor: aController;
 		failBlock: [ ^ false ];
-		translate.
+		compile.
 	
 		
 	self 

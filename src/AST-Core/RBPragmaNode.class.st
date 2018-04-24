@@ -129,7 +129,7 @@ RBPragmaNode >> isBinary [
 
 { #category : #testing }
 RBPragmaNode >> isFaulty [
-	^self arguments anySatisfy: #isFaulty.
+	^self arguments anySatisfy: #isFaulty
 ]
 
 { #category : #testing }
