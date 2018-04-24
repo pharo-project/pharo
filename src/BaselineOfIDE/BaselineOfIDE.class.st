@@ -53,11 +53,9 @@ BaselineOfIDE >> addPharoProjectToIceberg [
 		BaselineOfSUnit 
 		BaselineOfShift 
 		BaselineOfSpec
-		BaselineOfThemes
 		BaselineOfTraits
 		BaselineOfUI    
-		BaselineOfUnifiedFFI 
-		BaselineOfVersionner ) 
+		BaselineOfUnifiedFFI ) 
 		collect: [ :each | (Smalltalk globals at: each) allPackageNames copyWith: each ]) 
 		flattened 
 		asSet.
