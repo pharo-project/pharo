@@ -6,7 +6,7 @@ Class {
 	#name : #IntegerArray,
 	#superclass : #ArrayedCollection,
 	#type : #words,
-	#category : #'Collections-Native'
+	#category : #'Collections-Native-Base'
 }
 
 { #category : #converting }

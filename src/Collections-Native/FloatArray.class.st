@@ -5,7 +5,7 @@ Class {
 	#name : #FloatArray,
 	#superclass : #ArrayedCollection,
 	#type : #words,
-	#category : #'Collections-Native'
+	#category : #'Collections-Native-Base'
 }
 
 { #category : #comparing }
