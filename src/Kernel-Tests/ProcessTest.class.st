@@ -49,7 +49,7 @@ ProcessTest >> testInjectingExceptionHandlerFromProcessItself [
 	process := [ Processor activeProcess on: Error do: [ :err | interceptedError := err ].
 		error signal. interrupted := false ] fork.
 	
-	Processor yield.
+	[process isTerminated] whileFalse: [ Processor yield ].
 
 	self assert: interceptedError == error.
 	self assert: interrupted 
@@ -65,7 +65,7 @@ ProcessTest >> testInjectingExceptionHandlerIntoNotRunningProcess [
 	process := [ error signal. interrupted := false ] newProcess.
 	process on: Error do: [ :err | interceptedError := err ].
 	process resume.
-	Processor yield.
+	[process isTerminated] whileFalse: [ Processor yield ].
 
 	self assert: interceptedError == error.
 	self assert: interrupted
@@ -81,7 +81,7 @@ ProcessTest >> testInjectingExceptionHandlerIntoProcessWithArg [
 	process := [:arg | processArg := arg. error signal. interrupted := false ] newProcessWith: #(#arg).
 	process on: Error do: [ :err | interceptedError := err ].
 	process resume.
-	Processor yield.
+	[process isTerminated] whileFalse: [ Processor yield ].
 
 	self assert: interceptedError == error.
 	self assert: interrupted.
@@ -104,7 +104,7 @@ ProcessTest >> testInjectingExceptionHandlerIntoRunningProcess [
 	process on: Error do: [ :err | interceptedError := err ].
 	
 	sema signal.
-	Processor yield.
+	[process isTerminated] whileFalse: [ Processor yield ].
 	
 	self assert: interceptedError == error.
 	self assert: interrupted
@@ -133,7 +133,7 @@ ProcessTest >> testInjectingMultipleExceptionHandlersIntoNotRunningProcess [
 	
 	error := Error new.
 	process resume.
-	Processor yield.
+	[process isTerminated] whileFalse: [ Processor yield ].
 	self deny: firstHandler.
 	self assert: lastHandler
 ]
@@ -165,7 +165,7 @@ ProcessTest >> testInjectingMultipleExceptionHandlersIntoRunningProcess [
 	
 	error := Error new.
 	sema signal.
-	Processor yield.
+	[process isTerminated] whileFalse: [ Processor yield ].
 	self deny: firstHandler.
 	self assert: lastHandler
 ]
