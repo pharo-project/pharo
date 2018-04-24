@@ -8,7 +8,7 @@ Be careful, my #import method also handles ChangeSet interaction so far, handlin
 Class {
 	#name : #DoItChunk,
 	#superclass : #CodeChunk,
-	#category : #CodeImport
+	#category : #'CodeImport-Chunks'
 }
 
 { #category : #visiting }
