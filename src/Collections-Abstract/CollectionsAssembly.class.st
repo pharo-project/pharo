@@ -4,7 +4,7 @@ I contain all basic collections.
 Class {
 	#name : #CollectionsAssembly,
 	#superclass : #AssemblyManifest,
-	#category : #'Collections-Abstract'
+	#category : #'Collections-Abstract-Assembly'
 }
 
 { #category : #'meta-data' }

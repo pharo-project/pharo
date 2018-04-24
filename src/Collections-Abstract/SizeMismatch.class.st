@@ -5,7 +5,7 @@ on two or more collections that don't match in size.
 Class {
 	#name : #SizeMismatch,
 	#superclass : #Error,
-	#category : #'Collections-Abstract'
+	#category : #'Collections-Abstract-Errors'
 }
 
 { #category : #accessing }
