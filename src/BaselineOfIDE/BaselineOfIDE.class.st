@@ -75,7 +75,6 @@ BaselineOfIDE >> additionalInitialization [
 	KMRepository reset.
 	Morph shortcutsHandler: KMShortcutHandler new.
 
-	"because of Komitter"
 	MCSaveVersionDialog previousMessages add: String new.
 
 	RBProgramNode formatterClass: BIConfigurableFormatter.
