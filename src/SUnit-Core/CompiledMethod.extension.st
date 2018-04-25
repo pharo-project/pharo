@@ -1,6 +1,15 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*SUnit-Core' }
+CompiledMethod >> hasNoAssertionOnPurpose [
+	"Returns true if the method has the <noAssertionOnPurpose> pragma.
+	Else returns false.
+	
+	If a method has such pragma, it means that it is ok that it does not perform an assertion message."
+	^ self hasPragmaNamed: #noAssertionOnPurpose
+]
+
+{ #category : #'*SUnit-Core' }
 CompiledMethod >> isErrorTest [
 	"Is the receiver a test method that raised an error?"
 
@@ -22,6 +31,13 @@ CompiledMethod >> isPassedTest [
 
 	^ self methodClass isTestCase
 		and: [ self methodClass methodPassed: self selector ]
+]
+
+{ #category : #'*SUnit-Core' }
+CompiledMethod >> isStaticallyCallingOneOfTheAssertMethods [
+	"If, with a static analysis I am calling one of the methods in the TestAssert's 'asserting' protocol, returns true.
+	Else, returns false."
+	^ (self messages intersection: ((TestAsserter methodsInProtocol: 'asserting') collect: #selector)) isNotEmpty
 ]
 
 { #category : #'*SUnit-Core' }
