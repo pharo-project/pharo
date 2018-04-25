@@ -95,12 +95,12 @@ ProcessTest >> testInjectingExceptionHandlerIntoRunningProcess [
 	DefaultExecutionEnvironment beActive.
 	error := Error new messageText: 'test error'.
 	sema := Semaphore new.
+	started := false.
 	interrupted := true.
 	process := [started := true. sema wait. error signal. interrupted := false ] newProcess.
 	process resume.
-	Processor yield.
+	[started] whileFalse: [ Processor yield ].
 	
-	self assert: started.
 	process on: Error do: [ :err | interceptedError := err ].
 	
 	sema signal.
@@ -122,7 +122,7 @@ ProcessTest >> testInjectingMultipleExceptionHandlersIntoNotRunningProcess [
 	
 	error := ZeroDivide new.
 	process resume.
-	Processor yield.
+	[process isTerminated] whileFalse: [ Processor yield ].
 	self assert: firstHandler.
 	self deny: lastHandler.
 	
@@ -141,25 +141,25 @@ ProcessTest >> testInjectingMultipleExceptionHandlersIntoNotRunningProcess [
 { #category : #'tests - exception handlers' }
 ProcessTest >> testInjectingMultipleExceptionHandlersIntoRunningProcess [
 
-	| error process lastHandler firstHandler sema |
+	| error process lastHandler firstHandler sema started |
 	DefaultExecutionEnvironment beActive.
-	firstHandler := lastHandler := false.
+	started := firstHandler := lastHandler := false.	
 	sema := Semaphore new.
-	process := [ sema wait. error signal ] fork.
-	Processor yield.
+	process := [started := true. sema wait. error signal ] fork.
+	[started] whileFalse: [ Processor yield ].
 	process on: ZeroDivide do: [ :err | firstHandler := true ].
 	process on: Error do: [ :err | lastHandler := true ].
 	
 	error := ZeroDivide new.
 	sema signal.
-	Processor yield.
+	[process isTerminated] whileFalse: [ Processor yield ].
 	self assert: firstHandler.
 	self deny: lastHandler.
 	
-	firstHandler := lastHandler := false.
+	started := firstHandler := lastHandler := false.
 	sema := Semaphore new.
-	process := [ sema wait. error signal ] fork.
-	Processor yield.
+	process := [started := true. sema wait. error signal ] fork.
+	[started] whileFalse: [ Processor yield ].
 	process on: ZeroDivide do: [ :err | firstHandler := true ].
 	process on: Error do: [ :err | lastHandler := true ].
 	
@@ -321,25 +321,25 @@ ProcessTest >> testNewProcess [
 { #category : #'tests - creation' }
 ProcessTest >> testNewProcessWith [
 
-	| hasBlockRun block return passedArguments receivedArgument1 receivedArgument2 |
+	| hasBlockRun block process passedArguments receivedArgument1 receivedArgument2 |
 	hasBlockRun := false.
 	block := [ :a :b |
 		receivedArgument1 := a.
 		receivedArgument2 := b.
 		hasBlockRun := true ].
 	passedArguments := #(1 2).
-	return := block newProcessWith: passedArguments.
+	process := block newProcessWith: passedArguments.
 	
 	"Returns immediately"
 	self deny: hasBlockRun.
 	
-	self assert: (return isKindOf: Process).
+	self assert: (process isKindOf: Process).
 	
 	"Process has not been scheduled"
-	self assert: return isSuspended.
+	self assert: process isSuspended.
 	
-	return resume.
-	Processor yield.
+	process resume.
+	[process isTerminated] whileFalse: [ Processor yield ].
 	
 	"Each element in the collection argument was passed separately to the block"
 	self assert: { receivedArgument1. receivedArgument2 } equals: passedArguments.
@@ -394,19 +394,19 @@ ProcessTest >> testSchedulingSamePriorityFirstComeFirstServed [
 { #category : #'tests - termination' }
 ProcessTest >> testTerminateActive [
 
-	| lastStatementEvaluated block1HasRun block2HasRun |
+	| lastStatementEvaluated block1HasRun block2HasRun p1 p2 |
 	block1HasRun := block2HasRun := lastStatementEvaluated := false.
-	[
+	p1 := [
 		block1HasRun := true.
 		Processor activeProcess terminate.
 		lastStatementEvaluated := true ] fork.
 	
-	[
+	p2 := [
 		block2HasRun := true.
 		Processor terminateActive.
 		lastStatementEvaluated := true ] fork.
 	
-	Processor yield.
+	[p1 isTerminated & p2 isTerminated] whileFalse: [ Processor yield ].
 	
 	"Expressions following terminate are never executed"
 	self assert: block1HasRun.
@@ -417,15 +417,16 @@ ProcessTest >> testTerminateActive [
 { #category : #'tests - termination' }
 ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 
-	| ensureCalled process ensureFailure forkedFailures |
+	| ensureCalled process ensureFailure forkedFailures started |
 	ensureFailure := Error new messageText: 'signalled inside ensure'.
 	ensureCalled := false.
+	started := false.
 	process := [ 
-		[[10 seconds wait] 
+		[[started := true. 10 seconds wait] 
 			ensure: [ ensureFailure signal ]]
 				ensure: [ ensureCalled := true ].
 	] fork.
-	Processor yield.
+	[started] whileFalse: [ Processor yield ].
 	process terminate.	
 	Processor yield.
 	self assert: ensureCalled.
