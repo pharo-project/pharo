@@ -50,19 +50,20 @@ Class {
 		'packages',
 		'change'
 	],
-	#category : #'Tool-CriticBrowser'
+	#category : #'Tool-CriticBrowser-Utilities'
 }
 
 { #category : #private }
 CriticsCache >> addAllCriticToFalsePositive: aCollectionOfCritic forRule: aRule on: aManifestBuilder [
 
 	| ruleId versionId  criticss |
-	criticss := aCollectionOfCritic reject: [ :c | falsePositiveClasses includes: c criticTheNonMetaclassClass ].
+	criticss := aCollectionOfCritic 
+						reject: [ :c | falsePositiveClasses includes: c criticTheNonMetaclassClass ].
 	ruleId := aRule class uniqueIdentifierName.
 	versionId := aRule class identifierMinorVersionNumber.
 	(aManifestBuilder hasFalsePositiveOf: ruleId version: versionId) 
 		ifFalse: [ aManifestBuilder installFalsePositiveOf: ruleId version: versionId ].		
-	 aManifestBuilder addAllFalsePositive: criticss of: ruleId version: versionId.
+	 aManifestBuilder addAllFalsePositive: criticss of: ruleId version: versionId
 
 	
 ]
@@ -75,7 +76,7 @@ CriticsCache >> addAllCriticToToDo: aCollectionOfCritic forRule: aRule on: aMani
 	versionId := aRule class identifierMinorVersionNumber.
 	(aManifestBuilder hasToDoOf: ruleId version: versionId) 
 		ifFalse: [ aManifestBuilder installToDoOf: ruleId version: versionId ].		
-	 aManifestBuilder addAllToDo: aCollectionOfCritic of: ruleId version: versionId.
+	 aManifestBuilder addAllToDo: aCollectionOfCritic of: ruleId version: versionId
 
 	
 ]
@@ -85,7 +86,7 @@ CriticsCache >> addCritic: aCritic forRule: aRule [
 
 	(critics includesKey: aRule) 
 		ifFalse: [ critics at:aRule put: IdentitySet new ].
-	(critics at:aRule) add: aCritic. 
+	(critics at: aRule) add: aCritic. 
 	self updateBrowser
 ]
 
@@ -94,7 +95,7 @@ CriticsCache >> addFalsePositive: aCritic forRule: aRule [
 
 	(falsePositives includesKey: aRule) 
 		ifFalse: [ falsePositives at: aRule put: IdentitySet new ].
-	(falsePositives at:aRule) add: aCritic. 
+	(falsePositives at: aRule) add: aCritic. 
 	self updateBrowser 	
 ]
 
@@ -127,7 +128,7 @@ CriticsCache >> addToDo: aCritic forRule: aRule [
 
 	(toDos includesKey: aRule) 
 		ifFalse: [ toDos at:aRule put: IdentitySet new ].
-	(toDos at:aRule) add: aCritic. 
+	(toDos at: aRule) add: aCritic. 
 	self updateBrowser
 ]
 
@@ -167,7 +168,7 @@ CriticsCache >> criticsOf: aRule [
 	aRule ifNil: [ ^ {} ].	
 	^ aRule isComposite
 		ifTrue: [ aRule rules flatCollect: [ :rule | self criticsOf: rule ]]
-		ifFalse: [ critics at: aRule ifAbsent: [{}]]
+		ifFalse: [ critics at: aRule ifAbsent: [ {} ]]
 ]
 
 { #category : #protocol }
@@ -176,7 +177,7 @@ CriticsCache >> falsePositiveOf: aRule [
 	aRule ifNil: [ ^ {}].
 	^ aRule isComposite
 		ifTrue: [ aRule rules flatCollect: [ :rule | self falsePositiveOf: rule ]]
-		ifFalse: [falsePositives at: aRule ifAbsent: [{}]]
+		ifFalse: [ falsePositives at: aRule ifAbsent: [ {} ]]
 	
 	
 ]
@@ -223,8 +224,8 @@ CriticsCache >> itemRemoved: anItem [
 
 	{ critics . toDos . falsePositives } do: [ :ruleDict |
 		ruleDict valuesDo: [ :crits |
-			crits removeAllSuchThat:  [ :crit |
-				crit sourceAnchor entity = anItem ] ] ].
+			crits removeAllSuchThat: [ :crit |
+				crit sourceAnchor entity = anItem ]]]
 	
 ]
 
@@ -257,10 +258,10 @@ CriticsCache >> logFalsePositiveInManifest [
 CriticsCache >> logFalsePositiveRulesInManifest [
 	| manifestBuilder |
 	falsePositiveRules
-		keysAndValuesDo: [ :package :rules | 
+		keysAndValuesDo: [:package :rules | 
 			manifestBuilder := self builderManifestClass ofPackageNamed: package packageName.
 			manifestBuilder rejectRules \ rules do: [ :rule | manifestBuilder removeRejectRule: rule ].
-			rules \ manifestBuilder rejectRules do: [ :rule | manifestBuilder addRejectRule: rule ] ]
+			rules \ manifestBuilder rejectRules do: [ :rule | manifestBuilder addRejectRule: rule ]]
 ]
 
 { #category : #protocol }
@@ -295,9 +296,6 @@ CriticsCache >> logToDosInManifest [
 { #category : #private }
 CriticsCache >> packageOf: aCritc [
 	^ aCritc mcWorkingCopy 
-	"aCritc isCompiledMethod 
-		ifTrue: [MCWorkingCopy managersForClass: aCritc methodClass selector: aCritc selector do: [ :package | ^ package ]]	
-		ifFalse: [MCWorkingCopy managersForClass: aCritc do: [: package | ^ package ]]	"
 ]
 
 { #category : #accessing }
@@ -313,7 +311,7 @@ CriticsCache >> removeAllCriticToFalsePositive: aCollectionOfCritic forRule: aRu
 	ruleId := aRule class uniqueIdentifierName.
 	versionId := aRule class identifierMinorVersionNumber.
 	(aManifestBuilder hasFalsePositiveOf: ruleId version: versionId) 
-		ifTrue: [ aManifestBuilder removeAllFalsePositive: aCollectionOfCritic of: ruleId version: versionId ].		
+		ifTrue: [ aManifestBuilder removeAllFalsePositive: aCollectionOfCritic of: ruleId version: versionId ]	
 	 
 
 	
@@ -326,7 +324,7 @@ CriticsCache >> removeAllCriticToToDo: aCollectionOfCritic forRule: aRule on: aM
 	ruleId := aRule class uniqueIdentifierName.
 	versionId := aRule class identifierMinorVersionNumber.
 	(aManifestBuilder hasToDoOf: ruleId version: versionId) 
-		ifTrue: [ aManifestBuilder removeAllToDo: aCollectionOfCritic of: ruleId version: versionId].		
+		ifTrue: [ aManifestBuilder removeAllToDo: aCollectionOfCritic of: ruleId version: versionId ]		
 	
 
 	
@@ -346,7 +344,7 @@ CriticsCache >> removeCritic: aCritic forRule: aRule [
 CriticsCache >> removeFalsePositive: aCritic forRule: aRule [
 
 	(falsePositives includesKey: aRule) 
-		ifFalse: [^ self].
+		ifFalse: [^ self ].
 	[ (falsePositiveClasses includes: aCritic sourceAnchor entity criticTheNonMetaclassClass) 
 			ifTrue: [^ self] ]
 		on: MessageNotUnderstood 
@@ -362,7 +360,7 @@ CriticsCache >> removeFalsePositiveClass: aClass [
 	falsePositiveClasses remove: aClass ifAbsent: [^ self]. 
 	critics keysAndValuesDo: [ :rule :criticss |
 		fp := criticss select: [ :critic | aClass = critic criticTheNonMetaclassClass].
-		fp do: [ :each | self removeFalsePositive: each forRule: rule ]].
+		fp do: [ :each | self removeFalsePositive: each forRule: rule ]]
 ]
 
 { #category : #'add/remove' }
@@ -426,10 +424,10 @@ CriticsCache >> replaceAll: oldMethod by: newMethod [
 { #category : #protocol }
 CriticsCache >> toDosOf: aRule [
 
-	aRule ifNil: [ ^ {}].
+	aRule ifNil: [ ^{} ].
 	^ aRule isComposite
-		ifTrue: [ aRule rules flatCollect: [:rule | self toDosOf: rule]]
-		ifFalse: [toDos at: aRule ifAbsent: [{}]]
+		ifTrue: [ aRule rules flatCollect: [:rule | self toDosOf: rule ]]
+		ifFalse: [toDos at: aRule ifAbsent: [ {} ]]
 ]
 
 { #category : #private }

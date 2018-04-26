@@ -9,7 +9,7 @@ Class {
 		'removeTestPackageModel',
 		'testPackage'
 	],
-	#category : #'Tool-CriticBrowser'
+	#category : #'Tool-CriticBrowser-Parts'
 }
 
 { #category : #specs }
@@ -40,6 +40,7 @@ SelectPackageBrowser class >> defaultSpec [
 
 { #category : #'instance creation' }
 SelectPackageBrowser class >> open [
+	<script>
 	
 	self new items: RPackageOrganizer default packages;
 		openWithSpec 
@@ -59,7 +60,7 @@ SelectPackageBrowser >> addAllItems [
 	selectedModel items: tmp.
 	toSelectModel items: #().
 	toSelectModel updateList.
-	selectedModel updateList.  	  
+	selectedModel updateList 	  
 ]
 
 { #category : #private }
@@ -69,7 +70,7 @@ SelectPackageBrowser >> addItems [
 			selectedModel items: (self sort: selectedModel listItems withAll: items).
 			toSelectModel items: (self sort: toSelectModel listItems withoutAll: items) ].
 	toSelectModel updateList.
-	selectedModel updateList.  	  
+	selectedModel updateList  	  
 ]
 
 { #category : #accessing }
@@ -90,7 +91,7 @@ SelectPackageBrowser >> initialize [
 	testPackage := OrderedCollection new.
 	wrappingBlock := [ :package | package packageName ].
 	toSelectModel displayBlock: wrappingBlock.
-	selectedModel displayBlock: wrappingBlock.
+	selectedModel displayBlock: wrappingBlock
 ]
 
 { #category : #initialization }
@@ -101,7 +102,7 @@ SelectPackageBrowser >> initializeWidgets [
 	removeTestPackageModel := self newButton.
 	self setRemoveTestPackageModel.		
 	addTestCaseClassesModel label: 'remove all TestCase Classes'.
-	addTestCaseClassesModel state: true.
+	addTestCaseClassesModel state: true
 ]
 
 { #category : #api }
@@ -127,7 +128,7 @@ SelectPackageBrowser >> removeAllItems [
 	toSelectModel items: tmp.
 	selectedModel items: #().
 	toSelectModel updateList.
-	selectedModel updateList.  	  
+	selectedModel updateList  	  
 ]
 
 { #category : #private }
@@ -137,7 +138,7 @@ SelectPackageBrowser >> removeItems [
 			toSelectModel items: (self sort: toSelectModel listItems withAll: items).
 			selectedModel items: (self sort: selectedModel listItems withoutAll: items) ].
 	toSelectModel updateList.
-	selectedModel updateList.  	  
+	selectedModel updateList 	  
 ]
 
 { #category : #initialization }
@@ -156,7 +157,7 @@ SelectPackageBrowser >> removeTestPackage [
 			toSelectModel items: (self sort: (toSelectModel listItems asOrderedCollection addAll: testPackage; yourself)).
 			testPackage := OrderedCollection new ]. 
 	toSelectModel updateList.
-	selectedModel updateList.  	
+	selectedModel updateList  	
 ]
 
 { #category : #initialization }
@@ -173,13 +174,8 @@ SelectPackageBrowser >> setRemoveTestPackageModel [
 	removeTestPackageModel
 		state: false;
 		label: 'Remove All Packages Tests';
-		action: [ self  removeTestPackage ].
+		action: [ self  removeTestPackage ]
 	
-]
-
-{ #category : #private }
-SelectPackageBrowser >> sort: aCollection [
-	^ aCollection asOrderedCollection sort: [:e1 :e2 | (e1 asString) < (e2 asString)].
 ]
 
 { #category : #private }
@@ -187,7 +183,7 @@ SelectPackageBrowser >> sort: aCollection withAll: anotherCollection [
 	^ self sort: 
 		(aCollection asOrderedCollection 
 			addAll: (anotherCollection);
-			yourself).
+			yourself)
 ]
 
 { #category : #private }
@@ -195,5 +191,5 @@ SelectPackageBrowser >> sort: aCollection withoutAll: anotherCollection [
 	^ self sort: 
 		(aCollection asOrderedCollection 
 			removeAll: (anotherCollection);
-			yourself).
+			yourself)
 ]

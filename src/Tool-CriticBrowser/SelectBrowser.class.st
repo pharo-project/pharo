@@ -13,7 +13,7 @@ Class {
 		'removeAllButtonModel',
 		'nextButtonModel'
 	],
-	#category : #'Tool-CriticBrowser'
+	#category : #'Tool-CriticBrowser-Parts'
 }
 
 { #category : #specs }
@@ -41,6 +41,12 @@ SelectBrowser class >> defaultSpec [
 { #category : #accessing }
 SelectBrowser >> addAllButtonModel [
 	^ addAllButtonModel
+]
+
+{ #category : #private }
+SelectBrowser >> addAllItems [
+
+	self subclassResponsibility 
 ]
 
 { #category : #accessing }
@@ -111,7 +117,7 @@ SelectBrowser >> setAddAllButtonModel [
 	addAllButtonModel
 		state: false;
 		label: 'Add All';
-		action: [ self  addAllItems].
+		action: [ self addAllItems]
 	
 
 ]
@@ -169,6 +175,11 @@ SelectBrowser >> setRemoveButtonModel [
 		action: [ self removeItems ].
 	
 
+]
+
+{ #category : #private }
+SelectBrowser >> sort: aCollection [
+	^ aCollection asOrderedCollection sort: [:e1 :e2 | (e1 asString) < (e2 asString)].
 ]
 
 { #category : #accessing }

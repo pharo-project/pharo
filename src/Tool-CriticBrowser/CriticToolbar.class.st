@@ -35,7 +35,7 @@ Class {
 		'falsepositiveModel',
 		'transformModel'
 	],
-	#category : #'Tool-CriticBrowser'
+	#category : #'Tool-CriticBrowser-Parts'
 }
 
 { #category : #specs }
@@ -43,8 +43,8 @@ CriticToolbar class >> defaultSpec [
 <spec>
 
 	^SpecLayout composed
-		newRow: [:r |
-			r 
+		newRow: [:row |
+			row 
 				add: #browseModel;
 				add: #transformModel;
 				add: #falsepositiveModel
@@ -89,7 +89,7 @@ CriticToolbar >> initialize [
 	self setBrowseModel.
 	self setTransformModel.
 	self setFalsepositiveModel.
-	self registerForChanges.
+	self registerForChanges
 ]
 
 { #category : #initialization }
@@ -123,7 +123,7 @@ CriticToolbar >> setBrowseModel [
 	browseModel
 		state: false;
 		label: 'Browse';
-		action: [ self browseCritic ].
+		action: [ self browseCritic ]
 	
 
 ]
@@ -134,7 +134,7 @@ CriticToolbar >> setFalsepositiveModel [
 	falsepositiveModel
 		state: false;
 		label: 'Mark as wrong';
-		action: [  ].
+		action: [  ]
 	
 
 ]
@@ -145,7 +145,7 @@ CriticToolbar >> setFocusOrder [
 	self focusOrder
 		add: browseModel;
 		add: transformModel;
-		add: falsepositiveModel.
+		add: falsepositiveModel
 		
 ]
 
@@ -155,7 +155,7 @@ CriticToolbar >> setTransformModel [
 	transformModel
 		state: false;
 		label: 'Transform';
-		action: [ self transformCritic ].
+		action: [ self transformCritic ]
 	
 
 ]
