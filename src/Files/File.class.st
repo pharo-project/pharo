@@ -259,7 +259,7 @@ File >> readStreamDo: aBlock [
 		ensure: [ stream close ]
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 File >> size [
 
 	^ self readStreamDo: [ :stream | stream size ]

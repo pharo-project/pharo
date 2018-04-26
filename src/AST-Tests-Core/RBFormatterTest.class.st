@@ -1,3 +1,6 @@
+"
+SUnit tests for BISimpleFormatter
+"
 Class {
 	#name : #RBFormatterTest,
 	#superclass : #TestCase,

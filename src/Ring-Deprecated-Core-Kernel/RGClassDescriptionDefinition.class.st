@@ -66,6 +66,12 @@ RGClassDescriptionDefinition >> allInstanceVariables [
 		ifTrue:[ self superclass allInstanceVariables, instanceVariables ]
 ]
 
+{ #category : #accessing }
+RGClassDescriptionDefinition >> extendingPackages [
+
+	^ self realClass extendingPackages
+]
+
 { #category : #comparing }
 RGClassDescriptionDefinition >> hash [
 

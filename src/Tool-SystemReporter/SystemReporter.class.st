@@ -24,18 +24,19 @@ Class {
 
 { #category : #'instance creation' }
 SystemReporter class >> open [
-
+	<script>
+	
 	^ self new open
 ]
 
 { #category : #'system menu' }
 SystemReporter class >> systemReporterMenuOn: aBuilder [ 
-	"I build a menu"
 	<worldMenu>
+	
 	(aBuilder item: #'System Reporter')
 		parent: #System;
 		action: [ self open ];
-		help: 'If you have a bug, use this tool to provide information about your system.'.
+		help: 'If you have a bug, use this tool to provide information about your system.'
 ]
 
 { #category : #operations }
@@ -52,7 +53,7 @@ SystemReporter >> addAll: aWindow [
 		
 	aWindow
 		addMorph: self buildInformationText
-		fullFrame: self reportFrame.
+		fullFrame: self reportFrame
 ]
 
 { #category : #'items creation' }
@@ -83,7 +84,7 @@ SystemReporter >> buildInformationText [
 
 { #category : #accessing }
 SystemReporter >> categories [
-	^ categories ifNil: [categories := IdentityDictionary new]
+	^ categories ifNil: [ categories := IdentityDictionary new ]
 ]
 
 { #category : #display }
@@ -94,20 +95,23 @@ SystemReporter >> categoriesFrame [
 
 { #category : #'accessing-categories' }
 SystemReporter >> categoryAt: anIndex [
-	^ categoriesSelected includes: (self categoryList at: anIndex ifAbsent: [ ^ false ]).
+	^ categoriesSelected includes: (self categoryList at: anIndex ifAbsent: [ ^ false ])
 ]
 
 { #category : #'accessing-categories' }
 SystemReporter >> categoryAt: anInteger put: aBoolean [
 	categoriesSelected := categoriesSelected
-		perform: (aBoolean ifTrue: [ #copyWith: ] ifFalse: [ #copyWithout: ])
+		perform:
+			(aBoolean
+				ifTrue: [ #copyWith: ]
+				ifFalse: [ #copyWithout: ])
 		with: (self categoryList at: anInteger ifAbsent: [ ^ self ]).
 	self updateReport
 ]
 
 { #category : #accessing }
 SystemReporter >> categoryList [
-	^ categoryList ifNil: [categoryList := OrderedCollection new]
+	^ categoryList ifNil: [ categoryList := OrderedCollection new ]
 ]
 
 { #category : #'accessing-categories' }
@@ -118,7 +122,7 @@ SystemReporter >> categorySelected [
 { #category : #'accessing-categories' }
 SystemReporter >> categorySelected: anInteger [
 
-	self changed: #categorySelected.
+	self changed: #categorySelected
 ]
 
 { #category : #private }
@@ -157,10 +161,13 @@ SystemReporter >> extent [
 
 { #category : #'printing-report' }
 SystemReporter >> header: aString on: aStream [
-	aStream withAttribute: TextEmphasis bold do: [	
-		aStream nextPutAll: aString; cr.
-		aString size timesRepeat: [aStream nextPut: $-].
-		aStream cr]
+	aStream
+		withAttribute: TextEmphasis bold
+		do: [ aStream
+				nextPutAll: aString;
+				cr.
+			aString size timesRepeat: [ aStream nextPut: $- ].
+			aStream cr ]
 ]
 
 { #category : #'accessing-ui' }
@@ -182,20 +189,35 @@ SystemReporter >> initialize [
 		add: #'VM Modules' method: #reportModules:;
 		add: #'VM Parameters' method: #reportVMParameters:;
 		add: #'VM Stats' method: #reportVMStats:.
-	Smalltalk os platformName = 'Win32'
+	self isWindows
 		ifTrue: [ self add: #'VM Configuration' method: #reportWin32VMConfig: ].
 	self add: #'OS General' method: #reportOS:.
-	Smalltalk os platformName = 'Win32'
+	
+	self isWindows
 		ifTrue: [ 
 			self
 				add: #'OS Details' method: #reportWin32OSDetails:;
 				add: #'Hardware Details' method: #reportWin32HardwareDetails:;
 				add: #'GFX Hardware Details' method: #reportWin32GFXDetails: ].
-	Smalltalk os version = 'linux'
+			
+	self isLinux 
 		ifTrue: [ self add: #'OS Details' method: #reportLinuxOSDetails: ].
 	self add: #'OS Environment' method: #reportOSEnvironment:.
 	categoriesSelected := Set with: #Image with: #'VM General'.
 	self updateReport
+]
+
+{ #category : #'private - testing' }
+SystemReporter >> isLinux [
+	"Some Linux versions return linux, some linux-gnu, ..."
+	
+	^Smalltalk os version beginsWith: 'linux'
+]
+
+{ #category : #'private - testing' }
+SystemReporter >> isWindows [
+
+	^Smalltalk os isWindows
 ]
 
 { #category : #'accessing-ui' }
@@ -205,7 +227,7 @@ SystemReporter >> label [
 
 { #category : #display }
 SystemReporter >> open [
-	"self new open"
+	<script: 'self new open'>
 	
 	| window |
 	window := StandardWindow new model: self.		
@@ -213,6 +235,13 @@ SystemReporter >> open [
 	window openInWorld.
 	window title: self label.
 	^ window			
+]
+
+{ #category : #private }
+SystemReporter >> readContentsSafelyFromFile: osPath andWriteTo: aStream [
+	 [ osPath asFileReference 
+                    readStreamDo: [:s | aStream nextPutAll: s contents ]
+    ] on: Error do: [:ex| ex return: ex printString]
 ]
 
 { #category : #operations }
@@ -241,7 +270,7 @@ SystemReporter >> reportImage: aStream [
 { #category : #reporting }
 SystemReporter >> reportImageParameters: aStream [
 	self header: 'Image Commandline Parameters' on: aStream.
-	self enumerate: [:idx | Smalltalk image argumentAt: idx] on: aStream.
+	self enumerate: [:idx | Smalltalk image argumentAt: idx] on: aStream
 ]
 
 { #category : #reporting }
@@ -252,7 +281,7 @@ SystemReporter >> reportLinuxOSDetails: aStream [
 		'/etc/lsb-release'
 		'/proc/version'
 	) do: [:path|
-		self writeContentsSafelyFromFile: path on: aStream]
+		self readContentsSafelyFromFile: path andWriteTo: aStream]
 ]
 
 { #category : #reporting }
@@ -261,7 +290,7 @@ SystemReporter >> reportModules: aStream [
 	Smalltalk vm listLoadedModules asSortedCollection do: [:each | aStream nextPutAll: each; cr].
 	aStream cr.
 	self header: 'VM Built-in Modules' on: aStream.
-	Smalltalk vm listBuiltinModules asSortedCollection do: [:each | aStream nextPutAll: each; cr].
+	Smalltalk vm listBuiltinModules asSortedCollection do: [:each | aStream nextPutAll: each; cr]
 
 
 ]
@@ -280,9 +309,9 @@ SystemReporter >> reportOS: aStream [
 SystemReporter >> reportOSEnvironment: aStream [
 	| env |
 	self header: 'Operating System Environment' on: aStream.
-	env := [Smalltalk os environment] on: Error do: [^self].
+	env := [ Smalltalk os environment] on: Error do: [ ^self ].
 	env keys asSortedCollection do: [:name |
-		aStream nextPutAll: name; nextPut: $=; nextPutAll: (env at: name); cr]
+		aStream nextPutAll: name; nextPut: $=; nextPutAll: (env at: name); cr ]
 	
 ]
 
@@ -473,8 +502,8 @@ SystemReporter >> reportWin32VMConfig: aStream [
 	self header: 'VM Configuration' on: aStream.
 	exePath := Smalltalk vm vmFileName.
 	iniPath := (exePath copyUpToLast: $.), '.ini'.
-	aStream nextPutAll: iniPath; cr.
-	self writeContentsSafelyFromFile: iniPath on: aStream.
+	aStream nextPutAll: iniPath; cr; cr.
+	self readContentsSafelyFromFile: iniPath andWriteTo: aStream
 
 ]
 
@@ -482,14 +511,14 @@ SystemReporter >> reportWin32VMConfig: aStream [
 SystemReporter >> reportWorkingCopies: aStream [
 	| list |
 	self header: 'Monticello Working Copies' on: aStream.
-	list := MCWorkingCopy allManagers asSortedCollection: [:a :b | a packageName <= b packageName]  .
-	list do: [:each | aStream nextPutAll: each description; cr]
+	list := MCWorkingCopy allManagers asSortedCollection: [:a :b | a packageName <= b packageName].
+	list do: [:each | aStream nextPutAll: each description; cr ]
 ]
 
 { #category : #accessing }
 SystemReporter >> sourceTextModel [
-	^ sourceTextModel ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ].
-	
+	^ sourceTextModel
+		ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ]
 ]
 
 { #category : #updating }
@@ -500,12 +529,4 @@ SystemReporter >> updateReport [
 								self perform: (categories at: each) with: stream.
 								stream cr]]])
 
-]
-
-{ #category : #private }
-SystemReporter >> writeContentsSafelyFromFile: osPath on: aStream [
-	aStream nextPutAll:
-		([
-			(FileStream readOnlyFileNamed: osPath) upToEnd
-		 ] on: Error do: [:ex| ex return: ex printString])
 ]

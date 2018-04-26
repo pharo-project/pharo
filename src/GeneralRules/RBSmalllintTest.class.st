@@ -370,6 +370,11 @@ RBSmalllintTest >> testLiteralArrayContainsComma [
 ]
 
 { #category : #tests }
+RBSmalllintTest >> testLocalMethodsSameThanTrait [
+	self classAndMetaClassRuleFor: self currentSelector
+]
+
+{ #category : #tests }
 RBSmalllintTest >> testLongMethods [
 	self ruleFor: self currentSelector
 ]

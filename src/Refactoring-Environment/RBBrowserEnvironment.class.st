@@ -117,6 +117,29 @@ RBBrowserEnvironment >> asSelectorEnvironment [
 	^(RBClassEnvironment onEnvironment: self classes: self classes) asSelectorEnvironment
 ]
 
+{ #category : #conversion }
+RBBrowserEnvironment >> asSystemNavigationEnvironment [
+
+	| env globalsNames |
+	"Optimization for the default environment AKA Smalltalk"
+	self class == RBBrowserEnvironment 
+		ifTrue: [ ^ Smalltalk globals ].
+	
+	env := SystemDictionary new.
+	
+	self classesDo: [:each | 
+		env add: ( Smalltalk globals associationAt: each theNonMetaClass name )].
+	self traitsDo:  [:each | 
+		env add: ( Smalltalk globals associationAt: each name )].
+	globalsNames := Smalltalk globals keys asOrderedCollection.
+	globalsNames removeAll: ( Smalltalk globals classNames ).
+	 globalsNames removeAll: ( Smalltalk globals traitNames ).
+	globalsNames do: [:each | 
+		env add: ( Smalltalk globals associationAt: each )].
+
+	^ env
+]
+
 { #category : #'accessing-classes' }
 RBBrowserEnvironment >> associationAt: aKey [
 	^ self associationAt: aKey ifAbsent: [ self error: aKey printString , ' not found' ]
@@ -652,6 +675,22 @@ RBBrowserEnvironment >> systemDictionary [
 RBBrowserEnvironment >> systemDictionaryClassesDo: aBlock [
 	self systemDictionary allClassesDo:[:class |
 		 aBlock value: class; value: class classSide]
+]
+
+{ #category : #'accessing-classes' }
+RBBrowserEnvironment >> traits [
+	| traits |
+	traits := IdentitySet new: 4096.
+	self traitsDo: [ :each | traits add: each ].
+	^ traits
+]
+
+{ #category : #'accessing-classes' }
+RBBrowserEnvironment >> traitsDo: aBlock [
+
+	self systemDictionary allTraitsDo: [ :each | 
+		(self includesClass: each)
+			ifTrue: [ aBlock value: each ]  ]
 ]
 
 { #category : #accessing }

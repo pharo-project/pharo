@@ -633,7 +633,7 @@ CompiledMethod >> isReturnSpecial [
 { #category : #printing }
 CompiledMethod >> isSelfEvaluating [
 
-	^self methodClass notNil and: [(#(#DoIt #DoItIn: nil) includes: self selector) not]
+	^self methodClass notNil and: [self isDoIt not]
 ]
 
 { #category : #testing }
