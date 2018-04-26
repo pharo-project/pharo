@@ -1,16 +1,16 @@
 Class {
-	#name : #T2TraitAnnouncements,
+	#name : #T2TraitAnnouncementsTest,
 	#superclass : #T2AbstractTest,
 	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }
-T2TraitAnnouncements >> packageName [
+T2TraitAnnouncementsTest >> packageName [
 	^ 'TestPackage'
 ]
 
 { #category : #tests }
-T2TraitAnnouncements >> testRPackageIsUpdatedInClassSide [
+T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 	
 	| c1 t1 |
 	
@@ -26,7 +26,7 @@ T2TraitAnnouncements >> testRPackageIsUpdatedInClassSide [
 ]
 
 { #category : #tests }
-T2TraitAnnouncements >> testRPackageIsUpdatedInInstanceSide [
+T2TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
 	
 	| c1 t1 |
 	
