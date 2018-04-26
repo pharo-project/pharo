@@ -9,8 +9,7 @@ Class {
 
 { #category : #'building suites' }
 LiteralDictionaryTest class >> shouldInheritSelectors [
-
-^true
+	^ true
 ]
 
 { #category : #coverage }
@@ -19,24 +18,20 @@ LiteralDictionaryTest >> classToBeTested [
 	^ LiteralDictionary
 ]
 
-{ #category : #'tests - literal specific behavior' }
+{ #category : #tests }
 LiteralDictionaryTest >> testIncludesWithEqualElementFromDifferentClasses [
-
-| dict |
-dict := self classToBeTested new.
-
-dict at: 1 put: 'element1'.
-dict at: #key put: 1.0.
-
-self deny: (dict includesKey: 1.0).
-self assert: (dict includes: 1)
+	| dict |
+	dict := self classToBeTested new.
+	dict at: 1 put: 'element1'.
+	dict at: #key put: 1.0.
+	self deny: (dict includesKey: 1.0).
+	self assert: (dict includes: 1)
 ]
 
-{ #category : #problems }
+{ #category : #tests }
 LiteralDictionaryTest >> testUnCategorizedMethods [
-"this test doesn't pass :"
 	| categories slips  |
 	categories := self categoriesForClass: self targetClass.
 	slips := categories select: [:each | each = #'as yet unclassified'].
-	self should: [slips isEmpty].	
+	self assert: slips isEmpty	
 ]
