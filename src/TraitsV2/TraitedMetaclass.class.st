@@ -129,7 +129,7 @@ TraitedMetaclass >> findOriginMethodOf: aMethod [
 	If it is an aliased or conflicting method, the method is look up in the whole trait composition"
 
 	(self isLocalSelector: aMethod selector)
-		ifTrue: [ ^ self compiledMethodAt: aMethod selector].
+		ifTrue: [ ^ aMethod].
 
 	(aMethod hasProperty: #traitSource)
 		ifTrue: [ |newSelector|
@@ -324,9 +324,9 @@ TraitedMetaclass >> removeSelector: aSelector [
 
 	"When a selector is removed it should be notified to my users.
 	Check the class TraitChange for more details"
-
-	self localMethodDict removeKey: aSelector ifAbsent: [  ].
 	super removeSelector: aSelector.
+	self localMethodDict removeKey: aSelector ifAbsent: [  ].
+
 	TraitChange removeSelector: aSelector on: self.
 ]
 
