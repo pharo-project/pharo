@@ -12,5 +12,5 @@ Class {
 
 { #category : #tests }
 AuthorTest >> testUniqueness [
-	self should: [ Author new ] raise: Error.
+	self should: [ Author new ] raise: Error
 ]
