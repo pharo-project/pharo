@@ -1,7 +1,10 @@
+"
+SUnit tests for SystemDictionary
+"
 Class {
 	#name : #SystemDictionaryTest,
 	#superclass : #DictionaryTest,
-	#category : #'Tests-System'
+	#category : #'System-Support-Tests'
 }
 
 { #category : #'building suites' }
@@ -22,9 +25,9 @@ SystemDictionaryTest >> classToBeTested [
 	^ SystemDictionary
 ]
 
-{ #category : #problems }
+{ #category : #tests }
 SystemDictionaryTest >> testClassComment [
-	self should: [self targetClass organization hasComment].
+	self assert: self targetClass organization hasComment
 ]
 
 { #category : #tests }
@@ -102,9 +105,9 @@ SystemDictionaryTest >> testSmalltalkSelfEvaluating [
 	self assert: Smalltalk isSelfEvaluating
 ]
 
-{ #category : #problems }
+{ #category : #tests }
 SystemDictionaryTest >> testUnCategorizedMethods [
 	| categories slips  |	categories := self categoriesForClass: self targetClass.
 	slips := categories select: [:each | each = #'as yet unclassified'].
-	self should: [slips isEmpty].	
+	self assert: slips isEmpty	
 ]

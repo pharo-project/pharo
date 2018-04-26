@@ -1,10 +1,13 @@
+"
+SUnit tests for Author
+"
 Class {
 	#name : #AuthorTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'author'
 	],
-	#category : #'Tests-System'
+	#category : #'System-Support-Tests'
 }
 
 { #category : #tests }

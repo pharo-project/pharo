@@ -1,7 +1,10 @@
+"
+Tests for SmalltalkImage
+"
 Class {
 	#name : #SmalltalkImageTest,
 	#superclass : #TestCase,
-	#category : #'Tests-System'
+	#category : #'System-Support-Tests'
 }
 
 { #category : #'tests-arguments' }
