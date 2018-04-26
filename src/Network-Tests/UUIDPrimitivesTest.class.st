@@ -4,7 +4,7 @@ SUnit tests for UUIDPrimitives
 Class {
 	#name : #UUIDPrimitivesTest,
 	#superclass : #TestCase,
-	#category : #'Tests-UUID'
+	#category : #'Network-Tests-UUID'
 }
 
 { #category : #tests }
