@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #UIManager
+	#category : #'UIManager-Base'
 }
 
 { #category : #initialization }

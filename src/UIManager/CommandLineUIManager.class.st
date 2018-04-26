@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'SnapshotErrorImage'
 	],
-	#category : #UIManager
+	#category : #'UIManager-Base'
 }
 
 { #category : #testing }
