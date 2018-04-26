@@ -1,7 +1,10 @@
+"
+SUnit tests for SystemNavigation on newly created environments
+"
 Class {
 	#name : #SystemNavigationOnNewlyCreatedEnvironmentTest,
 	#superclass : #SystemNavigationTest,
-	#category : #'Tests-System'
+	#category : #'System-Support-Tests'
 }
 
 { #category : #'building suites' }

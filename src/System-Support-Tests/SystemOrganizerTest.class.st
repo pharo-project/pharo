@@ -1,7 +1,10 @@
+"
+SUnit tests for SystemOrganizer
+"
 Class {
 	#name : #SystemOrganizerTest,
 	#superclass : #TestCase,
-	#category : #'Tests-System'
+	#category : #'System-Support-Tests'
 }
 
 { #category : #tests }
