@@ -9,6 +9,7 @@ Class {
 
 { #category : #'building suites' }
 LiteralDictionaryTest class >> shouldInheritSelectors [
+	
 	^ true
 ]
 
