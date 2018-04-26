@@ -1,3 +1,6 @@
+"
+SUnit tests for MD5
+"
 Class {
 	#name : #MD5Test,
 	#superclass : #ClassTestCase,
