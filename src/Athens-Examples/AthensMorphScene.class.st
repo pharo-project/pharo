@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'morph'
 	],
-	#category : #'Athens-Examples'
+	#category : #'Athens-Examples-Utilities'
 }
 
 { #category : #accessing }
@@ -22,7 +22,7 @@ AthensMorphScene >> morph: anObject [
 	morph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #rendering }
 AthensMorphScene >> renderOn:aCanvas [
 	morph fullDrawOnAthensCanvas: aCanvas
 ]
