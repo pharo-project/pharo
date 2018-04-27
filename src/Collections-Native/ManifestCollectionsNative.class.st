@@ -4,7 +4,7 @@ Arrays of native types: byte, word, float and integer
 Class {
 	#name : #ManifestCollectionsNative,
 	#superclass : #PackageManifest,
-	#category : #'Collections-Native'
+	#category : #'Collections-Native-Manifest'
 }
 
 { #category : #'meta-data' }
