@@ -76,7 +76,13 @@ PharoDarkTheme >> backgroundColor [
 { #category : #'accessing colors' }
 PharoDarkTheme >> balloonBackgroundColor [
 
-	^Color veryDarkGray lighter
+	^ (Color r: 1.0 g: 1.0 b: 0.71 alpha: 1.0)
+]
+
+{ #category : #'accessing colors' }
+PharoDarkTheme >> balloonTextColor [
+
+	^ Color black
 ]
 
 { #category : #'accessing colors' }

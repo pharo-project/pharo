@@ -276,6 +276,12 @@ UITheme >> balloonBackgroundColor [
 ]
 
 { #category : #'accessing colors' }
+UITheme >> balloonTextColor [
+
+	^self textColor
+]
+
+{ #category : #'accessing colors' }
 UITheme >> baseColor [
 	^ self class baseColor
 ]
