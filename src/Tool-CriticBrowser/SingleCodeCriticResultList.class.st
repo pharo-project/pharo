@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'icons'
 	],
-	#category : #'Tool-CriticBrowser'
+	#category : #'Tool-CriticBrowser-Parts'
 }
 
 { #category : #specs }
