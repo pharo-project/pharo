@@ -4,7 +4,7 @@ Manifest for AST-Core package
 Class {
 	#name : #ManifestASTCore,
 	#superclass : #PackageManifest,
-	#category : #'AST-Core'
+	#category : #'AST-Core-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
