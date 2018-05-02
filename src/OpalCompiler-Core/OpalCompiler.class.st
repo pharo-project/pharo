@@ -145,11 +145,8 @@ OpalCompiler >> addPlugin: aClass [
 
 { #category : #accessing }
 OpalCompiler >> bindings: aDictionary [
-	"for now we abuse the requestor infrastructure...we should rewrite the requestor to use bindings
-	instead"
-	self compilationContext 
-		bindings: aDictionary;
-		interactive: false.
+	"allows to define additional binding, note: Globals are not shadowed"
+	self compilationContext bindings: aDictionary
 ]
 
 { #category : #private }
@@ -280,11 +277,7 @@ OpalCompiler >> evaluate [
 	self source: selectedSource.
 	compilationContext parseOptions: #(+ #optionEmbeddSources). 
 	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod: self compile.
-	self compilationContext logged
-		ifTrue: [ Smalltalk globals 
-			at: #SystemAnnouncer 
-			ifPresent: [ :sysAnn | 
-				sysAnn uniqueInstance evaluated: selectedSource contents context: context ] ].
+	self logDoIt: selectedSource.
 	^ value
 ]
 
@@ -304,6 +297,15 @@ OpalCompiler >> format: textOrString [
 	^self
 		source: textOrString;
 		format
+]
+
+{ #category : #private }
+OpalCompiler >> logDoIt: sourceCode [
+	self compilationContext logged ifFalse: [ ^self ].
+	Smalltalk globals 
+			at: #SystemAnnouncer 
+			ifPresent: [ :sysAnn | 
+				sysAnn uniqueInstance evaluated: sourceCode contents context: context ]
 ]
 
 { #category : #accessing }
@@ -339,13 +341,11 @@ OpalCompiler >> parse: textOrString [
 
 { #category : #private }
 OpalCompiler >> parseExpression [
-	| parseClass expression |
-	
-	parseClass := self compilationContext parserClass.
+	| expression |
 
 	expression := self compilationContext optionParseErrors 
-		ifTrue: [parseClass parseFaultyExpression: source contents]
-		ifFalse: [parseClass parseExpression: source contents].
+		ifTrue: [self parserClass parseFaultyExpression: source contents]
+		ifFalse: [self parserClass parseExpression: source contents].
 		
 	^context 
 		ifNil: [expression asDoit] 
@@ -355,25 +355,27 @@ OpalCompiler >> parseExpression [
 
 { #category : #'public access' }
 OpalCompiler >> parseLiterals: aString [
-	^RBParser parseLiterals: aString
+	^self parserClass parseLiterals: aString
 ]
 
 { #category : #private }
 OpalCompiler >> parseMethod [
-	| parseClass |
-	
-	parseClass := self compilationContext parserClass.
 	
 	^self compilationContext optionParseErrors 
-		ifTrue: [parseClass parseFaultyMethod: source contents]
-		ifFalse: [parseClass parseMethod: source contents]
+		ifTrue: [self parserClass parseFaultyMethod: source contents]
+		ifFalse: [self parserClass parseMethod: source contents]
 ]
 
 { #category : #'public access' }
 OpalCompiler >> parseSelector: aString [ 
 	"Answer the message selector for the argument, aString, which should parse successfully up to the temporary declaration or the end of the method header."
 	
-	^[RBParser parseMethodPattern: aString] on: Error do: [nil].
+	^[self parserClass parseMethodPattern: aString] on: Error do: [nil].
+]
+
+{ #category : #accessing }
+OpalCompiler >> parserClass [
+	^self compilationContext parserClass
 ]
 
 { #category : #accessing }
