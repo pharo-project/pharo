@@ -1112,9 +1112,15 @@ CompiledMethod >> value: arg1 value: arg2 [
 ]
 
 { #category : #evaluating }
+CompiledMethod >> value: arg1 value: arg2 value: arg3 [
+
+	^ nil withArgs: { arg1 . arg2 . arg3 } executeMethod: self
+]
+
+{ #category : #evaluating }
 CompiledMethod >> value: arg1 value: arg2 value: arg3 value: arg4 [
 
-	^ nil withArgs: { arg1 . arg2 . arg3 . arg4} executeMethod: self
+	^ nil withArgs: { arg1 . arg2 . arg3 . arg4 } executeMethod: self
 ]
 
 { #category : #evaluating }
