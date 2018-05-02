@@ -1094,6 +1094,42 @@ CompiledMethod >> untagFrom: aSymbol [
 ]
 
 { #category : #evaluating }
+CompiledMethod >> value [
+
+	^ nil withArgs: #() executeMethod: self
+]
+
+{ #category : #evaluating }
+CompiledMethod >> value: arg1 [
+
+	^ nil withArgs: { arg1 } executeMethod: self
+]
+
+{ #category : #evaluating }
+CompiledMethod >> value: arg1 value: arg2 [
+
+	^ nil withArgs: { arg1 . arg2 } executeMethod: self
+]
+
+{ #category : #evaluating }
+CompiledMethod >> value: arg1 value: arg2 value: arg3 value: arg4 [
+
+	^ nil withArgs: { arg1 . arg2 . arg3 . arg4} executeMethod: self
+]
+
+{ #category : #evaluating }
+CompiledMethod >> valueWithArguments: anArray [ 
+	
+	^ nil withArgs: anArray executeMethod: self
+]
+
+{ #category : #evaluating }
+CompiledMethod >> valueWithReceiver: aReceiver [
+
+	^ aReceiver withArgs: #() executeMethod: self
+]
+
+{ #category : #evaluating }
 CompiledMethod >> valueWithReceiver: aReceiver arguments: anArray [ 
 	"This should be changed when all the VM will support passign of extra arguments
 		^self receiver: aReceiver withArguments: anArray executeMethod: self"
