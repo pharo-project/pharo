@@ -9,7 +9,7 @@ Class {
 		'fileCompileRequestor',
 		'interactive'
 	],
-	#category : #CodeImport
+	#category : #'CodeImport-Utilities'
 }
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ Class {
 		'behaviorName',
 		'isMeta'
 	],
-	#category : #CodeImport
+	#category : #'CodeImport-Chunks'
 }
 
 { #category : #accessing }

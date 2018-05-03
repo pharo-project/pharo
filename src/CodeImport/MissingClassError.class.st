@@ -24,7 +24,7 @@ Class {
 		'className',
 		'superclassName'
 	],
-	#category : #CodeImport
+	#category : #'CodeImport-Errors'
 }
 
 { #category : #'instance creation' }
