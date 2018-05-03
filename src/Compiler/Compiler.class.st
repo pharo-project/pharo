@@ -359,8 +359,10 @@ Compiler >> from: textOrStream class: aClass context: aContext notifying: req [
 
 { #category : #'error handling' }
 Compiler >> interactive [
-	
-	^ UIManager default interactiveParserFor: requestor
+	requestor ifNil: [^ false ].
+	^(requestor respondsTo: #interactive)
+		ifTrue: [ requestor interactive ]
+		ifFalse: [ true ]
 ]
 
 { #category : #'public - opal compatibility' }
@@ -471,7 +473,7 @@ Compiler >> receiver: anObject [
 Compiler >> requestor: aRequestor [
 	requestor := aRequestor.
 	self compilationContext requestor: aRequestor.
-	self compilationContext interactive: (UIManager default interactiveParserFor: self compilationContext requestor).
+	self compilationContext interactive: self interactive.
 ]
 
 { #category : #'public - opal compatibility' }

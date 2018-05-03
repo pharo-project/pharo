@@ -430,15 +430,6 @@ UIManager >> informUserDuring: aBlock [
 	^self subclassResponsibility
 ]
 
-{ #category : #settings }
-UIManager >> interactiveParserFor: requestor [	
-	
-	requestor ifNil: [^ false ].
-	(requestor respondsTo: #interactive)
-		ifTrue: [ ^requestor interactive ].
-	^true
-]
-
 { #category : #'ui process' }
 UIManager >> interruptName: labelString preemptedProcess: theInterruptedProcess [
 	"Create a Notifier on the active scheduling process with the given label."
