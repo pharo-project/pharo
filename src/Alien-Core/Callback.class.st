@@ -86,7 +86,7 @@ Callback class >> abi [
 	^ABI
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'instance creation-obsolete' }
 Callback class >> block: aBlock "<BlockContext>" argsClass: argsProxyClass [ "<Alien class>" "^<Callback>"
 	"Answer a Callback that evaluates aBlock and whose thunk should conform to the C calling convention."
 	<legacy>
@@ -96,7 +96,7 @@ Callback class >> block: aBlock "<BlockContext>" argsClass: argsProxyClass [ "<A
 		argsProxyClass: argsProxyClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'instance creation-obsolete' }
 Callback class >> block: aBlock "<BlockContext>" stdcallArgsClass: argsProxyClass [ "<Alien class>" "^<Callback>"
 	"Answer a Callback that evaluates aBlock and whose thunk should conform to the
 	 stdcall (Pascal) calling convention with a stack size of argsProxyClass dataSize."

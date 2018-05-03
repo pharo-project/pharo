@@ -32,8 +32,8 @@ UnsafeAlien class >> ensureInSpecialObjectsArray [
 	self ~~ UnsafeAlien ifTrue: [^self].
 
 	index := 55.
-	((Smalltalk includesKey: #ObjectMemory)
-	 and: [((Smalltalk at: #ObjectMemory) classPool at: #ClassUnsafeAlien ifAbsent: []) ~~ (index - 1)]) ifTrue:
+	((Smalltalk includesKey: #VMObjectIndices)
+	 and: [((Smalltalk at: #VMObjectIndices) classPool at: #ClassUnsafeAlien ifAbsent: []) ~= (index - 1)]) ifTrue:
 		[self error: 'index probably wrong'].
 
 	Smalltalk specialObjectsArray size < index ifTrue:
@@ -44,13 +44,12 @@ UnsafeAlien class >> ensureInSpecialObjectsArray [
 		and: [(Smalltalk specialObjectsArray at: index) ~~ self]]) ifTrue:
 		[self error: 'SystemDictionary>>recreateSpecialObjectsArray appears incompatible'].
 
-	(Smalltalk specialObjectsArray at: index) == nil ifTrue:
+	(Smalltalk specialObjectsArray at: index) ifNil:
 		[Smalltalk specialObjectsArray at: index put: self]
 ]
 
 { #category : #examples }
 UnsafeAlien class >> exampleSprintf [
-	<sampleInstance>
 	"Call the libc sprintf function."
 	"UnsafeAlien exampleSprintf"
 	| r s |

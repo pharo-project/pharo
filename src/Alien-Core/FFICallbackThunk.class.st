@@ -150,7 +150,20 @@ FFICallbackThunk >> initialize [
 
 { #category : #'instance initalization' }
 FFICallbackThunk >> initializeARM32 [
-	"Initialize the receiver with a __ccall thunk."
+	"Initialize the receiver with a __ccall thunk.  The thunk calls thunkEntry in the Alien/IA32ABI plugin,
+	 whose source is in platforms/Cross/plugins/IA32ABI/arm32abicc.c.  thunkEntry is the entry point
+	 for Callbacks. The objective of the thunk is to call thunkEntry with all arguments to the call of the
+	 thunk (registers and stack) as well as a pointer to the thunk itself.  thunkEntry is as follows:
+	
+		long long
+		thunkEntry(long r0, long r1, long r2, long r3,
+		            double d0, double d1, double d2, double d3,
+		            double d4, double d5, double d6, double d7,
+		            void *thunkpPlus16, sqIntptr_t *stackp)
+
+	thunkEntry then collects the various arguments (thunk, integer register arguments, floating-point
+	register arguments, stack pointer) in a VMCallbackContext and invokes the callback via invokeCallbackContext:."
+
 	"0x0 <thunk+0>:		mov     r12, sp			; 0xe1a0c00d
  	 0x4 <thunk+4>:		sub     sp, sp, #16		; 0xe24dd010
  	 0x8 <thunk+8>:		str     pc, [sp, #0]		; 0xe58df000 N.B. passes thunk+16; thunkEntry compensates
@@ -185,7 +198,20 @@ FFICallbackThunk >> initializeStdcall: bytes [
 
 { #category : #'instance initalization' }
 FFICallbackThunk >> initializeX64 [
-	"Initialize the receiver with a __ccall thunk."
+	"Initialize the receiver with a __ccall thunk.  The thunk calls thunkEntry in the Alien/IA32ABI plugin,
+	 whose source is in platforms/Cross/plugins/IA32ABI/x64sysvabicc.c.  thunkEntry is the entry point
+	 for Callbacks. The objective of the thunk is to call thunkEntry with all arguments to the call of the
+	 thunk (registers and stack) as well as a pointer to the thunk itself.  thunkEntry is as follows:
+
+		long
+		thunkEntry(long a0, long a1, long a2, long a3, long a4, long a5,
+		            double d0, double d1, double d2, double d3,
+		            double d4, double d5, double d6, double d7,
+		            void *thunkp, sqIntptr_t *stackp)
+
+	thunkEntry then collects the various arguments (thunk, integer register arguments, floating-point
+	register arguments, stack pointer) in a VMCallbackContext and invokes the callback via invokeCallbackContext:."
+
 	"thunk+0x0:	pushq  %rsp							54
 	 thunk+0x1:	pushq  %rsp							54
 	 thunk+0x4:	movabsq $thunk, %rax					48 b8 b0..b7 eight bytes of thunk address a.k.a. addressField
@@ -211,7 +237,19 @@ FFICallbackThunk >> initializeX64 [
 
 { #category : #'instance initalization' }
 FFICallbackThunk >> initializeX64Win64 [
-	"Initialize the receiver with a __ccall thunk."
+	"Initialize the receiver with a __ccall thunk.  The thunk calls thunkEntry in the Alien/IA32ABI plugin,
+	 whose source is in platforms/Cross/plugins/IA32ABI/x64win64abicc.c.  thunkEntry is the entry point
+	 for Callbacks. The objective of the thunk is to call thunkEntry with all arguments to the call of the
+	 thunk (registers and stack) as well as a pointer to the thunk itself.  thunkEntry is as follows:
+
+		long long
+		thunkEntry(long long rcx, long long rdx,
+		      		long long r8, long long r9,
+					void *thunkp, sqIntptr_t *stackp)
+
+	thunkEntry then collects the various arguments (thunk, integer register arguments, stack pointer)
+	in a VMCallbackContext and invokes the callback via invokeCallbackContext:."
+
 	"thunk+0x0:	pushq  %rsp							54
 	 thunk+0x1:	pushq  %rsp							54
 	 thunk+0x4:	movabsq $thunk, %rax					48 b8 b0..b7 eight bytes of thunk address a.k.a. addressField
@@ -239,9 +277,19 @@ FFICallbackThunk >> initializeX64Win64 [
 
 { #category : #'instance initalization' }
 FFICallbackThunk >> initializeX86 [
-	"Initialize the receiver with a __ccall thunk."
-	"thunk:		push   %esp					0x54							0xa1905454
-	 thunk+01:	push   %esp					0x54
+	"Initialize the receiver with a __ccall thunk.  The thunk calls thunkEntry in the Alien/IA32ABI plugin,
+	 whose source is in platforms/Cross/plugins/IA32ABI/x64win64abicc.c.  thunkEntry is the entry point
+	 for Callbacks. The objective of the thunk is to call thunkEntry with all arguments to the call of the
+	 thunk (registers and stack) as well as a pointer to the thunk itself.  thunkEntry is as follows:
+
+		long
+		thunkEntry(void *thunkp, sqIntptr_t *stackp)
+
+	thunkEntry then collects the various arguments (thunk, stack pointer) in a VMCallbackContext and
+	invokes the callback via invokeCallbackContext:."
+
+	"thunk:		push   %esp				0x54							0xa1905454
+	 thunk+01:	push   %esp				0x54
 	 thunk+02:	nop   						0x90
 	 thunk+03:	mov    $thunkEntry,%eax	0xb8 0x00 0x00 0x00 0x00	0x00000000 - entry
 	 thunk+08:	nop   						0x90							0x68909090
@@ -264,9 +312,9 @@ FFICallbackThunk >> initializeX86 [
 
 { #category : #'instance initalization' }
 FFICallbackThunk >> initializeX86Stdcall: bytes [
-	"Initialize the receiver with a __stdcall thunk with bytes argument bytes."
-	"thunk:		push   %esp					0x54							0xa1905454
-	 thunk+01:	push   %esp					0x54
+	"Initialize the receiver with a __stdcall thunk with bytes argument bytes. (See initializeX86 fort more info)"
+	"thunk:		push   %esp				0x54							0xa1905454
+	 thunk+01:	push   %esp				0x54
 	 thunk+02:	nop   						0x90
 	 thunk+03:	mov    $thunkEntry,%eax	0xb8 0x00 0x00 0x00 0x00	0x00000000 - entry
 	 thunk+08:	nop   						0x90							0x68909090

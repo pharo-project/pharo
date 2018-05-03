@@ -20,12 +20,32 @@ CallbackForIA32 class >> isForCurrentPlatform [
 ]
 
 { #category : #signatures }
+CallbackForIA32 >> hwndlparamRetbool: callbackContext sp: spAlien [
+	<signature: #(BOOL CALLBACK (*)(HWND, LPARAM))>
+	^callbackContext wordResult:
+		(block
+			value: (Alien forPointer: (spAlien unsignedLongAt: 1))
+			value: (spAlien unsignedLongAt: 5)) asAlien "i.e. coerce true to 1 and false to 0"
+]
+
+{ #category : #signatures }
 CallbackForIA32 >> intcharstarRetint: callbackContext sp: spAlien [
 	<signature: #(int (*)(int, char *))>
 	^callbackContext wordResult:
 		(block
 			value: (spAlien signedLongAt: 1)
 			value: (Alien forPointer: (spAlien unsignedLongAt: 5)))
+]
+
+{ #category : #signatures }
+CallbackForIA32 >> logfontstartextmetricstardwordlparamRetint: callbackContext sp: spAlien [
+	<signature: #(int CALLBACK (*)(const LOGFONT *, const TEXTMETRIC *, DWORD, LPARAM))>
+	^callbackContext wordResult:
+		(block
+			value: (Alien forPointer: (spAlien unsignedLongAt: 1))
+			value: (Alien forPointer: (spAlien unsignedLongAt: 5))
+			value: (spAlien unsignedLongAt: 9)
+			value: (spAlien signedLongAt: 13))
 ]
 
 { #category : #evaluation }

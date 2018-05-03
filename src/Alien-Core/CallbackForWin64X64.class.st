@@ -22,12 +22,32 @@ CallbackForWin64X64 class >> isForCurrentPlatform [
 ]
 
 { #category : #signatures }
+CallbackForWin64X64 >> hwndlparamRetbool: callbackContext regs: regsAlien [
+	<signature: #(BOOL CALLBACK (*)(HWND, LPARAM))>
+	^callbackContext wordResult:
+		(block
+			value: (Alien forPointer: (regsAlien unsignedLongLongAt: 1))
+			value: (regsAlien unsignedLongLongAt: 9)) asAlien "i.e. coerce true to 1 and false to 0"
+]
+
+{ #category : #signatures }
 CallbackForWin64X64 >> intcharstarRetint: callbackContext regs: regsAlien [
 	<signature: #(int (*)(int, char *))>
 	^callbackContext wordResult:
 		(block
 			value: (regsAlien signedLongLongAt: 1)
 			value: (Alien forPointer: (regsAlien unsignedLongLongAt: 9)))
+]
+
+{ #category : #signatures }
+CallbackForWin64X64 >> logfontstartextmetricstardwordlparamRetint: callbackContext regs: regsAlien [
+	<signature: #(int CALLBACK (*)(const LOGFONT *, const TEXTMETRIC *, DWORD, LPARAM))>
+	^callbackContext wordResult:
+		(block
+			value: (Alien forPointer: (regsAlien unsignedLongLongAt: 1))
+			value: (Alien forPointer: (regsAlien unsignedLongLongAt: 9))
+			value: (regsAlien unsignedLongAt: 17)
+			value: (regsAlien signedLongLongAt: 25))
 ]
 
 { #category : #evaluation }

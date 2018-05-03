@@ -134,7 +134,6 @@ Alien class >> exampleCqsort [
 	"Call the libc qsort function (which requires a callback)."
 	"Alien exampleCqsort"
 	"(Time millisecondsToRun: [100 timesRepeat: [Alien exampleCqsort]]) / 100.0"
-	<sampleInstance>
 	| cb rand nElements sizeofDouble values orig sort |
 	rand := Random new.
 	values := Alien newC: (nElements := 100) * (sizeofDouble := 8).
@@ -156,165 +155,17 @@ Alien class >> exampleCqsort [
 ]
 
 { #category : #examples }
-Alien class >> exampleEnumFontFamiliesEx [
-	"Call the Win32 EnumFontFamiliesEx function."
-	"Alien exampleEnumFontFamiliesEx"
-	"(Time millisecondsToRun: [1000 timesRepeat: [Alien exampleEnumFontFamiliesEx]]) / 1000.0"
-	<sampleInstance>
-	| fontNames r gle err hDC cb |
-	fontNames := OrderedCollection new.
-	gle := self lookup: 'GetLastError' inLibrary: 'kernel32.dll'.
-	hDC := (self lookup: 'GetDC' inLibrary: 'user32.dll')
-				primFFICallResult: (Alien new: 4)
-				with: 0. "entire screen"
-	err := Alien new: 4.
-	cb := Callback
-				block: [:args :result|
-						fontNames addLast: args logicalFontData elfFullName.
-						result returnInteger: 1]
-				stdcallArgsClass: EnumFontFamExProc.
-	(self lookup: 'EnumFontFamiliesExA' inLibrary: 'gdi32.dll')
-		primFFICallResult: (r := Alien new: 4)
-		with: hDC
-		with: (LOGFONTA newC lfCharset: LOGFONTA DEFAULTCHARSET; yourself) pointer
-		with: cb thunk
-		with: 0
-		with: 0.
-	(r signedLongAt: 1) ~= 1 ifTrue:
-		[gle primFFICallResult: err].
-	(self lookup: 'ReleaseDC' inLibrary: 'user32.dll')
-		primFFICallResult: (Alien new: 4)
-		with: 0 "entire screen"
-		with: hDC.
-	^(err signedLongAt: 1) -> fontNames -> fontNames size
-]
-
-{ #category : #examples }
-Alien class >> exampleEnumWindows [
-	"Call the Win32 EnumWindows function, which takes a callback.
-	Count how many windows.  Use an Alien to hold the counter on the C heap.
-	Answer the count of windows (number of callbacks)."
-	"Alien exampleEnumWindows"
-	<sampleInstance>
-	| counter cb |
-	counter := Alien newC: 4.
-	cb := Callback
-				block: [:args :result| | ptr |
-						ptr := Alien forPointer: args lParam.
-						ptr signedLongAt: 1 put: (ptr signedLongAt: 1) + 1.
-						result returnInteger: (ptr signedLongAt: 1)]
-				stdcallArgsClass: EnumWindowsProc.
-	^((self lookup: 'EnumWindows' inLibrary: 'user32.dll')
-		primFFICallResult: (Alien new: 4)
-		with: cb thunk
-		with: counter pointer) signedLongAt: 1
-
-]
-
-{ #category : #examples }
-Alien class >> exampleEnumWindowsCallbackPerformance [
-	"Measure the speed of callbacks using the Win32 EnumWindows function.
-	Count how many windows using a Smalltalk counter.
-	Answer seconds -> callbacks -> microseconds per callback."
-	"Alien exampleEnumWindowsCallbackPerformance"
-	<sampleInstance>
-	| enumWin count ms cb |
-	Smalltalk garbageCollect.
-	enumWin := self lookup: 'EnumWindows' inLibrary: 'user32.dll'.
-	count := 0.
-	cb := Callback
-			block: [:args :result|
-					result returnInteger: (count := count + 1)]
-			stdcallArgsClass: EnumWindowsProc.
-	ms := Time millisecondsToRun:
-			[1000 timesRepeat:
-				[enumWin
-					primFFICallResult: (Alien new: 4)
-					with: cb thunk
-					with: 0]].
-	^ms / 1000.0 -> count -> (ms * 1000.0 / count)
-]
-
-{ #category : #examples }
-Alien class >> exampleEnumWindowsSimple [
-	"Call the Win32 EnumWindows function, which takes a callback.
-	Count how many windows.  Use an Alien to hold the counter on the C heap.
-	Answer the count of windows (number of callbacks)."
-	"Alien exampleEnumWindowsSimple"
-	<sampleInstance>
-	| count cb |
-	count := 0.
-	cb := Callback
-			block: [:args :result|
-					result returnInteger: (count := count + 1)]
-			stdcallArgsClass: EnumWindowsProc.
-	^((self lookup: 'EnumWindows' inLibrary: 'user32.dll')
-		primFFICallResult: (Alien new: 4)
-		with: cb thunk
-		with: 0) signedLongAt: 1
-
-]
-
-{ #category : #examples }
-Alien class >> exampleGetOpenFileName [
-	"Call the Win32 GetOpenFileNameA function."
-	"Alien exampleGetOpenFileName"
-	<sampleInstance>
-	| openstruct |
-	openstruct := OPENFILENAME newC.
-	(self lookup: 'GetOpenFileNameA' inLibrary: 'comdlg32.dll')
-		primFFICallResult: nil
-		with: openstruct pointer.
-	^openstruct fileName
-]
-
-{ #category : #examples }
 Alien class >> examplePrintf [
 	"Call the libc printf function."
 	"Alien examplePrintf"
-	<sampleInstance>
 	| r s |
 	(self lookup: 'printf' inLibrary: self libcName)
-		primFFICallResult: (r := Alien new: 4)
+		primFFICallResult: (r := Alien forWord)
 		withArguments: {(s := ('Hello World %d %x !!', (String with: Character lf)) asAlien) pointer.
 						 123.
 						 48879}.
 	s free.
-	^r signedLongAt: 1
-]
-
-{ #category : #examples }
-Alien class >> exampleVarArgsEnumFontFamiliesEx [
-	"Call the Win32 EnumFontFamiliesEx function."
-	"Alien exampleEnumFontFamiliesEx"
-	"(Time millisecondsToRun: [1000 timesRepeat: [Alien exampleEnumFontFamiliesEx]]) / 1000.0"
-	<sampleInstance>
-	| fontNames r gle err hDC cb |
-	fontNames := OrderedCollection new.
-	gle := self lookup: 'GetLastError' inLibrary: 'kernel32.dll'.
-	hDC := (self lookup: 'GetDC' inLibrary: 'user32.dll')
-				primFFICallResult: (Alien new: 4)
-				with: 0. "entire screen"
-	err := Alien new: 4.
-	cb := Callback
-			block: [:args :result|
-					fontNames addLast: args logicalFontData elfFullName.
-					result returnInteger: 1]
-			stdcallArgsClass: EnumFontFamExProc.
-	(self lookup: 'EnumFontFamiliesExA' inLibrary: 'gdi32.dll')
-		primFFICallResult: (r := Alien new: 4)
-		withArguments: {hDC.
-						 (LOGFONTA newC lfCharset: LOGFONTA DEFAULTCHARSET; yourself) pointer.
-						 cb thunk.
-						 0.
-						 0}.
-	(r signedLongAt: 1) ~= 1 ifTrue:
-		[gle primFFICallResult: err].
-	(self lookup: 'ReleaseDC' inLibrary: 'user32.dll')
-		primFFICallResult: (Alien new: 4)
-		with: 0 "entire screen"
-		with: hDC.
-	^(err signedLongAt: 1) -> fontNames -> fontNames size
+	^r signedWordAtWordIndex: 1
 ]
 
 { #category : #finalization }
@@ -329,6 +180,13 @@ Alien class >> forPointer: address [ "<Integer>" "^<Alien>"
 	^(self basicNew: WordSize * 2)
 		sizeFieldPut: 0;
 		addressFieldPut: address;
+		yourself
+]
+
+{ #category : #'instance creation' }
+Alien class >> forWord [ "<Integer>" "^<Alien>"
+	^(self basicNew: WordSize * 2)
+		sizeFieldPut: WordSize;
 		yourself
 ]
 
@@ -530,6 +388,11 @@ Alien class >> startUp: resuming [
 ]
 
 { #category : #accessing }
+Alien class >> wordSize [
+	^WordSize
+]
+
+{ #category : #accessing }
 Alien >> address [
 	^self sizeField <= 0
 		ifTrue: [self addressField]
@@ -546,6 +409,18 @@ Alien >> addressField [ "^<Integer>"
 Alien >> addressFieldPut: value [ "<Integer> ^<Integer>"
 	<primitive: 'primAddressFieldPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
+]
+
+{ #category : #coercing }
+Alien >> as: anAlienClass [
+	"Attempt to coerce the receiver into a different class of Alien.  Performs minimal checks!! Use with caution!!"
+	| alienClassDataSize |
+	"Always attempt to access anAlienClass dataSize as a run-time check for anAlienClass actually being an Alien class."
+	alienClassDataSize := anAlienClass dataSize.
+	self isPointer ifFalse:
+		[self dataSize >= alienClassDataSize ifFalse:
+			[self error: 'receiver too small to coerce']].
+	anAlienClass adoptInstance: self
 ]
 
 { #category : #coercing }
@@ -820,6 +695,13 @@ Alien >> signedShortAt: index [ "<Integer> ^<Integer>"
 Alien >> signedShortAt: index "<Integer>" put: value [ "<Integer> ^<Integer>"
 	<primitive: 'primSignedShortAtPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
+]
+
+{ #category : #accessing }
+Alien >> signedWordAtWordIndex: wordIndex [
+	^WordSize = 4
+		ifTrue: [self signedLongAt: wordIndex - 1 * 4 + 1]
+		ifFalse: [self signedLongLongAt: wordIndex - 1 * 8 + 1]
 ]
 
 { #category : #'primitives-accessing' }
