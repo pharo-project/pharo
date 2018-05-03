@@ -1239,7 +1239,7 @@ Behavior >> isPointers [
 Behavior >> isReferenced [
 	"returns true if the class is referenced from a method"
 	^self environment allBehaviors 
-		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: behavior binding]
+		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self binding]
 	
 
 ]
