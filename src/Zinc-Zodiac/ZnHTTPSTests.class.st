@@ -175,9 +175,9 @@ ZnHTTPSTests >> testRequestResponse [
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	query := 'Smalltalk'.
-	stream := ZdcSecureSocketStream openConnectionToHostNamed: 'encrypted.google.com' port: 443.
+	stream := ZdcSecureSocketStream openConnectionToHostNamed: 'www.google.com' port: 443.
 	[
-		request := ZnRequest get: 'https://encrypted.google.com/search?q=', query.
+		request := ZnRequest get: 'https://www.google.com/search?q=', query.
 		stream connect.
 		request writeOn: stream.
 		stream flush.
