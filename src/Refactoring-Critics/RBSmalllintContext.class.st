@@ -74,23 +74,6 @@ RBSmalllintContext >> computeLiteralsForSelector: aSelector in: aClass [
 	self addLiteralsFor: method
 ]
 
-{ #category : #private }
-RBSmalllintContext >> computeMessages [
-	| searcher |
-	selfMessages := Set new.
-	superMessages := Set new.
-	messages := Set new.
-	searcher := RBParseTreeSearcher new.
-	searcher
-		matches: 'self `@message: ``@args'
-			do: [:aNode :answer | selfMessages add: aNode selector];
-		matches: 'super `@message: ``@args'
-			do: [:aNode :answer | superMessages add: aNode selector];
-		matches: '``@receiver `@message: ``@args'
-			do: [:aNode :answer | messages add: aNode selector].
-	searcher executeTree: self parseTree initialAnswer: nil
-]
-
 { #category : #testing }
 RBSmalllintContext >> implements: aSelector [ 
 	^self selectors includes: aSelector
@@ -138,8 +121,7 @@ RBSmalllintContext >> literals [
 
 { #category : #accessing }
 RBSmalllintContext >> messages [
-	messages isNil ifTrue: [self computeMessages].
-	^messages
+    ^(self parseTree sendNodes collect: [ :node | node selector ]) asSet
 ]
 
 { #category : #accessing }
@@ -207,7 +189,7 @@ RBSmalllintContext >> selector [
 { #category : #accessing }
 RBSmalllintContext >> selector: anObject [ 
 	selector := anObject.
-	parseTree := compiledMethod := selfMessages := superMessages := messages := nil
+	parseTree := compiledMethod := nil
 ]
 
 { #category : #accessing }
@@ -223,8 +205,8 @@ RBSmalllintContext >> selectors [
 
 { #category : #accessing }
 RBSmalllintContext >> selfMessages [
-	selfMessages isNil ifTrue: [self computeMessages].
-	^selfMessages
+    ^self parseTree selfMessages
+
 ]
 
 { #category : #private }
@@ -249,8 +231,8 @@ RBSmalllintContext >> specialSelectors [
 
 { #category : #accessing }
 RBSmalllintContext >> superMessages [
-	superMessages isNil ifTrue: [self computeMessages].
-	^superMessages
+    ^self parseTree superMessages
+
 ]
 
 { #category : #testing }
