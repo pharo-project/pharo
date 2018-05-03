@@ -1235,9 +1235,24 @@ Behavior >> isPointers [
 	^self isBits not
 ]
 
+{ #category : #testing }
+Behavior >> isReferenced [
+	"returns true if the class is referenced from a method"
+	^self environment allBehaviors 
+		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: behavior binding]
+	
+
+]
+
 { #category : #'testing class hierarchy' }
 Behavior >> isRootInEnvironment [
 	^self superclass isNil
+]
+
+{ #category : #testing }
+Behavior >> isUsed [
+	"the class us used somehow. This is client specific, subclasses can override"
+	^self isReferenced
 ]
 
 { #category : #testing }
