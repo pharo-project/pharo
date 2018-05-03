@@ -19,7 +19,7 @@ Class {
 ShLayoutDefinition >> allSlots [
 	| superclass | 
 	superclass := builder superclass.
-	^ (superclass ifNil: [ ^#() ] ifNotNil: [ superclass allSlots ]) , slots.
+	^ (superclass ifNil: [ #() ] ifNotNil: [ superclass allSlots ]) , slots.
 ]
 
 { #category : #accessing }
