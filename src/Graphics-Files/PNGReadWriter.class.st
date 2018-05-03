@@ -776,8 +776,6 @@ PNGReadWriter >> nextImage [
 	idatChunkStream := nil.
 	transparentPixelValue := nil.
 	unknownChunks := Set new.
-	stream reset.
-	stream binary.
 	stream skip: 8.
 	[stream atEnd] whileFalse: [self processNextChunk].
 	"Set up our form"
@@ -1251,16 +1249,12 @@ PNGReadWriter >> writeChunk: crcStream [
 			print: length;
 			nextPutAll: ' crc=0x';
 			nextPutAll: crc printStringHex ].
-	stream 
-		nextNumber: 4
-		put: length - 4.	"exclude chunk name"
+	self nextLongPut: length - 4.	"exclude chunk name"
 	stream 
 		next: length
 		putAll: bytes
 		startingAt: 1.
-	stream 
-		nextNumber: 4
-		put: crc.
+	self nextLongPut: crc.
 	debug ifTrue: 
 		[ Transcript
 			nextPutAll: ' afterPos=';
