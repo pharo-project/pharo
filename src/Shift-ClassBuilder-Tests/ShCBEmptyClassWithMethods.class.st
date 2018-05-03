@@ -4,7 +4,7 @@ I am a test class.
 Class {
 	#name : #ShCBEmptyClassWithMethods,
 	#superclass : #Object,
-	#category : 'Shift-ClassBuilder-Tests-TestClasses'
+	#category : #'Shift-ClassBuilder-Tests-TestClasses'
 }
 
 { #category : #'test methods' }
