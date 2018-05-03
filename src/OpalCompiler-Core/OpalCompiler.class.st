@@ -300,6 +300,15 @@ OpalCompiler >> format: textOrString [
 ]
 
 { #category : #private }
+OpalCompiler >> isInteractiveFor: aRequestor [
+	"the requester can override if the compiler is interactive or not"
+	aRequestor ifNil: [^ false ].
+	^(aRequestor respondsTo: #interactive)
+		ifTrue: [ aRequestor interactive ]
+		ifFalse: [ true ]
+]
+
+{ #category : #private }
 OpalCompiler >> logDoIt: sourceCode [
 	self compilationContext logged ifFalse: [ ^self ].
 	Smalltalk globals 
@@ -386,7 +395,7 @@ OpalCompiler >> receiver: anObject [
 { #category : #accessing }
 OpalCompiler >> requestor: aRequestor [
 	self compilationContext requestor: aRequestor.
-	self compilationContext interactive: (UIManager default interactiveParserFor: aRequestor).
+	self compilationContext interactive: (self isInteractiveFor: aRequestor).
 ]
 
 { #category : #accessing }
