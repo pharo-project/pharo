@@ -1,7 +1,7 @@
 Class {
 	#name : #ManifestColors,
 	#superclass : #PackageManifest,
-	#category : #Colors
+	#category : #'Colors-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
