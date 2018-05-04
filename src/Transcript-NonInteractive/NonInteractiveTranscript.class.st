@@ -22,7 +22,7 @@ Class {
 		'fileName',
 		'accessSemaphore'
 	],
-	#category : #'Transcript-NonInteractive'
+	#category : #'Transcript-NonInteractive-Base'
 }
 
 { #category : #constants }

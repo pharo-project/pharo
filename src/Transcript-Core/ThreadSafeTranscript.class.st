@@ -28,7 +28,7 @@ Class {
 		'deferredEndEntry',
 		'stepContents'
 	],
-	#category : #'Transcript-Core'
+	#category : #'Transcript-Core-Base'
 }
 
 { #category : #declare }
