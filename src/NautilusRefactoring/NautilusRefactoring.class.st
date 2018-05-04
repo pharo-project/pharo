@@ -82,72 +82,6 @@ NautilusRefactoring class >> buildSourceCodeShortcutsOn: aBuilder [
 		do: [ :target | target refactor formatSourceCode ]
 ]
 
-{ #category : #menu }
-NautilusRefactoring class >> classRefactoringSubmenu: aBuilder [
-	<nautilusGlobalClassMenu>
-	| target |
-	target := aBuilder model.
-	target selectedClass ifNil: [^target].
-	
-	target selectedClass refactoringSubmenu: aBuilder.
-]
-
-{ #category : #menu }
-NautilusRefactoring class >> classVarRefactoringSubmenu: aBuilder [
-	<nautilusGlobalClassMenu>
-	| target selectedClass |
-	target := aBuilder model.
-	selectedClass := target selectedClass.
-	selectedClass ifNil: [ ^ target ].
-	
-	selectedClass varRefactoringSubMenu: aBuilder.
-
-	
-]
-
-{ #category : #menu }
-NautilusRefactoring class >> codeRewritingClassSubmenu: aBuilder [
-	<nautilusGlobalClassMenu>
-	| target |
-	target := aBuilder model.
-	target selectedClass ifNil: [^target].
-	
-	target selectedClass codeRewritingClass: aBuilder.
-]
-
-{ #category : #menu }
-NautilusRefactoring class >> groupRefactoringMenu: aBuilder [
-	<nautilusGlobalGroupMenu>
-	| target |
-	target := aBuilder model.
-	target selectedClass ifNotNil: [
-		target selectedClass groupRefactoring: aBuilder ].
-]
-
-{ #category : #menu }
-NautilusRefactoring class >> instVarRefactoringSubmenu: aBuilder [
-	<nautilusGlobalClassMenu>
-	| target selectedClass |
-	
-	target := aBuilder model.
-	selectedClass := target selectedClass.
-	selectedClass ifNil: [^target].
-	
-	selectedClass instVarRefactoring: aBuilder.
-]
-
-{ #category : #menu }
-NautilusRefactoring class >> methodRefactoringSubMenu: aBuilder [
-	<nautilusGlobalMethodMenu>
-	| target selectedMethod |
-
-	target := aBuilder model.
-	selectedMethod := target selectedMethod.
-	selectedMethod ifNil:[ ^ target ].
-	
-	selectedMethod origin instanceSide methodRefactoring: aBuilder.
-]
-
 { #category : #'instance creation' }
 NautilusRefactoring class >> model: model [
 
@@ -156,74 +90,10 @@ NautilusRefactoring class >> model: model [
 		yourself
 ]
 
-{ #category : #menu }
-NautilusRefactoring class >> packageRefactoringMenu: aBuilder [
-	<nautilusGlobalPackageMenu>
-	
-	| target |
-	
-	target := aBuilder model.
-	
-	(aBuilder item: #'Rewrite Code')
-		order:  100;
-		withSeparatorAfter.
-	
-	(aBuilder item: #'Rewrite Code')
-		action: [ target refactor rewriteCode ];
-		parent: #'Rewrite Code';
-		order: 0.
-
-	(aBuilder item: #'Search Code')
-		action: [ target refactor searchCode ];
-		parent: #'Rewrite Code';
-		order: 100.
-	
-]
-
 { #category : #accessing }
 NautilusRefactoring class >> promptOnRefactoring [
 
 	^ PromptOnRefactoring ifNil: [ PromptOnRefactoring := true ]
-]
-
-{ #category : #menu }
-NautilusRefactoring class >> refactoringClassMenu: aBuilder [
-	<nautilusGlobalClassMenu>
-	| target |
-	target := aBuilder model.
-	target selectedClass ifNil: [ ^ target ].
-	target selectedClass refactoringMenu: aBuilder
-]
-
-{ #category : #menu }
-NautilusRefactoring class >> refactoringMethodMenu: aBuilder [
-	<nautilusGlobalMethodMenu>
-	| target |
-	target := aBuilder model.
-	target selectedMethod ifNil: [ ^ target ].
-	target selectedMethod origin instanceSide refactoringMethod: aBuilder
-]
-
-{ #category : #menu }
-NautilusRefactoring class >> sourceCodeRefactoringMenuHolder: aBuilder [
-	<nautilusGlobalSourceCodeMenu>
-	| target |
-	target := aBuilder model.
-	target ifNil: [ ^ self ].
-	target selectedMethod ifNil: [ ^ self ].
-	target selectedClass
-		ifNotNil: [ :selectedClass | selectedClass sourceCodeRefactoringMenu: aBuilder ]
-]
-
-{ #category : #menu }
-NautilusRefactoring class >> sourceCodeRefactoringSubMenu: aBuilder [
-	<nautilusGlobalSourceCodeMenu>
-	| target |
-	target := aBuilder model.
-	target ifNil: [ ^ self ].
-	target selectedMethod ifNil: [ ^ self ].
-	target selectedClass
-		ifNotNil: [ :selectedClass | selectedClass sourceCodeRefactoring: aBuilder ]
 ]
 
 { #category : #'class var' }
