@@ -10,7 +10,6 @@ Class {
 { #category : #tests }
 ZipExtensionTests >> testZipped [
 	| compressed |
-	
 	compressed := 'hello' zipped.
-	self assert: compressed unzipped equals: 'hello'.
+	self assert: compressed unzipped equals: 'hello'
 ]
