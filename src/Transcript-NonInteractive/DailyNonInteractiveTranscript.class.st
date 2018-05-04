@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'date'
 	],
-	#category : #'Transcript-NonInteractive'
+	#category : #'Transcript-NonInteractive-Base'
 }
 
 { #category : #constants }
