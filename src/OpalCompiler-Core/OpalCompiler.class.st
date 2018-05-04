@@ -263,21 +263,13 @@ OpalCompiler >> evaluate [
 	 compiled method is invoked from here via withArgs:executeMethod:, hence
 	 the system no longer creates Doit method litter on errors."
 
-	| value selectedSource itsSelection itsSelectionString |
-	self class: (context 
-				ifNil: [ receiver class ]
-				ifNotNil: [ context method methodClass ]).
+	| value |
 	self noPattern: true.
-	selectedSource := ((self compilationContext requestor respondsTo: #selection)
-		and: [ 
-			(itsSelection := self compilationContext requestor selection) notNil
-				and: [ (itsSelectionString := itsSelection asString) isEmptyOrNil not ] ])
-		ifTrue: [ itsSelectionString ]
-		ifFalse: [ source ].
-	self source: selectedSource.
-	compilationContext parseOptions: #(+ #optionEmbeddSources). 
+	self getSourceFromRequestorSelection.
+	self class: (context ifNil: [ receiver class ] ifNotNil: [ context method methodClass ]).
+	compilationContext parseOptions: #(+ #optionEmbeddSources).
 	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod: self compile.
-	self logDoIt: selectedSource.
+	self logDoIt.
 	^ value
 ]
 
@@ -300,6 +292,17 @@ OpalCompiler >> format: textOrString [
 ]
 
 { #category : #private }
+OpalCompiler >> getSourceFromRequestorSelection [
+    | selectionString |
+    "if the requestor can provide a selection, we use that as the source"
+     (self compilationContext requestor respondsTo: #selection) ifFalse: [ ^self ].
+    
+    selectionString := self compilationContext requestor selection asString.
+    selectionString isEmptyOrNil ifTrue: [ ^self ].
+    self source: selectionString.
+]
+
+{ #category : #private }
 OpalCompiler >> isInteractiveFor: aRequestor [
 	"the requester can override if the compiler is interactive or not"
 	aRequestor ifNil: [^ false ].
@@ -309,12 +312,12 @@ OpalCompiler >> isInteractiveFor: aRequestor [
 ]
 
 { #category : #private }
-OpalCompiler >> logDoIt: sourceCode [
+OpalCompiler >> logDoIt [
 	self compilationContext logged ifFalse: [ ^self ].
 	Smalltalk globals 
 			at: #SystemAnnouncer 
 			ifPresent: [ :sysAnn | 
-				sysAnn uniqueInstance evaluated: sourceCode contents context: context ]
+				sysAnn uniqueInstance evaluated: source contents context: context ]
 ]
 
 { #category : #accessing }
