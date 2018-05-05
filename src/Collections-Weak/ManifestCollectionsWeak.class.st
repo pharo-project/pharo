@@ -4,7 +4,7 @@ All weak collections
 Class {
 	#name : #ManifestCollectionsWeak,
 	#superclass : #PackageManifest,
-	#category : #'Collections-Weak'
+	#category : #'Collections-Weak-Manifest'
 }
 
 { #category : #'meta-data' }

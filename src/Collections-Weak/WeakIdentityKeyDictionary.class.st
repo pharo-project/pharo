@@ -4,7 +4,7 @@ This class represents an identity dictionary with weak keys.
 Class {
 	#name : #WeakIdentityKeyDictionary,
 	#superclass : #WeakKeyDictionary,
-	#category : #'Collections-Weak'
+	#category : #'Collections-Weak-Dictionaries'
 }
 
 { #category : #private }
