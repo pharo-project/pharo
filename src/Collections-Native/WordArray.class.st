@@ -22,7 +22,7 @@ WordArray >> atAllPut: value [
 	super atAllPut: value
 ]
 
-{ #category : #'objects from disk' }
+{ #category : #'accessing' }
 WordArray >> byteSize [
 	^self size * 4
 ]
