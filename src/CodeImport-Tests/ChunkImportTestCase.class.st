@@ -1,7 +1,10 @@
+"
+SUnit test case for import of chunk format
+"
 Class {
 	#name : #ChunkImportTestCase,
 	#superclass : #TestCase,
-	#category : #'Tests-CodeImport'
+	#category : #'CodeImport-Tests-Chunks'
 }
 
 { #category : #auxiliar }
