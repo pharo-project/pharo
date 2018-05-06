@@ -14,7 +14,7 @@ ChunkImportTestCase >> importAClass [
 			instanceVariableNames: ''var1 var2 var3''
 			classVariableNames: ''''
 			poolDictionaries: ''''
-			category: ''CodeImporter-Tests-Garbage''!'.
+			category: ''CodeImport-Tests-Garbage''!'.
 ]
 
 { #category : #'importing-code' }
@@ -130,7 +130,7 @@ ChunkImportTestCase >> testImportAClass [
 		self assert: (class instVarNames includes: 'var1').
 		self assert: (class instVarNames includes: 'var2').
 		self assert: (class instVarNames includes: 'var3').
-		self assert: class category equals: 'CodeImporter-Tests-Garbage'.
+		self assert: class category equals: 'CodeImport-Tests-Garbage'.
 		
 	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]

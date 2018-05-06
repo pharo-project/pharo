@@ -133,7 +133,10 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'CodeExport'.
 		spec package: 'CodeImport'.
+		spec package: 'CodeImport-Tests'.
+		
 		spec package: 'CodeImportCommandLineHandlers'.
+		
 		spec package: 'OpalCompiler-Core'.
 		
 		spec package: 'FileSystem-Core'.
@@ -230,6 +233,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'SUnitGroup' with: {
 			'SUnit-Core'.
 			'SUnit-Tests'.
+			'CodeImport-Tests'.
 			'JenkinsTools-Core'}.
 
 	]
