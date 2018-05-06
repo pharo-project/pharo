@@ -4,7 +4,7 @@ I am an expert on Mac OS X filesystem conventions. I resolve origins according t
 Class {
 	#name : #MacOSResolver,
 	#superclass : #PlatformResolver,
-	#category : #'FileSystem-Core-Implementation'
+	#category : #'FileSystem-Core-Base-Resolver'
 }
 
 { #category : #accessing }

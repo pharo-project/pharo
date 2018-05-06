@@ -8,7 +8,7 @@ Class {
 		'out',
 		'block'
 	],
-	#category : #'FileSystem-Core-Implementation'
+	#category : #'FileSystem-Core-Base-Visitors'
 }
 
 { #category : #visiting }
