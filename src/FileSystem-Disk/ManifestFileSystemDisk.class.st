@@ -8,7 +8,7 @@ A documentation of this library is available in the Deep Into Pharo book, «Chap
 Class {
 	#name : #ManifestFileSystemDisk,
 	#superclass : #PackageManifest,
-	#category : #'FileSystem-Disk'
+	#category : #'FileSystem-Disk-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

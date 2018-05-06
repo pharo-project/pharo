@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'Disks'
 	],
-	#category : #'FileSystem-Disk'
+	#category : #'FileSystem-Disk-Store'
 }
 
 { #category : #accessing }
