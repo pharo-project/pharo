@@ -4,7 +4,7 @@ SUnit tests for FileSystemDirectoryEntry
 Class {
 	#name : #DirectoryEntryTest,
 	#superclass : #TestCase,
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Base'
 }
 
 { #category : #accessing }

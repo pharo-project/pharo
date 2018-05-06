@@ -4,7 +4,7 @@ SUnit tests for SystemResolver
 Class {
 	#name : #SystemResolverTest,
 	#superclass : #FileSystemResolverTest,
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Resolver'
 }
 
 { #category : #running }
