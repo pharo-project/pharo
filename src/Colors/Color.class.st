@@ -74,7 +74,7 @@ Class {
 		'MaskingMap',
 		'RedShift'
 	],
-	#category : #Colors
+	#category : #'Colors-Base'
 }
 
 { #category : #colormaps }
@@ -1597,13 +1597,6 @@ Color >> isTranslucentButNotTransparent [
 	"Answer true if this any of this morph is translucent but not transparent."
 	
 	^ self isTranslucent and: [ self isTransparent not ]
-]
-
-{ #category : #queries }
-Color >> isTranslucentColor [
-	"This means: self isTranslucent, but isTransparent not"
-	self flag: #toremove.
-	^ false
 ]
 
 { #category : #queries }
