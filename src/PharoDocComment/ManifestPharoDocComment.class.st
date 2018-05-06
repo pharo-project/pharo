@@ -1,5 +1,5 @@
 "
-This package supports the handling (synatx highlighting and first class manipulation of small executable examples inline in method comment. 
+This package supports the handling (syntax highlighting and first class manipulation) of small executable examples inline in method comment. 
 
 Assuming the following method is defined
 
@@ -12,8 +12,8 @@ The following expression allows one to access to the expression and its expected
 
 [[[
 | doc |
-doc := (AbstractFileReference >> #basename) ast pharoDocCommentNodes
-doc expression 
+doc := (AbstractFileReference >> #basename) ast pharoDocCommentNodes.
+doc first expression 
 > '/foo/gloops.taz' asFileReference basename
 doc result
 >  'gloops.taz'
@@ -36,5 +36,5 @@ Implementation Notes
 Class {
 	#name : #ManifestPharoDocComment,
 	#superclass : #PackageManifest,
-	#category : #PharoDocComment
+	#category : #'PharoDocComment-Manifest'
 }
