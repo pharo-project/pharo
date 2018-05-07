@@ -67,7 +67,7 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 			offset: 0) - delta.
 	" we can not guess at this point where the tempvar should be stored,
 	tempvars vs. tempvector therefore -> reparse"
-	(OCSourceCodeChanged new newSourceCode: self requestor text) signal
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal
 ]
 
 { #category : #correcting }
@@ -201,7 +201,7 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 			actions
 				add: [ 
 					self substituteVariable: each atInterval: interval.
-					(OCSourceCodeChanged new newSourceCode: self requestor text) signal ] ].
+					(ReparseAfterSourceEditing new newSource: self requestor text) signal ] ].
 	lines add: labels size.
 	labels add: 'Cancel'.
 	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
