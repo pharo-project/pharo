@@ -153,6 +153,12 @@ BehaviorTest >> testIsAbstract [
 ]
 
 { #category : #tests }
+BehaviorTest >> testIsReferenced [
+	self assert: Object isReferenced.
+	self deny: Object class isReferenced
+]
+
+{ #category : #tests }
 BehaviorTest >> testIsRootInEnvironment [
 	self assert: ProtoObject isRootInEnvironment.
 	self deny: Object isRootInEnvironment
