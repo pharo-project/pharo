@@ -374,8 +374,6 @@ TBehavior >> basicAddSelector: selector withMethod: compiledMethod [
 	receiver's method dictionary.
 	Do this without sending system change notifications"
 
-	| oldMethodOrNil |	
-	oldMethodOrNil := self lookupSelector: selector.
 	self methodDict at: selector put: compiledMethod.
 	compiledMethod methodClass: self.
 	compiledMethod selector: selector.
