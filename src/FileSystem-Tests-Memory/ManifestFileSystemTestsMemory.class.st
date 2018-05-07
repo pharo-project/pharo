@@ -6,5 +6,5 @@ A documentation of this library is available in the Deep Into Pharo book, «Chap
 Class {
 	#name : #ManifestFileSystemTestsMemory,
 	#superclass : #PackageManifest,
-	#category : #'FileSystem-Tests-Memory'
+	#category : #'FileSystem-Tests-Memory-Manifest'
 }
