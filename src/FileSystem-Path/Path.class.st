@@ -17,7 +17,7 @@ Class {
 	#name : #Path,
 	#superclass : #Object,
 	#type : #variable,
-	#category : #'FileSystem-Path'
+	#category : #'FileSystem-Path-Base'
 }
 
 { #category : #'instance creation' }

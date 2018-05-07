@@ -8,7 +8,7 @@ A documentation of this library is available in the Deep Into Pharo book, «Chap
 Class {
 	#name : #ManifestFileSystemPath,
 	#superclass : #PackageManifest,
-	#category : #'FileSystem-Path'
+	#category : #'FileSystem-Path-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
