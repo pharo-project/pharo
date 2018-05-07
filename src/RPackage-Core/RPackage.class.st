@@ -626,9 +626,11 @@ RPackage >> definesOrExtendsClass: aClass [
 ]
 
 { #category : #converting }
-RPackage >> demoteToRPackageNamed: aString [ 
+RPackage >> demoteToTagInPackageNamed: aString [
 	| newRPackage |
 
+	aString = self name ifTrue: [ ^ self ].
+	
 	self unregister.
 	newRPackage := self class organizer 
 		packageNamed: aString 
