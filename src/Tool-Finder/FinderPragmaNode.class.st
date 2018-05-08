@@ -23,7 +23,7 @@ FinderPragmaNode >> browseHierarchy [
 { #category : #private }
 FinderPragmaNode >> browseReferences [
 
-	self systemNavigation browseAllReferencesTo: self item.
+	self systemNavigation browseAllReferencesTo: self item
 ]
 
 { #category : #accessing }
@@ -55,12 +55,12 @@ FinderPragmaNode >> foundReceiverOf: aString [
 	(index = 0)
 		ifFalse: [firstPart := selector copyFrom: 1 to: index].
 	index :=  aString findString: firstPart.
-	^ aString copyFrom: 1 to: (index-1).
+	^ aString copyFrom: 1 to: (index-1)
 ]
 
 { #category : #private }
 FinderPragmaNode >> inspectItem [
-	(RBBrowserEnvironment default forPragmas:{ self item}) methods inspect
+	(RBBrowserEnvironment default forPragmas: {self item}) methods inspect
 ]
 
 { #category : #'event handling' }
@@ -68,7 +68,7 @@ FinderPragmaNode >> keyStroke: anEvent [
 	(anEvent controlKeyPressed or: [ anEvent commandKeyPressed ]) ifFalse: [ ^ false ].
 	anEvent keyCharacter == $h ifTrue: [ ^ self browseHierarchy ].
 	anEvent keyCharacter == $N ifTrue: [ ^ self browseReferences ].
-	^ super keyStroke: anEvent.
+	^ super keyStroke: anEvent
 ]
 
 { #category : #'event handling' }
@@ -77,5 +77,5 @@ FinderPragmaNode >> menu: menu shifted: aBoolean [
 		add: 'References (N)'
 		target: self
 		selector: #browseReferences.
-	^ super menu: menu shifted: aBoolean.
+	^ super menu: menu shifted: aBoolean
 ]
