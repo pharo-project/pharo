@@ -60,7 +60,6 @@ ZnEncodedStream >> encoding: encoding [
 
 { #category : #accessing }
 ZnEncodedStream >> flush [
-
 	^ stream flush
 ]
 
@@ -81,7 +80,6 @@ ZnEncodedStream >> position [
 
 { #category : #accessing }
 ZnEncodedStream >> position: aPosition [
-
 	stream position: aPosition
 ]
 
@@ -92,19 +90,16 @@ ZnEncodedStream >> setToEnd [
 
 { #category : #accessing }
 ZnEncodedStream >> size [
-
 	^ stream size
 ]
 
 { #category : #accessing }
 ZnEncodedStream >> truncate [
-	
 	stream truncate
 ]
 
 { #category : #accessing }
 ZnEncodedStream >> truncate: anInteger [ 
-	
 	stream truncate: anInteger
 ]
 

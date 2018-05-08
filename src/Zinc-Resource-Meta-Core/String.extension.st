@@ -9,7 +9,7 @@ String >> addedToZnUrl: url [
 
 { #category : #'*zinc-resource-meta-core' }
 String >> asUrl [
-	^ self asZnUrl
+	^ self asZnUrl 
 ]
 
 { #category : #'*zinc-resource-meta-core' }

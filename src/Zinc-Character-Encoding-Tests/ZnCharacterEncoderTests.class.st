@@ -533,7 +533,7 @@ ZnCharacterEncoderTests >> testUTF8ByteOrderMark [
 	self assert: decodedString equals: string.
 	
 	bom := encoder encodeStringWithByteOrderMark: ''.
-	self should: [ encoder decodeBytes: bom ] raise: ZnInvalidUTF8
+	self should: [ encoder decodeBytes: bom ] raise: ZnIncomplete
 ]
 
 { #category : #testing }
@@ -580,7 +580,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderIncomplete [
 		2 to: each size do: [ :count |
 			self 
 				should: [ encoder decodeBytes: (each allButLast: count - 1) ] 
-				raise: ZnInvalidUTF8 ] ]
+				raise: ZnIncomplete ] ]
 ]
 
 { #category : #testing }
@@ -644,9 +644,9 @@ ZnCharacterEncoderTests >> testUTF8ReadFaultyInput [
 	"incomplete input"
 	self 
 		should: [ #[102 111 111 195 ] utf8Decoded ] 
-		raise: ZnInvalidUTF8.
+		raise: ZnIncomplete.
 	self 
-		assert: ([ #[102 111 111 195 ] utf8Decoded ] on: ZnInvalidUTF8 do: [ :exception | exception resume ]) 
+		assert: ([ #[102 111 111 195 ] utf8Decoded ] on: ZnInvalidUTF8 , ZnIncomplete do: [ :exception | exception resume ]) 
 		equals: 'foo?'
 ]
 
