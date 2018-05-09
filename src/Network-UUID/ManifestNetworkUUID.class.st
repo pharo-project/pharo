@@ -1,5 +1,5 @@
 "
-A package providing Universally Unique Identifiers (UUID) following RFC4122
+A package providing Universally Unique Identifiers (UUID) following RFC4122.
 "
 Class {
 	#name : #ManifestNetworkUUID,
