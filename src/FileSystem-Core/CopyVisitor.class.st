@@ -8,7 +8,7 @@ Class {
 		'source',
 		'dest'
 	],
-	#category : #'FileSystem-Core-Implementation'
+	#category : #'FileSystem-Core-Base-Visitors'
 }
 
 { #category : #'instance creation' }

@@ -6,7 +6,7 @@ I can use any guide, and the objects in the array I produce will reflect the ord
 Class {
 	#name : #SelectVisitor,
 	#superclass : #AbstractEnumerationVisitor,
-	#category : #'FileSystem-Core-Implementation'
+	#category : #'FileSystem-Core-Base-Visitors'
 }
 
 { #category : #'instance creation' }
