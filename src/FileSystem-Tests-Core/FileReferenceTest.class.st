@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'filesystem'
 	],
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Base'
 }
 
 { #category : #support }

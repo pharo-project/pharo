@@ -9,7 +9,7 @@ Class {
 		'handle',
 		'reference'
 	],
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Base'
 }
 
 { #category : #testing }
