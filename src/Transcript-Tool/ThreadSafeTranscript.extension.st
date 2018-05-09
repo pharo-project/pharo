@@ -23,14 +23,15 @@ ThreadSafeTranscript class >> menuCommandOn: aBuilder [
 
 { #category : #'*Transcript-Tool' }
 ThreadSafeTranscript >> open [
-	"self new open"
+	<script: 'self new open'>
+	
 	^ self openLabel: self title
 
 ]
 
 { #category : #'*Transcript-Tool' }
 ThreadSafeTranscript class >> open [ 
-	"self open"
+	<script>
 	
 	^ self new open 
 
