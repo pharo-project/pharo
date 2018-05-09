@@ -4,7 +4,7 @@ I'm a specific store for OSX file systems
 Class {
 	#name : #MacStore,
 	#superclass : #UnixStore,
-	#category : #'FileSystem-Disk'
+	#category : #'FileSystem-Disk-Store'
 }
 
 { #category : #current }
