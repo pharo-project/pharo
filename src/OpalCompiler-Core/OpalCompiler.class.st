@@ -189,10 +189,10 @@ OpalCompiler >> compile [
 	[ 	[	ast := self parse.
 			self doSemanticAnalysis. 
 			self callPlugins.  
-		] 	on: OCSourceCodeChanged 
+		] 	on: ReparseAfterSourceEditing 
 			do: 
 			[  	:notification | 
-				self source: notification newSourceCode. 
+				self source: notification newSource. 
 				notification retry. 
 			]. 
 		cm := compilationContext optionEmbeddSources
