@@ -7,13 +7,13 @@ Class {
 	#category : #'Tool-Finder'
 }
 
-{ #category : #'events handling' }
+{ #category : #'event handling' }
 FinderNode >> addInspectMenuItem: menu [
 
 	menu
 		add: 'Inspect (i)'
 		target: self
-		selector: #inspectItem.
+		selector: #inspectItem
 ]
 
 { #category : #private }
@@ -28,7 +28,7 @@ FinderNode >> browseClass [
 	^ Smalltalk tools browser openOnClass: self item
 ]
 
-{ #category : #private }
+{ #category : #displaying }
 FinderNode >> displayString [
 	
 	^ self item asString
@@ -49,14 +49,14 @@ FinderNode >> inspectItem [
 	self item inspect
 ]
 
-{ #category : #'events handling' }
+{ #category : #'event handling' }
 FinderNode >> keyStroke: anEvent [
 	(anEvent controlKeyPressed or: [ anEvent commandKeyPressed ]) ifFalse: [ ^ false ].
 	anEvent keyCharacter == $b ifTrue: [ ^ self browse ].
-	anEvent keyCharacter == $i ifTrue: [ ^ self inspectItem ].
+	anEvent keyCharacter == $i ifTrue: [ ^ self inspectItem ]
 ]
 
-{ #category : #'events handling' }
+{ #category : #'event handling' }
 FinderNode >> menu: menu shifted: aBoolean [
 	menu
 		add: 'Browse (b)'

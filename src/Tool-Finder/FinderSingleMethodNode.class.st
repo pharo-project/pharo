@@ -14,9 +14,8 @@ FinderSingleMethodNode >> childrenItems [
 ]
 
 { #category : #printing }
-FinderSingleMethodNode >> displayString [ 
-
-	^ self itemMethod selector, ' (',self itemMethod methodClass name,')'
+FinderSingleMethodNode >> displayString [
+	^ self itemMethod selector , ' (' , self itemMethod methodClass name , ')'
 ]
 
 { #category : #private }

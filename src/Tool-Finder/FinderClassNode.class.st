@@ -42,7 +42,8 @@ FinderClassNode >> childNodeClassFromItem: anItem [
 { #category : #accessing }
 FinderClassNode >> childrenItems [
 	"I search the children, if I have not got any, I call my super method"
-	^ (self model resultDictionary at: self item ifAbsent:[^super childrenItems])
+
+	^ self model resultDictionary at: self item ifAbsent: [ ^ super childrenItems ]
 ]
 
 { #category : #'event handling' }
@@ -50,7 +51,7 @@ FinderClassNode >> keyStroke: anEvent [
 	(anEvent controlKeyPressed or: [ anEvent commandKeyPressed ]) ifFalse: [ ^ false ].
 	anEvent keyCharacter == $h ifTrue: [ ^ self browseHierarchy ].
 	anEvent keyCharacter == $N ifTrue: [ ^ self browseReferences ].
-	^ super keyStroke: anEvent.
+	^ super keyStroke: anEvent
 ]
 
 { #category : #'event handling' }
@@ -63,5 +64,5 @@ FinderClassNode >> menu: menu shifted: aBoolean [
 		add: 'References (N)'
 		target: self
 		selector: #browseReferences.
-	^ super menu: menu shifted: aBoolean.
+	^ super menu: menu shifted: aBoolean
 ]
