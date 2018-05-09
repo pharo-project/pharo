@@ -56,7 +56,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'Network-UUID'
+	#category : #'Network-UUID-Base'
 }
 
 { #category : #accessing }
