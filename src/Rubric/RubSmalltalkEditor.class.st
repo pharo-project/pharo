@@ -213,24 +213,22 @@ RubSmalltalkEditor >> click: anEvent [
 
 { #category : #'do-its' }
 RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
-	| methodNode methodClass |
+	| methodClass |
 	methodClass := evalContext
 		ifNil: [ anObject class ]
 		ifNotNil: [ evalContext methodClass ].
-	methodNode := self class compiler
+	^self class compiler
 		source: aStream;
 		class: methodClass;
 		context: evalContext;
 		requestor: self morph;
 		noPattern: true;
 		failBlock: [ ^ nil ];
-		translate.
-	^ methodNode generateWithSource
+		compile
 ]
 
 { #category : #'do-its' }
 RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
-	
 	^ self compile: self selectionAsStream for: anObject in: evalContext
 ]
 
