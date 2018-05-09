@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'root'
 	],
-	#category : #'FileSystem-Memory'
+	#category : #'FileSystem-Memory-Store'
 }
 
 { #category : #public }
