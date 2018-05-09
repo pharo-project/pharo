@@ -108,7 +108,7 @@ TraitMethodDescription >> generateMethod: aSelector withMarker: aSymbol forArgs:
 		source: source;
 		class: self class;
 		failBlock: [];
-		translate.
+		parse.
 	^(node generateWithSource) selector: aSelector; yourself
 ]
 

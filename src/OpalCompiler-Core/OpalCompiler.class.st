@@ -267,7 +267,6 @@ OpalCompiler >> evaluate [
 	self noPattern: true.
 	self getSourceFromRequestorSelection.
 	self class: (context ifNil: [ receiver class ] ifNotNil: [ context method methodClass ]).
-	compilationContext parseOptions: #(+ #optionEmbeddSources).
 	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod: self compile.
 	self logDoIt.
 	^ value
@@ -328,6 +327,8 @@ OpalCompiler >> logged: aBoolean [
 { #category : #accessing }
 OpalCompiler >> noPattern: aBoolean [
 	self compilationContext noPattern: aBoolean.
+	"when we compile an expression, embedd sources, as the resulting method will never be installed"
+	compilationContext parseOptions: #(+ #optionEmbeddSources).
 	
 ]
 
