@@ -67,7 +67,6 @@ BMPReadWriter class >> typicalFileExtensions [
 { #category : #reading }
 BMPReadWriter >> nextImage [
 	| colors |
-	stream binary.
 	self readHeader.
 	biBitCount = 24 ifTrue:[^self read24BmpFile].
 	"read the color map"
@@ -92,25 +91,23 @@ BMPReadWriter >> nextPutImage: aForm [
 	biSizeImage := biHeight * rowBytes.
 
 	"Write the file header"
-	stream position: 0.
-	stream nextLittleEndianNumber: 2 put: 19778.  "bfType = BM"
-	stream nextLittleEndianNumber: 4 put: bfOffBits + biSizeImage.  "Entire file size in bytes"
-	stream nextLittleEndianNumber: 4 put: 0.  "bfReserved"
-	stream nextLittleEndianNumber: 4 put: bfOffBits.  "Offset of bitmap data from start of hdr (and file)"
+	self nextLittleEndianNumber: 2 put: 19778.  "bfType = BM"
+	self nextLittleEndianNumber: 4 put: bfOffBits + biSizeImage.  "Entire file size in bytes"
+	self nextLittleEndianNumber: 4 put: 0.  "bfReserved"
+	self nextLittleEndianNumber: 4 put: bfOffBits.  "Offset of bitmap data from start of hdr (and file)"
 
 	"Write the bitmap info header"
-	stream position: bhSize.
-	stream nextLittleEndianNumber: 4 put: biSize.  "info header size in bytes"
-	stream nextLittleEndianNumber: 4 put: image width.  "biWidth"
-	stream nextLittleEndianNumber: 4 put: image height.  "biHeight"
-	stream nextLittleEndianNumber: 2 put: 1.  "biPlanes"
-	stream nextLittleEndianNumber: 2 put: (depth min: 24).  "biBitCount"
-	stream nextLittleEndianNumber: 4 put: 0.  "biCompression"
-	stream nextLittleEndianNumber: 4 put: biSizeImage.  "size of image section in bytes"
-	stream nextLittleEndianNumber: 4 put: 2800.  "biXPelsPerMeter"
-	stream nextLittleEndianNumber: 4 put: 2800.  "biYPelsPerMeter"
-	stream nextLittleEndianNumber: 4 put: biClrUsed.
-	stream nextLittleEndianNumber: 4 put: 0.  "biClrImportant"
+	self nextLittleEndianNumber: 4 put: biSize.  "info header size in bytes"
+	self nextLittleEndianNumber: 4 put: image width.  "biWidth"
+	self nextLittleEndianNumber: 4 put: image height.  "biHeight"
+	self nextLittleEndianNumber: 2 put: 1.  "biPlanes"
+	self nextLittleEndianNumber: 2 put: (depth min: 24).  "biBitCount"
+	self nextLittleEndianNumber: 4 put: 0.  "biCompression"
+	self nextLittleEndianNumber: 4 put: biSizeImage.  "size of image section in bytes"
+	self nextLittleEndianNumber: 4 put: 2800.  "biXPelsPerMeter"
+	self nextLittleEndianNumber: 4 put: 2800.  "biYPelsPerMeter"
+	self nextLittleEndianNumber: 4 put: biClrUsed.
+	self nextLittleEndianNumber: 4 put: 0.  "biClrImportant"
 	biClrUsed > 0 ifTrue: [
 		"write color map; this works for ColorForms, too"
 		colorValues := image colormapIfNeededForDepth: 32.
@@ -133,9 +130,7 @@ BMPReadWriter >> nextPutImage: aForm [
 			self store24BitBmpLine: pixline from: data startingAt: (biHeight-i)*biWidth+1 width: biWidth.
 			stream nextPutAll: pixline.
 		].
-	].
-	stream position = (bfOffBits + biSizeImage) ifFalse: [self error:'Write failure'].
-	stream close.
+	]
 ]
 
 { #category : #reading }
@@ -223,21 +218,21 @@ BMPReadWriter >> readColorMap [
 { #category : #reading }
 BMPReadWriter >> readHeader [
 	| reserved |
-	bfType := stream nextLittleEndianNumber: 2.
-	bfSize := stream nextLittleEndianNumber: 4.
-	reserved := stream nextLittleEndianNumber: 4.
-	bfOffBits := stream nextLittleEndianNumber: 4.
-	biSize := stream nextLittleEndianNumber: 4.
-	biWidth := stream nextLittleEndianNumber: 4.
-	biHeight := stream nextLittleEndianNumber: 4.
-	biPlanes := stream nextLittleEndianNumber: 2.
-	biBitCount := stream nextLittleEndianNumber: 2.
-	biCompression := stream nextLittleEndianNumber: 4.
-	biSizeImage := stream nextLittleEndianNumber: 4.
-	biXPelsPerMeter := stream nextLittleEndianNumber: 4.
-	biYPelsPerMeter := stream nextLittleEndianNumber: 4.
-	biClrUsed := stream nextLittleEndianNumber: 4.
-	biClrImportant := stream nextLittleEndianNumber: 4
+	bfType := self nextLittleEndianNumber: 2.
+	bfSize := self nextLittleEndianNumber: 4.
+	reserved := self nextLittleEndianNumber: 4.
+	bfOffBits := self nextLittleEndianNumber: 4.
+	biSize := self nextLittleEndianNumber: 4.
+	biWidth := self nextLittleEndianNumber: 4.
+	biHeight := self nextLittleEndianNumber: 4.
+	biPlanes := self nextLittleEndianNumber: 2.
+	biBitCount := self nextLittleEndianNumber: 2.
+	biCompression := self nextLittleEndianNumber: 4.
+	biSizeImage := self nextLittleEndianNumber: 4.
+	biXPelsPerMeter := self nextLittleEndianNumber: 4.
+	biYPelsPerMeter := self nextLittleEndianNumber: 4.
+	biClrUsed := self nextLittleEndianNumber: 4.
+	biClrImportant := self nextLittleEndianNumber: 4
 ]
 
 { #category : #reading }
@@ -312,12 +307,10 @@ BMPReadWriter >> store24BitBmpLine: pixelLine from: formBits startingAt: formBit
 
 { #category : #testing }
 BMPReadWriter >> understandsImageFormat [
-	stream size < 54 ifTrue:[^false]. "min size = BITMAPFILEHEADER+BITMAPINFOHEADER"
 	self readHeader.
 	bfType = 19778 "BM" ifFalse:[^false].
 	biSize = 40 ifFalse:[^false].
 	biPlanes = 1 ifFalse:[^false].
-	bfSize <= stream size ifFalse:[^false].
 	biCompression = 0 ifFalse:[^false].
 	^true
 ]
