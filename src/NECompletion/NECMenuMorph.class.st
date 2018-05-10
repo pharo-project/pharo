@@ -538,7 +538,7 @@ NECMenuMorph >> insertCompletion: aString [
 	caret := editor caret.
 	editor selectInvisiblyFrom: caret - context completionToken size to: caret - 1.
 	old := editor selection. 
-	editor zapSelectionWith: aString.
+	editor replaceSelectionWith: aString.
 	offset := NECPreferences spaceAfterCompletion
 				ifTrue: [ 1 ]
 				ifFalse: [ 0 ].
