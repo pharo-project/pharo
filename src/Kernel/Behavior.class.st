@@ -449,16 +449,6 @@ Behavior >> basicObsoleteSubclasses [
 	^ObsoleteSubclasses.
 ]
 
-{ #category : #'adding/removing methods' }
-Behavior >> basicRemoveSelector: selector [ 
-	"Assuming that the argument, selector (a Symbol), is a message selector 
-	in my method dictionary, remove it and its method."
-
-	| oldMethod |
-	oldMethod := self methodDict at: selector ifAbsent: [^ self].
-	self methodDict removeKey: selector.
-]
-
 { #category : #private }
 Behavior >> becomeCompact [
 	"Backward compatibility with the Squeak V3 object format.
@@ -1627,12 +1617,10 @@ Behavior >> removeProperty: propName ifAbsent: aBlock [
 
 { #category : #'accessing method dictionary' }
 Behavior >> removeSelector: aSelector [
-	"Assuming that the argument, selector (a Symbol), is a message selector 
-	in my method dictionary, remove it and its method."	
-	
-	| oldMethod |
-	oldMethod := self methodDict at: aSelector ifAbsent: [^ self].
-	self methodDict removeKey: aSelector.
+	"Assuming that the argument, selector (a Symbol), is a message selector in my method dictionary, remove it and its method."
+
+	(self includesSelector: aSelector) ifFalse: [ ^ self ].
+	self methodDict removeKey: aSelector
 ]
 
 { #category : #'adding/removing methods' }
