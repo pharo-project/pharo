@@ -24,6 +24,9 @@ Installs:
 Class {
 	#name : #BaselineOfIDE,
 	#superclass : #BaselineOf,
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfIDE
 }
 
@@ -888,6 +891,22 @@ spec group: #default with: #(
 	'Shift'
 ).
 
+]
+
+{ #category : #actions }
+BaselineOfIDE >> loadCalypso [
+
+	"Load Calypso without Iceberg Metacello integration"
+	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
+		
+	Metacello new
+		baseline: 'Calypso';
+		repository: 'github://dionisiydk/Calypso:v0.11.3';
+		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
+
+	(self class environment at: #ClyBrowser) beAllDefault.
+	
+	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
 ]
 
 { #category : #actions }
