@@ -7,16 +7,12 @@ String >> asMIMEType [
 
 { #category : #'*Network-MIME' }
 String >> base64Decoded [
-	"Decode the receiver from base 64"
-	"'SGVsbG8gV29ybGQ=' base64Decoded"
-	^(Base64MimeConverter mimeDecode: self as: self class)
-]
-
-{ #category : #'*Network-MIME' }
-String >> base64Encoded [
-	"Encode the receiver as base64"
-	"'Hello World' base64Encoded"
-	^(Base64MimeConverter mimeEncode: self readStream) contents
+	"Decode the receiver assuming it was encoded using Base64, returning a ByteArray.
+	Base64 encoding is a technique to represent binary data as ASCII text"
+	
+	"'AgMFBwsNERMXHR8lKSsvNTs9Q0dJT1NZYWVna21xf4OJi5WXnaOnrbO1v8HFx9Pf4+Xp7/H7' base64Decoded"
+	
+	^ ZnBase64Encoder new decode: self
 ]
 
 { #category : #'*Network-MIME' }
