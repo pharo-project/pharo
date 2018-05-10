@@ -5290,7 +5290,7 @@ UITheme >> settings: anObject [
 { #category : #accessing }
 UITheme >> shStyleTable [
 
-	^SHTextStylerST80 blueStyleTable
+	^SHRBTextStyler blueStyleTable
 ]
 
 { #category : #'border-styles' }

@@ -430,7 +430,7 @@ PharoDarkTheme >> selectionTextColor [
 { #category : #defaults }
 PharoDarkTheme >> shStyleTable [
 
-	^SHTextStylerST80 darkStyleTable
+	^SHRBTextStyler darkStyleTable
 ]
 
 { #category : #'accessing colors' }
