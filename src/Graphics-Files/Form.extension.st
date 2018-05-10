@@ -16,8 +16,7 @@ Form class >> fromBinaryStream: aBinaryStream [
 	"Read a Form or ColorForm from given file, using the first byte of the file to guess its format. Currently handles: GIF, uncompressed BMP, and both old and new DisplayObject writeOn: formats, JPEG, and PCX. Return nil if the file could not be read or was of an unrecognized format."
 
 	| firstByte |
-	aBinaryStream binary.
-	firstByte := aBinaryStream next.
+	firstByte := aBinaryStream peek.
 	firstByte = 1 ifTrue: [
 		"old Squeakform format"
 		^ self new readFromOldFormat: aBinaryStream].
@@ -35,12 +34,8 @@ Form class >> fromBinaryStream: aBinaryStream [
 Form class >> fromFileNamed: fileName [ 
 	"Read a Form or ColorForm from the given file."
 	
-	^ FileStream 
-			readOnlyFileNamed: fileName 
-			do: [:aFile |
-					aFile binary.
-					self fromBinaryStream: aFile.]
-		
+	^ fileName asFileReference 
+			binaryReadStreamDo: [ :in | self fromBinaryStream: in ]
 ]
 
 { #category : #'*Graphics-Files-FileRegistry' }
@@ -55,25 +50,17 @@ Form class >> openImageInWindow: fullName [
 
 { #category : #'*Graphics-Files' }
 Form >> readNativeResourceFrom: byteStream [
-	| img aStream |
-	(byteStream isKindOf: FileStream) ifTrue:[
-		"Ugly, but ImageReadWriter will send #reset which is implemented as #reopen and we may not be able to do so."
-		aStream := RWBinaryOrTextStream with: byteStream contents.
-	] ifFalse:[
-		aStream := byteStream.
-	].
-	img := [ImageReadWriter formFromStream: aStream] on: Error do:[:ex| nil].
-	img ifNil:[^nil].
-	(img isColorForm and:[self isColorForm]) ifTrue:[
-		| cc |
-		cc := img colors.
-		img colors: nil.
-		img displayOn: self.
-		img colors: cc.
-	] ifFalse:[
-		img displayOn: self.
-	].
-	img := nil.
+	| img |
+	img := [ ImageReadWriter formFromStream: byteStream ]
+		on: Error
+		do: [ :ex | ^ nil ].
+	(img isColorForm and: [ self isColorForm ])
+		ifTrue: [ | cc |
+			cc := img colors.
+			img colors: nil.
+			img displayOn: self.
+			img colors: cc ]
+		ifFalse: [ img displayOn: self ]
 ]
 
 { #category : #'*Graphics-Files-FileRegistry' }
