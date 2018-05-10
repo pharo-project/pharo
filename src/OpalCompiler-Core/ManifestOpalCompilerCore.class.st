@@ -6,7 +6,7 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestOpalCompilerCore class >> ignoredDependencies [
-	^ #(#Compiler #'Morphic-Base' #'System-Settings')
+	^ #(#'Morphic-Base' #'System-Settings')
 ]
 
 { #category : #'meta-data - dependency analyser' }
