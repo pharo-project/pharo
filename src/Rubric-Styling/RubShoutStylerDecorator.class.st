@@ -29,7 +29,7 @@ RubShoutStylerDecorator class >> minTextSizeForStylingInBackground [
 
 { #category : #settings }
 RubShoutStylerDecorator class >> minTextSizeForStylingInBackground: anInteger [
-	MinTextSizeForStylingInBackground := anInteger.
+	MinTextSizeForStylingInBackground := anInteger
 ]
 
 { #category : #settings }
