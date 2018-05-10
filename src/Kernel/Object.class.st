@@ -936,10 +936,17 @@ Object >> haltIfNil [
 ]
 
 { #category : #halting }
-Object >> haltIfOutsideTest [
-	"This is the typical message to use for inserting breakpoints during debugging."
+Object >> haltIfNotTest [
+	"Halt if execution was not started by a test. This is useful as this means one can just run tests undisturbed, while a execution for example from the Playground would be halted"
 	<debuggerCompleteToSender>
-	Halt ifOutsideTest
+	Halt ifNotTest
+]
+
+{ #category : #halting }
+Object >> haltIfTest [
+	"Halt if execution was started by a test. These #halts are just active in the tests, useful when you want to add a halt in methods that are executed a lot (e.g. collections)"
+	<debuggerCompleteToSender>
+	Halt ifTest
 ]
 
 { #category : #halting }
