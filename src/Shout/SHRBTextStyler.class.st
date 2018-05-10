@@ -14,6 +14,33 @@ Class {
 	#category : #'Shout-Styling'
 }
 
+{ #category : #'style table' }
+SHRBTextStyler class >> initialTextAttributesForPixelHeight: aNumber [ 
+	^ SHTextStylerST80 initialTextAttributesForPixelHeight: aNumber 
+]
+
+{ #category : #initialization }
+SHRBTextStyler class >> initialize [
+	"self initialize"
+	styleTable := nil.
+	textAttributesByPixelHeight := nil.
+]
+
+{ #category : #accessing }
+SHRBTextStyler class >> styleTable [
+	^ SHTextStylerST80 styleTable
+]
+
+{ #category : #accessing }
+SHRBTextStyler class >> styleTable: anArray [ 
+	SHTextStylerST80 styleTable: anArray 
+]
+
+{ #category : #accessing }
+SHRBTextStyler class >> textAttributesByPixelHeight [  
+	^ SHTextStylerST80 textAttributesByPixelHeight 
+]
+
 { #category : #formatting }
 SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
 	self 
@@ -312,12 +339,12 @@ SHRBTextStyler >> visitLiteralNode: aLiteralNode [
 SHRBTextStyler >> visitMessageNode: aMessageNode [
 	| style link |
 	style := #keyword.
-	(Symbol findInterned: aMessageNode selector asString)
+	(Symbol findInternedSelector: aMessageNode selector asString)
 		ifNil: [ 
-			style := (Symbol thatStartsCaseSensitive: aMessageNode selector asString skipping: nil) isNil
+			style := (Symbol selectorThatStartsCaseSensitive: aMessageNode selector asString skipping: nil) isNil
 				ifTrue: [ #undefinedKeyword ]
 				ifFalse: [ #incompleteKeyword ] ].
-	link := TextMethodLink selector: aMessageNode selector.
+	link := TextMethodLink sourceNode: aMessageNode.
 	self styleOpenParenthese: aMessageNode.
 	aMessageNode selectorParts
 		with: aMessageNode keywordsPositions
@@ -334,26 +361,21 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 ]
 
 { #category : #'visiting rb nodes' }
-SHRBTextStyler >> visitMethodNode: aMethodNode [ 
-aMethodNode comments do: [ :comment|
-		self 
-			addStyle: #comment
-			from: comment start
-			to: comment stop ].
-	aMethodNode arguments do: [ :argument|
-		self 
-			addStyle: #patternArg
-			forNode: argument ].
-		
-	aMethodNode selectorParts with: aMethodNode keywordsPositions do:  [ :keyword :position |
-		self 
-			addStyle: #patternKeyword
-			from: position
-			to: position + keyword size - 1 ].
-	
-	aMethodNode pragmas
-		do: [ :each | self visitNode: each ].
-		
+SHRBTextStyler >> visitMethodNode: aMethodNode [
+	| link |
+	self visitMethodComments: aMethodNode comments.
+	aMethodNode arguments do: [ :argument | self addStyle: #patternArg forNode: argument ].
+	link := TextMethodLink selector: aMethodNode selector.
+	aMethodNode selectorParts
+		with: aMethodNode keywordsPositions
+		do:
+			[ :keyword :position | 
+			self
+				addStyle: #patternKeyword
+				attribute: link
+				from: position
+				to: position + keyword size - 1 ].
+	aMethodNode pragmas do: [ :each | self visitNode: each ].
 	self visitNode: aMethodNode body
 ]
 

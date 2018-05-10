@@ -64,7 +64,7 @@ RubShoutStylerDecorator >> classOrMetaClass: aBehavior [
 
 { #category : #accessing }
 RubShoutStylerDecorator >> defaultStyler [
-	^RubSHTextStylerST80 new view: self; yourself
+	^SHRBTextStyler new view: self; yourself
 ]
 
 { #category : #shout }
