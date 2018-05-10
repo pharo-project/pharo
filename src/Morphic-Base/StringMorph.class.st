@@ -515,12 +515,6 @@ StringMorph >> privateSetContents: newContents [
 					newContents].
 ]
 
-{ #category : #accessing }
-StringMorph >> removeEmphasis: aCodeOrTextEmphasis [
-	self emphasis: 
-		(TextEmphasis fromCode: emphasis) remove: (TextEmphasis fromCode: aCodeOrTextEmphasis)
-]
-
 { #category : #'*Morphic-Base-MorphTreeWidget' }
 StringMorph >> rowMorphForNode: aNode inColumn: aColumn [
 	| hasIcon |

@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'flag'
 	],
-	#category : #'Collections-Weak'
+	#category : #'Collections-Weak-Base'
 }
 
 { #category : #adding }

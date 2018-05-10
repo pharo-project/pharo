@@ -1,3 +1,6 @@
+"
+Test extension methods for Zip support
+"
 Class {
 	#name : #ZipExtensionTests,
 	#superclass : #TestCase,
@@ -7,7 +10,6 @@ Class {
 { #category : #tests }
 ZipExtensionTests >> testZipped [
 	| compressed |
-	
 	compressed := 'hello' zipped.
-	self assert: (compressed unzipped = 'hello').
+	self assert: compressed unzipped equals: 'hello'
 ]

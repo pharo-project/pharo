@@ -73,9 +73,7 @@ ReCriticEngine >> critiquesOf: anEntity [
 ReCriticEngine >> guidedBy: anEntity ban: aCritique [
 
 	| candidates |
-	
-	ReSystemAnnouncer uniqueInstance notifyBanInitiatedFor: aCritique of: anEntity.
-	
+		
 	candidates := anEntity banLevelCandidates.
 	
 	(UIManager default

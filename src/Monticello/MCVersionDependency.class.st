@@ -11,7 +11,7 @@ Class {
 	#category : #'Monticello-Versioning'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 MCVersionDependency class >> package: aPackage info: aVersionInfo [
 	^ self basicNew initializeWithPackage: aPackage info: aVersionInfo
 ]

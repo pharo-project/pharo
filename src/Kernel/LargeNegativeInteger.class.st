@@ -58,16 +58,6 @@ LargeNegativeInteger >> highBit [
 	^ self shouldNotImplement
 ]
 
-{ #category : #'mathematical functions' }
-LargeNegativeInteger >> ln [
-	^DomainError signal: 'ln is only defined for x > 0' from: 0
-]
-
-{ #category : #'mathematical functions' }
-LargeNegativeInteger >> log [
-	^DomainError signal: 'log is only defined for x > 0' from: 0
-]
-
 { #category : #testing }
 LargeNegativeInteger >> mightBeASquare [
 	^false
@@ -154,12 +144,6 @@ LargeNegativeInteger >> signBit [
 
 	^1
 
-]
-
-{ #category : #'mathematical functions' }
-LargeNegativeInteger >> sqrt [
-	"Answer the square root of the receiver."
-	^ DomainError signal: 'sqrt undefined for number less than zero.'
 ]
 
 { #category : #testing }

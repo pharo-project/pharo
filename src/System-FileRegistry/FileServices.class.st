@@ -23,7 +23,7 @@ FileServices class >> itemsForDirectory: aFileDirectory [
 	| services |
 	services := OrderedCollection new.
 	(PragmaCollector filter: [ :pragma | pragma keyword = 'directoryService' ]) reset
-		do: [ :each | services addAll: (each methodClass soleInstance perform: each selector with: aFileDirectory) ].
+		do: [ :each | services addAll: (each methodClass soleInstance perform: each methodSelector with: aFileDirectory) ].
 	^ services
 ]
 

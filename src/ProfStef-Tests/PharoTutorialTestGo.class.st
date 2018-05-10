@@ -9,7 +9,8 @@ Class {
 
 { #category : #running }
 PharoTutorialTestGo >> tearDown [
-	ProfStef default close
+	ProfStef default close.
+	super tearDown
 ]
 
 { #category : #tests }

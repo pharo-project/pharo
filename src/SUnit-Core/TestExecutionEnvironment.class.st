@@ -124,6 +124,11 @@ TestExecutionEnvironment >> initialize [
 	testCompleted := false
 ]
 
+{ #category : #testing }
+TestExecutionEnvironment >> isTest [
+	^true
+]
+
 { #category : #accessing }
 TestExecutionEnvironment >> maxTimeForTest [
 	^ maxTimeForTest

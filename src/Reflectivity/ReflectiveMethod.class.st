@@ -101,7 +101,7 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 	send := RBMessageNode
 		receiver: (RBSelfNode named: #self)
 		selector:  #rFwithArgs:executeMethod:
-		arguments: {RBArrayNode statements: ast arguments . (RBLiteralNode value: wrappedMethod)}.
+		arguments: {RBArrayNode statements: ast arguments . (RFLiteralVariableNode value: wrappedMethod)}.
 	
 	wrapperMethod := RBMethodNode
 		selector: ast selector
@@ -159,7 +159,7 @@ ReflectiveMethod >> installLink: aMetaLink [
 	self increaseLinkCount.
 	(self ast hasOption: #optionCompileOnLinkInstallation for: aMetaLink) 
 		ifTrue: [ self compileAndInstallCompiledMethod ].
-	SystemAnnouncer uniqueInstance announce: (MetalinkChanged new link: aMetaLink)	
+	aMetaLink announceChange
 ]
 
 { #category : #invalidate }
@@ -259,8 +259,7 @@ ReflectiveMethod >> removeLink: aMetaLink [
 		ifFalse: [ compiledMethod invalidate ].
 	self decreaseLinkCount.
 	self linkCount = 0 ifTrue: [ self destroyTwin ].
-	SystemAnnouncer uniqueInstance announce: (MetalinkChanged new link: aMetaLink).
-		
+	aMetaLink announceChange		
 ]
 
 { #category : #evaluation }

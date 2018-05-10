@@ -1,3 +1,6 @@
+"
+SUnit tests for registration order on the Pharo session manager
+"
 Class {
 	#name : #SessionManagerRegistrationOrderTest,
 	#superclass : #TestCase,
@@ -24,6 +27,7 @@ SessionManagerRegistrationOrderTest >> register: aString atSystemPriority: anInt
 
 { #category : #running }
 SessionManagerRegistrationOrderTest >> setUp [
+	super setUp.
 	manager := SessionManager new
 ]
 

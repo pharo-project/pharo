@@ -4,7 +4,7 @@ I am a dictionary holding only weakly on my values. Clients may expect to get a 
 Class {
 	#name : #WeakValueDictionary,
 	#superclass : #Dictionary,
-	#category : #'Collections-Weak'
+	#category : #'Collections-Weak-Dictionaries'
 }
 
 { #category : #adding }

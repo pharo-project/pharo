@@ -13,7 +13,7 @@ Class {
 		'DefaultWorkingDirectory',
 		'Primitives'
 	],
-	#category : #'FileSystem-Disk'
+	#category : #'FileSystem-Disk-Store'
 }
 
 { #category : #current }
@@ -255,10 +255,7 @@ DiskStore >> delete: path [
 	(self isDirectory: path)
 		ifTrue: [ Primitives deleteDirectory: encodedPathString ]
 		ifFalse: [ 
-			StandardFileStream
-				retryWithGC: [ Primitives deleteFile: encodedPathString ]
-				until: [ :result | result notNil ]
-				forFileNamed: pathString ]
+			(File named: pathString) delete ]
 ]
 
 { #category : #printing }

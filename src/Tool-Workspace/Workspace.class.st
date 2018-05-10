@@ -114,10 +114,6 @@ Workspace >> addModelItemsToWindowMenu: aMenu [
 		add: 'Reset variables'
 		target: self
 		selector: #initializeBindings.
-	aMenu
-		add: 'Previous contents...'
-		target: self
-		selector: #selectPreviousContent.
 	aMenu addLine
 ]
 
@@ -326,15 +322,6 @@ Workspace >> saveString: aString toFile: aFileName [
 	writeStream := (File named: fullFilename) openForWrite.
 	fileContent := ZnCharacterWriteStream on: writeStream encoding: encoding.
 	fileContent nextPutAll: aString
-]
-
-{ #category : #history }
-Workspace >> selectPreviousContent [
-
-	| trimmedContents  |
-	trimmedContents := self lastContents collect: [:c | c copyFrom: 1 to: (c size min: 20)].
-	^ (UIManager default chooseFrom: trimmedContents values: self lastContents)
-		ifNotNil: [ :newContents | self setContent: newContents ]
 ]
 
 { #category : #accessing }

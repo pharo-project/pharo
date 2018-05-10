@@ -6,3 +6,8 @@ Class {
 	#superclass : #DialogWindowPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+DialogWindowModel class >> isDeprecated [
+	^true
+]

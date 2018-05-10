@@ -270,8 +270,7 @@ LRUCacheTests >> testPopulate [
 
 { #category : #testing }
 LRUCacheTests >> testPrimeFactors [
-	"[ self run: #testPrimeFactors ] bench."
-	
+
 	| cache data |
 	cache := self newCache.
 	cache maximumWeight: 512.

@@ -22,7 +22,7 @@ Class {
 		'fileName',
 		'accessSemaphore'
 	],
-	#category : #'Transcript-NonInteractive'
+	#category : #'Transcript-NonInteractive-Base'
 }
 
 { #category : #constants }
@@ -147,7 +147,7 @@ NonInteractiveTranscript >> fileName [
 	^ fileName ifNil: [ fileName := self class defaultLogFileName ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #accessing }
 NonInteractiveTranscript >> fileName: anObject [
 	"Initialize me to write to a file stream described by anObject.
 	anObject is either a String naming a file or the special #stdout value
@@ -164,7 +164,7 @@ NonInteractiveTranscript >> flush [
 	self critical: [ self stream flush ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NonInteractiveTranscript >> initialize [
 	super initialize.
 	accessSemaphore := Mutex new
@@ -196,10 +196,12 @@ NonInteractiveTranscript >> install [
 		put: self
 ]
 
-{ #category : #printing }
+{ #category : #'self evaluating' }
 NonInteractiveTranscript >> isSelfEvaluating [
-	self == Transcript ifTrue: [ ^ true ].
-	^ super isSelfEvaluating
+
+	^self == Transcript 
+		ifTrue: [ true ]
+		ifFalse: [ super isSelfEvaluating ]
 ]
 
 { #category : #testing }

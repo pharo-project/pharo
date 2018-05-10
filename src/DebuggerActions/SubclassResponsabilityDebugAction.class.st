@@ -6,7 +6,7 @@ A SubclassResponsabilityDebugAction is a debugging action that can create a meth
 Class {
 	#name : #SubclassResponsabilityDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
@@ -81,6 +81,11 @@ SubclassResponsabilityDebugAction >> executeAction [
 		classified: msgCategory 
 		inClass: chosenClass 
 		forContext: senderContext.
+]
+
+{ #category : #accessing }
+SubclassResponsabilityDebugAction >> help [
+	^ 'Create a method in a class having the responsability to implement it.'
 ]
 
 { #category : #accessing }

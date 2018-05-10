@@ -79,23 +79,8 @@ Object >> dragPassengersFor: item inMorph: dragSource [
 ]
 
 { #category : #'*Morphic-Base' }
-Object >> externalName [
-	"Answer an external name by which the receiver is known. Generic
-	implementation here is a transitional backstop. probably"
-	^ [(self asString copyWithout: Character cr)
-		truncateTo: 27]
-		ifError: [ ^ self class name printString] 
-]
-
-{ #category : #'*Morphic-Base' }
 Object >> hasModelYellowButtonMenuItems [
 	^Morph cmdGesturesEnabled
-]
-
-{ #category : #'*Morphic-Base' }
-Object >> head [
-
-	^ self
 ]
 
 { #category : #'*Morphic-Base' }
@@ -108,12 +93,6 @@ Object >> iconOrThumbnailOfSize: aNumberOrPoint [
 Object >> isTransferable [
 
 	^ false
-]
-
-{ #category : #'*Morphic-Base' }
-Object >> tail [
-
-	^ nil
 ]
 
 { #category : #'*Morphic-Base' }
@@ -142,6 +121,18 @@ Object class >> taskbarIconName [
 Object >> transferFor: passenger from: aMorph [
 
 	^ TransferMorph withPassenger: passenger from: aMorph
+]
+
+{ #category : #'*Morphic-Base' }
+Object >> treeNodeHead [
+
+	^ self
+]
+
+{ #category : #'*Morphic-Base' }
+Object >> treeNodeTail [
+
+	^ nil
 ]
 
 { #category : #'*Morphic-Base' }

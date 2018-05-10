@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #UIManager
+	#category : #'UIManager-Base'
 }
 
 { #category : #initialization }
@@ -49,7 +49,7 @@ UIManager class >> isValidForCurrentSystemConfiguration [
 	^ false
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 UIManager class >> nonInteractiveDuring: aBlock [
 	| currentManager |
 	currentManager := self default.
@@ -428,15 +428,6 @@ UIManager >> informUserDuring: aBlock [
 				bar label: info.
 				(Delay forSeconds: 1) wait]]"
 	^self subclassResponsibility
-]
-
-{ #category : #settings }
-UIManager >> interactiveParserFor: requestor [	
-	
-	requestor ifNil: [^ false ].
-	(requestor respondsTo: #interactive)
-		ifTrue: [ ^requestor interactive ].
-	^true
 ]
 
 { #category : #'ui process' }

@@ -10,7 +10,7 @@ Class {
 
 { #category : #testing }
 MacOSPlatform class >> isActivePlatform [
-	^ self isMacOS and: [ self currentVersion asNumber < 1000 ]
+	^ false
 ]
 
 { #category : #testing }
@@ -55,7 +55,7 @@ MacOSPlatform >> isMacOS [
 
 { #category : #accessing }
 MacOSPlatform >> keyForValue: aKeyValue [
-	^Key valueForMacOSXPlatform: aKeyValue.
+	^KeyboardKey valueForMacOSXPlatform: aKeyValue.
 ]
 
 { #category : #accessing }

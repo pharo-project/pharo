@@ -14,7 +14,7 @@ RBAddMethodChange >> accept: aText notifying: aController [
 		class:  self changeClass;
 		requestor: aController;
 		failBlock: [ ^ false ];
-		translate.
+		compile.
 	
 		
 	self 
@@ -33,7 +33,7 @@ RBAddMethodChange >> oldVersionTextToDisplay [
 				at: className asSymbol
 				ifAbsent: [ ^ super oldVersionTextToDisplay ].
 				
-	isMeta ifTrue: [ class := class theMetaClass ].
+	isMeta ifTrue: [ class := class classSide ].
 				
 	^ class methodDict 
 			at: self selector

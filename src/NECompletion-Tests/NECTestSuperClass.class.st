@@ -28,13 +28,13 @@ NECTestSuperClass >> testIt: aString [
 	self subclassResponsibility 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 NECTestSuperClass >> toBeOverriden: anArgument [ 
 	15 > 16
 		ifTrue: [self sample * anArgument ]
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 NECTestSuperClass >> toBeOverridenWithReturn [
 	^ 'saga'
 ]

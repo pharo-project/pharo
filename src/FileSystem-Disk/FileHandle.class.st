@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'Registry'
 	],
-	#category : #'FileSystem-Disk'
+	#category : #'FileSystem-Disk-Base'
 }
 
 { #category : #'class initialization' }
@@ -76,14 +76,14 @@ FileHandle >> at: index write: buffer startingAt: start count: count [
 
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #public }
 FileHandle >> binaryReadStream [
-	^ (FileStream onHandle: self)
-		ifNil: [ self streamError ]
-		ifNotNil: [ :stream | 
-			stream
-				binary;
-				yourself ]
+	^ ZnBufferedReadStream on: (File named: reference fullName) readStream
+]
+
+{ #category : #public }
+FileHandle >> binaryWriteStream [
+	^ (File named: reference fullName) writeStream
 ]
 
 { #category : #public }
@@ -118,13 +118,6 @@ FileHandle >> open [
 	id ifNil: 	[
 		reference exists ifFalse: [FileDoesNotExist signalWith: reference].
 		self error: 'Unable to open file ' , reference printString]"
-]
-
-{ #category : #public }
-FileHandle >> readStream [
-	^ (FileStream onHandle: self)
-		ifNil: [ self streamError ]
-	
 ]
 
 { #category : #finalization }
@@ -175,10 +168,4 @@ FileHandle >> truncateTo: anInteger [
 	Primitives setPosition: id to: anInteger.
 	Primitives truncate: id to: anInteger.
 	self reopen
-]
-
-{ #category : #public }
-FileHandle >> writeStream [
-	^( FileStream onHandle: self)
-		 ifNil: [ self streamError ]
 ]

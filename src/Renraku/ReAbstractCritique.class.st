@@ -64,8 +64,6 @@ ReAbstractCritique >> actions [
 			description: 'Automatically resolve the issue';
 			action: [ :crit |
 				| changesBrowser |
-
-				ReSystemAnnouncer uniqueInstance notifyViewedDiffFor: crit of: crit sourceAnchor entity.
 				
 				changesBrowser := (ChangesBrowser changes: { crit change })
 					extent: 500@400;
@@ -73,10 +71,7 @@ ReAbstractCritique >> actions [
 					yourself.
 					
 				changesBrowser openDialogWithSpec
-					okAction: [ ReSystemAnnouncer uniqueInstance
-								notifyCritique: crit
-								AutoFixedFor: crit sourceAnchor entity.
-								changesBrowser accept ];
+					okAction: [ changesBrowser accept ];
 					centered ];
 			yourself) ].
 	
@@ -99,6 +94,17 @@ ReAbstractCritique >> ban [
 ReAbstractCritique >> change [
 	
 	^ self subclassResponsibility 
+]
+
+{ #category : #accessing }
+ReAbstractCritique >> color [
+
+	^ ({
+	#error -> Color red .
+	#warning -> Color yellow .
+	#information -> Color blue
+	 } asDictionary at: rule severity ifAbsent: [ super color ]) alpha: 0.1
+
 ]
 
 { #category : #accessing }

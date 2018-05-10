@@ -103,7 +103,7 @@ Morph class >> halosEnabled: aBoolean [
 	HalosEnabled := aBoolean
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 Morph class >> initialize [
 	"Morph initialize"
 
@@ -2512,7 +2512,7 @@ Morph >> extent: aPoint [
 
 { #category : #viewer }
 Morph >> externalName [
-	^ self assureExtension externalName ifNil: [super externalName]
+	^ self assureExtension externalName ifNil: [self printString]
 ]
 
 { #category : #'visual properties' }

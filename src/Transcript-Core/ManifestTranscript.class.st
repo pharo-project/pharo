@@ -1,10 +1,10 @@
 "
-I store metadata for this package. These meta data are used by other tools such as the SmalllintManifestChecker and the critics Browser
+Primary package for Transcript related implementation
 "
 Class {
 	#name : #ManifestTranscript,
 	#superclass : #PackageManifest,
-	#category : #'Transcript-Core'
+	#category : #'Transcript-Core-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

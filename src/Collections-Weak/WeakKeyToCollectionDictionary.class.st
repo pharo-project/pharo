@@ -5,7 +5,7 @@ Keys not in the dictionary are mapped to the empty collection.  Conversely, if a
 Class {
 	#name : #WeakKeyToCollectionDictionary,
 	#superclass : #WeakIdentityKeyDictionary,
-	#category : #'Collections-Weak'
+	#category : #'Collections-Weak-Dictionaries'
 }
 
 { #category : #finalization }

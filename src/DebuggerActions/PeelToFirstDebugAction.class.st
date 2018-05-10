@@ -5,7 +5,7 @@ A PeelToFirstDebugAction peels the stack back to the second occurance of the cur
 Class {
 	#name : #PeelToFirstDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
@@ -29,6 +29,11 @@ PeelToFirstDebugAction >> defaultOrder [
 PeelToFirstDebugAction >> executeAction [
 
 	self session peelToFirstLike: self currentContext 
+]
+
+{ #category : #accessing }
+PeelToFirstDebugAction >> help [
+	^ 'Peels the stack back to the second occurance of the currently selected message.'
 ]
 
 { #category : #accessing }

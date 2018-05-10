@@ -1,17 +1,17 @@
 Extension { #name : #Association }
 
 { #category : #'*Morphic-Base' }
-Association >> head [
+Association >> treeNodeHead [
 
 	^ (key isKindOf: Association)
-		ifTrue: [ key head ]
+		ifTrue: [ key treeNodeHead ]
 		ifFalse: [ key ]
 ]
 
 { #category : #'*Morphic-Base' }
-Association >> tail [
+Association >> treeNodeTail [
 
 	^ (key isKindOf: Association)
-		ifTrue: [ key tail -> value ]
+		ifTrue: [ key treeNodeTail -> value ]
 		ifFalse: [ value ]
 ]

@@ -367,9 +367,8 @@ ZnClient >> downloadEntityTo: path [
 	self entity ifNil: [ ^ self ].
 	target := ZnFileSystemUtils downloadPathTo: path for: self request uri lastPathSegment.
 	ZnFileSystemUtils
-		newFileNamed: target
-		do: [ :fileStream | 
-			fileStream binary.
+		newBinaryFileNamed: target
+		do: [ :fileStream |
 			self withProgressDo: [ self entity writeOn: fileStream ] ]
 ]
 
@@ -1400,6 +1399,7 @@ ZnClient >> setupTLSTo: url [
 			"http://www.ietf.org/rfc/rfc2817.txt (section 5)"
 			"https://en.wikipedia.org/wiki/HTTP_tunnel#HTTP_CONNECT_tunneling"
 			originalRequest := request copy.
+			request entity: nil. "to prevent #resetEntity from being called, resulting in #close of the shared entity"
 			self method: #CONNECT; writeRequest; readResponse.
 			response isSuccess ifFalse: [ self error: 'Failed to CONNECT to proxy for TLS/SSL' ].
 			connection := ZnNetworkingUtils secureSocketStreamOn: connection socket.
@@ -1486,8 +1486,7 @@ ZnClient >> uploadEntityFrom: path [
 	You can then use #put or #post to actually do an upload."
 	
 	| stream type length |
-	stream := ZnFileSystemUtils fileStreamFor: path.
-	stream binary.
+	stream := ZnFileSystemUtils binaryFileStreamFor: path.
 	type := ZnMimeType forFilenameExtension: (ZnFileSystemUtils extensionFor: path).
 	length := ZnFileSystemUtils fileSizeFor: path.
 	self entity: (ZnStreamingEntity readFrom: stream usingType: type andLength: length)

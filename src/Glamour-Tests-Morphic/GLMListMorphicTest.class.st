@@ -88,8 +88,7 @@ GLMListMorphicTest >> testMultipleSelectionWithChangeFromModel [
 
 { #category : #tests }
 GLMListMorphicTest >> testOnlyOneMorphPerRowInList [
-	| browser listMorph nodeMorphs|
-	"self debug: #testOnlyOneMorphPerRowInList"
+	| browser listMorph nodeMorphs|	
 	browser := GLMTabulator new.
 	browser
 		column: #one.
@@ -106,7 +105,7 @@ GLMListMorphicTest >> testOnlyOneMorphPerRowInList [
 
 { #category : #tests }
 GLMListMorphicTest >> testTextBackgroundColor [
-	| browser firstTreeMorph secondTreeMorph treeNodeMorph txtMorph |
+	| browser firstTreeMorph treeNodeMorph txtMorph |
 	browser := GLMTabulator new.
 	browser column: #one.
 	browser transmit

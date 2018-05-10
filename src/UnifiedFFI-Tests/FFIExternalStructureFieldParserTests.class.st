@@ -1,10 +1,13 @@
+"
+Tests for FFIExternalStructureFieldParser
+"
 Class {
 	#name : #FFIExternalStructureFieldParserTests,
 	#superclass : #TestCase,
 	#instVars : [
 		'architecture'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #factory }
@@ -14,6 +17,7 @@ FFIExternalStructureFieldParserTests >> newParser [
 
 { #category : #running }
 FFIExternalStructureFieldParserTests >> setUp [
+	super setUp.
 	architecture := FFIArchitecture forCurrentArchitecture
 ]
 

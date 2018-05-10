@@ -1,10 +1,10 @@
 "
-I stores metadata on true and false positive critics. These meta data are used by the SmalllintManifestChecker and the critics Browser
+Manifest for AST-Core package
 "
 Class {
 	#name : #ManifestASTCore,
 	#superclass : #PackageManifest,
-	#category : #'AST-Core'
+	#category : #'AST-Core-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

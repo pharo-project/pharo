@@ -10,7 +10,7 @@ Class {
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareClassVar [
 
-	self methodClass theNonMetaClass
+	self methodClass instanceSide
 		addClassVarNamed: node name asSymbol.
 	^ self lookUpVariable
 ]
@@ -67,7 +67,14 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 			offset: 0) - delta.
 	" we can not guess at this point where the tempvar should be stored,
 	tempvars vs. tempvector therefore -> reparse"
-	(OCSourceCodeChanged new newSourceCode: self requestor text) signal
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal
+]
+
+{ #category : #correcting }
+OCUndeclaredVariableWarning >> declareUndefined [
+
+	Undeclared add: (UndeclaredVariable named: node name asSymbol).
+	^OCUndeclaredVariable new name: node name asSymbol
 ]
 
 { #category : #correcting }
@@ -168,6 +175,9 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 			labels add: 'Declare new instance variable'.
 			actions add: [ self declareInstVar: name ] ]
 		ifFalse: [ 
+			labels add: 'Leave variable undeclared'.
+			actions add: [ self declareUndefined ].
+			lines add: labels size.
 			labels add: 'Define new class'.
 			actions
 				add: [ 
@@ -191,7 +201,7 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 			actions
 				add: [ 
 					self substituteVariable: each atInterval: interval.
-					(OCSourceCodeChanged new newSourceCode: self requestor text) signal ] ].
+					(ReparseAfterSourceEditing new newSource: self requestor text) signal ] ].
 	lines add: labels size.
 	labels add: 'Cancel'.
 	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.

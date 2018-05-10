@@ -35,12 +35,12 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 RBGenerateEqualHashRefactoring class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 RBGenerateEqualHashRefactoring class >> model: aNamespace className: aClass variables: anArray [
 	^ (self model: aNamespace className: aClass) variables: anArray
 ]
@@ -122,7 +122,7 @@ RBGenerateEqualHashRefactoring >> preconditions [
 
 { #category : #accessing }
 RBGenerateEqualHashRefactoring >> theClass [
-	^ (self classObjectFor: className) theNonMetaClass
+	^ (self classObjectFor: className) instanceSide
 ]
 
 { #category : #transforming }

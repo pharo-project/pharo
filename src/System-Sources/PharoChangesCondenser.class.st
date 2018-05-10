@@ -34,16 +34,20 @@ PharoChangesCondenser >> basicCondense [
 	self
 		condenseClassesAndTraits;
 		swapSourcePointers;
-		installNewChangesFile;
-		reset
+    updateQuitPosition.
+  stream flush.
 ]
 
 { #category : #public }
 PharoChangesCondenser >> condense [
 	job := [ 
 		newChangesFile writeStreamDo: [ :aStream |
-			stream := aStream.
-			self basicCondense ]] asJob.
+			  stream := aStream.
+			  self basicCondense ].
+  		self
+        installNewChangesFile;
+  		  reset
+    ] asJob.
 	
 	job 
 		title: 'Condensing Changes';
@@ -55,11 +59,11 @@ PharoChangesCondenser >> condense [
 PharoChangesCondenser >> condenseClassOrTrait: classOrTrait [
 	self writeClassComment: classOrTrait.
 	
-	classOrTrait theNonMetaClass methodsDo: [ :method |
+	classOrTrait instanceSide methodsDo: [ :method |
 		(self shouldCondenseMethod: method)
 			ifTrue: [ self writeMethodSource: method ]].
 	
-	classOrTrait theMetaClass methodsDo: [ :method |
+	classOrTrait classSide methodsDo: [ :method |
 		(self shouldCondenseMethod: method)
 			ifTrue: [ self writeMethodSource: method ]]
 ]
@@ -88,20 +92,15 @@ PharoChangesCondenser >> initialize [
 PharoChangesCondenser >> installNewChangesFile [
 	
 	SourceFiles changesFileStream close.
-	self updateQuitPosition.
-	stream flush close.
-	
 	self backupOldChanges.
-	
 	self originalFile ensureDelete.
 	newChangesFile moveTo: self originalFile.
-	
 	Smalltalk openSourceFiles.
 ]
 
 { #category : #helper }
 PharoChangesCondenser >> nextChunkDo: aBlock [
-	stream nextChunkPut: (String streamContents: aBlock)
+	(ChunkWriteStream on: stream) nextPut: (String streamContents: aBlock)
 ]
 
 { #category : #helper }

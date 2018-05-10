@@ -1,3 +1,8 @@
+"
+I represent a WideString.
+I store myself as a byte array.
+To store myself I encode the content in utf8.
+"
 Class {
 	#name : #HEWideString,
 	#superclass : #HEByteArray,

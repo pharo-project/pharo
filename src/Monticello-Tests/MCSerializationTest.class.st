@@ -9,7 +9,7 @@ MCSerializationTest >> assertDependenciesMatchWith: writerClass [
 	| stream readerClass expected actual |
 	readerClass := writerClass readerClass.
 	expected := self mockVersionWithDependencies.
-	stream := RWBinaryOrTextStream on: String new.
+	stream := RWBinaryOrTextStream on: ByteArray new.
 	writerClass fileOut: expected on: stream.
 	actual := (readerClass on: stream reset) dependencies.
 	self assert: actual = expected dependencies.
@@ -25,7 +25,7 @@ MCSerializationTest >> assertSnapshotsMatchWith: writerClass [
 	| readerClass expected stream actual |
 	readerClass := writerClass readerClass.
 	expected := self mockSnapshot.
-	stream := RWBinaryOrTextStream on: String new.
+	stream := RWBinaryOrTextStream on: ByteArray new.
 	(writerClass on: stream) writeSnapshot: expected.
 	actual := readerClass snapshotFromStream: stream reset.
 	self assertSnapshot: actual matches: expected.
@@ -36,7 +36,7 @@ MCSerializationTest >> assertVersionInfosMatchWith: writerClass [
 	| stream readerClass expected actual |
 	readerClass := writerClass readerClass.
 	expected := self mockVersion.
-	stream := RWBinaryOrTextStream on: String new.
+	stream := RWBinaryOrTextStream on: ByteArray new.
 	writerClass fileOut: expected on: stream.
 	actual := readerClass versionInfoFromStream: stream reset.
 	self assert: actual = expected info.
@@ -47,7 +47,7 @@ MCSerializationTest >> assertVersionsMatchWith: writerClass [
 	| stream readerClass expected actual |
 	readerClass := writerClass readerClass.
 	expected := self mockVersion.
-	stream := RWBinaryOrTextStream on: String new.
+	stream := RWBinaryOrTextStream on: ByteArray new.
 	writerClass fileOut: expected on: stream.
 	actual := readerClass versionFromStream: stream reset.
 	self assertVersion: actual matches: expected.
@@ -71,7 +71,7 @@ MCSerializationTest >> mockDiffyVersion [
 MCSerializationTest >> testMcdSerialization [
 	| stream expected actual |
 	expected := self mockDiffyVersion.
-	stream := RWBinaryOrTextStream on: String new.
+	stream := RWBinaryOrTextStream on: ByteArray new.
 	MCMcdWriter fileOut: expected on: stream.
 	actual := MCMcdReader versionFromStream: stream reset.
 	self assertVersion: actual matches: expected.

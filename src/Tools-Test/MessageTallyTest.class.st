@@ -50,10 +50,7 @@ MessageTallyTest >> testSampling1 [
 
 { #category : #tallying }
 MessageTallyTest >> testTallySends [
-	"
-	self debug: #testTallySends
-	"
-	
+
 	| tally thisMethod allProcesses numberOfProcesses processUsedByTally tallyForPrintString tallyForPrintStringBase |
 	allProcesses := Process allInstances.
 	numberOfProcesses := allProcesses size.

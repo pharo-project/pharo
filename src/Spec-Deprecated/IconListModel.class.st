@@ -6,3 +6,8 @@ Class {
 	#superclass : #IconListPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+IconListModel class >> isDeprecated [
+	^true
+]

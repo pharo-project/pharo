@@ -8,6 +8,7 @@ Trait {
 
 { #category : #requirements }
 TCreationWithTest >> collectionClass [ 
+	"Return the class to be used to create instances of the class tested"
 	
 	^ self explicitRequirement
 ]
@@ -21,23 +22,22 @@ TCreationWithTest >> collectionMoreThan5Elements [
 
 { #category : #'tests - fixture' }
 TCreationWithTest >> test0FixtureCreationWithTest [
+
 	self collectionMoreThan5Elements.
 	self assert: self collectionMoreThan5Elements size >= 5
 ]
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testOfSize [
-	"self debug: #testOfSize"
 	
 	| aCol |
 	aCol := self collectionClass ofSize: 3.
-	self assert: (aCol size = 3).
+	self assert: aCol size equals: 3.
 
 ]
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWith [
-	"self debug: #testWith"
 	
 	| aCol anElement |
 	anElement := self collectionMoreThan5Elements anyOne.
@@ -47,62 +47,66 @@ TCreationWithTest >> testWith [
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWithAll [
-	"self debug: #testWithAll"
-	
+
 	| aCol collection |
-	collection := self collectionMoreThan5Elements asOrderedCollection .
-	aCol := self collectionClass withAll: collection  .
+	collection := self collectionMoreThan5Elements asOrderedCollection.
+	aCol := self collectionClass withAll: collection.
 	
-	collection do: [ :each | self assert: (aCol occurrencesOf: each ) = ( collection occurrencesOf: each ) ].
+	collection do: [ :each | self assert: (aCol occurrencesOf: each ) equals: ( collection occurrencesOf: each ) ].
 	
-	self assert: (aCol size = collection size ).
+	self assert: aCol size equals: collection size
 ]
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWithWith [
-	"self debug: #testWithWith"
 	
 	| aCol collection element1 element2 |
-	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 2  .
+	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 2.
 	element1 := collection at: 1.
-	element2 := collection at:2.
+	element2 := collection at: 2.
 	
 	aCol := self collectionClass with: element1  with: element2 .
-	self assert: (aCol occurrencesOf: element1 ) = ( collection occurrencesOf: element1).
-	self assert: (aCol occurrencesOf: element2 ) = ( collection occurrencesOf: element2).
+	self assert: (aCol occurrencesOf: element1 ) equals: (collection occurrencesOf: element1).
+	self assert: (aCol occurrencesOf: element2 ) equals: (collection occurrencesOf: element2) 
 	
 	
 ]
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWithWithWith [
-	"self debug: #testWithWithWith"
 	
 	| aCol collection |
 	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom:1 to: 3 .
-	aCol := self collectionClass with: (collection at:1) with: ( collection at:2 ) with: ( collection at: 3).
+	aCol := self collectionClass 
+						with: (collection at: 1) 
+						with: (collection at: 2) 
+						with: (collection at: 3).
 
-	1 to: 3 do: [ :i | self assert: ( aCol occurrencesOf: ( collection at: i ) ) = ( collection occurrencesOf: ( collection at: i ) ) ].
+	1 to: 3 do: [ :i | 
+		self assert: (aCol occurrencesOf: (collection at: i)) equals: (collection occurrencesOf: (collection at: i)) ]
 ]
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWithWithWithWith [
-	"self debug: #testWithWithWithWith"
 	
 	| aCol collection |
 	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 4.
-	aCol := self collectionClass with: (collection at:1) with: ( collection at:2 ) with: ( collection at: 3) with: ( collection at: 4).
+	aCol := self collectionClass with: (collection at:1) with: (collection at:2) with: (collection at: 3) with: (collection at: 4).
 
-	1 to: 3 do: [ :i | self assert: ( aCol occurrencesOf: ( collection at: i ) ) = ( collection occurrencesOf: ( collection at: i ) ) ].
+	1 to: 3 do: [ :i | self assert: (aCol occurrencesOf: (collection at: i)) equals: (collection occurrencesOf: (collection at: i)) ]
 ]
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWithWithWithWithWith [
-	"self debug: #testWithWithWithWithWith"
 	
 	| aCol collection |
-	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 5 .
-	aCol := self collectionClass with: (collection at:1) with: ( collection at:2 ) with: ( collection at: 3) with: (collection at: 4 ) with: ( collection at: 5 ).
+	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 5.
+	aCol := self collectionClass 
+						with: (collection at: 1) 
+						with: (collection at: 2) 
+						with: (collection at: 3) 
+						with: (collection at: 4) 
+						with: (collection at: 5).
 
-	1 to: 3 do: [ :i | self assert: ( aCol occurrencesOf: ( collection at: i ) ) = ( collection occurrencesOf: ( collection at: i ) ) ].
+	1 to: 3 do: [ :i | self assert: (aCol occurrencesOf: (collection at: i)) equals: (collection occurrencesOf: (collection at: i)) ]
 ]

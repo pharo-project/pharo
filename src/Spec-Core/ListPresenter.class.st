@@ -75,6 +75,7 @@ ListPresenter class >> defaultSpec [
 
 { #category : #example }
 ListPresenter class >> example [
+	<sampleInstance>
 	^ self
 		new
 		openWithSpec;

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'surface'
 	],
-	#category : #'Athens-Examples'
+	#category : #'Athens-Examples-Demos'
 }
 
 { #category : #private }
@@ -265,7 +265,7 @@ VGTigerDemo class >> tigerCommands [
 'CEFNRMMCCCCEFNRMMCCC'
 'EFNRMMCCCEFNRMMCCCEF'
 'NRMMLCLNSRMMLNSRMMCN'
-'SRMMCNSRMMC' ).
+'SRMMCNSRMMC' )
 ]
 
 { #category : #private }

@@ -1,3 +1,6 @@
+"
+An enumeration for test purposes
+"
 Class {
 	#name : #FFITestEnumeration,
 	#superclass : #FFIExternalEnumeration,
@@ -7,7 +10,7 @@ Class {
 		'CCC',
 		'DDD'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Test-Data'
 }
 
 { #category : #'accessing enum' }

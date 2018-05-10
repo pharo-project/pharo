@@ -15,7 +15,7 @@ GTSaveDebugAction class >> gtActionFor: aDebugger [
 			icon: GLMUIThemeExtraIcons glamorousAccept
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GTSaveDebugAction >> defaultKeymap [
 
 	^ PharoShortcuts current acceptShortcut
@@ -44,6 +44,11 @@ GTSaveDebugAction >> executeAction [
 				from: self session 
 				andDo: [ self needsUpdate: true ] ].
 	self codePresentation flash
+]
+
+{ #category : #accessing }
+GTSaveDebugAction >> help [
+	^ 'Save the current method.'
 ]
 
 { #category : #accessing }

@@ -42,6 +42,7 @@ RBRefactoringChangeTests >> equalityTestFor: aChange [
 
 { #category : #accessing }
 RBRefactoringChangeTests >> exampleClasses [
+	<sampleInstance>
 	^ { "Standard Classes" 
 		ProtoObject. Object. Class. Metaclass. Behavior. ClassDescription. Dictionary. Trait.
 		
@@ -52,7 +53,8 @@ RBRefactoringChangeTests >> exampleClasses [
 
 { #category : #accessing }
 RBRefactoringChangeTests >> exampleTraits [
-	^ { TBehavior. TClass. TAssertable }
+    <sampleInstance>
+	^ { TSortable. TAssertable }
 ]
 
 { #category : #utilities }

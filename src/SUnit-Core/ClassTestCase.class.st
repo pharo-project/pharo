@@ -45,10 +45,10 @@ ClassTestCase >> categoriesForClass: aClass [
 { #category : #coverage }
 ClassTestCase >> classToBeTested [
 	
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 ClassTestCase >> differentMethodsWithSameSelectorBetween: firstClass and: secondClass [
 	| repeatedSelectors differentMethodsWithSameSelector |
 	
@@ -62,7 +62,7 @@ ClassTestCase >> differentMethodsWithSameSelectorBetween: firstClass and: second
 	^differentMethodsWithSameSelector.
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 ClassTestCase >> repeatedMethodsThatDoNotAccessInstanceVariablesBetween: firstClass and: secondClass [
 	| repeatedSelectors repeatedMethodsThatDoNotAccessInstanceVariables |
 	
@@ -95,7 +95,7 @@ ClassTestCase >> selectorsTested [
 
 { #category : #coverage }
 ClassTestCase >> selectorsToBeIgnored [
-	^ #(#DoIt #DoItIn:)
+	^ #()
 ]
 
 { #category : #coverage }

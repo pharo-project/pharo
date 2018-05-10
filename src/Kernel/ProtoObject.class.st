@@ -24,27 +24,25 @@ ProtoObject >> == anObject [
 
 { #category : #'reflective operations' }
 ProtoObject >> basicIdentityHash [
-	"Answer a SmallInteger whose value is related to the receiver's identity.
-	This method must not be overridden, except by SmallInteger.
-	Primitive. Fails if the receiver is a SmallInteger. Essential.
+	"Answer a 22 bits unsigned SmallInteger whose value is related to the receiver's identity.
+	
+	Primitive. Fails if the receiver is an immediate. Essential.
 	See Object documentation whatIsAPrimitive.
-
-	Do not override. Use #identityHash unless you really know what you're doing.'"
+	
+	Do not override, use #identityHash instead"
 
 	<primitive: 75>
 	self primitiveFailed
 ]
 
 { #category : #'reflective operations' }
-ProtoObject >> become: otherObject [ 
+ProtoObject >> become: otherObject [
 	"Primitive. Swap the object pointers of the receiver and the argument.
 	All variables in the entire system that used to point to the 
 	receiver now point to the argument, and vice-versa.
 	Fails if either object is a SmallInteger"
 
-	(Array with: self)
-		elementsExchangeIdentityWith:
-			(Array with: otherObject)
+	{self} elementsExchangeIdentityWith: {otherObject}
 ]
 
 { #category : #'reflective operations' }
@@ -126,21 +124,30 @@ ProtoObject >> ifNil: nilBlock [
 
 { #category : #testing }
 ProtoObject >> ifNil: nilBlock ifNotNil: ifNotNilBlock [
-	"Evaluate the block, unless I'm == nil (q.v.)"
-
+	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block. else execute the nilBlock block "
+	
+	"(nil ifNil: [42] ifNotNil: [:o | o +3 ] ) >>> 42"
+	"(3  ifNil: [42] ifNotNil: [:o | o +3 ]) >>> 6"
+	
 	^ ifNotNilBlock cull: self
 ]
 
 { #category : #testing }
 ProtoObject >> ifNotNil: ifNotNilBlock [
-	"Evaluate the block, unless I'm == nil (q.v.)"
+	"Evaluate the block, unless I'm == nil (q.v.). If the receiver is not nil, pass it as argument to the block."
+
+	"(2 ifNotNil: [ :o | o + 3]) >>> 5"
+	"(nil ifNotNil: [:o | o +3 ]) >>> nil"
 
 	^ ifNotNilBlock cull: self
 ]
 
 { #category : #testing }
 ProtoObject >> ifNotNil: ifNotNilBlock ifNil: nilBlock [ 
-	"If I got here, I am not nil, so evaluate the block ifNotNilBlock"
+	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block. else execute the nilBlock block "
+
+	"(nil ifNotNil: [:o | o +3 ] ifNil: [42]) >>> 42"
+	"(3 ifNotNil: [:o | o +3 ] ifNil: [42]) >>> 6"
 
 	^ ifNotNilBlock cull: self
 ]
@@ -167,6 +174,22 @@ ProtoObject >> isNil [
 	"Coerces nil to true and everything else to false."
 
 	^false
+]
+
+{ #category : #'write barrier' }
+ProtoObject >> modificationForbiddenFor: selector index: index value: value [
+	^ (ModificationForbidden 
+		for: self
+		at: index
+		with: value
+		retrySelector: selector) signal
+]
+
+{ #category : #'write barrier' }
+ProtoObject >> modificationForbiddenFor: selector value: value [
+	^ self modificationForbiddenFor: selector index: nil value: value 
+	
+
 ]
 
 { #category : #'memory scanning' }
@@ -223,6 +246,29 @@ ProtoObject >> pointsTo: anObject [
 	via the compact classes array"
 
 	^ (self instVarsInclude: anObject) or: [ ^self class == anObject]
+]
+
+{ #category : #'primitive failure' }
+ProtoObject >> primitiveFail [
+	"primitiveFail may be invoked by certain methods whose code is translated in C. In such a case primitiveFail and not primitiveFailed
+	 should be invoked. The reason is that this code is translated to C by VMMaker. #primitiveFail is 
+	implemented in Interpreter of VMMaker."
+
+	^ self primitiveFailed
+]
+
+{ #category : #'primitive failure' }
+ProtoObject >> primitiveFailed [
+	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
+
+	self primitiveFailed: thisContext sender selector
+]
+
+{ #category : #'primitive failure' }
+ProtoObject >> primitiveFailed: selector [
+	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
+	
+	PrimitiveFailed signalFor: selector
 ]
 
 { #category : #debugging }

@@ -1,6 +1,21 @@
 Extension { #name : #RGMethodDefinition }
 
 { #category : #'*GT-InspectorExtensions-Core' }
+RGMethodDefinition >> gtInspectorASTIn: composite [
+	<gtInspectorPresentationOrder: 35> 
+	(GTSimpleRBTreeBrowser new treeIn: composite)
+		title: 'AST';
+		display: [ :anObject | {anObject ast} ]
+]
+
+{ #category : #'*GT-InspectorExtensions-Core' }
+RGMethodDefinition >> gtInspectorBytecodeIn: composite [
+	<gtInspectorPresentationOrder: 30> 
+	^ (GTBytecodeBrowser new treeIn: composite)
+		title: 'Bytecode'
+]
+
+{ #category : #'*GT-InspectorExtensions-Core' }
 RGMethodDefinition >> gtInspectorImplementorsIn: composite [
 	<gtInspectorPresentationOrder: 4>
 	composite list 

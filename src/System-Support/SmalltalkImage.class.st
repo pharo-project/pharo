@@ -89,8 +89,8 @@ SmalltalkImage class >> shutDown: isImageClosing [
 
 { #category : #initialization }
 SmalltalkImage class >> startUp: isImageStarting [
-	ChangesLog default.
-	isImageStarting ifTrue: [Smalltalk openSourceFiles]
+	
+	ChangesLog default
 ]
 
 { #category : #image }
@@ -258,11 +258,12 @@ SmalltalkImage >> backupImageInFileNamed: aFileReference [
 { #category : #saving }
 SmalltalkImage >> backupTo: newNameWithoutSuffix [
 	"Create a new backup of this image. 
-	Unlike #saveAs: do not transfer the default execution to the new image. 
+	Unlike #saveAs:, I do not transfer the default execution to the new image. 
 	Results:
 		true  when continuing in the new session
 		false for the current session"
-	SourceFiles changesFileStream ifNotNil:[
+	(SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
+    ifFalse: [
 		self 
 			closeSourceFiles; "so copying the changes file will always work"
 			saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix)].
@@ -622,6 +623,10 @@ SmalltalkImage >> fileForImageNamed: aString [
 SmalltalkImage >> fixObsoleteBindings [
 	CompiledMethod allInstances do: [ :method |
 		| obsoleteBindings |
+		
+		"Added to check because sometimes the bootstrap fails to generate some methods."
+		self assert: (method header isKindOf: SmallInteger) description: (method name , ' has an invalid header:' , method header asString).
+		
 		obsoleteBindings := method literals select: [ :literal |
 				literal isVariableBinding and: [
 					literal value isBehavior and: [ 
@@ -777,7 +782,7 @@ SmalltalkImage >> image [
 SmalltalkImage >> imageDirectory [
 	"Answer the directory containing the current image."
 
-	^ (Path from: self primImagePath) parent
+	^ self primImagePath asFileReference parent
 ]
 
 { #category : #'image, changes name' }
@@ -1106,7 +1111,7 @@ SmalltalkImage >> logStdErrorDuring: aBlock [
 	| stderr |
 	[
 		"install the line end conversion and force initialize the converter"
-		stderr := ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+		stderr := ZnNewLineWriterStream on: (ZnCharacterWriteStream
 			on: Stdio stderr
 			encoding: 'utf8').
 		
@@ -1282,7 +1287,8 @@ SmalltalkImage >> newSpecialObjectsArray [
 							#'internal error in named primitive machinery'
 							#'object may move' #'resource limit exceeded'
 							#'object is pinned' #'primitive write beyond end of object'
-							#'object moved' #'object not pinned' #'callback error').
+							#'object moved' #'object not pinned' #'callback error'),
+							{PrimitiveError new errorName: #'operating system error'; yourself}.
 	"53 to 55 are for Alien"
 	newArray at: 53 put: (self at: #Alien ifAbsent: []).
 	newArray at: 54 put: #invokeCallbackContext:. "use invokeCallback:stack:registers:jmpbuf: for old Alien callbacks."
@@ -1326,7 +1332,7 @@ SmalltalkImage >> openLog [
 	Because it really belongs to logging facility,
 	we should delegate to it at some point "
 
-	^ [ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+	^ [ZnNewLineWriterStream on: (ZnCharacterWriteStream
 		on:
 			((File named: Smalltalk logFileName) writeStream
 				setToEnd;
@@ -1673,7 +1679,8 @@ SmalltalkImage >> saveAs: newNameWithoutSuffix [
 		false for the current session "
 
 	newNameWithoutSuffix ifNil: [ ^ self ].
-	SourceFiles changesFileStream ifNotNil: [ 
+  (SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
+    ifFalse: [ 
 		self closeSourceFiles.
 		self saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix)	
 		"so copying the changes file will always work" ].

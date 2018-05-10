@@ -1,14 +1,14 @@
+"
+Tests for FFICallout
+"
 Class {
 	#name : #FFICalloutTests,
 	#superclass : #TestCase,
-	#instVars : [
-		'architecture'
-	],
 	#classVars : [
 		'CLASSVAR',
 		'TYPEVAR'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #private }
@@ -23,25 +23,20 @@ FFICalloutTests >> checkType: type class: typeClass arity: ptrArity argument: ar
 { #category : #private }
 FFICalloutTests >> checkType: type class: typeClass value: const [
 	self assert: type class == typeClass.
-	self assert: type value = const
+	self assert: type value equals: const
 ]
 
 { #category : #private }
 FFICalloutTests >> checkTypeSelf: type class: typeClass arity: ptrArity [ 
 
-	self assert: type class = typeClass.
-	self assert: type pointerArity = ptrArity.
-	self assert: type loader class = FFISelfArgument.
+	self assert: type class equals: typeClass.
+	self assert: type pointerArity equals: ptrArity.
+	self assert: type loader class equals: FFISelfArgument.
 ]
 
 { #category : #binding }
 FFICalloutTests >> ffiBindingOf: aName [
 	^ self class ffiBindingOf: aName
-]
-
-{ #category : #running }
-FFICalloutTests >> setUp [
-	architecture := FFIArchitecture forCurrentArchitecture
 ]
 
 { #category : #tests }

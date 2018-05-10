@@ -8,7 +8,7 @@ Class {
 	#category : #'Tool-Finder'
 }
 
-{ #category : #private }
+{ #category : #displaying }
 FinderExampleClassNode >> displayString [
 	(self parentNode receiver isKindOf: self item)
 		ifTrue: [ ^ '*' , super displayString ].

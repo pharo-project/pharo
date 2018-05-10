@@ -26,7 +26,7 @@ OCCompilerTest >> compileWithFailBlock: aBlock [
 		class: MockForCompilation;
 		requestor: self;
 		failBlock: aBlock;
-		translate.
+		compile.
 
 ]
 
@@ -66,7 +66,8 @@ OCCompilerTest >> setUp [
 
 { #category : #running }
 OCCompilerTest >> tearDown [
-	Smalltalk globals removeKey: #OCCompilerTestTestVar
+	Smalltalk globals removeKey: #OCCompilerTestTestVar.
+	super tearDown
 ]
 
 { #category : #utilities }
@@ -103,11 +104,7 @@ OCCompilerTest >> testAssignmentOfGlobalVarBinding [
 		requestor: self;
 		failBlock: [ self fail.
 			^ nil ];
-		translate
-]
-
-{ #category : #'test shadowing' }
-OCCompilerTest >> testEmptyCharacterFail [
+		compile
 ]
 
 { #category : #'test shadowing' }
@@ -221,7 +218,7 @@ OCCompilerTest >> testNotInteractiveInBlockArgumentInstanceVariableShadowing [
 			OpalCompiler new 
 				source: 'temp [:var1 | ]';
 				class: MockForCompilation;
-				translate.
+				compile.
 		] 
 		raise: OCShadowVariableWarning 
 		withExceptionDo: [ :ex |
@@ -243,7 +240,7 @@ OCCompilerTest >> testNotInteractiveInBlockTempArgumentShadowing [
 				source: 'temp [:temp | |temp|]';
 				class: MockForCompilation;
 				requestor: self;
-				translate.
+				compile.
 		] 
 		raise: OCShadowVariableWarning 
 		withExceptionDo: [ :ex |
@@ -265,7 +262,7 @@ OCCompilerTest >> testNotInteractiveInBlockTempInstanceVariableShadowing [
 				class: MockForCompilation;
 				requestor: self;
 				failBlock: [self fail. ^ nil];
-				translate.
+				compile.
 		] 
 		raise: OCShadowVariableWarning 
 		withExceptionDo: [ :ex |
@@ -288,7 +285,7 @@ OCCompilerTest >> testNotInteractiveInBlockTempShadowing [
 				class: MockForCompilation;
 				requestor: self;
 				failBlock: [self fail];
-				translate.
+				compile.
 		] 
 		raise: OCShadowVariableWarning 
 		withExceptionDo: [ :ex |
@@ -312,7 +309,7 @@ OCCompilerTest >> testNotInteractiveNoShadowing [
 			class: MockForCompilation;
 			requestor: self;
 			failBlock: [self fail. ^ nil ];
-			translate.
+			compile.
 	] raise: OCShadowVariableWarning.
 	
 
@@ -331,7 +328,7 @@ OCCompilerTest >> testNotInteractiveShadowingOfTemp [
 				source: 'temp |temp1 temp1| ';
 				class: MockForCompilation;
 				requestor: self;
-				translate.
+				compile.
 		] 
 		raise: OCShadowVariableWarning 
 		withExceptionDo: [ :ex |
@@ -354,7 +351,7 @@ OCCompilerTest >> testNotInteractiveSiblingBlocksInstanceVariableShadowing [
 				class:  MockForCompilation;
 				requestor: self; 
 				failBlock: [self fail. ^ nil ];
-				translate.
+				compile.
 		] 
 		raise: OCShadowVariableWarning 
 		withExceptionDo: [ :ex |
@@ -379,7 +376,7 @@ OCCompilerTest >> testNotInteractiveSiblingBlocksTempShadowing [
 			class: MockForCompilation;
 			requestor: self;
 			failBlock: [self fail. ^nil];
-			translate
+			compile
 	] raise: OCShadowVariableWarning.
 
 
@@ -403,7 +400,7 @@ OCCompilerTest >> testReservedNameAsBlockArgumentShadowing [
 				class: MockForCompilation;
 				requestor: self;
 				failBlock: [ exit value ];
-				translate.
+				compile.
 			self fail ] valueWithExit.
 		self assert: ((errorMessage = 'Variable name expected ->' )or: [ errorMessage =  'Name already defined ->' ]).
 		self assert: errorLocation = 11 ]
@@ -421,7 +418,7 @@ OCCompilerTest >> testReservedNameAsMethodArgumentShadowing [
 				class:  MockForCompilation;
 				requestor: self;
 				failBlock: [ exit value ];
-				translate.
+				compile.
 			self fail ] valueWithExit.
 		self assert: ((errorMessage = 'Variable name expected ->' )or: [ errorMessage =  'Name already defined ->' ]).
 		self assert: errorLocation = 7 ]
@@ -453,7 +450,7 @@ OCCompilerTest >> testSiblingBlocksInstanceVariableShadowing [
 				self assert: (errorMessage = 'Name already defined ->').
 				self assert: (errorLocation = 27).
 				^nil];
-		translate.
+		compile.
 	self fail.
 
 
@@ -470,7 +467,7 @@ OCCompilerTest >> testSiblingBlocksTempShadowing [
 		source: 'temp [:temp | ]. [:temp | ]';
 		class: MockForCompilation;
 		failBlock: [self fail. ^ nil ];
-		translate.
+		compile.
 				
 
 
@@ -495,7 +492,7 @@ OCCompilerTest >> testTraitTempShadowing [
 				source: self tempTraitShadowingString;
 				class: ArrayTest;
 				failBlock: [self fail.];
-				translate.
+				compile.
 	] 
 	on: OCShadowVariableWarning 
 	do: [ :ex | 

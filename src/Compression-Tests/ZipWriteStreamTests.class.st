@@ -1,3 +1,6 @@
+"
+Unit tests for ZipWriteStream
+"
 Class {
 	#name : #ZipWriteStreamTests,
 	#superclass : #TestCase,
@@ -19,7 +22,7 @@ ZipWriteStreamTests >> testEmptyStrings [
 	self assert: zipStream nextString isEmpty. 
 	self assert: zipStream nextString isEmpty.
 	zipStream close.
-	aStream close.
+	aStream close
 ]
 
 { #category : #tests }
@@ -27,5 +30,5 @@ ZipWriteStreamTests >> testZipped [
 	| compressed |
 	
 	compressed := 'hello' zipped.
-	self assert: (compressed unzipped = 'hello').
+	self assert: compressed unzipped equals: 'hello'
 ]

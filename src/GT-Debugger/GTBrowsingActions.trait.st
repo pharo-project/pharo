@@ -10,7 +10,7 @@ Trait {
 GTBrowsingActions >> browseClassRefs [
 
 	self currentContext ifNotNil: [ :aContext || class|
-		class := aContext methodClass theNonMetaClass.
+		class := aContext methodClass instanceSide.
 		class isTrait 
 			ifTrue: [ self systemNavigation browseAllUsersOfTrait: class ]
 			ifFalse: [ self systemNavigation browseAllCallsOnClass: class ] ]
@@ -60,6 +60,14 @@ GTBrowsingActions >> browseMethodFull [
 		Smalltalk tools browser 
 			openOnClass: self currentClassOrMetaClass
 			selector: self currentMessageName ]
+]
+
+{ #category : #actions }
+GTBrowsingActions >> browseReceiver [
+	"Create and schedule a full Browser and then select the current class and message."
+	self currentContext receiver class ifNotNil: [ :instance |
+		Smalltalk tools browser 
+			openOnClass: instance ]
 ]
 
 { #category : #actions }
@@ -116,7 +124,7 @@ GTBrowsingActions >> inspectInstances [
 	"Inspect all instances of the selected class."
 
 	self currentClassOrMetaClass ifNotNil: [ :aClass |
-		aClass theNonMetaClass inspectAllInstances ]
+		aClass instanceSide inspectAllInstances ]
 ]
 
 { #category : #actions }
@@ -124,7 +132,7 @@ GTBrowsingActions >> inspectSubInstances [
 	"Inspect all instances of the selected class and all its subclasses"
 
 	self currentClassOrMetaClass ifNotNil: [ :aClass |
-		aClass theNonMetaClass inspectSubInstances ]
+		aClass instanceSide inspectSubInstances ]
 ]
 
 { #category : #actions }

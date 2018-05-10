@@ -1,3 +1,6 @@
+"
+SUnit tests for GlobalIdentifierStonPersistence
+"
 Class {
 	#name : #GlobalIdentifierStonPersistenceTest,
 	#superclass : #GlobalIdentifierPersistenceTest,

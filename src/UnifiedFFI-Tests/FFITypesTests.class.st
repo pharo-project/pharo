@@ -1,7 +1,10 @@
+"
+Tests for different FFI types
+"
 Class {
 	#name : #FFITypesTests,
 	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #ranges }
@@ -105,7 +108,7 @@ FFITypesTests >> testSigned1ByteIntegers [
 		|ref|
 		ref := ByteArray new: 1.
 		ref integerAt: 1 put: int size: 1 signed: true.
-		self assert: (ref integerAt: 1 size: 1 signed: true) = int ]
+		self assert: (ref integerAt: 1 size: 1 signed: true) equals: int ]
 ]
 
 { #category : #tests }
@@ -114,7 +117,7 @@ FFITypesTests >> testSigned2ByteIntegers [
 		|ref|
 		ref := ByteArray new: 2.
 		ref integerAt: 1 put: int size: 2 signed: true.
-		self assert: (ref integerAt: 1 size: 2 signed: true) = int ]
+		self assert: (ref integerAt: 1 size: 2 signed: true) equals: int ]
 ]
 
 { #category : #tests }
@@ -123,7 +126,7 @@ FFITypesTests >> testSigned4ByteIntegers [
 		|ref|
 		ref := ByteArray new: 4.
 		ref integerAt: 1 put: int size: 4 signed: true.
-		self assert: (ref integerAt: 1 size: 4 signed: true) = int ]
+		self assert: (ref integerAt: 1 size: 4 signed: true) equals: int ]
 ]
 
 { #category : #tests }
@@ -133,15 +136,15 @@ FFITypesTests >> testSignedAtWithDiferentSizes [
 	
 	ref := ByteArray new: 4.
 	ref integerAt: 1 put: -10 size: 1 signed: true.
-	self assert: (ref integerAt: 1 size: 1 signed: true) = -10.
+	self assert: (ref integerAt: 1 size: 1 signed: true) equals: -10.
 	
 	ref := ByteArray new: 4.
 	ref integerAt: 1 put: -10 size: 4 signed: true.
-	self assert: (ref integerAt: 1 size: 4 signed: true) = -10.
+	self assert: (ref integerAt: 1 size: 4 signed: true) equals: -10.
 	
 	ref := ByteArray new: 8.
 	ref integerAt: 1 put: -10 size: 8 signed: true.
-	self assert: (ref integerAt: 1 size: 8 signed: true) = -10
+	self assert: (ref integerAt: 1 size: 8 signed: true) equals: -10
 ]
 
 { #category : #tests }
@@ -150,7 +153,7 @@ FFITypesTests >> testSignedLong [
 		|ref|
 		ref := ByteArray new: FFIInt32 externalTypeSize.
 		ref signedLongAt: 1 put: int.
-		self assert: (ref signedLongAt: 1) = int ]
+		self assert: (ref signedLongAt: 1) equals: int ]
 ]
 
 { #category : #tests }
@@ -159,7 +162,7 @@ FFITypesTests >> testSignedLongLong [
 		|ref|
 		ref := ByteArray new: FFIInt64 externalTypeSize.
 		ref signedLongLongAt: 1 put: int.
-		self assert: (ref signedLongLongAt: 1) = int ]
+		self assert: (ref signedLongLongAt: 1) equals: int ]
 ]
 
 { #category : #tests }
@@ -168,7 +171,7 @@ FFITypesTests >> testUnsigned1ByteIntegers [
 		|ref|
 		ref := ByteArray new: 1.
 		ref integerAt: 1 put: int size: 1 signed: false.
-		self assert: (ref integerAt: 1 size: 1 signed: false) = int ]
+		self assert: (ref integerAt: 1 size: 1 signed: false) equals: int ]
 ]
 
 { #category : #tests }
@@ -177,7 +180,7 @@ FFITypesTests >> testUnsigned2ByteIntegers [
 		|ref|
 		ref := ByteArray new: 2.
 		ref integerAt: 1 put: int size: 2 signed: false.
-		self assert: (ref integerAt: 1 size: 2 signed: false) = int ]
+		self assert: (ref integerAt: 1 size: 2 signed: false) equals: int ]
 ]
 
 { #category : #tests }
@@ -186,7 +189,7 @@ FFITypesTests >> testUnsigned4ByteIntegers [
 		|ref|
 		ref := ByteArray new: 4.
 		ref integerAt: 1 put: int size: 4 signed: false.
-		self assert: (ref integerAt: 1 size: 4 signed: false) = int ]
+		self assert: (ref integerAt: 1 size: 4 signed: false) equals: int ]
 ]
 
 { #category : #tests }
@@ -195,7 +198,7 @@ FFITypesTests >> testUnsignedLong [
 		|ref|
 		ref := ByteArray new: FFIUInt32 externalTypeSize.
 		ref unsignedLongAt: 1 put: int.
-		self assert: (ref unsignedLongAt: 1) = int ]
+		self assert: (ref unsignedLongAt: 1) equals: int ]
 ]
 
 { #category : #tests }
@@ -204,7 +207,7 @@ FFITypesTests >> testUnsignedLongLong [
 		|ref|
 		ref := ByteArray new: FFIUInt64 externalTypeSize.
 		ref unsignedLongLongAt: 1 put: int.
-		self assert: (ref unsignedLongLongAt: 1) = int ]
+		self assert: (ref unsignedLongLongAt: 1) equals: int ]
 ]
 
 { #category : #ranges }

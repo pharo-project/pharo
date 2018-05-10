@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 MCWorkingCopyBrowserTest >> setUp [
+	super setUp.
 	b := MCWorkingCopyBrowser new.
 ]
 

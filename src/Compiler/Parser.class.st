@@ -304,7 +304,7 @@ Parser >> declareClassVar: name [
 	| sym class |
 	sym := name asSymbol.
 	class := encoder classEncoding.
-	class := class theNonMetaClass.		"not the metaclass"
+	class := class instanceSide.		"not the metaclass"
 	class addClassVarNamed: name.
 	^ encoder global: (class classPool associationAt: sym)
 			name: sym
@@ -363,7 +363,7 @@ Parser >> defineClass: className [
 	
 	| classSymbol systemCategory classDefinition |
 	classSymbol := className asSymbol.
-	systemCategory := self encoder classEncoding theNonMetaClass category
+	systemCategory := self encoder classEncoding instanceSide category
 		ifNil: [ 'Unknown' ].
 	classDefinition := 'Object subclass: #' , classSymbol , '
 		instanceVariableNames: '''' 
@@ -533,8 +533,10 @@ Parser >> initPattern: aString notifying: req return: aBlock [
 
 { #category : #'error handling' }
 Parser >> interactive [
-	
-	^ UIManager default interactiveParserFor: requestor
+	requestor ifNil: [^ false ].
+	^(requestor respondsTo: #interactive)
+		ifTrue: [ requestor interactive ]
+		ifFalse: [ true ]
 ]
 
 { #category : #scanning }

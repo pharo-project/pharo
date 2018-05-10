@@ -16,9 +16,9 @@ EpCodeChangeIntegrationTest >> categoryNameForTesting [
 
 { #category : #running }
 EpCodeChangeIntegrationTest >> tearDown [
-	super tearDown.
 	
-	self class environment organization removeCategory: self categoryNameForTesting
+	self class environment organization removeCategory: self categoryNameForTesting.
+	super tearDown.
 ]
 
 { #category : #tests }
@@ -97,10 +97,6 @@ EpCodeChangeIntegrationTest >> testClassInstanceVariableRemoval [
 
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testClassModificationOfTraitComposition [
-	<expectedFailure>
-	"Failure: Currently, there is no system announcement when the trait composition is changed. 
-	Epicea, confussingly, only registers method addition and modification events 
-	when the trait is installed."
 	
 	| aTrait |
 	aClass := classFactory newClass.
@@ -163,7 +159,7 @@ EpCodeChangeIntegrationTest >> testMetaclassInstanceVariableAddition [
 	aClass := classFactory newClass.
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
-	aClass theMetaClass instanceVariableNames: 'x'.	
+	aClass classSide instanceVariableNames: 'x'.	
 	self assert: (self countLogEventsWith: EpClassModification) equals: 1.
 
 ]
@@ -176,7 +172,7 @@ EpCodeChangeIntegrationTest >> testMetaclassInstanceVariableAdditionWithTrait [
 	aTrait := classFactory newTrait.
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
-	aClass theMetaClass uses: aTrait asTraitComposition instanceVariableNames: 'x'.	
+	aClass classSide uses: aTrait asTraitComposition instanceVariableNames: 'x'.	
 	self assert: (self countLogEventsWith: EpClassModification) equals: 1.
 
 ]
@@ -249,11 +245,11 @@ EpCodeChangeIntegrationTest >> testMethodRecompilationShouldNotLog [
 	aClass := classFactory newClass.
 	aClass compile: 'fortyTwo ^42'.
 
-	headBeforeRecompiling := monitor head.
+	headBeforeRecompiling := monitor log head.
 
 	aClass compile: 'fortyTwo ^42'.
 	
-	self assert: monitor head == headBeforeRecompiling
+	self assert: monitor log head == headBeforeRecompiling
 ]
 
 { #category : #tests }
@@ -297,7 +293,7 @@ EpCodeChangeIntegrationTest >> testRedundantClassDefinition [
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
 
-	self class compiler evaluate: aClass theMetaClass definition.
+	self class compiler evaluate: aClass classSide definition.
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
 
@@ -335,10 +331,6 @@ EpCodeChangeIntegrationTest >> testTraitAddition [
 
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testTraitModificationOfTraitComposition [
-	<expectedFailure>
-	"Failure: Currently, there is no system announcement when the trait composition is changed. 
-	Epicea, confussingly, only registers method addition and modification events 
-	when the trait is installed."
 	
 	| aTrait |
 	aClass := classFactory newTrait.

@@ -119,7 +119,7 @@ PragmaMenuBuilder >> allMisplacedItems [
 ]
 
 { #category : #'registrations handling' }
-PragmaMenuBuilder >> arrangeRegistrations. [
+PragmaMenuBuilder >> arrangeRegistrations [
 	self allMisplacedItems do: [:item |
 		(self itemNamed: item parentName)
 			ifNotNil: [:newOwner | item owner removeItem: item.
@@ -155,7 +155,7 @@ PragmaMenuBuilder >> collectRegistrations [
 		do: [ :prg | 
 			self
 				currentRoot: self
-				while: [ prg methodClass theNonMetaClass
+				while: [ prg methodClass instanceSide
 						perform: prg methodSelector
 						with: menu ] ].
 	self interpretRegistration: menu

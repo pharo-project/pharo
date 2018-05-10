@@ -50,6 +50,27 @@ AbstractBinaryFileStream class >> handle: aCollection file: aFile forWrite: aTru
 		yourself
 ]
 
+{ #category : #testing }
+AbstractBinaryFileStream >> atEnd [
+
+	^ self primAtEnd: handle
+]
+
+{ #category : #accessing }
+AbstractBinaryFileStream >> contents [
+	"Answer the contents of the receiver while leaving the position unchanged.
+	Fail if the receiver doesn't support positioning.
+	#upToEnd provides an alternative that doesn't rely on stream positioning."
+
+	| savedPosition contents |
+
+	savedPosition := self position.
+	self position: 0.
+	contents := self upToEnd.
+	self position: savedPosition.
+	^contents
+]
+
 { #category : #'character writing' }
 AbstractBinaryFileStream >> cr [
 	
@@ -71,6 +92,15 @@ AbstractBinaryFileStream >> file [
 AbstractBinaryFileStream >> file: aFile [ 
 	
 	file := aFile
+]
+
+{ #category : #flushing }
+AbstractBinaryFileStream >> flush [
+	"When writing, this flushes the write buffer the stream uses to reduce
+	the number of write() system calls it makes. This should generally be
+	used before #sync, but on Windows they do the same thing."
+	
+	self primFlush: handle
 ]
 
 { #category : #initialization }
@@ -193,7 +223,22 @@ AbstractBinaryFileStream >> peek [
 { #category : #positioning }
 AbstractBinaryFileStream >> position [
 
-	self subclassResponsibility
+	^ self primGetPosition: handle
+]
+
+{ #category : #positioning }
+AbstractBinaryFileStream >> position: aPosition [
+	
+	self primSetPosition: handle to: aPosition
+]
+
+{ #category : #private }
+AbstractBinaryFileStream >> primAtEnd: id [
+	"Answer true if the file position is at the end of the file."
+
+	<primitive: 'primitiveFileAtEnd' module: 'FilePlugin'>
+	self primitiveFailed
+
 ]
 
 { #category : #private }
@@ -210,12 +255,48 @@ AbstractBinaryFileStream >> primFlush: id [
 ]
 
 { #category : #private }
+AbstractBinaryFileStream >> primGetPosition: id [
+	"Get this files current position."
+
+	<primitive: 'primitiveFileGetPosition' module: 'FilePlugin'>
+	self primitiveFailed
+
+]
+
+{ #category : #private }
 AbstractBinaryFileStream >> primRead: id into: byteArray startingAt: startIndex count: count [
 	"Read up to count bytes of data from this file into the given string or byte array starting at the given index. Answer the number of bytes actually read."
 
 	<primitive: 'primitiveFileRead' module: 'FilePlugin'>
 	self closed ifTrue: [^ self error: 'File is closed'].
 	self error: 'File read failed'.
+
+]
+
+{ #category : #private }
+AbstractBinaryFileStream >> primSetPosition: id to: anInteger [
+	"Set this file to the given position."
+
+	<primitive: 'primitiveFileSetPosition' module: 'FilePlugin'>
+	self primitiveFailed
+
+]
+
+{ #category : #private }
+AbstractBinaryFileStream >> primSize: id [
+	"Answer the size of this file."
+
+	<primitive: 'primitiveFileSize' module: 'FilePlugin'>
+	self primitiveFailed
+
+]
+
+{ #category : #private }
+AbstractBinaryFileStream >> primSizeNoError: id [
+	"Answer the size of this file. Answer nil if the primitive fails; this indicates that the file handle has become stale."
+
+	<primitive: 'primitiveFileSize' module: 'FilePlugin'>
+	^ nil
 
 ]
 
@@ -267,11 +348,37 @@ AbstractBinaryFileStream >> readInto: readBuffer startingAt: startIndex count: c
 ]
 
 { #category : #positioning }
+AbstractBinaryFileStream >> reset [
+	self position: 0
+]
+
+{ #category : #positioning }
+AbstractBinaryFileStream >> setToEnd [
+	
+	self position: self size
+]
+
+{ #category : #accessing }
+AbstractBinaryFileStream >> size [
+
+	^ self primSize: handle
+]
+
+{ #category : #positioning }
 AbstractBinaryFileStream >> skip: n [
 	"Set the character position to n characters from the current position.
 	Error if not enough characters left in the file.
 	By default we read n characters and we avoid reading the output"
 	self next: n
+]
+
+{ #category : #flushing }
+AbstractBinaryFileStream >> sync [	
+	"When writing, this syncs any written/flushed data still in the kernel
+	file system buffers to disk. This should generally be used after #flush,
+	but on Windows they do the same thing."
+
+	self primSync: handle
 ]
 
 { #category : #accessing }
@@ -286,4 +393,14 @@ AbstractBinaryFileStream >> upToAnyOf: delimiters [
 	^ ByteArray new: 1000 streamContents: [ :stream | | ch |
 		[ (ch := self next) isNil or: [ delimiters includes: ch] ] 
 			whileFalse: [ stream nextPut: ch ] ]
+]
+
+{ #category : #accessing }
+AbstractBinaryFileStream >> upToEnd [
+	"Answer a subcollection from the current access position through the last element of the receiver."
+
+	^ByteArray streamContents: [ :newStream |
+		| next |
+		[ (next := self next) isNil ] whileFalse: [
+			newStream nextPut: next ] ]
 ]

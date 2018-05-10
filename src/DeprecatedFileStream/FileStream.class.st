@@ -36,7 +36,7 @@ FileStream class >> concreteStream [
 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 FileStream class >> convertCRtoLF: fileName [
 	"Convert the given file to LF line endings. Put the result in a file with the extention '.lf'"
 
@@ -144,6 +144,11 @@ FileStream class >> isChangesFileSuffix: suffix [
 
 	^ self changesFileSuffixes includes: suffix
 
+]
+
+{ #category : #deprecation }
+FileStream class >> isDeprecated [
+	^true
 ]
 
 { #category : #'file reader services' }
@@ -330,7 +335,7 @@ FileStream class >> voidStdioFiles [
 	Stdin := Stdout := Stderr := StdioFiles := nil
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 FileStream class >> writeSourceCodeFrom: aStream baseName: baseName isSt: stOrCsFlag [
 
 	| extension converter fileName  |

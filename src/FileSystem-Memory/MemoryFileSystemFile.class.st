@@ -8,7 +8,7 @@ Class {
 		'bytes',
 		'size'
 	],
-	#category : #'FileSystem-Memory'
+	#category : #'FileSystem-Memory-Base'
 }
 
 { #category : #'stream-protocol' }
@@ -58,6 +58,12 @@ MemoryFileSystemFile >> at: first write: aCollection startingAt: start count: co
 { #category : #'streams-compatibility' }
 MemoryFileSystemFile >> binaryReadStream [
 	^ ReadStream on: self bytes from: 1 to: size
+]
+
+{ #category : #streams }
+MemoryFileSystemFile >> binaryWriteStream [
+
+	^ MemoryFileWriteStream on: self
 ]
 
 { #category : #accessing }
@@ -110,6 +116,12 @@ MemoryFileSystemFile >> readStream [
 ]
 
 { #category : #accessing }
+MemoryFileSystemFile >> size [
+
+	^ size
+]
+
+{ #category : #accessing }
 MemoryFileSystemFile >> sizeIncrement [
 	^ (bytes size min: 20) max: 1024
 ]
@@ -128,6 +140,13 @@ MemoryFileSystemFile >> truncateTo: aSize [
 			ifFalse: [bytes copyFrom: 1 to: aSize]].
 	size := bytes size.
 	self modified.
+]
+
+{ #category : #private }
+MemoryFileSystemFile >> updateContents: aCollection [ 
+	
+	bytes := aCollection.
+	self updateSize: aCollection size.
 ]
 
 { #category : #private }

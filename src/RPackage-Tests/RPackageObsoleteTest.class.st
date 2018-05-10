@@ -16,10 +16,8 @@ RPackageObsoleteTest >> setNotRun [
 ]
 
 { #category : #tests }
-RPackageObsoleteTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [
-	"self debug: #testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem"
-	| foo | 
-	
+RPackageObsoleteTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [	
+	| foo | 	
 	[ notRun := false.
 	  SystemAnnouncer uniqueInstance 
 		when: ClassRemoved send: #setNotRun to: self.
@@ -32,7 +30,6 @@ ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ].
 
 { #category : #tests }
 RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
-	"self debug: #testMethodPackageFromObsoleteClass"
 	
 	| pack method foo | 
 	[
@@ -54,7 +51,6 @@ RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
 
 { #category : #tests }
 RPackageObsoleteTest >> testMethodPackageOfRemovedClass [
-	"self debug: #testMethodPackageOfRemovedClass"
 	
 	| pack method foo | 
 	pack := self createNewPackageNamed: 'P1'.

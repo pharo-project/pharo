@@ -17,7 +17,9 @@ Class {
 		'showOptions',
 		'contextClassHolder',
 		'showOnlyDestination',
-		'showOnlySource'
+		'showOnlySource',
+		'leftLabelHolder',
+		'rightLabelHolder'
 	],
 	#category : #'Spec-Core-Widgets'
 }
@@ -41,7 +43,7 @@ DiffPresenter class >> exampleWithOptions [
 	"
 	self exampleWithOptions
 	"
-
+	<sampleInstance>
 	^ self new
 		showOptions: true;
 		leftText: (True >> #and:) sourceCode;
@@ -55,7 +57,8 @@ DiffPresenter class >> exampleWithoutOptions [
 	"
 	self exampleWithoutOptions
 	"
-
+	<sampleInstance>
+	
 	^ self new
 		showOptions: false;
 		leftText: 'Old text';
@@ -92,13 +95,31 @@ DiffPresenter >> initialize [
 	showOptions := true asValueHolder.
 	showOnlyDestination := false asValueHolder.
 	showOnlySource := false asValueHolder.	
+	leftLabelHolder := nil asValueHolder.
+	rightLabelHolder := nil asValueHolder.
 		
 	leftTextHolder whenChangedDo: [ :newText | self changed: #leftText: with: { newText } ].
 	rightTextHolder whenChangedDo: [ :newText | self changed: #rightText: with: { newText } ].
 	contextClassHolder whenChangedDo: [ :newClass | self changed: #contextClass: with: { newClass } ].	
 	showOptions whenChangedDo: [ :aBoolean | self changed: #showOptions: with: { aBoolean }].	
 	showOnlyDestination whenChangedDo: [:aBoolean | self changed: #showOnlyDestination: with: { aBoolean } ].
-	showOnlySource whenChangedDo: [:aBoolean | self changed: #showOnlySource: with: { aBoolean } ]
+	showOnlySource whenChangedDo: [:aBoolean | self changed: #showOnlySource: with: { aBoolean } ].
+	
+	leftLabelHolder whenChangedDo: [:newText | self changed: #leftLabel: with: { newText } ].
+	rightLabelHolder whenChangedDo: [:newText | self changed: #rightLabel: with: { newText } ].
+
+]
+
+{ #category : #accessing }
+DiffPresenter >> leftLabel [
+
+	^ leftLabelHolder value
+]
+
+{ #category : #accessing }
+DiffPresenter >> leftLabel: anObject [
+
+	leftLabelHolder value: anObject 
 ]
 
 { #category : #accessing }
@@ -111,6 +132,18 @@ DiffPresenter >> leftText [
 DiffPresenter >> leftText: anObject [
 
 	leftTextHolder value: anObject 
+]
+
+{ #category : #accessing }
+DiffPresenter >> rightLabel [
+
+	^ rightLabelHolder value
+]
+
+{ #category : #accessing }
+DiffPresenter >> rightLabel: anObject [
+
+	rightLabelHolder value: anObject 
 ]
 
 { #category : #accessing }

@@ -801,7 +801,7 @@ PositionableStream >> upToAll: aCollection [
 	(self match: aCollection) 
 		ifTrue: [endMatch := self position.
 			self position: startPos.
-			result := self next: endMatch - startPos - aCollection size.
+			result := self upToPosition: endMatch - aCollection size.
 			self position: endMatch.
 			^ result]
 		ifFalse: [self position: startPos.
@@ -849,4 +849,10 @@ PositionableStream >> upToEnd [
 	newStream := (collection species new: 100) writeStream.
 	[self atEnd] whileFalse: [ newStream nextPut: self next ].
 	^ newStream contents
+]
+
+{ #category : #accessing }
+PositionableStream >> upToPosition: anInteger [
+	"Answer a subcollection containing items starting from the current position and ending including the given position. Usefully different to #next: in that in the case of MultiByteFileStream, and perhaps others, positions measure in terms of encoded items, while #next: convention is to name a number of items, independent of their encoding in the underlying buffer."
+	^ self next: anInteger - position
 ]

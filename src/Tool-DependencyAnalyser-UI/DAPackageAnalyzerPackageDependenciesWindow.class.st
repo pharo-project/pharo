@@ -1,5 +1,5 @@
 "
-UI merging SpecTreeModel cycles and Nautilus UI.
+UI merging SpecTreeModel cycles and browser
 "
 Class {
 	#name : #DAPackageAnalyzerPackageDependenciesWindow,
@@ -7,21 +7,12 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
-{ #category : #nautilus }
-DAPackageAnalyzerPackageDependenciesWindow class >> browseDependencies: aBuilder [
-	<contextMenu>
-	<nautilusGlobalPackageMenu>
-	(aBuilder item: #'Browse dependencies...')
-		action: [ (self onPackagesNamed: (self selectedPackagesFrom: aBuilder)) open ];
-		order: 1000.
-]
-
 { #category : #examples }
 DAPackageAnalyzerPackageDependenciesWindow class >> collections [
 	^ (self onPackagesMatch: '*Collections*') open
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageAnalyzerPackageDependenciesWindow class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
 			(RPackageOrganizer default packages

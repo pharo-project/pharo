@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'surface'
 	],
-	#category : #'Athens-Examples'
+	#category : #'Athens-Examples-Workshop'
 }
 
 { #category : #colors }

@@ -1,66 +1,55 @@
-# Pharo-Core repository
+# Pharo
 
-This repository contains a mirror of the packages part of the [Pharo language](http://pharo.org/). Pharo is a pure object-oriented programming language and a powerful environment, focused on simplicity and immediate feedback (think IDE and OS rolled into one).
+This repository contains sources of the [Pharo language](http://pharo.org/). Pharo is a pure object-oriented programming language and a powerful environment, focused on simplicity and immediate feedback (think IDE and OS rolled into one).
+
+![Pharo 6 screenshot](https://pbs.twimg.com/media/DBpdIGrXkAA8SJ1.jpg)
+
+## Download Pharo
+
+To download the Pharo stable version for your platform, please visit:
+
+- [http://pharo.org/download](http://pharo.org/download)
+
+## Virtual machine
+
+This repository contains only sources of the Pharo image. The virtual machine is served by a separate repository:
+
+- [https://github.com/OpenSmalltalk/opensmalltalk-vm](https://github.com/OpenSmalltalk/opensmalltalk-vm)
 
 ## Automated Builds
 
-This repository is periodically built in travis and its results uploaded to travis.
+This repository is being built on a [Jenkins server](https://ci.inria.fr/pharo-ci-jenkins2) and uploaded to [files.pharo.org](https://files.pharo.org).
 
-[![Build Status](https://travis-ci.org/guillep/pharo-core.svg?branch=master)](https://travis-ci.org/guillep/pharo-core)
-[![Latest Nightly Build-32bit](https://api.bintray.com/packages/pharo-project/pharo/Pharo32bit/images/download.svg) ](https://bintray.com/pharo-project/pharo/Pharo32bit/_latestVersion)
-[![Latest Nightly Build-64bit](https://api.bintray.com/packages/pharo-project/pharo/Pharo64bit/images/download.svg) ](https://bintray.com/pharo-project/pharo/Pharo64bit/_latestVersion)
+- [Latest build - 64bit](http://files.pharo.org/image/70/latest-64.zip)
+- [Latest build - 32bit](http://files.pharo.org/image/70/latest.zip) 
 
-You can also programatically load the latest nightly build using the link:
+The minimal image contains the basic Pharo packages without the graphical user interface. It is useful as a base for server-side applications deployment.
 
-	https://bintray.com/pharo-project/pharo/Pharo/_latestVersion
-	
-There you will find 32 and 64 bit images. Each version contains the following generated artifacts:
+- [Minimal image latest build - 64bit](http://files.pharo.org/image/70/latest-minimal-64.zip)
+- [Minimal image latest build - 32bit](http://files.pharo.org/image/70/latest-minimal-32.zip) 
 
-- core: Just the initialized core. Has the compiler, IO/files, command line handlers. No network here.
-- monticello-bootstrap: core + basic monticello packages. This one has bootstrapped MCWorkingCopies also. Allows loading mcz packages from disk only.
-- monticello: monticello-bootstrap + network + monticello network repositories.
-- metacello: monticello + metacello
-- Pharo: metacello + the rest of pharo reloaded
 
 ## Bootstrapping Pharo from sources
 
-This source code repository serves also for bootstrapping the latest version of the [Pharo language](http://pharo.org/). The script in *scripts/bootstrap.st* serves for this purpose. For more information about bootstrapping, refer to [guillep/PharoBootstrap](https://github.com/guillep/PharoBootstrap).
-```
-[ Metacello new
-	baseline: 'Iceberg';
-	repository: 'github://npasserini/iceberg:dev-0.4';
-	load.
+To bootstrap a new Pharo image you need the latest stable version of Pharo. For more information about bootstrapping, refer to [guillep/PharoBootstrap](https://github.com/guillep/PharoBootstrap).
 
-Metacello new
-	baseline: 'PharoBootstrapProcess';
-	repository: 'filetree://bootstrap/src';
-	load.
-] on: Warning do: #resume
-
-(PBBootstrap forArchitecture: '32' "or '64'")
-	prepareBootstrap;
-	createImage
-```
-
-This will generate a new image file named `bootstrap.image` in directory bootstrap-cache.
-
-You should afterwards execute:
+The bootstrapping can be done using the following script:
 
 ```bash
-$ ./bootstrap/scripts/build.sh
+BUILD_NUMBER=42 BOOTSTRAP_ARCH=32 sh ./bootstrap/scripts/bootstrap.sh
 ```
+
+This will generate and archive images at various stages of the bootstrap process up to the full image in Pharo7.0-32bit-hhhhhhh.zip where hhhhhhh is the identifying hash.
+
+Additional information on the stages of the bootstrap and how to snapshot during the process are provided as comments in bootstrap.sh.
+
+__Tip:__ You can set `BOOTSTRAP_REPOSITORY` and `BOOTSTRAP_CACHE` environment variables to do the bootstrap outside of the source repository.
+
 
 ## File format
 
-This source code repository is exported in [FileTree metadataless format](https://github.com/dalehenrich/filetree). In this format, packages and classes are represented as directories. Each method is inside a single file.
+This source code repository is exported in [Tonel format](https://github.com/pharo-vcs/tonel). In this format, packages are represented as directories and each class is inside a single file.
 
-## Keeping this repository up to date
+## How to contribute
 
-This repository is a mirrored version of the latest Pharo packages. The scripts folder contains the scripts to export a Pharo image's source code.
-
-- export_latest.sh
-- export.st
-
-A CI job in the [Inria](http://ci.inria.fr) infrastructure executes these scripts for every new version of the source code and pushes into this repository the latest version of the sources.
-
-https://ci.inria.fr/pharo/view/Pharo%20bootstrap/job/Pharo-6.0-Bootstrap-Git-Export/
+Pharo is an opensource project very friendly to contributions of the users. See the document [CONTRIBUTING](CONTRIBUTING.md) how you can help to improve Pharo.

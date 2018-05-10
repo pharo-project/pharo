@@ -2,7 +2,6 @@ Extension { #name : #SelfEvaluatingObjectTest }
 
 { #category : #'*Kernel-Tests-WithCompiler' }
 SelfEvaluatingObjectTest >> testObjects [
-	"self debug: #testObjects"
 
 	self assert: 10 isSelfEvaluating.
 	self assert: $a isSelfEvaluating.

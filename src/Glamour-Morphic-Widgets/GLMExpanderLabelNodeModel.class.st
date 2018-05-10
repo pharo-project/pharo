@@ -42,7 +42,7 @@ GLMExpanderLabelNodeModel >> displayText [
 
 { #category : #callbacks }
 GLMExpanderLabelNodeModel >> elementColumn [
-	| row tags tagsFilter |
+	| row |
 	row := OrderedCollection with: (self displayText).
 	
 "	tags:= self containerTree glamourPresentation tagsFor: self item to: #show.

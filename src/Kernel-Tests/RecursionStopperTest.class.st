@@ -50,6 +50,7 @@ RecursionStopperTest >> setUp [
 RecursionStopperTest >> tearDown [
 
 	fork ifNotNil: [ fork terminate. fork := nil ].
+	super tearDown
 ]
 
 { #category : #tests }

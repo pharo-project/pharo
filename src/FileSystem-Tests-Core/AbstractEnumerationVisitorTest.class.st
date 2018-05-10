@@ -4,7 +4,7 @@ SUnit tests for AbstractEnumerationVisitor
 Class {
 	#name : #AbstractEnumerationVisitorTest,
 	#superclass : #SingleTreeTest,
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Visitors'
 }
 
 { #category : #'as yet unclassified' }
@@ -12,16 +12,16 @@ AbstractEnumerationVisitorTest class >> isAbstract [
 	^ self name = #AbstractEnumerationVisitorTest
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 AbstractEnumerationVisitorTest >> assertEntries: references are: expected [
 	| strings |
 	self assert: references isArray.
-	references do: [ :ea | self assert: ea class = FileSystemDirectoryEntry ].
+	references do: [ :ea | self assert: ea class equals: FileSystemDirectoryEntry ].
 	strings := references collect: [ :ea | ea reference pathString ].
 	self assert: strings equals: expected
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AbstractEnumerationVisitorTest >> root [
 	^ filesystem / 'alpha'
 ]

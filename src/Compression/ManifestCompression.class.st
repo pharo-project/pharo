@@ -1,10 +1,10 @@
 "
-I store metadata for this package. These meta data are used by other tools such as the SmalllintManifestChecker and the critics Browser
+Package for compression utilities like ZIP and other
 "
 Class {
 	#name : #ManifestCompression,
 	#superclass : #PackageManifest,
-	#category : #Compression
+	#category : #'Compression-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

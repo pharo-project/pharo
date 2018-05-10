@@ -9,12 +9,13 @@ repository := TonelRepository new
 	yourself.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) snapshot install.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) snapshot install.
+(repository versionWithInfo: (repository versionInfoFromVersionNamed: 'BaselineOfTraits')) snapshot install.
 
 Transcript nextPutAll: '[Hermes] - Generating Environment from repository'; cr.
 
 toExport := #BaselineOfPharoBootstrap asClass sUnitPackageNames.
 	
-packageNames := #BaselineOfPharoBootstrap asClass kernelPackageNames, toExport.
+packageNames := #BaselineOfPharoBootstrap asClass kernelPackageNames, #BaselineOfTraits asClass allPackageNames, toExport.
 environment := repository asRing2EnvironmentWith: packageNames.		
 
 environment fixProtoObjectClassSuperclass.

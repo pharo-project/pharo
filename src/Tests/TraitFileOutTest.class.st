@@ -56,9 +56,8 @@ TraitFileOutTest >> testFileOutCategory [
 	"File out whole system category, delete all classes and traits and then
 	file them in again."
 
-	"self run: #testFileOutCategory"
-
 	| file |
+		
 	self class environment organization fileOutCategory: self categoryName.
 	self class environment organization removeSystemCategory: self categoryName.
 	self deny: (Smalltalk globals keys asSet includesAnyOf: #(#CA #CB #TA #TB #TC #TD)).
@@ -67,7 +66,7 @@ TraitFileOutTest >> testFileOutCategory [
 	file fileIn ] ensure: [ file close ].
 	self assertCollection: Smalltalk globals keys asSet includesAll: #(#CA #CB #TA #TB #TC #TD).
 	ta := Smalltalk globals at: #TA.
-	self assert: ta traitComposition asString equals: 'TB @ {#cc->#c} - {#c} + (TC @ {#cc->#c} - {#c})'.
+	self assert: ta traitComposition asString equals:  '((TB + TC) @ {#cc->#c}) - {#c}'.
 	self assertCollection: ta selectors asSet includesAll: #(#a #b #cc).
 	cb := Smalltalk globals at: #CB.
 	self assert: cb traitComposition asString equals: 'TA'.
@@ -79,8 +78,6 @@ TraitFileOutTest >> testFileOutCategory [
 { #category : #testing }
 TraitFileOutTest >> testFileOutTrait [
 	"fileOut trait T6, remove it from system and then file it in again"
-
-	"self run: #testFileOutTrait"
 
 	| fileName file |
 	self t6 compile: 'localMethod: argument ^argument'.
@@ -96,8 +93,8 @@ TraitFileOutTest >> testFileOutTrait [
 	TraitsResource current t6: (Smalltalk globals at: #T6).
 	self resourceClassesAndTraits add: self t6.
 	self assert: self t6 traitComposition asString equals: 'T1 + (T2 @ {#m22Alias->#m22})'.
-	self assertCollection: self t6 selectors asSet includesAll: #(#localMethod: #m11 #m12 #m13 #m21 #m22 #m22Alias).
-	self assert: self t6 classSide methods size equals: 2.
+	self assertCollection: self t6 selectors asSet includesAll: #(#localMethod: #m11 #m12 #m13 #m21 #m22Alias).
+	self assert: self t6 classSide localMethods size equals: 1.
 	self assertCollection: self t6 classSide selectors asSet includesAll: #(#localClassSideMethod: #m2ClassSide:)
 ]
 
@@ -124,10 +121,7 @@ TraitFileOutTest >> testRemovingMethods [
 	from the trait is installed instead and that the users are 
 	updated."
 
-	"self run: #testRemovingMethods"
-
 	"Classes"
-
 	self c2 compile: 'm12 ^0' classified: #xxx.
 	self assert: (self c2 includesLocalSelector: #m12).
 	self c2 removeSelector: #m12.
@@ -136,9 +130,9 @@ TraitFileOutTest >> testRemovingMethods [
 
 	"Traits"
 	self t5 compile: 'm12 ^0' classified: #xxx.
-	self assert: self c2 new m12 = 0.
+	self assert: self c2 new m12 equals: 0.
 	self t5 removeSelector: #m12.
 	self deny: (self t5 includesLocalSelector: #m12).
 	self assert: (self t5 selectors includes: #m12).
-	self assert: self c2 new m12 = 12
+	self assert: self c2 new m12 equals: 12
 ]

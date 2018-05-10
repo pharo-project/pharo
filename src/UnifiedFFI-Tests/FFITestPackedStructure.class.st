@@ -1,3 +1,6 @@
+"
+A packaged structure for test purposes
+"
 Class {
 	#name : #FFITestPackedStructure,
 	#superclass : #FFIExternalPackedStructure,
@@ -9,7 +12,7 @@ Class {
 		'OFFSET_LONG',
 		'OFFSET_SHORT'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Test-Data'
 }
 
 { #category : #'field definition' }

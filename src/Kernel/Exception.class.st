@@ -82,6 +82,16 @@ Exception class >> signal: message in: context [
 ]
 
 { #category : #exceptioninstantiator }
+Exception class >> signal: message withTag: aTag [
+	"Signal the occurrence of an exceptional condition with a specified textual description including a tag for the exception."
+
+	^ self new 
+		messageText: message;
+		tag: aTag; 
+		signal
+]
+
+{ #category : #exceptioninstantiator }
 Exception class >> signalIn: context [
 	"Signal the occurrence of an exceptional condition in the given context."
 
@@ -244,35 +254,6 @@ Exception >> resumeUnchecked: resumptionValue [
 			outerContext := ctxt tempAt: 1. "prevOuterContext in #outer"
 			ctxt return: resumptionValue ]
 
-]
-
-{ #category : #handling }
-Exception >> retry [
-	"Abort an exception handler and re-evaluate its protected block."
-
-	handlerContext restart
-]
-
-{ #category : #handling }
-Exception >> retryUsing: alternativeBlock [
-	"Abort an exception handler and evaluate a new block in place of the handler's protected block."
-
-	handlerContext restartWithNewReceiver: alternativeBlock
-
-]
-
-{ #category : #handling }
-Exception >> return [
-	"Return nil as the value of the block protected by the active exception handler."
-
-	self return: self defaultReturnValue
-]
-
-{ #category : #handling }
-Exception >> return: returnValue [
-	"Return the argument as the value of the block protected by the active exception handler."
-
-	handlerContext return: returnValue
 ]
 
 { #category : #handling }

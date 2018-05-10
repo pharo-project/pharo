@@ -111,10 +111,12 @@ SystemDictionary >> bindingOf: varName [
 
 { #category : #'class and trait names' }
 SystemDictionary >> classAndTraitNames [
-	"Answer a sorted collection of all class and trait (not including class-traits) names. Do not bother to sort"
+	"Answer a sorted collection of all class and trait (not including class-traits) names. 
+	Now traits are normal classes. So they are in same class list.
+	Do not bother to sort"
 
 	
-	^self classNames, self traitNames
+	^self classNames
 	
 ]
 
@@ -370,7 +372,7 @@ SystemDictionary >> renameClassNamed: oldName as: newName [
 SystemDictionary >> traitNames [
 	"Answer a SortedCollection of all traits (not including class-traits) names."
 	
-	^self nonClassNames select: [ :name |
+	^self classNames select: [ :name |
 			self
 				at: name
 				ifPresent: [ :global | (global isTrait) and: [global isObsolete not]]

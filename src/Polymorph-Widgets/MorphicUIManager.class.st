@@ -9,7 +9,6 @@ Class {
 	#traits : 'TEasilyThemed - {#theme}',
 	#classTraits : 'TEasilyThemed classTrait',
 	#instVars : [
-		'interactiveParser',
 		'activeTranscript'
 	],
 	#classVars : [
@@ -400,28 +399,6 @@ MorphicUIManager >> informUserDuring: aBlock [
 		displayProgress: ''
 		from: 1 to: 100
 		during: [:bar | aBlock value: bar]
-]
-
-{ #category : #accessing }
-MorphicUIManager >> interactiveParser [
-	"Answer the value of interactiveParser"
-
-	^ interactiveParser
-]
-
-{ #category : #accessing }
-MorphicUIManager >> interactiveParser: anObject [
-	"Set the value of interactiveParser"
-
-	interactiveParser := anObject
-]
-
-{ #category : #settings }
-MorphicUIManager >> interactiveParserFor: requestor [
-	"during Morphic loading the interactive parser must be disabled"
-
-	(interactiveParser = false) ifTrue: [ ^ false ].  "can be nil"
-	^super interactiveParserFor: requestor
 ]
 
 { #category : #debug }

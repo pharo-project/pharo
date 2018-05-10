@@ -5,18 +5,13 @@ A StepOverDebugAction the current context.
 Class {
 	#name : #StepOverDebugAction,
 	#superclass : #DebugAction,
-	#category : #DebuggerActions
+	#category : #'DebuggerActions-Actions'
 }
 
 { #category : #registration }
 StepOverDebugAction class >> actionType [
 	<debuggingAction>
 	<contextMenuDebuggingAction>
-]
-
-{ #category : #accessing }
-StepOverDebugAction >> defaultHelp [
-	^ 'Step over the highlighted message, i.e. do not follow the sent message, taking debugger control after the method invoked returns.'
 ]
 
 { #category : #accessing }
@@ -41,6 +36,11 @@ StepOverDebugAction >> defaultOrder [
 StepOverDebugAction >> executeAction [
 
 	self session stepOver: self currentContext
+]
+
+{ #category : #accessing }
+StepOverDebugAction >> help [
+	^ 'Step over the highlighted message, i.e. do not follow the sent message, taking debugger control after the method invoked returns.'
 ]
 
 { #category : #accessing }

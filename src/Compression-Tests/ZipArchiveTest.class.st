@@ -11,7 +11,7 @@ Class {
 		'zipFile',
 		'fileSystem'
 	],
-	#category : #'Compression-Tests-Archive'
+	#category : #'Compression-Tests-Archives'
 }
 
 { #category : #running }
@@ -32,10 +32,14 @@ ZipArchiveTest >> setUp [
 { #category : #running }
 ZipArchiveTest >> tearDown [
 
+	"Must close the zipfile before deleting all files.
+	Otherwise in windows the file will not be deleted as long as the file is open."
+	zip close.
+	
 	fileToZip ensureDelete.
-	zip close.	
 	subdir ensureDeleteAll.
 	zipFile ensureDelete.
+	super tearDown 
 ]
 
 { #category : #tests }
@@ -63,8 +67,10 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		
 	zip writeToFileNamed: zipFile fullName.
 	
-	zipFile readStreamDo: [ :str |
-		str binary.
+	(File named: zipFile fullName) readStreamDo: [ :str | | endianStream |
+		
+		endianStream := ZnEndianessReadWriteStream on: str.
+		
 		localFileHeaderSignature := 16r04034b50.
 		versionNeededToExtract := 20.
 		bitFlag := 0.
@@ -74,30 +80,30 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		expectedUncompressedSize := 13.
 		
 		"folder"
-		self assert: (str nextLittleEndianNumber: 4) equals: localFileHeaderSignature.
-		self assert: (str nextLittleEndianNumber: 2) equals: versionNeededToExtract.
-		self assert: (str nextLittleEndianNumber: 2) equals: bitFlag.
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "No compression".
-		self assert: ((DateAndTime fromDosTimestamp: (str nextLittleEndianNumber: 4)) between: folderModified - 1 second and: folderModified + 1 seconds).
-		self assert: (str nextLittleEndianNumber: 4) equals: 0 "expectedCrc32".
-		self assert: (str nextLittleEndianNumber: 4) equals: 0 "expectedCompressedSize".
-		self assert: (str nextLittleEndianNumber: 4) equals: 0 "expectedUncompressedSize".
-		self assert: (str nextLittleEndianNumber: 2) equals: subdir basename size + 1.
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Extra header length".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: localFileHeaderSignature.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: bitFlag.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "No compression".
+		self assert: ((DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4)) between: folderModified - 1 second and: folderModified + 1 seconds).
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 0 "expectedCrc32".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 0 "expectedCompressedSize".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 0 "expectedUncompressedSize".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: subdir basename size + 1.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Extra header length".
 		self assert: (str next: subdir basename size + 1) asString equals: subdir basename, '/'.
 		
 		"Test file"
 		fileStart := str position.
-		self assert: (str nextLittleEndianNumber: 4) equals: localFileHeaderSignature.
-		self assert: (str nextLittleEndianNumber: 2) equals: versionNeededToExtract.
-		self assert: (str nextLittleEndianNumber: 2) equals: bitFlag.
-		self assert: (str nextLittleEndianNumber: 2) equals: deflateCompressionMethod.
-		self assert: ((DateAndTime fromDosTimestamp: (str nextLittleEndianNumber: 4)) between: fileModified - 1 second and: fileModified + 1 seconds).
-		self assert: (str nextLittleEndianNumber: 4) equals: expectedCrc32.
-		self assert: (str nextLittleEndianNumber: 4) equals: expectedCompressedSize.
-		self assert: (str nextLittleEndianNumber: 4) equals: expectedUncompressedSize.
-		self assert: (str nextLittleEndianNumber: 2) equals: nestedFileToZip basename size.
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Extra header length".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: localFileHeaderSignature.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: bitFlag.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: deflateCompressionMethod.
+		self assert: ((DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4)) between: fileModified - 1 second and: fileModified + 1 seconds).
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCrc32.
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCompressedSize.
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedUncompressedSize.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: nestedFileToZip basename size.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Extra header length".
 		self assert: (str next: nestedFileToZip basename size) asString equals: (nestedFileToZip basename copy replaceAll: DiskStore delimiter with: $/).
 		self assert: (str next: expectedCompressedSize) isNil not "I don''t understand the compression yet".
 		
@@ -105,61 +111,61 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		centralDirectoryOffset := str position.
 		
 		"Folder entry"
-		self assert: (str nextLittleEndianNumber: 4) equals: 16r02014b50.	
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 16r02014b50.	
 		self flag: 'I think this is wrong. What is version 1.4?!'.
-		self assert: (str nextLittleEndianNumber: 2) equals:  16r314.
-		self assert: (str nextLittleEndianNumber: 2) equals: versionNeededToExtract.
-		self assert: (str nextLittleEndianNumber: 2) equals: bitFlag.
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "no compression".
-		self assert: ((DateAndTime fromDosTimestamp: (str nextLittleEndianNumber: 4)) between: folderModified - 1 second and: folderModified + 1 seconds).
-		self assert: (str nextLittleEndianNumber: 4) equals: 0 "expectedCrc32".
-		self assert: (str nextLittleEndianNumber: 4) equals: 0 "expectedCompressedSize".
-		self assert: (str nextLittleEndianNumber: 4) equals: 0 "expectedUncompressedSize".
-		self assert: (str nextLittleEndianNumber: 2) equals: subdir basename size + 1.
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Extra header length".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "File comment".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Disk number start".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Internal file attributes".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals:  16r314.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: bitFlag.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "no compression".
+		self assert: ((DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4)) between: folderModified - 1 second and: folderModified + 1 seconds).
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 0 "expectedCrc32".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 0 "expectedCompressedSize".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 0 "expectedUncompressedSize".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: subdir basename size + 1.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Extra header length".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "File comment".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Disk number start".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Internal file attributes".
 		
 		self flag: 'I don''t understand the attributes yet'.
-		self assert: (str nextLittleEndianNumber: 4) equals:  8r040755 << 16 "External file attributes".
-		self assert: (str nextLittleEndianNumber: 4) equals:  0 "Relative offset of local header".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals:  8r040755 << 16 "External file attributes".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals:  0 "Relative offset of local header".
 		self assert: (str next: subdir basename size + 1) asString equals: subdir basename, '/'.
 		
 		"Nested file entry"
-		self assert: (str nextLittleEndianNumber: 4) equals: 16r02014b50.
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 16r02014b50.
 		
 		self flag: 'I think this is wrong. What is version 1.4?!'.
-		self assert: (str nextLittleEndianNumber: 2) equals:  16r314.
-		self assert: (str nextLittleEndianNumber: 2) equals: versionNeededToExtract.
-		self assert: (str nextLittleEndianNumber: 2) equals: bitFlag.
-		self assert: (str nextLittleEndianNumber: 2) equals: deflateCompressionMethod.
-		self assert: ((DateAndTime fromDosTimestamp: (str nextLittleEndianNumber: 4)) between: fileModified - 1 second and: fileModified + 1 seconds).
-		self assert: (str nextLittleEndianNumber: 4) equals: expectedCrc32.
-		self assert: (str nextLittleEndianNumber: 4) equals: expectedCompressedSize.
-		self assert: (str nextLittleEndianNumber: 4) equals: expectedUncompressedSize.
-		self assert: (str nextLittleEndianNumber: 2) equals: nestedFileToZip basename size.
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Extra header length".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "File comment".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Disk number start".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Internal file attributes".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals:  16r314.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: bitFlag.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: deflateCompressionMethod.
+		self assert: ((DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4)) between: fileModified - 1 second and: fileModified + 1 seconds).
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCrc32.
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCompressedSize.
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedUncompressedSize.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: nestedFileToZip basename size.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Extra header length".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "File comment".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Disk number start".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Internal file attributes".
 		
 		self flag: 'I don''t understand the attributes yet'.
-		self assert: (str nextLittleEndianNumber: 4) equals: 8r0100666 << 16 "External file attributes".
-		self assert: (str nextLittleEndianNumber: 4) equals: fileStart "Relative offset of local header".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 8r0100666 << 16 "External file attributes".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: fileStart "Relative offset of local header".
 		self assert: (str next: nestedFileToZip basename size) asString equals:  (nestedFileToZip basename copy replaceAll: DiskStore delimiter with: $/).
 
 		centralDirectoryEnd := str position.
 		
 		"End of central directory record"
-		self assert: (str nextLittleEndianNumber: 4) equals: 16r6054B50 "Signature".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Disk number".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Disk # where central dir started".
-		self assert: (str nextLittleEndianNumber: 2) equals: 2 "Total entries in central dir on this disk".
-		self assert: (str nextLittleEndianNumber: 2) equals: 2 "Total entries in central dir".
-		self assert: (str nextLittleEndianNumber: 4) equals: centralDirectoryEnd  - centralDirectoryOffset "Central directory size".
-		self assert: (str nextLittleEndianNumber: 4) equals: centralDirectoryOffset "from start of first disk".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "zip comment length".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 16r6054B50 "Signature".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Disk number".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Disk # where central dir started".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 2 "Total entries in central dir on this disk".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 2 "Total entries in central dir".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: centralDirectoryEnd  - centralDirectoryOffset "Central directory size".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: centralDirectoryOffset "from start of first disk".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "zip comment length".
 		self assert: str atEnd ].
 ]
 
@@ -225,11 +231,13 @@ ZipArchiveTest >> testZip [
 	zip	
 		addFile: fileToZip fullName
 		as: fileToZip basename.
-		
+	
 	zip writeToFileNamed: zipFile fullName.
 	
-	zipFile readStreamDo: [ :str |
-		str binary.
+	(File named: zipFile fullName) readStreamDo: [ :str | | endianStream |
+		
+		endianStream := ZnEndianessReadWriteStream on: str.
+		
 		localFileHeaderSignature := 16r04034b50.
 		versionNeededToExtract := 20.
 		bitFlag := 0.
@@ -239,52 +247,52 @@ ZipArchiveTest >> testZip [
 		expectedUncompressedSize := 13.
 		
 		"Test file"
-		self assert: (str nextLittleEndianNumber: 4) equals: localFileHeaderSignature.
-		self assert: (str nextLittleEndianNumber: 2) equals: versionNeededToExtract.
-		self assert: (str nextLittleEndianNumber: 2) equals: bitFlag.
-		self assert: (str nextLittleEndianNumber: 2) equals: deflateCompressionMethod.
-		self assert: ((DateAndTime fromDosTimestamp: (str nextLittleEndianNumber: 4)) between: realModificationStamp - 1 second and: realModificationStamp + 1 seconds).
-		self assert: (str nextLittleEndianNumber: 4) equals: expectedCrc32.
-		self assert: (str nextLittleEndianNumber: 4) equals: expectedCompressedSize.
-		self assert: (str nextLittleEndianNumber: 4) equals: expectedUncompressedSize.
-		self assert: (str nextLittleEndianNumber: 2) equals: fileToZip basename size.
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Extra header length".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: localFileHeaderSignature.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: bitFlag.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: deflateCompressionMethod.
+		self assert: ((DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4)) between: realModificationStamp - 1 second and: realModificationStamp + 1 seconds).
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCrc32.
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCompressedSize.
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedUncompressedSize.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: fileToZip basename size.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Extra header length".
 		self assert: (str next: fileToZip basename size) asString equals: fileToZip basename.
 		self assert: (str next: expectedCompressedSize) isNil not "I don''t understand the compression yet".
 		
 		"Central directory structure"
 		centralDirectoryOffset := str position.
-		self assert: (str nextLittleEndianNumber: 4) equals: 16r02014b50.
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 16r02014b50.
 		
 		self flag: 'I think this is wrong. What is version 1.4?!'.
-		self assert: (str nextLittleEndianNumber: 2) equals:  16r314.
-		self assert: (str nextLittleEndianNumber: 2) equals: versionNeededToExtract.
-		self assert: (str nextLittleEndianNumber: 2) equals: bitFlag.
-		self assert: (str nextLittleEndianNumber: 2) equals: deflateCompressionMethod.
-		self assert: ((DateAndTime fromDosTimestamp: (str nextLittleEndianNumber: 4)) between: realModificationStamp - 1 second and: realModificationStamp + 1 seconds).
-		self assert: (str nextLittleEndianNumber: 4) equals: expectedCrc32.
-		self assert: (str nextLittleEndianNumber: 4) equals: expectedCompressedSize.
-		self assert: (str nextLittleEndianNumber: 4) equals: expectedUncompressedSize.
-		self assert: (str nextLittleEndianNumber: 2) equals: fileToZip basename size.
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Extra header length".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "File comment".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Disk number start".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Internal file attributes".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals:  16r314.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: bitFlag.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: deflateCompressionMethod.
+		self assert: ((DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4)) between: realModificationStamp - 1 second and: realModificationStamp + 1 seconds).
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCrc32.
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCompressedSize.
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedUncompressedSize.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: fileToZip basename size.
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Extra header length".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "File comment".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Disk number start".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Internal file attributes".
 		
 		self flag: 'I don''t understand the attributes yet'.
-		self assert: (str nextLittleEndianNumber: 4) equals:  16r81B60000 "External file attributes".
-		self assert: (str nextLittleEndianNumber: 4) equals:  0 "Relative offset of local header".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals:  16r81B60000 "External file attributes".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals:  0 "Relative offset of local header".
 		self assert: (str next: fileToZip basename size) asString equals: fileToZip basename.
 		centralDirectoryEnd := str position.
 		
 		"End of central directory record"
-		self assert: (str nextLittleEndianNumber: 4) equals: 16r6054B50 "Signature".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Disk number".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "Disk # where central dir started".
-		self assert: (str nextLittleEndianNumber: 2) equals: 1 "Total entries in central dir on this disk".
-		self assert: (str nextLittleEndianNumber: 2) equals: 1 "Total entries in central dir".
-		self assert: (str nextLittleEndianNumber: 4) equals: centralDirectoryEnd  - centralDirectoryOffset "Central directory size".
-		self assert: (str nextLittleEndianNumber: 4) equals: centralDirectoryOffset "from start of first disk".
-		self assert: (str nextLittleEndianNumber: 2) equals: 0 "zip comment length".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: 16r6054B50 "Signature".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Disk number".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "Disk # where central dir started".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 1 "Total entries in central dir on this disk".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 1 "Total entries in central dir".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: centralDirectoryEnd  - centralDirectoryOffset "Central directory size".
+		self assert: (endianStream nextLittleEndianNumber: 4) equals: centralDirectoryOffset "from start of first disk".
+		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "zip comment length".
 		self assert: str atEnd ].
 ]

@@ -600,7 +600,8 @@ RubAbstractTextArea >> defaultGetMenuPolicy [
 
 { #category : #defaults }
 RubAbstractTextArea >> defaultMargins [
-	^ 6 @ 6 corner: 6 @ 6
+
+	^ Margin left: 6 right: 6 top: 6 bottom: 6
 ]
 
 { #category : #defaults }
@@ -1119,9 +1120,16 @@ RubAbstractTextArea >> margins [
 ]
 
 { #category : #accessing }
-RubAbstractTextArea >> margins: aRectangle [
-	margins := aRectangle withRight: (aRectangle right max: self cursorWidth ).
-
+RubAbstractTextArea >> margins: aMargin [
+	"Adjust margin to always be able to display a cursor to right of text bounds"
+	| m |
+	(m := aMargin asMargin) right < self cursorWidth
+		ifTrue: [ m
+				setTop: m top
+				left: m left
+				bottom: m bottom
+				right: self cursorWidth ].
+	margins := m
 ]
 
 { #category : #'accessing selection' }
@@ -1860,8 +1868,8 @@ RubAbstractTextArea >> updateExtentFromParagraph [
 ]
 
 { #category : #'public accessing' }
-RubAbstractTextArea >> updateMarginsWith: aRectangle [
-	self handleParagraphChange: [self margins: aRectangle ]
+RubAbstractTextArea >> updateMarginsWith: aMargin [
+	self handleParagraphChange: [self margins: aMargin ]
 ]
 
 { #category : #'accessing text' }

@@ -8,8 +8,7 @@ Class {
 		'filename',
 		'index',
 		'fileContentsExternalMemory',
-		'hasKerning',
-		'session'
+		'hasKerning'
 	],
 	#category : #'FreeType-Fonts'
 }
@@ -33,8 +32,8 @@ FreeTypeFace class >> fromBytes: aByteArray index: anInteger [
 	newFace := self basicNew
 		fileContentsExternalMemory: (FreeTypeExternalMemory bytes: aByteArray);
 		index: anInteger;
+		autoRelease;
 		yourself.
-	self register: newFace.
 	^ newFace
 ]
 
@@ -52,6 +51,7 @@ FreeTypeFace class >> fromFile: aFileName index: anInteger [
 	^ (self basicNew)
 		filename: aFileName;
 		index: anInteger;
+		autoRelease;
 		yourself
 ]
 
@@ -67,12 +67,13 @@ FreeTypeFace >> actAsExecutor [
 
 { #category : #validation }
 FreeTypeFace >> create [
-	"create me in the FT2Plugin. This gets my handle, and loads the fields"
+	"create me in FT2. This gets my handle, and loads the fields"
 	
 	fileContentsExternalMemory 
 		ifNotNil: [ self newFaceFromExternalMemory: fileContentsExternalMemory index: index ]	
 		ifNil: [	self newFaceFromFile: filename asFileReference index: index ].
-	self loadFields
+			
+	self loadFields.
 
 ]
 
@@ -108,10 +109,9 @@ FreeTypeFace >> hasFamilyName [
 
 { #category : #testing }
 FreeTypeFace >> hasKerning [
-	^hasKerning ifNil:[
-		[hasKerning := self primHasKerning = 64] 
-			on: Error do:[:e | hasKerning := false].
-		hasKerning]
+	"FT_FACE_FLAG_KERNING = 64 (1 << 6)"
+
+	^ hasKerning ifNil: [ hasKerning := (faceFlags bitAnd: 64) = 64 ]
 ]
 
 { #category : #testing }
@@ -146,12 +146,9 @@ FreeTypeFace >> validate [
 	"If the receiver is not valid (has a nil handle), then create the 
 	receiver to obtain a handle and load the receiver's fields"
 	
-	(session == Smalltalk session 
-		and: [ self isValid 
-		and: [ numCharmaps notNil ] ]) 
+	(self isValid 
+		and: [ numCharmaps notNil ]) 
 		ifTrue: [ ^ self ].
 	
-	session := Smalltalk session.
-	handle := nil.
 	self create
 ]

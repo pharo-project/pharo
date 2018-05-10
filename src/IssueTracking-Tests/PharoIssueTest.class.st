@@ -9,6 +9,11 @@ Class {
 	#category : #'IssueTracking-Tests'
 }
 
+{ #category : #accessing }
+PharoIssueTest class >> defaultTimeLimit [
+	^1 minutes
+]
+
 { #category : #running }
 PharoIssueTest >> setUp [
 	super setUp.

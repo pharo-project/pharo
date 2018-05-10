@@ -27,7 +27,7 @@ RPackageOrganizer class >> initializeDefaultFromMC [
 
 { #category : #'*Monticello-RPackage' }
 RPackageOrganizer >> initializeFromMC [
- 	RPackage 
+ 	self packageClass 
 		withOrganizer: self  
 		do:  [  self basicInitializeFromMC ].
 

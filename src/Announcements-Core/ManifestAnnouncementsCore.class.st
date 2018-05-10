@@ -1,10 +1,10 @@
 "
-I store metadata for this package. These meta data are used by other tools such as the SmalllintManifestChecker and the critics Browser
+A package with classes for the announcement framwork - an event notification framework.
 "
 Class {
 	#name : #ManifestAnnouncementsCore,
 	#superclass : #PackageManifest,
-	#category : #'Announcements-Core'
+	#category : #'Announcements-Core-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

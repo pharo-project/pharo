@@ -18,51 +18,54 @@ MetaLinkTest >> testAvailableReifications [
 { #category : #'tests - simple' }
 MetaLinkTest >> testBlockLink [
 	| link |
-	link := MetaLink new 
-	metaObject: [1+2].
-	
-	self assert: link metaObject value = 3.
-	self assert: link selector = #value.
+	link := MetaLink new metaObject: [ 1 + 2 ].
+	self assert: link metaObject value equals: 3.
+	self assert: link selector equals: #value
 ]
 
 { #category : #'tests - simple' }
 MetaLinkTest >> testConditionLink [
 	| link |
-	link := MetaLink new 
-	metaObject: [1+2];
-	condition: true.
-	
-	self assert: link metaObject value = 3.
-	self assert: link selector = #value.
+	link := MetaLink new
+		metaObject: [ 1 + 2 ];
+		condition: true.
+	self assert: link metaObject value equals: 3.
+	self assert: link selector equals: #value.
 	self assert: link condition.
-	self assert: link hasCondition.
+	self assert: link hasCondition
 ]
 
 { #category : #'tests - simple' }
 MetaLinkTest >> testCotrolInstead [
 	| link |
-	link := MetaLink new 
-	metaObject: [1+2];
-	control: #instead.
-	
-	self assert: link metaObject value = 3.
-	self assert: link selector = #value.
-	self assert: link control = #instead.
-	
-	self deny: ((ReflectivityExamples>>#exampleMethod) ast hasMetalinkInstead). 	
-	
+	link := MetaLink new
+		metaObject: [ 1 + 2 ];
+		control: #instead.
+	self assert: link metaObject value equals: 3.
+	self assert: link selector equals: #value.
+	self assert: link control equals: #instead.
+	self deny: (ReflectivityExamples >> #exampleMethod) ast hasMetalinkInstead
 ]
 
 { #category : #'tests - simple' }
 MetaLinkTest >> testCotrolLink [
 	| link |
-	link := MetaLink new 
-	metaObject: [1+2];
-	control: #after.
-	
-	self assert: link metaObject value = 3.
-	self assert: link selector = #value.
-	self assert: link control = #after.
+	link := MetaLink new
+		metaObject: [ 1 + 2 ];
+		control: #after.
+	self assert: link metaObject value equals: 3.
+	self assert: link selector equals: #value.
+	self assert: link control equals: #after
+]
+
+{ #category : #'tests - misc' }
+MetaLinkTest >> testDefintionString [
+	| metaLink |
+	metaLink := MetaLink new
+		metaObject: nil;
+		arguments: #();
+		condition: [ true ].
+	self assert: (Smalltalk compiler evaluate: metaLink definitionString) definitionString equals: metaLink definitionString
 ]
 
 { #category : #'tests - options' }
@@ -103,10 +106,9 @@ MetaLinkTest >> testReificationError [
 { #category : #'tests - simple' }
 MetaLinkTest >> testSimpleHaltLink [
 	| link |
-	link := MetaLink new 
-	metaObject: Halt;
-	selector: #now.
-	
-	self assert: link metaObject = Halt.
-	self assert: link selector = #now.
+	link := MetaLink new
+		metaObject: Halt;
+		selector: #now.
+	self assert: link metaObject equals: Halt.
+	self assert: link selector equals: #now
 ]

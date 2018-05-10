@@ -1,3 +1,14 @@
+"
+The HEInstaller is really basic. 
+It is designed that way to keep simple the bootstraped image. 
+A bigger or complex bootstraped image requires more bootstrap time.
+
+So, I am loaded later (with Hermes itself) and I extend the behavior in HEInstaller 
+
+I add: 
+ 	- 	Having a duplication Strategy
+	-	Having a configuration to fail on new undeclared variables.
+"
 Class {
 	#name : #HEExtendedInstaller,
 	#superclass : #HEInstaller,

@@ -8,20 +8,20 @@ Class {
 	#category : #'Monticello-Tests-IO'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 MCMczInstallerTest class >> isAbstract [
 	^ (Smalltalk hasClassNamed: #MczInstaller) not
 		
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCMczInstallerTest class >> suite [
 	^ (Smalltalk hasClassNamed: #MczInstaller)
 		ifTrue: [ super suite ]
 		ifFalse: [ self classForTestSuite new name: self name asString ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #assertions }
 MCMczInstallerTest >> assertDict: dict matchesInfo: info [
 	#(name id message date time author)
 		do: [:sel |  (info perform: sel) ifNotNil: [:i | dict at: sel ifPresent: [:d | self assert: i = d]]].
@@ -30,7 +30,7 @@ MCMczInstallerTest >> assertDict: dict matchesInfo: info [
 			do: [:i :d | self assertDict: d matchesInfo: i]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #assertions }
 MCMczInstallerTest >> assertNoChange [
 	| actual |
 	actual := MCSnapshotResource takeSnapshot.
@@ -38,7 +38,7 @@ MCMczInstallerTest >> assertNoChange [
 	self assert: diff isEmpty
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #assertions }
 MCMczInstallerTest >> assertVersionInfoPresent [
 	| dict info |
 	dict := MczInstaller versionInfo at: self mockPackage name.
@@ -46,19 +46,21 @@ MCMczInstallerTest >> assertVersionInfoPresent [
 	self assertDict: dict matchesInfo: info.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 MCMczInstallerTest >> deleteFile [
 	self fileName asFileReference ensureDelete
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCMczInstallerTest >> fileName [
 	^ 'InstallerTest.mcz'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCMczInstallerTest >> fileStream [
-	^ FileStream forceNewFileNamed: self fileName.
+	^ self fileName asFileReference
+		ensureDelete;
+		binaryWriteStream.
 ]
 
 { #category : #running }
@@ -72,19 +74,24 @@ MCMczInstallerTest >> setUp [
 MCMczInstallerTest >> tearDown [
 	expected snapshot updatePackage: self mockPackage.
 	self deleteFile.
+	super tearDown
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MCMczInstallerTest >> testInstallFromFile [
-	MCMczWriter fileOut: expected on: self fileStream.
+	| stream |
+	stream := self fileStream.
+	MCMczWriter fileOut: expected on: stream.
+	stream close.
+	
 	MczInstaller installFileNamed: self fileName.
 	self assertNoChange.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MCMczInstallerTest >> testInstallFromStream [
 	| stream |
-	stream := RWBinaryOrTextStream on: String new.
+	stream := RWBinaryOrTextStream on: ByteArray new.
 	MCMczWriter fileOut: expected on: stream.
 	MczInstaller installStream: stream reset.
 	self assertNoChange.

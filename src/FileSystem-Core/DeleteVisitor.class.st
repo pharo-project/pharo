@@ -4,7 +4,7 @@ I delete the directory tree that I visit. I use the PostorderGuide so that I can
 Class {
 	#name : #DeleteVisitor,
 	#superclass : #FileSystemVisitor,
-	#category : #'FileSystem-Core-Implementation'
+	#category : #'FileSystem-Core-Base-Visitors'
 }
 
 { #category : #'instance creation' }

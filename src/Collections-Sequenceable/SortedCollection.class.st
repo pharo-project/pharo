@@ -224,6 +224,7 @@ SortedCollection >> insert: anObject before: spot [
 
 { #category : #splitjoin }
 SortedCollection >> join: aCollection [ 
+	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
 	"Curiously addAllLast: does not trigger a reSort, so we must do it here."
 	^ (super join: aCollection) reSort; yourself
 

@@ -37,9 +37,7 @@ CombinedChar class >> isDiacriticals: unicode [
 
 { #category : #initialization }
 CombinedChar class >> parseCompositionMappingFrom: stream [
-"
-	self parseCompositionMapping
-"
+ 
 	| line fieldEnd point fieldStart compositions toNumber diacritical result |
 
 	toNumber := [:quad | ('16r', quad) asNumber].

@@ -36,7 +36,7 @@ GLMPrivacyAgreementBrick class >> gtExample [
 	^ self new
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 GLMPrivacyAgreementBrick class >> openSettingsBrowser [
 	| settingsBrowser window node nodePath |
 	settingsBrowser := SettingBrowser new 

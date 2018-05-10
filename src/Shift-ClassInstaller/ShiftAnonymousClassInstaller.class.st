@@ -7,7 +7,7 @@ I have exactly the same interface than the main class installer.
 Class {
 	#name : #ShiftAnonymousClassInstaller,
 	#superclass : #ShiftClassInstaller,
-	#category : 'Shift-ClassInstaller'
+	#category : #'Shift-ClassInstaller'
 }
 
 { #category : #accessing }
@@ -18,6 +18,10 @@ ShiftAnonymousClassInstaller >> comment: newClass [
 { #category : #building }
 ShiftAnonymousClassInstaller >> installInEnvironment: newClass. [
 	^ self
+]
+
+{ #category : #building }
+ShiftAnonymousClassInstaller >> installSubclassInSuperclass: newClass [
 ]
 
 { #category : #building }

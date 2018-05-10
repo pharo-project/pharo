@@ -46,7 +46,7 @@ MCStReader >> classDefinitionFrom: aRingClass [
 	traitCompositionString := (aRingClass definitionSource readStream
 		match: 'uses:';
 		upToAll: 'instanceVariableNames:') trimBoth.
-	classTraitCompositionString := (aRingClass theMetaClass definitionSource asString readStream
+	classTraitCompositionString := (aRingClass classSide definitionSource asString readStream
 		match: 'uses:';
 		upToAll: 'instanceVariableNames:') trimBoth.
 	traitCompositionString isEmpty ifTrue: [traitCompositionString := '{}'].
@@ -72,8 +72,8 @@ MCStReader >> classInstVarNamesFor: aRingClass [
 	| tokens |
 	
 	self flag: #traits.
-	aRingClass theMetaClass hasDefinitionSource ifFalse: [^ #()].
-	tokens := aRingClass theMetaClass definitionSource parseLiterals.
+	aRingClass classSide hasDefinitionSource ifFalse: [^ #()].
+	tokens := aRingClass classSide definitionSource parseLiterals.
 	"tokens size = 4 ifFalse: [self error: 'Unrecognized metaclass definition']."
 	^ tokens last findTokens: ' '
 ]
@@ -104,7 +104,7 @@ MCStReader >> loadDefinitions [
 				ifTrue: [definitions add:
 						(self classDefinitionFrom: ringClass)].
 			definitions addAll: (self methodDefinitionsFor: ringClass).
-			definitions addAll: (self methodDefinitionsFor: ringClass theMetaClass) ].
+			definitions addAll: (self methodDefinitionsFor: ringClass classSide) ].
 	filePackage doIts 
 		do: [ :ea | self addDefinitionsFromDoit: ea contents ].
 	

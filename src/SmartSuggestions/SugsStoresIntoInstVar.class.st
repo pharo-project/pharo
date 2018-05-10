@@ -7,12 +7,27 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsStoresIntoInstVar class >> nodes [
+	^{RBInstanceVariableNode}
+]
+
 { #category : #execution }
 SugsStoresIntoInstVar >> execute [
 	 SystemNavigation default browseAllStoresInto: context selectedVariableName from: context selectedClass
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsStoresIntoInstVar >> icon [
+	^self iconNamed: #smallInspectItIcon
+]
+
+{ #category : #display }
 SugsStoresIntoInstVar >> label [
 	^'Stores Into...' translated
+]
+
+{ #category : #display }
+SugsStoresIntoInstVar >> position [
+	^60
 ]

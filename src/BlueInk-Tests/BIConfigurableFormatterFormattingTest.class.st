@@ -1,3 +1,6 @@
+"
+Tests for BIConfigurableFormatter
+"
 Class {
 	#name : #BIConfigurableFormatterFormattingTest,
 	#superclass : #RBFormatterTest,
@@ -10,7 +13,7 @@ BIConfigurableFormatterFormattingTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #default }
+{ #category : #private }
 BIConfigurableFormatterFormattingTest >> formatterClass [
 	^ BIConfigurableFormatter
 ]

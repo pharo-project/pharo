@@ -7,6 +7,11 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
+{ #category : #accessing }
+SugsBreakpointSuggestion class >> nodes [
+	^{}
+]
+
 { #category : #breakpoints }
 SugsBreakpointSuggestion >> hasUnacceptedEdits [
 	context ifNil: [ ^false ].
@@ -14,7 +19,12 @@ SugsBreakpointSuggestion >> hasUnacceptedEdits [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #display }
+SugsBreakpointSuggestion >> icon [
+	^self iconNamed: #smallCancelIcon
+]
+
+{ #category : #display }
 SugsBreakpointSuggestion >> label [
 	self subclassResponsibility
 ]

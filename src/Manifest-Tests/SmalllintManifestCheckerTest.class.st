@@ -17,7 +17,7 @@ SmalllintManifestCheckerTest >> cleaningResources [
 		ifPresent: [ :cl | 
 			cl
 				removeFromChanges;
-				removeFromSystemUnlogged ]
+				removeFromSystem ]
 ]
 
 { #category : #private }
@@ -48,7 +48,8 @@ SmalllintManifestCheckerTest >> setUp [
 SmalllintManifestCheckerTest >> tearDown [
 	
 	self cleaningResources.
-	ASTCache reset
+	ASTCache reset.
+	super tearDown 
 ]
 
 { #category : #tests }

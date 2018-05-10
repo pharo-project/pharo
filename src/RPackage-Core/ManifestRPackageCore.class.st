@@ -1,5 +1,5 @@
 "
-I store metadata for this package. These meta data are used by other tools such as the SmalllintManifestChecker and the critics Browser
+Manifest for RPackage-Core
 "
 Class {
 	#name : #ManifestRPackageCore,
@@ -9,5 +9,5 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestRPackageCore class >> manuallyResolvedDependencies [
-	^ #(#'Ring-Core-Kernel' #UIManager #'System-Sources')
+	^ #(#'Ring-Deprecated-Core-Kernel' #UIManager #'System-Sources')
 ]

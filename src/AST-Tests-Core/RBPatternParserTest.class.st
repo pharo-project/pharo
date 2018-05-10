@@ -23,9 +23,27 @@ RBPatternParserTest >> testParseFaultyPatternBlock [
 	patternBlockNoArgButColon := '`{ : }'.
 	unfinishedBlock := '`{ :  '.
 	varWithUnfinishedBlock := '`sth `{ :  '.
-	{patternBlockNoArgButBar . patternBlockNoArgButColon .varWithUnfinishedBlock}
+	{patternBlockNoArgButBar. patternBlockNoArgButColon. unfinishedBlock. varWithUnfinishedBlock}
 		do: [ :faultyExpression | 
 			node := self parseFaultyExpression: faultyExpression.
 			self assert: node isBlock.
 			self assert: node isFaulty]
+]
+
+{ #category : #'tests parsing' }
+RBPatternParserTest >> testPatternBlockNode1 [
+	| searchPattern tree |
+	searchPattern := RBPatternParser
+		parseExpression: '(`a = `b) `{`a name size = `b name size}'.
+	tree := RBParser parseExpression: 'a = c'.
+	self assert: (searchPattern match: tree inContext: Dictionary new)
+]
+
+{ #category : #'tests parsing' }
+RBPatternParserTest >> testPatternBlockNode2 [
+	| searchPattern tree |
+	searchPattern := RBPatternParser
+		parseExpression: '(`a = `b) `{`a name anySatisfy: [ :e | `b name includes: e]}'.
+	tree := RBParser parseExpression: 'a = a1'.
+	self assert: (searchPattern match: tree inContext: Dictionary new)
 ]

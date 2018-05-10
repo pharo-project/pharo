@@ -102,20 +102,6 @@ SmalltalkEditor class >> initializeShiftCmdKeyShortcuts [
 ]
 
 { #category : #'menu declaration' }
-SmalltalkEditor class >> shiftedYellowButtonMenu [
-	^ (PragmaMenuBuilder 
-			pragmaKeyword: self smalltalkEditorShiftedMenuKeyword
-			model: nil) menu.
-
-]
-
-{ #category : #'menu declaration' }
-SmalltalkEditor class >> smalltalkEditorMenuKeyword [
-	^'smalltalkEditorMenu'
-
-]
-
-{ #category : #'menu declaration' }
 SmalltalkEditor class >> smalltalkEditorMenuOn: aBuilder [
 	"Specify the menu used when writing code. Try it with:
 	(PragmaMenuBuilder 
@@ -174,11 +160,6 @@ SmalltalkEditor class >> smalltalkEditorMenuOn: aBuilder [
 	(aBuilder item: #'Code search...' translated)
 		selector: #shiftedTextPaneMenuRequest;
 		withSeparatorAfter.
-	(aBuilder item: #'Do again' translated)
-		keyText: 'j';
-		selector: #again;
-		help: nil;
-		iconName: #smallRedoIcon.
 	(aBuilder item: #Undo translated)
 		keyText: 'z';
 		selector: #undo;
@@ -218,12 +199,6 @@ SmalltalkEditor class >> smalltalkEditorMenuOn: aBuilder [
 ]
 
 { #category : #'menu declaration' }
-SmalltalkEditor class >> smalltalkEditorShiftedMenuKeyword [
-	^ 'smalltalkEditorShiftedMenu'
-
-]
-
-{ #category : #'menu declaration' }
 SmalltalkEditor class >> smalltalkEditorShiftedMenuOn: aBuilder [ 
 	"Specify the menu used when writing code. Try it with:
 	(PragmaMenuBuilder 
@@ -259,14 +234,6 @@ SmalltalkEditor class >> smalltalkEditorShiftedMenuOn: aBuilder [
 		selector: #classNamesContainingIt.
 	(aBuilder item: #'class comments with it' translated) 
 		selector: #classCommentsContainingIt.
-
-]
-
-{ #category : #'menu declaration' }
-SmalltalkEditor class >> yellowButtonMenu [
-	^ (PragmaMenuBuilder 
-			pragmaKeyword: self smalltalkEditorMenuKeyword
-			model: nil) menu.
 
 ]
 
@@ -348,19 +315,14 @@ SmalltalkEditor >> codeCompletionAround:  aBlock textMorph:  aTextMorph keyStrok
 
 { #category : #'do-its' }
 SmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
-	| methodNode  |
-
-	methodNode :=  self class compiler
+	^self class compiler
 		source: self selectionAsStream;
 		class: anObject class;
 		context: evalContext;
 		requestor: self morph;
 		noPattern: true;
 		failBlock:  [ ^nil ];
-		translate.
-			
-	^methodNode generateWithSource.
-	
+		compile.
 ]
 
 { #category : #'do-its' }
@@ -437,6 +399,12 @@ SmalltalkEditor >> doIt: aKeyboardEvent [
 { #category : #accessing }
 SmalltalkEditor >> editingStateClass [
 	^ SmalltalkEditingState
+]
+
+{ #category : #'menu declaration' }
+SmalltalkEditor >> editorMenuKeyword [
+	^'smalltalkEditorMenu'
+
 ]
 
 { #category : #'do-its' }
@@ -556,32 +524,11 @@ SmalltalkEditor >> internalCallToBrowse: aSelector [
 ]
 
 { #category : #'menu messages' }
-SmalltalkEditor >> internalCallToBrowseIt [
-	"Launch a browser for the class indicated by the current selection. 
-	If multiple classes matching the selection exist, let the user choose among them."
- 
-	self lineSelectAndEmptyCheck: [^ self].
-	self internalCallToBrowse: (self selection string copyWithoutAll: CharacterSet crlf)
-]
-
-{ #category : #'menu messages' }
 SmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 	"Open an implementors browser on the given selector"
 	
 	 (model systemNavigation allImplementorsOf: aSelector) isEmpty
 				ifFalse: [ model systemNavigation browseAllImplementorsOf: aSelector]
-			
-	
-]
-
-{ #category : #'menu messages' }
-SmalltalkEditor >> internalCallToImplementorsOfIt [
-	"Open an implementors browser on the selected selector"
-
-	| aSelector |
-	self lineSelectAndEmptyCheck: [^ self].
-	(aSelector := self selectedSelector) == nil ifTrue: [^ morph flash].
-	self internalCallToImplementorsOf: aSelector.
 			
 	
 ]
@@ -610,7 +557,7 @@ SmalltalkEditor >> methodNamesContainingIt: aKeyboardEvent [
 
 { #category : #'menu messages' }
 SmalltalkEditor >> methodSourceContainingIt [
-	"Open a browser on methods which contain the current selection in their source (case-sensitive full-text search of source).   EXTREMELY slow!"
+	"Open a browser on methods which contain the current selection in their source (case-sensitive full-text search of source)."
 	self lineSelectAndEmptyCheck: [^ self].
 	model systemNavigation  browseMethodsWithSourceString: self selection string matchCase: false.
 ]
@@ -723,14 +670,6 @@ SmalltalkEditor >> printIt [
 				on: Error
 				do: [ '<error in printString: try ''Inspect it'' to debug>' ].
 			self afterSelectionInsertAndSelect: printString ]
-]
-
-{ #category : #'editing keys' }
-SmalltalkEditor >> printIt: aKeyboardEvent [
-	"Print the results of evaluting the selection -- invoked via cmd-p.  If there is no current selection, use the current line.  1/17/96 sw
-	 2/29/96 sw: don't call selectLine now, since it's called by doIt"
-	self printIt.
-	^ true
 ]
 
 { #category : #'typing/selecting keys' }
@@ -893,21 +832,10 @@ SmalltalkEditor >> sendersOfIt: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #'menu messages' }
-SmalltalkEditor >> spawn [
-	"Create and schedule a message browser for the code of the model's 
-	selected message. Retain any edits that have not yet been accepted."
-	| code |
-	code := self string.
-	self cancel.
-	model spawn: code.
-]
+{ #category : #'menu declaration' }
+SmalltalkEditor >> shiftedMenuKeyword [
+	^ 'smalltalkEditorShiftedMenu'
 
-{ #category : #'editing keys' }
-SmalltalkEditor >> spawnIt: aKeyboardEvent [
-	"Triggered by Cmd-o; spawn a new code window, if it makes sense."
-	self spawn.
-	^ true
 ]
 
 { #category : #'do-its' }

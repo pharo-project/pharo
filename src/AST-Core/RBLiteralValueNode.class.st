@@ -56,7 +56,7 @@ RBLiteralValueNode >> copyInContext: aDictionary [
 
 { #category : #testing }
 RBLiteralValueNode >> isFaulty [
-	^false.
+	^false
 ]
 
 { #category : #accessing }

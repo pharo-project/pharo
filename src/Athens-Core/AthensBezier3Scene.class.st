@@ -20,7 +20,7 @@ AthensBezier3Scene class >> on: anControlPointArray [
 		initFromArray: anControlPointArray
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensBezier3Scene >> curvePathBlock [
 	^ [ :builder |
 		builder 
@@ -31,7 +31,7 @@ AthensBezier3Scene >> curvePathBlock [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 AthensBezier3Scene >> initFromArray: aControlPointsArray [
 	
 		pt1 := aControlPointsArray at: 1.

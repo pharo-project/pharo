@@ -74,7 +74,7 @@ RBParseErrorNode >> errorMessage: anObject [
 
 { #category : #testing }
 RBParseErrorNode >> isFaulty [
-	^true.
+	^true
 ]
 
 { #category : #accessing }
@@ -119,7 +119,7 @@ RBParseErrorNode >> stopWithoutParentheses [
 	^ self stop
 ]
 
-{ #category : #accessing }
+{ #category : #evaluating }
 RBParseErrorNode >> value [
 	^value.
 ]

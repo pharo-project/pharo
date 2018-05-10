@@ -21,7 +21,7 @@ RBSendsMethodDictRule class >> uniqueIdentifierName [
 
 { #category : #running }
 RBSendsMethodDictRule >> check: aMethod forCritiquesDo: aCriticBlock [	
-	({Behavior. ClassDescription. Class.TBehavior . TClassDescription . TApplyingOnClassSide } includes: aMethod methodClass)
+	({Behavior. ClassDescription. Class. } includes: aMethod methodClass)
 		ifTrue: [ ^ self ].
 	(aMethod messages includes: #methodDict) ifTrue: [ 
 		aCriticBlock cull: (self critiqueFor: aMethod) ]

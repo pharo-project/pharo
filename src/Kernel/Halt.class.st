@@ -109,6 +109,20 @@ Halt class >> if: condition [
 ]
 
 { #category : #halting }
+Halt class >> ifNotTest [
+	<debuggerCompleteToSender>
+	"Halt if execution was not started by a test"
+	CurrentExecutionEnvironment value isTest ifFalse: [self signalIn: thisContext home sender ].
+]
+
+{ #category : #halting }
+Halt class >> ifTest [
+	<debuggerCompleteToSender>
+	"Halt if execution was started by a test"
+	CurrentExecutionEnvironment value isTest ifTrue: [self signalIn: thisContext home sender ].
+]
+
+{ #category : #halting }
 Halt class >> now [
 	<debuggerCompleteToSender>
 	self signal.

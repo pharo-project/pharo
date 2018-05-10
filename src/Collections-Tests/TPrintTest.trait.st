@@ -72,21 +72,19 @@ TPrintTest >> testPrintOn [
 
 { #category : #'tests - printing' }
 TPrintTest >> testPrintOnDelimiter [
-	| aStream result allElementsAsString tmp |
-	result:=''.
-	aStream:= ReadWriteStream on: result.
-	tmp:= OrderedCollection new.
-	self nonEmpty do: [:each | tmp add: each asString].
 	
+	| result allElementsAsString tmp |
 	
+	result := String streamContents: [ :aStream |
+		tmp := OrderedCollection new.
+		self nonEmpty do: [:each | tmp add: each asString].
+		self nonEmpty printOn: aStream delimiter: ', ' ].
 	
-	self nonEmpty printOn: aStream delimiter: ', ' .
+	allElementsAsString := (result findBetweenSubstrings: ', ').
 	
-	allElementsAsString:=(result findBetweenSubstrings: ', ' ).
 	1 to: allElementsAsString size do:
 		[:i | 
-		self assert: (tmp occurrencesOf:(allElementsAsString at:i))=(allElementsAsString  occurrencesOf:(allElementsAsString at:i))
-			].
+		self assert: (tmp occurrencesOf:(allElementsAsString at:i)) equals: (allElementsAsString  occurrencesOf:(allElementsAsString at:i)) ].
 ]
 
 { #category : #'tests - printing' }

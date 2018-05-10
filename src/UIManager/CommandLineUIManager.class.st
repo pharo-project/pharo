@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'SnapshotErrorImage'
 	],
-	#category : #UIManager
+	#category : #'UIManager-Base'
 }
 
 { #category : #testing }
@@ -175,7 +175,7 @@ CommandLineUIManager >> deny: aStringOrText title: aString [
 	"Open a denial dialog."
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CommandLineUIManager >> exitFailure [
 	[
 		self class snapshotErrorImage ifTrue: [
@@ -236,7 +236,7 @@ CommandLineUIManager >> initialize [
 	doNotQuitOnRestart := false.
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CommandLineUIManager >> logColored: anAnsiiColorCode during: aBlock [
 	
 	Smalltalk logStdErrorDuring: [:stderr |
@@ -250,7 +250,7 @@ CommandLineUIManager >> logColored: anAnsiiColorCode during: aBlock [
 	]
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CommandLineUIManager >> logDuring: aBlock [
 	
 	Smalltalk logStdErrorDuring: [ :stderr | aBlock value: stderr ]
@@ -258,13 +258,13 @@ CommandLineUIManager >> logDuring: aBlock [
 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CommandLineUIManager >> logGreenDuring: aBlock [
 	
 	^ self logColored: '32' during: aBlock
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CommandLineUIManager >> logRedDuring: aBlock [
 	
 	^ self logColored: '31' during: aBlock
@@ -280,7 +280,7 @@ CommandLineUIManager >> logTitle: aString andDescription: aStringOrText to: aStr
 		cr.
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CommandLineUIManager >> logYellowDuring: aBlock [
 	
 	^ self logColored: '33' during: aBlock
@@ -347,7 +347,7 @@ CommandLineUIManager >> questionWithoutCancel: aStringOrText title: aString [
 	false if no and nil if cancelled."
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CommandLineUIManager >> quitFrom: aContext withMessage: aString [
 
 	" log error and quit "

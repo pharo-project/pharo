@@ -22,15 +22,16 @@ Class {
 		'removeTestCase',
 		'cache',
 		'resetButton',
-		'logButton'
+		'logButton',
+		'updateButton'
 	],
-	#category : #'Tool-CriticBrowser'
+	#category : #'Tool-CriticBrowser-Base'
 }
 
 { #category : #menu }
 CriticBrowser class >> criticsBrowserMenuOn: aBuilder [ 
-	"I build a menu"
 	<worldMenu>
+	
 	(aBuilder item: 'Critic Browser')
 		action: [ self openOnCurrentWorkingConfiguration];
 		order: 0.41;
@@ -52,6 +53,7 @@ CriticBrowser class >> defaultSpec [
 							c1 add: #rulesModel.
 							c1 newRow: [:c2 |
 								c2 add: #resetButton.
+								c2 add: #updateButton.
 								c2 add: #logButton
 							] height: 25
 						];
@@ -74,17 +76,17 @@ CriticBrowser class >> icon [
 { #category : #'instance creation' }
 CriticBrowser class >> open [
 
-	| env rules  |
+	| env rules |
 	rules :=  RBCompositeLintRule allGoodRules rules.
 	env := RBBrowserEnvironment default.
-	self openOnRule: rules onEnvironment:  env
+	self openOnRule: rules onEnvironment: env
 ]
 
 { #category : #menu }
 CriticBrowser class >> openOnCurrentWorkingConfiguration [
 
 	CriticWorkingConfiguration exists
-		ifTrue: [  ResetWindow new openWithSpec  ]
+		ifTrue: [ ResetWindow new openWithSpec ]
 		ifFalse: [ SelectPackageBrowser open]
 ]
 
@@ -99,14 +101,14 @@ CriticBrowser class >> openOnRule: aRule onEnvironment: aEnv [
 
 	cbr openWithSpec.
 	cbr applyRules. 
-	cbr rulesModel  changed:  #listElementAt:.
+	cbr rulesModel changed:  #listElementAt:
 ]
 
 { #category : #'instance creation' }
 CriticBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
 
 	| cbr |
-	cbr :=  self new 
+	cbr := self new 
 		rules: aWorkingConfiguration rule;
 		environment: aWorkingConfiguration environment;
 		removeTestCase: aWorkingConfiguration removeTestCase;
@@ -114,22 +116,7 @@ CriticBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
 
 	cbr openWithSpec.
 	cbr applyRules. 
-	cbr rulesModel  changed:  #listElementAt:.
-]
-
-{ #category : #'instance creation' }
-CriticBrowser class >> packagesMenu: aBuilder [
-	<nautilusGlobalPackageMenu>
-	(aBuilder item: #'Critic Browser')
-		icon: self icon;
-		action: [
-			self  
-				openOnRule: (ReRuleManager uniqueInstance allRules) 
-				onEnvironment: 
-					(RBPackageEnvironment new 
-						packages: aBuilder model selectedPackages;
-						yourself) ];
-		help: 'Running critics rules on this package'
+	cbr rulesModel  changed:  #listElementAt:
 ]
 
 { #category : #icons }
@@ -242,7 +229,7 @@ CriticBrowser >> colorForRule: aRule [
 		ifEmpty: [ self class theme textColor ]
 		ifNotEmpty: [ (cache falsePositiveOf: aRule) = total
 				ifTrue: [ criticModel falsePositiveColor ]
-				ifFalse: [ criticModel defaultColor ] ]
+				ifFalse: [ criticModel defaultColor ]]
 ]
 
 { #category : #accessing }
@@ -280,7 +267,7 @@ CriticBrowser >> handleClassModified: anAnnouncement [
 
 	self
 		classRemoved: anAnnouncement oldClassDefinition;
-		classAdded:   anAnnouncement newClassDefinition.
+		classAdded: anAnnouncement newClassDefinition
 	
 ]
 
@@ -318,7 +305,7 @@ CriticBrowser >> handleMethodRemoved: anAnnouncement [
 { #category : #api }
 CriticBrowser >> initialExtent [
 
-	^   760@370
+	^ 760@370
 ]
 
 { #category : #initialization }
@@ -329,29 +316,19 @@ CriticBrowser >> initialize [
 	checker := ReSmalllintChecker new.
 	cache checker: checker.
 	cache browser: self.
-	criticModel cache: cache.
+	criticModel cache: cache
 ]
 
 { #category : #initialization }
 CriticBrowser >> initializePresenter [
-
-	rulesModel whenSelectedItemChanged: [ :rule |
-		(rule isNil or: [ rule isComposite ]) ifFalse: [ 
-				criticModel 
-					resetSelection;
-	 				rule: rule;	
-					setTextModelForNil
-			].
-				
-			self setTitle: ( 
-				rule 
-					ifNil: [ self defaultTitle  ] 
-					ifNotNil: [ rule name ]
-			)
-			
-	].
-
-
+	rulesModel
+		whenSelectedItemChanged: [ :rule | 
+			(rule isNil or: [ rule isComposite ])
+				ifFalse: [ criticModel
+						resetSelection;
+						rule: rule;
+						setTextModelForNil ].
+			self setTitle: (rule ifNil: [ self defaultTitle ] ifNotNil: [ rule name ]) ]
 ]
 
 { #category : #initialization }
@@ -360,10 +337,12 @@ CriticBrowser >> initializeWidgets [
 	title := self defaultTitle.
 	rulesModel := self newTree.
 	resetButton := self newButton.
+	updateButton := self newButton.
 	logButton := self newButton.
 	
 	self setLogButton.
 	self setResetButton.
+	self setUpdateButton.
 	 
 	criticModel := SingleCodeCriticResultList new.
 	rulesModel childrenBlock: [ :rule | 
@@ -516,7 +495,7 @@ CriticBrowser >> registerToAnnouncements [
 		when: MethodAdded send: #handleMethodAdded: to: self;
 		when: MethodModified send: #handleMethodModified: to: self;
 		when: MethodRemoved send: #handleMethodRemoved: to: self.
-	self window window announcer when: WindowClosed send: #onWindowClosed to: self.	
+	self window window announcer when: WindowClosed send: #onWindowClosed to: self
 ]
 
 { #category : #private }
@@ -525,7 +504,7 @@ CriticBrowser >> removeRuleToFalsePositive [
 	rulesModel selectedItem ifNotNil: [ :rule |
 		rule leaves do: [ :r |
 			rbEnvironment packages do: [ :package |
-				 cache removeFalsePositiveRule: r forPackage: package ]]].
+				 cache removeFalsePositiveRule: r forPackage: package ]]]
 
 	
 	
@@ -559,20 +538,26 @@ CriticBrowser >> rulesModel [
 ]
 
 { #category : #initialization }
-CriticBrowser >> setActionLogButtom [
-	
-	^ [(UIManager default confirm:  'Do you want to save all false positive and toDo in the Manifests ?
+CriticBrowser >> setActionLogButton [
+	^ [ (UIManager default
+		confirm:
+			'Do you want to save all false positive and toDo in the Manifests ?
 (this action may generate new manifest classes and make dirty your package)')
-			ifTrue: [ cache logInManifest] ]
+		ifTrue: [ cache logInManifest ] ]
 ]
 
 { #category : #initialization }
-CriticBrowser >> setActionResetButtom [
+CriticBrowser >> setActionResetButton [
 	
 	^ [(UIManager default confirm: 'Do you want to delete the current configuration
  and create a new configuration ?')
-		ifTrue: [ self  delete. 
-				SelectPackageBrowser open.] ]
+		ifTrue: [ self delete. 
+				SelectPackageBrowser open ]]
+]
+
+{ #category : #initialization }
+CriticBrowser >> setActionUpdateButton [
+	^ [ self reapplyAllRules ]
 ]
 
 { #category : #initialization }
@@ -581,7 +566,7 @@ CriticBrowser >> setLogButton [
 	logButton 
 		state: false;
 		label: 'Save Critics';
-		action: self setActionLogButtom 
+		action: self setActionLogButton 
 ]
 
 { #category : #initialization }
@@ -590,7 +575,7 @@ CriticBrowser >> setResetButton [
 	resetButton 
 		state: false;
 		label: 'Run new configuration';
-		action: self setActionResetButtom.
+		action: self setActionResetButton
 ]
 
 { #category : #api }
@@ -600,6 +585,15 @@ CriticBrowser >> setTitle: aTitle [
 	
 	self window updateTitle 
 	
+]
+
+{ #category : #initialization }
+CriticBrowser >> setUpdateButton [
+
+	updateButton 
+		state: false;
+		label: 'Update';
+		action: self setActionUpdateButton.
 ]
 
 { #category : #private }
@@ -635,6 +629,11 @@ CriticBrowser >> title [
 CriticBrowser >> unregisterFromAnnouncements [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self
+]
+
+{ #category : #accessing }
+CriticBrowser >> updateButton [
+	^ updateButton 
 ]
 
 { #category : #thread }

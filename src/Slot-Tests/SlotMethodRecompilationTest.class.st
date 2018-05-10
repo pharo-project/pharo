@@ -19,7 +19,10 @@ SlotMethodRecompilationTest >> methodBinding [
 
 { #category : #tests }
 SlotMethodRecompilationTest >> reshapeClass [
-	^ class := self make: [ :builder | builder slots: #(#iv) ]
+	^ class := self
+		make: [ :builder | 
+			builder fillFor: class.
+			builder slots: #(#iv) ]
 ]
 
 { #category : #running }

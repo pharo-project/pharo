@@ -6,3 +6,8 @@ Class {
 	#superclass : #CheckBoxPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+CheckBoxModel class >> isDeprecated [
+	^true
+]

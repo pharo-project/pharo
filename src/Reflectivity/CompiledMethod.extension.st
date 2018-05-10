@@ -38,7 +38,7 @@ CompiledMethod >> installLink: aMetaLink [
 	(aMetaLink optionCompileOnLinkInstallation or: [ self isRealPrimitive ])
 		ifTrue: [ self reflectiveMethod compileAndInstallCompiledMethod ]
 		ifFalse: [ self invalidate ].
-	SystemAnnouncer uniqueInstance announce: (MetalinkChanged new link: aMetaLink)	
+	aMetaLink announceChange.
 	
 ]
 

@@ -34,7 +34,6 @@ WeakMessageSendTest >> testCollectArguments [
 
 { #category : #tests }
 WeakMessageSendTest >> testNoArguments [
-	"self run: #testNoArguments"
 
 	| m |
 	m := WeakMessageSend
@@ -46,7 +45,6 @@ WeakMessageSendTest >> testNoArguments [
 
 { #category : #tests }
 WeakMessageSendTest >> testOneArgument [
-	"self run: #testOneArgument"	
 
 	| m |
 	m := WeakMessageSend
@@ -54,7 +52,7 @@ WeakMessageSendTest >> testOneArgument [
 		selector: #with:
 		argument: 1.
 	Smalltalk garbageCollectMost.
-	self assert: (m value  = { 1 })
+	self assert: m value equals: { 1 }
 
 ]
 

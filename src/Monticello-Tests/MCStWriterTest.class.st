@@ -21,7 +21,7 @@ MCStWriterTest >> assertChunkIsWellFormed: chunk [
 		class: UndefinedObject;
 		noPattern: true;
 		failBlock:  [self assert: false];
-		translate.
+		compile.
 ]
 
 { #category : #asserting }
@@ -38,7 +38,7 @@ MCStWriterTest >> assertMethodChunkIsWellFormed: chunk [
 		source: chunk readStream;
 		class: UndefinedObject;
 		failBlock: [self assert: false];
-		translate.
+		compile.
 	
 ]
 
@@ -235,6 +235,31 @@ MCStWriterTest >> testMethodDefinitionWithBangs [
 	self assertChunkIsWellFormed: stream next.
 	self assertMethodChunkIsWellFormed: stream next.
 	self assert: stream next isAllSeparators 
+]
+
+{ #category : #testing }
+MCStWriterTest >> testNotLoadedClassMethod [
+	"Check that the chunk header is correct for a class method of a class that isn't part of the running system"
+	| definition methodStream methodWriter |
+
+	definition := MCMethodDefinition
+		className: #NotALoadedClass
+		classIsMeta: true
+		selector: #reset
+		category: 'imagine'
+		timeStamp: nil
+		source: 'reset
+
+    ^self doReset'.
+	methodStream := String new writeStream.
+	methodWriter := MCStWriter new
+		stream: methodStream;
+		yourself.
+
+	methodWriter writeMethodPreamble: definition.
+	self assert: methodStream contents trimBoth
+			equals: '!NotALoadedClass class methodsFor: ''imagine'' stamp: ''nil''!'.
+
 ]
 
 { #category : #testing }

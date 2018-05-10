@@ -14,7 +14,7 @@ I use my work instance variable as a stack. I push messages that cause nodes to 
 Class {
 	#name : #PostorderGuide,
 	#superclass : #FileSystemGuide,
-	#category : #'FileSystem-Core-Implementation'
+	#category : #'FileSystem-Core-Base-Guide'
 }
 
 { #category : #showing }

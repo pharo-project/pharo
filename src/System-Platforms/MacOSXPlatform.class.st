@@ -15,7 +15,7 @@ Class {
 
 { #category : #testing }
 MacOSXPlatform class >> isActivePlatform [
-	^ self isMacOS and: [ self currentVersion asNumber >= 1000 ]
+	^ self isMacOS
 ]
 
 { #category : #accessing }

@@ -12,7 +12,7 @@ RBReadBeforeWrittenTesterTest >> testReadBeforeWritten [
 				includes: 'a')
 				== each last.
 		self assert: (RBReadBeforeWrittenTester isVariable: 'a' readBeforeWrittenIn: (RBParser parseExpression: each first))
-				= each last].
+				equals: each last].
 	#('| temp read written written1 |
 			read ifTrue: [^self].
 			written1 := self foo ifFalse: [written := true] ifTrue: [written := false].

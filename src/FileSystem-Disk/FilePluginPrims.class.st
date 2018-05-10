@@ -5,7 +5,7 @@ I provide an interface to the primitives in the FilePlugin.
 Class {
 	#name : #FilePluginPrims,
 	#superclass : #Object,
-	#category : #'FileSystem-Disk'
+	#category : #'FileSystem-Disk-Base'
 }
 
 { #category : #'file primitives' }
@@ -23,6 +23,38 @@ FilePluginPrims >> close: id [
 
 	<primitive: 'primitiveFileClose' module: 'FilePlugin'>
 	
+]
+
+{ #category : #'file primitives' }
+FilePluginPrims >> connectToFile: filePointer writable: writableFlag [
+	"Open the file with the supplied FILE* pointer, and return the file ID obtained.
+	writeableFlag indicates whether to allow write operations and must be compatible with the way the file was opened.
+	It is the responsibility of the caller to coordinate closing the file."
+
+	<primitive: 'primitiveConnectToFile' module: 'FilePlugin' error: error>
+	error = #'bad argument' ifTrue: [ 
+		(filePointer isKindOf: ByteArray) ifFalse: 
+			[ ^self error: 'filePointer must be a ByteArray' ].
+		(writableFlag isKindOf: Boolean) ifFalse: 
+			[ ^self error: 'writableFlag must be a boolean' ] ].
+	^ self primitiveFailed 
+
+]
+
+{ #category : #'file primitives' }
+FilePluginPrims >> connectToFileDescriptor: fileDescriptor writable: writableFlag [
+	"Connect to the file with fileDescriptor number, and return the file ID obtained.
+	writeableFlag indicates whether to allow write operations and must be compatible with the way the file was opened.
+	It is the responsibility of the caller to coordinate closing the file."
+
+	<primitive: 'primitiveConnectToFileDescriptor' module: 'FilePlugin' error: error>
+	error = #'bad argument' ifTrue: [ 
+		fileDescriptor isInteger ifFalse: 
+			[ ^self error: 'fileDescriptor must be an integer' ].
+		(writableFlag isKindOf: Boolean) ifFalse: 
+			[ ^self error: 'writableFlag must be a boolean' ] ].
+	^ self primitiveFailed 
+
 ]
 
 { #category : #'path primitives' }

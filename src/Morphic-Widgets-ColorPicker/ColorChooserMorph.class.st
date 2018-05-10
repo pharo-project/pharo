@@ -16,7 +16,7 @@ Class {
 
 { #category : #example }
 ColorChooserMorph class >> example [
-
+	<sampleInstance>
 	^ (ColorChooserMorph 
 		on: (BorderedMorph new) 
 		color: #color changeColor: #color:) openInWorld

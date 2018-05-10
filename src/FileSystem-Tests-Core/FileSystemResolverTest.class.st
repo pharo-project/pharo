@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'resolver'
 	],
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Resolver'
 }
 
 { #category : #testing }
@@ -32,5 +32,6 @@ FileSystemResolverTest >> createResolver [
 
 { #category : #running }
 FileSystemResolverTest >> setUp [
+	super setUp.
 	resolver := self createResolver.
 ]

@@ -10,7 +10,7 @@ Class {
 		'argumentNames',
 		'methodClass'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Test-Data'
 }
 
 { #category : #accessing }
@@ -36,6 +36,13 @@ FFICalloutMethodBuilderTestContext >> methodClass [
 { #category : #accessing }
 FFICalloutMethodBuilderTestContext >> methodClass: anObject [
 	methodClass := anObject
+]
+
+{ #category : #accesing }
+FFICalloutMethodBuilderTestContext >> methodProperties [
+	"stub"
+
+	^ nil
 ]
 
 { #category : #accessing }

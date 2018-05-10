@@ -17,7 +17,11 @@ Class {
 		'aCompiledMethod',
 		'aReceiver',
 		'aMethodContext',
-		'aSender'
+		'aSender',
+		'instVarForTestLookupSymbol'
+	],
+	#classVars : [
+		'classVarForTestLookupSymbol'
 	],
 	#category : #'Kernel-Tests-Methods'
 }
@@ -131,6 +135,18 @@ ContextTest >> testJump [
 ]
 
 { #category : #tests }
+ContextTest >> testLookupSymbol [
+	|localVar|
+	localVar := 2.
+	instVarForTestLookupSymbol := 3.
+	classVarForTestLookupSymbol := 4.
+	self assert: (thisContext lookupSymbol: #localVar) equals: 2.
+	self assert: (thisContext lookupSymbol: #instVarForTestLookupSymbol) equals: 3.
+	self assert: (thisContext lookupSymbol: #classVarForTestLookupSymbol) equals: 4.
+	self assert: (thisContext lookupSymbol: #Smalltalk) equals: Smalltalk.
+]
+
+{ #category : #tests }
 ContextTest >> testMethodContext [
 
 	self assert: aMethodContext home notNil.
@@ -189,7 +205,7 @@ ContextTest >> verifyJumpWithSelector: selector [
 	guineaPig beReadOnlyObject.
 	[ readOnlyStackp := (guineaPig perform: selector) stackPtr ]
 		on: ModificationForbidden 
-		do: [ :ex | ex resume ].
+		do: [ :ex | ex resumeUnchecked: nil ].
 	self assert: normalStackp = readOnlyStackp.
 	
 ]

@@ -19,7 +19,7 @@ ClassTest >> testCompileAll [
 { #category : #'*Kernel-Tests-WithCompiler' }
 ClassTest >> testPoolVariableAccessibleInClassUser [
 	"This test shows that a Pool Variable is accessible from the class that declare the Pool usage: here the superclass"
-	"self debug: #testInClassUser"
+ 
 	PoolDefiner initialize.
 	RootClassPoolUser compileAll.
 	
@@ -30,7 +30,7 @@ ClassTest >> testPoolVariableAccessibleInClassUser [
 { #category : #'*Kernel-Tests-WithCompiler' }
 ClassTest >> testPoolVariableAccessibleInSubclassOfClassUser [
 	"This test shows that a Pool Variable is not accessible from a subclass that declare the Pool usage: here SubFlop subclass of Flop and this is a bug. "
-	"self debug: #testInSubclassOfClassUser"
+ 
 	PoolDefiner initialize.
 	SubclassPoolUser compileAll.
 	

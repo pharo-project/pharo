@@ -17,6 +17,9 @@ Installs:
 Class {
 	#name : #BaselineOfUI,
 	#superclass : #BaselineOf,
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfUI
 }
 
@@ -32,6 +35,7 @@ BaselineOfUI >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 
+		spec baseline: 'Spec' with: [spec repository: repository].
 		spec baseline: 'Morphic' with: [spec repository: repository].
 
 		spec package: 'StartupPreferences'.
@@ -45,17 +49,6 @@ BaselineOfUI >> baseline: spec [
 		spec package: 'Tool-Base'.
 		spec package: 'Transcript-Tool'.
 		spec package: 'Tool-Workspace'.
-
-		spec package: 'Spec-Core'.
-		spec package: 'Spec-Debugger'.
-		spec package: 'Spec-Inspector'.
-		spec package: 'Spec-Layout'.
-		spec package: 'Spec-MorphicAdapters'.
-		spec package: 'Spec-PolyWidgets'.
-		spec package: 'Spec-Tools'.
-		spec package: 'Spec-StubAdapter'.
-		
-		spec package: 'Spec-Deprecated'.
 
 		spec package: 'Morphic-Widgets-Tree'.
 
@@ -73,6 +66,9 @@ BaselineOfUI >> baseline: spec [
 { #category : #actions }
 BaselineOfUI >> postload: loader package: packageSpec [
 
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
+
 	Smalltalk tools register: Workspace as: #browser.
 	Smalltalk tools register: Workspace as: #monticelloBrowser.
 	Smalltalk tools register: Workspace as: #fileList.
@@ -81,6 +77,7 @@ BaselineOfUI >> postload: loader package: packageSpec [
 	Smalltalk ui theme settings preferGradientFill: true.
 	PharoCommonTools initialize.
 
+	Initialized := true
 ]
 
 { #category : #baseline }

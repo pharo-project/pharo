@@ -54,7 +54,7 @@ DAPackageAnalyzerTreeModel class >> defaultSpec [
 					  yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageAnalyzerTreeModel class >> onPackages: aCollection [
 	^ self new
 		initializeWithRPackageSet: aCollection;
@@ -69,7 +69,7 @@ DAPackageAnalyzerTreeModel class >> onPackagesMatch: match [
 				thenCollect: [ :package | package packageName ]) )
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 DAPackageAnalyzerTreeModel class >> onPackagesNamed: aCollection [
 	^ self onPackages: (aCollection collect: [ :each | RPackageSet named: each ])
 ]
@@ -293,7 +293,7 @@ DAPackageAnalyzerTreeModel >> initializePresenter [
 				ifNotNil: [ 
 					buttonBrowseCycles enabled: true.
 					tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ].
-					self tree selectedItem browseInNautilus ] ]
+					self tree selectedItem selectInBrowser ] ]
 ]
 
 { #category : #initialization }
@@ -322,8 +322,7 @@ DAPackageAnalyzerTreeModel >> nodesFor: anItemList [
 			content: each;
 			cycle: false;
 			treeModelParent: self;
-			packageTreeNautilus: self packageTreeNautilus;
-			packageTreeNautilusUI: self packageTreeNautilusUI;
+			browser: self browser;
 			yourself ]
 ]
 

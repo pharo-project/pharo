@@ -7,13 +7,13 @@ Class {
 	#category : #'Collections-Tests-Unordered'
 }
 
-{ #category : #'building suites' }
+{ #category : #coverage }
 PluggableSetTest class >> classToBeTested [
 
-^ IdentitySet
+	^ IdentitySet
 ]
 
-{ #category : #requirements }
+{ #category : #coverage }
 PluggableSetTest >> classToBeTested [
 
 	^ PluggableSet

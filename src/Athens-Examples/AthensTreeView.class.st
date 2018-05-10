@@ -10,13 +10,15 @@ Class {
 		'root',
 		'rows'
 	],
-	#category : #'Athens-Examples'
+	#category : #'Athens-Examples-Demos'
 }
 
 { #category : #examples }
 AthensTreeView class >> example1 [
-
-	AthensTreeView openOn: Collection extentBlock: [ :each | (5 + each instVarNames size)@(5 + each methodDict size)  ] childsBlock: [:el | el subclasses ] 
+	AthensTreeView
+		openOn: Collection
+		extentBlock: [ :each | (5 + each instVarNames size) @ (5 + each methodDict size) ]
+		childsBlock: [ :el | el subclasses ]
 ]
 
 { #category : #'instance creation' }

@@ -14,7 +14,7 @@ Class {
 
 { #category : #running }
 DebuggerModelTest >> setUp [
-
+	super setUp.
 	context := [ Set new ] asContext.
 	process := Process 
 		forContext: context 

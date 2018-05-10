@@ -24,12 +24,12 @@ RBAddClassTest >> testAddClass [
 	classTest := refactoring model classNamed: self class name.
 	self assert: newClass superclass = superClass.
 	self assert: (superClass subclasses includes: newClass).
-	self assert: newClass theMetaClass superclass = superClass theMetaClass.
-	self assert: (superClass theMetaClass subclasses includes: newClass theMetaClass).
+	self assert: newClass classSide superclass = superClass classSide.
+	self assert: (superClass classSide subclasses includes: newClass classSide).
 	self assert: classTest superclass = newClass.
 	self assert: (newClass subclasses includes: classTest).
-	self assert: classTest theMetaClass superclass = newClass theMetaClass.
-	self assert: (newClass theMetaClass subclasses includes: classTest theMetaClass)
+	self assert: classTest classSide superclass = newClass classSide.
+	self assert: (newClass classSide subclasses includes: classTest classSide)
 ]
 
 { #category : #'failure tests' }
@@ -74,8 +74,8 @@ RBAddClassTest >> testModelAddClass [
 	newClass := model classNamed: #FooTest.
 	self assert: newClass superclass = superClass.
 	self assert: (superClass subclasses includes: newClass).
-	self assert: newClass theMetaClass superclass = superClass theMetaClass.
-	self assert: (superClass theMetaClass subclasses includes: newClass theMetaClass).
+	self assert: newClass classSide superclass = superClass classSide.
+	self assert: (superClass classSide subclasses includes: newClass classSide).
 	self assert: subclass superclass = newClass.
 	self assert: (newClass subclasses includes: subclass).
 	self assert: subclass theMetaClass superclass = newClass theMetaClass.

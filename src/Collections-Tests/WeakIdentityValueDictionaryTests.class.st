@@ -12,10 +12,10 @@ WeakIdentityValueDictionaryTests >> canBeUnhealthy [
 	^ false
 ]
 
-{ #category : #requirements }
+{ #category : #coverage }
 WeakIdentityValueDictionaryTests >> classToBeTested [
 
-	^WeakIdentityValueDictionary 
+	^ WeakIdentityValueDictionary 
 ]
 
 { #category : #tests }

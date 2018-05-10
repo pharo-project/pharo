@@ -12,7 +12,6 @@ Class {
 	#name : #ClassDescription,
 	#superclass : #Behavior,
 	#instVars : [
-		'instanceVariables',
 		'organization'
 	],
 	#category : #'Kernel-Classes'
@@ -173,24 +172,14 @@ ClassDescription >> allSlotsEverywhere [
 	^ aList asSet
 ]
 
-{ #category : #'organization updating' }
-ClassDescription >> applyChangesOfNewTraitCompositionReplacing: oldComposition [
-	| changedSelectors oldMethodDict |
-	oldMethodDict := self methodDict copy.
-	changedSelectors := super applyChangesOfNewTraitCompositionReplacing: oldComposition.
-	self noteRecategorizedSelectors: changedSelectors oldComposition: oldComposition.
-	self noteChangesFrom: oldMethodDict.
-	^ changedSelectors.
-]
-
 { #category : #authors }
 ClassDescription >> authors [
 	"Returns a bag representing the author frequency based on the latest version of the methods of the receiver."
 
-	^(self methods, self theMetaClass methods) collect: [ :each | each author ] as: Bag
+	^(self methods, self classSide methods) collect: [ :each | each author ] as: Bag
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> baseClass [
 	^self subclassResponsibility.
 ]
@@ -205,7 +194,7 @@ ClassDescription >> basicOrganization: aClassOrg [
 	organization := aClassOrg
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> classClass [
 	^self subclassResponsibility.
 ]
@@ -270,11 +259,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 { #category : #'accessing comment' }
 ClassDescription >> classCommentBlank [
 
-	| existingComment stream |
-	existingComment := self theNonMetaClass organization classComment.
-	existingComment isEmpty
-		ifFalse: [^existingComment].
-
+	| stream |
 	stream := (String new: 100) writeStream.
 	
 	stream nextPutAll: 'Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
@@ -311,7 +296,11 @@ stream cr; cr; nextPutAll: '    Implementation Points'.
 
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> classSide [
-	^self theMetaClass.
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+	"Point classSide >>> Point class"
+	"Point class classSide >>> Point class"
+	
+	^ self subclassResponsibility
 ]
 
 { #category : #'instance variables' }
@@ -359,11 +348,8 @@ ClassDescription >> classesThatImplementAllOf: selectorSet [
 
 { #category : #'accessing comment' }
 ClassDescription >> comment [
-	"Answer the receiver's comment. (If missing, supply a template) "
-	| aString |
-	aString := self instanceSide organization classComment.
-	aString isEmpty ifFalse: [^ aString].
-	^self classCommentBlank
+    "Answer the receiver's comment. (If missing, supply a template) "
+    ^self instanceSide organization classComment ifEmpty: [ self classCommentBlank ]
 ]
 
 { #category : #'accessing comment' }
@@ -741,7 +727,7 @@ ClassDescription >> instVarNameForIndex: index [
 ClassDescription >> instVarNames [
 	"Answer an Array of the receiver's instance variable names."
 
-	^self classLayout instVarNames
+	^self localSlots collect: [ :each | each name ]
 ]
 
 { #category : #compiling }
@@ -760,7 +746,11 @@ ClassDescription >> instVarNamesAndOffsetsDo: aBinaryBlock [
 
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> instanceSide [
-	^ self theNonMetaClass
+	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
+	"Point instanceSide >>> Point"
+	"Point class instanceSide >>> Point"
+	
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -773,29 +763,30 @@ ClassDescription >> instanceVariablesString [
 	"Answer a string of my instance variable names separated by spaces."
 
 	^String streamContents: [ :stream |
-		self instVarNames 
-			do: [ :each | stream nextPutAll: each ]
+		self localSlots
+			do: [ :each | stream nextPutAll: each name ]
 			separatedBy: [ stream space ] ]
 ]
 
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> isClassSide [
+	"Return true whether the receiver is a metaclass (in a couple class/metaclass sense)."
+	"Point isClassSide >>> false"
+	"Point class isClassSide >>> true"
+	
 	^self == self classSide
 ]
 
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> isInstanceSide [
-	^self isClassSide not
-]
-
-{ #category : #testing }
-ClassDescription >> isLocalMethodsProtocol: aProtocol [
-	aProtocol methods ifEmpty: [ ^true ].
+	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
+	"Point isClassSide >>> true"
+	"Point class isClassSide >>> false"
 	
-	^aProtocol methods anySatisfy: [ :each | self isLocalSelector: each]
+	^ self isClassSide not
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> isMeta [
 	^self isClassSide
 ]
@@ -814,7 +805,13 @@ ClassDescription >> linesOfCode [
 	lines := self localMethods inject: 0 into: [ :sum :each | sum + each linesOfCode ].
 	^ self isMeta 
 		ifTrue: [ lines ]
-		ifFalse: [ lines + self theMetaClass linesOfCode ]
+		ifFalse: [ lines + self classSide linesOfCode ]
+]
+
+{ #category : #slots }
+ClassDescription >> localSlots [
+
+	^ self slots select: [ :aSlot | aSlot isLocal ]
 ]
 
 { #category : #'accessing tags' }
@@ -877,22 +874,6 @@ ClassDescription >> noteAddedSelector: aSelector meta: isMeta [
 	"A hook allowing some classes to react to adding of certain selectors"
 ]
 
-{ #category : #'organization updating' }
-ClassDescription >> noteChangesFrom: oldMethodDict [
-	"create notifications about the changes made to the method dictionary"
-	"additions have already been notified in #addTraitSelector:withMethod:"
-		
-	" deal with removal / updates relative to the old method dictionary"
-	oldMethodDict keysAndValuesDo: [ :selector :oldMethod|
-		self methodDict 
-			at: selector
-			ifPresent: [ :currentMethod|
-				currentMethod == oldMethod
-					ifFalse: [ self noteMethodChanged: oldMethod to: currentMethod]]
-			ifAbsent: [ self noteMethodRemoved: oldMethod ]].
-	
-]
-
 { #category : #compiling }
 ClassDescription >> noteCompilationOf: aSelector meta: isMeta [
 	"A hook allowing some classes to react to recompilation of certain selectors"
@@ -904,41 +885,6 @@ ClassDescription >> noteCompilationOfMethod: aCompiledMethod meta: isMeta [
 ]
 
 { #category : #'organization updating' }
-ClassDescription >> noteMethodAdded: aMethod [
-	SystemAnnouncer uniqueInstance
-		methodAdded: aMethod
-]
-
-{ #category : #'organization updating' }
-ClassDescription >> noteMethodChanged: oldMethod to: newMethod [
-	self flag: #todo. "oldProtocol is not set properly here"
-	SystemAnnouncer uniqueInstance methodChangedFrom: oldMethod to: newMethod oldProtocol: Protocol unclassified
-]
-
-{ #category : #'organization updating' }
-ClassDescription >> noteMethodRemoved: oldMethod [
-	self flag: #todo. "protocol and origin are not set properly here"
-	SystemAnnouncer uniqueInstance methodRemoved: oldMethod protocol: oldMethod protocol origin: oldMethod origin
-]
-
-{ #category : #'organization updating' }
-ClassDescription >> noteRecategorizedSelector: aSymbol from: oldCategoryOrNil to: newCategoryOrNil [
-	| changedCategories |
-	changedCategories := self updateOrganizationSelector: aSymbol oldCategory: oldCategoryOrNil newCategory: newCategoryOrNil.
-	changedCategories do: [:each |
-		(self organization isEmptyCategoryNamed: each) ifTrue: [self organization removeCategory: each]]
-]
-
-{ #category : #'organization updating' }
-ClassDescription >> noteRecategorizedSelectors: aCollection oldComposition: aTraitComposition [
-	
-	aCollection do: [:each | | oldCategory newCategory | 
-		oldCategory := self organization categoryOfElement: each.
-		newCategory := (self traitComposition methodDescriptionForSelector: each) effectiveMethodCategory.
-		self noteRecategorizedSelector: each from: oldCategory to: newCategory]
-]
-
-{ #category : #'organization updating' }
 ClassDescription >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip 
 	 the method recategorized announce"
@@ -947,11 +893,7 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldCategory to
 			SystemAnnouncer uniqueInstance 
 				methodRecategorized: method
 				oldProtocol: oldCategory ].
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self 
-			notifyUsersOfRecategorizedSelector: selector 
-			from: oldCategory 
-			to: newCategory ]
+
 ]
 
 { #category : #private }
@@ -981,18 +923,6 @@ ClassDescription >> notifyRepackage: selector method: compiledMethod oldProtocol
 	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
 ]
 
-{ #category : #'users notification' }
-ClassDescription >> notifyUsersOfChangedSelectors: aCollection [
-	self traitUsers do: [:each |
-		each noteChangedSelectors: aCollection]
-]
-
-{ #category : #'users notification' }
-ClassDescription >> notifyUsersOfRecategorizedSelector: element from: oldCategory to: newCategory [
-	self traitUsers do: [:each |
-		each noteRecategorizedSelector: element from: oldCategory to: newCategory]
-]
-
 { #category : #private }
 ClassDescription >> numberOfMethods [
 	"count all methods that are local (not comming from a trait)"
@@ -1000,7 +930,7 @@ ClassDescription >> numberOfMethods [
 	num := self localMethods size.
 	^ self isMeta  
 		ifTrue: [ num ]
-		ifFalse: [ num + self theMetaClass numberOfMethods ] 
+		ifFalse: [ num + self classSide numberOfMethods ] 
 ]
 
 { #category : #'initialize-release' }
@@ -1107,9 +1037,10 @@ ClassDescription >> removeSelector: selector [
 	priorMethod := self compiledMethodAt: selector ifAbsent: [^ nil].
 	origin := priorMethod origin.
 	priorProtocol := self whichCategoryIncludesSelector: selector.
+	self organization removeElement: selector.
+	
 	super removeSelector: selector.
-	SystemAnnouncer uniqueInstance 
-		suspendAllWhile: [self updateOrganizationSelector: selector oldCategory: priorProtocol newCategory: nil].
+		
 	SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: origin
 ]
 
@@ -1169,7 +1100,7 @@ ClassDescription >> slotDefinitionString [
 	
 	^String streamContents: [ :str | | special |
 		str nextPutAll: '{ '.
-		self slots do: [:slot |
+		self localSlots do: [:slot |
 				str nextPutAll: slot definitionString.
 				special := slot isSpecial]				
 			separatedBy: [ 
@@ -1267,20 +1198,21 @@ ClassDescription >> tagsForMethods [
 		reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
 		
 	tags := OrderedCollection new.
-	allProtocols do: [ :each | 
-		(self isLocalMethodsProtocol: each) ifTrue: [ tags add: each name ]].
+	allProtocols do: [ :each | tags add: each name ].
 
 	^tags
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> theMetaClass [
-	^self classClass
+	"This method is deprecated so consider to migrate."
+	^ self classSide
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> theNonMetaClass [
-	^self baseClass
+	"This method is deprecated so consider to migrate."
+	^ self instanceSide
 ]
 
 { #category : #'accessing method dictionary' }
@@ -1359,78 +1291,6 @@ ClassDescription >> updateInstancesFrom: oldClass [
 	crashingBlock value.
 	"
 
-]
-
-{ #category : #'organization updating' }
-ClassDescription >> updateOrganizationDescription: each oldCategory: newCategoryOrNil newCategory: oldCategoryOrNil changed: changedCategories [
-	| sel effectiveCategory currentCategory |
-	
-	sel := each selector.
-	(self includesLocalSelector: sel) ifTrue: [ ^ self ].
-	
-	currentCategory := self organization categoryOfElement: sel.
-	effectiveCategory := each 
-		effectiveMethodCategoryCurrent: currentCategory 
-		new: newCategoryOrNil.
-	
-	effectiveCategory 
-		ifNil: [ 
-			currentCategory ifNotNil: [ changedCategories add: currentCategory ].
-			self organization removeElement: sel.
-			^ self ].
-		
-	(currentCategory isNil 
-		or: [ currentCategory == Protocol ambiguous 
-		or: [ currentCategory == oldCategoryOrNil ] ])
-	ifFalse: [ ^ self ].
-	
-	(currentCategory ~~ effectiveCategory)
-		ifTrue: [ 
-			currentCategory ifNotNil: [ changedCategories add: currentCategory ].
-			self organization classify: sel under: effectiveCategory suppressIfDefault: false ]
-]
-
-{ #category : #'organization updating' }
-ClassDescription >> updateOrganizationDescription: aTraitMethodDescription oldCategory: oldCategoryOrNil newCategory: newCategoryOrNil changedCategories: changedCategories [
-	| sel effectiveCategory currentCategory |
-	sel := aTraitMethodDescription selector.
-	
-	(self includesLocalSelector: sel) ifTrue: [ ^ self ].
-	 
-	currentCategory := self organization categoryOfElement: sel.
-	effectiveCategory := aTraitMethodDescription effectiveMethodCategoryCurrent: currentCategory new: newCategoryOrNil.
-	
-	effectiveCategory ifNil: [ 
-		currentCategory ifNotNil: [ changedCategories add: currentCategory ].
-		^ self organization removeElement: sel ].
-		
-	((currentCategory isNil 
-		or: [ 
-				currentCategory == Protocol ambiguous 
-				or: [ currentCategory == oldCategoryOrNil ] ])
-		and: [ currentCategory ~~ effectiveCategory ])
-		ifTrue: [ 
-			currentCategory ifNotNil: [ changedCategories add: currentCategory ].
-			self organization classify: sel under: effectiveCategory suppressIfDefault: false ]
-]
-
-{ #category : #'organization updating' }
-ClassDescription >> updateOrganizationSelector: aSymbol oldCategory: oldCategoryOrNil newCategory: newCategoryOrNil [
-	| changedCategories composition |
-	changedCategories := IdentitySet new.
-	
-	composition := self hasTraitComposition
-		ifTrue: [ self traitComposition ]
-		ifFalse: [ TraitComposition new ].
-		
-	(composition methodDescriptionsForSelector: aSymbol)
-		do: [ :each | 
-			self
-				updateOrganizationDescription: each
-				oldCategory: oldCategoryOrNil
-				newCategory: newCategoryOrNil
-				changedCategories: changedCategories ].
-	^ changedCategories
 ]
 
 { #category : #'pool variable' }

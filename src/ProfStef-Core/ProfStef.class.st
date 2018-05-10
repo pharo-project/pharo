@@ -77,49 +77,57 @@ ProfStef class >> aboutPharoZen [
 
 { #category : #cleanup }
 ProfStef class >> cleanUp [
+
 	self reset
 ]
 
 { #category : #accessing }
 ProfStef class >> contents [
-	"build table of contents with all defined tutorials"
+	"Build table of contents with all defined tutorials."
 
 	^ AbstractTutorial contentsOfTutorials
 ]
 
 { #category : #'class initialization' }
 ProfStef class >> default [
-	^ Instance ifNil: [Instance := self new]
+
+	^ Instance ifNil: [ Instance := self new ]
 ]
 
 { #category : #navigating }
 ProfStef class >> first [
+
 	^ self default first.
 ]
 
 { #category : #navigating }
 ProfStef class >> go [
+
 	^ self default go.
 ]
 
 { #category : #navigating }
 ProfStef class >> goOn: aTutorialClass [
+
 	^ self default goOn: aTutorialClass.
 ]
 
 { #category : #navigating }
 ProfStef class >> goToNextLesson [
+
   self next
 ]
 
 { #category : #navigating }
 ProfStef class >> last [
-	^ self default last.
+
+	^ self default last
 ]
 
-{ #category : #zen }
+{ #category : #'world menu' }
 ProfStef class >> menuCommandOn: aBuilder [
 	<worldMenu>
+	
 	(aBuilder item: #'Pharo Zen')
 		parent: #Help;
 		order: 3.0;
@@ -131,14 +139,14 @@ ProfStef class >> menuCommandOn: aBuilder [
 
 { #category : #navigating }
 ProfStef class >> next [
-	^ self default next.
+
+	^ self default next
 ]
 
 { #category : #zen }
 ProfStef class >> openPharoZenWorkspace [
 	"Open a Workspace showing the Pharo Zen values in random order"
-
-	"self openPharoZenWorkspace"
+	<script>
 
 	TextPresenter new
 		text: self pharoZenValuesContents;
@@ -180,59 +188,66 @@ ProfStef class >> pharoZenValues [
 { #category : #zen }
 ProfStef class >> pharoZenValuesContents [
 	"Return a string with CRs listing the Pharo Zen values in random order"
-	
-	"self pharoZenValuesContents"
-	
+ 	
 	^ String streamContents: [ :stream | 
-			stream << (self class>>#pharoZenValues) comment withoutQuoting; cr; cr.
+			stream << (self class >> #pharoZenValues) comment withoutQuoting; cr; cr.
 			self pharoZenValues shuffled 
 				do: [ :each | stream << each ] 
-				separatedBy: [ stream cr ] ]
+				separatedBy: [ stream cr ]]
 ]
 
 { #category : #navigating }
 ProfStef class >> previous [
-	^ self default previous.
+
+	^ self default previous
 ]
 
 { #category : #'class initialization' }
-ProfStef class >> reset [ 
+ProfStef class >> reset [
+	<script>
+		
 	Instance := nil
 ]
 
 { #category : #starting }
 ProfStef class >> tutorial: aTutorialClass lesson: aSelector [
-	self default tutorial: aTutorialClass lesson: aSelector.
+
+	self default tutorial: aTutorialClass lesson: aSelector
 ]
 
 { #category : #starting }
 ProfStef class >> tutorial: aTutorialClass lessonAt: lessonIndex [
-	self default tutorial: aTutorialClass lessonAt: lessonIndex.
+
+	self default tutorial: aTutorialClass lessonAt: lessonIndex
 ]
 
 { #category : #gui }
 ProfStef >> close [
+
 	self lessonView close
 ]
 
 { #category : #navigating }
 ProfStef >> first [
+
 	self player first.
-	^ self showCurrentLesson.
+	^ self showCurrentLesson
 ]
 
-{ #category : #starting }
+{ #category : #navigating }
 ProfStef >> go [
-	^ self goOn: PharoSyntaxTutorial.
+
+	^ self goOn: PharoSyntaxTutorial
 ]
 
-{ #category : #starting }
+{ #category : #navigating }
 ProfStef >> goOn: aTutorialClass [
+
 	self player tutorial: aTutorialClass new.
-	^ self open.
+	^ self open
 ]
 
-{ #category : #accessing }
+{ #category : #'private - accessing' }
 ProfStef >> helpBrowserWindow [
 	"Yes this is a hack"
 	
@@ -243,50 +258,59 @@ ProfStef >> helpBrowserWindow [
 
 { #category : #navigating }
 ProfStef >> last [
+
 	self player last.
-	^ self showCurrentLesson.
+	^ self showCurrentLesson
 ]
 
 { #category : #accessing }
 ProfStef >> lessonView [
-	^ lessonView ifNil: [lessonView := LessonView new]
+
+	^ lessonView 
+			ifNil: [ lessonView := LessonView new ]
 ]
 
 { #category : #accessing }
 ProfStef >> lessonView: aLessonView [
-	lessonView := aLessonView.
+
+	lessonView := aLessonView
 ]
 
 { #category : #navigating }
 ProfStef >> next [
+
 	self helpBrowserWindow 
-		ifNotNil: [ :window | window model next ].
+		ifNotNil: [:window | window model next ].
 	self lessonView isOpenInWindow 
 		ifTrue: [ 
 			self player next.
 			self showCurrentLesson ]
 ]
 
-{ #category : #gui }
+{ #category : #'instance creation' }
 ProfStef >> open [
+
 	self player first.
-	^ self showCurrentLesson.
+	^ self showCurrentLesson
 ]
 
 { #category : #accessing }
-ProfStef >> player [ 
-	^ player ifNil: [player := TutorialPlayer new]
+ProfStef >> player [
+
+	^ player ifNil: [ player := TutorialPlayer new ]
 ]
 
 { #category : #accessing }
 ProfStef >> player: aTutorialPlayer [
-	player := aTutorialPlayer.
+
+	player := aTutorialPlayer
 ]
 
 { #category : #navigating }
 ProfStef >> previous [
+
 	self helpBrowserWindow 
-		ifNotNil: [ :window | window model previous ].
+		ifNotNil: [:window | window model previous ].
 	self lessonView isOpenInWindow 
 		ifTrue: [ 
 			self player previous.
@@ -295,35 +319,40 @@ ProfStef >> previous [
 
 { #category : #gui }
 ProfStef >> showCurrentLesson [
+
 	| progressInfo lesson |
 	lesson := self player currentLesson.
 	progressInfo := '(', self tutorialPositionString, '/', self tutorialSizeString, ')'. 
 	^ self lessonView 
 		showLesson: lesson 
-		withTitle: lesson title, ' ', progressInfo.
+		withTitle: lesson title, ' ', progressInfo
 ]
 
 { #category : #navigating }
 ProfStef >> tutorial: aTutorialClass lesson: aSelector [
+
 	| tutorial |
 	tutorial := aTutorialClass new.
 	self player tutorial: tutorial.
-	self tutorial: aTutorialClass lessonAt: (tutorial indexOfLesson: aSelector).
+	self tutorial: aTutorialClass lessonAt: (tutorial indexOfLesson: aSelector)
 ]
 
-{ #category : #navigating }
+{ #category : #accessing }
 ProfStef >> tutorial: aTutorialClass lessonAt: lessonIndex [
+
 	self player tutorial: aTutorialClass new.
 	self player tutorialPosition: lessonIndex.
-	self showCurrentLesson.
+	self showCurrentLesson
 ]
 
 { #category : #accessing }
 ProfStef >> tutorialPositionString [
-	^ player tutorialPosition asString.
+
+	^ player tutorialPosition asString
 ]
 
 { #category : #accessing }
 ProfStef >> tutorialSizeString [
+
 	^ self player size asString
 ]

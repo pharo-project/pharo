@@ -311,11 +311,6 @@ Object >> addDependent: anObject [
 	^ anObject
 ]
 
-{ #category : #'user interface' }
-Object >> addModelItemsToWindowMenu: aMenu [
-	"aMenu is being constructed to be presented to the user in response to the user's pressing on the menu widget in the title bar of a morphic window.  Here, the model is given the opportunity to add any model-specific items to the menu, whose default target is the SystemWindow itself."
-]
-
 { #category : #converting }
 Object >> as: aSimilarClass [
 	"Create an object of class aSimilarClass that has similar contents to the receiver."
@@ -395,15 +390,18 @@ Object >> at: index put: value [
 	stored. Essential. See Object documentation whatIsAPrimitive."
 
 	<primitive: 61>
-	index isInteger ifTrue:
-		[self class isVariable
+	index isInteger 
+		ifTrue: [self class isVariable
 			ifTrue: [(index between: 1 and: self size)
-					ifTrue: [self errorImproperStore]
-					ifFalse: [self errorSubscriptBounds: index]]
-			ifFalse: [self errorNotIndexable]].
-	index isNumber
-		ifTrue: [^self at: index asInteger put: value]
-		ifFalse: [self errorNonIntegerIndex]
+				ifFalse: [ ^ self errorSubscriptBounds: index]]
+			ifFalse: [ ^ self errorNotIndexable ]]
+		ifFalse: [  
+			^ index isNumber
+				ifTrue: [ self at: index asInteger put: value]
+				ifFalse: [ self errorNonIntegerIndex] ].
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: value ].
+	self errorImproperStore 
 ]
 
 { #category : #'write barrier' }
@@ -413,7 +411,7 @@ Object >> attemptToAssign: value withIndex: index [
 	performed, do it manually here in the call back with instVarAt:put:.
 	This method has to return *no* value by jumping to the context's sender"
 	
-	(ModificationForbidden for: self atInstVar: index with: value)	signal.
+	self modificationForbiddenFor: #instVarAt:put: index: index value: value.
 
 	thisContext sender jump
 	"CAN'T REACH"
@@ -443,13 +441,18 @@ Object >> basicAt: index put: value [
 	documentation whatIsAPrimitive."
 
 	<primitive: 61>
-	index isInteger
-		ifTrue: [(index between: 1 and: self size)
-					ifTrue: [self errorImproperStore]
-					ifFalse: [self errorSubscriptBounds: index]].
-	index isNumber
-		ifTrue: [^self basicAt: index asInteger put: value]
-		ifFalse: [self errorNonIntegerIndex]
+	index isInteger 
+		ifTrue: [self class isVariable
+			ifTrue: [(index between: 1 and: self size)
+				ifFalse: [ ^ self errorSubscriptBounds: index ]]
+			ifFalse: [ ^ self errorNotIndexable ]]
+		ifFalse: [  
+			^ index isNumber
+				ifTrue: [ self basicAt: index asInteger put: value ]
+				ifFalse: [ self errorNonIntegerIndex ] ].
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #basicAt:put: index: index value: value ].
+	self errorImproperStore 
 ]
 
 { #category : #accessing }
@@ -491,9 +494,7 @@ Object >> becomeForward: otherObject [
 	to the receiver now point to the argument.
 	Fails if either argument is a SmallInteger."
 
-	(Array with: self)
-		elementsForwardIdentityTo:
-			(Array with: otherObject)
+	{self} elementsForwardIdentityTo: {otherObject}
 ]
 
 { #category : #'reflective operations' }
@@ -502,9 +503,7 @@ Object >> becomeForward: otherObject copyHash: copyHash [
 	If copyHash is true, the argument's identity hash bits will be set to those of the receiver.
 	Fails if either argument is a SmallInteger."
 
-	(Array with: self)
-		elementsForwardIdentityTo: (Array with: otherObject)
-		copyHash: copyHash
+	{self} elementsForwardIdentityTo: {otherObject} copyHash: copyHash
 ]
 
 { #category : #binding }
@@ -626,12 +625,6 @@ Object >> clone [
 					ifFalse:
 						[class basicNew].
 	^newObject copyFrom: self
-]
-
-{ #category : #'user interface' }
-Object >> complexContents [
-
-	^self
 ]
 
 { #category : #copying }
@@ -927,8 +920,29 @@ Object >> haltIf: condition [
 	Halt if: condition.
 ]
 
+{ #category : #halting }
+Object >> haltIfInsideTest [
+	"This is the typical message to use for inserting breakpoints during debugging."
+	<debuggerCompleteToSender>
+	Halt ifInsideTest
+]
+
 { #category : #testing }
 Object >> haltIfNil [
+]
+
+{ #category : #halting }
+Object >> haltIfNotTest [
+	"Halt if execution was not started by a test. This is useful as this means one can just run tests undisturbed, while a execution for example from the Playground would be halted"
+	<debuggerCompleteToSender>
+	Halt ifNotTest
+]
+
+{ #category : #halting }
+Object >> haltIfTest [
+	"Halt if execution was started by a test. These #halts are just active in the tests, useful when you want to add a halt in methods that are executed a lot (e.g. collections)"
+	<debuggerCompleteToSender>
+	Halt ifTest
 ]
 
 { #category : #halting }
@@ -1008,7 +1022,11 @@ Object >> instVarAt: index put: anObject [
 	 variable or indexed variable. Essential. See Object documentation whatIsAPrimitive."
 
 	<primitive: 174 error: ec>
-	self primitiveFailed
+	 (index isInteger 
+		and: [ index between: 1 and: self class instSize + self basicSize]) 
+			ifFalse: [ ^ self errorSubscriptBounds: index ].
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #instVarAt:put: index: index value: anObject ]
 ]
 
 { #category : #introspection }
@@ -1231,7 +1249,7 @@ Object >> isReadOnlyObject [
 	 An attempt to modify a read-only object in a primitive will cause the
 	 primitive to fail with a #'no modification' error code."
 	<primitive: 163 error: ec>
-	^self primitiveFailed
+	^self class isImmediateClass 
 ]
 
 { #category : #testing }
@@ -1401,16 +1419,12 @@ Object >> longPrintStringLimitedTo: aLimitValue [
 	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
 ]
 
-{ #category : #'user interface' }
-Object >> modelWakeUpIn: aWindow [
-	"A window with me as model is being entered or expanded.  Default response is no-op" 
-]
-
 { #category : #'block support' }
 Object >> mustBeBoolean [
 	"Catches attempts to test truth of non-Booleans.  This message is sent from the VM.  The sending context is rewound to just before the jump causing this exception."
-
-	^ self mustBeBooleanInMagic: thisContext sender
+	^ Boolean mustBeBooleanDeOptimize
+		ifTrue: [ self mustBeBooleanDeOptimizeIn: thisContext sender  ]
+		ifFalse: [ self mustBeBooleanIn: thisContext sender ]
 ]
 
 { #category : #'block support' }
@@ -1430,7 +1444,7 @@ Object >> mustBeBooleanIn: context [
 		- recompile your method with the pragma : <compilerOptions: #(+ optIlineNone)>
 		- recompile your class with the method : MyClass class>>compiler 
 			^ super compiler options: #(+ optIlineNone)
-		- call from this method by Object>>#mustBeBooleanInMagic:"
+		- enable the option mustBeBooleanDeOptimize to call mustBeBooleanDeOptimizeIn: instead of this method "
 
 	| proceedValue |
 	
@@ -1664,30 +1678,9 @@ Object >> primitiveChangeClassTo: anObject [
 	The facility is really provided for certain, very specific applications (mostly related to classes changing shape) and not for casual use."
 
 	<primitive: 115>
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #primitiveChangeClassTo: value: anObject ]. 
 	self primitiveFailed
-]
-
-{ #category : #'primitive failure' }
-Object >> primitiveFail [
-	"primitiveFail may be invoked by certain methods whose code is translated in C. In such a case primitiveFail and not primitiveFailed
-	 should be invoked. The reason is that this code is translated to C by VMMaker. #primitiveFail is 
-	implemented in Interpreter of VMMaker."
-
-	^ self primitiveFailed
-]
-
-{ #category : #'primitive failure' }
-Object >> primitiveFailed [
-	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
-
-	self primitiveFailed: thisContext sender selector
-]
-
-{ #category : #'primitive failure' }
-Object >> primitiveFailed: selector [
-	"Announce that a primitive has failed and there is no appropriate Smalltalk code to run."
-	
-	PrimitiveFailed signalFor: selector
 ]
 
 { #category : #printing }
@@ -2168,12 +2161,6 @@ Object >> wantsStepsIn: aSystemWindow [
 Object >> windowIsClosing [
 	"This message is used to inform a models that its window is closing. Most models do nothing, but some, such as the Debugger, must do some cleanup. Note that this mechanism must be used with care by models that support multiple views, since one view may be closed while others left open."
 
-]
-
-{ #category : #'user interface' }
-Object >> withoutListWrapper [
-
-	^self
 ]
 
 { #category : #introspection }

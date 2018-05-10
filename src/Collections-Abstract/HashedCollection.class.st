@@ -24,7 +24,7 @@ Class {
 		'tally',
 		'array'
 	],
-	#category : #'Collections-Abstract'
+	#category : #'Collections-Abstract-Base'
 }
 
 { #category : #cleanup }
@@ -190,8 +190,7 @@ HashedCollection >> grow [
 	oldElements
 		do:
 			[ :each | 
-			each == nil
-				ifFalse: [ self noCheckAdd: each ] ]
+			each ifNotNil: [ self noCheckAdd: each ] ]
 ]
 
 { #category : #private }

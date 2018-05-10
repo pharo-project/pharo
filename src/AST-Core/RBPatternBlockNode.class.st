@@ -15,7 +15,7 @@ Class {
 	#category : #'AST-Core-Pattern'
 }
 
-{ #category : #visitor }
+{ #category : #visiting }
 RBPatternBlockNode >> acceptVisitor: aProgramNodeVisitor [ 
 	^aProgramNodeVisitor visitPatternBlockNode: self
 ]
@@ -41,22 +41,12 @@ RBPatternBlockNode >> constructLookupNodeFor: aString in: aRBBlockNode [
 	^RBMessageNode 
 		receiver: (RBVariableNode named: 'self')
 		selector: #lookupMatchFor:in:
-		arguments: (Array with: argumentNode with: aRBBlockNode arguments last)
+		arguments: (Array with: argumentNode with: aRBBlockNode arguments last copy)
 ]
 
 { #category : #matching }
 RBPatternBlockNode >> copyInContext: aDictionary [ 
 	^ self replacingBlock value: aDictionary
-]
-
-{ #category : #matching }
-RBPatternBlockNode >> createBlockFor: aRBBlockNode [ 
-	aRBBlockNode left: self left; right:self right.
-	self replacePatternNodesIn: aRBBlockNode.
-	^Smalltalk compiler 
-		source: aRBBlockNode formattedCode;
-		receiver: self;
-		evaluate
 ]
 
 { #category : #matching }
@@ -71,7 +61,8 @@ RBPatternBlockNode >> createMatchingBlock [
 		ifTrue: [self addArgumentWithNameBasedOn: 'aNode' to: newBlock].
 	newBlock arguments size = 1 
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
-	^self createBlockFor: newBlock
+	self replacePatternNodesIn: newBlock.
+	^newBlock evaluateForReceiver: self.
 ]
 
 { #category : #matching }
@@ -84,7 +75,8 @@ RBPatternBlockNode >> createReplacingBlock [
 	newBlock := RBBlockNode arguments: arguments body: body.
 	self arguments isEmpty 
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
-	^self createBlockFor: newBlock
+	self replacePatternNodesIn: newBlock.
+	^newBlock evaluateForReceiver: self.
 ]
 
 { #category : #'testing-matching' }

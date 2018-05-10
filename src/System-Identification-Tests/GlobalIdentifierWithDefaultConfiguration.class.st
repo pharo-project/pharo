@@ -1,3 +1,6 @@
+"
+SUnit tests for GlobalIdentifier with a default configuration
+"
 Class {
 	#name : #GlobalIdentifierWithDefaultConfiguration,
 	#superclass : #GlobalIdentifierTest,

@@ -198,7 +198,7 @@ ConfigurationCommandLineHandler >> listConfigurations [
 
 { #category : #actions }
 ConfigurationCommandLineHandler >> loadConfigurationNames [
-	| references configurations |
+	| references |
 	
 	references := self gofer allResolved.
 		

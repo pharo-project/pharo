@@ -15,7 +15,7 @@ TutorialPlayerTestWithMockTutorial >> setUp [
 	| tutorial |
 	super setUp.
 	tutorial := MockTutorial new.
-	player := TutorialPlayer new tutorial: (MockTutorial new)
+	player := TutorialPlayer new tutorial: tutorial 
 ]
 
 { #category : #tests }

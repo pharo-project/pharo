@@ -119,13 +119,6 @@ DiffChangeMorph >> fromDescriptionMorph [
 	^self descriptionMorph firstSubmorph firstSubmorph
 ]
 
-{ #category : #initialization }
-DiffChangeMorph >> initialColorInSystemWindow: aSystemWindow [
-	"Answer the colour the receiver should be when added to a SystemWindow."
-
-	^Color transparent
-]
-
 { #category : #'user interface' }
 DiffChangeMorph >> initialExtent [
 	"Answer the initial extent for the receiver."

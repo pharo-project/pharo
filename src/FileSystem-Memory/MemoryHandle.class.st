@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'entry'
 	],
-	#category : #'FileSystem-Memory'
+	#category : #'FileSystem-Memory-Base'
 }
 
 { #category : #public }
@@ -31,9 +31,16 @@ MemoryHandle >> at: first write: aCollection startingAt: start count: count [
 	entry at: first write: aCollection startingAt: start count: count.
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 MemoryHandle >> binaryReadStream [
+
 	^ entry binaryReadStream
+]
+
+{ #category : #streams }
+MemoryHandle >> binaryWriteStream [
+	
+	^ entry binaryWriteStream
 ]
 
 { #category : #public }
@@ -73,14 +80,7 @@ MemoryHandle >> open [
 	entry := self basicOpen.
 ]
 
-{ #category : #'stream-protocol' }
-MemoryHandle >> readStream [
-	"Return a readstream on my contents.
-	Using myself as target collection allows to share the internal bytearray between multiple streams."
-	^ entry readStream
-]
-
-{ #category : #public }
+{ #category : #accessing }
 MemoryHandle >> size [
 	"return the size for the interna"
 	^ entry internalSize
@@ -99,11 +99,4 @@ MemoryHandle >> truncate [
 { #category : #public }
 MemoryHandle >> truncateTo: anInteger [
 	entry truncateTo: anInteger
-]
-
-{ #category : #'stream-protocol' }
-MemoryHandle >> writeStream [
-	"Return a writestream on my contents.
-	Using myself as target collection allows to share the internal bytearray between multiple streams."
-	^ WriteStream on: self from: 1 to: entry fileSize
 ]

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'entries'
 	],
-	#category : #'FileSystem-Memory'
+	#category : #'FileSystem-Memory-Base'
 }
 
 { #category : #creation }

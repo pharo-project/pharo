@@ -4,16 +4,8 @@ SUnit tests for the Smart suggestions context
 Class {
 	#name : #SugsContextTest,
 	#superclass : #TestCase,
-	#category : #'SmartSuggestions-Tests-Tests'
+	#category : #'SmartSuggestions-Tests'
 }
-
-{ #category : #'tests - valid context' }
-SugsContextTest >> testContextForNautilusItsANautilusContext [
-	| nautilus |
-	
-	nautilus := NautilusUI new.
-	self assert: (SugsAbstractContext contextFor: nautilus) class equals: SugsNautilusContext.
-]
 
 { #category : #'tests - valid context' }
 SugsContextTest >> testDebuggerIsAValidContext [

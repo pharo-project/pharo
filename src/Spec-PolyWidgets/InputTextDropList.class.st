@@ -28,6 +28,7 @@ InputTextDropList class >> defaultSpec [
 
 { #category : #example }
 InputTextDropList class >> example [
+	<sampleInstance>
 	| ex |
 	ex := self new.
 	ex

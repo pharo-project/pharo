@@ -97,6 +97,11 @@ Compiler class >> recompileAll [
 ]
 
 { #category : #'public - opal compatibility' }
+Compiler >> addPlugin: aClass [ 
+	"do nothing"
+]
+
+{ #category : #'public - opal compatibility' }
 Compiler >> class: aClass [
 	"This is used for compatibility with Opal"
 	class := aClass.
@@ -110,6 +115,11 @@ Compiler >> compilationContext [
 			requestor: requestor;
 			class: class ]
 			
+]
+
+{ #category : #'public - opal compatibility' }
+Compiler >> compilationContext: anObject [
+	compilationContext := anObject
 ]
 
 { #category : #'public - opal compatibility' }
@@ -184,6 +194,11 @@ Compiler >> context: aContext [
 Compiler >> decompileMethod: aCompiledMethod [
 	^Decompiler decompile: aCompiledMethod
 
+]
+
+{ #category : #'public - opal compatibility' }
+Compiler >> encoderClass: aClass [ 
+	self compilationContext encoderClass: aClass 
 ]
 
 { #category : #'public - opal compatibility' }
@@ -359,8 +374,10 @@ Compiler >> from: textOrStream class: aClass context: aContext notifying: req [
 
 { #category : #'error handling' }
 Compiler >> interactive [
-	
-	^ UIManager default interactiveParserFor: requestor
+	requestor ifNil: [^ false ].
+	^(requestor respondsTo: #interactive)
+		ifTrue: [ requestor interactive ]
+		ifFalse: [ true ]
 ]
 
 { #category : #'public - opal compatibility' }
@@ -471,7 +488,13 @@ Compiler >> receiver: anObject [
 Compiler >> requestor: aRequestor [
 	requestor := aRequestor.
 	self compilationContext requestor: aRequestor.
-	self compilationContext interactive: (UIManager default interactiveParserFor: self compilationContext requestor).
+	self compilationContext interactive: self interactive.
+]
+
+{ #category : #'public - opal compatibility' }
+Compiler >> requestorScopeClass: aClass [ 
+	"clients can set their own subclass of OCRequestorScope if needed"
+	self compilationContext requestorScopeClass: aClass
 ]
 
 { #category : #'public - opal compatibility' }

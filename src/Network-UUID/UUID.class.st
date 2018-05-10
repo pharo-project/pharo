@@ -37,7 +37,7 @@ Class {
 	#name : #UUID,
 	#superclass : #ByteArray,
 	#type : #bytes,
-	#category : #'Network-UUID'
+	#category : #'Network-UUID-Base'
 }
 
 { #category : #'instance creation' }
@@ -72,6 +72,14 @@ UUID class >> new [
 	"self new"
 	
 	^ (self new: 16)
+]
+
+{ #category : #'instance creation' }
+UUID class >> new: aSize [
+
+	(aSize == 16) ifFalse: [ self error: 'Wrong UUID size' ].
+	
+	^ super new: aSize
 ]
 
 { #category : #'instance creation' }

@@ -16,6 +16,9 @@ Class {
 	#instVars : [
 		'initializersEnabled'
 	],
+	#classVars : [
+		'Initialized'
+	],
 	#category : #BaselineOfUnifiedFFI
 }
 
@@ -28,9 +31,9 @@ BaselineOfUnifiedFFI >> baseline: spec [
 		spec postLoadDoIt: #'postload:package:'.
 		spec 
 			"alien"
-			package: 'Alien';
+			package: 'Alien-Core';
 			"unified ffi"
-			package: 'UnifiedFFI' with: [ spec requires: #('Alien') ];
+			package: 'UnifiedFFI' with: [ spec requires: #('Alien-Core') ];
 			package: 'UnifiedFFI-Tests' with: [ spec requires: #('UnifiedFFI') ];
 			package: 'UnifiedFFI-Legacy' with: [ spec requires: #('UnifiedFFI') ].
 			
@@ -43,6 +46,9 @@ BaselineOfUnifiedFFI >> baseline: spec [
 { #category : #actions }
 BaselineOfUnifiedFFI >> postload: loader package: packageSpec [
 
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
+
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 	
 	
@@ -50,6 +56,9 @@ BaselineOfUnifiedFFI >> postload: loader package: packageSpec [
 
 { #category : #actions }
 BaselineOfUnifiedFFI >> preload: loader package: packageSpec [
+
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
 
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: true.

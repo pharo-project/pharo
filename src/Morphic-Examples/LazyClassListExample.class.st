@@ -10,6 +10,7 @@ Class {
 
 { #category : #examples }
 LazyClassListExample class >> example [
+	<sampleInstance>
 
 	^LazyClassListExample new openOn: Object
 

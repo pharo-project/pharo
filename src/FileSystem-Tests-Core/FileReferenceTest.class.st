@@ -8,17 +8,18 @@ Class {
 	#instVars : [
 		'filesystem'
 	],
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Base'
 }
 
 { #category : #support }
 FileReferenceTest >> createFile: aPath [
 	filesystem ensureCreateDirectory: aPath parent.
-	(filesystem writeStreamOn: aPath) close
+	(filesystem resolve: aPath) writeStream close
 ]
 
 { #category : #running }
 FileReferenceTest >> setUp [
+	super setUp.
 	filesystem := FileSystem memory.
 ]
 
@@ -26,7 +27,7 @@ FileReferenceTest >> setUp [
 FileReferenceTest >> testAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
 	<publicTest>
-	"self debug: #testAllChildren"
+	
 	| ref children |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -48,7 +49,7 @@ FileReferenceTest >> testAllChildren [
 FileReferenceTest >> testAllDirectories [
 	"allDirectories returns all folders recursively nested in a reference"
 	<publicTest>
-	"self debug: #testAllDirectories"
+	
 	| ref children |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -113,7 +114,6 @@ FileReferenceTest >> testAsReference [
 
 { #category : #tests }
 FileReferenceTest >> testBaseAndExtension [
-	"self debug: #testBaseAndExtension"
 	
 	| noExtension simpleExtension complexExtension |
 	noExtension := filesystem * 'plonk'.
@@ -132,7 +132,6 @@ FileReferenceTest >> testBaseAndExtension [
 
 { #category : #tests }
 FileReferenceTest >> testBasename [
-	"self debug: #testBasename"
 	
 	| ref |
 	
@@ -148,10 +147,8 @@ FileReferenceTest >> testBasename [
 
 { #category : #tests }
 FileReferenceTest >> testBasenameWithoutExtension [
-	"self debug: #testBasenameWithoutExtension"
 	
-	| ref |
-	
+	| ref |	
 	ref := filesystem root.
 	self assert: ref basename equals: '/'.
 	
@@ -323,7 +320,7 @@ FileReferenceTest >> testContents [
 FileReferenceTest >> testDeleteAll [
 	"allChildren returns all the files and folders recursively nested in a reference"
 	<publicTest>
-	"self debug: #testDeleteAll"
+	
 	| ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -343,7 +340,7 @@ FileReferenceTest >> testDeleteAll [
 FileReferenceTest >> testDeleteAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
 	<publicTest>
-	"self debug: #testDeleteAllChildren"
+	
 	| ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -531,7 +528,7 @@ FileReferenceTest >> testGrandchildOfReference [
 { #category : #tests }
 FileReferenceTest >> testHasChildren [
 	<publicTest>
-	"self debug: #testHasChildren"
+	
 	| ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -549,7 +546,7 @@ FileReferenceTest >> testHasChildren [
 { #category : #tests }
 FileReferenceTest >> testHasDirectories [
 	<publicTest>
-	"self debug: #testHasDirectories"
+	
 	| ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -567,7 +564,7 @@ FileReferenceTest >> testHasDirectories [
 { #category : #tests }
 FileReferenceTest >> testHasFiles [
 	<publicTest>
-	"self debug: #testHasFiles"
+	
 	| ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -583,7 +580,6 @@ FileReferenceTest >> testHasFiles [
 
 { #category : #tests }
 FileReferenceTest >> testIndicator [
-	"self debug: #testIndicator"
 	
 	| ref |
 	ref := filesystem * 'plonk' / 'griffle'.
@@ -637,13 +633,12 @@ FileReferenceTest >> testIsRoot [
 
 { #category : #tests }
 FileReferenceTest >> testMakeRelative [
-	"self run: #testMakeRelative"
 
 	| parent child relative |
 	parent := filesystem / 'griffle'.
 	child := filesystem / 'griffle' / 'plonk' / 'nurb'.
 	relative := parent makeRelative: child.
-	self assert: relative = (Path * 'plonk' / 'nurb')
+	self assert: relative equals: (Path * 'plonk' / 'nurb')
 ]
 
 { #category : #tests }
@@ -759,7 +754,7 @@ FileReferenceTest >> testReadStreamDoNotFound [
 	ref := filesystem / 'plonk'.
 	self
 		should: [ref readStreamDo: [:s]]
-		raise: FileDoesNotExist 
+		raise: FileDoesNotExistException
 ]
 
 { #category : #tests }
@@ -804,7 +799,7 @@ FileReferenceTest >> testReadStreamNotFound [
 	ref := filesystem * 'plonk'.
 	self
 		should: [ref readStream]
-		raise: FileDoesNotExist 
+		raise: FileDoesNotExistException
 ]
 
 { #category : #tests }
@@ -930,6 +925,24 @@ FileReferenceTest >> testUnequalSize [
 	a := filesystem * 'plonk'.
 	b := filesystem / 'plonk' / 'griffle'.
 	self deny: a = b.
+]
+
+{ #category : #tests }
+FileReferenceTest >> testUpToAll [
+	| testString filename  |
+	testString := 'ße'.
+	filename := 'test-file-' , 99 atRandom printString , '.txt'.
+
+	[  
+	filename asFileReference
+		writeStreamEncoded: 'utf8' do: [ :stream | 
+			stream nextPutAll: testString ].
+
+	filename asFileReference
+		readStreamDo: [ :stream |
+			self assert: (stream upToAll: 'e') equals: 'ß'.
+		] ]
+	ensure: [ filename asFileReference ensureDelete ] 
 ]
 
 { #category : #tests }

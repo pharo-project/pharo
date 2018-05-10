@@ -57,7 +57,7 @@ MCTool >> accept [
 	" do nothing by default"
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 MCTool >> allManagers [
 
 	^ MCWorkingCopy allManagers 
@@ -194,7 +194,7 @@ MCTool >> initialExtent [
 	^ 500@500
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 MCTool >> interactionModel [
 	^ self
 ]

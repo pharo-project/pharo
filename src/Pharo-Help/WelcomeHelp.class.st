@@ -23,25 +23,50 @@ WelcomeHelp class >> changeLog [
 - bootstraping of a smaller image that will not include compiler/parser (Compiler and related packages are exported and loaded using a binary exporter named Hermes)
 - integration of Renraku quality framework
 - integration of WebBrowser
-- integration of ReferenceFinder
-
-', (self heading: 'All Issues'), 
+- using Tonel format for Iceberg (a single file per class instead of a file per method)
+- including the Shift Class Builder
+- release checks for proper categorization (no protocols left	without methods, categorization
+- many new extensions to tools like the inspectors (for instance to browse instances when inspecting the class)
+- ability to call external commands without additional packages - including piping (see Smalltalk os runCommand: ... and resultOfCommand:)
+', (self heading: 'Primary Issues'), 
 'Over ... fixes and enhancements were integrated in this release.
+
+- better package structuring, better separation of code packages vs tests packages
+- improved release tests to ensure proper categorization of common methods (hash, =, setUp, tearDown, etc.), to avoid unused temps and other
+- simplified suggestions menu definitions
+- additional smart suggestions to browse variable definition
+- addition of "Users of it" in the "Code Search" menu 
+- new "Browse receiver" feature in the debugger
+- additional filters and titles in the simple method browser that is included in the inspector
+- allow to define other default folders for GTPlayBook
+- improvements for MetaLink (including better inspection)
+- Command line handler improvements for deployment scenarios
+- Horizontal scroll bar for FastTable
+- Glamour example browser is now searchable
+- Playground is now also extensible (similar to GTInspector)
+- Conditional breakpoints/watches
 
 As the complete list of fixed issues is too large to be placed here, you can review it on the FogBugz issue tracker (', (self url: 'https://pharo.fogbugz.com'), ') (requires account).', 
 (self subheading: 'Tools'),
-'- Improved Iceberg Git repositories manager
+'- Integration of Calypso (new and improved SystemBrowser)
+- Improved Iceberg Git repositories manager
+- integration of ReferenceFinder
 ', 
 (self subheading: 'VM related'), 
-'- ...',
+'- EncoderForSistaV1',
 (self subheading: 'Reflectivity'), 
 '- General improvements
 - ...
 ', 
 (self subheading: 'Other'), 
-'- ...', 
+'- create clear image entry point (PharoBootstrapInitialization>>#initializeImageOfType:majorVersion:minor:suffix:buid:commitHash:)', 
 (self subheading: 'Cleanups'), 
 '- Object>>#setPinned: is now private
+- unnecessary "self debug:" comment removed 
+- super setUp now called in various test classes 
+- better zeroconf reporting of missing i386 libraries for command line
+- halt: and haltIf: are also highlighted in red as the other flavours of halt messages   
+- 
 ', 
 (self subheading: 'Unit testing/Documentation'), 
 '- More class comments and documentation', 

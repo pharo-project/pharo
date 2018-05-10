@@ -171,6 +171,12 @@ RBClass >> initialize [
 	comment := LookupComment
 ]
 
+{ #category : #accessing }
+RBClass >> instanceSide [
+
+	^ self 
+]
+
 { #category : #testing }
 RBClass >> isMeta [
 	^false
@@ -236,7 +242,7 @@ RBClass >> sharedPools [
 	^ self allPoolDictionaryNames collect: [ :each | Smalltalk globals at: each asSymbol ifAbsent: [ Dictionary new ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated' }
 RBClass >> theNonMetaClass [
 	^ self
 ]

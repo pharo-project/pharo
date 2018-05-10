@@ -132,6 +132,33 @@ FT2GlyphSlot >> extent [
 	^width@height
 ]
 
+{ #category : #accessing }
+FT2GlyphSlot >> face: aFreeTypeFace [ 
+	face := aFreeTypeFace
+]
+
+{ #category : #'accessing-fields' }
+FT2GlyphSlot >> fillFromGlyphSlotRec: aGlyphRec [
+	linearHorizontalAdvance := aGlyphRec linearHoriAdvance.
+	linearVerticalAdvance := aGlyphRec linearVertAdvance.
+	advanceX := aGlyphRec advance x.
+	advanceY := aGlyphRec advance y.
+
+	format := aGlyphRec format asByteArray.
+
+	bitmapLeft := aGlyphRec bitmap_left.
+	bitmapTop := aGlyphRec bitmap_top.
+
+	width := aGlyphRec metrics width.
+	height := aGlyphRec metrics height.
+	hBearingX := aGlyphRec metrics horiBearingX.
+	hBearingY := aGlyphRec metrics horiBearingY.
+	hAdvance := aGlyphRec metrics horiAdvance.
+	vBearingX := aGlyphRec metrics vertBearingX.
+	vBearingY := aGlyphRec metrics vertBearingY.
+	vAdvance := aGlyphRec metrics vertAdvance
+]
+
 { #category : #'accessing-fields' }
 FT2GlyphSlot >> format [
 	^format
@@ -176,7 +203,7 @@ FT2GlyphSlot >> linearVerticalAdvance [
 { #category : #private }
 FT2GlyphSlot >> loadFrom: anFT2Face [
 	face := anFT2Face.
-	self primLoadFrom: anFT2Face.
+	anFT2Face fillGlyph: self.
 	format := ((EndianDetector isLittleEndian) ifTrue: [ format reversed ] ifFalse: [ format ]) asString.
 	linearHorizontalAdvance := linearHorizontalAdvance / 65536.0.
 	linearVerticalAdvance isZero ifFalse: [ linearVerticalAdvance := linearVerticalAdvance / 65536.0 ].
@@ -200,12 +227,6 @@ FT2GlyphSlot >> outline [
 { #category : #'accessing-fields' }
 FT2GlyphSlot >> outline: anOutline [
 	outline := anOutline
-]
-
-{ #category : #private }
-FT2GlyphSlot >> primLoadFrom: anFT2Face [
-	<primitive: 'primitiveLoadGlyphSlotFromFace' module: 'FT2Plugin'>
-	^self primitiveFailed.
 ]
 
 { #category : #'accessing-convenience' }

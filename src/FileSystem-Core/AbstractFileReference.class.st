@@ -154,6 +154,31 @@ AbstractFileReference >> binaryReadStreamIfAbsent: absentBlock [
 		ifFalse: absentBlock
 ]
 
+{ #category : #streams }
+AbstractFileReference >> binaryWriteStream [
+	"Answer a binary write stream on the receiver"
+
+	^ self subclassResponsibility
+]
+
+{ #category : #streams }
+AbstractFileReference >> binaryWriteStreamDo: aBlock [
+	"Pass a binary write stream on the receiver to the supplied block, and ensure that the stream is closed after evaluation."
+
+	| stream |
+
+	stream := self binaryWriteStream.
+	^ [ aBlock value: stream ] 
+		ensure: [ stream close ]
+]
+
+{ #category : #streams }
+AbstractFileReference >> binaryWriteStreamDo: doBlock ifPresent: presentBlock [
+	^ self isFile
+		ifTrue: presentBlock
+		ifFalse: [ self binaryWriteStreamDo: doBlock ]
+]
+
 { #category : #delegated }
 AbstractFileReference >> canonicalize [
 	"Answer the receiver with references to the current folder (.) and parent folder (..) removed"
@@ -580,7 +605,7 @@ AbstractFileReference >> moveTo: aReference [
 	^ self resolve moveTo: aReference
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 AbstractFileReference >> nextVersion [
 	^ self resolve nextVersion
 ]
@@ -634,6 +659,22 @@ AbstractFileReference >> readStreamDo: doBlock ifAbsent: absentBlock [
 	^ self isFile 
 		ifTrue: [ self readStreamDo: doBlock ]
 		ifFalse: absentBlock
+]
+
+{ #category : #streams }
+AbstractFileReference >> readStreamEncoded: anEncoding [
+
+	^ ZnCharacterReadStream
+		on: self binaryReadStream
+		encoding: anEncoding
+]
+
+{ #category : #streams }
+AbstractFileReference >> readStreamEncoded: anEncoding do: aBlock [
+	| stream |
+	stream := self readStreamEncoded: anEncoding.
+	^ [ aBlock value: stream ] 
+		ensure: [ stream close ]
 ]
 
 { #category : #streams }
@@ -757,6 +798,22 @@ AbstractFileReference >> writeStreamDo: doBlock ifPresent: presentBlock [
 	^ self isFile
 		ifTrue: presentBlock
 		ifFalse: [ self writeStreamDo: doBlock ]
+]
+
+{ #category : #streams }
+AbstractFileReference >> writeStreamEncoded: anEncoding [
+
+	^ ZnCharacterWriteStream
+		on: self binaryWriteStream
+		encoding: anEncoding
+]
+
+{ #category : #streams }
+AbstractFileReference >> writeStreamEncoded: anEncoding do: aBlock [
+	| stream |
+	stream := self writeStreamEncoded: anEncoding.
+	^ [ aBlock value: stream ]
+		ensure: [ stream close ]
 ]
 
 { #category : #streams }

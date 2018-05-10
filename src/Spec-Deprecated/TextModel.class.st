@@ -6,3 +6,8 @@ Class {
 	#superclass : #TextPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+TextModel class >> isDeprecated [
+	^true
+]

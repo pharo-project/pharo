@@ -1,11 +1,10 @@
 "
-I am just a base abstract class,
-containing common behavior for various queue types
+I am just a base abstract class, containing common behavior for various queue types
 "
 Class {
 	#name : #AtomicCollection,
 	#superclass : #Object,
-	#category : #'Collections-Atomic'
+	#category : #'Collections-Atomic-Base'
 }
 
 { #category : #copying }
@@ -30,7 +29,7 @@ AtomicCollection >> interrupt [
 	Processor yield
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 AtomicCollection >> newItem [
 	"override in subclass, if you need to instantiate queue items of different class or initialize them in some specific way"
 	^ AtomicQueueItem new

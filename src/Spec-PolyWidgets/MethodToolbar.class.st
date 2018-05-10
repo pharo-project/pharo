@@ -37,6 +37,7 @@ MethodToolbar class >> defaultSpec [
 
 { #category : #example }
 MethodToolbar class >> example [
+	<sampleInstance>
 	| example |
 	example := MethodToolbar new.
 	example

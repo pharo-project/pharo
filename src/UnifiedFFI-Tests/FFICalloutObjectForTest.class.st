@@ -1,10 +1,13 @@
+"
+A callout object for testing purposes
+"
 Class {
 	#name : #FFICalloutObjectForTest,
 	#superclass : #Object,
 	#instVars : [
 		'handle'
 	],
-	#category : #'UnifiedFFI-Tests'
+	#category : #'UnifiedFFI-Tests-Test-Data'
 }
 
 { #category : #converting }

@@ -6,3 +6,8 @@ Class {
 	#superclass : #AbstractFormButtonPresenter,
 	#category : #'Spec-Deprecated'
 }
+
+{ #category : #deprecation }
+AbstractFormButtonModel class >> isDeprecated [
+	^true
+]

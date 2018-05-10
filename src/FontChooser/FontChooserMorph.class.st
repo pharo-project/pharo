@@ -132,7 +132,7 @@ FontChooserMorph >> createWindow [
 		fullFrame: buttonBarFrame.
 ]
 
-{ #category : #actions }
+{ #category : #'open/close' }
 FontChooserMorph >> delete [
 	model := nil.
 	super delete
@@ -255,7 +255,7 @@ FontChooserMorph >> newFontPreviewInnerPanel [
 	
 	| textMorph |
 	textMorph := self newText: self previewText.
-	textMorph margins: 4.
+	textMorph margins: 4 asMargin.
 	^ self model selectedFont
 		ifNil: [ textMorph ]
 		ifNotNil: [ :f | textMorph beAllFont: f ]
@@ -362,7 +362,7 @@ FontChooserMorph >> okButtonClicked [
 	self delete.
 ]
 
-{ #category : #'interface building' }
+{ #category : #'open/close' }
 FontChooserMorph >> open [
 
 	^ self createWindow openAsIsIn: self currentWorld.

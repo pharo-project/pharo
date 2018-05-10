@@ -242,7 +242,7 @@ OCClosureTests >> testWhileWithTemp [
 
 { #category : #'testing-while' }
 OCClosureTests >> testWhileWithTempIsNil [
-	"self debug: #testWhileWithTempIsNil"
+	
 	| index |
 	index := 0.
 	[ index < 5 ] whileTrue: [

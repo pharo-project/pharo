@@ -23,6 +23,7 @@ Class {
 
 { #category : #examples }
 AthensFontDescription class >> example [
+	<sampleInstance>
 	| fDesc |
 	fDesc := AthensFontDescription new. 
 	fDesc
