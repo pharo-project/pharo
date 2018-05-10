@@ -38,19 +38,10 @@ ThreadSafeTranscript class >> install [
 ]
 
 { #category : #declare }
-ThreadSafeTranscript class >> installThreadSafeAsSTranscript [
-
-	Smalltalk globals at: #STranscript put: (self new)
-	
-	"ThreadSafeTranscript open"
-]
-
-{ #category : #declare }
 ThreadSafeTranscript class >> installThreadSafeAsTranscript [
+	<script>
 
 	Smalltalk globals at: #Transcript put: (self new)
-
-	"ThreadSafeTranscript open"
 ]
 
 { #category : #icons }
