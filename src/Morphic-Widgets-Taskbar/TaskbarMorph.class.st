@@ -42,6 +42,7 @@ TaskbarMorph class >> maximumButtonsDefault [
 
 { #category : #initializing }
 TaskbarMorph class >> reset [
+	<script>
 	"Remove the taskbar and add a new one." 
 	
 	(World submorphs select: [:m | m isKindOf: self])
