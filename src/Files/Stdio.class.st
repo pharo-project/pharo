@@ -36,6 +36,20 @@ Stdio class >> initialize [
 ]
 
 { #category : #stdio }
+Stdio class >> primFileDescriptorType: fdNumber [
+	"Allow to test if the standard input/output files are from a console or not
+	Return values:
+	* -1 - Error
+	* 0 - no console (windows only)
+	* 1 - normal terminal (unix terminal / windows console)
+	* 2 - pipe
+	* 3 - file
+	* 4 - cygwin terminal (windows only)"
+	<primitive: 'primitiveFileDescriptorType' module: 'FilePlugin' error: ec>
+	self primitiveFailed
+]
+
+{ #category : #stdio }
 Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 	"Create if necessary and store default stdin, stdout and other files based on the their names"
 
@@ -75,8 +89,11 @@ Stdio class >> stdin [
 
 { #category : #stdio }
 Stdio class >> stdioDescriptorIsATTY [
-	<primitive: 'primitiveStdioDescriptorIsATTY' module: 'FilePlugin' error: ec>
-	self primitiveFailed
+	^ (0 to: 2)
+		anySatisfy: [ :fdNum | 
+			| res |
+			res := self primFileDescriptorType: fdNum.
+			#(1 4) includes: res ]
 ]
 
 { #category : #stdio }
