@@ -494,9 +494,7 @@ Object >> becomeForward: otherObject [
 	to the receiver now point to the argument.
 	Fails if either argument is a SmallInteger."
 
-	(Array with: self)
-		elementsForwardIdentityTo:
-			(Array with: otherObject)
+	{self} elementsForwardIdentityTo: {otherObject}
 ]
 
 { #category : #'reflective operations' }
@@ -505,9 +503,7 @@ Object >> becomeForward: otherObject copyHash: copyHash [
 	If copyHash is true, the argument's identity hash bits will be set to those of the receiver.
 	Fails if either argument is a SmallInteger."
 
-	(Array with: self)
-		elementsForwardIdentityTo: (Array with: otherObject)
-		copyHash: copyHash
+	{self} elementsForwardIdentityTo: {otherObject} copyHash: copyHash
 ]
 
 { #category : #binding }

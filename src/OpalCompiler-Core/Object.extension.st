@@ -9,19 +9,12 @@ Object >> mustBeBooleanDeOptimizeIn: context [
 
 	"get the message send node that triggered mustBeBoolean"
 	sendNode := context sourceNode sourceNodeForPC: context pc - 1.
-	"Build node to perform send unoptimized"
-	methodNode := RBMethodNode 
-		selector: #ExecuteUnOptimizedIn: 
-		arguments: { RBVariableNode named:'ThisContext' } 
-		body: sendNode copy asSequenceNode.
-	"Rewrite temps to access the values in context"
-	methodNode rewriteTempsForContext: context.
+	"Build doit node to perform send unoptimized"
+	methodNode := sendNode copy asDoitForContext: context.
 	"Rewrite non-local returns to return to the correct context from send"
 	RBParseTreeRewriter new 
 		replace: '^ ``@value' with: 'ThisContext home return: ``@value';
 		executeTree: methodNode.
-	"Add a return to the method body"
-	methodNode body transformLastToReturn.	
 	"Keep same compilation context as the sender node's"
 	methodNode compilationContext: sendNode methodNode compilationContext copy.
 	"Disable inlining so the message send will be unoptimized"

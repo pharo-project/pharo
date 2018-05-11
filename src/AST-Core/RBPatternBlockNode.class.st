@@ -41,7 +41,7 @@ RBPatternBlockNode >> constructLookupNodeFor: aString in: aRBBlockNode [
 	^RBMessageNode 
 		receiver: (RBVariableNode named: 'self')
 		selector: #lookupMatchFor:in:
-		arguments: (Array with: argumentNode with: aRBBlockNode arguments last)
+		arguments: (Array with: argumentNode with: aRBBlockNode arguments last copy)
 ]
 
 { #category : #matching }
@@ -61,6 +61,7 @@ RBPatternBlockNode >> createMatchingBlock [
 		ifTrue: [self addArgumentWithNameBasedOn: 'aNode' to: newBlock].
 	newBlock arguments size = 1 
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
+	self replacePatternNodesIn: newBlock.
 	^newBlock evaluateForReceiver: self.
 ]
 
@@ -74,6 +75,7 @@ RBPatternBlockNode >> createReplacingBlock [
 	newBlock := RBBlockNode arguments: arguments body: body.
 	self arguments isEmpty 
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
+	self replacePatternNodesIn: newBlock.
 	^newBlock evaluateForReceiver: self.
 ]
 

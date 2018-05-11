@@ -5,7 +5,7 @@ SUnit tests for class SelectVistor
 Class {
 	#name : #SelectVisitorTest,
 	#superclass : #AbstractEnumerationVisitorTest,
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Visitors'
 }
 
 { #category : #tests }

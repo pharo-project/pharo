@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : #'FileSystem-Core-Kernel'
+	#category : #'FileSystem-Core-Kernel-Errors'
 }
 
 { #category : #'instance creation' }

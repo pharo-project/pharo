@@ -7,5 +7,5 @@ Class {
 	#instVars : [
 		'inheritedSlot'
 	],
-	#category : 'Shift-ClassBuilder-Tests-TestClasses'
+	#category : #'Shift-ClassBuilder-Tests-TestClasses'
 }

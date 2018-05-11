@@ -1,3 +1,6 @@
+"
+A file write stream - but within memory
+"
 Class {
 	#name : #MemoryFileWriteStream,
 	#superclass : #Object,
@@ -6,7 +9,7 @@ Class {
 		'writeStream',
 		'stream'
 	],
-	#category : #'FileSystem-Memory'
+	#category : #'FileSystem-Memory-Streams'
 }
 
 { #category : #'instance creation' }

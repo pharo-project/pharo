@@ -14,7 +14,6 @@ Installs:
 - NECompletion
 - ProcessBrowsers
 - profillers
-- Komitter
 - different Metacello repositories
 - Monticello GUI
 - ProfStef
@@ -60,7 +59,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Tool-Profilers'.
 		spec package: 'Tool-SystemReporter'.
 		spec package: 'NECompletion'.
-		spec package: 'Komitter'.
 		
 		spec package: 'Announcements-Help'.
 		spec package: 'Metacello-FileTree'.

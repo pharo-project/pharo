@@ -6,5 +6,5 @@ The Class Traits now are instances of MetaclassForTraits.
 Class {
 	#name : #ClassTrait,
 	#superclass : #TraitDescription,
-	#category : #'TraitsV2-Compatibility'
+	#category : #'TraitsV2-Compatibility-Base'
 }

@@ -38,9 +38,9 @@ FFICalloutMethodBuilderTest >> testAllAtomicTypesCall [
 	
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
-	self assert: result primitive = 0.
-	self assert: result literals first name = 'method1'.
-	self assert: result literals first argTypes = { 
+	self assert: result primitive equals: 0.
+	self assert: result literals first name equals: 'method1'.
+	self assert: result literals first argTypes equals: { 
 		ExternalType void. 
 		ExternalType bool. 
 		ExternalType byte. 
@@ -74,9 +74,9 @@ FFICalloutMethodBuilderTest >> testCallCreateObject [
 
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
-	self assert: result primitive = 0.
-	self assert: result literals first name = 'method1'.
-	self assert: result literals first argTypes first = ExternalType void asPointerType. 
+	self assert: result primitive equals: 0.
+	self assert: result literals first name equals: 'method1'.
+	self assert: result literals first argTypes first equals: ExternalType void asPointerType
 ]
 
 { #category : #tests }
@@ -95,9 +95,9 @@ FFICalloutMethodBuilderTest >> testCallReturningEnumeration [
 
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
-	self assert: result primitive = 0.
-	self assert: result literals first name = 'method1'.
-	self assert: result literals first argTypes first = ExternalType ulong.
+	self assert: result primitive equals: 0.
+	self assert: result literals first name equals: 'method1'.
+	self assert: result literals first argTypes first equals: ExternalType ulong
 ]
 
 { #category : #tests }
@@ -115,9 +115,9 @@ FFICalloutMethodBuilderTest >> testCallSimple [
 	
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
-	self assert: result primitive = 0.
-	self assert: result literals first name = 'method1'.
-	self assert: result literals first argTypes = { ExternalType void. ExternalType long }
+	self assert: result primitive equals: 0.
+	self assert: result literals first name equals: 'method1'.
+	self assert: result literals first argTypes equals: { ExternalType void. ExternalType long }
 ]
 
 { #category : #tests }
@@ -135,8 +135,8 @@ FFICalloutMethodBuilderTest >> testCallWithConstant [
 
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
-	self assert: result primitive = 0.
-	self assert: result literals first name = 'method1'.
+	self assert: result primitive equals: 0.
+	self assert: result literals first name equals: 'method1'
 ]
 
 { #category : #tests }
@@ -155,9 +155,9 @@ FFICalloutMethodBuilderTest >> testCallWithObject [
 
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
-	self assert: result primitive = 0.
-	self assert: result literals first name = 'method1'.
-	self assert: result literals first argTypes last = ExternalType long asPointerType. 
+	self assert: result primitive equals: 0.
+	self assert: result literals first name equals: 'method1'.
+	self assert: result literals first argTypes last equals: ExternalType long asPointerType
 ]
 
 { #category : #tests }
@@ -175,9 +175,9 @@ FFICalloutMethodBuilderTest >> testCallWithPointer [
 
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
-	self assert: result primitive = 0.
-	self assert: result literals first name = 'method1'.
-	self assert: result literals first argTypes last = ExternalType long asPointerType. 
+	self assert: result primitive equals: 0.
+	self assert: result literals first name equals: 'method1'.
+	self assert: result literals first argTypes last equals: ExternalType long asPointerType 
 ]
 
 { #category : #tests }
@@ -195,9 +195,9 @@ FFICalloutMethodBuilderTest >> testCallWithPointerPointer [
 
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
-	self assert: result primitive = 0.
-	self assert: result literals first name = 'method1'.
-	self assert: result literals first argTypes last = architecture externalLongType asPointerType. 
+	self assert: result primitive equals: 0.
+	self assert: result literals first name equals: 'method1'.
+	self assert: result literals first argTypes last equals: architecture externalLongType asPointerType
 ]
 
 { #category : #tests }
@@ -216,7 +216,7 @@ FFICalloutMethodBuilderTest >> testCallWithSelf [
 
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
-	self assert: result primitive = 0.
-	self assert: result literals first name = 'method1'.
-	self assert: result literals first argTypes last = ExternalType long asPointerType. 
+	self assert: result primitive equals: 0.
+	self assert: result literals first name equals: 'method1'.
+	self assert: result literals first argTypes last equals: ExternalType long asPointerType
 ]

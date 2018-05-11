@@ -8,7 +8,7 @@ Class {
 		'resetModel',
 		'currentConfigurationModel'
 	],
-	#category : #'Tool-CriticBrowser'
+	#category : #'Tool-CriticBrowser-Parts'
 }
 
 { #category : #specs }
@@ -47,7 +47,7 @@ ResetWindow >> initializeWidgets [
 
 	self setFocusOrder.
 	self setResetModel. 
-	self setCurrentConfigurationModel. 
+	self setCurrentConfigurationModel
 	
 ]
 

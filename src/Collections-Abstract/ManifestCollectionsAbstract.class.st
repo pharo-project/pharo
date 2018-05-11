@@ -1,7 +1,10 @@
+"
+Package manifest for package metadata
+"
 Class {
 	#name : #ManifestCollectionsAbstract,
 	#superclass : #PackageManifest,
-	#category : #'Collections-Abstract'
+	#category : #'Collections-Abstract-Manifest'
 }
 
 { #category : #'meta-data' }

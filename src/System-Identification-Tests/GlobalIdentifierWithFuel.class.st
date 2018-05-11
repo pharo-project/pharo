@@ -1,3 +1,6 @@
+"
+SUnit tests for GlobalIdentifier with FUEL
+"
 Class {
 	#name : #GlobalIdentifierWithFuel,
 	#superclass : #GlobalIdentifierTest,

@@ -4,7 +4,7 @@ An utility class for exporting code to changesets (*.cs) or Smalltalk source (*.
 Class {
 	#name : #CodeExporter,
 	#superclass : #Object,
-	#category : #CodeExport
+	#category : #'CodeExport-Base'
 }
 
 { #category : #'file-out' }

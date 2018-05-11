@@ -76,7 +76,7 @@ PharoDarkTheme >> backgroundColor [
 { #category : #'accessing colors' }
 PharoDarkTheme >> balloonBackgroundColor [
 
-	^Color veryDarkGray lighter
+	^ self darkBaseColor lighter
 ]
 
 { #category : #'accessing colors' }
@@ -430,7 +430,7 @@ PharoDarkTheme >> selectionTextColor [
 { #category : #defaults }
 PharoDarkTheme >> shStyleTable [
 
-	^SHTextStylerST80 darkStyleTable
+	^SHRBTextStyler darkStyleTable
 ]
 
 { #category : #'accessing colors' }

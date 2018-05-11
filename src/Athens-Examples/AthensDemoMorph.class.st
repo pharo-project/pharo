@@ -19,28 +19,54 @@ Class {
 		'pharoLogo',
 		'esugBallon'
 	],
-	#category : #'Athens-Examples'
+	#category : #'Athens-Examples-Demos'
 }
 
 { #category : #examples }
 AthensDemoMorph class >> example [
-	"self example"
-	
+
 	| demo model window |
-	demo := AthensDemoMorph new openInWorld. 
+	demo := self new openInWorld.
 	(model := DynamicComposablePresenter new)
 		instantiatePresenters: #(backButton ButtonPresenter forwardButton ButtonPresenter).
-	model backButton label: 'Previous Figure'; action: [ demo prevFigure ].
-	model forwardButton label: 'Next Figure'; action: [ demo nextFigure ].
-	window := model openWithSpecLayout: (SpecLayout composed
- 				   newColumn: [: c | c add: #backButton. c add: #forwardButton ];
-    				   yourself).
-	window title: 'Athens demos'
+	model backButton
+		label: 'Previous Figure';
+		action: [ demo prevFigure ].
+	model forwardButton
+		label: 'Next Figure';
+		action: [ demo nextFigure ].
+	window := model
+		openWithSpecLayout:
+			(SpecLayout composed
+				newColumn: [ :c | 
+					c add: #backButton.
+					c add: #forwardButton ];
+				yourself).
+	window title: 'Athens demos' translated
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #utilities }
+AthensDemoMorph class >> roundedRectanglePathOn: aCanvas [
+
+	^ aCanvas createPath: [:builder |
+		builder
+			absolute;
+			moveTo: 70@100;
+			lineTo: 330@100;
+			cwArcTo: 350@120 angle: 90 degreesToRadians;
+			lineTo: 350@280;
+			cwArcTo: 330@300 angle: 90 degreesToRadians;
+			lineTo: 70@300;
+			cwArcTo: 50@280 angle: 90 degreesToRadians;
+			lineTo: 50@120;
+			cwArcTo: 70@100 angle: 90 degreesToRadians ]
+
+
+]
+
+{ #category : #accessing }
 AthensDemoMorph >> backColor [
-	^ Color white.
+	^ Color white
 ]
 
 { #category : #accessing }
@@ -70,14 +96,17 @@ AthensDemoMorph >> defaultExtent [
 
 { #category : #drawing }
 AthensDemoMorph >> drawBackgroundOn: aCanvas [
-	aCanvas setPaint: Color veryLightGray; drawShape: (0@0 extent: 1@1)
+	aCanvas
+		setPaint: Color veryLightGray;
+		drawShape: (0 @ 0 extent: 1 @ 1)
 ]
 
 { #category : #drawing }
 AthensDemoMorph >> drawCarOn: aCanvas [
-	"chasis -----------------------------------------------------------------------"
-		| p stroke wheel decorator |
-	p := aCanvas createPath:[:b|
+
+	| p stroke wheel decorator |
+	"chasis"
+	p := aCanvas createPath: [:b |		
 			b 
 				moveTo: 0.3@0.3 ;
 				lineTo: 0.4@0;
@@ -95,7 +124,7 @@ AthensDemoMorph >> drawCarOn: aCanvas [
 		stroke width: 0.01.
 		aCanvas draw.
 		
-		"wheels-----------------------------------------------------------------------"
+		"wheels"
 		wheel := aCanvas createPath:[:b|
 			b
 				moveTo: 	0.3@0.3;		
@@ -110,7 +139,7 @@ AthensDemoMorph >> drawCarOn: aCanvas [
 			setPaint: self wheelColor;
 			drawShape: wheel.
 		
-		"chasis decorator-----------------------------------------------------------------------"
+		"chasis decorator"
 		decorator  := aCanvas createPath:[:b|
 			b
 				moveTo: 	0.2@0.45;	
@@ -126,9 +155,7 @@ AthensDemoMorph >> drawCarOn: aCanvas [
 		stroke width: 0.01.	
 		aCanvas drawShape: decorator.
 		aCanvas setPaint: self chasisLineColor.
-		aCanvas draw.		
-			
-			
+		aCanvas draw
 ]
 
 { #category : #drawing }
@@ -146,16 +173,15 @@ AthensDemoMorph >> figure10: aCanvas [
 	ellipsePath := aCanvas createPath: [ :builder |
 		builder
 			moveTo: 0@200;
-			cwArcTo: 240@0  angle: Float pi ;
-			 cwArcTo: -240@0 angle: Float pi ].
+			cwArcTo:  240@0 angle: Float pi;
+			cwArcTo: -240@0 angle: Float pi ].
 	aCanvas setPaint: Color black.
 	aCanvas drawShape: ellipsePath.
 	rectangle := 250@40 extent: 140@300.
 	aCanvas drawShape: rectangle.
 
-
 	aCanvas paintTransform loadIdentity.
-	aCanvas paintTransform scaleBy: ((frame/100) sin abs)*5.
+	aCanvas paintTransform scaleBy: ((frame/100) sin abs) * 5.
 	aCanvas paintTransform rotateByDegrees: (frame/100) sin * 360.
 	
 	patternPaint := aCanvas setPaint: pharoLogo.
@@ -164,8 +190,7 @@ AthensDemoMorph >> figure10: aCanvas [
 	
 	aCanvas setPaint: patternPaint.
 	patternPaint setExtend: #Reflect.
-	aCanvas drawShape: rectangle.
-
+	aCanvas drawShape: rectangle
 ]
 
 { #category : #figures }
@@ -178,8 +203,7 @@ AthensDemoMorph >> figure1: aCanvas [
 
 { #category : #figures }
 AthensDemoMorph >> figure2: aCanvas [
-	| path |
-	
+	| path |	
 	path := aCanvas createPath: [:builder |
 		builder
 			absolute;
@@ -191,19 +215,16 @@ AthensDemoMorph >> figure2: aCanvas [
 			lineTo: 70@300;
 			cwArcTo: 50@280 angle: 90 degreesToRadians;
 			lineTo: 50@120;
-			cwArcTo: 70@100 angle: 90 degreesToRadians
-	].
+			cwArcTo: 70@100 angle: 90 degreesToRadians ].
 
 	aCanvas
 		setPaint: self carColor;
-		drawShape: path 
-
+		drawShape: path
 ]
 
 { #category : #figures }
 AthensDemoMorph >> figure3: aCanvas [
-	| path |
-	
+	| path |	
 	path := aCanvas createPath: [:builder |
 		builder
 			relative;
@@ -220,15 +241,14 @@ AthensDemoMorph >> figure3: aCanvas [
 	aCanvas pathTransform scaleBy: self extent.
 	aCanvas
 		setPaint: self carColor;
-		drawShape: path 
-
+		drawShape: path
 ]
 
 { #category : #figures }
 AthensDemoMorph >> figure4: aCanvas [
 	| path stroke |
 	
-	path := self roundedRectanglePathOn: aCanvas.
+	path := self class roundedRectanglePathOn: aCanvas.
 	
 	aCanvas setShape: path.
 	
@@ -238,7 +258,7 @@ AthensDemoMorph >> figure4: aCanvas [
 	stroke := aCanvas setStrokePaint: Color black.
 	stroke width: 3.
 	
-	aCanvas draw. 
+	aCanvas draw
 ]
 
 { #category : #figures }
@@ -279,12 +299,11 @@ AthensDemoMorph >> figure6: aCanvas [
 		start:  0@100  
 		stop: 0@300.
 	
-	aCanvas setShape: (self roundedRectanglePathOn: aCanvas).
+	aCanvas setShape: (self class roundedRectanglePathOn: aCanvas).
 	
 	aCanvas setPaint: linearGradient.
 	
-	aCanvas draw.
-		
+	aCanvas draw
 ]
 
 { #category : #figures }
@@ -296,7 +315,6 @@ AthensDemoMorph >> figure7: aCanvas [
 	pt := aCanvas pathTransform.
 
 	pt restoreAfter:[
-
 		pt scaleBy: self extent .
 		self drawCarOn: aCanvas.
 
@@ -304,8 +322,7 @@ AthensDemoMorph >> figure7: aCanvas [
 		self drawCarOn: aCanvas.
 	
 		pt  translateBy: 2@0; rotateByDegrees: 35.
-		self drawCarOn: aCanvas.
-	].
+		self drawCarOn: aCanvas ]
 		
 ]
 
@@ -313,9 +330,8 @@ AthensDemoMorph >> figure7: aCanvas [
 AthensDemoMorph >> figure8: aCanvas [
 	| pt |
 	pt := aCanvas pathTransform.
-	pt restoreAfter:[
-		| stroke p  wheel decorator |
-		pt scaleBy: self extent .
+	pt restoreAfter:[	
+		pt scaleBy: self extent.
 		self drawBackgroundOn: aCanvas.
 
 		pt scaleBy: (frame/100) sin abs.
@@ -324,9 +340,7 @@ AthensDemoMorph >> figure8: aCanvas [
 		self drawCarOn: aCanvas.
 	
 		pt  translateBy: 2@0; rotateByDegrees: 35.
-		self drawCarOn: aCanvas.
-	
-	  ].
+		self drawCarOn: aCanvas ]
 		
 ]
 
@@ -350,10 +364,10 @@ AthensDemoMorph >> figure9: aCanvas [
 	
 	patternPaint := aCanvas setPaint: esugBallon .
 	patternPaint setExtend: #None.
-	aCanvas draw.
+	aCanvas draw
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #accessing }
 AthensDemoMorph >> figures [
 	^ #(
 	figure1:
@@ -366,12 +380,12 @@ AthensDemoMorph >> figures [
 	figure8:
 	figure9:
 	figure10:
-	).
+	)
 	
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensDemoMorph >> initialize [ 
 	| ref loadFileFailBlock|
 	super initialize.
@@ -381,14 +395,13 @@ AthensDemoMorph >> initialize [
 	current := 1.
 	frame := 0.
       loadFileFailBlock:= AthensCairoSurface fromForm:(Form fromDisplay: (0@0 extent:(300@150))).
-	ref := 	'Pharo.png' asFileReference.
+	ref := 'Pharo.png' asFileReference.
 	pharoLogo := AthensCairoSurface createFromFile:  ref fullName ifFailed:  [ loadFileFailBlock ].
 
 	ref := 'esug-balloon.png' asFileReference.
 	esugBallon := AthensCairoSurface createFromFile:  ref fullName ifFailed:  [ loadFileFailBlock ].
-
 	
-	self startStepping.
+	self startStepping
 	
 ]
 
@@ -421,33 +434,13 @@ AthensDemoMorph >> render [
 
 ]
 
-{ #category : #figures }
-AthensDemoMorph >> roundedRectanglePathOn: aCanvas [
-
-	^ aCanvas createPath: [:builder |
-		builder
-			absolute;
-			moveTo: 70@100;
-			lineTo: 330@100;
-			cwArcTo: 350@120 angle: 90 degreesToRadians;
-			lineTo: 350@280;
-			cwArcTo: 330@300 angle: 90 degreesToRadians;
-			lineTo: 70@300;
-			cwArcTo: 50@280 angle: 90 degreesToRadians;
-			lineTo: 50@120;
-			cwArcTo: 70@100 angle: 90 degreesToRadians
-	].
-
-
-]
-
-{ #category : #accessing }
+{ #category : #'stepping and presenter' }
 AthensDemoMorph >> step [
 	frame := frame + 1.
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : #'model - stepping' }
 AthensDemoMorph >> stepTime [
 	^ 0
 ]

@@ -43,19 +43,20 @@ ImageReadWriter class >> allTypicalFileExtensions [
 { #category : #'image reading/writing' }
 ImageReadWriter class >> formFromFileNamed: fileName [ 
 	"Answer a ColorForm stored on the file with the given name."
-	| stream |
-	stream := FileStream readOnlyFileNamed: fileName.
-	^ self formFromStream: stream
+	
+	^ fileName asFileReference 
+		binaryReadStreamDo: [ :in | self formFromStream: in ]
 ]
 
 { #category : #'image reading/writing' }
 ImageReadWriter class >> formFromStream: aBinaryStream [ 
 	"Answer a ColorForm stored on the given stream.  closes the stream"
-	| reader readerClass form |
-	readerClass := self readerClassFromStream: aBinaryStream.
-	reader := readerClass new on: aBinaryStream.
+	| positionableReadStream reader readerClass form |
+	positionableReadStream := ZnPositionableReadStream on: aBinaryStream.
+	readerClass := self readerClassFromStream: positionableReadStream.
+	reader := readerClass new on: positionableReadStream.
 	form := reader nextImage.
-	reader close.
+	aBinaryStream close.
 	^ form
 ]
 
@@ -70,30 +71,30 @@ ImageReadWriter class >> on: aStream [
 { #category : #'image reading/writing' }
 ImageReadWriter class >> putForm: aForm onFileNamed: fileName [ 
 	"Store the given form on a file of the given name."
-	| writer |
-	writer := self on: (FileStream newFileNamed: fileName) binary.
-	Cursor write showWhile: [ writer nextPutImage: aForm ].
-	writer close
+	
+	fileName asFileReference 
+		binaryWriteStreamDo: [ :out | (self on: out) nextPutImage: aForm ]
 ]
 
 { #category : #'image reading/writing' }
 ImageReadWriter class >> putForm: aForm onStream: aWriteStream [ 
-	"Store the given form on a file of the given name."
+	"Store the given form on a file of the given name. closes the stream"
+	
 	| writer |
-	writer := self on: aWriteStream.
-	Cursor write showWhile: [ writer nextPutImage: aForm ].
+	writer := (self on: aWriteStream).
+	writer nextPutImage: aForm.
 	writer close
 ]
 
 { #category : #'image reading/writing' }
-ImageReadWriter class >> readerClassFromStream: aBinaryStream [
+ImageReadWriter class >> readerClassFromStream: positionableReadStream [
 	| readerClass |
 	readerClass := self withAllSubclasses
-		detect: [ :subclass | subclass understandsImageFormat: aBinaryStream ]
+		detect: [ :subclass | 
+			positionableReadStream savingPositionDo: [ subclass understandsImageFormat: positionableReadStream ] ]
 		ifNone: [ 
-			aBinaryStream close.
+			positionableReadStream close.
 			^ self error: 'image format not recognized' ].
-	aBinaryStream reset.
 	^ readerClass
 ]
 
@@ -194,6 +195,62 @@ ImageReadWriter >> nextImage [
 ]
 
 { #category : #'stream access' }
+ImageReadWriter >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bigEndian [
+	"Assuming the receiver is a stream of bytes, read the next integer of size numberOfBytes.
+	If bigEndian is true, use network byte order, most significant byte first, 
+	else use little endian order, least significant byte first.
+	If signed is true, interpret as a two-complement signed value, 
+	else interpret as a plain unsigned value."
+	
+	| value |
+	value := 0.
+	bigEndian
+		ifTrue: [ 
+			(numberOfBytes - 1) * 8 to: 0 by: -8 do: [ :shift |
+				value := value + (self next bitShift: shift) ] ]
+		ifFalse: [ 
+			0 to: (numberOfBytes - 1) * 8 by: 8 do: [ :shift |
+				value := value + (self next bitShift: shift) ] ].
+	^ (signed and: [ (value bitAt: numberOfBytes * 8) = 1 ])
+		ifTrue: [ value - (1 << (numberOfBytes * 8)) ]
+		ifFalse: [ value ]
+]
+
+{ #category : #'stream access' }
+ImageReadWriter >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bigEndian put: value [
+	"Assuming the receiver is a stream of bytes, write value as the next integer of size numberOfBytes.
+	If bigEndian is true, use network byte order, most significant byte first, 
+	else use little endian order, least significant byte first.
+	If signed is true, encode as a two-complement signed value, 
+	else encode as a plain unsigned value."
+	
+	| unsignedValue |
+	unsignedValue := (signed and: [ value negative ])
+		ifTrue: [ (1 << (numberOfBytes * 8)) + value ] 
+		ifFalse: [ value ].
+	(unsignedValue between: 0 and: (2 ** (numberOfBytes * 8)) - 1)
+		ifFalse: [ DomainError signalFrom: 0 to: (2 ** (numberOfBytes * 8)) - 1 ].
+	bigEndian
+		ifTrue: [ 
+			numberOfBytes to: 1 by: -1 do: [ :index |
+				self nextPut: (unsignedValue digitAt: index) ] ]
+		ifFalse: [ 
+			1 to: numberOfBytes do: [ :index |
+				self nextPut: (unsignedValue digitAt: index) ] ].
+	^ value
+]
+
+{ #category : #'stream access' }
+ImageReadWriter >> nextLittleEndianNumber: numberOfBytes [
+	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: false
+]
+
+{ #category : #'stream access' }
+ImageReadWriter >> nextLittleEndianNumber: numberOfBytes put: integer [
+	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: false put: integer
+]
+
+{ #category : #'stream access' }
 ImageReadWriter >> nextLong [
 	"Read a 32-bit quantity from the input stream."
 
@@ -248,10 +305,8 @@ ImageReadWriter >> nextWordPut: a16BitW [
 ]
 
 { #category : #private }
-ImageReadWriter >> on: aStream [ 
-	(stream := aStream) reset.
-	stream binary
-	"Note that 'reset' makes a file be text.  Must do this after."
+ImageReadWriter >> on: binaryStream [ 
+	stream := binaryStream
 ]
 
 { #category : #'stream access' }

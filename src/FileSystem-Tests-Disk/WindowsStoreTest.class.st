@@ -4,7 +4,7 @@ SUnit tests for class WindowsStore
 Class {
 	#name : #WindowsStoreTest,
 	#superclass : #TestCase,
-	#category : #'FileSystem-Tests-Disk'
+	#category : #'FileSystem-Tests-Disk-Base'
 }
 
 { #category : #testing }

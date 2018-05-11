@@ -1,7 +1,10 @@
+"
+Package for thread-safe collections with atomic operations
+"
 Class {
 	#name : #ManifestCollectionsAtomic,
 	#superclass : #PackageManifest,
-	#category : #'Collections-Atomic'
+	#category : #'Collections-Atomic-Manifest'
 }
 
 { #category : #'meta-data' }

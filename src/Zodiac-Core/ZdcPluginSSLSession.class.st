@@ -78,7 +78,7 @@ ZdcPluginSSLSession >> decrypt: srcBuf from: start to: stop into: dstBuf [
 	^ self primitiveSSL: handle decrypt: srcBuf startingAt: start count: stop - start + 1 into: dstBuf
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZdcPluginSSLSession >> destroy [
 	"Destroys the platform handle in the VM plugin"
 
@@ -87,7 +87,7 @@ ZdcPluginSSLSession >> destroy [
 	handle := nil
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZdcPluginSSLSession >> enableLogging [
 	"Enable logging of the native code inside the plugin"
 	
@@ -101,7 +101,7 @@ ZdcPluginSSLSession >> encrypt: srcBuf from: start to: stop into: dstBuf [
 	^ self primitiveSSL: handle encrypt: srcBuf startingAt: start count: stop - start + 1 into: dstBuf
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZdcPluginSSLSession >> initialize [
 	"Initialize the receiver"
 

@@ -9,7 +9,7 @@ The collection that is empty is in my inherited signaler instance variable.
 Class {
 	#name : #CollectionIsEmpty,
 	#superclass : #Error,
-	#category : #'Collections-Abstract'
+	#category : #'Collections-Abstract-Errors'
 }
 
 { #category : #'instance creation' }

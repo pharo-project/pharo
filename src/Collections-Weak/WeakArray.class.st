@@ -11,7 +11,7 @@ Class {
 		'FinalizationProcess',
 		'FinalizationSemaphore'
 	],
-	#category : #'Collections-Weak'
+	#category : #'Collections-Weak-Base'
 }
 
 { #category : #accessing }

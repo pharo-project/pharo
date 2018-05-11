@@ -1,3 +1,6 @@
+"
+SUnit tests for unregistration from the Pharo session manager
+"
 Class {
 	#name : #SessionManagerUnregistrationTest,
 	#superclass : #TestCase,

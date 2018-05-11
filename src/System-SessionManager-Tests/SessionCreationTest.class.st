@@ -1,3 +1,6 @@
+"
+SUnit tests for session creation with SessionManager
+"
 Class {
 	#name : #SessionCreationTest,
 	#superclass : #TestCase,

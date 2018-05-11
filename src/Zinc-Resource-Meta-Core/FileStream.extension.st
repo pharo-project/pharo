@@ -2,7 +2,7 @@ Extension { #name : #FileStream }
 
 { #category : #'*zinc-resource-meta-core' }
 FileStream >> asUrl [
-	^ self asZnUrl 
+	^ self asZnUrl
 ]
 
 { #category : #'*zinc-resource-meta-core' }

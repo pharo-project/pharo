@@ -15,7 +15,8 @@ Object >> confirm: queryString [
 Object >> inform: aString [
 	"Display a message for the user to read and then dismiss."
 
-	aString isEmptyOrNil ifFalse: [UIManager default inform: aString]
+	aString isEmptyOrNil
+		ifFalse: [ UIManager default inform: aString ]
 ]
 
 { #category : #'*UIManager' }
@@ -23,5 +24,5 @@ Object >> primitiveError: aString [
 	"This method is called when the error handling results in a recursion in 
 	calling on error: or halt or halt:."
 
-	UIManager default onPrimitiveError: aString.
+	UIManager default onPrimitiveError: aString
 ]

@@ -14,32 +14,10 @@ def shell(params){
 }
 
 def runTests(architecture, prefix=''){
-	def retryTimes = 3
-	def tries = 0
-	def success = false
-	waitUntil {
-		tries += 1
-		echo "Try #${tries}"
-		try {
-			cleanWs()
-			unstash "bootstrap${architecture}"
-			shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
-			junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
-			success = !(currentBuild.result == 'UNSTABLE')
-			echo "Tests run with result ${currentBuild.result}"
-		} catch(e) {
-			//If there is an exception ignore.
-			//success will be false and we will retry thanks to waitUntil
-			echo "Tests couldn't complete to run due to an exception"
-		}
-		if (!success && tries == retryTimes) {
-			echo "Out of retries"
-      //If the problem is with an exception I have to raise it because if not the test is marked as success.
-			if(currentBuild.result != 'UNSTABLE')
-        error("Out of retries running " + prefix + " tests")
-		}
-		return success || (tries == retryTimes)
-	}
+	cleanWs()
+	unstash "bootstrap${architecture}"
+	shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
+	junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
 	archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
 	cleanWs()
 }

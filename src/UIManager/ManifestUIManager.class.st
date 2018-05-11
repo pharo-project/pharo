@@ -1,7 +1,10 @@
+"
+Package for the UI Manager and related classes
+"
 Class {
 	#name : #ManifestUIManager,
 	#superclass : #PackageManifest,
-	#category : #UIManager
+	#category : #'UIManager-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

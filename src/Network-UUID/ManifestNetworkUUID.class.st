@@ -1,7 +1,10 @@
+"
+A package providing Universally Unique Identifiers (UUID) following RFC4122.
+"
 Class {
 	#name : #ManifestNetworkUUID,
 	#superclass : #PackageManifest,
-	#category : #'Network-UUID'
+	#category : #'Network-UUID-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

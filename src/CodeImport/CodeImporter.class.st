@@ -45,7 +45,7 @@ Class {
 		'requestor',
 		'logSource'
 	],
-	#category : #CodeImport
+	#category : #'CodeImport-Base'
 }
 
 { #category : #'instance creation' }

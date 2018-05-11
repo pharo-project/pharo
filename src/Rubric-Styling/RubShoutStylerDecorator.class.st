@@ -29,7 +29,7 @@ RubShoutStylerDecorator class >> minTextSizeForStylingInBackground [
 
 { #category : #settings }
 RubShoutStylerDecorator class >> minTextSizeForStylingInBackground: anInteger [
-	MinTextSizeForStylingInBackground := anInteger.
+	MinTextSizeForStylingInBackground := anInteger
 ]
 
 { #category : #settings }
@@ -64,7 +64,7 @@ RubShoutStylerDecorator >> classOrMetaClass: aBehavior [
 
 { #category : #accessing }
 RubShoutStylerDecorator >> defaultStyler [
-	^RubSHTextStylerST80 new view: self; yourself
+	^SHRBTextStyler new view: self; yourself
 ]
 
 { #category : #shout }

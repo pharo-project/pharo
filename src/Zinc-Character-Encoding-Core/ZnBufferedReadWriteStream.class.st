@@ -50,7 +50,7 @@ ZnBufferedReadWriteStream >> close [
 	writeStream close.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 ZnBufferedReadWriteStream >> closed [
 	^ readStream closed
 ]
@@ -179,7 +179,7 @@ ZnBufferedReadWriteStream >> setToEnd [
 		writeStream setToEnd ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ZnBufferedReadWriteStream >> size [
 	^ readStream size
 ]

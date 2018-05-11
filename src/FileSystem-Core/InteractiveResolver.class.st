@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'cache'
 	],
-	#category : #'FileSystem-Core-Implementation'
+	#category : #'FileSystem-Core-Base-Resolver'
 }
 
 { #category : #accessing }

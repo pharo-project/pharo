@@ -276,6 +276,12 @@ UITheme >> balloonBackgroundColor [
 ]
 
 { #category : #'accessing colors' }
+UITheme >> balloonTextColor [
+
+	^self textColor
+]
+
+{ #category : #'accessing colors' }
 UITheme >> baseColor [
 	^ self class baseColor
 ]
@@ -5284,7 +5290,7 @@ UITheme >> settings: anObject [
 { #category : #accessing }
 UITheme >> shStyleTable [
 
-	^SHTextStylerST80 blueStyleTable
+	^SHRBTextStyler blueStyleTable
 ]
 
 { #category : #'border-styles' }

@@ -11,20 +11,20 @@ Class {
 		'frame',
 		'spike'
 	],
-	#category : #'Athens-Examples'
+	#category : #'Athens-Examples-Demos'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensFlakeDemo >> circle [
 	^ circle 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 AthensFlakeDemo >> defaultExtent [
 	^ 800@800
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 AthensFlakeDemo >> drawCircles: canvas [
 
 	canvas pathTransform restoreAfter: [
@@ -49,7 +49,7 @@ AthensFlakeDemo >> drawCircles: canvas [
 	]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 AthensFlakeDemo >> drawOn: aCanvas [
 
 	self render.
@@ -57,7 +57,7 @@ AthensFlakeDemo >> drawOn: aCanvas [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 AthensFlakeDemo >> drawSpike: canvas [
 
 
@@ -90,7 +90,7 @@ AthensFlakeDemo >> drawSpike: canvas [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 AthensFlakeDemo >> initialize [ 
 
 	super initialize.
@@ -124,7 +124,7 @@ AthensFlakeDemo >> initialize [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 AthensFlakeDemo >> render [ 
 
 	surface drawDuring: [:canvas | 
@@ -149,14 +149,14 @@ AthensFlakeDemo >> render [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'stepping and presenter' }
 AthensFlakeDemo >> step [
 	frame := Time millisecondClockValue / 100.
 	
 	self changed
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'model - stepping' }
 AthensFlakeDemo >> stepTime [
 	^ 0
 ]

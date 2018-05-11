@@ -379,8 +379,6 @@ Behavior >> basicAddSelector: selector withMethod: compiledMethod [
 	receiver's method dictionary.
 	Do this without sending system change notifications"
 
-	| oldMethodOrNil |	
-	oldMethodOrNil := self lookupSelector: selector.
 	self methodDict at: selector put: compiledMethod.
 	compiledMethod methodClass: self.
 	compiledMethod selector: selector.
@@ -449,16 +447,6 @@ Behavior >> basicNew: sizeRequested [
 { #category : #'obsolete subclasses' }
 Behavior >> basicObsoleteSubclasses [
 	^ObsoleteSubclasses.
-]
-
-{ #category : #'adding/removing methods' }
-Behavior >> basicRemoveSelector: selector [ 
-	"Assuming that the argument, selector (a Symbol), is a message selector 
-	in my method dictionary, remove it and its method."
-
-	| oldMethod |
-	oldMethod := self methodDict at: selector ifAbsent: [^ self].
-	self methodDict removeKey: selector.
 ]
 
 { #category : #private }
@@ -1235,9 +1223,24 @@ Behavior >> isPointers [
 	^self isBits not
 ]
 
+{ #category : #testing }
+Behavior >> isReferenced [
+	"returns true if the class is referenced from a method"
+
+	^ self environment allBehaviors
+		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self binding ]
+]
+
 { #category : #'testing class hierarchy' }
 Behavior >> isRootInEnvironment [
 	^self superclass isNil
+]
+
+{ #category : #testing }
+Behavior >> isUsed [
+	"the class us used somehow. This is client specific, subclasses can override"
+
+	^ self isReferenced
 ]
 
 { #category : #testing }
@@ -1614,12 +1617,9 @@ Behavior >> removeProperty: propName ifAbsent: aBlock [
 
 { #category : #'accessing method dictionary' }
 Behavior >> removeSelector: aSelector [
-	"Assuming that the argument, selector (a Symbol), is a message selector 
-	in my method dictionary, remove it and its method."	
-	
-	| oldMethod |
-	oldMethod := self methodDict at: aSelector ifAbsent: [^ self].
-	self methodDict removeKey: aSelector.
+	"Assuming that the argument, selector (a Symbol), is a message selector in my method dictionary, remove it and its method."
+
+	self methodDict removeKey: aSelector ifAbsent: []
 ]
 
 { #category : #'adding/removing methods' }

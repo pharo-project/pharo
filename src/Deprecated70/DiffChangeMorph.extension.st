@@ -1,5 +1,5 @@
 Extension { #name : #DiffChangeMorph }
- 
+
 { #category : #'*Deprecated70' }
 DiffChangeMorph >> initialColorInSystemWindow: aSystemWindow [
 	"Answer the colour the receiver should be when added to a SystemWindow."

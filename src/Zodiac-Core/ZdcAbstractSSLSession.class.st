@@ -72,7 +72,7 @@ ZdcAbstractSSLSession >> decrypt: srcBuf from: start to: stop into: dstBuf [
 	self subclassResponsibility
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ZdcAbstractSSLSession >> destroy [
 	"Do any necessary cleanup when I am no longer needed"
 	

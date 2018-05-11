@@ -97,7 +97,7 @@ ZnUTF32Encoder >> readCodePointFrom: stream [
 	byte3 := stream next.
 	byte4 := stream next.
 	(byte1 isNil or: [ byte2 isNil or: [ byte3 isNil or: [ byte4 isNil ] ] ])
-		ifTrue: [ self errorIncomplete ].
+		ifTrue: [ ^ self errorIncomplete ].
 	^ self isBigEndian
 		ifTrue: [ 
 			(byte1 bitShift: 24) + (byte2 bitShift: 16) + (byte3 bitShift: 8) + byte4 ] 

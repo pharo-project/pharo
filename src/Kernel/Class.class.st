@@ -776,6 +776,14 @@ Class >> isSelfEvaluating [
 	^self isObsolete not
 ]
 
+{ #category : #testing }
+Class >> isUsed [
+	
+	^ self hasSubclasses
+		ifFalse: [ super isUsed ]
+		ifTrue: [ true ]
+]
+
 { #category : #private }
 Class >> isValidTraitName: aSymbol [
 
