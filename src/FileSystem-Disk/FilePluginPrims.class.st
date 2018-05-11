@@ -110,6 +110,24 @@ FilePluginPrims >> encode: aString [
 ]
 
 { #category : #'file primitives' }
+FilePluginPrims >> fileDescriptorType: fdNum [
+	"Allow to test if the standard input/output files are from a console or not
+	Return values:
+	* -1 - Error
+	* 0 - no console (windows only)
+	* 1 - normal terminal (unix terminal / windows console)
+	* 2 - pipe
+	* 3 - file
+	* 4 - cygwin terminal (windows only)"
+
+	<primitive: 'primitiveFileDescriptorType' module: 'FilePlugin' error: error>
+	error = #'bad argument'
+		ifTrue: [ fdNum isInteger
+				ifFalse: [ ^ self error: 'fileDescriptor must be an integer' ] ].
+	^ self primitiveFailed
+]
+
+{ #category : #'file primitives' }
 FilePluginPrims >> flush: id [
 	"On Unix, the FilePlugin uses stdio FILE* structs which maintain their
 	own internal buffer to minimize write() syscalls. This flushes that buffer.
@@ -260,6 +278,21 @@ FilePluginPrims >> sizeOrNil: id [
 
 	<primitive: 'primitiveFileSize' module: 'FilePlugin'>
 	^ nil
+]
+
+{ #category : #'file primitives' }
+FilePluginPrims >> stdioDescriptorIsATTY [
+	^ (0 to: 2)
+		anySatisfy: [ :fdNum | 
+			| res |
+			res := self fileDescriptorType: fdNum.
+			#(1 4) includes: res ]
+]
+
+{ #category : #'file primitives' }
+FilePluginPrims >> stdioHandles [
+	<primitive: 'primitiveFileStdioHandles' module: 'FilePlugin' error: ec>
+	self primitiveFailed
 ]
 
 { #category : #'file primitives' }

@@ -16,6 +16,7 @@ Class {
 	#name : #Stdio,
 	#superclass : #Object,
 	#classVars : [
+		'Primitives',
 		'Stderr',
 		'Stdin',
 		'Stdout'
@@ -31,22 +32,9 @@ Stdio class >> cleanStdioHandles [
 
 { #category : #'initialize-release' }
 Stdio class >> initialize [
+	self useFilePlugin.
 	SessionManager default
 		registerSystemClassNamed: self name
-]
-
-{ #category : #stdio }
-Stdio class >> primFileDescriptorType: fdNumber [
-	"Allow to test if the standard input/output files are from a console or not
-	Return values:
-	* -1 - Error
-	* 0 - no console (windows only)
-	* 1 - normal terminal (unix terminal / windows console)
-	* 2 - pipe
-	* 3 - file
-	* 4 - cygwin terminal (windows only)"
-	<primitive: 'primitiveFileDescriptorType' module: 'FilePlugin' error: ec>
-	self primitiveFailed
 ]
 
 { #category : #stdio }
@@ -55,7 +43,7 @@ Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 
 	| handle |
 	"HACK kept for retrocompatibility"
-	([ self stdioDescriptorIsATTY not ]
+	([ Primitives stdioDescriptorIsATTY not ]
 		on: PrimitiveFailed
 		do: [ :ex | Smalltalk os isWin32 ])
 		ifTrue: [ [ ^ (File named: moniker asString) writeStream ]
@@ -64,7 +52,7 @@ Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 					[ ^ (File named: moniker asString , '_' , (Random new nextInt: SmallInteger maxVal) asString) writeStream ]
 						on: FileException
 						do: [ "Nothing, we do not have the rights to write" ] ] ].
-	handle := self stdioHandles at: (#(stdin stdout stderr) identityIndexOf: moniker).
+	handle := Primitives stdioHandles at: (#(stdin stdout stderr) identityIndexOf: moniker).
 	handle ifNil: [ self error: moniker , ' is unavailable' ].
 	^ StdioStream handle: handle file: (File named: moniker) forWrite: forWrite
 ]
@@ -87,23 +75,13 @@ Stdio class >> stdin [
 	^ Stdin ifNil: [ Stdin := self standardIOStreamNamed: #stdin forWrite: false ].
 ]
 
-{ #category : #stdio }
-Stdio class >> stdioDescriptorIsATTY [
-	^ (0 to: 2)
-		anySatisfy: [ :fdNum | 
-			| res |
-			res := self primFileDescriptorType: fdNum.
-			#(1 4) includes: res ]
-]
-
-{ #category : #stdio }
-Stdio class >> stdioHandles [
-	<primitive: 'primitiveFileStdioHandles' module: 'FilePlugin' error: ec>
-	self primitiveFailed
-]
-
 { #category : #accessing }
 Stdio class >> stdout [
 
 	^ Stdout ifNil: [ Stdout := self standardIOStreamNamed: #stdout forWrite: true ].
+]
+
+{ #category : #'initialize-release' }
+Stdio class >> useFilePlugin [
+	Primitives := FilePluginPrims new
 ]
