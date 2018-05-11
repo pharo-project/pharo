@@ -432,8 +432,13 @@ ShiftClassBuilder >> sharedVariables: aCollection [
 ]
 
 { #category : #accessing }
-ShiftClassBuilder >> sharedVariablesFromString: aString [ 
-	layoutDefinition sharedVariables:((aString substrings: ' ') collect: [:x | x asSymbol => ClassVariable]). 
+ShiftClassBuilder >> sharedVariablesFromString: aStringOrArray [
+	layoutDefinition sharedVariables: (aStringOrArray isString
+        ifTrue: [ (aStringOrArray substrings: ' ') collect: [ :x | x asSymbol => ClassVariable ] ]
+        ifFalse: [ aStringOrArray collect: [ :x | 
+                x isSymbol
+                    ifTrue: [ x => ClassVariable ]
+                    ifFalse: [ self error: 'Shared variables can only be String or an array of Symbols' ] ] ])
 ]
 
 { #category : #accessing }
