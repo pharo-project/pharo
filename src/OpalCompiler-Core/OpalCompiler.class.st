@@ -1,13 +1,24 @@
 "
-I provide the API of the whole Compiler Package.
+I provide the API of the whole Compiler Package for the case that the input is sourcecode.
+(if there is alreay and AST, call #generate (to compile) or #evaluate directly on the node)
 
--> parsing: just parse
--> translate: parse and generate code so we get all error messages
--> compile: translate but return the CompiledMethod 
+a pre-configures compiler instance can be requested with: 
+ - Smalltalk compiler
+ - a Class compiler 
+
+The compiler instance (atually: the compilation context) needs to be setup. See #class: #source: #noPattern: #requestor: for the most important accessors (more are in the accessing protocol). 
+
+See the class comment of CompilationContext for more information.
+
+The final step is one of three actions:
+
+-> parsing: parse source and return an AST.
+-> compile: parse and compile, return a CompiledMethod 
+-> evaluate: parse, compile, evaluate and return result
 
 Example:
 
-OpalCompiler new
+Smalltalk compiler
 	source: 'test 1+2';
 	class: Object;
 	compile.
@@ -47,7 +58,7 @@ OpalCompiler class >> debuggerMethodMapForMethod: aMethod [
 	^ DebuggerMethodMapOpal forMethod: aMethod
 ]
 
-{ #category : #'old - public' }
+{ #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString [ 
 	
 	^self new
@@ -55,7 +66,7 @@ OpalCompiler class >> evaluate: textOrString [
 		evaluate
 ]
 
-{ #category : #'old - public' }
+{ #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString for: anObject logged: logFlag [ 
 	"See Compiler|evaluate:for:notifying:logged:. If a compilation error occurs, 
 	a Syntax Error view is created rather than notifying any requestor."
@@ -67,7 +78,7 @@ OpalCompiler class >> evaluate: textOrString for: anObject logged: logFlag [
 		evaluate
 ]
 
-{ #category : #'old - public' }
+{ #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString for: anObject notifying: aController logged: logFlag [
 	"Compile and execute the argument, textOrString with respect to the class 
 	of anObject. If a compilation error occurs, notify aController. If both 
@@ -85,7 +96,7 @@ OpalCompiler class >> evaluate: textOrString for: anObject notifying: aControlle
 			
 ]
 
-{ #category : #'old - public' }
+{ #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString logged: logFlag [ 
 	"See Compiler|evaluate:for:notifying:logged:. If a compilation error occurs, 
 	a Syntax Error view is created rather than notifying any requestor. 
@@ -99,7 +110,7 @@ OpalCompiler class >> evaluate: textOrString logged: logFlag [
 			
 ]
 
-{ #category : #'old - public' }
+{ #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString notifying: aController logged: logFlag [ 
 	"See Compiler|evaluate:for:notifying:logged:. Compilation is carried out 
 	with respect to nil, i.e., no object."
@@ -113,7 +124,7 @@ OpalCompiler class >> evaluate: textOrString notifying: aController logged: logF
 			
 ]
 
-{ #category : #'old - public' }
+{ #category : #'old - deprecated' }
 OpalCompiler class >> format: textOrStream in: aClass notifying: aRequestor [
 	^self new
 		source: textOrStream;
@@ -173,12 +184,12 @@ OpalCompiler >> compilationContext: anObject [
 	compilationContext := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #plugins }
 OpalCompiler >> compilationContextClass [
 	^compilationContextClass ifNil: [ CompilationContext  ]
 ]
 
-{ #category : #accessing }
+{ #category : #plugins }
 OpalCompiler >> compilationContextClass: aClass [
 	compilationContextClass := aClass.
 ]
@@ -286,7 +297,7 @@ OpalCompiler >> doSemanticAnalysis [
 		do: [ :ex | ex defaultAction. ^ self compilationContext failBlock value ]
 ]
 
-{ #category : #accessing }
+{ #category : #plugins }
 OpalCompiler >> encoderClass: aClass [ 
 	self compilationContext encoderClass: aClass 
 ]
@@ -559,7 +570,7 @@ OpalCompiler >> parseSelector: aString [
 	^[self parserClass parseMethodPattern: aString] on: Error do: [nil].
 ]
 
-{ #category : #accessing }
+{ #category : #plugins }
 OpalCompiler >> parserClass [
 	^self compilationContext parserClass
 ]
@@ -575,7 +586,7 @@ OpalCompiler >> requestor: aRequestor [
 	self compilationContext interactive: (self isInteractiveFor: aRequestor).
 ]
 
-{ #category : #accessing }
+{ #category : #plugins }
 OpalCompiler >> requestorScopeClass: aClass [ 
 	"clients can set their own subclass of OCRequestorScope if needed"
 	self compilationContext requestorScopeClass: aClass
