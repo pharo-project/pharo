@@ -3018,23 +3018,19 @@ UITheme >> newButtonIn: aThemedMorph for: aModel getState: stateSel action: acti
 UITheme >> newButtonIn: aThemedMorph for: aModel getState: stateSel action: actionSel arguments: args getEnabled: enabledSel label: label help: helpText [
 	"Answer a new button."
 
-	|b|
-	b := PluggableButtonMorph
-			on: aModel getState: stateSel action: actionSel.
-	b
+	| button |
+	^ (button := PluggableButtonMorph on: aModel getState: stateSel action: actionSel)
 		theme: self;
-		arguments: (args ifNil: [{b}]);
+		arguments: (args ifNil: [ {button} ]);
 		cornerStyle: (self buttonCornerStyleIn: aThemedMorph);
-		hResizing: #shrinkWrap;
-		vResizing: #shrinkWrap;
 		label: label font: self buttonFont;
 		getEnabledSelector: enabledSel;
 		setBalloonText: helpText;
-		extent: b minExtent;
+		extent: button minExtent;
 		hResizing: #rigid;
 		vResizing: #rigid;
-		removeProperty: #theme.
-	^b
+		removeProperty: #theme;
+		yourself
 ]
 
 { #category : #'morph creation' }
