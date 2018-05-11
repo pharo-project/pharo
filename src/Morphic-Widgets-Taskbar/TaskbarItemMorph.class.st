@@ -1,3 +1,18 @@
+"
+Description
+--------------------
+
+A TaskbarItemMorph is a Morph representing a unique item of the taskbar. 
+
+It can be customized via the current theme for its border and fill style.
+
+Examples
+--------------------
+
+	(TaskbarItemMorph on: aWindow getState: #isActive action: #taskbarButtonClicked)
+		initializeFor: aTaskbar;
+		yourself
+"
 Class {
 	#name : #TaskbarItemMorph,
 	#superclass : #PluggableButtonMorph,
