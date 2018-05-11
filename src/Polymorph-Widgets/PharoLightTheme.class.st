@@ -63,7 +63,7 @@ PharoLightTheme class >> setPreferredPreferences [
 PharoLightTheme class >> setPreferredShoutColors [
 	"self setPreferredShoutColors"
 
-	SHTextStylerST80 styleTable: 
+	SHRBTextStyler styleTable: 
 		#(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
 			(default 								black)
