@@ -44,10 +44,16 @@ Class {
 		'name'
 	],
 	#classVars : [
+		'Primitives',
 		'Registry'
 	],
 	#category : #'Files-Core'
 }
+
+{ #category : #'initialization-release' }
+File class >> initialize [
+	self useFilePlugin
+]
 
 { #category : #'file creation' }
 File class >> named: fileName [
@@ -79,10 +85,7 @@ File class >> openForWriteFileNamed: aName [
 
 { #category : #primitives }
 File class >> primClose: id [
-	"Close this file."
-
-	<primitive: 'primitiveFileClose' module: 'FilePlugin'>
-	self primitiveFailed
+	^ Primitives close: id
 ]
 
 { #category : #registry }
@@ -124,11 +127,16 @@ File class >> unregister: anObject [
 	^self registry remove: anObject ifAbsent:[]
 ]
 
+{ #category : #'initialization-release' }
+File class >> useFilePlugin [
+	Primitives := FilePluginPrims new
+]
+
 { #category : #'open/close' }
 File >> basicOpenForWrite: writeMode [ 
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
 	^ self class
-		retryWithGC: [ self primOpen: name utf8Encoded writable: writeMode ]
+		retryWithGC: [ Primitives open: name utf8Encoded writable: writeMode ]
 		until:[ :id | id notNil ] 
 		forFileNamed: name
 ]
@@ -151,7 +159,7 @@ File >> checkDoesNotExist [
 File >> delete [
 	"We retries with GC because in some platforms open files cannot be open"
 	self class
-		retryWithGC: [ self primDelete: name utf8Encoded ]
+		retryWithGC: [ Primitives deleteFile: name utf8Encoded ]
 		until: [ :result | result notNil ]
 		forFileNamed: name.
 	self exists
@@ -219,30 +227,6 @@ File >> openForWrite: writeMode [
 	^ (BinaryFileStream handle: fileHandle file: self forWrite: writeMode)
 		register;
 		yourself
-]
-
-{ #category : #primitives }
-File >> primDelete: aFileName [
-	"Delete the file of the given name. 
-	Return self if the primitive succeeds, nil otherwise."
-
-	<primitive: 'primitiveFileDelete' module: 'FilePlugin'>
-	^ nil
-]
-
-{ #category : #primitives }
-File >> primOpen: fileName writable: writableFlag [
-	"Open a file of the given name, and return the file ID obtained.
-	If writableFlag is true, then
-		if there is none with this name, then create one
-		else prepare to overwrite the existing from the beginning
-	otherwise
-		if the file exists, open it read-only
-		else return nil"
-
-	<primitive: 'primitiveFileOpen' module: 'FilePlugin'>
-	^ nil
-
 ]
 
 { #category : #streaming }

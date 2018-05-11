@@ -65,8 +65,7 @@ Stdio class >> startUp: resuming [
 
 { #category : #accessing }
 Stdio class >> stderr [
-
-	^ Stderr ifNil: [ Stderr := self standardIOStreamNamed: #stderr forWrite: true ].
+	^ Stderr ifNil: [ Stderr := self standardIOStreamNamed: #stderr forWrite: true ]
 ]
 
 { #category : #accessing }

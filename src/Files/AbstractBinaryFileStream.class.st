@@ -39,6 +39,9 @@ Class {
 		'handle',
 		'forWrite'
 	],
+	#classVars : [
+		'Primitives'
+	],
 	#category : #'Files-Streams'
 }
 
@@ -50,10 +53,20 @@ AbstractBinaryFileStream class >> handle: aCollection file: aFile forWrite: aTru
 		yourself
 ]
 
+{ #category : #'initialization-release' }
+AbstractBinaryFileStream class >> initialize [
+	self useFilePlugin
+]
+
+{ #category : #'initialization-release' }
+AbstractBinaryFileStream class >> useFilePlugin [
+	Primitives := FilePluginPrims new
+]
+
 { #category : #testing }
 AbstractBinaryFileStream >> atEnd [
 
-	^ self primAtEnd: handle
+	^ Primitives atEnd: handle
 ]
 
 { #category : #accessing }
@@ -100,7 +113,7 @@ AbstractBinaryFileStream >> flush [
 	the number of write() system calls it makes. This should generally be
 	used before #sync, but on Windows they do the same thing."
 	
-	self primFlush: handle
+	Primitives flush: handle
 ]
 
 { #category : #initialization }
@@ -147,7 +160,7 @@ AbstractBinaryFileStream >> next: n into: aBuffer [
 	"Return a string with the next n characters of the filestream in it."
 	| readBuffer read |
 	readBuffer := aBuffer.
-	read := self primRead: handle into: readBuffer startingAt: 1 count: n.
+	read := Primitives read: handle into: readBuffer startingAt: 1 count: n.
 	^read = n 
 		ifTrue: [ readBuffer ]
 		ifFalse: [ readBuffer copyFrom: 1 to: read ]
@@ -167,9 +180,19 @@ AbstractBinaryFileStream >> next: n into: aString startingAt: startIndex [
 
 { #category : #writing }
 AbstractBinaryFileStream >> next: amount putAll: aByteArray [
-
-	forWrite ifFalse: [^ self error: 'Cannot write a read-only file'].
-	self primWrite: handle from: aByteArray startingAt: 1 count: amount.
+	forWrite
+		ifFalse: [ ^ self error: 'Cannot write a read-only file' ].
+	[ Primitives
+		write: handle
+		from: aByteArray
+		startingAt: 1
+		count: amount ]
+		on: PrimitiveFailed
+		do: [ (FileWriteError fileName: self name)
+				signal:
+					(self close
+						ifTrue: [ 'File ' , self name , ' is closed' ]
+						ifFalse: [ 'File ' , self name , ' write failed' ]) ].
 	^ aByteArray
 ]
 
@@ -208,10 +231,7 @@ AbstractBinaryFileStream >> nextPut: anInteger [
 
 { #category : #writing }
 AbstractBinaryFileStream >> nextPutAll: aByteArray [
-
-	forWrite ifFalse: [^ self error: 'Cannot write a read-only file'].
-	
-	self primWrite: handle from: aByteArray startingAt: 1 count: aByteArray basicSize.
+	self next: aByteArray basicSize putAll: aByteArray
 ]
 
 { #category : #accessing }
@@ -223,112 +243,13 @@ AbstractBinaryFileStream >> peek [
 { #category : #positioning }
 AbstractBinaryFileStream >> position [
 
-	^ self primGetPosition: handle
+	^ Primitives getPosition: handle
 ]
 
 { #category : #positioning }
 AbstractBinaryFileStream >> position: aPosition [
 	
-	self primSetPosition: handle to: aPosition
-]
-
-{ #category : #private }
-AbstractBinaryFileStream >> primAtEnd: id [
-	"Answer true if the file position is at the end of the file."
-
-	<primitive: 'primitiveFileAtEnd' module: 'FilePlugin'>
-	self primitiveFailed
-
-]
-
-{ #category : #private }
-AbstractBinaryFileStream >> primFlush: id [
-	"On Unix, the FilePlugin uses stdio FILE* structs which maintain their
-	own internal buffer to minimize write() syscalls. This flushes that buffer.
-	On Windows this and primSync: do the same thing."
-
-	<primitive: 'primitiveFileFlush' module: 'FilePlugin'>
-	
-	"We can't ignore fflush() failing, because it can fail for any of the
-	reasons write() can."
-	self primitiveFailed
-]
-
-{ #category : #private }
-AbstractBinaryFileStream >> primGetPosition: id [
-	"Get this files current position."
-
-	<primitive: 'primitiveFileGetPosition' module: 'FilePlugin'>
-	self primitiveFailed
-
-]
-
-{ #category : #private }
-AbstractBinaryFileStream >> primRead: id into: byteArray startingAt: startIndex count: count [
-	"Read up to count bytes of data from this file into the given string or byte array starting at the given index. Answer the number of bytes actually read."
-
-	<primitive: 'primitiveFileRead' module: 'FilePlugin'>
-	self closed ifTrue: [^ self error: 'File is closed'].
-	self error: 'File read failed'.
-
-]
-
-{ #category : #private }
-AbstractBinaryFileStream >> primSetPosition: id to: anInteger [
-	"Set this file to the given position."
-
-	<primitive: 'primitiveFileSetPosition' module: 'FilePlugin'>
-	self primitiveFailed
-
-]
-
-{ #category : #private }
-AbstractBinaryFileStream >> primSize: id [
-	"Answer the size of this file."
-
-	<primitive: 'primitiveFileSize' module: 'FilePlugin'>
-	self primitiveFailed
-
-]
-
-{ #category : #private }
-AbstractBinaryFileStream >> primSizeNoError: id [
-	"Answer the size of this file. Answer nil if the primitive fails; this indicates that the file handle has become stale."
-
-	<primitive: 'primitiveFileSize' module: 'FilePlugin'>
-	^ nil
-
-]
-
-{ #category : #private }
-AbstractBinaryFileStream >> primSync: id [
-	"On Unix, this syncs any written or flushed data still in the kernel file
-	system buffers to disk. On Windows this and primFlush: do the same thing"
-
-	<primitive: 'primitiveFileSync' module: 'FilePlugin'>
-
-	"fsync() failing cannot be ignored"
-	self primitiveFailed
-]
-
-{ #category : #private }
-AbstractBinaryFileStream >> primTruncate: id to: anInteger [
-	"Truncate this file to the given position."
-
-	<primitive: 'primitiveFileTruncate' module: 'FilePlugin'>
-	self primitiveFailed
-
-]
-
-{ #category : #private }
-AbstractBinaryFileStream >> primWrite: id from: stringOrByteArray startingAt: startIndex count: count [
-	"Write count bytes onto this file from the given string or byte array starting at the given index. Answer the number of bytes written."
-
-	<primitive: 'primitiveFileWrite' module: 'FilePlugin'>
-	(FileWriteError fileName: self name)
-		signal: (self closed
-			ifTrue: [ 'File ', self name, ' is closed' ]
-			ifFalse: [ 'File ', self name, ' write failed' ])
+	Primitives setPosition: handle to: aPosition
 ]
 
 { #category : #printing }
@@ -344,7 +265,7 @@ AbstractBinaryFileStream >> printOn: aStream [
 { #category : #reading }
 AbstractBinaryFileStream >> readInto: readBuffer startingAt: startIndex count: count [
 
-	^ self primRead: handle into: readBuffer startingAt: startIndex count: count
+	^ Primitives read: handle into: readBuffer startingAt: startIndex count: count
 ]
 
 { #category : #positioning }
@@ -361,7 +282,7 @@ AbstractBinaryFileStream >> setToEnd [
 { #category : #accessing }
 AbstractBinaryFileStream >> size [
 
-	^ self primSize: handle
+	^ Primitives sizeOf: handle
 ]
 
 { #category : #positioning }
@@ -378,7 +299,7 @@ AbstractBinaryFileStream >> sync [
 	file system buffers to disk. This should generally be used after #flush,
 	but on Windows they do the same thing."
 
-	self primSync: handle
+	Primitives sync: handle
 ]
 
 { #category : #accessing }

@@ -94,7 +94,7 @@ FileHandle >> close [
 
 { #category : #finalization }
 FileHandle >> finalize [
-	self primCloseNoError: id.
+	Primitives close: id.
 ]
 
 { #category : #public }

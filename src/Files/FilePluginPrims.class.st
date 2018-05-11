@@ -5,7 +5,7 @@ I provide an interface to the primitives in the FilePlugin.
 Class {
 	#name : #FilePluginPrims,
 	#superclass : #Object,
-	#category : #'FileSystem-Disk-Base'
+	#category : #'Files-Core'
 }
 
 { #category : #'file primitives' }
@@ -23,6 +23,11 @@ FilePluginPrims >> close: id [
 
 	<primitive: 'primitiveFileClose' module: 'FilePlugin'>
 	
+]
+
+{ #category : #'file primitives' }
+FilePluginPrims >> closed: id [
+	^ id isNil or: [ (self sizeOrNil: id) isNil ]
 ]
 
 { #category : #'file primitives' }
@@ -123,7 +128,7 @@ FilePluginPrims >> fileDescriptorType: fdNum [
 	<primitive: 'primitiveFileDescriptorType' module: 'FilePlugin' error: error>
 	error = #'bad argument'
 		ifTrue: [ fdNum isInteger
-				ifFalse: [ ^ self error: 'fileDescriptor must be an integer' ] ].
+				ifFalse: [ ^ self error: 'File Descriptor must be an integer!' ] ].
 	^ self primitiveFailed
 ]
 
@@ -231,7 +236,9 @@ FilePluginPrims >> read: id into: byteArray startingAt: startIndex count: count 
 	"Read up to count bytes of data from this file into the given string or byte array starting at the given index. Answer the number of bytes actually read."
 
 	<primitive: 'primitiveFileRead' module: 'FilePlugin'>
-	self primitiveFailed
+	(self closed: id)
+		ifTrue: [ ^ self error: 'File is closed' ].
+	self error: 'File read failed'
 ]
 
 { #category : #'path primitives' }
@@ -320,5 +327,5 @@ FilePluginPrims >> write: id from: stringOrByteArray startingAt: startIndex coun
 	"Write count bytes onto this file from the given string or byte array starting at the given index. 	Answer the number of bytes written."
 
 	<primitive: 'primitiveFileWrite' module: 'FilePlugin'>
-	self primitiveFailed
+	self primitiveFailed 
 ]

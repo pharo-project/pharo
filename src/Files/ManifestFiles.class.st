@@ -1,7 +1,7 @@
 Class {
 	#name : #ManifestFiles,
 	#superclass : #PackageManifest,
-	#category : #Files
+	#category : #'Files-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
