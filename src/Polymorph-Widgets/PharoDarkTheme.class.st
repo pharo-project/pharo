@@ -444,14 +444,14 @@ PharoDarkTheme >> successTextColor [
 ]
 
 { #category : #'basic-colors' }
-PharoDarkTheme >> taskbarButtonLabelColorForCollapsed: aButton [
+PharoDarkTheme >> taskbarItemLabelColorForCollapsed: aButton [
 	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
 
 	^ self textColor
 ]
 
 { #category : #'basic-colors' }
-PharoDarkTheme >> taskbarButtonLabelColorForExpanded: aButton [
+PharoDarkTheme >> taskbarItemLabelColorForExpanded: aButton [
 	"Answer the colour for the label of the given taskbar button, given that the corresponding window is expanded."
 
 	^ self textColor
