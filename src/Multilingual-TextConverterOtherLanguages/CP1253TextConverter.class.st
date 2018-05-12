@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'FromTable'
 	],
-	#category : #'Multilingual-TextConverterOtherLanguages'
+	#category : #'Multilingual-TextConverterOtherLanguages-TextConverter'
 }
 
 { #category : #accessing }

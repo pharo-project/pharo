@@ -7,7 +7,7 @@ Locale switchToID: (LocaleID isoLanguage: 'ru').
 Class {
 	#name : #RussianEnvironment,
 	#superclass : #LanguageEnvironment,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-Environments'
 }
 
 { #category : #'class initialization' }

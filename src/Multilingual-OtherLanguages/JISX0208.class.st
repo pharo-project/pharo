@@ -4,7 +4,7 @@ This class represents the domestic character encoding called JIS X 0208 used for
 Class {
 	#name : #JISX0208,
 	#superclass : #EncodedCharSet,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-CharSets'
 }
 
 { #category : #'class methods' }

@@ -4,7 +4,7 @@ This class provides the support for the languages in 'Latin-9' category.
 Class {
 	#name : #Latin9Environment,
 	#superclass : #LanguageEnvironment,
-	#category : #'Multilingual-Languages'
+	#category : #'Multilingual-Languages-Environments'
 }
 
 { #category : #'class initialization' }

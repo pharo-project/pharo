@@ -1,7 +1,10 @@
+"
+Package for multilingual text conversion classes
+"
 Class {
 	#name : #ManifestMultilingualTextConversion,
 	#superclass : #PackageManifest,
-	#category : #'Multilingual-TextConversion'
+	#category : #'Multilingual-TextConversion-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
