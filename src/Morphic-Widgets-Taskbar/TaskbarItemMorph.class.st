@@ -43,6 +43,12 @@ TaskbarItemMorph >> disabledFillStyle [
 ]
 
 { #category : #initialization }
+TaskbarItemMorph >> initialize [
+	super initialize.
+	self borderStyle: (self theme taskbarItemNormalBorderStyleFor: self)
+]
+
+{ #category : #initialization }
 TaskbarItemMorph >> initializeAnnouncements [
 	self 
 		on: #mouseEnter send: #taskbarButtonEntered:event:in: to: self model withValue: self;
