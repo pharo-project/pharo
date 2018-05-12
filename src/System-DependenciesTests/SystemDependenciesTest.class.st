@@ -91,7 +91,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler #Iceberg #'Iceberg-Libgit') sorted
+	^ #(#Iceberg #'Iceberg-Libgit') sorted
 ]
 
 { #category : #'known dependencies' }
