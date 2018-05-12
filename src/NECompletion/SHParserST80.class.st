@@ -22,7 +22,7 @@ Class {
 		'environment',
 		'isMethod'
 	],
-	#category : #'Shout-Parsing'
+	#category : #'NECompletion-Parser'
 }
 
 { #category : #accessing }
@@ -302,12 +302,6 @@ SHParserST80 >> nextChar [
 	^ source
 		at: sourcePosition
 		ifAbsent: [Character space]
-]
-
-{ #category : #customizing }
-SHParserST80 >> on: anObject [
-
-	anObject shoutParser: self.
 ]
 
 { #category : #parse }
