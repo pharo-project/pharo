@@ -25,7 +25,7 @@ Class {
 		'Unconnected',
 		'WaitingForConnection'
 	],
-	#category : #'Network-Kernel'
+	#category : #'Network-Kernel-Base'
 }
 
 { #category : #'instance creation' }

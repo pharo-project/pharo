@@ -17,7 +17,7 @@ Class {
 		'UseHTTPProxy',
 		'UseNetworkAuthentification'
 	],
-	#category : #'Network-Kernel'
+	#category : #'Network-Kernel-Base'
 }
 
 { #category : #settings }

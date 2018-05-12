@@ -4,7 +4,7 @@ I do quoted printable MIME decoding as specified in RFC 2047 """"MIME Part Three
 Class {
 	#name : #RFC2047MimeConverter,
 	#superclass : #QuotedPrintableMimeConverter,
-	#category : #'Network-MIME'
+	#category : #'Network-MIME-Converter'
 }
 
 { #category : #'private-encoding' }
