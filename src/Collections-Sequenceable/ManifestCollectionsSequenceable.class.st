@@ -4,7 +4,7 @@ Sequenceable collections: arrays, intervals, ordered collections and dictionarie
 Class {
 	#name : #ManifestCollectionsSequenceable,
 	#superclass : #PackageManifest,
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Manifest'
 }
 
 { #category : #'meta-data' }

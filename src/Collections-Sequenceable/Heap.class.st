@@ -56,7 +56,7 @@ Class {
 	#classInstVars : [
 		'sortBlock'
 	],
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Base'
 }
 
 { #category : #accessing }
