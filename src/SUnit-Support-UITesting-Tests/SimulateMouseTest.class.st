@@ -1,5 +1,8 @@
+"
+SUnit tests to simulate and test mouse behavior
+"
 Class {
-	#name : #SimulateMouseSpecification,
+	#name : #SimulateMouseTest,
 	#superclass : #UITestCase,
 	#instVars : [
 		'morph'
@@ -8,7 +11,7 @@ Class {
 }
 
 { #category : #helpers }
-SimulateMouseSpecification >> menuOpenedDuring: aBlock [
+SimulateMouseTest >> menuOpenedDuring: aBlock [
 
 	| jailor |
 	jailor := MenuCapturingMorph new openInWorld.
@@ -17,14 +20,14 @@ SimulateMouseSpecification >> menuOpenedDuring: aBlock [
 ]
 
 { #category : #running }
-SimulateMouseSpecification >> tearDown [
+SimulateMouseTest >> tearDown [
 
 	morph delete.
 	super tearDown 
 ]
 
 { #category : #tests }
-SimulateMouseSpecification >> testSimulateClick [
+SimulateMouseTest >> testSimulateClick [
 
 	morph := TextMorph new contents: ''; openInWorld.	
 	morph simulateClick.
@@ -32,7 +35,7 @@ SimulateMouseSpecification >> testSimulateClick [
 ]
 
 { #category : #tests }
-SimulateMouseSpecification >> testSimulateMiddleClick [
+SimulateMouseTest >> testSimulateMiddleClick [
 	
 	morph := MorphHandlingMiddleButton new openInWorld.
 	morph simulateMiddleClick.
@@ -41,7 +44,7 @@ SimulateMouseSpecification >> testSimulateMiddleClick [
 ]
 
 { #category : #tests }
-SimulateMouseSpecification >> testSimulateRightClick [
+SimulateMouseTest >> testSimulateRightClick [
 	
 	| menu |
 	morph := Smalltalk tools workspace open.
@@ -50,7 +53,7 @@ SimulateMouseSpecification >> testSimulateRightClick [
 ]
 
 { #category : #helpers }
-SimulateMouseSpecification >> timeoutAfter: aDuration ifNot: aBlock [
+SimulateMouseTest >> timeoutAfter: aDuration ifNot: aBlock [
 
 	| timer |
 	timer := Stopwatch new activate.
@@ -58,7 +61,7 @@ SimulateMouseSpecification >> timeoutAfter: aDuration ifNot: aBlock [
 ]
 
 { #category : #helpers }
-SimulateMouseSpecification >> waitForMorphThat: aBlock [
+SimulateMouseTest >> waitForMorphThat: aBlock [
 
 	self timeoutAfter: 2 seconds ifNot: [
 		morph := World submorphThat: aBlock ifNone: [ nil ].
