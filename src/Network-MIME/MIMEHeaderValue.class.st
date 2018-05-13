@@ -16,7 +16,7 @@ Class {
 		'mainValue',
 		'parameters'
 	],
-	#category : #'Network-MIME'
+	#category : #'Network-MIME-Base'
 }
 
 { #category : #'instance creation' }

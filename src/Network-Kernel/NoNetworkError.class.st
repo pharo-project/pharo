@@ -6,5 +6,5 @@ Signals that no network was found. This could happen, e.g., on dial-up connectio
 Class {
 	#name : #NoNetworkError,
 	#superclass : #NetworkError,
-	#category : #'Network-Kernel'
+	#category : #'Network-Kernel-Exceptions'
 }

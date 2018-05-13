@@ -8,7 +8,7 @@ Class {
 		'dataStream',
 		'mimeStream'
 	],
-	#category : #'Network-MIME'
+	#category : #'Network-MIME-Converter'
 }
 
 { #category : #convenience }
