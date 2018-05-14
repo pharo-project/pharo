@@ -798,12 +798,6 @@ Class >> name [
 	^ name ifNil: [ super name ]
 ]
 
-{ #category : #private }
-Class >> name: aSymbol [
-	"for compatibile API with trais"
-	self setName: aSymbol
-]
-
 { #category : #'subclass creation' }
 Class >> newAnonymousSubclass [
 
