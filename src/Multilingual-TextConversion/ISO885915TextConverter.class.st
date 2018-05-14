@@ -4,7 +4,7 @@ Text converter for ISO 8859-15.  An international encoding used in Western Europ
 Class {
 	#name : #ISO885915TextConverter,
 	#superclass : #ByteTextConverter,
-	#category : #'Multilingual-TextConversion'
+	#category : #'Multilingual-TextConversion-TextConverter'
 }
 
 { #category : #initialization }

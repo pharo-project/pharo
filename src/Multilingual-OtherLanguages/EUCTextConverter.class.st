@@ -4,7 +4,7 @@ Text converter for Extended Unix Character.  This is an abstract class.  The CJK
 Class {
 	#name : #EUCTextConverter,
 	#superclass : #TextConverter,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-TextConverter'
 }
 
 { #category : #private }
