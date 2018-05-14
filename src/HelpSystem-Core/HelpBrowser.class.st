@@ -267,6 +267,12 @@ HelpBrowser >> selectedClassOrMetaClass [
 	^ nil
 ]
 
+{ #category : #initialization }
+HelpBrowser >> shoutAboutToStyle: aPluggableShoutMorphOrView [ 
+	^ (self rootTopic respondsTo: #canHaveSyntaxHighlighting)
+				and: [self rootTopic canHaveSyntaxHighlighting]
+]
+
 { #category : #ui }
 HelpBrowser >> shoutMorphFillMenu: aMenu [
 	^ aMenu addAllFrom: self menu

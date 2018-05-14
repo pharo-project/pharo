@@ -1479,6 +1479,11 @@ FileList >> setSortSelector: aByteSymbol [
 	self sortBlock: (self perform: aByteSymbol).
 ]
 
+{ #category : #'morphic ui' }
+FileList >> shoutAboutToStyle: aPluggableShoutMorphOrView [ 
+	^ false
+]
+
 { #category : #private }
 FileList >> sortBlock [
 	"Answer block to decide what order to display the directory entries."
