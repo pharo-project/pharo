@@ -206,15 +206,6 @@ File class >> getPosition: id [
 
 ]
 
-{ #category : #'initialization-release' }
-File class >> imageFile [
-	self 
-		deprecated: 'Use Smalltalk imageFile fullName instead'
-		on: 	'14 May 2018' 
-		in: 'Pharo-7.0+alpha.build.876.sha.f8079b5841caa282c5849479d7f16321aad0aead (32 Bit)'.
-	^ Smalltalk imageFile fullName
-]
-
 { #category : #'primitives-path' }
 File class >> lookupDirectory: fullPath filename: fileName [
 
@@ -354,17 +345,6 @@ File class >> retryWithGC: execBlock until: testBlock forFileNamed: fullName [
 	(testBlock value: blockValue) ifTrue: [ ^ blockValue ].
 	Smalltalk garbageCollect.
 	^execBlock value.
-]
-
-{ #category : #'primitives-path' }
-File class >> setMacFileNamed: fileName type: typeString creator: creatorString [
-	"Set the Macintosh file type and creator info for the file with the given name. Fails if the 
-	file does not exist or if the type and creator type arguments are not strings of length 4. This
-	primitive is Mac specific; it is a noop on other platforms."
-
- 	<primitive: 'primitiveDirectorySetMacTypeAndCreator' module: 'FilePlugin'>
-	self primitiveFailed
-
 ]
 
 { #category : #'primitives-file' }
