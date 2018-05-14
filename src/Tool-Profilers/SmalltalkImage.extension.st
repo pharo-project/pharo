@@ -63,7 +63,7 @@ SmalltalkImage >> reportCPUandRAM [
 [
 	"Process taking most CPU"
 	'Log-ThePig.txt' asFileReference writeStreamDo: [ :aStream |
-		self tools processBrowser dumpPigStackOn: aStream andClose: false ].
+		self tools processBrowser dumpPigStackOn: aStream ].
 	
 	"Tally of all processes"
 	'Log-FullTally.txt' asFileReference writeStreamDo: [ :aStream |
