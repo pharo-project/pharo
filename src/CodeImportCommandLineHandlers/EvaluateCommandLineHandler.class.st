@@ -22,7 +22,7 @@ Important: don't manually save the image at the end of the expression by calling
 Class {
 	#name : #EvaluateCommandLineHandler,
 	#superclass : #STCommandLineHandler,
-	#category : #CodeImportCommandLineHandlers
+	#category : #'CodeImportCommandLineHandlers-Base'
 }
 
 { #category : #accessing }
