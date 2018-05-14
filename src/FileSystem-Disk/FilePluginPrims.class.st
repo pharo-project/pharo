@@ -5,7 +5,7 @@ I provide an interface to the primitives in the FilePlugin.
 Class {
 	#name : #FilePluginPrims,
 	#superclass : #Object,
-	#category : #'FileSystem-Disk'
+	#category : #'FileSystem-Disk-Base'
 }
 
 { #category : #'file primitives' }

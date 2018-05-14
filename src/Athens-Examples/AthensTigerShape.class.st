@@ -17,55 +17,55 @@ Class {
 		'fillPaint',
 		'stroke'
 	],
-	#category : #'Athens-Examples'
+	#category : #'Athens-Examples-Utilities'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTigerShape >> addFill [
 	fill := true.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTigerShape >> addStroke [
 	stroke := true.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTigerShape >> capStyle: cap [
 	capStyle := cap.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTigerShape >> fillPaint: aColor [ 
 	fillPaint := aColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTigerShape >> fillRule [
 	^ fillRule
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTigerShape >> fillRule: rule [ 
 	fillRule := rule.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 AthensTigerShape >> initialize [ 
 	fill := stroke := false.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTigerShape >> joinStyle: join [
 	joinStyle := join.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTigerShape >> miterLimit: lim [
 	miterLimit := lim.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 AthensTigerShape >> prepareFor: surface [
 	fill ifTrue: [
 		fillPaint := surface createSolidColorPaint: fillPaint.
@@ -79,7 +79,7 @@ AthensTigerShape >> prepareFor: surface [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 AthensTigerShape >> renderOn: can [
 
 	fill ifTrue: [ 
@@ -93,17 +93,17 @@ AthensTigerShape >> renderOn: can [
 	]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTigerShape >> setPath: anAthensCairoPath [
 		path := anAthensCairoPath
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTigerShape >> strokePaint: aColor [ 
 	strokePaint := aColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTigerShape >> strokeWidth: w [
 	strokeWidth := w
 ]

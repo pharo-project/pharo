@@ -126,6 +126,22 @@ RPackageOrganizerTest >> testAccessingPackage [
 ]
 
 { #category : #tests }
+RPackageOrganizerTest >> testCreateNewPackageWithConflictRaisesConflictException [
+
+	packageOrganizer createPackageNamed: 'P1'.
+	self
+		should: [ packageOrganizer createPackageNamed: 'P1' ]
+		raise: RPackageConflictError
+]
+
+{ #category : #tests }
+RPackageOrganizerTest >> testCreateNewPackageWithoutConflictCreatesPackage [
+
+	packageOrganizer createPackageNamed: 'P1'.
+	self assert: (packageOrganizer includesPackageNamed: 'P1')
+]
+
+{ #category : #tests }
 RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 	
 	| p1 |

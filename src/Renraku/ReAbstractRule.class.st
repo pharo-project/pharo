@@ -74,7 +74,7 @@ ReAbstractRule class >> identifierMinorVersionNumber [
 { #category : #testing }
 ReAbstractRule class >> isUsed [
 	"all my sublasses are used"
-	^self name = 'RBLintRule'
+	^self name = 'ReAbstractRule'
 		ifTrue: [ super isUsed ]
 		ifFalse: [ true ]
 ]

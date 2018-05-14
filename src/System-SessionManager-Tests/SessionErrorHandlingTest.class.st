@@ -1,3 +1,6 @@
+"
+SUnit tests for session error handling
+"
 Class {
 	#name : #SessionErrorHandlingTest,
 	#superclass : #TestCase,

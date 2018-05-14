@@ -4,7 +4,7 @@ Text converter for UTF-8.  Since the BOM is used to distinguish the MacRoman cod
 Class {
 	#name : #UTF8TextConverter,
 	#superclass : #TextConverter,
-	#category : #'Multilingual-TextConversion'
+	#category : #'Multilingual-TextConversion-TextConverter'
 }
 
 { #category : #utilities }

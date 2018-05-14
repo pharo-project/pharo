@@ -11,7 +11,7 @@ Class {
 		'zipFile',
 		'fileSystem'
 	],
-	#category : #'Compression-Tests-Archive'
+	#category : #'Compression-Tests-Archives'
 }
 
 { #category : #running }

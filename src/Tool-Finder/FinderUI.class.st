@@ -37,7 +37,7 @@ FinderUI class >> icon [
 	^ self iconNamed: #smallFindIcon
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 FinderUI class >> initialize [
 	searchedTextListMaxSize := 15
 ]
@@ -73,10 +73,11 @@ See MethodFinder.verify for more examples.'
 
 { #category : #'instance creation' }
 FinderUI class >> on: aFinder [
+
 	| instance |
 	instance := self new finder: aFinder.
 	self doAllSubscriptionsOn: aFinder to: instance.
-	^instance.
+	^instance
 ]
 
 { #category : #accessing }
@@ -87,23 +88,26 @@ FinderUI class >> searchedTextListMaxSize: anInteger [
 ]
 
 { #category : #'event subscriptions' }
-FinderUI class >> subscribesDisableUseRegExOn: aFinder to: anInstance. [
+FinderUI class >> subscribesDisableUseRegExOn: aFinder to: anInstance [
+
 	aFinder
 		when: #disableUseRegEx
 		send: #disableUseRegEx
-		to: anInstance.
+		to: anInstance
 ]
 
 { #category : #'event subscriptions' }
 FinderUI class >> subscribesEnableUseRegExOn: aFinder to: anInstance [
+
 	aFinder
 		when: #enableUseRegEx
 		send: #enableUseRegEx
-		to: anInstance.
+		to: anInstance
 ]
 
 { #category : #'event subscriptions' }
-FinderUI class >> subscribesResetEnvironmentOn: aFinder to: anInstance [ 
+FinderUI class >> subscribesResetEnvironmentOn: aFinder to: anInstance [
+
 	aFinder
 		when: #resetEnvironment
 		send: #resetEnvironment
@@ -112,34 +116,38 @@ FinderUI class >> subscribesResetEnvironmentOn: aFinder to: anInstance [
 
 { #category : #'event subscriptions' }
 FinderUI class >> subscribesUpdateListOn: aFinder to: anInstance [
+
 	aFinder
 		when: #updateResultDictionary
 		send: #updateList
-		to: anInstance.
+		to: anInstance
 ]
 
 { #category : #'event subscriptions' }
 FinderUI class >> subscribesUpdateSelectedClassOn: aFinder to: anInstance [
+
 	aFinder
 		when: #updateSelectedClass
 		send: #updateSelectedClass
-		to: anInstance.
+		to: anInstance
 ]
 
 { #category : #'event subscriptions' }
 FinderUI class >> subscribesUpdateSelectedMethodOn: aFinder to: anInstance [
+
 	aFinder
 		when: #updateSelectedMethod
 		send: #updateSelectedMethod
-		to: anInstance.
+		to: anInstance
 ]
 
 { #category : #'event subscriptions' }
 FinderUI class >> subscribesUpdateSourceCodeOn: aFinder to: anInstance [
+
 	aFinder
 		when: #updateSourceCode
 		send: #updateSourceCode
-		to: anInstance.
+		to: anInstance
 ]
 
 { #category : #icons }
@@ -196,7 +204,7 @@ FinderUI >> addToSearchedTextList: aString [
 { #category : #'buttons behavior' }
 FinderUI >> allClassesButtonAction [
 
-	self finder packagesSelection: self environment.
+	self finder packagesSelection: self environment
 ]
 
 { #category : #'buttons behavior' }
@@ -206,7 +214,7 @@ FinderUI >> allClassesButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> allClassesButtonState [
-	^false
+	^ false
 ]
 
 { #category : #private }
@@ -229,21 +237,21 @@ FinderUI >> autoSelection [
 			list := string substrings: '*'.
 			firstIndex := aString findString: list first.
 			lastIndex := (aString findString: list last startingAt: firstIndex) + list last size - 1.
-			interval := firstIndex to: lastIndex]
+			interval := firstIndex to: lastIndex ]
 		ifFalse: [
 			firstIndex := aString findString: string.
 			size := string size.
-			interval := firstIndex to: (firstIndex + size - 1)].
+			interval := firstIndex to: (firstIndex + size - 1) ].
 		
 	^ firstIndex = 0 
 		ifTrue: [ 0 to:0 ]
-		ifFalse: [interval]
+		ifFalse: [ interval ]
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> browseButtonAction [
 
-	self selectedNode browse.
+	self selectedNode browse
 ]
 
 { #category : #'buttons behavior' }
@@ -253,7 +261,7 @@ FinderUI >> browseButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> browseButtonState [
-	^self selectedClass isNil or: [self selectedMethod isNil]
+	^self selectedClass isNil or: [ self selectedMethod isNil ]
 ]
 
 { #category : #accessing }
@@ -273,7 +281,7 @@ FinderUI >> buildAllClassesButton [
 { #category : #'items creation' }
 FinderUI >> buildAllTextArea [
 	self buildSearchingTextArea.
-	self buildSourceTextArea.
+	self buildSourceTextArea
 ]
 
 { #category : #'items creation' }
@@ -408,7 +416,7 @@ FinderUI >> buildSearchModeToolBar: aWindow [
 		self buildRegExChooser.
 		self buildSearchModeDropListIn: aWindow.
 		self buildEnvironmentButton.
-		self buildAllClassesButton}.
+		self buildAllClassesButton}
 ]
 
 { #category : #'items creation' }
@@ -423,7 +431,7 @@ FinderUI >> buildSearchingTextArea [
 				addToList: #addToSearchedTextList:
 				class: String
 				getEnabled: nil) hResizing: #spaceFill; 
-				ghostText: 'Hit return to accept' translated.
+				ghostText: 'Hit return to accept' translated
 
 	
 ]
@@ -483,15 +491,16 @@ FinderUI >> compileSource: aString notifying: aController [
 { #category : #private }
 FinderUI >> constructPackagesSet [
 	| result |
-	result := ((self environment packages collect:#name )difference: (self packagesSelection packages collect:#name)).
-	^result asSet asSortedCollection: [:a :b | a<b]
+	result := (self environment packages collect: #name)
+		difference: (self packagesSelection packages collect: #name).
+	^ result asSet asSortedCollection: [ :a :b | a < b ]
 ]
 
 { #category : #private }
 FinderUI >> constructPackagesSet: aPackageEnvironment [
 	| result |
-	result := aPackageEnvironment packages collect:[:c | c name].
-		^(result reject: [:each | each isNil]) asSet asSortedCollection: [:a :b | a < b ].
+	result := aPackageEnvironment packages collect: [ :c | c name ].
+	^ (result reject: [ :each | each isNil ]) asSet asSortedCollection: [ :a :b | a < b ]
 ]
 
 { #category : #accessing }
@@ -501,11 +510,9 @@ FinderUI >> currentSearchMode [
 
 { #category : #accessing }
 FinderUI >> currentSearchMode: aSymbol [
-	
 	self finder searchingStringSilently: self searchingTextArea contentMorph textMorph text asString.
-	self searchingTextArea contentMorph textMorph hasUnacceptedEdits:false.
-	self finder currentSearchMode: aSymbol.
-	.
+	self searchingTextArea contentMorph textMorph hasUnacceptedEdits: false.
+	self finder currentSearchMode: aSymbol
 ]
 
 { #category : #private }
@@ -549,21 +556,19 @@ FinderUI >> defaultTreeMorph [
 			autoMultiSelection: self autoMultiSelection;
 			isCheckList: self isCheckList;
 			doubleClickSelector: #doubleClick;
-			getMenuSelector: #menu:shifted:";
-			rowColorForEven: Color veryLightGray muchLighter odd: Color white".
+			getMenuSelector: #menu:shifted:
 ]
 
 { #category : #display }
 FinderUI >> defaultWindowLabel [
-	^'Finder'.
+	^ 'Finder'
 ]
 
 { #category : #checkbox }
 FinderUI >> disableUseRegEx [
 	useRegExCheckbox isSelected
-		ifTrue: [ useRegExCheckbox toggleSelected].
-	useRegExCheckbox enabled: false.
-
+		ifTrue: [ useRegExCheckbox toggleSelected ].
+	useRegExCheckbox enabled: false
 ]
 
 { #category : #'do it requirements' }
@@ -592,8 +597,7 @@ FinderUI >> enableUseRegEx [
 
 { #category : #accessing }
 FinderUI >> environment [
-
-	^ self finder environment.
+	^ self finder environment
 ]
 
 { #category : #'buttons behavior' }
@@ -608,7 +612,7 @@ FinderUI >> environmentButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> environmentButtonState [
-	^false.
+	^ false
 ]
 
 { #category : #accessing }
@@ -633,50 +637,47 @@ FinderUI >> forSelectorsDo: selectorBlock forClassNamesDo: classNamesBlock forSo
 	self isExamplesSymbol
 		ifTrue: [^exampleBlock value].
 	self isPragmasSymbol
-		ifTrue: [^pragmaBlock value].
+		ifTrue: [^pragmaBlock value]
 ]
 
 { #category : #accessing }
 FinderUI >> forceSearch [
-
-	 ^ forceSearch ifNil: [forceSearch := false].
+	^ forceSearch ifNil: [ forceSearch := false ]
 ]
 
 { #category : #private }
 FinderUI >> hierarchy [
-	
-		self selectedClass ifNotNil: [ :class |
+	self selectedClass
+		ifNotNil: [ :class | 
 			self selectedMethod
-				ifNil: [SystemNavigation new browseHierarchy: class]
-				ifNotNil: [:selector | 
-					SystemNavigation new browseHierarchy:class selector: selector]]
+				ifNil: [ SystemNavigation new browseHierarchy: class ]
+				ifNotNil: [ :selector | SystemNavigation new browseHierarchy: class selector: selector ] ]
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> hierarchyButtonAction [
-	self hierarchy.
+	self hierarchy
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> hierarchyButtonLabel [
-	^'Hierarchy'
+	^ 'Hierarchy'
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> hierarchyButtonState [
-	^self selectedClass isNil.
+	^ self selectedClass isNil
 ]
 
 { #category : #private }
 FinderUI >> implementors [
-
-	self selectedMethod ifNil: [^self].
- 	SystemNavigation new browseAllImplementorsOf: self selectedMethod
+	self selectedMethod ifNil: [ ^ self ].
+	SystemNavigation new browseAllImplementorsOf: self selectedMethod
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> implementorsButtonAction [
-	self implementors.
+	self implementors
 ]
 
 { #category : #'buttons behavior' }
@@ -686,35 +687,35 @@ FinderUI >> implementorsButtonLabel [
 
 { #category : #'buttons behavior' }
 FinderUI >> implementorsButtonState [
-	^self selectedMethod isNil | self isClassNamesSymbol.
+	^ self selectedMethod isNil | self isClassNamesSymbol
 ]
 
 { #category : #private }
 FinderUI >> inheritance [
-	
-		self selectedClass ifNotNil: [ :class |.
-				self selectedMethod ifNotNil: [:selector | 
-					SystemNavigation new methodHierarchyBrowserForClass: class selector: selector]]
+	self selectedClass
+		ifNotNil: [ :class | 
+			self selectedMethod
+				ifNotNil: [ :selector | SystemNavigation new methodHierarchyBrowserForClass: class selector: selector ] ]
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> inheritanceButtonAction [
-	self inheritance.
+	self inheritance
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> inheritanceButtonLabel [
-	^'Inheritance'
+	^ 'Inheritance'
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> inheritanceButtonState [
-	^self selectedClass isNil | self isClassNamesSymbol.
+	^ self selectedClass isNil | self isClassNamesSymbol
 ]
 
 { #category : #display }
 FinderUI >> initialExtent [
-	^700 @ 500
+	^ 700@500
 ]
 
 { #category : #initialization }
@@ -725,7 +726,7 @@ FinderUI >> initialize [
 	searchingTextArea := nil.
 	sourceTextArea := nil.
 	useRegExCheckbox := nil.
-	wrapBlockOrSelector := [ :i | i asString ] 
+	wrapBlockOrSelector := [ :i | i asString ]
 ]
 
 { #category : #'mode list' }
@@ -772,6 +773,7 @@ FinderUI >> menu: menu shifted: b [
 
 { #category : #display }
 FinderUI >> open [
+	 
 	| window |
 	window := StandardWindow new model: self.
 	self addAllItems: window.
@@ -800,7 +802,7 @@ FinderUI >> packagesSelection [
 { #category : #private }
 FinderUI >> packagesSelection: aCollection [
 
-	self finder packagesSelection: aCollection.
+	self finder packagesSelection: aCollection
 ]
 
 { #category : #accessing }
@@ -815,7 +817,7 @@ FinderUI >> resetEnvironment [
 
 { #category : #private }
 FinderUI >> resetSearchedTextList [
-	self searchedTextList removeAll.
+	self searchedTextList removeAll
 ]
 
 { #category : #'tree behavior' }
@@ -829,35 +831,34 @@ FinderUI >> rootItems [
 ]
 
 { #category : #'t - accessing' }
-FinderUI >> rootNodeClassFromItem: anItem [ 
+FinderUI >> rootNodeClassFromItem: anItem [
 	"To have the good class for my nodes, I ask my owner,
 	because he is the only one who knows his state"
-	^ self 
-		forSelectorsDo: [
-			(self resultDictionary at: anItem) size > 1
+
+	^ self
+		forSelectorsDo: [ (self resultDictionary at: anItem) size > 1
 				ifTrue: [ FinderMethodNode ]
-				ifFalse: [ FinderSingleMethodNode ]]
-		forClassNamesDo: [FinderClassNode]
-		forSourceDo: [FinderMethodNode]
-		forExamplesDo: [FinderExampleMethodNode] 
-		forPragmasDo: [FinderPragmaNode]
+				ifFalse: [ FinderSingleMethodNode ] ]
+		forClassNamesDo: [ FinderClassNode ]
+		forSourceDo: [ FinderMethodNode ]
+		forExamplesDo: [ FinderExampleMethodNode ]
+		forPragmasDo: [ FinderPragmaNode ]
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> searchButtonAction [
-	
 	forceSearch := true.
-	self searchingTextArea contentMorph acceptTextInModel.
+	self searchingTextArea contentMorph acceptTextInModel
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> searchButtonLabel [
-	^'Search'
+	^ 'Search'
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> searchButtonState [
-	^false.
+	^ false
 ]
 
 { #category : #private }
@@ -872,7 +873,7 @@ FinderUI >> searchModesList [
 
 { #category : #accessing }
 FinderUI >> searchedTextList [
-	^searchedTextList ifNil: [ searchedTextList := OrderedCollection new]
+	^ searchedTextList ifNil: [ searchedTextList := OrderedCollection new ]
 ]
 
 { #category : #accessing }
@@ -888,18 +889,17 @@ FinderUI >> searchedTextListMaxSize [
 
 { #category : #accessing }
 FinderUI >> searchedTextListMaxSize: anInteger [
-	[self searchedTextList size > anInteger]
-		whileTrue: [ self searchedTextList removeLast].
-	self changed: #searchedTextList.
+	[ self searchedTextList size > anInteger ] whileTrue: [ self searchedTextList removeLast ].
+	self changed: #searchedTextList
 ]
 
 { #category : #'text areas behavior' }
 FinderUI >> searchingAccept: aText [
-
 	self forceSearch
-		ifFalse: [aText asString = self searchingString ifTrue: [^self]].
+		ifFalse: [ aText asString = self searchingString
+				ifTrue: [ ^ self ] ].
 	self searchingString: aText asString.
-	forceSearch := false.
+	forceSearch := false
 ]
 
 { #category : #accessing }
@@ -915,7 +915,7 @@ FinderUI >> searchingString: aString [
 
 { #category : #accessing }
 FinderUI >> searchingTextArea [
-	^searchingTextArea ifNil: [self buildSearchingTextArea]
+	^ searchingTextArea ifNil: [ self buildSearchingTextArea ]
 ]
 
 { #category : #accessing }
@@ -937,25 +937,36 @@ FinderUI >> selection: aSelection [
 
 { #category : #private }
 FinderUI >> senders [
-
-	self selectedMethod 
-		ifNotNil: [ :selector |.
-			 	SystemNavigation new browseSendersOf: selector name: 'Senders of ', selector asString autoSelect: selector asString].
+	self selectedMethod
+		ifNotNil: [ :selector | 
+			SystemNavigation new
+				browseSendersOf: selector
+				name: 'Senders of ' , selector asString
+				autoSelect: selector asString ]
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> sendersButtonAction [
-	self senders.
+	self senders
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> sendersButtonLabel [
-	^'Senders'
+	^ 'Senders'
 ]
 
 { #category : #'buttons behavior' }
 FinderUI >> sendersButtonState [
-	^self selectedMethod isNil | self isClassNamesSymbol.
+	^ self selectedMethod isNil | self isClassNamesSymbol
+]
+
+{ #category : #'text areas behavior' }
+FinderUI >> shoutAboutToStyle: aPluggableShoutMorphOrView [
+
+	aPluggableShoutMorphOrView classOrMetaClass: self selectedClass.
+	self selectedClass ifNil: [^ false].
+	self selectedMethod ifNil: [^ false].
+	^ true
 ]
 
 { #category : #'text areas behavior' }
@@ -980,12 +991,12 @@ FinderUI >> sourceCode [
 
 { #category : #accessing }
 FinderUI >> sourceTextArea [
-	^sourceTextArea ifNil: [self buildSourceTextArea]
+	^ sourceTextArea ifNil: [ self buildSourceTextArea ]
 ]
 
 { #category : #accessing }
 FinderUI >> sourceTextModel [
-	^ sourceTextModel ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ].
+	^ sourceTextModel ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ]
 ]
 
 { #category : #private }
@@ -1010,8 +1021,7 @@ FinderUI >> useRegEx [
 
 { #category : #'items creation' }
 FinderUI >> useRegExCheckbox [
-	^ useRegExCheckbox ifNil: [self buildRegExChooser]
-
+	^ useRegExCheckbox ifNil: [ self buildRegExChooser ]
 ]
 
 { #category : #'buttons behavior' }

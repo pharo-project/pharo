@@ -11,7 +11,7 @@ Class {
 		'maxTest',
 		'shouldSerializeError'
 	],
-	#category : #'SUnit-UI'
+	#category : #'SUnit-UI-Headless'
 }
 
 { #category : #private }

@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'icons'
 	],
-	#category : #'Tool-CriticBrowser'
+	#category : #'Tool-CriticBrowser-Parts'
 }
 
 { #category : #specs }
@@ -37,7 +37,7 @@ SingleCodeCriticResultList class >> exclamationIcon [
 
 	^  icons
 			at: #'exclamationIcon'
-			ifAbsentPut:[ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self  exclamationIconContents readStream) ].
+			ifAbsentPut:[ Form fromBinaryStream: self exclamationIconContents base64Decoded readStream ].
 
 ]
 
@@ -76,7 +76,7 @@ SingleCodeCriticResultList class >> wrenchOrangeIcon [
 
 	^  icons
 			at: #'wrenchOrangeIcon'
-			ifAbsentPut:[ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self  wrenchOrangeIconContents readStream) ].
+			ifAbsentPut:[ Form fromBinaryStream: self wrenchOrangeIconContents base64Decoded readStream ].
 
 ]
 

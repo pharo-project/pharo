@@ -33,7 +33,7 @@ CharacterSetComplement >> = anObject [
 		absent = anObject complement ]
 ]
 
-{ #category : #'collection ops' }
+{ #category : #adding }
 CharacterSetComplement >> add: aCharacter [ 
 	"a character is present if not absent, so adding a character is removing it from the absent"
 	
@@ -67,7 +67,7 @@ CharacterSetComplement >> complement: aCharacterSet [
 	
 ]
 
-{ #category : #'collection ops' }
+{ #category : #enumerating }
 CharacterSetComplement >> do: aBlock [
 	"evaluate aBlock with each character in the set.
 	don't do it, there are too many..."
@@ -75,7 +75,7 @@ CharacterSetComplement >> do: aBlock [
 	self shouldNotImplement
 ]
 
-{ #category : #'collection ops' }
+{ #category : #enumerating }
 CharacterSetComplement >> findFirstInByteString: aByteString startingAt: startIndex [
 	"Double dispatching: since we know this is a ByteString, we can use a superfast primitive using a ByteArray map with 0 slots for byte characters not included and 1 for byte characters included in the receiver."
 	^ByteString
@@ -96,7 +96,7 @@ CharacterSetComplement >> hash [
 	^absent hash bitXor: self class hash
 ]
 
-{ #category : #'collection ops' }
+{ #category : #testing }
 CharacterSetComplement >> includes: aCharacter [
 	^(absent includes: aCharacter) not
 ]
@@ -117,14 +117,14 @@ CharacterSetComplement >> printOn: aStream [
 	aStream nextPut: $); space; nextPutAll: #complement.
 ]
 
-{ #category : #'collection ops' }
+{ #category : #enumerating }
 CharacterSetComplement >> reject: aBlock [
 	"Implementation note: rejecting present is selecting absent"
 	
 	^(absent select: aBlock) complement
 ]
 
-{ #category : #'collection ops' }
+{ #category : #removing }
 CharacterSetComplement >> remove: aCharacter [
 	"This means aCharacter is now absent from myself.
 	It must be added to my absent."
@@ -133,25 +133,25 @@ CharacterSetComplement >> remove: aCharacter [
 	^absent add: aCharacter
 ]
 
-{ #category : #'collection ops' }
+{ #category : #removing }
 CharacterSetComplement >> remove: aCharacter ifAbsent: aBlock [
 	(self includes: aCharacter) ifFalse: [^aBlock value].
 	^self remove: aCharacter
 ]
 
-{ #category : #'collection ops' }
+{ #category : #removing }
 CharacterSetComplement >> removeAll [
 	self becomeForward: CharacterSet new
 ]
 
-{ #category : #'collection ops' }
+{ #category : #enumerating }
 CharacterSetComplement >> select: aBlock [
 	"Implementation note: selecting present is rejecting absent"
 	
 	^(absent reject: aBlock) complement
 ]
 
-{ #category : #'collection ops' }
+{ #category : #accessing }
 CharacterSetComplement >> size [
 	"Is this 2**32-absent size ?"
 	

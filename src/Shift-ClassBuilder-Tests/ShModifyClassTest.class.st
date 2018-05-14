@@ -1,7 +1,7 @@
 Class {
 	#name : #ShModifyClassTest,
 	#superclass : #ShAbstractClassBuilderTest,
-	#category : 'Shift-ClassBuilder-Tests'
+	#category : #'Shift-ClassBuilder-Tests'
 }
 
 { #category : #tests }

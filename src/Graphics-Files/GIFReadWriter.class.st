@@ -221,17 +221,12 @@ GIFReadWriter >> nextBytePut: aByte [
 
 { #category : #accessing }
 GIFReadWriter >> nextImage [
-	"Read in the next GIF image from the stream. Read it all into
-memory first for speed."
+	"Read in the next GIF image from the stream."
 	| f thisImageColorTable |
-	stream class == ReadWriteStream ifFalse: 
-		[ stream binary.
-		self on: (ReadWriteStream with: stream contentsOfEntireFile) ].
 	localColorTable := nil.
 	self readHeader.
 	f := self readBody.
-	self close.
-	f == nil ifTrue: [ ^ self error: 'corrupt GIF file' ].
+	f ifNil: [ ^ self error: 'corrupt GIF file' ].
 	thisImageColorTable := localColorTable ifNil: [ colorPalette ].
 	transparentIndex ifNotNil: 
 		[ transparentIndex + 1 > thisImageColorTable size ifTrue: 
@@ -470,11 +465,12 @@ GIFReadWriter >> readColorTable: numberOfEntries [
 
 { #category : #'private-decoding' }
 GIFReadWriter >> readHeader [
-	| is89 byte hasColorMap |
-	(self hasMagicNumber: 'GIF87a' asByteArray) 
+	| magic is89 byte hasColorMap |
+	magic := stream next: 6.
+	(magic = 'GIF87a' asByteArray) 
 		ifTrue: [ is89 := false ]
 		ifFalse: 
-			[ (self hasMagicNumber: 'GIF89a' asByteArray) 
+			[ (magic = 'GIF89a' asByteArray) 
 				ifTrue: [ is89 := true ]
 				ifFalse: [ ^ self error: 'This does not appear to be a GIF file' ] ].
 	self readWord.	"skip Screen Width"

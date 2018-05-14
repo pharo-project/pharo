@@ -14,6 +14,11 @@ ZnEncodedWriteStream >> << collection [
 	^ self nextPutAll: collection
 ]
 
+{ #category : #accessing }
+ZnEncodedWriteStream >> flush [
+	stream flush
+]
+
 { #category : #testing }
 ZnEncodedWriteStream >> isBinary [
 	^ false

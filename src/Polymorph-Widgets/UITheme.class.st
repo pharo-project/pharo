@@ -276,6 +276,12 @@ UITheme >> balloonBackgroundColor [
 ]
 
 { #category : #'accessing colors' }
+UITheme >> balloonTextColor [
+
+	^self textColor
+]
+
+{ #category : #'accessing colors' }
 UITheme >> baseColor [
 	^ self class baseColor
 ]
@@ -3012,23 +3018,19 @@ UITheme >> newButtonIn: aThemedMorph for: aModel getState: stateSel action: acti
 UITheme >> newButtonIn: aThemedMorph for: aModel getState: stateSel action: actionSel arguments: args getEnabled: enabledSel label: label help: helpText [
 	"Answer a new button."
 
-	|b|
-	b := PluggableButtonMorph
-			on: aModel getState: stateSel action: actionSel.
-	b
+	| button |
+	^ (button := PluggableButtonMorph on: aModel getState: stateSel action: actionSel)
 		theme: self;
-		arguments: (args ifNil: [{b}]);
+		arguments: (args ifNil: [ {button} ]);
 		cornerStyle: (self buttonCornerStyleIn: aThemedMorph);
-		hResizing: #shrinkWrap;
-		vResizing: #shrinkWrap;
 		label: label font: self buttonFont;
 		getEnabledSelector: enabledSel;
 		setBalloonText: helpText;
-		extent: b minExtent;
+		extent: button minExtent;
 		hResizing: #rigid;
 		vResizing: #rigid;
-		removeProperty: #theme.
-	^b
+		removeProperty: #theme;
+		yourself
 ]
 
 { #category : #'morph creation' }
@@ -4219,34 +4221,9 @@ UITheme >> newTaskListButtonIn: aTasklist for: aTask [
 UITheme >> newTaskbarButtonIn: aTaskbar for: aWindow [
 	"Answer a taskbar button morph for the given window."
 
-	|lm lab button labSize|
-	labSize := (150 // (aTaskbar tasks size + 1) max: 10) min: 30.
-	lab := (self buttonLabelForText: (aWindow taskbarLabel truncateWithElipsisTo: labSize)).
-	aWindow isActive
-		ifTrue: [ lab emphasis: 1 "1 -> bold" ].
-	lm := self
-		newRowIn: aTaskbar
-		for: {(aWindow taskbarIcon ifNil: [^nil]) asMorph. lab}.
-	lm cellInset: 2.
-	button := self
-		newButtonIn: aTaskbar
-		for: aWindow
-		getState: #isActive
-		action: #taskbarButtonClicked
-		arguments: #()
-		getEnabled: nil
-		label: lm
-		help: nil.
-	button
-		useSquareCorners;
-		wantsYellowButtonMenu: true;
-		getMenuSelector: #taskbarButtonMenu:;
-		on: #mouseEnter send: #taskbarButtonEntered:event:in: to: aWindow withValue: button;
-		on: #mouseLeave send: #taskbarButtonLeft:event:in: to: aWindow withValue: button.
-	aWindow isCollapsed
-		ifTrue:  [ lab color: (self taskbarButtonLabelColorForCollapsed: button) ]
-		ifFalse: [ lab color: (self taskbarButtonLabelColorForExpanded: button). ].
-	^button
+	^ (TaskbarItemMorph on: aWindow getState: #isActive action: #taskbarButtonClicked)
+		initializeFor: aTaskbar;
+		yourself
 ]
 
 { #category : #'morph creation' }
@@ -5284,7 +5261,7 @@ UITheme >> settings: anObject [
 { #category : #accessing }
 UITheme >> shStyleTable [
 
-	^SHTextStylerST80 blueStyleTable
+	^SHRBTextStyler blueStyleTable
 ]
 
 { #category : #'border-styles' }
@@ -5486,24 +5463,136 @@ UITheme >> taskbarButtonLabelColorFor: aButton [
 				ifFalse: [Color gray darker]]
 ]
 
-{ #category : #'basic-colors' }
-UITheme >> taskbarButtonLabelColorForCollapsed: aButton [
-	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
-
-	^Color darkGray
-]
-
-{ #category : #'basic-colors' }
-UITheme >> taskbarButtonLabelColorForExpanded: aButton [
-	"Answer the colour for the label of the given taskbar button, given that the corresponding window is expanded."
-
-	^Color black
-]
-
 { #category : #'fill-styles' }
 UITheme >> taskbarFillStyleFor: aTaskbar [
 	^ "self buttonNormalFillStyleFor: aTaskbar"
 	SolidFillStyle color: Color transparent 
+]
+
+{ #category : #'border-styles-taskbar' }
+UITheme >> taskbarItemDisabledBorderStyleFor: aButton [
+	"Return the disabled taskbar item borderStyle for the given button."
+
+	^ self buttonDisabledBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+UITheme >> taskbarItemDisabledFillStyleFor: aButton [
+	"Return the disabled taskbar item fillStyle for the given color."
+
+	^ self buttonDisabledFillStyleFor: aButton
+]
+
+{ #category : #'basic-colors' }
+UITheme >> taskbarItemLabelColorForCollapsed: aButton [
+	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
+	
+	^Color darkGray
+]
+
+{ #category : #'basic-colors' }
+UITheme >> taskbarItemLabelColorForExpanded: aButton [
+	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
+	
+	^ Color black
+]
+
+{ #category : #'border-styles-taskbar' }
+UITheme >> taskbarItemMouseOverBorderStyleFor: aButton [
+	"Return the mouse over taskbar item borderStyle for the given button."
+	
+	^ self buttonMouseOverBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+UITheme >> taskbarItemMouseOverFillStyleFor: aButton [
+	"Return the taskbar item mouse over fillStyle for the given color."
+
+	^ self buttonMouseOverFillStyleFor: aButton
+]
+
+{ #category : #'border-styles-taskbar' }
+UITheme >> taskbarItemNormalBorderStyleFor: aButton [
+	"Return the normal taskbar item borderStyle for the given button."
+
+	^ self buttonNormalBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+UITheme >> taskbarItemNormalFillStyleFor: aButton [
+	"Return the normal taskbar item fillStyle for the given button."
+	
+	^ self buttonNormalFillStyleFor: aButton
+]
+
+{ #category : #'border-styles-taskbar' }
+UITheme >> taskbarItemPressedBorderStyleFor: aButton [
+	"Return the pressed taskbar item borderStyle for the given button."
+
+	^ self buttonPressedBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+UITheme >> taskbarItemPressedFillStyleFor: aButton [
+	"Return the taskbar item pressed fillStyle for the given button."
+		
+	^ self buttonPressedFillStyleFor: aButton
+]
+
+{ #category : #'border-styles-taskbar' }
+UITheme >> taskbarItemSelectedBorderStyleFor: aButton [
+	"Return the selected taskbar item borderStyle for the given button."
+
+	^ self buttonSelectedBorderStyleFor: aButton
+]
+
+{ #category : #'border-styles-taskbar' }
+UITheme >> taskbarItemSelectedDisabledBorderStyleFor: aButton [
+	"Return the selecteddisabled taskbar item borderStyle for the given button."
+
+	^ self buttonSelectedDisabledBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+UITheme >> taskbarItemSelectedDisabledFillStyleFor: aButton [
+	"Return the taskbar item selected disabled fillStyle for the given color."
+	
+	^ self buttonSelectedDisabledFillStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+UITheme >> taskbarItemSelectedFillStyleFor: aButton [
+	"Return the taskbar item button fillStyle for the given button."
+	
+	^ self buttonSelectedFillStyleFor: aButton
+]
+
+{ #category : #'border-styles-taskbar' }
+UITheme >> taskbarItemSelectedMouseOverBorderStyleFor: aButton [
+	"Return the selected mouse over taskbar item borderStyle for the given button."
+
+	^ self buttonSelectedMouseOverBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+UITheme >> taskbarItemSelectedMouseOverFillStyleFor: aButton [
+	"Return the taskbar item selected mouse over fillStyle for the given color."
+	
+	^ self buttonSelectedMouseOverFillStyleFor: aButton
+]
+
+{ #category : #'border-styles-taskbar' }
+UITheme >> taskbarItemSelectedPressedBorderStyleFor: aButton [
+	"Return the selected pressed taskbar item borderStyle for the given button."
+
+	^ self buttonSelectedPressedBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+UITheme >> taskbarItemSelectedPressedFillStyleFor: aButton [
+	"Return the taskbar item selected pressed fillStyle for the given color."
+
+	^ self buttonSelectedPressedFillStyleFor: aButton
 ]
 
 { #category : #'basic-colors' }

@@ -1,7 +1,10 @@
+"
+Package for compression utilities like ZIP and other
+"
 Class {
 	#name : #ManifestCompression,
 	#superclass : #PackageManifest,
-	#category : #Compression
+	#category : #'Compression-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

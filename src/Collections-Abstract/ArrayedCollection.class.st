@@ -4,7 +4,7 @@ I am an abstract collection of elements with a fixed range of integers (from 1 t
 Class {
 	#name : #ArrayedCollection,
 	#superclass : #SequenceableCollection,
-	#category : #'Collections-Abstract'
+	#category : #'Collections-Abstract-Base'
 }
 
 { #category : #'instance creation' }
@@ -128,7 +128,7 @@ ArrayedCollection >> add: newObject [
 	self shouldNotImplement
 ]
 
-{ #category : #'objects from disk' }
+{ #category : #accessing }
 ArrayedCollection >> byteSize [
 	^self basicSize * self bytesPerBasicElement
 

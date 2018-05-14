@@ -1,6 +1,6 @@
 "
-i am a queue item , used by atomic queues.
-All my new instances are circular i.e. next=self
+I am a queue item, used by atomic queues.
+All my new instances are circular i.e. next = self
 "
 Class {
 	#name : #AtomicQueueItem,
@@ -9,7 +9,7 @@ Class {
 		'next',
 		'object'
 	],
-	#category : #'Collections-Atomic'
+	#category : #'Collections-Atomic-Elements'
 }
 
 { #category : #initialization }

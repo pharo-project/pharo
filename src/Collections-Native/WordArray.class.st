@@ -6,7 +6,7 @@ Class {
 	#name : #WordArray,
 	#superclass : #ArrayedCollection,
 	#type : #words,
-	#category : #'Collections-Native'
+	#category : #'Collections-Native-Base'
 }
 
 { #category : #converting }
@@ -22,12 +22,12 @@ WordArray >> atAllPut: value [
 	super atAllPut: value
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing' }
 WordArray >> byteSize [
 	^self size * 4
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 WordArray >> defaultElement [
 	"Return the default element of the receiver"
 	^0
@@ -137,7 +137,7 @@ WordArray >> primSubScalar: rcvr and: other into: result [
 
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 WordArray >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
 	<primitive: 105>
 	^super replaceFrom: start to: stop with: replacement startingAt: repStart 

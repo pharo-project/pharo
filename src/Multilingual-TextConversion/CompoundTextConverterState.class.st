@@ -12,7 +12,7 @@ Class {
 		'charSize',
 		'streamPosition'
 	],
-	#category : #'Multilingual-TextConversion'
+	#category : #'Multilingual-TextConversion-Utilities'
 }
 
 { #category : #'instance creation' }

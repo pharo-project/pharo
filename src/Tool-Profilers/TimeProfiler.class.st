@@ -147,10 +147,14 @@ TimeProfiler >> blockCode: aString notifying: aRequestor [
 	"Treat the current selection as an expression; evaluate and tally it."
 	|  compiledMethod |
 	aString ifNil: [^ self].
-
 	blockSource := aString.
-	compiledMethod := self compile: aString for: nil in: self doItContext.
-	compiledMethod ifNil: [^ self].
+	compiledMethod := Smalltalk compiler
+		source: ('self runBlock: [', aString, ']');
+		context: self doItContext;
+		requestor: self;
+		noPattern: true;
+		failBlock: [^self];
+		compile.
 	self showResult: ( compiledMethod valueWithReceiver: self arguments: #()).
 	self changed: #blockCode.
 	self changed: #summaryText.
@@ -177,22 +181,6 @@ TimeProfiler >> codePaneMenu: aMenu shifted: shifted [
 	| donorMenu |
    donorMenu := (PragmaMenuBuilder pragmaKeyword: RubSmalltalkCodeMode menuKeyword model: codeTabPane) menu.
 	^ aMenu addAllFrom: donorMenu
-]
-
-{ #category : #compiling }
-TimeProfiler >> compile: codeString for: anObject in: evalContext [
-
-	| methodNode |
-	methodNode := Smalltalk compiler
-		source: ('self runBlock: [', codeString, ']');
-		class: anObject class;
-		context: evalContext;
-		requestor: self;
-		noPattern: true;
-		failBlock: [^nil];
-		translate.
-		
-	^ methodNode generateWithSource.
 ]
 
 { #category : #'UI specific' }
@@ -570,6 +558,21 @@ TimeProfiler >> selection: aSelection [
 { #category : #'UI specific' }
 TimeProfiler >> selectionInterval [
 	^ 1 to: 0
+]
+
+{ #category : #'UI specific' }
+TimeProfiler >> shoutAboutToStyle: aPluggableShoutMorphOrView [ 
+	self selectedNode
+		ifNotNil: [ :currNode | 
+			aPluggableShoutMorphOrView getTextSelector = #selectedMethodCode
+				ifTrue: [aPluggableShoutMorphOrView classOrMetaClass: currNode methodClass.
+					^ true]].
+	aPluggableShoutMorphOrView getTextSelector = #summaryText
+			ifTrue: [^ false].
+	aPluggableShoutMorphOrView getTextSelector = #blockCode
+			ifTrue: [^ true].
+	 ^ false
+
 ]
 
 { #category : #'UI specific' }

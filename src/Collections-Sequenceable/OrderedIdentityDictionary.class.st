@@ -19,7 +19,7 @@ Examples
 Class {
 	#name : #OrderedIdentityDictionary,
 	#superclass : #OrderedDictionary,
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Ordered'
 }
 
 { #category : #accessing }

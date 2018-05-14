@@ -6,7 +6,7 @@ Sending me the message #import makes me install the class organization I carry i
 Class {
 	#name : #ClassOrganizationChunk,
 	#superclass : #BehaviorOwnedChunk,
-	#category : #CodeImport
+	#category : #'CodeImport-Chunks'
 }
 
 { #category : #'instance creation' }

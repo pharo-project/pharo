@@ -5,7 +5,7 @@ Class {
 	#name : #AbsolutePath,
 	#superclass : #Path,
 	#type : #variable,
-	#category : #'FileSystem-Path'
+	#category : #'FileSystem-Path-Base'
 }
 
 { #category : #'as yet unclassified' }

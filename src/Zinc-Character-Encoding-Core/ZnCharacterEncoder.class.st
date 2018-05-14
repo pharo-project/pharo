@@ -224,6 +224,11 @@ ZnCharacterEncoder >> error: message [
 ]
 
 { #category : #'error handling' }
+ZnCharacterEncoder >> errorIncomplete [
+	^ ZnIncomplete signal: 'Incomplete input for character decoding'
+]
+
+{ #category : #'error handling' }
 ZnCharacterEncoder >> errorOutsideRange [
 	^ self error: 'Character Unicode code point outside encoder range'
 ]

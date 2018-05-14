@@ -4,7 +4,7 @@ Text converter for CP1252.  Windows code page used in Western Europe.
 Class {
 	#name : #CP1252TextConverter,
 	#superclass : #ByteTextConverter,
-	#category : #'Multilingual-TextConversion'
+	#category : #'Multilingual-TextConversion-TextConverter'
 }
 
 { #category : #initialization }

@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'combinedChar'
 	],
-	#category : #'Multilingual-TextConversion'
+	#category : #'Multilingual-TextConversion-TextConverter'
 }
 
 { #category : #utilities }

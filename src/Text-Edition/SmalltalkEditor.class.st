@@ -315,19 +315,14 @@ SmalltalkEditor >> codeCompletionAround:  aBlock textMorph:  aTextMorph keyStrok
 
 { #category : #'do-its' }
 SmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
-	| methodNode  |
-
-	methodNode :=  self class compiler
+	^self class compiler
 		source: self selectionAsStream;
 		class: anObject class;
 		context: evalContext;
 		requestor: self morph;
 		noPattern: true;
 		failBlock:  [ ^nil ];
-		translate.
-			
-	^methodNode generateWithSource.
-	
+		compile.
 ]
 
 { #category : #'do-its' }
@@ -529,32 +524,11 @@ SmalltalkEditor >> internalCallToBrowse: aSelector [
 ]
 
 { #category : #'menu messages' }
-SmalltalkEditor >> internalCallToBrowseIt [
-	"Launch a browser for the class indicated by the current selection. 
-	If multiple classes matching the selection exist, let the user choose among them."
- 
-	self lineSelectAndEmptyCheck: [^ self].
-	self internalCallToBrowse: (self selection string copyWithoutAll: CharacterSet crlf)
-]
-
-{ #category : #'menu messages' }
 SmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 	"Open an implementors browser on the given selector"
 	
 	 (model systemNavigation allImplementorsOf: aSelector) isEmpty
 				ifFalse: [ model systemNavigation browseAllImplementorsOf: aSelector]
-			
-	
-]
-
-{ #category : #'menu messages' }
-SmalltalkEditor >> internalCallToImplementorsOfIt [
-	"Open an implementors browser on the selected selector"
-
-	| aSelector |
-	self lineSelectAndEmptyCheck: [^ self].
-	(aSelector := self selectedSelector) == nil ifTrue: [^ morph flash].
-	self internalCallToImplementorsOf: aSelector.
 			
 	
 ]
@@ -696,14 +670,6 @@ SmalltalkEditor >> printIt [
 				on: Error
 				do: [ '<error in printString: try ''Inspect it'' to debug>' ].
 			self afterSelectionInsertAndSelect: printString ]
-]
-
-{ #category : #'editing keys' }
-SmalltalkEditor >> printIt: aKeyboardEvent [
-	"Print the results of evaluting the selection -- invoked via cmd-p.  If there is no current selection, use the current line.  1/17/96 sw
-	 2/29/96 sw: don't call selectLine now, since it's called by doIt"
-	self printIt.
-	^ true
 ]
 
 { #category : #'typing/selecting keys' }

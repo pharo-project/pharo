@@ -21,7 +21,7 @@ Class {
 	#classVars : [
 		'DocCommentEnabled'
 	],
-	#category : #PharoDocComment
+	#category : #'PharoDocComment-Base'
 }
 
 { #category : #settings }
@@ -78,7 +78,7 @@ PharoDocCommentNode class >> settingsOn: aBuilder [
 		parent: #codeBrowsing
 ]
 
-{ #category : #operation }
+{ #category : #conversion }
 PharoDocCommentNode >> asTriplet [
 	"Return the expression, its returned value and its expect result."
 	^ { self expression expressionCode formattedCode . self expression evaluate . self result expressionCode formattedCode}

@@ -20,7 +20,7 @@ NullStream class >> new [
 	^self basicNew initialize
 ]
 
-{ #category : #accessing }
+{ #category : #modes }
 NullStream >> ascii [
 	"Switches the stream to ascii mode"
 
@@ -34,7 +34,7 @@ NullStream >> atEnd [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : #modes }
 NullStream >> binary [
 	"Switches the stream to binary mode"
 
@@ -95,7 +95,7 @@ NullStream >> lf [
 	^ self nextPut: Character lf
 ]
 
-{ #category : #reading }
+{ #category : #accessing }
 NullStream >> next [
 	"Answer the next object accessible by the receiver."
 
@@ -103,7 +103,7 @@ NullStream >> next [
 	^self element
 ]
 
-{ #category : #reading }
+{ #category : #accessing }
 NullStream >> next: anInteger [ 
 	"Answer the next anInteger elements of my collection. Must override 
 	because default uses self contents species, which might involve a large 
@@ -139,7 +139,7 @@ NullStream >> next: anInteger putAll: aCollection [
 	^self next: anInteger putAll: aCollection startingAt: 1
 ]
 
-{ #category : #writing }
+{ #category : #accessing }
 NullStream >> next: anInteger putAll: aCollection startingAt: startIndex [
 	"Store the next anInteger elements from the given collection."
 
@@ -166,7 +166,7 @@ NullStream >> nextInto: aCollection startingAt: startIndex [
 	^self next: (aCollection size - startIndex +1) into: aCollection startingAt: startIndex.
 ]
 
-{ #category : #writing }
+{ #category : #accessing }
 NullStream >> nextPut: anObject [ 
 	"Insert the argument, anObject, as the next object accessible by the 
 	receiver. Answer anObject."
@@ -176,7 +176,7 @@ NullStream >> nextPut: anObject [
 	^anObject
 ]
 
-{ #category : #writing }
+{ #category : #accessing }
 NullStream >> nextPutAll: aCollection [
 	"Append the elements of aCollection to the sequence of objects accessible 
 	by the receiver. Answer aCollection."
@@ -216,6 +216,14 @@ NullStream >> position: anInteger [
 	(anInteger >= 0)
 		ifTrue: [position := anInteger]
 		ifFalse: [self positionError]
+]
+
+{ #category : #positioning }
+NullStream >> positionError [
+	"Since I am not necessarily writable, it is up to my subclasses to override 
+	position: if expanding the collection is preferrable to giving this error."
+
+	self error: 'Attempt to set the position of a PositionableStream out of bounds'
 ]
 
 { #category : #printing }

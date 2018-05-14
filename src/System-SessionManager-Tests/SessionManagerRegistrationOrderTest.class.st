@@ -1,3 +1,6 @@
+"
+SUnit tests for registration order on the Pharo session manager
+"
 Class {
 	#name : #SessionManagerRegistrationOrderTest,
 	#superclass : #TestCase,

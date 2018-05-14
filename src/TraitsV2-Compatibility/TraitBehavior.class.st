@@ -5,5 +5,5 @@ Check Trait for the new implementation of traits
 Class {
 	#name : #TraitBehavior,
 	#superclass : #Object,
-	#category : #'TraitsV2-Compatibility'
+	#category : #'TraitsV2-Compatibility-Base'
 }

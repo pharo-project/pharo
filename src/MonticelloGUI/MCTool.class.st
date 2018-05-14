@@ -312,6 +312,11 @@ MCTool >> setDefaultFocus [
 	specializ this in subclasses"
 ]
 
+{ #category : #'morphic ui' }
+MCTool >> shoutAboutToStyle: aPluggableShoutMorphOrView [
+	^ false
+]
+
 { #category : #opening }
 MCTool >> show [
 	"Open the tool returning the window."

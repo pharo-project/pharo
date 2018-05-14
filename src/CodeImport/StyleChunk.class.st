@@ -6,7 +6,7 @@ Sending me the #import message does nothing :).
 Class {
 	#name : #StyleChunk,
 	#superclass : #CodeChunk,
-	#category : #CodeImport
+	#category : #'CodeImport-Chunks'
 }
 
 { #category : #visiting }

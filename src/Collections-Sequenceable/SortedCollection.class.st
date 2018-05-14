@@ -71,7 +71,7 @@ Class {
 	#instVars : [
 		'sortBlock'
 	],
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Ordered'
 }
 
 { #category : #'instance creation' }
@@ -132,7 +132,7 @@ SortedCollection >> collect: aBlock [
 	^ newCollection
 ]
 
-{ #category : #adding }
+{ #category : #copying }
 SortedCollection >> copyEmpty [
 	"Answer a copy of the receiver without any of the receiver's elements."
 
@@ -230,7 +230,7 @@ SortedCollection >> join: aCollection [
 
 ]
 
-{ #category : #accessing }
+{ #category : #'math functions' }
 SortedCollection >> median [
 	"Return the middle element, or as close as we can get."
 
@@ -242,7 +242,7 @@ SortedCollection >> reSort [
 	self sort: firstIndex to: lastIndex
 ]
 
-{ #category : #accessing }
+{ #category : #sorting }
 SortedCollection >> sort: aSortBlock [ 
 	"Sort this array using aSortBlock. The block should take two arguments
 	and return true if the first element should preceed the second one."

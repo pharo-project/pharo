@@ -5,7 +5,7 @@ Such protocols allow one to perform in particular vector-operations on collectio
 Class {
 	#name : #ManifestCollectionsArithmetic,
 	#superclass : #PackageManifest,
-	#category : #'Collections-Arithmetic'
+	#category : #'Collections-Arithmetic-Manifest'
 }
 
 { #category : #'meta-data' }

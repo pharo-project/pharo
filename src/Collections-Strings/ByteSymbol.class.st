@@ -52,7 +52,7 @@ ByteSymbol >> at: index [
 	^ Character value: (super at: index)
 ]
 
-{ #category : #comparing }
+{ #category : #testing }
 ByteSymbol >> beginsWith: prefix [
 	"Answer whether the receiver begins with the given prefix string.
 	The comparison is case-sensitive."

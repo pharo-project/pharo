@@ -28,7 +28,7 @@ Class {
 		'deferredEndEntry',
 		'stepContents'
 	],
-	#category : #'Transcript-Core'
+	#category : #'Transcript-Core-Base'
 }
 
 { #category : #declare }
@@ -38,19 +38,10 @@ ThreadSafeTranscript class >> install [
 ]
 
 { #category : #declare }
-ThreadSafeTranscript class >> installThreadSafeAsSTranscript [
-
-	Smalltalk globals at: #STranscript put: (self new)
-	
-	"ThreadSafeTranscript open"
-]
-
-{ #category : #declare }
 ThreadSafeTranscript class >> installThreadSafeAsTranscript [
+	<script>
 
 	Smalltalk globals at: #Transcript put: (self new)
-
-	"ThreadSafeTranscript open"
 ]
 
 { #category : #icons }
@@ -197,6 +188,11 @@ ThreadSafeTranscript >> printOn: aStream [
 
 	self == Transcript ifFalse: [^super printOn: aStream].
 	aStream nextPutAll: 'Transcript'
+]
+
+{ #category : #updating }
+ThreadSafeTranscript >> shoutAboutToStyle: aPluggableShoutMorphOrView [ 
+	^ false
 ]
 
 { #category : #streaming }

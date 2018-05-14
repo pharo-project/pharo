@@ -1,3 +1,6 @@
+"
+SUnit tests for HistoryIterator
+"
 Class {
 	#name : #HistoryIteratorTest,
 	#superclass : #TestCase,

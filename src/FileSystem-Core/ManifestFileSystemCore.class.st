@@ -8,7 +8,7 @@ A documentation of this library is available in the Deep Into Pharo book, «Chap
 Class {
 	#name : #ManifestFileSystemCore,
 	#superclass : #PackageManifest,
-	#category : #'FileSystem-Core'
+	#category : #'FileSystem-Core-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

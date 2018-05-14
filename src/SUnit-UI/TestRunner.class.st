@@ -35,7 +35,7 @@ Class {
 		'packagePattern',
 		'packageIndex'
 	],
-	#category : #'SUnit-UI'
+	#category : #'SUnit-UI-Tools'
 }
 
 { #category : #'world menu' }
@@ -52,6 +52,8 @@ TestRunner class >> menuCommandOn: aBuilder [
 
 { #category : #'instance creation' }
 TestRunner class >> open [
+	<script>
+	
 	^ self new open
 ]
 
@@ -706,7 +708,8 @@ TestRunner >> label: aString forSuite: aTestSuite [
 
 { #category : #building }
 TestRunner >> open [
-
+	<script: 'self new open'>
+	 
 	^ self build openInWorld
 	
 

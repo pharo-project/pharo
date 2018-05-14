@@ -5,7 +5,7 @@ This class provides the support for the languages in 'Latin-1' category.  Althou
 Class {
 	#name : #Latin1Environment,
 	#superclass : #LanguageEnvironment,
-	#category : #'Multilingual-Languages'
+	#category : #'Multilingual-Languages-Environments'
 }
 
 { #category : #'subclass responsibilities' }

@@ -494,9 +494,7 @@ Object >> becomeForward: otherObject [
 	to the receiver now point to the argument.
 	Fails if either argument is a SmallInteger."
 
-	(Array with: self)
-		elementsForwardIdentityTo:
-			(Array with: otherObject)
+	{self} elementsForwardIdentityTo: {otherObject}
 ]
 
 { #category : #'reflective operations' }
@@ -505,9 +503,7 @@ Object >> becomeForward: otherObject copyHash: copyHash [
 	If copyHash is true, the argument's identity hash bits will be set to those of the receiver.
 	Fails if either argument is a SmallInteger."
 
-	(Array with: self)
-		elementsForwardIdentityTo: (Array with: otherObject)
-		copyHash: copyHash
+	{self} elementsForwardIdentityTo: {otherObject} copyHash: copyHash
 ]
 
 { #category : #binding }
@@ -800,7 +796,7 @@ Object >> doesNotUnderstand: aMessage [
 		ifFalse: [resumeValue]
 ]
 
-{ #category : #'set implementation' }
+{ #category : #accessing }
 Object >> enclosedSetElement [
 	"The receiver is included into a set as an element. 
 	Since some objects require wrappers (see SetElement) to be able to be included into a Set,
@@ -1168,7 +1164,7 @@ Object >> isKindOf: aClass [
 		ifFalse: [^self class inheritsFrom: aClass]
 ]
 
-{ #category : #printing }
+{ #category : #testing }
 Object >> isLiteral [
 	"Answer whether the receiver has a literal text form recognized by the 
 	compiler."

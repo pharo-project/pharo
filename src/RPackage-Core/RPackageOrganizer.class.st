@@ -312,6 +312,17 @@ RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
 		ifFalse: [ (self packageClass named: packageName capitalized) register ] 
 ]
 
+{ #category : #'public registration' }
+RPackageOrganizer >> createPackageNamed: aString [ 
+
+	| instance |
+	self validatePackageDoesNotExist: aString.
+	
+	instance := self packageClass named: aString.
+	self registerPackage: instance.
+	^ instance
+]
+
 { #category : #'private testing' }
 RPackageOrganizer >> debuggingName [
 
@@ -869,6 +880,12 @@ RPackageOrganizer >> reportExtraRemovalOf: aClass [
 	self logCr:  'The class ',  aClass name printString, 'is removed twice'.
 ]
 
+{ #category : #'public registration' }
+RPackageOrganizer >> signalPackageExists: aPackageName [
+
+	RPackageConflictError signal: ('A package named {1} already exists' format: {aPackageName})
+]
+
 { #category : #private }
 RPackageOrganizer >> stopNotification [
 	"(self instVarNamed: #default) stopNotification"
@@ -1273,4 +1290,11 @@ RPackageOrganizer >> validateCanBeAddedPackageName: packageName tagName: tagName
 		ifTrue: [ 
 			RPackageConflictError signal: ('Package/Tag can not be added because it conflicts with package {1} tag {2}' format: { packageName. tagName })  ]
 
+]
+
+{ #category : #'public registration' }
+RPackageOrganizer >> validatePackageDoesNotExist: aPackageName [
+
+	(self includesPackageNamed: aPackageName)
+		ifTrue: [ self signalPackageExists: aPackageName ]
 ]

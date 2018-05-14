@@ -896,15 +896,6 @@ TextEditor >> crWithIndent: aKeyboardEvent [
 	^ false
 ]
 
-{ #category : #accessing }
-TextEditor >> currentCharacterStyleOrNil [
-	"Answer the CharacterStyle for the current selection or cursor location if any"
-
-	^self hasSelection
-		ifTrue: [ self text characterStyleOrNilAt: self startIndex ]
-		ifFalse: [ self text characterStyleOrNilIfApplying: self emphasisHere ]
-]
-
 { #category : #'nonediting/nontyping keys' }
 TextEditor >> cursorEnd: aKeyboardEvent [ 
 
@@ -1608,17 +1599,6 @@ TextEditor >> lastFont [
 	^ t fontAt: t size + 1
 ]
 
-{ #category : #accessing }
-TextEditor >> lastParagraphStyle [
-	"Answer the TextStyle for to be used if positioned at the end of the text"
-	
-	| t |
-	t := self text.
-	^self startIndex > t size
-		ifTrue: [ self text styleIfApplying: self emphasisHere ]
-		ifFalse: [ self text textStyleAt: t size +1 ]
-]
-
 { #category : #'editing keys' }
 TextEditor >> makeCapitalized: aKeyboardEvent [
 	"Force the current selection to uppercase.  Triggered by Cmd-z."
@@ -1854,16 +1834,6 @@ TextEditor >> pasteRecent [
 	(clipping := Clipboard chooseRecentClipping) ifNil: [^ self].
 	Clipboard clipboardText: clipping.
 	^ self paste
-]
-
-{ #category : #'typing support' }
-TextEditor >> performCmdActionsWith: aKeyboardEvent shifted: aBoolean [ 
-	| asciiValue actions|
-	asciiValue := aKeyboardEvent keyValue + 1.
-	actions := aBoolean
-				ifTrue: [self class shiftCmdActions]
-				ifFalse: [self class cmdActions].
-	^ self perform: (actions at: asciiValue) with: aKeyboardEvent
 ]
 
 { #category : #'typing support' }

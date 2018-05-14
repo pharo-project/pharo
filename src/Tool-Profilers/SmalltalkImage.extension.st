@@ -50,36 +50,32 @@ SmalltalkImage >> reportCPUandRAM [
 	SmalltalkImage current reportCPUandRAM
 	"	
 
-	| stream |
 	"VM statistics (Memory use and GC, mainly)"
-	FileStream 
-		forceNewFileNamed: 'Log-MemoryStats.txt'
-		do: [:aStream | aStream nextPutAll: self vm statisticsReport ].
+	'Log-MemoryStats.txt' asFileReference writeStreamDo: [ :aStream | 
+		aStream nextPutAll: self vm statisticsReport ].
 	
 	"Process list"
-	stream := FileStream 
-				forceNewFileNamed: 'Log-ProcessList.txt' 
-				do: [ :aStream |  self tools processBrowser new processNameList 
-								do: [ :each | aStream nextPutAll: each; cr ]].
+	'Log-ProcessList.txt' asFileReference writeStreamDo: [ :aStream |
+		self tools processBrowser new processNameList do: [ :each | 
+			aStream nextPutAll: each; cr ] ].
 
 "Fork all these, so they run in sequence, as the system is back running"
 [
 	"Process taking most CPU"
-	stream := FileStream forceNewFileNamed: 'Log-ThePig.txt'.
-	self tools processBrowser dumpPigStackOn: stream andClose: true.
+	'Log-ThePig.txt' asFileReference writeStreamDo: [ :aStream |
+		self tools processBrowser dumpPigStackOn: aStream ].
 	
 	"Tally of all processes"
-	stream := FileStream forceNewFileNamed: 'Log-FullTally.txt'.
-	[ | tally |
+	'Log-FullTally.txt' asFileReference writeStreamDo: [ :aStream |
+		| tally |
 		tally := MessageTally new.
 		tally reportOtherProcesses: true.
 		tally spyAllEvery: 1 on: [ (Delay forMilliseconds: 1000) wait ].
-		tally report: stream ] ensure: [ stream close ].
+		tally report: aStream ].
 
 	"Memory Analysis"
-	stream := FileStream forceNewFileNamed: 'Log-MemoryAnalysis.txt'.
-	[ SpaceTally new printSpaceAnalysis: 1 on: stream ]
-		ensure: [ stream close ]
+	'Log-MemoryAnalysis.txt' asFileReference writeStreamDo: [ :aStream |
+		SpaceTally new printSpaceAnalysis: 1 on: aStream ]
 
 ] forkNamed: 'CPU usage analysis'
 ]

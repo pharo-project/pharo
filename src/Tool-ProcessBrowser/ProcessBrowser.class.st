@@ -83,7 +83,7 @@ ProcessBrowser class >> debugProcess: aProcess [
 ]
 
 { #category : #'CPU utilization' }
-ProcessBrowser class >> dumpPigStackOn: aStream andClose: aBoolean [
+ProcessBrowser class >> dumpPigStackOn: aStream [
 	"Must run forked on its own process, so the monitored behavior is not affected too much" 
 
 	| promise tally process depth stack suspendedContext |
@@ -111,7 +111,6 @@ ProcessBrowser class >> dumpPigStackOn: aStream andClose: aBoolean [
 			stack do: [ :c | 
 				c printOn: aStream.
 				aStream cr]].
-	aBoolean ifTrue: [aStream close]
 ]
 
 { #category : #'CPU utilization' }
@@ -931,6 +930,15 @@ ProcessBrowser >> setUpdateCallbackAfter: seconds [
 			[ d wait.
 			d := nil. 
 			deferredMessageRecipient defer: [ self updateProcessList ] ] fork ]
+]
+
+{ #category : #updating }
+ProcessBrowser >> shoutAboutToStyle: aPluggableShoutMorphOrView [
+
+	selectedContext ifNil: [^false].
+	aPluggableShoutMorphOrView classOrMetaClass: self selectedClass.
+	^ true
+
 ]
 
 { #category : #'process actions' }

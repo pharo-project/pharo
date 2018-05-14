@@ -10,5 +10,5 @@ Usually, the cause is one of two things;
 Class {
 	#name : #NoBroadcastAllowed,
 	#superclass : #SocketPrimitiveFailed,
-	#category : #'Network-Kernel'
+	#category : #'Network-Kernel-Exceptions'
 }

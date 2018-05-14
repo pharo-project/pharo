@@ -1,3 +1,6 @@
+"
+SUnit tests for HistoryNode
+"
 Class {
 	#name : #HistoryNodeTest,
 	#superclass : #TestCase,

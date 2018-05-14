@@ -8,7 +8,7 @@ Class {
 	#category : #'Tool-Finder'
 }
 
-{ #category : #private }
+{ #category : #accessing }
 FinderExampleMethodNode >> childNodeClassFromItem: anItem [
 	"I answer the class of my children nodes (if I have some)"
 

@@ -164,8 +164,8 @@ PNGReadWriterTest >> decodeColors: colorsAndFiles depth: requiredDepth [
 	
 	colorsAndFiles do:[:assoc| | bytes color form |
 		color := assoc key.
-		bytes := Base64MimeConverter mimeDecodeToBytes: assoc value readStream.
-		form := PNGReadWriter formFromStream: bytes.
+		bytes := assoc value base64Decoded.
+		form := PNGReadWriter formFromStream: bytes readStream.
 		self assert: form depth = requiredDepth.
 		self assert: (form pixelValueAt: 1@1) = (color pixelValueForDepth: requiredDepth).
 	].
@@ -378,7 +378,7 @@ PNGReadWriterTest >> encodeColors: colorsAndFiles depth: requiredDepth [
 	
 	colorsAndFiles do:[:assoc| | original encoded color ff |
 		color := assoc key.
-		original := Base64MimeConverter mimeDecodeToBytes: assoc value readStream.
+		original := assoc value base64Decoded.
 		ff := Form extent: 32@32 depth: requiredDepth.
 		ff fillColor: color.
 		encoded := ByteArray new writeStream.

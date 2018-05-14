@@ -1,5 +1,10 @@
 "
-I represent an HTTP Cookie token.
+I represent an HTTP Cookie, a small piece of data sent by an HTTP web server to an HTTP user-agent client and by the client to the same server afterwards, to remember stateful information across indepedent request/responses.
+
+References
+
+https://en.wikipedia.org/wiki/HTTP_cookie
+https://tools.ietf.org/html/rfc6265
 
 Part of Zinc HTTP Components.
 "
@@ -70,8 +75,16 @@ ZnCookie >> expires: anExpiration [
 
 { #category : #accessing }
 ZnCookie >> expiresTimeStamp [
-	self expires ifNil: [ ^ DateAndTime now + 1 day ].
+	"Return the DateAndTime when I will expire.
+	Throw an exception when no expiration is set or the expiration cannot be parsed.
+	See #isExpired"
+	
 	^ ZnUtils parseHttpDate: self expires
+]
+
+{ #category : #accessing }
+ZnCookie >> expiresTimeStamp: dateAndTime [
+	self expires: (ZnUtils httpDate: dateAndTime)
 ]
 
 { #category : #private }
@@ -98,6 +111,11 @@ ZnCookie >> fullString [
 		self writeOn: stream ]
 ]
 
+{ #category : #testing }
+ZnCookie >> hasAttribute: attributeName [
+	^ attributes includesKey: attributeName asLowercase 
+]
+
 { #category : #comparing }
 ZnCookie >> hash [
 	^ (self name hash bitXor: self path hash) bitXor: self domain hash
@@ -122,7 +140,11 @@ ZnCookie >> initialize [
 
 { #category : #testing }
 ZnCookie >> isExpired [
-	^ (self expiresTimeStamp asUTC < DateAndTime now asUTC) or: [ self expires = 0 ]
+	| expirationTimeStamp |
+	(self hasAttribute: 'expire') ifFalse: [ ^ false ].
+	[ expirationTimeStamp := self expiresTimeStamp ] on: Error do: [ ^ false ].
+	"note that max-age (#maxage) is not used"
+	^ expirationTimeStamp asUTC < DateAndTime now asUTC
 ]
 
 { #category : #testing }
@@ -143,7 +165,14 @@ ZnCookie >> isInPath: urlObject [
 
 { #category : #accessing }
 ZnCookie >> maxage [
-	^ self expires
+	^ attributes at: 'max-age' ifAbsent: [ nil ]
+]
+
+{ #category : #accessing }
+ZnCookie >> maxage: numberOfSeconds [
+	"To be able to use this to validate expiration, a time of creation has to be recorded, so right now, this is not really usable."
+	
+	^ attributes at: 'max-age' put: numberOfSeconds asString
 ]
 
 { #category : #accessing }

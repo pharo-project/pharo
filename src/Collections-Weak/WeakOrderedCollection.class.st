@@ -8,7 +8,7 @@ For more details, read my tests in WeakOrderedCollectionTest.
 Class {
 	#name : #WeakOrderedCollection,
 	#superclass : #OrderedCollection,
-	#category : #'Collections-Weak'
+	#category : #'Collections-Weak-Base'
 }
 
 { #category : #private }
