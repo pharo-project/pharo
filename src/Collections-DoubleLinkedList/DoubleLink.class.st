@@ -61,7 +61,7 @@ DoubleLink >> previousLink: anObject [
 	previousLink := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #evaluating }
 DoubleLink >> value [
 	^ value
 ]

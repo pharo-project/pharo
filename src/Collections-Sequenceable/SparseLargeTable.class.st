@@ -141,7 +141,7 @@ SparseLargeTable >> chunkSize [
 
 ]
 
-{ #category : #private }
+{ #category : #copying }
 SparseLargeTable >> copyEmpty [
 	"Answer a copy of the receiver that contains no elements."
 	^self speciesNew: 0
