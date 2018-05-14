@@ -1101,7 +1101,7 @@ SHRBTextStyler >> unstyledTextFrom: aText [
 	^ answer
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitArgumentNode: anArgumentNode [
 	| blockOrMethodArgStyle |
 	blockOrMethodArgStyle := self methodOrBlockArgStyleFor: anArgumentNode.
@@ -1116,7 +1116,7 @@ SHRBTextStyler >> visitAssignmentNode: anAssignmentNode [
 		ifFalse: [ self addStyle: #invalid forNode: anAssignmentNode ]
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitBlockNode: aBlockNode [
 	aBlockNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
 	aBlockNode arguments do: [ :argument | self addStyle: #blockPatternArg forNode: argument ].
@@ -1127,7 +1127,7 @@ SHRBTextStyler >> visitBlockNode: aBlockNode [
 	self styleCloseBracket: aBlockNode
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitCascadeNode: aCascadeNode [
 	aCascadeNode messages do: [ :each | self visitNode: each ].
 	aCascadeNode semicolons do: [ :pos | self addStyle: #cascadeSeparator from: pos to: pos ]
@@ -1151,7 +1151,7 @@ at once, but for ordinary literal arrays, style every node"
 	ifFalse: [ aRBLiteralArrayNode contents do: [ :each | self visitNode: each ] ]
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitLiteralNode: aLiteralNode [
 	| value |
 	value := aLiteralNode value.
@@ -1161,7 +1161,7 @@ SHRBTextStyler >> visitLiteralNode: aLiteralNode [
 		forNode: aLiteralNode
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
 	| style link |
 	style := #keyword.
@@ -1186,7 +1186,7 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 	self styleCloseParenthese: aMessageNode
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitMethodNode: aMethodNode [
 	| link |
 	self visitMethodComments: aMethodNode comments.
@@ -1205,7 +1205,7 @@ SHRBTextStyler >> visitMethodNode: aMethodNode [
 	self visitNode: aMethodNode body
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitNode: aNode [ 
 	aNode comments do: [ :comment|
 		self 
@@ -1216,14 +1216,14 @@ SHRBTextStyler >> visitNode: aNode [
 	^aNode acceptVisitor: self
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitParseErrorNode: anErrorNode [
 	self 
 		addStyle: #invalid
 		forNode: anErrorNode
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitPragmaNode: aPragmaNode [
 	aPragmaNode selectorParts with: aPragmaNode keywordsPositions do: [ :keyword : position|
 	self 
@@ -1234,7 +1234,7 @@ SHRBTextStyler >> visitPragmaNode: aPragmaNode [
 	aPragmaNode arguments do: [ :each | self visitNode: each ]
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitReturnNode: aReturnNode [ 
 	self 
 		addStyle: #return
@@ -1244,14 +1244,14 @@ SHRBTextStyler >> visitReturnNode: aReturnNode [
 	self visitNode: aReturnNode value
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitSelfNode: aSelfNode [
 	self 
 		addStyle: #self
 		forNode: aSelfNode
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 	| patternTempStyle |
 	patternTempStyle := self methodOrBlockTempDeclStyleFor: aSequenceNode.
@@ -1262,24 +1262,24 @@ SHRBTextStyler >> visitSequenceNode: aSequenceNode [
 	aSequenceNode periods do: [ :pos | self addStyle: #statementSeparator from: pos to: pos ]
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitSuperNode: aSuperNode [
 	self addStyle: #super forNode: aSuperNode
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitTemporaryNode: aTemporaryNode [
 	| methodOrBlockTempStyle |
 	methodOrBlockTempStyle := self methodOrBlockTempStyleFor: aTemporaryNode.
 	self addStyle: methodOrBlockTempStyle forNode: aTemporaryNode
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitThisContextNode: aThisContextNode [
 	self addStyle: #thisContext forNode: aThisContextNode
 ]
 
-{ #category : #'visiting rb nodes' }
+{ #category : #visiting }
 SHRBTextStyler >> visitVariableNode: aVariableNode [
 	self 
 		addStyle: (self resolveStyleFor: aVariableNode) 

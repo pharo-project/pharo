@@ -933,6 +933,15 @@ ProcessBrowser >> setUpdateCallbackAfter: seconds [
 			deferredMessageRecipient defer: [ self updateProcessList ] ] fork ]
 ]
 
+{ #category : #updating }
+ProcessBrowser >> shoutAboutToStyle: aPluggableShoutMorphOrView [
+
+	selectedContext ifNil: [^false].
+	aPluggableShoutMorphOrView classOrMetaClass: self selectedClass.
+	^ true
+
+]
+
 { #category : #'process actions' }
 ProcessBrowser >> signalSemaphore [
 	(selectedProcess suspendingList isKindOf: Semaphore)

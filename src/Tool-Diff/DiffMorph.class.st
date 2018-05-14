@@ -899,6 +899,12 @@ DiffMorph >> setOptionsPanel: aBoolean [
 	aBoolean ifFalse: [ self removeOptionsPanel ]
 ]
 
+{ #category : #'user interface' }
+DiffMorph >> shoutAboutToStyle: aPluggableShoutMorphOrView [
+	aPluggableShoutMorphOrView classOrMetaClass: self contextClass.
+	^ self contextClass notNil 
+]
+
 { #category : #accessing }
 DiffMorph >> showBoth [
 

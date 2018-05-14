@@ -18,17 +18,15 @@ SHStyleElementTest >> setUp [
 
 { #category : #tests }
 SHStyleElementTest >> testPrintOn [
- 
-	self assert: element printString =  'a SHStyleElement tokens: #(#self #super #true #false)'
-
-	
+	self
+		assert: element printString
+		equals: 'a SHStyleElement tokens: #(#self #super #true #false)'
 ]
 
 { #category : #tests }
 SHStyleElementTest >> testStyleForTable [
- 
 	| table |
 	table := element styleForTable.
-	self assert: table size = 4.
-	self assert: (table collect: #first) = element tokens
+	self assert: table size equals: 4.
+	self assert: (table collect: #first) equals: element tokens
 ]
