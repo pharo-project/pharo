@@ -11,7 +11,7 @@ Class {
 		'chunkSize',
 		'defaultValue'
 	],
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Sparse'
 }
 
 { #category : #accessing }

@@ -15,7 +15,7 @@ Class {
 		'monitor',
 		'items'
 	],
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Base'
 }
 
 { #category : #'instance creation' }

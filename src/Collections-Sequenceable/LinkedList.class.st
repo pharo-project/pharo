@@ -73,7 +73,7 @@ Class {
 		'firstLink',
 		'lastLink'
 	],
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Base'
 }
 
 { #category : #'instance creation' }
