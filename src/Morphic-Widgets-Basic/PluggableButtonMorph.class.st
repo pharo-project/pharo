@@ -746,8 +746,9 @@ PluggableButtonMorph >> initialize [
 		layoutInset: (self theme buttonLabelInsetFor: self);
 		extent: 20 @ 15;
 		lastState: false;
-		cornerStyle: (self theme buttonCornerStyleIn: nil).
-	self theme buttonBorderStyleFor: self.
+		cornerStyle: (self theme buttonCornerStyleIn: nil);
+		borderStyle: (self theme buttonNormalBorderStyleFor: self).
+		
 	self clipSubmorphs: true
 ]
 
