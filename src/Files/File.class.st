@@ -124,6 +124,11 @@ File class >> unregister: anObject [
 	^self registry remove: anObject ifAbsent:[]
 ]
 
+{ #category : #accessing }
+File >> basename [
+	^self name
+]
+
 { #category : #'open/close' }
 File >> basicOpenForWrite: writeMode [ 
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."

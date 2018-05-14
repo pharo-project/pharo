@@ -30,7 +30,7 @@ stream upToAnyOf: #[ 13 30 ].
 
 ""peeking""
 stream peek.
-" 
+"
 Class {
 	#name : #AbstractBinaryFileStream,
 	#superclass : #Stream,

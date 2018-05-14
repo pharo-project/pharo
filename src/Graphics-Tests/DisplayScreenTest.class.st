@@ -23,6 +23,12 @@ DisplayScreenTest >> icoPath [
 ]
 
 { #category : #running }
+DisplayScreenTest >> setUp [
+	"Sorry the primitive is only for Windows for now!"
+	OSPlatform current isWindows ifFalse: [ ^ self skip ] 
+]
+
+{ #category : #running }
 DisplayScreenTest >> tearDown [
 	self icoPath asFileReference ensureDelete.
 	super tearDown
