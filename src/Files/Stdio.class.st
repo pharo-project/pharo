@@ -16,7 +16,6 @@ Class {
 	#name : #Stdio,
 	#superclass : #Object,
 	#classVars : [
-		'Primitives',
 		'Stderr',
 		'Stdin',
 		'Stdout'
@@ -32,7 +31,6 @@ Stdio class >> cleanStdioHandles [
 
 { #category : #'initialize-release' }
 Stdio class >> initialize [
-	self useFilePlugin.
 	SessionManager default
 		registerSystemClassNamed: self name
 ]
@@ -43,7 +41,7 @@ Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 
 	| handle |
 	"HACK kept for retrocompatibility"
-	([ Primitives stdioDescriptorIsATTY not ]
+	([ File stdioDescriptorIsATTY not ]
 		on: PrimitiveFailed
 		do: [ :ex | Smalltalk os isWin32 ])
 		ifTrue: [ [ ^ (File named: moniker asString) writeStream ]
@@ -52,7 +50,7 @@ Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 					[ ^ (File named: moniker asString , '_' , (Random new nextInt: SmallInteger maxVal) asString) writeStream ]
 						on: FileException
 						do: [ "Nothing, we do not have the rights to write" ] ] ].
-	handle := Primitives stdioHandles at: (#(stdin stdout stderr) identityIndexOf: moniker).
+	handle := File stdioHandles at: (#(stdin stdout stderr) identityIndexOf: moniker).
 	handle ifNil: [ self error: moniker , ' is unavailable' ].
 	^ StdioStream handle: handle file: (File named: moniker) forWrite: forWrite
 ]
@@ -78,9 +76,4 @@ Stdio class >> stdin [
 Stdio class >> stdout [
 
 	^ Stdout ifNil: [ Stdout := self standardIOStreamNamed: #stdout forWrite: true ].
-]
-
-{ #category : #'initialize-release' }
-Stdio class >> useFilePlugin [
-	Primitives := FilePluginPrims new
 ]

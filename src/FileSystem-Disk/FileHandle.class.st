@@ -15,19 +15,13 @@ Class {
 	#category : #'FileSystem-Disk-Base'
 }
 
-{ #category : #'class initialization' }
-FileHandle class >> initialize [
-	self useFilePlugin.
-
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #registry }
 FileHandle class >> register: aFileHandle [
 	"properly register the given FileHandle for being closed on garbage collection"
 	^self registry add: aFileHandle
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #registry }
 FileHandle class >> registry [
 	^Registry ifNil: [Registry := WeakRegistry new]
 
@@ -39,11 +33,6 @@ FileHandle class >> startUp: resuming [
 	image start up. To reenable, add this class to the start up list."
 	
 	resuming ifTrue: [self allInstancesDo: [:ea | ea startUp]]
-]
-
-{ #category : #'class initialization' }
-FileHandle class >> useFilePlugin [
-	Primitives := FilePluginPrims new
 ]
 
 { #category : #public }
@@ -58,7 +47,7 @@ FileHandle >> at: index read: buffer startingAt: start count: count [
 	self flag: 'TODO: remove once FileHandles are really used!'.
 	self assureOpen.
 	
-	^ Primitives 
+	^ File 
 		setPosition: id to: index - 1;
 		read: id into: buffer startingAt: start count: count
 
@@ -70,7 +59,7 @@ FileHandle >> at: index write: buffer startingAt: start count: count [
 	self flag: 'TODO: remove once FileHandles are really used!'.
 	self assureOpen.
 	
-	Primitives 
+	File 
 		setPosition: id to: index - 1;
 		write: id from: buffer startingAt: start count: count
 
@@ -88,13 +77,13 @@ FileHandle >> binaryWriteStream [
 
 { #category : #public }
 FileHandle >> close [
-	Primitives close: id.
+	File close: id.
 	id := nil
 ]
 
 { #category : #finalization }
 FileHandle >> finalize [
-	Primitives close: id.
+	File close: id
 ]
 
 { #category : #public }
@@ -103,12 +92,12 @@ FileHandle >> flush [
 	self flag: 'TODO: remove once FileHandles are really used!'.
 	self assureOpen.
 	
-	Primitives flush: id
+	File flush: id
 ]
 
 { #category : #testing }
 FileHandle >> isOpen [
-	^ (Primitives sizeOrNil: id) notNil
+	^ (File sizeOrNil: id) notNil
 ]
 
 { #category : #public }
@@ -132,7 +121,7 @@ FileHandle >> size [
 	self flag: 'TODO: remove once FileHandles are really used!'.
 	self assureOpen.
 	
-	^ Primitives sizeOf: id
+	^ File sizeOf: id
 ]
 
 { #category : #private }
@@ -160,12 +149,12 @@ FileHandle >> sync [
 	self flag: 'TODO: remove once FileHandles are really used!'.
 	self assureOpen.
 	
-	Primitives sync: id
+	File sync: id
 ]
 
 { #category : #public }
 FileHandle >> truncateTo: anInteger [
-	Primitives setPosition: id to: anInteger.
-	Primitives truncate: id to: anInteger.
+	File setPosition: id to: anInteger.
+	File truncate: id to: anInteger.
 	self reopen
 ]

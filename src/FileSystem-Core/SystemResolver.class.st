@@ -46,7 +46,7 @@ SystemResolver >> changes [
 
 { #category : #origins }
 SystemResolver >> image [
-	^ self resolveString: self primImagePath
+	^ self resolveString: Smalltalk primImagePath
 ]
 
 { #category : #origins }
@@ -60,22 +60,6 @@ SystemResolver >> localDirectory [
 		ifNil: [ (self imageDirectory / self class defaultLocalDirectoryName) ensureCreateDirectory ]
 ]
 
-{ #category : #primitives }
-SystemResolver >> primImagePath [
-	"Answer the full path name for the current image."
-
-	<primitive: 121>
-	self primitiveFailed
-]
-
-{ #category : #primitives }
-SystemResolver >> primVmDirectoryPath [
-	"Answer the full path name for the current virtual machine."
-
-	<primitive: 142>
-	self primitiveFailed
-]
-
 { #category : #resolving }
 SystemResolver >> supportedOrigins [
 	^ #(image imageDirectory changes vmBinary vmDirectory workingDirectory localDirectory)
@@ -83,10 +67,10 @@ SystemResolver >> supportedOrigins [
 
 { #category : #origins }
 SystemResolver >> vmBinary [
-	^ self resolveString: (Smalltalk vm fullPath)
+	^ self resolveString: Smalltalk vm fullPath
 ]
 
 { #category : #origins }
 SystemResolver >> vmDirectory [
-	^ self resolveString: self primVmDirectoryPath
+	^ self resolveString: Smalltalk vm primVmDirectoryPath
 ]

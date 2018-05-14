@@ -16,14 +16,14 @@ Class {
 BinaryFileStream >> close [
 	self closed
 		ifTrue: [ ^ self ].
-	Primitives close: handle.
+	File close: handle.
 	self unregister.
 	handle := nil
 ]
 
 { #category : #testing }
 BinaryFileStream >> closed [
-	^ handle isNil or: [ (Primitives sizeOrNil: handle) isNil ]
+	^ handle isNil or: [ (File sizeOrNil: handle) isNil ]
 ]
 
 { #category : #finalization }
@@ -64,7 +64,7 @@ BinaryFileStream >> truncate [
 BinaryFileStream >> truncate: pos [
 	"Truncate to this position"
 
-	^ Primitives truncate: handle to: pos
+	^ File truncate: handle to: pos
 ]
 
 { #category : #finalization }

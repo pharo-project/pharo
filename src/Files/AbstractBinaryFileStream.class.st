@@ -39,9 +39,6 @@ Class {
 		'handle',
 		'forWrite'
 	],
-	#classVars : [
-		'Primitives'
-	],
 	#category : #'Files-Streams'
 }
 
@@ -53,20 +50,10 @@ AbstractBinaryFileStream class >> handle: aCollection file: aFile forWrite: aTru
 		yourself
 ]
 
-{ #category : #'initialization-release' }
-AbstractBinaryFileStream class >> initialize [
-	self useFilePlugin
-]
-
-{ #category : #'initialization-release' }
-AbstractBinaryFileStream class >> useFilePlugin [
-	Primitives := FilePluginPrims new
-]
-
 { #category : #testing }
 AbstractBinaryFileStream >> atEnd [
 
-	^ Primitives atEnd: handle
+	^ File atEnd: handle
 ]
 
 { #category : #accessing }
@@ -113,7 +100,7 @@ AbstractBinaryFileStream >> flush [
 	the number of write() system calls it makes. This should generally be
 	used before #sync, but on Windows they do the same thing."
 	
-	Primitives flush: handle
+	File flush: handle
 ]
 
 { #category : #initialization }
@@ -160,7 +147,7 @@ AbstractBinaryFileStream >> next: n into: aBuffer [
 	"Return a string with the next n characters of the filestream in it."
 	| readBuffer read |
 	readBuffer := aBuffer.
-	read := Primitives read: handle into: readBuffer startingAt: 1 count: n.
+	read := File read: handle into: readBuffer startingAt: 1 count: n.
 	^read = n 
 		ifTrue: [ readBuffer ]
 		ifFalse: [ readBuffer copyFrom: 1 to: read ]
@@ -182,7 +169,7 @@ AbstractBinaryFileStream >> next: n into: aString startingAt: startIndex [
 AbstractBinaryFileStream >> next: amount putAll: aByteArray [
 	forWrite
 		ifFalse: [ ^ self error: 'Cannot write a read-only file' ].
-	[ Primitives
+	[ File
 		write: handle
 		from: aByteArray
 		startingAt: 1
@@ -243,13 +230,13 @@ AbstractBinaryFileStream >> peek [
 { #category : #positioning }
 AbstractBinaryFileStream >> position [
 
-	^ Primitives getPosition: handle
+	^ File getPosition: handle
 ]
 
 { #category : #positioning }
 AbstractBinaryFileStream >> position: aPosition [
 	
-	Primitives setPosition: handle to: aPosition
+	File setPosition: handle to: aPosition
 ]
 
 { #category : #printing }
@@ -265,7 +252,7 @@ AbstractBinaryFileStream >> printOn: aStream [
 { #category : #reading }
 AbstractBinaryFileStream >> readInto: readBuffer startingAt: startIndex count: count [
 
-	^ Primitives read: handle into: readBuffer startingAt: startIndex count: count
+	^ File read: handle into: readBuffer startingAt: startIndex count: count
 ]
 
 { #category : #positioning }
@@ -282,7 +269,7 @@ AbstractBinaryFileStream >> setToEnd [
 { #category : #accessing }
 AbstractBinaryFileStream >> size [
 
-	^ Primitives sizeOf: handle
+	^ File sizeOf: handle
 ]
 
 { #category : #positioning }
@@ -299,7 +286,7 @@ AbstractBinaryFileStream >> sync [
 	file system buffers to disk. This should generally be used after #flush,
 	but on Windows they do the same thing."
 
-	Primitives sync: handle
+	File sync: handle
 ]
 
 { #category : #accessing }

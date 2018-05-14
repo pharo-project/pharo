@@ -680,6 +680,14 @@ VirtualMachine >> platformSourceVersion [
 ]
 
 { #category : #primitives }
+VirtualMachine >> primVmDirectoryPath [
+	"Answer the full path name for the current virtual machine."
+
+	<primitive: 142>
+	self primitiveFailed
+]
+
+{ #category : #primitives }
 VirtualMachine >> primVmPath [
 	"Answer the path for the directory containing the Smalltalk virtual machine. Return the empty string if this primitive is not implemented."
 	"Smalltalk vmPath"
