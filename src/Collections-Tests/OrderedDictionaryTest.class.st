@@ -1358,6 +1358,15 @@ OrderedDictionaryTest >> testSize [
 ]
 
 { #category : #tests }
+OrderedDictionaryTest >> testStoreOn [
+	| print |
+	print := String streamContents: [ :s | self dictionaryWithOrderedAssociations storeOn: s ].
+	self assert: (Compiler evaluate: print) equals: self dictionaryWithOrderedAssociations.
+	print := String streamContents: [ :s | self emptyDictionary storeOn: s ].
+	self assert: (Compiler evaluate: print) equals: self emptyDictionary
+]
+
+{ #category : #tests }
 OrderedDictionaryTest >> testValues [
 	| dictionary |
 
