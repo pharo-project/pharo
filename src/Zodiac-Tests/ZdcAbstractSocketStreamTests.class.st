@@ -71,7 +71,7 @@ ZdcAbstractSocketStreamTests >> runServer: block [
 	| serverSocket semaphore |
 	serverSocket := self serverSocketOn: self port.
 	self assert: serverSocket notNil.
-	self assert: serverSocket localPort = self port.
+	self assert: serverSocket localPort equals: self port.
 	semaphore := Semaphore new.
 	[ 
 	semaphore signal.
@@ -150,7 +150,7 @@ ZdcAbstractSocketStreamTests >> testAddOneEcho [
 	clientStream nextPut: dataSent; flush.
 	dataRead := clientStream next.
 	clientStream close.
-	self assert: dataRead = (dataSent + 1).
+	self assert: dataRead equals: dataSent + 1.
 	semaphore wait
 ]
 
@@ -168,7 +168,7 @@ ZdcAbstractSocketStreamTests >> testPlainClientRead [
 	dataRead := clientStream upToEnd.
 	clientStream close.
 	semaphore wait.
-	self assert: dataSent = dataRead.
+	self assert: dataSent equals: dataRead.
 	semaphore wait
 ]
 
@@ -186,7 +186,7 @@ ZdcAbstractSocketStreamTests >> testPlainClientRead10k [
 	dataRead := clientStream upToEnd.
 	clientStream close.
 	semaphore wait.
-	self assert: dataSent = dataRead.
+	self assert: dataSent equals: dataRead.
 	semaphore wait
 ]
 
@@ -205,7 +205,7 @@ ZdcAbstractSocketStreamTests >> testPlainClientRead10kInPieces1 [
 		10 timesRepeat: [ stream nextPutAll: (clientStream next: 1000) ] ].
 	clientStream close.
 	semaphore wait.
-	self assert: dataSent = dataRead.
+	self assert: dataSent equals: dataRead.
 	semaphore wait
 ]
 
@@ -225,7 +225,7 @@ ZdcAbstractSocketStreamTests >> testPlainClientRead10kInPieces2 [
 		clientStream next: 1000 into: dataRead startingAt: (index * 1000) + 1 ].
 	clientStream close.
 	semaphore wait.
-	self assert: dataSent = dataRead.
+	self assert: dataSent equals: dataRead.
 	semaphore wait
 ]
 
@@ -243,7 +243,7 @@ ZdcAbstractSocketStreamTests >> testPlainClientSkip [
 	dataRead := clientStream skip: 1; upToEnd.
 	clientStream close.
 	semaphore wait.
-	self assert: dataSent = dataRead.
+	self assert: dataSent equals: dataRead.
 	semaphore wait
 ]
 
@@ -262,7 +262,7 @@ ZdcAbstractSocketStreamTests >> testPlainClientSkip10k [
 	dataRead := clientStream skip: 10000; upToEnd.
 	clientStream close.
 	semaphore wait.
-	self assert: dataSent = dataRead.
+	self assert: dataSent equals: dataRead.
 	semaphore wait
 ]
 
@@ -280,7 +280,7 @@ ZdcAbstractSocketStreamTests >> testPlainClientWrite [
 	clientStream nextPutAll: dataSent.
 	clientStream close.
 	semaphore wait.
-	self assert: dataSent = dataRead.
+	self assert: dataSent equals: dataRead.
 	semaphore wait
 ]
 
@@ -298,7 +298,7 @@ ZdcAbstractSocketStreamTests >> testPlainClientWrite10k [
 	clientStream nextPutAll: dataSent.
 	clientStream close.
 	semaphore wait.
-	self assert: dataSent = dataRead.
+	self assert: dataSent equals: dataRead.
 	semaphore wait
 ]
 
@@ -317,7 +317,7 @@ ZdcAbstractSocketStreamTests >> testPlainClientWrite10kInPieces [
 		clientStream next: 1000 putAll: dataSent startingAt: (1000 * index) + 1 ].
 	clientStream close.
 	semaphore wait.
-	self assert: dataSent = dataRead.
+	self assert: dataSent equals: dataRead.
 	semaphore wait
 ]
 
@@ -335,7 +335,7 @@ ZdcAbstractSocketStreamTests >> testReverseEcho [
 	clientStream nextPutAll: dataSent; nextPut: 0; flush.
 	dataRead := clientStream upTo: 0.
 	clientStream close.
-	self assert: dataRead = dataSent reverse.
+	self assert: dataRead equals: dataSent reverse.
 	semaphore wait
 ]
 
@@ -353,7 +353,7 @@ ZdcAbstractSocketStreamTests >> testReverseEcho10kFixed [
 	clientStream nextPutAll: dataSent; flush.
 	dataRead := clientStream next: 10000.
 	clientStream close.
-	self assert: dataRead = dataSent reverse.
+	self assert: dataRead equals: dataSent reverse.
 	semaphore wait
 ]
 
@@ -371,7 +371,7 @@ ZdcAbstractSocketStreamTests >> testReverseEcho10kSearch [
 	clientStream nextPutAll: dataSent; nextPut: 0; flush.
 	dataRead := clientStream upTo: 0.
 	clientStream close.
-	self assert: dataRead = dataSent reverse.
+	self assert: dataRead equals: dataSent reverse.
 	semaphore wait
 ]
 
@@ -391,6 +391,6 @@ ZdcAbstractSocketStreamTests >> testReverseEchoUpToEnd [
 		clientStream nextPutAll: dataSent; flush.
 		dataRead := clientStream upToEnd.
 		clientStream close.
-		self assert: dataRead = dataSent reverse.
+		self assert: dataRead equals: dataSent reverse.
 		semaphore wait ]
 ]

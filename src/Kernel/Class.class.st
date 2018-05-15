@@ -776,6 +776,14 @@ Class >> isSelfEvaluating [
 	^self isObsolete not
 ]
 
+{ #category : #testing }
+Class >> isUsed [
+	
+	^ self hasSubclasses
+		ifFalse: [ super isUsed ]
+		ifTrue: [ true ]
+]
+
 { #category : #private }
 Class >> isValidTraitName: aSymbol [
 
@@ -788,12 +796,6 @@ Class >> name [
 	"Answer the name of the receiver."
 
 	^ name ifNil: [ super name ]
-]
-
-{ #category : #private }
-Class >> name: aSymbol [
-	"for compatibile API with trais"
-	self setName: aSymbol
 ]
 
 { #category : #'subclass creation' }

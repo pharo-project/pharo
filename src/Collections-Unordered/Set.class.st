@@ -61,11 +61,6 @@ Set >> add: newObject [
 	^ newObject
 ]
 
-{ #category : #adding }
-Set >> add: newObject withOccurrences: anInteger [
-	^ self add: newObject
-]
-
 { #category : #converting }
 Set >> asSet [
 	^self

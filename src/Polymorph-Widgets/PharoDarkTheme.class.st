@@ -76,13 +76,7 @@ PharoDarkTheme >> backgroundColor [
 { #category : #'accessing colors' }
 PharoDarkTheme >> balloonBackgroundColor [
 
-	^ (Color r: 1.0 g: 1.0 b: 0.71 alpha: 1.0)
-]
-
-{ #category : #'accessing colors' }
-PharoDarkTheme >> balloonTextColor [
-
-	^ Color black
+	^ self darkBaseColor lighter
 ]
 
 { #category : #'accessing colors' }
@@ -436,7 +430,7 @@ PharoDarkTheme >> selectionTextColor [
 { #category : #defaults }
 PharoDarkTheme >> shStyleTable [
 
-	^SHTextStylerST80 darkStyleTable
+	^SHRBTextStyler darkStyleTable
 ]
 
 { #category : #'accessing colors' }
@@ -450,14 +444,14 @@ PharoDarkTheme >> successTextColor [
 ]
 
 { #category : #'basic-colors' }
-PharoDarkTheme >> taskbarButtonLabelColorForCollapsed: aButton [
+PharoDarkTheme >> taskbarItemLabelColorForCollapsed: aButton [
 	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
 
 	^ self textColor
 ]
 
 { #category : #'basic-colors' }
-PharoDarkTheme >> taskbarButtonLabelColorForExpanded: aButton [
+PharoDarkTheme >> taskbarItemLabelColorForExpanded: aButton [
 	"Answer the colour for the label of the given taskbar button, given that the corresponding window is expanded."
 
 	^ self textColor

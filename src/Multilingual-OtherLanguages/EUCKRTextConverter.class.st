@@ -4,7 +4,7 @@ Text converter for Korean variation of EUC.
 Class {
 	#name : #EUCKRTextConverter,
 	#superclass : #EUCTextConverter,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-TextConverter'
 }
 
 { #category : #utilities }

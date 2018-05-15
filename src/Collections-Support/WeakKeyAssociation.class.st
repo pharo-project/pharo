@@ -27,7 +27,7 @@ WeakKeyAssociation class >> key: newKey value: newValue [
 	^(self basicNew: 1) key: newKey value: newValue
 ]
 
-{ #category : #comparing }
+{ #category : #testing }
 WeakKeyAssociation >> < aLookupKey [ 
 	"Refer to the comment in Magnitude|<."
 

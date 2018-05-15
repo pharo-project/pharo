@@ -8,7 +8,7 @@ To see an example of it's use, see POPSocket class>>example.
 Class {
 	#name : #POP3Client,
 	#superclass : #ProtocolClient,
-	#category : #'Network-Protocols'
+	#category : #'Network-Protocols-Protocols'
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 	#name : #PathTest,
 	#superclass : #TestCase,
 	#type : #variable,
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Base'
 }
 
 { #category : #tests }

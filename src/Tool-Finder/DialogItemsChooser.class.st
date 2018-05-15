@@ -31,7 +31,14 @@ DialogItemsChooser class >> on: aModel unselectedItems: unselectedItems selected
 					title: aString;
 					unselectedLabel: unselectedLabel;
 					selectedLabel: selectedLabel.
-	^instance.
+	^instance
+]
+
+{ #category : #opening }
+DialogItemsChooser class >> open [
+	<script>
+	
+	^self new open
 ]
 
 { #category : #accessing }
@@ -49,6 +56,8 @@ DialogItemsChooser >> choicesList: anObject [
 DialogItemsChooser >> initialize [
 	super initialize.
 	selection := OrderedCollection new.
+	unselectedItems := OrderedCollection new.
+	selectedItems := OrderedCollection new
 ]
 
 { #category : #accessing }
@@ -75,8 +84,9 @@ DialogItemsChooser >> model: aModel [
 
 { #category : #display }
 DialogItemsChooser >> open [
-
-	(DialogItemsChooserUI on: self)
+	<script: 'self new open'>
+	
+	^(DialogItemsChooserUI on: self)
 			title: self title;
 			openInWorld
 ]
@@ -131,7 +141,7 @@ DialogItemsChooser >> selection [
 
 { #category : #accessing }
 DialogItemsChooser >> sendSelection [
-	self model perform: self selectedItemsSetterSelector with: self selectedItems
+	^self model perform: self selectedItemsSetterSelector with: self selectedItems
 ]
 
 { #category : #accessing }

@@ -15,7 +15,7 @@ Class {
 		'monitor',
 		'items'
 	],
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Base'
 }
 
 { #category : #'instance creation' }
@@ -50,7 +50,7 @@ SharedQueue >> findFirst: aBlock [
 
 ]
 
-{ #category : #accessing }
+{ #category : #flushing }
 SharedQueue >> flush [
 	"Remove from the queue all objects"
 	monitor critical: [
@@ -58,7 +58,7 @@ SharedQueue >> flush [
 
 ]
 
-{ #category : #accessing }
+{ #category : #flushing }
 SharedQueue >> flushAllSuchThat: aBlock [
 	"Remove from the queue all objects that satisfy aBlock."
 	monitor critical: [
@@ -150,7 +150,7 @@ SharedQueue >> removeAll [
 		items removeAll ].
 ]
 
-{ #category : #size }
+{ #category : #accessing }
 SharedQueue >> size [
 	^monitor critical: [ items size ]
 ]

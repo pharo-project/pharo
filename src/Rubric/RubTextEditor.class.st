@@ -623,15 +623,6 @@ RubTextEditor >> crlf: aKeyboardEvent [
 	^false
 ]
 
-{ #category : #accessing }
-RubTextEditor >> currentCharacterStyleOrNil [
-	"Answer the CharacterStyle for the current selection or cursor location if any"
-
-	^self hasSelection
-		ifTrue: [ self text characterStyleOrNilAt: self startIndex ]
-		ifFalse: [ self text characterStyleOrNilIfApplying: self emphasisHere ]
-]
-
 { #category : #'nonediting/nontyping keys' }
 RubTextEditor >> cursorDown: aKeyboardEvent [ 
 
@@ -1487,17 +1478,6 @@ RubTextEditor >> lastFont [
 	| t |	
 	t := self text.	
 	^ t fontAt: t size + 1
-]
-
-{ #category : #accessing }
-RubTextEditor >> lastParagraphStyle [
-	"Answer the TextStyle for to be used if positioned at the end of the text"
-	
-	| t |
-	t := self text.
-	^self startIndex > t size
-		ifTrue: [ self text styleIfApplying: self emphasisHere ]
-		ifFalse: [ self text textStyleAt: t size +1 ]
 ]
 
 { #category : #'typing/selecting keys' }

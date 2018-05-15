@@ -4,5 +4,5 @@ I am raised when an operation is attempted on a file that does not exist. This i
 Class {
 	#name : #FileDoesNotExist,
 	#superclass : #FileSystemError,
-	#category : #'FileSystem-Core-Kernel'
+	#category : #'FileSystem-Core-Kernel-Errors'
 }

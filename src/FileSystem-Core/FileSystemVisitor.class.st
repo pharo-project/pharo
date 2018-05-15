@@ -4,7 +4,7 @@ I am an abstract superclass for objects that can perform operations on directory
 Class {
 	#name : #FileSystemVisitor,
 	#superclass : #Object,
-	#category : #'FileSystem-Core-Implementation'
+	#category : #'FileSystem-Core-Base-Visitors'
 }
 
 { #category : #visiting }

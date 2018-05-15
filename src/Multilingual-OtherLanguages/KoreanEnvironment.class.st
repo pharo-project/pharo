@@ -4,7 +4,7 @@ This class provides the Korean support.  Unfortunately, we haven't tested this y
 Class {
 	#name : #KoreanEnvironment,
 	#superclass : #LanguageEnvironment,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-Environments'
 }
 
 { #category : #'class initialization' }

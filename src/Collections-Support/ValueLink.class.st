@@ -40,7 +40,7 @@ ValueLink >> printOn: aStream [
 
 ]
 
-{ #category : #accessing }
+{ #category : #evaluating }
 ValueLink >> value [
 	^value 
 ]

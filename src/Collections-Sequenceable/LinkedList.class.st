@@ -73,7 +73,7 @@ Class {
 		'firstLink',
 		'lastLink'
 	],
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Base'
 }
 
 { #category : #'instance creation' }
@@ -307,7 +307,7 @@ LinkedList >> firstLink [
 	^firstLink 
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 LinkedList >> indexOf: anElement startingAt: start ifAbsent: exceptionBlock [
 	"Answer the index of the first occurence of anElement after start
 	within the receiver. If the receiver does not contain anElement, 
@@ -532,7 +532,7 @@ LinkedList >> size [
 	^ tally
 ]
 
-{ #category : #accessing }
+{ #category : #sorting }
 LinkedList >> sort: aBlock [
 	|aLinkedList|
 	aLinkedList := LinkedList newFrom: (self asArray sort: aBlock).
@@ -540,7 +540,7 @@ LinkedList >> sort: aBlock [
 	lastLink := aLinkedList lastLink.
 ]
 
-{ #category : #enumerating }
+{ #category : #private }
 LinkedList >> species [
 
 	^ Array

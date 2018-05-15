@@ -59,7 +59,7 @@ FontSet class >> fontNamed: fontName fromMimeLiteral: aString [
 
 	^ StrikeFont new 
 		name: fontName;
-		readFromStrike2Stream: (Base64MimeConverter mimeDecodeToBytes: aString readStream)
+		readFromStrike2Stream: aString base64Decoded readStream
 ]
 
 { #category : #private }

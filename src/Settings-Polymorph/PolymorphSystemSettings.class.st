@@ -892,7 +892,7 @@ AElFTkSuQmCC'
 
 { #category : #desktop }
 PolymorphSystemSettings class >> pharoLogoForm [
-	^ Form fromBinaryStream: self pharoLogoContents base64Decoded asByteArray readStream
+	^ Form fromBinaryStream: self pharoLogoContents base64Decoded readStream
 ]
 
 { #category : #desktop }

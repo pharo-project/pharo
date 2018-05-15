@@ -10,7 +10,7 @@ Seems to work only on MacOSX
 Class {
 	#name : #InternetConfiguration,
 	#superclass : #Object,
-	#category : #'Network-Kernel'
+	#category : #'Network-Kernel-Base'
 }
 
 { #category : #'HTTP Proxy' }

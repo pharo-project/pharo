@@ -15,11 +15,11 @@ ZdcIOBufferTests >> testAdvanceReadPointer [
 	1 to: 6 do: [ :each | ioBuffer nextPut: each ].
 	3 timesRepeat: [ ioBuffer next ].
 	offset := ioBuffer contentsStart.
-	self assert: ioBuffer availableForReading = 6.
+	self assert: ioBuffer availableForReading equals: 6.
 	1 to: 6 do: [ :each | 
-		self assert: (ioBuffer buffer at: offset + each - 1) = each ].
+		self assert: (ioBuffer buffer at: offset + each - 1) equals: each ].
 	ioBuffer advanceReadPointer: 6.
-	self assert: ioBuffer availableForReading = 0.
+	self assert: ioBuffer availableForReading equals: 0.
 	ioBuffer compact.
 	self assert: ioBuffer isEmpty     
 	
@@ -34,9 +34,9 @@ ZdcIOBufferTests >> testAdvanceWritePointer [
 	1 to: 6 do: [ :each |
 		ioBuffer buffer at: offset + each - 1 put: each ].
 	ioBuffer advanceWritePointer: 6.
-	self assert: ioBuffer isEmpty not.
-	self assert: ioBuffer availableForReading = 6.
-	self assert: ioBuffer contents = #[1 2 3 4 5 6]
+	self deny: ioBuffer isEmpty.
+	self assert: ioBuffer availableForReading equals: 6.
+	self assert: ioBuffer contents equals: #[1 2 3 4 5 6]
 	
 ]
 
@@ -80,10 +80,10 @@ ZdcIOBufferTests >> testCompact [
 	1 to: 6 do: [ :each | ioBuffer nextPut: each ].
 	3 timesRepeat: [ ioBuffer next ].
 	ioBuffer compact.
-	self assert: ioBuffer availableForReading = 3.
-	self assert: ioBuffer availableForWriting = 7.
+	self assert: ioBuffer availableForReading equals: 3.
+	self assert: ioBuffer availableForWriting equals: 7.
 	3 timesRepeat: [ ioBuffer next ].
-	self assert: ioBuffer gapAtFront = 3.
+	self assert: ioBuffer gapAtFront equals: 3.
 	ioBuffer compact.
 	self assert: ioBuffer isEmpty
 	
@@ -96,11 +96,11 @@ ZdcIOBufferTests >> testCompactAtBeginning [
 	ioBuffer := ZdcIOBuffer on: (ByteArray new: 10).
 	ioBuffer compact.
 	self assert: ioBuffer isEmpty.
-	self assert: ioBuffer availableForWriting = 10.
+	self assert: ioBuffer availableForWriting equals: 10.
 	1 to: 6 do: [ :each | ioBuffer nextPut: each ].
 	ioBuffer compact.
-	self assert: ioBuffer availableForReading = 6.
-	self assert: ioBuffer availableForWriting = 4.
+	self assert: ioBuffer availableForReading equals: 6.
+	self assert: ioBuffer availableForWriting equals: 4.
 	self assert: ioBuffer gapAtFront isZero
 ]
 
@@ -112,7 +112,7 @@ ZdcIOBufferTests >> testCompactAtEnd [
 	self assert: ioBuffer gapAtFront isZero.
 	10 timesRepeat: [ ioBuffer next ].
 	self assert: ioBuffer isFull.
-	self assert: ioBuffer gapAtFront = 10.
+	self assert: ioBuffer gapAtFront equals: 10.
 	ioBuffer compact.
 	self assert: ioBuffer isEmpty
 	
@@ -124,20 +124,20 @@ ZdcIOBufferTests >> testCompactDoNothing [
 	| ioBuffer |
 	ioBuffer := ZdcIOBuffer on: (ByteArray new: 10).
 	self assert: ioBuffer isEmpty.
-	self assert: ioBuffer availableForReading = 0.
-	self assert: ioBuffer availableForWriting = 10.
+	self assert: ioBuffer availableForReading equals: 0.
+	self assert: ioBuffer availableForWriting equals: 10.
 	ioBuffer compact.
 	self assert: ioBuffer isEmpty.
-	self assert: ioBuffer availableForReading = 0.
-	self assert: ioBuffer availableForWriting = 10.	    
+	self assert: ioBuffer availableForReading equals: 0.
+	self assert: ioBuffer availableForWriting equals: 10.	    
 	1 to: 6 do: [ :each | ioBuffer nextPut: each ].	
-	self assert: ioBuffer isEmpty not.
-	self assert: ioBuffer availableForReading = 6.
-	self assert: ioBuffer availableForWriting = 4.
+	self deny: ioBuffer isEmpty.
+	self assert: ioBuffer availableForReading equals: 6.
+	self assert: ioBuffer availableForWriting equals: 4.
 	ioBuffer compact.
-	self assert: ioBuffer isEmpty not.
-	self assert: ioBuffer availableForReading = 6.
-	self assert: ioBuffer availableForWriting = 4.
+	self deny: ioBuffer isEmpty.
+	self assert: ioBuffer availableForReading equals: 6.
+	self assert: ioBuffer availableForWriting equals: 4.
 ]
 
 { #category : #testing }
@@ -168,9 +168,9 @@ ZdcIOBufferTests >> testReading [
 	| ioBuffer |
 	ioBuffer := ZdcIOBuffer on: (ByteArray new: 10).
 	1 to: 6 do: [ :each | ioBuffer nextPut: each ].
-	1 to: 3 do: [ :each | self assert: ioBuffer next = each ].
-	self assert: ioBuffer contents = #[4 5 6].
-	4 to: 6 do: [ :each | self assert: ioBuffer next = each ].
+	1 to: 3 do: [ :each | self assert: ioBuffer next equals: each ].
+	self assert: ioBuffer contents equals: #[4 5 6].
+	4 to: 6 do: [ :each | self assert: ioBuffer next equals: each ].
 	self assert: ioBuffer isEmpty.
 	self should: [ ioBuffer next ] raise: Error
 ]
@@ -180,8 +180,8 @@ ZdcIOBufferTests >> testString [
 	| ioBuffer |
 	ioBuffer := ZdcIOBuffer on: (String new: 10).
 	($a to: $f) do: [ :each | ioBuffer nextPut: each ].
-	self assert: ioBuffer contents = 'abcdef'.
-	($a to: $f) do: [ :each | self assert: ioBuffer next = each ]
+	self assert: ioBuffer contents equals: 'abcdef'.
+	($a to: $f) do: [ :each | self assert: ioBuffer next equals: each ]
 	
 	
 ]
@@ -192,11 +192,11 @@ ZdcIOBufferTests >> testWriting [
 	ioBuffer := ZdcIOBuffer on: (ByteArray new: 10).
 	self assert: ioBuffer isEmpty.
 	self assert: ioBuffer size isZero.
-	self assert: ioBuffer availableForWriting = 10.
+	self assert: ioBuffer availableForWriting equals: 10.
 	1 to: 6 do: [ :each | ioBuffer nextPut: each ].
-	self assert: ioBuffer contents = #[1 2 3 4 5 6].
-	self assert: ioBuffer size = 6.
-	self assert: ioBuffer availableForWriting = 4.
+	self assert: ioBuffer contents equals: #[1 2 3 4 5 6].
+	self assert: ioBuffer size equals: 6.
+	self assert: ioBuffer availableForWriting equals: 4.
 	7 to: 10 do: [ :each | ioBuffer nextPut: each ].
 	self assert: ioBuffer isFull.
 	self should: [ ioBuffer nextPut: 1 ] raise: Error

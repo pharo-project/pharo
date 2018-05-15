@@ -4,7 +4,7 @@ SUnit tests for class BreadthFirstGuide
 Class {
 	#name : #BreadthFirstGuideTest,
 	#superclass : #GuideTest,
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Guide'
 }
 
 { #category : #tests }

@@ -9,10 +9,7 @@ Class {
 		'literalSemaphore',
 		'literalProcess',
 		'selectors',
-		'compiledMethod',
-		'selfMessages',
-		'superMessages',
-		'messages'
+		'compiledMethod'
 	],
 	#category : #'Refactoring-Critics'
 }

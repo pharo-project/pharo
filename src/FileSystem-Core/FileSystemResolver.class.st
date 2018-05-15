@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'next'
 	],
-	#category : #'FileSystem-Core-Implementation'
+	#category : #'FileSystem-Core-Base-Resolver'
 }
 
 { #category : #accessing }

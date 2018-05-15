@@ -4,7 +4,7 @@ Text converter for ISO 8859-1.  An international encoding used in Western Europe
 Class {
 	#name : #Latin1TextConverter,
 	#superclass : #ByteTextConverter,
-	#category : #'Multilingual-TextConversion'
+	#category : #'Multilingual-TextConversion-TextConverter'
 }
 
 { #category : #accessing }

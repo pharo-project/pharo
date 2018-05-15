@@ -20,7 +20,7 @@ Announcer >> gtInspectorAnnouncementsIn: composite context: aGTContext [
 		send: #value;
 		showOnly: 50;
 		format: #gtDisplayString;
-		filterOn: [:text :each | Smalltalk compiler evaluate: '| date each | date := self key. each := self value. ', text for: each logged: false ];
+		filterOn: [:text :each | Smalltalk compiler receiver: each; evaluate: '| date each | date := self key. each := self value. ', text ];
 		updateOn: Announcement from: recordedAnnouncements gtAnnouncer;
 		act: [ :table | 
 			recordedAnnouncements removeAll.

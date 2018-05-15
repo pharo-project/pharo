@@ -43,7 +43,7 @@ NECMenuMorph class >> controller: aECController position: aPoint [
 
 { #category : #preferences }
 NECMenuMorph class >> convertToSHSymbol: aSymbol [
-	^ (SHTextStylerST80 new attributesFor: aSymbol) isNotEmpty
+	^ (SHRBTextStyler new attributesFor: aSymbol) isNotEmpty
 		ifTrue: [ aSymbol ]
 		ifFalse: [ #default ]
 ]
@@ -199,13 +199,13 @@ NECMenuMorph class >> sectionAttributes [
 NECMenuMorph class >> selectColorFor: aSymbol [ 
 	| attribute |
 	attribute := self convertToSHSymbol: aSymbol.
-	^ (SHTextStylerST80 new attributesFor: attribute) first color
+	^ (SHRBTextStyler new attributesFor: attribute) first color
 ]
 
 { #category : #'preferences-fonts' }
 NECMenuMorph class >> selectFontFor: aSymbol [ 
 	| emphasized attributes |
-	attributes := SHTextStylerST80 new 
+	attributes := SHRBTextStyler new 
 		attributesFor: (self convertToSHSymbol: aSymbol).
 	emphasized := attributes size > 1 
 		ifTrue: [ attributes second emphasisCode ]

@@ -7,5 +7,5 @@ Class {
 	#classVars : [
 		'FooValue1'
 	],
-	#category : 'Shift-ClassBuilder-Tests-TestClasses'
+	#category : #'Shift-ClassBuilder-Tests-TestClasses'
 }

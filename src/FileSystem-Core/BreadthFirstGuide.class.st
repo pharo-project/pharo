@@ -15,7 +15,7 @@ I use my work instance variable as a queue, adding nodes to be visited to the en
 Class {
 	#name : #BreadthFirstGuide,
 	#superclass : #FileSystemGuide,
-	#category : #'FileSystem-Core-Implementation'
+	#category : #'FileSystem-Core-Base-Guide'
 }
 
 { #category : #showing }

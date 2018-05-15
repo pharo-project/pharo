@@ -4,7 +4,7 @@ SUnit tests for MemoryFileSystem
 Class {
 	#name : #MemoryFileSystemTest,
 	#superclass : #FileSystemTest,
-	#category : #'FileSystem-Tests-Memory'
+	#category : #'FileSystem-Tests-Memory-Base'
 }
 
 { #category : #'initialize-release' }

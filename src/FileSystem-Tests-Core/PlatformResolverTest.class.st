@@ -4,7 +4,7 @@ SUnit tests for PlatformResolver
 Class {
 	#name : #PlatformResolverTest,
 	#superclass : #FileSystemResolverTest,
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Resolver'
 }
 
 { #category : #running }

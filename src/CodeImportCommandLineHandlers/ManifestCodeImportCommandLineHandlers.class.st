@@ -1,7 +1,7 @@
 Class {
 	#name : #ManifestCodeImportCommandLineHandlers,
 	#superclass : #PackageManifest,
-	#category : #CodeImportCommandLineHandlers
+	#category : #'CodeImportCommandLineHandlers-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

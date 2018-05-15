@@ -4,7 +4,7 @@ Text converter for ISO 8859-2.  An international encoding used in Eastern Europe
 Class {
 	#name : #ISO88592TextConverter,
 	#superclass : #ByteTextConverter,
-	#category : #'Multilingual-TextConversion'
+	#category : #'Multilingual-TextConversion-TextConverter'
 }
 
 { #category : #accessing }

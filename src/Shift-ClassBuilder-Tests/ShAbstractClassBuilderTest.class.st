@@ -8,7 +8,7 @@ Class {
 		'result',
 		'builder'
 	],
-	#category : 'Shift-ClassBuilder-Tests'
+	#category : #'Shift-ClassBuilder-Tests'
 }
 
 { #category : #validation }

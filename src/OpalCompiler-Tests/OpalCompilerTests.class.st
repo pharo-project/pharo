@@ -34,6 +34,14 @@ OpalCompilerTests >> testCompileEmbeddsSource [
 ]
 
 { #category : #tests }
+OpalCompilerTests >> testCompileWithNilClass [
+	"we shoud use UndefinedObject if the class is nil"
+	| method |
+	method := Smalltalk compiler compile: 'tst 1+2'.
+	self assert: method methodClass equals: UndefinedObject.
+]
+
+{ #category : #tests }
 OpalCompilerTests >> testEvaluateWithBindings [
 	| result |
 	result := Smalltalk compiler

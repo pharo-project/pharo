@@ -1,13 +1,24 @@
 "
-I provide the API of the whole Compiler Package.
+I provide the API of the whole Compiler Package for the case that the input is sourcecode.
+(if there is alreay and AST, call #generate (to compile) or #evaluate directly on the node)
 
--> parsing: just parse
--> translate: parse and generate code so we get all error messages
--> compile: translate but return the CompiledMethod 
+a pre-configures compiler instance can be requested with: 
+ - Smalltalk compiler
+ - a Class compiler 
+
+The compiler instance (atually: the compilation context) needs to be setup. See #class: #source: #noPattern: #requestor: for the most important accessors (more are in the accessing protocol). 
+
+See the class comment of CompilationContext for more information.
+
+The final step is one of three actions:
+
+-> parsing: parse source and return an AST.
+-> compile: parse and compile, return a CompiledMethod 
+-> evaluate: parse, compile, evaluate and return result
 
 Example:
 
-OpalCompiler new
+Smalltalk compiler
 	source: 'test 1+2';
 	class: Object;
 	compile.
@@ -47,7 +58,7 @@ OpalCompiler class >> debuggerMethodMapForMethod: aMethod [
 	^ DebuggerMethodMapOpal forMethod: aMethod
 ]
 
-{ #category : #'old - public' }
+{ #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString [ 
 	
 	^self new
@@ -55,7 +66,7 @@ OpalCompiler class >> evaluate: textOrString [
 		evaluate
 ]
 
-{ #category : #'old - public' }
+{ #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString for: anObject logged: logFlag [ 
 	"See Compiler|evaluate:for:notifying:logged:. If a compilation error occurs, 
 	a Syntax Error view is created rather than notifying any requestor."
@@ -67,7 +78,7 @@ OpalCompiler class >> evaluate: textOrString for: anObject logged: logFlag [
 		evaluate
 ]
 
-{ #category : #'old - public' }
+{ #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString for: anObject notifying: aController logged: logFlag [
 	"Compile and execute the argument, textOrString with respect to the class 
 	of anObject. If a compilation error occurs, notify aController. If both 
@@ -85,7 +96,7 @@ OpalCompiler class >> evaluate: textOrString for: anObject notifying: aControlle
 			
 ]
 
-{ #category : #'old - public' }
+{ #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString logged: logFlag [ 
 	"See Compiler|evaluate:for:notifying:logged:. If a compilation error occurs, 
 	a Syntax Error view is created rather than notifying any requestor. 
@@ -99,7 +110,7 @@ OpalCompiler class >> evaluate: textOrString logged: logFlag [
 			
 ]
 
-{ #category : #'old - public' }
+{ #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString notifying: aController logged: logFlag [ 
 	"See Compiler|evaluate:for:notifying:logged:. Compilation is carried out 
 	with respect to nil, i.e., no object."
@@ -113,7 +124,7 @@ OpalCompiler class >> evaluate: textOrString notifying: aController logged: logF
 			
 ]
 
-{ #category : #'old - public' }
+{ #category : #'old - deprecated' }
 OpalCompiler class >> format: textOrStream in: aClass notifying: aRequestor [
 	^self new
 		source: textOrStream;
@@ -173,12 +184,12 @@ OpalCompiler >> compilationContext: anObject [
 	compilationContext := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #plugins }
 OpalCompiler >> compilationContextClass [
 	^compilationContextClass ifNil: [ CompilationContext  ]
 ]
 
-{ #category : #accessing }
+{ #category : #plugins }
 OpalCompiler >> compilationContextClass: aClass [
 	compilationContextClass := aClass.
 ]
@@ -189,10 +200,10 @@ OpalCompiler >> compile [
 	[ 	[	ast := self parse.
 			self doSemanticAnalysis. 
 			self callPlugins.  
-		] 	on: OCSourceCodeChanged 
+		] 	on: ReparseAfterSourceEditing 
 			do: 
 			[  	:notification | 
-				self source: notification newSourceCode. 
+				self source: notification newSource. 
 				notification retry. 
 			]. 
 		cm := compilationContext optionEmbeddSources
@@ -218,6 +229,43 @@ OpalCompiler >> compile: textOrString [
 	^self
 		source: textOrString;
 		compile.
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> compile: textOrStream in: aClass classified: aCategory notifying: aRequestor ifFail:  aFailBlock [ 
+
+	^self 
+		source: textOrStream;
+		class: aClass;
+		requestor: aRequestor;
+		failBlock: aFailBlock;
+		parse
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> compile: textOrStream in: aClass notifying: aRequestor ifFail: aFailBlock [ 
+
+	^self 
+		source: textOrStream;
+		class: aClass;
+		requestor: aRequestor;
+		failBlock: aFailBlock;
+		parse
+	
+
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> compileNoPattern: textOrStream in: aClass context: aContext notifying: aRequestor ifFail: aFailBlock [
+
+	^self 
+		source: textOrStream;
+		class: aClass;
+		context: aContext;
+		requestor: aRequestor;
+		noPattern: true;
+		failBlock: aFailBlock;
+		parse
 ]
 
 { #category : #accessing }
@@ -249,6 +297,11 @@ OpalCompiler >> doSemanticAnalysis [
 		do: [ :ex | ex defaultAction. ^ self compilationContext failBlock value ]
 ]
 
+{ #category : #plugins }
+OpalCompiler >> encoderClass: aClass [ 
+	self compilationContext encoderClass: aClass 
+]
+
 { #category : #accessing }
 OpalCompiler >> environment: anSmallTalkImage [
 	self compilationContext environment: anSmallTalkImage 
@@ -267,10 +320,98 @@ OpalCompiler >> evaluate [
 	self noPattern: true.
 	self getSourceFromRequestorSelection.
 	self class: (context ifNil: [ receiver class ] ifNotNil: [ context method methodClass ]).
-	compilationContext parseOptions: #(+ #optionEmbeddSources).
 	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod: self compile.
 	self logDoIt.
 	^ value
+]
+
+{ #category : #'public access' }
+OpalCompiler >> evaluate: textOrString [ 
+	
+	^self
+		source: textOrString;
+		evaluate
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> evaluate: textOrString for: anObject logged: logFlag [ 
+
+	^self
+		source: textOrString;
+		logged: logFlag;
+		receiver: anObject;
+		evaluate
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> evaluate: textOrString for: anObject notifying: aController logged: logFlag [
+
+	^ self 
+		source: textOrString;
+		logged: logFlag;
+		receiver: anObject;
+		requestor: aController;
+		evaluate
+	
+			
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> evaluate: aString in: aContext to: aReceiver [
+	
+	^self
+		source: aString;
+		context: aContext;
+		receiver: aReceiver;
+		failBlock: [^ #failedDoit];
+		evaluate
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> evaluate: textOrStream in: aContext to: aReceiver notifying: aRequestor ifFail: aFailBlock [ 
+	
+	^self
+		source: textOrStream;
+		context: aContext;
+		receiver: aReceiver;
+		requestor: aRequestor;
+		failBlock: aFailBlock;
+		evaluate
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> evaluate: textOrStream in: aContext to: aReceiver notifying: aRequestor ifFail: aFailBlock logged: logFlag [
+	
+	^self
+		source: textOrStream;
+		context: aContext;
+		receiver: aReceiver;
+		requestor: aRequestor;
+		failBlock: aFailBlock;
+		logged: logFlag;
+		evaluate
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> evaluate: textOrString logged: logFlag [ 
+
+	^ self
+		source: textOrString;
+		logged: logFlag;
+		evaluate
+	
+			
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> evaluate: textOrString notifying: aController logged: logFlag [ 
+
+	^ self
+		source: textOrString;
+		logged: logFlag;
+		requestor: aController;
+		evaluate
+	
 ]
 
 { #category : #accessing }
@@ -289,6 +430,16 @@ OpalCompiler >> format: textOrString [
 	^self
 		source: textOrString;
 		format
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> format: textOrStream in: aClass notifying: aRequestor [
+	^self
+		source: textOrStream;
+		class: aClass;
+		requestor: aRequestor;
+		format
+		
 ]
 
 { #category : #private }
@@ -328,6 +479,8 @@ OpalCompiler >> logged: aBoolean [
 { #category : #accessing }
 OpalCompiler >> noPattern: aBoolean [
 	self compilationContext noPattern: aBoolean.
+	"when we compile an expression, embedd sources, as the resulting method will never be installed"
+	compilationContext parseOptions: #(+ #optionEmbeddSources).
 	
 ]
 
@@ -349,6 +502,38 @@ OpalCompiler >> parse: textOrString [
 	^self
 		source: textOrString;
 		parse
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> parse: aString class: aClass [
+	^self 
+		source: aString;
+		class: aClass;
+		parse
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> parse: aString class: aClass noPattern: aBoolean context: aContext notifying: req ifFail: aBlock [
+	"Backwards compatibilty"
+	
+	^self 
+		source: aString;
+		class: aClass;
+		noPattern: aBoolean;
+		context: aContext;
+		requestor: req;
+		failBlock: aBlock;
+		parse.
+]
+
+{ #category : #'old - deprecated' }
+OpalCompiler >> parse: textOrStream in: aClass notifying: req [
+
+	^self 
+		source: textOrStream;
+		class: aClass;
+		requestor: req;
+		parse.
 ]
 
 { #category : #private }
@@ -385,7 +570,7 @@ OpalCompiler >> parseSelector: aString [
 	^[self parserClass parseMethodPattern: aString] on: Error do: [nil].
 ]
 
-{ #category : #accessing }
+{ #category : #plugins }
 OpalCompiler >> parserClass [
 	^self compilationContext parserClass
 ]
@@ -401,16 +586,20 @@ OpalCompiler >> requestor: aRequestor [
 	self compilationContext interactive: (self isInteractiveFor: aRequestor).
 ]
 
+{ #category : #plugins }
+OpalCompiler >> requestorScopeClass: aClass [ 
+	"clients can set their own subclass of OCRequestorScope if needed"
+	self compilationContext requestorScopeClass: aClass
+]
+
 { #category : #accessing }
 OpalCompiler >> source: aString [
 	source := aString readStream.
 ]
 
-{ #category : #'public access' }
+{ #category : #'old - deprecated' }
 OpalCompiler >> translate [
-	[ self compile ] on: ReparseAfterSourceEditing do: [ :ex |
-		self source: ex newSource readStream.
-		self compile
-	 ] .
-	^ ast
+	self
+		deprecated: 'Please use #parse instead'
+		transformWith: '`@receiver translate' -> '`@receiver parse'
 ]

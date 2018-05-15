@@ -349,7 +349,7 @@ ThemeIcons >> readPNGFrom: aReference [
 ThemeIcons >> repairIcon [
 	^ icons
 			at: #'repairIcon'
-			ifAbsentPut: [ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self repairIconContents readStream) ].
+			ifAbsentPut: [ Form fromBinaryStream: self repairIconContents base64Decoded readStream ].
 ]
 
 { #category : #'critiques icons' }
@@ -378,7 +378,7 @@ ThemeIcons >> smallInformationIcon [
 ThemeIcons >> smallQAIcon [
 	^ icons
 			at: #'smallQAIcon'
-			ifAbsentPut: [ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self smallQAIconContents readStream) ].
+			ifAbsentPut: [ Form fromBinaryStream: self smallQAIconContents base64Decoded readStream ].
 ]
 
 { #category : #'critiques icons' }
@@ -392,14 +392,14 @@ iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAA
 ThemeIcons >> thumbsDownIcon [
 	^ icons
 			at: #thumbsDownIcon
-			ifAbsentPut: [ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self tumbsDownIconContents readStream) ].
+			ifAbsentPut: [ Form fromBinaryStream: self tumbsDownIconContents base64Decoded readStream ].
 ]
 
 { #category : #'critiques icons' }
 ThemeIcons >> thumbsUpIcon [
 	^ icons
 			at: #thumbsUpIcon
-			ifAbsentPut: [ Form fromBinaryStream: (Base64MimeConverter mimeDecodeToBytes: self thumbsUpIconContents readStream) ].
+			ifAbsentPut: [ Form fromBinaryStream: self thumbsUpIconContents base64Decoded readStream ].
 ]
 
 { #category : #'critiques icons' }
