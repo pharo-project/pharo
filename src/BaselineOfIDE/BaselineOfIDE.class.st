@@ -326,6 +326,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Balloon-Tests'.
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
+		spec package: 'CodeImport-Tests'.
 		spec package: 'Collections-DoubleLinkedList-Tests'.
 		spec package: 'Collections-Arithmetic-Tests'.
 		spec package: 'Compression-Tests'.
@@ -803,7 +804,8 @@ spec group: 'OSWindow-Group' with: #(
 
 spec group: 'Kernel-Tests-Group' with: #(
 	'BlueInk-Core-Group' "dependency"
-	'RPackage-Tests' 
+	'RPackage-Tests'
+	'CodeImport-Tests'	 
 	'Collections-Tests'
 	'Kernel-Tests' 
 	'Kernel-Tests-WithCompiler' 
