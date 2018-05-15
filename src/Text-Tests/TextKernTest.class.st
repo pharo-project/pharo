@@ -4,7 +4,7 @@ SUnit tests for class TextKern
 Class {
 	#name : #TextKernTest,
 	#superclass : #HashAndEqualsTestCase,
-	#category : #'Text-Tests'
+	#category : #'Text-Tests-Base'
 }
 
 { #category : #running }
