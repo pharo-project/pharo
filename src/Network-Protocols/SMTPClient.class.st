@@ -112,7 +112,7 @@ SMTPClient >> data: messageData [
 	self checkResponse.
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 SMTPClient >> encodeString: aString [ 
 	^ ZnUtils encodeBase64: aString
 ]

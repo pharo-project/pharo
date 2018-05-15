@@ -174,7 +174,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	^ #(#'Athens-Morphic' #MonticelloGUI #'Morphic-Widgets-FastTable' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 SystemDependenciesTest >> longTestCase [
 
 	self timeLimit: 60 seconds.

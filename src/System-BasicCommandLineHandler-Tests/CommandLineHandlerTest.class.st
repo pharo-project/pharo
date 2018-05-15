@@ -4,7 +4,7 @@ Class {
 	#category : #'System-BasicCommandLineHandler-Tests'
 }
 
-{ #category : #utility }
+{ #category : #utilities }
 CommandLineHandlerTest >> argumentsWith: aCollection [
 	^ CommandLineArguments withArguments: aCollection
 ]

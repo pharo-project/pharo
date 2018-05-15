@@ -472,7 +472,7 @@ TestCase class >> run: aSymbol [
 	^(self selector: aSymbol) run
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 TestCase class >> runAllAndLogResult [
 
 	"runs all tests in the image"

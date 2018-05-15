@@ -18,7 +18,7 @@ TraitsTestCase class >> resources [
 	^ super resources copyWith: TraitsResource
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 TraitsTestCase >> assertPrints: aString like: anotherString [ 
 	self assert: (aString copyWithout: $ )
 		= (anotherString copyWithout: $ )
@@ -84,7 +84,7 @@ TraitsTestCase >> categoryName [
 	^self class category
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 TraitsTestCase >> createClassNamed: aSymbol superclass: aClass uses: aTraitComposition [
 	| class |
 	class := aClass
@@ -98,7 +98,7 @@ TraitsTestCase >> createClassNamed: aSymbol superclass: aClass uses: aTraitCompo
 	^class
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 TraitsTestCase >> createTraitNamed: aSymbol uses: aTraitComposition [
 	| trait |
 	trait := Trait
@@ -109,14 +109,14 @@ TraitsTestCase >> createTraitNamed: aSymbol uses: aTraitComposition [
 	^trait
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 TraitsTestCase >> createdClassesAndTraits [
 	createdClassesAndTraits ifNil: [
 		createdClassesAndTraits := OrderedCollection new].
 	^createdClassesAndTraits
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 TraitsTestCase >> resourceClassesAndTraits [
 	^TraitsResource current createdClassesAndTraits
 ]

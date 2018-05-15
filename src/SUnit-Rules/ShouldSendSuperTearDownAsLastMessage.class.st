@@ -13,7 +13,7 @@ ShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 	^ true
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 ShouldSendSuperTearDownAsLastMessage class >> superTearDownNotCalledLastIn: aCompiledMethod [
 	"Return true if the method is a tearDown method and a call to super tearDown is not the last message send."
 	

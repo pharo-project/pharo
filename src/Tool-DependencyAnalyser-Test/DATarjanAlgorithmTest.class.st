@@ -39,7 +39,7 @@ DATarjanAlgorithmTest >> setUp [
 	anArray at: 8 put:packageH.
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 DATarjanAlgorithmTest >> stackSize [
 	^ (tarjanPackage instVarNamed: 'stack') size
 ]

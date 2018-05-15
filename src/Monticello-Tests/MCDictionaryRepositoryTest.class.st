@@ -12,12 +12,12 @@ MCDictionaryRepositoryTest >> addVersion: aVersion [
 	dict at: aVersion info put: aVersion
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCDictionaryRepositoryTest >> deleteNode: aNode [
 	dict removeKey: aNode
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCDictionaryRepositoryTest >> dictionary [
 	^ dict ifNil: [dict := Dictionary new]
 ]

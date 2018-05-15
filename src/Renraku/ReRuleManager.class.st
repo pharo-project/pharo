@@ -20,7 +20,7 @@ Class {
 	#category : #'Renraku-Utility'
 }
 
-{ #category : #utility }
+{ #category : #utilities }
 ReRuleManager class >> availableRuleGroups [
 	^ (self visibleRuleClasses
 		collect: [ :r | r new group ]
@@ -135,14 +135,14 @@ ReRuleManager class >> removeManagerFor: anRPackage [
 	
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 ReRuleManager class >> reset [
 	<script>
 	managers := nil.
 	default := nil.
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 ReRuleManager class >> resetWithInform [
 
 	self reset.
@@ -210,13 +210,13 @@ ReRuleManager class >> unsubscribe [
 	ReSystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 ReRuleManager class >> visibleLintRuleClasses [
 
 	^ RBLintRule withAllSubclasses select: #isVisible
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 ReRuleManager class >> visibleRuleClasses [
 
 	^ (ReAbstractRule withAllSubclasses select: #isVisible)
