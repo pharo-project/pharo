@@ -7,6 +7,11 @@ Class {
 	#category : #Deprecated70
 }
 
+{ #category : #deprecation }
+PackageChecker class >> isDeprecated [
+	^true
+]
+
 { #category : #check }
 PackageChecker >> check [
 	"self new check"
