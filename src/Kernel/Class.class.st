@@ -538,7 +538,7 @@ Class >> definitionForNautilusWithSlots [
 	poolString = '' ifFalse: [
 		aStream cr; tab; nextPutAll: 'poolDictionaries: ';
 			store: poolString].
-	aStream cr; tab; nextPutAll: 'category: ';
+	aStream cr; tab; nextPutAll: 'package: ';
 			store: self category asString.
 
 	superclass ifNil: [ 
@@ -1152,7 +1152,7 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 ]
 
 { #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
+Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder |
 		builder name: aSubclassSymbol;
@@ -1165,7 +1165,7 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition cl
 ]
 
 { #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
+Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames pacakge: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder |
 		builder name: aSubclassSymbol;
@@ -1179,7 +1179,7 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition c
 ]
 
 { #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
+Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder | 
 			builder
@@ -1191,7 +1191,7 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 ]
 
 { #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
+Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder |
 		builder name: aSubclassSymbol;
