@@ -121,13 +121,13 @@ DiskStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
 		
 	index := 1.
 	pathString := self stringFromPath: aPath.
-	encodedPathString := File encode: pathString.
+	encodedPathString := File encodePathString: pathString.
 	entry := File lookupEntryIn: encodedPathString index: index.
 	entry = #badDirectoryPath ifTrue: [ ^ self signalDirectoryDoesNotExist: aPath ].
 	
 	[ entry isNil ]
 		whileFalse: [ 
-			entry at: 1 put: (File decode: entry first).
+			entry at: 1 put: (File decodePathString: entry first).
 			aBlock value: entry.
 			index := index + 1.
 			entry := File lookupEntryIn: encodedPathString index: index ].
@@ -137,8 +137,8 @@ DiskStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
 DiskStore >> basicEntryAt: aPath [
 	| encodedPath encodedBasename |
 	
-	encodedPath := File encode: (self stringFromPath: aPath parent).
-	encodedBasename := File encode: aPath basename.
+	encodedPath := File encodePathString: (self stringFromPath: aPath parent).
+	encodedBasename := File encodePathString: aPath basename.
 	
 	^ (File lookupDirectory: encodedPath filename: encodedBasename)
 		ifNil: [ #badDirectoryPath ].
@@ -172,7 +172,7 @@ DiskStore >> basicModificationTimeOf: anEntry [
 DiskStore >> basicOpen: aPath writable: aBoolean [
 	| string encoded |
 	string := self stringFromPath: aPath.
-	encoded := File encode: string.
+	encoded := File encodePathString: string.
 	^ File open: encoded writable: aBoolean
 ]
 
@@ -211,7 +211,7 @@ DiskStore >> createDirectory: path [
 
 	| parent encodedPathString pathString result |
 	pathString := self stringFromPath: path.
-	encodedPathString := File encode: pathString.
+	encodedPathString := File encodePathString: pathString.
 	result := File createDirectory: encodedPathString.
 	result
 		ifNil: [ 
@@ -243,7 +243,7 @@ DiskStore >> delete: path [
 		ifFalse: [ ^ FileDoesNotExist signalWith: path ].
 		
 	pathString := self stringFromPath: path.
-	encodedPathString := File encode: pathString.
+	encodedPathString := File encodePathString: pathString.
 	
 	(self isDirectory: path)
 		ifTrue: [ File deleteDirectory: encodedPathString ]
@@ -377,9 +377,9 @@ DiskStore >> rename: sourcePath to: destinationPath [
 
 	| sourcePathString encodedSourcePathString targetPathString encodedTargetPathString |
 	sourcePathString := self stringFromPath: sourcePath.
-	encodedSourcePathString := File encode: sourcePathString.
+	encodedSourcePathString := File encodePathString: sourcePathString.
 	targetPathString := self stringFromPath: destinationPath.
-	encodedTargetPathString := File encode: targetPathString.
+	encodedTargetPathString := File encodePathString: targetPathString.
 	^ File rename: encodedSourcePathString to: encodedTargetPathString.
 ]
 

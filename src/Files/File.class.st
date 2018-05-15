@@ -116,7 +116,7 @@ File class >> createDirectory: fullPath [
 ]
 
 { #category : #'primitives-encoding' }
-File class >> decode: aString [
+File class >> decodePathString: aString [
 
 	^ (ZnCharacterEncoder newForEncoding: 'utf8') decodeBytes: aString asByteArray
 ]
@@ -151,7 +151,7 @@ File class >> delimiter [
 ]
 
 { #category : #'primitives-encoding' }
-File class >> encode: aString [
+File class >> encodePathString: aString [
 
 	"Should not return a string"
 	^ ((ZnCharacterEncoder newForEncoding: 'utf8') encodeString: aString) asString
