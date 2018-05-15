@@ -1663,25 +1663,21 @@ FileList >> veryDeepFixupWith: deepCopier [
 { #category : #'own services' }
 FileList >> viewContents [
 	"View the contents of my selected file in a new text window"
-	
+
 	| aString |
-	
-	self reference streamWritable: false do: [ :stream|
-		aString := stream setConverterForCode contentsOfEntireFile ].
-	
-	UIManager default edit: aString label: 'Contents from ', self reference basename
+	self reference streamWritable: false do: [ :stream | aString := stream upToEnd ].
+	UIManager default edit: aString label: 'Contents from ' , self reference basename
 ]
 
 { #category : #'own services' }
 FileList >> viewContentsInWorkspace [
 	"View the contents of my selected file in a new workspace"
-	
+
 	| aString |
-	
-	self reference streamWritable: false do: [ :stream|
-		aString := stream setConverterForCode contentsOfEntireFile ].
-	
-	Smalltalk tools workspace openContents: aString label: 'Workspace from ', self reference basename
+	self reference streamWritable: false do: [ :stream | aString := stream upToEnd ].
+	Smalltalk tools workspace
+		openContents: aString
+		label: 'Workspace from ' , self reference basename
 ]
 
 { #category : #'volume list and pattern' }
