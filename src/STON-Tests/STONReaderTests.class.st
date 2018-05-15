@@ -59,7 +59,7 @@ STONReaderTests >> testClassWithUnderscore [
 	| cls data reader |
 
 	cls := Object newAnonymousSubclass.
-	cls name: #A_B_C123AnonClass.
+	cls setName: #A_B_C123AnonClass.
 
 	data := STON toString: cls new.
 	reader := STONReader on: data readStream.
