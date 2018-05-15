@@ -607,20 +607,17 @@ OrderedDictionary >> size [
 
 { #category : #printing }
 OrderedDictionary >> storeOn: aStream [
-    | noneYet |
-    aStream nextPutAll: '(('.
-    aStream nextPutAll: self class name.
-    aStream nextPutAll: ' new)'.
-    noneYet := true.
-    self associationsDo:
-            [:each |
-            noneYet
-                ifTrue: [noneYet := false]
-                ifFalse: [aStream nextPut: $;].
-            aStream nextPutAll: ' add: '.
-            aStream store: each].
-    noneYet ifFalse: [aStream nextPutAll: '; yourself'].
-    aStream nextPut: $) 
+	aStream << '((' << self class name << ' new)'.
+	self associations
+		ifNotEmpty: [ :assos | 
+			assos
+				do: [ :each | 
+					aStream
+						<< ' add: ';
+						store: each ]
+				separatedBy: [ aStream << ';' ].
+			aStream << '; yourself' ].
+	aStream << ')'
 ]
 
 { #category : #private }
