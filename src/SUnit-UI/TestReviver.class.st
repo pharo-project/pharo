@@ -19,7 +19,7 @@ Class {
 		'imageVersion',
 		'imageVersionLabel'
 	],
-	#category : #'SUnit-UI'
+	#category : #'SUnit-UI-Tools'
 }
 
 { #category : #opening }

@@ -31,6 +31,60 @@ Class {
 }
 
 { #category : #actions }
+BaselineOfIDE >> addPharoProjectToIceberg [
+	"It will take all packages corresponding to Pharo project and it will create an iceberg 
+	 project with it"
+	| packageNames extraPackageNames repository commit |
+	
+	self flag: #TODO. "Refactor into something better (a class and a hierarchy, so we can add 
+	other packages)"
+	
+	"extract package names from baselines"
+	packageNames := (#(
+		BaselineOfBasicTools
+		BaselineOfDisplay
+		BaselineOfIDE  
+		BaselineOfMonticello 
+		BaselineOfMetacello 
+		BaselineOfMorphic 
+		BaselineOfMorphicCore 
+		BaselineOfPharo
+		BaselineOfPharoBootstrap
+		BaselineOfSUnit 
+		BaselineOfShift 
+		BaselineOfSpec
+		BaselineOfTraits
+		BaselineOfUI    
+		BaselineOfUnifiedFFI ) 
+		collect: [ :each | (Smalltalk globals at: each) allPackageNames copyWith: each ]) 
+		flattened 
+		asSet.
+	"for some reason, there are packages loaded manually and not from a baseline"
+	extraPackageNames := #('Compiler').
+	"declare project"
+	
+	commit := (IceUnknownCommit new 
+			id: SystemVersion current commitHash;
+ 			yourself).
+	
+	repository := IceLibgitRepository new
+		name: 'pharo';
+		workingCopy: (IceWorkingCopy new
+		referenceCommit: commit
+		yourself).
+		
+	commit repository: repository.
+	"add packages to project"
+	(packageNames, extraPackageNames)
+		do: [ :each |
+			repository workingCopy basicAddPackage: (IcePackage
+				named: each
+				repository: repository) ].
+	"register project"
+	repository register
+]
+
+{ #category : #actions }
 BaselineOfIDE >> additionalInitialization [
 
 	self class environment at: #GTGenericStackDebugger ifPresent: [
@@ -101,6 +155,8 @@ BaselineOfIDE >> additionalInitialization [
 	
 	self loadIceberg.	
 	self loadCalypso.
+	
+	self addPharoProjectToIceberg.
 ]
 
 { #category : #baseline }
@@ -155,7 +211,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tests'.
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'AST-Tests-Core'.
-		spec package: 'Compiler-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'Fuel-Tests-Core'.
 		spec package: 'Fuel-Tools-Pharo'.
@@ -754,7 +809,6 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Kernel-Tests-WithCompiler' 
 	'AST-Tests-Core' "requires BlueInk-Core"
 	'Announcements-Tests-Core'
-	'Compiler-Tests'
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
@@ -846,7 +900,8 @@ BaselineOfIDE >> loadCalypso [
 		
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://dionisiydk/Calypso:v0.11.2';
+		repository: 'github://pharo-ide/Calypso:v0.11.3';
+		onConflict: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
 	(self class environment at: #ClyBrowser) beAllDefault.
@@ -858,7 +913,7 @@ BaselineOfIDE >> loadCalypso [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v0.7.2';
+		repository: 'github://pharo-vcs/iceberg:v0.7.5';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 

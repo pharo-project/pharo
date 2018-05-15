@@ -5,7 +5,7 @@ This class provides the support for Greek.  It is here, but most of the methods 
 Class {
 	#name : #GreekEnvironment,
 	#superclass : #LanguageEnvironment,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-Environments'
 }
 
 { #category : #'class initialization' }

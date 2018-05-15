@@ -116,7 +116,7 @@ NECSelectorEntry >> lookupSelector: aSymbol class: aClass [
 NECSelectorEntry >> methodSourceDescription: aClass method: aCompiledMethod [ 
 	| styler styledText |
 	
-	styler := SHTextStylerST80 new.
+	styler := SHRBTextStyler new.
 	styler classOrMetaClass: aClass.
 	styledText := styler styledTextFor: (aCompiledMethod sourceCode) asText.
 	

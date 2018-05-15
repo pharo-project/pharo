@@ -4,7 +4,7 @@ I am an abstract superclass for collections that have a well-defined order assoc
 Class {
 	#name : #SequenceableCollection,
 	#superclass : #Collection,
-	#category : #'Collections-Abstract'
+	#category : #'Collections-Abstract-Base'
 }
 
 { #category : #'stream creation' }

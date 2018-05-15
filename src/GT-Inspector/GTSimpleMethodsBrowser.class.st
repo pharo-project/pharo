@@ -3,7 +3,7 @@ This browser is used to browse the class structure of every object in the inspec
 
 Example:
 self openOn: World
-" 
+"
 Class {
 	#name : #GTSimpleMethodsBrowser,
 	#superclass : #GLMCompositePresentation,
@@ -117,7 +117,7 @@ GTSimpleMethodsBrowser >> sourceOf: method for: object in: composite [
 		selectionPopulate: #evaluatedObject
 			on: $g
 			entitled: 'Do it and go'
-			with: [ :text | Smalltalk compiler evaluate: text selectedText for: object logged: false ];
+			with: [ :text | Smalltalk compiler receiver: object; evaluate: text selectedText ];
 		installDefaultSelectionActions;
 		selectionAct: [ :text | self updateOuterPaneFrom: text for: method ]
 			icon: GLMUIThemeExtraIcons glamorousAccept

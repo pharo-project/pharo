@@ -153,21 +153,20 @@ CatalogProject >> gtInspectorDetailsIn: composite [
 ]
 
 { #category : #installing }
-CatalogProject >> installStableVersion [ 
-	  Metacello new
-		repository: self repositoryUrl, '/',self name;
-		configuration: self name;
-		version: #'stable';
-		load
+CatalogProject >> installStableVersion [
+	
+	self installVersion: #stable
 ]
 
 { #category : #installing }
 CatalogProject >> installVersion: aStringOrSymbol [ 
-	[ Gofer it 
-			url: self repositoryUrl;
-			configurationOf: self name;
-			loadVersion: aStringOrSymbol ]
-	on: Warning do: [ :w | w resume: true ]
+
+	Metacello new
+		repository: self repositoryUrl , '/' , self name;
+		configuration: self name;
+		version: aStringOrSymbol;
+		onWarningLog;
+		load
 ]
 
 { #category : #testing }

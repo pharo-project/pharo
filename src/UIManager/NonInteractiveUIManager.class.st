@@ -14,7 +14,7 @@ You can replace the default UI Manager with my instance in cases, when you need 
 Class {
 	#name : #NonInteractiveUIManager,
 	#superclass : #CommandLineUIManager,
-	#category : #UIManager
+	#category : #'UIManager-Base'
 }
 
 { #category : #testing }

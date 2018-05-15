@@ -19,7 +19,7 @@ Class {
 		'ResolverSemaphore',
 		'ResolverUninitialized'
 	],
-	#category : #'Network-Kernel'
+	#category : #'Network-Kernel-Base'
 }
 
 { #category : #lookups }

@@ -12,7 +12,7 @@ Class {
 		'host',
 		'port'
 	],
-	#category : #'Network-Kernel'
+	#category : #'Network-Kernel-Exceptions'
 }
 
 { #category : #'instance creation' }

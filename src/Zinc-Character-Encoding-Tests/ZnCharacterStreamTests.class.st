@@ -180,7 +180,7 @@ ZnCharacterStreamTests >> testUpToAllTwice [
 
 { #category : #testing }
 ZnCharacterStreamTests >> utf8ReadStreamOn: string [
-	^ZnCharacterReadStream
+	^ ZnCharacterReadStream
 		on: (ZnUTF8Encoder new encodeString: string) readStream
 		encoding: #utf8
 ]

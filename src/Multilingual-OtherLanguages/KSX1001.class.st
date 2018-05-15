@@ -4,7 +4,7 @@ This class represents the domestic character encoding called KS X 1001 used for 
 Class {
 	#name : #KSX1001,
 	#superclass : #EncodedCharSet,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-CharSets'
 }
 
 { #category : #'class methods' }

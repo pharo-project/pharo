@@ -4,7 +4,7 @@ Text converter for Simplified Chinese variation of EUC.  (Even though the name d
 Class {
 	#name : #CNGBTextConverter,
 	#superclass : #EUCTextConverter,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-TextConverter'
 }
 
 { #category : #utilities }

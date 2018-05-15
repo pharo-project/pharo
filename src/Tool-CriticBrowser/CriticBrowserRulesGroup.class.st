@@ -8,7 +8,7 @@ Class {
 		'name',
 		'rules'
 	],
-	#category : #'Tool-CriticBrowser'
+	#category : #'Tool-CriticBrowser-Utilities'
 }
 
 { #category : #'instance creation' }

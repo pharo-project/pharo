@@ -5,7 +5,7 @@ I run a TestSuite and outpout the progress in a terminal friendly way with XTerm
 Class {
 	#name : #VTermTestRunner,
 	#superclass : #CommandLineTestRunner,
-	#category : #'SUnit-UI'
+	#category : #'SUnit-UI-Headless'
 }
 
 { #category : #private }

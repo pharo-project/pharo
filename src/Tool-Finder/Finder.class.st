@@ -22,25 +22,27 @@ Class {
 
 { #category : #menu }
 Finder class >> finderMenuOn: aBuilder [ 
-	"I build a menu"
 	<worldMenu>
+
 	(aBuilder item: #Finder)
 		action: [self open];
 		order: 0.10;
 		parent: #Tools;
 		help: 'Looking for something ?';
 		icon: self icon.
-	aBuilder withSeparatorAfter.	
+	aBuilder withSeparatorAfter	
 ]
 
 { #category : #menu }
 Finder class >> icon [
-	"My menu icon"
+
 	^ FinderUI icon
 ]
 
 { #category : #menu }
 Finder class >> open [
+	<script>
+	
 	^ self new open
 ]
 
@@ -73,7 +75,7 @@ Finder >> computeListOfClasses: aString [
 			self classSearch: [ :class | regex search: class name ]]
 		ifFalse: [ 
 			self classSearch: [ :class |
-				class name includesSubstring: aString caseSensitive: false ]].
+				class name includesSubstring: aString caseSensitive: false ]]
 ]
 
 { #category : #'private-example' }
@@ -141,22 +143,22 @@ Finder >> constructClassNamesDictionary [
 	result := Dictionary new.
 	listOfClasses do: [:each | 
 		result at: each put: (each selectors sort: [:a :b | a < b])].
-	self resultDictionary: result.
+	self resultDictionary: result
 ]
 
 { #category : #private }
 Finder >> constructDictionary [
 	"I construct the adequate dictionary regarding the search mode"
 
-	self searchingString isEmpty ifTrue: [ ^ self resultDictionary: Dictionary new].
+	self searchingString isEmpty ifTrue: [ ^self resultDictionary: Dictionary new ].
 	[ :job|
-		job title: 'Searching...'.
+		job title: 'Searching...' translated.
 		self isSelectorsSymbol
-			ifTrue: [ self constructDictionaryWithMessagesNameSearch: self searchingString].
+			ifTrue: [ self constructDictionaryWithMessagesNameSearch: self searchingString ].
 		self isClassNamesSymbol
-			ifTrue: [ self constructClassNamesDictionary].
+			ifTrue: [ self constructClassNamesDictionary ].
 		self isSourceSymbol
-			ifTrue: [ self constructSourceDictionary].
+			ifTrue: [ self constructSourceDictionary ].
 		self isExamplesSymbol
 			ifTrue: [ self constructDictionaryWithMethodFinder: self searchingString].
 		self isPragmasSymbol
@@ -177,7 +179,7 @@ Finder >> constructDictionaryWithMessagesNameSearch: aString [
 			(result includesKey: key)
 				ifTrue: [ (result at: key) add: value]
 				ifFalse: [ result at: key put: (OrderedCollection new add: value; yourself)]].
-	self resultDictionary: result.
+	self resultDictionary: result
 ]
 
 { #category : #'private-example' }
@@ -223,7 +225,7 @@ Finder >> constructDictionaryWithPragmaSearch: aString [
 					at: key
 					ifAbsentPut: OrderedCollection new ) add: value].
 		dictionary at: k put: result ].
-	self resultDictionary: dictionary.
+	self resultDictionary: dictionary
 ]
 
 { #category : #private }
@@ -238,7 +240,7 @@ Finder >> constructSourceDictionary [
 		(result includesKey: key)
 			ifTrue: [ (result at: key) add: value]
 			ifFalse: [ result at: key put: (OrderedCollection new add: value; yourself)]].
-	self resultDictionary: result.
+	self resultDictionary: result
 ]
 
 { #category : #accessing }
@@ -279,7 +281,7 @@ Finder >> defaultPackagesSelection [
 
 { #category : #default }
 Finder >> defaultString [
-	^''
+	^ ''
 ]
 
 { #category : #private }
@@ -290,12 +292,13 @@ Finder >> disableUseRegEx [
 
 { #category : #private }
 Finder >> enableUseRegEx [
-	"send a enable useRegEx dropbox event"
+	"send an 'enableUseRegEx' dropbox event"
 	^ self triggerEvent: #enableUseRegEx
 ]
 
 { #category : #accessing }
 Finder >> environment [
+
 	 ^ environment 
 ]
 
@@ -327,7 +330,7 @@ Finder >> initialize [
 	packagesSelection := self defaultPackagesSelection.
 	resultDictionary := Dictionary new.
 	currentSearchMode := #Selectors.
-	useRegEx := false.
+	useRegEx := false
 	
 ]
 
@@ -345,19 +348,19 @@ Finder >> isExamplesSymbol [
 
 { #category : #checkbox }
 Finder >> isPragmasSymbol [
-"answer if the current mode is Pragmas"
+	"Answer if the current mode is Pragmas"
 	^self currentSearchMode = #Pragmas
 ]
 
 { #category : #checkbox }
 Finder >> isSelectorsSymbol [
-"answer if the current mode is Selectors"
+	"Answer if the current mode is Selectors"
 	^self currentSearchMode = #Selectors
 ]
 
 { #category : #checkbox }
 Finder >> isSourceSymbol [
-	"answer if the current mode is Source"
+	"Answer if the current mode is Source"
 	^self currentSearchMode = #Source
 ]
 
@@ -367,7 +370,7 @@ Finder >> listFromResult: resultOC [
 
 	(resultOC first beginsWith: 'no single method') ifTrue: [^ #()].
 	^ resultOC sort: [:a :b | 
-		(a copyFrom: 6 to: a size) < (b copyFrom: 6 to: b size)].
+		(a copyFrom: 6 to: a size) < (b copyFrom: 6 to: b size)]
 
 ]
 
@@ -375,7 +378,7 @@ Finder >> listFromResult: resultOC [
 Finder >> messageSearchBlockFrom: aString [
 	| exactMatch |
 	
-	exactMatch := aString first = $" and: [ aString last = $"].
+	exactMatch := aString first = $" and: [ aString last = $" ].
 	
 	exactMatch ifFalse: [ 
 		^ [ :method | 
@@ -384,7 +387,7 @@ Finder >> messageSearchBlockFrom: aString [
 	 ^ (Symbol findInterned: (aString copyFrom: 2 to: aString size - 1))
 		ifNil: [  nil ]
 		ifNotNil: [ :aSymbol | 
-			[ :method | method selector = aSymbol ]].
+			[ :method | method selector = aSymbol ]]
 ]
 
 { #category : #'private-selector' }
@@ -395,7 +398,7 @@ Finder >> messagesNameSearch: aString [
 			regex := aString asRegex.
 			self methodSearch: [ :method| 	regex search: method selector asString ]]
 		ifFalse: [
-			self methodSearch: (self messageSearchBlockFrom: aString)].
+			self methodSearch: (self messageSearchBlockFrom: aString)]
 ]
 
 { #category : #private }
@@ -415,6 +418,8 @@ Finder >> methodSearch: aSelectBlock [
 
 { #category : #display }
 Finder >> open [
+	<script: 'self new open'>
+	
 	^ (FinderUI on: self) open
 ]
 
@@ -427,14 +432,15 @@ Finder >> packagesSelection [
 { #category : #accessing }
 Finder >> packagesSelection: aCollection [
 	"I change the classes selection, then I rebuild the result dictionary"
+
 	packagesSelection :=  aCollection.
-	self constructDictionary.
+	self constructDictionary
 ]
 
 { #category : #'private-pragma' }
 Finder >> pragmaSearch: aString [ 
 	| result byCondition |
-	" I choose a dictionary here because the next step is to group result by pragmas "
+	"I choose a dictionary here because the next step is to group result by pragmas."
 	result := Dictionary new.
 	
 	byCondition :=  self useRegEx 
@@ -452,7 +458,7 @@ Finder >> pragmaSearch: aString [
 Finder >> resetEnvironment [
 	"I send an event when I reset the environment"
 	self environment: self defaultEnvironment.
-	self triggerEvent: #resetEnvironment.
+	self triggerEvent: #resetEnvironment
 ]
 
 { #category : #accessing }
@@ -469,7 +475,7 @@ Finder >> resultDictionary: aDictionary [
 	self triggerEvent: #updateResultDictionary.
 	self selectedMethod: nil.
 	self selectedClass: nil.
-	self triggerEvent: #updateSourceCode.
+	self triggerEvent: #updateSourceCode
 ]
 
 { #category : #accessing }
@@ -483,12 +489,13 @@ Finder >> searchingString: aString [
 	"When the search string is modified (in fact, when I make a search) I rebuild the result dictionary"
 
 	searchingString := aString.
-	self constructDictionary.
+	self constructDictionary
 ]
 
 { #category : #accessing }
 Finder >> searchingStringSilently: aString [
-	searchingString := aString.
+
+	searchingString := aString
 
 ]
 
@@ -578,7 +585,7 @@ Finder >> sourceSearch: aSearchString [
 	"I'm searching in sources"
 	^ self useRegEx
 		ifTrue: [ self sourceRegexSearch: aSearchString ]
-		ifFalse:[ self sourceStringSearch: aSearchString ].
+		ifFalse:[ self sourceStringSearch: aSearchString ]
 ]
 
 { #category : #private }
@@ -652,5 +659,5 @@ Finder >> useRegEx [
 { #category : #accessing }
 Finder >> useRegEx: aBoolean [
 
-	useRegEx :=  aBoolean.
+	useRegEx := aBoolean
 ]

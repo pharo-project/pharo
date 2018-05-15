@@ -101,7 +101,7 @@ SystemWindow class >> expandBoxImage [
 
 { #category : #settings }
 SystemWindow class >> fullscreenMargin [
-	^ FullscreenMargin ifNil: [FullscreenMargin := 25]
+	^ FullscreenMargin ifNil: [FullscreenMargin := 0]
 ]
 
 { #category : #settings }

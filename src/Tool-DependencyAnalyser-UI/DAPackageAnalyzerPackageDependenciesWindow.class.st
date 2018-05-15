@@ -7,15 +7,6 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
-{ #category : #nautilus }
-DAPackageAnalyzerPackageDependenciesWindow class >> browseDependencies: aBuilder [
-	<contextMenu>
-	<nautilusGlobalPackageMenu>
-	(aBuilder item: #'Browse dependencies...')
-		action: [ (self onPackagesNamed: (self selectedPackagesFrom: aBuilder)) open ];
-		order: 1000.
-]
-
 { #category : #examples }
 DAPackageAnalyzerPackageDependenciesWindow class >> collections [
 	^ (self onPackagesMatch: '*Collections*') open

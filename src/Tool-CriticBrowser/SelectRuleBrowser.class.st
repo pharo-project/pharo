@@ -9,7 +9,7 @@ Class {
 		'removeTestCase',
 		'selectedRules'
 	],
-	#category : #'Tool-CriticBrowser'
+	#category : #'Tool-CriticBrowser-Parts'
 }
 
 { #category : #'instance creation' }
@@ -45,14 +45,14 @@ SelectRuleBrowser class >> title [
 	^ 'Select rules'
 ]
 
-{ #category : #api }
+{ #category : #private }
 SelectRuleBrowser >> addAllItems [
 	
 	toSelectModel roots do: [ :group | selectedRules addAll: group rules].
-	self updateTree.  	  
+	self updateTree  	  
 ]
 
-{ #category : #api }
+{ #category : #private }
 SelectRuleBrowser >> addItems [
 	toSelectModel selectedItem
 		ifNotNil:
@@ -83,16 +83,16 @@ SelectRuleBrowser >> initialize [
 	selectedRulesChildrenBlock := [ :rule | 
 		rule isComposite
 			ifTrue: [ rule rules
-				select: [ :r | (self isSelected: r) or: [ r isComposite ] ] ]
-			ifFalse: [ #() ] ].
+				select: [:r | (self isSelected: r) or: [ r isComposite ]]]
+			ifFalse: [ #() ]].
 	rulesToSelectChildrenBlock := [ :rule | 
 		rule isComposite
 			ifTrue: [ rule rules
-				select: [ :r | 	(self isSelected: r) not or: [ r isComposite ] ] ]
-			ifFalse: [ #() ] ].
+				select: [:r | (self isSelected: r) not or: [ r isComposite ]]]
+			ifFalse: [ #() ]].
 	toSelectModel childrenBlock: rulesToSelectChildrenBlock.
 	selectedModel childrenBlock: selectedRulesChildrenBlock.
-	wrappingBlock := [ :rule | rule name ].
+	wrappingBlock := [:rule | rule name ].
 	toSelectModel displayBlock: wrappingBlock.
 	selectedModel displayBlock: wrappingBlock
 ]
@@ -100,7 +100,9 @@ SelectRuleBrowser >> initialize [
 { #category : #private }
 SelectRuleBrowser >> isSelected: aRule [
 	"Check the rule identifier to not run twice the same rule"
-	^ selectedRules anySatisfy: [ :rule | rule class uniqueIdentifierName = aRule class uniqueIdentifierName ]
+
+	^ selectedRules
+		anySatisfy: [ :rule | rule class uniqueIdentifierName = aRule class uniqueIdentifierName ]
 ]
 
 { #category : #accessing }
@@ -114,7 +116,7 @@ SelectRuleBrowser >> items: aCollection [
 { #category : #api }
 SelectRuleBrowser >> nextAction [
 
-	self delete..
+	self delete.
 	
 	CriticWorkingConfiguration current
 		rule: selectedRules;
@@ -148,5 +150,5 @@ SelectRuleBrowser >> removeTestCase: aBoolean [
 SelectRuleBrowser >> updateTree [
 
 	toSelectModel updateTree.
-	selectedModel updateTree.  	  
+	selectedModel updateTree
 ]

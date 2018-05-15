@@ -626,9 +626,11 @@ RPackage >> definesOrExtendsClass: aClass [
 ]
 
 { #category : #converting }
-RPackage >> demoteToRPackageNamed: aString [ 
+RPackage >> demoteToTagInPackageNamed: aString [
 	| newRPackage |
 
+	aString = self name ifTrue: [ ^ self ].
+	
 	self unregister.
 	newRPackage := self class organizer 
 		packageNamed: aString 
@@ -1461,8 +1463,7 @@ RPackage >> renameTo: aSymbol [
 	newName := aSymbol asSymbol.
 	repositoryGroup := self mcPackage workingCopy repositoryGroup.
 	
-	(self organizer includesPackageNamed: aSymbol)
-		ifTrue: [ RPackageConflictError  signal: ('A package named {1} already exists' format: { aSymbol }) ].
+	self organizer validatePackageDoesNotExist: aSymbol.
 
 	oldCategoryNames  := (self classTags collect: #categoryName as: Set) 
 		add: self categoryName;

@@ -5,7 +5,7 @@ Exception for signaling login failures of protocol clients.
 Class {
 	#name : #LoginFailedException,
 	#superclass : #ProtocolClientError,
-	#category : #'Network-Protocols'
+	#category : #'Network-Protocols-Exceptions'
 }
 
 { #category : #exceptiondescription }

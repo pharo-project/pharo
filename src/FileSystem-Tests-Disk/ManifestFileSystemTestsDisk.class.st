@@ -6,5 +6,5 @@ A documentation of this library is available in the Deep Into Pharo book, «Chap
 Class {
 	#name : #ManifestFileSystemTestsDisk,
 	#superclass : #PackageManifest,
-	#category : #'FileSystem-Tests-Disk'
+	#category : #'FileSystem-Tests-Disk-Manifest'
 }

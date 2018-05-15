@@ -1,3 +1,6 @@
+"
+SUnit tests for GlobalIdentifier with STON
+"
 Class {
 	#name : #GlobalIdentifierWithSton,
 	#superclass : #GlobalIdentifierTest,

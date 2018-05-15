@@ -8,7 +8,7 @@ symbols
 Class {
 	#name : #ChunkWriteStream,
 	#superclass : #DecoratorStream,
-	#category : #CodeExport
+	#category : #'CodeExport-Utilities'
 }
 
 { #category : #writing }

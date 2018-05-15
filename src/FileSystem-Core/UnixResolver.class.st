@@ -4,7 +4,7 @@ I am an expert on Unix filesystem conventions. I resolve origins according to th
 Class {
 	#name : #UnixResolver,
 	#superclass : #PlatformResolver,
-	#category : #'FileSystem-Core-Implementation'
+	#category : #'FileSystem-Core-Base-Resolver'
 }
 
 { #category : #accessing }

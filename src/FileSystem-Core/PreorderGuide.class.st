@@ -14,7 +14,7 @@ I use my work instance variable as a stack. I push nodes to be visited and visit
 Class {
 	#name : #PreorderGuide,
 	#superclass : #FileSystemGuide,
-	#category : #'FileSystem-Core-Implementation'
+	#category : #'FileSystem-Core-Base-Guide'
 }
 
 { #category : #showing }

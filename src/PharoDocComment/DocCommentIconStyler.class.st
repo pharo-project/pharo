@@ -4,7 +4,7 @@ IconStyler for highlight example expressions in method documents (seee PharoDocC
 Class {
 	#name : #DocCommentIconStyler,
 	#superclass : #IconStyler,
-	#category : #PharoDocComment
+	#category : #'PharoDocComment-Styling'
 }
 
 { #category : #private }

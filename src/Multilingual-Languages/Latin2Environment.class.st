@@ -10,7 +10,7 @@ This class provides the support for the languages in 'Latin-2' category.  Althou
 Class {
 	#name : #Latin2Environment,
 	#superclass : #LanguageEnvironment,
-	#category : #'Multilingual-Languages'
+	#category : #'Multilingual-Languages-Environments'
 }
 
 { #category : #'class initialization' }

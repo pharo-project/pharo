@@ -88,3 +88,16 @@ T2TraitWithSlots >> testRedefiningSuperclass [
 	self assertCollection: (c2 allSlots collect: #name) hasSameElements: #(c d a b e g h).
 	self assertCollection: (c1 allSlots collect: #name) hasSameElements: #(c d a b).	
 ]
+
+{ #category : #tests }
+T2TraitWithSlots >> testRedefiningTrait [
+
+| t1 |
+
+t1 := self newTrait: #T1 with: #().
+t1 := self newTrait: #T1 with: #(aSlot).
+
+self deny: t1 slots isEmpty.
+
+
+]

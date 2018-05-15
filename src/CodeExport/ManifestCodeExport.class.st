@@ -1,7 +1,10 @@
+"
+Package manifest for package metadata
+"
 Class {
 	#name : #ManifestCodeExport,
 	#superclass : #PackageManifest,
-	#category : #CodeExport
+	#category : #'CodeExport-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

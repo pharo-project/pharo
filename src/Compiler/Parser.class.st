@@ -533,8 +533,10 @@ Parser >> initPattern: aString notifying: req return: aBlock [
 
 { #category : #'error handling' }
 Parser >> interactive [
-	
-	^ UIManager default interactiveParserFor: requestor
+	requestor ifNil: [^ false ].
+	^(requestor respondsTo: #interactive)
+		ifTrue: [ requestor interactive ]
+		ifFalse: [ true ]
 ]
 
 { #category : #scanning }

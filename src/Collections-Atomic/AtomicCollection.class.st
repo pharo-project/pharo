@@ -1,11 +1,10 @@
 "
-I am just a base abstract class,
-containing common behavior for various queue types
+I am just a base abstract class, containing common behavior for various queue types
 "
 Class {
 	#name : #AtomicCollection,
 	#superclass : #Object,
-	#category : #'Collections-Atomic'
+	#category : #'Collections-Atomic-Base'
 }
 
 { #category : #copying }

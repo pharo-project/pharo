@@ -4,7 +4,7 @@ I am the abstract superclass of all classes that represent a group of elements.
 Class {
 	#name : #Collection,
 	#superclass : #Object,
-	#category : #'Collections-Abstract'
+	#category : #'Collections-Abstract-Base'
 }
 
 { #category : #'instance creation' }

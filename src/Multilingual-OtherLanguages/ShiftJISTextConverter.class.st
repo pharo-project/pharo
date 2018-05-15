@@ -4,7 +4,7 @@ Text converter for Shift-JIS.  Mac and Windows in Japanese mode use this encodin
 Class {
 	#name : #ShiftJISTextConverter,
 	#superclass : #TextConverter,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-TextConverter'
 }
 
 { #category : #utilities }

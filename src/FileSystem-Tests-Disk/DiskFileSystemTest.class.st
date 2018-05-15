@@ -4,7 +4,7 @@ SUnit tests for the disk filesystem
 Class {
 	#name : #DiskFileSystemTest,
 	#superclass : #FileSystemTest,
-	#category : #'FileSystem-Tests-Disk'
+	#category : #'FileSystem-Tests-Disk-Base'
 }
 
 { #category : #'initialize-release' }

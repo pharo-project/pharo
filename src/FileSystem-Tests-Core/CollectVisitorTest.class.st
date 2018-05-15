@@ -4,7 +4,7 @@ SUnit tests for class CollectVisitor
 Class {
 	#name : #CollectVisitorTest,
 	#superclass : #AbstractEnumerationVisitorTest,
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Visitors'
 }
 
 { #category : #tests }

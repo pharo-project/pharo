@@ -6,7 +6,7 @@ Class {
 	#name : #ByteArray,
 	#superclass : #ArrayedCollection,
 	#type : #bytes,
-	#category : #'Collections-Native'
+	#category : #'Collections-Native-Base'
 }
 
 { #category : #'byte based hash' }

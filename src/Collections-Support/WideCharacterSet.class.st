@@ -40,7 +40,7 @@ WideCharacterSet >> = anObject [
 		self wideCharacterMap = anObject wideCharacterMap ]
 ]
 
-{ #category : #'collection ops' }
+{ #category : #adding }
 WideCharacterSet >> add: aCharacter [ 
 	| val high low lowmap |
 	val := aCharacter asciiValue.
@@ -114,7 +114,7 @@ WideCharacterSet >> complement [
 	^CharacterSetComplement of: self copy
 ]
 
-{ #category : #'collection ops' }
+{ #category : #enumerating }
 WideCharacterSet >> do: aBlock [ 
 	map
 		keysAndValuesDo: [:index :lowmap |
@@ -125,7 +125,7 @@ WideCharacterSet >> do: aBlock [
 				do: [:low16Bits | aBlock value: (Character value: high16Bits + low16Bits)]]
 ]
 
-{ #category : #'collection ops' }
+{ #category : #enumerating }
 WideCharacterSet >> findFirstInByteString: aByteString startingAt: startIndex [
 	"Double dispatching: since we know this is a ByteString, we can use a superfast primitive using a ByteArray map with 0 slots for byte characters not included and 1 for byte characters included in the receiver."
 	^ByteString
@@ -154,7 +154,7 @@ WideCharacterSet >> hash [
 		ifFalse: [self asCharacterSet hash]
 ]
 
-{ #category : #'collection ops' }
+{ #category : #testing }
 WideCharacterSet >> includes: aCharacter [ 
 	| val high low |
 	val := aCharacter asciiValue.
@@ -180,7 +180,7 @@ WideCharacterSet >> postCopy [
 	map := map collect: [:each | each copy]
 ]
 
-{ #category : #'collection ops' }
+{ #category : #removing }
 WideCharacterSet >> remove: aCharacter [ 
 	| val high low lowmap |
 	val := aCharacter asciiValue.
@@ -196,13 +196,13 @@ WideCharacterSet >> remove: aCharacter [
 	^ aCharacter
 ]
 
-{ #category : #'collection ops' }
+{ #category : #removing }
 WideCharacterSet >> remove: aCharacter ifAbsent: aBlock [
 	(self includes: aCharacter) ifFalse: [^aBlock value].
 	^self remove: aCharacter
 ]
 
-{ #category : #'collection ops' }
+{ #category : #removing }
 WideCharacterSet >> removeAll [
 	map removeAll.
 	byteArrayMap := ByteArray new: 256
@@ -219,7 +219,7 @@ WideCharacterSet >> setBitmap: aMap at: shortInteger [
 	^aMap at: collecIndex + 1 put: ((aMap at: collecIndex + 1) bitOr: (1 bitShift: bitIndex))
 ]
 
-{ #category : #'collection ops' }
+{ #category : #accessing }
 WideCharacterSet >> size [
 	| size |
 	size := 0.
@@ -230,7 +230,7 @@ WideCharacterSet >> size [
 	^ size
 ]
 
-{ #category : #comparing }
+{ #category : #private }
 WideCharacterSet >> species [
 	^self hasWideCharacters
 		ifTrue: [WideCharacterSet]

@@ -4,7 +4,7 @@ SUnit tests for class PostorderGuide
 Class {
 	#name : #PostorderGuideTest,
 	#superclass : #GuideTest,
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Guide'
 }
 
 { #category : #tests }

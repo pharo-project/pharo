@@ -17,8 +17,11 @@ ZnFileSystemUtils class >> baseNameFor: fileName [
 
 { #category : #streams }
 ZnFileSystemUtils class >> binaryFileStreamFor: fileName [
-	^ fileName asFileReference 
-		binaryWriteStream
+	| fileReference |
+	fileReference := fileName asFileReference.
+	^ (fileReference respondsTo: #binaryWriteStream)
+		ifTrue: [ fileReference binaryWriteStream ]
+		ifFalse: [ fileReference writeStream binary ]
 ]
 
 { #category : #defaults }
@@ -101,9 +104,17 @@ ZnFileSystemUtils class >> modificationTimeFor: path [
 
 { #category : #streams }
 ZnFileSystemUtils class >> newBinaryFileNamed: fileName do: block [
-	^ fileName asFileReference 
-		binaryWriteStreamDo: block 
-		ifPresent: [ FileExists signalWith: fileName asFileReference ]
+	| fileReference |
+	fileReference := fileName asFileReference.
+	^ (fileReference respondsTo: #binaryWriteStreamDo:ifPresent:)
+		ifTrue: [
+			fileName asFileReference 
+				binaryWriteStreamDo: block 
+				ifPresent: [ FileExists signalWith: fileReference ] ]
+		ifFalse: [ 
+			fileReference isFile 
+				ifTrue: [ FileExists signalWith: fileReference ] 
+				ifFalse: [ block value: (self binaryFileStreamFor: fileName) ] ]
 ]
 
 { #category : #streams }

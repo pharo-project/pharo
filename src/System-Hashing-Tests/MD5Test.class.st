@@ -1,3 +1,6 @@
+"
+SUnit tests for MD5
+"
 Class {
 	#name : #MD5Test,
 	#superclass : #ClassTestCase,
@@ -9,6 +12,7 @@ Class {
 
 { #category : #testing }
 MD5Test >> testEmpty [
+	
 	self 
 		assert: (MD5 hashMessage: '') hex 
 		equals: 'd41d8cd98f00b204e9800998ecf8427e'

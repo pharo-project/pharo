@@ -175,9 +175,9 @@ ZnHTTPSTests >> testRequestResponse [
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	query := 'Smalltalk'.
-	stream := ZdcSecureSocketStream openConnectionToHostNamed: 'encrypted.google.com' port: 443.
+	stream := ZdcSecureSocketStream openConnectionToHostNamed: 'www.google.com' port: 443.
 	[
-		request := ZnRequest get: 'https://encrypted.google.com/search?q=', query.
+		request := ZnRequest get: 'https://www.google.com/search?q=', query.
 		stream connect.
 		request writeOn: stream.
 		stream flush.
@@ -206,11 +206,10 @@ ZnHTTPSTests >> testSNIPage [
 
 { #category : #testing }
 ZnHTTPSTests >> testTransfers [
-
 	self timeLimit: 300 seconds.
-
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
+	
 	(Integer primesUpTo: 100) do: [ :each | | size client |
 		size := 1024 * each + each.
 		(client := ZnClient new)
@@ -260,4 +259,10 @@ ZnHTTPSTests >> testWikimedia [
 	self assert: client isSuccess.
 	self assert: (client contents includesSubstring: 'Wikimedia').
 	client close
+]
+
+{ #category : #private }
+ZnHTTPSTests >> timeLimit: seconds [
+	(TestCase canUnderstand: #timeLimit:)
+		ifTrue: [ super timeLimit: seconds ]
 ]

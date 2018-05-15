@@ -213,24 +213,22 @@ RubSmalltalkEditor >> click: anEvent [
 
 { #category : #'do-its' }
 RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
-	| methodNode methodClass |
+	| methodClass |
 	methodClass := evalContext
 		ifNil: [ anObject class ]
 		ifNotNil: [ evalContext methodClass ].
-	methodNode := self class compiler
+	^self class compiler
 		source: aStream;
 		class: methodClass;
 		context: evalContext;
 		requestor: self morph;
 		noPattern: true;
 		failBlock: [ ^ nil ];
-		translate.
-	^ methodNode generateWithSource
+		compile
 ]
 
 { #category : #'do-its' }
 RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
-	
 	^ self compile: self selectionAsStream for: anObject in: evalContext
 ]
 
@@ -560,15 +558,6 @@ RubSmalltalkEditor >> internalCallToBrowse: aSelector [
 ]
 
 { #category : #'menu messages' }
-RubSmalltalkEditor >> internalCallToBrowseIt [
-	"Launch a browser for the class indicated by the current selection. 
-	If multiple classes matching the selection exist, let the user choose among them."
-
-	self lineSelectAndEmptyCheck: [^ self].
-	self internalCallToBrowse: (self selection string copyWithoutAll: CharacterSet crlf)
-]
-
-{ #category : #'menu messages' }
 RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 	"Open an implementors browser on the given selector"
 	
@@ -576,17 +565,6 @@ RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 				ifFalse: [ self model systemNavigation browseAllImplementorsOf: aSelector]
 			
 	
-]
-
-{ #category : #'menu messages' }
-RubSmalltalkEditor >> internalCallToImplementorsOfIt [
-	"Open an implementors browser on the selected selector"
-
-	| aSelector |
-	self lineSelectAndEmptyCheck: [ ^ self ].
-	(aSelector := self selectedSelector) isNil
-		ifTrue: [ ^ textArea flash ].
-	self internalCallToImplementorsOf: aSelector
 ]
 
 { #category : #testing }
@@ -732,14 +710,6 @@ RubSmalltalkEditor >> printIt [
 				on: Error
 				do: [ '<error in printString: try ''Inspect it'' to debug>' ].
 			self afterSelectionInsertAndSelect: printString ]
-]
-
-{ #category : #'editing keys' }
-RubSmalltalkEditor >> printIt: aKeyboardEvent [
-	"Print the results of evaluting the selection -- invoked via cmd-p.  If there is no current selection, use the current line.  1/17/96 sw
-	 2/29/96 sw: don't call selectLine now, since it's called by doIt"
-	self printIt.
-	^ true
 ]
 
 { #category : #'basic-completion' }

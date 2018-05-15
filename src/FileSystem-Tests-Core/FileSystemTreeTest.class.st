@@ -4,7 +4,7 @@ SUnit tests for a file system tree
 Class {
 	#name : #FileSystemTreeTest,
 	#superclass : #TestCase,
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Base'
 }
 
 { #category : #testing }

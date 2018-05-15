@@ -1,6 +1,6 @@
 "
 This is a thread-safe LIFO (last-in-first-out) queue (also known as stack) implementation,
- based on atomic operations.
+based on atomic operations.
 
 "
 Class {
@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'head'
 	],
-	#category : #'Collections-Atomic'
+	#category : #'Collections-Atomic-Base'
 }
 
 { #category : #'stack-compliant protocol' }

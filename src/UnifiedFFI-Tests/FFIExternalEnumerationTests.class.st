@@ -38,8 +38,8 @@ FFIExternalEnumerationTests >> testCall [
 
 { #category : #tests }
 FFIExternalEnumerationTests >> testEnumIdents [
-	self assert: self enumClass AAA value = 1.
-	self assert: self enumClass DDD value = 2400
+	self assert: self enumClass AAA value equals: 1.
+	self assert: self enumClass DDD value equals: 2400
 ]
 
 { #category : #tests }
@@ -50,10 +50,10 @@ FFIExternalEnumerationTests >> testEnumIncludes [
 
 { #category : #tests }
 FFIExternalEnumerationTests >> testFromInteger [
-	self assert: (self enumClass fromInteger:  1) value = 1 .
-	self assert: (self enumClass fromInteger: 2) value = 2.
-	self assert: (self enumClass fromInteger: 3) value = 3.
-	self assert: (self enumClass fromInteger: 2400) value = 2400.
+	self assert: (self enumClass fromInteger: 1) value equals: 1.
+	self assert: (self enumClass fromInteger: 2) value equals: 2.
+	self assert: (self enumClass fromInteger: 3) value equals: 3.
+	self assert: (self enumClass fromInteger: 2400) value equals: 2400.
 	self should: [ self enumClass fromInteger: 234 ] raise: Error
 ]
 

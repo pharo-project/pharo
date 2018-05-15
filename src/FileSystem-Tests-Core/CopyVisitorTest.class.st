@@ -8,7 +8,7 @@ Class {
 		'source',
 		'dest'
 	],
-	#category : #'FileSystem-Tests-Core'
+	#category : #'FileSystem-Tests-Core-Visitors'
 }
 
 { #category : #running }

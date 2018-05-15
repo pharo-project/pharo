@@ -5,7 +5,7 @@ Class {
 	#name : #RelativePath,
 	#superclass : #Path,
 	#type : #variable,
-	#category : #'FileSystem-Path'
+	#category : #'FileSystem-Path-Base'
 }
 
 { #category : #accessing }

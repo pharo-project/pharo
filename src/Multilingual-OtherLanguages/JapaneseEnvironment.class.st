@@ -5,7 +5,7 @@ This class provides the Japanese support.  Since it has been used most other tha
 Class {
 	#name : #JapaneseEnvironment,
 	#superclass : #LanguageEnvironment,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-Environments'
 }
 
 { #category : #'language methods' }

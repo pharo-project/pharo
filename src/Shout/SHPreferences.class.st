@@ -18,7 +18,6 @@ Class {
 SHPreferences class >> applyStyle [
 	| table |
 	table := Groups values flatCollect: [:group | group styleForTable].
-	SHTextStylerST80 styleTable: table.
 	SHRBTextStyler styleTable: table.
 ]
 
@@ -96,7 +95,7 @@ SHPreferences class >> globalVarStyle: aGroupStyle [
 
 { #category : #initialization }
 SHPreferences class >> initialize [
-	self customStyleTable: SHTextStylerST80 defaultStyleTable
+	self customStyleTable: SHRBTextStyler defaultStyleTable
 ]
 
 { #category : #initialization }
@@ -170,16 +169,15 @@ SHPreferences class >> selectorPatternsStyle: aGroupStyle [
 
 { #category : #settings }
 SHPreferences class >> setStyleTable: anArray [
-	SHTextStylerST80 styleTable: anArray.
 	SHRBTextStyler styleTable: anArray.
 ]
 
 { #category : #settings }
 SHPreferences class >> setStyleTableNamed: aString [
-	self setStyleTable: (((Pragma allNamed: #styleTable: in: SHTextStylerST80 class)
+	self setStyleTable: (((Pragma allNamed: #styleTable: in: SHRBTextStyler class)
 		detect: [ :each | (each argumentAt: 1) = aString ])
 		method 
-			valueWithReceiver: SHTextStylerST80 class 
+			valueWithReceiver: SHRBTextStyler class 
 			arguments: #())
 ]
 
@@ -239,7 +237,7 @@ SHPreferences class >> settingsOn: aBuilder [
 SHPreferences class >> styleTableRow [
 	| allStyles |
 	
-	allStyles := Pragma  allNamed: #styleTable: in: SHTextStylerST80 class.
+	allStyles := Pragma  allNamed: #styleTable: in: SHRBTextStyler class.
 	^Smalltalk ui theme 
 		newRowIn: World 
 		for: (
