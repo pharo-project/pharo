@@ -99,8 +99,13 @@ Behavior >> addSelector: selector withMethod: compiledMethod notifying: requesto
 
 { #category : #'adding/removing methods' }
 Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
-	self basicAddSelector: selector withMethod: compiledMethod.
+	"Add the message selector with the corresponding compiled method to the 
+	receiver's method dictionary.
+	Do this without sending system change notifications"
 
+	self methodDict at: selector put: compiledMethod.
+	compiledMethod methodClass: self.
+	compiledMethod selector: selector
 ]
 
 { #category : #'adding/removing methods' }
@@ -374,14 +379,13 @@ Behavior >> allUnreferencedInstanceVariables [
 ]
 
 { #category : #'adding/removing methods' }
-Behavior >> basicAddSelector: selector withMethod: compiledMethod [ 
-	"Add the message selector with the corresponding compiled method to the 
-	receiver's method dictionary.
-	Do this without sending system change notifications"
-
-	self methodDict at: selector put: compiledMethod.
-	compiledMethod methodClass: self.
-	compiledMethod selector: selector.
+Behavior >> basicAddSelector: selector withMethod: compiledMethod [
+	self
+		deprecated: 'Please use #addSelectorSilently:withMethod: instead'
+		transformWith:
+			'`@receiver basicAddSelector: `@statements1 withMethod: `@statements2'
+		   -> '`@receiver addSelectorSilently: `@statements1 withMethod: `@statements2'.
+	self addSelectorSilently: selector withMethod: compiledMethod
 ]
 
 { #category : #'reflective operations' }
