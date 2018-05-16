@@ -20,7 +20,7 @@ SimpleTestResourceTestCase class >> resources [
 	^Array with: SimpleTestResource
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 SimpleTestResourceTestCase >> clearOuterResourceStateDuring: aBlock [
 	"This self-testing test must clear the outer state of its resources before starting and after finishing, so that it can construct test cases and suites of itself and test them."
 	

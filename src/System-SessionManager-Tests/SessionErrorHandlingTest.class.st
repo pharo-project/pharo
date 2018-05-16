@@ -11,7 +11,7 @@ Class {
 	#category : #'System-SessionManager-Tests'
 }
 
-{ #category : #utility }
+{ #category : #utilities }
 SessionErrorHandlingTest >> newTestSessionfor: aManager [
 	^ TestWorkingSession new
 		manager: aManager;

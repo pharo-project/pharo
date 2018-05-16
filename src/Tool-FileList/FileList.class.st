@@ -35,7 +35,7 @@ Class {
 	#category : #'Tool-FileList'
 }
 
-{ #category : #utility }
+{ #category : #utilities }
 FileList class >> addFullPanesTo: window from: aCollection [
 
 	aCollection do: [ :each | 
@@ -112,14 +112,14 @@ FileList class >> contentMenu: aBuilder [
 
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 FileList class >> itemsForDirectory: aFileDirectory [
 	"Answer a list of services appropriate when no file is selected."
 
 	^ FileServices itemsForDirectory: aFileDirectory
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 FileList class >> itemsForFile: file [
 	"Answer a list of services appropriate for a file of the given full name"
 
@@ -244,7 +244,7 @@ FileList class >> searchList [
 	^ searchList ifNil: [ searchList := OrderedCollection new ].
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 FileList class >> suffixOf: aName [
 	"Answer the file extension of the given file"
 	^ aName
@@ -304,7 +304,7 @@ FileList >> acceptDroppingMorph: aTransferMorph event: evt inMorph: dest [
 	^true
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 FileList >> addFullPanesTo: window from: aCollection [
 
 	aCollection do: [ :each | 

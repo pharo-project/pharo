@@ -150,7 +150,7 @@ TraitsResource >> categoryName [
 	^self class category
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 TraitsResource >> createClassNamed: aSymbol superclass: aClass uses: aTraitComposition [
 	| class |
 	class := aClass
@@ -164,7 +164,7 @@ TraitsResource >> createClassNamed: aSymbol superclass: aClass uses: aTraitCompo
 	^class
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 TraitsResource >> createTraitNamed: aSymbol uses: aTraitComposition [
 	| trait |
 	trait := Trait

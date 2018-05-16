@@ -17,7 +17,7 @@ TabManagerPresenterTest >> initializeTestedInstance [
 	redTab := self redMorphTab
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 TabManagerPresenterTest >> morphicTabsFor: aManagerModel [
 	"Retrieve all tabs in the morphic world to test whether they are being properly added/removed. It is assumed that the Model has already been built."
 
