@@ -47,10 +47,11 @@ SDL_Renderer >> createTextureFormat: format access: access width: width height: 
 	^(self primCreateTextureFormat: format access: access width: width height: height) initialize.
 ]
 
-{ #category : #destroy }
+{ #category : #initialization }
 SDL_Renderer >> destroy [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_DestroyRenderer ( self ) )
+	handle isNull ifTrue: [ ^ self ].
+	self primDestroy.
+	handle beNull
 ]
 
 { #category : #rendering }
@@ -119,6 +120,11 @@ SDL_Renderer >> present [
 SDL_Renderer >> primCreateTextureFormat: format access: access width: width height: height [
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
 	^ self nbCall: #( SDL_Texture SDL_CreateTexture ( self , Uint32 format , int access , int width , int height ) )
+]
+
+{ #category : #initialization }
+SDL_Renderer >> primDestroy [
+	^ self ffiCall: #( void SDL_DestroyRenderer ( self ) )
 ]
 
 { #category : #private }

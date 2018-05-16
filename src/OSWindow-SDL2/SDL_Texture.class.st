@@ -23,10 +23,11 @@ SDL_Texture class >> finalizeResourceData: aHandle [
 	aHandle beNull	
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 SDL_Texture >> destroy [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_DestroyTexture ( self ) )
+	handle isNull ifTrue: [ ^ self ].
+	self primDestroy.
+	handle beNull
 ]
 
 { #category : #initialization }
@@ -40,19 +41,24 @@ SDL_Texture >> lockPixels: pixels pitch: pitch [
 	^ self nbCall: #( int SDL_LockTexture ( self , nil , void** pixels , int* pitch ) )
 ]
 
+{ #category : #private }
+SDL_Texture >> primDestroy [
+	^ self ffiCall: #( void SDL_DestroyTexture ( self ) )
+]
+
 { #category : #'pixels handling' }
 SDL_Texture >> unlock [
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
 	^ self nbCall: #( void SDL_UnlockTexture ( self ) )
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 SDL_Texture >> updateTexturePixels: pixels pitch: pitch [
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
 	^ self nbCall: #( int SDL_UpdateTexture ( self , nil , void* pixels , int pitch ) )
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 SDL_Texture >> updateTextureRect: rect pixels: pixels pitch: pitch [
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
 	^ self nbCall: #( int SDL_UpdateTexture ( self , SDL_Rect* rect , void* pixels , int pitch ) )

@@ -43,7 +43,8 @@ SDL_Window >> createRenderer: driverIndex flags: flags [
 { #category : #initialize }
 SDL_Window >> destroy [
 	OSSDL2Driver current unregisterWindowWithId: self windowID.
-	self primDestroy
+	self primDestroy.
+	handle beNull
 ]
 
 { #category : #accessing }
