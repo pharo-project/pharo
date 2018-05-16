@@ -114,7 +114,7 @@ SMTPClient >> data: messageData [
 
 { #category : #utility }
 SMTPClient >> encodeString: aString [ 
-	^ ZnUtils encodeBase64: aString
+	^ (aString encodeWith: #null) base64Encoded
 ]
 
 { #category : #'private protocol' }
