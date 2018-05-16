@@ -4,7 +4,7 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
-{ #category : #'utils - morph creation' }
+{ #category : #'utilities - morph creation' }
 GLMMorphic class >> alignmentMorph: aCollectionOfMorphs [
 	"Answer a row-oriented AlignmentMorph holding the given collection"
 	| morph |
@@ -22,7 +22,7 @@ GLMMorphic class >> alignmentMorph: aCollectionOfMorphs [
 	^morph
 ]
 
-{ #category : #'utils - morph creation' }
+{ #category : #'utilities - morph creation' }
 GLMMorphic class >> containerMorph [
 	^ GLMPanelMorph new
 		layoutPolicy: ProportionalLayout new;
@@ -32,7 +32,7 @@ GLMMorphic class >> containerMorph [
 		yourself
 ]
 
-{ #category : #'utils - morph creation' }
+{ #category : #'utilities - morph creation' }
 GLMMorphic class >> emptyMorph [
 	^ self containerMorph
 		fillStyle: (SolidFillStyle color: Color transparent );
@@ -84,7 +84,7 @@ GLMMorphic class >> isWhiteRectangledButton: aSymbol [
 	^aSymbol = #whiteRectangledButton
 ]
 
-{ #category : #'utils - morph creation' }
+{ #category : #'utilities - morph creation' }
 GLMMorphic class >> morphElement: anObject [
 
 	anObject isString
@@ -115,7 +115,7 @@ GLMMorphic class >> styleButton: button morph: m pressed: aBoolean style: aSymbo
 		ifTrue:[ self whiteRectangledButtonStyle: button morph: m pressed: aBoolean ]
 ]
 
-{ #category : #'utils - morph creation' }
+{ #category : #'utilities - morph creation' }
 GLMMorphic class >> togglingButtonLabelled: anObject pressed: aBoolean style: aSymbol [
 	| button oldLabel m |
 	button := SimpleButtonMorph new.
