@@ -19,8 +19,9 @@ SDL_Renderer class >> destroyRenderer: aHandle [
 
 { #category : #finalization }
 SDL_Renderer class >> finalizeResourceData: aHandle [
-
-	^ self destroyRenderer: aHandle.
+	aHandle isNull ifTrue: [ ^ self ].
+	self destroyRenderer: aHandle.
+	aHandle beNull
 ]
 
 { #category : #rendering }
@@ -94,7 +95,7 @@ SDL_Renderer >> info [
 
 { #category : #initialization }
 SDL_Renderer >> initialize [
-	FFIExternalResourceManager addResource: self data: handle value.
+	self autoRelease
 ]
 
 { #category : #rendering }

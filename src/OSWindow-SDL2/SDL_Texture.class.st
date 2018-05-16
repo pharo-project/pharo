@@ -13,14 +13,14 @@ Class {
 
 { #category : #finalization }
 SDL_Texture class >> destroyTexture: aHandle [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_DestroyTexture ( ulong aHandle ) )
+	^ self ffiCall: #( void SDL_DestroyTexture ( void *aHandle ) )
 ]
 
 { #category : #finalization }
 SDL_Texture class >> finalizeResourceData: aHandle [
-
-	^ self destroyTexture: aHandle.
+	aHandle isNull ifTrue: [ ^ self ].
+	self destroyTexture: aHandle.
+	aHandle beNull	
 ]
 
 { #category : #initialize }
@@ -31,7 +31,7 @@ SDL_Texture >> destroy [
 
 { #category : #initialization }
 SDL_Texture >> initialize [
-	FFIExternalResourceManager addResource: self data: handle value.
+	self autoRelease
 ]
 
 { #category : #'pixels handling' }
