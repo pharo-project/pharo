@@ -1152,6 +1152,17 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 ]
 
 { #category : #'subclass creation - slots' }
+Class >> subclass: aSubclassSymbol layout: layoutClass slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
+	self deprecated: 'use ... package: instead'.
+	^ self
+		subclass: aSubclassSymbol
+		layout: layoutClass
+		slots: slotDefinition
+		classVariables: classVarDefinition
+		package: aCategorySymbol
+]
+
+{ #category : #'subclass creation - slots' }
 Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder |
@@ -1165,7 +1176,14 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition cl
 ]
 
 { #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames pacakge: aCategorySymbol [
+Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
+	self deprecated: 'use ... package: instead'.
+	^ self subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol
+
+]
+
+{ #category : #'subclass creation - slots' }
+Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder |
 		builder name: aSubclassSymbol;
@@ -1179,6 +1197,16 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition c
 ]
 
 { #category : #'subclass creation - slots' }
+Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
+	self deprecated: 'use ... package: instead'.
+	^ self
+		subclass: aSubclassSymbol
+		slots: slotDefinition
+		classVariables: classVarDefinition
+		package: aCategorySymbol
+]
+
+{ #category : #'subclass creation - slots' }
 Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder | 
@@ -1188,6 +1216,13 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 				slots: slotDefinition;
 				sharedVariables: classVarDefinition;
 				category: aCategorySymbol ]
+]
+
+{ #category : #'subclass creation - slots' }
+Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
+
+	self deprecated: 'use ... package: instead'.
+	^ self subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol
 ]
 
 { #category : #'subclass creation - slots' }
