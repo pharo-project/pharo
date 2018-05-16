@@ -13,8 +13,7 @@ Class {
 
 { #category : #finalization }
 SDL_Renderer class >> destroyRenderer: aHandle [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_DestroyRenderer ( ulong aHandle ) )
+	^ self ffiCall: #( void SDL_DestroyRenderer ( void *aHandle ) )
 ]
 
 { #category : #finalization }
