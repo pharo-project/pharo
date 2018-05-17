@@ -57,7 +57,7 @@ MethodAddition >> createCompiledMethod [
 { #category : #operations }
 MethodAddition >> installMethod [
 	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ myClass addSelector: selector withMethod: compiledMethod notifying: nil ]
+		suspendAllWhile: [ myClass addSelector: selector withMethod: compiledMethod ]
 ]
 
 { #category : #notifying }
