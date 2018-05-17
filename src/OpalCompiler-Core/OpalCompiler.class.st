@@ -232,9 +232,13 @@ OpalCompiler >> compile: textOrString [
 ]
 
 { #category : #'old - deprecated' }
-OpalCompiler >> compile: textOrStream in: aClass classified: aCategory notifying: aRequestor ifFail:  aFailBlock [ 
-
-	^self 
+OpalCompiler >> compile: textOrStream in: aClass classified: aCategory notifying: aRequestor ifFail: aFailBlock [
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver compile: `@statements1 in: `@statements2 classified: `@statements3 notifying: `@statements4 ifFail: `@statements5'
+				-> '`@receiver 	source:  `@statements1; class: `@statements2; requestor: `@statements4; failBlock: `@statements5; parse'.
+	^ self
 		source: textOrStream;
 		class: aClass;
 		requestor: aRequestor;
@@ -243,20 +247,27 @@ OpalCompiler >> compile: textOrStream in: aClass classified: aCategory notifying
 ]
 
 { #category : #'old - deprecated' }
-OpalCompiler >> compile: textOrStream in: aClass notifying: aRequestor ifFail: aFailBlock [ 
-
-	^self 
+OpalCompiler >> compile: textOrStream in: aClass notifying: aRequestor ifFail: aFailBlock [
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver compile: `@statements1 in: `@statements2 notifying: `@statements3 ifFail: `@statements4'
+				-> '`@receiver source: `@statements1; class: `@statements2; requestor: `@statements3; failBlock: `@statements4; parse'.
+	^ self
 		source: textOrStream;
 		class: aClass;
 		requestor: aRequestor;
 		failBlock: aFailBlock;
 		parse
-	
-
 ]
 
 { #category : #'old - deprecated' }
 OpalCompiler >> compileNoPattern: textOrStream in: aClass context: aContext notifying: aRequestor ifFail: aFailBlock [
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver compileNoPattern: `@statements1 in: `@statements2 context: `@statements3 notifying: `@statements4 ifFail: `@statements5'
+				-> '`@receiver source: `@statements1; class: `@statements2; context: `@statements3; requestor: `@statements4; noPattern: true; failBlock: `@statements5; parse'.
 
 	^self 
 		source: textOrStream;
@@ -334,9 +345,14 @@ OpalCompiler >> evaluate: textOrString [
 ]
 
 { #category : #'old - deprecated' }
-OpalCompiler >> evaluate: textOrString for: anObject logged: logFlag [ 
-
-	^self
+OpalCompiler >> evaluate: textOrString for: anObject logged: logFlag [
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver evaluate: `@statements1 for: `@statements2 logged: `@statements3'
+				->
+					'`@receiver source: `@statements1; logged: `@statements2; receiver: `@statements3; evaluate'.
+	^ self
 		source: textOrString;
 		logged: logFlag;
 		receiver: anObject;
@@ -345,19 +361,25 @@ OpalCompiler >> evaluate: textOrString for: anObject logged: logFlag [
 
 { #category : #'old - deprecated' }
 OpalCompiler >> evaluate: textOrString for: anObject notifying: aController logged: logFlag [
-
-	^ self 
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver evaluate: `@statements1 for: `@statements2 notifying: `@statements3 logged: `@statements4'
+				-> '`@receiver source: `@statements1; logged: `@statements2; receiver: `@statements3; requestor: `@statements4; evaluate'.
+	^ self
 		source: textOrString;
 		logged: logFlag;
 		receiver: anObject;
 		requestor: aController;
 		evaluate
-	
-			
 ]
 
 { #category : #'old - deprecated' }
 OpalCompiler >> evaluate: aString in: aContext to: aReceiver [
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith: '`@receiver evaluate: `@statements1 in: `@statements2 to: `@statements3' 
+						-> '`@receiver source: `@statements1; context: `@statements2; receiver: `@statements3;  parse.'.
 	
 	^self
 		source: aString;
@@ -368,9 +390,14 @@ OpalCompiler >> evaluate: aString in: aContext to: aReceiver [
 ]
 
 { #category : #'old - deprecated' }
-OpalCompiler >> evaluate: textOrStream in: aContext to: aReceiver notifying: aRequestor ifFail: aFailBlock [ 
-	
-	^self
+OpalCompiler >> evaluate: textOrStream in: aContext to: aReceiver notifying: aRequestor ifFail: aFailBlock [
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver evaluate: `@statements1 in: `@statements2 to: `@statements3 notifying: `@statements4 ifFail: `@statements5'
+				->
+					'`@receiver source: `@statements1; context: `@statements2; receiver: `@statements3; requestor: `@statements4; failBlock: `@statements5; evaluate'.
+	^ self
 		source: textOrStream;
 		context: aContext;
 		receiver: aReceiver;
@@ -381,8 +408,12 @@ OpalCompiler >> evaluate: textOrStream in: aContext to: aReceiver notifying: aRe
 
 { #category : #'old - deprecated' }
 OpalCompiler >> evaluate: textOrStream in: aContext to: aReceiver notifying: aRequestor ifFail: aFailBlock logged: logFlag [
-	
-	^self
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver evaluate: `@statements1 in: `@statements2 to: `@statements3 notifying: `@statements4 ifFail: `@statements5 logged:  `@statements6'
+				-> '`@receiver source: `@statements1; context: `@statements2; receiver: `@statements3; requestor: `@statements4; failBlock: `@statements5; logged: `@statements6; evaluate'.
+	^ self
 		source: textOrStream;
 		context: aContext;
 		receiver: aReceiver;
@@ -393,18 +424,23 @@ OpalCompiler >> evaluate: textOrStream in: aContext to: aReceiver notifying: aRe
 ]
 
 { #category : #'old - deprecated' }
-OpalCompiler >> evaluate: textOrString logged: logFlag [ 
-
+OpalCompiler >> evaluate: textOrString logged: logFlag [
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith: '`@receiver evaluate: `@statements1 logged: `@statements2' 
+			-> '`@receiver source: `@statements1; logged: `@statements2; evaluate'.
 	^ self
 		source: textOrString;
 		logged: logFlag;
 		evaluate
-	
-			
 ]
 
 { #category : #'old - deprecated' }
 OpalCompiler >> evaluate: textOrString notifying: aController logged: logFlag [ 
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith: '`@receiver evaluate: `@statements1 notifying: `@statements2 logged: `@statements3' 
+						-> '`@receiver source: `@statements1; logged: `@statements2; requestor:  `@statements3; evaluate'.
 
 	^ self
 		source: textOrString;
@@ -434,12 +470,15 @@ OpalCompiler >> format: textOrString [
 
 { #category : #'old - deprecated' }
 OpalCompiler >> format: textOrStream in: aClass notifying: aRequestor [
-	^self
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith: '`@receiver format: `@statements1 in: `@statements2 notifying: `@statements3' 
+					-> '`@receiver source:  `@statements1; class: `@statements2; requestor: `@statements3; format'.
+	^ self
 		source: textOrStream;
 		class: aClass;
 		requestor: aRequestor;
 		format
-		
 ]
 
 { #category : #private }
@@ -506,6 +545,10 @@ OpalCompiler >> parse: textOrString [
 
 { #category : #'old - deprecated' }
 OpalCompiler >> parse: aString class: aClass [
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith: '`@receiver parse: `@statements1 class: `@statements2' 
+						-> '`@receiver source: `@statements1; class: `@statements2; parse.'.
 	^self 
 		source: aString;
 		class: aClass;
@@ -514,26 +557,32 @@ OpalCompiler >> parse: aString class: aClass [
 
 { #category : #'old - deprecated' }
 OpalCompiler >> parse: aString class: aClass noPattern: aBoolean context: aContext notifying: req ifFail: aBlock [
-	"Backwards compatibilty"
-	
-	^self 
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver parse: `@statements1 class: `@statements2 noPattern: `@statements3 context: `@statements4 notifying: `@statements5 ifFail: `@statements6'
+				->'`@receiver source: `@statements1; class: `@statements2; noPattern: `@statements3; context: `@statements4; requestor: `@statements5; failBlock: `@statements6; parse.'.
+	^ self
 		source: aString;
 		class: aClass;
 		noPattern: aBoolean;
 		context: aContext;
 		requestor: req;
 		failBlock: aBlock;
-		parse.
+		parse
 ]
 
 { #category : #'old - deprecated' }
 OpalCompiler >> parse: textOrStream in: aClass notifying: req [
-
-	^self 
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver parse: `@statements1 in: `@statements2 notifying: `@statements3' -> '`@receiver source: `@statements1; class: `@statements2; requestor: `@statements3; parse.'.
+	^ self
 		source: textOrStream;
 		class: aClass;
 		requestor: req;
-		parse.
+		parse
 ]
 
 { #category : #private }
@@ -601,5 +650,6 @@ OpalCompiler >> source: aString [
 OpalCompiler >> translate [
 	self
 		deprecated: 'Please use #parse instead'
-		transformWith: '`@receiver translate' -> '`@receiver parse'
+		transformWith: '`@receiver translate' -> '`@receiver parse'.
+	^self parse.
 ]
