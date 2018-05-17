@@ -370,12 +370,12 @@ Text >> howManyMatch: aString [
 	^ self string howManyMatch: aString
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 Text >> includesSubstring: substring [
 	^ substring isEmpty or: [ (self findString: substring startingAt: 1) > 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 Text >> includesSubstring: aString caseSensitive: caseSensitive [
 	
 	^ (self findString: aString startingAt: 1 caseSensitive: caseSensitive) > 0

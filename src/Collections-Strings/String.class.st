@@ -1554,12 +1554,12 @@ String >> howManyMatch: string [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 String >> includesSubstring: substring [
 	^ substring isEmpty or: [ (self findString: substring startingAt: 1) > 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 String >> includesSubstring: aString caseSensitive: caseSensitive [
 	
 	^ (self findString: aString startingAt: 1 caseSensitive: caseSensitive) > 0
