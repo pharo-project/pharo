@@ -12,6 +12,8 @@ these binding shadow all other bindings, even globals:
 result := Smalltalk compiler
 		bindings: {(#Object -> 3)} asDictionary;
 		evaluate: 'Object + 1'.
+		
+Shadowed global variables can be assigned to even if they referene a class.
 "
 Class {
 	#name : #OCExtraBindingScope,

@@ -13,6 +13,15 @@ OpalCompilerTests >> testBindingsWithUppercaseNameDoOverwriteGlobals [
 	self assert: result equals: Object class
 ]
 
+{ #category : #'tests - bindings' }
+OpalCompilerTests >> testBindingsWriteGlobals [
+	| result |
+	result := Smalltalk compiler
+		 bindings: {(#Object -> Point)} asDictionary;
+       evaluate: 'Object := 42. Object'.
+	self assert: result equals: 42.
+]
+
 { #category : #tests }
 OpalCompilerTests >> testCompileEmbeddsSource [
 	| result |
