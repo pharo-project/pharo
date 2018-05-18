@@ -56,7 +56,7 @@ MCCacheRepository class >> description [
 	^ nil
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCCacheRepository class >> disableCacheDuring: aBlock [
 	self uniqueInstance disableCacheDuring: aBlock
 ]
@@ -66,13 +66,13 @@ MCCacheRepository class >> initialize [
 	self resetIfInvalid
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCCacheRepository class >> reset [
 
 	default := nil.
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCCacheRepository class >> resetIfInvalid [
 
 	default notNil and: [default directory exists ifFalse: [default := nil]]
@@ -99,18 +99,18 @@ MCCacheRepository >> cacheForPackage: aPackage [
 	^ packageCaches at: aPackage ifAbsentPut: [MCPackageCache new]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCCacheRepository >> disable [
 	cacheEnabled := false.
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCCacheRepository >> disableCacheDuring: aBlock [
 	self disable.
 	aBlock ensure: [ self enable ].
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCCacheRepository >> enable [
 	cacheEnabled := true
 ]

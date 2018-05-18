@@ -173,14 +173,14 @@ NetworkSystemSettings class >> proxyPassword [
 
 	^ ProxyPassword 
 		ifNil: [ '' ]
-		ifNotNil: [ ZnUtils decodeBase64: ProxyPassword ]
+		ifNotNil: [ ProxyPassword base64Decoded utf8Decoded ]
 ]
 
 { #category : #settings }
 NetworkSystemSettings class >> proxyPassword: aPassword [
 	"Set the HTTP proxy password. Can be empty or nil to reset"
 	
-	ProxyPassword := aPassword ifNotNil: [ ZnUtils encodeBase64: aPassword ]
+	ProxyPassword := aPassword ifNotNil: [ aPassword utf8Encoded base64Encoded ]
 
 ]
 
@@ -190,14 +190,14 @@ NetworkSystemSettings class >> proxyUser [
 
 	^ ProxyUser
 		ifNil: [ '' ]
-		ifNotNil: [ ZnUtils decodeBase64: ProxyUser ]
+		ifNotNil: [ ProxyUser base64Decoded utf8Decoded ]
 ]
 
 { #category : #settings }
 NetworkSystemSettings class >> proxyUser: aUser [
 	"Set the HTTP proxy user. Can be empty or nil to reset"
 	
-	ProxyUser := aUser ifNotNil: [ ZnUtils encodeBase64: aUser ]
+	ProxyUser := aUser ifNotNil: [ aUser utf8Encoded base64Encoded ]
 
 
 ]

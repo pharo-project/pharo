@@ -19,7 +19,7 @@ HashAndEqualsTestCase >> setUp [
 	prototypes := OrderedCollection new 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 HashAndEqualsTestCase >> testEquality [
 	"Check that TextFontChanges report equality correctly"
 	prototypes
@@ -27,7 +27,7 @@ HashAndEqualsTestCase >> testEquality [
 				should: [(EqualityTester with: p) result]] 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 HashAndEqualsTestCase >> testHash [
 	"test that TextFontChanges hash correctly"
 	prototypes do: [:p |

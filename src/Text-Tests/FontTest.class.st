@@ -22,7 +22,7 @@ FontTest >> testDisplay [
 	destPoint := font displayString: text on: bb from: 1 to: 4 at: 0@0 kern: 1.
 
 	width := text inject: 0 into: [:max :char | max + (font widthOf: char)].
-	self assert: destPoint x = (width + 4).
+	self assert: destPoint x equals: (width + 4)
 	"bb destForm asMorph openInHand."
 
 ]
@@ -47,5 +47,5 @@ FontTest >> testParagraph [
 				into: [:tally :next | tally
 						+ (style defaultFont widthOf: next)].
 	p adjustRightX.
-	self assert: p extent = (width @ height)
+	self assert: p extent equals: (width @ height)
 ]

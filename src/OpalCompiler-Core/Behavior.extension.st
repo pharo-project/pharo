@@ -90,7 +90,7 @@ Behavior >> recompile: selector from: oldClass [
 				compiledMethodTrailer: method trailer;
 				compile.   "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
-	self basicAddSelector: selector withMethod: newMethod.
+	self addSelectorSilently: selector withMethod: newMethod.
 ]
 
 { #category : #'*OpalCompiler-Core' }

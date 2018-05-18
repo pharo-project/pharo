@@ -66,12 +66,12 @@ MCFileTreeRepository class >> description [
     ^ 'filetree://'
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCFileTreeRepository class >> parseName: aString [
     ^ self parseName: aString extension: self defaultPackageExtension
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCFileTreeRepository class >> parseName: aString extension: extension [
     "picked up from GoferVersionReference>>parseName:"
 
@@ -97,7 +97,7 @@ MCFileTreeRepository class >> parseName: aString extension: extension [
     (packageName , extension)}
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCFileTreeRepository class >> urlAsFileReference: aZnUrl [
 	"Extracted from ZnUrl since the scheme is restricted.
 	We need to keep host as a segment part."

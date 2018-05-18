@@ -267,7 +267,7 @@ FileReference >> moveTo: aReference [
 		self setFileSystem: result fileSystem path: result path ].		
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 FileReference >> nextVersion [
 	"Assumes a file name includes a version number encoded as '.' followed by digits 
 	preceding the file extension.  Increment the version number and answer the new file name.

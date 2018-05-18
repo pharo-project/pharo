@@ -239,6 +239,26 @@ BehaviorTest >> testWhichSelectorsAccess [
 ]
 
 { #category : #tests }
+BehaviorTest >> testWhichSelectorsAccessFindSlots [
+	| cls |
+	cls := Object newAnonymousSubclass.
+	cls := cls addSlot: #regularIvar.
+	cls := cls addSlot: #slotIvar => PropertySlot.
+	cls
+		compile:
+			'initialize 
+		super initialize.
+	
+		regularIvar := 4.
+		slotIvar := 2.
+	'.
+	self
+		assert: (cls whichSelectorsAccess: #regularIvar) size equals: 1;
+		assert: (cls whichSelectorsAccess: #slotIvar) size equals: 1;
+		assert: (cls whichSelectorsAccess: #notAnIvar) equals: #()
+]
+
+{ #category : #tests }
 BehaviorTest >> testallSuperclassesIncluding [
 		
 	|cls |

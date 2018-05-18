@@ -15,12 +15,12 @@ Class {
 	#category : #'Tool-DependencyAnalyser-Test-Packages'
 }
 
-{ #category : #utility }
+{ #category : #utilities }
 DAPackageCycleDetectorTest >> cyclesSize [
 	^ aPackageCycleDetection cycles size
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 DAPackageCycleDetectorTest >> graphWithThreeCycles [
 	| anArray |
 	anArray := Array new: 3.
@@ -35,7 +35,7 @@ DAPackageCycleDetectorTest >> graphWithThreeCycles [
 	^ DAPackageRelationGraph onPackages: anArray
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 DAPackageCycleDetectorTest >> queue [
 	^ aPackageCycleDetection instVarNamed: 'queue'
 ]
@@ -245,7 +245,7 @@ DAPackageCycleDetectorTest >> testfindCycles [
 	
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 DAPackageCycleDetectorTest >> visitedNodes [
 	^ aPackageCycleDetection instVarNamed: 'visitedNodes'
 ]

@@ -13,7 +13,7 @@ ShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 	^ true
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 ShouldSendSuperSetUpAsFirstMessage class >> superSetUpNotCalledFirstIn: aCompiledMethod [
 	"Return true if the method is a setUp method and a call to super setUp is not the first message send."
 	
