@@ -474,7 +474,6 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Morphic-Tests'
 	'NECompletion-Tests'
-	'OmbuTests'
 	'ProfStef-Tests'
 
 	'Reflectivity-Tools-Tests'
