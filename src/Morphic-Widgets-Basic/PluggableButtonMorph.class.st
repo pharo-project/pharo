@@ -45,7 +45,6 @@ Class {
 		'arguments',
 		'argumentsProvider',
 		'argumentsSelector',
-		'gradientLook',
 		'enabled',
 		'actionBlock',
 		'getColorSelector',
@@ -56,9 +55,6 @@ Class {
 		'iconMorph',
 		'iconPosition',
 		'lastState'
-	],
-	#classVars : [
-		'UseGradientLook'
 	],
 	#category : #'Morphic-Widgets-Basic-Buttons'
 }
@@ -82,16 +78,6 @@ PluggableButtonMorph class >> exampleButtonNoAction [
 		action: nil
 		label: 'A Button'
 		help: 'This is a button'
-]
-
-{ #category : #settings }
-PluggableButtonMorph class >> gradientButtonLook [ 
-	^ UseGradientLook ifNil: [UseGradientLook := self theme settings preferGradientFill]
-]
-
-{ #category : #settings }
-PluggableButtonMorph class >> gradientButtonLook: aBoolean [
-	UseGradientLook := aBoolean
 ]
 
 { #category : #'instance creation' }
@@ -346,11 +332,8 @@ PluggableButtonMorph >> beIconTop [
 { #category : #accessing }
 PluggableButtonMorph >> borderStyleToUse [
 	"Return the borderStyle to use for the receiver."
-	
-	self gradientLook ifFalse:[^self borderStyle].
-	^self perform: (self availableBorderStyles at: (
-			self interactionStates indexOf: self interactionState))
 
+	^ self perform: (self availableBorderStyles at: (self interactionStates indexOf: self interactionState))
 ]
 
 { #category : #private }
@@ -393,8 +376,7 @@ PluggableButtonMorph >> color: aColor [
 	(lastColor = aColor and: [
 	self getModelState = (self lastState)])
 		ifTrue: [^self].
-	super color: aColor.
-	self class gradientButtonLook ifTrue: [self adoptColor: aColor]
+	super color: aColor
 ]
 
 { #category : #accessing }
@@ -497,17 +479,16 @@ PluggableButtonMorph >> enabled: aBoolean [
 ]
 
 { #category : #accessing }
-PluggableButtonMorph >> extent: aPoint [ 
-	"Set the receiver's extent to value provided.
-	Update the gradient fills."
+PluggableButtonMorph >> extent: aPoint [
+	"Set the receiver's extent to value provided."
 
-	|answer|
-	aPoint = self extent ifTrue: [^super extent: aPoint].
+	| answer |
+	aPoint = self extent ifTrue: [ ^ super extent: aPoint ].
+	
 	answer := super extent: aPoint.
-	self gradientLook ifTrue: [
-		self fillStyle isOrientedFill
-			ifTrue: [self fillStyle: self fillStyleToUse]].
-	^answer
+	
+	self fillStyle isOrientedFill ifTrue: [ self fillStyle: self fillStyleToUse ].
+	^ answer
 ]
 
 { #category : #accessing }
@@ -631,16 +612,6 @@ PluggableButtonMorph >> getModelState [
 					ifFalse: [argumentsProvider ifNotNil: [
 								arguments := argumentsProvider perform: argumentsSelector].
 							model perform: getStateSelector withEnoughArguments: arguments]]
-]
-
-{ #category : #accessing }
-PluggableButtonMorph >> gradientLook [
-	^ gradientLook ifNil: [gradientLook := self theme currentSettings preferGradientFill]
-]
-
-{ #category : #accessing }
-PluggableButtonMorph >> gradientLook: aBoolean [
-	gradientLook := aBoolean
 ]
 
 { #category : #'event handling' }
@@ -918,11 +889,9 @@ PluggableButtonMorph >> lastState: anObject [
 PluggableButtonMorph >> layoutBounds: aRectangle [
 	"Set the bounds for laying out children of the receiver.
 	Update the fillstyle since it may depend on the bounds."
-	
+
 	super layoutBounds: aRectangle.
-	self gradientLook ifTrue: [
-		self fillStyle isOrientedFill
-			ifTrue: [self fillStyle: self fillStyleToUse]]
+	self fillStyle isOrientedFill ifTrue: [ self fillStyle: self fillStyleToUse ]
 ]
 
 { #category : #accessing }
@@ -976,24 +945,18 @@ PluggableButtonMorph >> mouseDown: evt [
 { #category : #'event handling' }
 PluggableButtonMorph >> mouseEnter: evt [
 	"Update the appearance."
+
 	self setProperty: #mouseEntered toValue: true.
-	
-	self gradientLook
-		ifTrue: [self changed]
-		ifFalse: ["0.09375 is exact in floating point so no cumulative rounding error will occur"
-				self color: (self color adjustBrightness: -0.09375)].
+	self changed.
 	super mouseEnter: evt
 ]
 
 { #category : #'event handling' }
 PluggableButtonMorph >> mouseLeave: evt [
 	"Update the appearance."
+
 	self setProperty: #mouseEntered toValue: false.
-	self gradientLook
-		ifTrue: [self changed]
-		ifFalse: ["0.09375 is exact in floating point so no cumulative rounding error will occur"
-				self color: (self color adjustBrightness: 0.09375).
-				self update: nil].
+	self changed.
 	super mouseLeave: evt
 ]
 
