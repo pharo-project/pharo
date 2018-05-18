@@ -85,6 +85,7 @@ Author class >> requestFullName [
 
 { #category : #'instance creation' }
 Author class >> reset [
+	<script>
 	^ self uniqueInstance reset.
 ]
 
