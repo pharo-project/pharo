@@ -27,7 +27,7 @@ Behavior >> compile: code notifying: requestor [
 		
 	method putSource: code
 			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Behavior method'; cr].
-	self addSelector: method selector withMethod: method notifying: requestor.
+	self addSelector: method selector withMethod: method.
 	^ method selector
 ]
 

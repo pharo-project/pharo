@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'Fuel-Platform-Core'
+	#category : #'Fuel-Platform-Core'
 }
 
 { #category : #'private-extensions' }
