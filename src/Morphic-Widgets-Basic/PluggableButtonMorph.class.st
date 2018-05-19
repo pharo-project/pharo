@@ -374,8 +374,7 @@ PluggableButtonMorph >> color: aColor [
 	aColor ifNil: [ ^ self ].
 	(aColor = self color and: [ self getModelState = self lastState ]) ifTrue: [ ^ self ].
 	
-	super color: aColor.
-	self class gradientButtonLook ifTrue: [ self adoptColor: aColor ]
+	super color: aColor
 ]
 
 { #category : #accessing }
@@ -475,19 +474,6 @@ PluggableButtonMorph >> enabled: aBoolean [
 	enabled := aBoolean.
 	self updateLabelEnablement.
 	self changed
-]
-
-{ #category : #accessing }
-PluggableButtonMorph >> extent: aPoint [
-	"Set the receiver's extent to value provided."
-
-	| answer |
-	aPoint = self extent ifTrue: [ ^ super extent: aPoint ].
-	
-	answer := super extent: aPoint.
-	
-	self fillStyle isOrientedFill ifTrue: [ self fillStyle: self fillStyleToUse ].
-	^ answer
 ]
 
 { #category : #accessing }
@@ -884,15 +870,6 @@ PluggableButtonMorph >> lastState: anObject [
 	lastState := anObject
 ]
 
-{ #category : #layout }
-PluggableButtonMorph >> layoutBounds: aRectangle [
-	"Set the bounds for laying out children of the receiver.
-	Update the fillstyle since it may depend on the bounds."
-
-	super layoutBounds: aRectangle.
-	self fillStyle isOrientedFill ifTrue: [ self fillStyle: self fillStyleToUse ]
-]
-
 { #category : #accessing }
 PluggableButtonMorph >> minHeight [
 	"Consult the theme also."
@@ -947,6 +924,8 @@ PluggableButtonMorph >> mouseEnter: evt [
 
 	self setProperty: #mouseEntered toValue: true.
 	self changed.
+	"0.09375 is exact in floating point so no cumulative rounding error will occur"
+	self color: (self color adjustBrightness: -0.09375).
 	super mouseEnter: evt
 ]
 
@@ -956,6 +935,8 @@ PluggableButtonMorph >> mouseLeave: evt [
 
 	self setProperty: #mouseEntered toValue: false.
 	self changed.
+	"0.09375 is exact in floating point so no cumulative rounding error will occur"
+	self color: (self color adjustBrightness: 0.09375).
 	super mouseLeave: evt
 ]
 
