@@ -5,7 +5,6 @@ Class {
 	#name : #AthensTigerShape,
 	#superclass : #Object,
 	#instVars : [
-		'paint',
 		'path',
 		'fillRule',
 		'fill',
@@ -28,6 +27,11 @@ AthensTigerShape >> addFill [
 { #category : #accessing }
 AthensTigerShape >> addStroke [
 	stroke := true.
+]
+
+{ #category : #accessing }
+AthensTigerShape >> capStyle [
+	^capStyle
 ]
 
 { #category : #accessing }
@@ -56,8 +60,18 @@ AthensTigerShape >> initialize [
 ]
 
 { #category : #accessing }
+AthensTigerShape >> joinStyle [
+	^joinStyle
+]
+
+{ #category : #accessing }
 AthensTigerShape >> joinStyle: join [
 	joinStyle := join.
+]
+
+{ #category : #accessing }
+AthensTigerShape >> miterLimit [
+	^miterLimit
 ]
 
 { #category : #accessing }
@@ -101,6 +115,11 @@ AthensTigerShape >> setPath: anAthensCairoPath [
 { #category : #accessing }
 AthensTigerShape >> strokePaint: aColor [ 
 	strokePaint := aColor
+]
+
+{ #category : #accessing }
+AthensTigerShape >> strokeWidth [
+	^strokeWidth
 ]
 
 { #category : #accessing }

@@ -14,6 +14,12 @@ Class {
 	#category : #'Athens-Examples-Demos'
 }
 
+{ #category : #'instance creation' }
+AthensFlakeDemo class >> open [
+	<script>
+	self new openInWindow
+]
+
 { #category : #accessing }
 AthensFlakeDemo >> circle [
 	^ circle 

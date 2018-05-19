@@ -4,9 +4,6 @@ An example from a workshop
 Class {
 	#name : #CurveWorkshop,
 	#superclass : #Object,
-	#instVars : [
-		'surface'
-	],
 	#category : #'Athens-Examples-Workshop'
 }
 
