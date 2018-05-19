@@ -16,7 +16,7 @@ Class {
 
 { #category : #'instance creation' }
 AthensFlakeDemo class >> open [
-	<script>
+	<example>
 	self new openInWindow
 ]
 
