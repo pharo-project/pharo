@@ -605,6 +605,21 @@ OrderedDictionary >> size [
 	^ dictionary size
 ]
 
+{ #category : #printing }
+OrderedDictionary >> storeOn: aStream [
+	aStream << '((' << self class name << ' new)'.
+	self associations
+		ifNotEmpty: [ :assos | 
+			assos
+				do: [ :each | 
+					aStream
+						<< ' add: ';
+						store: each ]
+				separatedBy: [ aStream << ';' ].
+			aStream << '; yourself' ].
+	aStream << ')'
+]
+
 { #category : #private }
 OrderedDictionary >> unreferencedKeys [
 	^ Dictionary unreferencedKeysIn: self
