@@ -109,10 +109,11 @@ ZipArchive class >> validSignatures [
 { #category : #'archive operations' }
 ZipArchive >> addDeflateString: aString as: aFileName [
 	"Add a verbatim string under the given file name"
+
 	| mbr |
 	mbr := self addString: aString as: aFileName.
 	mbr desiredCompressionMethod: CompressionDeflated.
-	^mbr
+	^ mbr
 ]
 
 { #category : #initialization }
@@ -126,14 +127,15 @@ ZipArchive >> extractAllTo: aDirectory [
 
 	UIManager default
 		informUserDuring: [ :bar | 
-			bar max: self members size.
+			bar max: self numberOfMembers.
 			self extractAllTo: aDirectory informing: bar ]
 ]
 
 { #category : #'archive operations' }
 ZipArchive >> extractAllTo: aDirectory informing: bar [
 	"Extract all elements to the given directory"
-	^self extractAllTo: aDirectory informing: bar overwrite: false
+
+	^ self extractAllTo: aDirectory informing: bar overwrite: false
 ]
 
 { #category : #'archive operations' }
@@ -178,6 +180,13 @@ ZipArchive >> extractAllTo: aDirectory informing: bar overwrite: allOverwrite [
 			bar isNotNil & shouldUpdateInfos
 				ifTrue: [ bar value: barValue.
 					lastUpdate := Time millisecondClockValue ] ]
+]
+
+{ #category : #'archive operations' }
+ZipArchive >> extractAllTo: aDirectory overwrite: overwriteAll [
+	"Extracts all elements to the given directory, overwriting existing entries if necessary. Does not use UI for confirmation"
+
+	self members do: [ :entry | entry extractInDirectory: aDirectory withoutInformingOverwrite: overwriteAll ]
 ]
 
 { #category : #accessing }

@@ -63,6 +63,21 @@ ZipArchiveMember >> asDirectory [
 	^ZipDirectoryMember new copyFrom: self
 ]
 
+{ #category : #'extraction-ui' }
+ZipArchiveMember >> askOverwriteOptionsUsing: aUIManager onYes: yesBlock onNo: noBlock onRetryWithOverwrite: retryWithOverwriteBlock onCancel: cancelBlock [
+	| index |
+	[ index := aUIManager chooseFrom: {'Yes, overwrite' . 'No, don''t overwrite' . 'Overwrite ALL files' . 'Cancel operation'} lines: #(2) title: fileName , ' already exists. Overwrite?'.
+	index isNil ] whileTrue.
+	index = 1
+		ifTrue: [ yesBlock value ].
+	index = 2
+		ifTrue: [ noBlock value ].
+	index = 3
+		ifTrue: [ retryWithOverwriteBlock value ].
+	index = 4
+		ifTrue: [ cancelBlock value ]
+]
+
 { #category : #'accessing - spec fields' }
 ZipArchiveMember >> bitFlag [
 	"Per .ZIP File Format Specification Version: 6.3.2:
@@ -351,37 +366,46 @@ ZipArchiveMember >> endRead [
 
 { #category : #extraction }
 ZipArchiveMember >> extractInDirectory: dir [
-	self extractToFileNamed: self localFileName inDirectory: dir
-
+	self extractToFileNamed: self localFileName inDirectory: dir overwrite: true
 ]
 
-{ #category : #extraction }
-ZipArchiveMember >> extractInDirectory: aDirectory overwrite: overwriteAll [
-	"Extract this entry into the given directory. Answer #okay, #failed, #abort, or #retryWithOverwrite."
-	| path fileDir file index localName |
+{ #category : #'extraction-ui' }
+ZipArchiveMember >> extractInDirectory: aDirectory informingOverwrite: shouldOverwrite onSuccess: successBlock onRetryWithOverwrite: retryWithOverwriteBlock onFailedOverwrite: failedBlock onAbortOverwrite: abortBlock [
+	"Extract this entry into the given directory. Answer successBlock or call one of the other action blocks."
+
+	| path fileDir file localName |
 	path := fileName findTokens: '/'.
 	localName := path last.
 	fileDir := path allButLast inject: aDirectory into: [ :base :part | base / part ].
 	fileDir ensureCreateDirectory.
 	file := fileDir / localName.
-	file exists ifTrue: [
-		overwriteAll ifFalse:[
-			[index := UIManager default chooseFrom: {
-						'Yes, overwrite'. 
-						'No, don''t overwrite'. 
-						'Overwrite ALL files'.
-						'Cancel operation'
-					} lines: #(2) title: fileName, ' already exists. Overwrite?'.
-			index == nil] whileTrue.
-			index = 4 ifTrue:[^#abort].
-			index = 3 ifTrue:[^#retryWithOverwrite].
-			index = 2 ifTrue:[^#okay].
-		].
-		file ensureDelete.
-		file := [file ensureCreateFile] on: Error do:[:ex| ^#failed].
-	].
-	file binaryWriteStreamDo: [ :str | self extractTo: str ].
-	^#okay
+	^ self
+		extractToFile: file
+		informingOverwrite: shouldOverwrite
+		onSuccess: successBlock
+		onRetryWithOverwrite: retryWithOverwriteBlock
+		onFailedOverwrite: failedBlock
+		onAbortOverwrite: abortBlock
+]
+
+{ #category : #'extraction-ui' }
+ZipArchiveMember >> extractInDirectory: aDirectory overwrite: shouldOverwrite [
+	"Extract this entry into the given directory. Answer #okay, #failed, #abort, or #retryWithOverwrite."
+
+	^ self
+		extractInDirectory: aDirectory
+		informingOverwrite: shouldOverwrite
+		onSuccess: [ ^ #okay ]
+		onRetryWithOverwrite: [ ^ #retryWithOverwrite ]
+		onFailedOverwrite: [ ^ #failed ]
+		onAbortOverwrite: [ ^ #abort ]
+]
+
+{ #category : #extraction }
+ZipArchiveMember >> extractInDirectory: dir withoutInformingOverwrite: overwrite [
+	"Extract myself to dir without informing user whether to overwrite existing file"
+
+	self extractToFileNamed: self localFileName inDirectory: dir overwrite: overwrite
 ]
 
 { #category : #extraction }
@@ -407,27 +431,59 @@ ZipArchiveMember >> extractTo: aStream from: start to: finish [
 	self endRead.
 ]
 
-{ #category : #extraction }
-ZipArchiveMember >> extractToFileNamed: aFileName [
-	self 
-		extractToFileNamed: aFileName 
-		inDirectory: FileSystem workingDirectory.
+{ #category : #'extraction-private' }
+ZipArchiveMember >> extractToFile: aFile informingOverwrite: shouldOverwrite onSuccess: successBlock onRetryWithOverwrite: retryWithOverwriteBlock onFailedOverwrite: failedBlock onAbortOverwrite: abortBlock [
+	"Extract this entry into the given file. Answer successBlock or call one of the other action blocks."
+
+	| file |
+	file := aFile.
+	(file exists and: [ shouldOverwrite not ])
+		ifTrue: [ | overwriteBlock |
+			overwriteBlock := [ file := [ file
+				ensureDelete;
+				ensureCreateFile ]
+				on: Error
+				do: [ :ex | 
+					failedBlock cull: ex.
+					^ self ] ].
+			self
+				askOverwriteOptionsUsing: UIManager default
+				onYes: overwriteBlock
+				onNo: [ ^ #okay ]
+				onRetryWithOverwrite: [ retryWithOverwriteBlock value.
+					overwriteBlock value ]
+				onCancel: abortBlock ].
+	file binaryWriteStreamDo: [ :str | self extractTo: str ].
+	^ successBlock value
 ]
 
-{ #category : #accessing }
-ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir [
-	| file fullDir |
-	self isEncrypted
-		ifTrue: [ ^self error: 'encryption unsupported' ].
-	file := dir / aLocalFileName.
-	file parent ensureCreateDirectory.
-	self isDirectory 
-		ifFalse: [
-			fullDir 
-				forceNewFileNamed: file basename 
-				do: [:stream |  self extractTo: stream]]
-		ifTrue: [ fullDir ensureCreateDirectory ]
+{ #category : #extraction }
+ZipArchiveMember >> extractToFileNamed: aFileName [
+	self extractToFileNamed: aFileName inDirectory: FileSystem workingDirectory overwrite: true
+]
 
+{ #category : #extraction }
+ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir [
+	self extractToFileNamed: aLocalFileName inDirectory: dir overwrite: true
+]
+
+{ #category : #extraction }
+ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir overwrite: overwrite [
+	| file |
+	self isEncrypted
+		ifTrue: [ ^ self error: 'encryption unsupported' ].
+	file := dir / aLocalFileName.
+	self isDirectory
+		ifTrue: [ file ensureCreateDirectory ]
+		ifFalse: [ (file isFile and: [ file exists ])
+				ifTrue: [ overwrite
+						ifTrue: [ file
+								ensureDelete;
+								ensureCreateFile;
+								binaryWriteStreamDo: [ :stream | self extractTo: stream ] ] ]
+				ifFalse: [ file
+						ensureCreateFile;
+						binaryWriteStreamDo: [ :stream | self extractTo: stream ] ] ]
 ]
 
 { #category : #accessing }
