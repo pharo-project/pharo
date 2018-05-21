@@ -37,7 +37,7 @@ FileHandle class >> startUp: resuming [
 
 { #category : #public }
 FileHandle >> assureOpen [
-	"compatibility method to make the FileHandle Tests pass"
+	"Compatibility method to make the FileHandle Tests pass"
 	self isOpen ifFalse: [ id := self basicOpen ].
 ]
 
