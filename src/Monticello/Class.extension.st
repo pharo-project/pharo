@@ -24,10 +24,10 @@ Class >> asClassDefinition [
 		traitComposition: self traitCompositionString
 		classTraitComposition: self class traitCompositionString
 		category: self category 
-		instVarNames: (self slots collect: #definitionString)
+		instVarNames: (self localSlots collect: #definitionString)
 		classVarNames: (self classVariables collect: #definitionString)
 		poolDictionaryNames: self sharedPoolNames
-		classInstVarNames: (self class slots collect: #definitionString)
+		classInstVarNames: (self class localSlots collect: #definitionString)
 		type: self typeOfClass
 		comment: self organization classComment	asString
 		commentStamp: self organization commentStamp.

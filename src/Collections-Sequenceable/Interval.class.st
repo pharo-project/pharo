@@ -60,7 +60,7 @@ Class {
 		'stop',
 		'step'
 	],
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Base'
 }
 
 { #category : #'instance creation' }

@@ -84,7 +84,7 @@ ClassDescription >> addMethodTag: aSymbol [
 ]
 
 { #category : #'accessing method dictionary' }
-ClassDescription >> addSelector: selector withMethod: compiledMethod notifying: requestor [
+ClassDescription >> addSelector: selector withMethod: compiledMethod [
 	| priorMethodOrNil oldProtocol |
 	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [nil].
 	oldProtocol := priorMethodOrNil ifNotNil: [ priorMethodOrNil protocol ].

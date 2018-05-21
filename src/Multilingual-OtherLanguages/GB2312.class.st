@@ -5,7 +5,7 @@ This class represents the domestic character encoding called GB 2312 used for si
 Class {
 	#name : #GB2312,
 	#superclass : #EncodedCharSet,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-CharSets'
 }
 
 { #category : #'class methods' }

@@ -123,10 +123,9 @@ SpaceTally >> printHeader: aStream [
 ]
 
 { #category : #fileout }
-SpaceTally >> printSpaceAnalysis [	
-	| stream |
-	stream := FileStream newFileNamed: 'STspace.text'.
-	[ self printSpaceAnalysis: 1 on: stream ] ensure: [ stream close ]
+SpaceTally >> printSpaceAnalysis [
+	'STspace.text' asFileReference 
+		writeStreamDo: [ :stream | self printSpaceAnalysis: 1 on: stream ]
 ]
 
 { #category : #fileout }
@@ -199,11 +198,11 @@ SpaceTally >> printSpaceDifferenceFrom: fileName1 to: fileName2 [
 		SpaceTally new printSpaceDifferenceFrom: 'STspace.text1' to: 'STspace.text2'
 "
 	| f coll1 coll2 item |
-	f := FileStream readOnlyFileNamed: fileName1.
+	f := fileName1 asFileReference readStream.
 	coll1 := OrderedCollection new.
 	[f atEnd] whileFalse: [coll1 add: f nextLine].
 	f close.
-	f := FileStream readOnlyFileNamed: fileName2.
+	f := fileName2 asFileReference readStream.
 	coll2 := OrderedCollection new.
 	[f atEnd] whileFalse:
 		[item := f nextLine.

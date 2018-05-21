@@ -18,7 +18,7 @@ Class {
 		'pendingResponses',
 		'progressObservers'
 	],
-	#category : #'Network-Protocols'
+	#category : #'Network-Protocols-Protocols'
 }
 
 { #category : #accessing }

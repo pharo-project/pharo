@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'arrayClass'
 	],
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Sparse'
 }
 
 { #category : #private }

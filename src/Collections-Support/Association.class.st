@@ -55,7 +55,7 @@ Association >> key: aKey value: anObject [
 	value := anObject
 ]
 
-{ #category : #testing }
+{ #category : #comparing }
 Association >> literalEqual: otherLiteral [
 	"Answer true if the receiver and otherLiteral represent the same literal.
 	Variable bindings are literally equals only if identical.
@@ -81,7 +81,7 @@ Association >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : #evaluating }
 Association >> value [
 	"Answer the value of the receiver."
 

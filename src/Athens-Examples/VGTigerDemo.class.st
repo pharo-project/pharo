@@ -12,11 +12,7 @@ Class {
 
 { #category : #private }
 VGTigerDemo class >> checkDataSizes [
-
-" 
-VGTigerDemo checkDataSizes
-"
-
+	<script>
 	self assert: (self commands size = self tigerCommandCount).
 	self assert: (self tigerPointsCount = self tigerPoints size).
 ]
@@ -45,7 +41,7 @@ VGTigerDemo class >> commands [
 
 { #category : #run }
 VGTigerDemo class >> runDemo [
-	<script>
+	<example>
 	^ self new runDemo
 ]
 

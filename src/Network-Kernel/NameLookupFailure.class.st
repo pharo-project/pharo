@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'hostName'
 	],
-	#category : #'Network-Kernel'
+	#category : #'Network-Kernel-Exceptions'
 }
 
 { #category : #'instance creation' }

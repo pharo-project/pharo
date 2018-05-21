@@ -17,7 +17,7 @@ LookupKey class >> key: aKey [
 	^self basicNew key: aKey
 ]
 
-{ #category : #comparing }
+{ #category : #testing }
 LookupKey >> < aLookupKey [ 
 	"Refer to the comment in Magnitude|<."
 

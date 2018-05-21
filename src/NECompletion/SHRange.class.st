@@ -15,7 +15,7 @@ Class {
 		'end',
 		'type'
 	],
-	#category : #'Shout-Parsing'
+	#category : #'NECompletion-Parser'
 }
 
 { #category : #'instance creation' }

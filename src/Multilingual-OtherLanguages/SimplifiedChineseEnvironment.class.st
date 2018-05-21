@@ -4,7 +4,7 @@ This class provides the Simplified Chinese support (Used mainly in Mainland Chin
 Class {
 	#name : #SimplifiedChineseEnvironment,
 	#superclass : #LanguageEnvironment,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-Environments'
 }
 
 { #category : #'class initialization' }

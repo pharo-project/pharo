@@ -49,7 +49,7 @@ Class {
 	#name : #Array,
 	#superclass : #ArrayedCollection,
 	#type : #variable,
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Base'
 }
 
 { #category : #'brace support' }
@@ -217,7 +217,7 @@ Array >> elementsForwardIdentityTo: otherArray copyHash: copyHash [
 	self primitiveFailed
 ]
 
-{ #category : #private }
+{ #category : #'literal testing' }
 Array >> hasLiteral: literal [
 	"Answer true if literal is identical to any literal in this array, even 
 	if imbedded in further array structure. This method is only intended 
@@ -231,7 +231,7 @@ Array >> hasLiteral: literal [
 	^false
 ]
 
-{ #category : #private }
+{ #category : #'literal testing' }
 Array >> hasLiteralSuchThat: testBlock [
 	"Answer true if testBlock returns true for any literal in this array, even if imbedded in 	further Arrays or CompiledMethods.  This method is only intended for private use by 	CompiledMethod 	hasLiteralSuchThat:"
 	| lit |
@@ -289,14 +289,14 @@ Array >> printOn: aStream [
 	super printOn: aStream
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 Array >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]
 
-{ #category : #testing }
+{ #category : #'literal testing' }
 Array >> shouldBePrintedAsLiteral [
 
 	^self class == Array and: [ self allSatisfy: [ :each | each shouldBePrintedAsLiteral ] ]

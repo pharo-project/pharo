@@ -13,7 +13,7 @@ Class {
 		'useByteOrderMark',
 		'byteOrderMarkDone'
 	],
-	#category : #'Multilingual-TextConversion'
+	#category : #'Multilingual-TextConversion-TextConverter'
 }
 
 { #category : #utilities }

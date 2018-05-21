@@ -8,7 +8,7 @@ Class {
 		'byteToUnicode',
 		'unicodeToByte'
 	],
-	#category : #'Multilingual-TextConversion'
+	#category : #'Multilingual-TextConversion-TextConverter'
 }
 
 { #category : #'class initialization' }

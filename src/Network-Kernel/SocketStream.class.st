@@ -72,7 +72,7 @@ Class {
 		'binary',
 		'shouldSignal'
 	],
-	#category : #'Network-Kernel'
+	#category : #'Network-Kernel-Base'
 }
 
 { #category : #example }

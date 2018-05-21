@@ -416,7 +416,7 @@ StandardFileStream >> fullName [
 
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 StandardFileStream >> insertLineFeeds [
 	"(FileStream oldFileNamed: 'BBfix2.st') insertLineFeeds"
 	| s crLf f |

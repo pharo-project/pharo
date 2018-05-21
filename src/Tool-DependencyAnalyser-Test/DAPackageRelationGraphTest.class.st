@@ -17,7 +17,7 @@ Class {
 	#category : #'Tool-DependencyAnalyser-Test-Packages'
 }
 
-{ #category : #utility }
+{ #category : #utilities }
 DAPackageRelationGraphTest >> packageDependencyFrom: aPackage to: anOtherPackage [
 	^ DAPackageDependency from: aPackage to: anOtherPackage
 ]

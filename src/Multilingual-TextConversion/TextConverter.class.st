@@ -13,7 +13,7 @@ Class {
 		'latin1Map',
 		'latin1Encodings'
 	],
-	#category : #'Multilingual-TextConversion'
+	#category : #'Multilingual-TextConversion-TextConverter'
 }
 
 { #category : #utilities }

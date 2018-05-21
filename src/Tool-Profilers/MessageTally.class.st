@@ -239,14 +239,12 @@ MessageTally class >> spyOn: aBlock toFileNamed: fileName reportOtherProcesses: 
 	"Spy on the evaluation of aBlock. Write the data collected on a file
 	named fileName."
 
-	| file value node |
+	| value node |
 	node := self new.
 	node reportOtherProcesses: aBoolean.
 	value := node spyEvery: self defaultPollPeriod on: aBlock.
-	file := FileStream newFileNamed: fileName.
-	node report: file; close.
-	file close.
-	^value
+	fileName asFileReference writeStreamDo: [ :out | node report: out ].
+	^ value
 ]
 
 { #category : #spying }
@@ -285,16 +283,15 @@ MessageTally class >> spyOnProcess: aProcess forMilliseconds: msecDuration repor
 MessageTally class >> spyOnProcess: aProcess forMilliseconds: msecDuration toFileNamed: fileName reportOtherProcesses: aBoolean [
 	"Spy on the evaluation of aProcess. Write the data collected on a file  
 	named fileName. Will overwrite fileName"
-	| file node |
+	
+	| node |
 	node := self new.
 	node reportOtherProcesses: aBoolean.
 	node
 		spyEvery: self defaultPollPeriod
 		onProcess: aProcess
 		forMilliseconds: msecDuration.
-	file := FileStream fileNamed: fileName.
-	node report: file.
-	file close
+	fileName asFileReference writeStreamDo: [ :out | node report: out ]
 ]
 
 { #category : #public }

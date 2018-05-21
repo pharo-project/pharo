@@ -33,8 +33,8 @@ TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMetho
 ]
 
 { #category : #'accessing method dictionary' }
-TraitedClass class >> addSelector: selector withMethod: compiledMethod notifying: requestor [
-	super addSelector: selector withMethod: compiledMethod notifying: requestor.
+TraitedClass class >> addSelector: selector withMethod: compiledMethod [
+	super addSelector: selector withMethod: compiledMethod.
 	self propagateChangeOf: selector
 ]
 
@@ -97,13 +97,22 @@ TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inPr
 ]
 
 { #category : #'accessing method dictionary' }
-TraitedClass >> addSelector: selector withMethod: compiledMethod notifying: requestor [
+TraitedClass >> addSelector: selector withMethod: compiledMethod [
 	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
 	
 	self localMethodDict at: selector put: compiledMethod.
-
-	super addSelector: selector withMethod: compiledMethod notifying: requestor.
+	super addSelector: selector withMethod: compiledMethod.
 	TraitChange addSelector: selector on: self
+]
+
+{ #category : #'accessing method dictionary' }
+TraitedClass >> addSelector: selector withMethod: compiledMethod notifying: requestor [
+	self
+		deprecated: 'Please use #addSelector:withMethod: instead'
+		transformWith:
+			'`@receiver addSelector: `@statements1 withMethod: `@statements2 notifying: `@statements3'
+		   -> '`@receiver addSelector: `@statements1 withMethod: `@statements2'.
+	^self addSelector: selector withMethod: compiledMethod
 ]
 
 { #category : #querying }

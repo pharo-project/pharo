@@ -225,7 +225,7 @@ NECContext >> createModel [
 { #category : #private }
 NECContext >> createRanges [
 	| parser |
-	parser := SHParserST80 new on: controller model.
+	parser := SHParserST80 new.
 	ranges := parser 
 				rangesIn: source
 				classOrMetaClass: theClass

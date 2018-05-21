@@ -4,7 +4,7 @@ I'm a simple test ressource for test purposes
 Class {
 	#name : #SimpleTestResourceCircular1,
 	#superclass : #SimpleTestResource,
-	#category : #'SUnit-Tests-Core'
+	#category : #'SUnit-Tests-Resources'
 }
 
 { #category : #accessing }

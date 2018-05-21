@@ -15,7 +15,7 @@ Trait >> asClassDefinition [
 			name: self name
 			traitComposition: self traitCompositionString
 			category: self category 
-			instVarNames: (self slots collect: #definitionString)
+			instVarNames: (self localSlots collect: #definitionString)
 			comment: self organization classComment asString
 			commentStamp: self organization commentStamp.
 		

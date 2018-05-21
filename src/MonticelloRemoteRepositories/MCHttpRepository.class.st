@@ -373,7 +373,7 @@ MCHttpRepository >> userAndPasswordFromSettingsDo: aBlock [
 				(entry first match: self location) ifTrue: [
 					userAndPassword := entry second.
 					(userAndPassword includes: $:) ifFalse: [
-						userAndPassword := ZnUtils decodeBase64: userAndPassword].
+						userAndPassword := userAndPassword base64Decoded decodeWith: #null].
 					userAndPassword := userAndPassword findTokens: $:.
 					^aBlock value: userAndPassword first 
 						value: userAndPassword second 

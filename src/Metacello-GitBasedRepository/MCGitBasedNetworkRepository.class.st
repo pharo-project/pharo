@@ -234,21 +234,22 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 			url := self
 				projectZipUrlFor: projectPath
 				versionString: versionString.
-			pid := MetacelloPlatform current processPID.
-			zipFileName := MetacelloPlatform current
+			pid := mcPlatform processPID.
+			zipFileName := mcPlatform
 				tempFileFor:
 					self basicDescription , '-' , pid , '-'
 						, (downloadCacheKey select: [ :c | c isAlphaNumeric ])
 				suffix: '.zip'.
-			archive := MetacelloPlatform current
+			archive := mcPlatform
 				downloadZipArchive: url
 				to: zipFileName.
 			directory := mcPlatform
 				directoryFromPath: (cachePath := archive members first fileName)
 				relativeTo: theCacheDirectory.
+			archive close.
 			directory exists
-				ifTrue: [ MetacelloPlatform current deleteFileNamed: zipFileName ]
-				ifFalse: [ MetacelloPlatform current
+				ifTrue: [ mcPlatform deleteFileNamed: zipFileName ]
+				ifFalse: [ mcPlatform
 						extractRepositoryFrom: zipFileName
 						to: theCacheDirectory fullName ].
 			self downloadCache at: downloadCacheKey put: cachePath.

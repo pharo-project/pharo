@@ -796,7 +796,7 @@ Object >> doesNotUnderstand: aMessage [
 		ifFalse: [resumeValue]
 ]
 
-{ #category : #'set implementation' }
+{ #category : #accessing }
 Object >> enclosedSetElement [
 	"The receiver is included into a set as an element. 
 	Since some objects require wrappers (see SetElement) to be able to be included into a Set,
@@ -1164,7 +1164,7 @@ Object >> isKindOf: aClass [
 		ifFalse: [^self class inheritsFrom: aClass]
 ]
 
-{ #category : #printing }
+{ #category : #testing }
 Object >> isLiteral [
 	"Answer whether the receiver has a literal text form recognized by the 
 	compiler."

@@ -12,7 +12,7 @@ Class {
 	#classInstVars : [
 		'preventAvailability'
 	],
-	#category : #'SUnit-Tests-Core'
+	#category : #'SUnit-Tests-Resources'
 }
 
 { #category : #accessing }
@@ -20,7 +20,7 @@ SimpleTestResource class >> allowAvailability [
 	^preventAvailability isNil
 ]
 
-{ #category : #utility }
+{ #category : #utilties }
 SimpleTestResource class >> preventAvailabilityDuring: aBlock [
 	"Only setter of preventAvailability."
 	

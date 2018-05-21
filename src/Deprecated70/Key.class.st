@@ -8,3 +8,8 @@ Class {
 	#superclass : #KeyboardKey,
 	#category : #Deprecated70
 }
+
+{ #category : #deprecation }
+Key class >> isDeprecated [
+	^true
+]

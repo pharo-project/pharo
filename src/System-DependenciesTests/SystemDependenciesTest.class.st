@@ -91,7 +91,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler #Iceberg #'Iceberg-Libgit') sorted
+	^ #(#Iceberg #'Iceberg-Libgit') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -174,7 +174,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	^ #(#'Athens-Morphic' #MonticelloGUI #'Morphic-Widgets-FastTable' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 SystemDependenciesTest >> longTestCase [
 
 	self timeLimit: 60 seconds.

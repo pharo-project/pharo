@@ -33,7 +33,7 @@ Class {
 	#instVars : [
 		'newline'
 	],
-	#category : #'Network-MIME'
+	#category : #'Network-MIME-Converter'
 }
 
 { #category : #initialize }

@@ -51,7 +51,6 @@ Class {
 		'getColorSelector',
 		'getEnabledSelector',
 		'getFontSelector',
-		'lastColor',
 		'labelMorph',
 		'iconMorph',
 		'iconPosition',
@@ -389,12 +388,11 @@ PluggableButtonMorph >> changed [
 PluggableButtonMorph >> color: aColor [
 	"Check to avoid repeats of the same color."
 
-	aColor ifNil: [^self].
-	(lastColor = aColor and: [
-	self getModelState = (self lastState)])
-		ifTrue: [^self].
+	aColor ifNil: [ ^ self ].
+	(aColor = self color and: [ self getModelState = self lastState ]) ifTrue: [ ^ self ].
+	
 	super color: aColor.
-	self class gradientButtonLook ifTrue: [self adoptColor: aColor]
+	self class gradientButtonLook ifTrue: [ self adoptColor: aColor ]
 ]
 
 { #category : #accessing }
@@ -746,8 +744,9 @@ PluggableButtonMorph >> initialize [
 		layoutInset: (self theme buttonLabelInsetFor: self);
 		extent: 20 @ 15;
 		lastState: false;
-		cornerStyle: (self theme buttonCornerStyleIn: nil).
-	self theme buttonBorderStyleFor: self.
+		cornerStyle: (self theme buttonCornerStyleIn: nil);
+		borderStyle: (self theme buttonNormalBorderStyleFor: self).
+		
 	self clipSubmorphs: true
 ]
 
