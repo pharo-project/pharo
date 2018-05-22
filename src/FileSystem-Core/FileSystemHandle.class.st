@@ -8,9 +8,6 @@ Class {
 		'reference',
 		'writable'
 	],
-	#classVars : [
-		'Primitives'
-	],
 	#category : #'FileSystem-Core-Kernel'
 }
 

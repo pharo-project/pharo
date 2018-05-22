@@ -16,7 +16,7 @@ Class {
 
 { #category : #accessing }
 FileSystemStore class >> delimiter [
-	self shouldBeImplemented 
+	^ self shouldBeImplemented 
 ]
 
 { #category : #accessing }
