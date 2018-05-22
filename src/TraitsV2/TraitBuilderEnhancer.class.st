@@ -161,6 +161,16 @@ TraitBuilderEnhancer >> initializeBuilder: aBuilder [
 		ifFalse: [ aBuilder metaclassClass: TraitedMetaclass ]
 ]
 
+{ #category : #'class modifications' }
+TraitBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: installer [
+
+	super propagateChangesToRelatedClasses: newClass installer: installer.
+
+	"If the newClass is a trait I have to remake the users of it"
+	newClass isTrait ifFalse: [ ^ self ].
+	newClass users do: [ :each | installer remake: each ]
+]
+
 { #category : #accessing }
 TraitBuilderEnhancer >> traitComposition [
 	^ builder traitComposition asTraitComposition
