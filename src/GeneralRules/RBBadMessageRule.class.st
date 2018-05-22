@@ -21,8 +21,6 @@ RBBadMessageRule >> badSelectors [
 
 { #category : #enumerating }
 RBBadMessageRule >> check: aNode forCritiquesDo: aCriticBlock [
-	"Tests use a lot of reflective methods and it is ok"
-	aNode methodNode methodClass isTestCase ifTrue: [ ^#() ].
     (aNode isMessage and: [ 
     self badSelectors includes: aNode selector ])
         ifTrue: [ aCriticBlock cull: (self critiqueFor: aNode) ]
