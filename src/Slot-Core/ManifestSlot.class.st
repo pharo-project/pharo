@@ -1,7 +1,7 @@
 Class {
 	#name : #ManifestSlot,
 	#superclass : #PackageManifest,
-	#category : #'Slot-Core'
+	#category : #'Slot-Core-Manifest'
 }
 
 { #category : #'as yet unclassified' }

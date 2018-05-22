@@ -66,14 +66,38 @@ T2TraitWithSlots >> testOwningClass [
 ]
 
 { #category : #tests }
+T2TraitWithSlots >> testRedefiningSuperclass [
+
+	| t1 c1 t2 c2 |
+	
+	t1 := self newTrait: #T1 with: #(a b).
+	t2 := self newTrait: #T2 with: #(g h).
+
+	c1 := self newClass: #C1 with: #(c d) uses: t1.
+	c2 := self newClass: #C2 superclass: c1 with: #(e) uses: t2.
+	
+	self assert: c2 instanceVariables equals: #(e).
+	self assert: c1 instanceVariables equals: #(c d).
+	self assertCollection: (c2 allSlots collect: #name) hasSameElements: #(c d a b e g h).
+	self assertCollection: (c1 allSlots collect: #name) hasSameElements: #(c d a b).	
+
+	c1 := self newClass: #C1 with: #(c d) uses: t1.	
+
+	self assert: c2 instanceVariables equals: #(e).
+	self assert: c1 instanceVariables equals: #(c d).
+	self assertCollection: (c2 allSlots collect: #name) hasSameElements: #(c d a b e g h).
+	self assertCollection: (c1 allSlots collect: #name) hasSameElements: #(c d a b).	
+]
+
+{ #category : #tests }
 T2TraitWithSlots >> testRedefiningTrait [
 
-	| t1 |
-	
-	t1 := self newTrait: #T1 with: #().
-	t1 := self newTrait: #T1 with: #(aSlot).
+| t1 |
 
-	self deny: t1 slots isEmpty.
+t1 := self newTrait: #T1 with: #().
+t1 := self newTrait: #T1 with: #(aSlot).
+
+self deny: t1 slots isEmpty.
 
 
 ]
