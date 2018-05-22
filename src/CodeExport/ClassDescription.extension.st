@@ -118,7 +118,7 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 
 	| preamble method |
 	preamble := self name, ' methodsFor: ', (self organization categoryOfElement: selector) asString printString.
-	method := self methodDict
+	method := methodDict
 		at: selector
 		ifAbsent: [ 
 			outStream

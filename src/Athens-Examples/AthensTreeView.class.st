@@ -17,7 +17,7 @@ Class {
 AthensTreeView class >> example1 [
 	AthensTreeView
 		openOn: Collection
-		extentBlock: [ :each | (5 + each instVarNames size) @ (5 + each methodDict size) ]
+		extentBlock: [ :each | (5 + each instVarNames size) @ (5 + each methods size) ]
 		childsBlock: [ :el | el subclasses ]
 ]
 

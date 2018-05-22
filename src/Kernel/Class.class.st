@@ -400,7 +400,7 @@ Class >> copy [
 	| newClass |
 	newClass := self class copy new
 		superclass: superclass;
-		methodDict: self methodDict copy;
+		methodDict: methodDict copy;
 		setFormat: format;
 		setName: name;
 		organization: self organization copy;

@@ -108,7 +108,7 @@ Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	receiver's method dictionary.
 	Do this without sending system change notifications"
 
-	self methodDict at: selector put: compiledMethod.
+	methodDict at: selector put: compiledMethod.
 	compiledMethod methodClass: self.
 	compiledMethod selector: selector
 ]
@@ -622,28 +622,28 @@ Behavior >> compiledMethodAt: selector [
 	Symbol), a message selector in the receiver's method dictionary. If the 
 	selector is not in the dictionary, create an error notification."
 
-	^ self methodDict at: selector
+	^ methodDict at: selector
 ]
 
 { #category : #'accessing method dictionary' }
 Behavior >> compiledMethodAt: selector ifAbsent: aBlock [
 	"Answer the compiled method associated with the argument, selector (a Symbol), a message selector in the receiver's method dictionary. If the selector is not in the dictionary, return the value of aBlock"
 
-	^ self methodDict at: selector ifAbsent: aBlock
+	^ methodDict at: selector ifAbsent: aBlock
 ]
 
 { #category : #'accessing method dictionary' }
 Behavior >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlock [
 	"Answer the compiled method associated with the argument, selector (a Symbol), a message selector in the receiver's method dictionary. If the selector is not in the dictionary, return the value of aBlock"
 
-	^ self methodDict at: selector ifPresent: anotherBlock ifAbsent: aBlock
+	^ methodDict at: selector ifPresent: anotherBlock ifAbsent: aBlock
 ]
 
 { #category : #'accessing method dictionary' }
 Behavior >> compress [
 	"Compact the method dictionary of the receiver."
 
-	self methodDict rehash
+	methodDict rehash
 ]
 
 { #category : #queries }
@@ -689,13 +689,6 @@ Behavior >> copiesMethodsFromSuperclass [
 		(self copiesFromSuperclass: method)
 			ifTrue: [ ^ true ]].
 	^ false
-]
-
-{ #category : #copying }
-Behavior >> copyOfMethodDictionary [
-	"Return a copy of the receiver's method dictionary"
-
-	^ self methodDict copy
 ]
 
 { #category : #copying }
@@ -920,7 +913,7 @@ Behavior >> hasAbstractMethods [
 Behavior >> hasMethods [
 	"Answer whether the receiver has any methods in its method dictionary."
 
-	^ self methodDict notEmpty
+	^ methodDict notEmpty
 ]
 
 { #category : #'testing method dictionary' }
@@ -950,7 +943,7 @@ Behavior >> includesMethod: aMethod [
 	"Answer whether aMethod is in the method dictionary. Use identityIncludes
 	as = of CompiledMethod is too weak (ignores the selector)"
 
-	^ self methodDict identityIncludes: aMethod
+	^ methodDict identityIncludes: aMethod
 ]
 
 { #category : #'testing method dictionary' }
@@ -958,7 +951,7 @@ Behavior >> includesSelector: aSymbol [
 	"Answer whether the message whose selector is the argument is in the 
 	method dictionary of the receiver's class."
 
-	^ self methodDict includesKey: aSymbol
+	^ methodDict includesKey: aSymbol
 ]
 
 { #category : #'accessing instances and variables' }
@@ -1406,7 +1399,7 @@ Behavior >> methodDictionary: aDictionary [
 { #category : #'accessing method dictionary' }
 Behavior >> methods [
 	
-	^ self methodDict values
+	^ methodDict values
 ]
 
 { #category : #queries }
@@ -1418,7 +1411,7 @@ Behavior >> methodsAccessingSlot: aSlot [
 Behavior >> methodsDo: aBlock [
 	"Evaluate aBlock for all the compiled methods in my method dictionary."
 
-	^ self methodDict valuesDo: aBlock
+	^ methodDict valuesDo: aBlock
 ]
 
 { #category : #queries }
@@ -1511,7 +1504,7 @@ Behavior >> obsoleteSubclasses [
 { #category : #copying }
 Behavior >> postCopy [
 	super postCopy.
-	self methodDict: self copyOfMethodDictionary
+	self methodDict: methodDict copy
 ]
 
 { #category : #'accessing method dictionary' }
@@ -1628,7 +1621,7 @@ Behavior >> removeProperty: propName ifAbsent: aBlock [
 Behavior >> removeSelector: aSelector [
 	"Assuming that the argument, selector (a Symbol), is a message selector in my method dictionary, remove it and its method."
 
-	self methodDict removeKey: aSelector ifAbsent: []
+	methodDict removeKey: aSelector ifAbsent: []
 ]
 
 { #category : #'adding/removing methods' }
@@ -1676,21 +1669,21 @@ Behavior >> selectors [
 	"Answer a Set of all the message selectors specified in the receiver's 
 	method dictionary."
 
-	^ self methodDict keys
+	^ methodDict keys
 ]
 
 { #category : #'accessing method dictionary' }
 Behavior >> selectorsAndMethodsDo: selectorAndMethodBlock [
 	"Evaluate selectorAndMethodBlock with two arguments for each selector/method pair in my method dictionary."
 
-	^ self methodDict keysAndValuesDo: selectorAndMethodBlock
+	^ methodDict keysAndValuesDo: selectorAndMethodBlock
 ]
 
 { #category : #'accessing method dictionary' }
 Behavior >> selectorsDo: selectorBlock [
 	"Evaluate selectorBlock for all the message selectors in my method dictionary."
 
-	^ self methodDict keysDo: selectorBlock
+	^ methodDict keysDo: selectorBlock
 ]
 
 { #category : #'accessing method dictionary' }
