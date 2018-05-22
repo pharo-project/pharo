@@ -185,7 +185,7 @@ ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
 
 { #category : #'archive operations' }
 ZipArchive >> extractAllTo: aDirectory overwrite: overwriteAll [
-	"Extracts all elements to the given directory, overwriting existing entries if necessary. Does not use UI for confirmation"
+	"Extracts all elements to the given directory, overwriting existing entries if necessary. Does not use the UI for confirmation"
 
 	self members do: [ :entry | entry extractInDirectory: aDirectory withoutInformingOverwrite: overwriteAll ]
 ]
