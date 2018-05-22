@@ -17,6 +17,11 @@ ExternalData >> asInteger [
 ]
 
 { #category : #'*UnifiedFFI' }
+ExternalData >> beNull [
+	^ self getHandle beNull
+]
+
+{ #category : #'*UnifiedFFI' }
 ExternalData >> copyFrom: start to: stop [
 	^ self getHandle copyFrom: start to: stop
 ]
