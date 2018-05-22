@@ -24,7 +24,7 @@ Class {
 		'showClassSide',
 		'model'
 	],
-	#category : #'Tool-ExternalBrowser'
+	#category : #'Tool-ExternalBrowser-Browsers'
 }
 
 { #category : #'public access' }
@@ -52,16 +52,23 @@ ExternalBrowser class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #examples }
+ExternalBrowser class >> example [
+	<example>
+
+	self openOn: Smalltalk image
+]
+
 { #category : #'System-FileRegistry' }
 ExternalBrowser class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 
-	^ (#('st' 'cs') includes: suffix)
+	^ (self sourceFileSuffixes includes: suffix)
 		ifTrue: [ Array with: self serviceBrowseCode]
-		ifFalse: [ #() ].
+		ifFalse: [ #() ]
 ]
 
-{ #category : #specs }
+{ #category : #'instance creation' }
 ExternalBrowser class >> openOn: model [
 
 	self basicNew
@@ -88,6 +95,14 @@ ExternalBrowser class >> services [
 	"Answer potential file services associated with this class"
 
 	^ {self serviceBrowseCode}.
+]
+
+{ #category : #'System-FileRegistry' }
+ExternalBrowser class >> sourceFileSuffixes [
+
+	^#('st' 'cs')
+
+
 ]
 
 { #category : #accessing }
