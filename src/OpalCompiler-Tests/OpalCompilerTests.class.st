@@ -18,7 +18,7 @@ OpalCompilerTests >> testBindingsWriteGlobals [
 	| result |
 	result := Smalltalk compiler
 		 bindings: {(#Object -> Point)} asDictionary;
-       evaluate: 'Object := 42. Object'.
+       evaluate: 'Object := 42'.
 	self assert: result equals: 42.
 ]
 

@@ -352,7 +352,7 @@ CompilationContext >> bindings [
 CompilationContext >> bindings: aDictionay [
 	"binding are LiteralVariables, not simple Associations"
 	bindings := (aDictionay associations
-		collect: [ :each | LiteralVariable key: each key value: each value ]) asDictionary
+		collect: [ :each | AdditionalBinding key: each key value: each value ]) asDictionary
 ]
 
 { #category : #accessing }
