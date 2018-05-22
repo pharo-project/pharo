@@ -10,8 +10,7 @@ Class {
 	],
 	#classVars : [
 		'CurrentFS',
-		'DefaultWorkingDirectory',
-		'Primitives'
+		'DefaultWorkingDirectory'
 	],
 	#category : #'FileSystem-Disk-Store'
 }
@@ -66,14 +65,13 @@ DiskStore class >> delimiter [
 
 { #category : #'class initialization' }
 DiskStore class >> initialize [
-	self useFilePlugin.
 	SessionManager default
 		registerSystemClassNamed: self name
 ]
 
 { #category : #current }
 DiskStore class >> isActiveClass [
-	^ self delimiter = Primitives delimiter
+	^ self delimiter = File delimiter
 ]
 
 { #category : #public }
@@ -101,11 +99,6 @@ DiskStore class >> startUp: resuming [
 	DefaultWorkingDirectory := self defaultWorkingDirectory.
 ]
 
-{ #category : #'class initialization' }
-DiskStore class >> useFilePlugin [
-	Primitives := FilePluginPrims new
-]
-
 { #category : #comparing }
 DiskStore >> = other [
 	^ self species = other species
@@ -128,26 +121,26 @@ DiskStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
 		
 	index := 1.
 	pathString := self stringFromPath: aPath.
-	encodedPathString := Primitives encode: pathString.
-	entry := Primitives lookupEntryIn: encodedPathString index: index.
+	encodedPathString := File encodePathString: pathString.
+	entry := File lookupEntryIn: encodedPathString index: index.
 	entry = #badDirectoryPath ifTrue: [ ^ self signalDirectoryDoesNotExist: aPath ].
 	
 	[ entry isNil ]
 		whileFalse: [ 
-			entry at: 1 put: (Primitives decode: entry first).
+			entry at: 1 put: (File decodePathString: entry first).
 			aBlock value: entry.
 			index := index + 1.
-			entry := Primitives lookupEntryIn: encodedPathString index: index ].
+			entry := File lookupEntryIn: encodedPathString index: index ].
 ]
 
 { #category : #public }
 DiskStore >> basicEntryAt: aPath [
 	| encodedPath encodedBasename |
 	
-	encodedPath := Primitives encode: (self stringFromPath: aPath parent).
-	encodedBasename := Primitives encode: aPath basename.
+	encodedPath := File encodePathString: (self stringFromPath: aPath parent).
+	encodedBasename := File encodePathString: aPath basename.
 	
-	^ (Primitives lookupDirectory: encodedPath filename: encodedBasename)
+	^ (File lookupDirectory: encodedPath filename: encodedBasename)
 		ifNil: [ #badDirectoryPath ].
 	
 ]
@@ -179,8 +172,8 @@ DiskStore >> basicModificationTimeOf: anEntry [
 DiskStore >> basicOpen: aPath writable: aBoolean [
 	| string encoded |
 	string := self stringFromPath: aPath.
-	encoded := Primitives encode: string.
-	^ Primitives open: encoded writable: aBoolean
+	encoded := File encodePathString: string.
+	^ File open: encoded writable: aBoolean
 ]
 
 { #category : #private }
@@ -218,8 +211,8 @@ DiskStore >> createDirectory: path [
 
 	| parent encodedPathString pathString result |
 	pathString := self stringFromPath: path.
-	encodedPathString := Primitives encode: pathString.
-	result := Primitives createDirectory: encodedPathString.
+	encodedPathString := File encodePathString: pathString.
+	result := File createDirectory: encodedPathString.
 	result
 		ifNil: [ 
 			parent := path parent.
@@ -250,10 +243,10 @@ DiskStore >> delete: path [
 		ifFalse: [ ^ FileDoesNotExist signalWith: path ].
 		
 	pathString := self stringFromPath: path.
-	encodedPathString := Primitives encode: pathString.
+	encodedPathString := File encodePathString: pathString.
 	
 	(self isDirectory: path)
-		ifTrue: [ Primitives deleteDirectory: encodedPathString ]
+		ifTrue: [ File deleteDirectory: encodedPathString ]
 		ifFalse: [ 
 			(File named: pathString) delete ]
 ]
@@ -318,7 +311,7 @@ DiskStore >> isReadable: aPath [
 	self flag: 'TODO: we need a decent primitive for this...'.
 	(self basicOpen: aPath writable: false) 
 		ifNotNil: [ :id|
-			Primitives close: id.
+			File close: id.
 			^ true].
 	^ false
 ]
@@ -343,7 +336,7 @@ DiskStore >> isWritable: aPath [
 	self flag: 'TODO: we need a decent primitive for this...'.
 	(self basicOpen: aPath writable: true) 
 		ifNotNil: [ :id|
-			Primitives close: id.
+			File close: id.
 			^ true].
 	^ false
 ]
@@ -384,10 +377,10 @@ DiskStore >> rename: sourcePath to: destinationPath [
 
 	| sourcePathString encodedSourcePathString targetPathString encodedTargetPathString |
 	sourcePathString := self stringFromPath: sourcePath.
-	encodedSourcePathString := Primitives encode: sourcePathString.
+	encodedSourcePathString := File encodePathString: sourcePathString.
 	targetPathString := self stringFromPath: destinationPath.
-	encodedTargetPathString := Primitives encode: targetPathString.
-	^ Primitives rename: encodedSourcePathString to: encodedTargetPathString.
+	encodedTargetPathString := File encodePathString: targetPathString.
+	^ File rename: encodedSourcePathString to: encodedTargetPathString.
 ]
 
 { #category : #private }

@@ -43,6 +43,26 @@ ShClassInstallerTest >> tearDown [
 ]
 
 { #category : #tests }
+ShClassInstallerTest >> testChangingHierarchy [
+
+	"Testing that the changes in the superclasses are propagated to the subclasses"
+
+	superClass := self newClass:#ShCITestClass1 slots:#().
+	newClass := self newClass:#ShCITestClass2 superclass: superClass slots:#(aSlot).
+
+	self assert: newClass classLayout slotScope parentScope equals: superClass classLayout slotScope.
+
+	superClass2 := self newClass:#ShCITestClass0 slots:#(anotherSlot).
+	superClass := self newClass:#ShCITestClass1 superclass: superClass2 slots:#().
+	
+	self assert: newClass classLayout slotScope parentScope equals: superClass classLayout slotScope.
+	self assert: superClass classLayout slotScope parentScope equals: superClass2 classLayout slotScope.
+	
+	self assertCollection: (newClass allSlots collect: #name) hasSameElements: #(aSlot anotherSlot)
+
+]
+
+{ #category : #tests }
 ShClassInstallerTest >> testChangingSuperclassInTheHierarchy [
 
 	superClass := self newClass:#ShCITestClass slots:#(var1 var2).

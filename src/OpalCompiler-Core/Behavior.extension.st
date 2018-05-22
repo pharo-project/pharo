@@ -27,7 +27,7 @@ Behavior >> compile: code notifying: requestor [
 		
 	method putSource: code
 			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Behavior method'; cr].
-	self addSelector: method selector withMethod: method notifying: requestor.
+	self addSelector: method selector withMethod: method.
 	^ method selector
 ]
 
@@ -90,7 +90,7 @@ Behavior >> recompile: selector from: oldClass [
 				compiledMethodTrailer: method trailer;
 				compile.   "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
-	self basicAddSelector: selector withMethod: newMethod.
+	self addSelectorSilently: selector withMethod: newMethod.
 ]
 
 { #category : #'*OpalCompiler-Core' }

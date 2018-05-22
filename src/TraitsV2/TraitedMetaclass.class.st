@@ -39,9 +39,9 @@ TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod 
 ]
 
 { #category : #'accessing method dictionary' }
-TraitedMetaclass >> addSelector: selector withMethod: compiledMethod notifying: requestor [
+TraitedMetaclass >> addSelector: selector withMethod: compiledMethod [
 	self localMethodDict at: selector put: compiledMethod.
-	super addSelector: selector withMethod: compiledMethod notifying: requestor.
+	super addSelector: selector withMethod: compiledMethod.
 	TraitChange addSelector: selector on: self
 ]
 

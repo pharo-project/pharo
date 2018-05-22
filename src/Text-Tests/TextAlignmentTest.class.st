@@ -4,7 +4,7 @@ SUnit tests for class TextAlignment
 Class {
 	#name : #TextAlignmentTest,
 	#superclass : #HashAndEqualsTestCase,
-	#category : #'Text-Tests'
+	#category : #'Text-Tests-Base'
 }
 
 { #category : #running }

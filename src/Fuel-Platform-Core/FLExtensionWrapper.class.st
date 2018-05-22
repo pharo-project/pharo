@@ -7,7 +7,7 @@ Class {
 		'selector',
 		'isSource'
 	],
-	#category : 'Fuel-Platform-Core'
+	#category : #'Fuel-Platform-Core'
 }
 
 { #category : #'instance creation' }
@@ -149,8 +149,7 @@ FLExtensionWrapper >> renameAndCompileInTarget [
 		selector: self selector.
 	self targetClass
 		addSelector: self selector
-		withMethod: newMethod
-		notifying: nil.
+		withMethod: newMethod.
 	self targetClass organization
 		classify: self selector
 		under: self extensionProtocolName

@@ -80,3 +80,10 @@ ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables 
 		declareClassVariables: sharedVariables;
 		sharing: sharedPoolsString
 ]
+
+{ #category : #'class modifications' }
+ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: installer [
+	
+	newClass subclasses do: [ :e | installer remake: e ].
+
+]

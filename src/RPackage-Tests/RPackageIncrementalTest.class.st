@@ -22,26 +22,26 @@ Class {
 	#category : #'RPackage-Tests'
 }
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageIncrementalTest >> p1Name [
 	^ 'RPackageTestP1'
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageIncrementalTest >> p2Name [
 	^ 'RPackageTestP2'
 
 
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageIncrementalTest >> p3Name [
 	^ 'RPackageTestP3'
 
 
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RPackageIncrementalTest >> removeClassNamedIfExists: aClassNameSymbol [
 	Smalltalk at: aClassNameSymbol asSymbol ifPresent: [:c| c removeFromSystem]
 ]

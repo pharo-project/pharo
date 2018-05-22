@@ -214,5 +214,6 @@ LiteralVariable >> usingMethods [
 
 { #category : #'meta-object-protocol' }
 LiteralVariable >> write: anObject [
-	^self value: anObject
+	self value: anObject.
+	^anObject
 ]

@@ -335,13 +335,13 @@ StartupPreferencesLoader >> loadFromDefaultLocations [
 		do: [ :ex | ex return ]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 StartupPreferencesLoader >> preferencesGeneralFolder [
 
 	^ self class preferencesGeneralFolder.
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 StartupPreferencesLoader >> preferencesVersionFolder [
 
 	^ self class preferencesVersionFolder.

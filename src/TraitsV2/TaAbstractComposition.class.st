@@ -153,7 +153,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 		newMethod putSource: sourceCode
 				withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
 		
-	aClass basicAddSelector: selector withMethod: newMethod.
+	aClass addSelectorSilently: selector withMethod: newMethod.
 
 	aClass organization protocolOrganizer
 		classify: selector
@@ -215,7 +215,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 		newMethod putSource: source
 			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
 
-	aClass basicAddSelector: aSelector withMethod: newMethod.
+	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
 	aClass organization protocolOrganizer
 		classify: aSelector

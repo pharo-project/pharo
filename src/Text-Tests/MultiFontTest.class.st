@@ -1,3 +1,6 @@
+"
+Test for internationalized fonts
+"
 Class {
 	#name : #MultiFontTest,
 	#superclass : #TestCase,

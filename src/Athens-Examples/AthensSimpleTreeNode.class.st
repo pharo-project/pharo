@@ -10,7 +10,6 @@ Class {
 		'subject',
 		'extent',
 		'layoutWidth',
-		'childsHeight',
 		'originX',
 		'originY',
 		'color'
