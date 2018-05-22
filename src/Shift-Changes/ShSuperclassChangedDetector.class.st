@@ -3,7 +3,7 @@ I detect if there is a change in the superclass
 "
 Class {
 	#name : #ShSuperclassChangedDetector,
-	#superclass : #ShAbstractClassChangeDetector,
+	#superclass : #ShAbstractInstanceSideClassChangeDetector,
 	#category : #'Shift-Changes'
 }
 
