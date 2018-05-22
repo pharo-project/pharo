@@ -4,7 +4,7 @@ Tests for BIConfigurableFormatter
 Class {
 	#name : #BIConfigurableFormatterFormattingTest,
 	#superclass : #RBFormatterTest,
-	#category : #'BlueInk-Tests'
+	#category : #'BlueInk-Tests-Base'
 }
 
 { #category : #testing }

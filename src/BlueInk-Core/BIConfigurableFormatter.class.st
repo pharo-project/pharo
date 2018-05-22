@@ -26,7 +26,7 @@ Class {
 		'DefaultPrettyPrintContext',
 		'FormatAsYouReadPolicy'
 	],
-	#category : #'BlueInk-Core'
+	#category : #'BlueInk-Core-Base'
 }
 
 { #category : #private }
