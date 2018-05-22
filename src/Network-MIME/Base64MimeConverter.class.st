@@ -82,7 +82,7 @@ Base64MimeConverter class >> initialize [
 { #category : #encoding }
 Base64MimeConverter class >> mimeDecodeToBytes: aStream [ 
 
-	self deprecated: 'Please use #base64Decoded now. See issue #219337'.
+	self deprecated: 'Please use #base64Decoded now. See issue #21937'.
 	
 	^aStream contents base64Decoded readStream 
 ]
