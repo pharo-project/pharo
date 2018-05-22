@@ -3,7 +3,7 @@ Extension { #name : #Behavior }
 { #category : #'*Ring-Deprecated-Core-Kernel' }
 Behavior >> methodNamed: aSelector [
 
-	^ self methodDict at: aSelector
+	^ methodDict at: aSelector
 ]
 
 { #category : #'*Ring-Deprecated-Core-Kernel' }
