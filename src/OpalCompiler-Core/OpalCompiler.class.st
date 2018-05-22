@@ -59,19 +59,23 @@ OpalCompiler class >> debuggerMethodMapForMethod: aMethod [
 ]
 
 { #category : #'old - deprecated' }
-OpalCompiler class >> evaluate: textOrString [ 
-	
-	^self new
+OpalCompiler class >> evaluate: textOrString [
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith: '`@receiver evaluate: `@statements1 ' -> '`@receiver new source: `@statements1; evaluate'.
+	^ self new
 		source: textOrString;
 		evaluate
 ]
 
 { #category : #'old - deprecated' }
-OpalCompiler class >> evaluate: textOrString for: anObject logged: logFlag [ 
-	"See Compiler|evaluate:for:notifying:logged:. If a compilation error occurs, 
-	a Syntax Error view is created rather than notifying any requestor."
-
-	^self new
+OpalCompiler class >> evaluate: textOrString for: anObject logged: logFlag [
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver evaluate: `@statements1 for: `@statements2 logged: `@statements3 '
+				-> '`@receiver new source: `@statements1; logged: `@statements3; receiver: `@statements2; evaluate.'.
+	^ self new
 		source: textOrString;
 		logged: logFlag;
 		receiver: anObject;
@@ -80,58 +84,56 @@ OpalCompiler class >> evaluate: textOrString for: anObject logged: logFlag [
 
 { #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString for: anObject notifying: aController logged: logFlag [
-	"Compile and execute the argument, textOrString with respect to the class 
-	of anObject. If a compilation error occurs, notify aController. If both 
-	compilation and execution are successful then, if logFlag is true, log 
-	(write) the text onto a system changes file so that it can be replayed if 
-	necessary."
-
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver evaluate: `@statements1 for: `@statements2 notifying: `@statements3 logged: `@statements4'
+				-> '`@receiver new source: `@statements1; logged: `@statements4; receiver: `@statements2; requestor: `@statements3; evaluate'.
 	^ self new
 		source: textOrString;
 		logged: logFlag;
 		receiver: anObject;
 		requestor: aController;
 		evaluate
-	
-			
 ]
 
 { #category : #'old - deprecated' }
-OpalCompiler class >> evaluate: textOrString logged: logFlag [ 
-	"See Compiler|evaluate:for:notifying:logged:. If a compilation error occurs, 
-	a Syntax Error view is created rather than notifying any requestor. 
-	Compilation is carried out with respect to nil, i.e., no object."
-
+OpalCompiler class >> evaluate: textOrString logged: logFlag [
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith: '`@receiver evaluate: `@statements1 logged: `@statements2 ' -> '`@receiver new source: `@statements1; logged: `@statements2; evaluate.'.
 	^ self new
 		source: textOrString;
 		logged: logFlag;
 		evaluate
-	
-			
 ]
 
 { #category : #'old - deprecated' }
-OpalCompiler class >> evaluate: textOrString notifying: aController logged: logFlag [ 
-	"See Compiler|evaluate:for:notifying:logged:. Compilation is carried out 
-	with respect to nil, i.e., no object."
-
+OpalCompiler class >> evaluate: textOrString notifying: aController logged: logFlag [
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver evaluate: `@statements1 notifying: `@statements2 logged: `@statements3'
+				-> '`@receiver new source: `@statements1; logged: `@statements3; requestor: `@statements2; evaluate'.
 	^ self new
 		source: textOrString;
 		logged: logFlag;
 		requestor: aController;
 		evaluate
-	
-			
 ]
 
 { #category : #'old - deprecated' }
 OpalCompiler class >> format: textOrStream in: aClass notifying: aRequestor [
-	^self new
+	self
+		deprecated: 'Please use new compiler API instead'
+		transformWith:
+			'`@receiver format: `@statements1 in: `@statements2 notifying: `@statements3'
+				-> '`@receiver new source: `@statements1; class: `@statements2; requestor: `@statements3; format'.
+	^ self new
 		source: textOrStream;
 		class: aClass;
 		requestor: aRequestor;
 		format
-		
 ]
 
 { #category : #public }
