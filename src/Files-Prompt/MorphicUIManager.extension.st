@@ -7,9 +7,9 @@ MorphicUIManager >> fileDoesNotExistUserHandling: anException [
 	filename := anException fileName.
 	selection := self
 		chooseFrom:
-			{('create a new file' translated).
-			('choose another name' translated).
-			('cancel' translated)}
+			{('Force recursive file creation' translated).
+			('Choose another file name' translated).
+			('Cancel' translated)}
 		title: filename, ' does not exist.'.
 		
 	"If user presses escape, selection will be 0.
@@ -17,9 +17,12 @@ MorphicUIManager >> fileDoesNotExistUserHandling: anException [
 	(#( 0 3 ) includes: selection) ifTrue:[
 		Abort signal: 'Please close this to abort file opening' ].
 	
-	"Create a new file"
+	"Create a new file.
+	We depend on FileSystem here to recursively create the directory for the file."
 	selection = 1
-		ifTrue: [ ^ File openForWriteFileNamed: filename ].
+		ifTrue: [
+			filename asFileReference ensureCreateFile.
+			^ File openForWriteFileNamed: filename ].
 		
 	"Create a new file"
 	newName := self request: 'Enter a new file name' initialAnswer: filename.
@@ -70,7 +73,7 @@ MorphicUIManager >> readOnlyFileDoesNotExistUserHandling: anException [
 	files := directory fileNames.
 	
 	choices := filename correctAgainst: files.
-	choices add: 'Choose another name'.
+	choices add: 'Choose another file name'.
 	choices add: 'Cancel'.
 	
 	selection := self chooseFrom: choices lines: (Array with: 5)
