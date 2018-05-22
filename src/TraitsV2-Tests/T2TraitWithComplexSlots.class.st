@@ -63,6 +63,29 @@ T2TraitWithComplexSlots >> testTraitWithComplexSlot [
 ]
 
 { #category : #'instance creation' }
+T2TraitWithComplexSlots >> testTraitWithComplexSlotAfter [
+	| t1 c1 obj |
+	
+	self createSlotClass.
+	t1 := self newTrait: #T1 with: {}. 
+	c1 := self newClass: #C1 with: { #aSlot. } uses: {t1}.
+
+	c1 compile: 'initialize
+		aSlot := 0'.
+
+	t1 := self newTrait: #T1 with: { #otherSlot => (slotClass associatedSlotName: #aSlot) }. 
+
+	c1 compile: 'doSomething
+		otherSlot := ''a'''.
+	
+	obj := c1 new.
+	self assert: (obj instVarNamed: #aSlot) equals: 0.
+	obj doSomething.
+	self assert: (obj instVarNamed: #aSlot) equals: 1.
+
+]
+
+{ #category : #'instance creation' }
 T2TraitWithComplexSlots >> testTraitWithComplexSlotInSuperclass [
 	| t1 c1 c2 obj |
 	
@@ -77,6 +100,28 @@ T2TraitWithComplexSlots >> testTraitWithComplexSlotInSuperclass [
 		otherSlot := ''a'''.
 	
 	obj := c2 new.
+	self assert: (obj instVarNamed: #aSlot) equals: 0.
+	obj doSomething.
+	self assert: (obj instVarNamed: #aSlot) equals: 1.
+
+]
+
+{ #category : #'instance creation' }
+T2TraitWithComplexSlots >> testTraitWithComplexSlotUpdatedAfter [
+	| t1 c1 obj |
+	
+	self createSlotClass.
+	t1 := self newTrait: #T1 with: {}. 
+	c1 := self newClass: #C1 with: { #aSlot. } uses: {t1}.
+
+	t1 := self newTrait: #T1 with: { #otherSlot => (slotClass associatedSlotName: #aSlot) }. 
+
+	c1 compile: 'initialize
+		aSlot := 0'.
+	c1 compile: 'doSomething
+		otherSlot := ''a'''.
+	
+	obj := c1 new.
 	self assert: (obj instVarNamed: #aSlot) equals: 0.
 	obj doSomething.
 	self assert: (obj instVarNamed: #aSlot) equals: 1.
