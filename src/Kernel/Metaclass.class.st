@@ -14,9 +14,7 @@ Class {
 	#name : #Metaclass,
 	#superclass : #ClassDescription,
 	#instVars : [
-		'thisClass',
-		'traitComposition',
-		'localSelectors'
+		'thisClass'
 	],
 	#category : #'Kernel-Classes'
 }
