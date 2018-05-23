@@ -123,7 +123,7 @@ ZipArchive >> close [
 
 { #category : #'archive operations' }
 ZipArchive >> extractAllTo: aDirectory [
-	"Extract all elements to the given directory"
+	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
 	UIManager default
 		informUserDuring: [ :bar | 
@@ -133,7 +133,7 @@ ZipArchive >> extractAllTo: aDirectory [
 
 { #category : #'archive operations' }
 ZipArchive >> extractAllTo: aDirectory informing: bar [
-	"Extract all elements to the given directory"
+	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
 	^ self extractAllTo: aDirectory informing: bar overwrite: false
 ]
