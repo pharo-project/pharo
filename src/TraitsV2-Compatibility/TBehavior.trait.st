@@ -624,13 +624,6 @@ TBehavior >> copiesMethodsFromSuperclass [
 ]
 
 { #category : #copying }
-TBehavior >> copyOfMethodDictionary [
-	"Return a copy of the receiver's method dictionary"
-
-	^ self methodDict copy
-]
-
-{ #category : #copying }
 TBehavior >> deepCopy [
 	"Classes should only be shallowCopied or made anew."
 
@@ -1395,7 +1388,7 @@ TBehavior >> obsoleteSubclasses [
 { #category : #copying }
 TBehavior >> postCopy [
 	super postCopy.
-	self methodDict: self copyOfMethodDictionary
+	self methodDict: self methodDict copy
 ]
 
 { #category : #'accessing method dictionary' }

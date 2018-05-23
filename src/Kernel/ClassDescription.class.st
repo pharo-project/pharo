@@ -565,14 +565,6 @@ ClassDescription >> copyCategory: cat from: aClass classified: newCat [
 		classified: newCat
 ]
 
-{ #category : #copying }
-ClassDescription >> copyMethodDictionaryFrom: donorClass [
-	"Copy the method dictionary of the donor class over to the receiver"
-
-	self methodDict: donorClass copyOfMethodDictionary.
-	self organization: donorClass organization deepCopy.
-]
-
 { #category : #'filein/out' }
 ClassDescription >> definition [
 	"Answer a String that defines the receiver."
