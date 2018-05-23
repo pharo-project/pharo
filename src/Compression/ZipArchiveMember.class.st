@@ -431,7 +431,7 @@ ZipArchiveMember >> extractTo: aStream from: start to: finish [
 	self endRead.
 ]
 
-{ #category : #'extraction-private' }
+{ #category : #'private-extraction' }
 ZipArchiveMember >> extractToFile: aFile informingOverwrite: shouldOverwrite onSuccess: successBlock onRetryWithOverwrite: retryWithOverwriteBlock onFailedOverwrite: failedBlock onAbortOverwrite: abortBlock [
 	"Extract this entry into the given file. Answer successBlock or call one of the other action blocks."
 
