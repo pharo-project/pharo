@@ -604,7 +604,7 @@ CompilationContext >> requestorScopeClass: anObject [
 CompilationContext >> scope [
 	| newScope |
 
-	newScope := newScope:= (OCEnvironmentScope for: self environment) newClassScope: self getClass.
+	newScope := (OCEnvironmentScope for: self environment) newClassScope: self getClass.
 	requestor ifNotNil: [
 		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"  
 		newScope := (self requestorScopeClass new
