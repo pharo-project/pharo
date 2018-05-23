@@ -1282,7 +1282,6 @@ Class >> usesClassVarNamed: aString [
 Class >> usesLocalPoolVarNamed: aString [
 	"Return whether the receiver uses a pool variable named: aString which is defined locally"
 
-	self hasSharedPools ifFalse: [ ^ false ].
 	^ self sharedPools anySatisfy: [ :each | each usesClassVarNamed: aString ]
 ]
 
