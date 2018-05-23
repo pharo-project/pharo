@@ -26,11 +26,15 @@ In order to propose a bug fix or enhancement for Pharo you need:
 
 #### Pharo 70 and git
 
-Since Pharo 70 alpha, Pharo is managed with git and hosted on github. To submit a fix we suggest
+Since Pharo 70 alpha, Pharo is managed with git and hosted on github. To submit a fix we suggest:
 
 - make sure that you use the latest image
 - do a Pull request in the development branch. For a full description, see [here](https://github.com/pharo-project/pharo/wiki/Contribute-a-fix-to-Pharo).
 - Watch the video from the [Pharo TechTalk February 2018](https://www.youtube.com/watch?v=VW7XrFjnbyw) for a step by step tutorial.
+
+**_IMPORTANT NOTICE_**: A new version of [Iceberg](https://github.com/pharo-vcs/iceberg) (the VCS git tool used in Pharo) is being developed to improve our workflow. Pharo Images downloaded since May/2018 contain this newer version and in this case please follow these slightly different instructions:
+- rebind your repository to a local clone fork, make your changes, commit, push, and then make a Pull request. For a full description, read [this description](https://github.com/pharo-vcs/iceberg/wiki/Contribute-to-Pharo-with-Iceberg-0.7.3).
+- Watch the video from the [Pharo TechTalk February 2018](https://www.youtube.com/watch?v=PK2yCu2rWCc) for a step by step tutorial.
 
 #### Old Procedure (for pre git for Pharo versions: 40, 50, 60)
 
