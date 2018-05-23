@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #testing }
+ShInstanceShapeChanged >> hasChangeInstanceSideShape [
+	^ true.
+]
+
+{ #category : #testing }
 ShInstanceShapeChanged >> hasToMigrateInstances [
 	^ true.
 ]
