@@ -173,6 +173,12 @@ Metaclass >> initializeFrom: anotherClassTrait [
 	self basicOrganization: self organization copy.
 ]
 
+{ #category : #compiling }
+Metaclass >> innerBindingOf: varName [
+
+	^self instanceSide innerBindingOf: varName
+]
+
 { #category : #'accessing parallel hierarchy' }
 Metaclass >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
