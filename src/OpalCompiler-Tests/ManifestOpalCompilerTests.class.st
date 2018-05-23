@@ -1,7 +1,7 @@
 Class {
 	#name : #ManifestOpalCompilerTests,
 	#superclass : #PackageManifest,
-	#category : #'OpalCompiler-Tests'
+	#category : #'OpalCompiler-Tests-Manifest'
 }
 
 { #category : #'code-critics' }
