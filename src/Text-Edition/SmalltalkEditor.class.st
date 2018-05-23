@@ -200,41 +200,41 @@ SmalltalkEditor class >> smalltalkEditorMenuOn: aBuilder [
 
 { #category : #'menu declaration' }
 SmalltalkEditor class >> smalltalkEditorShiftedMenuOn: aBuilder [ 
-	"Specify the menu used when writing code. Try it with:
-	(PragmaMenuBuilder 
-		pragmaKeyword: 'smalltalkEditorShiftedMenu'
-		model: nil) menu popUpInWorld"
+	"Specify the menu used when writing code. Try it with:"
+	
+	<script: '(PragmaMenuBuilder 
+		pragmaKeyword: ''smalltalkEditorShiftedMenu''
+		model: nil) menu popUpInWorld'>
 
 	<contextMenu>
 	<smalltalkEditorShiftedMenu>
 
-	(aBuilder item: #'browse it' translated) 
+	(aBuilder item: #'Browse it' translated) 
 		keyText: 'b';
 		selector: #browseIt.
-	(aBuilder item: #'senders of it' translated) 
+	(aBuilder item: #'Senders of it' translated) 
 		keyText: 'n';
 		selector: #sendersOfIt.
-	(aBuilder item: #'implementors of it' translated) 
+	(aBuilder item: #'Implementors of it' translated) 
 		keyText: 'm';
 		selector: #implementorsOfIt.
-	(aBuilder item: #'references to it' translated) 
+	(aBuilder item: #'References to it' translated) 
 		keyText: 'N';
 		selector: #referencesToIt; 
 		withSeparatorAfter.
-	(aBuilder item: #'selectors containing it' translated) 
+	(aBuilder item: #'Selectors containing it' translated) 
 		keyText: 'W';
 		selector: #methodNamesContainingIt.
-	(aBuilder item: #'method literal strings with it' translated) 
+	(aBuilder item: #'Method literal strings with it' translated) 
 		keyText: 'E';
 		selector: #methodStringsContainingit.
-	(aBuilder item: #'method source with it' translated) 
+	(aBuilder item: #'Method source with it' translated) 
 		selector: #methodSourceContainingIt; 
 		withSeparatorAfter.
-	(aBuilder item: #'class names containing it' translated) 
+	(aBuilder item: #'Class names containing it' translated) 
 		selector: #classNamesContainingIt.
-	(aBuilder item: #'class comments with it' translated) 
-		selector: #classCommentsContainingIt.
-
+	(aBuilder item: #'Class comments with it' translated) 
+		selector: #classCommentsContainingIt
 ]
 
 { #category : #'typing/selecting keys' }
