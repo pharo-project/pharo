@@ -1,3 +1,6 @@
+"
+Unit tests for File dialog window
+"
 Class {
 	#name : #FileDialogWindowTest,
 	#superclass : #TestCase,

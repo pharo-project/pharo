@@ -168,7 +168,11 @@ TraitBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: in
 
 	"If the newClass is a trait I have to remake the users of it"
 	newClass isTrait ifFalse: [ ^ self ].
-	newClass users do: [ :each | installer remake: each ]
+	(builder changes noneSatisfy: 
+		[ :each | each hasChangeClassSideShape or: [ each hasChangeInstanceSideShape  ] ]) 
+		ifTrue: [^self].
+
+	newClass users do: [ :each | installer remake: each instanceSide ]
 ]
 
 { #category : #accessing }

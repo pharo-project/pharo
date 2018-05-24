@@ -231,6 +231,11 @@ Path >> = other [
 ]
 
 { #category : #converting }
+Path >> asPath [
+	^ self
+]
+
+{ #category : #converting }
 Path >> asPathWith: anObject [
 	^ self
 ]

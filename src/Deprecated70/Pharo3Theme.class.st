@@ -22,6 +22,12 @@ Pharo3Theme class >> isAbstract [
 	^true
 ]
 
+{ #category : #testing }
+Pharo3Theme class >> isDeprecated [
+
+	^true
+]
+
 { #category : #accessing }
 Pharo3Theme class >> themeName [
 	^ 'Pharo3 (Obsolete)'

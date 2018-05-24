@@ -42,6 +42,11 @@ ShAbstractChange >> builder: anObject [
 ]
 
 { #category : #testing }
+ShAbstractChange >> hasChangeClassSideShape [
+	^ false.
+]
+
+{ #category : #testing }
 ShAbstractChange >> hasChangeInstanceSideShape [
 	^ false.
 ]
