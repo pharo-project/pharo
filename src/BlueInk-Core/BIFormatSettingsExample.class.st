@@ -4,7 +4,7 @@ Some examples of the action of a pretty printing option
 Class {
 	#name : #BIFormatSettingsExample,
 	#superclass : #Object,
-	#category : #'BlueInk-Core'
+	#category : #'BlueInk-Core-Examples'
 }
 
 { #category : #prettyPrintOptionRelated }
