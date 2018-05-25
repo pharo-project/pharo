@@ -5,7 +5,7 @@ CurrentImage new packages
 	=> all packages in the image sorted
 	
 
-THIS CLASS IS NOW DEPRECATED AND BSOLETE - please use 
+THIS CLASS IS NOW DEPRECATED AND OBSOLETE - please use 
 
   Smalltalk image packages 
 
