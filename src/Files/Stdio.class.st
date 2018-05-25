@@ -86,8 +86,15 @@ Stdio class >> stdout [
 	^ Stdout ifNil: [ Stdout := self standardIOStreamNamed: #stdout forWrite: true ].
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 Stdio class >> typeOfFileForStdio [
 	"Can be changed to MemoryFileSystemFile in order to not write on the disk"
 	^ TypeOfFileForStdio ifNil: [ TypeOfFileForStdio := File ]
+]
+
+{ #category : #accessing }
+Stdio class >> typeOfFileForStdio: aFileTypeClass [
+	"Can be changed to MemoryFileSystemFile in order to not write on the disk"
+
+	TypeOfFileForStdio := aFileTypeClass
 ]
