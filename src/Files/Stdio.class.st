@@ -18,7 +18,8 @@ Class {
 	#classVars : [
 		'Stderr',
 		'Stdin',
-		'Stdout'
+		'Stdout',
+		'TypeOfFileForStdio'
 	],
 	#category : #'Files-Core'
 }
@@ -27,6 +28,19 @@ Class {
 Stdio class >> cleanStdioHandles [
 
 	Stderr := Stdin := Stdout := nil
+]
+
+{ #category : #private }
+Stdio class >> createStdioFileFor: moniker [
+	^ [ (self typeOfFileForStdio named: moniker asString) writeStream ]
+		on: CannotDeleteFileException
+		do:
+			[ "HACK: if the image is opened a second time windows barks about the already opened locked file"
+			[ (self typeOfFileForStdio
+				named: moniker asString , '_' , (Random new nextInt: SmallInteger maxVal) asString)
+				writeStream ]
+				on: FileException
+				do: [ "Nothing, we do not have the rights to write and cannot suppose a dependency to the class MemoryFileSystemFile" ] ]
 ]
 
 { #category : #'initialize-release' }
@@ -40,16 +54,10 @@ Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 	"Create if necessary and store default stdin, stdout and other files based on the their names"
 
 	| handle |
-	"HACK kept for retrocompatibility"
 	([ File stdioDescriptorIsATTY not ]
 		on: PrimitiveFailed
-		do: [ :ex | Smalltalk os isWin32 ])
-		ifTrue: [ [ ^ (File named: moniker asString) writeStream ]
-				on: CannotDeleteFileException
-				do: [ "HACK: if the image is opened a second time windows barks about the already opened locked file"
-					[ ^ (File named: moniker asString , '_' , (Random new nextInt: SmallInteger maxVal) asString) writeStream ]
-						on: FileException
-						do: [ "Nothing, we do not have the rights to write" ] ] ].
+		do: [ :ex | "HACK kept for retrocompatibility" Smalltalk os isWin32 ])
+		ifTrue: [ ^ self createStdioFileFor: moniker ].
 	handle := File stdioHandles at: (#(stdin stdout stderr) identityIndexOf: moniker).
 	handle ifNil: [ self error: moniker , ' is unavailable' ].
 	^ StdioStream handle: handle file: (File named: moniker) forWrite: forWrite
@@ -76,4 +84,10 @@ Stdio class >> stdin [
 Stdio class >> stdout [
 
 	^ Stdout ifNil: [ Stdout := self standardIOStreamNamed: #stdout forWrite: true ].
+]
+
+{ #category : #private }
+Stdio class >> typeOfFileForStdio [
+	"Can be changed to MemoryFileSystemFile in order to not write on the disk"
+	^ TypeOfFileForStdio ifNil: [ TypeOfFileForStdio := File ]
 ]
