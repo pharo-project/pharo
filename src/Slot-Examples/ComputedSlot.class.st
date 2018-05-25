@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'block'
 	],
-	#category : #'Slot-Core-Examples'
+	#category : #'Slot-Examples-base'
 }
 
 { #category : #comparing }

@@ -8,7 +8,7 @@ The idea is that virtual slots can use hidden non-virtual slots to store their s
 Class {
 	#name : #HiddenInstanceVariableSlot,
 	#superclass : #InstanceVariableSlot,
-	#category : #'Slot-Core-Examples'
+	#category : #'Slot-Examples-base'
 }
 
 { #category : #testing }

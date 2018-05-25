@@ -11,7 +11,7 @@ setIvar: aMorph
 Class {
 	#name : #MorphSlot,
 	#superclass : #IndexedSlot,
-	#category : #'Slot-Core-Examples'
+	#category : #'Slot-Examples-base'
 }
 
 { #category : #'meta-object-protocol' }

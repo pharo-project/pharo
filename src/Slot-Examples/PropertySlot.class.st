@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'baseSlot'
 	],
-	#category : #'Slot-Core-Examples'
+	#category : #'Slot-Examples-base'
 }
 
 { #category : #'code generation' }

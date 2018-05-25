@@ -4,7 +4,7 @@ I'm an relation slot  that  describes the one or zero side of an association.
 Class {
 	#name : #ToOneRelationSlot,
 	#superclass : #RelationSlot,
-	#category : #'Slot-Core-Examples-Associations'
+	#category : #'Slot-Examples-Associations'
 }
 
 { #category : #testing }
