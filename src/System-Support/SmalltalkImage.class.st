@@ -449,7 +449,7 @@ SmalltalkImage >> compactClassesArray [
 { #category : #compiler }
 SmalltalkImage >> compiler [
 	^self compilerClass new
-		environment: self
+		environment: self globals
 ]
 
 { #category : #compiler }
