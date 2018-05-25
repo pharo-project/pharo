@@ -189,12 +189,12 @@ Class >> allClassVarNames [
 { #category : #'pool variables' }
 Class >> allSharedPools [
 	"Answer an ordered collection of the pools the receiver shares, including those defined  in the superclasses of the receiver."
-	| aSet | 
-	^self superclass == nil
-		ifTrue: [self sharedPools copy]
-		ifFalse: [aSet := self superclass allSharedPools.
-			aSet addAll: self sharedPools.
-			aSet]
+	
+	^self superclass
+		ifNil: [self sharedPools copy]
+		ifNotNil: [ | aSet |  
+			aSet := self superclass allSharedPools.
+			aSet addAll: self sharedPools; yourself]
 ]
 
 { #category : #'class variables' }
@@ -1037,14 +1037,11 @@ Class >> setName: aSymbol [
 { #category : #'pool variables' }
 Class >> sharedPoolOfVarNamed: aString [
 	"Returns the SharedPool or nil from which the pool variable named aString is coming from."
-	
-	 ^ self sharedPools 
-			detect: [:each | each usesClassVarNamed: aString ]
-			ifNone: [
-						self superclass == nil
-							ifTrue: [nil]
-							ifFalse: [self superclass sharedPoolOfVarNamed: aString]
-						]
+
+	^ self sharedPools
+		detect: [ :each | each usesClassVarNamed: aString ]
+		ifNone:
+			[ self superclass ifNil: [ nil ] ifNotNil: [ self superclass sharedPoolOfVarNamed: aString ] ]
 ]
 
 { #category : #'pool variables' }
@@ -1284,20 +1281,15 @@ Class >> usesClassVarNamed: aString [
 { #category : #'pool variables' }
 Class >> usesLocalPoolVarNamed: aString [
 	"Return whether the receiver uses a pool variable named: aString which is defined locally"
-	
-	self hasSharedPools
-		ifTrue: [ self sharedPools do: [:each | (each usesClassVarNamed: aString) 
-												ifTrue: [ ^true ]]]
-		ifFalse: [ ^false ].
-	^false
+
+	^ self sharedPools anySatisfy: [ :each | each usesClassVarNamed: aString ]
 ]
 
 { #category : #'pool variables' }
 Class >> usesPoolVarNamed: aString [
 	"Return whether the receiver has a pool variable named: aString, taking into account superclasses too"
 	
-	self allSharedPools do: [:each | (each usesClassVarNamed: aString) ifTrue: [^true]].
-	^false
+	^self allSharedPools anySatisfy: [:each | each usesClassVarNamed: aString]
 ]
 
 { #category : #'subclass creation - variableByte' }
