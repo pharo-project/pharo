@@ -843,6 +843,39 @@ OrderedCollectionTest >> testCollectFromTo [
 	self should: [c1 collect: [:each | each abs] from: 5 to: 2] raise: Error.
 ]
 
+{ #category : #tests }
+OrderedCollectionTest >> testCompact [
+	| collection |
+	collection := OrderedCollection new.
+	self assert: collection isEmpty.
+	self assert: collection capacity equals: 10.
+	collection compact.
+	self assert: collection capacity equals: 0.
+	
+	collection := OrderedCollection new.
+	collection add: 1.
+	collection compact.
+	self assert: collection capacity equals: 1.
+	
+	collection := OrderedCollection new.
+	collection add: 1.
+	collection compact.
+	self assert: collection capacity equals: 1.
+	
+	collection growAtLast.
+	collection compact.
+	self assert: collection capacity equals: 1.
+	
+	
+	"we do not shrint the start for now"
+	collection growAtFirst.
+	collection compact.
+	self assert: collection capacity equals: 2.
+	
+	
+	
+]
+
 { #category : #'tests - copying' }
 OrderedCollectionTest >> testCopyEmptyOld [
 	"Allows one to create a copy of the receiver that contains no elements"
