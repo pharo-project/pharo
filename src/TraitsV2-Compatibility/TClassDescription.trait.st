@@ -510,14 +510,6 @@ TClassDescription >> copyCategory: cat from: aClass classified: newCat [
 		classified: newCat
 ]
 
-{ #category : #copying }
-TClassDescription >> copyMethodDictionaryFrom: donorClass [
-	"Copy the method dictionary of the donor class over to the receiver"
-
-	self methodDict: donorClass copyOfMethodDictionary.
-	self organization: donorClass organization deepCopy.
-]
-
 { #category : #slots }
 TClassDescription >> definesSlot: aSlot [
 	"Return true whether the receiver defines an instance variable named aString"

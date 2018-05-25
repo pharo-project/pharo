@@ -692,13 +692,6 @@ Behavior >> copiesMethodsFromSuperclass [
 ]
 
 { #category : #copying }
-Behavior >> copyOfMethodDictionary [
-	"Return a copy of the receiver's method dictionary"
-
-	^ self methodDict copy
-]
-
-{ #category : #copying }
 Behavior >> deepCopy [
 	"Classes should only be shallowCopied or made anew."
 
@@ -1511,7 +1504,7 @@ Behavior >> obsoleteSubclasses [
 { #category : #copying }
 Behavior >> postCopy [
 	super postCopy.
-	self methodDict: self copyOfMethodDictionary
+	self methodDict: self methodDict copy
 ]
 
 { #category : #'accessing method dictionary' }
