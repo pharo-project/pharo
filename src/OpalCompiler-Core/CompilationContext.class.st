@@ -349,9 +349,10 @@ CompilationContext >> bindings [
 ]
 
 { #category : #accessing }
-CompilationContext >> bindings: aDictionay [
-	"binding are LiteralVariables, not simple Associations"
-	bindings := (aDictionay associations
+CompilationContext >> bindings: aCollectionOfAssociations [
+	"bindings are LiteralVariables, not simple Associations.
+	This method receives any collection with bindings inside and converts it to a dictionary of AdditionalBindings"
+	bindings := (aCollectionOfAssociations asDictionary associations
 		collect: [ :each | AdditionalBinding key: each key value: each value ]) asDictionary
 ]
 
