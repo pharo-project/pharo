@@ -26,7 +26,7 @@ Class {
 	#classInstVars : [
 		'enabled'
 	],
-	#category : #'Slot-Core-Exception'
+	#category : #'Shift-ClassBuilder'
 }
 
 { #category : #validation }
