@@ -22,6 +22,9 @@ ZnEasyTests >> testDelete [
 { #category : #testing }
 ZnEasyTests >> testGetGif [
 	| url result |
+	
+	self requiresNetworkConnection.
+	
 	url := 'http://zn.stfx.eu/zn/Hot-Air-Balloon.gif'.
 	result := ZnEasy getGif: url.
 	self assert: result isForm
@@ -30,6 +33,9 @@ ZnEasyTests >> testGetGif [
 { #category : #testing }
 ZnEasyTests >> testGetJpeg [
 	| url result |
+	
+	self requiresNetworkConnection.
+	
 	url := 'http://stfx.eu/sun-fire-x2100.jpg'.
 	result := ZnEasy getJpeg: url.
 	self assert: result isForm
@@ -38,6 +44,9 @@ ZnEasyTests >> testGetJpeg [
 { #category : #testing }
 ZnEasyTests >> testGetPng [
 	| url result |
+	
+	self requiresNetworkConnection.
+	
 	url := 'http://pharo.org/files/pharo.png'.
 	result := ZnEasy getPng: url.
 	self assert: result isForm
@@ -46,6 +55,9 @@ ZnEasyTests >> testGetPng [
 { #category : #testing }
 ZnEasyTests >> testGetSmallHTMLDocument [
 	| url response |
+	
+	self requiresNetworkConnection.
+	
 	url := self smallHtmlUrl.
 	response := ZnEasy get: url.
 	self assert: (response headers contentType = ZnMimeType textHtml).
@@ -56,6 +68,9 @@ ZnEasyTests >> testGetSmallHTMLDocument [
 { #category : #testing }
 ZnEasyTests >> testHeadSmallHTMLDocument [
 	| url response |
+	
+	self requiresNetworkConnection.
+	
 	url := self smallHtmlUrl.
 	response := ZnEasy head: url.
 	self assert: (response headers contentType = ZnMimeType textHtml).

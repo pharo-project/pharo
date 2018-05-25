@@ -147,6 +147,9 @@ ZnResponseTests >> testRedirect [
 { #category : #testing }
 ZnResponseTests >> testSlashdotGzipChunked [
 	| request stream response contents |
+	
+	self requiresNetworkConnection.
+	
 	(request := ZnRequest get: 'http://slashdot.org')
 		setConnectionClose;
 		setAcceptEncodingGzip.

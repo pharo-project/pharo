@@ -14,6 +14,9 @@ ZnImageExampleDelegateTests >> image [
 
 { #category : #testing }
 ZnImageExampleDelegateTests >> testDefaultImage [
+
+	self requiresNetworkConnection.
+
 	self withServerDo: [ :server |
 		| client |
 		client := ZnClient new.
@@ -40,6 +43,9 @@ ZnImageExampleDelegateTests >> testMainPage [
 
 { #category : #testing }
 ZnImageExampleDelegateTests >> testUpload [
+
+	self requiresNetworkConnection.
+	
 	self withServerDo: [ :server |
 		| image client |
 		image := self image.

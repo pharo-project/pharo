@@ -79,6 +79,9 @@ ZnClientTests >> testCookies [
 { #category : #testing }
 ZnClientTests >> testDownloadSmallHTML [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	ZnFileSystemUtils deleteIfExists: self smallHtmlUrl pathSegments last.
 	"First download to a directory"
 	(client := ZnClient new)
@@ -154,6 +157,9 @@ ZnClientTests >> testGetForm [
 { #category : #testing }
 ZnClientTests >> testGetGeoIP [
 	| result client |
+	
+	self requiresNetworkConnection.
+	
 	result := (client := ZnClient new)
 		systemPolicy;
 		url: self t3EasyGeoIPUrl;
@@ -192,6 +198,9 @@ ZnClientTests >> testGetLargeWideStringHTML [
 { #category : #testing }
 ZnClientTests >> testGetSmallHTML [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	(client := ZnClient new)
 		url: self smallHtmlUrl;
 		get.
@@ -207,6 +216,8 @@ ZnClientTests >> testGetSmallHTML [
 { #category : #testing }
 ZnClientTests >> testGetSmallHTMLBinary [
 	| client html bytes |
+	
+	self requiresNetworkConnection.
 	
 	(client := ZnClient new)
 		url: self smallHtmlUrl;
@@ -230,6 +241,9 @@ ZnClientTests >> testGetSmallHTMLBinary [
 { #category : #testing }
 ZnClientTests >> testGetSmallHTMLOneShot [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	(client := ZnClient new)
 		beOneShot;
 		url: self smallHtmlUrl;
@@ -243,6 +257,9 @@ ZnClientTests >> testGetSmallHTMLOneShot [
 { #category : #testing }
 ZnClientTests >> testGetSmallHTMLStreaming [
 	| client result contents |
+	
+	self requiresNetworkConnection.
+	
 	result := (client := ZnClient new)
 		url: self smallHtmlUrl;
 		streaming: true;
@@ -259,6 +276,9 @@ ZnClientTests >> testGetSmallHTMLStreaming [
 { #category : #testing }
 ZnClientTests >> testGetSmallHTMLTwice [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	(client := ZnClient new)
 		url: self smallHtmlUrl;
 		get.
@@ -277,6 +297,9 @@ ZnClientTests >> testGetSmallHTMLTwice [
 { #category : #testing }
 ZnClientTests >> testGetSmallHTMLUrlConstruction [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	(client := ZnClient new)
 		http;
 		host: self smallHtmlUrl host;
@@ -336,6 +359,9 @@ ZnClientTests >> testIfFailNonExistingHost [
 { #category : #testing }
 ZnClientTests >> testIfFailNotFound [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	(client := ZnClient new)
 		beOneShot;
 		url: 'http://stfx.eu/non-existing';
@@ -352,6 +378,9 @@ ZnClientTests >> testIfFailNotFound [
 { #category : #testing }
 ZnClientTests >> testIfFailWrongType [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	(client := ZnClient new)
 		beOneShot;
 		accept: ZnMimeType imagePng;
@@ -366,6 +395,9 @@ ZnClientTests >> testIfFailWrongType [
 { #category : #testing }
 ZnClientTests >> testIfModifiedSinceNotModified [
 	| client  response |
+	
+	self requiresNetworkConnection.
+	
 	(client := ZnClient new) host: 'stfx.eu'.
 	[
 		response := client 
@@ -380,6 +412,9 @@ ZnClientTests >> testIfModifiedSinceNotModified [
 { #category : #testing }
 ZnClientTests >> testLogging [
 	| client logEventCollection count |
+	
+	self requiresNetworkConnection.
+	
 	logEventCollection := OrderedCollection new.
 	ZnLogEvent announcer 
 		when: ZnLogEvent do: [ :event | logEventCollection add: event ]. 
@@ -548,6 +583,9 @@ ZnClientTests >> testProgressNoIfFail [
 { #category : #testing }
 ZnClientTests >> testQueryGoogle [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	(client := ZnClient new)
 		http;
 		host: 'www.google.com';
@@ -563,6 +601,9 @@ ZnClientTests >> testQueryGoogle [
 { #category : #testing }
 ZnClientTests >> testRedirect [
 	| client response target |
+	
+	self requiresNetworkConnection.
+	
 	target := 'http://zn.stfx.eu'.
 	client := ZnClient new url: target.
 	client get.
@@ -585,6 +626,9 @@ ZnClientTests >> testRedirect [
 { #category : #testing }
 ZnClientTests >> testRedirectDontFollow [
 	| client target |
+	
+	self requiresNetworkConnection.
+	
 	target := 'http://zn.stfx.eu'.
 	(client := ZnClient new) 
 		dontFollowRedirects;
