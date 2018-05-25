@@ -16,7 +16,7 @@ Class {
 		'minCellSize',
 		'maxCellSize'
 	],
-	#category : #'Morphic-Base-Layouts'
+	#category : #'Kernel-BasicObjects'
 }
 
 { #category : #'table defaults' }
