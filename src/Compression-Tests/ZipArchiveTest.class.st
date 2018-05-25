@@ -224,6 +224,8 @@ ZipArchiveTest >> testSetLastModification [
 { #category : #tests }
 ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
 	| nestedFileToZip fileModificationTime fileModificationTimeBlock |
+	Smalltalk os isWindows
+		ifTrue: [ "Occassionally trying to delete an existing file fails in Windows due to a file open lock" ^ self skip ].
 	fileModificationTimeBlock := [ (subdir / '_test-zip-file.txt') modificationTime ].
 	nestedFileToZip := (subdir / '_test-zip-file.txt')
 		writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ];
