@@ -15,25 +15,25 @@ Matrix * Number and Number * Matrix work fine, so you don't need +* with numbers
 
 "
 Class {
-	#name : #Matrix,
+	#name : #Array2D,
 	#superclass : #Collection,
 	#instVars : [
 		'contents',
 		'numberOfColumns',
 		'numberOfRows'
 	],
-	#category : #'Collections-Unordered'
+	#category : #Deprecated70
 }
 
 { #category : #'special instance creation' }
-Matrix class >> columnVector: aCollection [
+Array2D class >> columnVector: aCollection [
 	"Create a matrix of one column having aCollection as contents"
 
 	^ self rows: aCollection size columns: 1 contents: aCollection asArray shallowCopy
 ]
 
 { #category : #'special instance creation' }
-Matrix class >> diagonal: aCollection [
+Array2D class >> diagonal: aCollection [
 	|r i|
 	r := self zeros: aCollection size.
 	i := 0.
@@ -42,7 +42,7 @@ Matrix class >> diagonal: aCollection [
 ]
 
 { #category : #'special instance creation' }
-Matrix class >> identity: n [
+Array2D class >> identity: n [
 	| r |
 	r := self zeros: n.
 	1 to: n do: [ :i | r at: i at: i put: 1 ].
@@ -50,40 +50,40 @@ Matrix class >> identity: n [
 ]
 
 { #category : #'instance creation' }
-Matrix class >> new: dimension [
+Array2D class >> new: dimension [
 	"Answer a dimension*dimension matrix."
 	^ self rows: dimension columns: dimension
 ]
 
 { #category : #'instance creation' }
-Matrix class >> new: dimemsion element: element [
+Array2D class >> new: dimemsion element: element [
 	"Answer a dimemsion*dimemsion matrix with all elements set to element."
 
 	^ self rows: dimemsion columns: dimemsion element: element
 ]
 
 { #category : #'instance creation' }
-Matrix class >> new: dimension tabulate: aTwoArgumentBlock [
+Array2D class >> new: dimension tabulate: aTwoArgumentBlock [
 	"Answer a dimension*dimension matrix where it at: i at: j is aBlock value: i value: j."
 	^ self rows: dimension columns: dimension tabulate: aTwoArgumentBlock
 ]
 
 { #category : #'special instance creation' }
-Matrix class >> ones: dimension [
+Array2D class >> ones: dimension [
 	"Create a squared matrix of dimension full of 1"
 	^ self new: dimension element: 1
 
 ]
 
 { #category : #'special instance creation' }
-Matrix class >> rowVector: aCollection [
+Array2D class >> rowVector: aCollection [
 	"Create a matrix of one row having aCollection as contents"
 
 	^self rows: 1 columns: aCollection size contents: aCollection asArray shallowCopy
 ]
 
 { #category : #'instance creation' }
-Matrix class >> rows: rowNumber columns: columnNumber [
+Array2D class >> rows: rowNumber columns: columnNumber [
 	"Create a Matrix of rowNUmber rows and columnNumber columns."
 	^ self 
 		rows: rowNumber 
@@ -92,13 +92,13 @@ Matrix class >> rows: rowNumber columns: columnNumber [
 ]
 
 { #category : #private }
-Matrix class >> rows: rowNumber columns: columnNumber contents: contents [
+Array2D class >> rows: rowNumber columns: columnNumber contents: contents [
 	"Private! Creates a Matrix of the given size with an adequate contents."
 	^ self new rows: rowNumber columns: columnNumber contents: contents
 ]
 
 { #category : #'instance creation' }
-Matrix class >> rows: rowNumber columns: columnNumber element: element [
+Array2D class >> rows: rowNumber columns: columnNumber element: element [
 	"Create a Matrix of rowNumber rows and columnNumber columns filled with element."
 	^ self 
 		rows: rowNumber 
@@ -107,7 +107,7 @@ Matrix class >> rows: rowNumber columns: columnNumber element: element [
 ]
 
 { #category : #'instance creation' }
-Matrix class >> rows: rowNumber columns: columnNumber tabulate: aTwoArgumentBlock [
+Array2D class >> rows: rowNumber columns: columnNumber tabulate: aTwoArgumentBlock [
 	"Answer a new Matrix of the given dimensions where
 	 result at: i at: j is aTwoArgumentBlock value: i value: j"
 	|a i|
@@ -121,13 +121,13 @@ Matrix class >> rows: rowNumber columns: columnNumber tabulate: aTwoArgumentBloc
 ]
 
 { #category : #'special instance creation' }
-Matrix class >> zeros: dimension [
+Array2D class >> zeros: dimension [
 	"Create a Matrix of dimensionxdimemsion"
 	^ self new: dimension element: 0
 ]
 
 { #category : #copying }
-Matrix >> , aMatrix [
+Array2D >> , aMatrix [
 	"Answer a new matrix having the same number of rows as the receiver and aMatrix,
 	 its columns being the columns of the receiver followed by the columns of aMatrix."
 	|newCont newCols anArray oldCols a b c|
@@ -150,7 +150,7 @@ Matrix >> , aMatrix [
 ]
 
 { #category : #copying }
-Matrix >> ,, aMatrix [
+Array2D >> ,, aMatrix [
 	"Answer a new matrix having the same number of columns as the receiver and aMatrix,
 	 its rows being the rows of the receiver followed by the rows of aMatrix."
 
@@ -163,7 +163,7 @@ Matrix >> ,, aMatrix [
 ]
 
 { #category : #comparing }
-Matrix >> = aMatrix [
+Array2D >> = aMatrix [
 	^ aMatrix class == self class
 		and: [ aMatrix numberOfRows = numberOfRows
 				and: [ aMatrix numberOfColumns = numberOfColumns 
@@ -171,83 +171,83 @@ Matrix >> = aMatrix [
 ]
 
 { #category : #'not implemented' }
-Matrix >> add: newObject [
+Array2D >> add: newObject [
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
-Matrix >> anyOne [
+Array2D >> anyOne [
 	"Return one element from the receiver"
 	^ contents anyOne
 ]
 
 { #category : #converting }
-Matrix >> asArray [
+Array2D >> asArray [
 	^ contents shallowCopy
 ]
 
 { #category : #converting }
-Matrix >> asBag [
+Array2D >> asBag [
 	^ contents asBag
 ]
 
 { #category : #converting }
-Matrix >> asByteArray [
+Array2D >> asByteArray [
 	^ contents asByteArray
 ]
 
 { #category : #converting }
-Matrix >> asCharacterSet [
+Array2D >> asCharacterSet [
 	^ contents asCharacterSet
 ]
 
 { #category : #converting }
-Matrix >> asFloatArray [
+Array2D >> asFloatArray [
 	^ contents asFloatArray
 ]
 
 { #category : #converting }
-Matrix >> asIdentitySet [
+Array2D >> asIdentitySet [
 	^ contents asIdentitySet
 ]
 
 { #category : #converting }
-Matrix >> asIntegerArray [
+Array2D >> asIntegerArray [
 	^ contents asIntegerArray
 ]
 
 { #category : #converting }
-Matrix >> asOrderedCollection [
+Array2D >> asOrderedCollection [
 	^ contents asOrderedCollection
 ]
 
 { #category : #converting }
-Matrix >> asSet [
+Array2D >> asSet [
 	^ contents asSet
 ]
 
 { #category : #converting }
-Matrix >> asSortedCollection [
+Array2D >> asSortedCollection [
 	^ contents asSortedCollection
 ]
 
 { #category : #converting }
-Matrix >> asSortedCollection: aBlock [
+Array2D >> asSortedCollection: aBlock [
 	^ contents asSortedCollection: aBlock
 ]
 
 { #category : #converting }
-Matrix >> asWordArray [
+Array2D >> asWordArray [
 	^ contents asWordArray
 ]
 
 { #category : #accessing }
-Matrix >> at: rowNumber at: columnNumber [
+Array2D >> at: rowNumber at: columnNumber [
 	^ contents at: (self indexForRow: rowNumber andColumn: columnNumber)
 ]
 
 { #category : #accessing }
-Matrix >> at: rowNumber at: columnNumber ifInvalid: value [
+Array2D >> at: rowNumber at: columnNumber ifInvalid: value [
 	"If rowNumber,columnNumber is a valid index for the receiver, answer the corresponding element. Otherwise, answer value."
 
 	(rowNumber between: 1 and: numberOfRows) ifFalse: [ ^ value ].
@@ -257,26 +257,26 @@ Matrix >> at: rowNumber at: columnNumber ifInvalid: value [
 ]
 
 { #category : #accessing }
-Matrix >> at: rowNumber at: columnNumber incrementBy: value [
+Array2D >> at: rowNumber at: columnNumber incrementBy: value [
 	"Add a value to the element available at rowNumber,columNumber."
 
 	^ contents at: (self indexForRow: rowNumber andColumn: columnNumber) incrementBy: value
 ]
 
 { #category : #accessing }
-Matrix >> at: rowNumber at: columnNumber put: value [
+Array2D >> at: rowNumber at: columnNumber put: value [
 	"Put value at rowNumber,columnNumber"
 	^ contents at: (self indexForRow: rowNumber andColumn: columnNumber) put: value
 ]
 
 { #category : #accessing }
-Matrix >> atAllPut: value [
+Array2D >> atAllPut: value [
 	"Put value as value of all the receiver elements."
 	contents atAllPut: value
 ]
 
 { #category : #'row/column operations' }
-Matrix >> atColumn: column [
+Array2D >> atColumn: column [
 
 	|p|
 	p := (self indexForRow: 1 andColumn: column)-numberOfColumns.
@@ -285,7 +285,7 @@ Matrix >> atColumn: column [
 ]
 
 { #category : #'row/column operations' }
-Matrix >> atColumn: column put: aCollection [
+Array2D >> atColumn: column put: aCollection [
 	| p |
 	aCollection size = numberOfRows ifFalse: [ self error: 'wrong column size' ].
 	p := (self indexForRow: 1 andColumn: column) - numberOfColumns.
@@ -295,7 +295,7 @@ Matrix >> atColumn: column put: aCollection [
 ]
 
 { #category : #'row/column operations' }
-Matrix >> atRow: rowNumber [
+Array2D >> atRow: rowNumber [
 	(rowNumber between: 1 and: numberOfRows)
 		ifFalse: [self error: '1st subscript out of range'].
 	^ contents 
@@ -304,7 +304,7 @@ Matrix >> atRow: rowNumber [
 ]
 
 { #category : #'row/column operations' }
-Matrix >> atRow: row put: aCollection [
+Array2D >> atRow: row put: aCollection [
 	|p|
 
 	aCollection size = numberOfColumns ifFalse: [self error: 'wrong row size'].
@@ -314,7 +314,7 @@ Matrix >> atRow: row put: aCollection [
 ]
 
 { #category : #'accessing submatrices' }
-Matrix >> atRows: rs columns: cs [
+Array2D >> atRows: rs columns: cs [
 	"Answer a Matrix obtained by slicing the receiver.
 	 rs and cs should be sequenceable collections of positive integers."
 
@@ -323,7 +323,7 @@ Matrix >> atRows: rs columns: cs [
 ]
 
 { #category : #'accessing submatrices' }
-Matrix >> atRows: r1 to: r2 columns: c1 to: c2 [
+Array2D >> atRows: r1 to: r2 columns: c1 to: c2 [
 	"Answer a submatrix [r1..r2][c1..c2] of the receiver."
 	|rd cd|
 
@@ -334,7 +334,7 @@ Matrix >> atRows: r1 to: r2 columns: c1 to: c2 [
 ]
 
 { #category : #'accessing submatrices' }
-Matrix >> atRows: r1 to: r2 columns: c1 to: c2 ifInvalid: element [
+Array2D >> atRows: r1 to: r2 columns: c1 to: c2 ifInvalid: element [
 	"Answer a submatrix [r1..r2][c1..c2] of the receiver.
 	 Portions of the result outside the bounds of the original matrix are filled in with element."
 	|rd cd|
@@ -345,7 +345,7 @@ Matrix >> atRows: r1 to: r2 columns: c1 to: c2 ifInvalid: element [
 ]
 
 { #category : #'accessing submatrices' }
-Matrix >> atRows: r1 to: r2 columns: c1 to: c2 put: aMatrix [
+Array2D >> atRows: r1 to: r2 columns: c1 to: c2 put: aMatrix [
 	"Set the [r1..r2][c1..c2] submatrix of the receiver
 	 from the [1..r2-r1+1][1..c2-c1+1] submatrix of aMatrix.
 	 As long as aMatrix responds to at:at: and accepts arguments in the range shown,
@@ -362,7 +362,7 @@ Matrix >> atRows: r1 to: r2 columns: c1 to: c2 put: aMatrix [
 ]
 
 { #category : #enumerating }
-Matrix >> collect: aBlock [
+Array2D >> collect: aBlock [
 	"Answer a new matrix with transformed elements; transformations should be independent."
 
 	^self class 
@@ -372,12 +372,12 @@ Matrix >> collect: aBlock [
 ]
 
 { #category : #accessing }
-Matrix >> columnCount [
+Array2D >> columnCount [
 	^ numberOfColumns
 ]
 
 { #category : #'row/column operations' }
-Matrix >> diagonal [
+Array2D >> diagonal [
 	"Answer (1 to: (numberOfRows min: numberOfColumns)) collect: [:i | self at: i at: i]"
 	|i|
 	i := numberOfColumns negated.
@@ -385,7 +385,7 @@ Matrix >> diagonal [
 ]
 
 { #category : #'not implemented' }
-Matrix >> difference: aCollection [
+Array2D >> difference: aCollection [
 	"Union is in because the result is always a Set.
 	 Difference and intersection are out because the result is like the receiver,
 	 and with irregular seleection that cannot be."
@@ -393,20 +393,20 @@ Matrix >> difference: aCollection [
 ]
 
 { #category : #enumerating }
-Matrix >> do: aBlock [
+Array2D >> do: aBlock [
 	"Pass elements to aBlock one at a time in row-major order."
 	contents do: aBlock
 ]
 
 { #category : #accessing }
-Matrix >> extent [
+Array2D >> extent [
     "Answer the receiver's dimensions as point."
 
     ^ self numberOfColumns @ self numberOfRows
 ]
 
 { #category : #comparing }
-Matrix >> hash [
+Array2D >> hash [
 	"I'm really not sure what would be a good hash function here.
 	 The essential thing is that it must be compatible with #=, and
 	 this satisfies that requirement."
@@ -415,41 +415,41 @@ Matrix >> hash [
 ]
 
 { #category : #testing }
-Matrix >> identityIncludes: anObject [
+Array2D >> identityIncludes: anObject [
 	^ contents identityIncludes: anObject
 ]
 
 { #category : #accessing }
-Matrix >> identityIndexOf: anElement [
+Array2D >> identityIndexOf: anElement [
 	
 	^ self identityIndexOf: anElement ifAbsent: [ 0@0 ]
 
 ]
 
 { #category : #accessing }
-Matrix >> identityIndexOf: anElement ifAbsent: anExceptionBlock [
+Array2D >> identityIndexOf: anElement ifAbsent: anExceptionBlock [
 	^self rowAndColumnForIndex:
 		 (contents identityIndexOf: anElement ifAbsent: [^anExceptionBlock value])
 
 ]
 
 { #category : #testing }
-Matrix >> includes: anObject [
+Array2D >> includes: anObject [
 	^ contents includes: anObject
 ]
 
 { #category : #testing }
-Matrix >> includesAll: aCollection [
+Array2D >> includesAll: aCollection [
 	^ contents includesAll: aCollection
 ]
 
 { #category : #testing }
-Matrix >> includesAny: aCollection [
+Array2D >> includesAny: aCollection [
 	^ contents includesAny: aCollection
 ]
 
 { #category : #private }
-Matrix >> indexForRow: row andColumn: column [
+Array2D >> indexForRow: row andColumn: column [
 	(row between: 1 and: numberOfRows)
 		ifFalse: [self error: '1st subscript out of range'].
 	(column between: 1 and: numberOfColumns)
@@ -458,7 +458,7 @@ Matrix >> indexForRow: row andColumn: column [
 ]
 
 { #category : #accessing }
-Matrix >> indexOf: anElement [
+Array2D >> indexOf: anElement [
 	"If there are integers r, c such that (self at: r at: c) = anElement, answer some such r@c, otherwise answer 0@0. The order in which the receiver are searched is UNSPECIFIED except that it is the same as the order used by #indexOf:ifAbsent: and #readStream."
 
 	^self indexOf: anElement ifAbsent: [0@0]
@@ -466,7 +466,7 @@ Matrix >> indexOf: anElement [
 ]
 
 { #category : #accessing }
-Matrix >> indexOf: anElement ifAbsent: anExceptionBlock [
+Array2D >> indexOf: anElement ifAbsent: anExceptionBlock [
 	"If there are integers r, c such that (self at: r at: c) = anElement, answer some such r@c, otherwise answer the result of anExceptionBlock."
 
 	^self rowAndColumnForIndex:
@@ -475,7 +475,7 @@ Matrix >> indexOf: anElement ifAbsent: anExceptionBlock [
 ]
 
 { #category : #enumerating }
-Matrix >> indicesCollect: aBlock [
+Array2D >> indicesCollect: aBlock [
 	
 	| r i |
 	r := Array new: numberOfRows * numberOfColumns.
@@ -487,14 +487,14 @@ Matrix >> indicesCollect: aBlock [
 ]
 
 { #category : #enumerating }
-Matrix >> indicesDo: aBlock [
+Array2D >> indicesDo: aBlock [
 	1 to: numberOfRows do: [ :row |
 		1 to: numberOfColumns do: [ :column |
 			aBlock value: row value: column]].
 ]
 
 { #category : #enumerating }
-Matrix >> indicesInject: start into: aBlock [
+Array2D >> indicesInject: start into: aBlock [
 
 	|current|
 	current := start.
@@ -505,7 +505,7 @@ Matrix >> indicesInject: start into: aBlock [
 ]
 
 { #category : #'not implemented' }
-Matrix >> intersection: aCollection [
+Array2D >> intersection: aCollection [
 	"Union is in because the result is always a Set.
 	 Difference and intersection are out because the result is like the receiver,
 	 and with irregular seleection that cannot be."
@@ -513,7 +513,7 @@ Matrix >> intersection: aCollection [
 ]
 
 { #category : #testing }
-Matrix >> isSequenceable [
+Array2D >> isSequenceable [
 	"LIE so that arithmetic on matrices will work.
 	 What matters for arithmetic is not that there should be random indexing
 	 but that the structure should be stable and independent of the values of
@@ -522,38 +522,38 @@ Matrix >> isSequenceable [
 ]
 
 { #category : #accessing }
-Matrix >> numberOfColumns [
+Array2D >> numberOfColumns [
 	^ numberOfColumns
 ]
 
 { #category : #accessing }
-Matrix >> numberOfColumns: anObject [
+Array2D >> numberOfColumns: anObject [
 	numberOfColumns := anObject
 ]
 
 { #category : #accessing }
-Matrix >> numberOfRows [
+Array2D >> numberOfRows [
 	^ numberOfRows
 ]
 
 { #category : #accessing }
-Matrix >> numberOfRows: anObject [
+Array2D >> numberOfRows: anObject [
 	numberOfRows := anObject
 ]
 
 { #category : #testing }
-Matrix >> occurrencesOf: anObject [
+Array2D >> occurrencesOf: anObject [
 	^ contents occurrencesOf: anObject
 ]
 
 { #category : #copying }
-Matrix >> postCopy [
+Array2D >> postCopy [
 	super postCopy.
 	contents := contents copy
 ]
 
 { #category : #printing }
-Matrix >> printOn: aStream [
+Array2D >> printOn: aStream [
 
 	aStream nextPutAll: '('.
 	(1 to: self numberOfRows) 
@@ -566,7 +566,7 @@ Matrix >> printOn: aStream [
 ]
 
 { #category : #private }
-Matrix >> privateContents [
+Array2D >> privateContents [
 	"Only used in #, #,, and #= so far.
 	 It used to be called #contents, but that clashes with Collection>>contents."
 
@@ -574,35 +574,35 @@ Matrix >> privateContents [
 ]
 
 { #category : #converting }
-Matrix >> readStream [
+Array2D >> readStream [
 	"Answer a ReadStream that returns all the elements of the receiver in some UNSPECIFIED order."
 	^ contents readStream
 ]
 
 { #category : #'not implemented' }
-Matrix >> reject: aBlock [
+Array2D >> reject: aBlock [
 	self shouldNotImplement
 ]
 
 { #category : #removing }
-Matrix >> remove: anObject ifAbsent: anExceptionBlock [
+Array2D >> remove: anObject ifAbsent: anExceptionBlock [
 	self shouldNotImplement
 ]
 
 { #category : #removing }
-Matrix >> removeAll [
+Array2D >> removeAll [
 
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
-Matrix >> replaceAll: oldObject with: newObject [
+Array2D >> replaceAll: oldObject with: newObject [
 	"Replace all occurrences of oldObject with newObject in the receiver."
 	contents replaceAll: oldObject with: newObject
 ]
 
 { #category : #private }
-Matrix >> rowAndColumnForIndex: index [
+Array2D >> rowAndColumnForIndex: index [
 	|t|
 
 	t := index - 1.
@@ -610,12 +610,12 @@ Matrix >> rowAndColumnForIndex: index [
 ]
 
 { #category : #accessing }
-Matrix >> rowCount [
+Array2D >> rowCount [
 	^numberOfRows
 ]
 
 { #category : #private }
-Matrix >> rows: rows columns: columns contents: anArray [
+Array2D >> rows: rows columns: columns contents: anArray [
 	[rows isInteger and: [rows >= 0]] assert.
 	[columns isInteger and: [columns >= 0]] assert.
 	[rows * columns = anArray size] assert.
@@ -626,27 +626,27 @@ Matrix >> rows: rows columns: columns contents: anArray [
 ]
 
 { #category : #'not implemented' }
-Matrix >> select: aBlock [
+Array2D >> select: aBlock [
 	self shouldNotImplement
 ]
 
 { #category : #copying }
-Matrix >> shuffled [
+Array2D >> shuffled [
 	^self class rows: numberOfRows columns: numberOfColumns contents: (contents shuffled)
 ]
 
 { #category : #copying }
-Matrix >> shuffledBy: aRandom [
+Array2D >> shuffledBy: aRandom [
 	^self class rows: numberOfRows columns: numberOfColumns contents: (contents copy shuffleBy: aRandom)
 ]
 
 { #category : #accessing }
-Matrix >> size [
+Array2D >> size [
 	^ contents size
 ]
 
 { #category : #printing }
-Matrix >> storeOn: aStream [
+Array2D >> storeOn: aStream [
 	aStream nextPut: $(; nextPutAll: self class name;
 		nextPutAll: ' rows: '; store: numberOfRows;
 		nextPutAll: ' columns: '; store: numberOfColumns;
@@ -655,13 +655,13 @@ Matrix >> storeOn: aStream [
 ]
 
 { #category : #accessing }
-Matrix >> swap: r1 at: c1 with: r2 at: c2 [
+Array2D >> swap: r1 at: c1 with: r2 at: c2 [
 	contents swap: (self indexForRow: r1 andColumn: c1)
 			 with: (self indexForRow: r2 andColumn: c2)
 ]
 
 { #category : #'row/column operations' }
-Matrix >> swapColumn: anIndex withColumn: anotherIndex [
+Array2D >> swapColumn: anIndex withColumn: anotherIndex [
 	|a b|
 
 	a := self indexForRow: 1 andColumn: anIndex.
@@ -674,7 +674,7 @@ Matrix >> swapColumn: anIndex withColumn: anotherIndex [
 ]
 
 { #category : #'row/column operations' }
-Matrix >> swapRow: anIndex withRow: anotherIndex [
+Array2D >> swapRow: anIndex withRow: anotherIndex [
 	| a b |
 	a := self indexForRow: anIndex andColumn: 1.
 	b := self indexForRow: anotherIndex andColumn: 1.
@@ -686,13 +686,13 @@ Matrix >> swapRow: anIndex withRow: anotherIndex [
 ]
 
 { #category : #'row/column operations' }
-Matrix >> transposed [
+Array2D >> transposed [
 	[numberOfRows = numberOfColumns] assert.
 	^ self indicesCollect: [ :row :column | self at: column at: row ]
 ]
 
 { #category : #enumerating }
-Matrix >> with: aCollection collect: aBlock [
+Array2D >> with: aCollection collect: aBlock [
 	"aCollection must support #at:at: and be at least as large as the receiver."
 
 	^self withIndicesCollect: [:each :row :column |
@@ -701,7 +701,7 @@ Matrix >> with: aCollection collect: aBlock [
 ]
 
 { #category : #enumerating }
-Matrix >> with: aCollection do: aBlock [
+Array2D >> with: aCollection do: aBlock [
 	"aCollection must support #at:at: and be at least as large as the receiver."
 
 	self withIndicesDo: [:each :row :column |
@@ -710,7 +710,7 @@ Matrix >> with: aCollection do: aBlock [
 ]
 
 { #category : #enumerating }
-Matrix >> with: aCollection inject: startingValue into: aBlock [
+Array2D >> with: aCollection inject: startingValue into: aBlock [
 	"aCollection must support #at:at: and be at least as large as the receiver."
 
 	^ self withIndicesInject: startingValue into: [:value :each :row :column |
@@ -718,7 +718,7 @@ Matrix >> with: aCollection inject: startingValue into: aBlock [
 ]
 
 { #category : #enumerating }
-Matrix >> withIndicesCollect: aBlock [
+Array2D >> withIndicesCollect: aBlock [
 	
 	|i r|
 	i := 0.
@@ -732,7 +732,7 @@ Matrix >> withIndicesCollect: aBlock [
 ]
 
 { #category : #enumerating }
-Matrix >> withIndicesDo: aBlock [
+Array2D >> withIndicesDo: aBlock [
 	
 	| i |
 	i := 0.
@@ -743,7 +743,7 @@ Matrix >> withIndicesDo: aBlock [
 ]
 
 { #category : #enumerating }
-Matrix >> withIndicesInject: start into: aBlock [
+Array2D >> withIndicesInject: start into: aBlock [
 	
 	| i current |
 	i := 0.
