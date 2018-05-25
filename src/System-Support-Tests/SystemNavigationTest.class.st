@@ -79,14 +79,6 @@ SystemNavigationTest >> tearDown [
 ]
 
 { #category : #testing }
-SystemNavigationTest >> testAllClassesUsingSharedPool [
-
-	| res |
-	res := SystemNavigation new allClassesUsingSharedPool: 'ChronologyConstants'.
-	self assert: ({Date. DateAndTime. Duration. Month. Time. TimeZone. Week} difference: res) isEmpty
-]
-
-{ #category : #testing }
 SystemNavigationTest >> testAllExistingProtocolsFor [
 
 	| instSideProtocols classSideProtocols |
