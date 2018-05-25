@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #tests }
-SharedPoolTest >> testUsers [
+SharedPoolTest >> testPoolUsers [
 	| result |
-	result := ChronologyConstants users.
+	result := ChronologyConstants poolusers.
 	self assert: result asSet equals: {Date. DateAndTime. Duration. Month. Time. TimeZone. Week. LocalTimeZone . AbstractTimeZone } asSet.
 		 
 ]

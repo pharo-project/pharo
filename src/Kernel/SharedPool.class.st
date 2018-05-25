@@ -58,11 +58,11 @@ SharedPool class >> includesKey: aName [
 
 { #category : #testing }
 SharedPool class >> isUsed [
-	^self users isNotEmpty
+	^super isUsed or: [self poolUsers isNotEmpty]
 ]
 
 { #category : #pools }
-SharedPool class >> users [
+SharedPool class >> poolUsers [
 	"Answer an Array of all classes that uses the shared pool"
 
 	| aCollection |
