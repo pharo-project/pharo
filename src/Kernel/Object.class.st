@@ -774,11 +774,26 @@ Object >> deprecated: anExplanationString transformWith: aRule [
 
 { #category : #displaying }
 Object >> displayString [
-	"While printString is about to give a detailled information about an object, displayString is a message that should return a short string-based representation to be used by list and related UI frameworks. By default, simply return printString."
-	"asString should not be implemented in Object, and kept for conversion between strings, symbols, text and characters."
+	"While printString is about to give a detailled information about an object, displayString is a message that should return a short string-based representation to be used by list and related UI frameworks. By default, simply return printString.
+	Subclasses should not override this method 
+	but instead stream based method #displayStringOn:"
 	
-	^ self printString
+	^ self displayStringLimitedTo: 50000
+]
 
+{ #category : #displaying }
+Object >> displayStringLimitedTo: limit [
+	"Answer a String whose characters are a description of the receiver.
+	If you want to print without a character limit, use fullDisplayString."
+	^self printStringLimitedTo: limit using: [:s | self displayStringOn: s]
+]
+
+{ #category : #displaying }
+Object >> displayStringOn: aStream [
+	"While #printOn: is about to give a detailled information about an object, #displayStringOn: is a message that should return a string-based representation to be used by list and related UI frameworks. By default, simply use printOn: method.
+	Subclasses should override this method instead of #displayString"
+
+	self printOn: aStream
 ]
 
 { #category : #'reflective operations' }
@@ -892,6 +907,13 @@ Object >> finalizationRegistry [
 { #category : #finalization }
 Object >> finalize [
 	"Finalize the resource associated with the receiver. This message should only be sent during the finalization process. There is NO garantuee that the resource associated with the receiver hasn't been free'd before so take care that you don't run into trouble - this all may happen with interrupt priority."
+]
+
+{ #category : #displaying }
+Object >> fullDisplayString [
+	"Answer a String whose characters are a description of the receiver suitable for UI"
+
+	^ String streamContents: [:s | self displayStringOn: s]
 ]
 
 { #category : #printing }
@@ -1707,8 +1729,15 @@ Object >> printString [
 Object >> printStringLimitedTo: limit [
 	"Answer a String whose characters are a description of the receiver.
 	If you want to print without a character limit, use fullPrintString."
+	^self printStringLimitedTo: limit using: [:s | self printOn: s]
+]
+
+{ #category : #printing }
+Object >> printStringLimitedTo: limit using: printBlock [
+	"Answer a String whose characters are a description of the receiver
+	produced by given printBlock. It ensures the result will be not bigger than given limit"
 	| limitedString |
-	limitedString := String streamContents: [:s | self printOn: s] limitedTo: limit.
+	limitedString := String streamContents: printBlock limitedTo: limit.
 	limitedString size < limit ifTrue: [^ limitedString].
 	^ limitedString , '...etc...'
 ]

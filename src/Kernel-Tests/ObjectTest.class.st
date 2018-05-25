@@ -82,6 +82,20 @@ ObjectTest >> testBecomeForward [
 	self assert: pt1 = (100@100)
 ]
 
+{ #category : #'tests-printing' }
+ObjectTest >> testDisplayString [
+
+	self assert: Object new displayString equals: 'an Object'
+]
+
+{ #category : #'tests-printing' }
+ObjectTest >> testDisplayStringLimitedString [
+
+	| actual |
+	actual := Object new displayStringLimitedTo: 4.
+	self assert: actual equals: 'an O...etc...'
+]
+
 { #category : #'tests - debugging' }
 ObjectTest >> testHaltIf [
 
@@ -137,6 +151,20 @@ ObjectTest >> testInstVarNamedPut [
 	self assert: (obj instVarNamed: 'variable') equals: 1.
 	self shouldnt: [ obj instVarNamed: 'variable' put: 1 ] raise: InstanceVariableNotFound.
 	self should: [ obj instVarNamed: 'timoleon' put: 1 ] raise: InstanceVariableNotFound
+]
+
+{ #category : #'tests-printing' }
+ObjectTest >> testPrintLimitedString [
+
+	| actual |
+	actual := Object new printStringLimitedTo: 4.
+	self assert: actual equals: 'an O...etc...'
+]
+
+{ #category : #'tests-printing' }
+ObjectTest >> testPrintString [
+
+	self assert: Object new printString equals: 'an Object'
 ]
 
 { #category : #'tests - introspection' }
