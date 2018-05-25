@@ -537,7 +537,7 @@ HaloMorph >> addNameBeneath: outerRectangle string: aString [
 	nameMorph 
 	wantsYellowButtonMenu: false;
 	color: Color black;
-	backgroundColor: Color white;
+	backgroundColor: self defaultBalloonColor;
 	target: innerTarget.
 	
 	namePosition := outerRectangle bottomCenter -
