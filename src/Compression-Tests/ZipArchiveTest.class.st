@@ -224,8 +224,6 @@ ZipArchiveTest >> testSetLastModification [
 { #category : #tests }
 ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
 	| nestedFileToZip fileModificationTime fileModificationTimeBlock |
-	Smalltalk os isWindows
-		ifTrue: [ "Occassionally trying to delete an existing file fails in Windows due to a file open lock" ^ self skip ].
 	fileModificationTimeBlock := [ (subdir / '_test-zip-file.txt') modificationTime ].
 	nestedFileToZip := (subdir / '_test-zip-file.txt')
 		writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ];
@@ -233,21 +231,25 @@ ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
 	zip
 		addDirectory: subdir fullName as: subdir basename;
 		addFile: nestedFileToZip fullName as: nestedFileToZip basename;
-		writeToFileNamed: zipFile fullName.
+		writeToFileNamed: zipFile fullName;
+		close.
 	ZipArchive new
 		readFrom: zipFile;
-		extractAllTo: subdir overwrite: true.
+		extractAllTo: subdir overwrite: true;
+		close.
 	fileModificationTime := fileModificationTimeBlock value.
 	1 second wait.
 	ZipArchive new
 		readFrom: zipFile;
-		extractAllTo: subdir overwrite: true.
+		extractAllTo: subdir overwrite: true;
+		close.
 	self assert: fileModificationTime ~= fileModificationTimeBlock value.
 	fileModificationTime := fileModificationTimeBlock value.
 	1 second wait.
 	ZipArchive new
 		readFrom: zipFile;
-		extractAllTo: subdir overwrite: false.
+		extractAllTo: subdir overwrite: false;
+		close.
 	self deny: fileModificationTime ~= fileModificationTimeBlock value
 ]
 
