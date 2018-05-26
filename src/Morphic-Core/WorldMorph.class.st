@@ -121,6 +121,16 @@ WorldMorph >> activeHand: aHandMorph [
 
 ]
 
+{ #category : #accessing }
+WorldMorph >> actualScreenSize [
+	"Obtains the screen size from VM. Since this may change depending on which world is installed 
+	(worlds can change, yes), this needs to be delegated here allowing subclasses to redefine the way 
+	they take screen size."
+	<primitive: 106>
+
+	self primitiveFailed
+]
+
 { #category : #'alarms-scheduler' }
 WorldMorph >> addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime [
 	"Add a new alarm with the given set of parameters"

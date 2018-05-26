@@ -35,12 +35,10 @@ DisplayScreen class >> actualScreenDepth [
 
 { #category : #accessing }
 DisplayScreen class >> actualScreenSize [
-	<primitive: 106>
-
-	^ World osWindow 
-		ifNotNil: [:anOSWindow | anOSWindow extent]
-		ifNil: [ self primitiveFailed ].
-
+	"Delegates to active world because it can be something else than the one provided by the VM"
+	
+	ActiveWorld ifNil: [ ^ 0@0 ].
+	^ ActiveWorld actualScreenSize
 ]
 
 { #category : #'display box access' }
