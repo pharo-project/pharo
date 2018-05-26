@@ -224,7 +224,7 @@ ExternalBrowser >> refreshClasses: pack [
 	pack 
 		ifNil: [ classes items: #() ] 
 		ifNotNil: [ classes items: (self classesOfPackage: pack)]. 
-	Transcript show: pack printString;cr
+
 ]
 
 { #category : #'selection operation' }
