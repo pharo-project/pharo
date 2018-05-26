@@ -6,7 +6,8 @@ Class {
 	#superclass : #MemoryFileSystemEntry,
 	#instVars : [
 		'bytes',
-		'size'
+		'size',
+		'closed'
 	],
 	#category : #'FileSystem-Memory-Base'
 }
@@ -71,6 +72,16 @@ MemoryFileSystemFile >> bytes [
 	^ bytes
 ]
 
+{ #category : #'open/close' }
+MemoryFileSystemFile >> close [
+	 closed := true
+]
+
+{ #category : #testing }
+MemoryFileSystemFile >> closed [
+	^ closed
+]
+
 { #category : #'stream-protocol' }
 MemoryFileSystemFile >> copyFrom: from to: position [
 	^ bytes copyFrom: from to: position
@@ -97,7 +108,8 @@ MemoryFileSystemFile >> grownBy: length [
 MemoryFileSystemFile >> initialize [
 	super initialize.
 	bytes := #[].
-	size := 0
+	size := 0.
+	closed := false
 ]
 
 { #category : #accessing }
