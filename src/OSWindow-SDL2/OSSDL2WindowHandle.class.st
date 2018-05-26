@@ -270,6 +270,11 @@ OSSDL2WindowHandle >> position: aPoint [
 	handle setPositionX: aPoint x asInteger y: aPoint y asInteger
 ]
 
+{ #category : #accessing }
+OSSDL2WindowHandle >> prepareExternalResourceForAutoRelease [
+	handle autoRelease
+]
+
 { #category : #'mouse capture' }
 OSSDL2WindowHandle >> releaseMouse [
 	SDL2 setRelativeMouseMode: false
