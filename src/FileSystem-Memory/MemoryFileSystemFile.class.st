@@ -56,6 +56,11 @@ MemoryFileSystemFile >> at: first write: aCollection startingAt: start count: co
 	size := last
 ]
 
+{ #category : #'open/close' }
+MemoryFileSystemFile >> basicOpen [
+	closed := false
+]
+
 { #category : #'streams-compatibility' }
 MemoryFileSystemFile >> binaryReadStream [
 	^ ReadStream on: self bytes from: 1 to: size
