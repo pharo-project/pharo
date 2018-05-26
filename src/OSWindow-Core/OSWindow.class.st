@@ -122,9 +122,9 @@ OSWindow >> createWindow [
 	
 	handle := initialAttributes createWindowHandleFor: self.
 	handle isValid ifTrue: [ 
-		"Handle here points to an OSWindowHandle, its #handle message has the real external resource. 
-		 This is a bit confusing, but is better like this :)"
-		handle handle autoRelease ]
+		"Handle here points to an OSWindowHandle, its #handle message has the real 
+		 external resource. This is a bit confusing, but is better like this :)"
+		handle prepareExternalResourceForAutoRelease ]
 ]
 
 { #category : #'dispatching events' }
