@@ -81,3 +81,8 @@ OSWindowDriver >> createWindowWithAttributes: anOSWindowAttributes osWindow: osW
 OSWindowDriver >> isNullDriver [
 	^ false
 ]
+
+{ #category : #'system startup' }
+OSWindowDriver >> shutDown [
+	"A hook to perform cleanups when shuting down a driver"
+]
