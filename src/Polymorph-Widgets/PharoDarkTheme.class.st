@@ -443,18 +443,112 @@ PharoDarkTheme >> successTextColor [
 	^ Color green darker darker darker
 ]
 
+{ #category : #'fill-styles-taskbar' }
+PharoDarkTheme >> taskbarFillStyleFor: aTaskbar [
+	^ SolidFillStyle color: ( Color black alpha: 0.8)
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoDarkTheme >> taskbarItemDisabledBorderStyleFor: aButton [
+	^ self taskbarItemNormalBorderStyleFor: aButton
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoDarkTheme >> taskbarItemDisabledFillStyleFor: aButton [
+	"Return the disabled taskbar item fillStyle for the given color."
+
+	^ self taskbarItemNormalFillStyleFor: aButton
+]
+
 { #category : #'basic-colors' }
 PharoDarkTheme >> taskbarItemLabelColorForCollapsed: aButton [
 	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
 
-	^ self textColor
+	^ Color lightGray
 ]
 
 { #category : #'basic-colors' }
 PharoDarkTheme >> taskbarItemLabelColorForExpanded: aButton [
 	"Answer the colour for the label of the given taskbar button, given that the corresponding window is expanded."
 
-	^ self textColor
+	^ Color white
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoDarkTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
+	^ BottomBorder new
+		color: Color white;
+		width: 2;
+		yourself
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoDarkTheme >> taskbarItemMouseOverFillStyleFor: aButton [
+	^ SolidFillStyle color: (Color white alpha: 0.15)
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoDarkTheme >> taskbarItemNormalBorderStyleFor: aButton [
+	^ BottomBorder new
+		color: Color white;
+		width: 1;
+		trimSize: 2;
+		yourself
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoDarkTheme >> taskbarItemNormalFillStyleFor: aButton [
+	^ SolidFillStyle color: Color transparent
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoDarkTheme >> taskbarItemPressedBorderStyleFor: aButton [
+	^ self taskbarItemNormalBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoDarkTheme >> taskbarItemPressedFillStyleFor: aButton [
+	^ SolidFillStyle color: (Color white alpha: 0.4)
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoDarkTheme >> taskbarItemSelectedBorderStyleFor: aButton [
+	^ self taskbarItemMouseOverBorderStyleFor: aButton
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoDarkTheme >> taskbarItemSelectedDisabledBorderStyleFor: aButton [
+	^ self taskbarItemMouseOverBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoDarkTheme >> taskbarItemSelectedDisaledFillStyleFor: aButton [
+	^ self taskbarItemSelectedFillStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoDarkTheme >> taskbarItemSelectedFillStyleFor: aButton [
+	^ SolidFillStyle color: (Color white alpha: 0.15)
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoDarkTheme >> taskbarItemSelectedMouseOverBorderStyleFor: aButton [
+	^ self taskbarItemMouseOverBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoDarkTheme >> taskbarItemSelectedMouseOverFillStyleFor: aButton [
+	^ SolidFillStyle color: (Color white alpha: 0.25)
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoDarkTheme >> taskbarItemSelectedPressedBorderStyleFor: aButton [
+	^ self taskbarItemMouseOverBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoDarkTheme >> taskbarItemSelectedPressedFillStyleFor: aButton [
+	^ SolidFillStyle color: (Color white alpha: 0.35)
 ]
 
 { #category : #'accessing colors' }
