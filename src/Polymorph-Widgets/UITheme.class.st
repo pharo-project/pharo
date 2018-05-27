@@ -5463,10 +5463,9 @@ UITheme >> taskbarButtonLabelColorFor: aButton [
 				ifFalse: [Color gray darker]]
 ]
 
-{ #category : #'fill-styles' }
+{ #category : #'fill-styles-taskbar' }
 UITheme >> taskbarFillStyleFor: aTaskbar [
-	^ "self buttonNormalFillStyleFor: aTaskbar"
-	SolidFillStyle color: Color transparent 
+	^ SolidFillStyle color: Color transparent 
 ]
 
 { #category : #'border-styles-taskbar' }
