@@ -1,3 +1,6 @@
+"
+SUnit tests for the key mapping dispatcher
+"
 Class {
 	#name : #KMDispatcherTestCase,
 	#superclass : #AbstractKeymappingTest,
@@ -32,16 +35,16 @@ KMDispatcherTestCase >> testBuffering [
 	event2 := self eventKey: $b.
 	morph kmDispatcher
 		dispatchKeystroke: event2.
-	self assert: morph kmDispatcher buffer size = 2.
-	self assert: morph kmDispatcher buffer first = event1.
-	self assert: morph kmDispatcher buffer second = event2.
+	self assert: morph kmDispatcher buffer size equals: 2.
+	self assert: morph kmDispatcher buffer first equals: event1.
+	self assert: morph kmDispatcher buffer second equals: event2.
 	
 	event3 := self eventKey: $c.
 	morph kmDispatcher
 		dispatchKeystroke: event3.
 	self assert: morph kmDispatcher buffer isEmpty.
 	
-	self assert: flag.
+	self assert: flag
 ]
 
 { #category : #tests }
@@ -62,7 +65,7 @@ KMDispatcherTestCase >> testDetach [
 	attachedCategories := morph kmDispatcher targets collect: [ :e | e category name ].
 	self assert: attachedCategories asArray equals: { #TestAnother }.
 
-	self should: [ morph detachKeymapCategory: #NonExistent ] raise: Error.
+	self should: [ morph detachKeymapCategory: #NonExistent ] raise: Error
 ]
 
 { #category : #tests }
@@ -89,7 +92,7 @@ KMDispatcherTestCase >> testNoMultiTrigger [
 	{self eventKey: $a. self eventKey: $b. self eventKey: $c}
 		do: [:e | bm2 dispatchKeystrokeForEvent: e].
 	self deny: flag1.
-	self assert: flag2.
+	self assert: flag2
 ]
 
 { #category : #tests }
@@ -121,5 +124,5 @@ KMDispatcherTestCase >> testNoStaggeredTrigger [
 		do: [:e | bm2 dispatchKeystrokeForEvent: e].
 	flag1 ifTrue: [ bufferBefore inspect ].
 	self deny: flag1.
-	self assert: flag2.
+	self assert: flag2
 ]

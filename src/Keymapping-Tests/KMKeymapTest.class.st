@@ -1,3 +1,6 @@
+"
+SUnit tests for the key map
+"
 Class {
 	#name : #KMKeymapTest,
 	#superclass : #AbstractKeymappingTest,
@@ -49,5 +52,5 @@ KMKeymapTest >> testMatching [
 	self assert: (category matches: {p}).
 	self assert: (category matchesCompletely: {p. p.}).
 	self deny: (category matches: {a. p. p}).
-	self deny: (category matches: {self eventKey: $l. self eventKey: $m. self eventKey: $n. self eventKey: $o}).
+	self deny: (category matches: {self eventKey: $l. self eventKey: $m. self eventKey: $n. self eventKey: $o})
 ]

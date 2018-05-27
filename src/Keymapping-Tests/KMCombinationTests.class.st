@@ -1,3 +1,6 @@
+"
+SUnit tests for key combinations
+"
 Class {
 	#name : #KMCombinationTests,
 	#superclass : #AbstractKeymappingTest,
@@ -15,7 +18,7 @@ KMCombinationTests >> testCombinationOfSimpleShortcuts [
 	self assert: (combination includes: shortcut).
 	self assert: (combination includes: otherShortcut).
 	
-	self assert: ((combination collect: #platform) allSatisfy: [ :p | p = #all ]).
+	self assert: ((combination collect: #platform) allSatisfy: [ :p | p = #all ])
 ]
 
 { #category : #tests }
@@ -28,7 +31,7 @@ KMCombinationTests >> testCombinationSeveralShortcuts [
 	self assert: (platforms includes: #MacOSX).
 	self assert: (platforms includes: #Windows).
 	self assert: (platforms includes: #Unix).
-	self assert: (platforms includes: #all).
+	self assert: (platforms includes: #all)
 ]
 
 { #category : #tests }
@@ -36,9 +39,9 @@ KMCombinationTests >> testMacDependentShortcut [
 	| shortcut |
 	shortcut := $a ctrl mac.
 	
-	self assert: (shortcut shortcut = $a ctrl).
+	self assert: shortcut shortcut equals: $a ctrl.
 	
-	self assert: shortcut platform equals: #MacOSX.
+	self assert: shortcut platform equals: #MacOSX
 ]
 
 { #category : #tests }
@@ -55,9 +58,9 @@ KMCombinationTests >> testPlatformDependentShortcut [
 	| shortcut |
 	shortcut := $a ctrl win.
 	
-	self assert: (shortcut shortcut = $a ctrl).
+	self assert: shortcut shortcut equals: $a ctrl.
 	
-	self assert: shortcut platform equals: #Windows.
+	self assert: shortcut platform equals: #Windows
 ]
 
 { #category : #tests }
@@ -65,7 +68,7 @@ KMCombinationTests >> testShortcutIsSimpleCombination [
 	| shortcut |
 	shortcut := $a command.
 	self assert: (shortcut includes: shortcut).
-	self assert: shortcut shortcut equals: shortcut.
+	self assert: shortcut shortcut equals: shortcut
 ]
 
 { #category : #tests }
@@ -73,9 +76,9 @@ KMCombinationTests >> testUnixDependentShortcut [
 	| shortcut |
 	shortcut := $a ctrl unix.
 	
-	self assert: (shortcut shortcut = $a ctrl).
+	self assert: shortcut shortcut equals: $a ctrl.
 	
-	self assert: shortcut platform equals: #Unix.
+	self assert: shortcut platform equals: #Unix
 ]
 
 { #category : #tests }
@@ -92,7 +95,7 @@ KMCombinationTests >> testWindowsDependentShortcut [
 	| shortcut |
 	shortcut := $a ctrl win.
 	
-	self assert: (shortcut shortcut = $a ctrl).
+	self assert: shortcut shortcut equals: $a ctrl.
 	
-	self assert: shortcut platform equals: #Windows.
+	self assert: shortcut platform equals: #Windows
 ]
