@@ -14,9 +14,7 @@ Class {
 	#name : #Metaclass,
 	#superclass : #ClassDescription,
 	#instVars : [
-		'thisClass',
-		'traitComposition',
-		'localSelectors'
+		'thisClass'
 	],
 	#category : #'Kernel-Classes'
 }
@@ -171,6 +169,12 @@ Metaclass >> initializeFrom: anotherClassTrait [
 	self traitComposition: self traitComposition copyTraitExpression.
 	self methodDict: self methodDict copy.
 	self basicOrganization: self organization copy.
+]
+
+{ #category : #compiling }
+Metaclass >> innerBindingOf: varName [
+
+	^self instanceSide innerBindingOf: varName
 ]
 
 { #category : #'accessing parallel hierarchy' }

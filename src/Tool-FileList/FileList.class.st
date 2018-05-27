@@ -35,7 +35,7 @@ Class {
 	#category : #'Tool-FileList'
 }
 
-{ #category : #utility }
+{ #category : #utilities }
 FileList class >> addFullPanesTo: window from: aCollection [
 
 	aCollection do: [ :each | 
@@ -112,14 +112,14 @@ FileList class >> contentMenu: aBuilder [
 
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 FileList class >> itemsForDirectory: aFileDirectory [
 	"Answer a list of services appropriate when no file is selected."
 
 	^ FileServices itemsForDirectory: aFileDirectory
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 FileList class >> itemsForFile: file [
 	"Answer a list of services appropriate for a file of the given full name"
 
@@ -244,7 +244,7 @@ FileList class >> searchList [
 	^ searchList ifNil: [ searchList := OrderedCollection new ].
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 FileList class >> suffixOf: aName [
 	"Answer the file extension of the given file"
 	^ aName
@@ -304,7 +304,7 @@ FileList >> acceptDroppingMorph: aTransferMorph event: evt inMorph: dest [
 	^true
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 FileList >> addFullPanesTo: window from: aCollection [
 
 	aCollection do: [ :each | 
@@ -1479,6 +1479,11 @@ FileList >> setSortSelector: aByteSymbol [
 	self sortBlock: (self perform: aByteSymbol).
 ]
 
+{ #category : #'morphic ui' }
+FileList >> shoutAboutToStyle: aPluggableShoutMorphOrView [ 
+	^ false
+]
+
 { #category : #private }
 FileList >> sortBlock [
 	"Answer block to decide what order to display the directory entries."
@@ -1658,25 +1663,21 @@ FileList >> veryDeepFixupWith: deepCopier [
 { #category : #'own services' }
 FileList >> viewContents [
 	"View the contents of my selected file in a new text window"
-	
+
 	| aString |
-	
-	self reference streamWritable: false do: [ :stream|
-		aString := stream setConverterForCode contentsOfEntireFile ].
-	
-	UIManager default edit: aString label: 'Contents from ', self reference basename
+	self reference streamWritable: false do: [ :stream | aString := stream upToEnd ].
+	UIManager default edit: aString label: 'Contents from ' , self reference basename
 ]
 
 { #category : #'own services' }
 FileList >> viewContentsInWorkspace [
 	"View the contents of my selected file in a new workspace"
-	
+
 	| aString |
-	
-	self reference streamWritable: false do: [ :stream|
-		aString := stream setConverterForCode contentsOfEntireFile ].
-	
-	Smalltalk tools workspace openContents: aString label: 'Workspace from ', self reference basename
+	self reference streamWritable: false do: [ :stream | aString := stream upToEnd ].
+	Smalltalk tools workspace
+		openContents: aString
+		label: 'Workspace from ' , self reference basename
 ]
 
 { #category : #'volume list and pattern' }

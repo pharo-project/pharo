@@ -34,7 +34,7 @@ TURN <CRLF>
 Class {
 	#name : #SMTPClient,
 	#superclass : #TelnetProtocolClient,
-	#category : #'Network-Protocols'
+	#category : #'Network-Protocols-Protocols'
 }
 
 { #category : #accessing }
@@ -112,9 +112,9 @@ SMTPClient >> data: messageData [
 	self checkResponse.
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 SMTPClient >> encodeString: aString [ 
-	^ ZnUtils encodeBase64: aString
+	^ (aString encodeWith: #null) base64Encoded
 ]
 
 { #category : #'private protocol' }

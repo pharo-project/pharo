@@ -166,7 +166,7 @@ ShiftClassInstaller >> make: aBlock [
 
 		builder builderEnhancer afterMigratingClass: builder installer: self.	
 
-		newClass subclasses do: [ :e | self remake: e ].
+		builder builderEnhancer propagateChangesToRelatedClasses: newClass installer: self.
 	] on: ShNoChangesInClass do:[
 		"If there are no changes in the building, I am not building or replacing nothing"
 		newClass := oldClass.

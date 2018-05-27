@@ -1,7 +1,7 @@
 Class {
 	#name : #ManifestOpalCompilerCore,
 	#superclass : #PackageManifest,
-	#category : #'OpalCompiler-Core'
+	#category : #'OpalCompiler-Core-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

@@ -24,17 +24,17 @@ Class {
 	#category : #'Morphic-Base-Widgets'
 }
 
-{ #category : #utility }
+{ #category : #utilities }
 BalloonMorph class >> balloonColor [
 	^ BalloonColor ifNil: [BalloonColor := self defaultBalloonColor]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 BalloonMorph class >> balloonFont [
 	^ StandardFonts balloonFont
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 BalloonMorph class >> balloonFont: aFont [
 	StandardFonts balloonFont: aFont
 ]
@@ -104,7 +104,7 @@ BalloonMorph class >> initialize [
 	self balloonFont: StandardFonts defaultFont
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 BalloonMorph class >> setBalloonColorTo: aColor [ 
 	aColor ifNotNil: [BalloonColor := aColor]
 ]

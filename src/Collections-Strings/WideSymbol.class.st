@@ -72,7 +72,7 @@ WideSymbol >> privateAt: index put: aCharacter [
 
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 WideSymbol >> species [
 	"Answer the preferred class for reconstructing the receiver."
 	^WideString

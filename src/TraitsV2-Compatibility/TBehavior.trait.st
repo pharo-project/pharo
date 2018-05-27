@@ -36,12 +36,17 @@ TBehavior >> addObsoleteSubclass: aClass [
 
 { #category : #'adding/removing methods' }
 TBehavior >> addSelector: selector withMethod: compiledMethod [ 
-	^ self addSelector: selector withMethod: compiledMethod notifying: nil
+	^ self addSelectorSilently: selector withMethod: compiledMethod
 ]
 
 { #category : #'adding/removing methods' }
 TBehavior >> addSelector: selector withMethod: compiledMethod notifying: requestor [
-	^ self addSelectorSilently: selector withMethod: compiledMethod
+	self
+		deprecated: 'Please use #addSelector:withMethod: instead'
+		transformWith:
+			'`@receiver addSelector: `@statements1 withMethod: `@statements2 notifying: `@statements3'
+		   -> '`@receiver addSelector: `@statements1 withMethod: `@statements2'.
+	^ self addSelector: selector withMethod: compiledMethod
 ]
 
 { #category : #'adding/removing methods' }
@@ -616,13 +621,6 @@ TBehavior >> copiesMethodsFromSuperclass [
 		(self copiesFromSuperclass: method)
 			ifTrue: [ ^ true ]].
 	^ false
-]
-
-{ #category : #copying }
-TBehavior >> copyOfMethodDictionary [
-	"Return a copy of the receiver's method dictionary"
-
-	^ self methodDict copy
 ]
 
 { #category : #copying }
@@ -1390,7 +1388,7 @@ TBehavior >> obsoleteSubclasses [
 { #category : #copying }
 TBehavior >> postCopy [
 	super postCopy.
-	self methodDict: self copyOfMethodDictionary
+	self methodDict: self methodDict copy
 ]
 
 { #category : #'accessing method dictionary' }

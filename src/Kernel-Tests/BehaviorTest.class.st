@@ -209,9 +209,9 @@ BehaviorTest >> testMethodsWritingSlot [
 
 { #category : #metrics }
 BehaviorTest >> testNumberOfInstanceVariables [
-	self assert: Object numberOfInstanceVariables = 0.
-	self assert: Point numberOfInstanceVariables = 2.
-	self assert: Metaclass numberOfInstanceVariables = 3
+	self assert: Object numberOfInstanceVariables equals: 0.
+	self assert: Point numberOfInstanceVariables equals: 2.
+	self assert: Metaclass numberOfInstanceVariables equals: 1
 ]
 
 { #category : #'tests - properties' }

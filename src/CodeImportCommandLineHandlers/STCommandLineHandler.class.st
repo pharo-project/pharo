@@ -23,7 +23,7 @@ Class {
 	#instVars : [
 		'sourceFiles'
 	],
-	#category : #CodeImportCommandLineHandlers
+	#category : #'CodeImportCommandLineHandlers-Base'
 }
 
 { #category : #accessing }

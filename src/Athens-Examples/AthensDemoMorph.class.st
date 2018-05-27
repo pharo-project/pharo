@@ -11,10 +11,7 @@ Class {
 	#superclass : #Morph,
 	#instVars : [
 		'surface',
-		'animations',
 		'current',
-		'zooming',
-		'scale',
 		'frame',
 		'pharoLogo',
 		'esugBallon'

@@ -13,7 +13,7 @@ Class {
 		'formattedCheckBox',
 		'sourceCodePane'
 	],
-	#category : #'BlueInk-Extras'
+	#category : #'BlueInk-Extras-Settings'
 }
 
 { #category : #'build ui buttons' }
@@ -54,8 +54,15 @@ BISettingPreviewer class >> dialogOpenBIPreviewer [
 			self buildOpenBIInspectorButton}
 ]
 
+{ #category : #'instance creation' }
+BISettingPreviewer class >> open [
+	<script>
+	self new openWithSpec 
+]
+
 { #category : #'button behavior' }
 BISettingPreviewer class >> openBIInspectorButtonAction [
+	<script>
 	BISettingPreviewer new openWithSpec
 ]
 
@@ -113,7 +120,7 @@ BISettingPreviewer >> buildMethodSearchField [
 	^ self newTextInput
 		ghostText: 'Enter the method selector...';
 		whenTextIsAccepted: [ self whenSelectorAccepted ];
-		yourself.
+		yourself
 ]
 
 { #category : #'item creation' }
@@ -254,7 +261,7 @@ BISettingPreviewer >> whenSelectorAccepted [
 			sourceCodePane behavior: compiledMethod methodClass.
 			self formattedCheckBox state
 				ifTrue: [ self formatSourceCode ]
-				ifFalse: [ sourceCodePane text: compiledMethod sourceCode ] ]
+				ifFalse: [ sourceCodePane text: compiledMethod sourceCode ]]
 		ifFalse: [ 
 			sourceCodePane behavior: nil.
 			sourceCodePane text: ' ' ]

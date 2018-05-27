@@ -520,7 +520,7 @@ BISimpleFormatter >> visitVariableNode: aVariableNode [
 	codeStream nextPutAll: aVariableNode name
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 BISimpleFormatter >> with: firstCollection and: secondCollection do: aBlock separatedBy: separatorBlock [
 	firstCollection isEmpty
 		ifTrue: [ ^ self ].

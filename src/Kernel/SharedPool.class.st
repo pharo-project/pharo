@@ -55,3 +55,18 @@ SharedPool class >> includesKey: aName [
 	"does this pool include aName"
 	^(self bindingOf: aName) notNil
 ]
+
+{ #category : #testing }
+SharedPool class >> isUsed [
+	^super isUsed or: [self poolUsers isNotEmpty]
+]
+
+{ #category : #pools }
+SharedPool class >> poolUsers [
+	"Answer an Array of all classes that uses the shared pool"
+
+	| aCollection |
+	aCollection := ReadWriteStream on: Array new.
+	self environment allClassesDo: [:class | (class includesSharedPoolNamed: self name) ifTrue: [aCollection nextPut: class]].
+	^ aCollection contents
+]

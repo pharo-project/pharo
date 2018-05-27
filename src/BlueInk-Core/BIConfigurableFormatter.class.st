@@ -26,7 +26,7 @@ Class {
 		'DefaultPrettyPrintContext',
 		'FormatAsYouReadPolicy'
 	],
-	#category : #'BlueInk-Core'
+	#category : #'BlueInk-Core-Base'
 }
 
 { #category : #private }
@@ -1236,7 +1236,7 @@ BIConfigurableFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 	self newLines: 1
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 BIConfigurableFormatter >> resizeComment: aComment withFirstLineShorterOf: anIndex [
 	| cutComment firstLine currentCharPos |
 	currentCharPos := 1.
@@ -1255,7 +1255,7 @@ BIConfigurableFormatter >> resizeComment: aComment withFirstLineShorterOf: anInd
 			self resizeStringDependingOnWindowSizeFor: cutComment ]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 BIConfigurableFormatter >> resizeCommentFor: aComment startingAt: anIndex [
 	codeStream nextPut: $".
 	"Hack to keep the right comment in pop up like cmd n, cmd m..."
@@ -1272,7 +1272,7 @@ BIConfigurableFormatter >> resizeCommentFor: aComment startingAt: anIndex [
 	codeStream nextPut: $"
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 BIConfigurableFormatter >> resizeStringDependingOnWindowSizeFor: aComment [
 	| resizedComment |
 	resizedComment := aComment contents withNoLineLongerThan: self maxLineLength.
@@ -1536,7 +1536,7 @@ BIConfigurableFormatter >> willBeMultiline: aNode [
 	^(self formattedSourceFor: aNode) includes: Character cr
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 BIConfigurableFormatter >> with: firstCollection and: secondCollection do: aBlock separatedBy: separatorBlock [
 	firstCollection isEmpty
 		ifTrue: [ ^ self ].

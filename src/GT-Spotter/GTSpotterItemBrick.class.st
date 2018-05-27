@@ -271,7 +271,7 @@ GTSpotterItemBrick >> shouldShowActionbar [
 
 	^ self isHovered or: [
 		self isChecked or: [
-			self stepModel isSelected: self candidateLink ] ]
+			self stepModel ifNil: [ false ] ifNotNil: [ :sm | sm isSelected: self candidateLink ] ] ]
 ]
 
 { #category : #actions }

@@ -34,6 +34,7 @@ ByteArray >> gtInspectorHexDumpIn: composite [
 	composite text
 			title: 'Hex Dump';
 			format: #asText;
+			when: [ self isCompiledMethod not ];
 			display: [ | maxBytes displayStream displayString |
 				maxBytes := 10000.
 				displayStream := (String new: maxBytes * 5) writeStream.

@@ -1,6 +1,6 @@
 Extension { #name : #MultiFontTest }
 
-{ #category : #'*Multilingual-Tests-OtherLanguages' }
+{ #category : #'*Multilingual-Tests' }
 MultiFontTest >> testMultistringFont [
 	
 	| text p style height width |
@@ -25,7 +25,7 @@ MultiFontTest >> testMultistringFont [
 				into: [:tally :next | tally
 						+ (style defaultFont widthOf: next)].
 	p adjustRightX.
-	self assert: p extent = (width @ height).
+	self assert: p extent equals: (width @ height).
 	"Display getCanvas
 		paragraph: p
 		bounds: (10 @ 10 extent: 100 @ 100)

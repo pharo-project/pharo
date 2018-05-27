@@ -189,12 +189,12 @@ Class >> allClassVarNames [
 { #category : #'pool variables' }
 Class >> allSharedPools [
 	"Answer an ordered collection of the pools the receiver shares, including those defined  in the superclasses of the receiver."
-	| aSet | 
-	^self superclass == nil
-		ifTrue: [self sharedPools copy]
-		ifFalse: [aSet := self superclass allSharedPools.
-			aSet addAll: self sharedPools.
-			aSet]
+	
+	^self superclass
+		ifNil: [self sharedPools copy]
+		ifNotNil: [ | aSet |  
+			aSet := self superclass allSharedPools.
+			aSet addAll: self sharedPools; yourself]
 ]
 
 { #category : #'class variables' }
@@ -538,7 +538,7 @@ Class >> definitionForNautilusWithSlots [
 	poolString = '' ifFalse: [
 		aStream cr; tab; nextPutAll: 'poolDictionaries: ';
 			store: poolString].
-	aStream cr; tab; nextPutAll: 'category: ';
+	aStream cr; tab; nextPutAll: 'package: ';
 			store: self category asString.
 
 	superclass ifNil: [ 
@@ -694,6 +694,11 @@ Class >> immediateSubclass: className instanceVariableNames: instvarNames
 ]
 
 { #category : #'subclass creation - immediate' }
+Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
+	^self immediateSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat
+]
+
+{ #category : #'subclass creation - immediate' }
 Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
 	"This is the standard initialization message for creating a new class as a 
 	subclass of an existing class (the receiver) in which the subclass is to 
@@ -796,12 +801,6 @@ Class >> name [
 	"Answer the name of the receiver."
 
 	^ name ifNil: [ super name ]
-]
-
-{ #category : #private }
-Class >> name: aSymbol [
-	"for compatibile API with trais"
-	self setName: aSymbol
 ]
 
 { #category : #'subclass creation' }
@@ -929,12 +928,9 @@ Class >> removeFromSystem [
 
 { #category : #'initialize-release' }
 Class >> removeFromSystem: logged [
-	"Forget the receiver from the Smalltalk global dictionary. Any existing 
-	instances will refer to an obsolete version of the receiver."
-	
-	"keep the class name and category for triggering the system change message. If we wait to long, then we get obsolete information which is not what we want."
-
-	"tell class to deactivate and unload itself-- two separate events in the module system"
+	"Forget the receiver from the Smalltalk global dictionary. Any existing  instances will refer to an obsolete version of the receiver.
+	Keep the class name and category for triggering the system change message. If we wait to long, then we get obsolete information which is not what we want.
+	Tell class to deactivate and unload itself-- two separate events in the module system"
 	| myCategory |
 	self release.
 	self unload.
@@ -944,6 +940,7 @@ Class >> removeFromSystem: logged [
 		self superclass addObsoleteSubclass: self].
 
 	myCategory := self category.
+	self isReferenced ifTrue: [Undeclared declare: self name asSymbol from: Smalltalk globals].
 	self environment forgetClass: self logged: logged.
 	self obsolete.
 	logged ifTrue: [SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory].
@@ -1040,14 +1037,11 @@ Class >> setName: aSymbol [
 { #category : #'pool variables' }
 Class >> sharedPoolOfVarNamed: aString [
 	"Returns the SharedPool or nil from which the pool variable named aString is coming from."
-	
-	 ^ self sharedPools 
-			detect: [:each | each usesClassVarNamed: aString ]
-			ifNone: [
-						self superclass == nil
-							ifTrue: [nil]
-							ifFalse: [self superclass sharedPoolOfVarNamed: aString]
-						]
+
+	^ self sharedPools
+		detect: [ :each | each usesClassVarNamed: aString ]
+		ifNone:
+			[ self superclass ifNil: [ nil ] ifNotNil: [ self superclass sharedPoolOfVarNamed: aString ] ]
 ]
 
 { #category : #'pool variables' }
@@ -1158,7 +1152,18 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 ]
 
 { #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
+Class >> subclass: aSubclassSymbol layout: layoutClass slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
+	self deprecated: 'use ... package: instead'.
+	^ self
+		subclass: aSubclassSymbol
+		layout: layoutClass
+		slots: slotDefinition
+		classVariables: classVarDefinition
+		package: aCategorySymbol
+]
+
+{ #category : #'subclass creation - slots' }
+Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder |
 		builder name: aSubclassSymbol;
@@ -1172,6 +1177,13 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition cl
 
 { #category : #'subclass creation - slots' }
 Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
+	self deprecated: 'use ... package: instead'.
+	^ self subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol
+
+]
+
+{ #category : #'subclass creation - slots' }
+Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder |
 		builder name: aSubclassSymbol;
@@ -1186,6 +1198,16 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition c
 
 { #category : #'subclass creation - slots' }
 Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
+	self deprecated: 'use ... package: instead'.
+	^ self
+		subclass: aSubclassSymbol
+		slots: slotDefinition
+		classVariables: classVarDefinition
+		package: aCategorySymbol
+]
+
+{ #category : #'subclass creation - slots' }
+Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder | 
 			builder
@@ -1198,6 +1220,13 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 
 { #category : #'subclass creation - slots' }
 Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
+
+	self deprecated: 'use ... package: instead'.
+	^ self subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol
+]
+
+{ #category : #'subclass creation - slots' }
+Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder |
 		builder name: aSubclassSymbol;
@@ -1252,20 +1281,15 @@ Class >> usesClassVarNamed: aString [
 { #category : #'pool variables' }
 Class >> usesLocalPoolVarNamed: aString [
 	"Return whether the receiver uses a pool variable named: aString which is defined locally"
-	
-	self hasSharedPools
-		ifTrue: [ self sharedPools do: [:each | (each usesClassVarNamed: aString) 
-												ifTrue: [ ^true ]]]
-		ifFalse: [ ^false ].
-	^false
+
+	^ self sharedPools anySatisfy: [ :each | each usesClassVarNamed: aString ]
 ]
 
 { #category : #'pool variables' }
 Class >> usesPoolVarNamed: aString [
 	"Return whether the receiver has a pool variable named: aString, taking into account superclasses too"
 	
-	self allSharedPools do: [:each | (each usesClassVarNamed: aString) ifTrue: [^true]].
-	^false
+	^self allSharedPools anySatisfy: [:each | each usesClassVarNamed: aString]
 ]
 
 { #category : #'subclass creation - variableByte' }

@@ -4,7 +4,7 @@ SUnit tests for TextFontReference
 Class {
 	#name : #TextFontReferenceTest,
 	#superclass : #HashAndEqualsTestCase,
-	#category : #'Text-Tests'
+	#category : #'Text-Tests-Base'
 }
 
 { #category : #running }

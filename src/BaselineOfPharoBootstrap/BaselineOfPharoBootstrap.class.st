@@ -133,7 +133,9 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'CodeExport'.
 		spec package: 'CodeImport'.
+		
 		spec package: 'CodeImportCommandLineHandlers'.
+		
 		spec package: 'OpalCompiler-Core'.
 		
 		spec package: 'FileSystem-Core'.

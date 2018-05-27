@@ -21,6 +21,11 @@ ShMetaclassChanged >> builder: anObject [
 ]
 
 { #category : #propagating }
+ShMetaclassChanged >> hasChangeClassSideShape [
+	^ true.
+]
+
+{ #category : #propagating }
 ShMetaclassChanged >> propagateToSubclasses: anotherBuilder [
 		anotherBuilder changes add: self.
 ]

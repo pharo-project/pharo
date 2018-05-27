@@ -190,6 +190,11 @@ ThreadSafeTranscript >> printOn: aStream [
 	aStream nextPutAll: 'Transcript'
 ]
 
+{ #category : #updating }
+ThreadSafeTranscript >> shoutAboutToStyle: aPluggableShoutMorphOrView [ 
+	^ false
+]
+
 { #category : #streaming }
 ThreadSafeTranscript >> show: anObject [
 	"Output anObject asString on the receiver and show the output"

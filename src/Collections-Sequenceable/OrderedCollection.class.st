@@ -79,7 +79,7 @@ Class {
 		'firstIndex',
 		'lastIndex'
 	],
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Ordered'
 }
 
 { #category : #private }
@@ -742,7 +742,7 @@ OrderedCollection >> reverseDo: aBlock [
 		aBlock value: (array at: index) ]
 ]
 
-{ #category : #copying }
+{ #category : #converting }
 OrderedCollection >> reversed [
 	"Answer a copy of the receiver with element order reversed.  "
 	| newCol |
@@ -805,7 +805,7 @@ OrderedCollection >> size [
 	^ lastIndex - firstIndex + 1
 ]
 
-{ #category : #enumerating }
+{ #category : #sorting }
 OrderedCollection >> sort: aSortBlock [ 
 	"Sort this array using aSortBlock. The block should take two arguments
 	and return true if the first element should preceed the second one."

@@ -31,7 +31,7 @@ DAMessageSendAnalyzer class >> on: aPackageName [
 		yourself
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 DAMessageSendAnalyzer class >> packagesProvidingSelector: aSelector [
 	^ aSelector implementors 
 		collect: [:each | each package name]

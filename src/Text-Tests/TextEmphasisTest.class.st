@@ -4,7 +4,7 @@ SUnit tests for TextEmphasis
 Class {
 	#name : #TextEmphasisTest,
 	#superclass : #HashAndEqualsTestCase,
-	#category : #'Text-Tests'
+	#category : #'Text-Tests-Base'
 }
 
 { #category : #running }
@@ -20,7 +20,7 @@ TextEmphasisTest >> setUp [
 
 { #category : #tests }
 TextEmphasisTest >> testAdd [
-	| t1  |
+	| t1 |
 	t1 := TextEmphasis bold.
 	t1 add: TextEmphasis italic.
 	self assert: (t1 = 2r11) description: 'bold and italics didn''t add correctly'
@@ -38,9 +38,9 @@ TextEmphasisTest >> testAppendString [
 	expectedResult := 'xxxyyy' asText 
 		addAttribute: TextEmphasis bold from: 1 to: 3.
 	result := receiver append: argument.
-	self assert: (result == receiver). 
-	self assert: (result string = expectedResult string).
-	self assert: (result runs = expectedResult runs)
+	self assert: result == receiver. 
+	self assert: result string equals: expectedResult string.
+	self assert: result runs equals: expectedResult runs
 ]
 
 { #category : #tests }
@@ -51,29 +51,26 @@ TextEmphasisTest >> testAppendText [
 	receiver := 'xxx' asText  
 		addAttribute: TextEmphasis bold from: 1 to: 3.
 	argument := 'yyy' asText
-		addAttribute: TextEmphasis italic from: 1 to: 3.		.
+		addAttribute: TextEmphasis italic from: 1 to: 3.
 	expectedResult := 'xxxyyy' asText 
 		addAttribute: TextEmphasis bold from: 1 to: 3;
 		addAttribute: TextEmphasis italic from: 4 to: 6.
 	result := receiver append: argument.
-	self assert: (result == receiver). 
-	self assert: (result string = expectedResult string).
-	self assert: (result runs = expectedResult runs)
-
-	
-	
+	self assert: result == receiver. 
+	self assert: result string equals: expectedResult string.
+	self assert: result runs equals: expectedResult runs
 ]
 
 { #category : #tests }
 TextEmphasisTest >> testFromCode [
-	| t1  |
+	| t1 |
 	t1 := TextEmphasis fromCode: 2r10101.
-	self assert: t1 value equals: 2r10101.
+	self assert: t1 value equals: 2r10101
 ]
 
 { #category : #tests }
 TextEmphasisTest >> testPrependString [
-	"tests the Text>>prepend: method when prepending a String " 
+	"Tests the Text>>prepend: method when prepending a String." 
 	| receiver argument result expectedResult |
 
 	receiver := 'xxx' asText  
@@ -82,16 +79,16 @@ TextEmphasisTest >> testPrependString [
 	expectedResult := 'yyyxxx' asText 
 		addAttribute: TextEmphasis bold from: 4 to: 6.
 	result := receiver prepend: argument.
-	self assert: (result == receiver). 
-	self assert: (result string = expectedResult string).
-	self assert: (result runs = expectedResult runs)
+	self assert: result == receiver. 
+	self assert: result string equals: expectedResult string.
+	self assert: result runs equals: expectedResult runs
 
 	
 ]
 
 { #category : #tests }
 TextEmphasisTest >> testPrependText [
-	"tests the Text>>prepend: method when prepending Text " 
+	"Tests the Text>>prepend: method when prepending Text" 
 	| receiver argument result expectedResult |
 
 	receiver := 'xxx' asText  
@@ -102,9 +99,9 @@ TextEmphasisTest >> testPrependText [
 		addAttribute: TextEmphasis italic from: 1 to: 3;
 		addAttribute: TextEmphasis bold from: 4 to: 6.
 	result := receiver prepend: argument.
-	self assert: (result == receiver). 
-	self assert: (result string = expectedResult string).
-	self assert: (result runs = expectedResult runs)
+	self assert: result == receiver. 
+	self assert: result string equals: expectedResult string.
+	self assert: result runs equals: expectedResult runs
 ]
 
 { #category : #tests }

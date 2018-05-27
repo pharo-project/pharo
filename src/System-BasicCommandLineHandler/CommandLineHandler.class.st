@@ -105,7 +105,7 @@ CommandLineHandler class >> selectHandlersFor: aCommandLine [
 		handlerClass isResponsibleFor: aCommandLine ]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 CommandLineHandler >> << aString [
 	^ self stdout 
 		nextPutAll: aString;
@@ -172,19 +172,19 @@ CommandLineHandler >> description [
 	^ self class description
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 CommandLineHandler >> exitFailure [
 	 ^ self exitFailure: 'Command line handler failed'
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 CommandLineHandler >> exitFailure: aMessage [ 
 	self hasSessionChanged
 		ifTrue: [ ^ self ].
 	Exit signalFailure: aMessage 
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 CommandLineHandler >> exitSuccess [
 	self hasSessionChanged
 		ifTrue: [ ^ self ].
@@ -272,7 +272,7 @@ CommandLineHandler >> printHelp [
 		nextPutAll: self class comment; lf
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 CommandLineHandler >> quit [
 	self exitSuccess
 ]

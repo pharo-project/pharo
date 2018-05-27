@@ -64,11 +64,3 @@ FFITypeArrayTests >> testExternalAtPutFloat [
 		1 to: 10 do: [ :index | self assert: (array at: index) isFloat ] ]
 	ensure: [ array free ].
 ]
-
-{ #category : #tests }
-FFITypeArrayTests >> testStructureRead [
-	| structure |
-	
-	structure := FFITestArrayStructure new.
-	
-]

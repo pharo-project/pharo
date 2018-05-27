@@ -84,7 +84,7 @@ ClassDescription >> addMethodTag: aSymbol [
 ]
 
 { #category : #'accessing method dictionary' }
-ClassDescription >> addSelector: selector withMethod: compiledMethod notifying: requestor [
+ClassDescription >> addSelector: selector withMethod: compiledMethod [
 	| priorMethodOrNil oldProtocol |
 	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [nil].
 	oldProtocol := priorMethodOrNil ifNotNil: [ priorMethodOrNil protocol ].
@@ -563,14 +563,6 @@ ClassDescription >> copyCategory: cat from: aClass classified: newCat [
 	self copyAll: (aClass organization listAtCategoryNamed: cat)
 		from: aClass
 		classified: newCat
-]
-
-{ #category : #copying }
-ClassDescription >> copyMethodDictionaryFrom: donorClass [
-	"Copy the method dictionary of the donor class over to the receiver"
-
-	self methodDict: donorClass copyOfMethodDictionary.
-	self organization: donorClass organization deepCopy.
 ]
 
 { #category : #'filein/out' }

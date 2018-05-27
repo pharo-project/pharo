@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'dataSocket'
 	],
-	#category : #'Network-Protocols'
+	#category : #'Network-Protocols-Protocols'
 }
 
 { #category : #accessing }

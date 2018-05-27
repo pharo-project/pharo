@@ -153,7 +153,7 @@ TaAbstractComposition >> compile: selector into: aClass [
 		newMethod putSource: sourceCode
 				withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
 		
-	aClass basicAddSelector: selector withMethod: newMethod.
+	aClass addSelectorSilently: selector withMethod: newMethod.
 
 	aClass organization protocolOrganizer
 		classify: selector
@@ -215,7 +215,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 		newMethod putSource: source
 			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
 
-	aClass basicAddSelector: aSelector withMethod: newMethod.
+	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
 	aClass organization protocolOrganizer
 		classify: aSelector
@@ -226,6 +226,16 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	aClass >> aSelector propertyAt: #traitSource put: traitDefining.
 		
 	^ true
+]
+
+{ #category : #copying }
+TaAbstractComposition >> copySlot: aSlot [
+	"This is a utitlity method to handle the copy of a slot. It is used for instance side and class side slots."
+	| newOne |
+	newOne := aSlot copy.
+	newOne isVirtual ifFalse: [ newOne index: nil ].
+	newOne definingClass: aSlot definingClass.
+	^ newOne
 ]
 
 { #category : #copying }
@@ -387,6 +397,12 @@ TaAbstractComposition >> semanticallyEquals: another [
 { #category : #accessing }
 TaAbstractComposition >> slots [
 	self subclassResponsibility 
+]
+
+{ #category : #copying }
+TaAbstractComposition >> slotsCopy [
+
+	^ self slots collect: [ :each | self copySlot: each ]
 ]
 
 { #category : #accessing }

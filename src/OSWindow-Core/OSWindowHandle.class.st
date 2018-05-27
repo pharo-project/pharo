@@ -71,7 +71,7 @@ OSWindowHandle >> hide [
 OSWindowHandle >> icon: aForm [
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 OSWindowHandle >> isValid [
 	self subclassResponsibility 
 ]
@@ -121,6 +121,12 @@ OSWindowHandle >> position [
 { #category : #accessing }
 OSWindowHandle >> position: newPosition [
 	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+OSWindowHandle >> prepareExternalResourceForAutoRelease [
+	"This hook will allow just create handlers to prepate their external resources for being 
+	 releases by the GC (if needed). By default, do nothing."
 ]
 
 { #category : #'mouse capture' }

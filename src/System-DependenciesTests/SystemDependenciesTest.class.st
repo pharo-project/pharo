@@ -91,7 +91,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler #Iceberg #'Iceberg-Libgit') sorted
+	^ #(#Iceberg #'Iceberg-Libgit') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -174,7 +174,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	^ #(#'Athens-Morphic' #MonticelloGUI #'Morphic-Widgets-FastTable' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 SystemDependenciesTest >> longTestCase [
 
 	self timeLimit: 60 seconds.
@@ -210,7 +210,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfTraits allPackageNames,
+		BaselineOfTraits corePackages,
 		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
 		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
 		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
@@ -249,7 +249,7 @@ SystemDependenciesTest >> testExternalDisplayDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfTraits allPackageNames,		
+		BaselineOfTraits corePackages,		
 		BaselineOfDisplay allPackageNames).
 	
 	self assertCollection: dependencies equals: self knownDisplayDependencies.
@@ -283,6 +283,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
 		{ BaselineOfTraits name }, BaselineOfTraits allPackageNames,		
+		{ BaselineOfSlot name }, BaselineOfSlot allPackageNames,		
 		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
 		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
 		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
@@ -337,7 +338,7 @@ SystemDependenciesTest >> testExternalMetacelloDependencies [
 	
 	self longTestCase.
 	
-	dependencies := self externalDependendiesOf: self metacelloPackageNames, BaselineOfTraits allPackageNames.
+	dependencies := self externalDependendiesOf: self metacelloPackageNames, BaselineOfTraits corePackages.
 	
 	self assertCollection: dependencies equals: self knownMetacelloDependencies.
 ]
@@ -350,7 +351,7 @@ SystemDependenciesTest >> testExternalMonticelloDependencies [
 	self longTestCase.
 	
 	dependencies := self externalDependendiesOf: (
-		BaselineOfTraits allPackageNames,		
+		BaselineOfTraits corePackages,		
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap compilerPackageNames,
@@ -372,7 +373,7 @@ SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfTraits allPackageNames,			
+		BaselineOfTraits corePackages,			
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
@@ -391,7 +392,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfTraits allPackageNames,		
+		BaselineOfTraits corePackages,		
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
@@ -409,7 +410,7 @@ SystemDependenciesTest >> testExternalSUnitDependencies [
 	self longTestCase.
 	
 	dependencies := self externalDependendiesOf: (
-		BaselineOfTraits allPackageNames,			
+		BaselineOfTraits corePackages,			
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
 		BaselineOfSUnit defaultPackageNames).
@@ -425,7 +426,7 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 	self longTestCase.
 	
 	dependencies := self externalDependendiesOf: (
-		BaselineOfTraits allPackageNames,
+		BaselineOfTraits corePackages,
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
@@ -443,7 +444,7 @@ SystemDependenciesTest >> testExternalSpecDependencies [
 	
 	dependencies := (self externalDependendiesOf: (
 			self metacelloPackageNames,
-			BaselineOfTraits allPackageNames,			
+			BaselineOfTraits corePackages,			
 			self specPackageNames )) 
 		copyWithoutAll: self knownMetacelloDependencies.
 	
@@ -460,7 +461,7 @@ SystemDependenciesTest >> testExternalUFFIDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfTraits allPackageNames,				
+		BaselineOfTraits corePackages,				
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfUnifiedFFI allPackageNames).
 	
@@ -477,7 +478,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 	dependencies := (self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfTraits allPackageNames,
+		BaselineOfTraits corePackages,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,

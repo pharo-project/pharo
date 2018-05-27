@@ -182,6 +182,11 @@ BaselineOfIDE >> baseline: spec [
 			spec loads: 'traits-tests'. 
 			spec repository: repository
 		].
+	
+		spec baseline: 'Slot' with: [
+			spec loads: 'slot-tests'. 
+			spec repository: repository
+		].
 
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
@@ -211,7 +216,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tests'.
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'AST-Tests-Core'.
-		spec package: 'Compiler-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'Fuel-Tests-Core'.
 		spec package: 'Fuel-Tools-Pharo'.
@@ -327,6 +331,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Balloon-Tests'.
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
+		spec package: 'CodeImport-Tests'.
 		spec package: 'Collections-DoubleLinkedList-Tests'.
 		spec package: 'Collections-Arithmetic-Tests'.
 		spec package: 'Compression-Tests'.
@@ -391,7 +396,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'SUnit-Tests'.
 		spec package: 'SUnit-Support-UITesting-Tests'.
 		spec package: 'Shout-Tests'.
-		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
@@ -509,8 +513,7 @@ spec group: 'General-Tests-Group' with: #(
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
 	'SUnit-Tests'
-	'SUnit-Support-UITesting-Tests' 
-	'Slot-Tests'
+	'SUnit-Support-UITesting-Tests'
 	'Spec-Tests'
 	'System-Caching-Tests'
 	'System-Hashing-Tests'
@@ -804,13 +807,13 @@ spec group: 'OSWindow-Group' with: #(
 
 spec group: 'Kernel-Tests-Group' with: #(
 	'BlueInk-Core-Group' "dependency"
-	'RPackage-Tests' 
+	'RPackage-Tests'
+	'CodeImport-Tests'	 
 	'Collections-Tests'
 	'Kernel-Tests' 
 	'Kernel-Tests-WithCompiler' 
 	'AST-Tests-Core' "requires BlueInk-Core"
 	'Announcements-Tests-Core'
-	'Compiler-Tests'
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
@@ -890,6 +893,7 @@ spec group: #default with: #(
 	'Shift'
 	"Importing tests of Traits"
 	'Traits'
+	'Slot'
 ).
 
 ]

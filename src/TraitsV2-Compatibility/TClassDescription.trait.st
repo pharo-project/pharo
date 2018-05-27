@@ -39,13 +39,12 @@ TClassDescription >> addMethodTag: aSymbol [
 
 { #category : #'accessing method dictionary' }
 TClassDescription >> addSelector: selector withMethod: compiledMethod notifying: requestor [
-	| priorMethodOrNil oldProtocol |
-	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [nil].
-	oldProtocol := priorMethodOrNil ifNotNil: [ priorMethodOrNil protocol ].
-	self addSelectorSilently: selector withMethod: compiledMethod.
-	priorMethodOrNil 
-		ifNil: [SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
-		ifNotNil: [SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ].
+	self
+		deprecated: 'Please use #addSelector:withMethod: instead'
+		transformWith:
+			'`@receiver addSelector: `@statements1 withMethod: `@statements2 notifying: `@statements3'
+		   -> '`@receiver addSelector: `@statements1 withMethod: `@statements2'.
+	^self addSelector: selector withMethod: compiledMethod
 ]
 
 { #category : #'accessing method dictionary' }
@@ -509,14 +508,6 @@ TClassDescription >> copyCategory: cat from: aClass classified: newCat [
 	self copyAll: (aClass organization listAtCategoryNamed: cat)
 		from: aClass
 		classified: newCat
-]
-
-{ #category : #copying }
-TClassDescription >> copyMethodDictionaryFrom: donorClass [
-	"Copy the method dictionary of the donor class over to the receiver"
-
-	self methodDict: donorClass copyOfMethodDictionary.
-	self organization: donorClass organization deepCopy.
 ]
 
 { #category : #slots }

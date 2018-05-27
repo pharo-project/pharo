@@ -1014,6 +1014,13 @@ String >> deepCopy [
 	^self shallowCopy
 ]
 
+{ #category : #displaying }
+String >> displayStringOn: aStream [
+	
+	aStream nextPutAll: self
+	
+]
+
 { #category : #printing }
 String >> encodeDoublingQuoteOn: aStream [ 
 	"Print inside string quotes, doubling inbedded quotes."
@@ -1554,12 +1561,12 @@ String >> howManyMatch: string [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 String >> includesSubstring: substring [
 	^ substring isEmpty or: [ (self findString: substring startingAt: 1) > 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 String >> includesSubstring: aString caseSensitive: caseSensitive [
 	
 	^ (self findString: aString startingAt: 1 caseSensitive: caseSensitive) > 0
@@ -1695,7 +1702,7 @@ String >> isByteString [
 	^false
 ]
 
-{ #category : #printing }
+{ #category : #testing }
 String >> isLiteral [
 
 	^true

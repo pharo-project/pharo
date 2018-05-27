@@ -11,6 +11,24 @@ Class {
 	#category : #'OSWindow-SDL2-Bindings'
 }
 
+{ #category : #finalization }
+SDL_Window class >> destroyWindow: handle [
+	self ffiCall: #( void SDL_DestroyWindow ( void *handle ) ) 
+]
+
+{ #category : #finalization }
+SDL_Window class >> finalizeResourceData: aTuple [
+	| handle windowId |
+	
+	handle := aTuple first.
+	handle isNull ifTrue: [ ^ self ].
+
+	windowId := aTuple second.
+	OSSDL2Driver current unregisterWindowWithId: windowId.	
+	self destroyWindow: handle.
+	handle beNull
+]
+
 { #category : #rendering }
 SDL_Window >> createDefaultRenderer [
 	^ self createRenderer: -1 flags: 0
@@ -24,8 +42,9 @@ SDL_Window >> createRenderer: driverIndex flags: flags [
 
 { #category : #initialize }
 SDL_Window >> destroy [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_DestroyWindow ( self ) )
+	OSSDL2Driver current unregisterWindowWithId: self windowID.
+	self primDestroy.
+	handle beNull
 ]
 
 { #category : #accessing }
@@ -92,6 +111,16 @@ SDL_Window >> minimize [
 SDL_Window >> primCreateRenderer: driverIndex flags: flags [
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
 	^ self nbCall: #( SDL_Renderer SDL_CreateRenderer ( self , int driverIndex , Uint32 flags ) )
+]
+
+{ #category : #private }
+SDL_Window >> primDestroy [
+	^ self ffiCall: #( void SDL_DestroyWindow ( self ) )
+]
+
+{ #category : #'external resource management' }
+SDL_Window >> resourceData [
+	^ {self getHandle. self windowID }
 ]
 
 { #category : #'window management' }

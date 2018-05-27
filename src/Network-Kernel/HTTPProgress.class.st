@@ -20,7 +20,7 @@ Class {
 		'total',
 		'amount'
 	],
-	#category : #'Network-Kernel'
+	#category : #'Network-Kernel-Notifications'
 }
 
 { #category : #examples }

@@ -16,14 +16,14 @@ Class {
 BinaryFileStream >> close [
 	self closed
 		ifTrue: [ ^ self ].
-	File primClose: handle.
+	File close: handle.
 	self unregister.
 	handle := nil
 ]
 
 { #category : #testing }
 BinaryFileStream >> closed [
-	^ handle isNil or: [ (self primSizeNoError: handle) isNil ]
+	^ handle isNil or: [ (File sizeOrNil: handle) isNil ]
 ]
 
 { #category : #finalization }
@@ -40,14 +40,6 @@ BinaryFileStream >> peek [
 	next := self next.
 	self position: self position - 1.
 	^ next
-]
-
-{ #category : #private }
-BinaryFileStream >> primCloseNoError: id [
-	"Close this file. Don't raise an error if the primitive fails."
-
-	<primitive: 'primitiveFileClose' module: 'FilePlugin'>
-
 ]
 
 { #category : #finalization }
@@ -72,7 +64,7 @@ BinaryFileStream >> truncate [
 BinaryFileStream >> truncate: pos [
 	"Truncate to this position"
 
-	^self primTruncate: handle to: pos
+	^ File truncate: handle to: pos
 ]
 
 { #category : #finalization }

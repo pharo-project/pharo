@@ -1,0 +1,3 @@
+# Bash needs lf even on windows/cygwin
+*.st eol=lf
+*.sh eol=lf

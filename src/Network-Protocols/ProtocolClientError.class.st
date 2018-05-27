@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'protocolInstance'
 	],
-	#category : #'Network-Protocols'
+	#category : #'Network-Protocols-Exceptions'
 }
 
 { #category : #'instance creation' }

@@ -121,8 +121,10 @@ OSWindow >> createWindow [
 	handle ifNotNil: [ self error: 'The window is already created.' ].
 	
 	handle := initialAttributes createWindowHandleFor: self.
-	handle isValid 
-		ifTrue: [ FFIExternalResourceManager addResource: self data: handle ]
+	handle isValid ifTrue: [ 
+		"Handle here points to an OSWindowHandle, its #handle message has the real 
+		 external resource. This is a bit confusing, but is better like this :)"
+		handle prepareExternalResourceForAutoRelease ]
 ]
 
 { #category : #'dispatching events' }

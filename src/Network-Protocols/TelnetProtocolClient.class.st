@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'responseCode'
 	],
-	#category : #'Network-Protocols'
+	#category : #'Network-Protocols-Protocols'
 }
 
 { #category : #accessing }

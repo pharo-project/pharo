@@ -4,7 +4,7 @@ A KOI8RTextConverter class is used to convert cyrillic inputs.
 Class {
 	#name : #KOI8RTextConverter,
 	#superclass : #ByteTextConverter,
-	#category : #'Multilingual-OtherLanguages'
+	#category : #'Multilingual-OtherLanguages-TextConverter'
 }
 
 { #category : #initialization }

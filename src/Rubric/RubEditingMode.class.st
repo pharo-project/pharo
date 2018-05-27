@@ -24,33 +24,33 @@ RubEditingMode class >> extendedSearchMenuOn: aBuilder [
 		label: 'Code search...' translated;
 		withSeparatorAfter;
 		with: [ 
-					(aBuilder item: #'browse it' translated)
+					(aBuilder item: #'Browse it' translated)
 						keyText: 'b';
 						selector: #browseIt.
-					(aBuilder item: #'senders of it' translated)
+					(aBuilder item: #'Senders of it' translated)
 						keyText: 'n';
 						selector: #sendersOfIt.
-					(aBuilder item: #'implementors of it' translated)
+					(aBuilder item: #'Implementors of it' translated)
 						keyText: 'm';
 						selector: #implementorsOfIt.
-					(aBuilder item: #'references to it' translated)
+					(aBuilder item: #'References to it' translated)
 						keyText: 'N';
 						selector: #referencesToIt;
 						withSeparatorAfter.
-					(aBuilder item: #'selectors containing it' translated)
+					(aBuilder item: #'Selectors containing it' translated)
 						keyText: 'W';
 						selector: #methodNamesContainingIt.
-					(aBuilder item: #'case insensitive method literal strings with it' translated)
+					(aBuilder item: #'Case insensitive method literal strings with it' translated)
 						keyText: 'E';
 						selector: #methodStringsContainingit.
-					(aBuilder item: #'case sensitive method literal strings with it' translated)
+					(aBuilder item: #'Case sensitive method literal strings with it' translated)
 						keyText: 'E';
 						selector: #methodCaseSensitiveStringsContainingit.
-					(aBuilder item: #'method source with it' translated)
+					(aBuilder item: #'Method source with it' translated)
 						selector: #methodSourceContainingIt;
 						withSeparatorAfter.
-					(aBuilder item: #'class names containing it' translated) selector: #classNamesContainingIt.
-					(aBuilder item: #'class comments with it' translated) selector: #classCommentsContainingIt ]
+					(aBuilder item: #'Class names containing it' translated) selector: #classNamesContainingIt.
+					(aBuilder item: #'Class comments with it' translated) selector: #classCommentsContainingIt ]
 ]
 
 { #category : #menu }

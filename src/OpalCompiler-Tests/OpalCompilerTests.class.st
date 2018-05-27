@@ -4,13 +4,58 @@ Class {
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
-{ #category : #tests }
-OpalCompilerTests >> testBindingsWithUppercaseNameDoNotOverwriteGlobals [
+{ #category : #'tests - bindings' }
+OpalCompilerTests >> testArrayBindingsWithUppercaseNameDoOverwriteGlobals [
+	| result |
+	result := Smalltalk compiler
+		bindings: {(#UndefinedObject -> Object)};
+		evaluate: 'UndefinedObject class'.
+	self assert: result equals: Object class
+]
+
+{ #category : #'tests - bindings' }
+OpalCompilerTests >> testArrayBindingsWriteGlobals [
+	| result |
+	result := Smalltalk compiler
+		 bindings: {(#Object -> Point)};
+       evaluate: 'Object := 42'.
+	self assert: result equals: 42.
+]
+
+{ #category : #'tests - bindings' }
+OpalCompilerTests >> testArrayEvaluateWithBindings [
+	| result |
+	result := Smalltalk compiler
+		bindings: {(#a -> 3)};
+		evaluate: '1+a'.
+	self assert: result equals: 4
+]
+
+{ #category : #'tests - bindings' }
+OpalCompilerTests >> testArrayEvaluateWithBindingsWithUppercaseName [
+	| result |
+	result := Smalltalk compiler
+		bindings: {(#MyVar -> 3)};
+		evaluate: '1+MyVar'.
+	self assert: result equals: 4
+]
+
+{ #category : #'tests - bindings' }
+OpalCompilerTests >> testBindingsWithUppercaseNameDoOverwriteGlobals [
 	| result |
 	result := Smalltalk compiler
 		bindings: {(#UndefinedObject -> Object)} asDictionary;
 		evaluate: 'UndefinedObject class'.
-	self assert: result equals: UndefinedObject class
+	self assert: result equals: Object class
+]
+
+{ #category : #'tests - bindings' }
+OpalCompilerTests >> testBindingsWriteGlobals [
+	| result |
+	result := Smalltalk compiler
+		 bindings: {(#Object -> Point)} asDictionary;
+       evaluate: 'Object := 42'.
+	self assert: result equals: 42.
 ]
 
 { #category : #tests }
@@ -41,7 +86,7 @@ OpalCompilerTests >> testCompileWithNilClass [
 	self assert: method methodClass equals: UndefinedObject.
 ]
 
-{ #category : #tests }
+{ #category : #'tests - bindings' }
 OpalCompilerTests >> testEvaluateWithBindings [
 	| result |
 	result := Smalltalk compiler
@@ -50,7 +95,7 @@ OpalCompilerTests >> testEvaluateWithBindings [
 	self assert: result equals: 4
 ]
 
-{ #category : #tests }
+{ #category : #'tests - bindings' }
 OpalCompilerTests >> testEvaluateWithBindingsWithUppercaseName [
 	| result |
 	result := Smalltalk compiler

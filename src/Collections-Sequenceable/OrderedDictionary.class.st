@@ -47,7 +47,7 @@ Class {
 		'dictionary',
 		'orderedKeys'
 	],
-	#category : #'Collections-Sequenceable'
+	#category : #'Collections-Sequenceable-Ordered'
 }
 
 { #category : #'instance creation' }
@@ -603,6 +603,21 @@ OrderedDictionary >> select: aBlock [
 { #category : #accessing }
 OrderedDictionary >> size [
 	^ dictionary size
+]
+
+{ #category : #printing }
+OrderedDictionary >> storeOn: aStream [
+	aStream << '((' << self class name << ' new)'.
+	self associations
+		ifNotEmpty: [ :assos | 
+			assos
+				do: [ :each | 
+					aStream
+						<< ' add: ';
+						store: each ]
+				separatedBy: [ aStream << ';' ].
+			aStream << '; yourself' ].
+	aStream << ')'
 ]
 
 { #category : #private }

@@ -5,7 +5,7 @@ Abstract super class for exceptions signalled by clients based on the telnet pro
 Class {
 	#name : #TelnetProtocolError,
 	#superclass : #ProtocolClientError,
-	#category : #'Network-Protocols'
+	#category : #'Network-Protocols-Exceptions'
 }
 
 { #category : #accessing }
