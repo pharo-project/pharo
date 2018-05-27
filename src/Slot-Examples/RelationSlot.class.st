@@ -26,7 +26,7 @@ Class {
 		'inverseName',
 		'inverseSlot'
 	],
-	#category : #'Slot-Core-Examples-Associations'
+	#category : #'Slot-Examples-Associations'
 }
 
 { #category : #'instance creation' }
