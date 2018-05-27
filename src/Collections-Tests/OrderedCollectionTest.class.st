@@ -857,23 +857,14 @@ OrderedCollectionTest >> testCompact [
 	collection compact.
 	self assert: collection capacity equals: 1.
 	
-	collection := OrderedCollection new.
-	collection add: 1.
-	collection compact.
-	self assert: collection capacity equals: 1.
-	
 	collection growAtLast.
 	collection compact.
 	self assert: collection capacity equals: 1.
 	
-	
-	"we do not shrint the start for now"
+	"we do not shrink the start for now"
 	collection growAtFirst.
 	collection compact.
 	self assert: collection capacity equals: 2.
-	
-	
-	
 ]
 
 { #category : #'tests - copying' }
