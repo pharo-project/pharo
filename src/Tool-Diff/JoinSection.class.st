@@ -1,3 +1,6 @@
+"
+A join section
+"
 Class {
 	#name : #JoinSection,
 	#superclass : #Model,
@@ -12,7 +15,7 @@ Class {
 		'additionHighlightColor',
 		'removalHighlightColor'
 	],
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Joins'
 }
 
 { #category : #adding }
