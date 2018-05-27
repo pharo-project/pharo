@@ -1,11 +1,14 @@
+"
+SUnit tests for key map builder
+"
 Class {
-	#name : #KeymapBuilderTest,
+	#name : #KMKeymapBuilderTest,
 	#superclass : #AbstractKeymappingTest,
 	#category : #'Keymapping-Tests'
 }
 
 { #category : #tests }
-KeymapBuilderTest >> testAddKeymapCreatesCategory [
+KMKeymapBuilderTest >> testAddKeymapCreatesCategory [
 	self assert: KMRepository default categories isEmpty.
 	
 	KMRepository default
@@ -16,11 +19,11 @@ KeymapBuilderTest >> testAddKeymapCreatesCategory [
 		platform: #all.
 	
 	self assert: (KMRepository default includesCategoryNamed: #Testing).
-	self assert: KMRepository default categories size = 1.
+	self assert: KMRepository default categories size equals: 1
 ]
 
 { #category : #tests }
-KeymapBuilderTest >> testAddKeymapCreatesShortcut [
+KMKeymapBuilderTest >> testAddKeymapCreatesShortcut [
 	KMRepository default
 		initializeKeymap: #test
 		executingOn: $r ctrl, $r asKeyCombination, $r asKeyCombination
@@ -28,11 +31,11 @@ KeymapBuilderTest >> testAddKeymapCreatesShortcut [
 		inCategory: #Testing
 		platform: #all.
 	
-	self assert: (KMRepository default categoryForName: #Testing ) allEntries size = 1.
+	self assert: (KMRepository default categoryForName: #Testing) allEntries size equals: 1
 ]
 
 { #category : #tests }
-KeymapBuilderTest >> testAttachKeymapAndExecuteExecutes [
+KMKeymapBuilderTest >> testAttachKeymapAndExecuteExecutes [
 	| executed morphToTest |
 	executed := false.
 	
@@ -43,7 +46,7 @@ KeymapBuilderTest >> testAttachKeymapAndExecuteExecutes [
 		inCategory: #Testing
 		platform: #all.
 
-"	KMFactory keymapContainer attachCategoryName: #Testing to: Morph."
+	"KMFactory keymapContainer attachCategoryName: #Testing to: Morph."
 	
 	morphToTest := Morph new.
 	morphToTest attachKeymapCategory: #Testing.
@@ -51,5 +54,5 @@ KeymapBuilderTest >> testAttachKeymapAndExecuteExecutes [
 	{self eventKey: $a. self eventKey: $a. self eventKey: $a}
 		do: [:e | morphToTest dispatchKeystrokeForEvent: e].
 		
-	self assert: executed.
+	self assert: executed
 ]
