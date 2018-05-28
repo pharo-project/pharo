@@ -57,6 +57,7 @@ ImageCleaner >> cleanUpForRelease [
 	Author fullName: 'MrCleaner'.
 	self cleanUpMethods.
 	
+	OrderedCollection compactAllInstances.
 	FreeTypeFontProvider current initialize.
 	EmbeddedFreeTypeFontInstaller initialize.
 	self class environment at: #MetacelloProjectRegistration ifPresent: [ :class | class resetRegistry ].
