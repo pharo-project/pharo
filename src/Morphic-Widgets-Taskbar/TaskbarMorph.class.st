@@ -4,7 +4,7 @@ Themed synchronous taskbar (not using #step to poll windows). The buttons provid
 "
 Class {
 	#name : #TaskbarMorph,
-	#superclass : #Morph,
+	#superclass : #DockingBarMorph,
 	#instVars : [
 		'tasks',
 		'orderedTasks'
@@ -115,19 +115,6 @@ TaskbarMorph >> clipSubmorphs [
 	^ true
 ]
 
-{ #category : #'change reporting' }
-TaskbarMorph >> displayExtentChanged [
-
-	self updateBounds
-]
-
-{ #category : #'private - accessing' }
-TaskbarMorph >> edgeToAdhereTo [
-	"Must implement. Answer #bottom."
-	
-	^#bottom
-]
-
 { #category : #'event handling' }
 TaskbarMorph >> handlesMouseDown: evt [
 	"Best to say we will to avoid being grabbed."
@@ -150,18 +137,9 @@ TaskbarMorph >> initialize [
 	super initialize.
 	self
 		initializeLayout;
-		initializeAppearance;
 		tasks: #();
-		orderedTasks: OrderedCollection new
-]
-
-{ #category : #initialization }
-TaskbarMorph >> initializeAppearance [
-	"Initialize the appearance."
-
-	self
-		color: (self theme textColor alpha: 0.3);
-		fillStyle: (self theme taskbarFillStyleFor: self)
+		orderedTasks: OrderedCollection new;
+		adhereToBottom
 ]
 
 { #category : #initialization }
@@ -179,71 +157,11 @@ TaskbarMorph >> initializeLayout [
 		extent: self minimumExtent
 ]
 
-{ #category : #initialization }
-TaskbarMorph >> intoWorld: aWorld [
-	"Stick to the bottom left now."
-	
-	self
-		setToAdhereToEdge: #bottomLeft;
-		updateBounds.
-	super intoWorld: aWorld
-]
-
-{ #category : #testing }
-TaskbarMorph >> isAdheringToBottom [
-	"Must implement. Answer true."
-	
-	^true
-]
-
-{ #category : #testing }
-TaskbarMorph >> isAdheringToLeft [
-	"Must implement. Answer false."
-	
-	^false
-]
-
-{ #category : #testing }
-TaskbarMorph >> isAdheringToRight [
-	"Must implement. Answer false."
-	
-	^false
-]
-
-{ #category : #testing }
-TaskbarMorph >> isAdheringToTop [
-	"Must implement. Answer false."
-	
-	^false
-]
-
-{ #category : #testing }
-TaskbarMorph >> isDockingBar [
-	"Answer yes so we get updated when the Display is resized."
-
-	^true
-]
-
 { #category : #testing }
 TaskbarMorph >> isTaskbar [
 	"Answer true."
 
 	^true
-]
-
-{ #category : #geometry }
-TaskbarMorph >> minimumExtent [
-	"Answer the minimum extent."
-
-	^40@25
-]
-
-{ #category : #'wiw support' }
-TaskbarMorph >> morphicLayerNumber [
-	"Helpful for ensuring some morphs always appear in front of or 
-	behind others. Smaller numbers are in front"
-	
-	^11
 ]
 
 { #category : #accessing }
@@ -267,11 +185,9 @@ TaskbarMorph >> ownerChanged [
 	ui, delete the receiver if there are any excpetions."
 	
 	self owner ifNil: [^self].
-	[self updateBounds.
-	self updateTasks]
-		on: Exception
-		do: [:ex | self delete. ex pass].
-	super ownerChanged
+
+	super ownerChanged.
+	self updateTasks
 ]
 
 { #category : #theme }
@@ -303,6 +219,13 @@ TaskbarMorph >> removeFromWorld [
 	self delete.
 	mins do: [:t | t morph minimize]]
 		ensure: [animation ifTrue: [self theme settings animationSettings useAnimation: true]]
+]
+
+{ #category : #initialization }
+TaskbarMorph >> setDefaultParameters [
+	self
+		color: (self theme textColor alpha: 0.3);
+		fillStyle: (self theme taskbarFillStyleFor: self)
 ]
 
 { #category : #setting }
@@ -342,19 +265,10 @@ TaskbarMorph >> tasks: anObject [
 TaskbarMorph >> themeChanged [
 	"The theme has changed. Update our appearance."
 
-	self initializeAppearance.
-	self removeAllMorphs.
 	super themeChanged.
+	self setDefaultParameters.
+	self removeAllMorphs.
 	self updateTaskButtons
-]
-
-{ #category : #'private - layout' }
-TaskbarMorph >> updateBounds [
-	"Update the receiver's bounds to fill the world."
-
-	self
-		width: self owner width;
-		snapToEdgeIfAppropriate
 ]
 
 { #category : #private }
@@ -395,14 +309,6 @@ TaskbarMorph >> updateTasks [
 		addAll: newTasks reversed.
 	self updateTaskButtons.
 	self defer: [self layoutChanged] "may have a different number of rows"
-]
-
-{ #category : #accessing }
-TaskbarMorph >> wantsToBeTopmost [
-	"Answer if the receiver want to be one of the topmost
-	objects in its owner."
-	
-	^ true
 ]
 
 { #category : #taskbar }
