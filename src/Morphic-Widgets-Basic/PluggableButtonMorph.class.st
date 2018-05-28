@@ -94,13 +94,7 @@ PluggableButtonMorph class >> newButtonFor: aModel action: actionSel label: stri
 ]
 
 { #category : #'instance creation' }
-PluggableButtonMorph class >> newButtonFor: aModel 
-	getState: stateSel 
-	action: actionSel 
-	arguments: args 
-	getEnabled: enabledSel 
-	label: label 
-	help: helpText [
+PluggableButtonMorph class >> newButtonFor: aModel getState: stateSel action: actionSel arguments: args getEnabled: enabledSel label: label help: helpText [
 	"Answer a new button."
 
 	| b |
