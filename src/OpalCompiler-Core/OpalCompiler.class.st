@@ -162,40 +162,34 @@ OpalCompiler class >> recompileAll [
 { #category : #public }
 OpalCompiler class >> startUsingOverlayForDevelopment [
 	"this method sets up an overlay so we can change the compiler package without breaking the compiler"
+
 	<script>
 	overlayEnvironment := Dictionary new.
-	
+
 	"now we put a copy of all the classes of the compiler package into the environment"
-	self package definedClasses do: [ :class |
-		overlayEnvironment at: class name put: class copy].
+	self package definedClasses
+		do: [ :class | overlayEnvironment at: class name put: class copy ].
+
 	"now we recompile the classes in the environment with itself as an overlay"
 	overlayEnvironment valuesDo: [ :class | 
-		class methods do: [ :method | |newMethod|
-		 newMethod := class compiler 
-				bindings: overlayEnvironment;
-				compile: method sourceCode.
-		 class addSelectorSilently: method selector withMethod: newMethod.	
-		]].
-	SmalltalkImage compilerClass: (overlayEnvironment at: #OpalCompiler).
+			class methodsDo: [ :method | 
+					| newMethod |
+					newMethod := class compiler
+						bindings: overlayEnvironment;
+						compile: method sourceCode.
+					class addSelectorSilently: method selector withMethod: newMethod ] ].
 	
-	
-	
-	 
+	"make the copy the default compiler for the image"
+	SmalltalkImage compilerClass: (overlayEnvironment at: #OpalCompiler)
 ]
 
 { #category : #public }
 OpalCompiler class >> stopUsingOverlayForDevelopment [
 	"set compiler back to normal and throw away overlay environment"
+
 	<script>
 	SmalltalkImage compilerClass: nil.
-	overlayEnvironment := nil.
-	
-
-	
-	
-	
-	
-	 
+	overlayEnvironment := nil
 ]
 
 { #category : #plugins }
