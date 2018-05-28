@@ -30,21 +30,26 @@ SDL2 class >> checkLibraryName: aName [
 
 { #category : #clipboard }
 SDL2 class >> clipboardText [
-	| text len data |
+	| text |
+	
 	text := self primClipboardText.
-	len := self strlen: text.
-	data := ByteArray new: len.
-	LibC memCopy: text to: data size: len.
-	^ ZnUTF8Encoder new decodeBytes: data.
+	^ text readStringUTF8
+
 ]
 
 { #category : #clipboard }
 SDL2 class >> clipboardText: text [
 	| encoded encoder |
+	
 	encoded := ByteArray streamContents: [ :stream |
 		encoder := ZnUTF8Encoder new.
-		encoder next: text size putAll: text startingAt: 1 toStream: stream.
+		encoder 
+			next: text size 
+			putAll: text asString
+			startingAt: 1 
+			toStream: stream.
 		stream nextPut: 0 ].
+	
 	self primClipboardText: encoded
 ]
 
@@ -282,14 +287,15 @@ SDL2 class >> pollEvent: event [
 
 { #category : #clipboard }
 SDL2 class >> primClipboardText [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( char* SDL_GetClipboardText ( ) )
+
+	^ self ffiCall: #( ExternalAddress SDL_GetClipboardText ( ) )
 ]
 
 { #category : #clipboard }
 SDL2 class >> primClipboardText: text [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_SetClipboardText ( char* text ) )
+	"It receives a ByteArray because it can be encoded"
+
+	^ self ffiCall: #( int SDL_SetClipboardText ( ByteArray text ) )
 ]
 
 { #category : #cairo }
@@ -322,15 +328,6 @@ SDL2 class >> setRelativeMouseMode: enabled [
 SDL2 class >> showCursor: toggle [
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
 	^ self nbCall: #( int SDL_ShowCursor ( int toggle ) )
-]
-
-{ #category : #clipboard }
-SDL2 class >> strlen: text [
-	| res |
-	res := 0.
-	[ (text nbUInt8AtOffset: res) ~= 0 ] whileTrue:
-		[ res := res + 1 ].
-	^ res
 ]
 
 { #category : #timer }
