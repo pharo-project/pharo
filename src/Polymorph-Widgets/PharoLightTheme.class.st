@@ -340,7 +340,7 @@ PharoLightTheme >> taskbarItemDisabledFillStyleFor: aButton [
 { #category : #'border-styles-taskbar' }
 PharoLightTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
 	^ BottomBorder new
-		color: Color black;
+		color: (Color fromHexString: '616161');
 		width: 2;
 		yourself
 ]
@@ -353,7 +353,7 @@ PharoLightTheme >> taskbarItemMouseOverFillStyleFor: aButton [
 { #category : #'border-styles-taskbar' }
 PharoLightTheme >> taskbarItemNormalBorderStyleFor: aButton [
 	^ BottomBorder new
-		color: Color black lighter;
+		color: (Color fromHexString: '757575');
 		width: 2;
 		trimSize: 2;
 		yourself
