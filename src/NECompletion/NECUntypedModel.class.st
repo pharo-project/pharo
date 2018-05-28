@@ -104,7 +104,7 @@ NECUntypedModel >> initializeSelectors [
 	self resetSelectors.
 	
 	includeSelectors ifFalse: 
-		[ Smalltalk keysAndValuesDo: [ :each :class |
+		[ Smalltalk globals keysAndValuesDo: [ :each :class |
 			(each includesSubstring: narrowString caseSensitive: NECPreferences caseSensitive) ifTrue: [
 			selectors add: (NECGlobalEntry contents: each)] ].
 		^ self ].
