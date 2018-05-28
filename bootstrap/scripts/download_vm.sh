@@ -11,5 +11,5 @@ if [ ${BOOTSTRAP_ARCH} = "64" ]; then
 	ARCHFLAG=64/
 fi
 
-wget -O- get.pharo.org/${ARCHFLAG}vm70 | bash
+wget -O- get.pharo.org/${ARCHFLAG}vmLatest70 | bash
 cd ..
