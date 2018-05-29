@@ -265,6 +265,12 @@ WorldMorph >> discoveredWorldMenu [
 	^ worldState discoveredWorldMenu
 ]
 
+{ #category : #geometry }
+WorldMorph >> displayScaleFactor [
+
+	^ 1
+]
+
 { #category : #'world state' }
 WorldMorph >> displayWorld [
 	worldState displayWorld: self submorphs: submorphs
