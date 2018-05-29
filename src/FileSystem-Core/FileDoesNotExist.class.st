@@ -6,3 +6,10 @@ Class {
 	#superclass : #FileSystemError,
 	#category : #'FileSystem-Core-Kernel-Errors'
 }
+
+{ #category : #deprecation }
+FileDoesNotExist class >> isDeprecated [
+	"Use FileDoesNotExistException instead"
+
+	^true
+]

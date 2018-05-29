@@ -128,11 +128,11 @@ ZnFileSystemUtils class >> newFileNamed: fileName do: block [
 ZnFileSystemUtils class >> oldFileNamed: fileName do: block [
 	^ fileName asFileReference 
 		readStreamDo: block
-		ifAbsent: [ FileDoesNotExist signalWith: fileName asFileReference ]
+		ifAbsent: [ FileDoesNotExistException signalWith: fileName asFileReference ]
 ]
 
 { #category : #streams }
 ZnFileSystemUtils class >> oldFileStreamFor: fileName [
 	^ fileName asFileReference 
-		readStreamIfAbsent: [ FileDoesNotExist signalWith: fileName asFileReference ]
+		readStreamIfAbsent: [ FileDoesNotExistException signalWith: fileName asFileReference ]
 ]

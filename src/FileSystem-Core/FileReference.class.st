@@ -82,6 +82,13 @@ FileReference >> asFileReference [
 	^ self
 ]
 
+{ #category : #converting }
+FileReference >> asPath [
+	"Answer the receivers path"
+
+	^path
+]
+
 { #category : #streams }
 FileReference >> binaryReadStream [
 	

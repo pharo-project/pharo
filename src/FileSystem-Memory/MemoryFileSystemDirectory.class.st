@@ -67,7 +67,7 @@ MemoryFileSystemDirectory >> fileEntryAt: aFileName put: anEntry [
 
 { #category : #accessing }
 MemoryFileSystemDirectory >> fileEntryRemove: aFileName [
-	^ self fileEntryRemove: aFileName ifAbsent: [ FileDoesNotExist signalWith: aFileName ]
+	^ self fileEntryRemove: aFileName ifAbsent: [ FileDoesNotExistException signalWith: aFileName ]
 ]
 
 { #category : #accessing }
