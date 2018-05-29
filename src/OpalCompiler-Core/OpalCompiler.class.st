@@ -180,7 +180,8 @@ OpalCompiler class >> startUsingOverlayForDevelopment [
 					class addSelectorSilently: method selector withMethod: newMethod ] ].
 	
 	"make the copy the default compiler for the image"
-	SmalltalkImage compilerClass: (overlayEnvironment at: #OpalCompiler)
+	SmalltalkImage compilerClass: (overlayEnvironment at: #OpalCompiler).
+	ASTCache reset.
 ]
 
 { #category : #public }
@@ -189,7 +190,8 @@ OpalCompiler class >> stopUsingOverlayForDevelopment [
 
 	<script>
 	SmalltalkImage compilerClass: nil.
-	overlayEnvironment := nil
+	overlayEnvironment := nil.
+	ASTCache reset
 ]
 
 { #category : #plugins }
