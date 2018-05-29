@@ -265,14 +265,14 @@ ThemeIcons >> hasIcons [
 
 { #category : #accessing }
 ThemeIcons >> iconNamed: aSymbol [
-	^ self 
+	^ (self 
 		iconNamed: aSymbol 
 		ifNone: [ 
 			self isReportingNotFound 
 				ifTrue: [ 
 					self crLog: (aSymbol, ' icon not found!').
 					self notFoundIcon ]
-				ifFalse: [ self blankIcon ]]
+				ifFalse: [ self blankIcon ]]) scaledByDisplayScaleFactor
 ]
 
 { #category : #accessing }

@@ -54,9 +54,9 @@ ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 	self hasIcon ifTrue: [ |iconForm|
 		iconForm := self icon.
 		self drawIcon: iconForm on: aCanvas in: stringBounds.
-		stringBounds := stringBounds left: stringBounds left + iconForm width + 2].
+		stringBounds := stringBounds left: stringBounds left + (iconForm width) + (2*self displayScaleFactor)].
 	self hasMarker ifTrue: [
-		stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8].
+		stringBounds := stringBounds left: stringBounds left + self submorphBounds width + (8 * self displayScaleFactor)].
 	stringBounds := stringBounds top: stringBounds top + stringBounds bottom - self fontToUse height // 2.
 	stringBounds := stringBounds bottom: stringBounds top + self fontToUse height.
 	self drawText: contents on: aCanvas in: stringBounds.
@@ -71,7 +71,7 @@ ToggleMenuItemMorph >> drawIcon: aForm on: aCanvas in: aRectangle [
 	
 	|iconForm|
 	self isEnabled
-		ifTrue: [iconForm := aForm]
+		ifTrue: [iconForm := aForm.]
 		ifFalse: [iconForm := Form extent: aForm extent depth: 32.
 				iconForm fillColor: (Color white alpha: 0.003922).
 				(iconForm getCanvas asAlphaBlendingCanvas: 0.5)
@@ -105,8 +105,8 @@ ToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRectangle [
 	"Draw the submenu marker on the canvas within the given bounds."
 	
 	|markerRect| 
-	markerRect := aRectangle topRight + (aForm width negated @ (aRectangle height - aForm height // 2)) extent: aForm extent.
-	self drawIcon: aForm on: aCanvas in: markerRect
+	markerRect := aRectangle topRight + ((aForm width * self displayScaleFactor) negated @ (aRectangle height - (aForm height * self displayScaleFactor) // 2)) extent: aForm extent * self displayScaleFactor.
+	self drawIcon: aForm scaledByDisplayScaleFactor on: aCanvas in: markerRect
 ]
 
 { #category : #'drawing-private' }

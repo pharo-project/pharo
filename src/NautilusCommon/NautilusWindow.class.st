@@ -53,5 +53,5 @@ NautilusWindow >> hasFocus [
 
 { #category : #'open/close' }
 NautilusWindow >> initialExtent [
-	^ 850@620
+	^ (850@620) * self displayScaleFactor
 ]
