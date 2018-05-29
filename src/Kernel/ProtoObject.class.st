@@ -84,6 +84,8 @@ ProtoObject >> doOnlyOnce: aBlock [
 { #category : #'reflective operations' }
 ProtoObject >> doesNotUnderstand: aMessage [
 
+	<debuggerCompleteToSender>
+
 	^ MessageNotUnderstood new 
 		message: aMessage;
 		receiver: self;
