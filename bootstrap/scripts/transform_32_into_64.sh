@@ -8,7 +8,7 @@ set -o xtrace
 mkdir -p vmmaker && cd vmmaker
 wget https://ci.inria.fr/pharo/view/5.0-VM-Spur/job/Spur-Git-Tracker/lastSuccessfulBuild/artifact/vmmaker-image.zip
 unzip vmmaker-image.zip
-bootstrap/scripts/getPharoVM.sh 60
+../bootstrap/scripts/getPharoVM.sh 60
 wget http://files.pharo.org/sources/PharoV50.sources
 cd ..
 

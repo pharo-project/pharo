@@ -28,6 +28,6 @@ popd
 # Downloads a SPUR vm for the configured architecture
 mkdir vmtarget
 pushd vmtarget
-bootstrap/scripts/getPharoVM.sh 70 vm $BOOTSTRAP_ARCH
+../bootstrap/scripts/getPharoVM.sh 70 vm $BOOTSTRAP_ARCH
 popd
 
