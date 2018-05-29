@@ -56,6 +56,20 @@ OpalCompiler class >> compilerSpecificSettingsOn: aBuilder [
 	
 ]
 
+{ #category : #overlay }
+OpalCompiler class >> createAndEnableOverlay [
+	^self overlayIsActive
+]
+
+{ #category : #overlay }
+OpalCompiler class >> createAndEnableOverlay: aBoolean [
+	
+	aBoolean = self overlayIsActive ifTrue: [ ^self ].
+	aBoolean 
+		ifTrue: [ self startUsingOverlayForDevelopment   ]
+		ifFalse: [ self stopUsingOverlayForDevelopment   ]
+]
+
 { #category : #public }
 OpalCompiler class >> debuggerMethodMapForMethod: aMethod [
 	^ DebuggerMethodMapOpal forMethod: aMethod
@@ -144,9 +158,14 @@ OpalCompiler class >> isActive [
 	^Smalltalk compilerClass == self
 ]
 
-{ #category : #public }
+{ #category : #overlay }
 OpalCompiler class >> overlayEnvironment [
 	^overlayEnvironment
+]
+
+{ #category : #overlay }
+OpalCompiler class >> overlayIsActive [
+	^overlayEnvironment notNil
 ]
 
 { #category : #public }
@@ -159,7 +178,7 @@ OpalCompiler class >> recompileAll [
 
 ]
 
-{ #category : #public }
+{ #category : #overlay }
 OpalCompiler class >> startUsingOverlayForDevelopment [
 	"this method sets up an overlay so we can change the compiler package without breaking the compiler"
 
@@ -184,7 +203,7 @@ OpalCompiler class >> startUsingOverlayForDevelopment [
 	ASTCache reset.
 ]
 
-{ #category : #public }
+{ #category : #overlay }
 OpalCompiler class >> stopUsingOverlayForDevelopment [
 	"set compiler back to normal and throw away overlay environment"
 
