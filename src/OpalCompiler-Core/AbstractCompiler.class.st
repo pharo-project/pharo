@@ -13,7 +13,12 @@ AbstractCompiler class >> compilerSettingsOn: aBuilder [
 	(aBuilder group: #compiler)
 		label: 'Compiler';
 		description: 'All Compiler Settings';
-		with: [ (aBuilder pickOne: #compilerClass)
+		with: [ 
+				(aBuilder setting: #createAndEnableOverlay)
+						label: 'Compiler Overlay Environment';
+						target: OpalCompiler;
+						description: 'Create a overlay environment for the OpalCompiler package and sets this copy as the global compiler. After this all classes in the package OpalCompiler are not used anymore outside of tests.  Simplifies changing the compiler'.
+				(aBuilder pickOne: #compilerClass)
 						target: SmalltalkImage;
 						label: 'Default Compiler';
 						domainValues: AbstractCompiler subclasses.
