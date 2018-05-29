@@ -87,7 +87,7 @@ WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 		label: 'Display scale factor';
 		description: 'Specify the amount of space that is let around a windows when it''s opened fullscreen';
 		target: self;
-		range: (0.3s to: 8s by: 0.1s).	
+		range: (0.3 to: 8 by: 0.1).	
 	
 ]
 
