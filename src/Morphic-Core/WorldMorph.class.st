@@ -16,6 +16,9 @@ Class {
 		'CursorOwnerWorld',
 		'ExtraWorldList'
 	],
+	#classInstVars : [
+		'displayScaleFactor'
+	],
 	#category : #'Morphic-Core-Worlds'
 }
 
@@ -60,6 +63,32 @@ WorldMorph class >> defaultWorldColor [
 
 	^ Color r: 0.937 g: 0.937 b: 0.937.
 
+]
+
+{ #category : #setting }
+WorldMorph class >> displayScaleFactor [
+
+	^ displayScaleFactor ifNil: [ displayScaleFactor := 1 ]
+]
+
+{ #category : #setting }
+WorldMorph class >> displayScaleFactor: aNumber [
+
+	displayScaleFactor := aNumber
+]
+
+{ #category : #setting }
+WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [ 
+	<systemsettings>
+	
+	(aBuilder range: #displayScaleFactor)
+		parent: #appearance;
+		order: 3;
+		label: 'Display scale factor';
+		description: 'Specify the amount of space that is let around a windows when it''s opened fullscreen';
+		target: self;
+		range: (0.3s to: 8s by: 0.1s).	
+	
 ]
 
 { #category : #'initialize-release' }
@@ -268,7 +297,7 @@ WorldMorph >> discoveredWorldMenu [
 { #category : #geometry }
 WorldMorph >> displayScaleFactor [
 
-	^ 1
+	^ self class displayScaleFactor
 ]
 
 { #category : #'world state' }
