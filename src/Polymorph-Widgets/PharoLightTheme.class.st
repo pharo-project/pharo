@@ -300,6 +300,15 @@ PharoLightTheme >> glamorousVeyLightSelectionColorFor: aMorph [
 	^ self class veryLightSelectionColor
 ]
 
+{ #category : #private }
+PharoLightTheme >> initialize [
+	"self beCurrent"
+
+	super initialize.
+	self windowActiveDropShadowStyle: #diffuse.
+	self settings preferGradientFill: false.
+]
+
 { #category : #'initialize-release' }
 PharoLightTheme >> newRadioMarkerForm [
 	"Answer a new checkbox marker form."
