@@ -34,7 +34,7 @@ CriticBrowser class >> criticsBrowserMenuOn: aBuilder [
 	
 	(aBuilder item: 'Critic Browser')
 		action: [ self openOnCurrentWorkingConfiguration];
-		order: 0.41;
+		order: 310;
 		parent: #Tools;
 		help: 'To manage rule checks.';
 		icon: self icon

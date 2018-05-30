@@ -106,9 +106,9 @@ PharoCommonTools class >> shutDown: aboutToQuit [
 PharoCommonTools class >> worldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'System Browser')
-		parent: #MostUsedTools;
+		parent: #Tools;
 		action: [ Smalltalk tools openClassBrowser ];
-		order: 0.1;
+		order: 0;
 		keyText: 'o, b';
 		help: 'System browser to browse and edit code.';
 		icon: Smalltalk tools browser taskbarIcon

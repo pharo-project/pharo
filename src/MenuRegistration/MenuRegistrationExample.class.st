@@ -14,7 +14,7 @@ Class {
 { #category : #'menu declaring' }
 MenuRegistrationExample class >> mostUsedToolsOn: aBuilder [ 
 	<worldMenuExample>
-	(aBuilder group: #MostUsedTools)
+	(aBuilder group: #Tools)
 		withSeparatorAfter;
 		order: 0;
 		target: Smalltalk tools;

@@ -16,6 +16,28 @@ MenubarMorph class >> closeAll [
 ]
 
 { #category : #'instance creation' }
+MenubarMorph class >> initialize [
+
+	self install.
+	self reset.
+]
+
+{ #category : #'instance creation' }
+MenubarMorph class >> install [
+	"self install"
+	SystemAnnouncer uniqueInstance weak
+		when: MethodAnnouncement
+		send: #methodAnnouncementReceived: to: self.
+]
+
+{ #category : #'instance creation' }
+MenubarMorph class >> methodAnnouncementReceived: anAnnouncement [
+
+	(anAnnouncement methodAffected hasPragmaNamed: #worldMenu)
+		ifTrue: [ self reset ]
+]
+
+{ #category : #'instance creation' }
 MenubarMorph class >> open [
 	"self open"
 
@@ -76,7 +98,7 @@ MenubarMorph >> open [
 			add: each label
 			icon: nil
 			help: each help
-			subMenu: each subMenu asMenuMorph  ].
+			subMenu: (each subMenu ifNotNil: #asMenuMorph) ].
 		
 	self
 		adhereToTop;

@@ -154,8 +154,8 @@ ProcessBrowser class >> isUIProcess: aProcess [
 ProcessBrowser class >> menuCommandOn: aBuilder [ 
 	<worldMenu> 
 	(aBuilder item: #'Process Browser')
-		parent: #Tools;
-		order: 0.42;
+		parent: #System;
+		order: 0;
 		action:[ self open ];
 		help: 'Provides a view of all of the processes (threads) executing in Smalltalk.';
 		icon: self taskbarIcon.

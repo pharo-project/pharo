@@ -81,11 +81,7 @@ WorldState class >> systemOn: aBuilder [
 	(aBuilder item: #System)
 		order: 3.0;
 		iconName: #smallConfigurationIcon;
-		with: [ (aBuilder item: #'About...')
-				order: 0;
-				iconName: #smallLanguageIcon;
-				help: 'Informations about this version of Pharo.';
-				action: [ Smalltalk aboutThisSystem ].
+		with: [
 			(aBuilder item: #'Start profiling all Processes')
 				help: 'Profile all Pharo processes.';
 				action: [ self startMessageTally ].

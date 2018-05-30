@@ -61,7 +61,7 @@ TimeProfiler class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Time Profiler')
 		parent: #Tools;  
-		order: 0.40;
+		order: 301;
 		icon: self taskbarIcon;
 		help: 'Profile the execution of a piece of code and navigate into the result.';
 		action: [TimeProfiler new open]
