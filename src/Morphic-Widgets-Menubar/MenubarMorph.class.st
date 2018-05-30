@@ -1,0 +1,91 @@
+Class {
+	#name : #MenubarMorph,
+	#superclass : #DockingBarMorph,
+	#instVars : [
+		'menuBarItems'
+	],
+	#category : #'Morphic-Widgets-Menubar'
+}
+
+{ #category : #'instance creation' }
+MenubarMorph class >> closeAll [
+
+	World submorphs
+		select: [ :e | e isKindOf: MenubarMorph ]
+		thenDo: [ :e | e delete ].
+]
+
+{ #category : #'instance creation' }
+MenubarMorph class >> open [
+	"self open"
+
+	self new
+		menuBarItems: WorldState new menuBuilder menuSpec items;
+		open.
+]
+
+{ #category : #'instance creation' }
+MenubarMorph class >> reset [
+
+	<script>
+	self closeAll.
+	self open.
+]
+
+{ #category : #adding }
+MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
+
+	"Nothing"
+]
+
+{ #category : #accessing }
+MenubarMorph >> handlesMouseDown: anEvent [
+
+	^ true
+]
+
+{ #category : #initialization }
+MenubarMorph >> initialize [
+
+	super initialize.
+	self autoGradient: false.
+	self cellInset: 7.
+]
+
+{ #category : #accessing }
+MenubarMorph >> menuBarItems [
+	^ menuBarItems
+]
+
+{ #category : #accessing }
+MenubarMorph >> menuBarItems: anObject [
+	menuBarItems := anObject
+]
+
+{ #category : #construction }
+MenubarMorph >> newMenuItem [
+	
+	^ MenubarItemMorph new
+]
+
+{ #category : #accessing }
+MenubarMorph >> open [
+
+	self menuBarItems do: [ :each |
+		self
+			add: each label
+			icon: nil
+			help: each help
+			subMenu: each subMenu asMenuMorph  ].
+		
+	self
+		adhereToTop;
+		openInWorld
+]
+
+{ #category : #accessing }
+MenubarMorph >> wantsYellowButtonMenu [
+	"Answer true if the receiver wants a yellow button menu."
+	
+	^false
+]
