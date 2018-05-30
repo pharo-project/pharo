@@ -378,6 +378,13 @@ FileLocator >> asFileReference [
 	^ self resolve
 ]
 
+{ #category : #converting }
+FileLocator >> asPath [
+	"Answer the receiver's path"
+
+	^self resolve asPath
+]
+
 { #category : #'streams-compatibility' }
 FileLocator >> binaryReadStream [
 	^ self resolve binaryReadStream

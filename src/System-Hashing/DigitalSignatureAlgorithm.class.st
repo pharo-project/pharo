@@ -267,18 +267,18 @@ DigitalSignatureAlgorithm >> generateKeySet [
 
 	| qAndPandS q p exp g h x y |
 	qAndPandS := self generateQandP.
-	Transcript show: 'Computing g...'.
+	"Transcript show: 'Computing g...'."
 	q := qAndPandS first.
 	p := qAndPandS second.
 	exp := (p - 1) / q.
 	h := 2.
 	[g := h raisedTo: exp modulo: p. g = 1] whileTrue: [h := h + 1].
-	Transcript show: 'done.'; cr.
-	Transcript show: 'Computing x and y...'.
+	"Transcript show: 'done.'; cr.
+	Transcript show: 'Computing x and y...'."
 	x := self nextRandom160.
 	y := g raisedTo: x modulo: p.
-	Transcript show: 'done.'; cr.
-	Transcript show: 'Key generation complete!'; cr.
+	"Transcript show: 'done.'; cr.
+	Transcript show: 'Key generation complete!'; cr."
 	^ Array
 		with: (Array with: p with: q with: g with: x)
 		with: (Array with: p with: q with: g with: y).
@@ -294,10 +294,10 @@ DigitalSignatureAlgorithm >> generateQandP [
 	halfTwoToTheP := 2 raisedTo: (pBits - 1).
 	chunkCount := pBits // 160.
 
-	Transcript show: 'Searching for primes q and p...'; cr.
+	"Transcript show: 'Searching for primes q and p...'; cr."
 	[true] whileTrue: [
 		sAndq := self generateSandQ.
-		Transcript show: '  Found a candidate q.'; cr.
+		"Transcript show: '  Found a candidate q.'; cr."
 		s := sAndq first.
 		q := sAndq last.
 		twoQ := q bitShift: 1.
@@ -308,9 +308,9 @@ DigitalSignatureAlgorithm >> generateQandP [
 			x := w + halfTwoToTheP.
 			p := (x - ( x \\ twoQ)) + 1.
 			p highBit = pBits ifTrue: [
-				Transcript show: '    Testing potential p ', (c + 1) printString, '...'; cr.
+				"Transcript show: '    Testing potential p ', (c + 1) printString, '...'; cr."
 				(self isProbablyPrime: p) ifTrue: [
-					Transcript show: '  Found p!'; cr.
+					"Transcript show: '  Found p!'; cr."
 					^ Array with: q with: p with: s]].
 			n := n + chunkCount + 1.
 			c := c + 1]].
@@ -358,7 +358,7 @@ DigitalSignatureAlgorithm >> initRandom: randomInteger [
 
 	randSeed := 16rEFCDAB8998BADCFE10325476C3D2E1F067452301.  "initial seed"
 	randKey := randomInteger.
-	Transcript show: 'Random seed: ', randomInteger printString; cr.
+	"Transcript show: 'Random seed: ', randomInteger printString; cr."
 
 ]
 
@@ -448,7 +448,8 @@ DigitalSignatureAlgorithm >> isProbablyPrime: p [
 	"Answer true if p is prime with very high probability. Such a number is sometimes called an 'industrial grade prime'--a large number that is so extremely likely to be prime that it can assumed that it actually is prime for all practical purposes. This implementation uses the Rabin-Miller algorithm (Schneier, p. 159)."
 
 	| iterations pMinusOne b m r a j z couldBePrime |
-	iterations := 50.	"Note: The DSA spec requires >50 iterations; Schneier says 5 are enough (p. 260)"	"quick elimination: check for p divisible by a small prime"
+	iterations := 50.	
+	"Note: The DSA spec requires >50 iterations; Schneier says 5 are enough (p. 260)"	"quick elimination: check for p divisible by a small prime"
 	SmallPrimes
 		ifNil: [ 
 			"generate list of small primes > 2"
@@ -457,13 +458,12 @@ DigitalSignatureAlgorithm >> isProbablyPrime: p [
 	SmallPrimes detect: [ :f | p \\ f = 0 ] ifFound: [ :factor | ^ p = factor ].
 	pMinusOne := p - 1.
 	b := self logOfLargestPowerOfTwoDividing: pMinusOne.
-	m := pMinusOne bitShift: b negated.	"Assert: pMinusOne = m * (2 raisedTo: b) and m is odd"
-	Transcript show: '      Prime test pass '.
+	m := pMinusOne bitShift: b negated.	
+	"Assert: pMinusOne = m * (2 raisedTo: b) and m is odd"
+	"Transcript show: '      Prime test pass '."
 	r := Random new.
 	1 to: iterations do: [ :i | 
-		Transcript
-			show: i printString;
-			space.
+		"Transcript show: i printString; space."
 		a := (r next * 16rFFFFFF) truncated.
 		j := 0.
 		z := (a raisedTo: m modulo: p) normalize.
@@ -472,9 +472,7 @@ DigitalSignatureAlgorithm >> isProbablyPrime: p [
 			whileFalse: [ 
 				z = 1
 					ifTrue: [ 
-						Transcript
-							show: 'failed!';
-							cr.
+						"Transcript show: 'failed!'; cr."
 						^ false ].	"not prime"
 				z = pMinusOne
 					ifTrue: [ couldBePrime := true ]
@@ -482,14 +480,10 @@ DigitalSignatureAlgorithm >> isProbablyPrime: p [
 						(j := j + 1) < b
 							ifTrue: [ z := z * z \\ p ]
 							ifFalse: [ 
-								Transcript
-									show: 'failed!';
-									cr.
+								"Transcript show: 'failed!'; cr."
 								^ false ] ] ] ].	"not prime"
-	Transcript
-		show: 'passed!';
-		cr.
-	^ true	"passed all tests; probably prime"
+	"Transcript show: 'passed!'; cr."
+	^ true	 "passed all tests; probably prime"
 ]
 
 { #category : #private }

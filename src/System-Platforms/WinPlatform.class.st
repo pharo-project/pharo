@@ -10,7 +10,7 @@ OSPlatform current.
 Class {
 	#name : #WinPlatform,
 	#superclass : #OSPlatform,
-	#category : #'System-Platforms'
+	#category : #'System-Platforms-Windows'
 }
 
 { #category : #testing }

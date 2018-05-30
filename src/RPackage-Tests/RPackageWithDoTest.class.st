@@ -90,18 +90,19 @@ RPackageWithDoTest >> testDoC [
 ]
 
 { #category : #tests }
-RPackageWithDoTest >> testInvariant [
-	"The default invariant"
-	self assert: (self packageOrganizerClass default packageNames size > 50).
+RPackageWithDoTest >> testImageContainsOneSubscribedOrganizer [
 	"to be sure that this is real default one"
-	self assert: (self announcer hasSubscriber: self packageOrganizerClass default).
+	self assert: (self announcer hasSubscriber: self packageOrganizerClass default) description: 'System announcer should have the default instance of the organizer as subscriber.'.
 	"note that this test is not precise enough because I could get the wrong one."
-	Smalltalk garbageCollect.
-	Smalltalk garbageCollect.
-	self assert: self packageOrganizerClass allInstances size equals: 1.
 	
-	self packageOrganizerClass allInstances collect: [:each | self announcer hasSubscriber: each ] 
-	"To debug..."
+	[ self assert: self packageOrganizerClass allInstances size equals: 1 ]
+		on: AssertionFailure
+		do: [ :ex | 
+			"If it fails it might be because there was other instances created by other tests. Run some full GC and re-test to see if it's a real regression."
+			5 timesRepeat: [ Smalltalk garbageCollect ].
+			self assert: self packageOrganizerClass allInstances size equals: 1 ]
+
+	"To debug: self packageOrganizerClass allInstances collect: [:each | self announcer hasSubscriber: each ] "
 ]
 
 { #category : #'simple ensure tests' }
@@ -114,40 +115,37 @@ RPackageWithDoTest >> testOnDo [
 ]
 
 { #category : #tests }
+RPackageWithDoTest >> testOrganizerContainsPackages [
+	self assert: self packageOrganizerClass default packageNames isNotEmpty description: 'RPackageOrganizer should contains package names since an image should at least contains one package.'.
+	self assert: self packageOrganizerClass default packages isNotEmpty description: 'RPackageOrganizer should not be empty since an image should at least contains one package.'
+]
+
+{ #category : #tests }
 RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefault [
-	
 	| current empty |
-	current := self packageOrganizerClass default.  
+	current := self packageOrganizerClass default.
 	empty := self packageOrganizerClass basicNew initialize.
 	empty debuggingName: 'empty from PackageWithDoTest'.
-	self packageClass 
+	self packageClass
 		withOrganizer: empty
-		do: [ 
-			self assert: (self announcer hasSubscriber: empty).
-			self deny: (self announcer hasSubscriber: current)].
-	self assert: (self announcer hasSubscriber: current).
-	self deny: (self announcer hasSubscriber: empty)
+		do: [ self assert: (self announcer hasSubscriber: empty) description: 'During #withOrganizer:do:, the system announcer should have the organizer as parameter in its subscriber.'.
+			self deny: (self announcer hasSubscriber: current) description: 'During #withOrganizer:do:, the system announcer shouldn''t have the default organizer in its subscriber.' ].
+	self assert: (self announcer hasSubscriber: current) description: 'After the use of #withOrganizer:do:, the default organizer should be reinstalled in system announcer subscribers.'.
+	self deny: (self announcer hasSubscriber: empty) description: 'After the use of #withOrganizer:do:, the empty organizer should be removed from the system announcer subscribers.'
 ]
 
 { #category : #tests }
 RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefaultEvenIfHalt [
-
 	| current empty |
-	current := self packageOrganizerClass default.  
+	current := self packageOrganizerClass default.
 	empty := self packageOrganizerClass basicNew initialize.
-	[ self packageClass 
+	[ self packageClass
 		withOrganizer: empty
-		do: [ 		
-			self assert: (self announcer hasSubscriber: empty).
-			self deny: (self announcer hasSubscriber: current).
+		do: [ self assert: (self announcer hasSubscriber: empty) description: 'During #withOrganizer:do:, the system announcer should have the organizer as parameter in its subscriber.'.
+			self deny: (self announcer hasSubscriber: current) description: 'During #withOrganizer:do:, the system announcer shouldn''t have the default organizer in its subscriber.'.
 			self error ] ]
-		on: Error do: [:ex|].
-	
-	self assert: (self announcer hasSubscriber: current).
-	self deny: (self announcer hasSubscriber: empty)
-		
-		
-
-
-
+		on: Error
+		do: [ :ex |  ].
+	self assert: (self announcer hasSubscriber: current) description: 'After the use of #withOrganizer:do:, the default organizer should be reinstalled in system announcer subscribers.'.
+	self deny: (self announcer hasSubscriber: empty) description: 'After the use of #withOrganizer:do:, the empty organizer should be removed from the system announcer subscribers.'
 ]

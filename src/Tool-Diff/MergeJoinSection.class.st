@@ -1,3 +1,6 @@
+"
+A join section usable for merging
+"
 Class {
 	#name : #MergeJoinSection,
 	#superclass : #JoinSection,
@@ -8,7 +11,7 @@ Class {
 		'stateIcons',
 		'allowClick'
 	],
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Joins'
 }
 
 { #category : #accessing }

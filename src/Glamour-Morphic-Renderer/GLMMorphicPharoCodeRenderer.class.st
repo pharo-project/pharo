@@ -67,6 +67,11 @@ GLMMorphicPharoCodeRenderer >> evaluateAndPrintSelection [
 	
 ]
 
+{ #category : #callbacks }
+GLMMorphicPharoCodeRenderer >> formatSourceCode [
+	textMorph formatSourceCode 
+]
+
 { #category : #rendering }
 GLMMorphicPharoCodeRenderer >> modelFor: aPresentation [
 	| highlightContext |
@@ -103,7 +108,8 @@ GLMMorphicPharoCodeRenderer >> registerEventsForPresentation: aPresentation [
 	aPresentation when: GLMCompileText send: #actOnCompileText: to: self.
 	aPresentation when: GLMDebugSelection send: #debugHighlightedText to: self.
 	aPresentation when: GLMProfileSelection send: #profileHighlightedText to: self.
-	aPresentation when: GLMPrintSelection send: #evaluateAndPopPrintHighlight to: self
+	aPresentation when: GLMPrintSelection send: #evaluateAndPopPrintHighlight to: self.
+	aPresentation when: GLMFormatCode send: #formatSourceCode to: self.
 ]
 
 { #category : #callbacks }

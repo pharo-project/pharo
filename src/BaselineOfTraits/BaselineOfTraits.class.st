@@ -42,7 +42,6 @@ BaselineOfTraits >> baseline: spec [
 			package: 'SUnit-Core-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'CodeImport-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'OpalCompiler-Traits' with: [ spec requires: #('TraitsV2') ];
-			package: 'Slot-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'CodeExport-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'System-Sources-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'System-Support-Traits' with: [ spec requires: #('TraitsV2') ];
@@ -57,7 +56,6 @@ BaselineOfTraits >> baseline: spec [
 					'Collections-Abstract-Traits'
 					'Transcript-Core-Traits'
 					'CodeImport-Traits'
-					'Slot-Traits'
 					'CodeExport-Traits'
 					'System-Sources-Traits'
 					'System-Support-Traits' ).

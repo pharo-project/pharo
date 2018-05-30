@@ -21,6 +21,14 @@ FileException class >> signalOnFile: aFile [
 	(self fileName: aFile name) signal
 ]
 
+{ #category : #'instance creation' }
+FileException class >> signalWith: aReference [
+	"Signal a new instance of the receiver with the supplied reference.
+	aReference is something that can be converted to a path, e.g. a String, Path or FileReference"
+
+	^(self fileName: aReference asPath pathString) signal
+]
+
 { #category : #exceptiondescription }
 FileException >> fileName [
 	^fileName

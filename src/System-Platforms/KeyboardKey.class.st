@@ -14,7 +14,7 @@ Class {
 		'UnixVirtualKeyTable',
 		'WindowsVirtualKeyTable'
 	],
-	#category : #'System-Platforms'
+	#category : #'System-Platforms-Utilities'
 }
 
 { #category : #'class initialization' }
@@ -661,7 +661,7 @@ KeyboardKey >> printOn: aStream [
 		nextPutAll: name;
 		nextPutAll: ' code: (';
 		nextPutAll: value asString;
-		nextPutAll: ')'.
+		nextPutAll: ')'
 ]
 
 { #category : #'initialize-release' }
