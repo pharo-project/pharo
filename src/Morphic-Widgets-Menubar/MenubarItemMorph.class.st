@@ -11,6 +11,14 @@ MenubarItemMorph >> drawSubmenuMarkerOn: aCanvas [
 ]
 
 { #category : #drawing }
+MenubarItemMorph >> menuStringBounds [
+
+	| oldBounds |
+	oldBounds := super menuStringBounds.
+	^ oldBounds left: (oldBounds left + oldBounds right - self measureContents x) // 2
+]
+
+{ #category : #drawing }
 MenubarItemMorph >> minHeight [
 
 	^ super minHeight + 6

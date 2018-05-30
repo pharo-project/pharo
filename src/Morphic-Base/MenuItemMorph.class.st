@@ -239,23 +239,18 @@ MenuItemMorph >> doButtonAction [
 
 { #category : #drawing }
 MenuItemMorph >> drawOn: aCanvas [ 
-	| stringColor stringBounds |
+	| stringColor |
 	(isSelected and: [ isEnabled ])
 		ifTrue: [aCanvas fillRectangle: self bounds fillStyle: self selectionFillStyle.
 			stringColor := color negated]
 		ifFalse: [stringColor := color].
-	stringBounds := bounds.
 	self hasIcon
 		ifTrue: [| iconForm | 
 			iconForm := self iconForm.
-			aCanvas translucentImage: iconForm at: stringBounds left @ (self top + (self height - iconForm height // 2)).
-			stringBounds := stringBounds left: stringBounds left + iconForm width + 2].
-	self hasMarker
-		ifTrue: [stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8].
-	stringBounds := stringBounds top: stringBounds top + stringBounds bottom - self fontToUse height // 2.
+			aCanvas translucentImage: iconForm at: bounds left @ (self top + (self height - iconForm height // 2)) ].
 	aCanvas
 		drawString: self contents
-		in: stringBounds
+		in: self menuStringBounds
 		font: self fontToUse
 		color: stringColor.
 	self drawSubmenuMarkerOn: aCanvas
@@ -466,6 +461,18 @@ MenuItemMorph >> isStayUpItem [
 MenuItemMorph >> leftArrow [
 	^ ColorForm
 		mappingWhiteToTransparentFrom: ((SubMenuMarker rotateBy: 180)asFormOfDepth: 8)
+]
+
+{ #category : #drawing }
+MenuItemMorph >> menuStringBounds [
+	| stringBounds |
+	stringBounds := bounds.
+	self hasIcon ifTrue: [ | iconForm |
+		iconForm := self iconForm.
+		stringBounds := stringBounds left: stringBounds left + iconForm width + 2 ].
+	self hasMarker ifTrue: [ 
+		stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8 ].
+	^ stringBounds top: (stringBounds top + stringBounds bottom - self fontToUse height) // 2
 ]
 
 { #category : #layout }
