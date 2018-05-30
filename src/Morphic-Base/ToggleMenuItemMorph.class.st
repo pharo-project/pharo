@@ -71,7 +71,7 @@ ToggleMenuItemMorph >> drawIcon: aForm on: aCanvas in: aRectangle [
 	
 	|iconForm|
 	self isEnabled
-		ifTrue: [iconForm := aForm.]
+		ifTrue: [iconForm := aForm]
 		ifFalse: [iconForm := Form extent: aForm extent depth: 32.
 				iconForm fillColor: (Color white alpha: 0.003922).
 				(iconForm getCanvas asAlphaBlendingCanvas: 0.5)
