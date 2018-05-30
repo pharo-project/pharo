@@ -147,7 +147,7 @@ WorldState class >> lastCycleTime [
 { #category : #'world menu items' }
 WorldState class >> mostUsedToolsOn: aBuilder [
 	<worldMenu>
-	(aBuilder group: #MostUsedTools)
+	(aBuilder item: #MostUsedTools)
 		withSeparatorAfter;
 		order: 0
 ]
@@ -155,7 +155,7 @@ WorldState class >> mostUsedToolsOn: aBuilder [
 { #category : #'world menu items' }
 WorldState class >> quitItemsOn: aBuilder [
 	<worldMenu>
-	(aBuilder group: #QuitPharo)
+	(aBuilder item: #QuitPharo)
 		order: 9999;
 		with: [ (aBuilder item: #Save)
 				target: self;

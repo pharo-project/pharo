@@ -258,11 +258,17 @@ MenuItemMorph >> drawOn: aCanvas [
 		in: stringBounds
 		font: self fontToUse
 		color: stringColor.
+	self drawSubmenuMarkerOn: aCanvas
+]
+
+{ #category : #drawing }
+MenuItemMorph >> drawSubmenuMarkerOn: aCanvas [
+	| subMenuMarker subMenuMarkerPosition |
 	self hasSubMenu
-		ifTrue: [| subMenuMarker subMenuMarkerPosition | 
-			subMenuMarker := self subMenuMarker.
-			subMenuMarkerPosition := self right - subMenuMarker width @ (self top + self bottom - subMenuMarker height // 2).
-			aCanvas paintImage: subMenuMarker at: subMenuMarkerPosition]
+		ifFalse: [ ^ self ].
+	subMenuMarker := self subMenuMarker.
+	subMenuMarkerPosition := (self right - subMenuMarker width) @ ((self top + self bottom - subMenuMarker height) // 2).
+	aCanvas paintImage: subMenuMarker at: subMenuMarkerPosition
 ]
 
 { #category : #grabbing }

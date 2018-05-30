@@ -122,7 +122,7 @@ DockingBarMorph >> add: wordingString font: aFont icon: aForm help: helpString s
 DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMenuMorph [ 
 	"Append the given submenu with the given label."
 	| item |
-	item := DockingBarMenuItemMorph new.
+	item := self newMenuItem.
 	item contents: wordingString.
 	item subMenu: aMenuMorph.
 	item icon: aForm.
@@ -500,6 +500,12 @@ DockingBarMorph >> mouseDown: anEvent [
 	(self fullContainsPoint: anEvent position)
 		ifFalse: [anEvent hand releaseMouseFocus: self].
 	^super mouseDown: anEvent
+]
+
+{ #category : #construction }
+DockingBarMorph >> newMenuItem [
+	
+	^ DockingBarMenuItemMorph new
 ]
 
 { #category : #'submorphs-accessing' }
