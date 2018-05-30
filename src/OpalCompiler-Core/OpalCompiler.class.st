@@ -198,6 +198,11 @@ OpalCompiler class >> startUsingOverlayForDevelopment [
 						compile: method sourceCode.
 					class addSelectorSilently: method selector withMethod: newMethod ] ].
 	
+	"make sure superclass pointers are correct"
+    overlayEnvironment valuesDo: [ :class | 
+        (overlayEnvironment includesKey: class superclass name) ifTrue: [  
+            class superclass: (overlayEnvironment at: class superclass name)]].
+	
 	"make the copy the default compiler for the image"
 	SmalltalkImage compilerClass: (overlayEnvironment at: #OpalCompiler).
 	ASTCache reset.
