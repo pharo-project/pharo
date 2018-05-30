@@ -85,7 +85,7 @@ WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 		parent: #appearance;
 		order: 3;
 		label: 'Display scale factor';
-		description: 'Specify the amount of space that is let around a windows when it''s opened fullscreen';
+		description: 'Specify scale factor for UI elements. This setting does not affect defined font sizes.';
 		target: self;
 		range: (0.3 to: 8 by: 0.1).	
 	
