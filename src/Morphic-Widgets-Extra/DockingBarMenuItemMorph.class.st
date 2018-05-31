@@ -8,6 +8,12 @@ Class {
 	#category : #'Morphic-Widgets-Extra'
 }
 
+{ #category : #events }
+DockingBarMenuItemMorph >> activateOwnerMenu: evt [
+	self owner activate: evt.
+	^ true
+]
+
 { #category : #selecting }
 DockingBarMenuItemMorph >> adjacentTo [
 	owner isFloating
@@ -43,7 +49,7 @@ DockingBarMenuItemMorph >> mouseDown: evt [
 			evt hand newMouseFocus: nil.
 			owner selectItem: nil event: evt. ]
 		ifFalse: [
-			evt hand newMouseFocus: owner. "Redirect to menu for valid transitions"
+			owner activate: evt. "Redirect to menu for valid transitions"
 			owner selectItem: self event: evt. ]
 
 ]

@@ -386,6 +386,11 @@ DockingBarMorph >> handleFocusEvent: evt [
 
 ]
 
+{ #category : #'events-processing' }
+DockingBarMorph >> handlesMouseDown: evt [
+	^ true
+]
+
 { #category : #initialization }
 DockingBarMorph >> initialize [
 	"initialize the receiver"
