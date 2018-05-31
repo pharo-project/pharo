@@ -60,12 +60,6 @@ MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
 	"Nothing"
 ]
 
-{ #category : #accessing }
-MenubarMorph >> handlesMouseDown: anEvent [
-
-	^ true
-]
-
 { #category : #initialization }
 MenubarMorph >> initialize [
 
