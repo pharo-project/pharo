@@ -374,7 +374,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'PerformMessageCommandLineHandler'.
 		spec package: 'Pharo-Help'.
 		spec package: 'PharoDocComment'.
-		spec package: 'Polymorph-Widgets-Rules'.
 		spec package: 'ProfStef-Tests'.
 		spec package: 'Random-Tests'.
 		spec package: 'Refactoring-Help'.
@@ -642,7 +641,6 @@ spec group: 'Refactoring-Rules-Group' with: #(
 	'QualityAssistant-Core-Group' "dependency"
 	'SUnit-Rules'	
 	'Kernel-Tests-Rules'
-	'Polymorph-Widgets-Rules'
 	'System-Settings-Rules'
 	'System-Support-Rules'
 	'Rubric-Rules'
