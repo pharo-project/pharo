@@ -155,6 +155,7 @@ BaselineOfIDE >> additionalInitialization [
 	
 	self loadIceberg.	
 	self loadCalypso.
+	self loadEpicea.
 	
 	self addPharoProjectToIceberg.
 ]
@@ -191,15 +192,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
-
-		spec package: 'Ombu'.
-		spec package: 'Epicea'.
-		spec package: 'Hiedra'.
-		spec package: 'EpiceaBrowsers'.
-		spec package: 'HiedraTests'. 
-		spec package: 'OmbuTests'.
-		spec package: 'EpiceaTests'.
-		spec package: 'EpiceaBrowsersTests'.
 
 		
 		spec package: 'Shout'.
@@ -454,23 +446,6 @@ spec group: 'NodeNavigation-Group' with: #(
 	'NodeNavigation-Tests'	
 ).					
 
-spec group: 'Epicea-Core-Group' with: #(
-	'Athens-Group' "dependency of Hiedra"
-	'Ombu'
-	'Epicea'
-	'Hiedra'
-	'EpiceaBrowsers').
-spec group: 'Epicea-Tests-Group' with: #(
-	'OmbuTests'
-	'EpiceaTests'
-	'HiedraTests'
-	'EpiceaBrowsersTests'
-).	
-spec group: 'Epicea-Group' with: #(
-	'Epicea-Core-Group' 
-	'Epicea-Tests-Group'
-).	
-
 spec group: 'General-Help-Group' with: #(
 	'Announcements-Help'
 	'Pharo-Help'
@@ -503,7 +478,6 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Morphic-Tests'
 	'NECompletion-Tests'
-	'OmbuTests'
 	'ProfStef-Tests'
 
 	'Reflectivity-Tools-Tests'
@@ -878,7 +852,6 @@ spec group: #default with: #(
 	'OSWindow-Group'
 	'Refactoring-Group'
 	'Catalog-Group'
-	'Epicea-Group'
 	'Optional-Group'
 	'NodeNavigation-Group'
 	'General-Tests-Group'
@@ -913,6 +886,15 @@ BaselineOfIDE >> loadCalypso [
 	(self class environment at: #ClyBrowser) beAllDefault.
 	
 	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
+]
+
+{ #category : #actions }
+BaselineOfIDE >> loadEpicea [
+	Metacello new
+		baseline: 'Epicea';
+		repository: 'github://tinchodias/epicea:v8.3.0';
+		load.
+
 ]
 
 { #category : #actions }
