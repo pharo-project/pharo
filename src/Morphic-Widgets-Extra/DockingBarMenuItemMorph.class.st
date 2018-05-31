@@ -10,8 +10,7 @@ Class {
 
 { #category : #events }
 DockingBarMenuItemMorph >> activateOwnerMenu: evt [
-	self owner activate: evt.
-	^ true
+	^ self owner ifNil: [ false ] ifNotNil: [ :o | o activate: evt. true]
 ]
 
 { #category : #selecting }
