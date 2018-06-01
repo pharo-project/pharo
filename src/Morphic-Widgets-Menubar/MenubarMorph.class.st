@@ -90,7 +90,7 @@ MenubarMorph >> open [
 	self menuBarItems do: [ :each |
 		self
 			add: each label
-			icon: nil
+			icon: each icon
 			help: each help
 			subMenu: (each subMenu ifNotNil: #asMenuMorph) ].
 		
