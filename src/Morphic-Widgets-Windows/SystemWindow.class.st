@@ -1294,6 +1294,13 @@ SystemWindow >> positionSubmorphs [
 		[:aMorph | aMorph positionSubmorphs]
 ]
 
+{ #category : #printing }
+SystemWindow >> printOn: aStream [
+
+	super printOn: aStream. 
+	label ifNotNil: [ aStream nextPutAll: ' named: ', self labelString  ]
+]
+
 { #category : #activation }
 SystemWindow >> privateBePassive [
 	"private"
