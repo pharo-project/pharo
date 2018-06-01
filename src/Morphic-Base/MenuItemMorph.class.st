@@ -238,16 +238,24 @@ MenuItemMorph >> doButtonAction [
 ]
 
 { #category : #drawing }
-MenuItemMorph >> drawOn: aCanvas [ 
+MenuItemMorph >> drawIconOn: aCanvas [
+	| iconForm |
+	self hasIcon ifFalse: [ ^ self ].
+	
+	iconForm := self iconForm.
+	aCanvas translucentImage: iconForm at: bounds left @ (self top + ((self height - iconForm height) // 2))
+]
+
+{ #category : #drawing }
+MenuItemMorph >> drawOn: aCanvas [
 	| stringColor |
 	(isSelected and: [ isEnabled ])
-		ifTrue: [aCanvas fillRectangle: self bounds fillStyle: self selectionFillStyle.
-			stringColor := color negated]
-		ifFalse: [stringColor := color].
-	self hasIcon
-		ifTrue: [| iconForm | 
-			iconForm := self iconForm.
-			aCanvas translucentImage: iconForm at: bounds left @ (self top + (self height - iconForm height // 2)) ].
+		ifTrue: [ aCanvas
+				fillRectangle: self bounds
+				fillStyle: self selectionFillStyle.
+			stringColor := color negated ]
+		ifFalse: [ stringColor := color ].
+	self drawIconOn: aCanvas.
 	aCanvas
 		drawString: self contents
 		in: self menuStringBounds

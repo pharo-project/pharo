@@ -124,8 +124,7 @@ WorldState class >> easySelectingWorld: aBoolean [
 WorldState class >> helpOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Help)
-		order: 4.0;
-		iconName: #smallHelpIcon;
+		order: 5.0;
 		help: 'Some help tools on Pharo.';
 		with: [
 			(aBuilder item: #'About...')
@@ -158,10 +157,11 @@ WorldState class >> mostUsedToolsOn: aBuilder [
 ]
 
 { #category : #'world menu items' }
-WorldState class >> quitItemsOn: aBuilder [
+WorldState class >> pharoItemsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Pharo)
 		label: 'Pharo';
+		icon: (#pharo asIcon scaledToSize: 20 @ 20);
 		order: 0;
 		with: [ (aBuilder item: #Save)
 				target: self;

@@ -537,6 +537,13 @@ DockingBarMorph >> ownerChanged [
 	^ super ownerChanged
 ]
 
+{ #category : #accessing }
+DockingBarMorph >> popUpOwner [
+	"For compatibility with other menu"
+	
+	^ nil
+]
+
 { #category : #'private - accessing' }
 DockingBarMorph >> predominantDockingBarsOfChastes: predominantChastes [ 
 	"Private - Answer a collection of the docking bar of my owner  

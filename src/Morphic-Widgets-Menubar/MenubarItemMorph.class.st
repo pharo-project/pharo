@@ -5,6 +5,15 @@ Class {
 }
 
 { #category : #drawing }
+MenubarItemMorph >> drawIconOn: aCanvas [
+	| iconForm |
+	self hasIcon ifFalse: [ ^ self ].
+	
+	iconForm := self iconForm.
+	aCanvas translucentImage: iconForm at: (self menuStringBounds left - iconForm width - 5 ) @ (self top + ((self height - iconForm height) // 2))
+]
+
+{ #category : #drawing }
 MenubarItemMorph >> drawSubmenuMarkerOn: aCanvas [
 
 	"Nothing"
