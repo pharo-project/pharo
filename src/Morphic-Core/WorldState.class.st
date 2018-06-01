@@ -124,7 +124,7 @@ WorldState class >> easySelectingWorld: aBoolean [
 WorldState class >> helpOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Help)
-		order: 4.0;
+		order: 5.0;
 		iconName: #smallHelpIcon;
 		help: 'Some help tools on Pharo.';
 		with: [
