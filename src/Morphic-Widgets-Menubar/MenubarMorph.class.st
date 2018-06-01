@@ -100,6 +100,11 @@ MenubarMorph >> open [
 ]
 
 { #category : #accessing }
+MenubarMorph >> repelsMorph: aMorph event: ev [
+	^ true
+]
+
+{ #category : #accessing }
 MenubarMorph >> wantsYellowButtonMenu [
 	"Answer true if the receiver wants a yellow button menu."
 	
