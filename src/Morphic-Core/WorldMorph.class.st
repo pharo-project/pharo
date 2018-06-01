@@ -401,6 +401,12 @@ WorldMorph >> listOfSteppingMorphs [
 "self currentWorld listOfSteppingMorphs"
 ]
 
+{ #category : #accessing }
+WorldMorph >> menubar [
+
+	^ self submorphs detect: [ :morph | morph isKindOf: MenubarMorph  ]
+]
+
 { #category : #'dropping/grabbing' }
 WorldMorph >> mouseDown: evt [
 	super mouseDown: evt.

@@ -14,7 +14,7 @@ Class {
 { #category : #'menu declaring' }
 MenuRegistrationExample class >> mostUsedToolsOn: aBuilder [ 
 	<worldMenuExample>
-	(aBuilder group: #MostUsedTools)
+	(aBuilder group: #Tools)
 		withSeparatorAfter;
 		order: 0;
 		target: Smalltalk tools;
@@ -51,12 +51,7 @@ MenuRegistrationExample class >> myOwnCoolToolRegistrationOn: aBuilder [
 ]
 
 { #category : #'menu declaring' }
-MenuRegistrationExample class >> pragmaKeyword [
-	^ 'worldMenuExample'
-]
-
-{ #category : #'menu declaring' }
-MenuRegistrationExample class >> quitItemsOn: aBuilder [ 
+MenuRegistrationExample class >> pharoItemsOn: aBuilder [ 
 	<worldMenuExample> 
 	(aBuilder group: #QuitPharo)
 		order: 9999; 
@@ -70,6 +65,11 @@ MenuRegistrationExample class >> quitItemsOn: aBuilder [
 						target: triplet second first;
 				 		selector: triplet second second;
 						help: (triplet size > 2 ifTrue: [triplet third] ifFalse: [nil])]]
+]
+
+{ #category : #'menu declaring' }
+MenuRegistrationExample class >> pragmaKeyword [
+	^ 'worldMenuExample'
 ]
 
 { #category : #'menu actions' }

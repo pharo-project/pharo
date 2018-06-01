@@ -300,6 +300,15 @@ PharoLightTheme >> glamorousVeyLightSelectionColorFor: aMorph [
 	^ self class veryLightSelectionColor
 ]
 
+{ #category : #private }
+PharoLightTheme >> initialize [
+	"self beCurrent"
+
+	super initialize.
+	self windowActiveDropShadowStyle: #diffuse.
+	self settings preferGradientFill: false.
+]
+
 { #category : #'initialize-release' }
 PharoLightTheme >> newRadioMarkerForm [
 	"Answer a new checkbox marker form."
@@ -322,7 +331,7 @@ PharoLightTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 
 { #category : #'fill-styles-taskbar' }
 PharoLightTheme >> taskbarFillStyleFor: aTaskbar [
-	^ SolidFillStyle color: (Color white alpha: 0.8)
+	^ SolidFillStyle color: (Color gray muchLighter alpha: 0.8)
 ]
 
 { #category : #'border-styles-taskbar' }

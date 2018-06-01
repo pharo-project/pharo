@@ -445,7 +445,7 @@ PharoDarkTheme >> successTextColor [
 
 { #category : #'fill-styles-taskbar' }
 PharoDarkTheme >> taskbarFillStyleFor: aTaskbar [
-	^ SolidFillStyle color: ( Color black alpha: 0.8)
+	^ SolidFillStyle color: (Color black lighter alpha: 0.8)
 ]
 
 { #category : #'border-styles-taskbar' }
