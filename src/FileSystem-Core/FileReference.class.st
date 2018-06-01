@@ -314,7 +314,7 @@ FileReference >> nextNameFor: baseFileName extension: extension [
 
 { #category : #utilities }
 FileReference >> nextVersion [
-	"Assumes a file name includes a version number encoded as '.' followed by digits 
+	"Assumes a file (or folder) name includes a version number encoded as '.' followed by digits 
 	preceding the file extension.  Increment the version number and answer the new file name.
 	If a version number is not found, return just the file"
 
@@ -326,7 +326,7 @@ FileReference >> nextVersion [
 	parent := self parent.
 	nameWithoutExtension := self basename copyUpTo: $..
 	
-	versionNumbers := parent files 
+	versionNumbers := parent children 
 				select: [ :f| 
 					(f basename beginsWith: nameWithoutExtension) ]
 				thenCollect: [ :f| 
