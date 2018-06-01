@@ -111,7 +111,7 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		order: 0;
 		keyText: 'o, b';
 		help: 'System browser to browse and edit code.';
-		icon: Smalltalk tools browser taskbarIcon
+		iconName: #smallWindowIcon
 ]
 
 { #category : #'registry access' }
