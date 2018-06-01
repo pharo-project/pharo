@@ -336,6 +336,8 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Stdio stdout nextPutAll: 'SmalltalkEditor initialized.'; lf.
 
+	MenubarMorph initialize.	
+
 	PolymorphSystemSettings showDesktopLogo: false.
 	PolymorphSystemSettings showDesktopLogo: true.
 	PolymorphSystemSettings desktopColor: Color white.
@@ -368,9 +370,7 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.
 	
-	Author fullName: self class name.
-	
-
+	Author fullName: self class name
 ]
 
 { #category : #baseline }
