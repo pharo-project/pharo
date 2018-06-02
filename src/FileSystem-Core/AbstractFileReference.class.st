@@ -7,9 +7,9 @@ Class {
 	#category : #'FileSystem-Core-Public'
 }
 
-{ #category : #copying }
+{ #category : #navigating }
 AbstractFileReference >> , extension [
-	^ self resolve, extension
+	^ self withPath: self path, extension
 ]
 
 { #category : #navigating }

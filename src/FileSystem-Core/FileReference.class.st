@@ -44,11 +44,6 @@ FileReference class >> newTempFilePrefix: prefix suffix: suffix [
 	^ tmpDir / fileName
 ]
 
-{ #category : #navigating }
-FileReference >> , extension [
-	^ self withPath: self path, extension
-]
-
 { #category : #comparing }
 FileReference >> = other [
 	"Two FileReferences are considered equal if they refer to the same file / directory.
