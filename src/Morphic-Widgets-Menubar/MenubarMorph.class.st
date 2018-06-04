@@ -73,9 +73,7 @@ MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
 
 { #category : #initialization }
 MenubarMorph >> initialize [
-
 	super initialize.
-	self autoGradient: false.
 	self cellInset: 7
 ]
 
@@ -113,6 +111,11 @@ MenubarMorph >> open [
 { #category : #accessing }
 MenubarMorph >> repelsMorph: aMorph event: ev [
 	^ true
+]
+
+{ #category : #initialization }
+MenubarMorph >> wantsGradientByDefault [
+	^ false
 ]
 
 { #category : #accessing }

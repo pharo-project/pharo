@@ -409,18 +409,19 @@ DockingBarMorph >> handlesMouseDown: evt [
 { #category : #initialization }
 DockingBarMorph >> initialize [
 	"initialize the receiver"
+
 	super initialize.
 	""
 	selectedItem := nil.
 	activeSubMenu := nil.
 	fillsOwner := true.
 	avoidVisibleBordersAtEdge := true.
-	autoGradient := self theme preferGradientFill.
+	autoGradient := self wantsGradientByDefault.
+	self color: self defaultColor.	"<= This is done in the super initialize but we need to use the setter in this class"
 	""
 	self beFloating.
 	""
-	self layoutInset: 0.
-	
+	self layoutInset: 0
 ]
 
 { #category : #testing }
@@ -758,6 +759,11 @@ DockingBarMorph >> usedWidthByPredominantDockingBarsOfChastes: predominantChaste
 	^(self predominantDockingBarsOfChastes: predominantChastes)
 		ifEmpty: [0]
 		ifNotEmpty: [:predominants | (predominants collect: [:each | each width]) sum]
+]
+
+{ #category : #initialization }
+DockingBarMorph >> wantsGradientByDefault [
+	^ self theme preferGradientFill
 ]
 
 { #category : #testing }
