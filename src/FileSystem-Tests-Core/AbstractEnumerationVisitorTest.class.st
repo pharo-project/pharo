@@ -16,7 +16,7 @@ AbstractEnumerationVisitorTest class >> isAbstract [
 AbstractEnumerationVisitorTest >> assertEntries: references are: expected [
 	| strings |
 	self assert: references isArray.
-	references do: [ :ea | self assert: ea class equals: FileSystemDirectoryEntry ].
+	references do: [ :ea | self assert: ea class equals: MemoryDirectoryEntry ].
 	strings := references collect: [ :ea | ea reference pathString ].
 	self assert: strings equals: expected
 ]

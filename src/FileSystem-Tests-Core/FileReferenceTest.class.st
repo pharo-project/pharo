@@ -81,7 +81,7 @@ FileReferenceTest >> testAllEntries [
 	self assert: entries size = 4.
 	entries do:
 		[:entry |
-		self assert: entry class = FileSystemDirectoryEntry.
+		self assert: entry class = MemoryDirectoryEntry.
 		self assert: (ref = entry reference or: [ref contains: entry reference])].
 	self assert: (entries collect: [:ea | ea basename]) = #('alpha' 'beta' 'gamma' 'delta')
 ]
@@ -459,7 +459,7 @@ FileReferenceTest >> testEntries [
 	self assert: entries size = 2.
 	entries do:
 		[:entry |
-		self assert: entry class = FileSystemDirectoryEntry.
+		self assert: entry class = MemoryDirectoryEntry.
 		self assert: (entry reference isChildOf: ref).
 		self assert: (#('beta' 'gamma') includes: entry reference basename)]
 ]

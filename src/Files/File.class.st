@@ -46,7 +46,16 @@ Class {
 		'name'
 	],
 	#classVars : [
-		'Registry'
+		'Encoder',
+		'Registry',
+		'S_IFBLK',
+		'S_IFCHR',
+		'S_IFDIR',
+		'S_IFIFO',
+		'S_IFLNK',
+		'S_IFMT',
+		'S_IFREG',
+		'S_IFSOCK'
 	],
 	#category : #'Files-Core'
 }
@@ -58,6 +67,30 @@ File class >> atEnd: id [
 	<primitive: 'primitiveFileAtEnd' module: 'FilePlugin'>
 	self primitiveFailed
 
+]
+
+{ #category : #'primitives-errors' }
+File class >> cantAllocateMemory [
+
+	^-10
+]
+
+{ #category : #'primitives-errors' }
+File class >> cantOpenDir [
+
+	^-9
+]
+
+{ #category : #'primitives-errors' }
+File class >> cantReadlink [
+
+	^-8
+]
+
+{ #category : #'primitives-errors' }
+File class >> cantStatPath [
+	"SecurityPlugin determined that the requested path cannot be accessed."
+	^-3
 ]
 
 { #category : #'primitives-file' }
@@ -105,6 +138,12 @@ File class >> connectToFileDescriptor: fileDescriptor writable: writableFlag [
 
 ]
 
+{ #category : #'primitives-errors' }
+File class >> corruptValue [
+
+	^-7
+]
+
 { #category : #'primitives-path' }
 File class >> createDirectory: fullPath [
 	"Create a directory named by the given path. 
@@ -113,6 +152,12 @@ File class >> createDirectory: fullPath [
  	<primitive: 'primitiveDirectoryCreate' module: 'FilePlugin'>
 	^ nil
 
+]
+
+{ #category : #'private-encoding' }
+File class >> decode: aString [
+
+	^ (ZnCharacterEncoder newForEncoding: 'utf8') decodeBytes: aString asByteArray
 ]
 
 { #category : #'primitives-encoding' }
@@ -150,11 +195,68 @@ File class >> delimiter [
 
 ]
 
+{ #category : #'private-encoding' }
+File class >> encode: aString [
+
+	^ ((ZnCharacterEncoder newForEncoding: 'utf8') encodeString: aString) asString
+]
+
 { #category : #'primitives-encoding' }
 File class >> encodePathString: aString [
 
 	"Should not return a string"
 	^ ((ZnCharacterEncoder newForEncoding: 'utf8') encodeString: aString) asString
+]
+
+{ #category : #testing }
+File class >> exists: aString [
+
+	^self primExists: (self encode: aString)
+]
+
+{ #category : #attributes }
+File class >> fileAttribute: aString number: attributeNumber [
+	"Answer the attribute identified by attributeNumber for the specified file (aString).
+	For backward compatibility (on Unix) with FileReference if the file doesn't exist, and the specified path is a (broken) symbolic link, answer the requested attribute for the symbolic link."
+
+	^self primFileAttribute: (self encode: aString) number: attributeNumber
+]
+
+{ #category : #attributes }
+File class >> fileAttributeNumberMap [
+	"Answer a mapping of attribute number to name for #primFileAttribute:number:"
+	
+	^#(
+		#targetName
+		#mode
+		#inode
+		#deviceId
+		#numberOfHardLinks
+		#uid
+		#gid
+		#size
+		#accessUnixTime
+		#modificationUnixTime
+		#changeUnixTime
+		#creationUnixTime
+		#isReadable
+		#isWritable
+		#isExecutable
+		#isSymlink
+		)
+]
+
+{ #category : #attributes }
+File class >> fileAttributes: aString mask: attributeMask [
+
+	^self primFileAttributes: (self encode: aString) mask: attributeMask
+]
+
+{ #category : #'primitives-version' }
+File class >> fileAttributesVersionString [
+
+	<primitive: 'primitiveVersionString' module: 'FileAttributesPlugin' error: error>
+	^self primitiveFailed
 ]
 
 { #category : #'primitives-file' }
@@ -188,6 +290,12 @@ File class >> flush: id [
 	self primitiveFailed
 ]
 
+{ #category : #'primitives-errors' }
+File class >> getAttributesFailed [
+
+	^-4
+]
+
 { #category : #'primitives-path' }
 File class >> getMacFile: fileName type: typeString creator: creatorString [
 	"Get the Macintosh file type and creator info for the file with the given name. Fails if the file does not exist or if the type and creator type arguments are not strings of length 4. This primitive is Mac specific; it is a noop on other platforms."
@@ -203,6 +311,110 @@ File class >> getPosition: id [
 
 	<primitive: 'primitiveFileGetPosition' module: 'FilePlugin'>
 	self primitiveFailed
+
+]
+
+{ #category : #'class initialization' }
+File class >> initialize [
+
+	Encoder := ZnCharacterEncoder newForEncoding: 'utf8'.
+	self reset.
+]
+
+{ #category : #'primitives-errors' }
+File class >> invalidArguments [
+
+	^-6
+]
+
+{ #category : #'primitives-file modes' }
+File class >> isBlock: aPath [
+	"Answer a boolean indicating whether the supplied path is a Block file"
+
+	^self modeIsBlock: (self modeOf: aPath)
+
+]
+
+{ #category : #'primitives-file modes' }
+File class >> isCharacter: aPath [
+	"Answer a boolean indicating whether the supplied path is a Character file"
+
+	^self modeIsCharacter: (self modeOf: aPath)
+
+]
+
+{ #category : #'primitives-file modes' }
+File class >> isDirectory: aPath [
+	"Answer a boolean indicating whether the supplied path is a Directory"
+
+	^[ self modeIsDirectory: (self modeOf: aPath) ]
+		on: FileDoesNotExistException
+		do: [ false ].
+]
+
+{ #category : #'primitives-file modes' }
+File class >> isExecutable: aPath [
+	"Answer a boolean indicating whether the supplied path is a executable file"
+
+	^self fileAttribute: aPath number: 15
+
+]
+
+{ #category : #'primitives-file modes' }
+File class >> isFIFO: aPath [
+	"Answer a boolean indicating whether the supplied path is a FIFO file"
+
+	^self modeIsFIFO: (self modeOf: aPath)
+
+]
+
+{ #category : #'primitives-file modes' }
+File class >> isFile: aPathString [
+	"Answer a boolean indicating whether the supplied path is a file, i.e. not a directory"
+
+	^[ (self modeIsDirectory: (self modeOf: aPathString)) not ]
+		on: FileDoesNotExistException
+		do: [ false ].
+]
+
+{ #category : #'primitives-file modes' }
+File class >> isReadable: aPath [
+	"Answer a boolean indicating whether the supplied path is a readable file"
+
+	^self fileAttribute: aPath number: 13
+
+]
+
+{ #category : #'primitives-file modes' }
+File class >> isRegular: aPath [
+	"Answer a boolean indicating whether the supplied path is a Regular file"
+
+	^self modeIsRegular: (self modeOf: aPath)
+
+]
+
+{ #category : #'primitives-file modes' }
+File class >> isSocket: aPath [
+	"Answer a boolean indicating whether the supplied path is a Socket file"
+
+	^self modeIsSocket: (self modeOf: aPath)
+
+]
+
+{ #category : #'primitives-file modes' }
+File class >> isSymlink: aPath [
+	"Answer a boolean indicating whether the supplied path is a Symlink file.
+	Note that this should only be called on platforms that support symlinks (e.g. not Windows)"
+
+	^self fileAttribute: aPath number: 16
+
+]
+
+{ #category : #'primitives-file modes' }
+File class >> isWritable: aPath [
+	"Answer a boolean indicating whether the supplied path is a writable file"
+
+	^self fileAttribute: aPath number: 14
 
 ]
 
@@ -251,6 +463,62 @@ File class >> lookupEntryIn: fullPath index: index [
 
 ]
 
+{ #category : #'primitives-file modes' }
+File class >> modeIsBlock: aMode [
+	"Answer a boolean indicating whether the supplied mode has the Block type bit set"
+
+	^(aMode bitAnd: S_IFMT) = S_IFBLK
+]
+
+{ #category : #'primitives-file modes' }
+File class >> modeIsCharacter: aMode [
+	"Answer a boolean indicating whether the supplied mode has the Character type bit set"
+
+	^(aMode bitAnd: S_IFMT) = S_IFCHR
+]
+
+{ #category : #'primitives-file modes' }
+File class >> modeIsDirectory: aMode [
+	"Answer a boolean indicating whether the supplied mode has the Directory type bit set"
+
+	^(aMode bitAnd: S_IFMT) = S_IFDIR
+]
+
+{ #category : #'primitives-file modes' }
+File class >> modeIsFIFO: aMode [
+	"Answer a boolean indicating whether the supplied mode has the FIFO type bit set"
+
+	^(aMode bitAnd: S_IFMT) = S_IFIFO
+]
+
+{ #category : #'primitives-file modes' }
+File class >> modeIsRegular: aMode [
+	"Answer a boolean indicating whether the supplied mode has the Regular type bit set"
+
+	^(aMode bitAnd: S_IFMT) = S_IFREG
+]
+
+{ #category : #'primitives-file modes' }
+File class >> modeIsSocket: aMode [
+	"Answer a boolean indicating whether the supplied mode has the Socket type bit set"
+
+	^(aMode bitAnd: S_IFMT) = S_IFSOCK
+]
+
+{ #category : #'primitives-file modes' }
+File class >> modeIsSymlink: aMode [
+	"Answer a boolean indicating whether the supplied mode has the Socket type bit set"
+
+	^(aMode bitAnd: S_IFMT) = S_IFLNK
+]
+
+{ #category : #'primitives-file modes' }
+File class >> modeOf: aPath [
+	"Answer the statBuf.st_mode for the supplied path"
+	
+	^self fileAttribute: aPath number: 2
+]
+
 { #category : #'file creation' }
 File class >> named: fileName [
 	"Open a file with the given name for reading and writing. If the name has no directory part, then the file will be created in the default directory. If the file already exists, its prior contents may be modified or replaced, but the file will not be truncated on close."
@@ -294,6 +562,193 @@ File class >> openForWriteFileNamed: aName [
 	^ (self named: aName) openForWrite
 ]
 
+{ #category : #'primitives-file modes' }
+File class >> permissions: aPath [
+	"Answer the FileSystemPermission's for the supplied path"
+
+	^FileSystemPermission posixPermissions: (self posixPermissions: aPath)
+
+]
+
+{ #category : #'primitives-file modes' }
+File class >> posixPermissions: aPath [
+	"Answer the posix permissions for the supplied path"
+
+	^(self modeOf: aPath) bitAnd: 8r777
+
+]
+
+{ #category : #'primitives-directory' }
+File class >> primClosedir: directoryPointerBytes [
+	"Close the directory stream associated with directoryPointerBytes.
+	Caution: do not call this twice on the same externalAddress."
+
+	"self primClosedir: (self primOpendir: '/etc')"
+	"self primClosedir: (self primOpendir: '/no/such/directory')"
+
+	<primitive: 'primitiveClosedir' module: 'FileAttributesPlugin' error: error>
+	^self primitiveFailed.
+]
+
+{ #category : #'primitives-file attributes' }
+File class >> primExists: aString [
+	"Answer a boolean indicating whether the supplied file exists."
+
+	<primitive: 'primitiveFileExists' module: 'FileAttributesPlugin' error: error>
+	^(error isPrimitiveError)
+		ifTrue: [ self signalError: error errorCode for: aString ]
+		ifFalse: [ self primitiveFailed ].
+]
+
+{ #category : #'primitives-file attributes' }
+File class >> primFileAttribute: aString number: attributeNumber [
+	"Answer a single attribute for the supplied file.
+	For backward compatibility (on Unix) with FileReference if the file doesn't exist, and the specified path is a (broken) symbolic link, answer the requested attribute for the symbolic link.
+
+stat() information:
+	
+	1: name
+	2: mode
+	3: ino
+	4: dev
+	5: nlink
+	6: uid
+	7: gid
+	8: size
+	9: accessDate
+	10: modifiedDate
+	11: changeDate
+	12: creationDate
+
+access() information
+
+	13: is readable
+	14: is writeable
+	15: is executable
+
+symbolic link information
+
+	16: is symbolic link
+	"
+	<primitive: 'primitiveFileAttribute' module: 'FileAttributesPlugin' error: error>
+	^error isPrimitiveError ifTrue: [ 
+		(error errorCode = self cantStatPath and: [ attributeNumber ~= 16 ]) ifTrue: 
+			[ (self fileAttributeNumberMap at: attributeNumber) value: 
+				(DiskSymlinkDirectoryEntry fileSystem: DiskStore currentFileSystem path: aString asPath) ]
+		ifFalse:
+			[ self signalError: error errorCode for: aString ] ]
+	ifFalse:
+		[ self primitiveFailed ]
+]
+
+{ #category : #'primitives-file attributes' }
+File class >> primFileAttributes: aString mask: attributeMask [
+	"Answer an array of attributes for the supplied file.  The size and contents of the array are determined by the attributeMask:
+
+Bit 0: stat() information
+Bit 1: access() information
+Bit 2: use lstat() (instead of stat())
+
+On error, answer an error code (Integer).
+
+stat() information:
+	
+	1: name
+	2: mode
+	3: ino
+	4: dev
+	5: nlink
+	6: uid
+	7: gid
+	8: size
+	9: accessDate
+	10: modifiedDate
+	11: creationDate
+
+access() information
+
+	1: is readable
+	2: is writeable
+	3: is executable
+	"
+	<primitive: 'primitiveFileAttributes' module: 'FileAttributesPlugin' error: error>
+	^error isPrimitiveError ifTrue:
+		[ self signalError: error errorCode for: aString ]
+	ifFalse: 
+		[ self primitiveFailed ]
+]
+
+{ #category : #private }
+File class >> primFileMasks [
+	"Answer an array of well known masks:
+	
+	1: S_IFMT
+	2: S_IFSOCK
+	3: S_IFLNK
+	4: S_IFREG
+	5: S_IFBLK
+	6: S_IFDIR
+	7: S_IFCHR
+	8: S_IFIFO
+
+	For more information, see: http://man7.org/linux/man-pages/man2/stat.2.html
+	"
+	<primitive: 'primitiveFileMasks' module: 'FileAttributesPlugin' error: error>
+	^self primitiveFailed
+]
+
+{ #category : #'primitives-windows' }
+File class >> primLogicalDrives [
+	"Answer the windows logical drive mask"
+	<primitive: 'primitiveLogicalDrives' module: 'FileAttributesPlugin' error: error>
+	^self primitiveFailed
+]
+
+{ #category : #'primitives-directory' }
+File class >> primOpendir: pathString [
+	"Answer an ExternalAddress for a directory stream on pathString, or nil if
+	the directory cannot be opened"
+
+	"self primOpendir: '/etc'"
+	"self primOpendir: '.'"
+	"self primOpendir: '/no/such/directory'"
+
+	<primitive: 'primitiveOpendir' module: 'FileAttributesPlugin' error: error>
+	^self primitiveFailed
+]
+
+{ #category : #'primitives-directory' }
+File class >> primPathMax [
+	"Answer the VMs PATH_MAX value"
+	<primitive: 'primitivePathMax' module: 'FileAttributesPlugin' error: error>
+	^self primitiveFailed
+]
+
+{ #category : #'primitives-directory' }
+File class >> primReaddir: directoryPointerBytes [
+	"Read the next directory entry from the directory stream associated with
+	directoryPointerBytes. Answer the name of the entry, ornil for end of directory stream."
+
+	"self primReaddir: (self primOpendir: '/etc')"
+	"self primReaddir: (self primOpendir: '/no/such/directory')"
+
+	<primitive: 'primitiveReaddir' module: 'FileAttributesPlugin' error: error>
+	^self primitiveFailed
+]
+
+{ #category : #'primitives-directory' }
+File class >> primRewinddir: directoryPointerBytes [
+	"Rewind the directory stream associated with directoryPointerBytes. Answer
+	anExternalAddress on success, or nil on failure."
+
+	"self primRewinddir: (self primOpendir: '/etc')"
+	"self primRewinddir: (self primOpendir: '/no/such/directory')"
+
+	<primitive: 'primitiveRewinddir' module: 'FileAttributesPlugin' error: error>
+	^self primitiveFailed
+
+]
+
 { #category : #'primitives-file' }
 File class >> read: id into: byteArray startingAt: startIndex count: count [
 	"Read up to count bytes of data from this file into the given string or byte array starting at the given index. Answer the number of bytes actually read."
@@ -324,6 +779,24 @@ File class >> rename: oldFileFullName to: newFileFullName [
 	^nil
 ]
 
+{ #category : #'class initialization' }
+File class >> reset [
+	"Reload the masks"
+
+	| masks |
+
+	masks := self primFileMasks.
+	S_IFMT := masks at: 1.
+	S_IFSOCK := masks at: 2.
+	S_IFLNK := masks at: 3.
+	S_IFREG := masks at: 4.
+	S_IFBLK := masks at: 5.
+	S_IFDIR := masks at: 6.
+	S_IFCHR := masks at: 7.
+	S_IFIFO := masks at: 8.
+
+]
+
 { #category : #registry }
 File class >> retryWithGC: execBlock until: testBlock forFileNamed: fullName [
 	"Some platforms, like Windows, will fail if we try to open a file twice.
@@ -347,6 +820,46 @@ File class >> retryWithGC: execBlock until: testBlock forFileNamed: fullName [
 	^execBlock value.
 ]
 
+{ #category : #'primitives-file modes' }
+File class >> s_IFBLK [
+	^ S_IFBLK
+]
+
+{ #category : #'primitives-file modes' }
+File class >> s_IFCHR [
+	^ S_IFCHR
+]
+
+{ #category : #'primitives-file modes' }
+File class >> s_IFDIR [
+	^ S_IFDIR
+]
+
+{ #category : #'primitives-file modes' }
+File class >> s_IFIFO [
+	^ S_IFIFO
+]
+
+{ #category : #'primitives-file modes' }
+File class >> s_IFLNK [
+	^ S_IFLNK
+]
+
+{ #category : #'primitives-file modes' }
+File class >> s_IFMT [
+	^ S_IFMT
+]
+
+{ #category : #'primitives-file modes' }
+File class >> s_IFREG [
+	^ S_IFREG
+]
+
+{ #category : #'primitives-file modes' }
+File class >> s_IFSOCK [
+	^ S_IFSOCK
+]
+
 { #category : #'primitives-file' }
 File class >> setPosition: id to: anInteger [
 	"Set this file to the given position."
@@ -354,6 +867,19 @@ File class >> setPosition: id to: anInteger [
 	<primitive: 'primitiveFileSetPosition' module: 'FilePlugin'>
 	self primitiveFailed
 
+]
+
+{ #category : #private }
+File class >> signalError: aNumber for: aString [
+	"Raise the appropriate signal for the supplied error number"
+
+	aNumber = self stringTooLong ifTrue: 
+		[ ^IllegalName signalWith: aString ].
+	aNumber = self cantStatPath ifTrue: 
+		[ ^FileDoesNotExistException signalWith: aString ].
+	aNumber = self getAttributesFailed ifTrue: 
+		[ ^FileDoesNotExistException signalWith: aString ].
+	^FileSystemError signalWith: aString.
 ]
 
 { #category : #'primitives-file' }
@@ -373,6 +899,12 @@ File class >> sizeOrNil: id [
 	^ nil
 ]
 
+{ #category : #'primitives-errors' }
+File class >> statFailed [
+	"A call to stat() or lstat() failed"
+	^-2
+]
+
 { #category : #'primitives-file' }
 File class >> stdioDescriptorIsATTY [
 	^ (0 to: 2)
@@ -388,6 +920,12 @@ File class >> stdioHandles [
 	self primitiveFailed
 ]
 
+{ #category : #'primitives-errors' }
+File class >> stringTooLong [
+	"String too long.  A file path name was longer than PATH_MAX"
+	^-1
+]
+
 { #category : #'primitives-file' }
 File class >> sync: id [
 	"On Unix, this syncs any written or flushed data still in the kernel file
@@ -397,6 +935,12 @@ File class >> sync: id [
 
 	"fsync() failing cannot be ignored"
 	self primitiveFailed
+]
+
+{ #category : #'primitives-errors' }
+File class >> timeConversionFailed [
+
+	^-5
 ]
 
 { #category : #'primitives-file' }

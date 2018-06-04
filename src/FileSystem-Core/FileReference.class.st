@@ -68,6 +68,11 @@ FileReference >> absolutePath [
 		ifTrue: [ filesystem resolve: self path ]
 ]
 
+{ #category : #accessing }
+FileReference >> accessTime [ 
+	^ filesystem accessTimeOf: self path
+]
+
 { #category : #converting }
 FileReference >> asAbsolute [
 	"Return the receiver as an absolute file reference."
@@ -102,6 +107,11 @@ FileReference >> binaryWriteStream [
 	^ ZnBufferedReadWriteStream on: (filesystem binaryWriteStreamOn: self path)
 ]
 
+{ #category : #accessing }
+FileReference >> changeTime [ 
+	^ filesystem changeTimeOf: self path
+]
+
 { #category : #comparing }
 FileReference >> containsReference: aReference [
 	^  aReference fileSystem = filesystem and: [path contains: aReference path]
@@ -120,7 +130,9 @@ FileReference >> copyWithPath: newPath [
 ]
 
 { #category : #accessing }
-FileReference >> creationTime [ 
+FileReference >> creationTime [
+	"Answer the receivers creation time.
+	Note that the interpretation varies by platform."
 	^ filesystem creationTimeOf: self path
 ]
 
@@ -162,6 +174,7 @@ FileReference >> entry [
 
 { #category : #testing }
 FileReference >> exists [
+	"Answer a boolean indicating whether the receiver exists on the file system"
 	^ filesystem exists: path
 ]
 
@@ -217,8 +230,32 @@ FileReference >> isAbsolute [
 ]
 
 { #category : #testing }
+FileReference >> isBlock [
+	"Return a boolean indicating whether the File described by aPath is a block device"
+	^ filesystem isBlock: path
+]
+
+{ #category : #testing }
+FileReference >> isCharacter [
+	"Return a boolean indicating whether the File described by aPath is character based"
+	^ filesystem isCharacter: path
+]
+
+{ #category : #testing }
 FileReference >> isDirectory [
 	^ filesystem isDirectory: path
+]
+
+{ #category : #testing }
+FileReference >> isExecutable [
+	"Answer a boolean indicating whether the receiver has the executable flag set"
+	^ filesystem isExecutable: path
+]
+
+{ #category : #testing }
+FileReference >> isFIFO [
+	"Return a boolean indicating whether the File described by aPath is FIFO (i.e. a pipe)"
+	^ filesystem isFIFO: path
 ]
 
 { #category : #testing }
@@ -232,6 +269,12 @@ FileReference >> isReadable [
 ]
 
 { #category : #testing }
+FileReference >> isRegular [
+	"Return a boolean indicating whether the File described by aPath is a regular file"
+	^ filesystem isRegular: path
+]
+
+{ #category : #testing }
 FileReference >> isRelative [
 	^ path isRelative
 ]
@@ -242,7 +285,14 @@ FileReference >> isRoot [
 ]
 
 { #category : #testing }
-FileReference >> isSymlink [ 
+FileReference >> isSocket [
+	"Return a boolean indicating whether the File described by aPath is a socket"
+	^ filesystem isSocket: path
+]
+
+{ #category : #testing }
+FileReference >> isSymlink [
+	"Answer a boolean indicating whether the receiver is a symlink"
 	^ filesystem isSymlink: path
 ]
 
@@ -338,6 +388,12 @@ FileReference >> nextVersion [
 	^ parent / (nameWithoutExtension , '.', version asString) , self extension
 ]
 
+{ #category : #accessing }
+FileReference >> numberOfHardLinks [
+	"Return the number of hard links to the File described by aPath"
+	^ filesystem numberOfHardLinks: path
+]
+
 { #category : #streams }
 FileReference >> openWritable: aBoolean [ 
 	^ filesystem open: path writable: aBoolean
@@ -423,6 +479,18 @@ FileReference >> setFileSystem: aFilesystem path: aPath [
 { #category : #accessing }
 FileReference >> size [
 	^ filesystem sizeOf: path
+]
+
+{ #category : #accessing }
+FileReference >> symlinkEntry [
+	"Return the symlink entry (meta data) describing the receiver."
+	^ filesystem symlinkEntryAt: path
+]
+
+{ #category : #accessing }
+FileReference >> targetPath [
+	"Return the target file of the File described by aPath.  For a regular file, this is itself, for a symbolic link, it is the file pointed to by the symbolic link"
+	^ self class fileSystem: filesystem path: (filesystem targetPath: path)
 ]
 
 { #category : #streams }

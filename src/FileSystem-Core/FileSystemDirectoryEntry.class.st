@@ -1,34 +1,13 @@
 "
-I am a cache for metadata about a file or directory. The information I hold is as follows:
+I am a cache for metadata about a file, symbolic link or directory.
 
-reference
-	A reference to the file or directory to which my data pertains.
-	
-creation
-	The creation date and time, stored as number seconds since the 
-	Smalltalk epoch.
-	
-modification
-	The modification date and time, number seconds since the Smalltalk epoch.
-	
-isDirectory 
-	True if my data pertains to a directory, false if a file.
-	
-size
-	Size in bytes for a file, 0 for a directory.
-
+The set of attributes supported is platform dependent.  See the class comments of my subclasses for the details.
 "
 Class {
 	#name : #FileSystemDirectoryEntry,
 	#superclass : #Object,
 	#instVars : [
-		'reference',
-		'creation',
-		'modification',
-		'isDirectory',
-		'isSymlink',
-		'size',
-		'posixPermissions'
+		'reference'
 	],
 	#category : #'FileSystem-Core-Public'
 }
@@ -39,31 +18,48 @@ FileSystemDirectoryEntry class >> allPosixPermissions [
 ]
 
 { #category : #'instance creation' }
-FileSystemDirectoryEntry class >> fileSystem: aFilesystem path: aPath creation: cTime modification: mTime isDir: aBoolean size: anInteger posixPermissions: posixNumber isSymlink: symlinkBooleam [
-	"Create a directory entry given a filesystem and a path in such filesystem. In addition, the creation and modification time are required as well as a boolean that indicates whether the entry is a folder or a file and its size."
+FileSystemDirectoryEntry class >> fileSystem: aFilesystem path: aPath [
+	"Create a directory entry given a filesystem and a path in such filesystem.
+	This method is here for backward compatibility, the appropriate subclass should be called directly, and not rely on the switch statement here."
 
-	^ self 
-		reference: (aFilesystem referenceTo: aPath)
-		creation: cTime
-		modification: mTime
-		isDir: aBoolean
-		size: anInteger
-		posixPermissions: posixNumber
-		isSymlink: symlinkBooleam
+	^ aFilesystem store isDiskFileSystem ifTrue: 
+		[ DiskDirectoryEntry reference: (aFilesystem referenceTo: aPath) ]
+	ifFalse:
+		[ MemoryDirectoryEntry reference: (aFilesystem referenceTo: aPath) ]
+]
+
+{ #category : #'instance creation' }
+FileSystemDirectoryEntry class >> fileSystem: aFilesystem path: aPath creation: cTime modification: mTime isDir: aBoolean size: anInteger posixPermissions: posixNumber isSymlink: symlinkBooleam [
+	"Create a directory entry given a filesystem and a path in such filesystem.
+	This method is here for backward compatibility.  All other file attributes are retrieved independently."
+
+	^ aFilesystem store isDiskFileSystem ifTrue: 
+		[ DiskDirectoryEntry reference: (aFilesystem referenceTo: aPath) ]
+	ifFalse:
+		[ MemoryDirectoryEntry reference: (aFilesystem referenceTo: aPath) ]
+]
+
+{ #category : #'instance creation' }
+FileSystemDirectoryEntry class >> reference: aFileReference [
+
+	^self new initializeWithReference: aFileReference
 ]
 
 { #category : #'instance creation' }
 FileSystemDirectoryEntry class >> reference: ref creation: cTime modification: mTime isDir: aBoolean size: anInteger posixPermissions: posixNumber isSymlink: symlinkBoolean [
-	"Create a directory entry for the file reference ref, with the creation time, cTime, the modification time, mTime. aBoolean indicates if the entry represents a directory or a file of size given by anInteger"
-	
-	^ self basicNew
-		initializeWithRef: ref
-		creation: cTime
-		modification: mTime
-		isDir: aBoolean
-		size: anInteger
-		posixPermissions: posixNumber
-		isSymlink: symlinkBoolean
+	"Create a directory entry given a file reference.
+	This method is here for backward compatibility.  All other file attributes are retrieved independently."
+
+	^ ref store isDiskFileSystem ifTrue: 
+		[ DiskDirectoryEntry reference: ref ]
+	ifFalse:
+		[ MemoryDirectoryEntry reference: ref ]
+]
+
+{ #category : #accessing }
+FileSystemDirectoryEntry >> accessTime [
+
+	^FileAttributeNotSupported signalWith: self
 ]
 
 { #category : #converting }
@@ -78,22 +74,29 @@ FileSystemDirectoryEntry >> basename [
 ]
 
 { #category : #accessing }
+FileSystemDirectoryEntry >> changeTime [
+	"Answer the files change time"
+
+	^FileAttributeNotSupported signalWith: self
+]
+
+{ #category : #accessing }
 FileSystemDirectoryEntry >> creation [
 	^ self creationTime 
 ]
 
 { #category : #accessing }
-FileSystemDirectoryEntry >> creationSeconds [
-	"Return the creation date and time of the entry receiver in seconds."
-		
-	^ creation asSeconds
+FileSystemDirectoryEntry >> creationTime [
+	"Answer the files creation time.
+	Different platforms will interpret this in different ways."
+
+	^FileAttributeNotSupported signalWith: self
 ]
 
 { #category : #accessing }
-FileSystemDirectoryEntry >> creationTime [
-	"Return the creation date and time of the entry receiver."
-	
-	^ creation
+FileSystemDirectoryEntry >> deviceId [
+
+	^FileAttributeNotSupported signalWith: self
 ]
 
 { #category : #delegate }
@@ -106,41 +109,118 @@ FileSystemDirectoryEntry >> fullName [
 	^ reference fullName
 ]
 
-{ #category : #'initialize-release' }
-FileSystemDirectoryEntry >> initializeWithRef: ref 
-	creation: cTime 
-	modification: mTime 
-	isDir: directoryBoolean
-	size: bytes 
-	posixPermissions: posixNumber 
-	isSymlink: symlinkBoolean [
+{ #category : #'cache management' }
+FileSystemDirectoryEntry >> getAccessAttributes [
+	"Noop by default"
 	
+	^self
+]
+
+{ #category : #'cache management' }
+FileSystemDirectoryEntry >> getAllAttributes [
+	"Noop by default"
+	
+	^self
+]
+
+{ #category : #'cache management' }
+FileSystemDirectoryEntry >> getStatAttributes [
+	"Noop by default"
+	
+	^self
+]
+
+{ #category : #accessing }
+FileSystemDirectoryEntry >> gid [
+
+	^FileAttributeNotSupported signalWith: self
+]
+
+{ #category : #'initialize-release' }
+FileSystemDirectoryEntry >> initializeWithReference: ref [ 
+
+	super initialize.	
 	reference := ref.
-	creation := cTime.
-	modification := mTime.
-	isDirectory := directoryBoolean.
-	size := bytes.
-	posixPermissions := posixNumber.
-	isSymlink := symlinkBoolean.
+
+]
+
+{ #category : #accessing }
+FileSystemDirectoryEntry >> inode [
+
+	^FileAttributeNotSupported signalWith: self
+]
+
+{ #category : #testing }
+FileSystemDirectoryEntry >> isBlock [
+
+	^false
+]
+
+{ #category : #testing }
+FileSystemDirectoryEntry >> isCharacter [
+
+	^false
 ]
 
 { #category : #testing }
 FileSystemDirectoryEntry >> isDirectory [
 	"Return whether the receiver is a directory"
-	
-	^ isDirectory
+
+	^false
+]
+
+{ #category : #testing }
+FileSystemDirectoryEntry >> isExecutable [
+
+	^false
+]
+
+{ #category : #testing }
+FileSystemDirectoryEntry >> isFIFO [
+
+	^false
 ]
 
 { #category : #testing }
 FileSystemDirectoryEntry >> isFile [
-	"Return whether the receiver is a file"
-	
-	^ isDirectory not
+
+	^false
 ]
 
 { #category : #testing }
-FileSystemDirectoryEntry >> isSymlink [ 
-	^isSymlink
+FileSystemDirectoryEntry >> isReadable [
+
+	^false
+]
+
+{ #category : #testing }
+FileSystemDirectoryEntry >> isRegular [
+
+	^false
+]
+
+{ #category : #testing }
+FileSystemDirectoryEntry >> isSocket [
+
+	^false
+]
+
+{ #category : #testing }
+FileSystemDirectoryEntry >> isSymlink [
+
+	^false
+]
+
+{ #category : #testing }
+FileSystemDirectoryEntry >> isWritable [
+
+	^false
+]
+
+{ #category : #accessing }
+FileSystemDirectoryEntry >> mode [
+
+	^FileAttributeNotSupported signalWith: self
 ]
 
 { #category : #accessing }
@@ -149,16 +229,15 @@ FileSystemDirectoryEntry >> modification [
 ]
 
 { #category : #accessing }
-FileSystemDirectoryEntry >> modificationSeconds [
-	"Return the modification date and time of the entry receiver in seconds."
-	^ modification
+FileSystemDirectoryEntry >> modificationTime [
+
+	^FileAttributeNotSupported signalWith: self
 ]
 
 { #category : #accessing }
-FileSystemDirectoryEntry >> modificationTime [
-	"Return the modification date and time of the entry receiver."
+FileSystemDirectoryEntry >> numberOfHardLinks [
 
-	^  modification
+	^FileAttributeNotSupported signalWith: self
 ]
 
 { #category : #delegate }
@@ -166,15 +245,68 @@ FileSystemDirectoryEntry >> pathSegments [
 	^ reference pathSegments
 ]
 
-{ #category : #accessing }
-FileSystemDirectoryEntry >> permissions [ 
-	^self posixPermissions
-		ifNotNil: [ FileSystemPermission posixPermissions: self posixPermissions ]
+{ #category : #delegate }
+FileSystemDirectoryEntry >> pathString [
+	"Answer the full path name of the receiver"
+
+	^reference pathString
 ]
 
 { #category : #accessing }
-FileSystemDirectoryEntry >> posixPermissions [ 
-	^posixPermissions
+FileSystemDirectoryEntry >> permissions [
+
+	^FileAttributeNotSupported signalWith: self
+]
+
+{ #category : #printing }
+FileSystemDirectoryEntry >> printAttribute: anAttribute on: aStream [
+
+	[ (anAttribute value: self) printOn: aStream ]
+		on: FileAttributeNotSupported 
+		do: [ aStream << '(not supported)' ]
+]
+
+{ #category : #printing }
+FileSystemDirectoryEntry >> printAttributeNamed: attributeName on: aStream [
+
+	aStream
+		tab; 
+		<< attributeName;
+		<< ':';
+		tab.
+	self printAttribute: attributeName on: aStream.
+	aStream cr.
+
+]
+
+{ #category : #printing }
+FileSystemDirectoryEntry >> printLongFormOn: aStream [
+
+	reference path printOn: aStream.
+	aStream cr.
+	self
+		printAttributeNamed: #accessTime on: aStream;
+		printAttributeNamed: #modificationTime on: aStream;
+		printAttributeNamed: #changeTime on: aStream;
+		printAttributeNamed: #creationTime on: aStream;
+		printAttributeNamed: #deviceId on: aStream;
+		printAttributeNamed: #inode on: aStream;
+		printAttributeNamed: #fileSize on: aStream;
+		printAttributeNamed: #uid on: aStream;
+		printAttributeNamed: #gid on: aStream;
+		printAttributeNamed: #numberOfHardLinks on: aStream;
+		printAttributeNamed: #permissions on: aStream;
+		printAttributeNamed: #targetPath on: aStream;
+		printAttributeNamed: #isBlock on: aStream;
+		printAttributeNamed: #isCharacter on: aStream;
+		printAttributeNamed: #isDirectory on: aStream;
+		printAttributeNamed: #isExecutable on: aStream;
+		printAttributeNamed: #isFIFO on: aStream;
+		printAttributeNamed: #isFile on: aStream;
+		printAttributeNamed: #isReadable on: aStream;
+		printAttributeNamed: #isSocket on: aStream;
+		printAttributeNamed: #isSymlink on: aStream;
+		printAttributeNamed: #isWritable on: aStream.
 ]
 
 { #category : #printing }
@@ -196,8 +328,27 @@ FileSystemDirectoryEntry >> reference [
 
 { #category : #accessing }
 FileSystemDirectoryEntry >> size [
-	"Returns the receiver size"
-	^ size
+
+	^FileAttributeNotSupported signalWith: self
+]
+
+{ #category : #accessing }
+FileSystemDirectoryEntry >> targetFileReference [
+	"Answer a FileReference representing the receivers target file"
+	
+	^FileReference fileSystem: reference fileSystem path: self targetPath.
+]
+
+{ #category : #accessing }
+FileSystemDirectoryEntry >> targetPath [
+
+	^FileAttributeNotSupported signalWith: self
+]
+
+{ #category : #accessing }
+FileSystemDirectoryEntry >> uid [
+
+	^FileAttributeNotSupported signalWith: self
 ]
 
 { #category : #delegate }
