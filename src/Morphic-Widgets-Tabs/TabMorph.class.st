@@ -417,6 +417,7 @@ TabMorph >> backgroundColor [
 
 { #category : #'meta-actions' }
 TabMorph >> blueButtonUp: anEvent [
+	super blueButtonUp: anEvent.
 	self close
 ]
 
