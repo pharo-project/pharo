@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'DefaultInstance'
 	],
-	#category : #'System-Sources'
+	#category : #'System-Sources-Changes-Log'
 }
 
 { #category : #accessing }
