@@ -55,6 +55,16 @@ MenubarMorph class >> reset [
 	self open.
 ]
 
+{ #category : #initialization }
+MenubarMorph >> defaultBorderWidth [
+	^ self theme menubarBorderWidthFor: self
+]
+
+{ #category : #initialization }
+MenubarMorph >> defaultColor [
+	^ self theme menubarFillStyleFor: self
+]
+
 { #category : #adding }
 MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
 
@@ -66,7 +76,7 @@ MenubarMorph >> initialize [
 
 	super initialize.
 	self autoGradient: false.
-	self cellInset: 7.
+	self cellInset: 7
 ]
 
 { #category : #accessing }
