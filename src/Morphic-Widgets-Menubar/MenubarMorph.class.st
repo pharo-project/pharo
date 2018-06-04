@@ -69,6 +69,11 @@ MenubarMorph >> initialize [
 	self cellInset: 7.
 ]
 
+{ #category : #testing }
+MenubarMorph >> isMenubar [
+	^ true
+]
+
 { #category : #accessing }
 MenubarMorph >> menuBarItems [
 	^ menuBarItems
