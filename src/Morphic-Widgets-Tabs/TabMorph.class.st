@@ -415,6 +415,11 @@ TabMorph >> backgroundColor [
 	^ state backgroundColor
 ]
 
+{ #category : #'meta-actions' }
+TabMorph >> blueButtonUp: anEvent [
+	self close
+]
+
 { #category : #'private-drawing' }
 TabMorph >> borderColor [
 	"I do not use #borderColor because I want a light border"
@@ -536,6 +541,13 @@ TabMorph >> extraSpaceForActions [
 		offsets := offsets +1 ].
 	
 	^ space + (offsets * self actionOffset)
+]
+
+{ #category : #'events-processing' }
+TabMorph >> handleMouseUp: anEvent [
+	anEvent blueButtonChanged
+		ifTrue: [ self blueButtonUp: anEvent ]
+		ifFalse: [ super handleMouseUp: anEvent ]
 ]
 
 { #category : #'event handling' }
