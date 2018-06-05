@@ -317,6 +317,7 @@ File class >> getPosition: id [
 { #category : #'class initialization' }
 File class >> initialize [
 
+	SessionManager default registerSystemClassNamed: self name.
 	Encoder := ZnCharacterEncoder newForEncoding: 'utf8'.
 	self reset.
 ]
@@ -897,6 +898,14 @@ File class >> sizeOrNil: id [
 
 	<primitive: 'primitiveFileSize' module: 'FilePlugin'>
 	^ nil
+]
+
+{ #category : #'class initialization' }
+File class >> startUp: isImageStarting [
+	"Update VM constants on startup"
+
+	isImageStarting ifTrue: [ self reset ]
+
 ]
 
 { #category : #'primitives-errors' }
