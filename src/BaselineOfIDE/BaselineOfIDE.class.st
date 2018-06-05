@@ -957,9 +957,13 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	Smalltalk cleanOutUndeclared. 
 
-	FileStream stdout nextPutAll: ' ------------ Obsolete ------------'; lf.
-	FileStream stdout nextPutAll: SystemNavigation default obsoleteClasses asString; lf.
-	FileStream stdout nextPutAll: ' ............ Obsolete ............'; lf.
+	Stdio stdout 
+		nextPutAll: ' ------------ Obsolete ------------';
+		lf;
+		nextPutAll: SystemNavigation default obsoleteClasses asString;
+		lf;
+		nextPutAll: ' ............ Obsolete ............';
+		lf.
 
 	Smalltalk fixObsoleteReferences.
 	
