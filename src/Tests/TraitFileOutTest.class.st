@@ -59,7 +59,7 @@ TraitFileOutTest >> testFileOutCategory [
 	file them in again."
 
 	| file |
-		
+	self timeLimit: 30 seconds.
 	self class environment organization fileOutCategory: self categoryName.
 	self class environment organization removeSystemCategory: self categoryName.
 	self deny: (Smalltalk globals keys asSet includesAnyOf: #(#CA #CB #TA #TB #TC #TD)).
