@@ -315,6 +315,7 @@ BaselineOfIDE >> baseline: spec [
 				
 		spec package: 'System-CommandLine-TextSupport'.
 		spec package: 'GeneralRules'.
+		spec package: 'GeneralRules-Tests'.
 		spec package: 'FuzzyMatcher'.
 		spec package: 'STON-Text support'.
 		
@@ -832,6 +833,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 
 spec group: 'GT&QA-Group' with: #(
 	'GeneralRules'		"depends on QA, needs cleanup"
+	'GeneralRules-Tests' "depends on QA, needs cleanup"
 	'Kernel-Rules'		"depends on QA, DependencyAnalyzer, needs cleanup"
 
 	'ReleaseTests' 		"required by Manifest-Core Refactoring-Critics"
