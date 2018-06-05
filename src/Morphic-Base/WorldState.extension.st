@@ -110,7 +110,6 @@ WorldState class >> windowsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Windows)
 		order: 4.0;
-		withSeparatorAfter;
 		with: [ (aBuilder item: #'Collapse all windows')
 				action: [ World collapseAll ];
 				help: 'Reduce all open windows to collapsed forms that only show titles' translated.
