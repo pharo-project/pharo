@@ -16,10 +16,10 @@ Class {
 	#name : #Stdio,
 	#superclass : #Object,
 	#classVars : [
+		'CreateWriteStreamBlock',
 		'Stderr',
 		'Stdin',
-		'Stdout',
-		'TypeOfFileForStdio'
+		'Stdout'
 	],
 	#category : #'Files-Core'
 }
@@ -32,15 +32,30 @@ Stdio class >> cleanStdioHandles [
 
 { #category : #private }
 Stdio class >> createStdioFileFor: moniker [
-	^ [ (self typeOfFileForStdio named: moniker asString) writeStream ]
+	^ [ self createWriteStreamBlock value: moniker asString ]
 		on: CannotDeleteFileException
 		do:
 			[ "HACK: if the image is opened a second time windows barks about the already opened locked file"
-			[ (self typeOfFileForStdio
-				named: moniker asString , '_' , (Random new nextInt: SmallInteger maxVal) asString)
-				writeStream ]
+			[ self createWriteStreamBlock
+				value: moniker asString , '_' , (Random new nextInt: SmallInteger maxVal) asString ]
 				on: FileException
-				do: [ "Nothing, we do not have the rights to write and cannot suppose a dependency to the class MemoryFileSystemFile" ] ]
+				do:
+					[ "Nothing, we do not have the rights to write and cannot suppose a dependency to the class MemoryFileSystemFile" ] ]
+]
+
+{ #category : #accessing }
+Stdio class >> createWriteStreamBlock [
+	"Can be changed to MemoryFileSystemFile in order to not write on the disk"
+
+	^ CreateWriteStreamBlock
+		ifNil: [ CreateWriteStreamBlock := [ :aName | (File named: aName) asString writeStream ] ]
+]
+
+{ #category : #accessing }
+Stdio class >> createWriteStreamBlock: aBlock [
+	"Can be changed to any block that returns a writeStream"
+
+	CreateWriteStreamBlock := aBlock
 ]
 
 { #category : #'initialize-release' }
@@ -84,17 +99,4 @@ Stdio class >> stdin [
 Stdio class >> stdout [
 
 	^ Stdout ifNil: [ Stdout := self standardIOStreamNamed: #stdout forWrite: true ].
-]
-
-{ #category : #accessing }
-Stdio class >> typeOfFileForStdio [
-	"Can be changed to MemoryFileSystemFile in order to not write on the disk"
-	^ TypeOfFileForStdio ifNil: [ TypeOfFileForStdio := File ]
-]
-
-{ #category : #accessing }
-Stdio class >> typeOfFileForStdio: aFileTypeClass [
-	"Can be changed to MemoryFileSystemFile in order to not write on the disk"
-
-	TypeOfFileForStdio := aFileTypeClass
 ]
