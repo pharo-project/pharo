@@ -42,13 +42,10 @@ BaselineOfBasicTools >> baseline: spec [
 		spec postLoadDoIt: #'postload:package:'.
 
 		spec baseline: 'UI' with: [spec repository: repository].
-
-		spec package: 'JenkinsTools-Core'.
-		spec package: 'JenkinsTools-ExtraReports'.
 		
 		spec baseline: 'SUnit' with: [
 			spec repository: repository.
-			spec loads: #('UI' 'Help')].
+			spec loads: #('UI' 'Help' 'JenkinsSupport')].
 
 		spec package: 'Morphic-Widgets-FastTable'.
 		
