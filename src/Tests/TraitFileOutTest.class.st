@@ -48,6 +48,8 @@ TraitFileOutTest >> tearDown [
 		(dir / each asString,'st') ensureDelete ] .
 	(dir / self categoryName,'st') ensureDelete.
 	self class environment organization removeSystemCategory: self categoryName.
+	"Ensure cleaning of obsoletes refs"
+	ca := cb := ta := tb := tc := td := nil.
 	super tearDown
 ]
 

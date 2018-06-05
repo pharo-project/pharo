@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'thisContextSample'
 	],
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #'closures for testing' }
@@ -183,14 +183,12 @@ FLContextSerializationTest >> testContextWithTemp [
 FLContextSerializationTest >> testDoIt [
 	"Serialization of DoIt methods should be possible by default.
 	Note: apparently this test didn't use to terminate some times.
-	I've added the #valueWithin:onTimeout: as a fallback for that."	
+	I've added the #valueWithin:onTimeout: as a fallback for that."
+
 	| context |
-	[
-		[ Smalltalk compiler evaluate: 'self error' ]
-			on: Error 
-			do: [:error | context := error signalerContext copyStack ].
-	
-		self serialize: context ]
-			valueWithin: 30 seconds
-			onTimeout: [ self fail ]
+	self timeLimit: 30 seconds.
+	[ Smalltalk compiler evaluate: 'self error' ]
+		on: Error
+		do: [ :error | context := error signalerContext copyStack ].
+	self serialize: context
 ]
