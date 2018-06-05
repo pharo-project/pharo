@@ -100,7 +100,7 @@ BaselineOfIDE >> additionalInitialization [
 	self class environment at: #GTInspector ifPresent: [:inspector | 
 	  Smalltalk tools register: inspector as: #inspector.].
 
-	  Smalltalk tools register: ExternalChangesBrowser as: #changeList.
+	Smalltalk tools register: ExternalChangesBrowser as: #changeList.
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
@@ -122,9 +122,6 @@ BaselineOfIDE >> additionalInitialization [
 	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
 	GrowlMorph position: #bottomLeft.
 	ShortcutReminder enabled: true.
-
-	self class environment at: #QASettings ifPresent: [:qaSettings |
-	  qaSettings nautilusPlugin: true].
 
 	KMRepository reset.
 	Morph shortcutsHandler: KMShortcutHandler new.
