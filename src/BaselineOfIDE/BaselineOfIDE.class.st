@@ -290,8 +290,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Moose-Algos-Graph'.
 		spec package: 'Tool-DependencyAnalyser'.
 		spec package: 'Tool-DependencyAnalyser-UI'.
-		spec package: 'Tool-DependencyAnalyser-Test'.	"standalone"
-		spec package: 'Tool-DependencyAnalyser-Test-Data'.	"standalone"
+		spec package: 'Tool-DependencyAnalyser-Tests'.	"standalone"
+		spec package: 'Tool-DependencyAnalyser-Tests-Data'.	"standalone"
 
 		spec package: 'Athens-Core'.
 		spec package: 'Athens-Text'.
@@ -765,8 +765,8 @@ spec group: 'DependencyAnalyser-Core-Group' with: #(
 	'Tool-DependencyAnalyser-UI'
 ).
 spec group: 'DependencyAnalyser-Tests-Group' with: #(
-	'Tool-DependencyAnalyser-Test'	
-	'Tool-DependencyAnalyser-Test-Data'	
+	'Tool-DependencyAnalyser-Tests'	
+	'Tool-DependencyAnalyser-Tests-Data'	
 ).
 spec group: 'DependencyAnalyser-Group' with: #(
 	'DependencyAnalyser-Core-Group'

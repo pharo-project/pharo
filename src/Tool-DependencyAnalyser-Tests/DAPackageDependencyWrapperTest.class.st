@@ -5,7 +5,7 @@ Class {
 		'packageA',
 		'aPDPackageDependencyWrapper'
 	],
-	#category : #'Tool-DependencyAnalyser-Test-Packages'
+	#category : #'Tool-DependencyAnalyser-Tests-Packages'
 }
 
 { #category : #running }

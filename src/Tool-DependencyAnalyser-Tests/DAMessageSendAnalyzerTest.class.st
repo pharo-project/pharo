@@ -4,13 +4,13 @@ Class {
 	#instVars : [
 		'analyzer'
 	],
-	#category : #'Tool-DependencyAnalyser-Test-Core'
+	#category : #'Tool-DependencyAnalyser-Tests-Core'
 }
 
 { #category : #running }
 DAMessageSendAnalyzerTest >> setUp [
 	super setUp.
-	analyzer := DAMessageSendAnalyzer on: 'Tool-DependencyAnalyser-Test-Data'
+	analyzer := DAMessageSendAnalyzer on: 'Tool-DependencyAnalyser-Tests-Data'
 ]
 
 { #category : #tests }
