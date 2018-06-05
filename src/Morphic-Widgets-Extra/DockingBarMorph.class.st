@@ -122,7 +122,7 @@ DockingBarMorph >> add: wordingString font: aFont icon: aForm help: helpString s
 DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMenuMorph [ 
 	"Append the given submenu with the given label."
 	| item |
-	item := DockingBarMenuItemMorph new.
+	item := self newMenuItem.
 	item contents: wordingString.
 	item subMenu: aMenuMorph.
 	item icon: aForm.
@@ -386,6 +386,11 @@ DockingBarMorph >> handleFocusEvent: evt [
 
 ]
 
+{ #category : #'events-processing' }
+DockingBarMorph >> handlesMouseDown: evt [
+	^ true
+]
+
 { #category : #initialization }
 DockingBarMorph >> initialize [
 	"initialize the receiver"
@@ -502,6 +507,12 @@ DockingBarMorph >> mouseDown: anEvent [
 	^super mouseDown: anEvent
 ]
 
+{ #category : #construction }
+DockingBarMorph >> newMenuItem [
+	
+	^ DockingBarMenuItemMorph new
+]
+
 { #category : #'submorphs-accessing' }
 DockingBarMorph >> noteNewOwner: aMorph [ 
 	"I have just been added as a submorph of aMorph"
@@ -524,6 +535,13 @@ DockingBarMorph >> ownerChanged [
 "The receiver's owner has changed its layout. "
 	self updateBounds.
 	^ super ownerChanged
+]
+
+{ #category : #accessing }
+DockingBarMorph >> popUpOwner [
+	"For compatibility with other menu"
+	
+	^ nil
 ]
 
 { #category : #'private - accessing' }

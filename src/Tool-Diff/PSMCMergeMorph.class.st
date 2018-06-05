@@ -9,7 +9,7 @@ Class {
 		'codeMorph',
 		'merged'
 	],
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Morphs'
 }
 
 { #category : #'instance creation' }

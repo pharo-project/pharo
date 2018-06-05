@@ -44,14 +44,14 @@ SDL_Surface class >> fieldsDesc [
 
 { #category : #finalization }
 SDL_Surface class >> finalizeResourceData: aHandle [
-
-	^ self freeSurface: aHandle.
+	aHandle isNull ifTrue: [ ^ self ].
+	self freeSurface: aHandle.
+	aHandle beNull
 ]
 
 { #category : #video }
 SDL_Surface class >> freeSurface: aHandle [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_FreeSurface ( ulong aHandle ) )
+	^ self ffiCall: #( void SDL_FreeSurface ( void *aHandle ) )
 ]
 
 { #category : #'pixel accessing' }
@@ -114,7 +114,7 @@ SDL_Surface >> h: anObject [
 
 { #category : #initialization }
 SDL_Surface >> initialize [
-	FFIExternalResourceManager addResource: self data: self getHandle value.
+	self autoRelease
 ]
 
 { #category : #'pixel accessing' }

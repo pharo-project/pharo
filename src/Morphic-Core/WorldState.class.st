@@ -124,10 +124,14 @@ WorldState class >> easySelectingWorld: aBoolean [
 WorldState class >> helpOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Help)
-		order: 4.0;
-		iconName: #smallHelpIcon;
+		order: 5.0;
 		help: 'Some help tools on Pharo.';
-		withSeparatorAfter
+		with: [
+			(aBuilder item: #'About...')
+				order: 8.0;
+				iconName: #smallInfo;
+				help: 'Informations about this version of Pharo.';
+				action: [ Smalltalk aboutThisSystem ] ]
 ]
 
 { #category : #initialization }
@@ -146,17 +150,19 @@ WorldState class >> lastCycleTime [
 
 { #category : #'world menu items' }
 WorldState class >> mostUsedToolsOn: aBuilder [
-	<worldMenu>
-	(aBuilder group: #MostUsedTools)
+
+	(aBuilder item: #Tools)
 		withSeparatorAfter;
-		order: 0
+		order: 1
 ]
 
 { #category : #'world menu items' }
-WorldState class >> quitItemsOn: aBuilder [
+WorldState class >> pharoItemsOn: aBuilder [
 	<worldMenu>
-	(aBuilder group: #QuitPharo)
-		order: 9999;
+	(aBuilder item: #Pharo)
+		label: 'Pharo';
+		icon: (#pharo asIcon scaledToSize: 20 @ 20);
+		order: 0;
 		with: [ (aBuilder item: #Save)
 				target: self;
 				selector: #saveSession;
@@ -224,10 +230,10 @@ WorldState class >> screenShotCommandOn: aBuilder [
 	(aBuilder item: #Screenshot)
 		parent: #Tools;
 		target: World;
-		order: 0.59;
+		order: 501;
 		selector: #makeAScreenshot;
 		label: 'Screenshot';
-		help: 'Take a screenshot of your Pharo image.';
+		help: 'Take a screenshot';
 		iconName: #smallScreenshotIcon
 ]
 

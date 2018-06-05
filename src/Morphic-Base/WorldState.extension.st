@@ -16,7 +16,6 @@ WorldState class >> debugOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Debugging)
 		order: 3.5;
-		iconName: #smallDebug;
 		with: [ (aBuilder item: #'Remove all Breakpoints')
 				order: 0;
 				help: 'Remove all the breakpoints of the image.';
@@ -80,12 +79,7 @@ WorldState class >> systemOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #System)
 		order: 3.0;
-		iconName: #smallConfigurationIcon;
-		with: [ (aBuilder item: #'About...')
-				order: 0;
-				iconName: #smallLanguageIcon;
-				help: 'Informations about this version of Pharo.';
-				action: [ Smalltalk aboutThisSystem ].
+		with: [
 			(aBuilder item: #'Start profiling all Processes')
 				help: 'Profile all Pharo processes.';
 				action: [ self startMessageTally ].
@@ -117,7 +111,6 @@ WorldState class >> windowsOn: aBuilder [
 	(aBuilder item: #Windows)
 		order: 4.0;
 		withSeparatorAfter;
-		iconName: #smallWindowIcon;
 		with: [ (aBuilder item: #'Collapse all windows')
 				action: [ World collapseAll ];
 				help: 'Reduce all open windows to collapsed forms that only show titles' translated.

@@ -9,7 +9,7 @@ Class {
 		'slot',
 		'set'
 	],
-	#category : #'Slot-Core-Examples-Associations'
+	#category : #'Slot-Examples-Associations'
 }
 
 { #category : #'instance creation' }

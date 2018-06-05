@@ -100,7 +100,7 @@ BaselineOfIDE >> additionalInitialization [
 	self class environment at: #GTInspector ifPresent: [:inspector | 
 	  Smalltalk tools register: inspector as: #inspector.].
 
-	  Smalltalk tools register: ExternalChangesBrowser as: #changeList.
+	Smalltalk tools register: ExternalChangesBrowser as: #changeList.
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
@@ -122,9 +122,6 @@ BaselineOfIDE >> additionalInitialization [
 	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
 	GrowlMorph position: #bottomLeft.
 	ShortcutReminder enabled: true.
-
-	self class environment at: #QASettings ifPresent: [:qaSettings |
-	  qaSettings nautilusPlugin: true].
 
 	KMRepository reset.
 	Morph shortcutsHandler: KMShortcutHandler new.
@@ -180,6 +177,11 @@ BaselineOfIDE >> baseline: spec [
 
 		spec baseline: 'Traits' with: [
 			spec loads: 'traits-tests'. 
+			spec repository: repository
+		].
+	
+		spec baseline: 'Slot' with: [
+			spec loads: 'slot-tests'. 
 			spec repository: repository
 		].
 
@@ -391,7 +393,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'SUnit-Tests'.
 		spec package: 'SUnit-Support-UITesting-Tests'.
 		spec package: 'Shout-Tests'.
-		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
@@ -509,8 +510,7 @@ spec group: 'General-Tests-Group' with: #(
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
 	'SUnit-Tests'
-	'SUnit-Support-UITesting-Tests' 
-	'Slot-Tests'
+	'SUnit-Support-UITesting-Tests'
 	'Spec-Tests'
 	'System-Caching-Tests'
 	'System-Hashing-Tests'
@@ -890,6 +890,7 @@ spec group: #default with: #(
 	'Shift'
 	"Importing tests of Traits"
 	'Traits'
+	'Slot'
 ).
 
 ]
@@ -915,7 +916,7 @@ BaselineOfIDE >> loadCalypso [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v0.7.5';
+		repository: 'github://pharo-vcs/iceberg:v1.0.1';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 
@@ -956,9 +957,13 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	Smalltalk cleanOutUndeclared. 
 
-	FileStream stdout nextPutAll: ' ------------ Obsolete ------------'; lf.
-	FileStream stdout nextPutAll: SystemNavigation default obsoleteClasses asString; lf.
-	FileStream stdout nextPutAll: ' ............ Obsolete ............'; lf.
+	Stdio stdout 
+		nextPutAll: ' ------------ Obsolete ------------';
+		lf;
+		nextPutAll: SystemNavigation default obsoleteClasses asString;
+		lf;
+		nextPutAll: ' ............ Obsolete ............';
+		lf.
 
 	Smalltalk fixObsoleteReferences.
 	

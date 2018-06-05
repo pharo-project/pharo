@@ -19,7 +19,7 @@ T2TraitPropagatingSlotChangesTest >> testAddingSlotToTrait [
 
 	self assert: c1 classLayout slotScope parentScope == c1 superclass classLayout slotScope.
 	self assert: c1 class classLayout slotScope parentScope == c1 class superclass classLayout slotScope. 		 
-	self assertCollection: (c1 slots collect: #name)  hasSameElements: #(aSlot).
+	self assertCollection: (c1 allSlots collect: #name)  hasSameElements: #(aSlot).
 ]
 
 { #category : #tests }
@@ -31,12 +31,12 @@ T2TraitPropagatingSlotChangesTest >> testRemovingSlotToTrait [
 
 	self assert: c1 classLayout slotScope parentScope == c1 superclass classLayout slotScope.
 	self assert: c1 class classLayout slotScope parentScope == c1 class superclass classLayout slotScope.
-	self assertCollection: (c1 slots collect: #name)  hasSameElements: #(aSlot).
+	self assertCollection: (c1 allSlots collect: #name)  hasSameElements: #(aSlot).
 			
 	t1 := self newTrait: #T1 with: #() uses: {}.
 
 	self assert: c1 classLayout slotScope parentScope == c1 superclass classLayout slotScope.
 	self assert: c1 class classLayout slotScope parentScope == c1 class superclass classLayout slotScope. 		 
-	self assertCollection: c1 slots equals: #()	.
+	self assertCollection: c1 allSlots hasSameElements: #()	.
 
 ]

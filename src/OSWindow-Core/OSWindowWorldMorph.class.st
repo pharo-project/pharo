@@ -18,6 +18,15 @@ Class {
 	#category : #'OSWindow-Core-Morphic'
 }
 
+{ #category : #accessing }
+OSWindowWorldMorph >> actualScreenSize [
+
+	^ [ self osWindow extent ]
+		on: Error do: [ :e | 
+			"if window was destroyed, we will have an error."
+			0@0 ]
+]
+
 { #category : #adding }
 OSWindowWorldMorph >> addMorph: aMorph frame: rectangle [
 	"For compatibility with SystemWindow."

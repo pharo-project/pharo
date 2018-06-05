@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'default'
 	],
-	#category : #'Slot-Core-Examples'
+	#category : #'Slot-Examples-base'
 }
 
 { #category : #comparing }

@@ -9,7 +9,7 @@ Class {
 		'offset',
 		'baseSlotSize'
 	],
-	#category : #'Slot-Core-Examples'
+	#category : #'Slot-Examples-base'
 }
 
 { #category : #'class building' }

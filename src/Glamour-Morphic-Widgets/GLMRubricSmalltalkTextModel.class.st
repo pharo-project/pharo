@@ -49,6 +49,11 @@ GLMRubricSmalltalkTextModel >> doItReceiver [
 	^ self glamourPresentation doItReceiver 
 ]
 
+{ #category : #formatting }
+GLMRubricSmalltalkTextModel >> formatSourceCode [
+	self glamourPresentation formatSourceCode .
+]
+
 { #category : #bindings }
 GLMRubricSmalltalkTextModel >> guessTypeForName: aString [ 
 	^ nil

@@ -1,3 +1,6 @@
+"
+The join side
+"
 Class {
 	#name : #JoinSide,
 	#superclass : #Object,
@@ -9,7 +12,7 @@ Class {
 		'color',
 		'text'
 	],
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Joins'
 }
 
 { #category : #accessing }
