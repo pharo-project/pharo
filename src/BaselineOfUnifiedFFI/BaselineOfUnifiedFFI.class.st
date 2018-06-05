@@ -13,12 +13,6 @@ Installs:
 Class {
 	#name : #BaselineOfUnifiedFFI,
 	#superclass : #BaselineOf,
-	#instVars : [
-		'initializersEnabled'
-	],
-	#classVars : [
-		'Initialized'
-	],
 	#category : #BaselineOfUnifiedFFI
 }
 
@@ -27,8 +21,6 @@ BaselineOfUnifiedFFI >> baseline: spec [
 	<baseline>
 	
 	spec for: #common do: [
-		spec preLoadDoIt: #'preload:package:'.
-		spec postLoadDoIt: #'postload:package:'.
 		spec 
 			"alien"
 			package: 'Alien-Core';
@@ -41,29 +33,4 @@ BaselineOfUnifiedFFI >> baseline: spec [
 			group: 'default' with: #('core' 'legacy');
 			group: 'core' with: #('UnifiedFFI' 'UnifiedFFI-Tests');
 			group: 'legacy' with: #('UnifiedFFI-Legacy') ]
-]
-
-{ #category : #actions }
-BaselineOfUnifiedFFI >> postload: loader package: packageSpec [
-
-	"Ignore pre and post loads if already executed"
-	Initialized = true ifTrue: [ ^ self ].
-
-	MCMethodDefinition initializersEnabled: initializersEnabled.
-	
-	
-]
-
-{ #category : #actions }
-BaselineOfUnifiedFFI >> preload: loader package: packageSpec [
-
-	"Ignore pre and post loads if already executed"
-	Initialized = true ifTrue: [ ^ self ].
-
-	initializersEnabled := MCMethodDefinition initializersEnabled.
-	MCMethodDefinition initializersEnabled: true.
-	
-
-	
-
 ]
