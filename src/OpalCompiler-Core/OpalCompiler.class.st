@@ -420,7 +420,7 @@ OpalCompiler >> evaluate: textOrString for: anObject logged: logFlag [
 		transformWith:
 			'`@receiver evaluate: `@statements1 for: `@statements2 logged: `@statements3'
 				->
-					'`@receiver source: `@statements1; logged: `@statements2; receiver: `@statements3; evaluate'.
+					'`@receiver source: `@statements1; logged: `@statements3; receiver: `@statements2; evaluate'.
 	^ self
 		source: textOrString;
 		logged: logFlag;
