@@ -30,7 +30,7 @@ Announcer >> basicSubscribe: subscription [
 
 { #category : #testing }
 Announcer >> hasSubscriber: anObject [
-
+	"Added comment"
 	registry subscriptionsOf: anObject do: [:each | ^ true].
 	^ false
 ]
