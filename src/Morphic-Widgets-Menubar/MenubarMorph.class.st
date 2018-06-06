@@ -55,6 +55,11 @@ MenubarMorph class >> reset [
 	self open.
 ]
 
+{ #category : #construction }
+MenubarMorph >> addSeparator [
+	self addMorphBack: MenubarSeparatorMorph new
+]
+
 { #category : #adding }
 MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
 
@@ -98,7 +103,8 @@ MenubarMorph >> open [
 			add: each label
 			icon: each icon
 			help: each help
-			subMenu: (each subMenu ifNotNil: #asMenuMorph) ].
+			subMenu: (each subMenu ifNotNil: #asMenuMorph).
+			each separator ifTrue: [ self addSeparator ] ].
 		
 	self
 		adhereToTop;
