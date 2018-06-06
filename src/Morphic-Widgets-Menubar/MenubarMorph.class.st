@@ -119,6 +119,13 @@ MenubarMorph >> open [
 		openInWorld
 ]
 
+{ #category : #recategorized }
+MenubarMorph >> rejectsEvent: anEvent [
+	(anEvent isMouse and: [ anEvent isMouseDown ]) ifTrue: [ ^ (self submorphs anySatisfy: [ :each | each containsPoint: anEvent cursorPoint ]) not ].
+	
+	^ super rejectsEvent: anEvent
+]
+
 { #category : #accessing }
 MenubarMorph >> repelsMorph: aMorph event: ev [
 	^ true
