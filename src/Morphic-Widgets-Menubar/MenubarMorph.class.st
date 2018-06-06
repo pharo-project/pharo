@@ -55,6 +55,11 @@ MenubarMorph class >> reset [
 	self open.
 ]
 
+{ #category : #construction }
+MenubarMorph >> addSeparator [
+	self addMorphBack: MenubarSeparatorMorph new
+]
+
 { #category : #initialization }
 MenubarMorph >> defaultBorderWidth [
 	^ self theme menubarBorderWidthFor: self
@@ -75,6 +80,11 @@ MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
 MenubarMorph >> initialize [
 	super initialize.
 	self cellInset: 7
+]
+
+{ #category : #testing }
+MenubarMorph >> isMenubar [
+	^ true
 ]
 
 { #category : #accessing }
@@ -101,7 +111,8 @@ MenubarMorph >> open [
 			add: each label
 			icon: each icon
 			help: each help
-			subMenu: (each subMenu ifNotNil: #asMenuMorph) ].
+			subMenu: (each subMenu ifNotNil: #asMenuMorph).
+			each separator ifTrue: [ self addSeparator ] ].
 		
 	self
 		adhereToTop;

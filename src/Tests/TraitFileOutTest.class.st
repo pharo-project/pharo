@@ -48,6 +48,8 @@ TraitFileOutTest >> tearDown [
 		(dir / each asString,'st') ensureDelete ] .
 	(dir / self categoryName,'st') ensureDelete.
 	self class environment organization removeSystemCategory: self categoryName.
+	"Ensure cleaning of obsoletes refs"
+	ca := cb := ta := tb := tc := td := nil.
 	super tearDown
 ]
 
@@ -57,7 +59,7 @@ TraitFileOutTest >> testFileOutCategory [
 	file them in again."
 
 	| file |
-		
+	self timeLimit: 30 seconds.
 	self class environment organization fileOutCategory: self categoryName.
 	self class environment organization removeSystemCategory: self categoryName.
 	self deny: (Smalltalk globals keys asSet includesAnyOf: #(#CA #CB #TA #TB #TC #TD)).
