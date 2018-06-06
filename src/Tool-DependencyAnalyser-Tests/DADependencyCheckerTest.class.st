@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'checker'
 	],
-	#category : #'Tool-DependencyAnalyser-Test-Core'
+	#category : #'Tool-DependencyAnalyser-Tests-Core'
 }
 
 { #category : #running }
@@ -16,7 +16,7 @@ DADependencyCheckerTest >> setUp [
 { #category : #tests }
 DADependencyCheckerTest >> testShouldGetDirectDependencies [
 	self 	
-		assert: (checker dependenciesOf: 'Tool-DependencyAnalyser-Test-Data')
+		assert: (checker dependenciesOf: 'Tool-DependencyAnalyser-Tests-Data')
 		equals: #(#Kernel)
 ]
 
@@ -24,7 +24,7 @@ DADependencyCheckerTest >> testShouldGetDirectDependencies [
 DADependencyCheckerTest >> testShouldGetUnresolvedDependencies [
 	| result |
 	
-	result := (checker unresolvedDependenciesOf: 'Tool-DependencyAnalyser-Test-Data').
+	result := (checker unresolvedDependenciesOf: 'Tool-DependencyAnalyser-Tests-Data').
 	
 	self 	
 		assert: result size

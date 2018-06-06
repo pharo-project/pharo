@@ -14,7 +14,7 @@ Class {
 		'packageC',
 		'packageD'
 	],
-	#category : #'Tool-DependencyAnalyser-Test-Packages'
+	#category : #'Tool-DependencyAnalyser-Tests-Packages'
 }
 
 { #category : #utilities }

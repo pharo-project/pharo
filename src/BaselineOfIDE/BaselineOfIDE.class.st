@@ -290,8 +290,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Moose-Algos-Graph'.
 		spec package: 'Tool-DependencyAnalyser'.
 		spec package: 'Tool-DependencyAnalyser-UI'.
-		spec package: 'Tool-DependencyAnalyser-Test'.	"standalone"
-		spec package: 'Tool-DependencyAnalyser-Test-Data'.	"standalone"
+		spec package: 'Tool-DependencyAnalyser-Tests'.	"standalone"
+		spec package: 'Tool-DependencyAnalyser-Tests-Data'.	"standalone"
 
 		spec package: 'Athens-Core'.
 		spec package: 'Athens-Text'.
@@ -315,6 +315,7 @@ BaselineOfIDE >> baseline: spec [
 				
 		spec package: 'System-CommandLine-TextSupport'.
 		spec package: 'GeneralRules'.
+		spec package: 'GeneralRules-Tests'.
 		spec package: 'FuzzyMatcher'.
 		spec package: 'STON-Text support'.
 		
@@ -765,8 +766,8 @@ spec group: 'DependencyAnalyser-Core-Group' with: #(
 	'Tool-DependencyAnalyser-UI'
 ).
 spec group: 'DependencyAnalyser-Tests-Group' with: #(
-	'Tool-DependencyAnalyser-Test'	
-	'Tool-DependencyAnalyser-Test-Data'	
+	'Tool-DependencyAnalyser-Tests'	
+	'Tool-DependencyAnalyser-Tests-Data'	
 ).
 spec group: 'DependencyAnalyser-Group' with: #(
 	'DependencyAnalyser-Core-Group'
@@ -832,6 +833,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 
 spec group: 'GT&QA-Group' with: #(
 	'GeneralRules'		"depends on QA, needs cleanup"
+	'GeneralRules-Tests' "depends on QA, needs cleanup"
 	'Kernel-Rules'		"depends on QA, DependencyAnalyzer, needs cleanup"
 
 	'ReleaseTests' 		"required by Manifest-Core Refactoring-Critics"

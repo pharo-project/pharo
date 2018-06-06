@@ -13,7 +13,7 @@ Class {
 		'packageH',
 		'anArray'
 	],
-	#category : #'Tool-DependencyAnalyser-Test-Algorithm'
+	#category : #'Tool-DependencyAnalyser-Tests-Algorithm'
 }
 
 { #category : #running }
