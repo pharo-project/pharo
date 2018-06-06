@@ -48,7 +48,7 @@ Stdio class >> createWriteStreamBlock [
 	"Can be changed to MemoryFileSystemFile in order to not write on the disk"
 
 	^ CreateWriteStreamBlock
-		ifNil: [ CreateWriteStreamBlock := [ :aName | (File named: aName) asString writeStream ] ]
+		ifNil: [ CreateWriteStreamBlock := [ :aName | (File named: aName asString) writeStream ] ]
 ]
 
 { #category : #accessing }
