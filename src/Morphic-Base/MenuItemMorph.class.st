@@ -249,11 +249,11 @@ MenuItemMorph >> drawIconOn: aCanvas [
 { #category : #drawing }
 MenuItemMorph >> drawOn: aCanvas [
 	| stringColor |
-	(isSelected and: [ isEnabled ])
+	self shouldBeHighlighted
 		ifTrue: [ aCanvas
 				fillRectangle: self bounds
 				fillStyle: self selectionFillStyle.
-			stringColor := color negated ]
+			stringColor := self selectionTextColor ]
 		ifFalse: [ stringColor := color ].
 	self drawIconOn: aCanvas.
 	aCanvas
@@ -618,6 +618,11 @@ MenuItemMorph >> selectionFillStyle [
 
 ]
 
+{ #category : #private }
+MenuItemMorph >> selectionTextColor [
+	^ color negated
+]
+
 { #category : #accessing }
 MenuItemMorph >> selector [
 
@@ -630,6 +635,11 @@ MenuItemMorph >> selector: aSymbol [
 
 	selector := aSymbol.
 
+]
+
+{ #category : #testing }
+MenuItemMorph >> shouldBeHighlighted [
+	^ isSelected and: [ isEnabled ]
 ]
 
 { #category : #events }

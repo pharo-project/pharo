@@ -296,6 +296,21 @@ DockingBarMorph >> color: aColor [
 	self updateColor
 ]
 
+{ #category : #initialization }
+DockingBarMorph >> defaultBorderColor [
+	^ self theme menuBorderColor
+]
+
+{ #category : #initialization }
+DockingBarMorph >> defaultBorderWidth [
+	^ self theme menuBorderWidth
+]
+
+{ #category : #initialization }
+DockingBarMorph >> defaultColor [
+	^ self theme settings derivedMenuColor
+]
+
 { #category : #'submorphs-add/remove' }
 DockingBarMorph >> delete [
 	activeSubMenu
@@ -394,20 +409,19 @@ DockingBarMorph >> handlesMouseDown: evt [
 { #category : #initialization }
 DockingBarMorph >> initialize [
 	"initialize the receiver"
+
 	super initialize.
 	""
 	selectedItem := nil.
 	activeSubMenu := nil.
 	fillsOwner := true.
 	avoidVisibleBordersAtEdge := true.
-	autoGradient := self theme preferGradientFill.
-	""
-	self setDefaultParameters.
+	autoGradient := self wantsGradientByDefault.
+	self color: self defaultColor.	"<= This is done in the super initialize but we need to use the setter in this class"
 	""
 	self beFloating.
 	""
-	self layoutInset: 0.
-	
+	self layoutInset: 0
 ]
 
 { #category : #testing }
@@ -605,15 +619,6 @@ DockingBarMorph >> selectedItem [
 		ifFalse: [ nil]
 ]
 
-{ #category : #initialization }
-DockingBarMorph >> setDefaultParameters [
-	"private - set the default parameter using the current theme settings as the inspiration source"
-	self
-		color: self theme settings derivedMenuColor;
-		borderWidth: self theme menuBorderWidth;
-		borderColor: self theme menuBorderColor
-]
-
 { #category : #construction }
 DockingBarMorph >> snapToEdgeIfAppropriate [
 	(self owner isNil
@@ -754,6 +759,11 @@ DockingBarMorph >> usedWidthByPredominantDockingBarsOfChastes: predominantChaste
 	^(self predominantDockingBarsOfChastes: predominantChastes)
 		ifEmpty: [0]
 		ifNotEmpty: [:predominants | (predominants collect: [:each | each width]) sum]
+]
+
+{ #category : #initialization }
+DockingBarMorph >> wantsGradientByDefault [
+	^ self theme preferGradientFill
 ]
 
 { #category : #testing }

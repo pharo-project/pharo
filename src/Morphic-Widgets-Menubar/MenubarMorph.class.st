@@ -60,6 +60,16 @@ MenubarMorph >> addSeparator [
 	self addMorphBack: MenubarSeparatorMorph new
 ]
 
+{ #category : #initialization }
+MenubarMorph >> defaultBorderWidth [
+	^ self theme menubarBorderWidthFor: self
+]
+
+{ #category : #initialization }
+MenubarMorph >> defaultColor [
+	^ self theme menubarFillStyleFor: self
+]
+
 { #category : #adding }
 MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
 
@@ -68,10 +78,8 @@ MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
 
 { #category : #initialization }
 MenubarMorph >> initialize [
-
 	super initialize.
-	self autoGradient: false.
-	self cellInset: 7.
+	self cellInset: 7
 ]
 
 { #category : #testing }
@@ -114,6 +122,11 @@ MenubarMorph >> open [
 { #category : #accessing }
 MenubarMorph >> repelsMorph: aMorph event: ev [
 	^ true
+]
+
+{ #category : #initialization }
+MenubarMorph >> wantsGradientByDefault [
+	^ false
 ]
 
 { #category : #accessing }
