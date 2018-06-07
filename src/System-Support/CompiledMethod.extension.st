@@ -9,7 +9,7 @@ CompiledMethod >> implementors [
 CompiledMethod >> referencedClasses [
 	"Return classes that are directly referenced by this method"
 
-	^ self literals allButLast
+	^ self literals
 		select: [ :l | l value isClass ] 
 		thenCollect: [:v | v value ].
 ]

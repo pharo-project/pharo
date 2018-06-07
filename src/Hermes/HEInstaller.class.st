@@ -240,12 +240,12 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 
 	extendedEnvironment newMethod: newMethod.
 
-	aMethod literals
+	aMethod allLiterals
 		doWithIndex:
 			[ :literal :idx | newMethod literalAt: idx put: (literal asLiteralIn: extendedEnvironment) ].
 
 	newMethod classBinding: aClass binding.
-	literalSpace := (aMethod literals size + 1) * Smalltalk wordSize.
+	literalSpace := (aMethod allLiterals size + 1) * Smalltalk wordSize.
 
 	aMethod bytecode doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
 
