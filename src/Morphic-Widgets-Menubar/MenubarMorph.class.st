@@ -4,6 +4,9 @@ Class {
 	#instVars : [
 		'menuBarItems'
 	],
+	#classVars : [
+		'ShowMenubar'
+	],
 	#category : #'Morphic-Widgets-Menubar'
 }
 
@@ -17,9 +20,9 @@ MenubarMorph class >> closeAll [
 
 { #category : #'instance creation' }
 MenubarMorph class >> initialize [
-
+	self showMenubar: true.
 	self install.
-	self reset.
+	self reset
 ]
 
 { #category : #'instance creation' }
@@ -31,6 +34,16 @@ MenubarMorph class >> install [
 		send: #methodAnnouncementReceived: to: self.
 ]
 
+{ #category : #setting }
+MenubarMorph class >> menubarSettingOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #showMenubar)
+		target: self;
+		parent: #morphic;
+		label: 'Show menubar';
+		description: 'Whether the world''s menubar should be shown or not.'
+]
+
 { #category : #'instance creation' }
 MenubarMorph class >> methodAnnouncementReceived: anAnnouncement [
 
@@ -40,7 +53,9 @@ MenubarMorph class >> methodAnnouncementReceived: anAnnouncement [
 
 { #category : #'instance creation' }
 MenubarMorph class >> open [
-	"self open"
+	<script>
+	
+	self showMenubar ifFalse: [ ^ self ].
 
 	self new
 		menuBarItems: WorldState new menuBuilder menuSpec items;
@@ -53,6 +68,17 @@ MenubarMorph class >> reset [
 	<script>
 	self closeAll.
 	self open.
+]
+
+{ #category : #accessing }
+MenubarMorph class >> showMenubar [
+	^ ShowMenubar
+]
+
+{ #category : #accessing }
+MenubarMorph class >> showMenubar: aBoolean [
+	ShowMenubar := aBoolean.
+	self reset
 ]
 
 { #category : #construction }
