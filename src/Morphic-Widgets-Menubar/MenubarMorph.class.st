@@ -133,19 +133,13 @@ MenubarMorph >> newMenuItem [
 MenubarMorph >> open [
 	self menuBarItems
 		do: [ :each | 
-			each subMenu
-				ifNil: [ self
-						add: each label
-						icon: each icon
-						help: each help
-						action: each action
-						keyText: each keyText ]
-				ifNotNil: [ :sub | 
-					self
-						add: each label
-						icon: each icon
-						help: each help
-						subMenu: sub asMenuMorph ].
+			self
+				add: each label
+				icon: each icon
+				help: each help
+				subMenu: (each subMenu ifNotNil: #asMenuMorph)
+				action: each action
+				keyText: each keyText.
 			each separator
 				ifTrue: [ self addSeparator ] ].
 	self

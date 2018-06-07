@@ -103,7 +103,7 @@ DockingBarMorph >> activeSubmenu: aSubmenu [
 ]
 
 { #category : #menu }
-DockingBarMorph >> add: wordingString font: aFont icon: aForm help: helpString subMenu: aMenuMorph [ 
+DockingBarMorph >> add: wordingString font: aFont icon: aForm help: helpString subMenu: aMenuMorph [
 	"Append the given submenu with the given label."
 	
 	| item |
@@ -140,12 +140,28 @@ DockingBarMorph >> add: wordingString icon: aForm help: helpString action: anAct
 { #category : #construction }
 DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMenuMorph [ 
 	"Append the given submenu with the given label."
+	
+	self add: wordingString icon: aForm help: helpString action: nil keyText: nil
+]
+
+{ #category : #construction }
+DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMenuMorph action: anAction keyText: aText [
+	"Append the given submenu with the given label."
+
 	| item |
-	item := self newMenuItem.
-	item contents: wordingString.
-	item subMenu: aMenuMorph.
-	item icon: aForm.
-	helpString ifNotNil: [item setBalloonText: helpString].
+	item := self newMenuItem
+		contents: wordingString;
+		subMenu: aMenuMorph;
+		icon: aForm;
+		keyText: aText;
+		yourself.
+	anAction
+		ifNotNil: [ :act | 
+			item
+				target: act receiver;
+				selector: act selector;
+				arguments: act arguments ].
+	helpString ifNotNil: [ item setBalloonText: helpString ].
 	self addMorphBack: item
 ]
 
