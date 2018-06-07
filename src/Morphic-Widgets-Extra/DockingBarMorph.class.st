@@ -119,6 +119,25 @@ DockingBarMorph >> add: wordingString font: aFont icon: aForm help: helpString s
 ]
 
 { #category : #construction }
+DockingBarMorph >> add: wordingString icon: aForm help: helpString action: anAction keyText: aText [
+	"Append the given submenu with the given label."
+
+	| item |
+	item := self newMenuItem.
+	item contents: wordingString.
+	item keyText: aText.
+	anAction
+		ifNotNil: [ :act | 
+			item
+				target: act receiver;
+				selector: act selector;
+				arguments: act arguments ].
+	item icon: aForm.
+	helpString ifNotNil: [ item setBalloonText: helpString ].
+	self addMorphBack: item
+]
+
+{ #category : #construction }
 DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMenuMorph [ 
 	"Append the given submenu with the given label."
 	| item |
@@ -385,7 +404,7 @@ DockingBarMorph >> gradientRamp: colorRamp [
 DockingBarMorph >> handleFocusEvent: evt [
 	"Handle focus events. Valid menu transitions are determined based on the menu currently holding the focus after the mouse went down on one of its children."
 
-	(evt isMouse and:[ evt isMouseUp ]) ifTrue:[^ self].
+	(evt isMouse and:[ evt isMouseUp ]) ifTrue:[^ super handleFocusEvent: evt].
 
 	self processEvent: evt.
 
@@ -519,6 +538,17 @@ DockingBarMorph >> mouseDown: anEvent [
 	(self fullContainsPoint: anEvent position)
 		ifFalse: [anEvent hand releaseMouseFocus: self].
 	^super mouseDown: anEvent
+]
+
+{ #category : #'events-processing' }
+DockingBarMorph >> mouseUp: evt [
+	super mouseUp: evt.
+	self selectedItem ifNil: [ ^ self ].
+
+	"If the selected element is selected and have an action to execute, send a mouseUp event to launch the action and deselect the element"
+	(self selectedItem selector isNotNil and: [ self selectedItem containsPoint: evt cursorPoint ])
+		ifTrue: [ self selectedItem invokeWithEvent: evt.
+			self selectItem: nil event: evt ]
 ]
 
 { #category : #construction }

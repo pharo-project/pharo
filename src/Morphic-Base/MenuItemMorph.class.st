@@ -24,7 +24,8 @@ Class {
 		'target',
 		'selector',
 		'arguments',
-		'icon'
+		'icon',
+		'keyText'
 	],
 	#classVars : [
 		'SubMenuMarker'
@@ -463,6 +464,20 @@ MenuItemMorph >> isSelected: aBoolean [
 MenuItemMorph >> isStayUpItem [
 
 	^selector == #toggleStayUp:
+]
+
+{ #category : #accessing }
+MenuItemMorph >> keyText [
+	"Answer the value of keyText"
+
+	^ keyText
+]
+
+{ #category : #accessing }
+MenuItemMorph >> keyText: anObject [
+	"Set the value of keyText"
+
+	keyText := anObject
 ]
 
 { #category : #private }

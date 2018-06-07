@@ -6,8 +6,7 @@ Class {
 	#superclass : #MenuItemMorph,
 	#instVars : [
 		'getStateSelector',
-		'enablementSelector',
-		'keyText'
+		'enablementSelector'
 	],
 	#category : #'Morphic-Base-Menus'
 }
@@ -216,20 +215,6 @@ ToggleMenuItemMorph >> itemShortcut [
 		owner: self 
 		keyText: self keyText
 		
-]
-
-{ #category : #accessing }
-ToggleMenuItemMorph >> keyText [
-	"Answer the value of keyText"
-
-	^ keyText
-]
-
-{ #category : #accessing }
-ToggleMenuItemMorph >> keyText: anObject [
-	"Set the value of keyText"
-
-	keyText := anObject
 ]
 
 { #category : #private }
