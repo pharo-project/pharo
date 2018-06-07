@@ -420,7 +420,7 @@ DockingBarMorph >> gradientRamp: colorRamp [
 DockingBarMorph >> handleFocusEvent: evt [
 	"Handle focus events. Valid menu transitions are determined based on the menu currently holding the focus after the mouse went down on one of its children."
 
-	(evt isMouse and:[ evt isMouseUp ]) ifTrue:[^ super handleFocusEvent: evt].
+	(evt isMouse and: [ evt isMouseUp ]) ifTrue: [ ^ self mouseUp: evt ].
 
 	self processEvent: evt.
 
@@ -558,13 +558,17 @@ DockingBarMorph >> mouseDown: anEvent [
 
 { #category : #'events-processing' }
 DockingBarMorph >> mouseUp: evt [
+	"If we click on a selected item with an action we want to execute the action and deselect the menu item."
+	
 	super mouseUp: evt.
-	self selectedItem ifNil: [ ^ self ].
+	
+	self selectedItem ifNil: [ ^ self ]. "No selected item"
+	self selectedItem selector ifNil: [ ^ self ]. "No action for the selected item"
+	(self selectedItem containsPoint: evt cursorPoint) ifFalse: [ ^ self ]. "The user did not clicked on the selected menu item"
 
-	"If the selected element is selected and have an action to execute, send a mouseUp event to launch the action and deselect the element"
-	(self selectedItem selector isNotNil and: [ self selectedItem containsPoint: evt cursorPoint ])
-		ifTrue: [ self selectedItem invokeWithEvent: evt.
-			self selectItem: nil event: evt ]
+	"Execute the action of the menu item and deselect it"
+	self selectedItem invokeWithEvent: evt.
+	self selectItem: nil event: evt 
 ]
 
 { #category : #construction }
