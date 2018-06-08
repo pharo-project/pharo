@@ -122,7 +122,7 @@ DockingBarMorph >> add: wordingString font: aFont icon: aForm help: helpString s
 DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMenuMorph [ 
 	"Append the given submenu with the given label."
 	| item |
-	item := DockingBarMenuItemMorph new.
+	item := self newMenuItem.
 	item contents: wordingString.
 	item subMenu: aMenuMorph.
 	item icon: aForm.
@@ -296,6 +296,21 @@ DockingBarMorph >> color: aColor [
 	self updateColor
 ]
 
+{ #category : #initialization }
+DockingBarMorph >> defaultBorderColor [
+	^ self theme menuBorderColor
+]
+
+{ #category : #initialization }
+DockingBarMorph >> defaultBorderWidth [
+	^ self theme menuBorderWidth
+]
+
+{ #category : #initialization }
+DockingBarMorph >> defaultColor [
+	^ self theme settings derivedMenuColor
+]
+
 { #category : #'submorphs-add/remove' }
 DockingBarMorph >> delete [
 	activeSubMenu
@@ -386,23 +401,27 @@ DockingBarMorph >> handleFocusEvent: evt [
 
 ]
 
+{ #category : #'events-processing' }
+DockingBarMorph >> handlesMouseDown: evt [
+	^ true
+]
+
 { #category : #initialization }
 DockingBarMorph >> initialize [
 	"initialize the receiver"
+
 	super initialize.
 	""
 	selectedItem := nil.
 	activeSubMenu := nil.
 	fillsOwner := true.
 	avoidVisibleBordersAtEdge := true.
-	autoGradient := self theme preferGradientFill.
-	""
-	self setDefaultParameters.
+	autoGradient := self wantsGradientByDefault.
+	self color: self defaultColor.	"<= This is done in the super initialize but we need to use the setter in this class"
 	""
 	self beFloating.
 	""
-	self layoutInset: 0.
-	
+	self layoutInset: 0
 ]
 
 { #category : #testing }
@@ -502,6 +521,12 @@ DockingBarMorph >> mouseDown: anEvent [
 	^super mouseDown: anEvent
 ]
 
+{ #category : #construction }
+DockingBarMorph >> newMenuItem [
+	
+	^ DockingBarMenuItemMorph new
+]
+
 { #category : #'submorphs-accessing' }
 DockingBarMorph >> noteNewOwner: aMorph [ 
 	"I have just been added as a submorph of aMorph"
@@ -524,6 +549,13 @@ DockingBarMorph >> ownerChanged [
 "The receiver's owner has changed its layout. "
 	self updateBounds.
 	^ super ownerChanged
+]
+
+{ #category : #accessing }
+DockingBarMorph >> popUpOwner [
+	"For compatibility with other menu"
+	
+	^ nil
 ]
 
 { #category : #'private - accessing' }
@@ -585,15 +617,6 @@ DockingBarMorph >> selectedItem [
 	^ selectedItem isSelected
 		ifTrue: [ selectedItem]
 		ifFalse: [ nil]
-]
-
-{ #category : #initialization }
-DockingBarMorph >> setDefaultParameters [
-	"private - set the default parameter using the current theme settings as the inspiration source"
-	self
-		color: self theme settings derivedMenuColor;
-		borderWidth: self theme menuBorderWidth;
-		borderColor: self theme menuBorderColor
 ]
 
 { #category : #construction }
@@ -736,6 +759,11 @@ DockingBarMorph >> usedWidthByPredominantDockingBarsOfChastes: predominantChaste
 	^(self predominantDockingBarsOfChastes: predominantChastes)
 		ifEmpty: [0]
 		ifNotEmpty: [:predominants | (predominants collect: [:each | each width]) sum]
+]
+
+{ #category : #initialization }
+DockingBarMorph >> wantsGradientByDefault [
+	^ self theme preferGradientFill
 ]
 
 { #category : #testing }

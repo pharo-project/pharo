@@ -6,19 +6,18 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
+# Since there is random failure during tests execution we print the content of the current directory to find potential problems
+
+ls -lAh
+
 # The first parameter is the architecture
 # The second parameter is the stage name
-
-ARCHFLAG=""
-if [ ${1} = "64" ]; then
-    ARCHFLAG="64/"
-fi
 
 CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
 find ${CACHE}
 
-wget -O- get.pharo.org/${ARCHFLAG}vm70 | bash
+bootstrap/scripts/getPharoVM.sh 70 vm ${1}
 					
 IMAGE_ARCHIVE=$(find ${CACHE} -name Pharo7.0-bootstrap-${1}bit-*.zip)
 unzip $IMAGE_ARCHIVE

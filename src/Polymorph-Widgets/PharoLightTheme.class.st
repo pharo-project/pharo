@@ -300,6 +300,15 @@ PharoLightTheme >> glamorousVeyLightSelectionColorFor: aMorph [
 	^ self class veryLightSelectionColor
 ]
 
+{ #category : #private }
+PharoLightTheme >> initialize [
+	"self beCurrent"
+
+	super initialize.
+	self windowActiveDropShadowStyle: #diffuse.
+	self settings preferGradientFill: false.
+]
+
 { #category : #'initialize-release' }
 PharoLightTheme >> newRadioMarkerForm [
 	"Answer a new checkbox marker form."
@@ -318,4 +327,93 @@ PharoLightTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 			ifFalse: [aScrollbar width @ 0])"
 "	^ SolidFillStyle color: Color lightGray lighter."
 	^ self glamorousSelectedFillStyleFor: aScrollbar height: aScrollbar height
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoLightTheme >> taskbarFillStyleFor: aTaskbar [
+	^ SolidFillStyle color: (Color gray muchLighter alpha: 0.8)
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoLightTheme >> taskbarItemDisabledBorderStyleFor: aButton [
+	^ self taskbarItemNormalBorderStyleFor: aButton
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoLightTheme >> taskbarItemDisabledFillStyleFor: aButton [
+	"Return the disabled taskbar item fillStyle for the given color."
+
+	^ self taskbarItemNormalFillStyleFor: aButton
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoLightTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
+	^ BottomBorder new
+		color: (Color fromHexString: '616161');
+		width: 2;
+		yourself
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoLightTheme >> taskbarItemMouseOverFillStyleFor: aButton [
+	^ SolidFillStyle color: (Color black alpha: 0.07)
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoLightTheme >> taskbarItemNormalBorderStyleFor: aButton [
+	^ BottomBorder new
+		color: (Color fromHexString: '757575');
+		width: 2;
+		trimSize: 2;
+		yourself
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoLightTheme >> taskbarItemNormalFillStyleFor: aButton [
+	^ SolidFillStyle color: Color transparent
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoLightTheme >> taskbarItemPressedBorderStyleFor: aButton [
+	^ self taskbarItemNormalBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoLightTheme >> taskbarItemPressedFillStyleFor: aButton [
+	^ SolidFillStyle color: (Color black alpha: 0.15)
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoLightTheme >> taskbarItemSelectedBorderStyleFor: aButton [
+	^ self taskbarItemMouseOverBorderStyleFor: aButton
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoLightTheme >> taskbarItemSelectedDisabledBorderStyleFor: aButton [
+	^ self taskbarItemMouseOverBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoLightTheme >> taskbarItemSelectedFillStyleFor: aButton [
+	^ SolidFillStyle color: (Color black alpha: 0.1)
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoLightTheme >> taskbarItemSelectedMouseOverBorderStyleFor: aButton [
+	^ self taskbarItemMouseOverBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoLightTheme >> taskbarItemSelectedMouseOverFillStyleFor: aButton [
+	^ SolidFillStyle color: (Color black alpha: 0.15)
+]
+
+{ #category : #'border-styles-taskbar' }
+PharoLightTheme >> taskbarItemSelectedPressedBorderStyleFor: aButton [
+	^ self taskbarItemMouseOverBorderStyleFor: aButton
+]
+
+{ #category : #'fill-styles-taskbar' }
+PharoLightTheme >> taskbarItemSelectedPressedFillStyleFor: aButton [
+	^ SolidFillStyle color: (Color black alpha: 0.2)
 ]

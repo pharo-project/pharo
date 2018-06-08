@@ -198,6 +198,11 @@ OpalCompiler class >> startUsingOverlayForDevelopment [
 						compile: method sourceCode.
 					class addSelectorSilently: method selector withMethod: newMethod ] ].
 	
+	"make sure superclass pointers are correct"
+    overlayEnvironment valuesDo: [ :class | 
+        (overlayEnvironment includesKey: class superclass name) ifTrue: [  
+            class superclass: (overlayEnvironment at: class superclass name)]].
+	
 	"make the copy the default compiler for the image"
 	SmalltalkImage compilerClass: (overlayEnvironment at: #OpalCompiler).
 	ASTCache reset.
@@ -415,7 +420,7 @@ OpalCompiler >> evaluate: textOrString for: anObject logged: logFlag [
 		transformWith:
 			'`@receiver evaluate: `@statements1 for: `@statements2 logged: `@statements3'
 				->
-					'`@receiver source: `@statements1; logged: `@statements2; receiver: `@statements3; evaluate'.
+					'`@receiver source: `@statements1; logged: `@statements3; receiver: `@statements2; evaluate'.
 	^ self
 		source: textOrString;
 		logged: logFlag;

@@ -2644,6 +2644,26 @@ UITheme >> menuTitleFillStyleFor: aMenuTitle [
 	^ fill
 ]
 
+{ #category : #'border-style-menubar' }
+UITheme >> menubarBorderWidthFor: aMenubar [
+	^ 0
+]
+
+{ #category : #'fill-styles-menubar' }
+UITheme >> menubarFillStyleFor: aMenubar [
+	^ self taskbarFillStyleFor: aMenubar
+]
+
+{ #category : #'fill-styles-menubar' }
+UITheme >> menubarItemSelectionFillStyleFor: aMenubarItem [
+	^ self taskbarItemSelectedFillStyleFor: aMenubarItem
+]
+
+{ #category : #'fill-styles-menubar' }
+UITheme >> menubarItemSelectionTextColorFor: aMenubarItem [
+	^ self taskbarItemLabelColorForExpanded: aMenubarItem
+]
+
 { #category : #services }
 UITheme >> messageIn: aThemedMorph text: aStringOrText title: aString [
 	"Answer the result of a message dialog (true) with the given label and title."
@@ -5463,10 +5483,9 @@ UITheme >> taskbarButtonLabelColorFor: aButton [
 				ifFalse: [Color gray darker]]
 ]
 
-{ #category : #'fill-styles' }
+{ #category : #'fill-styles-taskbar' }
 UITheme >> taskbarFillStyleFor: aTaskbar [
-	^ "self buttonNormalFillStyleFor: aTaskbar"
-	SolidFillStyle color: Color transparent 
+	^ SolidFillStyle color: Color transparent 
 ]
 
 { #category : #'border-styles-taskbar' }

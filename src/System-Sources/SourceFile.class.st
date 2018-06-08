@@ -9,7 +9,7 @@ Class {
 		'stream',
 		'potentialLocations'
 	],
-	#category : #'System-Sources'
+	#category : #'System-Sources-Sources'
 }
 
 { #category : #'instance creation' }

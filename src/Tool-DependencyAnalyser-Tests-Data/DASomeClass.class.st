@@ -1,7 +1,7 @@
 Class {
 	#name : #DASomeClass,
 	#superclass : #Object,
-	#category : #'Tool-DependencyAnalyser-Test-Data'
+	#category : #'Tool-DependencyAnalyser-Tests-Data'
 }
 
 { #category : #'tests - test data' }
