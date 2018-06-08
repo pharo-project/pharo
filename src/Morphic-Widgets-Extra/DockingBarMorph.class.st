@@ -87,7 +87,8 @@ DockingBarMorph >> aboutToBeGrabbedBy: aHand [
 DockingBarMorph >> activate: evt [ 
 	"Receiver should be activated; e.g., so that control passes  
 	correctly."
-	evt hand newMouseFocus: self
+	evt hand newMouseFocus: self.
+	self takeKeyboardFocus
 ]
 
 { #category : #control }
@@ -402,6 +403,11 @@ DockingBarMorph >> handleFocusEvent: evt [
 ]
 
 { #category : #'events-processing' }
+DockingBarMorph >> handlesKeyboard: evt [
+	^ true
+]
+
+{ #category : #'events-processing' }
 DockingBarMorph >> handlesMouseDown: evt [
 	^ true
 ]
@@ -505,6 +511,19 @@ DockingBarMorph >> justDroppedInto: aMorph event: anEvent [
 	self beFloating
 ]
 
+{ #category : #'events-processing' }
+DockingBarMorph >> keyStroke: anEvent [
+	"Handle menu navigation"
+	
+	"Left arrow key"
+	anEvent keyValue = 28 ifTrue: [ self moveSelectionRight: -1 event: anEvent ].
+	"Right arrow key"
+	anEvent keyValue = 29 ifTrue: [ self moveSelectionRight: 1 event: anEvent ].
+	"Bottom key"
+	anEvent keyValue = 31 ifTrue: [ (selectedItem ifNotNil: [ selectedItem subMenu ifNotNil: [ :subMenu | subMenu activateFromKeyboard: anEvent ] ] )].
+	^ super keyStroke: anEvent
+]
+
 { #category : #'wiw support' }
 DockingBarMorph >> morphicLayerNumber [
 	"helpful for insuring some morphs always appear in front of or 
@@ -519,6 +538,25 @@ DockingBarMorph >> mouseDown: anEvent [
 	(self fullContainsPoint: anEvent position)
 		ifFalse: [anEvent hand releaseMouseFocus: self].
 	^super mouseDown: anEvent
+]
+
+{ #category : #'events-processing' }
+DockingBarMorph >> moveSelectionRight: direction event: anEvent [
+	"Move the current selection left or right by one, presumably under keyboard control.
+	direction = +/-1"
+
+	| index |
+	index := (submorphs indexOf: selectedItem ifAbsent: [ 1 - direction ]) + direction.
+	submorphs
+		do: [ :unused | 
+			"Ensure finite"
+			| m |
+			m := submorphs atWrap: index.
+			(m isMenuItemMorph and: [ m isEnabled ])
+				ifTrue: [ ^ self selectItem: m event: anEvent ].
+			"Keep looking for an enabled item"
+			index := index + direction sign ].
+	^ self selectItem: nil event: anEvent
 ]
 
 { #category : #construction }

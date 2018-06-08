@@ -196,7 +196,16 @@ MenuMorph class >> pushPinImage [
 { #category : #events }
 MenuMorph >> activate: evt [
 	"Receiver should be activated; e.g., so that control passes correctly."
+	evt hand newMouseFocus: self
+]
+
+{ #category : #events }
+MenuMorph >> activateFromKeyboard: evt [
+	"Receiver should be activated; e.g., so that control passes correctly."
 	evt hand newMouseFocus: self.
+	self activate: evt.
+	self takeKeyboardFocus.
+	self moveSelectionDown: 1 event: evt
 ]
 
 { #category : #control }
