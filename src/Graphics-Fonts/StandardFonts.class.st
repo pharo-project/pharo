@@ -231,7 +231,7 @@ StandardFonts class >> pointSizeForStyleNamed: aSymbol [
 	self pointSizeForStyleNamed: #Huge.
 	self pointSizeForStyleNamed: #xxxxx.
 	"
-	^ (#(#(#superTiny 5) #(#tiny 7) #(#small 9) #(#medium 12) #(#large 14) #(veryLarge 18) #(huge 24)) 
+	^ (#(#(#small 9) #(#medium 12) #(#large 14) #(veryLarge 18) #(huge 24)) 
 		detect: [:info | info first asUppercase = aSymbol asUppercase] ifNone: []) 
 			ifNotNil: [:info | info second]
 	
