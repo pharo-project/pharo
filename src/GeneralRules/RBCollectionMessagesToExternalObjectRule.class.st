@@ -42,11 +42,11 @@ RBCollectionMessagesToExternalObjectRule >> initialize [
 
 { #category : #helpers }
 RBCollectionMessagesToExternalObjectRule >> isNotSpecialVariable: variableNode [
-	variableNode isSelfOrSuper
-		ifFalse: [ ^ false ].
-	(Smalltalk globals includesKey: variableNode name asSymbol)
-		ifTrue: [ ^ false ].
+
+	variableNode isSelfOrSuper ifTrue: [ ^false ]. 
+	(Smalltalk globals includesKey: variableNode name asSymbol) ifTrue: [ ^ false ].
 	^ true
+	
 ]
 
 { #category : #accessing }
