@@ -127,7 +127,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 				yourself].
 	matcher executeTree: parseTree initialAnswer: Set new.
 	^(matcher answer 
-		detect: [:each | (each isVariable and: [each name = 'self']) not]
+		detect: [:each | each isSelf not]
 		ifNone: [nil]) isNil
 ]
 
