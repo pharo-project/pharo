@@ -24,3 +24,8 @@ OCSelfVariable >> initialize [
 OCSelfVariable >> isSelf [
 	^true
 ]
+
+{ #category : #testing }
+OCSelfVariable >> isSelfOrSuper [
+	^true
+]
