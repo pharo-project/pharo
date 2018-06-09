@@ -303,7 +303,7 @@ DockingBarMorph >> defaultBorderColor [
 
 { #category : #initialization }
 DockingBarMorph >> defaultBorderWidth [
-	^ self theme menuBorderWidth
+	^ self theme dockingBarBorderWidth
 ]
 
 { #category : #initialization }
