@@ -167,6 +167,12 @@ ReAbstractCritique >> popDescriptionUp [
 	UIManager default longMessage: self description title: self title
 ]
 
+{ #category : #initialization }
+ReAbstractCritique >> printOn: aStream [
+	super printOn: aStream.
+	aStream nextPutAll: ' (', self title, ')'
+]
+
 { #category : #actions }
 ReAbstractCritique >> provideNegativeFeedback: aComment [
 	ReFeedbacker negativeFeedback: aComment About: self
