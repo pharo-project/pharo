@@ -169,6 +169,7 @@ ReAbstractCritique >> popDescriptionUp [
 
 { #category : #initialization }
 ReAbstractCritique >> printOn: aStream [
+
 	super printOn: aStream.
 	aStream nextPutAll: ' (', self title, ')'
 ]
