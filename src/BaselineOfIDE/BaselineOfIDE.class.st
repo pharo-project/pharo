@@ -34,7 +34,7 @@ Class {
 BaselineOfIDE >> addPharoProjectToIceberg [
 	"It will take all packages corresponding to Pharo project and it will create an iceberg 
 	 project with it"
-	| packageNames extraPackageNames repository commit |
+	| packageNames repository commit |
 	
 	self flag: #TODO. "Refactor into something better (a class and a hierarchy, so we can add 
 	other packages)"
@@ -59,8 +59,7 @@ BaselineOfIDE >> addPharoProjectToIceberg [
 		collect: [ :each | (Smalltalk globals at: each) allPackageNames copyWith: each ]) 
 		flattened 
 		asSet.
-	"for some reason, there are packages loaded manually and not from a baseline"
-	extraPackageNames := #('Compiler').
+		
 	"declare project"
 	
 	commit := (IceUnknownCommit new 
@@ -75,7 +74,7 @@ BaselineOfIDE >> addPharoProjectToIceberg [
 		
 	commit repository: repository.
 	"add packages to project"
-	(packageNames, extraPackageNames)
+	packageNames
 		do: [ :each |
 			repository workingCopy basicAddPackage: (IcePackage
 				named: each
@@ -944,17 +943,10 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 		yourself.
 		
 	gofer := Gofer it repository: repo.
-	gofer package: #'Compiler'.
 	gofer package: #'RPackage-Tests'.
 	gofer load.
 	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
-
-	(Smalltalk at: #ParseNode) initialize.
-	(Smalltalk at: #Scanner) initialize.
-	(Smalltalk at: #Decompiler) initialize.
-	(Smalltalk at: #MessageNode) initialize.
-	(Smalltalk at: #VariableNode) initialize.
 	
 	Smalltalk tools register: GTGenericStackDebugger as: #debugger.	
 
