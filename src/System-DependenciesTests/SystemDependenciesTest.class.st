@@ -139,7 +139,7 @@ SystemDependenciesTest >> knownMorphicDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#DebuggerActions #FontChooser #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Rubric #Shout #'Spec-Core' #'Tool-Base' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers') sorted
+	^ #(#DebuggerActions #'Fonts-Chooser' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Rubric #Shout #'Spec-Core' #'Tool-Base' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers') sorted
 ]
 
 { #category : #'known dependencies' }
