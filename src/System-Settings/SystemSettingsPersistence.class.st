@@ -227,13 +227,18 @@ SystemSettingsPersistence >> settingsNodesFromIdentifiers: aCollection [
 { #category : #storing }
 SystemSettingsPersistence >> storeExactStoredSettings: allStoredSettings [
 	| stream |
-	self removeFileReference. 
+	self removeFileReference.
 	stream := self writeStream.
-	[ SettingsStonWriter new
-		stream: stream;
+	[ self storeExactStoredSettings: allStoredSettings on: stream ]
+		ensure: [ stream close ]
+]
+
+{ #category : #storing }
+SystemSettingsPersistence >> storeExactStoredSettings: allStoredSettings on: aStream [
+	SettingsStonWriter new
+		stream: aStream;
 		addSettings: allStoredSettings;
-		store 
-		] ensure: [ stream close ]
+		store
 ]
 
 { #category : #storing }
