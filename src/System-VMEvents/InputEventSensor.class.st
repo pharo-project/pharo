@@ -414,10 +414,7 @@ InputEventSensor >> processEvent: evt [
 	type := evt at: 1.
 
 	"Treat menu events first"
-	type = EventTypeMenu
-		ifTrue: [
-			self processMenuEvent: evt.
-			^nil].
+	type = EventTypeMenu ifTrue: [ "Do we still have EventTypeMenu? All the code handling this was removed from Pharo. I keep this guard just in case." ^nil].
 
 	"Tackle mouse events first"
 	type = EventTypeMouse
@@ -445,18 +442,6 @@ InputEventSensor >> processEvent: evt [
 	"Handle all events other than Keyborad or Mouse."
 	^evt.
 	
-]
-
-{ #category : #'private events' }
-InputEventSensor >> processMenuEvent: evt [
-	| handler localCopyOfEvt |
-
-	Smalltalk globals at: #HostSystemMenus ifPresent: [ :menus |		
-		localCopyOfEvt := evt shallowCopy.
-		handler := (menus
-			defaultMenuBarForWindowIndex: (localCopyOfEvt at: 8))
-			getHandlerForMenu: (localCopyOfEvt at: 3) item: (localCopyOfEvt at: 4).
-		handler handler value: localCopyOfEvt ]
 ]
 
 { #category : #'private events' }
