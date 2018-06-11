@@ -26,7 +26,7 @@ Class {
 		'languageList',
 		'fontList'
 	],
-	#category : #FontChooser
+	#category : #'Fonts-Chooser'
 }
 
 { #category : #'instance creation' }

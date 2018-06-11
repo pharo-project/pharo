@@ -20,7 +20,7 @@ Class {
 		'stretchValue',
 		'pointSizeList'
 	],
-	#category : #FontChooser
+	#category : #'Fonts-Chooser'
 }
 
 { #category : #open }
