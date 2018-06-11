@@ -26,7 +26,7 @@ ClassDescription >> acceptsLoggingOfCompilation [
 ]
 
 { #category : #'accessing method dictionary' }
-ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category notifying: requestor [
+ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category [
 	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
 	
 	priorMethodOrNil := self 
@@ -61,6 +61,12 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 				methodChangedFrom: priorMethodOrNil
 				to: compiledMethod
 				oldProtocol: oldProtocol ]
+]
+
+{ #category : #'accessing method dictionary' }
+ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category notifying: requestor [
+	"to be deprecated"
+	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category.
 ]
 
 { #category : #organization }
@@ -441,8 +447,7 @@ ClassDescription >> compile: text classified: category withStamp: changeStamp no
 	self 
 		addAndClassifySelector: selector 
 		withMethod: method 
-		inProtocol: category 
-		notifying: requestor.
+		inProtocol: category.
 			
 	self instanceSide 
 		noteCompilationOfMethod: method 
