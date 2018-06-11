@@ -7,9 +7,6 @@ Load type:
 Class {
 	#name : #BaselineOfAthens,
 	#superclass : #BaselineOf,
-	#classVars : [
-		'Initialized'
-	],
 	#category : #BaselineOfAthens
 }
 
@@ -33,7 +30,8 @@ BaselineOfAthens >> baseline: spec [
 			
 			"Groups"
 			spec
-				group: 'Core' with: #('Athens-Core' 'Athens-Text' 'Athens-Balloon' 'Athens-Morphic' 'Athens-CairoPools' 'Athens-Cairo');
+				group: 'Core' with: #('Basic' 'Athens-Text' 'Athens-Balloon' 'Athens-Morphic');
+				group: 'Basic' with: #('Athens-Core' 'Athens-CairoPools' 'Athens-Cairo');
 				group: 'Examples' with: #('Athens-Examples'); "Test and Examples are not yet working. We need to add the requirements between packages to get them working"
 				group: 'Tests' with: #('Athens-Tests-Cairo') ]
 ]
