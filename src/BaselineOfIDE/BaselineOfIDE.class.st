@@ -903,7 +903,13 @@ BaselineOfIDE >> loadCalypso [
 
 	"Load Calypso without Iceberg Metacello integration"
 	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
-		
+	
+	Metacello new
+		baseline: 'Commander';
+		repository: 'github://pharo-ide/Commander:v0.6.3';
+		onConflict: [ :err | err useIncoming ];
+		load.
+
 	Metacello new
 		baseline: 'Calypso';
 		repository: 'github://pharo-ide/Calypso:v0.11.5';
