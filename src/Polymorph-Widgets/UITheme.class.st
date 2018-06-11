@@ -1846,6 +1846,11 @@ UITheme >> disabledTextColor [
 	^ self disabledColor
 ]
 
+{ #category : #accessing }
+UITheme >> dockingBarBorderWidth [ 
+	^ 0
+]
+
 { #category : #'fill-styles' }
 UITheme >> dockingBarNormalFillStyleFor: aToolDockingBar [
 	^ SolidFillStyle color: Color transparent
