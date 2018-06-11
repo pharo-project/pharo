@@ -2,12 +2,12 @@
 Deprecated class
 "
 Class {
-	#name : #AthensMorphicGradiantPaint,
+	#name : #AthensMorphicGradientPaint,
 	#superclass : #AthensGradientPaint,
 	#category : #Deprecated70
 }
 
 { #category : #deprecation }
-AthensMorphicGradiantPaint class >> isDeprecated [
+AthensMorphicGradientPaint class >> isDeprecated [
 	^ true
 ]
