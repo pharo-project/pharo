@@ -20,16 +20,21 @@ Class {
 }
 
 { #category : #'accessing method dictionary' }
-TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
+TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
 
 	super
 		addAndClassifySelector: selector
 		withMethod: compiledMethod
-		inProtocol: aCategory
-		notifying: requestor.
+		inProtocol: aCategory.
 
 	self propagateChangeOf: selector.
 	
+]
+
+{ #category : #'accessing method dictionary' }
+TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
+	"to be deprecated"
+	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory
 ]
 
 { #category : #'accessing method dictionary' }
@@ -82,7 +87,7 @@ TraitedClass class >> traitUsers [
 ]
 
 { #category : #'accessing method dictionary' }
-TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
+TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
 	
 	"When a new methods is added, I add it to the localMethodDict and also propagate the changes to my users"
 	self localMethodDict at: selector put: compiledMethod.
@@ -90,10 +95,15 @@ TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inPr
 	super
 		addAndClassifySelector: selector
 		withMethod: compiledMethod
-		inProtocol: aCategory
-		notifying: requestor.
+		inProtocol: aCategory.
 
 	TraitChange addSelector: selector on: self.	
+]
+
+{ #category : #'accessing method dictionary' }
+TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
+	"to be deprecated"
+	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory
 ]
 
 { #category : #'accessing method dictionary' }

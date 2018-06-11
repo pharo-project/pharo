@@ -15,6 +15,11 @@ TClassDescription >> acceptsLoggingOfCompilation [
 ]
 
 { #category : #'accessing method dictionary' }
+TClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category [
+	^self explicitRequirement.
+]
+
+{ #category : #'accessing method dictionary' }
 TClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category notifying: requestor [
 	^self explicitRequirement.
 ]
@@ -365,7 +370,7 @@ TClassDescription >> compile: text classified: category withStamp: changeStamp n
 ]
 
 { #category : #compiling }
-TClassDescription >> compile: text classified: category withStamp: changeStamp notifying: requestor logSource: logSource [
+TClassDescription >> compile: text classified: category withStamp: changeStamp notifying: requestor logSource: logSource [ 
  
 	| method selector |
 
@@ -386,8 +391,7 @@ TClassDescription >> compile: text classified: category withStamp: changeStamp n
 	self 
 		addAndClassifySelector: selector 
 		withMethod: method 
-		inProtocol: category 
-		notifying: requestor.
+		inProtocol: category.
 			
 	self instanceSide 
 		noteCompilationOfMethod: method 
