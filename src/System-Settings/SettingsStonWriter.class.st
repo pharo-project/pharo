@@ -45,9 +45,8 @@ SettingsStonWriter >> initialize [
 SettingsStonWriter >> store [
 	"Write the stored setting in the stream"
 
-	| writer |
 	stream ifNil: [ ^ self ].
-	writer := STON writer
+	STON writer
 		on: stream;
 		prettyPrint: true;
 		asciiOnly: true;
