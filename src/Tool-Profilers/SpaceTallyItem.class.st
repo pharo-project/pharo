@@ -10,7 +10,7 @@ Class {
 		'instanceCount',
 		'spaceForInstances'
 	],
-	#category : #'Tool-Profilers'
+	#category : #'Tool-Profilers-Space'
 }
 
 { #category : #'instance creation' }

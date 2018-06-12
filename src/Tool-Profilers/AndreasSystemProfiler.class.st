@@ -38,7 +38,7 @@ Class {
 		'ticksPerMSec',
 		'totalTicks'
 	],
-	#category : #'Tool-Profilers'
+	#category : #'Tool-Profilers-System'
 }
 
 { #category : #LICENSE }
@@ -64,18 +64,34 @@ AndreasSystemProfiler class >> default [
 	^self new
 ]
 
+{ #category : #examples }
+AndreasSystemProfiler class >> exampleSpyForSeconds [
+
+	self spyFor: 5
+]
+
+{ #category : #examples }
+AndreasSystemProfiler class >> exampleSpyOnBlock [
+
+	self spyOn: [ 10000 timesRepeat: [ 3.14159 printString ] ]
+]
+
+{ #category : #examples }
+AndreasSystemProfiler class >> exampleSpyOnWorld [
+
+	self spyOnWorldFor: 5
+]
+
 { #category : #spying }
 AndreasSystemProfiler class >> spyFor: seconds [
 	"Run the system profiler for the specified number of seconds"
-	"self spyFor: 5"
+
 	^self spyOn: [ (Delay forSeconds: seconds) wait ].
 ]
 
 { #category : #spying }
 AndreasSystemProfiler class >> spyOn: aBlock [
 	"The main method for profiling and showing the report "
-
-	"self spyOn: [ 10000 timesRepeat: [ 3.14159 printString ] ]"
 
 	| profiler |
 	profiler := self new.
