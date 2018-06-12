@@ -36,7 +36,7 @@ SettingsStonWriterTest >> testBasic [
 
 { #category : #tests }
 SettingsStonWriterTest >> testEmptyStream [
-	fileStream close.
+	fileStream flush.
 	self assert: fileReference contents isEmpty
 ]
 
@@ -46,7 +46,7 @@ SettingsStonWriterTest >> testStore [
 	settingNode := MockSettings booleanSettingNode.
 	writer addSetting: (StoredSettingsFactory new from: settingNode).
 	writer store.
-	fileStream close.
+	fileStream flush.
 	self assert: fileReference contents equals: MockSettings oneStoredSettingSTONString
 ]
 
@@ -57,7 +57,7 @@ SettingsStonWriterTest >> testStoreShouldNotCloseBackingStream [
 	writer addSetting: (StoredSettingsFactory new from: settingNode).
 	writer store.
 	self deny: fileStream closed.
-	fileStream close.
+	fileStream flush.
 	self assert: fileReference contents equals: MockSettings oneStoredSettingSTONString
 ]
 
@@ -77,6 +77,6 @@ SettingsStonWriterTest >> testStoreTwoObjects [
 				realValue: 55;
 				yourself).
 	writer store.
-	fileStream close.
+	fileStream flush.
 	self assert: fileReference contents equals: MockSettings twoStoredSettingsSTONString
 ]
