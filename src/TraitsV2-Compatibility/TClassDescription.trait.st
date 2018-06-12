@@ -19,11 +19,6 @@ TClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod
 	^self explicitRequirement.
 ]
 
-{ #category : #'accessing method dictionary' }
-TClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category notifying: requestor [
-	^self explicitRequirement.
-]
-
 { #category : #organization }
 TClassDescription >> addCategory: newName before: aCategory [
 

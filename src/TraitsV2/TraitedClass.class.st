@@ -32,12 +32,6 @@ TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMetho
 ]
 
 { #category : #'accessing method dictionary' }
-TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
-	"to be deprecated"
-	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory
-]
-
-{ #category : #'accessing method dictionary' }
 TraitedClass class >> addSelector: selector withMethod: compiledMethod [
 	super addSelector: selector withMethod: compiledMethod.
 	self propagateChangeOf: selector
@@ -102,7 +96,11 @@ TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inPr
 
 { #category : #'accessing method dictionary' }
 TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
-	"to be deprecated"
+	self
+		deprecated: 'Please use #addAndClassifySelector:withMethod:inProtocol: instead'
+		transformWith:
+			'`@receiver addAndClassifySelector: `@statements1 withMethod: `@statements2 inProtocol: `@statements3 notifying: `@statements4'
+		   -> '`@receiver addAndClassifySelector: `@statements1 withMethod: `@statements2 inProtocol: `@statements3'.
 	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory
 ]
 

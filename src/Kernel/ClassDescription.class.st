@@ -64,9 +64,13 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 ]
 
 { #category : #'accessing method dictionary' }
-ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category notifying: requestor [
-	"to be deprecated"
-	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category.
+ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
+	self
+		deprecated: 'Please use #addAndClassifySelector:withMethod:inProtocol: instead'
+		transformWith:
+			'`@receiver addAndClassifySelector: `@statements1 withMethod: `@statements2 inProtocol: `@statements3 notifying: `@statements4'
+		   -> '`@receiver addAndClassifySelector: `@statements1 withMethod: `@statements2 inProtocol: `@statements3'.
+	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory
 ]
 
 { #category : #organization }
