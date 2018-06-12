@@ -95,16 +95,6 @@ TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inPr
 ]
 
 { #category : #'accessing method dictionary' }
-TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
-	self
-		deprecated: 'Please use #addAndClassifySelector:withMethod:inProtocol: instead'
-		transformWith:
-			'`@receiver addAndClassifySelector: `@statements1 withMethod: `@statements2 inProtocol: `@statements3 notifying: `@statements4'
-		   -> '`@receiver addAndClassifySelector: `@statements1 withMethod: `@statements2 inProtocol: `@statements3'.
-	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory
-]
-
-{ #category : #'accessing method dictionary' }
 TraitedClass >> addSelector: selector withMethod: compiledMethod [
 	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
 	
