@@ -157,7 +157,7 @@ File class >> createDirectory: fullPath [
 { #category : #'private-encoding' }
 File class >> decode: aString [
 
-	^ (ZnCharacterEncoder newForEncoding: 'utf8') decodeBytes: aString asByteArray
+	^ Encoder decodeBytes: aString asByteArray
 ]
 
 { #category : #'primitives-encoding' }
@@ -198,7 +198,7 @@ File class >> delimiter [
 { #category : #'private-encoding' }
 File class >> encode: aString [
 
-	^ ((ZnCharacterEncoder newForEncoding: 'utf8') encodeString: aString) asString
+	^ (Encoder encodeString: aString) asString
 ]
 
 { #category : #'primitives-encoding' }
@@ -318,7 +318,6 @@ File class >> getPosition: id [
 File class >> initialize [
 
 	SessionManager default registerSystemClassNamed: self name.
-	Encoder := ZnCharacterEncoder newForEncoding: 'utf8'.
 	self reset.
 ]
 
@@ -407,8 +406,7 @@ File class >> isSymlink: aPath [
 	"Answer a boolean indicating whether the supplied path is a Symlink file.
 	Note that this should only be called on platforms that support symlinks (e.g. not Windows)"
 
-	^self fileAttribute: aPath number: 16
-
+	^self supportsSymbolicLinks and: [ self fileAttribute: aPath number: 16 ]
 ]
 
 { #category : #'primitives-file modes' }
@@ -633,7 +631,7 @@ symbolic link information
 	"
 	<primitive: 'primitiveFileAttribute' module: 'FileAttributesPlugin' error: error>
 	^error isPrimitiveError ifTrue: [ 
-		(error errorCode = self cantStatPath and: [ attributeNumber ~= 16 ]) ifTrue: 
+		(self retrySymbolicLinkOnAttribute: attributeNumber error: error) ifTrue: 
 			[ (self fileAttributeNumberMap at: attributeNumber) value: 
 				(DiskSymlinkDirectoryEntry fileSystem: DiskStore currentFileSystem path: aString asPath) ]
 		ifFalse:
@@ -782,9 +780,13 @@ File class >> rename: oldFileFullName to: newFileFullName [
 
 { #category : #'class initialization' }
 File class >> reset [
-	"Reload the masks"
+	"Initialise the receiver for the current platform"
 
 	| masks |
+
+	Encoder := OSPlatform current isWindows 
+		ifTrue: [ ZnCharacterEncoder newForEncoding: 'null' ]
+		ifFalse: [ ZnCharacterEncoder newForEncoding: 'utf8' ].
 
 	masks := self primFileMasks.
 	S_IFMT := masks at: 1.
@@ -796,6 +798,16 @@ File class >> reset [
 	S_IFCHR := masks at: 7.
 	S_IFIFO := masks at: 8.
 
+]
+
+{ #category : #private }
+File class >> retrySymbolicLinkOnAttribute: attributeNumber error: error [
+	"Answer a boolean indicating whether the operation can be retried assuming a symbolic link"
+	"This is part of some obscure backward compatibility code and can probably be removed."
+
+	^attributeNumber ~= 16 and: 
+		[ error errorCode = self cantStatPath and:
+		[ OSPlatform current isUnix ] ]
 ]
 
 { #category : #registry }
@@ -933,6 +945,13 @@ File class >> stdioHandles [
 File class >> stringTooLong [
 	"String too long.  A file path name was longer than PATH_MAX"
 	^-1
+]
+
+{ #category : #testing }
+File class >> supportsSymbolicLinks [
+	"Answer a boolean indicating whether the current platform supports symbolic links"
+
+	^OSPlatform current isUnix
 ]
 
 { #category : #'primitives-file' }

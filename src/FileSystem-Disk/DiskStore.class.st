@@ -346,7 +346,7 @@ DiskStore >> isCharacter: aPath [
 { #category : #accessing }
 DiskStore >> isDirectory: aPath [
 	"Answer a boolean indicating whether the supplied path is a Directory file"
-	^File isDirectory: (self stringFromPath: aPath)
+	^aPath isRoot or: [File isDirectory: (self stringFromPath: aPath)]
 ]
 
 { #category : #testing }

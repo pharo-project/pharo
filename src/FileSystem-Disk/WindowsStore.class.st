@@ -80,7 +80,7 @@ WindowsStore >> nodesAt: aPath do: aBlock [
 			drive := String with: (Character value: ($A asciiValue + i)) with: $:.
 			node := Array
 				with: drive
-				with: drive asFileReference attributes statAttributes.
+				with: drive asFileReference entry statAttributes.
 			aBlock value: node.
 			]
 		].
