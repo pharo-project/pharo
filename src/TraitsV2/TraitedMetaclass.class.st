@@ -38,12 +38,6 @@ TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod 
 ]
 
 { #category : #'accessing method dictionary' }
-TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
-	"to be deprecated"
-	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory
-]
-
-{ #category : #'accessing method dictionary' }
 TraitedMetaclass >> addSelector: selector withMethod: compiledMethod [
 	self localMethodDict at: selector put: compiledMethod.
 	super addSelector: selector withMethod: compiledMethod.

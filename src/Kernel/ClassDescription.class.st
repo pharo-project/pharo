@@ -63,12 +63,6 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 				oldProtocol: oldProtocol ]
 ]
 
-{ #category : #'accessing method dictionary' }
-ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category notifying: requestor [
-	"to be deprecated"
-	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category.
-]
-
 { #category : #organization }
 ClassDescription >> addCategory: newName before: aCategory [
 
