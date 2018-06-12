@@ -2,7 +2,11 @@
 This baseline is used to generate Pharo images from the local clone of pharo-project/pharo repository. 
 
 Depends on:
-- ConfigurationOfUI
+- BasicTools
+- Traits
+- Shift
+- Slots
+- Athens
 
 Load type: 
 - linear
@@ -14,7 +18,6 @@ Installs:
 - refactoring
 - GT Tools
 - Versionner
-- Athens
 - TxText
 - OSWindow
 - QualityAssistant
@@ -168,7 +171,9 @@ BaselineOfIDE >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 		
-		spec baseline: 'BasicTools' with: [spec repository: repository].
+		spec baseline: 'BasicTools' with: [ spec repository: repository ].
+		
+		spec baseline: 'Athens' with: [ spec repository: repository ].
 
 		spec baseline: 'Shift' with: [
 			spec loads: 'shift-tests'. 
@@ -292,15 +297,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tool-DependencyAnalyser-UI'.
 		spec package: 'Tool-DependencyAnalyser-Tests'.	"standalone"
 		spec package: 'Tool-DependencyAnalyser-Tests-Data'.	"standalone"
-
-		spec package: 'Athens-Core'.
-		spec package: 'Athens-Text'.
-		spec package: 'Athens-Balloon'.
-		spec package: 'Athens-Morphic'.
-		spec package: 'Athens-CairoPools'.
-		spec package: 'Athens-Cairo'.
-		spec package: 'Athens-Examples'. 
-		spec package: 'Athens-Tests-Cairo'.
  
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
@@ -436,7 +432,7 @@ spec group: 'Mandatory-Group' with: #(
 ). 
 
 spec group: 'Optional-Group' with: #(
-	'Athens-Group' "dependency"
+	'Athens' "dependency"
 
 	'PharoDocComment'	"standalone"
 	'STON-Text support'	"standalone?"
@@ -453,7 +449,7 @@ spec group: 'NodeNavigation-Group' with: #(
 ).					
 
 spec group: 'Epicea-Core-Group' with: #(
-	'Athens-Group' "dependency of Hiedra"
+	'Athens' "dependency of Hiedra"
 	'Ombu'
 	'Epicea'
 	'Hiedra'
@@ -703,7 +699,7 @@ spec group: 'QualityAssistant-Group' with: #(
 spec group: 'Glamour-Core-Group' with: #(
 	'Shout-Core-Group'  "dependecy"
 	"circular dependency on 'Glamour-Tests-Group', 'GT-Core-Group'"
-	'Athens-Group' "dependency"
+	'Athens' "dependency"
 	'Glamour-Announcements'
 	'Glamour-Helpers'
 	'Glamour-Core'
@@ -772,24 +768,12 @@ spec group: 'DependencyAnalyser-Tests-Group' with: #(
 spec group: 'DependencyAnalyser-Group' with: #(
 	'DependencyAnalyser-Core-Group'
 	'DependencyAnalyser-Tests-Group'
-).		
-
-spec group: 'Athens-Group' with: #(
-	"dependent on Rubric, cleanup?"
-	'Athens-Core'
-	'Athens-Text'
-	'Athens-Balloon'
-	'Athens-Morphic'
-	'Athens-CairoPools'
-	'Athens-Cairo'
-	'Athens-Examples'
-   'Athens-Tests-Cairo'
-).		
+).	
 
 spec group: 'OSWindow-Core-Group' with: #(
 	'Glamour-Core-Group'	"dependency, cleanup needed"
 	'GT-Core-Group'	"dependency, cleanup needed"
-	'Athens-Group' "dependency"
+	'Athens' "dependency"
 	'OSWindow-Core'
 	'OSWindow-SDL2'
 	'OSWindow-VM'
@@ -854,10 +838,10 @@ spec group: 'GT&QA-Group' with: #(
 
 spec group: #default with: #(
 	'BasicTools'	"dependency"
+	'Athens'
 
 	'Mandatory-Group'
 
-	'Athens-Group'
 	'Kernel-Tests-Group'
 	'BlueInk-Group'
 
