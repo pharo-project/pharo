@@ -9,7 +9,7 @@ Class {
 		'contours',
 		'last'
 	],
-	#category : #'Athens-Balloon'
+	#category : #'Athens-Balloon-Path'
 }
 
 { #category : #accessing }

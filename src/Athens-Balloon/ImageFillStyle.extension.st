@@ -1,6 +1,6 @@
 Extension { #name : #ImageFillStyle }
 
-{ #category : #'*Athens-Core' }
+{ #category : #'*Athens-Balloon' }
 ImageFillStyle >> asAthensPaintOn: anAthensCanvas [
 
 	^ (anAthensCanvas cacheAt: self ifAbsentPut: [

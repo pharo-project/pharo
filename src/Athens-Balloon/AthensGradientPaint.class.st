@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'gradient'
 	],
-	#category : #'Athens-Core-Paints'
+	#category : #'Athens-Balloon-Paint'
 }
 
 { #category : #rendering }
