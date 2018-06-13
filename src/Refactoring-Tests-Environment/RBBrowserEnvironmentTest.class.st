@@ -1,3 +1,6 @@
+"
+Unit test for RBBrowserEnvironment
+"
 Class {
 	#name : #RBBrowserEnvironmentTest,
 	#superclass : #TestCase,
