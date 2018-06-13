@@ -200,10 +200,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Epicea'.
 		spec package: 'Hiedra'.
 		spec package: 'EpiceaBrowsers'.
-		spec package: 'Hiedra-Tests'. 
-		spec package: 'Ombu-Tests'.
-		spec package: 'Epicea-Tests'.
-		spec package: 'EpiceaBrowsers-Tests'.
+		spec package: 'HiedraTests'. 
+		spec package: 'OmbuTests'.
+		spec package: 'EpiceaTests'.
+		spec package: 'EpiceaBrowsersTests'.
 
 		
 		spec package: 'Shout'.
@@ -211,7 +211,6 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'Rubric-Styling'.
 		
-		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		
 		spec package: 'Collections-Tests'.
@@ -340,7 +339,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
-		spec package: 'Flashback-Decompiler-Tests'.
 		spec package: 'FontInfrastructure-Tests'.
 		spec package: 'FreeType-Tests'.
 		spec package: 'FreeType-Help'.
@@ -457,10 +455,10 @@ spec group: 'Epicea-Core-Group' with: #(
 	'Hiedra'
 	'EpiceaBrowsers').
 spec group: 'Epicea-Tests-Group' with: #(
-	'Ombu-Tests'
-	'Epicea-Tests'
-	'Hiedra-Tests'
-	'EpiceaBrowsers-Tests'
+	'OmbuTests'
+	'EpiceaTests'
+	'HiedraTests'
+	'EpiceaBrowsersTests'
 ).	
 spec group: 'Epicea-Group' with: #(
 	'Epicea-Core-Group' 
