@@ -198,10 +198,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Epicea'.
 		spec package: 'Hiedra'.
 		spec package: 'EpiceaBrowsers'.
-		spec package: 'HiedraTests'. 
-		spec package: 'OmbuTests'.
-		spec package: 'EpiceaTests'.
-		spec package: 'EpiceaBrowsersTests'.
+		spec package: 'Hiedra-Tests'. 
+		spec package: 'Ombu-Tests'.
+		spec package: 'Epicea-Tests'.
+		spec package: 'EpiceaBrowsers-Tests'.
 
 		
 		spec package: 'Shout'.
@@ -455,10 +455,10 @@ spec group: 'Epicea-Core-Group' with: #(
 	'Hiedra'
 	'EpiceaBrowsers').
 spec group: 'Epicea-Tests-Group' with: #(
-	'OmbuTests'
-	'EpiceaTests'
-	'HiedraTests'
-	'EpiceaBrowsersTests'
+	'Ombu-Tests'
+	'Epicea-Tests'
+	'Hiedra-Tests'
+	'EpiceaBrowsers-Tests'
 ).	
 spec group: 'Epicea-Group' with: #(
 	'Epicea-Core-Group' 
