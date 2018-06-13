@@ -7,10 +7,21 @@ I am a facade class to access standard output streams:
 
 I initialize standard streams in a lazy fashion, asking to the VM for the #stdioHandles. I cache those standard streams and release them on shutdown.
 
-Known Bugs / subtleties
-=======================
+The possible scenarios, i.e. for each of stdin, stderr and stdout:
 
-Windows VMs do now support the stdioHandles primitive if they are not compiled specially as command line binaries. To overcome that, on windows this class will create a normal file for std output / input / error.
+    the stream is attached to a terminal (default on posix platforms, PharoConsole.exe on Windows (see below for Pharo.exe))
+    the stream is redirected to a normal file, e.g. pharo pharo.image > output.txt
+    the stream is redirected to a pipe, e.g. pharo pharo.image | tee output.txt
+
+To know exactly which kind of stream you are using, you can use File >> #fileDescriptorType: (args are 0 1 2 for the stdios).
+
+
+Windows Subtleties
+=====================
+
+If launched as a desktop app (not from the console), Pharo.exe will not be linked to external streams because none is created. To overcome that, the default behavior of this class is to create a normal file for the three stdio. This can be modified to:
+	not create a file (execute #useNullStreams)
+	use a memory stream (execute #useMemoryStreams).
 "
 Class {
 	#name : #Stdio,
@@ -32,12 +43,12 @@ Stdio class >> cleanStdioHandles [
 
 { #category : #private }
 Stdio class >> createStdioFileFor: moniker [
-	^ [ self createWriteStreamBlock value: moniker asString ]
+	^ [ self createWriteStreamBlock cull: moniker asString ]
 		on: CannotDeleteFileException
 		do:
 			[ "HACK: if the image is opened a second time windows barks about the already opened locked file"
 			[ self createWriteStreamBlock
-				value: moniker asString , '_' , (Random new nextInt: SmallInteger maxVal) asString ]
+				cull: moniker asString , '_' , (Random new nextInt: SmallInteger maxVal) asString ]
 				on: FileException
 				do:
 					[ "Nothing, we do not have the rights to write and cannot suppose a dependency to the class MemoryFileSystemFile" ] ]
@@ -45,17 +56,18 @@ Stdio class >> createStdioFileFor: moniker [
 
 { #category : #accessing }
 Stdio class >> createWriteStreamBlock [
-	"Can be changed to MemoryFileSystemFile in order to not write on the disk"
 
 	^ CreateWriteStreamBlock
-		ifNil: [ CreateWriteStreamBlock := [ :aName | (File named: aName asString) writeStream ] ]
+		ifNil: [ self useDefaultStreams.
+			CreateWriteStreamBlock ]
 ]
 
 { #category : #accessing }
 Stdio class >> createWriteStreamBlock: aBlock [
 	"Can be changed to any block that returns a writeStream"
 
-	CreateWriteStreamBlock := aBlock
+	CreateWriteStreamBlock := aBlock.
+	self cleanStdioHandles
 ]
 
 { #category : #'initialize-release' }
@@ -99,4 +111,16 @@ Stdio class >> stdin [
 Stdio class >> stdout [
 
 	^ Stdout ifNil: [ Stdout := self standardIOStreamNamed: #stdout forWrite: true ].
+]
+
+{ #category : #stdio }
+Stdio class >> useDefaultStreams [
+	<script>
+	self createWriteStreamBlock: [ :aName | (File named: aName asString) writeStream ]
+]
+
+{ #category : #stdio }
+Stdio class >> useNullStreams [
+	<script>
+	self createWriteStreamBlock: [ NullStream new ]
 ]
