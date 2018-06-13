@@ -1,17 +1,17 @@
 "
-i am used to convert gradient fill style(s) used in Morphic to appropriate paint(s) in Athens.
+I am used to convert gradient fill style(s) to appropriate paint(s) in Athens.
 "
 Class {
-	#name : #AthensMorphicGradientPaint,
+	#name : #AthensGradientPaint,
 	#superclass : #AthensPaint,
 	#instVars : [
 		'gradient'
 	],
-	#category : #'Athens-Morphic'
+	#category : #'Athens-Balloon-Paint'
 }
 
 { #category : #rendering }
-AthensMorphicGradientPaint >> athensFillPath: aPath on: canvas [
+AthensGradientPaint >> athensFillPath: aPath on: canvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
 	
@@ -22,7 +22,7 @@ AthensMorphicGradientPaint >> athensFillPath: aPath on: canvas [
 ]
 
 { #category : #rendering }
-AthensMorphicGradientPaint >> athensFillRectangle: aRect on: canvas [
+AthensGradientPaint >> athensFillRectangle: aRect on: canvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
 	
@@ -33,7 +33,7 @@ AthensMorphicGradientPaint >> athensFillRectangle: aRect on: canvas [
 ]
 
 { #category : #private }
-AthensMorphicGradientPaint >> convertGradientToPaintOn: aCanvas [
+AthensGradientPaint >> convertGradientToPaintOn: aCanvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
 	
@@ -52,6 +52,6 @@ AthensMorphicGradientPaint >> convertGradientToPaintOn: aCanvas [
 ]
 
 { #category : #accessing }
-AthensMorphicGradientPaint >> gradient: aGradient [
+AthensGradientPaint >> gradient: aGradient [
 	gradient := aGradient
 ]

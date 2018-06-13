@@ -1,6 +1,6 @@
 Extension { #name : #BitmapFillStyle }
 
-{ #category : #'*Athens-Core' }
+{ #category : #'*Athens-Balloon' }
 BitmapFillStyle >> asAthensPaintOn: anAthensCanvas [
 	| paint |
 	paint := (anAthensCanvas surface createFormPaint: form)

@@ -1,9 +1,9 @@
 Extension { #name : #GradientFillStyle }
 
-{ #category : #'*Athens-Core' }
+{ #category : #'*Athens-Balloon' }
 GradientFillStyle >> asAthensPaintOn: anAthensCanvas [
 
-	^ AthensMorphicGradientPaint new gradient: self.
+	^ AthensGradientPaint new gradient: self.
 	"^ radial ifTrue: [
 		anAthensCanvas surface
 			createRadialGradient: colorRamp
