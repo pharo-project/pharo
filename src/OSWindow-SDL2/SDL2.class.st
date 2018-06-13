@@ -11,6 +11,7 @@ Class {
 	],
 	#pools : [
 		'SDL2Constants',
+		'SDL2ConstantsHint',
 		'SDL2Types'
 	],
 	#category : #'OSWindow-SDL2-Bindings'
@@ -84,6 +85,12 @@ SDL2 class >> createWindow: title x: x y: y width: w height: h flags: flags [
 SDL2 class >> delay: milliseconds [
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
 	^ self nbCall: #( void SDL_Delay ( Uint32 milliseconds ) )
+]
+
+{ #category : #video }
+SDL2 class >> disableScreenSaver [
+
+	^ self ffiCall: #(void SDL_DisableScreenSaver(void))
 ]
 
 { #category : #native }
@@ -206,6 +213,10 @@ SDL2 class >> initJoystick [
 { #category : #common }
 SDL2 class >> initLibrary [
 	Session == Smalltalk session ifTrue: [ ^ 1 ].
+	"Configure SDL2 in 'application mode', to let the screen to turn off on inactivity.
+	 But we let the user to restore 'game mode' on screen, by using #disableScreenSaver"
+	self setHint: SDL_HINT_VIDEO_ALLOW_SCREENSAVER value: '1'.
+	self setHint: SDL_HINT_NO_SIGNAL_HANDLERS value: '1'.
 	self init: SDL_INIT_NOPARACHUTE.
 	Session := Smalltalk session.
 ]
@@ -316,6 +327,11 @@ SDL2 class >> quit [
 SDL2 class >> quitSubSystem: flags [
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
 	^ self nbCall: #( void SDL_QuitSubSystem ( Uint32 flags ) )
+]
+
+{ #category : #video }
+SDL2 class >> setHint: aName value: aValue [
+	^ self ffiCall: #(int SDL_SetHint(const char* aName, const char* aValue))
 ]
 
 { #category : #mouse }
