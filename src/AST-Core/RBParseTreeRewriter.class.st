@@ -333,9 +333,8 @@ RBParseTreeRewriter >> visitCascadeNode: aCascadeNode [
 					[newNode isCascade 
 						ifTrue: [newMessages addAll: newNode messages]
 						ifFalse: 
-							[Transcript
-								show: 'Cannot replace message node inside of cascaded node with non-message node.';
-								cr.
+							["Cannot replace message node inside of cascaded node with non-message node." 
+							self flag: #'Maybe we should raise a warning here and catch it in the UI layer.'.
 							newMessages add: each]]].
 	notFound size = aCascadeNode messages size 
 		ifTrue: 
