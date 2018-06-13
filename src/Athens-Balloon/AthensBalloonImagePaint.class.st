@@ -10,7 +10,7 @@ Class {
 		'direction',
 		'tileFlag'
 	],
-	#category : #'Athens-Balloon'
+	#category : #'Athens-Balloon-Paint'
 }
 
 { #category : #rendering }

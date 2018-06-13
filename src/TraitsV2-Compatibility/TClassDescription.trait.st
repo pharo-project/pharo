@@ -15,7 +15,7 @@ TClassDescription >> acceptsLoggingOfCompilation [
 ]
 
 { #category : #'accessing method dictionary' }
-TClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category notifying: requestor [
+TClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category [
 	^self explicitRequirement.
 ]
 
@@ -365,7 +365,7 @@ TClassDescription >> compile: text classified: category withStamp: changeStamp n
 ]
 
 { #category : #compiling }
-TClassDescription >> compile: text classified: category withStamp: changeStamp notifying: requestor logSource: logSource [
+TClassDescription >> compile: text classified: category withStamp: changeStamp notifying: requestor logSource: logSource [ 
  
 	| method selector |
 
@@ -386,8 +386,7 @@ TClassDescription >> compile: text classified: category withStamp: changeStamp n
 	self 
 		addAndClassifySelector: selector 
 		withMethod: method 
-		inProtocol: category 
-		notifying: requestor.
+		inProtocol: category.
 			
 	self instanceSide 
 		noteCompilationOfMethod: method 
@@ -508,14 +507,6 @@ TClassDescription >> copyCategory: cat from: aClass classified: newCat [
 	self copyAll: (aClass organization listAtCategoryNamed: cat)
 		from: aClass
 		classified: newCat
-]
-
-{ #category : #copying }
-TClassDescription >> copyMethodDictionaryFrom: donorClass [
-	"Copy the method dictionary of the donor class over to the receiver"
-
-	self methodDict: donorClass copyOfMethodDictionary.
-	self organization: donorClass organization deepCopy.
 ]
 
 { #category : #slots }

@@ -84,7 +84,13 @@ CompiledCode >> accessesSlot: aSlot [
 
 { #category : #literals }
 CompiledCode >> allLiterals [
-	^self literals
+	"Answer an Array of the literals referenced by the receiver.	
+	 including superclass + selector/properties"
+	| literals numberLiterals |
+	literals := Array new: (numberLiterals := self numLiterals).
+	1 to: numberLiterals do: [:index |
+		literals at: index put: (self objectAt: index + 1)].
+	^literals
 ]
 
 { #category : #'source code management' }
@@ -232,7 +238,7 @@ CompiledCode >> hasLiteralSuchThat: litBlock [
 	(self penultimateLiteral isMethodProperties
 	 and: [self penultimateLiteral hasLiteralSuchThat: litBlock]) ifTrue:
 		[^true].
-	2 to: self numLiterals + 1 do:
+	2 to: self numLiterals - 1 do: "exclude header and methodClass or outerCode"
 		[:index | | lit |
 		lit := self objectAt: index.
 		((litBlock value: lit)
@@ -432,9 +438,10 @@ CompiledCode >> literalStrings [
 
 { #category : #literals }
 CompiledCode >> literals [
-	"Answer an Array of the literals referenced by the receiver."
+	"Answer an Array of the literals referenced by the receiver.	
+	 Exclude superclass + selector/properties"
 	| literals numberLiterals |
-	literals := Array new: (numberLiterals := self numLiterals).
+	literals := Array new: (numberLiterals := self numLiterals - 2).
 	1 to: numberLiterals do: [:index |
 		literals at: index put: (self objectAt: index + 1)].
 	^literals

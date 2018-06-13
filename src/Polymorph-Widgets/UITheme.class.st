@@ -333,7 +333,7 @@ UITheme >> borderColor [
 
 { #category : #accessing }
 UITheme >> borderWidth [
-	^ 1
+	^ 1 * World displayScaleFactor
 ]
 
 { #category : #accessing }
@@ -508,7 +508,7 @@ UITheme >> buttonMiddleRightForm [
 UITheme >> buttonMinHeight [
 	"Answer the minumum height of a button for this theme."
 	
-	^24
+	^24 * World displayScaleFactor
 ]
 
 { #category : #defaults }
@@ -1846,6 +1846,11 @@ UITheme >> disabledTextColor [
 	^ self disabledColor
 ]
 
+{ #category : #accessing }
+UITheme >> dockingBarBorderWidth [ 
+	^ 0
+]
+
 { #category : #'fill-styles' }
 UITheme >> dockingBarNormalFillStyleFor: aToolDockingBar [
 	^ SolidFillStyle color: Color transparent
@@ -2642,6 +2647,26 @@ UITheme >> menuTitleFillStyleFor: aMenuTitle [
 		origin: aMenuTitle topLeft;
 		direction: aMenuTitle width @ 0.
 	^ fill
+]
+
+{ #category : #'border-style-menubar' }
+UITheme >> menubarBorderWidthFor: aMenubar [
+	^ 0
+]
+
+{ #category : #'fill-styles-menubar' }
+UITheme >> menubarFillStyleFor: aMenubar [
+	^ self taskbarFillStyleFor: aMenubar
+]
+
+{ #category : #'fill-styles-menubar' }
+UITheme >> menubarItemSelectionFillStyleFor: aMenubarItem [
+	^ self taskbarItemSelectedFillStyleFor: aMenubarItem
+]
+
+{ #category : #'fill-styles-menubar' }
+UITheme >> menubarItemSelectionTextColorFor: aMenubarItem [
+	^ self taskbarItemLabelColorForExpanded: aMenubarItem
 ]
 
 { #category : #services }
@@ -4770,7 +4795,7 @@ UITheme >> radioButtonForm [
 UITheme >> radioButtonMarkerForm [
 	"Answer the form to use for a radio button marker."
 
-	^self forms at: #radioButtonMarker ifAbsent: [Form extent: 12@12 depth: Display depth]
+	^(self forms at: #radioButtonMarker ifAbsent: [Form extent: 12@12 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'border-styles-buttons' }
@@ -5463,10 +5488,9 @@ UITheme >> taskbarButtonLabelColorFor: aButton [
 				ifFalse: [Color gray darker]]
 ]
 
-{ #category : #'fill-styles' }
+{ #category : #'fill-styles-taskbar' }
 UITheme >> taskbarFillStyleFor: aTaskbar [
-	^ "self buttonNormalFillStyleFor: aTaskbar"
-	SolidFillStyle color: Color transparent 
+	^ SolidFillStyle color: Color transparent 
 ]
 
 { #category : #'border-styles-taskbar' }
@@ -5762,7 +5786,7 @@ UITheme >> textFont [
 UITheme >> treeExpandedForm [
 	"Answer the form to use for an expanded tree item."
 
-	^self forms at: #treeExpanded ifAbsent: [Form extent: 10@9 depth: Display depth]
+	^(self forms at: #treeExpanded ifAbsent: [Form extent: 10@9 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'basic-colors' }
@@ -5791,7 +5815,7 @@ UITheme >> treeLineWidth [
 UITheme >> treeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item."
 
-	^self forms at: #treeUnexpanded ifAbsent: [Form extent: 10@9 depth: Display depth]
+	^(self forms at: #treeUnexpanded ifAbsent: [Form extent: 10@9 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'accessing colors' }
@@ -5895,28 +5919,28 @@ UITheme >> watcherWindowInactiveFillStyleFor: aWindow [
 UITheme >> whiteTreeExpandedForm [
 	"Answer the form to use for an expanded tree item when a contrasting one is needed."
 
-	^self forms 
+	^(self forms 
 		at: #whiteTreeExpanded 
 		ifAbsent: [ | f |
 			f := self treeExpandedForm deepCopy.
 			f replaceColor: Color white withColor: Color transparent.
 			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
 			self forms at: #whiteTreeExpanded put: f.
-			self whiteTreeExpandedForm]
+			self whiteTreeExpandedForm]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles' }
 UITheme >> whiteTreeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item when a contrasting one is needed."
 
-	^self forms 
+	^(self forms 
 		at: #whiteTreeUnexpanded
 		ifAbsent: [ | f |
 			f := self treeUnexpandedForm deepCopy.
 			f replaceColor: Color white withColor: Color transparent.
 			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
 			self forms at: #whiteTreeUnexpanded put: f.
-			self whiteTreeUnexpandedForm]
+			self whiteTreeUnexpandedForm]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'border-styles' }
@@ -5964,7 +5988,7 @@ UITheme >> windowActiveTitleFillStyleFor: aWindow [
 { #category : #defaults }
 UITheme >> windowBorderWidthFor: aWindow [
 
-	^ 4
+	^ 4 * World displayScaleFactor
 ]
 
 { #category : #defaults }
@@ -5977,14 +6001,14 @@ UITheme >> windowBottomOffset [
 UITheme >> windowCloseForm [
 	"Answer the form to use for the close button of a window."
 
-	^self forms at: #windowClose ifAbsent: [Form extent: 10@10 depth: Display depth]
+	^(self forms at: #windowClose ifAbsent: [Form extent: 10@10 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles' }
 UITheme >> windowCloseOverForm [
 	"Answer the form to use for mouse over window close buttons"
 
-	^self forms at: #windowCloseOver ifAbsent: [Form extent: 16@16 depth: Display depth]
+	^(self forms at: #windowCloseOver ifAbsent: [Form extent: 16@16 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles' }
@@ -6107,14 +6131,14 @@ UITheme >> windowLeftOffset [
 UITheme >> windowMaximizeForm [
 	"Answer the form to use for the maximize button of a window."
 
-	^self forms at: #windowMaximize ifAbsent: [Form extent: 10@10 depth: Display depth]
+	^(self forms at: #windowMaximize ifAbsent: [Form extent: 10@10 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles' }
 UITheme >> windowMaximizeOverForm [
 	"Answer the form to use for mouse over window maximize buttons"
 
-	^self forms at: #windowMaximizeOver ifAbsent: [Form extent: 16@16 depth: Display depth]
+	^(self forms at: #windowMaximizeOver ifAbsent: [Form extent: 16@16 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles' }
@@ -6135,7 +6159,7 @@ UITheme >> windowMaximizeSound [
 UITheme >> windowMenuForm [
 	"Answer the form to use for the menu button of a window."
 
-	^self forms at: #windowMenu ifAbsent: [Form extent: 10@10 depth: Display depth]
+	^(self forms at: #windowMenu ifAbsent: [Form extent: 10@10 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles' }
@@ -6149,7 +6173,7 @@ UITheme >> windowMenuIconFor: aWindow [
 UITheme >> windowMenuOverForm [
 	"Answer the form to use for mouse over window menu buttons"
 
-	^self forms at: #windowMenuOver ifAbsent: [Form extent: 16@16 depth: Display depth]
+	^(self forms at: #windowMenuOver ifAbsent: [Form extent: 16@16 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles' }
@@ -6163,14 +6187,14 @@ UITheme >> windowMenuPassiveForm [
 UITheme >> windowMinimizeForm [
 	"Answer the form to use for the minimize button of a window."
 
-	^self forms at: #windowMinimize ifAbsent: [Form extent: 10@10 depth: Display depth]
+	^(self forms at: #windowMinimize ifAbsent: [Form extent: 10@10 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles' }
 UITheme >> windowMinimizeOverForm [
 	"Answer the form to use for mouse over window minimize buttons"
 
-	^self forms at: #windowMinimizeOver ifAbsent: [Form extent: 16@16 depth: Display depth]
+	^(self forms at: #windowMinimizeOver ifAbsent: [Form extent: 16@16 depth: Display depth]) scaledByDisplayScaleFactor
 ]
 
 { #category : #'label-styles' }

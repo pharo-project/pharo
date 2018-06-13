@@ -100,6 +100,12 @@ OCAbstractVariable >> isSelf [
 ]
 
 { #category : #testing }
+OCAbstractVariable >> isSelfOrSuper [
+	
+	^ false
+]
+
+{ #category : #testing }
 OCAbstractVariable >> isSpecialVariable [
 	^false
 ]

@@ -944,25 +944,6 @@ RBBasicLintRuleTest class >> tempVarOverridesInstVar [
 ]
 
 { #category : #'possible bugs' }
-RBBasicLintRuleTest class >> tempsReadBeforeWritten [
-	| detector |
-	detector := self new.
-	detector name: 'Temporaries read before written'.
-	detector methodBlock: 
-			[:context :result | 
-			| variables |
-			variables := RBParseTreeSearcher nonBlockTempsIn: context parseTree.
-			variables isEmpty 
-				ifFalse: 
-					[(RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: context parseTree) 
-						do: 
-							[:each | 
-							result addClass: context selectedClass selector: context selector.
-							result addSearchString: each]]].
-	^detector
-]
-
-{ #category : #'possible bugs' }
 RBBasicLintRuleTest class >> threeElementPoint [
 	| detector matcher |
 	detector := self new.
@@ -1041,24 +1022,6 @@ RBBasicLintRuleTest class >> usesAdd [
 			[:context :result | 
 			(addSearcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
-	^detector
-]
-
-{ #category : #bugs }
-RBBasicLintRuleTest class >> usesTrue [
-	| detector trueBinding falseBinding |
-	detector := self new.
-	trueBinding := Smalltalk associationAt: #True.
-	falseBinding := Smalltalk associationAt: #False.
-	detector name: 'Uses True/False instead of true/false'.
-	detector methodBlock: 
-			[:context :result | 
-			| method |
-			method := context compiledMethod.
-			((method referencesLiteral: trueBinding)
-				or: [method referencesLiteral: falseBinding]) ifTrue: 
-						[result addClass: context selectedClass selector: context selector.
-						result searchStrings: #('True' 'False')]].
 	^detector
 ]
 

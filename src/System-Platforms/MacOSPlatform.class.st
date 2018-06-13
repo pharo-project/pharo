@@ -5,7 +5,7 @@ I am a an object representing a Mac OS (pre OSX) platform. Use myself to access 
 Class {
 	#name : #MacOSPlatform,
 	#superclass : #OSPlatform,
-	#category : #'System-Platforms'
+	#category : #'System-Platforms-Mac'
 }
 
 { #category : #testing }

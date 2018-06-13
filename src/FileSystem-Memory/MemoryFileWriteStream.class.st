@@ -22,14 +22,13 @@ MemoryFileWriteStream class >> on: aFile [
 
 { #category : #'opening-closing' }
 MemoryFileWriteStream >> close [
-	
-	^ self stream close
+	self stream close.
+	file close
 ]
 
 { #category : #'opening-closing' }
 MemoryFileWriteStream >> closed [
-	
-	^ self stream closed
+	^ file closed
 ]
 
 { #category : #accessing }

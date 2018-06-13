@@ -42,6 +42,11 @@ BaselineOfBasicTools >> baseline: spec [
 		spec postLoadDoIt: #'postload:package:'.
 
 		spec baseline: 'UI' with: [spec repository: repository].
+		
+		spec baseline: 'Athens' with: [ 
+			spec
+				loads: 'Basic';
+				repository: repository ].
 
 		spec package: 'JenkinsTools-Core'.
 		spec package: 'JenkinsTools-ExtraReports'.
@@ -86,10 +91,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Tool-Finder'.
 		spec package: 'Tool-ImageCleaner'.		
 		spec package: 'Tools'.
-					
-		spec package: 'Athens-Core'.
-		spec package: 'Athens-CairoPools'.
-		spec package: 'Athens-Cairo'.
 
 	].
 ]

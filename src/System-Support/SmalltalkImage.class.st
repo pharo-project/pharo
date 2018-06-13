@@ -175,15 +175,6 @@ SmalltalkImage >> arguments [
 ]
 
 { #category : #'to clean later' }
-SmalltalkImage >> associationAt: key ifAbsent: aBlock [
-	"Obsoleted."
-
-	self flag: #tobeprecated.
-	"self deprecated: 'Use Smalltalk globals'."
-	^globals associationAt: key ifAbsent: aBlock
-]
-
-{ #category : #'to clean later' }
 SmalltalkImage >> at: aKey [
 	"Answer the global associated with the key."
 
@@ -449,7 +440,7 @@ SmalltalkImage >> compactClassesArray [
 { #category : #compiler }
 SmalltalkImage >> compiler [
 	^self compilerClass new
-		environment: self
+		environment: self globals
 ]
 
 { #category : #compiler }
@@ -476,16 +467,6 @@ SmalltalkImage >> datedVersion [
 SmalltalkImage >> defaultLogFileName [
  
 	^ 'PharoDebug.log'
-]
-
-{ #category : #'to clean later' }
-SmalltalkImage >> do: aBlock [
-	"Obsoleted."
-	self flag: #tobeprecated.
-	"self deprecated: 'Use Smalltalk globals'."
-	^globals do: aBlock
-	
-
 ]
 
 { #category : #accessing }
@@ -827,15 +808,6 @@ SmalltalkImage >> imageSuffix [
 ]
 
 { #category : #'to clean later' }
-SmalltalkImage >> includes: element [
-	"Obsoleted."
-
-	self flag: #tobeprecated.
-	"self deprecated: 'Use Smalltalk globals'."
-	^globals includes: element
-]
-
-{ #category : #'to clean later' }
 SmalltalkImage >> includesKey: key [
 	"Answer whether the receiver has a key equal to the argument, key."
 
@@ -913,41 +885,6 @@ SmalltalkImage >> isYoung: oop [
 	"Primitive. Answer whether the object currently resides in youngSpace."
 	<primitive: 'primitiveIsYoung'>
 	^self primitiveFailed
-]
-
-{ #category : #'to clean later' }
-SmalltalkImage >> keyAtIdentityValue: anObject ifAbsent: aBlock [
-	"Obsoleted."
-
-	self flag: #tobeprecated.
-	"self deprecated: 'Use Smalltalk globals'."
-	^globals keyAtIdentityValue: anObject ifAbsent: aBlock
-]
-
-{ #category : #'to clean later' }
-SmalltalkImage >> keyAtValue: anObject [
-	"Obsoleted."
-	self flag: #tobeprecated.
-	"self deprecated: 'Use Smalltalk globals'."
-	^globals keyAtValue: anObject
-]
-
-{ #category : #'to clean later' }
-SmalltalkImage >> keys [
-	"Obsoleted."
-
-	self flag: #tobeprecated.
-	"self deprecated: 'Use Smalltalk globals'."
-	^globals keys
-]
-
-{ #category : #'to clean later' }
-SmalltalkImage >> keysAndValuesDo: aBlock [
-	"Obsoleted."
-	self flag: #tobeprecated.
-	"self deprecated: 'Use Smalltalk globals'."
-	^globals keysAndValuesDo: aBlock
-
 ]
 
 { #category : #accessing }
@@ -1586,24 +1523,6 @@ SmalltalkImage >> removeEmptyMessageCategories [
 	SystemOrganization removeEmptyCategories.
 ]
 
-{ #category : #'to clean later' }
-SmalltalkImage >> removeKey: key [
-	"Obsoleted."
-
-	self flag: #tobeprecated.
-	"self deprecated: 'Use Smalltalk globals'."
-	^globals removeKey: key
-]
-
-{ #category : #'to clean later' }
-SmalltalkImage >> removeKey: key ifAbsent: aBlock [
-	"Obsoleted."
-
-	self flag: #tobeprecated.
-	"self deprecated: 'Use Smalltalk globals'."
-	^globals removeKey: key ifAbsent: aBlock
-]
-
 { #category : #shrinking }
 SmalltalkImage >> removeSelector: descriptor [ 
 	"Safely remove a selector from a class (or metaclass). If the
@@ -1756,15 +1675,6 @@ SmalltalkImage >> saveSession [
 	^ self snapshot: true andQuit: false
 ]
 
-{ #category : #'to clean later' }
-SmalltalkImage >> select: aBlock [
-	"Obsoleted."
-	self flag: #tobeprecated.
-	"self deprecated: 'Use Smalltalk globals'."
-	^globals select: aBlock
-
-]
-
 { #category : #accessing }
 SmalltalkImage >> session [
 	^ SessionManager default currentSession
@@ -1788,15 +1698,6 @@ SmalltalkImage >> signalLowSpace [
 	"Signal the low-space semaphore to alert the user that space is running low."
 
 	LowSpaceSemaphore signal.
-]
-
-{ #category : #'to clean later' }
-SmalltalkImage >> size [
-	"Obsoleted."
-
-	self flag: #tobeprecated.
-	"self deprecated: 'Use Smalltalk globals'."
-	^globals size
 ]
 
 { #category : #'snapshot and quit' }

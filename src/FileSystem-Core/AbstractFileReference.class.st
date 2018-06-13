@@ -85,6 +85,13 @@ AbstractFileReference >> asFileReference [
 	self subclassResponsibility 
 ]
 
+{ #category : #converting }
+AbstractFileReference >> asPath [
+	"Answer the receiver's path"
+
+	self subclassResponsibility 
+]
+
 { #category : #delegated }
 AbstractFileReference >> asPathWith: anObject [
 	^ self resolve asPathWith: anObject

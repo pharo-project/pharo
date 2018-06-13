@@ -1,7 +1,10 @@
+"
+Support for different OS platforms
+"
 Class {
 	#name : #ManifestSystemPlatforms,
 	#superclass : #PackageManifest,
-	#category : #'System-Platforms'
+	#category : #'System-Platforms-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

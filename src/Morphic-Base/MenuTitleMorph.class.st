@@ -46,7 +46,7 @@ MenuTitleMorph >> bigTitle: aTitle [
 { #category : #'private-creation' }
 MenuTitleMorph >> boxExtent [
 
-	^18 @ 18
+	^ (18 @ 18) * self displayScaleFactor
 ]
 
 { #category : #'event handling' }
@@ -207,7 +207,7 @@ MenuTitleMorph >> withPinBox [
 		
 	pinBox := self 
 		iconButtonCalling: #pinBoxClicked 
-		withForm: self pinForm
+		withForm: self pinForm scaledByDisplayScaleFactor
 		helpText: 'Keep this menu up'.	
 			
 	self addMorph: pinBox asElementNumber: 4

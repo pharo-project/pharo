@@ -238,31 +238,40 @@ MenuItemMorph >> doButtonAction [
 ]
 
 { #category : #drawing }
-MenuItemMorph >> drawOn: aCanvas [ 
-	| stringColor stringBounds |
-	(isSelected and: [ isEnabled ])
-		ifTrue: [aCanvas fillRectangle: self bounds fillStyle: self selectionFillStyle.
-			stringColor := color negated]
-		ifFalse: [stringColor := color].
-	stringBounds := bounds.
-	self hasIcon
-		ifTrue: [| iconForm | 
-			iconForm := self iconForm.
-			aCanvas translucentImage: iconForm at: stringBounds left @ (self top + (self height - iconForm height // 2)).
-			stringBounds := stringBounds left: stringBounds left + iconForm width + 2].
-	self hasMarker
-		ifTrue: [stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8].
-	stringBounds := stringBounds top: stringBounds top + stringBounds bottom - self fontToUse height // 2.
+MenuItemMorph >> drawIconOn: aCanvas [
+	| iconForm |
+	self hasIcon ifFalse: [ ^ self ].
+	
+	iconForm := self iconForm.
+	aCanvas translucentImage: iconForm at: bounds left @ (self top + ((self height - iconForm height) // 2))
+]
+
+{ #category : #drawing }
+MenuItemMorph >> drawOn: aCanvas [
+	| stringColor |
+	self shouldBeHighlighted
+		ifTrue: [ aCanvas
+				fillRectangle: self bounds
+				fillStyle: self selectionFillStyle.
+			stringColor := self selectionTextColor ]
+		ifFalse: [ stringColor := color ].
+	self drawIconOn: aCanvas.
 	aCanvas
 		drawString: self contents
-		in: stringBounds
+		in: self menuStringBounds
 		font: self fontToUse
 		color: stringColor.
+	self drawSubmenuMarkerOn: aCanvas
+]
+
+{ #category : #drawing }
+MenuItemMorph >> drawSubmenuMarkerOn: aCanvas [
+	| subMenuMarker subMenuMarkerPosition |
 	self hasSubMenu
-		ifTrue: [| subMenuMarker subMenuMarkerPosition | 
-			subMenuMarker := self subMenuMarker.
-			subMenuMarkerPosition := self right - subMenuMarker width @ (self top + self bottom - subMenuMarker height // 2).
-			aCanvas paintImage: subMenuMarker at: subMenuMarkerPosition]
+		ifFalse: [ ^ self ].
+	subMenuMarker := self subMenuMarker.
+	subMenuMarkerPosition := (self right - subMenuMarker width) @ ((self top + self bottom - subMenuMarker height) // 2).
+	aCanvas paintImage: subMenuMarker at: subMenuMarkerPosition
 ]
 
 { #category : #grabbing }
@@ -462,6 +471,18 @@ MenuItemMorph >> leftArrow [
 		mappingWhiteToTransparentFrom: ((SubMenuMarker rotateBy: 180)asFormOfDepth: 8)
 ]
 
+{ #category : #drawing }
+MenuItemMorph >> menuStringBounds [
+	| stringBounds |
+	stringBounds := bounds.
+	self hasIcon ifTrue: [ | iconForm |
+		iconForm := self iconForm.
+		stringBounds := stringBounds left: stringBounds left + iconForm width + 2 ].
+	self hasMarker ifTrue: [ 
+		stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8 ].
+	^ stringBounds top: (stringBounds top + stringBounds bottom - self fontToUse height) // 2
+]
+
 { #category : #layout }
 MenuItemMorph >> minHeight [
 	| iconHeight |
@@ -597,6 +618,11 @@ MenuItemMorph >> selectionFillStyle [
 
 ]
 
+{ #category : #private }
+MenuItemMorph >> selectionTextColor [
+	^ color negated
+]
+
 { #category : #accessing }
 MenuItemMorph >> selector [
 
@@ -609,6 +635,11 @@ MenuItemMorph >> selector: aSymbol [
 
 	selector := aSymbol.
 
+]
+
+{ #category : #testing }
+MenuItemMorph >> shouldBeHighlighted [
+	^ isSelected and: [ isEnabled ]
 ]
 
 { #category : #events }

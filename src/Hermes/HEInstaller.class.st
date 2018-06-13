@@ -253,7 +253,6 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 		addAndClassifySelector: aMethod name
 		withMethod: newMethod
 		inProtocol: aMethod protocol
-		notifying: nil
 ]
 
 { #category : #'reporting undeclared' }

@@ -58,7 +58,7 @@ EpUnifiedBrowserModel class >> worldMenuItemOn: aBuilder [
 		action: [ self open ]; 
 		icon: self taskbarIcon;
 		help: 'Browse recorded change logs during from Pharo coding sessions and replay changes.';
-		order: 0.5
+		order: 401
 ]
 
 { #category : #api }

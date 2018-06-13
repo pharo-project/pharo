@@ -27,19 +27,19 @@ Class {
 
 { #category : #'instance creation' }
 ImageCleaner class >> cleanUpForProduction [
+	<script>
 	self new cleanUpForProduction
 ]
 
 { #category : #'instance creation' }
 ImageCleaner class >> cleanUpForRelease [
+	<script>
 	self new cleanUpForRelease
 ]
 
 { #category : #api }
 ImageCleaner >> cleanUpForProduction [
-	"self new cleanUpForProduction"
-
-	"delete logo"
+	<script: 'self new cleanUpForProduction'>
 
 	PolymorphSystemSettings showDesktopLogo: false.
 	self packagesForCleanUpInProduction
@@ -52,13 +52,11 @@ ImageCleaner >> cleanUpForProduction [
 
 { #category : #api }
 ImageCleaner >> cleanUpForRelease [
-	"self new cleanUpForRelease"
+	<script: 'self new cleanUpForRelease'>
 
 	Author fullName: 'MrCleaner'.
 	self cleanUpMethods.
-	
-	FreeTypeFontProvider current initialize.
-	EmbeddedFreeTypeFontInstaller initialize.
+	OrderedCollection compactAllInstances.
 	self class environment at: #MetacelloProjectRegistration ifPresent: [ :class | class resetRegistry ].
 	SystemNavigation new
 		allObjectsDo: [ :each | 
@@ -78,8 +76,7 @@ ImageCleaner >> cleanUpForRelease [
 { #category : #cleaning }
 ImageCleaner >> cleanUpMethods [
 	"Make sure that all methods in use are restarted"
-	"self new cleanUpMethods"
-
+	<script: 'self new cleanUpMethods'>
 	WeakArray restartFinalizationProcess.
 	WorldState allInstancesDo: [ :ws | ws convertAlarms; cleanStepList; resetWorldMenu].
 	WorldState allInstancesDo: [ :ws | ws instVarNamed: 'menuBuilder' put: nil ].
@@ -89,24 +86,23 @@ ImageCleaner >> cleanUpMethods [
 
 { #category : #cleaning }
 ImageCleaner >> cleanUpProcesses [
-
-    (Process allInstances
-               reject: [ :p |
-                       {(InputEventFetcher default fetcherProcess).
-                       (Processor activeProcess).
-                       (WeakArray runningFinalizationProcess).
-                      (Processor backgroundProcess).
-                       (SmalltalkImage current lowSpaceWatcherProcess).
-                       (UIManager default uiProcess).
-                       (Delay schedulingProcess)} includes: p ])
-               do: [ :p |
-                       p suspend; terminate ]
-
+	(Process allInstances
+		reject: [ :p | 
+			{InputEventFetcher default fetcherProcess.
+			Processor activeProcess.
+			WeakArray runningFinalizationProcess.
+			Processor backgroundProcess.
+			SmalltalkImage current lowSpaceWatcherProcess.
+			UIManager default uiProcess.
+			Delay schedulingProcess} includes: p ])
+		do: [ :p | 
+			p
+				suspend;
+				terminate ]
 ]
 
 { #category : #cleaning }
 ImageCleaner >> examplePackages [
-	<sampleInstance>
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: 'Examples' ]
 ]
 
@@ -120,38 +116,7 @@ ImageCleaner >> packagesForCleanUpInProduction [
 	"A list of packages who will be unloaded when going to production.
 	 WARNING, ORDER IS IMPORTANT"
 	
-	^#(
-	"Manifest & Critics Browser"
-	'Manifest-Core'
-	'Manifest-CriticBrowser'
-	'Manifest-Tests'
-	'Manifest-Resources-Tests'
-	"Metacello"
-	'Metacello-ToolBox'
-	'Metacello-MC'
-	'Metacello-Platform'
-	'Metacello-Core'
-	'Metacello-Base'
-	'Metacello-ProfStef'
-	'Metacello-Tutorial'
-	'Metacello-TestsCore'
-	'Metacello-TestsMC'
-	'Metacello-TestsMCCore'
-	'Metacello-TestsMCResources'
-	'Metacello-TestsPharo20MC'
-	'Metacello-TestsPlatform'
-	'Metacello-TestsTutorial'
-	"Other packages"
-	'ScriptLoader40'
-	'MonticelloMocks'
-	'ToolsTest'	
-	'AST-Interpreter-Test'	
-	'Versionner-Core-Model'
-	'Versionner-Core-DependenciesModel'
-	'Versionner-Core-Announcements'
-	'Versionner-Core-Commands'
-	'Versionner-Spec-Browser'
-	)
+	^#('MonticelloMocks')
 
 ]
 

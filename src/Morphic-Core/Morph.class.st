@@ -2178,6 +2178,12 @@ Morph >> displayExtentChanged [
 	"
 ]
 
+{ #category : #settings }
+Morph >> displayScaleFactor [
+
+	^ World displayScaleFactor
+]
+
 { #category : #announcements }
 Morph >> doAnnounce: anAnnouncement [
 	"Take care of not creating the announcer when announcing. If the announcer doesn't exist then this means nobody has expressed an interest in the message."

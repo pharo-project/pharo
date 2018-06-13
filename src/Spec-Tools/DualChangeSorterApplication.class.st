@@ -81,7 +81,7 @@ DualChangeSorterApplication class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder group: #SystemChanges)
 		parent: #Tools;
-		order: 0.51;
+		order: 410;
 		with: [ (aBuilder item: #'Change Sorter')
 				action: [ self open ];
 				help: 'Examine the different change set of the image.';

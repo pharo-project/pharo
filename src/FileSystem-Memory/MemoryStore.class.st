@@ -71,9 +71,11 @@ MemoryStore >> basicModificationTimeOf: aMemoryFileSystemEntry [
 MemoryStore >> basicOpen: path writable: aBoolean [
 	^ self
 		nodeAt: path
-		ifPresent: [ :aMemoryFileSystemEntry | aMemoryFileSystemEntry ]
-		ifAbsent: [ 
-			aBoolean
+		ifPresent: [ :aMemoryFileSystemEntry | 
+			aMemoryFileSystemEntry
+				basicOpen;
+				yourself ]
+		ifAbsent: [ aBoolean
 				ifFalse: [ self signalFileDoesNotExist: path ]
 				ifTrue: [ self createFile: path ] ]
 ]
@@ -158,7 +160,7 @@ MemoryStore >> delete: path [
 	self 
 		nodeAt: path parent
 		ifPresent: [ :dict | 
-			dict fileEntryRemove: path basename ifAbsent: [ FileDoesNotExist signalWith: path ]] 
+			dict fileEntryRemove: path basename ifAbsent: [ FileDoesNotExistException signalWith: path ]] 
 		ifAbsent: [ DirectoryDoesNotExist signalWith: path parent ]
 ]
 

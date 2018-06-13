@@ -459,8 +459,8 @@ SystemWindow >> boxExtent [
 	"answer the extent to use in all the buttons.  
 	The label height is used to be proportional to the standard window label font"
 	
-	label ifNil: [^14 @ 14].
-	^ (14 @ 14) max: label height @ label height 
+	label ifNil: [^(14 @ 14) * self displayScaleFactor].
+	^ (((14 @ 14) * self displayScaleFactor) max: label height @ label height)  
 ]
 
 { #category : #testing }
@@ -882,7 +882,7 @@ SystemWindow >> initialize [
 	self cellPositioning: #topLeft. "make the offsets easy to calculate!"
 	self addGripsIfWanted.
 	
-	self extent: 300 @ 200.
+	self extent: (300 @ 200) scaledByDisplayScaleFactor.
 	mustNotClose := false.
 	updatablePanes := Array new
 ]
@@ -1292,6 +1292,13 @@ SystemWindow >> positionSubmorphs [
 	super positionSubmorphs.
 	self submorphsDo:
 		[:aMorph | aMorph positionSubmorphs]
+]
+
+{ #category : #printing }
+SystemWindow >> printOn: aStream [
+
+	super printOn: aStream. 
+	label ifNotNil: [ aStream nextPutAll: ' named: ', self labelString  ]
 ]
 
 { #category : #activation }

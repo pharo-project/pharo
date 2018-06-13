@@ -112,7 +112,38 @@ Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray layout: layout
 ]
 
 { #category : #'*TraitsV2' }
+Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray layout: layoutClass slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
+
+	^ self
+		subclass: aSubclassSymbol
+		uses: aTraitCompositionOrArray
+		layout: layoutClass
+		slots: slotDefinition
+		classVariables: classVarDefinition
+		poolDictionaries: ''
+		category: aCategorySymbol
+]
+
+{ #category : #'*TraitsV2' }
 Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: someSlots classVariables: someClassVariables poolDictionaries: somePoolDictionaries category: aCategory [
+	
+	^ self classInstaller
+		make: [ :builder | 
+			builder
+				name: subclassName;
+				superclass: self;
+				slots: someSlots;
+				layoutClass: aLayout;
+				sharedVariables: someClassVariables;
+				sharedPools: somePoolDictionaries;
+				traitComposition: aTraitComposition asTraitComposition;
+				classTraitComposition: aTraitComposition asTraitComposition classComposition;
+				category: aCategory;
+				copyClassSlotsFromExistingClass ]
+]
+
+{ #category : #'*TraitsV2' }
+Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: someSlots classVariables: someClassVariables poolDictionaries: somePoolDictionaries package: aCategory [
 	
 	^ self classInstaller
 		make: [ :builder | 
@@ -148,6 +179,24 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 ]
 
 { #category : #'*TraitsV2' }
+Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: someSlots classVariablesNames: someClassVariablesNames poolDictionaries: somePoolDictionaries package: aCategory [
+	
+	^ self classInstaller
+		make: [ :builder | 
+			builder
+				name: subclassName;
+				superclass: self;
+				slots: someSlots;
+				layoutClass: aLayout;
+				sharedVariablesFromString: someClassVariablesNames;
+				sharedPools: somePoolDictionaries;
+				traitComposition: aTraitComposition asTraitComposition;
+				classTraitComposition: aTraitComposition asTraitComposition classComposition;
+				category: aCategory;
+				copyClassSlotsFromExistingClass ]
+]
+
+{ #category : #'*TraitsV2' }
 Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
 
 	^ self
@@ -161,7 +210,33 @@ Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDef
 ]
 
 { #category : #'*TraitsV2' }
+Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
+
+	^ self
+		subclass: aSubclassSymbol
+		uses: aTraitCompositionOrArray
+		layout: self classLayout class
+		slots: slotDefinition
+		classVariables: classVarDefinition
+		poolDictionaries: ''
+		category: aCategorySymbol
+]
+
+{ #category : #'*TraitsV2' }
 Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
+
+	^ self
+		subclass: aSubclassSymbol
+		uses: aTraitCompositionOrArray
+		layout: self classLayout class
+		slots: slotDefinition
+		classVariables: classVarDefinition
+		poolDictionaries: someSharedPoolNames
+		category: aCategorySymbol
+]
+
+{ #category : #'*TraitsV2' }
+Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol [
 
 	^ self
 		subclass: aSubclassSymbol

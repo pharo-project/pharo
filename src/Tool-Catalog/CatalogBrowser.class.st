@@ -32,7 +32,7 @@ CatalogBrowser class >> menuCommandOn: aBuilder [
 
 	<worldMenu>
 	(aBuilder item: #'Catalog Browser')
-		order: 0.19;
+		order: 201;
 		iconName: #catalogIcon;
 		parent: #Tools;
 		help: 'Project catalog from pharo official repositories.';

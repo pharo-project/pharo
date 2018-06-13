@@ -65,16 +65,6 @@ TaCompositionElement >> compiledMethodAt: selector [
 ]
 
 { #category : #copying }
-TaCompositionElement >> copySlot: aSlot [
-	"This is a utitlity method to handle the copy of a slot. It is used for instance side and class side slots."
-	| newOne |
-	newOne := aSlot copy.
-	newOne isVirtual ifFalse: [ newOne index: nil ].
-	newOne definingClass: self innerClass.
-	^ newOne
-]
-
-{ #category : #copying }
 TaCompositionElement >> copyTraitExpression [
 	"I can be just shallowCopy, because I have only a reference to the real Trait"
 	^ self shallowCopy.
@@ -158,7 +148,7 @@ TaCompositionElement >> selectors [
 
 { #category : #accessing }
 TaCompositionElement >> slots [
-	^ innerClass slots collect: [ :e | self copySlot: e ]
+	^ innerClass slots 
 ]
 
 { #category : #printing }

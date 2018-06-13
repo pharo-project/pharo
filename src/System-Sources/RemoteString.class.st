@@ -24,7 +24,7 @@ Class {
 		'filePositionHi',
 		'sourceFileArray'
 	],
-	#category : #'System-Sources'
+	#category : #'System-Sources-Utilities'
 }
 
 { #category : #'instance creation' }

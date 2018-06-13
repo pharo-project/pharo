@@ -36,6 +36,9 @@ Class {
 		'compilationContext',
 		'compilationContextClass'
 	],
+	#classInstVars : [
+		'overlayEnvironment'
+	],
 	#category : #'OpalCompiler-Core-FrontEnd'
 }
 
@@ -51,6 +54,20 @@ OpalCompiler class >> compilerSpecificSettingsOn: aBuilder [
 				#SistaV1 -> EncoderForSistaV1 }.
 	CompilationContext compilerSpecificSettingsOn: aBuilder.
 	
+]
+
+{ #category : #overlay }
+OpalCompiler class >> createAndEnableOverlay [
+	^self overlayIsActive
+]
+
+{ #category : #overlay }
+OpalCompiler class >> createAndEnableOverlay: aBoolean [
+	
+	aBoolean = self overlayIsActive ifTrue: [ ^self ].
+	aBoolean 
+		ifTrue: [ self startUsingOverlayForDevelopment   ]
+		ifFalse: [ self stopUsingOverlayForDevelopment   ]
 ]
 
 { #category : #public }
@@ -141,6 +158,16 @@ OpalCompiler class >> isActive [
 	^Smalltalk compilerClass == self
 ]
 
+{ #category : #overlay }
+OpalCompiler class >> overlayEnvironment [
+	^overlayEnvironment
+]
+
+{ #category : #overlay }
+OpalCompiler class >> overlayIsActive [
+	^overlayEnvironment notNil
+]
+
 { #category : #public }
 OpalCompiler class >> recompileAll [
 	"Recompile all classes and traits in the system."
@@ -149,6 +176,46 @@ OpalCompiler class >> recompileAll [
 
 
 
+]
+
+{ #category : #overlay }
+OpalCompiler class >> startUsingOverlayForDevelopment [
+	"this method sets up an overlay so we can change the compiler package without breaking the compiler"
+
+	<script>
+	overlayEnvironment := Dictionary new.
+
+	"now we put a copy of all the classes of the compiler package into the environment"
+	self package definedClasses
+		do: [ :class | overlayEnvironment at: class name put: class copy ].
+
+	"now we recompile the classes in the environment with itself as an overlay"
+	overlayEnvironment valuesDo: [ :class | 
+			class methodsDo: [ :method | 
+					| newMethod |
+					newMethod := class compiler
+						bindings: overlayEnvironment;
+						compile: method sourceCode.
+					class addSelectorSilently: method selector withMethod: newMethod ] ].
+	
+	"make sure superclass pointers are correct"
+    overlayEnvironment valuesDo: [ :class | 
+        (overlayEnvironment includesKey: class superclass name) ifTrue: [  
+            class superclass: (overlayEnvironment at: class superclass name)]].
+	
+	"make the copy the default compiler for the image"
+	SmalltalkImage compilerClass: (overlayEnvironment at: #OpalCompiler).
+	ASTCache reset.
+]
+
+{ #category : #overlay }
+OpalCompiler class >> stopUsingOverlayForDevelopment [
+	"set compiler back to normal and throw away overlay environment"
+
+	<script>
+	SmalltalkImage compilerClass: nil.
+	overlayEnvironment := nil.
+	ASTCache reset
 ]
 
 { #category : #plugins }
@@ -353,7 +420,7 @@ OpalCompiler >> evaluate: textOrString for: anObject logged: logFlag [
 		transformWith:
 			'`@receiver evaluate: `@statements1 for: `@statements2 logged: `@statements3'
 				->
-					'`@receiver source: `@statements1; logged: `@statements2; receiver: `@statements3; evaluate'.
+					'`@receiver source: `@statements1; logged: `@statements3; receiver: `@statements2; evaluate'.
 	^ self
 		source: textOrString;
 		logged: logFlag;
