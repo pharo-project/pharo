@@ -44,6 +44,7 @@ BaselineOfIDE >> addPharoProjectToIceberg [
 	
 	"extract package names from baselines"
 	packageNames := (#(
+		BaselineOfAthens
 		BaselineOfBasicTools
 		BaselineOfDisplay
 		BaselineOfIDE  
