@@ -46,6 +46,7 @@ BaselineOfIDE >> addPharoProjectToIceberg [
 	packageNames := (#(
 		BaselineOfBasicTools
 		BaselineOfDisplay
+		BaselineOfFlashback
 		BaselineOfIDE  
 		BaselineOfMonticello 
 		BaselineOfMetacello 
@@ -174,6 +175,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
 		
 		spec baseline: 'Athens' with: [ spec repository: repository ].
+		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
 		spec baseline: 'Shift' with: [
 			spec loads: 'shift-tests'. 
@@ -198,10 +200,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Epicea'.
 		spec package: 'Hiedra'.
 		spec package: 'EpiceaBrowsers'.
-		spec package: 'HiedraTests'. 
-		spec package: 'OmbuTests'.
-		spec package: 'EpiceaTests'.
-		spec package: 'EpiceaBrowsersTests'.
+		spec package: 'Hiedra-Tests'. 
+		spec package: 'Ombu-Tests'.
+		spec package: 'Epicea-Tests'.
+		spec package: 'EpiceaBrowsers-Tests'.
 
 		
 		spec package: 'Shout'.
@@ -455,10 +457,10 @@ spec group: 'Epicea-Core-Group' with: #(
 	'Hiedra'
 	'EpiceaBrowsers').
 spec group: 'Epicea-Tests-Group' with: #(
-	'OmbuTests'
-	'EpiceaTests'
-	'HiedraTests'
-	'EpiceaBrowsersTests'
+	'Ombu-Tests'
+	'Epicea-Tests'
+	'Hiedra-Tests'
+	'EpiceaBrowsers-Tests'
 ).	
 spec group: 'Epicea-Group' with: #(
 	'Epicea-Core-Group' 
@@ -584,17 +586,6 @@ spec group: 'Manifest-Tests-Group' with: #(
 spec group: 'Manifest-Group' with: #(
 	'Manifest-Core-Group'
 	'Manifest-Tests-Group'
-).
-
-spec group: 'Flashback-Core-Group' with: #(
-	'Flashback-Decompiler'
-).
-spec group: 'Flashback-Tests-Group' with: #(
-	'Flashback-Decompiler-Tests'
-).
-spec group: 'Flashback-Group' with: #(
-	'Flashback-Core-Group'
-	'Flashback-Tests-Group'
 ).
 
 spec group: 'BlueInk-Core-Group' with: #(
@@ -839,6 +830,7 @@ spec group: 'GT&QA-Group' with: #(
 spec group: #default with: #(
 	'BasicTools'	"dependency"
 	'Athens'
+	'Flashback'
 
 	'Mandatory-Group'
 
@@ -853,7 +845,6 @@ spec group: #default with: #(
 	'ReflectionMirrors-Group'
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
-	'Flashback-Group'
 
 	'GT&QA-Group'
 

@@ -274,32 +274,26 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalIDEDependencies [
-
-	| dependencies | 
-	
+	| dependencies packages |
 	self longTestCase.
+	packages := self metacelloPackageNames , self tonelCorePackageNames , { BaselineOfPharoBootstrap name. BaselineOfMonticello name. BaselineOfMetacello name}.
 	
-	dependencies := self externalDependendiesOf: (
-		self metacelloPackageNames,
-		self tonelCorePackageNames,
-		{ BaselineOfTraits name }, BaselineOfTraits allPackageNames,		
-		{ BaselineOfSlot name }, BaselineOfSlot allPackageNames,		
-		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
-		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
-		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
-		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
-		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
-		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
-		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
-		{ BaselineOfAthens name }, BaselineOfAthens allPackageNames,
-		{ BaselineOfIDE name }, BaselineOfIDE allPackageNames,
-		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
-		{ BaselineOfPharoBootstrap name. 
-		  BaselineOfMonticello name.
-		  BaselineOfMetacello name }
-		 ).
-	
-	self assertCollection: dependencies equals: self knownIDEDependencies.
+	{BaselineOfAthens.
+	BaselineOfBasicTools.
+	BaselineOfDisplay.
+	BaselineOfFlashback.
+	BaselineOfIDE.
+	BaselineOfMorphic.
+	BaselineOfMorphicCore.
+	BaselineOfSlot.
+	BaselineOfSpec.
+	BaselineOfSUnit.
+	BaselineOfTraits.
+	BaselineOfUI.
+	BaselineOfUnifiedFFI} do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
+			
+	dependencies := self externalDependendiesOf: packages.
+	self assertCollection: dependencies equals: self knownIDEDependencies
 ]
 
 { #category : #tests }
