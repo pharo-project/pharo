@@ -195,7 +195,6 @@ OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
 	self visitNode: aMethodNode body.
-	scope := scope outerScope.
 
 ]
 
