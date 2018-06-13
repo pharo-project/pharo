@@ -607,7 +607,7 @@ MethodFinder >> initialize2 [
 	#("adding" add:after: add:afterIndex: add:before: addAllFirst: addAllLast: addFirst: addLast:
 "removing" removeAt: removeFirst removeLast
 "accessing" sortBlock:) do: [:sel | AddAndRemove add: sel].
-
+	
 "Character"
 	#("in class, instance creation" allCharacters digitValue: new separators
 	"accessing untypeable characters" backspace cr enter lf linefeed nbsp newPage space tab
