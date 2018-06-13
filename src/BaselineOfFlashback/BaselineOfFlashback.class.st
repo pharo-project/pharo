@@ -15,8 +15,7 @@ BaselineOfFlashback >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ spec postLoadDoIt: #postload:package:.
-
+		do: [ 
 			"Packages"
 			spec package: 'Flashback-Decompiler'.
 			spec package: 'Flashback-Decompiler-Tests' with: [ spec requires: 'Flashback-Decompiler' ].
