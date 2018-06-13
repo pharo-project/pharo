@@ -484,6 +484,7 @@ spec group: 'General-Tests-Group' with: #(
 	'MetacelloCommandLineHandler-Tests'
 	'Debugger-Tests'
 	'EmbeddedFreeType-Tests'
+	'Epicea-Tests-Group'
 	'FileSystem-Tests-Memory'
 	'FontInfrastructure-Tests'
 	'FreeType-Tests'
@@ -497,7 +498,6 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Morphic-Tests'
 	'NECompletion-Tests'
-	'OmbuTests'
 	'ProfStef-Tests'
 
 	'Reflectivity-Tools-Tests'
