@@ -109,10 +109,11 @@ ZipArchive class >> validSignatures [
 { #category : #'archive operations' }
 ZipArchive >> addDeflateString: aString as: aFileName [
 	"Add a verbatim string under the given file name"
+
 	| mbr |
 	mbr := self addString: aString as: aFileName.
 	mbr desiredCompressionMethod: CompressionDeflated.
-	^mbr
+	^ mbr
 ]
 
 { #category : #initialization }
@@ -122,62 +123,71 @@ ZipArchive >> close [
 
 { #category : #'archive operations' }
 ZipArchive >> extractAllTo: aDirectory [
-	"Extract all elements to the given directory"
+	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
 	UIManager default
 		informUserDuring: [ :bar | 
-			bar max: self members size.
+			bar max: self numberOfMembers.
 			self extractAllTo: aDirectory informing: bar ]
 ]
 
 { #category : #'archive operations' }
 ZipArchive >> extractAllTo: aDirectory informing: bar [
-	"Extract all elements to the given directory"
-	^self extractAllTo: aDirectory informing: bar overwrite: false
+	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
+
+	^ self extractAllTo: aDirectory informing: bar overwrite: false
 ]
 
 { #category : #'archive operations' }
-ZipArchive >> extractAllTo: aDirectory informing: bar overwrite: allOverwrite [
-	"Extract all elements to the given directory"
+ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
+	"Extract all elements to the given directory. Informs user when a file exists and set to overwrite"
 
-	| overwriteAll lastUpdate barValue shouldUpdateInfos |
+	| bar overwriteAll barValue |
+	bar := aBar ifNil: [ DummySystemProgressItem new ].
 	overwriteAll := allOverwrite.
-	lastUpdate := 0.
 	barValue := 0.
 	self members
 		select: #isDirectory
 		thenDo: [ :entry | 
-			| dir |
+			| dir shouldUpdateInfos lastUpdate |
+			lastUpdate := 0.
 			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
-				ifTrue: [ lastUpdate := Time millisecondClockValue ].
-			bar isNotNil & shouldUpdateInfos
-				ifTrue: [ bar label: 'Creating ' , entry fileName ].
-			dir := (entry fileName findTokens: '/') inject: aDirectory into: [ :base :part | base / part ].
+				ifTrue: [ lastUpdate := Time millisecondClockValue.
+					bar label: 'Creating ' , entry fileName ].
+			dir := (entry fileName findTokens: '/')
+				inject: aDirectory
+				into: [ :base :part | base / part ].
 			dir ensureCreateDirectory.
 			barValue := barValue + 1.
-			bar isNotNil & shouldUpdateInfos
+			shouldUpdateInfos
 				ifTrue: [ bar value: barValue ] ].
 	self members
-		select: [ :entry | entry isDirectory not ]
+		reject: #isDirectory
 		thenDo: [ :entry | 
-			| response |
+			| shouldUpdateInfos lastUpdate |
+			lastUpdate := 0.
 			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
-				ifTrue: [ lastUpdate := Time millisecondClockValue ].
-			bar isNotNil & shouldUpdateInfos
-				ifTrue: [ bar label: 'Extracting ' , entry fileName ].
-			response := entry extractInDirectory: aDirectory overwrite: overwriteAll.
-			response == #retryWithOverwrite
-				ifTrue: [ overwriteAll := true.
-					response := entry extractInDirectory: aDirectory overwrite: overwriteAll ].
-			response == #abort
-				ifTrue: [ ^ self ].
-			response == #failed
-				ifTrue: [ (self confirm: 'Failed to extract ' , entry fileName , '. Proceed?')
-						ifFalse: [ ^ self ] ].
+				ifTrue: [ lastUpdate := Time millisecondClockValue.
+					bar label: 'Extracting ' , entry fileName ].
+			entry
+				extractInDirectory: aDirectory
+				informingOverwrite: overwriteAll
+				onSuccess: [  ]
+				onRetryWithOverwrite: [ overwriteAll := true ]
+				onFailedOverwrite: [ (self confirm: 'Failed to extract ' , entry fileName , '. Proceed?')
+						ifFalse: [ ^ self ] ]
+				onAbortOverwrite: [ ^ self ].
 			barValue := barValue + 1.
-			bar isNotNil & shouldUpdateInfos
+			shouldUpdateInfos
 				ifTrue: [ bar value: barValue.
 					lastUpdate := Time millisecondClockValue ] ]
+]
+
+{ #category : #'archive operations' }
+ZipArchive >> extractAllTo: aDirectory overwrite: overwriteAll [
+	"Extracts all elements to the given directory, overwriting existing entries if necessary. Does not use the UI for confirmation"
+
+	self members do: [ :entry | entry extractInDirectory: aDirectory withoutInformingOverwrite: overwriteAll ]
 ]
 
 { #category : #accessing }

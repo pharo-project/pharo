@@ -260,7 +260,7 @@ DAPackageRelationGraph >> findReferencesIn: aMethod for: aPackage [
 	compiledMethod := aMethod compiledMethod.
 	^ compiledMethod
 		ifNotNil: [ 
-			compiledMethod literals allButLast
+			compiledMethod literals
 				do: [ :literal | 
 					(self isReference: literal)
 						ifTrue: [ 

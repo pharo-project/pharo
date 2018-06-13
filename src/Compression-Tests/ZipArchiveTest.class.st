@@ -31,15 +31,14 @@ ZipArchiveTest >> setUp [
 
 { #category : #running }
 ZipArchiveTest >> tearDown [
-
 	"Must close the zipfile before deleting all files.
 	Otherwise in windows the file will not be deleted as long as the file is open."
-	zip close.
-	
-	fileToZip ensureDelete.
-	subdir ensureDeleteAll.
-	zipFile ensureDelete.
-	super tearDown 
+
+	[ zip close ]
+		ensure: [ fileToZip ensureDelete.
+			subdir ensureDeleteAll.
+			zipFile ensureDelete ].
+	super tearDown
 ]
 
 { #category : #tests }
@@ -220,6 +219,38 @@ ZipArchiveTest >> testSetLastModification [
 	member := zip addDeflateString: 'foo' as: 'bar'.
 	member modifiedAt: aDateAndTime.
 	self assert: member lastModTime equals: aDateAndTime.
+]
+
+{ #category : #tests }
+ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
+	| nestedFileToZip fileModificationTime fileModificationTimeBlock |
+	fileModificationTimeBlock := [ (subdir / '_test-zip-file.txt') modificationTime ].
+	nestedFileToZip := (subdir / '_test-zip-file.txt')
+		writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ];
+		yourself.
+	zip
+		addDirectory: subdir fullName as: subdir basename;
+		addFile: nestedFileToZip fullName as: nestedFileToZip basename;
+		writeToFileNamed: zipFile fullName;
+		close.
+	ZipArchive new
+		readFrom: zipFile;
+		extractAllTo: subdir overwrite: true;
+		close.
+	fileModificationTime := fileModificationTimeBlock value.
+	1 second wait.
+	ZipArchive new
+		readFrom: zipFile;
+		extractAllTo: subdir overwrite: true;
+		close.
+	self assert: fileModificationTime ~= fileModificationTimeBlock value.
+	fileModificationTime := fileModificationTimeBlock value.
+	1 second wait.
+	ZipArchive new
+		readFrom: zipFile;
+		extractAllTo: subdir overwrite: false;
+		close.
+	self deny: fileModificationTime ~= fileModificationTimeBlock value
 ]
 
 { #category : #tests }

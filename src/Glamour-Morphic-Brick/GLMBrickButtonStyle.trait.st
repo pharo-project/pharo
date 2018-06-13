@@ -27,7 +27,7 @@ GLMBrickButtonStyle >> buttonBorderWidth [
 { #category : #'brick-button' }
 GLMBrickButtonStyle >> buttonMinHeight [
 
-	^ 26
+	^ 26 * World displayScaleFactor
 ]
 
 { #category : #'brick-button' }

@@ -10,11 +10,6 @@ Class {
 	#category : #'RPackage-Tests'
 }
 
-{ #category : #accessing }
-RPackageWithDoTest >> announcer [
-	^ SystemAnnouncer uniqueInstance private
-]
-
 { #category : #'simple ensure tests' }
 RPackageWithDoTest >> do: aBlock [ 
 
@@ -43,13 +38,9 @@ RPackageWithDoTest >> ensure [
 	x := 3
 ]
 
-{ #category : #tests }
-RPackageWithDoTest >> info [
-	
-	
-	self announcer hasSubscriber: RPackageOrganizer default.
-	Smalltalk garbageCollect.
-	RPackageOrganizer allInstances collect: [:each | self announcer hasSubscriber: each ] 
+{ #category : #accessing }
+RPackageWithDoTest >> organizerAnnouncer [
+	^ SystemAnnouncer uniqueInstance private
 ]
 
 { #category : #tests }
@@ -92,7 +83,7 @@ RPackageWithDoTest >> testDoC [
 { #category : #tests }
 RPackageWithDoTest >> testImageContainsOneSubscribedOrganizer [
 	"to be sure that this is real default one"
-	self assert: (self announcer hasSubscriber: self packageOrganizerClass default) description: 'System announcer should have the default instance of the organizer as subscriber.'.
+	self assert: (self organizerAnnouncer hasSubscriber: self packageOrganizerClass default) description: 'System announcer should have the default instance of the organizer as subscriber.'.
 	"note that this test is not precise enough because I could get the wrong one."
 	
 	[ self assert: self packageOrganizerClass allInstances size equals: 1 ]
@@ -128,10 +119,10 @@ RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefault [
 	empty debuggingName: 'empty from PackageWithDoTest'.
 	self packageClass
 		withOrganizer: empty
-		do: [ self assert: (self announcer hasSubscriber: empty) description: 'During #withOrganizer:do:, the system announcer should have the organizer as parameter in its subscriber.'.
-			self deny: (self announcer hasSubscriber: current) description: 'During #withOrganizer:do:, the system announcer shouldn''t have the default organizer in its subscriber.' ].
-	self assert: (self announcer hasSubscriber: current) description: 'After the use of #withOrganizer:do:, the default organizer should be reinstalled in system announcer subscribers.'.
-	self deny: (self announcer hasSubscriber: empty) description: 'After the use of #withOrganizer:do:, the empty organizer should be removed from the system announcer subscribers.'
+		do: [ self assert: (self organizerAnnouncer hasSubscriber: empty) description: 'During #withOrganizer:do:, the system announcer should have the organizer as parameter in its subscriber.'.
+			self deny: (self organizerAnnouncer hasSubscriber: current) description: 'During #withOrganizer:do:, the system announcer shouldn''t have the default organizer in its subscriber.' ].
+	self assert: (self organizerAnnouncer hasSubscriber: current) description: 'After the use of #withOrganizer:do:, the default organizer should be reinstalled in system announcer subscribers.'.
+	self deny: (self organizerAnnouncer hasSubscriber: empty) description: 'After the use of #withOrganizer:do:, the empty organizer should be removed from the system announcer subscribers.'
 ]
 
 { #category : #tests }
@@ -141,11 +132,11 @@ RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefaultEvenIfHalt [
 	empty := self packageOrganizerClass basicNew initialize.
 	[ self packageClass
 		withOrganizer: empty
-		do: [ self assert: (self announcer hasSubscriber: empty) description: 'During #withOrganizer:do:, the system announcer should have the organizer as parameter in its subscriber.'.
-			self deny: (self announcer hasSubscriber: current) description: 'During #withOrganizer:do:, the system announcer shouldn''t have the default organizer in its subscriber.'.
+		do: [ self assert: (self organizerAnnouncer hasSubscriber: empty) description: 'During #withOrganizer:do:, the system announcer should have the organizer as parameter in its subscriber.'.
+			self deny: (self organizerAnnouncer hasSubscriber: current) description: 'During #withOrganizer:do:, the system announcer shouldn''t have the default organizer in its subscriber.'.
 			self error ] ]
 		on: Error
 		do: [ :ex |  ].
-	self assert: (self announcer hasSubscriber: current) description: 'After the use of #withOrganizer:do:, the default organizer should be reinstalled in system announcer subscribers.'.
-	self deny: (self announcer hasSubscriber: empty) description: 'After the use of #withOrganizer:do:, the empty organizer should be removed from the system announcer subscribers.'
+	self assert: (self organizerAnnouncer hasSubscriber: current) description: 'After the use of #withOrganizer:do:, the default organizer should be reinstalled in system announcer subscribers.'.
+	self deny: (self organizerAnnouncer hasSubscriber: empty) description: 'After the use of #withOrganizer:do:, the empty organizer should be removed from the system announcer subscribers.'
 ]

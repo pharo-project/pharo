@@ -255,3 +255,13 @@ SystemSettingsPersistenceTest >> testWriteStream [
 	self assert: writeStream isStream.
 	writeStream close.
 ]
+
+{ #category : #'tests - storing' }
+SystemSettingsPersistenceTest >> testWritingStoredSettingNodesShouldNotCloseFileStream [
+	| writeStream storedSettings |
+	writeStream := preferences ensureCreateFile writeStream.
+	storedSettings := StoredSettingsFactory new
+		fromSettingNodes: (Array with: MockSettings booleanSettingNode).
+	systemSettings storeExactStoredSettings: storedSettings on: writeStream.
+	self deny: writeStream closed
+]

@@ -20,10 +20,33 @@ Class {
 		'character',
 		'modifiers',
 		'position',
-		'repeat'
+		'repeat',
+		'handled'
 	],
 	#category : #'OSWindow-Core-Events'
 }
+
+{ #category : #keymapping }
+OSKeyboardEvent >> asKeyCombination [
+	| modifier control command shift alt char |
+
+	control := self modifiers ctrl.
+	command := self modifiers cmd.
+	shift := self modifiers shift.
+	alt := self modifiers alt.
+	char := self modifiedCharacter.
+	
+	(shift | command | control | alt)
+		ifFalse: [^ KMSingleKeyCombination from: char ].
+	
+	modifier := KMNoShortcut new.
+	control ifTrue: [ modifier := modifier + KMModifier ctrl ].
+	command ifTrue: [ modifier := modifier + KMModifier command ].
+	shift ifTrue: [ modifier := modifier + KMModifier shift ].
+	alt ifTrue: [ modifier := modifier + KMModifier alt ].
+
+	^ modifier + char
+]
 
 { #category : #accessing }
 OSKeyboardEvent >> character [
@@ -48,6 +71,15 @@ OSKeyboardEvent >> characterCode [
 OSKeyboardEvent >> initialize [
 	super initialize.
 	modifiers := OSStateModifiers new.
+	handled := false
+]
+
+{ #category : #keymapping }
+OSKeyboardEvent >> modifiedCharacter [
+	
+	self character ifNotNil: [ :c | ^ c ].
+	self symbol <= 16rFF ifTrue: [ ^ Character value: self symbol ]. 
+	^ Character value: 0
 ]
 
 { #category : #accessing }
@@ -110,4 +142,14 @@ OSKeyboardEvent >> symbol [
 OSKeyboardEvent >> symbol: anObject [
 	
 	symbol := anObject
+]
+
+{ #category : #keymapping }
+OSKeyboardEvent >> wasHandled [
+	^ handled
+]
+
+{ #category : #keymapping }
+OSKeyboardEvent >> wasHandled: aBoolean [
+	handled := aBoolean
 ]

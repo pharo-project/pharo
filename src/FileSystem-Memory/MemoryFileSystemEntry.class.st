@@ -13,7 +13,7 @@ Class {
 	#category : #'FileSystem-Memory-Base'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MemoryFileSystemEntry class >> named: aFileName [
 	^ self new
 		basename: aFileName;

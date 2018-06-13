@@ -16,6 +16,9 @@ Class {
 		'CursorOwnerWorld',
 		'ExtraWorldList'
 	],
+	#classInstVars : [
+		'displayScaleFactor'
+	],
 	#category : #'Morphic-Core-Worlds'
 }
 
@@ -60,6 +63,32 @@ WorldMorph class >> defaultWorldColor [
 
 	^ Color r: 0.937 g: 0.937 b: 0.937.
 
+]
+
+{ #category : #setting }
+WorldMorph class >> displayScaleFactor [
+
+	^ displayScaleFactor ifNil: [ displayScaleFactor := 1 ]
+]
+
+{ #category : #setting }
+WorldMorph class >> displayScaleFactor: aNumber [
+
+	displayScaleFactor := aNumber
+]
+
+{ #category : #setting }
+WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [ 
+	<systemsettings>
+	
+	(aBuilder range: #displayScaleFactor)
+		parent: #appearance;
+		order: 3;
+		label: 'Display scale factor';
+		description: 'Specify scale factor for UI elements. This setting does not affect defined font sizes.';
+		target: self;
+		range: (0.3 to: 8 by: 0.1).	
+	
 ]
 
 { #category : #'initialize-release' }
@@ -263,6 +292,12 @@ WorldMorph >> deleteBalloonTarget: aMorph [
 { #category : #'world menu' }
 WorldMorph >> discoveredWorldMenu [
 	^ worldState discoveredWorldMenu
+]
+
+{ #category : #geometry }
+WorldMorph >> displayScaleFactor [
+
+	^ self class displayScaleFactor
 ]
 
 { #category : #'world state' }
