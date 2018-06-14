@@ -275,6 +275,8 @@ CompilationContext class >> optionReadOnlyLiterals [
 
 { #category : #'options - settings API' }
 CompilationContext class >> optionReadOnlyLiterals: aBoolean [
+	(aBoolean and: [ Smalltalk vm supportsWriteBarrier ]) ifFalse: [ ^ OCReadOnlyVMWarning signal ].
+	
 	^ self writeDefaultOption: #optionReadOnlyLiterals value: aBoolean
 ]
 
