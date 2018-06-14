@@ -23,9 +23,9 @@ AbstractTwoButtonsTest >> testFirstActionSecondAction [
 
 { #category : #tests }
 AbstractTwoButtonsTest >> testFirstIconSecondIcon [
-		testedInstance firstIcon: #thumbsUp secondIcon: #thumbsDown.
-	self assert: testedInstance firstButton icon == #thumbsUp asIcon.
-	self assert: testedInstance secondButton icon == #thumbsDown asIcon
+	testedInstance firstIcon: #thumbsUp secondIcon: #thumbsDown.
+	self assert: testedInstance firstButton icon == (self iconNamed: #thumbsUp).
+	self assert: testedInstance secondButton icon == (self iconNamed: #thumbsDown)
 ]
 
 { #category : #tests }
