@@ -98,6 +98,14 @@ DateAndTime class >> epoch [
   
 ]
 
+{ #category : #'instance creation' }
+DateAndTime class >> fromSqueakTime: anInteger [
+	"Answer an instance of the receiver with the time represente by anInteger.
+	Squeak time is in the local timezone with an epoch of 1 Jan. 1901"
+
+	^(self fromSeconds: anInteger offset: 0) translateTo: self localOffset.
+]
+
 { #category : #input }
 DateAndTime class >> fromString: aString [ 
 	^ self readFrom: aString readStream

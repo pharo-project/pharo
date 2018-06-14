@@ -107,8 +107,8 @@ DiskStore >> = other [
 { #category : #accessing }
 DiskStore >> accessTimeOf: aPath [
 	"Return the date of last access of the File described by aPath"
-	^DateAndTime fromUnixTime:
-		(File fileAttribute: (self stringFromPath: aPath) number: 9).
+
+	^DateAndTime fromSqueakTime: (File fileAttribute: (self stringFromPath: aPath) number: 9)
 ]
 
 { #category : #private }
@@ -207,9 +207,15 @@ DiskStore >> basicSizeOf: anEntry [
 
 { #category : #accessing }
 DiskStore >> changeTimeOf: aPath [
+	"Answer the time the metadata of aPath was last changed.
+	On platforms that don't support change time, use the modification time."
 
-	^DateAndTime fromUnixTime:
-		(File fileAttribute: (self stringFromPath: aPath) number: 11).
+	| pathString squeakTime |
+	
+	pathString := self stringFromPath: aPath.
+	squeakTime := (File fileAttribute: pathString number: 11) ifNil: 
+			[ File fileAttribute: pathString number: 12 ].
+	^DateAndTime fromSqueakTime: squeakTime
 ]
 
 { #category : #public }
@@ -253,15 +259,14 @@ DiskStore >> createDirectory: path [
 
 { #category : #accessing }
 DiskStore >> creationTimeOf: aPath [
+	"Answer the creation time of aPath.  If the platform doesn't support creation time, use change time"
+	| pathString squeakTime |
 
-	| pathString unixTime |
-	
 	pathString := self stringFromPath: aPath.
-	"FileAttributesPluginPrims>>fileAttribute:number: v1.2.6 and earlier has a bug that results in a creationTime returning -1 instead of nil.  For now, treat -1 the same as nil"
-	unixTime := File fileAttribute: pathString number: 12.
-	(unixTime isNil or: [ unixTime = -1 ]) ifTrue: 
-		[ unixTime := File fileAttribute: pathString number: 11 ].
-	^DateAndTime fromUnixTime: unixTime.
+	squeakTime := (File fileAttribute: pathString number: 12) ifNil: 
+			[ File fileAttribute: pathString number: 11 ].
+	^DateAndTime fromSqueakTime: squeakTime
+
 ]
 
 { #category : #accessing }
@@ -419,9 +424,9 @@ DiskStore >> maxFileNameLength [
 
 { #category : #accessing }
 DiskStore >> modificationTimeOf: aPath [
-	"Return the date of last access of the File described by aPath"
-	^DateAndTime fromUnixTime:
-		(File fileAttribute: (self stringFromPath: aPath) number: 10).
+	"Return the date of last modification of the File described by aPath"
+
+	^DateAndTime fromSqueakTime: (File fileAttribute: (self stringFromPath: aPath) number: 10)
 ]
 
 { #category : #private }

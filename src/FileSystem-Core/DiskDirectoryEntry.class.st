@@ -55,12 +55,15 @@ DiskDirectoryEntry >> accessAttributes: anArray [
 
 { #category : #accessing }
 DiskDirectoryEntry >> accessTime [
-	^DateAndTime fromUnixTime: (self statAttributes at: 9)
+
+	^DateAndTime fromSqueakTime: (self statAttributes at: 9)
 ]
 
 { #category : #accessing }
 DiskDirectoryEntry >> accessUnixTime [
-	^self statAttributes at: 9
+	"Answer the receivers access time in Unix time_t format"
+
+	^self accessTime asUnixTime
 ]
 
 { #category : #'private - accessing' }
@@ -72,19 +75,19 @@ DiskDirectoryEntry >> allAttributeMask [
 
 { #category : #accessing }
 DiskDirectoryEntry >> changeTime [
+	"Answer the time the receivers metadata was last changed.
+	On platforms that don't support change time, use the modification time"
 
-	| unixTime |
+	^DateAndTime fromSqueakTime: ((self statAttributes at: 11) ifNil: 
+						[self statAttributes at: 12 ])
 
-	unixTime := self statAttributes at: 11.
-	^unixTime 
-		ifNil: [ nil ]
-		ifNotNil: [ DateAndTime fromUnixTime: unixTime ].
 ]
 
 { #category : #accessing }
 DiskDirectoryEntry >> changeUnixTime [
+	"Answer the receiver's change time in Unix time_t format"
 
-	^self statAttributes at: 11.
+	^self changeTime asUnixTime
 
 ]
 
@@ -92,14 +95,14 @@ DiskDirectoryEntry >> changeUnixTime [
 DiskDirectoryEntry >> creationTime [
 	"Answer the receivers creation time.  If this is not available, answer the change time, i.e. the time at which the receivers metadata was last updated."
 
-	^DateAndTime fromUnixTime: ((self statAttributes at: 12) ifNil: [ self statAttributes at: 11 ])
+	^DateAndTime fromSqueakTime: ((self statAttributes at: 12) ifNil: [ self statAttributes at: 11 ])
 ]
 
 { #category : #accessing }
 DiskDirectoryEntry >> creationUnixTime [
-	"Answer the receivers creation time.  If this is not available, answer the change time, i.e. the time at which the receivers metadata was last updated."
+	"Answer the receiver's creation time in Unix time_t format"
 
-	^(self statAttributes at: 12) ifNil: [ self statAttributes at: 11 ]
+	^self creationTime asUnixTime
 ]
 
 { #category : #accessing }
@@ -269,12 +272,16 @@ DiskDirectoryEntry >> mode [
 
 { #category : #accessing }
 DiskDirectoryEntry >> modificationTime [
-	^DateAndTime fromUnixTime: (self statAttributes at: 10)
+	"Answer the receiver's modification time"
+
+	^DateAndTime fromSqueakTime: (self statAttributes at: 10)
 ]
 
 { #category : #accessing }
 DiskDirectoryEntry >> modificationUnixTime [
-	^self statAttributes at: 10
+	"Answer the receiver's modification time in Unix time_t format"
+
+	^self modificationTime asUnixTime
 ]
 
 { #category : #accessing }
