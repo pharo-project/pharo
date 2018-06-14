@@ -35,7 +35,7 @@ BaselineOfSUnit >> baseline: spec [
 			
 			spec
 				package: 'SUnit-Core';
-				package: 'SUnit-Core-Trait';
+				package: 'SUnit-Core-Traits';
 				package: 'SUnit-Tests';
 				package: 'SUnit-UI';
 				package: 'SUnit-Support-UITesting-Tests';
@@ -44,7 +44,7 @@ BaselineOfSUnit >> baseline: spec [
 				package: 'JenkinsTools-Core';
 				package: 'JenkinsTools-ExtraReports'.
 			spec
-				group: 'Core' with: #('SUnit-Core' 'SUnit-Core-Trait' 'Traits');
+				group: 'Core' with: #('SUnit-Core' 'SUnit-Core-Traits' 'Traits');
 				group: 'UI' with: #('SUnit-UI' 'SUnit-Support-UITesting');
 				group: 'Tests' with: #('SUnit-Tests' 'SUnit-Support-UITesting-Tests');
 				group: 'Help' with: #('SUnit-Help');
