@@ -48,6 +48,7 @@ BaselineOfIDE >> addPharoProjectToIceberg [
 		BaselineOfDisplay
 		BaselineOfIDE  
 		BaselineOfMonticello 
+		BaselineOfMenuRegistration
 		BaselineOfMetacello 
 		BaselineOfMorphic 
 		BaselineOfMorphicCore 

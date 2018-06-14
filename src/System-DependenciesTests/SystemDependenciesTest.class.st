@@ -294,6 +294,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 		{ BaselineOfAthens name }, BaselineOfAthens allPackageNames,
 		{ BaselineOfIDE name }, BaselineOfIDE allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
+		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfPharoBootstrap name. 
 		  BaselineOfMonticello name.
 		  BaselineOfMetacello name }
