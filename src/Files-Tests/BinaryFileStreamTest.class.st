@@ -1,7 +1,10 @@
+"
+Unit tests for binary file streams
+"
 Class {
 	#name : #BinaryFileStreamTest,
 	#superclass : #TestCase,
-	#category : #'Files-Tests'
+	#category : #'Files-Tests-Streams'
 }
 
 { #category : #running }
