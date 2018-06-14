@@ -165,6 +165,7 @@ MetacelloVersionSpec >> configMethodOn: aStream last: last indent: indent [
     self configPackagesSpecMethodOn: aStream indent: indent.
     last
         ifFalse: [ aStream cr ]
+
 ]
 
 { #category : #printing }

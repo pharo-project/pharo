@@ -93,6 +93,11 @@ MetacelloPlatform >> clearPackageCache [
         do: [ :ignore |  ] ]
 ]
 
+{ #category : #'github/bitbucket support' }
+MetacelloPlatform >> closeZipArchive: anArchive [
+	"do nothing"
+]
+
 { #category : #notification }
 MetacelloPlatform >> collection: aCollection do: aBlock displaying: aString [
 
@@ -117,77 +122,89 @@ MetacelloPlatform >> copyClass: oldClass as: newName inCategory: newCategoryName
 ]
 
 { #category : #'repository creation' }
-MetacelloPlatform >> createRepository: aRepositorySpec [
-  | type |
-  type := aRepositorySpec type.
-  type = 'http'
-    ifTrue: [ 
-      ^ MCHttpRepository
-        location: aRepositorySpec description
-        user: aRepositorySpec username
-        password: aRepositorySpec password ].
-  type = 'directory'
-    ifTrue: [ 
-      ^ MCDirectoryRepository new
-        directory: (self fileHandleOn: aRepositorySpec description) ].
-  Smalltalk
-    at: #'MCFileTreeRepository'
-    ifPresent: [ :cl | 
-      type = 'filetree'
-        ifTrue: [ 
-          | description headerSize |
-          description := aRepositorySpec description.
-          headerSize := 'filetree://' size.
-          ^ cl new
-            directory:
-              (self
-                fileHandleOn:
-                  (aRepositorySpec description copyFrom: headerSize + 1 to: description size)) ] ].
-  Smalltalk
-    at: #'TonelRepository'
-    ifPresent: [ :cl | 
-      type = 'tonel'
-        ifTrue: [ 
-          | description headerSize |
-          description := aRepositorySpec description.
-          headerSize := 'tonel://' size.
-          ^ cl new
-            directory:
-              (self
-                fileHandleOn:
-                  (aRepositorySpec description copyFrom: headerSize + 1 to: description size)) ] ].
-  Smalltalk
-    at: #'MCGitHubRepository'
-    ifPresent: [ :cl | 
-      type = 'github'
-        ifTrue: [ ^ cl location: aRepositorySpec description ] ].
-  Smalltalk
-    at: #'MCBitbucketRepository'
-    ifPresent: [ :cl | 
-      type = 'bitbucket'
-        ifTrue: [ ^ cl location: aRepositorySpec description ] ].
-  Smalltalk
-    at: #'MCGitoriousRepository'
-    ifPresent: [ :cl | 
-      type = 'gitorious'
-        ifTrue: [ ^ cl location: aRepositorySpec description ] ].
-  type = 'dictionary'
-    ifTrue: [ 
-      | description headerSize globalName |
-      description := aRepositorySpec description.
-      headerSize := 'dictionary://' size.
-      globalName := (description copyFrom: headerSize + 1 to: description size)
-        asSymbol.
-      ^ Smalltalk
-        at: globalName
-        ifAbsent: [ 
+MetacelloPlatform >> createBitbucketRepository: aRepositorySpec [
+	| cl |
+	
+	cl := Smalltalk at: #'MCBitbucketRepository'.
+ 	^ cl location: aRepositorySpec description
+]
+
+{ #category : #'repository creation' }
+MetacelloPlatform >> createDictionaryRepository: aRepositorySpec [
+	| description headerSize globalName |
+ 
+	description := aRepositorySpec description.
+	headerSize := 'dictionary://' size.
+	globalName := (description copyFrom: headerSize + 1 to: description size) asSymbol.
+   
+	^ Smalltalk
+ 		at: globalName
+ 		ifAbsent: [ 
           Smalltalk
             at: globalName
-            put:
-              (MCDictionaryRepository new
-                description: description;
-                yourself) ] ].
-  ^ nil
+            put: (MCDictionaryRepository new
+					description: description;
+					yourself) ]
+]
+
+{ #category : #'repository creation' }
+MetacelloPlatform >> createDirectoryRepository: aRepositorySpec [
+	^ MCDirectoryRepository new
+		directory: (self fileHandleOn: aRepositorySpec description);
+		yourself
+]
+
+{ #category : #'repository creation' }
+MetacelloPlatform >> createFiletreeRepository: aRepositorySpec [
+	| cl description headerSize |
+	
+	cl := Smalltalk at: #'MCFileTreeRepository'.
+	description := aRepositorySpec description.
+ 	headerSize := 'filetree://' size.
+	^ cl new 
+		directory: (self fileHandleOn: (aRepositorySpec description 
+			copyFrom: headerSize + 1 
+			to: description size));
+		yourself
+]
+
+{ #category : #'repository creation' }
+MetacelloPlatform >> createGithubRepository: aRepositorySpec [
+	| cl |
+	
+	cl := Smalltalk at: #'MCGitHubRepository'.
+	^ cl location: aRepositorySpec description
+]
+
+{ #category : #'repository creation' }
+MetacelloPlatform >> createHttpRepository: aRepositorySpec [
+	^ MCHttpRepository
+        location: aRepositorySpec description
+        user: aRepositorySpec username
+        password: aRepositorySpec password
+
+]
+
+{ #category : #'repository creation' }
+MetacelloPlatform >> createRepository: aRepositorySpec [
+
+	^ MCRepository 
+		newRepositoryFromSpec: aRepositorySpec
+		on: self
+]
+
+{ #category : #'repository creation' }
+MetacelloPlatform >> createTonelRepository: aRepositorySpec [
+	| cl description headerSize |
+	
+	cl := Smalltalk at: #'TonelRepository'.
+	description := aRepositorySpec description.
+	headerSize := (aRepositorySpec type, '://') size.
+ 	^ cl new 
+		directory: (self fileHandleOn: (aRepositorySpec description 
+			copyFrom: headerSize + 1 
+			to: description size));
+		yourself
 ]
 
 { #category : #'file system' }
