@@ -1,3 +1,6 @@
+"
+Used to describe properties for layouts in Spec
+"
 Class {
 	#name : #SpecLayoutProperties,
 	#superclass : #Object,
@@ -6,7 +9,7 @@ Class {
 		'vResizing',
 		'disableLayout'
 	],
-	#category : #'Spec-Layout'
+	#category : #'Spec-Layout-Layouts'
 }
 
 { #category : #converting }
