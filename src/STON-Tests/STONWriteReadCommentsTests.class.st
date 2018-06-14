@@ -1,7 +1,10 @@
+"
+Unit test writing and reading of comments
+"
 Class {
 	#name : #STONWriteReadCommentsTests,
 	#superclass : #STONWriteReadTests,
-	#category : #'STON-Tests'
+	#category : #'STON-Tests-Writer'
 }
 
 { #category : #private }

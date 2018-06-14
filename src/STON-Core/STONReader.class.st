@@ -27,7 +27,7 @@ Class {
 		'newLine',
 		'convertNewLines'
 	],
-	#category : #'STON-Core'
+	#category : #'STON-Core-Reader'
 }
 
 { #category : #'instance creation' }

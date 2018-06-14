@@ -5,7 +5,7 @@ STONReaderTests test materialization.
 Class {
 	#name : #STONReaderTests,
 	#superclass : #TestCase,
-	#category : #'STON-Tests'
+	#category : #'STON-Tests-Reader'
 }
 
 { #category : #private }
