@@ -29,7 +29,7 @@ SystemDependenciesTest class >> rebuildDependenciesReport [
 
 { #category : #accessing }
 SystemDependenciesTest class >> resetDependenciesReport [
-
+	<script>
 	"self resetDependenciesReport"
 
 	dependenciesReport := nil
