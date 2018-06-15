@@ -236,6 +236,12 @@ FileReference >> hash [
 	^ path hash bitXor: filesystem hash
 ]
 
+{ #category : #accessing }
+FileReference >> inode [
+	"Return the inode of the file at aPath"
+	^ filesystem inodeOf: path
+]
+
 { #category : #testing }
 FileReference >> isAbsolute [
 	^ path isAbsolute

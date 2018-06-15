@@ -342,6 +342,12 @@ DiskStore >> initialize [
 	maxFileNameLength := Smalltalk vm maxFilenameLength ifNil: [ 255 ].
 ]
 
+{ #category : #accessing }
+DiskStore >> inodeOf: aPath [
+	"Return the inode number of the File described by aPath"
+	^File fileAttribute: (self stringFromPath: aPath) number: 3
+]
+
 { #category : #testing }
 DiskStore >> isBlock: aPath [
 	"Answer a boolean indicating whether the supplied path is a Block file"
