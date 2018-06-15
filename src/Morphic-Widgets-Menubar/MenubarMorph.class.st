@@ -4,6 +4,9 @@ Class {
 	#instVars : [
 		'menuBarItems'
 	],
+	#classVars : [
+		'ShowMenubar'
+	],
 	#category : #'Morphic-Widgets-Menubar'
 }
 
@@ -17,9 +20,9 @@ MenubarMorph class >> closeAll [
 
 { #category : #'instance creation' }
 MenubarMorph class >> initialize [
-
+	self showMenubar: true.
 	self install.
-	self reset.
+	self reset
 ]
 
 { #category : #'instance creation' }
@@ -31,6 +34,16 @@ MenubarMorph class >> install [
 		send: #methodAnnouncementReceived: to: self.
 ]
 
+{ #category : #setting }
+MenubarMorph class >> menubarSettingOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #showMenubar)
+		target: self;
+		parent: #morphic;
+		label: 'Show menubar';
+		description: 'Whether the world''s menubar should be shown or not.'
+]
+
 { #category : #'instance creation' }
 MenubarMorph class >> methodAnnouncementReceived: anAnnouncement [
 
@@ -40,7 +53,9 @@ MenubarMorph class >> methodAnnouncementReceived: anAnnouncement [
 
 { #category : #'instance creation' }
 MenubarMorph class >> open [
-	"self open"
+	<script>
+	
+	self showMenubar ifFalse: [ ^ self ].
 
 	self new
 		menuBarItems: WorldState new menuBuilder menuSpec items;
@@ -55,6 +70,32 @@ MenubarMorph class >> reset [
 	self open.
 ]
 
+{ #category : #accessing }
+MenubarMorph class >> showMenubar [
+	^ ShowMenubar
+]
+
+{ #category : #accessing }
+MenubarMorph class >> showMenubar: aBoolean [
+	ShowMenubar := aBoolean.
+	self reset
+]
+
+{ #category : #construction }
+MenubarMorph >> addSeparator [
+	self addMorphBack: MenubarSeparatorMorph new
+]
+
+{ #category : #initialization }
+MenubarMorph >> defaultBorderWidth [
+	^ self theme menubarBorderWidthFor: self
+]
+
+{ #category : #initialization }
+MenubarMorph >> defaultColor [
+	^ self theme menubarFillStyleFor: self
+]
+
 { #category : #adding }
 MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
 
@@ -63,10 +104,13 @@ MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
 
 { #category : #initialization }
 MenubarMorph >> initialize [
-
 	super initialize.
-	self autoGradient: false.
-	self cellInset: 7.
+	self cellInset: 7
+]
+
+{ #category : #testing }
+MenubarMorph >> isMenubar [
+	^ true
 ]
 
 { #category : #accessing }
@@ -93,16 +137,29 @@ MenubarMorph >> open [
 			add: each label
 			icon: each icon
 			help: each help
-			subMenu: (each subMenu ifNotNil: #asMenuMorph) ].
+			subMenu: (each subMenu ifNotNil: #asMenuMorph).
+			each separator ifTrue: [ self addSeparator ] ].
 		
 	self
 		adhereToTop;
 		openInWorld
 ]
 
+{ #category : #recategorized }
+MenubarMorph >> rejectsEvent: anEvent [
+	(anEvent isMouse and: [ anEvent isMouseDown ]) ifTrue: [ ^ (self submorphs anySatisfy: [ :each | each containsPoint: anEvent cursorPoint ]) not ].
+	
+	^ super rejectsEvent: anEvent
+]
+
 { #category : #accessing }
 MenubarMorph >> repelsMorph: aMorph event: ev [
 	^ true
+]
+
+{ #category : #initialization }
+MenubarMorph >> wantsGradientByDefault [
+	^ false
 ]
 
 { #category : #accessing }

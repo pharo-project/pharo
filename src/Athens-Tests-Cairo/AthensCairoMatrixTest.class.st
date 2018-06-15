@@ -4,8 +4,8 @@ A test for AthensCairoMatrix
 Class {
 	#name : #AthensCairoMatrixTest,
 	#superclass : #TestCase,
-	#category : #'Athens-Tests-Cairo'
-} 
+	#category : #'Athens-Tests-Cairo-Transforms'
+}
 
 { #category : #tests }
 AthensCairoMatrixTest >> testCopy [

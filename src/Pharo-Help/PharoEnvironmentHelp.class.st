@@ -16,7 +16,7 @@ KMDescription new categories: #(NautilusGlobalShortcuts); openWithSpec.
 - Shortcuts are typically multi-key combinations, where you hold a modifier key and press the listed secondary key. For example if something is listed as CMD-F, CMD-C you would press and hold the CMD key while typing  F and then C
 
 - The modifier key varies between platforms:
- - Windows = ALT
+ - Windows = CTRL
  - Mac/OSX = CMD
  - Linux = CTRL
 

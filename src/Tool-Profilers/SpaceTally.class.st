@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'results'
 	],
-	#category : #'Tool-Profilers'
+	#category : #'Tool-Profilers-Space'
 }
 
 { #category : #fileout }

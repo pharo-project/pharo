@@ -1,3 +1,6 @@
+"
+Unit test for chained sort functions
+"
 Class {
 	#name : #ChainedSortFunctionTest,
 	#superclass : #TestCase,

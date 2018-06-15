@@ -498,7 +498,7 @@ SystemNavigation >> methodsWithUnboundGlobals [
 
 	^self allMethodsSelect:
 		[:m|
-		m literals anySatisfy:
+		m allLiterals anySatisfy:
 			[:l|
 			l isVariableBinding
 			and: [l key isSymbol "avoid class-side methodClass literals"

@@ -89,6 +89,13 @@ WorldState class >> deferredUIMessages [
 ]
 
 { #category : #settings }
+WorldState class >> desktopMenuPragmaKeyword [
+	"For compatibility with settings"
+	
+	^ self discoveredMenuPragmaKeyword
+]
+
+{ #category : #settings }
 WorldState class >> desktopMenuPragmaKeyword: aString [
 	DesktopMenuPragmaKeyword := aString.
 	World resetWorldMenu.
@@ -161,7 +168,7 @@ WorldState class >> pharoItemsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Pharo)
 		label: 'Pharo';
-		icon: (#pharo asIcon scaledToSize: 20 @ 20);
+		icon: ((self iconNamed: #pharo) scaledToSize: 20 @ 20);
 		order: 0;
 		with: [ (aBuilder item: #Save)
 				target: self;
@@ -261,6 +268,17 @@ WorldState class >> showUpdateOptionInWorldMenu: aBoolean [
 { #category : #accessing }
 WorldState class >> theme [
 	^ Smalltalk ui theme
+]
+
+{ #category : #settings }
+WorldState class >> worldMenuSettingOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #desktopMenuPragmaKeyword)
+		label: 'World menu pragma';
+		ghostHelp: 'worldMenu';
+		parent: #morphic;
+		target: self;
+		description: 'Define whitch pragma should be used to build the world menu. To disable the world menu, leave this input empty.'
 ]
 
 { #category : #hands }

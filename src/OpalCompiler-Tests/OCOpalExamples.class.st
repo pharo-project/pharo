@@ -394,6 +394,12 @@ OCOpalExamples >> exampleSelf [
 ]
 
 { #category : #'examples-blocks' }
+OCOpalExamples >> exampleSelfReceiver [
+	<sampleInstance>
+	self foo.
+]
+
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlock [
 	<sampleInstance>
 	^[1].
@@ -495,6 +501,12 @@ OCOpalExamples >> exampleSuper [
 	| t |
 	t := super.
 	^super.
+]
+
+{ #category : #'examples-blocks' }
+OCOpalExamples >> exampleSuperReceiver [
+	<sampleInstance>
+	super foo.
 ]
 
 { #category : #'examples-variables' }

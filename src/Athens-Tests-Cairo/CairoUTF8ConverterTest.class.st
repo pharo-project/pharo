@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'encoder'
 	],
-	#category : #'Athens-Tests-Cairo'
+	#category : #'Athens-Tests-Cairo-Text'
 }
 
 { #category : #running }

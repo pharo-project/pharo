@@ -15,17 +15,19 @@ DockingBarMenuItemMorph >> activateOwnerMenu: evt [
 
 { #category : #selecting }
 DockingBarMenuItemMorph >> adjacentTo [
+	| verticalMargin |
+	verticalMargin := 4 + owner borderWidth.
 	owner isFloating
-		ifTrue: [^ {self bounds bottomLeft + (5 @ 5)}].
+		ifTrue: [^ {self bounds bottomLeft + (5 @ verticalMargin)}].
 	owner isAdheringToTop
-		ifTrue: [^ {self bounds bottomLeft + (5 @ 5)}].
+		ifTrue: [^ {self bounds bottomLeft + (5 @ verticalMargin)}].
 	owner isAdheringToLeft
-		ifTrue: [^ {self bounds topRight + (5 @ 5)}].
+		ifTrue: [^ {self bounds topRight + (5 @ verticalMargin)}].
 	owner isAdheringToBottom
-		ifTrue: [^ {self bounds topLeft + (5 @ 5)}].
+		ifTrue: [^ {self bounds topLeft + (5 @ verticalMargin)}].
 	owner isAdheringToRight
-		ifTrue: [^ {self bounds topLeft + (5 @ -5)}].
-	^ {self bounds bottomLeft + (3 @ 5)}
+		ifTrue: [^ {self bounds topLeft + (5 @ verticalMargin negate)}].
+	^ {self bounds bottomLeft + (3 @ verticalMargin)}
 ]
 
 { #category : #events }
