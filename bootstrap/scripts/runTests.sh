@@ -10,7 +10,7 @@ set -o xtrace
 # The second parameter is the stage name
 
 # Next line is for debugging purpose. We suspect that multiple slaves uses the same dinectory.
-touch ${1}
+touch ${2}
 
 CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
