@@ -483,6 +483,11 @@ RBProgramNode >> isSelf [
 ]
 
 { #category : #testing }
+RBProgramNode >> isSelfOrSuper [
+	^ false
+]
+
+{ #category : #testing }
 RBProgramNode >> isSequence [
 	^false
 ]

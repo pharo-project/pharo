@@ -11,7 +11,7 @@ Class {
 ArchitecturalCritique >> actions [
 	^ super actions copyWith: 
 		(RePropertyAction new
-			icon: #smallWindow asIcon;
+			icon: (self iconNamed: #smallWindow);
 			description: 'Open dependency analyzer';
 			action: [ :crit :package |
 				self openDependencyAnalyzerOn: package ];

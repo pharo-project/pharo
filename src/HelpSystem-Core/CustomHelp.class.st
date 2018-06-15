@@ -179,7 +179,7 @@ CustomHelp class >> newColoredText: color withClipboardAction: aString [
 	icon := Text
 		string: (String value: 1)
 		attributes:
-			{(TextAnchor new anchoredMorph: #smallCopy asIcon).
+			{(TextAnchor new anchoredMorph: (self iconNamed: #smallCopy)).
 			(TextAction new
 				actOnClickBlock: [ Clipboard clipboardText: aString.
 					self inform: 'The URL has been pasted into your clipboard' ])}.
@@ -201,7 +201,7 @@ CustomHelp class >> newColoredText: color withRunAction: aString [
 	icon := Text
 		string: (String value: 1)
 		attributes: { 
-			(TextAnchor new anchoredMorph: #glamorousGo asIcon).
+			(TextAnchor new anchoredMorph: (self iconNamed: #glamorousGo)).
 			(TextAction new actOnClickBlock: [
 				Smalltalk compiler evaluate: aString]; yourself) }.
 	run := ' (execute it)' asText

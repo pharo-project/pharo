@@ -17,7 +17,7 @@ Class {
 		'autoFractionComputation',
 		'size'
 	],
-	#category : #'Spec-Layout'
+	#category : #'Spec-Layout-Layouts'
 }
 
 { #category : #'instance creation' }

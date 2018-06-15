@@ -173,7 +173,7 @@ RBMessageNode >> isMessage [
 
 { #category : #testing }
 RBMessageNode >> isSelfSend [
-	^ self receiver isVariable and: [ self receiver name = 'self' ]
+	^ self receiver isSelf
 ]
 
 { #category : #testing }

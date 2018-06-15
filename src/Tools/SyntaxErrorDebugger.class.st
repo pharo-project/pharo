@@ -31,8 +31,6 @@ SyntaxErrorDebugger class >> buildMorphicViewOn: aSyntaxError [
 	window := (SystemWindow labelled: 'Syntax Error: ' , aSyntaxError error)
 		model: aSyntaxError.
 	window
-		onAnnouncement: WindowClosed do: [ 
-			aSyntaxError handleWindowClosed ];
 		addMorph:
 			((PluggableListMorph
 				on: aSyntaxError
@@ -185,15 +183,6 @@ SyntaxErrorDebugger >> debug [
 { #category : #accessing }
 SyntaxErrorDebugger >> error [
 	^ error
-]
-
-{ #category : #menu }
-SyntaxErrorDebugger >> handleWindowClosed [
-	debugSession interruptedProcess == nil 
-		ifFalse: [ 
-			debugSession 
-			resume: nil;
-			clear ]
 ]
 
 { #category : #initialization }

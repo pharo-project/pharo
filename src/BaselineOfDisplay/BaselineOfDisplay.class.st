@@ -32,7 +32,7 @@ BaselineOfDisplay >> baseline: spec [
 		
 		spec 
 			package: 'Graphics-Display Objects';
-			package: 'Graphics-Primitives';
+			package: 'Graphics-Primitives' with: [ spec requires: 'Graphics-Display Objects' ];
 			package: 'Graphics-Transformations'.
 		spec 
 			group: 'default' with: #('Graphics-Display Objects' 'Graphics-Primitives' 'Graphics-Transformations'). ].		

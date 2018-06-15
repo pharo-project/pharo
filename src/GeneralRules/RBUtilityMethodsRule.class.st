@@ -31,7 +31,7 @@ RBUtilityMethodsRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				aMethod superMessages isEmpty and: [ aMethod selfMessages isEmpty and: [ 
 					aMethod methodClass allInstVarNames,
 				   aMethod methodClass allClassVarNames asArray,
-				 	#('self' )    noneSatisfy: [ :each | aMethod ast references: each ] ] ] ] ])
+				 	#('self') noneSatisfy: [ :each | aMethod ast references: each ] ] ] ] ])
 	ifTrue: [ aCriticBlock cull: (self critiqueFor: aMethod) ]
 ]
 
