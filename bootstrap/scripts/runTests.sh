@@ -6,16 +6,15 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
-# Since there is random failure during tests execution we print the content of the current directory to find potential problems
-
-ls -lAh
-
 # The first parameter is the architecture
 # The second parameter is the stage name
 
 CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
 find ${CACHE}
+
+# Since there is random failure during tests execution we print the content of the current directory to find potential problems
+bootstrap/scripts/printFolderContent.sh
 
 bootstrap/scripts/getPharoVM.sh 70 vm ${1}
 					

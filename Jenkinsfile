@@ -15,6 +15,7 @@ def shell(params){
 
 def runTests(architecture, prefix=''){
 	cleanWs()
+	shell "bash -c 'bootstrap/scripts/printFolderContent.sh'"
 	unstash "bootstrap${architecture}"
 	shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
 	junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
