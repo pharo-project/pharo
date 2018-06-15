@@ -153,6 +153,12 @@ FileReference >> deleteIfAbsent: aBlock [
 		ifFalse: aBlock
 ]
 
+{ #category : #accessing }
+FileReference >> deviceId [
+	"Return the device id of the file at aPath"
+	^ filesystem deviceIdOf: path
+]
+
 { #category : #operations }
 FileReference >> ensureCreateDirectory [
 	"Create if necessary a directory for the receiver."
@@ -193,6 +199,12 @@ FileReference >> fullName [
 { #category : #accessing }
 FileReference >> fullPath [
 	^ self path
+]
+
+{ #category : #accessing }
+FileReference >> gid [
+	"Return the gid of the file at aPath"
+	^ filesystem gidOf: path
 ]
 
 { #category : #testing }
@@ -491,6 +503,12 @@ FileReference >> symlinkEntry [
 FileReference >> targetPath [
 	"Return the target file of the File described by aPath.  For a regular file, this is itself, for a symbolic link, it is the file pointed to by the symbolic link"
 	^ self class fileSystem: filesystem path: (filesystem targetPath: path)
+]
+
+{ #category : #accessing }
+FileReference >> uid [
+	"Return the gid of the file at aPath"
+	^ filesystem uidOf: path
 ]
 
 { #category : #streams }

@@ -281,7 +281,7 @@ DiskStore >> defaultWorkingDirectory [
 DiskStore >> delete: path [
 	| pathString encodedPathString |
 	
-	(self exists: path)
+	((self exists: path) or: [ self isSymlink: path ])
 		ifFalse: [ ^ FileDoesNotExistException signalWith: path ].
 		
 	pathString := self stringFromPath: path.
@@ -291,6 +291,12 @@ DiskStore >> delete: path [
 		ifTrue: [ File deleteDirectory: encodedPathString ]
 		ifFalse: [ 
 			(File named: pathString) delete ]
+]
+
+{ #category : #accessing }
+DiskStore >> deviceIdOf: aPath [
+	"Return the device id of the file at aPath"
+	^File fileAttribute: (self stringFromPath: aPath) number: 4
 ]
 
 { #category : #public }
@@ -514,4 +520,10 @@ DiskStore >> rootNode [
 DiskStore >> sizeOf: aPath [
 	"Return the size of the File described by aPath"
 	^File fileAttribute: (self stringFromPath: aPath) number: 8.
+]
+
+{ #category : #accessing }
+DiskStore >> uidOf: aPath [
+	"Return the uid of the File described by aPath"
+	^File fileAttribute: (self stringFromPath: aPath) number: 6
 ]

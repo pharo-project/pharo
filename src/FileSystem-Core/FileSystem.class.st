@@ -515,13 +515,6 @@ FileSystem >> mimeTypesAt: aResolvable [
 ]
 
 { #category : #public }
-FileSystem >> modificationTime: aResolvable [
-	"Returns the date of the last modification of aResolvable"
-
-	^ store modificationTimeOf: (self resolve: aResolvable)
-]
-
-{ #category : #public }
 FileSystem >> modificationTimeOf: aResolvable [
 	"Returns the last date of modification of aResolvable"
 
@@ -743,10 +736,10 @@ FileSystem >> targetPath: aResolvable [
 ]
 
 { #category : #public }
-FileSystem >> uid: aResolvable [
+FileSystem >> uidOf: aResolvable [
 	"Returns the user id of aResolvable"
 
-	^ store uid: (self resolve: aResolvable)
+	^ store uidOf: (self resolve: aResolvable)
 ]
 
 { #category : #accessing }
