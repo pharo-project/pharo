@@ -961,6 +961,34 @@ NeoGIFReadWriter >> writeCodeAndCheckCodeSize: aCode [
 	self checkCodeSize
 ]
 
+{ #category : #writing }
+NeoGIFReadWriter >> writeDisposal: aSymbol toPackedByte: aByte [
+	"Using the GIF Graphics Control Extension
+	packed byte format, respond with a modified version
+	of the passed byte that includes the correct 3-bit
+	disposal code corresponding to the passed in symbol"
+	
+	aSymbol = #restoreBackground
+		ifTrue: [ 
+			"This is a value of 2 in the 3-bit structure,
+			so 010, then shifted two to the left (equal to 8)"
+			^ aByte + (2 bitShift: 2) ].
+	
+	aSymbol = #leaveCurrent
+		ifTrue: [ 
+			"This is a value of 1 in the 3-bit structure,
+			so 001, then shifted two to the left (equal to 4)"
+			^ aByte + (1 bitShift: 2) ].
+	
+	aSymbol = #restorePrevState
+		ifTrue: [ 
+			"This is a value of 3 in the 3-bit structure,
+			so 011, then shifted two to the left (equal to 12)"
+			^ aByte + (3 bitShift: 2) ].
+	^ aByte
+		
+]
+
 { #category : #accessing }
 NeoGIFReadWriter >> writeFrameHeader: anImageFrame [
 	"Write any Extensions and/or headers that apply
@@ -988,15 +1016,30 @@ NeoGIFReadWriter >> writeFrameHeader: anImageFrame [
 NeoGIFReadWriter >> writeGCEForFrame: anAnimatedImageFrame [
 	"Writes a Graphics Control Extension onto
 	the output stream for the given image frame"
-	| nextDelay |
+	| nextDelay packedByte |
 	nextDelay := anAnimatedImageFrame delay.
 	anAnimatedImageFrame delay ifNil: [ nextDelay := 0 ].
+	"Set the bits of the packed byte"
+	"====
+		Reserved                      3 Bits (Ignore)
+		Disposal Method               3 Bits 
+		User Input Flag               1 Bit  (Ignore)
+		Transparent Color Flag        1 Bit 
+		==="
+	packedByte := 0.
+	transparentIndex
+		ifNotNil: [ packedByte := 1 ].
+	packedByte := self 
+		writeDisposal: (anAnimatedImageFrame disposal)
+		toPackedByte: packedByte.
+	
 	self 
 		nextPut: Extension;
 		nextPutAll: #(249 4) asByteArray;
-		nextPut: (transparentIndex
+		nextPut: packedByte;
+		"nextPut: (transparentIndex
 				ifNil: [ 0 ]
-				ifNotNil: [ 9 ]); "I think this is where the problem is!! TODO"
+				ifNotNil: [ 9 ]);"
 		writeWord: nextDelay / 10;
 		nextPut: (transparentIndex ifNil: [ 0 ]);
 		nextPut: 0.
