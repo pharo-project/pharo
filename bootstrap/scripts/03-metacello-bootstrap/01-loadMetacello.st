@@ -19,6 +19,7 @@ mcPackages := #(
  'Metacello-PharoCommonPlatform'
  'MonticelloFileTree-FileSystem-Utilities'
  'STON-Core'
+ 'Metacello-Tonel'
  'Metacello-GitBasedRepository'
  'Metacello-Gitlab'
  'Metacello-GitHub'
