@@ -1040,7 +1040,7 @@ NeoGIFReadWriter >> writeGCEForFrame: anAnimatedImageFrame [
 		"nextPut: (transparentIndex
 				ifNil: [ 0 ]
 				ifNotNil: [ 9 ]);"
-		writeWord: nextDelay / 10;
+		writeWord: nextDelay // 10;
 		nextPut: (transparentIndex ifNil: [ 0 ]);
 		nextPut: 0.
 ]
