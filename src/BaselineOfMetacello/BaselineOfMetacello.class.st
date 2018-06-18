@@ -30,7 +30,6 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'Metacello-PharoCommonPlatform';
 			package: 'MonticelloFileTree-FileSystem-Utilities';
 			package: 'STON-Core';
-			package: 'Metacello-Tonel';
 			package: 'Metacello-GitBasedRepository';
 			package: 'Metacello-GitHub';
 			package: 'Metacello-Gitlab';

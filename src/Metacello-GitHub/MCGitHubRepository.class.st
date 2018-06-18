@@ -37,6 +37,11 @@ MCGitHubRepository class >> cacheDirectoryPath [
   ^ super cacheDirectoryPath
 ]
 
+{ #category : #'instance creation' }
+MCGitHubRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
+	^ aPlatform createGithubRepository: aRepositorySpec
+]
+
 { #category : #accessing }
 MCGitHubRepository class >> downloadCache [
   "use class var to survive upgrade when MCGitHubRepository moved to subclass of MCGitBasedRepository"
@@ -69,6 +74,11 @@ MCGitHubRepository class >> flushETagsCache [
   "self flushETagsCache"
 
   ETagsCache := nil
+]
+
+{ #category : #testing }
+MCGitHubRepository class >> isAvailableFor: type [
+	^ type = 'github'
 ]
 
 { #category : #testing }
