@@ -7,5 +7,5 @@ MCDirectoryRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPl
 
 { #category : #'*Metacello-Core' }
 MCDirectoryRepository class >> isAvailableFor: type [
-	^ self = MCDirectoryRepository and: [ type = 'directory' ]
+	^ type = 'directory'
 ]

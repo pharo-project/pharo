@@ -1,15 +1,5 @@
 Extension { #name : #MCFileTreeRepository }
 
-{ #category : #'*Metacello-FileTree' }
-MCFileTreeRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
-	^ aPlatform createFiletreeRepository: aRepositorySpec
-]
-
-{ #category : #'*Metacello-FileTree' }
-MCFileTreeRepository class >> isAvailableFor: type [
-	^ self = MCFileTreeRepository and: [ type = 'filetree' ]
-]
-
 { #category : #'*metacello-filetree' }
 MCFileTreeRepository >> metacelloProjectClassFor: aScriptEngine [
     aScriptEngine versionString isEmptyOrNil
