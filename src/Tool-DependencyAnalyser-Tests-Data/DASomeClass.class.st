@@ -1,3 +1,6 @@
+"
+A simple class to test dependency analyzer
+"
 Class {
 	#name : #DASomeClass,
 	#superclass : #Object,
