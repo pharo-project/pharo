@@ -6,18 +6,16 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
+# Since there is random failure during tests execution we print the content of the current directory to find potential problems
+
+ls -lAh
+
 # The first parameter is the architecture
 # The second parameter is the stage name
-
-# Next line is for debugging purpose. We suspect that multiple slaves uses the same dinectory.
-touch ${2}
 
 CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
 find ${CACHE}
-
-# Since there is random failure during tests execution we print the content of the current directory to find potential problems
-bootstrap/scripts/printFolderContent.sh
 
 bootstrap/scripts/getPharoVM.sh 70 vm ${1}
 					
@@ -31,11 +29,5 @@ mv $IMAGE_FILE Pharo.image
 mv $CHANGES_FILE Pharo.changes
 
 export PHARO_CI_TESTING_ENVIRONMENT=1
-
-# Since there is random failure during tests execution we print the content of the current directory to find potential problems
-bootstrap/scripts/printFolderContent.sh
 					
 ./pharo Pharo.image test --junit-xml-output --stage-name=${2} '.*'
-
-# Since there is random failure during tests execution we print the content of the current directory to find potential problems
-bootstrap/scripts/printFolderContent.sh
