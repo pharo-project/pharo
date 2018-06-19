@@ -154,6 +154,12 @@ GroupWindowMorph >> offerWindowMenu [
 	aMenu popUpEvent: self currentEvent in: self world
 ]
 
+{ #category : #'model - updating' }
+GroupWindowMorph >> okToChange [
+
+    ^self tabGroup pages allSatisfy: [ :each | each model okToChange ]
+]
+
 { #category : #windows }
 GroupWindowMorph >> onWindowLabelChanged: ann [
 	self tabGroup relabelPage: ann window with: (self tabLabelFor: ann window)  
@@ -163,13 +169,14 @@ GroupWindowMorph >> onWindowLabelChanged: ann [
 GroupWindowMorph >> removeWindow: aSystemWindow [
 	"Remove a window from the pages."
 
+	aSystemWindow isCloseable
+		ifFalse: [ ^ self ].
 	aSystemWindow announcer unsubscribe: self.
 	self tabGroup removePage: aSystemWindow.
 	aSystemWindow configureForUnembedding.
 	"self world addMorph: aSystemWindow"
-	aSystemWindow delete.
-	self tabGroup pages size = 0 
-		ifTrue: [ self owner delete ]
+	aSystemWindow deleteDiscardingChanges.
+	self tabGroup pages ifEmpty: [ self owner delete ]
 ]
 
 { #category : #accessing }

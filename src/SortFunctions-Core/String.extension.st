@@ -1,7 +1,7 @@
 Extension { #name : #String }
 
-{ #category : #'*SortFunctions-Core-comparing' }
-String >> threeWayCompareTo: anotherObject [
+{ #category : #'*SortFunctions-Core' }
+String >> threeWayCompareTo: aString [
 	"Do a three-way comparison between the receiver and anotherObject, returning
 	-1 if self < anotherObject
 	0 if self = anotherObject
@@ -9,9 +9,5 @@ String >> threeWayCompareTo: anotherObject [
 	This assumes a total order in accordance with the mathematical law of trichotomy.
 	See also:  http://en.wikipedia.org/wiki/Three-way_comparison"
 
-	^ self = anotherObject
-		ifTrue: [ 0 ]
-		ifFalse: [ self < anotherObject
-				ifTrue: [ -1 ]
-				ifFalse: [ 1 ] ]
+	 ^ (self compare: self with: aString collated: AsciiOrder) - 2
 ]

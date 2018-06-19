@@ -87,7 +87,8 @@ DockingBarMorph >> aboutToBeGrabbedBy: aHand [
 DockingBarMorph >> activate: evt [ 
 	"Receiver should be activated; e.g., so that control passes  
 	correctly."
-	evt hand newMouseFocus: self
+	evt hand newMouseFocus: self.
+	self takeKeyboardFocus
 ]
 
 { #category : #control }
@@ -338,7 +339,7 @@ DockingBarMorph >> defaultBorderColor [
 
 { #category : #initialization }
 DockingBarMorph >> defaultBorderWidth [
-	^ self theme menuBorderWidth
+	^ self theme dockingBarBorderWidth
 ]
 
 { #category : #initialization }
@@ -434,6 +435,11 @@ DockingBarMorph >> handleFocusEvent: evt [
 	"Now it's getting tricky. On #mouseMove we might transfer control to *either* the currently active submenu or the pop up owner, if any. Since the active sub menu is always displayed upfront check it first."
 	selectedItem ifNotNil:[(selectedItem activateSubmenu: evt) ifTrue:[^self]].
 
+]
+
+{ #category : #'events-processing' }
+DockingBarMorph >> handlesKeyboard: evt [
+	^ true
 ]
 
 { #category : #'events-processing' }
@@ -540,6 +546,19 @@ DockingBarMorph >> justDroppedInto: aMorph event: anEvent [
 	self beFloating
 ]
 
+{ #category : #'events-processing' }
+DockingBarMorph >> keyStroke: anEvent [
+	"Handle menu navigation"
+	
+	"Left arrow key"
+	anEvent keyValue = 28 ifTrue: [ self moveSelectionRight: -1 event: anEvent ].
+	"Right arrow key"
+	anEvent keyValue = 29 ifTrue: [ self moveSelectionRight: 1 event: anEvent ].
+	"Bottom key"
+	anEvent keyValue = 31 ifTrue: [ (selectedItem ifNotNil: [ selectedItem subMenu ifNotNil: [ :subMenu | subMenu activateFromKeyboard: anEvent ] ] )].
+	^ super keyStroke: anEvent
+]
+
 { #category : #'wiw support' }
 DockingBarMorph >> morphicLayerNumber [
 	"helpful for insuring some morphs always appear in front of or 
@@ -568,7 +587,26 @@ DockingBarMorph >> mouseUp: evt [
 
 	"Execute the action of the menu item and deselect it"
 	self selectedItem invokeWithEvent: evt.
-	self selectItem: nil event: evt 
+	self selectItem: nil event: evt
+]
+
+{ #category : #'events-processing' }
+DockingBarMorph >> moveSelectionRight: direction event: anEvent [
+	"Move the current selection left or right by one, presumably under keyboard control.
+	direction = +/-1"
+
+	| index |
+	index := (submorphs indexOf: selectedItem ifAbsent: [ 1 - direction ]) + direction.
+	submorphs
+		do: [ :unused | 
+			"Ensure finite"
+			| m |
+			m := submorphs atWrap: index.
+			(m isMenuItemMorph and: [ m isEnabled ])
+				ifTrue: [ ^ self selectItem: m event: anEvent ].
+			"Keep looking for an enabled item"
+			index := index + direction sign ].
+	^ self selectItem: nil event: anEvent
 ]
 
 { #category : #construction }

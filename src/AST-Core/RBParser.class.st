@@ -57,11 +57,13 @@ RBParser class >> parseExpression: aString onError: aBlock [
 
 { #category : #parsing }
 RBParser class >> parseFaultyExpression: aString [ 
+	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
 	^self parseExpression: aString onError: self errorNodeBlock
 ]
 
 { #category : #parsing }
-RBParser class >> parseFaultyMethod: aString [ 
+RBParser class >> parseFaultyMethod: aString [
+	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
 	^self parseMethod: aString onError: self errorNodeBlock
 ]
 

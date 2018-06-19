@@ -26,7 +26,7 @@ Class {
 		'builder',
 		'installingEnvironment'
 	],
-	#category : #'Shift-ClassInstaller'
+	#category : #'Shift-ClassInstaller-Base'
 }
 
 { #category : #examples }

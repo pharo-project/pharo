@@ -137,7 +137,7 @@ MenubarMorph >> open [
 				add: each label
 				icon: each icon
 				help: each help
-				subMenu: (each subMenu ifNotNil: #asMenuMorph)
+				subMenu: (each subMenu ifNotNil: #asMenubarMenuMorph)
 				action: each action
 				keyText: each keyText.
 			each separator

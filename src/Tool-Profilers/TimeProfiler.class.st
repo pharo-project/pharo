@@ -27,8 +27,23 @@ Class {
 		'result',
 		'withToolBar'
 	],
-	#category : #'Tool-Profilers'
+	#category : #'Tool-Profilers-Time'
 }
+
+{ #category : #examples }
+TimeProfiler class >> example [
+
+	[1000 timesRepeat: [3.14159 printString. Processor yield]] fork.
+	[1000 timesRepeat: [20 factorial. Processor yield]] fork.
+	[1000 timesRepeat: [20 factorial. Processor yield]] fork.
+	self spyAllOn: [ (Delay forMilliseconds: 100) wait]
+]
+
+{ #category : #examples }
+TimeProfiler class >> exampleOnBlock [
+
+	TimeProfiler onBlock: [ 20 timesRepeat: [Transcript show: 100 factorial printString]]
+]
 
 { #category : #opening }
 TimeProfiler class >> fullReportMenuOn: aBuilder [
@@ -71,7 +86,6 @@ TimeProfiler class >> menuCommandOn: aBuilder [
 TimeProfiler class >> onBlock: block [
 	"Open a profile browser on the given block, thereby running the block and 
 	 collecting the message tally."
-	"TimeProfiler onBlock: [ 20 timesRepeat: [Transcript show: 100 factorial printString]]"
 
 	| inst result |
 	inst := self new.
@@ -89,14 +103,7 @@ TimeProfiler class >> registerToolsOn: registry [
 
 { #category : #opening }
 TimeProfiler class >> spyAllOn: aBlock [
-	"Spy on all the processes in the system
-	
-	[1000 timesRepeat: [3.14159 printString. Processor yield]] fork.
-	[1000 timesRepeat: [20 factorial. Processor yield]] fork.
-	[1000 timesRepeat: [20 factorial. Processor yield]] fork.
-	self spyAllOn: [ (Delay forMilliseconds: 100) wait]
-	
-	"
+	"Spy on all the processes in the system"
 	| inst result |
 	inst := self new.
 	result := inst spyAllOn: aBlock.
@@ -108,7 +115,7 @@ TimeProfiler class >> spyAllOn: aBlock [
 { #category : #opening }
 TimeProfiler class >> spyFor: seconds [
 	"Run the system profiler for the specified number of seconds"
-	"self spyFor: 2"
+ 
 	^self spyOn: [ (Delay forSeconds: seconds) wait ].
 ]
 

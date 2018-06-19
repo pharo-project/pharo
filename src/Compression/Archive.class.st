@@ -110,10 +110,11 @@ Archive >> contentsOf: aMemberOrName [
 Archive >> extractMember: aMemberOrName [
 	| member |
 	member := self member: aMemberOrName.
-	member ifNil: [ ^nil ].
-	member 
-		extractToFileNamed: member localFileName 
-		inDirectory: FileSystem workingDirectory.
+	member ifNil: [ ^ nil ].
+	member
+		extractToFileNamed: member localFileName
+		inDirectory: FileSystem workingDirectory
+		overwrite: true
 ]
 
 { #category : #'archive operations' }
@@ -135,8 +136,8 @@ Archive >> extractMemberWithoutPath: aMemberOrName [
 Archive >> extractMemberWithoutPath: aMemberOrName inDirectory: dir [
 	| member |
 	member := self member: aMemberOrName.
-	member ifNil: [ ^nil ].
-	member extractToFileNamed: (member asFileReference basename) inDirectory: dir
+	member ifNil: [ ^ nil ].
+	member extractToFileNamed: member asFileReference basename inDirectory: dir overwrite: true
 ]
 
 { #category : #initialization }

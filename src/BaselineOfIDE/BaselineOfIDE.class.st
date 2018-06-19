@@ -2,7 +2,11 @@
 This baseline is used to generate Pharo images from the local clone of pharo-project/pharo repository. 
 
 Depends on:
-- ConfigurationOfUI
+- BasicTools
+- Traits
+- Shift
+- Slots
+- Athens
 
 Load type: 
 - linear
@@ -14,7 +18,6 @@ Installs:
 - refactoring
 - GT Tools
 - Versionner
-- Athens
 - TxText
 - OSWindow
 - QualityAssistant
@@ -34,17 +37,20 @@ Class {
 BaselineOfIDE >> addPharoProjectToIceberg [
 	"It will take all packages corresponding to Pharo project and it will create an iceberg 
 	 project with it"
-	| packageNames extraPackageNames repository commit |
+	| packageNames repository commit |
 	
 	self flag: #TODO. "Refactor into something better (a class and a hierarchy, so we can add 
 	other packages)"
 	
 	"extract package names from baselines"
 	packageNames := (#(
+		BaselineOfAthens
 		BaselineOfBasicTools
 		BaselineOfDisplay
+		BaselineOfFlashback
 		BaselineOfIDE  
 		BaselineOfMonticello 
+		BaselineOfMenuRegistration
 		BaselineOfMetacello 
 		BaselineOfMorphic 
 		BaselineOfMorphicCore 
@@ -59,8 +65,7 @@ BaselineOfIDE >> addPharoProjectToIceberg [
 		collect: [ :each | (Smalltalk globals at: each) allPackageNames copyWith: each ]) 
 		flattened 
 		asSet.
-	"for some reason, there are packages loaded manually and not from a baseline"
-	extraPackageNames := #('Compiler').
+		
 	"declare project"
 	
 	commit := (IceUnknownCommit new 
@@ -75,7 +80,7 @@ BaselineOfIDE >> addPharoProjectToIceberg [
 		
 	commit repository: repository.
 	"add packages to project"
-	(packageNames, extraPackageNames)
+	packageNames
 		do: [ :each |
 			repository workingCopy basicAddPackage: (IcePackage
 				named: each
@@ -113,6 +118,7 @@ BaselineOfIDE >> additionalInitialization [
 
 	PolymorphSystemSettings desktopColor:  Color veryVeryLightGray lighter.
 	SourceCodeFonts setSourceCodeFonts: 10.
+	LogicalFontManager unload.
 	FreeTypeSystemSettings loadFt2Library: true.
 	FreeTypeSettings current monitorType: #LCD.
 	FreeTypeSettings current glyphContrast: 55.
@@ -168,7 +174,10 @@ BaselineOfIDE >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 		
-		spec baseline: 'BasicTools' with: [spec repository: repository].
+		spec baseline: 'BasicTools' with: [ spec repository: repository ].
+		
+		spec baseline: 'Athens' with: [ spec repository: repository ].
+		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
 		spec baseline: 'Shift' with: [
 			spec loads: 'shift-tests'. 
@@ -193,10 +202,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Epicea'.
 		spec package: 'Hiedra'.
 		spec package: 'EpiceaBrowsers'.
-		spec package: 'HiedraTests'. 
-		spec package: 'OmbuTests'.
-		spec package: 'EpiceaTests'.
-		spec package: 'EpiceaBrowsersTests'.
+		spec package: 'Hiedra-Tests'. 
+		spec package: 'Ombu-Tests'.
+		spec package: 'Epicea-Tests'.
+		spec package: 'EpiceaBrowsers-Tests'.
 
 		
 		spec package: 'Shout'.
@@ -204,7 +213,6 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'Rubric-Styling'.
 		
-		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		
 		spec package: 'Collections-Tests'.
@@ -292,15 +300,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tool-DependencyAnalyser-UI'.
 		spec package: 'Tool-DependencyAnalyser-Tests'.	"standalone"
 		spec package: 'Tool-DependencyAnalyser-Tests-Data'.	"standalone"
-
-		spec package: 'Athens-Core'.
-		spec package: 'Athens-Text'.
-		spec package: 'Athens-Balloon'.
-		spec package: 'Athens-Morphic'.
-		spec package: 'Athens-CairoPools'.
-		spec package: 'Athens-Cairo'.
-		spec package: 'Athens-Examples'. 
-		spec package: 'Athens-Tests-Cairo'.
  
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
@@ -342,7 +341,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
-		spec package: 'Flashback-Decompiler-Tests'.
 		spec package: 'FontInfrastructure-Tests'.
 		spec package: 'FreeType-Tests'.
 		spec package: 'FreeType-Help'.
@@ -436,7 +434,7 @@ spec group: 'Mandatory-Group' with: #(
 ). 
 
 spec group: 'Optional-Group' with: #(
-	'Athens-Group' "dependency"
+	'Athens' "dependency"
 
 	'PharoDocComment'	"standalone"
 	'STON-Text support'	"standalone?"
@@ -453,16 +451,16 @@ spec group: 'NodeNavigation-Group' with: #(
 ).					
 
 spec group: 'Epicea-Core-Group' with: #(
-	'Athens-Group' "dependency of Hiedra"
+	'Athens' "dependency of Hiedra"
 	'Ombu'
 	'Epicea'
 	'Hiedra'
 	'EpiceaBrowsers').
 spec group: 'Epicea-Tests-Group' with: #(
-	'OmbuTests'
-	'EpiceaTests'
-	'HiedraTests'
-	'EpiceaBrowsersTests'
+	'Ombu-Tests'
+	'Epicea-Tests'
+	'Hiedra-Tests'
+	'EpiceaBrowsers-Tests'
 ).	
 spec group: 'Epicea-Group' with: #(
 	'Epicea-Core-Group' 
@@ -488,6 +486,7 @@ spec group: 'General-Tests-Group' with: #(
 	'MetacelloCommandLineHandler-Tests'
 	'Debugger-Tests'
 	'EmbeddedFreeType-Tests'
+	'Epicea-Tests-Group'
 	'FileSystem-Tests-Memory'
 	'FontInfrastructure-Tests'
 	'FreeType-Tests'
@@ -501,7 +500,6 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Morphic-Tests'
 	'NECompletion-Tests'
-	'OmbuTests'
 	'ProfStef-Tests'
 
 	'Reflectivity-Tools-Tests'
@@ -588,17 +586,6 @@ spec group: 'Manifest-Tests-Group' with: #(
 spec group: 'Manifest-Group' with: #(
 	'Manifest-Core-Group'
 	'Manifest-Tests-Group'
-).
-
-spec group: 'Flashback-Core-Group' with: #(
-	'Flashback-Decompiler'
-).
-spec group: 'Flashback-Tests-Group' with: #(
-	'Flashback-Decompiler-Tests'
-).
-spec group: 'Flashback-Group' with: #(
-	'Flashback-Core-Group'
-	'Flashback-Tests-Group'
 ).
 
 spec group: 'BlueInk-Core-Group' with: #(
@@ -703,7 +690,7 @@ spec group: 'QualityAssistant-Group' with: #(
 spec group: 'Glamour-Core-Group' with: #(
 	'Shout-Core-Group'  "dependecy"
 	"circular dependency on 'Glamour-Tests-Group', 'GT-Core-Group'"
-	'Athens-Group' "dependency"
+	'Athens' "dependency"
 	'Glamour-Announcements'
 	'Glamour-Helpers'
 	'Glamour-Core'
@@ -772,24 +759,12 @@ spec group: 'DependencyAnalyser-Tests-Group' with: #(
 spec group: 'DependencyAnalyser-Group' with: #(
 	'DependencyAnalyser-Core-Group'
 	'DependencyAnalyser-Tests-Group'
-).		
-
-spec group: 'Athens-Group' with: #(
-	"dependent on Rubric, cleanup?"
-	'Athens-Core'
-	'Athens-Text'
-	'Athens-Balloon'
-	'Athens-Morphic'
-	'Athens-CairoPools'
-	'Athens-Cairo'
-	'Athens-Examples'
-   'Athens-Tests-Cairo'
-).		
+).	
 
 spec group: 'OSWindow-Core-Group' with: #(
 	'Glamour-Core-Group'	"dependency, cleanup needed"
 	'GT-Core-Group'	"dependency, cleanup needed"
-	'Athens-Group' "dependency"
+	'Athens' "dependency"
 	'OSWindow-Core'
 	'OSWindow-SDL2'
 	'OSWindow-VM'
@@ -854,10 +829,11 @@ spec group: 'GT&QA-Group' with: #(
 
 spec group: #default with: #(
 	'BasicTools'	"dependency"
+	'Athens'
+	'Flashback'
 
 	'Mandatory-Group'
 
-	'Athens-Group'
 	'Kernel-Tests-Group'
 	'BlueInk-Group'
 
@@ -869,7 +845,6 @@ spec group: #default with: #(
 	'ReflectionMirrors-Group'
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
-	'Flashback-Group'
 
 	'GT&QA-Group'
 
@@ -905,7 +880,7 @@ BaselineOfIDE >> loadCalypso [
 		
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.11.3';
+		repository: 'github://pharo-ide/Calypso:v0.11.4';
 		onConflict: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
@@ -918,7 +893,7 @@ BaselineOfIDE >> loadCalypso [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.0.1';
+		repository: 'github://pharo-vcs/iceberg:v1.1.1';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 
@@ -943,17 +918,10 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 		yourself.
 		
 	gofer := Gofer it repository: repo.
-	gofer package: #'Compiler'.
 	gofer package: #'RPackage-Tests'.
 	gofer load.
 	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
-
-	(Smalltalk at: #ParseNode) initialize.
-	(Smalltalk at: #Scanner) initialize.
-	(Smalltalk at: #Decompiler) initialize.
-	(Smalltalk at: #MessageNode) initialize.
-	(Smalltalk at: #VariableNode) initialize.
 	
 	Smalltalk tools register: GTGenericStackDebugger as: #debugger.	
 

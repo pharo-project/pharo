@@ -71,9 +71,11 @@ MemoryStore >> basicModificationTimeOf: aMemoryFileSystemEntry [
 MemoryStore >> basicOpen: path writable: aBoolean [
 	^ self
 		nodeAt: path
-		ifPresent: [ :aMemoryFileSystemEntry | aMemoryFileSystemEntry ]
-		ifAbsent: [ 
-			aBoolean
+		ifPresent: [ :aMemoryFileSystemEntry | 
+			aMemoryFileSystemEntry
+				basicOpen;
+				yourself ]
+		ifAbsent: [ aBoolean
 				ifFalse: [ self signalFileDoesNotExist: path ]
 				ifTrue: [ self createFile: path ] ]
 ]

@@ -2178,6 +2178,12 @@ Morph >> displayExtentChanged [
 	"
 ]
 
+{ #category : #settings }
+Morph >> displayScaleFactor [
+
+	^ World displayScaleFactor
+]
+
 { #category : #announcements }
 Morph >> doAnnounce: anAnnouncement [
 	"Take care of not creating the announcer when announcing. If the announcer doesn't exist then this means nobody has expressed an interest in the message."
@@ -3591,23 +3597,6 @@ Morph >> invokeMetaMenu: evt [
 	self addTitleForHaloMenu: menu.	
 	menu popUpEvent: evt in: self world
 
-]
-
-{ #category : #'meta-actions' }
-Morph >> invokeMetaMenuAt: aPoint event: evt [ 
-	| morphs target |
-	morphs := self morphsAt: aPoint.
-	(morphs includes: self)
-		ifFalse: [morphs := morphs copyWith: self].
-	morphs size = 1
-		ifTrue: [morphs anyOne invokeMetaMenu: evt]
-		ifFalse: [target := UIManager default
-						chooseFrom: (morphs
-								collect: [:t | t class name asString])
-						values: morphs.
-			target 
-				ifNil: [^ self].
-			target invokeMetaMenu: evt]
 ]
 
 { #category : #classification }

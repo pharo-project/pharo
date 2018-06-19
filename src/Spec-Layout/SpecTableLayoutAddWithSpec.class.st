@@ -5,7 +5,7 @@ A SpecLayoutAddWithSpec is an action representing an add in the spec table layou
 Class {
 	#name : #SpecTableLayoutAddWithSpec,
 	#superclass : #SpecTableLayoutAdd,
-	#category : #'Spec-Layout'
+	#category : #'Spec-Layout-Actions'
 }
 
 { #category : #'instance creation' }

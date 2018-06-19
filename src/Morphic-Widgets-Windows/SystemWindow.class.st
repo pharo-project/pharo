@@ -459,8 +459,8 @@ SystemWindow >> boxExtent [
 	"answer the extent to use in all the buttons.  
 	The label height is used to be proportional to the standard window label font"
 	
-	label ifNil: [^14 @ 14].
-	^ (14 @ 14) max: label height @ label height 
+	label ifNil: [^(14 @ 14) * self displayScaleFactor].
+	^ (((14 @ 14) * self displayScaleFactor) max: label height @ label height)  
 ]
 
 { #category : #testing }
@@ -564,17 +564,15 @@ SystemWindow >> createBox [
 
 { #category : #'menu actions' }
 SystemWindow >> createWindowGroup [
-
-  | group pos ext |
-  
-  pos := self position.
-  ext := self extent.
-  group := GroupWindowMorph new.
-  group addWindow: self.
-  (group openInWindowLabeled: 'Group: ' translated, self label) 
-    extent: ext;
-    position: pos.
-  
+	| group pos ext |
+	pos := self position.
+	ext := self extent.
+	group := GroupWindowMorph new.
+	group addWindow: self.
+	(group openInWindowLabeled: 'Group: ' translated , self label)
+		extent: ext;
+		position: pos;
+		model: group
 ]
 
 { #category : #initialization }
@@ -600,34 +598,11 @@ SystemWindow >> delete [
 	"Should activate window before asking model if okToChange
 	since likely that a confirmation dialog will be requested.
 	Don't if not owned by the world though."
-	
-	| thisWorld animateClose announcement |
-	self mustNotClose ifTrue: [^ self].
-	"(self owner notNil and: [self owner isWorldMorph])
-		ifTrue: [self activate]."
-		
-	model ifNotNil: [ model okToChange ifFalse: [ ^ self ] ].
-	animateClose := (self visible and: [self world notNil and: [
-		self theme settings animationSettings useAnimation and: [
-		self theme settings animationSettings animateClosing]]]).
-	self removePaneSplitters. "in case we add some panes and reopen!"
-	thisWorld := self world.
-	self isFlexed
-		ifTrue: [owner delete]
-		ifFalse: [super delete].
-	model ifNotNil: [ 
-		model 
-			windowIsClosing; 
-			releaseActionMap ].
-	model := nil.
-	animateClose ifTrue: [self animateClose].	
-	SystemWindow noteTopWindowIn: thisWorld.
-	announcement := (WindowClosed new 
-						window: self; 
-						yourself).
-	self announce: announcement.
-	World announcer announce: announcement
 
+	"in case we add some panes and reopen!"
+	self isCloseable
+		ifFalse: [ ^ self ].
+	self deleteDiscardingChanges
 ]
 
 { #category : #'menu actions' }
@@ -635,6 +610,33 @@ SystemWindow >> deleteCloseBox [
 	closeBox ifNotNil:
 		[closeBox delete.
 		closeBox := nil]
+]
+
+{ #category : #'open/close' }
+SystemWindow >> deleteDiscardingChanges [
+	| thisWorld announcement animateClose |
+	animateClose := self visible
+		and: [ self world notNil
+				and: [ self theme settings animationSettings useAnimation
+						and: [ self theme settings animationSettings animateClosing ] ] ].
+	self removePaneSplitters.	"in case we add some panes and reopen!"
+	thisWorld := self world.
+	self isFlexed
+		ifTrue: [ owner delete ]
+		ifFalse: [ super delete ].
+	model
+		ifNotNil: [ model
+				windowIsClosing;
+				releaseActionMap ].
+	model := nil.
+	animateClose
+		ifTrue: [ self animateClose ].
+	SystemWindow noteTopWindowIn: thisWorld.
+	announcement := WindowClosed new
+		window: self;
+		yourself.
+	self announce: announcement.
+	World announcer announce: announcement
 ]
 
 { #category : #'menu building' }
@@ -882,7 +884,7 @@ SystemWindow >> initialize [
 	self cellPositioning: #topLeft. "make the offsets easy to calculate!"
 	self addGripsIfWanted.
 	
-	self extent: 300 @ 200.
+	self extent: (300 @ 200) scaledByDisplayScaleFactor.
 	mustNotClose := false.
 	updatablePanes := Array new
 ]
@@ -893,6 +895,11 @@ SystemWindow >> initializeShortcuts: aKMDispatcher [
 
 	super initializeShortcuts: aKMDispatcher.
 	aKMDispatcher attachCategory: #WindowShortcuts	
+]
+
+{ #category : #testing }
+SystemWindow >> isCloseable [
+	^ self mustNotClose not and: [ model ifNotNil: [ model okToChange ] ifNil: [ true ] ]
 ]
 
 { #category : #'resize/collapse' }

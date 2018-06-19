@@ -29,7 +29,7 @@ SystemDependenciesTest class >> rebuildDependenciesReport [
 
 { #category : #accessing }
 SystemDependenciesTest class >> resetDependenciesReport [
-
+	<script>
 	"self resetDependenciesReport"
 
 	dependenciesReport := nil
@@ -139,7 +139,7 @@ SystemDependenciesTest >> knownMorphicDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#DebuggerActions #FontChooser #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Rubric #Shout #'Spec-Core' #'Tool-Base' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers') sorted
+	^ #(#DebuggerActions #'Fonts-Chooser' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Rubric #Shout #'Spec-Core' #'Tool-Base' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -216,6 +216,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
 		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
 		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
+		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames ).
@@ -274,31 +275,27 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalIDEDependencies [
-
-	| dependencies | 
-	
+	| dependencies packages |
 	self longTestCase.
-	
-	dependencies := self externalDependendiesOf: (
-		self metacelloPackageNames,
-		self tonelCorePackageNames,
-		{ BaselineOfTraits name }, BaselineOfTraits allPackageNames,		
-		{ BaselineOfSlot name }, BaselineOfSlot allPackageNames,		
-		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
-		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
-		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
-		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
-		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
-		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
-		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
-		{ BaselineOfIDE name }, BaselineOfIDE allPackageNames,
-		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
-		{ BaselineOfPharoBootstrap name. 
-		  BaselineOfMonticello name.
-		  BaselineOfMetacello name }
-		 ).
-	
-	self assertCollection: dependencies equals: self knownIDEDependencies.
+	packages := self metacelloPackageNames , self tonelCorePackageNames , { BaselineOfPharoBootstrap name. BaselineOfMonticello name. BaselineOfMetacello name}.
+
+	{BaselineOfAthens.
+	BaselineOfBasicTools.
+	BaselineOfDisplay.
+	BaselineOfFlashback.
+	BaselineOfIDE.
+	BaselineOfMenuRegistration.
+	BaselineOfMorphic.
+	BaselineOfMorphicCore.
+	BaselineOfSlot.
+	BaselineOfSpec.
+	BaselineOfSUnit.
+	BaselineOfTraits.
+	BaselineOfUI.
+	BaselineOfUnifiedFFI} do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
+
+	dependencies := self externalDependendiesOf: packages.
+	self assertCollection: dependencies equals: self knownIDEDependencies
 ]
 
 { #category : #tests }
@@ -397,7 +394,8 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfMorphicCore allPackageNames,
-		BaselineOfMorphic allPackageNames ).
+		BaselineOfMorphic allPackageNames,
+		BaselineOfMenuRegistration allPackageNames ).
 	
 	self assertCollection: dependencies equals: self knownMorphicDependencies.
 ]
@@ -485,7 +483,8 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
-		BaselineOfUI allPackageNames )).
+		BaselineOfUI allPackageNames,
+		BaselineOfMenuRegistration allPackageNames )).
 	
 	self assertCollection: dependencies equals: self knownUIDependencies.
 ]

@@ -67,5 +67,5 @@ MenuLineMorph >> minHeight [
 { #category : #layout }
 MenuLineMorph >> minWidth [
 	"Answer the receiver's minWidth"
-	^  10 
+	^  10 * self displayScaleFactor
 ]

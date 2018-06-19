@@ -2294,6 +2294,13 @@ f display
 ]
 
 { #category : #'scaling, rotation' }
+Form >> scaledByDisplayScaleFactor [
+	
+	^ self scaledToSize: self extent * World displayScaleFactor.
+
+]
+
+{ #category : #'scaling, rotation' }
 Form >> scaledToSize: newExtent [
 
 	| scale |

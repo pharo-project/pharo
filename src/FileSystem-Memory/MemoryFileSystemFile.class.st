@@ -6,7 +6,8 @@ Class {
 	#superclass : #MemoryFileSystemEntry,
 	#instVars : [
 		'bytes',
-		'size'
+		'size',
+		'closed'
 	],
 	#category : #'FileSystem-Memory-Base'
 }
@@ -55,6 +56,11 @@ MemoryFileSystemFile >> at: first write: aCollection startingAt: start count: co
 	size := last
 ]
 
+{ #category : #'open/close' }
+MemoryFileSystemFile >> basicOpen [
+	closed := false
+]
+
 { #category : #'streams-compatibility' }
 MemoryFileSystemFile >> binaryReadStream [
 	^ ReadStream on: self bytes from: 1 to: size
@@ -69,6 +75,16 @@ MemoryFileSystemFile >> binaryWriteStream [
 { #category : #accessing }
 MemoryFileSystemFile >> bytes [
 	^ bytes
+]
+
+{ #category : #'open/close' }
+MemoryFileSystemFile >> close [
+	 closed := true
+]
+
+{ #category : #testing }
+MemoryFileSystemFile >> closed [
+	^ closed
 ]
 
 { #category : #'stream-protocol' }
@@ -97,7 +113,8 @@ MemoryFileSystemFile >> grownBy: length [
 MemoryFileSystemFile >> initialize [
 	super initialize.
 	bytes := #[].
-	size := 0
+	size := 0.
+	closed := false
 ]
 
 { #category : #accessing }
