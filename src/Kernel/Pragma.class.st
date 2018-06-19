@@ -130,6 +130,11 @@ Pragma >> arguments [
 	^ arguments
 ]
 
+{ #category : #initialization }
+Pragma >> arguments: anArray [
+	arguments := anArray
+]
+
 { #category : #testing }
 Pragma >> hasLiteral: aLiteral [
 	^keyword == aLiteral 
@@ -162,11 +167,9 @@ Pragma >> key [
 	^keyword
 ]
 
-{ #category : #accessing }
+{ #category : #'to be deprecated' }
 Pragma >> keyword [
-	"Answer the keyword of the pragma (the selector of its message pattern).
-	 For a pragma defined as <key1: val1 key2: val2> this will answer #key1:key2:."
-	
+	"to be decprecated for #selector"
 	^ keyword
 ]
 
@@ -182,6 +185,11 @@ Pragma >> method [
 	"Answer the compiled-method containing the pragma."
 	
 	^ method
+]
+
+{ #category : #initialization }
+Pragma >> method: aCompiledMethod [
+	method := aCompiledMethod
 ]
 
 { #category : #'accessing-method' }
@@ -218,6 +226,19 @@ Pragma >> printOn: aStream [
 	aStream nextPut: $>.
 ]
 
+{ #category : #accessing }
+Pragma >> selector [
+	"Answer the selector of the pragma.
+	 For a pragma defined as <key1: val1 key2: val2> this will answer #key1:key2:."
+	
+	^ keyword
+]
+
+{ #category : #initialization }
+Pragma >> selector: aSymbol [
+	keyword := aSymbol
+]
+
 { #category : #sending }
 Pragma >> sendTo: anObject [
 	"Send the pragma keyword together with its arguments to anObject and answer the result."
@@ -225,18 +246,21 @@ Pragma >> sendTo: anObject [
 	^ anObject perform: self keyword withArguments: self arguments
 ]
 
-{ #category : #initialization }
+{ #category : #'to be deprecated' }
 Pragma >> setArguments: anArray [
+	"to be decprecated for #arguments:"
 	arguments := anArray
 ]
 
-{ #category : #initialization }
+{ #category : #'to be deprecated' }
 Pragma >> setKeyword: aSymbol [
+	"to be decprecated for #selector:"
 	keyword := aSymbol
 ]
 
-{ #category : #initialization }
+{ #category : #'to be deprecated' }
 Pragma >> setMethod: aCompiledMethod [
+	"to be decprecated for #method:"
 	method := aCompiledMethod
 ]
 
