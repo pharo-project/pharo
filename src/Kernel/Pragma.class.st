@@ -169,7 +169,7 @@ Pragma >> key [
 
 { #category : #'to be deprecated' }
 Pragma >> keyword [
-	"to be decprecated for #selector"
+	"to be deprecated for #selector"
 	^ keyword
 ]
 
@@ -248,19 +248,19 @@ Pragma >> sendTo: anObject [
 
 { #category : #'to be deprecated' }
 Pragma >> setArguments: anArray [
-	"to be decprecated for #arguments:"
+	"to be deprecated for #arguments:"
 	arguments := anArray
 ]
 
 { #category : #'to be deprecated' }
 Pragma >> setKeyword: aSymbol [
-	"to be decprecated for #selector:"
+	"to be deprecated for #selector:"
 	keyword := aSymbol
 ]
 
 { #category : #'to be deprecated' }
 Pragma >> setMethod: aCompiledMethod [
-	"to be decprecated for #method:"
+	"to be deprecated for #method:"
 	method := aCompiledMethod
 ]
 
