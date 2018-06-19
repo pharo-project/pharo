@@ -29,7 +29,7 @@ SystemDependenciesTest class >> rebuildDependenciesReport [
 
 { #category : #accessing }
 SystemDependenciesTest class >> resetDependenciesReport [
-
+	<script>
 	"self resetDependenciesReport"
 
 	dependenciesReport := nil
@@ -216,6 +216,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
 		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
 		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
+		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames ).
@@ -277,12 +278,13 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	| dependencies packages |
 	self longTestCase.
 	packages := self metacelloPackageNames , self tonelCorePackageNames , { BaselineOfPharoBootstrap name. BaselineOfMonticello name. BaselineOfMetacello name}.
-	
+
 	{BaselineOfAthens.
 	BaselineOfBasicTools.
 	BaselineOfDisplay.
 	BaselineOfFlashback.
 	BaselineOfIDE.
+	BaselineOfMenuRegistration.
 	BaselineOfMorphic.
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
@@ -291,7 +293,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfTraits.
 	BaselineOfUI.
 	BaselineOfUnifiedFFI} do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
-			
+
 	dependencies := self externalDependendiesOf: packages.
 	self assertCollection: dependencies equals: self knownIDEDependencies
 ]
@@ -392,7 +394,8 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfMorphicCore allPackageNames,
-		BaselineOfMorphic allPackageNames ).
+		BaselineOfMorphic allPackageNames,
+		BaselineOfMenuRegistration allPackageNames ).
 	
 	self assertCollection: dependencies equals: self knownMorphicDependencies.
 ]
@@ -480,7 +483,8 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
-		BaselineOfUI allPackageNames )).
+		BaselineOfUI allPackageNames,
+		BaselineOfMenuRegistration allPackageNames )).
 	
 	self assertCollection: dependencies equals: self knownUIDependencies.
 ]

@@ -19,7 +19,7 @@ PluggableMenuItemSpec >> asMenuItemMorphFrom: parentMenu isLast: aBoolean [
 					target: act receiver;
 					selector: act selector;
 					arguments: act arguments ].
-	(menu := self subMenu) ifNotNil: [ self enabled ifTrue: [ it subMenu: (menu asMenuMorph) ]].
+	(menu := self subMenu) ifNotNil: [ self enabled ifTrue: [ it subMenu: (menu asMenuMorphOfKind: parentMenu class) ]].
 		
 	parentMenu ifNotNil: [ parentMenu addMorphBack: it ].
 	aBoolean ifFalse: [ self separator ifTrue: [ parentMenu addLine ] ].

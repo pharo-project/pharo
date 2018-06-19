@@ -49,6 +49,7 @@ BaselineOfIDE >> addPharoProjectToIceberg [
 		BaselineOfFlashback
 		BaselineOfIDE  
 		BaselineOfMonticello 
+		BaselineOfMenuRegistration
 		BaselineOfMetacello 
 		BaselineOfMorphic 
 		BaselineOfMorphicCore 
@@ -200,10 +201,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Epicea'.
 		spec package: 'Hiedra'.
 		spec package: 'EpiceaBrowsers'.
-		spec package: 'HiedraTests'. 
-		spec package: 'OmbuTests'.
-		spec package: 'EpiceaTests'.
-		spec package: 'EpiceaBrowsersTests'.
+		spec package: 'Hiedra-Tests'. 
+		spec package: 'Ombu-Tests'.
+		spec package: 'Epicea-Tests'.
+		spec package: 'EpiceaBrowsers-Tests'.
 
 		
 		spec package: 'Shout'.
@@ -455,10 +456,10 @@ spec group: 'Epicea-Core-Group' with: #(
 	'Hiedra'
 	'EpiceaBrowsers').
 spec group: 'Epicea-Tests-Group' with: #(
-	'OmbuTests'
-	'EpiceaTests'
-	'HiedraTests'
-	'EpiceaBrowsersTests'
+	'Ombu-Tests'
+	'Epicea-Tests'
+	'Hiedra-Tests'
+	'EpiceaBrowsers-Tests'
 ).	
 spec group: 'Epicea-Group' with: #(
 	'Epicea-Core-Group' 
@@ -484,6 +485,7 @@ spec group: 'General-Tests-Group' with: #(
 	'MetacelloCommandLineHandler-Tests'
 	'Debugger-Tests'
 	'EmbeddedFreeType-Tests'
+	'Epicea-Tests-Group'
 	'FileSystem-Tests-Memory'
 	'FontInfrastructure-Tests'
 	'FreeType-Tests'
@@ -497,7 +499,6 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Morphic-Tests'
 	'NECompletion-Tests'
-	'OmbuTests'
 	'ProfStef-Tests'
 
 	'Reflectivity-Tools-Tests'
@@ -891,7 +892,7 @@ BaselineOfIDE >> loadCalypso [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.1.0';
+		repository: 'github://pharo-vcs/iceberg:v1.1.1';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 

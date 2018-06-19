@@ -34,7 +34,7 @@ Class {
 		'fileStream',
 		'stdioStream'
 	],
-	#category : #'Files-Tests'
+	#category : #'Files-Tests-Streams'
 }
 
 { #category : #accessing }
