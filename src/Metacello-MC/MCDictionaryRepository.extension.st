@@ -12,6 +12,16 @@ MCDictionaryRepository >> asRepositorySpecFor: aMetacelloMCProject [
 		yourself
 ]
 
+{ #category : #'*Metacello-MC' }
+MCDictionaryRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
+	^ aPlatform createDictionaryRepository: aRepositorySpec
+]
+
+{ #category : #'*Metacello-MC' }
+MCDictionaryRepository class >> isAvailableFor: type [
+	^ type = 'dictionary'
+]
+
 { #category : #'*metacello-mc' }
 MCDictionaryRepository >> versionInfoFromVersionNamed: aString [
 

@@ -1,11 +1,11 @@
 Extension { #name : #MCFtpRepository }
 
-{ #category : #'*Metacello-Core' }
+{ #category : #'*Metacello-MC' }
 MCFtpRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
 	^ aPlatform createFtpRepository: aRepositorySpec
 ]
 
-{ #category : #'*Metacello-Core' }
+{ #category : #'*Metacello-MC' }
 MCFtpRepository class >> isAvailableFor: type [
 	^ type = 'ftp'
 ]
