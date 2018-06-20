@@ -46,6 +46,13 @@ RBComment >> contents [
 	^ contents
 ]
 
+{ #category : #'initialize-release' }
+RBComment >> intersectsInterval: anInterval [ 
+	"Make comments polymorphic with program nodes for hit detection"
+	^(anInterval first between: self start and: self stop) 
+		or: [self start between: anInterval first and: anInterval last]
+]
+
 { #category : #printing }
 RBComment >> printOn: aStream [
 	super printOn: aStream.

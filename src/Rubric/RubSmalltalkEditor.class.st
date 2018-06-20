@@ -125,6 +125,51 @@ RubSmalltalkEditor >> basicInspectIt [
 ]
 
 { #category : #'menu messages' }
+RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval edittingMode: aRubEdittingMode shouldFavourExpressions: isFavouringExpressions onError: aBlock [
+	"Find the best node in the source text in the identified selection area"
+	
+	| ast node start stop |
+
+	start := selectionInterval first min: source size.
+	stop := selectionInterval last min: source size.
+	
+	ast := aRubEdittingMode parseSource: source.
+	
+	ast ifNotNil: [ 
+		"If there is no text selection"
+		((selectionInterval size < 2) and: [ isFavouringExpressions ]) ifTrue: [ 
+			"If there is white space or statement terminator, try to backup to find a better node"		
+			[stop > 0 and: [('.;' includes: (source at: stop)) or: [(source at: stop) isSeparator ]]]
+				whileTrue: [ start := stop := stop - 1 ]].
+		
+		node := ast bestNodeFor: (start to: stop).
+		
+		node ifNil: [ 
+			node := RBParseErrorNodeVisitor
+				visit: ast 
+				detect: [ :n | n intersectsInterval: (start to: start)]
+				ifNone: [ ^aBlock value ]].
+		
+		node isFaulty ifTrue: [ 
+			node allChildren size = 1 ifTrue: [ 
+				(aRubEdittingMode parseExpression: (node value padLeftTo: source size)) 
+					ifNil: [ ^node ] 
+					ifNotNil: [ :newNode |
+						ast replaceNode: node withNode: newNode.
+						node := newNode ].
+				].
+			
+			node := RBGenericNodeVisitor 
+				visit: node 
+				detect: [ :n | n intersectsInterval: (start to: start) ] 
+				ifNone: [ node ] ] ].
+	
+
+	^node
+
+]
+
+{ #category : #'menu messages' }
 RubSmalltalkEditor >> bestNodeInTextArea [
 	"Find the best node in the editor text area at the current pointer location"
 	
@@ -139,6 +184,24 @@ RubSmalltalkEditor >> bestNodeInTextArea [
 	
 	^node bestNodeFor: (start to: stop).
 	
+]
+
+{ #category : #'menu messages' }
+RubSmalltalkEditor >> bestNodeInTextAreaOnError: aBlock [
+	"Find the best node in the editor text area at the current pointer location"
+
+	| start stop source |
+	start := self textArea startIndex.
+	stop := self textArea stopIndex.
+
+	source := self textArea string.
+
+	^ self
+		bestNodeInString: source
+		at: (start to: stop)
+		edittingMode: self textArea editingMode
+		shouldFavourExpressions: true
+		onError: aBlock
 ]
 
 { #category : #binding }
@@ -431,27 +494,23 @@ RubSmalltalkEditor >> exploreIt: aKeyboardEvent [
 RubSmalltalkEditor >> findClassFromAST [
 	"Try to make a class name out of the current text selection"
 
-	| node className |		
+	| node fallbackBlock className |		
 	
 	"Preserve original behavior - although could consider building AST from selection"
 	self hasSelection ifTrue: [ 
 		^(self selection string copyWithoutAll: CharacterSet crlf) trimBoth ].
 	
-	node := self bestNodeInTextArea.
-	
-	node ifNil: [ 
-		self selectLine.
-		^ self hasSelection 
-			ifTrue: [ (self selection string copyWithoutAll: CharacterSet crlf) trimBoth ]
-			ifFalse: [ nil ] ].
+	fallbackBlock := [^nil].
+
+	node := self bestNodeInTextAreaOnError: fallbackBlock.
 	
 	[node isVariable] whileFalse: [ 
-	 	(node := node parent) ifNil: [^nil]. ].
+	 	(node := node parent) ifNil: fallbackBlock ].
 	
 	className := node name.
 	
 	[ className first isUppercase ] whileFalse: [ 
-		(className := className allButFirst) ifEmpty: [^nil].  ].
+		(className := className allButFirst) ifEmpty: fallbackBlock  ].
 	
 	^className
 ]
@@ -460,15 +519,18 @@ RubSmalltalkEditor >> findClassFromAST [
 RubSmalltalkEditor >> findSelectorFromAST [
 	"Try to make a selector out of the current text selection"
 
-	| node |
-	node := self bestNodeInTextArea.
-	(node isNil or: [node isSequence]) ifTrue: [
-		self selectLine.
-		^ RBParser parseFaultyExpression: self selection string.]. 
+	| node fallbackBlock |
+
+	fallbackBlock := [^self].
+	node := self bestNodeInTextAreaOnError: fallbackBlock.
+	
 	node isMethod ifFalse: [ 
+		(node isValue and: [ node value isSymbol ]) ifTrue: [ ^node value ].
+				
 		[ node isMessage ] whileFalse: [ 
-	 		(node := node parent) ]].
-	^node 
+	 		(node := node parent) ifNil: fallbackBlock ]].
+	
+	^node selector
 ]
 
 { #category : #private }
@@ -506,9 +568,9 @@ RubSmalltalkEditor >> implementorsOfIt [
 	"Open an implementors browser on the selected selector"
 
 	| aSelector |
+	"self lineSelectAndEmptyCheck: [^ self]."
 	(aSelector := self selectedSelector) ifNil: [^ textArea flash].
 	self implementorsOf: aSelector
-
 ]
 
 { #category : #'editing keys' }
@@ -688,6 +750,38 @@ RubSmalltalkEditor >> notify: aString at: anInteger in: aStream [
 
 ]
 
+{ #category : #parsing }
+RubSmalltalkEditor >> parseOptimistically: source withCursorAt: loc [
+	"Find the best node in the editor text area at the current pointer location"
+	
+	| ast |
+
+	ast := [ RBParser parseMethod: source onError: [ :msg :pos :parser | | seqNode errorNode |
+		
+		errorNode := RBParseErrorNode
+			errorMessage: msg value: parser currentToken value printString at: pos. 
+			
+		seqNode := parser sequenceNodeClass new.
+		parser 
+			step; 
+			parseStatements: true into: seqNode.
+			
+		seqNode 
+			addNodeFirst: errorNode;
+			yourself
+			
+		]] onDNU: #body: do: [ nil "allow source fragment handling"].
+
+	(ast notNil and: [ ast isMethod and: [ast selector ~= #self]]) ifTrue: [ ^ast ].
+		
+	^[ RBParser parseExpression: source onError: [ :msg :pos :parser |
+			"^self parseOptimisticallyRetrying: source withErrorAt: pos1 withCursorAt: loc]]."
+			parser step; parseErrorNode: msg ]] on: ReparseAfterSourceEditing do: ["prevent correction tool popup"].
+	
+	
+
+]
+
 { #category : #'editing keys' }
 RubSmalltalkEditor >> pasteInitials: aKeyboardEvent [ 
 	"Replace the current text selection by an authorship name/date stamp; invoked by cmd-shift-v, easy way to put an authorship stamp in the comments of an editor."
@@ -750,9 +844,9 @@ RubSmalltalkEditor >> referencesToIt [
 	"Open a references browser on the selected symbol"
 
 	| aSymbol |
-	self selectLine.
-	(aSymbol := self selectedSymbol) isNil
-		ifTrue: [ ^ textArea flash ].
+	"self selectLine."
+	(aSymbol := self selectedSymbol) ifNil: [^ textArea flash].
+
 	self referencesTo: aSymbol
 ]
 
@@ -793,10 +887,10 @@ RubSmalltalkEditor >> selectedSelector [
 
 	| node |
 	
-	node := self hasSelection 
-		ifTrue: [ RBParser parseFaultyExpression: self selection string. ]
-		ifFalse: [ self findSelectorFromAST ].
-	node nodesDo: [ :n | 
+	self hasSelection ifFalse: [ ^self findSelectorFromAST ].
+	node := RBParser parseFaultyExpression: self selection string.
+	node
+		nodesDo: [ :n | 
 			n isMessage
 				ifTrue: [ ^ n selector ].
 			n isVariable
@@ -812,11 +906,11 @@ RubSmalltalkEditor >> selectedSymbol [
 	"Return the currently selected symbol, or nil if none.  Spaces, tabs and returns are ignored"
 
 	| aString |
-	self hasCursor ifTrue: [^ nil].
+	self hasCursor ifTrue: [^self findSelectorFromAST].
 	aString := self selection string copyWithoutAll:
 		{Character space.  Character cr.  Character tab}.
-	aString isEmpty ifTrue: [^ nil].
-	Symbol hasInterned: aString  ifTrue: [:sym | ^ sym].
+	aString size = 0 ifTrue: [^ nil].
+	Symbol hasInterned: aString ifTrue: [:sym | ^sym].
 
 	^ nil
 ]
@@ -966,9 +1060,7 @@ RubSmalltalkEditor >> sendersOfIt [
 
 	| selectedSelector syst |
 	"self lineSelectAndEmptyCheck: [ ^ self ]."
-	selectedSelector := self selectedSelector.
-	selectedSelector isNil
-		ifTrue: [ ^ textArea flash ].
+	(selectedSelector := self selectedSelector) ifNil: [ ^ textArea flash ].
 	syst := self model interactionModel systemNavigation.
 	syst browseAllSendersOrUsersOf: selectedSelector
 ]
