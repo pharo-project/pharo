@@ -4,6 +4,10 @@ Extension { #name : #MorphicUIManager }
 MorphicUIManager >> fileDoesNotExistUserHandling: anException [
 	| selection newName filename |
 
+	self 
+		deprecated: 'Deprecated since file exceptions should not rely on a UI being present' 
+		on: '20 Jun 2018' 
+		in: 'Pharo70'.
 	filename := anException fileName.
 	selection := self
 		chooseFrom:
@@ -32,6 +36,10 @@ MorphicUIManager >> fileDoesNotExistUserHandling: anException [
 { #category : #'*Files-Prompt' }
 MorphicUIManager >> fileDoesNotExistsDefaultAction: anException [
 
+	self 
+		deprecated: 'Deprecated since file exceptions should not rely on a UI being present' 
+		on: '20 Jun 2018' 
+		in: 'Pharo70'.
 	^ anException readOnly
 		ifTrue: [ self readOnlyFileDoesNotExistUserHandling: anException]
 		ifFalse: [self fileDoesNotExistUserHandling: anException]
@@ -68,6 +76,10 @@ MorphicUIManager >> readOnlyFileDoesNotExistUserHandling: anException [
 
 	| files choices selection newName directory filename |
 
+	self 
+		deprecated: 'Deprecated since file exceptions should not rely on a UI being present' 
+		on: '20 Jun 2018' 
+		in: 'Pharo70'.
 	filename := anException fileName.	
 	directory := filename asFileReference parent.
 	files := directory fileNames.
