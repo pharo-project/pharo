@@ -13,8 +13,9 @@ Class {
 
 { #category : #accessing }
 RBCommentNodeVisitor >> visitNode: aNode [
-	aNode comments ifNotEmpty: [ :value |
-		self visitBlock cull: value cull: aNode ].
+	aNode comments ifNotEmpty: [ :commentNodes |
+		commentNodes do: [ :commentNode |
+			self visitBlock cull: commentNode cull: aNode ] ].
 	
 	super visitNode: aNode
 ]

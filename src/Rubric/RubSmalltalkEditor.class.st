@@ -750,38 +750,6 @@ RubSmalltalkEditor >> notify: aString at: anInteger in: aStream [
 
 ]
 
-{ #category : #parsing }
-RubSmalltalkEditor >> parseOptimistically: source withCursorAt: loc [
-	"Find the best node in the editor text area at the current pointer location"
-	
-	| ast |
-
-	ast := [ RBParser parseMethod: source onError: [ :msg :pos :parser | | seqNode errorNode |
-		
-		errorNode := RBParseErrorNode
-			errorMessage: msg value: parser currentToken value printString at: pos. 
-			
-		seqNode := parser sequenceNodeClass new.
-		parser 
-			step; 
-			parseStatements: true into: seqNode.
-			
-		seqNode 
-			addNodeFirst: errorNode;
-			yourself
-			
-		]] onDNU: #body: do: [ nil "allow source fragment handling"].
-
-	(ast notNil and: [ ast isMethod and: [ast selector ~= #self]]) ifTrue: [ ^ast ].
-		
-	^[ RBParser parseExpression: source onError: [ :msg :pos :parser |
-			"^self parseOptimisticallyRetrying: source withErrorAt: pos1 withCursorAt: loc]]."
-			parser step; parseErrorNode: msg ]] on: ReparseAfterSourceEditing do: ["prevent correction tool popup"].
-	
-	
-
-]
-
 { #category : #'editing keys' }
 RubSmalltalkEditor >> pasteInitials: aKeyboardEvent [ 
 	"Replace the current text selection by an authorship name/date stamp; invoked by cmd-shift-v, easy way to put an authorship stamp in the comments of an editor."

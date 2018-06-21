@@ -46,7 +46,7 @@ RBComment >> contents [
 	^ contents
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #testing }
 RBComment >> intersectsInterval: anInterval [ 
 	"Make comments polymorphic with program nodes for hit detection"
 	^(anInterval first between: self start and: self stop) 
