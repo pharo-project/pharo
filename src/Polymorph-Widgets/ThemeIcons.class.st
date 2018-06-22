@@ -369,12 +369,6 @@ IQcM6etA2x8DnV6Dnv6BGtWAeCmKCyjBAMWc9s7ZKakLAAAAAElFTkSuQmCC'
 ]
 
 { #category : #'critiques icons' }
-ThemeIcons >> smallInformationIcon [
-
-	^ self smallInfoIcon 
-]
-
-{ #category : #'critiques icons' }
 ThemeIcons >> smallQAIcon [
 	^ icons
 			at: #'smallQAIcon'
