@@ -32,5 +32,5 @@ FileAlreadyExistsException >> file: aFile [
 { #category : #accessing }
 FileAlreadyExistsException >> messageText [
 
-	^ 'File already exists: ', file name
+	^ 'File already exists: ', file basename
 ]
