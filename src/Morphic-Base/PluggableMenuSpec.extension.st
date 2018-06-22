@@ -2,9 +2,14 @@ Extension { #name : #PluggableMenuSpec }
 
 { #category : #'*Morphic-Base' }
 PluggableMenuSpec >> asMenuMorph [
+	^ self asMenuMorphOfKind: self morphClass
+]
+
+{ #category : #'*Morphic-Base' }
+PluggableMenuSpec >> asMenuMorphOfKind: aMorphClass [
 	| prior menu myitems |
 	prior := parentMenu.
-	parentMenu := menu := self morphClass new.
+	parentMenu := menu := aMorphClass new.
 	self label ifNotNil: [ 
 		parentMenu buildTitle: [ :titleMorph | 
 			titleMorph bigTitle: self label 

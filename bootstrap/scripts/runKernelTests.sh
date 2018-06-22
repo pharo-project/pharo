@@ -6,18 +6,12 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
-# Next line is for debugging purpose. We suspect that multiple slaves uses the same dinectory.
-touch ${2}
-
 # The first parameter is the architecture
 # The second parameter is the stage name
 
 CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
 find ${CACHE}
-
-# Since there is random failure during tests execution we print the content of the current directory to find potential problems
-bootstrap/scripts/printFolderContent.sh
 
 bootstrap/scripts/getPharoVM.sh 70 vm ${1}
 					
@@ -34,9 +28,6 @@ unzip $RPACKAGE_ARCHIVE
 mv $IMAGE_FILE bootstrap.image
 
 export PHARO_CI_TESTING_ENVIRONMENT=1
-
-# Since there is random failure during tests execution we print the content of the current directory to find potential problems
-bootstrap/scripts/printFolderContent.sh
 	
 #Initializing the Image
 ./pharo bootstrap.image
@@ -53,8 +44,5 @@ bootstrap/scripts/printFolderContent.sh
 #Loading Tests
 ./pharo bootstrap.image loadHermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication=ignore
 
-#Running tests.
-./pharo bootstrap.image test --junit-xml-output --stage-name=${2} SUnit-Core SUnit-Tests	
-
-# Since there is random failure during tests execution we print the content of the current directory to find potential problems
-bootstrap/scripts/printFolderContent.sh
+#Running tests
+./pharo bootstrap.image test --junit-xml-output --stage-name=${2} SUnit-Core SUnit-Tests

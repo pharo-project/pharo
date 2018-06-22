@@ -421,6 +421,11 @@ File class >> write: id from: stringOrByteArray startingAt: startIndex count: co
 	self primitiveFailed 
 ]
 
+{ #category : #accessing }
+File >> basename [
+	^self name
+]
+
 { #category : #'open/close' }
 File >> basicOpenForWrite: writeMode [ 
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
