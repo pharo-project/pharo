@@ -5,7 +5,7 @@ FileSystem >> isMemoryFileSystem [
 	^ store isMemoryFileSystem
 ]
 
-{ #category : #'*filesystem-memory' }
+{ #category : #'*FileSystem-Memory' }
 FileSystem class >> memory [
-	^ self store: (MemoryStore new)
+	^ MemoryStore currentFileSystem
 ]

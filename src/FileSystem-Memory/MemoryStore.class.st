@@ -7,8 +7,16 @@ Class {
 	#instVars : [
 		'root'
 	],
+	#classVars : [
+		'CurrentFS'
+	],
 	#category : #'FileSystem-Memory-Store'
 }
+
+{ #category : #current }
+MemoryStore class >> currentFileSystem [
+	^ CurrentFS ifNil: [ CurrentFS := FileSystem store: MemoryStore new ]
+]
 
 { #category : #public }
 MemoryStore class >> delimiter [
@@ -187,11 +195,14 @@ MemoryStore >> isMemoryFileSystem [
 { #category : #private }
 MemoryStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 	| current |
+	aPath isRoot
+		ifTrue: [ ^ presentBlock value: self root ].
 	current := self root.
-	aPath do: [ :segment | 
-		current isDirectory
-			ifTrue: [ current := current fileEntryAt: segment ifAbsent: [ ^ absentBlock value ]]
-			ifFalse: [ ^ absentBlock value ]].
+	aPath
+		do: [ :segment | 
+			current isDirectory
+				ifTrue: [ current := current fileEntryAt: segment ifAbsent: [ ^ absentBlock value ] ]
+				ifFalse: [ ^ absentBlock value ] ].
 	^ presentBlock value: current
 ]
 
