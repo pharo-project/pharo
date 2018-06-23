@@ -28,6 +28,5 @@ SingleTreeTest >> createFile: aString [
 { #category : #running }
 SingleTreeTest >> setUp [
 	super setUp.
-	filesystem := FileSystem memory.
-	
+	filesystem := FileSystem newMemory
 ]

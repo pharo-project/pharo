@@ -15,9 +15,14 @@ GlobalIdentifierStonPersistenceTest >> persistenceClass [
 { #category : #running }
 GlobalIdentifierStonPersistenceTest >> setUpPreferencesAndChecker [
 	| memory |
-	memory := FileSystem memory.
+	memory := FileSystem newMemory.
 	preferences := memory workingDirectory / self folderName / 'pharoX' / 'preferences.ston'.
 	preferences ensureDelete.
-	checker := GlobalIdentifierPersistenceMockChecker new answer: [ memory workingDirectory exists ].
+	checker := GlobalIdentifierPersistenceMockChecker new answer: [ memory workingDirectory exists ]
+]
 
+{ #category : #running }
+GlobalIdentifierStonPersistenceTest >> tearDown [
+	(FileSystem memory workingDirectory / self folderName) ensureDeleteAll.
+	super tearDown
 ]

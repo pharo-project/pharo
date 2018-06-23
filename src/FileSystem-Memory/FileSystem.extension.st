@@ -9,3 +9,8 @@ FileSystem >> isMemoryFileSystem [
 FileSystem class >> memory [
 	^ MemoryStore currentFileSystem
 ]
+
+{ #category : #'*FileSystem-Memory' }
+FileSystem class >> newMemory [
+	^ self store: MemoryStore new
+]

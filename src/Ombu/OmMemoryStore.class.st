@@ -104,6 +104,6 @@ OmMemoryStore >> refresh [
 { #category : #accessing }
 OmMemoryStore >> writingFileReference [
 	"Stub"
-	
-	^ (FileSystem memory / 'store.ombu') ensureCreateFile
+
+	^ (FileSystem newMemory / 'store.ombu') ensureCreateFile
 ]

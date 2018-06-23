@@ -16,11 +16,18 @@ MemoryFileSystemTest >> createFileSystem [
 MemoryFileSystemTest >> testEqual [
 	| other |
 	other := self createFileSystem.
-	self deny: filesystem = other
+	self assert: other equals: filesystem
 ]
 
 { #category : #tests }
 MemoryFileSystemTest >> testIsMemoryFileSystem [
 	self assert: filesystem isMemoryFileSystem.
 	
+]
+
+{ #category : #tests }
+MemoryFileSystemTest >> testNotEqualWhenCreatingNewMemoryFileSystem [
+	| other |
+	other := FileSystem newMemory.
+	self deny: other equals: filesystem
 ]
