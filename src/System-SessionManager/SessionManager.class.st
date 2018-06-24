@@ -140,6 +140,7 @@ SessionManager class >> initializedSessionManager [
 		registerSystemClassNamed: #LanguageEnvironment	; "System"
 		registerSystemClassNamed: #ShortIntegerArray; "System"
 		registerSystemClassNamed: #DiskStore; "System"
+		registerSystemClassNamed: #MemoryStore; "System"
 		registerSystemClassNamed: #SmalltalkImage; "System"
 		registerSystemClassNamed: #WeakFinalizationList; "System"
 		registerSystemClassNamed: #Clipboard; "System"

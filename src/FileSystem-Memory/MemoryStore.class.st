@@ -23,14 +23,31 @@ MemoryStore class >> delimiter [
 	^ $/
 ]
 
+{ #category : #'class initialization' }
+MemoryStore class >> initialize [
+	"self initialize"
+
+	SessionManager default registerSystemClassNamed: self name
+]
+
 { #category : #public }
 MemoryStore class >> isCaseSensitive [
 	^ true
 ]
 
+{ #category : #'class initialization' }
+MemoryStore class >> reset [
+	CurrentFS := nil
+]
+
 { #category : #public }
 MemoryStore class >> separator [ 
 	^ $:
+]
+
+{ #category : #'system startup' }
+MemoryStore class >> startUp [
+	self reset
 ]
 
 { #category : #public }
