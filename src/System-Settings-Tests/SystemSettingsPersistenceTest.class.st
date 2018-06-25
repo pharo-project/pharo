@@ -26,7 +26,7 @@ SystemSettingsPersistenceTest >> rangeSettingNode [
 SystemSettingsPersistenceTest >> setUp [
 	super setUp.
 	MockSettings cleanUp.
-	memory := FileSystem newMemory.
+	memory := FileSystem memory.
 	preferences := memory root / 'pharo' / 'pharoX.Y' / 'preferences.ston.txt'.
 	systemSettings := SystemSettingsPersistence new.
 	systemSettings

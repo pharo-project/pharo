@@ -55,7 +55,7 @@ GTEventPackingTest >> setUp [
 		add: event2.
 	collector category: #category1.
 	packing := self packingClass new.
-	storage := FileSystem newMemory.
+	storage := FileSystem memory.
 	file := (storage workingDirectory / 'data')
 		ensureCreateFile;
 		yourself

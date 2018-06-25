@@ -24,8 +24,8 @@ CopyVisitorTest >> createFile: aString [
 { #category : #running }
 CopyVisitorTest >> setUp [
 	super setUp.
-	source := FileSystem newMemory.
-	dest := FileSystem newMemory
+	source := FileSystem memory.
+	dest := FileSystem memory
 ]
 
 { #category : #tests }

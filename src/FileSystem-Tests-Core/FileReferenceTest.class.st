@@ -374,8 +374,16 @@ FileReferenceTest >> testDeleteIfAbsent [
 FileReferenceTest >> testDoesContainReferenceFileSystem [
 	| ref other |
 	ref := filesystem * 'griffle'.
-	other := FileSystem memory / 'griffle' / 'nurp'.
+	other := filesystem / 'griffle' / 'nurp'.
 	self assert: (ref contains: other)
+]
+
+{ #category : #tests }
+FileReferenceTest >> testDoesNotContainReferenceWhenUsingDifferentInstancesOfMemoryFileSystem [
+	| ref other |
+	ref := filesystem * 'griffle'.
+	other := FileSystem memory / 'griffle' / 'nurp'.
+	self deny: (ref contains: other)
 ]
 
 { #category : #tests }
@@ -634,7 +642,7 @@ FileReferenceTest >> testParent [
 FileReferenceTest >> testParentResolutionWithAbsoluteReference [
 	| base relative absolute |
 	base := filesystem / '/plonk' / 'pinto'.
-	relative := FileSystem memory / 'griffle' / 'zonk'.
+	relative := filesystem / 'griffle' / 'zonk'.
 	absolute := base resolve: relative.
 	self assert: absolute fileSystem == relative fileSystem.
 	self assert: absolute isAbsolute.
@@ -668,13 +676,11 @@ FileReferenceTest >> testParentResolutionWithReference [
 { #category : #tests }
 FileReferenceTest >> testParentResolutionWithRemoteReference [
 	| base relative absolute |
-	base := (filesystem / 'plonk' / 'pinto').
-	relative := (FileSystem memory referenceTo: '../griffle/zonk').
+	base := filesystem / 'plonk' / 'pinto'.
+	relative := filesystem referenceTo: '../griffle/zonk'.
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
-	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk').
-	
-	
+	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk')
 ]
 
 { #category : #tests }

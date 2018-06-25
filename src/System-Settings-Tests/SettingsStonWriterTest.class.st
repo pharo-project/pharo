@@ -15,7 +15,7 @@ Class {
 { #category : #running }
 SettingsStonWriterTest >> setUp [
 	super setUp.
-	fileReference := (FileSystem newMemory root / 'preferences.ston.txt') asFileReference.
+	fileReference := (FileSystem memory root / 'preferences.ston.txt') asFileReference.
 	writer := SettingsStonWriter new.
 	fileStream := fileReference writeStream.
 	writer stream: fileStream

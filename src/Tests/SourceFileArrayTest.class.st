@@ -236,7 +236,7 @@ SourceFileArrayTest >> testProtocol [
 { #category : #testing }
 SourceFileArrayTest >> testRemoteStringReadsInGivenSourceFileArray [
 	| fs array remoteString readStream |
-	fs := FileSystem newMemory.
+	fs := FileSystem memory.
 	array := SourceFileArray new.
 	array changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: {fs root}) tryOpen.
 	array sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: {fs root}) tryOpen.
@@ -251,7 +251,7 @@ SourceFileArrayTest >> testRemoteStringReadsInGivenSourceFileArray [
 { #category : #testing }
 SourceFileArrayTest >> testRemoteStringWritesInGivenSourceFileArray [
 	| fs array |
-	fs := FileSystem newMemory.
+	fs := FileSystem memory.
 	array := SourceFileArray new.
 	array
 		changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: {fs root}) tryOpen.
@@ -356,7 +356,7 @@ SourceFileArrayTest >> testTimeStamp [
 { #category : #testing }
 SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArray [
 	| fs array |
-	fs := FileSystem newMemory.
+	fs := FileSystem memory.
 	array := SourceFileArray new.
 	array
 		changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: {fs root}) tryOpen.
@@ -373,7 +373,7 @@ SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArray [
 { #category : #testing }
 SourceFileArrayTest >> testWriteToBufferedStream [
 	| fs array |
-	fs := FileSystem newMemory.
+	fs := FileSystem memory.
 	array := SourceFileArray new.
 	array
 		changesFileStream: (ZnBufferedReadWriteStream on: (fs / 'changes.chunk') writeStream).
@@ -390,7 +390,7 @@ SourceFileArrayTest >> testWriteToBufferedStream [
 { #category : #testing }
 SourceFileArrayTest >> testWriteToChangesFileInGivenSourceFileArray [
 	| fs array |
-	fs := FileSystem newMemory.
+	fs := FileSystem memory.
 	array := SourceFileArray new.
 	array
 		changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: {fs root}) tryOpen.

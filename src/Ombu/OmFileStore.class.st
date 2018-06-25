@@ -65,7 +65,7 @@ OmFileStore class >> globalNameFrom: directoryEntryOrFileReference [
 
 { #category : #'instance creation' }
 OmFileStore class >> named: aGlobalName [
-	^ self named: aGlobalName inDirectory: FileSystem newMemory
+	^ self named: aGlobalName inDirectory: FileSystem memory
 ]
 
 { #category : #'instance creation' }
