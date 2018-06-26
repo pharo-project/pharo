@@ -387,20 +387,33 @@ NECController >> smartBackspace [
 	^ true
 ]
 
+{ #category : #settings }
+NECController >> smartCharacterPairFor: char ifAbsent: aBlock [
+	| left right |
+	
+	left := self smartCharactersMapping at: char ifPresent: [ char ] ifAbsent: [ 
+		self smartInverseMapping at: char ifPresent: [:key | key ] ifAbsent: [ ^aBlock value ]].
+	
+	right := self smartCharactersMapping at: left ifAbsent: [ ^aBlock value ].
+	
+ 	^ left -> right
+]
+
 { #category : #keyboard }
 NECController >> smartCharacterWithEvent: anEvent [
 	"char is extracted from anEvent, anEvent is passed because we may need it.
 	We may remove char if this is not costly."
 
-	| opposite previous next char insertion insertionCenter |
+	| opposite previous next char insertion insertionCenter matchingPair |
 	char := anEvent keyCharacter.
 	editor hasSelection
 		ifTrue: [ 
 			"we selected a piece of text and we type the same character that previously, so
 		we unwrap it"
 			"we selected a piece of text if the character is not a special one we do nothing."
-			opposite := self smartCharactersMapping at: char ifAbsent: [ ^ nil ].	"else we wrap the selection"	"editor replaceSelectionWith: (String with: char) , (editor selection) , (String with: opposite)."	"ugly logic it should be encapsulated in the editor "
-			editor enclose: anEvent.
+			matchingPair := self smartCharacterPairFor: char ifAbsent: [  ^nil ].	"else we wrap the selection"	"editor replaceSelectionWith: (String with: char) , (editor selection) , (String with: opposite)."	"ugly logic it should be encapsulated in the editor "
+			
+			editor encloseWith: matchingPair.
 			self invalidateEditorMorph.
 			^ true ].	"we are not in a selection"
 	opposite := self smartCharactersMapping

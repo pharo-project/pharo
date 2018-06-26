@@ -27,6 +27,26 @@ NECControllerTest >> tearDown [
 ]
 
 { #category : #'tests-keyboard' }
+NECControllerTest >> testSmartCharacterPairForIfAbsent [
+
+	self assert: (controller smartCharacterPairFor: $( ifAbsent: [ nil ]) equals: $( -> $).
+	self assert: (controller smartCharacterPairFor: $[ ifAbsent: [ nil ]) equals: $[ -> $].	
+	self assert: (controller smartCharacterPairFor: $< ifAbsent: [ nil ]) equals: $< -> $>.
+	self assert: (controller smartCharacterPairFor: ${ ifAbsent: [ nil ]) equals: ${ -> $}.	
+	self assert: (controller smartCharacterPairFor: $" ifAbsent: [ nil ]) equals: $" -> $".
+	self assert: (controller smartCharacterPairFor: $' ifAbsent: [ nil ]) equals: $' -> $'.		
+	self assert: (controller smartCharacterPairFor: $| ifAbsent: [ nil ]) equals: $| -> $|.
+	
+	self assert: (controller smartCharacterPairFor: $) ifAbsent: [ nil ]) equals: $( -> $).
+	self assert: (controller smartCharacterPairFor: $] ifAbsent: [ nil ]) equals: $[ -> $].	
+	self assert: (controller smartCharacterPairFor: $> ifAbsent: [ nil ]) equals: $< -> $>.
+	self assert: (controller smartCharacterPairFor: $} ifAbsent: [ nil ]) equals: ${ -> $}.
+	
+	self assert: (controller smartCharacterPairFor: $% ifAbsent: [ nil ]) equals: nil.
+		
+]
+
+{ #category : #'tests-keyboard' }
 NECControllerTest >> testSmartNeedExtraRemoveInForOppositeAt [
 
 	self assert: (controller smartNeedExtraRemoveIn: '()' for: $( opposite:$) at:1).

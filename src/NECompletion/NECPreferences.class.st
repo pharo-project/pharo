@@ -140,7 +140,10 @@ NECPreferences class >> initialize [
 		at: $[ put: $];
 		at: ${ put: $};
 		at: $" put: $";
-		at: $' put: $'.
+		at: $' put: $';
+		at: $< put: $>;
+		at: $| put: $|.
+		
 	smartCharactersWithSingleSpace := ''.
 	smartCharactersWithDoubleSpace := '[]{}'.
 	backgroundColor := Smalltalk ui theme settings menuColor ifNil: [ Color white ].

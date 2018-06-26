@@ -1115,6 +1115,22 @@ TextEditor >> enclose: aKeyboardEvent [
 	^true
 ]
 
+{ #category : #'editing keys' }
+TextEditor >> encloseWith: aMatchingPair [
+	"Insert or remove bracket characters around the current selection. Provided for protocol compatibility, but not completely sure this is ever called"
+	| event |  
+	event := KeyboardEvent new.
+	event 
+		setType: #keystroke
+		buttons: nil
+		position:  0@0
+		keyValue: aMatchingPair key asciiValue 
+		charCode: aMatchingPair key asciiValue
+		hand: nil 
+		stamp: Time now.
+	^self enclose: event 
+]
+
 { #category : #private }
 TextEditor >> encompassParagraph: anInterval [
 	"Return an interval that includes anInterval, and that comprises one or several whole paragraphs in the receiver.

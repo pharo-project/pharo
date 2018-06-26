@@ -799,6 +799,7 @@ RubTextEditor >> defaultCommandKeymapping [
 	(Character space -> #selectWord:).
 	(Character delete -> #forwardDelete:) } do: [ :assoc | 
 		cmdMap at: assoc key asciiValue + 1 put: assoc value ].
+	"I am not convinced the following smart characters are used - see NecPreferences>>smartCharactersMapping"
 	'([{''"<' do: [ :char | cmdMap at: char asciiValue + 1 put: #enclose: ].
 	cmdMap at: $, asciiValue + 1 put: #shiftEnclose:.
 	'0123456789-=' do: [ :char | cmdMap at: char asciiValue + 1 put: #changeEmphasis: ].
@@ -959,6 +960,7 @@ RubTextEditor >> enclose: aKeyboardEvent [
 	"Insert or remove bracket characters around the current selection."
 
 	| left right startIndex stopIndex oldSelection which text |
+	self deprecated: '***** should be using #encloseWith: and extracting values from NECController>>smartCharactersMapping*****'.
 	self closeTypeIn.
 	startIndex := self startIndex.
 	stopIndex := self stopIndex.
@@ -966,6 +968,33 @@ RubTextEditor >> enclose: aKeyboardEvent [
 	which := '([<{"''' indexOf: aKeyboardEvent keyCharacter ifAbsent: [ ^true ].
 	left := '([<{"''' at: which.
 	right := ')]>}"''' at: which.
+	text := self text.
+	((startIndex > 1 and: [stopIndex <= text size])
+			and: [ (text at: startIndex-1) = left and: [(text at: stopIndex) = right]])
+		ifTrue: [
+			"already enclosed; strip off brackets"
+			self selectFrom: startIndex-1 to: stopIndex.
+			self replaceSelectionWith: oldSelection]
+		ifFalse: [
+			"not enclosed; enclose by matching brackets"
+			self replaceSelectionWith:
+				(Text string: (String with: left), oldSelection string, (String with: right) attributes: self emphasisHere).
+			self selectFrom: startIndex+1 to: stopIndex].
+	^true
+]
+
+{ #category : #'editing keys' }
+RubTextEditor >> encloseWith: aMatchingPair [
+	"Insert or remove bracket characters around the current selection."
+
+	| left right startIndex stopIndex oldSelection text |
+	self closeTypeIn.
+	startIndex := self startIndex.
+	stopIndex := self stopIndex.
+	oldSelection := self selection.
+	
+	left := aMatchingPair key.
+	right := aMatchingPair value.
 	text := self text.
 	((startIndex > 1 and: [stopIndex <= text size])
 			and: [ (text at: startIndex-1) = left and: [(text at: stopIndex) = right]])
