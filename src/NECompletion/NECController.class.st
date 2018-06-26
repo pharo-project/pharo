@@ -426,9 +426,9 @@ NECController >> smartCharacterWithEvent: anEvent [
 			editor encloseWith: matchingPair.
 			self invalidateEditorMorph.
 			^ true ].	"we are not in a selection"
-	opposite := self smartCharactersMapping
-		at: char
-		ifAbsent: [ 
+			
+	(self smartCharacterShouldClose: char)	
+		ifFalse: [ 
 			"if the character is not a special character"
 			self smartInverseMapping at: char ifAbsent: [ ^ nil ].	"if the character is not a closing special character do nothing"	"The character is special"
 			editor blinkPrevParen: char.
@@ -437,6 +437,8 @@ NECController >> smartCharacterWithEvent: anEvent [
 			editor selectFrom: editor startIndex + 1 to: editor startIndex.
 			self invalidateEditorMorph.
 			^ true ].
+		
+	opposite := self smartCharacterOppositeOf: char ifAbsent: [ ^nil ].
 	previous := editor previousCharacterIfAbsent: [ Character space ].
 	next := editor nextCharacterIfAbsent: [ Character space ].
 	insertion := next isSeparator
