@@ -363,7 +363,7 @@ NECController >> smartBackspace [
 	currentText := currentEditor text.
 	smartCharacter := currentText at: currentEditor startIndex - 1 ifAbsent: [ ^ false ].	"take the opposite"
 	
-	opposite := self smartCharactersMapping at: smartCharacter ifAbsent: [ ^ false ].	"test if the next char is opposite"
+	opposite := self smartCharacterOppositeOf: smartCharacter ifAbsent: [ ^false ].	"test if the next char is opposite"
 	
 	opposite = (currentText at: currentEditor stopIndex ifAbsent: [ ^ false ])
 		ifFalse: [ ^ false ].	"test if there is an extra opposite to remove"
@@ -388,15 +388,25 @@ NECController >> smartBackspace [
 ]
 
 { #category : #settings }
+NECController >> smartCharacterOppositeOf: char ifAbsent: aBlock [
+	^(self smartCharactersMapping at: char ifAbsent: [ ^aBlock value ]) key
+]
+
+{ #category : #settings }
 NECController >> smartCharacterPairFor: char ifAbsent: aBlock [
 	| left right |
 	
 	left := self smartCharactersMapping at: char ifPresent: [ char ] ifAbsent: [ 
 		self smartInverseMapping at: char ifPresent: [:key | key ] ifAbsent: [ ^aBlock value ]].
 	
-	right := self smartCharactersMapping at: left ifAbsent: [ ^aBlock value ].
+	right := self smartCharacterOppositeOf: left ifAbsent: [ ^aBlock value ].
 	
  	^ left -> right
+]
+
+{ #category : #settings }
+NECController >> smartCharacterShouldClose: char [
+	^(self smartCharactersMapping at: char ifAbsent: [ ^false ]) value
 ]
 
 { #category : #keyboard }
@@ -472,7 +482,7 @@ NECController >> smartInverseMapping [
 	^ inverseMapping ifNil: [ 
 		inverseMapping := Dictionary new.
 		self smartCharactersMapping
-			keysAndValuesDo: [ :key :value | inverseMapping at: value put: key ].
+			keysAndValuesDo: [ :char :inverse | inverseMapping at: inverse key put: char ].
 		inverseMapping ]
 ]
 
