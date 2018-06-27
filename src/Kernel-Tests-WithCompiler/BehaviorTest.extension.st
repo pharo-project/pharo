@@ -5,7 +5,7 @@ BehaviorTest >> testCanPerform [
 	
 	| c1 c2 |
 
-	c1 := Object subclass: 'MySuperclass' instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: self class category.
+	c1 := Object subclass: 'MySuperclass' instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' package: self class category.
 	c1 compile: 'method1 ^self subclassResponsibility'.
 	c1 compile: 'method2 ^123'.
 	
@@ -29,7 +29,7 @@ BehaviorTest >> testCanUnderstand [
 	
 	| c1 c2 |
 
-	c1 := Object subclass: 'MySuperclass' instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: self class category.
+	c1 := Object subclass: 'MySuperclass' instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' package: self class category.
 	c1 compile: 'method1 ^self subclassResponsibility'.
 	c1 compile: 'method2 ^123'.
 	
