@@ -1,5 +1,5 @@
 "
-I hold a lot of different constants needed to work with cairo library
+I hold a lot of different constants needed to work with cairo library.
 "
 Class {
 	#name : #AthensCairoDefinitions,
@@ -335,7 +335,6 @@ AthensCairoDefinitions class >> initialize_cairo_status_t [
 	"_cairo_status enum"
 	
 	CAIRO_STATUS_SUCCESS := 0.
-
 	CAIRO_STATUS_NO_MEMORY := 1.
 	CAIRO_STATUS_INVALID_RESTORE := 2.
 	CAIRO_STATUS_INVALID_POP_GROUP := 3.
