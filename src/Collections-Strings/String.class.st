@@ -514,7 +514,7 @@ String >> asByteString [
 
 { #category : #converting }
 String >> asCamelCase [
-	"Convert to CamelCas, i.e, remove spaces, and convert starting loowercase to uppercase."
+	"Convert to CamelCase, i.e, remove spaces, and convert starting loowercase to uppercase."
    "'A man, a plan, a canal, panama' asCamelCase >>> 'AMan,APlan,ACanal,Panama'"
  	"'Here 123should % be 6 the name6 of the method' asCamelCase  >>> 'Here123should%Be6TheName6OfTheMethod'"
 		^ self class streamContents: [:stream |
