@@ -4,7 +4,7 @@ STONWriterTests test serialization.
 Class {
 	#name : #STONWriterTests,
 	#superclass : #TestCase,
-	#category : #'STON-Tests'
+	#category : #'STON-Tests-Writer'
 }
 
 { #category : #private }
