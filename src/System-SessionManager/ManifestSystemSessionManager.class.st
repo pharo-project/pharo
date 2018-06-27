@@ -1,7 +1,7 @@
 Class {
 	#name : #ManifestSystemSessionManager,
 	#superclass : #PackageManifest,
-	#category : #'System-SessionManager'
+	#category : #'System-SessionManager-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
