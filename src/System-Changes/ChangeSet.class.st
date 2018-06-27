@@ -25,7 +25,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #'System-Changes'
+	#category : #'System-Changes-Base'
 }
 
 { #category : #enumerating }
@@ -186,6 +186,21 @@ ChangeSet class >> doesAnyChangeSetHaveClass: aClass andSelector: aSelector [
 	^ (self countOfChangeSetsWithClass: aClass andSelector: aSelector) > 0
 ]
 
+{ #category : #'as yet unclassified' }
+ChangeSet class >> fileIntoNewChangeSet: fullName [
+	"File in all of the contents of the currently selected file, if any, into a new change set." 
+
+	| fn ff |
+	fullName ifNil: [^ self ].
+	
+	fn := (Smalltalk hasClassNamed: #GZipReadStream) 
+		ifTrue: [(Smalltalk classNamed:  #GZipReadStream) uncompressedFileName: fullName]
+		ifFalse: [fullName].
+	[ ff := FileStream readOnlyFileNamed: fn.
+	self newChangesFromStream: ff named: (fn  asFileReference basename)]
+		ensure: [ff ifNotNil: [ff close]]
+]
+
 { #category : #'filein/out' }
 ChangeSet class >> fileOutChangeSetsNamed: nameList [
 	"File out the list of change sets whose names are provided"
@@ -218,6 +233,15 @@ ChangeSet class >> fileOutChangeSetsNamed: nameList [
 ', aName]].
 
 	self inform: infoString
+]
+
+{ #category : #'as yet unclassified' }
+ChangeSet class >> fileReaderServicesForFile: fullName suffix: suffix [
+	<fileService>
+	
+	^ (FileStream isSourceFileSuffix: suffix)
+		ifTrue: [ self services]
+		ifFalse: [#()]
 ]
 
 { #category : #enumerating }
@@ -457,6 +481,23 @@ ChangeSet class >> scanFile: file category: cat class: class meta: meta stamp: s
 		items add: (ChangeRecord new file: file position: itemPosition type: #method
 							class: class category: cat meta: meta stamp: stamp)].
 	^items
+]
+
+{ #category : #'as yet unclassified' }
+ChangeSet class >> serviceFileIntoNewChangeSet [
+	"Answer a service for installing a file into a new change set"
+
+	^ SimpleServiceEntry 
+		provider: self 
+		label: 'Install into new change set'
+		selector: #fileIntoNewChangeSet:
+		description: 'Install the file as a body of code in the image: create a new change set and file-in the selected file into it'
+		buttonLabel: 'Install'
+]
+
+{ #category : #'as yet unclassified' }
+ChangeSet class >> services [
+	^ Array with: self serviceFileIntoNewChangeSet
 ]
 
 { #category : #'filein/out' }

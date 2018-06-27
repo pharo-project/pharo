@@ -1,7 +1,7 @@
 Class {
 	#name : #ManifestSystemChanges,
 	#superclass : #PackageManifest,
-	#category : #'System-Changes'
+	#category : #'System-Changes-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
