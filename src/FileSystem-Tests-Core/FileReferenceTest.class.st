@@ -990,28 +990,36 @@ FileReferenceTest >> testWriteStream [
 
 { #category : #tests }
 FileReferenceTest >> testWriteStreamDo [
-	| ref |
+	| ref s |
 	ref := filesystem / 'plonk'.
-	[ ref writeStreamDo: [ :stream | self deny: stream isNil ] ]
+	[ ref
+		writeStreamDo: [ :stream | 
+			s := stream.
+			self deny: stream isNil ] ]
 		ensure: [ ref ensureDelete ]
 ]
 
 { #category : #tests }
 FileReferenceTest >> testWriteStreamDoExists [
-	| ref path |
+	| ref s path |
 	path := Path * 'plonk'.
 	filesystem store createFile: path.
 	ref := filesystem referenceTo: path.
-	[ ref writeStreamDo: [ :stream | self deny: stream isNil ] ]
+	[ ref
+		writeStreamDo: [ :stream | 
+			s := stream.
+			self deny: stream isNil ] ]
 		ensure: [ ref ensureDelete ]
 ]
 
 { #category : #tests }
 FileReferenceTest >> testWriteStreamDoifPresent [
-	| ref |
+	| ref s |
 	ref := filesystem / 'plonk'.
 	[ ref
-		writeStreamDo: [ :stream | self deny: stream isNil ]
+		writeStreamDo: [ :stream | 
+			s := stream.
+			self deny: stream isNil ]
 		ifPresent: [ self signalFailure: 'The file does not exist!' ] ]
 		ensure: [ ref ensureDelete ]
 ]
