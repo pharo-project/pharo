@@ -1,10 +1,13 @@
+"
+Unit test for traits with complex slots
+"
 Class {
 	#name : #T2TraitWithComplexSlots,
 	#superclass : #T2AbstractTest,
 	#instVars : [
 		'slotClass'
 	],
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-Tests'
 }
 
 { #category : #'instance creation' }

@@ -1,7 +1,10 @@
+"
+Unit test for traits with slots
+"
 Class {
 	#name : #T2TraitWithSlots,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-Tests'
 }
 
 { #category : #tests }

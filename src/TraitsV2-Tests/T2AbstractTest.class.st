@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'createdClasses'
 	],
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-Tests'
 }
 
 { #category : #'instance creation' }

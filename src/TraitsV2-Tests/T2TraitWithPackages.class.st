@@ -1,7 +1,10 @@
+"
+Unit test for trait packaging
+"
 Class {
 	#name : #T2TraitWithPackages,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-Tests'
 }
 
 { #category : #tests }

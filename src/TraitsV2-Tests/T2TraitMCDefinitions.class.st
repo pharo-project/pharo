@@ -1,7 +1,10 @@
+"
+Unit test for correct handling of MC class definitions
+"
 Class {
 	#name : #T2TraitMCDefinitions,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-Tests'
 }
 
 { #category : #tests }
