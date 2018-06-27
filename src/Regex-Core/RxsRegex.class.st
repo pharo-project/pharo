@@ -14,7 +14,7 @@ Class {
 		'branch',
 		'regex'
 	],
-	#category : #'Regex-Core'
+	#category : #'Regex-Core-Nodes'
 }
 
 { #category : #accessing }

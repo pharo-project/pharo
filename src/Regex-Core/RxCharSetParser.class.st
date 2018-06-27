@@ -17,7 +17,7 @@ Class {
 		'lookahead',
 		'elements'
 	],
-	#category : #'Regex-Core'
+	#category : #'Regex-Core-Utilities'
 }
 
 { #category : #'instance creation' }

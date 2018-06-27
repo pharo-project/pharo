@@ -18,7 +18,7 @@ Class {
 		'BackslashConstants',
 		'BackslashSpecials'
 	],
-	#category : #'Regex-Core'
+	#category : #'Regex-Core-Base'
 }
 
 { #category : #'exception signaling' }

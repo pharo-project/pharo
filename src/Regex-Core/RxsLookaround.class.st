@@ -10,7 +10,7 @@ Class {
 		'piece',
 		'positive'
 	],
-	#category : #'Regex-Core'
+	#category : #'Regex-Core-Nodes'
 }
 
 { #category : #'instance creation' }

@@ -1,7 +1,10 @@
+"
+Support for regular expressions
+"
 Class {
 	#name : #ManifestRegexCore,
 	#superclass : #PackageManifest,
-	#category : #'Regex-Core'
+	#category : #'Regex-Core-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

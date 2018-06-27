@@ -13,7 +13,7 @@ Class {
 		'selector',
 		'negated'
 	],
-	#category : #'Regex-Core'
+	#category : #'Regex-Core-Nodes'
 }
 
 { #category : #accessing }

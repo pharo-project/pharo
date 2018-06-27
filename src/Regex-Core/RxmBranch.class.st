@@ -14,7 +14,7 @@ Class {
 		'loopback',
 		'alternative'
 	],
-	#category : #'Regex-Core'
+	#category : #'Regex-Core-Links'
 }
 
 { #category : #'initialize-release' }
