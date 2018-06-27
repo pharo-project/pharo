@@ -186,9 +186,8 @@ ByteArray >> hexDumpOn: aStream max: maxBytes [
 			aStream
 				<< (ch printPaddedWith: $0 to: 2 base: 16);
 				<< ' '.
-			ch := Character value: ch.
-			ch isAlphaNumeric ifTrue: 
-				[ string nextPut: ch ]
+			(ch between: 32 and: 126) ifTrue: 
+				[ string nextPut: (Character value: ch) ]
 			ifFalse:
 				[ string nextPut: $. ].
 			remainder = 15 ifTrue: [ 
@@ -199,7 +198,7 @@ ByteArray >> hexDumpOn: aStream max: maxBytes [
 			ch := stream next.
 			i := i + 1 ].
 		remainder := i \\ 16.
-		(ch isNil and: [remainder between: 1 and: 14]) ifTrue: [ 
+		(ch isNil and: [remainder between: 1 and: 15]) ifTrue: [ 
 			(16 - remainder) timesRepeat: [ aStream nextPutAll: '   ' ].
 			aStream
 				<< '  |';

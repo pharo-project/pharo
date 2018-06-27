@@ -22,7 +22,7 @@ WordArray >> atAllPut: value [
 	super atAllPut: value
 ]
 
-{ #category : #'accessing' }
+{ #category : #accessing }
 WordArray >> byteSize [
 	^self size * 4
 ]
