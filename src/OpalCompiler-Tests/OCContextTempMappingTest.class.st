@@ -35,7 +35,7 @@ OCContextTempMappingTest >> testAccessingArgOfOuterBlockFromAnotherDeepBlock [
 	| actual |
 	
 	"Check the source code availability to do not fail on images without sources"
-	thisContext method hasSourceCode ifTrue: [ ^ self ].
+	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 	
 	actual := [:outerArg | 
 		outerArg asString.
@@ -53,7 +53,7 @@ OCContextTempMappingTest >> testAccessingBlockArgumentNoneOptimizedBlock [
 	| a b |
 
 	"Check the source code availability to do not fail on images without sources"
-	thisContext method hasSourceCode ifTrue: [ ^ self ].
+	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
 	a := 1.
 	b := a in: [ :x | thisContext tempNames ].
@@ -68,7 +68,7 @@ OCContextTempMappingTest >> testAccessingBlockArgumentOptimizedBlock [
 	| a b |
 	
 	"Check the source code availability to do not fail on images without sources"
-	thisContext method hasSourceCode ifTrue: [ ^ self ].
+	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
 	a := 1.
 	b := a ifNotNil: [ :x | thisContext tempNames ].
@@ -88,7 +88,7 @@ OCContextTempMappingTest >> testAccessingMultipleVariablesInVector [
 	| t1 t2 t3 t4 t5 t6 |
 	
 	"Check the source code availability to do not fail on images without sources"
-	thisContext method hasSourceCode ifTrue: [ ^ self ].
+	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 	
 	t1 := 1.
 	t2 := 2.
@@ -113,7 +113,7 @@ OCContextTempMappingTest >> testAccessingMultipleVariablesInVector [
 OCContextTempMappingTest >> testAccessingTempsVectorInBlock [
 
 	"Check the source code availability to do not fail on images without sources"
-	thisContext method hasSourceCode ifTrue: [ ^ self ].
+	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
 	[ | temp |
 		[ temp := 1.
@@ -127,7 +127,7 @@ OCContextTempMappingTest >> testAccessingTempsVectorInBlock2 [
 	|a b r |
 	
 	"Check the source code availability to do not fail on images without sources"
-	thisContext method hasSourceCode ifTrue: [ ^ self ].
+	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 	
 	a := [ r := 'failure'].
 	[ b :='success'.
@@ -144,7 +144,7 @@ OCContextTempMappingTest >> testAccessingTempsVectorInBlock3 [
 	|a b r |
 
 	"Check the source code availability to do not fail on images without sources"
-	thisContext method hasSourceCode ifTrue: [ ^ self ].
+	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
 	a := [ r := 'failure'].
 	[ b :='success'.
@@ -159,7 +159,7 @@ OCContextTempMappingTest >> testAccessingVariablesInBlock [
 	| theContext |
 
 	"Check the source code availability to do not fail on images without sources"
-	thisContext method hasSourceCode ifTrue: [ ^ self ].
+	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
 	[ | t1 |
 		t1 := true.
@@ -174,7 +174,7 @@ OCContextTempMappingTest >> testAccessingVariablesInBlock [
 OCContextTempMappingTest >> testAccessingVariablesInOptimizedBlock [
 	
 	"Check the source code availability to do not fail on images without sources"
-	thisContext method hasSourceCode ifTrue: [ ^ self ].
+	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
 	1 to: 2 do: [ :index | |optimizedTemp|
 		optimizedTemp := index.
@@ -188,7 +188,7 @@ OCContextTempMappingTest >> testAccessingVariablesInOptimizedBlock2 [
 	| a b |
 
 	"Check the source code availability to do not fail on images without sources"
-	thisContext method hasSourceCode ifTrue: [ ^ self ].
+	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
 	a:=1.
 	b:=2.

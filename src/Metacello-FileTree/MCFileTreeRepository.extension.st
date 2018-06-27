@@ -33,3 +33,8 @@ MCFileTreeRepository >> repositoryVersionString [
     ifNotNil: [ :sha | ^ sha ].
   ^ super repositoryVersionString
 ]
+
+{ #category : #'*Metacello-FileTree' }
+MCFileTreeRepository >> resetDirectory [
+	directory := nil
+]

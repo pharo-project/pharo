@@ -13,7 +13,7 @@ Class {
 { #category : #signalling }
 FileDoesNotExistException class >> signalWithFile: aFile writeMode: writeMode [
 
-	^ (self fileName: aFile name)
+	^ (self fileName: aFile basename)
 		readOnly: writeMode not;
 		signal
 ]

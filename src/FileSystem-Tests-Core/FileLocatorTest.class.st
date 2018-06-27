@@ -186,10 +186,10 @@ FileLocatorTest >> testResolveRelativeReference [
 	locator := FileLocator image / 'plonk'.
 	self flag: 'this is a bit weird...'.
 	reference := FileSystem memory * 'griffle'.
-	result := locator resolve: reference..
-	self assert: result class= locator class.
-	self assert: result origin = locator origin.
-	self assert: result path = reference path.
+	result := locator resolve: reference.
+	self assert: result class equals: locator class.
+	self assert: result origin equals: locator origin.
+	self assert: result path equals: reference path
 ]
 
 { #category : #'resolution tests' }

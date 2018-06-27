@@ -45,7 +45,7 @@ BaselineOfBasicTools >> baseline: spec [
 		
 		spec baseline: 'Athens' with: [ 
 			spec
-				loads: 'Basic';
+				loads: 'Cairo-core';
 				repository: repository ].
 
 		spec package: 'JenkinsTools-Core'.

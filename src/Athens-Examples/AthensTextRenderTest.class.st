@@ -4,16 +4,18 @@ Visual tests for correct rendering of text using Athens
 Class {
 	#name : #AthensTextRenderTest,
 	#superclass : #Object,
-	#category : #'Athens-Text'
+	#category : #'Athens-Examples-Demos'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 AthensTextRenderTest class >> surfaceClass [
 	^ AthensCairoSurface
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AthensTextRenderTest class >> test1 [
+	<example>
+	
 	|  t  c  |
 
 t := '
@@ -52,8 +54,10 @@ asText .
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AthensTextRenderTest class >> test2 [
+	<example>
+	
 	|  t  c surf |
 	t := self testText. 
 	t addAttribute: (AthensTextBackground new color: (Color green alpha: 0.3 )) from: 1 to: 267.
@@ -80,8 +84,10 @@ AthensTextRenderTest class >> test2 [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AthensTextRenderTest class >> test3 [
+	<example>
+	
 	|  t  c surf |
 
 "t := '12345 pi kl mn op gj the text must flow' "
@@ -122,8 +128,10 @@ LogicalFont
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AthensTextRenderTest class >> test4 [
+	<example>
+	
 	|  t  c surf |
 
 "t := '12345 pi kl mn op gj the text must flow' "
@@ -158,8 +166,10 @@ LogicalFont
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AthensTextRenderTest class >> test5 [
+	<example>
+	
 	|  t  c surf |
 
 "t := '12345 pi kl mn op gj the text must flow' "
@@ -190,8 +200,10 @@ LogicalFont
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AthensTextRenderTest class >> testBlitting [
+	<example>
+	
 	| fnt form blt |
 
 	fnt := LogicalFont
@@ -233,8 +245,10 @@ AthensTextRenderTest class >> testBlitting [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AthensTextRenderTest class >> testText [
+	<example>
+	
 	|  t  |
 
 t := 'The safety Dconstraint is that the garbage collector 
@@ -271,8 +285,9 @@ LogicalFont
 	^ t
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AthensTextRenderTest class >> testWindow [
+	<example>
 
 	^ (AthensPluggableTextMorph
 		on: self
@@ -281,8 +296,10 @@ AthensTextRenderTest class >> testWindow [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AthensTextRenderTest class >> testWindowRender [
+	<example>
+	
 	| surf |
 	surf := self surfaceClass extent: Display extent.
 

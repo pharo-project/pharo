@@ -39,7 +39,8 @@ BaselineOfUnifiedFFI >> baseline: spec [
 			
 		spec 
 			group: 'default' with: #('core' 'legacy');
-			group: 'core' with: #('UnifiedFFI' 'UnifiedFFI-Tests');
+			group: 'minimal' with: #('UnifiedFFI');
+			group: 'core' with: #('minimal' 'UnifiedFFI-Tests');
 			group: 'legacy' with: #('UnifiedFFI-Legacy') ]
 ]
 
