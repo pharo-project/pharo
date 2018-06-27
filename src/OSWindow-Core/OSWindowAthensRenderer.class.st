@@ -8,7 +8,7 @@ Class {
 		'athensSurface',
 		'session'
 	],
-	#category : #'OSWindow-Core'
+	#category : #'OSWindow-Core-Renderer'
 }
 
 { #category : #accessing }

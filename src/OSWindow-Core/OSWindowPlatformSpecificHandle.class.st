@@ -17,7 +17,7 @@ Class {
 		'window',
 		'surface'
 	],
-	#category : #'OSWindow-Core'
+	#category : #'OSWindow-Core-Utilities'
 }
 
 { #category : #accessing }
