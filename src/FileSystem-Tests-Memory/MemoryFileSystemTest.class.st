@@ -27,7 +27,7 @@ MemoryFileSystemTest >> testIsMemoryFileSystem [
 
 { #category : #tests }
 MemoryFileSystemTest >> testModifiedTimeWhenFileCreated [
-	self assert: (FileSystem memory root / 'file.txt') ensureCreateFile modificationTime notNil
+	self assert: (filesystem / 'file.txt') ensureCreateFile modificationTime notNil
 ]
 
 { #category : #tests }
