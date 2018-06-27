@@ -387,7 +387,7 @@ EncoderForV3PlusClosures class >> unusedBytecode [
 	^ 126
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'bytecode generation' }
 EncoderForV3PlusClosures >> genCallPrimitive: primitiveIndex [
 	"139	11101111	iiiiiiii jjjjjjjj	Call Primitive #iiiiiiii + (jjjjjjjj * 256)"
 	(primitiveIndex < 1 or: [primitiveIndex > 65535]) ifTrue:
