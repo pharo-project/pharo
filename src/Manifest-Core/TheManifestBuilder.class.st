@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'manifestClass'
 	],
-	#category : #'Manifest-Core'
+	#category : #'Manifest-Core-Base'
 }
 
 { #category : #utilities }
@@ -331,12 +331,13 @@ TheManifestBuilder >> containsTruePositive: aItem onRule: ruleId version: versio
 
 { #category : #manifest }
 TheManifestBuilder >> createManifestNamed: packageName [
-
-	 manifestClass := PackageManifest subclass: (self class manifestTag, packageName onlyLetters) asSymbol
+	|tag|
+	tag := self class manifestTag.
+	manifestClass := PackageManifest subclass: (tag, packageName onlyLetters) asSymbol
 			instanceVariableNames: ''
 			classVariableNames: ''
 			poolDictionaries: ''
-			category: packageName.
+			package: packageName, '-', tag.
 	manifestClass comment: self class manifestClassComment.
 	^ manifestClass
 ]
