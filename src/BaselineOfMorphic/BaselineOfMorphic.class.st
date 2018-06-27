@@ -92,7 +92,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Multilingual-OtherLanguages'.
 		spec package: 'Multilingual-TextConverterOtherLanguages'.
 
-		spec package: 'NewValueHolder'.
+		spec package: 'NewValueHolder-Core'.
 
 		spec package: 'Polymorph-Widgets'.
 
