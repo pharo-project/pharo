@@ -12,7 +12,7 @@ Class {
 		'functionName',
 		'arguments'
 	],
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-Base'
 }
 
 { #category : #accessing }

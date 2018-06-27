@@ -8,7 +8,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-Architecture'
 }
 
 { #category : #'instance creation' }

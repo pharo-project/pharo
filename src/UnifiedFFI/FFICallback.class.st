@@ -17,7 +17,7 @@ Class {
 		'functionSpec',
 		'block'
 	],
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-Callbacks'
 }
 
 { #category : #converting }

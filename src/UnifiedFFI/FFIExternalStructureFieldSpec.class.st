@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fields'
 	],
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-External-StructureHandling'
 }
 
 { #category : #accessing }

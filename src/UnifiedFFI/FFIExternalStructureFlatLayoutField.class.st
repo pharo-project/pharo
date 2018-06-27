@@ -10,7 +10,7 @@ Class {
 		'size',
 		'alignment'
 	],
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-External-StructureHandling'
 }
 
 { #category : #accessing }

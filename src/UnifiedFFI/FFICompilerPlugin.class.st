@@ -37,7 +37,7 @@ Class {
 	#classInstVars : [
 		'collector'
 	],
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-Base'
 }
 
 { #category : #adding }
