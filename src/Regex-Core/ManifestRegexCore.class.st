@@ -1,5 +1,5 @@
 "
-Support for regular expressions
+Support for regular expressions.
 "
 Class {
 	#name : #ManifestRegexCore,
