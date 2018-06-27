@@ -82,7 +82,7 @@ Finder >> computeListOfClasses: aString [
 Finder >> computeWithMethodFinder: aString [
 	"Compute the selectors for the single example of receiver and args, in the very top pane"
 
-	| data result resultArray dataStrings methodFinder dataObjects temporarySearchResult statements |
+	| data result resultArray dataStrings methodFinder dataObjects temporarySearchResult statements data1|
 	(aString includes: $.)
 		ifFalse: [ ^ #() ].	"delete trailing period. This should be fixed in the Parser!"
 	data := aString trimRight: [ :char | char isSeparator or: [ char = $. ] ].
@@ -111,9 +111,12 @@ Finder >> computeWithMethodFinder: aString [
 						withCRs.
 			^ #() ].
 	dataObjects := Array with: dataObjects allButLast with: dataObjects last.	"#( (data1 data2) result )"
-	result := methodFinder
+	methodFinder load: dataObjects.""
+	data1 := methodFinder data."" 
+	result := NewMethodFinder new permutationGuess: data1 and: methodFinder answers.""
+	"result := methodFinder
 		load: dataObjects;
-		findMessage.
+		findMessage."
 	(result first beginsWith: 'no single method')
 		ifFalse: [ 
 			temporarySearchResult := self testObjects: dataObjects strings: dataStrings.

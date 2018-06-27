@@ -2,5 +2,5 @@ Extension { #name : #Boolean }
 
 { #category : #'*NewMethodFinder' }
 Boolean class >> approvedMethods [
-	^ #(#not #asBit)
+	^ #(#not #asBit #and: #or:)
 ]
