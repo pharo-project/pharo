@@ -1,7 +1,10 @@
+"
+Unicode initialization 
+"
 Class {
 	#name : #ManifestUnicodeInitialization,
 	#superclass : #PackageManifest,
-	#category : #'Unicode-Initialization'
+	#category : #'Unicode-Initialization-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
