@@ -26,8 +26,16 @@ BaselineOfSUnit class >> defaultPackageNames [
 BaselineOfSUnit >> baseline: spec [
 	<baseline>
 	spec for: #common
-		do: [ spec
+		do: [ 
+	
+			spec baseline: 'Traits' with: [
+				spec loads: 'core'. 
+				spec repository: self repository
+			].
+			
+			spec
 				package: 'SUnit-Core';
+				package: 'SUnit-Core-Traits' with: [ spec requires: 'Traits' ];
 				package: 'SUnit-Tests';
 				package: 'SUnit-UI';
 				package: 'SUnit-Support-UITesting-Tests';
@@ -36,11 +44,15 @@ BaselineOfSUnit >> baseline: spec [
 				package: 'JenkinsTools-Core';
 				package: 'JenkinsTools-ExtraReports'.
 			spec
-				group: 'Core' with: #('SUnit-Core');
+				group: 'Core' with: #('SUnit-Core' 'SUnit-Core-Traits');
 				group: 'UI' with: #('SUnit-UI' 'SUnit-Support-UITesting');
 				group: 'Tests' with: #('SUnit-Tests' 'SUnit-Support-UITesting-Tests');
 				group: 'Help' with: #('SUnit-Help');
 				group: 'JenkinsSupport' with: #('JenkinsTools-Core' 'JenkinsTools-ExtraReports');
-				group: 'default'
-					with: #('SUnit-Core' 'SUnit-Tests' 'JenkinsTools-Core' 'JenkinsTools-ExtraReports') ]
+				group: 'default' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Tests' 'JenkinsTools-Core' 'JenkinsTools-ExtraReports') ]
+]
+
+{ #category : #accessing }
+BaselineOfSUnit >> repository [
+	^ self packageRepositoryURL
 ]

@@ -166,7 +166,7 @@ echo "[Compiler] Installing Traits through Hermes"
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" save ${TRAITS_IMAGE_NAME}
 ${VM} "${TRAITS_IMAGE_NAME}.image" loadHermes TraitsV2.hermes --save
-${VM} "${TRAITS_IMAGE_NAME}.image" loadHermes Kernel-Traits.hermes AST-Core-Traits.hermes Collections-Abstract-Traits.hermes Transcript-Core-Traits.hermes SUnit-Core-Traits.hermes CodeImport-Traits.hermes OpalCompiler-Traits.hermes CodeExport-Traits.hermes System-Sources-Traits.hermes System-Support-Traits.hermes TraitsV2-Compatibility.hermes --save
+${VM} "${TRAITS_IMAGE_NAME}.image" loadHermes Kernel-Traits.hermes AST-Core-Traits.hermes Collections-Abstract-Traits.hermes Transcript-Core-Traits.hermes CodeImport-Traits.hermes OpalCompiler-Traits.hermes CodeExport-Traits.hermes System-Sources-Traits.hermes System-Support-Traits.hermes TraitsV2-Compatibility.hermes --save
 zip "${TRAITS_IMAGE_NAME}.zip" "${TRAITS_IMAGE_NAME}.image"
 
 #Bootstrap Initialization: Class and RPackage initialization
@@ -218,7 +218,7 @@ ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Smalltalk vm parameterAt: 45 put:
 
 env 2>&1 > env.log
 
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.5';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.9';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Pharo';repository: 'tonel://${REPOSITORY}/src';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources. Smalltalk garbageCollect"
 ${VM} "${PHARO_IMAGE_NAME}.image" clean --release

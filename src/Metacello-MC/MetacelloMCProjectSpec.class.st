@@ -164,6 +164,7 @@ MetacelloMCProjectSpec >> determineCurrentVersionForLoad [
                 , cvs asString , ') and specified version ' , version printString
                 , '. Press resume to continue with load anyway'.
     ^ nil
+
 ]
 
 { #category : #loading }

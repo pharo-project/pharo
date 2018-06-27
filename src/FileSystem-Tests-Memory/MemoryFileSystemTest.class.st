@@ -13,10 +13,11 @@ MemoryFileSystemTest >> createFileSystem [
 ]
 
 { #category : #tests }
-MemoryFileSystemTest >> testEqual [
-	| other |
-	other := self createFileSystem.
-	self deny: filesystem = other
+MemoryFileSystemTest >> testCurrentEqual [
+	| other another |
+	another := FileSystem currentMemoryFileSystem.
+	other := FileSystem currentMemoryFileSystem.
+	self assert: other equals: another
 ]
 
 { #category : #tests }
@@ -74,4 +75,18 @@ MemoryFileSystemTest >> testModifiedTimeWhenHandleTruncated [
 	handle truncate.
 	self assert: modifiedTime notNil.
 	self deny: modifiedTime equals: fileReference modificationTime
+]
+
+{ #category : #tests }
+MemoryFileSystemTest >> testNotEqualWhenCreatingNewMemoryFileSystem [
+	| other |
+	other := FileSystem memory.
+	self deny: other equals: filesystem
+]
+
+{ #category : #tests }
+MemoryFileSystemTest >> testNotEqualWhenRequestingMemoryFileSystem [
+	| other |
+	other := self createFileSystem.
+	self deny: other equals: filesystem
 ]
