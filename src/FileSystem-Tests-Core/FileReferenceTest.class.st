@@ -990,7 +990,10 @@ FileReferenceTest >> testWriteStream [
 
 { #category : #tests }
 FileReferenceTest >> testWriteStreamDo [
-	filesystem / 'plonk' writeStreamDo: [ :stream | self deny: stream isNil ]
+	| ref |
+	ref := filesystem / 'plonk'.
+	[ ref writeStreamDo: [ :stream | self deny: stream isNil ] ]
+		ensure: [ ref ensureDelete ]
 ]
 
 { #category : #tests }
@@ -999,13 +1002,18 @@ FileReferenceTest >> testWriteStreamDoExists [
 	path := Path * 'plonk'.
 	filesystem store createFile: path.
 	ref := filesystem referenceTo: path.
-	self assert: ref exists.
-	ref writeStreamDo: [ :stream | self deny: stream isNil ]
+	[ ref writeStreamDo: [ :stream | self deny: stream isNil ] ]
+		ensure: [ ref ensureDelete ]
 ]
 
 { #category : #tests }
 FileReferenceTest >> testWriteStreamDoifPresent [
-	filesystem / 'plonk' writeStreamDo: [ :stream | self deny: stream isNil ] ifPresent: [ self signalFailure: 'The file does not exist!' ]
+	| ref |
+	ref := filesystem / 'plonk'.
+	[ ref
+		writeStreamDo: [ :stream | self deny: stream isNil ]
+		ifPresent: [ self signalFailure: 'The file does not exist!' ] ]
+		ensure: [ ref ensureDelete ]
 ]
 
 { #category : #tests }
@@ -1015,8 +1023,9 @@ FileReferenceTest >> testWriteStreamDoifPresentNot [
 	path := Path * 'plonk'.
 	filesystem store createFile: path.
 	ref := filesystem referenceTo: path.
-	ref writeStreamDo: [ :stream |  ] ifPresent: [ pass := true ].
-	self assert: pass
+	[ ref writeStreamDo: [ :stream |  ] ifPresent: [ pass := true ].
+	self assert: pass ]
+		ensure: [ ref ensureDelete ]
 ]
 
 { #category : #tests }
@@ -1025,15 +1034,18 @@ FileReferenceTest >> testWriteStreamExists [
 	path := Path * 'plonk'.
 	filesystem store createFile: path.
 	ref := filesystem referenceTo: path.
-	stream := ref writeStream.
-	stream close
+	[ [ stream := ref writeStream ]
+		ensure: [ stream ifNotNil: [ stream close ] ] ]
+		ensure: [ ref ensureDelete ]
 ]
 
 { #category : #tests }
 FileReferenceTest >> testWriteStreamifPresent [
-	| stream |
-	stream := filesystem / 'plonk' writeStreamIfPresent: [ self signalFailure: 'Should not reach here' ].
-	stream close
+	| ref stream |
+	ref := filesystem / 'plonk'.
+	[ [ stream := ref writeStreamIfPresent: [ self signalFailure: 'Should not reach here' ] ]
+		ensure: [ stream ifNotNil: [ stream close ] ] ]
+		ensure: [ ref ensureDelete ]
 ]
 
 { #category : #tests }
