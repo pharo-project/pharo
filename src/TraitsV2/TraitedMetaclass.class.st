@@ -16,7 +16,7 @@ Class {
 		'baseLocalMethods',
 		'baseComposition'
 	],
-	#category : #TraitsV2
+	#category : #'TraitsV2-Base'
 }
 
 { #category : #accessing }
