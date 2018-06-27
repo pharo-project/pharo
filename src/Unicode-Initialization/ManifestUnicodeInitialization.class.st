@@ -1,5 +1,5 @@
 "
-Unicode initialization 
+Class extensions on other Pharo packages in order to give them access to mappings of Unicode values 
 "
 Class {
 	#name : #ManifestUnicodeInitialization,
