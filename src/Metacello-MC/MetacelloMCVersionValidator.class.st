@@ -364,6 +364,7 @@ MetacelloMCVersionValidator >> validateProjectVersionLoad: versionString loads: 
 		ifTrue: [ self error: 'The specified version is #broken' ].
 	self validateCleanLoadAndTestsForVersion: version loads: loadList.
 	^ self validationReport
+
 ]
 
 { #category : #loading }

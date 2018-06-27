@@ -510,6 +510,7 @@ MetacelloProject >> version: aVersionString [
     ^ self
         lookupVersion: aVersionString
         ifAbsent: [ (MetacelloVersionDoesNotExistError project: self project versionString: aVersionString) signal ]
+
 ]
 
 { #category : #versions }

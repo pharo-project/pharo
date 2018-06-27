@@ -3,7 +3,7 @@ Class {
 	#superclass : #MetacelloSpec,
 	#instVars : [
 		'list',
-		'memberMap' 
+		'memberMap'
 	],
 	#category : #'Metacello-Core-Members'
 }
@@ -165,6 +165,7 @@ MetacelloMemberListSpec >> mergeSpec: anotherSpec [
 	newSpec list: self list copy.
 	anotherSpec list do: [:groupMember | groupMember applyToList: newSpec ].
 	^newSpec
+
 ]
 
 { #category : #testing }
