@@ -41,7 +41,6 @@ BaselineOfBasicTools >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 
-<<<<<<< HEAD
 		spec
 			baseline: 'UI' with: [spec repository: repository];
 			baseline: 'Athens' with: [ 
