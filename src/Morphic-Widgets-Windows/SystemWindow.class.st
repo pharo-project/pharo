@@ -58,6 +58,120 @@ SystemWindow class >> buildShortcutsOn: aBuilder [
 ]
 
 { #category : #keymapping }
+SystemWindow class >> buildWindowBottomEdgeShortcutsOn: aBuilder [
+	<keymap>
+
+	(aBuilder shortcut: #windowBottomEdgeUp)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowBottomEdgeUpShortcut
+		do: [ :target | 
+			| movement |
+			movement := 0@(target bounds height / 2) negated.
+			target bounds: ((target bounds topLeft) corner: (target bounds bottomRight + movement))]
+		description: 'Move bottom edge of the window up by half of the window extent'.
+		
+	(aBuilder shortcut: #windowBottomEdgeDown)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowBottomEdgeDownShortcut
+		do: [ :target | 
+			| movement |
+			movement := 0@(target bounds height / 2).
+			target bounds: ((target bounds topLeft) corner: (target bounds bottomRight + movement))]
+		description: 'Move bottXX edge of the window up by half of the window extent'.
+
+]
+
+{ #category : #keymapping }
+SystemWindow class >> buildWindowLeftEdgeShortcutsOn: aBuilder [
+	<keymap>
+
+	(aBuilder shortcut: #windowLeftEdgeLeft)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowLeftEdgeLeftShortcut
+		do: [ :target | 
+			| movement |
+			movement := (target bounds width / 2) negated @0.
+			target bounds: ((target bounds topLeft + movement) corner: (target bounds bottomRight ))]
+		description: 'Move left edge of the window left by half of the window extent'.
+		
+	(aBuilder shortcut: #windowLeftEdgeRight)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowLeftEdgeRightShortcut
+		do: [ :target | 
+			| movement |
+			movement := (target bounds width / 2)@0.
+			target bounds: ((target bounds topLeft + movement) corner: (target bounds bottomRight))]
+		description: 'Move left edge of the window right by half of the window extent'.
+
+]
+
+{ #category : #keymapping }
+SystemWindow class >> buildWindowMovingShortcutsOn: aBuilder [
+	<keymap>
+
+	(aBuilder shortcut: #windowMoveLeft)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowMoveLeftShortcut
+		do: [ :target | 
+			| movement |
+			movement := ((target bounds width / 2) negated)@0.
+			target bounds: ((target bounds topLeft + (movement)) corner: (target bounds bottomRight + (movement)))]
+		description: 'Move window left by half of its extent'.
+		
+	(aBuilder shortcut: #windowMoveRight)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowMoveRightShortcut
+		do: [ :target | 
+			| movement |
+			movement := ((target bounds width /2))@0.
+			target bounds: ((target bounds topLeft + (movement)) corner: (target bounds bottomRight + (movement)))]
+		description: 'Move window right by half of its extent'.
+
+	(aBuilder shortcut: #windowMoveUp)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowMoveUpShortcut
+		do: [ :target | 
+			| movement |
+			movement := 0@((target bounds height / 2) negated).
+			target bounds: ((target bounds topLeft + (movement)) corner: (target bounds bottomRight + (movement)))]
+		description: 'Move window up by half of its extent'.
+		
+	(aBuilder shortcut: #windowMoveDown)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowMoveDownShortcut
+		do: [ :target | 
+			| movement |
+			movement := 0@(target bounds height / 2).
+			target bounds: ((target bounds topLeft + (movement)) corner: (target bounds bottomRight + (movement)))]
+		description: 'Move window down by half of its extent'.
+
+]
+
+{ #category : #keymapping }
+SystemWindow class >> buildWindowRightEdgeShortcutsOn: aBuilder [
+	<keymap>
+
+	(aBuilder shortcut: #windowRightEdgeLeft)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowRightEdgeLeftShortcut
+		do: [ :target | 
+			| movement |
+			movement := (target bounds width / 2) negated @0.
+			target bounds: ((target bounds topLeft) corner: (target bounds bottomRight + movement))]
+		description: 'Center the window with a default extent'.
+		
+	(aBuilder shortcut: #windowRightEdgeRight)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowRightEdgeRightShortcut
+		do: [ :target | 
+			| movement |
+			movement := (target bounds width / 2)@0.
+			target bounds: ((target bounds topLeft) corner: (target bounds bottomRight + movement))]
+		description: 'Center the window with a default extent'.
+
+]
+
+{ #category : #keymapping }
 SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 	<keymap>
 
@@ -142,6 +256,15 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 			target bounds: max]
 		description: 'Maximize the window'.
 
+	(aBuilder shortcut: #windowMinimize)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowMinimizeShortcut
+		do: [ :target | 
+			| max |
+			max := RealEstateAgent maximumUsableArea.
+			target minimize]
+		description: 'Miminimze the window'.
+
 	(aBuilder shortcut: #windowCenter)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowCenterShortcut
@@ -151,6 +274,30 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 			initial :=  target initialExtent.
 			target bounds: ((max center - (initial/2)) extent: initial )]
 		description: 'Center the window with a default extent'.
+
+]
+
+{ #category : #keymapping }
+SystemWindow class >> buildWindowTopEdgeShortcutsOn: aBuilder [
+	<keymap>
+
+	(aBuilder shortcut: #windowTopEdgeUp)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowTopEdgeUpShortcut
+		do: [ :target | 
+			| movement |
+			movement := 0@(target bounds height / 2) negated.
+			target bounds: ((target bounds topLeft + movement) corner: (target bounds bottomRight))]
+		description: 'Move top edge of the window up by half of the window extent'.
+		
+	(aBuilder shortcut: #windowTopEdgeDown)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowTopEdgeDownShortcut
+		do: [ :target | 
+			| movement |
+			movement := 0@(target bounds height / 2).
+			target bounds: ((target bounds topLeft + movement) corner: (target bounds bottomRight))]
+		description: 'Move top edge of the window down by half of the window extent'.
 
 ]
 

@@ -607,62 +607,146 @@ PharoShortcuts >> undoShortcut [
 	^ $z meta
 ]
 
-{ #category : #'keymaps - window' }
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowBottomEdgeDownShortcut [
+
+	^ self windowManagementShortcut, $x shift meta, $x shift meta
+]
+
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowBottomEdgeUpShortcut [
+
+	^ self windowManagementShortcut, $x shift meta, $s shift meta
+]
+
+{ #category : #'keymaps - window tiling' }
 PharoShortcuts >> windowBottomLeftShortcut [
 
-	^ $w shift meta, $z
+	^ self windowManagementShortcut, $z
 ]
 
-{ #category : #'keymaps - window' }
+{ #category : #'keymaps - window tiling' }
 PharoShortcuts >> windowBottomShortcut [
 
-	^ $w shift meta, $x
+	^ self windowManagementShortcut, $x
 ]
 
-{ #category : #'keymaps - window' }
+{ #category : #'keymaps - window tiling' }
 PharoShortcuts >> windowCenterShortcut [
 
-	^ $w shift meta, $r
+	^ self windowManagementShortcut, $r
 ]
 
-{ #category : #'keymaps - window' }
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowLeftEdgeLeftShortcut [
+
+	^ self windowManagementShortcut, $a shift meta, $a shift meta
+]
+
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowLeftEdgeRightShortcut [
+
+	^ self windowManagementShortcut, $a shift meta, $s shift meta
+]
+
+{ #category : #'keymaps - window tiling' }
 PharoShortcuts >> windowLeftShortcut [
 
-	^ $w shift meta, $a
+	^ self windowManagementShortcut, $a
 ]
 
 { #category : #'keymaps - window' }
+PharoShortcuts >> windowManagementShortcut [
+
+	^ $w shift meta
+]
+
+{ #category : #'keymaps - window tiling' }
 PharoShortcuts >> windowMaximizeShortcut [
 
-	^ $w shift meta, $s
+	^ self windowManagementShortcut, $s
 ]
 
-{ #category : #'keymaps - window' }
+{ #category : #'keymaps - window tiling' }
+PharoShortcuts >> windowMinimizeShortcut [
+
+	^ self windowManagementShortcut, $s shift
+]
+
+{ #category : #'keymaps - window moving' }
+PharoShortcuts >> windowMoveDownShortcut [
+
+	^ self windowManagementShortcut, Character arrowDown
+]
+
+{ #category : #'keymaps - window moving' }
+PharoShortcuts >> windowMoveLeftShortcut [
+
+	^ self windowManagementShortcut, Character arrowLeft
+]
+
+{ #category : #'keymaps - window moving' }
+PharoShortcuts >> windowMoveRightShortcut [
+
+	^ self windowManagementShortcut, Character arrowRight
+]
+
+{ #category : #'keymaps - window moving' }
+PharoShortcuts >> windowMoveUpShortcut [
+
+	^ self windowManagementShortcut, Character arrowUp
+]
+
+{ #category : #'keymaps - window tiling' }
 PharoShortcuts >> windowRightBottomShortcut [
 
-	^ $w shift meta, $c
+	^ self windowManagementShortcut, $c
 ]
 
-{ #category : #'keymaps - window' }
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowRightEdgeLeftShortcut [
+
+	^ self windowManagementShortcut, $d shift meta, $s shift meta
+]
+
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowRightEdgeRightShortcut [
+
+	^ self windowManagementShortcut, $d shift meta, $d shift meta
+]
+
+{ #category : #'keymaps - window tiling' }
 PharoShortcuts >> windowRightShortcut [
 
-	^ $w shift meta, $d
+	^ self windowManagementShortcut, $d
 ]
 
-{ #category : #'keymaps - window' }
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowTopEdgeDownShortcut [
+
+	^ self windowManagementShortcut, $w shift meta, $s shift meta
+]
+
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowTopEdgeUpShortcut [
+
+	^ self windowManagementShortcut, $w shift meta, $w shift meta
+]
+
+{ #category : #'keymaps - window tiling' }
 PharoShortcuts >> windowTopLeftShortcut [
 
-	^ $w shift meta, $q
+	^ self windowManagementShortcut, $q
 ]
 
-{ #category : #'keymaps - window' }
+{ #category : #'keymaps - window tiling' }
 PharoShortcuts >> windowTopRightShortcut [
 
-	^ $w shift meta, $e
+	^ self windowManagementShortcut, $e
 ]
 
-{ #category : #'keymaps - window' }
+{ #category : #'keymaps - window tiling' }
 PharoShortcuts >> windowTopShortcut [
 
-	^ $w shift meta, $w
+	^ self windowManagementShortcut, $w
 ]
