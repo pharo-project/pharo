@@ -1619,6 +1619,7 @@ MetacelloToolBox >> commitBaselineOfMethod [
   skipValidation
     ifFalse: [ self validateVersion: self methodSpec versionString ].
   methodSpec := nil
+
 ]
 
 { #category : #'api-configuration' }
@@ -1640,6 +1641,7 @@ MetacelloToolBox >> commitMethod [
 	skipValidation
 		ifFalse: [ self validateVersion: self methodSpec versionString ].
 	methodSpec := nil
+
 ]
 
 { #category : #private }
@@ -2214,6 +2216,7 @@ MetacelloToolBox >> updateVersionMethodForVersion: inputVersionStringOrSymbol pr
                         ifTrue: [ self methodSpec methodSections add: methodSection ] ]
                 ifFalse: [ self methodSpec methodSections add: methodSection ] ].
     ^ updatedSpecs
+
 ]
 
 { #category : #'api-configuration' }

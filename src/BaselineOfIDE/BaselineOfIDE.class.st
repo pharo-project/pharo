@@ -44,10 +44,13 @@ BaselineOfIDE >> addPharoProjectToIceberg [
 	
 	"extract package names from baselines"
 	packageNames := (#(
+		BaselineOfAthens
 		BaselineOfBasicTools
 		BaselineOfDisplay
+		BaselineOfFlashback
 		BaselineOfIDE  
 		BaselineOfMonticello 
+		BaselineOfMenuRegistration
 		BaselineOfMetacello 
 		BaselineOfMorphic 
 		BaselineOfMorphicCore 
@@ -174,6 +177,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
 		
 		spec baseline: 'Athens' with: [ spec repository: repository ].
+		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
 		spec baseline: 'Shift' with: [
 			spec loads: 'shift-tests'. 
@@ -209,7 +213,6 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'Rubric-Styling'.
 		
-		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		
 		spec package: 'Collections-Tests'.
@@ -338,7 +341,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
-		spec package: 'Flashback-Decompiler-Tests'.
 		spec package: 'FontInfrastructure-Tests'.
 		spec package: 'FreeType-Tests'.
 		spec package: 'FreeType-Help'.
@@ -586,17 +588,6 @@ spec group: 'Manifest-Group' with: #(
 	'Manifest-Tests-Group'
 ).
 
-spec group: 'Flashback-Core-Group' with: #(
-	'Flashback-Decompiler'
-).
-spec group: 'Flashback-Tests-Group' with: #(
-	'Flashback-Decompiler-Tests'
-).
-spec group: 'Flashback-Group' with: #(
-	'Flashback-Core-Group'
-	'Flashback-Tests-Group'
-).
-
 spec group: 'BlueInk-Core-Group' with: #(
 	'BlueInk-Core'
 	'BlueInk-Extras'
@@ -839,6 +830,7 @@ spec group: 'GT&QA-Group' with: #(
 spec group: #default with: #(
 	'BasicTools'	"dependency"
 	'Athens'
+	'Flashback'
 
 	'Mandatory-Group'
 
@@ -853,7 +845,6 @@ spec group: #default with: #(
 	'ReflectionMirrors-Group'
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
-	'Flashback-Group'
 
 	'GT&QA-Group'
 
@@ -902,7 +893,7 @@ BaselineOfIDE >> loadCalypso [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.1.0';
+		repository: 'github://pharo-vcs/iceberg:v1.1.1';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 

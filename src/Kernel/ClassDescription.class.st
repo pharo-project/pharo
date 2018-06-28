@@ -777,6 +777,19 @@ ClassDescription >> isInstanceSide [
 	^ self isClassSide not
 ]
 
+{ #category : #testing }
+ClassDescription >> isLocalMethodsProtocol: aProtocol [
+	aProtocol methods ifEmpty: [ ^true ].
+	
+	^aProtocol methods anySatisfy: [ :each | self isLocalSelector: each]
+]
+
+{ #category : #testing }
+ClassDescription >> isLocalSelector: aSelector [
+	
+	^ self methodDict includesKey: aSelector
+]
+
 { #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> isMeta [
 	^self isClassSide
@@ -1184,14 +1197,10 @@ ClassDescription >> tagsForMethods [
 	It supposed to not include any method tags inherited from Traits 
 	which is opposite to current Protocol implementation.
 	And extension protocol is not treated as tag"
-	| allProtocols tags |
-	allProtocols := self organization protocols 
-		reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
+	| allProtocols |
+	allProtocols := self organization protocols reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
 		
-	tags := OrderedCollection new.
-	allProtocols do: [ :each | tags add: each name ].
-
-	^tags
+	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
 ]
 
 { #category : #'accessing - deprecated parallel hierarchy ' }

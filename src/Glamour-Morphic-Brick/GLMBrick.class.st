@@ -13,7 +13,7 @@ brickBounds
 ports
 	- dictionary of phlow bindings. is not implemented yet
 
-" 
+"
 Class {
 	#name : #GLMBrick,
 	#superclass : #GLMBrickedMorph,
@@ -429,7 +429,7 @@ GLMBrick >> fullDrawOn: aCanvas [
 { #category : #'brick-geometry' }
 GLMBrick >> globalClippingBounds [
 	^ self owner
-		ifNotNil: [ self drawingBounds translateBy: self owner globalBoundsTranslateFactor ]
+		ifNotNil: [ :brick | self drawingBounds translateBy: brick globalBoundsTranslateFactor ]
 		ifNil: [ self drawingBounds ]
 ]
 
