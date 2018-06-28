@@ -118,7 +118,7 @@ ZipArchive >> addDeflateString: aString as: aFileName [
 
 { #category : #initialization }
 ZipArchive >> close [
-	self members do:[:m| m close].
+	self members do: [ :m | m close ]
 ]
 
 { #category : #'archive operations' }
@@ -126,7 +126,7 @@ ZipArchive >> extractAllTo: aDirectory [
 	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
 	UIManager default
-		informUserDuring: [ :bar | 
+		informUserDuring: [:bar | 
 			bar max: self numberOfMembers.
 			self extractAllTo: aDirectory informing: bar ]
 ]
@@ -200,7 +200,7 @@ ZipArchive >> hasMemberSuchThat: aBlock [
 ZipArchive >> initialize [
 	super initialize.
 	writeEOCDOffset := writeCentralDirectoryOffset := 0.
-	zipFileComment := ''.
+	zipFileComment := ''
 
 ]
 
@@ -233,7 +233,7 @@ ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 	centralDirectorySize := endianStream nextLittleEndianNumber: 4. "size of central directory"
 	centralDirectoryOffsetWRTStartingDiskNumber := endianStream nextLittleEndianNumber: 4. "offset of start of central directory"
 	zipFileCommentLength := endianStream nextLittleEndianNumber: 2. "zip file comment"
-	zipFileComment := aStream next: zipFileCommentLength.
+	zipFileComment := aStream next: zipFileCommentLength
 
 ]
 
@@ -262,7 +262,7 @@ ZipArchive >> readMembersFrom: stream named: fileName [
 		newMember readFrom: stream.
 		newMember looksLikeDirectory ifTrue: [ newMember := newMember asDirectory ].
 		self addMember: newMember.
-	] repeat.
+	] repeat
 ]
 
 { #category : #private }
@@ -288,7 +288,7 @@ ZipArchive >> writeCentralDirectoryTo: aStream [
 		offset := offset + member centralDirectoryHeaderSize.
 	].
 	writeEOCDOffset := offset.
-	self writeEndOfCentralDirectoryTo: aStream.
+	self writeEndOfCentralDirectoryTo: aStream
 
 
 ]
@@ -308,7 +308,7 @@ ZipArchive >> writeEndOfCentralDirectoryTo: aStream [
 	endianStream nextLittleEndianNumber: 4 put: writeCentralDirectoryOffset. "offset of central dir"
 	endianStream nextLittleEndianNumber: 2 put: zipFileComment size. "zip file comment"
 	
-	zipFileComment isEmpty ifFalse: [ aStream nextPutAll: zipFileComment ].
+	zipFileComment isEmpty ifFalse: [ aStream nextPutAll: zipFileComment ]
 
 
 ]
@@ -320,7 +320,7 @@ ZipArchive >> writeTo: stream [
 		member endRead.
 	].
 	writeCentralDirectoryOffset := stream position.
-	self writeCentralDirectoryTo: stream.
+	self writeCentralDirectoryTo: stream
 	
 ]
 
@@ -332,7 +332,7 @@ ZipArchive >> writeTo: stream prepending: aString [
 		member endRead.
 	].
 	writeCentralDirectoryOffset := stream position.
-	self writeCentralDirectoryTo: stream.
+	self writeCentralDirectoryTo: stream
 	
 ]
 
@@ -350,7 +350,7 @@ ZipArchive >> writeTo: stream prependingFileNamed: aFileName [
 		member endRead.
 	].
 	writeCentralDirectoryOffset := stream position.
-	self writeCentralDirectoryTo: stream.
+	self writeCentralDirectoryTo: stream
 	
 ]
 
