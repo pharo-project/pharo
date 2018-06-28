@@ -57,6 +57,103 @@ SystemWindow class >> buildShortcutsOn: aBuilder [
 		description: 'Close this window'.
 ]
 
+{ #category : #keymapping }
+SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
+	<keymap>
+
+	(aBuilder shortcut: #windowTopLeft)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowTopLeftShortcut
+		do: [ :target | 
+			| max |
+			max := RealEstateAgent maximumUsableArea.
+			target bounds: (max topLeft corner: max center)]
+		description: 'Move a window to the top left corner of the display'.
+
+	(aBuilder shortcut: #windowLeft)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowLeftShortcut
+		do: [ :target | 
+			| max |
+			max := RealEstateAgent maximumUsableArea.
+			target bounds: (max topLeft corner: max bottomCenter)]
+		description: 'Move a window to the top left half the display'.
+	
+	(aBuilder shortcut: #windowBottomLeft)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowBottomLeftShortcut
+		do: [ :target | 
+			| max |
+			max := RealEstateAgent maximumUsableArea.
+			target bounds: (max leftCenter corner: max bottomCenter)]
+		description: 'Move a window to the bottom left corner the display'.
+
+	(aBuilder shortcut: #windowTop)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowTopShortcut
+		do: [ :target | 
+			| max |
+			max := RealEstateAgent maximumUsableArea.
+			target bounds: (max topLeft corner: max rightCenter)]
+		description: 'Move window to the top half of the display'.
+
+	(aBuilder shortcut: #windowTopRight)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowTopRightShortcut
+		do: [ :target | 
+			| max |
+			max := RealEstateAgent maximumUsableArea.
+			target bounds: (max topCenter corner: max rightCenter)]
+		description: 'Move a window to the top right corner of the display'.
+
+	(aBuilder shortcut: #windowRight)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowRightShortcut
+		do: [ :target | 
+			| max |
+			max := RealEstateAgent maximumUsableArea.
+			target bounds: (max topCenter corner: max corner)]
+		description: 'Move a window to the right half of the display'.
+
+	(aBuilder shortcut: #windowRightBottom)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowRightBottomShortcut
+		do: [ :target | 
+			| max |
+			max := RealEstateAgent maximumUsableArea.
+			target bounds: (max center corner: max corner)]
+		description: 'Move a window to the right bottom corner of the display'.
+
+	(aBuilder shortcut: #windowBottom)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowBottomShortcut
+		do: [ :target | 
+			| max |
+			max := RealEstateAgent maximumUsableArea.
+			target bounds: (max leftCenter corner: max corner)]
+		description: 'Move a window to the bottom half of the display'.
+
+	(aBuilder shortcut: #windowMaximize)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowMaximizeShortcut
+		do: [ :target | 
+			| max |
+			max := RealEstateAgent maximumUsableArea.
+			target bounds: max]
+		description: 'Maximize a window'.
+
+	(aBuilder shortcut: #windowCenter)
+		category: #WindowShortcuts
+		default: PharoShortcuts current windowCenterShortcut
+		do: [ :target | 
+			| max initial |
+			max := RealEstateAgent maximumUsableArea.
+			initial :=  target initialExtent.
+			target bounds: ((max center - (initial/2)) extent: initial )]
+		description: 'Center a window with the default extent'.
+
+]
+
 { #category : #initializing }
 SystemWindow class >> closeBoxImage [
 	"Supplied here because we don't necessarily have ComicBold"
