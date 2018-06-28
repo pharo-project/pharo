@@ -68,7 +68,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 			| max |
 			max := RealEstateAgent maximumUsableArea.
 			target bounds: (max topLeft corner: max center)]
-		description: 'Move a window to the top left corner of the display'.
+		description: 'Move the window to the top left corner of the display'.
 
 	(aBuilder shortcut: #windowLeft)
 		category: #WindowShortcuts
@@ -77,7 +77,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 			| max |
 			max := RealEstateAgent maximumUsableArea.
 			target bounds: (max topLeft corner: max bottomCenter)]
-		description: 'Move a window to the top left half the display'.
+		description: 'Move the window to the left half of the display'.
 	
 	(aBuilder shortcut: #windowBottomLeft)
 		category: #WindowShortcuts
@@ -86,7 +86,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 			| max |
 			max := RealEstateAgent maximumUsableArea.
 			target bounds: (max leftCenter corner: max bottomCenter)]
-		description: 'Move a window to the bottom left corner the display'.
+		description: 'Move the window to the bottom left corner of the display'.
 
 	(aBuilder shortcut: #windowTop)
 		category: #WindowShortcuts
@@ -95,7 +95,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 			| max |
 			max := RealEstateAgent maximumUsableArea.
 			target bounds: (max topLeft corner: max rightCenter)]
-		description: 'Move window to the top half of the display'.
+		description: 'Move the window to the top half of the display'.
 
 	(aBuilder shortcut: #windowTopRight)
 		category: #WindowShortcuts
@@ -104,7 +104,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 			| max |
 			max := RealEstateAgent maximumUsableArea.
 			target bounds: (max topCenter corner: max rightCenter)]
-		description: 'Move a window to the top right corner of the display'.
+		description: 'Move the window to the top right corner of the display'.
 
 	(aBuilder shortcut: #windowRight)
 		category: #WindowShortcuts
@@ -113,7 +113,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 			| max |
 			max := RealEstateAgent maximumUsableArea.
 			target bounds: (max topCenter corner: max corner)]
-		description: 'Move a window to the right half of the display'.
+		description: 'Move the window to the right half of the display'.
 
 	(aBuilder shortcut: #windowRightBottom)
 		category: #WindowShortcuts
@@ -122,7 +122,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 			| max |
 			max := RealEstateAgent maximumUsableArea.
 			target bounds: (max center corner: max corner)]
-		description: 'Move a window to the right bottom corner of the display'.
+		description: 'Move the window to the right bottom corner of the display'.
 
 	(aBuilder shortcut: #windowBottom)
 		category: #WindowShortcuts
@@ -131,7 +131,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 			| max |
 			max := RealEstateAgent maximumUsableArea.
 			target bounds: (max leftCenter corner: max corner)]
-		description: 'Move a window to the bottom half of the display'.
+		description: 'Move the window to the bottom half of the display'.
 
 	(aBuilder shortcut: #windowMaximize)
 		category: #WindowShortcuts
@@ -140,7 +140,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 			| max |
 			max := RealEstateAgent maximumUsableArea.
 			target bounds: max]
-		description: 'Maximize a window'.
+		description: 'Maximize the window'.
 
 	(aBuilder shortcut: #windowCenter)
 		category: #WindowShortcuts
@@ -150,7 +150,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 			max := RealEstateAgent maximumUsableArea.
 			initial :=  target initialExtent.
 			target bounds: ((max center - (initial/2)) extent: initial )]
-		description: 'Center a window with the default extent'.
+		description: 'Center the window with a default extent'.
 
 ]
 

@@ -610,59 +610,59 @@ PharoShortcuts >> undoShortcut [
 { #category : #'keymaps - window' }
 PharoShortcuts >> windowBottomLeftShortcut [
 
-	^ $w shift ctrl, $z
+	^ $w shift meta, $z
 ]
 
 { #category : #'keymaps - window' }
 PharoShortcuts >> windowBottomShortcut [
 
-	^ $w shift ctrl, $x
+	^ $w shift meta, $x
 ]
 
 { #category : #'keymaps - window' }
 PharoShortcuts >> windowCenterShortcut [
 
-	^ $w shift ctrl, $r
+	^ $w shift meta, $r
 ]
 
 { #category : #'keymaps - window' }
 PharoShortcuts >> windowLeftShortcut [
 
-	^ $w shift ctrl, $a
+	^ $w shift meta, $a
 ]
 
 { #category : #'keymaps - window' }
 PharoShortcuts >> windowMaximizeShortcut [
 
-	^ $w shift ctrl, $s
+	^ $w shift meta, $s
 ]
 
 { #category : #'keymaps - window' }
 PharoShortcuts >> windowRightBottomShortcut [
 
-	^ $w shift ctrl, $c
+	^ $w shift meta, $c
 ]
 
 { #category : #'keymaps - window' }
 PharoShortcuts >> windowRightShortcut [
 
-	^ $w shift ctrl, $d
+	^ $w shift meta, $d
 ]
 
 { #category : #'keymaps - window' }
 PharoShortcuts >> windowTopLeftShortcut [
 
-	^ $w shift ctrl, $q
+	^ $w shift meta, $q
 ]
 
 { #category : #'keymaps - window' }
 PharoShortcuts >> windowTopRightShortcut [
 
-	^ $w shift ctrl, $e
+	^ $w shift meta, $e
 ]
 
 { #category : #'keymaps - window' }
 PharoShortcuts >> windowTopShortcut [
 
-	^ $w shift ctrl, $w
+	^ $w shift meta, $w
 ]
