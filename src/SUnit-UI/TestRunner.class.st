@@ -91,12 +91,14 @@ TestRunner >> addDeclaredPackagesUnderTestTo: listOfPackages [
 { #category : #actions }
 TestRunner >> addMethodsUnderTestIn: listOfPackages to: methods [ 
 	listOfPackages
-		do: [:package | package isNil
-				ifFalse: [package methodReferences
-						do: [:method | ((#(#packageNamesUnderTest #classNamesNotUnderTest ) includes: method selector)
-									or: [method compiledMethod isAbstract
-											or: [method compiledMethod refersToLiteral: #ignoreForCoverage]])
-								ifFalse: [methods add: method]]]]
+		reject: #isNil
+		thenDo: [:package | 
+			package methodReferences
+				reject: [ :method | (#(#packageNamesUnderTest #classNamesNotUnderTest ) includes: method selector)
+												or: [ method compiledMethod isAbstract
+													or: [ (method compiledMethod refersToLiteral: #ignoreForCoverage)
+														or: [ method methodClass instanceSide allSuperclasses includes: TestCase ] ] ] ]
+				thenDo: [:method | methods add: method ] ]
 ]
 
 { #category : #accessing }
@@ -799,8 +801,7 @@ TestRunner >> promptForPackages [
 						or: [(package packageName beginsWith: 'Collections')
 								or: [(package packageName beginsWith: 'Exceptions')
 										or: [(package packageName beginsWith: 'SUnit')
-												or: [(package packageName beginsWith: 'System')
-														or: [package packageName includesSubstring: 'Test' caseSensitive: false]]]]]])
+												or: [(package packageName beginsWith: 'System') ]]]]])
 				sort: [:a :b | a packageName < b packageName].
 	choosenpackages := Array
 				with: (UIManager default
