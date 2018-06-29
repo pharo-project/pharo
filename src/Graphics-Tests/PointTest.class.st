@@ -7,6 +7,12 @@ Class {
 	#category : #'Graphics-Tests-Primitives'
 }
 
+{ #category : #coverage }
+PointTest >> classToBeTested [
+	
+	^Point
+]
+
 { #category : #'tests - arithmetic' }
 PointTest >> testAbs [
 
