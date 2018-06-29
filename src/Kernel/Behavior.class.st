@@ -1735,6 +1735,11 @@ Behavior >> shutDown: quitting [
 	^self shutDown.
 ]
 
+{ #category : #accessing }
+Behavior >> slots [
+	^#()
+]
+
 { #category : #'accessing instances and variables' }
 Behavior >> someInstance [
 	"Primitive. Answer the first instance in the enumeration of all instances 
