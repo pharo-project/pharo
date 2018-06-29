@@ -5,6 +5,19 @@ Class {
 }
 
 { #category : #tests }
+ShModifyClassTest >> testChangeSuperClassShouldRaiseError [
+	| result1 result2 |
+	builder name: #ShTestSuperClass.
+	result1 := builder build.
+	
+	builder name: #ShTestBasicClass.
+	result2 := builder build.
+	
+	self should: [ result2 superclass: result1 ] 	raise: Error
+
+]
+
+{ #category : #tests }
 ShModifyClassTest >> testEmptyClass [
 	builder name: #ShCBEmptyClass.
 	result := builder build.
