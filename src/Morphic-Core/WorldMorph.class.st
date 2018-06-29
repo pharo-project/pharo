@@ -294,6 +294,12 @@ WorldMorph >> discoveredWorldMenu [
 	^ worldState discoveredWorldMenu
 ]
 
+{ #category : #accessing }
+WorldMorph >> displayArea [
+
+	^ Display usableArea.
+]
+
 { #category : #geometry }
 WorldMorph >> displayScaleFactor [
 
