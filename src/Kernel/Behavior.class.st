@@ -1875,7 +1875,7 @@ Behavior >> superclass: aClass [
 	(aClass isNil and: [ { Object . ProtoObject } includes: superclass ])
 		ifTrue: [self basicSuperclass: aClass.
 				Object flushCache]
-		ifFalse: [self error: 'superclass must be nil or you should need to recreate the complete class with the new superclass']
+		ifFalse: [self error: 'superclass must be nil or you should need to recreate the complete class with the new superclass', aClass printString , self name ]
 ]
 
 { #category : #'initialize-release' }
