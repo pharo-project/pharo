@@ -34,15 +34,6 @@ WindowsStore class >> separator [
 	^ $\
 ]
 
-{ #category : #'class initialization' }
-WindowsStore class >> useFilePlugin [
-	"Initialise the FileAttributesPrimitives and call my superclass to continue initialisation"
-
-	FileAttributePrimitives := WindowsFileAttributesPluginPrims new.
-	super useFilePlugin.
-
-]
-
 { #category : #public }
 WindowsStore >> checkName: aFileName fixErrors: fixing [
 	"Check if the file name contains any invalid characters"
