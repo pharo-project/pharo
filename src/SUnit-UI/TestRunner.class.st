@@ -78,10 +78,14 @@ TestRunner class >> theme [
 
 { #category : #actions }
 TestRunner >> addDeclaredPackagesUnderTestTo: listOfPackages [ 
-	classesSelected do: 
-		[ :class | 
-		(class class includesSelector: #packageNamesUnderTest) ifTrue: 
-			[ class packageNamesUnderTest do: [ :name | listOfPackages add: (RPackage organizer packageNamed: name) ] ] ]
+	"This method looks for #packageNamesUnderTest method in class side of classes defined packages in listOfPackages.
+	 If a class defines this method, then the coverage tool knows the methods of which packages should be spied to compute the coverage.
+	 Thus, it adds it to #listOfPackages collection provided as parameter."
+	classesSelected
+		select: [ :class | (class class includesSelector: #packageNamesUnderTest) ]
+		thenDo: [ :class | 
+			class packageNamesUnderTest do: [ :name | 
+				listOfPackages add: (RPackage organizer packageNamed: name) ] ]
 ]
 
 { #category : #actions }
