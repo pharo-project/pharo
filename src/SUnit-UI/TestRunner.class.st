@@ -643,6 +643,15 @@ TestRunner >> generateDefaultFileOutResultsName [
 	^ filename copyReplaceAll: ':' with: '-'.
 ]
 
+{ #category : #actions }
+TestRunner >> getRelevantPackageToMeasureCoverage [
+	"Return the package choosen to measure the test coverage"
+	^ (RPackageOrganizer default packages
+		select:
+			[ :package | self shouldThisPackageNameBeConsideredForCoverage: package packageName ])
+		sort: [ :a :b | a packageName < b packageName ]
+]
+
 { #category : #testing }
 TestRunner >> hasErrors [
 	^ result hasErrors.
@@ -789,21 +798,16 @@ TestRunner >> previousRun [
 
 { #category : #actions }
 TestRunner >> promptForPackages [
+	"Open a UI that ask one to select one package. This package is then used to measure the coverage"
+
 	| choosenpackages |
-	choosenpackages := (RPackageOrganizer default packages
-				reject: [:package | (package packageName beginsWith: 'Kernel')
-						or: [(package packageName beginsWith: 'Collections')
-								or: [(package packageName beginsWith: 'Exceptions')
-										or: [(package packageName beginsWith: 'SUnit')
-												or: [(package packageName beginsWith: 'System')
-														or: [package packageName includesSubstring: 'Test' caseSensitive: false]]]]]])
-				sort: [:a :b | a packageName < b packageName].
+	choosenpackages := self getRelevantPackageToMeasureCoverage.
 	choosenpackages := Array
-				with: (UIManager default
-						chooseFrom: (choosenpackages
-								collect: [:package | package packageName])
-						values: choosenpackages
-						title: 'Select Package').
+		with:
+			(UIManager default
+				chooseFrom: (choosenpackages collect: [ :package | package packageName ])
+				values: choosenpackages
+				title: 'Select Package').
 	^ choosenpackages
 ]
 
@@ -833,6 +837,7 @@ TestRunner >> runAll [
 
 { #category : #actions }
 TestRunner >> runCoverage [
+	"This method is directly called by the UI"
 	| myPackages methods |
 	myPackages := Set new.
 	self addDeclaredPackagesUnderTestTo: myPackages.
@@ -976,6 +981,13 @@ TestRunner >> selectSubclasses [
 		changed: #allSelections;
 		changed: #classSelected;
 		changed: #hasRunnable
+]
+
+{ #category : #utilities }
+TestRunner >> shouldThisPackageNameBeConsideredForCoverage: aPackageName [
+	"Return true if the package is safe to be test-covered"
+	^ #('Kernel' 'Collections' 'Exceptions' 'SUnit' 'System')
+		noneSatisfy: [ :prefix | aPackageName beginsWith: prefix ]
 ]
 
 { #category : #'history saving' }
