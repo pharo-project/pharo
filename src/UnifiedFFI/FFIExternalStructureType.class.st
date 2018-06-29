@@ -31,8 +31,7 @@ FFIExternalStructureType >> basicHandle: aHandle at: index [
 
 { #category : #private }
 FFIExternalStructureType >> basicHandle: aHandle at: index put: value [
-	^ LibC memCopy: value getHandle to: aHandle size: self externalTypeSize
-
+	^ LibC memCopy: value getHandle to: aHandle + (index - 1) size: self externalTypeSize
 ]
 
 { #category : #accessing }
