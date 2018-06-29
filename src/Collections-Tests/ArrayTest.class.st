@@ -41,14 +41,14 @@ Class {
 		'nonEmpty1Element',
 		'collectionOfCollection',
 		'collectionOfFloatWithEqualElements',
-		'floatCollectionWithSameBeginingAnEnd',
 		'collectionWithoutNil',
 		'duplicateElement',
 		'collection5Elements',
 		'collectionWith4Elements',
 		'collectionOfCollectionsOfStrings',
 		'collectionOfCollectionsOfInts',
-		'simpleCollection'
+		'simpleCollection',
+		'stringCollectionWithSameBeginingAnEnd'
 	],
 	#category : #'Collections-Tests-Arrayed'
 }
@@ -191,14 +191,14 @@ ArrayTest >> collectionWithEqualElements [
 ArrayTest >> collectionWithNonIdentitySameAtEndAndBegining [
 	" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
-	^ floatCollectionWithSameBeginingAnEnd 
+	^ stringCollectionWithSameBeginingAnEnd 
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWithSameAtEndAndBegining [
 " return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
-	^ floatCollectionWithSameBeginingAnEnd 
+	^ stringCollectionWithSameBeginingAnEnd 
 ]
 
 { #category : #requirements }
@@ -341,13 +341,6 @@ ArrayTest >> firstOdd [
 ]
 
 { #category : #requirements }
-ArrayTest >> floatCollectionWithSameAtEndAndBegining [
-" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
-(others elements of the collection are not equal to those elements)"
-	^ floatCollectionWithSameBeginingAnEnd 
-]
-
-{ #category : #requirements }
 ArrayTest >> indexArray [
 	^ indexArray .
 ]
@@ -485,9 +478,9 @@ ArrayTest >> setUp [
 	replacementCollection:= {4. 3. 2. 1.}.
 	replacementCollectionSameSize := {5. 4. 3.}.	
 	nonEmpty1Element:={ 5.}.
-	collectionOfCollection:={1.5. 5.5. 6.5.}.
+	collectionOfCollection:={'a'. 'b'. 'c'.}.
 	collectionOfFloatWithEqualElements:={1.5. 5.5. 6.5. 1.5}.
-	floatCollectionWithSameBeginingAnEnd := {1.5. 5.5. 1.5 copy}.
+	stringCollectionWithSameBeginingAnEnd := {'c'. 's'. 'c' copy}.
 	collection5Elements := { 1. 2. 5. 3. 4.}.
 ]
 
