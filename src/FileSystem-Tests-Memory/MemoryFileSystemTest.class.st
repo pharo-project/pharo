@@ -16,8 +16,8 @@ MemoryFileSystemTest >> createFileSystem [
 MemoryFileSystemTest >> lastModificationTimeOf: fileReference [
 	"DateAndTime primUTCMicrosecondsClock is not precise across all OS so put in slight delay between calling modificationTime"
 
-	(Delay forDuration: DateAndTime clockPrecision) wait.
-	^ fileReference modificationTime
+	^ [ fileReference modificationTime ]
+		ensure: [ (Delay forDuration: DateAndTime clockPrecision) wait ]
 ]
 
 { #category : #tests }
@@ -46,7 +46,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenFileModifiedByWriteStream [
 	modifiedTime := self lastModificationTimeOf: fileReference.
 	fileReference writeStreamDo: [ :aStream | aStream nextPutAll: 'data' ].
 	self assert: modifiedTime notNil.
-	self deny: modifiedTime equals: (self lastModificationTimeOf: fileReference)
+	self deny: modifiedTime equals: fileReference modificationTime
 ]
 
 { #category : #tests }
@@ -57,8 +57,10 @@ MemoryFileSystemTest >> testModifiedTimeWhenFileModifiedWithBinaryWriteStream [
 	data := 'some data'.
 	fileReference binaryWriteStreamDo: [ :aStream | aStream nextPutAll: data ].
 	self assert: modifiedTime notNil.
-	self deny: modifiedTime equals: (self lastModificationTimeOf: fileReference).
-	self assert: data asByteArray equals: (fileReference binaryReadStreamDo: [ :aStream | aStream upToEnd ]).
+	self deny: modifiedTime equals: fileReference modificationTime.
+	self
+		assert: data asByteArray
+		equals: (fileReference binaryReadStreamDo: [ :aStream | aStream upToEnd ]).
 	self assert: data equals: (fileReference readStreamDo: [ :aStream | aStream upToEnd ])
 ]
 
@@ -69,7 +71,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenFileWrittenTo [
 	modifiedTime := self lastModificationTimeOf: fileReference.
 	fileReference binaryWriteStreamDo: [ :aStream | aStream nextPutAll: 'data' ].
 	self assert: modifiedTime notNil.
-	self deny: modifiedTime equals: (self lastModificationTimeOf: fileReference)
+	self deny: modifiedTime equals: fileReference modificationTime
 ]
 
 { #category : #tests }
@@ -80,7 +82,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenHandleTruncated [
 	modifiedTime := self lastModificationTimeOf: fileReference.
 	handle truncate.
 	self assert: modifiedTime notNil.
-	self deny: modifiedTime equals: (self lastModificationTimeOf: fileReference)
+	self deny: modifiedTime equals: fileReference modificationTime
 ]
 
 { #category : #tests }
