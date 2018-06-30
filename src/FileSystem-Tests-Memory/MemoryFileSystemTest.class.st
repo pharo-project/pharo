@@ -17,7 +17,7 @@ MemoryFileSystemTest >> lastModificationTimeOf: fileReference [
 	"DateAndTime primUTCMicrosecondsClock is not precise across all OS so put in slight delay between calling modificationTime"
 
 	^ [ fileReference modificationTime ]
-		ensure: [ (Delay forDuration: DateAndTime clockPrecision) wait ]
+		ensure: [ (Delay forMilliseconds: 100) wait ]
 ]
 
 { #category : #tests }
