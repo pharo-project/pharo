@@ -39,7 +39,6 @@ DateAndTimeTest >> testArithmeticAcrossDateBoundary [
 	t1 := '2004-01-07T11:55:00+00:00' asDateAndTime. 
 	t2 := t1 - ( (42900+1) seconds).  
 	self assert: t2 = ('2004-01-06T23:59:59+00:00' asDateAndTime)
-		
 
 ]
 
@@ -697,6 +696,23 @@ DateAndTimeTest >> testSqueakEpoch [
   
   self assert: DateAndTime epoch equals: '1901-01-01T00:00:00+00:00' asDateAndTime. 
   self assert: ((DateAndTime fromSeconds: 0) offset: 0) equals: '1901-01-01T00:00:00+00:00' asDateAndTime.
+]
+
+{ #category : #'tests - arithmetic' }
+DateAndTimeTest >> testSubstracting [
+
+	| t |
+	t := '2004-01-07T11:55:00+00:00' asDateAndTime. 
+	self assert: t - 5 equals: '2004-01-07T11:54:55+00:00' asDateAndTime
+
+]
+
+{ #category : #'tests - arithmetic' }
+DateAndTimeTest >> testSubstracting02 [
+
+	| t |
+	t := '2004-01-07T11:55:00+00:00' asDateAndTime. 
+	self assert: t - '2004-01-07T1:00:00+00:00' equals: (Duration fromString: '0:10:55:00')
 ]
 
 { #category : #'tests - under design' }
