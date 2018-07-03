@@ -118,7 +118,7 @@ ZipArchive >> addDeflateString: aString as: aFileName [
 
 { #category : #initialization }
 ZipArchive >> close [
-	self members do: [ :m | m close ]
+	self members do: [:m | m close ]
 ]
 
 { #category : #'archive operations' }
