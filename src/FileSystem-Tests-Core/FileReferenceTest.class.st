@@ -972,14 +972,11 @@ FileReferenceTest >> testWriteStreamDo [
 
 { #category : #tests }
 FileReferenceTest >> testWriteStreamDoExists [
-	| ref s path |
+	| ref path |
 	path := Path * 'plonk'.
 	filesystem store createFile: path.
 	ref := filesystem referenceTo: path.
-	[ ref
-		writeStreamDo: [ :stream | 
-			s := stream.
-			self deny: stream isNil ] ]
+	[ ref writeStreamDo: [ :stream | self deny: stream isNil ] ]
 		ensure: [ ref ensureDelete ]
 ]
 

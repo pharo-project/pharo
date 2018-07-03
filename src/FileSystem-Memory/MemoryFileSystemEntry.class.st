@@ -59,7 +59,6 @@ MemoryFileSystemEntry >> isFile [
 
 { #category : #accessing }
 MemoryFileSystemEntry >> modificationTime [
-	
 	^ modificationTime
 ]
 
