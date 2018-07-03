@@ -133,7 +133,7 @@ ZipArchiveMember >> bitFlag [
 ZipArchiveMember >> bitFlag: aNumber [
 	"See comment for #bitFlag"
 	
-	bitFlag := aNumber.
+	bitFlag := aNumber
 ]
 
 { #category : #accessing }
@@ -150,7 +150,7 @@ ZipArchiveMember >> centralDirectoryHeaderSize [
 { #category : #accessing }
 ZipArchiveMember >> clearExtraFields [
 	cdExtraField := ''.
-	localExtraField := ''.
+	localExtraField := ''
 ]
 
 { #category : #'private-writing' }
@@ -169,8 +169,7 @@ ZipArchiveMember >> compressDataTo: aStream [
 	encoder finish. "not close!"
 	endPos := aStream position.
 	compressedSize := endPos - startPos.
-	crc32 := encoder crc.
-
+	crc32 := encoder crc
 ]
 
 { #category : #accessing }
@@ -240,7 +239,7 @@ ZipArchiveMember >> copyDataTo: aStream [
 
 	compressionMethod = CompressionStored ifTrue: [ ^self copyDataWithCRCTo: aStream ].
 
-	self copyRawDataTo: aStream.
+	self copyRawDataTo: aStream
 ]
 
 { #category : #'private-writing' }
@@ -259,7 +258,7 @@ ZipArchiveMember >> copyDataWithCRCTo: aStream [
 		readDataRemaining := readDataRemaining - data size.
 	].
 
-	crc32 := crc32 bitXor: 16rFFFFFFFF.
+	crc32 := crc32 bitXor: 16rFFFFFFFF
 
 ]
 
@@ -269,9 +268,7 @@ ZipArchiveMember >> copyRawDataTo: aStream [
 	[ readDataRemaining > 0 ] whileTrue: [ | data |
 		data := self readRawChunk: (4096 min: readDataRemaining).
 		aStream nextPutAll: data.
-		readDataRemaining := readDataRemaining - data size.
-	].
-
+		readDataRemaining := readDataRemaining - data size ]
 ]
 
 { #category : #'private-writing' }
@@ -284,8 +281,7 @@ ZipArchiveMember >> copyRawDataTo: aStream from: start to: finish [
 	[ readDataRemaining > 0 ] whileTrue: [ | data |
 		data := self readRawChunk: (32768 min: readDataRemaining).
 		aStream nextPutAll: data.
-		readDataRemaining := readDataRemaining - data size.
-	].
+		readDataRemaining := readDataRemaining - data size ]
 
 ]
 
@@ -356,12 +352,12 @@ ZipArchiveMember >> desiredCompressionMethod: aNumber [
 			ifTrue: [ CompressionLevelDefault ]
 			ifFalse: [ CompressionLevelNone ].
 	compressionMethod = CompressionStored ifTrue: [ compressedSize := uncompressedSize ].
-	^old.
+	^old
 ]
 
 { #category : #private }
 ZipArchiveMember >> endRead [
-	readDataRemaining := 0.
+	readDataRemaining := 0
 ]
 
 { #category : #extraction }
@@ -416,7 +412,7 @@ ZipArchiveMember >> extractTo: aStream [
 	self rewindData.
 	self writeDataTo: aStream.
 	self desiredCompressionMethod: oldCompression.
-	self endRead.
+	self endRead
 ]
 
 { #category : #extraction }
@@ -428,7 +424,7 @@ ZipArchiveMember >> extractTo: aStream from: start to: finish [
 	self rewindData.
 	self writeDataTo: aStream from: start to: finish.
 	self desiredCompressionMethod: oldCompression.
-	self endRead.
+	self endRead
 ]
 
 { #category : #'private-extraction' }
@@ -521,7 +517,7 @@ ZipArchiveMember >> initialize [
 	crc32 := 0.
 	compressedSize := 0.
 	uncompressedSize := 0.
-	self unixFileAttributes: DefaultFilePermissions.
+	self unixFileAttributes: DefaultFilePermissions
 ]
 
 { #category : #testing }
@@ -563,13 +559,13 @@ ZipArchiveMember >> isTextFile: aBoolean [
 ZipArchiveMember >> lastModTime [
 	"Return my last modification date"
 
-	^ lastModFileDateTime.
+	^ lastModFileDateTime
 ]
 
 { #category : #accessing }
 ZipArchiveMember >> localFileName [
 	"Answer my fileName in terms of the local directory naming convention"
-	^ fileName copyReplaceAll: '/' with: FileSystem disk delimiter asString.
+	^ fileName copyReplaceAll: '/' with: FileSystem disk delimiter asString
 ]
 
 { #category : #testing }
@@ -581,20 +577,20 @@ ZipArchiveMember >> looksLikeDirectory [
 ZipArchiveMember >> mapPermissionsFromUnix: unixPerms [
 	"Take Unix permissions (e.g. 8r40755 for a directory) and put them in the high 16 bits. The low 16 bits are for DOS permissions"
 	
-	^ unixPerms bitShift: 16.
+	^ unixPerms bitShift: 16
 ]
 
 { #category : #private }
 ZipArchiveMember >> mapPermissionsToUnix: zipPerms [
 	"Extract Unix permissions (the high 16 bits) from zip permissions. The low 16 bits are for DOS permissions"
 	
-	^ zipPerms bitShift: -16.
+	^ zipPerms bitShift: -16
 ]
 
 { #category : #accessing }
 ZipArchiveMember >> modifiedAt: aDateAndTime [
 
-	lastModFileDateTime := aDateAndTime.
+	lastModFileDateTime := aDateAndTime
 ]
 
 { #category : #private }
@@ -628,7 +624,7 @@ ZipArchiveMember >> refreshLocalFileHeaderTo: aStream [
 	endianStream nextLittleEndianNumber: 2 put: systemFileName size.
 	endianStream nextLittleEndianNumber: 2 put: localExtraField size.
 
-	aStream position: here.
+	aStream position: here
 
 ]
 
@@ -637,14 +633,14 @@ ZipArchiveMember >> rewindData [
 	readDataRemaining :=  (desiredCompressionMethod = CompressionDeflated
 		and: [ compressionMethod = CompressionDeflated ])
 			ifTrue: [ compressedSize ]
-			ifFalse: [ uncompressedSize ].
+			ifFalse: [ uncompressedSize ]
 
 ]
 
 { #category : #accessing }
 ZipArchiveMember >> splitFileName [
 	"Answer my name split on slash boundaries. A directory will have a trailing empty string."
-	^ fileName findTokens: '/'.
+	^ fileName findTokens: '/'
 ]
 
 { #category : #accessing }
@@ -657,7 +653,7 @@ ZipArchiveMember >> uncompressedSize [
 ZipArchiveMember >> unixFileAttributes [
 	"See comment at end"
 
-	^self mapPermissionsToUnix: externalFileAttributes.
+	^self mapPermissionsToUnix: externalFileAttributes
 	
 "Per http://unix.stackexchange.com/questions/14705/the-zip-formats-external-file-attribute : These values can all be found in <sys/stat.h> - link to 4.4BSD version. These are not in the POSIX standard (which defines test macros instead); but originate from AT&T Unix and BSD. (in GNU libc / Linux, the values themselves are defined as __S_IFDIR etc in bits/stat.h, though the kernel header might be easier to read - the values are all the same pretty much everywhere.)
 
@@ -698,7 +694,7 @@ ZipArchiveMember >> unixFileAttributes: perms [
 			ifTrue: [ (perms bitAnd: FileAttrib bitInvert) bitOr: DirectoryAttrib ]
 			ifFalse: [ (perms bitAnd: DirectoryAttrib bitInvert) bitOr: FileAttrib ].
 	externalFileAttributes := self mapPermissionsFromUnix: newPerms.
-	^oldPerms.
+	^oldPerms
 ]
 
 { #category : #'accessing - spec fields' }
@@ -708,14 +704,14 @@ ZipArchiveMember >> versionMadeBy [
 		- The upper byte indicates the compatibility of the file attribute information.  If the external file attributes are compatible with MS-DOS and can be read by PKZIP for DOS version 2.04g then this value will be zero.
 		- The lower byte indicates the ZIP specification version (the version of PKWARE Appnote) supported by the software used to encode the file.  The value / 10 indicates the major version number, and the value mod 10 is the minor version number"
 	
-	^ versionMadeBy.
+	^ versionMadeBy
 ]
 
 { #category : #'accessing - spec fields' }
 ZipArchiveMember >> versionMadeBy: anInteger [
 	"See comment for #versionMadeBy"
 	
-	versionMadeBy := anInteger.
+	versionMadeBy := anInteger
 ]
 
 { #category : #'accessing - spec fields' }
@@ -726,14 +722,14 @@ ZipArchiveMember >> versionNeededToExtract [
 		- File is compressed using Deflate compression
 		- File is encrypted using traditional PKWARE encryption"
 	
-	^ versionNeededToExtract.
+	^ versionNeededToExtract
 ]
 
 { #category : #'accessing - spec fields' }
 ZipArchiveMember >> versionNeededToExtract: anInteger [
 	"See comment for #versionNeededToExtract"
 	
-	versionNeededToExtract := anInteger.
+	versionNeededToExtract := anInteger
 ]
 
 { #category : #'private-writing' }
@@ -774,7 +770,7 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 
 	aStream nextPutAll: systemFileName asByteArray.
 	aStream nextPutAll: systemCdExtraField asByteArray.
-	aStream nextPutAll: systemFileComment asByteArray.
+	aStream nextPutAll: systemFileComment asByteArray
 ]
 
 { #category : #'private-writing' }
@@ -787,7 +783,7 @@ ZipArchiveMember >> writeDataDescriptorTo: aStream [
 
 	aStream nextLittleEndianNumber: 4 put: crc32.
 	aStream nextLittleEndianNumber: 4 put: compressedSize.
-	aStream nextLittleEndianNumber: 4 put: uncompressedSize.
+	aStream nextLittleEndianNumber: 4 put: uncompressedSize
 ]
 
 { #category : #'private-writing' }
