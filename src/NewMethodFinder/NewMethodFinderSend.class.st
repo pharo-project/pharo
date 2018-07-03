@@ -1,5 +1,5 @@
 Class {
-	#name : #Send,
+	#name : #NewMethodFinderSend,
 	#superclass : #Object,
 	#instVars : [
 		'receiver',
@@ -10,26 +10,26 @@ Class {
 }
 
 { #category : #acccessing }
-Send >> arguments [
+NewMethodFinderSend >> arguments [
 
 	^arguments
 ]
 
 { #category : #'public access' }
-Send >> evaluate [
+NewMethodFinderSend >> evaluate [
 	"comment stating purpose of message"
 	
 	^ receiver perform: selector withArguments: arguments.
 ]
 
 { #category : #acccessing }
-Send >> receiver [
+NewMethodFinderSend >> receiver [
 
 	^receiver
 ]
 
 { #category : #'public access' }
-Send >> resultIn: r [
+NewMethodFinderSend >> resultIn: r [
 	"comment stating purpose of message"
 	|evaluation|
 	
@@ -38,13 +38,13 @@ Send >> resultIn: r [
 ]
 
 { #category : #accessing }
-Send >> selector [
+NewMethodFinderSend >> selector [
 	
 	^selector
 ]
 
 { #category : #'as yet unclassified' }
-Send >> to:r selector:s1 withArgs: args [
+NewMethodFinderSend >> to:r selector:s1 withArgs: args [
 	"comment stating purpose of message"
 
 	receiver  := r.
@@ -53,7 +53,7 @@ Send >> to:r selector:s1 withArgs: args [
 ]
 
 { #category : #'as yet unclassified' }
-Send >> to:r withArgs: args [
+NewMethodFinderSend >> to:r withArgs: args [
 	"comment stating purpose of message"
 
 	receiver  := r.
