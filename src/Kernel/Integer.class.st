@@ -951,6 +951,13 @@ Integer >> digitSubtract: arg [
 	^ sum normalize
 ]
 
+{ #category : #accessing }
+Integer >> digitSum [
+    "Returns the digit sum of the receiver"
+    
+    ^self asString inject: 0 into: [:value :new| value + new digitValue]
+]
+
 { #category : #'truncation and round off' }
 Integer >> floor [ 
 	"Refer to the comment in Number|floor."

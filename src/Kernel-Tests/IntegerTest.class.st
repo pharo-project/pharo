@@ -457,6 +457,12 @@ IntegerTest >> testDifferentBases [
 	self assert: -36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: -106300512100105327644605138221229898724869759421181854980.
 ]
 
+{ #category : #'tests - other' }
+IntegerTest >> testDigitSum [
+
+	self assert: 1234 digitSum equals: 10
+]
+
 { #category : #'tests - basic' }
 IntegerTest >> testDigitsAccess [
 
