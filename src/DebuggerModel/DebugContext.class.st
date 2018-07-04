@@ -36,7 +36,7 @@ Class {
 		'context',
 		'topContext'
 	],
-	#category : #DebuggerModel
+	#category : #'DebuggerModel-Base'
 }
 
 { #category : #'instance creation' }
@@ -53,7 +53,7 @@ DebugContext >> blockNotFoundDialog: aMethod with: aText [
 	
 	"shouldn't edit doits"
 	aMethod selector isDoIt
-		ifTrue: [ 	^ self inform: message ].
+		ifTrue: [ ^ self inform: message ].
 			
 	result := UIManager default
 						confirm: message
@@ -61,7 +61,7 @@ DebugContext >> blockNotFoundDialog: aMethod with: aText [
 						falseChoice: 'Cancel'.
 						
 	"possible return values are true | false | nil"
-	result == true ifFalse: [ ^ self ].
+	result ifFalse: [ ^ self ].
 		
 	newMethod := self recompileCurrentMethodTo: aText notifying: nil.
 	newMethod ifNotNil: [newMethod browse]
@@ -111,7 +111,7 @@ DebugContext >> evaluate: expression [
 { #category : #initialization }
 DebugContext >> forContext: aContext [ 
 	context := aContext.
-	topContext := aContext.
+	topContext := aContext
 ]
 
 { #category : #accessing }
@@ -196,5 +196,5 @@ DebugContext >> source [
 
 { #category : #initialization }
 DebugContext >> topContext: aContext [
-	topContext  := aContext 
+	topContext := aContext 
 ]
