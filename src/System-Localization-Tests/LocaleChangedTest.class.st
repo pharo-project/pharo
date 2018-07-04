@@ -1,7 +1,10 @@
+"
+Unit tests for LocaleChanged announcement
+"
 Class {
 	#name : #LocaleChangedTest,
 	#superclass : #TestCase,
-	#category : #'System-Localization-Tests'
+	#category : #'System-Localization-Tests-Locales'
 }
 
 { #category : #'private accessing' }
