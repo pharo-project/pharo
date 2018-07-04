@@ -23,13 +23,13 @@ ZipEncoder >> bitPosition [
 { #category : #'open/close' }
 ZipEncoder >> close [
 	self flush.
-	encodedStream close.
+	encodedStream close
 ]
 
 { #category : #initialization }
 ZipEncoder >> commit [
 	encodedStream next: position putAll: collection.
-	position := readLimit := 0.
+	position := readLimit := 0
 ]
 
 { #category : #accessing }
@@ -40,7 +40,7 @@ ZipEncoder >> encodedStream [
 { #category : #flushing }
 ZipEncoder >> flush [
 	self flushBits.
-	self commit.
+	self commit
 ]
 
 { #category : #flushing }
@@ -50,7 +50,7 @@ ZipEncoder >> flushBits [
 		self nextBytePut: (bitBuffer bitAnd: 255).
 		bitBuffer := bitBuffer bitShift: -8.
 		bitPosition := bitPosition - 8].
-	bitPosition := 0.
+	bitPosition := 0
 ]
 
 { #category : #accessing }
@@ -62,7 +62,7 @@ ZipEncoder >> nextBits: nBits put: value [
 	[bitPosition >= 8] whileTrue:[
 		self nextBytePut: (bitBuffer bitAnd: 255).
 		bitBuffer := bitBuffer bitShift: -8.
-		bitPosition := bitPosition - 8].
+		bitPosition := bitPosition - 8]
 ]
 
 { #category : #accessing }
@@ -83,13 +83,13 @@ ZipEncoder >> nextBytePut: anObject [
 
 { #category : #initialization }
 ZipEncoder >> on: aCollectionOrStream [
-	aCollectionOrStream isStream 
-		ifTrue:[encodedStream := aCollectionOrStream]
-		ifFalse:[	encodedStream := aCollectionOrStream writeStream].
+	encodedStream := aCollectionOrStream isStream
+		ifTrue: [ aCollectionOrStream ]
+		ifFalse: [ aCollectionOrStream writeStream ].
 	encodedStream isBinary
-		ifTrue:[super on: (ByteArray new: 4096)]
-		ifFalse:[super on: (String new: 4096)].
-	bitPosition := bitBuffer := 0.
+		ifTrue: [ super on: (ByteArray new: 4096) ]
+		ifFalse: [ super on: (String new: 4096) ].
+	bitPosition := bitBuffer := 0
 ]
 
 { #category : #private }
@@ -105,9 +105,9 @@ ZipEncoder >> privateSendBlock: literalStream with: distanceStream with: litTree
 	| lit dist code extra sum |
 	<primitive: 'primitiveZipSendBlock' module: 'ZipPlugin'>
 	sum := 0.
-	[lit := literalStream next.
-	dist := distanceStream next.
-	lit == nil] whileFalse:[
+	[ lit := literalStream next.
+	  dist := distanceStream next.
+	  lit isNil ] whileFalse:[
 		dist = 0 ifTrue:["lit is a literal"
 			sum := sum + 1.
 			self nextBits: (litTree bitLengthAt: lit)
@@ -123,9 +123,9 @@ ZipEncoder >> privateSendBlock: literalStream with: distanceStream with: litTree
 				self nextBits: extra put: lit.
 			].
 			dist := dist - 1.
-			dist < 256
-				ifTrue:[code := DistanceCodes at: dist + 1]
-				ifFalse:[code := DistanceCodes at: 257 + (dist bitShift: -7)].
+			code := dist < 256
+				ifTrue:[ DistanceCodes at: dist + 1]
+				ifFalse:[ DistanceCodes at: 257 + (dist bitShift: -7) ].
 			"self assert:[code < MaxDistCodes]."
 			self nextBits: (distTree bitLengthAt: code)
 				put: (distTree codeAt: code).
