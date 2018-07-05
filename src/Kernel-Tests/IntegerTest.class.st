@@ -1,6 +1,6 @@
 "
 SUnit tests for integers
-"
+" 
 Class {
 	#name : #IntegerTest,
 	#superclass : #TestCase,
