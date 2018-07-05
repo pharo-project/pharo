@@ -5,7 +5,7 @@ I am a parser created to parse the insides of a character set ([...]) construct.
 
 Instance Variables:
 
-	source	<Stream>	open on whatever is inside the square brackets we have to parse.
+	source <Stream>	open on whatever is inside the square brackets we have to parse.
 	lookahead	<Character>	The current lookahead character
 	elements	<Collection of: <RxsCharacter|RxsRange|RxsPredicate>> Parsing result
 "
