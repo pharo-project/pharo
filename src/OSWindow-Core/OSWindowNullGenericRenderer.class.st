@@ -4,7 +4,7 @@ I am an implementation of the generic API for native window rendering that does 
 Class {
 	#name : #OSWindowNullGenericRenderer,
 	#superclass : #OSWindowGenericRenderer,
-	#category : #'OSWindow-Core'
+	#category : #'OSWindow-Core-Renderer'
 }
 
 { #category : #rendering }
