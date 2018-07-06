@@ -282,6 +282,30 @@ MemoryStore >> isMemoryFileSystem [
 ]
 
 { #category : #accessing }
+MemoryStore >> isReadable: aPath [
+	"Answer a boolean indicating whether the entry at aPath is readable.
+	Memory store doesn't have access controls, all entries are readable."
+
+	^true
+]
+
+{ #category : #accessing }
+MemoryStore >> isRegular: aPath [
+	"Answer a boolean indicating whether the entry at aPath is writable.
+	Memory store only supports regular files."
+
+	^self isFile: aPath
+]
+
+{ #category : #accessing }
+MemoryStore >> isWritable: aPath [
+	"Answer a boolean indicating whether the entry at aPath is writable.
+	Memory store doesn't have access controls, all entries are writable."
+
+	^true
+]
+
+{ #category : #accessing }
 MemoryStore >> modificationTimeOf: aPath [
 
 	^(self nodeAt: aPath) modificationTime
@@ -326,6 +350,14 @@ MemoryStore >> openFileStream: path writable: isWriteStream [
 	^ isWriteStream 
 		ifTrue: [ entry writeStream ]
 		ifFalse: [ entry readStream ]
+]
+
+{ #category : #accessing }
+MemoryStore >> permissions: aPath [
+	"Answer the FileSystemPermission's for aPath.
+	Memory Store doesn't implement access controls."
+
+	^FileSystemPermission posixPermissions: 8r777
 ]
 
 { #category : #public }
