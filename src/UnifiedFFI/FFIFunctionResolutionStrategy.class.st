@@ -11,7 +11,7 @@ resolveFunctionAddress: ""answers the solved function address (an ExternalAddres
 Class {
 	#name : #FFIFunctionResolutionStrategy,
 	#superclass : #Object,
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-Callouts'
 }
 
 { #category : #testing }
