@@ -281,12 +281,13 @@ MemoryStore >> isMemoryFileSystem [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 MemoryStore >> isReadable: aPath [
-	"Answer a boolean indicating whether the entry at aPath is readable.
-	Memory store doesn't have access controls, all entries are readable."
+	"Answer a boolean indicating whether the supplied path is a readable entry (directory or file).
+	MemoryStore doesn't implement access controls, always true if the file exists."
 
-	^true
+	^self exists: aPath
+
 ]
 
 { #category : #accessing }
@@ -297,12 +298,13 @@ MemoryStore >> isRegular: aPath [
 	^self isFile: aPath
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 MemoryStore >> isWritable: aPath [
-	"Answer a boolean indicating whether the entry at aPath is writable.
-	Memory store doesn't have access controls, all entries are writable."
+	"Answer a boolean indicating whether the supplied path is a writable entry (directory or file).
+	MemoryStore doesn't implement access controls, always true if the file exists."
 
-	^true
+	^self exists: aPath
+
 ]
 
 { #category : #accessing }

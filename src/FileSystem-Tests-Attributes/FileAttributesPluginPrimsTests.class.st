@@ -25,7 +25,7 @@ FileAttributesPluginPrimsTests >> testExistsPathTooLong [
 	filename := String new: pathMax * 2 withAll: $a.
 	self 
 		should: [ primitives exists: filename ]
-		raise: IllegalName.
+		raise: IllegalFileName.
 ]
 
 { #category : #tests }

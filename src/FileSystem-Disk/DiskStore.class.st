@@ -502,8 +502,10 @@ DiskStore >> openFileStream: path writable: writable [
 
 { #category : #accessing }
 DiskStore >> permissions: aPath [
+	"Answer the FileSystemPermissions for the supplied path"
 
-	^File permissions: (self stringFromPath: aPath)
+	^FileSystemPermission posixPermissions: (File posixPermissions: (self stringFromPath: aPath))
+
 ]
 
 { #category : #public }

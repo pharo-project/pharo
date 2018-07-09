@@ -512,10 +512,10 @@ File class >> modeIsSymlink: aMode [
 ]
 
 { #category : #'primitives-file modes' }
-File class >> modeOf: aPath [
+File class >> modeOf: aPathString [
 	"Answer the statBuf.st_mode for the supplied path"
 	
-	^self fileAttribute: aPath number: 2
+	^self fileAttribute: aPathString number: 2
 ]
 
 { #category : #'file creation' }
@@ -559,14 +559,6 @@ File class >> openForReadFileNamed: aName [
 File class >> openForWriteFileNamed: aName [
 
 	^ (self named: aName) openForWrite
-]
-
-{ #category : #'primitives-file modes' }
-File class >> permissions: aPath [
-	"Answer the FileSystemPermission's for the supplied path"
-
-	^FileSystemPermission posixPermissions: (self posixPermissions: aPath)
-
 ]
 
 { #category : #'primitives-file modes' }
@@ -630,12 +622,14 @@ symbolic link information
 	16: is symbolic link
 	"
 	<primitive: 'primitiveFileAttribute' module: 'FileAttributesPlugin' error: error>
-	^error isPrimitiveError ifTrue: [ 
-		(self retrySymbolicLinkOnAttribute: attributeNumber error: error) ifTrue: 
-			[ (self fileAttributeNumberMap at: attributeNumber) value: 
-				(DiskSymlinkDirectoryEntry fileSystem: DiskStore currentFileSystem path: aString asPath) ]
-		ifFalse:
-			[ self signalError: error errorCode for: aString ] ]
+	"FilePlugin>>primitiveDirectoryEntry would return the symbolic link attributes if the symbolic link was broken.  This was due to the incorrect implementation of attempting to retrieve symbolic link information.
+	If the old behaviour is required, the logic is:
+	
+		(error isPrimitiveError and: [attributeNumber ~= 16 and: [error errorCode = self cantStatPath and: [
+					self platformSupportsSymbolicLinksEgUnix]]]) ifTrue:
+						[DiskSymlinkDirectoryEntry fileSystem: DiskStore currentFileSystem path: aString asPath]"
+	^error isPrimitiveError ifTrue:
+		[ self signalError: error errorCode for: aString ]
 	ifFalse:
 		[ self primitiveFailed ]
 ]
@@ -800,16 +794,6 @@ File class >> reset [
 
 ]
 
-{ #category : #private }
-File class >> retrySymbolicLinkOnAttribute: attributeNumber error: error [
-	"Answer a boolean indicating whether the operation can be retried assuming a symbolic link"
-	"This is part of some obscure backward compatibility code and can probably be removed."
-
-	^attributeNumber ~= 16 and: 
-		[ error errorCode = self cantStatPath and:
-		[ OSPlatform current isUnix ] ]
-]
-
 { #category : #registry }
 File class >> retryWithGC: execBlock until: testBlock forFileNamed: fullName [
 	"Some platforms, like Windows, will fail if we try to open a file twice.
@@ -887,12 +871,12 @@ File class >> signalError: aNumber for: aString [
 	"Raise the appropriate signal for the supplied error number"
 
 	aNumber = self stringTooLong ifTrue: 
-		[ ^IllegalName signalWith: aString ].
+		[ ^IllegalFileName signalWith: aString ].
 	aNumber = self cantStatPath ifTrue: 
 		[ ^FileDoesNotExistException signalWith: aString ].
 	aNumber = self getAttributesFailed ifTrue: 
 		[ ^FileDoesNotExistException signalWith: aString ].
-	^FileSystemError signalWith: aString.
+	^FileException signalWith: aString.
 ]
 
 { #category : #'primitives-file' }
