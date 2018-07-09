@@ -9,7 +9,7 @@ Class {
 		'stream',
 		'fnSpec'
 	],
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-Base'
 }
 
 { #category : #'requestor callbacks' }

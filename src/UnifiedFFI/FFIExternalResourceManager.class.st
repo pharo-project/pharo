@@ -68,7 +68,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-External-Resources'
 }
 
 { #category : #'resource management' }
