@@ -13,7 +13,7 @@ Class {
 		'sample',
 		'compare'
 	],
-	#category : #'Regex-Core'
+	#category : #'Regex-Core-Links'
 }
 
 { #category : #'initialize-release' }
