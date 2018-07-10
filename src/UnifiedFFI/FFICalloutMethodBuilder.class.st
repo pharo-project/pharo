@@ -13,7 +13,7 @@ Class {
 		'module',
 		'functionResolutionStrategies'
 	],
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-Callouts'
 }
 
 { #category : #'instance creation' }
