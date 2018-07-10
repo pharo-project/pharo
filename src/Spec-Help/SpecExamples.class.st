@@ -18,7 +18,7 @@ SpecExamples class >> bookName [
 SpecExamples class >> firstExample [
 	^HelpTopic 
 		title: 'A first example: ModelList'
-		contents: 'Creating a specific UI always starts with the subclassing of Composable-Model. Each sub widget is stored into an instance variable of the newly created class. All the code presented here is already in the image so you can simply do: 
+		contents: 'Creating a specific UI always starts with the subclassing of ComposablePresenter. Each sub widget is stored into an instance variable of the newly created class. All the code presented here is already in the image so you can simply do: 
 		
 	ModelList browse
 
