@@ -476,7 +476,10 @@ FileSystemTest >> testFileNames [
 				description: [ reference basename, ' should exist but does not' ].
 			self assert: (filesystem workingDirectory children
 					anySatisfy: [ :ref | ref = reference ])
-				description: [ 'children did not find ', reference basename ] ]
+				description: [ | childrenByteArrays |
+					childrenByteArrays := filesystem workingDirectory children collect: [ :child |
+						child basename asByteArray ].
+					 'children ', childrenByteArrays printString, ' does not include ', reference basename asByteArray printString ] ]
 		ensure: [ reference delete ] ]
 ]
 
