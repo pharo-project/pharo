@@ -182,12 +182,12 @@ SHRange >> length [
 	^ end - start + 1
 ]
 
-{ #category : #printing }
+{ #category : #necompletion }
 SHRange >> printOn: aStream [
 
-    super printOn: aStream. 
-    aStream nextPutAll: ' ', type. 
-    aStream nextPutAll: ' [', start asString, ' - ', end asString, ']'
+	super printOn: aStream. 
+	aStream nextPutAll: ' ', type. 
+	aStream nextPutAll: ' [', start asString, ' - ', end asString, ']'.
 ]
 
 { #category : #accessing }
