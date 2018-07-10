@@ -56,8 +56,9 @@ DiskFileAttributesTests >> collectionAssert: aBlock equals: expected [
 { #category : #running }
 DiskFileAttributesTests >> setUp [
 
+	super setUp.
 	primitives := File.
-	
+
 ]
 
 { #category : #'private-helpers' }
