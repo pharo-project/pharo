@@ -955,7 +955,7 @@ Integer >> digitSubtract: arg [
 Integer >> digitSum [
     "Returns the digit sum of the receiver"
     
-    ^self asString inject: 0 into: [:value :new| value + new digitValue]
+    ^self abs asString inject: 0 into: [:value :new| value + new digitValue]
 ]
 
 { #category : #'truncation and round off' }

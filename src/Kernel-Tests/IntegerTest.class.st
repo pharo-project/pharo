@@ -1,6 +1,6 @@
 "
 SUnit tests for integers
-" 
+"
 Class {
 	#name : #IntegerTest,
 	#superclass : #TestCase,
@@ -461,6 +461,12 @@ IntegerTest >> testDifferentBases [
 IntegerTest >> testDigitSum [
 
 	self assert: 1234 digitSum equals: 10
+]
+
+{ #category : #'tests - other' }
+IntegerTest >> testDigitSumOnNegative [
+
+	self assert: -1234 digitSum equals: 10
 ]
 
 { #category : #'tests - basic' }
