@@ -202,12 +202,12 @@ Trait >> isTrait [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 Trait >> isTraitAlias [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 Trait >> isTraitExclusion [
 	^ false
 ]

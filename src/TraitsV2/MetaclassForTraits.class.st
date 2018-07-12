@@ -79,12 +79,12 @@ MetaclassForTraits >> isTrait [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 MetaclassForTraits >> isTraitAlias [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 MetaclassForTraits >> isTraitExclusion [
 	^ false
 ]
