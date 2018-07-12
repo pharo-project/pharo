@@ -78,21 +78,27 @@ TestRunner class >> theme [
 
 { #category : #actions }
 TestRunner >> addDeclaredPackagesUnderTestTo: listOfPackages [ 
-	classesSelected do: 
-		[ :class | 
-		(class class includesSelector: #packageNamesUnderTest) ifTrue: 
-			[ class packageNamesUnderTest do: [ :name | listOfPackages add: (RPackage organizer packageNamed: name) ] ] ]
+	"This method looks for #packageNamesUnderTest method in class side of classes defined packages in listOfPackages.
+	 If a class defines this method, then the coverage tool knows the methods of which packages should be spied to compute the coverage.
+	 Thus, it adds it to #listOfPackages collection provided as parameter."
+	classesSelected
+		select: [ :class | (class class includesSelector: #packageNamesUnderTest) ]
+		thenDo: [ :class | 
+			class packageNamesUnderTest do: [ :name | 
+				listOfPackages add: (RPackage organizer packageNamed: name) ] ]
 ]
 
 { #category : #actions }
 TestRunner >> addMethodsUnderTestIn: listOfPackages to: methods [ 
 	listOfPackages
-		do: [:package | package isNil
-				ifFalse: [package methodReferences
-						do: [:method | ((#(#packageNamesUnderTest #classNamesNotUnderTest ) includes: method selector)
-									or: [method compiledMethod isAbstract
-											or: [method compiledMethod refersToLiteral: #ignoreForCoverage]])
-								ifFalse: [methods add: method]]]]
+		reject: #isNil
+		thenDo: [:package | 
+			package methodReferences
+				reject: [ :method | (#(#packageNamesUnderTest #classNamesNotUnderTest ) includes: method selector)
+												or: [ method compiledMethod isAbstract
+													or: [ (method compiledMethod refersToLiteral: #ignoreForCoverage)
+														or: [ method methodClass instanceSide allSuperclasses includes: TestCase ] ] ] ]
+				thenDo: [:method | methods add: method ] ]
 ]
 
 { #category : #accessing }
@@ -795,8 +801,7 @@ TestRunner >> promptForPackages [
 						or: [(package packageName beginsWith: 'Collections')
 								or: [(package packageName beginsWith: 'Exceptions')
 										or: [(package packageName beginsWith: 'SUnit')
-												or: [(package packageName beginsWith: 'System')
-														or: [package packageName includesSubstring: 'Test' caseSensitive: false]]]]]])
+												or: [(package packageName beginsWith: 'System') ]]]]])
 				sort: [:a :b | a packageName < b packageName].
 	choosenpackages := Array
 				with: (UIManager default

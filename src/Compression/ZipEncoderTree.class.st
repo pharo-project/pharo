@@ -24,7 +24,7 @@ ZipEncoderTree class >> buildTreeFrom: frequencies maxDepth: depth [
 
 { #category : #accessing }
 ZipEncoderTree >> bitLengthAt: index [
-	^bitLengths at: index+1
+	^ bitLengths at: index + 1
 ]
 
 { #category : #accessing }
@@ -37,7 +37,7 @@ ZipEncoderTree >> bitLengths [
 ZipEncoderTree >> bitLengths: blArray codes: codeArray [
 	bitLengths := blArray as: WordArray.
 	codes := codeArray as: WordArray.
-	[(self bitLengthAt: maxCode) > 0] assert.
+	[ (self bitLengthAt: maxCode) > 0 ] assert
 ]
 
 { #category : #encoding }
@@ -57,8 +57,8 @@ ZipEncoderTree >> buildCodes: nodeList counts: blCounts maxDepth: depth [
 			code := nextCode at: length+1.
 			node code: (self reverseBits: code length: length).
 			nextCode at: length+1 put: code+1.
-		].
-	].
+		]
+	]
 ]
 
 { #category : #encoding }
@@ -129,7 +129,7 @@ ZipEncoderTree >> buildTreeFrom: frequencies maxDepth: depth [
 
 { #category : #accessing }
 ZipEncoderTree >> codeAt: index [
-	^codes at: index+1
+	^ codes at: index + 1
 ]
 
 { #category : #accessing }
@@ -145,15 +145,15 @@ ZipEncoderTree >> maxCode [
 
 { #category : #accessing }
 ZipEncoderTree >> maxCode: aNumber [
-	maxCode := aNumber.
+	maxCode := aNumber
 ]
 
 { #category : #encoding }
 ZipEncoderTree >> nodeSortBlock [
-	^[:n1 :n2|
-		n1 frequency = n2 frequency
-			ifTrue:[n1 height <= n2 height]
-			ifFalse:[n1 frequency <= n2 frequency]].
+	^ [ :n1 :n2 | 
+	n1 frequency = n2 frequency
+		ifTrue: [ n1 height <= n2 height ]
+		ifFalse: [ n1 frequency <= n2 frequency ] ]
 ]
 
 { #category : #private }

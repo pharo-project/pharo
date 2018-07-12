@@ -60,6 +60,12 @@ OSWindowWorldMorph >> display [
 	^ display
 ]
 
+{ #category : #'session management' }
+OSWindowWorldMorph >> displayArea [
+
+	^ Rectangle origin: 0@0 corner: osWindow extent
+]
+
 { #category : #initialization }
 OSWindowWorldMorph >> initialize [
 	super initialize.

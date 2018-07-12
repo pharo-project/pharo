@@ -163,6 +163,18 @@ RubSmalltalkCodeMode >> maxFormatterLineLength [
 		ifFalse: [ 70 ]
 ]
 
+{ #category : #parsing }
+RubSmalltalkCodeMode >> parseExpression: aString [
+
+	^RBParser parseFaultyExpression: aString
+]
+
+{ #category : #parsing }
+RubSmalltalkCodeMode >> parseSource: aString [
+
+	^RBParser parseFaultyMethod: aString
+]
+
 { #category : #shout }
 RubSmalltalkCodeMode >> shoutAboutToStyle: myShoutStyler [
 	^ self model isNil
