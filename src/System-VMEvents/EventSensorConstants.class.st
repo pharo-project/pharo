@@ -29,7 +29,7 @@ Class {
 		'WindowEventPaint',
 		'YellowButtonBit'
 	],
-	#category : #'System-VMEvents'
+	#category : #'System-VMEvents-Support'
 }
 
 { #category : #'class initialization' }

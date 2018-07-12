@@ -106,7 +106,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'System-SessionManager'
+	#category : #'System-SessionManager-Base'
 }
 
 { #category : #accessing }
@@ -193,7 +193,7 @@ SessionManager class >> initializedSessionManager [
 SessionManager >> addDeferredStartupAction: aBlock [
 	"Add the block to the list of actions that we will be performed immediately after the startup list is executed."
 	self currentSession 
-		addDeferredStartupAction: aBlock.
+		addDeferredStartupAction: aBlock
 	
 ]
 
@@ -208,7 +208,7 @@ SessionManager >> basicCreateCategory: aString [
 SessionManager >> categoryNamed: aString [ 
 	^ categories 
 		detect: [ :each | each name = aString ]
-		ifNone: [ NotFound signalFor: aString  ]
+		ifNone: [ NotFound signalFor: aString ]
 ]
 
 { #category : #'category management' }
@@ -248,10 +248,10 @@ SessionManager >> guiCategory [
 { #category : #registration }
 SessionManager >> hasRegistered: handledId [
 	"handledId, in most cases, will be a class name"
+	
 	^ self startupList 
-		detect: [ :handler | handler handledId = handledId ]
-		ifFound: [ true ]
-		ifNone: [ false ]
+			anySatisfy: [ :handler | handler handledId = handledId ]
+	
 ]
 
 { #category : #initialization }

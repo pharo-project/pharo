@@ -44,13 +44,16 @@ MetaclassForTraits >> asTraitComposition [
 { #category : #'fileIn/Out' }
 MetaclassForTraits >> definition [
 	^ String streamContents: [ :s | 
-		s 
-			nextPutAll: self instanceSide name;
+		s nextPutAll: self instanceSide name;
 			nextPutAll: ' classTrait';
 			cr; tab;
 			nextPutAll: 'uses: ';
 			nextPutAll: composition traitCompositionExpression.
-	]
+			
+		self localSlots ifNotEmpty: [ 
+				s crtab;
+					nextPutAll: 'slots: ';
+					nextPutAll: self slotDefinitionString]]
 ]
 
 { #category : #testing }
