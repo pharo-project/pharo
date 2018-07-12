@@ -146,7 +146,6 @@ GrowlMorph >> alpha [
 { #category : #accessing }
 GrowlMorph >> alpha: newAlpha [
 
-	"self alpha = newAlpha ifTrue: [^ self]."
 	alpha := newAlpha.
 	labelAttr color: (self labelColor alpha: alpha).
 	contentsAttr color: (self contentsColor alpha: alpha).
@@ -167,7 +166,7 @@ GrowlMorph >> backgroundColor [
 GrowlMorph >> contents: contentsString [
 
 	self streamDo: [ :w |
-		w withAttributes: self contentsAttributes do: [w nextPutAll: contentsString asString]].
+		w withAttributes: self contentsAttributes do: [w nextPutAll: contentsString asString]]
 ]
 
 { #category : #initialization }
@@ -185,7 +184,7 @@ GrowlMorph >> contentsColor [
 GrowlMorph >> contentsColor: aColor [
 	"when you set this contentsColor, it takes precedence over theme one. In certain case (such as for green as in SUnit) it is needed, normally you do not need it."
 	contentsColor := aColor.
-	contentsAttr color: aColor.
+	contentsAttr color: aColor
 	
 ]
 
@@ -220,13 +219,13 @@ GrowlMorph >> defaultVanishDelay [
 	^ 1  seconds
 ]
 
-{ #category : #stepping }
+{ #category : #accessing }
 GrowlMorph >> enabled [
 
 	^ false
 ]
 
-{ #category : #interaction }
+{ #category : #'event handling' }
 GrowlMorph >> handlesMouseDown: evt [
 	^ actionBlock notNil or: [super handlesMouseDown: evt]
 ]
@@ -296,7 +295,7 @@ GrowlMorph >> minimumExtent [
 	^ 256@38
 ]
 
-{ #category : #interaction }
+{ #category : #'event handling' }
 GrowlMorph >> mouseDown: evt [
 	super mouseDown: evt.
 	evt yellowButtonPressed ifTrue: [^ self].
@@ -312,7 +311,7 @@ GrowlMorph >> nextColorStep: aColor [
 GrowlMorph >> openInWorld [
 
 	self position: self unoccupiedPosition.
-	super openInWorld
+	^super openInWorld
 ]
 
 { #category : #internal }
@@ -327,7 +326,7 @@ GrowlMorph >> resetVanishTimer [
 	self resetAlpha.
 ]
 
-{ #category : #stepping }
+{ #category : #'stepping and presenter' }
 GrowlMorph >> step [
 
 	(self containsPoint: ActiveHand position) ifTrue: [
@@ -337,7 +336,7 @@ GrowlMorph >> step [
 	self alpha: self alpha - 0.05.
 ]
 
-{ #category : #stepping }
+{ #category : #'stepping and presenter' }
 GrowlMorph >> stepTime [
 	^ 100
 ]
@@ -449,7 +448,7 @@ GrowlMorph >> vanishDelay: aDuration [
 	self resetVanishTimer
 ]
 
-{ #category : #stepping }
+{ #category : #'stepping and presenter' }
 GrowlMorph >> wantsSteps [
 	^ true
 ]
