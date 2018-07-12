@@ -978,7 +978,7 @@ UITheme >> chooseDirectoryIn: aThemedMorph title: title path: path [
 	fd := (FileDialogWindow newWithTheme: aThemedMorph theme)
 		title: title;
 		answerDirectory.
-	path ifNotNil: [ fd selectPathName: path fullName ].
+	path ifNotNil: [ fd selectPathName: path asFileReference fullName ].
 	^ (aThemedMorph openModal: fd) answer
 ]
 
