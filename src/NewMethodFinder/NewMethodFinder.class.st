@@ -74,6 +74,30 @@ NewMethodFinder >> finderGuess: in and: out [
 
 ]
 
+{ #category : #testing }
+NewMethodFinder >> isSafe: selector [
+
+	^ selector implementors allSatisfy: [ :each | (self isSafe: selector in: each)].
+]
+
+{ #category : #testing }
+NewMethodFinder >> isSafe: selector in: class [
+	|actual|
+	
+	actual := class.
+	[actual isNil] whileFalse: [
+		(actual class selectors includes: #forbiddenMethods) ifTrue: [
+			(actual forbiddenMethods includes: selector) ifTrue: [ ^ false ]. 
+		].
+		(actual class selectors includes: #approvedMethods) ifTrue: [
+			Transcript show: actual approvedMethods; cr.
+			(actual approvedMethods includes: selector) ifTrue: [ ^ true ].  
+		].
+		actual := actual superclass.
+	].
+	^ false.
+]
+
 { #category : #'as yet unclassified' }
 NewMethodFinder >> permutationGuess: in and: out [
 	"Search for methods which giving each elements of input returns the corresponding 

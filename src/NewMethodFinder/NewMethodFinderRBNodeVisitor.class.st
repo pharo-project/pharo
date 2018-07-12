@@ -3,7 +3,8 @@ Class {
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'methodFinder',
-		'isSafe'
+		'isSafe',
+		'class'
 	],
 	#classInstVars : [
 		'isSafe',
@@ -29,5 +30,5 @@ NewMethodFinderRBNodeVisitor >> visitGlobalNode: aGlobalNode [
 { #category : #visiting }
 NewMethodFinderRBNodeVisitor >> visitMessageNode: aMessageNode [
 	"isSafe := methodFinder isSafe: aMessageNode selector."
-	isSafe ifTrue: [self visitMessageNode: aMessageNode].
+	isSafe ifTrue: [super visitMessageNode: aMessageNode].
 ]
