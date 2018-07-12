@@ -50,7 +50,8 @@ MCTraitDefinition >> = aDefinition [
 		and: [(self isRevisionOf: aDefinition)
 		and: [self traitCompositionString = aDefinition traitCompositionString
 		and: [category = aDefinition category
-		and: [comment = aDefinition comment]]]]
+		and: [comment = aDefinition comment
+		and: [self sortedVariables = aDefinition sortedVariables]]]]]
 ]
 
 { #category : #visiting }
@@ -84,6 +85,9 @@ MCTraitDefinition >> hash [
 	hash := String stringHash: name initialHash: 0.
 	hash := String stringHash: self traitCompositionString initialHash: hash.
 	hash := String stringHash: (category ifNil: ['']) initialHash: hash.
+	variables do: [ :v |
+		hash := String stringHash: v name initialHash: hash ].
+	
 	^ hash
 
 ]
