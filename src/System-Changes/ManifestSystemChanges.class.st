@@ -1,3 +1,6 @@
+"
+Packacke with support for system changes recorded in changesets
+"
 Class {
 	#name : #ManifestSystemChanges,
 	#superclass : #PackageManifest,
