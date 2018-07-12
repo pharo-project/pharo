@@ -337,8 +337,10 @@ TheManifestBuilder >> createManifestNamed: packageName [
 			instanceVariableNames: ''
 			classVariableNames: ''
 			poolDictionaries: ''
-			package: packageName, '-', tag.
-	manifestClass comment: self class manifestClassComment.
+			package: packageName.
+	manifestClass 
+		tagWith: tag;
+		comment: self class manifestClassComment.
 	^ manifestClass
 ]
 
