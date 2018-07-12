@@ -606,3 +606,147 @@ PharoShortcuts >> undoShortcut [
 
 	^ $z meta
 ]
+
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowBottomEdgeDownShortcut [
+
+	^ self windowManagementShortcut, $x shift meta, $x shift meta
+]
+
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowBottomEdgeUpShortcut [
+
+	^ self windowManagementShortcut, $x shift meta, $s shift meta
+]
+
+{ #category : #'keymaps - window tiling' }
+PharoShortcuts >> windowBottomLeftShortcut [
+
+	^ self windowManagementShortcut, $z
+]
+
+{ #category : #'keymaps - window tiling' }
+PharoShortcuts >> windowBottomShortcut [
+
+	^ self windowManagementShortcut, $x
+]
+
+{ #category : #'keymaps - window tiling' }
+PharoShortcuts >> windowCenterShortcut [
+
+	^ self windowManagementShortcut, $r
+]
+
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowLeftEdgeLeftShortcut [
+
+	^ self windowManagementShortcut, $a shift meta, $a shift meta
+]
+
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowLeftEdgeRightShortcut [
+
+	^ self windowManagementShortcut, $a shift meta, $s shift meta
+]
+
+{ #category : #'keymaps - window tiling' }
+PharoShortcuts >> windowLeftShortcut [
+
+	^ self windowManagementShortcut, $a
+]
+
+{ #category : #'keymaps - window' }
+PharoShortcuts >> windowManagementShortcut [
+
+	^ $w shift meta
+]
+
+{ #category : #'keymaps - window tiling' }
+PharoShortcuts >> windowMaximizeShortcut [
+
+	^ self windowManagementShortcut, $s
+]
+
+{ #category : #'keymaps - window tiling' }
+PharoShortcuts >> windowMinimizeShortcut [
+
+	^ self windowManagementShortcut, $s shift
+]
+
+{ #category : #'keymaps - window moving' }
+PharoShortcuts >> windowMoveDownShortcut [
+
+	^ self windowManagementShortcut, Character arrowDown
+]
+
+{ #category : #'keymaps - window moving' }
+PharoShortcuts >> windowMoveLeftShortcut [
+
+	^ self windowManagementShortcut, Character arrowLeft
+]
+
+{ #category : #'keymaps - window moving' }
+PharoShortcuts >> windowMoveRightShortcut [
+
+	^ self windowManagementShortcut, Character arrowRight
+]
+
+{ #category : #'keymaps - window moving' }
+PharoShortcuts >> windowMoveUpShortcut [
+
+	^ self windowManagementShortcut, Character arrowUp
+]
+
+{ #category : #'keymaps - window tiling' }
+PharoShortcuts >> windowRightBottomShortcut [
+
+	^ self windowManagementShortcut, $c
+]
+
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowRightEdgeLeftShortcut [
+
+	^ self windowManagementShortcut, $d shift meta, $s shift meta
+]
+
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowRightEdgeRightShortcut [
+
+	^ self windowManagementShortcut, $d shift meta, $d shift meta
+]
+
+{ #category : #'keymaps - window tiling' }
+PharoShortcuts >> windowRightShortcut [
+
+	^ self windowManagementShortcut, $d
+]
+
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowTopEdgeDownShortcut [
+
+	^ self windowManagementShortcut, $w shift meta, $s shift meta
+]
+
+{ #category : #'keymaps - window resizing' }
+PharoShortcuts >> windowTopEdgeUpShortcut [
+
+	^ self windowManagementShortcut, $w shift meta, $w shift meta
+]
+
+{ #category : #'keymaps - window tiling' }
+PharoShortcuts >> windowTopLeftShortcut [
+
+	^ self windowManagementShortcut, $q
+]
+
+{ #category : #'keymaps - window tiling' }
+PharoShortcuts >> windowTopRightShortcut [
+
+	^ self windowManagementShortcut, $e
+]
+
+{ #category : #'keymaps - window tiling' }
+PharoShortcuts >> windowTopShortcut [
+
+	^ self windowManagementShortcut, $w
+]

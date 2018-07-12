@@ -35,7 +35,7 @@ HistoryIteratorTest >> testGroupedUndo1 [
 	historyList groupFrom: 1 to: 2.
 	historyList undo.
 
-	self assert: ((aCollection last = 3) and: [aCollection second = 2]).
+	self assert: ((aCollection last = 3) and: [aCollection second = 2])
 ]
 
 { #category : #testing }
@@ -61,7 +61,7 @@ HistoryIteratorTest >> testGroupedUndo2 [
 
 	historyList undo.
 	"both UndoRecords in the group should have been made undone"
-	self assert: ((aCollection last = 3) and: [aCollection second = 2]).
+	self assert: ((aCollection last = 3) and: [aCollection second = 2])
 ]
 
 { #category : #testing }
@@ -70,7 +70,7 @@ HistoryIteratorTest >> testGrouping [
 	aCollection := OrderedCollection new.
 
 	historyList openGroup.
-	self assert: historyList size = 1.
+	self assert: historyList size equals: 1.
 	self assert: (historyList at: 1) isComposite.
 	self assert: (historyList at: 1) opened.
 	historyList doAndAddRecord: (
@@ -81,16 +81,15 @@ HistoryIteratorTest >> testGrouping [
 		UndoRedoRecord
 			do: (MessageSend receiver: aCollection selector: #addLast: argument: 2)
 			undo: (MessageSend receiver: aCollection selector: #removeLast)).
-	self assert: historyList size = 1.
-	self assert: (historyList at: 1) size = 2.
+	self assert: historyList size equals: 1.
+	self assert: (historyList at: 1) size equals: 2.
 	historyList closeGroup.
 	self assert: (historyList at: 1) closed.
-	self assert: aCollection size = 2.
-	self assert: aCollection first = 1.
-	self assert: aCollection last = 2.
+	self assert: aCollection size equals: 2.
+	self assert: aCollection first equals: 1.
+	self assert: aCollection last equals: 2.
 	historyList undo.
 	self assert: aCollection isEmpty
-
 ]
 
 { #category : #testing }
@@ -107,7 +106,7 @@ HistoryIteratorTest >> testMaxSize [
 				undo: (MessageSend receiver: aCollection selector: #size)).
 	].
 
-	self assert: historyList size = 5.
+	self assert: historyList size equals: 5
 ]
 
 { #category : #testing }
@@ -123,7 +122,7 @@ HistoryIteratorTest >> testUndo1 [
 
 	historyList undo.
 
-	self assert: aCollection size = 0.
+	self assert: aCollection size equals: 0
 ]
 
 { #category : #testing }
@@ -139,6 +138,6 @@ HistoryIteratorTest >> testUndo2 [
 
 	historyList undo.
 
-	self assert: aCollection size = 3.	
-	self assert: aCollection last = 3.
+	self assert: aCollection size equals: 3.	
+	self assert: aCollection last equals: 3
 ]

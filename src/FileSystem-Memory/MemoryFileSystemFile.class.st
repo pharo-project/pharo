@@ -21,13 +21,15 @@ MemoryFileSystemFile >> at: index [
 { #category : #'stream-protocol' }
 MemoryFileSystemFile >> at: index put: anObject [
 	index > bytes size
-		 ifTrue: [ self grow ].
-		
-	bytes at: index put: (anObject isCharacter
-		ifTrue: [ anObject codePoint ]
-		ifFalse: [ anObject ]).
-	
-	size := size max: index
+		ifTrue: [ self grow ].
+	bytes
+		at: index
+		put:
+			(anObject isCharacter
+				ifTrue: [ anObject codePoint ]
+				ifFalse: [ anObject ]).
+	size := size max: index.
+	self modified
 ]
 
 { #category : #'stream-protocol' }
@@ -44,16 +46,18 @@ MemoryFileSystemFile >> at: index read: aCollection startingAt: start count: cou
 ]
 
 { #category : #'stream-protocol' }
-MemoryFileSystemFile >> at: first write: aCollection startingAt: start count: count [ 
+MemoryFileSystemFile >> at: first write: aCollection startingAt: start count: count [
 	| last |
 	last := first + count - 1.
-	last > bytes size ifTrue: [ self grownBy: last - size ].
-	bytes 
+	last > bytes size
+		ifTrue: [ self grownBy: last - size ].
+	bytes
 		replaceFrom: first
 		to: last
 		with: aCollection
 		startingAt: start.
-	size := last
+	size := last.
+	self modified
 ]
 
 { #category : #'open/close' }
@@ -68,7 +72,6 @@ MemoryFileSystemFile >> binaryReadStream [
 
 { #category : #streams }
 MemoryFileSystemFile >> binaryWriteStream [
-
 	^ MemoryFileWriteStream on: self
 ]
 
@@ -105,8 +108,7 @@ MemoryFileSystemFile >> grow [
 { #category : #accessing }
 MemoryFileSystemFile >> grownBy: length [
 	bytes := bytes grownBy: length.
-	
-	self modified.
+	self modified
 ]
 
 { #category : #initialization }
@@ -151,32 +153,34 @@ MemoryFileSystemFile >> truncate [
 { #category : #accessing }
 MemoryFileSystemFile >> truncateTo: aSize [
 	bytes size = aSize
-		ifFalse: [bytes := bytes size < aSize
-			ifTrue: [(ByteArray new: aSize)
-				replaceFrom: 1 to: bytes size with: bytes startingAt: 1]
-			ifFalse: [bytes copyFrom: 1 to: aSize]].
+		ifFalse: [ bytes := bytes size < aSize
+				ifTrue: [ (ByteArray new: aSize)
+						replaceFrom: 1
+						to: bytes size
+						with: bytes
+						startingAt: 1 ]
+				ifFalse: [ bytes copyFrom: 1 to: aSize ] ].
 	size := bytes size.
-	self modified.
+	self modified
 ]
 
 { #category : #private }
-MemoryFileSystemFile >> updateContents: aCollection [ 
-	
+MemoryFileSystemFile >> updateContents: aCollection [
 	bytes := aCollection.
-	self updateSize: aCollection size.
+	self updateSize: aCollection size
 ]
 
 { #category : #private }
 MemoryFileSystemFile >> updateSize: newSize [
 	size := newSize.
-	modificationTime := nil
+	self modified
 ]
 
 { #category : #'stream-protocol' }
 MemoryFileSystemFile >> writeStreamDo: aBlock [
-	| stream |
-	stream := WriteStream on: ByteArray new.
-	[ aBlock value: stream ] ensure: [ stream close ].
-	bytes := stream contents.
+	ByteArray
+		streamContents: [ :aStream | 
+			aBlock value: aStream.
+			bytes := aStream contents ].
 	self updateSize: bytes size
 ]

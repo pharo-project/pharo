@@ -622,7 +622,7 @@ Paragraph >> lineIndexOfCharacterIndex: characterIndex [
 
 { #category : #private }
 Paragraph >> lines [
-	^ lines
+	^ lines ifNil: [ ^ Array new ]
 ]
 
 { #category : #access }

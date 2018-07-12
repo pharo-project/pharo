@@ -17,7 +17,7 @@ ShMetaclassChanged >> announceChanges [
 { #category : #accessing }
 ShMetaclassChanged >> builder: anObject [
 	super builder: anObject.
-	oldClass := builder oldClass copy.
+	oldClass := builder oldClass copyForAnnouncement.
 ]
 
 { #category : #propagating }
