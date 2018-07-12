@@ -6,18 +6,18 @@ If the entity violates the rule, method should ruturn ""true"", otherwise - ""fa
 It is recommended to reuse #basicCheck: functionality in #checkClass: and #checkMethod:
 "
 Class {
-	#name : #RBDefineBasickCheckRule,
+	#name : #RBDefineBasicCheckRule,
 	#superclass : #ReAbstractRule,
 	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #testing }
-RBDefineBasickCheckRule class >> checksClass [
+RBDefineBasicCheckRule class >> checksClass [
 	^ true
 ]
 
 { #category : #'as yet unclassified' }
-RBDefineBasickCheckRule >> check: aClass forCritiquesDo: aCritiqueBlock [
+RBDefineBasicCheckRule >> check: aClass forCritiquesDo: aCritiqueBlock [
 	((aClass inheritsFrom: RBLintRule) and: [ 
 		aClass isVisible and: [ 
 	  (aClass lookupSelector: #basicCheck:) isSubclassResponsibility ] ])
@@ -32,11 +32,11 @@ RBDefineBasickCheckRule >> check: aClass forCritiquesDo: aCritiqueBlock [
 ]
 
 { #category : #accessing }
-RBDefineBasickCheckRule >> group [
+RBDefineBasicCheckRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
 { #category : #accessing }
-RBDefineBasickCheckRule >> name [
+RBDefineBasicCheckRule >> name [
 	^ 'Rule does not define #basicCheck:'
 ]
