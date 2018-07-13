@@ -911,8 +911,8 @@ String >> contractTo: smallSize [
 
 { #category : #copying }
 String >> copyReplaceAll: oldSubstring with: newSubstring [
-    "Answer a copy of the receiver in which all occurrences of oldSubstring have been replaced by newSubstring"
-
+	"Answer a copy of the receiver in which all occurrences of oldSubstring have been replaced by newSubstring"
+	"'ab cd ab ef ab' copyReplaceAll: 'ab' with: 'zk' >>> 'zk cd zk ef zk'"
     | idx |        
     self = oldSubstring ifTrue: [ ^ newSubstring copy ].
     oldSubstring isEmpty ifTrue: [ ^ self copy ].
@@ -929,12 +929,10 @@ String >> copyReplaceAll: oldSubstring with: newSubstring [
 
 { #category : #copying }
 String >> copyReplaceAll: oldSubstring with: newSubstring asTokens: ifTokens [
-	"Answer a copy of the receiver in which all occurrences of
-	oldSubstring have been replaced by newSubstring.
-	ifTokens (valid for Strings only) specifies that the characters
-	surrounding the recplacement must not be alphanumeric.
-		Bruce Simth,  must be incremented by 1 and not 
-	newSubstring if ifTokens is true.  See example below. "
+	"Answer a copy of the receiver in which all occurrences of oldSubstring have been replaced by newSubstring. ifTokens (valid for Strings only) specifies that the characters surrounding the replacement must not be alphanumeric (space). When ifTokens is set, it means that the replacement will not occur inside word."
+
+	"('test te string' copyReplaceAll: 'te' with: 'longone' asTokens: true) >>> 'test longone string'"
+	"('test te string' copyReplaceAll: 'te' with: 'longone' asTokens: false) >>> 'longonest longone string'"
 
 	| aString startSearch currentIndex endIndex |
 
@@ -960,17 +958,16 @@ String >> copyReplaceAll: oldSubstring with: newSubstring asTokens: ifTokens [
 					ifFalse: [startSearch := currentIndex + newSubstring size]]].
 	^ aString
 
-"Test case:
-	'test te string' copyReplaceAll: 'te' with: 'longone' asTokens: true   "
 
 ]
 
 { #category : #copying }
 String >> copyReplaceTokens: oldSubstring with: newSubstring [ 
-	"Replace all occurrences of oldSubstring that are surrounded
-	by non-alphanumeric characters"
+	"Replace all occurrences of oldSubstring that are surrounded by non-alphanumeric characters"
+	"('File asFile Files File''s File' copyReplaceTokens: 'File' with: 'Snick') >>> 'Snick asFile Files Snick''s Snick'"
+	
 	^ self copyReplaceAll: oldSubstring with: newSubstring asTokens: true
-	"'File asFile Files File''s File' copyReplaceTokens: 'File' with: 'Snick'"
+	
 ]
 
 { #category : #converting }
@@ -1057,10 +1054,9 @@ String >> encodeDoublingQuoteOn: aStream [
 { #category : #testing }
 String >> endsWith: suffix [
 	"Answer whether the tail end of the receiver is the same as suffix.
-	The comparison is case-sensitive.
+	The comparison is case-sensitive."
  
-	'Elvis' endsWith: 'vis'
-	"
+	"'Elvis' endsWith: 'vis' >>> true"
 	
 	| extra |
 	extra := self size - suffix size.
@@ -1072,7 +1068,9 @@ String >> endsWith: suffix [
 { #category : #testing }
 String >> endsWithAColon [ 
 	"Answer whether the final character of the receiver is a colon"
-
+	"'displayStringOn:' endsWithAColon >>> true"
+	"'displayStringOn:foo' endsWithAColon >>> false"
+	
 	^ self notEmpty and: [ self last == $: ]
 
 ]
@@ -1080,17 +1078,27 @@ String >> endsWithAColon [
 { #category : #testing }
 String >> endsWithDigit [
 	"Answer whether the receiver's final character represents a digit."
-
+	"'foo10' endsWithDigit >>> true"
+	"'foo10foo' endsWithDigit >>> false"
+	"'foo1' endsWithDigit >>> true"
+	
 	^ self notEmpty and: [self last isDigit]
 ]
 
 { #category : #formatting }
 String >> expandMacros [
+	"'<t>' expandMacros >>> String tab"
+	"'<r>' expandMacros >>> String cr"
+	"'<n>' expandMacros >>> OSPlatform current lineEnding"
+	
 	^self expandMacrosWithArguments: #()
 ]
 
 { #category : #formatting }
 String >> expandMacrosWith: anObject [ 
+	"('Pharo is <1s>' expandMacrosWith: 'cool') >>> 'Pharo is cool'"
+	"('Pharo is <1p>' expandMacrosWith: 'cool') >>> 'Pharo is ''cool'''"
+
 	^self expandMacrosWithArguments: (Array with: anObject)
 ]
 
@@ -1119,33 +1127,32 @@ String >> expandMacrosWith: anObject with: anotherObject with: thirdObject with:
 
 { #category : #formatting }
 String >> expandMacrosWithArguments: anArray [
-	"
-	Arguments:
-	Unused arguments are ignored.
+	"Interpret the receiver pattern (<1p>, <1s>, <t>...) with argument passed in anArray."
 	
-	<Np> writes the N-th argument using #printString, but without trancating it.
-	('<1p>: <2p>' expandMacrosWith: 'Number' with: 5 with: nil) >>> '''Number'': 5'.
-	<Ns> writes the N-th argument, which should be a String, or a collection of printable objects.
-	Note also important distinction for single-quotes inside the argument; with <p> they will be doubled.
-	('<1s> vs <1p>' expandMacrosWith: 'it''em') >>> 'it''em vs ''it''''em'''
+	"<Np> writes the N-th argument using #printString, but without trancating it."
+	"('<1p>: <2p>' expandMacrosWith: 'Number' with: 5 with: nil) >>> '''Number'': 5'"
 	
-	Whitespace characters:
-	'<t>' expandMacros >>> String tab.
-	'<r>' expandMacros >>> String cr.
-	'<n>' expandMacros >>> OSPlatform current lineEnding.
+	"<Ns> writes the N-th argument, which should be a String, or a collection of printable objects.
+	Note also important distinction for single-quotes inside the argument; with <p> they will be doubled."
+	"('<1s> vs <1p>' expandMacrosWith: 'it''em') >>> 'it''em vs ''it''''em'''"
 	
-	Writing '<' character:
-	To write '<', prepend it with a percent sign.
-	'%<n>' expandMacros >>> '<n>'.
+	"Whitespace characters:"
+	"'<t>' expandMacros >>> String tab"
+	"'<r>' expandMacros >>> String cr"
+	"'<n>' expandMacros >>> OSPlatform current lineEnding"
 	
-	Ternary operator:
+	"Writing '<' character:
+	To write '<', prepend it with a percent sign."
+	"'%<n>' expandMacros >>> '<n>'"
+	
+	"Ternary operator:
 	An if-else string can be written with <N?yes-string:no-string>.
 	The N-th argument must be a Boolean.
 	Yes-string cannot contain colon ':', as it terminates the yes-string.
-	No-string cannot contain closing angle bracket '>', as it terminates the no-string.
-	('<1?success:error>' expandMacrosWith: true) >>> 'success'.
-	('<1?success:is error>' expandMacrosWith: false) >>> 'is error'
-	"
+	No-string cannot contain closing angle bracket '>', as it terminates the no-string."
+	"('<1?success:error>' expandMacrosWith: true) >>> 'success'"
+	"('<1?success:is error>' expandMacrosWith: false) >>> 'is error'"
+	
 	| readStream char index |
 	^ self class
 		new: self size
