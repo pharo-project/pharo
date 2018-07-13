@@ -1605,11 +1605,19 @@ String >> howManyMatch: string [
 
 { #category : #testing }
 String >> includesSubstring: substring [
+	"Returns whether the receiver contains the argument."
+	"('abcdefgh' includesSubstring: 'de') >>> true"
+	
 	^ substring isEmpty or: [ (self findString: substring startingAt: 1) > 0 ]
 ]
 
 { #category : #testing }
 String >> includesSubstring: aString caseSensitive: caseSensitive [
+	"Returns whether the receiver contains the argument."
+	"('abcdefgh' includesSubstring: 'de' caseSensitive: false) >>> true"
+	"('abcdefgh' includesSubstring: 'DE' caseSensitive: false) >>> true"
+	"('abcDefgh' includesSubstring: 'De' caseSensitive: true) >>> true"
+	"('abcDefgh' includesSubstring: 'DE' caseSensitive: true) >>> false"
 	
 	^ (self findString: aString startingAt: 1 caseSensitive: caseSensitive) > 0
 ]
@@ -1621,7 +1629,10 @@ String >> includesUnifiedCharacter [
 
 { #category : #accessing }
 String >> indexOf: aCharacter [
-
+	"Return the index starting at 1 of the argument in the receiver, zero if not present."
+	"('abcdf' indexOf: $a) >>> 1"
+	"('abddf' indexOf: $k) >>> 0"
+	
 	aCharacter isCharacter ifFalse: [^ 0].
 	^ self class
 		indexOfAscii: aCharacter asciiValue
@@ -1632,7 +1643,11 @@ String >> indexOf: aCharacter [
 
 { #category : #accessing }
 String >> indexOf: aCharacter startingAt: start [
-
+	"Return the index starting at 1 of the argument in the receiver, zero if not present."
+	
+	"('abcdf abcedf' indexOf: $a startingAt: 4) >>> 7"
+	"('abddf bcdef' indexOf: $a starting ) >>> 0"
+	
 	(aCharacter isCharacter) ifFalse: [^ 0].
 	^ self class indexOfAscii: aCharacter asciiValue inString: self startingAt: start
 ]
