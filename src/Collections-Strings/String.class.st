@@ -483,7 +483,9 @@ String >> alike: aString [
 
 { #category : #accessing }
 String >> allRangesOfSubstring: aSubstring [
-
+	"'Ab cd ef Ab cd' allRangesOfSubstring: 'cd' >>> {(4 to: 5). (13 to: 14)}"
+	"'Ab cd ef Ab cd' allRangesOfSubstring: 'zz' >>> #()"
+	
 	^ Array streamContents: [:s | | start subSize |
 		start := 1.
 		subSize := aSubstring size.
@@ -497,6 +499,9 @@ String >> allRangesOfSubstring: aSubstring [
 { #category : #converting }
 String >> asByteArray [
 	"Convert to a ByteArray with the ascii values of the string."
+	"'a' asByteArray >>> #[97]"
+	"'A' asByteArray >>> #[65]"
+	"'ABA' asByteArray >>> #[65 66 65]"
 	| b |
 	b := ByteArray new: self byteSize.
 	1 to: self size * 4 do: [:i |
@@ -580,7 +585,9 @@ String >> asDuration [
 
 { #category : #converting }
 String >> asFourCode [
-
+	"'abcd' asFourCode >>> -513645724"
+	"'1111' asFourCode >>> 825307441"
+	"'1234' asFourCode >>> 825373492"
 	| result |
 	self size = 4 
 		ifFalse: [^self error: 'must be exactly four characters'].
@@ -606,21 +613,30 @@ String >> asHTMLString [
 
 { #category : #converting }
 String >> asHex [
+	"'A' asHex >>> '16r41'"
+	"'AA' asHex >>> '16r4116r41'"
 	^ self class new: self size * 4 streamContents: [ :stream |
 		self do: [ :ch | stream nextPutAll: ch hex ]]
 ]
 
 { #category : #converting }
 String >> asInteger [ 
+	"Return the integer present in the receiver, or nil. In case of float, returns the integer part."
+	"'1' asInteger >>> 1"
+	"'-1' asInteger >>> -1"
+	"'10' asInteger >>> 10"
+	"'a' asInteger >>> nil"
+	"'1.234' asInteger >>> 1"
 	^self asSignedInteger
 
 ]
 
 { #category : #converting }
 String >> asLowercase [
-	"Answer a String made up from the receiver whose characters are all 
-	lowercase."
-
+	"Answer a String made up from the receiver whose characters are all lowercase."
+	"'PhaRo' asLowercase >>> 'pharo'"
+	"'' asLowercase >>> ''"
+	"' ' asLowercase >>> ' '"	
 	^ self copy asString translateToLowercase
 ]
 
@@ -717,15 +733,16 @@ String >> asUnsignedInteger [
 
 { #category : #converting }
 String >> asUppercase [
-	"Answer a String made up from the receiver whose characters are all 
-	uppercase."
+	"Answer a String made up from the receiver whose characters are all uppercase."
 
 	^self copy asString translateToUppercase
 ]
 
 { #category : #converting }
 String >> asValidSelector [
-	"e.g. '234znak ::x43 åå) :2' asValidSelector = #v234znak:x43:v2"
+	"Returns a symbol that is a vlida selector: remove any space or forbiddent characters"
+	"'234znak ::x43 ''åå) _ : 2' asValidSelector >>> #'v234znak:x43:v2'"
+	"'234znak ::x43 åå) :2' asValidSelector >>> #v234znak:x43:v2"
 	
 ^(((
 	$: join: (	
@@ -816,7 +833,10 @@ String >> caseSensitiveLessOrEqual: aString [
 { #category : #comparing }
 String >> charactersExactlyMatching: aString [
 	"Do a character-by-character comparison between the receiver and aString.  Return the index of the final character that matched exactly."
-
+	"'s' charactersExactlyMatching: 'abc' >>> 0"
+	"'fear is the little death that the.' charactersExactlyMatching: 'the' >>> 0"
+	"'fear is the little death that the.' charactersExactlyMatching: 'fear is' >>> 7"
+	
 	| count |
 	count := self size min: aString size.
 	1 to: count do: [:i | 
@@ -833,6 +853,10 @@ String >> compare: aString [
 		3 - after.
 	The collation sequence is ascii with case differences ignored.
 	To get the effect of a <= b, but ignoring case, use (a compare: b) <= 2."
+	"'aa' compare: 'ab' >>> 1"
+	"'aa' compare: 'aa' >>> 2"
+	"'ab' compare: 'aa' >>> 3"
+	
 	^self compare: aString caseSensitive: false
 ]
 
@@ -850,18 +874,16 @@ String >> compare: aString caseSensitive: aBool [
 
 { #category : #comparing }
 String >> compare: string1 with: string2 collated: order [
-	"
-	self assert: 'abc' = 'abc' asWideString.
-	self assert: 'abc' asWideString = 'abc'.
-	self assert: ((ByteArray with: 97 with: 0 with: 0 with: 0) asString ~= 'a000' asWideString).
-	self assert: ('a000' asWideString ~= (ByteArray with: 97 with: 0 with: 0 with: 0) asString).
-
-	self assert: ('abc' sameAs: 'aBc' asWideString).
-	self assert: ('aBc' asWideString sameAs: 'abc').
-	self assert: ((ByteArray with: 97 with: 0 with: 0 with: 0) asString sameAs: 'Abcd' asWideString) not.
-	self assert: ('a000' asWideString sameAs: (ByteArray with: 97 with: 0 with: 0 with: 0) asString) not.
-
-	"
+	
+	"'abc' = 'abc' asWideString >>> true"
+	"'abc' asWideString = 'abc' >>> true"
+	"(ByteArray with: 97 with: 0 with: 0 with: 0) asString ~= 'a000' asWideString >>> true"
+	"('abc' sameAs: 'aBc' asWideString) >>> true"
+	"('aBc' asWideString sameAs: 'abc') >>> true"
+	"('a000' asWideString ~= (ByteArray with: 97 with: 0 with: 0 with: 0) asString) >>> true"
+	"((ByteArray with: 97 with: 0 with: 0 with: 0) asString sameAs: 'Abcd' asWideString) >>> false"
+	"('a000' asWideString sameAs: (ByteArray with: 97 with: 0 with: 0 with: 0) asString) >>> false"
+	
 	(string1 isByteString and: [string2 isByteString]) ifTrue: [
 		^ ByteString compare: string1 with: string2 collated: order].
      "Primitive does not fail properly right now"
@@ -871,6 +893,10 @@ String >> compare: string1 with: string2 collated: order [
 { #category : #converting }
 String >> contractTo: smallSize [
 	"return myself or a copy shortened by ellipsis to smallSize"
+	"('abcd' contractTo: 10) >>> 'abcd'"
+	"('Pharo is really super cool' contractTo: 10) >>> 'Phar...ool'"
+	"('A clear but rather long-winded summary' contractTo: 18) >>> 'A clear ...summary'"
+	
 	| leftSize |
 	self size <= smallSize
 		ifTrue: [^ self].  "short enough"
@@ -880,9 +906,7 @@ String >> contractTo: smallSize [
 	^ self copyReplaceFrom: leftSize+1		"First N/2 ... last N/2"
 		to: self size - (smallSize - leftSize - 3)
 		with: '...'
-"
-	'A clear but rather long-winded summary' contractTo: 18
-"
+
 ]
 
 { #category : #copying }
@@ -1021,6 +1045,7 @@ String >> displayStringOn: aStream [
 { #category : #printing }
 String >> encodeDoublingQuoteOn: aStream [ 
 	"Print inside string quotes, doubling inbedded quotes."
+	
 	| x |
 	aStream print: $'.
 	1 to: self size do: [:i |
