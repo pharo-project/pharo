@@ -1643,7 +1643,7 @@ String >> indexOf: aCharacter [
 
 { #category : #accessing }
 String >> indexOf: aCharacter startingAt: start [
-	"Return the index starting at 1 of the argument in the receiver, zero if not present."
+	"Return the index of the argument in the receiver, only elements after the start th element are considered zero if not present."
 	
 	"('abcdf abcedf' indexOf: $a startingAt: 4) >>> 7"
 	"('abddf bcdef' indexOf: $a starting ) >>> 0"
@@ -1678,6 +1678,8 @@ String >> indexOfFirstUppercaseCharacter [
 
 { #category : #accessing }
 String >> indexOfSubCollection: sub [ 
+	""
+
 	^ self
 		indexOfSubCollection: sub
 		startingAt: 1
@@ -1705,16 +1707,15 @@ String >> indexOfWideCharacterFrom: start to: end [
 { #category : #converting }
 String >> initialIntegerOrNil [
 	"Answer the integer represented by the leading digits of the receiver, or nil if the receiver does not begin with a digit"
-	"
-	'234Whoopie' initialIntegerOrNil
-	'wimpy' initialIntegerOrNil
-	'234' initialIntegerOrNil
-	'2N' initialIntegerOrNil
-	'2' initialIntegerOrNil
-	'  89Ten ' initialIntegerOrNil
-	'78 92' initialIntegerOrNil
-	"
-
+	"'234Whoopie' initialIntegerOrNil >>> 234"
+	"'wimpy' initialIntegerOrNil >>> nil"
+	"'234' initialIntegerOrNil >>> 234"
+	"'2N' initialIntegerOrNil >>> 2"
+	"'2' initialIntegerOrNil >>> 2"
+	"'  89Ten ' initialIntegerOrNil >>> nil"
+	"'78 92' initialIntegerOrNil >>> 78"
+	"'3.1415' initialIntegerOrNil >>> 3"
+	
 	| firstNonDigit |
 	(self size = 0 or: [ self first isDigit not ]) 
 		ifTrue: [ ^ nil ].
@@ -1725,23 +1726,33 @@ String >> initialIntegerOrNil [
 
 { #category : #testing }
 String >> isAllAlphaNumerics [
-	"whether the receiver is composed entirely of alphanumerics"
+	"Returns whether the receiver is composed entirely of alphanumerics (i.e., letters or digits)."
+	"'3.123' isAllAlphaNumerics >>> false"
+	"'a3123abc' isAllAlphaNumerics >>> true"
+	"'3123' isAllAlphaNumerics >>> true"
+	"'3,123' isAllAlphaNumerics >>> false"
+	
 	self do: [:c | c isAlphaNumeric ifFalse: [^ false]].
 	^ true
 ]
 
 { #category : #testing }
 String >> isAllDigits [
-	"whether the receiver is composed entirely of digits and has at least one digit"
-
+	"Return whether the receiver is composed entirely of digits and has at least one digit"
+	"'2345' isAllDigits >>> true"
+	"'0002345' isAllDigits >>> true"
+	"'2345.88' isAllDigits >>> false"
+	
 	self do: [:c | c isDigit ifFalse: [^ false]].
 	self ifEmpty: [^false].
-       ^ true
+	^ true
 ]
 
 { #category : #testing }
 String >> isAllSeparators [
-	"whether the receiver is composed entirely of separators"
+	"Returns whether the receiver is composed entirely of separators i.e., a space, tab, lf, cr, and newPage"
+	"(Character space asString, Character space asString) isAllSeparators >>> true"
+	"(Character space asString, 'a') isAllSeparators >>> false"
 	self do: [ :c | c isSeparator ifFalse: [ ^false ] ].
 	^true
 ]
