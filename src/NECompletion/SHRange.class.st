@@ -182,7 +182,7 @@ SHRange >> length [
 	^ end - start + 1
 ]
 
-{ #category : #necompletion }
+{ #category : #printing }
 SHRange >> printOn: aStream [
 
 	super printOn: aStream. 
