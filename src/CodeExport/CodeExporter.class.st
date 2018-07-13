@@ -21,7 +21,9 @@ CodeExporter class >> writeSourceCodeFrom: aStream baseName: baseName isSt: stOr
 CodeExporter class >> writeSourceCodeFrom: aStream toFileReference: aFileReference [
 	"Write the supplied changes to aFileReference"
 
-	aFileReference binaryWriteStreamDo: [ :outputStream |
+	aFileReference 
+		ensureDelete;
+		binaryWriteStreamDo: [ :outputStream |
 		(ZnCharacterWriteStream on: outputStream encoding: 'utf8')
 			nextPutAll: aStream contents.
 	].
