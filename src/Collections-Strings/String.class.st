@@ -1279,7 +1279,16 @@ String >> findLastOccurrenceOfString: substring startingAt: start [
 
 { #category : #converting }
 String >> findSelector [
-	"Dan's code for hunting down selectors with keyword parts; while this doesn't give a true parse, in most cases it does what we want, in where it doesn't, we're none the worse for it."
+	"Extract a selector with keyword parts from the receiver. While this doesn't give a true parse, in most cases it does what we want, in where it doesn't, we're none the worse for it."
+	
+	"'isSymbol' findSelector >>> #isSymbol"
+	"'x isSymbol' findSelector >>> nil"
+	"'x isSymbol: 33' findSelector >>> #isSymbol:"
+	"'between:and:' findSelector >>> #'between:and:'"
+	"'2 between: 0 and: 4' findSelector >>> #'between:and:'"
+	"'2 between: ( 1 and: 4)' findSelector >>> nil"
+	"'( 1 and: 4)' findSelector >>> nil"
+	
 	| sel possibleParens |
 	sel := self trimBoth.
 	sel := sel copyReplaceAll: '#' with: ''.
@@ -1307,16 +1316,20 @@ String >> findSelector [
 
 { #category : #accessing }
 String >> findString: substring [
-	"Answer the index of substring within the receiver, starting at start. If 
-	the receiver does not contain substring, answer 0."
+	"Answer the index of the first substring within the receiver. If the receiver does not contain substring, answer 0."
+	"('salkjsdlkgfee' findString: 'al') >>> 2"
+	"('salkjsdlkgfeesd' findString: 'sd') >>> 6"
+	
 	^self findString: substring startingAt: 1.
 ]
 
 { #category : #accessing }
 String >> findString: substring startingAt: start [ 
-	"Answer the index of substring within the receiver, starting at start. If 
-	the receiver does not contain substring, answer 0."
-
+	"Answer the index of the first substring within the receiver, starting at start. If the receiver does not contain substring, answer 0."
+	"('salkjsdlkgfee' findString: 'ee'startingAt: 3) >>> 12"
+	"('salkjsdlkgfee' findString: 'al'startingAt: 3) >>> 0"
+	"('salkjsdlkgfeeal' findString: 'al' startingAt: 1) >>> 2"
+	
 	^self findString: substring startingAt: start caseSensitive: true
 ]
 
