@@ -161,8 +161,6 @@ MCMczReader >> zip [
 		zip := nil].
 	zip ifNil: [
 		zip := ZipArchive new.
-		stream binary.
-		
 		zip readFrom: (stream closed
         ifTrue: [	filename asFileReference binaryReadStream ]
         ifFalse: [ stream ])
