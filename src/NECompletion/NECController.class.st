@@ -1,5 +1,12 @@
 "
 I live as an instance variable in a Browser, Debugger, Workspace or other window. I'm the glue between all participants of the completion system. I create the NECContext and pass myself to the NECMenuMorph. I process the keyboard events and pass them to the NECMenuMorph or close the morph if needed.
+
+My method codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: evt
+is the starting point of the completion process.
+
+I'm invoked before and after a keystroke. Check method handleKeystrokeBefore: evt editor: editor and handleKeystrokeAfter: evt editor: editor.
+
+The completion occurs in specific character position. The editor is responsible for determining such positions: look at senders of ==atCompletionPosition==
 "
 Class {
 	#name : #NECController,
@@ -214,6 +221,7 @@ NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 
 { #category : #keyboard }
 NECController >> handleKeystrokeWithoutMenu: aKeyboardEvent [
+	"I handle resetting the completion menu, and I return true when I handle an event."
 	
 	self editor atCompletionPosition ifFalse: [ 
 		^ (self smartInputWithEvent: aKeyboardEvent ) notNil ].	
@@ -254,6 +262,8 @@ NECController >> isMenuOpen [
 
 { #category : #keyboard }
 NECController >> leftArrow [
+	"I return false when the arrow is at its left-most position.
+	Otherwise i return true."
 	
 	(menuMorph hideDetail)	
 			ifFalse: [ 
