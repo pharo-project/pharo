@@ -244,7 +244,7 @@ Character class >> pageUp [
 
 { #category : #'instance creation' }
 Character class >> separators [
-	"Answer a collection of the standard ASCII separator characters."
+	"Answer a collection of the standard ASCII separator characters as string."
 
 	^ #(32 "space"
 		13 "cr"
@@ -648,8 +648,14 @@ Character >> isSafeForHTTP [
 
 { #category : #testing }
 Character >> isSeparator [
-    | in |
-    ^ (in := self asInteger) == 32 or: [ in == 13 or: [ in == 9 or: [ in == 10 or: [ in == 12 ] ] ] ]
+	"Returns whether the receiver is a separator i.e., a space, tab, lf, cr, and newPage"
+	"Character space isSeparator >>> true"
+	"Character lf isSeparator >>> true"
+	"Character cr isSeparator >>> true"
+	"Character newPage isSeparator >>> true"
+	"Character tab isSeparator >>> true"
+	| in |
+	^ (in := self asInteger) == 32 or: [ in == 13 or: [ in == 9 or: [ in == 10 or: [ in == 12 ] ] ] ]
 ]
 
 { #category : #testing }
