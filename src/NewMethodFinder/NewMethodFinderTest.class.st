@@ -7,10 +7,10 @@ Class {
 { #category : #tests }
 NewMethodFinderTest >> testExceptionDoesNotStopTheFlow [
 
-	| bottom res |
+	| bottom result |
 	bottom := NewMethodFinderBottomClass new.
-	res := (NewMethodFinder new permutationGuess: { bottom . 1 } and: 1).
-	self assert: (res includes: #oneArgumentMethod:).
+	result := (NewMethodFinder new findMethodsByExampleInput: { bottom . 1 } andExpectedResult: 1).
+	self assert: ((result collect: #selector) includes: #oneArgumentMethod:).
 ]
 
 { #category : #tests }
@@ -20,8 +20,8 @@ NewMethodFinderTest >> testMethodApprovedInClassButDisapprovedInSuperClass [
 	
 	|bottom result |
 	bottom := NewMethodFinderBottomClass new.
-	result := (NewMethodFinder new permutationGuess: { bottom } and: bottom).
-	self assert: (result includes: #topDisapprovedButBottomApprovedMethod).
+	result := (NewMethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
+	self assert: ((result collect: #selector) includes: #topDisapprovedButBottomApprovedMethod).
 ]
 
 { #category : #tests }
@@ -31,7 +31,7 @@ NewMethodFinderTest >> testMethodDisapprovedInClassButApprovedInSuperClass [
 	
 	|bottom result |
 	bottom := NewMethodFinderBottomClass new.
-	result := (NewMethodFinder new permutationGuess: { bottom } and: bottom).
+	result := (NewMethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
 	self assert: (result includes: #topApprovedButBottomDisapprovedMethod) equals: false.
 ]
 
@@ -56,7 +56,7 @@ NewMethodFinderTest >> testMethodNotDefinedAndDisapprovedInClassButApprovedInSup
 	
 	|bottom result |
 	bottom := NewMethodFinderBottomClass new.
-	result := (NewMethodFinder new permutationGuess: { bottom } and: bottom).
+	result := (NewMethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
 	self assert: (result includes: #topApprovedButBottomDisapprovedMethod) equals: false.
 ]
 
@@ -67,7 +67,7 @@ NewMethodFinderTest >> testMethodNotDefinedInClassAndDisapprovedInSuperClass [
 	
 	|bottom result |
 	bottom := NewMethodFinderBottomClass new.
-	result := (NewMethodFinder new permutationGuess: { bottom } and: bottom).
+	result := (NewMethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult: bottom).
 	self assert: (result includes: #onlyTopDefinedDisapprovedMethod) equals: false.
 ]
 
@@ -79,8 +79,8 @@ NewMethodFinderTest >> testMethodNotDefinedInClassButApprovedInSuperClass [
 	
 	|bottom result |
 	bottom := NewMethodFinderBottomClass new.
-	result := (NewMethodFinder new permutationGuess: { bottom } and: bottom).
-	self assert: (result includes: #onlyTopDefinedApprovedMethod).
+	result := (NewMethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
+	self assert: ((result collect: #selector) includes: #onlyTopDefinedApprovedMethod).
 ]
 
 { #category : #tests }
@@ -90,8 +90,8 @@ NewMethodFinderTest >> testMethodOnlyBottomDefinedAndApprovedInBottom [
 	
 	|bottom result |
 	bottom := NewMethodFinderBottomClass new.
-	result := NewMethodFinder new permutationGuess: { bottom } and: bottom.
-	self assert: (result includes: #onlyBottomDefinedApprovedMethod).
+	result := NewMethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom.
+	self assert: ((result collect: #selector) includes: #onlyBottomDefinedApprovedMethod).
 	
 ]
 
@@ -103,8 +103,8 @@ NewMethodFinderTest >> testMethodOnlyTopDefinedAndApprovedInTop [
 	
 	|bottom result |
 	bottom := NewMethodFinderBottomClass new.
-	result := (NewMethodFinder new permutationGuess: { bottom } and: bottom).
-	self assert: (result includes: #onlyTopDefinedApprovedMethod).
+	result := (NewMethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
+	self assert: ((result collect: #selector) includes: #onlyTopDefinedApprovedMethod).
 	
 ]
 
@@ -122,9 +122,9 @@ NewMethodFinderTest >> testPermutation [
 	| bottom res args|
 	bottom := NewMethodFinderBottomClass new.
 	args := { bottom . 1 . 2 }.
-	res := (NewMethodFinder new permutationGuess: args and: 1).
+	res := (NewMethodFinder new findMethodsByExampleInput: args andExpectedResult: 1).
 	args permutationsDo: [ :p |
-		self assert: res equals: (NewMethodFinder new permutationGuess: p and: 1).
+		self assert: res equals: (NewMethodFinder new findMethodsByExampleInput: p andExpectedResult: 1).
 	].
 ]
 
@@ -133,10 +133,10 @@ NewMethodFinderTest >> testSideEffects [
 	"The arguments that we tested should not be changed even if
 	 a matching method modifies them"
 	
-	| bottom res |
+	| bottom result |
 	bottom := NewMethodFinderBottomClass new.
 	bottom modifyMethod: 1.
-	res := (NewMethodFinder new permutationGuess: { bottom . 5 } and: 5).
-	self assert: (res includes: #modifyMethod:).
+	result := (NewMethodFinder new findMethodsByExampleInput: { bottom . 5 } andExpectedResult:  5).
+	self assert: ((result collect: #selector) includes: #modifyMethod:).
 	self assert: (bottom instanceVariable) equals: 1.
 ]

@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #'method finder' }
-NewMethodFinderDummy class >> approvedMethods [
+NewMethodFinderDummy class >> approvedSelectors [
 
 	^ #(foo x:y:z: arg:)
 ]

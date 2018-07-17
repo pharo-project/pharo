@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #'method finder' }
-NewMethodFinderFoo class >> approvedMethods [
+NewMethodFinderFoo class >> approvedSelectors [
 	
 	^ #(foo bar)
 ]

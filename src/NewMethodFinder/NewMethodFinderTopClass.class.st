@@ -5,9 +5,14 @@ Class {
 }
 
 { #category : #'method finder' }
-NewMethodFinderTopClass class >> approvedMethods [
+NewMethodFinderTopClass class >> approvedSelectors [
 
 	^#(topApprovedButBottomDisapprovedMethod onlyTopDefinedApprovedMethod)
+]
+
+{ #category : #'method finder' }
+NewMethodFinderTopClass class >> forbiddenSelectors [
+	^ #(topDisapprovedButBottomApprovedMethod)
 ]
 
 { #category : #'as yet unclassified' }
@@ -20,6 +25,11 @@ NewMethodFinderTopClass >> onlyTopDefinedApprovedMethod [
 NewMethodFinderTopClass >> onlyTopDefinedDisaprovedMethod [
 
 	^self
+]
+
+{ #category : #tests }
+NewMethodFinderTopClass >> test [
+	^ self onlyTopDefinedDisaprovedMethod 
 ]
 
 { #category : #'as yet unclassified' }

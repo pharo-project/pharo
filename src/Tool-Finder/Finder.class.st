@@ -101,7 +101,7 @@ Finder >> computeWithMethodFinder: aString [
 						withCRs.
 			^ #() ].
 		
-	result := NewMethodFinder new finderGuess: dataObjects allButLast and: dataObjects last.
+	result := NewMethodFinder new findMethodsByExampleInput: dataObjects allButLast andExpectedResult: dataObjects last.
 	result isEmpty ifTrue: [ self inform: 'no single method'. ^ #()].
 	
 	resultArray := result collect: [ :send |  |selectorSplit formattedString|

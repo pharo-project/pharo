@@ -21,6 +21,12 @@ NewMethodFinderRBNodeVisitor >> initialize [
 	methodFinder := NewMethodFinder new.
 ]
 
+{ #category : #accessing }
+NewMethodFinderRBNodeVisitor >> isSafe [
+
+	^isSafe
+]
+
 { #category : #visiting }
 NewMethodFinderRBNodeVisitor >> visitGlobalNode: aGlobalNode [
 	isSafe := false.
@@ -29,6 +35,11 @@ NewMethodFinderRBNodeVisitor >> visitGlobalNode: aGlobalNode [
 
 { #category : #visiting }
 NewMethodFinderRBNodeVisitor >> visitMessageNode: aMessageNode [
-	"isSafe := methodFinder isSafe: aMessageNode selector."
+	isSafe := (aMessageNode selector implementors) allSatisfy: [ :s |
+		|v|
+		Transcript show: s ast; cr.
+		v := NewMethodFinderRBNodeVisitor new visitNode: (s ast body).
+		v isSafe .
+	].
 	isSafe ifTrue: [super visitMessageNode: aMessageNode].
 ]
