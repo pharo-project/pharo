@@ -1,18 +1,6 @@
 Extension { #name : #Class }
 
 { #category : #'*NewMethodFinder' }
-Class >> allApprovedSelectors [
-	
-	^  (self approvedSelectors union: self superclass allApprovedSelectors) asSet
-]
-
-{ #category : #'*NewMethodFinder' }
-Class >> allForbiddenSelectors [
-	
-	^  (self forbiddenSelectors union: self superclass allForbiddenSelectors) asSet
-]
-
-{ #category : #'*NewMethodFinder' }
 Class >> allSelectorsToTest [
 	"Returns all the selectors that the class approved, so which can be tested by the Method
 	 Finder without problem. This set is the set of selectors that the class approved plus
