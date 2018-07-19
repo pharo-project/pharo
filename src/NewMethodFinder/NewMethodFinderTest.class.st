@@ -5,6 +5,18 @@ Class {
 }
 
 { #category : #tests }
+NewMethodFinderTest >> testArgumentsNumber [
+	"The Method Finder should returns sends with the good number of arguments."
+	
+	|bottom resultZero resultOne |
+	bottom := NewMethodFinderBottomClass new.
+	resultZero := (NewMethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult: bottom).
+	resultOne  := (NewMethodFinder new findMethodsByExampleInput: { bottom . bottom } andExpectedResult: bottom).
+	self assert: ((resultZero collect: #selector) allSatisfy: [ :s | s keywords size = 1]).
+	self assert: ((resultOne  collect: #selector) allSatisfy: [ :s | s keywords size = 1 and: s last = $:]).
+]
+
+{ #category : #tests }
 NewMethodFinderTest >> testExceptionDoesNotStopTheFlow [
 
 	| bottom result |
