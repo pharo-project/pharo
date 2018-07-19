@@ -104,19 +104,7 @@ Finder >> computeWithMethodFinder: aString [
 	result := NewMethodFinder new findMethodsByExampleInput: dataObjects allButLast andExpectedResult: dataObjects last.
 	result isEmpty ifTrue: [ self inform: 'no single method'. ^ #()].
 	
-	resultArray := result collect: [ :send |  |selectorSplit formattedString|
-		selectorSplit := ($: split: send selector asString) asArray.
-		formattedString := '(' , send receiver asString , ')'.
-		(send arguments isEmpty) ifTrue: [ 
-			 formattedString := formattedString , selectorSplit first.
-		]
-		ifFalse: [ 
-				send arguments asArray withIndexDo: [ :arg :i |
-				formattedString := formattedString , ' ', (selectorSplit at: i), ': ' , arg asString.
-			].
-		].
-		formattedString , ' --> ', dataObjects last asString.
-	].
+	resultArray := result collect: [ :send | send asString , ' --> ', dataObjects last asString. ].
 	^ resultArray.
 ]
 
