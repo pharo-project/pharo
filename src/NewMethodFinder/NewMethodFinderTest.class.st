@@ -161,3 +161,20 @@ NewMethodFinderTest >> testSideEffects [
 	self assert: ((result collect: #selector) includes: #modifyMethod:).
 	self assert: (bottom instanceVariable) equals: 1.
 ]
+
+{ #category : #tests }
+NewMethodFinderTest >> testSideEffectsBetweenTestProves [
+	"The arguments that we tested should not be changed even if
+	 a matching method modifies them"
+	
+	| bottom results |
+	bottom := NewMethodFinderBottomClass new.
+	bottom modifyMethod: 1.
+	results := NewMethodFinder new possibleSolutionsForInput: { {1.2.3} . { 4 } }.
+	
+	"Test we have many results for the following assertion"
+	self assert: results size > 10.
+	
+	"Test we DO copy the objects in the candidates message sends"
+	self assert: (results collect: [ :each | each receiver ]) asIdentitySet size equals: results size.
+]

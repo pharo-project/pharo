@@ -51,14 +51,17 @@ NewMethodFinder >> isSafe: selector in: class [
 
 { #category : #'as yet unclassified' }
 NewMethodFinder >> possibleSolutionsForInput: inputCollection [
-
 	| sends |
 	sends := OrderedCollection new.
-	inputCollection permutationsDo: [ :permutation | | foundPermutationSends args receiver |
-		args := permutation allButFirst deepCopy.
-		receiver := permutation first deepCopy.
-		foundPermutationSends := ((receiver class allSelectorsToTestWithArity: (inputCollection size - 1))
-			collect: [ :method | NewMethodFinderSend new to: receiver selector: method withArgs: args ]).
-		sends addAll: foundPermutationSends ].
-	^  sends
+	inputCollection
+		permutationsDo: [ :permutation | 
+			| foundPermutationSends args receiver |
+			args := permutation allButFirst.
+			receiver := permutation first.
+			foundPermutationSends := (receiver class
+				allSelectorsToTestWithArity: inputCollection size - 1)
+				collect:
+					[ :method | NewMethodFinderSend new to: receiver deepCopy selector: method withArgs: args deepCopy ].
+			sends addAll: foundPermutationSends ].
+	^ sends
 ]
