@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'instanceVariable'
 	],
-	#category : #NewMethodFinder
+	#category : #'NewMethodFinder-Tests'
 }
 
 { #category : #'method finder' }

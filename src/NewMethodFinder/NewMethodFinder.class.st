@@ -14,10 +14,10 @@ NewMethodFinder new findMethodsByExampleInput: #( 1 2 ) andExpectedResult: 3
 Class {
 	#name : #NewMethodFinder,
 	#superclass : #Object,
-	#category : #NewMethodFinder
+	#category : #'NewMethodFinder-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'public access' }
 NewMethodFinder >> findMethodsByExampleInput: inputCollection andExpectedResult: expectedResult [
 	"Search for methods which giving each elements of input returns the corresponding 
 	 elements of outputs."
@@ -25,31 +25,7 @@ NewMethodFinder >> findMethodsByExampleInput: inputCollection andExpectedResult:
 	^ (self possibleSolutionsForInput: inputCollection) select: [ :send | send resultIn: expectedResult ].
 ]
 
-{ #category : #testing }
-NewMethodFinder >> isSafe: selector [
-	Transcript show: selector implementors first class; cr.
-	^ selector implementors allSatisfy: [ :each | (self isSafe: selector in: each)].
-]
-
-{ #category : #testing }
-NewMethodFinder >> isSafe: selector in: class [
-	|actual|
-	
-	actual := class.
-	[actual isNil] whileFalse: [
-		(actual class selectors includes: #forbiddenSelectors) ifTrue: [
-			(actual forbiddenSelectors includes: selector) ifTrue: [ ^ false ]. 
-		].
-		(actual class selectors includes: #approvedSelectors) ifTrue: [
-			Transcript show: actual approvedSelectors; cr.
-			(actual approvedSelectors includes: selector) ifTrue: [ ^ true ].  
-		].
-		actual := actual superclass.
-	].
-	^ false.
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #'public access' }
 NewMethodFinder >> possibleSolutionsForInput: inputCollection [
 	| sends |
 	sends := OrderedCollection new.
@@ -61,7 +37,7 @@ NewMethodFinder >> possibleSolutionsForInput: inputCollection [
 			foundPermutationSends := (receiver class
 				allSelectorsToTestWithArity: inputCollection size - 1)
 				collect:
-					[ :method | NewMethodFinderSend new to: receiver deepCopy selector: method withArgs: args deepCopy ].
+					[ :method | NewMethodFinderSend̀ receiver: receiver deepCopy selector: method withArguments: args deepCopy ].
 			sends addAll: foundPermutationSends ].
 	^ sends
 ]

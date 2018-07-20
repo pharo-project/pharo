@@ -1,7 +1,7 @@
 Class {
 	#name : #NewMethodFinderTopClass,
 	#superclass : #Object,
-	#category : #NewMethodFinder
+	#category : #'NewMethodFinder-Tests'
 }
 
 { #category : #'method finder' }
