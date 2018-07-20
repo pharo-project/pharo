@@ -1,7 +1,7 @@
 Class {
 	#name : #NewMethodFinderTest,
 	#superclass : #TestCase,
-	#category : #NewMethodFinder
+	#category : #'NewMethodFinder-Tests'
 }
 
 { #category : #tests }
@@ -154,6 +154,12 @@ NewMethodFinderTest >> testPermutation [
 	args permutationsDo: [ :p |
 		self assert: res equals: (NewMethodFinder new findMethodsByExampleInput: p andExpectedResult: 1).
 	].
+]
+
+{ #category : #tests }
+NewMethodFinderTest >> testSearchOnClassDoesNotFail [
+
+	self shouldnt: [NewMethodFinder new findMethodsByExampleInput: { Boolean } andExpectedResult: {}] raise: Error.
 ]
 
 { #category : #tests }
