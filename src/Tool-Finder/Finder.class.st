@@ -181,7 +181,6 @@ Finder >> constructDictionaryWithMethodFinder: aString [
 											(OrderedCollection new
 												add: value;
 												yourself) ] ] ] ].
-	Transcript show: 'Appel ici'; cr.
 	self resultDictionary: result
 ]
 
