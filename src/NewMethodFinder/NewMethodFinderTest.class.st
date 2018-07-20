@@ -26,6 +26,13 @@ NewMethodFinderTest >> testExceptionDoesNotStopTheFlow [
 ]
 
 { #category : #tests }
+NewMethodFinderTest >> testExceptionInWrongEqualityReturns [
+
+	self should: [ { 1.2.3 } = (3 to: {5}) ] raise: Error. 
+	self deny: ((NewMethodFinderSend new to: 3 selector: #to: withArgs: { 5 }) resultIn: { 1.2.3 }). 
+]
+
+{ #category : #tests }
 NewMethodFinderTest >> testForbiddenSetIsOverApprovedSet [
 
 	| bottom result |
