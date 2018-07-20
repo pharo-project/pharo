@@ -44,12 +44,13 @@ NewMethodFinderSend >> receiver [
 ]
 
 { #category : #'public access' }
-NewMethodFinderSend >> resultIn: r [
+NewMethodFinderSend >> resultIn: expectedResult [
 	"comment stating purpose of message"
-	|evaluation|
-	
-	[[evaluation := receiver perform: selector withArguments: arguments.] ifError: [:aString :aReceiver | ^ false]] on: Deprecation do: [:depr | ^false.].
-	^ r = evaluation.
+
+	[ [ ^ expectedResult = (receiver perform: selector withArguments: arguments) ]
+		ifError: [ :aString :aReceiver | ^ false ] ]
+			on: Deprecation
+			do: [ :depr | ^ false ]
 ]
 
 { #category : #accessing }
