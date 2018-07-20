@@ -48,8 +48,8 @@ NewMethodFinderSend >> resultIn: r [
 	"comment stating purpose of message"
 	|evaluation|
 	
-	[evaluation := self evaluate] on: Exception do: [ ^false ].
-	^ evaluation = r.
+	[[evaluation := receiver perform: selector withArguments: arguments.] ifError: [:aString :aReceiver | ^ false]] on: Deprecation do: [:depr | ^false.].
+	^ r = evaluation.
 ]
 
 { #category : #accessing }
