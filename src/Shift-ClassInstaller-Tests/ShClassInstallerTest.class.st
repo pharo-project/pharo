@@ -142,6 +142,16 @@ ShClassInstallerTest >> testDuplicateClassPreserveSlots [
 ]
 
 { #category : #tests }
+ShClassInstallerTest >> testDuplicatedInstanceVariable [
+
+	superClass := self newClass:#ShCITestClass1 slots:#(aSlot).
+	newClass := self newClass:#ShCITestClass2 superclass: superClass slots:#().
+	
+	self should: [newClass := self newClass:#ShCITestClass2 superclass: superClass slots:#(aSlot)] raise: Error.
+	
+]
+
+{ #category : #tests }
 ShClassInstallerTest >> testModifyingClassKeepsOrganizationOfMethods [
 	newClass := self newClass: #ShCITestClass superclass: subClass slots: #().
 
