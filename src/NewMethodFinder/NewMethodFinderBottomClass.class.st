@@ -10,19 +10,25 @@ Class {
 { #category : #'method finder' }
 NewMethodFinderBottomClass class >> approvedSelectors [
 
-	^#(topDisapprovedButBottomApprovedMethod onlyBottomDefinedApprovedMethod modifyMethod: oneArgumentMethod: otherOneArgumentMethod:)
+	^#(topDisapprovedButBottomApprovedMethod onlyBottomDefinedApprovedMethod modifyMethod: oneArgumentMethod: otherOneArgumentMethod: InApprovedAndInForbiddenSetMethod)
 ]
 
 { #category : #'method finder' }
 NewMethodFinderBottomClass class >> forbiddenSelectors [
 
-	^#(topApprovedButBottomDisapprovedMethod)
+	^#(topApprovedButBottomDisapprovedMethod InApprovedAndInForbiddenSetMethod)
 ]
 
 { #category : #comparing }
 NewMethodFinderBottomClass >> = other [
 
 	^ instanceVariable = other instanceVariable.
+]
+
+{ #category : #'as yet unclassified' }
+NewMethodFinderBottomClass >> InApprovedAndInForbiddenSetMethod [
+
+	 ^ self
 ]
 
 { #category : #accessing }

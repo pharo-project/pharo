@@ -7,7 +7,7 @@ Class >> allSelectorsToTest [
 	 all the selectors approved by its superclass unless if they are forbidden by the class."
 	
 	"^  self allApprovedSelectors difference: self allForbiddenSelectors"
-	^ self approvedSelectors union: (self superclass allSelectorsToTest difference: self forbiddenSelectors) asSet.
+	^ (self approvedSelectors union: self superclass allSelectorsToTest) difference: self forbiddenSelectors asSet.
 ]
 
 { #category : #'*NewMethodFinder' }

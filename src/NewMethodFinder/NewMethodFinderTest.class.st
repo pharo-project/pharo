@@ -26,6 +26,15 @@ NewMethodFinderTest >> testExceptionDoesNotStopTheFlow [
 ]
 
 { #category : #tests }
+NewMethodFinderTest >> testForbiddenSetIsOverApprovedSet [
+
+	| bottom result |
+	bottom := NewMethodFinderBottomClass new.
+	result := (NewMethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult: bottom ).
+	self assert: (((result collect: #selector) includes: #InApprovedAndInForbiddenSetMethod) not).
+]
+
+{ #category : #tests }
 NewMethodFinderTest >> testMethodApprovedInClassButDisapprovedInSuperClass [
 	"If a method f is approved by a class A but disapproved by one of 
 	 its superclass, its should be approved for A instance."
