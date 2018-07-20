@@ -25,7 +25,7 @@ Class >> approvedSelectors [
     tested by the Method Finder without problem. For instance, it does not modify 
     the environment and it does not touch to a globalvariable ."
 
-	^ #()
+	^ #(isNil)
 ]
 
 { #category : #'*NewMethodFinder' }

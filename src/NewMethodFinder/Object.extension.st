@@ -3,7 +3,7 @@ Extension { #name : #Object }
 { #category : #'*NewMethodFinder' }
 Object class >> approvedSelectors [
 
-	^ #(at: basicAt: bsicSize yourself size
+	^ #(at: basicAt: basicSize yourself size
 	    ->
 	    = == ~= hash literalEqual
 	   )
