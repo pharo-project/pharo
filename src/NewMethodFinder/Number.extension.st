@@ -3,7 +3,7 @@ Extension { #name : #Number }
 { #category : #'*NewMethodFinder' }
 Number class >> approvedSelectors [
 
-	^ #(% * ** + - / // @ \\ abs negated quo: reciprocal rem: 
+	^ #(% * ** + - / // @ \\ abs negated quo: reciprocal rem:
 	    adaptToCollection:andSend: asFloat asInteger asMargin asNumber asPoint asSclaedDecimal asScaledDecimal:       
 	       asSmallAngleDegrees asSmallPositiveDegrees copySignTo: sign sign:
 	    exp raisedTo: raisedToFraction: raisedToInteger: signBit

@@ -22,7 +22,7 @@ NewMethodFinder >> findMethodsByExampleInput: inputCollection andExpectedResult:
 	"Search for methods which giving each elements of input returns the corresponding 
 	 elements of outputs."
 
-	^  (self possibleSolutionsForInput: inputCollection) select: [ :send | send resultIn: expectedResult ]
+	^ (self possibleSolutionsForInput: inputCollection) select: [ :send | send resultIn: expectedResult ].
 ]
 
 { #category : #testing }
