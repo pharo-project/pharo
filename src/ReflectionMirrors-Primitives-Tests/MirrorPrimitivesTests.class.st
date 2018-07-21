@@ -1,3 +1,6 @@
+"
+Unit tests for mirror primitives
+"
 Class {
 	#name : #MirrorPrimitivesTests,
 	#superclass : #TestCase,

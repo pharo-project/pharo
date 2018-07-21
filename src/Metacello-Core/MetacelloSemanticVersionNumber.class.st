@@ -193,6 +193,7 @@ MetacelloSemanticVersionNumber class >> fromString: aString forPattern: forPatte
     preReleaseVersion: preReleaseComponents;
     buildVersion: buildComponents;
     yourself
+
 ]
 
 { #category : #private }

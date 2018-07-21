@@ -1,3 +1,6 @@
+"
+Unit tests for queries on classes
+"
 Class {
 	#name : #ClassQueryTest,
 	#superclass : #TestCase,

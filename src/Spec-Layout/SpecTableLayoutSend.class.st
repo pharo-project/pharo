@@ -5,7 +5,7 @@ A SpecTableLayoutSend is a spec layout action used when a selector is sent to th
 Class {
 	#name : #SpecTableLayoutSend,
 	#superclass : #AbstractSpecLayoutAction,
-	#category : #'Spec-Layout'
+	#category : #'Spec-Layout-Actions'
 }
 
 { #category : #'instance creation' }

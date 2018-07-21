@@ -18,7 +18,7 @@ Class {
 	#pools : [
 		'EventSensorConstants'
 	],
-	#category : #'System-VMEvents'
+	#category : #'System-VMEvents-Base'
 }
 
 { #category : #'events - testing' }

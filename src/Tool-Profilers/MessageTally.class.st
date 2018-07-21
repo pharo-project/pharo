@@ -95,7 +95,7 @@ Class {
 		'DefaultPollPeriod',
 		'Timer'
 	],
-	#category : #'Tool-Profilers'
+	#category : #'Tool-Profilers-Messages'
 }
 
 { #category : #defaults }
@@ -130,16 +130,25 @@ MessageTally class >> defaultPollPeriod: numberOfMilliseconds [
 	DefaultPollPeriod := numberOfMilliseconds
 ]
 
-{ #category : #spying }
-MessageTally class >> spyAllOn: aBlock [
-	"Spy on all the processes in the system
-	
+{ #category : #examples }
+MessageTally class >> example [
+
 	[1000 timesRepeat: [3.14159 printString. Processor yield]] fork.
 	[1000 timesRepeat: [20 factorial. Processor yield]] fork.
 	[1000 timesRepeat: [20 factorial. Processor yield]] fork.
 	MessageTally spyAllOn: [ (Delay forMilliseconds: 100) wait]
-	
-	"
+]
+
+{ #category : #examples }
+MessageTally class >> exampleSpyForSeconds [
+
+	self spyFor: 2
+]
+
+{ #category : #spying }
+MessageTally class >> spyAllOn: aBlock [
+	"Spy on all the processes in the system"
+	<script: 'self example'>
 	^ self spyAllOn: aBlock cutoff: 1
 ]
 
@@ -365,7 +374,7 @@ MessageTally class >> tallySendsTo: receiver inBlock: aBlock showTree: treeOptio
 
 { #category : #private }
 MessageTally class >> terminateTimerProcess [
-
+	<script>
 	Timer ifNotNil: [ Timer terminate ].
 	Timer := nil
 ]

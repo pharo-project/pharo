@@ -1,3 +1,6 @@
+"
+Unit test locale announcements
+"
 Class {
 	#name : #LocaleAnnouncementTests,
 	#superclass : #TestCase,
@@ -5,11 +8,12 @@ Class {
 		'saveCurrent',
 		'catchedAnnouncement'
 	],
-	#category : #'System-Localization-Tests'
+	#category : #'System-Localization-Tests-Announcements'
 }
 
 { #category : #'private accessing' }
 LocaleAnnouncementTests >> frenchLocale [
+
 	^ Locale isoLanguage: 'fr'
 ]
 

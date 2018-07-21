@@ -1,7 +1,10 @@
+"
+Localization support
+"
 Class {
 	#name : #ManifestSystemLocalization,
 	#superclass : #PackageManifest,
-	#category : #'System-Localization'
+	#category : #'System-Localization-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

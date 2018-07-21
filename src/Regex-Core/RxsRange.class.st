@@ -19,7 +19,7 @@ Class {
 		'first',
 		'last'
 	],
-	#category : #'Regex-Core'
+	#category : #'Regex-Core-Nodes'
 }
 
 { #category : #'instance creation' }

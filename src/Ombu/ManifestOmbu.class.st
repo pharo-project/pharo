@@ -6,5 +6,5 @@ By default, Ombu uses STON to write the events when they are announced in the sy
 Class {
 	#name : #ManifestOmbu,
 	#superclass : #PackageManifest,
-	#category : #Ombu
+	#category : #'Ombu-Manifest'
 }

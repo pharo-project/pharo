@@ -17,7 +17,8 @@ GLMExamplesBrowser class >> menuExamplesOn: aBuilder [
 		parent: #Help;
 		order: 4.0;
 		help: 'Open Glamour Example Browser.';
-		action: [ self open ]
+		action: [ self open ].
+	aBuilder withSeparatorAfter	
 ]
 
 { #category : #'user interface' }

@@ -418,6 +418,7 @@ MetacelloScriptEngine >> lookupProjectSpecFor: aProjectSpec [
             signal ]
         ifFalse: [ new ] ].
   ^ registration projectSpec
+
 ]
 
 { #category : #accessing }

@@ -34,7 +34,6 @@ FLExtensionWrapper >> copySelector: aSelector ofMethod: aCompiledMethod toClass:
 		addAndClassifySelector: aSelector
 		withMethod: aCompiledMethod copy
 		inProtocol: self extensionProtocolName
-		notifying: nil
 ]
 
 { #category : #private }
@@ -43,7 +42,6 @@ FLExtensionWrapper >> copyToTarget [
 		addAndClassifySelector: self selector
 		withMethod: self method copy
 		inProtocol: self extensionProtocolName
-		notifying: nil
 ]
 
 { #category : #private }

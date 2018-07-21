@@ -6,7 +6,7 @@ set -o xtrace
 
 #Load VMMaker, used to convert images from 32 to 64 bits
 mkdir -p vmmaker && cd vmmaker
-wget https://ci.inria.fr/pharo/view/5.0-VM-Spur/job/Spur-Git-Tracker/lastSuccessfulBuild/artifact/vmmaker-image.zip
+wget https://github.com/pharo-project/pharo-32to64-converter/releases/download/v1.0.0/vmmaker-image.zip
 unzip vmmaker-image.zip
 ../../bootstrap/scripts/getPharoVM.sh 60
 wget http://files.pharo.org/sources/PharoV50.sources
