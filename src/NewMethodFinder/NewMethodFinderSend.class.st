@@ -46,7 +46,7 @@ NewMethodFinderSend >> printOn: aStream [
 
 	aStream nextPutAll: receiver asString.
 	aStream space.
-	arguments isEmpty ifTrue: [^ aStream nextPutAll: selector].
+	arguments ifEmpty: [^ aStream nextPutAll: selector].
 	arguments with: selector keywords do: [:arg :word |
 		aStream nextPutAll: word asString.
 		aStream space.
