@@ -119,9 +119,11 @@ RealEstateAgent class >> maximumUsableArea [
 RealEstateAgent class >> maximumUsableAreaInWorld: aWorldOrNil [
 
 	| allowedArea |
-	allowedArea := Display usableArea.
+	
+	allowedArea := 0@0 extent: self standardSize. "fallback default size"
+	
 	aWorldOrNil ifNotNil: [
-		allowedArea := allowedArea intersect: aWorldOrNil visibleClearArea ifNone: [ allowedArea ]].
+		allowedArea := aWorldOrNil displayArea intersect: aWorldOrNil visibleClearArea ifNone: [ allowedArea ]].
 	^allowedArea
 ]
 

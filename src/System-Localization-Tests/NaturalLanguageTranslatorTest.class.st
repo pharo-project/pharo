@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'previousRegistered'
 	],
-	#category : #'System-Localization-Tests'
+	#category : #'System-Localization-Tests-Translations'
 }
 
 { #category : #running }
@@ -29,7 +29,7 @@ NaturalLanguageTranslatorTest >> testRegisterCustomTranslator [
 
 	NaturalLanguageTranslator current: RegisterableTranslatorMock new.
 	"Our custom translator translates the string differently"
-	self assert: 'TestCase' translated = 'Testfall'.
+	self assert: 'TestCase' translated equals: 'Testfall'.
 	
 	
 ]

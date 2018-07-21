@@ -1,3 +1,6 @@
+"
+Unit tests for collection arithmetic
+"
 Class {
 	#name : #CollectionArithmeticTests,
 	#superclass : #TestCase,

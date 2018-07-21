@@ -17,5 +17,5 @@ ShClassChanged >> announceChanges [
 { #category : #announcing }
 ShClassChanged >> builder: anObject [
 	builder := anObject.
-	oldClass := builder oldClass copy.
+	oldClass := builder oldClass copyForAnnouncement.
 ]

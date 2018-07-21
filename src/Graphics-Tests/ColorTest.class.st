@@ -17,6 +17,12 @@ ColorTest >> assertColorrefFor: aColor equals: anInteger [
 			('(<1p>) asColorref was <2s>; should have been <3s>' expandMacrosWith: aColor with: colorref hex with: anInteger hex)
 ]
 
+{ #category : #coverage }
+ColorTest >> classToBeTested [
+
+	^Color
+]
+
 { #category : #'tests - 32 bit' }
 ColorTest >> test32BitBlackColorTranformation [
 	"Solve bug: https://pharo.fogbugz.com/f/cases/14619/Strange-behavior-of-TestRunner-Icon"

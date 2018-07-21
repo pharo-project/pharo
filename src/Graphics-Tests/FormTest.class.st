@@ -7,6 +7,12 @@ Class {
 	#category : #'Graphics-Tests-Primitives'
 }
 
+{ #category : #coverage }
+FormTest >> classToBeTested [
+	
+	^Form
+]
+
 { #category : #'tests - 32 bit' }
 FormTest >> test32BitFormBlackShouldStayBlackAfterSave [
 	"Solve bug: https://pharo.fogbugz.com/f/cases/14619/Strange-behavior-of-TestRunner-Icon"

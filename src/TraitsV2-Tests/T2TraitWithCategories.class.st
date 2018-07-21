@@ -1,7 +1,10 @@
+"
+Unit test for categorization of traits
+"
 Class {
 	#name : #T2TraitWithCategories,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-Tests'
 }
 
 { #category : #tests }

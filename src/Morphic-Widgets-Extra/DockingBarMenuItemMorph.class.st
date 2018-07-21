@@ -46,13 +46,9 @@ DockingBarMenuItemMorph >> mouseDown: evt [
 
 	evt shiftPressed ifTrue: [^ super mouseDown: evt].  "enable label editing"
 	isSelected
-		ifTrue: [
-			evt hand newMouseFocus: nil.
-			owner selectItem: nil event: evt. ]
-		ifFalse: [
-			owner activate: evt. "Redirect to menu for valid transitions"
-			owner selectItem: self event: evt. ]
-
+		ifTrue: [ owner selectItem: nil event: evt ]
+		ifFalse: [ owner activate: evt.	"Redirect to menu for valid transitions"
+			owner selectItem: self event: evt ]
 ]
 
 { #category : #events }

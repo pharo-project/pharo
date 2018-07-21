@@ -39,12 +39,8 @@ BaselineOfTraits >> baseline: spec [
 			package: 'AST-Core-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'Collections-Abstract-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'Transcript-Core-Traits' with: [ spec requires: #('TraitsV2') ];
-			package: 'SUnit-Core-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'CodeImport-Traits' with: [ spec requires: #('TraitsV2') ];
-			package: 'OpalCompiler-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'CodeExport-Traits' with: [ spec requires: #('TraitsV2') ];
-			package: 'System-Sources-Traits' with: [ spec requires: #('TraitsV2') ];
-			package: 'System-Support-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'TraitsV2-Tests' with: [ spec requires: #('TraitsV2') ];
 			package: 'TraitsV2-Compatibility' with: [ spec requires: #('TraitsV2') ].
 
@@ -56,14 +52,12 @@ BaselineOfTraits >> baseline: spec [
 					'Collections-Abstract-Traits'
 					'Transcript-Core-Traits'
 					'CodeImport-Traits'
-					'CodeExport-Traits'
-					'System-Sources-Traits'
-					'System-Support-Traits' ).
+					'CodeExport-Traits' ).
 					
 		spec group: 'compatibility' with: #('TraitsV2-Compatibility').
 		
 		spec group: 'core-traits' with: #(core 'traits-in-kernel' 'compatibility').		
-		spec group: 'default' with: #('core-traits' 'SUnit-Core-Traits').
+		spec group: 'default' with: #('core-traits').
 		spec group: 'traits-tests' with: #('default' 'TraitsV2-Tests').		
 	 ].		
 

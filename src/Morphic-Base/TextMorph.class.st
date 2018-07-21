@@ -97,8 +97,7 @@ TextMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	outer ifNotNil: [
 	outer isLineMorph ifTrue:
 		[container isNil
-			ifFalse: [aCustomMenu add: 'reverse direction' selector: #reverseCurveDirection.
-					aCustomMenu add: 'set baseline' selector: #setCurveBaseline:]]
+			ifFalse: [ aCustomMenu add: 'set baseline' selector: #setCurveBaseline:]]
 		ifFalse:
 		[self fillsOwner
 			ifFalse: [aCustomMenu add: 'fill owner''s shape' selector: #fillingOnOff]
@@ -1464,12 +1463,6 @@ TextMorph >> resetBlinkCursor [
 		para showCaret: para focused.
 	].
 
-]
-
-{ #category : #menu }
-TextMorph >> reverseCurveDirection [
-	container textDirection: container textDirection negated.
-	self paragraph composeAll
 ]
 
 { #category : #alignment }

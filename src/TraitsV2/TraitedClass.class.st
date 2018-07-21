@@ -20,13 +20,12 @@ Class {
 }
 
 { #category : #'accessing method dictionary' }
-TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
+TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
 
 	super
 		addAndClassifySelector: selector
 		withMethod: compiledMethod
-		inProtocol: aCategory
-		notifying: requestor.
+		inProtocol: aCategory.
 
 	self propagateChangeOf: selector.
 	
@@ -82,7 +81,7 @@ TraitedClass class >> traitUsers [
 ]
 
 { #category : #'accessing method dictionary' }
-TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory notifying: requestor [
+TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
 	
 	"When a new methods is added, I add it to the localMethodDict and also propagate the changes to my users"
 	self localMethodDict at: selector put: compiledMethod.
@@ -90,8 +89,7 @@ TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inPr
 	super
 		addAndClassifySelector: selector
 		withMethod: compiledMethod
-		inProtocol: aCategory
-		notifying: requestor.
+		inProtocol: aCategory.
 
 	TraitChange addSelector: selector on: self.	
 ]
@@ -331,15 +329,10 @@ TraitedClass >> tagsForMethods [
 	It supposed to not include any method tags inherited from Traits 
 	which is opposite to current Protocol implementation.
 	And extension protocol is not treated as tag"
-	| allProtocols tags |
-	allProtocols := self organization protocols 
-		reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
+	| allProtocols |
+	allProtocols := self organization protocols reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
 		
-	tags := OrderedCollection new.
-	allProtocols do: [ :each | 
-		(self isLocalMethodsProtocol: each) ifTrue: [ tags add: each name ]].
-
-	^tags
+	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
 ]
 
 { #category : #accessing }

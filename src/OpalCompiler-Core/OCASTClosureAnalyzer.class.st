@@ -48,7 +48,6 @@ OCASTClosureAnalyzer >> visitMethodNode: aMethodNode [
 	scope := aMethodNode scope.	
 	self doRemotes; doCopying.
 	self visitNode: aMethodNode body.
-	scope := scope popScope.
 ]
 
 { #category : #visiting }

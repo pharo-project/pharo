@@ -16,6 +16,16 @@ MCBitbucketRepository class >> cacheDirectoryPath [
   ^ super cacheDirectoryPath
 ]
 
+{ #category : #'instance creation' }
+MCBitbucketRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
+	^ aPlatform createBitbucketRepository: aRepositorySpec
+]
+
+{ #category : #testing }
+MCBitbucketRepository class >> isAvailableFor: type [
+	^ type = 'bitbucket'
+]
+
 { #category : #testing }
 MCBitbucketRepository class >> isEnabled [
 
