@@ -29,7 +29,8 @@ Class {
 	],
 	#classVars : [
 		'DefaultBackgroundColor',
-		'Position'
+		'Position',
+		'Type'
 	],
 	#category : #'Growl-Base'
 }
@@ -59,12 +60,25 @@ GrowlMorph class >> growlSettingsOn: aBuilder [
 		parent: #appearance;
 		description: 'All settings concerned with the notifications popup look''n feel';
 		with: [
+			(aBuilder pickOne: #type)
+				label: 'Popup notifycation type';
+				target: self;
+				default: #growl;
+				order: 1;
+				domainValues: self growlTypeChoices.
 			(aBuilder pickOne: #position)
 				label: 'Popup position';
 				target: self;
 				default: #topRight;
-				order: 1;
+				order: 2;
 				domainValues: self growlPositionChoices.]
+]
+
+{ #category : #settings }
+GrowlMorph class >> growlTypeChoices [
+
+	^#(growl 'Growl Morph' 
+		window 'Dialog window') pairsCollect: [:a :b | b -> a]
 ]
 
 { #category : #'instance creation' }
@@ -77,32 +91,44 @@ GrowlMorph class >> label: aString contents: contentString [
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithContents: contentString [
-	
-	^ (self contents: contentString) openInWorld
+
+	^ self type = #window 
+		ifTrue: [ MessageDialogWindow new message: contentString ]
+		ifFalse: [ (self contents: contentString) openInWorld ]
 ]
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithLabel: aString contents: contentString [
+
+	^ self type = #window 
+		ifTrue: [ MessageDialogWindow new message: contentString ]
+		ifFalse: [ (self label: aString contents: contentString) openInWorld ]
+		
 	
-	^ (self label: aString contents: contentString) openInWorld
 ]
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithLabel: aString contents: contentString backgroundColor: aColor labelColor: aLabelColor [
 	
-	^ (self label: aString contents: contentString)
+	^ self type = #window 
+		ifTrue: [ MessageDialogWindow new message: contentString ]
+		ifFalse: [ (self label: aString contents: contentString)
 			backgroundColor: aColor;
 			labelColor: aLabelColor;
 			contentsColor: aLabelColor; 
-			openInWorld
+			openInWorld ]
+
+
 ]
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithLabel: aString contents: contentString color: aColor [
 	
-	^ (self label: aString contents: contentString)
+	^ self type = #window 
+		ifTrue: [ MessageDialogWindow new message: contentString ]
+		ifFalse: [ (self label: aString contents: contentString)
 			backgroundColor: aColor;
-			openInWorld
+			openInWorld ]
 ]
 
 { #category : #position }
@@ -123,6 +149,26 @@ GrowlMorph class >> position: aSymbol [
 GrowlMorph class >> possiblePositions [
 
 	^ #( bottomRight bottomLeft topRight topLeft )
+]
+
+{ #category : #position }
+GrowlMorph class >> possibleTypes [
+
+	^ #( growl window )
+]
+
+{ #category : #position }
+GrowlMorph class >> type [
+
+	^ Type ifNil: [ Type := #growl ]
+]
+
+{ #category : #position }
+GrowlMorph class >> type: aSymbol [
+
+	(self possibleTypes includes: aSymbol) ifFalse: [ ^ self ].
+
+	Type := aSymbol
 ]
 
 { #category : #building }
