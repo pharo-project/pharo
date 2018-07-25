@@ -1,7 +1,10 @@
+"
+Support for package Manifest creation
+"
 Class {
 	#name : #ManifestManifestCore,
 	#superclass : #PackageManifest,
-	#category : #'Manifest-Core'
+	#category : #'Manifest-Core-Manifest'
 }
 
 { #category : #'meta data' }
