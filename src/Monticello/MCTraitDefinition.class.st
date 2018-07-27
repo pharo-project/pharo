@@ -50,7 +50,8 @@ MCTraitDefinition >> = aDefinition [
 		and: [(self isRevisionOf: aDefinition)
 		and: [self traitCompositionString = aDefinition traitCompositionString
 		and: [category = aDefinition category
-		and: [comment = aDefinition comment]]]]
+		and: [comment = aDefinition comment
+		and: [self sortedVariables = aDefinition sortedVariables]]]]]
 ]
 
 { #category : #visiting }
@@ -67,7 +68,10 @@ MCTraitDefinition >> createClass [
 		uses: (Smalltalk compiler evaluate: self traitCompositionString)
 		slots: self instanceVariables
 		category: category.
-	trait ifNotNil: [trait classComment: comment stamp: commentStamp].
+	trait ifNotNil: [
+		trait classComment: comment stamp: commentStamp.
+		self classInstanceVariables ifNotEmpty: [
+			trait classSide slots: self classInstanceVariables ]].
 	^trait
 ]
 
@@ -84,6 +88,9 @@ MCTraitDefinition >> hash [
 	hash := String stringHash: name initialHash: 0.
 	hash := String stringHash: self traitCompositionString initialHash: hash.
 	hash := String stringHash: (category ifNil: ['']) initialHash: hash.
+	variables do: [ :v |
+		hash := String stringHash: v name initialHash: hash ].
+	
 	^ hash
 
 ]
