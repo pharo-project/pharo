@@ -1,6 +1,6 @@
 Extension { #name : #CombinedChar }
 
-{ #category : #'*NewMethodFinder' }
+{ #category : #'*Tool-Finder' }
 CombinedChar class >> approvedSelectors [
 
 	^ self selectors

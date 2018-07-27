@@ -1,87 +1,87 @@
 Class {
-	#name : #NewMethodFinderBottomClass,
-	#superclass : #NewMethodFinderTopClass,
+	#name : #MethodFinderBottomClass,
+	#superclass : #MethodFinderTopClass,
 	#instVars : [
 		'instanceVariable'
 	],
-	#category : #'NewMethodFinder-Tests'
+	#category : #'Tools-Test-Finder-Support'
 }
 
 { #category : #'method finder' }
-NewMethodFinderBottomClass class >> approvedSelectors [
+MethodFinderBottomClass class >> approvedSelectors [
 
 	^#(topDisapprovedButBottomApprovedMethod onlyBottomDefinedApprovedMethod modifyMethod: oneArgumentMethod: otherOneArgumentMethod: InApprovedAndInForbiddenSetMethod)
 ]
 
 { #category : #'method finder' }
-NewMethodFinderBottomClass class >> forbiddenSelectors [
+MethodFinderBottomClass class >> forbiddenSelectors [
 
 	^#(topApprovedButBottomDisapprovedMethod InApprovedAndInForbiddenSetMethod)
 ]
 
 { #category : #comparing }
-NewMethodFinderBottomClass >> = other [
+MethodFinderBottomClass >> = other [
 
 	^ instanceVariable = other instanceVariable.
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderBottomClass >> InApprovedAndInForbiddenSetMethod [
+MethodFinderBottomClass >> InApprovedAndInForbiddenSetMethod [
 
 	 ^ self
 ]
 
 { #category : #accessing }
-NewMethodFinderBottomClass >> instanceVariable [
+MethodFinderBottomClass >> instanceVariable [
 
 	^ instanceVariable.
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderBottomClass >> modifyMethod: x [
+MethodFinderBottomClass >> modifyMethod: x [
 
 	instanceVariable := x.
 	^ x.
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderBottomClass >> multipleArgumentsMethod: x and: y [
+MethodFinderBottomClass >> multipleArgumentsMethod: x and: y [
 
 	^ x
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderBottomClass >> oneArgumentMethod: x [
+MethodFinderBottomClass >> oneArgumentMethod: x [
 
 	^ x + 0
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderBottomClass >> onlyBottomDefinedApprovedMethod [
+MethodFinderBottomClass >> onlyBottomDefinedApprovedMethod [
 
 	^self
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderBottomClass >> onlyBottomDefinedDisapprovedMethod [
+MethodFinderBottomClass >> onlyBottomDefinedDisapprovedMethod [
 
 	^self
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderBottomClass >> otherOneArgumentMethod: s [
+MethodFinderBottomClass >> otherOneArgumentMethod: s [
 
 	^ s, ''
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderBottomClass >> topApprovedButBottomDisapprovedMethod [
+MethodFinderBottomClass >> topApprovedButBottomDisapprovedMethod [
 
 	^self
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderBottomClass >> topDisapprovedButBottomApprovedMethod [
+MethodFinderBottomClass >> topDisapprovedButBottomApprovedMethod [
 
 	^self
 ]

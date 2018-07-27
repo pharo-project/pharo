@@ -1,45 +1,45 @@
 Class {
-	#name : #NewMethodFinderTopClass,
+	#name : #MethodFinderTopClass,
 	#superclass : #Object,
-	#category : #'NewMethodFinder-Tests'
+	#category : #'Tools-Test-Finder-Support'
 }
 
 { #category : #'method finder' }
-NewMethodFinderTopClass class >> approvedSelectors [
+MethodFinderTopClass class >> approvedSelectors [
 
 	^#(topApprovedButBottomDisapprovedMethod onlyTopDefinedApprovedMethod)
 ]
 
 { #category : #'method finder' }
-NewMethodFinderTopClass class >> forbiddenSelectors [
+MethodFinderTopClass class >> forbiddenSelectors [
 	^ #(topDisapprovedButBottomApprovedMethod)
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderTopClass >> onlyTopDefinedApprovedMethod [
+MethodFinderTopClass >> onlyTopDefinedApprovedMethod [
 	"comment stating purpose of message"
 	^ self
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderTopClass >> onlyTopDefinedDisaprovedMethod [
+MethodFinderTopClass >> onlyTopDefinedDisaprovedMethod [
 
 	^self
 ]
 
 { #category : #tests }
-NewMethodFinderTopClass >> test [
+MethodFinderTopClass >> test [
 	^ self onlyTopDefinedDisaprovedMethod 
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderTopClass >> topApprovedButBottomDisapprovedMethod [
+MethodFinderTopClass >> topApprovedButBottomDisapprovedMethod [
 
 	^self
 ]
 
 { #category : #'as yet unclassified' }
-NewMethodFinderTopClass >> topDisapprovedButBottomApprovedMethod [
+MethodFinderTopClass >> topDisapprovedButBottomApprovedMethod [
 
 	^self
 ]

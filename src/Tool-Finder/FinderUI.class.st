@@ -46,7 +46,7 @@ FinderUI class >> initialize [
 FinderUI class >> methodFinderExplanation [
 	"The comment in the bottom pane"
 
-	false ifTrue: [MethodFinder methodFor: #( (4 3) 7  (0 5) 5  (5 5) 10)].
+	false ifTrue: [MethodFinderUI methodFor: #( (4 3) 7  (0 5) 5  (5 5) 10)].
 		"to keep the method methodFor: from being removed from the system"
 
 	^ 'Type a fragment of a selector in the search box and click <Search>.

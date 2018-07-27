@@ -1,6 +1,6 @@
 Extension { #name : #Margin }
 
-{ #category : #'*NewMethodFinder' }
+{ #category : #'*Tool-Finder' }
 Margin class >> approvedSelectors [
 
 	^ self selectors

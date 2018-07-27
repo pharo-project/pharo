@@ -1,6 +1,6 @@
 Extension { #name : #Magnitude }
 
-{ #category : #'*NewMethodFinder' }
+{ #category : #'*Tool-Finder' }
 Magnitude class >> approvedSelectors [
 
 	^ self selectors

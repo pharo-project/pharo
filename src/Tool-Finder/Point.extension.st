@@ -1,6 +1,6 @@
 Extension { #name : #Point }
 
-{ #category : #'*NewMethodFinder' }
+{ #category : #'*Tool-Finder' }
 Point class >> approvedSelectors [
 
 	^ self selectors

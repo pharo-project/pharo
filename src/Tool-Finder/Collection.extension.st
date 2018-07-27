@@ -1,6 +1,6 @@
 Extension { #name : #Collection }
 
-{ #category : #'*NewMethodFinder' }
+{ #category : #'*Tool-Finder' }
 Collection class >> approvedSelectors [
 
 	 ^ self selectors

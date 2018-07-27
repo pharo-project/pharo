@@ -1,6 +1,6 @@
 Extension { #name : #ClassDescription }
 
-{ #category : #'*NewMethodFinder' }
+{ #category : #'*Tool-Finder' }
 ClassDescription >> allSelectorsToTest [
 	"Returns all the selectors that the class approved, so which can be tested by the Method
 	 Finder without problem. This set is the set of selectors that the class approved plus
@@ -10,7 +10,7 @@ ClassDescription >> allSelectorsToTest [
 	^ (self approvedSelectors union: self superclass allSelectorsToTest) difference: self forbiddenSelectors asSet.
 ]
 
-{ #category : #'*NewMethodFinder' }
+{ #category : #'*Tool-Finder' }
 ClassDescription >> allSelectorsToTestWithArity: anInteger [ 
 	"Returns all the selectors with a certain arity which are approved by the class so which 
 	 can be tested in the Method Finder."
@@ -18,7 +18,7 @@ ClassDescription >> allSelectorsToTestWithArity: anInteger [
 	^  self allSelectorsToTest select: [ :selector | selector numArgs = anInteger ]
 ]
 
-{ #category : #'*NewMethodFinder' }
+{ #category : #'*Tool-Finder' }
 ClassDescription >> approvedSelectors [
 	"The list of the selectors that the class approved. It's empty by default.
     An approved selector is a selector where the message send to the class could be
@@ -28,7 +28,7 @@ ClassDescription >> approvedSelectors [
 	^ #(isNil)
 ]
 
-{ #category : #'*NewMethodFinder' }
+{ #category : #'*Tool-Finder' }
 ClassDescription >> forbiddenSelectors [
 	"The list of selector forbidden by the class. A forbidden selector will not be tested by
 	 the Method Finder. So, a forbiden selector could be a method which modify the environment,

@@ -101,7 +101,7 @@ Finder >> computeWithMethodFinder: aString [
 						withCRs.
 			^ #() ].
 		
-	result := NewMethodFinder new findMethodsByExampleInput: dataObjects allButLast andExpectedResult: dataObjects last.
+	result := MethodFinder new findMethodsByExampleInput: dataObjects allButLast andExpectedResult: dataObjects last.
 	result isEmpty ifTrue: [ self inform: 'no single method'. ^ #()].
 	
 	resultArray := result collect: [ :send | send asString , ' --> ', dataObjects last asString. ].
@@ -596,7 +596,7 @@ Finder >> testObjects: dataObjects strings: dataStrings [
 			((ansSel ~~ #first) or: [dataObjects last size = 1]) ifTrue: [
 				tempDataObjects at: tempDataObjects size put: (tempDataObjects last perform: ansSel).	"asString"
 				tempDataStrings at: tempDataStrings size put: tempDataStrings last, ' ', ansSel.
-				result := MethodFinder new load: tempDataObjects; findMessage.
+				result := MethodFinderUI new load: tempDataObjects; findMessage.
 				(result first beginsWith: 'no single method') ifFalse: [
 					"found a selector!"
 					^ Array with: result first with: tempDataObjects with: tempDataStrings].	
@@ -613,7 +613,7 @@ Finder >> testObjects: dataObjects strings: dataStrings [
 					((argSel ~~ #first) or: [arg size = 1]) ifTrue: [
 						ddo first at: ind put: ((ddo first at: ind) perform: argSel).	"asString"
 						dds at: ind put: (dds at: ind), ' ', argSel.
-						result := MethodFinder new load: ddo; findMessage.
+						result := MethodFinderUI new load: ddo; findMessage.
 						(result first beginsWith: 'no single method') ifFalse: [
 							"found a selector!"
 						^ Array with: result first with: ddo with: dds].	
