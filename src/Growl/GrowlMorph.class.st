@@ -29,7 +29,8 @@ Class {
 	],
 	#classVars : [
 		'DefaultBackgroundColor',
-		'Position'
+		'Position',
+		'Type'
 	],
 	#category : #'Growl-Base'
 }
@@ -59,12 +60,25 @@ GrowlMorph class >> growlSettingsOn: aBuilder [
 		parent: #appearance;
 		description: 'All settings concerned with the notifications popup look''n feel';
 		with: [
+			(aBuilder pickOne: #type)
+				label: 'Popup notifycation type';
+				target: self;
+				default: #growl;
+				order: 1;
+				domainValues: self growlTypeChoices.
 			(aBuilder pickOne: #position)
 				label: 'Popup position';
 				target: self;
 				default: #topRight;
-				order: 1;
+				order: 2;
 				domainValues: self growlPositionChoices.]
+]
+
+{ #category : #settings }
+GrowlMorph class >> growlTypeChoices [
+
+	^#(growl 'Growl Morph' 
+		window 'Dialog window') pairsCollect: [:a :b | b -> a]
 ]
 
 { #category : #'instance creation' }
@@ -77,32 +91,44 @@ GrowlMorph class >> label: aString contents: contentString [
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithContents: contentString [
-	
-	^ (self contents: contentString) openInWorld
+
+	^ self type = #window 
+		ifTrue: [ MessageDialogWindow new message: contentString ]
+		ifFalse: [ (self contents: contentString) openInWorld ]
 ]
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithLabel: aString contents: contentString [
+
+	^ self type = #window 
+		ifTrue: [ MessageDialogWindow new message: contentString ]
+		ifFalse: [ (self label: aString contents: contentString) openInWorld ]
+		
 	
-	^ (self label: aString contents: contentString) openInWorld
 ]
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithLabel: aString contents: contentString backgroundColor: aColor labelColor: aLabelColor [
 	
-	^ (self label: aString contents: contentString)
+	^ self type = #window 
+		ifTrue: [ MessageDialogWindow new message: contentString ]
+		ifFalse: [ (self label: aString contents: contentString)
 			backgroundColor: aColor;
 			labelColor: aLabelColor;
 			contentsColor: aLabelColor; 
-			openInWorld
+			openInWorld ]
+
+
 ]
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithLabel: aString contents: contentString color: aColor [
 	
-	^ (self label: aString contents: contentString)
+	^ self type = #window 
+		ifTrue: [ MessageDialogWindow new message: contentString ]
+		ifFalse: [ (self label: aString contents: contentString)
 			backgroundColor: aColor;
-			openInWorld
+			openInWorld ]
 ]
 
 { #category : #position }
@@ -123,6 +149,26 @@ GrowlMorph class >> position: aSymbol [
 GrowlMorph class >> possiblePositions [
 
 	^ #( bottomRight bottomLeft topRight topLeft )
+]
+
+{ #category : #position }
+GrowlMorph class >> possibleTypes [
+
+	^ #( growl window )
+]
+
+{ #category : #position }
+GrowlMorph class >> type [
+
+	^ Type ifNil: [ Type := #growl ]
+]
+
+{ #category : #position }
+GrowlMorph class >> type: aSymbol [
+
+	(self possibleTypes includes: aSymbol) ifFalse: [ ^ self ].
+
+	Type := aSymbol
 ]
 
 { #category : #building }
@@ -146,7 +192,6 @@ GrowlMorph >> alpha [
 { #category : #accessing }
 GrowlMorph >> alpha: newAlpha [
 
-	"self alpha = newAlpha ifTrue: [^ self]."
 	alpha := newAlpha.
 	labelAttr color: (self labelColor alpha: alpha).
 	contentsAttr color: (self contentsColor alpha: alpha).
@@ -167,7 +212,7 @@ GrowlMorph >> backgroundColor [
 GrowlMorph >> contents: contentsString [
 
 	self streamDo: [ :w |
-		w withAttributes: self contentsAttributes do: [w nextPutAll: contentsString asString]].
+		w withAttributes: self contentsAttributes do: [w nextPutAll: contentsString asString]]
 ]
 
 { #category : #initialization }
@@ -185,7 +230,7 @@ GrowlMorph >> contentsColor [
 GrowlMorph >> contentsColor: aColor [
 	"when you set this contentsColor, it takes precedence over theme one. In certain case (such as for green as in SUnit) it is needed, normally you do not need it."
 	contentsColor := aColor.
-	contentsAttr color: aColor.
+	contentsAttr color: aColor
 	
 ]
 
@@ -220,13 +265,13 @@ GrowlMorph >> defaultVanishDelay [
 	^ 1  seconds
 ]
 
-{ #category : #stepping }
+{ #category : #accessing }
 GrowlMorph >> enabled [
 
 	^ false
 ]
 
-{ #category : #interaction }
+{ #category : #'event handling' }
 GrowlMorph >> handlesMouseDown: evt [
 	^ actionBlock notNil or: [super handlesMouseDown: evt]
 ]
@@ -296,7 +341,7 @@ GrowlMorph >> minimumExtent [
 	^ 256@38
 ]
 
-{ #category : #interaction }
+{ #category : #'event handling' }
 GrowlMorph >> mouseDown: evt [
 	super mouseDown: evt.
 	evt yellowButtonPressed ifTrue: [^ self].
@@ -312,7 +357,7 @@ GrowlMorph >> nextColorStep: aColor [
 GrowlMorph >> openInWorld [
 
 	self position: self unoccupiedPosition.
-	super openInWorld
+	^super openInWorld
 ]
 
 { #category : #internal }
@@ -327,7 +372,7 @@ GrowlMorph >> resetVanishTimer [
 	self resetAlpha.
 ]
 
-{ #category : #stepping }
+{ #category : #'stepping and presenter' }
 GrowlMorph >> step [
 
 	(self containsPoint: ActiveHand position) ifTrue: [
@@ -337,7 +382,7 @@ GrowlMorph >> step [
 	self alpha: self alpha - 0.05.
 ]
 
-{ #category : #stepping }
+{ #category : #'stepping and presenter' }
 GrowlMorph >> stepTime [
 	^ 100
 ]
@@ -449,7 +494,7 @@ GrowlMorph >> vanishDelay: aDuration [
 	self resetVanishTimer
 ]
 
-{ #category : #stepping }
+{ #category : #'stepping and presenter' }
 GrowlMorph >> wantsSteps [
 	^ true
 ]

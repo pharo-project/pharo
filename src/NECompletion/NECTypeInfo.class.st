@@ -9,7 +9,7 @@ Class {
 		'kind',
 		'temporaryOffset'
 	],
-	#category : #'NECompletion-Model'
+	#category : #'NECompletion-TypeGuesser'
 }
 
 { #category : #'instance creation' }

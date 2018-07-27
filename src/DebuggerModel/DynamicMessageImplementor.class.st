@@ -10,7 +10,7 @@ Class {
 		'argumentNames',
 		'stream'
 	],
-	#category : #DebuggerModel
+	#category : #'DebuggerModel-Utilities'
 }
 
 { #category : #'instance creation' }

@@ -26,7 +26,7 @@ Class {
 	#classVars : [
 		'CallbackRegistry'
 	],
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-Callouts'
 }
 
 { #category : #private }

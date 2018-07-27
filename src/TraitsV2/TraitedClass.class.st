@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'users'
 	],
-	#category : #TraitsV2
+	#category : #'TraitsV2-Base'
 }
 
 { #category : #'accessing method dictionary' }
