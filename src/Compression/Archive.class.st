@@ -70,7 +70,7 @@ Archive >> addTree: aFileNameOrDirectory removingFirstCharacters: n [
 	^ self
 		addTree: aFileNameOrDirectory
 		removingFirstCharacters: n
-		match: [:e | true]
+		match: [:e | true ]
 ]
 
 { #category : #'archive operations' }
@@ -87,7 +87,7 @@ Archive >> addTree: aFileNameOrDirectory removingFirstCharacters: n match: aBloc
 		newMember localFileName: (relativePath / e name) fullName.
 		self addMember: newMember.
 		e isDirectory ifTrue: [ self addTree: e fullName removingFirstCharacters: n match: aBlock ].
-	].
+	]
 
 ]
 

@@ -7,8 +7,10 @@ Class {
 	#category : #'NECompletion-Model'
 }
 
-{ #category : #private }
+{ #category : #'ui related' }
 NECSelectorEntry >> browseWith: anECContext [
+	"If there's a corresponding class, search for the method there,
+	otherwise search for the method in the system."
 
 	(self guessTypeWith: anECContext)
 		ifNotNil: [ :clazz|
@@ -30,6 +32,8 @@ NECSelectorEntry >> browseWith: anECContext [
 
 { #category : #'detail information' }
 NECSelectorEntry >> createDescriptionWith: anECContext [
+	"Creates description either from looking up the method in a class,
+	or in the system."
 
 	(self guessTypeWith: anECContext)
 		ifNotNil: [ :clazz|
@@ -62,7 +66,9 @@ NECSelectorEntry >> findMethodWith: anECContext do: foundBlock ifAbsent: notfoun
 ]
 
 { #category : #operations }
-NECSelectorEntry >> guessTypeWith: anECContext [ 
+NECSelectorEntry >> guessTypeWith: anECContext [
+	"If the variable is a class, i return the variable itself or its class name.
+	Otherwise i return nil."
 	| globalEntry |
 	globalEntry := Smalltalk at: contents ifAbsent: [^ nil].
 	globalEntry isBehavior ifTrue: [^ globalEntry].
@@ -92,6 +98,7 @@ NECSelectorEntry >> implementorsDescription: aSymbol [
 
 { #category : #accessing }
 NECSelectorEntry >> label [
+	"I return whether the variable is a class or a method."
 	^ (self guessTypeWith: nil) ifNil:[ 'method' ] ifNotNil: [ 'class' ].
 ]
 
@@ -114,6 +121,7 @@ NECSelectorEntry >> lookupSelector: aSymbol class: aClass [
 
 { #category : #private }
 NECSelectorEntry >> methodSourceDescription: aClass method: aCompiledMethod [ 
+	"I return if it's a class or a method, its class name, and the implementation."
 	| styler styledText |
 	
 	styler := SHRBTextStyler new.

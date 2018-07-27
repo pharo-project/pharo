@@ -24,7 +24,7 @@ Class {
 	#classInstVars : [
 		'users'
 	],
-	#category : #TraitsV2
+	#category : #'TraitsV2-Base'
 }
 
 { #category : #'instance creation' }
@@ -200,6 +200,16 @@ Trait >> isClassTrait [
 { #category : #testing }
 Trait >> isTrait [
 	^ true
+]
+
+{ #category : #testing }
+Trait >> isTraitAlias [
+	^ false
+]
+
+{ #category : #testing }
+Trait >> isTraitExclusion [
+	^ false
 ]
 
 { #category : #'organization updating' }

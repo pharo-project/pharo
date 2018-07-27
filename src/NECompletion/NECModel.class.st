@@ -128,6 +128,16 @@ NECModel >> notEmpty [
 	^self isEmpty not
 ]
 
+{ #category : #printing }
+NECModel >> printOn: aStream [
+
+	super printOn: aStream.
+	clazz ifNotNil: 
+				[ aStream nextPutAll: ' ('.
+				clazz printOn: aStream.
+				aStream nextPutAll: ')' ]
+]
+
 { #category : #private }
 NECModel >> reset [
 	self resetSelectors.
@@ -158,7 +168,7 @@ NECModel >> resetSelectors [
 		scoreA < scoreB ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NECModel >> setClass: aClass [ 
 	clazz := aClass.
 	self initializeSelectors.
@@ -175,7 +185,7 @@ NECModel >> title [
 	^nil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #action }
 NECModel >> toggleExpand [
 	
 ]

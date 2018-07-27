@@ -43,7 +43,7 @@ Class {
 		'DefaultVisible',
 		'DefaultWindowCentered'
 	],
-	#category : #'OSWindow-Core'
+	#category : #'OSWindow-Core-Base'
 }
 
 { #category : #defaults }

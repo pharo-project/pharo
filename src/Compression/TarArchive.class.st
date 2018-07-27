@@ -11,3 +11,9 @@ Class {
 TarArchive >> memberClass [
 	^TarArchiveMember
 ]
+
+{ #category : #'archive operations' }
+TarArchive >> writeTo: aStream [
+
+	self shouldBeImplemented 
+]

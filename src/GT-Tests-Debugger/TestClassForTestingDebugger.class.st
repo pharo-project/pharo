@@ -6,7 +6,6 @@ Class {
 
 { #category : #tests }
 TestClassForTestingDebugger >> testBla [
-	<expectedFailure>
-
-	self bla.
+<expectedFailure>
+	self assert: self bla equals: 1.
 ]
