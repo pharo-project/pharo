@@ -21,7 +21,7 @@ Class {
 		'session'
 	],
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#classInstVars : [
 		'session',

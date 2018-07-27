@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'users'
 	],
-	#category : #TraitsV2
+	#category : #'TraitsV2-Base'
 }
 
 { #category : #operations }
@@ -44,13 +44,16 @@ MetaclassForTraits >> asTraitComposition [
 { #category : #'fileIn/Out' }
 MetaclassForTraits >> definition [
 	^ String streamContents: [ :s | 
-		s 
-			nextPutAll: self instanceSide name;
+		s nextPutAll: self instanceSide name;
 			nextPutAll: ' classTrait';
 			cr; tab;
 			nextPutAll: 'uses: ';
 			nextPutAll: composition traitCompositionExpression.
-	]
+			
+		self localSlots ifNotEmpty: [ 
+				s crtab;
+					nextPutAll: 'slots: ';
+					nextPutAll: self slotDefinitionString]]
 ]
 
 { #category : #testing }
@@ -74,6 +77,16 @@ MetaclassForTraits >> isRejectedMethod: aSelector [
 { #category : #testing }
 MetaclassForTraits >> isTrait [
 	^ true
+]
+
+{ #category : #testing }
+MetaclassForTraits >> isTraitAlias [
+	^ false
+]
+
+{ #category : #testing }
+MetaclassForTraits >> isTraitExclusion [
+	^ false
 ]
 
 { #category : #accessing }

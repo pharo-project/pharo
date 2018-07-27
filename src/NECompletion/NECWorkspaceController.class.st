@@ -9,6 +9,7 @@ Class {
 
 { #category : #accessing }
 NECWorkspaceController >> additionals [
+
 	^ self workspace completionAdditionals
 ]
 

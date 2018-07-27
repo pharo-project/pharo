@@ -305,7 +305,7 @@ FileReference >> nextNameFor: baseFileName extension: extension [
 	splits := files
 		collect: [ :filename | filename basename splitOn: $. ]
 		thenSelect: [ :split | (split at: 1) = baseFileName and: [ split size = 3 ] ].
-	splits := splits asSortedCollection: [ :a :b | (a at: 2) < (b at: 2) ].
+	splits := splits asSortedCollection: [ :a :b | (a at: 2) asNumber < (b at: 2) asNumber ].
 	version := splits isEmpty
 		ifTrue: [ 1 ]
 		ifFalse: [ (splits last at: 2) asNumber + 1 ].

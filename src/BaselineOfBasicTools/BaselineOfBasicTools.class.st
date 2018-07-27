@@ -41,19 +41,16 @@ BaselineOfBasicTools >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 
-		spec baseline: 'UI' with: [spec repository: repository].
-		
-		spec baseline: 'Athens' with: [ 
-			spec
-				loads: 'Cairo-core';
-				repository: repository ].
-
-		spec package: 'JenkinsTools-Core'.
-		spec package: 'JenkinsTools-ExtraReports'.
-		
-		spec baseline: 'SUnit' with: [
-			spec repository: repository.
-			spec loads: #('UI' 'Help')].
+		spec
+			baseline: 'UI' with: [spec repository: repository];
+			baseline: 'Athens' with: [ 
+				spec
+					loads: 'Cairo-core';
+					repository: repository ];
+			baseline: 'SUnit' with: [
+				spec
+					loads: #('UI' 'Help' 'JenkinsSupport');
+					repository: repository ].
 
 		spec package: 'Morphic-Widgets-FastTable'.
 		
@@ -89,6 +86,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Tool-Diff'.
 		spec package: 'Tool-FileList'.
 		spec package: 'Tool-Finder'.
+		spec package: 'Tool-NewMethodFinder'.
 		spec package: 'Tool-ImageCleaner'.		
 		spec package: 'Tools'.
 

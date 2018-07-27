@@ -13,7 +13,7 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#pools : [
-		'AthensCairoDefs',
+		'AthensCairoDefinitions',
 		'FT2Constants'
 	],
 	#category : #'Athens-Cairo-Text'

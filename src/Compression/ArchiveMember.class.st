@@ -45,7 +45,7 @@ ArchiveMember >> fileName: aName [
 ArchiveMember >> initialize [
 	super initialize.
 	fileName := ''.
-	isCorrupt := false.
+	isCorrupt := false
 ]
 
 { #category : #accessing }
@@ -64,13 +64,16 @@ ArchiveMember >> localFileName: aString [
 	"Set my internal filename.
 	Returns the (possibly new) filename"
 
-	^fileName := aString copyReplaceAll: FileSystem disk delimiter asString with: UnixStore delimiter asString.
+	^ fileName := aString
+		copyReplaceAll: FileSystem disk delimiter asString
+		with: UnixStore delimiter asString
 ]
 
 { #category : #printing }
 ArchiveMember >> printOn: aStream [
 	super printOn: aStream.
-	aStream nextPut: $(;
+	aStream
+		nextPut: $(;
 		nextPutAll: self fileName;
 		nextPut: $)
 ]

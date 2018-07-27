@@ -17,3 +17,20 @@ RubAbstractSmalltalkMode >> editorClass [
 RubAbstractSmalltalkMode >> isCodeCompletionAllowed [
 	^ true
 ]
+
+{ #category : #'as yet unclassified' }
+RubAbstractSmalltalkMode >> isScripting [
+	^ false
+]
+
+{ #category : #parsing }
+RubAbstractSmalltalkMode >> parseExpression: aString [
+
+	self subclassResponsibility
+]
+
+{ #category : #parsing }
+RubAbstractSmalltalkMode >> parseSource: aString [
+
+	self subclassResponsibility
+]
