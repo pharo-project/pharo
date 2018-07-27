@@ -19,7 +19,7 @@ InfiniteDebuggerTest >> testTestInfinitDebugger [
 	1000 milliSecond asDelay wait.
 	World doOneCycle.
 	preWindow := (World allMorphs
-		select: [ :e | (e isKindOf: SystemWindow) and: [ e label beginsWith: 'Instance of TestBla' ] ])
+		select: [ :e | (e isKindOf: SystemWindow) and: [ e label beginsWith: 'Instance of TestClassFor' ] ])
 		first.
 	debugButton := (preWindow allMorphs
 		select: [ :e | (e isKindOf: PluggableButtonMorph) and: [ e label = 'Debug' ] ]) first.
@@ -29,7 +29,7 @@ InfiniteDebuggerTest >> testTestInfinitDebugger [
 	100 milliSecond asDelay wait.
 	World doOneCycle.
 	debugWindow := (World allMorphs
-		select: [ :e | (e isKindOf: SystemWindow) and: [ e label beginsWith: 'Instance of TestBla' ] ])
+		select: [ :e | (e isKindOf: SystemWindow) and: [ e label beginsWith: 'Instance of TestClassFor' ] ])
 		first.
 	overButton := (debugWindow allMorphs
 		select: [ :e | (e isKindOf: GLMPluggableButtonMorph) and: [ e label = 'Over' ] ]) first.
