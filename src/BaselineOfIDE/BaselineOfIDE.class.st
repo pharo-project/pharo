@@ -908,6 +908,7 @@ BaselineOfIDE >> loadCalypso [
 		baseline: 'Calypso';
 		repository: 'github://pharo-ide/Calypso:v0.11.5';
 		onConflict: [ :err | err useIncoming ];
+		onUpgrade: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
 	(self class environment at: #ClyBrowser) beAllDefault.
