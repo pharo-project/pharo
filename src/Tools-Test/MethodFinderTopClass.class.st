@@ -5,13 +5,13 @@ Class {
 }
 
 { #category : #'method finder' }
-MethodFinderTopClass class >> approvedSelectors [
+MethodFinderTopClass class >> approvedSelectorsForMethodFinder [
 
 	^#(topApprovedButBottomDisapprovedMethod onlyTopDefinedApprovedMethod)
 ]
 
 { #category : #'method finder' }
-MethodFinderTopClass class >> forbiddenSelectors [
+MethodFinderTopClass class >> forbiddenSelectorsForMethodFinder [
 	^ #(topDisapprovedButBottomApprovedMethod)
 ]
 

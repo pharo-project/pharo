@@ -1,7 +1,7 @@
 Extension { #name : #Collection }
 
 { #category : #'*Tool-Finder' }
-Collection class >> approvedSelectors [
+Collection class >> approvedSelectorsForMethodFinder [
 
 	 ^ self selectors
 ]

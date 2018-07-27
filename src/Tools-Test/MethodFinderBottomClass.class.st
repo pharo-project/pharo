@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #'method finder' }
-MethodFinderBottomClass class >> approvedSelectors [
+MethodFinderBottomClass class >> approvedSelectorsForMethodFinder [
 
 	^#(topDisapprovedButBottomApprovedMethod onlyBottomDefinedApprovedMethod modifyMethod: oneArgumentMethod: otherOneArgumentMethod: InApprovedAndInForbiddenSetMethod)
 ]
 
 { #category : #'method finder' }
-MethodFinderBottomClass class >> forbiddenSelectors [
+MethodFinderBottomClass class >> forbiddenSelectorsForMethodFinder [
 
 	^#(topApprovedButBottomDisapprovedMethod InApprovedAndInForbiddenSetMethod)
 ]

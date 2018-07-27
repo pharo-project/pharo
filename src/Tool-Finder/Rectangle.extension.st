@@ -1,7 +1,7 @@
 Extension { #name : #Rectangle }
 
 { #category : #'*Tool-Finder' }
-Rectangle class >> approvedSelectors [
+Rectangle class >> approvedSelectorsForMethodFinder [
 
 	^ self selectors
 ]

@@ -1,7 +1,7 @@
 Extension { #name : #Margin }
 
 { #category : #'*Tool-Finder' }
-Margin class >> approvedSelectors [
+Margin class >> approvedSelectorsForMethodFinder [
 
 	^ self selectors
 ]

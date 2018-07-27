@@ -1,6 +1,6 @@
 Extension { #name : #Boolean }
 
 { #category : #'*Tool-Finder' }
-Boolean class >> approvedSelectors [
+Boolean class >> approvedSelectorsForMethodFinder [
 	^ self selectors
 ]

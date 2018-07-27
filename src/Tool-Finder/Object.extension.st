@@ -1,7 +1,7 @@
 Extension { #name : #Object }
 
 { #category : #'*Tool-Finder' }
-Object class >> approvedSelectors [
+Object class >> approvedSelectorsForMethodFinder [
 
 	^ #(at: basicAt: basicSize yourself size
 	    ->

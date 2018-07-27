@@ -35,7 +35,7 @@ MethodFinder >> possibleSolutionsForInput: inputCollection [
 			args := permutation allButFirst.
 			receiver := permutation first.
 			foundPermutationSends := (receiver class
-				allSelectorsToTestWithArity: inputCollection size - 1)
+				allSelectorsToTestInMethodFinderWithArity: inputCollection size - 1)
 				collect:
 					[ :method | MethodFinderSend receiver: receiver deepCopy selector: method withArguments: args deepCopy ].
 			sends addAll: foundPermutationSends ].

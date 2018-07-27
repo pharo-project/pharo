@@ -1,7 +1,7 @@
 Extension { #name : #Color }
 
 { #category : #'*Tool-Finder' }
-Color class >> approvedSelectors [
+Color class >> approvedSelectorsForMethodFinder [
 
 	^ self selectors
 ]

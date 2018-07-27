@@ -10,7 +10,7 @@ Class {
 		'selector',
 		'arguments'
 	],
-	#category : #'Tool-Finder'
+	#category : #'Tool-Finder-MethodFinder\r\t'
 }
 
 { #category : #'instance creation' }
