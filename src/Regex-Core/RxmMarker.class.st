@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'index'
 	],
-	#category : #'Regex-Core'
+	#category : #'Regex-Core-Links'
 }
 
 { #category : #'initialize-release' }

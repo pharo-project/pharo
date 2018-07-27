@@ -1,7 +1,10 @@
+"
+Unit tests on ISO language definitions
+"
 Class {
 	#name : #ISOLanguageDefinitionTest,
 	#superclass : #TestCase,
-	#category : #'System-Localization-Tests'
+	#category : #'System-Localization-Tests-Utilities'
 }
 
 { #category : #tests }

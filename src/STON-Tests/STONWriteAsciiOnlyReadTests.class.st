@@ -1,7 +1,10 @@
+"
+Unit tests for writing ASCII only
+"
 Class {
 	#name : #STONWriteAsciiOnlyReadTests,
 	#superclass : #STONWriteReadTests,
-	#category : #'STON-Tests'
+	#category : #'STON-Tests-Writer'
 }
 
 { #category : #private }

@@ -138,7 +138,7 @@ GZipReadStream >> on: aCollection from: firstIndex to: lastIndex [
 	(flags anyMask: GZipNameFlag) "Original file name - ignored"
 		ifTrue:[[(self nextBits: 8) = 0] whileFalse].
 	(flags anyMask: GZipCommentFlag) "Comment - ignored"
-		ifTrue:[[(self nextBits: 8) = 0] whileFalse].
+		ifTrue:[[(self nextBits: 8) = 0] whileFalse]
 
 ]
 

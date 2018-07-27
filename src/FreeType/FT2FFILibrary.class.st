@@ -148,5 +148,9 @@ FT2FFILibrary >> unixModuleName [
 
 { #category : #'accessing platform' }
 FT2FFILibrary >> win32ModuleName [
-	^ 'libfreetype.dll'
+	#('libfreetype.dll' 'libfreetype-6.dll') 
+		detect: [ :each | (FileLocator vmDirectory / each) exists ]
+		ifFound: [ :each | ^ each ].
+	
+	self error: 'freetyle library not found!'
 ]

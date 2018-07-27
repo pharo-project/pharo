@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'commands'
 	],
-	#category : #'Spec-Layout'
+	#category : #'Spec-Layout-Actions'
 }
 
 { #category : #'instance creation' }

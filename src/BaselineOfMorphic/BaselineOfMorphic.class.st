@@ -40,7 +40,9 @@ BaselineOfMorphic >> baseline: spec [
 		spec preLoadDoIt: #'preload:package:'.
 		spec postLoadDoIt: #'postload:package:'.
 
-		spec baseline: 'MorphicCore' with: [spec repository: repository].
+		spec 
+			baseline: 'MorphicCore' with: [spec repository: repository];
+			baseline: 'MenuRegistration' with: [spec repository: repository].
 
 		spec package: 'System-Localization'.
 		spec package: 'Collections-DoubleLinkedList'.
@@ -66,8 +68,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Graphics-Fonts'.
 		spec package: 'Graphics-Shapes'.
 		spec package: 'Growl'.
-
-		spec package: 'MenuRegistration'.
 
 		spec package: 'Keymapping-Core'.
 		spec package: 'Keymapping-KeyCombinations'.

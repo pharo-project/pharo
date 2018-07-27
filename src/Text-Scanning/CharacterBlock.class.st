@@ -26,7 +26,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Text-Scanning'
+	#category : #'Text-Scanning-Base'
 }
 
 { #category : #comparing }
@@ -48,9 +48,9 @@ CharacterBlock >> <= aCharacterBlock [
 { #category : #comparing }
 CharacterBlock >> = aCharacterBlock [
 
-	self species = aCharacterBlock species
-		ifTrue: [^stringIndex = aCharacterBlock stringIndex]
-		ifFalse: [^false]
+	^self species = aCharacterBlock species
+		ifTrue: [ stringIndex = aCharacterBlock stringIndex]
+		ifFalse: [ false]
 ]
 
 { #category : #comparing }
@@ -98,7 +98,7 @@ CharacterBlock >> printOn: aStream [
 
 	aStream nextPutAll: 'a CharacterBlock with index '.
 	stringIndex printOn: aStream.
-	(text ~~ nil and: [text size> 0 and: [stringIndex between: 1 and: text size]])
+	(text notNil and: [text notEmpty and: [ stringIndex between: 1 and: text size ]])
 		ifTrue: [aStream nextPutAll: ' and character '.
 				(text at: stringIndex) printOn: aStream].
 	aStream nextPutAll: ' and rectangle '.

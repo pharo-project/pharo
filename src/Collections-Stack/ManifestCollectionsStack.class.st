@@ -4,7 +4,7 @@ I only contain a Stack implementation.
 Class {
 	#name : #ManifestCollectionsStack,
 	#superclass : #PackageManifest,
-	#category : #'Collections-Stack'
+	#category : #'Collections-Stack-Manifest'
 }
 
 { #category : #'meta-data' }

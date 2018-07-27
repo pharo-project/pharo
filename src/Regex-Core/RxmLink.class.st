@@ -22,7 +22,7 @@ Class {
 	#instVars : [
 		'next'
 	],
-	#category : #'Regex-Core'
+	#category : #'Regex-Core-Links'
 }
 
 { #category : #matching }

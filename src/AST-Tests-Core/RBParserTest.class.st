@@ -26,10 +26,17 @@ RBParserTest >> exampleClasses [
 
 { #category : #private }
 RBParserTest >> parseError: each [
-	RBParser 
-		parseExpression: each first 
-		onError: [ :string :pos | ^ self assert: pos equals: each last ].
+	
+	self parseError: each first onError: [ :string :pos | ^ self assert: pos equals: each last ].
 	self assert: false description: 'Parser didn''t fail'
+	
+]
+
+{ #category : #private }
+RBParserTest >> parseError: expression onError: aBlock [
+	^RBParser 
+		parseExpression: expression 
+		onError: aBlock
 ]
 
 { #category : #private }
@@ -582,6 +589,21 @@ indicate the invalid expression."
 RBParserTest >> testParserErrors [
 	#(#('self foo. + 3' 11) #('#(' 3) #('self 0' 6) #('self asdf;;asfd' 11)) 
 		do: [:each | self parseError: each]
+]
+
+{ #category : #'tests parsing' }
+RBParserTest >> testParserErrorsWithErrorBlock [
+	"Parse source with errors and ensure we identify them"
+	
+	#(#('self foo. + 3' 2) #('#(' 1) #('self 0' 1) #('self asdf;;asfd' 2)) 
+		do: [:each | |ast errorCount|
+			   [ ast := self parseError: each first onError: 
+					[:msg :pos :parser | parser step. parser parseErrorNode: msg]] 
+						on: ReparseAfterSourceEditing do: [].
+						
+				errorCount := 0.
+				RBParseErrorNodeVisitor visit: ast do: [ :n | errorCount := errorCount + 1 ].
+				self assert: errorCount equals: each last ]
 ]
 
 { #category : #'tests parsing' }

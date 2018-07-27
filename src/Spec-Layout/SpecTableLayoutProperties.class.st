@@ -1,3 +1,6 @@
+"
+Used to describe properties for table layouts in Spec
+"
 Class {
 	#name : #SpecTableLayoutProperties,
 	#superclass : #SpecLayoutProperties,
@@ -16,7 +19,7 @@ Class {
 		'minCellSize',
 		'maxCellSize'
 	],
-	#category : #'Spec-Layout'
+	#category : #'Spec-Layout-Layouts'
 }
 
 { #category : #'table defaults' }

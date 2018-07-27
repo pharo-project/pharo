@@ -29,10 +29,9 @@ SystemSettingsPersistenceTest >> setUp [
 	memory := FileSystem memory.
 	preferences := memory root / 'pharo' / 'pharoX.Y' / 'preferences.ston.txt'.
 	systemSettings := SystemSettingsPersistence new.
-	systemSettings 
+	systemSettings
 		fileReference: preferences;
-		settingTree: MockSettings settingTree.
-	
+		settingTree: MockSettings settingTree
 ]
 
 { #category : #accessing }
@@ -254,4 +253,14 @@ SystemSettingsPersistenceTest >> testWriteStream [
 	writeStream := systemSettings writeStream.
 	self assert: writeStream isStream.
 	writeStream close.
+]
+
+{ #category : #'tests - storing' }
+SystemSettingsPersistenceTest >> testWritingStoredSettingNodesShouldNotCloseFileStream [
+	| writeStream storedSettings |
+	writeStream := preferences ensureCreateFile writeStream.
+	storedSettings := StoredSettingsFactory new
+		fromSettingNodes: (Array with: MockSettings booleanSettingNode).
+	systemSettings storeExactStoredSettings: storedSettings on: writeStream.
+	self deny: writeStream closed
 ]

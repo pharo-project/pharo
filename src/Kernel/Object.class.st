@@ -955,13 +955,6 @@ Object >> haltIf: condition [
 	Halt if: condition.
 ]
 
-{ #category : #halting }
-Object >> haltIfInsideTest [
-	"This is the typical message to use for inserting breakpoints during debugging."
-	<debuggerCompleteToSender>
-	Halt ifInsideTest
-]
-
 { #category : #testing }
 Object >> haltIfNil [
 ]

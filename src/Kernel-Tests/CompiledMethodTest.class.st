@@ -247,6 +247,15 @@ CompiledMethodTest >> testHasInstVarRef [
 	
 ]
 
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testHasLiteralSuchThat [
+	"#literals should not expose implementation hack that the last two literals are 
+	used for name of method and class"
+
+	self deny: (Object >> #yourself hasLiteralSuchThat: [ :lit | lit == #yourself ]).
+	self assert: (Object >> #halt hasLiteralSuchThat: [ :lit | lit == #now ]).
+]
+
 { #category : #'tests - abstract' }
 CompiledMethodTest >> testIsAbstract [
 
@@ -278,6 +287,16 @@ CompiledMethodTest >> testIsQuick [
 	self deny: (method isQuick).
 
 	
+]
+
+{ #category : #'tests - literals' }
+CompiledMethodTest >> testLiterals [
+	"#literals should not expose implementation hack that the last two literals are 
+	used for name of method and class"
+
+	self assert: (Object >> #yourself) literals isEmpty.
+	self assert: (Object >> #yourself) allLiterals size equals: 2.
+	self deny: ((Object >> #yourself) hasLiteral: #yourself).
 ]
 
 { #category : #'tests - accessing' }

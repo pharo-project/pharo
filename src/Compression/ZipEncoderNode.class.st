@@ -35,25 +35,25 @@ ZipEncoderNode class >> value: v frequency: f height: h [
 
 { #category : #accessing }
 ZipEncoderNode >> bitLength [
-	^bitLength ifNil:[0]
+	^ bitLength ifNil: [ 0 ]
 ]
 
 { #category : #accessing }
 ZipEncoderNode >> code [
-	^code ifNil:[0]
+	^ code ifNil: [ 0 ]
 ]
 
 { #category : #accessing }
 ZipEncoderNode >> code: aCode [
-	[aCode >= 0 and:[(1 bitShift: bitLength) > aCode]] assert.
-	code := aCode.
+	[ aCode >= 0 and: [ (1 bitShift: bitLength) > aCode ] ] assert.
+	code := aCode
 ]
 
 { #category : #private }
 ZipEncoderNode >> computeHeight [
-	^self isLeaf
-		ifTrue:[height := 0]
-		ifFalse:[height := (left computeHeight max: right computeHeight) + 1].
+	^ height := self isLeaf
+		ifTrue: [ 0 ]
+		ifFalse: [ (left computeHeight max: right computeHeight) + 1 ]
 ]
 
 { #category : #encoding }
@@ -96,8 +96,8 @@ ZipEncoderNode >> isLeaf [
 { #category : #private }
 ZipEncoderNode >> leafNodes [
 	self isLeaf
-		ifTrue:[^Array with: self]
-		ifFalse:[^left leafNodes, right leafNodes]
+		ifTrue: [ ^Array with: self ]
+		ifFalse: [ ^left leafNodes, right leafNodes ]
 ]
 
 { #category : #accessing }
@@ -108,7 +108,7 @@ ZipEncoderNode >> left [
 { #category : #accessing }
 ZipEncoderNode >> left: aNode [
 	aNode parent: self.
-	left := aNode.
+	left := aNode
 ]
 
 { #category : #accessing }
@@ -130,7 +130,7 @@ ZipEncoderNode >> printOn: aStream [
 		nextPutAll:', bitLength = '; print: bitLength;
 		nextPutAll:', code = '; print: code;
 		nextPutAll:', height = '; print: height; 
-	nextPut:$).
+	nextPut:$)
 ]
 
 { #category : #accessing }
@@ -141,7 +141,7 @@ ZipEncoderNode >> right [
 { #category : #accessing }
 ZipEncoderNode >> right: aNode [
 	aNode parent: self.
-	right := aNode.
+	right := aNode
 ]
 
 { #category : #encoding }
@@ -192,7 +192,7 @@ ZipEncoderNode >> setBitLengthTo: bl [
 ZipEncoderNode >> setValue: v frequency: f height: h [
 	value := v.
 	frequency := f.
-	height := h.
+	height := h
 ]
 
 { #category : #accessing }

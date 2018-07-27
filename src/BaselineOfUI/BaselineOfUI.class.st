@@ -44,7 +44,7 @@ BaselineOfUI >> baseline: spec [
 		spec package: 'DebuggerFilters'.
 		spec package: 'DebuggerModel'.
 
-		spec package: 'FontChooser'.
+		spec package: 'Fonts-Chooser'.
 
 		spec package: 'Tool-Base'.
 		spec package: 'Transcript-Tool'.

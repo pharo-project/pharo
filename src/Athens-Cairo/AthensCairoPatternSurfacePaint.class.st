@@ -5,7 +5,7 @@ Class {
 	#name : #AthensCairoPatternSurfacePaint,
 	#superclass : #AthensCairoPatternPaint,
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#category : #'Athens-Cairo-Paints'
 }
@@ -43,7 +43,7 @@ AthensCairoPatternSurfacePaint >> athensFillRectangle: aRectangle on: aCanvas [
 	aCanvas fill
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensCairoPatternSurfacePaint >> direction: aPoint [ 
 	direction := aPoint.
 ]
@@ -65,12 +65,12 @@ AthensCairoPatternSurfacePaint >> initializeFor: anAthensCairoSurface [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensCairoPatternSurfacePaint >> origin: aPoint [ 
 	origin := aPoint.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensCairoPatternSurfacePaint >> setMatrix: aMatrix [
 
 	aMatrix restoreAfter: [
