@@ -49,6 +49,11 @@ Array2D class >> identity: n [
 	^ r
 ]
 
+{ #category : #deprecation }
+Array2D class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 Array2D class >> new: dimension [
 	"Answer a dimension*dimension matrix."
@@ -124,6 +129,15 @@ Array2D class >> rows: rowNumber columns: columnNumber tabulate: aTwoArgumentBlo
 Array2D class >> zeros: dimension [
 	"Create a Matrix of dimensionxdimemsion"
 	^ self new: dimension element: 0
+]
+
+{ #category : #arithmetic }
+Array2D >> +* aCollection [
+	"Premultiply aCollection by self.  aCollection should be an Array or Matrix.
+	 The name of this method is APL's +.x squished into Smalltalk syntax."
+
+	^aCollection preMultiplyByMatrix: self
+
 ]
 
 { #category : #copying }
@@ -292,6 +306,18 @@ Array2D >> atColumn: column put: aCollection [
 	aCollection do: [ :each | contents at: (p := p + numberOfColumns) put: each ].
 	^ aCollection
 
+]
+
+{ #category : #random }
+Array2D >> atRandom [
+	"Return the contents of the receiver in a random order."
+	^ contents atRandom
+
+]
+
+{ #category : #random }
+Array2D >> atRandom: aGenerator [
+	^ contents atRandom: aGenerator
 ]
 
 { #category : #'row/column operations' }
@@ -550,6 +576,30 @@ Array2D >> occurrencesOf: anObject [
 Array2D >> postCopy [
 	super postCopy.
 	contents := contents copy
+]
+
+{ #category : #arithmetic }
+Array2D >> preMultiplyByArray: a [
+	"Answer a +* self where a is an Array."
+
+	numberOfRows = 1 ifFalse: [self error: 'dimensions do not conform'].
+	^Array2D rows: a size columns: numberOfColumns tabulate: [:row :col |
+		(a at: row) * (contents at: col)]
+
+]
+
+{ #category : #arithmetic }
+Array2D >> preMultiplyByMatrix: m [
+	"Answer m +* self where m is a Matrix."
+	|s|
+	numberOfRows = m numberOfColumns ifFalse: [self error: 'dimensions do not conform'].
+	^ Array2D 
+		rows: m numberOfRows 
+		columns: numberOfColumns 
+		tabulate: [:row :col |
+			s := 0.
+			1 to: numberOfRows do: [:k | s := (m at: row at: k) * (self at: k at: col) + s].
+			s ]
 ]
 
 { #category : #printing }
