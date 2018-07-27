@@ -8,6 +8,15 @@ Class {
 }
 
 { #category : #fonts }
+GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
+
+	^ (#(#(#superTiny 0.6) #(#tiny 0.8) #(#small 1) #(#medium 1.3) #(#large 1.6) #(veryLarge 2) #(huge 2.7)) 
+		detect: [:info | info first asUppercase = aSymbol asUppercase] ifNone: []) 
+			ifNotNil: [:info | info second]
+
+]
+
+{ #category : #fonts }
 GraphicFontSettings class >> fontChoiceButtonForStyle: aSymbol label: aLabel [
 	| label |
 	label := StringMorph 
@@ -71,7 +80,13 @@ GraphicFontSettings class >> resetAllFontToDefaultButton [
 
 { #category : #fonts }
 GraphicFontSettings class >> setFontsToStyleNamed: aSymbol [
-	StandardFonts setFontsToStyleNamed: aSymbol.
+
+	(self class environment includesKey: #SourceCodeFonts)
+		ifTrue: [ (self environment at: #SourceCodeFonts) setFontsToStyleNamed: aSymbol ]
+		ifFalse: [ StandardFonts setFontsToStyleNamed: aSymbol ].
+		
+	WorldMorph displayScaleFactor: (self displayScaleFactorForStyleNamed: aSymbol).
+
 	SettingBrowser refreshAllSettingBrowsers.
 	EditorFindReplaceDialogWindow cleanUp.
 ]

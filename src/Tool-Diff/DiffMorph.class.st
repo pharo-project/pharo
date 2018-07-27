@@ -25,7 +25,7 @@ Class {
 		'leftCaption',
 		'rightCaption'
 	],
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Morphs'
 }
 
 { #category : #'instance creation' }

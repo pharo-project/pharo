@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #'System-Platforms'
+	#category : #'System-Platforms-Base'
 }
 
 { #category : #accessing }
@@ -45,7 +45,13 @@ OSPlatform class >> determineActivePlatform [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #example }
+OSPlatform class >> example [
+	<example>
+	Smalltalk os current inspect
+]
+
+{ #category : #'class initialization' }
 OSPlatform class >> initialize [
 	"OSPlatform initialize"
 

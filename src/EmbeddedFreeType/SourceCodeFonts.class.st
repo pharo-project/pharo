@@ -63,6 +63,19 @@ SourceCodeFonts class >> registerFonts: freeTypeFontManager [
 			baseName: font originalFileName ]
 ]
 
+{ #category : #settings }
+SourceCodeFonts class >> setFontsToStyleNamed: aSymbol [
+
+	| pragma |
+
+	pragma := (Pragma allNamed: #styleName: in: SourceCodeFonts class) detect: [ :each  | each arguments first = aSymbol ] ifNone: [ ^ self ].
+	
+	self setSourceCodeFonts: (self perform: pragma method selector).
+	
+	
+	
+]
+
 { #category : #accessing }
 SourceCodeFonts class >> setSourceCodeFonts: pointSize [
 	StandardFonts
@@ -96,26 +109,50 @@ SourceCodeFonts class >> settingsOn: aBuilder [
 
 { #category : #accessing }
 SourceCodeFonts class >> sizeHuge [
+
+	<styleName: #huge>
 	^ 22
 ]
 
 { #category : #accessing }
 SourceCodeFonts class >> sizeLarge [
+
+	<styleName: #large>
 	^ 16
 ]
 
 { #category : #accessing }
 SourceCodeFonts class >> sizeMedium [ 
+
+	<styleName: #medium>
 	^ 13
 ]
 
 { #category : #accessing }
 SourceCodeFonts class >> sizeSmall [ 
+
+	<styleName: #small>
 	^ 10
 ]
 
 { #category : #accessing }
+SourceCodeFonts class >> sizeSuperTiny [
+
+	<styleName: #superTiny>
+	^ 5
+]
+
+{ #category : #accessing }
+SourceCodeFonts class >> sizeTiny [
+
+	<styleName: #tiny>
+	^ 8
+]
+
+{ #category : #accessing }
 SourceCodeFonts class >> sizeVeryLarge [
+
+	<styleName: #veryLarge>
 	^ 18
 ]
 

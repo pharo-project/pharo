@@ -7,3 +7,9 @@ Class {
 	#superclass : #WindowAnnouncement,
 	#category : #'Morphic-Widgets-Windows-Announcements'
 }
+
+{ #category : #testing }
+WindowOpened >> isOpened [
+
+	^ true
+]

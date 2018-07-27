@@ -240,6 +240,18 @@ Object class >> whatIsAPrimitive [
 Object >> -> anObject [
 	"Answer an Association between self and anObject"
 	"the code of Association>>#key:value: is inline here for speed"
+	"The following example creates an association whose key is number 1 and value string 'one'.
+	1 -> 'one'
+	>>> 1 -> 'one'
+
+	(1 -> 'one') key
+	>>> 1
+
+	(1 -> 'one') value
+	>>> 'one'
+	
+	Note that key and value can be ANY object."
+	
 	^Association basicNew key: self value: anObject
 ]
 
@@ -798,6 +810,7 @@ Object >> displayStringOn: aStream [
 
 { #category : #'reflective operations' }
 Object >> doesNotUnderstand: aMessage [ 
+	<debuggerCompleteToSender>
 	 "Handle the fact that there was an attempt to send the given message to the receiver but the receiver does not understand this message (typically sent from the machine when a message is sent to the receiver and no method is defined for that selector)."
 	"Testing: (3 activeProcess)"
 		
@@ -940,13 +953,6 @@ Object >> halt: aString [
 Object >> haltIf: condition [
 	<debuggerCompleteToSender>
 	Halt if: condition.
-]
-
-{ #category : #halting }
-Object >> haltIfInsideTest [
-	"This is the typical message to use for inserting breakpoints during debugging."
-	<debuggerCompleteToSender>
-	Halt ifInsideTest
 ]
 
 { #category : #testing }

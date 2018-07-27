@@ -92,8 +92,7 @@ FT2Library >> getBitmap: ftBitmap fromOutline: outline [
 
 { #category : #testing }
 FT2Library >> isAvailable [
-	self checkLibrary.
-	"^ false."
+	[self checkLibrary] on:Error do: [^ false].
 	^ self isNull not
 ]
 

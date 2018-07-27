@@ -63,6 +63,21 @@ ZipArchiveMember >> asDirectory [
 	^ZipDirectoryMember new copyFrom: self
 ]
 
+{ #category : #'extraction-ui' }
+ZipArchiveMember >> askOverwriteOptionsUsing: aUIManager onYes: yesBlock onNo: noBlock onRetryWithOverwrite: retryWithOverwriteBlock onCancel: cancelBlock [
+	| index |
+	[ index := aUIManager chooseFrom: {'Yes, overwrite' . 'No, don''t overwrite' . 'Overwrite ALL files' . 'Cancel operation'} lines: #(2) title: fileName , ' already exists. Overwrite?'.
+	index isNil ] whileTrue.
+	index = 1
+		ifTrue: [ yesBlock value ].
+	index = 2
+		ifTrue: [ noBlock value ].
+	index = 3
+		ifTrue: [ retryWithOverwriteBlock value ].
+	index = 4
+		ifTrue: [ cancelBlock value ]
+]
+
 { #category : #'accessing - spec fields' }
 ZipArchiveMember >> bitFlag [
 	"Per .ZIP File Format Specification Version: 6.3.2:
@@ -118,7 +133,7 @@ ZipArchiveMember >> bitFlag [
 ZipArchiveMember >> bitFlag: aNumber [
 	"See comment for #bitFlag"
 	
-	bitFlag := aNumber.
+	bitFlag := aNumber
 ]
 
 { #category : #accessing }
@@ -135,7 +150,7 @@ ZipArchiveMember >> centralDirectoryHeaderSize [
 { #category : #accessing }
 ZipArchiveMember >> clearExtraFields [
 	cdExtraField := ''.
-	localExtraField := ''.
+	localExtraField := ''
 ]
 
 { #category : #'private-writing' }
@@ -154,8 +169,7 @@ ZipArchiveMember >> compressDataTo: aStream [
 	encoder finish. "not close!"
 	endPos := aStream position.
 	compressedSize := endPos - startPos.
-	crc32 := encoder crc.
-
+	crc32 := encoder crc
 ]
 
 { #category : #accessing }
@@ -225,7 +239,7 @@ ZipArchiveMember >> copyDataTo: aStream [
 
 	compressionMethod = CompressionStored ifTrue: [ ^self copyDataWithCRCTo: aStream ].
 
-	self copyRawDataTo: aStream.
+	self copyRawDataTo: aStream
 ]
 
 { #category : #'private-writing' }
@@ -244,7 +258,7 @@ ZipArchiveMember >> copyDataWithCRCTo: aStream [
 		readDataRemaining := readDataRemaining - data size.
 	].
 
-	crc32 := crc32 bitXor: 16rFFFFFFFF.
+	crc32 := crc32 bitXor: 16rFFFFFFFF
 
 ]
 
@@ -254,9 +268,7 @@ ZipArchiveMember >> copyRawDataTo: aStream [
 	[ readDataRemaining > 0 ] whileTrue: [ | data |
 		data := self readRawChunk: (4096 min: readDataRemaining).
 		aStream nextPutAll: data.
-		readDataRemaining := readDataRemaining - data size.
-	].
-
+		readDataRemaining := readDataRemaining - data size ]
 ]
 
 { #category : #'private-writing' }
@@ -269,8 +281,7 @@ ZipArchiveMember >> copyRawDataTo: aStream from: start to: finish [
 	[ readDataRemaining > 0 ] whileTrue: [ | data |
 		data := self readRawChunk: (32768 min: readDataRemaining).
 		aStream nextPutAll: data.
-		readDataRemaining := readDataRemaining - data size.
-	].
+		readDataRemaining := readDataRemaining - data size ]
 
 ]
 
@@ -341,47 +352,56 @@ ZipArchiveMember >> desiredCompressionMethod: aNumber [
 			ifTrue: [ CompressionLevelDefault ]
 			ifFalse: [ CompressionLevelNone ].
 	compressionMethod = CompressionStored ifTrue: [ compressedSize := uncompressedSize ].
-	^old.
+	^old
 ]
 
 { #category : #private }
 ZipArchiveMember >> endRead [
-	readDataRemaining := 0.
+	readDataRemaining := 0
 ]
 
 { #category : #extraction }
 ZipArchiveMember >> extractInDirectory: dir [
-	self extractToFileNamed: self localFileName inDirectory: dir
-
+	self extractToFileNamed: self localFileName inDirectory: dir overwrite: true
 ]
 
-{ #category : #extraction }
-ZipArchiveMember >> extractInDirectory: aDirectory overwrite: overwriteAll [
-	"Extract this entry into the given directory. Answer #okay, #failed, #abort, or #retryWithOverwrite."
-	| path fileDir file index localName |
+{ #category : #'extraction-ui' }
+ZipArchiveMember >> extractInDirectory: aDirectory informingOverwrite: shouldOverwrite onSuccess: successBlock onRetryWithOverwrite: retryWithOverwriteBlock onFailedOverwrite: failedBlock onAbortOverwrite: abortBlock [
+	"Extract this entry into the given directory. Answer successBlock or call one of the other action blocks."
+
+	| path fileDir file localName |
 	path := fileName findTokens: '/'.
 	localName := path last.
 	fileDir := path allButLast inject: aDirectory into: [ :base :part | base / part ].
 	fileDir ensureCreateDirectory.
 	file := fileDir / localName.
-	file exists ifTrue: [
-		overwriteAll ifFalse:[
-			[index := UIManager default chooseFrom: {
-						'Yes, overwrite'. 
-						'No, don''t overwrite'. 
-						'Overwrite ALL files'.
-						'Cancel operation'
-					} lines: #(2) title: fileName, ' already exists. Overwrite?'.
-			index == nil] whileTrue.
-			index = 4 ifTrue:[^#abort].
-			index = 3 ifTrue:[^#retryWithOverwrite].
-			index = 2 ifTrue:[^#okay].
-		].
-		file ensureDelete.
-		file := [file ensureCreateFile] on: Error do:[:ex| ^#failed].
-	].
-	file binaryWriteStreamDo: [ :str | self extractTo: str ].
-	^#okay
+	^ self
+		extractToFile: file
+		informingOverwrite: shouldOverwrite
+		onSuccess: successBlock
+		onRetryWithOverwrite: retryWithOverwriteBlock
+		onFailedOverwrite: failedBlock
+		onAbortOverwrite: abortBlock
+]
+
+{ #category : #'extraction-ui' }
+ZipArchiveMember >> extractInDirectory: aDirectory overwrite: shouldOverwrite [
+	"Extract this entry into the given directory. Answer #okay, #failed, #abort, or #retryWithOverwrite."
+
+	^ self
+		extractInDirectory: aDirectory
+		informingOverwrite: shouldOverwrite
+		onSuccess: [ ^ #okay ]
+		onRetryWithOverwrite: [ ^ #retryWithOverwrite ]
+		onFailedOverwrite: [ ^ #failed ]
+		onAbortOverwrite: [ ^ #abort ]
+]
+
+{ #category : #extraction }
+ZipArchiveMember >> extractInDirectory: dir withoutInformingOverwrite: overwrite [
+	"Extract myself to dir without informing user whether to overwrite existing file"
+
+	self extractToFileNamed: self localFileName inDirectory: dir overwrite: overwrite
 ]
 
 { #category : #extraction }
@@ -392,7 +412,7 @@ ZipArchiveMember >> extractTo: aStream [
 	self rewindData.
 	self writeDataTo: aStream.
 	self desiredCompressionMethod: oldCompression.
-	self endRead.
+	self endRead
 ]
 
 { #category : #extraction }
@@ -404,30 +424,62 @@ ZipArchiveMember >> extractTo: aStream from: start to: finish [
 	self rewindData.
 	self writeDataTo: aStream from: start to: finish.
 	self desiredCompressionMethod: oldCompression.
-	self endRead.
+	self endRead
+]
+
+{ #category : #'private-extraction' }
+ZipArchiveMember >> extractToFile: aFile informingOverwrite: shouldOverwrite onSuccess: successBlock onRetryWithOverwrite: retryWithOverwriteBlock onFailedOverwrite: failedBlock onAbortOverwrite: abortBlock [
+	"Extract this entry into the given file. Answer successBlock or call one of the other action blocks."
+
+	| file |
+	file := aFile.
+	(file exists and: [ shouldOverwrite not ])
+		ifTrue: [ | overwriteBlock |
+			overwriteBlock := [ file := [ file
+				ensureDelete;
+				ensureCreateFile ]
+				on: Error
+				do: [ :ex | 
+					failedBlock cull: ex.
+					^ self ] ].
+			self
+				askOverwriteOptionsUsing: UIManager default
+				onYes: overwriteBlock
+				onNo: [ ^ #okay ]
+				onRetryWithOverwrite: [ retryWithOverwriteBlock value.
+					overwriteBlock value ]
+				onCancel: abortBlock ].
+	file binaryWriteStreamDo: [ :str | self extractTo: str ].
+	^ successBlock value
 ]
 
 { #category : #extraction }
 ZipArchiveMember >> extractToFileNamed: aFileName [
-	self 
-		extractToFileNamed: aFileName 
-		inDirectory: FileSystem workingDirectory.
+	self extractToFileNamed: aFileName inDirectory: FileSystem workingDirectory overwrite: true
 ]
 
-{ #category : #accessing }
+{ #category : #extraction }
 ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir [
-	| file fullDir |
-	self isEncrypted
-		ifTrue: [ ^self error: 'encryption unsupported' ].
-	file := dir / aLocalFileName.
-	file parent ensureCreateDirectory.
-	self isDirectory 
-		ifFalse: [
-			fullDir 
-				forceNewFileNamed: file basename 
-				do: [:stream |  self extractTo: stream]]
-		ifTrue: [ fullDir ensureCreateDirectory ]
+	self extractToFileNamed: aLocalFileName inDirectory: dir overwrite: true
+]
 
+{ #category : #extraction }
+ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir overwrite: overwrite [
+	| file |
+	self isEncrypted
+		ifTrue: [ ^ self error: 'encryption unsupported' ].
+	file := dir / aLocalFileName.
+	self isDirectory
+		ifTrue: [ file ensureCreateDirectory ]
+		ifFalse: [ (file isFile and: [ file exists ])
+				ifTrue: [ overwrite
+						ifTrue: [ file
+								ensureDelete;
+								ensureCreateFile;
+								binaryWriteStreamDo: [ :stream | self extractTo: stream ] ] ]
+				ifFalse: [ file
+						ensureCreateFile;
+						binaryWriteStreamDo: [ :stream | self extractTo: stream ] ] ]
 ]
 
 { #category : #accessing }
@@ -465,7 +517,7 @@ ZipArchiveMember >> initialize [
 	crc32 := 0.
 	compressedSize := 0.
 	uncompressedSize := 0.
-	self unixFileAttributes: DefaultFilePermissions.
+	self unixFileAttributes: DefaultFilePermissions
 ]
 
 { #category : #testing }
@@ -507,13 +559,13 @@ ZipArchiveMember >> isTextFile: aBoolean [
 ZipArchiveMember >> lastModTime [
 	"Return my last modification date"
 
-	^ lastModFileDateTime.
+	^ lastModFileDateTime
 ]
 
 { #category : #accessing }
 ZipArchiveMember >> localFileName [
 	"Answer my fileName in terms of the local directory naming convention"
-	^ fileName copyReplaceAll: '/' with: FileSystem disk delimiter asString.
+	^ fileName copyReplaceAll: '/' with: FileSystem disk delimiter asString
 ]
 
 { #category : #testing }
@@ -525,20 +577,20 @@ ZipArchiveMember >> looksLikeDirectory [
 ZipArchiveMember >> mapPermissionsFromUnix: unixPerms [
 	"Take Unix permissions (e.g. 8r40755 for a directory) and put them in the high 16 bits. The low 16 bits are for DOS permissions"
 	
-	^ unixPerms bitShift: 16.
+	^ unixPerms bitShift: 16
 ]
 
 { #category : #private }
 ZipArchiveMember >> mapPermissionsToUnix: zipPerms [
 	"Extract Unix permissions (the high 16 bits) from zip permissions. The low 16 bits are for DOS permissions"
 	
-	^ zipPerms bitShift: -16.
+	^ zipPerms bitShift: -16
 ]
 
 { #category : #accessing }
 ZipArchiveMember >> modifiedAt: aDateAndTime [
 
-	lastModFileDateTime := aDateAndTime.
+	lastModFileDateTime := aDateAndTime
 ]
 
 { #category : #private }
@@ -572,7 +624,7 @@ ZipArchiveMember >> refreshLocalFileHeaderTo: aStream [
 	endianStream nextLittleEndianNumber: 2 put: systemFileName size.
 	endianStream nextLittleEndianNumber: 2 put: localExtraField size.
 
-	aStream position: here.
+	aStream position: here
 
 ]
 
@@ -581,14 +633,14 @@ ZipArchiveMember >> rewindData [
 	readDataRemaining :=  (desiredCompressionMethod = CompressionDeflated
 		and: [ compressionMethod = CompressionDeflated ])
 			ifTrue: [ compressedSize ]
-			ifFalse: [ uncompressedSize ].
+			ifFalse: [ uncompressedSize ]
 
 ]
 
 { #category : #accessing }
 ZipArchiveMember >> splitFileName [
 	"Answer my name split on slash boundaries. A directory will have a trailing empty string."
-	^ fileName findTokens: '/'.
+	^ fileName findTokens: '/'
 ]
 
 { #category : #accessing }
@@ -601,7 +653,7 @@ ZipArchiveMember >> uncompressedSize [
 ZipArchiveMember >> unixFileAttributes [
 	"See comment at end"
 
-	^self mapPermissionsToUnix: externalFileAttributes.
+	^self mapPermissionsToUnix: externalFileAttributes
 	
 "Per http://unix.stackexchange.com/questions/14705/the-zip-formats-external-file-attribute : These values can all be found in <sys/stat.h> - link to 4.4BSD version. These are not in the POSIX standard (which defines test macros instead); but originate from AT&T Unix and BSD. (in GNU libc / Linux, the values themselves are defined as __S_IFDIR etc in bits/stat.h, though the kernel header might be easier to read - the values are all the same pretty much everywhere.)
 
@@ -642,7 +694,7 @@ ZipArchiveMember >> unixFileAttributes: perms [
 			ifTrue: [ (perms bitAnd: FileAttrib bitInvert) bitOr: DirectoryAttrib ]
 			ifFalse: [ (perms bitAnd: DirectoryAttrib bitInvert) bitOr: FileAttrib ].
 	externalFileAttributes := self mapPermissionsFromUnix: newPerms.
-	^oldPerms.
+	^oldPerms
 ]
 
 { #category : #'accessing - spec fields' }
@@ -652,14 +704,14 @@ ZipArchiveMember >> versionMadeBy [
 		- The upper byte indicates the compatibility of the file attribute information.  If the external file attributes are compatible with MS-DOS and can be read by PKZIP for DOS version 2.04g then this value will be zero.
 		- The lower byte indicates the ZIP specification version (the version of PKWARE Appnote) supported by the software used to encode the file.  The value / 10 indicates the major version number, and the value mod 10 is the minor version number"
 	
-	^ versionMadeBy.
+	^ versionMadeBy
 ]
 
 { #category : #'accessing - spec fields' }
 ZipArchiveMember >> versionMadeBy: anInteger [
 	"See comment for #versionMadeBy"
 	
-	versionMadeBy := anInteger.
+	versionMadeBy := anInteger
 ]
 
 { #category : #'accessing - spec fields' }
@@ -670,14 +722,14 @@ ZipArchiveMember >> versionNeededToExtract [
 		- File is compressed using Deflate compression
 		- File is encrypted using traditional PKWARE encryption"
 	
-	^ versionNeededToExtract.
+	^ versionNeededToExtract
 ]
 
 { #category : #'accessing - spec fields' }
 ZipArchiveMember >> versionNeededToExtract: anInteger [
 	"See comment for #versionNeededToExtract"
 	
-	versionNeededToExtract := anInteger.
+	versionNeededToExtract := anInteger
 ]
 
 { #category : #'private-writing' }
@@ -718,7 +770,7 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 
 	aStream nextPutAll: systemFileName asByteArray.
 	aStream nextPutAll: systemCdExtraField asByteArray.
-	aStream nextPutAll: systemFileComment asByteArray.
+	aStream nextPutAll: systemFileComment asByteArray
 ]
 
 { #category : #'private-writing' }
@@ -731,7 +783,7 @@ ZipArchiveMember >> writeDataDescriptorTo: aStream [
 
 	aStream nextLittleEndianNumber: 4 put: crc32.
 	aStream nextLittleEndianNumber: 4 put: compressedSize.
-	aStream nextLittleEndianNumber: 4 put: uncompressedSize.
+	aStream nextLittleEndianNumber: 4 put: uncompressedSize
 ]
 
 { #category : #'private-writing' }

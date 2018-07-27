@@ -111,7 +111,7 @@ PharoWelcomePage class >> openForRelease [
 		detect: [ :each | (each isKindOf: SystemWindow) and: [ each label = self title ] ] 
 		ifFound: [ :oldWindow | oldWindow delete ].
 	window := self open.
-	window extent: 750@400.
+	window extent: (750@400) scaledByDisplayScaleFactor.
 	window center: Display extent / 2
 ]
 

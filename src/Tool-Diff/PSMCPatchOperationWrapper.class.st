@@ -1,7 +1,10 @@
+"
+Wrapper for patch operations
+"
 Class {
 	#name : #PSMCPatchOperationWrapper,
 	#superclass : #PSMCChangeWrapper,
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Wrapper'
 }
 
 { #category : #converting }

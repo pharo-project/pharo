@@ -985,7 +985,7 @@ SHRBTextStyler >> privateStyle: aText [
     | ast |
 
     ast := self parse: aText isMethod: self isForWorkspace not.
-    ast methodNode compilationContext: (CompilationContext new
+    ast methodNode compilationContext: (Smalltalk compiler compilationContextClass new
             class: (classOrMetaClass ifNil: [UndefinedObject]);
 				forSyntaxHighlighting: true;
             requestor: workspace).

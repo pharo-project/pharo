@@ -9,16 +9,11 @@ set -o xtrace
 # The first parameter is the architecture
 # The second parameter is the stage name
 
-ARCHFLAG=""
-if [ ${1} = "64" ]; then
-    ARCHFLAG="64/"
-fi
-
 CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
 find ${CACHE}
 
-wget -O- get.pharo.org/${ARCHFLAG}vm70 | bash
+bootstrap/scripts/getPharoVM.sh 70 vm ${1}
 					
 IMAGE_ARCHIVE=$(find ${CACHE} -name Pharo7.0-bootstrap-${1}bit-*.zip)
 unzip $IMAGE_ARCHIVE
@@ -33,7 +28,7 @@ unzip $RPACKAGE_ARCHIVE
 mv $IMAGE_FILE bootstrap.image
 
 export PHARO_CI_TESTING_ENVIRONMENT=1
-			
+	
 #Initializing the Image
 ./pharo bootstrap.image
 #Adding packages removed from the bootstrap
@@ -49,5 +44,5 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 #Loading Tests
 ./pharo bootstrap.image loadHermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication=ignore
 
-#Running tests.
-./pharo bootstrap.image test --junit-xml-output --stage-name=${2} SUnit-Core SUnit-Tests	
+#Running tests
+./pharo bootstrap.image test --junit-xml-output --stage-name=${2} SUnit-Core SUnit-Tests

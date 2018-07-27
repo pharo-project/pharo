@@ -11,7 +11,7 @@ Class {
 		'currentOperation',
 		'classChanges'
 	],
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Utilities'
 }
 
 { #category : #'helper methods' }

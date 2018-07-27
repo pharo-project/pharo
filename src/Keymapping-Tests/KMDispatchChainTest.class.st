@@ -1,3 +1,6 @@
+"
+SUnit tests for testing the dispatch chain
+"
 Class {
 	#name : #KMDispatchChainTest,
 	#superclass : #AbstractKeymappingTest,
@@ -10,7 +13,7 @@ KMDispatchChainTest >> testGlobalIsFirst [
 	first := nil.
 	chain := KMDispatchChain from: (KmGlobalDispatcher new) andDispatcher: (KMDispatcher new).
 	chain do: [ :target | first ifNil: [ first := target ] ].
-	self assert: first isGlobalDispatcher.
+	self assert: first isGlobalDispatcher
 ]
 
 { #category : #tests }
@@ -27,5 +30,5 @@ KMDispatchChainTest >> testPassesOnTheTarget [
 KMDispatchChainTest >> testTargetDoesNotIterateTheNil [
 	| chain |
 	chain := KMDispatchChain from: (KmGlobalDispatcher new) andDispatcher: (KMDispatcher new).
-	chain do: [ :target | self assert: target notNil ].
+	chain do: [ :target | self assert: target notNil ]
 ]

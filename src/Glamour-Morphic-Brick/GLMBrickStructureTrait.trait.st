@@ -225,7 +225,7 @@ GLMBrickStructureTrait >> openInBrickWindowLabeled: aLabel [
 						hSpaceFill;
 						addBrickBack: self;
 						yourself);
-				extent: 400@400;
+				extent: (400@400) * World displayScaleFactor;
 				openCenteredInWorld ]
 		ifAbsent: [ self asMorph openInWindow ] 
 	

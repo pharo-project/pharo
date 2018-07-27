@@ -554,19 +554,51 @@ ReflectivityControlTest >> testBeforeSequence [
 { #category : #'tests - before' }
 ReflectivityControlTest >> testBeforeVariable [
 	| variableNode |
-	variableNode := (ReflectivityExamples >> #exampleGlobalRead) ast statements first value.
+	variableNode := (ReflectivityExamples >> #exampleGlobalRead) ast
+		statements first value.
 	self assert: variableNode isVariable.
 	link := MetaLink new
 		metaObject: self;
 		selector: #tagExec.
 	variableNode link: link.
 	self assert: variableNode hasMetalinkBefore.
-	self assert: (ReflectivityExamples >> #exampleGlobalRead) class = ReflectiveMethod.
+	self
+		assert: (ReflectivityExamples >> #exampleGlobalRead) class
+		equals: ReflectiveMethod.
 	self assert: tag isNil.
-	self assert: ReflectivityExamples new exampleGlobalRead = GlobalForTesting.
-	self assert: tag = 'yes'.
-	self assert: (ReflectivityExamples >> #exampleGlobalRead) class = CompiledMethod.
-	self deny: (ReflectivityExamples >> #exampleGlobalRead) isQuick.
+	self
+		assert: ReflectivityExamples new exampleGlobalRead
+		equals: GlobalForTesting.
+	self assert: tag equals: 'yes'.
+	self
+		assert: (ReflectivityExamples >> #exampleGlobalRead) class
+		equals: CompiledMethod.
+	self deny: (ReflectivityExamples >> #exampleGlobalRead) isQuick
+]
+
+{ #category : #'tests - before' }
+ReflectivityControlTest >> testBeforeVariableSelf [
+	| variableNode |
+	variableNode := (ReflectivityExamples >> #exampleSelf) ast statements
+		first.
+	self assert: variableNode isVariable.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec.
+	variableNode link: link.
+	self assert: variableNode hasMetalinkBefore.
+	self
+		assert: (ReflectivityExamples >> #exampleSelf) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	self
+		assert: ReflectivityExamples new exampleSelf class
+		equals: ReflectivityExamples.
+	self assert: tag equals: 'yes'.
+	self
+		assert: (ReflectivityExamples >> #exampleSelf) class
+		equals: CompiledMethod.
+	self deny: (ReflectivityExamples >> #exampleSelf) isQuick
 ]
 
 { #category : #'tests - conditions' }

@@ -13,13 +13,8 @@ ManifestCollectionsStreams class >> dependencies [
 ]
 
 { #category : #'meta-data - dependency analyser' }
-ManifestCollectionsStreams class >> ignoredDependencies [
-	^ #(#'Transcript-Tool')
-]
-
-{ #category : #'meta-data - dependency analyser' }
 ManifestCollectionsStreams class >> manuallyResolvedDependencies [
-	^ #(#UIManager #'Transcript-Tool' #'Transcript-Core' #'Collections-Abstract' #Jobs)
+	^ #(#UIManager #'Collections-Abstract' #Jobs)
 ]
 
 { #category : #'meta-data' }

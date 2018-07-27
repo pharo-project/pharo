@@ -40,7 +40,9 @@ BaselineOfMorphic >> baseline: spec [
 		spec preLoadDoIt: #'preload:package:'.
 		spec postLoadDoIt: #'postload:package:'.
 
-		spec baseline: 'MorphicCore' with: [spec repository: repository].
+		spec 
+			baseline: 'MorphicCore' with: [spec repository: repository];
+			baseline: 'MenuRegistration' with: [spec repository: repository].
 
 		spec package: 'System-Localization'.
 		spec package: 'Collections-DoubleLinkedList'.
@@ -67,8 +69,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Graphics-Shapes'.
 		spec package: 'Growl'.
 
-		spec package: 'MenuRegistration'.
-
 		spec package: 'Keymapping-Core'.
 		spec package: 'Keymapping-KeyCombinations'.
 		spec package: 'Keymapping-Pragmas'.
@@ -86,6 +86,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Scrolling'.
 		spec package: 'Morphic-Widgets-Tabs'.
 		spec package: 'Morphic-Widgets-Taskbar'.
+		spec package: 'Morphic-Widgets-Menubar'.
 		spec package: 'Morphic-Widgets-Tree'.
 		spec package: 'Morphic-Widgets-Windows'.
 		spec package: 'Multilingual-OtherLanguages'.
@@ -335,6 +336,8 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Stdio stdout nextPutAll: 'SmalltalkEditor initialized.'; lf.
 
+	MenubarMorph initialize.	
+
 	PolymorphSystemSettings showDesktopLogo: false.
 	PolymorphSystemSettings showDesktopLogo: true.
 	PolymorphSystemSettings desktopColor: Color white.
@@ -367,9 +370,7 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.
 	
-	Author fullName: self class name.
-	
-
+	Author fullName: self class name
 ]
 
 { #category : #baseline }

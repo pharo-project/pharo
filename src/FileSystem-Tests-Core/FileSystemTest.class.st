@@ -327,7 +327,7 @@ FileSystemTest >> testDelete [
 	
 	self 
 		should: [ reference delete ]
-		raise: FileDoesNotExist.
+		raise: FileDoesNotExistException.
 		
 		
 	reference := ( filesystem workingDirectory / 'file') ensureCreateFile.

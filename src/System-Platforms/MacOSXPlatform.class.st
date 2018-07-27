@@ -10,7 +10,7 @@ OSPlatform current.
 Class {
 	#name : #MacOSXPlatform,
 	#superclass : #MacOSPlatform,
-	#category : #'System-Platforms'
+	#category : #'System-Platforms-Mac'
 }
 
 { #category : #testing }

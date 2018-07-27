@@ -11,6 +11,7 @@ Class {
 	],
 	#pools : [
 		'SDL2Constants',
+		'SDL2ConstantsHint',
 		'SDL2Types'
 	],
 	#category : #'OSWindow-SDL2-Bindings'
@@ -30,21 +31,26 @@ SDL2 class >> checkLibraryName: aName [
 
 { #category : #clipboard }
 SDL2 class >> clipboardText [
-	| text len data |
+	| text |
+	
 	text := self primClipboardText.
-	len := self strlen: text.
-	data := ByteArray new: len.
-	LibC memCopy: text to: data size: len.
-	^ ZnUTF8Encoder new decodeBytes: data.
+	^ text readStringUTF8
+
 ]
 
 { #category : #clipboard }
 SDL2 class >> clipboardText: text [
 	| encoded encoder |
+	
 	encoded := ByteArray streamContents: [ :stream |
 		encoder := ZnUTF8Encoder new.
-		encoder next: text size putAll: text startingAt: 1 toStream: stream.
+		encoder 
+			next: text size 
+			putAll: text asString
+			startingAt: 1 
+			toStream: stream.
 		stream nextPut: 0 ].
+	
 	self primClipboardText: encoded
 ]
 
@@ -79,6 +85,12 @@ SDL2 class >> createWindow: title x: x y: y width: w height: h flags: flags [
 SDL2 class >> delay: milliseconds [
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
 	^ self nbCall: #( void SDL_Delay ( Uint32 milliseconds ) )
+]
+
+{ #category : #video }
+SDL2 class >> disableScreenSaver [
+
+	^ self ffiCall: #(void SDL_DisableScreenSaver(void))
 ]
 
 { #category : #native }
@@ -201,6 +213,10 @@ SDL2 class >> initJoystick [
 { #category : #common }
 SDL2 class >> initLibrary [
 	Session == Smalltalk session ifTrue: [ ^ 1 ].
+	"Configure SDL2 in 'application mode', to let the screen to turn off on inactivity.
+	 But we let the user to restore 'game mode' on screen, by using #disableScreenSaver"
+	self setHint: SDL_HINT_VIDEO_ALLOW_SCREENSAVER value: '1'.
+	self setHint: SDL_HINT_NO_SIGNAL_HANDLERS value: '1'.
 	self init: SDL_INIT_NOPARACHUTE.
 	Session := Smalltalk session.
 ]
@@ -282,14 +298,15 @@ SDL2 class >> pollEvent: event [
 
 { #category : #clipboard }
 SDL2 class >> primClipboardText [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( char* SDL_GetClipboardText ( ) )
+
+	^ self ffiCall: #( ExternalAddress SDL_GetClipboardText ( ) )
 ]
 
 { #category : #clipboard }
 SDL2 class >> primClipboardText: text [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_SetClipboardText ( char* text ) )
+	"It receives a ByteArray because it can be encoded"
+
+	^ self ffiCall: #( int SDL_SetClipboardText ( ByteArray text ) )
 ]
 
 { #category : #cairo }
@@ -312,6 +329,11 @@ SDL2 class >> quitSubSystem: flags [
 	^ self nbCall: #( void SDL_QuitSubSystem ( Uint32 flags ) )
 ]
 
+{ #category : #video }
+SDL2 class >> setHint: aName value: aValue [
+	^ self ffiCall: #(int SDL_SetHint(const char* aName, const char* aValue))
+]
+
 { #category : #mouse }
 SDL2 class >> setRelativeMouseMode: enabled [
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
@@ -322,15 +344,6 @@ SDL2 class >> setRelativeMouseMode: enabled [
 SDL2 class >> showCursor: toggle [
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
 	^ self nbCall: #( int SDL_ShowCursor ( int toggle ) )
-]
-
-{ #category : #clipboard }
-SDL2 class >> strlen: text [
-	| res |
-	res := 0.
-	[ (text nbUInt8AtOffset: res) ~= 0 ] whileTrue:
-		[ res := res + 1 ].
-	^ res
 ]
 
 { #category : #timer }

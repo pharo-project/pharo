@@ -15,11 +15,12 @@ def shell(params){
 
 def runTests(architecture, prefix=''){
 	cleanWs()
-	unstash "bootstrap${architecture}"
-	shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
-	junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
-	archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
-	cleanWs()
+	dir(env.STAGE_NAME) {
+		unstash "bootstrap${architecture}"
+		shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
+		junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
+		archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
+	}
 }
 
 def shellOutput(params){

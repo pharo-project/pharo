@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'currentFill'
 	],
-	#category : #'Athens-Balloon'
+	#category : #'Athens-Balloon-Engine'
 }
 
 { #category : #drawing }

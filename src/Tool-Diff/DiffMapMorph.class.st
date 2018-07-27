@@ -1,10 +1,13 @@
+"
+A morph to display a map of join mappings
+"
 Class {
 	#name : #DiffMapMorph,
 	#superclass : #BorderedMorph,
 	#instVars : [
 		'mappings'
 	],
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Morphs'
 }
 
 { #category : #accessing }

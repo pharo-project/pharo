@@ -1,3 +1,6 @@
+"
+Morph to display a diff join
+"
 Class {
 	#name : #DiffJoinMorph,
 	#superclass : #ProportionalSplitterMorph,
@@ -6,7 +9,7 @@ Class {
 		'dstOffset',
 		'mappings'
 	],
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Morphs'
 }
 
 { #category : #'accessing - defaults' }

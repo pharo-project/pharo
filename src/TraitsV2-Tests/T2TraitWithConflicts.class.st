@@ -1,7 +1,10 @@
+"
+Unit test for trait conflict scenarios
+"
 Class {
 	#name : #T2TraitWithConflicts,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-Tests'
 }
 
 { #category : #tests }
@@ -50,7 +53,7 @@ T2TraitWithConflicts >> testDiamonProblemIsNotConflict [
 
 	c1 := self newClass: #C1 with: #(aSlot) uses: t2 + t3.
 	
-	self assert:c1 new m1 equals: 42.
+	self assert: (c1 new perform: #m1) equals: 42.
 
 ]
 
@@ -65,7 +68,7 @@ T2TraitWithConflicts >> testDifferentMethodsAreConflict [
 
 	c1 := self newClass: #C1 with: #(aSlot) uses: t1 + t2.
 	
-	self should: [c1 new m1] raise: Error
+	self should: [ c1 new m1 ] raise: Error
 
 ]
 
@@ -80,8 +83,8 @@ T2TraitWithConflicts >> testNonConflictingTraitsAreNotConflict [
 
 	c1 := self newClass: #C1 with: #(aSlot) uses: t1 + t2.
 	
-	self assert: c1 new m1 equals: 42.
-	self assert: c1 new m2 equals: 43.
+	self assert: (c1 new perform: #m1) equals: 42.
+	self assert: (c1 new perform: #m2) equals: 43.
 
 ]
 

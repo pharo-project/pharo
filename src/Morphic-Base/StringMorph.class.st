@@ -556,6 +556,12 @@ StringMorph >> stringColor [
 	^ self color
 ]
 
+{ #category : #initialization }
+StringMorph >> themeChanged [
+	self color: self defaultColor.
+	super themeChanged
+]
+
 { #category : #accessing }
 StringMorph >> underlineColor [
 

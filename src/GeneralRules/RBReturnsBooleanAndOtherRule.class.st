@@ -50,7 +50,7 @@ RBReturnsBooleanAndOtherRule >> checkIfNodeIsBool: node [
 
 { #category : #private }
 RBReturnsBooleanAndOtherRule >> checkIfNodeIsNotBool: node [
-	^ (node isVariable and: [ node name = 'self' ]) or:
+	^ node isSelf or:
 		[ node isLiteralNode and: [ (#(true false) includes: node value) not ] ]
 ]
 

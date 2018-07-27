@@ -26,7 +26,7 @@ Finder class >> finderMenuOn: aBuilder [
 
 	(aBuilder item: #Finder)
 		action: [self open];
-		order: 0.10;
+		order: 101;
 		parent: #Tools;
 		help: 'Looking for something ?';
 		icon: self icon.

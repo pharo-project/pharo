@@ -1,3 +1,6 @@
+"
+SUnit tests for key mapping shortcuts
+"
 Class {
 	#name : #KMShortcutTest,
 	#superclass : #AbstractKeymappingTest,
@@ -6,14 +9,14 @@ Class {
 
 { #category : #tests }
 KMShortcutTest >> testAsString [
-	self assert: $a asShortcut asString = 'a'.
-	self assert: $A asShortcut asString = 'A'.
-	self assert: $a ctrl asString = 'Ctrl + a'.
-	self assert: $A ctrl asString = 'Ctrl + A'.
-	self assert: $b command asString = 'Cmd + b'.
-	self assert: $c shift asString = 'Shift + c'.
-	self assert: $d alt asString = 'Alt + d'.
-	self assert: $e ctrl command asString =  (KMCtrlModifier new asString ,' + ' , KMCommandModifier new asString,' + e').
+	self assert: $a asShortcut asString equals: 'a'.
+	self assert: $A asShortcut asString equals: 'A'.
+	self assert: $a ctrl asString equals: 'Ctrl + a'.
+	self assert: $A ctrl asString equals: 'Ctrl + A'.
+	self assert: $b command asString equals: 'Cmd + b'.
+	self assert: $c shift asString equals: 'Shift + c'.
+	self assert: $d alt asString equals: 'Alt + d'.
+	self assert: $e ctrl command asString equals: (KMCtrlModifier new asString ,' + ' , KMCommandModifier new asString,' + e')
 	
 	
 
@@ -26,27 +29,27 @@ KMShortcutTest >> testBadComposedCmdShortcutFails [
 
 { #category : #tests }
 KMShortcutTest >> testChainIntegerSucceds [
-	^ self assert: ($e ctrl , 1) = ($e ctrl , 1)
+	^ self assert: ($e ctrl , 1) equals: ($e ctrl , 1)
 ]
 
 { #category : #tests }
 KMShortcutTest >> testChainShortcutSucceds [
-	^ self assert: ($e ctrl , $e ctrl) = ($e ctrl , $e ctrl)
+	^ self assert: ($e ctrl , $e ctrl) equals: ($e ctrl , $e ctrl)
 ]
 
 { #category : #tests }
 KMShortcutTest >> testChainSimpleCharsSucceds [
-	^ self assert: ($e ctrl , $e) = ($e ctrl , $e)
+	^ self assert: ($e ctrl , $e) equals: ($e ctrl , $e)
 ]
 
 { #category : #tests }
 KMShortcutTest >> testCmdIntegerSucceds [
-	^ self assert: 1 ctrl = 1 ctrl
+	^ self assert: 1 ctrl equals: 1 ctrl
 ]
 
 { #category : #tests }
 KMShortcutTest >> testCmdKeySucceds [
-	^ self assert: $e ctrl = $e ctrl
+	^ self assert: $e ctrl equals: $e ctrl
 ]
 
 { #category : #tests }
@@ -68,7 +71,7 @@ KMShortcutTest >> testComplexChainMatches [
 
 	self deny: (($e ctrl, $e shift, $f) matchesCompletely: {eCtrl}).
 	self deny: (($e ctrl, $e shift, $f) matchesCompletely: {eCtrl. eShift}).
-	self assert: (($e ctrl, $e shift, $f) matchesCompletely: {eCtrl. eShift. f}).
+	self assert: (($e ctrl, $e shift, $f) matchesCompletely: {eCtrl. eShift. f})
 ]
 
 { #category : #tests }
@@ -81,7 +84,7 @@ KMShortcutTest >> testCreation [
 { #category : #tests }
 KMShortcutTest >> testEventCodes [
 	self assert: $s meta modifier eventCode 
-		 equals: OSPlatform current defaultModifier eventCode 
+		  equals: OSPlatform current defaultModifier eventCode 
 ]
 
 { #category : #tests }
@@ -107,12 +110,12 @@ KMShortcutTest >> testModifiedShortcutsMatch [
 	self assert: ($a ctrl matchesCompletely: {a}).
 	self assert: ($1 shift matchesCompletely: {oneShift}).
 	self assert: ($1 command matchesCompletely: {oneCommand}).
-	self assert: ($1 command shift matchesCompletely: {oneCommandShift}).
+	self assert: ($1 command shift matchesCompletely: {oneCommandShift})
 ]
 
 { #category : #tests }
 KMShortcutTest >> testShiftKeySucceds [
-	^ self assert: $e shift = $e shift
+	^ self assert: $e shift equals: $e shift
 ]
 
 { #category : #tests }
@@ -125,7 +128,7 @@ KMShortcutTest >> testSimpleChainMatches [
 	self assert: ($e ctrl matches: {eCtrl. e}).
 	
 	self deny: (($e ctrl, $e) matches: {eCtrl. self eventKey: $a}).
-	self deny: ($e ctrl matches: {e}).
+	self deny: ($e ctrl matches: {e})
 ]
 
 { #category : #tests }
@@ -142,10 +145,10 @@ KMShortcutTest >> testSingleShortcutsMatch [
 	self deny: ($b asKeyCombination matches: {a}).
 	
 	self assert: ($a asKeyCombination matchesCompletely: {a}).
-	self assert: (1 asKeyCombination matchesCompletely: {one}).
+	self assert: (1 asKeyCombination matchesCompletely: {one})
 ]
 
 { #category : #tests }
 KMShortcutTest >> testTripleChainShortcutSucceds [
-	^ self assert: ($e ctrl , $e ctrl , $d ctrl) = ($e ctrl , $e ctrl , $d ctrl)
+	^ self assert: ($e ctrl , $e ctrl , $d ctrl) equals: ($e ctrl , $e ctrl , $d ctrl)
 ]

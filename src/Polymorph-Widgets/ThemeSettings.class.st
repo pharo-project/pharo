@@ -333,7 +333,7 @@ ThemeSettings >> menuBorderColor [
 ThemeSettings >> menuBorderWidth [
 	"Answer the value of menuColor"
 
-	^ 2
+	^ 2 * World displayScaleFactor
 ]
 
 { #category : #menu }

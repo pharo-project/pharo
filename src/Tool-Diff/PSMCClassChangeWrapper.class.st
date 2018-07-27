@@ -1,3 +1,6 @@
+"
+Wrapper for class changes
+"
 Class {
 	#name : #PSMCClassChangeWrapper,
 	#superclass : #PSMCChangeWrapper,
@@ -5,7 +8,7 @@ Class {
 		'conflict',
 		'contents'
 	],
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Wrapper'
 }
 
 { #category : #accessing }

@@ -1,3 +1,6 @@
+"
+SUnit tests for key mapping per instance
+"
 Class {
 	#name : #KMPerInstanceTests,
 	#superclass : #AbstractKeymappingTest,
@@ -13,5 +16,5 @@ KMPerInstanceTests >> testAddMoreThanOneHandler [
 	morph on: $j do: [ flag := flag + 6 ].
 	{ self eventKey: $i. self eventKey: $j }
 		do: [:e | morph dispatchKeystrokeForEvent: e].
-	self assert: flag equals: 7.
+	self assert: flag equals: 7
 ]

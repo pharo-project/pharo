@@ -308,6 +308,15 @@ OSSDL2Driver >> setupEventLoop [
 		resume
 ]
 
+{ #category : #'system startup' }
+OSSDL2Driver >> shutDown [
+	"Reset WindowMap and JoystickMap when shuting down (otherwise there will be handlers 
+	 remaining on restart)"
+
+	WindowMap := nil.
+	JoystickMap := nil
+]
+
 { #category : #'global events' }
 OSSDL2Driver >> unregisterGlobalListener: globalListener [
 	"This method registers a global event listener.

@@ -35,12 +35,10 @@ DisplayScreen class >> actualScreenDepth [
 
 { #category : #accessing }
 DisplayScreen class >> actualScreenSize [
-	<primitive: 106>
-
-	^ World osWindow 
-		ifNotNil: [:anOSWindow | anOSWindow extent]
-		ifNil: [ self primitiveFailed ].
-
+	"Delegates to active world because it can be something else than the one provided by the VM"
+	
+	ActiveWorld ifNil: [ ^ 0@0 ].
+	^ ActiveWorld actualScreenSize
 ]
 
 { #category : #'display box access' }
@@ -92,6 +90,11 @@ DisplayScreen class >> displaySettingsOn: aBuilder [
 ]
 
 { #category : #'host window access' }
+DisplayScreen class >> hostWindowIcon: aPath [
+	^ self primitiveWindowIcon: self hostWindowIndex path: aPath
+]
+
+{ #category : #'host window access' }
 DisplayScreen class >> hostWindowIndex [
 	^ 1
 ]
@@ -131,6 +134,21 @@ DisplayScreen class >> primitiveDeferUpdates: aBoolean [
 
 	<primitive: 126>
 	^ nil  "answer nil if primitive fails"
+]
+
+{ #category : #'host window access' }
+DisplayScreen class >> primitiveWindowIcon: id path: pathString [
+
+	<primitive: 'primitiveHostWindowIcon' module: 'HostWindowPlugin' error: ec>
+	(pathString isKindOf: AbstractFileReference)
+		ifTrue: [ ^ self primitiveWindowIcon: id path: pathString fullName ].
+	ec == #'bad argument'
+		ifTrue: [ pathString isString
+				ifFalse: [ ^ self error: 'The path should be a String' ].
+			pathString asFileReference exists
+				ifTrue: [ ^ self error: 'File existing but not found by the VM sorry, try another location...' "Not reproductible in the tests but can happen"]
+				ifFalse: [ ^ FileDoesNotExistException signalOnFile: pathString asFileReference ] ].
+	self primitiveFailed
 ]
 
 { #category : #'host window access' }

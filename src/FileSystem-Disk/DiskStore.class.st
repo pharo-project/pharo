@@ -240,7 +240,7 @@ DiskStore >> delete: path [
 	| pathString encodedPathString |
 	
 	(self exists: path)
-		ifFalse: [ ^ FileDoesNotExist signalWith: path ].
+		ifFalse: [ ^ FileDoesNotExistException signalWith: path ].
 		
 	pathString := self stringFromPath: path.
 	encodedPathString := File encodePathString: pathString.

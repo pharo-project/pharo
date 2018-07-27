@@ -16,7 +16,7 @@ Class {
 		'readOnlyQueue',
 		'flushChanges'
 	],
-	#category : #'System-Sources'
+	#category : #'System-Sources-Sources'
 }
 
 { #category : #'class initialization' }
@@ -334,14 +334,12 @@ SourceFileArray >> getPreambleFrom: aFileStream at: position [
 	First we need to move back in stream using byte reading without encoding. It performed by basicNext.
 	Next we still could not read exact number of characters because (position-startIndex) is not characters number in case of UTF8.
 	So at the end we use another loop to read encoded characters step by step until stream will be at original position"
+
 	| startIndex |
 	startIndex := position.
-	[startIndex >= 0 and: [aFileStream position: startIndex.
-	aFileStream next ~~ $!] ] whileTrue: [ startIndex := startIndex - 1 ].
-
-	^String streamContents: [ :result | 
-		[aFileStream position <= position] whileTrue: [result nextPut: aFileStream next]]
-
+	[ startIndex >= 0 and: [ aFileStream position: startIndex. aFileStream next ~~ $! ] ] whileTrue: [ startIndex := startIndex - 1 ].
+	
+	^ String streamContents: [ :result | result nextPutAll: (aFileStream next: position - aFileStream position + 1) ]
 ]
 
 { #category : #initialization }

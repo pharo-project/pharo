@@ -239,13 +239,13 @@ SettingBrowser class >> initialExtent [
 SettingBrowser class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Settings)
-		parent: #System;
+		parent: #Pharo;
 		order: 1;
 		iconName: #smallConfigurationIcon;
 		action: [ SettingBrowser open ];
 		keyText: 'o, s';
-		help:
-			'Opens a SystemSettingBrowser which allows you to alter many system settings.'
+		help: 'Opens a SystemSettingBrowser which allows you to alter many system settings.';
+		withSeparatorAfter
 ]
 
 { #category : #opening }

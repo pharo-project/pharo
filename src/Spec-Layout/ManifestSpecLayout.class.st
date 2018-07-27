@@ -1,7 +1,10 @@
+"
+Layouts and layout actions for Spec UI framework
+"
 Class {
 	#name : #ManifestSpecLayout,
 	#superclass : #PackageManifest,
-	#category : #'Spec-Layout'
+	#category : #'Spec-Layout-Manifest'
 }
 
 { #category : #'code-critics' }

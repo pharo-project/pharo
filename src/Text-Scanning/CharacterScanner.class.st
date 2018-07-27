@@ -134,7 +134,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Text-Scanning'
+	#category : #'Text-Scanning-Base'
 }
 
 { #category : #'class initialization' }

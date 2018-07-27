@@ -1,11 +1,29 @@
+"
+A morph to display merge differences and allow to merge them
+with clickable icons on the spitter
+"
 Class {
 	#name : #MergeDiffMorph,
 	#superclass : #DiffMorph,
 	#instVars : [
 		'allowJoinClicks'
 	],
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Morphs'
 }
+
+{ #category : #examples }
+MergeDiffMorph class >> example [
+
+	MergeDiffMorph new openInWindow 
+]
+
+{ #category : #examples }
+MergeDiffMorph class >> example2 [
+
+	(MergeDiffMorph 
+		from: 'test' to: 'test2')
+		openInWindow 
+]
 
 { #category : #accessing }
 MergeDiffMorph >> allowJoinClicks [

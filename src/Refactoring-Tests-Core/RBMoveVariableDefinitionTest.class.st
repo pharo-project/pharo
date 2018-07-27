@@ -40,7 +40,7 @@ RBMoveVariableDefinitionTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACas
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #referencesConditionFor:) = (RBParser parseMethod: 'referencesConditionFor: aClass 
 								| environment  |
 								^(RBCondition withBlock: 
-										[| association |association := Smalltalk associationAt: aClass name
+										[| association |association := Smalltalk globals associationAt: aClass name
 													ifAbsent: [self refactoringError: ''Could not find class''].
 										environment := (self environment referencesTo: association) 
 													| (self environment referencesTo: aClass name).

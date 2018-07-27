@@ -265,14 +265,14 @@ ThemeIcons >> hasIcons [
 
 { #category : #accessing }
 ThemeIcons >> iconNamed: aSymbol [
-	^ self 
+	^ (self 
 		iconNamed: aSymbol 
 		ifNone: [ 
 			self isReportingNotFound 
 				ifTrue: [ 
 					self crLog: (aSymbol, ' icon not found!').
 					self notFoundIcon ]
-				ifFalse: [ self blankIcon ]]
+				ifFalse: [ self blankIcon ]]) scaledByDisplayScaleFactor
 ]
 
 { #category : #accessing }
@@ -366,12 +366,6 @@ B9T0FRiYf4GGvQDyXeEG6JcucjOuXhYBiw2QAbGxsWdBNsM0Aw08GBoayoU1EGEak5OTW6uq
 qj4C8QeoRjCOjo6+mZqaWgQ0JBgUsDgNAAbMa6CGPiDugWmOiIg4HB8fLwYNk+dAvAdmCIYB
 paWl54GamKFR1Qc08BnMNqAmVSB+Co0dsCEYBgA1CUFpDiBeWFFR8Qg56UJjB2ZIO9a80NHR
 IQcM6etA2x8DnV6Dnv6BGtWAeCmKCyjBAMWc9s7ZKakLAAAAAElFTkSuQmCC'
-]
-
-{ #category : #'critiques icons' }
-ThemeIcons >> smallInformationIcon [
-
-	^ self smallInfoIcon 
 ]
 
 { #category : #'critiques icons' }

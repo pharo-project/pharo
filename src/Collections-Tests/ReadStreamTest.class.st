@@ -35,23 +35,38 @@ ReadStreamTest >> streamOnString [
 	^ ReadStream on: 'abcde'.
 ]
 
+{ #category : #'tests - testing' }
+ReadStreamTest >> testAtEnd [
+	self assert: self emptyStream atEnd.
+	self deny: self streamOnString atEnd
+]
+
 { #category : #tests }
 ReadStreamTest >> testBack [
-	|stream|
+	| stream |
 	stream := 'abc' readStream.
 	stream setToEnd.
-	self assert: stream back = $c.
+	self assert: stream back equals: $c.
 
 ]
 
 { #category : #tests }
 ReadStreamTest >> testBackOnPosition1 [
 	"Test the new implementation of the method back."
-	|stream|
+	| stream |
 	stream := 'abc' readStream.
 	stream next.
-	self assert: stream back = $a.
+	self assert: stream back equals: $a.
 
+]
+
+{ #category : #'tests - accessing' }
+ReadStreamTest >> testContents [
+	| stream |
+	stream := self streamOnString.
+	self assert: stream contents equals: 'abcde'.
+	stream next: 2.
+	self assert: stream contents equals: 'abcde'
 ]
 
 { #category : #'tests - testing' }
@@ -75,10 +90,10 @@ ReadStreamTest >> testIsEmpty [
 { #category : #tests }
 ReadStreamTest >> testOldBack [
 	"Test the old behavior of the method back. The method #oldBack is a misconception about what a stream is. A stream contains a pointer *between* elements with past and future elements. The method #oldBack considers that the pointer is *on* an element. (Damien Cassou - 1 August 2007)"
-	|stream|
+	| stream |
 	stream := 'abc' readStream.
 	stream setToEnd.
-	self assert: stream oldBack = $b.
+	self assert: stream oldBack equals: $b.
 
 ]
 
@@ -95,31 +110,31 @@ ReadStreamTest >> testOldBackOnPosition1 [
 { #category : #tests }
 ReadStreamTest >> testOldPeekBack [
 	"Test the old behavior of the method peekBack. The method #oldBack is a misconception about what a stream is. A stream contains a pointer *between* elements with past and future elements. The method #oldBack considers that the pointer is *on* an element. (Damien Cassou - 1 August 2007)"
-	|stream|
+	| stream |
 	stream := 'abc' readStream.
 	stream setToEnd.
-	self assert: stream oldPeekBack = $b.
+	self assert: stream oldPeekBack equals: $b.
 
 ]
 
 { #category : #tests }
 ReadStreamTest >> testPeekBack [
 	"Test the new implementation of the method peekBack due to changing #back."
-	|stream|
+	| stream |
 	stream := 'abc' readStream.
 	stream setToEnd.
-	self assert: stream peekBack = $c.
+	self assert: stream peekBack equals: $c.
 
 ]
 
 { #category : #tests }
 ReadStreamTest >> testPositionOfSubCollection [
 	
-	self assert: ('xyz' readStream positionOfSubCollection: 'q' ) = 0.
-	self assert: ('xyz' readStream positionOfSubCollection: 'x' ) = 1.
+	self assert: ('xyz' readStream positionOfSubCollection: 'q' ) equals: 0.
+	self assert: ('xyz' readStream positionOfSubCollection: 'x' ) equals: 1.
 
-	self assert: ('xyz' readStream positionOfSubCollection: 'y' ) = 2.
-	self assert: ('xyz' readStream positionOfSubCollection: 'z' ) = 3.
+	self assert: ('xyz' readStream positionOfSubCollection: 'y' ) equals: 2.
+	self assert: ('xyz' readStream positionOfSubCollection: 'z' ) equals: 3.
 ]
 
 { #category : #'tests - accessing' }
@@ -127,11 +142,11 @@ ReadStreamTest >> testUpTo3 [
 	| stream string |
 	string := 'XYZabcdUVW'.
 	stream := ReadStream on: string from: (string indexOf: $a) to: (string indexOf: $d).
-	self assert: stream upToEnd = 'abcd'.
+	self assert: stream upToEnd equals: 'abcd'.
 	self assert: stream atEnd.
 	stream := ReadStream on: string from: (string indexOf: $a) to: (string indexOf: $d).
-	self assert: (stream upTo: $c) = 'ab'.
-	self assert: stream next = $d.
+	self assert: (stream upTo: $c) equals: 'ab'.
+	self assert: stream next equals: $d.
 	stream := ReadStream on: string from: (string indexOf: $a) to: (string indexOf: $d).
 	self assert: (stream upTo: $e) = 'abcd'.
 	self assert: stream atEnd.
@@ -139,29 +154,23 @@ ReadStreamTest >> testUpTo3 [
 
 { #category : #tests }
 ReadStreamTest >> testUpToAll [
-
-	self assert: (self streamOn: 'abcdefgh' upToAll: 'cd') = 'ab'.
-	self assert: (self streamOn: 'abcdefgh' upToAll: 'cd' upToAll: 'gh') = 'ef'.
-
-	self assert: (self streamOn: '' upToAll: '') = ''.
-
-	self assert: (self streamOn: 'a' upToAll: '') = ''.
-	self assert: (self streamOn: 'a' upToAll: 'a') = ''.
-	self assert: (self streamOn: 'a' upToAll: 'b') = 'a'.
-
-	self assert: (self streamOn: 'ab' upToAll: '') = ''.
-	self assert: (self streamOn: 'ab' upToAll: 'a') = ''.
-	self assert: (self streamOn: 'ab' upToAll: 'b') = 'a'.
-	self assert: (self streamOn: 'ab' upToAll: 'c') = 'ab'.
-	self assert: (self streamOn: 'ab' upToAll: 'ab') = ''.
-
-	self assert: (self streamOn: 'abc' upToAll: '') = ''.
-	self assert: (self streamOn: 'abc' upToAll: 'a') = ''.
-	self assert: (self streamOn: 'abc' upToAll: 'b') = 'a'.
-	self assert: (self streamOn: 'abc' upToAll: 'c') = 'ab'.
-	self assert: (self streamOn: 'abc' upToAll: 'd') = 'abc'.
-	self assert: (self streamOn: 'abc' upToAll: 'ab') = ''.
-	self assert: (self streamOn: 'abc' upToAll: 'bc') = 'a'.
-	self assert: (self streamOn: 'abc' upToAll: 'cd') = 'abc'.
-
+	self assert: (self streamOn: 'abcdefgh' upToAll: 'cd') equals: 'ab'.
+	self assert: (self streamOn: 'abcdefgh' upToAll: 'cd' upToAll: 'gh') equals: 'ef'.
+	self assert: (self streamOn: '' upToAll: '') equals: ''.
+	self assert: (self streamOn: 'a' upToAll: '') equals: ''.
+	self assert: (self streamOn: 'a' upToAll: 'a') equals: ''.
+	self assert: (self streamOn: 'a' upToAll: 'b') equals: 'a'.
+	self assert: (self streamOn: 'ab' upToAll: '') equals: ''.
+	self assert: (self streamOn: 'ab' upToAll: 'a') equals: ''.
+	self assert: (self streamOn: 'ab' upToAll: 'b') equals: 'a'.
+	self assert: (self streamOn: 'ab' upToAll: 'c') equals: 'ab'.
+	self assert: (self streamOn: 'ab' upToAll: 'ab') equals: ''.
+	self assert: (self streamOn: 'abc' upToAll: '') equals: ''.
+	self assert: (self streamOn: 'abc' upToAll: 'a') equals: ''.
+	self assert: (self streamOn: 'abc' upToAll: 'b') equals: 'a'.
+	self assert: (self streamOn: 'abc' upToAll: 'c') equals: 'ab'.
+	self assert: (self streamOn: 'abc' upToAll: 'd') equals: 'abc'.
+	self assert: (self streamOn: 'abc' upToAll: 'ab') equals: ''.
+	self assert: (self streamOn: 'abc' upToAll: 'bc') equals: 'a'.
+	self assert: (self streamOn: 'abc' upToAll: 'cd') equals: 'abc'
 ]

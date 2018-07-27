@@ -8,7 +8,7 @@ Class {
 		'layoutFrame',
 		'subwidget'
 	],
-	#category : #'Spec-Layout'
+	#category : #'Spec-Layout-Actions'
 }
 
 { #category : #'instance creation' }

@@ -5,7 +5,9 @@ Class {
 	#name : #SettingsStonWriterTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'writer'
+		'writer',
+		'fileStream',
+		'fileReference'
 	],
 	#category : #'System-Settings-Tests'
 }
@@ -13,20 +15,29 @@ Class {
 { #category : #running }
 SettingsStonWriterTest >> setUp [
 	super setUp.
+	fileReference := (FileSystem memory root / 'preferences.ston.txt') asFileReference.
 	writer := SettingsStonWriter new.
-	writer stream: (WriteStream on: String new).
+	fileStream := fileReference writeStream.
+	writer stream: fileStream
+]
 
+{ #category : #running }
+SettingsStonWriterTest >> tearDown [
+	fileStream close.
+	super tearDown
 ]
 
 { #category : #tests }
 SettingsStonWriterTest >> testBasic [
 	"Checking that no error occur"
+
 	SettingsStonWriter new store
 ]
 
 { #category : #tests }
 SettingsStonWriterTest >> testEmptyStream [
-	self assert: writer stream contents isEmpty
+	fileStream flush.
+	self assert: fileReference contents isEmpty
 ]
 
 { #category : #tests }
@@ -35,8 +46,19 @@ SettingsStonWriterTest >> testStore [
 	settingNode := MockSettings booleanSettingNode.
 	writer addSetting: (StoredSettingsFactory new from: settingNode).
 	writer store.
-	
-	self assert: writer stream contents equals: MockSettings oneStoredSettingSTONString
+	fileStream flush.
+	self assert: fileReference contents equals: MockSettings oneStoredSettingSTONString
+]
+
+{ #category : #tests }
+SettingsStonWriterTest >> testStoreShouldNotCloseBackingStream [
+	| settingNode |
+	settingNode := MockSettings booleanSettingNode.
+	writer addSetting: (StoredSettingsFactory new from: settingNode).
+	writer store.
+	self deny: fileStream closed.
+	fileStream flush.
+	self assert: fileReference contents equals: MockSettings oneStoredSettingSTONString
 ]
 
 { #category : #tests }
@@ -44,9 +66,17 @@ SettingsStonWriterTest >> testStoreTwoObjects [
 	| settingNode1 settingNode2 |
 	settingNode1 := MockSettings booleanSettingNode.
 	settingNode2 := MockSettings rangeSettingNode.
-	writer addSetting: ((StoredSettingsFactory new from: settingNode1) realValue: false; yourself).
-	writer addSetting: ((StoredSettingsFactory new from: settingNode2) realValue: 55; yourself).
+	writer
+		addSetting:
+			((StoredSettingsFactory new from: settingNode1)
+				realValue: false;
+				yourself).
+	writer
+		addSetting:
+			((StoredSettingsFactory new from: settingNode2)
+				realValue: 55;
+				yourself).
 	writer store.
-	
-	self assert: writer stream contents equals: MockSettings twoStoredSettingsSTONString.
+	fileStream flush.
+	self assert: fileReference contents equals: MockSettings twoStoredSettingsSTONString
 ]

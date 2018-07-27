@@ -131,7 +131,7 @@ FileList class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'File Browser')
 		parent: #Tools;
-		order: 0.43;
+		order: 320;
 		action: [ self open ];
 		help: 'Browse the files present on your system.';
 		icon: self taskbarIcon.

@@ -282,6 +282,13 @@ TaskbarMorph >> preferredButtonCornerStyle [
 	^#square
 ]
 
+{ #category : #recategorized }
+TaskbarMorph >> rejectsEvent: anEvent [
+	(anEvent isMouse and: [ anEvent isMouseDown ]) ifTrue: [ ^ (self submorphs anySatisfy: [ :each | each containsPoint: anEvent cursorPoint ]) not ].
+	
+	^ super rejectsEvent: anEvent
+]
+
 { #category : #taskbar }
 TaskbarMorph >> removeFromWorld [
 	"Delete the receiver from its world after restoring minimized tasks.

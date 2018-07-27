@@ -9,7 +9,7 @@ source bootstrap/scripts/envvars.sh
 
 mkdir -p "${CACHE}" #required to generate hermes files
 
-wget -O - get.pharo.org/vm61 | bash
+bootstrap/scripts/getPharoVM.sh 61
 wget https://github.com/guillep/PharoBootstrap/releases/download/v1.4.1/bootstrapImage.zip
 unzip bootstrapImage.zip
 
@@ -28,9 +28,6 @@ popd
 # Downloads a SPUR vm for the configured architecture
 mkdir vmtarget
 pushd vmtarget
-if [ ${BOOTSTRAP_ARCH} = "64" ]; then
-	ARCHFLAG=64/
-fi
-wget -O- get.pharo.org/${ARCHFLAG}vm70 | bash
+../bootstrap/scripts/getPharoVM.sh 70 vm $BOOTSTRAP_ARCH
 popd
 

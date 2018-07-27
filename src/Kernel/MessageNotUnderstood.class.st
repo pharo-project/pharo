@@ -16,7 +16,7 @@ Class {
 MessageNotUnderstood >> debug [
 	"open a debugger on myself"
 	Processor activeProcess 
-		debug: self signalerContext sender
+		debug: self signalerContext
 		title: self smartDescription
 ]
 

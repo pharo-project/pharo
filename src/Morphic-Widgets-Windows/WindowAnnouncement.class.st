@@ -53,6 +53,17 @@ WindowAnnouncement >> isMoved [
 ]
 
 { #category : #testing }
+WindowAnnouncement >> isMovedOrResized [
+
+	^ self isMoved or: [ self isResized ]
+]
+
+{ #category : #testing }
+WindowAnnouncement >> isOpened [
+	^ false
+]
+
+{ #category : #testing }
 WindowAnnouncement >> isResized [
 	^ false
 ]

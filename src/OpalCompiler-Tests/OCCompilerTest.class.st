@@ -190,7 +190,12 @@ OCCompilerTest >> testInstanceVariableShadowing [
 
 { #category : #literals }
 OCCompilerTest >> testNegativeZero [
-	self assert: (OpalCompiler evaluate: '-0.0') hex = Float negativeZero hex.
+	self
+		assert:
+			(OpalCompiler new
+				source: '-0.0';
+				evaluate) hex
+		equals: Float negativeZero hex
 ]
 
 { #category : #'test shadowing' }

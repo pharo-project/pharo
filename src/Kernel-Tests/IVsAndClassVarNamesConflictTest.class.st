@@ -34,7 +34,7 @@ IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingCapitalizedIn
 	]
 		on: Exception
 		do: [ :ex | ex resume ].
-	self assert: (Smalltalk keys includes: class name)
+	self assert: (Smalltalk globals keys includes: class name)
 ]
 
 { #category : #tests }
@@ -48,5 +48,5 @@ IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingClasseVariabl
 	]
 		on: Exception
 		do: [ :ex | ex resume ].
-	self assert: (Smalltalk keys includes: class name)
+	self assert: (Smalltalk globals keys includes: class name)
 ]

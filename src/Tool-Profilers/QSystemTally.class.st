@@ -11,7 +11,7 @@ Class {
 		'tally',
 		'senders'
 	],
-	#category : #'Tool-Profilers'
+	#category : #'Tool-Profilers-System'
 }
 
 { #category : #LICENSE }
@@ -240,7 +240,7 @@ QSystemTally >> tallyMethod: aMethod by: count [
 	"Called explicitly and needs to decrement receiver's tally count"
 	| node |
 	node := receivers.
-	[node == nil] whileFalse:[
+	[node isNil] whileFalse:[
 		node method == aMethod ifTrue:[^node bumpBy: count].
 		node := node nextLink.
 	].

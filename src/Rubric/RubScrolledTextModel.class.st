@@ -87,6 +87,11 @@ RubScrolledTextModel >> doItReceiver [
 	^ interactionModel ifNotNil: [ :im | im doItReceiver ]
 ]
 
+{ #category : #formatting }
+RubScrolledTextModel >> formatSourceCode [
+	self interactionModel formatSourceCode .
+]
+
 { #category : #'view updating' }
 RubScrolledTextModel >> formatSourceCodeInView [
 	self reconfigureViewWith: [ :view | view formatSourceCode ]

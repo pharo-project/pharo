@@ -3,7 +3,7 @@ The compiler accepts Smalltalk source code and compiles it with respect to a giv
 "
 Class {
 	#name : #Compiler,
-	#superclass : #AbstractCompiler,
+	#superclass : #Object,
 	#instVars : [
 		'sourceStream',
 		'requestor',

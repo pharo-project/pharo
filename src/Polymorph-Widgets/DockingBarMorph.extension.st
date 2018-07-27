@@ -3,7 +3,8 @@ Extension { #name : #DockingBarMorph }
 { #category : #'*Polymorph-Widgets' }
 DockingBarMorph >> themeChanged [
 	self
-		color: self theme settings derivedMenuColor;
-		borderColor: self theme menuBorderColor.
+		color: self defaultColor;
+		borderColor: self defaultBorderColor;
+		borderWidth: self defaultBorderWidth.
 	super themeChanged
 ]

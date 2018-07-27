@@ -352,7 +352,7 @@ SystemNavigation >> browseSharedPoolUsersOf: aClass [
 
 	| pattern list | 
 	self okToChange ifFalse: [^ self ].
-	list := self allClassesUsingSharedPool: aClass name.
+	list := aClass poolUsers.
 	list isEmpty
 		ifTrue: [ ^ self ]
 		ifFalse: [pattern := UIManager default 

@@ -21,6 +21,12 @@ OCSuperVariable >> initialize [
 ]
 
 { #category : #testing }
+OCSuperVariable >> isSelfOrSuper [
+	
+	^ true
+]
+
+{ #category : #testing }
 OCSuperVariable >> isSuper [
 	^true
 ]

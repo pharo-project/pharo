@@ -87,7 +87,8 @@ DockingBarMorph >> aboutToBeGrabbedBy: aHand [
 DockingBarMorph >> activate: evt [ 
 	"Receiver should be activated; e.g., so that control passes  
 	correctly."
-	evt hand newMouseFocus: self
+	evt hand newMouseFocus: self.
+	self takeKeyboardFocus
 ]
 
 { #category : #control }
@@ -103,7 +104,7 @@ DockingBarMorph >> activeSubmenu: aSubmenu [
 ]
 
 { #category : #menu }
-DockingBarMorph >> add: wordingString font: aFont icon: aForm help: helpString subMenu: aMenuMorph [ 
+DockingBarMorph >> add: wordingString font: aFont icon: aForm help: helpString subMenu: aMenuMorph [
 	"Append the given submenu with the given label."
 	
 	| item |
@@ -119,14 +120,49 @@ DockingBarMorph >> add: wordingString font: aFont icon: aForm help: helpString s
 ]
 
 { #category : #construction }
+DockingBarMorph >> add: wordingString icon: aForm help: helpString action: anAction keyText: aText [
+	"Append the given submenu with the given label."
+
+	| item |
+	item := self newMenuItem.
+	item contents: wordingString.
+	item keyText: aText.
+	anAction
+		ifNotNil: [ :act | 
+			item
+				target: act receiver;
+				selector: act selector;
+				arguments: act arguments ].
+	item icon: aForm.
+	helpString ifNotNil: [ item setBalloonText: helpString ].
+	self addMorphBack: item
+]
+
+{ #category : #construction }
 DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMenuMorph [ 
 	"Append the given submenu with the given label."
+	
+	self add: wordingString icon: aForm help: helpString action: nil keyText: nil
+]
+
+{ #category : #construction }
+DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMenuMorph action: anAction keyText: aText [
+	"Append the given submenu with the given label."
+
 	| item |
-	item := DockingBarMenuItemMorph new.
-	item contents: wordingString.
-	item subMenu: aMenuMorph.
-	item icon: aForm.
-	helpString ifNotNil: [item setBalloonText: helpString].
+	item := self newMenuItem
+		contents: wordingString;
+		subMenu: aMenuMorph;
+		icon: aForm;
+		keyText: aText;
+		yourself.
+	anAction
+		ifNotNil: [ :act | 
+			item
+				target: act receiver;
+				selector: act selector;
+				arguments: act arguments ].
+	helpString ifNotNil: [ item setBalloonText: helpString ].
 	self addMorphBack: item
 ]
 
@@ -296,6 +332,21 @@ DockingBarMorph >> color: aColor [
 	self updateColor
 ]
 
+{ #category : #initialization }
+DockingBarMorph >> defaultBorderColor [
+	^ self theme menuBorderColor
+]
+
+{ #category : #initialization }
+DockingBarMorph >> defaultBorderWidth [
+	^ self theme dockingBarBorderWidth
+]
+
+{ #category : #initialization }
+DockingBarMorph >> defaultColor [
+	^ self theme settings derivedMenuColor
+]
+
 { #category : #'submorphs-add/remove' }
 DockingBarMorph >> delete [
 	activeSubMenu
@@ -370,7 +421,7 @@ DockingBarMorph >> gradientRamp: colorRamp [
 DockingBarMorph >> handleFocusEvent: evt [
 	"Handle focus events. Valid menu transitions are determined based on the menu currently holding the focus after the mouse went down on one of its children."
 
-	(evt isMouse and:[ evt isMouseUp ]) ifTrue:[^ self].
+	(evt isMouse and: [ evt isMouseUp ]) ifTrue: [ ^ self mouseUp: evt ].
 
 	self processEvent: evt.
 
@@ -386,23 +437,32 @@ DockingBarMorph >> handleFocusEvent: evt [
 
 ]
 
+{ #category : #'events-processing' }
+DockingBarMorph >> handlesKeyboard: evt [
+	^ true
+]
+
+{ #category : #'events-processing' }
+DockingBarMorph >> handlesMouseDown: evt [
+	^ true
+]
+
 { #category : #initialization }
 DockingBarMorph >> initialize [
 	"initialize the receiver"
+
 	super initialize.
 	""
 	selectedItem := nil.
 	activeSubMenu := nil.
 	fillsOwner := true.
 	avoidVisibleBordersAtEdge := true.
-	autoGradient := self theme preferGradientFill.
-	""
-	self setDefaultParameters.
+	autoGradient := self wantsGradientByDefault.
+	self color: self defaultColor.	"<= This is done in the super initialize but we need to use the setter in this class"
 	""
 	self beFloating.
 	""
-	self layoutInset: 0.
-	
+	self layoutInset: 0
 ]
 
 { #category : #testing }
@@ -486,6 +546,19 @@ DockingBarMorph >> justDroppedInto: aMorph event: anEvent [
 	self beFloating
 ]
 
+{ #category : #'events-processing' }
+DockingBarMorph >> keyStroke: anEvent [
+	"Handle menu navigation"
+	
+	"Left arrow key"
+	anEvent keyValue = 28 ifTrue: [ self moveSelectionRight: -1 event: anEvent ].
+	"Right arrow key"
+	anEvent keyValue = 29 ifTrue: [ self moveSelectionRight: 1 event: anEvent ].
+	"Bottom key"
+	anEvent keyValue = 31 ifTrue: [ (selectedItem ifNotNil: [ selectedItem subMenu ifNotNil: [ :subMenu | subMenu activateFromKeyboard: anEvent ] ] )].
+	^ super keyStroke: anEvent
+]
+
 { #category : #'wiw support' }
 DockingBarMorph >> morphicLayerNumber [
 	"helpful for insuring some morphs always appear in front of or 
@@ -500,6 +573,46 @@ DockingBarMorph >> mouseDown: anEvent [
 	(self fullContainsPoint: anEvent position)
 		ifFalse: [anEvent hand releaseMouseFocus: self].
 	^super mouseDown: anEvent
+]
+
+{ #category : #'events-processing' }
+DockingBarMorph >> mouseUp: evt [
+	"If we click on a selected item with an action we want to execute the action and deselect the menu item."
+	
+	super mouseUp: evt.
+	
+	self selectedItem ifNil: [ ^ self ]. "No selected item"
+	self selectedItem selector ifNil: [ ^ self ]. "No action for the selected item"
+	(self selectedItem containsPoint: evt cursorPoint) ifFalse: [ ^ self ]. "The user did not clicked on the selected menu item"
+
+	"Execute the action of the menu item and deselect it"
+	self selectedItem invokeWithEvent: evt.
+	self selectItem: nil event: evt
+]
+
+{ #category : #'events-processing' }
+DockingBarMorph >> moveSelectionRight: direction event: anEvent [
+	"Move the current selection left or right by one, presumably under keyboard control.
+	direction = +/-1"
+
+	| index |
+	index := (submorphs indexOf: selectedItem ifAbsent: [ 1 - direction ]) + direction.
+	submorphs
+		do: [ :unused | 
+			"Ensure finite"
+			| m |
+			m := submorphs atWrap: index.
+			(m isMenuItemMorph and: [ m isEnabled ])
+				ifTrue: [ ^ self selectItem: m event: anEvent ].
+			"Keep looking for an enabled item"
+			index := index + direction sign ].
+	^ self selectItem: nil event: anEvent
+]
+
+{ #category : #construction }
+DockingBarMorph >> newMenuItem [
+	
+	^ DockingBarMenuItemMorph new
 ]
 
 { #category : #'submorphs-accessing' }
@@ -524,6 +637,13 @@ DockingBarMorph >> ownerChanged [
 "The receiver's owner has changed its layout. "
 	self updateBounds.
 	^ super ownerChanged
+]
+
+{ #category : #accessing }
+DockingBarMorph >> popUpOwner [
+	"For compatibility with other menu"
+	
+	^ nil
 ]
 
 { #category : #'private - accessing' }
@@ -585,15 +705,6 @@ DockingBarMorph >> selectedItem [
 	^ selectedItem isSelected
 		ifTrue: [ selectedItem]
 		ifFalse: [ nil]
-]
-
-{ #category : #initialization }
-DockingBarMorph >> setDefaultParameters [
-	"private - set the default parameter using the current theme settings as the inspiration source"
-	self
-		color: self theme settings derivedMenuColor;
-		borderWidth: self theme menuBorderWidth;
-		borderColor: self theme menuBorderColor
 ]
 
 { #category : #construction }
@@ -736,6 +847,11 @@ DockingBarMorph >> usedWidthByPredominantDockingBarsOfChastes: predominantChaste
 	^(self predominantDockingBarsOfChastes: predominantChastes)
 		ifEmpty: [0]
 		ifNotEmpty: [:predominants | (predominants collect: [:each | each width]) sum]
+]
+
+{ #category : #initialization }
+DockingBarMorph >> wantsGradientByDefault [
+	^ self theme preferGradientFill
 ]
 
 { #category : #testing }

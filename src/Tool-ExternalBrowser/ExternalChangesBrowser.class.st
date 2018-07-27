@@ -20,12 +20,13 @@ Class {
 		'deselectAllButton',
 		'fileInSelectedButton'
 	],
-	#category : #'Tool-ExternalBrowser'
+	#category : #'Tool-ExternalBrowser-Browsers'
 }
 
-{ #category : #browsing }
+{ #category : #examples }
 ExternalChangesBrowser class >> browseRecentLog [
 	<example>
+	
 	^ self openOnStream: SourceFiles changesFileStream
 ]
 
@@ -44,6 +45,21 @@ ExternalChangesBrowser class >> defaultSpec [
 						add: #fileInSelectedButton ] height: 32;
 				add: #codePane ]; 
 		yourself
+]
+
+{ #category : #examples }
+ExternalChangesBrowser class >> example1 [
+	<example>
+	
+	self new openWithSpec
+
+]
+
+{ #category : #examples }
+ExternalChangesBrowser class >> example2 [
+	<example>
+	
+	self openOn: Smalltalk changesFile fullName
 ]
 
 { #category : #'file service' }

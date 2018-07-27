@@ -90,8 +90,7 @@ RBInlineMethodRefactoring >> findSelectedMessage [
 		ifFalse: 
 			[self 
 				refactoringFailure: 'The selection doesn''t appear to be a message send'].
-	(sourceMessage receiver isVariable 
-		and: [#('self' 'super') includes: sourceMessage receiver name]) 
+	(sourceMessage receiver isSelfOrSuper)
 			ifFalse: [self refactoringError: 'Cannot inline non-self messages']
 ]
 

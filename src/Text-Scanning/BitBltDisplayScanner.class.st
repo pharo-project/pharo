@@ -20,7 +20,7 @@ Class {
 		'bitBlt',
 		'fillBlt'
 	],
-	#category : #'Text-Scanning'
+	#category : #'Text-Scanning-Base'
 }
 
 { #category : #queries }
@@ -56,7 +56,7 @@ BitBltDisplayScanner >> displayString: string from: startIndex to: stopIndex at:
 
 { #category : #displaying }
 BitBltDisplayScanner >> fillTextBackground [
-	fillBlt == nil ifFalse:
+	fillBlt ifNotNil:
 		["Not right"
 		fillBlt destX: line left destY: lineY
 			width: line width left height: line lineHeight; copyBits].
@@ -66,7 +66,7 @@ BitBltDisplayScanner >> fillTextBackground [
 BitBltDisplayScanner >> plainTab [
 	| nextDestX |
  	nextDestX := super plainTab.
-	fillBlt == nil ifFalse:
+	fillBlt ifNotNil:
 		[fillBlt destX: destX destY: destY width: nextDestX - destX height: font height; copyBits].
 	^nextDestX
 ]

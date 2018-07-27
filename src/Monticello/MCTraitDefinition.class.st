@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition:  traitCompositionString category:  categoryString comment:  commentString commentStamp:   commentStamp [
+MCTraitDefinition class >> name: classNameString traitComposition:  traitCompositionString category:  categoryString comment:  commentString commentStamp: commentStamp [
 	^ self instanceLike:
 		(self new initializeWithName: classNameString 
 			traitComposition:  traitCompositionString
@@ -19,7 +19,19 @@ MCTraitDefinition class >> name: classNameString traitComposition:  traitComposi
 ]
 
 { #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition:  traitCompositionString category:  categoryString instVarNames: ivarArray  comment:  commentString commentStamp:   commentStamp [
+MCTraitDefinition class >> name: classNameString traitComposition:  traitCompositionString category:  categoryString instVarNames: ivarArray classInstVarNames: civarArray comment:  commentString commentStamp:   commentStamp [
+	^ self instanceLike:
+		(self new initializeWithName: classNameString 
+			traitComposition:  traitCompositionString
+			category:  categoryString
+			instVarNames: ivarArray
+			classInstVarNames: civarArray
+			comment:  commentString  
+			commentStamp:   commentStamp)
+]
+
+{ #category : #'instance creation' }
+MCTraitDefinition class >> name: classNameString traitComposition:  traitCompositionString category:  categoryString instVarNames: ivarArray comment: commentString commentStamp: commentStamp [
 	^ self instanceLike:
 		(self new initializeWithName: classNameString 
 			traitComposition:  traitCompositionString

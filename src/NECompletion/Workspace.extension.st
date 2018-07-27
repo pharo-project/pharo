@@ -1,7 +1,8 @@
 Extension { #name : #Workspace }
 
-{ #category : #'*necompletion' }
+{ #category : #'*NECompletion' }
 Workspace >> completionAdditionals [
+	"return the local variable definition of the workspace as information for the completion algorithm."
 	| additionals |
 	additionals := SortedCollection new.
 	bindings ifNotNil: 
@@ -11,17 +12,6 @@ Workspace >> completionAdditionals [
 					contents: each
 					type: #local) ] ].
 	^ additionals
-]
-
-{ #category : #'*necompletion' }
-Workspace >> completionAdditionalsFromOCompletion [
-	"should spend more time to get it"
-	
-	bindings ifNil: [ ^#() ].
-	^bindings keys asArray replace: [ :each | 
-		NECLocalEntry 
-			contents: each
-			type: #local ]
 ]
 
 { #category : #'*necompletion' }

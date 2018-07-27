@@ -1,3 +1,6 @@
+"
+A morph to display text differences
+"
 Class {
 	#name : #DiffChangeMorph,
 	#superclass : #ComposableMorph,
@@ -5,8 +8,21 @@ Class {
 		'diffMorph',
 		'descriptionMorph'
 	],
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Morphs'
 }
+
+{ #category : #examples }
+DiffChangeMorph class >> example [
+	<example>
+	(DiffChangeMorph
+		from: 'foo
+			^bar'
+		label: 'Left'
+		to: 'foo
+			^bar2'
+		label: 'Right'
+		contextClass: nil) openInWindow
+]
 
 { #category : #'instance creation' }
 DiffChangeMorph class >> from: old label: oldLabel to: new label: newLabel contextClass: aClass [

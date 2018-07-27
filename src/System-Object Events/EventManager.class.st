@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'ActionMaps'
 	],
-	#category : #'System-Object Events'
+	#category : #'System-Object Events-Base'
 }
 
 { #category : #accessing }

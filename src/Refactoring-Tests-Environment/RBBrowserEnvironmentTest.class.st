@@ -1,3 +1,6 @@
+"
+Unit test for RBBrowserEnvironment
+"
 Class {
 	#name : #RBBrowserEnvironmentTest,
 	#superclass : #TestCase,
@@ -79,7 +82,7 @@ RBBrowserEnvironmentTest >> keysFor: aBrowserEnvironment [
 	| allKeys |
 	allKeys := IdentitySet withAll: aBrowserEnvironment keys.
 	allKeys addAll: aBrowserEnvironment not keys.
-	allKeys removeAll: Smalltalk keys.
+	allKeys removeAll: Smalltalk globals keys.
 	self assert: allKeys isEmpty
 ]
 

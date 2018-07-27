@@ -18,7 +18,7 @@ Class {
 		'Current',
 		'Session'
 	],
-	#category : #'OSWindow-Core'
+	#category : #'OSWindow-Core-Utilities'
 }
 
 { #category : #accessing }
@@ -80,4 +80,9 @@ OSWindowDriver >> createWindowWithAttributes: anOSWindowAttributes osWindow: osW
 { #category : #testing }
 OSWindowDriver >> isNullDriver [
 	^ false
+]
+
+{ #category : #'system startup' }
+OSWindowDriver >> shutDown [
+	"A hook to perform cleanups when shuting down a driver"
 ]

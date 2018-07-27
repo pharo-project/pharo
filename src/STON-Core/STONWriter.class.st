@@ -47,7 +47,7 @@ Class {
 		'STONCharacters',
 		'STONSimpleSymbolCharacters'
 	],
-	#category : #'STON-Core'
+	#category : #'STON-Core-Writer'
 }
 
 { #category : #'class initialization' }

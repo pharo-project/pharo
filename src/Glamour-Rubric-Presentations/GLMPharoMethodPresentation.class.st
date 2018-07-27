@@ -35,6 +35,11 @@ GLMPharoMethodPresentation class >> pharoMethodPresentationExample [
 	browser openOn: CompiledMethod class >> #gtExampleSimple
 ]
 
+{ #category : #actions }
+GLMPharoMethodPresentation >> formatSourceCode [
+	self announce: GLMFormatCode.
+]
+
 { #category : #rendering }
 GLMPharoMethodPresentation >> renderGlamorouslyOn: aRenderer [ 
 	self registerAnnouncements.

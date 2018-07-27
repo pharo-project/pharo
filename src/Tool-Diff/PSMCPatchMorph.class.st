@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'UsedByDefault'
 	],
-	#category : #'Tool-Diff'
+	#category : #'Tool-Diff-Morphs'
 }
 
 { #category : #settings }

@@ -385,7 +385,7 @@ RBRefactoryTyper >> processNode: aNode [
 	(aNode isVariable and: [class instanceVariableNames includes: aNode name]) 
 		ifTrue: [^self merge: aNode name].
 	(aNode isMessage 
-		and: [aNode receiver isVariable and: [aNode receiver name = 'self']]) 
+		and: [aNode receiver isSelf]) 
 			ifTrue: [^self merge: aNode selector].
 	aNode isAssignment 
 		ifTrue: 

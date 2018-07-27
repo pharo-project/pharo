@@ -47,5 +47,5 @@ KMMetaModifier >> matches: aKeyboardEvent [
 
 { #category : #matching }
 KMMetaModifier >> matchesEvent: aKeyboardEvent [
-	^ aKeyboardEvent asKeyCombination modifier = OSPlatform current defaultModifier
+	^ OSPlatform current defaultModifier matchesEvent: aKeyboardEvent
 ]

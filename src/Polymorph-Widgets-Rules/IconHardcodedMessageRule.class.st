@@ -26,13 +26,13 @@ IconHardcodedMessageRule >> initialize [
 		replace: 'Smalltalk ui icons `iconName'
 		byEvaluating: [ :node :matchMap | 
 			RBParser
-				parseExpression: '#' , (matchMap at: #'`iconName') , ' asIcon' ]
+				parseExpression: 'self iconNamed: #' , (matchMap at: #'`iconName') ]
 ]
 
 { #category : #accessing }
 IconHardcodedMessageRule >> name [
 
-	^ 'Use #iconName asIcon'
+	^ 'Use self iconNamed: #symbol instead of asIcon or Smalltalk ui icons iconNamed: #symbol'
 ]
 
 { #category : #accessing }
