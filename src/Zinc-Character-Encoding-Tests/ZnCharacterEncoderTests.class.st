@@ -89,6 +89,9 @@ ZnCharacterEncoderTests >> testByteDecoding [
 { #category : #testing }
 ZnCharacterEncoderTests >> testByteEncoderFromUrl [
 	| encoderFromUrl iso88592 bytes characters |
+	
+	self requiresNetworkConnection.
+	
 	encoderFromUrl := ZnByteEncoder newFromUrl: 'http://files.pharo.org/extra/unicode/8859-2.TXT'.
 	iso88592 := ZnCharacterEncoder newForEncoding: #iso88592.
 	self assert: encoderFromUrl byteDomain equals: iso88592 byteDomain.

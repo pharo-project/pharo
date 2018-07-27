@@ -103,6 +103,9 @@ ZnHTTPSTests >> runningOnWindowsInriaCI [
 { #category : #testing }
 ZnHTTPSTests >> testAmazonAWS [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	(client := ZnClient new) 
@@ -115,6 +118,9 @@ ZnHTTPSTests >> testAmazonAWS [
 { #category : #testing }
 ZnHTTPSTests >> testGForceInria [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	(client := ZnClient new)
@@ -127,6 +133,9 @@ ZnHTTPSTests >> testGForceInria [
 { #category : #testing }
 ZnHTTPSTests >> testGetPharoVersion [
 	| client lastBuildVersion version |
+	
+	self requiresNetworkConnection.
+	
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	self runningOnWindowsInriaCI ifTrue: [ ^ self ].
@@ -146,6 +155,9 @@ ZnHTTPSTests >> testGetPharoVersion [
 { #category : #testing }
 ZnHTTPSTests >> testGmailEncrypted [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].  
 	(client := ZnClient new) 
@@ -159,6 +171,9 @@ ZnHTTPSTests >> testGmailEncrypted [
 { #category : #testing }
 ZnHTTPSTests >> testGoogleEncrypted [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	(client := ZnClient new) 
@@ -172,6 +187,9 @@ ZnHTTPSTests >> testGoogleEncrypted [
 { #category : #testing }
 ZnHTTPSTests >> testRequestResponse [
 	| query stream request response |
+	
+	self requiresNetworkConnection.
+	
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	query := 'Smalltalk'.
@@ -192,6 +210,9 @@ ZnHTTPSTests >> testRequestResponse [
 { #category : #testing }
 ZnHTTPSTests >> testSNIPage [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self skip ].
 	self doesNativeSSLPluginSupportSNI ifFalse: [ ^ self skip ].
@@ -206,7 +227,9 @@ ZnHTTPSTests >> testSNIPage [
 
 { #category : #testing }
 ZnHTTPSTests >> testTransfers [
-	self timeLimit: 300 seconds.
+	
+	self requiresNetworkConnection.
+	
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	
@@ -230,6 +253,9 @@ ZnHTTPSTests >> testTransfers [
 { #category : #testing }
 ZnHTTPSTests >> testTransfersSingleClient [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	(client := ZnClient new)
@@ -252,6 +278,9 @@ ZnHTTPSTests >> testTransfersSingleClient [
 { #category : #testing }
 ZnHTTPSTests >> testWikimedia [
 	| client |
+	
+	self requiresNetworkConnection.
+	
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ]. 
 	(client := ZnClient new) 
