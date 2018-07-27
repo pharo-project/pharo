@@ -10,14 +10,6 @@ Trait {
 }
 
 { #category : #asserting }
-TAssertable >> assert: aBoolean [
-	"We check for true explicitly to make the assertion fail for non booleans"
-	self assert: aBoolean description: 'Assertion failed'.
-
-			
-]
-
-{ #category : #asserting }
 TAssertable >> assert: actualNumber closeTo: expectedNumber [
 	^ self
 		assert: (actualNumber closeTo: expectedNumber)
