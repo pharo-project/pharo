@@ -40,6 +40,10 @@ NeoLzwGifDecoder >> checkCodeSize [
 
 { #category : #'as yet unclassified' }
 NeoLzwGifDecoder >> codeStream: aReadableStream [ 
+	"Set the stream of encoded bytes we will decode
+	to be the internal codeStream. We read off the first
+	byte immediately, which tells us how many subsequent bytes
+	to use in our buffer for decoding"
 	| chunkSize |
 	codeStream := aReadableStream.
 	chunkSize := codeStream next.
@@ -58,25 +62,21 @@ NeoLzwGifDecoder >> decode [
 	"The first real code simply gets output
 	onto the stream, then we enter the loop"
 	currentCode := self nextCode.
-	"outStream nextPut: currentCode."
 	self writeBit: currentCode on: outStream.
 	prevCode := currentCode.
 	currentCode := self nextCode.
 	[ currentCode = eoiCode ] whileFalse: [ 
 		currentCode = clearCode
 			ifTrue: [ 
-				Transcript show: 'CLEAR CODE'; cr.
 				self initializeTables.
 				currentCode := self nextCode.
-				"outStream nextPut: (suffixTable at: (currentCode + 1))."
 				self
 					writeBit: (suffixTable at: (currentCode + 1))
 					on: outStream.
 				prevCode := nil ]
 			ifFalse: [ self handleCode: currentCode withPreviousCode: prevCode on: outStream ].
 		prevCode := currentCode.
-		currentCode := self nextCode.
-		currentCode = eoiCode ifTrue: [ Transcript show: 'EOICODE'; cr ] ].
+		currentCode := self nextCode ].
 	^ outStream contents.
 
 	
@@ -97,10 +97,7 @@ NeoLzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWri
 				and we can simply use the suffix"
 				ifTrue: [ 
 					first := (suffixTable at: (anInteger + 1)).
-					"aWriteStream nextPut: first."
-					self writeBit: first on: aWriteStream.
-					"prefixTable at: (nextAvailableCode + 1) put: prevInteger.
-					suffixTable at: (nextAvailableCode + 1) put: first" ]
+					self writeBit: first on: aWriteStream ]
 				"Otherwise we need to loop backwards along
 				the prefix index values and take the suffix each
 				time"
@@ -113,7 +110,6 @@ NeoLzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWri
 					searchStack push: (suffixTable at: searchIndex).
 					first := searchStack first.
 					searchStack do: [ :int |
-						"aWriteStream nextPut: int"
 						self writeBit: int on: aWriteStream ] ]. 
 			]
 		ifFalse: [ 
@@ -121,9 +117,6 @@ NeoLzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWri
 			prevInteger < clearCode
 				ifTrue: [ 
 					first := (suffixTable at: (prevInteger + 1)).
-					"aWriteStream
-						nextPut: first;
-						nextPut: first."
 					self
 						writeBit: first on: aWriteStream;
 						writeBit: first on: aWriteStream.
@@ -137,9 +130,7 @@ NeoLzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWri
 					searchStack push: (suffixTable at: searchIndex).
 					first := searchStack first.
 					searchStack do: [ :int |
-						"aWriteStream nextPut: int"
 						self writeBit: int on: aWriteStream ].
-					"aWriteStream nextPut: first"
 					self writeBit: first on: aWriteStream ]. 
 			].
 		"We add prevCode and the new

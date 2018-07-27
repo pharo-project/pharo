@@ -16,18 +16,7 @@ Class {
 		'ypos',
 		'pass',
 		'interlace',
-		'codeSize',
-		'clearCode',
-		'eoiCode',
-		'freeCode',
-		'maxCode',
-		'prefixTable',
-		'suffixTable',
-		'remainBitCount',
-		'bufByte',
-		'bufStream',
 		'transparentIndex',
-		'mapOf32',
 		'localColorTable',
 		'loopCount',
 		'offset',
@@ -146,6 +135,12 @@ NeoGIFReadWriter >> altReadBitDataOnFrame: aFrame [
 		depth: 8. 
 
 	decoder := NeoLzwGifDecoder new.
+	[ | position chunk |
+		position := stream position.
+		chunk := stream upTo: ((1 bitShift: initCodeSize) + 1).
+		(Smalltalk at: #_streamData) add: chunk.
+		(Smalltalk at: #_codeSizeData) add: initCodeSize.
+		stream position: position ] value.
 	decoder 
 		codeStream: stream;
 		minimumCodeSize: initCodeSize;
@@ -188,13 +183,6 @@ NeoGIFReadWriter >> canvasWidth: aNumber [
 	canvasWidth := aNumber
 ]
 
-{ #category : #private }
-NeoGIFReadWriter >> checkCodeSize [
-	(freeCode > maxCode and: [ codeSize < 12 ]) ifTrue: 
-		[ codeSize := codeSize + 1.
-		maxCode := (1 bitShift: codeSize) - 1 ]
-]
-
 { #category : #'stream access' }
 NeoGIFReadWriter >> close [
 	"Write terminator"
@@ -212,34 +200,6 @@ NeoGIFReadWriter >> delay [
 NeoGIFReadWriter >> delay: anInteger [
 	^ self
 		deprecated: 'Delay values for animaed GIFs are no longer set by the GIFReadWriter. Set them in each AnimatedImageFrame instead! See GIFReaderWriter class >> #exampleAnim for an example.'
-]
-
-{ #category : #'private-packing' }
-NeoGIFReadWriter >> fillBuffer [
-	| packSize |
-	packSize := self next.
-	bufStream := (self next: packSize) readStream
-]
-
-{ #category : #'private-bits access' }
-NeoGIFReadWriter >> flushBits [
-	remainBitCount = 0 ifFalse: 
-		[ self nextBytePut: bufByte.
-		remainBitCount := 0 ].
-	self flushBuffer
-]
-
-{ #category : #'private-packing' }
-NeoGIFReadWriter >> flushBuffer [
-	bufStream isEmpty ifTrue: [ ^ self ].
-	self nextPut: bufStream size.
-	self nextPutAll: bufStream contents.
-	bufStream := (ByteArray new: 256) writeStream.
-]
-
-{ #category : #'private-encoding' }
-NeoGIFReadWriter >> flushCode [
-	self flushBits
 ]
 
 { #category : #accessing }
@@ -280,66 +240,6 @@ NeoGIFReadWriter >> isAnimated [
 NeoGIFReadWriter >> loopCount: aNumber [
 	"Set looping. This must be done before any image is written!"
 	loopCount := aNumber
-]
-
-{ #category : #'private-bits access' }
-NeoGIFReadWriter >> nextBits [
-	| integer readBitCount shiftCount byte |
-	integer := 0.
-	remainBitCount = 0 
-		ifTrue: 
-			[ readBitCount := 8.
-			shiftCount := 0 ]
-		ifFalse: 
-			[ readBitCount := remainBitCount.
-			shiftCount := remainBitCount - 8 ].
-	[ readBitCount < codeSize ] whileTrue: 
-		[ byte := self nextByte.
-		byte == nil ifTrue: [ ^ eoiCode ].
-		integer := integer + (byte bitShift: shiftCount).
-		shiftCount := shiftCount + 8.
-		readBitCount := readBitCount + 8 ].
-	(remainBitCount := readBitCount - codeSize) = 0 
-		ifTrue: [ byte := self nextByte ]
-		ifFalse: [ byte := self peekByte ].
-	byte == nil ifTrue: [ ^ eoiCode ].
-	^ integer + (byte bitShift: shiftCount) bitAnd: maxCode
-]
-
-{ #category : #'private-bits access' }
-NeoGIFReadWriter >> nextBitsPut: anInteger [ 
-	| integer writeBitCount shiftCount |
-	shiftCount := 0.
-	remainBitCount = 0 
-		ifTrue: 
-			[ writeBitCount := 8.
-			integer := anInteger ]
-		ifFalse: 
-			[ writeBitCount := remainBitCount.
-			integer := bufByte + (anInteger bitShift: 8 - remainBitCount) ].
-	[ writeBitCount < codeSize ] whileTrue: 
-		[ self nextBytePut: ((integer bitShift: shiftCount) bitAnd: 255).
-		shiftCount := shiftCount - 8.
-		writeBitCount := writeBitCount + 8 ].
-	(remainBitCount := writeBitCount - codeSize) = 0 
-		ifTrue: [ self nextBytePut: (integer bitShift: shiftCount) ]
-		ifFalse: [ bufByte := integer bitShift: shiftCount ].
-	^ anInteger
-]
-
-{ #category : #'private-packing' }
-NeoGIFReadWriter >> nextByte [
-	bufStream atEnd
-		ifTrue:
-			[self atEnd ifTrue: [^nil].
-			self fillBuffer].
-	^bufStream next
-]
-
-{ #category : #'private-packing' }
-NeoGIFReadWriter >> nextBytePut: aByte [
-	bufStream nextPut: aByte.
-	bufStream size >= 254 ifTrue: [self flushBuffer]
 ]
 
 { #category : #accessing }
@@ -449,15 +349,6 @@ NeoGIFReadWriter >> nextPutImage: aForm [
 	self writeBitData: reduced bits.
 ]
 
-{ #category : #'private-packing' }
-NeoGIFReadWriter >> peekByte [
-	bufStream atEnd
-		ifTrue:
-			[self atEnd ifTrue: [^nil].
-			self fillBuffer].
-	^bufStream peek
-]
-
 { #category : #'as yet unclassified' }
 NeoGIFReadWriter >> processColorsFor: anImageFrame [
 	"Colors can only be mapped after the GCE has been evaluated
@@ -530,74 +421,6 @@ NeoGIFReadWriter >> readApplicationExtension [
 ]
 
 { #category : #'private-decoding' }
-NeoGIFReadWriter >> readBitData [
-	"using modified Lempel-Ziv Welch algorithm."
-	|  initCodeSize  packedBits hasLocalColor localColorSize decoder c f colorIndices activeColorTable indexStream |
-	offset := self readWord @ self readWord.	"Image Left@Image Top"
-	width := self readWord.
-	height := self readWord.
-
-	"---
-	Local Color Table Flag        1 Bit
-	Interlace Flag                1 Bit
-	Sort Flag                     1 Bit
-	Reserved                      2 Bits
-	Size of Local Color Table     3 Bits
-	----"
-	packedBits := self next.
-	interlace := (packedBits bitAnd: 64) ~= 0.
-	hasLocalColor := (packedBits bitAnd: 128) ~= 0.
-	localColorSize := 1 bitShift: (packedBits bitAnd: 7) + 1.
-	activeColorTable := colorPalette.
-	hasLocalColor ifTrue: [ 
-		localColorTable := self readColorTable: localColorSize.
-		activeColorTable := localColorTable ].
-	pass := 0.
-	xpos := 0.
-	ypos := 0.
-	rowByteSize := (width + 3) // 4 * 4.
-	"bytes := ByteArray new: rowByteSize * height."
-	remainBitCount := 0.
-	bufByte := 0.
-	bufStream := ByteArray new readStream.
-	prefixTable := Array new: 4096.
-	suffixTable := Array new: 4096.
-	initCodeSize := self next.
-	decoder := NeoLzwGifDecoder new.
-	"hasLocalColor
-		ifTrue: [ 
-			decoder colorTable: localColorTable ]
-		ifFalse: [ 
-			decoder colorTable: colorPalette  ]".
-	c := ColorForm 
-		extent: width@height
-		depth: 8. "Change to bitsPerPixel?"
-	c colors: activeColorTable.
-	decoder 
-		codeStream: stream;
-		minimumCodeSize: initCodeSize;
-		maxCode: 4096.
-	colorIndices := decoder decode.
-	indexStream := colorIndices readStream.
-	"colorIndices do: [ :d |
-		bytes
-			at: (ypos * rowByteSize + xpos + 1)
-			put: d.
-		self updatePixelPosition ]."
-	"c bits copyFromByteArray: bytes."
-	0 to: (width - 1) do: [ :y |
-		0 to: (height - 1) do: [ :x |
-			| idx nextColor |
-			idx := indexStream next.
-			nextColor := activeColorTable at: (idx + 1).
-			c colorAt: (x@y) put: nextColor ] ].
-	f := Form
-		extent: c extent
-		depth: bitsPerPixel.
-	^ c displayOn: f.
-]
-
-{ #category : #'private-decoding' }
 NeoGIFReadWriter >> readBody [
 	"Read the GIF blocks. Modified to return a frame."
 	| form extype block blocksize packedFields delay1 disposal frame |
@@ -628,11 +451,6 @@ NeoGIFReadWriter >> readBody [
 						ifFalse: [ ^ self error: 'Unknown Bytes!' ] ] 
 		].
 	^ frames.
-]
-
-{ #category : #'private-decoding' }
-NeoGIFReadWriter >> readCode [
-	^self nextBits
 ]
 
 { #category : #'private-decoding' }
@@ -748,58 +566,15 @@ NeoGIFReadWriter >> readHeader [
 			[ colorPalette := nil	"Palette monochromeDefault" ]
 ]
 
-{ #category : #'private-encoding' }
-NeoGIFReadWriter >> readPixelFrom: bits [ 
-	"Since bits is a Bitmap with 32 bit values, watch out for the
-padding at the end of each row.  But, GIF format already wants padding to
-32 bit boundary!  OK as is.  tk 9/14/97"
-	| pixel |
-	ypos >= height ifTrue: [ ^ nil ].
-	pixel := bits byteAt: ypos * rowByteSize + xpos + 1.
-	self updatePixelPosition.
-	^ pixel
-]
-
 { #category : #'private-decoding' }
 NeoGIFReadWriter >> readWord [
 	^self next + (self next bitShift: 8)
-]
-
-{ #category : #private }
-NeoGIFReadWriter >> setParameters: initCodeSize [ 
-	clearCode := 1 bitShift: initCodeSize.
-	eoiCode := clearCode + 1.
-	freeCode := clearCode + 2.
-	codeSize := initCodeSize + 1.
-	maxCode := (1 bitShift: codeSize) - 1
 ]
 
 { #category : #accessing }
 NeoGIFReadWriter >> setStream: aStream [ 
 	"Feed it in from an existing source"
 	stream := aStream
-]
-
-{ #category : #'private-decoding' }
-NeoGIFReadWriter >> skipBitData [
-	| misc blocksize |
-	self readWord.	"skip Image Left"
-	self readWord.	"skip Image Top"
-	self readWord.	"width"
-	self readWord.	"height"
-	misc := self next.
-	(misc bitAnd: 128) = 0 ifFalse: 
-		[ "skip colormap"
-		1 
-			to: (1 bitShift: (misc bitAnd: 7) + 1)
-			do: 
-				[ :i | 
-				self
-					next;
-					next;
-					next ] ].
-	self next.	"minimum code size"
-	[ (blocksize := self next) > 0 ] whileTrue: [ self next: blocksize ]
 ]
 
 { #category : #accessing }
@@ -848,17 +623,6 @@ NeoGIFReadWriter >> writeBitData: bits [
 		ifFalse: [ bitsPerPixel ].
 	encoder minimumCodeSize: initCodeSize.
 	encoder encode: bits.
-]
-
-{ #category : #'private-encoding' }
-NeoGIFReadWriter >> writeCode: aCode [
-	self nextBitsPut: aCode
-]
-
-{ #category : #'private-encoding' }
-NeoGIFReadWriter >> writeCodeAndCheckCodeSize: aCode [
-	self writeCode: aCode.
-	self checkCodeSize
 ]
 
 { #category : #writing }
