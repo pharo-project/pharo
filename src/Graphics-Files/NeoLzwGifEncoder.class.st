@@ -22,7 +22,7 @@ Class {
 		'yPos',
 		'dimensions'
 	],
-	#category : #'Images-Animated'
+	#category : #'Graphics-Files'
 }
 
 { #category : #private }

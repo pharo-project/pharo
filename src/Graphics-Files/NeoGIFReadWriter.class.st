@@ -49,19 +49,21 @@ NeoGIFReadWriter class >> exampleAnim [
 	"This example writes out an animated gif of
 	 a red circle"
 
-	| writer extent center |
+	| writer extent center frameDelay |
 	writer := NeoGIFReadWriter on: (File openForWriteFileNamed: 'anim.gif').
 	writer loopCount: 20.		"Repeat 20 times"
-	writer delay: 10.		"Wait 10/100 seconds"
+	frameDelay := 10.		"Wait 10/100 seconds"
 	extent := 42@42.
 	center := extent / 2.
 	Cursor write showWhile: [
 		[2 to: center x - 1 by: 2 do: [:r |
 			"Make a fancy anim without using Canvas - inefficient as hell"
-			| image |
-			image := ColorForm extent: extent depth: 8.
-			0.0 to: 359.0 do: [:theta | image colorAt: (center + (Point r: r degrees: theta)) rounded put: Color red].
-			writer nextPutImage: image]
+			| frame |
+			frame := AnimatedImageFrame new
+				delay: frameDelay;
+				form: (ColorForm extent: extent depth: 8).
+			0.0 to: 359.0 do: [:theta | frame form colorAt: (center + (Point r: r degrees: theta)) rounded put: Color red].
+			writer nextPutFrame: frame]
 		]	ensure: [writer close]].
 ]
 
@@ -107,77 +109,6 @@ NeoGIFReadWriter class >> typicalFileExtensions [
 { #category : #'image reading/writing' }
 NeoGIFReadWriter class >> wantsToHandleGIFs [
 	^ true
-]
-
-{ #category : #'as yet unclassified' }
-NeoGIFReadWriter >> altReadBitData [
-	"using modified Lempel-Ziv Welch algorithm."
-	| outColors outCount initCodeSize  packedBits hasLocalColor localColorSize maxOutCodes decoder outCodes colorMapStream c outBytes bytes f colorIndices activeColorTable indexStream |
-	maxOutCodes := 4096.
-	offset := self readWord @ self readWord.	"Image Left@Image Top"
-	width := self readWord.
-	height := self readWord.
-
-	"---
-	Local Color Table Flag        1 Bit
-	Interlace Flag                1 Bit
-	Sort Flag                     1 Bit
-	Reserved                      2 Bits
-	Size of Local Color Table     3 Bits
-	----"
-	packedBits := self next.
-	interlace := (packedBits bitAnd: 64) ~= 0.
-	hasLocalColor := (packedBits bitAnd: 128) ~= 0.
-	localColorSize := 1 bitShift: (packedBits bitAnd: 7) + 1.
-	activeColorTable := colorPalette.
-	hasLocalColor ifTrue: [ 
-		localColorTable := self readColorTable: localColorSize.
-		activeColorTable := localColorTable ].
-	pass := 0.
-	xpos := 0.
-	ypos := 0.
-	rowByteSize := (width + 3) // 4 * 4.
-	bytes := ByteArray new: rowByteSize * height.
-	remainBitCount := 0.
-	bufByte := 0.
-	bufStream := ByteArray new readStream.
-	outCodes := ByteArray new: maxOutCodes + 1.
-	outCount := 0.
-	prefixTable := Array new: 4096.
-	suffixTable := Array new: 4096.
-	initCodeSize := self next.
-	decoder := NeoLzwGifDecoder new.
-	"hasLocalColor
-		ifTrue: [ 
-			decoder colorTable: localColorTable ]
-		ifFalse: [ 
-			decoder colorTable: colorPalette  ]".
-	c := ColorForm 
-		extent: width@height
-		depth: 8. "Change to bitsPerPixel?"
-	c colors: activeColorTable.
-	decoder 
-		codeStream: stream;
-		minimumCodeSize: initCodeSize;
-		maxCode: 4096.
-	colorIndices := decoder decode.
-	indexStream := colorIndices readStream.
-	"colorIndices do: [ :d |
-		bytes
-			at: (ypos * rowByteSize + xpos + 1)
-			put: d.
-		self updatePixelPosition ]."
-	"c bits copyFromByteArray: bytes."
-	0 to: (width - 1) do: [ :y |
-		0 to: (height - 1) do: [ :x |
-			| idx nextColor |
-			idx := indexStream next.
-			nextColor := activeColorTable at: (idx + 1).
-			c colorAt: (x@y) put: nextColor ] ].
-	f := Form
-		extent: c extent
-		depth: bitsPerPixel.
-	^ c displayOn: f.
 ]
 
 { #category : #'as yet unclassified' }
@@ -269,6 +200,18 @@ NeoGIFReadWriter >> close [
 	"Write terminator"
 	self nextPut: Terminator.
 	^super close
+]
+
+{ #category : #accessing }
+NeoGIFReadWriter >> delay [
+	^ self
+		deprecated: 'Delay values for animaed GIFs are no longer set by the GIFReadWriter. Set them in each AnimatedImageFrame instead! See GIFReaderWriter class >> #exampleAnim for an example.'
+]
+
+{ #category : #accessing }
+NeoGIFReadWriter >> delay: anInteger [
+	^ self
+		deprecated: 'Delay values for animaed GIFs are no longer set by the GIFReadWriter. Set them in each AnimatedImageFrame instead! See GIFReaderWriter class >> #exampleAnim for an example.'
 ]
 
 { #category : #'private-packing' }
@@ -589,8 +532,7 @@ NeoGIFReadWriter >> readApplicationExtension [
 { #category : #'private-decoding' }
 NeoGIFReadWriter >> readBitData [
 	"using modified Lempel-Ziv Welch algorithm."
-	| outCodes outCount bitMask initCodeSize code curCode oldCode inCode finChar i bytes f c packedBits hasLocalColor localColorSize maxOutCodes |
-	maxOutCodes := 4096.
+	|  initCodeSize  packedBits hasLocalColor localColorSize decoder c f colorIndices activeColorTable indexStream |
 	offset := self readWord @ self readWord.	"Image Left@Image Top"
 	width := self readWord.
 	height := self readWord.
@@ -606,95 +548,53 @@ NeoGIFReadWriter >> readBitData [
 	interlace := (packedBits bitAnd: 64) ~= 0.
 	hasLocalColor := (packedBits bitAnd: 128) ~= 0.
 	localColorSize := 1 bitShift: (packedBits bitAnd: 7) + 1.
-	hasLocalColor ifTrue: [ localColorTable := self readColorTable: localColorSize ].
+	activeColorTable := colorPalette.
+	hasLocalColor ifTrue: [ 
+		localColorTable := self readColorTable: localColorSize.
+		activeColorTable := localColorTable ].
 	pass := 0.
 	xpos := 0.
 	ypos := 0.
 	rowByteSize := (width + 3) // 4 * 4.
+	"bytes := ByteArray new: rowByteSize * height."
 	remainBitCount := 0.
 	bufByte := 0.
 	bufStream := ByteArray new readStream.
-	outCodes := ByteArray new: maxOutCodes + 1.
-	outCount := 0.
 	prefixTable := Array new: 4096.
 	suffixTable := Array new: 4096.
 	initCodeSize := self next.
-	bitMask := (1 bitShift: initCodeSize) - 1.
-	self setParameters: initCodeSize.
-	bitsPerPixel > 8 ifTrue: [ ^ self error: 'never heard of a GIF that deep' ].
-	bytes := ByteArray new: rowByteSize * height.
-	[ (code := self readCode) = eoiCode ] whileFalse: 
-		[ code = clearCode 
-			ifTrue: 
-				[ self setParameters: initCodeSize.
-				curCode := oldCode := code := self readCode.
-				finChar := curCode bitAnd: bitMask.
-				"Horrible hack to avoid running off the end of the bitmap.  Seems to cure problem reading some gifs!?"
-				xpos = 0 
-					ifTrue: 
-						[ ypos < height ifTrue: 
-							[ bytes 
-								at: ypos * rowByteSize + xpos + 1
-								put: finChar ] ]
-					ifFalse: 
-						[ bytes 
-							at: ypos * rowByteSize + xpos + 1
-							put: finChar ].
-				self updatePixelPosition ]
-			ifFalse: 
-				[ curCode := inCode := code.
-				curCode >= freeCode ifTrue: 
-					[ curCode := oldCode.
-					outCodes 
-						at: (outCount := outCount + 1)
-						put: finChar ].
-				[ curCode > bitMask ] whileTrue: 
-					[ outCount > maxOutCodes ifTrue: [ ^ self error: 'corrupt GIF file (OutCount)' ].
-					outCodes 
-						at: (outCount := outCount + 1)
-						put: (suffixTable at: curCode + 1).
-					curCode := prefixTable at: curCode + 1 ].
-				finChar := curCode bitAnd: bitMask.
-				outCodes 
-					at: (outCount := outCount + 1)
-					put: finChar.
-				i := outCount.
-				[ i > 0 ] whileTrue: [
-					bytes 
-						at: ypos * rowByteSize + xpos + 1
-						put: (outCodes at: i).
-					self updatePixelPosition.
-					i := i - 1 ].
-				outCount := 0.
-				prefixTable 
-					at: freeCode + 1
-					put: oldCode.
-				suffixTable 
-					at: freeCode + 1
-					put: finChar.
-				oldCode := inCode.
-				freeCode := freeCode + 1.
-				self checkCodeSize ] ].
-	"prefixTable := suffixTable := nil."
-	"WARNING: Change the above to get working again"
-	f := ColorForm 
-		extent: width @ height
-		depth: 8.
-	f bits copyFromByteArray: bytes.
-	self halt.
-	"Squeak can handle depths 1, 2, 4, and 8"
-	bitsPerPixel > 4 ifTrue: [ ^ f ].
-	"reduce depth to save space"
-	"c := ColorForm 
-		extent: width @ height
-		depth: (bitsPerPixel = 3 
-				ifTrue: [ 4 ]
-				ifFalse: [ bitsPerPixel ])."
-	c := ColorForm
+	decoder := NeoLzwGifDecoder new.
+	"hasLocalColor
+		ifTrue: [ 
+			decoder colorTable: localColorTable ]
+		ifFalse: [ 
+			decoder colorTable: colorPalette  ]".
+	c := ColorForm 
 		extent: width@height
+		depth: 8. "Change to bitsPerPixel?"
+	c colors: activeColorTable.
+	decoder 
+		codeStream: stream;
+		minimumCodeSize: initCodeSize;
+		maxCode: 4096.
+	colorIndices := decoder decode.
+	indexStream := colorIndices readStream.
+	"colorIndices do: [ :d |
+		bytes
+			at: (ypos * rowByteSize + xpos + 1)
+			put: d.
+		self updatePixelPosition ]."
+	"c bits copyFromByteArray: bytes."
+	0 to: (width - 1) do: [ :y |
+		0 to: (height - 1) do: [ :x |
+			| idx nextColor |
+			idx := indexStream next.
+			nextColor := activeColorTable at: (idx + 1).
+			c colorAt: (x@y) put: nextColor ] ].
+	f := Form
+		extent: c extent
 		depth: bitsPerPixel.
-	f displayOn: c.
-	^ c
+	^ c displayOn: f.
 ]
 
 { #category : #'private-decoding' }

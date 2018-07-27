@@ -168,6 +168,11 @@ ImageReadWriter >> hasMagicNumber: aByteArray [
 	^ false
 ]
 
+{ #category : #testing }
+ImageReadWriter >> isAnimated [
+	^ false
+]
+
 { #category : #'stream access' }
 ImageReadWriter >> lf [
 	"PPM and PBM are used LF as CR."

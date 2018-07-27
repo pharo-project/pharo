@@ -16,7 +16,7 @@ Class {
 		'codeStreamBuffer',
 		'outBlock'
 	],
-	#category : #'Images-Animated'
+	#category : #'Graphics-Files'
 }
 
 { #category : #private }
