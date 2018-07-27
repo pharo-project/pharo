@@ -13,7 +13,7 @@ Class {
 		'currentClipRect'
 	],
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#category : #'Athens-Cairo'
 }
