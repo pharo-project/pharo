@@ -149,16 +149,9 @@ CommandLineUIManager >> confirm: queryString trueChoice: trueLabel falseChoice: 
 
 { #category : #debug }
 CommandLineUIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
-	| description |
-	description := String streamContents: [ :stream |
-		stream
-			nextPutAll: 'debugging process: ';
-			nextPutAll: process name;
-			cr;
-			nextPutAll: 'context:';
-			cr;
-			print: context.
-		notificationString ifNotNil: [ stream nextPutAll: notificationString ] ].
+	| description debugSession |
+	debugSession := process newDebugSessionNamed: title startedAt: context.
+	description := NoDebugger logStringFor: debugSession withNotification: notificationString.
 	self 
 		logTitle: title
 		andDescription: description 
