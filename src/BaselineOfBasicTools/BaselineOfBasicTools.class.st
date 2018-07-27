@@ -86,7 +86,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Tool-Diff'.
 		spec package: 'Tool-FileList'.
 		spec package: 'Tool-Finder'.
-		spec package: 'Tool-NewMethodFinder'.
 		spec package: 'Tool-ImageCleaner'.		
 		spec package: 'Tools'.
 
