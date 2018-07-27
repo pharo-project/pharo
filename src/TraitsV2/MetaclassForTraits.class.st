@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'users'
 	],
-	#category : #TraitsV2
+	#category : #'TraitsV2-Base'
 }
 
 { #category : #operations }
@@ -77,6 +77,16 @@ MetaclassForTraits >> isRejectedMethod: aSelector [
 { #category : #testing }
 MetaclassForTraits >> isTrait [
 	^ true
+]
+
+{ #category : #testing }
+MetaclassForTraits >> isTraitAlias [
+	^ false
+]
+
+{ #category : #testing }
+MetaclassForTraits >> isTraitExclusion [
+	^ false
 ]
 
 { #category : #accessing }

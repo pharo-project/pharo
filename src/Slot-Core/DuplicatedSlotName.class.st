@@ -3,7 +3,7 @@ I am signaled when trying to build a class with a duplicated slot.
 "
 Class {
 	#name : #DuplicatedSlotName,
-	#superclass : #ClassBuilderWarning,
+	#superclass : #ClassBuilderError,
 	#instVars : [
 		'newSlot',
 		'oldSlot',

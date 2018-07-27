@@ -14,7 +14,7 @@ Class {
 		'cache'
 	],
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#classInstVars : [
 		'soleInstance',
