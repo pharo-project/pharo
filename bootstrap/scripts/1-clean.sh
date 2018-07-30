@@ -7,7 +7,7 @@ set -e
 
 source bootstrap/scripts/envvars.sh
 
-pushd "${REPOSITORY}"
+pushd "${BOOTSTRAP_REPOSITORY}"
 rm -f bootstrapImage.zip
 rm -f Pharo.image Pharo.changes pharo pharo-ui
 rm -rf pharo-vm

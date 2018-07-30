@@ -25,11 +25,16 @@ then
     exit 1
 fi
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+if [[ -z "${BOOTSTRAP_REPOSITORY}" ]]
+then
+  ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+else
+  ROOT_DIR="${BOOTSTRAP_CACHE}"
+fi
 
 CACHE="${BOOTSTRAP_CACHE:-${ROOT_DIR}/bootstrap-cache}"
-REPOSITORY="${BOOTSTRAP_REPOSITORY:-${ROOT_DIR}}"
+
 # Ensure that BOOTSTRAP_REPOSITORY is propagated
 export BOOTSTRAP_REPOSITORY="${REPOSITORY}"
 # This is the VM used to bootstrap, i.e. the target VM
-VM="${REPOSITORY}/vmtarget/pharo --headless"
+VM="${BOOTSTRAP_REPOSITORY}/vmtarget/pharo --headless"
