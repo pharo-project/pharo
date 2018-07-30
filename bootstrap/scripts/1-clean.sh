@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Remove any artifacts from previous bootstrap runs
 #

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Set up environment variables used by the various
 # bootstrap stages
@@ -21,7 +21,7 @@ fi
 
 if [ -z "${BOOTSTRAP_ARCH}" ]
 then
-    echo "BOOTSTRAP_ARCH not specified, existing"
+    echo "BOOTSTRAP_ARCH not specified, exiting"
     exit 1
 fi
 
