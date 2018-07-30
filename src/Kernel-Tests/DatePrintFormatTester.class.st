@@ -25,13 +25,6 @@ DatePrintFormatTester class >> on: aDate [
 ]
 
 { #category : #asserting }
-DatePrintFormatTester >> assert: aBoolean [
-	"We check for true explicitly to make the assertion fail for non booleans"
-	aBoolean == true ifFalse: [self signalFailure: 'Assertion failed']
-			
-]
-
-{ #category : #asserting }
 DatePrintFormatTester >> assert: actualNumber closeTo: expectedNumber [
 	^ self
 		assert: (actualNumber closeTo: expectedNumber)
