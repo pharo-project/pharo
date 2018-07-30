@@ -58,7 +58,7 @@ FinderUI class >> methodFinderExplanation [
 
 It works on collections too:
 
-   {2. 4. 5. 1}.  5. 3  will find the message #max: and #lastIndexOf:
+   {2. 4. 5. 1}. 5. 3   will find the message #indexOf:
    {2. 5. 1}. 5. true   will find the message #includes:
 	
 An example is made up of the following two or more items separated by a period: 
