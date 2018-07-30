@@ -82,27 +82,17 @@ Finder >> computeListOfClasses: aString [
 Finder >> computeWithMethodFinder: aString [
 	"Compute the selectors for the single example of receiver and args, in the very top pane"
 
-	| data result resultArray dataStrings methodFinder dataObjects temporarySearchResult statements |
-	(aString includes: $.)
+	| data result resultArray dataObjects |
+(aString includes: $.)
 		ifFalse: [ ^ #() ].	"delete trailing period. This should be fixed in the Parser!"
 	data := aString trimRight: [ :char | char isSeparator or: [ char = $. ] ].
-	methodFinder := MethodFinder new.
-	data := methodFinder cleanInputs: data.	"remove common mistakes"
+
 	[ dataObjects := Smalltalk compiler evaluate: '{' , data , '}' ]
 		on: SyntaxErrorNotification
 		do: [ :e | 
 			self inform: 'Syntax Error: ' , e errorMessage.
 			^ #() ].	"#( data1 data2 result )"
-	statements := (self class compiler parse: 'zort ' , data) body statements reject: [ :each | each isReturn ].
-	dataStrings := statements
-		collect: [ :node | 
-			String
-				streamContents: [ :strm | 
-					node isMessage
-						ifTrue: [ strm nextPut: $( ].
-					strm << node formattedCode.
-					node isMessage
-						ifTrue: [ strm nextPut: $) ] ] ].
+	
 	dataObjects size < 2
 		ifTrue: [ 
 			self
@@ -110,28 +100,12 @@ Finder >> computeWithMethodFinder: aString [
 					'If you are giving an example of receiver, \args, and result, please put periods between the parts.\Otherwise just type one selector fragment'
 						withCRs.
 			^ #() ].
-	dataObjects := Array with: dataObjects allButLast with: dataObjects last.	"#( (data1 data2) result )"
-	result := methodFinder
-		load: dataObjects;
-		findMessage.
-	(result first beginsWith: 'no single method')
-		ifFalse: [ 
-			temporarySearchResult := self testObjects: dataObjects strings: dataStrings.
-			dataObjects := temporarySearchResult second.
-			dataStrings := temporarySearchResult third ].
-	resultArray := self listFromResult: result.
-	resultArray isEmpty
-		ifTrue: [ self inform: result first ].
-	dataStrings size = (dataObjects first size + 1)
-		ifTrue: [ 
-			resultArray := resultArray
-				collect: [ :expression | 
-					| newExp |
-					newExp := expression.
-					dataObjects first
-						withIndexDo: [ :lit :i | newExp := newExp copyReplaceAll: 'data' , i printString with: (dataStrings at: i) ].
-					newExp , ' --> ' , dataStrings last ] ].
-	^ resultArray
+		
+	result := MethodFinder new findMethodsByExampleInput: dataObjects allButLast andExpectedResult: dataObjects last.
+	result isEmpty ifTrue: [ self inform: 'no single method'. ^ #()].
+	
+	resultArray := result collect: [ :send | send asString , ' --> ', dataObjects last asString. ].
+	^ resultArray.
 ]
 
 { #category : #'private-class' }
@@ -593,61 +567,6 @@ Finder >> sourceStringSearch: aSearchString [
 	^ self 
 		methodSearch: [ :method |
 			method sourceCode includesSubstring: aSearchString caseSensitive: false ]
-]
-
-{ #category : #private }
-Finder >> testObjects: dataObjects strings: dataStrings [
-	"Try to make substitutions in the user's inputs and search for the selector again.
-		1 no change to answer.
-		2 answer Array -> OrderedCollection.
-		2 answer Character -> String
-		4 answer Symbol or String of len 1 -> Character
-	For each of these, try straight, and try converting args:
-		Character -> String
-		Symbol or String of len 1 -> Character
-	Return array with result, dataObjects, dataStrings.  Don't ever do a find on the same set of data twice."
-
-	| selectors classes didUnmodifiedAnswer |
-	
-	selectors := {#asString. #first. #asOrderedCollection}.
-	classes := {Character. String. Array}.
-	didUnmodifiedAnswer := false.
-	
-	selectors withIndexDo: [:ansSel :ansInd | | tempDataObjects result tempDataStrings answerMod | 
-		"Modify the answer object"
-		answerMod := false.
-		tempDataObjects := dataObjects copyTwoLevel.  
-		tempDataStrings := dataStrings copy.
-		(dataObjects last isKindOf: (classes at: ansInd)) ifTrue: [
-			((ansSel ~~ #first) or: [dataObjects last size = 1]) ifTrue: [
-				tempDataObjects at: tempDataObjects size put: (tempDataObjects last perform: ansSel).	"asString"
-				tempDataStrings at: tempDataStrings size put: tempDataStrings last, ' ', ansSel.
-				result := MethodFinder new load: tempDataObjects; findMessage.
-				(result first beginsWith: 'no single method') ifFalse: [
-					"found a selector!"
-					^ Array with: result first with: tempDataObjects with: tempDataStrings].	
-				answerMod := true]].
-
-		selectors allButLast withIndexDo: [:argSel :argInd | | dds ddo | 
-			"Modify an argument object"
-			"for args, no reason to do Array -> OrderedCollection.  Identical protocol."
-			didUnmodifiedAnswer not | answerMod ifTrue: [
-			ddo := tempDataObjects copyTwoLevel. 
-			dds := tempDataStrings copy.
-			dataObjects first withIndexDo: [:arg :ind |
-				(arg isKindOf: (classes at: argInd))  ifTrue: [
-					((argSel ~~ #first) or: [arg size = 1]) ifTrue: [
-						ddo first at: ind put: ((ddo first at: ind) perform: argSel).	"asString"
-						dds at: ind put: (dds at: ind), ' ', argSel.
-						result := MethodFinder new load: ddo; findMessage.
-						(result first beginsWith: 'no single method') ifFalse: [
-							"found a selector!"
-						^ Array with: result first with: ddo with: dds].	
-					didUnmodifiedAnswer not & answerMod not ifTrue: [
-						didUnmodifiedAnswer := true].
-					]]]]].
-	].
-	^ Array with: 'no single method does that function' with: dataObjects with: dataStrings
 ]
 
 { #category : #accessing }
