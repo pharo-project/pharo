@@ -8,3 +8,9 @@ Class {
 	#classTraits : 'TAssertable classTrait',
 	#category : #'Refactoring-Tests-Critics'
 }
+
+{ #category : #asserting }
+RBSmalllintTestLocalMethodsSameThanTraitObject >> skip [
+	"Don't run this test, and don't mark it as failure"
+	TestSkip signal
+]
