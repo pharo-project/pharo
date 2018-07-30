@@ -142,6 +142,19 @@ ShClassInstallerTest >> testDuplicateClassPreserveSlots [
 ]
 
 { #category : #tests }
+ShClassInstallerTest >> testDuplicatedInstanceVariable [
+	superClass := self newClass: #ShCITestClass1 slots: #(aSlot).
+	newClass := self newClass: #ShCITestClass2 superclass: superClass slots: #().
+
+	"The DuplicatedSlotName should not be resumable. If it is resume, the process will generate
+   duplicated instance variables. The shadowing of IV is not possible in Pharo."
+	[ newClass := self newClass: #ShCITestClass2 superclass: superClass slots: #(aSlot).
+	self fail ]
+		on: DuplicatedSlotName
+		do: [ :ex | self deny: ex isResumable ]
+]
+
+{ #category : #tests }
 ShClassInstallerTest >> testModifyingClassKeepsOrganizationOfMethods [
 	newClass := self newClass: #ShCITestClass superclass: subClass slots: #().
 

@@ -82,17 +82,27 @@ Finder >> computeListOfClasses: aString [
 Finder >> computeWithMethodFinder: aString [
 	"Compute the selectors for the single example of receiver and args, in the very top pane"
 
-	| data result resultArray dataObjects |
-(aString includes: $.)
+	| data result resultArray dataStrings methodFinder dataObjects temporarySearchResult statements |
+	(aString includes: $.)
 		ifFalse: [ ^ #() ].	"delete trailing period. This should be fixed in the Parser!"
 	data := aString trimRight: [ :char | char isSeparator or: [ char = $. ] ].
-
+	methodFinder := MethodFinder new.
+	data := methodFinder cleanInputs: data.	"remove common mistakes"
 	[ dataObjects := Smalltalk compiler evaluate: '{' , data , '}' ]
 		on: SyntaxErrorNotification
 		do: [ :e | 
 			self inform: 'Syntax Error: ' , e errorMessage.
 			^ #() ].	"#( data1 data2 result )"
-	
+	statements := (self class compiler parse: 'zort ' , data) body statements reject: [ :each | each isReturn ].
+	dataStrings := statements
+		collect: [ :node | 
+			String
+				streamContents: [ :strm | 
+					node isMessage
+						ifTrue: [ strm nextPut: $( ].
+					strm << node formattedCode.
+					node isMessage
+						ifTrue: [ strm nextPut: $) ] ] ].
 	dataObjects size < 2
 		ifTrue: [ 
 			self
@@ -100,7 +110,7 @@ Finder >> computeWithMethodFinder: aString [
 					'If you are giving an example of receiver, \args, and result, please put periods between the parts.\Otherwise just type one selector fragment'
 						withCRs.
 			^ #() ].
-		
+      
 	result := MethodFinder new findMethodsByExampleInput: dataObjects allButLast andExpectedResult: dataObjects last.
 	result isEmpty ifTrue: [ self inform: 'no single method'. ^ #()].
 	
