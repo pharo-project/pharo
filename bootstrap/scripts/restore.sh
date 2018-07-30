@@ -9,7 +9,7 @@ set -e
 
 source bootstrap/scripts/envvars.sh
 
-pushd "${REPOSITORY}"
+pushd "${BOOTSTRAP_REPOSITORY}"
 bootstrap/scripts/1-clean.sh
-tar xzf "${REPOSITORY}/snapshot.tar.gz"
+tar xzf "${BOOTSTRAP_REPOSITORY}/snapshot.tar.gz"
 popd

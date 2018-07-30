@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 #
 # Perform the entire bootstrap process.
 #
@@ -24,7 +24,7 @@
 set -x
 set -e
 
-source bootstrap/scripts/envvars.sh
+. ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/envvars.sh
 
 SCRIPTS=${BOOTSTRAP_REPOSITORY}/bootstrap/scripts
 

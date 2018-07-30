@@ -5,8 +5,7 @@
 set -x
 set -e
 
-source bootstrap/scripts/envvars.sh
-
+. ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/envvars.sh
 
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
@@ -87,7 +86,7 @@ PREFIX=Pharo7.0
 if [[ -z "${BOOTSTRAP_REPOSITORY}" ]]; then
   GIT_COMMIT_HASH=$(git show -s --format=%h)
 else
-  GIT_COMMIT_HASH=$(git -C ${REPOSITORY} show -s --format=%h)
+  GIT_COMMIT_HASH=$(git -C ${BOOTSTRAP_REPOSITORY} show -s --format=%h)
 fi
 
 SUFFIX=${ARCH_DESCRIPTION}bit-${GIT_COMMIT_HASH}
