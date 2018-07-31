@@ -40,7 +40,7 @@ Class {
 		'bottomFraction',
 		'bottomOffset'
 	],
-	#category : #'Morphic-Base-Layouts'
+	#category : #'Kernel-BasicObjects'
 }
 
 { #category : #'instance creation' }
