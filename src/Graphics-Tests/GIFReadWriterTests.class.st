@@ -57,13 +57,13 @@ GIFReadWriterTests >> testAnimatedColorsOutIn [
 	
 	"Write out the GIF bytes to the byte stream"
 	outBytes := WriteStream on: (ByteArray new).
-	writer := NeoGIFReadWriter on: outBytes.
+	writer := GIFReadWriter on: outBytes.
 	frames do: [ :f | writer nextPutFrame: f ].
 	writer close.
 	
 	"Read the GIF byte stream back into a GIF"
 	inBytes := ReadStream on: (outBytes contents).
-	reader := NeoGIFReadWriter on: inBytes.
+	reader := GIFReadWriter on: inBytes.
 	reader
 		readHeader;
 		readBody.
@@ -95,12 +95,12 @@ GIFReadWriterTests >> testColorsFileOutIn [
 		fillRectangle: (200@200 extent: 400@400) color: Color black.
 	form := canvas form.
 	outBytes := 'testColorsFileOutIn.gif' asFileReference binaryWriteStream.
-	writer := NeoGIFReadWriter on: outBytes.
+	writer := GIFReadWriter on: outBytes.
 	writer
 		nextPutImage: form;
 		close.
 	inBytes := 'testColorsFileOutIn.gif' asFileReference binaryReadStream.
-	reader := NeoGIFReadWriter on: inBytes.
+	reader := GIFReadWriter on: inBytes.
 	reader
 		readHeader;
 		readBody.
@@ -125,13 +125,13 @@ GIFReadWriterTests >> testColorsOutIn [
 		fillRectangle: (200@200 extent: 400@400) color: Color black.
 	form := canvas form.
 	outBytes := WriteStream on: (ByteArray new).
-	writer := NeoGIFReadWriter on: outBytes.
+	writer := GIFReadWriter on: outBytes.
 	writer
 		nextPutImage: form;
 		close.
 	outBytes := outBytes contents.
 	inBytes := ReadStream on: outBytes.
-	reader := NeoGIFReadWriter on: inBytes.
+	reader := GIFReadWriter on: inBytes.
 	reader
 		readHeader;
 		readBody.

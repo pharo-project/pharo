@@ -58,9 +58,9 @@ ImageReadWriterTests >> testBmpWriteReadUsingFiles [
 ImageReadWriterTests >> testGifWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormDepth8.
-	bytes := ByteArray streamContents: [ :out | NeoGIFReadWriter putForm: form onStream: out ].
+	bytes := ByteArray streamContents: [ :out | GIFReadWriter putForm: form onStream: out ].
 	"Without format detection"
-	result := (NeoGIFReadWriter on: bytes readStream) nextImage.
+	result := (GIFReadWriter on: bytes readStream) nextImage.
 	self assert: form bits equals: result bits.
 	"With format detection"
 	result := ImageReadWriter formFromStream: bytes readStream.
@@ -73,9 +73,9 @@ ImageReadWriterTests >> testGifWriteReadUsingFiles [
 	form := self pharoLogoFormDepth8.
 	file := (self class name asString , '-pharo-logo.gif') asFileReference.
 	file ensureDelete.
-	file binaryWriteStreamDo: [ :out | (NeoGIFReadWriter on: out) nextPutImage: form ].
+	file binaryWriteStreamDo: [ :out | (GIFReadWriter on: out) nextPutImage: form ].
 	"Without format detection"
-	result := file binaryReadStreamDo: [ :in | (NeoGIFReadWriter on: in) nextImage ].
+	result := file binaryReadStreamDo: [ :in | (GIFReadWriter on: in) nextImage ].
 	self assert: form bits equals: result bits.
 	"With format detection"
 	result := file binaryReadStreamDo: [ :in | ImageReadWriter formFromStream: in ].

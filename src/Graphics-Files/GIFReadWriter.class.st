@@ -1,7 +1,22 @@
 "
-Copyright (c) Kazuki Yasumatsu, 1995. All rights reserved.
+Updated implementation of a GIF file (byte-level) decoder.
 
-Used with permission.  Modified for use in Squeak.
+I implment a Stream-like behavior over a GIF image file, and can both read and write GIF files.
+
+Previously, two classes distinguished between ""still"" and ""animated"" GIFs. However, the standard specifies that any GIF can have ""frames"" and be animated. This reimplementation treats this as normal.
+
+See these links for more detailed information:
+https://www.w3.org/Graphics/GIF/spec-gif89a.txt
+https://en.wikipedia.org/wiki/GIF
+http://www.matthewflickinger.com/lab/whatsinagif/bits_and_bytes.asp
+
+For writing GIF files, I take a collection of AnimatedImageFrame objects and write the appropriate headers, Graphics Control Extensions, and everything else needed for writing an animated GIF.
+
+For reading GIF files, I take a binary filestream and set my own `frames` variable to be a collection of AnimatedImageFrames, which themselves contain decoded Forms and instructions for disposal, delay, etc.
+
+NOTE: I make use of the LzwGifDecoder and LzwGifEncoder classes in order to encode/decode individual bitmap data for each image frame of the GIF.
+
+See `GIFReadWriter exampleAnim` for more information.
 "
 Class {
 	#name : #GIFReadWriter,
@@ -16,22 +31,14 @@ Class {
 		'ypos',
 		'pass',
 		'interlace',
-		'codeSize',
-		'clearCode',
-		'eoiCode',
-		'freeCode',
-		'maxCode',
-		'prefixTable',
-		'suffixTable',
-		'remainBitCount',
-		'bufByte',
-		'bufStream',
 		'transparentIndex',
-		'mapOf32',
 		'localColorTable',
-		'delay',
 		'loopCount',
-		'offset'
+		'offset',
+		'frames',
+		'canvasWidth',
+		'canvasHeight',
+		'backgroundColorIndex'
 	],
 	#classVars : [
 		'Extension',
@@ -43,21 +50,24 @@ Class {
 
 { #category : #examples }
 GIFReadWriter class >> exampleAnim [
-	"GIFReadWriter exampleAnim"
+	"This example writes out an animated gif of
+	 a red circle"
 
-	| writer extent center |
-	writer := GIFReadWriter on: (FileStream newFileNamed: 'anim.gif').
+	| writer extent center frameDelay |
+	writer := GIFReadWriter on: (File openForWriteFileNamed: 'anim.gif').
 	writer loopCount: 20.		"Repeat 20 times"
-	writer delay: 10.		"Wait 10/100 seconds"
+	frameDelay := 10.		"Wait 10/100 seconds"
 	extent := 42@42.
 	center := extent / 2.
 	Cursor write showWhile: [
 		[2 to: center x - 1 by: 2 do: [:r |
 			"Make a fancy anim without using Canvas - inefficient as hell"
-			| image |
-			image := ColorForm extent: extent depth: 8.
-			0.0 to: 359.0 do: [:theta | image colorAt: (center + (Point r: r degrees: theta)) rounded put: Color red].
-			writer nextPutImage: image]
+			| frame |
+			frame := AnimatedImageFrame new
+				delay: frameDelay;
+				form: (ColorForm extent: extent depth: 8).
+			0.0 to: 359.0 do: [:theta | frame form colorAt: (center + (Point r: r degrees: theta)) rounded put: Color red].
+			writer nextPutFrame: frame]
 		]	ensure: [writer close]].
 ]
 
@@ -102,14 +112,35 @@ GIFReadWriter class >> typicalFileExtensions [
 
 { #category : #'image reading/writing' }
 GIFReadWriter class >> wantsToHandleGIFs [
-	^ false
+	^ true
 ]
 
-{ #category : #private }
-GIFReadWriter >> checkCodeSize [
-	(freeCode > maxCode and: [ codeSize < 12 ]) ifTrue: 
-		[ codeSize := codeSize + 1.
-		maxCode := (1 bitShift: codeSize) - 1 ]
+{ #category : #accessing }
+GIFReadWriter >> backgroundColor [
+	backgroundColorIndex ifNotNil: [ 
+		colorPalette ifNotNil: [ 
+			^ colorPalette at: backgroundColorIndex]].
+	^ Color transparent.
+]
+
+{ #category : #accessing }
+GIFReadWriter >> canvasHeight [
+	^ canvasHeight
+]
+
+{ #category : #accessing }
+GIFReadWriter >> canvasHeight: aNumber [
+	canvasHeight := aNumber
+]
+
+{ #category : #accessing }
+GIFReadWriter >> canvasWidth [
+	^ canvasWidth
+]
+
+{ #category : #accessing }
+GIFReadWriter >> canvasWidth: aNumber [
+	canvasWidth := aNumber
 ]
 
 { #category : #'stream access' }
@@ -120,37 +151,49 @@ GIFReadWriter >> close [
 ]
 
 { #category : #accessing }
-GIFReadWriter >> delay: aNumberOrNil [
-	"Set delay for next image in hundredth (1/100) of seconds"
-	delay := aNumberOrNil
+GIFReadWriter >> delay [
+	^ self
+		deprecated: 'Delay values for animaed GIFs are no longer set by the GIFReadWriter. Set them in each AnimatedImageFrame instead! See GIFReaderWriter class >> #exampleAnim for an example.'
 ]
 
-{ #category : #'private-packing' }
-GIFReadWriter >> fillBuffer [
-	| packSize |
-	packSize := self next.
-	bufStream := (self next: packSize) readStream
+{ #category : #accessing }
+GIFReadWriter >> delay: anInteger [
+	^ self
+		deprecated: 'Delay values for animaed GIFs are no longer set by the GIFReadWriter. Set them in each AnimatedImageFrame instead! See GIFReaderWriter class >> #exampleAnim for an example.'
 ]
 
-{ #category : #'private-bits access' }
-GIFReadWriter >> flushBits [
-	remainBitCount = 0 ifFalse: 
-		[ self nextBytePut: bufByte.
-		remainBitCount := 0 ].
-	self flushBuffer
+{ #category : #accessing }
+GIFReadWriter >> form [
+	"By default, answer with the first Form available in the
+	ImageFrames collection. If there are not any frames, answer nil"
+	frames ifNil: [ ^ nil ].
+	frames ifEmpty: [ ^ nil ].
+	^ frames first form.
 ]
 
-{ #category : #'private-packing' }
-GIFReadWriter >> flushBuffer [
-	bufStream isEmpty ifTrue: [ ^ self ].
-	self nextPut: bufStream size.
-	self nextPutAll: bufStream contents.
-	bufStream := (ByteArray new: 256) writeStream.
+{ #category : #accessing }
+GIFReadWriter >> forms [
+	frames ifNil: [ ^ nil ].
+	^ frames collect: [ :f | f form ].
 ]
 
-{ #category : #'private-encoding' }
-GIFReadWriter >> flushCode [
-	self flushBits
+{ #category : #accessing }
+GIFReadWriter >> frames [
+	^ frames
+]
+
+{ #category : #accessing }
+GIFReadWriter >> frames: aCollectionOfImageFrames [
+	"Set the receiver's underlying collection of
+	ImageFrame objects. Used when attempting to write
+	out GIF images"
+	frames := aCollectionOfImageFrames
+]
+
+{ #category : #testing }
+GIFReadWriter >> isAnimated [
+	frames ifNil: [ ^ false ].
+	^ frames size > 1
 ]
 
 { #category : #accessing }
@@ -159,91 +202,25 @@ GIFReadWriter >> loopCount: aNumber [
 	loopCount := aNumber
 ]
 
-{ #category : #'private-bits access' }
-GIFReadWriter >> nextBits [
-	| integer readBitCount shiftCount byte |
-	integer := 0.
-	remainBitCount = 0 
-		ifTrue: 
-			[ readBitCount := 8.
-			shiftCount := 0 ]
-		ifFalse: 
-			[ readBitCount := remainBitCount.
-			shiftCount := remainBitCount - 8 ].
-	[ readBitCount < codeSize ] whileTrue: 
-		[ byte := self nextByte.
-		byte == nil ifTrue: [ ^ eoiCode ].
-		integer := integer + (byte bitShift: shiftCount).
-		shiftCount := shiftCount + 8.
-		readBitCount := readBitCount + 8 ].
-	(remainBitCount := readBitCount - codeSize) = 0 
-		ifTrue: [ byte := self nextByte ]
-		ifFalse: [ byte := self peekByte ].
-	byte == nil ifTrue: [ ^ eoiCode ].
-	^ integer + (byte bitShift: shiftCount) bitAnd: maxCode
-]
-
-{ #category : #'private-bits access' }
-GIFReadWriter >> nextBitsPut: anInteger [ 
-	| integer writeBitCount shiftCount |
-	shiftCount := 0.
-	remainBitCount = 0 
-		ifTrue: 
-			[ writeBitCount := 8.
-			integer := anInteger ]
-		ifFalse: 
-			[ writeBitCount := remainBitCount.
-			integer := bufByte + (anInteger bitShift: 8 - remainBitCount) ].
-	[ writeBitCount < codeSize ] whileTrue: 
-		[ self nextBytePut: ((integer bitShift: shiftCount) bitAnd: 255).
-		shiftCount := shiftCount - 8.
-		writeBitCount := writeBitCount + 8 ].
-	(remainBitCount := writeBitCount - codeSize) = 0 
-		ifTrue: [ self nextBytePut: (integer bitShift: shiftCount) ]
-		ifFalse: [ bufByte := integer bitShift: shiftCount ].
-	^ anInteger
-]
-
-{ #category : #'private-packing' }
-GIFReadWriter >> nextByte [
-	bufStream atEnd
-		ifTrue:
-			[self atEnd ifTrue: [^nil].
-			self fillBuffer].
-	^bufStream next
-]
-
-{ #category : #'private-packing' }
-GIFReadWriter >> nextBytePut: aByte [
-	bufStream nextPut: aByte.
-	bufStream size >= 254 ifTrue: [self flushBuffer]
-]
-
 { #category : #accessing }
 GIFReadWriter >> nextImage [
-	"Read in the next GIF image from the stream."
-	| f thisImageColorTable |
-	localColorTable := nil.
-	self readHeader.
-	f := self readBody.
-	f ifNil: [ ^ self error: 'corrupt GIF file' ].
-	thisImageColorTable := localColorTable ifNil: [ colorPalette ].
-	transparentIndex ifNotNil: 
-		[ transparentIndex + 1 > thisImageColorTable size ifTrue: 
-			[ thisImageColorTable := thisImageColorTable 
-				forceTo: transparentIndex + 1
-				paddingWith: Color white ].
-		thisImageColorTable 
-			at: transparentIndex + 1
-			put: Color transparent ].
-	f colors: thisImageColorTable.
-	^ f
+	"This method ensures older compatibility with ImageReadWriter.
+	We respond with the Form corresponding to the *first image* on
+	the receiver's read byte stream"
+	self
+		readHeader;
+		readBody.
+	^ self form.
+	
 ]
 
 { #category : #accessing }
-GIFReadWriter >> nextPutImage: aForm [
-
-	| reduced tempForm |
+GIFReadWriter >> nextPutFrame: anAnimatedImageFrame [
+	"Given the current settings, write the bytes onto the
+	output stream for the given ImageFrame and its form"
+	| aForm reduced tempForm tempFrame |
+	
+	aForm := anAnimatedImageFrame form copy.
 	aForm unhibernate.
 	aForm depth > 8 ifTrue:[
 		reduced := aForm colorReduced.  "minimize depth"
@@ -276,24 +253,137 @@ GIFReadWriter >> nextPutImage: aForm [
 	bitsPerPixel := reduced depth.
 	colorPalette := reduced colormapIfNeededForDepth: 32.
 	interlace := false.
+	tempFrame := AnimatedImageFrame new 
+		form: reduced;
+		offset: anAnimatedImageFrame offset;
+		delay: anAnimatedImageFrame delay;
+		disposal: anAnimatedImageFrame disposal.
 	self writeHeader.
+	self writeFrameHeader: tempFrame.
 	self writeBitData: reduced bits.
-
 ]
 
-{ #category : #'private-packing' }
-GIFReadWriter >> peekByte [
-	bufStream atEnd
-		ifTrue:
-			[self atEnd ifTrue: [^nil].
-			self fillBuffer].
-	^bufStream peek
+{ #category : #accessing }
+GIFReadWriter >> nextPutImage: aForm [
+	"Given the current settings, write the bytes onto the
+	output stream for the given ImageFrame and its form"
+	| reduced tempForm tempFrame |
+	
+	aForm unhibernate.
+	aForm depth > 8 ifTrue:[
+		reduced := aForm colorReduced.  "minimize depth"
+		reduced depth > 8 ifTrue: [
+			"Not enough color space; do it the hard way."
+			reduced := reduced asFormOfDepth: 8].
+	] ifFalse:[reduced := aForm].
+	reduced depth < 8 ifTrue: [
+		"writeBitData: expects depth of 8"
+		tempForm := reduced class extent: reduced extent depth: 8.
+		(reduced isColorForm) ifTrue:[
+			tempForm
+				copyBits: reduced boundingBox
+				from: reduced at: 0@0
+				clippingBox: reduced boundingBox
+				rule: Form over
+				fillColor: nil
+				map: nil.
+			tempForm colors: reduced colors.
+		] ifFalse: [reduced displayOn: tempForm].
+		reduced := tempForm.
+	].
+	(reduced isColorForm) ifTrue:[
+		(reduced colorsUsed includes: Color transparent) ifTrue: [
+			transparentIndex := (reduced colors indexOf: Color transparent) - 1.
+		]
+	] ifFalse: [transparentIndex := nil].
+	width := reduced width.
+	height := reduced height.
+	bitsPerPixel := reduced depth.
+	colorPalette := reduced colormapIfNeededForDepth: 32.
+	interlace := false.
+	tempFrame := AnimatedImageFrame new 
+		form: reduced;
+		offset: reduced offset.
+	self writeHeader.
+	self writeFrameHeader: tempFrame.
+	self writeBitData: reduced bits.
 ]
 
 { #category : #'private-decoding' }
-GIFReadWriter >> readBitData [
+GIFReadWriter >> processColorsFor: anImageFrame [
+	"Colors can only be mapped after the GCE has been evaluated
+	for a given image frame. We perform this action using either
+	the local or global color table for this frame's form"
+	| colorTable |
+	colorTable := localColorTable ifNil: [ colorPalette ].
+	
+	"Use a copy so we don't mess up the global color table as we parse"
+	colorTable := colorTable copyFrom: 1 to: colorTable size.
+	
+	transparentIndex 
+		ifNotNil: [ 
+			transparentIndex + 1 > colorTable size
+				ifTrue: [ 
+					anImageFrame transparentColor: Color white.
+					colorTable := colorTable
+										forceTo: transparentIndex + 1
+										paddingWith: Color white ].
+				"anImageFrame transparentColor: (colorTable at: transparentIndex + 1)."
+				colorTable
+					at: transparentIndex + 1
+					put: Color transparent ].
+	anImageFrame form colors: colorTable.
+]
+
+{ #category : #'private-decoding' }
+GIFReadWriter >> readApplicationExtension [
+	"Uses the underlying stream to read a so-called
+	Application Extension to the GIF Image. These extensions
+	are at the whole file -- not individual frame like a GCE --
+	level. It appears the only kind widely used is the NETSCAPE
+	extension for determining the number of times an animated
+	GIF should loop."
+	| bytesFollow appName appAuthCode caughtInfo numSubBlocks loopVal1 loopVal2 |
+	"How many bytes before data begins?
+	Usually 11"
+	bytesFollow := self next.
+	appName := (String streamContents: [ :s |
+		1 to: 8 do: [ :num |
+			s
+				nextPut: self next asCharacter ] ]).
+	appAuthCode := (String streamContents: [ :s |
+		1 to: 3 do: [ :num |
+			s
+				nextPut: self next asCharacter ] ]).
+	caughtInfo := (appName size + appAuthCode size).
+	caughtInfo = bytesFollow ifFalse: [ 
+		(bytesFollow = caughtInfo) timesRepeat: [ 
+			self next ] ].
+	numSubBlocks := self next.
+	appName = 'NETSCAPE' 
+		ifTrue: [ 
+			self next. "Data sub-block index (always 1)"
+			"If it's the NETSCAPE extension, the next
+			byte will set the loopCount. This is stored in
+			a 2-byte lo-hi unsigned format"
+			loopVal1 := self next.
+			loopVal2 := self next.
+			loopCount := (loopVal2 * 256) + loopVal1.
+			self next = 0 ifFalse: [ ^ self error: 'Corrupt NETSCAPE Application Block' ].
+			^ self ].
+
+	"For now we ignore Application Extensions
+	that are not the NETSCAPE kind"
+	[ numSubBlocks = 0 ] whileFalse: [ 
+		self next: numSubBlocks.
+		numSubBlocks := self next ].
+	
+]
+
+{ #category : #'private-decoding' }
+GIFReadWriter >> readBitDataOnFrame: aFrame [
 	"using modified Lempel-Ziv Welch algorithm."
-	| outCodes outCount bitMask initCodeSize code curCode oldCode inCode finChar i bytes f c packedBits hasLocalColor localColorSize maxOutCodes |
+	| initCodeSize  packedBits hasLocalColor localColorSize maxOutCodes decoder c  bytes |
 	maxOutCodes := 4096.
 	offset := self readWord @ self readWord.	"Image Left@Image Top"
 	width := self readWord.
@@ -310,136 +400,66 @@ GIFReadWriter >> readBitData [
 	interlace := (packedBits bitAnd: 64) ~= 0.
 	hasLocalColor := (packedBits bitAnd: 128) ~= 0.
 	localColorSize := 1 bitShift: (packedBits bitAnd: 7) + 1.
-	hasLocalColor ifTrue: [ localColorTable := self readColorTable: localColorSize ].
+	hasLocalColor ifTrue: [ 
+		localColorTable := self readColorTable: localColorSize ].
 	pass := 0.
 	xpos := 0.
 	ypos := 0.
 	rowByteSize := (width + 3) // 4 * 4.
-	remainBitCount := 0.
-	bufByte := 0.
-	bufStream := ByteArray new readStream.
-	outCodes := ByteArray new: maxOutCodes + 1.
-	outCount := 0.
-	prefixTable := Array new: 4096.
-	suffixTable := Array new: 4096.
-	initCodeSize := self next.
-	bitMask := (1 bitShift: initCodeSize) - 1.
-	self setParameters: initCodeSize.
-	bitsPerPixel > 8 ifTrue: [ ^ self error: 'never heard of a GIF that deep' ].
 	bytes := ByteArray new: rowByteSize * height.
-	[ (code := self readCode) = eoiCode ] whileFalse: 
-		[ code = clearCode 
-			ifTrue: 
-				[ self setParameters: initCodeSize.
-				curCode := oldCode := code := self readCode.
-				finChar := curCode bitAnd: bitMask.
-				"Horrible hack to avoid running off the end of the bitmap.  Seems to cure problem reading some gifs!?"
-				xpos = 0 
-					ifTrue: 
-						[ ypos < height ifTrue: 
-							[ bytes 
-								at: ypos * rowByteSize + xpos + 1
-								put: finChar ] ]
-					ifFalse: 
-						[ bytes 
-							at: ypos * rowByteSize + xpos + 1
-							put: finChar ].
-				self updatePixelPosition ]
-			ifFalse: 
-				[ curCode := inCode := code.
-				curCode >= freeCode ifTrue: 
-					[ curCode := oldCode.
-					outCodes 
-						at: (outCount := outCount + 1)
-						put: finChar ].
-				[ curCode > bitMask ] whileTrue: 
-					[ outCount > maxOutCodes ifTrue: [ ^ self error: 'corrupt GIF file (OutCount)' ].
-					outCodes 
-						at: (outCount := outCount + 1)
-						put: (suffixTable at: curCode + 1).
-					curCode := prefixTable at: curCode + 1 ].
-				finChar := curCode bitAnd: bitMask.
-				outCodes 
-					at: (outCount := outCount + 1)
-					put: finChar.
-				i := outCount.
-				[ i > 0 ] whileTrue: 
-					[ "self writePixel: (outCodes at: i) to: bits"
-					bytes 
-						at: ypos * rowByteSize + xpos + 1
-						put: (outCodes at: i).
-					self updatePixelPosition.
-					i := i - 1 ].
-				outCount := 0.
-				prefixTable 
-					at: freeCode + 1
-					put: oldCode.
-				suffixTable 
-					at: freeCode + 1
-					put: finChar.
-				oldCode := inCode.
-				freeCode := freeCode + 1.
-				self checkCodeSize ] ].
-	prefixTable := suffixTable := nil.
-	f := ColorForm 
-		extent: width @ height
-		depth: 8.
-	f bits copyFromByteArray: bytes.
-	"Squeak can handle depths 1, 2, 4, and 8"
-	bitsPerPixel > 4 ifTrue: [ ^ f ].
-	"reduce depth to save space"
+
+	initCodeSize := self next.
+
 	c := ColorForm 
-		extent: width @ height
-		depth: (bitsPerPixel = 3 
-				ifTrue: [ 4 ]
-				ifFalse: [ bitsPerPixel ]).
-	f displayOn: c.
+		extent: width@height
+		depth: 8. 
+
+	decoder := LzwGifDecoder new.
+	decoder 
+		codeStream: stream;
+		minimumCodeSize: initCodeSize;
+		maxCode: maxOutCodes;
+		onDecodedBit: [ :bit |
+			bytes
+				at: (ypos * rowByteSize + xpos + 1)
+				put: bit.
+			self updatePixelPosition ].
+	decoder decode.
+	c bits copyFromByteArray: bytes.
 	^ c
 ]
 
 { #category : #'private-decoding' }
 GIFReadWriter >> readBody [
-	"Read the GIF blocks. Modified to return a form.  "
-	| form extype block blocksize packedFields delay1 |
-	form := nil.
-	[ stream atEnd ] whileFalse: 
-		[ block := self next.
-		block = Terminator ifTrue: [ ^ form ].
+	"Read the GIF blocks. Modified to return a frame."
+	| form extype block blocksize packedFields delay1 disposal frame |
+	frame := nil.
+	frames := OrderedCollection new.
+	[ stream atEnd ] whileFalse: [ 
+		block := self next.
+		
+		"If we have reached the terminator byte, return."
+		block = Terminator ifTrue: [ ^ frame ].
 		block = ImageSeparator 
-			ifTrue: 
-				[ form
-					ifNil: [ form := self readBitData ]
-					ifNotNil: [ self skipBitData ] ]
+			ifTrue: [ 
+				frame ifNil: [ frame := AnimatedImageFrame new ].
+				frame form: (self readBitDataOnFrame: frame). "Adjusting message for testing"
+				frame offset: offset. "Set from instance var, which is set in readBitData"
+				
+				frames add: frame.
+				self processColorsFor: frame.
+				self next = Terminator ifTrue: [ ^ frames last ].
+				frame := nil. ]
 			ifFalse: 
-				[ block = Extension ifFalse: [ ^ form	"^ self error: 'Unknown block type'" ].
-				"Extension block"
-				extype := self next.	"extension type"
-				extype = 249 
-					ifTrue: 
-						[ "graphics control"
-						self next = 4 ifFalse: [ ^ form	"^ self error: 'corrupt GIF file'" ].
-						"====
-				Reserved                      3 Bits
-				Disposal Method               3 Bits
-				User Input Flag               1 Bit
-				Transparent Color Flag        1 Bit
-				==="
-						packedFields := self next.
-						delay1 := self next.	"delay time 1"
-						delay := (self next * 256 + delay1) * 10.	"delay time 2"
-						transparentIndex := self next.
-						(packedFields bitAnd: 1) = 0 ifTrue: [ transparentIndex := nil ].
-						self next = 0 ifFalse: [ ^ form	"^ self error: 'corrupt GIF file'" ] ]
-					ifFalse: 
-						[ "Skip blocks"
-						[ (blocksize := self next) > 0 ] whileTrue: 
-							[ "Read the block and ignore it and eat the block terminator"
-							self next: blocksize ] ] ] ]
-]
-
-{ #category : #'private-decoding' }
-GIFReadWriter >> readCode [
-	^self nextBits
+				[ "If it's not actual image data, perhaps
+					it's an Extension of some kind (there can be several)"
+					block = Extension 
+						ifTrue: [ 
+							frame ifNil: [ frame := AnimatedImageFrame new ].
+							self readExtensionBlock: block withFrame: frame ]
+						ifFalse: [ ^ self error: 'Unknown Bytes!' ] ] 
+		].
+	^ frames.
 ]
 
 { #category : #'private-decoding' }
@@ -464,40 +484,95 @@ GIFReadWriter >> readColorTable: numberOfEntries [
 ]
 
 { #category : #'private-decoding' }
+GIFReadWriter >> readDisposal: aPackedByte [
+	"Read the three-bit disposal flag from
+	the packed byte in the Graphic Control Extension block.
+	Disposal is three-bits with the following codes:
+	 |0 0 0 [0 0 0] 0 0|
+	1 => leave current frame and draw on top of it (#leaveCurrent)
+	2 => Restore to background color (#restoreBackground)
+	3 => Restore to state before current frame was drawn (#restorePrevState)"
+	| least middle both |
+	(both := (aPackedByte bitAnd: 12) = 12).
+	both ifTrue: [ ^ #restorePrevState ].
+	
+	least := (aPackedByte bitAnd: 4) = 4.
+	least ifTrue: [ ^ #leaveCurrent ].
+	
+	middle := (aPackedByte bitAnd: 8) = 8.
+	middle ifTrue: [ ^ #restoreBackground ].
+	
+	^ #otherDisposal
+	
+]
+
+{ #category : #'private-decoding' }
+GIFReadWriter >> readExtensionBlock: aGifBlock withFrame: anImageFrame [
+	"Determine which type of extension block we are
+	looking at. The most common is the Graphic Control Extension (GCE)
+	which tells us information about the image frame, including delays
+	offsets in the canvas, and how to dispose of the frame in animation"
+	| extensionType packedByte delayByte1 delayByte2 |
+	extensionType := self next.
+	
+	"255 is an Application Extension.
+	 This seems to always be the NETSCAPE
+	 extension, which has looping information.
+	This extension does not affect individual frames,
+	but rather sets the loopCount for the whole image"
+	extensionType = 255 ifTrue: [ 
+		^ self readApplicationExtension ].
+	
+	
+	"249 Corresponds to the GCE"
+	extensionType = 249 ifTrue: [ 
+		self next = 4 ifFalse: [ ^ self "The GIF is likely corrupt in this case" ].
+		"====
+		Reserved                      3 Bits (Ignore)
+		Disposal Method               3 Bits 
+		User Input Flag               1 Bit  (Ignore)
+		Transparent Color Flag        1 Bit  (Need to Implement)
+		==="
+		packedByte := self next.
+		delayByte1 := self next.
+		delayByte2 := self next.
+		transparentIndex := self next.
+		(packedByte bitAnd: 1) = 0 "Changed to see if other endian is the real end..."
+			ifTrue: [ transparentIndex := nil ].
+		anImageFrame 
+			disposal: (self readDisposal: packedByte);
+			"Delay time is stored as 2 bytes unsigned"
+			delay: (delayByte2 * 256 + delayByte1) * 10.
+		self next = 0 ifFalse: [ ^ self error: 'Corrupt GCE Block!' ].
+		^ self ].
+	
+	"If you get to this point, we don't know the Extension Type"
+	^ self error: 'Unknown GIF Extension: ',(extensionType asString).
+]
+
+{ #category : #'private-decoding' }
 GIFReadWriter >> readHeader [
-	| magic is89 byte hasColorMap |
-	magic := stream next: 6.
-	(magic = 'GIF87a' asByteArray) 
+	| is89 byte hasColorMap |
+	(self hasMagicNumber: 'GIF87a' asByteArray) 
 		ifTrue: [ is89 := false ]
 		ifFalse: 
-			[ (magic = 'GIF89a' asByteArray) 
+			[ (self hasMagicNumber: 'GIF89a' asByteArray) 
 				ifTrue: [ is89 := true ]
 				ifFalse: [ ^ self error: 'This does not appear to be a GIF file' ] ].
-	self readWord.	"skip Screen Width"
-	self readWord.	"skip Screen Height"
+	"Width and Height for whole canvas, not
+	just an invididual frame/form"
+	canvasWidth := self readWord.
+	canvasHeight := self readWord.
 	byte := self next.
 	hasColorMap := (byte bitAnd: 128) ~= 0.
 	bitsPerPixel := (byte bitAnd: 7) + 1.
-	byte := self next.	"skip background color."
+	backgroundColorIndex := self next.
 	self next ~= 0 ifTrue: 
 		[ is89 ifFalse: [ ^ self error: 'corrupt GIF file (screen descriptor)' ] ].
 	hasColorMap 
 		ifTrue: [ colorPalette := self readColorTable: (1 bitShift: bitsPerPixel) ]
 		ifFalse: 
-			[ "Transcript cr; show: 'GIF file does not have a color map.'."
-			colorPalette := nil	"Palette monochromeDefault" ]
-]
-
-{ #category : #'private-encoding' }
-GIFReadWriter >> readPixelFrom: bits [ 
-	"Since bits is a Bitmap with 32 bit values, watch out for the
-padding at the end of each row.  But, GIF format already wants padding to
-32 bit boundary!  OK as is.  tk 9/14/97"
-	| pixel |
-	ypos >= height ifTrue: [ ^ nil ].
-	pixel := bits byteAt: ypos * rowByteSize + xpos + 1.
-	self updatePixelPosition.
-	^ pixel
+			[ colorPalette := nil	"Palette monochromeDefault" ]
 ]
 
 { #category : #'private-decoding' }
@@ -505,41 +580,10 @@ GIFReadWriter >> readWord [
 	^self next + (self next bitShift: 8)
 ]
 
-{ #category : #private }
-GIFReadWriter >> setParameters: initCodeSize [ 
-	clearCode := 1 bitShift: initCodeSize.
-	eoiCode := clearCode + 1.
-	freeCode := clearCode + 2.
-	codeSize := initCodeSize + 1.
-	maxCode := (1 bitShift: codeSize) - 1
-]
-
 { #category : #accessing }
 GIFReadWriter >> setStream: aStream [ 
 	"Feed it in from an existing source"
 	stream := aStream
-]
-
-{ #category : #'private-decoding' }
-GIFReadWriter >> skipBitData [
-	| misc blocksize |
-	self readWord.	"skip Image Left"
-	self readWord.	"skip Image Top"
-	self readWord.	"width"
-	self readWord.	"height"
-	misc := self next.
-	(misc bitAnd: 128) = 0 ifFalse: 
-		[ "skip colormap"
-		1 
-			to: (1 bitShift: (misc bitAnd: 7) + 1)
-			do: 
-				[ :i | 
-				self
-					next;
-					next;
-					next ] ].
-	self next.	"minimum code size"
-	[ (blocksize := self next) > 0 ] whileTrue: [ self next: blocksize ]
 ]
 
 { #category : #accessing }
@@ -578,161 +622,143 @@ GIFReadWriter >> updatePixelPosition [
 { #category : #'private-encoding' }
 GIFReadWriter >> writeBitData: bits [ 
 	"using modified Lempel-Ziv Welch algorithm."
-	| maxBits maxMaxCode tSize initCodeSize ent tShift fCode pixel index disp nomatch |
-	pass := 0.
-	xpos := 0.
-	ypos := 0.
-	rowByteSize := (width * 8 + 31) // 32 * 4.
-	remainBitCount := 0.
-	bufByte := 0.
-	bufStream := (ByteArray new: 256) writeStream.
-	maxBits := 12.
-	maxMaxCode := 1 bitShift: maxBits.
-	tSize := 5003.
-	prefixTable := Array new: tSize.
-	suffixTable := Array new: tSize.
+	| encoder initCodeSize |
+	encoder := LzwGifEncoder new
+		rowByteSize: (width * 8 + 31) // 32 * 4;
+		extent: width@height;
+		codeStream: stream.
 	initCodeSize := bitsPerPixel <= 1 
 		ifTrue: [ 2 ]
 		ifFalse: [ bitsPerPixel ].
-	self nextPut: initCodeSize.
-	self setParameters: initCodeSize.
-	tShift := 0.
-	fCode := tSize.
-	[ fCode < 65536 ] whileTrue: 
-		[ tShift := tShift + 1.
-		fCode := fCode * 2 ].
-	tShift := 8 - tShift.
-	1 
-		to: tSize
-		do: 
-			[ :i | 
-			suffixTable 
-				at: i
-				put: -1 ].
-	self writeCodeAndCheckCodeSize: clearCode.
-	ent := self readPixelFrom: bits.
-	[ (pixel := self readPixelFrom: bits) == nil ] whileFalse: 
-		[ fCode := (pixel bitShift: maxBits) + ent.
-		index := ((pixel bitShift: tShift) bitXor: ent) + 1.
-		(suffixTable at: index) = fCode 
-			ifTrue: [ ent := prefixTable at: index ]
-			ifFalse: 
-				[ nomatch := true.
-				(suffixTable at: index) >= 0 ifTrue: 
-					[ disp := tSize - index + 1.
-					index = 1 ifTrue: [ disp := 1 ].
-					"probe"
-					
-					[ (index := index - disp) < 1 ifTrue: [ index := index + tSize ].
-					(suffixTable at: index) = fCode ifTrue: 
-						[ ent := prefixTable at: index.
-						nomatch := false
-						"continue whileFalse:" ].
-					nomatch and: [ (suffixTable at: index) > 0 ] ] whileTrue: 
-						[ "probe"
-						 ] ].
-				"nomatch"
-				nomatch ifTrue: 
-					[ self writeCodeAndCheckCodeSize: ent.
-					ent := pixel.
-					freeCode < maxMaxCode 
-						ifTrue: 
-							[ prefixTable 
-								at: index
-								put: freeCode.
-							suffixTable 
-								at: index
-								put: fCode.
-							freeCode := freeCode + 1 ]
-						ifFalse: 
-							[ self writeCodeAndCheckCodeSize: clearCode.
-							1 
-								to: tSize
-								do: 
-									[ :i | 
-									suffixTable 
-										at: i
-										put: -1 ].
-							self setParameters: initCodeSize ] ] ] ].
-	prefixTable := suffixTable := nil.
-	self writeCodeAndCheckCodeSize: ent.
-	self writeCodeAndCheckCodeSize: eoiCode.
-	self flushCode.
-	self nextPut: 0	"zero-length packet"
+	encoder minimumCodeSize: initCodeSize.
+	encoder encode: bits.
+]
+
+{ #category : #writing }
+GIFReadWriter >> writeDisposal: aSymbol toPackedByte: aByte [
+	"Using the GIF Graphics Control Extension
+	packed byte format, respond with a modified version
+	of the passed byte that includes the correct 3-bit
+	disposal code corresponding to the passed in symbol"
+	
+	aSymbol = #restoreBackground
+		ifTrue: [ 
+			"This is a value of 2 in the 3-bit structure,
+			so 010, then shifted two to the left (equal to 8)"
+			^ aByte + (2 bitShift: 2) ].
+	
+	aSymbol = #leaveCurrent
+		ifTrue: [ 
+			"This is a value of 1 in the 3-bit structure,
+			so 001, then shifted two to the left (equal to 4)"
+			^ aByte + (1 bitShift: 2) ].
+	
+	aSymbol = #restorePrevState
+		ifTrue: [ 
+			"This is a value of 3 in the 3-bit structure,
+			so 011, then shifted two to the left (equal to 12)"
+			^ aByte + (3 bitShift: 2) ].
+	^ aByte
+		
+]
+
+{ #category : #accessing }
+GIFReadWriter >> writeFrameHeader: anImageFrame [
+	"Write any Extensions and/or headers that apply
+	to individual frames/subimages"
+	| interlaceByte |
+	anImageFrame delay notNil | transparentIndex notNil ifTrue: [ 
+		self writeGCEForFrame: anImageFrame ].
+	
+	"Next is the image descriptor"
+	self 
+		nextPut: ImageSeparator;
+		writeWord: (anImageFrame offset x);
+		writeWord: (anImageFrame offset y);
+		writeWord: (anImageFrame form extent x);
+		writeWord: (anImageFrame form extent y).
+	
+	interlaceByte := interlace
+		ifTrue: [ 64 ]
+		ifFalse: [ 0 ].
+	self nextPut: interlaceByte
+	
 ]
 
 { #category : #'private-encoding' }
-GIFReadWriter >> writeCode: aCode [
-	self nextBitsPut: aCode
-]
-
-{ #category : #'private-encoding' }
-GIFReadWriter >> writeCodeAndCheckCodeSize: aCode [
-	self writeCode: aCode.
-	self checkCodeSize
+GIFReadWriter >> writeGCEForFrame: anAnimatedImageFrame [
+	"Writes a Graphics Control Extension onto
+	the output stream for the given image frame"
+	| nextDelay packedByte |
+	nextDelay := anAnimatedImageFrame delay.
+	anAnimatedImageFrame delay ifNil: [ nextDelay := 0 ].
+	"Set the bits of the packed byte"
+	"====
+		Reserved                      3 Bits (Ignore)
+		Disposal Method               3 Bits 
+		User Input Flag               1 Bit  (Ignore)
+		Transparent Color Flag        1 Bit 
+		==="
+	packedByte := 0.
+	transparentIndex
+		ifNotNil: [ packedByte := 1 ].
+	packedByte := self 
+		writeDisposal: (anAnimatedImageFrame disposal)
+		toPackedByte: packedByte.
+	
+	self 
+		nextPut: Extension;
+		nextPutAll: #(249 4) asByteArray;
+		nextPut: packedByte;
+		"nextPut: (transparentIndex
+				ifNil: [ 0 ]
+				ifNotNil: [ 9 ]);"
+		writeWord: nextDelay // 10;
+		nextPut: (transparentIndex ifNil: [ 0 ]);
+		nextPut: 0.
 ]
 
 { #category : #'private-encoding' }
 GIFReadWriter >> writeHeader [
 	| byte |
-	stream position = 0 ifTrue: 
-		[ "For first image only"
-		self nextPutAll: 'GIF89a' asByteArray.
-		self writeWord: width.	"Screen Width"
-		self writeWord: height.	"Screen Height"
-		byte := 128.	"has color map"
-		byte := byte bitOr: (bitsPerPixel - 1 bitShift: 5).	"color resolution"
-		byte := byte bitOr: bitsPerPixel - 1.	"bits per pixel"
-		self nextPut: byte.
-		self nextPut: 0.	"background color."
-		self nextPut: 0.	"reserved"
-		colorPalette do: 
-			[ :pixelValue | 
-			self
-				nextPut: ((pixelValue bitShift: -16) bitAnd: 255);
-				nextPut: ((pixelValue bitShift: -8) bitAnd: 255);
-				nextPut: (pixelValue bitAnd: 255) ].
-		loopCount notNil ifTrue: 
-			[ "Write a Netscape loop chunk"
-			self nextPut: Extension.
-			self nextPutAll: #(
-					255
-					11
-					78
-					69
-					84
-					83
-					67
-					65
-					80
-					69
-					50
-					46
-					48
-					3
-					1
-				) asByteArray.
-			self writeWord: loopCount.
-			self nextPut: 0 ] ].
-	delay notNil | transparentIndex notNil ifTrue: 
-		[ self
-			nextPut: Extension;
-			nextPutAll: #(249 4 ) asByteArray;
-			nextPut: (transparentIndex 
-					ifNil: [ 0 ]
-					ifNotNil: [ 9 ]);
-			writeWord: (delay ifNil: [ 0 ]);
-			nextPut: (transparentIndex ifNil: [ 0 ]);
-			nextPut: 0 ].
-	self nextPut: ImageSeparator.
-	self writeWord: 0.	"Image Left"
-	self writeWord: 0.	"Image Top"
-	self writeWord: width.	"Image Width"
-	self writeWord: height.	"Image Height"
-	byte := interlace 
-		ifTrue: [ 64 ]
-		ifFalse: [ 0 ].
-	self nextPut: byte
+	"Write the overall image file header onto the
+	output stream. This includes the global information
+	about the file, such as canvasWidth etc. Only do so
+	if the stream is in the initial position."
+	stream position = 0 ifFalse: [ ^ self ].
+
+	self nextPutAll: 'GIF89a' asByteArray.
+	self writeWord: width.	"Screen Width"
+	self writeWord: height.	"Screen Height"
+	byte := 128.	"has color map"
+	byte := byte bitOr: (bitsPerPixel - 1 bitShift: 5).	"color resolution"
+	byte := byte bitOr: bitsPerPixel - 1.	"bits per pixel"
+	self nextPut: byte.
+	self nextPut: 0.	"background color."
+	self nextPut: 0.	"reserved / unused 'pixel aspect ratio"
+	colorPalette do: 
+		[ :pixelValue | 
+		self
+			nextPut: ((pixelValue bitShift: -16) bitAnd: 255);
+			nextPut: ((pixelValue bitShift: -8) bitAnd: 255);
+			nextPut: (pixelValue bitAnd: 255) ].
+	loopCount notNil ifTrue: 
+		[ self writeNetscapeExtension ].
+]
+
+{ #category : #'private-encoding' }
+GIFReadWriter >> writeNetscapeExtension [
+	"Writes a GIF Application Extension corresponding
+	to the NETSCAPE2.0 version, with specifies the loopCount."
+	self
+		nextPut: Extension;
+		nextPut: 255; "Indicates Application Extension"
+		nextPut: 11; "Indicates how many bytes follow, almost always 11"
+		nextPutAll: ('NETSCAPE2.0' asByteArray);
+		nextPut: 3;
+		nextPut: 1;
+		writeWord: (loopCount ifNil: [ 0 ]);
+		nextPut: 0.
 ]
 
 { #category : #'private-encoding' }
