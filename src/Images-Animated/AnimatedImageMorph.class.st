@@ -23,6 +23,16 @@ AnimatedImageMorph class >> fromGIFReader: aGIFReader [
 ]
 
 { #category : #accessing }
+AnimatedImageMorph >> backgroundColor [
+	^ self color
+]
+
+{ #category : #accessing }
+AnimatedImageMorph >> backgroundColor: aColor [
+	self color: aColor.
+]
+
+{ #category : #accessing }
 AnimatedImageMorph >> currentFrame [
 	^ currentFrame
 ]
@@ -96,15 +106,18 @@ AnimatedImageMorph >> restoreBackground [
 	| canvas r |
 	canvas := activeForm getCanvas.
 	r := (prevFrame offset extent: (prevFrame form extent)).
+	
+	"We restore the area of the previous frame to the backgroundColor.
+	 Usually this is transparent"
 	canvas
-		"Restore the area of the prevFrame to the background color"
-		fillRectangle: r
-		color: self color;
 		clipBy: r
 		during: [ :c |
-			c
-				drawImage: currentFrame form
-				at: currentFrame offset ].
+			c fillColor: self backgroundColor ].
+	
+	"Draw the current frame's form atop the current canvas form"
+	canvas
+		translucentImage: currentFrame form
+		at: currentFrame offset.
 
 	activeForm := canvas form.
 ]
