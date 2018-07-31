@@ -5,7 +5,7 @@
 set -x
 set -e
 
-. ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/envvars.sh
+. ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/envvars.sh
 
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
@@ -150,10 +150,10 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" initializePackages --protocols=protocolsKer
 echo "[Compiler] Installing compiler through Hermes"
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
-${VM} "${COMPILER_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
+${VM} "${COMPILER_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
 
 echo "[Compiler] Initializing Unicode"
-${VM} "${COMPILER_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit "${REPOSITORY}/resources/unicode/"
+${VM} "${COMPILER_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit "${BOOTSTRAP_REPOSITORY}/resources/unicode/"
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes DeprecatedFileStream.hermes FileSystem-Core.hermes FileSystem-Disk.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "PharoBootstrapInitialization initializeFileSystem"
@@ -179,21 +179,21 @@ echo "[Monticello] Bootstrap Monticello Core and Local repositories"
 ${VM} "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
 #cp "${CORE_IMAGE_NAME}.image" "${MC_BOOTSTRAP_IMAGE_NAME}.image"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${ST_CACHE}/Monticello.st --save --quit
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" eval --save "TraitsBootstrap fixSourceCodeOfTraits "
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 
 #Bootstrap Monticello Part 2: Networking Packages and Remote Repositories
 echo "[Monticello] Loading Networking Packages and Remote Repositories"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" save $MC_IMAGE_NAME
-${VM} "${MC_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
+${VM} "${MC_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
 zip "${MC_IMAGE_NAME}.zip" ${MC_IMAGE_NAME}.*
 
 #Bootstrap Metacello
 echo "[Metacello] Bootstrapping Metacello"
 ${VM} "${MC_IMAGE_NAME}.image" save ${METACELLO_IMAGE_NAME}
-${VM} "${METACELLO_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
+${VM} "${METACELLO_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
 zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo "[Pharo] Reloading rest of packages"
@@ -218,7 +218,7 @@ ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Smalltalk vm parameterAt: 45 put:
 env 2>&1 > env.log
 
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.9';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Pharo';repository: 'tonel://${REPOSITORY}/src';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Pharo';repository: 'tonel://${BOOTSTRAP_REPOSITORY}/src';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources. Smalltalk garbageCollect"
 ${VM} "${PHARO_IMAGE_NAME}.image" clean --release
 

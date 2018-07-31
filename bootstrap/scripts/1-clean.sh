@@ -5,7 +5,7 @@
 set -x
 set -e
 
-. ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/envvars.sh
+. ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/envvars.sh
 
 #pushd "${BOOTSTRAP_REPOSITORY}"
 rm -f bootstrapImage.zip

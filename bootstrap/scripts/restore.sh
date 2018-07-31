@@ -7,7 +7,7 @@
 set -x
 set -e
 
-source bootstrap/scripts/envvars.sh
+. ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/envvars.sh
 
 pushd "${BOOTSTRAP_REPOSITORY}"
 bootstrap/scripts/1-clean.sh

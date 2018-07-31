@@ -5,7 +5,7 @@
 set -x
 set -e
 
-. ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/envvars.sh
+. ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/envvars.sh
 
 mkdir -p "${CACHE}" #required to generate hermes files
 

@@ -24,7 +24,7 @@
 set -x
 set -e
 
-. ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/envvars.sh
+. ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/envvars.sh
 
 SCRIPTS=${BOOTSTRAP_REPOSITORY}/bootstrap/scripts
 
