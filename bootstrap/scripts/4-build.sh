@@ -108,7 +108,7 @@ METACELLO_IMAGE_NAME=${PREFIX}-metacello-${SUFFIX}
 PHARO_IMAGE_NAME=${PREFIX}-${SUFFIX}
 
 #Get inside the bootstrap-cache folder. Pharo interprets relatives as relatives to the image and not the 'working directory'
-cd "${BOOTSTRAP_CACHE}"
+cd "${CACHE}"
 
 
 #Prepare
