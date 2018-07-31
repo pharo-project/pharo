@@ -1,5 +1,26 @@
+"
+I implement the modified Lempel-Ziv-Welch (LZW) algorithm for lossless GIF bitmap compression. My primary purpose is to encode/compress streams of bitmap bytes as specified by the GIF standard.
+
+My instances require at minimum:
+- A size of bytes in a row of bitmap bits for the image (#rowByteSize:)
+- The extent of the image being encoded (#extent:)
+- An array of bits in a bitmap (as bytes) for encoding (sent with #encode:)
+- A stream of Bytes on which to output the encoded bytes (#codeStream:)
+- A minimum code size as specified from GIF header information (#minimimCodeSize:)
+
+Once all of these are set, implementors simply send the #encode: message along with a
+collection of bitmap values as bytes that need to be encoded. Instead of responding with a collection of encoded bytes, #encode: will write to the output stream specified by #codeStream: directly.
+
+For an example of use, see GIFReadWriter >> #writeBitData:
+
+NOTE: LZW compression for GIFs is complex and the #encode: method is largely taken verbatim from Kazuki Yasumatsu's 1995 Squeak implementation (as opposed to the Decoder, which was heavily refactored for readability and comprehension). Any contributions to fleshing this out in a comprehensible way are much appreciated!
+
+See:
+https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch
+https://www.w3.org/Graphics/GIF/spec-gif89a.txt
+"
 Class {
-	#name : #NeoLzwGifEncoder,
+	#name : #LzwGifEncoder,
 	#superclass : #Object,
 	#instVars : [
 		'suffixTable',
@@ -26,7 +47,7 @@ Class {
 }
 
 { #category : #private }
-NeoLzwGifEncoder >> checkCodeSize [
+LzwGifEncoder >> checkCodeSize [
 	"Determine whether or not we need to increment
 	the codeSize"
 	(nextAvailableCode > maxCode and: [ codeSize < 12 ])
@@ -36,7 +57,7 @@ NeoLzwGifEncoder >> checkCodeSize [
 ]
 
 { #category : #'as yet unclassified' }
-NeoLzwGifEncoder >> checkSettings [
+LzwGifEncoder >> checkSettings [
 	"Ensure that the appropriate variables
 	that are needed for proper encoding
 	have been set"
@@ -46,19 +67,19 @@ NeoLzwGifEncoder >> checkSettings [
 ]
 
 { #category : #accessing }
-NeoLzwGifEncoder >> codeStream: aByteStream [
+LzwGifEncoder >> codeStream: aByteStream [
 	codeStream := aByteStream.
 ]
 
 { #category : #accessing }
-NeoLzwGifEncoder >> dimensions: anExtentPoint [
+LzwGifEncoder >> dimensions: anExtentPoint [
 	"Set the extent (as point) of the
 	image that will be encoded"
 	dimensions := anExtentPoint
 ]
 
 { #category : #converting }
-NeoLzwGifEncoder >> encode: bits [
+LzwGifEncoder >> encode: bits [
 	| maxBits maxMaxCode tSize tShift fCode ent pixel index nomatch disp |
 	self checkSettings.
 	xPos := yPos := 0.
@@ -143,14 +164,14 @@ NeoLzwGifEncoder >> encode: bits [
 ]
 
 { #category : #accessing }
-NeoLzwGifEncoder >> extent: anExtentPoint [
+LzwGifEncoder >> extent: anExtentPoint [
 	"Set the extent (as point) of the
 	image that will be encoded"
 	dimensions := anExtentPoint
 ]
 
 { #category : #'private-bits access' }
-NeoLzwGifEncoder >> flushBits [
+LzwGifEncoder >> flushBits [
 	numLeftoverBits = 0 ifFalse: 
 		[ self nextBytePut: bitBuffer.
 		numLeftoverBits := 0 ].
@@ -158,7 +179,7 @@ NeoLzwGifEncoder >> flushBits [
 ]
 
 { #category : #private }
-NeoLzwGifEncoder >> flushBuffer [
+LzwGifEncoder >> flushBuffer [
 	"Write out the current codeStreamBuffer size,
 	followed by its actual contents, to the true
 	output codeStream"
@@ -170,7 +191,7 @@ NeoLzwGifEncoder >> flushBuffer [
 ]
 
 { #category : #initialization }
-NeoLzwGifEncoder >> initializeParameters [
+LzwGifEncoder >> initializeParameters [
 	"The initial code size and mask settings
 	also get reinitialized each time"
 	codeSize := minimumCodeSize + 1.
@@ -181,12 +202,12 @@ NeoLzwGifEncoder >> initializeParameters [
 ]
 
 { #category : #accessing }
-NeoLzwGifEncoder >> minimumCodeSize: anInteger [
+LzwGifEncoder >> minimumCodeSize: anInteger [
 	minimumCodeSize := anInteger
 ]
 
 { #category : #'private-packing' }
-NeoLzwGifEncoder >> nextBytePut: anInteger [
+LzwGifEncoder >> nextBytePut: anInteger [
 	"Write a complete byte to the output byteStream.
 	Be sure to reset one we reach the limit, which is
 	255 for GIF files. Then write the length of the next
@@ -197,7 +218,7 @@ NeoLzwGifEncoder >> nextBytePut: anInteger [
 ]
 
 { #category : #'private-bits access' }
-NeoLzwGifEncoder >> nextCodePut: anInteger [
+LzwGifEncoder >> nextCodePut: anInteger [
 	"Attempt to put the bits on the
 	output stream. If we have remaining bits,
 	then we need to use bitwise operations to
@@ -224,7 +245,7 @@ NeoLzwGifEncoder >> nextCodePut: anInteger [
 ]
 
 { #category : #'private-encoding' }
-NeoLzwGifEncoder >> readPixelFrom: bits [
+LzwGifEncoder >> readPixelFrom: bits [
 	"Using the current x and y positions and
 	the specified byte size for a row, determine
 	the value for the next pixel in the provided bits"
@@ -237,12 +258,12 @@ NeoLzwGifEncoder >> readPixelFrom: bits [
 ]
 
 { #category : #accessing }
-NeoLzwGifEncoder >> rowByteSize: anInteger [
+LzwGifEncoder >> rowByteSize: anInteger [
 	rowByteSize := anInteger
 ]
 
 { #category : #'as yet unclassified' }
-NeoLzwGifEncoder >> tablesInclude: aValue withIndexBuffer: aCollection [
+LzwGifEncoder >> tablesInclude: aValue withIndexBuffer: aCollection [
 	"Answer true if we are able to find the given value
 	in the prefix/suffix tables by tracing the values
 	in the given collection. False otherwise."
@@ -255,7 +276,7 @@ NeoLzwGifEncoder >> tablesInclude: aValue withIndexBuffer: aCollection [
 ]
 
 { #category : #private }
-NeoLzwGifEncoder >> updatePixelPosition [
+LzwGifEncoder >> updatePixelPosition [
 	"Increment the xPos. If we are at the width
 	position, set xPos to 0 and increment the yPos"
 	xPos := xPos + 1.
@@ -265,7 +286,7 @@ NeoLzwGifEncoder >> updatePixelPosition [
 ]
 
 { #category : #writing }
-NeoLzwGifEncoder >> writeCodeAndCheckCodeSize: aCode [
+LzwGifEncoder >> writeCodeAndCheckCodeSize: aCode [
 	self nextCodePut: aCode.
 	self checkCodeSize.
 ]

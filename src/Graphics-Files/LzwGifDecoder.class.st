@@ -1,5 +1,24 @@
+"
+I implement the modified Lempel-Ziv-Welch (LZW) algorithm for lossless GIF decompression. My primary purpose is to decode streams of bytes that have been encoded with this modified version of LZW as used in the GIF standard.
+
+My instances require, at minimum, a maximum code size (via #maxCode:), a minimum code size (via #minimumCodeSize:), and of course a stream of bytes to decode (via #codeStream:). Once these are set, implementors can simply send the #decode message, which will respond with a decoded ByteArray.
+
+Optionally, implementors can make use of the #onDecodedBit: message, which takes a Block with a single argument corresponding to a decoded bit. This Block is called each time a complete byte/bit-level value for the bitmap has been decoded.
+
+For an example of use, see GIFReadWriter >> #readBitDataOnFrame:.
+
+I am separated out from GIFReadWriter for clarity and better debugging.
+
+
+
+See:
+https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch
+https://www.w3.org/Graphics/GIF/spec-gif89a.txt
+
+
+"
 Class {
-	#name : #NeoLzwGifDecoder,
+	#name : #LzwGifDecoder,
 	#superclass : #Object,
 	#instVars : [
 		'suffixTable',
@@ -20,7 +39,7 @@ Class {
 }
 
 { #category : #private }
-NeoLzwGifDecoder >> checkCodeSize [
+LzwGifDecoder >> checkCodeSize [
 	"Ensure that the next available code to enter
 	into the table is not equal to the bitMask.
 	If it is, we increment the code size and update the
@@ -39,7 +58,7 @@ NeoLzwGifDecoder >> checkCodeSize [
 ]
 
 { #category : #'as yet unclassified' }
-NeoLzwGifDecoder >> codeStream: aReadableStream [ 
+LzwGifDecoder >> codeStream: aReadableStream [ 
 	"Set the stream of encoded bytes we will decode
 	to be the internal codeStream. We read off the first
 	byte immediately, which tells us how many subsequent bytes
@@ -51,7 +70,7 @@ NeoLzwGifDecoder >> codeStream: aReadableStream [
 ]
 
 { #category : #api }
-NeoLzwGifDecoder >> decode [
+LzwGifDecoder >> decode [
 	| currentCode prevCode outStream |
 	self initializeTables.
 	outStream := WriteStream with: (ByteArray new).
@@ -84,7 +103,7 @@ NeoLzwGifDecoder >> decode [
 ]
 
 { #category : #'as yet unclassified' }
-NeoLzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteStream [
+LzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteStream [
 	"Check for the code in the tables
 	and perform the appropriate LZW action"
 	| first searchIndex searchStack |
@@ -147,7 +166,7 @@ NeoLzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWri
 ]
 
 { #category : #initialization }
-NeoLzwGifDecoder >> initializeTables [
+LzwGifDecoder >> initializeTables [
 	"The two arrays are our lookup tables.
 	We do this instead of Dictionaries because
 	the method is much, much faster"
@@ -170,17 +189,17 @@ NeoLzwGifDecoder >> initializeTables [
 ]
 
 { #category : #'as yet unclassified' }
-NeoLzwGifDecoder >> maxCode: anInteger [ 
+LzwGifDecoder >> maxCode: anInteger [ 
 	maxCode := anInteger
 ]
 
 { #category : #'as yet unclassified' }
-NeoLzwGifDecoder >> minimumCodeSize: anInteger [ 
+LzwGifDecoder >> minimumCodeSize: anInteger [ 
 	minimumCodeSize := anInteger
 ]
 
 { #category : #'private-packing' }
-NeoLzwGifDecoder >> nextByte [
+LzwGifDecoder >> nextByte [
 	| nextChunkSize |
 	codeStreamBuffer atEnd
 		ifTrue: [ 
@@ -191,7 +210,7 @@ NeoLzwGifDecoder >> nextByte [
 ]
 
 { #category : #'as yet unclassified' }
-NeoLzwGifDecoder >> nextCode [
+LzwGifDecoder >> nextCode [
 	| integer numBitsRead newRemainder shiftAmount byte |
 	"Retrieve the next code of codeSize bits.
 	Store the remaining bits etc for later computation"
@@ -218,7 +237,7 @@ NeoLzwGifDecoder >> nextCode [
 ]
 
 { #category : #'as yet unclassified' }
-NeoLzwGifDecoder >> onDecodedBit: aBlock [
+LzwGifDecoder >> onDecodedBit: aBlock [
 	"This block will be executed once each time a new
 	value is decoded from the stream, with the value
 	as the sole argument passed to the block"
@@ -226,7 +245,7 @@ NeoLzwGifDecoder >> onDecodedBit: aBlock [
 ]
 
 { #category : #'private-packing' }
-NeoLzwGifDecoder >> peekByte [
+LzwGifDecoder >> peekByte [
 	| nextChunkSize |
 	codeStreamBuffer atEnd
 		ifTrue: [ 
@@ -237,7 +256,7 @@ NeoLzwGifDecoder >> peekByte [
 ]
 
 { #category : #writing }
-NeoLzwGifDecoder >> writeBit: anInteger on: aWriteStream [
+LzwGifDecoder >> writeBit: anInteger on: aWriteStream [
 	"Write the incoming decoded value onto a
 	writestream. If I have an outBlock set, 
 	send this value also"

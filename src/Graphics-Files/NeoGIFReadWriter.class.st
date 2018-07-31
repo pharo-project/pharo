@@ -1,7 +1,22 @@
 "
-Copyright (c) Kazuki Yasumatsu, 1995. All rights reserved.
+Updated implementation of a GIF file (byte-level) decoder.
 
-Used with permission.  Modified for use in Squeak.
+I implment a Stream-like behavior over a GIF image file, and can both read and write GIF files.
+
+Previously, two classes distinguished between ""still"" and ""animated"" GIFs. However, the standard specifies that any GIF can have ""frames"" and be animated. This reimplementation treats this as normal.
+
+See these links for more detailed information:
+https://www.w3.org/Graphics/GIF/spec-gif89a.txt
+https://en.wikipedia.org/wiki/GIF
+http://www.matthewflickinger.com/lab/whatsinagif/bits_and_bytes.asp
+
+For writing GIF files, I take a collection of AnimatedImageFrame objects and write the appropriate headers, Graphics Control Extensions, and everything else needed for writing an animated GIF.
+
+For reading GIF files, I take a binary filestream and set my own `frames` variable to be a collection of AnimatedImageFrames, which themselves contain decoded Forms and instructions for disposal, delay, etc.
+
+NOTE: I make use of the LzwGifDecoder and LzwGifEncoder classes in order to encode/decode individual bitmap data for each image frame of the GIF.
+
+See `GIFReadWriter exampleAnim` for more information.
 "
 Class {
 	#name : #NeoGIFReadWriter,
@@ -100,66 +115,11 @@ NeoGIFReadWriter class >> wantsToHandleGIFs [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
-NeoGIFReadWriter >> altReadBitDataOnFrame: aFrame [
-	"using modified Lempel-Ziv Welch algorithm."
-	| initCodeSize  packedBits hasLocalColor localColorSize maxOutCodes decoder c  bytes |
-	maxOutCodes := 4096.
-	offset := self readWord @ self readWord.	"Image Left@Image Top"
-	width := self readWord.
-	height := self readWord.
-
-	"---
-	Local Color Table Flag        1 Bit
-	Interlace Flag                1 Bit
-	Sort Flag                     1 Bit
-	Reserved                      2 Bits
-	Size of Local Color Table     3 Bits
-	----"
-	packedBits := self next.
-	interlace := (packedBits bitAnd: 64) ~= 0.
-	hasLocalColor := (packedBits bitAnd: 128) ~= 0.
-	localColorSize := 1 bitShift: (packedBits bitAnd: 7) + 1.
-	hasLocalColor ifTrue: [ 
-		localColorTable := self readColorTable: localColorSize ].
-	pass := 0.
-	xpos := 0.
-	ypos := 0.
-	rowByteSize := (width + 3) // 4 * 4.
-	bytes := ByteArray new: rowByteSize * height.
-
-	initCodeSize := self next.
-
-	c := ColorForm 
-		extent: width@height
-		depth: 8. 
-
-	decoder := NeoLzwGifDecoder new.
-	[ | position chunk |
-		position := stream position.
-		chunk := stream upTo: ((1 bitShift: initCodeSize) + 1).
-		(Smalltalk at: #_streamData) add: chunk.
-		(Smalltalk at: #_codeSizeData) add: initCodeSize.
-		stream position: position ] value.
-	decoder 
-		codeStream: stream;
-		minimumCodeSize: initCodeSize;
-		maxCode: maxOutCodes;
-		onDecodedBit: [ :bit |
-			bytes
-				at: (ypos * rowByteSize + xpos + 1)
-				put: bit.
-			self updatePixelPosition ].
-	decoder decode.
-	c bits copyFromByteArray: bytes.
-	^ c
-]
-
 { #category : #accessing }
 NeoGIFReadWriter >> backgroundColor [
 	backgroundColorIndex ifNotNil: [ 
 		colorPalette ifNotNil: [ 
-			^ colorPalette at: backgroundColorIndex + 1]].
+			^ colorPalette at: backgroundColorIndex]].
 	^ Color transparent.
 ]
 
@@ -349,7 +309,7 @@ NeoGIFReadWriter >> nextPutImage: aForm [
 	self writeBitData: reduced bits.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private-decoding' }
 NeoGIFReadWriter >> processColorsFor: anImageFrame [
 	"Colors can only be mapped after the GCE has been evaluated
 	for a given image frame. We perform this action using either
@@ -421,6 +381,55 @@ NeoGIFReadWriter >> readApplicationExtension [
 ]
 
 { #category : #'private-decoding' }
+NeoGIFReadWriter >> readBitDataOnFrame: aFrame [
+	"using modified Lempel-Ziv Welch algorithm."
+	| initCodeSize  packedBits hasLocalColor localColorSize maxOutCodes decoder c  bytes |
+	maxOutCodes := 4096.
+	offset := self readWord @ self readWord.	"Image Left@Image Top"
+	width := self readWord.
+	height := self readWord.
+
+	"---
+	Local Color Table Flag        1 Bit
+	Interlace Flag                1 Bit
+	Sort Flag                     1 Bit
+	Reserved                      2 Bits
+	Size of Local Color Table     3 Bits
+	----"
+	packedBits := self next.
+	interlace := (packedBits bitAnd: 64) ~= 0.
+	hasLocalColor := (packedBits bitAnd: 128) ~= 0.
+	localColorSize := 1 bitShift: (packedBits bitAnd: 7) + 1.
+	hasLocalColor ifTrue: [ 
+		localColorTable := self readColorTable: localColorSize ].
+	pass := 0.
+	xpos := 0.
+	ypos := 0.
+	rowByteSize := (width + 3) // 4 * 4.
+	bytes := ByteArray new: rowByteSize * height.
+
+	initCodeSize := self next.
+
+	c := ColorForm 
+		extent: width@height
+		depth: 8. 
+
+	decoder := LzwGifDecoder new.
+	decoder 
+		codeStream: stream;
+		minimumCodeSize: initCodeSize;
+		maxCode: maxOutCodes;
+		onDecodedBit: [ :bit |
+			bytes
+				at: (ypos * rowByteSize + xpos + 1)
+				put: bit.
+			self updatePixelPosition ].
+	decoder decode.
+	c bits copyFromByteArray: bytes.
+	^ c
+]
+
+{ #category : #'private-decoding' }
 NeoGIFReadWriter >> readBody [
 	"Read the GIF blocks. Modified to return a frame."
 	| form extype block blocksize packedFields delay1 disposal frame |
@@ -434,7 +443,7 @@ NeoGIFReadWriter >> readBody [
 		block = ImageSeparator 
 			ifTrue: [ 
 				frame ifNil: [ frame := AnimatedImageFrame new ].
-				frame form: (self altReadBitDataOnFrame: frame). "Adjusting message for testing"
+				frame form: (self readBitDataOnFrame: frame). "Adjusting message for testing"
 				frame offset: offset. "Set from instance var, which is set in readBitData"
 				
 				frames add: frame.
@@ -474,7 +483,7 @@ NeoGIFReadWriter >> readColorTable: numberOfEntries [
 	^ array
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private-decoding' }
 NeoGIFReadWriter >> readDisposal: aPackedByte [
 	"Read the three-bit disposal flag from
 	the packed byte in the Graphic Control Extension block.
@@ -614,7 +623,7 @@ NeoGIFReadWriter >> updatePixelPosition [
 NeoGIFReadWriter >> writeBitData: bits [ 
 	"using modified Lempel-Ziv Welch algorithm."
 	| encoder initCodeSize |
-	encoder := NeoLzwGifEncoder new
+	encoder := LzwGifEncoder new
 		rowByteSize: (width * 8 + 31) // 32 * 4;
 		extent: width@height;
 		codeStream: stream.
