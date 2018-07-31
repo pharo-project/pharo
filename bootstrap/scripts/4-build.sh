@@ -78,9 +78,6 @@ if [ -z "${ARCH_DESCRIPTION}" ]; then
   exit 1;
 fi
 
-# Script directory
-__this_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 PREFIX=Pharo7.0
 
 if [[ -z "${BOOTSTRAP_REPOSITORY}" ]]; then
@@ -111,7 +108,7 @@ METACELLO_IMAGE_NAME=${PREFIX}-metacello-${SUFFIX}
 PHARO_IMAGE_NAME=${PREFIX}-${SUFFIX}
 
 #Get inside the bootstrap-cache folder. Pharo interprets relatives as relatives to the image and not the 'working directory'
-cd "${CACHE}"
+cd "${BOOTSTRAP_CACHE}"
 
 
 #Prepare

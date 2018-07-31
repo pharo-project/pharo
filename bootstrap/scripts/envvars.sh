@@ -30,11 +30,11 @@ then
   ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." ; pwd -P)"
   export BOOTSTRAP_REPOSITORY="${ROOT_DIR}"
 else
-  ROOT_DIR="$(cd "$(dirname "$0")" ; pwd -P)"
+  ROOT_DIR="$(pwd -P)"
 fi
 
 CACHE="${BOOTSTRAP_CACHE:-${ROOT_DIR}/bootstrap-cache}"
 
 # Ensure that BOOTSTRAP_REPOSITORY is propagated
 # This is the VM used to bootstrap, i.e. the target VM
-VM="${ROOT_DIR}./vmtarget/pharo --headless"
+VM="${ROOT_DIR}/vmtarget/pharo --headless"
