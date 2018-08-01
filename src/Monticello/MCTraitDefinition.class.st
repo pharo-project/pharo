@@ -185,6 +185,9 @@ MCTraitDefinition >> requirements [
 
 { #category : #printing }
 MCTraitDefinition >> slotDefinitionString [
+
+	variables ifNil: [ ^ '{ }' ].
+
 	^ self usesSpecialVariables 
 		ifTrue: [ self instanceVariables asString ]
 		ifFalse: [ 
