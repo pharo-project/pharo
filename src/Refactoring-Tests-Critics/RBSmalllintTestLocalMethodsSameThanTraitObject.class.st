@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #asserting }
-RBSmalllintTestLocalMethodsSameThanTraitObject >> assert: aBoolean [
-	"We check for true explicitly to make the assertion fail for non booleans"
-	aBoolean == true ifFalse: [self signalFailure: 'Assertion failed']
+RBSmalllintTestLocalMethodsSameThanTraitObject >> skip [
+	"Don't run this test, and don't mark it as failure"
+	TestSkip signal
 ]

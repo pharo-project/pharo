@@ -1,6 +1,8 @@
 "
-I represent the user environment variables.
-See  `man environ` for more details.
+I represent the user environment variables. See  `man environ` for more details.
+Get access using: 
+
+	Smalltalk os environment
 "
 Class {
 	#name : #OSEnvironment,
@@ -11,7 +13,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #'System-OSEnvironments'
+	#category : #'System-OSEnvironments-Base'
 }
 
 { #category : #'instance creation' }
@@ -19,12 +21,7 @@ OSEnvironment class >> current [
 	^ Current ifNil: [ Current := self environmentFor: OSPlatform current ]
 ]
 
-{ #category : #'instance creation' }
-OSEnvironment class >> default [
-	^ self current.
-]
-
-{ #category : #accessing }
+{ #category : #'private - accessing' }
 OSEnvironment class >> environmentFor: aPlatform [
 	| environmentClass |
 	
@@ -35,6 +32,12 @@ OSEnvironment class >> environmentFor: aPlatform [
 	^ (environmentClass notNil and: [ environmentClass isAvailable  ])  
 		ifTrue: [ environmentClass platform: aPlatform ]
 		ifFalse: [ PlatformIndependentEnvironment platform: aPlatform ]
+]
+
+{ #category : #examples }
+OSEnvironment class >> example [
+
+	Smalltalk os environment asDictionary inspect
 ]
 
 { #category : #'initialize-release' }
