@@ -521,7 +521,7 @@ RubSmalltalkEditor >> findSelectorFromAST [
 
 	| node fallbackBlock |
 
-	fallbackBlock := [^self].
+	fallbackBlock := [ ^ nil ].
 	node := self bestNodeInTextAreaOnError: fallbackBlock.
 	
 	node isMethod ifFalse: [ 
@@ -853,9 +853,17 @@ RubSmalltalkEditor >> selectPrecedingIdentifier [
 RubSmalltalkEditor >> selectedSelector [
 	"Try to make a selector out of the current text selection"
 
-	| node |
+	| node selectorFromAst |
 	
-	self hasSelection ifFalse: [ ^self findSelectorFromAST ].
+	self hasSelection ifFalse: [ 
+		selectorFromAst := self findSelectorFromAST.
+		^ selectorFromAst 
+			ifNotNil: [ 
+				selectorFromAst ]
+			ifNil: [ 
+				self selectLine.
+				^ self selectedSelector ] ].
+	
 	node := RBParser parseFaultyExpression: self selection string.
 	node
 		nodesDo: [ :n | 
