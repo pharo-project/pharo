@@ -119,7 +119,7 @@ GIFReadWriter class >> wantsToHandleGIFs [
 GIFReadWriter >> backgroundColor [
 	backgroundColorIndex ifNotNil: [ 
 		colorPalette ifNotNil: [ 
-			^ colorPalette at: backgroundColorIndex]].
+			^ colorPalette at: backgroundColorIndex + 1]].
 	^ Color transparent.
 ]
 
@@ -324,11 +324,9 @@ GIFReadWriter >> processColorsFor: anImageFrame [
 		ifNotNil: [ 
 			transparentIndex + 1 > colorTable size
 				ifTrue: [ 
-					anImageFrame transparentColor: Color white.
 					colorTable := colorTable
 										forceTo: transparentIndex + 1
 										paddingWith: Color white ].
-				"anImageFrame transparentColor: (colorTable at: transparentIndex + 1)."
 				colorTable
 					at: transparentIndex + 1
 					put: Color transparent ].
