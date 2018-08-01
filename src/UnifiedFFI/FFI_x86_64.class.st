@@ -20,6 +20,11 @@ FFI_x86_64 >> externalLongType [
 ]
 
 { #category : #types }
+FFI_x86_64 >> externalSizeTType [
+	^ ExternalType unsignedLongLong
+]
+
+{ #category : #types }
 FFI_x86_64 >> externalULongType [
 	^ ExternalType unsignedLongLong
 ]

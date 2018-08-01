@@ -877,11 +877,12 @@ BaselineOfIDE >> loadCalypso [
 
 	"Load Calypso without Iceberg Metacello integration"
 	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
-		
+
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.11.4';
+		repository: 'github://pharo-ide/Calypso:v0.11.5';
 		onConflict: [ :err | err useIncoming ];
+		onUpgrade: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
 	(self class environment at: #ClyBrowser) beAllDefault.
@@ -893,7 +894,7 @@ BaselineOfIDE >> loadCalypso [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.1.1';
+		repository: 'github://pharo-vcs/iceberg:v1.1.2';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 

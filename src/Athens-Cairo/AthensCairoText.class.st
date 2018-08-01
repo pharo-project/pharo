@@ -14,7 +14,7 @@ Class {
 		'fontSize'
 	],
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#category : #'Athens-Cairo-Text'
 }

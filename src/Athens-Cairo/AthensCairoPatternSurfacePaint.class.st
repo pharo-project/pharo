@@ -5,7 +5,7 @@ Class {
 	#name : #AthensCairoPatternSurfacePaint,
 	#superclass : #AthensCairoPatternPaint,
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#category : #'Athens-Cairo-Paints'
 }

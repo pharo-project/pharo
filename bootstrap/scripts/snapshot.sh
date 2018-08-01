@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Make a snapshot of the current bootstrap state.
 #
@@ -9,8 +9,8 @@
 set -x
 set -e
 
-source bootstrap/scripts/envvars.sh
+. ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/envvars.sh
 
-pushd "${REPOSITORY}"
-tar czf "${REPOSITORY}/snapshot.tar.gz" Pharo.image Pharo.changes pharo pharo-ui pharo-vm pharo-local vmtarget bootstrap-cache
+pushd "${BOOTSTRAP_REPOSITORY}"
+tar czf "${BOOTSTRAP_REPOSITORY}/snapshot.tar.gz" Pharo.image Pharo.changes pharo pharo-ui pharo-vm pharo-local vmtarget bootstrap-cache
 popd

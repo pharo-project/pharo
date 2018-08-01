@@ -116,8 +116,8 @@ TBehavior >> allInstVarNames [
 
 	| vars |
 	self superclass == nil
-		ifTrue: [vars := self instVarNames copy]	"Guarantee a copy is answered."
-		ifFalse: [vars := self superclass allInstVarNames , self instVarNames].
+		ifTrue: [vars := self slots collect: #name]	"Guarantee a copy is answered."
+		ifFalse: [vars := self superclass allInstVarNames , (self slots collect: #name)].
 	^vars
 ]
 

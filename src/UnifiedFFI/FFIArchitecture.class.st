@@ -50,6 +50,11 @@ FFIArchitecture >> externalLongType [
 ]
 
 { #category : #types }
+FFIArchitecture >> externalSizeTType [
+	^ ExternalType ulong
+]
+
+{ #category : #types }
 FFIArchitecture >> externalULongType [
 	^ ExternalType ulong
 ]
@@ -97,6 +102,11 @@ FFIArchitecture >> returnSingleFloatsAsDoubles [
 { #category : #'default abi' }
 FFIArchitecture >> shadowCallSpaceSize [
 	^ 0
+]
+
+{ #category : #types }
+FFIArchitecture >> sizeTTypeSize [
+	^ self externalSizeTType byteSize
 ]
 
 { #category : #types }

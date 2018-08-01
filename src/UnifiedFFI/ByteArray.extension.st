@@ -62,6 +62,23 @@ ByteArray >> platformLongAt: byteOffset put: value [
 ]
 
 { #category : #'*UnifiedFFI' }
+ByteArray >> platformSizeTAt: byteOffset [
+	^ self 
+		integerAt: byteOffset 
+		size: FFIArchitecture forCurrentArchitecture sizeTTypeSize
+		signed: false
+]
+
+{ #category : #'*UnifiedFFI' }
+ByteArray >> platformSizeTAt: byteOffset put: value [
+	self 
+		integerAt: byteOffset
+		put: value
+		size: FFIArchitecture forCurrentArchitecture sizeTTypeSize
+		signed: false
+]
+
+{ #category : #'*UnifiedFFI' }
 ByteArray >> platformUnsignedLongAt: byteOffset [
 	^ self 
 		integerAt: byteOffset 
