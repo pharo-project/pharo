@@ -34,6 +34,48 @@ T2TraitMCDefinitions >> testDefinitionHasCorrectStringWithoutSlots [
 ]
 
 { #category : #tests }
+T2TraitMCDefinitions >> testDefinitionOfClassSideTrait [
+	
+	| t1 definition |
+	
+	t1 := self newTrait: #T1 with: #() uses: #().
+	t1 classTrait uses: {} slots: #(aSlot).
+
+	definition := t1 asClassDefinition.
+	
+	self assert: definition classInstanceVariables equals: {#aSlot => InstanceVariableSlot}.
+
+]
+
+{ #category : #tests }
+T2TraitMCDefinitions >> testDefinitionOfClassSideTraitHasCorrectString [
+	
+	| t1 definition |
+	
+	t1 := self newTrait: #T1 with: #() uses: #().
+	t1 classTrait uses: {} slots: #(aSlot).
+
+	definition := t1 asClassDefinition.
+	
+	self assert: definition classDefinitionString equals: t1 class definition 
+
+]
+
+{ #category : #tests }
+T2TraitMCDefinitions >> testDefinitionOfClassSideTraitWithSpecialSlotHasCorrectString [
+	
+	| t1 definition |
+	
+	t1 := self newTrait: #T1 with: #() uses: #().
+	t1 classTrait uses: {} slots: {#aSlot => WeakSlot.}.
+
+	definition := t1 asClassDefinition.
+	
+	self assert: (definition classDefinitionString reject: [ :each | each isSeparator ]) equals: (t1 class definition reject: [ :each | each isSeparator ])
+
+]
+
+{ #category : #tests }
 T2TraitMCDefinitions >> testDefinitionOfNormalClass [
 	| c1 definition |
 	c1 := self newClass: #C1 with: #(a b c) uses: {}.

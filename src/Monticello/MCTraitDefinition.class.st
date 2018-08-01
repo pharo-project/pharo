@@ -51,13 +51,28 @@ MCTraitDefinition >> = aDefinition [
 		and: [self traitCompositionString = aDefinition traitCompositionString
 		and: [category = aDefinition category
 		and: [self slotDefinitionString = aDefinition slotDefinitionString
-		and: [comment = aDefinition comment]]]]]
+		and: [self classInstVarNames  = aDefinition classInstVarNames  
+		and: [comment = aDefinition comment]]]]]]
 ]
 
 { #category : #visiting }
 MCTraitDefinition >> accept: aVisitor [
 	^ aVisitor visitTraitDefinition: self
 
+]
+
+{ #category : #printing }
+MCTraitDefinition >> classSlotDefinitionString [
+
+	^ self usesSpecialVariables 
+		ifTrue: [ self classInstanceVariables asString ]
+		ifFalse: [ 
+			String streamContents: [ :stream |
+				stream nextPutAll: '{ '.
+				self classInstanceVariables 
+					do: [ :each | stream print: each name ]
+					separatedBy: [ stream nextPutAll: '. ' ].
+				stream nextPutAll: ' }']]
 ]
 
 { #category : #installing }
@@ -68,7 +83,10 @@ MCTraitDefinition >> createClass [
 		uses: (Smalltalk compiler evaluate: self traitCompositionString)
 		slots: self instanceVariables
 		category: category.
-	trait ifNotNil: [trait classComment: comment stamp: commentStamp].
+	trait ifNotNil: [
+		trait classComment: comment stamp: commentStamp.
+		self classInstanceVariables ifNotEmpty: [
+			trait classSide slots: self classInstanceVariables ]].
 	^trait
 ]
 
