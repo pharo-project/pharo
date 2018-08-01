@@ -24,9 +24,9 @@
 set -x
 set -e
 
-source bootstrap/scripts/envvars.sh
+. ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/envvars.sh
 
-SCRIPTS=${REPOSITORY}/bootstrap/scripts
+SCRIPTS=${BOOTSTRAP_REPOSITORY}/bootstrap/scripts
 
 #
 # Remove any artifacts from previous runs
