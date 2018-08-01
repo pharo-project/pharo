@@ -16,7 +16,7 @@ For reading GIF files, I take a binary filestream and set my own `frames` variab
 
 NOTE: I make use of the LzwGifDecoder and LzwGifEncoder classes in order to encode/decode individual bitmap data for each image frame of the GIF.
 
-See `GIFReadWriter exampleAnim` for more information.
+See `GIFReadWriter exampleAnim` for more information.  
 "
 Class {
 	#name : #GIFReadWriter,
