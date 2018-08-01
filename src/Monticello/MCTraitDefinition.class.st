@@ -50,7 +50,7 @@ MCTraitDefinition >> = aDefinition [
 		and: [(self isRevisionOf: aDefinition)
 		and: [self traitCompositionString = aDefinition traitCompositionString
 		and: [category = aDefinition category
-		and: [self instanceVariablesString = aDefinition instanceVariablesString
+		and: [self slotDefinitionString = aDefinition slotDefinitionString
 		and: [comment = aDefinition comment]]]]]
 ]
 
