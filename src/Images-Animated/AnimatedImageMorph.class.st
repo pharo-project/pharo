@@ -1,3 +1,12 @@
+"
+I am a Morph that displays a sequence of Forms order, each as represented by AnimatedImageFrame objects.
+
+To set or access the AnimatedImageFrame objects that I should display, use #frames and #frames: with a collection of frames.
+
+For convenience, the #forms message will respond with a collection of the Forms inside of each AnimatedImageFrame.
+
+Unlike ImageMorph (from whom I do not subclass), my extent must be explicitly set since each frame's form can have different dimensions and offsets.
+"
 Class {
 	#name : #AnimatedImageMorph,
 	#superclass : #Morph,
@@ -37,7 +46,7 @@ AnimatedImageMorph >> currentFrame [
 	^ currentFrame
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 AnimatedImageMorph >> defaultDelay [
 	^ 100
 ]
@@ -81,7 +90,7 @@ AnimatedImageMorph >> initialize [
 	activeForm := Form extent: self extent.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 AnimatedImageMorph >> leaveCurrent [
 	"Update the activeForm using the #leaveCurrent
 	disposal method"
@@ -99,7 +108,7 @@ AnimatedImageMorph >> prevFrame [
 	^ prevFrame
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 AnimatedImageMorph >> restoreBackground [
 	"Update the activeForm using the #restoreBackground
 	disposal method"
@@ -151,7 +160,7 @@ AnimatedImageMorph >> stepTime [
 	^ currentFrame delay.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 AnimatedImageMorph >> updateActiveForm [
 	"Update the activeForm of the receiver based upon the
 	disposal rules of the current and previous frames."
