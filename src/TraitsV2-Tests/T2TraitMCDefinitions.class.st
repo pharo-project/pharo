@@ -8,6 +8,32 @@ Class {
 }
 
 { #category : #tests }
+T2TraitMCDefinitions >> testDefinitionHasCorrectString [
+	| t2 definition t1 definitionString |
+	t1 := self newTrait: #T1 with: {#x => PropertySlot. #y => PropertySlot }. 
+	t2 := self newTrait: #T2 with: {#a => PropertySlot. #b => PropertySlot } uses: t1.
+
+	definition := t2 asClassDefinition.				
+	definitionString := String streamContents: [ :s | definition printDefinitionOn: s ].
+ 	
+ 	self assert: (definitionString reject: [ :each | each isSeparator]) equals: (t2 definition reject: [ :each | each isSeparator ]).
+
+]
+
+{ #category : #tests }
+T2TraitMCDefinitions >> testDefinitionHasCorrectStringWithoutSlots [
+	| t2 definition t1 definitionString |
+	t1 := self newTrait: #T1 with: {}. 
+	t2 := self newTrait: #T2 with: {#a. #b } uses: t1.
+
+	definition := t2 asClassDefinition.				
+	definitionString := String streamContents: [ :s | definition printDefinitionOn: s ].
+		
+	self assert: (definitionString reject: [ :each | each isSeparator ]) equals: (t2 definition reject: [ :each | each isSeparator ]).
+
+]
+
+{ #category : #tests }
 T2TraitMCDefinitions >> testDefinitionOfNormalClass [
 	| c1 definition |
 	c1 := self newClass: #C1 with: #(a b c) uses: {}.
@@ -24,7 +50,7 @@ T2TraitMCDefinitions >> testDefinitionOfNormalClassWithSlots [
 	| c1 definition |
 	c1 := self newClass: #C1 with: { #a => PropertySlot. #b => PropertySlot } uses: {}.
 	definition := c1 asClassDefinition.
-	
+		
 	self assert: definition instanceVariablesString equals: '#a => PropertySlot #b => PropertySlot'.
 	self assert: definition instanceVariables size equals: 2.
 	self assert: definition traitComposition equals: '{}'.	
@@ -63,7 +89,7 @@ T2TraitMCDefinitions >> testDefinitionOfTraitUsingTraitWithSlots [
 	t2 := self newTrait: #T2 with: {#a => PropertySlot. #b => PropertySlot } uses: t1.
 
 	definition := t2 asClassDefinition.	
-		
+				
 	self assert: definition instanceVariablesString equals: '#a => PropertySlot #b => PropertySlot'.
 	self assert: definition instanceVariables size equals: 2.
 	self assert: definition traitComposition equals: 'T1'.	

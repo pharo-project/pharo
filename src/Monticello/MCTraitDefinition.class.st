@@ -50,7 +50,8 @@ MCTraitDefinition >> = aDefinition [
 		and: [(self isRevisionOf: aDefinition)
 		and: [self traitCompositionString = aDefinition traitCompositionString
 		and: [category = aDefinition category
-		and: [comment = aDefinition comment]]]]
+		and: [self instanceVariablesString = aDefinition instanceVariablesString
+		and: [comment = aDefinition comment]]]]]
 ]
 
 { #category : #visiting }
@@ -153,7 +154,16 @@ MCTraitDefinition >> printDefinitionOn: stream [
 		 tab;
 		 nextPutAll: 'uses: ';
 		 nextPutAll: self traitCompositionString;
-		 cr;
+		 cr.
+
+	self instanceVariablesString isEmpty ifFalse: [
+			stream 
+				tab;
+				nextPutAll: 'slots: ';
+		 		nextPutAll: self slotDefinitionString;
+				cr ].
+		
+	stream
 		 tab;
 		 nextPutAll: 'category: ';
 		 store: self category asString
@@ -171,4 +181,17 @@ MCTraitDefinition >> requirements [
 	tokens := traitComposition parseLiterals.
 	traitNames := tokens select: [:each | each first isUppercase].
 	^traitNames asArray
+]
+
+{ #category : #printing }
+MCTraitDefinition >> slotDefinitionString [
+	^ self usesSpecialVariables 
+		ifTrue: [ self instanceVariables asString ]
+		ifFalse: [ 
+			String streamContents: [ :stream |
+				stream nextPutAll: '{ '.
+				self instanceVariables 
+					do: [ :each | stream print: each name ]
+					separatedBy: [ stream nextPutAll: '. ' ].
+				stream nextPutAll: ' }']]
 ]
