@@ -50,13 +50,29 @@ MCTraitDefinition >> = aDefinition [
 		and: [(self isRevisionOf: aDefinition)
 		and: [self traitCompositionString = aDefinition traitCompositionString
 		and: [category = aDefinition category
-		and: [comment = aDefinition comment]]]]
+		and: [self slotDefinitionString = aDefinition slotDefinitionString
+		and: [self classInstVarNames  = aDefinition classInstVarNames  
+		and: [comment = aDefinition comment]]]]]]
 ]
 
 { #category : #visiting }
 MCTraitDefinition >> accept: aVisitor [
 	^ aVisitor visitTraitDefinition: self
 
+]
+
+{ #category : #printing }
+MCTraitDefinition >> classSlotDefinitionString [
+
+	^ self usesSpecialVariables 
+		ifTrue: [ self classInstanceVariables asString ]
+		ifFalse: [ 
+			String streamContents: [ :stream |
+				stream nextPutAll: '{ '.
+				self classInstanceVariables 
+					do: [ :each | stream print: each name ]
+					separatedBy: [ stream nextPutAll: '. ' ].
+				stream nextPutAll: ' }']]
 ]
 
 { #category : #installing }
@@ -67,7 +83,10 @@ MCTraitDefinition >> createClass [
 		uses: (Smalltalk compiler evaluate: self traitCompositionString)
 		slots: self instanceVariables
 		category: category.
-	trait ifNotNil: [trait classComment: comment stamp: commentStamp].
+	trait ifNotNil: [
+		trait classComment: comment stamp: commentStamp.
+		self classInstanceVariables ifNotEmpty: [
+			trait classSide slots: self classInstanceVariables ]].
 	^trait
 ]
 
@@ -153,7 +172,16 @@ MCTraitDefinition >> printDefinitionOn: stream [
 		 tab;
 		 nextPutAll: 'uses: ';
 		 nextPutAll: self traitCompositionString;
-		 cr;
+		 cr.
+
+	self instanceVariablesString isEmpty ifFalse: [
+			stream 
+				tab;
+				nextPutAll: 'slots: ';
+		 		nextPutAll: self slotDefinitionString;
+				cr ].
+		
+	stream
 		 tab;
 		 nextPutAll: 'category: ';
 		 store: self category asString
@@ -171,4 +199,20 @@ MCTraitDefinition >> requirements [
 	tokens := traitComposition parseLiterals.
 	traitNames := tokens select: [:each | each first isUppercase].
 	^traitNames asArray
+]
+
+{ #category : #printing }
+MCTraitDefinition >> slotDefinitionString [
+
+	variables ifNil: [ ^ '{ }' ].
+
+	^ self usesSpecialVariables 
+		ifTrue: [ self instanceVariables asString ]
+		ifFalse: [ 
+			String streamContents: [ :stream |
+				stream nextPutAll: '{ '.
+				self instanceVariables 
+					do: [ :each | stream print: each name ]
+					separatedBy: [ stream nextPutAll: '. ' ].
+				stream nextPutAll: ' }']]
 ]
