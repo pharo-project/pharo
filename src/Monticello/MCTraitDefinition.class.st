@@ -118,6 +118,7 @@ MCTraitDefinition >> initializeWithName: classNameString
 		traitComposition := traitCompositionString.
 	     category := categoryString.
 		comment := commentString withSqueakLineEndings.
+		variables := OrderedCollection  new.
 		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp]
 
 ]
