@@ -26,8 +26,8 @@ cd ..
 
 
 # Downloads a SPUR vm for the configured architecture
-mkdir vmtarget
-cd vmtarget
+mkdir ${CACHE}/vmtarget
+cd ${CACHE}/vmtarget
 ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 70 vm $BOOTSTRAP_ARCH
-cd ..
+cd -
 

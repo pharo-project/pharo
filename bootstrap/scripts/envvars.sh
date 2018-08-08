@@ -37,4 +37,4 @@ CACHE="${BOOTSTRAP_CACHE:-${ROOT_DIR}/bootstrap-cache}"
 
 # Ensure that BOOTSTRAP_REPOSITORY is propagated
 # This is the VM used to bootstrap, i.e. the target VM
-VM="${ROOT_DIR}/vmtarget/pharo --headless"
+VM="${CACHE}/vmtarget/pharo --headless"
