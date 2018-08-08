@@ -14,7 +14,7 @@
 asRing2EnvironmentWith: packageNames
 
 	| aRG2Environment |
-	aRG2Environment := RG2Environment new.
+	aRG2Environment := RGEnvironment new.
 	aRG2Environment announcer suspendAllWhile: [ 
 		(packageNames) do: [ :pn | 
 			| snap defs package version |
@@ -24,7 +24,7 @@ asRing2EnvironmentWith: packageNames
 
 			defs := snap definitions.
 			defs do: [ :each |			
-				each ensureRing2DefinitionIn: aRG2Environment package: package ]
+				each ensureRingDefinitionIn: aRG2Environment package: package ]
 			displayingProgress: 'snap'.] 
 		 displayingProgress: 'version'.
 		].		
