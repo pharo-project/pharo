@@ -911,15 +911,6 @@ File class >> statFailed [
 ]
 
 { #category : #'primitives-file' }
-File class >> stdioDescriptorIsATTY [
-	^ (0 to: 2)
-		anySatisfy: [ :fdNum | 
-			| res |
-			res := self fileDescriptorType: fdNum.
-			#(1 4) includes: res ]
-]
-
-{ #category : #'primitives-file' }
 File class >> stdioHandles [
 	<primitive: 'primitiveFileStdioHandles' module: 'FilePlugin' error: ec>
 	self primitiveFailed
@@ -936,6 +927,17 @@ File class >> supportsSymbolicLinks [
 	"Answer a boolean indicating whether the current platform supports symbolic links"
 
 	^OSPlatform current isUnix
+]
+
+{ #category : #'primitives-file' }
+File class >> stdioIsAvailable [
+	"Answer a boolean indicating whether stdio is available on the current platform.
+	stdio is considered available if any one of the three files (stdin, stdout, stderr) is available."
+
+	^ (0 to: 2)
+		anySatisfy: [ :fdNum | | res |
+			res := self fileDescriptorType: fdNum.
+			res between: 1 and: 3 ]
 ]
 
 { #category : #'primitives-file' }

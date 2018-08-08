@@ -25,7 +25,7 @@ GRTemporaryNeitherReadNorWrittenRule >> checkTemp: aTemp followedBy: statements 
 		statement nodesDo: [ :node | 
 			(node isVariable and: [
 			 node name = aTemp name ]) ifTrue: [
-					isRead    := isRead    or: [ node isUsed ].
+					isRead    := isRead    or: [ node isWrite not and: [ node isUsed ] ].
 					isWritten := isWritten or: [ node isWrite ] ] ] ].
 		
 	^ (isRead and: isWritten )

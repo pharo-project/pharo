@@ -577,7 +577,7 @@ String >> asDateAndTime [
 
 { #category : #converting }
 String >> asDuration [
- 	"convert from [nnnd]hh:mm:ss[.nanos] format. [] implies optional elements"
+ 	"Convert from [-]D:HH:MM:SS[.S] format. What is between [] implies optional elements"
  
  	^ Duration fromString: self
  

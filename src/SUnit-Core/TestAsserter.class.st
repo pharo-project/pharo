@@ -64,13 +64,6 @@ TestAsserter class >> suiteClass [
 ]
 
 { #category : #asserting }
-TestAsserter >> assert: aBoolean [
-	aBoolean ifFalse:
-		[self logFailure: 'Assertion failed'.
-		self defaultTestFailure signal: 'Assertion failed'].
-]
-
-{ #category : #asserting }
 TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 	^ self
 		assert: (actualNumber closeTo: expectedNumber)

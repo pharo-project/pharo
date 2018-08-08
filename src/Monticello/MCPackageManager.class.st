@@ -47,7 +47,7 @@ MCPackageManager class >> bestMatchingManagerForCategory: aSystemCategory do: aB
 	self registry do: [ :mgr |
 		| candidatePackages bestMatchingPackage |
 		candidatePackages := mgr packageSet packages select: [ :package |
-			package name beginsWith: aSystemCategory ].
+			package name asUppercase beginsWith: aSystemCategory asUppercase ].
 		bestMatchingPackage := candidatePackages detectMin: [ :package |
 			package name size ].
 		bestMatchingPackage ifNotNil: [

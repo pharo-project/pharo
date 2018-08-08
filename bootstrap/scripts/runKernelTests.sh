@@ -13,7 +13,7 @@ CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
 find ${CACHE}
 
-bootstrap/scripts/getPharoVM.sh 70 vm ${1}
+${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh 70 vm ${1}
 					
 IMAGE_ARCHIVE=$(find ${CACHE} -name Pharo7.0-bootstrap-${1}bit-*.zip)
 unzip $IMAGE_ARCHIVE

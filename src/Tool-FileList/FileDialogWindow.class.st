@@ -26,6 +26,12 @@ Class {
 	#category : #'Tool-FileList'
 }
 
+{ #category : #examples }
+FileDialogWindow class >> example [
+	<example>
+	(self onFileSystem: FileSystem disk) open
+]
+
 { #category : #'initialize - release' }
 FileDialogWindow class >> onFileSystem: aFileSystem [
 	^ self basicNew
@@ -823,14 +829,14 @@ FileDialogWindow >> selectParentDirectory [
 ]
 
 { #category : #actions }
-FileDialogWindow >> selectPathName: aStringOrReference [
-	"Select the directory and set the file name text from the given string."
+FileDialogWindow >> selectPath: aPathOrFileReference [
+	"Select the directory and set the file name text from the given path."
 
 	| reference |
 	reference := (self preferredFileSystem
-		referenceTo: (self preferredFileSystem resolve: aStringOrReference)) asAbsolute.
+		referenceTo: (self preferredFileSystem resolve: aPathOrFileReference)) asAbsolute.
 	reference exists
-		ifFalse: [ ^ self selectPathName: reference parent fullName ].
+		ifFalse: [ ^ self selectPath: reference parent ].
 	reference isDirectory
 		ifTrue: [ ^ self selectDirectory: reference ].
 

@@ -978,7 +978,7 @@ UITheme >> chooseDirectoryIn: aThemedMorph title: title path: path [
 	fd := (FileDialogWindow newWithTheme: aThemedMorph theme)
 		title: title;
 		answerDirectory.
-	path ifNotNil: [ fd selectPathName: path fullName ].
+	path ifNotNil: [ fd selectPath: path ].
 	^ (aThemedMorph openModal: fd) answer
 ]
 
@@ -1007,7 +1007,7 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 		title: title;
 		answerFileEntry.
 	exts ifNotNil: [ fd validExtensions: exts ].
-	path ifNotNil: [ fd selectPathName: path fullName ].
+	path ifNotNil: [ fd selectPath: path ].
 	^ (aThemedMorph openModal: fd) answer
 ]
 
@@ -1025,7 +1025,7 @@ UITheme >> chooseFileNameIn: aThemedMorph title: title extensions: exts path: pa
 		title: title;
 		answerFileName.
 	exts ifNotNil: [ fd validExtensions: exts ].
-	path ifNotNil: [ fd selectPathName: path fullName ].
+	path ifNotNil: [ fd selectPath: path ].
 	^ (aThemedMorph openModal: fd) answer
 ]
 
@@ -1058,7 +1058,7 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title extensions: exts path
 		title: title;
 		answerPathName.
 	exts ifNotNil: [ fd validExtensions: exts ].
-	path ifNotNil: [ fd selectPathName: path fullName ].
+	path ifNotNil: [ fd selectPath: path ].
 	^ (aThemedMorph openModal: fd) answer
 ]
 
@@ -1080,7 +1080,7 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title patterns: patterns pa
 				fileSelectionBlock: [ :de | 
 					(fd defaultFileSelectionBlock value: de)
 						and: [ de isDirectory or: [ patterns anySatisfy: [ :pat | pat match: de name ] ] ] ] ].
-	path ifNotNil: [ fd selectPathName: path fullName ].
+	path ifNotNil: [ fd selectPath: path ].
 	^ (aThemedMorph openModal: fd) answer
 ]
 
@@ -2176,7 +2176,7 @@ UITheme >> fileOpenIn: aThemedMorph title: title extensions: exts path: path pre
 		title: title;
 		answerOpenFile.
 	exts ifNotNil: [ fd validExtensions: exts ].
-	path ifNotNil: [ fd selectPathName: path fullName ].
+	path ifNotNil: [ fd selectPath: path ].
 	^ (aThemedMorph openModal: fd) answer
 ]
 
@@ -2197,7 +2197,7 @@ UITheme >> fileSaveIn: aThemedMorph title: title initialAnswer: aFileName extens
 		fileNameText: aFileName;
 		answerSaveFile.
 	exts ifNotNil: [ fd validExtensions: exts ].
-	path ifNotNil: [ fd selectPathName: path fullName ].
+	path ifNotNil: [ fd selectPath: path ].
 	^ (aThemedMorph openModal: fd) answer
 ]
 
