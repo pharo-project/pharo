@@ -7,13 +7,13 @@ set -e
 
 . ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/envvars.sh
 
-mkdir -p "${CACHE}" #required to generate hermes files
+mkdir -p "${BOOTSTRAP_CACHE}" #required to generate hermes files
 
 ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 61
 wget https://github.com/guillep/PharoBootstrap/releases/download/v1.4.1/bootstrapImage.zip
 unzip bootstrapImage.zip
 
-cd "${CACHE}"
+cd "${BOOTSTRAP_CACHE}"
 #We need the old sources file next to the image because of sources condensation step
 wget http://files.pharo.org/sources/PharoV60.sources
 echo "Prepare icons"
@@ -26,8 +26,8 @@ cd ..
 
 
 # Downloads a SPUR vm for the configured architecture
-mkdir ${CACHE}/vmtarget
-cd ${CACHE}/vmtarget
+mkdir ${BOOTSTRAP_CACHE}/vmtarget
+cd ${BOOTSTRAP_CACHE}/vmtarget
 ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 70 vm $BOOTSTRAP_ARCH
 cd -
 
