@@ -5,7 +5,9 @@
 set -x
 set -e
 
-. ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/envvars.sh
+SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
+
+. ${SCRIPTS}/envvars.sh
 
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.

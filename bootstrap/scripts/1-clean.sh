@@ -5,7 +5,9 @@
 set -x
 set -e
 
-. ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/envvars.sh
+SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
+
+. ${SCRIPTS}/envvars.sh
 
 rm -f bootstrapImage.zip
 rm -f Pharo.image Pharo.changes pharo pharo-ui
