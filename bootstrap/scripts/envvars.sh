@@ -33,8 +33,14 @@ else
   ROOT_DIR="$(pwd -P)"
 fi
 
-CACHE="${BOOTSTRAP_CACHE:-${ROOT_DIR}/bootstrap-cache}"
+if [ -z "${BOOTSTRAP_CACHE}" ]
+then
+  BOOTSTRAP_CACHE=${ROOT_DIR}/bootstrap-cache
+else
+  BOOTSTRAP_CACHE=$(readlink -f "${BOOTSTRAP_CACHE}")
+fi
+export BOOTSTRAP_CACHE
 
 # Ensure that BOOTSTRAP_REPOSITORY is propagated
 # This is the VM used to bootstrap, i.e. the target VM
-VM="${ROOT_DIR}/vmtarget/pharo --headless"
+VM="${BOOTSTRAP_CACHE}/vmtarget/pharo --headless"
