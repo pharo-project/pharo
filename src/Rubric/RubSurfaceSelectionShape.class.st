@@ -7,7 +7,6 @@ Class {
 		'borderWidth',
 		'firstIndex',
 		'lastIndex',
-		'tag',
 		'vertices'
 	],
 	#category : #'Rubric-Editing-Core'
