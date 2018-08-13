@@ -30,7 +30,8 @@ Class {
 		'explanationString',
 		'deprecationDate',
 		'versionString',
-		'rule'
+		'rule',
+		'condition'
 	],
 	#classVars : [
 		'Log',
@@ -87,6 +88,11 @@ Deprecation >> = anObject [
 	  and: [context
 			ifNil: [explanationString = anObject explanationString]
 			ifNotNil: [true]]]
+]
+
+{ #category : #accessing }
+Deprecation >> condition: aBlock [
+	condition := aBlock
 ]
 
 { #category : #accessing }
@@ -179,6 +185,12 @@ Deprecation >> sendingMethodName [
 	^self contextOfSender method printString
 ]
 
+{ #category : #handling }
+Deprecation >> shouldTransform [
+	^ self raiseWarning  "when desprecations are disables, we do not want to transform, either"
+		and: [ condition isNil or: [ condition cull: self ] ]
+]
+
 { #category : #settings }
 Deprecation >> showWarning [
 	^ self class showWarning
@@ -187,7 +199,7 @@ Deprecation >> showWarning [
 { #category : #handling }
 Deprecation >> transform [
 	| node rewriteRule aMethod |
-	self raiseWarning ifFalse: [ ^ self ]. "when desprecations are disables, we do not want to transform, either"
+	self shouldTransform ifFalse: [ ^ self ].
 	self rewriterClass ifNil:[ ^ self signal ].
 	aMethod := self contextOfSender method.
 	aMethod isDoIt ifTrue:[^ self]. "no need to transform doits"
