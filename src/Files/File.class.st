@@ -158,6 +158,14 @@ File class >> encodePathString: aString [
 ]
 
 { #category : #'primitives-file' }
+File class >> fileDescriptorIsAvailable: anInteger [
+	"Answer a boolean indicating whether the supplied file descriptor (anInteger) is available.
+	A file descriptor is considered available if it is connected to a console / terminal, pipe or a file.  cygwin terminals are currently not supported (the pipe is created, but nothing appears in the terminal)"
+
+	^ (self fileDescriptorType: anInteger) between: 1 and: 3
+]
+
+{ #category : #'primitives-file' }
 File class >> fileDescriptorType: fdNum [
 	"Allow to test if the standard input/output files are from a console or not
 	Return values:
@@ -385,9 +393,7 @@ File class >> stdioIsAvailable [
 	stdio is considered available if any one of the three files (stdin, stdout, stderr) is available."
 
 	^ (0 to: 2)
-		anySatisfy: [ :fdNum | | res |
-			res := self fileDescriptorType: fdNum.
-			res between: 1 and: 3 ]
+		anySatisfy: [ :fdNum | self fileDescriptorIsAvailable: fdNum ]
 ]
 
 { #category : #'primitives-file' }
