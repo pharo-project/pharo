@@ -93,6 +93,7 @@ MetacelloScriptingStdTstHarness >> tearDown [
             'leaked package from ' , self printString , ' -> ' , leak printString ].
   self assert: diff isEmpty.
   super tearDown
+
 ]
 
 { #category : #running }

@@ -18,6 +18,12 @@ MetacelloPharoCommonPlatform >> authorName: aString [
 	Author fullName: aString
 ]
 
+{ #category : #'github support' }
+MetacelloPharoCommonPlatform >> closeZipArchive: anArchive [
+	
+	anArchive close
+]
+
 { #category : #notification }
 MetacelloPharoCommonPlatform >> collection: aCollection do: aBlock displaying: aString [
 
@@ -53,23 +59,30 @@ MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newC
 ]
 
 { #category : #'repository creation' }
-MetacelloPharoCommonPlatform >> createRepository: aRepositorySpec [
+MetacelloPharoCommonPlatform >> createFiletreeRepository: aRepositorySpec [
+	MCRepository 
+		findFiletreeAlternateFormat: aRepositorySpec
+		ifFound: [ :repository | 
+			^ repository createRepositoryFromSpec: aRepositorySpec on: self ].
 
-	| type |
-	type := aRepositorySpec type.
-	type = 'ftp'
-		ifTrue: [ | description headerSize index host directory |
-			description := aRepositorySpec description.
-			headerSize := 'ftp://' size.
-			index := description indexOf: $/ startingAt: headerSize + 1.
-			host := description copyFrom: headerSize + 1 to: index - 1.
-			directory := description copyFrom: index + 1 to: description size.
-			^ MCFtpRepository
-				host: host 
-				directory: directory 
-				user: aRepositorySpec username
-				password: aRepositorySpec password].
-	^ super createRepository: aRepositorySpec
+	^ super createFiletreeRepository: aRepositorySpec
+]
+
+{ #category : #'repository creation' }
+MetacelloPharoCommonPlatform >> createFtpRepository: aRepositorySpec [
+ 	| description headerSize index host directory |
+	
+	description := aRepositorySpec description.
+	headerSize := 'ftp://' size.
+	index := description indexOf: $/ startingAt: headerSize + 1.
+	host := description copyFrom: headerSize + 1 to: index - 1.
+	directory := description copyFrom: index + 1 to: description size.
+	
+	^ MCFtpRepository
+		host: host 
+		directory: directory 
+		user: aRepositorySpec username
+		password: aRepositorySpec password
 ]
 
 { #category : #attributes }
@@ -98,6 +111,24 @@ MetacelloPharoCommonPlatform >> defaultPlatformAttributes [
 											(versionString beginsWith: 'Pharo1.3')
 												ifTrue: [ attributes add: #'pharo1.3.x' ] ] ] ] ] ].
 	^ attributes
+]
+
+{ #category : #'file system' }
+MetacelloPharoCommonPlatform >> deleteFileNamed: filePath [
+	filePath asFileReference ensureDelete
+]
+
+{ #category : #notification }
+MetacelloPharoCommonPlatform >> do: aBlock displaying: aString [
+
+    self bypassProgressBars ifTrue: [ ^ super do: aBlock displaying: aString ].
+	
+    aString
+        displayProgressFrom: 0 to: 2
+        during: [:bar |
+            bar value: 1.
+            aBlock value.
+            bar value: 2 ]
 ]
 
 { #category : #'git-based http repo support' }

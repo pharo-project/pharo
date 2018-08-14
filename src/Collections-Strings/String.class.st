@@ -514,13 +514,10 @@ String >> asByteString [
 
 { #category : #converting }
 String >> asCamelCase [
-       "Convert to CamelCase. Can be conveinient in conjunction with #asLegalSelector
-     	 'A man, a plan, a canal, panama' asCamelCase.
-       'A man, a plan, a canal, panama' asCamelCase asLegalSelector.
-       'Here 123should % be 6 the name6 of the method' asCamelCase.
-       'Here 123should % be 6 the name6 of the method' asCamelCase asLegalSelector."
-
-      ^ self class streamContents: [:stream |
+	"Convert to CamelCase, i.e, remove spaces, and convert starting lowercase to uppercase."
+   "'A man, a plan, a canal, panama' asCamelCase >>> 'AMan,APlan,ACanal,Panama'"
+ 	"'Here 123should % be 6 the name6 of the method' asCamelCase  >>> 'Here123should%Be6TheName6OfTheMethod'"
+		^ self class streamContents: [:stream |
                self substrings do: [:sub |
                        stream nextPutAll: sub capitalized]]
 ]
@@ -2286,6 +2283,10 @@ String >> substrings: separators [
 
 { #category : #converting }
 String >> surroundedBy: aString [
+	"Answer the receiver with leading and trailing aString."
+	"'hello' surroundedBy: 'abd' >>> 'abdhelloabd'"
+	"'hello' surroundedBy: ' abd ' >>> ' abd hello abd '"
+	
 	^ self class streamContents: [ :s|
 		s nextPutAll: aString.
 		s nextPutAll: self.
@@ -2294,8 +2295,11 @@ String >> surroundedBy: aString [
 
 { #category : #converting }
 String >> surroundedBySingleQuotes [
-	"Answer the receiver with leading and trailing quotes.  "
-
+	"Answer the receiver with leading and trailing quotes."
+	"'hello' surroundedBySingleQuotes >>>  '''hello'''"
+	"'he''llo' surroundedBySingleQuotes >>> '''he''llo'''"
+	"'  hello  ' surroundedBySingleQuotes >>>  '''  hello  '''"
+	
 	^ self surroundedBy: ($' asString)
 ]
 
@@ -2604,8 +2608,10 @@ String >> withoutPrefix: prefix [
 
 { #category : #'platform conventions' }
 String >> withoutQuoting [
-	"remove the initial and final quote marks, if present (and if matches nesting quotes)"
-	"'''h''' withoutQuoting"
+	"remove the initial and final quote marks (single quote for string, or double quotes for comments), if present (and if matches nesting quotes). Have a look at testWithoutQuoting. If you want to remove single/double quotes not in first and last positions of the strings, have a look at copyWithout: $' "
+	"'''h''' withoutQuoting >>> 'h'"
+	"' ''h'' ' withoutQuoting >>>  ' ''h'' '"
+	
 	| quote |
 	self size < 2 ifTrue: [ ^self ].
 	quote := self first.
