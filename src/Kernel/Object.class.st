@@ -1787,11 +1787,6 @@ Object >> removeDependent: anObject [
 	^ anObject
 ]
 
-{ #category : #'error handling' }
-Object >> requirement [
-	self error: 'Implicitly required method'
-]
-
 { #category : #'class membership' }
 Object >> respondsTo: aSymbol [ 
 	"Answer whether the method dictionary of the receiver's class contains 

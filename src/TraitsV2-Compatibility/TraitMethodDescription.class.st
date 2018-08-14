@@ -51,18 +51,6 @@ TraitMethodDescription >> conflictMethod [
 ]
 
 { #category : #accessing }
-TraitMethodDescription >> effectiveMethod [
-	"Return the effective compiled method of this method description." 
-
-	| method |
-	method := self providedMethod.
-	method isNil ifFalse: [^ method].
-	method := self conflictMethod.
-	method isNil ifFalse: [^ method].
-	^ self requiredMethod.
-]
-
-{ #category : #accessing }
 TraitMethodDescription >> effectiveMethodCategory [
 	^ self effectiveMethodCategoryCurrent: nil new: nil
 ]
@@ -228,22 +216,6 @@ TraitMethodDescription >> providedLocatedMethod [
 { #category : #accessing }
 TraitMethodDescription >> providedMethod [
 	^self providedLocatedMethod ifNotNil: [:locatedMethod | locatedMethod method]
-]
-
-{ #category : #accessing }
-TraitMethodDescription >> requiredMethod [
-	| numberOfArguments binary |
-	self isRequired ifFalse: [^nil].
-	self size = 1 ifTrue: [^self locatedMethods anyOne].
-
-	binary := self isBinarySelector.
-	numberOfArguments := self numberOfArguments.
-	
-	 ^self
-		generateMethod: self selector
-		withMarker: CompiledMethod implicitRequirementMarker
-		forArgs: numberOfArguments
-		binary: binary.
 ]
 
 { #category : #accessing }
