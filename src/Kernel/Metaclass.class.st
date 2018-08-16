@@ -66,12 +66,6 @@ Metaclass >> adoptInstance: oldInstance from: oldMetaClass [
 		map: (self instVarMappingFrom: oldMetaClass)
 ]
 
-{ #category : #'accessing parallel hierarchy - deprecated' }
-Metaclass >> baseClass [
-
-	^thisClass.
-]
-
 { #category : #compiling }
 Metaclass >> binding [
 	"return an association that can be used as the binding
@@ -98,12 +92,6 @@ Metaclass >> canZapMethodDictionary [
 { #category : #accessing }
 Metaclass >> category [
 	^ self instanceSide category
-]
-
-{ #category : #'accessing parallel hierarchy - deprecated' }
-Metaclass >> classClass [
-
-	^self
 ]
 
 { #category : #'pool variables' }
