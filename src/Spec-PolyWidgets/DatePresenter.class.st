@@ -16,7 +16,6 @@ Class {
 	#name : #DatePresenter,
 	#superclass : #ComposablePresenter,
 	#instVars : [
-		'dateLabel',
 		'displayBlockHolder',
 		'chooseDateButton',
 		'dateModel',
@@ -44,8 +43,6 @@ DatePresenter class >> spec [
 	^ SpecLayout composed
 			newRow: [ :row | 
 				row 
-					add: #dateLabel width: 60; 
-					"This is to address a not yet fixed Spec issue"
 					newRow: [:ugly | 
 						ugly
 							add: #dateModel;  
@@ -84,12 +81,6 @@ DatePresenter >> date: aDate [
 	date := aDate.
 	dateString := self displayBlock value: date.
 	self dateModel text: dateString.
-]
-
-{ #category : #'accessing-widgets' }
-DatePresenter >> dateLabel [
-
-	^ dateLabel.
 ]
 
 { #category : #'accessing-widgets' }
@@ -138,13 +129,9 @@ DatePresenter >> initialize [
 { #category : #initialization }
 DatePresenter >> initializeWidgets [
 
-	dateLabel := self newLabel.
 	dateModel := self newTextInput.
 	chooseDateButton := self newButton.
 	
-	dateLabel
-		label: 'Date'.
-		
 	dateModel
 		isCodeCompletionAllowed: false.
 	
