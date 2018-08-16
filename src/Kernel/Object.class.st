@@ -772,6 +772,21 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 ]
 
 { #category : #deprecation }
+Object >> deprecated: anExplanationString on: date in: version transformWith: aRule when: conditionBlock [
+	"Automatically tranform the deprecated call if it matches the condition"
+	
+	Deprecation new
+		context: thisContext sender;
+		explanation: anExplanationString;
+		date: date;
+		version: version;
+		rule: aRule;
+		condition: conditionBlock;
+		transform.
+		
+]
+
+{ #category : #deprecation }
 Object >> deprecated: anExplanationString transformWith: aRule [
 	"Automatically tranform the deprecated call"
 	
@@ -779,6 +794,19 @@ Object >> deprecated: anExplanationString transformWith: aRule [
 		context: thisContext sender;
 		explanation: anExplanationString;
 		rule: aRule;
+		transform.
+		
+]
+
+{ #category : #deprecation }
+Object >> deprecated: anExplanationString transformWith: aRule when: conditionBlock [
+	"Automatically tranform the deprecated call if it matches the condition"
+	
+	Deprecation new
+		context: thisContext sender;
+		explanation: anExplanationString;
+		rule: aRule;
+		condition: conditionBlock;
 		transform.
 		
 ]
