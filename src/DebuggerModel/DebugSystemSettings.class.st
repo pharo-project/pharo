@@ -4,7 +4,7 @@ Settings for debugging
 Class {
 	#name : #DebugSystemSettings,
 	#superclass : #Object,
-	#category : #DebuggerModel
+	#category : #'DebuggerModel-Settings'
 }
 
 { #category : #'private - settings' }
@@ -39,7 +39,7 @@ DebugSystemSettings class >> addDebugFilterSessingsOn: aBuilder [
 					target: stackWidgetClass.
 					
 					 ]
-				].
+				]
 ]
 
 { #category : #settings }

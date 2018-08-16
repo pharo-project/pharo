@@ -26,6 +26,12 @@ Class {
 	#category : #'Tool-FileList'
 }
 
+{ #category : #examples }
+FileDialogWindow class >> example [
+	<example>
+	(self onFileSystem: FileSystem disk) open
+]
+
 { #category : #'initialize - release' }
 FileDialogWindow class >> onFileSystem: aFileSystem [
 	^ self basicNew
@@ -175,12 +181,12 @@ FileDialogWindow >> defaultFileSortBlock [
 
 	^[:entry1 :entry2 |
 		entry1 isDirectory = entry2 isDirectory
-			ifTrue: [entry1 basename <= entry2 basename]
+			ifTrue: [entry1 basename caseInsensitiveLessOrEqual: entry2 basename]
 			ifFalse: [entry1 isDirectory
 						ifTrue: [true]
 						ifFalse: [entry2 isDirectory
 									ifTrue: [false]
-									ifFalse: [entry1 basename <= entry2 basename]]]]
+									ifFalse: [entry1 basename caseInsensitiveLessOrEqual: entry2 basename]]]]
 ]
 
 { #category : #actions }
@@ -823,14 +829,14 @@ FileDialogWindow >> selectParentDirectory [
 ]
 
 { #category : #actions }
-FileDialogWindow >> selectPathName: aStringOrReference [
-	"Select the directory and set the file name text from the given string."
+FileDialogWindow >> selectPath: aPathOrFileReference [
+	"Select the directory and set the file name text from the given path."
 
 	| reference |
 	reference := (self preferredFileSystem
-		referenceTo: (self preferredFileSystem resolve: aStringOrReference)) asAbsolute.
+		referenceTo: (self preferredFileSystem resolve: aPathOrFileReference)) asAbsolute.
 	reference exists
-		ifFalse: [ ^ self selectPathName: reference parent fullName ].
+		ifFalse: [ ^ self selectPath: reference parent ].
 	reference isDirectory
 		ifTrue: [ ^ self selectDirectory: reference ].
 

@@ -13,7 +13,7 @@ Class {
 		'canvas'
 	],
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#category : #'Athens-Cairo'
 }

@@ -138,8 +138,8 @@ Behavior >> allInstVarNames [
 
 	| vars |
 	self superclass == nil
-		ifTrue: [vars := self instVarNames copy]	"Guarantee a copy is answered."
-		ifFalse: [vars := self superclass allInstVarNames , self instVarNames].
+		ifTrue: [vars := self slots collect: #name]	"Guarantee a copy is answered."
+		ifFalse: [vars := self superclass allInstVarNames , (self slots collect: #name)].
 	^vars
 ]
 
@@ -1733,6 +1733,11 @@ Behavior >> shutDown [
 Behavior >> shutDown: quitting [
 	"This message is sent on system shutdown to registered classes"
 	^self shutDown.
+]
+
+{ #category : #accessing }
+Behavior >> slots [
+	^#()
 ]
 
 { #category : #'accessing instances and variables' }

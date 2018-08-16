@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #selection }
+SugsGlamourCodeContext >> contentSelection [
+    ^selectedNode source copyFrom: selectedNode start to: selectedNode stop 
+]
+
+{ #category : #selection }
 SugsGlamourCodeContext >> selectTheTextForTheNode [
 	selectionPreviousHighligth := self model primarySelectionInterval .
 	selectedNode ifNotNil: [ self model primarySelectionInterval: (self selectedNode start to: self selectedNode stop)]
@@ -26,6 +31,11 @@ SugsGlamourCodeContext >> selectedInterval [
 { #category : #selection }
 SugsGlamourCodeContext >> selectedMethod [
 	^ model selectedMethod
+]
+
+{ #category : #selection }
+SugsGlamourCodeContext >> selectionInterval [
+    ^selectedNode start to: selectedNode stop
 ]
 
 { #category : #refactoring }

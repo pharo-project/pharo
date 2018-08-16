@@ -48,4 +48,12 @@ MCTraitDefinition >> printMetaDefinitionOn: stream [
 		 crtab;
 		 nextPutAll: 'uses: ';
 		 nextPutAll: self classTraitCompositionString.
+	
+	self classInstanceVariables ifNotEmpty: [  
+		stream
+			cr; tab;
+			nextPutAll: 'slots: '; 
+			nextPutAll: self classSlotDefinitionString
+	].	
+
 ]

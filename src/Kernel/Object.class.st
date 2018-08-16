@@ -363,8 +363,7 @@ Object >> asString [
 Object >> assert: aBlock [
 	"Throw an assertion error if aBlock does not evaluates to true.
 	We check for true explicitly to make the assertion fail for non booleans"
-	
-	aBlock value == true ifFalse: [AssertionFailure signal: 'Assertion failed']
+	self assert: aBlock description: 'Assertion failed'.
 ]
 
 { #category : #asserting }
@@ -773,6 +772,21 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 ]
 
 { #category : #deprecation }
+Object >> deprecated: anExplanationString on: date in: version transformWith: aRule when: conditionBlock [
+	"Automatically tranform the deprecated call if it matches the condition"
+	
+	Deprecation new
+		context: thisContext sender;
+		explanation: anExplanationString;
+		date: date;
+		version: version;
+		rule: aRule;
+		condition: conditionBlock;
+		transform.
+		
+]
+
+{ #category : #deprecation }
 Object >> deprecated: anExplanationString transformWith: aRule [
 	"Automatically tranform the deprecated call"
 	
@@ -780,6 +794,19 @@ Object >> deprecated: anExplanationString transformWith: aRule [
 		context: thisContext sender;
 		explanation: anExplanationString;
 		rule: aRule;
+		transform.
+		
+]
+
+{ #category : #deprecation }
+Object >> deprecated: anExplanationString transformWith: aRule when: conditionBlock [
+	"Automatically tranform the deprecated call if it matches the condition"
+	
+	Deprecation new
+		context: thisContext sender;
+		explanation: anExplanationString;
+		rule: aRule;
+		condition: conditionBlock;
 		transform.
 		
 ]
@@ -1786,11 +1813,6 @@ Object >> removeDependent: anObject [
 	dependents := self dependents reject: [:each | each == anObject].
 	self myDependents: (dependents isEmpty ifFalse: [dependents]).
 	^ anObject
-]
-
-{ #category : #'error handling' }
-Object >> requirement [
-	self error: 'Implicitly required method'
 ]
 
 { #category : #'class membership' }
