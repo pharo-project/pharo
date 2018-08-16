@@ -81,19 +81,11 @@ Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 	"Create the requested stdio (#stdin, #stdout, #stderr) if possible.
 	On Windows, if stdio is not available, create a regular file instead."
 
-	| handle |
+	| handle streamIndex |
 
-	"The VM should return nil if stdio is not available, but there's a bug in the VM on Windows.
-	See: https://github.com/OpenSmalltalk/opensmalltalk-vm/issues/274.
-	This section of code can be removed once the issue is resolved"
-	Smalltalk os isWindows ifTrue: [ 
-		([ File stdioIsAvailable not ]
-			on: PrimitiveFailed
-			do: [ :ex | true ]) ifTrue: 
-				[ ^ self createStdioFileFor: moniker ] ].
-
-	handle := File stdioHandles at: (#(stdin stdout stderr) identityIndexOf: moniker).
-	handle ifNil: [ 
+	streamIndex := #(stdin stdout stderr) identityIndexOf: moniker.
+	handle := File stdioHandles at: streamIndex.
+	(handle isNil or: [ (File fileDescriptorIsAvailable: streamIndex-1) not ]) ifTrue: [ 
 		"On windows, create a file for stdio, error on other platforms"
 		Smalltalk os isWindows 
 			ifTrue: [ ^ self createStdioFileFor: moniker ]

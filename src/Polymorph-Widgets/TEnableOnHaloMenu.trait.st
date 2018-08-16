@@ -21,14 +21,14 @@ TEnableOnHaloMenu >> addToggleItemsToHaloMenu: aCustomMenu [
 TEnableOnHaloMenu >> enabled [
 	"Answer the enabled state of the receiver."
 
-	self requirement
+	self explicitRequirement
 ]
 
 { #category : #accessing }
 TEnableOnHaloMenu >> enabled: aBoolean [
 	"Set the enabled state of the receiver."
 
-	self requirement
+	self explicitRequirement
 ]
 
 { #category : #enablement }
