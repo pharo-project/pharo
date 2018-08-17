@@ -32,12 +32,12 @@ ReNoPrintStringInPrintOnRule >> group [
 
 { #category : #accessing }
 ReNoPrintStringInPrintOnRule >> name [
-	^ 'No PrintString In PrintOn' 
+	^ 'No printString inside printOn' 
 ]
 
 { #category : #accessing }
 ReNoPrintStringInPrintOnRule >> rationale [
-	^ 'Use the stream argument to #printOn: instead of creating an extra stream(by using printString)'
+	^ 'Use the stream argument to #printOn: e.g.( stream print: anObject ) instead of creating an extra stream by using printString. e.g.( stream nextPutAll: anObject printString ).'
 ]
 
 { #category : #accessing }
