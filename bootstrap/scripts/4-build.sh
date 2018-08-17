@@ -5,7 +5,9 @@
 set -x
 set -e
 
-. ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/envvars.sh
+SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
+
+. ${SCRIPTS}/envvars.sh
 
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
@@ -108,7 +110,7 @@ METACELLO_IMAGE_NAME=${PREFIX}-metacello-${SUFFIX}
 PHARO_IMAGE_NAME=${PREFIX}-${SUFFIX}
 
 #Get inside the bootstrap-cache folder. Pharo interprets relatives as relatives to the image and not the 'working directory'
-cd "${CACHE}"
+cd "${BOOTSTRAP_CACHE}"
 
 
 #Prepare

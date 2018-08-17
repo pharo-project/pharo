@@ -133,11 +133,6 @@ CompiledMethod class >> headerFlagForEncoder: anEncoderClass [
 	^ 0
 ]
 
-{ #category : #constants }
-CompiledMethod class >> implicitRequirementMarker [
-	^ #requirement
-]
-
 { #category : #'class initialization' }
 CompiledMethod class >> initialize [    "CompiledMethod initialize"
 	"Initialize class variables specifying the size of the temporary frame
@@ -486,8 +481,7 @@ CompiledMethod >> isAbstract [
 	marker := self markerOrNil ifNil: [^false].
 	
 	^marker == self class subclassResponsibilityMarker 
-		or: [ marker == self class explicitRequirementMarker
-			or: [  marker == self class implicitRequirementMarker]]
+		or: [ marker == self class explicitRequirementMarker ]
 
 ]
 
@@ -555,16 +549,6 @@ CompiledMethod >> isFromTrait [
 ]
 
 { #category : #testing }
-CompiledMethod >> isImplicitlyRequired [
-	^ self isImplicitlyRequired: self markerOrNil
-]
-
-{ #category : #testing }
-CompiledMethod >> isImplicitlyRequired: marker [
-	^ marker == self class implicitRequirementMarker
-]
-
-{ #category : #testing }
 CompiledMethod >> isInstalled [
 	self methodClass ifNotNil:
 		[:class|
@@ -604,7 +588,6 @@ CompiledMethod >> isRequired [
 { #category : #testing }
 CompiledMethod >> isRequired: marker [
 	marker ifNil: [^ false].
-	(self isImplicitlyRequired: marker) ifTrue: [^ true].
 	(self isExplicitlyRequired: marker) ifTrue: [^ true]. 
 	(self isSubclassResponsibility: marker) ifTrue: [^ true]. 
 	^ false

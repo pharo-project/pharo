@@ -24,9 +24,9 @@
 set -x
 set -e
 
-. ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/envvars.sh
+SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 
-SCRIPTS=${BOOTSTRAP_REPOSITORY}/bootstrap/scripts
+. ${SCRIPTS}/envvars.sh
 
 #
 # Remove any artifacts from previous runs

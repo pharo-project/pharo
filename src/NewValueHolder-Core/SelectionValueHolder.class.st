@@ -8,7 +8,7 @@ Class {
 		'index',
 		'selection'
 	],
-	#category : #NewValueHolder
+	#category : #'NewValueHolder-Core-Base'
 }
 
 { #category : #'instance creation' }

@@ -36,7 +36,7 @@ To bootstrap a new Pharo image you need the latest stable version of Pharo. For 
 The bootstrapping can be done using the following script:
 
 ```bash
-BUILD_NUMBER=42 BOOTSTRAP_ARCH=32 sh ./bootstrap/scripts/bootstrap.sh
+BUILD_NUMBER=42 BOOTSTRAP_ARCH=32 bash ./bootstrap/scripts/bootstrap.sh
 ```
 
 This will generate and archive images at various stages of the bootstrap process up to the full image in Pharo7.0-32bit-hhhhhhh.zip where hhhhhhh is the identifying hash.
