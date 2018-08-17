@@ -1,3 +1,6 @@
+"
+Unit tests for collection value holders
+"
 Class {
 	#name : #CollectionValueHolderTest,
 	#superclass : #TestCase,

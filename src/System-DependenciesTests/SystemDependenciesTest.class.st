@@ -197,7 +197,7 @@ SystemDependenciesTest >> metacelloPackageNames [
 { #category : #accessing }
 SystemDependenciesTest >> specPackageNames [
 
-	^ #(#'Spec-Core' #'Spec-Layout' #'Keymapping-Pragmas' #'Keymapping-Core' #'Keymapping-KeyCombinations' #MenuRegistration #NewValueHolder) sorted
+	^ #(#'Spec-Core' #'Spec-Layout' #'Keymapping-Pragmas' #'Keymapping-Core' #'Keymapping-KeyCombinations' #'MenuRegistration' #'NewValueHolder-Core') sorted
 ]
 
 { #category : #tests }
