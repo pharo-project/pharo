@@ -16,7 +16,7 @@ Class {
 		'gender',
 		'selectedItems'
 	],
-	#category : #'Spec-Demo-Forms'
+	#category : #'Spec-Examples-Demo-Forms'
 }
 
 { #category : #accessing }

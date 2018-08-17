@@ -4,7 +4,7 @@ Demo page for SpecDemoButtonsPresenter
 Class {
 	#name : #SpecDemoButtonsPage,
 	#superclass : #SpecDemoPage,
-	#category : #'Spec-Demo-Buttons'
+	#category : #'Spec-Examples-Demo-Buttons'
 }
 
 { #category : #specs }

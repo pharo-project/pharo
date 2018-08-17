@@ -4,7 +4,7 @@ Demo page for SpecDemoTextInputPresenter
 Class {
 	#name : #SpecDemoTextInputPage,
 	#superclass : #SpecDemoPage,
-	#category : #'Spec-Demo-TextInput'
+	#category : #'Spec-Examples-Demo-TextInput'
 }
 
 { #category : #specs }

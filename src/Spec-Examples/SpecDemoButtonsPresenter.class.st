@@ -16,7 +16,7 @@ Class {
 		'buttonWithHelp',
 		'buttonWithDifferentFont'
 	],
-	#category : #'Spec-Demo-Buttons'
+	#category : #'Spec-Examples-Demo-Buttons'
 }
 
 { #category : #specs }

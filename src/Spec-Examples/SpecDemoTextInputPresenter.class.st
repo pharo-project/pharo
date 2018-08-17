@@ -15,7 +15,7 @@ Class {
 		'labelEncrypted',
 		'fieldEncrypted'
 	],
-	#category : #'Spec-Demo-TextInput'
+	#category : #'Spec-Examples-Demo-TextInput'
 }
 
 { #category : #specs }

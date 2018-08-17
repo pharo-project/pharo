@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'tabManager'
 	],
-	#category : #'Spec-Demo-Support'
+	#category : #'Spec-Examples-Demo-Support'
 }
 
 { #category : #specs }

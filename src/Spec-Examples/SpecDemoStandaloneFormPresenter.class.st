@@ -30,7 +30,7 @@ Class {
 		'submitButton',
 		'restoreButton'
 	],
-	#category : #'Spec-Demo-Forms'
+	#category : #'Spec-Examples-Demo-Forms'
 }
 
 { #category : #specs }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : #'Spec-Demo-Forms'
+	#category : #'Spec-Examples-Demo-Forms'
 }
 
 { #category : #'instance creation' }

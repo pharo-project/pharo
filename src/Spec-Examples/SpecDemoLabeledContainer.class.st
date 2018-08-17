@@ -4,7 +4,7 @@ A component that should encapsulate a form part with a specific label
 Class {
 	#name : #SpecDemoLabeledContainer,
 	#superclass : #LabelledContainer,
-	#category : #'Spec-Demo-Support'
+	#category : #'Spec-Examples-Demo-Support'
 }
 
 { #category : #specs }

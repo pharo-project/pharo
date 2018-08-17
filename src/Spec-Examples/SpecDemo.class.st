@@ -12,7 +12,7 @@ Class {
 		'page',
 		'selectedPage'
 	],
-	#category : #'Spec-Demo-Main'
+	#category : #'Spec-Examples-Demo'
 }
 
 { #category : #specs }

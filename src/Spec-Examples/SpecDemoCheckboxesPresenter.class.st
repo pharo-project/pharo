@@ -11,7 +11,7 @@ Class {
 		'checkboxWithHelp',
 		'checkboxWithLabelOnLeft'
 	],
-	#category : #'Spec-Demo-Checkboxes'
+	#category : #'Spec-Examples-Demo-Checkboxes'
 }
 
 { #category : #specs }

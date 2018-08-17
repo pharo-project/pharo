@@ -4,7 +4,7 @@ Demo page for SpecDemoCheckboxesPresenter
 Class {
 	#name : #SpecDemoCheckboxesPage,
 	#superclass : #SpecDemoPage,
-	#category : #'Spec-Demo-Checkboxes'
+	#category : #'Spec-Examples-Demo-Checkboxes'
 }
 
 { #category : #specs }

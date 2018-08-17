@@ -354,7 +354,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Zinc-Resource-Meta-FileSystem'.	
 		spec package: 'Zinc-Tests'.
 		spec package: 'System-Identification-Tests'.
-		spec package: 'Spec-Demo'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
@@ -788,8 +787,8 @@ spec group: #default with: #(
 	'ReflectionMirrors-Group'
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
+
 	'GT&QA-Group'
-	'Spec-Demo'
 
 	"standalone but dependent:"
 	'OSWindow-Group'
