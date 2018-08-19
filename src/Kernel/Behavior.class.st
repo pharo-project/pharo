@@ -537,7 +537,8 @@ Behavior >> canUnderstand: selector [
 { #category : #testing }
 Behavior >> canZapMethodDictionary [
 	"Return true if it is safe to zap the method dictionary on #obsolete"
-	^true
+
+	^ true
 ]
 
 { #category : #'accessing method dictionary' }
