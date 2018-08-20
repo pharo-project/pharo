@@ -1,5 +1,5 @@
 "
-Unit test for PharoIssue
+Unit tests for PharoIssue
 "
 Class {
 	#name : #PharoIssueTest,
@@ -9,7 +9,7 @@ Class {
 		'issueNumber',
 		'madeUpTitleString'
 	],
-	#category : #'IssueTracking-Tests'
+	#category : #'IssueTracking-Tests-Base'
 }
 
 { #category : #accessing }

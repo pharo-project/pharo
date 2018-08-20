@@ -13,7 +13,7 @@ MCTraitDefinition >> asRingDefinition [
 		definitionSource: self definitionString;
 		withMetaclass.
 		
-	ring theMetaClass 
+	ring classSide 
 		traitCompositionSource: self classTraitCompositionString;
 		definitionSource: self classDefinitionString.
 	^ring
