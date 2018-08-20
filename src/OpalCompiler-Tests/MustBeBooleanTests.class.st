@@ -65,6 +65,14 @@ MustBeBooleanTests >> testOr [
 ]
 
 { #category : #tests }
+MustBeBooleanTests >> testSemanticAnalysisCleaned [
+	"this used to fail as we did not clean semantic analysis data before recompiling"
+	
+	self should: [self shouldnt: [1 ifTrue:  [[:dir :path|
+                        [ path]]]] raise: KeyNotFound ] raise: MessageNotUnderstood.
+]
+
+{ #category : #tests }
 MustBeBooleanTests >> testWhile [
 	| myFlag |
 	self should: [[ nil ] whileFalse: [myFlag := true ]] raise: MessageNotUnderstood.
