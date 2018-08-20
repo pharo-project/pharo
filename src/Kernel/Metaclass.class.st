@@ -90,9 +90,10 @@ Metaclass >> bindingOf: varName [
 { #category : #testing }
 Metaclass >> canZapMethodDictionary [
 	"Return true if it is safe to zap the method dictionary on #obsolete"
-	self soleInstance == nil
-		ifTrue:[^true]
-		ifFalse:[^self soleInstance canZapMethodDictionary]
+
+	self soleInstance
+		ifNil: [ ^ true ]
+		ifNotNil: [ ^ self soleInstance canZapMethodDictionary ]
 ]
 
 { #category : #accessing }
