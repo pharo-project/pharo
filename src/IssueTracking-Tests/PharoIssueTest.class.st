@@ -1,3 +1,6 @@
+"
+Unit test for PharoIssue
+"
 Class {
 	#name : #PharoIssueTest,
 	#superclass : #TestCase,
@@ -57,5 +60,5 @@ PharoIssueTest >> testSlice [
 
 { #category : #tests }
 PharoIssueTest >> testTrackerUrl [
-	self assert: issue trackerUrl equals: ('https://pharo.fogbugz.com/default.asp?', issueNumber asString) asUrl
+	self assert: issue trackerUrl equals: ('https://pharo.manuscript.com/default.asp?', issueNumber asString) asUrl
 ]
