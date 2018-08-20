@@ -4,7 +4,7 @@ Core classes of Pharo Smalltalk including basic objects, types, exceptions, proc
 Class {
 	#name : #ManifestKernel,
 	#superclass : #PackageManifest,
-	#category : #Kernel
+	#category : #'Kernel-Manifest'
 }
 
 { #category : #'meta-data' }
