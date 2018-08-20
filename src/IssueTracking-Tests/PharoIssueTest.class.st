@@ -1,3 +1,6 @@
+"
+Unit tests for PharoIssue
+"
 Class {
 	#name : #PharoIssueTest,
 	#superclass : #TestCase,
@@ -6,7 +9,7 @@ Class {
 		'issueNumber',
 		'madeUpTitleString'
 	],
-	#category : #'IssueTracking-Tests'
+	#category : #'IssueTracking-Tests-Base'
 }
 
 { #category : #accessing }
