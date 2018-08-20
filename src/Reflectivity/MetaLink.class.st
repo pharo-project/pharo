@@ -54,6 +54,7 @@ MetaLink class >> defaultOptions [
 	- optionDisabledLink                "links are active by default"
 	+ optionWeakAfter 						  "do not use #ensure: for #after "
 	- optionAnnounce                    "do we announce adding / removing links? Slow!"
+	- argsAsArray                       "pass all arguments in one array. By default off as it adds an array creation"
 	)
 ]
 
