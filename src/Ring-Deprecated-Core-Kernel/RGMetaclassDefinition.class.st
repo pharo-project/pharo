@@ -27,7 +27,7 @@ RGMetaclassDefinition >> allClassVarNames [
 { #category : #variables }
 RGMetaclassDefinition >> allSharedPoolNames [
 
-	^self theNonMetaClass allSharedPoolNames
+	^self instanceSide allSharedPoolNames
 ]
 
 { #category : #accessing }

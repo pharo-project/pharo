@@ -121,7 +121,7 @@ RBChildrenToSiblingsRefactoring >> preconditions [
 RBChildrenToSiblingsRefactoring >> pullUpClassInstanceVariables [
 	| newSuperclass |
 	newSuperclass := self abstractSuperclass classSide.
-	parent theMetaClass instanceVariableNames do: 
+	parent classSide instanceVariableNames do: 
 		[ :each | 
 		self performComponentRefactoring: (RBPullUpInstanceVariableRefactoring 
 				model: self model
