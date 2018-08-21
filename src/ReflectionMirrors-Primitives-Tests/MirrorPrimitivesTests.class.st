@@ -1,5 +1,5 @@
 "
-Unit tests for mirror primitives
+Unit tests for mirror primitives.
 "
 Class {
 	#name : #MirrorPrimitivesTests,
