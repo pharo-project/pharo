@@ -609,12 +609,12 @@ TestRunner >> filterPackages [
 TestRunner >> findClassesForPackages: aCollection [
 	| items |
 	aCollection isEmpty
-		ifTrue: [ ^ self instanceSide withAllSubclasses asSet ].
+		ifTrue: [ ^ self baseClass withAllSubclasses asSet ].
 	items := aCollection
 		flatCollect: [ :category | 
 			((Smalltalk organization listAtCategoryNamed: category) 
 				collect: [ :each | Smalltalk globals at: each ])
-				select: [ :each | each includesBehavior: self instanceSide ] ].
+				select: [ :each | each includesBehavior: self baseClass ] ].
 
 	^ items asSet
 ]
@@ -623,13 +623,13 @@ TestRunner >> findClassesForPackages: aCollection [
 TestRunner >> findPackages [
 	| visible |
 	visible := Set new.
-	self instanceSide withAllSubclassesDo: [ :each |
+	self baseClass withAllSubclassesDo: [ :each |
 		each category ifNotNil: [ :category |
 			visible add: category ] ].
 	^ Array streamContents: [ :stream |
 		Smalltalk organization categories do: [ :each |
 			((visible includes: each) 
-					and: [ packagePattern isNil or: [ (packagePattern matchesIn: each) isEmpty not]])
+					and: [ packagePattern isNil or: [ (packagePattern matchesIn: each) isNotEmpty]])
 				ifTrue: [ stream nextPut: each ] ] ].
 ]
 
