@@ -16,7 +16,7 @@ ReDeadMethod class >> checksMethod [
 { #category : #running }
 ReDeadMethod >> basicCheck: aMethod [
 
-	^ (aMethod senders isEmpty) and: [ aMethod messages isEmpty ].
+	^ (aMethod senders isEmpty) and: [ aMethod messages anySatisfy: [ :each | each implementors isEmpty ] ].
 ]
 
 { #category : #running }
