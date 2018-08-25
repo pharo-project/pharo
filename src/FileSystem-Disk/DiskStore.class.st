@@ -173,13 +173,6 @@ DiskStore >> basicIsFile: anEntry [
 ]
 
 { #category : #private }
-DiskStore >> basicIsSymlink: anEntry [
-	^(anEntry size >= 7)
-		ifTrue: [ anEntry at: 7 ]
-		ifFalse: [ false ]
-]
-
-{ #category : #private }
 DiskStore >> basicModificationTimeOf: anEntry [
 	" the entry contains the seconds since the squeak epoch in local time"
 	^ (DateAndTime fromSeconds: (anEntry at: 3) offset: 0) translateTo: DateAndTime localOffset
@@ -411,16 +404,9 @@ DiskStore >> isSocket: aPath [
 
 { #category : #public }
 DiskStore >> isSymlink: aPath [
-	| entry |
-	
-	aPath isRoot ifTrue: [ ^false ].
-	
-	entry := self  basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: [  false ]
-		ifFalse: [ self basicIsSymlink: entry ].
-	
+	"Answer a boolean indicating whether aPath is a symbolic link"
+
+	^File isSymlink: (self stringFromPath: aPath)
 ]
 
 { #category : #testing }

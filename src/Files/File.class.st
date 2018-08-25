@@ -414,7 +414,7 @@ File class >> isSymlink: aPath [
 	"Answer a boolean indicating whether the supplied path is a Symlink file.
 	Note that this should only be called on platforms that support symlinks (e.g. not Windows)"
 
-	^self supportsSymbolicLinks and: [ self fileAttribute: aPath number: 16 ]
+	^self fileAttribute: aPath number: 16
 ]
 
 { #category : #'primitives-file modes' }
@@ -922,6 +922,17 @@ File class >> statFailed [
 File class >> stdioHandles [
 	<primitive: 'primitiveFileStdioHandles' module: 'FilePlugin' error: ec>
 	self primitiveFailed
+]
+
+{ #category : #'primitives-file' }
+File class >> stdioIsAvailable [
+	"Answer a boolean indicating whether stdio is available on the current platform.
+	stdio is considered available if any one of the three files (stdin, stdout, stderr) is available."
+
+	^ (0 to: 2)
+		anySatisfy: [ :fdNum | | res |
+			res := self fileDescriptorType: fdNum.
+			res between: 1 and: 3 ]
 ]
 
 { #category : #'primitives-errors' }

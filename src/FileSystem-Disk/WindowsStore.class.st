@@ -58,6 +58,14 @@ WindowsStore >> currentDisk [
 	^ disk ifNil: [  disk := FileSystem workingDirectory path segments first ]
 ]
 
+{ #category : #public }
+WindowsStore >> isSymlink: aPath [
+	"Answer a boolean indicating whether aPath is a symbolic link.
+	Answer false as symbolic links aren't supported on Windows."
+
+	^false
+]
+
 { #category : #private }
 WindowsStore >> nodesAt: aPath do: aBlock [
 
