@@ -1,3 +1,6 @@
+"
+Unit tests for new ValueHolder
+"
 Class {
 	#name : #NewValueHolderTest,
 	#superclass : #TestCase,

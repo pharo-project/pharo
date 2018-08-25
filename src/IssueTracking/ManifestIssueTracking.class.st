@@ -1,7 +1,10 @@
+"
+Utilities for issue tracking on Pharo development
+"
 Class {
 	#name : #ManifestIssueTracking,
 	#superclass : #PackageManifest,
-	#category : #IssueTracking
+	#category : #'IssueTracking-Manifest'
 }
 
 { #category : #'code-critics' }

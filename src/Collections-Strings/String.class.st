@@ -36,7 +36,7 @@ String class >> compare: string1 with: string2 collated: order [
 	"Return 1, 2 or 3, if string1 is <, =, or > string2, with the collating order of characters given by the order array."
 
 	| len1 len2 c1 c2 |
-	order == nil ifTrue: [
+	order ifNil: [
 		len1 := string1 size.
 		len2 := string2 size.
 		1 to: (len1 min: len2) do:[:i |
@@ -158,8 +158,7 @@ String class >> indexOfAscii: anInteger inString: aString startingAt: start [
 ]
 
 { #category : #initialization }
-String class >> initialize [   "self initialize"
-
+String class >> initialize [   
 	
 	self initializeTypeTable.
 	
@@ -208,7 +207,7 @@ String class >> initializeTypeTable [
 	newTable at: $^ asciiValue put: #upArrow.
 	newTable at: $_ asciiValue put: #xLetter. "by default, do not accept _ as assignement"
 	newTable at: $| asciiValue put: #verticalBar.
-	TypeTable := newTable "bon voyage!"
+	TypeTable := newTable
 
 ]
 
@@ -255,12 +254,11 @@ String class >> loremIpsum: size [
 
 { #category : #'instance creation' }
 String class >> new: sizeRequested [ 
-	"Answer an instance of this class with the number of indexable
-	variables specified by the argument, sizeRequested."
+	"Return a new instance with the number of indexable variables specified by the argument."
 	
 	self == String 
 		ifTrue:[^ByteString new: sizeRequested]
-		ifFalse:[^self basicNew: sizeRequested].
+		ifFalse:[^self basicNew: sizeRequested]
 ]
 
 { #category : #initialization }
@@ -271,7 +269,7 @@ String class >> newAsciiOrder [
 { #category : #initialization }
 String class >> newCSLineEnders [
 	"CR and LF--characters that terminate a line"
-	^ CharacterSet crlf.
+	^ CharacterSet crlf
 ]
 
 { #category : #initialization }
@@ -321,20 +319,20 @@ String class >> newCrLfExchangeTable [
 { #category : #initialization }
 String class >> newLowercasingTable [
 	"a table for translating to lower case"
-	^ String withAll: (Character allByteCharacters collect: [:c | c asLowercase]).
+	^ String withAll: (Character allByteCharacters collect: [:c | c asLowercase])
 ]
 
 { #category : #initialization }
 String class >> newTokenish [
 	"a table for testing tokenish (for fast numArgs)"
 	^ String withAll: (Character allByteCharacters 
-		collect: [:c | c tokenish ifTrue: [ c ] ifFalse: [ $~ ]]).
+		collect: [:c | c tokenish ifTrue: [ c ] ifFalse: [ $~ ]])
 ]
 
 { #category : #initialization }
 String class >> newUppercasingTable [
 	"a table for translating to upper case"
-	^ String withAll: (Character allByteCharacters collect: [:c | c asUppercase]).
+	^ String withAll: (Character allByteCharacters collect: [:c | c asUppercase])
 ]
 
 { #category : #'instance creation' }
@@ -378,7 +376,7 @@ String class >> stringHash: aString initialHash: speciesHash [
 		low := hash bitAnd: 16383.
 		hash := (16r260D * low + ((16r260D * (hash // 16384) + (16r0065 * low) bitAnd: 16383) * 16384)) bitAnd: 16r0FFFFFFF.
 	].
-	^ hash.
+	^ hash
 
 ]
 
@@ -397,7 +395,7 @@ String class >> translate: aString from: start  to: stop  table: table [
 	start to: stop do: [:i |
 		(char := aString basicAt: i) < 256 ifTrue: [
 			aString at: i put: (table at: char+1)].
-	].
+	]
 
 ]
 
@@ -410,16 +408,16 @@ String class >> typeTable [
 { #category : #'instance creation' }
 String class >> value: anInteger [
 
-	^ self with: (Character value: anInteger).
+	^ self with: (Character value: anInteger)
 
 ]
 
 { #category : #'instance creation' }
 String class >> with: aCharacter [
 	| newCollection |
-	aCharacter asInteger < 256
-		ifTrue:[newCollection := ByteString new: 1]
-		ifFalse:[newCollection := WideString new: 1].
+	newCollection := aCharacter asInteger < 256
+		ifTrue:[ ByteString new: 1]
+		ifFalse:[ WideString new: 1].
 	newCollection at: 1 put: aCharacter.
 	^newCollection
 ]
@@ -478,7 +476,7 @@ String >> alike: aString [
 	[(j > 0) and: [(k > 0) and:
 		[((super at: j) bitAnd: 16rDF) = ((aString at: k) asciiValue bitAnd: 16rDF)]]]
 			whileTrue: [ j := j - 1.  k := k - 1. ].
-	^ i - 1 + self size - j + bonus. 
+	^ i - 1 + self size - j + bonus
 ]
 
 { #category : #accessing }
@@ -506,7 +504,7 @@ String >> asByteArray [
 	b := ByteArray new: self byteSize.
 	1 to: self size * 4 do: [:i |
 		b at: i put: (self byteAt: i)].
-	^ b.
+	^ b
 
 ]
 
@@ -557,7 +555,7 @@ String >> asComment [
 			str nextPut: $". ].
 
 		str nextPut: $".
-	].
+	]
 	
 ]
 
@@ -2754,6 +2752,6 @@ String >> writeLeadingCharRunsOn: stream [
 	runLength do: [:rr | rr printOn: stream. stream space].
 	stream skip: -1; nextPut: $).
 	runValues do: [:vv | vv printOn: stream. stream nextPut: $,].
-	stream skip: -1.
+	stream skip: -1
 
 ]

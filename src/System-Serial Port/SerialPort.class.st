@@ -30,8 +30,7 @@ SerialPort >> baudRate [
 SerialPort >> baudRate: anInteger [
 	"Set the baud rate for this serial port."
 
-	baudRate := anInteger.
-
+	baudRate := anInteger
 ]
 
 { #category : #'open/close' }
@@ -55,7 +54,7 @@ SerialPort >> dataBits [
 SerialPort >> dataBits: anInteger [
 	"Set the number of data bits for this serial port to 5, 6, 7, or 8."
 
-	dataBits := anInteger.
+	dataBits := anInteger
 
 ]
 
@@ -64,15 +63,15 @@ SerialPort >> initialize [
 	"Default port settings."
 
 	super initialize.
-	port := nil.					"set when opened"
-	baudRate := 9600.			"9600 baud"
+	port := nil.						"set when opened"
+	baudRate := 9600.				"9600 baud"
 	stopBitsType := 1.				"one stop bit"
 	parityType := 0.				"no parity"
 	dataBits := 8.					"8 bits"
 	outputFlowControlType := 0.	"none"
 	inputFlowControlType := 0.	"none"
-	xOnByte := 19.				"ctrl-S"
-	xOffByte := 24.				"ctrl-X"
+	xOnByte := 19.					"ctrl-S"
+	xOffByte := 24.					"ctrl-X"
 
 ]
 
@@ -90,26 +89,25 @@ SerialPort >> inputFlowControlType: anInteger [
 		1 - XOn/XOff
 		2 - hardware handshaking"
 
-	inputFlowControlType := anInteger.
+	inputFlowControlType := anInteger
 
 ]
 
 { #category : #'input/output' }
-SerialPort >> nextPutAll: aStringOrByteArray [ 
-	"Send the given bytes out this serial port. The port must be
-	open. "
-	^ port isString
-		ifTrue: [self
-					primWritePortByName: port
-					from: aStringOrByteArray
-					startingAt: 1
-					count: aStringOrByteArray size]
-		ifFalse: [self
-					primWritePort: port
-					from: aStringOrByteArray
-					startingAt: 1
-					count: aStringOrByteArray size]
+SerialPort >> nextPutAll: aStringOrByteArray [
+	"Send the given bytes out this serial port. The port must be open."
 
+	^ port isString
+		ifTrue: [ self
+				primWritePortByName: port
+				from: aStringOrByteArray
+				startingAt: 1
+				count: aStringOrByteArray size ]
+		ifFalse: [ self
+				primWritePort: port
+				from: aStringOrByteArray
+				startingAt: 1
+				count: aStringOrByteArray size ]
 ]
 
 { #category : #'open/close' }
@@ -117,7 +115,7 @@ SerialPort >> openPort: portId [
 	"Open the given serial port, using the settings specified by my
 	instance variables."
 
-		| result |	
+	| result |	
 
 	self close.
 	
@@ -145,7 +143,7 @@ SerialPort >> openPort: portId [
 				xOffByte: xOffByte].
 
 	"wks - raise an error if there was a failure."
-	result isNil ifTrue:[ self error:'Cannot open ', portId printString. ].
+	result isNil ifTrue:[ self error: 'Cannot open ', portId printString ].
 
 	port := portId
 
@@ -165,7 +163,7 @@ SerialPort >> outputFlowControlType: anInteger [
 		1 - XOn/XOff
 		2 - hardware handshaking"
 
-	outputFlowControlType := anInteger.
+	outputFlowControlType := anInteger
 
 ]
 
@@ -183,7 +181,7 @@ SerialPort >> parityType: anInteger [
 		1 - odd parity
 		2 - even parity"
 
-	parityType := anInteger.
+	parityType := anInteger
 
 ]
 
@@ -224,7 +222,7 @@ SerialPort >> primOpenPortByName: portName baudRate: baud stopBitsType: stop par
 SerialPort >> primReadPort: portNumber into: byteArray startingAt: startIndex count: count [
 
 	<primitive: 'primitiveSerialPortRead' module: 'SerialPlugin'>
-	self primitiveFailed.
+	self primitiveFailed
 
 ]
 
@@ -259,7 +257,7 @@ SerialPort >> printOn: aStream [
 		print: baudRate; nextPutAll: ' baud, ';
 		print: dataBits; nextPutAll: ' bits, ';
 		nextPutAll: (#('1.5' '1' '2') at: stopBitsType + 1); nextPutAll: ' stopbits, ';
-		nextPutAll: (#('no' 'odd' 'even') at: parityType + 1); nextPutAll: ' parity)'.
+		nextPutAll: (#('no' 'odd' 'even') at: parityType + 1); nextPutAll: ' parity)'
 
 ]
 
@@ -284,19 +282,20 @@ SerialPort >> readByteArray [
 ]
 
 { #category : #'input/output' }
-SerialPort >> readInto: aStringOrByteArray startingAt: index [ 
+SerialPort >> readInto: aStringOrByteArray startingAt: index [
 	"Read data into the given String or ByteArray object starting at the given index, and answer the number of bytes read. Does not go past the end of the given String or ByteArray."
-	
-	^ port isString 
-		ifTrue: [self primReadPortByName: port
-					into: aStringOrByteArray
-					startingAt: index
-					count: aStringOrByteArray size - index + 1]
-		ifFalse: [self primReadPort: port
-					into: aStringOrByteArray
-					startingAt: index
-					count: aStringOrByteArray size - index + 1].
-		
+
+	^ port isString
+		ifTrue: [ self
+				primReadPortByName: port
+				into: aStringOrByteArray
+				startingAt: index
+				count: aStringOrByteArray size - index + 1 ]
+		ifFalse: [ self
+				primReadPort: port
+				into: aStringOrByteArray
+				startingAt: index
+				count: aStringOrByteArray size - index + 1 ]
 ]
 
 { #category : #'input/output' }
@@ -333,7 +332,7 @@ SerialPort >> stopBitsType: anInteger [
 		1 - one stop bit
 		2 - two stop bits"
 
-	stopBitsType := anInteger.
+	stopBitsType := anInteger
 
 ]
 
@@ -348,7 +347,7 @@ SerialPort >> xOffByte [
 SerialPort >> xOffByte: anInteger [
 	"Set the value of the XOff byte to be used if XOn/XOff flow control is enabled."
 
-	xOffByte := anInteger.
+	xOffByte := anInteger
 
 ]
 
@@ -363,6 +362,6 @@ SerialPort >> xOnByte [
 SerialPort >> xOnByte: anInteger [
 	"Set the value of the XOn byte to be used if XOn/XOff flow control is enabled."
 
-	xOnByte := anInteger.
+	xOnByte := anInteger
 
 ]

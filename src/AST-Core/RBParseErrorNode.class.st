@@ -31,6 +31,13 @@ RBParseErrorNode class >> errorMessage: aString value: aValue at: aPosition [
 		yourself
 ]
 
+{ #category : #comparing }
+RBParseErrorNode >> = anObject [ 
+	self == anObject ifTrue: [^true].
+	self class = anObject class ifFalse: [^false].
+	^anObject value = value and: [ anObject errorMessage = errorMessage ]
+]
+
 { #category : #visiting }
 RBParseErrorNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitParseErrorNode: self.
@@ -70,6 +77,11 @@ RBParseErrorNode >> errorMessage [
 { #category : #accessing }
 RBParseErrorNode >> errorMessage: anObject [
 	errorMessage := anObject
+]
+
+{ #category : #comparing }
+RBParseErrorNode >> hash [
+	^ (self value hash bitXor: self errorMessage hash)
 ]
 
 { #category : #testing }

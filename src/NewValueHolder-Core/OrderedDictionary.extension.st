@@ -1,6 +1,6 @@
 Extension { #name : #OrderedDictionary }
 
-{ #category : #'*NewValueHolder' }
+{ #category : #'*NewValueHolder-Core' }
 OrderedDictionary >> asValueHolder [
 
 	^ DictionaryValueHolder value: self

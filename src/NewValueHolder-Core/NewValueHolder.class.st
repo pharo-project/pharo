@@ -18,7 +18,7 @@ Class {
 		'lock',
 		'value'
 	],
-	#category : #NewValueHolder
+	#category : #'NewValueHolder-Core-Base'
 }
 
 { #category : #'instance creation' }
