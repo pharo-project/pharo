@@ -370,10 +370,10 @@ TabMorph >> addIcon [
 		fullFrame: (LayoutFrame identity
 			bottomFraction: 0;
 			leftFraction: 1;
-			topOffset: 6; 
-			leftOffset: self iconRightOffset negated - 12;
+			topOffset: 6 * self displayScaleFactor; 
+			leftOffset: self iconRightOffset negated - (12 * self displayScaleFactor);
 			rightOffset: self iconRightOffset negated;
-			bottomOffset: 18; 
+			bottomOffset: (18 * self displayScaleFactor); 
 			yourself)
 ]
 
@@ -605,7 +605,7 @@ TabMorph >> initialize [
 	state := TabEnabled tab: self.
 	closeable := true.
 	label := self buildLabel: 'tab' withIcon: self defaultIcon.
-	closeIcon := AlphaImageMorph withForm: self class closeIcon.
+	closeIcon := AlphaImageMorph withForm: self class closeIcon scaledByDisplayScaleFactor.
 	morph := nil.
 	actions := OrderedCollection new.
 	retrievingSemaphore := Semaphore new.
@@ -681,7 +681,7 @@ TabMorph >> modifyClippingBounds: clippingBounds [
 	rightOffset := -10.
 	closeIcon visible ifTrue: [ rightOffset := rightOffset - 14 ].
 
-	^ clippingBounds withRight:clippingBounds right + rightOffset
+	^ clippingBounds withRight: (clippingBounds right + rightOffset) * self displayScaleFactor
 ]
 
 { #category : #accessing }

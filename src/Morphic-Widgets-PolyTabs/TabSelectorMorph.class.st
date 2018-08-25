@@ -422,7 +422,7 @@ TabSelectorMorph >> rightButtonLabel [
 	^AlphaImageMorph new image: (
 		ScrollBar
 			arrowOfDirection: #right
-			size: self controlButtonWidth - 3
+			size: self controlButtonWidth - (3 * self displayScaleFactor)
 			color: self paneColor darker)
 ]
 
