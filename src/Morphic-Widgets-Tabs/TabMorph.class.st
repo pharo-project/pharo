@@ -85,7 +85,7 @@ TabMorph class >> closeOverIconContents [
 
 { #category : #accessing }
 TabMorph class >> defaultHeight [
-	^ 22
+	^ 22 * World displayScaleFactor 
 ]
 
 { #category : #initialize }
@@ -325,7 +325,7 @@ TabMorph class >> refreshIcon9Contents [
 { #category : #'private-constants' }
 TabMorph >> actionOffset [
 
-	^ 4
+	^ 4 * self displayScaleFactor
 ]
 
 { #category : #accessing }
@@ -472,7 +472,7 @@ TabMorph >> closeable: anObject [
 
 { #category : #initialize }
 TabMorph >> defaultBounds [
-	^ 0@0 corner: 100@(self class defaultHeight)
+	^ 0@0 corner: (100@(self class defaultHeight)) * self displayScaleFactor
 ]
 
 { #category : #'private-icons' }
@@ -592,7 +592,7 @@ TabMorph >> icon: anIcon [
 { #category : #'private-constants' }
 TabMorph >> iconRightOffset [
 
-	^ 10
+	^ 10 * self displayScaleFactor
 ]
 
 { #category : #initialization }
@@ -629,13 +629,13 @@ TabMorph >> label: aString [
 { #category : #'private-constants' }
 TabMorph >> labelBottomOffset [
 
-	^ 5
+	^ 5 * self displayScaleFactor
 ]
 
 { #category : #'private-constants' }
 TabMorph >> labelRightOffset [
 
-	^ 12
+	^ 12 * self displayScaleFactor
 ]
 
 { #category : #accessing }
@@ -826,9 +826,9 @@ TabMorph >> showCloseIcon [
 { #category : #'private-tab label' }
 TabMorph >> showIconTreshold [
 
-	^ closeIcon visible
+	^ (closeIcon visible
 		ifTrue: [ 54 ]
-		ifFalse: [ 40 ]
+		ifFalse: [ 40 ]) * self displayScaleFactor
 ]
 
 { #category : #protocol }

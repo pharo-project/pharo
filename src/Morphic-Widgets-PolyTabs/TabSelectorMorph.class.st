@@ -101,7 +101,7 @@ TabSelectorMorph >> calculateVisibleTabs [
 TabSelectorMorph >> controlButtonWidth [
 	"Answer the width for a scroll button."
 
-	^self theme scrollbarThickness + 3
+	^self theme scrollbarThickness + (3 * self displayScaleFactor)
 ]
 
 { #category : #accessing }
@@ -259,7 +259,7 @@ TabSelectorMorph >> leftButtonLabel [
 	^AlphaImageMorph new image: (
 		ScrollBar
 			arrowOfDirection: #left
-			size: self controlButtonWidth - 3
+			size: self controlButtonWidth - (3* self displayScaleFactor)
 			color: self paneColor darker)
 ]
 
