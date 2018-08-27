@@ -16,7 +16,7 @@ ReTestClassNameShouldNotEndWithTests class >> checksClass [
 { #category : #running }
 ReTestClassNameShouldNotEndWithTests >> basicCheck: aClass [
 
-	^ (aClass isKindOf: TestCase class) and: [aClass name asString endsWith: 'Tests'].
+	^ (aClass inheritsFrom: TestCase) and: [aClass name asString endsWith: 'Tests'].
 ]
 
 { #category : #running }

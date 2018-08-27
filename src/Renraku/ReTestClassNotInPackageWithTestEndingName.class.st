@@ -16,7 +16,7 @@ ReTestClassNotInPackageWithTestEndingName class >> checksClass [
 { #category : #running }
 ReTestClassNotInPackageWithTestEndingName >> basicCheck: aClass [
 
-	^ (aClass isKindOf: TestCase class) and: [(aClass package name asString endsWith: '-Tests') not].
+	^ (aClass inheritsFrom: TestCase) and: [(aClass package name asString endsWith: '-Tests') not].
 ]
 
 { #category : #running }
