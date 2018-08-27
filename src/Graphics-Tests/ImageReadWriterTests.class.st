@@ -84,6 +84,30 @@ ImageReadWriterTests >> testGifWriteReadUsingFiles [
 ]
 
 { #category : #tests }
+ImageReadWriterTests >> testHasMagicNumber [
+	"Tests now account for the new Streams, for which we cannot
+	 assume we will be able to know the whole size"
+	| exampleNumber writerStream failStream failTooShortStream reader |
+	exampleNumber := 'GIF89a'.
+	writerStream := ZnPositionableReadStream on: (ReadStream on: 'GIF89a this is some data').
+	failStream := ZnPositionableReadStream on: (ReadStream on: 'This is incorrect').
+	failTooShortStream := ZnPositionableReadStream on: (ReadStream on: 'GIF').
+	
+	"This one has the magic number at the current position"
+	reader := ImageReadWriter on: writerStream.
+	self assert: (reader hasMagicNumber: exampleNumber).
+	
+	"Does not have the magic number at the current position"
+	reader := ImageReadWriter on: failStream.
+	self assert: (reader hasMagicNumber: exampleNumber) equals: false.
+	
+	"The source stream is shorter than the magic number. Shouldn't error!"
+	reader := ImageReadWriter on: failTooShortStream.
+	self assert: (reader hasMagicNumber: exampleNumber) equals: false.
+	
+]
+
+{ #category : #tests }
 ImageReadWriterTests >> testJpegWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormNonTransparent.

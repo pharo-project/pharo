@@ -433,6 +433,12 @@ PharoDarkTheme >> shStyleTable [
 	^SHRBTextStyler darkStyleTable
 ]
 
+{ #category : #'fill-styles' }
+PharoDarkTheme >> sliderNormalFillStyleFor: aSlider [
+	
+	^ self backgroundColor
+]
+
 { #category : #'accessing colors' }
 PharoDarkTheme >> spotlightWindowColor [ 
 	^ self windowColor

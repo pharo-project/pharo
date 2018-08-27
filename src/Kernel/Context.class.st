@@ -1674,10 +1674,10 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	"Insert ensure and exception handler contexts under aSender"
 	error := nil.
 	context := aSender insertSender: (Context
-		contextOn: UnhandledError, Halt do: [:ex |
+		contextOn: Error do: [:ex |
 			error ifNil: [
 				"this is ugly but it fixes the side-effects of not sending an Unhandled error on Halt"
-				error := (ex isKindOf: Halt) ifTrue: [ ex ] ifFalse: [ ex exception ].
+				error := (ex isKindOf: UnhandledError) ifTrue: [ ex exception ] ifFalse: [ ex ].
 				topContext := thisContext.
 				ex resumeUnchecked: here jump ]
 			ifNotNil: [ ex pass ]]).

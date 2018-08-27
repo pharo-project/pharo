@@ -1080,8 +1080,12 @@ Collection >> reject: rejectBlock thenCollect: collectBlock [
 
 { #category : #enumerating }
 Collection >> reject: rejectBlock thenDo: doBlock [ 
-	"Utility method to improve readability."
-	(self reject: rejectBlock) do: doBlock
+	"Utility method to improve readability.
+	Do not create the intermediate collection."
+	
+	self do: [ :each |
+		(rejectBlock value: each)
+			ifFalse: [ doBlock value: each ] ].
 ]
 
 { #category : #removing }

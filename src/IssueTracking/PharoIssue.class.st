@@ -19,7 +19,7 @@ Class {
 		'number',
 		'title'
 	],
-	#category : #IssueTracking
+	#category : #'IssueTracking-Base'
 }
 
 { #category : #'instance creation' }
@@ -107,6 +107,6 @@ PharoIssue >> title: aString [
 
 { #category : #accessing }
 PharoIssue >> trackerUrl [
-	^ ('https://pharo.fogbugz.com/default.asp?', self number asString) asUrl
+	^ ('https://pharo.manuscript.com/default.asp?', self number asString) asUrl
 	
 ]

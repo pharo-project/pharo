@@ -46,29 +46,69 @@ FinderUI class >> initialize [
 FinderUI class >> methodFinderExplanation [
 	"The comment in the bottom pane"
 
-	false ifTrue: [MethodFinder methodFor: #( (4 3) 7  (0 5) 5  (5 5) 10)].
+	MethodFinder new findMethodsByExampleInput: #( 1 2 ) andExpectedResult: 3.
 		"to keep the method methodFor: from being removed from the system"
 
-	^ 'Type a fragment of a selector in the search box and click <Search>.
+	^ 'Use an example to find a method in the system.  
+	
+   ''a''. ''b''. ''ab''       will find the message #, for strings concatenation
+   2. -2                will find the message #negated
+   3. 6                 will find the message #factorial
+   20. 10. 15. 15       will find the message #min:max:
 
-Or, use an example to find a method in the system.  An example is made up of the following three items separated by a period: receiver. args. answer.    For example, type: 3. 4. 7. into the search box and click <Search>
+It works on collections too:
 
-Alternatively, in this bottom pane, use #methodFor: directly to find a method in the system.  Select this line of code and choose "print it".  
+   {2. 4. 5. 1}. 5. 3   will find the message #indexOf:
+   {2. 5. 1}. 5. true   will find the message #includes:
+	
+An example is made up of the following two or more items separated by a period: 
+	
+	receiver. answer
+	receiver. argument1. answer
+	receiver. argument1. argument2. answer
+	etc...
+	
+For example, type: 3. 4. 7. into the search box and click <Search>
 
-	MethodFinder methodFor: #( (4 3) 7  (0 5) 5  (5 5) 10).
-This will discover (data1 + data2).
+Take care on separating spaces because of floating point numbers.
 
-You supply inputs and answers and the system will find the method.  Each inner array is a list of inputs.  It contains the receiver and zero or more arguments.  For Booleans and any computed arguments, use brace notation.
+ 	3.4.7      will find nothing, it is interpreted two numbers, 3.4 and. 7
+	3. 4. 7    will find you the message #+
+	
+The examples array should contain one object for the receiver, one object per expected argument and then a final object with the expected result.	
 
-	MethodFinder methodFor: { {1. 3}. true.  {20. 10}. false}.
-This will discover the expressions (data1 < data2), (data2 > data1), and many others.
+In other words 
+ - a unary method example expects an array of input objects #( receiver ) and an expected result
+ - a binary method example expects an array with two input objects #( receiver argument ) and an expected result
+ - a keyword method example expects an array with at least two elements  #( receiver argument1 argument2 ... ) and an expected results
 
-	MethodFinder methodFor: { {''29 Apr 1999'' asDate}. ''Thursday''.  
-		{''30 Apr 1999'' asDate}. ''Friday'' }.
-This will discover the expression (data1 weekday)
+The method finder will take the input objects (receiver and arguments) and perform their permutation to be able to find more results.
+Then, it will lookup in the receiver''s hierarchy the approved and forbidden methods to run on the hierarchy and run them on the permutation of objects.
 
 Receiver and arguments do not have to be in the right order.
-See MethodFinder.verify for more examples.'
+
+Alternatively, in this bottom pane or in the Playground, use #findMethodsByExampleInput:andExpectedResult: directly to find a method in the system.  Select this line of code and choose "print it" or "inspect it.  
+
+	MethodFinder new findMethodsByExampleInput: #( 1 2 ) andExpectedResult: 3.
+
+It is useful when you want to look for computed objects:
+	
+	MethodFinder new 
+		findMethodsByExampleInput: {''29 Apr 1999'' asDate} 
+		andExpectedResult: ''30 Apr 1999'' asDate.
+
+This will find the message #next.
+
+	MethodFinder new 
+		findMethodsByExampleInput: {''30 Apr 1999'' asDate} 
+		andExpectedResult: ''Friday''. 
+
+This will find the message #dayOfWeekName
+
+The Method Finder is not trying all methods in the system so if it will find nothing, a method with requested behavior may still exist. '.
+
+		
+
 ]
 
 { #category : #'instance creation' }

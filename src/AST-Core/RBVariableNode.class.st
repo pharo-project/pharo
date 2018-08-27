@@ -94,7 +94,7 @@ RBVariableNode >> initialize [
 
 { #category : #testing }
 RBVariableNode >> isDefinition [
-	^self parent isSequence
+	^self parent isSequence and: [ self parent defines: name ]
 ]
 
 { #category : #testing }

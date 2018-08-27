@@ -15,7 +15,7 @@ Class {
 		'OFFSET_Y'
 	],
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#category : #'Athens-Cairo-Transforms'
 }

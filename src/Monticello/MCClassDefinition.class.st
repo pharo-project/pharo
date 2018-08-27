@@ -183,6 +183,9 @@ MCClassDefinition >> classInstVarNames [
 
 { #category : #printing }
 MCClassDefinition >> classInstanceVariables [
+
+	variables ifNil: [ ^ #() ].
+
 	^self usesSpecialVariables 
 		ifTrue: [ self variablesOfType: #isClassInstanceVariable]
 		ifFalse: [self classInstanceVariablesString asSlotCollection]

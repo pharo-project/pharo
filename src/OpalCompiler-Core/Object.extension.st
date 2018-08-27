@@ -20,6 +20,7 @@ Object >> mustBeBooleanDeOptimizeIn: context [
 	"Disable inlining so the message send will be unoptimized"
 	methodNode compilationContext compilerOptions: #(- optionInlineIf optionInlineAndOr optionInlineWhile).
 	"Generate the method"	
+	OCASTSemanticCleaner clean: methodNode.
 	method := methodNode generate.
 	"Execute the generated method with the pc still at the optimzized block so that the lookUp can read variables defined in the optimized block"
 	ret := context receiver withArgs: {context} executeMethod: method.

@@ -260,6 +260,14 @@ File class >> fileAttributesVersionString [
 ]
 
 { #category : #'primitives-file' }
+File class >> fileDescriptorIsAvailable: anInteger [
+	"Answer a boolean indicating whether the supplied file descriptor (anInteger) is available.
+	A file descriptor is considered available if it is connected to a console / terminal, pipe or a file.  cygwin terminals are currently not supported (the pipe is created, but nothing appears in the terminal)"
+
+	^ (self fileDescriptorType: anInteger) between: 1 and: 3
+]
+
+{ #category : #'primitives-file' }
 File class >> fileDescriptorType: fdNum [
 	"Allow to test if the standard input/output files are from a console or not
 	Return values:
@@ -406,7 +414,7 @@ File class >> isSymlink: aPath [
 	"Answer a boolean indicating whether the supplied path is a Symlink file.
 	Note that this should only be called on platforms that support symlinks (e.g. not Windows)"
 
-	^self supportsSymbolicLinks and: [ self fileAttribute: aPath number: 16 ]
+	^self fileAttribute: aPath number: 16
 ]
 
 { #category : #'primitives-file modes' }
@@ -628,8 +636,12 @@ symbolic link information
 		(error isPrimitiveError and: [attributeNumber ~= 16 and: [error errorCode = self cantStatPath and: [
 					self platformSupportsSymbolicLinksEgUnix]]]) ifTrue:
 						[DiskSymlinkDirectoryEntry fileSystem: DiskStore currentFileSystem path: aString asPath]"
-	^error isPrimitiveError ifTrue:
-		[ self signalError: error errorCode for: aString ]
+	^error isPrimitiveError ifTrue: [ 
+		(attributeNumber = 16 and: [ error errorCode = self unsupportedOperation ]) ifTrue: 
+			"If symlinks aren't supported, answer false"
+			[ ^false ]
+		ifFalse:
+			[ self signalError: error errorCode for: aString ] ]
 	ifFalse:
 		[ self primitiveFailed ]
 ]
@@ -911,18 +923,20 @@ File class >> statFailed [
 ]
 
 { #category : #'primitives-file' }
-File class >> stdioDescriptorIsATTY [
-	^ (0 to: 2)
-		anySatisfy: [ :fdNum | 
-			| res |
-			res := self fileDescriptorType: fdNum.
-			#(1 4) includes: res ]
-]
-
-{ #category : #'primitives-file' }
 File class >> stdioHandles [
 	<primitive: 'primitiveFileStdioHandles' module: 'FilePlugin' error: ec>
 	self primitiveFailed
+]
+
+{ #category : #'primitives-file' }
+File class >> stdioIsAvailable [
+	"Answer a boolean indicating whether stdio is available on the current platform.
+	stdio is considered available if any one of the three files (stdin, stdout, stderr) is available."
+
+	^ (0 to: 2)
+		anySatisfy: [ :fdNum | | res |
+			res := self fileDescriptorType: fdNum.
+			res between: 1 and: 3 ]
 ]
 
 { #category : #'primitives-errors' }
@@ -964,9 +978,23 @@ File class >> truncate: id to: anInteger [
 
 ]
 
+{ #category : #'primitives-errors' }
+File class >> unexpectedError [
+	"This is normally used where a catch-all is placed, but not expected to be used"
+
+	^-14
+]
+
 { #category : #registry }
 File class >> unregister: anObject [
 	^self registry remove: anObject ifAbsent:[]
+]
+
+{ #category : #'primitives-errors' }
+File class >> unsupportedOperation [
+	"The requested operation is not supported on the current platform"
+
+	^-13
 ]
 
 { #category : #'primitives-file' }

@@ -15,9 +15,9 @@ Trait >> asRingDefinition [
 		definitionSource: self definition;
 		withMetaclass.
 		
-	ring theMetaClass 
-		traitCompositionSource: self theMetaClass traitCompositionString;
-		definitionSource: self theMetaClass definition.
+	ring classSide 
+		traitCompositionSource: self classSide traitCompositionString;
+		definitionSource: self classSide definition.
 	^ring
 ]
 
@@ -32,9 +32,9 @@ Trait >> asRingDefinitionWithMethods: methodsBoolean withSuperclasses: supersBoo
 		self methodsDo:[ :mth|  
 			rgMethod := mth asActiveRingDefinition.
 			aRGSlice loadMethod: rgMethod inClass: rgClass using: packageKeys ].
-		self theMetaClass methodsDo:[ :mth|  
+		self classSide methodsDo:[ :mth|  
 			rgMethod := mth asActiveRingDefinition.
-			aRGSlice loadMethod: rgMethod inClass: rgClass theMetaClass using: packageKeys ] ].
+			aRGSlice loadMethod: rgMethod inClass: rgClass classSide using: packageKeys ] ].
 
 	supersBoolean ifTrue: [
 		rgSuper := aRGSlice classNamed: rgClass superclassName.

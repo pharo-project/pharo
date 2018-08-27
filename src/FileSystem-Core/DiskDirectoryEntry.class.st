@@ -180,21 +180,21 @@ DiskDirectoryEntry >> inode [
 	^self statAttributes at: 3
 ]
 
-{ #category : #'testing - stat' }
+{ #category : #testing }
 DiskDirectoryEntry >> isBlock [
 	"Answer true if the receiver is a block device"
 	
 	^self primitives modeIsBlock: self mode.
 ]
 
-{ #category : #'testing - stat' }
+{ #category : #testing }
 DiskDirectoryEntry >> isCharacter [
 	"Answer true if the receiver is a character device"
 	
 	^self primitives modeIsCharacter: self mode
 ]
 
-{ #category : #'testing - stat' }
+{ #category : #testing }
 DiskDirectoryEntry >> isDirectory [
 	"Answer true if the receiver is a directory"
 
@@ -204,21 +204,21 @@ DiskDirectoryEntry >> isDirectory [
 		do: [ false ].
 ]
 
-{ #category : #'testing - access' }
+{ #category : #testing }
 DiskDirectoryEntry >> isExecutable [
 	"Answer a boolean indicating whether the VM can execute the receivers file"
 
 	^self accessAttributes at: 3
 ]
 
-{ #category : #'testing - stat' }
+{ #category : #testing }
 DiskDirectoryEntry >> isFIFO [
 	"Answer true if the receiver is FIFO"
 
 	^self primitives modeIsFIFO: self mode
 ]
 
-{ #category : #'testing - stat' }
+{ #category : #testing }
 DiskDirectoryEntry >> isFile [
 	"Answer true if the receiver is a file (exists and is not a directory)"
 	
@@ -228,35 +228,36 @@ DiskDirectoryEntry >> isFile [
 		do: [ false ].
 ]
 
-{ #category : #'testing - access' }
+{ #category : #testing }
 DiskDirectoryEntry >> isReadable [
 	"Answer a boolean indicating whether the VM can read the receivers file"
 
 	^self accessAttributes at: 1
 ]
 
-{ #category : #'testing - stat' }
+{ #category : #testing }
 DiskDirectoryEntry >> isRegular [
 	"Answer true if the receiver is a regular file"
 	
 	^self primitives modeIsRegular: self mode
 ]
 
-{ #category : #'testing - stat' }
+{ #category : #testing }
 DiskDirectoryEntry >> isSocket [
 	"Answer true if the receiver is a socket"
 	
 	^self primitives modeIsSocket: self mode
 ]
 
-{ #category : #'testing - stat' }
+{ #category : #testing }
 DiskDirectoryEntry >> isSymlink [
 	"Answer true if the receiver is a symbolic link"
-	
+
+	"Don't use cached information as the values might reflect a target file accessed from a symlink."
 	^self primitives isSymlink: self pathString
 ]
 
-{ #category : #'testing - access' }
+{ #category : #testing }
 DiskDirectoryEntry >> isWritable [
 	"Answer a boolean indicating whether the VM can write to the receivers file"
 

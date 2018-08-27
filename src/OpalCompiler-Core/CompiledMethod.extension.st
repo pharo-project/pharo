@@ -31,17 +31,10 @@ CompiledMethod >> irPrimitive [
 	^ primNode
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 CompiledMethod >> methodNode [
-	"Return the parse tree that represents self"
-	| aClass source methodNode |
-	
-	aClass := self methodClass.
-	source := self sourceCode.
-	methodNode := aClass compiler parse: source.
-	methodNode source: source.
-	^methodNode.
-			
+	"returns an AST for this method, do not cache it. (see #ast for the cached alternative)"
+	^self parseTree
 ]
 
 { #category : #'*opalcompiler-core' }
