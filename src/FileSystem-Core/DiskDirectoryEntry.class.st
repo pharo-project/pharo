@@ -253,9 +253,8 @@ DiskDirectoryEntry >> isSocket [
 DiskDirectoryEntry >> isSymlink [
 	"Answer true if the receiver is a symbolic link"
 
-	"Don't use cached information as the values might reflect a target file accessed from a symlink.
-	Pass this back to the file reference to get platform specific processing"
-	^reference isSymlink
+	"Don't use cached information as the values might reflect a target file accessed from a symlink."
+	^self primitives isSymlink: self pathString
 ]
 
 { #category : #testing }

@@ -636,8 +636,12 @@ symbolic link information
 		(error isPrimitiveError and: [attributeNumber ~= 16 and: [error errorCode = self cantStatPath and: [
 					self platformSupportsSymbolicLinksEgUnix]]]) ifTrue:
 						[DiskSymlinkDirectoryEntry fileSystem: DiskStore currentFileSystem path: aString asPath]"
-	^error isPrimitiveError ifTrue:
-		[ self signalError: error errorCode for: aString ]
+	^error isPrimitiveError ifTrue: [ 
+		(attributeNumber = 16 and: [ error errorCode = self unsupportedOperation ]) ifTrue: 
+			"If symlinks aren't supported, answer false"
+			[ ^false ]
+		ifFalse:
+			[ self signalError: error errorCode for: aString ] ]
 	ifFalse:
 		[ self primitiveFailed ]
 ]
@@ -949,15 +953,6 @@ File class >> supportsSymbolicLinks [
 ]
 
 { #category : #'primitives-file' }
-File class >> stdioIsAvailable [
-	"Answer a boolean indicating whether stdio is available on the current platform.
-	stdio is considered available if any one of the three files (stdin, stdout, stderr) is available."
-
-	^ (0 to: 2)
-		anySatisfy: [ :fdNum | self fileDescriptorIsAvailable: fdNum ]
-]
-
-{ #category : #'primitives-file' }
 File class >> sync: id [
 	"On Unix, this syncs any written or flushed data still in the kernel file
 	system buffers to disk. On Windows this and primFlush: do the same thing"
@@ -983,9 +978,23 @@ File class >> truncate: id to: anInteger [
 
 ]
 
+{ #category : #'primitives-errors' }
+File class >> unexpectedError [
+	"This is normally used where a catch-all is placed, but not expected to be used"
+
+	^-14
+]
+
 { #category : #registry }
 File class >> unregister: anObject [
 	^self registry remove: anObject ifAbsent:[]
+]
+
+{ #category : #'primitives-errors' }
+File class >> unsupportedOperation [
+	"The requested operation is not supported on the current platform"
+
+	^-13
 ]
 
 { #category : #'primitives-file' }
