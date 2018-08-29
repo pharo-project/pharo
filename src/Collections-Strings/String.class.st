@@ -2164,13 +2164,15 @@ String >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 String >> romanNumber [
 	| value v1 v2 |
 	value := v1 := v2 := 0.
-	self reverseDo:
-		[:each |
-		v1 := #(1 5 10 50 100 500 1000) at: ('IVXLCDM' indexOf: each).
-		value := v1 >= v2
-			ifTrue: [ value + v1]
-			ifFalse: [ value - v1].
-		v2 := v1].
+	self
+		reverseDo: [ :each | 
+			each = $-
+				ifTrue: [ ^ value negated ].
+			v1 := #(1 5 10 50 100 500 1000) at: ('IVXLCDM' indexOf: each).
+			value := v1 >= v2
+				ifTrue: [ value + v1 ]
+				ifFalse: [ value - v1 ].
+			v2 := v1 ].
 	^ value
 ]
 
