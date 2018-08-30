@@ -260,7 +260,7 @@ For more information, please visit here: ', (self url: 'http://pharo.org'),
 
 Click if you have access to a: ',
 (self doItFrom: 'WelcomeHelp fastNetworkDefaults' text: 'regular network connection'), ' or ',
-(self doItFrom: 'WelcomeHelp slowNetworkDefaults' text: 'slow Network'), '
+(self doItFrom: 'WelcomeHelp slowNetworkDefaults' text: 'slow network'), '
 or if need to ',
 (self doItFrom: 'WelcomeHelp openNetworkSettings' text: 'setup a network proxy'), '.
 
