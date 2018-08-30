@@ -265,5 +265,6 @@ or if need to ',
 (self doItFrom: 'WelcomeHelp openNetworkSettings' text: 'setup a network proxy'), '.
 
 You can also ',
-(self doItFrom: 'SettingBrowser open' text: 'apply many other other settings')
+(self doItFrom: 'SettingBrowser open' text: 'apply many other other settings'), ' or extend the image ',
+(self doItFrom: 'CatalogBrowser open' text: 'by loading additional external packages from catalog'), '.'
 ]
