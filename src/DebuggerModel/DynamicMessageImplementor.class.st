@@ -145,8 +145,7 @@ DynamicMessageImplementor >> writeShouldBeImplemented [
 		cr;
 		tab;
 		nextPutAll: 'self ';
-		nextPutAll: #shouldBeImplemented;
-		nextPut: $.
+		nextPutAll: #shouldBeImplemented
 ]
 
 { #category : #'evaluating-private' }
