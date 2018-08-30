@@ -305,6 +305,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Manifest-Tests'.
 		spec package: 'Morphic-Tests'.
 		spec package: 'Multilingual-Tests'.
+		spec package: 'NewValueHolder-Tests'.		
 		spec package: 'NECompletion-Tests'.
 		spec package: 'NodeNavigation-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
@@ -442,8 +443,8 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Morphic-Tests'
 	'NECompletion-Tests'
+	'NewValueHolder-Tests'
 	'ProfStef-Tests'
-
 	'Reflectivity-Tools-Tests'
 	'Regex-Tests-Core'
 	'Ring-Deprecated-Tests-Monticello'

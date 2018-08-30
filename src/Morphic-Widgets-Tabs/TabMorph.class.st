@@ -85,7 +85,7 @@ TabMorph class >> closeOverIconContents [
 
 { #category : #accessing }
 TabMorph class >> defaultHeight [
-	^ 22
+	^ 22 * World displayScaleFactor 
 ]
 
 { #category : #initialize }
@@ -325,7 +325,7 @@ TabMorph class >> refreshIcon9Contents [
 { #category : #'private-constants' }
 TabMorph >> actionOffset [
 
-	^ 4
+	^ 4 * self displayScaleFactor
 ]
 
 { #category : #accessing }
@@ -370,10 +370,10 @@ TabMorph >> addIcon [
 		fullFrame: (LayoutFrame identity
 			bottomFraction: 0;
 			leftFraction: 1;
-			topOffset: 6; 
-			leftOffset: self iconRightOffset negated - 12;
+			topOffset: 6 * self displayScaleFactor; 
+			leftOffset: self iconRightOffset negated - (12 * self displayScaleFactor);
 			rightOffset: self iconRightOffset negated;
-			bottomOffset: 18; 
+			bottomOffset: (18 * self displayScaleFactor); 
 			yourself)
 ]
 
@@ -472,7 +472,7 @@ TabMorph >> closeable: anObject [
 
 { #category : #initialize }
 TabMorph >> defaultBounds [
-	^ 0@0 corner: 100@(self class defaultHeight)
+	^ 0@0 corner: (100@(self class defaultHeight)) * self displayScaleFactor
 ]
 
 { #category : #'private-icons' }
@@ -592,7 +592,7 @@ TabMorph >> icon: anIcon [
 { #category : #'private-constants' }
 TabMorph >> iconRightOffset [
 
-	^ 10
+	^ 10 * self displayScaleFactor
 ]
 
 { #category : #initialization }
@@ -605,7 +605,7 @@ TabMorph >> initialize [
 	state := TabEnabled tab: self.
 	closeable := true.
 	label := self buildLabel: 'tab' withIcon: self defaultIcon.
-	closeIcon := AlphaImageMorph withForm: self class closeIcon.
+	closeIcon := AlphaImageMorph withForm: self class closeIcon scaledByDisplayScaleFactor.
 	morph := nil.
 	actions := OrderedCollection new.
 	retrievingSemaphore := Semaphore new.
@@ -629,13 +629,13 @@ TabMorph >> label: aString [
 { #category : #'private-constants' }
 TabMorph >> labelBottomOffset [
 
-	^ 5
+	^ 5 * self displayScaleFactor
 ]
 
 { #category : #'private-constants' }
 TabMorph >> labelRightOffset [
 
-	^ 12
+	^ 12 * self displayScaleFactor
 ]
 
 { #category : #accessing }
@@ -681,7 +681,7 @@ TabMorph >> modifyClippingBounds: clippingBounds [
 	rightOffset := -10.
 	closeIcon visible ifTrue: [ rightOffset := rightOffset - 14 ].
 
-	^ clippingBounds withRight:clippingBounds right + rightOffset
+	^ clippingBounds withRight: (clippingBounds right + rightOffset) * self displayScaleFactor
 ]
 
 { #category : #accessing }
@@ -826,9 +826,9 @@ TabMorph >> showCloseIcon [
 { #category : #'private-tab label' }
 TabMorph >> showIconTreshold [
 
-	^ closeIcon visible
+	^ (closeIcon visible
 		ifTrue: [ 54 ]
-		ifFalse: [ 40 ]
+		ifFalse: [ 40 ]) * self displayScaleFactor
 ]
 
 { #category : #protocol }

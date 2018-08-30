@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'contents'
 	],
-	#category : #NewValueHolder
+	#category : #'NewValueHolder-Core-Base'
 }
 
 { #category : #comparing }

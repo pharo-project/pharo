@@ -222,8 +222,9 @@ ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. Pharo
 ${VM} "${PHARO_IMAGE_NAME}.image" clean --release
 
 ${VM} "${PHARO_IMAGE_NAME}.image" save "Pharo"
+echo "70" > pharo.version
 
 # clean bak sources files
 rm -f *.bak
 
-zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.*
+zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.* pharo.version

@@ -48,7 +48,8 @@ for f in Pharo7.0-32bit-*.zip; do
 	
 	mv "tempconversion-64.image" "Pharo7.0-64bit-$HASH.image"
 	mv "tempconversion-64.changes" "Pharo7.0-64bit-$HASH.changes"
-	zip Pharo7.0-64bit-$HASH.zip Pharo7.0-64bit-$HASH.* ${IMAGENAME}.sources
+	echo "70" > pharo.version
+	zip Pharo7.0-64bit-$HASH.zip Pharo7.0-64bit-$HASH.* ${IMAGENAME}.sources pharo.version
 	rm -f *.image *.changes *.sources
 done
 
