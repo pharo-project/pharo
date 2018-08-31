@@ -82,7 +82,7 @@ NECController class >> reset [
 
 { #category : #'instance creation' }
 NECController class >> uniqueInstance [
-	^uniqueInstance ifNil: [ uniqueInstance := self basicNew initialize ]
+	^uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
 { #category : #accessing }
