@@ -243,10 +243,10 @@ Collection >> asCharacterSet [
 
 { #category : #printing }
 Collection >> asCommaString [
-	"Return collection printed as 'a, b, c' "
-
-	^String streamContents: [:s | self asStringOn: s delimiter: ', ']
-		
+    "Return collection printed as 'a, b, c' "
+    "#( 'a' 'b' 'c') asCommaString >>> 'a, b, c'"
+    
+    ^String streamContents: [:s | self asStringOn: s delimiter: ', ']
 ]
 
 { #category : #printing }
