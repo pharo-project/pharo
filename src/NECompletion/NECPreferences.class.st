@@ -21,8 +21,7 @@ Class {
 		'popupShowWithShortcut',
 		'spaceAfterCompletion',
 		'smartCharactersWithSingleSpace',
-		'smartCharactersWithDoubleSpace',
-		'overrideModel'
+		'smartCharactersWithDoubleSpace'
 	],
 	#category : #'NECompletion-Model'
 }
@@ -128,7 +127,6 @@ NECPreferences class >> expandPrefixes: aBoolean [
 { #category : #'class initialization' }
 NECPreferences class >> initialize [
 	enabled := true.
-	overrideModel := false.
 	caseSensitive := true.
 	smartCharacters := true.
 	expandPrefixes := true.
@@ -148,16 +146,6 @@ NECPreferences class >> initialize [
 	popupShowAutomatic := self defaultPopupShowAutomatic.
 	popupAutomaticDelay := self defaultPopupDelay.
 	spaceAfterCompletion := true
-]
-
-{ #category : #accessing }
-NECPreferences class >> overrideModel [ 
-	^overrideModel ifNil: [ overrideModel := false].
-]
-
-{ #category : #accessing }
-NECPreferences class >> overrideModel: aBoolean [
-	overrideModel := aBoolean
 ]
 
 { #category : #accessing }
@@ -212,8 +200,6 @@ NECPreferences class >> settingsOn: aBuilder [
 								domainValues: availableControllers ].
 					(aBuilder setting: #backgroundColor)
 						label: 'Background Color'.
-					(aBuilder setting: #overrideModel)
-						label: 'Complete whole methods'.	
 					(aBuilder setting: #expandPrefixes)
 						label: 'Complete common prefixes using TAB in the suggested completions'.
 					(aBuilder setting: #useEnterToAccept)

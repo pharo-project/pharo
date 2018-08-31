@@ -219,10 +219,8 @@ NECContext >> createModel [
 		ifNotNil: [^ NECTypedModel class: receiverClass].
 
 	(controller workspace isNil and: [ theClass notNil ])
-		ifTrue: [ self isStartOfMethodDefinition
-				ifTrue: [ NECPreferences overrideModel
-						ifTrue: [ ^ NECOverrideModel class: theClass ]
-						ifFalse: [ ^ NECEmptyModel new ] ] ].
+		ifTrue: [ self isStartOfMethodDefinition 
+				ifTrue: [ ^NECEmptyModel new]].
 							
 	self completionTokenIsLiteralOrComment ifTrue:[ ^ NECEmptyModel new].
 			
