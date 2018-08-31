@@ -11,6 +11,16 @@ Class {
 }
 
 { #category : #'instance creation' }
+Month class >> april [
+    ^ self month: 4
+]
+
+{ #category : #'instance creation' }
+Month class >> august [
+    ^ self month: 8
+]
+
+{ #category : #'instance creation' }
 Month class >> current [
 	^ self starting: DateAndTime now
 ]
@@ -28,11 +38,46 @@ Month class >> daysInMonth: indexOrName forYear: yearInteger [
 						ifTrue: [1] ifFalse: [0])
 ]
 
+{ #category : #'instance creation' }
+Month class >> december [
+    ^ self month: 12
+]
+
+{ #category : #'instance creation' }
+Month class >> february [
+    ^ self month: 2
+]
+
 { #category : #accessing }
 Month class >> indexOfMonth: aMonthName [ 
 
 	1 to: 12 do: [ :i |  (aMonthName, '*' match: (MonthNames at: i)) ifTrue: [^i] ].
  	self error: aMonthName , ' is not a recognized month name'.
+]
+
+{ #category : #'instance creation' }
+Month class >> january [
+    ^ self month: 1
+]
+
+{ #category : #'instance creation' }
+Month class >> july [
+    ^ self month: 7
+]
+
+{ #category : #'instance creation' }
+Month class >> june [
+    ^ self month: 6
+]
+
+{ #category : #'instance creation' }
+Month class >> march [
+    ^ self month: 3
+]
+
+{ #category : #'instance creation' }
+Month class >> may [
+    ^ self month: 5
 ]
 
 { #category : #'instance creation' }
@@ -58,6 +103,16 @@ Month class >> nameOfMonth: anIndex [
 ]
 
 { #category : #'instance creation' }
+Month class >> november [
+    ^ self month: 11
+]
+
+{ #category : #'instance creation' }
+Month class >> october [
+    ^ self month: 10
+]
+
+{ #category : #'instance creation' }
 Month class >> readFrom: aStream [
 
 	| m y c |
@@ -74,6 +129,11 @@ Month class >> readFrom: aStream [
 
 "Month readFrom: 'July 1998' readStream"
 
+]
+
+{ #category : #'instance creation' }
+Month class >> september [
+    ^ self month: 9
 ]
 
 { #category : #'instance creation' }
