@@ -184,8 +184,3 @@ NECModel >> theClass [
 NECModel >> title [
 	^nil
 ]
-
-{ #category : #action }
-NECModel >> toggleExpand [
-	
-]

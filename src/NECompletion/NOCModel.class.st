@@ -7,7 +7,6 @@ Class {
 	#superclass : #NECUntypedModel,
 	#instVars : [
 		'table',
-		'expand',
 		'context',
 		'nextModel',
 		'classTable'
@@ -51,7 +50,6 @@ NOCModel >> context: aNOCContext [
 
 { #category : #accessing }
 NOCModel >> contract [
-	expand := true.
 	nextModel := nil.
 ]
 
@@ -64,11 +62,6 @@ NOCModel >> entries [
 { #category : #accessing }
 NOCModel >> entryCount [
 	^ self entries size
-]
-
-{ #category : #accessing }
-NOCModel >> expand [
-	expand := true.
 ]
 
 { #category : #initialization }
