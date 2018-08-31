@@ -419,12 +419,6 @@ NECMenuMorph >> end [
 	self changed.
 ]
 
-{ #category : #actions }
-NECMenuMorph >> expand [
-	context model toggleExpand.
-	self narrowCompletion
-]
-
 { #category : #private }
 NECMenuMorph >> firstVisible [
 	^firstVisible min: context model entryCount

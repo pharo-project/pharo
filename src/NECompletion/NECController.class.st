@@ -198,10 +198,6 @@ NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 		menuMorph help.
 		^ true ].
 
-	(keyCharacter = $t and: [ controlKeyPressed ]) ifTrue: [ 
-		menuMorph expand.
-		^ true ].
-
 	(keyCharacter = $u and: [ controlKeyPressed ]) ifTrue: [ 
 		menuMorph switchToUntyped.
 		^ true ].	"	"All keys but the alphanumeric chars (without command and control ) 
