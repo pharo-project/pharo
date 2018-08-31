@@ -45,7 +45,7 @@ DynamicPresentersListBuilderTest >> testInstVarNames [
 DynamicPresentersListBuilderTest >> testInstVarNamesAndPresenterNamesArray [
 	builder
 		modelObjects: { 3 . 2 . 1 };
-		presenterClass: ButtonPresenter.
+		presenterBlock: [ :o | ButtonPresenter ].
 		
 	self
 		assertCollection: builder instVarNamesAndPresenterNamesArray hasSameElements: #(var1 ButtonPresenter var2 ButtonPresenter var3 ButtonPresenter)
@@ -76,7 +76,7 @@ DynamicPresentersListBuilderTest >> testNullPresentersInstVarNamesAndPresenterNa
 DynamicPresentersListBuilderTest >> testPresenterConfiguredAs [
 	| block |
 	self
-		assert: builder presenterClass isNil;
+		assert: builder presenterBlock isNil;
 		assert: builder configurationBlock isNil.
 	
 	block := [ :p :m | ].
@@ -84,6 +84,26 @@ DynamicPresentersListBuilderTest >> testPresenterConfiguredAs [
 		presenter: ButtonPresenter configuredAs: block.
 		
 	self
-		assert: builder presenterClass equals: ButtonPresenter;
+		assert: (builder presenterBlock value: nil) equals: ButtonPresenter; "Any value can be provided to the block in this case, always the same presenter is returned."
+		assert: builder configurationBlock equals: block
+]
+
+{ #category : #tests }
+DynamicPresentersListBuilderTest >> testPresenterProvidedByConfiguredAs [
+	| block |
+	self
+		assert: builder presenterBlock isNil;
+		assert: builder configurationBlock isNil.
+	
+	block := [ :p :m | ].
+	builder
+		presenterProvidedBy: [ :integer |
+			integer even
+				ifTrue: [ ButtonPresenter ]
+				ifFalse: [ LabelPresenter ] ] configuredAs: block.
+		
+	self
+		assert: (builder presenterBlock value: 1) equals: LabelPresenter;
+		assert: (builder presenterBlock value: 2) equals: ButtonPresenter;
 		assert: builder configurationBlock equals: block
 ]
