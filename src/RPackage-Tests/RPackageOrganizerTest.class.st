@@ -164,7 +164,7 @@ RPackageOrganizerTest >> testEmpty [
 ]
 
 { #category : #tests }
-RPackageOrganizerTest >> testExtensionMethodNotExacltyTheName [
+RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 	| p1 p2 c1 |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.

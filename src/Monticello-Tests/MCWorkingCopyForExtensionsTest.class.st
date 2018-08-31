@@ -1,11 +1,11 @@
 Class {
-	#name : #MCWorkingCopyForExtensions,
+	#name : #MCWorkingCopyForExtensionsTest,
 	#superclass : #MCTestCase,
 	#category : #'Monticello-Tests-Base'
 }
 
 { #category : #tests }
-MCWorkingCopyForExtensions >> tearDown [
+MCWorkingCopyForExtensionsTest >> tearDown [
 	super tearDown.
 	'ATestPackage' asPackage removeFromSystem.
 	'AnotherTestPackage' asPackage removeFromSystem.
@@ -23,7 +23,7 @@ MCWorkingCopyForExtensions >> tearDown [
 ]
 
 { #category : #tests }
-MCWorkingCopyForExtensions >> testAddingExtensionMethodNotMatchingPackage [
+MCWorkingCopyForExtensionsTest >> testAddingExtensionMethodNotMatchingPackage [
 
 	| aClass |
 	RPackageOrganizer default createPackageNamed: 'ATestPackage'.
