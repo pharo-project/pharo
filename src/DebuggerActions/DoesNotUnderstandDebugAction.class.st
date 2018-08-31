@@ -52,7 +52,7 @@ DoesNotUnderstandDebugAction >> closeWindow [
 
 { #category : #private }
 DoesNotUnderstandDebugAction >> createMissingClassIn: aContext [
-	| senderContext newClassVar variableNode previousContext errorMsgNode |
+	| senderContext variableNode previousContext errorMsgNode |
 	
 	variableNode := nil.
 	
@@ -60,9 +60,9 @@ DoesNotUnderstandDebugAction >> createMissingClassIn: aContext [
 	errorMsgNode := senderContext method sourceNodeExecutedForPC: senderContext pc.
 	variableNode := self findUndeclaredVariableIn: errorMsgNode ]
 		on: Error
-		do: [ self error: 'Unable to create missing class' ].
+		do: [ ^self ].
 		
-	newClassVar := OCUndeclaredVariableWarning new
+	OCUndeclaredVariableWarning new
 		node: variableNode;
 		defineClass: variableNode name.
 		
@@ -95,7 +95,7 @@ DoesNotUnderstandDebugAction >> executeAction [
 	
 	msg := self interruptedContext tempAt: 1.
 	(msg lookupClass == UndefinedObject ) ifTrue: [ 
-		^self createMissingClassIn: self interruptedContext ].
+		self createMissingClassIn: self interruptedContext ].
 	
 	chosenClass := self 
 		askForSuperclassOf: self interruptedContext receiver class
