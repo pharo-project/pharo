@@ -13,6 +13,5 @@ Class {
 
 { #category : #deleting }
 SDL_GLContext >> delete [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_GL_DeleteContext ( self ) )
+	^ self ffiCall: #( void SDL_GL_DeleteContext ( self ) )
 ]
