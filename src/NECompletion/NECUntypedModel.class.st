@@ -109,7 +109,7 @@ NECUntypedModel >> initializeSelectors [
 			selectors add: (NECGlobalEntry contents: each)] ].
 		^ self ].
 	narrowString ifEmpty: [ ^ self ].
-	NECSymbols 
+	NECSymbolCache 
 		contains: narrowString
 		caseSensitive: NECPreferences caseSensitive
 		do: [ :each | 
