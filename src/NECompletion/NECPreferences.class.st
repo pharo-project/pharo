@@ -136,11 +136,14 @@ NECPreferences class >> initialize [
 	useEnterToAccept := true.
 	smartCharactersMapping := Dictionary new.
 	smartCharactersMapping
-		at: $( put: $);
-		at: $[ put: $];
-		at: ${ put: $};
-		at: $" put: $";
-		at: $' put: $'.
+		at: $( put: $) -> true;
+		at: $[ put: $] -> true;
+		at: ${ put: $} -> true;
+		at: $" put: $" -> true;
+		at: $' put: $' -> true;
+		at: $< put: $> -> false;
+		at: $| put: $| -> false.
+		
 	smartCharactersWithSingleSpace := ''.
 	smartCharactersWithDoubleSpace := '[]{}'.
 	backgroundColor := Smalltalk ui theme settings menuColor ifNil: [ Color white ].
