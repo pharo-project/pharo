@@ -157,17 +157,12 @@ AthensCairoSurface class >> createUnlockSurfaceFn [
 
 { #category : #private }
 AthensCairoSurface class >> destroyContextHandle: aHandle [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #( 	void cairo_destroy (size_t aHandle) )
+	^ self ffiCall: #( 	void cairo_destroy (size_t aHandle) )
 ]
 
 { #category : #private }
 AthensCairoSurface class >> destroySurfaceHandle: handle [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #( void cairo_surface_destroy ( ulong handle ) )
+	^ self ffiCall: #( void cairo_surface_destroy ( ulong handle ) )
 
 
 ]
@@ -289,9 +284,6 @@ AthensCairoSurface class >> ioFindSurface: id dispatch: dispPtr handle: handlePt
 		(e.g., the surface has been found), false otherwise.
 "
 
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
 	self nbCall: #( bool ioFindSurface(int id, void * dispPtr, int *handlePtr) ) module: #SurfacePlugin
 ]
 
@@ -304,9 +296,6 @@ AthensCairoSurface class >> ioFindSurface: id handle: handlePtr [
 		(e.g., the surface has been found), false otherwise.
 "
 
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
 	self nbCall: #( bool ioFindSurface(int id, 0 , int *handlePtr) ) module: #SurfacePlugin
 ]
 
@@ -321,8 +310,6 @@ AthensCairoSurface class >> ioRegisterSurface: aCairoSurfaceHandle dispatch: sqS
 	otherwise.
 
 "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-
 	self nbCall: #(bool ioRegisterSurface(int aCairoSurfaceHandle, void *sqSurfaceDispatchPtr, void *idHolder)) module: #SurfacePlugin
 ]
 
@@ -334,26 +321,19 @@ AthensCairoSurface class >> ioUnregisterSurface: aCairoSurfaceId [
 	Returns true if successful, false otherwise. 
 
 "
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
 	
 	self nbCall: #( int ioUnregisterSurface(ulong aCairoSurfaceId) ) module: #SurfacePlugin
 ]
 
 { #category : #private }
 AthensCairoSurface class >> primCreateFromFile: aFileName [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin> 
-	
-	^self nbCall: #(AthensCairoSurface cairo_image_surface_create_from_png (char* aFileName)) 
+	^ self ffiCall: #(AthensCairoSurface cairo_image_surface_create_from_png (char* aFileName)) 
 
 ]
 
 { #category : #private }
 AthensCairoSurface class >> primImage: aFormat width: aWidth height: aHeight [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #(AthensCairoSurface cairo_image_surface_create (int aFormat,
+	^ self ffiCall: #(AthensCairoSurface cairo_image_surface_create (int aFormat,
                                                          int aWidth,
                                                          int aHeight) )
 
@@ -362,9 +342,7 @@ AthensCairoSurface class >> primImage: aFormat width: aWidth height: aHeight [
 
 { #category : #private }
 AthensCairoSurface class >> primImageFromData: data width: width height: height pitch: stride [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #(AthensCairoSurface cairo_image_surface_create_for_data (
+	^ self ffiCall: #(AthensCairoSurface cairo_image_surface_create_for_data (
 		void *data,
 		CAIRO_FORMAT_ARGB32,
 		int width,
@@ -376,9 +354,7 @@ AthensCairoSurface class >> primImageFromData: data width: width height: height 
 
 { #category : #private }
 AthensCairoSurface class >> primWidth: aWidth height: aHeight [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #( AthensCairoSurface cairo_image_surface_create (
+	^ self ffiCall: #( AthensCairoSurface cairo_image_surface_create (
 						CAIRO_FORMAT_ARGB32,
 						int aWidth,
 						int aHeight) )
@@ -569,10 +545,7 @@ AthensCairoSurface >> fillRectangle: aRectangle withSolidColor: aColor [
 
 { #category : #private }
 AthensCairoSurface >> flush [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #( void cairo_surface_flush (self) )
+	^ self ffiCall: #( void cairo_surface_flush (self) )
 ]
 
 { #category : #caching }
@@ -590,10 +563,8 @@ AthensCairoSurface >> flushCacheAt: anObject [
 { #category : #accessing }
 AthensCairoSurface >> getDataPtr [
 	"get a pointer to surface bitmap data"
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
 	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		void* cairo_image_surface_get_data ( self ) )
 
 
@@ -656,10 +627,7 @@ AthensCairoSurface >> loadSolidColor: aColor [
 
 { #category : #private }
 AthensCairoSurface >> markDirty [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #( void cairo_surface_mark_dirty (self) )
+	^ self ffiCall: #( void cairo_surface_mark_dirty (self) )
 ]
 
 { #category : #private }
@@ -674,9 +642,7 @@ AthensCairoSurface >> newCanvas [
 
 { #category : #private }
 AthensCairoSurface >> primCreateCanvas [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^self nbCall: #( AthensCairoCanvas cairo_create (self) )
+	^ self ffiCall: #( AthensCairoCanvas cairo_create (self) )
 ]
 
 { #category : #private }
@@ -691,9 +657,7 @@ AthensCairoSurface >> privSetDefaults [
 
 { #category : #private }
 AthensCairoSurface >> privateHeight [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		int cairo_image_surface_get_height ( self ) )
 
 
@@ -706,24 +670,18 @@ AthensCairoSurface >> resourceData [
 
 { #category : #accessing }
 AthensCairoSurface >> status [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(int cairo_surface_status (self) )
+	^ self ffiCall: #(int cairo_surface_status (self) )
 	
 ]
 
 { #category : #private }
 AthensCairoSurface >> statusToString: aCairoStatusT [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	^ self nbCall: #(String   cairo_status_to_string  (cairo_status_t aCairoStatusT))
+	^ self ffiCall: #(String   cairo_status_to_string  (cairo_status_t aCairoStatusT))
 ]
 
 { #category : #accessing }
 AthensCairoSurface >> stride [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		int cairo_image_surface_get_stride ( self ) )
 
 
@@ -731,9 +689,7 @@ AthensCairoSurface >> stride [
 
 { #category : #accessing }
 AthensCairoSurface >> width [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		int cairo_image_surface_get_width ( self ) )
 
 
@@ -741,8 +697,6 @@ AthensCairoSurface >> width [
 
 { #category : #converting }
 AthensCairoSurface >> writeToPng: aFileName [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	self nbCall: #(void cairo_surface_write_to_png (self, String aFileName) )
+	^ self ffiCall: #(void cairo_surface_write_to_png (self, String aFileName) )
 
 ]

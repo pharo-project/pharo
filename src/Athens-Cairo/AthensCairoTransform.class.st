@@ -24,10 +24,7 @@ AthensCairoTransform >> canvas: aCairoCanvas [
 
 { #category : #primitives }
 AthensCairoTransform >> loadIdentity [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_identity_matrix (AthensCairoCanvas canvas) )
 
 
@@ -40,10 +37,7 @@ AthensCairoTransform >> moveTo: aPoint [
 
 { #category : #primitives }
 AthensCairoTransform >> moveToX: px Y: py [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_move_to (AthensCairoCanvas canvas,
                                                          double px,
                                                          double py))
@@ -53,10 +47,7 @@ AthensCairoTransform >> moveToX: px Y: py [
 
 { #category : #primitives }
 AthensCairoTransform >> primTransformX: x Y: y [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_user_to_device (AthensCairoCanvas canvas,
                                                          NBFloatPtr x,
                                                          NBFloatPtr y) )
@@ -65,9 +56,7 @@ AthensCairoTransform >> primTransformX: x Y: y [
 
 { #category : #primitives }
 AthensCairoTransform >> restore [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(void cairo_restore(AthensCairoCanvas canvas))
+	^ self ffiCall: #(void cairo_restore(AthensCairoCanvas canvas))
 
 ]
 
@@ -85,10 +74,7 @@ AthensCairoTransform >> rotateByDegrees: angle [
 
 { #category : #primitives }
 AthensCairoTransform >> rotateByRadians: angle [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_rotate (AthensCairoCanvas canvas,
                                                          double angle))
 
@@ -97,9 +83,7 @@ AthensCairoTransform >> rotateByRadians: angle [
 
 { #category : #primitives }
 AthensCairoTransform >> save [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(void cairo_save (AthensCairoCanvas canvas))
+	^ self ffiCall: #(void cairo_save (AthensCairoCanvas canvas))
 
 ]
 
@@ -119,10 +103,7 @@ AthensCairoTransform >> scaleBy: aScalarOrPoint [
 
 { #category : #primitives }
 AthensCairoTransform >> scaleX: fx Y: fy [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_scale (AthensCairoCanvas canvas,
                                                          double fx,
                                                          double fy))
@@ -149,10 +130,7 @@ AthensCairoTransform >> translateBy: aPoint [
 
 { #category : #primitives }
 AthensCairoTransform >> translateX: px Y: py [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_translate (AthensCairoCanvas canvas,
                                                          double px,
                                                          double py))
