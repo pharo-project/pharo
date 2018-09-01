@@ -12,10 +12,7 @@ Class {
 
 { #category : #private }
 AthensCairoPDFSurface class >> createPDF: fileName width: width_in_points height: height_in_points [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #(AthensCairoPDFSurface cairo_pdf_surface_create (String fileName,
+	^ self ffiCall: #(AthensCairoPDFSurface cairo_pdf_surface_create (String fileName,
                                                       double width_in_points,
                                                       double height_in_points) )
 
@@ -46,8 +43,5 @@ AthensCairoPDFSurface >> resourceData [
 
 { #category : #private }
 AthensCairoPDFSurface >> showPage [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #( void cairo_surface_show_page (self) )
+	^ self ffiCall: #( void cairo_surface_show_page (self) )
 ]

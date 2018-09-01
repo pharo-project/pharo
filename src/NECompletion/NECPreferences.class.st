@@ -21,8 +21,7 @@ Class {
 		'popupShowWithShortcut',
 		'spaceAfterCompletion',
 		'smartCharactersWithSingleSpace',
-		'smartCharactersWithDoubleSpace',
-		'overrideModel'
+		'smartCharactersWithDoubleSpace'
 	],
 	#category : #'NECompletion-Model'
 }
@@ -128,7 +127,6 @@ NECPreferences class >> expandPrefixes: aBoolean [
 { #category : #'class initialization' }
 NECPreferences class >> initialize [
 	enabled := true.
-	overrideModel := false.
 	caseSensitive := true.
 	smartCharacters := true.
 	expandPrefixes := true.
@@ -136,11 +134,14 @@ NECPreferences class >> initialize [
 	useEnterToAccept := true.
 	smartCharactersMapping := Dictionary new.
 	smartCharactersMapping
-		at: $( put: $);
-		at: $[ put: $];
-		at: ${ put: $};
-		at: $" put: $";
-		at: $' put: $'.
+		at: $( put: $) -> true;
+		at: $[ put: $] -> true;
+		at: ${ put: $} -> true;
+		at: $" put: $" -> true;
+		at: $' put: $' -> true;
+		at: $< put: $> -> false;
+		at: $| put: $| -> false.
+		
 	smartCharactersWithSingleSpace := ''.
 	smartCharactersWithDoubleSpace := '[]{}'.
 	backgroundColor := Smalltalk ui theme settings menuColor ifNil: [ Color white ].
@@ -148,16 +149,6 @@ NECPreferences class >> initialize [
 	popupShowAutomatic := self defaultPopupShowAutomatic.
 	popupAutomaticDelay := self defaultPopupDelay.
 	spaceAfterCompletion := true
-]
-
-{ #category : #accessing }
-NECPreferences class >> overrideModel [ 
-	^overrideModel ifNil: [ overrideModel := false].
-]
-
-{ #category : #accessing }
-NECPreferences class >> overrideModel: aBoolean [
-	overrideModel := aBoolean
 ]
 
 { #category : #accessing }
@@ -212,8 +203,6 @@ NECPreferences class >> settingsOn: aBuilder [
 								domainValues: availableControllers ].
 					(aBuilder setting: #backgroundColor)
 						label: 'Background Color'.
-					(aBuilder setting: #overrideModel)
-						label: 'Complete whole methods'.	
 					(aBuilder setting: #expandPrefixes)
 						label: 'Complete common prefixes using TAB in the suggested completions'.
 					(aBuilder setting: #useEnterToAccept)

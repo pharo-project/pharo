@@ -127,9 +127,10 @@ Collection >> min [
 	^ self inject: self anyOne into: [:min :each | min min: each]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : #'*Collections-Arithmetic' }
 Collection >> negated [
 	"Negated value of all elements in the collection"
+	"#(1 2 3) negated >>> #(-1 -2 -3)"
 	^ self collect: [:a | a negated]
 ]
 
@@ -144,9 +145,10 @@ Collection >> range [
 	^ self max - self min
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : #'*Collections-Arithmetic' }
 Collection >> reciprocal [
 	"Return the reciever full of reciprocated elements"
+	"#(1 11 0.5) reciprocal >>> {1 . 1/11 . 2.0}"
 	^ self collect: [:a | a reciprocal]
 ]
 

@@ -50,3 +50,22 @@ EpLostChangesDetectorTest >> testDetectOneChange [
 
 	self assert: monitor log entriesCount > 1. "Just to ensure assumptions of this test"
 ]
+
+{ #category : #tests }
+EpLostChangesDetectorTest >> testDetectOneChangeButFileDeleted [
+
+	| logWithALostChange |
+	"Build a fake log with a lost change"
+	classFactory newClass.
+	logWithALostChange := EpLog newWithStore: monitor sessionStore store flush copyReopened refresh.
+	classFactory newClass.
+	monitor sessionStore flush.
+
+	"Delete the file"
+	monitor sessionStore store ensureDeleteFile.
+
+	detector := EpLostChangesDetector newWithLog: logWithALostChange.
+	self deny: detector hasLostChanges.
+	self assert: detector lostChanges isEmpty.
+
+]

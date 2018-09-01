@@ -1764,6 +1764,8 @@ StringTest >> testRomanNumber [
 	self assert: 'MDCLXXXVII' romanNumber equals: 1687.
 	self assert: 'MCMXLII' romanNumber equals: 1942.
 	self assert: 'DCLXVI' romanNumber equals: 666.
+	self assert: '-V' romanNumber equals: -5.
+	self assert: '-MDCCCXCV' romanNumber equals: -1895.
 ]
 
 { #category : #'tests - instance creation' }

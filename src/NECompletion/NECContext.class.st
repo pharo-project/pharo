@@ -44,7 +44,7 @@ Class {
 
 { #category : #'instance creation' }
 NECContext class >> controller: aECController class: aClass source: aString position: anInteger [ 
-	^ self basicNew initialize
+	^ self new
 		setController: aECController
 		class: aClass
 		source: aString
@@ -215,25 +215,16 @@ NECContext >> createEmptyRangeForGapAt: index [
 
 { #category : #accessing }
 NECContext >> createModel [
-	| modelClass |
-	
 	self receiverClass
 		ifNotNil: [^ NECTypedModel class: receiverClass].
 
 	(controller workspace isNil and: [ theClass notNil ])
-		ifTrue: [ self isStartOfMethodDefinition
-				ifTrue: [ NECPreferences overrideModel
-						ifTrue: [ ^ NECOverrideModel class: theClass ]
-						ifFalse: [ ^ NECEmptyModel new ] ] ].
+		ifTrue: [ self isStartOfMethodDefinition 
+				ifTrue: [ ^NECEmptyModel new]].
 							
 	self completionTokenIsLiteralOrComment ifTrue:[ ^ NECEmptyModel new].
-				
-	modelClass := NECUntypedModel.		
-	(controller model respondsTo: #modelClass) 
-		ifTrue: [
-			controller model modelClass ifNotNil: [:class | modelClass :=  class]].	
 			
-	^ modelClass
+	^ NECUntypedModel
 		class: theClass
 		temporaries: self temporaries
 		additionals: controller additionals

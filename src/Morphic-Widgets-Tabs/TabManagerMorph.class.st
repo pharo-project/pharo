@@ -43,7 +43,7 @@ TabManagerMorph >> addMorphs [
 		addMorph: toolbar
 		fullFrame: (LayoutFrame identity
 			bottomFraction: 0;
-			bottomOffset: TabMorph defaultHeight + 2;
+			bottomOffset: TabMorph defaultHeight + (2* self displayScaleFactor);
 			yourself).
 			
 	self 
@@ -238,7 +238,7 @@ TabManagerMorph >> initialize [
 { #category : #initialization }
 TabManagerMorph >> minExtent [
 
-	^ 100@50
+	^ (100@50) * self displayScaleFactor
 ]
 
 { #category : #accessing }

@@ -1,10 +1,8 @@
 "
 I retrieve the symbols for the ecompletion algorithm.
-
-TODO remove stupid symbols (like packages and timestamps)
 "
 Class {
-	#name : #NECSymbols,
+	#name : #NECSymbolCache,
 	#superclass : #Object,
 	#classInstVars : [
 		'cachedSymbols'
@@ -13,7 +11,7 @@ Class {
 }
 
 { #category : #private }
-NECSymbols class >> cacheInterestingSymbolsAndDo: aBlock [
+NECSymbolCache class >> cacheInterestingSymbolsAndDo: aBlock [
 	"For time issue, we collect and perform the block in only one iteration"
 	| cache |
 	cache := OrderedCollection new: 5000.
@@ -25,17 +23,17 @@ NECSymbols class >> cacheInterestingSymbolsAndDo: aBlock [
 ]
 
 { #category : #private }
-NECSymbols class >> cachedInterestingSymbolsDo: aBlock [
+NECSymbolCache class >> cachedInterestingSymbolsDo: aBlock [
 	self cachedSymbols do: aBlock
 ]
 
 { #category : #accessing }
-NECSymbols class >> cachedSymbols [
+NECSymbolCache class >> cachedSymbols [
 	^cachedSymbols
 ]
 
 { #category : #query }
-NECSymbols class >> contains: aString caseSensitive: aBoolean do: aBlock [ 
+NECSymbolCache class >> contains: aString caseSensitive: aBoolean do: aBlock [ 
 	| blockToPerform |
 
 	blockToPerform := [ :each | 
@@ -49,7 +47,7 @@ NECSymbols class >> contains: aString caseSensitive: aBoolean do: aBlock [
 ]
 
 { #category : #private }
-NECSymbols class >> interestingSymbolsDo: aBlock [
+NECSymbolCache class >> interestingSymbolsDo: aBlock [
 
 	Symbol allSymbolTablesDo:[:symbol |
 		symbol isEmpty
@@ -60,12 +58,12 @@ NECSymbols class >> interestingSymbolsDo: aBlock [
 ]
 
 { #category : #accessing }
-NECSymbols class >> resetCachedSymbols [
+NECSymbolCache class >> resetCachedSymbols [
 	cachedSymbols := nil
 ]
 
 { #category : #query }
-NECSymbols class >> startsWith: aChar caseSensitive: aBoolean do: aBlock [ 
+NECSymbolCache class >> startsWith: aChar caseSensitive: aBoolean do: aBlock [ 
 	| char caseInSensitive firstChar |
 	caseInSensitive := aBoolean not.
 	firstChar := caseInSensitive 

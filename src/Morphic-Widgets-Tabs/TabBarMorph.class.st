@@ -15,7 +15,7 @@ Class {
 
 { #category : #'private-constants' }
 TabBarMorph >> actionOffset [
-	^ 4
+	^ 4 * self displayScaleFactor
 ]
 
 { #category : #private }
@@ -71,7 +71,7 @@ TabBarMorph >> addMenuButton [
 	| topOffset rightOffset |
 	
 	rightOffset := self actionOffset.
-	topOffset := (self height - 16) // 2.
+	topOffset := (self height - 16 * self displayScaleFactor) // 2.
 	self
 		addMorph: menuButton
 		fullFrame:
@@ -157,8 +157,8 @@ TabBarMorph >> computeLength [
 	width := self width - self extraSpace + ((size-1) * self overlap).
 	
 	length := width / size.
-	length := length min: 150.
-	length := length max: 33.
+	length := length min: 150 * self displayScaleFactor.
+	length := length max: 33 * self displayScaleFactor.
 
 	^ length
 	
@@ -289,12 +289,12 @@ TabBarMorph >> isMultiSelection [
 
 { #category : #'private-constants' }
 TabBarMorph >> menuButtonHeight [
-	^ 16
+	^ 16 * self displayScaleFactor
 ]
 
 { #category : #'private-constants' }
 TabBarMorph >> menuButtonWidth [
-	^ 16
+	^ 16 * self displayScaleFactor
 ]
 
 { #category : #private }
@@ -316,7 +316,7 @@ TabBarMorph >> orderedSelectedTabs [
 { #category : #private }
 TabBarMorph >> overlap [
 
-	^ 8
+	^ 8 * self displayScaleFactor
 ]
 
 { #category : #'change reporting' }
