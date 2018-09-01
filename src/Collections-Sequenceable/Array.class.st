@@ -146,9 +146,17 @@ Array >> asArray [
 
 { #category : #accessing }
 Array >> atWrap: index [ 
-	"Optimized to go through the primitive if possible"
-	<primitive: 60>
-	^ self at: index - 1 \\ self size + 1
+    "Answer the index'th element of the receiver.  If index is out of bounds,
+    let it wrap around from the end to the beginning until it is in bounds."
+    
+    "Optimized to go through the primitive if possible"
+    
+    "(#(11 22 33) atWrap: 3) >>> 33"
+    "(#(11 22 33) atWrap: 2) >>> 22"
+    "(#(11 22 33) atWrap: 4) >>> 11"
+    
+    <primitive: 60>
+    ^ self at: index - 1 \\ self size + 1
 ]
 
 { #category : #accessing }

@@ -181,7 +181,10 @@ ClassDescription >> authors [
 
 { #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> baseClass [
-	^self subclassResponsibility.
+	"This method is deprecated so consider to migrate."
+	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver baseClass' 
+						-> '`@receiver instanceSide'.
+	^ self instanceSide
 ]
 
 { #category : #organization }
@@ -196,7 +199,10 @@ ClassDescription >> basicOrganization: aClassOrg [
 
 { #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> classClass [
-	^self subclassResponsibility.
+	"This method is deprecated so consider to migrate."
+	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver classClasss' 
+						-> '`@receiver classSide'.
+	^ self classSide
 ]
 
 { #category : #'filein/out' }
@@ -1206,12 +1212,16 @@ ClassDescription >> tagsForMethods [
 { #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> theMetaClass [
 	"This method is deprecated so consider to migrate."
+	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass' 
+						-> '`@receiver classSide'.
 	^ self classSide
 ]
 
 { #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> theNonMetaClass [
 	"This method is deprecated so consider to migrate."
+	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass' 
+						-> '`@receiver instanceSide'.
 	^ self instanceSide
 ]
 

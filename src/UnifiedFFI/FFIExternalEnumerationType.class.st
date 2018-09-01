@@ -47,6 +47,24 @@ FFIExternalEnumerationType >> callbackReturnOn: callbackContext for: anObject [
     ^ super callbackReturnOn: callbackContext for: anObject value
 ]
 
+{ #category : #'emitting code' }
+FFIExternalEnumerationType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
+	"| tmpResult |
+	
+	tmpResult := <returnValue>.
+	^ self objectClass itemAt: tmpResult
+	"
+
+	^ aBuilder 
+		"keep invoke result into the tmpResult var"
+		storeTemp: resultVar;
+		"return := self objectClass itemAt: tmpResult"
+		pushLiteralVariable: self objectClass binding;
+		pushTemp: resultVar;
+		send: #fromInteger:;
+		returnTop	
+]
+
 { #category : #accessing }
 FFIExternalEnumerationType >> externalType [
 	^ self representationType externalType

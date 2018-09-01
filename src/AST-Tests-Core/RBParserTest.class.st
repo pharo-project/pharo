@@ -437,7 +437,7 @@ RBParserTest >> testParents [
 						self assert: each methodNode == root ] ] ] ] ]
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'tests parsing faulty' }
 RBParserTest >> testParseFaultyBlock [
 	| node blockNoArgButBar blockNoArgButColon unfinishedBlock |
 	"parsing block should mark this block as faulty, if it is unfinished no closing brace, or missing parts (colon but no arg, 
@@ -454,7 +454,7 @@ RBParserTest >> testParseFaultyBlock [
 			self assert: node isFaulty]
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'tests parsing faulty' }
 RBParserTest >> testParseFaultyLiteral [
 	| faultyLiteral faultyLiteralArray node |
 	"a literal or literal array object with an unknown character can be parse
@@ -472,7 +472,7 @@ RBParserTest >> testParseFaultyLiteral [
 	self assert: node contents first errorMessage equals: 'Unknown character'
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'tests parsing faulty' }
 RBParserTest >> testParseFaultyMethod [
 	| node strangeExpressions |
 	
@@ -500,7 +500,7 @@ RBParserTest >> testParseFaultyMethod [
 	
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'tests parsing faulty' }
 RBParserTest >> testParseFaultyMethodExpresionHasErrorNodeAsFinal [
 	| node strangeExpression |
 	
@@ -514,12 +514,27 @@ RBParserTest >> testParseFaultyMethodExpresionHasErrorNodeAsFinal [
 	
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'tests parsing faulty' }
 RBParserTest >> testParseFaultyMethodMessagePattern [
 	| node faultyMessagePattern |
 	faultyMessagePattern := '1'.
 	node := self parseFaultyMethod: faultyMessagePattern.
 	self assert: node isFaulty
+]
+
+{ #category : #'tests parsing faulty' }
+RBParserTest >> testParseFaultyMethodStop [
+	 | methodSource node |
+	
+	methodSource :=  'method: asd   self do      ('.
+	node := self parseFaultyMethod: methodSource.
+	
+	self assert: node isMethod.
+	self assert: node isFaulty.
+	self assert: node stop equals: 28.
+
+
+	
 ]
 
 { #category : #'tests parsing' }

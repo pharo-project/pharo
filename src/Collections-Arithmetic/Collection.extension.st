@@ -127,9 +127,10 @@ Collection >> min [
 	^ self inject: self anyOne into: [:min :each | min min: each]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : #'*Collections-Arithmetic' }
 Collection >> negated [
 	"Negated value of all elements in the collection"
+	"#(1 2 3) negated >>> #(-1 -2 -3)"
 	^ self collect: [:a | a negated]
 ]
 
@@ -139,14 +140,17 @@ Collection >> raisedTo: arg [
 	^ arg adaptToCollection: self andSend: #raisedTo:
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : #'*Collections-Arithmetic' }
 Collection >> range [
+	"returns the difference between the max and min element, their positions notwithstanding"
+	"#( 1 51 10 ) range >>> 50"
 	^ self max - self min
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : #'*Collections-Arithmetic' }
 Collection >> reciprocal [
 	"Return the reciever full of reciprocated elements"
+	"#(1 11 0.5) reciprocal >>> {1 . 1/11 . 2.0}"
 	^ self collect: [:a | a reciprocal]
 ]
 
@@ -160,8 +164,11 @@ Collection >> rounded [
 	^ self collect: [:a | a rounded]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : #'*Collections-Arithmetic' }
 Collection >> sign [
+	"Answer 1 if the receiver is greater than 0, -1 if less than 0, else 0."
+	"5 sign >>> 1"
+	"-3 sign >>> -1"
 	^self collect: [:each | each sign]
 ]
 

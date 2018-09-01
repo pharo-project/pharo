@@ -33,7 +33,7 @@ String >> unzipped [
 	^(GZipReadStream on: self) upToEnd
 ]
 
-{ #category : #'*compression' }
+{ #category : #'*Compression' }
 String >> zipped [
 	| stream gzstream |
 
@@ -44,6 +44,6 @@ String >> zipped [
 	gzstream close.
 	stream reset.
 
-	^ stream contents.
+	^ stream contents
 
 ]

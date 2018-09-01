@@ -49,6 +49,30 @@ FFIExternalEnumeration class >> at: anItem [
 	^ self classPool at: anItem ifAbsent: [ nil ]
 ]
 
+{ #category : #utilities }
+FFIExternalEnumeration class >> buildClassVariables [
+	self enumerationDictionary keysAndValuesDo: [ :eachName :eachValue | 
+		| classBinding enumerationValue |
+		
+		enumerationValue := (self enumClassForName: eachName) basicNew value: eachValue.
+		classBinding := self classPool associationAt: eachName asSymbol ifAbsent: [ nil ].
+		classBinding 
+			ifNotNil: [ classBinding value: enumerationValue ]
+			ifNil: [ 
+				self classPool add: (ClassVariable 
+					key: eachName asSymbol 
+					value: enumerationValue ) ] ]
+]
+
+{ #category : #utilities }
+FFIExternalEnumeration class >> buildEnumHierarchy [
+	"This utility method will create a hierarchy based on enumDecl"
+	<script>
+	
+	self buildClassVariables.
+	self rebuildEnumHierarchyAccessors
+]
+
 { #category : #private }
 FFIExternalEnumeration class >> defineEnumAccesorFor: enumName [
 	"Define accessors as class methods"
@@ -63,9 +87,50 @@ FFIExternalEnumeration class >> defineEnumAccesorFor: enumName [
 		classified: self generatedEnumProtocolName.
 ]
 
+{ #category : #utilities }
+FFIExternalEnumeration class >> defineEnumHierarchyAccesorFor: enumName [
+	"Define accessors as class methods"
+	| code |
+	
+	code := (self enumSelectorName: enumName), '
+	"This method was automatically generated"
+	^ ', enumName.
+	
+	self class 
+		compile: code 
+		classified: self generatedEnumProtocolName
+]
+
+{ #category : #utilities }
+FFIExternalEnumeration class >> enumClassForName: aName [
+	| className |
+	
+	className := (self name, (self enumNameSuffix: aName)) asSymbol.
+	^ self allSubclasses
+		detect: [ :each | each name = className ]
+		ifNone: [ 
+			self 
+				subclass: className 
+				slots: {  } 
+				classVariables: {  } 
+				package: self category ]
+]
+
 { #category : #'enum declaration' }
 FFIExternalEnumeration class >> enumDecl [
 	^ #()
+]
+
+{ #category : #utilities }
+FFIExternalEnumeration class >> enumNameSuffix: aName [
+	^ (aName substrings: '_')
+	inject: ''
+	into: [ :all :each | all, (each asLowercase capitalized) ]
+]
+
+{ #category : #utilities }
+FFIExternalEnumeration class >> enumSelectorName: aName [
+	^ (self enumNameSuffix: aName) asValidSelector
 ]
 
 { #category : #private }
@@ -128,15 +193,19 @@ FFIExternalEnumeration class >> initializeEnumeration [
 
 { #category : #accessing }
 FFIExternalEnumeration class >> itemAt: aValue [
-	^ self itemAt: aValue ifAbsent: [ nil ]
+
+	^ self 
+		itemAt: aValue 
+		ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }
 FFIExternalEnumeration class >> itemAt: aValue ifAbsent: exceptionBlock [
-	self classPool
-		associationsDo: [ :assoc | 
-			aValue = assoc value value
-				ifTrue: [ ^ assoc key ] ].
+
+	self classPool associationsDo: [ :assoc | 
+		aValue = assoc value value ifTrue: [ 
+			^ assoc key ] ].
+
 	^ exceptionBlock value
 ]
 
@@ -149,6 +218,12 @@ FFIExternalEnumeration class >> new [
 FFIExternalEnumeration class >> rebuildEnumAccessors [
 	self enumerationDictionary keysDo: [ :each | 
 		self defineEnumAccesorFor: each ]
+]
+
+{ #category : #utilities }
+FFIExternalEnumeration class >> rebuildEnumHierarchyAccessors [
+	self enumerationDictionary keysDo: [ :each | 
+		self defineEnumHierarchyAccesorFor: each ]
 ]
 
 { #category : #accessing }
