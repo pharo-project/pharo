@@ -353,7 +353,8 @@ SequenceableCollection >> atPin: index [
 ]
 
 { #category : #accessing }
-SequenceableCollection >> atWrap: index [ 
+SequenceableCollection >> atWrap: index [
+
     "Answer the index'th element of the receiver.  If index is out of bounds,
     let it wrap around from the end to the beginning until it is in bounds."
     "(#(11 22 33) asOrderedCollection atWrap: 2) >>> 22"

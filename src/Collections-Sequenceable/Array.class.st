@@ -146,6 +146,7 @@ Array >> asArray [
 
 { #category : #accessing }
 Array >> atWrap: index [ 
+
     "Answer the index'th element of the receiver.  If index is out of bounds,
     let it wrap around from the end to the beginning until it is in bounds."
     
@@ -156,7 +157,7 @@ Array >> atWrap: index [
     "(#(11 22 33) atWrap: 4) >>> 11"
     
     <primitive: 60>
-    ^ self at: index - 1 \\ self size + 1
+    ^ self at: index - 1 \\ self size + 1 
 ]
 
 { #category : #accessing }
