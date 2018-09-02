@@ -23,9 +23,7 @@ CairoScaledFont class >> finalizeResourceData: handle [
 "
 void                cairo_scaled_font_destroy           (cairo_scaled_font_t *scaled_font);
 "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( void  cairo_scaled_font_destroy (size_t handle) )
+	^ self ffiCall: #( void  cairo_scaled_font_destroy (size_t handle) )
 ]
 
 { #category : #'instance creation' }
@@ -89,9 +87,7 @@ options :
 Returns :
 	a newly created cairo_scaled_font_t. Destroy with cairo_scaled_font_destroy()
 "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( 
+	^ self ffiCall: #( 
 		CairoScaledFont cairo_scaled_font_create (
 			CairoFontFace face,
 			AthensCairoMatrix * fontMatrix,
@@ -115,9 +111,7 @@ CairoScaledFont >> getExtents: cairoFontExtents [
 	"void                cairo_scaled_font_extents           (cairo_scaled_font_t *scaled_font,
                                                          cairo_font_extents_t *extents);
 	"
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(int cairo_scaled_font_extents (self, CairoFontExtents * cairoFontExtents ))
+	^ self ffiCall: #(int cairo_scaled_font_extents (self, CairoFontExtents * cairoFontExtents ))
 		
 ]
 
@@ -126,9 +120,7 @@ CairoScaledFont >> getExtentsOf: utf8String into: extentObj [
 	"void                cairo_scaled_font_extents           (cairo_scaled_font_t *scaled_font,
                                                          cairo_font_extents_t *extents);
 	"
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_scaled_font_text_extents (self,
 			void *utf8String,
 			cairo_text_extents_t * extentObj))
@@ -142,9 +134,7 @@ CairoScaledFont >> getExtentsOfGlyphs: glyphs ofLength: num into: extents [
                                  const cairo_glyph_t *glyphs,
                                  int num_glyphs,
                                  cairo_text_extents_t *extents);"
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_scaled_font_glyph_extents (self,
                                             void *glyphs,
                                             int num,
@@ -175,9 +165,7 @@ CairoScaledFont >> lock [
 FT_Face             cairo_ft_scaled_font_lock_face      (cairo_scaled_font_t *scaled_font);
 
 "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( 
+	^ self ffiCall: #( 
 		void cairo_ft_scaled_font_lock_face (self)) 
 ]
 
@@ -189,9 +177,7 @@ CairoScaledFont >> resourceData [
 { #category : #accessing }
 CairoScaledFont >> status [
 "cairo_status_t      cairo_scaled_font_status            (cairo_scaled_font_t *scaled_font);"
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(int cairo_scaled_font_status (self))
+	^ self ffiCall: #(int cairo_scaled_font_status (self))
 		
 ]
 
@@ -202,8 +188,6 @@ CairoScaledFont >> unlock [
 FT_Face             cairo_ft_scaled_font_lock_face      (cairo_scaled_font_t *scaled_font);
 
 "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( 
+	^ self ffiCall: #( 
 		void cairo_ft_scaled_font_unlock_face  (self)) 
 ]
