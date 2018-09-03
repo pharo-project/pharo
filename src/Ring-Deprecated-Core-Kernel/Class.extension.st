@@ -29,9 +29,9 @@ Class >> asFullRingDefinition [
 			rgMethod := mth asActiveRingDefinition.
 			rgClass addMethod: rgMethod.
 			rgMethod package: (RGContainer packageOfMethod: rgMethod using: packageKeys) ].
-	self theMetaClass methodsDo:[ :mth|  
+	self classSide methodsDo:[ :mth|  
 			rgMethod := mth asActiveRingDefinition.
-			rgClass theMetaClass addMethod: rgMethod.
+			rgClass classSide addMethod: rgMethod.
 			rgMethod package: (RGContainer packageOfMethod: rgMethod using: packageKeys) ].
 	
 	^ rgClass
@@ -57,10 +57,10 @@ Class >> asRingDefinition [
 		definitionSource: self definition;
 		package: self package asRingDefinition;
 		withMetaclass.
-	ring theMetaClass 
-		traitCompositionSource: self theMetaClass traitCompositionString;
-		definitionSource: self theMetaClass definition;
-		addInstanceVariables: self theMetaClass instVarNames.  
+	ring classSide 
+		traitCompositionSource: self classSide traitCompositionString;
+		definitionSource: self classSide definition;
+		addInstanceVariables: self classSide instVarNames.  
 	^ ring
 ]
 
@@ -75,10 +75,10 @@ Class >> asRingDefinitionWithMethods: methodsBoolean withSuperclasses: supersBoo
 				methodsDo: [ :mth | 
 					rgMethod := mth asActiveRingDefinition.
 					aRGSlice loadMethod: rgMethod inClass: rgClass using: packageKeys ].
-			self theMetaClass
+			self classSide
 				methodsDo: [ :mth | 
 					rgMethod := mth asActiveRingDefinition.
-					aRGSlice loadMethod: rgMethod inClass: rgClass theMetaClass using: packageKeys ] ].
+					aRGSlice loadMethod: rgMethod inClass: rgClass classSide using: packageKeys ] ].
 	supersBoolean
 		ifTrue: [ 
 			self superclass

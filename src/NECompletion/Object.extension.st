@@ -1,6 +1,6 @@
 Extension { #name : #Object }
 
-{ #category : #'*necompletion-extensions' }
+{ #category : #'*NECompletion' }
 Object >> isCodeCompletionAllowed [
 	^false
 ]

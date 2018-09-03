@@ -195,7 +195,7 @@ ShiftClassBuilder >> copyClassSlotsFromExistingClass [
 	anOldClass := self environment at: name ifAbsent: [ ^ self ].
 
 	oldSlots := anOldClass class classLayout slotScope visibleSlots.
-	self classSlots:(oldSlots collect: [ :e | e copy index: nil; yourself ])
+	self classSlots:(oldSlots select: #isLocal thenCollect: [ :e | e copy index: nil; yourself ])
 ]
 
 { #category : #building }

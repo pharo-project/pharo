@@ -243,18 +243,18 @@ Collection >> asCharacterSet [
 
 { #category : #printing }
 Collection >> asCommaString [
-	"Return collection printed as 'a, b, c' "
-
-	^String streamContents: [:s | self asStringOn: s delimiter: ', ']
-		
+    "Return collection printed as 'a, b, c' "
+    "#( 'a' 'b' 'c') asCommaString >>> 'a, b, c'"
+    
+    ^String streamContents: [:s | self asStringOn: s delimiter: ', ']
 ]
 
 { #category : #printing }
 Collection >> asCommaStringAnd [
 	"Return collection printed as 'a, b and c' "
+	"#( 'a' 'b' 'c') asCommaStringAnd >>> 'a, b and c'"
 
 	^String streamContents: [:s | self asStringOn: s delimiter: ', ' last: ' and ']
-		
 ]
 
 { #category : #converting }
@@ -442,13 +442,11 @@ Collection >> copyWithDependent: newElement [
 Collection >> copyWithout: oldElement [ 
 	"Answer a copy of the receiver that does not contain any
 	elements equal to oldElement."
-
+	"('fred the bear' copyWithout: $e) >>> 'frd th bar'"
+	"(#(2 3 4 5 5 6) copyWithout: 5) >>> #(2 3 4 6)"
+	
+	
 	^ self reject: [:each | each = oldElement]
-
-"Examples:
-	'fred the bear' copyWithout: $e
-	#(2 3 4 5 5 6) copyWithout: 5
-"
 ]
 
 { #category : #copying }

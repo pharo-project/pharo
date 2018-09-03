@@ -34,9 +34,7 @@ Returns :
 	a newly allocated cairo_font_options_t. Free with cairo_font_options_destroy(). This function always returns a valid pointer; if memory cannot be allocated, then a special error object is returned where all operations on the object do nothing. You can check for this with cairo_font_options_status().
 
 "	
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(CairoFontOptions cairo_font_options_create ())
+	^ self ffiCall: #(CairoFontOptions cairo_font_options_create ())
 ]
 
 { #category : #private }
@@ -47,10 +45,7 @@ Destroys a cairo_font_options_t object created with cairo_font_options_create() 
 
 options :
 	a cairo_font_options_t"
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(void cairo_font_options_destroy (size_t anOptions))
+	^ self ffiCall: #(void cairo_font_options_destroy (size_t anOptions))
 ]
 
 { #category : #antialiasing }
@@ -162,9 +157,7 @@ options :
 
 antialias :
 	the new antialiasing mode"
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( 
+	^ self ffiCall: #( 
 	void cairo_font_options_set_antialias (self, uint antialias))
 
 ]
@@ -184,9 +177,7 @@ CairoFontOptions >> setHintMetrics: hintMetrics [
  Sets the metrics hinting mode for the font options object. This controls whether metrics are quantized to integer values in device units. See the documentation for cairo_hint_metrics_t for full details.
 
 "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(void cairo_font_options_set_hint_metrics (self,  uint hintMetrics))
+	^ self ffiCall: #(void cairo_font_options_set_hint_metrics (self,  uint hintMetrics))
 
  
 ]
@@ -199,9 +190,7 @@ void                cairo_font_options_set_hint_style   (cairo_font_options_t *o
                                                          cairo_hint_style_t hint_style);
 
 Sets the hint style for font outlines for the font options object. This controls whether to fit font outlines to the pixel grid, and if so, whether to optimize for fidelity or contrast. See the documentation for cairo_hint_style_t for full details. "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( 
+	^ self ffiCall: #( 
 		void cairo_font_options_set_hint_style (self, uint aStyle))
 
  
@@ -212,9 +201,7 @@ CairoFontOptions >> setSubpixelOrder: order [
 	"void cairo_font_options_set_subpixel_order
 		(cairo_font_options_t *options,
 		cairo_subpixel_order_t subpixel_order)"
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_font_options_set_subpixel_order (self, uint order))
  
 ]

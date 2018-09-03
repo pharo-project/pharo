@@ -521,7 +521,7 @@ RubSmalltalkEditor >> findSelectorFromAST [
 
 	| node fallbackBlock |
 
-	fallbackBlock := [^self].
+	fallbackBlock := [ ^ nil ].
 	node := self bestNodeInTextAreaOnError: fallbackBlock.
 	
 	node isMethod ifFalse: [ 
@@ -853,9 +853,25 @@ RubSmalltalkEditor >> selectPrecedingIdentifier [
 RubSmalltalkEditor >> selectedSelector [
 	"Try to make a selector out of the current text selection"
 
-	| node |
+	^ self selectedSelectorWithRecursionDepth: 0
+]
+
+{ #category : #'menu messages' }
+RubSmalltalkEditor >> selectedSelectorWithRecursionDepth: depth [
+
+	| node selectorFromAst |
 	
-	self hasSelection ifFalse: [ ^self findSelectorFromAST ].
+	depth > 1 ifTrue: [ ^ nil ].
+	
+	self hasSelection ifFalse: [ 
+		selectorFromAst := self findSelectorFromAST.
+		^ selectorFromAst 
+			ifNotNil: [ 
+				selectorFromAst ]
+			ifNil: [ 
+				self selectWord.
+				^ self selectedSelectorWithRecursionDepth: depth + 1 ] ].
+	
 	node := RBParser parseFaultyExpression: self selection string.
 	node
 		nodesDo: [ :n | 

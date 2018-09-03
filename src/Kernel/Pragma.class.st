@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'method',
 		'arguments',
-		'keyword'
+		'selector'
 	],
 	#category : #'Kernel-Pragmas'
 }
@@ -112,7 +112,7 @@ Pragma >> = aPragma [
 { #category : #comparing }
 Pragma >> analogousCodeTo: anObject [ 
 	^self class == anObject class
-	  and: [keyword == anObject keyword
+	  and: [selector == anObject selector
 	  and: [arguments = anObject arguments]]
 ]
 
@@ -137,7 +137,7 @@ Pragma >> arguments: anArray [
 
 { #category : #testing }
 Pragma >> hasLiteral: aLiteral [
-	^keyword == aLiteral 
+	^selector == aLiteral 
 	   or: [arguments hasLiteral: aLiteral]
 ]
 
@@ -145,7 +145,7 @@ Pragma >> hasLiteral: aLiteral [
 Pragma >> hasLiteralSuchThat: aBlock [
 	"Answer true if litBlock returns true for any literal in the receiver, even if embedded in further array structure.
 	 This method is only intended for private use by CompiledMethod hasLiteralSuchThat:"
-	^(aBlock value: keyword)
+	^(aBlock value: selector)
 	   or: [arguments hasLiteralSuchThat: aBlock]
 ]
 
@@ -164,20 +164,20 @@ Pragma >> hash [
 Pragma >> key [
 	"Answer the keyword of the pragma (the selector of its message pattern).
 	 This accessor provides polymorphism with Associations used for properties."
-	^keyword
+	^self selector
 ]
 
 { #category : #'to be deprecated' }
 Pragma >> keyword [
 	"to be deprecated for #selector"
-	^ keyword
+	^ self selector
 ]
 
 { #category : #accessing }
 Pragma >> message [
 	"Answer the message of the receiving pragma."
 	
-	^ Message selector: self keyword arguments: self arguments. 
+	^ Message selector: self selector arguments: self arguments. 
 ]
 
 { #category : #'accessing-method' }
@@ -231,12 +231,12 @@ Pragma >> selector [
 	"Answer the selector of the pragma.
 	 For a pragma defined as <key1: val1 key2: val2> this will answer #key1:key2:."
 	
-	^ keyword
+	^ selector
 ]
 
 { #category : #initialization }
 Pragma >> selector: aSymbol [
-	keyword := aSymbol
+	selector := aSymbol
 ]
 
 { #category : #sending }
@@ -255,7 +255,7 @@ Pragma >> setArguments: anArray [
 { #category : #'to be deprecated' }
 Pragma >> setKeyword: aSymbol [
 	"to be deprecated for #selector:"
-	keyword := aSymbol
+	self selector: aSymbol
 ]
 
 { #category : #'to be deprecated' }

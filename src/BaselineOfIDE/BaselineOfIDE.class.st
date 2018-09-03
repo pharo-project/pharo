@@ -362,6 +362,9 @@ BaselineOfIDE >> baseline: spec [
 		
 		spec package: 'ReferenceFinder-Core'.
 
+		spec package: 'Refactoring2-Core'.
+		spec package: 'Refactoring2-Transformations'.
+
       self groups: spec.
 	].
 
@@ -749,6 +752,11 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Text-Tests'		"required by Multilingual-Tests"
 ).
 
+spec group: 'Refactoring2-Group' with: #(
+	'Refactoring2-Core'
+	'Refactoring2-Transformations'
+).
+
 spec group: 'GT&QA-Group' with: #(
 	'GeneralRules'		"depends on QA, needs cleanup"
 	'GeneralRules-Tests' "depends on QA, needs cleanup"
@@ -811,6 +819,8 @@ spec group: #default with: #(
 	"Importing tests of Traits"
 	'Traits'
 	'Slot'
+	
+	'Refactoring2-Group'
 ).
 
 ]

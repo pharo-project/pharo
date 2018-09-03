@@ -2257,6 +2257,11 @@ UITheme >> forms: anObject [
 	forms := anObject
 ]
 
+{ #category : #'accessing colors' }
+UITheme >> ghostTextColor [ 
+	^ Color lightGray
+]
+
 { #category : #'border-styles' }
 UITheme >> groupLabelBorderStyleFor: aGroupPanel [
 	"Answer the normal border style for a group label."
@@ -4942,7 +4947,7 @@ UITheme >> scrollbarMinimumThumbThickness [
 	"Answer the minumum width or height of a scrollbar thumb 
 	as appropriate to its orientation."
 	
-	^15
+	^15 * World displayScaleFactor
 ]
 
 { #category : #'border-styles-scrollbars' }
@@ -5317,7 +5322,7 @@ UITheme >> sliderNormalBorderStyleFor: aSlider [
 UITheme >> sliderNormalFillStyleFor: aSlider [
 	"Return the normal fillStyle for the given slider."
 	
-	^Color white
+	^ SolidFillStyle color: Color white
 ]
 
 { #category : #accessing }

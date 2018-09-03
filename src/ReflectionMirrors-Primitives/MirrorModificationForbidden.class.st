@@ -6,7 +6,7 @@ I am signaled from MirrorPrimitive methods.
 Class {
 	#name : #MirrorModificationForbidden,
 	#superclass : #ModificationForbidden,
-	#category : #'ReflectionMirrors-Primitives'
+	#category : #'ReflectionMirrors-Primitives-Errors'
 }
 
 { #category : #retrying }
