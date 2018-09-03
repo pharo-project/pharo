@@ -76,3 +76,10 @@ ClassRenamed >> oldName: anObject [
 	
 	oldName := anObject
 ]
+
+{ #category : #accessing }
+ClassRenamed >> packagesAffected [
+	^ (super packageAffected,
+		(self classAffected methods asArray , self classAffected classSide methods asArray
+			collect: #package)) asSet asArray
+]
