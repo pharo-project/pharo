@@ -13,8 +13,3 @@ Class {
 NOCController >> contextClass [
 	^NOCContext
 ]
-
-{ #category : #private }
-NOCController >> menuMorphClass [
-	^ NOCMenuMorph
-]
