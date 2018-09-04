@@ -479,23 +479,6 @@ NECMenuMorph >> initialize [
 ]
 
 { #category : #actions }
-NECMenuMorph >> insertCommonPrefix [
-	"Return value: true if the user input has been handled, regardless of whether a prefix was inserted"
-
-	| prefix |
-	context model isEmpty ifTrue: [^ false].
-	context model entries size = 1
-		ifTrue: [ ^ self insertSelected ].
-	prefix := context model commonPrefix.
-	self flag: 'Pending issue 7308, "controller editor wordAtCaret" below should be changed to "context completionToken"'.
-	prefix size > controller editor wordAtCaret size
-		ifTrue: [ 
-			self insertCompletion: prefix.
-			context narrowWith: controller editor wordAtCaret ].
-	^ true
-]
-
-{ #category : #actions }
 NECMenuMorph >> insertCommonPrefixOrSelected [
 	"Return value: true if the user input has been handled, regardless of whether a prefix was inserted"
 
@@ -618,13 +601,6 @@ NECMenuMorph >> pageCount [
 	^count
 ]
 
-{ #category : #paging }
-NECMenuMorph >> pageCountString [
-	^ self itemsCount = 501
-		ifTrue: [ 'more' ]
-		ifFalse: [ self pageCount asString ]
-]
-
 { #category : #actions }
 NECMenuMorph >> pageDown [
 	self gotoPage: self currentPage + 1.
@@ -645,14 +621,6 @@ NECMenuMorph >> pageUp [
 { #category : #drawing }
 NECMenuMorph >> prepareRectForNextRow: aRectangle [ 
 	^aRectangle translateBy: 0 @ self class itemHeight
-]
-
-{ #category : #title }
-NECMenuMorph >> removeTitle [
-	titleStringMorph
-		ifNil: [^ self].
-	self removeMorph: titleStringMorph owner. 
-	titleStringMorph := nil
 ]
 
 { #category : #drawing }

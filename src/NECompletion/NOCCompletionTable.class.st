@@ -119,11 +119,6 @@ NOCCompletionTable >> entriesPerPrefix: n [
 	numberofEntries := n
 ]
 
-{ #category : #accessing }
-NOCCompletionTable >> fillRate [
-	^ self totalNumberOfEntries / self maxNumberOfEntries 
-]
-
 { #category : #initialization }
 NOCCompletionTable >> initialize [
 	table := Dictionary new.
@@ -168,17 +163,6 @@ NOCCompletionTable >> listsForPrefix: aString [
 { #category : #accessing }
 NOCCompletionTable >> maxNumberOfEntries [
 	^ 26 * 26 * numberofEntries 
-]
-
-{ #category : #accessing }
-NOCCompletionTable >> numberOfEntries [
-	^ numberofEntries
-]
-
-{ #category : #protocol }
-NOCCompletionTable >> quickFillWithCategoriesMatching: pattern [
-	(Smalltalk organization categoriesMatching: pattern) do: [:category | 
-		(Smalltalk organization classesInCategory: category) do: [:e | self quickFillWithClass: e]]
 ]
 
 { #category : #protocol }

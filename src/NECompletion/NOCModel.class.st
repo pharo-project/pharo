@@ -128,11 +128,6 @@ NOCModel >> nextModel [
 		nextModel ].
 ]
 
-{ #category : #accessing }
-NOCModel >> noNextModel [
-	nextModel := NOCEmptyModel new.
-]
-
 { #category : #private }
 NOCModel >> sortByLastRecentlyUsed: lastRecentlyUsedEntries [
 	"Sort my entrys by the most recently used date"
@@ -164,10 +159,4 @@ NOCModel >> tableForEntry: ent [
 { #category : #accessing }
 NOCModel >> title [
 	^ self nextModel title
-]
-
-{ #category : #accessing }
-NOCModel >> useUniqueTable [
-	table := NOCCompletionTable new entriesPerPrefix: 20.
-	
 ]
