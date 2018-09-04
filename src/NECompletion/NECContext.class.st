@@ -497,13 +497,6 @@ NECContext >> sourceOf: aSHRange stopAt: aNumber [
 		ifFalse: [source copyFrom: aSHRange start to: aNumber]
 ]
 
-{ #category : #action }
-NECContext >> switchToUntyped [
-	receiverClass := nil.
-	self configureSelectorsAndVariables.
-	model := self createModel
-]
-
 { #category : #accessing }
 NECContext >> temporaries [
 	"Return entries to represent temporary variables, method arguments and block temporaries. 
