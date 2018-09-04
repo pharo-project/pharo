@@ -19,6 +19,9 @@ Class {
 		'inverseMapping',
 		'completionDelay'
 	],
+	#classVars : [
+		'ContextClass'
+	],
 	#classInstVars : [
 		'uniqueInstance'
 	],
@@ -55,6 +58,16 @@ NECController class >> codeCompletionAround: aBlock textMorph: aTextMorph keyStr
 	
 	completionAllowed
 		ifTrue: [ controller handleKeystrokeAfter: evt editor: editor ]
+]
+
+{ #category : #accessing }
+NECController class >> contextClass [
+	^ContextClass ifNil: [ ^NECContext ] 
+]
+
+{ #category : #accessing }
+NECController class >> contextClass: aClass [
+	ContextClass := aClass
 ]
 
 { #category : #'class initialization' }
@@ -110,7 +123,7 @@ NECController >> context [
 
 { #category : #private }
 NECController >> contextClass [
-	^NECContext
+	^self class contextClass
 ]
 
 { #category : #accessing }
