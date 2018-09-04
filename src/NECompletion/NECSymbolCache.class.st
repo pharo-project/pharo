@@ -48,35 +48,11 @@ NECSymbolCache class >> contains: aString caseSensitive: aBoolean do: aBlock [
 
 { #category : #private }
 NECSymbolCache class >> interestingSymbolsDo: aBlock [
-
-	Symbol allSymbolTablesDo:[:symbol |
-		symbol isEmpty
-			ifFalse: [
-				(symbol first isUppercase and:[ Smalltalk globals includesKey: symbol ])
-					ifTrue:[ aBlock value: symbol ]
-					ifFalse: [ symbol isSelectorSymbol ifTrue: [ aBlock value: symbol ]]]].
+	 Symbol selectorTable do: [:symbol | aBlock value: symbol ].
+    Smalltalk globals keysDo: [:symbol | aBlock value: symbol ].
 ]
 
 { #category : #accessing }
 NECSymbolCache class >> resetCachedSymbols [
 	cachedSymbols := nil
-]
-
-{ #category : #query }
-NECSymbolCache class >> startsWith: aChar caseSensitive: aBoolean do: aBlock [ 
-	| char caseInSensitive firstChar |
-	caseInSensitive := aBoolean not.
-	firstChar := caseInSensitive 
-		ifTrue: [ aChar asLowercase ]
-		ifFalse: [ aChar ].
-	Symbol allSymbolTablesDo: 
-		[ :each | 
-		| size |
-		size := each size.
-		char := size > 0 ifTrue: [ each first ].
-		(char notNil 
-			and: [ (char == firstChar or: [ caseInSensitive and: [ char asLowercase == firstChar ] ])
-			and: [ (each 
-				findAnySubstring: '- '
-				startingAt: 2) > size ] ]) ifTrue: [ aBlock value: each ] ]
 ]
