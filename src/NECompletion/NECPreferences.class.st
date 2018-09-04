@@ -130,7 +130,7 @@ NECPreferences class >> initialize [
 	caseSensitive := true.
 	smartCharacters := true.
 	expandPrefixes := true.
-	captureNavigationKeys := false.
+	captureNavigationKeys := true.
 	useEnterToAccept := true.
 	smartCharactersMapping := Dictionary new.
 	smartCharactersMapping
