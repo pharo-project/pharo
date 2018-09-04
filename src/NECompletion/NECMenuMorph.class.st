@@ -745,14 +745,6 @@ NECMenuMorph >> showDetail [
 	self updateDetail
 ]
 
-{ #category : #actions }
-NECMenuMorph >> switchToUntyped [
-	context switchToUntyped.
-	self 
-		removeTitle; 
-		narrowCompletion
-]
-
 { #category : #testing }
 NECMenuMorph >> takesKeyboardFocus [
 	^ true

@@ -196,12 +196,7 @@ NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 						ifTrue: [ ^ true ] ] ].
 	self flag: #todo.	"Removing for now... most of the shortcuts are broken and no time or need now to fix them"	"(keyCharacter = $h and: [ controlKeyPressed ]) ifTrue: [ 
 		menuMorph help.
-		^ true ].
-
-	(keyCharacter = $u and: [ controlKeyPressed ]) ifTrue: [ 
-		menuMorph switchToUntyped.
-		^ true ].	"	"All keys but the alphanumeric chars (without command and control ) 
-	and the backspace key do close the menu"
+		^ true ]."
 	keyCharacter = Character backspace
 		ifTrue: [ 
 			editor isCaretBehindChar
