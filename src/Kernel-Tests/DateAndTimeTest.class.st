@@ -821,6 +821,12 @@ DateAndTimeTest >> testUnixEpoch [
 	self assert: DateAndTime unixEpoch equals: '1 January 1970 00:00+00:00' asDateAndTime.	
 ]
 
+{ #category : #tests }
+DateAndTimeTest >> testYearMonth [
+	
+	self assert: ((DateAndTime year: 2018 month: 9) asDate asString) equals: '1 September 2018'.
+]
+
 { #category : #helpers }
 DateAndTimeTest >> useNonUtcTimeZoneDuring: aBlock [
 
