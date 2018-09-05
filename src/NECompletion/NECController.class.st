@@ -255,11 +255,6 @@ NECController >> invalidateEditorMorph [
 ]
 
 { #category : #'menu morph' }
-NECController >> isMenuEmpty [
-	^menuMorph isNil or: [ self context model notNil and: [ self context model isEmpty ] ]
-]
-
-{ #category : #'menu morph' }
 NECController >> isMenuOpen [
 	^menuMorph notNil
 ]
