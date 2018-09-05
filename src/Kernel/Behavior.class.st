@@ -1872,7 +1872,7 @@ Behavior >> superclass: aClass [
 	"Change the receiver's superclass to be aClass."
 	"Note: Do not use 'aClass isKindOf: Behavior' here
 		in case we recompile from Behavior itself."
-	(aClass isNil and: [ { Object . ProtoObject } includes: superclass ])
+	(aClass isNil or: [ { Object . ProtoObject } includes: superclass ])
 		ifTrue: [self basicSuperclass: aClass.
 				Object flushCache]
 		ifFalse: [self error: 'superclass must be nil or you should need to recreate the complete class with the new superclass', aClass printString , self name ]
