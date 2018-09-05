@@ -107,6 +107,12 @@ DateTest >> testAsDate [
 ]
 
 { #category : #tests }
+DateTest >> testAsMonthInYear [
+	
+	self assert: ((Date asMonth: 9 inYear: 2018) asString) equals: 'September 2018'.
+]
+
+{ #category : #tests }
 DateTest >> testAsSeconds [
 
 	| secondsSinceEpoch dateUTC dateEDT datePST |
