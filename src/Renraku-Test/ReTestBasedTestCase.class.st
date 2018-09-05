@@ -7,7 +7,7 @@ Class {
 	#category : #'Renraku-Test'
 }
 
-{ #category : #tests }
+{ #category : #running }
 ReTestBasedTestCase >> setUp [
 	super setUp.
 	
@@ -22,7 +22,7 @@ ReTestBasedTestCase >> setUp [
 		package: testPackage name.
 ]
 
-{ #category : #tests }
+{ #category : #running }
 ReTestBasedTestCase >> tearDown [
 
 	validTestPackage methods do: #removeFromSystem.
