@@ -413,7 +413,7 @@ Class >> copyForAnnouncement [
 	
 	
 	newClass := self class copy new
-		superclass: superclass;
+		basicSuperclass: superclass;
 		methodDict: self methodDict copy;
 		setFormat: format;
 		setName: name;
