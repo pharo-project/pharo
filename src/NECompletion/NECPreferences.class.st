@@ -28,7 +28,7 @@ Class {
 
 { #category : #private }
 NECPreferences class >> availableControllers [
-	^NECController withAllSubclasses copyWithout: NECWorkspaceController
+	^NECController withAllSubclasses
 ]
 
 { #category : #accessing }
