@@ -99,16 +99,20 @@ NECUntypedModel >> initializeInstVars [
 
 { #category : #private }
 NECUntypedModel >> initializeSelectors [
+	| case |
 	self resetSelectors.
 	narrowString size < 2 ifTrue: [ ^ self ].
-	
+	case :=  NECPreferences caseSensitive.
 	includeSelectors
-		ifTrue: [ Symbol selectorTable do: [ :symbol | 
-					(symbol includesSubstring: narrowString caseSensitive: NECPreferences caseSensitive)
-						ifTrue: [ selectors add: (NECSelectorEntry contents: symbol type: #selector) ] ] ].
+		ifTrue: [ Symbol selectorTable do: [ :symbol | | toadd | 
+					"for small strings, we do not do substring matching as we get too many matches (slow)"
+					toadd := narrowString size < 3 
+						ifTrue: [ symbol beginsWithEmpty: narrowString caseSensitive: case] 
+						ifFalse: [symbol includesSubstring: narrowString caseSensitive: case].
+					toadd ifTrue: [ selectors add: (NECSelectorEntry contents: symbol type: #selector) ] ] ].
 	includeVariables
 		ifTrue: [ Smalltalk globals keysDo: [ :symbol  | 
-					(symbol includesSubstring: narrowString caseSensitive: NECPreferences caseSensitive)
+					(symbol includesSubstring: narrowString caseSensitive: case)
 						ifTrue: [ selectors add: (NECGlobalEntry contents: symbol ) ] ] ].
 	self sortSelectors
 ]
