@@ -4,7 +4,7 @@ SUnit tests for container
 Class {
 	#name : #RGContainerTest,
 	#superclass : #TestCase,
-	#category : #'Ring-Deprecated-Tests-Containers'
+	#category : #'Ring-Deprecated-Tests-Containers-Base'
 }
 
 { #category : #deprecation }
