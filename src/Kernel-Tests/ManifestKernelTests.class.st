@@ -4,7 +4,7 @@ I contain tests for the Kernel package.
 Class {
 	#name : #ManifestKernelTests,
 	#superclass : #PackageManifest,
-	#category : #'Kernel-Tests'
+	#category : #'Kernel-Tests-Manifest'
 }
 
 { #category : #metadata }
