@@ -37,7 +37,7 @@ ClassHierarchyTest class >> fixSubclasses [
 ClassHierarchyTest >> testObjectFormatInstSize [
 	| classes offending |
 	"check that #instSize is in sync with #allInstVarNames"
-	offending := SystemNavigation default allBehaviors reject: [ :cls | cls instSize = cls allInstVarNames size ].
+	offending := SystemNavigation default allBehaviors reject: [ :cls | cls instSize = (cls allSlots reject: #isVirtual) size ].
 	self assertCollection: offending hasSameElements: {}.
 
 	"instSpec is only 0 for classes without any inst vars or variable fields"
