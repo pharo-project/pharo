@@ -15,7 +15,7 @@ FormTest >> classToBeTested [
 
 { #category : #'tests - 32 bit' }
 FormTest >> test32BitFormBlackShouldStayBlackAfterSave [
-	"Solve bug: https://pharo.fogbugz.com/f/cases/14619/Strange-behavior-of-TestRunner-Icon"
+	"Solve bug: https://pharo.manuscript.com/f/cases/14619"
 
 	| blackForm |
 	blackForm := (Form extent: 10 @ 10) fillColor: Color black.

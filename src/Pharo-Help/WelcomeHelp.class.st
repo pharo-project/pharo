@@ -46,7 +46,7 @@ WelcomeHelp class >> changeLog [
 - Playground is now also extensible (similar to GTInspector)
 - Conditional breakpoints/watches
 
-As the complete list of fixed issues is too large to be placed here, you can review it on the FogBugz issue tracker (', (self url: 'https://pharo.fogbugz.com'), ') (requires account).', 
+As the complete list of fixed issues is too large to be placed here, you can review it on the FogBugz issue tracker (', (self url: 'https://pharo.manuscript.com'), ') (requires account).', 
 (self subheading: 'Tools'),
 '- Integration of Calypso (new and improved SystemBrowser)
 - Improved Iceberg Git repositories manager

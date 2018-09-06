@@ -25,7 +25,7 @@ ColorTest >> classToBeTested [
 
 { #category : #'tests - 32 bit' }
 ColorTest >> test32BitBlackColorTranformation [
-	"Solve bug: https://pharo.fogbugz.com/f/cases/14619/Strange-behavior-of-TestRunner-Icon"
+	"Solve bug: https://pharo.manuscript.com/f/cases/14619"
 
 	self assert: ((Color black pixelWordForDepth: 32) asColorOfDepth: 32) equals: Color black
 ]

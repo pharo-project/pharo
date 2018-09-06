@@ -524,7 +524,7 @@ DateAndTimeTest >> testReadFromUTCOffset [
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadTimeWithOtherCharactersAfter [
-	"See https://pharo.fogbugz.com/f/cases/17693/"
+	"See https://pharo.manuscript.com/f/cases/17693/"
 	self
 		assert:
 			(DateAndTime
@@ -536,8 +536,8 @@ DateAndTimeTest >> testReadTimeWithOtherCharactersAfter [
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadTimeZoneOffsetISO [
-	"See https://pharo.fogbugz.com/f/cases/17693/"
-	"See ISO 8601 offset format"
+	"See https://pharo.manuscript.com/f/cases/17693 
+	 See ISO 8601 offset format"
 
 	self
 		assert: (DateAndTime readTimezoneOffsetFrom: '+05:30' readStream) printString
@@ -546,15 +546,15 @@ DateAndTimeTest >> testReadTimeZoneOffsetISO [
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadTimeZoneOffsetISO822WithOtherCharactersAfter [
-	"See https://pharo.fogbugz.com/f/cases/17693/"
+	"See https://pharo.manuscript.com/f/cases/17693/"
 
 	self assert: (DateAndTime readTimezoneOffsetFrom: '+05:30 CommiterName' readStream) printString equals: '0:05:30:00'
 ]
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadTimeZoneOffsetRFC822 [
-	"See https://pharo.fogbugz.com/f/cases/17693/"
-	"See RFC822 : https://www.w3.org/Protocols/rfc822/"
+	"See https://pharo.manuscript.com/f/cases/17693
+	 See RFC822 : https://www.w3.org/Protocols/rfc822"
 
 	self
 		assert: (DateAndTime readTimezoneOffsetFrom: '+0530' readStream) printString
@@ -563,7 +563,7 @@ DateAndTimeTest >> testReadTimeZoneOffsetRFC822 [
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadTimeZoneOffsetRFC822WithOtherCharactersAfter [
-	"See https://pharo.fogbugz.com/f/cases/17693/"
+	"See https://pharo.manuscript.com/f/cases/17693"
 	
 	self
 		assert: (DateAndTime readTimezoneOffsetFrom: '+0530 CommiterName' readStream) printString
