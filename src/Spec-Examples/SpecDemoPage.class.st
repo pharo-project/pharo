@@ -45,13 +45,12 @@ SpecDemoPage >> commentFor: aClass [
 
 { #category : #initialization }
 SpecDemoPage >> commentTab [
-	| tab commentInput|
+	| tab commentInput |
 	tab := self newTab.
 	tab
 		label: 'Comment';
 		icon: (tab iconNamed: #helpIcon);
-		model: (commentInput := self newText).
-		
+		presenter: (commentInput := self newText).
 	commentInput text: (self commentFor: self pageClass).
 	^ tab
 ]
@@ -63,7 +62,7 @@ SpecDemoPage >> exampleTab [
 	tab
 		label: 'Example';
 		icon: (tab iconNamed: #smallPaint);
-		model: (self instantiate: self pageClass).
+		presenter: (self instantiate: self pageClass).
 	^ tab
 ]
 
