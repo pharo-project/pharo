@@ -4,7 +4,7 @@ This is deprecated class because the original class PickListModel was renamed to
 Class {
 	#name : #PickListModel,
 	#superclass : #PickListPresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }

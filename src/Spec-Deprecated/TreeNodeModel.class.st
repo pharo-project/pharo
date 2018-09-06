@@ -4,7 +4,7 @@ This is deprecated class because the original class TreeNodeModel was renamed to
 Class {
 	#name : #TreeNodeModel,
 	#superclass : #TreeNodePresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }
