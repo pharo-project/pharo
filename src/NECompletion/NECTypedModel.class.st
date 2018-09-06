@@ -16,7 +16,8 @@ NECTypedModel >> initializeSelectors [
 NECTypedModel >> initializeSelectorsFor: aClass [
 	selectors reset.
 	selectors addAll:
-			(aClass allSelectors collect: [ :each | NECSelectorEntry contents: each type: #selector ])
+			(aClass allSelectors collect: [ :each | NECSelectorEntry contents: each type: #selector ]).
+	self sortSelectors.
 ]
 
 { #category : #action }

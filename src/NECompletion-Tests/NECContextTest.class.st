@@ -443,7 +443,7 @@ NECContextTest >> testUntypedSelectorsOnly [
 	model := context model.
 	self assert: model hasMessage.
 	self assert: model message = 'press key for selectors'.
-	context narrowWith: 'a'.
+	context narrowWith: 'ab'.
 	self assert: (model entriesOfType: #selector) notEmpty.
 	self assert: (model entriesOfType: #local) isEmpty.
 	self assert: (model entriesOfType: #instance) isEmpty

@@ -9,8 +9,7 @@ Class {
 		'localVars',
 		'includeVariables',
 		'includeSelectors',
-		'classVars',
-		'listLimit'
+		'classVars'
 	],
 	#category : #'NECompletion-Model'
 }
@@ -73,7 +72,6 @@ NECUntypedModel >> initialize [
 	classVars := SortedCollection new.
 	includeSelectors := true.
 	includeVariables := true.
-	listLimit := 100.
 ]
 
 { #category : #initialization }
@@ -102,32 +100,17 @@ NECUntypedModel >> initializeInstVars [
 { #category : #private }
 NECUntypedModel >> initializeSelectors [
 	self resetSelectors.
+	narrowString size < 2 ifTrue: [ ^ self ].
 	
-	includeSelectors ifFalse: 
-		[ Smalltalk globals keysDo: [ :each |
-			(each includesSubstring: narrowString caseSensitive: NECPreferences caseSensitive) ifTrue: [
-			selectors add: (NECGlobalEntry contents: each)] ].
-		^ self ].
-	narrowString ifEmpty: [ ^ self ].
-	NECSymbolCache 
-		contains: narrowString
-		caseSensitive: NECPreferences caseSensitive
-		do: [ :each | 
-			(includeVariables or: [ each first isLowercase ]) ifTrue: 
-				[ selectors add: (NECSelectorEntry 
-						contents: each
-						type: #selector).
-				selectors size > self listLimit ifTrue: [ ^ self ]]]
-]
-
-{ #category : #accessing }
-NECUntypedModel >> listLimit [
-	^ listLimit
-]
-
-{ #category : #accessing }
-NECUntypedModel >> listLimit: aNumber [
-	listLimit := aNumber
+	includeSelectors
+		ifTrue: [ Symbol selectorTable do: [ :symbol | 
+					(symbol includesSubstring: narrowString caseSensitive: NECPreferences caseSensitive)
+						ifTrue: [ selectors add: (NECSelectorEntry contents: symbol type: #selector) ] ] ].
+	includeVariables
+		ifTrue: [ Smalltalk globals keysDo: [ :symbol  | 
+					(symbol includesSubstring: narrowString caseSensitive: NECPreferences caseSensitive)
+						ifTrue: [ selectors add: (NECGlobalEntry contents: symbol ) ] ] ].
+	self sortSelectors
 ]
 
 { #category : #private }
