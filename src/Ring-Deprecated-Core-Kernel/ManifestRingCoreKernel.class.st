@@ -1,7 +1,10 @@
+"
+Manifest for DEPRECATED package of Ring
+"
 Class {
 	#name : #ManifestRingCoreKernel,
 	#superclass : #PackageManifest,
-	#category : #'Ring-Deprecated-Core-Kernel'
+	#category : #'Ring-Deprecated-Core-Kernel-Manifest'
 }
 
 { #category : #deprecation }

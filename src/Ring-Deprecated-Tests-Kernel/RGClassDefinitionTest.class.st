@@ -4,7 +4,7 @@ SUnit tests for class definitions
 Class {
 	#name : #RGClassDefinitionTest,
 	#superclass : #TestCase,
-	#category : #'Ring-Deprecated-Tests-Kernel'
+	#category : #'Ring-Deprecated-Tests-Kernel-Base'
 }
 
 { #category : #deprecation }
