@@ -430,7 +430,7 @@ GIFReadWriter >> readBitDataOnFrame: aFrame [
 { #category : #'private-decoding' }
 GIFReadWriter >> readBody [
 	"Read the GIF blocks. Modified to return a frame."
-	| form extype block blocksize packedFields delay1 disposal frame |
+	| block frame |
 	frame := nil.
 	frames := OrderedCollection new.
 	[ stream atEnd ] whileFalse: [ 
