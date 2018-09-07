@@ -218,9 +218,8 @@ NECContext >> createModel [
 	self receiverClass
 		ifNotNil: [^ NECTypedModel class: receiverClass].
 
-	(controller workspace isNil and: [ theClass notNil ])
-		ifTrue: [ self isStartOfMethodDefinition 
-				ifTrue: [ ^NECEmptyModel new]].
+	(theClass notNil and:  [ self isStartOfMethodDefinition ])
+				ifTrue: [ self configureSelectorsOnly].
 							
 	self completionTokenIsLiteralOrComment ifTrue:[ ^ NECEmptyModel new].
 			
