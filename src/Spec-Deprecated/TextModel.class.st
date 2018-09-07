@@ -4,7 +4,7 @@ This is deprecated class because the original class TextModel was renamed to Tex
 Class {
 	#name : #TextModel,
 	#superclass : #TextPresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }

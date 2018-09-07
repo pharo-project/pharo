@@ -4,7 +4,7 @@ This is deprecated class because the original class AbstractFormButtonModel was 
 Class {
 	#name : #AbstractFormButtonModel,
 	#superclass : #AbstractFormButtonPresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }

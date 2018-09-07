@@ -4,7 +4,7 @@ This is deprecated class because the original class DynamicComposableModel was r
 Class {
 	#name : #DynamicComposableModel,
 	#superclass : #DynamicComposablePresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }

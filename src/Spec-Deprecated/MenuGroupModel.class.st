@@ -4,7 +4,7 @@ This is deprecated class because the original class MenuGroupModel was renamed t
 Class {
 	#name : #MenuGroupModel,
 	#superclass : #MenuGroupPresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }

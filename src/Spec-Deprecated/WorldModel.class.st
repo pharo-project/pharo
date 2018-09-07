@@ -4,7 +4,7 @@ This is deprecated class because the original class WorldModel was renamed to Wo
 Class {
 	#name : #WorldModel,
 	#superclass : #WorldPresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }
