@@ -99,7 +99,7 @@ HEClass >> layoutClass: anObject [
 HEClass >> printOn: aStream [
 	aStream
 		nextPutAll: 'HEClass ( ';
-		nextPutAll: className asString;
+		print: className;
 		nextPutAll: ' )'
 ]
 

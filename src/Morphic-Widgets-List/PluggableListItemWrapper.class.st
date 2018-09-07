@@ -76,7 +76,10 @@ PluggableListItemWrapper >> hasContentsSelector: aSymbol [
 { #category : #printing }
 PluggableListItemWrapper >> printOn: aStream [
 	super printOn: aStream.
-	aStream nextPut:$(; nextPutAll: self asString; nextPut:$).
+	aStream
+		nextPut: $(;
+		print: self;
+		nextPut: $)
 ]
 
 { #category : #private }

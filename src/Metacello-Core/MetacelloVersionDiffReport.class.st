@@ -60,20 +60,20 @@ MetacelloVersionDiffReport >> printOn: aStream [
 	printBlock := [ :pkgName :ar | 
 	aStream
 		tab: 2;
-		nextPutAll: pkgName asString;
+		print: pkgName;
 		cr.
 	aStream
 		tab: 3;
-		nextPutAll: (ar at: 1) asString printString;
+		print: (ar at: 1);
 		nextPutAll: ' to ';
-		nextPutAll: (ar at: 2) asString printString;
+		print: (ar at: 2);
 		cr ].
 	aStream
-		nextPutAll: self configuration asString;
+		print: self configuration;
 		space;
-		nextPutAll: from asString printString;
+		print: from;
 		nextPutAll: ' to ';
-		nextPutAll: to asString printString;
+		print: to;
 		cr.
 	aStream
 		tab;

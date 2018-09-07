@@ -638,7 +638,7 @@ GLMPresentation >> printOn: aStream [
 		nextPutAll: '(id=';
 		nextPutAll: self identityHash printString;
 		nextPutAll: ' title=';
-		nextPutAll: self titleValue asString;
+		print: self titleValue;
 		nextPutAll: ' pane=';
 		nextPutAll: self pane printString;
 		nextPutAll: ')'

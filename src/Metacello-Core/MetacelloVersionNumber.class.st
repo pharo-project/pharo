@@ -404,18 +404,16 @@ MetacelloVersionNumber >> match: aVersionPattern [
 
 { #category : #printing }
 MetacelloVersionNumber >> printOn: aStream [
-
-	| beforeFirst | 
+	| beforeFirst |
 	beforeFirst := true.
-	self do:
-		[:each |
-		beforeFirst
-			ifTrue: [beforeFirst := false]
-			ifFalse: [
-				each isString
-					ifTrue: [ aStream nextPut: $- ]
-					ifFalse: [ aStream nextPut: $. ] ].
-		aStream nextPutAll: each asString ]
+	self
+		do: [ :each | 
+			beforeFirst
+				ifTrue: [ beforeFirst := false ]
+				ifFalse: [ each isString
+						ifTrue: [ aStream nextPut: $- ]
+						ifFalse: [ aStream nextPut: $. ] ].
+			aStream print: each ]
 ]
 
 { #category : #accessing }

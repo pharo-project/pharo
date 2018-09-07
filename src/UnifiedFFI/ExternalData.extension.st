@@ -27,9 +27,11 @@ ExternalData >> copyFrom: start to: stop [
 ]
 
 { #category : #'*UnifiedFFI' }
-ExternalData >> printOn: stream [ 
-	stream << $( << type asString << $). 
-	self getHandle printOn: stream.
+ExternalData >> printOn: stream [
+	stream << $(.
+	type printOn: stream.
+	stream  << $).
+	self getHandle printOn: stream
 ]
 
 { #category : #'*UnifiedFFI' }

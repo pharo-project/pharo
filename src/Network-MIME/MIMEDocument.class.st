@@ -282,15 +282,16 @@ MIMEDocument >> parts [
 
 { #category : #printing }
 MIMEDocument >> printOn: aStream [
-	aStream nextPutAll: self class name;
+	aStream
+		nextPutAll: self class name;
 		nextPutAll: ' (';
-		nextPutAll: self mimeType asString;
+		print: self mimeType;
 		nextPutAll: ', '.
 	contents
-		ifNotNil: [aStream
-			nextPutAll: self contents size printString;
-			nextPutAll: ' bytes)']
-		ifNil: [aStream nextPutAll: 'unknown size)'].
+		ifNotNil: [ aStream
+				nextPutAll: self contents size printString;
+				nextPutAll: ' bytes)' ]
+		ifNil: [ aStream nextPutAll: 'unknown size)' ]
 ]
 
 { #category : #private }

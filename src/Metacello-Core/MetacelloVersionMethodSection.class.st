@@ -65,11 +65,11 @@ MetacelloVersionMethodSection >> parent: anObject [
 
 { #category : #accessing }
 MetacelloVersionMethodSection >> printOn: aStream [
-  aStream
-    nextPutAll: self class name asString;
-    nextPut: $(.
-  self versionSpec printOn: aStream.
-  aStream nextPut: $)
+	aStream
+		print: self class name;
+		nextPut: $(.
+	self versionSpec printOn: aStream.
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }

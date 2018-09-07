@@ -74,11 +74,11 @@ RBConjunctiveCondition >> neitherFailed [
 ]
 
 { #category : #printing }
-RBConjunctiveCondition >> printOn: aStream [ 
-	aStream nextPutAll: left asString;
+RBConjunctiveCondition >> printOn: aStream [
+	aStream
+		print: left;
 		nextPutAll: ' & ';
-		nextPutAll: right asString
-
+		print: right
 ]
 
 { #category : #private }

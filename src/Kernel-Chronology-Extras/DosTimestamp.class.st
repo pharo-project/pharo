@@ -121,12 +121,11 @@ DosTimestamp >> low16Bits [
 
 { #category : #printing }
 DosTimestamp >> printOn: aStream [
-
 	aStream
 		nextPutAll: self asDateAndTime printString;
 		nextPutAll: ' (';
-		nextPutAll: self value asString;
-		nextPut: $).
+		print: self value;
+		nextPut: $)
 ]
 
 { #category : #private }

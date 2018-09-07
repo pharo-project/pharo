@@ -184,10 +184,12 @@ SHRange >> length [
 
 { #category : #printing }
 SHRange >> printOn: aStream [
-
-	super printOn: aStream. 
-	aStream nextPutAll: ' ', type. 
-	aStream nextPutAll: ' [', start asString, ' - ', end asString, ']'.
+	super printOn: aStream.
+	aStream nextPutAll: ' ';
+	nextPutAll:  type;
+	nextPutAll: ' [' ;
+		print: start ; nextPutAll:  ' - ';  print: end ;
+		nextPutAll:  ']'
 ]
 
 { #category : #accessing }

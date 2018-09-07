@@ -46,8 +46,8 @@ FontFamilyAbstract >> members [
 
 { #category : #printing }
 FontFamilyAbstract >> printOn: aStream [
-	aStream 
-		nextPutAll: self class name asString;
+	aStream
+		print: self class name;
 		nextPut: $ ;
 		nextPutAll: self familyName printString
 ]

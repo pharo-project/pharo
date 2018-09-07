@@ -92,21 +92,45 @@ FreeTypeFileInfo >> modificationTime: anObject [
 { #category : #printing }
 FreeTypeFileInfo >> printOn: aStream [
 	"super printOn: aStream."
-	aStream 
-		nextPutAll: familyGroupName asString, '::',styleNameExtracted asString, ' '; 
-		nextPutAll:  
-			(locationType = #absolute 
-				ifTrue:[''] 
-				ifFalse:['{',locationType asString,'}']);
-		nextPutAll: absoluteOrRelativePath asString;
-		nextPutAll: '[',index asString,'] ';
-		nextPutAll: familyName asString;
-		nextPutAll: ' - ', styleName asString;
-		nextPutAll: ' - ', postscriptName asString;		
-		nextPutAll: ' ',(bold ifTrue:['B'] ifFalse:['']);
-		nextPutAll: ' ',(italic ifTrue:['I'] ifFalse:['']);
-		nextPutAll: ' ',(fixedWidth ifTrue:['Monospaced'] ifFalse:['']);
-		nextPutAll: ' ',(stretchValue asString);
-		nextPutAll: ' ',(weightValue asString);	
+
+	aStream
+		print: familyGroupName;
+		nextPutAll: '::';
+		print: styleNameExtracted;
+		nextPutAll: ' '.
+	locationType = #absolute
+		ifFalse: [ aStream
+				nextPut: ${;
+				print: locationType;
+				nextPut: $} ].
+	aStream
+		print: absoluteOrRelativePath;
+		nextPutAll: '[';
+		print: index;
+		nextPutAll: '] ';
+		print: familyName;
+		nextPutAll: ' - ';
+		print: styleName;
+		nextPutAll: ' - ';
+		print: postscriptName;
+		nextPutAll: ' ';
+		nextPutAll:
+			(bold
+				ifTrue: [ 'B' ]
+				ifFalse: [ '' ]);
+		nextPutAll: ' ';
+		nextPutAll:
+			(italic
+				ifTrue: [ 'I' ]
+				ifFalse: [ '' ]);
+		nextPutAll: ' ';
+		nextPutAll:
+			(fixedWidth
+				ifTrue: [ 'Monospaced' ]
+				ifFalse: [ '' ]);
+		nextPutAll: ' ';
+		print: stretchValue;
+		nextPutAll: ' ';
+		print: weightValue;
 		cr
 ]

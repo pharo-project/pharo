@@ -155,16 +155,15 @@ SimpleServiceEntry >> performServiceFor: anObject [
 
 { #category : #printing }
 SimpleServiceEntry >> printOn: aStream [
-
-	aStream nextPutAll: self class name; nextPutAll: ': ('.
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ': ('.
 	self provider notNil
-		ifTrue: [aStream nextPutAll: provider printString].
-	aStream nextPutAll: ' --- '. 
+		ifTrue: [ aStream nextPutAll: provider printString ].
+	aStream nextPutAll: ' --- '.
 	self selector notNil
-		ifTrue: [aStream nextPutAll: selector asString].
+		ifTrue: [ aStream print: selector ].
 	aStream nextPut: $)
-
-
 ]
 
 { #category : #accessing }

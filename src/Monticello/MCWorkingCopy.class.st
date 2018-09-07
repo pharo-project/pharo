@@ -373,9 +373,8 @@ MCWorkingCopy >> possiblyNewerVersionsIn: aRepository [
 
 { #category : #printing }
 MCWorkingCopy >> printOn: aStream [
-
 	super printOn: aStream.
-	package name ifNotNil: [ aStream nextPutAll: '(' , package name asString, ')'].
+	package name ifNotNil: [ aStream nextPutAll: '(' ; print: package name; nextPutAll: ')' ]
 ]
 
 { #category : #accessing }

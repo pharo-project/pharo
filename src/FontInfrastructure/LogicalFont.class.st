@@ -709,22 +709,22 @@ LogicalFont >> printOn: aStream [
 	aStream
 		cr;
 		nextPutAll: ' familyName: ';
-		nextPutAll: familyName asString;
+		print: familyName;
 		cr;
 		nextPutAll: ' emphasis: ';
-		nextPutAll: emphasis asString;
+		print: emphasis;
 		cr;
 		nextPutAll: ' pointSize: ';
-		nextPutAll: pointSize asString;
+		print: pointSize;
 		cr;
 		nextPutAll: ' realFont: ';
-		nextPutAll: realFont asString;
+		print: realFont;
 		nextPutAll: ' weight: ';
-		nextPutAll: weightValue asString;
+		print: weightValue;
 		nextPutAll: ' stretch: ';
-		nextPutAll: stretchValue asString;
+		print: stretchValue;
 		nextPutAll: ' slant: ';
-		nextPutAll: slantValue asString
+		print: slantValue
 ]
 
 { #category : #accessing }

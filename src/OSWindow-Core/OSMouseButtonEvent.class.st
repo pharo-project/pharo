@@ -30,7 +30,9 @@ OSMouseButtonEvent >> isWheel [
 { #category : #printing }
 OSMouseButtonEvent >> printOn: stream [
 	super printOn: stream.
-	stream space; nextPutAll: button asString
+	stream
+		space;
+		print: button
 ]
 
 { #category : #accessing }

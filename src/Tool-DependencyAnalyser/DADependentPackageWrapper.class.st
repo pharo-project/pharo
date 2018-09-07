@@ -67,14 +67,14 @@ DADependentPackageWrapper >> printOn: aStream [
 	aStream
 		nextPutAll: self packageName;
 		nextPutAll: ' <-- Users : ';
-		nextPutAll: self usersOfPackageSize asString;
+		print: self usersOfPackageSize;
 		nextPutAll: ' package(s) | ';
 		nextPutAll: 'Dependencies : ';
-		nextPutAll: ((self dependenciesSize) - numberOfExtension) asString;
+		print: (self dependenciesSize - numberOfExtension);
 		nextPutAll: ' (+ ';
-		nextPutAll: numberOfExtension asString;
+		print: numberOfExtension;
 		nextPutAll: ' extension dependencies ';
-		nextPutAll: ')'.
+		nextPutAll: ')'
 ]
 
 { #category : #accessing }

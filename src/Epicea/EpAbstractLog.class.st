@@ -220,13 +220,10 @@ EpAbstractLog >> nullReference [
 
 { #category : #printing }
 EpAbstractLog >> printOn: aStream [
-
 	super printOn: aStream.
-	
-	aStream 
-		nextPut: $(;
-		nextPutAll: self headReference asString;
-		nextPut: $).
+	aStream nextPut: $(;
+		print: self headReference;
+		 nextPut: $)
 ]
 
 { #category : #enumerating }
