@@ -547,28 +547,39 @@ RubSmalltalkEditor >> findNextKeywordIn: sourceCode selection: selectionInterval
 	
 	| checkBlock ranges potentialLocation selectionEnd|
 	
-	"match on typical locations you jump to in source to complete typing. We use regex to better cope
-	with broken source code (where its very handy to jump while fixing code) - and get initial 
-	location hints which can then use an ast to infer on"
+	"match on typical locations you jump to in source to complete typing. We use regex to more 
+	easily cope with broken source code (where its very handy to jump while fixing code) - 
+	and get initial location hints which can then use an ast to infer on. It might be possible
+	to do this completely with the AST, but this was an easier starting point"
 	
 	ranges := sourceCode allRangesOfRegexMatches: 
-		'\[\s*|', "[ Iself msg1... ]"
-		'\(\s*|', "( I5 + 2..."
-		'\:=\s*|', "x := Iself ..."
 		'\S+\:\s|', "ifTrue1: I...."
+		'\:=\s*|', "x := Iself ..."
 		'\|\s*|', "[ :var | Iself...]"
-		'\:\S+|', "[ :var :var2 | ..."
+		'\:\S+|', "[ :varI :var2I | ..."
 		'\;\s+|', " self msg1; Imsg2...." 
 		'\,\s*|', " 'string1', I'string 2'...."
+		
 		'\)|', " 4 + 5)I ifTrue..."
 		'\]|', " true and: [ true ]I )..."
+		'\^\s*|', "  ^ Iself"
+		'self\s+|', "self Imsg"
+			
+		"Note sure if these ones cause over-jumping, so currently excluded"
+		"'\[\s*|'," "[ Iself msg1... ]"
+		"'\(\s*|'," "( I5 + 2..."
+		
+		"Should insist on whitespace after a $. or do we want to jump between {1.2.3}?"
 		'\.\s+'.  "self msg1. Iself msg2..."
 
-	selectionEnd := selectionInterval last.
+	selectionEnd := selectionInterval 
+		ifEmpty: [selectionInterval first]
+		ifNotEmpty: [selectionInterval last].
+	
 	isFwd
 		ifTrue: [ checkBlock := [ :match | match last > selectionEnd ] ]
 		ifFalse: [ ranges := ranges reversed.
-			checkBlock := [ :match | match last <= (selectionEnd - (match last - match first + 1)) ] ].
+			checkBlock := [ :match | match last < (selectionEnd - 1) ] ].
 		
 	ranges
 		do: [ :match | 
@@ -1221,9 +1232,10 @@ RubSmalltalkEditor >> widenSelectionIn: sourceCode selection: selectionInterval 
 		onError: [ ^nil ].
 	
 	cursorIndex := selectionInterval last.
-	selectionInterval ifNotEmpty: [ 
-		node parent ifNotNil: [ node := node parent ].
-		node isSequence ifTrue: [ node := node parent]].
+	selectionInterval
+		ifNotEmpty: [ 
+			node parent ifNotNil: [ node := node parent ].
+			node isSequence ifTrue: [ node := node parent]].
 	
 	start := node start.
 	stop := node stop max: cursorIndex - 1.
@@ -1249,7 +1261,6 @@ RubSmalltalkEditor >> widenSelectionIn: sourceCode selection: selectionInterval 
 					start := node receiver stop + 1.
 					node hasParentheses ifTrue: [stop := stop - 1]]"]].
 			
-	"textMorph selectionInterval: (start to: stop)"
 	selectionBlock value: (start to: stop)
 ]
 
