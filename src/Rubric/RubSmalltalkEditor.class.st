@@ -150,6 +150,7 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval edittingMod
 	
 	| ast node start stop |
 
+	source ifEmpty: aBlock.
 	start := selectionInterval first min: source size.
 	stop := selectionInterval last min: source size.
 	
@@ -157,10 +158,12 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval edittingMod
 	
 	ast ifNotNil: [ 
 		"If there is no text selection"
-		((selectionInterval size < 2) and: [ isFavouringExpressions ]) ifTrue: [ 
-			"If there is white space or statement terminator, try to backup to find a better node"		
-			[stop > 0 and: [('.;' includes: (source at: stop)) or: [(source at: stop) isSeparator ]]]
-				whileTrue: [ start := stop := stop - 1 ]].
+		(selectionInterval isEmpty and: [ isFavouringExpressions and: [ 
+			(source at: (stop + 1 min: source size)) isAlphaNumeric not ]]) ifTrue: [ 
+				"If there is white space or statement terminator, try to backup to find a better node"		
+				[stop > 0 and: [('.;' includes: (source at: stop)) or: [(source at: stop) isSeparator ]]]
+					whileTrue: [ start := stop := stop - 1 ].
+				start := stop].
 		
 		node := ast bestNodeFor: (start to: stop).
 		
