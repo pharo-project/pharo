@@ -273,7 +273,6 @@ NECController >> leftArrow [
 
 { #category : #'menu morph' }
 NECController >> menuClosed [
-	NECSymbolCache resetCachedSymbols.
 	menuMorph := nil.
 	context := nil.
 ]

@@ -67,8 +67,6 @@ NECUntypedModelTest >> testCaseSensitivity [
 	model := NECUntypedModel 
 		class: NECTestClass
 		temporaries: OrderedCollection new.
-	model listLimit: Float infinity.
-		
 	model narrowWith: 'typesugg'.
 	self assert: model isEmpty.
 	
@@ -80,7 +78,7 @@ NECUntypedModelTest >> testCaseSensitivity [
 	
 	model narrowWith: 'dict'.
 	self assert: model notEmpty.
-	self assert: ((model entriesOfType: #selector) includes: 'Dictionary')
+	self assert: ((model entriesOfType: #globalVar) includes: 'Dictionary')
 ]
 
 { #category : #tests }
@@ -179,11 +177,9 @@ NECUntypedModelTest >> testMessage [
 NECUntypedModelTest >> testNarrowWith [
 	| count model |
 	model := NECUntypedModel new.
-	model listLimit: Float infinity.
-	
 	self assert: model isEmpty.
 	
-	model narrowWith: 'b'.
+	model narrowWith: 'ba'.
 	count := model entryCount.
 	self assert: count == model entries size.
 	self assert: model isEmpty not.
@@ -194,7 +190,7 @@ NECUntypedModelTest >> testNarrowWith [
 	model narrowWith: 'barXXXX'.
 	self assert: model isEmpty.
 	
-	model narrowWith: 'b'.
+	model narrowWith: 'ba'.
 	self assert: count == model entryCount.
 	
 	model narrowWith: 'save'.

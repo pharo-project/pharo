@@ -152,20 +152,7 @@ NECModel >> resetEntries [
 
 { #category : #private }
 NECModel >> resetSelectors [
-	selectors := (SortedCollection new: 500) sortBlock: 
-		[ :a :b | 
-		| scoreA scoreB |
-		scoreA := scoreB := 0.
-		(a contents 
-			beginsWithEmpty: narrowString
-			caseSensitive: NECPreferences caseSensitive) ifFalse: [ scoreA := 2 ].
-		(b contents 
-			beginsWithEmpty: narrowString
-			caseSensitive: NECPreferences caseSensitive) ifFalse: [ scoreB := 2 ].
-		a contents < b contents
-			ifTrue: [ scoreB := scoreB + 1 ]
-			ifFalse: [ scoreA := scoreA + 1 ].
-		scoreA < scoreB ]
+	selectors := OrderedCollection new: 500.
 ]
 
 { #category : #initialization }
@@ -173,6 +160,26 @@ NECModel >> setClass: aClass [
 	clazz := aClass.
 	self initializeSelectors.
 	self narrowWith: String new
+]
+
+{ #category : #private }
+NECModel >> sortSelectors [
+	| case |
+	case :=  NECPreferences caseSensitive.
+	selectors sort: 
+		[ :a :b | 
+		| scoreA scoreB |
+		scoreA := scoreB := 0.
+		(a contents 
+			beginsWithEmpty: narrowString
+			caseSensitive: case) ifFalse: [ scoreA := 2 ].
+		(b contents 
+			beginsWithEmpty: narrowString
+			caseSensitive: case) ifFalse: [ scoreB := 2 ].
+		a contents < b contents
+			ifTrue: [ scoreB := scoreB + 1 ]
+			ifFalse: [ scoreA := scoreA + 1 ].
+		scoreA < scoreB ].
 ]
 
 { #category : #action }
