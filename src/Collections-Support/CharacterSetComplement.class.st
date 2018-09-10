@@ -14,7 +14,7 @@ Class {
 		'absent',
 		'byteArrayMapCache'
 	],
-	#category : #'Collections-Support'
+	#category : #'Collections-Support-Base'
 }
 
 { #category : #'instance creation' }

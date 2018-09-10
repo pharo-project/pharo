@@ -5,7 +5,7 @@ Main classes: Bag, Dictionary, Matrix, Set
 Class {
 	#name : #ManifestCollectionsUnordered,
 	#superclass : #PackageManifest,
-	#category : #'Collections-Unordered'
+	#category : #'Collections-Unordered-Manifest'
 }
 
 { #category : #'meta-data' }

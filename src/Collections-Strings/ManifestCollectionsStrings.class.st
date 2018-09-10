@@ -4,7 +4,7 @@ Contains String, ByteString, Symbol, ByteSymbol, WideSymbol and WideString
 Class {
 	#name : #ManifestCollectionsStrings,
 	#superclass : #PackageManifest,
-	#category : #'Collections-Strings'
+	#category : #'Collections-Strings-Manifest'
 }
 
 { #category : #'meta-data' }

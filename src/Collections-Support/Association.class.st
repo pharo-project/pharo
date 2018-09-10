@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : #'Collections-Support'
+	#category : #'Collections-Support-Base'
 }
 
 { #category : #'instance creation' }
