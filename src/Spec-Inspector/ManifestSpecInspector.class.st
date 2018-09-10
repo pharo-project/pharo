@@ -1,5 +1,5 @@
 Class {
 	#name : #ManifestSpecInspector,
 	#superclass : #PackageManifest,
-	#category : #'Spec-Inspector'
+	#category : #'Spec-Inspector-Manifest'
 }
