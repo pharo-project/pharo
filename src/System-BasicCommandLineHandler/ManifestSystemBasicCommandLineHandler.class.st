@@ -1,7 +1,10 @@
+"
+Package to provide basic command line handling
+"
 Class {
 	#name : #ManifestSystemBasicCommandLineHandler,
 	#superclass : #PackageManifest,
-	#category : #'System-BasicCommandLineHandler'
+	#category : #'System-BasicCommandLineHandler-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

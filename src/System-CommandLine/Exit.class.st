@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'status'
 	],
-	#category : #'System-CommandLine'
+	#category : #'System-CommandLine-Exceptions'
 }
 
 { #category : #'instance creation' }

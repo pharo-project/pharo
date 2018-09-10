@@ -15,7 +15,7 @@ Class {
 	#classInstVars : [
 		'singleton'
 	],
-	#category : #'System-BasicCommandLineHandler'
+	#category : #'System-BasicCommandLineHandler-Utilities'
 }
 
 { #category : #'instance creation' }

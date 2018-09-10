@@ -1,5 +1,5 @@
 Class {
 	#name : #ManifestSystemFinalization,
 	#superclass : #PackageManifest,
-	#category : #'System-Finalization'
+	#category : #'System-Finalization-Manifest'
 }

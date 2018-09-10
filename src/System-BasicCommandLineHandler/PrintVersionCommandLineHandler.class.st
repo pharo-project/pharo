@@ -26,7 +26,7 @@ Examples:
 Class {
 	#name : #PrintVersionCommandLineHandler,
 	#superclass : #CommandLineHandler,
-	#category : #'System-BasicCommandLineHandler'
+	#category : #'System-BasicCommandLineHandler-Base'
 }
 
 { #category : #accessing }
