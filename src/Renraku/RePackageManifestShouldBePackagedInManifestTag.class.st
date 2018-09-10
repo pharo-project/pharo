@@ -36,5 +36,5 @@ RePackageManifestShouldBePackagedInManifestTag >> rationale [
 { #category : #accessing }
 RePackageManifestShouldBePackagedInManifestTag >> severity [
 
-	^ #warning
+	^ #warning 
 ]
