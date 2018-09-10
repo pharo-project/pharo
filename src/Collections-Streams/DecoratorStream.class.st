@@ -17,7 +17,7 @@ DecoratorStream class >> on: aStream [
 
 	^ self basicNew
 		on: aStream;
-		yourself.
+		yourself
 ]
 
 { #category : #testing }
