@@ -1,3 +1,6 @@
+"
+Package to provide basic command line handling
+"
 Class {
 	#name : #ManifestSystemBasicCommandLineHandler,
 	#superclass : #PackageManifest,
