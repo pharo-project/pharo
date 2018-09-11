@@ -1,5 +1,5 @@
 "
-Core package for the Spec UI Framework
+Core package for the Spec UI framework
 "
 Class {
 	#name : #ManifestSpecCore,
