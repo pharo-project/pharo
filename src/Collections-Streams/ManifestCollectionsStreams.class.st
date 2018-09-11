@@ -1,5 +1,5 @@
 "
-All Stream hierarchy: read/write stream
+All Stream hierarchy: read/write stream.
 "
 Class {
 	#name : #ManifestCollectionsStreams,
