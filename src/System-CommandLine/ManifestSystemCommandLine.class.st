@@ -9,5 +9,5 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestSystemCommandLine class >> manuallyResolvedDependencies [
-	^ #(#'System-Support')
+	^ #(#'System-Support' #'Text-Core')
 ]
