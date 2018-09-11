@@ -1,5 +1,5 @@
 "
-Package to provide basic command line handling
+Package to provide basic command line handling.
 "
 Class {
 	#name : #ManifestSystemBasicCommandLineHandler,
