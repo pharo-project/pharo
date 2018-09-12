@@ -42,16 +42,15 @@ RBNamespace2 >> convertClasses: classSet select: aBlock using: searchReplacer [
 
 { #category : #converting }
 RBNamespace2 >> createNewClassFor: aBehavior [
-
 	| nonMeta meta className |
-	className := aBehavior theNonMetaClass name.
+	className := aBehavior instanceSide name.
 	nonMeta := (RBClass2 existingNamed: className)
-				model: self;
-				yourself.
+		model: self;
+		yourself.
 	meta := (RBMetaclass2 existingNamed: className)
-				model: self;
-				yourself.
-	^changedClasses at: className put: (Array with: nonMeta with: meta)
+		model: self;
+		yourself.
+	^ changedClasses at: className put: (Array with: nonMeta with: meta)
 ]
 
 { #category : #converting }

@@ -21,13 +21,13 @@ RBMoveClassTransformationTest >> testRefactoring [
 	
 	transformation := (RBMoveClassTransformation 
 							move: self class name
-							to: #'Refactoring2-Core')
+							to: #'Refactoring2-Transformations-Utilities')
 							asRefactoring transform.
 	
 	self assert: transformation model changes changes size equals: 1.
 	
 	class := transformation model classNamed: self class name. 
-	self assert: class category equals: #'Refactoring2-Core'
+	self assert: class category equals: #'Refactoring2-Transformations-Utilities'
 ]
 
 { #category : #testing }

@@ -148,10 +148,10 @@ RBTransformationTest >> shouldFail: aRefactoring [
 { #category : #running }
 RBTransformationTest >> tearDown [
 
-	super tearDown.
 	RBRefactoringManager instance release.
 	RBRefactoringManager classVarNamed: #Instance put: manager.
 	self removeMockClass.
+	super tearDown
 ]
 
 { #category : #testing }
