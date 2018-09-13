@@ -1,7 +1,7 @@
 Class {
 	#name : #ManifestSystemModel,
 	#superclass : #PackageManifest,
-	#category : #'System-Model'
+	#category : #'System-Model-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
