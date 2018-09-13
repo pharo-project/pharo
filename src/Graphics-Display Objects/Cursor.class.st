@@ -1034,14 +1034,20 @@ Cursor >> asCursorForm [
 
 { #category : #primitives }
 Cursor >> beCursor [
-	"TODO: This is the place for redirecting the be cursor primitive into OSWindow"
-	self primitiveBeCursor
+	WorldMorph cursorOwnerWorld ifNotNil: [ :cursorOwner |
+		cursorOwner activateCursor: self
+	] ifNil: [
+		self primitiveBeCursor
+	]
 ]
 
 { #category : #primitives }
 Cursor >> beCursorWithMask: maskForm [
-	"TODO: This is the place for redirecting the be cursor primitive into OSWindow"
-	self primitiveBeCursorWithMask: maskForm
+	WorldMorph cursorOwnerWorld ifNotNil: [ :cursorOwner |
+		cursorOwner activateCursor: self withMask: maskForm
+	] ifNil: [
+		self primitiveBeCursorWithMask: maskForm
+	]
 ]
 
 { #category : #updating }

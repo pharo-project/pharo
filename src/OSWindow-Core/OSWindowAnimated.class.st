@@ -14,8 +14,8 @@ OSWindowAnimated >> destroy [
 ]
 
 { #category : #initialization }
-OSWindowAnimated >> initWithAttributes: attributes [
-	super initWithAttributes: attributes.
+OSWindowAnimated >> initWithAttributes: attributes eventHandler: anEventHandle [
+	super initWithAttributes: attributes eventHandler: anEventHandle.
 	self registerWindow.
 ]
 

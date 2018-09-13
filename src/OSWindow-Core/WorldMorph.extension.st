@@ -30,19 +30,32 @@ WorldMorph >> clipboardText: aString [
 
 { #category : #'*OSWindow-Core' }
 WorldMorph >> osWindow [
-	
-	self checkSession.
-	^ osWindow
+	self osWindowCritical: [ 
+		self checkSession.
+		^ osWindow
+	]
 	
 
 ]
 
 { #category : #'*OSWindow-Core' }
+WorldMorph >> osWindowCritical: aBlock [
+	self flag: 'HACK: Try to remove this lazy initialization'.
+	osWindowMutex ifNil: [ osWindowMutex := Mutex new ].
+	^ osWindowMutex critical: aBlock
+
+]
+
+{ #category : #'*OSWindow-Core' }
 WorldMorph >> osWindowRenderer [
-	^ self osWindow renderer ifNil: [ 
-		self osWindow newFormRenderer: Display.
-		self osWindow renderer
-	].
+	self osWindowCritical: [ 
+		^ self osWindow ifNotNil: [:window |
+			window renderer ifNil: [ 
+				self osWindow newFormRenderer: Display.
+				self osWindow renderer
+			].
+		]
+	]
 	
 
 ]
@@ -72,9 +85,7 @@ WorldMorph >> recreateOSWindow [
 		icon: (self iconNamed: #pharoIcon).
 	driver := self pickMostSuitableWindowDriver.
 	attributes preferableDriver: driver.
-	osWindow := OSWindow createWithAttributes: attributes.
-	osWindow newFormRenderer: Display.
-	osWindow eventHandler: (OSWindowMorphicEventHandler for: self)
+	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: self)
 ]
 
 { #category : #'*OSWindow-Core' }

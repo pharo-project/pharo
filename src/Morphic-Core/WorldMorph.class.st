@@ -9,6 +9,7 @@ Class {
 	#superclass : #PasteUpMorph,
 	#instVars : [
 		'osWindow',
+		'osWindowMutex',
 		'session'
 	],
 	#classVars : [
@@ -134,6 +135,24 @@ WorldMorph class >> shutDown [
 WorldMorph class >> startUp [
 	World ifNotNil: [:world | world restoreMorphicDisplay].
 	self extraWorldList do: #restoreMorphicDisplay.
+]
+
+{ #category : #cursor }
+WorldMorph >> activateCursor: aCursor [
+	osWindow ifNil: [
+		aCursor primitiveBeCursor
+	] ifNotNil: [
+		osWindow setMouseCursor: aCursor
+	]
+]
+
+{ #category : #cursor }
+WorldMorph >> activateCursor: aCursor withMask: maskForm [
+	osWindow ifNil: [
+		aCursor primitiveBeCursorWithMask: maskForm
+	] ifNotNil: [
+		osWindow setMouseCursor: aCursor mask: maskForm
+	]
 ]
 
 { #category : #structure }
