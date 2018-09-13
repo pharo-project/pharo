@@ -1,26 +1,43 @@
+"
+SUnit tests for stacks
+"
 Class {
-	#name : #StackTest,
-	#superclass : #AbstractStackTest,
+	#name : #AbstractStackTest,
+	#superclass : #TestCase,
+	#traits : 'TEmptyTest - {#testIfNotEmptyifEmpty. #testIfEmpty. #testNotEmpty} + (TCloneTest - {#testCopyNonEmpty})',
+	#classTraits : 'TEmptyTest classTrait + TCloneTest classTrait',
+	#instVars : [
+		'empty',
+		'nonEmpty'
+	],
+	#classInstVars : [
+		'testSize'
+	],
 	#category : #'Collections-Tests-Stacks'
 }
 
+{ #category : #testing }
+AbstractStackTest class >> isAbstract [
+	^ self name = #AbstractStackTest
+]
+
 { #category : #'tests - empty' }
-StackTest >> empty [
+AbstractStackTest >> empty [
 	
  	^ empty
 ]
 
 { #category : #'tests - empty' }
-StackTest >> nonEmpty [
+AbstractStackTest >> nonEmpty [
 	
  	^ nonEmpty
 ]
 
 { #category : #running }
-StackTest >> setUp [
+AbstractStackTest >> setUp [
 	super setUp.
-	empty := Stack new.
-	nonEmpty := Stack new.
+	empty := self stackClass new.
+	nonEmpty := self stackClass new.
 	nonEmpty push: 1.
 	nonEmpty push: -2.
 	nonEmpty push: 3.
@@ -29,14 +46,14 @@ StackTest >> setUp [
 ]
 
 { #category : #accessing }
-StackTest >> stackClass [
-	^ Stack
+AbstractStackTest >> stackClass [
+	^ self subclassResponsibility
 ]
 
 { #category : #tests }
-StackTest >> testEmptyError [
+AbstractStackTest >> testEmptyError [
 	| aStack |
-	aStack := Stack new.
+	aStack := self stackClass new.
 	self should: [ aStack top ] raise: Error.
 	self should: [ aStack pop ] raise: Error.
 	aStack push: 'element'.
@@ -47,11 +64,11 @@ StackTest >> testEmptyError [
 ]
 
 { #category : #tests }
-StackTest >> testPop [
+AbstractStackTest >> testPop [
 
 	| aStack res elem |
 	elem := 'anElement'.	
-	aStack := Stack new.
+	aStack := self stackClass new.
 	self assert: aStack isEmpty.
 	
 	aStack push: 'a'.
@@ -68,10 +85,10 @@ StackTest >> testPop [
 ]
 
 { #category : #tests }
-StackTest >> testPush [
+AbstractStackTest >> testPush [
 	
 	| aStack |
-	aStack := Stack new.
+	aStack := self stackClass new.
 	aStack push: 'a'.
 	self assert: aStack size = 1.	
 	aStack push: 'b'.
@@ -80,10 +97,10 @@ StackTest >> testPush [
 ]
 
 { #category : #tests }
-StackTest >> testSize [
+AbstractStackTest >> testSize [
 	
 	| aStack |
-	aStack := Stack new.
+	aStack := self stackClass new.
 	self assert: aStack size = 0.
 	aStack push: 'a'.
 	self assert: aStack size = 1.
@@ -102,10 +119,10 @@ StackTest >> testSize [
 ]
 
 { #category : #tests }
-StackTest >> testTop [
+AbstractStackTest >> testTop [
 
 	| aStack |
-	aStack := Stack new.
+	aStack := self stackClass new.
 	self assert: aStack isEmpty.
 	aStack push: 'a'.
 	aStack push: 'b'.
