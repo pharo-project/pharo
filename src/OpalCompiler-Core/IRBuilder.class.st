@@ -154,7 +154,7 @@ IRBuilder >> initialize [
 	jumpAheadStacks := IdentityDictionary new.
 	jumpBackTargetStacks := IdentityDictionary new.
 	sourceMapNodes := OrderedCollection new.	"stack"
-	currentScope := Stack new.
+	currentScope := LinkedListStack new.
 	self pushScope: ir.
 	
 	"Leave an empty sequence up front (guaranteed not to be in loop)"

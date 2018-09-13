@@ -30,7 +30,7 @@ HiNodesAndLinksIterator >> doWithNodes: nodesBlock doWithLinks: linksBlock [
 HiNodesAndLinksIterator >> doWithNodes: nodesBlock doWithLinks: linksBlock from: initialValue linkBuilder: aLinkBuilder [
 
 	| pendingItems |
-	pendingItems := Stack with: (self nodeAt: initialValue).
+	pendingItems := LinkedListStack with: (self nodeAt: initialValue).
 		
 	[ pendingItems isEmpty ] whileFalse: [
 		| currentItem |

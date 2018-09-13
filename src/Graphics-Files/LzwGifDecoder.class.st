@@ -121,7 +121,7 @@ LzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteS
 				the prefix index values and take the suffix each
 				time"
 				ifFalse: [ 
-					searchStack := Stack new.
+					searchStack := LinkedListStack new.
 					searchIndex := anInteger + 1.
 					[ searchIndex > clearCode ] whileTrue: [ 
 						searchStack push: (suffixTable at: searchIndex).
@@ -141,7 +141,7 @@ LzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteS
 						writeBit: first on: aWriteStream.
 					 ]
 				ifFalse: [ 
-					searchStack := Stack new.
+					searchStack := LinkedListStack new.
 					searchIndex := prevInteger + 1.
 					[ searchIndex > clearCode ] whileTrue: [ 
 						searchStack push: (suffixTable at: searchIndex).
