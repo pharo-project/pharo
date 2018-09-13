@@ -20,13 +20,13 @@ SDL_KeyDownEvent >> accept: aVisitor [
 { #category : #'accessing structure variables' }
 SDL_KeyDownEvent >> keysym [
 	"This method was automatically generated"
-	^SDL_Keysym fromHandle: (handle referenceStructAt: OFFSET_KEYSYM length: 16)
+	^ SDL_Keysym fromHandle: (handle referenceStructAt: OFFSET_KEYSYM length: SDL_Keysym byteSize)
 ]
 
 { #category : #'accessing structure variables' }
 SDL_KeyDownEvent >> keysym: anObject [
 	"This method was automatically generated"
-	handle structAt: OFFSET_KEYSYM put: anObject getHandle length: 16.
+	handle structAt: OFFSET_KEYSYM put: anObject getHandle length: SDL_Keysym byteSize
 ]
 
 { #category : #'accessing structure variables' }
