@@ -1,7 +1,7 @@
 Class {
 	#name : #ManifestSpecMorphicAdapters,
 	#superclass : #PackageManifest,
-	#category : #'Spec-MorphicAdapters'
+	#category : #'Spec-MorphicAdapters-Manifest'
 }
 
 { #category : #'code-critics' }

@@ -1,5 +1,8 @@
+"
+Help descriptions for Spec UI framework
+"
 Class {
 	#name : #ManifestSpecHelp,
 	#superclass : #PackageManifest,
-	#category : #'Spec-Help'
+	#category : #'Spec-Help-Manifest'
 }

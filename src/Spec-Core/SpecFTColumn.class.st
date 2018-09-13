@@ -1,3 +1,6 @@
+"
+A column for Fast table
+"
 Class {
 	#name : #SpecFTColumn,
 	#superclass : #Object,

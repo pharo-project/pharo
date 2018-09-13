@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'tree'
 	],
-	#category : #'Spec-Inspector'
+	#category : #'Spec-Inspector-Base'
 }
 
 { #category : #spec }

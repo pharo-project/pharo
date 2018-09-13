@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'toolbar'
 	],
-	#category : #'Spec-Inspector'
+	#category : #'Spec-Inspector-Base'
 }
 
 { #category : #spec }
