@@ -30,7 +30,7 @@ Class {
 	#classVars : [
 		'Instance'
 	],
-	#category : #'System-BasicCommandLineHandler'
+	#category : #'System-BasicCommandLineHandler-Management'
 }
 
 { #category : #accessing }

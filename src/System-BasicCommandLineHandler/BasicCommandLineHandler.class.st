@@ -36,7 +36,7 @@ Command line with password:
 Class {
 	#name : #BasicCommandLineHandler,
 	#superclass : #CommandLineHandler,
-	#category : #'System-BasicCommandLineHandler'
+	#category : #'System-BasicCommandLineHandler-Base'
 }
 
 { #category : #'password-protection' }
