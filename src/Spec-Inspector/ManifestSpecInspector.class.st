@@ -1,5 +1,5 @@
 "
-Spec based object inspectors (Eye inspector framework)
+Spec based object inspectors ('Eye inspector' framework)
 "
 Class {
 	#name : #ManifestSpecInspector,
