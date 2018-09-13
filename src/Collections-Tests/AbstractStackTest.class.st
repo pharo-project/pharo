@@ -53,7 +53,7 @@ AbstractStackTest >> stackClass [
 { #category : #tests }
 AbstractStackTest >> testEmptyError [
 	| aStack |
-	aStack := self stackClass new.
+	aStack := empty.
 	self should: [ aStack top ] raise: Error.
 	self should: [ aStack pop ] raise: Error.
 	aStack push: 'element'.
@@ -66,18 +66,18 @@ AbstractStackTest >> testEmptyError [
 { #category : #tests }
 AbstractStackTest >> testPop [
 
-	| aStack res elem |
+	| res elem aStack |
+	aStack := empty.
 	elem := 'anElement'.	
-	aStack := self stackClass new.
 	self assert: aStack isEmpty.
 	
 	aStack push: 'a'.
 	aStack push: elem.
 	res := aStack pop.	
-	self assert: res = elem.
+	self assert: res equals: elem.
 	self assert: res == elem.
 	
-	self assert: aStack size = 1.
+	self assert: aStack size equals: 1.
 	aStack pop.
 	self assert: aStack isEmpty.
 
@@ -86,13 +86,12 @@ AbstractStackTest >> testPop [
 
 { #category : #tests }
 AbstractStackTest >> testPush [
-	
 	| aStack |
-	aStack := self stackClass new.
+	aStack := empty.
 	aStack push: 'a'.
-	self assert: aStack size = 1.	
+	self assert: aStack size equals: 1.	
 	aStack push: 'b'.
-	self assert: aStack size = 2.
+	self assert: aStack size equals: 2.
 	
 ]
 
@@ -100,16 +99,16 @@ AbstractStackTest >> testPush [
 AbstractStackTest >> testSize [
 	
 	| aStack |
-	aStack := self stackClass new.
-	self assert: aStack size = 0.
+	aStack := empty.
+	self assert: aStack size equals: 0.
 	aStack push: 'a'.
-	self assert: aStack size = 1.
+	self assert: aStack size equals: 1.
 	aStack push: 'b'.
-	self assert: aStack size = 2.
+	self assert: aStack size equals: 2.
 	aStack pop.
-	self assert: aStack size = 1.
+	self assert: aStack size equals: 1.
 	aStack pop.
-	self assert: aStack size = 0.
+	self assert: aStack size equals: 0.
 
  
 	
@@ -122,11 +121,11 @@ AbstractStackTest >> testSize [
 AbstractStackTest >> testTop [
 
 	| aStack |
-	aStack := self stackClass new.
+	aStack := empty.
 	self assert: aStack isEmpty.
 	aStack push: 'a'.
 	aStack push: 'b'.
-	self assert: aStack top = 'b'.
-	self assert: aStack top = 'b'.
-	self assert: aStack size = 2.
+	self assert: aStack top equals: 'b'.
+	self assert: aStack top equals: 'b'.
+	self assert: aStack size equals: 2.
 ]
