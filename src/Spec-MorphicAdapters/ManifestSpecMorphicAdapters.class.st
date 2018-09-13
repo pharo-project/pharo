@@ -1,3 +1,6 @@
+"
+Morphic specific spec adapters
+"
 Class {
 	#name : #ManifestSpecMorphicAdapters,
 	#superclass : #PackageManifest,
