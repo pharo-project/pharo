@@ -140,7 +140,7 @@ WorldMorph class >> startUp [
 { #category : #cursor }
 WorldMorph >> activateCursor: aCursor [
 	osWindow ifNil: [
-		aCursor primitiveBeCursor
+		aCursor beCursor
 	] ifNotNil: [
 		osWindow setMouseCursor: aCursor
 	]
@@ -149,7 +149,7 @@ WorldMorph >> activateCursor: aCursor [
 { #category : #cursor }
 WorldMorph >> activateCursor: aCursor withMask: maskForm [
 	osWindow ifNil: [
-		aCursor primitiveBeCursorWithMask: maskForm
+		aCursor beCursorWithMask: maskForm
 	] ifNotNil: [
 		osWindow setMouseCursor: aCursor mask: maskForm
 	]

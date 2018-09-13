@@ -126,13 +126,13 @@ Cursor class >> currentCursor: aCursor [
 	ActiveHand ifNotNil: [
 		ActiveHand world currentCursor: aCursor.
 		ActiveHand world isCursorOwner ifTrue: [
-			aCursor beCursor
+			aCursor activateInCursorOwner: ActiveHand world
 		].
 		^ self
 	].
 
 	CurrentCursor := aCursor.
-	aCursor beCursor
+	"aCursor beCursor"
 ]
 
 { #category : #constants }
@@ -1024,6 +1024,11 @@ Cursor class >> write [
 	^WriteCursor
 ]
 
+{ #category : #primitives }
+Cursor >> activateInCursorOwner: aCursorOwner [
+	^ aCursorOwner activateCursor: self
+]
+
 { #category : #converting }
 Cursor >> asCursorForm [
 	| form |
@@ -1034,26 +1039,21 @@ Cursor >> asCursorForm [
 
 { #category : #primitives }
 Cursor >> beCursor [
-	WorldMorph cursorOwnerWorld ifNotNil: [ :cursorOwner |
-		cursorOwner activateCursor: self
-	] ifNil: [
-		self primitiveBeCursor
-	]
+	self primitiveBeCursor
 ]
 
 { #category : #primitives }
 Cursor >> beCursorWithMask: maskForm [
-	WorldMorph cursorOwnerWorld ifNotNil: [ :cursorOwner |
-		cursorOwner activateCursor: self withMask: maskForm
-	] ifNil: [
-		self primitiveBeCursorWithMask: maskForm
-	]
+	self primitiveBeCursorWithMask: maskForm
 ]
 
 { #category : #updating }
 Cursor >> changed: aParameter [
 	"overriden to reinstall the cursor if it is the active cursor, in case the appearance has changed.  (Is this used anywhere?  Do cursors really change in place these days?)"
-	self == CurrentCursor ifTrue: [self beCursor].
+	self flag: 'FIXME: Please, check on whether is this really needed'.
+	
+	"Removed for Morphic World specific cursor."
+	"self == CurrentCursor ifTrue: [self beCursor]."
 	super changed: aParameter
 ]
 
