@@ -2,16 +2,16 @@
 I am a stack using a OrderedCollection under the hood.
 "
 Class {
-	#name : #OrderedCollectionStack,
-	#superclass : #AbstractStack,
+	#name : #OrderedCollectionStackStrategy,
+	#superclass : #AbstractStackStrategy,
 	#instVars : [
 		'orderedCollection'
 	],
-	#category : #'Collections-Stack-Base'
+	#category : #'Collections-Stack-Strategies'
 }
 
 { #category : #enumerating }
-OrderedCollectionStack >> do: aBlock [ 
+OrderedCollectionStackStrategy >> do: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	 Starts by the element at the top of the Linked list and goes to the deepest element."
 
@@ -19,13 +19,13 @@ OrderedCollectionStack >> do: aBlock [
 ]
 
 { #category : #initialization }
-OrderedCollectionStack >> initialize [
+OrderedCollectionStackStrategy >> initialize [
 	super initialize.
 	orderedCollection := OrderedCollection new
 ]
 
 { #category : #removing }
-OrderedCollectionStack >> pop [
+OrderedCollectionStackStrategy >> pop [
 	"Remove the object at the top of the stack and returns it.
 	 The implementation depends on the internal representation of the stack.
 	 Any subclass should implement this method properly."
@@ -33,7 +33,7 @@ OrderedCollectionStack >> pop [
 ]
 
 { #category : #adding }
-OrderedCollectionStack >> push: newObject [
+OrderedCollectionStackStrategy >> push: newObject [
 	"Push newObject on the top of the stack.
 	 The implementation depends on the internal representation of the stack.
 	 Any subclass should implement this method properly."
@@ -42,13 +42,13 @@ OrderedCollectionStack >> push: newObject [
 ]
 
 { #category : #accessing }
-OrderedCollectionStack >> size [
+OrderedCollectionStackStrategy >> size [
 	"Optimized way to get the size of the stack."
 	^ orderedCollection size
 ]
 
 { #category : #accessing }
-OrderedCollectionStack >> top [
+OrderedCollectionStackStrategy >> top [
 	"Returns the element at the top of the stack without removing it.
 	 The implementation depends on the internal representation of the stack.
 	 Any subclass should implement this method properly."

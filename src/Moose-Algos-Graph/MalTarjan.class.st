@@ -89,7 +89,7 @@ MalTarjan >> putOnStack: aTarjanNode [
 { #category : #running }
 MalTarjan >> run [
 	sccs := OrderedCollection new.
-	stack := LinkedListStack new.
+	stack := Stack new.
 	runningIndex := 0.
 	self nodes
 		do: [ :n | 

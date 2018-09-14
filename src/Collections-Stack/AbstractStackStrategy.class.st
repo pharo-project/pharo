@@ -1,56 +1,50 @@
 "
-I am a stack using a LinkedList under the hood.
+I am an abstract Stack.
+
+Addtionally to Collection messages, I understand the following famous messages: 
+- #push: to push an object at the top of the stack.
+- #top to get the object at the top of the stack without removing it.
+- #pop to remove the object at the top of the stack and return it.
 "
 Class {
-	#name : #LinkedListStack,
-	#superclass : #AbstractStack,
-	#instVars : [
-		'linkedList'
-	],
-	#category : #'Collections-Stack-Base'
+	#name : #AbstractStackStrategy,
+	#superclass : #Object,
+	#category : #'Collections-Stack-Strategies'
 }
 
 { #category : #enumerating }
-LinkedListStack >> do: aBlock [ 
+AbstractStackStrategy >> do: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	 Starts by the element at the top of the Linked list and goes to the deepest element."
 
-	linkedList do: aBlock
-]
-
-{ #category : #initialization }
-LinkedListStack >> initialize [
-	super initialize.
-	linkedList := LinkedList new
+	self subclassResponsibility
 ]
 
 { #category : #removing }
-LinkedListStack >> pop [
+AbstractStackStrategy >> pop [
 	"Remove the object at the top of the stack and returns it.
 	 The implementation depends on the internal representation of the stack.
 	 Any subclass should implement this method properly."
-	^ linkedList removeFirst
+	^ self subclassResponsibility
 ]
 
 { #category : #adding }
-LinkedListStack >> push: newObject [
+AbstractStackStrategy >> push: newObject [
 	"Push newObject on the top of the stack.
 	 The implementation depends on the internal representation of the stack.
 	 Any subclass should implement this method properly."
-	linkedList addFirst: newObject.
-	^ newObject
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
-LinkedListStack >> size [
-	"Optimized way to get the size of the stack."
-	^ linkedList size
+AbstractStackStrategy >> size [
+	^ self strategy size
 ]
 
 { #category : #accessing }
-LinkedListStack >> top [
+AbstractStackStrategy >> top [
 	"Returns the element at the top of the stack without removing it.
 	 The implementation depends on the internal representation of the stack.
 	 Any subclass should implement this method properly."
-	^ linkedList first
+	^ self subclassResponsibility
 ]

@@ -17,7 +17,7 @@ Class {
 DATarjanAlgorithm >> initialize [
 	super initialize.
 	stronglyConnectedComponents := OrderedCollection new.
-	stack := LinkedListStack new.
+	stack := Stack new.
 	runningIndex := 0
 
 ]

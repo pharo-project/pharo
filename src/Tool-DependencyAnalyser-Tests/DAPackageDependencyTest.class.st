@@ -70,7 +70,7 @@ DAPackageDependencyTest >> testDependenciesFrom [
 		add: (self referenceDependency: String);
 		add: (self referenceDependency: Object);
 		add: (self referenceDependency: String);
-		add: (self inheritanceDependency: LinkedListStack).
+		add: (self inheritanceDependency: Stack).
 	self assert: ((aCompositeDependency referenceDependenciesFrom: String) size = 2).
 ]
 

@@ -61,8 +61,8 @@ IRTranslatorV2 >> currentScope [
 
 { #category : #initialize }
 IRTranslatorV2 >> initialize [
-	currentScope := LinkedListStack new.
-	tempVectorStack := LinkedListStack new.
+	currentScope := Stack new.
+	tempVectorStack := Stack new.
 
 ]
 

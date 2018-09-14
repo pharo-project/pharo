@@ -28,7 +28,7 @@ IRBytecodeDecompiler >> checkIfJumpTarget [
 IRBytecodeDecompiler >> decompile: aCompiledMethod [
 	instructionStream := InstructionStream on: aCompiledMethod.
 	irBuilder := IRReconstructor new.
-	scopeStack := LinkedListStack new.
+	scopeStack := Stack new.
 	self pushScope: #() numArgs: aCompiledMethod numArgs.
 	irBuilder irPrimitive: aCompiledMethod irPrimitive.
 	
