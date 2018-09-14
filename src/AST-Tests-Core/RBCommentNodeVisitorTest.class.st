@@ -1,3 +1,6 @@
+"
+Something
+"
 Class {
 	#name : #RBCommentNodeVisitorTest,
 	#superclass : #TestCase,
