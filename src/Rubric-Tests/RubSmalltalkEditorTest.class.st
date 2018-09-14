@@ -13,11 +13,17 @@ Class {
 
 { #category : #assertions }
 RubSmalltalkEditorTest >> assertJumpsToPostionAfter: aString direction: isFwd [
-	| text |
+	self assertJumpsToPostionAfter: aString direction: isFwd playground: false
+]
+
+{ #category : #assertions }
+RubSmalltalkEditorTest >> assertJumpsToPostionAfter: aString direction: isFwd playground: isPlayground [
+	| text mode |
 	
+	mode := isPlayground ifTrue: [ RubSmalltalkScriptingMode new  ] ifFalse: [ RubSmalltalkCodeMode new ].
 	self
 		exectuteFindNextKeywordDirection: isFwd
-		editingMode: RubSmalltalkCodeMode new
+		editingMode: mode
 		onFound: [ :loc | 
 			text := self source first: loc.
 			^ self
@@ -29,11 +35,17 @@ RubSmalltalkEditorTest >> assertJumpsToPostionAfter: aString direction: isFwd [
 
 { #category : #assertions }
 RubSmalltalkEditorTest >> assertJumpsToPostionBefore: aString direction: isFwd [
-	| text |
-	
+	self assertJumpsToPostionBefore: aString direction: isFwd playground: false
+]
+
+{ #category : #assertions }
+RubSmalltalkEditorTest >> assertJumpsToPostionBefore: aString direction: isFwd playground: isPlayground [
+	| text mode |
+
+	mode := isPlayground ifTrue: [ RubSmalltalkScriptingMode new  ] ifFalse: [ RubSmalltalkCodeMode new ].	
 	self
 		exectuteFindNextKeywordDirection: isFwd
-		editingMode: RubSmalltalkCodeMode new
+		editingMode: mode
 		onFound: [ :loc | 
 			text := self source first: (self source size min: loc + aString size).
 			^ self
@@ -41,6 +53,33 @@ RubSmalltalkEditorTest >> assertJumpsToPostionBefore: aString direction: isFwd [
 				description: 'The source location didnt finish before: ' , aString , ' in ' , text ].
 			
 	self assert: false description: 'Did not jump to correct location before, [' , aString , ']'
+]
+
+{ #category : #assertions }
+RubSmalltalkEditorTest >> assertJumpsToPostionFor: aString direction: isFwd playground: isPlayground [
+	| text mode found directionText |
+	
+	mode := isPlayground
+		ifTrue: [ RubSmalltalkScriptingMode new ]
+		ifFalse: [ RubSmalltalkCodeMode new ].
+		
+	self
+		exectuteFindNextKeywordDirection: isFwd
+		editingMode: mode
+		onFound: [ :loc | 
+			isFwd
+				ifTrue: [ text := self source first: loc.
+					found := text endsWith: aString.
+					directionText := 'end with - ' ]
+				ifFalse: [ text := self source.
+					found := text beginsWith: aString.
+					directionText := 'begin with - ' ].
+				
+			^ self
+				assert: found
+				description: 'The source location doesn''t ' , directionText , aString , ' in ' , text ].
+			
+	self assert: false description: 'Did not jump to correct location for, [' , aString , ']'
 ]
 
 { #category : #assertions }
@@ -111,6 +150,19 @@ RubSmalltalkEditorTest >> assertPlaygroundNodeValue: anObject [
 	node := self exectuteBestPlaygroundNodeFor: anObject printString.
 
 	self assert: node value printString equals: (anObject isString ifTrue: [anObject ] ifFalse: [anObject printString])
+]
+
+{ #category : #assertions }
+RubSmalltalkEditorTest >> assertWidensToRegex: aString playground: isPlayground [
+	| text mode |
+	
+	mode := isPlayground ifTrue: [ RubSmalltalkScriptingMode new  ] ifFalse: [ RubSmalltalkCodeMode new ].
+	self
+		widenSelectionWithMode: mode ifFound: [ :interval | 
+			text := self source copyFrom: interval first to: interval last.
+			^ self assert: (text matchesRegex: aString) description: 'The selected text node "', text, '", doesn''t match: "', aString, '"' ].
+			
+	self assert: false description: 'Did not find a selection node for, "' , aString , '"'
 ]
 
 { #category : #helpers }
@@ -516,7 +568,7 @@ RubSmalltalkEditorTest >> testBestNodeWithValidValueMidSource [
 
 { #category : #'tests-jumpFind' }
 RubSmalltalkEditorTest >> testJumpOnAssignment [
-	"Should position after asignment giving the possibility to widen selection on the assigned expressions"
+	"Should position after an asignment giving the possibility to widen selection on the assigned expressions"
 	
 	self source: 'testMethod
 	self simpleMsg.
@@ -536,6 +588,7 @@ RubSmalltalkEditorTest >> testJumpOnAssignment [
 
 { #category : #'tests-jumpFind' }
 RubSmalltalkEditorTest >> testJumpOnBlockPipe [
+	"Should jump after a block variable pipe so its easy to widen selection on the contents"
 	
 	self source: 'testMethod
 	self items inject: OrderedCollection new into: [:item :result | result add: item transformed ].
@@ -553,6 +606,7 @@ RubSmalltalkEditorTest >> testJumpOnBlockPipe [
 
 { #category : #'tests-jumpFind' }
 RubSmalltalkEditorTest >> testJumpOnBlockVariables [
+	"Should jump after an assignment, so its easy to widen selection on the expression to modify it"
 	
 	self source: 'testMethod
 	self items inject: OrderedCollection new into: [:item :result | result add: item transformed ].
@@ -576,6 +630,7 @@ RubSmalltalkEditorTest >> testJumpOnBlockVariables [
 
 { #category : #'tests-jumpFind' }
 RubSmalltalkEditorTest >> testJumpOnCascade [
+	"Should be able to jump between cascaded messages"
 	
 	self source: 'testMethod
 	self 
@@ -602,7 +657,8 @@ RubSmalltalkEditorTest >> testJumpOnCascade [
 
 { #category : #'tests-jumpFind' }
 RubSmalltalkEditorTest >> testJumpOnComments [
-	"Should jump to postion ignoring any keywords in comments "
+	"Should jump to next postion but ignore any keywords in comments"
+	
 	self source: 'testMethod
 	"some comments with keyword:selector: that should be ignored"
 	
@@ -636,6 +692,7 @@ RubSmalltalkEditorTest >> testJumpOnEndOfBlock [
 
 { #category : #'tests-jumpFind' }
 RubSmalltalkEditorTest >> testJumpOnEndOfSource [
+	"Edge case test, ensure it can handle this end of source boundary"
 	
 	self source: 'testMethod
 	self simpleMsg.
@@ -653,7 +710,35 @@ RubSmalltalkEditorTest >> testJumpOnEndOfSource [
 ]
 
 { #category : #'tests-jumpFind' }
+RubSmalltalkEditorTest >> testJumpOnErroneousMethod [
+	"Should be able to intelligently jump on source that doesn't yet compile"
+	
+	self source: 'testMethod
+	
+	self msg1.
+		
+	1 + 300
+
+	(String new: 5)
+'.
+	
+	self 
+		positionBefore: 'msg1';
+		assertJumpsToPostionBefore: '1 + 300' direction: true.
+	self 
+		positionBefore: '1 + 300';
+		assertJumpsToPostionAfter: 'new: ' direction: true.
+		
+	self 
+		positionBefore: 'new:';
+		assertJumpsToPostionBefore: '1 +' direction: false.
+	
+]
+
+{ #category : #'tests-jumpFind' }
 RubSmalltalkEditorTest >> testJumpOnIfTrueIfFalseAfterCompletion [
+	"This is the most common jump example, after code completing ifTrue:ifFalse: you want to easily type in an
+	expression for each case"
 	
 	self source: 'testMethod
 true ifTrue:  ifFalse: '.
@@ -670,6 +755,7 @@ true ifTrue:  ifFalse: '.
 
 { #category : #'tests-jumpFind' }
 RubSmalltalkEditorTest >> testJumpOnNoFurtherStatements [
+	"Should jump to the very end or beginning when no further matches, so you can easily add more code"
 	
 	self source: 'testMethod
 	self simpleMsg secondMsg'.
@@ -690,7 +776,7 @@ RubSmalltalkEditorTest >> testJumpOnNoFurtherStatements [
 RubSmalltalkEditorTest >> testJumpOnNoParameterBlock [
 	"Should jump inside a block [ marker, ready for you to type more expressions into a new block, or easily add a variable into an existing block.
 		
-	NOTE: This test is currently asserting differently as empirically it was too fine grained to jump into every block - instead we simply jump to the next valid position inside the block. The implementation regex can be changed if the original behaviour is deemed better"
+	NOTE: This test is currently asserting differently, as empirically it was too fine grained to jump into every block - instead we simply jump to the next valid position inside the block. The implementation regex can be changed if this other behaviour is deemed better"
 		
 	self source: 'hasBindingThatBeginsWith: aString 
 	^ self model notNil and: [ model hasBindingThatBeginsWith: aString ]'.
@@ -717,7 +803,7 @@ RubSmalltalkEditorTest >> testJumpOnReturn [
 		positionAfter: '^ self ';
 		assertJumpsToPostionBefore: 'self msg' direction: false.
 		
-	"This one fails as regex solution has difficulty with single character matches,
+	"This one fails as the regex solution has difficulty with single character matches,
 		if also trying to account for matching aribtrary keyword: positions. Leaving for now"
 	"
 	self 
@@ -728,7 +814,7 @@ RubSmalltalkEditorTest >> testJumpOnReturn [
 
 { #category : #'tests-jumpFind' }
 RubSmalltalkEditorTest >> testJumpOnSecondKeyword [
-	"Should jump between multiple kewords"
+	"Should jump between multiple keywords"
 	
 	self source: 'testMethod
 	self multiKeywordMsg: 5 with: 10.
@@ -757,6 +843,7 @@ RubSmalltalkEditorTest >> testJumpOnSecondKeyword [
 { #category : #'tests-jumpFind' }
 RubSmalltalkEditorTest >> testJumpOnSelf [
 	"Should jump after self to easily widen selection on a self message send"
+	
 	self source: 'testMethod
 	self 
 		msg1;
@@ -799,4 +886,130 @@ self simpleKeywordMsg: 5.
 		assertJumpsToPostionAfter: 'self ' direction: false.
 
 
+]
+
+{ #category : #'tests-jumpFind' }
+RubSmalltalkEditorTest >> testPlaygroundJumpOnErroneousSource [
+	"Should be able to intelligently jump on source that doesn't yet compile"
+	
+	self source: '	
+	self msg1.
+		
+	1 + 300
+
+	(String new: 5)
+'.
+	
+	self 
+		positionBefore: 'msg1';
+		assertJumpsToPostionBefore: '1 + 300' direction: true playground: true.
+	self 
+		positionBefore: '1 + 300';
+		assertJumpsToPostionAfter: 'new: ' direction: true playground: true.
+		
+	self 
+		positionBefore: 'new:';
+		assertJumpsToPostionBefore: '1 +' direction: false playground: true.
+	
+]
+
+{ #category : #'tests-jumpFind' }
+RubSmalltalkEditorTest >> testPlaygroundJumpOnIfTrueIfFalseAfterCompletion [
+	"Source jumping should work in bother browser and playground"
+	
+	self source: 'true ifTrue:  ifFalse: '.
+
+	self 
+		positionAfter: 'ifTrue: ';
+		assertJumpsToPostionAfter: 'ifFalse: ' direction: true playground: true.
+
+	self 
+		positionAfter: 'ifFalse: ';
+		assertJumpsToPostionAfter: 'ifTrue: ' direction: false playground: true.
+
+]
+
+{ #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testPlaygroundWidenOnSelf [
+	"Should widen selection after self to easily select code on a self message send"
+	
+	self source: 'self 
+		msg1;
+		msg2
+'.
+	
+	self 
+		positionBefore: 'msg1';
+		assertWidensToRegex: 'self.+msg1' playground: true.
+		
+	self 
+		positionBefore: 'msg2';
+		assertWidensToRegex: ';.*msg2' playground: true
+	
+]
+
+{ #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testWidenOnAssignment [
+	"Should position after an asignment giving the possibility to widen selection on the assigned expressions"
+	
+	self source: 'testMethod
+	self simpleMsg.
+	x := 1000.
+	^self
+'.
+	
+	self 
+		positionAfter: ':=';
+		assertWidensToRegex: 'x .*1000' playground: false.
+		
+]
+
+{ #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testWidenOnEndOfBlock [
+	"Should widen selection after self to easily select code on a self message send"
+	
+	self source: 'hasBindingThatBeginsWith: aString 
+	^ self model notNil ifTrue: [ true ] ifFalse: [ aString > 1 ]'.
+	
+	
+	self 
+		positionAfter: 'true ]';
+		assertWidensToRegex: '\[ true \]' playground: false.
+		
+	
+	
+]
+
+{ #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testWidenOnSelf [
+	"Should widen selection after self to easily select code on a self message send"
+	
+	self source: 'testMethod
+	self 
+		msg1;
+		msg2
+'.
+	
+	self 
+		positionBefore: 'msg1';
+		assertWidensToRegex: 'self.+msg1' playground: false.
+		
+	self 
+		positionBefore: 'msg2';
+		assertWidensToRegex: ';.*msg2' playground: false
+	
+]
+
+{ #category : #helpers }
+RubSmalltalkEditorTest >> widenSelectionWithMode: aRubEditingMode ifFound: aBlock [ 
+
+	| textArea |
+	textArea := RubEditingArea new.
+	textArea editingMode: aRubEditingMode.
+	
+	^ RubSmalltalkEditor new
+		textArea: textArea;
+		widenSelectionIn: self source
+			selection: self selection
+			ifFound: aBlock
 ]

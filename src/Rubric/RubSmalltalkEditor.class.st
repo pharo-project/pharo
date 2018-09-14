@@ -1257,7 +1257,7 @@ RubSmalltalkEditor >> widenSelectionIn: sourceCode selection: selectionInterval 
 				(i := node parent messages indexOf: node) > 1 
 					ifTrue: [ 
 						cascadeStart := (node parent semicolons at: i - 1).
-						cascadeStart < cursorIndex ifTrue: [ start := start min: cascadeStart ]]]
+						cascadeStart < cursorIndex ifTrue: [ start := cascadeStart ]]]
 			ifFalse: [
 				"Try to select the first chained message send - experimental"
 				"self hasSelection ifFalse: [ 
