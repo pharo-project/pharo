@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'classFactory'
 	],
-	#category : #ReleaseTests
+	#category : #'ReleaseTests-Tests'
 }
 
 { #category : #running }

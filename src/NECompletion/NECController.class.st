@@ -19,6 +19,9 @@ Class {
 		'inverseMapping',
 		'completionDelay'
 	],
+	#classVars : [
+		'ContextClass'
+	],
 	#classInstVars : [
 		'uniqueInstance'
 	],
@@ -55,6 +58,16 @@ NECController class >> codeCompletionAround: aBlock textMorph: aTextMorph keyStr
 	
 	completionAllowed
 		ifTrue: [ controller handleKeystrokeAfter: evt editor: editor ]
+]
+
+{ #category : #accessing }
+NECController class >> contextClass [
+	^ContextClass ifNil: [ ^NECContext ] 
+]
+
+{ #category : #accessing }
+NECController class >> contextClass: aClass [
+	ContextClass := aClass
 ]
 
 { #category : #'class initialization' }
@@ -110,7 +123,7 @@ NECController >> context [
 
 { #category : #private }
 NECController >> contextClass [
-	^NECContext
+	^self class contextClass
 ]
 
 { #category : #accessing }
@@ -196,12 +209,7 @@ NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 						ifTrue: [ ^ true ] ] ].
 	self flag: #todo.	"Removing for now... most of the shortcuts are broken and no time or need now to fix them"	"(keyCharacter = $h and: [ controlKeyPressed ]) ifTrue: [ 
 		menuMorph help.
-		^ true ].
-
-	(keyCharacter = $u and: [ controlKeyPressed ]) ifTrue: [ 
-		menuMorph switchToUntyped.
-		^ true ].	"	"All keys but the alphanumeric chars (without command and control ) 
-	and the backspace key do close the menu"
+		^ true ]."
 	keyCharacter = Character backspace
 		ifTrue: [ 
 			editor isCaretBehindChar
@@ -247,11 +255,6 @@ NECController >> invalidateEditorMorph [
 ]
 
 { #category : #'menu morph' }
-NECController >> isMenuEmpty [
-	^menuMorph isNil or: [ self context model notNil and: [ self context model isEmpty ] ]
-]
-
-{ #category : #'menu morph' }
 NECController >> isMenuOpen [
 	^menuMorph notNil
 ]
@@ -270,7 +273,6 @@ NECController >> leftArrow [
 
 { #category : #'menu morph' }
 NECController >> menuClosed [
-	NECSymbolCache resetCachedSymbols.
 	menuMorph := nil.
 	context := nil.
 ]

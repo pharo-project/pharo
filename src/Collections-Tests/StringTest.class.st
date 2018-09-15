@@ -1359,7 +1359,7 @@ StringTest >> testIsAllDigits [
 
 { #category : #tests }
 StringTest >> testIsAsciiString [
-	"Non-regression for https://pharo.fogbugz.com/f/cases/15232 "
+	"Non-regression for https://pharo.manuscript.com/f/cases/15232 "
 	
 	self assert: '' isAsciiString equals: true.
 	self assert: 'abcdefGHIJKL 98765,./@#%$' isAsciiString equals: true.

@@ -4,7 +4,7 @@ A class instance variable definition
 Class {
 	#name : #RGClassInstanceVariableDefinition,
 	#superclass : #RGVariableDefinition,
-	#category : #'Ring-Deprecated-Core-Kernel'
+	#category : #'Ring-Deprecated-Core-Kernel-Base'
 }
 
 { #category : #initialization }

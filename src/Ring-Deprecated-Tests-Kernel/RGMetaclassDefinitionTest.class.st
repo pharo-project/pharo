@@ -4,7 +4,7 @@ SUnit tests for Ring metaclass definitions
 Class {
 	#name : #RGMetaclassDefinitionTest,
 	#superclass : #TestCase,
-	#category : #'Ring-Deprecated-Tests-Kernel'
+	#category : #'Ring-Deprecated-Tests-Kernel-Base'
 }
 
 { #category : #deprecation }

@@ -9,8 +9,7 @@ Class {
 		'localVars',
 		'includeVariables',
 		'includeSelectors',
-		'classVars',
-		'listLimit'
+		'classVars'
 	],
 	#category : #'NECompletion-Model'
 }
@@ -73,7 +72,6 @@ NECUntypedModel >> initialize [
 	classVars := SortedCollection new.
 	includeSelectors := true.
 	includeVariables := true.
-	listLimit := 100.
 ]
 
 { #category : #initialization }
@@ -101,33 +99,22 @@ NECUntypedModel >> initializeInstVars [
 
 { #category : #private }
 NECUntypedModel >> initializeSelectors [
+	| case |
 	self resetSelectors.
-	
-	includeSelectors ifFalse: 
-		[ Smalltalk globals keysAndValuesDo: [ :each :class |
-			(each includesSubstring: narrowString caseSensitive: NECPreferences caseSensitive) ifTrue: [
-			selectors add: (NECGlobalEntry contents: each)] ].
-		^ self ].
-	narrowString ifEmpty: [ ^ self ].
-	NECSymbolCache 
-		contains: narrowString
-		caseSensitive: NECPreferences caseSensitive
-		do: [ :each | 
-			(includeVariables or: [ each first isLowercase ]) ifTrue: 
-				[ selectors add: (NECSelectorEntry 
-						contents: each
-						type: #selector).
-				selectors size > self listLimit ifTrue: [ ^ self ]]]
-]
-
-{ #category : #accessing }
-NECUntypedModel >> listLimit [
-	^ listLimit
-]
-
-{ #category : #accessing }
-NECUntypedModel >> listLimit: aNumber [
-	listLimit := aNumber
+	narrowString size < 2 ifTrue: [ ^ self ].
+	case :=  NECPreferences caseSensitive.
+	includeSelectors
+		ifTrue: [ Symbol selectorTable do: [ :symbol | | toadd | 
+					"for small strings, we do not do substring matching as we get too many matches (slow)"
+					toadd := narrowString size < 3 
+						ifTrue: [ symbol beginsWithEmpty: narrowString caseSensitive: case] 
+						ifFalse: [symbol includesSubstring: narrowString caseSensitive: case].
+					toadd ifTrue: [ selectors add: (NECSelectorEntry contents: symbol type: #selector) ] ] ].
+	includeVariables
+		ifTrue: [ Smalltalk globals keysDo: [ :symbol  | 
+					(symbol includesSubstring: narrowString caseSensitive: case)
+						ifTrue: [ selectors add: (NECGlobalEntry contents: symbol ) ] ] ].
+	self sortSelectors
 ]
 
 { #category : #private }

@@ -28,7 +28,7 @@ Class {
 
 { #category : #private }
 NECPreferences class >> availableControllers [
-	^NECController withAllSubclasses copyWithout: NECWorkspaceController
+	^NECController withAllSubclasses
 ]
 
 { #category : #accessing }
@@ -130,7 +130,7 @@ NECPreferences class >> initialize [
 	caseSensitive := true.
 	smartCharacters := true.
 	expandPrefixes := true.
-	captureNavigationKeys := false.
+	captureNavigationKeys := true.
 	useEnterToAccept := true.
 	smartCharactersMapping := Dictionary new.
 	smartCharactersMapping

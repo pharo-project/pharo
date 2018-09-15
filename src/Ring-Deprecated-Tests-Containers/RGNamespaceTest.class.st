@@ -4,7 +4,7 @@ SUnit tests for namespaces
 Class {
 	#name : #RGNamespaceTest,
 	#superclass : #TestCase,
-	#category : #'Ring-Deprecated-Tests-Containers'
+	#category : #'Ring-Deprecated-Tests-Containers-Base'
 }
 
 { #category : #deprecation }

@@ -217,6 +217,18 @@ DateAndTime class >> unixEpoch [
 		yourself.
 ]
 
+{ #category : #'clock provider' }
+DateAndTime class >> year: aYearInteger month: aMonthNumber [
+    "Return a date starting the first day of the month"
+
+    ^ self
+        year: aYearInteger
+        month: aMonthNumber
+        day: 1
+        hour: 0
+        minute: 0
+]
+
 { #category : #arithmetic }
 DateAndTime >> + operand [
 	"operand conforms to protocol Duration"

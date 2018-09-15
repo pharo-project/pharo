@@ -17,6 +17,13 @@ Date >> addMonths: monthCount [
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
+Date class >> asMonth: aMonthNumber inYear: aYearNumber [
+      "Returns the month corresponding the month number"
+    
+        ^ Month year: aYearNumber month: aMonthNumber
+]
+
+{ #category : #'*Kernel-Chronology-Extras' }
 Date class >> dayNames [
 	"Return a collection of english day names"
 	^ DayNames copy

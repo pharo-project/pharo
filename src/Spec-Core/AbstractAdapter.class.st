@@ -15,7 +15,7 @@ Class {
 		'widget',
 		'selector'
 	],
-	#category : #'Spec-Core'
+	#category : #'Spec-Core-Base'
 }
 
 { #category : #'instance creation' }

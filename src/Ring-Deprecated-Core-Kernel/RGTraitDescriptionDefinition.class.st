@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'users'
 	],
-	#category : #'Ring-Deprecated-Core-Kernel'
+	#category : #'Ring-Deprecated-Core-Kernel-Base'
 }
 
 { #category : #'adding/removing users' }

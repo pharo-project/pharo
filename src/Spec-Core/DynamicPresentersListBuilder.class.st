@@ -12,13 +12,13 @@ Class {
 	#name : #DynamicPresentersListBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'presenterClass',
 		'configurationBlock',
 		'instVarCount',
 		'dynamicPresenter',
 		'nullPresentersInstVarNames',
 		'layoutBuilder',
-		'instVarToModelObject'
+		'instVarToModelObject',
+		'presenterBlock'
 	],
 	#category : #'Spec-Core-Dynamic-Builder'
 }
@@ -34,6 +34,26 @@ DynamicPresentersListBuilder class >> example [
 				label: modelObject asString;
 				whenActivatedDo: [ UIManager default inform: modelObject asString , ' activated.' ];
 				whenDeactivatedDo: [ UIManager default inform: modelObject asString , ' deactivated.' ] ];
+		layoutBuilder: (DynamicTopToBottomColumnsLayout columns: 2);
+		build.
+	
+	^ dynamicPresenter
+		openWithSpec;
+		yourself
+]
+
+{ #category : #example }
+DynamicPresentersListBuilder class >> example2 [
+	| dynamicPresenter |
+	dynamicPresenter := DynamicPresentersListBuilder new
+		modelObjects: {1 . 2 . 3 . 4 . 5};
+		presenterProvidedBy: [ :integer |
+			integer odd "In your real code, avoid conditionals, use dispatch."
+				ifTrue: [ CheckBoxPresenter ]
+				ifFalse: [ LabelPresenter ] ]
+			configuredAs: [ :presenter :modelObject | 
+			presenter
+				label: modelObject asString ];
 		layoutBuilder: (DynamicTopToBottomColumnsLayout columns: 2);
 		build.
 	
@@ -109,12 +129,12 @@ DynamicPresentersListBuilder >> instVarNames [
 
 { #category : #private }
 DynamicPresentersListBuilder >> instVarNamesAndPresenterNamesArray [
-	^ (self instVarNames
+	^ (self instVarToModelObject
 		inject: OrderedCollection new
-		into: [ :col :instVar |
+		into: [ :col :instVarToModelObjectAssoc |
 			col
-				add: instVar;
-				add: self presenterClass name;
+				add: instVarToModelObjectAssoc key;
+				add: (self presenterBlock value: instVarToModelObjectAssoc value) name;
 				yourself ]) asArray
 ]
 
@@ -169,17 +189,23 @@ DynamicPresentersListBuilder >> nullPresentersInstVarNamesAndPresenterNamesArray
 
 { #category : #api }
 DynamicPresentersListBuilder >> presenter: aPresenterClass configuredAs: twoArgumentsBlock [
+	self presenterProvidedBy: [ :modelObject | aPresenterClass ] configuredAs: twoArgumentsBlock
+]
+
+{ #category : #accessing }
+DynamicPresentersListBuilder >> presenterBlock [
+	^ presenterBlock
+]
+
+{ #category : #accessing }
+DynamicPresentersListBuilder >> presenterBlock: anObject [
+	presenterBlock := anObject
+]
+
+{ #category : #api }
+DynamicPresentersListBuilder >> presenterProvidedBy: blockReturningPresenter configuredAs: blockConfiguringThePresenter [
 	self
-		presenterClass: aPresenterClass;
-		configurationBlock: twoArgumentsBlock
-]
-
-{ #category : #accessing }
-DynamicPresentersListBuilder >> presenterClass [
-	^ presenterClass
-]
-
-{ #category : #accessing }
-DynamicPresentersListBuilder >> presenterClass: anObject [
-	presenterClass := anObject
+		presenterBlock: blockReturningPresenter;
+		configurationBlock: blockConfiguringThePresenter
+	
 ]

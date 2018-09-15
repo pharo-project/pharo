@@ -56,7 +56,7 @@ LzwGifEncoder >> checkCodeSize [
 			maxCode := (1 bitShift: codeSize) - 1 ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 LzwGifEncoder >> checkSettings [
 	"Ensure that the appropriate variables
 	that are needed for proper encoding
@@ -260,19 +260,6 @@ LzwGifEncoder >> readPixelFrom: bits [
 { #category : #accessing }
 LzwGifEncoder >> rowByteSize: anInteger [
 	rowByteSize := anInteger
-]
-
-{ #category : #'as yet unclassified' }
-LzwGifEncoder >> tablesInclude: aValue withIndexBuffer: aCollection [
-	"Answer true if we are able to find the given value
-	in the prefix/suffix tables by tracing the values
-	in the given collection. False otherwise."
-	| lookupIndex |
-	aCollection ifEmpty: [ 
-		^ prefixTable includes: aValue ].
-	aCollection do: [ :val |
-		 ]
-	
 ]
 
 { #category : #private }

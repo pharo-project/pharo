@@ -1,3 +1,6 @@
+"
+A stub for WriteBarrier to be used by tests
+"
 Class {
 	#name : #WriteBarrierStub,
 	#superclass : #Object,
