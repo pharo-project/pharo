@@ -446,16 +446,23 @@ DiskStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 { #category : #private }
 DiskStore >> nodesAt: aPath do: aBlock [
 
-	| pathString dirPointer entryData fileName attributes targetName |
+	| pathString openDir dirPointer entryData fileName attributes targetName |
 	
 	pathString := File encode: (self stringFromPath: aPath).
 	(self isDirectory: aPath) ifFalse:
 		[ ^self signalDirectoryDoesNotExist: aPath ].
 
-	dirPointer := File primOpendir: pathString.
-	dirPointer ifNil: [ ^nil ].
+	openDir := File primOpendir: pathString.
+	openDir ifNil: [ ^nil ].
+	(openDir isArray and: [openDir size = 3]) ifTrue: [ 
+		"New VM (FileAttributesPlugin > 1.4)"
+		dirPointer := openDir at: 3.
+		entryData := openDir. ]
+	ifFalse: [ 
+		"Old VM (FileAttributesPlugin <= 1.4.x)"
+		dirPointer := openDir.
+		entryData := File primReaddir: dirPointer ].
 	[
-		entryData := File primReaddir: dirPointer.
 		[ entryData notNil ] whileTrue:
 			[
 				fileName := entryData first.
