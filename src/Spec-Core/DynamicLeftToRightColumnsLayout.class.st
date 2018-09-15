@@ -19,17 +19,15 @@ DynamicLeftToRightColumnsLayout class >> columns: anInteger [
 
 { #category : #building }
 DynamicLeftToRightColumnsLayout >> buildLayoutFor: aDynamicPresentersListBuilder [
-	| nullPresentersNeeded |
-	"Compute the number of empty presenters required to fill additional space if the number of model objects modulo the number of columns/rows is not equals to 0."
-	nullPresentersNeeded := self columnsCount - (aDynamicPresentersListBuilder modelObjects size % self columnsCount).
-	aDynamicPresentersListBuilder createNullPresenters: nullPresentersNeeded.
+	aDynamicPresentersListBuilder
+		createNullPresenters: (self nullPresentersNeededFor: aDynamicPresentersListBuilder).
 	^ SpecLayout composed
 		newColumn: [ :mainColumn | 
 			(self instVarNamesFrom: aDynamicPresentersListBuilder)
 				groupsOf: self columnsCount
 				atATimeDo: [ :group | 
-					mainColumn newRow: [ :row |
-						group do: [ :instVar | row newColumn: instVar ] ] ] ]
+					mainColumn
+						newRow: [ :row | group do: [ :instVar | row newColumn: instVar ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -43,4 +41,10 @@ DynamicLeftToRightColumnsLayout >> columnsCount: anObject [
 		ifFalse: [ self error: 'A positive integer is expected as parameter.' ].
 	
 	columnsCount := anObject
+]
+
+{ #category : #building }
+DynamicLeftToRightColumnsLayout >> nullPresentersNeededFor: aDynamicPresentersListBuilder [
+	"Compute the number of empty presenters required to fill additional space if the number of model objects modulo the number of columns/rows is not equals to 0."
+	^ self columnsCount - (aDynamicPresentersListBuilder modelObjects size % self columnsCount)
 ]
