@@ -95,16 +95,15 @@ TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithIdentityEqualsE
 
 { #category : #'tests - as identity set' }
 TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithoutIdentityEqualsElements [
-
 	| result collection |
 	collection := self collectionWithCopy.
 	result := collection asIdentitySet.
 	" no elements should have been removed as no elements are equels with Identity equality"
-	self assert: result size = collection size.
-	collection do: 
-		[ :each | 
-		(collection occurrencesOf: each) = (result asOrderedCollection occurrencesOf: each) ].
-	self assert: result class = IdentitySet
+	self assert: result size equals: collection size.
+	collection
+		do:
+			[ :each | self assert: (collection occurrencesOf: each) equals: (result asOrderedCollection occurrencesOf: each) ].
+	self assert: result class equals: IdentitySet
 ]
 
 { #category : #'tests - as set tests' }

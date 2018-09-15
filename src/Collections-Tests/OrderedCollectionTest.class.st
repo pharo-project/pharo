@@ -15,12 +15,14 @@ Class {
 		'emptyButAllocatedWith20',
 		'otherCollection',
 		'indexCollection',
-		'elementExistsTwice',
 		'collectionWithElement',
 		'collectionOfFloat',
+		'collectionOfString',
 		'elementNotIn',
 		'indexArray',
 		'withoutEqualElements',
+		'floatCollectionWithSameBeginingEnd',
+		'stringCollectionWithSameBeginingEnd',
 		'duplicateElement',
 		'collectionWithDuplicateElement',
 		'collection5Elements',
@@ -28,10 +30,7 @@ Class {
 		'collectionOfCollectionsOfInts',
 		'collectionOfCollectionsOfStrings',
 		'withCharacters',
-		'collectionNotIncluded',
-		'simpleCollection',
-		'collectionOfString',
-		'collectionWithSameBeginingEnd'
+		'simpleCollection'
 	],
 	#category : #'Collections-Tests-Sequenceable'
 }
@@ -174,14 +173,14 @@ OrderedCollectionTest >> collectionWithEqualElements [
 OrderedCollectionTest >> collectionWithNonIdentitySameAtEndAndBegining [
 	" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
-	^ collectionWithSameBeginingEnd 
+	^ stringCollectionWithSameBeginingEnd
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> collectionWithSameAtEndAndBegining [
 " return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
-	^ collectionWithSameBeginingEnd 
+	^ stringCollectionWithSameBeginingEnd
 ]
 
 { #category : #requirements }
@@ -437,30 +436,123 @@ OrderedCollectionTest >> selectorToAccessValuePutIn [
 
 { #category : #running }
 OrderedCollectionTest >> setUp [
-
 	super setUp.
-	nonEmpty := OrderedCollection new  add: self valuePutIn; add: self elementTwiceIn; add: self elementTwiceIn; yourself.
-	empty := OrderedCollection new. 
+	nonEmpty := OrderedCollection new
+		add: self valuePutIn;
+		add: self elementTwiceIn;
+		add: self elementTwiceIn;
+		yourself.
+	empty := OrderedCollection new.
 	elementNotIn := 99.
-	collectionWith4Elements := OrderedCollection new add: 1; add: -2; add: 3; add: 1; yourself.
-	indexArray := { 3. 1.}.
-	indexCollection := OrderedCollection new add: 1; add: 2;add: 3; add: 4; add:5;  yourself.
-	otherCollection := OrderedCollection new add: 1;add: 20; add: 30; yourself.
-	withoutEqualElements := OrderedCollection new add: 1;add: 20; add: 30; yourself.
-	collectResult := OrderedCollection new add: SmallInteger; add: SmallInteger; add: SmallInteger; yourself.
-	collectionOfCollectionsOfStrings:= OrderedCollection new add: (OrderedCollection new add: (OrderedCollection new add: 'foo'; yourself); add: (OrderedCollection new add: 'bar'; yourself); yourself); add: 'zorg'; yourself.
-	simpleCollection := OrderedCollection new add: 1; add: 8; add: 3; yourself.
-	collectionOfCollectionsOfInts := OrderedCollection new add: 1; add: (OrderedCollection new add: 2; add: 3; yourself); add: (OrderedCollection new add: 4; add: (OrderedCollection new add: 5; add: 6; yourself); yourself); yourself.
-	withCharacters := OrderedCollection new add: $a; add: $x; add: $d; add: $c; add: $m; yourself.
-	emptyButAllocatedWith20 := OrderedCollection new: 20. 
-	collectionWithElement := OrderedCollection new add: self element; yourself.
-	collectionOfFloat := OrderedCollection new add: 4.1; add: 7.2; add: 2.5; yourself.
-	collectionOfString := OrderedCollection new add: 'a'; add: 'b'; add: 'c'; yourself.
-	collectionWithSameBeginingEnd := OrderedCollection new add: 'a'; add: 'b'; add: 'a' copy ; yourself.
+	collectionWith4Elements := OrderedCollection new
+		add: 1;
+		add: -2;
+		add: 3;
+		add: 1;
+		yourself.
+	indexArray := {3 . 1}.
+	indexCollection := OrderedCollection new
+		add: 1;
+		add: 2;
+		add: 3;
+		add: 4;
+		add: 5;
+		yourself.
+	otherCollection := OrderedCollection new
+		add: 1;
+		add: 20;
+		add: 30;
+		yourself.
+	withoutEqualElements := OrderedCollection new
+		add: 1;
+		add: 20;
+		add: 30;
+		yourself.
+	collectResult := OrderedCollection new
+		add: SmallInteger;
+		add: SmallInteger;
+		add: SmallInteger;
+		yourself.
+	collectionOfCollectionsOfStrings := OrderedCollection new
+		add:
+			(OrderedCollection new
+				add:
+					(OrderedCollection new
+						add: 'foo';
+						yourself);
+				add:
+					(OrderedCollection new
+						add: 'bar';
+						yourself);
+				yourself);
+		add: 'zorg';
+		yourself.
+	simpleCollection := OrderedCollection new
+		add: 1;
+		add: 8;
+		add: 3;
+		yourself.
+	collectionOfCollectionsOfInts := OrderedCollection new
+		add: 1;
+		add:
+			(OrderedCollection new
+				add: 2;
+				add: 3;
+				yourself);
+		add:
+			(OrderedCollection new
+				add: 4;
+				add:
+					(OrderedCollection new
+						add: 5;
+						add: 6;
+						yourself);
+				yourself);
+		yourself.
+	withCharacters := OrderedCollection new
+		add: $a;
+		add: $x;
+		add: $d;
+		add: $c;
+		add: $m;
+		yourself.
+	emptyButAllocatedWith20 := OrderedCollection new: 20.
+	collectionWithElement := OrderedCollection new
+		add: self element;
+		yourself.
+	collectionOfFloat := OrderedCollection new
+		add: 4.1;
+		add: 7.2;
+		add: 2.5;
+		yourself.
+	collectionOfString := OrderedCollection new
+		add: 'we';
+		add: 'love';
+		add: 'pharo';
+		yourself.
+	floatCollectionWithSameBeginingEnd := OrderedCollection new
+		add: 4.1;
+		add: 7.2;
+		add: 4.1 copy;
+		yourself.
+	stringCollectionWithSameBeginingEnd := OrderedCollection new
+		add: 'yes';
+		add: 'pharo';
+		add: 'yes' copy;
+		yourself.
 	duplicateElement := 2.
-	collectionWithDuplicateElement := OrderedCollection new add: duplicateElement ; add: duplicateElement ; add:4 ; yourself.	
-
-	collection5Elements := OrderedCollection new add: 1; add: 2;  add: 3;  add: 4;  add: 5; yourself.
+	collectionWithDuplicateElement := OrderedCollection new
+		add: duplicateElement;
+		add: duplicateElement;
+		add: 4;
+		yourself.
+	collection5Elements := OrderedCollection new
+		add: 1;
+		add: 2;
+		add: 3;
+		add: 4;
+		add: 5;
+		yourself
 ]
 
 { #category : #requirements }
@@ -504,16 +596,9 @@ OrderedCollectionTest >> test0FixtureTConvertAsSetForMultiplinessTest [
 	"a collection ofFloat with equal elements:"
 
 	| res |
-	self withEqualElements.
-	self withEqualElements do: [ :each | self assert: each isFloat ].
-	res := true.
-	self withEqualElements detect: [ :each | (self withEqualElements occurrencesOf: each) > 1 ] ifNone: [ res := false ].
-	self assert: res = true.	"a collection of Float without equal elements:"
-	res := true.
+	self withEqualElements do: [ :each | self assert: (self withEqualElements occurrencesOf: each) > 1 ].
 	self elementsCopyNonIdenticalWithoutEqualElements
-		detect: [ :each | (self elementsCopyNonIdenticalWithoutEqualElements occurrencesOf: each) > 1 ]
-		ifNone: [ res := false ].
-	self assert: res = false
+		do: [ :each | self deny: (self elementsCopyNonIdenticalWithoutEqualElements occurrencesOf: each) > 1 ]
 ]
 
 { #category : #'tests - adding' }
