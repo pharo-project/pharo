@@ -46,5 +46,5 @@ DynamicLeftToRightColumnsLayout >> columnsCount: anObject [
 { #category : #building }
 DynamicLeftToRightColumnsLayout >> nullPresentersNeededFor: aDynamicPresentersListBuilder [
 	"Compute the number of empty presenters required to fill additional space if the number of model objects modulo the number of columns/rows is not equals to 0."
-	^ self columnsCount - (aDynamicPresentersListBuilder modelObjects size % self columnsCount)
+	^ self columnsCount - (((aDynamicPresentersListBuilder modelObjects size - 1) % self columnsCount) + 1)
 ]
