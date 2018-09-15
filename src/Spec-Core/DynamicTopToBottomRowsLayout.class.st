@@ -31,7 +31,7 @@ DynamicTopToBottomRowsLayout >> buildLayoutFor: aDynamicPresentersListBuilder [
 { #category : #building }
 DynamicTopToBottomRowsLayout >> nullPresentersNeededFor: aDynamicPresentersListBuilder [
 	"Compute the number of empty presenters required to fill additional space if the number of model objects modulo the number of columns/rows is not equals to 0."
-	^ self rowsCount - (aDynamicPresentersListBuilder modelObjects size % self rowsCount)
+	^ self rowsCount - ((aDynamicPresentersListBuilder modelObjects size - 1 % self rowsCount) + 1)
 ]
 
 { #category : #accessing }
