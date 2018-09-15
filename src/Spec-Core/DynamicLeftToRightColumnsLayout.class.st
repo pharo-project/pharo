@@ -19,8 +19,6 @@ DynamicLeftToRightColumnsLayout class >> columns: anInteger [
 
 { #category : #building }
 DynamicLeftToRightColumnsLayout >> buildLayoutFor: aDynamicPresentersListBuilder [
-	aDynamicPresentersListBuilder
-		createNullPresenters: (self nullPresentersNeededFor: aDynamicPresentersListBuilder).
 	^ SpecLayout composed
 		newColumn: [ :mainColumn | 
 			(self instVarNamesFrom: aDynamicPresentersListBuilder)

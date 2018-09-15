@@ -82,7 +82,7 @@ DynamicPresentersListBuilder >> buildDynamicPresenter [
 
 { #category : #building }
 DynamicPresentersListBuilder >> buildLayout [
-	^ self layoutBuilder buildLayoutFor: self
+	^ self layoutBuilder buildFor: self
 ]
 
 { #category : #accessing }

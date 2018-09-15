@@ -19,10 +19,6 @@ DynamicTopToBottomRowsLayout class >> rows: anInteger [
 
 { #category : #building }
 DynamicTopToBottomRowsLayout >> buildLayoutFor: aDynamicPresentersListBuilder [
-	| nullPresentersNeeded |
-	"Compute the number of empty presenters required to fill additional space if the number of model objects modulo the number of columns/rows is not equals to 0."
-	nullPresentersNeeded := self rowsCount - (aDynamicPresentersListBuilder modelObjects size % self rowsCount).
-	aDynamicPresentersListBuilder createNullPresenters: nullPresentersNeeded.
 	^ SpecLayout composed
 		newRow: [ :mainRow | 
 			(self instVarNamesFrom: aDynamicPresentersListBuilder)
@@ -30,6 +26,12 @@ DynamicTopToBottomRowsLayout >> buildLayoutFor: aDynamicPresentersListBuilder [
 				atATimeDo: [ :group | 
 					mainRow newColumn: [ :column |
 						group do: [ :instVar | column newRow: instVar ] ] ] ]
+]
+
+{ #category : #building }
+DynamicTopToBottomRowsLayout >> nullPresentersNeededFor: aDynamicPresentersListBuilder [
+	"Compute the number of empty presenters required to fill additional space if the number of model objects modulo the number of columns/rows is not equals to 0."
+	^ self rowsCount - (aDynamicPresentersListBuilder modelObjects size % self rowsCount)
 ]
 
 { #category : #accessing }
