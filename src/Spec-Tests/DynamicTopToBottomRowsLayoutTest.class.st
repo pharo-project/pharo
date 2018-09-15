@@ -1,3 +1,6 @@
+"
+I hold tests for DynamicTopToBottomRowsLayout.
+"
 Class {
 	#name : #DynamicTopToBottomRowsLayoutTest,
 	#superclass : #TestCase,
