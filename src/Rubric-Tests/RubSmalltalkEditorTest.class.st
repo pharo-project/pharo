@@ -224,6 +224,15 @@ RubSmalltalkEditorTest >> positionBefore: aString offset: aNumber [
 	
 ]
 
+{ #category : #helpers }
+RubSmalltalkEditorTest >> positionSelection: aString [
+	| pos |
+	
+	pos := (self source findString: aString).
+	self selection: (pos to: pos + aString size).
+	
+]
+
 { #category : #accessing }
 RubSmalltalkEditorTest >> selection [
 	^ selection
@@ -930,6 +939,58 @@ RubSmalltalkEditorTest >> testPlaygroundJumpOnIfTrueIfFalseAfterCompletion [
 ]
 
 { #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testPlaygroundWidenOnCascade [
+	"Should widen on cascaded messages"
+	
+	self source: '
+	5 + 4.
+	self 
+		msg1;
+		msg2;
+		msg3
+'.
+	
+	self 
+		positionBefore: 'msg2';
+		assertWidensToRegex: ';.*msg2' playground: true.
+		
+	self 
+		positionAfter: 'msg3';
+		assertWidensToRegex: ';.*msg3' playground: true.
+		
+	self 
+		positionSelection: 'msg2';
+		assertWidensToRegex: 'self.*msg3' playground: true.
+	
+]
+
+{ #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testPlaygroundWidenOnErroneousSource [
+	"Should be able to intelligently jump on source that doesn't yet compile"
+	
+	self source: '
+	self msg1.
+		
+	1 + 300
+
+	(String new: 5)
+'.
+	
+	self 
+		positionAfter: '300';
+		assertWidensToRegex: '300' playground: true.
+		
+	self 
+		positionSelection: '300';
+		assertWidensToRegex: '1 \+ 300' playground: true.
+		
+	self 
+		positionSelection: '5';
+		assertWidensToRegex: '\(String.*5\)' playground: true.
+	
+]
+
+{ #category : #'tests-widenSelection' }
 RubSmalltalkEditorTest >> testPlaygroundWidenOnSelf [
 	"Should widen selection after self to easily select code on a self message send"
 	
@@ -945,6 +1006,30 @@ RubSmalltalkEditorTest >> testPlaygroundWidenOnSelf [
 	self 
 		positionBefore: 'msg2';
 		assertWidensToRegex: ';.*msg2' playground: true
+	
+]
+
+{ #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testWidenInsideBlock [
+	"Should widen selection inside a block, slowly extending the selection"
+	
+	self source: 'hasBindingThatBeginsWith: aString 
+	^ self model notNil ifTrue: [ true ] ifFalse: [ aString > 10 ]'.
+	
+	
+	self 
+		positionSelection: '10';
+		assertWidensToRegex: 'aString > 10' playground: false.
+		
+	self 
+		positionSelection: 'aString > 10';
+		assertWidensToRegex: '\[ aString > 10 \]' playground: false.
+		
+	self 
+		positionSelection: '[ aString > 10 ]';
+		assertWidensToRegex: 'self.*10 \]' playground: false.
+		
+	
 	
 ]
 
@@ -965,8 +1050,79 @@ RubSmalltalkEditorTest >> testWidenOnAssignment [
 ]
 
 { #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testWidenOnBrackets [
+	"Should jump to next postion but ignore any keywords in comments"
+	
+	self source: 'testMethod
+		^5 + ((100 - 70) * 20)
+'.
+	
+	self 
+		positionSelection: '70';
+		assertWidensToRegex: '\(100 - 70\)' playground: false.
+		
+	self 
+		positionSelection: '(100 - 70)';
+		assertWidensToRegex: '\(\(100.*20\)' playground: false.
+		
+	 self 
+		positionSelection: '20';
+		assertWidensToRegex: '\(\(100.*20\)' playground: false
+		
+	
+]
+
+{ #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testWidenOnCascade [
+	"Should widen on cascaded messages"
+	
+	self source: 'testMethod
+	self 
+		msg1;
+		msg2;
+		msg3
+'.
+	
+	self 
+		positionBefore: 'msg2';
+		assertWidensToRegex: ';.*msg2' playground: false.
+		
+	self 
+		positionAfter: 'msg3';
+		assertWidensToRegex: ';.*msg3' playground: false.
+		
+	self 
+		positionSelection: 'msg2';
+		assertWidensToRegex: 'self.*msg3' playground: false.
+	
+]
+
+{ #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testWidenOnComments [
+	"Should jump to next postion but ignore any keywords in comments"
+	
+	self source: 'testMethod
+	"some comments with keyword:selector: that should be ignored"
+	
+	self 
+		msg1; "Another comment with ignored:selector: to skip"
+		msg2
+'.
+	
+	self 
+		positionAfter: 'comments';
+		assertWidensToRegex: '"some.*ignored"' playground: false.
+		
+	self 
+		positionSelection: 'keyword:selector:';
+		assertWidensToRegex: '"some.*ignored"' playground: false
+		
+	
+]
+
+{ #category : #'tests-widenSelection' }
 RubSmalltalkEditorTest >> testWidenOnEndOfBlock [
-	"Should widen selection after self to easily select code on a self message send"
+	"Should widen selection at the end of a block to select the whole block"
 	
 	self source: 'hasBindingThatBeginsWith: aString 
 	^ self model notNil ifTrue: [ true ] ifFalse: [ aString > 1 ]'.
@@ -978,6 +1134,75 @@ RubSmalltalkEditorTest >> testWidenOnEndOfBlock [
 		
 	
 	
+]
+
+{ #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testWidenOnErroneousMethod [
+	"Should be able to intelligently jump on source that doesn't yet compile"
+	
+	self source: 'testMethod
+	
+	self msg1.
+		
+	1 + 300
+
+	(String new: 5)
+'.
+	
+	self 
+		positionAfter: '300';
+		assertWidensToRegex: '300' playground: false.
+		
+	self 
+		positionSelection: '300';
+		assertWidensToRegex: '1 \+ 300' playground: false.
+		
+	self 
+		positionSelection: '5';
+		assertWidensToRegex: '\(String.*5\)' playground: false.
+	
+]
+
+{ #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testWidenOnKeywordSelector [
+	"Should jump between multiple keywords"
+	
+	self source: 'testMethod
+	self msg1.
+	self multiKeywordMsg: 7 with: 10 + 5.
+	self msg2
+'.
+	
+	self 
+		positionSelection: '10 + 5';
+		assertWidensToRegex: 'self.*5' playground: false.
+		
+	self 
+		positionSelection: '7';
+		assertWidensToRegex: 'self.*5' playground: false
+]
+
+{ #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testWidenOnMultipleExpressions [
+	"Should widen on multiple expressions"
+	
+	self source: 'testMethod
+	x := 1000 + 5.
+	^self
+'.
+	
+	self 
+		positionBefore: '1000';
+		assertWidensToRegex: '1000' playground: false.
+		
+	self 
+		positionSelection: '1000';
+		assertWidensToRegex: '1000 \+ 5' playground: false.
+		
+	self 
+		positionSelection: '5';
+		assertWidensToRegex: '1000 \+ 5' playground: false.
+		
 ]
 
 { #category : #'tests-widenSelection' }
@@ -997,6 +1222,28 @@ RubSmalltalkEditorTest >> testWidenOnSelf [
 	self 
 		positionBefore: 'msg2';
 		assertWidensToRegex: ';.*msg2' playground: false
+	
+]
+
+{ #category : #'tests-widenSelection' }
+RubSmalltalkEditorTest >> testWidenOnString [
+	"Should jump to next postion but ignore any keywords in comments"
+	
+	self source: 'testMethod
+	self 
+		msg: ''some string'';
+		msg1: ''a string with "a comment text" inside''; "Another comment"
+		msg2
+'.
+	
+	self 
+		positionAfter: 'some';
+		assertWidensToRegex: '\''some string\''' playground: false.
+	
+	self 
+		positionAfter: 'a comment';
+		assertWidensToRegex: '\''a string.*inside\''' playground: false.
+			
 	
 ]
 
