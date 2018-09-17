@@ -1,7 +1,10 @@
+"
+A matrix
+"
 Class {
 	#name : #Matrix,
 	#superclass : #Array2D,
-	#category : #Deprecated70
+	#category : #'Deprecated70-Obsolete'
 }
 
 { #category : #deprecation }

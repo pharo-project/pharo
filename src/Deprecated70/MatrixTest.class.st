@@ -10,7 +10,7 @@ Class {
 		'matrix3',
 		'matrix23'
 	],
-	#category : #Deprecated70
+	#category : #'Deprecated70-Obsolete'
 }
 
 { #category : #testing }

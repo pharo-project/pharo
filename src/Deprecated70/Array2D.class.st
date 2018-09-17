@@ -22,7 +22,7 @@ Class {
 		'numberOfColumns',
 		'numberOfRows'
 	],
-	#category : #Deprecated70
+	#category : #'Deprecated70-Obsolete'
 }
 
 { #category : #'special instance creation' }

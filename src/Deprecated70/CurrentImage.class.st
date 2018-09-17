@@ -14,7 +14,7 @@ to receive all packages in the image sorted
 Class {
 	#name : #CurrentImage,
 	#superclass : #Object,
-	#category : #Deprecated70
+	#category : #'Deprecated70-Obsolete'
 }
 
 { #category : #testing }
