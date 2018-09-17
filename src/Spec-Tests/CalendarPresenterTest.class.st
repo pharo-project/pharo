@@ -27,6 +27,16 @@ CalendarPresenterTest >> testDayBeforeMonthOf [
 ]
 
 { #category : #tests }
+CalendarPresenterTest >> testDaysAfterMonthOf [
+	self assert: (calendar daysAfterMonthOf: (Date year: 2018 month: 9 day: 1)) equals: 6.
+	self assert: (calendar daysAfterMonthOf: (Date year: 2018 month: 9 day: 14)) equals: 6.
+	self assert: (calendar daysAfterMonthOf: (Date year: 2018 month: 9 day: 30)) equals: 6.
+	self assert: (calendar daysAfterMonthOf: (Date year: 2018 month: 10 day: 1)) equals: 10.
+	self assert: (calendar daysAfterMonthOf: (Date year: 2018 month: 10 day: 17)) equals: 10.
+	self assert: (calendar daysAfterMonthOf: (Date year: 2018 month: 10 day: 30)) equals: 10
+]
+
+{ #category : #tests }
 CalendarPresenterTest >> testJulianDaysIntervalFor [
 	| interval |
 	interval := calendar julianDaysIntervalFor: (Date year: 2018 month: 9 day: 15).

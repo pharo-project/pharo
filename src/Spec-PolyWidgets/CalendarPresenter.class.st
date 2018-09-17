@@ -97,8 +97,7 @@ CalendarPresenter >> dayNames [
 
 { #category : #private }
 CalendarPresenter >> daysAfterMonthOf: aDate [
-	^ self daysToDisplayCount - aDate month daysInMonth
-		- (self dayBeforeMonthOf: aDate)
+	^ self daysToDisplayCount - aDate month daysInMonth - (self dayBeforeMonthOf: aDate)
 ]
 
 { #category : #accessing }
