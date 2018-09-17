@@ -40,8 +40,8 @@ MimeConverter class >> mimeDecode: aStringOrStream to: outStream [
 
 { #category : #convenience }
 MimeConverter class >> mimeEncode: aCollectionOrStream [
-	^ String streamContents: [:out |
-		self mimeEncode: aCollectionOrStream to: out]
+	^ (String streamContents: [:out |
+		self mimeEncode: aCollectionOrStream to: out]) readStream
 ]
 
 { #category : #convenience }
