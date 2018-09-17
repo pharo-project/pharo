@@ -394,8 +394,12 @@ DateAndTimeDosEpochTest >> testToBy [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testToByDo [
-	"self assert: (aDateAndTime to: aDateAndTime + 10 days by: 5 days do: []) =  "
-	"MessageNotUnderstood: UndefinedObject>>starting:ending:  where UndefinedObject is Timespan "
+	| schedule |
+	schedule := aDateAndTime to: aDateAndTime + 10 days by: 5 days do: [:i | ].
+	self 
+		assert: schedule notNil;
+		assert: schedule duration equals: 10 days
+	 
 ]
 
 { #category : #tests }
