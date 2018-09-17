@@ -82,7 +82,7 @@ CalendarPresenter >> datesToDisplayFor: aDate [
 
 { #category : #private }
 CalendarPresenter >> dayBeforeMonthOf: aDate [
-	^ (aDate addDays: (aDate dayOfMonth negated + 1)) dayOfWeek - 1
+	^ aDate month dates first dayOfWeek - 1
 ]
 
 { #category : #'private - event' }
