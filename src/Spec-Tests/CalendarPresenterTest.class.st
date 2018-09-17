@@ -17,9 +17,52 @@ CalendarPresenterTest >> setUp [
 ]
 
 { #category : #tests }
+CalendarPresenterTest >> testDayBeforeMonthOf [
+	self assert: (calendar dayBeforeMonthOf: (Date year: 2018 month: 9 day: 1)) equals: 6.
+	self assert: (calendar dayBeforeMonthOf: (Date year: 2018 month: 9 day: 14)) equals: 6.
+	self assert: (calendar dayBeforeMonthOf: (Date year: 2018 month: 9 day: 30)) equals: 6.
+	self assert: (calendar dayBeforeMonthOf: (Date year: 2018 month: 10 day: 1)) equals: 1.
+	self assert: (calendar dayBeforeMonthOf: (Date year: 2018 month: 10 day: 17)) equals: 1.
+	self assert: (calendar dayBeforeMonthOf: (Date year: 2018 month: 10 day: 30)) equals: 1
+]
+
+{ #category : #tests }
 CalendarPresenterTest >> testJulianDaysIntervalFor [
 	| interval |
 	interval := calendar julianDaysIntervalFor: (Date year: 2018 month: 9 day: 15).
+	
+	self
+		assert: interval size equals: calendar daysToDisplayCount;
+		assert: interval
+		equals: ((Date year: 2018 month: 8 day: 26) julianDayNumber to: (Date year: 2018 month: 10 day: 6) julianDayNumber)
+]
+
+{ #category : #tests }
+CalendarPresenterTest >> testJulianDaysIntervalFor2 [
+	| interval |
+	interval := calendar julianDaysIntervalFor: (Date year: 2018 month: 9 day: 17).
+	
+	self
+		assert: interval size equals: calendar daysToDisplayCount;
+		assert: interval
+		equals: ((Date year: 2018 month: 8 day: 26) julianDayNumber to: (Date year: 2018 month: 10 day: 6) julianDayNumber)
+]
+
+{ #category : #tests }
+CalendarPresenterTest >> testJulianDaysIntervalFor3 [
+	| interval |
+	interval := calendar julianDaysIntervalFor: (Date year: 2018 month: 9 day: 1).
+	
+	self
+		assert: interval size equals: calendar daysToDisplayCount;
+		assert: interval
+		equals: ((Date year: 2018 month: 8 day: 26) julianDayNumber to: (Date year: 2018 month: 10 day: 6) julianDayNumber)
+]
+
+{ #category : #tests }
+CalendarPresenterTest >> testJulianDaysIntervalFor4 [
+	| interval |
+	interval := calendar julianDaysIntervalFor: (Date year: 2018 month: 9 day: 30).
 	
 	self
 		assert: interval size equals: calendar daysToDisplayCount;

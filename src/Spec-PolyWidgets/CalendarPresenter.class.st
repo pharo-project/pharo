@@ -80,6 +80,11 @@ CalendarPresenter >> datesToDisplayFor: aDate [
 			collect: [ :julianNumber | Date julianDayNumber: julianNumber ]
 ]
 
+{ #category : #private }
+CalendarPresenter >> dayBeforeMonthOf: aDate [
+	^ (aDate addDays: (aDate dayOfMonth negated + 1)) dayOfWeek - 1
+]
+
 { #category : #'private - event' }
 CalendarPresenter >> dayClicked: aDate [
 	self whenDaySelectedBlock cull: aDate cull: self
@@ -88,6 +93,12 @@ CalendarPresenter >> dayClicked: aDate [
 { #category : #'private - constants' }
 CalendarPresenter >> dayNames [
 	^ #('Sun' 'Mon' 'Tue' 'Wed' 'Thu' 'Fri' 'Sat')
+]
+
+{ #category : #private }
+CalendarPresenter >> daysAfterMonthOf: aDate [
+	^ self daysToDisplayCount - aDate month daysInMonth
+		- (self dayBeforeMonthOf: aDate)
 ]
 
 { #category : #accessing }
@@ -167,11 +178,9 @@ CalendarPresenter >> julianDaysIntervalFor: aDate [
 	"Returns an interval of integers with the first one being the first day to display in the UI and the last integer the last day.
 	 The first and last days might not be in the same month as aDate provided as parameter."
 
-	| daysBeforeMonth daysAfterMonth start end |
-	daysBeforeMonth := aDate dayOfWeek - 1.
-	daysAfterMonth := self daysToDisplayCount - aDate month daysInMonth - daysBeforeMonth.
-	start := aDate julianDayNumber - aDate dayOfMonth - daysBeforeMonth + 1.
-	end := aDate julianDayNumber + (aDate month daysInMonth - aDate dayOfMonth) + daysAfterMonth.
+	| start end |
+	start := aDate julianDayNumber - aDate dayOfMonth - (self dayBeforeMonthOf: aDate) + 1.
+	end := aDate julianDayNumber + (aDate month daysInMonth - aDate dayOfMonth) + (self daysAfterMonthOf: aDate).
 	^ start to: end
 ]
 
