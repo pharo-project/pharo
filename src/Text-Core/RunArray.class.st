@@ -21,7 +21,7 @@ Class {
 		'lastRun',
 		'lastOffset'
 	],
-	#category : #'Text-Core'
+	#category : #'Text-Core-Utilities'
 }
 
 { #category : #'instance creation' }
