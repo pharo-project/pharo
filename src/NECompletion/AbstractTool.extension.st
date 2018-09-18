@@ -5,7 +5,7 @@ AbstractTool >> guessTypeForName: aString [
 	^nil
 ]
 
-{ #category : #'*necompletion-extensions' }
+{ #category : #'*NECompletion' }
 AbstractTool >> isCodeCompletionAllowed [ 
 	^true
 ]

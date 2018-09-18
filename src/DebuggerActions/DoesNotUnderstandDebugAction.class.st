@@ -40,6 +40,39 @@ DoesNotUnderstandDebugAction >> askForSuperclassOf: aClass toImplement: aSelecto
 	^ classes at: chosenClassIndex
 ]
 
+{ #category : #private }
+DoesNotUnderstandDebugAction >> closeWindow [
+	"Safely close the debugger window without destroying the debugger context and stack"
+	| modelWindow |
+	modelWindow := self debugger window.
+	modelWindow
+		model: nil;
+		close
+]
+
+{ #category : #private }
+DoesNotUnderstandDebugAction >> createMissingClassIn: aContext [
+	| senderContext variableNode previousContext errorMsgNode |
+	
+	variableNode := nil.
+	
+	[ senderContext := aContext sender.
+	errorMsgNode := senderContext method sourceNodeExecutedForPC: senderContext pc.
+	variableNode := self findUndeclaredVariableIn: errorMsgNode ]
+		on: Error
+		do: [ ^self ].
+		
+	OCUndeclaredVariableWarning new
+		node: variableNode;
+		defineClass: variableNode name.
+		
+	previousContext := aContext stack second.
+	
+	self closeWindow.
+	
+	previousContext restart
+]
+
 { #category : #accessing }
 DoesNotUnderstandDebugAction >> defaultLabel [
 
@@ -56,11 +89,14 @@ DoesNotUnderstandDebugAction >> defaultOrder [
 DoesNotUnderstandDebugAction >> executeAction [
 	"Should only be called when the debugger was created in response to a
 	MessageNotUnderstood exception. Create a stub for the method that was
-	missing and proceed into it."
+	missing and proceed into it, or create a class if it was missing instead"
 	
 	| msg msgCategory chosenClass |
-
+	
 	msg := self interruptedContext tempAt: 1.
+	(msg lookupClass == UndefinedObject ) ifTrue: [ 
+		self createMissingClassIn: self interruptedContext ].
+	
 	chosenClass := self 
 		askForSuperclassOf: self interruptedContext receiver class
 		toImplement: msg selector
@@ -74,9 +110,17 @@ DoesNotUnderstandDebugAction >> executeAction [
 	self debugger selectTopContext
 ]
 
+{ #category : #private }
+DoesNotUnderstandDebugAction >> findUndeclaredVariableIn: errorMsgNode [
+	^ errorMsgNode allChildren
+		detect: [ :n | n isVariable and: [ n isUndeclared ] ]
+		ifNone: [ errorMsgNode parent allChildren
+				detect: [ :n | n isVariable and: [ n isUndeclared ] ] ]
+]
+
 { #category : #accessing }
 DoesNotUnderstandDebugAction >> help [
-    ^ 'Create the missing method in the user prompted class and restart the debugger at that location where it can be edited.'
+    ^ 'Create the missing class or method in the user prompted class, and restart the debugger at the location where it can be edited.'
 ]
 
 { #category : #accessing }

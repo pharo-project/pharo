@@ -1,8 +1,6 @@
 "
 I keep track of symbols to be retrieved in ocompletion algorithm. 
 Unlike ecompletion, I learn something and try to retrieve users last occurences of typing sequences first, then the system symbols which match. 
-
-TODO remove stupid symbols (like packages and method extensions and timestamp)
 "
 Class {
 	#name : #NOCCompletionTable,
@@ -121,11 +119,6 @@ NOCCompletionTable >> entriesPerPrefix: n [
 	numberofEntries := n
 ]
 
-{ #category : #accessing }
-NOCCompletionTable >> fillRate [
-	^ self totalNumberOfEntries / self maxNumberOfEntries 
-]
-
 { #category : #initialization }
 NOCCompletionTable >> initialize [
 	table := Dictionary new.
@@ -170,17 +163,6 @@ NOCCompletionTable >> listsForPrefix: aString [
 { #category : #accessing }
 NOCCompletionTable >> maxNumberOfEntries [
 	^ 26 * 26 * numberofEntries 
-]
-
-{ #category : #accessing }
-NOCCompletionTable >> numberOfEntries [
-	^ numberofEntries
-]
-
-{ #category : #protocol }
-NOCCompletionTable >> quickFillWithCategoriesMatching: pattern [
-	(Smalltalk organization categoriesMatching: pattern) do: [:category | 
-		(Smalltalk organization classesInCategory: category) do: [:e | self quickFillWithClass: e]]
 ]
 
 { #category : #protocol }

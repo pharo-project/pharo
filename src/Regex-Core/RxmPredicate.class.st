@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'predicate'
 	],
-	#category : #'Regex-Core'
+	#category : #'Regex-Core-Links'
 }
 
 { #category : #'instance creation' }

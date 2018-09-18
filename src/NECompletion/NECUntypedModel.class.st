@@ -9,8 +9,7 @@ Class {
 		'localVars',
 		'includeVariables',
 		'includeSelectors',
-		'classVars',
-		'listLimit'
+		'classVars'
 	],
 	#category : #'NECompletion-Model'
 }
@@ -73,10 +72,9 @@ NECUntypedModel >> initialize [
 	classVars := SortedCollection new.
 	includeSelectors := true.
 	includeVariables := true.
-	listLimit := 100.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NECUntypedModel >> initializeClassVars [
 	(clazz isNil or: [ includeVariables not ]) ifTrue: [ ^ self ].
 	classVars := clazz instanceSide allClassVarNames asSortedCollection.
@@ -85,7 +83,7 @@ NECUntypedModel >> initializeClassVars [
 		NECClassVarEntry contents: each ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NECUntypedModel >> initializeInstVars [
 	(clazz isNil or: [ includeVariables not ]) ifTrue: [ ^ self ].
 	instVars := clazz allInstVarNames asSortedCollection.
@@ -101,33 +99,22 @@ NECUntypedModel >> initializeInstVars [
 
 { #category : #private }
 NECUntypedModel >> initializeSelectors [
+	| case |
 	self resetSelectors.
-	
-	includeSelectors ifFalse: 
-		[ Smalltalk globals keysAndValuesDo: [ :each :class |
-			(each includesSubstring: narrowString caseSensitive: NECPreferences caseSensitive) ifTrue: [
-			selectors add: (NECGlobalEntry contents: each)] ].
-		^ self ].
-	narrowString ifEmpty: [ ^ self ].
-	NECSymbols 
-		contains: narrowString
-		caseSensitive: NECPreferences caseSensitive
-		do: [ :each | 
-			(includeVariables or: [ each first isLowercase ]) ifTrue: 
-				[ selectors add: (NECSelectorEntry 
-						contents: each
-						type: #selector).
-				selectors size > self listLimit ifTrue: [ ^ self ]]]
-]
-
-{ #category : #accessing }
-NECUntypedModel >> listLimit [
-	^ listLimit
-]
-
-{ #category : #accessing }
-NECUntypedModel >> listLimit: aNumber [
-	listLimit := aNumber
+	narrowString size < 2 ifTrue: [ ^ self ].
+	case :=  NECPreferences caseSensitive.
+	includeSelectors
+		ifTrue: [ Symbol selectorTable do: [ :symbol | | toadd | 
+					"for small strings, we do not do substring matching as we get too many matches (slow)"
+					toadd := narrowString size < 3 
+						ifTrue: [ symbol beginsWithEmpty: narrowString caseSensitive: case] 
+						ifFalse: [symbol includesSubstring: narrowString caseSensitive: case].
+					toadd ifTrue: [ selectors add: (NECSelectorEntry contents: symbol type: #selector) ] ] ].
+	includeVariables
+		ifTrue: [ Smalltalk globals keysDo: [ :symbol  | 
+					(symbol includesSubstring: narrowString caseSensitive: case)
+						ifTrue: [ selectors add: (NECGlobalEntry contents: symbol ) ] ] ].
+	self sortSelectors
 ]
 
 { #category : #private }
@@ -146,7 +133,7 @@ NECUntypedModel >> message [
 		ifFalse: [ super message ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NECUntypedModel >> narrowString: aString [ 
 	(narrowString isEmpty
 			or: [aString isEmpty
@@ -163,7 +150,7 @@ NECUntypedModel >> narrowWith: aString [
 	self addSelectors
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NECUntypedModel >> setClass: aClass temporaries: aCollection additionals: additionalCollection variables: variablesBoolean selectors: selectorsBoolean [ 
 	includeVariables := variablesBoolean.
 	includeSelectors := selectorsBoolean.

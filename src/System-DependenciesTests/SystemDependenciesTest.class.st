@@ -59,7 +59,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout) sorted
+	^ #(#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout #'Tool-Catalog') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -91,7 +91,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Iceberg #'Iceberg-Libgit') sorted
+	^ #()
 ]
 
 { #category : #'known dependencies' }
@@ -197,7 +197,7 @@ SystemDependenciesTest >> metacelloPackageNames [
 { #category : #accessing }
 SystemDependenciesTest >> specPackageNames [
 
-	^ #(#'Spec-Core' #'Spec-Layout' #'Keymapping-Pragmas' #'Keymapping-Core' #'Keymapping-KeyCombinations' #MenuRegistration #NewValueHolder) sorted
+	^ #(#'Spec-Core' #'Spec-Layout' #'Keymapping-Pragmas' #'Keymapping-Core' #'Keymapping-KeyCombinations' #'MenuRegistration' #'NewValueHolder-Core') sorted
 ]
 
 { #category : #tests }
@@ -216,6 +216,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
 		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
 		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
+		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames ).
@@ -274,32 +275,27 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalIDEDependencies [
-
-	| dependencies | 
-	
+	| dependencies packages |
 	self longTestCase.
-	
-	dependencies := self externalDependendiesOf: (
-		self metacelloPackageNames,
-		self tonelCorePackageNames,
-		{ BaselineOfTraits name }, BaselineOfTraits allPackageNames,		
-		{ BaselineOfSlot name }, BaselineOfSlot allPackageNames,		
-		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
-		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
-		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
-		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
-		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
-		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
-		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
-		{ BaselineOfAthens name }, BaselineOfAthens allPackageNames,
-		{ BaselineOfIDE name }, BaselineOfIDE allPackageNames,
-		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
-		{ BaselineOfPharoBootstrap name. 
-		  BaselineOfMonticello name.
-		  BaselineOfMetacello name }
-		 ).
-	
-	self assertCollection: dependencies equals: self knownIDEDependencies.
+	packages := self metacelloPackageNames , self tonelCorePackageNames , { BaselineOfPharoBootstrap name. BaselineOfMonticello name. BaselineOfMetacello name}.
+
+	{BaselineOfAthens.
+	BaselineOfBasicTools.
+	BaselineOfDisplay.
+	BaselineOfFlashback.
+	BaselineOfIDE.
+	BaselineOfMenuRegistration.
+	BaselineOfMorphic.
+	BaselineOfMorphicCore.
+	BaselineOfSlot.
+	BaselineOfSpec.
+	BaselineOfSUnit.
+	BaselineOfTraits.
+	BaselineOfUI.
+	BaselineOfUnifiedFFI} do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
+
+	dependencies := self externalDependendiesOf: packages.
+	self assertCollection: dependencies equals: self knownIDEDependencies
 ]
 
 { #category : #tests }
@@ -398,7 +394,8 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfMorphicCore allPackageNames,
-		BaselineOfMorphic allPackageNames ).
+		BaselineOfMorphic allPackageNames,
+		BaselineOfMenuRegistration allPackageNames ).
 	
 	self assertCollection: dependencies equals: self knownMorphicDependencies.
 ]
@@ -486,7 +483,8 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
-		BaselineOfUI allPackageNames )).
+		BaselineOfUI allPackageNames,
+		BaselineOfMenuRegistration allPackageNames )).
 	
 	self assertCollection: dependencies equals: self knownUIDependencies.
 ]

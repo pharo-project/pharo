@@ -67,13 +67,13 @@ SDL_Surface >> SDL_UnlockSurface: aSurface [
 { #category : #'accessing structure variables' }
 SDL_Surface >> clip_rect [
 	"This method was automatically generated"
-	^SDL_Rect fromHandle: (handle referenceStructAt: OFFSET_CLIP_RECT length: 16)
+	^ SDL_Rect fromHandle: (handle referenceStructAt: OFFSET_CLIP_RECT length: SDL_Rect byteSize)
 ]
 
 { #category : #'accessing structure variables' }
 SDL_Surface >> clip_rect: anObject [
 	"This method was automatically generated"
-	handle structAt: OFFSET_CLIP_RECT put: anObject getHandle length: 16.
+	handle structAt: OFFSET_CLIP_RECT put: anObject getHandle length: SDL_Rect byteSize
 ]
 
 { #category : #'accessing structure variables' }

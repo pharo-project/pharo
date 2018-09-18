@@ -1,3 +1,6 @@
+"
+Unit test for BenchmarkResult
+"
 Class {
 	#name : #BenchmarkResultTest,
 	#superclass : #TestCase,

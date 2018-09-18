@@ -13,7 +13,7 @@ MCTraitDefinition >> asRingDefinition [
 		definitionSource: self definitionString;
 		withMetaclass.
 		
-	ring theMetaClass 
+	ring classSide 
 		traitCompositionSource: self classTraitCompositionString;
 		definitionSource: self classDefinitionString.
 	^ring
@@ -48,4 +48,12 @@ MCTraitDefinition >> printMetaDefinitionOn: stream [
 		 crtab;
 		 nextPutAll: 'uses: ';
 		 nextPutAll: self classTraitCompositionString.
+	
+	self classInstanceVariables ifNotEmpty: [  
+		stream
+			cr; tab;
+			nextPutAll: 'slots: '; 
+			nextPutAll: self classSlotDefinitionString
+	].	
+
 ]

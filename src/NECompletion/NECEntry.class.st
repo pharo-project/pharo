@@ -1,5 +1,7 @@
 "
 I represent a completion entry that is management by a ECModel and shown in the ECMenuMorph as a menu entry.
+
+Each of my subclass will represent a specific kind of entity. For example a globalvariable, self...
 "
 Class {
 	#name : #NECEntry,
@@ -27,12 +29,7 @@ NECEntry >> <= aECEntry [
 	^ contents <= aECEntry contents
 ]
 
-{ #category : #conversion }
-NECEntry >> asNECEntry [
-	^ self
-]
-
-{ #category : #operations }
+{ #category : #'ui related' }
 NECEntry >> browseWith: anECContext [ 
 	| guessType |
 	guessType := self guessTypeWith: anECContext.
@@ -49,11 +46,6 @@ NECEntry >> completion [
 { #category : #accessing }
 NECEntry >> contents [
 	^contents
-]
-
-{ #category : #accessing }
-NECEntry >> contentsAsSymbol [
-	^ contents asSymbol 
 ]
 
 { #category : #'detail information' }

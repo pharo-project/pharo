@@ -4,7 +4,7 @@ SUnit tests for global definitions (pools, global variables)
 Class {
 	#name : #RGGlobalDefinitionTest,
 	#superclass : #TestCase,
-	#category : #'Ring-Deprecated-Tests-Kernel'
+	#category : #'Ring-Deprecated-Tests-Kernel-Base'
 }
 
 { #category : #deprecation }

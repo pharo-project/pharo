@@ -13,7 +13,7 @@ Class {
 		'dashOffset'
 	],
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#category : #'Athens-Cairo-Paints'
 }
@@ -109,9 +109,8 @@ AthensCairoStrokePaint >> primSetDashesOn: aCanvas lengths: dashesLengths count:
                                                          double *dashes,
                                                          int num_dashes,
                                                          double offset);"
-<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
 	
-	self nbCall: #(void cairo_set_dash (
+	^ self ffiCall: #(void cairo_set_dash (
 				AthensCairoCanvas aCanvas,
 				double* dashesLengths,
 				int dashesCount,
@@ -121,27 +120,21 @@ AthensCairoStrokePaint >> primSetDashesOn: aCanvas lengths: dashesLengths count:
 
 { #category : #private }
 AthensCairoStrokePaint >> primSetLineCapOn: aCanvas [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(void cairo_set_line_cap (
+	^ self ffiCall: #(void cairo_set_line_cap (
 			AthensCairoCanvas aCanvas,
 			cairo_line_cap_t capStyle) )
 ]
 
 { #category : #private }
 AthensCairoStrokePaint >> primSetLineJoinOn: aCanvas [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	self nbCall: #(void cairo_set_line_join (
+	^ self ffiCall: #(void cairo_set_line_join (
 			AthensCairoCanvas aCanvas,
 			cairo_line_join_t joinStyle) )
 ]
 
 { #category : #private }
 AthensCairoStrokePaint >> primSetLineWidthOn: aCanvas [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	self nbCall: #(void cairo_set_line_width (
+	^ self ffiCall: #(void cairo_set_line_width (
 				AthensCairoCanvas aCanvas,
 				double width) )
 

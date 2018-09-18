@@ -14,7 +14,7 @@ Class {
 		'fontSize'
 	],
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#category : #'Athens-Cairo-Text'
 }
@@ -133,8 +133,7 @@ AthensCairoText >> primSelectFont: aFontFamily
 		slant: aFontSlant
 		weight: aFontWeight 
 		on: aCanvas [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	self nbCall: #(void cairo_select_font_face (
+	^ self ffiCall: #(void cairo_select_font_face (
 			cairo_t aCanvas,
    			char * aFontFamily,
       		cairo_font_slant_t aFontSlant,
@@ -144,8 +143,7 @@ AthensCairoText >> primSelectFont: aFontFamily
 
 { #category : #private }
 AthensCairoText >> primSetFontSize: aFontSize on: aCanvas [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	self nbCall: #(void cairo_set_font_size (
+	^ self ffiCall: #(void cairo_set_font_size (
 			cairo_t aCanvas,
 			double aFontSize) )
 
@@ -153,8 +151,7 @@ AthensCairoText >> primSetFontSize: aFontSize on: aCanvas [
 
 { #category : #private }
 AthensCairoText >> primShowText: aString on: aCanvas [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	self nbCall: #(void cairo_show_text (
+	^ self ffiCall: #(void cairo_show_text (
 			cairo_t aCanvas,
 			char * aString) )
 

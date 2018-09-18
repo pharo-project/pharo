@@ -4,7 +4,7 @@ I represent x86_64 architectures.
 Class {
 	#name : #'FFI_x86_64',
 	#superclass : #FFIArchitecture,
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-Architecture'
 }
 
 { #category : #private }
@@ -17,6 +17,11 @@ FFI_x86_64 class >> uniqueInstance [
 { #category : #types }
 FFI_x86_64 >> externalLongType [
 	^ ExternalType signedLongLong
+]
+
+{ #category : #types }
+FFI_x86_64 >> externalSizeTType [
+	^ ExternalType unsignedLongLong
 ]
 
 { #category : #types }

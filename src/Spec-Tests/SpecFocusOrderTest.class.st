@@ -1,3 +1,6 @@
+"
+SUnit tests for SpecFocusOrder
+"
 Class {
 	#name : #SpecFocusOrderTest,
 	#superclass : #TestCase,

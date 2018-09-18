@@ -70,8 +70,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Graphics-Shapes'.
 		spec package: 'Growl'.
 
-		spec package: 'MenuRegistration'.
-
 		spec package: 'Keymapping-Core'.
 		spec package: 'Keymapping-KeyCombinations'.
 		spec package: 'Keymapping-Pragmas'.
@@ -95,9 +93,11 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Multilingual-OtherLanguages'.
 		spec package: 'Multilingual-TextConverterOtherLanguages'.
 
-		spec package: 'NewValueHolder'.
+		spec package: 'NewValueHolder-Core'.
 
 		spec package: 'Polymorph-Widgets'.
+		
+		spec package: 'Images-Animated'.
 
 		spec package: 'Settings-Graphics'.
 		spec package: 'Settings-Polymorph'.

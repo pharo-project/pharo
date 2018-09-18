@@ -21,7 +21,7 @@ MCPackage class >> named: aString [
 
 { #category : #comparing }
 MCPackage >> = other [
-	^ other species = self species and: [other name sameAs: name]
+	^ other species = self species and: [other name = name]
 ]
 
 { #category : #accessing }

@@ -39,37 +39,56 @@ DateAndTimeTest >> testArithmeticAcrossDateBoundary [
 	t1 := '2004-01-07T11:55:00+00:00' asDateAndTime. 
 	t2 := t1 - ( (42900+1) seconds).  
 	self assert: t2 = ('2004-01-06T23:59:59+00:00' asDateAndTime)
-		
 
 ]
 
 { #category : #'tests - under design' }
 DateAndTimeTest >> testAsDateAndTime [	
-	
-		#('-1199-01-05T20:33:14.321-05:00' 
-		' 2002-05-16T17:20:45.1+01:01' 
+		|result|
+		result := #('-1199-01-05T20:33:14.321-05:00' 
+		'2002-05-16T17:20:45.1+01:01' 
 
-		' 2002-05-16T17:20:45.02+01:01' 
+		'2002-05-16T17:20:45.02+01:01' 
 
-		' 2002-05-16T17:20:45.003+01:01' 
+		'2002-05-16T17:20:45.003+01:01' 
 
-		' 2002-05-16T17:20:45.0004+01:01' 
-  		' 2002-05-16T17:20:45.00005' 
-		' 2002-05-16T17:20:45.000006+01:01' 
+		'2002-05-16T17:20:45.0004+01:01' 
+  		'2002-05-16T17:20:45.00005' 
+		'2002-05-16T17:20:45.000006+01:01' 
 
-		' 2002-05-16T17:20:45.0000007+01:01' 
-		' 2002-05-16T17:20:45.00000008-01:01'    
-		' 2002-05-16T17:20:45.000000009+01:01'   
-		' 2002-05-16T17:20:45.0000000001+01:01'   
+		'2002-05-16T17:20:45.0000007+01:01' 
+		'2002-05-16T17:20:45.00000008-01:01'    
+		'2002-05-16T17:20:45.000000009+01:01'   
+		'2002-05-16T17:20:45.0000000001+01:01'   
 
- 		' 2002-05-16T17:20' 
-		' 2002-05-16T17:20:45' 
-		' 2002-05-16T17:20:45+01:57' 
- 		' 2002-05-16T17:20:45-02:34' 
- 		' 2002-05-16T17:20:45+00:00' 
-		' 1997-04-26T01:02:03+01:02:3' ) 
+ 		'2002-05-16T17:20' 
+		'2002-05-16T17:20:45' 
+		'2002-05-16T17:20:45+01:57' 
+ 		'2002-05-16T17:20:45-02:34' 
+ 		'2002-05-16T17:20:45+00:00' 
+		'1997-04-26T01:02:03+01:02:3' ) 
 		
-		do: [:each | each asDateAndTime printString = each]
+		collect: [ :each | each asDateAndTime printString  ]. 
+		
+		
+		self assert: result equals:  #(
+		'-1199-01-05T20:33:14.321-05:00' 
+		'2002-05-16T17:20:45.1+01:01' 
+		'2002-05-16T17:20:45.02+01:01' 
+		'2002-05-16T17:20:45.003+01:01' 
+		'2002-05-16T17:20:45.0004+01:01' 
+		'2002-05-16T17:20:45.00005+02:00' 
+		'2002-05-16T17:20:45.000006+01:01' 
+		'2002-05-16T17:20:45.0000007+01:01' 
+		'2002-05-16T17:20:45.00000008-01:01' 
+		'2002-05-16T17:20:45.000000009+01:01' 
+		'2002-05-16T17:20:45+01:01' 
+		'2002-05-16T17:20:00+02:00' 
+		'2002-05-16T17:20:45+02:00' 
+		'2002-05-16T17:20:45+01:57' 
+		'2002-05-16T17:20:45-02:34' 
+		'2002-05-16T17:20:45+00:00' 
+		'1997-04-26T01:02:03+01:02:3')
 ]
 
 { #category : #tests }
@@ -505,7 +524,7 @@ DateAndTimeTest >> testReadFromUTCOffset [
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadTimeWithOtherCharactersAfter [
-	"See https://pharo.fogbugz.com/f/cases/17693/"
+	"See https://pharo.manuscript.com/f/cases/17693/"
 	self
 		assert:
 			(DateAndTime
@@ -517,8 +536,8 @@ DateAndTimeTest >> testReadTimeWithOtherCharactersAfter [
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadTimeZoneOffsetISO [
-	"See https://pharo.fogbugz.com/f/cases/17693/"
-	"See ISO 8601 offset format"
+	"See https://pharo.manuscript.com/f/cases/17693 
+	 See ISO 8601 offset format"
 
 	self
 		assert: (DateAndTime readTimezoneOffsetFrom: '+05:30' readStream) printString
@@ -527,15 +546,15 @@ DateAndTimeTest >> testReadTimeZoneOffsetISO [
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadTimeZoneOffsetISO822WithOtherCharactersAfter [
-	"See https://pharo.fogbugz.com/f/cases/17693/"
+	"See https://pharo.manuscript.com/f/cases/17693/"
 
 	self assert: (DateAndTime readTimezoneOffsetFrom: '+05:30 CommiterName' readStream) printString equals: '0:05:30:00'
 ]
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadTimeZoneOffsetRFC822 [
-	"See https://pharo.fogbugz.com/f/cases/17693/"
-	"See RFC822 : https://www.w3.org/Protocols/rfc822/"
+	"See https://pharo.manuscript.com/f/cases/17693
+	 See RFC822 : https://www.w3.org/Protocols/rfc822"
 
 	self
 		assert: (DateAndTime readTimezoneOffsetFrom: '+0530' readStream) printString
@@ -544,7 +563,7 @@ DateAndTimeTest >> testReadTimeZoneOffsetRFC822 [
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadTimeZoneOffsetRFC822WithOtherCharactersAfter [
-	"See https://pharo.fogbugz.com/f/cases/17693/"
+	"See https://pharo.manuscript.com/f/cases/17693"
 	
 	self
 		assert: (DateAndTime readTimezoneOffsetFrom: '+0530 CommiterName' readStream) printString
@@ -699,6 +718,23 @@ DateAndTimeTest >> testSqueakEpoch [
   self assert: ((DateAndTime fromSeconds: 0) offset: 0) equals: '1901-01-01T00:00:00+00:00' asDateAndTime.
 ]
 
+{ #category : #'tests - arithmetic' }
+DateAndTimeTest >> testSubstracting [
+
+	| t |
+	t := '2004-01-07T11:55:00+00:00' asDateAndTime. 
+	self assert: t - 5 equals: '2004-01-07T11:54:55+00:00' asDateAndTime
+
+]
+
+{ #category : #'tests - arithmetic' }
+DateAndTimeTest >> testSubstracting02 [
+
+	| t |
+	t := '2004-01-07T11:55:00+00:00' asDateAndTime. 
+	self assert: t - '2004-01-07T1:00:00+00:00' equals: (Duration fromString: '0:10:55:00')
+]
+
 { #category : #'tests - under design' }
 DateAndTimeTest >> testSymmetric [
 	| t1 t2 |
@@ -783,6 +819,12 @@ DateAndTimeTest >> testTransitive [
 DateAndTimeTest >> testUnixEpoch [
 
 	self assert: DateAndTime unixEpoch equals: '1 January 1970 00:00+00:00' asDateAndTime.	
+]
+
+{ #category : #tests }
+DateAndTimeTest >> testYearMonth [
+	
+	self assert: ((DateAndTime year: 2018 month: 9) asDate asString) equals: '1 September 2018'.
 ]
 
 { #category : #helpers }

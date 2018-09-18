@@ -25,20 +25,17 @@ SDL_Renderer class >> finalizeResourceData: aHandle [
 
 { #category : #rendering }
 SDL_Renderer >> clear [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_RenderClear ( self ) )
+	^ self ffiCall: #( int SDL_RenderClear ( self ) )
 ]
 
 { #category : #rendering }
 SDL_Renderer >> copy: texture [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_RenderCopy ( self , SDL_Texture texture , nil, nil ) )
+	^ self ffiCall: #( int SDL_RenderCopy ( self , SDL_Texture texture , nil, nil ) )
 ]
 
 { #category : #rendering }
 SDL_Renderer >> copy: texture srcRect: srcRect dstRect: dstRect [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_RenderCopy ( self , SDL_Texture texture , SDL_Rect* srcRect , SDL_Rect* dstRect ) )
+	^ self ffiCall: #( int SDL_RenderCopy ( self , SDL_Texture texture , SDL_Rect* srcRect , SDL_Rect* dstRect ) )
 ]
 
 { #category : #rendering }
@@ -56,32 +53,27 @@ SDL_Renderer >> destroy [
 
 { #category : #rendering }
 SDL_Renderer >> drawColorR: r g: g b: b a: a [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_SetRenderDrawColor ( self , Uint8 r , Uint8 g , Uint8 b , Uint8 a ) )
+	^ self ffiCall: #( int SDL_SetRenderDrawColor ( self , Uint8 r , Uint8 g , Uint8 b , Uint8 a ) )
 ]
 
 { #category : #rendering }
 SDL_Renderer >> drawLineX1: x1 y1: y1 x2: x2 y2: y2 [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_RenderDrawLine ( self , int x1 , int y1 , int x2 , int y2 ) )
+	^ self ffiCall: #( int SDL_RenderDrawLine ( self , int x1 , int y1 , int x2 , int y2 ) )
 ]
 
 { #category : #rendering }
 SDL_Renderer >> drawPointX: x y: y [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_RenderDrawPoint ( self , int x , int y ) )
+	^ self ffiCall: #( int SDL_RenderDrawPoint ( self , int x , int y ) )
 ]
 
 { #category : #rendering }
 SDL_Renderer >> drawRect: rect [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_RenderDrawRect ( self , SDL_Rect* rect ) )
+	^ self ffiCall: #( int SDL_RenderDrawRect ( self , SDL_Rect* rect ) )
 ]
 
 { #category : #rendering }
 SDL_Renderer >> fillRect: rect [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_RenderFillRect ( self , SDL_Rect* rect ) )
+	^ self ffiCall: #( int SDL_RenderFillRect ( self , SDL_Rect* rect ) )
 ]
 
 { #category : #accessing }
@@ -100,26 +92,22 @@ SDL_Renderer >> initialize [
 
 { #category : #rendering }
 SDL_Renderer >> noClipRect [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_RenderSetClipRect ( self , nil ) )
+	^ self ffiCall: #( int SDL_RenderSetClipRect ( self , nil ) )
 ]
 
 { #category : #rendering }
 SDL_Renderer >> noRenderTarget [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_SetRenderTarget ( self , nil ) )
+	^ self ffiCall: #( int SDL_SetRenderTarget ( self , nil ) )
 ]
 
 { #category : #rendering }
 SDL_Renderer >> present [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_RenderPresent ( self ) )
+	^ self ffiCall: #( void SDL_RenderPresent ( self ) )
 ]
 
 { #category : #private }
 SDL_Renderer >> primCreateTextureFormat: format access: access width: width height: height [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( SDL_Texture SDL_CreateTexture ( self , Uint32 format , int access , int width , int height ) )
+	^ self ffiCall: #( SDL_Texture SDL_CreateTexture ( self , Uint32 format , int access , int width , int height ) )
 ]
 
 { #category : #initialization }

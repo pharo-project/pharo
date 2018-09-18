@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'method',
 		'arguments',
-		'keyword'
+		'selector'
 	],
 	#category : #'Kernel-Pragmas'
 }
@@ -112,7 +112,7 @@ Pragma >> = aPragma [
 { #category : #comparing }
 Pragma >> analogousCodeTo: anObject [ 
 	^self class == anObject class
-	  and: [keyword == anObject keyword
+	  and: [selector == anObject selector
 	  and: [arguments = anObject arguments]]
 ]
 
@@ -130,9 +130,14 @@ Pragma >> arguments [
 	^ arguments
 ]
 
+{ #category : #initialization }
+Pragma >> arguments: anArray [
+	arguments := anArray
+]
+
 { #category : #testing }
 Pragma >> hasLiteral: aLiteral [
-	^keyword == aLiteral 
+	^selector == aLiteral 
 	   or: [arguments hasLiteral: aLiteral]
 ]
 
@@ -140,7 +145,7 @@ Pragma >> hasLiteral: aLiteral [
 Pragma >> hasLiteralSuchThat: aBlock [
 	"Answer true if litBlock returns true for any literal in the receiver, even if embedded in further array structure.
 	 This method is only intended for private use by CompiledMethod hasLiteralSuchThat:"
-	^(aBlock value: keyword)
+	^(aBlock value: selector)
 	   or: [arguments hasLiteralSuchThat: aBlock]
 ]
 
@@ -159,22 +164,20 @@ Pragma >> hash [
 Pragma >> key [
 	"Answer the keyword of the pragma (the selector of its message pattern).
 	 This accessor provides polymorphism with Associations used for properties."
-	^keyword
+	^self selector
 ]
 
-{ #category : #accessing }
+{ #category : #'to be deprecated' }
 Pragma >> keyword [
-	"Answer the keyword of the pragma (the selector of its message pattern).
-	 For a pragma defined as <key1: val1 key2: val2> this will answer #key1:key2:."
-	
-	^ keyword
+	"to be deprecated for #selector"
+	^ self selector
 ]
 
 { #category : #accessing }
 Pragma >> message [
 	"Answer the message of the receiving pragma."
 	
-	^ Message selector: self keyword arguments: self arguments. 
+	^ Message selector: self selector arguments: self arguments. 
 ]
 
 { #category : #'accessing-method' }
@@ -182,6 +185,11 @@ Pragma >> method [
 	"Answer the compiled-method containing the pragma."
 	
 	^ method
+]
+
+{ #category : #initialization }
+Pragma >> method: aCompiledMethod [
+	method := aCompiledMethod
 ]
 
 { #category : #'accessing-method' }
@@ -218,6 +226,19 @@ Pragma >> printOn: aStream [
 	aStream nextPut: $>.
 ]
 
+{ #category : #accessing }
+Pragma >> selector [
+	"Answer the selector of the pragma.
+	 For a pragma defined as <key1: val1 key2: val2> this will answer #key1:key2:."
+	
+	^ selector
+]
+
+{ #category : #initialization }
+Pragma >> selector: aSymbol [
+	selector := aSymbol
+]
+
 { #category : #sending }
 Pragma >> sendTo: anObject [
 	"Send the pragma keyword together with its arguments to anObject and answer the result."
@@ -225,18 +246,21 @@ Pragma >> sendTo: anObject [
 	^ anObject perform: self keyword withArguments: self arguments
 ]
 
-{ #category : #initialization }
+{ #category : #'to be deprecated' }
 Pragma >> setArguments: anArray [
+	"to be deprecated for #arguments:"
 	arguments := anArray
 ]
 
-{ #category : #initialization }
+{ #category : #'to be deprecated' }
 Pragma >> setKeyword: aSymbol [
-	keyword := aSymbol
+	"to be deprecated for #selector:"
+	self selector: aSymbol
 ]
 
-{ #category : #initialization }
+{ #category : #'to be deprecated' }
 Pragma >> setMethod: aCompiledMethod [
+	"to be deprecated for #method:"
 	method := aCompiledMethod
 ]
 

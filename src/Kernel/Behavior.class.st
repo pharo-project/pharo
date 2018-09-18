@@ -20,7 +20,8 @@ Class {
 { #category : #testing }
 Behavior class >> canZapMethodDictionary [
 	"Return false since zapping the method dictionary of Behavior class or its subclasses will cause the system to fail."
-	^false
+
+	^ false
 ]
 
 { #category : #cleanup }
@@ -138,8 +139,8 @@ Behavior >> allInstVarNames [
 
 	| vars |
 	self superclass == nil
-		ifTrue: [vars := self instVarNames copy]	"Guarantee a copy is answered."
-		ifFalse: [vars := self superclass allInstVarNames , self instVarNames].
+		ifTrue: [vars := self slots collect: #name]	"Guarantee a copy is answered."
+		ifFalse: [vars := self superclass allInstVarNames , (self slots collect: #name)].
 	^vars
 ]
 
@@ -536,8 +537,9 @@ Behavior >> canUnderstand: selector [
 
 { #category : #testing }
 Behavior >> canZapMethodDictionary [
-	"Return true if it is safe to zap the method dictionary on #obsolete"
-	^true
+	"Return true if it is safe to zap the method dictionary on #obsolete."
+
+	^ true
 ]
 
 { #category : #'accessing method dictionary' }
@@ -1733,6 +1735,11 @@ Behavior >> shutDown [
 Behavior >> shutDown: quitting [
 	"This message is sent on system shutdown to registered classes"
 	^self shutDown.
+]
+
+{ #category : #accessing }
+Behavior >> slots [
+	^#()
 ]
 
 { #category : #'accessing instances and variables' }

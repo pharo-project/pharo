@@ -58,11 +58,6 @@ ZnEncodedStream >> encoding: encoding [
 	encoder := encoding asZnCharacterEncoder
 ]
 
-{ #category : #accessing }
-ZnEncodedStream >> flush [
-	^ stream flush
-]
-
 { #category : #testing }
 ZnEncodedStream >> isStream [
   ^ true

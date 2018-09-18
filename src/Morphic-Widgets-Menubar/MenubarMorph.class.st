@@ -131,15 +131,17 @@ MenubarMorph >> newMenuItem [
 
 { #category : #accessing }
 MenubarMorph >> open [
-
-	self menuBarItems do: [ :each |
-		self
-			add: each label
-			icon: each icon
-			help: each help
-			subMenu: (each subMenu ifNotNil: #asMenuMorph).
-			each separator ifTrue: [ self addSeparator ] ].
-		
+	self menuBarItems
+		do: [ :each | 
+			self
+				add: each label
+				icon: each icon
+				help: each help
+				subMenu: (each subMenu ifNotNil: #asMenubarMenuMorph)
+				action: each action
+				keyText: each keyText.
+			each separator
+				ifTrue: [ self addSeparator ] ].
 	self
 		adhereToTop;
 		openInWorld

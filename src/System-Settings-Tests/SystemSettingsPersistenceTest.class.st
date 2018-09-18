@@ -29,10 +29,9 @@ SystemSettingsPersistenceTest >> setUp [
 	memory := FileSystem memory.
 	preferences := memory root / 'pharo' / 'pharoX.Y' / 'preferences.ston.txt'.
 	systemSettings := SystemSettingsPersistence new.
-	systemSettings 
+	systemSettings
 		fileReference: preferences;
-		settingTree: MockSettings settingTree.
-	
+		settingTree: MockSettings settingTree
 ]
 
 { #category : #accessing }

@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'users'
 	],
-	#category : #TraitsV2
+	#category : #'TraitsV2-Base'
 }
 
 { #category : #'accessing method dictionary' }
@@ -329,15 +329,10 @@ TraitedClass >> tagsForMethods [
 	It supposed to not include any method tags inherited from Traits 
 	which is opposite to current Protocol implementation.
 	And extension protocol is not treated as tag"
-	| allProtocols tags |
-	allProtocols := self organization protocols 
-		reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
+	| allProtocols |
+	allProtocols := self organization protocols reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
 		
-	tags := OrderedCollection new.
-	allProtocols do: [ :each | 
-		(self isLocalMethodsProtocol: each) ifTrue: [ tags add: each name ]].
-
-	^tags
+	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
 ]
 
 { #category : #accessing }

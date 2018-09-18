@@ -15,7 +15,7 @@ Class {
 		'OFFSET_Y'
 	],
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#category : #'Athens-Cairo-Transforms'
 }
@@ -70,10 +70,7 @@ AthensCairoMatrix >> initialize [
 
 { #category : #private }
 AthensCairoMatrix >> initx: x y: y sx: sx sy: sy shx: shx shy: shy [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_matrix_init (AthensCairoMatrix * self,
 			double sx,
 			double shy,
@@ -93,10 +90,7 @@ AthensCairoMatrix >> inverseTransform: aPoint [
 
 { #category : #transformations }
 AthensCairoMatrix >> invert [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #( cairo_status_t cairo_matrix_invert (AthensCairoMatrix *  self))
+	^self ffiCall: #( cairo_status_t cairo_matrix_invert (AthensCairoMatrix *  self))
 
 
 ]
@@ -143,17 +137,12 @@ AthensCairoMatrix >> postCopy [
 { #category : #private }
 AthensCairoMatrix >> primLoadIdentity [
 	"initialize with identity transform"
-	
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-
-	^ self nbCall: #( void cairo_matrix_init_identity (AthensCairoMatrix * self ) )
+	^ self ffiCall: #( void cairo_matrix_init_identity (AthensCairoMatrix * self ) )
 ]
 
 { #category : #transformations }
 AthensCairoMatrix >> primMultiplyBy: m [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-
-	^self nbCall: #(void   cairo_matrix_multiply
+	^ self ffiCall: #(void   cairo_matrix_multiply
 		(AthensCairoMatrix * self,
 		AthensCairoMatrix * m ,
 		AthensCairoMatrix * self ) )
@@ -163,10 +152,7 @@ AthensCairoMatrix >> primMultiplyBy: m [
 
 { #category : #private }
 AthensCairoMatrix >> primTransformX: x Y: y [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #( void cairo_matrix_transform_point (AthensCairoMatrix *  self, double * x, double * y))
+	^ self ffiCall: #( void cairo_matrix_transform_point (AthensCairoMatrix *  self, double * x, double * y))
 
 
 ]
@@ -189,10 +175,7 @@ AthensCairoMatrix >> rotateByDegrees: angle [
 
 { #category : #transformations }
 AthensCairoMatrix >> rotateByRadians: angle [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_matrix_rotate (AthensCairoMatrix *  self,
                                                          double angle))
 
@@ -212,10 +195,7 @@ AthensCairoMatrix >> scaleBy: factor [
 
 { #category : #transformations }
 AthensCairoMatrix >> scaleX: fx Y: fy [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_matrix_scale (AthensCairoMatrix * self,
                                                          double fx,
                                                          double fy))
@@ -225,30 +205,21 @@ AthensCairoMatrix >> scaleX: fx Y: fy [
 
 { #category : #transformations }
 AthensCairoMatrix >> setRotationInRadians: radians [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #( void cairo_matrix_init_rotate (AthensCairoMatrix * self, double  radians))
+	^ self ffiCall: #( void cairo_matrix_init_rotate (AthensCairoMatrix * self, double  radians))
 
 
 ]
 
 { #category : #transformations }
 AthensCairoMatrix >> setScaleX: x Y: y [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #( void cairo_matrix_init_scale (AthensCairoMatrix * self, double  x, double  y))
+	^ self ffiCall: #( void cairo_matrix_init_scale (AthensCairoMatrix * self, double  x, double  y))
 
 
 ]
 
 { #category : #transformations }
 AthensCairoMatrix >> setTranslateX: x Y: y [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #( void cairo_matrix_init_translate (AthensCairoMatrix * self, double  x, double  y))
+	^ self ffiCall: #( void cairo_matrix_init_translate (AthensCairoMatrix * self, double  x, double  y))
 
 
 ]
@@ -319,10 +290,7 @@ AthensCairoMatrix >> translateBy: aPoint [
 
 { #category : #transformations }
 AthensCairoMatrix >> translateX: px Y: py [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		void cairo_matrix_translate (AthensCairoMatrix * self,
                                                          double px,
                                                          double py))

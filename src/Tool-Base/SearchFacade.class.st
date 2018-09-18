@@ -77,14 +77,6 @@ SearchFacade class >> packageSearchIn: anEnvironment [
 ]
 
 { #category : #'protocol search' }
-SearchFacade class >> protocolSearchFor: aClass [
-
-	^ (self protocolSearchIn: aClass organization categories)
-			browseBlock: [:answer | Smalltalk tools browser openOnClass: aClass onProtocol: answer ]; 
-			yourself
-]
-
-{ #category : #'protocol search' }
 SearchFacade class >> protocolSearchIn: aCollection [
 	^ ListDialogWindow new
 		getList: [ :r | aCollection sorted select: [ :e | r search: e ] ];

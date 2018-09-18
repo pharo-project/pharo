@@ -325,6 +325,12 @@ OSWindowMorphicEventHandler >> visitWindowCloseEvent: anEvent [
 ]
 
 { #category : #visiting }
+OSWindowMorphicEventHandler >> visitWindowExposeEvent: anEvent [
+	"Make sure that the renderer for this window exist."
+	morphicWorld osWindowRenderer
+]
+
+{ #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowResizeEvent: anEvent [
 
 	"window resized"

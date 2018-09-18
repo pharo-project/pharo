@@ -974,12 +974,12 @@ UITheme >> chooseColorIn: aThemedMorph title: aString color: aColor for: aBlock 
 UITheme >> chooseDirectoryIn: aThemedMorph title: title path: path [
 	"Answer the result of a file dialog with the given title, choosing directories only."
 
-	|fd|
+	| fd |
 	fd := (FileDialogWindow newWithTheme: aThemedMorph theme)
 		title: title;
 		answerDirectory.
-	path ifNotNil: [fd selectPathName: path].
-	^(aThemedMorph openModal: fd) answer
+	path ifNotNil: [ fd selectPath: path ].
+	^ (aThemedMorph openModal: fd) answer
 ]
 
 { #category : #services }
@@ -999,16 +999,16 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 	"Answer the result of a file open dialog with the given title, extensions path and preview type.
 	Answer nil or a filename."
 
-	|fd|
+	| fd |
 	fd := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
 		initialize;
 		title: title;
 		answerFileEntry.
-	exts ifNotNil: [fd validExtensions: exts].
-	path ifNotNil: [fd selectPathName: path].
-	^(aThemedMorph openModal: fd) answer
+	exts ifNotNil: [ fd validExtensions: exts ].
+	path ifNotNil: [ fd selectPath: path ].
+	^ (aThemedMorph openModal: fd) answer
 ]
 
 { #category : #services }
@@ -1017,16 +1017,16 @@ UITheme >> chooseFileNameIn: aThemedMorph title: title extensions: exts path: pa
 	path and preview type.
 	Answer nil or a filename."
 
-	|fd|
+	| fd |
 	fd := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
 		initialize;
 		title: title;
 		answerFileName.
-	exts ifNotNil: [fd validExtensions: exts].
-	path ifNotNil: [fd selectPathName: path].
-	^(aThemedMorph openModal: fd) answer
+	exts ifNotNil: [ fd validExtensions: exts ].
+	path ifNotNil: [ fd selectPath: path ].
+	^ (aThemedMorph openModal: fd) answer
 ]
 
 { #category : #services }
@@ -1050,16 +1050,16 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title extensions: exts path
 	path and preview type.
 	Answer nil or a full filename."
 
-	|fd|
+	| fd |
 	fd := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
 		initialize;
 		title: title;
 		answerPathName.
-	exts ifNotNil: [fd validExtensions: exts].
-	path ifNotNil: [fd selectPathName: path].
-	^(aThemedMorph openModal: fd) answer
+	exts ifNotNil: [ fd validExtensions: exts ].
+	path ifNotNil: [ fd selectPath: path ].
+	^ (aThemedMorph openModal: fd) answer
 ]
 
 { #category : #services }
@@ -1068,19 +1068,20 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title patterns: patterns pa
 	path and preview type.
 	Answer nil or a filename."
 
-	|fd|
+	| fd |
 	fd := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
 		initialize;
 		title: title;
 		answerPathName.
-	patterns ifNotNil: [
-		fd fileSelectionBlock: [:de |
-			(fd defaultFileSelectionBlock value: de) and: [
-				de isDirectory or: [patterns anySatisfy: [:pat | pat match: de name]]]]].
-	path ifNotNil: [fd selectPathName: path].
-	^(aThemedMorph openModal: fd) answer
+	patterns
+		ifNotNil: [ fd
+				fileSelectionBlock: [ :de | 
+					(fd defaultFileSelectionBlock value: de)
+						and: [ de isDirectory or: [ patterns anySatisfy: [ :pat | pat match: de name ] ] ] ] ].
+	path ifNotNil: [ fd selectPath: path ].
+	^ (aThemedMorph openModal: fd) answer
 ]
 
 { #category : #services }
@@ -2167,16 +2168,16 @@ UITheme >> fadeCheckboxWhenDisabled [
 UITheme >> fileOpenIn: aThemedMorph title: title extensions: exts path: path preview: preview [
 	"Answer the result of a file open dialog with the given title, extensions path and preview type."
 
-	|fd|
+	| fd |
 	fd := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
 		initialize;
 		title: title;
 		answerOpenFile.
-	exts ifNotNil: [fd validExtensions: exts].
-	path ifNotNil: [fd selectPathName: path].
-	^(aThemedMorph openModal: fd) answer
+	exts ifNotNil: [ fd validExtensions: exts ].
+	path ifNotNil: [ fd selectPath: path ].
+	^ (aThemedMorph openModal: fd) answer
 ]
 
 { #category : #services }
@@ -2190,14 +2191,14 @@ UITheme >> fileSaveIn: aThemedMorph title: title extensions: exts path: path [
 UITheme >> fileSaveIn: aThemedMorph title: title initialAnswer: aFileName extensions: exts path: path [
 	"Answer the result of a file save dialog with the given title, extensions and path."
 
-	|fd|
+	| fd |
 	fd := (FileDialogWindow newWithTheme: aThemedMorph theme)
 		title: title;
 		fileNameText: aFileName;
 		answerSaveFile.
-	exts ifNotNil: [fd validExtensions: exts].
-	path ifNotNil: [fd selectPathName: path].
-	^(aThemedMorph openModal: fd) answer
+	exts ifNotNil: [ fd validExtensions: exts ].
+	path ifNotNil: [ fd selectPath: path ].
+	^ (aThemedMorph openModal: fd) answer
 ]
 
 { #category : #accessing }
@@ -2254,6 +2255,11 @@ UITheme >> forms: anObject [
 	"Set the value of forms"
 
 	forms := anObject
+]
+
+{ #category : #'accessing colors' }
+UITheme >> ghostTextColor [ 
+	^ Color lightGray
 ]
 
 { #category : #'border-styles' }
@@ -4941,7 +4947,7 @@ UITheme >> scrollbarMinimumThumbThickness [
 	"Answer the minumum width or height of a scrollbar thumb 
 	as appropriate to its orientation."
 	
-	^15
+	^15 * World displayScaleFactor
 ]
 
 { #category : #'border-styles-scrollbars' }
@@ -5316,7 +5322,7 @@ UITheme >> sliderNormalBorderStyleFor: aSlider [
 UITheme >> sliderNormalFillStyleFor: aSlider [
 	"Return the normal fillStyle for the given slider."
 	
-	^Color white
+	^ SolidFillStyle color: Color white
 ]
 
 { #category : #accessing }

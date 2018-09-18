@@ -74,17 +74,26 @@ CustomHelp class >> builder [
 { #category : #formatting }
 CustomHelp class >> doItFrom: aString [
 	"Return Text object with a specific color and mouse click action
-	that executes aString; aString should be a Smalltalk script that is possible to evaluate."
+	that executes aString; aString should also be a Smalltalk script that is possible to evaluate."
+	
+	^self doItFrom: aString text: aString
+
+]
+
+{ #category : #formatting }
+CustomHelp class >> doItFrom: aString text: textString [
+	"Return Text object with a specific color and mouse click action displayed as textString; 
+	 aString should be a Smalltalk script that is possible to evaluate."
 	| color |
 	
 	color := Color fromHexString: 'aa5693'.
 
 	aString ifEmpty: [ self errorEmptyString ].
-	^ aString asText
+	^ textString asText
 		addAttribute: (TextAction new actOnClickBlock: [
 				Smalltalk compiler evaluate: aString]; yourself) 
-			from: 1 to: aString size;
-		addAttribute: (TextColor new color: color) from: 1 to: aString size;
+			from: 1 to: textString size;
+		addAttribute: (TextColor new color: color) from: 1 to: textString size;
 		yourself
 
 ]
@@ -179,7 +188,7 @@ CustomHelp class >> newColoredText: color withClipboardAction: aString [
 	icon := Text
 		string: (String value: 1)
 		attributes:
-			{(TextAnchor new anchoredMorph: #smallCopy asIcon).
+			{(TextAnchor new anchoredMorph: (self iconNamed: #smallCopy)).
 			(TextAction new
 				actOnClickBlock: [ Clipboard clipboardText: aString.
 					self inform: 'The URL has been pasted into your clipboard' ])}.
@@ -201,7 +210,7 @@ CustomHelp class >> newColoredText: color withRunAction: aString [
 	icon := Text
 		string: (String value: 1)
 		attributes: { 
-			(TextAnchor new anchoredMorph: #glamorousGo asIcon).
+			(TextAnchor new anchoredMorph: (self iconNamed: #glamorousGo)).
 			(TextAction new actOnClickBlock: [
 				Smalltalk compiler evaluate: aString]; yourself) }.
 	run := ' (execute it)' asText

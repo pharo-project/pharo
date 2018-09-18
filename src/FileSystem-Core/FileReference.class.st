@@ -108,10 +108,17 @@ FileReference >> containsReference: aReference [
 ]
 
 { #category : #operations }
-FileReference >> copyTo: aReference [
+FileReference >> copyTo: aFileReference [
+	"Copy the receiver and create the argument, a file reference."
+	
+	"If you want to copy a file from a folder into a given folder, the argument should not be the future parent folder
+	but a file reference of the future location.  
+	Therefore use 
+		(folder1 / 'foo.txt') copyTo: (folder2 / 'bar.txt')"
+		
 	self isDirectory
-		ifTrue: [ aReference ensureCreateDirectory ]
-		ifFalse: [ filesystem copy: path toReference: aReference ]
+		ifTrue: [ aFileReference ensureCreateDirectory ]
+		ifFalse: [ filesystem copy: path toReference: aFileReference ]
 ]
 
 { #category : #copying }
@@ -305,7 +312,7 @@ FileReference >> nextNameFor: baseFileName extension: extension [
 	splits := files
 		collect: [ :filename | filename basename splitOn: $. ]
 		thenSelect: [ :split | (split at: 1) = baseFileName and: [ split size = 3 ] ].
-	splits := splits asSortedCollection: [ :a :b | (a at: 2) < (b at: 2) ].
+	splits := splits asSortedCollection: [ :a :b | (a at: 2) asNumber < (b at: 2) asNumber ].
 	version := splits isEmpty
 		ifTrue: [ 1 ]
 		ifFalse: [ (splits last at: 2) asNumber + 1 ].

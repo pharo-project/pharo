@@ -10,7 +10,7 @@ Class {
 		'window',
 		'lastExposeTime'
 	],
-	#category : #'OSWindow-Core'
+	#category : #'OSWindow-Core-Renderer'
 }
 
 { #category : #deleting }
@@ -36,12 +36,12 @@ OSWindowRenderer >> initialize [
 	lastExposeTime := 0
 ]
 
-{ #category : #'*OSWindow-Core-Extras' }
+{ #category : #'as yet unclassified' }
 OSWindowRenderer >> onRenderThread: aBlock [
 	OSWindowRenderThread enqueueOperation: aBlock
 ]
 
-{ #category : #'*OSWindow-Core-Extras' }
+{ #category : #'as yet unclassified' }
 OSWindowRenderer >> onRenderThreadBlocking: aBlock [
 	OSWindowRenderThread enqueueBlockingOperation: aBlock
 ]

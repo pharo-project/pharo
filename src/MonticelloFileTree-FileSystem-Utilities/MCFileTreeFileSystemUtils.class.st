@@ -95,5 +95,7 @@ MCFileTreeFileSystemUtils class >> resolvePath: path in: aDirectory [
 
 { #category : #utilities }
 MCFileTreeFileSystemUtils class >> writeStreamFor: filePath in: aDirectory do: aBlock [
-    (aDirectory resolveString: filePath) writeStreamDo: aBlock
+    (aDirectory resolveString: filePath) 
+		ensureDelete;
+		writeStreamDo: aBlock
 ]

@@ -267,6 +267,15 @@ GTSpotter >> defaultStep [
 	^ GTSpotterStep new
 ]
 
+{ #category : #'actions api' }
+GTSpotter >> doIt [
+	| result |
+	Smalltalk compiler
+		silentlyDo: [ result := Smalltalk compiler evaluate: text string trimBoth ]
+		exceptionDo: [:ex | ^ex ]. 
+	"self exitDueTo: #doIt"
+]
+
 { #category : #accessing }
 GTSpotter >> exceptionHandler [
 	^ exceptionHandler ifNil: [ exceptionHandler := self defaultExceptionHandler ]
@@ -404,6 +413,16 @@ GTSpotter >> initialize [
 	super initialize.
 	
 	processorsFilter := GTSpotterSettingsProcessorFilter new
+]
+
+{ #category : #'actions api' }
+GTSpotter >> inspectIt [
+	| result |
+	Smalltalk compiler
+		silentlyDo: [ result := Smalltalk compiler evaluate: text string trimBoth ]
+		exceptionDo: [ :ex | ^ex  ].
+	result inspect.
+	self exitDueTo: #inspectIt 
 ]
 
 { #category : #testing }

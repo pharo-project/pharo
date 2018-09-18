@@ -4,7 +4,7 @@ This is deprecated class because the original class AbstractWidgetModel was rena
 Class {
 	#name : #AbstractWidgetModel,
 	#superclass : #AbstractWidgetPresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }

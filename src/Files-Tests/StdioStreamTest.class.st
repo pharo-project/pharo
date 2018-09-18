@@ -13,7 +13,7 @@ StdioStreamTest relies on a test stream constructed by StdioStreamTestResource.
 Class {
 	#name : #StdioStreamTest,
 	#superclass : #TestCase,
-	#category : #'Files-Tests'
+	#category : #'Files-Tests-Streams'
 }
 
 { #category : #'tests-manual' }

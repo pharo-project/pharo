@@ -37,7 +37,7 @@ Class {
 		'TraceEvents',
 		'VMWindow'
 	],
-	#category : #'OSWindow-Core'
+	#category : #'OSWindow-Core-Base'
 }
 
 { #category : #'clipboard handling' }
@@ -52,7 +52,12 @@ OSWindow class >> clipboardText: aString [
 
 { #category : #'instance creation' }
 OSWindow class >> createWithAttributes: attributes [
-	^ self basicNew initWithAttributes: attributes
+	^ self createWithAttributes: attributes eventHandler: nil
+]
+
+{ #category : #'instance creation' }
+OSWindow class >> createWithAttributes: attributes eventHandler: eventHandler [
+	^ self basicNew initWithAttributes: attributes eventHandler: eventHandler
 ]
 
 { #category : #finalization }
@@ -204,10 +209,12 @@ OSWindow >> icon: aForm [
 ]
 
 { #category : #initialization }
-OSWindow >> initWithAttributes: attributes [
+OSWindow >> initWithAttributes: attributes eventHandler: anEventHandle [
 	initialAttributes := attributes.
+	eventHandler := anEventHandle.
 	self createWindow.
 	self initialize
+
 ]
 
 { #category : #private }
@@ -312,6 +319,12 @@ OSWindow >> restore [
 OSWindow >> setDraggableArea: aRectangle [
 
 	^self validHandle setDraggableArea: aRectangle.
+]
+
+{ #category : #private }
+OSWindow >> setJustCreatedHandle: aHandle [
+	"This method is to be called by a driver that needs to create the window in a critical section to prevent a race condition where some events such as expose could be missed."
+	handle := aHandle
 ]
 
 { #category : #accessing }

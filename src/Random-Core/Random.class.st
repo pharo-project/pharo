@@ -31,7 +31,7 @@ Class {
 		'q',
 		'r'
 	],
-	#category : #'Random-Core'
+	#category : #'Random-Core-Base'
 }
 
 { #category : #testing }

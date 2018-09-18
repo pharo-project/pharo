@@ -15,7 +15,7 @@ Class {
 		'cache'
 	],
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#category : #'Athens-Cairo-Text'
 }
@@ -45,9 +45,7 @@ all of this for using
 http://www.cairographics.org/manual/cairo-User-Fonts.html#cairo-user-scaled-font-text-to-glyphs-func-t
 
 "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #(
+	^ self ffiCall: #(
 		cairo_status_t cairo_scaled_font_text_to_glyphs (CairoScaledFont aScaledFont,
 			double x,
 			double y,
@@ -87,9 +85,7 @@ CairoFontMetricsProvider >> fontHeight [
 
 { #category : #private }
 CairoFontMetricsProvider >> freeGlyphs: glyphs [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #( void cairo_glyph_free (void *glyphs))
+	^ self ffiCall: #( void cairo_glyph_free (void *glyphs))
 ]
 
 { #category : #accessing }

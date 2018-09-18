@@ -256,7 +256,7 @@ NumberParserTest >> testFloatmin [
 	ref http://www.exploringbinary.com/gays-strtod-returns-zero-for-inputs-just-above-2-1075/
 	ref http://gcc.gnu.org/viewcvs/gcc/trunk/gcc/testsuite/gcc.dg/float-exact-1.c?view=markup&pathrev=205119
 	They are also non regression for a bug of NumberParser related to incorrect position of last non zero digit.
-	ref https://pharo.fogbugz.com/f/cases/12642/bug-in-NumberParser-when-reading-a-number-with-fraction-part"
+	ref https://pharo.manuscript.com/f/cases/12642/"
 	| halfMin moreThanHalfmin |
 	halfMin := NumberParser parse: (Float fmin asTrueFraction / 2 printShowingDecimalPlaces: 1 - Float fmin exponent).
 	self assert: halfMin = 0.0 description: 'nearest even of 0.5*Float fmin is zero'.

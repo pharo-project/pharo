@@ -128,6 +128,16 @@ NECModel >> notEmpty [
 	^self isEmpty not
 ]
 
+{ #category : #printing }
+NECModel >> printOn: aStream [
+
+	super printOn: aStream.
+	clazz ifNotNil: 
+				[ aStream nextPutAll: ' ('.
+				clazz printOn: aStream.
+				aStream nextPutAll: ')' ]
+]
+
 { #category : #private }
 NECModel >> reset [
 	self resetSelectors.
@@ -142,27 +152,34 @@ NECModel >> resetEntries [
 
 { #category : #private }
 NECModel >> resetSelectors [
-	selectors := (SortedCollection new: 500) sortBlock: 
+	selectors := OrderedCollection new: 500.
+]
+
+{ #category : #initialization }
+NECModel >> setClass: aClass [ 
+	clazz := aClass.
+	self initializeSelectors.
+	self narrowWith: String new
+]
+
+{ #category : #private }
+NECModel >> sortSelectors [
+	| case |
+	case :=  NECPreferences caseSensitive.
+	selectors sort: 
 		[ :a :b | 
 		| scoreA scoreB |
 		scoreA := scoreB := 0.
 		(a contents 
 			beginsWithEmpty: narrowString
-			caseSensitive: NECPreferences caseSensitive) ifFalse: [ scoreA := 2 ].
+			caseSensitive: case) ifFalse: [ scoreA := 2 ].
 		(b contents 
 			beginsWithEmpty: narrowString
-			caseSensitive: NECPreferences caseSensitive) ifFalse: [ scoreB := 2 ].
+			caseSensitive: case) ifFalse: [ scoreB := 2 ].
 		a contents < b contents
 			ifTrue: [ scoreB := scoreB + 1 ]
 			ifFalse: [ scoreA := scoreA + 1 ].
-		scoreA < scoreB ]
-]
-
-{ #category : #'initialize-release' }
-NECModel >> setClass: aClass [ 
-	clazz := aClass.
-	self initializeSelectors.
-	self narrowWith: String new
+		scoreA < scoreB ].
 ]
 
 { #category : #action }
@@ -173,9 +190,4 @@ NECModel >> theClass [
 { #category : #action }
 NECModel >> title [
 	^nil
-]
-
-{ #category : #'initialize-release' }
-NECModel >> toggleExpand [
-	
 ]

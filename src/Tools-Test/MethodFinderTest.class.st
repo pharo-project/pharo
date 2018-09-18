@@ -1,139 +1,193 @@
-"
-To do:
-	- radix should be returned 
-"
 Class {
 	#name : #MethodFinderTest,
 	#superclass : #TestCase,
 	#category : #'Tools-Test-Finder'
 }
 
-{ #category : #'test examples' }
-MethodFinderTest >> testAbs [
-		
-	self assert: (MethodFinder new load: #((4) 4  (-10) 10 (-3) 3 (2) 2 (-6) 6 (612) 612)) searchForOne asArray equals: #('data1 abs')
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testAllNumbers [
-		
-	self assert: (MethodFinder new load: #((5) 0.2   (2) 0.5)) allNumbers.
-	self deny: (MethodFinder new load: #(('' $A) 'A')) allNumbers
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testDegreeSin [
-		
-	self assert: (MethodFinder new load: #( (0) 0  (30) 0.5  (45) 0.707106  (90) 1)) searchForOne asArray = #('data1 degreeSin') 
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testDivision [
-
-	self 
-		assert: (MethodFinder new load: #((7 5) 2   (4 5) 4   (-9 4) 3)) searchForOne asArray 
-		equals: #('data1 \\ data2').
-	self assert:
-		(MethodFinder new load: #((35) 3   (17) 1   (5) 5)) searchForOne asArray 
-		equals: #('data1 \\ 8').
-	self assert: (MethodFinder new load: #((12 4 8) 2  (1 3 6) 2  (5 2 16) 8)
-	) searchForOne asArray equals:  #().
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testGreaterThanANumber [
-
-	self 
-		assert: (MethodFinder new load: {#(7). true.   #(4.1).  true.   #(1.5). false}) searchForOne asArray 
-		equals: #('data1 >= 4.1').
-		
-	self assert: (MethodFinder new load: {#(4 3). true.  #(-7 3). false.  #(5 1). true.  #(5 5). false}) searchForOne asArray 
-		equals: #('data1 > data2').
-	self assert: (MethodFinder new load: #((36) 7   (50) 10)) searchForOne asSortedCollection asArray equals: #( 'data1 // 5' 'data1 quo: 5')
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testIfTrueIfFalse [
-
-	self assert: (MethodFinder new load:  { { true. [3]. [4]}. 3.  { false. [0]. [6]}. 6}) searchForOne asArray = #('data1 ifTrue: data2 ifFalse: data3') 
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testIsOdd [
-		
-	self assert: (MethodFinder new load: {#(1). true. #(2). false. #(5). true. #(10). false}) searchForOne asArray = #('data1 odd')
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testIsRadix [
-
-	self assert: ((MethodFinder new load: #((4 2) '2r100'   (255 16) '16rFF'    (14 8) '8r16')) searchForOne) asArray = #('data1 storeStringBase: data2')
-		
-	"Apparently the system should find :
-	the #('data1 radix: data2' 'data1 printStringBase: data2' 'data1 storeStringBase: data2')"
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testMethodFor [
+{ #category : #tests }
+MethodFinderTest >> testArgumentsNumber [
+	"The Method Finder should returns sends with the good number of arguments."
 	
-	self assert: (MethodFinder  methodFor: {#(1). true. #(2). false. #(5). true. #(10). false}) =  '(data1 allMask: 1) (data1 anyMask: 1) (data1 odd) '
+	|bottom resultZero resultOne |
+	bottom := MethodFinderBottomClass new.
+	resultZero := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult: bottom).
+	resultOne  := (MethodFinder new findMethodsByExampleInput: { bottom . bottom } andExpectedResult: bottom).
+	self assert: ((resultZero collect: #selector) allSatisfy: [ :s | s keywords size = 1]).
+	self assert: ((resultOne  collect: #selector) allSatisfy: [ :s | s keywords size = 1 and: s last = $:]).
 ]
 
-{ #category : #'test examples' }
-MethodFinderTest >> testPointY [
+{ #category : #tests }
+MethodFinderTest >> testExceptionDoesNotStopTheFlow [
+
+	| bottom result |
+	bottom := MethodFinderBottomClass new.
+	result := (MethodFinder new findMethodsByExampleInput: { bottom . 1 } andExpectedResult: 1).
+	self assert: ((result collect: #selector) includes: #oneArgumentMethod:).
+]
+
+{ #category : #tests }
+MethodFinderTest >> testExceptionInWrongEqualityReturns [
+
+	self should: [ { 1.2.3 } = (3 to: {5}) ] raise: Error. 
+	self deny: ((MethodFinderSend receiver: 3 selector: #to: withArguments: { 5 }) resultIn: { 1.2.3 }). 
+]
+
+{ #category : #tests }
+MethodFinderTest >> testForbiddenSetIsOverApprovedSet [
+
+	| bottom result |
+	bottom := MethodFinderBottomClass new.
+	result := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult: bottom ).
+	self assert: (((result collect: #selector) includes: #InApprovedAndInForbiddenSetMethod) not).
+]
+
+{ #category : #tests }
+MethodFinderTest >> testMethodApprovedInClassButDisapprovedInSuperClass [
+	"If a method f is approved by a class A but disapproved by one of 
+	 its superclass, its should be approved for A instance."
 	
-	self assertCollection:(MethodFinder new load: {{Point x: 3 y: 4}. 4.  {Point x: 1 y: 5}. 5}) searchForOne  hasSameElements: #('data1 max' 'data1 y').
-	self assertCollection:(MethodFinder new load: {{Point x: 5 y: 4}. 4.  {Point x: 1 y: 5}. 5}) searchForOne  hasSameElements: #( 'data1 y').
+	|bottom result |
+	bottom := MethodFinderBottomClass new.
+	result := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
+	self assert: ((result collect: #selector) includes: #topDisapprovedButBottomApprovedMethod).
 ]
 
-{ #category : #'test examples' }
-MethodFinderTest >> testPolynomial [
-		
-	self assert: (MethodFinder new load: #( ((2 3) 2) 8   ((2 3) 5) 17 )) searchForOne asArray 
-		equals: #('data1 polynomialEval: data2').	
-	self assert: (MethodFinder new load: #((2) 8   (5) 17 )) searchForOne asArray 
-		equals: #('#(2 3) polynomialEval: data1')	
-
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testPower [
-		
-	self assert:(MethodFinder new load: #((7) 2   (4) 2 )) searchForOne asArray equals: #('^ 2')
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testReciprocal [
-		
-	self assert: (MethodFinder new load: #((5) 0.2   (2) 0.5)) searchForOne asArray = #('data1 reciprocal')
-
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testSearchForAccessAtOne [
-		
-	self
-		assert: (MethodFinder new load: #(('abcd' 1) $a  ('Ted ' 3) $d ))
-			searchForOne asArray sorted
-		equals: #('data1 at: data2' 'data1 atPin: data2' 'data1 atWrap: data2') sorted
-		 
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testSearchForOne [
-		
-	self
-		assert: (MethodFinder new load: #(('abcd') $a  ('TedK') $T))
-			searchForOne asSortedCollection asArray
-		equals: #('data1 anyOne' 'data1 first')
-		 
-]
-
-{ #category : #'test examples' }
-MethodFinderTest >> testSubstraction [
-		
-	self assert: (MethodFinder new load: #((14 3) 11  (-10 5) -15  (4 -3) 7)) searchForOne asArray equals: #('data1 - data2').
+{ #category : #tests }
+MethodFinderTest >> testMethodDisapprovedInClassButApprovedInSuperClass [
+	"If a method f is disapproved by a class A, it should be disapproved 
+	by any instance of A, no matter if A superclass approved it."
 	
-	self assert: (MethodFinder new load: #(((12 4 8)) 24  ((1 3 6)) 10 )
-	) searchForOne asArray  equals: #('data1 sum') 
+	|bottom result |
+	bottom := MethodFinderBottomClass new.
+	result := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
+	self assert: (result includes: #topApprovedButBottomDisapprovedMethod) equals: false.
+]
+
+{ #category : #tests }
+MethodFinderTest >> testMethodNotDefinedAndDisapprovedInClassButApprovedInSuperClass [
+	"If the superclass B of a class defines a methods f which is not
+	 redefined in A, then any instance of A should accept f unless
+	 f is not approved by A.
+	 Indeed let imagine this case :
+	     f calls g which is approved in B but dangerous in A.
+	     Then f is approved in B but dangerous in B.
+	
+	 TODO analysis : need to have a forbiden methods set or need that any
+	                 methods which is approved by A is in its appovedSet 
+	                 even if its only defined in one of its superclasses.
+                    1 is more flexible and evolutive as the forbidden methods
+                    set is only necesary in these unpracticable case (which
+                    are really not frequent), the only advantage of the second
+                    solution if that it offers to not calculate the set of 
+                    approved mathod going through the superclasses tree.   
+	"
+	
+	|bottom result |
+	bottom := MethodFinderBottomClass new.
+	result := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
+	self assert: (result includes: #topApprovedButBottomDisapprovedMethod) equals: false.
+]
+
+{ #category : #tests }
+MethodFinderTest >> testMethodNotDefinedInClassAndDisapprovedInSuperClass [
+	"If the superclass B of a class A defines a not approved method f 
+	 which is not approved in A, then any instance of A should not accept f."
+	
+	|bottom result |
+	bottom := MethodFinderBottomClass new.
+	result := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult: bottom).
+	self assert: (result includes: #onlyTopDefinedDisapprovedMethod) equals: false.
+]
+
+{ #category : #tests }
+MethodFinderTest >> testMethodNotDefinedInClassButApprovedInSuperClass [
+	"If the superclass B of a class defines a methods f which is not
+	 redefined in A and which is not forbidden in A, then any instance
+	 of A should accept f."
+	
+	|bottom result |
+	bottom := MethodFinderBottomClass new.
+	result := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
+	self assert: ((result collect: #selector) includes: #onlyTopDefinedApprovedMethod).
+]
+
+{ #category : #tests }
+MethodFinderTest >> testMethodOnlyBottomDefinedAndApprovedInBottom [
+	"If a method f is approved by a class A, then it
+	 should be approved by any instance of A"
+	
+	|bottom result |
+	bottom := MethodFinderBottomClass new.
+	result := MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom.
+	self assert: ((result collect: #selector) includes: #onlyBottomDefinedApprovedMethod).
+	
+]
+
+{ #category : #tests }
+MethodFinderTest >> testMethodOnlyTopDefinedAndApprovedInTop [
+	"If a method f is approved by a class A and is not redefined 
+	 in a subclass B, then if there is no information on it in B,
+	 it should be approved by any instance of B."
+	
+	|bottom result |
+	bottom := MethodFinderBottomClass new.
+	result := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
+	self assert: ((result collect: #selector) includes: #onlyTopDefinedApprovedMethod).
+	
+]
+
+{ #category : #tests }
+MethodFinderTest >> testPermutation [
+
+	"Any order of the args should result in the same responding methods. Thus,
+	 `-` should correspond to `5 . 4 -> 1` but also to `4 . 5 -> 1`.
+	
+	TODO : The result array should be sorted. The method which matches when 
+	the arguments are not shuffled is more important than the one where the
+	arguments order has to be changed."
+	
+	
+	| bottom res args|
+	bottom := MethodFinderBottomClass new.
+	args := { bottom . 1 . 2 }.
+	res := (MethodFinder new findMethodsByExampleInput: args andExpectedResult: 1).
+	args permutationsDo: [ :p |
+		self assert: res equals: (MethodFinder new findMethodsByExampleInput: p andExpectedResult: 1).
+	].
+]
+
+{ #category : #tests }
+MethodFinderTest >> testSearchOnClassDoesNotFail [
+
+	self shouldnt: [MethodFinder new findMethodsByExampleInput: { Boolean } andExpectedResult: {}] raise: Error.
+]
+
+{ #category : #tests }
+MethodFinderTest >> testSideEffects [
+	"The arguments that we tested should not be changed even if
+	 a matching method modifies them"
+	
+	| bottom result |
+	bottom := MethodFinderBottomClass new.
+	bottom modifyMethod: 1.
+	result := (MethodFinder new findMethodsByExampleInput: { bottom . 5 } andExpectedResult:  5).
+	self assert: ((result collect: #selector) includes: #modifyMethod:).
+	self assert: (bottom instanceVariable) equals: 1.
+]
+
+{ #category : #tests }
+MethodFinderTest >> testSideEffectsBetweenTestProves [
+	"The arguments that we tested should not be changed even if
+	 a matching method modifies them"
+	
+	| bottom results |
+	bottom := MethodFinderBottomClass new.
+	bottom modifyMethod: 1.
+	results := MethodFinder new possibleSolutionsForInput: { {1.2.3} . { 4 } }.
+	
+	"Test we have many results for the following assertion"
+	self assert: results size > 10.
+	
+	"Test we DO copy the objects in the candidates message sends"
+	self assert: (results collect: [ :each | each receiver ]) asIdentitySet size equals: results size.
 ]

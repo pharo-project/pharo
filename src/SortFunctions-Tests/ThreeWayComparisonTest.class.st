@@ -1,3 +1,6 @@
+"
+Unit test for three way comparision
+"
 Class {
 	#name : #ThreeWayComparisonTest,
 	#superclass : #TestCase,

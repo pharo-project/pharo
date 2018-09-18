@@ -13,7 +13,7 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#pools : [
-		'AthensCairoDefs',
+		'AthensCairoDefinitions',
 		'FT2Constants'
 	],
 	#category : #'Athens-Cairo-Text'
@@ -24,8 +24,7 @@ CairoFontFace class >> countReferences: handle [
 "
 unsigned int  cairo_font_face_get_reference_count             (cairo_font_face_t *font_face);
 "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( unsigned int cairo_font_face_get_reference_count (size_t handle)) 
+	^ self ffiCall: #( unsigned int cairo_font_face_get_reference_count (size_t handle)) 
 ]
 
 { #category : #finalizing }
@@ -34,9 +33,7 @@ CairoFontFace class >> finalizeResourceData: handle [
 "
 void                cairo_font_face_destroy             (cairo_font_face_t *font_face);
 "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( void cairo_font_face_destroy (size_t handle)) 
+	^ self ffiCall: #( void cairo_font_face_destroy (size_t handle)) 
 ]
 
 { #category : #'instance creation' }
@@ -62,9 +59,7 @@ cairo_font_face_t * cairo_ft_font_face_create_for_ft_face
                                                         (FT_Face face,
                                                          int load_flags);
 "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( CairoFontFace cairo_ft_font_face_create_for_ft_face(void * aFace , int flags )) 
+	^ self ffiCall: #( CairoFontFace cairo_ft_font_face_create_for_ft_face(void * aFace , int flags )) 
 ]
 
 { #category : #'initialize-release' }
@@ -89,9 +84,7 @@ void
 cairo_ft_font_face_set_synthesize (cairo_font_face_t *font_face,
                                    int synth_flags);
 "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( void cairo_ft_font_face_set_synthesize(self, int flags )) 
+	^ self ffiCall: #( void cairo_ft_font_face_set_synthesize(self, int flags )) 
 ]
 
 { #category : #'external resource management' }
@@ -101,9 +94,7 @@ CairoFontFace >> resourceData [
 
 { #category : #accessing }
 CairoFontFace >> status [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(int cairo_font_face_status (self))
+	^ self ffiCall: #(int cairo_font_face_status (self))
 		
 ]
 

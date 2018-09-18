@@ -181,7 +181,7 @@ ReleaseTest >> testRPackageOrganizer [
 
 { #category : #testing }
 ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupList [
-	"This test documents issue https://pharo.fogbugz.com/f/cases/17721/Starting-Image-50617-raises-MNU"
+	"This test documents issue https://pharo.manuscript.com/f/cases/17721"
 	| startupList settingsIndex |
 	
 	startupList := (SessionManager default startupList collect: #handledId).
@@ -193,7 +193,7 @@ ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupLi
 
 { #category : #testing }
 ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
-	"This test documents issue https://pharo.fogbugz.com/f/cases/17834/World-Morph-is-started-up-before-Fonts"
+	"This test documents issue https://pharo.manuscript.com/f/cases/17834"
 	| startupList |
 	
 	startupList := (SessionManager default startupList collect: #handledId).

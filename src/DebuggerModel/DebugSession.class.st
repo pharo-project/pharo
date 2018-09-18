@@ -32,7 +32,7 @@ Class {
 	#classVars : [
 		'LogDebuggerStackToFile'
 	],
-	#category : #DebuggerModel
+	#category : #'DebuggerModel-Base'
 }
 
 { #category : #'actions registration' }
@@ -105,7 +105,7 @@ DebugSession class >> named: aString on: aProcess startedAt: aContext [
 DebugSession >> activePC: aContext [ 
 	^ (self isLatestContext: aContext)
 		ifTrue: [ interruptedContext pc ]
-		ifFalse: [ self previousPC: aContext ].
+		ifFalse: [ self previousPC: aContext ]
 ]
 
 { #category : #'debugging actions' }
@@ -147,7 +147,7 @@ DebugSession >> downInContext: aContext [
 	"move down the context stack to the previous (enclosing) context"
 
 	self flag: 'This does not take into account (bypasses) filtering'.
-	^ aContext sender. 
+	^ aContext sender 
 ]
 
 { #category : #accessing }
@@ -321,13 +321,11 @@ DebugSession >> process [
 
 { #category : #initialization }
 DebugSession >> process: aProcess context: aContext [
+	"aProcess stepToSendOrReturn"
+	"aProcess isSuspended ifTrue: [ aProcess stepToSendOrReturn ]"
 
-	"aProcess stepToSendOrReturn ."
-	"aProcess isSuspended ifTrue: [ aProcess stepToSendOrReturn ]."
 	interruptedProcess := aProcess.
-	interruptedContext ifNil: [interruptedContext := aContext].
-	
-
+	interruptedContext ifNil: [ interruptedContext := aContext ]
 ]
 
 { #category : #'debugging actions' }
@@ -414,7 +412,7 @@ DebugSession >> resumeProcess [
 				ifFalse: [ interruptedProcess resume ]].
 
 	"restart low space handler"
-	Smalltalk installLowSpaceWatcher.	
+	Smalltalk installLowSpaceWatcher
 		
 	
 ]
@@ -424,7 +422,7 @@ DebugSession >> resumeProcessWithValue: aValue [
 	"Make sure the interrupted process is restored properly and restart the low space handler"
 	
 	self returnValue: aValue from: interruptedProcess suspendedContext.
-	self resumeProcess.	
+	self resumeProcess	
 ]
 
 { #category : #'debugging actions' }
@@ -436,7 +434,7 @@ DebugSession >> returnValue: anObject from: aContext [
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 
 	previous := aContext sender.
-"	self resetContext: previous."
+	"self resetContext: previous."
 	interruptedProcess popTo: previous value: anObject.
 	self updateContextTo: previous.
 	self contextChanged 
@@ -459,7 +457,7 @@ DebugSession >> returnValueFrom: aContext [
 			evaluate.
 				
 	previous := aContext sender.
-"	self resetContext: previous."
+	"self resetContext: previous."
 	interruptedProcess popTo: previous value: value.
 	self updateContextTo: previous.
 	self contextChanged 
@@ -482,7 +480,7 @@ DebugSession >> rewindContextToMethod: aMethod fromContext: aContext [
 	self updateContextTo:  ctxt.
 	
 	"Issue 3015 - Hernan"
-	self isInterruptedContextATest ifTrue: [ self prepareTestToRunAgain ].
+	self isInterruptedContextATest ifTrue: [ self prepareTestToRunAgain ]
 ]
 
 { #category : #'debugging actions' }
@@ -511,7 +509,7 @@ DebugSession >> shouldDisplayContext: aContext basedOnFilters: stackFilters [
 	"Return true if all filters match the given context, or false otherwise.
 	True is returned if there are no filters."
 		
-	^stackFilters allSatisfy: [ :aFilter | aFilter shouldDisplay: aContext ].
+	^stackFilters allSatisfy: [ :aFilter | aFilter shouldDisplay: aContext ]
 	
 ]
 

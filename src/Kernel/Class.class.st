@@ -120,7 +120,7 @@ Class >> addClassVariable: aGlobal [
 	Signal an error if the first character of aString is not capitalized,
 	or if it is already a variable named in the class."
 	| symbol oldState |
-	oldState := self copy.
+	oldState := self copyForAnnouncement.
 	symbol := aGlobal name asSymbol.
 	self withAllSubclasses do: 
 		[:subclass | 
@@ -214,12 +214,6 @@ Class >> applyDeprecation [
 	
 ]
 
-{ #category : #'accessing parallel hierarchy - deprecated' }
-Class >> baseClass [
-
-	^ self
-]
-
 { #category : #accessing }
 Class >> basicCategory [
 	^category
@@ -296,12 +290,6 @@ Class >> classBuilder [
 		"Answer the object responsible of creating subclasses of myself in the system."
 	
 		^ self classInstaller new builder
-]
-
-{ #category : #'accessing parallel hierarchy - deprecated' }
-Class >> classClass [
-
-	^ self class
 ]
 
 { #category : #'subclass creation' }
@@ -396,8 +384,22 @@ Class >> compileAllFrom: oldClass [
 
 { #category : #copying }
 Class >> copy [ 
-	"Answer a copy of the receiver without a list of subclasses"
+	
+	self error: 'You should not copy a class.'.
+	
+	"If you want to copy a class just to check the differences before a change, as done in the announcements, use #copyForAnnouncement.
+	Copying a class should be done using #duplicateClassWithNewName:
+	Any other copy operation should be used using the class builder and class installer. 
+	They guarantee that the state of the system is consistent."
+]
+
+{ #category : #copying }
+Class >> copyForAnnouncement [
+	"Answer a copy of the receiver to be used in the announcement of changes.
+	You should not use this class for anything else, it is invalid."
 	| newClass |
+	
+	
 	newClass := self class copy new
 		superclass: superclass;
 		methodDict: self methodDict copy;
@@ -565,19 +567,18 @@ Class >> deprecationRefactorings [
 { #category : #copying }
 Class >> duplicateClassWithNewName: aSymbol [
 	| copysName class |
+			
 	copysName := aSymbol asSymbol.
 	copysName = self name
 		ifTrue: [ ^ self ].
 	(self environment includesKey: copysName)
 		ifTrue: [ ^ self error: copysName , ' already exists' ].
-	class := self superclass
-		subclass: copysName
-		instanceVariableNames: self instanceVariablesString
-		classVariableNames: self classVariablesString
-		poolDictionaries: self sharedPoolsString
-		package: self category.
-	class classSide
-		instanceVariableNames: self classSide instanceVariablesString.
+
+	class := self classInstaller make: [ :builder | 
+		builder 
+			fillFor: self;
+			name: copysName].
+		
 	class copyAllCategoriesFrom: self.
 	class class copyAllCategoriesFrom: self class.
 	^ class

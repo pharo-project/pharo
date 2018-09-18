@@ -34,59 +34,6 @@ Class {
 }
 
 { #category : #actions }
-BaselineOfIDE >> addPharoProjectToIceberg [
-	"It will take all packages corresponding to Pharo project and it will create an iceberg 
-	 project with it"
-	| packageNames repository commit |
-	
-	self flag: #TODO. "Refactor into something better (a class and a hierarchy, so we can add 
-	other packages)"
-	
-	"extract package names from baselines"
-	packageNames := (#(
-		BaselineOfBasicTools
-		BaselineOfDisplay
-		BaselineOfIDE  
-		BaselineOfMonticello 
-		BaselineOfMetacello 
-		BaselineOfMorphic 
-		BaselineOfMorphicCore 
-		BaselineOfPharo
-		BaselineOfPharoBootstrap
-		BaselineOfSUnit 
-		BaselineOfShift 
-		BaselineOfSpec
-		BaselineOfTraits
-		BaselineOfUI    
-		BaselineOfUnifiedFFI ) 
-		collect: [ :each | (Smalltalk globals at: each) allPackageNames copyWith: each ]) 
-		flattened 
-		asSet.
-		
-	"declare project"
-	
-	commit := (IceUnknownCommit new 
-			id: SystemVersion current commitHash;
- 			yourself).
-	
-	repository := IceLibgitRepository new
-		name: 'pharo';
-		workingCopy: (IceWorkingCopy new
-		referenceCommit: commit
-		yourself).
-		
-	commit repository: repository.
-	"add packages to project"
-	packageNames
-		do: [ :each |
-			repository workingCopy basicAddPackage: (IcePackage
-				named: each
-				repository: repository) ].
-	"register project"
-	repository register
-]
-
-{ #category : #actions }
 BaselineOfIDE >> additionalInitialization [
 
 	self class environment at: #GTGenericStackDebugger ifPresent: [
@@ -155,8 +102,6 @@ BaselineOfIDE >> additionalInitialization [
 	
 	self loadIceberg.	
 	self loadCalypso.
-	
-	self addPharoProjectToIceberg.
 ]
 
 { #category : #baseline }
@@ -174,6 +119,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
 		
 		spec baseline: 'Athens' with: [ spec repository: repository ].
+		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
 		spec baseline: 'Shift' with: [
 			spec loads: 'shift-tests'. 
@@ -209,7 +155,6 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'Rubric-Styling'.
 		
-		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		
 		spec package: 'Collections-Tests'.
@@ -338,7 +283,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
-		spec package: 'Flashback-Decompiler-Tests'.
 		spec package: 'FontInfrastructure-Tests'.
 		spec package: 'FreeType-Tests'.
 		spec package: 'FreeType-Help'.
@@ -361,6 +305,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Manifest-Tests'.
 		spec package: 'Morphic-Tests'.
 		spec package: 'Multilingual-Tests'.
+		spec package: 'NewValueHolder-Tests'.		
 		spec package: 'NECompletion-Tests'.
 		spec package: 'NodeNavigation-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
@@ -498,8 +443,8 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Morphic-Tests'
 	'NECompletion-Tests'
+	'NewValueHolder-Tests'
 	'ProfStef-Tests'
-
 	'Reflectivity-Tools-Tests'
 	'Regex-Tests-Core'
 	'Ring-Deprecated-Tests-Monticello'
@@ -584,17 +529,6 @@ spec group: 'Manifest-Tests-Group' with: #(
 spec group: 'Manifest-Group' with: #(
 	'Manifest-Core-Group'
 	'Manifest-Tests-Group'
-).
-
-spec group: 'Flashback-Core-Group' with: #(
-	'Flashback-Decompiler'
-).
-spec group: 'Flashback-Tests-Group' with: #(
-	'Flashback-Decompiler-Tests'
-).
-spec group: 'Flashback-Group' with: #(
-	'Flashback-Core-Group'
-	'Flashback-Tests-Group'
 ).
 
 spec group: 'BlueInk-Core-Group' with: #(
@@ -839,6 +773,7 @@ spec group: 'GT&QA-Group' with: #(
 spec group: #default with: #(
 	'BasicTools'	"dependency"
 	'Athens'
+	'Flashback'
 
 	'Mandatory-Group'
 
@@ -853,7 +788,6 @@ spec group: #default with: #(
 	'ReflectionMirrors-Group'
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
-	'Flashback-Group'
 
 	'GT&QA-Group'
 
@@ -886,11 +820,12 @@ BaselineOfIDE >> loadCalypso [
 
 	"Load Calypso without Iceberg Metacello integration"
 	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
-		
+
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.11.4';
+		repository: 'github://pharo-ide/Calypso:v0.11.5';
 		onConflict: [ :err | err useIncoming ];
+		onUpgrade: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
 	(self class environment at: #ClyBrowser) beAllDefault.
@@ -902,10 +837,10 @@ BaselineOfIDE >> loadCalypso [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.1.0';
+		repository: 'github://pharo-vcs/iceberg:v1.2.2';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
-
+	(Smalltalk classNamed: #IcePharoPlugin) addPharoProjectToIceberg.
 ]
 
 { #category : #actions }

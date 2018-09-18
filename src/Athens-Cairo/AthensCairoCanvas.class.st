@@ -13,7 +13,7 @@ Class {
 		'currentClipRect'
 	],
 	#pools : [
-		'AthensCairoDefs'
+		'AthensCairoDefinitions'
 	],
 	#category : #'Athens-Cairo'
 }
@@ -32,10 +32,7 @@ AthensCairoCanvas class >> on: cairoSurface [
 
 { #category : #primitives }
 AthensCairoCanvas class >> primCreate: cairoSurface [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #( 
+	^ self ffiCall: #( 
 		AthensCairoCanvas cairo_create (AthensCairoSurface cairoSurface) )
 ]
 
@@ -70,10 +67,7 @@ AthensCairoCanvas >> clipRect [
 
 { #category : #private }
 AthensCairoCanvas >> destroy [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^self nbCall: #( 	void cairo_destroy (self) )
+	^ self ffiCall: #( 	void cairo_destroy (self) )
 ]
 
 { #category : #drawing }
@@ -91,19 +85,14 @@ AthensCairoCanvas >> draw [
 
 { #category : #drawing }
 AthensCairoCanvas >> drawWithAlpha: alpha [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #( 
+	^ self ffiCall: #( 
 		void cairo_paint_with_alpha ( self , double alpha)
 	)
 ]
 
 { #category : #private }
 AthensCairoCanvas >> fill [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(void cairo_fill (self))
+	^ self ffiCall: #(void cairo_fill (self))
 
 ]
 
@@ -123,9 +112,7 @@ AthensCairoCanvas >> getCurrentPoint [
 AthensCairoCanvas >> getScaledFont [
 	"Returns the current scaled font. This object is owned by cairo. To keep a reference to it, you must call cairo_scaled_font_reference().
  "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( CairoScaledFont cairo_get_scaled_font ( self ))
+	^ self ffiCall: #( CairoScaledFont cairo_get_scaled_font ( self ))
 ]
 
 { #category : #accessing }
@@ -141,29 +128,20 @@ AthensCairoCanvas >> initializeWithSurface: anAthensSurface [
 
 { #category : #private }
 AthensCairoCanvas >> loadPath: aPath [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	 
-	^ self nbCall: #( void cairo_append_path (self , AthensCairoPath aPath))
+	^ self ffiCall: #( void cairo_append_path (self , AthensCairoPath aPath))
 
 ]
 
 { #category : #private }
 AthensCairoCanvas >> moveToX: x Y: y [
 	" move command always starts a new contour "
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(void cairo_move_to (self, double x, double y ) )
+	^ self ffiCall: #(void cairo_move_to (self, double x, double y ) )
 
 ]
 
 { #category : #private }
 AthensCairoCanvas >> newPath [
- 
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( void cairo_new_path ( self ) )
+	^ self ffiCall: #( void cairo_new_path ( self ) )
 ]
 
 { #category : #accessing }
@@ -179,33 +157,24 @@ AthensCairoCanvas >> pathTransform [
 
 { #category : #private }
 AthensCairoCanvas >> primClip [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(void cairo_clip (self))
+	^ self ffiCall: #(void cairo_clip (self))
 
 ]
 
 { #category : #private }
 AthensCairoCanvas >> primGetCurrentPointX: x Y: y [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^self nbCall: #( void cairo_get_current_point (self, double * x, double * y))
+	^ self ffiCall: #( void cairo_get_current_point (self, double * x, double * y))
 ]
 
 { #category : #private }
 AthensCairoCanvas >> primGetSource [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	self nbCall: #( cairo_pattern_t cairo_get_source ( self ) )
+	^ self ffiCall: #( cairo_pattern_t cairo_get_source ( self ) )
 ]
 
 { #category : #private }
 AthensCairoCanvas >> primPaint [
 	"A drawing operator that paints the current source everywhere within the current clip region."
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(void cairo_paint (self))
+	^ self ffiCall: #(void cairo_paint (self))
 
 ]
 
@@ -215,9 +184,7 @@ AthensCairoCanvas >> primResetDashes: anOffset [
                                                          double *dashes,
                                                          int num_dashes,
                                                          double offset);"
-<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	self nbCall: #(void cairo_set_dash (
+	^ self ffiCall: #(void cairo_set_dash (
 				self,
 				0,
 				0,
@@ -227,8 +194,7 @@ AthensCairoCanvas >> primResetDashes: anOffset [
 
 { #category : #private }
 AthensCairoCanvas >> primSetDashesLengths: dashesLengths count: dashesCount offset: anOffset [
-	
-	self ffiCall: #(void cairo_set_dash (self,
+	^ self ffiCall: #(void cairo_set_dash (self,
 			double * dashesLengths,
 			int dashesCount,
 			double anOffset ) )
@@ -236,34 +202,27 @@ AthensCairoCanvas >> primSetDashesLengths: dashesLengths count: dashesCount offs
 
 { #category : #private }
 AthensCairoCanvas >> primSetLineCap: capStyle [
-	
 	^ self ffiCall: #(void cairo_set_line_cap ( self, cairo_line_cap_t capStyle ) )
 ]
 
 { #category : #private }
 AthensCairoCanvas >> primSetLineJoin: joinStyle [
-
-	self ffiCall: #(void cairo_set_line_join ( self, cairo_line_join_t joinStyle) )
+	^ self ffiCall: #(void cairo_set_line_join ( self, cairo_line_join_t joinStyle) )
 ]
 
 { #category : #private }
 AthensCairoCanvas >> primSetLineWidth: width [
-	
-	self ffiCall: #(void cairo_set_line_width (self, double width) )
+	^ self ffiCall: #(void cairo_set_line_width (self, double width) )
 ]
 
 { #category : #private }
 AthensCairoCanvas >> primSetSource: aPattern [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(void cairo_set_source ( self, AthensCairoPatternPaint aPattern))
+	^ self ffiCall: #(void cairo_set_source ( self, AthensCairoPatternPaint aPattern))
 ]
 
 { #category : #private }
 AthensCairoCanvas >> rectangleX: x y: y width: aWidth height: aHeight [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(void cairo_rectangle (self,
+	^ self ffiCall: #(void cairo_rectangle (self,
 		 double x, double y,
 		 double aWidth, double aHeight) )
 
@@ -271,9 +230,7 @@ AthensCairoCanvas >> rectangleX: x y: y width: aWidth height: aHeight [
 
 { #category : #private }
 AthensCairoCanvas >> resetClip [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(void cairo_reset_clip (self))
+	^ self ffiCall: #(void cairo_reset_clip (self))
 
 ]
 
@@ -295,9 +252,7 @@ Set the antialiasing mode of the rasterizer used for drawing shapes. This value 
 Note that this option does not affect text rendering, instead see cairo_font_options_set_antialias().
 
 "
-<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(void cairo_set_antialias (self, uint antiAlias))
+	^ self ffiCall: #(void cairo_set_antialias (self, uint antiAlias))
 
 ]
 
@@ -323,9 +278,7 @@ AthensCairoCanvas >> setFontMatrix: aMatrix [
 void                cairo_set_font_matrix               (cairo_t *cr,
                                                          const cairo_matrix_t *matrix);
 	"
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( void cairo_set_font_matrix (self , AthensCairoMatrix  * aMatrix ))
+	^ self ffiCall: #( void cairo_set_font_matrix (self , AthensCairoMatrix  * aMatrix ))
 
 ]
 
@@ -335,26 +288,20 @@ AthensCairoCanvas >> setFontSize: aSize [
 	void                cairo_set_font_size                 (cairo_t *cr,
                                                          double size);
 	"
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( void cairo_set_font_size (self , double aSize ))
+	^ self ffiCall: #( void cairo_set_font_size (self , double aSize ))
 
 ]
 
 { #category : #private }
 AthensCairoCanvas >> setPathMatrix [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(void cairo_set_matrix (self,
+	^ self ffiCall: #(void cairo_set_matrix (self,
 			AthensCairoMatrix * pathTransform) )
 
 ]
 
 { #category : #private }
 AthensCairoCanvas >> setPathMatrix: aMatrix [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(void cairo_set_matrix (self,
+	^ self ffiCall: #(void cairo_set_matrix (self,
 			AthensCairoMatrix * aMatrix) )
 
 ]
@@ -363,18 +310,13 @@ AthensCairoCanvas >> setPathMatrix: aMatrix [
 AthensCairoCanvas >> setScaledFont: aFont [
 	"Replaces the current font face, font matrix, and font options in the cairo_t with those of the cairo_scaled_font_t. Except for some translation, the current CTM of the cairo_t should be the same as that of the cairo_scaled_font_t, which can be accessed using cairo_scaled_font_get_ctm().
  "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( void cairo_set_scaled_font (self , CairoScaledFont aFont))
+	^ self ffiCall: #( void cairo_set_scaled_font (self , CairoScaledFont aFont))
 
 ]
 
 { #category : #private }
 AthensCairoCanvas >> setSourceR: red g: green b: blue a: alpha [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #( 
+	^ self ffiCall: #( 
 		void cairo_set_source_rgba ( self ,
 			double red,
 			double green,
@@ -384,11 +326,8 @@ AthensCairoCanvas >> setSourceR: red g: green b: blue a: alpha [
 
 { #category : #private }
 AthensCairoCanvas >> showGlyphs: glyphs size: numGlyphs [
-
 	"A drawing operator that generates the shape from a string of UTF-8 characters, rendered according to the current font_face, font_size (font_matrix), and font_options. "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(
+	^ self ffiCall: #(
 	
 		void cairo_show_glyphs ( self ,
 			void * glyphs,
@@ -399,17 +338,13 @@ AthensCairoCanvas >> showGlyphs: glyphs size: numGlyphs [
 { #category : #private }
 AthensCairoCanvas >> showText: anUTF8String [
 	"A drawing operator that generates the shape from a string of UTF-8 characters, rendered according to the current font_face, font_size (font_matrix), and font_options. "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(void cairo_show_text (self, char * anUTF8String ))
+	^ self ffiCall: #(void cairo_show_text (self, char * anUTF8String ))
 
 ]
 
 { #category : #private }
 AthensCairoCanvas >> stroke [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin>
-	
-	^ self nbCall: #(void cairo_stroke (self))
+	^ self ffiCall: #(void cairo_stroke (self))
 
 ]
 
@@ -434,9 +369,7 @@ void                cairo_text_extents                  (cairo_t *cr,
                                                          const char *utf8,
                                                          cairo_text_extents_t *extents);
 "
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-
-	^ self nbCall: #( void cairo_text_extents (self, char * utf8String, cairo_text_extents_t * extentsObj) )
+	^ self ffiCall: #( void cairo_text_extents (self, char * utf8String, cairo_text_extents_t * extentsObj) )
 	
 ]
 

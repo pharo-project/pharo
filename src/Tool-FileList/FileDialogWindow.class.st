@@ -20,10 +20,24 @@ Class {
 		'entryCache',
 		'entryCacheDirectory',
 		'previewType',
-		'previewMorph'
+		'previewMorph',
+		'preferredFileSystem'
 	],
 	#category : #'Tool-FileList'
 }
+
+{ #category : #examples }
+FileDialogWindow class >> example [
+	<example>
+	(self onFileSystem: FileSystem disk) open
+]
+
+{ #category : #'initialize - release' }
+FileDialogWindow class >> onFileSystem: aFileSystem [
+	^ self basicNew
+		initializeOn: aFileSystem;
+		yourself
+]
 
 { #category : #icons }
 FileDialogWindow class >> taskbarIconName [
@@ -48,10 +62,8 @@ FileDialogWindow >> actionSelector: anObject [
 
 { #category : #actions }
 FileDialogWindow >> addInitialPanel [
-	"Add the panel."
-
 	super addInitialPanel.
-	self selectDirectory: FileSystem disk workingDirectory 
+	self selectDirectory: self preferredFileSystem workingDirectory
 ]
 
 { #category : #accessing }
@@ -169,12 +181,12 @@ FileDialogWindow >> defaultFileSortBlock [
 
 	^[:entry1 :entry2 |
 		entry1 isDirectory = entry2 isDirectory
-			ifTrue: [entry1 basename <= entry2 basename]
+			ifTrue: [entry1 basename caseInsensitiveLessOrEqual: entry2 basename]
 			ifFalse: [entry1 isDirectory
 						ifTrue: [true]
 						ifFalse: [entry2 isDirectory
 									ifTrue: [false]
-									ifFalse: [entry1 basename <= entry2 basename]]]]
+									ifFalse: [entry1 basename caseInsensitiveLessOrEqual: entry2 basename]]]]
 ]
 
 { #category : #actions }
@@ -219,8 +231,6 @@ FileDialogWindow >> dirEntriesOrEmptyListFor: aDirectory [
 
 { #category : #accessing }
 FileDialogWindow >> directories [
-	"Answer the value of directories"
-
 	^ directories
 ]
 
@@ -418,19 +428,16 @@ FileDialogWindow >> iconFor: anEntry [
 { #category : #actions }
 FileDialogWindow >> initialDirectories [
 	"Answer the initial directories."
-	
+
 	| dirList |
-	dirList := FileSystem disk root directories collect: [ :each |
-		FileDirectoryWrapper with: each name: each basename model: self ].
-	
-	dirList isEmpty ifTrue: [ | workingDirectory 	wrapper |
-		workingDirectory := FileSystem disk workingDirectory.
-		wrapper := FileDirectoryWrapper 
-			with:  workingDirectory
-			name: workingDirectory basename
-			model: self.
-		dirList := Array with: wrapper ].
-	^dirList
+	dirList := self preferredFileSystem root directories collect: [ :each | FileDirectoryWrapper with: each name: each basename model: self ] as: OrderedCollection.
+	dirList add: (FileDirectoryWrapper with: self preferredFileSystem root name: self preferredFileSystem root basename model: self).
+	dirList isEmpty
+		ifTrue: [ | workingDirectory wrapper |
+			workingDirectory := self preferredFileSystem workingDirectory.
+			wrapper := FileDirectoryWrapper with: workingDirectory name: workingDirectory basename model: self.
+			dirList := Array with: wrapper ].
+	^ dirList
 ]
 
 { #category : #initialization }
@@ -440,8 +447,6 @@ FileDialogWindow >> initialExtent [
 
 { #category : #initialization }
 FileDialogWindow >> initialize [
-	"Initialize the receiver."
-
 	selectedFileIndex := 0.
 	fileNameText := ''.
 	self
@@ -450,7 +455,13 @@ FileDialogWindow >> initialize [
 		showDirectoriesInFileList: true;
 		fileSelectionBlock: self defaultFileSelectionBlock;
 		fileSortBlock: self defaultFileSortBlock.
-	super initialize. "Must be at end or signals error. No idea why - SeanDeNigris"
+	super initialize	"Must be at end or signals error. No idea why - SeanDeNigris"
+]
+
+{ #category : #initialization }
+FileDialogWindow >> initializeOn: aFileSystem [
+	self preferredFileSystem: aFileSystem.
+	self initialize
 ]
 
 { #category : #testing }
@@ -701,6 +712,16 @@ FileDialogWindow >> openSelectedFile [
 ]
 
 { #category : #accessing }
+FileDialogWindow >> preferredFileSystem [
+	^ preferredFileSystem ifNil: [ FileSystem disk ]
+]
+
+{ #category : #accessing }
+FileDialogWindow >> preferredFileSystem: aFileSystem [
+	preferredFileSystem := aFileSystem
+]
+
+{ #category : #accessing }
 FileDialogWindow >> previewMorph [
 	"Answer the value of previewMorph"
 
@@ -775,7 +796,11 @@ Overwrite the file?' translated format: {f printString})
 FileDialogWindow >> selectDirectory: aFileReference [
 	"Expand and select the given directory."
 
-	self changed: #(openPath), aFileReference pathSegments
+	| pathSegments |
+	pathSegments := aFileReference isRoot
+		ifTrue: [ Array with: aFileReference pathString ]
+		ifFalse: [ aFileReference pathSegments ].
+	self changed: #(openPath) , pathSegments
 ]
 
 { #category : #actions }
@@ -804,22 +829,20 @@ FileDialogWindow >> selectParentDirectory [
 ]
 
 { #category : #actions }
-FileDialogWindow >> selectPathName: aString [
-	"Select the directory and set the file name text
-	from the given string."
+FileDialogWindow >> selectPath: aPathOrFileReference [
+	"Select the directory and set the file name text from the given path."
 
 	| reference |
-	reference := aString asFileReference asAbsolute.
-	
+	reference := (self preferredFileSystem
+		referenceTo: (self preferredFileSystem resolve: aPathOrFileReference)) asAbsolute.
 	reference exists
-		ifFalse: [ ^ self selectPathName: reference parent fullName ].
-	
-	reference isDirectory 
+		ifFalse: [ ^ self selectPath: reference parent ].
+	reference isDirectory
 		ifTrue: [ ^ self selectDirectory: reference ].
-		
+
 	"must be a file then"
 	self selectDirectory: reference parent.
-	self fileNameText: reference basename.
+	self fileNameText: reference basename
 ]
 
 { #category : #actions }
@@ -843,8 +866,6 @@ FileDialogWindow >> selectedDirectory [
 
 { #category : #accessing }
 FileDialogWindow >> selectedDirectory: anObject [
-	"Set the value of selectedDirectory"
-
 	selectedDirectory := anObject.
 	self
 		selectedFileIndex: 0;

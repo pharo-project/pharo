@@ -1,3 +1,6 @@
+"
+Unit test for sort functions
+"
 Class {
 	#name : #SortFunctionTest,
 	#superclass : #TestCase,

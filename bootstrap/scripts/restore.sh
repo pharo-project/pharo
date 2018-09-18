@@ -1,15 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Restore the bootstrap snapshot.
 #
-# Only works if bootstrap-cache is in the default location
+# This script must be run under the same conditions as snapshot.sh.
+# Please read the comments in snapshot.sh.
 #
 set -x
 set -e
 
-source bootstrap/scripts/envvars.sh
+. ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/envvars.sh
 
-pushd "${REPOSITORY}"
-bootstrap/scripts/1-clean.sh
-tar xzf "${REPOSITORY}/snapshot.tar.gz"
-popd
+${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/1-clean.sh
+tar xzf snapshot.tar.gz

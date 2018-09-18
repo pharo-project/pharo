@@ -8,7 +8,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #UnifiedFFI
+	#category : #'UnifiedFFI-Architecture'
 }
 
 { #category : #'instance creation' }
@@ -47,6 +47,11 @@ FFIArchitecture >> computeStructureRegisterPassingLayout: aStructureClass [
 { #category : #types }
 FFIArchitecture >> externalLongType [
 	^ ExternalType long
+]
+
+{ #category : #types }
+FFIArchitecture >> externalSizeTType [
+	^ ExternalType ulong
 ]
 
 { #category : #types }
@@ -97,6 +102,11 @@ FFIArchitecture >> returnSingleFloatsAsDoubles [
 { #category : #'default abi' }
 FFIArchitecture >> shadowCallSpaceSize [
 	^ 0
+]
+
+{ #category : #types }
+FFIArchitecture >> sizeTTypeSize [
+	^ self externalSizeTType byteSize
 ]
 
 { #category : #types }

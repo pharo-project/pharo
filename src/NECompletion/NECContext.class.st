@@ -2,6 +2,25 @@
 A completion is started by the ECController. The controller creates me to compute the context of the completion. The most important information about the context are the receiverClass and the completionToken. I create a ECModel or subclass when requested by the 'model' method.
 
 I use SHParser and SHRange to parse the text input.
+
+narrowString holds the current part of the text that should be completed (be it a class, variable or methods). 
+
+For example in the case of a message: 
+    selectors are all the selectors that could be used.
+    entries are the selectors that match the narrowString.
+
+My method createModel is important since it is the one deciding the kind of model that will be used: 
+- none empty when no completion should be done
+- untyped when basically we have no clue about the receiver, (structurally xx|)
+- typed when the receiver is know (structurally var xx|)
+
+
+
+
+
+
+
+
 "
 Class {
 	#name : #NECContext,
@@ -25,7 +44,7 @@ Class {
 
 { #category : #'instance creation' }
 NECContext class >> controller: aECController class: aClass source: aString position: anInteger [ 
-	^ self basicNew initialize
+	^ self new
 		setController: aECController
 		class: aClass
 		source: aString
@@ -196,25 +215,15 @@ NECContext >> createEmptyRangeForGapAt: index [
 
 { #category : #accessing }
 NECContext >> createModel [
-	| modelClass |
-	
 	self receiverClass
 		ifNotNil: [^ NECTypedModel class: receiverClass].
 
-	(controller workspace isNil and: [ theClass notNil ])
-		ifTrue: [ self isStartOfMethodDefinition
-				ifTrue: [ NECPreferences overrideModel
-						ifTrue: [ ^ NECOverrideModel class: theClass ]
-						ifFalse: [ ^ NECEmptyModel new ] ] ].
+	(theClass notNil and:  [ self isStartOfMethodDefinition ])
+				ifTrue: [ self configureSelectorsOnly].
 							
 	self completionTokenIsLiteralOrComment ifTrue:[ ^ NECEmptyModel new].
-				
-	modelClass := NECUntypedModel.		
-	(controller model respondsTo: #modelClass) 
-		ifTrue: [
-			controller model modelClass ifNotNil: [:class | modelClass :=  class]].	
 			
-	^ modelClass
+	^ NECUntypedModel
 		class: theClass
 		temporaries: self temporaries
 		additionals: controller additionals
@@ -487,15 +496,11 @@ NECContext >> sourceOf: aSHRange stopAt: aNumber [
 		ifFalse: [source copyFrom: aSHRange start to: aNumber]
 ]
 
-{ #category : #action }
-NECContext >> switchToUntyped [
-	receiverClass := nil.
-	self configureSelectorsAndVariables.
-	model := self createModel
-]
-
 { #category : #accessing }
 NECContext >> temporaries [
+	"Return entries to represent temporary variables, method arguments and block temporaries. 
+	Note that the identification of such knowledge is done using SHOUT ranges."
+	
 	| tempRanges |
 	tempRanges := ranges select: [ :each | #(#patternTempVar #patternArg ) includes: each type ].
 	tempRanges addAll: self blockTemporaries.

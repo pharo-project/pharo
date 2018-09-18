@@ -4,7 +4,7 @@ This is deprecated class because the original class TransferModel was renamed to
 Class {
 	#name : #TransferModel,
 	#superclass : #TransferPresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }

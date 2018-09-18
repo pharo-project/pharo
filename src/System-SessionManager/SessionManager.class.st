@@ -106,7 +106,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'System-SessionManager'
+	#category : #'System-SessionManager-Base'
 }
 
 { #category : #accessing }
@@ -140,6 +140,7 @@ SessionManager class >> initializedSessionManager [
 		registerSystemClassNamed: #LanguageEnvironment	; "System"
 		registerSystemClassNamed: #ShortIntegerArray; "System"
 		registerSystemClassNamed: #DiskStore; "System"
+		registerSystemClassNamed: #MemoryStore; "System"
 		registerSystemClassNamed: #SmalltalkImage; "System"
 		registerSystemClassNamed: #WeakFinalizationList; "System"
 		registerSystemClassNamed: #Clipboard; "System"
@@ -192,7 +193,7 @@ SessionManager class >> initializedSessionManager [
 SessionManager >> addDeferredStartupAction: aBlock [
 	"Add the block to the list of actions that we will be performed immediately after the startup list is executed."
 	self currentSession 
-		addDeferredStartupAction: aBlock.
+		addDeferredStartupAction: aBlock
 	
 ]
 
@@ -207,7 +208,7 @@ SessionManager >> basicCreateCategory: aString [
 SessionManager >> categoryNamed: aString [ 
 	^ categories 
 		detect: [ :each | each name = aString ]
-		ifNone: [ NotFound signalFor: aString  ]
+		ifNone: [ NotFound signalFor: aString ]
 ]
 
 { #category : #'category management' }
@@ -247,10 +248,10 @@ SessionManager >> guiCategory [
 { #category : #registration }
 SessionManager >> hasRegistered: handledId [
 	"handledId, in most cases, will be a class name"
+	
 	^ self startupList 
-		detect: [ :handler | handler handledId = handledId ]
-		ifFound: [ true ]
-		ifNone: [ false ]
+			anySatisfy: [ :handler | handler handledId = handledId ]
+	
 ]
 
 { #category : #initialization }
@@ -431,18 +432,13 @@ SessionManager >> shutdownList [
 
 { #category : #'snapshot and quit' }
 SessionManager >> snapshot: save andQuit: quit [
-	| isImageStarting wait |
+	| isImageStarting |
 	"We do the snapshot in a separate process in maximum priority to have always a clean startup.
 	This process will be interrupted by the fork, and will be resumed as soon as the snapshot finishes.
 	We synchronize these processes in case both are in the same priority.
 	When both arguments are false, do nothing and return false."
 	(save or: [quit]) ifFalse: [ ^ false ]. 
-	wait := Semaphore new.
-	[
-		isImageStarting := self launchSnapshot: save andQuit: quit.
-		wait signal
-	] forkAt: Processor highestPriority.
-	wait wait.
+	isImageStarting := self launchSnapshot: save andQuit: quit.
 	^ isImageStarting
 ]
 

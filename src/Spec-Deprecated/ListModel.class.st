@@ -4,7 +4,7 @@ This is deprecated class because the original class ListModel was renamed to Lis
 Class {
 	#name : #ListModel,
 	#superclass : #ListPresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }

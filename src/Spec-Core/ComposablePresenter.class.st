@@ -101,7 +101,7 @@ Class {
 		'askOkToClose',
 		'titleHolder'
 	],
-	#category : #'Spec-Core'
+	#category : #'Spec-Core-Base'
 }
 
 { #category : #defaults }
@@ -132,6 +132,12 @@ ComposablePresenter class >> defaultSpec [
 ComposablePresenter class >> inputTextHeight [
 
 	^ self defaultFont height + 12
+]
+
+{ #category : #defaults }
+ComposablePresenter class >> labelHeight [
+
+	^ self defaultFont height
 ]
 
 { #category : #'instance creation' }
@@ -715,6 +721,22 @@ ComposablePresenter >> newDropList [
 ]
 
 { #category : #widgets }
+ComposablePresenter >> newDynamicPresentersListIn: accessorSymbol usingBuilder: aDynamicPresentersListBuilder [
+	|mutatorSymbol newDynamicPresenter |
+	mutatorSymbol := (accessorSymbol , ':') asSymbol.
+	(self perform: accessorSymbol)
+		ifNotNil: [ :dynamicPresenter | dynamicPresenter owner: nil ].
+	newDynamicPresenter := aDynamicPresentersListBuilder build.
+	
+	self perform: mutatorSymbol with: newDynamicPresenter.
+	
+	newDynamicPresenter owner: self.
+	
+	self needRebuild: false.
+	self buildWithSpec
+]
+
+{ #category : #widgets }
 ComposablePresenter >> newIconList [
 	^ self instantiate: IconListPresenter
 ]
@@ -737,6 +759,11 @@ ComposablePresenter >> newList [
 { #category : #widgets }
 ComposablePresenter >> newMultiColumnList [
 	^ self instantiate: MultiColumnListPresenter
+]
+
+{ #category : #widgets }
+ComposablePresenter >> newNullPresenter [
+	^ self instantiate: NullPresenter
 ]
 
 { #category : #widgets }

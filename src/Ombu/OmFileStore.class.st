@@ -65,9 +65,7 @@ OmFileStore class >> globalNameFrom: directoryEntryOrFileReference [
 
 { #category : #'instance creation' }
 OmFileStore class >> named: aGlobalName [
-	^ self 
-		named: aGlobalName
-		inDirectory: FileSystem memory
+	^ self named: aGlobalName inDirectory: FileSystem memory
 ]
 
 { #category : #'instance creation' }
@@ -297,12 +295,9 @@ OmFileStore >> initializeWithGlobalName: aName fileReference: aFileReference [
 
 { #category : #testing }
 OmFileStore >> isOutdated [
-	"Answer if #refresh is needed. To that end, I check if the file has different size than last time I wrote."
+	"Answer if #refresh is needed. A store is outdated if the file exists and has greater size than last time I wrote."
 
-	^ self fileReference exists
-		ifTrue: [ self fileReference size ~= lastStreamPosition ]
-		ifFalse: [ lastStreamPosition isNotNil ]
-
+	^ self fileReference exists and: [ self fileReference size ~= lastStreamPosition ]
 ]
 
 { #category : #accessing }

@@ -1,7 +1,10 @@
+"
+SUnit tests for SpecWindow
+"
 Class {
 	#name : #SpecWindowTest,
 	#superclass : #TestCase,
-	#category : #'Spec-Tests'
+	#category : #'Spec-Tests-Core-Support'
 }
 
 { #category : #tests }

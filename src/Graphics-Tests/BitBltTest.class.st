@@ -7,6 +7,12 @@ Class {
 	#category : #'Graphics-Tests-Primitives'
 }
 
+{ #category : #coverage }
+BitBltTest >> classToBeTested [
+	
+	^BitBlt
+]
+
 { #category : #'tests - bugs' }
 BitBltTest >> testAlphaCompositing [
 

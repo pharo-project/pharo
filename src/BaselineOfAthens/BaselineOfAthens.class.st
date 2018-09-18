@@ -15,23 +15,46 @@ BaselineOfAthens >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ 
-			self flag: #todo. "We need to cut cyclic dependencies and add requirements to the packages."
-			
+		do: [ self flag: #todo.	"Inter packages dependencies are now added but it is missing some dependencies on other projects such as Morphic for Athens-Morphic"
+
+			"Dependencies"
+			self
+				display: spec;
+				unifiedFFI: spec.
+
 			"Packages"
-			spec package: 'Athens-Core'. "There is a cyclic dependency between Core and Morphic"
-			spec package: 'Athens-Text'.
-			spec package: 'Athens-Balloon'.
-			spec package: 'Athens-Morphic'.
-			spec package: 'Athens-CairoPools'.
-			spec package: 'Athens-Cairo'.
-			spec package: 'Athens-Examples'.
-			spec package: 'Athens-Tests-Cairo'.
-			
+			spec
+				package: 'Athens-Core' with: [ spec requires: 'Display' ];
+				package: 'Athens-Text' with: [ spec requires: 'Athens-Core' ];
+				package: 'Athens-Balloon' with: [ spec requires: #('Athens-Core' 'Athens-Text') ];
+				package: 'Athens-Morphic' with: [ spec requires: #('Athens-Core' 'Athens-Text' 'Athens-Balloon' 'Athens-Cairo') ];
+				package: 'Athens-Cairo' with: [ spec requires: #('Athens-Core' 'UnifiedFFI') ];
+				package: 'Athens-Examples' with: [ spec requires: #('Athens-Morphic' 'Athens-Text' 'Athens-Balloon' 'Athens-Cairo') ];
+				package: 'Athens-Tests-Cairo' with: [ spec requires: 'Athens-Cairo' ].
+
 			"Groups"
 			spec
-				group: 'Core' with: #('Basic' 'Athens-Text' 'Athens-Balloon' 'Athens-Morphic');
-				group: 'Basic' with: #('Athens-Core' 'Athens-CairoPools' 'Athens-Cairo');
-				group: 'Examples' with: #('Athens-Examples'); "Test and Examples are not yet working. We need to add the requirements between packages to get them working"
+				group: 'Core' with: #('Cairo-core' 'Athens-Text' 'Athens-Balloon' 'Athens-Morphic');
+				group: 'Cairo-core' with: #('Athens-Core' 'Athens-Cairo');
+				group: 'Examples' with: #('Athens-Examples');
 				group: 'Tests' with: #('Athens-Tests-Cairo') ]
+]
+
+{ #category : #baseline }
+BaselineOfAthens >> display: spec [
+	spec baseline: 'Display' with: [ spec repository: self repository ]
+]
+
+{ #category : #accessing }
+BaselineOfAthens >> repository [
+	^ self packageRepositoryURL
+]
+
+{ #category : #baseline }
+BaselineOfAthens >> unifiedFFI: spec [
+	spec
+		baseline: 'UnifiedFFI'
+		with: [ spec
+				loads: 'minimal';
+				repository: self repository ]
 ]

@@ -472,11 +472,9 @@ RBMethodNode >> reformatSource [
 					each stopPosition + 1 ])
 			to: source size).
 	newSource := stream contents.
-	newTree := RBParser 
-		parseMethod: newSource 
-		onError: [ :msg :pos | ^ self formattedCode ].
+	newTree :=  RBParser parseFaultyMethod: newSource.
 	self = newTree
-		ifFalse: [ ^ self formattedCode ].
+		ifFalse: [ ^ self formattedCode].
 	^ newSource
 ]
 
