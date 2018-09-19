@@ -20,11 +20,11 @@ initializeImage
 		"doing: self bootstrapInitialProcessCode."
 		doing: ('PharoBootstrapInitialization 
 			initializeImageOfType: ''Pharo'' 
-			majorVersion: {major} 
+			major: {major} 
 			minor: {minor} 
 			patch: {patch}
 			suffix: ''{suffix}'' 
-			buildNumber: ''{build}'' 
+			build: ''{build}'' 
 			commitHash: ''{hash}''.' 
 		format: {
 			'major' -> versionInfo major.
