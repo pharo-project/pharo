@@ -1,0 +1,6 @@
+tests
+testDefaultBuildIsUnknown
+
+	| versionInfo |
+	versionInfo := PBVersionInfo major: 7.
+	self assert: versionInfo buildNumber equals: 'UNKNOWN_BUILD'.

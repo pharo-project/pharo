@@ -12,11 +12,10 @@
 		"bootstrapInterpreter",
 		"bootstrapEnvironment",
 		"espellBackend",
-		"definitionFetcher",
 		"statistics",
 		"logger",
 		"imageFileReference",
-		"buildNumber"
+		"versionInfo"
 	],
 	"name" : "PBImageBuilder50",
 	"type" : "normal"

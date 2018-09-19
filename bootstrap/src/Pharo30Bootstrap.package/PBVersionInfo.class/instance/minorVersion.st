@@ -1,4 +1,3 @@
-versioning
+accessing
 minorVersion
-
-	^ '0'
+	^ minor

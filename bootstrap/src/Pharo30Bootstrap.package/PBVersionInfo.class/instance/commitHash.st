@@ -1,4 +1,3 @@
-versioning
+accessing
 commitHash
-
-	^ commitHash
+	^ commitHash ifNil: [ 'UNKNOWN_COMMIT' ]

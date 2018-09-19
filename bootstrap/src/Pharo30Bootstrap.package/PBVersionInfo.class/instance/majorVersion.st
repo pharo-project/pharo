@@ -1,4 +1,3 @@
-versioning
+accessing
 majorVersion
-
-	^ '7'
+	^ major 
