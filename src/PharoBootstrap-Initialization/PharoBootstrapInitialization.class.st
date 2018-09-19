@@ -112,6 +112,7 @@ PharoBootstrapInitialization class >> initializeImageOfType: typeName major: maj
 					type: typeName;
 					major: major;
 					minor: minor;
+					patch: patch;
 					suffix: suffix;
 					build: build;
 					commitHash: hash;
