@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "",
-	"super" : "PBDefinitionFetcher",
+	"super" : "Object",
 	"category" : "Pharo30Bootstrap",
 	"classinstvars" : [ ],
 	"pools" : [ ],
@@ -9,6 +9,6 @@
 		"repository",
 		"commitHash"
 	],
-	"name" : "PBGitFetcher",
+	"name" : "PBVersionInfo",
 	"type" : "normal"
 }
