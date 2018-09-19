@@ -1,4 +1,4 @@
-tests
+test-default-values
 testDefaultBuildIsUnknown
 
 	| versionInfo |

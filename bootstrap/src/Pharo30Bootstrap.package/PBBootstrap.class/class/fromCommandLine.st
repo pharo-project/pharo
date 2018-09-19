@@ -4,19 +4,14 @@ fromCommandLine
 	options := CommandLineArguments default.
 	architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].
 	buildNumber := options optionAt: 'BUILD_NUMBER' ifAbsent: [ '1' ].
+	versionInfo := options optionAt: 'VERSION_INFO' ifAbsent: [ self error: 'Must provide VERSION_INFO in the form of a git describe --long' ].
 	
 	('Architecture: ' , architecture) logCr.
-	('BuildNumber: ' , buildNumber) logCr. 
+	('BuildNumber: ' , buildNumber) logCr.
+	('VersionInfo: ' , versionInfo) logCr. 
 	
-	repo := IceRepositoryCreator new
-		location: self repositoryLocation;
-		subdirectory: 'src';
-		createRepository.
-	
-	versionInfo := (PBVersionInfo major: 7)
-		repository: repo;
+	versionInfo := (PBVersionInfo fromLongGitDescribe: versionInfo)
 		buildNumber: buildNumber;
-		minor: 0;
 		yourself.
 	
 	^ super new

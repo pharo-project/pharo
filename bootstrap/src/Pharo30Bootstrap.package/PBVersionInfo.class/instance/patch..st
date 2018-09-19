@@ -1,4 +1,4 @@
 accessing
 patch: anObject
 	
-	patch := anObject
+	patch := anObject asInteger

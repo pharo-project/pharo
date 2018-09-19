@@ -1,3 +1,3 @@
 accessing
 minor: anObject
-	minor := anObject
+	minor := anObject asInteger
