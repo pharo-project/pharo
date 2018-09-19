@@ -7,34 +7,20 @@ Class {
 	#category : #'NECompletion-Model'
 }
 
-{ #category : #private }
+{ #category : #initialization }
 NECTypedModel >> initializeSelectors [
-	self initializeSelectorsFor: clazz
-]
-
-{ #category : #private }
-NECTypedModel >> initializeSelectorsFor: aClass [
 	selectors reset.
 	selectors addAll:
-			(aClass allSelectors collect: [ :each | NECSelectorEntry contents: each type: #selector ]).
+			(clazz allSelectors collect: [ :each | NECSelectorEntry contents: each type: #selector ]).
 	self sortSelectors.
 ]
 
-{ #category : #action }
-NECTypedModel >> narrowWith: aString [ 
-	self
-		narrowString: aString ;
-		initializeSelectors.
-	entries reset.
-	self addToEntries: selectors
-]
-
-{ #category : #action }
+{ #category : #acessing }
 NECTypedModel >> theClass [
 	^clazz
 ]
 
-{ #category : #action }
+{ #category : #acessing }
 NECTypedModel >> title [
 	^clazz name
 ]
