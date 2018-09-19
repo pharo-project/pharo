@@ -22,9 +22,9 @@ SharedPool class >> bindingOf: varName [
 		binding := pool bindingOf: aSymbol.
 		binding ifNotNil:[^binding].
 	].
+ 
+	^self superclass bindingOf: varName.
 
-	"subclassing and environment are not preserved"
-	^nil
 ]
 
 { #category : #'name lookup' }
