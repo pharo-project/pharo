@@ -8,6 +8,13 @@ Class {
 }
 
 { #category : #tests }
+SharedPoolTest >> testIncludesKey [
+
+	self assert: (ChronologyConstants includesKey: #DayNames).
+	self deny: (ChronologyConstants includesKey: #DependentsFields)
+]
+
+{ #category : #tests }
 SharedPoolTest >> testPoolUsers [
 	| result |
 	result := ChronologyConstants poolUsers.
