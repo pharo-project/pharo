@@ -48,7 +48,7 @@ SystemVersionTest >> testDoNotBreakSmalltalkVersion [
 { #category : #tests }
 SystemVersionTest >> testDottedMajorMinorPatch [ 
 	 
-	self assert: (SystemVersion fromVersionString: 'Squeak3.7+alpha') dottedMajorMinorPatch = '3.7.0'.
+	self assert: (SystemVersion fromVersionString: 'RPharo3.7+alpha') dottedMajorMinorPatch = '3.7.0'.
 	self assert: (SystemVersion fromVersionString: 'Pharo1.0+ALPHA') dottedMajorMinorPatch = '1.0.0'.
 	self assert: (SystemVersion fromVersionString: 'Pharo1.1') dottedMajorMinorPatch = '1.1.0'.
 ]
@@ -164,35 +164,42 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildWithoutSuffix [
 { #category : #tests }
 SystemVersionTest >> testMajorMinorVersion [ 
 	 	
-	self assert: (SystemVersion fromVersionString: 'Squeak3.7+alpha') majorMinorVersion = 'Squeak3.7.0'.
+	self assert: (SystemVersion fromVersionString: 'RPharo3.7+alpha') majorMinorVersion = 'RPharo3.7.0'.
 	self assert: (SystemVersion fromVersionString: 'Pharo1.0+ALPHA') majorMinorVersion = 'Pharo1.0.0'.
 	self assert: (SystemVersion fromVersionString: 'Pharo1.1') majorMinorVersion = 'Pharo1.1.0'.
+	self assert: (SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorVersion = 'Pharo1.1.7'.
 ]
 
 { #category : #tests }
 SystemVersionTest >> testMajorMinorWithSeparatingString [ 
 	
-	self assert: ((SystemVersion fromVersionString: 'Squeak3.7+alpha') majorMinorPatch: '-') = '3-7-0'.
+	self assert: ((SystemVersion fromVersionString: 'RPharo3.7+alpha') majorMinorPatch: '-') = '3-7-0'.
 	self assert: ((SystemVersion fromVersionString: 'Pharo1.0+ALPHA') majorMinorPatch: '')  = '100'.
 	self assert: ((SystemVersion fromVersionString: 'Pharo1.1') majorMinorPatch: '.') = '1.1.0'.
+	self assert: ((SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorPatch: '.') = '1.1.7'.
 ]
 
 { #category : #'tests - parsing' }
 SystemVersionTest >> testParsingFromVersionString [
 	"Test that each of the keys are parsable and return a printString giving as value of the associations"
 
-	{'Squeak3.7+alpha' 		  -> 'Squeak-3.7.0+alpha'.
+	{'RPharo3.7+alpha' 		  -> 'RPharo-3.7.0+alpha'.
 	 'Pharo1.0+ALPHA'  		  -> 'Pharo-1.0.0+ALPHA'.
 	 'MyKillerApp-4.0+beta'    -> 'MyKillerApp-4.0.0+beta'.			
 	 'Pharo0'           		  -> 'Pharo-0.0.0'.
 	 'Pharo5'           		  -> 'Pharo-5.0.0'.
 	 'Pharo6.0'         		  -> 'Pharo-6.0.0'.
+	 'Pharo6.0.78'         		  -> 'Pharo-6.0.78'.
 	 'Pharo-7'          		  -> 'Pharo-7.0.0'.
 	 'Pharo-7.0'        		  -> 'Pharo-7.0.0'.
+	 'Pharo-7.0.89'        		  -> 'Pharo-7.0.89'.
 	 'Pharo-7.0+alpha'  		  -> 'Pharo-7.0.0+alpha'.
+	 'Pharo-7.0.89+alpha'  		  -> 'Pharo-7.0.89+alpha'.
 	 'Pharo-7.0+alpha.build.0' -> 'Pharo-7.0.0+alpha.build.0'.
 	 'Pharo-7.0+alpha.build.2' -> 'Pharo-7.0.0+alpha.build.2'.
+	 'Pharo-7.0.89+alpha.build.2' -> 'Pharo-7.0.89+alpha.build.2'.
 	 'Pharo-7.0+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8' -> 'Pharo-7.0.0+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8'.
+	 'Pharo-7.0.89+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8' -> 'Pharo-7.0.89+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8'.
 	  } 
 	do: [:each | self assert: ((SystemVersion fromVersionString: each key) printString beginsWith: each value) ]
 ]
