@@ -263,6 +263,8 @@ FileReference >> lastFileFor: baseFileName extension: extension [
 	| files |
 	files := self childrenMatching: baseFileName , '.*.' , extension.
 	files ifEmpty: [ ^ self error: 'No file with number pattern' ].
+	"splitting twice but for now a simple '*.*.*' does not work since it selects: name.45.677.mcz"
+	files := files select: [ :each | (each basename splitOn: $.) size = 3].
 	^ (files
 		asSortedCollection:
 			[ :a :b | ((a basename splitOn: $.) at: 2) asNumber < ((b basename splitOn: $.) at: 2) asNumber ])
