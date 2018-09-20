@@ -8,4 +8,4 @@ testFromLongDescribeWithNumberOfCommitsExtractsSemanticVersion
 	self assert: versionInfo minor equals: 5.
 	self assert: versionInfo patch equals: 3.
 	self assert: versionInfo suffix equals: nil.
-	self assert: versionInfo commitHash equals: 'g975b'.
+	self assert: versionInfo commitHash equals: '975b'.
