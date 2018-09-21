@@ -21,12 +21,14 @@ Class {
 		'beingWaitedOn',
 		'millisecondDelayDuration',
 		'scheduler',
-		'schedulerResumptionTime'
+		'schedulerResumptionTime',
+		'ticker',
+		'resumptionTick'
 	],
 	#classVars : [
 		'Scheduler'
 	],
-	#category : #'Kernel-Processes'
+	#category : #'Kernel-Delays'
 }
 
 { #category : #testing }
@@ -43,14 +45,17 @@ Delay class >> delaySchedulerClass [
 
 { #category : #settings }
 Delay class >> delaySchedulerClass: aSchedulerClass [ 
-	| newScheduler |
+	| newScheduler oldScheduler |
 	self delaySchedulerClass = aSchedulerClass ifTrue:[ ^self ].
 	newScheduler := aSchedulerClass new.
 	(newScheduler respondsTo: #startTimerEventLoop) 
 		ifFalse: [ self error: 'New delay scheduler must respond to #startTimerEventLoop' ].
-	Scheduler stopTimerEventLoop.
+	newScheduler startTimerEventLoop.
+	"To avoid lockup if a higher priority process preempts this method to schedule a delay,
+	the newScheduler needs to be in place before oldScheduler is stopped"
+	oldScheduler := Scheduler.
 	Scheduler := newScheduler.
-	Scheduler startTimerEventLoop.
+	oldScheduler stopTimerEventLoop.
 	self inform: 'Delay scheduler set to ' , aSchedulerClass printString.
 	
 	
@@ -156,6 +161,13 @@ Delay class >> systemSettingOn: aBuilder [
 	
 ]
 
+{ #category : #deprecated }
+Delay class >> testCaseSupportTimingSemaphore [
+
+	^ Scheduler testCaseSupportTimingSemaphore.
+
+]
+
 { #category : #'instance creation' }
 Delay class >> timeoutSemaphore: aSemaphore afterMSecs: anInteger [
 	"Create and schedule a Delay to signal the given semaphore when the given number of milliseconds has elapsed. Return the scheduled Delay. The timeout can be cancelled by sending 'unschedule' to this Delay."
@@ -163,6 +175,12 @@ Delay class >> timeoutSemaphore: aSemaphore afterMSecs: anInteger [
 
 	^ (self new setDelay: anInteger forSemaphore: aSemaphore) schedule; yourself
 
+]
+
+{ #category : #public }
+Delay >> beingWaitedOn [
+	"Answer whether this delay is currently scheduled, e.g., being waited on"
+	^beingWaitedOn
 ]
 
 { #category : #public }
@@ -178,16 +196,27 @@ Delay >> isExpired [
 
 ]
 
+{ #category : #private }
+Delay >> isScheduled [
+	"ticker is set in #timingPrioritySchedule: 
+	and nilled in #timingPriorityUnschedule: "
+	^ ticker isNotNil
+]
+
 { #category : #public }
 Delay >> millisecondDelayDuration [
 	^millisecondDelayDuration
 ]
 
-{ #category : #printing }
+{ #category : #public }
 Delay >> millisecondsToGo [
-	"The milli/micro second semantics of /schedulerResumptionTime/ vary with which 
-	scheduler set the value, so ask it to interpret."
-	^ scheduler millisecondsUntilResumptionTime: schedulerResumptionTime
+	^ ticker 
+		ifNotNil: [ "New code for Pharo 7"
+			ticker millisecondsUntilTick: resumptionTick ]
+		ifNil: [ "Deprecated code required during transition" 
+			scheduler 
+				ifNotNil: [ scheduler millisecondsUntilResumptionTime: schedulerResumptionTime ]
+				ifNil: [ 0 ] ]
 ]
 
 { #category : #printing }
@@ -206,6 +235,20 @@ Delay >> printOn: aStream [
 	aStream nextPutAll: ')'.
 ]
 
+{ #category : #public }
+Delay >> resumptionTick [
+	"The tick semantics (e.g. millisecond/microsecond) depends on the ticker its derived from."
+	
+	^resumptionTick 
+
+]
+
+{ #category : #public }
+Delay >> resumptionTickAdjustFrom: oldBaseTick to: newBaseTick [
+	resumptionTick := resumptionTick - oldBaseTick + newBaseTick.  
+
+]
+
 { #category : #private }
 Delay >> schedule [
 	"Schedule this delay."
@@ -214,7 +257,7 @@ Delay >> schedule [
 
 ]
 
-{ #category : #'private - scheduler' }
+{ #category : #deprecated }
 Delay >> scheduler: aDelayScheduler resumptionTime: milliOrMicroResumptionTime [
 	"The milli/micro semantics of schedulerResumptionTime varies depending on which 
 	scheduler is running, so we record it such that later printOn: can interpret it
@@ -223,13 +266,13 @@ Delay >> scheduler: aDelayScheduler resumptionTime: milliOrMicroResumptionTime [
 	schedulerResumptionTime := milliOrMicroResumptionTime.
 ]
 
-{ #category : #'private - scheduler' }
+{ #category : #deprecated }
 Delay >> schedulerBeingWaitedOn [
 	"Answer whether this delay is currently scheduled, e.g., being waited on"
 	^beingWaitedOn
 ]
 
-{ #category : #'private - scheduler' }
+{ #category : #deprecated }
 Delay >> schedulerBeingWaitedOn: aBoolean [
 	"Indicate whether this delay is currently scheduled, i.e. being waited on"
 	
@@ -241,7 +284,7 @@ Delay >> schedulerBeingWaitedOn: aBoolean [
 
 ]
 
-{ #category : #'private - scheduler' }
+{ #category : #deprecated }
 Delay >> schedulerResumptionTime [
 	"Answer the value of the system clock at which the receiver's suspended Process will resume.
 	The semantics of whether this is a millisecond or microsecond value depends on which scheduler is in use."
@@ -250,7 +293,7 @@ Delay >> schedulerResumptionTime [
 
 ]
 
-{ #category : #'private - scheduler' }
+{ #category : #deprecated }
 Delay >> schedulerResumptionTime: anInteger [
 	"Private! Should only be called by a subclass of DelayScheduler.
 	Set the value of the system's clock at which the receiver's suspended Process will resumed.  The clock semantics depends on the scheduler used e.g. millisecond/microsecond."
@@ -260,7 +303,7 @@ Delay >> schedulerResumptionTime: anInteger [
 
 ]
 
-{ #category : #'private - scheduler' }
+{ #category : #deprecated }
 Delay >> schedulerSignalWaitingProcess [
 	"The delay time has elapsed; signal the waiting process."
 
@@ -286,6 +329,36 @@ Delay >> setDelay: milliseconds forSemaphore: aSemaphore [
 	millisecondDelayDuration < 0 ifTrue: [self error: 'delay times cannot be negative'].
 	delaySemaphore := aSemaphore.
 	beingWaitedOn := false.
+]
+
+{ #category : #'private - timing priority process' }
+Delay >> timingPriorityScheduleTicker: aDelayTicker [
+	beingWaitedOn ifTrue: [ ^false ]. "Already scheduled"
+	beingWaitedOn := true.
+	ticker := aDelayTicker.
+	resumptionTick := ticker tickAfterMilliseconds: millisecondDelayDuration.
+	^true
+]
+
+{ #category : #'private - timing priority process' }
+Delay >> timingPrioritySignalExpired [
+	"The delay time has elapsed; signal the waiting process."
+
+	beingWaitedOn := false.
+	delaySemaphore signal.
+
+	"Important! Must only be called from the single timing priority process e.g...
+		DelayScheduler>>handleEventTimer."
+]
+
+{ #category : #'private - timing priority process' }
+Delay >> timingPriorityUnschedule [
+	""
+
+	beingWaitedOn := false.
+
+	"Important! Must only be called from the single timing priority process e.g...
+		DelayScheduler>>handleEventTimer."
 ]
 
 { #category : #private }
