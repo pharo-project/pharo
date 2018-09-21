@@ -100,7 +100,7 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 ]
 
 { #category : #'public api' }
-PharoBootstrapInitialization class >> initializeImageOfType: typeName major: major minor: minor patch: patch suffix: suffix build: build commitHash: hash [
+PharoBootstrapInitialization class >> initializeImageOfType: typeName major: major minor: minor patch: patch suffix: suffix build: buildString commitHash: hash [
 
 	"The image main entry point called by an image builder. The arguments specify the image
 	version description.
@@ -114,7 +114,7 @@ PharoBootstrapInitialization class >> initializeImageOfType: typeName major: maj
 					minor: minor;
 					patch: patch;
 					suffix: suffix;
-					build: build;
+					buildNumberString: buildString;
 					commitHash: hash;
 					yourself).
 	

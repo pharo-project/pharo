@@ -105,7 +105,13 @@ SystemVersion >> build [
 { #category : #'accessing - properties' }
 SystemVersion >> build: aBuildNumber [
 
-	build := aBuildNumber 
+	build := aBuildNumber
+]
+
+{ #category : #'accessing - properties' }
+SystemVersion >> buildNumberString: aBuildNumberString [
+
+	self build: (Number readFrom: aBuildNumberString ifFail: [ self class invalidBuildNumber ])
 ]
 
 { #category : #private }
