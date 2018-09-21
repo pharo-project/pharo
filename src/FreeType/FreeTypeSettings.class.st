@@ -103,7 +103,7 @@ FreeTypeSettings >> bitBltSubPixelAvailable [
 	bitBlt sourceForm: (Form extent: 5@5 depth: 32).
 	bitBlt destOrigin: 1@1.
 	bitBlt width: 5; height: 5.
-	color := Color black nontranslucentColor pixelValueForDepth: 32.
+	color := Color black asNontranslucentColor pixelValueForDepth: 32.
 	[bitBlt 
 		copyBitsColor: (color bitAnd: 16rFFFFFF)
 		alpha: (color bitAnd: 16rFF000000) >> 24 

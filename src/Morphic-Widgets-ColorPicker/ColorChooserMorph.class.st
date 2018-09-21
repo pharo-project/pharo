@@ -44,7 +44,7 @@ ColorChooserMorph >> chooseColor [
 		color: self labelMorph color.
 	newColor ifNil: [^self].
 	self labelMorph color: newColor.
-	self solidLabelMorph color: newColor nontranslucentColor.
+	self solidLabelMorph color: newColor asNontranslucentColor.
 	self setColorSelector ifNotNil: [self model perform: self setColorSelector with: newColor]
 ]
 

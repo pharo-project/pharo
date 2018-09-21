@@ -24,7 +24,7 @@ SVColorSelectorMorph >> adoptPaneColor: paneColor [
 SVColorSelectorMorph >> basicColor: aColor [
 	"Set the gradient colors."
 	
-	super color: aColor nontranslucentColor.
+	super color: aColor asNontranslucentColor.
 	self
 		fillStyle: self gradient
 ]
@@ -62,7 +62,7 @@ SVColorSelectorMorph >> colorAt: aPoint [
 	"Answer the color in the world at the given point."
 	
 	^self isInWorld
-		ifTrue: [(Display colorAt: aPoint) nontranslucentColor]
+		ifTrue: [(Display colorAt: aPoint) asNontranslucentColor ]
 		ifFalse: [Color black]
 ]
 

@@ -130,7 +130,7 @@ FreeTypeFont >> displayLineGlyphOn: aDisplayContext from: startPoint to: endPoin
 	oldCombinationRule := aDisplayContext combinationRule .
 	oldHalftoneForm := aDisplayContext halftoneForm .
 	originalColorMap := aDisplayContext colorMap.
-	clr := (foreColor := aDisplayContext lastFontForegroundColor ifNil:[Color black nontranslucentColor]) 
+	clr := (foreColor := aDisplayContext lastFontForegroundColor ifNil:[Color black asNontranslucentColor]) 
 		pixelValueForDepth: 32.
 	depth := aDisplayContext destForm depth.
 	foreColorVal := clr bitAnd: 16rFFFFFF.
@@ -211,7 +211,7 @@ FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopInde
 	useRule41 := FreeTypeSettings current useSubPixelAntiAliasing and: [aBitBlt destForm depth >= 8].
 	depth := aBitBlt destForm depth.
 	originalColorMap := aBitBlt colorMap.
-	clr := (aBitBlt lastFontForegroundColor ifNil:[Color black nontranslucentColor]) 
+	clr := (aBitBlt lastFontForegroundColor ifNil:[Color black asNontranslucentColor]) 
 		pixelValueForDepth: 32.
 	useRule41 
 		ifTrue:[

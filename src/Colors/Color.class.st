@@ -1057,6 +1057,13 @@ Color >> asHexString [
 	^ s
 ]
 
+{ #category : #conversions }
+Color >> asNontranslucentColor [
+	"Set the transparency of the receiver to opaque."
+	
+	^ self alpha: 1.0.
+]
+
 { #category : #transformations }
 Color >> atLeastAsLuminentAs: aFloat [ 
 	| revisedColor |
@@ -1702,13 +1709,6 @@ Color >> negated [
 		r: 1.0 - self red
 		g: 1.0 - self green
 		b: 1.0 - self blue
-]
-
-{ #category : #conversions }
-Color >> nontranslucentColor [
-	"Set the transparency of the receiver to opaque."
-	
-	^ self alpha: 1.0.
 ]
 
 { #category : #transformations }
