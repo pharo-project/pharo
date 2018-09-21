@@ -1059,9 +1059,10 @@ Color >> asHexString [
 
 { #category : #conversions }
 Color >> asNontranslucentColor [
-	"Set the transparency of the receiver to opaque."
-	
-	^ self alpha: 1.0.
+	self
+		deprecated: 'Please use #nontranslucentColor instead'
+		transformWith: '`@receiver asNontranslucentColor' -> '`@receiver nontranslucentColor'.
+	^ self nontranslucentColor
 ]
 
 { #category : #transformations }
@@ -1709,6 +1710,13 @@ Color >> negated [
 		r: 1.0 - self red
 		g: 1.0 - self green
 		b: 1.0 - self blue
+]
+
+{ #category : #conversions }
+Color >> nontranslucentColor [
+	"Set the transparency of the receiver to opaque."
+
+	^ self alpha: 1.0
 ]
 
 { #category : #transformations }
