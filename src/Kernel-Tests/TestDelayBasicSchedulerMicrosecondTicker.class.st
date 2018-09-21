@@ -67,7 +67,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> setUp [
 	suspendedDelaysHeap := self classForScheduler defaultSuspendedDelaysHeap.
 	scheduler := self classForScheduler onTicker: ticker suspendedDelaysHeap: suspendedDelaysHeap.
 	scheduler startTimerEventLoopPriority: 45. "So its slightly above normal priority of tests"
-	DebugMe ifNil: [ DebugMe := true ]. 
+	DebugMe ifNil: [ DebugMe := false ]. 
 	scheduler debug: DebugMe.
 
 ]
