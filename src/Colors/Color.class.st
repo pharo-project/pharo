@@ -1057,14 +1057,6 @@ Color >> asHexString [
 	^ s
 ]
 
-{ #category : #conversions }
-Color >> asNontranslucentColor [
-	self
-		deprecated: 'Please use #nontranslucentColor instead'
-		transformWith: '`@receiver asNontranslucentColor' -> '`@receiver nontranslucentColor'.
-	^ self nontranslucentColor
-]
-
 { #category : #transformations }
 Color >> atLeastAsLuminentAs: aFloat [ 
 	| revisedColor |
