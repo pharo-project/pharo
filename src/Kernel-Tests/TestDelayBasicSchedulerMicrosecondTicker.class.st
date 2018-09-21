@@ -60,9 +60,10 @@ TestDelayBasicSchedulerMicrosecondTicker >> setDebugOnOff [
 		DebugMe := false.
 ]
 
-{ #category : #tests }
+{ #category : #running }
 TestDelayBasicSchedulerMicrosecondTicker >> setUp [
 	"Event loop priority takes So it takes priority over following code"
+	super setUp.
 	ticker := self classForTicker new.
 	suspendedDelaysHeap := self classForScheduler defaultSuspendedDelaysHeap.
 	scheduler := self classForScheduler onTicker: ticker suspendedDelaysHeap: suspendedDelaysHeap.
@@ -72,10 +73,11 @@ TestDelayBasicSchedulerMicrosecondTicker >> setUp [
 
 ]
 
-{ #category : #tests }
+{ #category : #running }
 TestDelayBasicSchedulerMicrosecondTicker >> tearDown [
 "	scheduler debug: false."
 	scheduler debug: false.
+	super tearDown.
 	"scheduler stopTimerEventLoop."
 
 ]
