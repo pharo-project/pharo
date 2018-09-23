@@ -1,6 +1,52 @@
 Extension { #name : #IntegerTest }
 
 { #category : #'*Kernel-Tests-Extended' }
+IntegerTest >> testIsProbablyPrime [
+
+	"Not primes:"
+	#(-100 -5 -3 -2 -1 0 1) do: [ :each |
+		self deny: each isProbablyPrime ].
+
+	"The following tests should return 'true'"
+	#(17 78901 104729 15485863 2038074743 29996224275833) do: [ :each |
+		self assert: each isProbablyPrime ].
+	
+	"The following tests should return 'false' (first 5 are Carmichael integers)"
+	#(561 2821 6601 10585 15841 256 29996224275831) do: [ :each |
+		self deny: each isProbablyPrime ].
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
+IntegerTest >> testLargePrimesUpTo [
+
+	| nn | 
+	nn := (2 raisedTo: 17) - 1. 
+	self deny: (Integer primesUpTo: nn) last = nn.
+	self assert: (Integer primesUpTo: nn + 1) last  = nn.
+	
+	
+
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
+IntegerTest >> testLn [
+	self assert: (100 ln closeTo: 10 ln*2).
+	self assert: ((2 raisedTo: Float emax + 3) ln closeTo: 2 ln*(Float emax + 3)) description: 'Integer>>ln should not overflow'
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
+IntegerTest >> testLog [
+	self assert: (100 log closeTo: 2).
+	self assert: ((2 raisedTo: Float emax + 3) log closeTo: 2 log*(Float emax + 3)) description: 'Integer>>log should not overflow'
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
+IntegerTest >> testNthRoot [
+	1 << 2000 nthRoot: 100.
+	self assert: (1 << 2000 nthRoot: 100) equals: 1 << 20
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
 IntegerTest >> testNthRootErrorConditions [
 	"
 	IntegerTest new testExactRaisedToErrorConditions
@@ -8,6 +54,36 @@ IntegerTest >> testNthRootErrorConditions [
 
 	self should: [ -2 nthRoot: 1/4 ] raise: ArithmeticError.
 	self should: [ -2 nthRoot: 1.24 ] raise: ArithmeticError.
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
+IntegerTest >> testNthRootExactness [
+	| inexactRoots largeExactPowersOf6 |
+	largeExactPowersOf6 := (2 to: 100) collect: [:k | k raisedTo: 66].
+	inexactRoots := largeExactPowersOf6 reject: [:e | (e nthRoot: 6) isInteger].
+	self assert: inexactRoots isEmpty description: 'Failed to find the exact 6th root of these numbers'
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
+IntegerTest >> testNthRootTruncated [
+	<timeout:  5 "seconds">
+	| tooBigToBeAFloat large |
+	tooBigToBeAFloat := 1 << 2000.
+	self assert: (tooBigToBeAFloat nthRootTruncated: 100) equals: 1 << 20.
+	self assert: (tooBigToBeAFloat + 1 nthRootTruncated: 100) equals: 1 << 20.
+	self assert: (tooBigToBeAFloat - 1 nthRootTruncated: 100) equals: 1 << 20 - 1.
+	
+	large := -3 raisedTo: 255.
+	self assert: (large nthRootTruncated: 17) equals: (-3 raisedTo: 15).
+	self assert: (large + 11 nthRootTruncated: 17) equals: (-3 raisedTo: 15) + 1.
+	self assert: (large - 11 nthRootTruncated: 17) equals: (-3 raisedTo: 15).
+	
+	2 to: 10 do: [:thePower |
+		1 to: 10000 do: [:n |
+			| theTruncatedRoot |
+			theTruncatedRoot := n nthRootTruncated: thePower.
+			self assert: (theTruncatedRoot raisedTo: thePower) <= n.
+			self assert: (theTruncatedRoot + 1 raisedTo: thePower) > n]]
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
