@@ -885,13 +885,6 @@ FloatTest >> testRounded [
 	self assert: -1.5 rounded equals: -2
 ]
 
-{ #category : #'tests - rounding' }
-FloatTest >> testRounding [
-
-	self assert: (10.1234 round: 2) equals: 10.12.
- 	self assert: (10.1234 round: 0) equals: 10
-]
-
 { #category : #'tests - compare' }
 FloatTest >> testSetOfFloat [
 	"Classical disagreement between hash and = did lead to a bug.
