@@ -22,9 +22,11 @@ ClassTest >> categoryNameForTemporaryClasses [
 ClassTest >> deleteClass [
 	| cl |
 	cl := Smalltalk globals at: className ifAbsent: [ ^ self ].
-	cl
-		removeFromChanges;
-		removeFromSystemUnlogged
+	
+	Smalltalk globals at: #ChangeSet ifPresent: [ 
+		cl removeFromChanges ].
+	
+	cl removeFromSystemUnlogged
 ]
 
 { #category : #'referencing methods' }
