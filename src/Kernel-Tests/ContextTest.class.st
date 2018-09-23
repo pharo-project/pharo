@@ -101,19 +101,6 @@ ContextTest >> testActivateReturnValue [
 ]
 
 { #category : #tests }
-ContextTest >> testCannotReturn [
-	| context p |
-	p := [context := thisContext] fork.
-	[p isTerminated] whileFalse: [ 10 milliSeconds wait ].
-
-	[ context resume: #result.
-	self assert: false description: 'ContextCannotReturn should be signaled' ]
-		 on: ContextCannotReturn do: [ :err |
-			self assert: err result equals: #result.
-			self assert: err target equals: context]
-]
-
-{ #category : #tests }
 ContextTest >> testClosureRestart [
 	"Test that various combinations of closures are restarted with the expected values"
 	"no args, no remote temps blocks are not tested, as I don't know how to do that programatically without ending up looping endlessly"
