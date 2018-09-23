@@ -33,7 +33,7 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image
 #Adding packages removed from the bootstrap
 ./pharo bootstrap.image loadHermes Hermes-Extensions.hermes --save
-./pharo bootstrap.image loadHermes Math-Operations-Extensions.hermes Debugging-Core.hermes Kernel-Chronology-Extras.hermes AST-Core.hermes Jobs.hermes InitializePackagesCommandLineHandler.hermes --save --no-fail-on-undeclared --on-duplication=ignore
+./pharo bootstrap.image loadHermes  Kernel-Chronology-Extras.hermes AST-Core.hermes Jobs.hermes InitializePackagesCommandLineHandler.hermes --save --no-fail-on-undeclared --on-duplication=ignore
 
 #Initializing the package manager
 ./pharo bootstrap.image initializePackages --packages=packagesKernel.txt --protocols=protocolsKernel.txt --save
