@@ -13,7 +13,7 @@ Class {
 		'aDuration',
 		'aDate'
 	],
-	#category : #'Kernel-Tests-Chronology'
+	#category : #'Kernel-Tests-Extended-Chronology'
 }
 
 { #category : #running }
