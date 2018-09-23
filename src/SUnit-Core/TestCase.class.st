@@ -668,12 +668,6 @@ TestCase >> openDebuggerOnFailingTestMethod [
 
 { #category : #private }
 TestCase >> performTest [
-
-	Stdio stdout 
-		nextPutAll: self class name asString;
-		nextPutAll: '>>#'; 
-		nextPutAll: testSelector asString; lf.
-		
 	self perform: testSelector asSymbol
 ]
 
