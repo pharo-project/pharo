@@ -11,7 +11,7 @@ Class {
 		'x',
 		'y'
 	],
-	#category : #'Kernel-Tests-Methods'
+	#category : #'Kernel-Tests-Extended-Methods'
 }
 
 { #category : #'tests - performing' }
@@ -185,6 +185,37 @@ CompiledMethodTest >> testComparison [
 		self deny: each = method2 ]
 ]
 
+{ #category : #'as yet unclassified' }
+CompiledMethodTest >> testCompiledMethodAsString [
+
+	thisContext method asString
+]
+
+{ #category : #'as yet unclassified' }
+CompiledMethodTest >> testContainsHalt [
+	
+	| annonClass |
+	
+	self 
+	deny: (Object >> #halt) containsHalt;
+	deny: (Object >> #haltIfNil) containsHalt;
+	deny: (Halt class >> #once) containsHalt;
+	assert: (UndefinedObjectTest >> #testIfNil) containsHalt.
+	
+	annonClass := Object newAnonymousSubclass.
+	annonClass 
+	compile: 'm1 self halt';
+	compile: 'm2 self haltIfNil';
+	compile: 'm3 self yourself'.
+	
+	self
+	assert: (annonClass >> #m1) containsHalt;
+	assert: (annonClass >> #m2) containsHalt;
+	deny: (annonClass >> #m3) containsHalt.
+	
+	
+]
+
 { #category : #tests }
 CompiledMethodTest >> testCopy [
 	<pragma: #pragma>
@@ -226,6 +257,34 @@ CompiledMethodTest >> testCopyWithTrailerBytes [
 	copy pragmas do:
 		[:p|
 		self assert: p method == copy]
+
+]
+
+{ #category : #'as yet unclassified' }
+CompiledMethodTest >> testEqualityClassSideMethod [
+   	| method1 method2 |
+
+	method1 := TestCase class compiler
+			compile: 'aMethod'.
+		
+	method2 := TestCase class compiler
+			compile: 'aMethod'.
+			
+ 	self assert: method1 equals: method2.
+
+
+]
+
+{ #category : #'as yet unclassified' }
+CompiledMethodTest >> testEqualityInstanceSideMethod [
+   	| method1 method2 |
+
+	method1 :=  TestCase compiler compile: 'aMethod'.
+	method2 :=  TestCase compiler compile: 'aMethod'.
+
+	self assert: (method1 literalAt: method1 numLiterals) ==  (method2 literalAt: method2 numLiterals).
+ 	self assert: method1 equals: method2.
+
 
 ]
 
@@ -276,6 +335,29 @@ CompiledMethodTest >> testIsDeprecated [
 				ifFalse: [ self deny: (self class >> each) isDeprecated ] ]
 ]
 
+{ #category : #'as yet unclassified' }
+CompiledMethodTest >> testIsInstalled [
+|  method cls |
+
+	method := (self class)>>#returnTrue.
+	self assert: method isInstalled.
+
+	"now make an orphaned method by just deleting the class."
+
+	Smalltalk removeClassNamed: #TUTU.
+
+	cls := Object subclass: #TUTU
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		category: self categoryNameForTemporaryClasses.
+	cls compile: 'foo ^ 10'.
+	method := cls >> #foo.
+	Smalltalk removeClassNamed: #TUTU.
+
+	self deny: method isInstalled. 
+]
+
 { #category : #'tests - testing' }
 CompiledMethodTest >> testIsQuick [
 	| method  |
@@ -297,6 +379,27 @@ CompiledMethodTest >> testLiterals [
 	self assert: (Object >> #yourself) literals isEmpty.
 	self assert: (Object >> #yourself) allLiterals size equals: 2.
 	self deny: ((Object >> #yourself) hasLiteral: #yourself).
+]
+
+{ #category : #'as yet unclassified' }
+CompiledMethodTest >> testMethodClass [
+	| method cls |
+	method := self class >> #returnTrue.
+	self assert: method selector equals: #returnTrue.
+	"now make an orphaned method by just deleting the class.
+	old: #unknown
+	new semantics: return Absolete class"
+	Smalltalk removeClassNamed: #TUTU.
+	cls := Object
+				subclass: #TUTU
+				instanceVariableNames: ''
+				classVariableNames: ''
+				poolDictionaries: ''
+				category: self categoryNameForTemporaryClasses.
+	cls compile: 'foo ^ 10'.
+	method := cls >> #foo.
+	Smalltalk removeClassNamed: #TUTU.
+	self assert: method methodClass equals: cls
 ]
 
 { #category : #'tests - accessing' }
@@ -371,6 +474,39 @@ CompiledMethodTest >> testReadsSlot [
 	self deny: ((Point>>#setX:setY:) readsSlot: (Point slotNamed: #y)).
 	
 	
+]
+
+{ #category : #'as yet unclassified' }
+CompiledMethodTest >> testSelector [
+
+	Author useAuthor: 'TUTU_TEST' during: [ 
+		
+		|  method cls |
+		
+		method := (self class)>>#returnTrue.
+		self assert: method selector equals: #returnTrue.
+		
+		"now make an orphaned method. new semantics: return corrent name"	
+		Smalltalk removeClassNamed: #TUTU.
+
+		cls := Object subclass: #TUTU
+			instanceVariableNames: ''
+			classVariableNames: ''
+			poolDictionaries: ''
+			category: self categoryNameForTemporaryClasses.
+		
+		cls compile: 'foo ^ 10'.
+		
+		method := cls >> #foo.
+		
+		Smalltalk removeClassNamed: #TUTU.
+
+		self assert: method selector = #foo. 
+		
+	].
+	
+
+
 ]
 
 { #category : #'tests - testing' }
