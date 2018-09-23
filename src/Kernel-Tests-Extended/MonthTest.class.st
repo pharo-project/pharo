@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'month'
 	],
-	#category : #'Kernel-Tests-Chronology'
+	#category : #'Kernel-Tests-Extended-Chronology'
 }
 
 { #category : #coverage }
