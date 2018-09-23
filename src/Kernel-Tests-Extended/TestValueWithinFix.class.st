@@ -4,7 +4,7 @@ SUnit tests for a fix on #valueWithin:
 Class {
 	#name : #TestValueWithinFix,
 	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Processes'
+	#category : #'Kernel-Tests-Extended-Processes'
 }
 
 { #category : #tests }
@@ -32,7 +32,7 @@ TestValueWithinFix >> testValueWithinNonLocalReturnFixSimply [
 	(Delay forMilliseconds: 50) wait
 ]
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
 TestValueWithinFix >> testValueWithinTimingBasic [
 	"Test timing of valueWithin:onTimeout:"
 	| time |
@@ -43,7 +43,37 @@ TestValueWithinFix >> testValueWithinTimingBasic [
 	self assert: time < 150 milliSeconds.
 ]
 
-{ #category : #tests }
+{ #category : #'as yet unclassified' }
+TestValueWithinFix >> testValueWithinTimingNestedInner [
+	"Test nested timing of valueWithin:onTimeout:"
+	| time |
+	time := [
+		[
+			[5 seconds asDelay wait]
+				valueWithin: 100 milliSeconds onTimeout: []
+		] valueWithin: 500 milliSeconds onTimeout: []
+	] durationToRun.
+	self assert: time < 150 milliSeconds.
+
+]
+
+{ #category : #'as yet unclassified' }
+TestValueWithinFix >> testValueWithinTimingNestedOuter [
+	"Test nested timing of valueWithin:onTimeout:"
+	| time |
+	time := [
+		[
+			3 timesRepeat: [
+				[5 seconds asDelay wait]
+					valueWithin: 100 milliSeconds onTimeout: []]
+		] valueWithin: 150 milliSeconds onTimeout: []
+	] durationToRun.
+	self assert: time > 100 milliSeconds.
+	self assert: time < 200 milliSeconds.
+	
+]
+
+{ #category : #'as yet unclassified' }
 TestValueWithinFix >> testValueWithinTimingRepeat [
 	"Test timing of valueWithin:onTimeout:"
 	| time |
