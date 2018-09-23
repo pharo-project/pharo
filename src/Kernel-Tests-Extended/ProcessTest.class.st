@@ -4,7 +4,7 @@ A ProcessTest holds test cases for generic Process-related behaviour.
 Class {
 	#name : #ProcessTest,
 	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Processes'
+	#category : #'Kernel-Tests-Extended-Processes'
 }
 
 { #category : #tests }
@@ -37,6 +37,22 @@ ProcessTest >> testForkAtHigherPriority [
 	
 	"Preempts current process"
 	self assert: hasBlockRun.
+]
+
+{ #category : #'tests - exception handlers' }
+ProcessTest >> testInjectingExceptionHandlerFromProcessItself [
+
+	| error interceptedError process interrupted |
+	DefaultExecutionEnvironment beActive.
+	error := Error new messageText: 'test error'.
+	interrupted := true.
+	process := [ Processor activeProcess on: Error do: [ :err | interceptedError := err ].
+		error signal. interrupted := false ] fork.
+	
+	[process isTerminated] whileFalse: [ Processor yield ].
+
+	self assert: interceptedError == error.
+	self assert: interrupted 
 ]
 
 { #category : #'tests - exception handlers' }
