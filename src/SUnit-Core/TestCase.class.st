@@ -671,8 +671,8 @@ TestCase >> performTest [
 
 	Stdio stdout 
 		nextPutAll: self class name asString;
-		space; 
-		nextPutAll: testSelector; lf.
+		nextPutAll: '>>#'; 
+		nextPutAll: testSelector asString; lf.
 		
 	self perform: testSelector asSymbol
 ]
