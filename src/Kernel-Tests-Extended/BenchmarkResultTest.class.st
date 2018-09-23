@@ -4,7 +4,7 @@ Unit test for BenchmarkResult
 Class {
 	#name : #BenchmarkResultTest,
 	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Chronology'
+	#category : #'Kernel-Tests-Extended-Chronology'
 }
 
 { #category : #tests }

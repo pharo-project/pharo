@@ -19,18 +19,6 @@ BehaviorTest >> sampleMessageWithFirstArgument: firstArgument "This is a comment
 ]
 
 { #category : #tests }
-BehaviorTest >> testAllLocalCallsOn [
-	
-	self assert: (( Point allLocalCallsOn: #asPoint )  notEmpty).
-	self assert: (( Point allLocalCallsOn: #asPoint )  size = 4).
-	self assert: (( Point allLocalCallsOn: #asPoint )  includes: (Point>> #roundDownTo:) asRingDefinition).
-	self assert: (( Point allLocalCallsOn: #asPoint )  includes: (Point >> #roundUpTo:) asRingDefinition).
-	self assert: (( Point allLocalCallsOn: #asPoint )  includes: (Point >> #roundTo:) asRingDefinition).
-	self assert: (( Point allLocalCallsOn: #asPoint )  includes: (Point >> #truncateTo: ) asRingDefinition).
-	
-]
-
-{ #category : #tests }
 BehaviorTest >> testAllMethods [
 	| allMethods nonOverridenMethods |
 	allMethods := IdentitySet new
@@ -230,12 +218,6 @@ BehaviorTest >> testRemoveProperty [
 	self class propertyAt: #testKeySelector put: 1.
 	self class removeProperty: #testKeySelector.
 	self assert: (self class propertyAt: #testKeySelector) equals: nil
-]
-
-{ #category : #'tests - testing method dictionary' }
-BehaviorTest >> testWhichSelectorsAccess [
-	self assert: ((Point whichSelectorsAccess: 'x') includes: #x).
-	self deny:  ((Point whichSelectorsAccess: 'y') includes: #x).
 ]
 
 { #category : #tests }
