@@ -8,7 +8,7 @@ Class {
 		'className',
 		'renamedName'
 	],
-	#category : #'Kernel-Tests-Classes'
+	#category : #'Kernel-Tests-Extended-Classes'
 }
 
 { #category : #setup }
@@ -128,6 +128,17 @@ ClassTest >> testAllSharedPools [
 	self assert: SubclassPoolUser sharedPools isEmpty
 ]
 
+{ #category : #'as yet unclassified' }
+ClassTest >> testChangingShapeDoesNotPutNilInMethodsLastLiteralKey [
+	"Test that when the shape of a class changes, the key of the last literal of the methods is not nil"
+	| tutu |
+	tutu := Smalltalk globals at: #TUTU.
+	tutu compile: 'foo'.
+	self deny: (tutu >> #foo) allLiterals last key isNil.
+	tutu addInstVarNamed: 'x'.
+	self deny: (tutu >> #foo) allLiterals last key isNil.
+]
+
 { #category : #'test - accessing parallel hierarchy' }
 ClassTest >> testClassSide [
 
@@ -142,6 +153,11 @@ ClassTest >> testClassVarNames [
 	
 	"A class and it's meta-class share the class variables"
 	self assert: (Object classVarNames = Object class classVarNames).
+]
+
+{ #category : #'as yet unclassified' }
+ClassTest >> testCompileAll [
+	ClassTest compileAll
 ]
 
 { #category : #'tests - dependencies' }
@@ -273,6 +289,28 @@ ClassTest >> testOrdersMetaClassAfterItsClassInstance [
 	self assert: (ordered indexOf: Boolean class) < (ordered indexOf: True class).
 	self assert: (ordered indexOf: Boolean) < (ordered indexOf: True).
 
+]
+
+{ #category : #'as yet unclassified' }
+ClassTest >> testPoolVariableAccessibleInClassUser [
+	"This test shows that a Pool Variable is accessible from the class that declare the Pool usage: here the superclass"
+ 
+	PoolDefiner initialize.
+	RootClassPoolUser compileAll.
+	
+	self assert: RootClassPoolUser gloups = 42.
+	self assert: RootClassPoolUser author = 'Ducasse'
+]
+
+{ #category : #'as yet unclassified' }
+ClassTest >> testPoolVariableAccessibleInSubclassOfClassUser [
+	"This test shows that a Pool Variable is not accessible from a subclass that declare the Pool usage: here SubFlop subclass of Flop and this is a bug. "
+ 
+	PoolDefiner initialize.
+	SubclassPoolUser compileAll.
+	
+	self assert: SubclassPoolUser gloups = 42.
+	self assert: SubclassPoolUser author = 'Ducasse'
 ]
 
 { #category : #'tests - navigation' }
