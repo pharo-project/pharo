@@ -58,13 +58,6 @@ DurationTest >> testAsDay [
 ]
 
 { #category : #tests }
-DurationTest >> testAsDays [
-	self assert: (Duration days: 2) asDays = 2.
-	self assert: (Duration weeks: 1) asDays = 7.	
-	self assert: (aDuration asDays closeTo: 1.08546).
-]
-
-{ #category : #tests }
 DurationTest >> testAsDelay [
 	self deny: aDuration asDelay =   aDuration.
 	"want to come up with a more meaningful test"
@@ -76,20 +69,6 @@ DurationTest >> testAsDuration [
 	self assert: aDuration asDuration =  aDuration
 	
 
-]
-
-{ #category : #tests }
-DurationTest >> testAsHour [
-	|full half quarter|
-	full := (Duration minutes: 60).
-	half := (Duration minutes: 30).
-	quarter := (Duration minutes: 15).	
-	self 
-		assert: 1 hour = full;
-		assert: 1.0 hour = full;
-		assert: 0.5 hour = half; 
-		assert: (1/2) hour = half;
-		assert: (1/4) hour = quarter
 ]
 
 { #category : #tests }
@@ -137,14 +116,6 @@ DurationTest >> testAsMinute [
 		assert: (1/2) minute = half;
 		assert: (1/4) minute = quarter.
 	self assert: 0.4 minute + 0.6 minute = 1 minute	
-]
-
-{ #category : #tests }
-DurationTest >> testAsMinutes [
-	self assert: (Duration seconds: 60) asMinutes = 1.
-	self assert: (Duration hours: 1) asMinutes = 60.	
-	self assert: (aDuration asMinutes closeTo:  1563.0666).
-	self assert: ((Duration milliSeconds: 100) asMinutes closeTo: (1/600))
 ]
 
 { #category : #tests }

@@ -25,19 +25,6 @@ BlockClosureTest >> setUp [
 ]
 
 { #category : #'tests - evaluating' }
-BlockClosureTest >> testBenchFor [
-	| benchmarkResult duration minimumIterations |
-	duration := 500 milliSeconds.
-	benchmarkResult := [ 100 factorial ] benchFor: duration.
-	self deny: benchmarkResult isEmpty.
-	self assert: benchmarkResult elapsedTime >= duration.
-	"These should pass even on a very slow machine or simulation"
-	minimumIterations := 10.
-	self assert: benchmarkResult iterations > minimumIterations.
-	self assert: benchmarkResult period < (duration / minimumIterations)  
-]
-
-{ #category : #'tests - evaluating' }
 BlockClosureTest >> testCull [
 	[  ] cull: 1.
 	[ :x |  ] cull: 1.
@@ -287,11 +274,6 @@ BlockClosureTest >> testOneArgument [
 ]
 
 { #category : #tests }
-BlockClosureTest >> testRunSimulated [
-	self assert: (Context runSimulated: aBlockContext) class = Rectangle.
-]
-
-{ #category : #tests }
 BlockClosureTest >> testSetUp [
 	"Note: In addition to verifying that the setUp worked the way it was expected to, testSetUp is used to illustrate the meaning of the simple access methods, methods that are not normally otherwise 'tested'"
 
@@ -299,14 +281,6 @@ BlockClosureTest >> testSetUp [
 	self assert: aBlockContext receiver = self.
 	"Depending on the closure implementation, it's either a compiled block, a compiled method or nil."
 	self assert: (aBlockContext method isNil or: [aBlockContext method isKindOf: CompiledCode]).
-]
-
-{ #category : #'tests - astmapping' }
-BlockClosureTest >> testSourceNodeOptimized [
-	| block | 
-	block := [ :ctx | [ ctx atEnd ] whileTrue:[1+2 ] ] .
-	self assert: block sourceNode printString = 'RBBlockNode([ :ctx | [ ctx atEnd ] whileTrue: [ 1 + 2 ] ])'.
-
 ]
 
 { #category : #testing }
@@ -393,23 +367,6 @@ BlockClosureTest >> testSuppressInformUsingStringMatchOptions [
 	
 	self should: [([nil inform: 'Should not see this message or this test failed!'] valueSuppressingMessages: #('*message*failed#')) isNil].
 
-]
-
-{ #category : #tests }
-BlockClosureTest >> testTallyInstructions [
-	"Depends on compiler settings... If everything is compiled to the V3PlusClosures bytecode set, then the result is 27.
-	 If everything is compiled to the SistaV1 bytecode set, then the result is 26. If execution is mixed between method
-	compiled with V3PlusClosures and SistaV1, result is then different and untested."
-	
-	"We test class name and not the class because there are multiple versions of the encoders depending on the compiler used."
-	| expectedResult |
-	expectedResult := 27.
-	self assert: (Context tallyInstructions: aBlockContext ) size equals: expectedResult
-]
-
-{ #category : #tests }
-BlockClosureTest >> testTallyMethods [
-	self assert: (Context tallyMethods: aBlockContext) size = 7.
 ]
 
 { #category : #'tests - evaluating' }

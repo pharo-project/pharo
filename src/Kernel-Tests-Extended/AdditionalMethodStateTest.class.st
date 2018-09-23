@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'amState'
 	],
-	#category : #'Kernel-Tests-Methods'
+	#category : #'Kernel-Tests-Extended-Methods'
 }
 
 { #category : #running }
