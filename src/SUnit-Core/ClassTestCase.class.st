@@ -119,7 +119,7 @@ ClassTestCase >> targetClass [
 ClassTestCase >> testClassComment [
 
 	"skip this test for bootstrapped image without installed sources"
-	Smalltalk globals at: #ChangeSet ifAbsent: [ self skip ].
+	ClassTestCase organization comment ifNil: [ self skip ].
 	
 	self assert: self targetClass organization hasComment.
 ]
