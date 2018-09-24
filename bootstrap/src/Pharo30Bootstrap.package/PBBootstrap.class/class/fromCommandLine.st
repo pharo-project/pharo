@@ -1,9 +1,11 @@
 instance creation
 fromCommandLine
-	| options architecture buildNumber repo versionInfo |
+	| options architecture buildNumber versionInfo |
 	options := CommandLineArguments new.
 	architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].
-	buildNumber := options optionAt: 'BUILD_NUMBER' ifAbsent: [ '1' ].
+	buildNumber := options optionAt: 'BUILD_NUMBER'
+		ifPresent: [ :read | Number readFrom: read ifFail: [ -1 ] ]
+		ifAbsent: [ -1 ].
 	versionInfo := options optionAt: 'VERSION_INFO' ifAbsent: [ self error: 'Must provide VERSION_INFO in the form of a git describe --long' ].
 	
 	('Architecture: ' , architecture) logCr.

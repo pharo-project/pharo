@@ -1,3 +1,3 @@
 accessing
 buildNumber
-	^ buildNumber ifNil: [ 'UNKNOWN_BUILD' ]
+	^ buildNumber ifNil: [ -1 ]

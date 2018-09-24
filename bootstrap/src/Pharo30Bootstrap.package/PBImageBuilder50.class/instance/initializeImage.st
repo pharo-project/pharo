@@ -24,7 +24,7 @@ initializeImage
 			minor: {minor} 
 			patch: {patch}
 			suffix: ''{suffix}'' 
-			build: ''{build}'' 
+			build: {build} 
 			commitHash: ''{hash}''.' 
 		format: {
 			'major' -> versionInfo major.
