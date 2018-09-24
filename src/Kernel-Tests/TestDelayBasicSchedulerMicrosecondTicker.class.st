@@ -230,6 +230,24 @@ TestDelayBasicSchedulerMicrosecondTicker >> testMillisecondsToGoExpired [
 ]
 
 { #category : #tests }
+TestDelayBasicSchedulerMicrosecondTicker >> testMultiSchedule [
+	| delay anotherDelay |
+	"Ensure that scheduling the same delay twice raises an error"
+	delay := Delay forSeconds: 1000.
+	scheduler schedule: delay.
+	self assert: delay isScheduled.
+	self should:[ scheduler schedule: delay ] raise: Error.
+	
+	"Check that after that error, still accepting new items to schedule."
+	"Run in a separate process in case #schedule: blocks"
+	[	anotherDelay := Delay forMilliseconds: 1000.
+		scheduler schedule: anotherDelay.
+		] forkAt: Processor activePriority + 1.
+	self assert: anotherDelay isScheduled.
+	
+]
+
+{ #category : #tests }
 TestDelayBasicSchedulerMicrosecondTicker >> testPerformanceInlined_ifNotNil [
 	"For optimal performance, the outer conditionals of #timingPriorityHandleEvent should be inlined"
 	|codeSample|

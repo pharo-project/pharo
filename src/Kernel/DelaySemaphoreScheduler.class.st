@@ -21,8 +21,18 @@ DelaySemaphoreScheduler >> initializeTicker: aDelayTicker suspendedDelaysHeap: a
 
 { #category : #initialization }
 DelaySemaphoreScheduler >> schedule: aDelay [
-	scheduledDelayIsNil wait.  
-	super schedule: aDelay
+	"This is the front-half of scheduling a delay. For back-half see #timingPrioritySchedule:"
+
+	"Debug lines to help review. Could be removed after a settling in period"
+	debug ifTrue: [ self halt ].
+	
+	aDelay isScheduled ifTrue: [^self error: 'This Delay has already been scheduled.'].
+	
+	scheduledDelayIsNil wait.  "Starts signalled. Resignalled from #timingPriorityHandleEvent"
+	scheduledDelay := aDelay.
+	timingSemaphore signal. 
+	debug ifTrue: [ self halt. "If debugger appeared for timingPriority thread, step through that first" ]
+
 ]
 
 { #category : #initialization }
@@ -45,7 +55,7 @@ DelaySemaphoreScheduler >> timingPriorityHandleEvent [
 	finishedDelay ifNotNil: [
 		self timingPriorityUnschedule: finishedDelay.
 		finishedDelay := nil.
-		finishedDelayIsNil ].
+		finishedDelayIsNil signal ].
 
 	"Signal any expired delays"
 	[ 	activeDelay notNil and: [ nowTick >= activeDelay resumptionTick ]] whileTrue: [
