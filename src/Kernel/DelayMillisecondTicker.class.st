@@ -3,7 +3,7 @@ I interface to the millisecond based VM primitives.
 "
 Class {
 	#name : #DelayMillisecondTicker,
-	#superclass : #DelayTickerInterface,
+	#superclass : #AbstractDelayTicker,
 	#category : #'Kernel-Delays'
 }
 

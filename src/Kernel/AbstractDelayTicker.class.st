@@ -6,23 +6,23 @@ I supply /nextTick/ to the VM and wait for /timingSemaphore/ to be signalled.
 I read time-base specific ticks from the VM, and scale ticks around snapshot pauses.
 "
 Class {
-	#name : #DelayTickerInterface,
+	#name : #AbstractDelayTicker,
 	#superclass : #Object,
 	#category : #'Kernel-Delays'
 }
 
 { #category : #'api-system' }
-DelayTickerInterface >> millisecondsUntilTick: delay [
+AbstractDelayTicker >> millisecondsUntilTick: delay [
 	self subclassResponsibility 
 ]
 
 { #category : #'api-system' }
-DelayTickerInterface >> nowTick [
+AbstractDelayTicker >> nowTick [
 	self subclassResponsibility 
 ]
 
 { #category : #'api-system' }
-DelayTickerInterface >> restoreResumptionTimes: delaysOrNils [
+AbstractDelayTicker >> restoreResumptionTimes: delaysOrNils [
 	"Private! Called only from the timing-priority process.
     Not performance critical."
 
@@ -35,7 +35,7 @@ DelayTickerInterface >> restoreResumptionTimes: delaysOrNils [
 ]
 
 { #category : #'api-system' }
-DelayTickerInterface >> saveResumptionTimes: delaysOrNils [
+AbstractDelayTicker >> saveResumptionTimes: delaysOrNils [
 	"Private! Called only from the timing-priority process.
     Not performance critical."
 
@@ -49,11 +49,11 @@ DelayTickerInterface >> saveResumptionTimes: delaysOrNils [
 ]
 
 { #category : #'api-system' }
-DelayTickerInterface >> tickAfterMilliseconds: milliseconds [
+AbstractDelayTicker >> tickAfterMilliseconds: milliseconds [
 	self subclassResponsibility 
 ]
 
 { #category : #'api-system' }
-DelayTickerInterface >> waitForUserSignalled: timingSemaphore orExpired: activeDelay [
+AbstractDelayTicker >> waitForUserSignalled: timingSemaphore orExpired: activeDelay [
 	self subclassResponsibility
 ]

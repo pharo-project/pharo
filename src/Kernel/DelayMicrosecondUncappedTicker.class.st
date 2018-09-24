@@ -5,13 +5,13 @@ When there is no scheduled delay, the VM will sleep indefinitely until woken
 by another mechanism (which is what?)
 "
 Class {
-	#name : #DelayUnconstrainedTicker,
+	#name : #DelayMicrosecondUncappedTicker,
 	#superclass : #DelayMicrosecondTicker,
 	#category : #'Kernel-Delays'
 }
 
 { #category : #'api-system' }
-DelayUnconstrainedTicker >> waitForUserSignalled: timingSemaphore orExpired: activeDelay [
+DelayMicrosecondUncappedTicker >> waitForUserSignalled: timingSemaphore orExpired: activeDelay [
 	|nextTick|
 	"Sleep until the active delay is due, or timingSemaphore signalled by DelayScheduler user-api."
 	
