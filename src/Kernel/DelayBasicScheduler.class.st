@@ -68,13 +68,11 @@ Class {
 		'timerEventLoop',
 		'suspendedDelays',
 		'activeDelay',
-		'scheduledDelay',
-		'finishedDelay',
 		'suspendSemaphore',
 		'timingSemaphore',
-		'extraSignalCount',
-		'loopCount',
-		'debug'
+		'debug',
+		'delayToStart',
+		'delayToStop'
 	],
 	#category : #'Kernel-Delays'
 }
@@ -158,23 +156,81 @@ DelayBasicScheduler >> restartTimerEventLoop [
 
 ]
 
+{ #category : #'private - timing priority process' }
+DelayBasicScheduler >> runBackendLoopAtTimingPriority [
+	"Private! Outer loop for the timing priority timer event loop.
+	 Invoked by api-system #startTimerEventLoop"
+
+	"Unit tests may run this at a lower priority" 
+
+	"Debug lines to help code review. Could be removed after a settling in period"
+
+	[  [runTimerEventLoop] whileTrue: 
+		[	|nowTick|
+			"Warning! Stepping <Over> the following line may lock the Image. Use <Into> or <Proceed>."
+		 	ticker waitForUserSignalled: timingSemaphore orExpired: activeDelay. 
+
+			"When two debuggers appear, step/proceed through this higher priority one first."
+			debug ifTrue: [ self halt ].		
+
+			"Invoke the api back-ends, which set the transfer-variable to nil" 		
+			suspendSemaphore ifNotNil: [ self suspendAtTimingPriority    ].
+			delayToStart     ifNotNil: [ self scheduleAtTimingPriority   ].
+			delayToStop      ifNotNil: [ self unscheduleAtTimingPriority ].
+
+			"Signal any expired delays"
+			nowTick := ticker nowTick.
+			[ 	activeDelay notNil and: [nowTick >= activeDelay resumptionTick] ] 
+					whileTrue: [
+						activeDelay timingPrioritySignalExpired.
+						activeDelay := suspendedDelays removeFirstOrNil ].
+		]
+	] ensure: [ "When timer event loop exits, expire remaining delays."
+		debug ifTrue: [ self halt ].
+		[activeDelay notNil] whileTrue: [
+				activeDelay timingPrioritySignalExpired.
+				activeDelay := suspendedDelays removeFirstOrNil ]].
+]
+
 { #category : #'user-api' }
 DelayBasicScheduler >> schedule: aDelay [
-	"This is the front-half of scheduling a delay. For back-half see #timingPrioritySchedule:"
+	"This is the front-half of scheduling a delay. Invoked from user processes. 
+	 For back-half see #scheduleAtTimingPriority"
 
 	"Debug lines to help review. Could be removed after a settling in period"
 	debug ifTrue: [ self halt ].
 	
-	aDelay isScheduled ifTrue: [^self error: 'This Delay has already been scheduled.'].
+	"Only one signal is sent when delay expires, and if that is already spoken for"
+	aDelay beingWaitedOn ifTrue: [^self error: 'This Delay has already been scheduled.'].
 	
 	"The basic scheduler is highly dependant on semantics of cooperative multitasking and 
 	 bytecode inlining such that interuption *cannot* occur between the following assignment and signal.
 	 The #signal immediately transfers execution to timing-priority #runTimerEventLoop
 	 such that no other thread can overwrite our value until consumed by timing-priority thread.
 	 Subclasses provide addition protections to lessen the importance of these semantics."
-	scheduledDelay := aDelay.
-	timingSemaphore signal. 
+	delayToStart := aDelay.
+	timingSemaphore signal. "Transfer execution to back-end #scheduleAtTimingPriority"
+	
 	debug ifTrue: [ self halt. "If debugger appeared for timingPriority thread, step through that first" ]
+
+]
+
+{ #category : #'private - timing priority process' }
+DelayBasicScheduler >> scheduleAtTimingPriority [
+	"Private! Invoke only from the timing-priority process.
+	 This is the back-half of scheduling a delay. For front-half see #schedule:"
+	
+	(delayToStart timingPriorityScheduleTicker: ticker) ifFalse:[ ^self ]. "Already scheduled"
+
+	activeDelay 
+		ifNil: [ activeDelay := delayToStart ]
+		ifNotNil: [
+			delayToStart resumptionTick < activeDelay resumptionTick
+				ifTrue: [
+					suspendedDelays add: activeDelay.
+					activeDelay := delayToStart ]
+				ifFalse: [ suspendedDelays add: delayToStart ]].
+	delayToStart := nil
 
 ]
 
@@ -185,15 +241,7 @@ DelayBasicScheduler >> schedulingProcess [
 
 { #category : #'system-api' }
 DelayBasicScheduler >> shutDown [
-	"Suspend the timing-priority delay scheduling loop loop before snapshotting
-	 to prevent random waking of delayed threads in the midst of snapshoting."
-		
-	suspendSemaphore := Semaphore new.
-	timingSemaphore signal.	
-		
-	"That #signal transfers execution to timingPriorityRunEventLoop 
-	 which then waits for suspendSemaphore to be signalled from #startup"
-
+	self suspend
 ]
 
 { #category : #'support - test cases' }
@@ -221,7 +269,7 @@ DelayBasicScheduler >> startTimerEventLoopPriority: processorPriority [
 	
 	runTimerEventLoop := true.
 	
-	timerEventLoop := [ self timingPriorityRunEventLoop ] newProcess.
+	timerEventLoop := [ self runBackendLoopAtTimingPriority ] newProcess.
 	timerEventLoop 
 		name: self className , '(' , ticker className, ')';
 		priority: processorPriority.
@@ -231,14 +279,7 @@ DelayBasicScheduler >> startTimerEventLoopPriority: processorPriority [
 
 { #category : #'system-api' }
 DelayBasicScheduler >> startUp [
-	"Unsuspend the timing-priority delay scheduling loop when resuming a snapshot."
-	
-	suspendSemaphore
-		ifNil:[ ^self error: 'Trying to activate Delay twice' ].
-	suspendSemaphore signal.
-	
-	"That #signal immediately transfers execution to timing priority 
-	 process #runTimerEventLoop, which does... suspendSemaphore := nil."
+	self suspendRelease
 ]
 
 { #category : #'system-api' }
@@ -258,6 +299,49 @@ DelayBasicScheduler >> stopTimerEventLoop [
 	timerEventLoop := nil.
 ]
 
+{ #category : #'user-api' }
+DelayBasicScheduler >> suspend [
+	"This is the front-half for suspending the delay scheduler to prevent
+	 wake-up of delayed threads in the middle of snapshotting.
+	 For back-half see #suspendAtTimingPriority"
+
+	suspendSemaphore := Semaphore new.
+	timingSemaphore signal.	
+		
+	"That #signal transfers execution to timingPriorityRunEventLoop 
+	 which then waits for suspendSemaphore to be signalled from #startup"
+
+]
+
+{ #category : #'private - timing priority process' }
+DelayBasicScheduler >> suspendAtTimingPriority [
+	"Private! This is the front-half for suspending the delay scheduler to prevent
+	 wake-up of delayed threads in the middle of snapshotting. For front-half see #suspend"
+	debug ifTrue: [ self halt ].
+	
+	ticker saveResumptionTimes: suspendedDelays asArray, {activeDelay}.
+	
+	"Warning! Stepping <Over> the following line may lock the Image. Use <Proceed>."
+	suspendSemaphore wait.
+	
+	debug ifTrue: [ self halt ].
+	
+	ticker restoreResumptionTimes: suspendedDelays asArray, {activeDelay}.  
+	suspendSemaphore := nil
+
+]
+
+{ #category : #'user-api' }
+DelayBasicScheduler >> suspendRelease [
+	"Unsuspend the timing-priority delay scheduling loop when resuming a snapshot."
+	
+	suspendSemaphore
+		ifNil:[ ^self error: 'Not suspended' ].
+	suspendSemaphore signal. 
+	"signal transfers execution to #suspendAtTimingPriority, 
+	 which does... suspendSemaphore := nil."
+]
+
 { #category : #deprecated }
 DelayBasicScheduler >> testCaseSupportTimingSemaphore [
 	"Tests might alter which sempahore the VM signals, so call this from test tearDown"
@@ -269,107 +353,10 @@ DelayBasicScheduler >> ticker [
 	^ticker
 ]
 
-{ #category : #'private - timing priority process' }
-DelayBasicScheduler >> timingPriorityHandleEvent [
-	|nowTick|
-	"Debug lines to help review. Could be removed after a settling in period"
-	
-	"When two debuggers appear, step through this higher priority first (or <Proceed>)"
-	debug ifTrue: [ self halt ].		
-	
-	nowTick := ticker nowTick.
-
-	"Handle api-user #schedule: request"
-	scheduledDelay ifNotNil: [
-		self timingPrioritySchedule: scheduledDelay.
-		scheduledDelay := nil ].
-
-	"Handle api-user #unschedule: request"
-	finishedDelay ifNotNil: [
-		self timingPriorityUnschedule: finishedDelay.
-		finishedDelay := nil ].
-
-	"Signal any expired delays"
-	[ 	activeDelay notNil and: [ nowTick >= activeDelay resumptionTick ]] whileTrue: [
-			activeDelay timingPrioritySignalExpired.
-			activeDelay := suspendedDelays removeFirstOrNil ].
-
-]
-
-{ #category : #'private - timing priority process' }
-DelayBasicScheduler >> timingPriorityRunEventLoop [
-	"Private! Call only from the timing-priority process.
-	 Outer loop for the timing priority timer event loop.
-	 Invoked by api-system #startTimerEventLoop"
-
-	[[runTimerEventLoop] whileTrue: 
-		[	"Warning! Stepping <Over> the following line may lock the Image. Use <Into> or <Proceed>."
-		 	ticker waitForUserSignalled: timingSemaphore orExpired: activeDelay. 
-
-			"suspendSemaphore set by #shutDown method sets so it can be waited on" 		
-			suspendSemaphore ifNotNil: 	
-			[	"Warning! Stepping <Over> the following line may lock the Image. Use <Into> or <Proceed>."
-				self timingPrioritySuspendEventLoopOn: suspendSemaphore.
-				suspendSemaphore := nil
-			].
-		
-			self timingPriorityHandleEvent 
-		]
-	] ensure: [ "When timer event loop exits, remaining delays are expired."
-		debug ifTrue: [ self halt ].
-		[activeDelay notNil] whileTrue: [
-				activeDelay timingPrioritySignalExpired.
-				activeDelay := suspendedDelays removeFirstOrNil ]].
-]
-
-{ #category : #'private - timing priority process' }
-DelayBasicScheduler >> timingPrioritySchedule: aDelay [
-	"Private! Call only from the timing-priority process.
-	 This is the back-half of scheduling a delay. For front half see #schedule:"
-	
-	(aDelay timingPriorityScheduleTicker: ticker) ifFalse:[ ^self ]. "Already scheduled"
-
-	activeDelay 
-		ifNil: [ activeDelay := aDelay ]
-		ifNotNil: [
-			aDelay resumptionTick < activeDelay resumptionTick
-				ifTrue: [
-					suspendedDelays add: activeDelay.
-					activeDelay := aDelay ]
-				ifFalse: [ suspendedDelays add: aDelay ]]
-
-]
-
-{ #category : #'private - timing priority process' }
-DelayBasicScheduler >> timingPrioritySuspendEventLoopOn: semaphore [
-	debug ifTrue: [ self halt ].
-	ticker saveResumptionTimes: suspendedDelays asArray, {activeDelay}.
-	
-	"Warning! Stepping <Over> the following line may lock the Image. Use <Proceed>."
-	semaphore wait.
-	
-	debug ifTrue: [ self halt ].
-	ticker restoreResumptionTimes: suspendedDelays asArray, {activeDelay}.  
-
-]
-
-{ #category : #'private - timing priority process' }
-DelayBasicScheduler >> timingPriorityUnschedule: aDelay [
-	"Private! Call only from the timing-priority process.
-	 This is the back-half of unscheduling a delay. For front half see #unschedule:"
-	
-	aDelay beingWaitedOn ifFalse:[ ^self ].
-	
-	activeDelay == aDelay 
-		ifTrue: [ activeDelay := suspendedDelays removeFirstOrNil ] 
-		ifFalse:[ suspendedDelays remove: aDelay ifAbsent: [] ].
-	
-	aDelay timingPriorityScheduleTicker: nil.
-]
-
 { #category : #'user-api' }
 DelayBasicScheduler >> unschedule: aDelay [
-	"This is the front-half of unscheduling a delay. For back-half see #timingPriorityUnschedule:"
+	"This is the front-half of unscheduling a delay. Invoked from user processes. 
+	 For back-half see #unscheduleAtTimingPriority"
 
 	"Debug lines to help review. Could be removed after a settling in period"
 	debug ifTrue: [ self halt ].
@@ -379,11 +366,25 @@ DelayBasicScheduler >> unschedule: aDelay [
 	 The #signal immediately transfers execution to timing-priority #runTimerEventLoop
 	 such that no other thread can overwrite our value until consumed by timing-priority thread.
 	 Subclasses add protection against this."
-
-	finishedDelay := aDelay.
+	delayToStop := aDelay.
+	timingSemaphore signal. "Transfer execution to #unscheduleAtTimingPriority"
 	
-	timingSemaphore signal. "Execution transfers to #timingPriorityWaitForUserOrDelay:"
 	debug ifTrue: [ self halt. "If timingPriority thread debugger appears, step through it first" ]
 
 
+]
+
+{ #category : #'private - timing priority process' }
+DelayBasicScheduler >> unscheduleAtTimingPriority [
+	"Private! Invoke only from the timing-priority process.
+	 This is the back-half of unscheduling a delay. For front-half see #unschedule:"
+	
+	delayToStop beingWaitedOn ifFalse:[ ^self ].
+	
+	activeDelay == delayToStop 
+		ifTrue: [ activeDelay := suspendedDelays removeFirstOrNil ] 
+		ifFalse:[ suspendedDelays remove: delayToStop ifAbsent: [] ].
+	
+	delayToStop timingPriorityUnschedule.
+	delayToStop := nil.
 ]

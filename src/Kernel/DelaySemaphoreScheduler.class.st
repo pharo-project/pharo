@@ -5,8 +5,8 @@ Class {
 	#name : #DelaySemaphoreScheduler,
 	#superclass : #DelayBasicScheduler,
 	#instVars : [
-		'scheduledDelayIsNil',
-		'finishedDelayIsNil'
+		'readyToSchedule',
+		'readyToUnschedule'
 	],
 	#category : #'Kernel-Delays'
 }
@@ -14,8 +14,8 @@ Class {
 { #category : #initialization }
 DelaySemaphoreScheduler >> initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap [
 	super initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap.
-	scheduledDelayIsNil := Semaphore new signal.
-	finishedDelayIsNil := Semaphore new signal.
+	readyToSchedule := Semaphore new signal.
+	readyToUnschedule := Semaphore new signal.
 
 ]
 
@@ -23,51 +23,38 @@ DelaySemaphoreScheduler >> initializeTicker: aDelayTicker suspendedDelaysHeap: a
 DelaySemaphoreScheduler >> schedule: aDelay [
 	"This is the front-half of scheduling a delay. For back-half see #timingPrioritySchedule:"
 
-	"Debug lines to help review. Could be removed after a settling in period"
-	debug ifTrue: [ self halt ].
+	"Only one signal is sent when delay expires. Check if that is already spoken for"
+	aDelay beingWaitedOn ifTrue: [^self error: 'This Delay has already been scheduled.'].
 	
-	aDelay isScheduled ifTrue: [^self error: 'This Delay has already been scheduled.'].
-	
-	scheduledDelayIsNil wait.  "Starts signalled. Resignalled from #timingPriorityHandleEvent"
-	scheduledDelay := aDelay.
-	timingSemaphore signal. 
-	debug ifTrue: [ self halt. "If debugger appeared for timingPriority thread, step through that first" ]
+	readyToSchedule wait.  "Starts signalled. Resignalled from back-end #scheduleAtTimingPriority"
+	delayToStart := aDelay.
+	timingSemaphore signal. "Transfer execution to back-end #scheduleAtTimingPriority"
 
 ]
 
 { #category : #initialization }
-DelaySemaphoreScheduler >> timingPriorityHandleEvent [
-	|nowTick|
-	"Debug lines to help review. Could be removed after a settling in period"
-	
-	"When two debuggers appear, step through this higher priority first (or <Proceed>)"
-	debug ifTrue: [ self halt ].		
-	
-	nowTick := ticker nowTick.
+DelaySemaphoreScheduler >> scheduleAtTimingPriority [
+	"Private! Invoke only from the timing-priority process.
+	 This is the back-half of scheduling a delay. For front-half see #schedule:"
 
-	"Handle api-user #schedule: request"
-	scheduledDelay ifNotNil: [
-		self timingPrioritySchedule: scheduledDelay.
-		scheduledDelay := nil.
-		scheduledDelayIsNil signal ].
-
-	"Handle api-user #unschedule: request"
-	finishedDelay ifNotNil: [
-		self timingPriorityUnschedule: finishedDelay.
-		finishedDelay := nil.
-		finishedDelayIsNil signal ].
-
-	"Signal any expired delays"
-	[ 	activeDelay notNil and: [ nowTick >= activeDelay resumptionTick ]] whileTrue: [
-			activeDelay timingPrioritySignalExpired.
-			activeDelay := suspendedDelays removeFirstOrNil ].
+	readyToSchedule signal. "But this timingPriority method completes first"
+	super 	scheduleAtTimingPriority.
 
 ]
 
 { #category : #initialization }
 DelaySemaphoreScheduler >> unschedule: aDelay [
-	finishedDelayIsNil wait.  "signalled from #timingPriorityHandleEvent"
-	super unschedule: aDelay
-	
+	readyToUnschedule  wait.  "Starts signalled. Resignalled from back-end #unscheduleAtTimingPriority"
+	delayToStop := aDelay.
+	timingSemaphore signal. "Transfer execution to back-end #unscheduleAtTimingPriority"
+]
+
+{ #category : #initialization }
+DelaySemaphoreScheduler >> unscheduleAtTimingPriority [
+	"Private! Invoke only from the timing-priority process.
+	 This is the back-half of scheduling a delay. For front-half see #schedule:"
+
+	readyToUnschedule signal. "But this timingPriority method completes first"
+	super 	unscheduleAtTimingPriority.
 
 ]

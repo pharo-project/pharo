@@ -235,7 +235,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testMultiSchedule [
 	"Ensure that scheduling the same delay twice raises an error"
 	delay := Delay forSeconds: 1000.
 	scheduler schedule: delay.
-	self assert: delay isScheduled.
+	self assert: delay beingWaitedOn.
 	self should:[ scheduler schedule: delay ] raise: Error.
 	
 	"Check that after that error, still accepting new items to schedule."
@@ -243,7 +243,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testMultiSchedule [
 	[	anotherDelay := Delay forMilliseconds: 1000.
 		scheduler schedule: anotherDelay.
 		] forkAt: Processor activePriority + 1.
-	self assert: anotherDelay isScheduled.
+	self assert: anotherDelay beingWaitedOn.
 	
 ]
 

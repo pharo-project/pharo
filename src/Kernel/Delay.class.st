@@ -196,13 +196,6 @@ Delay >> isExpired [
 
 ]
 
-{ #category : #private }
-Delay >> isScheduled [
-	"ticker is set in #timingPrioritySchedule: 
-	and nilled in #timingPriorityUnschedule: "
-	^ ticker isNotNil
-]
-
 { #category : #public }
 Delay >> millisecondDelayDuration [
 	^millisecondDelayDuration
@@ -335,7 +328,7 @@ Delay >> setDelay: milliseconds forSemaphore: aSemaphore [
 Delay >> timingPriorityScheduleTicker: aDelayTicker [
 	beingWaitedOn ifTrue: [ ^false ]. "Already scheduled"
 	beingWaitedOn := true.
-	ticker := aDelayTicker.
+	ticker := aDelayTicker. "To help Delay >> printOn: interpret resumptionTick"
 	resumptionTick := ticker tickAfterMilliseconds: millisecondDelayDuration.
 	^true
 ]
