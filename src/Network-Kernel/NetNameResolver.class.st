@@ -160,7 +160,7 @@ NetNameResolver class >> localHostAddress [
 	| primAddress |
 
 	self initializeNetwork.
-	primAddress := self primLocalAddress.
+	[ primAddress := self primLocalAddress ] on: Error do: [ :err | primAddress := #[0 0 0 0] ].
 	^ (primAddress = #[0 0 0 0] ifTrue: [ #[127 0 0 1] ] ifFalse: [ primAddress ]) asSocketAddress
 ]
 
