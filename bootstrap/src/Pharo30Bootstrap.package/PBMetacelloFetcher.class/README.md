@@ -1,1 +1,0 @@
-Fetch MC definitions from a Metacello configuration: ConfigurationOfPharoBootstrap

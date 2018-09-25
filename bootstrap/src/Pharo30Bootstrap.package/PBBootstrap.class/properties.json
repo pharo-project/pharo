@@ -11,7 +11,7 @@
 		"buildNumber",
 		"originRepository",
 		"ringEnvironment",
-		"versionFetcher"
+		"versionInfo"
 	],
 	"name" : "PBBootstrap",
 	"type" : "normal"

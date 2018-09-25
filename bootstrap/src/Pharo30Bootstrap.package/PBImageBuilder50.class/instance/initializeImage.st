@@ -20,16 +20,19 @@ initializeImage
 		"doing: self bootstrapInitialProcessCode."
 		doing: ('PharoBootstrapInitialization 
 			initializeImageOfType: ''Pharo'' 
-			majorVersion: {major} 
+			major: {major} 
 			minor: {minor} 
-			suffix: ''alpha'' 
-			buid: {build} 
+			patch: {patch}
+			suffix: ''{suffix}'' 
+			build: {build} 
 			commitHash: ''{hash}''.' 
 		format: {
-			'major' -> definitionFetcher majorVersion asNumber.
-			'minor' -> definitionFetcher minorVersion asNumber.
-			'build' -> self buildNumber asNumber.
-			'hash' -> definitionFetcher commitHash asString.
+			'major' -> versionInfo major.
+			'minor' -> versionInfo minor.
+			'patch' -> versionInfo patch.
+			'suffix' -> versionInfo suffix.
+			'build' -> versionInfo buildNumber.
+			'hash' -> versionInfo commitHash.
 	} asDictionary).
  	objectSpace installAsActiveProcess: process.
 	
