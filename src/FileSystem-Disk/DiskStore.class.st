@@ -448,7 +448,7 @@ DiskStore >> nodesAt: aPath do: aBlock [
 
 	| pathString openDir dirPointer entryData fileName attributes targetName |
 	
-	pathString := File encode: (self stringFromPath: aPath).
+	pathString := File encodePathString: (self stringFromPath: aPath).
 	(self isDirectory: aPath) ifFalse:
 		[ ^self signalDirectoryDoesNotExist: aPath ].
 
@@ -466,11 +466,11 @@ DiskStore >> nodesAt: aPath do: aBlock [
 		[ entryData notNil ] whileTrue:
 			[
 				fileName := entryData first.
-				entryData at: 1 put: (File decode: fileName).
+				entryData at: 1 put: (File decodePathString: fileName).
 				attributes := entryData at: 2.
 				attributes ifNotNil: 
 					[ targetName := attributes at: 1.
-					targetName ifNotNil: [ attributes at: 1 put: (File decode: targetName) ] ].
+					targetName ifNotNil: [ attributes at: 1 put: (File decodePathString: targetName) ] ].
 				aBlock value: entryData.
 				entryData := File primReaddir: dirPointer.
 			]

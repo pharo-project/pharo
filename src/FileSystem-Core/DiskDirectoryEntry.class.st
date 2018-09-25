@@ -129,7 +129,7 @@ DiskDirectoryEntry >> getAllAttributes [
 	statAttributes := allAttributes at: 1.
 	accessAttributes := allAttributes at: 2.
 	(statAttributes at: 1) ifNotNil: 
-		[ statAttributes at: 1 put: (self primitives decode: (statAttributes at: 1)) ].
+		[ statAttributes at: 1 put: (self primitives decodePathString: (statAttributes at: 1)) ].
 
 ]
 
@@ -139,7 +139,7 @@ DiskDirectoryEntry >> getStatAttributes [
 
 	statAttributes := self primitives fileAttributes: self pathString mask: self statAttributeMask.
 	(statAttributes at: 1) ifNotNil: 
-		[ statAttributes at: 1 put: (self primitives decode: (statAttributes at: 1)) ].
+		[ statAttributes at: 1 put: (self primitives decodePathString: (statAttributes at: 1)) ].
 	^statAttributes
 ]
 

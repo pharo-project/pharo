@@ -46,7 +46,6 @@ Class {
 		'name'
 	],
 	#classVars : [
-		'Encoder',
 		'Registry',
 		'S_IFBLK',
 		'S_IFCHR',
@@ -154,16 +153,10 @@ File class >> createDirectory: fullPath [
 
 ]
 
-{ #category : #'private-encoding' }
-File class >> decode: aString [
-
-	^ Encoder decodeBytes: aString asByteArray
-]
-
 { #category : #'primitives-encoding' }
-File class >> decodePathString: aString [
+File class >> decodePathString: aByteArray [
 
-	^ (ZnCharacterEncoder newForEncoding: 'utf8') decodeBytes: aString asByteArray
+	^ ZnUTF8Encoder default decodeBytes: aByteArray asByteArray
 ]
 
 { #category : #'primitives-path' }
@@ -195,23 +188,16 @@ File class >> delimiter [
 
 ]
 
-{ #category : #'private-encoding' }
-File class >> encode: aString [
-
-	^ (Encoder encodeString: aString) asString
-]
-
 { #category : #'primitives-encoding' }
 File class >> encodePathString: aString [
 
-	"Should not return a string"
-	^ ((ZnCharacterEncoder newForEncoding: 'utf8') encodeString: aString) asString
+	^ ZnUTF8Encoder default encodeString: aString
 ]
 
 { #category : #testing }
 File class >> exists: aString [
 
-	^self primExists: (self encode: aString)
+	^self primExists: (self encodePathString: aString)
 ]
 
 { #category : #attributes }
@@ -219,7 +205,7 @@ File class >> fileAttribute: aString number: attributeNumber [
 	"Answer the attribute identified by attributeNumber for the specified file (aString).
 	For backward compatibility (on Unix) with FileReference if the file doesn't exist, and the specified path is a (broken) symbolic link, answer the requested attribute for the symbolic link."
 
-	^self primFileAttribute: (self encode: aString) number: attributeNumber
+	^self primFileAttribute: (self encodePathString: aString) number: attributeNumber
 ]
 
 { #category : #attributes }
@@ -249,7 +235,7 @@ File class >> fileAttributeNumberMap [
 { #category : #attributes }
 File class >> fileAttributes: aString mask: attributeMask [
 
-	^self primFileAttributes: (self encode: aString) mask: attributeMask
+	^self primFileAttributes: (self encodePathString: aString) mask: attributeMask
 ]
 
 { #category : #'primitives-version' }
@@ -411,8 +397,7 @@ File class >> isSocket: aPath [
 
 { #category : #'primitives-file modes' }
 File class >> isSymlink: aPath [
-	"Answer a boolean indicating whether the supplied path is a Symlink file.
-	Note that this should only be called on platforms that support symlinks (e.g. not Windows)"
+	"Answer a boolean indicating whether the supplied path is a Symlink file"
 
 	^self fileAttribute: aPath number: 16
 ]
@@ -790,10 +775,6 @@ File class >> reset [
 
 	| masks |
 
-	Encoder := OSPlatform current isWindows 
-		ifTrue: [ ZnCharacterEncoder newForEncoding: 'null' ]
-		ifFalse: [ ZnCharacterEncoder newForEncoding: 'utf8' ].
-
 	masks := self primFileMasks.
 	S_IFMT := masks at: 1.
 	S_IFSOCK := masks at: 2.
@@ -879,9 +860,12 @@ File class >> setPosition: id to: anInteger [
 ]
 
 { #category : #private }
-File class >> signalError: aNumber for: aString [
+File class >> signalError: aNumber for: aByteArray [
 	"Raise the appropriate signal for the supplied error number"
 
+	| aString |
+	
+	aString := self decodePathString: aByteArray.
 	aNumber = self stringTooLong ifTrue: 
 		[ ^IllegalFileName signalWith: aString ].
 	aNumber = self cantStatPath ifTrue: 
@@ -943,13 +927,6 @@ File class >> stdioIsAvailable [
 File class >> stringTooLong [
 	"String too long.  A file path name was longer than PATH_MAX"
 	^-1
-]
-
-{ #category : #testing }
-File class >> supportsSymbolicLinks [
-	"Answer a boolean indicating whether the current platform supports symbolic links"
-
-	^OSPlatform current isUnix
 ]
 
 { #category : #'primitives-file' }
