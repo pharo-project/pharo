@@ -52,14 +52,6 @@ DateAndTimeLeapTest >> testAsLocal [
 ]
 
 { #category : #tests }
-DateAndTimeLeapTest >> testAsMonth [
-	self
-		assert: aDateAndTime asMonth
-		equals: ((Month year: 2004 month: 'February') translateTo: 2 hours).
-
-]
-
-{ #category : #tests }
 DateAndTimeLeapTest >> testAsNanoSeconds [
 	self assert: aDateAndTime asNanoSeconds equals: aDuration asNanoSeconds.
 	self assert: aDateAndTime asNanoSeconds equals: 48780000000000
@@ -86,24 +78,6 @@ DateAndTimeLeapTest >> testAsUTC [
 	self assert: aDateAndTime asUTC equals: aDateAndTime
 
           
-]
-
-{ #category : #tests }
-DateAndTimeLeapTest >> testAsWeek [
-	self assert: aDateAndTime asWeek equals: ((Week starting: '02-29-2004' asDate) translateTo: 2 hours).
-
-]
-
-{ #category : #tests }
-DateAndTimeLeapTest >> testAsYear [
-	"A year always starts at January 1"
-	self 
-		assert: aDateAndTime asYear
-		equals: ((Year starting: '02-29-2004' asDate) translateTo: 2 hours ).  
-	self
-		assert: aDateAndTime asYear
-		equals: ((Year starting: '01-01-2004' asDate) translateTo: 2 hours)  
-
 ]
 
 { #category : #tests }
