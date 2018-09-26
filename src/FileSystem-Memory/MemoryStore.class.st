@@ -55,14 +55,27 @@ MemoryStore >> basenameFromEntry: aMemoryFileSystemEntry [
 	^ aMemoryFileSystemEntry basename
 ]
 
+{ #category : #public }
+MemoryStore >> basenameFromNode: aMemoryFileSystemEntry [
+	^ aMemoryFileSystemEntry basename
+]
+
 { #category : #private }
 MemoryStore >> basicCreationTimeOf: aMemoryFileSystemEntry [
 	"Returns the creation date of aMemoryFileSystemEntry"
+	self 
+		deprecated: 'Use #creationTimeOf: instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0'.
 	^ aMemoryFileSystemEntry creationTime
 ]
 
 { #category : #private }
 MemoryStore >> basicEntry: entry nodesDo: aBlock [
+	self 
+		deprecated: 'Use #fileEntriesDo: instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0'.
 	entry fileEntriesDo: aBlock
 ]
 
@@ -78,17 +91,29 @@ MemoryStore >> basicIsDirectory: aMemoryFileSystemEntry [
 
 { #category : #private }
 MemoryStore >> basicIsFile: aMemoryFileSystemEntry [
+	self 
+		deprecated: 'Use #isFile instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0'.
 	^ aMemoryFileSystemEntry isFile
 ]
 
 { #category : #private }
 MemoryStore >> basicIsSymlink: aNode [
+	self 
+		deprecated: 'Use #isSymlink instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0'.
 	^false
 ]
 
 { #category : #private }
 MemoryStore >> basicModificationTimeOf: aMemoryFileSystemEntry [
 	"Return the basic modification time of aMemoryFileSystemEntry"
+	self 
+		deprecated: 'Use #modificationTimeOf: instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0'.
 	^ aMemoryFileSystemEntry modificationTime
 ]
 
@@ -107,12 +132,20 @@ MemoryStore >> basicOpen: path writable: aBoolean [
 
 { #category : #private }
 MemoryStore >> basicPosixPermissions: anEntry [
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0'.
 	^ 8r777
 ]
 
 { #category : #private }
 MemoryStore >> basicSizeOf: aMemoryFileSystemEntry [
 	"Return the basic size of aMemoryFileSystemEntry"
+	self 
+		deprecated: 'Use #fileSize instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0'.
 	^ aMemoryFileSystemEntry fileSize
 ]
 
@@ -180,6 +213,12 @@ MemoryStore >> createFile: aPath [
 		ifAbsent: [ self signalDirectoryDoesNotExist: aPath parent ]
 ]
 
+{ #category : #accessing }
+MemoryStore >> creationTimeOf: aPath [
+
+	^(self nodeAt: aPath) creationTime
+]
+
 { #category : #public }
 MemoryStore >> delete: path [
 	self 
@@ -187,6 +226,23 @@ MemoryStore >> delete: path [
 		ifPresent: [ :dict | 
 			dict fileEntryRemove: path basename ifAbsent: [ FileDoesNotExistException signalWith: path ]] 
 		ifAbsent: [ DirectoryDoesNotExist signalWith: path parent ]
+]
+
+{ #category : #public }
+MemoryStore >> entryFromNode: node path: path for: aFileSystem [
+
+	| entryPath |
+	entryPath := path / (self basenameFromNode: node).
+	^MemoryDirectoryEntry reference: (FileReference fileSystem: aFileSystem path: entryPath).
+
+]
+
+{ #category : #testing }
+MemoryStore >> exists: aPath [
+
+	^self nodeAt: aPath
+		ifPresent: [ :node | true ]
+		ifAbsent: [ false ]
 ]
 
 { #category : #printing }
@@ -205,8 +261,67 @@ MemoryStore >> initialize [
 ]
 
 { #category : #testing }
+MemoryStore >> isDirectory: aPath [
+
+	^self nodeAt: aPath
+		ifPresent: [ :node | node isDirectory ]
+		ifAbsent: [ false ]
+]
+
+{ #category : #testing }
+MemoryStore >> isFile: aPath [
+
+	^self nodeAt: aPath
+		ifPresent: [ :node | node isFile ]
+		ifAbsent: [ false ]
+]
+
+{ #category : #testing }
 MemoryStore >> isMemoryFileSystem [
 	^ true
+]
+
+{ #category : #testing }
+MemoryStore >> isReadable: aPath [
+	"Answer a boolean indicating whether the supplied path is a readable entry (directory or file).
+	MemoryStore doesn't implement access controls, always true if the file exists."
+
+	^self exists: aPath
+
+]
+
+{ #category : #accessing }
+MemoryStore >> isRegular: aPath [
+	"Answer a boolean indicating whether the entry at aPath is writable.
+	Memory store only supports regular files."
+
+	^self isFile: aPath
+]
+
+{ #category : #testing }
+MemoryStore >> isWritable: aPath [
+	"Answer a boolean indicating whether the supplied path is a writable entry (directory or file).
+	MemoryStore doesn't implement access controls, always true if the file exists."
+
+	^self exists: aPath
+
+]
+
+{ #category : #accessing }
+MemoryStore >> modificationTimeOf: aPath [
+
+	^(self nodeAt: aPath) modificationTime
+]
+
+{ #category : #private }
+MemoryStore >> nodeAt: aPath [
+	| current |
+	current := self root.
+	aPath do: [ :segment | 
+		current isDirectory
+			ifTrue: [ current := current fileEntryAt: segment ifAbsent: [ ^ FileDoesNotExistException signalWith: aPath ]]
+			ifFalse: [ ^ FileDoesNotExistException signalWith: aPath ]].
+	^ current
 ]
 
 { #category : #private }
@@ -223,6 +338,13 @@ MemoryStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 	^ presentBlock value: current
 ]
 
+{ #category : #private }
+MemoryStore >> nodesAt: aPath do: aBlock [
+
+	^(self nodeAt: aPath) fileEntriesDo:
+		[ :each | aBlock value: each ]. 
+]
+
 { #category : #public }
 MemoryStore >> openFileStream: path writable: isWriteStream [
 	| entry |
@@ -230,6 +352,14 @@ MemoryStore >> openFileStream: path writable: isWriteStream [
 	^ isWriteStream 
 		ifTrue: [ entry writeStream ]
 		ifFalse: [ entry readStream ]
+]
+
+{ #category : #accessing }
+MemoryStore >> permissions: aPath [
+	"Answer the FileSystemPermission's for aPath.
+	Memory Store doesn't implement access controls."
+
+	^FileSystemPermission posixPermissions: 8r777
 ]
 
 { #category : #public }
@@ -274,4 +404,10 @@ MemoryStore >> replaceFile: path in: aBlock [
 { #category : #accessing }
 MemoryStore >> root [
 	^ root
+]
+
+{ #category : #accessing }
+MemoryStore >> sizeOf: aPath [
+
+	^(self nodeAt: aPath) fileSize
 ]

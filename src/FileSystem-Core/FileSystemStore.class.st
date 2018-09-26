@@ -29,21 +29,42 @@ FileSystemStore class >> separator [
 	self shouldBeImplemented
 ]
 
+{ #category : #accessing }
+FileSystemStore >> accessTimeOf: aPath [
+	"Return the date of last access of the File described by aPath"
+	^FileAttributeNotSupported signalWith: self
+	
+]
+
 { #category : #public }
 FileSystemStore >> basenameFromEntry: aNode [
 	"Used to extract the basename from the low-level representation (node / entry) from the store."
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : #public }
+FileSystemStore >> basenameFromNode: aNode [
+	"Used to extract the basename from the low-level representation (node / entry) from the store."
+	self subclassResponsibility
+]
+
+{ #category : #deprecated }
 FileSystemStore >> basicCreationTimeOf: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is a readable
 	file or a directory whose contents can be listed."
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
 	self subclassResponsibility 
 ]
 
 { #category : #abstract }
 FileSystemStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
 	self subclassResponsibility 
 ]
 
@@ -54,30 +75,46 @@ FileSystemStore >> basicIsDirectory: aNode [
 	self subclassResponsibility 
 ]
 
-{ #category : #abstract }
+{ #category : #deprecated }
 FileSystemStore >> basicIsFile: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is a file.
 	This private message should only be called form within the store."
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
 	self subclassResponsibility 
 ]
 
-{ #category : #abstract }
+{ #category : #deprecated }
 FileSystemStore >> basicIsSymlink: aNode [
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
 	^self subclassResponsibility 
 	
 ]
 
-{ #category : #abstract }
+{ #category : #deprecated }
 FileSystemStore >> basicIsWritable: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is 
 	a writable file or can be changed."
+	self 
+		deprecated: 'Use #isWritable: instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0'.
 	self subclassResponsibility 
 ]
 
-{ #category : #abstract }
+{ #category : #deprecated }
 FileSystemStore >> basicModificationTime: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is a readable
 	file or a directory whose contents can be listed."
+	self 
+		deprecated: 'Use #modificationTimeOf: instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0'.
 	self subclassResponsibility 
 ]
 
@@ -87,16 +124,31 @@ FileSystemStore >> basicOpen: aPath writable: aBoolean [
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : #deprecated }
 FileSystemStore >> basicPosixPermissions: aNode [
 	"Used to get the posix permissions from a low-level filesystem entry / node"
+	self 
+		deprecated: 'Use #permissions: instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0'.
 	self subclassResponsibility 
 ]
 
-{ #category : #abstract }
+{ #category : #deprecated }
 FileSystemStore >> basicSizeOf: aNode [
 	"Used to get the size of the low-level representation (node / entry) "
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
 	self subclassResponsibility 
+]
+
+{ #category : #testing }
+FileSystemStore >> checkExists: aPath [
+
+	(self exists: aPath) ifFalse:
+		[ FileDoesNotExistException signalWith: aPath ].
 ]
 
 { #category : #public }
@@ -142,13 +194,11 @@ FileSystemStore >> createDirectory: aPath [
 	self subclassResponsibility 
 ]
 
-{ #category : #public }
+{ #category : #accessing }
 FileSystemStore >> creationTimeOf: aPath [
-	"Return the date of creation of the File described by aPath"
-	^ self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | self basicCreationTimeOf: entry ] 
-		ifAbsent: [ self signalFileDoesNotExist: aPath ].
+	"Return the date of creation of the File described by aPath.
+	Unlike most attribute methods in the file system store, retrieve the attributes object for aPath to minimise the number of primitive calls as creationTime often needs to get change time as well."
+	^FileAttributeNotSupported signalWith: self
 	
 ]
 
@@ -165,6 +215,30 @@ FileSystemStore >> delete: aPath [
 { #category : #accessing }
 FileSystemStore >> delimiter [
 	^ self class delimiter
+]
+
+{ #category : #accessing }
+FileSystemStore >> deviceIdOf: aPath [
+	"Return the device id of the File described by aPath"
+	^FileAttributeNotSupported signalWith: self
+]
+
+{ #category : #public }
+FileSystemStore >> directoryAt: aPath  directoryNodesDo: aBlock [
+	^ self 
+		nodesAt: aPath 
+		do: [ :node |
+			(self basicIsDirectory: node) 
+				ifTrue: [ aBlock value: node ]].
+]
+
+{ #category : #public }
+FileSystemStore >> directoryAt: aPath fileNodesDo: aBlock [
+	^ self 
+		nodesAt: aPath 
+		do: [ :node |
+			(self basicIsDirectory: node) 
+				ifFalse: [ aBlock value: node ]].
 ]
 
 { #category : #public }
@@ -189,13 +263,11 @@ FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock fileNodesDo: aBlock 
 
 { #category : #public }
 FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
-	^ self
-		nodeAt: aPath
-		ifPresent: [ :entry | 
-			(self basicIsDirectory: entry)
-				ifTrue: [ self basicEntry: entry path: aPath nodesDo: aBlock ]
-				ifFalse: [ DirectoryDoesNotExist signalWith: aPath ] ]
-		ifAbsent: absentBlock
+
+	^[ self nodesAt: aPath do: aBlock ]
+		on: DirectoryDoesNotExist, FileDoesNotExistException
+		do: [ absentBlock value ].
+
 ]
 
 { #category : #public }
@@ -206,31 +278,34 @@ FileSystemStore >> ensureCreateDirectory: aPath [
 ]
 
 { #category : #private }
-FileSystemStore >> entryFromNode: aNode fileSystem: aFilesystem path: aPath [
+FileSystemStore >> entryAt: aPath fileSystem: aFilesystem [
+
+	self checkExists: aPath.
 	^ FileSystemDirectoryEntry
 		fileSystem: aFilesystem
 		path: aPath
-		creation: (self basicCreationTimeOf: aNode)
-		modification:(self basicModificationTimeOf: aNode)
-		isDir: (self basicIsDirectory: aNode)
-		size: (self basicSizeOf: aNode)
-		posixPermissions: (self basicPosixPermissions: aNode)
-		isSymlink: (self basicIsSymlink: aNode)
+]
+
+{ #category : #private }
+FileSystemStore >> entryFromNode: aNode fileSystem: aFilesystem path: aPath [
+
+	self 
+		deprecated: 'FileSystemDirectoryEntry class>>fileSystem:path:'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0'.
+	^ FileSystemDirectoryEntry
+		fileSystem: aFilesystem
+		path: aPath
 ]
 
 { #category : #public }
 FileSystemStore >> entryFromNode: node path: path for: aFileystem [
-	| entryPath |
-	entryPath := path / (self basenameFromEntry: node).
-	^ self entryFromNode: node fileSystem: aFileystem path: entryPath
+	^self subclassResponsibility
 ]
 
 { #category : #public }
 FileSystemStore >> exists: aPath [
-	self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | ^ true ] 
-		ifAbsent: [ ^ false ].
+	^self subclassResponsibility
 	
 ]
 
@@ -240,46 +315,89 @@ FileSystemStore >> filename: aByteString matches: aByteString2 [
 ]
 
 { #category : #accessing }
+FileSystemStore >> gidOf: aPath [
+	"Return the gid of the File described by aPath"
+	^FileAttributeNotSupported signalWith: self
+
+]
+
+{ #category : #abstract }
+FileSystemStore >> inodeOf: aPath [
+	"Return the inode number of the File described by aPath"
+	^FileAttributeNotSupported signalWith: self
+
+]
+
+{ #category : #testing }
+FileSystemStore >> isBlock: aPath [
+	"Return a boolean indicating whether the File described by aPath is a block device"
+	^FileAttributeNotSupported signalWith: self
+	
+]
+
+{ #category : #accessing }
 FileSystemStore >> isCaseSensitive [
 	^ self class isCaseSensitive
 ]
 
-{ #category : #public }
+{ #category : #testing }
+FileSystemStore >> isCharacter: aPath [
+	"Return a boolean indicating whether the File described by aPath is character based"
+	^FileAttributeNotSupported signalWith: self
+	
+]
+
+{ #category : #testing }
 FileSystemStore >> isDirectory: aPath [
-	aPath isRoot ifTrue: [ ^ true ].
-	self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | ^ self basicIsDirectory: entry ] 
-		ifAbsent: [ ^ false ].
+	^FileAttributeNotSupported signalWith: self
 	
 ]
 
-{ #category : #public }
+{ #category : #testing }
+FileSystemStore >> isExecutable: aPath [
+	^FileAttributeNotSupported signalWith: self
+]
+
+{ #category : #testing }
+FileSystemStore >> isFIFO: aPath [
+	"Return a boolean indicating whether the File described by aPath is FIFO"
+	^FileAttributeNotSupported signalWith: self
+	
+]
+
+{ #category : #testing }
 FileSystemStore >> isFile: aPath [
-	"slow solution for big directories! "
-	^ self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | ^ self basicIsFile: entry ] 
-		ifAbsent: [ ^ false ]
+	"Return a boolean indicating whether the File described by aPath is a file (not a directory)"
+	^FileAttributeNotSupported signalWith: self
 	
 ]
 
-{ #category : #public }
+{ #category : #testing }
+FileSystemStore >> isReadable: aPath [
+	^FileAttributeNotSupported signalWith: self
+]
+
+{ #category : #testing }
+FileSystemStore >> isRegular: aPath [
+	"Return a boolean indicating whether the File described by aPath is a regular file"
+	^FileAttributeNotSupported signalWith: self
+	
+]
+
+{ #category : #testing }
+FileSystemStore >> isSocket: aPath [
+	"Return a boolean indicating whether the File described by aPath is a socket"
+	^FileAttributeNotSupported signalWith: self
+]
+
+{ #category : #testing }
 FileSystemStore >> isSymlink: aPath [
-	aPath isRoot ifTrue: [ ^ true ].
-	self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | ^ self basicIsSymlink: entry ] 
-		ifAbsent: [ ^ false ].
-	
+	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #public }
+{ #category : #testing }
 FileSystemStore >> isWritable: aPath [
-	self nodeAt: aPath 
-		ifPresent: [ :entry | ^ self basicIsWritable: entry ] 
-		ifAbsent: [ ^ false ].
-	
+	^FileAttributeNotSupported signalWith: self
 ]
 
 { #category : #public }
@@ -291,18 +409,18 @@ FileSystemStore >> mimeTypesAt: aPath [
 	^ Array with: mimeType
 ]
 
-{ #category : #public }
+{ #category : #accessing }
 FileSystemStore >> modificationTimeOf: aPath [
 	"Returns the last date of modification of the File described by aPath"
-	^ self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | self basicModificationTimeOf: entry ] 
-		ifAbsent: [ self signalFileDoesNotExist: aPath ].
-	
+	^FileAttributeNotSupported signalWith: self
 ]
 
 { #category : #public }
 FileSystemStore >> nodeAt: aPath [
+	self 
+		deprecated: 'Use FileSystemDirectoryEntry instead'
+		on: 	'19 Feb 2018' 
+		in: 'Pharo-7.0'.
 	^ self 
 		nodeAt: aPath 
 		ifPresent: [ :node| node ]
@@ -311,7 +429,23 @@ FileSystemStore >> nodeAt: aPath [
 
 { #category : #abstract }
 FileSystemStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
-	self subclassResponsibility 
+	self 
+		deprecated: 'Use FileAttributes instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
+	^self subclassResponsibility 
+]
+
+{ #category : #private }
+FileSystemStore >> nodesAt: aPath do: aBlock [
+
+	^self subclassResponsibility
+]
+
+{ #category : #accessing }
+FileSystemStore >> numberOfHardLinks: aPath [
+	"Return the number of hard links to the File described by aPath"
+	^FileAttributeNotSupported signalWith: self
 ]
 
 { #category : #abstract }
@@ -331,12 +465,9 @@ FileSystemStore >> pathFromString: aString [
 	^ Path from: aString delimiter: self delimiter
 ]
 
-{ #category : #public }
+{ #category : #accessing }
 FileSystemStore >> permissions: aPath [
-	self nodeAt: aPath 
-		ifPresent: [ :entry | ^ FileSystemPermission posixPermissions: (self basicPosixPermissions: entry) ] 
-		ifAbsent: [ ^ FileSystemPermission default ].
-	
+	^FileAttributeNotSupported signalWith: self
 ]
 
 { #category : #converting }
@@ -390,18 +521,34 @@ FileSystemStore >> signalFileExists: aPath [
 	^ FileExists signalWith: aPath
 ]
 
-{ #category : #public }
+{ #category : #accessing }
 FileSystemStore >> sizeOf: aPath [
 	"Return the size of the File described by aPath"
-	^ self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | self basicSizeOf: entry ] 
-		ifAbsent: [ self signalFileDoesNotExist: aPath ]
-	
+	^FileAttributeNotSupported signalWith: self
 ]
 
 { #category : #converting }
 FileSystemStore >> stringFromPath: aPath [
 	^ String streamContents: [ :out | 
 		self printPath: aPath on: out ]
+]
+
+{ #category : #private }
+FileSystemStore >> symlinkEntryAt: aPath fileSystem: aFilesystem [
+
+	^ DiskSymlinkDirectoryEntry
+		fileSystem: aFilesystem
+		path: aPath
+]
+
+{ #category : #accessing }
+FileSystemStore >> targetPath: aPath [
+	"Return the target file of the File described by aPath.  For a regular file, this is itself, for a symbolic link, it is the file pointed to by the symbolic link"
+	^FileAttributeNotSupported signalWith: self
+]
+
+{ #category : #accessing }
+FileSystemStore >> uid: aPath [
+	"Return the uid of the File described by aPath"
+	^FileAttributeNotSupported signalWith: self
 ]
