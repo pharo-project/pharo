@@ -1,33 +1,18 @@
 "
-Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
+I specify the tests for the delay scheduler system. My subclasses inherit 
+these tests to run against various combinations of scheduler and ticker.  
 
-For the Class part:  State a one line summary. For example, ""I represent a paragraph of text"".
+The scheduler is specified by #classForScheduler.
+The ticker is specified by #classForTicker.
 
-For the Responsibility part: Three sentences about my main responsibilities - what I do, what I know.
+I specifically test...
+  scheduler DelayBasicScheduler together with its default 
+  ticker DelayMicrosecondTicker.
 
-For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
-
-Public API and Key Messages
-
-- message one   
-- message two 
-- (for bonus points) how to create instances.
-
-   One simple example is simply gorgeous.
- 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	scheduler:		<Object>
-	ticker:		<Object>
-
-
-    Implementation Points
-
-The delay scheduler stores delays in two instance variables:
-   'activeDelay' holds one instance of Delay 
-   'scheduedDelay' holds a Heap of Delays
-
+My #setUp method starts a new scheduler process running at a priority slightly higher than 
+the tests, so that it will preempt the tests similar to how the system's current delay scheduler
+running at timingPriority will normally preempt all other processes.  This is provided
+to tests in the /scheduler/ variable.
 "
 Class {
 	#name : #TestDelayBasicSchedulerMicrosecondTicker,
