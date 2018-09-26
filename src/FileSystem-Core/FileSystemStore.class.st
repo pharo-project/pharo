@@ -319,11 +319,6 @@ FileSystemStore >> open [
 	"Some kinds of filesystems need to open connections to external resources"
 ]
 
-{ #category : #public }
-FileSystemStore >> openFileStream: path writable: writable [
-	self subclassResponsibility
-]
-
 { #category : #converting }
 FileSystemStore >> pathFromString: aString [
 	"Use the unix convention by default, since many filesystems are based on it."
