@@ -571,21 +571,20 @@ File class >> primClosedir: directoryPointerBytes [
 	"self primClosedir: (self primOpendir: '/no/such/directory')"
 
 	<primitive: 'primitiveClosedir' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed.
+	^self signalError: error for: 'primClosedir'
 ]
 
 { #category : #'primitives-file attributes' }
-File class >> primExists: aString [
+File class >> primExists: aByteArray [
 	"Answer a boolean indicating whether the supplied file exists."
 
 	<primitive: 'primitiveFileExists' module: 'FileAttributesPlugin' error: error>
-	^(error isPrimitiveError)
-		ifTrue: [ self signalError: error errorCode for: aString ]
-		ifFalse: [ self primitiveFailed ].
+	^self signalError: error for: aByteArray.
+
 ]
 
 { #category : #'primitives-file attributes' }
-File class >> primFileAttribute: aString number: attributeNumber [
+File class >> primFileAttribute: aByteArray number: attributeNumber [
 	"Answer a single attribute for the supplied file.
 	For backward compatibility (on Unix) with FileReference if the file doesn't exist, and the specified path is a (broken) symbolic link, answer the requested attribute for the symbolic link.
 
@@ -621,18 +620,16 @@ symbolic link information
 		(error isPrimitiveError and: [attributeNumber ~= 16 and: [error errorCode = self cantStatPath and: [
 					self platformSupportsSymbolicLinksEgUnix]]]) ifTrue:
 						[DiskSymlinkDirectoryEntry fileSystem: DiskStore currentFileSystem path: aString asPath]"
-	^error isPrimitiveError ifTrue: [ 
+	error isPrimitiveError ifTrue: [ 
 		(attributeNumber = 16 and: [ error errorCode = self unsupportedOperation ]) ifTrue: 
 			"If symlinks aren't supported, answer false"
-			[ ^false ]
-		ifFalse:
-			[ self signalError: error errorCode for: aString ] ]
-	ifFalse:
-		[ self primitiveFailed ]
+			[ ^false ]].
+	^self signalError: error for: aByteArray
+
 ]
 
 { #category : #'primitives-file attributes' }
-File class >> primFileAttributes: aString mask: attributeMask [
+File class >> primFileAttributes: aByteArray mask: attributeMask [
 	"Answer an array of attributes for the supplied file.  The size and contents of the array are determined by the attributeMask:
 
 Bit 0: stat() information
@@ -662,10 +659,8 @@ access() information
 	3: is executable
 	"
 	<primitive: 'primitiveFileAttributes' module: 'FileAttributesPlugin' error: error>
-	^error isPrimitiveError ifTrue:
-		[ self signalError: error errorCode for: aString ]
-	ifFalse: 
-		[ self primitiveFailed ]
+	^self signalError: error for: aByteArray
+
 ]
 
 { #category : #private }
@@ -684,14 +679,14 @@ File class >> primFileMasks [
 	For more information, see: http://man7.org/linux/man-pages/man2/stat.2.html
 	"
 	<primitive: 'primitiveFileMasks' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed
+	^self signalError: error for: 'primFileMasks'
 ]
 
 { #category : #'primitives-windows' }
 File class >> primLogicalDrives [
 	"Answer the windows logical drive mask"
 	<primitive: 'primitiveLogicalDrives' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed
+	^self signalError: error for: 'primLogicalDrives'
 ]
 
 { #category : #'primitives-directory' }
@@ -704,14 +699,14 @@ File class >> primOpendir: pathString [
 	"self primOpendir: '/no/such/directory'"
 
 	<primitive: 'primitiveOpendir' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed
+	^self signalError: error for: pathString
 ]
 
 { #category : #'primitives-directory' }
 File class >> primPathMax [
 	"Answer the VMs PATH_MAX value"
 	<primitive: 'primitivePathMax' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed
+	^self signalError: error for: 'primPathMax'
 ]
 
 { #category : #'primitives-directory' }
@@ -723,7 +718,7 @@ File class >> primReaddir: directoryPointerBytes [
 	"self primReaddir: (self primOpendir: '/no/such/directory')"
 
 	<primitive: 'primitiveReaddir' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed
+	^self signalError: error for: 'primReaddir:'
 ]
 
 { #category : #'primitives-directory' }
@@ -735,7 +730,7 @@ File class >> primRewinddir: directoryPointerBytes [
 	"self primRewinddir: (self primOpendir: '/no/such/directory')"
 
 	<primitive: 'primitiveRewinddir' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed
+	^self signalError: error for: 'primRewinddir:'
 
 ]
 
@@ -860,19 +855,26 @@ File class >> setPosition: id to: anInteger [
 ]
 
 { #category : #private }
-File class >> signalError: aNumber for: aByteArray [
-	"Raise the appropriate signal for the supplied error number"
+File class >> signalError: error for: aByteArray [
+	"Raise the appropriate signal for the supplied error"
 
-	| aString |
-	
-	aString := self decodePathString: aByteArray.
-	aNumber = self stringTooLong ifTrue: 
-		[ ^IllegalFileName signalWith: aString ].
-	aNumber = self cantStatPath ifTrue: 
-		[ ^FileDoesNotExistException signalWith: aString ].
-	aNumber = self getAttributesFailed ifTrue: 
-		[ ^FileDoesNotExistException signalWith: aString ].
-	^FileException signalWith: aString.
+	| errorNumber pathString |
+
+	error ifNil: [ ^self primitiveFailed ].
+	error isSymbol ifTrue: [ ^self primitiveFailed: error ].
+	error isPrimitiveError ifFalse: [ 
+		"We shouldn't ever get here"
+		^self primitiveFailed. ].
+
+	pathString := self decodePathString: aByteArray asByteArray.
+	errorNumber := error errorCode.
+	errorNumber = self stringTooLong ifTrue: 
+		[ ^IllegalFileName signalWith: pathString ].
+	errorNumber = self cantStatPath ifTrue: 
+		[ ^FileDoesNotExistException signalWith: pathString ].
+	errorNumber = self getAttributesFailed ifTrue: 
+		[ ^FileDoesNotExistException signalWith: pathString ].
+	^FileException signalWith: pathString.
 ]
 
 { #category : #'primitives-file' }
