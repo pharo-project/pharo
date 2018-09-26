@@ -156,6 +156,17 @@ DelayBasicScheduler >> restartTimerEventLoop [
 
 ]
 
+{ #category : #'user-api' }
+DelayBasicScheduler >> resume [
+	"Unsuspend the timing-priority delay scheduling loop when resuming a snapshot."
+	
+	suspendSemaphore
+		ifNil:[ ^self error: 'Not suspended' ].
+	suspendSemaphore signal. 
+	"signal transfers execution to #suspendAtTimingPriority, 
+	 which does... suspendSemaphore := nil."
+]
+
 { #category : #'private - timing priority process' }
 DelayBasicScheduler >> runBackendLoopAtTimingPriority [
 	"Private! Outer loop for the timing priority timer event loop.
@@ -279,7 +290,7 @@ DelayBasicScheduler >> startTimerEventLoopPriority: processorPriority [
 
 { #category : #'system-api' }
 DelayBasicScheduler >> startUp [
-	self suspendRelease
+	self resume
 ]
 
 { #category : #'system-api' }
@@ -329,17 +340,6 @@ DelayBasicScheduler >> suspendAtTimingPriority [
 	ticker restoreResumptionTimes: suspendedDelays asArray, {activeDelay}.  
 	suspendSemaphore := nil
 
-]
-
-{ #category : #'user-api' }
-DelayBasicScheduler >> suspendRelease [
-	"Unsuspend the timing-priority delay scheduling loop when resuming a snapshot."
-	
-	suspendSemaphore
-		ifNil:[ ^self error: 'Not suspended' ].
-	suspendSemaphore signal. 
-	"signal transfers execution to #suspendAtTimingPriority, 
-	 which does... suspendSemaphore := nil."
 ]
 
 { #category : #deprecated }
