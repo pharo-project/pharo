@@ -87,7 +87,7 @@ Delay class >> forSeconds: aNumber [
 Delay class >> initialize [
 	"Delay initialize"
 	Scheduler ifNotNil: [ Scheduler stopTimerEventLoop ].
-	Scheduler := DelaySpinScheduler new.
+	Scheduler := DelaySemaphoreScheduler new.
 	Scheduler startTimerEventLoop. 
 	SessionManager default 
 		registerSystemClassNamed: self name 
