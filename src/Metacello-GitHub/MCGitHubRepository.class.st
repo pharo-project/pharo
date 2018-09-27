@@ -88,11 +88,6 @@ MCGitHubRepository class >> isEnabled [
 ]
 
 { #category : #private }
-MCGitHubRepository class >> projectTagsUrlFor: projectPath [
-  ^ 'https://api.github.com/repos/' , projectPath , '/tags'
-]
-
-{ #category : #private }
 MCGitHubRepository class >> projectZipUrlFor: projectPath versionString: versionString [
   ^ 'https://github.com/' , projectPath , '/zipball/' , versionString
 ]
@@ -144,4 +139,9 @@ MCGitHubRepository >> normalizeTagsData: jsonObject [
       commit := tagObject at: 'commit'.
       tagDict at: tag put: (commit at: 'sha') ].
   ^ tagDict
+]
+
+{ #category : #private }
+MCGitHubRepository >> projectTagsUrlFor: projectPath [
+  ^ 'https://api.github.com/repos/' , projectPath , '/tags'
 ]
