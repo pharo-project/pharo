@@ -14,7 +14,7 @@ Class {
 	#category : #'NECompletion-Model'
 }
 
-{ #category : #accessing }
+{ #category : #initialization }
 NECEmptyModel >> initializeSelectors [
 	self resetSelectors
 ]

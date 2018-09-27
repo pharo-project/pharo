@@ -1,74 +1,91 @@
 "
-This concrete subclass of DelayScheduler immediately signals the delaySemaphore, effectively eliminating the delay.  This can be useful to facilitate modifications to the DelayScheduler code hierarchy.
+I represent the simplest delay scheduler.  I'm so simple I actually don't schedule delays,
+but signal them to continue immediately so there is no delay. 
+My purpose is provide the minimum interface required to avoid DNU errors in the rest of the system.
 
-The delay scehduler is in continual use every 20 - 50 milliseconds due to the UI loop, so it can be difficult to modify (particularly via a continuous integration validation service).  DelayNullScheduler is provided as a substitute to allow the UI loop to continue while the delay scheduler system is taken offline for modifications. If that proves insufficient, try temporarily bypassing the call to #interCyclePause from WorldState>>doOneCycleNow.
+My responsibilities are: 
+1. Facilitate image shutdown/startup   
+2. Facilitate the start/stop in transitioning between delay schedulers 
+3. Immediately signal delays to continue to avoid user code blocking forever on unscheduled delays 
 
-Select either from ""System > Settings > System > Delay Scheduler"" 
-or do... ""Delay delaySchedulerClass: DelayNullScheduler""
+My main collaborators are:
+Delay - has a class variable ""Scheduler"" storing the current delay scheduler
+      - changes Scheduler by stopping old timer event loop and starting new timer event loop
+      - invokes #schedule: and #unschedule: on current Scheduler
+      - forwards system #startUp and #shutDown to current Scheduler
 
 
+USER-API 
 
+#schedule: aDelay
+	Immediately signals the delaySemaphore to continue.
+	Required by Delay>>schedule & Delay>>wait. 
+
+#unschedule: aDelay
+	Empty method body 
+ 	Required by Delay>>unschedule.
+
+
+SYSTEM-API
+	
+#startTimerEventLoop
+	Empty method body 
+	Required by Delay-class>>#delaySchedulerClass: 
+	
+#stopTimerEventLoop
+	Empty method body 
+ 	Required by Delay-class>>#delaySchedulerClass: 
+		
+#startUp
+	Empty method body 
+	Required by Delay-class>>#startup 
+					
+#shutDown
+	Empty method body 
+	Required by Delay-class>>#shutdown
 "
 Class {
 	#name : #DelayNullScheduler,
-	#superclass : #DelayScheduler,
-	#category : #'Kernel-Processes'
+	#superclass : #Object,
+	#category : #'Kernel-Delays'
 }
 
-{ #category : #'low priority processes' }
+{ #category : #'user-api' }
 DelayNullScheduler >> schedule: aDelay [
-	aDelay delaySemaphore signal.
+	"Invoked from user code Delay>>schedule:
+	 DelayNullScheduler does not schedule delays, but need to avoid user code blocking.
+	 Signal its semaphore immediately, so effectively there is no delay.
+	 For example,  [1 second asDelay wait] timeToRun  ==> 0:00:00:00.000 instead of 0:00:00:01.000"
 	
+	aDelay delaySemaphore signal.
 
 ]
 
-{ #category : #snapshotting }
+{ #category : #'system-api' }
 DelayNullScheduler >> shutDown [
-	"do nothing"
+	"Nothing to do for DelayNullScheduler"
 ]
 
-{ #category : #'timer process' }
+{ #category : #'system-api' }
 DelayNullScheduler >> startTimerEventLoop [
-	"Start a fake timer event loop that does nothing - just suspends via a wait that is never signalled"
-	"Delay restartTimerEventLoop"
-		
-	timerEventLoop ifNotNil: [ self error: 'Timer event loop has already been started.' ].
-		
-	timerEventLoop := [ Processor activeProcess suspend. ] newProcess.
-	timerEventLoop 
-		name: 'WARNING! Delay Scheduling Process NOT RUNNING!';
-		priority: Processor timingPriority.
-	timerEventLoop resume.
-
+	"Nothing to do for DelayNullScheduler"
 ]
 
-{ #category : #snapshotting }
+{ #category : #'system-api' }
 DelayNullScheduler >> startUp [
-	self error: 'Delay scheduler is NOT RUNNING!'.
-	"The running delay scheduler seems to be DelayNullScheduler.
-	 This is probably not what you want. See Tools > Process Browser.
-	 
-	 If all is well, the following should result in a value 1 second...
-	    [1 second asDelay wait] timeToRun
-
-	 To get delays working again, go to System > Settings > System > Delay scheduler.	
-	 "
+	self log: 'WARNING! Delay scheduler is NOT RUNNING!'.
+	
+	"To get delays working again, go to System > Settings > System > Delay scheduler. "
  
 ]
 
-{ #category : #'timer process' }
+{ #category : #'system-api' }
 DelayNullScheduler >> stopTimerEventLoop [
-	"Stop the timer event loop"
-
-	timerEventLoop ifNotNil: [ timerEventLoop terminate ]. 
-	timerEventLoop := nil.
-
-
+	"Nothing to do for DelayNullScheduler"
 ]
 
-{ #category : #'low priority processes' }
+{ #category : #'user-api' }
 DelayNullScheduler >> unschedule: aDelay [
-	"Nothing to do"
-		
+	"Nothing to do for DelayNullScheduler"		
 
 ]

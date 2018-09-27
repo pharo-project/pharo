@@ -19,18 +19,6 @@ BehaviorTest >> sampleMessageWithFirstArgument: firstArgument "This is a comment
 ]
 
 { #category : #tests }
-BehaviorTest >> testAllLocalCallsOn [
-	
-	self assert: (( Point allLocalCallsOn: #asPoint )  notEmpty).
-	self assert: (( Point allLocalCallsOn: #asPoint )  size = 4).
-	self assert: (( Point allLocalCallsOn: #asPoint )  includes: (Point>> #roundDownTo:) asRingDefinition).
-	self assert: (( Point allLocalCallsOn: #asPoint )  includes: (Point >> #roundUpTo:) asRingDefinition).
-	self assert: (( Point allLocalCallsOn: #asPoint )  includes: (Point >> #roundTo:) asRingDefinition).
-	self assert: (( Point allLocalCallsOn: #asPoint )  includes: (Point >> #truncateTo: ) asRingDefinition).
-	
-]
-
-{ #category : #tests }
 BehaviorTest >> testAllMethods [
 	| allMethods nonOverridenMethods |
 	allMethods := IdentitySet new
@@ -43,22 +31,6 @@ BehaviorTest >> testAllMethods [
 			(Object includesSelector: sel)
 				ifFalse: [ nonOverridenMethods add: method ] ].
 	self assert: (allMethods includesAll: nonOverridenMethods)
-]
-
-{ #category : #tests }
-BehaviorTest >> testAllReferencesTo [
-	| result |
-	result := SystemNavigation new allReferencesTo: Point binding.
-	result do: [ :each | self assert: (each compiledMethod hasLiteral: Point binding) ].
-	self assert: (result anySatisfy: [ :each | each actualClass = self class and: [ each selector = #testAllReferencesTo ] ]).
-		
-	result := SystemNavigation new allReferencesTo: #printOn:.
-	result do: [ :each | self assert: (each compiledMethod hasLiteralThorough: #printOn:) ].
-	self assert: (result anySatisfy: [ :each | each actualClass = self class and: [ each selector = #testAllReferencesTo ] ]).
-	
-	result := SystemNavigation new allReferencesTo: #+.
-	result do: [ :each | self assert: ((each compiledMethod sendsSelector: #+) or: [ each compiledMethod hasLiteralThorough: #+ ]) ].
-	self assert: (result anySatisfy: [ :each | each actualClass = self class and: [ each selector = #testAllReferencesTo ] ])
 ]
 
 { #category : #tests }
@@ -230,12 +202,6 @@ BehaviorTest >> testRemoveProperty [
 	self class propertyAt: #testKeySelector put: 1.
 	self class removeProperty: #testKeySelector.
 	self assert: (self class propertyAt: #testKeySelector) equals: nil
-]
-
-{ #category : #'tests - testing method dictionary' }
-BehaviorTest >> testWhichSelectorsAccess [
-	self assert: ((Point whichSelectorsAccess: 'x') includes: #x).
-	self deny:  ((Point whichSelectorsAccess: 'y') includes: #x).
 ]
 
 { #category : #tests }

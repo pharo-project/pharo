@@ -345,15 +345,6 @@ MemoryStore >> nodesAt: aPath do: aBlock [
 		[ :each | aBlock value: each ]. 
 ]
 
-{ #category : #public }
-MemoryStore >> openFileStream: path writable: isWriteStream [
-	| entry |
-	entry := self basicOpen: path writable: isWriteStream.
-	^ isWriteStream 
-		ifTrue: [ entry writeStream ]
-		ifFalse: [ entry readStream ]
-]
-
 { #category : #accessing }
 MemoryStore >> permissions: aPath [
 	"Answer the FileSystemPermission's for aPath.

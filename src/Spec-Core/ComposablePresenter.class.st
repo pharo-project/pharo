@@ -134,6 +134,12 @@ ComposablePresenter class >> inputTextHeight [
 	^ self defaultFont height + 12
 ]
 
+{ #category : #defaults }
+ComposablePresenter class >> labelHeight [
+
+	^ self defaultFont height
+]
+
 { #category : #'instance creation' }
 ComposablePresenter class >> on: aDomainObject [
 

@@ -484,16 +484,6 @@ DiskStore >> numberOfHardLinks: aPath [
 	^File fileAttribute: (self stringFromPath: aPath) number: 5
 ]
 
-{ #category : #public }
-DiskStore >> openFileStream: path writable: writable [
-	| fullPath |
-	fullPath := self stringFromPath: path.
-	"redirect over the default implementation"
-	^ writable 
-		ifFalse: [ FileStream readOnlyFileNamed: fullPath ]
-		ifTrue: [ FileStream fileNamed: fullPath ]
-]
-
 { #category : #accessing }
 DiskStore >> permissions: aPath [
 	"Answer the FileSystemPermissions for the supplied path"

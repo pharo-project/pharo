@@ -373,7 +373,6 @@ TraitTest >> testRemoveFromSystem [
 				ensure: [ aClass removeFromSystem: false ] ]
 ]
 
-
 { #category : #testing }
 TraitTest >> testTraitCompositionRespectsParenthesis [
 	self t1 compile: 'method ^1234'.

@@ -82,7 +82,7 @@ DynamicPresentersListBuilder >> buildDynamicPresenter [
 
 { #category : #building }
 DynamicPresentersListBuilder >> buildLayout [
-	^ self layoutBuilder buildLayoutFor: self
+	^ self layoutBuilder buildFor: self
 ]
 
 { #category : #accessing }
@@ -189,6 +189,9 @@ DynamicPresentersListBuilder >> nullPresentersInstVarNamesAndPresenterNamesArray
 
 { #category : #api }
 DynamicPresentersListBuilder >> presenter: aPresenterClass configuredAs: twoArgumentsBlock [
+	"Configure the builder: 1. provide the presenter class to instantiate; and 2. specify how to configure it.
+	 - aPresenterClass is a the presenter class to instantiate for each model object.
+	 - twoArgumentsBlock will be called to configure instances of aPresenterClass. The first argument of this block is the presenter instance and the second the model object."
 	self presenterProvidedBy: [ :modelObject | aPresenterClass ] configuredAs: twoArgumentsBlock
 ]
 
@@ -204,6 +207,10 @@ DynamicPresentersListBuilder >> presenterBlock: anObject [
 
 { #category : #api }
 DynamicPresentersListBuilder >> presenterProvidedBy: blockReturningPresenter configuredAs: blockConfiguringThePresenter [
+	"Configure the builder: 1. provide a block returning presenter classes to instantiate; and 2. specify how to configure them.
+	 I do a job similar to #presenter:configuredAs: but I provide more flexibility since model objects can be shown as different presenters.
+	 - blockReturningPresenter is a block returning the presenter class to instantiate for each model object. It has one argument which the model object that needs to be shown on the UI.
+	 - twoArgumentsBlock will be called to configure instances of aPresenterClass. The first argument of this block is the presenter instance and the second the model object."
 	self
 		presenterBlock: blockReturningPresenter;
 		configurationBlock: blockConfiguringThePresenter

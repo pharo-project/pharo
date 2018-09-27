@@ -579,13 +579,6 @@ FileSystem >> open: aResolvable writable: aBoolean [
 		
 ]
 
-{ #category : #delegated }
-FileSystem >> openFileStream: aResolvable writable: aBoolean [
-	^ store 
-		openFileStream: (self resolve: aResolvable) 
-		writable: aBoolean
-]
-
 { #category : #private }
 FileSystem >> openStreamDescription: aResolvable writable: aBoolean [
 	"I am  a helper method to delegate basicOpen:writable: to the store.
