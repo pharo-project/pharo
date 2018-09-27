@@ -42,18 +42,12 @@ FileSystemStore >> basenameFromEntry: aNode [
 	self subclassResponsibility
 ]
 
-{ #category : #public }
-FileSystemStore >> basenameFromNode: aNode [
-	"Used to extract the basename from the low-level representation (node / entry) from the store."
-	self subclassResponsibility
-]
-
 { #category : #deprecated }
 FileSystemStore >> basicCreationTimeOf: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is a readable
 	file or a directory whose contents can be listed."
 	self 
-		deprecated: 'Use FileAttributes instead'
+		deprecated: 'Use #creationTimeOf: instead'
 		on: 	'30 Apr 2017' 
 		in: 'Pharo-7.0-hopefully-'.
 	self subclassResponsibility 
@@ -80,7 +74,7 @@ FileSystemStore >> basicIsFile: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is a file.
 	This private message should only be called form within the store."
 	self 
-		deprecated: 'Use FileAttributes instead'
+		deprecated: 'Use #isFile: instead'
 		on: 	'30 Apr 2017' 
 		in: 'Pharo-7.0-hopefully-'.
 	self subclassResponsibility 
@@ -89,7 +83,7 @@ FileSystemStore >> basicIsFile: aNode [
 { #category : #deprecated }
 FileSystemStore >> basicIsSymlink: aNode [
 	self 
-		deprecated: 'Use FileAttributes instead'
+		deprecated: 'Use #isSymlink: instead'
 		on: 	'30 Apr 2017' 
 		in: 'Pharo-7.0-hopefully-'.
 	^self subclassResponsibility 
@@ -138,7 +132,7 @@ FileSystemStore >> basicPosixPermissions: aNode [
 FileSystemStore >> basicSizeOf: aNode [
 	"Used to get the size of the low-level representation (node / entry) "
 	self 
-		deprecated: 'Use FileAttributes instead'
+		deprecated: 'Use #sizeOf: instead'
 		on: 	'30 Apr 2017' 
 		in: 'Pharo-7.0-hopefully-'.
 	self subclassResponsibility 
@@ -290,7 +284,7 @@ FileSystemStore >> entryAt: aPath fileSystem: aFilesystem [
 FileSystemStore >> entryFromNode: aNode fileSystem: aFilesystem path: aPath [
 
 	self 
-		deprecated: 'FileSystemDirectoryEntry class>>fileSystem:path:'
+		deprecated: 'Use FileSystemDirectoryEntry class>>fileSystem:path:'
 		on: 	'30 Apr 2017' 
 		in: 'Pharo-7.0'.
 	^ FileSystemDirectoryEntry
@@ -305,7 +299,10 @@ FileSystemStore >> entryFromNode: node path: path for: aFileystem [
 
 { #category : #public }
 FileSystemStore >> exists: aPath [
-	^self subclassResponsibility
+	self 
+		nodeAt: aPath 
+		ifPresent: [ :entry | ^ true ] 
+		ifAbsent: [ ^ false ].
 	
 ]
 
@@ -347,9 +344,13 @@ FileSystemStore >> isCharacter: aPath [
 	
 ]
 
-{ #category : #testing }
+{ #category : #public }
 FileSystemStore >> isDirectory: aPath [
-	^FileAttributeNotSupported signalWith: self
+	aPath isRoot ifTrue: [ ^ true ].
+	self 
+		nodeAt: aPath 
+		ifPresent: [ :entry | ^ self basicIsDirectory: entry ] 
+		ifAbsent: [ ^ false ].
 	
 ]
 
@@ -365,10 +366,13 @@ FileSystemStore >> isFIFO: aPath [
 	
 ]
 
-{ #category : #testing }
+{ #category : #public }
 FileSystemStore >> isFile: aPath [
-	"Return a boolean indicating whether the File described by aPath is a file (not a directory)"
-	^FileAttributeNotSupported signalWith: self
+	"slow solution for big directories! "
+	^ self 
+		nodeAt: aPath 
+		ifPresent: [ :entry | ^ self basicIsFile: entry ] 
+		ifAbsent: [ ^ false ]
 	
 ]
 
@@ -429,11 +433,7 @@ FileSystemStore >> nodeAt: aPath [
 
 { #category : #abstract }
 FileSystemStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
-	self 
-		deprecated: 'Use FileAttributes instead'
-		on: 	'30 Apr 2017' 
-		in: 'Pharo-7.0-hopefully-'.
-	^self subclassResponsibility 
+	self subclassResponsibility 
 ]
 
 { #category : #private }

@@ -74,6 +74,21 @@ DiskDirectoryEntry >> allAttributeMask [
 ]
 
 { #category : #accessing }
+DiskDirectoryEntry >> asFilePluginNode [
+	"Backward compatibility: Answer an array of file attributes matching that returned by FilePlugin"
+
+	^{
+		self basename.
+		(self statAttributes at: 12) ifNil: [ self statAttributes at: 11 ].
+		self statAttributes at: 10.
+		self isDirectory.
+		self size.
+		self posixPermissions.
+		self isSymlink.
+	}
+]
+
+{ #category : #accessing }
 DiskDirectoryEntry >> changeTime [
 	"Answer the time the receivers metadata was last changed.
 	On platforms that don't support change time, use the modification time"

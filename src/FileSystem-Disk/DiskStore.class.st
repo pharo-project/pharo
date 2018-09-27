@@ -406,6 +406,7 @@ DiskStore >> isSocket: aPath [
 DiskStore >> isSymlink: aPath [
 	"Answer a boolean indicating whether aPath is a symbolic link"
 
+	aPath isRoot ifTrue: [ ^false ].
 	^File isSymlink: (self stringFromPath: aPath)
 ]
 
@@ -429,18 +430,18 @@ DiskStore >> modificationTimeOf: aPath [
 
 { #category : #private }
 DiskStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
-	
-	| entry |
-	
+
+	self 
+		deprecated: 'Use FileReference #exists and #entry instead'
+		on: 	'30 Apr 2017' 
+		in: 'Pharo-7.0-hopefully-'.
+
 	aPath isRoot ifTrue: [ ^ presentBlock value: self rootNode ].
-	
-	entry := self basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: absentBlock
-		ifFalse: [
-			entry at: 1 put: aPath basename.
-			presentBlock value: entry ].
+	^ [presentBlock value: 
+			(DiskDirectoryEntry fileSystem: FileSystem disk path: aPath) asFilePluginNode ]
+		on: FileDoesNotExistException 
+		do: absentBlock.
+
 ]
 
 { #category : #private }
