@@ -17,7 +17,7 @@ OSWindowExposeEvent >> accept: aVisitor [
 
 { #category : #'default actions' }
 OSWindowExposeEvent >> defaultAction [
-	window renderer ifNotNil: [ window renderer exposed: timestamp ]
+	window isValid ifTrue: [ window renderer ifNotNil: [ window renderer exposed: timestamp ] ]
 ]
 
 { #category : #accessing }

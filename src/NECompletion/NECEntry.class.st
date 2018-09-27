@@ -29,11 +29,6 @@ NECEntry >> <= aECEntry [
 	^ contents <= aECEntry contents
 ]
 
-{ #category : #conversion }
-NECEntry >> asNECEntry [
-	^ self
-]
-
 { #category : #'ui related' }
 NECEntry >> browseWith: anECContext [ 
 	| guessType |
@@ -51,11 +46,6 @@ NECEntry >> completion [
 { #category : #accessing }
 NECEntry >> contents [
 	^contents
-]
-
-{ #category : #accessing }
-NECEntry >> contentsAsSymbol [
-	^ contents asSymbol 
 ]
 
 { #category : #'detail information' }

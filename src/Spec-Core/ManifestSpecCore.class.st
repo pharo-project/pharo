@@ -1,7 +1,10 @@
+"
+Core package for the Spec UI framework
+"
 Class {
 	#name : #ManifestSpecCore,
 	#superclass : #PackageManifest,
-	#category : #'Spec-Core'
+	#category : #'Spec-Core-Manifest'
 }
 
 { #category : #'code-critics' }

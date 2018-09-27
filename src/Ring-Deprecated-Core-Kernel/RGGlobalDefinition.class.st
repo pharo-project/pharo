@@ -5,7 +5,7 @@ An RGGlobalDefinition is an abstract superclass for representing classes, global
 Class {
 	#name : #RGGlobalDefinition,
 	#superclass : #RGDefinition,
-	#category : #'Ring-Deprecated-Core-Kernel'
+	#category : #'Ring-Deprecated-Core-Kernel-Base'
 }
 
 { #category : #comparing }

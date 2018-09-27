@@ -66,12 +66,6 @@ Metaclass >> adoptInstance: oldInstance from: oldMetaClass [
 		map: (self instVarMappingFrom: oldMetaClass)
 ]
 
-{ #category : #'accessing parallel hierarchy - deprecated' }
-Metaclass >> baseClass [
-
-	^thisClass.
-]
-
 { #category : #compiling }
 Metaclass >> binding [
 	"return an association that can be used as the binding
@@ -90,20 +84,15 @@ Metaclass >> bindingOf: varName [
 { #category : #testing }
 Metaclass >> canZapMethodDictionary [
 	"Return true if it is safe to zap the method dictionary on #obsolete"
-	self soleInstance == nil
-		ifTrue:[^true]
-		ifFalse:[^self soleInstance canZapMethodDictionary]
+
+	self soleInstance
+		ifNil: [ ^ true ]
+		ifNotNil: [ ^ self soleInstance canZapMethodDictionary ]
 ]
 
 { #category : #accessing }
 Metaclass >> category [
 	^ self instanceSide category
-]
-
-{ #category : #'accessing parallel hierarchy - deprecated' }
-Metaclass >> classClass [
-
-	^self
 ]
 
 { #category : #'pool variables' }

@@ -12,7 +12,8 @@ Class {
 	#classVars : [
 		'EventLoopProcess',
 		'JoystickMap',
-		'WindowMap'
+		'WindowMap',
+		'WindowMapMutex'
 	],
 	#pools : [
 		'SDL2Constants'
@@ -61,7 +62,9 @@ OSSDL2Driver >> convertEvent: sdlEvent [
 	mappedEvent := sdlEvent mapped ifNil: [ ^ nil ].
 	mappedEvent windowID ifNil: [ ^ self sendEventWithoutWindow: mappedEvent ].
 	
-	window := WindowMap at: mappedEvent windowID ifAbsent: [ ^ nil ].
+	WindowMapMutex critical: [ 
+		window := WindowMap at: mappedEvent windowID ifAbsent: [ ^ nil ].
+	].
 	window handleNewSDLEvent: mappedEvent.
 	^ nil
 	
@@ -100,16 +103,21 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 		flags := flags | SDL_WINDOW_MINIMIZED ].
 
 	"Create the window"
-	handle := SDL2 createWindow: attributes title
-		x: x
-		y: y
-		width: attributes width 
-		height: attributes height 
-		flags: flags.
-	
-	window := OSSDL2WindowHandle newWithHandle: handle attributes: attributes.
-	window osWindow: osWindow.
-	self registerWindow: window.
+	WindowMapMutex critical: [ 
+		handle := SDL2 createWindow: attributes title
+			x: x
+			y: y
+			width: attributes width 
+			height: attributes height 
+			flags: flags.
+		
+		window := OSSDL2WindowHandle newWithHandle: handle attributes: attributes.
+		window osWindow: osWindow.
+		self registerWindow: window.
+		
+		"The OSWindow handle has to be set inside of this critical section to avoid losing some events such as expose."
+		osWindow setJustCreatedHandle: window.
+	].
 	^ window
 ]
 
@@ -191,6 +199,7 @@ OSSDL2Driver >> initializeWindowMap [
 	WindowMap ifNil: [ 
 		WindowMap := WeakValueDictionary new. 
 	].
+	WindowMapMutex := Semaphore forMutualExclusion.
 ]
 
 { #category : #'global events' }
@@ -266,7 +275,10 @@ OSSDL2Driver >> sendEventWithoutWindow: event [
 	converted := event accept: self.
 	converted ifNil: [ ^ self ].
 	globalListeners do: [ :list | list handleEvent: converted ].
-	WindowMap valuesDo: [ :window | window deliverGlobalEvent: converted ].
+	self flag: 'TODO: Avoid holding the mutex for so long'.	
+	WindowMapMutex critical: [
+		WindowMap valuesDo: [ :window | window deliverGlobalEvent: converted ].
+	]
 ]
 
 { #category : #'window creation and deletion' }
@@ -329,7 +341,9 @@ OSSDL2Driver >> unregisterGlobalListener: globalListener [
 { #category : #'window creation and deletion' }
 OSSDL2Driver >> unregisterWindowWithId: windowId [
 
-	WindowMap removeKey: windowId.
+	WindowMapMutex critical: [ 
+		WindowMap removeKey: windowId ifAbsent: [].
+	].
 	
 	"Does it make sense to keep the SDL event loop process running even if no OSWindow is currently open ?"
 	"WindowMap ifEmpty: [ 

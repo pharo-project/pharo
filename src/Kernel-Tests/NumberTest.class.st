@@ -43,12 +43,6 @@ NumberTest >> testOne [
 ]
 
 { #category : #tests }
-NumberTest >> testPercent [
-
-	self assert: (20 / 40) = 50 percent
-]
-
-{ #category : #tests }
 NumberTest >> testPrintShowingDecimalPlaces [
 	self assert: (111.2 printShowingDecimalPlaces: 2) = '111.20'.
 	self assert: (111.2 printShowingDecimalPlaces: 0) = '111'.

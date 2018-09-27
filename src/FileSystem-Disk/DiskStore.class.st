@@ -363,16 +363,6 @@ DiskStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 ]
 
 { #category : #public }
-DiskStore >> openFileStream: path writable: writable [
-	| fullPath |
-	fullPath := self stringFromPath: path.
-	"redirect over the default implementation"
-	^ writable 
-		ifFalse: [ FileStream readOnlyFileNamed: fullPath ]
-		ifTrue: [ FileStream fileNamed: fullPath ]
-]
-
-{ #category : #public }
 DiskStore >> rename: sourcePath to: destinationPath [
 
 	| sourcePathString encodedSourcePathString targetPathString encodedTargetPathString |

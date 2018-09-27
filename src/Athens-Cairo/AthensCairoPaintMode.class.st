@@ -145,9 +145,7 @@ AthensCairoPaintMode >> exclusion [
 
 { #category : #private }
 AthensCairoPaintMode >> getOperator [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(
+	^ self ffiCall: #(
 		cairo_operator_t cairo_get_operator (AthensCairoCanvas canvas) )
 
 ]
@@ -243,9 +241,7 @@ AthensCairoPaintMode >> screen [
 
 { #category : #private }
 AthensCairoPaintMode >> setOperator: aCairoOperatorT [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(void cairo_set_operator (AthensCairoCanvas canvas, cairo_operator_t aCairoOperatorT) )
+	^ self ffiCall: #(void cairo_set_operator (AthensCairoCanvas canvas, cairo_operator_t aCairoOperatorT) )
 
 ]
 

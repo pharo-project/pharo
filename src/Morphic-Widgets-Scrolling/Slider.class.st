@@ -85,7 +85,7 @@ Slider >> initialize [
 
 { #category : #initialization }
 Slider >> initializeSlider [
-	slider := BorderedMorph newBounds: self totalSliderArea color: self thumbColor.
+	slider := BorderedMorph newBounds: self totalSliderArea color: self theme baseColor.
 	sliderShadow := BorderedMorph newBounds: self totalSliderArea
 						color: self pagingArea color.
 	slider on: #mouseMove send: #scrollAbsolute: to: self.
@@ -93,7 +93,7 @@ Slider >> initializeSlider [
 	slider on: #mouseUp send: #mouseUpInSlider: to: self.
 	slider 
 		borderWidth: 1;
-		borderColor: Color lightGray.
+		borderColor: self theme baseColor.
 
 	sliderShadow 
 		borderWidth: 1;

@@ -13,26 +13,22 @@ Class {
 
 { #category : #closing }
 SDL_Joystick >> close [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_JoystickClose(self ) )
+	^ self ffiCall: #( void SDL_JoystickClose(self ) )
 ]
 
 { #category : #accessing }
 SDL_Joystick >> getAttached [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( SDL_bool SDL_JoystickGetAttached(self) )
+	^ self ffiCall: #( SDL_bool SDL_JoystickGetAttached(self) )
 ]
 
 { #category : #accessing }
 SDL_Joystick >> getAxis: axis [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( Sint16 SDL_JoystickGetAxis(self , int axis) )
+	^ self ffiCall: #( Sint16 SDL_JoystickGetAxis(self , int axis) )
 ]
 
 { #category : #accessing }
 SDL_Joystick >> getButton: button [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( Sint16 SDL_JoystickGetButton(self , int button) )
+	^ self ffiCall: #( Sint16 SDL_JoystickGetButton(self , int button) )
 ]
 
 { #category : #testing }
@@ -42,30 +38,25 @@ SDL_Joystick >> isGameController [
 
 { #category : #accessing }
 SDL_Joystick >> name [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( String SDL_JoystickName(self) )
+	^ self ffiCall: #( String SDL_JoystickName(self) )
 ]
 
 { #category : #accessing }
 SDL_Joystick >> numberOfAxes [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_JoystickNumAxes(self) )
+	^ self ffiCall: #( int SDL_JoystickNumAxes(self) )
 ]
 
 { #category : #accessing }
 SDL_Joystick >> numberOfBalls [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_JoystickNumBalls(self) )
+	^ self ffiCall: #( int SDL_JoystickNumBalls(self) )
 ]
 
 { #category : #accessing }
 SDL_Joystick >> numberOfButtons [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_JoystickNumButtons(self) )
+	^ self ffiCall: #( int SDL_JoystickNumButtons(self) )
 ]
 
 { #category : #accessing }
 SDL_Joystick >> numberOfHats [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_JoystickNumHats(self) )
+	^ self ffiCall: #( int SDL_JoystickNumHats(self) )
 ]

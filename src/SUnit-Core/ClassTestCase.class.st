@@ -117,6 +117,10 @@ ClassTestCase >> targetClass [
 
 { #category : #tests }
 ClassTestCase >> testClassComment [
+
+	"skip this test for bootstrapped image without installed sources"
+	ClassTestCase organization comment ifEmpty: [ self skip ].
+	
 	self assert: self targetClass organization hasComment.
 ]
 

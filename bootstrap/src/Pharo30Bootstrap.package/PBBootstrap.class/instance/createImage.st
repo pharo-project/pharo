@@ -4,8 +4,7 @@ createImage
 	| builder |
 
 	builder := PBImageBuilderSpur50 forArchitecture: architecture.
-	builder definitionFetcher: versionFetcher.
-	builder buildNumber: buildNumber.
+	builder versionInfo: versionInfo.
 	builder imageFileReference: imageReference.
 	builder systemDefinition: ringEnvironment.
 	builder espellBackend instanceVariableMapping: (PBInstanceVariableMapping onEnvironment: ringEnvironment ).

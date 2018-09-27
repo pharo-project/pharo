@@ -12,7 +12,7 @@ Class {
 		'package',
 		'sharedPools'
 	],
-	#category : #'Ring-Deprecated-Core-Kernel'
+	#category : #'Ring-Deprecated-Core-Kernel-Base'
 }
 
 { #category : #'instance creation' }

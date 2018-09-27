@@ -217,10 +217,10 @@ BMPReadWriter >> readColorMap [
 
 { #category : #reading }
 BMPReadWriter >> readHeader [
-	| reserved |
+ 
 	bfType := self nextLittleEndianNumber: 2.
 	bfSize := self nextLittleEndianNumber: 4.
-	reserved := self nextLittleEndianNumber: 4.
+	self nextLittleEndianNumber: 4. "reserved, do nothing with it"
 	bfOffBits := self nextLittleEndianNumber: 4.
 	biSize := self nextLittleEndianNumber: 4.
 	biWidth := self nextLittleEndianNumber: 4.

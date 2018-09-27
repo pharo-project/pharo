@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'baseClass'
 	],
-	#category : #'Ring-Deprecated-Core-Kernel'
+	#category : #'Ring-Deprecated-Core-Kernel-Base'
 }
 
 { #category : #'class initialization' }
@@ -27,7 +27,7 @@ RGMetaclassDefinition >> allClassVarNames [
 { #category : #variables }
 RGMetaclassDefinition >> allSharedPoolNames [
 
-	^self theNonMetaClass allSharedPoolNames
+	^self instanceSide allSharedPoolNames
 ]
 
 { #category : #accessing }

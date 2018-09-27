@@ -13,12 +13,10 @@ Class {
 
 { #category : #'freeing resources' }
 SDL_Cursor >> freeCursor [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_FreeCursor ( self ) )
+	^ self ffiCall: #( void SDL_FreeCursor ( self ) )
 ]
 
 { #category : #'using the cursor' }
 SDL_Cursor >> setCursor [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_SetCursor ( self ) )
+	^ self ffiCall: #( void SDL_SetCursor ( self ) )
 ]

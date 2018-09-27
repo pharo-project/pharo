@@ -1,4 +1,0 @@
-versioning
-majorVersion
-
-	^ '7'

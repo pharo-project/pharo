@@ -629,7 +629,7 @@ TestRunner >> findPackages [
 	^ Array streamContents: [ :stream |
 		Smalltalk organization categories do: [ :each |
 			((visible includes: each) 
-					and: [ packagePattern isNil or: [ (packagePattern matchesIn: each) isEmpty not]])
+					and: [ packagePattern isNil or: [ (packagePattern matchesIn: each) isNotEmpty]])
 				ifTrue: [ stream nextPut: each ] ] ].
 ]
 

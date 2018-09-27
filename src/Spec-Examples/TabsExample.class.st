@@ -39,7 +39,7 @@ TabsExample >> browserTab [
 	tab
 		label: 'Browser';
 		icon: (tab iconNamed: #nautilusIcon);
-		model:
+		presenter:
 			(ClassMethodBrowser new
 				classes: Smalltalk allClasses;
 				yourself).
@@ -48,13 +48,13 @@ TabsExample >> browserTab [
 
 { #category : #private }
 TabsExample >> dynamicTab [
-      | tab |
-      tab := self newTab.
-      tab
-          label: 'Dynamic';
-          icon: (tab iconNamed: #nautilusIcon);
-          model: (DynamicWidgetChange  new).
-      ^ tab 
+	| tab |
+	tab := self newTab.
+	tab
+		label: 'Dynamic';
+		icon: (tab iconNamed: #nautilusIcon);
+		presenter: DynamicWidgetChange new.
+	^ tab
 ]
 
 { #category : #initialization }
@@ -78,7 +78,7 @@ TabsExample >> objectClassTab [
 	tab
 		label: 'Object class';
 		icon: (tab iconNamed: #nautilusIcon);
-		model: (MessageBrowser new messages: Object methods).
+		presenter: (MessageBrowser new messages: Object methods).
 	^ tab
 ]
 

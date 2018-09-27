@@ -15,7 +15,7 @@ Examples:
 Class {
 	#name : #SaveCommandLineHandler,
 	#superclass : #CommandLineHandler,
-	#category : #'System-BasicCommandLineHandler'
+	#category : #'System-BasicCommandLineHandler-Base'
 }
 
 { #category : #accessing }

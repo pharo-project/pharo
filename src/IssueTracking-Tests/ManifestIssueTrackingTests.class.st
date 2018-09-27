@@ -1,7 +1,10 @@
+"
+Unit tests for issue tracking on Pharo development
+"
 Class {
 	#name : #ManifestIssueTrackingTests,
 	#superclass : #PackageManifest,
-	#category : #'IssueTracking-Tests'
+	#category : #'IssueTracking-Tests-Manifest'
 }
 
 { #category : #'code-critics' }

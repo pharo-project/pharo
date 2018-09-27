@@ -1359,7 +1359,7 @@ StringTest >> testIsAllDigits [
 
 { #category : #tests }
 StringTest >> testIsAsciiString [
-	"Non-regression for https://pharo.fogbugz.com/f/cases/15232 "
+	"Non-regression for https://pharo.manuscript.com/f/cases/15232 "
 	
 	self assert: '' isAsciiString equals: true.
 	self assert: 'abcdefGHIJKL 98765,./@#%$' isAsciiString equals: true.
@@ -1764,6 +1764,8 @@ StringTest >> testRomanNumber [
 	self assert: 'MDCLXXXVII' romanNumber equals: 1687.
 	self assert: 'MCMXLII' romanNumber equals: 1942.
 	self assert: 'DCLXVI' romanNumber equals: 666.
+	self assert: '-V' romanNumber equals: -5.
+	self assert: '-MDCCCXCV' romanNumber equals: -1895.
 ]
 
 { #category : #'tests - instance creation' }

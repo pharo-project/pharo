@@ -224,15 +224,6 @@ MemoryStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 ]
 
 { #category : #public }
-MemoryStore >> openFileStream: path writable: isWriteStream [
-	| entry |
-	entry := self basicOpen: path writable: isWriteStream.
-	^ isWriteStream 
-		ifTrue: [ entry writeStream ]
-		ifFalse: [ entry readStream ]
-]
-
-{ #category : #public }
 MemoryStore >> rename: sourcePath to: destinationPath [
 	| sourceEntry destinationParentEntry newName |
 	

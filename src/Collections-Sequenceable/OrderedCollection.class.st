@@ -864,3 +864,17 @@ OrderedCollection >> withIndexCollect: elementAndIndexBlock [
 			value: index - firstIndex + 1)].
 	^ newCollection
 ]
+
+{ #category : #enumerating }
+OrderedCollection >> withIndexSelect: elementAndIndexBlock select: selectBlock [
+	"Optimized version of SequenceableCollection>>#withIndexSelect: "
+
+	"(#('We' 'love' 'pharo!') asOrderedCollection withIndexSelect: [:value :index | value size - 1 <= index]) >>> (OrderedCollection with: 'We')"
+
+	| newCollection element |
+	newCollection := self copyEmpty.
+	firstIndex to: lastIndex do: [ :index | 
+		(selectBlock value: (element := array at: index) value: index)
+			ifTrue: [ newCollection addLast: element ] ].
+	^ newCollection
+]
