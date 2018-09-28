@@ -304,7 +304,7 @@ SystemNavigation >> allReferencesToPool: aPool [
 			cls
 				selectorsAndMethodsDo: [ :sel :meth | 
 					meth literals
-						detect: [ :lit | (lit isVariableBinding and: [ lit key notNil ]) and: [ (aPool bindingOf: lit key) notNil ] ]
+						detect: [ :lit | (lit isVariableBinding and: [ lit key notNil ]) and: [ aPool includesKey: lit key ] ]
 						ifFound: [ list add: (self createMethodNamed: sel realParent: cls) ] ] ].
 	^ list
 ]

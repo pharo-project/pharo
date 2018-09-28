@@ -958,6 +958,13 @@ Integer >> digitSum [
     ^self abs asString inject: 0 into: [:value :new| value + new digitValue]
 ]
 
+{ #category : #testing }
+Integer >> even [ 
+	"Refer to the comment in Number|even."
+
+	^((self digitAt: 1) bitAnd: 1) = 0
+]
+
 { #category : #'truncation and round off' }
 Integer >> floor [ 
 	"Refer to the comment in Number|floor."

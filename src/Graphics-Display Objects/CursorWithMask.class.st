@@ -25,6 +25,12 @@ CursorWithMask class >> derivedFrom: aForm [      "Cursor initNormalWithMask.  C
 	^ cursor
 ]
 
+{ #category : #primitives }
+CursorWithMask >> activateInCursorOwner: aCursorOwner [
+	maskForm unhibernate.
+	^ aCursorOwner activateCursor: self withMask: maskForm
+]
+
 { #category : #converting }
 CursorWithMask >> asCursorForm [
 	| form |

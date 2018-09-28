@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'announcingObject'
 	],
-	#category : #'Spec-Core'
+	#category : #'Spec-Core-Base'
 }
 
 { #category : #'accessing - private' }

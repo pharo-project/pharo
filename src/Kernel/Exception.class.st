@@ -257,6 +257,20 @@ Exception >> resumeUnchecked: resumptionValue [
 ]
 
 { #category : #handling }
+Exception >> return [
+	"Return nil as the value of the block protected by the active exception handler."
+
+	self return: self defaultReturnValue
+]
+
+{ #category : #handling }
+Exception >> return: returnValue [
+	"Return the argument as the value of the block protected by the active exception handler."
+
+	handlerContext return: returnValue
+]
+
+{ #category : #handling }
 Exception >> searchFrom: aContext [
 	" Set the context where the handler search will start. "
 

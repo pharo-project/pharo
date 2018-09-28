@@ -120,6 +120,13 @@ One chapter of particular interest is the one that provides a quick tour of the 
 ', (self url: 'https://ci.inria.fr/pharo-contribution/job/UpdatedPharoByExample/lastSuccessfulBuild/artifact/book-result/PharoTour/PharoTour.pdf')
 ]
 
+{ #category : #defaults }
+WelcomeHelp class >> fastNetworkDefaults [
+	"Allow to display catalog projects in spotter on regular and fast networks"
+	CatalogSettings displayCatalogProjectsInSpotter: true.
+	self inform: 'Catalog projects accessible through Spotter'
+]
+
 { #category : #pages }
 WelcomeHelp class >> gettingHelp [
 	^ HelpTopic 
@@ -185,9 +192,30 @@ WelcomeHelp class >> openForRelease [
 	window center: Display extent / 2
 ]
 
+{ #category : #'defaults - actions' }
+WelcomeHelp class >> openNetworkSettings [
+
+	| browser window path |	
+	browser := SettingBrowser new 
+		changePackageSet: { 
+			#'Network-Kernel' asPackage.
+	 };
+		yourself.		 
+	window := browser open.
+	path := (window submorphs detect: [ :each | (each isKindOf: MorphTreeMorph) ]) nodeList.
+	browser expandNodePath: path  
+]
+
 { #category : #accessing }
 WelcomeHelp class >> pages [
 	^ #(welcome changeLog learn exploreEnvironment useExternalPackages documentation gettingHelp)
+]
+
+{ #category : #defaults }
+WelcomeHelp class >> slowNetworkDefaults [
+	"Do not display network bound catalog projects in spotter to keep it responsive."
+	CatalogSettings displayCatalogProjectsInSpotter: false.
+	self inform: 'Catalog projects not accessible through Spotter due to slow network. Use search in catalog tool to load external packages.'
 ]
 
 { #category : #pages }
@@ -224,10 +252,19 @@ WelcomeHelp class >> welcome [
 
 Pharo is a pure object-oriented programming language and a powerful environment, focused on simplicity and immediate feedback (think IDE and OS rolled into one).
 
-For more information, please visit here: 
+For more information, please visit here: ', (self url: 'http://pharo.org'),
+(self subheading: 'Quick setup'),
+'Choose your preferred color theme: ',
+(self doItFrom: 'PharoLightTheme beCurrent' text: 'White Theme'), ' or ',
+(self doItFrom: 'PharoDarkTheme beCurrent' text: 'Dark Theme'), ' 
 
-', (self url: 'http://pharo.org'),
-(self subheading: 'Color themes'),
-'White theme: ', (self doItFrom: 'PharoLightTheme beCurrent. '), ' 
-Dark theme: ', (self doItFrom: 'PharoDarkTheme beCurrent. ').
+Click if you have access to a: ',
+(self doItFrom: 'WelcomeHelp fastNetworkDefaults' text: 'regular network connection'), ' or ',
+(self doItFrom: 'WelcomeHelp slowNetworkDefaults' text: 'slow network'), '
+or if need to ',
+(self doItFrom: 'WelcomeHelp openNetworkSettings' text: 'setup a network proxy'), '.
+
+You can also ',
+(self doItFrom: 'SettingBrowser open' text: 'apply many other other settings'), ' or extend the image ',
+(self doItFrom: 'CatalogBrowser open' text: 'by loading additional external packages from catalog'), '.'
 ]

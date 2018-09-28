@@ -20,7 +20,8 @@ Class {
 		'nonEmpty1element',
 		'withoutEqualElements',
 		'collection5Elements',
-		'collectionWith3Elements'
+		'collectionWith3Elements',
+		'collectionOfNonIdentical'
 	],
 	#category : #'Collections-Tests-Unordered'
 }
@@ -79,14 +80,9 @@ SetTest >> collectionNotIncluded [
 ]
 
 { #category : #requirements }
-SetTest >> collectionOfFloat [
-	^ collectionOfFloat 
-]
-
-{ #category : #requirements }
 SetTest >> collectionWithCopyNonIdentical [
 	" return a collection that include elements for which 'copy' return a different object (this is not the case of SmallInteger)"
-	^ collectionOfFloat
+	^ collectionOfNonIdentical
 ]
 
 { #category : #requirements }
@@ -227,6 +223,7 @@ SetTest >> setUp [
 	emptyButAllocatedWith20 := self classToBeTested  new: 20.
 	elementNotIn := 99.
 	collectionOfFloat := self classToBeTested  with: 2.5 with: 4.6 with: 4.2.
+	collectionOfNonIdentical := self classToBeTested  with: 'a' with: 'b' with: 'c'.
 	nonEmpty1element := self classToBeTested  with: 32.
 	withoutEqualElements := self classToBeTested  with: 4 with: 5 with: 2.
 	collection5Elements := self classToBeTested with: 1 with: 2 with: 3 with: 4 with: 5.

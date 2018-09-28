@@ -1,7 +1,10 @@
+"
+Handling of Text and related text attributes
+"
 Class {
 	#name : #ManifestTextCore,
 	#superclass : #PackageManifest,
-	#category : #'Text-Core'
+	#category : #'Text-Core-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

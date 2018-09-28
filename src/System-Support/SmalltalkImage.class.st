@@ -1853,7 +1853,7 @@ SmalltalkImage >> supportsQueueingFinalization: aBoolean [
 
 { #category : #'sources, change log' }
 SmalltalkImage >> systemInformationString [
-	^ String cr, 'Pharo ', SystemVersion current dottedMajorMinor,  String cr, self lastUpdateString, String cr, String cr, String cr, self licenseString
+	^ String cr, 'Pharo ', SystemVersion current dottedMajorMinorPatch,  String cr, self lastUpdateString, String cr, String cr, String cr, self licenseString
 ]
 
 { #category : #'sources, change log' }

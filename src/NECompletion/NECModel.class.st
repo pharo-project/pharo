@@ -22,6 +22,12 @@ NECModel class >> class: aClass [
 ]
 
 { #category : #private }
+NECModel >> addSelectors [
+	self initializeSelectors.
+	self addToEntries: selectors
+]
+
+{ #category : #private }
 NECModel >> addToEntries: aCollection [ 
 	| temp caseSensitive |
 	caseSensitive := NECPreferences caseSensitive.
@@ -81,7 +87,7 @@ NECModel >> entryCount [
 	^entries size
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 NECModel >> hasMessage [
 	^ self message notNil
 ]
@@ -91,7 +97,7 @@ NECModel >> initialize [
 	self reset
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 NECModel >> initializeSelectors [ 
 	self subclassResponsibility 
 ]
@@ -119,8 +125,10 @@ NECModel >> narrowString: aString [
 ]
 
 { #category : #action }
-NECModel >> narrowWith: aString [
-	self subclassResponsibility 
+NECModel >> narrowWith: aString [ 
+	self narrowString: aString.
+	self resetEntries.
+	self addSelectors
 ]
 
 { #category : #testing }
@@ -182,12 +190,12 @@ NECModel >> sortSelectors [
 		scoreA < scoreB ].
 ]
 
-{ #category : #action }
+{ #category : #accessing }
 NECModel >> theClass [
 	^nil
 ]
 
-{ #category : #action }
+{ #category : #accessing }
 NECModel >> title [
 	^nil
 ]

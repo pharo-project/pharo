@@ -126,9 +126,24 @@ OSWindowWorldMorph >> recreateOSWindow [
 	self updateDisplay.
 	driver := self pickMostSuitableWindowDriver.
 	attributes preferableDriver: driver.
-	osWindow := OSWindow createWithAttributes: attributes.
-	osWindow newFormRenderer: display.
-	osWindow eventHandler: (OSWindowMorphicEventHandler for: self)
+	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: self)
+]
+
+{ #category : #'world state' }
+OSWindowWorldMorph >> restoreMorphicDisplay [
+
+	self
+		extent: self display extent;
+		viewBox: self display boundingBox;
+		handsDo: [:h | h visible: true; showTemporaryCursor: nil];
+		resizeBackgroundMorph;
+		submorphsDo: [ :each | each displayExtentChanged ];
+		fullRepaintNeeded.
+		
+	self defer: [Cursor normal show].
+		
+	self layoutChanged.
+
 ]
 
 { #category : #accessing }
