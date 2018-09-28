@@ -565,7 +565,8 @@ spec group: 'Metacello-Tests-Group' with: #(
 	'Metacello-TestsMC'	
 	'Metacello-TestsMCCore'	
 	'Metacello-TestsPlatform'	
-	'Metacello-TestsReference'	
+	'Metacello-TestsReference'
+	'Metacello-Gitlab-Tests'
 ).
 
 spec group: 'Refactoring-Rules-Group' with: #(
