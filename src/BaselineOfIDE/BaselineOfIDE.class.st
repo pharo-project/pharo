@@ -354,6 +354,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tools-Test'.	
 		spec package: 'Zinc-Character-Encoding-Tests'.
 		spec package: 'Zinc-Resource-Meta-FileSystem'.	
+		spec package: 'Zinc-HTTP-Examples'.			
 		spec package: 'Zinc-Tests'.
 		spec package: 'System-Identification-Tests'.
 
