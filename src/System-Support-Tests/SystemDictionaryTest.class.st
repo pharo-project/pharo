@@ -26,11 +26,6 @@ SystemDictionaryTest >> classToBeTested [
 ]
 
 { #category : #tests }
-SystemDictionaryTest >> testClassComment [
-	self assert: self targetClass organization hasComment
-]
-
-{ #category : #tests }
 SystemDictionaryTest >> testClassOrTraitNamedReturnsClassForClasses [
 	
 	self assert: Object ==  (Smalltalk globals classOrTraitNamed: 'Object').
