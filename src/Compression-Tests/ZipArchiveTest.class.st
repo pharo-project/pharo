@@ -48,6 +48,12 @@ ZipArchiveTest >> testAddNonExistentFile [
 ]
 
 { #category : #tests }
+ZipArchiveTest >> testContents [
+	zip addFile: fileToZip fullName as: fileToZip basename.
+	self assert: zip members first contents equals: 'file contents'
+]
+
+{ #category : #tests }
 ZipArchiveTest >> testCreateWithRelativeNames [
 	"Test creating a zip with a relative tree of files, so that the tree will
 	be created whereever the ."
