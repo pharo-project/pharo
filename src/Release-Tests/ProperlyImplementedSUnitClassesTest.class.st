@@ -4,7 +4,7 @@ This class checks if test classes have been properly implemented
 Class {
 	#name : #ProperlyImplementedSUnitClassesTest,
 	#superclass : #TestCase,
-	#category : #'Release-Tests-Tests'
+	#category : #'ReleaseTests-Tests'
 }
 
 { #category : #tests }
