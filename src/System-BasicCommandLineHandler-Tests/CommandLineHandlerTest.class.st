@@ -1,7 +1,10 @@
+"
+SUnit tests for CommandLineHandler
+"
 Class {
 	#name : #CommandLineHandlerTest,
 	#superclass : #TestCase,
-	#category : #'System-BasicCommandLineHandler-Tests'
+	#category : #'System-BasicCommandLineHandler-Tests-Base'
 }
 
 { #category : #utilities }

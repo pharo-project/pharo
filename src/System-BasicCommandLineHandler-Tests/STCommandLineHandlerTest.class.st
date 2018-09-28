@@ -1,7 +1,10 @@
+"
+SUnit tests for STCommandLineHandler
+"
 Class {
 	#name : #STCommandLineHandlerTest,
 	#superclass : #ClassTestCase,
-	#category : #'System-BasicCommandLineHandler-Tests'
+	#category : #'System-BasicCommandLineHandler-Tests-Base'
 }
 
 { #category : #coverage }

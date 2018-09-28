@@ -1,3 +1,6 @@
+"
+Provides optimized model support
+"
 Class {
 	#name : #ManifestSystemModel,
 	#superclass : #PackageManifest,

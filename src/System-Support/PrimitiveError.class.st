@@ -26,7 +26,7 @@ Class {
 		'errorName',
 		'errorCode'
 	],
-	#category : #'System-Support'
+	#category : #'System-Support-Utilities'
 }
 
 { #category : #accessing }

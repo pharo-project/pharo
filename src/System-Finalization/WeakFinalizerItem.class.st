@@ -39,7 +39,7 @@ Class {
 		'next',
 		'executor'
 	],
-	#category : #'System-Finalization'
+	#category : #'System-Finalization-Weak'
 }
 
 { #category : #'instance creation' }

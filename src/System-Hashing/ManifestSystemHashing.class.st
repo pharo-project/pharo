@@ -1,7 +1,10 @@
+"
+Provide hashing algorithms
+"
 Class {
 	#name : #ManifestSystemHashing,
 	#superclass : #PackageManifest,
-	#category : #'System-Hashing'
+	#category : #'System-Hashing-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

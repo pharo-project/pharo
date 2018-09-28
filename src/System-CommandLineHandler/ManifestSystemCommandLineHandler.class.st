@@ -1,7 +1,10 @@
+"
+A package to provide the Pharo default command line handler
+"
 Class {
 	#name : #ManifestSystemCommandLineHandler,
 	#superclass : #PackageManifest,
-	#category : #'System-CommandLineHandler'
+	#category : #'System-CommandLineHandler-Manifest'
 }
 
 { #category : #'as yet unclassified' }
