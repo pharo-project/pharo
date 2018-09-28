@@ -136,7 +136,7 @@ BaselineOfIDE >> baseline: spec [
 			spec repository: repository
 		].
 
-		spec package: 'ReleaseTests'. 
+		spec package: 'Release-Tests'. 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
 
@@ -161,7 +161,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Tests'.
-		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'AST-Tests-Core'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'Fuel-Tests-Core'.
@@ -175,7 +174,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'OpalCompiler-Tests'.
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
-		spec package: 'ReleaseTests'.
 		spec package: 'Ring-Deprecated-Tests-Containers'.
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'System-DependenciesTests'.
@@ -314,6 +312,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'PerformMessageCommandLineHandler'.
 		spec package: 'Pharo-Help'.
 		spec package: 'PharoDocComment'.
+		spec package: 'PharoDocComment-Tests'.
 		spec package: 'Polymorph-Widgets-Rules'.
 		spec package: 'ProfStef-Tests'.
 		spec package: 'Random-Tests'.
@@ -379,8 +378,8 @@ spec group: 'Mandatory-Group' with: #(
 
 spec group: 'Optional-Group' with: #(
 	'Athens' "dependency"
-
 	'PharoDocComment'	"standalone"
+	'PharoDocComment-Tests'	"depends on PharoDocComment"
 	'STON-Text support'	"standalone?"
 	'System-CommandLine-TextSupport'	"standalone?"
 	'System-Serial Port'	"standalone?"
@@ -742,7 +741,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Multilingual-Tests'
 	'OpalCompiler-Tests' 
 	'Random-Tests'
-	"'ReleaseTests'"
+	"'Release-Tests'"
 	'Ring-Deprecated-Tests-Kernel'
 	'Ring-Deprecated-Tests-Containers' 
 	'Tests' 
@@ -756,7 +755,7 @@ spec group: 'GT&QA-Group' with: #(
 	'GeneralRules-Tests' "depends on QA, needs cleanup"
 	'Kernel-Rules'		"depends on QA, DependencyAnalyzer, needs cleanup"
 
-	'ReleaseTests' 		"required by Manifest-Core Refactoring-Critics"
+	'Release-Tests' 		"required by Manifest-Core Refactoring-Critics"
 	'Reflectivity-Tools'	"required by Manifest-Core Refactoring-Critics"
 
 	'NautilusRefactoring'	"required by Epicea, SmartSuggestions"

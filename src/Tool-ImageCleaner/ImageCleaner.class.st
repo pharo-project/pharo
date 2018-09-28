@@ -145,7 +145,6 @@ ImageCleaner >> removeEmptyPackages [
 
 { #category : #cleaning }
 ImageCleaner >> testPackages [
-	^ (RPackageOrganizer default packageNames
-		select: [ :each | (each endsWith: '-Tests') or: [ each includesSubstring: '-Tests-' ] ])
-		copyWithout: 'ReleaseTests'
+	^ RPackageOrganizer default packageNames
+		select: [ :each | (each endsWith: '-Tests') or: [ each includesSubstring: '-Tests-' ] ]
 ]
