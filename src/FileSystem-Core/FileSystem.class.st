@@ -106,7 +106,6 @@ FileSystem >> childNamesAt: aResolvable do: aBlock [
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
 		nodesDo: [ :entry | 
 			aBlock value: (store basenameFromEntry: entry) ]
 ]
@@ -124,7 +123,6 @@ FileSystem >> childrenAt: aResolvable do: aBlock [
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
 		nodesDo: [ :entry | 
 			aBlock value: path / (store basenameFromEntry: entry) ]
 ]
@@ -294,10 +292,13 @@ FileSystem >> entriesAt: aResolvable [
 
 { #category : #'public-enumerating' }
 FileSystem >> entriesAt: aResolvable do: aBlock [
-	^ self 
-		entriesAt: aResolvable 
-		ifAbsent: [ store signalDirectoryDoesNotExist: ( self resolve: aResolvable) ]
-		do: aBlock 
+	| path entry |
+	path := self resolve: aResolvable.
+	store
+		directoryAt: path
+		nodesDo: [ :node | 
+			entry := store entryFromNode: node path: path for: self.
+			aBlock value: entry ]
 ]
 
 { #category : #'public-enumerating' }
