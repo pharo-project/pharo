@@ -139,6 +139,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
+		spec package: 'NautilusRefactoring-Tests'.
 
 		spec package: 'Ombu'.
 		spec package: 'Epicea'.
