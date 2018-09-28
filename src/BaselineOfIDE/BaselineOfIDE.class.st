@@ -172,6 +172,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-Tests-WithCompiler'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
+		spec package: 'NautilusRefactoring-Tests'.
 		spec package: 'OpalCompiler-Tests'.
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
@@ -443,6 +444,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Keymapping-Tests'
 
 	'Morphic-Tests'
+	'NautilusRefactoring-Tests'
 	'NECompletion-Tests'
 	'NewValueHolder-Tests'
 	'ProfStef-Tests'
