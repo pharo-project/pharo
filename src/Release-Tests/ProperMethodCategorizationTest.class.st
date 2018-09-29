@@ -4,7 +4,7 @@ Tests to enforce proper categorization
 Class {
 	#name : #ProperMethodCategorizationTest,
 	#superclass : #TestCase,
-	#category : #'ReleaseTests-Categorization'
+	#category : #'Release-Tests-Categorization'
 }
 
 { #category : #utilities }
