@@ -53,3 +53,13 @@ OSPlatformTest >> testStartUpList [
 	
 	self should: [ (startupList indexOf: #OSPlatform) < (startupList indexOf: #InputEventSensor) ]
 ]
+
+{ #category : #tests }
+OSPlatformTest >> testWorkingDirectory [
+	"There are currently two implementations to retrieve the working directory.
+	Check that they are the same."
+
+	self
+		assert: OSPlatform current primCurrentWorkingDirectoryPath
+		equals: (OSPlatform current currentWorkingDirectoryPathWithBufferSize: 4096)
+]
