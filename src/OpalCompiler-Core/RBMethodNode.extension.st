@@ -19,20 +19,14 @@ RBMethodNode >> doSemanticAnalysis [
 
 	self
 		compilationContext semanticAnalyzerClass new
-		compilationContext: self compilationContext;
-		analyze: self
+			compilationContext: self compilationContext;
+			analyze: self
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysisIn: behavior [
 	self methodClass: behavior.
 	self doSemanticAnalysis
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> doSemanticAnalysisInContext: aCompilationContext [
-	self compilationContext: aCompilationContext.
-	self doSemanticAnalysis.
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -70,7 +64,7 @@ RBMethodNode >> generate: trailer [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateIR [
 	| ir |
-	scope ifNil: [self doSemanticAnalysisInContext: self compilationContext ].
+	scope ifNil: [self doSemanticAnalysis].
  	ir := (self compilationContext astTranslatorClass new
 			visitNode: self)
 			ir.
