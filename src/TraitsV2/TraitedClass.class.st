@@ -318,7 +318,11 @@ TraitedClass >> removeSelector: aSelector [
 { #category : #initialization }
 TraitedClass >> slots [
 	"I remove the slots comming from a traitComposition"
-	^ super slots reject:[ :e  | self traitComposition slots includes:e ]
+
+	^ super slots reject:
+			[ :aSlot | 
+				self traitComposition slots anySatisfy: 
+					[ :existingSlots | aSlot name = existingSlots name ] ]
 ]
 
 { #category : #'accessing tags' }
