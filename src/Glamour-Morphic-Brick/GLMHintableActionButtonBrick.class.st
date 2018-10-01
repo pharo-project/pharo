@@ -5,65 +5,11 @@ Class {
 		'hintTitle',
 		'hintText',
 		'hintDelay',
-		'hintModifier'
-	],
-	#classInstVars : [
-		'asyncTask',
+		'hintModifier',
 		'hintBrick'
 	],
 	#category : #'Glamour-Morphic-Brick-Widgets-UI'
 }
-
-{ #category : #converting }
-GLMHintableActionButtonBrick class >> asyncTaskUniqueInstance [
-
-	^ asyncTask ifNil: [ asyncTask := GLMAsyncTask new ]
-]
-
-{ #category : #cleanup }
-GLMHintableActionButtonBrick class >> cleanUp [
-
-	self closeHint.
-	self reset.
-]
-
-{ #category : #actions }
-GLMHintableActionButtonBrick class >> closeHint [
-
-	self asyncTaskUniqueInstance ifNotNil: #terminate.
-	self hintBrickUniqueInstance ifNotNil: #close
-]
-
-{ #category : #accessing }
-GLMHintableActionButtonBrick class >> hintBrickUniqueInstance [
-
-	^ hintBrick
-]
-
-{ #category : #actions }
-GLMHintableActionButtonBrick class >> openHint: aHintString title: aTitleString type: aTypeSymbol for: aBrick [
-	|brick|
-	
-	self closeHint.
-	brick :=  GLMPopupBrick new
-		beUpward;
-		hintText: aHintString;
-		titleText: aTitleString;
-		perform: aTypeSymbol withEnoughArguments: {  };
-		openOn: aBrick.
-		
-	hintBrick := brick
-		
-	
-]
-
-{ #category : #actions }
-GLMHintableActionButtonBrick class >> reset [
-
-	self closeHint.
-	asyncTask := nil.
-	hintBrick := nil.
-]
 
 { #category : #initialization }
 GLMHintableActionButtonBrick >> beError [
@@ -80,10 +26,17 @@ GLMHintableActionButtonBrick >> beHelp [
 { #category : #initialization }
 GLMHintableActionButtonBrick >> beMode: aMode [
 
-	self hoverAction: [ :aBrick :evt |
-			self class asyncTaskUniqueInstance
-				perform: [ self isInWorld ifTrue: [ self class openHint: self hintText title: self hintTitle type: aMode for: self ] ]
-				delay: ((self isModifierPressed: evt) ifTrue: [ 0 ] ifFalse: [ self hintDelay ]) ]
+	self hoverAction: [ :aBrick :evt | | delay |
+		
+		delay := (self isModifierPressed: evt) 
+			ifTrue: [ 0 ]
+			ifFalse: [ self hintDelay ].
+		
+		self startStepping: #openHintPopup: 
+			at: Time millisecondClockValue + delay
+			arguments: {aMode}
+			stepTime: 3000 
+	]
 ]
 
 { #category : #initialization }
@@ -100,11 +53,24 @@ GLMHintableActionButtonBrick >> beSuccess [
 
 { #category : #'brick-interactable-actions' }
 GLMHintableActionButtonBrick >> click: evt [
+
 	|result|
+	
 	result := super click: evt.
-	self class asyncTaskUniqueInstance terminate.
-	self class reset.
+	result ifTrue: [ self closePopup ].
+	
 	^ result
+]
+
+{ #category : #'brick-interactable-actions' }
+GLMHintableActionButtonBrick >> closePopup [
+
+	self stopSteppingSelector: #openHintPopup:.
+
+	hintBrick ifNotNil: [ 	
+		hintBrick close.
+		hintBrick := nil.
+	]
 ]
 
 { #category : #accessing }
@@ -153,17 +119,16 @@ GLMHintableActionButtonBrick >> hintTitle: anObject [
 	hintTitle := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #'brick-interactable-actions' }
 GLMHintableActionButtonBrick >> initialize [
 	super initialize.
 	
 	self beHelp.
 	self unhoverAction: [ :aBrick :anEvent |
-		self class asyncTaskUniqueInstance terminate.
-		(aBrick globalBounds containsPoint: anEvent position)
-			ifFalse: [ self class 
-				closeHint;
-				reset ] ]
+		(aBrick globalBounds containsPoint: anEvent position) ifFalse: [ 
+			self closePopup 
+		] 
+	]
 ]
 
 { #category : #testing }
@@ -179,9 +144,21 @@ GLMHintableActionButtonBrick >> isModifierPressed: anEvent [
 ]
 
 { #category : #'brick-interactable-actions' }
+GLMHintableActionButtonBrick >> openHintPopup: aMode [
+	
+	self closePopup.
+	
+	hintBrick := GLMPopupBrick new
+		beUpward;
+		hintText: self hintText;
+		titleText: self hintTitle;
+		perform: aMode withEnoughArguments: {  };
+		openOn: self.
+]
+
+{ #category : #'brick-interactable-actions' }
 GLMHintableActionButtonBrick >> press [
 	super press.
 	
-	self class asyncTaskUniqueInstance terminate.
-	self class reset.
+	self closePopup.
 ]
