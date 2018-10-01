@@ -183,7 +183,11 @@ ShiftClassBuilder >> compareWithOldClass [
 
 { #category : #compiling }
 ShiftClassBuilder >> compileMethods [
+	| toRemove |
 	newClass compileAllFrom: self oldClass.
+
+	toRemove := newClass organization allMethodSelectors reject: [ :aSelector | newClass includesSelector: aSelector ].
+	toRemove do: [ :aSelector | newClass organization removeElement: aSelector  ]
 
 ]
 
@@ -224,7 +228,7 @@ ShiftClassBuilder >> createClass [
 
 { #category : #building }
 ShiftClassBuilder >> createMetaclass [
-	newMetaclass := self metaclassClass new.
+	newMetaclass := self builderEnhancer newMetaclass: self.
 	
 	self builderEnhancer 
 		configureMetaclass: newMetaclass 	
