@@ -28,7 +28,7 @@ OmSessionStoreNameStrategyTest >> createFileWith: aName [
 { #category : #private }
 OmSessionStoreNameStrategyTest >> directory [
 
-	^ 'ombu-strategy-tests' asFileReference
+	^ FileLocator temp asFileReference / 'ombu-strategy-tests'
 ]
 
 { #category : #private }
@@ -41,6 +41,7 @@ OmSessionStoreNameStrategyTest >> fileReferenceWith: aName [
 
 { #category : #running }
 OmSessionStoreNameStrategyTest >> setUp [
+
 	super setUp.
 	strategy := self strategyClass new
 ]
