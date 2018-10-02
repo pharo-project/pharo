@@ -57,7 +57,7 @@ MessageTallyTest >> testTallySends [
 
 	tally := MessageTally 
 				tallySendsTo: nil 
-				inBlock:  [ 3.14159 printString ] 
+				inBlock:  [ 3.14159s printString ] 
 				showTree: true 
 				closeAfter: false 
 				openResultWindow: false.
@@ -80,29 +80,25 @@ MessageTallyTest >> testTallySends [
 	
 	"--------"
 	tallyForPrintString := tally receivers second.
-	"Since 3.14159 is a float"
-	self assert: (tallyForPrintString theClass includesBehavior: Float).
+	"Since 3.14159s is a ScaledDecimal"
+	self assert: (tallyForPrintString theClass includesBehavior: ScaledDecimal).
 	"the executed method is Number>>printString"
 	self assert: (tallyForPrintString method == ( Number>>#printString)).
 	self assert: (tallyForPrintString tally >= 50).
 
 	"--------"
 	tallyForPrintStringBase := tallyForPrintString receivers first.
-	"The receiver is still a Float"
-	self assert: (tallyForPrintString theClass includesBehavior: Float).
+	"The receiver is still a ScaledDecimal"
+	self assert: (tallyForPrintString theClass includesBehavior: ScaledDecimal).
 	"the executed method is Number>>printStringBase: this time"
 	self assert: (tallyForPrintStringBase method == ( Number>>#printStringBase:)).
 	self assert: (tallyForPrintStringBase tally >= 50).
 	
 	"The method printStringBase: calls two methods:
-	   SequenceableCollection class >> streamContents: and Float >> printOn:base:"
+	   SequenceableCollection class >> streamContents: and ScaledDecimal >> printOn:base:"
 	
-	self assert: (tallyForPrintStringBase receivers size = 1).
-	
-	"streamContents: is been tallied 13 times and printOn:base: 59 times"
-	self assert: (tallyForPrintStringBase receivers size = 1).	
-	self assert: ((tallyForPrintStringBase receivers first tally) >= 128 ).	
-
+	self assert: tallyForPrintStringBase receivers size equals: 1.	
+	self assert: ((tallyForPrintStringBase receivers first tally) >= 50 ).	
 
 	"We close to explicitely release reference of the process, the class and methods"
 	tally close.
