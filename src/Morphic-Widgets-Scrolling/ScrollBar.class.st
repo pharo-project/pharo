@@ -256,9 +256,9 @@ ScrollBar >> expandSlider [
 ScrollBar >> extent: p [ 
 	p x > p y
 		ifTrue: [super
-				extent: (p max: 42 @ 8)]
+				extent: (p max: (42 @ 8) scaledByDisplayScaleFactor)]
 		ifFalse: [super
-				extent: (p max: 8 @ 42)].
+				extent: (p max: (8 @ 42) scaledByDisplayScaleFactor)].
 	
 ]
 
