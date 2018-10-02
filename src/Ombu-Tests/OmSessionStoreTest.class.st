@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #resources }
-OmSessionStoreTest >> directoryForTests [
-
-	^ FileSystem workingDirectory
-]
-
-{ #category : #resources }
 OmSessionStoreTest >> setUpOtherStore [
 
 	^ OmSessionStore newWithBaseLocator: (self directoryForTests / 'test-sessions-other') ensureCreateDirectory
