@@ -6,3 +6,9 @@ Class {
 	#superclass : #PackageManifest,
 	#category : #Deprecated70
 }
+
+{ #category : #deprecation }
+ManifestDeprecated70 class >> isDeprecated [
+
+	^ true
+]

@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #resources }
-OmFileStoreTest >> directoryForTests [
-
-	^ FileSystem workingDirectory
-]
-
-{ #category : #resources }
 OmFileStoreTest >> setUpOtherStore [
 
 	^ OmFileStore 

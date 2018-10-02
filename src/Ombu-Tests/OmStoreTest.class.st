@@ -26,6 +26,12 @@ OmStoreTest >> beforeAndAfterFlushStore: aBlock [
 	aBlock value.
 ]
 
+{ #category : #resources }
+OmStoreTest >> directoryForTests [
+
+	^ FileLocator temp asFileReference / 'ombu-tests'
+]
+
 { #category : #running }
 OmStoreTest >> setUp [
 	super setUp.

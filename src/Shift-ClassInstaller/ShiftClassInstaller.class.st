@@ -89,8 +89,6 @@ ShiftClassInstaller >> fixSlotScope: newClass [
 	newClass superclass ifNil: [ ^ self ].
 	(newClass classLayout slotScope isKindOf: LayoutEmptyScope) ifTrue: [ ^ self ].
 
-	self assert: newClass superclass classLayout slotScope = newClass classLayout slotScope parentScope.
-
 	newClass superclass classLayout slotScope == newClass classLayout slotScope parentScope
 		ifFalse: [ newClass classLayout slotScope parentScope: newClass superclass classLayout slotScope ].
 		
