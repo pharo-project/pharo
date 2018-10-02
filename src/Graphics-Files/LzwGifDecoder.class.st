@@ -127,7 +127,7 @@ LzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteS
 						searchStack push: (suffixTable at: searchIndex).
 						searchIndex := (prefixTable at: searchIndex) + 1 ].
 					searchStack push: (suffixTable at: searchIndex).
-					first := searchStack first.
+					first := searchStack top.
 					searchStack do: [ :int |
 						self writeBit: int on: aWriteStream ] ]. 
 			]
@@ -147,7 +147,7 @@ LzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteS
 						searchStack push: (suffixTable at: searchIndex).
 						searchIndex := (prefixTable at: searchIndex) + 1 ].
 					searchStack push: (suffixTable at: searchIndex).
-					first := searchStack first.
+					first := searchStack top.
 					searchStack do: [ :int |
 						self writeBit: int on: aWriteStream ].
 					self writeBit: first on: aWriteStream ]. 
