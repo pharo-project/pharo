@@ -123,7 +123,7 @@ SystemDependenciesTest >> knownMonticelloDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Graphics-Files' #'Network-Mail' #'SUnit-Core' #'System-Localization' #'Transcript-Core')
+	^ #(#'Graphics-Files' #'Network-Mail' #'System-Localization' #'Transcript-Core')
 ]
 
 { #category : #'known dependencies' }
