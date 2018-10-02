@@ -299,11 +299,10 @@ MIMEDocument >> privateContent: aString [
 ]
 
 { #category : #files }
-MIMEDocument >> saveToFile: anAbsolutePathString [
-
-	FileStream forceNewFileNamed: anAbsolutePathString do: [ :str |
-		str binary.
-		str nextPutAll: (self contents) ].
+MIMEDocument >> saveToFile: pathString [
+	pathString asFileReference 
+		binaryWriteStreamDo: [ :out | 
+			out nextPutAll: self contents ]
 ]
 
 { #category : #accessing }
