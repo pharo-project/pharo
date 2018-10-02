@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 ReDeadMethodTest >> testBasicCheck [
 	
-	testMethod := testClass >> (testClass compile: 'toto').
+	testMethod := testClass >> (testClass compile: 'toto Object new toto2').
 	
 	self
 		assert: (testMethod critiques anySatisfy: [ :critic | critic rule class = ReDeadMethod ]).
