@@ -156,6 +156,32 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperc
 ]
 
 { #category : #tests }
+T2TraitTest >> testSelectorsWithExplicitOrigin [
+	"Obtain the subset of selectors that are defined either locally or inherited from traits. But, exclude selectors of methods from implicit traits such as TraitedClass"
+	| t1 c1 |
+	
+	t1 := self newTrait: #T1 with: #().	
+	t1 compile: 'instanceSideMethod'.
+	t1 class compile: 'classSideMethod'.
+	c1 := self newClass: #C1 with: #() uses: t1.
+	self assertCollection: c1 selectorsWithExplicitOrigin hasSameElements: #(instanceSideMethod).
+	self assertCollection: c1 class selectorsWithExplicitOrigin hasSameElements: #(classSideMethod).
+
+]
+
+{ #category : #tests }
+T2TraitTest >> testSelectorsWithExplicitOriginNoTrait [
+	"Obtain the subset of selectors that are defined either locally or inherited from traits. But, exclude selectors of methods from implicit traits such as TraitedClass"
+	| c1 |	
+	c1 := self newClass: #C1.
+	c1 compile: 'instanceSideMethod'.
+	c1 class compile: 'classSideMethod'.
+	self assertCollection: c1 selectorsWithExplicitOrigin hasSameElements: #(instanceSideMethod).
+	self assertCollection: c1 class selectorsWithExplicitOrigin hasSameElements: #(classSideMethod).
+
+]
+
+{ #category : #tests }
 T2TraitTest >> testSequence [
 	| t1 t2 c1 obj |
 	
