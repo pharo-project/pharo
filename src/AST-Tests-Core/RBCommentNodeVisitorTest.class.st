@@ -1,3 +1,6 @@
+"
+SUnit tests for RBCommentNodeVisitor
+"
 Class {
 	#name : #RBCommentNodeVisitorTest,
 	#superclass : #TestCase,
