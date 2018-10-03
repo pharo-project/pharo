@@ -459,6 +459,11 @@ Behavior >> basicObsoleteSubclasses [
 	^ObsoleteSubclasses.
 ]
 
+{ #category : #'accessing class hierarchy' }
+Behavior >> basicSuperclass: aClass [
+	superclass := aClass
+]
+
 { #category : #private }
 Behavior >> becomeCompact [
 	"Backward compatibility with the Squeak V3 object format.
@@ -988,7 +993,7 @@ Behavior >> inheritsFrom: aClass [
 Behavior >> initialize [
 	"moved here from the class side's #new"
 	super initialize.
-	self superclass: Object.
+	self basicSuperclass: Object.
 	"no longer sending any messages, some of them crash the VM"
 	self methodDict: self emptyMethodDictionary.
 	self setFormat: Object format.
@@ -1874,17 +1879,21 @@ Behavior >> superclass: aClass [
 	"Change the receiver's superclass to be aClass."
 	"Note: Do not use 'aClass isKindOf: Behavior' here
 		in case we recompile from Behavior itself."
-	(aClass isNil or: [aClass isBehavior])
-		ifTrue: [superclass := aClass.
-				Object flushCache]
-		ifFalse: [self error: 'superclass must be a class-describing object']
+	aClass isNil
+		ifTrue: [self basicSuperclass: aClass. Object flushCache. ^ self].
+
+	"If the class is not nil it should update the class hierarchy correctly, using the classs builder"
+	^ self classInstaller update: self to: [ :builder |
+		builder
+			fillFor: self;
+			superclass: aClass].
 ]
 
 { #category : #'initialize-release' }
 Behavior >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver.
 	Must only be sent to a new instance; else we would need Object flushCache."
-	self superclass: aClass.
+	self basicSuperclass: aClass.
 	self setFormat: fmt.
 	self methodDict: mDict.
 

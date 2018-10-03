@@ -2053,41 +2053,28 @@ TextEditor >> sameColumn: start newLine: lineBlock forward: isForward [
 
 { #category : #'menu messages' }
 TextEditor >> saveContentsInFile [
-	"Save the receiver's contents string to a file, prompting the user for a file-name.  Suggest a reasonable file-name."
+	"Save the receiver's contents string to a file, prompting the user for a file-name. Suggest a reasonable file-name."
 
 	| fileName stringToSave parentWindow labelToUse suggestedName lastIndex |
-	stringToSave := self string. 
-	stringToSave size = 0 ifTrue: [^self inform: 'nothing to save.'].
-	parentWindow := model dependents 
-				detect: [:dep | dep isKindOf: SystemWindow]
-				ifNone: [nil].
-	labelToUse := parentWindow ifNil: ['Untitled']
-				ifNotNil: [parentWindow label].
+	stringToSave := self string.
+	stringToSave ifEmpty: [ ^ self inform: 'nothing to save.' ].
+	parentWindow := model dependents detect: [ :dep | dep isKindOf: SystemWindow ] ifNone: [ nil ].
+	labelToUse := parentWindow ifNil: [ 'Untitled' ] ifNotNil: [ parentWindow label ].
 	suggestedName := nil.
-	#(#('Decompressed contents of: ' '.gz')) do: 
-			[:leaderTrailer | 
+	#(#('Decompressed contents of: ' '.gz'))
+		do: [ :leaderTrailer | 
 			"can add more here..."
-
-			(labelToUse beginsWith: leaderTrailer first) 
-				ifTrue: 
-					[suggestedName := labelToUse copyFrom: leaderTrailer first size + 1
-								to: labelToUse size.
-					(labelToUse endsWith: leaderTrailer last) 
-						ifTrue: 
-							[suggestedName := suggestedName copyFrom: 1
-										to: suggestedName size - leaderTrailer last size]
-						ifFalse: 
-							[lastIndex := suggestedName lastIndexOf: $. ifAbsent: [0].
-							(lastIndex = 0 or: [lastIndex = 1]) 
-								ifFalse: [suggestedName := suggestedName copyFrom: 1 to: lastIndex - 1]]]].
-	suggestedName ifNil: [suggestedName := labelToUse , '.text'].
-	fileName := UIManager default request: 'File name?'
-				initialAnswer: suggestedName.
-	fileName isEmptyOrNil 
-		ifFalse: 
-			[(FileStream newFileNamed: fileName)
-				nextPutAll: stringToSave;
-				close]
+			(labelToUse beginsWith: leaderTrailer first)
+				ifTrue: [ suggestedName := labelToUse copyFrom: leaderTrailer first size + 1 to: labelToUse size.
+					(labelToUse endsWith: leaderTrailer last)
+						ifTrue: [ suggestedName := suggestedName copyFrom: 1 to: suggestedName size - leaderTrailer last size ]
+						ifFalse: [ lastIndex := suggestedName lastIndexOf: $. ifAbsent: [ 0 ].
+							lastIndex > 1
+								ifTrue: [ suggestedName := suggestedName copyFrom: 1 to: lastIndex - 1 ] ] ] ].
+	suggestedName ifNil: [ suggestedName := labelToUse , '.text' ].
+	fileName := UIManager default request: 'File name?' initialAnswer: suggestedName.
+	fileName isEmptyOrNil
+		ifFalse: [ fileName asFileReference writeStreamDo: [ :out | out nextPutAll: stringToSave ] ]
 ]
 
 { #category : #scrolling }

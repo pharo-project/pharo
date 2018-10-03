@@ -433,13 +433,6 @@ BlockClosuresTestCase >> testContinuationExample3 [
 ]
 
 { #category : #tests }
-BlockClosuresTestCase >> testExample1 [
-
-   self assert: ((self example1: 5) = 5 factorial)
-  
-]
-
-{ #category : #tests }
 BlockClosuresTestCase >> testExample2 [
 
    self assert: ((self example2: 5) = (1 to: 5) asOrderedCollection)

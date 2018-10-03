@@ -16,7 +16,7 @@ lesson:
 
 #(1 2 3).
 
-#( 1 2 3 #(4 5 6)) size.
+#(1 2 3 #(4 5 6)) size.
 
 #(1 2 4) isEmpty.
 
@@ -61,7 +61,6 @@ lesson:
 { (2+3) . (6*6) }.
 
 { (2+3) . (6*6) . ''hello'', '' Stef''} size.
-
 
 { ProfStef } first next.'
 ]
@@ -144,7 +143,6 @@ There is one and only one Symbol #ProfStef. There may be several ''ProfStef'' St
 
 (2 asString) asSymbol == (2 asString) asSymbol.
 
-
 (Smalltalk globals at: #ProfStef) next.'
 ]
 
@@ -153,13 +151,13 @@ PharoSyntaxTutorial >> blocks [
 	^ Lesson
 title: 'Blocks' 
 lesson: 
-'"Cascade is cool ! Let''s talk about blocks.
+'"Cascade is cool! Let''s talk about blocks.
 
 Blocks are anonymous methods that can be stored into variables and executed on demand.
 
 Blocks are delimited by square brackets: []"
 
-[Workspace open].
+[GTPlayground open].
 
 "does not open a Browser because the block is not executed.
 
@@ -171,7 +169,7 @@ Here is a block that adds 2 to its argument (its argument is named x):"
 
 [:x | x+2] value: 5.
 
-[Workspace open] value.
+[GTPlayground open] value.
 
 [:x | x+2] value: 10.
 
@@ -189,12 +187,11 @@ lesson:
 
 Note that |b| is the declaration of a variable named ''b'' and that '':='' assigns a value to a variable.
 
-Select the three lines then Print It:"
+Select the three lines then Print it:"
 
 |b|
 b := [:x | x+2].
 b value: 12.
-
 
 ProfStef next.'
 ]
@@ -210,15 +207,15 @@ lesson:
   ifTrue: [100]
   ifFalse: [42].
 
-"Here the message is ifTrue:ifFalse
+"Here the message is ifTrue:ifFalse:
 
 Try this:"
 
 Transcript open.
 
 3 > 10 
-	ifTrue: [Transcript show: ''maybe there''''s a bug ....'']
-	ifFalse: [Transcript show: ''No : 3 is less than 10''].
+	ifTrue: [Transcript show: ''Maybe there''''s a bug ....'']
+	ifFalse: [Transcript show: ''No: 3 is less than 10''].
 
 3 = 3 ifTrue: [ProfStef next].'.
 ]
@@ -231,20 +228,20 @@ lesson: '"The Debugger may be the most famous tool of Smalltalk environments. It
 
 The following code will open the debugger on the message stack, select PharoSyntaxTutorial>>divideTwoByZero".
 
-PharoSyntaxTutorial new divideTwoByZero. '
+PharoSyntaxTutorial new divideTwoByZero.'
 ]
 
 { #category : #interactive }
 PharoSyntaxTutorial >> divideTwoByZero [
-			2/0.
+	2/0.
 
-			"Oups! 2/0 raises a ZeroDivide exception.  So the debugger opens to let you fix the code.
+	"Oops! 2/0 raises a ZeroDivide exception. So the debugger opens to let you fix the code.
 
-			- Remove the line of code above.
-			- Right-click and select 'Accept' to compile the new version of the method
-			- click the button 'Proceed' to continue execution.
-			".
-			ProfStef next. 
+	- Remove the line of code above.
+	- Right-click and select 'Accept' to compile the new version of the method
+	- click the button 'Proceed' to continue execution."
+
+	ProfStef next. 
 ]
 
 { #category : #lessons }
@@ -252,17 +249,17 @@ PharoSyntaxTutorial >> doingVSPrinting [
 	^ Lesson
 title: 'Doing' 
 lesson: 
-'"Cool ! (I like to say Cooool :) ). You''ve just executed a Pharo expression. More precisely, you sent the message ''next'' to ProfStef class (it''s me !).
+'"Cool! (I like to say Cooool :) ). You''ve just executed a Pharo expression. More precisely, you sent the message ''next'' to ProfStef class (it''s me!).
 
 Note you can run this tutorial again by evaluating: ''ProfStef go''. 
 ''ProfStef previous'' returns to the previous lesson.
 
-You can also Do It using the keyboard shortcut ''ALT d''
-(this varies according to your operating system/computer: it can be ''CMD d'' or ''CTRL d''). 
+You can also Do it using the keyboard shortcut ''Ctrl + D''
+(this varies according to your operating system/computer: it can be ''Cmd + D'' or ''Alt + D''). 
 
 Try to evaluate these expressions:"
 
-Workspace open.
+GTPlayground open.
 
 SmalltalkImage current aboutThisSystem.
 
@@ -276,16 +273,16 @@ PharoSyntaxTutorial >> inspecting [
 	^ Lesson
 title: 'Inspecting' 
 lesson: 
-'"Now you''re a Do It and Print It master ! Let''s talk about inspecting. It''s a Do It which opens an Inspector on the result of evaluating the expression you''ve selected. 
+'"Now you''re a Do it and Print it master! Let''s talk about inspecting. It''s a Do it which opens an Inspector on the result of evaluating the expression you''ve selected. 
 The Inspector is a tool that allows you to have a look inside an object.
 
-For example, select the text below, open the menu and click on ''inspect it (i)'':"
+For example, select the text below, open the menu and click on ''Inspect it'':"
 
 1 / 2.
 
-"You''ve seen the letter ''i'' between parentheses next to ''inspect it'' ? It indicates the ALT- (or CMD- or CTRL-) shortcut to execute this command.
+"You''ve seen the keyboard keys next to the ''Inspect it''? It indicates the Ctrl- (or Cmd- or Alt-) shortcut to execute this command.
 
-Try ALT-i (or CMD-i or CTRL-i) on the following expressions:"
+Try ''Ctrl + I'' (or ''Cmd + I'' or ''Alt + I'') on the following expressions:"
 
 DateAndTime today.
 
@@ -305,7 +302,7 @@ lesson:
 
 The message #allInstances sent to a class answers an Array with all instances of this class.
 
-For example, let''s look at how many instances of SimpleButtonMorph exist:"
+For example, let''s look at how many instances of SimpleButtonMorph exist. Please use only Do it or Print it on this page, not Inspect it."
 
 SimpleButtonMorph allInstances size.
 
@@ -315,7 +312,7 @@ SimpleButtonMorph new
 	label: ''A nice button'';
 	openCenteredInWorld.
 
-"See the button centered on the world ? The list of all instances should contains one more instance:"
+"See the button centered on the world? The list of all instances should contains one more instance:"
 
 SimpleButtonMorph allInstances size.
 
@@ -336,7 +333,7 @@ SimpleButtonMorph allInstances size.
 SimpleButtonMorph new
 	label: ''Go to next lesson'';
 	target: [ProfStef next. 
-			SimpleButtonMorph allInstances last delete];
+			   SimpleButtonMorph allInstances last delete];
 	actionSelector: #value;
 	openCenteredInWorld.'
 ]
@@ -369,7 +366,6 @@ Here we want to print all the numbers on the Transcript (a console)"
      do: [:each | Transcript show: each printString]
      separatedBy: [Transcript show: ''.''].
 
-
 ProfStef allInstances do: [:aPharoTutorial | aPharoTutorial next].'
 ]
 
@@ -382,15 +378,14 @@ lesson:
 
 "Basic loops:
   to:do:
-  to:by:do"
+  to:by:do:
+"
 
-1 to: 100 do:
-  [:i | Transcript show: i asString; cr ].
+1 to: 100 do: [:i | Transcript show: i asString; cr].
 
 1 to: 100 by: 3 do: [:i | Transcript show: i asString; cr].
 
-100 to: 0 by: -2 do: 
-    [:i | Transcript show: i asString; cr].
+100 to: 0 by: -2 do: [:i | Transcript show: i asString; cr].
 
 1 to: 1 do: [:i | ProfStef next].'
 ]
@@ -455,7 +450,8 @@ PharoSyntaxTutorial >> messageSyntaxCascade [
 	^ Lesson
 title: 'Message syntax: Cascade' 
 lesson: 
-'"; is the cascade operator. It''s useful to send message to the SAME receiver
+'"; is the cascade operator. It''s useful to send message to the SAME receiver.
+
 Open a Transcript (console):"
 
 Transcript open.
@@ -481,11 +477,11 @@ ProfStef'.
 { #category : #lessons }
 PharoSyntaxTutorial >> messageSyntaxCascadeShouldNotBeHere [
 	^ Lesson
-title: 'Lost ?' 
+title: 'Lost?' 
 lesson: 
-'"Hey, you should not be here !! 
+'"Hey, you should not be here!! 
 
-Go back and use a cascade !"
+Go back and use a cascade!"
 
 ProfStef previous.'.
 ]
@@ -536,7 +532,7 @@ PharoSyntaxTutorial >> messageSyntaxKeyword [
 	^ Lesson
 title: 'Message syntax: Keyword messages' 
 lesson: 
-'"Keyword Messages are messages with arguments. They have the following form:
+'"Keyword messages are messages with arguments. They have the following form:
     anObject akey: anotherObject akey2: anotherObject2"
 
 4 between: 0 and: 10.
@@ -562,7 +558,7 @@ PharoSyntaxTutorial >> messageSyntaxUnary [
 	^ Lesson
 title: 'Message syntax: Unary messages' 
 lesson: 
-'"Messages are sent to objects. There are three types of message: Unary, Binary and Keyword.
+'"Messages are sent to objects. There are three types of message: unary, binary and keyword.
 
 Unary messages have the following form:
     anObject aMessage 
@@ -579,7 +575,7 @@ Date today.
 
 Float pi.
 
-"And of course: "
+"And of course:"
 
 ProfStef next.'
 ]
@@ -591,13 +587,13 @@ title: 'Pharo environment'
 lesson: 
 '"Pharo is full of objects. There are windows, text, numbers, dates, colors, points and much more. You can interact with objects in a much more direct way than is possible with other programming languages.
 
-Every object understands the message ''explore''. As a result, you get an Explorer window that shows details about the object."
+Every object understands the message ''inspect''. As a result, you get an Inspector window that shows details about the object."
 
-Date today explore.
+Date today inspect.
 
 "This shows that the date object consists of a point in time (start) and a duration (one day long)."
 
-ProfStef explore.
+ProfStef inspect.
 
 "You see, ProfStef class has a lot of objects. Let''s take a look at my code:"
 
@@ -611,20 +607,20 @@ PharoSyntaxTutorial >> printing [
 	^ Lesson
 title: 'Printing' 
 lesson: 
-'"Now you''re a Do It master ! Let''s talk about printing. It''s a Do It which prints the result next to the expression you''ve selected.
-For example, select the text below, open the menu and click on ''print it (p)'':"
+'"Now you''re a Do it master! Let''s talk about printing. It''s a Do it which prints the result next to the expression you''ve selected.
+For example, select the text below, open the menu and click on ''Print it'':"
 
 1 + 2.
 
-"You''ve seen the letter ''p'' between parentheses next to ''print it'' ? It indicates the ALT- (or CMD- or CTRL-) shortcut to execute this command.
+"You''ve seen the keyboard keys next to the ''Print it''? It indicates the Ctrl- (or Cmd- or Alt-) shortcut to execute this command.
 
-Try ALT-p (or CMD-p or CTRL-p) on the following expressions:"
+Try ''Ctrl + P'' (or ''Cmd + P'' or ''Alt + P'') on the following expressions:"
 
 Date today.
 
 Time now.
 
-"The result is selected, so you can erase it using the backspace key. Try it !"
+"The result is selected, so you can erase it using the backspace key. Try it!"
 
 SmalltalkImage current datedVersion.
 
@@ -650,13 +646,12 @@ Take a look at method #ifFalse:ifTrue: source code of class True:"
 
 ProfStef selectors.
 
-
-"Let''s create a new method to go to the next lesson:"
+"Now let''s create a new method to go to the next lesson:"
 
 ProfStef class compile:''goToNextLesson
   self next''.
 
-"Wow ! I can''t wait to use my new method ! "
+"Wow! I can''t wait to use my new method!"
 
 ProfStef goToNextLesson.'
 ]
@@ -666,14 +661,13 @@ PharoSyntaxTutorial >> reflectionContinued [
 	^ Lesson
 title: 'Reflection continued' 
 lesson: 
-'"So cool, isn''t it ?  Before going further, let''s remove this method:"
+'"So cool, isn''t it? Before going further, let''s remove this method:"
 
 ProfStef respondsTo: #goToNextLesson.
 
 ProfStef class removeSelector: #goToNextLesson.
 
 ProfStef respondsTo: #goToNextLesson.
-
 
 "Then move forward:"
 
@@ -683,25 +677,24 @@ ProfStef default executeMethod: (ProfStef lookupSelector:#next).'
 { #category : #lessons }
 PharoSyntaxTutorial >> theEnd [
 	^ Lesson
-title: 'Tutorial done !' 
+title: 'Tutorial done!' 
 lesson: 
 '"This tutorial is done. Enjoy programming with Pharo. 
 
 Don''t forget to read ''Pharo By Example'' found here:  
 
-	http://pharobyexample.org/
+	https://books.pharo.org/updated-pharo-by-example
 
 You can run this tutorial again by evaluating:"
 
 ProfStef go.
 
-"Do you want to create your own interactive tutorial with ProfStef? That''s very easy!!  How ? There''s a ProfStef interactive tutorial for that :D
+"Do you want to create your own interactive tutorial with ProfStef? That''s very easy!! How? There''s a ProfStef interactive tutorial for that :D
 Just evaluate the following code:"
 
 ProfStef goOn: HowToMakeYourOwnTutorial
 
-"See you soon !"
-'
+"See you soon!"'
 ]
 
 { #category : #tutorial }
@@ -755,7 +748,7 @@ lesson:
 
 You must want me to help you learn Pharo.
 
-So let''s go to the first lesson.  Select the text below, right-click and choose ''do it (d)''"
+So let''s go to the first lesson. Select the text below, right-click and choose ''Do it''"
 
 ProfStef next.'
 ]

@@ -7,9 +7,8 @@ Class {
 	#category : #'Deprecated70-Manifest'
 }
 
-{ #category : #testing }
+{ #category : #deprecation }
 ManifestDeprecated70 class >> isDeprecated [
-	"This package is also deprecated as with the next development cycle it will be removed"
-	
-	^true
+
+	^ true
 ]

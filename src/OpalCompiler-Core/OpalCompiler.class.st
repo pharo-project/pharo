@@ -266,7 +266,7 @@ OpalCompiler >> compilationContextClass: aClass [
 { #category : #'public access' }
 OpalCompiler >> compile [
 	| cm |
-	[ 	[	ast := self parse.
+	[ 	[	self parse.
 			self doSemanticAnalysis. 
 			self callPlugins.  
 		] 	on: ReparseAfterSourceEditing 
@@ -372,7 +372,7 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 
 { #category : #private }
 OpalCompiler >> doSemanticAnalysis [
-	^[ast doSemanticAnalysisInContext: self compilationContext] 
+	^[ast doSemanticAnalysis] 
 		on: OCSemanticError 
 		do: [ :ex | ex defaultAction. ^ self compilationContext failBlock value ]
 ]
@@ -660,12 +660,12 @@ OpalCompiler >> parseExpression [
 
 	expression := self compilationContext optionParseErrors 
 		ifTrue: [self parserClass parseFaultyExpression: source contents]
-		ifFalse: [self parserClass parseExpression: source contents].
-		
-	^context 
+		ifFalse: [self parserClass parseExpression: source contents].	
+	ast := context 
 		ifNil: [expression asDoit] 
 		ifNotNil: [expression asDoitForContext: context].
-
+	ast compilationContext: self compilationContext.
+	^ast.
 ]
 
 { #category : #'public access' }
@@ -676,9 +676,12 @@ OpalCompiler >> parseLiterals: aString [
 { #category : #private }
 OpalCompiler >> parseMethod [
 	
-	^self compilationContext optionParseErrors 
+	ast := self compilationContext optionParseErrors 
 		ifTrue: [self parserClass parseFaultyMethod: source contents]
-		ifFalse: [self parserClass parseMethod: source contents]
+		ifFalse: [self parserClass parseMethod: source contents].
+	ast compilationContext: self compilationContext.
+	^ast.
+
 ]
 
 { #category : #'public access' }

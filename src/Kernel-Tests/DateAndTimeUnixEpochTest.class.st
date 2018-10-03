@@ -59,14 +59,6 @@ DateAndTimeUnixEpochTest >> testAsLocal [
 ]
 
 { #category : #tests }
-DateAndTimeUnixEpochTest >> testAsMonth [
-	self 
-		assert: aDateAndTime asMonth
-		equals: (Month year: 1970 month: 'January'). 
-
-]
-
-{ #category : #tests }
 DateAndTimeUnixEpochTest >> testAsNanoSeconds [
 	self assert: aDateAndTime asNanoSeconds =  0 asDuration asNanoSeconds
 	
@@ -90,19 +82,6 @@ DateAndTimeUnixEpochTest >> testAsTime [
 DateAndTimeUnixEpochTest >> testAsUTC [
 	self assert: aDateAndTime asUTC =  aDateAndTime
           
-]
-
-{ #category : #tests }
-DateAndTimeUnixEpochTest >> testAsWeek [
-	self assert: aDateAndTime asWeek = (Week starting: '12-31-1969' asDate). 
-
-
-]
-
-{ #category : #tests }
-DateAndTimeUnixEpochTest >> testAsYear [
-	self assert: aDateAndTime asYear =   (Year starting: '01-01-1970' asDate). 
-
 ]
 
 { #category : #tests }

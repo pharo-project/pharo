@@ -77,13 +77,6 @@ Integer >> decimalDigitAt: anExponent [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Integer >> even [ 
-	"Refer to the comment in Number|even."
-
-	^((self digitAt: 1) bitAnd: 1) = 0
-]
-
-{ #category : #'*Math-Operations-Extensions' }
 Integer >> factorial [
 	"Answer the factorial of the receiver."
 

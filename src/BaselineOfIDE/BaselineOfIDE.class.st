@@ -168,6 +168,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
+		spec package: 'Kernel-Tests-Extended'.
 		spec package: 'Kernel-Tests-WithCompiler'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
@@ -727,6 +728,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'CodeImport-Tests'	 
 	'Collections-Tests'
 	'Kernel-Tests' 
+	'Kernel-Tests-Extended' 
 	'Kernel-Tests-WithCompiler' 
 	'AST-Tests-Core' "requires BlueInk-Core"
 	'Announcements-Tests-Core'

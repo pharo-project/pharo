@@ -50,15 +50,8 @@ NECUntypedModel >> addAdditionals: aCollection [
 ]
 
 { #category : #private }
-NECUntypedModel >> addSelectors [
-	self initializeSelectors.
-	self addToEntries: selectors
-]
-
-{ #category : #private }
 NECUntypedModel >> addVariables [
-	includeVariables
-		ifFalse: [^ self].
+	includeVariables ifFalse: [^ self].
 	self addToEntries: localVars.
 	self addToEntries: instVars.
 	self addToEntries: classVars
@@ -78,17 +71,14 @@ NECUntypedModel >> initialize [
 NECUntypedModel >> initializeClassVars [
 	(clazz isNil or: [ includeVariables not ]) ifTrue: [ ^ self ].
 	classVars := clazz instanceSide allClassVarNames asSortedCollection.
-	classVars := classVars collect: 
-		[ :each | 
-		NECClassVarEntry contents: each ]
+	classVars := classVars collect: [ :each | NECClassVarEntry contents: each ]
 ]
 
 { #category : #initialization }
 NECUntypedModel >> initializeInstVars [
 	(clazz isNil or: [ includeVariables not ]) ifTrue: [ ^ self ].
 	instVars := clazz allInstVarNames asSortedCollection.
-	instVars := instVars collect: 
-		[ :each |  NECInstVarEntry contents: each ].
+	instVars := instVars collect: [ :each |  NECInstVarEntry contents: each ].
 	instVars add: (NECSelfEntry 
 			contents: 'self'
 			type: #self).
@@ -106,7 +96,7 @@ NECUntypedModel >> initializeSelectors [
 	includeSelectors
 		ifTrue: [ Symbol selectorTable do: [ :symbol | | toadd | 
 					"for small strings, we do not do substring matching as we get too many matches (slow)"
-					toadd := narrowString size < 3 
+					toadd := narrowString size <= 2 
 						ifTrue: [ symbol beginsWithEmpty: narrowString caseSensitive: case] 
 						ifFalse: [symbol includesSubstring: narrowString caseSensitive: case].
 					toadd ifTrue: [ selectors add: (NECSelectorEntry contents: symbol type: #selector) ] ] ].
@@ -119,8 +109,7 @@ NECUntypedModel >> initializeSelectors [
 
 { #category : #private }
 NECUntypedModel >> loadEntries [
-	self addVariables;
-		addSelectors
+	self addVariables; addSelectors
 ]
 
 { #category : #accessing }
@@ -144,10 +133,8 @@ NECUntypedModel >> narrowString: aString [
 
 { #category : #action }
 NECUntypedModel >> narrowWith: aString [ 
-	self narrowString: aString.
-	self resetEntries.
+	super narrowWith: aString.
 	self addVariables.
-	self addSelectors
 ]
 
 { #category : #initialization }

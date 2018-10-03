@@ -19,9 +19,9 @@ Class {
 		'valueNotIn',
 		'keyNotIn',
 		'dictionaryNotIncluded',
-		'nonEmptyWithFloat',
 		'dictionaryWithDuplicateValues',
-		'duplicateValue'
+		'duplicateValue',
+		'nonEmptyWithString'
 	],
 	#classInstVars : [
 		'testToto',
@@ -254,7 +254,7 @@ DictionaryTest >> nonEmptyDifferentFromNonEmptyDict [
 { #category : #requirements }
 DictionaryTest >> nonEmptyWithCopyNonIdentical [
 " return a collection including elements for wich copy is not identical to the initial element ( this is not the cas of Integer )"
-^nonEmptyWithFloat 
+^nonEmptyWithString 
 ]
 
 { #category : #requirements }
@@ -325,7 +325,7 @@ DictionaryTest >> setUp [
 		at: #a
 			put: 5;
 		yourself.
-	nonEmptyWithFloat := Dictionary new add: #A->2.5; add: #b->3.5 ; yourself.
+	nonEmptyWithString := Dictionary new add: #A->'foo'; add: #b->'bar' ; yourself.
 	duplicateValue := 2.5.
 	dictionaryWithDuplicateValues := 	Dictionary new add: #A->duplicateValue ; add: #b->3.5 ; add: #C->duplicateValue  ; yourself.
 

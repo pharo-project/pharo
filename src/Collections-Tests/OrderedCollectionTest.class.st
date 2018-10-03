@@ -21,7 +21,6 @@ Class {
 		'elementNotIn',
 		'indexArray',
 		'withoutEqualElements',
-		'floatCollectionWithSameBeginingEnd',
 		'duplicateElement',
 		'collectionWithDuplicateElement',
 		'collection5Elements',
@@ -30,7 +29,9 @@ Class {
 		'collectionOfCollectionsOfStrings',
 		'withCharacters',
 		'collectionNotIncluded',
-		'simpleCollection'
+		'simpleCollection',
+		'collectionOfString',
+		'collectionWithSameBeginingEnd'
 	],
 	#category : #'Collections-Tests-Sequenceable'
 }
@@ -123,11 +124,6 @@ OrderedCollectionTest >> collectionOfCollectionsOfStrings [
 ]
 
 { #category : #requirements }
-OrderedCollectionTest >> collectionOfFloat [
-	^ collectionOfFloat 
-]
-
-{ #category : #requirements }
 OrderedCollectionTest >> collectionWith1TimeSubcollection [
 " return a collection including 'oldSubCollection'  only one time "
 	^ ((OrderedCollection new add: elementNotIn; yourself),self oldSubCollection) add: elementNotIn;yourself   
@@ -153,7 +149,7 @@ OrderedCollectionTest >> collectionWithCharacters [
 { #category : #requirements }
 OrderedCollectionTest >> collectionWithCopyNonIdentical [
 	" return a collection that include elements for which 'copy' return a different object (this is not the case of SmallInteger)"
-	^ collectionOfFloat
+	^ collectionOfString
 ]
 
 { #category : #requirements }
@@ -178,14 +174,14 @@ OrderedCollectionTest >> collectionWithEqualElements [
 OrderedCollectionTest >> collectionWithNonIdentitySameAtEndAndBegining [
 	" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
-	^ floatCollectionWithSameBeginingEnd 
+	^ collectionWithSameBeginingEnd 
 ]
 
 { #category : #requirements }
 OrderedCollectionTest >> collectionWithSameAtEndAndBegining [
 " return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
-	^ floatCollectionWithSameBeginingEnd 
+	^ collectionWithSameBeginingEnd 
 ]
 
 { #category : #requirements }
@@ -277,7 +273,7 @@ OrderedCollectionTest >> elementTwiceInForOccurrences [
 { #category : #requirements }
 OrderedCollectionTest >> elementsCopyNonIdenticalWithoutEqualElements [
 	" return a collection that does niot incllude equal elements ( classic equality )"
-	^ collectionOfFloat
+	^ collectionOfString
 ]
 
 { #category : #setup }
@@ -307,13 +303,6 @@ OrderedCollectionTest >> firstCollection [
 OrderedCollectionTest >> firstIndex [
 " return an index between 'nonEmpty' bounds that is < to 'second index' "
 	^1
-]
-
-{ #category : #requirements }
-OrderedCollectionTest >> floatCollectionWithSameAtEndAndBegining [
-" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
-(others elements of the collection are not equal to those elements)"
-	^ floatCollectionWithSameBeginingEnd 
 ]
 
 { #category : #requirements }
@@ -466,7 +455,8 @@ OrderedCollectionTest >> setUp [
 	emptyButAllocatedWith20 := OrderedCollection new: 20. 
 	collectionWithElement := OrderedCollection new add: self element; yourself.
 	collectionOfFloat := OrderedCollection new add: 4.1; add: 7.2; add: 2.5; yourself.
-	floatCollectionWithSameBeginingEnd := OrderedCollection new add: 4.1; add: 7.2; add: 4.1 copy ; yourself.
+	collectionOfString := OrderedCollection new add: 'a'; add: 'b'; add: 'c'; yourself.
+	collectionWithSameBeginingEnd := OrderedCollection new add: 'a'; add: 'b'; add: 'a' copy ; yourself.
 	duplicateElement := 2.
 	collectionWithDuplicateElement := OrderedCollection new add: duplicateElement ; add: duplicateElement ; add:4 ; yourself.	
 
@@ -519,8 +509,6 @@ OrderedCollectionTest >> test0FixtureTConvertAsSetForMultiplinessTest [
 	res := true.
 	self withEqualElements detect: [ :each | (self withEqualElements occurrencesOf: each) > 1 ] ifNone: [ res := false ].
 	self assert: res = true.	"a collection of Float without equal elements:"
-	self elementsCopyNonIdenticalWithoutEqualElements.
-	self elementsCopyNonIdenticalWithoutEqualElements do: [ :each | self assert: each isFloat ].
 	res := true.
 	self elementsCopyNonIdenticalWithoutEqualElements
 		detect: [ :each | (self elementsCopyNonIdenticalWithoutEqualElements occurrencesOf: each) > 1 ]

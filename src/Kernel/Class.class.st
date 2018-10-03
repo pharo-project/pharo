@@ -383,17 +383,6 @@ Class >> compileAllFrom: oldClass [
 ]
 
 { #category : #copying }
-Class >> copy [ 
-	
-	self error: 'You should not copy a class.'.
-	
-	"If you want to copy a class just to check the differences before a change, as done in the announcements, use #copyForAnnouncement.
-	Copying a class should be done using #duplicateClassWithNewName:
-	Any other copy operation should be used using the class builder and class installer. 
-	They guarantee that the state of the system is consistent."
-]
-
-{ #category : #copying }
 Class >> copyForAnnouncement [
 	"Answer a copy of the receiver to be used in the announcement of changes.
 	You should not use this class for anything else, it is invalid."
@@ -401,7 +390,7 @@ Class >> copyForAnnouncement [
 	
 	
 	newClass := self class copy new
-		superclass: superclass;
+		basicSuperclass: superclass;
 		methodDict: self methodDict copy;
 		setFormat: format;
 		setName: name;

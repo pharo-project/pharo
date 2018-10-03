@@ -736,7 +736,7 @@ Collection >> groupedBy: aBlock [
 	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species."
 	
 	| groups |
-	groups := PluggableDictionary integerDictionary.
+	groups := OrderedDictionary new.
 	self do: [ :each |
 		(groups at: (aBlock value: each) ifAbsentPut: [ OrderedCollection new ]) add: each ].
 	self species ~~ OrderedCollection ifTrue: [

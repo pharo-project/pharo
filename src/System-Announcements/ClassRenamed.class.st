@@ -76,3 +76,8 @@ ClassRenamed >> oldName: anObject [
 	
 	oldName := anObject
 ]
+
+{ #category : #accessing }
+ClassRenamed >> packagesAffected [
+	^ self classAffected packages
+]
