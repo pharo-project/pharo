@@ -38,6 +38,11 @@ FileSystemPermission >> <= other [
 ]
 
 { #category : #comparing }
+FileSystemPermission >> = other [
+	^ other posixPermission = posixPermission
+]
+
+{ #category : #comparing }
 FileSystemPermission >> > other [
 	^ other posixPermission < posixPermission
 ]
@@ -60,6 +65,12 @@ FileSystemPermission >> groupRead [
 { #category : #accessing }
 FileSystemPermission >> groupWrite [
 	^ self permissionBitAt: 5
+]
+
+{ #category : #comparing }
+FileSystemPermission >> hash [
+
+	^posixPermission hash
 ]
 
 { #category : #initialization }

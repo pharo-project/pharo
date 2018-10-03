@@ -258,6 +258,12 @@ FileSystemDirectoryEntry >> permissions [
 	^FileAttributeNotSupported signalWith: self
 ]
 
+{ #category : #accessing }
+FileSystemDirectoryEntry >> permissions: permissions [
+
+	^FileAttributeNotSupported signalWith: self
+]
+
 { #category : #printing }
 FileSystemDirectoryEntry >> printAttribute: anAttribute on: aStream [
 

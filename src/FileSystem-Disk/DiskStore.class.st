@@ -364,6 +364,27 @@ DiskStore >> exists: aPath [
 	^File exists: (self stringFromPath: aPath).
 ]
 
+{ #category : #public }
+DiskStore >> file: path posixPermissions: anInteger [
+	"Set the mode of pathString to anInteger (as defined by chmod())"
+
+	^File file:(self stringFromPath: path) posixPermissions: anInteger
+]
+
+{ #category : #public }
+DiskStore >> file: path symlinkUid: uidInteger gid: gidInteger [
+	"Set the owner and group of path by numeric id."
+
+	^File file: (self stringFromPath: path) symlinkUid: uidInteger gid: gidInteger
+]
+
+{ #category : #public }
+DiskStore >> file: path uid: uidInteger gid: gidInteger [
+	"Set the owner and group of path by numeric id."
+
+	^File file: (self stringFromPath: path) uid: uidInteger gid: gidInteger
+]
+
 { #category : #printing }
 DiskStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'File @ '

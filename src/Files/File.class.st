@@ -201,6 +201,34 @@ File class >> exists: aString [
 ]
 
 { #category : #attributes }
+File class >> file: pathString posixPermissions: anInteger [
+	"Set the mode of pathString to anInteger (as defined by chmod())"
+
+	^self primFile: (self encodePathString: pathString) posixPermissions: anInteger
+]
+
+{ #category : #attributes }
+File class >> file: pathString symlinkUid: uidInteger gid: gidInteger [
+	"Set the owner and group of pathString by numeric id."
+
+	^self primFile: (self encodePathString: pathString) 
+		symlinkUid: (uidInteger ifNil: [ -1 ]) 
+		gid: (gidInteger ifNil: [ -1 ])
+
+]
+
+{ #category : #attributes }
+File class >> file: pathString uid: uidInteger gid: gidInteger [
+	"Set the owner and group of pathString by numeric id.
+	An id of nil leaves it unchanged."
+
+	^self primFile: (self encodePathString: pathString) 
+		uid: (uidInteger ifNil: [ -1 ])
+		gid: (gidInteger ifNil: [ -1 ])
+
+]
+
+{ #category : #attributes }
 File class >> fileAttribute: aString number: attributeNumber [
 	"Answer the attribute identified by attributeNumber for the specified file (aString).
 	For backward compatibility (on Unix) with FileReference if the file doesn't exist, and the specified path is a (broken) symbolic link, answer the requested attribute for the symbolic link."
@@ -581,6 +609,30 @@ File class >> primExists: aByteArray [
 	<primitive: 'primitiveFileExists' module: 'FileAttributesPlugin' error: error>
 	^self signalError: error for: aByteArray.
 
+]
+
+{ #category : #'primitives-file attributes' }
+File class >> primFile: pathByteArray posixPermissions: anInteger [
+	"Set the mode of pathByateArray to anInteger (as defined by chmod())"
+
+	<primitive: 'primitiveChangeMode' module: 'FileAttributesPlugin' error: error>
+	^self signalError: error for: pathByteArray
+]
+
+{ #category : #'primitives-file attributes' }
+File class >> primFile: pathByteArray symlinkUid: uidInteger gid: gidInteger [
+	"Set the owner and group of path by numeric id."
+
+	<primitive: 'primitiveSymlinkChangeOwner' module: 'FileAttributesPlugin' error: error>
+	^self signalError: error for: pathByteArray
+]
+
+{ #category : #'primitives-file attributes' }
+File class >> primFile: pathByteArray uid: uidInteger gid: gidInteger [
+	"Set the owner and group of path by numeric id."
+
+	<primitive: 'primitiveChangeOwner' module: 'FileAttributesPlugin' error: error>
+	^self signalError: error for: pathByteArray
 ]
 
 { #category : #'primitives-file attributes' }

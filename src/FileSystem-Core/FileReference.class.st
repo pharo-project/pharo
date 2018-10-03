@@ -446,6 +446,13 @@ FileReference >> permissions [
 	^ filesystem permissions: self path
 ]
 
+{ #category : #operations }
+FileReference >> permissions: permissions [
+	"Set the receivers mode to anInteger (as defined by chmod())"
+
+	^filesystem file: self path posixPermissions: permissions posixPermission
+]
+
 { #category : #printing }
 FileReference >> printOn: aStream [
 	filesystem forReferencePrintOn: aStream.
@@ -516,6 +523,14 @@ FileReference >> symlinkEntry [
 	^ filesystem symlinkEntryAt: path
 ]
 
+{ #category : #'as yet unclassified' }
+FileReference >> symlinkUid: uid gid: gid [
+	"Set the owner and group of the receiver by numeric id.
+	An id of nil leaves it unchanged."
+
+	^filesystem file: self path symlinkUid: uid gid: gid.
+]
+
 { #category : #accessing }
 FileReference >> targetPath [
 	"Return the target file of the File described by aPath.  For a regular file, this is itself, for a symbolic link, it is the file pointed to by the symbolic link"
@@ -526,6 +541,14 @@ FileReference >> targetPath [
 FileReference >> uid [
 	"Return the gid of the file at aPath"
 	^ filesystem uidOf: path
+]
+
+{ #category : #'as yet unclassified' }
+FileReference >> uid: uid gid: gid [
+	"Set the owner and group of the receiver by numeric id.
+	An id of nil leaves it unchanged."
+
+	^filesystem file: self path uid: uid gid: gid
 ]
 
 { #category : #streams }

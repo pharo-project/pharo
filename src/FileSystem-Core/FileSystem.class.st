@@ -335,6 +335,27 @@ FileSystem >> extensionDelimiter [
 	^ $.
 ]
 
+{ #category : #public }
+FileSystem >> file: aResolvable posixPermissions: anInteger [
+	"Set the mode of aResolvable to anInteger (as defined by chmod())"
+
+	^store file: (self resolve: aResolvable) posixPermissions: anInteger
+]
+
+{ #category : #public }
+FileSystem >> file: aResolvable symlinkUid: uidInteger gid: gidInteger [
+	"Set the owner and group of aResolvable by numeric id."
+
+	^store file: (self resolve: aResolvable) symlinkUid: uidInteger gid: gidInteger.
+]
+
+{ #category : #public }
+FileSystem >> file: aResolvable uid: uidInteger gid: gidInteger [
+	"Set the owner and group of aResolvable by numeric id."
+
+	^store file: (self resolve: aResolvable) uid: uidInteger gid: gidInteger.
+]
+
 { #category : #'public-enumerating' }
 FileSystem >> fileNamesAt: aResolvable [
 	^ Array streamContents: [ :out | 
