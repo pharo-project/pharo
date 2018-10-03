@@ -25,7 +25,7 @@ Class {
 	#classVars : [
 		'FloodFillTolerance'
 	],
-	#category : #'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects-Forms'
 }
 
 { #category : #'mode constants' }
