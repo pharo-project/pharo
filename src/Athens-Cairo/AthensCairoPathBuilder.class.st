@@ -39,9 +39,7 @@ AthensCairoPathBuilder >> angleOfVector: v [
 
 { #category : #private }
 AthensCairoPathBuilder >> arcCenterX: xc centerY: yc radius: radius startAngle: angle1 endAngle: angle2 [ 
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	self nbCall: #(void cairo_arc (AthensCairoCanvas context,
+	^ self ffiCall: #(void cairo_arc (AthensCairoCanvas context,
 				double xc,
 				double yc,
 				double radius,
@@ -53,9 +51,7 @@ AthensCairoPathBuilder >> arcCenterX: xc centerY: yc radius: radius startAngle: 
 
 { #category : #private }
 AthensCairoPathBuilder >> arcNegativeCenterX: xc centerY: yc radius: radius startAngle: angle1 endAngle: angle2 [ 
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	self nbCall: #(void cairo_arc_negative (AthensCairoCanvas context,
+	^ self ffiCall: #(void cairo_arc_negative (AthensCairoCanvas context,
 				double xc,
 				double yc,
 				double radius,
@@ -133,9 +129,7 @@ AthensCairoPathBuilder >> close [
 
 { #category : #private }
 AthensCairoPathBuilder >> closePath [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	self nbCall: #(void cairo_close_path (AthensCairoCanvas context))
+	^ self ffiCall: #(void cairo_close_path (AthensCairoCanvas context))
 ]
 
 { #category : #accessing }
@@ -146,11 +140,7 @@ AthensCairoPathBuilder >> context: anObject [
 
 { #category : #private }
 AthensCairoPathBuilder >> copyPath [ 
-
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( AthensCairoPath cairo_copy_path (AthensCairoCanvas context) )
+	^ self ffiCall: #( AthensCairoPath cairo_copy_path (AthensCairoCanvas context) )
 
 ]
 
@@ -213,9 +203,7 @@ The two control points for the cubic are:
 
 { #category : #private }
 AthensCairoPathBuilder >> curveViaX: x1 Y: y1 viaX: x2 Y: y2 toX: x3 Y: y3 [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(void cairo_curve_to(AthensCairoCanvas context,
+	^ self ffiCall: #(void cairo_curve_to(AthensCairoCanvas context,
                                                          double x1,
                                                          double y1,
                                                          double x2,
@@ -244,9 +232,7 @@ AthensCairoPathBuilder >> glyphPath: glyphs size: numGlyphs [
 	"void cairo_glyph_path (cairo_t *cr,
                   const cairo_glyph_t *glyphs,
                   int num_glyphs);"
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(
+	^ self ffiCall: #(
 	
 		void cairo_glyph_path ( AthensCairoCanvas context ,
 			void * glyphs,
@@ -269,10 +255,7 @@ AthensCairoPathBuilder >> lineTo: aPoint [
 
 { #category : #private }
 AthensCairoPathBuilder >> lineToX: x Y: y [
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(void cairo_line_to (AthensCairoCanvas context,
+	^ self ffiCall: #(void cairo_line_to (AthensCairoCanvas context,
 		 double x, double y ) )
 
 ]
@@ -289,20 +272,14 @@ AthensCairoPathBuilder >> moveTo: aPoint [
 { #category : #private }
 AthensCairoPathBuilder >> moveToX: x Y: y [
 	" move command always starts a new contour "
-
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #(void cairo_move_to (AthensCairoCanvas context,
+	^ self ffiCall: #(void cairo_move_to (AthensCairoCanvas context,
 		 double x, double y ) )
 
 ]
 
 { #category : #private }
 AthensCairoPathBuilder >> newPath [
- 
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	
-	^ self nbCall: #( void cairo_new_path ( AthensCairoCanvas context ) )
+ ^ self ffiCall: #( void cairo_new_path ( AthensCairoCanvas context ) )
 ]
 
 { #category : #'path commands' }

@@ -13,6 +13,11 @@ Class {
 	#category : #Deprecated70
 }
 
+{ #category : #testing }
+MatrixTest class >> isDeprecated [
+	^true
+]
+
 { #category : #running }
 MatrixTest >> setUp [
 	super setUp.

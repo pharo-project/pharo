@@ -8,7 +8,7 @@ Class {
 		'newValue',
 		'oldValue'
 	],
-	#category : #'System-Model'
+	#category : #'System-Model-Announcements'
 }
 
 { #category : #'instance creation' }

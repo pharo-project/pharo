@@ -1,4 +1,0 @@
-versioning
-commitHash
-
-	^ commitHash

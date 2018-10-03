@@ -74,6 +74,21 @@ DiskDirectoryEntry >> allAttributeMask [
 ]
 
 { #category : #accessing }
+DiskDirectoryEntry >> asFilePluginNode [
+	"Backward compatibility: Answer an array of file attributes matching that returned by FilePlugin"
+
+	^{
+		self basename.
+		(self statAttributes at: 12) ifNil: [ self statAttributes at: 11 ].
+		self statAttributes at: 10.
+		self isDirectory.
+		self size.
+		self posixPermissions.
+		self isSymlink.
+	}
+]
+
+{ #category : #accessing }
 DiskDirectoryEntry >> changeTime [
 	"Answer the time the receivers metadata was last changed.
 	On platforms that don't support change time, use the modification time"
@@ -129,7 +144,7 @@ DiskDirectoryEntry >> getAllAttributes [
 	statAttributes := allAttributes at: 1.
 	accessAttributes := allAttributes at: 2.
 	(statAttributes at: 1) ifNotNil: 
-		[ statAttributes at: 1 put: (self primitives decode: (statAttributes at: 1)) ].
+		[ statAttributes at: 1 put: (self primitives decodePathString: (statAttributes at: 1)) ].
 
 ]
 
@@ -139,7 +154,7 @@ DiskDirectoryEntry >> getStatAttributes [
 
 	statAttributes := self primitives fileAttributes: self pathString mask: self statAttributeMask.
 	(statAttributes at: 1) ifNotNil: 
-		[ statAttributes at: 1 put: (self primitives decode: (statAttributes at: 1)) ].
+		[ statAttributes at: 1 put: (self primitives decodePathString: (statAttributes at: 1)) ].
 	^statAttributes
 ]
 

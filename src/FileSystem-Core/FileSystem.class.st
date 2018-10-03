@@ -97,7 +97,7 @@ FileSystem >> checkName: aString fixErrors: fixErrors [
 FileSystem >> childNamesAt: aResolvable [
 	^ Array streamContents: [ :out | 
 		self childNamesAt: aResolvable do: [ :path|
-			out nextPut: path ]]
+			out nextPut: path ]].
 ]
 
 { #category : #'public-enumerating' }
@@ -105,9 +105,9 @@ FileSystem >> childNamesAt: aResolvable do: aBlock [
 	| path |
 	path := self resolve: aResolvable.
 	store
-		nodesAt: path
-		do: [ :node | 
-			aBlock value: (store basenameFromNode: node) ]
+		directoryAt: path
+		nodesDo: [ :entry | 
+			aBlock value: (store basenameFromEntry: entry) ]
 ]
 
 { #category : #'public-enumerating' }
@@ -122,9 +122,9 @@ FileSystem >> childrenAt: aResolvable do: aBlock [
 	| path |
 	path := self resolve: aResolvable.
 	store
-		nodesAt: path
-		do: [ :node | 
-			aBlock value: path / (store basenameFromEntry: node) ]
+		directoryAt: path
+		nodesDo: [ :entry | 
+			aBlock value: path / (store basenameFromEntry: entry) ]
 ]
 
 { #category : #public }
@@ -292,21 +292,26 @@ FileSystem >> entriesAt: aResolvable [
 
 { #category : #'public-enumerating' }
 FileSystem >> entriesAt: aResolvable do: aBlock [
-
-	| path |
+	| path entry |
 	path := self resolve: aResolvable.
-	^store nodesAt: path do:
-		[ :node | aBlock value: (store entryFromNode: node path: path for: self) ].
-
+	store
+		directoryAt: path
+		nodesDo: [ :node | 
+			entry := store entryFromNode: node path: path for: self.
+			aBlock value: entry ]
 ]
 
 { #category : #'public-enumerating' }
 FileSystem >> entriesAt: aResolvable ifAbsent: absentBlock do: aBlock [
-
-	^[self entriesAt: aResolvable do: aBlock]
-		on: DirectoryDoesNotExist, FileDoesNotExistException
-		do: [ :error | absentBlock value ].
-
+	| path entry aFilesystem |
+	path := self resolve: aResolvable.
+	aFilesystem := self.
+	store
+		directoryAt: path
+		ifAbsent: [ ^ absentBlock value ]
+		nodesDo: [ :node | 
+			entry := store entryFromNode: node path: path for: aFilesystem.
+			aBlock value: entry ]
 ]
 
 { #category : #public }
@@ -465,7 +470,8 @@ FileSystem >> isFIFO: aResolvable [
 
 { #category : #'public-testing' }
 FileSystem >> isFile: aResolvable [
-	"Return a boolean indicating whether the File described by aPath is a file (not a directory)"
+	"Resolve the argument, and answer true if the result refers
+	to a file, false if it refers to a directory or doesn't exist."
 
 	^ store isFile: (self resolve: aResolvable)
 ]
@@ -572,13 +578,6 @@ FileSystem >> open: aResolvable writable: aBoolean [
 		open: (FileReference fileSystem: self path: path) 
 		writable: aBoolean
 		
-]
-
-{ #category : #delegated }
-FileSystem >> openFileStream: aResolvable writable: aBoolean [
-	^ store 
-		openFileStream: (self resolve: aResolvable) 
-		writable: aBoolean
 ]
 
 { #category : #private }

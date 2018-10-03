@@ -1,10 +1,13 @@
+"
+SUnit tests for MorphicLabelAdapter
+"
 Class {
 	#name : #MorphicLabelAdapterTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'label'
 	],
-	#category : #'Spec-Tests'
+	#category : #'Spec-Tests-Base'
 }
 
 { #category : #accessing }

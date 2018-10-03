@@ -98,9 +98,7 @@ NECContextTest >> testCreateModel [
 	self assert: context createModel class == NECTypedModel.
 	text := 'testIt:'.
 	context := self createContextFor: text at: text size.
-	NECPreferences overrideModel 
-		ifTrue: [ self assert: context createModel class = NECOverrideModel]
-		ifFalse: [self assert: context createModel class = NECEmptyModel].
+	self assert: context createModel class = NECUntypedModel.
 	text := 'testIt: rect
 	rect is'.
 	context := self createContextFor: text at: text size.
@@ -445,7 +443,7 @@ NECContextTest >> testUntypedSelectorsOnly [
 	model := context model.
 	self assert: model hasMessage.
 	self assert: model message = 'press key for selectors'.
-	context narrowWith: 'a'.
+	context narrowWith: 'ab'.
 	self assert: (model entriesOfType: #selector) notEmpty.
 	self assert: (model entriesOfType: #local) isEmpty.
 	self assert: (model entriesOfType: #instance) isEmpty

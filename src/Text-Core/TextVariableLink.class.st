@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'variableName'
 	],
-	#category : #'Text-Core'
+	#category : #'Text-Core-Attributes'
 }
 
 { #category : #'instance creation' }

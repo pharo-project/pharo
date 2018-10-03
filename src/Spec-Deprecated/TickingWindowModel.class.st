@@ -4,7 +4,7 @@ This is deprecated class because the original class TickingWindowModel was renam
 Class {
 	#name : #TickingWindowModel,
 	#superclass : #TickingWindowPresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }

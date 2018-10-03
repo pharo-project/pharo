@@ -43,7 +43,7 @@ DiskFileAttributesTestsResources >> setUp [
 	| ws |
 
 	super setUp.
-	file := FileLocator temp / ('FileAttributesTests-', UUIDGenerator next asString, '.txt').
+	file := FileLocator temp / ('FileAttributesTests-žřč-', UUIDGenerator next asString, '.txt').
 	beforeCreationTime := DateAndTime now.
 	"Remove the nanoseconds"
 	beforeCreationTime := DateAndTime

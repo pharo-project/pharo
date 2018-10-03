@@ -22,6 +22,12 @@ NECModel class >> class: aClass [
 ]
 
 { #category : #private }
+NECModel >> addSelectors [
+	self initializeSelectors.
+	self addToEntries: selectors
+]
+
+{ #category : #private }
 NECModel >> addToEntries: aCollection [ 
 	| temp caseSensitive |
 	caseSensitive := NECPreferences caseSensitive.
@@ -81,7 +87,7 @@ NECModel >> entryCount [
 	^entries size
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 NECModel >> hasMessage [
 	^ self message notNil
 ]
@@ -91,7 +97,7 @@ NECModel >> initialize [
 	self reset
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 NECModel >> initializeSelectors [ 
 	self subclassResponsibility 
 ]
@@ -119,8 +125,10 @@ NECModel >> narrowString: aString [
 ]
 
 { #category : #action }
-NECModel >> narrowWith: aString [
-	self subclassResponsibility 
+NECModel >> narrowWith: aString [ 
+	self narrowString: aString.
+	self resetEntries.
+	self addSelectors
 ]
 
 { #category : #testing }
@@ -152,20 +160,7 @@ NECModel >> resetEntries [
 
 { #category : #private }
 NECModel >> resetSelectors [
-	selectors := (SortedCollection new: 500) sortBlock: 
-		[ :a :b | 
-		| scoreA scoreB |
-		scoreA := scoreB := 0.
-		(a contents 
-			beginsWithEmpty: narrowString
-			caseSensitive: NECPreferences caseSensitive) ifFalse: [ scoreA := 2 ].
-		(b contents 
-			beginsWithEmpty: narrowString
-			caseSensitive: NECPreferences caseSensitive) ifFalse: [ scoreB := 2 ].
-		a contents < b contents
-			ifTrue: [ scoreB := scoreB + 1 ]
-			ifFalse: [ scoreA := scoreA + 1 ].
-		scoreA < scoreB ]
+	selectors := OrderedCollection new: 500.
 ]
 
 { #category : #initialization }
@@ -175,17 +170,32 @@ NECModel >> setClass: aClass [
 	self narrowWith: String new
 ]
 
-{ #category : #action }
+{ #category : #private }
+NECModel >> sortSelectors [
+	| case |
+	case :=  NECPreferences caseSensitive.
+	selectors sort: 
+		[ :a :b | 
+		| scoreA scoreB |
+		scoreA := scoreB := 0.
+		(a contents 
+			beginsWithEmpty: narrowString
+			caseSensitive: case) ifFalse: [ scoreA := 2 ].
+		(b contents 
+			beginsWithEmpty: narrowString
+			caseSensitive: case) ifFalse: [ scoreB := 2 ].
+		a contents < b contents
+			ifTrue: [ scoreB := scoreB + 1 ]
+			ifFalse: [ scoreA := scoreA + 1 ].
+		scoreA < scoreB ].
+]
+
+{ #category : #accessing }
 NECModel >> theClass [
 	^nil
 ]
 
-{ #category : #action }
+{ #category : #accessing }
 NECModel >> title [
 	^nil
-]
-
-{ #category : #action }
-NECModel >> toggleExpand [
-	
 ]

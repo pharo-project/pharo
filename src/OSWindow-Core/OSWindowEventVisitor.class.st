@@ -107,6 +107,10 @@ OSWindowEventVisitor >> visitWindowFrameEvent: anEvent [
 ]
 
 { #category : #visiting }
+OSWindowEventVisitor >> visitWindowHiddenEvent: anEvent [
+]
+
+{ #category : #visiting }
 OSWindowEventVisitor >> visitWindowMaximizedEvent: anEvent [
 ]
 
@@ -128,4 +132,8 @@ OSWindowEventVisitor >> visitWindowMoveEvent: anEvent [
 
 { #category : #visiting }
 OSWindowEventVisitor >> visitWindowResizeEvent: anEvent [
+]
+
+{ #category : #visiting }
+OSWindowEventVisitor >> visitWindowShownEvent: anEvent [
 ]

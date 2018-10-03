@@ -10,6 +10,12 @@ Class {
 	#category : #'Collections-Tests-Strings'
 }
 
+{ #category : #coverage }
+CharacterTest >> classToBeTested [
+	
+	^ Character
+]
+
 { #category : #'tests - conversion' }
 CharacterTest >> testAsLowercaseBasicAsciiRange [
 	| lowercase uppercase |
@@ -34,33 +40,33 @@ CharacterTest >> testCharacterSeparators [
 
 	| result |
 	result := '/' , Character separators.
-	self assert: result size = (Character separators size + 1)
+	self assert: result size equals: Character separators size + 1 
 ]
 
 { #category : #tests }
 CharacterTest >> testCodePoint [
 
-	self assert: $A codePoint = 65.
-	self assert: (Character codePoint: $a codePoint) = $a.
-	self assert: (Character codePoint: 97) codePoint = 97.
+	self assert: $A codePoint equals: 65.
+	self assert: (Character codePoint: $a codePoint) equals: $a.
+	self assert: (Character codePoint: 97) codePoint equals: 97.
 ]
 
 { #category : #tests }
 CharacterTest >> testDigitValue [
 		
 	'0123456789ABCDEF' with: #(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)
-		do: [:char :value | self assert: char digitValue = value].
+		do: [:char :value | self assert: char digitValue equals: value].
 	
 	'0123456789' with: #(0 1 2 3 4 5 6 7 8 9)
-		do: [:char :value | self assert: char digitValue = value].
+		do: [:char :value | self assert: char digitValue equals: value].
 		
 	 
 ]
 
 { #category : #tests }
 CharacterTest >> testHex [
-	self assert: $a hex = '16r61'.
-	self assert: Character space hex = '16r20'
+	self assert: $a hex equals: '16r61'.
+	self assert: Character space hex equals: '16r20'
 ]
 
 { #category : #'tests - instance creation' }
@@ -88,36 +94,35 @@ CharacterTest >> testNew [
 
 { #category : #tests }
 CharacterTest >> testPrintString [
-	self assert: $a printString = '$a'.
-	self assert: $5 printString = '$5'.
-	self assert: $@ printString = '$@'.
+	self assert: $a printString equals: '$a'.
+	self assert: $5 printString equals: '$5'.
+	self assert: $@ printString equals: '$@'.
 
-	self assert: Character cr printString = 'Character cr'.
-	self assert: Character lf printString = 'Character lf'.
-	self assert: Character space printString = 'Character space'.
+	self assert: Character cr printString equals: 'Character cr'.
+	self assert: Character lf printString equals: 'Character lf'.
+	self assert: Character space printString equals: 'Character space'.
 
-	self assert: (Character value: 0) printString = 'Character null'.
-	self assert: (Character value: 17) printString = 'Character value: 17'.
+	self assert: (Character value: 0) printString equals: 'Character null'.
+	self assert: (Character value: 17) printString equals: 'Character value: 17'.
 ]
 
 { #category : #tests }
 CharacterTest >> testPrintStringAll [
-	Character allCharacters do: [ :each |
-		self assert: (self class compiler
-			evaluate: each printString) = each ].
+	Character allCharacters
+		do: [ :each | self assert: (self class compiler evaluate: each printString) equals: each ]
 ]
 
 { #category : #tests }
 CharacterTest >> testPrintStringHex [
-	self assert: $a printStringHex = '61'.
-	self assert: Character space printStringHex = '20'
+	self assert: $a printStringHex equals: '61'.
+	self assert: Character space printStringHex equals: '20'
 ]
 
 { #category : #tests }
 CharacterTest >> testStoreString [
-	self assert: $a storeString = '$a'.
-	self assert: $5 storeString = '$5'.
-	self assert: $@ storeString = '$@'.
+	self assert: $a storeString equals: '$a'.
+	self assert: $5 storeString equals: '$5'.
+	self assert: $@ storeString equals: '$@'.
 
 	self assert: Character cr storeString equals: 'Character cr'.
 	self assert: Character lf storeString equals: 'Character lf'.
@@ -129,7 +134,6 @@ CharacterTest >> testStoreString [
 
 { #category : #tests }
 CharacterTest >> testStoreStringAll [
-	Character allCharacters do: [ :each |
-		self assert: (self class compiler
-			evaluate: each storeString) = each ].
+	Character allCharacters
+		do: [ :each | self assert: (self class compiler evaluate: each storeString) equals: each ]
 ]

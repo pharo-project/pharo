@@ -46,7 +46,6 @@ Class {
 		'name'
 	],
 	#classVars : [
-		'Encoder',
 		'Registry',
 		'S_IFBLK',
 		'S_IFCHR',
@@ -154,16 +153,10 @@ File class >> createDirectory: fullPath [
 
 ]
 
-{ #category : #'private-encoding' }
-File class >> decode: aString [
-
-	^ Encoder decodeBytes: aString asByteArray
-]
-
 { #category : #'primitives-encoding' }
-File class >> decodePathString: aString [
+File class >> decodePathString: aByteArray [
 
-	^ (ZnCharacterEncoder newForEncoding: 'utf8') decodeBytes: aString asByteArray
+	^ ZnUTF8Encoder default decodeBytes: aByteArray asByteArray
 ]
 
 { #category : #'primitives-path' }
@@ -195,23 +188,16 @@ File class >> delimiter [
 
 ]
 
-{ #category : #'private-encoding' }
-File class >> encode: aString [
-
-	^ (Encoder encodeString: aString) asString
-]
-
 { #category : #'primitives-encoding' }
 File class >> encodePathString: aString [
 
-	"Should not return a string"
-	^ ((ZnCharacterEncoder newForEncoding: 'utf8') encodeString: aString) asString
+	^ ZnUTF8Encoder default encodeString: aString
 ]
 
 { #category : #testing }
 File class >> exists: aString [
 
-	^self primExists: (self encode: aString)
+	^self primExists: (self encodePathString: aString)
 ]
 
 { #category : #attributes }
@@ -219,7 +205,7 @@ File class >> fileAttribute: aString number: attributeNumber [
 	"Answer the attribute identified by attributeNumber for the specified file (aString).
 	For backward compatibility (on Unix) with FileReference if the file doesn't exist, and the specified path is a (broken) symbolic link, answer the requested attribute for the symbolic link."
 
-	^self primFileAttribute: (self encode: aString) number: attributeNumber
+	^self primFileAttribute: (self encodePathString: aString) number: attributeNumber
 ]
 
 { #category : #attributes }
@@ -249,7 +235,7 @@ File class >> fileAttributeNumberMap [
 { #category : #attributes }
 File class >> fileAttributes: aString mask: attributeMask [
 
-	^self primFileAttributes: (self encode: aString) mask: attributeMask
+	^self primFileAttributes: (self encodePathString: aString) mask: attributeMask
 ]
 
 { #category : #'primitives-version' }
@@ -411,8 +397,7 @@ File class >> isSocket: aPath [
 
 { #category : #'primitives-file modes' }
 File class >> isSymlink: aPath [
-	"Answer a boolean indicating whether the supplied path is a Symlink file.
-	Note that this should only be called on platforms that support symlinks (e.g. not Windows)"
+	"Answer a boolean indicating whether the supplied path is a Symlink file"
 
 	^self fileAttribute: aPath number: 16
 ]
@@ -586,21 +571,20 @@ File class >> primClosedir: directoryPointerBytes [
 	"self primClosedir: (self primOpendir: '/no/such/directory')"
 
 	<primitive: 'primitiveClosedir' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed.
+	^self signalError: error for: 'primClosedir'
 ]
 
 { #category : #'primitives-file attributes' }
-File class >> primExists: aString [
+File class >> primExists: aByteArray [
 	"Answer a boolean indicating whether the supplied file exists."
 
 	<primitive: 'primitiveFileExists' module: 'FileAttributesPlugin' error: error>
-	^(error isPrimitiveError)
-		ifTrue: [ self signalError: error errorCode for: aString ]
-		ifFalse: [ self primitiveFailed ].
+	^self signalError: error for: aByteArray.
+
 ]
 
 { #category : #'primitives-file attributes' }
-File class >> primFileAttribute: aString number: attributeNumber [
+File class >> primFileAttribute: aByteArray number: attributeNumber [
 	"Answer a single attribute for the supplied file.
 	For backward compatibility (on Unix) with FileReference if the file doesn't exist, and the specified path is a (broken) symbolic link, answer the requested attribute for the symbolic link.
 
@@ -636,18 +620,16 @@ symbolic link information
 		(error isPrimitiveError and: [attributeNumber ~= 16 and: [error errorCode = self cantStatPath and: [
 					self platformSupportsSymbolicLinksEgUnix]]]) ifTrue:
 						[DiskSymlinkDirectoryEntry fileSystem: DiskStore currentFileSystem path: aString asPath]"
-	^error isPrimitiveError ifTrue: [ 
+	error isPrimitiveError ifTrue: [ 
 		(attributeNumber = 16 and: [ error errorCode = self unsupportedOperation ]) ifTrue: 
 			"If symlinks aren't supported, answer false"
-			[ ^false ]
-		ifFalse:
-			[ self signalError: error errorCode for: aString ] ]
-	ifFalse:
-		[ self primitiveFailed ]
+			[ ^false ]].
+	^self signalError: error for: aByteArray
+
 ]
 
 { #category : #'primitives-file attributes' }
-File class >> primFileAttributes: aString mask: attributeMask [
+File class >> primFileAttributes: aByteArray mask: attributeMask [
 	"Answer an array of attributes for the supplied file.  The size and contents of the array are determined by the attributeMask:
 
 Bit 0: stat() information
@@ -677,10 +659,8 @@ access() information
 	3: is executable
 	"
 	<primitive: 'primitiveFileAttributes' module: 'FileAttributesPlugin' error: error>
-	^error isPrimitiveError ifTrue:
-		[ self signalError: error errorCode for: aString ]
-	ifFalse: 
-		[ self primitiveFailed ]
+	^self signalError: error for: aByteArray
+
 ]
 
 { #category : #private }
@@ -699,14 +679,14 @@ File class >> primFileMasks [
 	For more information, see: http://man7.org/linux/man-pages/man2/stat.2.html
 	"
 	<primitive: 'primitiveFileMasks' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed
+	^self signalError: error for: 'primFileMasks'
 ]
 
 { #category : #'primitives-windows' }
 File class >> primLogicalDrives [
 	"Answer the windows logical drive mask"
 	<primitive: 'primitiveLogicalDrives' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed
+	^self signalError: error for: 'primLogicalDrives'
 ]
 
 { #category : #'primitives-directory' }
@@ -719,14 +699,14 @@ File class >> primOpendir: pathString [
 	"self primOpendir: '/no/such/directory'"
 
 	<primitive: 'primitiveOpendir' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed
+	^self signalError: error for: pathString
 ]
 
 { #category : #'primitives-directory' }
 File class >> primPathMax [
 	"Answer the VMs PATH_MAX value"
 	<primitive: 'primitivePathMax' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed
+	^self signalError: error for: 'primPathMax'
 ]
 
 { #category : #'primitives-directory' }
@@ -738,7 +718,7 @@ File class >> primReaddir: directoryPointerBytes [
 	"self primReaddir: (self primOpendir: '/no/such/directory')"
 
 	<primitive: 'primitiveReaddir' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed
+	^self signalError: error for: 'primReaddir:'
 ]
 
 { #category : #'primitives-directory' }
@@ -750,7 +730,7 @@ File class >> primRewinddir: directoryPointerBytes [
 	"self primRewinddir: (self primOpendir: '/no/such/directory')"
 
 	<primitive: 'primitiveRewinddir' module: 'FileAttributesPlugin' error: error>
-	^self primitiveFailed
+	^self signalError: error for: 'primRewinddir:'
 
 ]
 
@@ -789,10 +769,6 @@ File class >> reset [
 	"Initialise the receiver for the current platform"
 
 	| masks |
-
-	Encoder := OSPlatform current isWindows 
-		ifTrue: [ ZnCharacterEncoder newForEncoding: 'null' ]
-		ifFalse: [ ZnCharacterEncoder newForEncoding: 'utf8' ].
 
 	masks := self primFileMasks.
 	S_IFMT := masks at: 1.
@@ -879,16 +855,26 @@ File class >> setPosition: id to: anInteger [
 ]
 
 { #category : #private }
-File class >> signalError: aNumber for: aString [
-	"Raise the appropriate signal for the supplied error number"
+File class >> signalError: error for: aByteArray [
+	"Raise the appropriate signal for the supplied error"
 
-	aNumber = self stringTooLong ifTrue: 
-		[ ^IllegalFileName signalWith: aString ].
-	aNumber = self cantStatPath ifTrue: 
-		[ ^FileDoesNotExistException signalWith: aString ].
-	aNumber = self getAttributesFailed ifTrue: 
-		[ ^FileDoesNotExistException signalWith: aString ].
-	^FileException signalWith: aString.
+	| errorNumber pathString |
+
+	error ifNil: [ ^self primitiveFailed ].
+	error isSymbol ifTrue: [ ^self primitiveFailed: error ].
+	error isPrimitiveError ifFalse: [ 
+		"We shouldn't ever get here"
+		^self primitiveFailed. ].
+
+	pathString := self decodePathString: aByteArray asByteArray.
+	errorNumber := error errorCode.
+	errorNumber = self stringTooLong ifTrue: 
+		[ ^IllegalFileName signalWith: pathString ].
+	errorNumber = self cantStatPath ifTrue: 
+		[ ^FileDoesNotExistException signalWith: pathString ].
+	errorNumber = self getAttributesFailed ifTrue: 
+		[ ^FileDoesNotExistException signalWith: pathString ].
+	^FileException signalWith: pathString.
 ]
 
 { #category : #'primitives-file' }
@@ -943,13 +929,6 @@ File class >> stdioIsAvailable [
 File class >> stringTooLong [
 	"String too long.  A file path name was longer than PATH_MAX"
 	^-1
-]
-
-{ #category : #testing }
-File class >> supportsSymbolicLinks [
-	"Answer a boolean indicating whether the current platform supports symbolic links"
-
-	^OSPlatform current isUnix
 ]
 
 { #category : #'primitives-file' }

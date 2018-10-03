@@ -48,7 +48,7 @@ FileAttributesPluginPrimsTests >> testPrimCloseDirNil [
 		should: [ primitives primClosedir: nil ]
 		raise: PrimitiveFailed
 		withExceptionDo: [ :exception | 
-			self assert: exception selector equals: #primClosedir: ].
+			self assert: exception selector equals: #'bad argument' ].
 
 ]
 
@@ -60,7 +60,7 @@ FileAttributesPluginPrimsTests >> testPrimCloseDirString [
 		should: [ primitives primClosedir: 'a string' ]
 		raise: PrimitiveFailed
 		withExceptionDo: [ :exception | 
-			self assert: exception selector equals: #primClosedir: ].
+			self assert: exception selector equals: #'bad argument' ].
 
 ]
 
@@ -72,7 +72,7 @@ FileAttributesPluginPrimsTests >> testPrimCloseDirWrongLength [
 		should: [ primitives primClosedir: (ByteArray new: 1) ]
 		raise: PrimitiveFailed
 		withExceptionDo: [ :exception | 
-			self assert: exception selector equals: #primClosedir: ].
+			self assert: exception selector equals: #'bad argument' ].
 
 ]
 
@@ -84,6 +84,6 @@ FileAttributesPluginPrimsTests >> testPrimExistsNil [
 		should: [ primitives primExists: nil ]
 		raise: PrimitiveFailed
 		withExceptionDo: [ :exception | 
-			self assert: exception selector equals: #primExists: ].
+			self assert: exception selector equals: #'bad argument' ].
 
 ]

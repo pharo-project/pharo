@@ -4,7 +4,7 @@ SUnit tests for comment definitions
 Class {
 	#name : #RGCommentDefinitionTest,
 	#superclass : #TestCase,
-	#category : #'Ring-Deprecated-Tests-Kernel'
+	#category : #'Ring-Deprecated-Tests-Kernel-Base'
 }
 
 { #category : #deprecation }

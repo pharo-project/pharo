@@ -8,7 +8,7 @@ Class {
 		'process',
 		'expired'
 	],
-	#category : #'Kernel-Processes'
+	#category : #'Kernel-Delays'
 }
 
 { #category : #testing }
@@ -17,7 +17,7 @@ DelayWaitTimeout >> isExpired [
 	^expired
 ]
 
-{ #category : #signaling }
+{ #category : #deprecated }
 DelayWaitTimeout >> schedulerSignalWaitingProcess [
 	"Release the given process from the semaphore it is waiting on.
 	This method relies on running at highest priority so that it cannot be preempted
@@ -36,6 +36,20 @@ DelayWaitTimeout >> setDelay: anInteger forSemaphore: aSemaphore [
 	super setDelay: anInteger forSemaphore: aSemaphore.
 	process := Processor activeProcess.
 	expired := false.
+]
+
+{ #category : #private }
+DelayWaitTimeout >> timingPrioritySignalExpired [
+	"Release the given process from the semaphore it is waiting on.
+	This method relies on running at highest priority so that it cannot be preempted
+	by the process being released."
+	beingWaitedOn := false.
+	"Release the process but only if it is still waiting on its original list"
+	process suspendingList == delaySemaphore ifTrue:[
+		expired := true.
+		process suspend; resume.
+		].
+
 ]
 
 { #category : #waiting }

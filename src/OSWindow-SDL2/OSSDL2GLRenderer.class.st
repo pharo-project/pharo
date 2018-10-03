@@ -13,17 +13,33 @@ Class {
 	#category : #'OSWindow-SDL2-OpenGL'
 }
 
+{ #category : #finalization }
+OSSDL2GLRenderer class >> finalizeResourceData: windowAndContext [
+	| window context |
+	window := windowAndContext first.
+	context := windowAndContext second.
+
+	OSWindowRenderThread enqueueBlockingOperation: [
+		SDL2
+			glMakeCurrent: (SDL_Window null) context: (SDL_GLContext null).
+		context delete
+	].
+]
+
 { #category : #misc }
 OSSDL2GLRenderer >> checkThread [
-	OSWindowRenderThread isThisThread ifFalse: [ ^ 'GL Renderer must be used inside the OSWindowRenderThread' ]
+OSWindowRenderThread isActiveThread ifFalse: [ ^ 'GL Renderer must be used inside the OSWindowRenderThread or a critical section' ]
 ]
 
 { #category : #misc }
 OSSDL2GLRenderer >> createContext [
 	self onRenderThreadBlocking: [
 		context := SDL2 glCreateContext: window handle.
-	]
+	].
 
+	(context isNotNil and: [ context isNull not ]) ifTrue: [
+		FFIExternalResourceManager addResource: self data: { window . context }
+	]
 ]
 
 { #category : #initialize }

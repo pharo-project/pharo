@@ -19,6 +19,9 @@ Class {
 		'inverseMapping',
 		'completionDelay'
 	],
+	#classVars : [
+		'ContextClass'
+	],
 	#classInstVars : [
 		'uniqueInstance'
 	],
@@ -57,6 +60,16 @@ NECController class >> codeCompletionAround: aBlock textMorph: aTextMorph keyStr
 		ifTrue: [ controller handleKeystrokeAfter: evt editor: editor ]
 ]
 
+{ #category : #accessing }
+NECController class >> contextClass [
+	^ContextClass ifNil: [ ^NECContext ] 
+]
+
+{ #category : #accessing }
+NECController class >> contextClass: aClass [
+	ContextClass := aClass
+]
+
 { #category : #'class initialization' }
 NECController class >> initialize [ 
 	self register
@@ -82,7 +95,7 @@ NECController class >> reset [
 
 { #category : #'instance creation' }
 NECController class >> uniqueInstance [
-	^uniqueInstance ifNil: [ uniqueInstance := self basicNew initialize ]
+	^uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
 { #category : #accessing }
@@ -110,7 +123,7 @@ NECController >> context [
 
 { #category : #private }
 NECController >> contextClass [
-	^NECContext
+	^self class contextClass
 ]
 
 { #category : #accessing }
@@ -196,16 +209,7 @@ NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 						ifTrue: [ ^ true ] ] ].
 	self flag: #todo.	"Removing for now... most of the shortcuts are broken and no time or need now to fix them"	"(keyCharacter = $h and: [ controlKeyPressed ]) ifTrue: [ 
 		menuMorph help.
-		^ true ].
-
-	(keyCharacter = $t and: [ controlKeyPressed ]) ifTrue: [ 
-		menuMorph expand.
-		^ true ].
-
-	(keyCharacter = $u and: [ controlKeyPressed ]) ifTrue: [ 
-		menuMorph switchToUntyped.
-		^ true ].	"	"All keys but the alphanumeric chars (without command and control ) 
-	and the backspace key do close the menu"
+		^ true ]."
 	keyCharacter = Character backspace
 		ifTrue: [ 
 			editor isCaretBehindChar
@@ -251,11 +255,6 @@ NECController >> invalidateEditorMorph [
 ]
 
 { #category : #'menu morph' }
-NECController >> isMenuEmpty [
-	^menuMorph isNil or: [ self context model notNil and: [ self context model isEmpty ] ]
-]
-
-{ #category : #'menu morph' }
 NECController >> isMenuOpen [
 	^menuMorph notNil
 ]
@@ -274,7 +273,6 @@ NECController >> leftArrow [
 
 { #category : #'menu morph' }
 NECController >> menuClosed [
-	NECSymbols resetCachedSymbols.
 	menuMorph := nil.
 	context := nil.
 ]
@@ -373,7 +371,7 @@ NECController >> smartBackspace [
 	currentText := currentEditor text.
 	smartCharacter := currentText at: currentEditor startIndex - 1 ifAbsent: [ ^ false ].	"take the opposite"
 	
-	opposite := self smartCharactersMapping at: smartCharacter ifAbsent: [ ^ false ].	"test if the next char is opposite"
+	opposite := self smartCharacterOppositeOf: smartCharacter ifAbsent: [ ^false ].	"test if the next char is opposite"
 	
 	opposite = (currentText at: currentEditor stopIndex ifAbsent: [ ^ false ])
 		ifFalse: [ ^ false ].	"test if there is an extra opposite to remove"
@@ -397,25 +395,48 @@ NECController >> smartBackspace [
 	^ true
 ]
 
+{ #category : #settings }
+NECController >> smartCharacterOppositeOf: char ifAbsent: aBlock [
+	^(self smartCharactersMapping at: char ifAbsent: [ ^aBlock value ]) key
+]
+
+{ #category : #settings }
+NECController >> smartCharacterPairFor: char ifAbsent: aBlock [
+	| left right |
+	
+	left := self smartCharactersMapping at: char ifPresent: [ char ] ifAbsent: [ 
+		self smartInverseMapping at: char ifPresent: [:key | key ] ifAbsent: [ ^aBlock value ]].
+	
+	right := self smartCharacterOppositeOf: left ifAbsent: [ ^aBlock value ].
+	
+ 	^ left -> right
+]
+
+{ #category : #settings }
+NECController >> smartCharacterShouldClose: char [
+	^(self smartCharactersMapping at: char ifAbsent: [ ^false ]) value
+]
+
 { #category : #keyboard }
 NECController >> smartCharacterWithEvent: anEvent [
 	"char is extracted from anEvent, anEvent is passed because we may need it.
 	We may remove char if this is not costly."
 
-	| opposite previous next char insertion insertionCenter |
+	| opposite previous next char insertion insertionCenter matchingPair |
 	char := anEvent keyCharacter.
 	editor hasSelection
 		ifTrue: [ 
 			"we selected a piece of text and we type the same character that previously, so
 		we unwrap it"
 			"we selected a piece of text if the character is not a special one we do nothing."
-			opposite := self smartCharactersMapping at: char ifAbsent: [ ^ nil ].	"else we wrap the selection"	"editor replaceSelectionWith: (String with: char) , (editor selection) , (String with: opposite)."	"ugly logic it should be encapsulated in the editor "
-			editor enclose: anEvent.
+			matchingPair := self smartCharacterPairFor: char ifAbsent: [  ^nil ].	"else we wrap the selection"	"editor replaceSelectionWith: (String with: char) , (editor selection) , (String with: opposite)."	"ugly logic it should be encapsulated in the editor "
+			
+			editor encloseWith: matchingPair.
 			self invalidateEditorMorph.
 			^ true ].	"we are not in a selection"
-	opposite := self smartCharactersMapping
-		at: char
-		ifAbsent: [ 
+			
+	(self smartCharacterShouldClose: char)	
+		ifFalse: [ 
 			"if the character is not a special character"
 			self smartInverseMapping at: char ifAbsent: [ ^ nil ].	"if the character is not a closing special character do nothing"	"The character is special"
 			editor blinkPrevParen: char.
@@ -424,6 +445,8 @@ NECController >> smartCharacterWithEvent: anEvent [
 			editor selectFrom: editor startIndex + 1 to: editor startIndex.
 			self invalidateEditorMorph.
 			^ true ].
+		
+	opposite := self smartCharacterOppositeOf: char ifAbsent: [ ^nil ].
 	previous := editor previousCharacterIfAbsent: [ Character space ].
 	next := editor nextCharacterIfAbsent: [ Character space ].
 	insertion := next isSeparator
@@ -469,7 +492,7 @@ NECController >> smartInverseMapping [
 	^ inverseMapping ifNil: [ 
 		inverseMapping := Dictionary new.
 		self smartCharactersMapping
-			keysAndValuesDo: [ :key :value | inverseMapping at: value put: key ].
+			keysAndValuesDo: [ :char :inverse | inverseMapping at: inverse key put: char ].
 		inverseMapping ]
 ]
 

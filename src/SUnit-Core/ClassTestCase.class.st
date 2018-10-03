@@ -116,11 +116,6 @@ ClassTestCase >> targetClass [
 ]
 
 { #category : #tests }
-ClassTestCase >> testClassComment [
-	self assert: self targetClass organization hasComment.
-]
-
-{ #category : #tests }
 ClassTestCase >> testCoverage [
 
 	| untested | 

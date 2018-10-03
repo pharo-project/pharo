@@ -103,7 +103,7 @@ GTEventPacking >> updateAnnouncement: aGTEventAnnouncement for: aGTEventCollecto
 			timestamp: DateAndTime now;
 			imageHash: SmalltalkImage current imagePath hash;
 			imageVersion: SystemVersion current version;
-			latestUpdate: SystemVersion current highestUpdate;
+			latestUpdate: SystemVersion current commitHash;
 			computerUUID: GlobalIdentifier uniqueInstance computerUUID asString;
 			sessionUUID: SmalltalkImage current session id asString;
 			sessionCreationTime: SmalltalkImage current session creationTime;

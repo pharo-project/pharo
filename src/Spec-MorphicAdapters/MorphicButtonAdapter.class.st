@@ -7,7 +7,7 @@ SpecInterpreter
 Class {
 	#name : #MorphicButtonAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #'Spec-MorphicAdapters'
+	#category : #'Spec-MorphicAdapters-Base'
 }
 
 { #category : #'widget API' }
@@ -39,7 +39,7 @@ MorphicButtonAdapter >> buildLabel: text withIcon: icon [
 { #category : #factory }
 MorphicButtonAdapter >> buildWidget [
 	
-	| button | 
+	| button normalColorBlock clickedColorBlock | 
 	button := PluggableButtonMorph
 				on: self 
 				getState: #state 
@@ -56,6 +56,17 @@ MorphicButtonAdapter >> buildWidget [
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled ;	
 		eventHandler: (MorphicEventHandler new on: #keyStroke send: #keyStroke:fromMorph: to: self).
+	
+	normalColorBlock := [ :aButton |
+							(aButton valueOfProperty: #noFill ifAbsent: [false]) 
+								ifTrue: [ SolidFillStyle color: Color transparent ]
+								ifFalse: [ SolidFillStyle color: self color ] ].
+	clickedColorBlock := [ :aButton | SolidFillStyle color: self color muchDarker ].
+	button theme: ((UIThemeDecorator theme: button theme)
+							property: #buttonNormalFillStyleFor: returnsValueOf: normalColorBlock;
+							property: #buttonMouseOverFillStyleFor: returnsValueOf: normalColorBlock;
+							property: #buttonPressedFillStyleFor: returnsValueOf: clickedColorBlock;
+							yourself).
 	^ button
 ]
 

@@ -92,7 +92,11 @@ OSSDL2WindowHandle >> deliverGlobalEvent: aGlobalEvent [
 
 { #category : #initialize }
 OSSDL2WindowHandle >> destroy [
-	handle ifNotNil: [ handle destroy ].
+	handle ifNotNil: [ :validHandle | 
+		OSSDL2Driver current unregisterWindowWithId: validHandle windowID.
+		validHandle destroy
+	].
+
 	renderer := nil.
 	handle := nil.
 	osWindow := nil
@@ -452,6 +456,12 @@ OSSDL2WindowHandle >> visitWindowEvent: windowEvent [
 	
 	windowEvent event = SDL_WINDOWEVENT_EXPOSED ifTrue: [
 		^ ((OSWindowExposeEvent for: osWindow) timestamp: windowEvent timestamp) deliver.
+	].
+	windowEvent event = SDL_WINDOWEVENT_HIDDEN ifTrue: [ 
+		^ (OSWindowHiddenEvent for: osWindow) deliver.
+	].
+	windowEvent event = SDL_WINDOWEVENT_SHOWN ifTrue: [ 
+		^ ((OSWindowShownEvent for: osWindow) timestamp: windowEvent timestamp) deliver.
 	].
 	windowEvent event = SDL_WINDOWEVENT_CLOSE ifTrue: [ 
 		^ (OSWindowCloseEvent for: osWindow) deliver.

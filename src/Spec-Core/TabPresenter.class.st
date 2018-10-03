@@ -177,16 +177,16 @@ TabPresenter >> menuHolder [
 	^ menuHolder
 ]
 
-{ #category : #api }
-TabPresenter >> model: aComposablePresenter [
-	aComposablePresenter owner: self.
-	self retrievingBlock: [ aComposablePresenter buildWithSpec asWidget ]
-]
-
 { #category : #'api-valueHolder' }
 TabPresenter >> morphHolder [
 
 	^ morphHolder
+]
+
+{ #category : #api }
+TabPresenter >> presenter: aComposablePresenter [
+	aComposablePresenter owner: self.
+	self retrievingBlock: [ aComposablePresenter buildWithSpec asWidget ]
 ]
 
 { #category : #api }

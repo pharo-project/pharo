@@ -117,11 +117,6 @@ DiskStore >> basenameFromEntry: entry [
 ]
 
 { #category : #private }
-DiskStore >> basenameFromNode: aNode [
-	^ aNode at: 1
-]
-
-{ #category : #private }
 DiskStore >> basicCreationTimeOf: anEntry [
 	" the entry contains the seconds since the squeak epoch in local time"
 	^  (DateAndTime fromSeconds: (anEntry at: 2) offset: 0) translateTo: DateAndTime localOffset
@@ -293,10 +288,71 @@ DiskStore >> deviceIdOf: aPath [
 ]
 
 { #category : #public }
+DiskStore >> directoryAt: aPath  directoryNodesDo: aBlock [
+	^ self 
+		directoryAt: aPath 
+		nodesDo: [ :node |
+			(self basicIsDirectory: node) 
+				ifTrue: [ aBlock value: node ]].
+]
+
+{ #category : #public }
+DiskStore >> directoryAt: aPath fileNodesDo: aBlock [
+	^ self 
+		directoryAt: aPath 
+		nodesDo: [ :node |
+			(self basicIsDirectory: node) 
+				ifFalse: [ aBlock value: node ]].
+]
+
+{ #category : #public }
+DiskStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
+
+	^[ self directoryAt: aPath nodesDo: aBlock ]
+		on: DirectoryDoesNotExist, FileDoesNotExistException
+		do: [ absentBlock value ].
+
+]
+
+{ #category : #private }
+DiskStore >> directoryAt: aPath nodesDo: aBlock [
+
+	| pathString openDir dirPointer entryData fileName attributes targetName |
+	
+	pathString := File encodePathString: (self stringFromPath: aPath).
+	(self isDirectory: aPath) ifFalse:
+		[ ^self signalDirectoryDoesNotExist: aPath ].
+
+	openDir := File primOpendir: pathString.
+	openDir ifNil: [ ^nil ].
+	(openDir isArray and: [openDir size = 3]) ifTrue: [ 
+		"New VM (FileAttributesPlugin > 1.4)"
+		dirPointer := openDir at: 3.
+		entryData := openDir. ]
+	ifFalse: [ 
+		"Old VM (FileAttributesPlugin <= 1.4.x)"
+		dirPointer := openDir.
+		entryData := File primReaddir: dirPointer ].
+	[
+		[ entryData notNil ] whileTrue:
+			[
+				fileName := entryData first.
+				entryData at: 1 put: (File decodePathString: fileName).
+				attributes := entryData at: 2.
+				attributes ifNotNil: 
+					[ targetName := attributes at: 1.
+					targetName ifNotNil: [ attributes at: 1 put: (File decodePathString: targetName) ] ].
+				aBlock value: entryData.
+				entryData := File primReaddir: dirPointer.
+			]
+	] ensure: [ File primClosedir: dirPointer ].
+]
+
+{ #category : #public }
 DiskStore >> entryFromNode: node path: path for: aFileSystem [
 
 	| entryPath |
-	entryPath := path / (self basenameFromNode: node).
+	entryPath := path / (self basenameFromEntry: node).
 	^DiskDirectoryEntry reference: (FileReference fileSystem: aFileSystem path: entryPath).
 
 ]
@@ -406,6 +462,7 @@ DiskStore >> isSocket: aPath [
 DiskStore >> isSymlink: aPath [
 	"Answer a boolean indicating whether aPath is a symbolic link"
 
+	aPath isRoot ifTrue: [ ^false ].
 	^File isSymlink: (self stringFromPath: aPath)
 ]
 
@@ -429,61 +486,15 @@ DiskStore >> modificationTimeOf: aPath [
 
 { #category : #private }
 DiskStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
-	
-	| entry |
-	
-	aPath isRoot ifTrue: [ ^ presentBlock value: self rootNode ].
-	
-	entry := self basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: absentBlock
-		ifFalse: [
-			entry at: 1 put: aPath basename.
-			presentBlock value: entry ].
-]
+	"FileSystemStore provides a general implementation of the attributes originally supported by FilePlugin.  This assumes always retrieving a set of attributes and accessing the required attribute.  However this is expensive for the disk system (one or more Arrays has to be instantiated and garbage collected for a single attribute).  FileAttributesPlugin allows file attributes to be retrieved one at a time, so this method should never be used for DiskStore"
 
-{ #category : #private }
-DiskStore >> nodesAt: aPath do: aBlock [
-
-	| pathString dirPointer entryData fileName attributes targetName |
-	
-	pathString := File encode: (self stringFromPath: aPath).
-	(self isDirectory: aPath) ifFalse:
-		[ ^self signalDirectoryDoesNotExist: aPath ].
-
-	dirPointer := File primOpendir: pathString.
-	dirPointer ifNil: [ ^nil ].
-	[
-		entryData := File primReaddir: dirPointer.
-		[ entryData notNil ] whileTrue:
-			[
-				fileName := entryData first.
-				entryData at: 1 put: (File decode: fileName).
-				attributes := entryData at: 2.
-				attributes ifNotNil: 
-					[ targetName := attributes at: 1.
-					targetName ifNotNil: [ attributes at: 1 put: (File decode: targetName) ] ].
-				aBlock value: entryData.
-				entryData := File primReaddir: dirPointer.
-			]
-	] ensure: [ File primClosedir: dirPointer ].
+	^self shouldNotImplement
 ]
 
 { #category : #accessing }
 DiskStore >> numberOfHardLinks: aPath [
 	"Return the number of hard links for the File described by aPath"
 	^File fileAttribute: (self stringFromPath: aPath) number: 5
-]
-
-{ #category : #public }
-DiskStore >> openFileStream: path writable: writable [
-	| fullPath |
-	fullPath := self stringFromPath: path.
-	"redirect over the default implementation"
-	^ writable 
-		ifFalse: [ FileStream readOnlyFileNamed: fullPath ]
-		ifTrue: [ FileStream fileNamed: fullPath ]
 ]
 
 { #category : #accessing }

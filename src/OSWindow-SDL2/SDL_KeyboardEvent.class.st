@@ -37,13 +37,13 @@ SDL_KeyboardEvent class >> fieldsDesc [
 { #category : #'accessing structure variables' }
 SDL_KeyboardEvent >> keysym [
 	"This method was automatically generated"
-	^SDL_Keysym fromHandle: (handle referenceStructAt: OFFSET_KEYSYM length: 16)
+	^ SDL_Keysym fromHandle: (handle referenceStructAt: OFFSET_KEYSYM length: SDL_Keysym byteSize)
 ]
 
 { #category : #'accessing structure variables' }
 SDL_KeyboardEvent >> keysym: anObject [
 	"This method was automatically generated"
-	handle structAt: OFFSET_KEYSYM put: anObject getHandle length: 16.
+	handle structAt: OFFSET_KEYSYM put: anObject getHandle length: SDL_Keysym byteSize
 ]
 
 { #category : #'accessing structure variables' }

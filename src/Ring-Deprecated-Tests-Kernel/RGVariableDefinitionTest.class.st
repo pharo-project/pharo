@@ -4,7 +4,7 @@ SUnit tests for variable definitions
 Class {
 	#name : #RGVariableDefinitionTest,
 	#superclass : #TestCase,
-	#category : #'Ring-Deprecated-Tests-Kernel'
+	#category : #'Ring-Deprecated-Tests-Kernel-Base'
 }
 
 { #category : #deprecation }

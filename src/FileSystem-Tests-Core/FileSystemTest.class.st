@@ -460,7 +460,7 @@ FileSystemTest >> testFile [
 FileSystemTest >> testFileNames [
 	"Ensure that file name character encoding works properly"
 	| reference |
-	#('test one' 'test with two' 'test-äöü' 'test.äöü') do: [ :each |
+	#('test one' 'test with two' 'test-äöü' 'test.äöü' 'test-žřč') do: [ :each |
 		reference := filesystem workingDirectory / each.
 		"Enclose assertion failure text in blocks so that the string manipulation 
 		only occurs on failure (which should be uncommon).

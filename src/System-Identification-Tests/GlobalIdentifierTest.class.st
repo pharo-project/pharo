@@ -171,7 +171,7 @@ GlobalIdentifierTest >> testDefault [
 GlobalIdentifierTest >> testDoNotStoreIfHomeDoesNotExists [
 	"Ignore persistence if HOME directory does not exists.
 	In the case that the image is deployed on a server, HOME directory may not exists.
-	See issue https://pharo.fogbugz.com/f/cases/19944."
+	See issue https://pharo.manuscript.com/f/cases/19944."
 	| strategy |
 	strategy := identifier persistenceStrategy.
 	[ strategy ] whileNotNil: [ 
@@ -204,7 +204,7 @@ GlobalIdentifierTest >> testEnsure [
 { #category : #tests }
 GlobalIdentifierTest >> testPreferenceFilesNotCollideWithRealPreferences [
 	"Ensure that setUp is done correctly and we do not override or change production preferences.
-	See https://pharo.fogbugz.com/f/cases/19501"
+	See https://pharo.manuscript.com/f/cases/19501"
 	| strategy |
 	strategy := identifier persistenceStrategy.
 	[ strategy ] whileNotNil: [ 

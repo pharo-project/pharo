@@ -21,7 +21,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Text-Core'
+	#category : #'Text-Core-Attributes'
 }
 
 { #category : #utilities }
