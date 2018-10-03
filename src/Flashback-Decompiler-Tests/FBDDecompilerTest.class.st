@@ -1,10 +1,13 @@
+"
+SUnit tests for FBSDecompiler
+"
 Class {
 	#name : #FBDDecompilerTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'decompiler'
 	],
-	#category : #'Flashback-Decompiler-Tests'
+	#category : #'Flashback-Decompiler-Tests-Base'
 }
 
 { #category : #testing }
