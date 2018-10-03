@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'maskForm'
 	],
-	#category : #'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects-Cursors'
 }
 
 { #category : #'instance creation' }
