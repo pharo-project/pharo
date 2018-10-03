@@ -124,6 +124,22 @@ DiskFileAttributesTests >> testFileSize [
 ]
 
 { #category : #tests }
+DiskFileAttributesTests >> testFromPlatformPath [
+
+	| testString platformByteArray nativeByteArray |
+
+	testString := '1234žřč'.
+	platformByteArray := { 
+		#Win32 -> #[49 0 50 0 51 0 52 0 126 1 89 1 13 1].
+		#Win64 -> #[49 0 50 0 51 0 52 0 126 1 89 1 13 1].
+		#unix -> testString utf8Encoded.
+		#'Mac OS' -> #[49 50 51 52 122 204 140 114 204 140 99 204 140].
+	 } asDictionary at: OSPlatform current platformName asSymbol.
+	nativeByteArray := File fromPlatformPath: platformByteArray.
+	self assert: nativeByteArray utf8Decoded equals: testString.
+]
+
+{ #category : #tests }
 DiskFileAttributesTests >> testIsBlock [
 
 	self collectionAssert: [ :each | each isBlock ] equals: false.
@@ -264,6 +280,22 @@ DiskFileAttributesTests >> testTargetFile [
 	self attributesCollectionDo: [ :each |
 		self should: [ each targetFileReference ] raise: FileAttributeNotSupported ].
 
+]
+
+{ #category : #tests }
+DiskFileAttributesTests >> testToPlatformPath [
+
+	| testString platformByteArray expectedByteArray |
+
+	testString := '1234žřč'.
+	platformByteArray := File toPlatformPath: testString.
+	expectedByteArray := { 
+		#Win32 -> #[49 0 50 0 51 0 52 0 126 1 89 1 13 1].
+		#Win64 -> #[49 0 50 0 51 0 52 0 126 1 89 1 13 1].
+		#unix -> testString utf8Encoded.
+		#'Mac OS' -> #[49 50 51 52 122 204 140 114 204 140 99 204 140].
+	 } asDictionary at: OSPlatform current platformName asSymbol.
+	self assert: platformByteArray equals: expectedByteArray.
 ]
 
 { #category : #tests }

@@ -312,6 +312,13 @@ File class >> flush: id [
 	self primitiveFailed
 ]
 
+{ #category : #attributes }
+File class >> fromPlatformPath: aByteArray [
+	"Convert the supplied platform encoded string to the native (UTF8) equivalent"
+
+	^self primFromPlatformPath: aByteArray
+]
+
 { #category : #'primitives-errors' }
 File class >> getAttributesFailed [
 
@@ -734,6 +741,14 @@ File class >> primFileMasks [
 	^self signalError: error for: 'primFileMasks'
 ]
 
+{ #category : #'primitives-file attributes' }
+File class >> primFromPlatformPath: aByteArray [
+	"Convert the supplied platform encoded string to the native (UTF8) equivalent"
+
+	<primitive: 'primitivePlatToStPath' module: 'FileAttributesPlugin' error: error>
+	^self signalError: error for: 'primToPlatformPath:'
+]
+
 { #category : #'primitives-windows' }
 File class >> primLogicalDrives [
 	"Answer the windows logical drive mask"
@@ -784,6 +799,14 @@ File class >> primRewinddir: directoryPointerBytes [
 	<primitive: 'primitiveRewinddir' module: 'FileAttributesPlugin' error: error>
 	^self signalError: error for: 'primRewinddir:'
 
+]
+
+{ #category : #'primitives-file attributes' }
+File class >> primToPlatformPath: aByteArray [
+	"Convert the supplied UTF8 encoded string to the platform encoded equivalent"
+
+	<primitive: 'primitiveStToPlatPath' module: 'FileAttributesPlugin' error: error>
+	^self signalError: error for: 'primToPlatformPath:'
 ]
 
 { #category : #'primitives-file' }
@@ -998,6 +1021,13 @@ File class >> sync: id [
 File class >> timeConversionFailed [
 
 	^-5
+]
+
+{ #category : #attributes }
+File class >> toPlatformPath: aString [
+	"Convert the supplied string to the platform encoded equivalent"
+
+	^self primToPlatformPath: (self encodePathString: aString)
 ]
 
 { #category : #'primitives-file' }
