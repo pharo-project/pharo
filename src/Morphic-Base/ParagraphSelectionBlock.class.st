@@ -1,3 +1,6 @@
+"
+A selection block in a text paragraph 
+"
 Class {
 	#name : #ParagraphSelectionBlock,
 	#superclass : #Object,

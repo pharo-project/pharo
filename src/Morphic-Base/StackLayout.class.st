@@ -1,3 +1,6 @@
+"
+A stack based layout
+"
 Class {
 	#name : #StackLayout,
 	#superclass : #LayoutPolicy,

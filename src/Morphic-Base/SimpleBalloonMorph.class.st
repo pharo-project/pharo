@@ -1,3 +1,6 @@
+"
+A simple ballon morph with straight segments
+"
 Class {
 	#name : #SimpleBalloonMorph,
 	#superclass : #BalloonMorph,
