@@ -1,12 +1,8 @@
 "
-Flashback is a Decomplier for Pharo code.
-
-My job is to decompile a compiledMethod to get valid Abstract Syntax Tree (AST).
-
-I contains all the test of the decompiler.
+Includes unit tests for Flashback - a Decomplier for Pharo code
 "
 Class {
 	#name : #ManifestFlashbackDecompilerTests,
 	#superclass : #PackageManifest,
-	#category : #'Flashback-Decompiler-Tests'
+	#category : #'Flashback-Decompiler-Tests-Manifest'
 }
