@@ -1,3 +1,6 @@
+"
+SUnit tests for RBComment
+"
 Class {
 	#name : #RBCommentTest,
 	#superclass : #TestCase,

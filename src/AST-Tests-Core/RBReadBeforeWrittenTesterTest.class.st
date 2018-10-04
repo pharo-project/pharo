@@ -1,3 +1,6 @@
+"
+SUnit tests for RBReadBeforeWrittenTester
+"
 Class {
 	#name : #RBReadBeforeWrittenTesterTest,
 	#superclass : #TestCase,
