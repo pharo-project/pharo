@@ -11,7 +11,7 @@ Class {
 		'lastFontForegroundColor',
 		'lastFontBackgroundColor'
 	],
-	#category : #'Graphics-Primitives'
+	#category : #'Graphics-Primitives-BitBlt'
 }
 
 { #category : #accessing }
