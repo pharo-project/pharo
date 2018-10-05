@@ -758,6 +758,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 spec group: 'Refactoring2-Group' with: #(
 	'Refactoring2-Core'
 	'Refactoring2-Transformations'
+	'Refactoring2-Transformations-Tests'
 ).
 
 spec group: 'GT&QA-Group' with: #(
