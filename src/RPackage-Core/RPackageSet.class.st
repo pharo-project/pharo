@@ -22,7 +22,7 @@ Class {
 		'cacheActive',
 		'cachePackages'
 	],
-	#category : #'RPackage-Core'
+	#category : #'RPackage-Core-Base'
 }
 
 { #category : #private }
