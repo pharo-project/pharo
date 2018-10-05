@@ -48,6 +48,12 @@ for f in Pharo7.0-32bit-*.zip; do
 	
 	mv "tempconversion-64.image" "Pharo7.0-64bit-$HASH.image"
 	mv "tempconversion-64.changes" "Pharo7.0-64bit-$HASH.changes"
+	
+	# fix the display size in the image header (position 40 [zero based], 24 for 32-bit image)
+	# in older versions we must use octal representation
+	printf "\231\002\320\003" > displaySize.bin
+	dd if="displaySize.bin" of="Pharo7.0-64bit-$HASH.image" bs=1 seek=40 count=4 conv=notrunc
+	
 	echo "70" > pharo.version
 	zip Pharo7.0-64bit-$HASH.zip Pharo7.0-64bit-$HASH.* ${IMAGENAME}.sources pharo.version
 	rm -f *.image *.changes *.sources
