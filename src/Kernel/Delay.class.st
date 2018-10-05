@@ -70,7 +70,9 @@ Delay class >> forDuration: aDuration [
 
 { #category : #'instance creation' }
 Delay class >> forMilliseconds: aNumber [
-	"Return a new Delay for the given number of milliseconds. Sending 'wait' to this Delay will cause the sender's process to be suspended for approximately that length of time."
+	"Return a new Delay for the given number of milliseconds. Sending 'wait' to this Delay will cause the sender's process to be suspended for approximately that length of time.
+	
+	WARNING: There may be a minimal delay time that depends on the system activity and setting of the idle process. See ProcessorScheduler class >> idleTime "
 
 	^ self new setDelay: aNumber forSemaphore: Semaphore new
 
