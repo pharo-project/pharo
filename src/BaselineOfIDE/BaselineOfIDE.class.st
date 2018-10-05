@@ -365,6 +365,7 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'Refactoring2-Core'.
 		spec package: 'Refactoring2-Transformations'.
+		spec package: 'Refactoring2-Transformations-Tests'.
 
       self groups: spec.
 	].
