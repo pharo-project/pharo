@@ -17,9 +17,9 @@ WelcomeHelp class >> bookName [
 { #category : #pages }
 WelcomeHelp class >> changeLog [
 	^ HelpTopic 
-		title: 'ChangeLog'
-		contents: (self heading: 'Highlights (aka New Stuff) in Pharo 7.0alpha'),
-'- moving the development process to git and github (see ',(self url: 'https://github.com/pharo-project/pharo'),')
+		title: 'Changelog'
+		contents: (self heading: 'Changelog highlights'),
+'- moving the development process to git and GitHub (see ',(self url: 'https://github.com/pharo-project/pharo'),')
 - bootstraping of a smaller image that will not include compiler/parser (Compiler and related packages are exported and loaded using a binary exporter named Hermes)
 - integration of Renraku quality framework
 - integration of WebBrowser
@@ -245,8 +245,8 @@ The catalog can be enabled in Spotter by enabling the "Display catalog projects 
 { #category : #pages }
 WelcomeHelp class >> welcome [
 	^ HelpTopic 
-		title: 'Welcome to Pharo 7.0alpha'
-		contents: (self heading: 'Pharo 7.0alpha'), 
+		title: 'Welcome to ', Smalltalk version
+		contents: (self heading: Smalltalk version), 
 		
 'Welcome to Pharo, an immersive live programming environment.
 
