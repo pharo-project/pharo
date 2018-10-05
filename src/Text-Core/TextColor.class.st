@@ -81,6 +81,12 @@ TextColor >> = other [
 		and: [other color = color]
 ]
 
+{ #category : #converting }
+TextColor >> asColor [ 
+
+	^ color
+]
+
 { #category : #accessing }
 TextColor >> color [
 	^ color
