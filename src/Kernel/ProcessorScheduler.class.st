@@ -1,5 +1,11 @@
 "
 My single instance, named Processor, coordinates the use of the physical processor by all Processes requiring service.
+
+My instances variables are managed by the VM. The VM has for role to choose which process should be executed and when.
+
+NB: DelayScheduler is THE HIGHEST priority code which is run in Pharo. See DelayScheduler for additional comments.
+
+
 "
 Class {
 	#name : #ProcessorScheduler,
@@ -121,6 +127,7 @@ ProcessorScheduler >> highIOPriority [
 { #category : #accessing }
 ProcessorScheduler >> highestPriority [
 	"Answer the number of priority levels currently available for use."
+	"NB: If you are looking to set a priority when forking a process, please use the methods in 'priority names' protocol"
 
 	^quiescentProcessLists size
 ]
@@ -283,6 +290,8 @@ ProcessorScheduler >> terminateActive [
 ProcessorScheduler >> timingPriority [
 	"Answer the priority at which the system processes keeping track of real 
 	time should run."
+	"BEFORE USING IT: please read the 'Original word of advice' in the DelayScheduler class comment. 
+	TL;DR: for top priority processes use 'Processor timingPriority - 1' except if you really know what you are doing!"
 
 	^TimingPriority
 ]

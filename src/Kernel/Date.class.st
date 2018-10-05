@@ -78,6 +78,7 @@ Date class >> today [
 
 { #category : #accessing }
 Date >> asDate [
+	"(Date year: 2018 month: 9 day: 28) asDate >>> '28 September 2018'"
 
 	^ self
 ]
@@ -91,8 +92,9 @@ Date >> dayMonthYearDo: aBlock [
 
 { #category : #'comparing - ignore timezone' }
 Date >> equals: aDate [
-    "Perform a time zone independent comparison of the dates, i.e. only compare day, month and year.
+	"Perform a time zone independent comparison of the dates, i.e. only compare day, month and year.
 	To compare with time zones, use #="
+	"Date today equals: Date yesterday >>> false"
 
     ^self year = aDate year and: [
         self monthIndex = aDate monthIndex and:

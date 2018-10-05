@@ -7,7 +7,7 @@ Load type:
 Class {
 	#name : #BaselineOfAthens,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfAthens
+	#category : #'BaselineOfAthens-Baseline'
 }
 
 { #category : #baseline }

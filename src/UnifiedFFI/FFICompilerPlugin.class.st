@@ -65,7 +65,8 @@ FFICompilerPlugin class >> defaultFfiCalloutSelectors [
 FFICompilerPlugin class >> initialize [
 	FFICalloutSelectors := IdentitySet
 		withAll: self defaultFfiCalloutSelectors.
-	self initializeFfiCalloutSelectorsListUpdate
+	self initializeFfiCalloutSelectorsListUpdate.
+	self install
 ]
 
 { #category : #initialization }
@@ -80,8 +81,9 @@ FFICompilerPlugin class >> initializeFfiCalloutSelectorsListUpdate [
 FFICompilerPlugin class >> install [
 	<script>
 	(CompilationContext defaultTransformationPlugins includes: self)
-		ifFalse: [ CompilationContext addDefaultTransformationPlugin: self.
-			self recompileSenders ]
+		ifTrue: [ ^ self ].
+	CompilationContext addDefaultTransformationPlugin: self.
+	self recompileSenders
 ]
 
 { #category : #private }

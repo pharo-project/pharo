@@ -89,19 +89,20 @@ FloatTest >> testCopySignTo [
       "Test the copy sign functions"
       positives do: [:aPositiveSign |
               positives do: [:aPositive |
-                      self assert: (aPositiveSign copySignTo: aPositive) = aPositive].
+                      self assert: (aPositiveSign copySignTo: aPositive) equals: aPositive].
               negatives do: [:aNegative |
-                      self assert: (aPositiveSign copySignTo: aNegative) = aNegative negated].
-              (aPositiveSign copySignTo: zero) sign = 0.
-              (aPositiveSign copySignTo: negz) sign = 0].
+                      self assert: (aPositiveSign copySignTo: aNegative) equals: aNegative negated].
+              
+				  self assert: (aPositiveSign copySignTo: zero) sign equals: 0.
+              self assert: (aPositiveSign copySignTo: negz) sign equals: 0].
 
       negatives do: [:aNegativeSign |
               positives do: [:aPositive |
-                      self assert: (aNegativeSign copySignTo: aPositive) = aPositive negated].
+                      self assert: (aNegativeSign copySignTo: aPositive) equals: aPositive negated].
               negatives do: [:aNegative |
-                      self assert: (aNegativeSign copySignTo: aNegative) = aNegative].
-              (aNegativeSign copySignTo: zero) sign = -1.
-              (aNegativeSign copySignTo: negz) sign = -1]
+                      self assert: (aNegativeSign copySignTo: aNegative) equals: aNegative].
+              self assert: (aNegativeSign copySignTo: zero) sign equals: 0.
+              self assert: (aNegativeSign copySignTo: negz) sign equals: 0]
 ]
 
 { #category : #'tests - arithmetic' }
@@ -479,20 +480,20 @@ FloatTest >> testSign [
                       self assert: (aPositive sign: aPositiveSign) equals: aPositive].
               negatives do: [:aNegative |
                       self assert: (aNegative sign: aPositiveSign) equals: aNegative negated].
-              (zero sign: aPositiveSign) sign = 0.
-              (negz sign: aPositiveSign) sign = 0.
-              (zero sign: aPositiveSign) signBit = 0.
-              (negz sign: aPositiveSign) signBit = 0].
+              self assert: (zero sign: aPositiveSign) sign equals: 0.
+              self assert: (negz sign: aPositiveSign) sign equals: 0.
+              self assert: (zero sign: aPositiveSign) signBit equals: 0.
+              self assert: (negz sign: aPositiveSign) signBit equals: 0].
 
       negatives do: [:aNegativeSign |
               positives do: [:aPositive |
                       self assert: (aPositive sign: aNegativeSign) equals: aPositive negated].
               negatives do: [:aNegative |
                       self assert: (aNegative sign: aNegativeSign) equals: aNegative].
-              (zero sign: aNegativeSign) sign = 0.
-              (negz sign: aNegativeSign) sign = 0.
-              (zero sign: aNegativeSign) signBit = 1.
-              (negz sign: aNegativeSign) signBit = 1]
+              self assert: (zero sign: aNegativeSign) sign equals: 0.
+              self assert: (negz sign: aNegativeSign) sign equals: 0.
+              self assert: (zero sign: aNegativeSign) signBit equals: 1.
+              self assert: (negz sign: aNegativeSign) signBit equals: 1]
 ]
 
 { #category : #'tests - printing' }

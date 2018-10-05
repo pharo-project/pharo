@@ -372,7 +372,7 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 
 { #category : #private }
 OpalCompiler >> doSemanticAnalysis [
-	^[ast doSemanticAnalysisInContext: self compilationContext] 
+	^[ast doSemanticAnalysis] 
 		on: OCSemanticError 
 		do: [ :ex | ex defaultAction. ^ self compilationContext failBlock value ]
 ]

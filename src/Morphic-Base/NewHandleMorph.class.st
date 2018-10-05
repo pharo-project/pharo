@@ -1,3 +1,6 @@
+"
+A more recent implementation of a handle morph
+"
 Class {
 	#name : #NewHandleMorph,
 	#superclass : #HandleMorph,

@@ -2,12 +2,15 @@ Extension { #name : #Date }
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> addDays: dayCount [ 
+	"(Date year: 2018 month: 9 day: 28) addDays: 3 >>> '1 October 2018'"
 
 	^ (self asDateAndTime + (dayCount days)) asDate
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> addMonths: monthCount [ 
+	"(Date year: 2018 month: 9 day: 28) addMonths: 3 >>> '28 December 2018'"
+	
 	|year month maxDaysInMonth day |
 	year := self year + (monthCount + self monthIndex - 1 // 12).
 	month := self monthIndex + monthCount - 1 \\ 12 + 1.
@@ -57,6 +60,7 @@ Date class >> daysInYear: yearInteger [
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> ddmmyyyy [
 	"Print the receiver  in standard French format dd/mm/yyyy."
+	"(Date year: 2018 month: 9 day: 28) ddmmyyyy >>> '28/9/2018'"
 
 	^ self printFormat: #(1 2 3 $/ 1 1)
 
@@ -145,19 +149,24 @@ Date class >> julianDayNumber: aJulianDayNumber offset: aTimeZoneOffset [
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> mmddyyyy [
 	"Print the receiver in standard U.S.A format mm/dd/yyyy.
-	Note that the name here is slightly misleading -- the month and day numbers don't show leading zeros, 
+	Note that the name here is slightly misleading -- the month and day numbers don't show leading zeros,
 	so that for example February 1 1996 is 2/1/96"
+	"(Date year: 2018 month: 9 day: 28) mmddyyyy >>> '9/28/2018'"
 
 	^ self printFormat: #(2 1 3 $/ 1 1)
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> month [
+	"(Date year: 2018 month: 9 day: 28) month >>> 'September 2018'"
+
 	^ self asMonth
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> monthIndex [
+	"(Date year: 2018 month: 9 day: 28) monthIndex >>> 9"
+		
 	^ super month
 ]
 
@@ -194,6 +203,7 @@ Date class >> newDay: dayCount year: yearInteger [
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> onNextMonth [
+	"(Date year: 2018 month: 9 day: 28) onNextMonth >>> '28 October 2018'"
 
 	^ self addMonths: 1
 
@@ -201,6 +211,7 @@ Date >> onNextMonth [
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> onPreviousMonth [
+	"(Date year: 2018 month: 9 day: 28) onPreviousMonth >>> '28 August 2018'"
 
 	^ self addMonths: -1
 
@@ -209,6 +220,7 @@ Date >> onPreviousMonth [
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> previous: dayName [ 
 	"Answer the previous date whose weekday name is dayName."
+	"(Date year: 2018 month: 9 day: 28) previous: 'Sunday' >>> '23 September 2018'"
 
 	| days |
 	days := 7 + self weekdayIndex - (self class dayOfWeek: dayName) \\ 7.
@@ -300,12 +312,14 @@ Date >> storeOn: aStream [
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> subtractDate: aDate [ 
 	"Answer the number of days between self and aDate"
+	"(Date year: 2018 month: 9 day: 28) subtractDate: '27 September 2018' >>> 1"
 
 	^ (self start - aDate asDateAndTime) days
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> subtractDays: dayCount [ 
+	"(Date year: 2018 month: 9 day: 28) subtractDays: 1 >>> '27 September 2018'"
 
 	^ (self asDateAndTime - (dayCount days)) asDate
 ]
@@ -325,6 +339,7 @@ Date class >> week: week day: dayOfWeek [
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> weekday [
 	"Answer the name of the day of the week on which the receiver falls."
+	"(Date year: 2018 month: 9 day: 28) weekday >>> #Friday"
 
 	^ self dayOfWeekName
 ]
@@ -332,7 +347,8 @@ Date >> weekday [
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> weekdayIndex [
 	"Sunday=1, ... , Saturday=7"
-
+	"(Date year: 2018 month: 9 day: 28) weekdayIndex >>> 6"
+	
 	^ self dayOfWeek
 ]
 
@@ -366,7 +382,10 @@ Date class >> yesterday [
 Date >> yyyymmdd [
  	"Format the date in ISO 8601 standard like '2002-10-22'
 	The result is of fixed size 10 characters long.."
- 
+ 	"(Date year: 2018 month: 9 day: 28) yyyymmdd >>> '2018-09-28'"
+	
  	^ String new: 10 streamContents: [ :aStream |
 		self printOn: aStream format: #(3 2 1 $- 1 1 2) ]
+	
+	
 ]

@@ -716,7 +716,7 @@ Number >> sign [
 
 	self > 0 ifTrue: [^1].
 	self < 0 ifTrue: [^-1].
-	^self
+	^0
 ]
 
 { #category : #converting }

@@ -1,3 +1,6 @@
+"
+A pluggable text editor
+"
 Class {
 	#name : #PluggableTextMorph,
 	#superclass : #ScrollPane,
@@ -29,7 +32,7 @@ Class {
 		'ShowTextEditingState',
 		'StylingClass'
 	],
-	#category : #'Morphic-Widgets-Pluggable'
+	#category : #'Morphic-Widgets-Pluggable-Text'
 }
 
 { #category : #'instance creation' }
