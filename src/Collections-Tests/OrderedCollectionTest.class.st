@@ -15,7 +15,6 @@ Class {
 		'emptyButAllocatedWith20',
 		'otherCollection',
 		'indexCollection',
-		'elementExistsTwice',
 		'collectionWithElement',
 		'collectionOfFloat',
 		'collectionOfString',
@@ -31,9 +30,7 @@ Class {
 		'collectionOfCollectionsOfInts',
 		'collectionOfCollectionsOfStrings',
 		'withCharacters',
-		'collectionNotIncluded',
-		'simpleCollection',
-		'collectionWithSameBeginingEnd'
+		'simpleCollection'
 	],
 	#category : #'Collections-Tests-Sequenceable'
 }
