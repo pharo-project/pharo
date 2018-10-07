@@ -86,6 +86,11 @@ DelayBasicScheduler class >> defaultSuspendedDelaysHeap [
 ]
 
 { #category : #'as yet unclassified' }
+DelayBasicScheduler class >> onTicker: aTicker [
+	^ self onTicker: aTicker suspendedDelaysHeap: self defaultSuspendedDelaysHeap.
+]
+
+{ #category : #'as yet unclassified' }
 DelayBasicScheduler class >> onTicker: aDelayTicker suspendedDelaysHeap: aHeap [
 	"Facilitates unit tests examining the otherwise hidden suspendedDelays variable"
 	^self basicNew initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap
@@ -232,7 +237,11 @@ DelayBasicScheduler >> scheduleAtTimingPriority [
 	 This is the back-half of scheduling a delay. For front-half see #schedule:"
 	
 	(delayToStart timingPriorityScheduleTicker: ticker) ifFalse:[ ^self ]. "Already scheduled"
-
+	
+	"for debugging DelayIdleTicker"
+	(ticker tempMethod_DebugIdle) ifTrue: [ 
+		Transcript crShow: 'scheduling ', delayToStart millisecondDelayDuration printString, 'msecs'].
+	
 	activeDelay 
 		ifNil: [ activeDelay := delayToStart ]
 		ifNotNil: [

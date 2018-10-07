@@ -39,25 +39,28 @@ Delay class >> anyActive [
 ]
 
 { #category : #settings }
+Delay class >> delayScheduler: aDelayScheduler [
+	| oldScheduler |
+	aDelayScheduler startTimerEventLoop.
+	"To avoid lockup if a higher priority process preempts this method to schedule a delay,
+	the newScheduler needs to be in place before oldScheduler is stopped"
+	oldScheduler := Scheduler.
+	Scheduler := aDelayScheduler.
+	oldScheduler stopTimerEventLoop.
+	self inform: 'Delay scheduler set to ' , aDelayScheduler printString.
+	
+	
+]
+
+{ #category : #settings }
 Delay class >> delaySchedulerClass [
 	^Scheduler class
 ]
 
 { #category : #settings }
 Delay class >> delaySchedulerClass: aSchedulerClass [ 
-	| newScheduler oldScheduler |
 	self delaySchedulerClass = aSchedulerClass ifTrue:[ ^self ].
-	newScheduler := aSchedulerClass new.
-	(newScheduler respondsTo: #startTimerEventLoop) 
-		ifFalse: [ self error: 'New delay scheduler must respond to #startTimerEventLoop' ].
-	newScheduler startTimerEventLoop.
-	"To avoid lockup if a higher priority process preempts this method to schedule a delay,
-	the newScheduler needs to be in place before oldScheduler is stopped"
-	oldScheduler := Scheduler.
-	Scheduler := newScheduler.
-	oldScheduler stopTimerEventLoop.
-	self inform: 'Delay scheduler set to ' , aSchedulerClass printString.
-	
+	self delayScheduler: aSchedulerClass new.
 	
 ]
 
@@ -166,6 +169,12 @@ Delay class >> testCaseSupportTimingSemaphore [
 
 	^ Scheduler testCaseSupportTimingSemaphore.
 
+]
+
+{ #category : #'as yet unclassified' }
+Delay class >> ticker [
+	^ Scheduler ticker
+	
 ]
 
 { #category : #'instance creation' }
