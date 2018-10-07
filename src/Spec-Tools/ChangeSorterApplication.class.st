@@ -722,6 +722,12 @@ ChangeSorterApplication >> selectedClassIndex [
 	 ^ classesListPresenter selectedIndex
 ]
 
+{ #category : #accessing }
+ChangeSorterApplication >> selectedMessage [ 
+
+	^ self selectedClass >> self selectedSelector
+]
+
 { #category : #api }
 ChangeSorterApplication >> selectedSelector [
 
