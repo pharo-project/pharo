@@ -91,17 +91,21 @@ OSPlatform >> current [
 
 { #category : #accessing }
 OSPlatform >> currentWorkingDirectoryPath [
-	"This method calls the method getPwdViaFFI with arugement of a buffer size. By default it uses the defaultMaximumPathLength of each subclass as the buffer size."
-	^ self currentWorkingDirectoryPathWithBufferSize: self defaultMaximumPathLength
+	"Answer the current working directory (string).
+	First attempt to retrieve it with the named primitve, if that fails, try FFI."
+
+	^[ self primCurrentWorkingDirectoryPath ]
+		on: PrimitiveFailed 
+		do: [ self currentWorkingDirectoryPathWithBufferSize: self defaultMaximumPathLength ]
 
 ]
 
 { #category : #accessing }
 OSPlatform >> currentWorkingDirectoryPathWithBuffer: aByteString [
-	<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>
-	
-	^ (self getPwdViaFFI: aByteString size: aByteString size) 
-		ifNil:[ self error:'Insufficient buffer size to read current working directory: ' , aByteString size asString]
+	"This method calls the method getPwdViaFFI with arugement of a buffer size."
+
+	^ (self getPwdViaFFI: aByteString size: aByteString size) ifNil:
+		[ self error: 'Unable to read current working directory with buffer size: ', aByteString size asString]
 ]
 
 { #category : #accessing }
@@ -204,6 +208,14 @@ OSPlatform >> platformFamily [
 { #category : #compatbility }
 OSPlatform >> platformName [
 	^ self name
+]
+
+{ #category : #accessing }
+OSPlatform >> primCurrentWorkingDirectoryPath [
+	"Answer the current working directory of the process"
+
+	<primitive: 'primitiveGetCurrentWorkingDirectory' module: 'UnixOSProcessPlugin' error: ec>	
+	^self primitiveFailed: ec printString
 ]
 
 { #category : #initialize }
