@@ -195,6 +195,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Metacello-TestsMCCore'.	"standalone"
 		spec package: 'Metacello-TestsPlatform'.	"standalone"
 		spec package: 'Metacello-TestsReference'.	"standalone"
+		spec package: 'Metacello-Gitlab-Tests'.
 
 		spec package: 'RPackage-Tests'.
 		spec package: 'Monticello-Tests'.
@@ -567,7 +568,8 @@ spec group: 'Metacello-Tests-Group' with: #(
 	'Metacello-TestsMC'	
 	'Metacello-TestsMCCore'	
 	'Metacello-TestsPlatform'	
-	'Metacello-TestsReference'	
+	'Metacello-TestsReference'
+	'Metacello-Gitlab-Tests'
 ).
 
 spec group: 'Refactoring-Rules-Group' with: #(
