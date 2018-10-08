@@ -1,7 +1,10 @@
+"
+Includes the Spotter from GT Toolkit
+"
 Class {
 	#name : #ManifestGTSpotter,
 	#superclass : #PackageManifest,
-	#category : #'GT-Spotter'
+	#category : #'GT-Spotter-Manifest'
 }
 
 { #category : #'code-critics' }
