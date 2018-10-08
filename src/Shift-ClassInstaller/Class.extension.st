@@ -22,7 +22,7 @@ Class >> addSlot: aSlot [
 	^self classInstaller update: self to: [ :builder |
 		builder
 			fillFor: self;
-			slots: (self slots copyWith: aSlot)].
+			slots: (self localSlots copyWith: aSlot)].
 ]
 
 { #category : #'*Shift-ClassInstaller' }
