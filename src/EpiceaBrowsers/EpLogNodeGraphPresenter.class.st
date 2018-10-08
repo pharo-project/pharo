@@ -6,24 +6,23 @@ Usage:
 self open.
 "
 Class {
-	#name : #EpLogNodeGraphModel,
-	#superclass : #ComposableModel,
+	#name : #EpLogNodeGraphPresenter,
+	#superclass : #ComposablePresenter,
 	#instVars : [
-		'refreshButtonModel',
 		'directory',
 		'hiedraRulerController',
-		'selectDirectoryButtonModel',
-		'logNodesTreeModel',
-		'directoryTextModel',
 		'monitor',
-		'openSettingsButtonModel',
-		'hiedraCheckBoxModel'
+		'hiedraCheckBoxPresenter',
+		'logNodesTreePresenter',
+		'openSettingsButtonPresenter',
+		'refreshButtonPresenter',
+		'selectDirectoryButtonPresenter'
 	],
 	#category : #'EpiceaBrowsers-UI-Graph'
 }
 
 { #category : #'instance creation' }
-EpLogNodeGraphModel class >> open [
+EpLogNodeGraphPresenter class >> open [
 
 	^ self new
 		refresh;
@@ -32,32 +31,32 @@ EpLogNodeGraphModel class >> open [
 ]
 
 { #category : #accessing }
-EpLogNodeGraphModel class >> spec [
+EpLogNodeGraphPresenter class >> spec [
 	<spec: #default>
 
 	^ SpecLayout composed newColumn: [:column |
-		column add: #logNodesTreeModel.
+		column add: #logNodesTreePresenter.
 
 		column 
 			newRow: [ :row |
 				 row 
-					add: #hiedraCheckBoxModel;
-					add: #refreshButtonModel" width: self inputTextHeight";
-					add: #selectDirectoryButtonModel" width: self inputTextHeight";
-					add: #openSettingsButtonModel;
+					add: #hiedraCheckBoxPresenter;
+					add: #refreshButtonPresenter" width: self inputTextHeight";
+					add: #selectDirectoryButtonPresenter" width: self inputTextHeight";
+					add: #openSettingsButtonPresenter;
 					yourself ]
 			 height: self buttonHeight - 4 ].
 ]
 
 { #category : #accessing }
-EpLogNodeGraphModel >> directory [
+EpLogNodeGraphPresenter >> directory [
 
 	^ directory ifNil: [ 
 		directory := self monitor sessionStore baseLocator ]
 ]
 
 { #category : #accessing }
-EpLogNodeGraphModel >> directory: aFileReference [
+EpLogNodeGraphPresenter >> directory: aFileReference [
 
 	directory := aFileReference.
 	
@@ -65,14 +64,14 @@ EpLogNodeGraphModel >> directory: aFileReference [
 ]
 
 { #category : #'accessing widgets' }
-EpLogNodeGraphModel >> hiedraCheckBoxModel [
-	^ hiedraCheckBoxModel
+EpLogNodeGraphPresenter >> hiedraCheckBoxPresenter [
+	^ hiedraCheckBoxPresenter
 ]
 
 { #category : #initialization }
-EpLogNodeGraphModel >> initializeHiedraCheckBoxModel [
+EpLogNodeGraphPresenter >> initializeHiedraCheckBoxPresenter [
 
-	hiedraCheckBoxModel
+	self hiedraCheckBoxPresenter
 		help: 'Analyze and display connections between log files.';
 		label: 'Link logs';
 		state: false;
@@ -81,12 +80,12 @@ EpLogNodeGraphModel >> initializeHiedraCheckBoxModel [
 ]
 
 { #category : #initialization }
-EpLogNodeGraphModel >> initializeHiedraController [
+EpLogNodeGraphPresenter >> initializeHiedraController [
 
 	hiedraRulerController := HiRulerController new.
 	
-	hiedraRulerController treeModel: logNodesTreeModel.
-	logNodesTreeModel whenRootsChanged: [
+	hiedraRulerController treeModel: self logNodesTreePresenter.
+	self logNodesTreePresenter whenRootsChanged: [
 		hiedraRulerController updateFromTree ].
 	
 	hiedraRulerController rulerBuilder
@@ -97,21 +96,21 @@ EpLogNodeGraphModel >> initializeHiedraController [
 		linkBuilder targetsBlock: [ :node | node referencedNodes ] ].
 
 	"Set zero inset, else there is an empty gap cutting Hiedra links."
-	logNodesTreeModel rowInset: 0.
+	self logNodesTreePresenter rowInset: 0.
 
 ]
 
 { #category : #initialization }
-EpLogNodeGraphModel >> initializeLogNodesTreeModel [
+EpLogNodeGraphPresenter >> initializeLogNodesTreePresenter [
 
 	self initializeHiedraController.
 
-	logNodesTreeModel columns:	{	
+	self logNodesTreePresenter columns:	{	
 		hiedraRulerController newTreeColumnModel
 			initialWidth: 50
 			yourself.
 
-		TreeColumnModel new
+		TreeColumnPresenter new
 			displayBlock: [ :item | item content asMorph ];
 			yourself.
 	}.
@@ -119,28 +118,27 @@ EpLogNodeGraphModel >> initializeLogNodesTreeModel [
 ]
 
 { #category : #initialization }
-EpLogNodeGraphModel >> initializeOpenSettingsButtonModel [
+EpLogNodeGraphPresenter >> initializeOpenSettingsButtonPresenter [
 
-	openSettingsButtonModel
+	self openSettingsButtonPresenter
 		label: 'Dashboard';
 		action: [ self openDashboard ].
 ]
 
 { #category : #initialization }
-EpLogNodeGraphModel >> initializePresenter [ 
+EpLogNodeGraphPresenter >> initializePresenter [
 	super initializePresenter.
-	
-	self initializeSelectedDirectoryButtonModel.
-	self initializeLogNodesTreeModel.
-	self initializeRefreshButtonModel.
-	self initializeHiedraCheckBoxModel.
-	self initializeOpenSettingsButtonModel.
+	self initializeSelectedDirectoryButtonPresenter.
+	self initializeLogNodesTreePresenter.
+	self initializeRefreshButtonPresenter.
+	self initializeHiedraCheckBoxPresenter.
+	self initializeOpenSettingsButtonPresenter
 ]
 
 { #category : #initialization }
-EpLogNodeGraphModel >> initializeRefreshButtonModel [
+EpLogNodeGraphPresenter >> initializeRefreshButtonPresenter [
 
-	refreshButtonModel 
+	self refreshButtonPresenter 
 		help: 'Refresh logs from this directory';
 		icon: (self iconNamed: #smallUpdate);
 		label: 'Refresh';
@@ -148,9 +146,9 @@ EpLogNodeGraphModel >> initializeRefreshButtonModel [
 ]
 
 { #category : #initialization }
-EpLogNodeGraphModel >> initializeSelectedDirectoryButtonModel [
+EpLogNodeGraphPresenter >> initializeSelectedDirectoryButtonPresenter [
 	
-	selectDirectoryButtonModel 
+	self selectDirectoryButtonPresenter 
 		help: 'Select directory to browse logs (i.e. files with ombu extension)';
 		icon: (self iconNamed: #openIcon);
 		label: 'Directory';
@@ -159,67 +157,64 @@ EpLogNodeGraphModel >> initializeSelectedDirectoryButtonModel [
 ]
 
 { #category : #initialization }
-EpLogNodeGraphModel >> initializeWidgets [
+EpLogNodeGraphPresenter >> initializeWidgets [
 
-	self instantiateModels: {
-		#hiedraCheckBoxModel -> #CheckBoxModel.
-		#selectDirectoryButtonModel -> #ButtonModel.
-		#logNodesTreeModel -> #TreeModel.
-		#refreshButtonModel -> #ButtonModel.
-		#openSettingsButtonModel -> #ButtonModel.
+	self instantiatePresenters: {
+		#hiedraCheckBoxPresenter -> #CheckBoxPresenter.
+		#selectDirectoryButtonPresenter -> #ButtonPresenter.
+		#logNodesTreePresenter -> #TreePresenter.
+		#refreshButtonPresenter -> #ButtonPresenter.
+		#openSettingsButtonPresenter -> #ButtonPresenter.
 		}
 ]
 
 { #category : #refreshing }
-EpLogNodeGraphModel >> isMonitorDirectory [
+EpLogNodeGraphPresenter >> isMonitorDirectory [
 
 	^ self monitor sessionStore directory asFileReference = self directory asFileReference 
 ]
 
 { #category : #'accessing widgets' }
-EpLogNodeGraphModel >> logNodesTreeModel [
-	^ logNodesTreeModel
+EpLogNodeGraphPresenter >> logNodesTreePresenter [
+	^ logNodesTreePresenter
 ]
 
 { #category : #accessing }
-EpLogNodeGraphModel >> monitor [
+EpLogNodeGraphPresenter >> monitor [
 	
 	^ monitor ifNil: [ EpMonitor current ]
 ]
 
 { #category : #accessing }
-EpLogNodeGraphModel >> monitor: anEpMonitor [
+EpLogNodeGraphPresenter >> monitor: anEpMonitor [
 
 	monitor := anEpMonitor
 
 ]
 
 { #category : #private }
-EpLogNodeGraphModel >> openDashboard [
+EpLogNodeGraphPresenter >> openDashboard [
 
-	EpDashboardModel open
+	EpDashboardPresenter open
 ]
 
 { #category : #'accessing widgets' }
-EpLogNodeGraphModel >> openSettingsButtonModel [
-	^ openSettingsButtonModel
+EpLogNodeGraphPresenter >> openSettingsButtonPresenter [
+	^ openSettingsButtonPresenter
 ]
 
 { #category : #refreshing }
-EpLogNodeGraphModel >> refresh [
-
-	self refreshLogNodesTreeModel.
-
+EpLogNodeGraphPresenter >> refresh [
+	self refreshLogNodesTreePresenter
 ]
 
 { #category : #'accessing widgets' }
-EpLogNodeGraphModel >> refreshButtonModel [
-	^ refreshButtonModel
+EpLogNodeGraphPresenter >> refreshButtonPresenter [
+	^ refreshButtonPresenter
 ]
 
 { #category : #refreshing }
-EpLogNodeGraphModel >> refreshLogNodesTreeModel [
-
+EpLogNodeGraphPresenter >> refreshLogNodesTreePresenter [
 	| nodes |
 	nodes := #().
 	[	nodes := EpFileLogNode fromAllLogsIn: self directory.
@@ -235,30 +230,30 @@ EpLogNodeGraphModel >> refreshLogNodesTreeModel [
 		nodes := { EpMonitorLogNode for: self monitor }, nodes.
 	].
 
-	hiedraCheckBoxModel state ifTrue: [
+	self hiedraCheckBoxPresenter state ifTrue: [
 		nodes 
 			do: [ :node | node populateReferencedNodesWith: nodes ]
 			displayingProgress: ('Analyzing ', directory asString)].
 
-	logNodesTreeModel roots: nodes.
+	self logNodesTreePresenter roots: nodes.
 
 ]
 
 { #category : #accessing }
-EpLogNodeGraphModel >> rowSize [
+EpLogNodeGraphPresenter >> rowSize [
 
 	^ 23
 ]
 
 { #category : #private }
-EpLogNodeGraphModel >> selectDirectory [
+EpLogNodeGraphPresenter >> selectDirectory [
 
 	(UIManager default chooseDirectoryFrom: self directory)
 		ifNotNil: [ :selectedDirectory | self directory: selectedDirectory ]
 ]
 
 { #category : #'accessing widgets' }
-EpLogNodeGraphModel >> selectDirectoryButtonModel [
+EpLogNodeGraphPresenter >> selectDirectoryButtonPresenter [
 
-	^ selectDirectoryButtonModel
+	^ selectDirectoryButtonPresenter
 ]

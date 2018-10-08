@@ -5,19 +5,19 @@ Open with:
 self open
 "
 Class {
-	#name : #EpUnifiedBrowserModel,
-	#superclass : #ComposableModel,
+	#name : #EpUnifiedBrowserPresenter,
+	#superclass : #ComposablePresenter,
 	#instVars : [
-		'logModel',
-		'logNodesModel',
 		'monitorLog',
-		'refreshDeferrer'
+		'refreshDeferrer',
+		'logPresenter',
+		'logNodesPresenter'
 	],
 	#category : #'EpiceaBrowsers-UI-Unified'
 }
 
 { #category : #'instance creation' }
-EpUnifiedBrowserModel class >> open [
+EpUnifiedBrowserPresenter class >> open [
 
 	^ self new
 		refresh;
@@ -26,31 +26,31 @@ EpUnifiedBrowserModel class >> open [
 ]
 
 { #category : #accessing }
-EpUnifiedBrowserModel class >> spec [
+EpUnifiedBrowserPresenter class >> spec [
 	<spec: #default>
 
 	^ SpecLayout composed
 		newRow: [ :row |
 			row 
-				add: #logNodesModel origin: 0@0 corner: 0.4@1;
+				add: #logNodesPresenter origin: 0@0 corner: 0.4@1;
 				addSplitter;
-				add: #logModel origin: 0.4@0 corner: 1@1 ]
+				add: #logPresenter origin: 0.4@0 corner: 1@1 ]
 ]
 
 { #category : #accessing }
-EpUnifiedBrowserModel class >> taskbarIconName [
+EpUnifiedBrowserPresenter class >> taskbarIconName [
 
 	^ #recoverLostChangesIcon
 ]
 
 { #category : #specs }
-EpUnifiedBrowserModel class >> title [
+EpUnifiedBrowserPresenter class >> title [
 
 	^ 'Epicea - Code Changes'
 ]
 
 { #category : #accessing }
-EpUnifiedBrowserModel class >> worldMenuItemOn: aBuilder [
+EpUnifiedBrowserPresenter class >> worldMenuItemOn: aBuilder [
 	<worldMenu>
 
 	(aBuilder item: 'Code Changes')
@@ -62,24 +62,21 @@ EpUnifiedBrowserModel class >> worldMenuItemOn: aBuilder [
 ]
 
 { #category : #api }
-EpUnifiedBrowserModel >> initialExtent [ 
+EpUnifiedBrowserPresenter >> initialExtent [ 
 	^ 950 @ 650
 ]
 
 { #category : #initialization }
-EpUnifiedBrowserModel >> initializePresenter [
-
+EpUnifiedBrowserPresenter >> initializePresenter [
 	super initializePresenter.
-	
-	logNodesModel logNodesTreeModel
+	self logNodesPresenter logNodesTreePresenter
 		whenSelectedItemChanged: [ :items | self refreshWithLogSelected: items ].
-		
 	self initializeRefreshOnSessionUpdate.
-	self initializeWorkaroundToRefreshOnMonitorLogAnnouncement.
+	self initializeWorkaroundToRefreshOnMonitorLogAnnouncement
 ]
 
 { #category : #initialization }
-EpUnifiedBrowserModel >> initializeRefreshOnSessionUpdate [
+EpUnifiedBrowserPresenter >> initializeRefreshOnSessionUpdate [
 
 	| updatesAnnouncer |
 	updatesAnnouncer := EpMonitor current sessionStore announcer.
@@ -95,15 +92,15 @@ EpUnifiedBrowserModel >> initializeRefreshOnSessionUpdate [
 ]
 
 { #category : #initialization }
-EpUnifiedBrowserModel >> initializeWidgets [
+EpUnifiedBrowserPresenter >> initializeWidgets [
 
-	self instantiateModels: {
-		#logNodesModel -> #EpLogNodeGraphModel.
-		#logModel -> #EpLogBrowserModel }
+	self instantiatePresenters: {
+		#logNodesPresenter -> #EpLogNodeGraphPresenter.
+		#logPresenter -> #EpLogBrowserPresenter }
 ]
 
 { #category : #initialization }
-EpUnifiedBrowserModel >> initializeWorkaroundToRefreshOnMonitorLogAnnouncement [
+EpUnifiedBrowserPresenter >> initializeWorkaroundToRefreshOnMonitorLogAnnouncement [
 
 	monitorLog := EpMonitor current log.
 	refreshDeferrer := OmDeferrer 
@@ -122,41 +119,42 @@ EpUnifiedBrowserModel >> initializeWorkaroundToRefreshOnMonitorLogAnnouncement [
 ]
 
 { #category : #accessing }
-EpUnifiedBrowserModel >> logModel [
-	^ logModel
+EpUnifiedBrowserPresenter >> logNodesPresenter [
+	^ logNodesPresenter
 ]
 
 { #category : #accessing }
-EpUnifiedBrowserModel >> logNodesModel [
-	^ logNodesModel
+EpUnifiedBrowserPresenter >> logPresenter [
+	^ logPresenter
 ]
 
 { #category : #refreshing }
-EpUnifiedBrowserModel >> refresh [
+EpUnifiedBrowserPresenter >> refresh [
 
-	logNodesModel refresh.
+	self logNodesPresenter refresh.
 ]
 
 { #category : #refreshing }
-EpUnifiedBrowserModel >> refreshIfMonitorLogSelected [
+EpUnifiedBrowserPresenter >> refreshIfMonitorLogSelected [
 	"See initializeWorkaroundToRefreshOnMonitorLogAnnouncement"
-	
+
 	| item |
-	item := logNodesModel logNodesTreeModel selectedItem.
-	item ifNil: [ ^self ]. "Nothing to refresh"
-	item content isMonitor ifFalse: [ ^self ]. "Monitor log isn't selected"
-	logModel refresh.
+	item := self logNodesPresenter logNodesTreePresenter selectedItem.
+	item ifNil: [ ^ self ].	"Nothing to refresh"
+	item content isMonitor
+		ifFalse: [ ^ self ].	"Monitor log isn't selected"
+	self logPresenter refresh
 ]
 
 { #category : #refreshing }
-EpUnifiedBrowserModel >> refreshWithLogSelected: item [
+EpUnifiedBrowserPresenter >> refreshWithLogSelected: item [
 
 	| freshLog |
 	freshLog := item
 		ifNil: [ EpLog newNull ]
 		ifNotNil: [ item log ].
 	
-	logModel
+	self logPresenter
 		theLog: freshLog;
 		removeAllFilters;
 		refresh;

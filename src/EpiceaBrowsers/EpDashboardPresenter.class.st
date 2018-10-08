@@ -5,20 +5,20 @@ Open with:
 self open
 "
 Class {
-	#name : #EpDashboardModel,
-	#superclass : #ComposableModel,
+	#name : #EpDashboardPresenter,
+	#superclass : #ComposablePresenter,
 	#instVars : [
-		'enableMonitorButtonModel',
-		'createLogButtonModel',
 		'monitor',
-		'openSettingsButtonModel',
-		'currentSessionInfoModel'
+		'createLogButtonPresenter',
+		'currentSessionInfoPresenter',
+		'enableMonitorButtonPresenter',
+		'openSettingsButtonPresenter'
 	],
 	#category : #'EpiceaBrowsers-UI-Dashboard'
 }
 
 { #category : #'instance creation' }
-EpDashboardModel class >> open [
+EpDashboardPresenter class >> open [
 
 	^ self new
 		refresh;
@@ -27,43 +27,43 @@ EpDashboardModel class >> open [
 ]
 
 { #category : #specs }
-EpDashboardModel class >> spec [
+EpDashboardPresenter class >> spec [
 	<spec: #default>
 
 	^SpecLayout composed newColumn: [:column |
-		column add: #currentSessionInfoModel.
+		column add: #currentSessionInfoPresenter.
 		
 		column
 			newRow: [ :row |
 				row
-					add: #enableMonitorButtonModel;
-					add: #createLogButtonModel;
-					add: #openSettingsButtonModel;
+					add: #enableMonitorButtonPresenter;
+					add: #createLogButtonPresenter;
+					add: #openSettingsButtonPresenter;
 					yourself ]
 			height: self buttonHeight. 
 		]
 ]
 
 { #category : #icons }
-EpDashboardModel class >> taskbarIconName [
+EpDashboardPresenter class >> taskbarIconName [
 
 	^ #config
 
 ]
 
 { #category : #specs }
-EpDashboardModel class >> title [
+EpDashboardPresenter class >> title [
 
 	^ 'Epicea - Dashboard'
 ]
 
 { #category : #'accessing widgets' }
-EpDashboardModel >> createLogButtonModel [
-	^ createLogButtonModel
+EpDashboardPresenter >> createLogButtonPresenter [
+	^ createLogButtonPresenter
 ]
 
 { #category : #actions }
-EpDashboardModel >> createNewSessionLog [
+EpDashboardPresenter >> createNewSessionLog [
 	
 	| fileNameOrNil sessionStore |
 	sessionStore := self monitor sessionStore.
@@ -82,25 +82,25 @@ EpDashboardModel >> createNewSessionLog [
 ]
 
 { #category : #'accessing widgets' }
-EpDashboardModel >> currentSessionInfoModel [
-	^ currentSessionInfoModel
+EpDashboardPresenter >> currentSessionInfoPresenter [
+	^ currentSessionInfoPresenter
 ]
 
 { #category : #'accessing widgets' }
-EpDashboardModel >> enableMonitorButtonModel [
-	^ enableMonitorButtonModel
+EpDashboardPresenter >> enableMonitorButtonPresenter [
+	^ enableMonitorButtonPresenter
 ]
 
 { #category : #initialization }
-EpDashboardModel >> initialExtent [ 
+EpDashboardPresenter >> initialExtent [ 
 
 	^ 450 @ 200
 ]
 
 { #category : #initialization }
-EpDashboardModel >> initializeCreateLogButtonModel [
-
-	createLogButtonModel
+EpDashboardPresenter >> initializeCreateLogButtonPresenter [
+	
+	self createLogButtonPresenter
 		icon: (self iconNamed: #addIcon);
 		help: 'Start recording into new Log';
 		label: 'New session';
@@ -108,20 +108,20 @@ EpDashboardModel >> initializeCreateLogButtonModel [
 ]
 
 { #category : #initialization }
-EpDashboardModel >> initializeEnableMonitorButtonModel [
+EpDashboardPresenter >> initializeEnableMonitorButtonPresenter [
 
-	enableMonitorButtonModel
+	self enableMonitorButtonPresenter
 		help: 'Enable/disable the Epicea Monitor. When enabled, it logs code changes (and some IDE events such as MC load/save and refactorings) performed in this Pharo session.';
 		action: [ 
-			self monitor enabled: enableMonitorButtonModel state not.
+			self monitor enabled: self enableMonitorButtonPresenter state not.
 		].
 
 ]
 
 { #category : #initialization }
-EpDashboardModel >> initializeOpenSettingsButtonModel [
+EpDashboardPresenter >> initializeOpenSettingsButtonPresenter [
 
-	openSettingsButtonModel
+	self openSettingsButtonPresenter
 		help: 'Open Epicea''s system settings';
 		icon: (self iconNamed: #config);
 		label: 'More settings...';
@@ -129,26 +129,26 @@ EpDashboardModel >> initializeOpenSettingsButtonModel [
 ]
 
 { #category : #initialization }
-EpDashboardModel >> initializePresenter [ 
+EpDashboardPresenter >> initializePresenter [ 
 	super initializePresenter.
 	
-	self initializeCreateLogButtonModel.
-	self initializeEnableMonitorButtonModel.
-	self initializeOpenSettingsButtonModel.
+	self initializeCreateLogButtonPresenter.
+	self initializeEnableMonitorButtonPresenter.
+	self initializeOpenSettingsButtonPresenter.
 
 	"Listen announcers"
 	self initializeRefreshEnableMonitorButtonModelOnMonitorUpdate.
 ]
 
 { #category : #initialization }
-EpDashboardModel >> initializeRefreshEnableMonitorButtonModelOnMonitorUpdate [
+EpDashboardPresenter >> initializeRefreshEnableMonitorButtonModelOnMonitorUpdate [
 
 	| monitorAnnouncer |
 	monitorAnnouncer := self monitor announcer.
 
 	monitorAnnouncer weak
 		when: EpMonitorStateUpdated 
-		send: #refreshEnableMonitorButtonModel
+		send: #refreshEnableMonitorButtonPresenter
 		to: self.
 
 	self whenWindowChanged: [ :windowModel | 
@@ -158,31 +158,31 @@ EpDashboardModel >> initializeRefreshEnableMonitorButtonModelOnMonitorUpdate [
 ]
 
 { #category : #initialization }
-EpDashboardModel >> initializeWidgets [
+EpDashboardPresenter >> initializeWidgets [
 
-	self instantiateModels: {
-		#currentSessionInfoModel -> #TextModel.
-		#enableMonitorButtonModel -> #ButtonModel.
-		#openSettingsButtonModel -> #ButtonModel.
-		#createLogButtonModel -> #ButtonModel.
+	self instantiatePresenters: {
+		#currentSessionInfoPresenter -> #TextPresenter.
+		#enableMonitorButtonPresenter -> #ButtonPresenter.
+		#openSettingsButtonPresenter -> #ButtonPresenter.
+		#createLogButtonPresenter -> #ButtonPresenter.
 		}
 ]
 
 { #category : #accessing }
-EpDashboardModel >> monitor [
+EpDashboardPresenter >> monitor [
 	
 	^ monitor ifNil: [ EpMonitor current ]
 ]
 
 { #category : #accessing }
-EpDashboardModel >> monitor: anEpMonitor [
+EpDashboardPresenter >> monitor: anEpMonitor [
 
 	monitor := anEpMonitor.
-	self refreshEnableMonitorButtonModel.
+	self refreshEnableMonitorButtonPresenter
 ]
 
 { #category : #actions }
-EpDashboardModel >> openSettingsBrowser [
+EpDashboardPresenter >> openSettingsBrowser [
 	"Inspired on Glamour's code"
 
 	| settingsBrowser settingsWindow |
@@ -195,20 +195,20 @@ EpDashboardModel >> openSettingsBrowser [
 ]
 
 { #category : #'accessing widgets' }
-EpDashboardModel >> openSettingsButtonModel [
+EpDashboardPresenter >> openSettingsButtonPresenter [
 
-	^ openSettingsButtonModel
+	^ openSettingsButtonPresenter
 ]
 
 { #category : #refreshing }
-EpDashboardModel >> refresh [
+EpDashboardPresenter >> refresh [
 
-	self refreshEnableMonitorButtonModel.
-	self refreshCurrentSessionInfoModel.
+	self refreshEnableMonitorButtonPresenter.
+	self refreshCurrentSessionInfoPresenter
 ]
 
 { #category : #refreshing }
-EpDashboardModel >> refreshCurrentSessionInfoModel [
+EpDashboardPresenter >> refreshCurrentSessionInfoPresenter [
 
 	| sessionStore text |
 	sessionStore := self monitor sessionStore.
@@ -222,11 +222,11 @@ EpDashboardModel >> refreshCurrentSessionInfoModel [
 			nextPutAll: sessionStore writingFileReference parent fullName.
 		].
 
-	currentSessionInfoModel enabled: false; text: text.
+	self currentSessionInfoPresenter enabled: false; text: text.
 ]
 
 { #category : #refreshing }
-EpDashboardModel >> refreshEnableMonitorButtonModel [
+EpDashboardPresenter >> refreshEnableMonitorButtonPresenter [
 		
 	| theState theIconSelector |
 	self monitor isEnabled 
@@ -237,7 +237,7 @@ EpDashboardModel >> refreshEnableMonitorButtonModel [
 			theState := 'disabled'.
 			theIconSelector := #testNotRun ].
 	
-	enableMonitorButtonModel
+	self enableMonitorButtonPresenter
 		state: self monitor isEnabled;
 		label: 'Monitor ', theState;
 		icon: (self iconNamed: theIconSelector).

@@ -52,7 +52,7 @@ HiRulerController >> initializeRulerBuilder [
 HiRulerController >> newTreeColumnModel [
 	"Answer a TreeColumnModel ready to be used in a TreeModel."
 	
-	^ TreeColumnModel new	
+	^ TreeColumnPresenter new	
 		displayBlock: [ :item | self rowMorphFor: item content ];
 		yourself.	
 ]
