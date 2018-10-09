@@ -366,6 +366,7 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'Refactoring2-Core'.
 		spec package: 'Refactoring2-Transformations'.
+		spec package: 'Refactoring2-Transformations-Tests'.
 
       self groups: spec.
 	].
@@ -759,6 +760,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 spec group: 'Refactoring2-Group' with: #(
 	'Refactoring2-Core'
 	'Refactoring2-Transformations'
+	'Refactoring2-Transformations-Tests'
 ).
 
 spec group: 'GT&QA-Group' with: #(
