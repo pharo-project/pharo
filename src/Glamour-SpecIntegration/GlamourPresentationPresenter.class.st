@@ -5,8 +5,8 @@ For examples see my class side.
 
 "
 Class {
-	#name : #GlamourPresentationModel,
-	#superclass : #ComposableModel,
+	#name : #GlamourPresentationPresenter,
+	#superclass : #ComposablePresenter,
 	#instVars : [
 		'presentation',
 		'glmPres'
@@ -15,35 +15,35 @@ Class {
 }
 
 { #category : #specs }
-GlamourPresentationModel class >> defaultSpec [
+GlamourPresentationPresenter class >> defaultSpec [
 	<spec: #default>
 	^ SpecLayout composed add: #presentation
 ]
 
 { #category : #example }
-GlamourPresentationModel class >> exampleGLMExamples [
+GlamourPresentationPresenter class >> exampleGLMExamples [
 	<sampleInstance>
 	"open the Glamour Examples Browser"
 	|ui|
-	ui := GlamourPresentationModel new.
+	ui := GlamourPresentationPresenter new.
 	ui presentationClass: GLMExamplesBrowser startOn: GLMBasicExamples.
 	^ ui openWithSpec
 ]
 
 { #category : #example }
-GlamourPresentationModel class >> exampleGLMPharoScript [
+GlamourPresentationPresenter class >> exampleGLMPharoScript [
 	<sampleInstance>
-	^ GlamourPresentationModel new openWithSpec.
+	^ GlamourPresentationPresenter new openWithSpec.
 ]
 
 { #category : #accessing }
-GlamourPresentationModel >> glmPres [
+GlamourPresentationPresenter >> glmPres [
 	glmPres isNil ifTrue:[glmPres := GLMPharoScriptPresentation new].
 	^ glmPres 
 ]
 
 { #category : #initialization }
-GlamourPresentationModel >> initializeWidgets [
+GlamourPresentationPresenter >> initializeWidgets [
 	"Should actually do nothing at all.
 	This is because we cannot create the morph and later set the presentation.
 	So we will do all of this in the presentation: accessor.
@@ -52,7 +52,7 @@ GlamourPresentationModel >> initializeWidgets [
 ]
 
 { #category : #accessing }
-GlamourPresentationModel >> presentation [
+GlamourPresentationPresenter >> presentation [
 	presentation isNil ifTrue:[
 		| morph |
 		morph := GLMMorphicRenderer new render: self glmPres.
@@ -64,11 +64,11 @@ GlamourPresentationModel >> presentation [
 ]
 
 { #category : #accessing }
-GlamourPresentationModel >> presentation: anObject [
+GlamourPresentationPresenter >> presentation: anObject [
 	presentation := anObject
 ]
 
 { #category : #api }
-GlamourPresentationModel >> presentationClass: aGLMCompositePresentation startOn: anObject [ 
+GlamourPresentationPresenter >> presentationClass: aGLMCompositePresentation startOn: anObject [ 
 	glmPres := aGLMCompositePresentation new startOn: anObject
 ]
