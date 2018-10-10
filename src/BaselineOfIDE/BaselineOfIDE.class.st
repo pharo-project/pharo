@@ -354,7 +354,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
 		spec package: 'Zinc-Character-Encoding-Tests'.
-		spec package: 'Zinc-Resource-Meta-FileSystem'.	
+		spec package: 'Zinc-Resource-Meta-FileSystem'.			
+		spec package: 'Zinc-HTTP-Examples'.
 		spec package: 'Zinc-Tests'.
 		spec package: 'System-Identification-Tests'.
 
@@ -472,6 +473,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Tools-Test'
 	'Zinc-Resource-Meta-FileSystem'	
 	'Zinc-Resource-Meta-Tests'
+	'Zinc-HTTP-Examples'
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
 	'System-Identification-Tests'		
 	'System-DependenciesTests'
