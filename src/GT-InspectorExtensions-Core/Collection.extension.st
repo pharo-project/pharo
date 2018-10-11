@@ -34,5 +34,13 @@ Collection >> gtInspectorItemsIn: composite [
 			implemented in the renderer."
 			self asOrderedCollection ];
 		beMultiple;	
-		format: [ :each | GTObjectPrinter asTruncatedTextFrom: each ]
+		format: [ :each | GTObjectPrinter asTruncatedTextFrom: each ];
+		send: [ :result | result isNil 
+			ifTrue:[nil]
+			ifFalse:[ (result size = 1) 
+				ifTrue: [result anyOne] 
+				ifFalse: [self species withAll: result]]]
+		"withSmalltalkSearch;	
+		showOnly: 50;
+		helpMessage: 'Quick selection field. Given your INPUT, it executes: self select: [:each | INPUT ]'."
 ]
