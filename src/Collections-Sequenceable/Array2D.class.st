@@ -22,7 +22,7 @@ Class {
 		'numberOfColumns',
 		'numberOfRows'
 	],
-	#category : #'Deprecated70-Obsolete'
+	#category : #'Collections-Sequenceable-Ordered'
 }
 
 { #category : #'special instance creation' }
@@ -47,11 +47,6 @@ Array2D class >> identity: n [
 	r := self zeros: n.
 	1 to: n do: [ :i | r at: i at: i put: 1 ].
 	^ r
-]
-
-{ #category : #deprecation }
-Array2D class >> isDeprecated [
-	^ true
 ]
 
 { #category : #'instance creation' }
