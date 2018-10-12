@@ -12,6 +12,12 @@ Interval >> fromSton: stonReader [
 	stonReader parseNamedInstVarsFor: self
 ]
 
+{ #category : #'*STON-Core' }
+Interval >> sort: aBlock [
+	"Directly returns the Interval, since sorting an Interval does not make sense."
+	^ self
+]
+
 { #category : #'*ston-core' }
 Interval >> stonOn: stonWriter [
 	stonWriter writeObject: self
