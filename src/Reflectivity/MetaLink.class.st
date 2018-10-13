@@ -292,6 +292,11 @@ MetaLink >> methods [
 ]
 
 { #category : #accessing }
+MetaLink >> nodes [
+	^nodes
+]
+
+{ #category : #accessing }
 MetaLink >> option: anArray [ 
 	self parseOptions: anArray
 ]
