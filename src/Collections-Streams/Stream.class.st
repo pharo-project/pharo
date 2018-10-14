@@ -32,7 +32,6 @@ Stream >> atEnd [
 Stream >> basicNext [
 
 	^ self next.
-
 ]
 
 { #category : #private }
