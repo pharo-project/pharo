@@ -4,7 +4,7 @@ All Stream hierarchy: read/write stream
 Class {
 	#name : #ManifestCollectionsStreams,
 	#superclass : #PackageManifest,
-	#category : #'Collections-Streams'
+	#category : #'Collections-Streams-Manifest'
 }
 
 { #category : #'meta-data' }
