@@ -1,5 +1,5 @@
 "
-I am deprecated
+I am a widget used to verify that the mechanism used to compute rows and columns are still working.
 "
 Class {
 	#name : #TestAutoFractionComputation,
@@ -9,7 +9,7 @@ Class {
 		'list',
 		'text'
 	],
-	#category : #'Spec-Deprecated-Obsolete'
+	#category : #'Spec-Tests-Utils'
 }
 
 { #category : #spec }
@@ -25,11 +25,6 @@ TestAutoFractionComputation class >> defaultSpec [
 						add: #button bottom: 0.7;
 						add: #text top: 0.3 ] right: 0.2 ];
 		yourself
-]
-
-{ #category : #deprecation }
-TestAutoFractionComputation class >> isDeprecated [
-	^ true
 ]
 
 { #category : #accessing }
