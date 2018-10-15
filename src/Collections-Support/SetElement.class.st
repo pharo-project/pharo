@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'NilElement'
 	],
-	#category : #'Collections-Support'
+	#category : #'Collections-Support-Utilities'
 }
 
 { #category : #'class initialization' }
