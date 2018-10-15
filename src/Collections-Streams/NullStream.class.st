@@ -10,7 +10,7 @@ Class {
 		'position',
 		'lastElement'
 	],
-	#category : #'Collections-Streams'
+	#category : #'Collections-Streams-Base'
 }
 
 { #category : #'instance creation' }
