@@ -40,9 +40,10 @@ BaselineOfMorphic >> baseline: spec [
 		spec preLoadDoIt: #'preload:package:'.
 		spec postLoadDoIt: #'postload:package:'.
 
-		spec 
-			baseline: 'MorphicCore' with: [spec repository: repository];
-			baseline: 'MenuRegistration' with: [spec repository: repository].
+		spec baseline: 'MorphicCore' with: [spec repository: repository].
+		spec baseline: 'Traits' with: [spec repository: repository].
+		spec baseline: 'SUnit' with: [spec repository: repository].
+		spec baseline: 'UnifiedFFI' with: [spec repository: repository].
 
 		spec package: 'System-Localization'.
 		spec package: 'Collections-DoubleLinkedList'.
