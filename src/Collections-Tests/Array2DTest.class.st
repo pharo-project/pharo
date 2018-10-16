@@ -2,7 +2,7 @@
 SUnit tests for matrix
 "
 Class {
-	#name : #MatrixTest,
+	#name : #Array2DTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'matrix1',
@@ -10,16 +10,11 @@ Class {
 		'matrix3',
 		'matrix23'
 	],
-	#category : #'Deprecated70-Obsolete'
+	#category : #'Collections-Tests-Sequenceable'
 }
 
-{ #category : #testing }
-MatrixTest class >> isDeprecated [
-	^true
-]
-
 { #category : #running }
-MatrixTest >> setUp [
+Array2DTest >> setUp [
 	super setUp.
 	matrix1 := Array2D new: 2.
 	matrix1 at:1 at:1 put: 1.
@@ -43,7 +38,7 @@ MatrixTest >> setUp [
 ]
 
 { #category : #'tests - accessing' }
-MatrixTest >> testAtAllPut [
+Array2DTest >> testAtAllPut [
 
 	| m | 
 	m := Array2D new: 3. 
@@ -53,7 +48,7 @@ MatrixTest >> testAtAllPut [
 ]
 
 { #category : #'tests - accessing' }
-MatrixTest >> testAtAt [
+Array2DTest >> testAtAt [
 	self should:[matrix1 at: 2 at: 3] raise: Error.
 	self should:[matrix1 at: 3 at: 2] raise: Error.
 	self should:[matrix1 at: 3 at: 3] raise: Error.
@@ -71,7 +66,7 @@ MatrixTest >> testAtAt [
 ]
 
 { #category : #'tests - accessing' }
-MatrixTest >> testAtColumn [
+Array2DTest >> testAtColumn [
 
 	self assert: (matrix23 atColumn: 1) equals: #(11 12 13).
 	self assert: (matrix23 atColumn: 2) equals: #(21 22 23).
@@ -79,7 +74,7 @@ MatrixTest >> testAtColumn [
 ]
 
 { #category : #'tests - accessing' }
-MatrixTest >> testAtRow [
+Array2DTest >> testAtRow [
 
 	self assert: (matrix23 atRow: 1) equals: #(11 21).
 	self assert: (matrix23 atRow: 2) equals: #(12 22).
@@ -87,7 +82,7 @@ MatrixTest >> testAtRow [
 ]
 
 { #category : #'tests - accessing' }
-MatrixTest >> testCollectCreatesANewMatrix [
+Array2DTest >> testCollectCreatesANewMatrix [
 
 	| m m2 | 
 	m := Array2D new: 3. 
@@ -99,7 +94,7 @@ MatrixTest >> testCollectCreatesANewMatrix [
 ]
 
 { #category : #'tests - instance creation' }
-MatrixTest >> testColumnVector [
+Array2DTest >> testColumnVector [
 
 	| m m2 | 
 
@@ -118,13 +113,13 @@ MatrixTest >> testColumnVector [
 ]
 
 { #category : #'tests - accessing' }
-MatrixTest >> testContentsEncodings [
+Array2DTest >> testContentsEncodings [
 
 	self assert: matrix23 privateContents equals: #(11 21 12 22 13 23)
 ]
 
 { #category : #'tests - copying' }
-MatrixTest >> testCopy [
+Array2DTest >> testCopy [
 
 	| copyMatrix |
 	copyMatrix := matrix1 copy.
@@ -132,7 +127,7 @@ MatrixTest >> testCopy [
 ]
 
 { #category : #'tests - instance creation' }
-MatrixTest >> testDiagonal [
+Array2DTest >> testDiagonal [
 
 	| m m2 | 
 
@@ -152,7 +147,7 @@ MatrixTest >> testDiagonal [
 ]
 
 { #category : #'tests - instance creation' }
-MatrixTest >> testIdentity [
+Array2DTest >> testIdentity [
 
 	| m  m2 | 
 	m := Array2D new: 3 element: 0.
@@ -166,7 +161,7 @@ MatrixTest >> testIdentity [
 ]
 
 { #category : #'tests - instance creation' }
-MatrixTest >> testIdentityOtherTest [
+Array2DTest >> testIdentityOtherTest [
 
 	| m | 
 	m := Array2D identity: 3.
@@ -178,7 +173,7 @@ MatrixTest >> testIdentityOtherTest [
 ]
 
 { #category : #'tests - testing' }
-MatrixTest >> testIncludes [
+Array2DTest >> testIncludes [
 	self assert:
 			((1 to: 4)
 				allSatisfy: [:i | matrix1 includes: i])
@@ -186,7 +181,7 @@ MatrixTest >> testIncludes [
 ]
 
 { #category : #'tests - arithmetic' }
-MatrixTest >> testMultiply [
+Array2DTest >> testMultiply [
 	
 	| result |
 	self	should: [matrix1 preMultiplyByMatrix: (Array2D new: 3)] raise: Error.
@@ -199,7 +194,7 @@ MatrixTest >> testMultiply [
 ]
 
 { #category : #'tests - instance creation' }
-MatrixTest >> testNewTabulate [
+Array2DTest >> testNewTabulate [
 
 	| m m2 | 
 
@@ -222,7 +217,7 @@ MatrixTest >> testNewTabulate [
 ]
 
 { #category : #'tests - instance creation' }
-MatrixTest >> testOnes [
+Array2DTest >> testOnes [
 
 	| m m2 | 
 
@@ -241,7 +236,7 @@ MatrixTest >> testOnes [
 ]
 
 { #category : #'tests - accessing' }
-MatrixTest >> testReplaceAll [
+Array2DTest >> testReplaceAll [
 
 	matrix1 replaceAll: 1 with: 10.
 	self assert: (matrix1 at: 1 at: 1) equals: 10.
@@ -251,7 +246,7 @@ MatrixTest >> testReplaceAll [
 ]
 
 { #category : #'tests - instance creation' }
-MatrixTest >> testRowVector [
+Array2DTest >> testRowVector [
 
 	| m m2 | 
 
@@ -270,21 +265,21 @@ MatrixTest >> testRowVector [
 ]
 
 { #category : #'tests - accessing' }
-MatrixTest >> testSquaredWithAllElement [
+Array2DTest >> testSquaredWithAllElement [
 
 	self assert: ((Array2D new: 3 element: -1) occurrencesOf: -1) equals: 9.
 
 ]
 
 { #category : #'tests - accessing' }
-MatrixTest >> testSwap [
+Array2DTest >> testSwap [
 	matrix1 swap: 1 at: 2 with: 1 at: 1.
 	self assert: (matrix1 at: 1 at: 1) = 3.
 	self assert: (matrix1 at: 1 at: 2) = 1.
 ]
 
 { #category : #'tests - testing' }
-MatrixTest >> testTabulate [
+Array2DTest >> testTabulate [
 	| m |
 	m := Array2D rows: 3 columns: 2 tabulate: [ :row :column | column * 10 + row ].
 	self assert: (m at: 1 at: 1) equals: 11.
@@ -296,7 +291,7 @@ MatrixTest >> testTabulate [
 ]
 
 { #category : #'tests - testing' }
-MatrixTest >> testTabulateEquals [
+Array2DTest >> testTabulateEquals [
 	| m |
 	m := Array2D rows: 3 columns: 2 tabulate: [ :row :column | column * 10 + row ].
 	self assert: (m = matrix23)
@@ -304,7 +299,7 @@ MatrixTest >> testTabulateEquals [
 ]
 
 { #category : #'tests - accessing' }
-MatrixTest >> testTransposed [
+Array2DTest >> testTransposed [
 	| transposedMatrix |
 	transposedMatrix := matrix1 transposed.
 	self assert: (transposedMatrix at: 1 at: 1) equals: 1.
