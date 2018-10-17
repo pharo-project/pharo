@@ -5,7 +5,8 @@ Class {
 	#name : #OSNullWindowHandle,
 	#superclass : #OSWindowHandle,
 	#instVars : [
-		'attributes'
+		'attributes',
+		'isTextInputActive'
 	],
 	#category : #'OSWindow-Core-Utilities'
 }
@@ -52,6 +53,18 @@ OSNullWindowHandle >> extent: newExtent [
 OSNullWindowHandle >> hide [
 ]
 
+{ #category : #initialize }
+OSNullWindowHandle >> initialize [
+	super initialize.
+	
+	isTextInputActive := false
+]
+
+{ #category : #'text input' }
+OSNullWindowHandle >> isTextInputActive [
+	^ isTextInputActive
+]
+
 { #category : #accessing }
 OSNullWindowHandle >> isValid [
 	^ true
@@ -84,6 +97,16 @@ OSNullWindowHandle >> position: position [
 
 { #category : #accessing }
 OSNullWindowHandle >> show [
+]
+
+{ #category : #'text input' }
+OSNullWindowHandle >> startTextInput [
+	isTextInputActive := true
+]
+
+{ #category : #'text input' }
+OSNullWindowHandle >> stopTextInput [
+	isTextInputActive := false
 ]
 
 { #category : #accessing }
