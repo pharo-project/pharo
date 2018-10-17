@@ -82,8 +82,7 @@ GZipReadStream class >> unzip: fullFileName to: pathName [
 	GZipReadStream unzip:'zip.gz' to: '/aPath'
 	GZipReadStream unzip:'/aPath/zip.gz' asFileReference to: '/aPath' asFileReference
 	
-	To unzip a .zip go to the class ZipArchive
-	"
+	To unzip a .zip go to the class ZipArchive"
 
 	| buffer newName |
 	newName := fullFileName asFileReference basename copyUpToLast: FileSystem disk extensionDelimiter.
