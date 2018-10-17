@@ -369,6 +369,13 @@ Interval >> size [
 				ifFalse: [^ stop - start // step + 1]]
 ]
 
+{ #category : #accessing }
+Interval >> sort: aBlock [
+	"What sorting an Interval means is not clear."
+
+	self error: 'you can not sort an interval'
+]
+
 { #category : #sorting }
 Interval >> sorted [
 	^ self increment >= 0
