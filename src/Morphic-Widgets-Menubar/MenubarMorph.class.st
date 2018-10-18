@@ -1,3 +1,20 @@
+"
+Description
+--------------------
+
+I am a Morph of the form of a Menubar that can be displayed at the top of the World. 
+
+You can disable me with: `self showMenubar: false`.
+
+For now, when you open me, by default I will use the world menu pragma to collect the items to display. If you want a custom menu, just update the WorldMenu pragma to use.
+ 
+Internal Representation and Key Implementation Points.
+--------------------
+
+    Instance Variables
+	menuBarItems:		<aCollection>	A collection of items to show at the root of the Menubar. Those items can also contains submenus.
+
+"
 Class {
 	#name : #MenubarMorph,
 	#superclass : #DockingBarMorph,
@@ -7,7 +24,7 @@ Class {
 	#classVars : [
 		'ShowMenubar'
 	],
-	#category : #'Morphic-Widgets-Menubar'
+	#category : #'Morphic-Widgets-Menubar-View'
 }
 
 { #category : #'instance creation' }

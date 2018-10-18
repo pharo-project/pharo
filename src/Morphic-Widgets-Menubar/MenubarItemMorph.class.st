@@ -1,7 +1,13 @@
+"
+Description
+--------------------
+
+I am a specialization of the MenuItemMorph for the Menubar. I adapt the look of the Morph to fit the design of the menubar.
+"
 Class {
 	#name : #MenubarItemMorph,
 	#superclass : #DockingBarMenuItemMorph,
-	#category : #'Morphic-Widgets-Menubar'
+	#category : #'Morphic-Widgets-Menubar-View'
 }
 
 { #category : #drawing }
