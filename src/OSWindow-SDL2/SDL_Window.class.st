@@ -87,6 +87,11 @@ SDL_Window >> icon: surface [
 	^ self ffiCall: #( void SDL_SetWindowIcon ( self , SDL_Surface* surface ) )
 ]
 
+{ #category : #'text input' }
+SDL_Window >> isTextInputActive [
+	^ self ffiCall: #(bool SDL_IsTextInputActive(void))
+]
+
 { #category : #'window management' }
 SDL_Window >> maximize [
 	^ self ffiCall: #( void SDL_MaximizeWindow( self ) )
@@ -135,6 +140,16 @@ SDL_Window >> setSizeW: w h: h [
 { #category : #'window management' }
 SDL_Window >> show [
 	^ self ffiCall: #( void SDL_ShowWindow( self ) )
+]
+
+{ #category : #'text input' }
+SDL_Window >> startTextInput [
+	^ self ffiCall: #(void SDL_StartTextInput(void))
+]
+
+{ #category : #'text input' }
+SDL_Window >> stopTextInput [
+	^ self ffiCall: #(void SDL_StopTextInput(void))
 ]
 
 { #category : #accessing }
