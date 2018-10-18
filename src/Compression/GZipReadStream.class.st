@@ -82,22 +82,16 @@ GZipReadStream class >> unzip: fullFileName to: pathName [
 	GZipReadStream unzip:'zip.gz' to: '/aPath'
 	GZipReadStream unzip:'/aPath/zip.gz' asFileReference to: '/aPath' asFileReference
 	
-	To unzip a .zip go to the class ZipArchive
-	"
-	
-	| zipped buffer unzipped newName path|
+	To unzip a .zip go to the class ZipArchive"
+
+	| buffer newName |
 	newName := fullFileName asFileReference basename copyUpToLast: FileSystem disk extensionDelimiter.
-	path := pathName asFileReference.
-	path ensureCreateDirectory.
-	unzipped := FileStream newFileNamed: (path / newName) fullName.
-	unzipped ifNil: [self error: pathName, ' looks incorrect'].
-	[ unzipped binary. 
-	zipped := self on: (FileStream readOnlyFileNamed: fullFileName).
-	buffer := ByteArray new: 50000.
-	[zipped atEnd] whileFalse: [unzipped nextPutAll: (zipped nextInto: buffer)]]
-		ensure: [
-			zipped close.
-			unzipped close].
+	pathName asFileReference ensureCreateDirectory / newName
+		binaryWriteStreamDo: [ :unzipped | 
+			self with: fullFileName asFileReference binaryReadStream
+				do: [ :zipped | 
+					buffer := ByteArray new: 50000.
+					[ zipped atEnd ] whileFalse: [ unzipped nextPutAll: (zipped nextInto: buffer) ] ] ].
 	^ newName
 ]
 
