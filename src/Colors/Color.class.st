@@ -1705,7 +1705,7 @@ Color >> negated [
 ]
 
 { #category : #conversions }
-Color >> nontranslucentColor [
+Color >> opaqueColor [
 	"Set the transparency of the receiver to opaque."
 
 	^ self alpha: 1.0

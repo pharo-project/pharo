@@ -3,9 +3,9 @@ Extension { #name : #Color }
 { #category : #'*Deprecated70' }
 Color >> asNontranslucentColor [
 	self
-		deprecated: 'Please use #nontranslucentColor instead'
-		transformWith: '`@receiver asNontranslucentColor' -> '`@receiver nontranslucentColor'.
-	^ self nontranslucentColor
+		deprecated: 'Please use #opaqueColor instead'
+		transformWith: '`@receiver asNontranslucentColor' -> '`@receiver opaqueColor'.
+	^ self opaqueColor
 ]
 
 { #category : #'*Deprecated70' }
