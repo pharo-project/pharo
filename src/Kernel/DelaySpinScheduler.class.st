@@ -1,44 +1,42 @@
+"
+I'm just like DelayBasicScheduler except I busy-wait for the backend to clear the transfer variable.
+In a single-native-thread environment I provide a bit more assurance than the basic scheduler,
+but I remain dependent on implict scheduling semantics such that no suspension point follows 
+inlined #whileFalse: or assignments, which may not hold true for the threaded-vm.
+
+IMPORTANT! If #schedule: is called twice by a thread running at #highestPriority 
+the system will freeze since the busy loop blocks #scheduleAtTimingPriority 
+from being able to clear the transfer variable. i.e. this delay scheduler assumes
+#runBackendLoopAtTimingPriority is the only process running at #highestPriority.
+
+Same deal for #unschedule:
+"
 Class {
 	#name : #DelaySpinScheduler,
-	#superclass : #DelayMicrosecondScheduler,
-	#category : #'Kernel-Processes'
+	#superclass : #DelayBasicScheduler,
+	#category : #'Kernel-Delays'
 }
 
 { #category : #'low priority processes' }
 DelaySpinScheduler >> schedule: aDelay [
 	"Depends on implicit semantics of bytecode inlining and cooperative multitasking 
-	 such that no interuption can occur between the nil test, assignment & signal."
-	
-	"scheduledDelay is consumed at set to nil by #handleTimerEvent: 
-	 which runs at highestPriority(80) after being woken by the signal."
-	
+	 such that no suspension can occur between whileFalse, assignment & signal.
+	 i.e. there are no backward jumps after comparison becomes true."
+		
 	aDelay schedulerBeingWaitedOn ifTrue: [^self error: 'This Delay has already been scheduled.'].
-	[ 	scheduledDelay == nil ifTrue: [ 
-				scheduledDelay := aDelay. 
-				timingSemaphore signal.
-				^self
-				].
-		true.
-	] whileTrue.	
+	[ delayToStart == nil ] whileFalse. 
+	delayToStart := aDelay. 
+	timingSemaphore signal. "Transfer execution to back-end #scheduleAtTimingPriority"
 
-  	"Probably the whileTrue loop is not needed, its just for safety."
 ]
 
 { #category : #'low priority processes' }
 DelaySpinScheduler >> unschedule: aDelay [
 	"Depends on implicit semantics of bytecode inlining and cooperative multitasking 
-	 such that no interuption can occur between the nil test, assignment & signal."
+	 such that no suspension can occur between whileFalse, assignment & signal.
+	 i.e. there are no backward jumps after comparison becomes true."
 	
-	"scheduledDelay is consumed at set to nil by #handleTimerEvent: 
-	 which runs at highestPriority(80) after being woken by the signal."
-	
-	[	finishedDelay == nil ifTrue: [ 
-				finishedDelay := aDelay. 
-				timingSemaphore signal.
-				^true.
-				].
-		true.
-	] whileTrue.	
-
-  	"Probably the whileTrue loop is not needed, its just for safety." 
+	[delayToStop == nil] whileFalse.
+	delayToStop := aDelay. 
+	timingSemaphore signal. "Transfer execution to back-end #scheduleAtTimingPriority"
 ]
