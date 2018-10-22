@@ -1,3 +1,6 @@
+"
+General support for the Pharo system like access to the VM or image
+"
 Class {
 	#name : #ManifestSystemSupport,
 	#superclass : #PackageManifest,
