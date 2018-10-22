@@ -29,7 +29,7 @@ Class {
 		'stdoutTerminalInstance',
 		'stderrTerminalInstance'
 	],
-	#category : #'System-CommandLine'
+	#category : #'System-CommandLine-VTerm-Driver'
 }
 
 { #category : #'instance creation' }
