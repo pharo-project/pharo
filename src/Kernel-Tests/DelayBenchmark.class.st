@@ -26,7 +26,7 @@ DelayBenchmark class >> run [
 DelayBenchmark class >> runAll [
 	"DelayBenchmark runAll"
 	Transcript clear.
-	DelayScheduler allSubclasses do: [ :delayScheudlerClass | self new bench: delayScheudlerClass ].
+	DelayNullScheduler allSubclasses do: [ :delaySchedulerClass | self new bench: delaySchedulerClass ].
 ]
 
 { #category : #benchmarks }
@@ -69,7 +69,7 @@ completed wait.
 DelayBenchmark >> bench: aDelaySchedulerClass [
 	| schedulerClassToRestore |
 	
-	self assert: (aDelaySchedulerClass inheritsFrom: DelayScheduler) | (aDelaySchedulerClass inheritsFrom: DelayNullScheduler).
+	self assert: (aDelaySchedulerClass inheritsFrom: DelayNullScheduler).
 	schedulerClassToRestore := Delay delaySchedulerClass.
 	
 	[	Delay delaySchedulerClass: aDelaySchedulerClass.
