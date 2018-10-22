@@ -1,7 +1,10 @@
+"
+Packacke with support for system changes recorded in changesets
+"
 Class {
 	#name : #ManifestSystemChanges,
 	#superclass : #PackageManifest,
-	#category : #'System-Changes'
+	#category : #'System-Changes-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
