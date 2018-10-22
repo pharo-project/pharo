@@ -19,7 +19,7 @@ Check #initializeCommandLineHandlerAndErrorHandling to see the steps performed.
 Class {
 	#name : #PharoBootstrapInitialization,
 	#superclass : #Object,
-	#category : #'PharoBootstrap-Initialization'
+	#category : #'PharoBootstrap-Initialization-Base'
 }
 
 { #category : #initialization }
