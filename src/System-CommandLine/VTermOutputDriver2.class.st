@@ -39,7 +39,7 @@ Class {
 	#pools : [
 		'VTermOutputStyles'
 	],
-	#category : #'System-CommandLine'
+	#category : #'System-CommandLine-VTerm-Driver'
 }
 
 { #category : #'instance creation' }
