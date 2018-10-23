@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'environment'
 	],
-	#category : #'System-Support'
+	#category : #'System-Support-Image'
 }
 
 { #category : #accessing }

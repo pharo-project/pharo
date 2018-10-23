@@ -26,7 +26,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #'System-Support'
+	#category : #'System-Support-Image'
 }
 
 { #category : #accessing }
