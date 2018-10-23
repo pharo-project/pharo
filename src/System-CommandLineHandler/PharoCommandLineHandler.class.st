@@ -23,7 +23,7 @@ Class {
 	#classVars : [
 		'ForcePreferencesOmission'
 	],
-	#category : #'System-CommandLineHandler'
+	#category : #'System-CommandLineHandler-Base'
 }
 
 { #category : #'instance creation' }
