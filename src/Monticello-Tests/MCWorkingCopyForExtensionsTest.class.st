@@ -4,9 +4,8 @@ Class {
 	#category : #'Monticello-Tests-Base'
 }
 
-{ #category : #tests }
+{ #category : #running }
 MCWorkingCopyForExtensionsTest >> tearDown [
-	super tearDown.
 	'ATestPackage' asPackage removeFromSystem.
 	'AnotherTestPackage' asPackage removeFromSystem.
 	
@@ -19,7 +18,8 @@ MCWorkingCopyForExtensionsTest >> tearDown [
 
 	MCWorkingCopy registry
 		at: (MCPackage named: 'atestpackage-something-else')
-		ifPresent: [ :aWC | aWC unload ]
+		ifPresent: [ :aWC | aWC unload ].
+	super tearDown.
 ]
 
 { #category : #tests }
