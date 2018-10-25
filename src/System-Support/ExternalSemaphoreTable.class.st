@@ -18,7 +18,7 @@ Class {
 		'ProtectAdd',
 		'ProtectRemove'
 	],
-	#category : #'System-Support'
+	#category : #'System-Support-Utilities'
 }
 
 { #category : #accessing }

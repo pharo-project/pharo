@@ -155,7 +155,7 @@ Delay class >> systemSettingOn: aBuilder [
 		parent: #pharoSystem ;
 		target: self;
 		label: 'Delay Scheduler' ;
-		domainValues: DelayNullScheduler allSubclasses , DelayScheduler allSubclasses ;
+		domainValues: DelayNullScheduler allSubclasses ;
 		description: 'Choose the class to use for Delay scheduling.' , 
 			String crlf, 'You can observe which is running from Tools > Process Browser.'
 	

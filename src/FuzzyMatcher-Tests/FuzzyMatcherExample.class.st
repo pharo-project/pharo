@@ -14,7 +14,7 @@ Class {
 		'pattern',
 		'stringMorph'
 	],
-	#category : #'FuzzyMatcher-Tests'
+	#category : #'FuzzyMatcher-Tests-Examples'
 }
 
 { #category : #examples }

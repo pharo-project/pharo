@@ -26,7 +26,7 @@ EpApplyPreviewerTest >> assertOutputsAnEventWith: aBlock [
 EpApplyPreviewerTest >> assertOutputsEventsWith: aBlock [
 
 	| logBrowserModel outputLog |
-	logBrowserModel := EpLogBrowserModel newWithLog: monitor log.
+	logBrowserModel := EpLogBrowserPresenter newWithLog: monitor log.
 	
 	outputLog :=
 		EpLogBrowserOperationFactory new
@@ -43,7 +43,7 @@ EpApplyPreviewerTest >> assertOutputsEventsWith: aBlock [
 EpApplyPreviewerTest >> outputEvents [
 
 	| outputLog logBrowserModel |
-	logBrowserModel := EpLogBrowserModel newWithLog: monitor log.
+	logBrowserModel := EpLogBrowserPresenter newWithLog: monitor log.
 	
 	outputLog :=
 		EpLogBrowserOperationFactory new

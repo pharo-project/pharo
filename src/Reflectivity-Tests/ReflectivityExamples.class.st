@@ -77,8 +77,7 @@ ReflectivityExamples >> exampleIfTrueIfFalse [
 
 { #category : #examples }
 ReflectivityExamples >> exampleIvarRead [
-	<sampleInstance>
-	^ivar 
+	^ivar
 ]
 
 { #category : #examples }

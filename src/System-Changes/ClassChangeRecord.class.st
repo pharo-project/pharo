@@ -56,7 +56,7 @@ Class {
 		'priorName',
 		'methodChanges'
 	],
-	#category : #'System-Changes'
+	#category : #'System-Changes-Records'
 }
 
 { #category : #'all changes' }

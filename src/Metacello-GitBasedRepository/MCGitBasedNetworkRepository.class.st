@@ -14,7 +14,7 @@ Class {
 		'siteUsername',
 		'sitePassword'
 	],
-	#category : 'Metacello-GitBasedRepository'
+	#category : #'Metacello-GitBasedRepository'
 }
 
 { #category : #accessing }
@@ -259,11 +259,6 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 				directoryFromPath: cachePath
 				relativeTo: theCacheDirectory ].
 	^ projectDirectory
-]
-
-{ #category : #private }
-MCGitBasedNetworkRepository class >> projectTagsUrlFor: aProjectPath [
-  self subclassResponsibility
 ]
 
 { #category : #'version patterns' }
@@ -522,7 +517,7 @@ MCGitBasedNetworkRepository >> projectPath: aProjectPath projectVersion: aProjec
 
 { #category : #private }
 MCGitBasedNetworkRepository >> projectTagsUrlFor: aProjectPath [
-  ^ self class projectTagsUrlFor: aProjectPath
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

@@ -71,6 +71,11 @@ OSWindowHandle >> hide [
 OSWindowHandle >> icon: aForm [
 ]
 
+{ #category : #'text input' }
+OSWindowHandle >> isTextInputActive [
+	^ self subclassResponsibility
+]
+
 { #category : #testing }
 OSWindowHandle >> isValid [
 	self subclassResponsibility 
@@ -166,6 +171,16 @@ OSWindowHandle >> setMouseCursor: cursor mask: mask [
 { #category : #accessing }
 OSWindowHandle >> show [
 	self subclassResponsibility 
+]
+
+{ #category : #'text input' }
+OSWindowHandle >> startTextInput [
+	self subclassResponsibility
+]
+
+{ #category : #'text input' }
+OSWindowHandle >> stopTextInput [
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

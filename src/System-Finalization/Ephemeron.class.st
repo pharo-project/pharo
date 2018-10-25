@@ -37,7 +37,7 @@ Class {
 	#instVars : [
 		'container'
 	],
-	#category : #'System-Finalization'
+	#category : #'System-Finalization-Ephemerons'
 }
 
 { #category : #'instance creation' }
