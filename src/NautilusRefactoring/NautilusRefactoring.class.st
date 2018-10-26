@@ -90,6 +90,14 @@ NautilusRefactoring class >> model: model [
 		yourself
 ]
 
+{ #category : #'instance creation' }
+NautilusRefactoring class >> onEnvironment: anEnvironment [
+
+	^ self new
+		environment: anEnvironment;
+		yourself
+]
+
 { #category : #accessing }
 NautilusRefactoring class >> promptOnRefactoring [
 
@@ -282,6 +290,14 @@ NautilusRefactoring >> createCascadeBetween: anInterval from: aMethod [
 { #category : #method }
 NautilusRefactoring >> deprecateMethodFor: aMethod [
 	self performRefactoringFor: #privateDeprecateMethodFor: with: aMethod
+]
+
+{ #category : #accessing }
+NautilusRefactoring >> environment: anEnvironment [
+
+	environment := (RBClassModelFactory rbNamespace onEnvironment: anEnvironment)
+						name: self printString;
+						yourself
 ]
 
 { #category : #source }
