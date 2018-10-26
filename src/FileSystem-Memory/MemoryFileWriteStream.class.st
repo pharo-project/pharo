@@ -6,7 +6,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'file',
-		'writeStream',
 		'stream'
 	],
 	#category : #'FileSystem-Memory-Streams'
@@ -22,6 +21,7 @@ MemoryFileWriteStream class >> on: aFile [
 
 { #category : #'opening-closing' }
 MemoryFileWriteStream >> close [
+	self flush.
 	self stream close.
 	file close
 ]
