@@ -135,13 +135,14 @@ OmFileStoreTest >> testLoadFromCorruptFile3 [
 OmFileStoreTest >> testLoadFromCorruptFile4 [
 	"Content is corrupted"
 
-	| loadedStore |
+	| loadedStore stream |
 	store newEntry: (OmEntry content: 41).
 	store newEntry: (OmEntry content: 42).
 	store flush.
 	
 	"Override first characters"
-	store fileReference binaryWriteStreamDo: [ :stream | 
+	stream := store fileReference binaryReadWriteStream.
+	[
 		(ZnCharacterReadWriteStream on: stream encoding: 'utf8')
 			upToAll: '41';
 			skip: -1;
@@ -149,7 +150,7 @@ OmFileStoreTest >> testLoadFromCorruptFile4 [
 			
 		"Apparently, in Linux it can randomly fail if not explicitely flush"
 		stream flush.
-		].
+	] ensure: [ stream close ].
 	
 	loadedStore := 
 		(OmFileStore 
