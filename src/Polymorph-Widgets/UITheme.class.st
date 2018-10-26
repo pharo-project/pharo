@@ -995,6 +995,26 @@ UITheme >> chooseDropListIn: aThemedMorph text: aStringOrText title: aString lis
 ]
 
 { #category : #services }
+UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: exts path: path preview: preview [
+	"Answer the result of a file name chooser dialog with the given title, extensions
+	path and preview type.
+	Answer nil or a filename."
+
+	| fd pathFileReference |
+	pathFileReference := path asFileReference.
+	fd := FileDialogWindow basicNew
+		basicTheme: aThemedMorph theme;
+		previewType: preview;
+		fileNameText: pathFileReference basename;
+		initialize;
+		title: title;
+		answerFileName.	
+	exts ifNotNil: [ fd validExtensions: exts ].
+	path ifNotNil: [ fd selectPath: pathFileReference pathString ].
+	^ (aThemedMorph openModal: fd) answer ifNotNil: #asFileReference
+]
+
+{ #category : #services }
 UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path preview: preview [
 	"Answer the result of a file open dialog with the given title, extensions path and preview type.
 	Answer nil or a filename."
@@ -1016,8 +1036,8 @@ UITheme >> chooseFileNameIn: aThemedMorph title: title extensions: exts path: pa
 	"Answer the result of a file name chooser dialog with the given title, extensions
 	path and preview type.
 	Answer nil or a filename."
-
 	| fd |
+	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
 	fd := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
@@ -1045,12 +1065,30 @@ UITheme >> chooseFontIn: aThemedMorph title: aString font: aFont [
 ]
 
 { #category : #services }
+UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: exts path: path preview: preview [
+	"Answer the result of a file name chooser dialog with the given title, extensions
+	path and preview type.
+	Answer nil or a filename."
+
+	| fd pathFileReference |
+	pathFileReference := path asFileReference.
+	fd := (FileDialogWindow newWithTheme: aThemedMorph theme)
+		title: title;
+		fileNameText: pathFileReference basename;
+		answerSaveFile.
+	exts ifNotNil: [ fd validExtensions: exts ].
+	path ifNotNil: [ fd selectPath: path ].
+	^ (aThemedMorph openModal: fd) answer
+]
+
+{ #category : #services }
 UITheme >> chooseFullFileNameIn: aThemedMorph title: title extensions: exts path: path preview: preview [
 	"Answer the result of a file name chooser dialog with the given title, extensions
 	path and preview type.
 	Answer nil or a full filename."
 
 	| fd |
+	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
 	fd := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
@@ -2169,6 +2207,7 @@ UITheme >> fileOpenIn: aThemedMorph title: title extensions: exts path: path pre
 	"Answer the result of a file open dialog with the given title, extensions path and preview type."
 
 	| fd |
+	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
 	fd := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
@@ -2184,6 +2223,7 @@ UITheme >> fileOpenIn: aThemedMorph title: title extensions: exts path: path pre
 UITheme >> fileSaveIn: aThemedMorph title: title extensions: exts path: path [
 	"Answer the result of a file save dialog with the given title, extensions and path."
 
+	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
 	^self fileSaveIn: aThemedMorph title: title initialAnswer: '' extensions: exts path: path
 ]
 
@@ -2192,6 +2232,7 @@ UITheme >> fileSaveIn: aThemedMorph title: title initialAnswer: aFileName extens
 	"Answer the result of a file save dialog with the given title, extensions and path."
 
 	| fd |
+	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
 	fd := (FileDialogWindow newWithTheme: aThemedMorph theme)
 		title: title;
 		fileNameText: aFileName;
