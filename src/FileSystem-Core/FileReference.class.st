@@ -91,8 +91,9 @@ FileReference >> asPath [
 
 { #category : #streams }
 FileReference >> binaryReadStream [
+	"Answer a buffered binary read stream on the receiver"
 	
-	^ filesystem binaryReadStreamOn: self path
+	^ ZnBufferedReadStream on: (filesystem binaryReadStreamOn: self path)
 ]
 
 { #category : #streams }
@@ -104,9 +105,9 @@ FileReference >> binaryReadWriteStream [
 
 { #category : #streams }
 FileReference >> binaryWriteStream [
-	"Answer a binary write stream on the receiver"
+	"Answer a buffered binary write stream on the receiver"
 
-	^ filesystem binaryWriteStreamOn: self path
+	^ ZnBufferedWriteStream on: (filesystem binaryWriteStreamOn: self path)
 ]
 
 { #category : #comparing }
