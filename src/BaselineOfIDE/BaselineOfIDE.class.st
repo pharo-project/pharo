@@ -846,7 +846,7 @@ BaselineOfIDE >> loadCalypso [
 		onUpgrade: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
-	(self class environment at: #ClyBrowser) beAllDefault.
+	(self class environment at: #ClyBrowserMorph) beAllDefault.
 	
 	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
 ]
