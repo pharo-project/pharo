@@ -44,6 +44,20 @@ FileReference class >> newTempFilePrefix: prefix suffix: suffix [
 	^ tmpDir / fileName
 ]
 
+{ #category : #'instance creation' }
+FileReference class >> primDropRequestFileName: dropIndex [
+	"Primitive. Return the file name for some file that was just dropped onto the application.
+	Fail if dropIndex is out of range or the primitive is not supported."
+	<primitive: 'primitiveDropRequestFileName' module:'DropPlugin'>
+	^ self primitiveFail 
+]
+
+{ #category : #'drag-and-drop' }
+FileReference class >> requestDropReference: anInteger [ 
+	
+	^ (FilePathEncoder decode: (self primDropRequestFileName: anInteger)) asFileReference 
+]
+
 { #category : #navigating }
 FileReference >> , extension [
 	^ self withPath: self path, extension
