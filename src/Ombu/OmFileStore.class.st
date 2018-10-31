@@ -226,10 +226,11 @@ OmFileStore >> flush [
 OmFileStore >> flushEntryBuffer [
 
 	self critical: [
-		| initialPosition initialLocalName |
+		| initialPosition initialLocalName fileStream |
 		self entryBuffer isEmpty ifTrue: [ ^self ].
 		
-		fileReference writeStreamDo: [:fileStream | | anEntryWriter |
+		fileStream := ZnCharacterReadWriteStream on: fileReference binaryReadWriteStream encoding: #utf8.
+		[ | anEntryWriter |
 			fileStream setToEnd.
 			
 			initialPosition := fileStream position.
@@ -251,7 +252,7 @@ OmFileStore >> flushEntryBuffer [
 			fileStream flush.
 			
 			lastStreamPosition := fileStream size.
-			].
+			] ensure: [ fileStream close ].
 	
 		self refreshEntryPositionsByLocalNameStartingAt: initialPosition since: initialLocalName.
 		].
