@@ -21,6 +21,19 @@ MemoryFileSystemTest >> lastModificationTimeOf: fileReference [
 ]
 
 { #category : #tests }
+MemoryFileSystemTest >> testCopyFromto [
+
+	| fileReference buffer |
+
+	fileReference := filesystem root / 'test.file'.
+	buffer := 'test data'.
+	filesystem
+		copyFrom: buffer readStream 
+		to: fileReference path.
+	self assert: fileReference contents equals: buffer.
+]
+
+{ #category : #tests }
 MemoryFileSystemTest >> testCurrentEqual [
 	| other another |
 	another := FileSystem currentMemoryFileSystem.
