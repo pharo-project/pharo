@@ -9,15 +9,16 @@ Class {
 }
 
 { #category : #private }
-FFIExternalPackedStructure class >> compileFields: specArray withAccessors: defineBoolean [
-	| offset fieldSpec |
+FFIExternalPackedStructure class >> compileFields: specArray withAccessors: aSymbol [
+	| offset fieldSpec shouldDefineAccessors |
 			
+	shouldDefineAccessors := #(always generated absent) includes: aSymbol.
 	fieldSpec := self fieldSpec.
 	offset := 0.	
 	externalStructureAlignment := self packedStructureAlignment.
 	fieldSpec fieldsAndTypesDo: [ :fieldName :type | 
 		self defineFieldOffset: fieldName value: offset + 1.  
-		(defineBoolean and: [ fieldName isSymbol ]) ifTrue: [ 
+		(shouldDefineAccessors and: [ fieldName isSymbol ]) ifTrue: [ 
 			self defineFieldAccessorsFor: fieldName type: type ]. 
 		offset := offset + type typeSize.
 	].

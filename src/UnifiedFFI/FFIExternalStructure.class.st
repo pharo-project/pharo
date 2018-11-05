@@ -21,16 +21,17 @@ FFIExternalStructure class >> asExternalTypeOn: generator [
 ]
 
 { #category : #private }
-FFIExternalStructure class >> compileFields: specArray withAccessors: defineBoolean [
-	| offset fieldSpec |
+FFIExternalStructure class >> compileFields: specArray withAccessors: aSymbol [
+	| offset fieldSpec shouldDefineAccessors |
 	
+	shouldDefineAccessors := #(always generated absent) includes: aSymbol.	
 	fieldSpec := self fieldSpec.
 	offset := 0.	
 	externalStructureAlignment := 1.
 	fieldSpec fieldsAndTypesDo: [ :fieldName :type |
 		offset := offset alignedTo: type typeAlignment.
 		self defineFieldOffset: fieldName value: offset + 1.  
-		(defineBoolean and: [ fieldName isSymbol ]) ifTrue: [ 
+		(shouldDefineAccessors and: [ fieldName isSymbol ]) ifTrue: [ 
 			self defineFieldAccessorsFor: fieldName type: type ].
 		offset := offset + type typeSize.
 		externalStructureAlignment := externalStructureAlignment max: type typeAlignment  ].

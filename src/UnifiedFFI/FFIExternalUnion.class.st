@@ -9,14 +9,15 @@ Class {
 }
 
 { #category : #private }
-FFIExternalUnion class >> compileFields: specArray withAccessors: defineBoolean [
-	| totalSize fieldSpec |
-			
+FFIExternalUnion class >> compileFields: specArray withAccessors: aSymbol [
+	| totalSize fieldSpec shouldDefineAccessors |
+		
+	shouldDefineAccessors := #(always generated absent) includes: aSymbol.		
 	fieldSpec := self fieldSpec.
 	totalSize := 0.	
 	externalStructureAlignment := 1.
 	fieldSpec fieldsAndTypesDo: [ :fieldName :type | 
-		(defineBoolean and: [ fieldName isSymbol ]) ifTrue: [ 
+		(shouldDefineAccessors and: [ fieldName isSymbol ]) ifTrue: [ 
 			self defineFieldAccessorsFor: fieldName startingAt: 1 type: type ]. 
 		totalSize := totalSize max: type typeSize.
 		externalStructureAlignment := externalStructureAlignment max: type typeAlignment  ].
