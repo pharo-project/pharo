@@ -180,7 +180,6 @@ UITheme class >> newDefaultSettings [
 		autoSelectionColor: false;
 		preferRoundCorner: false;
 		fadedBackgroundWindows: false;
-		secondarySelectionColor: self veryLightSelectionColor;
 		flatMenu: true
 ]
 
@@ -5269,7 +5268,7 @@ UITheme >> scrollbarThumbVerticalMiddleForm [
 
 { #category : #'accessing colors' }
 UITheme >> secondarySelectionColor [
-	^ self settings secondarySelectionColor
+	^ Color r: 0.927 g: 0.962 b: 0.995 alpha: 1.0
 ]
 
 { #category : #'accessing colors' }

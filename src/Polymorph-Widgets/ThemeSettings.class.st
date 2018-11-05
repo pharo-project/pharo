@@ -508,23 +508,11 @@ ThemeSettings >> scrollbarColor: anObject [
 ]
 
 { #category : #accessing }
-ThemeSettings >> secondarySelectionColor [
-	"Answer the value of selectionColor"
-
-	^ secondarySelectionColor ifNil: [secondarySelectionColor :=   (Color r: 0.351 g: 0.939 b: 0.46 alpha: 0.35)]
-]
-
-{ #category : #accessing }
-ThemeSettings >> secondarySelectionColor: anColor [
-	secondarySelectionColor := anColor
-]
-
-{ #category : #accessing }
 ThemeSettings >> secondarySelectionTextColor [
 	"Answer the value of selectionTextColor"
 
 	^ secondarySelectionTextColor 
-		ifNil: [ self secondarySelectionColor contrastingColor ]
+		ifNil: [ Smalltalk ui theme secondarySelectionColor contrastingColor ]
 ]
 
 { #category : #accessing }

@@ -34,7 +34,7 @@ RubTextSelectionColor class >> oppositeDelimiterSelection [
 		ifNil: [ 
 			OppositeDelimiterSelection := self new
 				colorBlock: [ self theme currentSettings selectionTextColor ];
-				backgroundColorBlock: [ self theme currentSettings secondarySelectionColor ];
+				backgroundColorBlock: [ self theme secondarySelectionColor ];
 				yourself ]
 ]
 
@@ -57,7 +57,7 @@ RubTextSelectionColor class >> secondarySelection [
 							self theme currentSettings haveSecondarySelectionTextColor
 								ifTrue: [ self theme currentSettings secondarySelectionTextColor ]
 								ifFalse: [  ] ];
-				backgroundColorBlock: [ self theme currentSettings secondarySelectionColor ];
+				backgroundColorBlock: [ self theme secondarySelectionColor ];
 				yourself ]
 ]
 
