@@ -744,6 +744,21 @@ FileReferenceTest >> testNextNameForExtensionNegativeTesting [
 ]
 
 { #category : #tests }
+FileReferenceTest >> testNextVersion [
+
+	| fs file versions |
+
+	fs := FileSystem memory.
+	file := fs / 'file.name'.
+	versions := Array streamContents: [ :stream |
+		5 timesRepeat: [ 
+			file createFile.
+			stream nextPut: file basename.
+			file := file nextVersion. ] ].
+	self assert: versions equals: #('file.name' 'file.1.name' 'file.2.name' 'file.3.name' 'file.4.name').
+]
+
+{ #category : #tests }
 FileReferenceTest >> testParent [
 	| ref parent |
 	ref := filesystem * 'plonk' / 'griffle'.

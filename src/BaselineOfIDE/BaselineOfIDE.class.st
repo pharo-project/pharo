@@ -841,12 +841,12 @@ BaselineOfIDE >> loadCalypso [
 
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.11.5';
+		repository: 'github://pharo-ide/Calypso:v0.12.0/src';
 		onConflict: [ :err | err useIncoming ];
 		onUpgrade: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
-	(self class environment at: #ClyBrowser) beAllDefault.
+	(self class environment at: #ClyBrowserMorph) beAllDefault.
 	
 	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
 ]
