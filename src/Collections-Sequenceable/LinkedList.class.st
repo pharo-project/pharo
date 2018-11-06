@@ -561,6 +561,7 @@ LinkedList >> size [
 { #category : #sorting }
 LinkedList >> sort: aBlock [
 	|aLinkedList|
+	self isEmpty ifTrue: [ ^self ].
 	aLinkedList := LinkedList newFrom: (self asArray sort: aBlock).
 	firstLink := aLinkedList firstLink.
 	lastLink := aLinkedList lastLink.

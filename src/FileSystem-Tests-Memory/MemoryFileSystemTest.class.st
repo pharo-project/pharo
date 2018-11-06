@@ -21,6 +21,19 @@ MemoryFileSystemTest >> lastModificationTimeOf: fileReference [
 ]
 
 { #category : #tests }
+MemoryFileSystemTest >> testCopyFromto [
+
+	| fileReference buffer |
+
+	fileReference := filesystem root / 'test.file'.
+	buffer := 'test data'.
+	filesystem
+		copyFrom: buffer readStream 
+		to: fileReference path.
+	self assert: fileReference contents equals: buffer.
+]
+
+{ #category : #tests }
 MemoryFileSystemTest >> testCurrentEqual [
 	| other another |
 	another := FileSystem currentMemoryFileSystem.
@@ -55,7 +68,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenFileModifiedWithBinaryWriteStream [
 	fileReference := (filesystem / 'file.txt') ensureCreateFile.
 	modifiedTime := self lastModificationTimeOf: fileReference.
 	data := 'some data'.
-	fileReference binaryWriteStreamDo: [ :aStream | aStream nextPutAll: data ].
+	fileReference binaryWriteStreamDo: [ :aStream | aStream nextPutAll: data asByteArray ].
 	self assert: modifiedTime notNil.
 	self deny: modifiedTime equals: fileReference modificationTime.
 	self
@@ -69,7 +82,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenFileWrittenTo [
 	| modifiedTime fileReference |
 	fileReference := (filesystem / 'file.txt') ensureCreateFile.
 	modifiedTime := self lastModificationTimeOf: fileReference.
-	fileReference binaryWriteStreamDo: [ :aStream | aStream nextPutAll: 'data' ].
+	fileReference binaryWriteStreamDo: [ :aStream | aStream nextPutAll: 'data' asByteArray ].
 	self assert: modifiedTime notNil.
 	self deny: modifiedTime equals: fileReference modificationTime
 ]

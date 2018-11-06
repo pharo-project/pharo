@@ -139,12 +139,12 @@ AbstractFileReference >> basenameWithoutExtension: anExtension [
 	^ self fullPath basenameWithoutExtension: anExtension
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 AbstractFileReference >> binaryReadStream [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 AbstractFileReference >> binaryReadStreamDo: aBlock [
 	| stream |
 	stream := self binaryReadStream.
@@ -152,14 +152,14 @@ AbstractFileReference >> binaryReadStreamDo: aBlock [
 		ensure: [ stream close ]
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 AbstractFileReference >> binaryReadStreamDo: doBlock ifAbsent: absentBlock [
 	^ self isFile 
 		ifTrue: [ self binaryReadStreamDo: doBlock ]
 		ifFalse: absentBlock
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 AbstractFileReference >> binaryReadStreamIfAbsent: absentBlock [
 	^ self isFile
 		ifTrue: [ self binaryReadStream ]

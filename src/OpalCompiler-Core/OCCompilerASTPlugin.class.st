@@ -1,5 +1,5 @@
 "
-I am an abtract superclass for compiler plugings.
+I am an abtract superclass for compiler plugins.
 
 The compiler consists of multiple passes:
 

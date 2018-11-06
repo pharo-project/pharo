@@ -44,6 +44,20 @@ FileReference class >> newTempFilePrefix: prefix suffix: suffix [
 	^ tmpDir / fileName
 ]
 
+{ #category : #'instance creation' }
+FileReference class >> primDropRequestFileName: dropIndex [
+	"Primitive. Return the file name for some file that was just dropped onto the application.
+	Fail if dropIndex is out of range or the primitive is not supported."
+	<primitive: 'primitiveDropRequestFileName' module:'DropPlugin'>
+	^ self primitiveFail 
+]
+
+{ #category : #'drag-and-drop' }
+FileReference class >> requestDropReference: anInteger [ 
+	
+	^ (FilePathEncoder decode: (self primDropRequestFileName: anInteger)) asFileReference 
+]
+
 { #category : #navigating }
 FileReference >> , extension [
 	^ self withPath: self path, extension
@@ -96,15 +110,23 @@ FileReference >> asPath [
 
 { #category : #streams }
 FileReference >> binaryReadStream [
+	"Answer a buffered binary read stream on the receiver"
 	
-	^ filesystem binaryReadStreamOn: self path
+	^ ZnBufferedReadStream on: (filesystem binaryReadStreamOn: self path)
+]
+
+{ #category : #streams }
+FileReference >> binaryReadWriteStream [
+	"Answer a binary read/write stream on the receiver"
+
+	^ ZnBufferedReadWriteStream on: (filesystem binaryWriteStreamOn: self path)
 ]
 
 { #category : #streams }
 FileReference >> binaryWriteStream [
-	"Answer a binary write stream on the receiver"
+	"Answer a buffered binary write stream on the receiver"
 
-	^ ZnBufferedReadWriteStream on: (filesystem binaryWriteStreamOn: self path)
+	^ ZnBufferedWriteStream on: (filesystem binaryWriteStreamOn: self path)
 ]
 
 { #category : #accessing }
@@ -409,7 +431,7 @@ FileReference >> nextVersion [
 				select: [ :f| 
 					(f basename beginsWith: nameWithoutExtension) ]
 				thenCollect: [ :f| 
-					Number squeezeNumberOutOfString: (f basename last: (f basename size - nameWithoutExtension size))   ifFail: [ 0 ]].
+					Number squeezeNumberOutOfString: (f basename last: (f basename size - nameWithoutExtension size - 1))   ifFail: [ 0 ]].
 	
 	versionNumbers ifEmpty: [ ^self ].
 	

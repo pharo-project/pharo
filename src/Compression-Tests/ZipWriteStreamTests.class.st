@@ -11,24 +11,16 @@ Class {
 ZipWriteStreamTests >> testEmptyStrings [
 	| aStream zipStream |
 
-	aStream := ByteArray new writeStream binary.
+	aStream := ByteArray new writeStream.
 	zipStream := ZipWriteStream on: aStream.
 	zipStream nextStringPut: ''. 
 	zipStream nextStringPut: ''.
 	zipStream close.
 	aStream close.
-	aStream := aStream contents readStream binary.
+	aStream := aStream contents readStream.
 	zipStream := ZipReadStream on: aStream.
 	self assert: zipStream nextString isEmpty. 
 	self assert: zipStream nextString isEmpty.
 	zipStream close.
 	aStream close
-]
-
-{ #category : #tests }
-ZipWriteStreamTests >> testZipped [
-	| compressed |
-	
-	compressed := 'hello' zipped.
-	self assert: compressed unzipped equals: 'hello'
 ]

@@ -213,12 +213,11 @@ WorldState class >> saveAndQuit [
 { #category : #'world menu items' }
 WorldState class >> saveAs [
 	| reference |
-	reference := UIManager default 
-		fileSave: 'Save Image as?' 
-		initialAnswer: (Smalltalk imageFile nextVersion basename copyUpToLast: Path extensionDelimiter)
+	reference := UIManager default
+		chooseForSaveFileReference: 'Save Image as?'
 		extensions: #('image') 
-		path: Smalltalk imageDirectory.
-		
+		path: Smalltalk imageFile nextVersion.
+
 	reference ifNotNil: [ Smalltalk saveAs: reference parent / (reference basenameWithoutExtension: 'image') ]
 ]
 

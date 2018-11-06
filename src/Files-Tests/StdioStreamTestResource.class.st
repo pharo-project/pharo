@@ -60,7 +60,8 @@ StdioStreamTestResource >> setUp [
 
 	fileReference := FileReference newTempFilePrefix: 'StdioStreamTest.' suffix: '.bin'.
 	contents := '01234567890123456789'.
-	fileStream := fileReference binaryWriteStream wrappedStream.
+	
+	fileStream := (File named: fileReference pathString) openForWrite.
 	fileStream
 		nextPutAll: contents;
 		position: 0.
