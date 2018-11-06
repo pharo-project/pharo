@@ -211,6 +211,22 @@ WelcomeHelp class >> pages [
 	^ #(welcome changeLog learn exploreEnvironment useExternalPackages documentation gettingHelp)
 ]
 
+{ #category : #pages }
+WelcomeHelp class >> pharoVersionString [
+
+	| version | 
+	
+	version := SystemVersion current.
+
+	^ String streamContents: [ :aStream  |
+		version hasValidBuildNumber ifTrue: [ 
+			aStream nextPutAll: 'build: '.
+			version build printOn: aStream.
+			aStream nextPutAll: ', '. ].
+		aStream nextPutAll: 'commit: '.
+		aStream nextPutAll: version commitHashShort ]
+]
+
 { #category : #defaults }
 WelcomeHelp class >> slowNetworkDefaults [
 	"Do not display network bound catalog projects in spotter to keep it responsive."
@@ -246,8 +262,8 @@ The catalog can be enabled in Spotter by enabling the "Display catalog projects 
 WelcomeHelp class >> welcome [
 	^ HelpTopic 
 		title: 'Welcome to ', Smalltalk version
-		contents: (self heading: Smalltalk version), 
-		
+		contents: (self heading: Smalltalk version withSubtitle: self pharoVersionString), 
+
 'Welcome to Pharo, an immersive live programming environment.
 
 Pharo is a pure object-oriented programming language and a powerful environment, focused on simplicity and immediate feedback (think IDE and OS rolled into one).
