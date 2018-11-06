@@ -115,16 +115,18 @@ InputEventSensor class >> swapMouseButtons [
 
 { #category : #mouse }
 InputEventSensor >> anyButtonPressed [
-	"Answer whether at least one mouse button is currently being pressed."
+	"Answer whether at least one mouse button is currently being pressed.
+	 This can be checked by looking if any of the 3 bits representing the 3 mouse buttons states is set to 1."
 
-	^self mouseButtons anyMask: 7
+	^self mouseButtons anyMask: ButtonsBitMask
 ]
 
 { #category : #'modifier keys' }
 InputEventSensor >> anyModifierKeyPressed [
-	"ignore, however, the shift keys 'cause that's not REALLY a command key"
+	"Answer whether at least one modifier key is currently being pressed.
+	 This can be checked by looking if any of the 3 bits representing the state of cmd, opt and ctrl modifiers is set to 1."
 
-	^self modifiers anyMask: 16r0E	"cmd | opt | ctrl"
+	^self modifiers anyMask: ModifierKeysBitMask
 ]
 
 { #category : #mouse }
@@ -132,7 +134,7 @@ InputEventSensor >> blueButtonPressed [
 	"Answer whether only the blue mouse button is being pressed. 
 	This is the third mouse button or cmd+click on the Mac."
 
-	^(self mouseButtons bitAnd: 7) = 1
+	^(self mouseButtons bitAnd: ButtonsBitMask) = BlueButtonBit
 
 ]
 
@@ -150,14 +152,14 @@ InputEventSensor >> characterForEvent: evtBuf [
 InputEventSensor >> commandKeyPressed [
 	"Answer whether the command key on the keyboard is being held down."
 
-	^self modifiers anyMask: 16r08
+	^self modifiers anyMask: CommandKeyBit
 ]
 
 { #category : #'modifier keys' }
 InputEventSensor >> controlKeyPressed [
 	"Answer whether the control key on the keyboard is being held down."
 
-	^self modifiers anyMask: 16r02
+	^self modifiers anyMask: CtrlKeyBit
 ]
 
 { #category : #cursor }
@@ -345,10 +347,12 @@ InputEventSensor >> noButtonPressed [
 { #category : #events }
 InputEventSensor >> peekEvent [
 	"Look ahead at the next event."
+
 	| nextEvent |
 	nextEvent := eventQueue peek.
-	^((nextEvent notNil) and: [(nextEvent at: 1) ~= EventTypeMenu])
-		ifTrue: [self processEvent: nextEvent]
+	^ (nextEvent notNil
+		and: [ (nextEvent at: EventTypeIndexInBuffer) ~= EventTypeMenu ])
+		ifTrue: [ self processEvent: nextEvent ]
 ]
 
 { #category : #'private events' }
@@ -407,41 +411,55 @@ InputEventSensor >> primTabletRead: cursorIndex [
 ]
 
 { #category : #'private events' }
-InputEventSensor >> processEvent: evt [ 
+InputEventSensor >> processEvent: evt [
 	"Process a single event. This method is run at high priority."
+
 	| type |
-		
-	type := evt at: 1.
+	type := evt at: EventTypeIndexInBuffer.
 
 	"Treat menu events first"
-	type = EventTypeMenu ifTrue: [ "Do we still have EventTypeMenu? All the code handling this was removed from Pharo. I keep this guard just in case." ^nil].
+	type = EventTypeMenu
+		ifTrue:
+			[ "Do we still have EventTypeMenu? All the code handling this was removed from Pharo. I keep this guard just in case." ^ nil ].
 
 	"Tackle mouse events first"
 	type = EventTypeMouse
-		ifTrue: [
-			"Transmogrify the button state according to the platform's button map definition"
-			evt at: 5 put: (ButtonDecodeTable at: (evt at: 5) + 1).
-			"Map the mouse buttons depending on modifiers"
-			evt at: 5 put: (self mapButtons: (evt at: 5) modifiers: (evt at: 6)).
+		ifTrue: [ ^ self processMouseEvent: evt ].
 
-			"Update state for polling calls"
-			mousePosition := (evt at: 3) @ (evt at: 4).
-			modifiers := evt at: 6.
-			mouseButtons := evt at: 5.
 
-			^evt].
-	
-	
 	"Finally keyboard"
 	type = EventTypeKeyboard
-		ifTrue: [
-			"Update state for polling calls"
-			modifiers := evt at: 5. 
-			^evt].
-				
+		ifTrue: [ ^ self processKeyboardEvent: evt ].
+
 	"Handle all events other than Keyborad or Mouse."
-	^evt.
-	
+	^ evt
+]
+
+{ #category : #'private events' }
+InputEventSensor >> processKeyboardEvent: evt [
+	modifiers := evt at: KeyboardModifierIndexInEventBuffer.	"Update state for polling calls"
+	^ evt
+]
+
+{ #category : #'private events' }
+InputEventSensor >> processMouseEvent: evt [
+	"Transmogrify the button state according to the platform's button map definition"
+	evt
+		at: MouseButtonIndexInEventBuffer
+		put: (ButtonDecodeTable at: (evt at: MouseButtonIndexInEventBuffer) + 1).
+	"Map the mouse buttons depending on modifiers"
+	evt
+		at: MouseButtonIndexInEventBuffer
+		put:
+			(self
+				mapButtons: (evt at: MouseButtonIndexInEventBuffer)
+				modifiers: (evt at: MouseModifierIndexInEventBuffer)).
+
+	"Update state for polling calls"
+	mousePosition := (evt at: MouseXCoordinateIndexInEventBuffer) @ (evt at: MouseYCoordinateIndexInEventBuffer).
+	modifiers := evt at: MouseModifierIndexInEventBuffer.
+	mouseButtons := evt at: MouseButtonIndexInEventBuffer.
+	^ evt
 ]
 
 { #category : #'private events' }
@@ -455,7 +473,7 @@ InputEventSensor >> redButtonPressed [
 	"Answer true if only the red mouse button is being pressed.
 	This is the first mouse button, usually the left one."
 
-	^(self mouseButtons bitAnd: 7) = 4
+	^(self mouseButtons bitAnd: ButtonsBitMask) = RedButtonBit
 
 ]
 
@@ -463,7 +481,7 @@ InputEventSensor >> redButtonPressed [
 InputEventSensor >> shiftPressed [
 	"Answer whether the shift key on the keyboard is being held down."
 
-	^self modifiers anyMask: 16r01
+	^self modifiers anyMask: ShiftKeyBit
 
 ]
 
@@ -576,6 +594,6 @@ InputEventSensor >> yellowButtonPressed [
 	"Answer whether only the yellow mouse button is being pressed. 
 	This is the second mouse button or option+click on the Mac."
 
-	^(self mouseButtons bitAnd: 7) = 2
+	^(self mouseButtons bitAnd: ButtonsBitMask) = YellowButtonBit
 
 ]

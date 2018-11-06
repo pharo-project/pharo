@@ -51,7 +51,7 @@ UserInterruptHandler >> handleEvent: evt [
 			"Check if the event is a user interrupt"
 			keycode := buf sixth.
 			modifiers := buf fifth.
-			(keycode = interruptKey and: [ modifiers anyMask: 16r0E ])
+			(keycode = interruptKey and: [ modifiers anyMask: ModifierKeysBitMask ])
 				ifTrue: [ 
 					Display deferUpdates: false.
 					(Smalltalk hasClassNamed: #SoundService)
