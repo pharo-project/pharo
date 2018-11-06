@@ -608,7 +608,9 @@ AbstractFileReference >> moveTo: aReference [
 	(FileSystem disk workingDirectory / 'paf' ) ensureCreateFile.
 	(FileSystem disk workingDirectory / 'fooFolder') ensureCreateDirectory. 
 	(FileSystem disk workingDirectory / 'paf' ) moveTo: (FileSystem disk workingDirectory / 'fooFolder' / 'paf')
-	"
+	
+	Note that the receiver is modified to point to the new location."
+
 	^ self resolve moveTo: aReference
 ]
 
