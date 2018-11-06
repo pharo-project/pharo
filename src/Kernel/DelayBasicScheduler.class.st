@@ -342,12 +342,6 @@ DelayBasicScheduler >> suspendAtTimingPriority [
 
 ]
 
-{ #category : #deprecated }
-DelayBasicScheduler >> testCaseSupportTimingSemaphore [
-	"Tests might alter which sempahore the VM signals, so call this from test tearDown"
-	^ timingSemaphore.
-]
-
 { #category : #'system-api' }
 DelayBasicScheduler >> ticker [
 	^ticker

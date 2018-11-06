@@ -161,13 +161,6 @@ Delay class >> systemSettingOn: aBuilder [
 	
 ]
 
-{ #category : #deprecated }
-Delay class >> testCaseSupportTimingSemaphore [
-
-	^ Scheduler testCaseSupportTimingSemaphore.
-
-]
-
 { #category : #'instance creation' }
 Delay class >> timeoutSemaphore: aSemaphore afterMSecs: anInteger [
 	"Create and schedule a Delay to signal the given semaphore when the given number of milliseconds has elapsed. Return the scheduled Delay. The timeout can be cancelled by sending 'unschedule' to this Delay."
