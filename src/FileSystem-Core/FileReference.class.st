@@ -382,6 +382,13 @@ FileReference >> modificationTime [
 
 { #category : #operations }
 FileReference >> moveTo: aReference [
+	"Move the receiver in the location passed as argument.
+	
+	(FileSystem disk workingDirectory / 'paf' ) ensureCreateFile.
+	(FileSystem disk workingDirectory / 'fooFolder') ensureCreateDirectory. 
+	(FileSystem disk workingDirectory / 'paf' ) moveTo: (FileSystem disk workingDirectory / 'fooFolder' / 'paf')
+	
+	Note that the receiver is modified to point to the new location."
 	
 	| result |
 	result := self fileSystem 
