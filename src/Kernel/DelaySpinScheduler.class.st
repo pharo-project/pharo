@@ -23,7 +23,7 @@ DelaySpinScheduler >> schedule: aDelay [
 	 such that no suspension can occur between whileFalse, assignment & signal.
 	 i.e. there are no backward jumps after comparison becomes true."
 		
-	aDelay schedulerBeingWaitedOn ifTrue: [^self error: 'This Delay has already been scheduled.'].
+	aDelay beingWaitedOn ifTrue: [^self error: 'This Delay has already been scheduled.'].
 	[ delayToStart == nil ] whileFalse. 
 	delayToStart := aDelay. 
 	timingSemaphore signal. "Transfer execution to back-end #scheduleAtTimingPriority"
