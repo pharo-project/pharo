@@ -14,14 +14,13 @@ SystemVersionTest >> checkIsCompatibleWithResultOfVersionMessage: aString [
 	"
 	
 	| rx |
-	rx := '(Pharo)([0-9]+)[.]([0-9]+)[.]([0-9]+)([a-zA-Z]+)' asRegex.
+	rx := '(Pharo)([0-9]+)[.]([0-9]+)[.]([0-9]+)([a-zA-Z0-9]+)*' asRegex.
 	self 
 		assert: (rx matches: aString);
 		assert: (rx subexpression: 2) equals: 'Pharo';
 		assert: (rx subexpression: 3) asNumber > 0;
 		assert: (rx subexpression: 4) asNumber >= 0;
-		assert: (rx subexpression: 5) asNumber >= 0;
-		assert: (rx subexpression: 6) notEmpty
+		assert: (rx subexpression: 5) asNumber >= 0.
 ]
 
 { #category : #tests }
