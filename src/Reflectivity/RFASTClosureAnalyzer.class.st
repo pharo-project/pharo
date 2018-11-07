@@ -10,10 +10,8 @@ Class {
 { #category : #visiting }
 RFASTClosureAnalyzer >> visitNode: aNode [
 	super visitNode: aNode.
-	
-	aNode hasMetalinkBefore ifTrue: [  
- 		aNode beforeHooks do: [:each | super visitNode: each]].
-	
-	aNode hasMetalinkAfter ifTrue: [  
- 		aNode afterHooks do: [:each | super visitNode: each]].
+	"if we have any hooks defined --> visit them to do name analysis"
+	aNode beforeHooks do: [:each | super visitNode: each].
+	aNode insteadHooks do: [:each | super visitNode: each].
+	aNode afterHooks do: [:each | super visitNode: each].
 ]
