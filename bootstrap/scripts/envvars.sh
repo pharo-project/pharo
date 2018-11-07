@@ -36,8 +36,6 @@ fi
 if [ -z "${BOOTSTRAP_CACHE}" ]
 then
   BOOTSTRAP_CACHE=${ROOT_DIR}/bootstrap-cache
-else
-  BOOTSTRAP_CACHE=$(readlink -f "${BOOTSTRAP_CACHE}")
 fi
 export BOOTSTRAP_CACHE
 
