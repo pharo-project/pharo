@@ -4,7 +4,7 @@ Some basic classes used in collections: Link, Associtation, Weak*, CharacterSet,
 Class {
 	#name : #ManifestCollectionsSupport,
 	#superclass : #PackageManifest,
-	#category : #'Collections-Support'
+	#category : #'Collections-Support-Manifest'
 }
 
 { #category : #'meta-data' }

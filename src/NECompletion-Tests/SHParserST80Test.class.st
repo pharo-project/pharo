@@ -44,12 +44,6 @@ SHParserST80Test >> testBooleanHierarchy [
 ]
 
 { #category : #'tests - smoke' }
-SHParserST80Test >> testCollectionHierarchy [
-	self skip: 'Too slow for too little value added'.
-	self verifyHierarchy: Collection
-]
-
-{ #category : #'tests - smoke' }
 SHParserST80Test >> testNumberHierarchy [
 	self verifyHierarchy: Number
 ]

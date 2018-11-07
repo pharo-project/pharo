@@ -292,6 +292,11 @@ MetaLink >> methods [
 ]
 
 { #category : #accessing }
+MetaLink >> nodes [
+	^nodes
+]
+
+{ #category : #accessing }
 MetaLink >> option: anArray [ 
 	self parseOptions: anArray
 ]
@@ -306,6 +311,19 @@ MetaLink >> optionAnnounce: aBoolean [
 	aBoolean
 		ifTrue: [ options add: #optionAnnounce ] 
 		ifFalse: [ options remove: #optionAnnounce ifAbsent:[] ]
+]
+
+{ #category : #options }
+MetaLink >> optionArgsAsArray [
+	^ options includes: #argsAsArray
+]
+
+{ #category : #options }
+MetaLink >> optionArgsAsArray: aBoolean [
+	"If this option is set to true, this metalink will send the required reified elements to its metaobject as one single array instead of as multiple arguments"
+	aBoolean
+		ifTrue: [ options add: #argsAsArray ] 
+		ifFalse: [ options remove: #argsAsArray ifAbsent:[] ]
 ]
 
 { #category : #options }

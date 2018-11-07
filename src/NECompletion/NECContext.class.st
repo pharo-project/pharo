@@ -218,11 +218,8 @@ NECContext >> createModel [
 	self receiverClass
 		ifNotNil: [^ NECTypedModel class: receiverClass].
 
-	(controller workspace isNil and: [ theClass notNil ])
-		ifTrue: [ self isStartOfMethodDefinition
-				ifTrue: [ NECPreferences overrideModel
-						ifTrue: [ ^ NECOverrideModel class: theClass ]
-						ifFalse: [ ^ NECEmptyModel new ] ] ].
+	(theClass notNil and:  [ self isStartOfMethodDefinition ])
+				ifTrue: [ self configureSelectorsOnly].
 							
 	self completionTokenIsLiteralOrComment ifTrue:[ ^ NECEmptyModel new].
 			
@@ -497,13 +494,6 @@ NECContext >> sourceOf: aSHRange stopAt: aNumber [
 	^ aSHRange type = #empty
 		ifTrue: [String new]
 		ifFalse: [source copyFrom: aSHRange start to: aNumber]
-]
-
-{ #category : #action }
-NECContext >> switchToUntyped [
-	receiverClass := nil.
-	self configureSelectorsAndVariables.
-	model := self createModel
 ]
 
 { #category : #accessing }

@@ -17,9 +17,9 @@ WelcomeHelp class >> bookName [
 { #category : #pages }
 WelcomeHelp class >> changeLog [
 	^ HelpTopic 
-		title: 'ChangeLog'
-		contents: (self heading: 'Highlights (aka New Stuff) in Pharo 7.0alpha'),
-'- moving the development process to git and github (see ',(self url: 'https://github.com/pharo-project/pharo'),')
+		title: 'Changelog'
+		contents: (self heading: 'Changelog highlights'),
+'- moving the development process to git and GitHub (see ',(self url: 'https://github.com/pharo-project/pharo'),')
 - bootstraping of a smaller image that will not include compiler/parser (Compiler and related packages are exported and loaded using a binary exporter named Hermes)
 - integration of Renraku quality framework
 - integration of WebBrowser
@@ -46,7 +46,7 @@ WelcomeHelp class >> changeLog [
 - Playground is now also extensible (similar to GTInspector)
 - Conditional breakpoints/watches
 
-As the complete list of fixed issues is too large to be placed here, you can review it on the FogBugz issue tracker (', (self url: 'https://pharo.fogbugz.com'), ') (requires account).', 
+As the complete list of fixed issues is too large to be placed here, you can review it on the FogBugz issue tracker (', (self url: 'https://pharo.manuscript.com'), ') (requires account).', 
 (self subheading: 'Tools'),
 '- Integration of Calypso (new and improved SystemBrowser)
 - Improved Iceberg Git repositories manager
@@ -120,6 +120,13 @@ One chapter of particular interest is the one that provides a quick tour of the 
 ', (self url: 'https://ci.inria.fr/pharo-contribution/job/UpdatedPharoByExample/lastSuccessfulBuild/artifact/book-result/PharoTour/PharoTour.pdf')
 ]
 
+{ #category : #defaults }
+WelcomeHelp class >> fastNetworkDefaults [
+	"Allow to display catalog projects in spotter on regular and fast networks"
+	CatalogSettings displayCatalogProjectsInSpotter: true.
+	self inform: 'Catalog projects accessible through Spotter'
+]
+
 { #category : #pages }
 WelcomeHelp class >> gettingHelp [
 	^ HelpTopic 
@@ -185,9 +192,30 @@ WelcomeHelp class >> openForRelease [
 	window center: Display extent / 2
 ]
 
+{ #category : #'defaults - actions' }
+WelcomeHelp class >> openNetworkSettings [
+
+	| browser window path |	
+	browser := SettingBrowser new 
+		changePackageSet: { 
+			#'Network-Kernel' asPackage.
+	 };
+		yourself.		 
+	window := browser open.
+	path := (window submorphs detect: [ :each | (each isKindOf: MorphTreeMorph) ]) nodeList.
+	browser expandNodePath: path  
+]
+
 { #category : #accessing }
 WelcomeHelp class >> pages [
 	^ #(welcome changeLog learn exploreEnvironment useExternalPackages documentation gettingHelp)
+]
+
+{ #category : #defaults }
+WelcomeHelp class >> slowNetworkDefaults [
+	"Do not display network bound catalog projects in spotter to keep it responsive."
+	CatalogSettings displayCatalogProjectsInSpotter: false.
+	self inform: 'Catalog projects not accessible through Spotter due to slow network. Use search in catalog tool to load external packages.'
 ]
 
 { #category : #pages }
@@ -217,17 +245,26 @@ The catalog can be enabled in Spotter by enabling the "Display catalog projects 
 { #category : #pages }
 WelcomeHelp class >> welcome [
 	^ HelpTopic 
-		title: 'Welcome to Pharo 7.0alpha'
-		contents: (self heading: 'Pharo 7.0alpha'), 
+		title: 'Welcome to ', Smalltalk version
+		contents: (self heading: Smalltalk version), 
 		
 'Welcome to Pharo, an immersive live programming environment.
 
 Pharo is a pure object-oriented programming language and a powerful environment, focused on simplicity and immediate feedback (think IDE and OS rolled into one).
 
-For more information, please visit here: 
+For more information, please visit here: ', (self url: 'http://pharo.org'),
+(self subheading: 'Quick setup'),
+'Choose your preferred color theme: ',
+(self doItFrom: 'PharoLightTheme beCurrent' text: 'White Theme'), ' or ',
+(self doItFrom: 'PharoDarkTheme beCurrent' text: 'Dark Theme'), ' 
 
-', (self url: 'http://pharo.org'),
-(self subheading: 'Color themes'),
-'White theme: ', (self doItFrom: 'PharoLightTheme beCurrent. '), ' 
-Dark theme: ', (self doItFrom: 'PharoDarkTheme beCurrent. ').
+Click if you have access to a: ',
+(self doItFrom: 'WelcomeHelp fastNetworkDefaults' text: 'regular network connection'), ' or ',
+(self doItFrom: 'WelcomeHelp slowNetworkDefaults' text: 'slow network'), '
+or if need to ',
+(self doItFrom: 'WelcomeHelp openNetworkSettings' text: 'setup a network proxy'), '.
+
+You can also ',
+(self doItFrom: 'SettingBrowser open' text: 'apply many other other settings'), ' or extend the image ',
+(self doItFrom: 'CatalogBrowser open' text: 'by loading additional external packages from catalog'), '.'
 ]

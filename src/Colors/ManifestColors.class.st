@@ -1,3 +1,6 @@
+"
+Support for colors and color maps
+"
 Class {
 	#name : #ManifestColors,
 	#superclass : #PackageManifest,

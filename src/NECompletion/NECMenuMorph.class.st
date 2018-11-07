@@ -447,18 +447,7 @@ NECMenuMorph >> hasMessage [
 
 { #category : #accessing }
 NECMenuMorph >> height [
-	| count |
-	count := self class maxLength.
-	self visible ifTrue: [ 
-		| height |
-		height := World height - self bounds topLeft y.
-		World submorphs do: [ :each |
-			each class = TaskbarMorph 
-				ifTrue: [ height := height - each height ] ].
-		count := height // self class itemHeight - 1 min: count ].
-	^ count asInteger isZero 
-		ifTrue: [ 1 ]
-		ifFalse: [ count ]
+	^ 10
 ]
 
 { #category : #actions }
@@ -487,23 +476,6 @@ NECMenuMorph >> initialize [
 	super initialize.
 	self color: self class backgroundColor.
 	self borderStyle: (BorderStyle color: Color gray width: 1).
-]
-
-{ #category : #actions }
-NECMenuMorph >> insertCommonPrefix [
-	"Return value: true if the user input has been handled, regardless of whether a prefix was inserted"
-
-	| prefix |
-	context model isEmpty ifTrue: [^ false].
-	context model entries size = 1
-		ifTrue: [ ^ self insertSelected ].
-	prefix := context model commonPrefix.
-	self flag: 'Pending issue 7308, "controller editor wordAtCaret" below should be changed to "context completionToken"'.
-	prefix size > controller editor wordAtCaret size
-		ifTrue: [ 
-			self insertCompletion: prefix.
-			context narrowWith: controller editor wordAtCaret ].
-	^ true
 ]
 
 { #category : #actions }
@@ -629,13 +601,6 @@ NECMenuMorph >> pageCount [
 	^count
 ]
 
-{ #category : #paging }
-NECMenuMorph >> pageCountString [
-	^ self itemsCount = 501
-		ifTrue: [ 'more' ]
-		ifFalse: [ self pageCount asString ]
-]
-
 { #category : #actions }
 NECMenuMorph >> pageDown [
 	self gotoPage: self currentPage + 1.
@@ -656,14 +621,6 @@ NECMenuMorph >> pageUp [
 { #category : #drawing }
 NECMenuMorph >> prepareRectForNextRow: aRectangle [ 
 	^aRectangle translateBy: 0 @ self class itemHeight
-]
-
-{ #category : #title }
-NECMenuMorph >> removeTitle [
-	titleStringMorph
-		ifNil: [^ self].
-	self removeMorph: titleStringMorph owner. 
-	titleStringMorph := nil
 ]
 
 { #category : #drawing }
@@ -743,14 +700,6 @@ NECMenuMorph >> showDetail [
 	detailMorph := NECDetailMorph new.
 	self addMorph: detailMorph.
 	self updateDetail
-]
-
-{ #category : #actions }
-NECMenuMorph >> switchToUntyped [
-	context switchToUntyped.
-	self 
-		removeTitle; 
-		narrowCompletion
 ]
 
 { #category : #testing }

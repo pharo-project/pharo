@@ -619,6 +619,60 @@ FileReferenceTest >> testIsRoot [
 	self assert: (filesystem root) isRoot
 ]
 
+{ #category : #'tests - handy utils' }
+FileReferenceTest >> testLastFilesForExtension [
+	"This test verifies that we have the following ordering: 3 4 5 33 49 51 101"
+	| childFiles |
+	[ filesystem createDirectory: 'dir'.
+	filesystem / 'dir' / 'games.51.ston' writeStreamDo: [ :stream | stream nextPutAll: '51' ].
+	filesystem / 'dir' / 'games.3.ston' writeStreamDo: [ :stream | stream nextPutAll: '3' ].
+	filesystem / 'dir' / 'games.33.ston' writeStreamDo: [ :stream | stream nextPutAll: '33' ].
+	filesystem / 'dir' / 'games.4.ston' writeStreamDo: [ :stream | stream nextPutAll: '4' ].
+	filesystem / 'dir' / 'games.101.ston' writeStreamDo: [ :stream | stream nextPutAll: '101' ].
+	filesystem / 'dir' / 'games.49.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
+	filesystem / 'dir' / 'games.5.ston' writeStreamDo: [ :stream | stream nextPutAll: '5' ].
+	
+	childFiles := (filesystem root / 'dir') files.
+	self assert: childFiles size equals: 7.
+	self assert: ((filesystem root / 'dir') lastFileFor: 'games' extension: 'ston') basename equals: 'games.101.ston'.
+
+	
+			]
+			ensure: [ (filesystem / 'dir') ensureDeleteAll ]
+]
+
+{ #category : #'tests - handy utils' }
+FileReferenceTest >> testLastFilesForExtensionBrokenPattern [
+	"when a file does not follow the pattern name.number.extension, it should be filtered out."
+	[ filesystem createDirectory: 'dir'.
+	filesystem / 'dir' / 'games.51.ston' writeStreamDo: [ :stream | stream nextPutAll: '51' ].
+	filesystem / 'dir' / 'games.ston' writeStreamDo: [ :stream | stream nextPutAll: 'nonumber' ].
+	filesystem / 'dir' / 'games.stf' writeStreamDo: [ :stream | stream nextPutAll: 'wrong extension' ].
+	filesystem / 'dir' / 'games.101.ston' writeStreamDo: [ :stream | stream nextPutAll: '101' ].
+	filesystem / 'dir' / 'games.250.49.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
+	filesystem / 'dir' / 'games.1000.1000.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
+	filesystem / 'dir' / 'zorglub.500.ston' writeStreamDo: [ :stream | stream nextPutAll: '5' ].
+
+	self assert: ((filesystem root / 'dir') lastFileFor: 'games' extension: 'ston') basename equals: 'games.101.ston'.
+	] ensure: [ (filesystem / 'dir') ensureDeleteAll ]
+]
+
+{ #category : #'tests - handy utils' }
+FileReferenceTest >> testLastFilesForExtensionNegativeTesting [
+	"When there is no file with the given pattern, then an error should be raised."
+	
+	[ filesystem createDirectory: 'dir'.
+	filesystem / 'dir' / 'games.51.ston' writeStreamDo: [ :stream | stream nextPutAll: '51' ].
+	filesystem / 'dir' / 'games.4.ston' writeStreamDo: [ :stream | stream nextPutAll: '4' ].
+	filesystem / 'dir' / 'games.101.ston' writeStreamDo: [ :stream | stream nextPutAll: '101' ].
+	filesystem / 'dir' / 'games.49.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
+	filesystem / 'dir' / 'games.5.ston' writeStreamDo: [ :stream | stream nextPutAll: '5' ].
+	
+	self should: [((filesystem root / 'dir') lastFileFor: 'games' extension: 'stf')] raise: Error.
+   self should: [((filesystem root / 'dir') lastFileFor: 'plouf' extension: 'ston')] raise: Error.
+	] ensure: [ (filesystem / 'dir') ensureDeleteAll ]
+]
+
 { #category : #tests }
 FileReferenceTest >> testMakeRelative [
 
@@ -627,6 +681,66 @@ FileReferenceTest >> testMakeRelative [
 	child := filesystem / 'griffle' / 'plonk' / 'nurb'.
 	relative := parent makeRelative: child.
 	self assert: relative equals: (Path * 'plonk' / 'nurb')
+]
+
+{ #category : #'tests - handy utils' }
+FileReferenceTest >> testNextNameForExtension [
+	
+	| childFiles |
+	[ filesystem createDirectory: 'dir'.
+	filesystem / 'dir' / 'games.51.ston' writeStreamDo: [ :stream | stream nextPutAll: '51' ].
+	filesystem / 'dir' / 'games.3.ston' writeStreamDo: [ :stream | stream nextPutAll: '3' ].
+	filesystem / 'dir' / 'games.33.ston' writeStreamDo: [ :stream | stream nextPutAll: '33' ].
+	filesystem / 'dir' / 'games.4.ston' writeStreamDo: [ :stream | stream nextPutAll: '4' ].
+	filesystem / 'dir' / 'games.101.ston' writeStreamDo: [ :stream | stream nextPutAll: '101' ].
+	filesystem / 'dir' / 'games.49.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
+	filesystem / 'dir' / 'games.5.ston' writeStreamDo: [ :stream | stream nextPutAll: '5' ].
+	
+	childFiles := (filesystem root / 'dir') files.
+	self assert: childFiles size equals: 7.
+	self assert: ((filesystem root / 'dir') nextNameFor: 'games' extension: 'ston') equals: 'games.102.ston'.
+
+	
+			]
+			ensure: [ (filesystem / 'dir') ensureDeleteAll ]
+]
+
+{ #category : #'tests - handy utils' }
+FileReferenceTest >> testNextNameForExtensionBrokenPattern [
+	
+	| childFiles |
+	[ filesystem createDirectory: 'dir'.
+filesystem / 'dir' / 'games.51.ston' writeStreamDo: [ :stream | stream nextPutAll: '51' ].
+	filesystem / 'dir' / 'games.ston' writeStreamDo: [ :stream | stream nextPutAll: 'nonumber' ].
+	filesystem / 'dir' / 'games.stf' writeStreamDo: [ :stream | stream nextPutAll: 'wrong extension' ].
+	filesystem / 'dir' / 'games.101.ston' writeStreamDo: [ :stream | stream nextPutAll: '101' ].
+	filesystem / 'dir' / 'games.250.49.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
+	filesystem / 'dir' / 'games.1000.1000.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
+	filesystem / 'dir' / 'zorglub.500.ston' writeStreamDo: [ :stream | stream nextPutAll: '5' ].
+	
+	childFiles := (filesystem root / 'dir') files.
+	self assert: childFiles size equals: 7.
+	self assert: ((filesystem root / 'dir') nextNameFor: 'games' extension: 'ston') equals: 'games.102.ston'.
+
+	
+			]
+			ensure: [ (filesystem / 'dir') ensureDeleteAll ]
+]
+
+{ #category : #'tests - handy utils' }
+FileReferenceTest >> testNextNameForExtensionNegativeTesting [
+	"When there is no file with the given pattern, then we default patterned name should be returned."
+	
+	[ filesystem createDirectory: 'dir'.
+	filesystem / 'dir' / 'games.51.ston' writeStreamDo: [ :stream | stream nextPutAll: '51' ].
+	filesystem / 'dir' / 'games.4.ston' writeStreamDo: [ :stream | stream nextPutAll: '4' ].
+	filesystem / 'dir' / 'games.101.ston' writeStreamDo: [ :stream | stream nextPutAll: '101' ].
+	filesystem / 'dir' / 'games.49.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
+	filesystem / 'dir' / 'games.5.ston' writeStreamDo: [ :stream | stream nextPutAll: '5' ].
+
+	self assert: ((filesystem root / 'dir') nextNameFor: 'games' extension: 'stf') equals: 'games.1.stf'.
+   self assert: ((filesystem root / 'dir') nextNameFor: 'plouf' extension: 'ston') equals:  'plouf.1.ston'.
+	] ensure: [ (filesystem / 'dir') ensureDeleteAll ]
 ]
 
 { #category : #tests }

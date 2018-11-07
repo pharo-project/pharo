@@ -36,6 +36,20 @@ SpecDemo class >> defaultSpec [
 	
 ]
 
+{ #category : #'user interface' }
+SpecDemo class >> menuExamplesOn: aBuilder [
+	"Add a custom menu item to the world menu"
+
+	<worldMenu>
+	(aBuilder item: #'Spec examples')
+		iconName: #smallHelpIcon;
+		parent: #Help;
+		order: 3.5;
+		help: 'Open Spec demo browser.';
+		action: [ self open ].
+	aBuilder withSeparatorAfter	
+]
+
 { #category : #'instance creation' }
 SpecDemo class >> on: aModel [
 
@@ -97,15 +111,19 @@ SpecDemo >> initializePresenter [
 
 	list setSelectedItem: self selectedPage.
 	
-	list whenSelectedItemChanged: [ :newPageClass | 
-		newPageClass = self selectedPage
-			ifFalse: [
-				self selectedPage: newPageClass. 
-				page := self instantiate: newPageClass.
+	list whenSelectedItemChanged: [ :newPageClass |
+		newPageClass
+			ifNotNil: [
+			newPageClass = self selectedPage
+				ifFalse: [
+					self selectedPage: newPageClass. 
+					page := self instantiate: newPageClass.
 				
-				self needRebuild: false.
-				self buildWithSpec.
-				list setSelectedItem: self selectedPage ]].
+					self needRebuild: false.
+					self buildWithSpec.
+					list setSelectedItem: self selectedPage ] ]
+			ifNil: [ "Avoid the user to have no page selected at all."
+				list setSelectedItem: self selectedPage ] ].
 ]
 
 { #category : #initialization }

@@ -19,6 +19,7 @@ ComposablePresenter >> gtInspectorModelNestingIn: composite [
 { #category : #'*GT-InspectorExtensions-Core' }
 ComposablePresenter >> gtInspectorPreviewIn: composite [
 	<gtInspectorPresentationOrder: 30>
+	self widget = self ifTrue: [ ^ self ].
 	
 	self widget ifNotNil: [ :w | w gtInspectorPreviewIn: composite ]
 ]

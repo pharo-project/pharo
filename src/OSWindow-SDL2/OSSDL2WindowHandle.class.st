@@ -92,7 +92,11 @@ OSSDL2WindowHandle >> deliverGlobalEvent: aGlobalEvent [
 
 { #category : #initialize }
 OSSDL2WindowHandle >> destroy [
-	handle ifNotNil: [ handle destroy ].
+	handle ifNotNil: [ :validHandle | 
+		OSSDL2Driver current unregisterWindowWithId: validHandle windowID.
+		validHandle destroy
+	].
+
 	renderer := nil.
 	handle := nil.
 	osWindow := nil
@@ -171,6 +175,13 @@ OSSDL2WindowHandle >> icon: aForm [
 OSSDL2WindowHandle >> initWithHandle: aHandle attributes: attributes [
 	handle := aHandle.
 	attributes applyTo: self
+]
+
+{ #category : #'text input' }
+OSSDL2WindowHandle >> isTextInputActive [
+	"See https://wiki.libsdl.org/SDL_IsTextInputActive"
+
+	^ handle isTextInputActive
 ]
 
 { #category : #testing }
@@ -338,6 +349,20 @@ OSSDL2WindowHandle >> showCursor: aBoolean [
 	SDL2 showCursor: (aBoolean ifTrue: [SDL_ENABLE] ifFalse: [SDL_DISABLE]).
 ]
 
+{ #category : #'text input' }
+OSSDL2WindowHandle >> startTextInput [
+	"See https://wiki.libsdl.org/SDL_StartTextInput"
+
+	handle startTextInput
+]
+
+{ #category : #'text input' }
+OSSDL2WindowHandle >> stopTextInput [
+	"See https://wiki.libsdl.org/SDL_StopTextInput"
+
+	handle stopTextInput
+]
+
 { #category : #accessing }
 OSSDL2WindowHandle >> title [
 	^ handle title
@@ -452,6 +477,12 @@ OSSDL2WindowHandle >> visitWindowEvent: windowEvent [
 	
 	windowEvent event = SDL_WINDOWEVENT_EXPOSED ifTrue: [
 		^ ((OSWindowExposeEvent for: osWindow) timestamp: windowEvent timestamp) deliver.
+	].
+	windowEvent event = SDL_WINDOWEVENT_HIDDEN ifTrue: [ 
+		^ (OSWindowHiddenEvent for: osWindow) deliver.
+	].
+	windowEvent event = SDL_WINDOWEVENT_SHOWN ifTrue: [ 
+		^ ((OSWindowShownEvent for: osWindow) timestamp: windowEvent timestamp) deliver.
 	].
 	windowEvent event = SDL_WINDOWEVENT_CLOSE ifTrue: [ 
 		^ (OSWindowCloseEvent for: osWindow) deliver.

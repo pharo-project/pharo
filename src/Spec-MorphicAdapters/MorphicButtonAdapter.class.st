@@ -7,7 +7,7 @@ SpecInterpreter
 Class {
 	#name : #MorphicButtonAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #'Spec-MorphicAdapters'
+	#category : #'Spec-MorphicAdapters-Base'
 }
 
 { #category : #'widget API' }
@@ -56,6 +56,8 @@ MorphicButtonAdapter >> buildWidget [
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled ;	
 		eventHandler: (MorphicEventHandler new on: #keyStroke send: #keyStroke:fromMorph: to: self).
+	
+	self color ifNotNil: [ self setWidgetColor: button ].
 	^ button
 ]
 
@@ -81,6 +83,25 @@ MorphicButtonAdapter >> menu: aMenu [
 	menuModel := self model menu.
 	menuModel isBlock ifTrue: [ menuModel := menuModel value ].
 	^ menuModel buildWithSpec
+]
+
+{ #category : #factory }
+MorphicButtonAdapter >> setWidgetColor: button [
+
+		| normalColorBlock clickedColorBlock |
+
+		normalColorBlock := [ :aButton |
+							(aButton valueOfProperty: #noFill ifAbsent: [false]) 
+								ifTrue: [ SolidFillStyle color: Color transparent ]
+								ifFalse: [ SolidFillStyle color: self color ] ].
+	
+		clickedColorBlock := [ :aButton | SolidFillStyle color: self color muchDarker ].
+		button theme: ((UIThemeDecorator theme: button theme)
+							property: #buttonNormalFillStyleFor: returnsValueOf: normalColorBlock;
+							property: #buttonMouseOverFillStyleFor: returnsValueOf: normalColorBlock;
+							property: #buttonPressedFillStyleFor: returnsValueOf: clickedColorBlock;
+							yourself).
+
 ]
 
 { #category : #'widget API' }

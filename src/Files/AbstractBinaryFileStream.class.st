@@ -177,7 +177,7 @@ AbstractBinaryFileStream >> next: amount putAll: aByteArray [
 		on: PrimitiveFailed
 		do: [ (FileWriteError fileName: self name)
 				signal:
-					(self close
+					(self closed
 						ifTrue: [ 'File ' , self name , ' is closed' ]
 						ifFalse: [ 'File ' , self name , ' write failed' ]) ].
 	^ aByteArray

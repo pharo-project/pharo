@@ -4,7 +4,7 @@ This is deprecated class because the original class TableContainerModel was rena
 Class {
 	#name : #TableContainerModel,
 	#superclass : #TableContainerPresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }

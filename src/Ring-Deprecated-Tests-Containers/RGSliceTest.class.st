@@ -4,7 +4,7 @@ SUnit tests for slices
 Class {
 	#name : #RGSliceTest,
 	#superclass : #TestCase,
-	#category : #'Ring-Deprecated-Tests-Containers'
+	#category : #'Ring-Deprecated-Tests-Containers-Base'
 }
 
 { #category : #deprecation }

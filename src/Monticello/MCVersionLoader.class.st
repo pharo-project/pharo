@@ -168,11 +168,6 @@ MCVersionLoader >> mergeVersions [
 ]
 
 { #category : #checking }
-MCVersionLoader >> warnAboutLosingChangesTo: versionCollection [
-	^ (MCMergeOrLoadWarning signalFor: versionCollection).
-]
-
-{ #category : #checking }
 MCVersionLoader >> warnAboutLosingChangesTo: versionCollection ifCancel: cancelBlock ifMerge: mergeBlock [
 	
 	| result |

@@ -115,14 +115,17 @@ NetworkSystemSettings class >> manageHttpProxyExceptions [
 
 { #category : #settings }
 NetworkSystemSettings class >> manageHttpProxyExceptions: aStringWithExceptions [
+
 	self removeAllHttpProxyExceptions.
-	aStringWithExceptions	ifNotNil:[
-		LastHTTPProxyExceptions := aStringWithExceptions.
-		( ';' split: aStringWithExceptions) do: [
-			:domain  | 
-			self addHttpProxyException: domain
-		].
+
+	aStringWithExceptions isEmptyOrNil ifTrue: [ ^ self ].
+
+	LastHTTPProxyExceptions := aStringWithExceptions.
+	( ';' split: aStringWithExceptions) do: [
+		:domain  | 
+		self addHttpProxyException: domain
 	].
+
 ]
 
 { #category : #settings }
@@ -204,7 +207,7 @@ NetworkSystemSettings class >> proxyUser: aUser [
 
 { #category : #settings }
 NetworkSystemSettings class >> removeAllHttpProxyExceptions [
-	HTTPProxyExceptions removeAll.
+	self httpProxyExceptions removeAll.
 ]
 
 { #category : #settings }

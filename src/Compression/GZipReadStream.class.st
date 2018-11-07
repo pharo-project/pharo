@@ -13,48 +13,47 @@ Class {
 { #category : #'filein/out' }
 GZipReadStream class >> fileIn: fullFileName [
 	"FileIn the contents of a gzipped file"
-	| zipped unzipped |
-	zipped := self on: (FileStream readOnlyFileNamed: fullFileName).
-	unzipped := MultiByteBinaryOrTextStream with: (zipped contents asString).
-	unzipped reset.
-	unzipped fileIn.
 
+	self
+		with: fullFileName asFileReference binaryReadStream
+		do: [ :aStream | CodeImporter evaluateString: aStream contents asString ]
 ]
 
 { #category : #'filein/out' }
 GZipReadStream class >> fileIntoNewChangeSet: fullFileName [
 	"FileIn the contents of a gzipped file"
 
-	| zipped unzipped csClass |
+	| csClass |
 	csClass := Smalltalk globals at: #ChangeSet ifAbsent: [ ^ self ].
-	zipped := self on: (FileStream readOnlyFileNamed: fullFileName).
-	unzipped := MultiByteBinaryOrTextStream with: zipped contents asString.
-	unzipped reset.
-	csClass 
-		newChangesFromStream: unzipped 
-		named: fullFileName asFileReference basename
+	fullFileName asFileReference
+		binaryReadStreamDo: [ :aBinaryStream | 
+			self with: aBinaryStream
+				do: [ :aGzStream | 
+					aGzStream contents asString
+						readStreamDo: [ :aReadStream | 
+							aReadStream reset.
+							csClass newChangesFromStream: aReadStream named: fullFileName asFileReference basename ] ] ]
 ]
 
 { #category : #'filein/out' }
 GZipReadStream class >> saveContents: fullFileName [
 	"Save the contents of a gzipped file"
-	| zipped buffer unzipped newName |
-	newName := fullFileName copyUpToLast: FileSystem disk extensionDelimiter.
-	unzipped := FileStream newFileNamed: newName.
-	unzipped binary.
-	zipped := self on: (FileStream readOnlyFileNamed: fullFileName).
-	buffer := ByteArray new: 50000.
-	'Extracting ' , fullFileName
-		displayProgressFrom: 0
-		to: zipped sourceStream size
-		during: 
-			[:bar | 
-			[zipped atEnd]
-				whileFalse: 
-					[bar current: zipped sourceStream position.
-					unzipped nextPutAll: (zipped nextInto: buffer)].
-			zipped close.
-			unzipped close].
+
+	| buffer newName |
+	newName := fullFileName asFileReference basenameWithoutExtension.
+	newName asFileReference binaryWriteStreamDo: [ :unzipped | 
+			fullFileName asFileReference
+				binaryReadStreamDo: [ :readStream | 
+					self with: readStream
+						do: [ :zipped | 
+							buffer := ByteArray new: 50000.
+							'Extracting ' , fullFileName
+								displayProgressFrom: 0
+								to: zipped sourceStream size
+								during: [ :bar | 
+									[ zipped atEnd ]
+										whileFalse: [ bar current: zipped sourceStream position.
+											unzipped nextPutAll: (zipped nextInto: buffer) ] ] ] ] ].
 	^ newName
 ]
 
@@ -82,22 +81,16 @@ GZipReadStream class >> unzip: fullFileName to: pathName [
 	GZipReadStream unzip:'zip.gz' to: '/aPath'
 	GZipReadStream unzip:'/aPath/zip.gz' asFileReference to: '/aPath' asFileReference
 	
-	To unzip a .zip go to the class ZipArchive
-	"
-	
-	| zipped buffer unzipped newName path|
-	newName := fullFileName asFileReference basename copyUpToLast: FileSystem disk extensionDelimiter.
-	path := pathName asFileReference.
-	path ensureCreateDirectory.
-	unzipped := FileStream newFileNamed: (path / newName) fullName.
-	unzipped ifNil: [self error: pathName, ' looks incorrect'].
-	[ unzipped binary. 
-	zipped := self on: (FileStream readOnlyFileNamed: fullFileName).
-	buffer := ByteArray new: 50000.
-	[zipped atEnd] whileFalse: [unzipped nextPutAll: (zipped nextInto: buffer)]]
-		ensure: [
-			zipped close.
-			unzipped close].
+	To unzip a .zip go to the class ZipArchive"
+
+	| buffer newName |
+	newName := fullFileName asFileReference basenameWithoutExtension.
+	pathName asFileReference ensureCreateDirectory / newName
+		binaryWriteStreamDo: [ :unzipped | 
+			self with: fullFileName asFileReference binaryReadStream
+				do: [ :zipped | 
+					buffer := ByteArray new: 50000.
+					[ zipped atEnd ] whileFalse: [ unzipped nextPutAll: (zipped nextInto: buffer) ] ] ].
 	^ newName
 ]
 
@@ -105,8 +98,10 @@ GZipReadStream class >> unzip: fullFileName to: pathName [
 GZipReadStream class >> viewContents: fullFileName [
 	"Open the decompressed contents of the .gz file with the given name.  This method is only required for the registering-file-list of Squeak 3.3a and beyond, but does no harm in an earlier system"
 
-	(FileStream readOnlyFileNamed: fullFileName) ifNotNil:
-		[:aStream | aStream viewGZipContents]
+	| file |
+	(file := fullFileName asFileReference) binaryReadStreamDo: 
+		[ :aStream | self with: aStream do: 
+			[ :aGzStream | UIManager default edit: aGzStream upToEnd label: 'Decompressed contents of: ' , file basename ] ]
 ]
 
 { #category : #initialization }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'key'
 	],
-	#category : #'Collections-Support'
+	#category : #'Collections-Support-Associations'
 }
 
 { #category : #'instance creation' }

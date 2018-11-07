@@ -16,7 +16,7 @@ Class {
 		'loops',
 		'currentPC'
 	],
-	#category : #'Flashback-Decompiler'
+	#category : #'Flashback-Decompiler-Utilities'
 }
 
 { #category : #'public api' }

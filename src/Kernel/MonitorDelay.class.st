@@ -8,7 +8,7 @@ Class {
 		'monitor',
 		'queue'
 	],
-	#category : #'Kernel-Processes'
+	#category : #'Kernel-Delays'
 }
 
 { #category : #'instance creation' }
@@ -17,7 +17,7 @@ MonitorDelay class >> signalLock: aSemaphore afterMSecs: anInteger inMonitor: aM
 	^ (self new setDelay: anInteger forSemaphore: aSemaphore monitor: aMonitor queue: anOrderedCollection) schedule; yourself
 ]
 
-{ #category : #private }
+{ #category : #deprecated }
 MonitorDelay >> schedulerSignalWaitingProcess [
 	"The delay time has elapsed; signal the waiting process."
 
@@ -31,4 +31,13 @@ MonitorDelay >> setDelay: anInteger forSemaphore: aSemaphore monitor: aMonitor q
 	monitor := aMonitor.
 	queue := anOrderedCollection.
 	self setDelay: anInteger forSemaphore: aSemaphore.
+]
+
+{ #category : #private }
+MonitorDelay >> timingPrioritySignalExpired [
+	"The delay time has elapsed; signal the waiting process."
+
+	beingWaitedOn := false.
+	monitor signalLock: delaySemaphore inQueue: queue.
+
 ]

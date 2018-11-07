@@ -101,7 +101,7 @@ Class {
 		'askOkToClose',
 		'titleHolder'
 	],
-	#category : #'Spec-Core'
+	#category : #'Spec-Core-Base'
 }
 
 { #category : #defaults }
@@ -132,6 +132,12 @@ ComposablePresenter class >> defaultSpec [
 ComposablePresenter class >> inputTextHeight [
 
 	^ self defaultFont height + 12
+]
+
+{ #category : #defaults }
+ComposablePresenter class >> labelHeight [
+
+	^ self defaultFont height
 ]
 
 { #category : #'instance creation' }

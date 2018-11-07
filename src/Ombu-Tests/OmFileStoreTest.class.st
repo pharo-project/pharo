@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #resources }
-OmFileStoreTest >> directoryForTests [
-
-	^ FileSystem workingDirectory
-]
-
-{ #category : #resources }
 OmFileStoreTest >> setUpOtherStore [
 
 	^ OmFileStore 
@@ -56,11 +50,19 @@ OmFileStoreTest >> testEnsureDeleteFile [
 { #category : #tests }
 OmFileStoreTest >> testIsOutdated [
 
+	| copy |
 	self deny: store isOutdated.
 	store newEntry: (OmEntry content: 42).
 	self deny: store isOutdated.
 	store flush.
 	self deny: store isOutdated.
+	copy := store copyReopened refresh.
+	store newEntry: (OmEntry content: 43).
+	store flush.
+	"A store is outdated if the file exists and has greater size than in memory."
+	self assert: copy isOutdated.
+	store ensureDeleteFile.
+	self deny: copy isOutdated.
 
 ]
 

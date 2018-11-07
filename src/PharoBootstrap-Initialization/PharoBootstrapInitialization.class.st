@@ -19,7 +19,7 @@ Check #initializeCommandLineHandlerAndErrorHandling to see the steps performed.
 Class {
 	#name : #PharoBootstrapInitialization,
 	#superclass : #Object,
-	#category : #'PharoBootstrap-Initialization'
+	#category : #'PharoBootstrap-Initialization-Base'
 }
 
 { #category : #initialization }
@@ -100,7 +100,7 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 ]
 
 { #category : #'public api' }
-PharoBootstrapInitialization class >> initializeImageOfType: typeName majorVersion: major minor: minor suffix: suffix buid: build commitHash: hash [
+PharoBootstrapInitialization class >> initializeImageOfType: typeName major: major minor: minor patch: patch suffix: suffix build: buildNumber commitHash: hash [
 
 	"The image main entry point called by an image builder. The arguments specify the image
 	version description.
@@ -112,8 +112,9 @@ PharoBootstrapInitialization class >> initializeImageOfType: typeName majorVersi
 					type: typeName;
 					major: major;
 					minor: minor;
+					patch: patch;
 					suffix: suffix;
-					build: build;
+					build: buildNumber;
 					commitHash: hash;
 					yourself).
 	

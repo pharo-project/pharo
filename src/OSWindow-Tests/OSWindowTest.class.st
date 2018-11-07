@@ -41,8 +41,9 @@ OSWindowTest >> testSettingUpWindow [
 	window := OSWindow newWithNullDriver.
 	
 	[ window extent: 150@150.
-	  self assert: window extent equals: (150@150).	
-	  self assert: (window isValid) 
+		self assert: window extent equals: (150@150).
+		self assert: (window isValid).
+		self assert: (window isTextInputActive not)
 	] ensure: [ window destroy ].
 
 	self deny: window isValid 

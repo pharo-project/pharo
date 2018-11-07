@@ -18,6 +18,7 @@ Class {
 		'type',
 		'major',
 		'minor',
+		'patch',
 		'suffix',
 		'build',
 		'commitHash'
@@ -25,7 +26,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #'System-Support'
+	#category : #'System-Support-Image'
 }
 
 { #category : #accessing }
@@ -43,42 +44,43 @@ SystemVersion class >> invalidBuildNumber [
 ]
 
 { #category : #'instance creation' }
-SystemVersion class >> major: major minor: minor [
+SystemVersion class >> major: major minor: minor patch: patch [
 	"Create a new instance of the receiver with the given major minor number.
 
-		SystemVersion major: 6 minor: 1 
+		SystemVersion major: 6 minor: 1 patch: 199
 	"
 
-	^self major: major minor: minor suffix: ''
+	^self major: major minor: minor patch: patch suffix: ''
 ]
 
 { #category : #'instance creation' }
-SystemVersion class >> major: major minor: minor suffix: aString [ 
+SystemVersion class >> major: major minor: minor patch: patch suffix: aString [ 
 	"Create a new instance of the receiver with the given major minor number and suffix.
 
-	 	SystemVersion major: 6 minor: 1 suffix: 'alpha'     
+	 	SystemVersion major: 6 minor: 1 patch: 199 suffix: 'alpha'     
 	"
 	
-	^self major: major minor: minor suffix: aString build: self invalidBuildNumber  
+	^self major: major minor: minor patch: patch suffix: aString build: self invalidBuildNumber
 ]
 
 { #category : #'instance creation' }
-SystemVersion class >> major: major minor: minor suffix: aString build: build [ 
+SystemVersion class >> major: major minor: minor patch: patch suffix: aString build: build [
 	"Create a new instance of the receiver with the given major minor number and suffix.
 
-	 	SystemVersion major: 6 minor: 1 suffix: 'alpha' build: 148
+	 	SystemVersion major: 6 minor: 1 patch: 199 suffix: 'alpha' build: 148
 	"
-	
-	^(self new)
+
+	^ self new
 		major: major;
 		minor: minor;
+		patch: patch;
 		suffix: aString;
 		build: build;
 		yourself
 ]
 
 { #category : #'instance creation' }
-SystemVersion class >> major: major minor: minor suffix: aString build: build commitHash: hashString [
+SystemVersion class >> major: major minor: minor patch: patch suffix: aString build: build commitHash: hashString [
 	"Create a new instance of the receiver with the given major minor number and suffix.
 
 	 	SystemVersion major: 6 minor: 1 suffix: 'alpha'     
@@ -87,6 +89,7 @@ SystemVersion class >> major: major minor: minor suffix: aString build: build co
 	^(self new)
 		major: major;
 		minor: minor;
+		patch: patch;
 		suffix: aString;
 		build: build;
 		commitHash: hashString;
@@ -102,7 +105,7 @@ SystemVersion >> build [
 { #category : #'accessing - properties' }
 SystemVersion >> build: aBuildNumber [
 
-	build := aBuildNumber 
+	build := aBuildNumber
 ]
 
 { #category : #private }
@@ -157,7 +160,13 @@ SystemVersion >> datedVersion [
 { #category : #accessing }
 SystemVersion >> dottedMajorMinor [
 	
-	^ self majorMinor: '.'.
+	^ self majorMinor: '.'
+]
+
+{ #category : #accessing }
+SystemVersion >> dottedMajorMinorPatch [
+	
+	^ self majorMinorPatch: '.'.
 ]
 
 { #category : #testing }
@@ -194,7 +203,7 @@ SystemVersion >> imageVersionString [
 	^String streamContents: [:str |
 		str nextPutAll: self type;
 			 nextPut: $-;
-			 nextPutAll: (self majorMinor: '.').
+			 nextPutAll: (self majorMinorPatch: '.').
 			
 		self hasMetadataIdentifiers ifTrue: [ str nextPut: $+ ].		
 		self suffix ifNotEmpty: [ str nextPutAll: self suffix ].
@@ -213,7 +222,8 @@ SystemVersion >> initialize [
 	super initialize.
 	type := 'Pharo'.
 	major := 0.
-	minor := 0.	 	
+	minor := 0.
+	patch := 0.
 	suffix := ''.
 	build := self class invalidBuildNumber.
 	commitHash := ''.
@@ -247,10 +257,25 @@ SystemVersion >> majorMinor: aSeparatingString [
 			nextPutAll: self minor printString ]
 ]
 
+{ #category : #utilities }
+SystemVersion >> majorMinorPatch: aSeparatingString [
+	"Return the major/minor/patch version number of the form XaSeparatingStringY, without any 'alpha' or 'beta' or other suffix."
+	"SystemVersion current majorMinorPatch: '-'"
+	"SystemVersion current majorMinorPatch: ''"
+
+	^String streamContents: [:str |
+		str 
+			nextPutAll: self major printString; 
+			nextPutAll: aSeparatingString;
+			nextPutAll: self minor printString;
+			nextPutAll: aSeparatingString;
+			nextPutAll: self patch printString ]
+]
+
 { #category : #accessing }
 SystemVersion >> majorMinorVersion [
 	
-	^ self type, self dottedMajorMinor
+	^ self type, self dottedMajorMinorPatch
 ]
 
 { #category : #'accessing - properties' }
@@ -265,6 +290,16 @@ SystemVersion >> minor: anInteger [
 	"Set the minor part of the receiver"
 
 	minor := anInteger
+]
+
+{ #category : #accessing }
+SystemVersion >> patch [
+	^ patch
+]
+
+{ #category : #accessing }
+SystemVersion >> patch: anObject [
+	patch := anObject
 ]
 
 { #category : #printing }
@@ -283,6 +318,8 @@ SystemVersion >> shortVersionString [
 			nextPutAll: self major printString;
 			nextPut: $.;
 			nextPutAll: self minor printString;
+			nextPut: $.;
+			nextPutAll: self patch printString;
 			nextPutAll: self suffix ]
 ]
 

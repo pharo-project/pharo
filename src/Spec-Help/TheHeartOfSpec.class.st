@@ -6,7 +6,7 @@ See class side for selectors.
 Class {
 	#name : #TheHeartOfSpec,
 	#superclass : #SpecHelpTopics,
-	#category : #'Spec-Help'
+	#category : #'Spec-Help-Topics'
 }
 
 { #category : #accessing }

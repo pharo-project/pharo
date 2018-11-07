@@ -49,68 +49,62 @@ SDL_Window >> destroy [
 
 { #category : #accessing }
 SDL_Window >> fullscreen: flags [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_SetWindowFullscreen ( self , Uint32 flags ) )
+	^ self ffiCall: #( int SDL_SetWindowFullscreen ( self , Uint32 flags ) )
 ]
 
 { #category : #surface }
 SDL_Window >> getFlags [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( Uint32 SDL_GetWindowFlags ( self ) )
+	^ self ffiCall: #( Uint32 SDL_GetWindowFlags ( self ) )
 ]
 
 { #category : #accessing }
 SDL_Window >> getPositionX: x y: y [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_GetWindowPosition ( self , int* x , int* y ) )
+	^ self ffiCall: #( void SDL_GetWindowPosition ( self , int* x , int* y ) )
 ]
 
 { #category : #accessing }
 SDL_Window >> getSizeW: w h: h [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_GetWindowSize ( self , int* w , int* h ) )
+	^ self ffiCall: #( void SDL_GetWindowSize ( self , int* w , int* h ) )
 ]
 
 { #category : #'window management' }
 SDL_Window >> getWMInfo: infos [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( bool SDL_GetWindowWMInfo( self, SDL_SysWMinfo* infos) )
+	^ self ffiCall: #( bool SDL_GetWindowWMInfo( self, SDL_SysWMinfo* infos) )
 ]
 
 { #category : #surface }
 SDL_Window >> getWindowSurface [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( SDL_Surface* SDL_GetWindowSurface( self ) )
+	^ self ffiCall: #( SDL_Surface* SDL_GetWindowSurface( self ) )
 ]
 
 { #category : #'window management' }
 SDL_Window >> hide [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_HideWindow( self ) )
+	^ self ffiCall: #( void SDL_HideWindow( self ) )
 ]
 
 { #category : #accessing }
 SDL_Window >> icon: surface [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_SetWindowIcon ( self , SDL_Surface* surface ) )
+	^ self ffiCall: #( void SDL_SetWindowIcon ( self , SDL_Surface* surface ) )
+]
+
+{ #category : #'text input' }
+SDL_Window >> isTextInputActive [
+	^ self ffiCall: #(bool SDL_IsTextInputActive(void))
 ]
 
 { #category : #'window management' }
 SDL_Window >> maximize [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_MaximizeWindow( self ) )
+	^ self ffiCall: #( void SDL_MaximizeWindow( self ) )
 ]
 
 { #category : #'window management' }
 SDL_Window >> minimize [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_MinimizeWindow( self ) )
+	^ self ffiCall: #( void SDL_MinimizeWindow( self ) )
 ]
 
 { #category : #private }
 SDL_Window >> primCreateRenderer: driverIndex flags: flags [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( SDL_Renderer SDL_CreateRenderer ( self , int driverIndex , Uint32 flags ) )
+	^ self ffiCall: #( SDL_Renderer SDL_CreateRenderer ( self , int driverIndex , Uint32 flags ) )
 ]
 
 { #category : #private }
@@ -125,57 +119,57 @@ SDL_Window >> resourceData [
 
 { #category : #'window management' }
 SDL_Window >> restore [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_RestoreWindow( self ) )
+	^ self ffiCall: #( void SDL_RestoreWindow( self ) )
 ]
 
 { #category : #'window management' }
 SDL_Window >> setHitTest: callback [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self 
-		nbCall: #( int SDL_SetWindowHitTest( self , DraggableCallback callback, nil ) )
+	^ self ffiCall: #( int SDL_SetWindowHitTest( self , DraggableCallback callback, nil ) )
 ]
 
 { #category : #accessing }
 SDL_Window >> setPositionX: x y: y [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_SetWindowPosition ( self , int x , int y ) )
+	^ self ffiCall: #( void SDL_SetWindowPosition ( self , int x , int y ) )
 ]
 
 { #category : #accessing }
 SDL_Window >> setSizeW: w h: h [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_SetWindowSize ( self , int w , int h ) )
+	^ self ffiCall: #( void SDL_SetWindowSize ( self , int w , int h ) )
 ]
 
 { #category : #'window management' }
 SDL_Window >> show [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_ShowWindow( self ) )
+	^ self ffiCall: #( void SDL_ShowWindow( self ) )
+]
+
+{ #category : #'text input' }
+SDL_Window >> startTextInput [
+	^ self ffiCall: #(void SDL_StartTextInput(void))
+]
+
+{ #category : #'text input' }
+SDL_Window >> stopTextInput [
+	^ self ffiCall: #(void SDL_StopTextInput(void))
 ]
 
 { #category : #accessing }
 SDL_Window >> title [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( String SDL_GetWindowTitle ( self ) )
+	^ self ffiCall: #( String SDL_GetWindowTitle ( self ) )
 ]
 
 { #category : #accessing }
 SDL_Window >> title: title [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_SetWindowTitle ( self , String title ) )
+	^ self ffiCall: #( void SDL_SetWindowTitle ( self , String title ) )
 ]
 
 { #category : #'window management' }
 SDL_Window >> toggleBorder: bordered [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( void SDL_SetWindowBordered( self, bool bordered ) )
+	^ self ffiCall: #( void SDL_SetWindowBordered( self, bool bordered ) )
 ]
 
 { #category : #surface }
 SDL_Window >> updateWindowSurface [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( int SDL_UpdateWindowSurface( self ) )
+	^ self ffiCall: #( int SDL_UpdateWindowSurface( self ) )
 ]
 
 { #category : #surface }
@@ -185,6 +179,5 @@ SDL_Window >> updateWindowSurfaceRects: rects num: numrects [
 
 { #category : #accessing }
 SDL_Window >> windowID [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
-	^ self nbCall: #( Uint32 SDL_GetWindowID ( self ) )
+	^ self ffiCall: #( Uint32 SDL_GetWindowID ( self ) )
 ]

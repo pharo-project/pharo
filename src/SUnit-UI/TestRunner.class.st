@@ -115,8 +115,15 @@ TestRunner >> baseClass [
 
 { #category : #'accessing-classes' }
 TestRunner >> browseClass [
-
-	^ (classes at: classIndex ifAbsent: [ ^ self ]) browse
+	| targetClasses |
+	targetClasses := classesSelected asArray.
+	targetClasses ifEmpty: [ ^ self ].
+	targetClasses size > 1
+		ifTrue: [ (UIManager default
+				confirm: 'Do you want to open all ' , targetClasses size printString , ' classes?')
+				ifTrue: [ targetClasses do: #browse ].
+			^ self ].
+	targetClasses anyOne browse
 ]
 
 { #category : #browsing }

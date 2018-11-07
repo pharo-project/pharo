@@ -9,8 +9,14 @@ Class {
 	#instVars : [
 		'bindings'
 	],
-	#category : #'Spec-Core'
+	#category : #'Spec-Core-Base'
 }
+
+{ #category : #testing }
+SpecAdapterBindings class >> isAbstract [ 
+
+	^ self name = #SpecAdapterBindings
+]
 
 { #category : #initialize }
 SpecAdapterBindings >> initialize [

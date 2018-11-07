@@ -10,7 +10,7 @@ Date >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Date >> stonOn: stonWriter [
 	"Use an ISO style YYYY-MM-DD representation"
 	

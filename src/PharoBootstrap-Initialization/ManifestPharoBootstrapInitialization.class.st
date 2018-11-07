@@ -1,10 +1,13 @@
+"
+Initializations done during image bootstrap process
+"
 Class {
 	#name : #ManifestPharoBootstrapInitialization,
 	#superclass : #PackageManifest,
-	#category : #'PharoBootstrap-Initialization'
+	#category : #'PharoBootstrap-Initialization-Manifest'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'meta-data - dependency analyser' }
 ManifestPharoBootstrapInitialization class >> ignoredDependencies [
 	^ #(#'SUnit-Core')
 ]

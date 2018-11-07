@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'color'
 	],
-	#category : #'Text-Core'
+	#category : #'Text-Core-Attributes'
 }
 
 { #category : #constants }
@@ -79,6 +79,12 @@ TextColor class >> yellow [
 TextColor >> = other [ 
 	^ (other class == self class) 
 		and: [other color = color]
+]
+
+{ #category : #converting }
+TextColor >> asColor [ 
+
+	^ color
 ]
 
 { #category : #accessing }

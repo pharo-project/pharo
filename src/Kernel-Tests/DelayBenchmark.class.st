@@ -13,7 +13,7 @@ Class {
 		'ExitCount',
 		'Running'
 	],
-	#category : #'Kernel-Tests-Processes'
+	#category : #'Kernel-Tests-Delays'
 }
 
 { #category : #action }
@@ -26,7 +26,7 @@ DelayBenchmark class >> run [
 DelayBenchmark class >> runAll [
 	"DelayBenchmark runAll"
 	Transcript clear.
-	DelayScheduler allSubclasses do: [ :delayScheudlerClass | self new bench: delayScheudlerClass ].
+	DelayNullScheduler allSubclasses do: [ :delaySchedulerClass | self new bench: delaySchedulerClass ].
 ]
 
 { #category : #benchmarks }
@@ -69,7 +69,7 @@ completed wait.
 DelayBenchmark >> bench: aDelaySchedulerClass [
 	| schedulerClassToRestore |
 	
-	self assert: (aDelaySchedulerClass inheritsFrom: DelayScheduler).
+	self assert: (aDelaySchedulerClass inheritsFrom: DelayNullScheduler).
 	schedulerClassToRestore := Delay delaySchedulerClass.
 	
 	[	Delay delaySchedulerClass: aDelaySchedulerClass.
@@ -94,10 +94,10 @@ DelayBenchmark >> generateDelayProcesses: numberConcurrent priority: priority ma
 	Reuse Delay object with modified duration each loop."
     ^ (1 to: numberConcurrent) collect: 
 			[ 	:each | 
-				[	| delay | 
-					delay := Delay forMilliseconds: 0.
-					[	sampleIndex := (sampleIndex rem: sampleDurations size) + 1.
-						delay setDelay: (sampleDurations at: sampleIndex).
+				[					
+					[	| delay | 	
+						sampleIndex := (sampleIndex rem: sampleDurations size) + 1.
+						delay := Delay forMilliseconds: (sampleDurations at: sampleIndex).
 						EnterCount := EnterCount + 1. 	
 						delay wait.
 						ExitCount := ExitCount + 1.

@@ -83,7 +83,7 @@ EpTestLogBuilder >> logInitial [
 { #category : #initialization }
 EpTestLogBuilder >> newDirectory [
 
-	^ ('epicea-tests-', UUID new asString36) asFileReference
+	^ FileReference newTempFilePrefix: 'epicea-tests-' suffix: ''
 ]
 
 { #category : #initialization }

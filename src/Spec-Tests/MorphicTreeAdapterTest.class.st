@@ -1,10 +1,13 @@
+"
+SUnit tests for MorphicTreeAdapter
+"
 Class {
 	#name : #MorphicTreeAdapterTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'treeWithItems'
 	],
-	#category : #'Spec-Tests'
+	#category : #'Spec-Tests-Base'
 }
 
 { #category : #accessing }

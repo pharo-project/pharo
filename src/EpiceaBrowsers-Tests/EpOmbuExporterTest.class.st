@@ -5,28 +5,28 @@ Class {
 		'outputLog',
 		'inputLog1',
 		'inputLog2',
+		'outputDirectory',
 		'logBuilder1',
 		'logBuilder2'
 	],
 	#category : #'EpiceaBrowsers-Tests-Exporter'
 }
 
-{ #category : #accessing }
-EpOmbuExporterTest >> outputLogNameForTest [
-
-	^ self className, 'LogForTest'
-]
-
 { #category : #running }
-EpOmbuExporterTest >> setUp [ 
+EpOmbuExporterTest >> setUp [
+
 	super setUp.
-	
+
 	logBuilder1 := EpTestLogBuilder new.
-	logBuilder2 := EpTestLogBuilder new.	
+	logBuilder2 := EpTestLogBuilder new.
+
+	"Create 2 logs in different directories"
 	inputLog1 := logBuilder1 oneTriggerWithFourChildrenLog.
 	inputLog2 := logBuilder2 oneTriggerWithOneChildLog.
-	outputLog := EpLog newWithStore: OmFileStore new.
 
+	outputDirectory := logBuilder2 directory.
+	outputLog := EpLog
+		newWithStore: (OmFileStore named: 'exported' inDirectory: outputDirectory)
 ]
 
 { #category : #running }
@@ -34,16 +34,13 @@ EpOmbuExporterTest >> tearDown [
 	
 	logBuilder1 cleanUp.
 	logBuilder2 cleanUp.
-
-	(FileSystem workingDirectory / (self outputLogNameForTest, '.ombu')) ensureDelete.
-
 	super tearDown.
 ]
 
 { #category : #tests }
 EpOmbuExporterTest >> testBasicExport [
+
 	| selection outputResult |
-	
 	selection := inputLog1 entries.
 	
 	EpOmbuExporter new 
@@ -91,22 +88,16 @@ EpOmbuExporterTest >> testCommentExportWithDependencyFix [
 { #category : #tests }
 EpOmbuExporterTest >> testRoundtrip [
 
-	| aLog anotherLog |
-	aLog := 
-		EpLog newWithStore: 
-			(OmFileStore 
-				named: self outputLogNameForTest
-				inDirectory: FileSystem workingDirectory).
-
+	| outputLogReopened |
 	EpOmbuExporter new 
-		outputLog: aLog;
+		outputLog: outputLog;
 		fileOut: inputLog1 entries.
 
-	anotherLog := 
-		EpLog newWithStore: 
-			(OmFileStore 
-				named: self outputLogNameForTest
-				inDirectory: FileSystem workingDirectory).
+	"Open a fresh log with the exported entries. 
+	(fresh, to be sure it was correctly written to disk)"
+	outputLogReopened := EpLog newWithStore: outputLog store flush copyReopened refresh.
 
-	self assert: anotherLog entries size equals: inputLog1 entries size.
+	self
+		assert: outputLogReopened entries size
+		equals: inputLog1 entries size
 ]

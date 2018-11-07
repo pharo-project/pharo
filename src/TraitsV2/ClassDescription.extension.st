@@ -17,6 +17,11 @@ ClassDescription >> baseComposition [
 ]
 
 { #category : #'*TraitsV2' }
+ClassDescription >> selectorsWithExplicitOrigin [
+	^self traitComposition selectors , self localSelectors
+]
+
+{ #category : #'*TraitsV2' }
 ClassDescription >> traitComposition [
 	^ TaEmptyComposition new
 ]

@@ -4,7 +4,7 @@ This is deprecated class because the original class ImageModel was renamed to Im
 Class {
 	#name : #ImageModel,
 	#superclass : #ImagePresenter,
-	#category : #'Spec-Deprecated'
+	#category : #'Spec-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }

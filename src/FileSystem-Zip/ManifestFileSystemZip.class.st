@@ -8,5 +8,5 @@ A documentation of this library is available in the Deep Into Pharo book, «Chap
 Class {
 	#name : #ManifestFileSystemZip,
 	#superclass : #PackageManifest,
-	#category : #'FileSystem-Zip'
+	#category : #'FileSystem-Zip-Manifest'
 }

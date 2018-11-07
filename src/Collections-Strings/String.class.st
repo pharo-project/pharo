@@ -28,7 +28,7 @@ Class {
 		'TypeTable',
 		'UppercasingTable'
 	],
-	#category : #'Collections-Strings'
+	#category : #'Collections-Strings-Base'
 }
 
 { #category : #primitives }
@@ -2070,10 +2070,8 @@ String >> numArgs [
 
 { #category : #converting }
 String >> numericSuffix [
-	"
-	'abc98' numericSuffix
-	'98abc' numericSuffix
-	"
+	"'abc98' numericSuffix >>> 98"
+	"'98abc' numericSuffix >>> 0"
 	^ self stemAndNumericSuffix last
 ]
 
@@ -2219,7 +2217,13 @@ String >> skipDelimiters: delimiters startingAt: start [
 
 { #category : #converting }
 String >> squeezeOutNumber [
-	"Try to find a number somewhere in this string, as explained in Number>readFrom:"
+	"Try to find a number somewhere in this string, as explained in Number>readFrom:
+	
+	this method returns the first number found"
+	
+	"'th is is29 a stRI4' squeezeOutNumber >>> 29"
+	"'th is is2 9 a stRI4' squeezeOutNumber >>> 2"
+	
 	^ Number squeezeNumberOutOfString: self
 ]
 
@@ -2326,6 +2330,8 @@ String >> stringhash [
 String >> substrings [
 	"Answer an array of non-empty substrings from the receiver separated by
 	one or more whitespace characters."
+	
+	"'let us make seperate strings' substrings >>> #('let' 'us' 'make' 'separate' 'strings')"
 
 	^ self substrings: CSSeparators
 ]
@@ -2402,6 +2408,9 @@ String >> translateWith: table [
 
 { #category : #copying }
 String >> trim [
+	"Trim separators from both sides of the receiving string."
+	"' this string will be trimmed   ' trim >>> 'this string will be trimmed'"
+	
 	^ self trimBoth
 ]
 
@@ -2542,7 +2551,9 @@ String >> withBlanksCondensed [
 
 { #category : #formatting }
 String >> withCRs [
-	"Return a copy of the receiver in which backslash (\) characters have been replaced with carriage returns."
+	"Return a copy of the receiver in which backslash (\) characters have been replaced with carriage returns. For example '-hello\-hi' will be
+	'-hello
+	 -hi'"
 
 	^ self collect: [ :c | c = $\ ifTrue: [ Character cr ] ifFalse: [ c ]].
 ]
@@ -2715,6 +2726,9 @@ String >> withoutTrailingNewlines [
 
 { #category : #accessing }
 String >> wordBefore: anIndex [ 
+	"('word before index' wordBefore: 4) >>> 'word'"
+	"('word before index' wordBefore: 16) >>> 'inde'"
+	
 	| sep tok |
 	tok := false.
 	sep := anIndex.

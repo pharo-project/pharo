@@ -23,6 +23,21 @@ Currently there's two kinds of renderers available:
 OSWindow instance and its handle: 
  - all operations with window (like hiding/showing/resizing etc) is possible only if its handle is valid. If window gets destroyed, or image opened in a new session while window was created in previous session, the handle becomes invalid, and any operations will lead to error. 
 To test if window is still valid, you can just use #isValid message.
+
+Text input
+
+Why does OSWindow need a text input API?
+When I press a key on my keyboard, my program receives a character event, right?
+Well, it's not always that simple. Sometimes it can take multiple key presses to produce a character. Sometimes a single key press can produce multiple characters.
+Text input is not as simple as it seems, particularly when you consider International users (and you should). It's not hard to figure out why that is when you look at languages like Chinese, Japanese, and Korean. These languages, collectively referred to as the CJK, have thousands of symbols.
+It would not be feasible to have a keyboard with over ten-thousand keys, would it? The solution to this is a software input method.
+
+Related methods:
+ - startTextInput
+ - stopTextInput
+ - isTextInputActive
+
+(reference https://wiki.libsdl.org/Tutorials/TextInput)
 "
 Class {
 	#name : #OSWindow,
@@ -52,7 +67,12 @@ OSWindow class >> clipboardText: aString [
 
 { #category : #'instance creation' }
 OSWindow class >> createWithAttributes: attributes [
-	^ self basicNew initWithAttributes: attributes
+	^ self createWithAttributes: attributes eventHandler: nil
+]
+
+{ #category : #'instance creation' }
+OSWindow class >> createWithAttributes: attributes eventHandler: eventHandler [
+	^ self basicNew initWithAttributes: attributes eventHandler: eventHandler
 ]
 
 { #category : #finalization }
@@ -204,15 +224,24 @@ OSWindow >> icon: aForm [
 ]
 
 { #category : #initialization }
-OSWindow >> initWithAttributes: attributes [
+OSWindow >> initWithAttributes: attributes eventHandler: anEventHandle [
 	initialAttributes := attributes.
+	eventHandler := anEventHandle.
 	self createWindow.
 	self initialize
+
 ]
 
 { #category : #private }
 OSWindow >> invalidHandle [
 	self error: 'Invalid window handle'
+]
+
+{ #category : #'text input' }
+OSWindow >> isTextInputActive [
+	"Check whether or not Unicode text input events are enabled"
+
+	^ self validHandle isTextInputActive
 ]
 
 { #category : #testing }
@@ -314,6 +343,12 @@ OSWindow >> setDraggableArea: aRectangle [
 	^self validHandle setDraggableArea: aRectangle.
 ]
 
+{ #category : #private }
+OSWindow >> setJustCreatedHandle: aHandle [
+	"This method is to be called by a driver that needs to create the window in a critical section to prevent a race condition where some events such as expose could be missed."
+	handle := aHandle
+]
+
 { #category : #accessing }
 OSWindow >> setMouseCursor: cursorWithMask [
 	currentCursor == cursorWithMask ifTrue: [ ^ self ].
@@ -333,6 +368,23 @@ OSWindow >> setMouseCursor: cursor mask: mask [
 OSWindow >> show [
 	self checkIsValid .
 	handle show
+]
+
+{ #category : #'text input' }
+OSWindow >> startTextInput [
+	"Start accepting Unicode text input events.
+	I will start accepting Unicode text input events in the focused window, and start emitting text input and text editing events.
+	Please use me in pair with stopTextInput.
+	On some platforms using I may activates the screen keyboard."
+
+	self validHandle startTextInput
+]
+
+{ #category : #'text input' }
+OSWindow >> stopTextInput [
+	"Stop receiving any text input events"
+
+	self validHandle stopTextInput
 ]
 
 { #category : #accessing }

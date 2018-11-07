@@ -14,17 +14,3 @@ Exception >> retryUsing: alternativeBlock [
 	handlerContext restartWithNewReceiver: alternativeBlock
 
 ]
-
-{ #category : #'*Debugging-Core' }
-Exception >> return [
-	"Return nil as the value of the block protected by the active exception handler."
-
-	self return: self defaultReturnValue
-]
-
-{ #category : #'*Debugging-Core' }
-Exception >> return: returnValue [
-	"Return the argument as the value of the block protected by the active exception handler."
-
-	handlerContext return: returnValue
-]

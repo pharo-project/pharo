@@ -4,7 +4,7 @@ SUnit tests for monticello
 Class {
 	#name : #RGMonticelloTest,
 	#superclass : #TestCase,
-	#category : #'Ring-Deprecated-Tests-Monticello'
+	#category : #'Ring-Deprecated-Tests-Monticello-Base'
 }
 
 { #category : #deprecation }

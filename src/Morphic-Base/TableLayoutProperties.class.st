@@ -1,3 +1,6 @@
+"
+Properties for Table layouts like inset, spacing, ...
+"
 Class {
 	#name : #TableLayoutProperties,
 	#superclass : #LayoutProperties,

@@ -73,6 +73,12 @@ GLMPopupBrick >> beSuccess [
 	self themer: self themer popupSuccessThemer themer
 ]
 
+{ #category : #'brick-morph-mouse-events' }
+GLMPopupBrick >> handlesMouseDown: evt [
+
+	^ true
+]
+
 { #category : #accessing }
 GLMPopupBrick >> hintBrick [
 	^ hintBrick
@@ -99,6 +105,15 @@ GLMPopupBrick >> hintText: aBrick [
 	hintText := aBrick.
 
 	self hintBrick ifNotNil: [ self hintBrick text: self hintText ]
+]
+
+{ #category : #'brick-morph-mouse-events' }
+GLMPopupBrick >> mouseDown: evt [
+	
+	(anchorBrick containsPoint: evt cursorPoint)
+		ifTrue: [ anchorBrick mouseDown: evt ]
+		ifFalse: [ super mouseDown: evt ]
+
 ]
 
 { #category : #'instance creation' }

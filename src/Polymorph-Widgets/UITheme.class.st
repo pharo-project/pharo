@@ -5174,7 +5174,7 @@ UITheme >> scrollbarThickness [
 	"Answer the width or height of a scrollbar as appropriate to
 	its orientation."
 	
-	^13
+	^13 * World displayScaleFactor
 ]
 
 { #category : #'fill-styles' }

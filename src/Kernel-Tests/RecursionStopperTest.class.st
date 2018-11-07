@@ -72,14 +72,6 @@ RecursionStopperTest >> testNoRecursion [
 ]
 
 { #category : #tests }
-RecursionStopperTest >> testThreadSafe [
-
-	self should: [ self threadSafe ] notTakeMoreThanMilliseconds: 10.
-	
-	self assert: fork isNil.
-]
-
-{ #category : #tests }
 RecursionStopperTest >> testWithRecursion [
 
 	self should: [ self recursion ] notTakeMoreThanMilliseconds: 3.

@@ -9,7 +9,7 @@ Class {
 		'annotations',
 		'name'
 	],
-	#category : #'Ring-Deprecated-Core-Kernel'
+	#category : #'Ring-Deprecated-Core-Kernel-Base'
 }
 
 { #category : #annotations }

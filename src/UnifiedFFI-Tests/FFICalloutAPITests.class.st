@@ -79,7 +79,6 @@ FFICalloutAPITests >> method2 [
 
 { #category : #'primitives pointer' }
 FFICalloutAPITests >> primFromByteArray: src toExternalAddress: dest size: n [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode >
 	^ self 
 		ffiCall: #( void *memcpy(ExternalAddress dest, ByteArray src, size_t n) )
 		module: LibC
@@ -87,7 +86,6 @@ FFICalloutAPITests >> primFromByteArray: src toExternalAddress: dest size: n [
 
 { #category : #'primitives pointer' }
 FFICalloutAPITests >> primMemMoveFrom: src to: dest size: n [
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode >
 	^ self 
 		ffiCall: #( void *memcpy(void *dest, const void *src, size_t n) )
 		module: LibC
@@ -95,7 +93,6 @@ FFICalloutAPITests >> primMemMoveFrom: src to: dest size: n [
 
 { #category : #'primitives pointer' }
 FFICalloutAPITests >> primStr: aString cat: otherString [  
-	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode >
 	^ self 
 		ffiCall: #( char *strcat ( char *aString, char *otherString ) )
 		module: LibC

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'container'
 	],
-	#category : #'Spec-Inspector'
+	#category : #'Spec-Inspector-Base'
 }
 
 { #category : #spec }

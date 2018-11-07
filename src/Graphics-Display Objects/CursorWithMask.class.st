@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'maskForm'
 	],
-	#category : #'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects-Cursors'
 }
 
 { #category : #'instance creation' }
@@ -23,6 +23,12 @@ CursorWithMask class >> derivedFrom: aForm [      "Cursor initNormalWithMask.  C
 	cursor setMaskForm: mask.
 	cursor offset: ((aForm offset - (1@1)) max: ext negated).
 	^ cursor
+]
+
+{ #category : #primitives }
+CursorWithMask >> activateInCursorOwner: aCursorOwner [
+	maskForm unhibernate.
+	^ aCursorOwner activateCursor: self withMask: maskForm
 ]
 
 { #category : #converting }

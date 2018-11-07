@@ -115,16 +115,6 @@ ObjectTest >> testHaltIf [
 	self shouldntHaltWhen: [self haltIf: [:receiver | receiver class ~= self class]].
 ]
 
-{ #category : #'tests - debugging' }
-ObjectTest >> testHaltOnce [
-	| anObject block |
-	anObject := Object new.
-	block :=  [ anObject haltOnce ]. 
-	self should: block raise: Halt.
-	"block value."
-	Halt resetOnce.
-]
-
 { #category : #tests }
 ObjectTest >> testInstVarNamed [
 	| obj |
