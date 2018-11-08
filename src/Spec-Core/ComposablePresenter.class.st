@@ -129,6 +129,11 @@ ComposablePresenter class >> defaultSpec [
 ]
 
 { #category : #defaults }
+ComposablePresenter class >> iconNamed: aSymbol [
+	^ Smalltalk ui icons iconNamed: aSymbol
+]
+
+{ #category : #defaults }
 ComposablePresenter class >> inputTextHeight [
 
 	^ self defaultFont height + 12
@@ -523,11 +528,9 @@ ComposablePresenter >> hide [
 		(widget respondsTo: #hide) ifTrue: [ widget hide ]].
 ]
 
-{ #category : #icon }
-ComposablePresenter >> icon: aSymbol [
-	"Return the icon associated with the argument."
-	self flag: #remove.
-	^ self iconNamed: aSymbol
+{ #category : #accessing }
+ComposablePresenter >> iconNamed: aSymbol [
+	^ self class iconNamed: aSymbol
 ]
 
 { #category : #api }
