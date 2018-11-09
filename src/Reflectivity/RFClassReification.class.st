@@ -4,7 +4,7 @@ request reification of the class
 Class {
 	#name : #RFClassReification,
 	#superclass : #RFReification,
-	#category : #'Reflectivity-Links'
+	#category : #'Reflectivity-Reifications'
 }
 
 { #category : #'plugin interface' }

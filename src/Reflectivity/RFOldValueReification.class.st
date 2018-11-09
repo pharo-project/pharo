@@ -6,7 +6,7 @@ NOTE: Not yet working. Needs to gather information in a pre-hook
 Class {
 	#name : #RFOldValueReification,
 	#superclass : #RFReification,
-	#category : #'Reflectivity-Links'
+	#category : #'Reflectivity-Reifications'
 }
 
 { #category : #'plugin interface' }
