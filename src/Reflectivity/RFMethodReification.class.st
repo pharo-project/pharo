@@ -8,7 +8,7 @@ it is the same that you would get with ""thisContext method"", without the need 
 Class {
 	#name : #RFMethodReification,
 	#superclass : #RFReification,
-	#category : #'Reflectivity-Links'
+	#category : #'Reflectivity-Reifications'
 }
 
 { #category : #'plugin interface' }

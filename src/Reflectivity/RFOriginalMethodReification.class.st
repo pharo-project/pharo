@@ -6,7 +6,7 @@ Note: this is the original method, that is, the one that has this link *not* ins
 Class {
 	#name : #RFOriginalMethodReification,
 	#superclass : #RFReification,
-	#category : #'Reflectivity-Links'
+	#category : #'Reflectivity-Reifications'
 }
 
 { #category : #'plugin interface' }
