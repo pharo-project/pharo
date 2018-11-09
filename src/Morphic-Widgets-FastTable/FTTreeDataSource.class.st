@@ -230,9 +230,12 @@ FTTreeDataSource >> menuColumn: column row: rowIndex [
 
 { #category : #accessing }
 FTTreeDataSource >> newDataSourceMatching: aFTFilter [
-	"I delegate the filter to a FTTreeFunctionStrategy."
 
-	^ (self class searchStrategies at: self searchStrategy ifAbsent: [ self class searchStrategies at: #default ]) filterWith: aFTFilter pattern dataSource: self
+	^ (self class searchStrategies
+		at: self searchStrategy
+		ifAbsent: [ self class searchStrategies at: #default ])
+		filterWith: (RxMatcher forString: aFTFilter pattern)
+		dataSource: self
 ]
 
 { #category : #accessing }
