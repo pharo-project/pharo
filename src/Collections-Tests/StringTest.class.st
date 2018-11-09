@@ -619,6 +619,12 @@ StringTest >> testCharactersExactlyMatching [
 	self assert: 0 equals: ('voiture' charactersExactlyMatching: 'abcdef')
 ]
 
+{ #category : #'tests - iterate on sequenced reable collections' }
+StringTest >> testCollect [
+	
+	self assert: ('ABC' collect: [ :char | char asciiValue ]) equals: #(65 66 67)
+]
+
 { #category : #tests }
 StringTest >> testCompare [
 

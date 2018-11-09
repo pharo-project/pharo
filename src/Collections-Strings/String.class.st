@@ -843,6 +843,12 @@ String >> charactersExactlyMatching: aString [
 	^ count
 ]
 
+{ #category : #enumerating }
+String >> collect: aBlock [
+
+	^self collect: aBlock as: Array 
+]
+
 { #category : #comparing }
 String >> compare: aString [ 
 	"Answer a comparison code telling how the receiver sorts relative to aString:
