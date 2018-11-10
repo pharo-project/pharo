@@ -38,6 +38,11 @@ ManifestSpecCore class >> ruleLongMethodsRuleV1FalsePositive [
 ]
 
 { #category : #'code-critics' }
+ManifestSpecCore class >> ruleRBEquivalentSuperclassMethodsRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#'ComposablePresenter class' #iconNamed: #true)) #'2018-11-07T14:51:01.186582+01:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestSpecCore class >> ruleRBOverridesDeprecatedMethodRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#MenuItemPresenter #name #false)) #'2016-07-01T15:56:13.378417+02:00') )
 ]

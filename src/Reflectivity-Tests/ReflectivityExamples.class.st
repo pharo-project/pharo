@@ -36,7 +36,6 @@ ReflectivityExamples >> exampleArray [
 
 { #category : #examples }
 ReflectivityExamples >> exampleAssignment [
-	<sampleInstance>
 	| temp |
 	temp := (1 + 2).
 	^temp
