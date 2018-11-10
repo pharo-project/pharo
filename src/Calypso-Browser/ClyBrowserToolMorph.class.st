@@ -261,7 +261,7 @@ ClyBrowserToolMorph >> buildStatusBar [
 ]
 
 { #category : #controlling }
-ClyBrowserToolMorph >> cleanAfterRemove. [
+ClyBrowserToolMorph >> cleanAfterRemove [
 	self detachFromSystem.
 	decorators do: [ :each | each toolWasRemoved ]
 ]
