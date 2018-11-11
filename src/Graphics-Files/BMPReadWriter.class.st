@@ -1,5 +1,10 @@
 "
-I read and write BMP files.
+I am BMPReadWriter.
+I am a concrete ImageReadWriter.
+
+I read and write the BMP image file format.
+
+	https://en.wikipedia.org/wiki/BMP_file_format
 
 Example to save and load a screenshot of the world in a .bmp file:
 
