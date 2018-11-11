@@ -34,6 +34,7 @@ Class {
 ImageReadWriter class >> allTypicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that my subclasses can read might commonly have"
 	"ImageReadWriter allTypicalFileExtensions"
+	
 	| extensions |
 	extensions := Set new.
 	self allSubclassesDo: [ :cls | extensions addAll: cls typicalFileExtensions ].
@@ -50,7 +51,15 @@ ImageReadWriter class >> formFromFileNamed: fileName [
 
 { #category : #'image reading/writing' }
 ImageReadWriter class >> formFromStream: aBinaryStream [ 
-	"Answer a ColorForm stored on the given stream.  closes the stream"
+	"Answer a ColorForm stored on the given stream. Closes the stream after usage."
+	"A typical example is 
+
+          PNGReadWriter formFromStream: 'Sprites.png' asFileReference binaryReadStream
+ 
+        or 
+
+          PNGReadWriter formFromStream: (File named: 'Sprites.png') readStream"
+	
 	| positionableReadStream reader readerClass form |
 	positionableReadStream := ZnPositionableReadStream on: aBinaryStream.
 	readerClass := self readerClassFromStream: positionableReadStream.
@@ -78,10 +87,10 @@ ImageReadWriter class >> putForm: aForm onFileNamed: fileName [
 
 { #category : #'image reading/writing' }
 ImageReadWriter class >> putForm: aForm onStream: aWriteStream [ 
-	"Store the given form on a file of the given name. closes the stream"
+	"Store the given form on a file of the given name. Closes the stream after usage."
 	
 	| writer |
-	writer := (self on: aWriteStream).
+	writer := self on: aWriteStream.
 	writer nextPutImage: aForm.
 	writer close
 ]
@@ -105,7 +114,8 @@ ImageReadWriter class >> typicalFileExtensions [
 ]
 
 { #category : #'image reading/writing' }
-ImageReadWriter class >> understandsImageFormat: aStream [ 
+ImageReadWriter class >> understandsImageFormat: aStream [
+
 	^[(self new on: aStream) understandsImageFormat] on: Error do:[:ex| ex return: false]
 ]
 
