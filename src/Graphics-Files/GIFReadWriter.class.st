@@ -1,4 +1,7 @@
 "
+I am GIFReadWriter.
+I am a concrete ImageReadWriter.
+
 Updated implementation of a GIF file (byte-level) decoder.
 
 I implment a Stream-like behavior over a GIF image file, and can both read and write GIF files.
@@ -6,9 +9,10 @@ I implment a Stream-like behavior over a GIF image file, and can both read and w
 Previously, two classes distinguished between ""still"" and ""animated"" GIFs. However, the standard specifies that any GIF can have ""frames"" and be animated. This reimplementation treats this as normal.
 
 See these links for more detailed information:
-https://www.w3.org/Graphics/GIF/spec-gif89a.txt
-https://en.wikipedia.org/wiki/GIF
-http://www.matthewflickinger.com/lab/whatsinagif/bits_and_bytes.asp
+ 
+ https://www.w3.org/Graphics/GIF/spec-gif89a.txt
+ https://en.wikipedia.org/wiki/GIF
+ http://www.matthewflickinger.com/lab/whatsinagif/bits_and_bytes.asp
 
 For writing GIF files, I take a collection of AnimatedImageFrame objects and write the appropriate headers, Graphics Control Extensions, and everything else needed for writing an animated GIF.
 
