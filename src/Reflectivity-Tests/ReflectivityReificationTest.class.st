@@ -612,6 +612,64 @@ ReflectivityReificationTest >> testReifyOldValueAssignmentBefore [
 	self assert: tag equals: nil.
 ]
 
+{ #category : #'tests - operations' }
+ReflectivityReificationTest >> testReifyOperationMethod [
+	| methodNode instance |
+	methodNode := (ReflectivityExamples >> #exampleWithArg:) ast.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #before;
+		arguments: #(operation).
+	methodNode link: link.
+	self assert: methodNode hasMetalink.
+	self assert: (ReflectivityExamples >> #exampleWithArg:) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: tag value equals: 5
+]
+
+{ #category : #'tests - operations' }
+ReflectivityReificationTest >> testReifyOperationMethodafter [
+	| methodNode instance |
+	methodNode := (ReflectivityExamples >> #exampleWithArg:) ast.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #after;
+		arguments: #(operation).
+	methodNode link: link.
+	self assert: methodNode hasMetalink.
+	self assert: (ReflectivityExamples >> #exampleWithArg:) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: tag class == RFMethodOperation.
+	self assert: tag value equals: 5
+]
+
+{ #category : #'tests - operations' }
+ReflectivityReificationTest >> testReifyOperationSend [
+	| sendNode instance |
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast body
+		statements first value.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #before;
+		arguments: #(operation).
+	sendNode link: link.
+	self assert: sendNode hasMetalink.
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleMethod equals: 5.
+	self assert: tag value equals: 5
+]
+
 { #category : #'tests - options' }
 ReflectivityReificationTest >> testReifyOptionArgsAsArray [
 	" test that we can pass all arguments in an array"

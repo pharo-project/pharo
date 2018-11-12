@@ -167,11 +167,9 @@ EpLogBrowserPresenter >> applySelectedChanges [
 
 { #category : #modes }
 EpLogBrowserPresenter >> beApplyMode [
-
 	self title: 'Epicea - Apply Changes'.
-	self toolbarModel beApplyMode.
-	showEntryItemMenu := false.
-
+	self toolbarPresenter beApplyMode.
+	showEntryItemMenu := false
 ]
 
 { #category : #modes }
