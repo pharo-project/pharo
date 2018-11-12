@@ -72,5 +72,5 @@ SystemResolver >> vmBinary [
 
 { #category : #origins }
 SystemResolver >> vmDirectory [
-	^ self resolveString: Smalltalk vm primVmDirectoryPath
+	^ self resolveString: Smalltalk vm directory
 ]
