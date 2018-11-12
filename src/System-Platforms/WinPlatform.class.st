@@ -87,6 +87,12 @@ WinPlatform >> keyForValue: aKeyValue [
 ]
 
 { #category : #accessing }
+WinPlatform >> lastError [
+
+	^ self ffiCall: #(ulong GetLastError())
+]
+
+{ #category : #accessing }
 WinPlatform >> lineEnding [
 
 	^ String crlf

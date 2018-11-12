@@ -26,16 +26,27 @@ Win32Environment >> getEnv: aVariableName [
 
 { #category : #private }
 Win32Environment >> getEnvViaFFI: aVariableName [
+
+	^ self getEnvViaFFI: aVariableName bufferSize: 500
+]
+
+{ #category : #private }
+Win32Environment >> getEnvViaFFI: aVariableName bufferSize: aSize [
 	| name buffer return |
 
 	name := aVariableName asWin32WideString.
-	buffer := Win32WideString new: 500.
-	return := OSPlatform current getEnvironmentVariable: name into: buffer size: 500.
+	buffer := Win32WideString new: aSize.
+	return := OSPlatform current getEnvironmentVariable: name into: buffer size: aSize + 1.
 	
-	return = 0
-		ifTrue: [ self error: 'Error while getting environment variable ', aVariableName ].
-	return > 500
-		ifTrue: [ self error: 'Not enough buffer space' ].
+	"From MSDN: If the function fails, the return value is zero. If the specified environment variable was not found in the environment block, GetLastError returns ERROR_ENVVAR_NOT_FOUND."
+	return = 0 ifTrue: [ 
+		OSPlatform current lastError = 16r000000CB
+			ifTrue: [ ^ nil ]
+			ifFalse: [ self error: 'An error occurred while fetching environment variable ', aVariableName asString ] ].
+	
+	"From MSDN: If lpBuffer is not large enough to hold the data, the return value is the buffer size, in characters,
+	required to hold the string and its terminating null character and the contents of lpBuffer are undefined."
+	return > aSize ifTrue: [ ^ self getEnvViaFFI: aVariableName bufferSize: return ].
 	
 	^ buffer asString
 ]
