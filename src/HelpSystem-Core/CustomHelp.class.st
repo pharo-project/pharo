@@ -267,6 +267,11 @@ CustomHelp class >> subheading: aString [
 
 ]
 
+{ #category : #accessing }
+CustomHelp class >> theme [
+	^ Smalltalk ui theme
+]
+
 { #category : #formatting }
 CustomHelp class >> underlined: aString [
 	"Return Text object with underlined emphasis."
@@ -279,17 +284,15 @@ CustomHelp class >> underlined: aString [
 { #category : #formatting }
 CustomHelp class >> url: aString [
 	"Return Text object with copy aString to the clipboard after mouse click."
-	| color clickBlock |
+	| clickBlock |
 	
 	aString ifEmpty: [ self errorEmptyString ].
-	
-	color := Color fromHexString: '3196D3'.
 	
 	clickBlock := [ WebBrowser openOn: aString ].
 
 	^ aString asText 
 		addAttribute: (	TextAction new actOnClickBlock: clickBlock);
-		addAttribute: (TextColor new color: color);
+		addAttribute: (TextColor new color: self theme urlColor);
 		yourself
 
 ]
