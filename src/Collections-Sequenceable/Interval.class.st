@@ -370,6 +370,13 @@ Interval >> size [
 ]
 
 { #category : #sorting }
+Interval >> sort: aBlock [
+	"What sorting an Interval means is not clear."
+
+	self shouldNotImplement.
+]
+
+{ #category : #sorting }
 Interval >> sorted [
 	^ self increment >= 0
 		ifTrue: [ self copy ]
