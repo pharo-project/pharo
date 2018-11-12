@@ -373,7 +373,7 @@ Interval >> size [
 Interval >> sort: aBlock [
 	"What sorting an Interval means is not clear."
 
-	self error: 'You can not sort an interval.'
+	self shouldNotImplement.
 ]
 
 { #category : #sorting }
