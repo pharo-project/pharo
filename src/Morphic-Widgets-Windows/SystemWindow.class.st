@@ -53,7 +53,7 @@ SystemWindow class >> buildShortcutsOn: aBuilder [
 	(aBuilder shortcut: #close)
 		category: #WindowShortcuts
 		default: PharoShortcuts current closeWindowShortcut
-		do: [ :target | target closeWindowAction ]
+		do: [ :target | SystemWindow closeTopWindow ]
 		description: 'Close this window'.
 ]
 
