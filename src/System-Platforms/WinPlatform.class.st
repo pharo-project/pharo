@@ -20,6 +20,22 @@ WinPlatform class >> isActivePlatform [
 ]
 
 { #category : #accessing }
+WinPlatform >> currentWorkingDirectoryPathWithBuffer: aByteString [
+	"<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>"
+	
+	^ (self getPwdViaFFI: aByteString size: aByteString byteSize) 
+		ifNil:[ self error:'Insufficient buffer size to read current working directory: ' , aByteString size asString]
+]
+
+{ #category : #'environment-variables' }
+WinPlatform >> currentWorkingDirectoryPathWithBufferSize: aBufferSize [
+	| buffer |
+	buffer := Win32WideString new: aBufferSize.
+	self currentWorkingDirectoryPathWithBuffer: buffer.
+	^ buffer asString
+]
+
+{ #category : #accessing }
 WinPlatform >> defaultMaximumPathLength [
 		"This method returns the default maximum path length for the getCurrentWorkingDirectory implementation. Windows default PATH_MAX is 260.  PATH_MAX is needed to avoid buffer overflow.  In case PATH_MAX is not sufficient the method currentWorkingDirectoryWithBufferSize: can be used to give desired buffer size."
 	 ^260
@@ -49,14 +65,14 @@ WinPlatform >> getPwdViaFFI: buffer size: bufferSize [
 	
 	We use FFI-Kernel for this because this is required for bootstrapping, and we ensure minimal dependencies."
 	^ (ExternalLibraryFunction 
-			name: '_getcwd'
+			name: '_wgetcwd'
 			module: 'msvcrt.dll'
 			callType: 0
 			returnType: ExternalType char asPointerType
 			argumentTypes: {
 				ExternalType char asPointerType.
 				ExternalType long })
-					invokeWith: buffer with: bufferSize.
+					invokeWith: buffer getHandle with: bufferSize.
 
 ]
 
