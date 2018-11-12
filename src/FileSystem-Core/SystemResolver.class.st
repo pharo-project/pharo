@@ -46,7 +46,7 @@ SystemResolver >> changes [
 
 { #category : #origins }
 SystemResolver >> image [
-	^ self resolveString: Smalltalk primImagePath
+	^ self resolveString: Smalltalk imagePath
 ]
 
 { #category : #origins }
