@@ -28,8 +28,8 @@ for f in ${PHARO_NAME_PREFIX}-*-32bit-*.zip; do
 		touch "${IMAGENAME}.changes"
 		mv "${IMAGENAME}.changes" tempconversion.changes
 	
-		IMAGE_KIND=$(echo "$f" | cut -d '-' -f 2)
-		HASH=$(echo "$f" | head -n 1 | cut -d '-' -f 4 | cut -d '.' -f 1)
+		IMAGE_KIND=$(echo "$f" | cut -d '-' -f 3)
+		HASH=$(echo "$f" | head -n 1 | cut -d '-' -f 5 | cut -d '.' -f 1)
 		./vmmaker/pharo ./vmmaker/generator.image eval "[Spur32to64BitBootstrap new bootstrapImage: '../tempconversion.image'] on: AssertionFailure do: [ :fail | fail resumeUnchecked: nil ]"
 
 		mv "tempconversion-64.image" " ${PHARO_NAME_PREFIX}-${IMAGE_KIND}-64bit-$HASH.image"
@@ -47,7 +47,7 @@ for f in  ${PHARO_NAME_PREFIX}-32bit-*.zip; do
 	touch tempconversion.changes
 	cp "${IMAGENAME}.changes" tempconversion.changes
 	
-	HASH=$(find $f | head -n 1 | cut -d '-' -f 3 | cut -d '.' -f 1)
+	HASH=$(find $f | head -n 1 | cut -d '-' -f 4 | cut -d '.' -f 1)
 	./vmmaker/pharo ./vmmaker/generator.image eval "[Spur32to64BitBootstrap new bootstrapImage: '../tempconversion.image'] on: AssertionFailure do: [ :fail | fail resumeUnchecked: nil ]"
 	
 	mv "tempconversion-64.image" "${PHARO_NAME_PREFIX}-64bit-$HASH.image"
