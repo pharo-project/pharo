@@ -7,4 +7,6 @@
 
 
 PHARO_NAME_PREFIX="Pharo`git describe --long --tags | cut -d'-' -f 1-2 | cut -c 2-`"
-PHARO_VM_VERSION=`git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//'`
+PHARO_SHORT_VERSION=`git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//'`
+# this is just to make things clear (and because they could change in the future, who knows :P)
+PHARO_VM_VERSION="${PHARO_SHORT_VERSION}"
