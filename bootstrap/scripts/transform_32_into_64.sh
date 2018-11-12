@@ -32,9 +32,9 @@ for f in ${PHARO_NAME_PREFIX}-*-32bit-*.zip; do
 		HASH=$(echo "$f" | head -n 1 | cut -d '-' -f 5 | cut -d '.' -f 1)
 		./vmmaker/pharo ./vmmaker/generator.image eval "[Spur32to64BitBootstrap new bootstrapImage: '../tempconversion.image'] on: AssertionFailure do: [ :fail | fail resumeUnchecked: nil ]"
 
-		mv "tempconversion-64.image" " ${PHARO_NAME_PREFIX}-${IMAGE_KIND}-64bit-$HASH.image"
-		mv "tempconversion-64.changes" " ${PHARO_NAME_PREFIX}-${IMAGE_KIND}-64bit-$HASH.changes"
-		zip ${PHARO_NAME_PREFIX}-${IMAGE_KIND}-64bit-$HASH.zip  ${PHARO_NAME_PREFIX}-${IMAGE_KIND}-64bit-$HASH.*
+		mv "tempconversion-64.image" "${PHARO_NAME_PREFIX}-${IMAGE_KIND}-64bit-$HASH.image"
+		mv "tempconversion-64.changes" "${PHARO_NAME_PREFIX}-${IMAGE_KIND}-64bit-$HASH.changes"
+		zip ${PHARO_NAME_PREFIX}-${IMAGE_KIND}-64bit-$HASH.zip ${PHARO_NAME_PREFIX}-${IMAGE_KIND}-64bit-$HASH.*
 	fi
 	rm -f *.image *.changes *.sources
 done
