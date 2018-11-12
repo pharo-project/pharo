@@ -6,7 +6,7 @@ I manage the conversion between Pharo strings and Windows strings.
 "
 Class {
 	#name : #Win32WideString,
-	#superclass : #FFIExternalObject,
+	#superclass : #ExternalObject,
 	#category : #'System-Platforms-Windows'
 }
 
@@ -47,7 +47,7 @@ Win32WideString class >> fromString: aString [
 { #category : #'instance creation' }
 Win32WideString class >> new: size [
 	^ self new
-		handle: (ByteArray new: (size + 1) * 2);
+		setHandle: (ByteArray new: (size + 1) * 2);
 		yourself.
 
 ]
@@ -79,9 +79,9 @@ Win32WideString >> asWin32WideString [
 
 { #category : #accessing }
 Win32WideString >> byteSize [
-	^ self handle isExternalAddress
+	^ handle isExternalAddress
 		ifTrue: [ (self size + 1) * 2 ]
-		ifFalse: [ self handle size ]
+		ifFalse: [ handle size ]
 ]
 
 { #category : #printing }
@@ -100,7 +100,7 @@ Win32WideString >> size [
 	size := 0.
 	pos := 1.
 
-	[ (self handle unsignedByteAt: pos) = 0 and: [ (self handle unsignedByteAt: pos + 1) = 0 ] ]
+	[ (handle unsignedByteAt: pos) = 0 and: [ (handle unsignedByteAt: pos + 1) = 0 ] ]
 		whileFalse: [ size := size + 1.
 			pos := pos + 2 ].
 
