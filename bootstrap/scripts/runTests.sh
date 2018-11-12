@@ -13,12 +13,12 @@ CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
 find ${CACHE}
 
-${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh 70 vm ${1}
+${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh ${PHARO_VM_VERSION} vm ${1}
 					
-IMAGE_ARCHIVE=$(find ${CACHE} -name Pharo7.0-${1}bit-*.zip)
+IMAGE_ARCHIVE=$(find ${CACHE} -name ${PHARO_NAME_PREFIX}-${1}bit-*.zip)
 unzip $IMAGE_ARCHIVE
-IMAGE_FILE=$(find . -name Pharo7.0-${1}bit-*.image)
-CHANGES_FILE=$(find . -name Pharo7.0-${1}bit-*.changes)
+IMAGE_FILE=$(find . -name ${PHARO_NAME_PREFIX}-${1}bit-*.image)
+CHANGES_FILE=$(find . -name ${PHARO_NAME_PREFIX}-${1}bit-*.changes)
 				
 cp ${CACHE}/*.sources .
 mv $IMAGE_FILE Pharo.image

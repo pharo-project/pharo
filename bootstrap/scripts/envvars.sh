@@ -39,6 +39,12 @@ then
 fi
 export BOOTSTRAP_CACHE
 
+PHARO_NAME_PREFIX="Pharo`git describe --long --tags | cut -d'-' -f 1-2 | cut -c 2-`"
+PHARO_VM_VERSION=`git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//'`
+
 # Ensure that BOOTSTRAP_REPOSITORY is propagated
 # This is the VM used to bootstrap, i.e. the target VM
 VM="${BOOTSTRAP_CACHE}/vmtarget/pharo --headless"
+
+# Flags to run the image
+IMAGE_FLAGS="--no-default-preferences"
