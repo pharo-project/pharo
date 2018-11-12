@@ -4,6 +4,10 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
+SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
+
+. ${SCRIPTS}/envversion.sh
+
 #Load VMMaker, used to convert images from 32 to 64 bits
 mkdir -p vmmaker && cd vmmaker
 wget https://github.com/pharo-project/pharo-32to64-converter/releases/download/v1.0.0/vmmaker-image.zip
