@@ -137,6 +137,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
+		spec package: 'NautilusRefactoring-Tests'.
 
 		spec package: 'Ombu'.
 		spec package: 'Epicea'.
@@ -772,6 +773,7 @@ spec group: 'GT&QA-Group' with: #(
 	'Reflectivity-Tools'	"required by Manifest-Core Refactoring-Critics"
 
 	'NautilusRefactoring'	"required by Epicea, SmartSuggestions"
+	'NautilusRefactoring-Tests'
 	'Refactoring-Critics'	"depends on QA, needs cleanup"
 
 	'Glamour-Group'
