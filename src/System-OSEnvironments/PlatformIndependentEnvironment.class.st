@@ -19,6 +19,12 @@ PlatformIndependentEnvironment class >> isDefaultFor: aPlatform [
 	^ false
 ]
 
+{ #category : #accessing }
+PlatformIndependentEnvironment >> at: aKey put: aValue [
+
+	"Do nothing"
+]
+
 { #category : #private }
 PlatformIndependentEnvironment >> getEnv: aVariableName [
 	^ nil
@@ -26,6 +32,12 @@ PlatformIndependentEnvironment >> getEnv: aVariableName [
 
 { #category : #enumeration }
 PlatformIndependentEnvironment >> keysAndValuesDo: aBlock [
+	"Do nothing"
+]
+
+{ #category : #accessing }
+PlatformIndependentEnvironment >> removeKey: key [
+
 	"Do nothing"
 ]
 

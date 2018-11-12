@@ -13,20 +13,27 @@ Win32Environment class >> isDefaultFor: aPlatform [
 ]
 
 { #category : #accessing }
+Win32Environment >> at: aKey put: aValue [
+
+	| w32Key w32Value return |
+	w32Key := aKey asWin32WideString.
+	w32Value := aValue asWin32WideString.
+	return := OSPlatform current setEnvironmentVariable: w32Key value: w32Value.	
+
+	"From MSDN: If the function fails, the return value is zero."
+	return = 0 ifTrue: [ 
+		self error: 'An error occurred while setting environment variable ', aKey asString, ' to ', aValue asString ].
+]
+
+{ #category : #accessing }
 Win32Environment >> environmentStrings [
 	 ^ self ffiCall: #( void * GetEnvironmentStrings () ) module: #Kernel32
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 Win32Environment >> getEnv: aVariableName [
 	"The primitive on Windows currently uses the ascii version of the Windows API.
 	In such chase try to get value of the environment variable using FFI."
-    ^ self getEnvViaFFI: aVariableName
-]
-
-{ #category : #private }
-Win32Environment >> getEnvViaFFI: aVariableName [
-
 	^ self getEnvViaFFI: aVariableName bufferSize: 500
 ]
 
@@ -40,7 +47,7 @@ Win32Environment >> getEnvViaFFI: aVariableName bufferSize: aSize [
 	
 	"From MSDN: If the function fails, the return value is zero. If the specified environment variable was not found in the environment block, GetLastError returns ERROR_ENVVAR_NOT_FOUND."
 	return = 0 ifTrue: [ 
-		OSPlatform current lastError = 16r000000CB
+		OSPlatform current lastError = "ERROR_ENVVAR_NOT_FOUND" 16r000000CB
 			ifTrue: [ ^ nil ]
 			ifFalse: [ self error: 'An error occurred while fetching environment variable ', aVariableName asString ] ].
 	
@@ -68,13 +75,14 @@ Win32Environment >> keysAndValuesDo: aBlock [
 	environmentStrings := environmentStrings + nextString size + 1 ] repeat
 ]
 
-{ #category : #private }
-Win32Environment >> setEnv: nameString value: valueString [
-	"This method calls the Standard C Library getenv() function"
-	 ^ self ffiCall: #( int SetEnvironmentVariableA ( String nameString, String valueString ) ) module: #Kernel32
-]
-
 { #category : #accessing }
-Win32Environment >> unsetEnv: aString [
-	^ self setEnv: aString value: nil
+Win32Environment >> removeKey: aKey [
+	
+	| w32Key w32Value return |
+	w32Key := aKey asWin32WideString.
+	return := OSPlatform current setEnvironmentVariable: w32Key value: nil.	
+
+	"From MSDN: If the function fails, the return value is zero."
+	return = 0 ifTrue: [ 
+		self error: 'An error occurred while removing environment variable ', aKey asString ].
 ]

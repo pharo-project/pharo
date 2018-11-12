@@ -109,6 +109,12 @@ WinPlatform >> multiByteToWideCharacterCodepage: codepage flags: flags input: in
 	^self ffiCall: #(int MultiByteToWideChar(uint codepage, ulong flags, String input, int inputLen, Win32WideString output, int outputLen ))
 ]
 
+{ #category : #'environment-variables' }
+WinPlatform >> setEnvironmentVariable: nameString value: valueString [
+
+	 ^ self ffiCall: #( int SetEnvironmentVariableW ( String nameString, String valueString ) )
+]
+
 { #category : #accessing }
 WinPlatform >> virtualKey: virtualKeyCode [
 	"Win32Platform virtualKey: $C charCode"
