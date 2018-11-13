@@ -37,7 +37,13 @@ Win32Environment >> at: aKey put: aValue [
 
 { #category : #private }
 Win32Environment >> environmentStrings [
-	 ^ self ffiCall: #( void * GetEnvironmentStrings () ) module: #Kernel32
+	 ^ self ffiCall: #( void * GetEnvironmentStrings () )
+]
+
+{ #category : #private }
+Win32Environment >> ffiLibraryName [
+
+	^ #Kernel32
 ]
 
 { #category : #private }
