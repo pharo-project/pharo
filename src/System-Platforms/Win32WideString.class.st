@@ -3,6 +3,11 @@ I represent a Win32 wide string, supporting non-ascii characters.
 I manage the conversion between Pharo strings and Windows strings.
 
 (Win32String fromString: 'âùö') asString = 'âùö'
+
+! Implementation Details
+
+I'm on purpose a subclass of ExternalObject and not FFIExternalObject.
+The rationale is that the kernel should not be tied to UFFI (which depends on the compiler) to do simple ffi calls. Because of this I implement on #handle, #handle: and #asExternalTypeOn: to be compatible with UFFI external structures.
 "
 Class {
 	#name : #Win32WideString,
