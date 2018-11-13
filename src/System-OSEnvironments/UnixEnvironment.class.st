@@ -15,6 +15,18 @@ UnixEnvironment class >> isDefaultFor: aPlatform [
 ]
 
 { #category : #accessing }
+UnixEnvironment >> at: aKey encoding: anEncoding [
+	"Gets the value of an environment variable called `aKey`.
+	Throws a KeyNotFound exception if not found.
+	Use `anEncoding` to encode the arguments and return values.
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+	
+	^ self at: aKey encoding: anEncoding ifAbsent: [ KeyNotFound signalFor: aKey ]
+]
+
+{ #category : #accessing }
 UnixEnvironment >> at: aKey encoding: anEncoding ifAbsent: aBlock [
 	"Gets the value of an environment variable called `aKey`.
 	Execute aBlock if absent.
@@ -28,6 +40,44 @@ UnixEnvironment >> at: aKey encoding: anEncoding ifAbsent: aBlock [
 		rawAt: (aKey encodeWith: anEncoding)
 		ifAbsent: [ ^ aBlock value].
 	^ result decodeWith: anEncoding
+]
+
+{ #category : #accessing }
+UnixEnvironment >> at: aKey encoding: anEncoding ifAbsentPut: aBlock [
+	"Gets the value of an environment variable called `aKey`.
+	If absent, insert the value given by aBlock.
+	Use `anEncoding` to encode the arguments and return values.
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+	
+	^ self at: aKey encoding: anEncoding ifAbsent: [ self at: aKey put: aBlock value encoding: anEncoding ]
+]
+
+{ #category : #accessing }
+UnixEnvironment >> at: aKey encoding: anEncoding ifPresent: aBlock [
+	"Gets the value of an environment variable called `aKey` and invoke aBlock with it.
+	Return nil if absent.
+	Use `anEncoding` to encode the arguments and return values.
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+	
+	^ aBlock value: (self at: aKey encoding: anEncoding ifAbsent: [ ^ nil ])
+]
+
+{ #category : #accessing }
+UnixEnvironment >> at: aKey encoding: anEncoding ifPresent: presentBlock ifAbsent: absentBlock [
+	"Gets the value of an environment variable called `aKey`.
+	Call presentBlock with it if present.
+	Execute absentBlock if absent.
+	Use `anEncoding` to encode the arguments and return values.
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+	
+	self at: aKey encoding: anEncoding ifPresent: [ :v | ^ presentBlock cull: v ].
+	^absentBlock value
 ]
 
 { #category : #accessing }
