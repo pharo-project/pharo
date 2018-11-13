@@ -270,10 +270,10 @@ InputEventSensor >> keyboardPressed [
 { #category : #'private events' }
 InputEventSensor >> mapButtons: buttons modifiers: anInteger [
 	"Map the buttons to yellow or blue based on the given modifiers.
-    If only the red button is pressed, then map
-        Ctrl-RedButton -> YellowButtonBit.
-        Cmd-RedButton -> BlueButtonBit.
-    "
+	 If only the red button is pressed, then map
+		Ctrl-RedButton -> YellowButtonBit.
+		Cmd-RedButton -> BlueButtonBit.
+	"
 
 	buttons = RedButtonBit
 		ifFalse: [ ^ buttons ].
