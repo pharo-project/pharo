@@ -14,24 +14,21 @@ Win32Environment class >> isDefaultFor: aPlatform [
 
 { #category : #accessing }
 Win32Environment >> at: aKey ifAbsent: aBlock [
-	"Gets the value of an environment variable called `aKey`.
-	Execute aBlock if absent.
-	It is the system reponsibility to manage the encoding.
-	
-	Rationale: A common denominator for all platforms providing an already decoded string, because windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
-	
 	"The primitive on Windows currently uses the ascii version of the Windows API.
 	In such chase try to get value of the environment variable using FFI."
-	^ self getEnvViaFFI: aKey bufferSize: 500 ifAbsent: aBlock
+
+	^ self getEnvVariable: aKey bufferSize: 500 ifAbsent: aBlock
 ]
 
 { #category : #accessing }
 Win32Environment >> at: aKey put: aValue [
+	"The primitive on Windows currently uses the ascii version of the Windows API.
+	In such chase try to set the value of the environment variable using FFI."
 
 	| w32Key w32Value return |
 	w32Key := aKey asWin32WideString.
 	w32Value := aValue asWin32WideString.
-	return := OSPlatform current setEnvironmentVariable: w32Key value: w32Value.	
+	return := self setEnvironmentVariable: w32Key value: w32Value.	
 
 	"From MSDN: If the function fails, the return value is zero."
 	return = 0 ifTrue: [ 
@@ -44,7 +41,7 @@ Win32Environment >> environmentStrings [
 ]
 
 { #category : #private }
-Win32Environment >> getEnvViaFFI: aVariableName bufferSize: aSize ifAbsent: aBlock [
+Win32Environment >> getEnvVariable: aVariableName bufferSize: aSize ifAbsent: aBlock [
 	| name buffer return |
 
 	name := aVariableName asWin32WideString.
@@ -59,7 +56,7 @@ Win32Environment >> getEnvViaFFI: aVariableName bufferSize: aSize ifAbsent: aBlo
 	
 	"From MSDN: If lpBuffer is not large enough to hold the data, the return value is the buffer size, in characters,
 	required to hold the string and its terminating null character and the contents of lpBuffer are undefined."
-	return > aSize ifTrue: [ ^ self getEnvViaFFI: aVariableName bufferSize: return ifAbsent: aBlock ].
+	return > aSize ifTrue: [ ^ self getEnvVariable: aVariableName bufferSize: return ifAbsent: aBlock ].
 	
 	^ buffer asString
 ]
@@ -81,13 +78,27 @@ Win32Environment >> keysAndValuesDo: aBlock [
 	environmentStrings := environmentStrings + nextString size + 1 ] repeat
 ]
 
+{ #category : #private }
+Win32Environment >> removeEnvironmentVariable: nameString [
+
+	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, 0 ) )
+]
+
 { #category : #accessing }
 Win32Environment >> removeKey: aKey [
-	
+	"The primitive on Windows currently uses the ascii version of the Windows API.
+	In such chase try to get value of the environment variable using FFI."
+
 	| return |
-	return := OSPlatform current removeEnvironmentVariable: aKey asWin32WideString.
+	return := self removeEnvironmentVariable: aKey asWin32WideString.
 
 	"From MSDN: If the function fails, the return value is zero."
 	return = 0 ifTrue: [ 
 		self error: 'An error occurred while removing environment variable ', aKey asString ].
+]
+
+{ #category : #private }
+Win32Environment >> setEnvironmentVariable: nameString value: valueString [
+
+	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, Win32WideString valueString ) )
 ]

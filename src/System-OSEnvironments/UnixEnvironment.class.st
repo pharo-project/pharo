@@ -18,7 +18,11 @@ UnixEnvironment class >> isDefaultFor: aPlatform [
 UnixEnvironment >> at: aKey encoding: anEncoding ifAbsent: aBlock [
 	"Gets the value of an environment variable called `aKey`.
 	Execute aBlock if absent.
-	It is the system reponsibility to manage the encoding."
+	Use `anEncoding` to encode the arguments and return values.
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+	
 	| result |
 	result := self
 		rawAt: (aKey encodeWith: anEncoding)
@@ -28,20 +32,27 @@ UnixEnvironment >> at: aKey encoding: anEncoding ifAbsent: aBlock [
 
 { #category : #accessing }
 UnixEnvironment >> at: aKey ifAbsent: aBlock [
-	"Gets the value of an environment variable called `aKey`.
-	Execute aBlock if absent.
-	It is the system reponsibility to manage the encoding."
+	"See super>>at:ifAbsent:.
+	Uses a single encoding determined dinamically"
+
 	^ self at: aKey encoding: self defaultEncoding ifAbsent: aBlock
 ]
 
 { #category : #accessing }
 UnixEnvironment >> at: aKey put: aValue [
+	"See super>>at:put:.
+	Uses a single encoding determined dinamically"
 
 	^ self at: aKey put: aValue encoding: self defaultEncoding
 ]
 
 { #category : #accessing }
 UnixEnvironment >> at: aKey put: aValue encoding: anEncoding [
+	"Sets the value of an environment variable called `aKey` to `aValue`.
+	Use `anEncoding` to encode both arguments.
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
 
 	^ self
 		rawAt: (aKey encodeWith: anEncoding)
@@ -105,36 +116,57 @@ UnixEnvironment >> keysAndValuesDo: aBlock [
 ]
 
 { #category : #accessing }
-UnixEnvironment >> rawAt: aKey ifAbsent: aBlock [
-	"Gets the value of an environment variable called `aKey`.
+UnixEnvironment >> rawAt: anEncodedKey ifAbsent: aBlock [
+	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
 	Execute aBlock if absent.
-	It is the system reponsibility to manage the encoding."
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
 	
 	| rawValue |
-	rawValue := self basicGetEnvRaw: aKey asString.
+	rawValue := self basicGetEnvRaw: anEncodedKey asString.
 	^ rawValue
 		ifNil: [ aBlock value ]
 		ifNotNil: [ rawValue asByteArray ].
 ]
 
 { #category : #accessing }
-UnixEnvironment >> rawAt: anEncodedName put: bytes [
+UnixEnvironment >> rawAt: anEncodedKey put: someBytes [
+	"Sets the value of an environment variable called `anEncodedKey` to `someBytes`.
+	Both arguments should be already encoded (i.e., they are byte arrays).
 	
-	^ self setEnv: anEncodedName asString value: bytes asString
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+
+	^ self setEnv: anEncodedKey asString value: someBytes asString
 ]
 
 { #category : #accessing }
-UnixEnvironment >> rawRemoveKey: key [
-	^ self unsetEnv: key asString
+UnixEnvironment >> rawRemoveKey: anEncodedKey [
+	"Removes an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+
+	^ self unsetEnv: anEncodedKey asString
 ]
 
 { #category : #accessing }
 UnixEnvironment >> removeKey: key [
+	"See super>>removeKey:.
+	Uses a single encoding determined dinamically"
+	
 	^ self removeKey: key encoded: self defaultEncoding
 ]
 
 { #category : #accessing }
 UnixEnvironment >> removeKey: key encoded: anEncoding [
+	"Removes the entry `aKey` from the environment variables.
+	Use `anEncoding` to encode the arguments.
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+
 	^ self rawRemoveKey: (key encodeWith: anEncoding)
 ]
 

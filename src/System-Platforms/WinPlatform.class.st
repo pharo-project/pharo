@@ -110,12 +110,6 @@ WinPlatform >> multiByteToWideCharacterCodepage: codepage flags: flags input: in
 ]
 
 { #category : #'environment-variables' }
-WinPlatform >> removeEnvironmentVariable: nameString [
-
-	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, 0 ) )
-]
-
-{ #category : #'environment-variables' }
 WinPlatform >> setEnvironmentVariable: nameString value: valueString [
 
 	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, Win32WideString valueString ) )

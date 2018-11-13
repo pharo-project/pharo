@@ -110,8 +110,13 @@ OSEnvironment >> associationsDo: aBlock [
 
 { #category : #accessing }
 OSEnvironment >> at: aKey [
-	"Gets the value of an environment variable called `aKey`
-	It is the system reponsibility to manage the encoding."
+	"Gets the value of an environment variable called `aKey`.
+	Throws a KeyNotFound exception if not found.
+	It is the system reponsibility to manage the encodings of the argument and return values.
+	
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+
 	^ self at: aKey ifAbsent: [ KeyNotFound signalFor: aKey ]
 ]
 
@@ -119,37 +124,60 @@ OSEnvironment >> at: aKey [
 OSEnvironment >> at: aKey ifAbsent: aBlock [
 	"Gets the value of an environment variable called `aKey`.
 	Execute aBlock if absent.
-	It is the system reponsibility to manage the encoding.
+	It is the system reponsibility to manage the encodings of the argument and return values.
 	
-	Rationale: A common denominator for all platforms providing an already decoded string, because windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
 	
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-OSEnvironment >> at: key ifAbsentPut: aBlock [ 
-	"Return the value at the given key. 
-	If key is not included in the receiver store the result 
-	of evaluating aBlock as new value."
+OSEnvironment >> at: aKey ifAbsentPut: aBlock [ 
+	"Gets the value of an environment variable called `aKey`.
+	If absent, insert the value given by aBlock.
+	It is the system reponsibility to manage the encodings of the argument and return values.
+	
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
 
-	^ self at: key ifAbsent: [ self at: key put: aBlock value ]
+	^ self at: aKey ifAbsent: [ self at: aKey put: aBlock value ]
 ]
 
 { #category : #accessing }
 OSEnvironment >> at: aKey ifPresent: aBlock [
+	"Gets the value of an environment variable called `aKey` and invoke aBlock with it.
+	Return nil if absent.
+	It is the system reponsibility to manage the encodings of the argument and return values.
+	
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+
 	^ aBlock value: (self at: aKey ifAbsent: [ ^ nil ])
 ]
 
 { #category : #accessing }
-OSEnvironment >> at: key ifPresent: oneArgBlock ifAbsent: absentBlock [
-	"Lookup the given key in the receiver. If it is present, answer the value of evaluating the oneArgBlock with the value associated with the key, otherwise answer the value of absentBlock."
+OSEnvironment >> at: aKey ifPresent: presentBlock ifAbsent: absentBlock [
+	"Gets the value of an environment variable called `aKey`.
+	Call presentBlock with it if present.
+	Execute absentBlock if absent.
+	It is the system reponsibility to manage the encodings of the argument and return values.
 	
-	self at: key ifPresent: [ :v | ^oneArgBlock cull: v ].
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+	
+	self at: aKey ifPresent: [ :v | ^ presentBlock cull: v ].
 	^absentBlock value
 ]
 
 { #category : #accessing }
 OSEnvironment >> at: aKey put: aValue [
+	"Sets the value of an environment variable called `aKey` to `aValue`.
+	It is the system reponsibility to manage the encodings of both arguments.
+	
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+
 	^ self subclassResponsibility
 ]
 
@@ -211,7 +239,13 @@ OSEnvironment >> platform [
 ]
 
 { #category : #accessing }
-OSEnvironment >> removeKey: key [
+OSEnvironment >> removeKey: aKey [
+	"Removes the entry `aKey` from the environment variables.
+	It is the system reponsibility to manage the encoding of the argument.
+	
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+
 	^ self subclassResponsibility
 ]
 
