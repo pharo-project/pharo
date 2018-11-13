@@ -6,6 +6,9 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
+SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
+. ${SCRIPTS}/envversion.sh
+
 # The first parameter is the architecture
 # The second parameter is the stage name
 
