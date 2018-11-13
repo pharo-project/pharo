@@ -166,6 +166,17 @@ UnixEnvironment >> keysAndValuesDo: aBlock [
 ]
 
 { #category : #accessing }
+UnixEnvironment >> rawAt: anEncodedKey [
+	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
+	Throws a KeyNotFound exception if not found.
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+	
+	^ self rawAt: anEncodedKey ifAbsent: [ KeyNotFound signalFor: anEncodedKey ]
+]
+
+{ #category : #accessing }
 UnixEnvironment >> rawAt: anEncodedKey ifAbsent: aBlock [
 	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
 	Execute aBlock if absent.
@@ -178,6 +189,41 @@ UnixEnvironment >> rawAt: anEncodedKey ifAbsent: aBlock [
 	^ rawValue
 		ifNil: [ aBlock value ]
 		ifNotNil: [ rawValue asByteArray ].
+]
+
+{ #category : #accessing }
+UnixEnvironment >> rawAt: anEncodedKey ifAbsentPut: aBlock [
+	"Gets the value of an environment variable called `aKey` that is already encoded (i.e., it is a byte array).
+	If absent, insert the value given by aBlock.
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+	
+	^ self rawAt: anEncodedKey ifAbsent: [ self rawAt: anEncodedKey put: aBlock value ]
+]
+
+{ #category : #accessing }
+UnixEnvironment >> rawAt: anEncodedKey ifPresent: aBlock [
+	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array) and invoke aBlock with it.
+	Return nil if absent.
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+	
+	^ aBlock value: (self rawAt: anEncodedKey ifAbsent: [ ^ nil ])
+]
+
+{ #category : #accessing }
+UnixEnvironment >> rawAt: anEncodedKey ifPresent: presentBlock ifAbsent: absentBlock [
+	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
+	Call presentBlock with it if present.
+	Execute absentBlock if absent.
+	
+	This is a *nix specific API.
+	Rationale: In *nix systems (compared to windows systems) environment variables are stored as raw bytes and can be encoded in different forms."
+	
+	self rawAt: anEncodedKey ifPresent: [ :v | ^ presentBlock cull: v ].
+	^absentBlock value
 ]
 
 { #category : #accessing }
