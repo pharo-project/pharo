@@ -27,7 +27,7 @@ WinPlatform >> currentWorkingDirectoryPathWithBuffer: aByteString [
 		ifNil:[ self error:'Insufficient buffer size to read current working directory: ' , aByteString size asString]
 ]
 
-{ #category : #'environment-variables' }
+{ #category : #'working-directory' }
 WinPlatform >> currentWorkingDirectoryPathWithBufferSize: aBufferSize [
 	| buffer |
 	buffer := Win32WideString new: aBufferSize.
@@ -56,7 +56,7 @@ WinPlatform >> ffiLibraryName [
 { #category : #'environment-variables' }
 WinPlatform >> getEnvironmentVariable: lpName into: lpBuffer size: nSize [
 	"Primitive to obtain an environment variable using windows Wide Strings"
-	^ self ffiCall: #(ulong GetEnvironmentVariableW(Win32WideString lpName, Win32WideString  lpBuffer, ulong nSize))
+	^ self ffiCall: #(ulong GetEnvironmentVariableW (Win32WideString lpName, Win32WideString  lpBuffer, ulong nSize))
 ]
 
 { #category : #accessing }
@@ -110,9 +110,15 @@ WinPlatform >> multiByteToWideCharacterCodepage: codepage flags: flags input: in
 ]
 
 { #category : #'environment-variables' }
+WinPlatform >> removeEnvironmentVariable: nameString [
+
+	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, 0 ) )
+]
+
+{ #category : #'environment-variables' }
 WinPlatform >> setEnvironmentVariable: nameString value: valueString [
 
-	 ^ self ffiCall: #( int SetEnvironmentVariableW ( String nameString, String valueString ) )
+	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, Win32WideString valueString ) )
 ]
 
 { #category : #accessing }

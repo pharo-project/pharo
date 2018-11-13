@@ -78,9 +78,8 @@ Win32Environment >> keysAndValuesDo: aBlock [
 { #category : #accessing }
 Win32Environment >> removeKey: aKey [
 	
-	| w32Key w32Value return |
-	w32Key := aKey asWin32WideString.
-	return := OSPlatform current setEnvironmentVariable: w32Key value: nil.	
+	| return |
+	return := OSPlatform current removeEnvironmentVariable: aKey asWin32WideString.
 
 	"From MSDN: If the function fails, the return value is zero."
 	return = 0 ifTrue: [ 
