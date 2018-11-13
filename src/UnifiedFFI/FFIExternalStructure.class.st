@@ -218,8 +218,8 @@ FFIExternalStructure class >> removeAllOffsetVariables [
 ]
 
 { #category : #'class management' }
-FFIExternalStructure class >> reset [ 
-	compiledSpec := nil
+FFIExternalStructure class >> reset [
+	self compileFields.
 ]
 
 { #category : #accessing }
