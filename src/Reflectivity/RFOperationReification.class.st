@@ -36,13 +36,6 @@ RFOperationReification >> genForRBMethodNode [
 	
 	ast messages second arguments: {(RFLiteralVariableNode value: entity methodNode method)}.
 	^ast.
-
-
-
-
-
-
-
 ]
 
 { #category : #generate }
@@ -56,9 +49,12 @@ RFOperationReification >> genForRBVariableNode [
 		^RBParser parseExpression: ('RFTempRead new 
 			context: thisContext;
 			variableName: #{1}.' format: {entity name})].
+	
+	entity isGlobal ifTrue: [
+			^RBParser parseExpression: ('RFGlobalRead new 
+			variableName: #{1}.' format: {entity name})].
 		
-	self error: 'variable type not yet supported'
-
+	self error: 'not supported'
 
 
 ]
@@ -68,9 +64,6 @@ RFOperationReification >> preamble: aNode [
 	aNode isMessage ifTrue: [ ^self preambleForMessage: aNode ].
 	aNode isMethod  ifTrue: [ ^self preambleForMethod: aNode ].
 	^super preamble: aNode.
-		
-	
-
 ]
 
 { #category : #generate }
