@@ -119,8 +119,11 @@ OSEnvironment >> at: aKey [
 OSEnvironment >> at: aKey ifAbsent: aBlock [
 	"Gets the value of an environment variable called `aKey`.
 	Execute aBlock if absent.
-	It is the system reponsibility to manage the encoding."
-	^ (self getEnv: aKey) ifNil: aBlock
+	It is the system reponsibility to manage the encoding.
+	
+	Rationale: A common denominator for all platforms providing an already decoded string, because windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+	
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -154,15 +157,6 @@ OSEnvironment >> at: aKey put: aValue [
 OSEnvironment >> do: aBlock [
 
 	^self valuesDo: aBlock
-]
-
-{ #category : #private }
-OSEnvironment >> getEnv: aVariableName [
-	"Gets the value of an environment variable called `aVariableName`
-	It is the system reponsibility to manage the encoding.
-	Rationale: A common denominator for all platforms providing an already decoded string, because windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
-	
-	self subclassResponsibility
 ]
 
 { #category : #testing }

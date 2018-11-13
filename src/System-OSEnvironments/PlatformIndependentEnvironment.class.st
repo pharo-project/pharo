@@ -20,14 +20,19 @@ PlatformIndependentEnvironment class >> isDefaultFor: aPlatform [
 ]
 
 { #category : #accessing }
+PlatformIndependentEnvironment >> at: aKey ifAbsent: aBlock [
+	"Gets the value of an environment variable called `aKey`.
+	Execute aBlock if absent.
+	It is the system reponsibility to manage the encoding.
+	
+	Rationale: A common denominator for all platforms providing an already decoded string, because windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+	^ nil
+]
+
+{ #category : #accessing }
 PlatformIndependentEnvironment >> at: aKey put: aValue [
 
 	"Do nothing"
-]
-
-{ #category : #private }
-PlatformIndependentEnvironment >> getEnv: aVariableName [
-	^ nil
 ]
 
 { #category : #enumeration }
@@ -39,14 +44,4 @@ PlatformIndependentEnvironment >> keysAndValuesDo: aBlock [
 PlatformIndependentEnvironment >> removeKey: key [
 
 	"Do nothing"
-]
-
-{ #category : #private }
-PlatformIndependentEnvironment >> setEnv: nameString value: valueString [
-	"Do nothing"
-]
-
-{ #category : #private }
-PlatformIndependentEnvironment >> unsetEnv: aString [
-	^ self setEnv: aString value: nil
 ]

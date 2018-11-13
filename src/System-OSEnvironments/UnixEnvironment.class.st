@@ -15,6 +15,14 @@ UnixEnvironment class >> isDefaultFor: aPlatform [
 ]
 
 { #category : #accessing }
+UnixEnvironment >> at: aKey ifAbsent: aBlock [
+	"Gets the value of an environment variable called `aKey`.
+	Execute aBlock if absent.
+	It is the system reponsibility to manage the encoding."
+	^ (self getEnv: aKey) ifNil: aBlock
+]
+
+{ #category : #accessing }
 UnixEnvironment >> at: aKey put: aValue [
 
 	^ self at: aKey put: aValue encoding: self defaultEncoding
