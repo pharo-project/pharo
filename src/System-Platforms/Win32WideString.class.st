@@ -15,11 +15,6 @@ Class {
 	#category : #'System-Platforms-Windows'
 }
 
-{ #category : #'uffi-compatibility' }
-Win32WideString class >> asExternalTypeOn: generator [
-	^ FFIExternalObjectType objectClass: self
-]
-
 { #category : #'instance creation' }
 Win32WideString class >> fromByteArray: byteArray [
 	^ self fromHandle: byteArray
