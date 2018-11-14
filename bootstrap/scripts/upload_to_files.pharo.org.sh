@@ -12,5 +12,6 @@ echo "Uploading Images to pharo.files.org/$destDir"
 
 scp -o StrictHostKeyChecking=no -v \
   latest*.zip \
-  ${PHARO_NAME_PREFIX}*.zip \
+  ${PHARO_NAME_PREFIX}.build.*.zip \
+  ${PHARO_NAME_PREFIX}-metacello.build.*.zip \
     pharoorgde@ssh.cluster023.hosting.ovh.net:files/image/${PHARO_SHORT_VERSION}/
