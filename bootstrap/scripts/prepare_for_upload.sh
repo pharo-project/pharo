@@ -30,7 +30,7 @@ for f in ${PHARO_NAME_PREFIX}*-32bit-*.zip; do
 		IMAGE_KIND=$(echo "$f" | cut -d '-' -f 3)
 		mv "$f" ${PHARO_NAME_PREFIX}-${IMAGE_KIND}.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
 	else
-		mv "$f" ${PHARO_NAME_PREFIX}-alpha.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
+		mv "$f" ${PHARO_NAME_PREFIX}.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
 	fi
 done
 
@@ -41,8 +41,8 @@ for f in ${PHARO_NAME_PREFIX}*-64bit-*.zip; do
 	echo ${FULL_IMAGE_NAME64}
 	if [[ "$f" != "${FULL_IMAGE_NAME64}" ]]; then
 		IMAGE_KIND=$(echo "$f" | cut -d '-' -f 3)
-		mv "$f" Pharo-${IMAGE_KIND}-7.0.0-alpha.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
+		mv "$f" ${PHARO_NAME_PREFIX}-${IMAGE_KIND}.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
 	else
-		mv "$f" Pharo-7.0.0-alpha.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
+		mv "$f" ${PHARO_NAME_PREFIX}.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
 	fi
 done
