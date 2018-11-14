@@ -6,7 +6,6 @@ set -x
 set -e
 
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
-
 . ${SCRIPTS}/envvars.sh
 
 # A POSIX variable
@@ -226,4 +225,5 @@ echo "70" > pharo.version
 # clean bak sources files
 rm -f *.bak
 
-zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.* pharo.version
+PHARO_SOURCES_PREFIX=$(echo "${PHARO_NAME_PREFIX}" | cut -d'.' -f 1-2)
+zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.* ${PHARO_SOURCES_PREFIX}*.sources pharo.version
