@@ -8,7 +8,7 @@ set -o xtrace
 #Get the hash of the built image
 
 PHARO_NAME_PREFIX=$(find . -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2 | cut -d'-' -f 1-2)
-HASH=$(find ${PHARO_NAME_PREFIX}-32bit-*.zip | head -n 1 | cut -d '-' -f 4 | cut -d'.' -f 1)
+HASH=$(find . -name "${PHARO_NAME_PREFIX}-32bit*.zip" | head -n 1 | cut -d '-' -f 4 | cut -d'.' -f 1)
 FULL_IMAGE_NAME32="${PHARO_NAME_PREFIX}-32bit-${HASH}.zip"
 FULL_IMAGE_NAME64="${PHARO_NAME_PREFIX}-64bit-${HASH}.zip"
 

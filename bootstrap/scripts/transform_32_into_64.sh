@@ -5,7 +5,6 @@ set -o nounset
 set -o xtrace
 
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
-
 . ${SCRIPTS}/envversion.sh
 
 #Load VMMaker, used to convert images from 32 to 64 bits
