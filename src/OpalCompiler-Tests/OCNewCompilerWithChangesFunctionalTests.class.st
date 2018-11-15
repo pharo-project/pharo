@@ -19,7 +19,7 @@ OCNewCompilerWithChangesFunctionalTests >> testBlockReturning [
 	bytecode := aCompiledMethod symbolic asString substrings: String cr.
 
 	expected := 	Smalltalk vm 
-		for32bit: '29 <70> self.
+		for32bit: '29 <70> self
 30 <D0> send: announcements
 31 <70> self
 32 <D1> send: index
