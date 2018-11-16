@@ -252,19 +252,6 @@ ReflectivityControlTest >> testAfterMethodWithTemps [
 ]
 
 { #category : #'tests - after' }
-ReflectivityControlTest >> testAfterReturn [
-	| returnNode |
-	returnNode := (ReflectivityExamples >> #exampleMethod) ast statements first.
-	self assert: returnNode isReturn.
-	link := MetaLink new
-		metaObject: self;
-		selector: #tagExec;
-		control: #after.
-	self should: [returnNode link: link] raise: Error.
-	
-]
-
-{ #category : #'tests - after' }
 ReflectivityControlTest >> testAfterSend [
 	| sendNode |
 	sendNode := (ReflectivityExamples >> #exampleMethod) sendNodes first.
@@ -956,19 +943,6 @@ ReflectivityControlTest >> testInsteadPrimitiveMethod [
 ]
 
 { #category : #'tests - instead' }
-ReflectivityControlTest >> testInsteadReturn [
-	| returnNode |
-	returnNode := (ReflectivityExamples >> #exampleMethod) ast statements first.
-	self assert: returnNode isReturn.
-	link := MetaLink new
-		metaObject: self;
-		selector: #tagExec;
-		control: #instead.
-	self should: [returnNode link: link] raise: Error.
-	
-]
-
-{ #category : #'tests - instead' }
 ReflectivityControlTest >> testInsteadSend [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleMethod) sendNodes first.
@@ -987,18 +961,17 @@ ReflectivityControlTest >> testInsteadSend [
 { #category : #'tests - instead' }
 ReflectivityControlTest >> testInsteadSendMultipleSites [
 	| sendNodes instance |
-	self skip.
 	sendNodes := (ReflectivityExamples >> #exampleMethodMultipleSites) sendNodes.
 	link := MetaLink new
-		metaObject: [:receiver :selector :arguments | receiver perform: selector withArguments: arguments];
+		metaObject: [ :receiver :selector :arguments | receiver perform: selector withArguments: arguments ];
 		selector: #value:value:value:;
 		control: #instead;
 		arguments: #(#receiver #selector #arguments).
-	sendNodes do: [ :sn | sn link: link].
+	sendNodes do: [ :sn | sn link: link ].
 	self assert: sendNodes anyOne hasMetalink.
-	self assert: (ReflectivityExamples >> #exampleMethodMultipleSites) class = ReflectiveMethod.
+	self assert: (ReflectivityExamples >> #exampleMethodMultipleSites) class equals: ReflectiveMethod.
 	instance := ReflectivityExamples new.
-	self assert: instance exampleMethodMultipleSites= 5.
+	self assert: instance exampleMethodMultipleSites equals: 5
 ]
 
 { #category : #'tests - instead' }
@@ -1080,9 +1053,9 @@ ReflectivityControlTest >> testInsteadVariableWrite [
 		arguments: #(#name #newValue).
 	varNode link: link.
 	self assert: varNode hasMetalink.
-	self assert: (ReflectivityExamples >> #exampleAssignment) class = ReflectiveMethod.
+	self assert: (ReflectivityExamples >> #exampleAssignment) class equals: ReflectiveMethod.
 	instance := ReflectivityExamples new.
-	self assert: instance exampleAssignment = 3.
+	self assert: instance exampleAssignment equals: 3.
 ]
 
 { #category : #'tests - options' }
