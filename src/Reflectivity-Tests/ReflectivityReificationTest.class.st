@@ -993,6 +993,7 @@ ReflectivityReificationTest >> testReifyReceiverOnSendWithArgumentsAfter [
 { #category : #'tests - operations' }
 ReflectivityReificationTest >> testReifyReturnOperation [
 	"operation on return makes only sense for #instead (as else the return already was done)"
+	"
 	| returnNode reachHere instance |
 	
 	returnNode := (ReflectivityExamples >> #exampleAssignment) ast body statements last.
@@ -1007,7 +1008,7 @@ ReflectivityReificationTest >> testReifyReturnOperation [
 	self assert: tag isNil.
 	instance := ReflectivityExamples new.
 	self assert: instance exampleAssignment equals: 3.
-	self assert: reachHere.
+	self assert: reachHere."
 ]
 
 { #category : #'tests - return' }
