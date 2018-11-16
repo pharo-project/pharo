@@ -1128,9 +1128,16 @@ SmalltalkImage >> memoryHogs [
 
 { #category : #miscellaneous }
 SmalltalkImage >> metacelloPlatformAttributes [
-    "Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general." 
-    "For release integrators, we should not have #'pharo1.3x' **and** #'pharo1.4.x'"
-   ^ #(#squeakCommon #pharo #'pharo7.x' #'pharo7.0.x')
+	"Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general."
+
+	"For release integrators, we should not have #'pharo1.3x' **and** #'pharo1.4.x'"
+
+	| attributes systemeVersion |
+	attributes := OrderedCollection withAll: #(#squeakCommon #pharo).
+	systemeVersion := SystemVersion current.
+	attributes add: (String streamContents: [ :stream | stream << 'pharo' << systemeVersion major << '.x' ]) asSymbol.
+	attributes add: (String streamContents: [ :stream | stream << 'pharo' << systemeVersion major << $. << systemeVersion minor << '.x' ]) asSymbol.
+	^ attributes asArray
 ]
 
 { #category : #'special objects' }
