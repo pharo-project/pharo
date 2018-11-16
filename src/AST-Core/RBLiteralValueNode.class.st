@@ -54,6 +54,18 @@ RBLiteralValueNode >> copyInContext: aDictionary [
 	^ self class value: self value
 ]
 
+{ #category : #generation }
+RBLiteralValueNode >> dumpOn: aStream [
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ' value: '.
+	self value printOn: aStream
+	"aStream nextPutAll: ' start: '.
+	self start printOn: aStream.
+	aStream nextPutAll: ' stop: '.
+	self stop printOn: aStream"
+]
+
 { #category : #testing }
 RBLiteralValueNode >> isFaulty [
 	^false
