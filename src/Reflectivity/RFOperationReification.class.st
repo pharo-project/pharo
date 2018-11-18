@@ -9,12 +9,36 @@ Class {
 
 { #category : #'plugin interface' }
 RFOperationReification class >> entities [
-	^{RBVariableNode. RBMessageNode. RBMethodNode}
+	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode}
 ]
 
 { #category : #'plugin interface' }
 RFOperationReification class >> key [
 	^#operation
+]
+
+{ #category : #generate }
+RFOperationReification >> genForRBAssignmentNode [
+	entity variable isTemp ifTrue: [  
+		^RBParser parseExpression: ('RFTempWrite new
+			assignedValue: RFNewValueReificationVar; 
+			context: thisContext;
+			variableName: #{1}.' format: {entity variable name})].
+		
+	entity variable isInstance ifTrue: [  
+		^RBParser parseExpression: ('RFSlotWrite new
+			assignedValue: RFNewValueReificationVar; 
+			object: self;
+			variableName: #{1}.' format: {entity variable name})].
+
+	entity variable isGlobal ifTrue: [ | ast |	
+		ast := RBParser parseExpression: ('RFGlobalWrite new
+			assignedValue: RFNewValueReificationVar;
+			environment: #toReplace;
+			variableName: #{1}.' format: {entity variable name}).
+		ast messages second arguments: {(RFLiteralVariableNode value: entity variable binding scope environment)}.
+		^ast].
+	self error: 'not supported'
 ]
 
 { #category : #generate }
@@ -39,6 +63,13 @@ RFOperationReification >> genForRBMethodNode [
 ]
 
 { #category : #generate }
+RFOperationReification >> genForRBReturnNode [
+	^RBParser parseExpression: 'RFReturnOperation new
+			context: thisContext;
+			returnValue: RFReifyValueVar'
+]
+
+{ #category : #generate }
 RFOperationReification >> genForRBVariableNode [
 	entity isInstance ifTrue: [  
 		^RBParser parseExpression: ('RFSlotRead new 
@@ -50,9 +81,14 @@ RFOperationReification >> genForRBVariableNode [
 			context: thisContext;
 			variableName: #{1}.' format: {entity name})].
 	
-	entity isGlobal ifTrue: [
-			^RBParser parseExpression: ('RFGlobalRead new 
-			variableName: #{1}.' format: {entity name})].
+	entity isGlobal ifTrue: [ | ast |	
+			ast := RBParser parseExpression: ('RFGlobalRead new
+				environment: #toReplace;
+				variableName: #{1}.' format: {entity name}).
+			ast messages first arguments: {(RFLiteralVariableNode value: entity binding scope environment)}.
+
+			^ast. 
+		].
 		
 	self error: 'not supported'
 
@@ -62,8 +98,18 @@ RFOperationReification >> genForRBVariableNode [
 { #category : #generate }
 RFOperationReification >> preamble: aNode [
 	aNode isMessage ifTrue: [ ^self preambleForMessage: aNode ].
-	aNode isMethod  ifTrue: [ ^self preambleForMethod: aNode ].
+	aNode isMethod  ifTrue: [ ^self preambleForMethod:  aNode ].
+	aNode isReturn ifTrue:  [ ^self preambleForReturn:  aNode ].
+	aNode isAssignment ifTrue: [ ^self preambleForAssignment: aNode ].
 	^super preamble: aNode.
+]
+
+{ #category : #generate }
+RFOperationReification >> preambleForAssignment: aNode [
+	"balance stack for instead"
+	link control= #instead
+		ifTrue: [ ^RFStorePopIntoTempNode named: #RFNewValueReificationVar  ]
+		ifFalse: [^RFStoreIntoTempNode named: #RFNewValueReificationVar  ]
 ]
 
 { #category : #generate }
@@ -100,4 +146,9 @@ RFOperationReification >> preambleForMethod: aNode [
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
 	^ preamble 
+]
+
+{ #category : #generate }
+RFOperationReification >> preambleForReturn: aNode [
+	^RFStoreIntoTempNode named: #RFReifyValueVar
 ]

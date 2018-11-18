@@ -257,7 +257,10 @@ RFASTTranslator >> visitReturnNode: aReturnNode [
 
 	valueTranslator visitNode: aReturnNode value.
 	self emitMetaLinkBefore: aReturnNode.
-	methodBuilder returnTop.
+	aReturnNode hasMetalinkInstead
+		ifTrue: [ self emitMetaLinkInstead: aReturnNode ]
+		ifFalse: [ methodBuilder returnTop ].
+
 		
 
 ]

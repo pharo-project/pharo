@@ -30,7 +30,8 @@ RFNewValueReification >> genForRBVariableNode [
 
 { #category : #generate }
 RFNewValueReification >> preamble: aNode [
-		link control= #instead 
+	"balance stack for instead"
+	link control= #instead
 		ifTrue: [ ^RFStorePopIntoTempNode named: #RFNewValueReificationVar  ]
 		ifFalse: [^RFStoreIntoTempNode named: #RFNewValueReificationVar  ]
 	

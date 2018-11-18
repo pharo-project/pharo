@@ -16,6 +16,11 @@ OCEnvironmentScope class >> for: anEnvironment [
 ]
 
 { #category : #accessing }
+OCEnvironmentScope >> environment [
+	^environment
+]
+
+{ #category : #accessing }
 OCEnvironmentScope >> environment: aCollection [ 
 	environment := aCollection
 ]

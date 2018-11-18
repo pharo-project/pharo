@@ -32,6 +32,6 @@ RFReturnOperation >> returnValue: anObject [
 ]
 
 { #category : #evaluating }
-RFReturnOperation >> value [ 	
+RFReturnOperation >> value [
 	context return: returnValue 
 ]
