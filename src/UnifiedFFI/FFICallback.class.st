@@ -69,7 +69,7 @@ FFICallback class >> signature: aSignature block: aBlock [
 	^ self new signature: aSignature block: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #evaluation }
 FFICallback >> argumentsFor: stackPointer context: callbackContext [
 	| index architecture intRegisterCount intRegisterSize intRegisterIndex floatRegisterCount floatRegisterSize floatRegisterIndex floatRegisters intRegisters structureRegisterLayout |
 	self flag: 'TODO: Refactor and improve this code.'.
@@ -130,6 +130,15 @@ FFICallback >> argumentsFor: stackPointer context: callbackContext [
 			value ].	
 ]
 
+{ #category : #evaluation }
+FFICallback >> executeWithArguments: argumentValues [
+	
+	^ [ block valueWithArguments: argumentValues ]
+		on: Error 
+		fork: [ :e | e pass ]
+		return: [ self returnOnError ]
+]
+
 { #category : #private }
 FFICallback >> ffiBindingOf: aName [
 	^ self class ffiBindingOf: aName
@@ -153,6 +162,12 @@ FFICallback >> newParser [
 		yourself
 ]
 
+{ #category : #private }
+FFICallback >> returnOnError [
+
+	^ functionSpec returnType defaultReturnOnError
+]
+
 { #category : #initialization }
 FFICallback >> signature: signature "<String>" block: aBlock [ "<BlockClosure>"
 	functionSpec := self newParser parseAnonymousFunction: signature.
@@ -169,12 +184,11 @@ FFICallback >> thunk [
 ]
 
 { #category : #evaluation }
-FFICallback >> valueWithContext: callbackContext sp: stackPointer [ 
+FFICallback >> valueWithContext: callbackContext sp: stackPointer [
 	| argumentValues |
-	
-	self flag: #todo. "This can be optimised in a shadow method"
+
 	argumentValues := self argumentsFor: stackPointer context: callbackContext.
 	^ functionSpec returnType 
 		callbackReturnOn: callbackContext 
-		for: (block valueWithArguments: argumentValues)
+		for: (self executeWithArguments: argumentValues)
 ]

@@ -33,6 +33,12 @@ FFICharacterType >> basicHandle: aHandle at: index put: value [
 	^ aHandle signedCharAt: index put: value
 ]
 
+{ #category : #acccessing }
+FFICharacterType >> defaultReturnOnError [
+
+	^ Character null
+]
+
 { #category : #testing }
 FFICharacterType >> needsArityPacking [
 	">1 because it can be a 'char *', then just roll when is 'char**' or bigger"

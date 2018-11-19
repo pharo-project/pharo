@@ -48,6 +48,12 @@ FFIExternalReferenceType >> basicHandle: aHandle at: index put: value [
 
 ]
 
+{ #category : #accessing }
+FFIExternalReferenceType >> defaultReturnOnError [
+
+	^ ExternalAddress null
+]
+
 { #category : #'emitting code' }
 FFIExternalReferenceType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
 	^ aBuilder 

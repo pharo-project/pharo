@@ -130,6 +130,17 @@ FFIExternalType >> callbackValueFor: anObject at: index [
 	^ self handle: anObject at: index
 ]
 
+{ #category : #accessing }
+FFIExternalType >> defaultReturnOnError [
+	"In case of a callback error, the image will try to show a debugger and that will most ot the 
+	 time crashes the VM (because it will break the process and will let a C function waiting and 
+	 and in incorrect state). 
+	 To prevent that, we use #on:fork:return: (look for senders) and, while forking the error to 
+	 allow user to debug his error, we also return a 'default' value, that may be also wrong."
+
+	^ self subclassResponsibility
+]
+
 { #category : #'emitting code' }
 FFIExternalType >> emitArgument: aBuilder context: aContext [ 
 	self basicEmitArgument: aBuilder context: aContext.
