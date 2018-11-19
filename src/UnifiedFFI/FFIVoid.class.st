@@ -31,6 +31,12 @@ FFIVoid >> callbackReturnOn: callbackContext for: anObject [
 
 ]
 
+{ #category : #accessing }
+FFIVoid >> defaultReturnOnError [
+
+	^ nil
+]
+
 { #category : #'emitting code' }
 FFIVoid >> emitPointerReturn: aBuilder resultTempVar: resultVar context: aContext [
 	^ aBuilder 
