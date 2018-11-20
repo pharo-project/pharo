@@ -51,7 +51,7 @@ RFValueReification >> genForRBAssignmentNode [
 
 { #category : #generate }
 RFValueReification >> genForRBLiteralValueNode [
-	^RFLiteralVariableNode value: entity value
+	^RBLiteralValueNode value: entity value
 ]
 
 { #category : #generate }
