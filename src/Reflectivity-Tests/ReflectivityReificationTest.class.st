@@ -41,6 +41,36 @@ ReflectivityReificationTest >> testAccessTemp [
 	self assert: tag equals: 3
 ]
 
+{ #category : #'tests - misc' }
+ReflectivityReificationTest >> testLiteralValueAfter [
+	| literalNode |
+	literalNode := (ReflectivityExamples >> #exampleLiteral) ast statements first value.
+	self assert: literalNode isLiteralNode.
+	link := MetaLink new
+		metaObject: [:value | self assert: value equals: 2];
+		selector: #value:;
+		arguments: #(value);
+		control: #after.
+	literalNode link: link.
+	self assert: literalNode hasMetalinkAfter.
+	self assert: ReflectivityExamples new exampleLiteral == 2.
+]
+
+{ #category : #'tests - misc' }
+ReflectivityReificationTest >> testLiteralValueBefore [
+	| literalNode |
+	literalNode := (ReflectivityExamples >> #exampleLiteral) ast statements first value.
+	self assert: literalNode isLiteralNode.
+	link := MetaLink new
+		metaObject: [:value | self assert: value equals: 2];
+		selector: #value:;
+		arguments: #(value);
+		control: #before.
+	literalNode link: link.
+	self assert: literalNode hasMetalinkBefore.
+	self assert: ReflectivityExamples new exampleLiteral == 2.	
+]
+
 { #category : #'tests - sends' }
 ReflectivityReificationTest >> testReifyArguments2level [
 	| sendNode instance |

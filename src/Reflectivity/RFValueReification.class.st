@@ -19,7 +19,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFValueReification class >> entities [
-	^{RBVariableNode. RBAssignmentNode. RBReturnNode. RBMessageNode . LiteralVariable . Slot}
+	^{RBVariableNode. RBAssignmentNode. RBReturnNode. RBMessageNode . RBLiteralValueNode . LiteralVariable . Slot}
 ]
 
 { #category : #'plugin interface' }
@@ -47,6 +47,11 @@ RFValueReification >> genForLiteralVariable [
 RFValueReification >> genForRBAssignmentNode [
 	"#value for Assignemnt is the old value, is that what we want?"
 	^RBVariableNode named: entity variable name
+]
+
+{ #category : #generate }
+RFValueReification >> genForRBLiteralValueNode [
+	^RBLiteralValueNode value: entity value
 ]
 
 { #category : #generate }
