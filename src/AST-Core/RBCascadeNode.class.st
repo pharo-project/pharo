@@ -71,6 +71,18 @@ RBCascadeNode >> directlyUses: aNode [
 	^messages last = aNode and: [self isDirectlyUsed]
 ]
 
+{ #category : #generation }
+RBCascadeNode >> dumpOn: aStream [
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ' messages: {'.
+	self messages
+		do: [ :each | 
+			each dumpOn: aStream.
+			aStream nextPutAll: '. ' ].
+	aStream nextPut: $}
+]
+
 { #category : #comparing }
 RBCascadeNode >> equalTo: anObject withMapping: aDictionary [ 
 	self class = anObject class ifFalse: [^false].
