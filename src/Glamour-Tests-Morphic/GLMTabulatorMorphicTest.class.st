@@ -35,7 +35,7 @@ GLMTabulatorMorphicTest >> testSizeAndSpan [
 	browser transmit to: #middle; transformation: #second; andShow: [ :p | p text ].
 	browser transmit to: #bottom; transformation: #last; andShow: [ :p | p text ].
 	window := browser openOn: #('Should be scaled at 2/3' 'Should be fixed' 'Should be scaled at 1/3').
-	{window extent. 100@400} do: [:ext |
+	{200@500. 100@300} do: [:ext |
 		window extent: ext.
 		World doOneCycle.
 		panes := window submorphs last submorphs last: 3.
