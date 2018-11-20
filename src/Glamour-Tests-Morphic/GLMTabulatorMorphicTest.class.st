@@ -26,7 +26,7 @@ GLMTabulatorMorphicTest >> testMultipleInitialSelection [
 GLMTabulatorMorphicTest >> testSizeAndSpan [
 	"combining span (=fractional width/height) and size (=fixed width/height) did not work correctly before.
 	2 is added in height comparisons because the layout code leaves one pixel offset on top and bottom."
-	| browser panes |
+	| browser panes heights |
 	browser := GLMTabulator new.
 	browser row: #top span: 2.
 	browser row: #middle size: 80.
@@ -35,16 +35,16 @@ GLMTabulatorMorphicTest >> testSizeAndSpan [
 	browser transmit to: #middle; transformation: #second; andShow: [ :p | p text ].
 	browser transmit to: #bottom; transformation: #last; andShow: [ :p | p text ].
 	window := browser openOn: #('Should be scaled at 2/3' 'Should be fixed' 'Should be scaled at 1/3').
-	World doOneCycle.
-	panes := window submorphs last submorphs last: 3.
-	self assert: panes second height + 2 equals: 80.
-	self assert: ((panes last height + 2) / (panes first height + 2) - 0.5) abs < 0.01.
-	self assert: panes last bottom < panes last owner bottom.
-	window extent: 100@300.
-	self assert: panes second height + 2 equals: 80.
-	self assert: ((panes last height + 2) / (panes first height + 2) - 0.5) abs < 0.01.
-	self assert: panes last bottom < panes last owner bottom
-	
+	{window extent. 100@400} do: [:ext |
+		window extent: ext.
+		World doOneCycle.
+		panes := window submorphs last submorphs last: 3.
+		heights := panes collect: [ :each | each height+2 ].
+		self assert: panes first owner height equals: heights sum.
+		self assert: panes last bottom + 1 equals: panes first owner bottom.
+		self assert: heights second equals: 80.
+		self assert: (heights first - (heights sum - 80 / 3 * 2)) abs <= 1.
+		self assert: (heights last - (heights sum - 80 / 3)) abs <= 1]
 ]
 
 { #category : #tests }
