@@ -60,10 +60,6 @@ RBLiteralValueNode >> dumpOn: aStream [
 		nextPutAll: self class name;
 		nextPutAll: ' value: '.
 	self value printOn: aStream
-	"aStream nextPutAll: ' start: '.
-	self start printOn: aStream.
-	aStream nextPutAll: ' stop: '.
-	self stop printOn: aStream"
 ]
 
 { #category : #testing }
