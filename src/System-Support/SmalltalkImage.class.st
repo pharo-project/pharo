@@ -1132,9 +1132,9 @@ SmalltalkImage >> metacelloPlatformAttributes [
 
 	| attributes systemeVersion |
 	attributes := OrderedCollection withAll: #(#squeakCommon #pharo).
-	systemeVersion := SystemVersion current.
-	attributes add: (String streamContents: [ :stream | stream << 'pharo' << systemeVersion major << '.x' ]) asSymbol.
-	attributes add: (String streamContents: [ :stream | stream << 'pharo' << systemeVersion major << $. << systemeVersion minor << '.x' ]) asSymbol.
+	systemVersion := SystemVersion current.
+	attributes add: (String streamContents: [ :stream | stream << 'pharo' << systemVersion major << '.x' ]) asSymbol.
+	attributes add: (String streamContents: [ :stream | stream << 'pharo' << systemVersion major << $. << systemVersion minor << '.x' ]) asSymbol.
 	^ attributes asArray
 ]
 
