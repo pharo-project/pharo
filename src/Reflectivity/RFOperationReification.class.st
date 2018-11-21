@@ -9,12 +9,17 @@ Class {
 
 { #category : #'plugin interface' }
 RFOperationReification class >> entities [
-	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode}
+	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode. RBLiteralNode. RBLiteralArrayNode. RBArrayNode}
 ]
 
 { #category : #'plugin interface' }
 RFOperationReification class >> key [
 	^#operation
+]
+
+{ #category : #generate }
+RFOperationReification >> genForRBArrayNode [
+	^RBVariableNode named: #RFReifyValueVar
 ]
 
 { #category : #generate }
@@ -39,6 +44,18 @@ RFOperationReification >> genForRBAssignmentNode [
 		ast messages second arguments: {(RFLiteralVariableNode value: entity variable binding scope environment)}.
 		^ast].
 	self error: 'not supported'
+]
+
+{ #category : #generate }
+RFOperationReification >> genForRBLiteralArrayNode [
+	"same as #value, no need to wrap as the literal understands #value"
+	^RBLiteralArrayNode value: entity value
+]
+
+{ #category : #generate }
+RFOperationReification >> genForRBLiteralValueNode [
+	"same as #value, no need to wrap as the literal understands #value"
+	^RBLiteralNode value: entity value
 ]
 
 { #category : #generate }
@@ -101,7 +118,17 @@ RFOperationReification >> preamble: aNode [
 	aNode isMethod  ifTrue: [ ^self preambleForMethod:  aNode ].
 	aNode isReturn ifTrue:  [ ^self preambleForReturn:  aNode ].
 	aNode isAssignment ifTrue: [ ^self preambleForAssignment: aNode ].
+	aNode isDynamicArray ifTrue: [ ^self preambleForArray: aNode ].
 	^super preamble: aNode.
+]
+
+{ #category : #generate }
+RFOperationReification >> preambleForArray: aNode [
+	"balance stack for instead"
+	self flag: #TBD. "need to pop of the complete stack for instead, need to create the array for #before?"
+	link control= #instead
+		ifTrue: [ ^RFStorePopIntoTempNode named: #RFReifyValueVar  ]
+		ifFalse: [^RFStoreIntoTempNode named: #RFReifyValueVar  ]
 ]
 
 { #category : #generate }

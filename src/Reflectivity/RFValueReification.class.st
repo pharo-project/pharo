@@ -19,7 +19,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFValueReification class >> entities [
-	^{RBVariableNode. RBAssignmentNode. RBReturnNode. RBMessageNode . RBLiteralValueNode . LiteralVariable . Slot}
+	^{RBVariableNode. RBAssignmentNode. RBReturnNode. RBMessageNode . RBLiteralValueNode . RBLiteralArrayNode. RBArrayNode . LiteralVariable . Slot}
 ]
 
 { #category : #'plugin interface' }
@@ -44,9 +44,19 @@ RFValueReification >> genForLiteralVariable [
 ]
 
 { #category : #generate }
+RFValueReification >> genForRBArrayNode [
+	^RBVariableNode named: #RFReifyValueVar
+]
+
+{ #category : #generate }
 RFValueReification >> genForRBAssignmentNode [
 	"#value for Assignemnt is the old value, is that what we want?"
 	^RBVariableNode named: entity variable name
+]
+
+{ #category : #generate }
+RFValueReification >> genForRBLiteralArrayNode [
+	^RBLiteralArrayNode value: entity value
 ]
 
 { #category : #generate }
@@ -73,7 +83,7 @@ RFValueReification >> genForRBVariableNode [
 { #category : #generate }
 RFValueReification >> preamble: aNode [
 	(aNode isKindOf: RBProgramNode) ifFalse: [ ^#() ].
-	^(aNode isReturn or: [ aNode isMessage])
+	^(aNode isReturn or: [ aNode isMessage or: [aNode isDynamicArray]])
 		ifTrue: [RFStoreIntoTempNode named: #RFReifyValueVar]
 		ifFalse: [ #() ]. 
 ]
