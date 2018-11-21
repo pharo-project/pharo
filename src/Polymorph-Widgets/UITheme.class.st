@@ -5898,6 +5898,11 @@ UITheme >> updateWorldDockingBars [
 			borderStyle: (self worldMainDockingBarBorderStyleFor: d)]
 ]
 
+{ #category : #'accessing colors' }
+UITheme >> urlColor [
+	^ Color fromHexString: '03A9F4'
+]
+
 { #category : #'fill-styles-scrollbars' }
 UITheme >> useScrollbarThumbShadow [
 	"Answer whether a shadow morph should be displayed when

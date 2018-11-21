@@ -1,21 +1,29 @@
 "
-Copyright (c) Kazuki Yasumatsu, 1995. All rights reserved.
+I am ImageReadWriter. 
+I read an encoded image from a binary stream and return its as a Form. 
+I write and encode an image as Form to a binary stream.
+I am an abstract class, my subclasses implement concrete formats.
+I can autodetect the format of some encoded images, so you can use me directly.
 
-I am an abstract class to provide for encoding and/or decoding an image on a stream.
+Usage
+
+	ImageReadWriter formFromFileNamed: 'test.png'
+	ImageReadWriter formFromStream: 'test.png' asFileReference binaryReadStream
+
+Implementation 
 
 Instance Variables:
-	stream		<ReadStream | WriteStream>	stream for image storages
-
-Class Variables:
-	ImageNotStoredSignal		<Signal>	image not stored error signal
-	MagicNumberErrorSignal		<Signal>	magic number error signal
+	stream		<ReadStream|WriteStream>	binary stream that I read from or write to
 
 Subclasses must implement the following messages:
 	accessing
 		nextImage
 		nextPutImage:
 	testing
-		canUnderstand         (added tao 10/26/97)
+		canUnderstand         (or my class side's #understandsImageFormat:)
+			
+(original) copyright (c) Kazuki Yasumatsu, 1995. All rights reserved.
+
 "
 Class {
 	#name : #ImageReadWriter,
@@ -23,17 +31,15 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#classVars : [
-		'ImageNotStoredSignal',
-		'MagicNumberErrorSignal'
-	],
 	#category : #'Graphics-Files'
 }
 
 { #category : #'image reading/writing' }
 ImageReadWriter class >> allTypicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that my subclasses can read might commonly have"
+
 	"ImageReadWriter allTypicalFileExtensions"
+
 	| extensions |
 	extensions := Set new.
 	self allSubclassesDo: [ :cls | extensions addAll: cls typicalFileExtensions ].
@@ -42,46 +48,65 @@ ImageReadWriter class >> allTypicalFileExtensions [
 
 { #category : #'image reading/writing' }
 ImageReadWriter class >> formFromFileNamed: fileName [ 
-	"Answer a ColorForm stored on the file with the given name."
+	"Answer a Form of the image stored (encoded) on the file with fileName.
+	This will (normally) autodetect the format and delegate to the correct concrete subclass."
+	
+	"ImageReadWriter formFromFileNamed: 'test.png'"
+	"ImageReadWriter formFromFileNamed: 'test.jpg'"
 	
 	^ fileName asFileReference 
 		binaryReadStreamDo: [ :in | self formFromStream: in ]
 ]
 
 { #category : #'image reading/writing' }
-ImageReadWriter class >> formFromStream: aBinaryStream [ 
-	"Answer a ColorForm stored on the given stream.  closes the stream"
+ImageReadWriter class >> formFromStream: aBinaryReadStream [
+	"Answer a Form of the image stored on aBinaryReadStream.
+	This will (normally) autodetect the format and delegate to the correct concrete subclass.
+	Closes aBinaryReadStream when done."
+	
+	"ImageReadWriter formFromStream: 'test.png' asFileReference binaryReadStream"
+	"ImageReadWriter formFromStream: 'test.jpg' asFileReference binaryReadStream"
+
 	| positionableReadStream reader readerClass form |
-	positionableReadStream := ZnPositionableReadStream on: aBinaryStream.
+	positionableReadStream := ZnPositionableReadStream on: aBinaryReadStream.
 	readerClass := self readerClassFromStream: positionableReadStream.
 	reader := readerClass new on: positionableReadStream.
 	form := reader nextImage.
-	aBinaryStream close.
+	aBinaryReadStream close.
 	^ form
 ]
 
 { #category : #'instance creation' }
-ImageReadWriter class >> on: aStream [
-	"Answer an instance of the receiver for encoding and/or decoding images on the given."
+ImageReadWriter class >> on: binaryStream [
+	"Answer an instance of the receiver for encoding and/or decoding an image on binaryStream.
+	For reading, you should pass along a read stream, for writing a write stream."
 
-	^ self new on: aStream
-
+	^ self new on: binaryStream
 ]
 
 { #category : #'image reading/writing' }
 ImageReadWriter class >> putForm: aForm onFileNamed: fileName [ 
-	"Store the given form on a file of the given name."
+	"Store (encode) the image of the Form aForm on a file of with fileName.
+	Use a concrete subclass to select the desired format."
+	
+	"PNGReadWriter putForm: PolymorphSystemSettings pharoLogoForm onFileNamed: 'test.png'"
+	"PluginBasedJPEGReadWriter putForm: PolymorphSystemSettings pharoLogoForm onFileNamed: 'test.jpg'"
 	
 	fileName asFileReference 
 		binaryWriteStreamDo: [ :out | (self on: out) nextPutImage: aForm ]
 ]
 
 { #category : #'image reading/writing' }
-ImageReadWriter class >> putForm: aForm onStream: aWriteStream [ 
-	"Store the given form on a file of the given name. closes the stream"
-	
+ImageReadWriter class >> putForm: aForm onStream: aBinaryWriteStream [ 
+	"Store (encode) the image of the Form aForm on aBinaryWriteStream.
+	Use a concrete subclass to select the desired format.
+	Closes aBinaryWriteStream when done."
+
+	"PNGReadWriter putForm: PolymorphSystemSettings pharoLogoForm onStream: 'test.png' asFileReference binaryWriteStream"
+	"PluginBasedJPEGReadWriter putForm: PolymorphSystemSettings pharoLogoForm onStream: 'test.jpg' asFileReference binaryWriteStream"
+
 	| writer |
-	writer := (self on: aWriteStream).
+	writer := self on: aBinaryWriteStream.
 	writer nextPutImage: aForm.
 	writer close
 ]
@@ -91,9 +116,9 @@ ImageReadWriter class >> readerClassFromStream: positionableReadStream [
 	| readerClass |
 	readerClass := self withAllSubclasses
 		detect: [ :subclass | 
-			positionableReadStream savingPositionDo: [ subclass understandsImageFormat: positionableReadStream ] ]
-		ifNone: [ 
-			positionableReadStream close.
+			positionableReadStream savingPositionDo: [ 
+				subclass understandsImageFormat: positionableReadStream ] ]
+		ifNone: [ positionableReadStream close.
 			^ self error: 'image format not recognized' ].
 	^ readerClass
 ]
@@ -101,12 +126,25 @@ ImageReadWriter class >> readerClassFromStream: positionableReadStream [
 { #category : #'image reading/writing' }
 ImageReadWriter class >> typicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that I can read might commonly have"
-	^#()
+
+	^ #()
 ]
 
 { #category : #'image reading/writing' }
-ImageReadWriter class >> understandsImageFormat: aStream [ 
-	^[(self new on: aStream) understandsImageFormat] on: Error do:[:ex| ex return: false]
+ImageReadWriter class >> understandsImageFormat: aStream [
+	^ [ (self new on: aStream) understandsImageFormat ]
+		on: Error
+		do: [ :ex | ex return: false ]
+]
+
+{ #category : #'image reading/writing' }
+ImageReadWriter >> allTypicalFileExtensions [
+	"Answer a collection of file extensions (lowercase) which files that my subclasses can read might commonly have"
+	"ImageReadWriter allTypicalFileExtensions"
+	| extensions |
+	extensions := Set new.
+	self allSubclassesDo: [ :cls | extensions addAll: cls typicalFileExtensions ].
+	^ extensions
 ]
 
 { #category : #'stream access' }
@@ -195,9 +233,9 @@ ImageReadWriter >> next: size [
 
 { #category : #accessing }
 ImageReadWriter >> nextImage [
-	"Dencoding an image on stream and answer the image."
+	"Decode an encoded image from my stream and return it as a Form"
 
-	^self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #'stream access' }
@@ -288,10 +326,10 @@ ImageReadWriter >> nextPutAll: aByteArray [
 ]
 
 { #category : #accessing }
-ImageReadWriter >> nextPutImage: anImage [
-	"Encoding anImage on stream."
+ImageReadWriter >> nextPutImage: imageForm [
+	"Encoding imageForm onto my stream"
 
-	^self subclassResponsibility
+	self subclassResponsibility
 ]
 
 { #category : #'stream access' }

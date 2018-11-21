@@ -137,6 +137,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
+		spec package: 'NautilusRefactoring-Tests'.
 
 		spec package: 'Ombu'.
 		spec package: 'Epicea'.
@@ -772,6 +773,7 @@ spec group: 'GT&QA-Group' with: #(
 	'Reflectivity-Tools'	"required by Manifest-Core Refactoring-Critics"
 
 	'NautilusRefactoring'	"required by Epicea, SmartSuggestions"
+	'NautilusRefactoring-Tests'
 	'Refactoring-Critics'	"depends on QA, needs cleanup"
 
 	'Glamour-Group'
@@ -839,7 +841,7 @@ BaselineOfIDE >> loadCalypso [
 
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.12.0/src';
+		repository: 'github://pharo-ide/Calypso:v0.13.0/src';
 		onConflict: [ :err | err useIncoming ];
 		onUpgrade: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').

@@ -174,8 +174,9 @@ SessionManager class >> initializedSessionManager [
 		registerGuiClassNamed: #FT2Handle; "GUI"
 		registerGuiClassNamed: #FreeTypeSettings; "GUI"
 		registerGuiClassNamed: #WorldMorph atPriority: 110; "GUI"
+		"It Should run at the end of everything to correctly handle the errors"
 		registerLast: UIManagerSessionHandler uniqueInstance
-			inCategory: manager guiCategory; "GUi - last"
+			inCategory: manager userCategory; 
 
 		registerToolClassNamed: #CPUWatcher; "Tools"
 		registerToolClassNamed: #NOCCompletionTable; "Tool"
@@ -441,8 +442,12 @@ SessionManager >> snapshot: save andQuit: quit [
 		ifFalse: [ ^ false ].
 	wait := Semaphore new.
 	[ isImageStarting := self launchSnapshot: save andQuit: quit.
-	wait signal ] forkAt: Processor timingPriority - 1.
+	  wait signal. ] forkAt: Processor timingPriority - 1.
 	wait wait.
+	
+	"The execution of the deferred startup actions are executed in the caller thread."
+	self currentSession executeDeferredStartupActions: isImageStarting.
+	
 	^ isImageStarting
 ]
 
