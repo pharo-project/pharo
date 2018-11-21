@@ -808,9 +808,9 @@ ReflectivityControlTest >> testInsteadAssign [
 		arguments: #(#name #newValue).
 	assignmentNode link: link.
 	self assert: assignmentNode hasMetalink.
-	self assert: (ReflectivityExamples >> #exampleAssignment) class = ReflectiveMethod.
+	self assert: (ReflectivityExamples >> #exampleAssignment) class equals: ReflectiveMethod.
 	instance := ReflectivityExamples new.
-	self assert: instance exampleAssignment = 3.
+	self assert: instance exampleAssignment equals: 3.
 ]
 
 { #category : #'tests - instead' }
