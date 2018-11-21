@@ -127,13 +127,6 @@ DiskDirectoryEntry >> deviceId [
 	^self statAttributes at: 4
 ]
 
-{ #category : #testing }
-DiskDirectoryEntry >> exists [
-	"Answer a boolean indicating whether the receivers file exists"
-
-	^self reference exists
-]
-
 { #category : #'cache management' }
 DiskDirectoryEntry >> getAccessAttributes [
 	"Store the receivers access() attributes for future reference"

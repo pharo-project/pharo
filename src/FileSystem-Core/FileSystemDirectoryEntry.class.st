@@ -99,6 +99,13 @@ FileSystemDirectoryEntry >> deviceId [
 	^FileAttributeNotSupported signalWith: self
 ]
 
+{ #category : #testing }
+FileSystemDirectoryEntry >> exists [
+	"Answer a boolean indicating whether the receivers file exists"
+
+	^self reference exists
+]
+
 { #category : #delegate }
 FileSystemDirectoryEntry >> extension [
 	^ reference extension
