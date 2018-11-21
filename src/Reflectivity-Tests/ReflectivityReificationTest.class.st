@@ -130,7 +130,7 @@ ReflectivityReificationTest >> testReifyArrayOperationAfter [
 
 { #category : #'tests - misc' }
 ReflectivityReificationTest >> testReifyArrayOperationBefore [
-	| sendNode instance |
+
 	"
 	sendNode := (ReflectivityExamples >> #exampleArray) ast body
 		statements first value.
@@ -152,7 +152,7 @@ ReflectivityReificationTest >> testReifyArrayOperationBefore [
 
 { #category : #'tests - misc' }
 ReflectivityReificationTest >> testReifyArrayOperationInstead [
-	| sendNode instance |
+
 	"sendNode := (ReflectivityExamples >> #exampleArray) ast body
 		statements first value.
 	link := MetaLink new
