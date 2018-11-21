@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFOperationReification class >> entities [
-	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode}
+	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode. RBLiteralArrayNode}
 ]
 
 { #category : #'plugin interface' }
@@ -39,6 +39,12 @@ RFOperationReification >> genForRBAssignmentNode [
 		ast messages second arguments: {(RFLiteralVariableNode value: entity variable binding scope environment)}.
 		^ast].
 	self error: 'not supported'
+]
+
+{ #category : #generate }
+RFOperationReification >> genForRBLiteralArrayNode [
+	"same as #value, no need to wrap as the literal understands #value"
+	^RBLiteralArrayNode value: entity value
 ]
 
 { #category : #generate }
