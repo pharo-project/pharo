@@ -8,6 +8,12 @@ set -e
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 . ${SCRIPTS}/envvars.sh
 
+if [ $(is_version) == 1 ]; then
+    PHARO_NAME_PREFIX=${PHARO_VERSION_PREFIX}
+else
+    PHARO_NAME_PREFIX=${PHARO_SNAPSHOT_PREFIX}
+fi
+
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
 
