@@ -77,6 +77,11 @@ TemporaryVariable >> links [
 ]
 
 { #category : #'*Reflectivity' }
+TemporaryVariable >> postambles [
+	^ self propertyAt: #postambles ifAbsent: #()
+]
+
+{ #category : #'*Reflectivity' }
 TemporaryVariable >> preambles [
 	^ self propertyAt: #preambles ifAbsent: #()
 ]

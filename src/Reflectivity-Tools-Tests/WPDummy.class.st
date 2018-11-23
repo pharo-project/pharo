@@ -12,14 +12,14 @@ Class {
 
 { #category : #examples }
 WPDummy >> exampleAssignment [
-	foo := 1.
+	foo := 1
 	
 	
 ]
 
 { #category : #examples }
 WPDummy >> exampleAssignment: anObject [
-	foo := anObject.
+	foo := anObject
 	
 	
 ]
@@ -27,8 +27,6 @@ WPDummy >> exampleAssignment: anObject [
 { #category : #examples }
 WPDummy >> exampleMessageSend [
 	self exampleOperation
-	
-	
 ]
 
 { #category : #examples }

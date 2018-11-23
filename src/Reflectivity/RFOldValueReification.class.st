@@ -23,7 +23,6 @@ RFOldValueReification class >> key [
 RFOldValueReification >> genForRBAssignmentNode [
 	| varNode |
 	varNode := entity variable.
-	
 	varNode isGlobal ifTrue: [^RFLiteralVariableNode value: entity binding value]. 
 	^RBVariableNode named: varNode name.
 ]
@@ -33,9 +32,4 @@ RFOldValueReification >> genForRBVariableNode [
 	"same as #value for variableNodes"
 	entity isGlobal ifTrue: [^RFLiteralVariableNode value: entity binding value]. 
 	^RBVariableNode named: entity name.
-]
-
-{ #category : #generate }
-RFOldValueReification >> preamble: aNode [
-		^{}
 ]

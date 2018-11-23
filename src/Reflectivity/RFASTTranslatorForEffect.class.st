@@ -109,6 +109,7 @@ RFASTTranslatorForEffect >> visitParseErrorNode: anErrorNode [
 
 { #category : #'visitor-double dispatching' }
 RFASTTranslatorForEffect >> visitSequenceNode: aSequenceNode [
+	self emitPreamble: aSequenceNode.
 	self emitMetaLinkBefore: aSequenceNode.
 	self emitPrepareLinkAfter: aSequenceNode.
 	
@@ -126,6 +127,7 @@ RFASTTranslatorForEffect >> visitVariableNode: aVariableNode [
 	
 	| binding |
 	
+	self emitPreamble: aVariableNode.
 	self emitMetaLinkBefore: aVariableNode.
 	self emitPrepareLinkAfter: aVariableNode.
 	

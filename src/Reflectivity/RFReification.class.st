@@ -159,6 +159,11 @@ RFReification >> link: anUndefinedObject [
 ]
 
 { #category : #generate }
+RFReification >> postamble: aNode [
+	^#()
+]
+
+{ #category : #generate }
 RFReification >> preamble: aNode [
 	^#()
 ]
