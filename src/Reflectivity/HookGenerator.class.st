@@ -28,12 +28,9 @@ HookGenerator class >> node: aNode [
 
 { #category : #results }
 HookGenerator >> afterHooks [
-	| statements |
-	statements := links 
+	^ links 
 			select: [ :each | each control = #after ] 
 			thenCollect:  [ :link | (self hookFor: link) parent: node].
-			
-	^(RBBlockNode body: (RBSequenceNode statements: statements flattened)) parent: node.
 ]
 
 { #category : #results }
@@ -141,6 +138,18 @@ HookGenerator >> links [
 { #category : #accessing }
 HookGenerator >> plugins [
 	^ plugins
+]
+
+{ #category : #results }
+HookGenerator >> postamble [
+	| postamble |
+	"This is code executed just before the #after link"
+	
+	postamble := OrderedCollection new.
+	links do: [:link |  
+		plugins do: [ :plugin | (link allReifications includes: plugin key) ifTrue: [postamble addAll: ((plugin entity: entity link: link) postamble: entity)]]].
+		
+	^postamble
 ]
 
 { #category : #results }

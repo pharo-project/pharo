@@ -100,6 +100,11 @@ Slot >> links [
 ]
 
 { #category : #'*Reflectivity' }
+Slot >> postambles [
+	^ self propertyAt: #postambles ifAbsent: #()
+]
+
+{ #category : #'*Reflectivity' }
 Slot >> preambles [
 	^ self propertyAt: #preambles ifAbsent: #()
 ]

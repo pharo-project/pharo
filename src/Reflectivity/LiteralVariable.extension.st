@@ -116,6 +116,11 @@ LiteralVariable >> methodNode [
 ]
 
 { #category : #'*Reflectivity' }
+LiteralVariable >> postambles [
+	^ self propertyAt: #postambles ifAbsent: #()
+]
+
+{ #category : #'*Reflectivity' }
 LiteralVariable >> preambles [
 	^ self propertyAt: #preambles ifAbsent: #()
 ]

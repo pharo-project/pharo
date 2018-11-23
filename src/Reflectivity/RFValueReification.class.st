@@ -19,7 +19,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFValueReification class >> entities [
-	^{RBVariableNode. RBAssignmentNode. RBReturnNode. RBMessageNode . RBLiteralValueNode . RBLiteralArrayNode. RBArrayNode . LiteralVariable . Slot}
+	^{RBVariableNode. RBAssignmentNode. RBReturnNode. RBMessageNode . RBLiteralValueNode . RBLiteralArrayNode. RBArrayNode . RBMethodNode . LiteralVariable . Slot} 
 ]
 
 { #category : #'plugin interface' }
@@ -70,6 +70,11 @@ RFValueReification >> genForRBMessageNode [
 ]
 
 { #category : #generate }
+RFValueReification >> genForRBMethodNode [
+	^RBVariableNode named: #RFReifyValueVar
+]
+
+{ #category : #generate }
 RFValueReification >> genForRBReturnNode [
 	^RBVariableNode named: #RFReifyValueVar
 ]
@@ -81,9 +86,44 @@ RFValueReification >> genForRBVariableNode [
 ]
 
 { #category : #generate }
+RFValueReification >> postamble: aNode [
+	(aNode isKindOf: RBProgramNode) ifFalse: [ ^#() ].
+	aNode isMethod ifTrue: [^RFStoreIntoTempNode named: 'RFReifyValueVar'. ].
+	aNode isMessage ifTrue: [^RFStoreIntoTempNode named: 'RFReifyValueVar'. ].
+	^super postamble: aNode.
+	 
+]
+
+{ #category : #generate }
 RFValueReification >> preamble: aNode [
 	(aNode isKindOf: RBProgramNode) ifFalse: [ ^#() ].
-	^(aNode isReturn or: [ aNode isMessage or: [aNode isDynamicArray]])
-		ifTrue: [RFStoreIntoTempNode named: #RFReifyValueVar]
-		ifFalse: [ #() ]. 
+	aNode isReturn ifTrue: [^RFStoreIntoTempNode named: #RFReifyValueVar].
+	aNode isDynamicArray ifTrue: [ ^self preambleForArray: aNode ].
+	^#().
+	 
+]
+
+{ #category : #generate }
+RFValueReification >> preambleForArray: aNode [
+	| preamble arguments |
+	preamble := OrderedCollection new.
+	arguments := OrderedCollection new.
+
+	(1 to: aNode size) reverseWithIndexDo: [:each :index |  
+			| name |
+			name := 'RFArg', index asString, 'RFReification'.
+			preamble add:  (RFStorePopIntoTempNode named: name).
+	].
+	
+	self flag: #TBD. "for #instead we do not need to build the stack up again as the array creation bytecode is missing"
+	(1 to: aNode size) withIndexDo: [:each :index |  
+			| name |
+			name := 'RFArg', index asString, 'RFReification'.
+			arguments add:  (RBTemporaryNode named: name).
+	].
+	preamble addAll: (RBArrayNode statements: arguments).
+	preamble add: (RFStorePopIntoTempNode named: 'RFReifyValueVar').
+	preamble addAll: arguments.
+	^ preamble 
+	
 ]

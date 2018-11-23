@@ -111,6 +111,11 @@ RBProgramNode >> nodesWithLinks [
 ]
 
 { #category : #'*Reflectivity' }
+RBProgramNode >> postambles [
+	^self propertyAt: #postambles ifAbsent: #()
+]
+
+{ #category : #'*Reflectivity' }
 RBProgramNode >> preambles [
 	^self propertyAt: #preambles ifAbsent: #()
 ]
