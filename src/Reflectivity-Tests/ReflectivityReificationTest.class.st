@@ -872,24 +872,22 @@ ReflectivityReificationTest >> testReifyMethodThisContextAfter [
 
 { #category : #'tests - method' }
 ReflectivityReificationTest >> testReifyMethodValue [
-	| sendNode instance |
-	"not working yet. Need to somehow access return value of whole method"
-	self skip.
-	sendNode := (ReflectivityExamples >> #exampleMethod) ast.
+	| methodNode instance |
+	methodNode := (ReflectivityExamples >> #exampleMethod) ast.
 	link := MetaLink new
 		metaObject: self;
 		selector: #tagExec:;
 		control: #after;
 		arguments: #(value).
-	sendNode link: link.
-	self assert: sendNode hasMetalink.
+	methodNode link: link.
+	self assert: methodNode hasMetalink.
 	self
 		assert: (ReflectivityExamples >> #exampleMethod) class
 		equals: ReflectiveMethod.
 	self assert: tag isNil.
 	instance := ReflectivityExamples new.
 	self assert: instance exampleMethod equals: 5.
-	self assert: tag equals: #exampleMethod
+	self assert: tag equals: 5
 ]
 
 { #category : #'tests - assignment' }

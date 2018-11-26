@@ -71,7 +71,7 @@ RFValueReification >> genForRBMessageNode [
 
 { #category : #generate }
 RFValueReification >> genForRBMethodNode [
-	^RBVariableNode named: #RFReifyValueVar
+	^RBTemporaryNode named: #RFValueReificationVar
 ]
 
 { #category : #generate }
@@ -88,7 +88,6 @@ RFValueReification >> genForRBVariableNode [
 { #category : #generate }
 RFValueReification >> postamble: aNode [
 	(aNode isKindOf: RBProgramNode) ifFalse: [ ^#() ].
-	aNode isMethod ifTrue: [^RFStoreIntoTempNode named: 'RFReifyValueVar'. ].
 	aNode isMessage ifTrue: [^RFStoreIntoTempNode named: 'RFReifyValueVar'. ].
 	^super postamble: aNode.
 	 
