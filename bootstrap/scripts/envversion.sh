@@ -46,7 +46,7 @@ function set_version_variables() {
 	else
 		# I'm not development build, I should be a PR
 		# HACK: Since this is a PR branch, I do not have all information I need. I assume I will have a tag indicating Pharo version.
-		PHARO_NAME_PREFIX="Pharo$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2-)-PR"
+		PHARO_NAME_PREFIX="Pharo$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2)-PR"
 		PHARO_SHORT_VERSION="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
 	fi
 	
