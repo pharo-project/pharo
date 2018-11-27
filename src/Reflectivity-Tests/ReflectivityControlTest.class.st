@@ -392,11 +392,11 @@ ReflectivityControlTest >> testBeforeBlock [
 		selector: #tagExec.
 	blockNode link: link.
 	self assert: blockNode hasMetalinkBefore.
-	self assert: (ReflectivityExamples >> #exampleBlock) class = ReflectiveMethod.
+	self assert: (ReflectivityExamples >> #exampleBlock) class equals: ReflectiveMethod.
 	self assert: tag isNil.
 	self assert: ReflectivityExamples new exampleBlock == 5.
-	self assert: tag = 'yes'.
-	self assert: (ReflectivityExamples >> #exampleBlock) class = CompiledMethod.
+	self assert: tag equals: 'yes'.
+	self assert: (ReflectivityExamples >> #exampleBlock) class equals: CompiledMethod.
 ]
 
 { #category : #'tests - before' }

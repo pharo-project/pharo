@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFOperationReification class >> entities [
-	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode. RBLiteralNode. RBLiteralArrayNode. RBArrayNode}
+	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode. RBLiteralNode. RBBlockNode . RBLiteralArrayNode. RBArrayNode}
 ]
 
 { #category : #'plugin interface' }
@@ -44,6 +44,18 @@ RFOperationReification >> genForRBAssignmentNode [
 		ast messages second arguments: {(RFLiteralVariableNode value: entity variable binding scope environment)}.
 		^ast].
 	self error: 'not supported'
+]
+
+{ #category : #generate }
+RFOperationReification >> genForRBBlockNode [
+	"we just compile the block again"
+	| blockNode |
+	
+	blockNode := RBParser parseExpression: entity formattedCode.
+	^RBMessageNode 
+		receiver: (RBVariableNode named: #RFBlockOperation)
+		selector: #block: 
+		arguments: {blockNode} 
 ]
 
 { #category : #generate }

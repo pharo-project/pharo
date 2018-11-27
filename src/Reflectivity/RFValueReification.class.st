@@ -19,7 +19,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFValueReification class >> entities [
-	^{RBVariableNode. RBAssignmentNode. RBReturnNode. RBMessageNode . RBLiteralValueNode . RBLiteralArrayNode. RBArrayNode . RBMethodNode . LiteralVariable . Slot} 
+	^{RBVariableNode. RBAssignmentNode. RBReturnNode. RBMessageNode . RBLiteralValueNode . RBLiteralArrayNode. RBArrayNode . RBBlockNode . RBMethodNode . LiteralVariable . Slot} 
 ]
 
 { #category : #'plugin interface' }
@@ -52,6 +52,11 @@ RFValueReification >> genForRBArrayNode [
 RFValueReification >> genForRBAssignmentNode [
 	"#value for Assignemnt is the old value, is that what we want?"
 	^RBVariableNode named: entity variable name
+]
+
+{ #category : #generate }
+RFValueReification >> genForRBBlockNode [
+	^RBVariableNode named: #RFReifyValueVar
 ]
 
 { #category : #generate }
@@ -89,6 +94,7 @@ RFValueReification >> genForRBVariableNode [
 RFValueReification >> postamble: aNode [
 	(aNode isKindOf: RBProgramNode) ifFalse: [ ^#() ].
 	aNode isMessage ifTrue: [^RFStoreIntoTempNode named: 'RFReifyValueVar'. ].
+	aNode isBlock ifTrue: [^RFStoreIntoTempNode named: #RFReifyValueVar].
 	^super postamble: aNode.
 	 
 ]

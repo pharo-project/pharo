@@ -64,9 +64,11 @@ HookGenerator >> entity: anEntity node: aNode links: aCollection [
 { #category : #private }
 HookGenerator >> genReification: aSymbolOrNode for: aLink [
 	| plugin | 
-	aSymbolOrNode isSymbol not ifTrue: [ ^ aSymbolOrNode]. 
-	plugin := (plugins at: aSymbolOrNode ifAbsent: [self error: 'reification not supported for this entity']) entity: entity link: aLink.	
-	 ^plugin perform: self selectorForNode
+	(aSymbolOrNode isKindOf: RBProgramNode) ifTrue: [ ^ aSymbolOrNode].
+	plugin := aSymbolOrNode isSymbol 
+		ifTrue: [(plugins at: aSymbolOrNode ifAbsent: [self error: 'reification not supported for this entity']) entity: entity link: aLink]
+		ifFalse: [ aSymbolOrNode link: aLink; entity: entity. aSymbolOrNode ].
+	^plugin perform: self selectorForNode
 ]
 
 { #category : #private }

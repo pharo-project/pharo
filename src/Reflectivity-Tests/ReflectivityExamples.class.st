@@ -54,7 +54,7 @@ ReflectivityExamples >> exampleAssignmentIvar [
 
 { #category : #examples }
 ReflectivityExamples >> exampleBlock [
-	^ [2 + 3] value
+	^ [2 + 3] value 
 ]
 
 { #category : #examples }
