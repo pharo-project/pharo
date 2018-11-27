@@ -17,7 +17,6 @@ initializeImage
 	
 	process := objectSpace
 		createProcessWithPriority: 40 
-		"doing: self bootstrapInitialProcessCode."
 		doing: ('PharoBootstrapInitialization 
 			initializeImageOfType: ''Pharo'' 
 			major: {major} 
@@ -47,8 +46,8 @@ initializeImage
 			(#(#fullGC #compactImage  #doScavenge:) includes: ex signalerContext sender selector)
 				ifTrue: [ex resume]
 				ifFalse: [ex pass]]] on: AssertionFailure do: [ :e |
-				((e signalerContext method selector == #assert:)
-					and: [ e signalerContext sender method selector = #mapStackPages ])
+				((e signalerContext sender method selector == #assert:)
+					and: [ e signalerContext sender sender method selector = #mapStackPages ])
 						ifTrue: [ e resume ]
 						ifFalse: [ e pass ]] .
 
