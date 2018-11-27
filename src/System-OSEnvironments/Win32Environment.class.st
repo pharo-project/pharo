@@ -94,8 +94,11 @@ Win32Environment >> keysAndValuesDo: aBlock [
 
 { #category : #private }
 Win32Environment >> setEnv: nameString value: valueString [
-	"This method calls the Standard C Library getenv() function"
-	 ^ self ffiCall: #( int SetEnvironmentVariableA ( String nameString, String valueString ) ) module: #Kernel32
+	"This method calls the the platform specific set environment routine"
+
+	^ self
+		ffiCall: #(int SetEnvironmentVariableA #(String nameString , String valueString))
+		module: #Kernel32
 ]
 
 { #category : #accessing }
