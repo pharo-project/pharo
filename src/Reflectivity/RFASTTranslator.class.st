@@ -24,7 +24,6 @@ RFASTTranslator >> emitMessageNode: aMessageNode [
 		ifFalse: [ valueTranslator visitNode: aMessageNode receiver ].
 	aMessageNode arguments do: [ :each | valueTranslator visitNode: each ].
 	self emitPreamble: aMessageNode.
-	self emitPrepareLinkAfter: aMessageNode.
 	self emitMetaLinkBefore: aMessageNode.
 	aMessageNode hasMetalinkInstead
 		ifTrue: [ self emitMetaLinkInstead: aMessageNode ]
@@ -32,7 +31,7 @@ RFASTTranslator >> emitMessageNode: aMessageNode [
 			aMessageNode isSuperSend
 				ifTrue: [ methodBuilder send: aMessageNode selector toSuperOf: self compilationContext getClass ]
 				ifFalse: [ methodBuilder send: aMessageNode selector ] ].
-	self emitMetaLinkAfter: aMessageNode.
+	self emitMetaLinkAfterNoEnsure: aMessageNode.
 ]
 
 { #category : #reflectivity }
@@ -239,8 +238,6 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 	aMethodNode pragmas do: [:each | self visitPragmaNode: each].
 	methodBuilder numArgs: aMethodNode arguments size.
 	
-	self emitPrepareLinkAfter: aMethodNode.
-	
 	(aMethodNode hasMetalinkInstead and: [ aMethodNode isPrimitive not ])
 				ifTrue: [ self emitMetaLinkInstead: aMethodNode. methodBuilder returnTop.
 						^self. ].
@@ -251,9 +248,9 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 			withVars: (aMethodNode scope tempVector collect: [:each| each name]) asArray.
 	].
 	effectTranslator visitNode: aMethodNode body.
+	aMethodNode isPrimitive ifFalse: [self emitMetaLinkAfterNoEnsure: aMethodNode].
+	(aMethodNode hasProperty: #wrappedPrimitive) ifTrue: [methodBuilder pushTemp: #RFValueReificationVar; returnTop].
 	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop].
-	self emitMetaLinkAfter: aMethodNode.
-	aMethodNode hasMetalinkAfter ifTrue: [methodBuilder returnTop].
 
 ]
 

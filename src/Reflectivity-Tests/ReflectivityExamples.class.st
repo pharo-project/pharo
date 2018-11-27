@@ -108,6 +108,12 @@ ReflectivityExamples >> exampleMethod [
 ]
 
 { #category : #examples }
+ReflectivityExamples >> exampleMethod2 [
+
+	2 + 3
+]
+
+{ #category : #examples }
 ReflectivityExamples >> exampleMethodMultipleSites [
 	Transcript show: Object new.
 	^ 2 + 3
