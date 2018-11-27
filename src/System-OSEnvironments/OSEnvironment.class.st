@@ -212,6 +212,13 @@ OSEnvironment >> removeKey: key [
 ]
 
 { #category : #accessing }
+OSEnvironment >> setEnv: nameString value: valueString [
+	"This method calls the Standard C Library getenv() function"
+
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 OSEnvironment >> unsetEnv: string [
 	"This method calls the Standard C Library getenv() function"
 	 ^ self ffiCall: #( int unsetenv (String string) ) module: LibC
