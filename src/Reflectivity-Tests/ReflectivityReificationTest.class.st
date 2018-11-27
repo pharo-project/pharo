@@ -41,6 +41,87 @@ ReflectivityReificationTest >> testAccessTemp [
 	self assert: tag equals: 3
 ]
 
+{ #category : #'tests - blocks' }
+ReflectivityReificationTest >> testBlockOperationAfter [
+	| blockNode instance |
+	blockNode := (ReflectivityExamples >> #exampleBlock) ast statements first value receiver.
+	self assert: blockNode isBlock.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #after;
+		arguments: #(operation). 
+	blockNode link: link.
+	self assert: blockNode hasMetalinkAfter.
+	self assert: (ReflectivityExamples >> #exampleBlock) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleBlock == 5 .
+	self assert: tag value value equals: 5.
+	self assert: tag class equals: RFBlockOperation.
+	self assert: (ReflectivityExamples >> #exampleBlock) class equals: CompiledMethod.
+]
+
+{ #category : #'tests - blocks' }
+ReflectivityReificationTest >> testBlockOperationBefore [
+	| blockNode |
+	blockNode := (ReflectivityExamples >> #exampleBlock) ast statements first value receiver.
+	self assert: blockNode isBlock.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #before;
+		arguments: #(operation).
+	blockNode link: link.
+	self assert: blockNode hasMetalinkBefore.
+	self assert: (ReflectivityExamples >> #exampleBlock) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	self assert: ReflectivityExamples new exampleBlock == 5.
+	self assert: tag class equals: RFBlockOperation.
+	self assert: tag value value equals: 5.
+	self assert: (ReflectivityExamples >> #exampleBlock) class equals: CompiledMethod.
+]
+
+{ #category : #'tests - blocks' }
+ReflectivityReificationTest >> testBlockOperationInstead [
+	| blockNode instance |
+	blockNode := (ReflectivityExamples >> #exampleBlock) ast statements first value receiver.
+	self assert: blockNode isBlock.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #instead;
+		arguments: #(operation). 
+	blockNode link: link.
+	self assert: blockNode hasMetalinkInstead.
+	self assert: (ReflectivityExamples >> #exampleBlock) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleBlock == self .
+	self assert: tag value value equals: 5.
+	self assert: tag class equals: RFBlockOperation.
+	self assert: (ReflectivityExamples >> #exampleBlock) class equals: CompiledMethod.
+]
+
+{ #category : #'tests - blocks' }
+ReflectivityReificationTest >> testBlockValueAfter [
+	| blockNode |
+	blockNode := (ReflectivityExamples >> #exampleBlock) ast statements first value receiver.
+	self assert: blockNode isBlock.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #after;
+		arguments: #(value).
+	blockNode link: link.
+	self assert: blockNode hasMetalinkAfter.
+	self assert: (ReflectivityExamples >> #exampleBlock) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	self assert: ReflectivityExamples new exampleBlock == 5.
+	self assert: tag printString equals: [ 2 + 3 ] printString.
+	self assert: (ReflectivityExamples >> #exampleBlock) class equals: CompiledMethod.
+]
+
 { #category : #'tests - misc' }
 ReflectivityReificationTest >> testLiteralOperationAfter [
 	| literalNode |
@@ -353,6 +434,23 @@ ReflectivityReificationTest >> testReifyAssignmentTempOperationInstead [
 	instance := ReflectivityExamples new.
 	self assert: instance exampleAssignment equals: 3.
 	self assert: reachHere.
+]
+
+{ #category : #'tests - allnodes' }
+ReflectivityReificationTest >> testReifyByInstanceNotKey [
+	| varNode instance |
+	varNode := (ReflectivityExamples >> #exampleIvarRead) ast body
+		statements last value.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		arguments: {RFNodeReification new}.
+	varNode link: link.
+	self assert: varNode hasMetalink.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleIvarRead equals: 33.
+	self assert: tag equals: varNode
 ]
 
 { #category : #'tests - operations' }
