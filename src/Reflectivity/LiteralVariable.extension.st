@@ -106,7 +106,7 @@ LiteralVariable >> link: aMetaLink [
 
 { #category : #'*Reflectivity' }
 LiteralVariable >> links [
-	^self propertyAt: #links ifAbsent: nil
+	^self propertyAt: #links ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }
