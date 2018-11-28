@@ -200,7 +200,7 @@ Class {
 		'Stdout',
 		'TheStdioHandles'
 	],
-	#category : #DeprecatedFileStream
+	#category : #'DeprecatedFileStream-Base'
 }
 
 { #category : #'file reader services' }
