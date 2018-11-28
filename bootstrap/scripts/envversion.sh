@@ -50,10 +50,10 @@ function set_version_snapshot_variables() {
 function set_version_pull_request_variables() {
 	# I'm not development build, I should be a PR
 	# HACK: Since this is a PR branch, I do not have all information I need. I assume I will have a tag indicating Pharo version.
-	# This is same as with 'set_version_release_variables' so I use the function.
-	set_version_release_variables
-	# And I modify name to substract any -EXTRA info we have and to reflect the fact we are in a Pull request
-	PHARO_NAME_PREFIX="$(echo ${PHARO_NAME_PREFIX} | cut -d'-' -f 1)-PR"
+	# This will answer "Pharo7.0-PR"
+	PHARO_NAME_PREFIX="Pharo$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2)-PR"
+	# This will answer "70"
+	PHARO_SHORT_VERSION="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
 }
 
 # sets all variables
