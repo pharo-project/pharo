@@ -52,8 +52,8 @@ function set_version_pull_request_variables() {
 	# HACK: Since this is a PR branch, I do not have all information I need. I assume I will have a tag indicating Pharo version.
 	# This is same as with 'set_version_release_variables' so I use the function.
 	set_version_release_variables
-	# And I modify name to refleact the fact we are in a Pull request
-	PHARO_NAME_PREFIX="${PHARO_NAME_PREFIX}-PR"
+	# And I modify name to substract any -EXTRA info we have and to reflect the fact we are in a Pull request
+	PHARO_NAME_PREFIX="$(echo ${PHARO_NAME_PREFIX} | cut -d'-' -f 1)-PR"
 }
 
 # sets all variables
