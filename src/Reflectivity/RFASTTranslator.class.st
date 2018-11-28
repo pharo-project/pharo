@@ -20,7 +20,7 @@ RFASTTranslator >> classForValue [
 { #category : #'visitor-double dispatching' }
 RFASTTranslator >> emitMessageNode: aMessageNode [
 
-	aMessageNode isCascaded
+	(aMessageNode isCascaded and: [(aMessageNode hasProperty: #hook) not])
 		ifFalse: [ valueTranslator visitNode: aMessageNode receiver ].
 	aMessageNode arguments do: [ :each | valueTranslator visitNode: each ].
 	self emitPreamble: aMessageNode.
@@ -50,7 +50,7 @@ RFASTTranslator >> emitMetaLinkAfter: aNode [
 RFASTTranslator >> emitMetaLinkAfterNoEnsure: aNode [
 
 	aNode hasMetalinkAfter ifFalse: [ ^self ].
-	aNode postambles do: [:each | valueTranslator visitNode: each].
+	aNode postambles do: [ :each | valueTranslator visitNode: each ].
 	aNode afterHooks do: [ :each | effectTranslator visitNode: each ].
 ]
 
@@ -158,6 +158,23 @@ RFASTTranslator >> visitBlockNode: aBlockNode [
 ]
 
 { #category : #'visitor-double dispatching' }
+RFASTTranslator >> visitCascadeNode: aCascadeNode [ 
+	valueTranslator visitNode: aCascadeNode receiver.
+	
+	self emitPreamble: aCascadeNode.
+	self emitMetaLinkBefore: aCascadeNode.
+	aCascadeNode hasMetalinkInstead
+		ifTrue: [ self emitMetaLinkInstead: aCascadeNode ]
+		ifFalse: [  
+			aCascadeNode messages allButLastDo: [:node |
+				methodBuilder pushDup.
+				effectTranslator visitNode: node.
+			].
+				self visitNode: aCascadeNode messages last.].
+	self emitMetaLinkAfterNoEnsure: aCascadeNode.
+]
+
+{ #category : #'visitor-double dispatching' }
 RFASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 
 	"We are visiting a scope that is not a block, but inlined in the outer context.
@@ -219,7 +236,7 @@ RFASTTranslator >> visitLiteralNode: aLiteralNode [
 
 { #category : #reflectivity }
 RFASTTranslator >> visitLiteralVariableNode: aLiteralVariableNode [
-	 methodBuilder pushLiteralVariable: aLiteralVariableNode binding
+	methodBuilder pushLiteralVariable: aLiteralVariableNode binding
 ]
 
 { #category : #'visitor-double dispatching' }
