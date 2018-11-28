@@ -63,6 +63,11 @@ ReflectivityExamples >> exampleBlockNoValue [
 ]
 
 { #category : #examples }
+ReflectivityExamples >> exampleCascade [
+	^1 sin; yourself
+]
+
+{ #category : #examples }
 ReflectivityExamples >> exampleClassVarRead [
 	^ClassVar
 ]
