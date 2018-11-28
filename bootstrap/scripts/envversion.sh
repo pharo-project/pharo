@@ -17,14 +17,43 @@ function is_release_build() {
 }
 
 # answers if we are in development branch
+# development branchs have the format PharoMAJOR.MINOR (e.g. Pharo7.0)
 function is_development_build() {
 	set -f 
-	local branchName=$(git branch | grep \* | cut -d' ' -f 2 | grep -E "^dev-[0-9]+\.[0-9]+\$")
+	local branchName=$(git branch | grep \* | cut -d' ' -f 2 | grep -E "^pharo-[0-9]+\.[0-9]+\$")
 	if [ "${branchName}" == "" ]; then
 		echo 0
 	else
 		echo 1
 	fi
+}
+
+# sets variables when we are in a release build
+function set_version_release_variables() {
+	# I'm a release, I have all values needed in a TAG
+	# This will answer "Pharo7.0"
+	PHARO_NAME_PREFIX="Pharo$(git describe --long --tags | cut -d'-' -f 1-2 | cut -c 2-)"
+	# This will be "70"
+	PHARO_SHORT_VERSION="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
+}
+
+# sets variables when we are in a snapshot build
+function set_version_snapshot_variables() {
+	# I'm not a release, but I'm in development branch. I'm a SNAPSHOT
+	# This will answer "Pharo7.0-SNAPSHOT"
+	PHARO_NAME_PREFIX="Pharo$(git branch | grep \* | cut -d' ' -f 2 | cut -d'-' -f 2)-SNAPSHOT"
+	# This will answer "70"
+	PHARO_SHORT_VERSION="$(git branch | grep \* | cut -d' ' -f 2 | cut -d'-' -f 2 | sed 's/\.//')"
+}
+
+# sets variables when we are in a pull request build
+function set_version_pull_request_variables() {
+	# I'm not development build, I should be a PR
+	# HACK: Since this is a PR branch, I do not have all information I need. I assume I will have a tag indicating Pharo version.
+	# This is same as with 'set_version_release_variables' so I use the function.
+	set_version_release_variables
+	# And I modify name to refleact the fact we are in a Pull request
+	PHARO_NAME_PREFIX="${PHARO_NAME_PREFIX}-PR"
 }
 
 # sets all variables
@@ -35,19 +64,12 @@ function set_version_variables() {
 	
 	if [ $(is_development_build) == 1 ]; then
 		if [ $(is_release_build) == 1 ]; then
-			# I'm a release, I have all values needed in a TAG
-			PHARO_NAME_PREFIX="Pharo$(git describe --long --tags | cut -d'-' -f 1-2 | cut -c 2-)"
-			PHARO_SHORT_VERSION="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
+			set_version_release_variables
 		else
-			# I'm not a release, but I'm in development branch. I'm a SNAPSHOT
-			PHARO_NAME_PREFIX="Pharo$(git branch | grep \* | cut -d' ' -f 2 | cut -d'-' -f 2)-SNAPSHOT"
-			PHARO_SHORT_VERSION="$(git branch | grep \* | cut -d' ' -f 2 | cut -d'-' -f 2 | sed 's/\.//')"
+			set_version_snapshot_variables
 		fi
 	else
-		# I'm not development build, I should be a PR
-		# HACK: Since this is a PR branch, I do not have all information I need. I assume I will have a tag indicating Pharo version.
-		PHARO_NAME_PREFIX="Pharo$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2)-PR"
-		PHARO_SHORT_VERSION="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
+		set_version_pull_request_variables
 	fi
 	
 	# this is just to make things clear (and because they could change in the future, who knows :P)
