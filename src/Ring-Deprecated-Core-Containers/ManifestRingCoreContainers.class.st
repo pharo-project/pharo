@@ -1,7 +1,10 @@
+"
+Deprecated package for Ring Core containerss
+"
 Class {
 	#name : #ManifestRingCoreContainers,
 	#superclass : #PackageManifest,
-	#category : #'Ring-Deprecated-Core-Containers'
+	#category : #'Ring-Deprecated-Core-Containers-Manifest'
 }
 
 { #category : #deprecation }
