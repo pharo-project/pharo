@@ -102,18 +102,6 @@ ${mailMessage}
 Build Url: ${env.BUILD_URL}
 """
 
-  // If we are building development, add information about the uploads
-  /* ESTEBAN: Let this out for now (I don't know how to get tag version)
-  if( isDevelopmentBranch() ) {
-  	//def pharoVersion = 
-	//def pharoShortVersion = 
-  
-  """"
-Check for latest built images in http://files.pharo.org:
- - http://files.pharo.org/images/${pharoShortVersion}/${pharoVersion}.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.32bit.zip
- - http://files.pharo.org/images/${pharoShortVersion}/${pharoVersion}.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.64bit.zip
-"""
-  } */
   mail to: toMail, cc: 'guillermopolito@gmail.com', subject: "[Pharo ${buildKind}] Build #${env.BUILD_NUMBER}: ${title}", body: body
   } catch (e) {
     //If there is an error during mail send, just print it and continue
