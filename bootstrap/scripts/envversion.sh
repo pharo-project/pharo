@@ -61,6 +61,7 @@ function set_version_pull_request_variables() {
 # PHARO_SHORT_VERSION -> Short version of the image (70, 80, etc.)
 # PHARO_VM_VERSION -> VM version (equivallent to PHARO_SHORT_VERSION)
 function set_version_variables() {
+	git branch
 	
 	if [ $(is_development_build) == 1 ]; then
 		if [ $(is_release_build) == 1 ]; then
