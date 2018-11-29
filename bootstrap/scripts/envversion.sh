@@ -20,7 +20,7 @@ function is_release_build() {
 # development branchs have the format PharoMAJOR.MINOR (e.g. Pharo7.0)
 function is_development_build() {
 	set -f 
-	local branchName=$(git branch | grep \* | cut -d' ' -f 2 | grep -E "^pharo-[0-9]+\.[0-9]+\$")
+	local branchName=$(git branch | grep \* | cut -d' ' -f 2 | grep -E "^Pharo[0-9]+\.[0-9]+\$")
 	if [ "${branchName}" == "" ]; then
 		echo 0
 	else
