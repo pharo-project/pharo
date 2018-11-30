@@ -10,5 +10,5 @@ Class {
 { #category : #'as yet unclassified' }
 MFClassA >> method [
 	|foo|
-	self halt.
+	1+1.
 ]
