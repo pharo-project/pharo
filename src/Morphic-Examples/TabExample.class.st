@@ -66,7 +66,7 @@ TabExample >> freshListTab [
 				buildWithSpec ]
 		actions:
 		{(TabAction
-				action: [ self halt ]
+				action: [ self openDebugger ]
 				icon: (self iconNamed: #smallConfigurationIcon)
 				label: 'Halt!')})
 		menu: [ :menu | menu add: 'Fubu' target: self selector: #halt ];
