@@ -662,7 +662,7 @@ TestCase >> openDebuggerOnFailingTestMethod [
 	 send into 'self perform: testSelector' to see the failure from the beginning"
 
 	self
-		halt;
+		openDebugger;
 		performTest
 ]
 
