@@ -16,7 +16,7 @@ DiskFileSystemTest >> createFileSystem [
 DiskFileSystemTest >> testDefaultWorkingDirectory [
 	| ref |
 	ref := filesystem workingDirectory.
-	self assert: (('File @ ', Smalltalk vm imagePath) beginsWith: ref asString)
+	self assert: ('File @ ' , OSPlatform current currentWorkingDirectoryPath beginsWith: ref asString)
 ]
 
 { #category : #tests }
