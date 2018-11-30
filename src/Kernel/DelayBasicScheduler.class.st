@@ -182,7 +182,7 @@ DelayBasicScheduler >> runBackendLoopAtTimingPriority [
 		 	ticker waitForUserSignalled: timingSemaphore orExpired: activeDelay. 
 
 			"When two debuggers appear, step/proceed through this higher priority one first."
-			debug ifTrue: [ self halt ].		
+			debug ifTrue: [ self openDebugger ].		
 
 			"Invoke the api back-ends, which set the transfer-variable to nil" 		
 			suspendSemaphore ifNotNil: [ self suspendAtTimingPriority    ].
@@ -197,7 +197,7 @@ DelayBasicScheduler >> runBackendLoopAtTimingPriority [
 						activeDelay := suspendedDelays removeFirstOrNil ].
 		]
 	] ensure: [ "When timer event loop exits, expire remaining delays."
-		debug ifTrue: [ self halt ].
+		debug ifTrue: [ self openDebugger ].
 		[activeDelay notNil] whileTrue: [
 				activeDelay timingPrioritySignalExpired.
 				activeDelay := suspendedDelays removeFirstOrNil ]].
@@ -209,7 +209,7 @@ DelayBasicScheduler >> schedule: aDelay [
 	 For back-half see #scheduleAtTimingPriority"
 
 	"Debug lines to help review. Could be removed after a settling in period"
-	debug ifTrue: [ self halt ].
+	debug ifTrue: [ self openDebugger ].
 	
 	"Only one signal is sent when delay expires, and if that is already spoken for"
 	aDelay beingWaitedOn ifTrue: [^self error: 'This Delay has already been scheduled.'].
@@ -222,7 +222,7 @@ DelayBasicScheduler >> schedule: aDelay [
 	delayToStart := aDelay.
 	timingSemaphore signal. "Transfer execution to back-end #scheduleAtTimingPriority"
 	
-	debug ifTrue: [ self halt. "If debugger appeared for timingPriority thread, step through that first" ]
+	debug ifTrue: [ self openDebugger. "If debugger appeared for timingPriority thread, step through that first" ]
 
 ]
 
@@ -328,14 +328,14 @@ DelayBasicScheduler >> suspend [
 DelayBasicScheduler >> suspendAtTimingPriority [
 	"Private! This is the front-half for suspending the delay scheduler to prevent
 	 wake-up of delayed threads in the middle of snapshotting. For front-half see #suspend"
-	debug ifTrue: [ self halt ].
+	debug ifTrue: [ self openDebugger ].
 	
 	ticker saveResumptionTimes: suspendedDelays asArray, {activeDelay}.
 	
 	"Warning! Stepping <Over> the following line may lock the Image. Use <Proceed>."
 	suspendSemaphore wait.
 	
-	debug ifTrue: [ self halt ].
+	debug ifTrue: [ self openDebugger ].
 	
 	ticker restoreResumptionTimes: suspendedDelays asArray, {activeDelay}.  
 	suspendSemaphore := nil
@@ -359,7 +359,7 @@ DelayBasicScheduler >> unschedule: aDelay [
 	 For back-half see #unscheduleAtTimingPriority"
 
 	"Debug lines to help review. Could be removed after a settling in period"
-	debug ifTrue: [ self halt ].
+	debug ifTrue: [ self openDebugger ].
 
 	"The basic scheduler is highly dependant on semantics of cooperative multitasking and 
 	 bytecode inlining such that interuption *cannot* occur between the assignment and the signal.
@@ -369,7 +369,7 @@ DelayBasicScheduler >> unschedule: aDelay [
 	delayToStop := aDelay.
 	timingSemaphore signal. "Transfer execution to #unscheduleAtTimingPriority"
 	
-	debug ifTrue: [ self halt. "If timingPriority thread debugger appears, step through it first" ]
+	debug ifTrue: [ self openDebugger. "If timingPriority thread debugger appears, step through it first" ]
 
 
 ]
