@@ -1584,6 +1584,12 @@ Object >> openDebugger [
 	self halt.
 ]
 
+{ #category : #'as yet unclassified' }
+Object >> openDebugger: aString [
+	"Used in debugging infrastructure that should stay in production, instead of leaving a halt in the code. This way it is not flagged as debugging code left in method"
+	self halt: aString.
+]
+
 { #category : #'message performing' }
 Object >> perform: aSymbol [ 
 	"Send the unary selector, aSymbol, to the receiver.

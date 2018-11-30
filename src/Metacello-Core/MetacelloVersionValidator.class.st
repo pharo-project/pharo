@@ -232,7 +232,7 @@ MetacelloVersionValidator >> recordValidationCriticalWarning: aString versionStr
 		ifFalse: [ self error: 'Unknown critical warning reason code' ].
 	((self exludededValidations at: versionString ifAbsent: [ #() ]) includes: aSymbol)
 		ifTrue: [ ^self ].
-	(self debug includes: #criticalWarning) ifTrue: [ self halt: 'Debug triggered for critical warning: ', aString ].
+	(self debug includes: #criticalWarning) ifTrue: [ self openDebugger: 'Debug triggered for critical warning: ', aString ].
 	self validationReport
 		add:
 			(MetacelloValidationCriticalWarning
@@ -271,7 +271,7 @@ MetacelloVersionValidator >> recordValidationError: aString versionString: versi
 		ifFalse: [ self error: 'Unknown error reason code' ].
 	((self exludededValidations at: versionString ifAbsent: [ #() ]) includes: aSymbol)
 		ifTrue: [ ^self ].
-	(self debug includes: #error) ifTrue: [ self halt: 'Debug triggered for error: ', aString ].
+	(self debug includes: #error) ifTrue: [ self openDebugger: 'Debug triggered for error: ', aString ].
 	self validationReport
 		add:
 			(MetacelloValidationError
@@ -302,7 +302,7 @@ MetacelloVersionValidator >> recordValidationWarning: aString versionString: ver
 		ifFalse: [ self error: 'Unknown warning reason code' ].
 	((self exludededValidations at: versionString ifAbsent: [ #() ]) includes: aSymbol)
 		ifTrue: [ ^self ].
-	(self debug includes: #warning) ifTrue: [ self halt: 'Debug triggered for critical warning: ', aString ].
+	(self debug includes: #warning) ifTrue: [ self openDebugger: 'Debug triggered for critical warning: ', aString ].
 	self validationReport
 		add:
 			(MetacelloValidationWarning
