@@ -120,7 +120,7 @@ TreePresenter class >> exampleWithCustomColumnsAndNodes [
 		columns: {col1. col2};
 		dragEnabled: true;
 		dropEnabled: true;
-		acceptDropBlock: [ :transfer :event :source :receiver | self halt ].
+		acceptDropBlock: [ :transfer :event :source :receiver | self openDebugger].
 		
 	col2 
 		headerLabel: 'Character +2';
@@ -161,7 +161,7 @@ TreePresenter class >> exampleWithCustomColumnsAndNodesAndChildren [
 			col2};
 		dragEnabled: true;
 		dropEnabled: true;
-		acceptDropBlock: [ :transfer :event :source :receiver | self halt ].
+		acceptDropBlock: [ :transfer :event :source :receiver | self openDebugger ].
 	col2
 		displayBlock: [ :node | (Character value: node content asString first asciiValue + 2) asString ]
 ]
