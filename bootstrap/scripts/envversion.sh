@@ -20,7 +20,17 @@ function is_release_build() {
 # development branchs have the format PharoMAJOR.MINOR (e.g. Pharo7.0)
 function is_development_build() {
 	set -f 
-	local branchName=$(git branch | grep \* | cut -d' ' -f 2 | grep -E "^Pharo[0-9]+\.[0-9]+\$")
+
+	#Since jenkins does not checkout the branch but a specific commit (which is completely logical, btw) 
+	#git based way to determine branch is not valid. But jenkins provides an environment variable with the 
+	#actual branch and we can use that to know. To provide compatibility, in case I do not have a BRANCH_NAME
+	#I try to determine it using giyt.
+
+	if [ "${BRANCH_NAME}" == "" ]; then
+		BRANCH_NAME=$(git branch | grep \* | cut -d' ' -f 2)
+	fi
+
+	local branchName=$(echo "${BRANCH_NAME}" | grep -E "^Pharo[0-9]+\.[0-9]+\$")
 	if [ "${branchName}" == "" ]; then
 		echo 0
 	else
@@ -61,7 +71,6 @@ function set_version_pull_request_variables() {
 # PHARO_SHORT_VERSION -> Short version of the image (70, 80, etc.)
 # PHARO_VM_VERSION -> VM version (equivallent to PHARO_SHORT_VERSION)
 function set_version_variables() {
-	git branch
 	
 	if [ $(is_development_build) == 1 ]; then
 		if [ $(is_release_build) == 1 ]; then
