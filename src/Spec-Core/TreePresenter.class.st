@@ -152,7 +152,7 @@ TreePresenter class >> exampleWithCustomColumnsAndNodesAndChildren [
 	m openWithSpec.
 	col1 := TreeColumnPresenter new
 		displayBlock: [ :node | node content asString ];
-		headerAction: [ self halt ].
+		headerAction: [ self openDebugger ].
 	col2 := TreeColumnPresenter new
 		displayBlock: [ :node | (Character value: node content asString first asciiValue + 1) asString ].
 	m
