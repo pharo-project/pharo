@@ -234,7 +234,7 @@ RBExtractMethodRefactoring >> getNewMethodName [
 		ifFalse: 
 			[self refactoringWarning: newSelector , ' is not a valid selector name.'.
 			newSelector := nil].
-	(class hierarchyDefinesMethod: newSelector asSymbol) 
+	(class directlyDefinesMethod: newSelector) 
 		ifTrue: 
 			[(self shouldOverride: newSelector in: class) ifFalse: [newSelector := nil]].
 	newSelector isNil] 
