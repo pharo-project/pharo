@@ -32,8 +32,9 @@ GLMMorphicTabulatorRenderer >> render: aBrowser [
 
 { #category : #private }
 GLMMorphicTabulatorRenderer >> renderCustomColumn: aCell ofPane: aPane inUI: aMorph inBrowser: aBrowser [
-	| pane totalSpans currentSpanPosition currentOffset |
+	| pane totalSpans totalSizes currentSpanPosition currentOffset |
 	totalSpans := aCell children inject: 0 into: [ :sum :each | sum + each span ].
+	totalSizes := aCell children inject: 0 into: [ :sum :each | sum + each size ].
 	currentSpanPosition := 0.
 	currentOffset := 0.
 	aCell children
@@ -51,9 +52,11 @@ GLMMorphicTabulatorRenderer >> renderCustomColumn: aCell ofPane: aPane inUI: aMo
 			pane
 				layoutFrame:
 					(LayoutFrame new
-						topFraction: currentSpanPosition / totalSpans offset: currentOffset + self margin;
+						topFraction: currentSpanPosition / totalSpans
+							offset: currentOffset - (totalSizes * currentSpanPosition / totalSpans) rounded + self margin;
 						leftFraction: 0 offset: 0;
-						bottomFraction: (currentSpanPosition + each span) / totalSpans offset: currentOffset + each size - self margin;
+						bottomFraction: (currentSpanPosition + each span) / totalSpans
+							offset: currentOffset + each size - (totalSizes * (currentSpanPosition + each span) / totalSpans) rounded - self margin;
 						rightFraction: 1 offset: 0;
 						yourself).
 			aMorph addMorphBack: pane.
@@ -71,8 +74,9 @@ GLMMorphicTabulatorRenderer >> renderCustomColumn: aCell ofPane: aPane inUI: aMo
 
 { #category : #private }
 GLMMorphicTabulatorRenderer >> renderCustomRow: aCell ofPane: aPane inUI: aMorph inBrowser: aBrowser [ 
-	| pane totalSpans currentSpanPosition currentOffset |
+	| pane totalSpans totalSizes currentSpanPosition currentOffset |
 	totalSpans := aCell children inject: 0 into: [ :sum :each | sum + each span ].
+	totalSizes := aCell children inject: 0 into: [ :sum :each | sum + each size ].
 	currentSpanPosition := 0.
 	currentOffset := 0.
 	aCell children keysAndValuesDo: [ :index :each | 
@@ -88,9 +92,11 @@ GLMMorphicTabulatorRenderer >> renderCustomRow: aCell ofPane: aPane inUI: aMorph
 				pane addPaneSplitters ].
 		pane layoutFrame: (LayoutFrame new
 				topFraction: 0 offset: 0;
-				leftFraction: currentSpanPosition / totalSpans offset: currentOffset + self margin;
+				leftFraction: currentSpanPosition / totalSpans
+					offset: currentOffset - (totalSizes * currentSpanPosition / totalSpans) rounded + self margin;
 				bottomFraction: 1 offset: 0;
-				rightFraction: (currentSpanPosition + each span) / totalSpans offset: currentOffset + each size - self margin;
+				rightFraction: (currentSpanPosition + each span) / totalSpans
+					offset: currentOffset + each size - (totalSizes * (currentSpanPosition + each span) / totalSpans) rounded - self margin;
 				yourself).
 		aMorph addMorphBack: pane.
 		currentSpanPosition := currentSpanPosition + each span.
