@@ -19,7 +19,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFValueReification class >> entities [
-	^{RBVariableNode. RBAssignmentNode. RBReturnNode. RBMessageNode . RBLiteralValueNode . RBLiteralArrayNode. RBArrayNode . RBBlockNode . RBCascadeNode . RBMethodNode . LiteralVariable . Slot} 
+	^{RBValueNode . RBReturnNode. RBMethodNode . LiteralVariable . Slot} 
 ]
 
 { #category : #'plugin interface' }
