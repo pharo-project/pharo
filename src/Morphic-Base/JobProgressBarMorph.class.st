@@ -7,15 +7,48 @@ Class {
 	#name : #JobProgressBarMorph,
 	#superclass : #Morph,
 	#instVars : [
-		'button',
 		'progressBar'
 	],
 	#classVars : [
 		'BarHeight',
-		'BarWidth'
+		'BarWidth',
+		'IsInterruptable'
 	],
 	#category : #'Morphic-Base-ProgressBar'
 }
+
+{ #category : #'class initialization' }
+JobProgressBarMorph class >> initialize [ 
+	self isInterruptable: true
+]
+
+{ #category : #settings }
+JobProgressBarMorph class >> interruptionSetting: aBuilder [ 
+	<systemsettings>
+	(aBuilder setting: #isInterruptable) 
+		label: 'Make progress bar interuptable';
+		description: 'When enabled, add a button to progress bars to interupt the action when clicked.';
+		parent: #progress; 
+		target: self;
+		order: 1
+]
+
+{ #category : #accessing }
+JobProgressBarMorph class >> isInterruptable [
+	^ IsInterruptable
+]
+
+{ #category : #accessing }
+JobProgressBarMorph class >> isInterruptable: anObject [
+	IsInterruptable := anObject
+]
+
+{ #category : #initialization }
+JobProgressBarMorph >> addInterruptionButton [
+	self isInterruptable ifFalse: [ ^ self ].
+
+	self addMorphBack: (self iconNamed: #stopIcon) asMorph.
+]
 
 { #category : #accessing }
 JobProgressBarMorph >> decrement [
@@ -32,7 +65,6 @@ JobProgressBarMorph >> initialize [
 	super initialize.
 	progressBar := ProgressBarMorph new.
 	progressBar hResizing: #spaceFill.
-	button := (self iconNamed: #stopIcon) asMorph.
 	self extent: 200 @ 20.
 	self
 		color: Color transparent;
@@ -43,9 +75,13 @@ JobProgressBarMorph >> initialize [
 		listCentering: #center;
 		hResizing: #spaceFill;
 		vResizing: #shrinkWrap.
-	self
-		addMorphBack: progressBar;
-		addMorphBack: button 
+	self addMorphBack: progressBar.
+	self addInterruptionButton
+]
+
+{ #category : #testing }
+JobProgressBarMorph >> isInterruptable [ 
+	^ self class isInterruptable
 ]
 
 { #category : #accessing }
