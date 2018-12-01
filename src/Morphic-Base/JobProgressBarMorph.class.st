@@ -1,7 +1,13 @@
 "
 A JobProgressBarMorph is a progress bar with a title and a icon to stop update.
 
-JobProgressBarMorph new openInWorld
+		JobProgressBarMorph new openInWorld.
+
+I am often used by the Job class in pharo and not directly.
+
+It is possible to disable the icon to prevent the user of stopping the task via the #isInterruptable setting.
+
+		JobProgressBarMorph isInterruptable: false
 "
 Class {
 	#name : #JobProgressBarMorph,
