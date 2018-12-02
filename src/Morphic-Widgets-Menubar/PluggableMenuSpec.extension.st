@@ -2,5 +2,8 @@ Extension { #name : #PluggableMenuSpec }
 
 { #category : #'*Morphic-Widgets-Menubar' }
 PluggableMenuSpec >> asMenubarMenuMorph [
-	^ self asMenuMorphOfKind: MenubarMenuMorph
+^ (self asMenuMorphOfKind: MenubarMenuMorph)
+			layoutItems; 
+			yourself
+
 ]
