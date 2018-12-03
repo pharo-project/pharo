@@ -5970,28 +5970,28 @@ UITheme >> watcherWindowInactiveFillStyleFor: aWindow [
 UITheme >> whiteTreeExpandedForm [
 	"Answer the form to use for an expanded tree item when a contrasting one is needed."
 
-	^(self forms 
+	^ self forms 
 		at: #whiteTreeExpanded 
 		ifAbsent: [ | f |
 			f := self treeExpandedForm deepCopy.
 			f replaceColor: Color white withColor: Color transparent.
 			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
 			self forms at: #whiteTreeExpanded put: f.
-			self whiteTreeExpandedForm]) scaledByDisplayScaleFactor
+			self whiteTreeExpandedForm]
 ]
 
 { #category : #'label-styles' }
 UITheme >> whiteTreeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item when a contrasting one is needed."
 
-	^(self forms 
+	^ self forms 
 		at: #whiteTreeUnexpanded
 		ifAbsent: [ | f |
 			f := self treeUnexpandedForm deepCopy.
 			f replaceColor: Color white withColor: Color transparent.
 			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
 			self forms at: #whiteTreeUnexpanded put: f.
-			self whiteTreeUnexpandedForm]) scaledByDisplayScaleFactor
+			self whiteTreeUnexpandedForm]
 ]
 
 { #category : #'border-styles' }
