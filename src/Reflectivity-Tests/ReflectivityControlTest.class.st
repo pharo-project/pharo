@@ -595,6 +595,23 @@ ReflectivityControlTest >> testBeforeSend [
 ]
 
 { #category : #'tests - before' }
+ReflectivityControlTest >> testBeforeSendInCascade [
+	| sendNode |
+	sendNode := (ReflectivityExamples >> #exampleCascade) ast statements first value messages first.
+	self assert: sendNode isMessage.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec.
+	sendNode link: link.
+	self assert: sendNode hasMetalinkBefore.
+	self assert: (ReflectivityExamples >> #exampleCascade) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	self assert: ReflectivityExamples new exampleCascade equals: 1.
+	self assert: tag equals: #yes.
+	self assert: (ReflectivityExamples >> #exampleCascade) class equals: CompiledMethod.
+]
+
+{ #category : #'tests - before' }
 ReflectivityControlTest >> testBeforeSequence [
 	| seqNode |
 	seqNode := (ReflectivityExamples >> #exampleAssignment) ast body.
@@ -1201,6 +1218,22 @@ ReflectivityControlTest >> testLinkoptionInlineMetaObject [
 	"if we now change the meta object, the method should not be invalidated"
 	link metaObject: self class new.
 	self assert: (ReflectivityExamples>>#exampleMethod) class = CompiledMethod.
+]
+
+{ #category : #'tests - level' }
+ReflectivityControlTest >> testRecursionStopper [
+	"check that we can break a loop"
+	| methodNode |
+	methodNode := (self class >> #tagExec) ast.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec;
+		level: 0.
+	methodNode link: link.
+	self assert: methodNode hasMetalinkBefore.
+	self assert: tag isNil.
+	self tagExec.
+	self assert: tag equals: #yes.
 ]
 
 { #category : #'tests - before' }
