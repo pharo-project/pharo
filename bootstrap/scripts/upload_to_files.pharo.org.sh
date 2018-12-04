@@ -10,9 +10,8 @@ PHARO_SHORT_VERSION=$(echo "${PHARO_NAME_PREFIX}" | cut -d'-' -f 1 | cut -c 6- |
 destDir="/appli/files.pharo.org/image/${PHARO_SHORT_VERSION}/"
 echo "Uploading Images to pharo.files.org/$destDir"
 
-# ESTEBAN: Supend it for now
-# scp -o StrictHostKeyChecking=no -v \
-#  latest*.zip \
-#  ${PHARO_NAME_PREFIX}.build.*.zip \
-#  ${PHARO_NAME_PREFIX}-metacello.build.*.zip \
-#    pharoorgde@ssh.cluster023.hosting.ovh.net:files/image/${PHARO_SHORT_VERSION}/
+scp -o StrictHostKeyChecking=no -v \
+  latest*.zip \
+  ${PHARO_NAME_PREFIX}.build.*.zip \
+  ${PHARO_NAME_PREFIX}-metacello.build.*.zip \
+    pharoorgde@ssh.cluster023.hosting.ovh.net:files/image/${PHARO_SHORT_VERSION}/
