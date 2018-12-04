@@ -16,20 +16,25 @@ function is_release_build() {
     fi
 }
 
+# Ensures a variable BRANCH_NAME exits.
+function ensure_branch_name() {
+	# Since jenkins does not checkout the branch but a specific commit (which is completely logical, btw) 
+	# git based way to determine branch is not valid. But jenkins provides an environment variable with the 
+	# actual branch and we can use that to know. To provide compatibility, in case I do not have a BRANCH_NAME
+	# I try to determine it using git.
+	# This will be used below.
+	if [ "${BRANCH_NAME}" == "" ]; then
+		BRANCH_NAME=$(git branch | grep \* | cut -d' ' -f 2)
+	fi
+}
+
 # answers if we are in development branch
 # development branchs have the format PharoMAJOR.MINOR (e.g. Pharo7.0)
 function is_development_build() {
 	set -f 
-
-	#Since jenkins does not checkout the branch but a specific commit (which is completely logical, btw) 
-	#git based way to determine branch is not valid. But jenkins provides an environment variable with the 
-	#actual branch and we can use that to know. To provide compatibility, in case I do not have a BRANCH_NAME
-	#I try to determine it using giyt.
-
-	if [ "${BRANCH_NAME}" == "" ]; then
-		BRANCH_NAME=$(git branch | grep \* | cut -d' ' -f 2)
-	fi
-
+	# ensure we have BRANCH_NAME variable
+	ensure_branch_name()
+	# verify match
 	local branchName=$(echo "${BRANCH_NAME}" | grep -E "^Pharo[0-9]+\.[0-9]+\$")
 	if [ "${branchName}" == "" ]; then
 		echo 0
@@ -49,11 +54,12 @@ function set_version_release_variables() {
 
 # sets variables when we are in a snapshot build
 function set_version_snapshot_variables() {
-	# I'm not a release, but I'm in development branch. I'm a SNAPSHOT
+	# ensure we have BRANCH_NAME variable
+	ensure_branch_name()
 	# This will answer "Pharo7.0-SNAPSHOT"
-	PHARO_NAME_PREFIX="Pharo$(git branch | grep \* | cut -d' ' -f 2 | cut -d'-' -f 2)-SNAPSHOT"
+	PHARO_NAME_PREFIX="${BRANCH_NAME}-SNAPSHOT"
 	# This will answer "70"
-	PHARO_SHORT_VERSION="$(git branch | grep \* | cut -d' ' -f 2 | cut -d'-' -f 2 | sed 's/\.//')"
+	PHARO_SHORT_VERSION="$(echo ${BRANCH_NAME} | cut -c 6- | sed 's/\.//')"
 }
 
 # sets variables when we are in a pull request build
@@ -66,10 +72,11 @@ function set_version_pull_request_variables() {
 	PHARO_SHORT_VERSION="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
 }
 
-# sets all variables
-# PHARO_NAME_PREFIX -> Prefix to name the buids (Pharo7.0.0-rc1, Pharo7.0-SNAPSHOT, Pharo7.0.0-PR)
-# PHARO_SHORT_VERSION -> Short version of the image (70, 80, etc.)
-# PHARO_VM_VERSION -> VM version (equivallent to PHARO_SHORT_VERSION)
+# sets all variables:
+# 
+#  PHARO_NAME_PREFIX -> Prefix to name the buids (Pharo7.0.0-rc1, Pharo7.0-SNAPSHOT, Pharo7.0.0-PR)
+#  PHARO_SHORT_VERSION -> Short version of the image (70, 80, etc.)
+#  PHARO_VM_VERSION -> VM version (equivallent to PHARO_SHORT_VERSION)
 function set_version_variables() {
 	
 	if [ $(is_development_build) == 1 ]; then
