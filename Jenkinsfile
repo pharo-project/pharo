@@ -11,7 +11,7 @@ def isWindows(){
 // Answers if we are in a development branch (we assume is a development branch if it starts with "Pharo")
 def isDevelopmentBranch() {
 	def branchName =  env.BRANCH_NAME 
-	def baseName = branchName.substring(1, 5)
+	def baseName = branchName.substring(0, 5)
 	
 	return baseName == "Pharo"
 }
