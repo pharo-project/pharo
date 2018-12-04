@@ -24,18 +24,20 @@ function ensure_branch_name() {
 	# I try to determine it using git.
 	# This will be used below.
 	if [ "${BRANCH_NAME}" == "" ]; then
-		BRANCH_NAME=$(git branch | grep \* | cut -d' ' -f 2)
+		set -f
+		BRANCH_NAME="$(git branch | grep \* | cut -d' ' -f 2)"
 	fi
 }
 
 # answers if we are in development branch
 # development branchs have the format PharoMAJOR.MINOR (e.g. Pharo7.0)
 function is_development_build() {
-	set -f 
+	local branchName
+
 	# ensure we have BRANCH_NAME variable
 	ensure_branch_name
 	# verify match
-	local branchName=$(echo "${BRANCH_NAME}" | grep -E "^Pharo[0-9]+\.[0-9]+\$")
+	branchName=$(echo "${BRANCH_NAME}" | grep -E "^Pharo[0-9]+\.[0-9]+\$")
 	if [ "${branchName}" == "" ]; then
 		echo 0
 	else
