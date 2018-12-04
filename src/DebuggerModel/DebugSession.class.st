@@ -3,21 +3,20 @@ A DebugSession models a debuggeing session. It contains the interrupted context 
 
 As it is just a model it does now contain any information related to the ui. For example, it does not know what a selection in the ui is. It is the job on the ui to maintain the selection and call this session with the propper context.
 
-To create sessions use the mehod 'process: aProcess context: aContext'. aContext must be a context belonging to aProcess, and aProcess must be an interrupted process.
+To create sessions use the method 'process: aProcess context: aContext'. aContext must be a context belonging to aProcess, and aProcess must be an interrupted process.
 
 Instance Variables
-	context:		<Object>
-	errorWasInUIProcess:		<Object>
-	process:		<Object>
+	name:
+	interruptedContext: Context
+	interruptedProcess: Process
+	errorWasInUIProcess: Boolean
+	
+interruptedContext
+is the context which sent the signal message that eventually raised the exception that invoked the debugger. It can be different from the suspendedContext of the interruptedProcess, which is the top (“hot”) context the interruptedProcess’s context chain.
+Why interruptedContext is different from the suspendedContext of the interruptedProcess:
+Because the exception system is implemented in Smalltalk, the handling of the initial signal (eg in Object>>#halt), all the way to opening a debugger, is itself Smalltalk code, and exists as activations from suspendedContext to interruptedContext.  The debugger, with help from the exception system, carefully hides this processing from the programmer.  If it did not we would have to wade through many activations before we found where the exception occurred. When a process is interrupted by control period things are different.  Here, another process handles opening the debugger and suspendedContext and interruptedContext are the same.
 
-context
-	- xxxxx
 
-errorWasInUIProcess
-	- xxxxx
-
-process
-	- xxxxx
 
 "
 Class {
