@@ -33,7 +33,7 @@ function ensure_branch_name() {
 function is_development_build() {
 	set -f 
 	# ensure we have BRANCH_NAME variable
-	ensure_branch_name()
+	ensure_branch_name
 	# verify match
 	local branchName=$(echo "${BRANCH_NAME}" | grep -E "^Pharo[0-9]+\.[0-9]+\$")
 	if [ "${branchName}" == "" ]; then
@@ -55,7 +55,7 @@ function set_version_release_variables() {
 # sets variables when we are in a snapshot build
 function set_version_snapshot_variables() {
 	# ensure we have BRANCH_NAME variable
-	ensure_branch_name()
+	ensure_branch_name
 	# This will answer "Pharo7.0-SNAPSHOT"
 	PHARO_NAME_PREFIX="${BRANCH_NAME}-SNAPSHOT"
 	# This will answer "70"
