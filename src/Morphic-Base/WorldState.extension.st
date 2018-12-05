@@ -16,7 +16,16 @@ WorldState class >> debugOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Debugging)
 		order: 3.5;
-		with: [ (aBuilder item: #'Remove all Breakpoints')
+		with: [
+			(aBuilder item: #'Open Breakpoint Browser')
+				order: 1;
+				help: 'Lists all breakpoints and halts in the image.';
+				action: [ BreakpointBrowser open ].
+			(aBuilder item: #'Open Breakpoint Browser (unfiltered)')
+				order: 2;
+				help: 'Lists all breakpoints and halts in the image, even those from system tests.';
+				action: [ BreakpointBrowser openUnfiltered ].
+			(aBuilder item: #'Remove all Breakpoints')
 				order: 0;
 				help: 'Remove all the breakpoints of the image.';
 				action: [ Breakpoint removeAll ].
