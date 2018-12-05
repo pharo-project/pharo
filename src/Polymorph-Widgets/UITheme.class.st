@@ -2707,12 +2707,12 @@ UITheme >> menubarFillStyleFor: aMenubar [
 
 { #category : #'fill-styles-menubar' }
 UITheme >> menubarItemSelectionFillStyleFor: aMenubarItem [
-	^ self taskbarItemSelectedFillStyleFor: aMenubarItem
+	^ self settings menuSelectionColor
 ]
 
 { #category : #'fill-styles-menubar' }
 UITheme >> menubarItemSelectionTextColorFor: aMenubarItem [
-	^ self taskbarItemLabelColorForExpanded: aMenubarItem
+	^ self settings menuSelectionTextColor
 ]
 
 { #category : #services }
