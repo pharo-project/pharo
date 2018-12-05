@@ -19,7 +19,7 @@ def isDevelopmentBranch() {
 // Extracts Pharo version from the development branch (if it is "Pharo7.0" it will answer "7.0")
 def getPharoVersionFromBranch() {
 	def branchName =  env.BRANCH_NAME 
-	return branchName.substring(6)
+	return branchName.substring(5)
 }
 
 def shell(params){
