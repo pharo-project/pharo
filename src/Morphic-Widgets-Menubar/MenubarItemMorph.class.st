@@ -19,7 +19,7 @@ MenubarItemMorph >> drawIconOn: aCanvas [
 	x := (self menuStringBounds left - iconForm width - 5 ).
 	y := (self top + ((self height - iconForm height) // 2)).
 	
-	self shouldBeHighlighted ifTrue: [ y := y + 2 ].
+	"self shouldBeHighlighted ifTrue: [ y := y + 2 ]." "Stop moving"
 	
 	aCanvas translucentImage: iconForm at: x @ y
 ]
@@ -35,22 +35,23 @@ MenubarItemMorph >> menuStringBounds [
 
 	| oldBounds |
 	oldBounds := super menuStringBounds.
-	self shouldBeHighlighted ifTrue: [ oldBounds := oldBounds top: oldBounds top + 2 ].
+	"Stop shifting elements.
+	self shouldBeHighlighted ifTrue: [ oldBounds := oldBounds top: oldBounds top + 2 ]".
 	^ oldBounds left: (oldBounds left + oldBounds right - self measureContents x) // 2
 ]
 
 { #category : #drawing }
 MenubarItemMorph >> minHeight [
 
-	^ super minHeight + 6
+	^ super minHeight
 ]
 
 { #category : #private }
 MenubarItemMorph >> selectionFillStyle [
-	^ self theme menubarItemSelectionFillStyleFor: self
+	^ self theme settings menuSelectionColor.
 ]
 
 { #category : #private }
 MenubarItemMorph >> selectionTextColor [
-	^ self theme menubarItemSelectionTextColorFor: self
+	^ self theme settings menuSelectionTextColor.
 ]
