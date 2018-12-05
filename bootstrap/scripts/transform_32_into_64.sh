@@ -60,7 +60,7 @@ for f in  ${PHARO_NAME_PREFIX}-32bit-*.zip; do
 	dd if="displaySize.bin" of="${PHARO_NAME_PREFIX}-64bit-$HASH.image" bs=1 seek=40 count=4 conv=notrunc
 	
 	echo "70" > pharo.version
-	PHARO_SOURCES_PREFIX=$(echo "${PHARO_NAME_PREFIX}" | cut -d'.' -f 1-2)
+	PHARO_SOURCES_PREFIX=$(echo "${PHARO_NAME_PREFIX}" | cut -d'-' -f 1)	
 	zip ${PHARO_NAME_PREFIX}-64bit-$HASH.zip ${PHARO_NAME_PREFIX}-64bit-$HASH.* ${PHARO_SOURCES_PREFIX}*.sources pharo.version
 	rm -f *.image *.changes *.sources
 done
