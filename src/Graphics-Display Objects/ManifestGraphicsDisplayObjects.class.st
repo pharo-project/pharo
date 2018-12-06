@@ -9,5 +9,5 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestGraphicsDisplayObjects class >> manuallyResolvedDependencies [
-	^ #(#'Graphics-Canvas' #'Polymorph-Widgets' #'Graphics-Files' #'Collections-Streams')
+	^ #(#'Graphics-Canvas' #'Polymorph-Widgets-Core' #'Graphics-Files' #'Collections-Streams')
 ]

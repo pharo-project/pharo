@@ -94,7 +94,7 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'NewValueHolder-Core'.
 
-		spec package: 'Polymorph-Widgets'.
+		spec package: 'Polymorph-Widgets-Core'.
 		
 		spec package: 'Images-Animated'.
 

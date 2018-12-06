@@ -552,7 +552,7 @@ spec group: 'BlueInk-Group' with: #(
 ).
 
 spec group: 'Shout-Core-Group' with: #(
-	'Shout'		"'Polymorph-Widgets' and 'NECompletion' depend on it, fix needed?"
+	'Shout'		"'Polymorph-Widgets-Core' and 'NECompletion' depend on it, fix needed?"
 	'Rubric-Styling'	"requires 'Shout'"      
 ).
 spec group: 'Shout-Tests-Group' with: #(
