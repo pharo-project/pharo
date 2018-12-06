@@ -105,7 +105,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'System-Caching'.
 		spec package: 'System-History'.
 		spec package: 'System-Installers'.
-		spec package: 'System-Settings'.
+		spec package: 'System-Settings-Core'.
 		spec package: 'System-Sound'.
 		
 		spec package: 'Text-Diff'.
