@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'range'
 	],
-	#category : #'System-Settings-Core'
+	#category : #'System-Settings-Core-Base'
 }
 
 { #category : #'user interface' }
