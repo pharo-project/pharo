@@ -82,27 +82,21 @@ ZipArchive class >> findEndOfCentralDirectoryFrom: stream [
 ]
 
 { #category : #'file format' }
-ZipArchive class >> isFileAZipArchive: aFile [
-	"Answer whether the given file represents a valid zip file."
+ZipArchive class >> isZipArchive: file [
+	"Answer whether the given file represents a valid zip file. The argument file can be a String, FileReference or an open binary read stream.
 	
-	^ self isZipArchive: aFile fullName
-]
-
-{ #category : #'file format' }
-ZipArchive class >> isZipArchive: aStreamOrFileName [
-	"Answer whether the given filename represents a valid zip file."
+	See ZipArchiveTest>>testisZipArchive for examples."
 
 	| stream eocdPosition |
-	self flag: #clean. "This assert is here to help the transition between Pharo 6.1 and 7. In Pharo "
-	self assert: (aStreamOrFileName isStream or: [ aStreamOrFileName isString]) description: 'In Pharo 6 this method worked on FileReferences. Now it does not. If you want to make it work on a file reference, use #isFileAZipArchive:'. 
-	stream := aStreamOrFileName isStream
-		ifTrue: [aStreamOrFileName]
-		ifFalse: [File openForReadFileNamed: aStreamOrFileName].
-	stream ifNil: [^ false].
-	"nil happens sometimes somehow"
-	stream size < 22 ifTrue: [^ false].
+	stream := file isStream
+		ifTrue: [ file ]
+		ifFalse: [ file asFileReference binaryReadStream ].
+		
+	stream size < 22 ifTrue: [ ^ false ].
+	
 	eocdPosition := self findEndOfCentralDirectoryFrom: stream.
-	stream ~= aStreamOrFileName ifTrue: [stream close].
+	stream ~= file ifTrue: [ stream close ].
+	
 	^ eocdPosition > 0
 ]
 
