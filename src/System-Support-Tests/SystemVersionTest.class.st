@@ -1,5 +1,5 @@
 "
-SUnit tests for SystemVersion
+SUnit tests for SystemVersion.
 "
 Class {
 	#name : #SystemVersionTest,
