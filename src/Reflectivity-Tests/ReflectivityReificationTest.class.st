@@ -103,6 +103,63 @@ ReflectivityReificationTest >> testBlockOperationInstead [
 	self assert: (ReflectivityExamples >> #exampleBlock) class equals: CompiledMethod.
 ]
 
+{ #category : #'tests - blocks - body' }
+ReflectivityReificationTest >> testBlockSequenceArguments [
+	| blockNode |
+	blockNode := (ReflectivityExamples >> #exampleBlock) ast statements first value receiver body.
+	self assert: blockNode isSequence.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #before;
+		arguments: #(arguments).
+	blockNode link: link.
+	self assert: blockNode hasMetalinkBefore.
+	self assert: (ReflectivityExamples >> #exampleBlock) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	self assert: ReflectivityExamples new exampleBlock == 5.
+	self assert: tag equals: #().
+	self assert: (ReflectivityExamples >> #exampleBlock) class equals: CompiledMethod.
+]
+
+{ #category : #'tests - blocks - body' }
+ReflectivityReificationTest >> testBlockSequenceArgumentsWithArg [
+	| blockNode |
+	blockNode := (ReflectivityExamples >> #exampleBlockWithArg) ast statements first value receiver body.
+	self assert: blockNode isSequence.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #before;
+		arguments: #(arguments).
+	blockNode link: link.
+	self assert: blockNode hasMetalinkBefore.
+	self assert: (ReflectivityExamples >> #exampleBlockWithArg) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	self assert: ReflectivityExamples new exampleBlockWithArg == 5.
+	self assert: tag equals: #(2).
+	self assert: (ReflectivityExamples >> #exampleBlockWithArg) class equals: CompiledMethod.
+]
+
+{ #category : #'tests - blocks - body' }
+ReflectivityReificationTest >> testBlockSequenceArgumentsWithArgAfter [
+	| blockNode |
+	blockNode := (ReflectivityExamples >> #exampleBlockWithArg) ast statements first value receiver body.
+	self assert: blockNode isSequence.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #after;
+		arguments: #(arguments).
+	blockNode link: link.
+	self assert: blockNode hasMetalinkAfter.
+	self assert: (ReflectivityExamples >> #exampleBlockWithArg) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	self assert: ReflectivityExamples new exampleBlockWithArg == 5.
+	self assert: tag equals: #(2).
+	self assert: (ReflectivityExamples >> #exampleBlockWithArg) class equals: CompiledMethod.
+]
+
 { #category : #'tests - blocks' }
 ReflectivityReificationTest >> testBlockValueAfter [
 	| blockNode |

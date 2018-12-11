@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFArgumentsReification class >> entities [
-	^{RBMessageNode. RBMethodNode. RBBlockNode}
+	^{RBMessageNode. RBMethodNode. RBSequenceNode}
 ]
 
 { #category : #'plugin interface' }
@@ -23,15 +23,21 @@ RFArgumentsReification >> genForRBMessageNode [
 ]
 
 { #category : #generate }
-RFArgumentsReification >> genForRBProgramNode [
+RFArgumentsReification >> genForRBMethodNode [
+	^RBTemporaryNode named: self varName.
+]
+
+{ #category : #generate }
+RFArgumentsReification >> genForRBSequenceNode [
 	^RBTemporaryNode named: self varName.
 ]
 
 { #category : #generate }
 RFArgumentsReification >> preamble: aNode [
-	^aNode isMessage 
-		ifTrue: [ self preambleForMessage: aNode ]
-		ifFalse: [ self preambleForMethod: aNode ]
+	aNode isMessage ifTrue: [ ^self preambleForMessage: aNode ].
+	aNode isMethod	ifTrue: [ ^self preambleForMethod: aNode ].
+	aNode isSequence ifTrue: [ ^self preambleSequence: aNode ].
+	^#().
 ]
 
 { #category : #generate }
@@ -62,6 +68,16 @@ RFArgumentsReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
 	arguments := aNode argumentNames collect: [ :name | RBTemporaryNode named: name].
+	preamble addAll: (RBArrayNode statements: arguments).
+	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
+	^ preamble 
+]
+
+{ #category : #generate }
+RFArgumentsReification >> preambleSequence: aNode [
+	| preamble arguments |
+	preamble := OrderedCollection new.
+	arguments := aNode parent argumentNames collect: [ :name | RBTemporaryNode named: name].
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
 	^ preamble 
