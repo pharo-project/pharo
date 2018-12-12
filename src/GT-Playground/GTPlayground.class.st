@@ -163,6 +163,20 @@ GTPlayground class >> openLabel: aLabel [
 	^ self openOn: page
 ]
 
+{ #category : #'instance creation' }
+GTPlayground class >> openUrl: urlOrString [
+	"Open a new Playground with the contents of a text/plain web resource at urlOrString,
+	like the one you get from remote publishing a Playground as a Shared Smalltalk Workspace. 
+	See http://ws.stfx.eu - a Pastebin for Smalltalk - https://en.wikipedia.org/wiki/Pastebin"
+	
+	"self openUrl: 'http://ws.stfx.eu/1WS4U'"
+	
+	| page |
+	page := GTPlayPage basicLoadFromPublishUrl: urlOrString asUrl.
+	page title: urlOrString asUrl printString.
+	^ self openOn: page
+]
+
 { #category : #settings }
 GTPlayground class >> preferredExtent [
 	^ PreferredExtent ifNil: [ PreferredExtent := 600@400 ]
