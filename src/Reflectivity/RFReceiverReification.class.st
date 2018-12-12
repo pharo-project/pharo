@@ -28,14 +28,7 @@ RFReceiverReification >> genForRBMethodNode [
 	
 ]
 
-{ #category : #generate }
-RFReceiverReification >> preamble: aNode [
-	^aNode isMessage 
-		ifTrue: [self preambleForMessage: aNode]
-		ifFalse: [{}]
-]
-
-{ #category : #generate }
+{ #category : #preamble }
 RFReceiverReification >> preambleForMessage: aNode [
 	| preamble |
 	preamble := OrderedCollection new.

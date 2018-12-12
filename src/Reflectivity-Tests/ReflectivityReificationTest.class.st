@@ -160,6 +160,25 @@ ReflectivityReificationTest >> testBlockSequenceArgumentsWithArgAfter [
 	self assert: (ReflectivityExamples >> #exampleBlockWithArg) class equals: CompiledMethod.
 ]
 
+{ #category : #'tests - blocks - body' }
+ReflectivityReificationTest >> testBlockSequenceArgumentsWithArgAfterInstead [
+	| blockNode |
+	blockNode := (ReflectivityExamples >> #exampleBlockWithArg) ast statements first value receiver body.
+	self assert: blockNode isSequence.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #instead;
+		arguments: #(arguments).
+	blockNode link: link.
+	self assert: blockNode hasMetalinkInstead.
+	self assert: (ReflectivityExamples >> #exampleBlockWithArg) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	self assert: ReflectivityExamples new exampleBlockWithArg == self.
+	self assert: tag equals: #(2).
+	self assert: (ReflectivityExamples >> #exampleBlockWithArg) class equals: CompiledMethod.
+]
+
 { #category : #'tests - blocks' }
 ReflectivityReificationTest >> testBlockValueAfter [
 	| blockNode |
@@ -897,7 +916,7 @@ ReflectivityReificationTest >> testReifyMethod [
 	self deny: (tag == origMethod).
 ]
 
-{ #category : #'tests - method' }
+{ #category : #'tests - method ' }
 ReflectivityReificationTest >> testReifyMethodArgs [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleWithArg:) ast.
@@ -916,11 +935,8 @@ ReflectivityReificationTest >> testReifyMethodArgs [
 	self assert: tag equals: #(3)
 ]
 
-{ #category : #'tests - method' }
+{ #category : #'tests - method ' }
 ReflectivityReificationTest >> testReifyMethodArgsAfter [
-	" test that we can access reification in an after link on method
-	  after on method is always using ensure: wrapping
-	"
 	| methodNode instance |
 	methodNode := (ReflectivityExamples >> #exampleWithArg:) ast.
 	link := MetaLink new
@@ -937,13 +953,8 @@ ReflectivityReificationTest >> testReifyMethodArgsAfter [
 	self assert: tag equals: #(3)
 ]
 
-{ #category : #'tests - method' }
+{ #category : #'tests - method ' }
 ReflectivityReificationTest >> testReifyMethodArgsAfter2 [
-	" test that we can access reification in an after link on method
-	  after on method is always using ensure: wrapping
-	  More complex case
-	"
-
 	| methodNode |
 	methodNode := (ReflectivityExamples >> #exampleMethod) ast.
 	link := MetaLink new
@@ -965,7 +976,64 @@ ReflectivityReificationTest >> testReifyMethodArgsAfter2 [
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: CompiledMethod
 ]
 
-{ #category : #'tests - method' }
+{ #category : #'tests - method - body' }
+ReflectivityReificationTest >> testReifyMethodBodyArgsAfter [
+	| sequenceNode instance |
+	sequenceNode := (ReflectivityExamples >> #exampleWithArg:) ast body.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #after;
+		arguments: #(arguments).
+	sequenceNode link: link.
+	self assert: sequenceNode isSequence.
+	self assert: sequenceNode hasMetalink.
+	self assert: (ReflectivityExamples >> #exampleWithArg:) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: tag equals: #(3)
+]
+
+{ #category : #'tests - method - body' }
+ReflectivityReificationTest >> testReifyMethodBodyArgsBefore [
+	| sequenceNode instance |
+	sequenceNode := (ReflectivityExamples >> #exampleWithArg:) ast body.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #before;
+		arguments: #(arguments).
+	sequenceNode link: link.
+	self assert: sequenceNode isSequence.
+	self assert: sequenceNode hasMetalink.
+	self assert: (ReflectivityExamples >> #exampleWithArg:) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: tag equals: #(3)
+]
+
+{ #category : #'tests - method - body' }
+ReflectivityReificationTest >> testReifyMethodBodyArgsInstead [
+	| sequenceNode instance |
+	sequenceNode := (ReflectivityExamples >> #exampleWithArg:) ast body.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #instead;
+		arguments: #(arguments).
+	sequenceNode link: link.
+	self assert: sequenceNode isSequence.
+	self assert: sequenceNode hasMetalink.
+	self assert: (ReflectivityExamples >> #exampleWithArg:) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: (instance exampleWithArg: 3) equals: self.
+	self assert: tag equals: #(3)
+]
+
+{ #category : #'tests - method ' }
 ReflectivityReificationTest >> testReifyMethodReceiver [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast.
@@ -984,7 +1052,7 @@ ReflectivityReificationTest >> testReifyMethodReceiver [
 	self assert: tag equals: instance
 ]
 
-{ #category : #'tests - method' }
+{ #category : #'tests - method ' }
 ReflectivityReificationTest >> testReifyMethodSelector [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast.
@@ -1003,7 +1071,7 @@ ReflectivityReificationTest >> testReifyMethodSelector [
 	self assert: tag equals: #exampleMethod
 ]
 
-{ #category : #'tests - method' }
+{ #category : #'tests - method ' }
 ReflectivityReificationTest >> testReifyMethodThisContext [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast.
@@ -1022,7 +1090,7 @@ ReflectivityReificationTest >> testReifyMethodThisContext [
 	self assert: tag class equals: Context
 ]
 
-{ #category : #'tests - method' }
+{ #category : #'tests - method ' }
 ReflectivityReificationTest >> testReifyMethodThisContextAfter [
 	| sendNode instance |
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast.
@@ -1043,7 +1111,7 @@ ReflectivityReificationTest >> testReifyMethodThisContextAfter [
 	self deny: tag isBlockContext.
 ]
 
-{ #category : #'tests - method' }
+{ #category : #'tests - method ' }
 ReflectivityReificationTest >> testReifyMethodValue [
 	| methodNode instance |
 	methodNode := (ReflectivityExamples >> #exampleMethod) ast.

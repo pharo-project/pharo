@@ -163,7 +163,50 @@ RFReification >> postamble: aNode [
 	^#()
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFReification >> preamble: aNode [
+	(aNode isKindOf: RBProgramNode) ifFalse: [ ^#() ]. "variables not yet suported"
+	aNode isMessage ifTrue: [ ^self preambleForMessage: aNode ].
+	aNode isMethod	ifTrue: [ ^self preambleForMethod: aNode ].
+	aNode isSequence ifTrue: [ ^self preambleSequence: aNode ].
+	aNode isReturn ifTrue: [ ^ self preambleForReturn: aNode ].
+	aNode isDynamicArray ifTrue: [ ^self preambleForArray: aNode ].
+	aNode isAssignment ifTrue: [ ^self preambleForAssignment: aNode ].
+	aNode isVariable ifTrue: [ ^self preambleForVariable: aNode ].
+	^#().
+]
+
+{ #category : #preamble }
+RFReification >> preambleForArray: aNode [
+	^#()
+]
+
+{ #category : #preamble }
+RFReification >> preambleForAssignment: aNode [
+	^#()
+]
+
+{ #category : #preamble }
+RFReification >> preambleForMessage: aNode [
+	^#()
+]
+
+{ #category : #preamble }
+RFReification >> preambleForMethod: aNode [
+	^#()
+]
+
+{ #category : #preamble }
+RFReification >> preambleForReturn: aNode [
+	^#()
+]
+
+{ #category : #preamble }
+RFReification >> preambleForVariable: aNode [
+	^#()
+]
+
+{ #category : #preamble }
+RFReification >> preambleSequence: aNode [
 	^#()
 ]

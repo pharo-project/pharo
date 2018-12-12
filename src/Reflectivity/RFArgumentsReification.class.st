@@ -32,15 +32,7 @@ RFArgumentsReification >> genForRBSequenceNode [
 	^RBTemporaryNode named: self varName.
 ]
 
-{ #category : #generate }
-RFArgumentsReification >> preamble: aNode [
-	aNode isMessage ifTrue: [ ^self preambleForMessage: aNode ].
-	aNode isMethod	ifTrue: [ ^self preambleForMethod: aNode ].
-	aNode isSequence ifTrue: [ ^self preambleSequence: aNode ].
-	^#().
-]
-
-{ #category : #generate }
+{ #category : #preamble }
 RFArgumentsReification >> preambleForMessage: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -63,7 +55,7 @@ RFArgumentsReification >> preambleForMessage: aNode [
 	^ preamble 
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFArgumentsReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -73,7 +65,7 @@ RFArgumentsReification >> preambleForMethod: aNode [
 	^ preamble 
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFArgumentsReification >> preambleSequence: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
