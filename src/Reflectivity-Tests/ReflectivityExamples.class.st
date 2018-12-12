@@ -63,6 +63,11 @@ ReflectivityExamples >> exampleBlockNoValue [
 ]
 
 { #category : #examples }
+ReflectivityExamples >> exampleBlockWithArg [
+	^ [:a | a + 3] value: 2 
+]
+
+{ #category : #examples }
 ReflectivityExamples >> exampleCascade [
 	^1 sin; yourself
 ]

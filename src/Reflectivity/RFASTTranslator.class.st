@@ -77,7 +77,8 @@ RFASTTranslator >> emitPrepareLinkAfter: aNode [
 	copied := #().
 	aNode hasMetalinkAfter ifFalse: [^self].
 	aNode allAfterAreWeak ifTrue: [ ^self ].
-	aNode isMethod ifTrue: [ copied := aNode argumentNames, aNode tempNames ].
+	aNode isMethod ifTrue: [ copied := aNode argumentNames, aNode temporaryNames ].
+	aNode isSequence ifTrue: [ copied := aNode parent argumentNames, aNode parent temporaryNames ].
 	methodBuilder
 		pushClosureCopyCopiedValues: copied
 		args: #()
