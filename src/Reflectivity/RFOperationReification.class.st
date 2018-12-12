@@ -124,17 +124,7 @@ RFOperationReification >> genForRBVariableNode [
 
 ]
 
-{ #category : #generate }
-RFOperationReification >> preamble: aNode [
-	aNode isMessage ifTrue: [ ^self preambleForMessage: aNode ].
-	aNode isMethod  ifTrue: [ ^self preambleForMethod:  aNode ].
-	aNode isReturn ifTrue:  [ ^self preambleForReturn:  aNode ].
-	aNode isAssignment ifTrue: [ ^self preambleForAssignment: aNode ].
-	aNode isDynamicArray ifTrue: [ ^self preambleForArray: aNode ].
-	^super preamble: aNode.
-]
-
-{ #category : #generate }
+{ #category : #preamble }
 RFOperationReification >> preambleForArray: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -159,12 +149,12 @@ RFOperationReification >> preambleForArray: aNode [
 	
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFOperationReification >> preambleForAssignment: aNode [
 	^RFStoreIntoTempNode named: #RFNewValueReificationVar
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFOperationReification >> preambleForMessage: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -190,7 +180,7 @@ RFOperationReification >> preambleForMessage: aNode [
 	^ preamble 
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFOperationReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -200,7 +190,7 @@ RFOperationReification >> preambleForMethod: aNode [
 	^ preamble 
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFOperationReification >> preambleForReturn: aNode [
 	^RFStoreIntoTempNode named: #RFReifyValueVar
 ]

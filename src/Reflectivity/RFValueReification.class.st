@@ -105,16 +105,7 @@ RFValueReification >> postamble: aNode [
 	 
 ]
 
-{ #category : #generate }
-RFValueReification >> preamble: aNode [
-	(aNode isKindOf: RBProgramNode) ifFalse: [ ^#() ].
-	aNode isReturn ifTrue: [^RFStoreIntoTempNode named: #RFReifyValueVar].
-	aNode isDynamicArray ifTrue: [ ^self preambleForArray: aNode ].
-	^#().
-	 
-]
-
-{ #category : #generate }
+{ #category : #preamble }
 RFValueReification >> preambleForArray: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -137,4 +128,9 @@ RFValueReification >> preambleForArray: aNode [
 	preamble addAll: arguments.
 	^ preamble 
 	
+]
+
+{ #category : #preamble }
+RFValueReification >> preambleForReturn: aNode [
+	^ RFStoreIntoTempNode named: #RFReifyValueVar
 ]
