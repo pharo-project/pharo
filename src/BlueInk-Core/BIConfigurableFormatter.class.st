@@ -997,6 +997,7 @@ BIConfigurableFormatter >> needsParenthesisFor: aNode [
 	aNode ifNil: [ ^ false ].
 	aNode isValue
 		ifFalse: [ ^ false ].
+	aNode isParseError ifTrue: [ ^false ].
 	parent := aNode parent ifNil: [ ^ false ].
 	(aNode isMessage and: [ 
 		parent isMessage and: [ 
@@ -1477,6 +1478,11 @@ BIConfigurableFormatter >> visitNode: aNode [
 				ifFalse: [ self formatCommentsFor: aNode ].
 			needsParenthesis
 				ifTrue: [ codeStream nextPutAll: self stringInsideParentheses ] ]
+]
+
+{ #category : #visiting }
+BIConfigurableFormatter >> visitParseErrorNode: aNode [
+	self writeString: aNode value
 ]
 
 { #category : #visiting }

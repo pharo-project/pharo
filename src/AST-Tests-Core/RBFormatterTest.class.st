@@ -74,6 +74,16 @@ RBFormatterTest >> testLiteralDynamicArray [
 ]
 
 { #category : #testing }
+RBFormatterTest >> testParseError [
+	| inputSource errorNode |
+	"parse error nodes should have the faulty code"
+	inputSource := ')'.
+   errorNode := RBParser parseFaultyExpression: inputSource.
+	self assert: errorNode source equals: errorNode formattedCode
+
+]
+
+{ #category : #testing }
 RBFormatterTest >> testPreserveLiteralArrayFormat [
 	| inputSource literalArrayNode |
 	"symbols within a literal array can omit the # character, if it is used that way,
