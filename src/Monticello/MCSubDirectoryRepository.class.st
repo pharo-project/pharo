@@ -75,11 +75,10 @@ MCSubDirectoryRepository >> loadAllFileNames [
 
 { #category : #'i/o' }
 MCSubDirectoryRepository >> readStreamForFileNamed: aString do: aBlock [
-	| file val |
-	file := FileStream readOnlyFileNamed: (self findFullNameForReading: aString).
-	val := aBlock value: file.
-	file close.
-	^ val
+
+	| fileReference |
+	fileReference := (self findFullNameForReading: aString) reference.
+	fileReference binaryReadStreamDo: [ :stream | ^ aBlock value: stream ].
 ]
 
 { #category : #'i/o' }
@@ -96,13 +95,11 @@ MCSubDirectoryRepository >> splitNameVersionExtensionFor: aBaseName [
 ]
 
 { #category : #'i/o' }
-MCSubDirectoryRepository >> writeStreamForFileNamed: aString replace: aBoolean do: aBlock [ 
-	| file |
-	file := aBoolean
-				ifTrue: [FileStream
-						forceNewFileNamed: (self findFullNameForReading: aString)]
-				ifFalse: [FileStream
-						newFileNamed: (self findFullNameForWriting: aString)].
-	aBlock value: file.
-	file close
+MCSubDirectoryRepository >> writeStreamForFileNamed: aString replace: shouldReplace do: aBlock [ 
+
+	| fileReference |
+	fileReference := (self findFullNameForWriting: aString).
+	fileReference parent ensureCreateDirectory.
+	shouldReplace ifTrue: [ fileReference ensureDelete ].
+	fileReference binaryWriteStreamDo: [ :stream | aBlock value: stream ]
 ]
