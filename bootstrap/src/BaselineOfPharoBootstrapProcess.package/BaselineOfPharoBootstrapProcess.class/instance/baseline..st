@@ -7,7 +7,7 @@ baseline: spec
 		spec baseline: 'Tonel' with: [ spec
 			repository: 'github://pharo-vcs/tonel:v1.0.11' ].
 		spec baseline: 'Hermes' with: [ spec
-			repository: 'github://tesonep/hermes:v2.5.0';
+			repository: 'github://tesonep/hermes:v2.5.1';
   			loads: 'core' ].
 		spec
 			 package: 'Pharo30Bootstrap'.

@@ -12,7 +12,7 @@ SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 mkdir -p "${BOOTSTRAP_CACHE}" #required to generate hermes files
 
 ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 70
-wget https://github.com/tesonep/PharoBootstrap/releases/download/v1.6.0/bootstrapImage.zip
+wget https://github.com/carolahp/PharoBootstrap/releases/download/v1.7.0/bootstrapImage.zip
 unzip bootstrapImage.zip
 
 cd "${BOOTSTRAP_CACHE}"
