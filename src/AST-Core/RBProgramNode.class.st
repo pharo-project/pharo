@@ -472,6 +472,11 @@ RBProgramNode >> isMethod [
 	^false
 ]
 
+{ #category : #testing }
+RBProgramNode >> isParseError [
+	^false
+]
+
 { #category : #'testing-matching' }
 RBProgramNode >> isPatternNode [
 	^false
