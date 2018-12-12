@@ -104,7 +104,7 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 		arguments: {RBArrayNode statements: ast arguments . (RFLiteralVariableNode value: wrappedMethod)}.
 	
 	assignmentNode := RBAssignmentNode 
-		variable: (RBVariableNode named: #RFValueReificationVar)
+		variable: (RBVariableNode named: #RFReifyValueVar)
 		value: send.
 		
 	wrapperMethod := RBMethodNode

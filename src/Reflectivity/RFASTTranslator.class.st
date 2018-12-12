@@ -267,7 +267,7 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 	].
 	effectTranslator visitNode: aMethodNode body.
 	aMethodNode isPrimitive ifFalse: [self emitMetaLinkAfterNoEnsure: aMethodNode].
-	(aMethodNode hasProperty: #wrappedPrimitive) ifTrue: [methodBuilder pushTemp: #RFValueReificationVar; returnTop].
+	(aMethodNode hasProperty: #wrappedPrimitive) ifTrue: [methodBuilder pushTemp: #RFReifyValueVar; returnTop].
 	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop].
 
 ]
