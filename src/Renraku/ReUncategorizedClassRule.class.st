@@ -44,7 +44,7 @@ ReUncategorizedClassRule >> name [
 
 { #category : #accessing }
 ReUncategorizedClassRule >> rationale [
-	"Answer a human readable name of the rule."
+	"Answer a human readable rationale of the rule."
 
 	^'Categorize class within package with a proper tag or tag with "Base" (to show class belongs to the base functionality of the package). This helps having a well structured package.'
 ]
