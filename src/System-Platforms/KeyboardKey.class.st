@@ -388,8 +388,8 @@ KeyboardKey class >> initializeUnixVirtualKeyTable [
 		at: 247 put: (self value: 16rffe9); "  kVK_Option                    = 0x3A"
 		at: 251 put: (self value: 16rffe3); "  kVK_Control                   = 0x3B"
 		at: 254 put: (self value: 16rffe2); "  kVK_RightShift                = 0x3C"
-		at: -1 put: (self value: 16rffea); "  kVK_RightOption               = 0x3D"
-		at: -1 put: (self value: 16rffe4); "  kVK_RightControl              = 0x3E"
+		at: 246 put: (self value: 16rffea); "  kVK_RightOption               = 0x3D"
+		at: 250 put: (self value: 16rffe4); "  kVK_RightControl              = 0x3E"
 		at: -1 put: (self value: 16r08f6); "  kVK_Function                  = 0x3F"
 		at: -1 put: (self value: 16r48); "  kVK_VolumeUp                  = 0x48"  "Not mapped"
 		at: -1 put: (self value: 16r49); "  kVK_VolumeDown                = 0x49" "Not mapped"
@@ -606,7 +606,8 @@ KeyboardKey class >> macOSVirtualKeyTable [
 
 { #category : #unix }
 KeyboardKey class >> unixVirtualKeyTable [
-	^KeyTable
+	UnixVirtualKeyTable ifNil: [ self initializeUnixVirtualKeyTable. ].
+	^UnixVirtualKeyTable
 ]
 
 { #category : #unknownKeys }
