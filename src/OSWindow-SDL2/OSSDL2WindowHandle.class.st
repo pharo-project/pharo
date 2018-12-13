@@ -14,7 +14,7 @@ Class {
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #'OSWindow-SDL2'
+	#category : #'OSWindow-SDL2-Base'
 }
 
 { #category : #'instance creation' }
@@ -241,7 +241,7 @@ OSSDL2WindowHandle >> newGenericRenderer [
 		yourself
 ]
 
-{ #category : #'*OSWindow-SDL2-OpenGL' }
+{ #category : #'as yet unclassified' }
 OSSDL2WindowHandle >> newOpenGLRenderer [
 	^ renderer := OSSDL2GLRenderer new 
 		window: self;
