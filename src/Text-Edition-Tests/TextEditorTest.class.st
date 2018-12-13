@@ -1,8 +1,20 @@
+"
+Unit test for text editor 
+"
 Class {
 	#name : #TextEditorTest,
 	#superclass : #TestCase,
-	#category : #'Text-Edition-Tests'
+	#instVars : [
+		'editor'
+	],
+	#category : #'Text-Edition-Tests-Editor'
 }
+
+{ #category : #'private - accessing' }
+TextEditorTest >> createEditor [
+
+	^TextMorph new editor
+]
 
 { #category : #'private - accessing' }
 TextEditorTest >> keyboardEvent [ 
@@ -11,7 +23,7 @@ TextEditorTest >> keyboardEvent [
 	event 
 		setType: #keystroke
 		buttons: 0
-		position:  0@0
+		position: 0@0
 		keyValue: 0
 		charCode: 0
 		hand: nil 
@@ -19,16 +31,26 @@ TextEditorTest >> keyboardEvent [
 	^ event 	
 ]
 
-{ #category : #accessing }
+{ #category : #running }
+TextEditorTest >> setUp [
+	super setUp.	
+	editor := self createEditor
+]
+
+{ #category : #running }
+TextEditorTest >> tearDown [
+	editor := nil.
+	super tearDown 
+]
+
+{ #category : #tests }
 TextEditorTest >> testCursorEnd [
-	| editor |	 
-	editor := TextMorph new editor.
+	
 	editor cursorEnd: self keyboardEvent
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 TextEditorTest >> testSetSearchString [
-	| editor | 
-	editor := TextMorph new editor.
+	 
 	editor setSearchString
 ]
