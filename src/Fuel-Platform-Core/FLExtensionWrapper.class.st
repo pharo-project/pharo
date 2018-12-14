@@ -23,6 +23,7 @@ FLExtensionWrapper >> compileInTarget [
 	source := self method methodClass instanceSide
 		perform: self method selector
 		withArguments: (1 to: self method selector numArgs) asArray.
+	self targetClass compile: source.
 	self targetClass organization
 		classify: self selector
 		under: self extensionProtocolName
@@ -34,6 +35,7 @@ FLExtensionWrapper >> copySelector: aSelector ofMethod: aCompiledMethod toClass:
 		addAndClassifySelector: aSelector
 		withMethod: aCompiledMethod copy
 		inProtocol: self extensionProtocolName
+		notifying: nil
 ]
 
 { #category : #private }
@@ -42,6 +44,7 @@ FLExtensionWrapper >> copyToTarget [
 		addAndClassifySelector: self selector
 		withMethod: self method copy
 		inProtocol: self extensionProtocolName
+		notifying: nil
 ]
 
 { #category : #private }
@@ -147,7 +150,8 @@ FLExtensionWrapper >> renameAndCompileInTarget [
 		selector: self selector.
 	self targetClass
 		addSelector: self selector
-		withMethod: newMethod.
+		withMethod: newMethod
+		notifying: nil.
 	self targetClass organization
 		classify: self selector
 		under: self extensionProtocolName

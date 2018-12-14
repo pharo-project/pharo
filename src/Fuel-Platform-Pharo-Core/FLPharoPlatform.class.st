@@ -1,7 +1,7 @@
 Class {
 	#name : #FLPharoPlatform,
 	#superclass : #FLPlatform,
-	#category : 'Fuel-Platform-Pharo-Core'
+	#category : #'Fuel-Platform-Pharo-Core'
 }
 
 { #category : #testing }
@@ -71,6 +71,11 @@ FLPharoPlatform >> renamedMethodCopyOf: aMethod selector: aSymbol [
 		yourself.
 	"#compiledMethod answers a new instance"
 	^ newMethod compiledMethod
+]
+
+{ #category : #'accessing-tests' }
+FLPharoPlatform >> setTestTimeLimitFor: aTest to: aDuration [
+	aTest timeLimit: aDuration
 ]
 
 { #category : #'accessing-system' }

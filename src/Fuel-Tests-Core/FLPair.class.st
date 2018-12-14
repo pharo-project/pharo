@@ -8,7 +8,7 @@ Class {
 		'left',
 		'right'
 	],
-	#category : 'Fuel-Tests-Core-Mocks'
+	#category : #'Fuel-Tests-Core-Mocks'
 }
 
 { #category : #comparing }

@@ -120,6 +120,11 @@ FLPlatform >> addHacks [
 	self class addHacks
 ]
 
+{ #category : #'accessing-tests' }
+FLPlatform >> classFactoryForTestCaseClass [
+	^ ClassFactoryForTestCase
+]
+
 { #category : #'accessing-files' }
 FLPlatform >> deleteFileNamed: aFilename [
 	self subclassResponsibility
@@ -163,6 +168,11 @@ FLPlatform >> isSqueak [
 { #category : #'accessing-compiler' }
 FLPlatform >> renamedMethodCopyOf: aMethod selector: aSymbol [
 	^ self subclassResponsibility
+]
+
+{ #category : #'accessing-tests' }
+FLPlatform >> setTestTimeLimitFor: aTest to: aDuration [
+	self subclassResponsibility
 ]
 
 { #category : #'accessing-system' }

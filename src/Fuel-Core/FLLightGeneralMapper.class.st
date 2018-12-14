@@ -105,6 +105,13 @@ FLLightGeneralMapper >> visitMetaclass: aMetaclass [
 ]
 
 { #category : #visiting }
+FLLightGeneralMapper >> visitMetaclassForTraits: aMetaclass [
+	self
+		mapAndTraceByClusterName: aMetaclass
+		to: FLGlobalClassSideCluster
+]
+
+{ #category : #visiting }
 FLLightGeneralMapper >> visitMethodContext: aMethodContext [
 
 	self mapAndTraceByObjectClass: aMethodContext to: FLContextCluster
@@ -168,6 +175,13 @@ FLLightGeneralMapper >> visitSubstitution: anObject by: anotherObject onRecursio
 FLLightGeneralMapper >> visitTrait: aTrait [
 
 	self mapAndTraceInstanceSideGlobal: aTrait
+]
+
+{ #category : #visiting }
+FLLightGeneralMapper >> visitTraitedMetaclass: aMetaclass [
+	self
+		mapAndTraceByClusterName: aMetaclass
+		to: FLGlobalClassSideCluster
 ]
 
 { #category : #visiting }

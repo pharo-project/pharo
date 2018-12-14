@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'byteArray'
 	],
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #testing }

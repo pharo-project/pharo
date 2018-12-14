@@ -20,7 +20,7 @@ TraitDescription >> duringTestCompileSilently: code storeSource: storeSource [
 	^ self
 		duringTestCompileSilently: code
 		storeSource: storeSource
-		classified: ''
+		classified: #Unclassified
 ]
 
 { #category : #'*Fuel-Tests-Core' }

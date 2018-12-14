@@ -1,7 +1,7 @@
 Class {
 	#name : #FLPharo7Platform,
 	#superclass : #FLPharoPlatform,
-	#category : 'Fuel-Platform-Pharo-07'
+	#category : #'Fuel-Platform-Pharo-07'
 }
 
 { #category : #'private-hacks' }
@@ -23,14 +23,16 @@ FLPharo7Platform >> deleteFileNamed: aFilename [
 
 { #category : #'accessing-files' }
 FLPharo7Platform >> fileNamed: aFilename readStreamDo: aBlock [
-	^ ((Smalltalk at: #File) named: aFilename)
-			readStreamDo: [ :stream | aBlock value: stream ]
+	^ ((Smalltalk at: #File) named: aFilename) readStreamDo: [ :stream |
+		stream binary.
+		aBlock value: stream ]
 ]
 
 { #category : #'accessing-files' }
 FLPharo7Platform >> fileNamed: aFilename writeStreamDo: aBlock [
-	^ ((Smalltalk at: #File) named: aFilename)
-			writeStreamDo: [ :stream | aBlock value: stream ]
+	^ ((Smalltalk at: #File) named: aFilename) writeStreamDo: [ :stream |
+		stream binary.
+		aBlock value: stream ]
 ]
 
 { #category : #testing }
