@@ -17,7 +17,7 @@ Class {
 		'unselectedLabel',
 		'selectedLabel'
 	],
-	#category : #'Tool-Finder'
+	#category : #'Tool-Finder-UI'
 }
 
 { #category : #'instance creation' }
