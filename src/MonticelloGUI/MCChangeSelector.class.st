@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'kept'
 	],
-	#category : #MonticelloGUI
+	#category : #'MonticelloGUI-Tools'
 }
 
 { #category : #'morphic ui' }

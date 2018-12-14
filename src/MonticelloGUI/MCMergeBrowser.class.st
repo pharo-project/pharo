@@ -8,7 +8,7 @@ Class {
 		'conflicts',
 		'merger'
 	],
-	#category : #MonticelloGUI
+	#category : #'MonticelloGUI-Tools'
 }
 
 { #category : #'as yet unclassified' }
