@@ -1578,13 +1578,13 @@ Object >> okToChange [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #debugging }
 Object >> openDebugger [
 	"Used in debugging infrastructure that should stay in production, instead of leaving a halt in the code. This way it is not flagged as debugging code left in method"
 	self halt.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #debugging }
 Object >> openDebugger: aString [
 	"Used in debugging infrastructure that should stay in production, instead of leaving a halt in the code. This way it is not flagged as debugging code left in method"
 	self halt: aString.
