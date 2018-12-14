@@ -1,7 +1,10 @@
+"
+Includes the Monticello source code control system
+"
 Class {
 	#name : #ManifestMonticello,
 	#superclass : #PackageManifest,
-	#category : #Monticello
+	#category : #'Monticello-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

@@ -1,7 +1,10 @@
+"
+Deprecated ring extensions for Monticello
+"
 Class {
 	#name : #ManifestRingMonticello,
 	#superclass : #PackageManifest,
-	#category : #'Ring-Deprecated-Monticello'
+	#category : #'Ring-Deprecated-Monticello-Manifest'
 }
 
 { #category : #deprecation }
