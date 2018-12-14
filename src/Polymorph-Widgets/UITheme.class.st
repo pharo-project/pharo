@@ -1007,7 +1007,7 @@ UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: 
 		fileNameText: pathFileReference basename;
 		initialize;
 		title: title;
-		answerFileName.	
+		answerPathName.	
 	exts ifNotNil: [ fd validExtensions: exts ].
 	path ifNotNil: [ fd selectPath: pathFileReference pathString ].
 	^ (aThemedMorph openModal: fd) answer ifNotNil: #asFileReference
