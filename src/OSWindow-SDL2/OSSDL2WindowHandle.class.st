@@ -1,5 +1,5 @@
 "
-i am the OSWindowHandle interface implemented using SDL2 library
+I am the OSWindowHandle interface implemented using SDL2 library
 
 my handle is an SDL_Window
 "
@@ -241,7 +241,7 @@ OSSDL2WindowHandle >> newGenericRenderer [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 OSSDL2WindowHandle >> newOpenGLRenderer [
 	^ renderer := OSSDL2GLRenderer new 
 		window: self;
