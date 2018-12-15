@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFOperationReification class >> entities [
-	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode. RBLiteralNode. RBLiteralArrayNode. RBArrayNode}
+	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode. RBLiteralNode. RBBlockNode . RBLiteralArrayNode. RBArrayNode}
 ]
 
 { #category : #'plugin interface' }
@@ -44,6 +44,18 @@ RFOperationReification >> genForRBAssignmentNode [
 		ast messages second arguments: {(RFLiteralVariableNode value: entity variable binding scope environment)}.
 		^ast].
 	self error: 'not supported'
+]
+
+{ #category : #generate }
+RFOperationReification >> genForRBBlockNode [
+	"we just compile the block again"
+	| blockNode |
+	
+	blockNode := RBParser parseExpression: entity formattedCode.
+	^RBMessageNode 
+		receiver: (RBVariableNode named: #RFBlockOperation)
+		selector: #block: 
+		arguments: {blockNode} 
 ]
 
 { #category : #generate }
@@ -112,34 +124,37 @@ RFOperationReification >> genForRBVariableNode [
 
 ]
 
-{ #category : #generate }
-RFOperationReification >> preamble: aNode [
-	aNode isMessage ifTrue: [ ^self preambleForMessage: aNode ].
-	aNode isMethod  ifTrue: [ ^self preambleForMethod:  aNode ].
-	aNode isReturn ifTrue:  [ ^self preambleForReturn:  aNode ].
-	aNode isAssignment ifTrue: [ ^self preambleForAssignment: aNode ].
-	aNode isDynamicArray ifTrue: [ ^self preambleForArray: aNode ].
-	^super preamble: aNode.
-]
-
-{ #category : #generate }
+{ #category : #preamble }
 RFOperationReification >> preambleForArray: aNode [
-	"balance stack for instead"
-	self flag: #TBD. "need to pop of the complete stack for instead, need to create the array for #before?"
-	link control= #instead
-		ifTrue: [ ^RFStorePopIntoTempNode named: #RFReifyValueVar  ]
-		ifFalse: [^RFStoreIntoTempNode named: #RFReifyValueVar  ]
+	| preamble arguments |
+	preamble := OrderedCollection new.
+	arguments := OrderedCollection new.
+
+	(1 to: aNode size) reverseWithIndexDo: [:each :index |  
+			| name |
+			name := 'RFArg', index asString, 'RFReification'.
+			preamble add:  (RFStorePopIntoTempNode named: name).
+	].
+	
+	self flag: #TBD. "for #instead we do not need to build the stack up again as the array creation bytecode is missing"
+	(1 to: aNode size) withIndexDo: [:each :index |  
+			| name |
+			name := 'RFArg', index asString, 'RFReification'.
+			arguments add:  (RBTemporaryNode named: name).
+	].
+	preamble addAll: (RBArrayNode statements: arguments).
+	preamble add: (RFStorePopIntoTempNode named: 'RFReifyValueVar').
+	preamble addAll: arguments.
+	^ preamble 
+	
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFOperationReification >> preambleForAssignment: aNode [
-	"balance stack for instead"
-	link control= #instead
-		ifTrue: [ ^RFStorePopIntoTempNode named: #RFNewValueReificationVar  ]
-		ifFalse: [^RFStoreIntoTempNode named: #RFNewValueReificationVar  ]
+	^RFStoreIntoTempNode named: #RFNewValueReificationVar
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFOperationReification >> preambleForMessage: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -165,7 +180,7 @@ RFOperationReification >> preambleForMessage: aNode [
 	^ preamble 
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFOperationReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -175,7 +190,7 @@ RFOperationReification >> preambleForMethod: aNode [
 	^ preamble 
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFOperationReification >> preambleForReturn: aNode [
 	^RFStoreIntoTempNode named: #RFReifyValueVar
 ]

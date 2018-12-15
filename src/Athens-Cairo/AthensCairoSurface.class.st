@@ -28,7 +28,7 @@ Class {
 		'dispatch',
 		'dispatchStruct'
 	],
-	#category : #'Athens-Cairo'
+	#category : #'Athens-Cairo-Surface'
 }
 
 { #category : #converting }

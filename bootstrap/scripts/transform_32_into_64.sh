@@ -7,6 +7,8 @@ set -o xtrace
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 . ${SCRIPTS}/envversion.sh
 
+set_version_variables
+
 #Load VMMaker, used to convert images from 32 to 64 bits
 mkdir -p vmmaker && cd vmmaker
 wget https://github.com/pharo-project/pharo-32to64-converter/releases/download/v1.0.0/vmmaker-image.zip
@@ -58,7 +60,7 @@ for f in  ${PHARO_NAME_PREFIX}-32bit-*.zip; do
 	dd if="displaySize.bin" of="${PHARO_NAME_PREFIX}-64bit-$HASH.image" bs=1 seek=40 count=4 conv=notrunc
 	
 	echo "70" > pharo.version
-	PHARO_SOURCES_PREFIX=$(echo "${PHARO_NAME_PREFIX}" | cut -d'.' -f 1-2)
+	PHARO_SOURCES_PREFIX=$(echo "${PHARO_NAME_PREFIX}" | cut -d'-' -f 1)	
 	zip ${PHARO_NAME_PREFIX}-64bit-$HASH.zip ${PHARO_NAME_PREFIX}-64bit-$HASH.* ${PHARO_SOURCES_PREFIX}*.sources pharo.version
 	rm -f *.image *.changes *.sources
 done

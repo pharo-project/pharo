@@ -54,12 +54,22 @@ ReflectivityExamples >> exampleAssignmentIvar [
 
 { #category : #examples }
 ReflectivityExamples >> exampleBlock [
-	^ [2 + 3] value
+	^ [2 + 3] value 
 ]
 
 { #category : #examples }
 ReflectivityExamples >> exampleBlockNoValue [
 	^ [2 + 3]
+]
+
+{ #category : #examples }
+ReflectivityExamples >> exampleBlockWithArg [
+	^ [:a | a + 3] value: 2 
+]
+
+{ #category : #examples }
+ReflectivityExamples >> exampleCascade [
+	^1 sin; yourself
 ]
 
 { #category : #examples }
@@ -105,6 +115,12 @@ ReflectivityExamples >> exampleLiteralArray [
 ReflectivityExamples >> exampleMethod [
 
 	^ 2 + 3
+]
+
+{ #category : #examples }
+ReflectivityExamples >> exampleMethod2 [
+
+	2 + 3
 ]
 
 { #category : #examples }

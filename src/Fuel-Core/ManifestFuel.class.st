@@ -1,7 +1,10 @@
+"
+The core package of Fuel - the Smalltalk object serializer
+"
 Class {
 	#name : #ManifestFuel,
 	#superclass : #PackageManifest,
-	#category : #'Fuel-Core-Fuel-Core'
+	#category : #'Fuel-Core-Manifest'
 }
 
 { #category : #'meta data' }

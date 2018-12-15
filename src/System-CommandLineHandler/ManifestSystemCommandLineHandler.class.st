@@ -9,10 +9,10 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestSystemCommandLineHandler class >> ignoredDependencies [
-	^ #(#'System-Settings' #StartupPreferences)
+	^ #(#'System-Settings-Core' #StartupPreferences)
 ]
 
 { #category : #'meta-data - dependency analyser' }
 ManifestSystemCommandLineHandler class >> manuallyResolvedDependencies [
-	^ #(#'FileSystem-Core' #'System-Settings' #'System-Support')
+	^ #(#'FileSystem-Core' #'System-Settings-Core' #'System-Support')
 ]

@@ -465,10 +465,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		ifFalse: [ #Maximize ].
 	(aBuilder item: maximizeLabel)
 		action: [ aBuilder model expandBoxHit ];
-		iconName: #windowMaximizeForm.
-	aBuilder model isCollapsed
-		ifFalse: [ (aBuilder item: #'Window color...')
-				action: [ aBuilder model setWindowColor ] ]
+		iconName: #windowMaximizeForm
 ]
 
 { #category : #'top window' }

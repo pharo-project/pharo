@@ -99,7 +99,7 @@ ReflectiveMethodTest >> testSetLink [
 	sendNode := (ReflectivityExamples >> #exampleMethod) ast body statements first value.
 	sendNode link: link.
 	self assert: (sendNode hasMetalink: link).
-	self assert: (ReflectivityExamples >> #exampleMethod) class = ReflectiveMethod.
+	self assert: (ReflectivityExamples >> #exampleMethod) class equals: ReflectiveMethod.
 	sendNode removeLink: link.
 	(ReflectivityExamples >> #exampleMethod) destroyTwin.
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: CompiledMethod.
@@ -131,7 +131,7 @@ ReflectiveMethodTest >> testSetLinkOnClassVariable [
 	classVar link: link.
 
 	self assert: (classVar links includes: link).
-	self assert: (ReflectivityExamples >> #exampleClassVarRead) class = ReflectiveMethod.
+	self assert: (ReflectivityExamples >> #exampleClassVarRead) class equals: ReflectiveMethod.
 	classVar removeProperty: #links.
 ]
 
@@ -144,11 +144,11 @@ ReflectiveMethodTest >> testSetLinkOnClassVariableAndUninstall [
 	classVar link: link.
 
 	self assert: (classVar links includes: link).
-	self assert: (ReflectivityExamples >> #exampleClassVarRead) class = ReflectiveMethod.
-	self assert: (ReflectivityExamples >> #exampleClassVarRead) linkCount = 1.
+	self assert: (ReflectivityExamples >> #exampleClassVarRead) class equals: ReflectiveMethod.
+	self assert: (ReflectivityExamples >> #exampleClassVarRead) linkCount equals: 1.
 	
 	link uninstall.
-	self assert: (ReflectivityExamples >> #exampleClassVarRead) class = CompiledMethod.
+	self assert: (ReflectivityExamples >> #exampleClassVarRead) class equals: CompiledMethod.
 
 ]
 
@@ -160,7 +160,7 @@ ReflectiveMethodTest >> testSetLinkOnGlobalVariable [
 	globalVar := (Smalltalk globals at: #GlobalForTesting) binding.
 	globalVar link: link. 
 	self assert: (globalVar links includes: link).
-	self assert: (ReflectivityExamples >> #exampleGlobalRead) class = ReflectiveMethod.
+	self assert: (ReflectivityExamples >> #exampleGlobalRead) class equals: ReflectiveMethod.
 	link uninstall.
 	globalVar removeProperty: #links.
 	
@@ -174,10 +174,10 @@ ReflectiveMethodTest >> testSetLinkOnGlobalVariableAndUninstall [
 	global := (Smalltalk globals at: #GlobalForTesting) binding.
 	global link: link.
 	self assert: (global links includes: link). 
-	self assert: (ReflectivityExamples >> #exampleGlobalRead) class = ReflectiveMethod.
-	self assert: (ReflectivityExamples >> #exampleGlobalRead) linkCount = 1.
+	self assert: (ReflectivityExamples >> #exampleGlobalRead) class equals: ReflectiveMethod.
+	self assert: (ReflectivityExamples >> #exampleGlobalRead) linkCount equals: 1.
 	link uninstall.
-	self assert: (ReflectivityExamples >> #exampleGlobalRead) class = CompiledMethod.
+	self assert: (ReflectivityExamples >> #exampleGlobalRead) class equals: CompiledMethod.
 	global removeProperty: #links.
 
 
@@ -191,7 +191,7 @@ ReflectiveMethodTest >> testSetLinkOnInstanceVariable [
 	ivar := ReflectivityExamples slotNamed: #ivar.
 	ivar link: link.
 	self assert: (ivar links includes: link).
-	self assert: (ReflectivityExamples >> #exampleIvarRead) class = ReflectiveMethod.
+	self assert: (ReflectivityExamples >> #exampleIvarRead) class equals: ReflectiveMethod.
 	link uninstall.
 ]
 
@@ -203,11 +203,11 @@ ReflectiveMethodTest >> testSetLinkOnInstanceVariableAndUninstall [
 	ivar := ReflectivityExamples slotNamed: #ivar.
 	ivar link: link.
 	self assert: (ivar links includes: link).
-	self assert: (ReflectivityExamples >> #exampleIvarRead) class = ReflectiveMethod.
-	self assert: (ReflectivityExamples >> #exampleIvarRead) linkCount = 1.
+	self assert: (ReflectivityExamples >> #exampleIvarRead) class equals: ReflectiveMethod.
+	self assert: (ReflectivityExamples >> #exampleIvarRead) linkCount equals: 1.
 	link uninstall.
-	self assert: (ReflectivityExamples >> #exampleIvarRead) class = CompiledMethod.
-	self assert: (ivar links isNil).
+	self assert: (ReflectivityExamples >> #exampleIvarRead) class equals: CompiledMethod.
+	self assert: (ivar links isEmpty).
 ]
 
 { #category : #'tests - links' }
@@ -219,11 +219,11 @@ ReflectiveMethodTest >> testSetLinkOnPrimitive [
 	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) isRealPrimitive.
 	methodNode link: link.
 	self assert: (methodNode links includes: link).
-	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) class = CompiledMethod.
+	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) class equals: CompiledMethod.
 	self deny: (ReflectivityExamples>>#examplePrimitiveMethod) isRealPrimitive.
 	methodNode removeLink: link.
 	(ReflectivityExamples>>#examplePrimitiveMethod) destroyTwin.
-	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) class = CompiledMethod.
+	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) class equals: CompiledMethod.
 	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) isRealPrimitive.
 	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) reflectiveMethod isNil.
 	
@@ -237,10 +237,10 @@ ReflectiveMethodTest >> testSetLinkWithPragmaOptions [
 	sendNode := (ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) ast body statements first value.
 	sendNode link: link.
 	self assert: (sendNode links includes: link).
-	self assert: (ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) class = CompiledMethod.
+	self assert: (ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) class equals: CompiledMethod.
 	sendNode removeLink: link.
 	(ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) destroyTwin.
-	self assert: (ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) class = CompiledMethod.
+	self assert: (ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) class equals: CompiledMethod.
 	self assert: (ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) reflectiveMethod isNil.
 	
 ]
