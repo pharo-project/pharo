@@ -1,5 +1,5 @@
 "
-Includes the Monticello source code control system
+Includes the Monticello source code control system.
 "
 Class {
 	#name : #ManifestMonticello,
