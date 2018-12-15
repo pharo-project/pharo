@@ -38,6 +38,30 @@ DiskFileSystemTest >> testIsDiskFileSystem [
 ]
 
 { #category : #tests }
+DiskFileSystemTest >> testLongFilename [
+	"Test that long file names (in Win32 terms, i.e. < 260 characters) are working"
+
+	| dir1 dir2 file contents |
+
+	dir1 := FileLocator workingDirectory / (String new: 130 withAll: $a).
+	[ self deny: dir1 exists.
+	dir1 ensureCreateDirectory.
+
+	dir2 := dir1 / (String new: 130 withAll: $b).
+	self deny: dir2 exists.
+	dir2 ensureCreateDirectory.
+
+	file := dir2 / 'hello.txt'.
+	self deny: file exists.
+	contents := 'hello world'.
+	file writeStreamDo: [ :stream | stream << contents ].
+
+	self assert: file exists.
+	self assert: file contents equals: contents ]
+		ensure: [ dir1 ensureDeleteAll ]
+]
+
+{ #category : #tests }
 DiskFileSystemTest >> testMoveMemoryToDisk [
 	"Test moving a file from the memory filesystem to the disk filesystem.
 	This ensures that the copyAndDelete:to: is called correctly."
