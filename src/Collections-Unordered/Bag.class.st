@@ -132,11 +132,11 @@ Bag >> keysAndValuesDo: aTwoArgBlock [
 
 { #category : #testing }
 Bag >> occurrencesOf: anObject [ 
-	"Refer to the comment in Collection|occurrencesOf:."
-
-	(self includes: anObject)
-		ifTrue: [^contents at: anObject]
-		ifFalse: [^0]
+	"Answer how many of the receiver's elements are equal to anObject."
+	"#(1 2 2 3 1 1 1) asBag occurrencesOf: 1 >>> 4"
+	^ (self includes: anObject)
+		ifTrue: [ contents at: anObject]
+		ifFalse: [ 0 ]
 ]
 
 { #category : #copying }
@@ -147,7 +147,10 @@ Bag >> postCopy [
 
 { #category : #removing }
 Bag >> remove: oldObject ifAbsent: exceptionBlock [ 
-	"Refer to the comment in Collection|remove:ifAbsent:."
+	"Remove oldObject from the receiver's elements. If several of the 
+	elements are equal to oldObject, only one is removed. If no element is 
+	equal to oldObject, answer the result of evaluating anExceptionBlock. 
+	Otherwise, answer the argument, oldObject."
 
 	| count |
 	count := contents at: oldObject ifAbsent: [^ exceptionBlock value].
@@ -197,7 +200,8 @@ Bag >> sortedCounts [
 { #category : #accessing }
 Bag >> sortedElements [
 	"Answer with a collection of elements with counts, sorted by element."
-	"Suggested by l. Uzonyi"
+	
+	"#(1 2 2 3 1 1 1) asBag sortedElements >>> {1->4. 2->2. 3->1}"
 	
 	^contents associations
  		sort;
