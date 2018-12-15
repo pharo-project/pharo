@@ -1,5 +1,5 @@
 "
-Monticello selector for changes
+Monticello selector for changes.
 "
 Class {
 	#name : #MCChangeSelector,
