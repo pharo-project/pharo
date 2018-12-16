@@ -154,10 +154,10 @@ FFICompilerPlugin class >> uninstall [
 	self recompileSenders
 ]
 
-{ #category : #api }
-FFICompilerPlugin >> initializeFFICalloutSelectors [
+{ #category : #'private - accessing' }
+FFICompilerPlugin >> ffiCalloutSelectors [
 
-	^FFICalloutSelectors ifNil: [ FFICalloutSelectors := self class initializeFFICalloutSelectors ]
+	^self class ffiCalloutSelectors
 ]
 
 { #category : #api }
@@ -177,6 +177,6 @@ FFICompilerPlugin >> transformsFFIMethod [
  
   ast nodesDo: [:each | 
       each isMessage ifTrue: [    
-    		(self class ffiCalloutSelectors includes: each selector) ifTrue: [^true]]].
+    		(self ffiCalloutSelectors includes: each selector) ifTrue: [^true]]].
   ^false
 ]
