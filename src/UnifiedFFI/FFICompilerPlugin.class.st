@@ -84,7 +84,7 @@ FFICompilerPlugin class >> defaultUFFICalloutSelectors [
 FFICompilerPlugin class >> ffiCalloutSelectors [
 	<script: 'self ffiCalloutSelectors inspect'>
 	
-	^FFICalloutSelectors ifNil: [ FFICalloutSelectors := self class initializeFFICalloutSelectors ]
+	^FFICalloutSelectors ifNil: [ self class initializeFFICalloutSelectors ]
 ]
 
 { #category : #'class initialization' }
