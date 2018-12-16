@@ -17,7 +17,7 @@ FFICompilerPlugin class >> addAFfiCalloutSelectorFromPragma: aPragma [
 		deprecated: 'Please use #addFFICalloutSelectorFromPragma: instead'
 		transformWith: '`@receiver addAFfiCalloutSelectorFromPragma: `@statements' -> '`@receiver addFFICalloutSelectorFromPragma: `@statements'.
 		
-	self addFFICalloutSelectorFromPragma: aPragma
+	^self addFFICalloutSelectorFromPragma: aPragma
 ]
 
 { #category : #'*Deprecated70' }
@@ -27,7 +27,7 @@ FFICompilerPlugin class >> addFfiCalloutSelector: aString [
 		deprecated: 'Please use #addFFICalloutSelector: instead'
 		transformWith: '`@receiver addFfiCalloutSelector: `@statements' -> '`@receiver addFFICalloutSelector: `@statements'.
 		
-	self addFFICalloutSelector: aString
+	^self addFFICalloutSelector: aString
 ]
 
 { #category : #'*Deprecated70' }
@@ -47,7 +47,7 @@ FFICompilerPlugin class >> removeAFfiCalloutSelectorEvent: aPragmaRemoved [
 		deprecated: 'Please use #removeFFICalloutSelectorEvent: instead'
 		transformWith: '`@receiver removeAFfiCalloutSelectorEvent: `@statements' -> '`@receiver removeFFICalloutSelectorEvent: `@statements'.
 		
-	self removeFFICalloutSelectorEvent: aPragmaRemoved 
+	^self removeFFICalloutSelectorEvent: aPragmaRemoved 
 ]
 
 { #category : #'*Deprecated70' }
@@ -57,5 +57,5 @@ FFICompilerPlugin class >> removeFfiCalloutSelector: aString [
 		deprecated: 'Please use #removeFFICalloutSelector: instead'
 		transformWith: '`@receiver removeFfiCalloutSelector: `@statements' -> '`@receiver removeFFICalloutSelector: `@statements'.
 		
-	self removeFFICalloutSelector: aString 
+	^self removeFFICalloutSelector: aString 
 ]
