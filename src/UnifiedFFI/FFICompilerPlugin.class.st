@@ -60,8 +60,7 @@ FFICompilerPlugin class >> addFFICalloutSelectorFromPragma: aPragma [
 FFICompilerPlugin class >> defaultFFICalloutSelectors [
 	"FFI uses UFFI and NB for the time being"
 	
-	^ self defaultUFFICalloutSelectors 
-		join: self defaultNativeBoostCalloutSelectors 
+	^ self defaultUFFICalloutSelectors, self defaultNativeBoostCalloutSelectors 
 ]
 
 { #category : #'private - defaults' }
