@@ -1,5 +1,5 @@
 "
-Deprecated ring extensions for Monticello
+Deprecated ring extensions for Monticello.
 "
 Class {
 	#name : #ManifestRingMonticello,
