@@ -187,7 +187,7 @@ Bag >> setContents: aDictionary [
 Bag >> size [
 	"Answer how many elements the receiver contains."
 
-	"#(1 2 2 3 1 1 1) size >>> 7"
+	"#(1 2 2 3 1 1 1) asBag size >>> 7"
 	
 	| tally |
 	tally := 0.
