@@ -65,6 +65,7 @@ TestAsserter class >> suiteClass [
 
 { #category : #asserting }
 TestAsserter >> assert: actualNumber closeTo: expectedNumber [
+"Tell whether the actualNumber and expectedNumber are close from each with a margin of 0.0001"
 	^ self
 		assert: (actualNumber closeTo: expectedNumber)
 		description: [self comparingStringBetween: actualNumber and: expectedNumber]
@@ -72,6 +73,7 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 
 { #category : #asserting }
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
+"Take a second argument wich is a message string that describes the reason for the failure, this string will be displayed by the Test Runner"
 	aBooleanOrBlock value ifFalse: [
 		| aString |
 		aString := aStringOrBlock value.
@@ -82,6 +84,7 @@ TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
 
 { #category : #asserting }
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: resumableBoolean [ 
+"if resumable: true the test won't stop when the assertion fails, the test will continue it's excecution"
 	| exception |
 	aBooleanOrBlock value
 		ifFalse: 
@@ -97,6 +100,7 @@ TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: r
 
 { #category : #asserting }
 TestAsserter >> assert: actual equals: expected [
+"Validate whether or not the actual value is equal than the expected, if the assertion fails it provides a description that show both the actual and the expected value"
 	^ self
 		assert: actual = expected
 		description: [self comparingStringBetween: actual and: expected]
@@ -104,6 +108,7 @@ TestAsserter >> assert: actual equals: expected [
 
 { #category : #asserting }
 TestAsserter >> assert: actual identicalTo: expected [
+"Verify whether the actual and the expected are the same object (have the same object pointer)"
 	^ self
 		assert: expected == actual
 		description: [self comparingIdentityStringBetween: actual and: expected]
@@ -165,6 +170,7 @@ TestAsserter >> classForTestSuite [
 
 { #category : #private }
 TestAsserter >> comparingCollectionBetween: left and: right [
+"Returns a string that shows the size if they are diferent and the aditional items for each left and right"
 	| additionalLeft additionalRight sortBlock|
 	
 	"use a very slow sort block"
@@ -238,7 +244,7 @@ TestAsserter >> defaultTestFailure [
 
 { #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock [
-
+"to assert something that should not be true"
 	self assert: aBooleanOrBlock value not
 			
 ]
@@ -326,6 +332,7 @@ TestAsserter >> logFailure: aString [
 
 { #category : #asserting }
 TestAsserter >> should: aBlock [
+"Evaluate the Block first then execute the assertion"
 	self assert: aBlock value
 			
 ]
@@ -359,6 +366,7 @@ TestAsserter >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
 
 { #category : #asserting }
 TestAsserter >> should: aBlock raise: anExceptionalEvent [ 
+"To test that a particular exception is raised during the execution of a Block"
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
 			
 ]
