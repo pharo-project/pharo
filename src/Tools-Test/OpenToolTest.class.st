@@ -24,33 +24,33 @@ OpenToolTest >> testInspectArray [
 { #category : #'test inspect' }
 OpenToolTest >> testInspectClass [
 	| inspector |
-	inspector :=  self openInspectorOn: Object.
+	inspector := self openInspectorOn: Object.
 	inspector changed.
-	inspector close.
+	inspector close
 ]
 
 { #category : #'test inspect' }
 OpenToolTest >> testInspectDictionary [
 	| inspector |
-	inspector :=  self openInspectorOn: Dictionary new.
+	inspector := self openInspectorOn: Dictionary new.
 	inspector changed.
-	inspector close.
+	inspector close
 ]
 
 { #category : #'test inspect' }
 OpenToolTest >> testInspectInteger [
 	| inspector |
-	inspector :=  self openInspectorOn: 1.
+	inspector := self openInspectorOn: 1.
 	inspector changed.
-	inspector close.
+	inspector close
 ]
 
 { #category : #'test inspect' }
 OpenToolTest >> testInspectTraitClass [
 	| inspector |
-	inspector :=  self openInspectorOn: TSortable.
+	inspector := self openInspectorOn: TSortable.
 	inspector changed.
-	inspector close.
+	inspector close
 ]
 
 { #category : #'test browse' }
