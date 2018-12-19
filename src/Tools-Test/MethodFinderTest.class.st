@@ -1,3 +1,6 @@
+"
+Unit tests for MethodFinder
+"
 Class {
 	#name : #MethodFinderTest,
 	#superclass : #TestCase,
