@@ -353,7 +353,7 @@ GrowlMorph >> nextColorStep: aColor [
 	^ aColor alpha: self alpha
 ]
 
-{ #category : #internal }
+{ #category : #display }
 GrowlMorph >> openInWorld [
 
 	self position: self unoccupiedPosition.

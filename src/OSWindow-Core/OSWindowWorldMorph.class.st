@@ -94,7 +94,7 @@ OSWindowWorldMorph >> open [
 	self class addExtraWorld: self.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #display }
 OSWindowWorldMorph >> openInWorld [
 	^ self open
 ]
