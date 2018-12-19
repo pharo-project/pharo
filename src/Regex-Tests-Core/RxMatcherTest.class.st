@@ -83,10 +83,11 @@ RxMatcherTest >> runRegex: anArray [
 RxMatcherTest >> testCaseInsensitive [
 	| matcher |
 	matcher := self matcherClass forString: 'the quick brown fox' ignoreCase: true.
-	self assert: (matcher search: 'the quick brown fox').
-	self assert: (matcher search: 'The quick brown FOX').
-	self assert: (matcher search: 'What do you know about the quick brown fox?').
-	self assert: (matcher search: 'What do you know about THE QUICK BROWN FOX?')
+	self 
+		assert: (matcher search: 'the quick brown fox');
+		assert: (matcher search: 'The quick brown FOX');
+		assert: (matcher search: 'What do you know about the quick brown fox?');
+		assert: (matcher search: 'What do you know about THE QUICK BROWN FOX?')
 ]
 
 { #category : #'testing-protocol' }
@@ -105,16 +106,15 @@ RxMatcherTest >> testCopyReplacingMatches [
 	
 	| matcher |
 	matcher := self matcherClass forString: '\<\d\D+'.
-	self assert: (matcher copy: '9aaa1bbb 8ccc' replacingMatchesWith: 'foo')
-		= 'foo1bbb foo'
+	self 
+		assert: (matcher copy: '9aaa1bbb 8ccc' replacingMatchesWith: 'foo') equals: 'foo1bbb foo'
 ]
 
 { #category : #'testing-protocol' }
 RxMatcherTest >> testCopyTranslatingMatches [
 	| matcher |
 	matcher := self matcherClass forString: '\w+'.
-	self assert: (matcher copy: 'now is  the   time    ' translatingMatchesUsing: [ :each | each reversed ])
-		= 'won si  eht   emit    '
+	self assert: (matcher copy: 'now is  the   time    ' translatingMatchesUsing: [ :each | each reversed ]) equals: 'won si  eht   emit    '
 ]
 
 { #category : #'testing-empty' }
@@ -1170,9 +1170,10 @@ RxMatcherTest >> testRegex004 [
 RxMatcherTest >> testStringAllRangesOfRegexMatches [
 	| result |
 	result := 'aabbcc' allRangesOfRegexMatches: 'b+'.
-	self assert: result size = 1.
-	self assert: result first first = 3.
-	self assert: result first last = 4
+	self 
+		assert: result size equals: 1;
+		assert: result first first equals: 3;
+		assert: result first last equals: 4
 	
 ]
 
@@ -1180,23 +1181,27 @@ RxMatcherTest >> testStringAllRangesOfRegexMatches [
 RxMatcherTest >> testStringAllRegexMatches [
 	| result |
 	result := 'aabbcc' allRegexMatches: 'b+'.
-	self assert: result size = 1.
-	self assert: result first = 'bb'
+	self 
+		assert: result size equals: 1;
+		assert: result first equals: 'bb'
 ]
 
 { #category : #'testing-extensions' }
 RxMatcherTest >> testStringAsRegex [
-	self assert: 'b+' asRegex class = RxParser preferredMatcherClass
+	
+	self assert: 'b+' asRegex class equals: RxParser preferredMatcherClass
 ]
 
 { #category : #'testing-extensions' }
 RxMatcherTest >> testStringAsRegexIgnoringCase [
-	self assert: 'b+' asRegexIgnoringCase class = RxParser preferredMatcherClass
+
+	self assert: 'b+' asRegexIgnoringCase class equals: RxParser preferredMatcherClass
 ]
 
 { #category : #'testing-extensions' }
 RxMatcherTest >> testStringCopyWithRegexMatchesReplacedWith [
-	self assert: ('aabbcc' copyWithRegex: 'b+' matchesReplacedWith: 'X') = 'aaXcc'
+
+	self assert: ('aabbcc' copyWithRegex: 'b+' matchesReplacedWith: 'X') equals: 'aaXcc'
 ]
 
 { #category : #'testing-extensions' }
@@ -1204,8 +1209,8 @@ RxMatcherTest >> testStringCopyWithRegexMatchesTranslatedUsing [
 	self assert: ('aabbcc' 
 		copyWithRegex: 'b+' 
 		matchesTranslatedUsing: [ :each | 
-			self assert: each = 'bb'.
-			'X' ]) = 'aaXcc'
+			self assert: each equals: 'bb'.
+			'X' ]) equals: 'aaXcc'
 ]
 
 { #category : #'testing-extensions' }
@@ -1238,8 +1243,9 @@ RxMatcherTest >> testStringPrefixMatchesRegexIgnoringCase [
 RxMatcherTest >> testStringRegexMatchesCollect [
 	| result |
 	result := 'aabbcc' regex: 'b+' matchesCollect: [ :each | each asUppercase ].
-	self assert: result size = 1.
-	self assert: result first = 'BB'
+	self 
+		assert: result size equals: 1;
+		assert: result first equals: 'BB'
 ]
 
 { #category : #'testing-extensions' }
@@ -1247,8 +1253,9 @@ RxMatcherTest >> testStringRegexMatchesDo [
 	| result |
 	result := OrderedCollection new.
 	'aabbcc' regex: 'b+' matchesDo: [ :each | result add: each ].
-	self assert: result size = 1.
-	self assert: result first = 'bb'
+	self 
+		assert: result size equals: 1;
+		assert: result first equals: 'bb'
 ]
 
 { #category : #'testing-protocol' }
@@ -1257,5 +1264,5 @@ RxMatcherTest >> testSubexpressionCount [
 	#(('a' 1) ('a(b)' 2) ('a(b(c))' 3) ('(a)(b)' 3) ('(a(b))*' 3)) do: [ :pair |
 		matcher := self matcherClass forString: pair first.
 		matcher supportsSubexpressions 
-			ifTrue: [ self assert: matcher subexpressionCount = pair last ] ]
+			ifTrue: [ self assert: matcher subexpressionCount equals: pair last ] ]
 ]
