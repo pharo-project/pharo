@@ -21,7 +21,7 @@ Class {
 	#classInstVars : [
 		'all'
 	],
-	#category : #FontInfrastructure
+	#category : #'Fonts-Infrastructure'
 }
 
 { #category : #accessing }
