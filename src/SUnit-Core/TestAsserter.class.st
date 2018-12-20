@@ -65,26 +65,28 @@ TestAsserter class >> suiteClass [
 
 { #category : #asserting }
 TestAsserter >> assert: actualNumber closeTo: expectedNumber [
-"Tell whether the actualNumber and expectedNumber are close from each with a margin of 0.0001"
+	"Tell whether the actualNumber and expectedNumber are close from each with a margin of 0.0001"
+
 	^ self
 		assert: (actualNumber closeTo: expectedNumber)
-		description: [self comparingStringBetween: actualNumber and: expectedNumber]
+		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
 ]
 
 { #category : #asserting }
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
-"Take a second argument wich is a message string that describes the reason for the failure, this string will be displayed by the Test Runner"
-	aBooleanOrBlock value ifFalse: [
-		| aString |
-		aString := aStringOrBlock value.
-		self logFailure: aString.
-		self classForTestResult failure signal: aString]
-			
+	"Take a second argument wich is a message string that describes the reason for the failure, this string will be displayed by the Test Runner"
+
+	aBooleanOrBlock value
+		ifFalse: [ | aString |
+			aString := aStringOrBlock value.
+			self logFailure: aString.
+			self classForTestResult failure signal: aString ]
 ]
 
 { #category : #asserting }
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: resumableBoolean [ 
-"if resumable: true the test won't stop when the assertion fails, the test will continue it's excecution"
+	"if resumable: true the test won't stop when the assertion fails, the test will continue it's excecution"
+	
 	| exception |
 	aBooleanOrBlock value
 		ifFalse: 
@@ -100,7 +102,8 @@ TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: r
 
 { #category : #asserting }
 TestAsserter >> assert: actual equals: expected [
-"Validate whether or not the actual value is equal than the expected, if the assertion fails it provides a description that show both the actual and the expected value"
+	"Validate whether or not the actual value is equal than the expected, if the assertion fails it provides a description that show both the actual and the expected value"
+	
 	^ self
 		assert: actual = expected
 		description: [self comparingStringBetween: actual and: expected]
@@ -108,7 +111,8 @@ TestAsserter >> assert: actual equals: expected [
 
 { #category : #asserting }
 TestAsserter >> assert: actual identicalTo: expected [
-"Verify whether the actual and the expected are the same object (have the same object pointer)"
+	"Verify whether the actual and the expected are the same object (have the same object pointer)"
+	
 	^ self
 		assert: expected == actual
 		description: [self comparingIdentityStringBetween: actual and: expected]
@@ -117,6 +121,7 @@ TestAsserter >> assert: actual identicalTo: expected [
 { #category : #asserting }
 TestAsserter >> assertCollection: actual equals: expected [
 	"Specialized test method that generates a proper error message for collection"
+
 	^ self
 		assert: expected = actual
 		description: [ self comparingCollectionBetween: actual and: expected ]
@@ -125,26 +130,35 @@ TestAsserter >> assertCollection: actual equals: expected [
 { #category : #asserting }
 TestAsserter >> assertCollection: actual hasSameElements: expected [
 	"Assert that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements."
+
 	| missingElements additionalElements |
-	
 	additionalElements := actual difference: expected.
 	missingElements := expected difference: (actual intersection: expected).
-	self 
+	self
 		assert: (additionalElements isEmpty and: [ missingElements isEmpty ])
-		description: (String streamContents: 
-			[:stream |
-			stream
-				nextPutAll: 'Given Collections do not match!'; lf;
-				tab; nextPutAll: 'additions : '; print: additionalElements asArray; lf;
-				tab; nextPutAll: 'missing: '; print: missingElements asArray; lf ])
+		description:
+			(String
+				streamContents: [ :stream | 
+					stream
+						nextPutAll: 'Given Collections do not match!';
+						lf;
+						tab;
+						nextPutAll: 'additions : ';
+						print: additionalElements asArray;
+						lf;
+						tab;
+						nextPutAll: 'missing: ';
+						print: missingElements asArray;
+						lf ])
 ]
 
 { #category : #asserting }
 TestAsserter >> assertCollection: actual includesAll: subcollection [
 	"Specialized test method that generates a proper error message for collection"
+
 	^ self
 		assert: (actual includesAll: subcollection)
-		description: [ actual asString, ' does not include all in ', subcollection asString ]
+		description: [ actual asString , ' does not include all in ' , subcollection asString ]
 ]
 
 { #category : #factory }
@@ -170,41 +184,50 @@ TestAsserter >> classForTestSuite [
 
 { #category : #private }
 TestAsserter >> comparingCollectionBetween: left and: right [
-"Returns a string that shows the size if they are diferent and the aditional items for each left and right"
-	| additionalLeft additionalRight sortBlock|
-	
+	"Returns a string that shows the size if they are diferent and the aditional items for each left and right"
+
+	| additionalLeft additionalRight sortBlock |
 	"use a very slow sort block"
 	sortBlock := [ :a :b | a asString <= b asString ].
 	additionalLeft := (left difference: right) sorted: sortBlock.
-	additionalRight := (right difference: left) sorted: sortBlock. 
-	
-	^ String streamContents: [:stream |
-		stream
-			nextPutAll: 'Given Collections do not match. Got '; lf;
-			tab; nextPutAll: 'left := '; print: left; nextPut: $.; lf;
-			nextPutAll: ' instead of ';
-			tab; nextPutAll: ' right :='; print: right; nextPut: $.; lf.
-		left size = right size
-			ifFalse: [ 
-				stream 
-					nextPutAll: 'Collection size does not match: left='; 
-					print: left size;
-					nextPutAll: ' vs. right=';
-					print: right size; lf ].
-		additionalLeft isEmpty
-			ifFalse: [ 
-				stream 
-					nextPutAll: 'Got ';
-					print: additionalLeft size;
-					nextPutAll: ' additional element(s) in the left collection: ';
-					tab; print: additionalLeft  ].
-		additionalRight isEmpty
-			ifFalse: [ 
-				stream 
-					nextPutAll: 'Got ';
-					print: additionalRight size;
-					nextPutAll: ' additional element(s) in the right collection: ';
-					tab; print: additionalRight  ]]
+	additionalRight := (right difference: left) sorted: sortBlock.
+	^ String
+		streamContents: [ :stream | 
+			stream
+				nextPutAll: 'Given Collections do not match. Got ';
+				lf;
+				tab;
+				nextPutAll: 'left := ';
+				print: left;
+				nextPut: $.;
+				lf;
+				nextPutAll: ' instead of ';
+				tab;
+				nextPutAll: ' right :=';
+				print: right;
+				nextPut: $.;
+				lf.
+			left size = right size
+				ifFalse: [ stream
+						nextPutAll: 'Collection size does not match: left=';
+						print: left size;
+						nextPutAll: ' vs. right=';
+						print: right size;
+						lf ].
+			additionalLeft isEmpty
+				ifFalse: [ stream
+						nextPutAll: 'Got ';
+						print: additionalLeft size;
+						nextPutAll: ' additional element(s) in the left collection: ';
+						tab;
+						print: additionalLeft ].
+			additionalRight isEmpty
+				ifFalse: [ stream
+						nextPutAll: 'Got ';
+						print: additionalRight size;
+						nextPutAll: ' additional element(s) in the right collection: ';
+						tab;
+						print: additionalRight ] ]
 ]
 
 { #category : #private }
@@ -244,9 +267,9 @@ TestAsserter >> defaultTestFailure [
 
 { #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock [
-"to assert something that should not be true"
+	"to assert something that should not be true"
+
 	self assert: aBooleanOrBlock value not
-			
 ]
 
 { #category : #asserting }
@@ -281,6 +304,7 @@ TestAsserter >> deny: actual identicalTo: expected [
 { #category : #asserting }
 TestAsserter >> denyCollection: actual equals: expected [
 	"Specialized test method that generates a proper error message for collection"
+
 	^ self
 		deny: expected = actual
 		description: [ self unexpectedEqualityStringBetween: actual and: expected ]
@@ -332,9 +356,9 @@ TestAsserter >> logFailure: aString [
 
 { #category : #asserting }
 TestAsserter >> should: aBlock [
-"Evaluate the Block first then execute the assertion"
+	"Evaluate the Block first then execute the assertion"
+
 	self assert: aBlock value
-			
 ]
 
 { #category : #asserting }
@@ -365,10 +389,10 @@ TestAsserter >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
 ]
 
 { #category : #asserting }
-TestAsserter >> should: aBlock raise: anExceptionalEvent [ 
-"To test that a particular exception is raised during the execution of a Block"
-	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
-			
+TestAsserter >> should: aBlock raise: anExceptionalEvent [
+	"To test that a particular exception is raised during the execution of a Block"
+
+	^ self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
 ]
 
 { #category : #asserting }
@@ -399,9 +423,10 @@ TestAsserter >> should: aBlock raise: anException withExceptionDo: anotherBlock 
 ]
 
 { #category : #asserting }
-TestAsserter >> shouldFix: aBlock [ 
+TestAsserter >> shouldFix: aBlock [
 	"Run the block expecting an Exception. Throw an assertion failure if the block does NOT throw an exception."
-	^self should: aBlock raise: Exception
+
+	^ self should: aBlock raise: Exception
 ]
 
 { #category : #asserting }
