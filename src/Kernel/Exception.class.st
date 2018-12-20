@@ -180,13 +180,14 @@ Exception >> messageText: signalerText [
 
 { #category : #handling }
 Exception >> outer [
-	"Evaluate the enclosing exception action and return to here instead of signal if it resumes (see #resumeUnchecked:)."
- 
+	"Evaluate the enclosing exception action and return to here instead of signal if it resumes (see #resumeUnchecked:)."
+
+	| prevOuterContext |
 	self isResumable 
-		ifTrue: [			 
+		ifTrue: [
+			prevOuterContext := outerContext. "required and accessed in resumeUnchecked:"
 			outerContext := thisContext contextTag ].
 	self pass.
-
 ]
 
 { #category : #handling }
