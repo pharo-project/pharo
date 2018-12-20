@@ -41,7 +41,7 @@ KeyPrinterMorph >> mouseDown: event [
 	World activeHand newKeyboardFocus: self
 ]
 
-{ #category : #initialize }
+{ #category : #display }
 KeyPrinterMorph >> openInWorld [
 
 	self
