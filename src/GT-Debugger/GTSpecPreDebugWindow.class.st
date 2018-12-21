@@ -143,15 +143,7 @@ GTSpecPreDebugWindow >> emptyLayout [
 
 { #category : #'initialization widgets' }
 GTSpecPreDebugWindow >> filteredStack [
-
-	^ (self debugger session stackOfSize: 50 ) select: [ :aContext | (aContext method hasPragmaNamed: #debuggerCompleteToSender) not ]
-]
-
-{ #category : #'initialization widgets' }
-GTSpecPreDebugWindow >> firstContextToOpen [
-
-	self filteredStack ifEmpty: [ ^ nil ].
-	^ self filteredStack first
+	^ self debugger filteredStack
 ]
 
 { #category : #api }
@@ -239,10 +231,9 @@ GTSpecPreDebugWindow >> notifierPaneWidgetId [
 GTSpecPreDebugWindow >> openFullDebugger [
 	| currentDebugger |
 	currentDebugger := self debugger.
-	self setDebuggerToFirstNonFilteredContext.
 	self debugger: nil.
 	self close.
-	currentDebugger open
+	currentDebugger openWithFullView
 ]
 
 { #category : #'actions lookup' }
@@ -282,19 +273,6 @@ GTSpecPreDebugWindow >> rebuildWidget [
 GTSpecPreDebugWindow >> session [
 
 	^ self debugger session
-]
-
-{ #category : #actions }
-GTSpecPreDebugWindow >> setDebuggerToFirstNonFilteredContext [
-	"I set the debugger to the first non filtered stack"
-	| currentDebugger |
-
-	currentDebugger := self debugger.
-
-	(currentDebugger stackPresentation selection isNil
-		or: [ currentDebugger stackPresentation selection method
-				hasPragmaNamed: #debuggerCompleteToSender ])
-		ifTrue: [ currentDebugger stackPresentation selection: self firstContextToOpen ]
 ]
 
 { #category : #'building widgets' }
