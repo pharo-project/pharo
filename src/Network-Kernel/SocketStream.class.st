@@ -663,9 +663,12 @@ SocketStream >> printOn: aStream [
 
 	aStream nextPutAll: self class name.
 	inBuffer ifNotNil: [
-		aStream nextPutAll: '[inbuf:',
-		(inBuffer size / 1024) rounded asString, 'kb/outbuf:',
-		(outBuffer size / 1024) rounded asString, 'kb]']
+		aStream 
+			nextPutAll: '[inbuf:';
+			print: (inBuffer size / 1024) rounded;
+			nextPutAll: 'kb/outbuf:';
+		 	print: (outBuffer size / 1024) rounded;
+			nextPutAll: 'kb]']
 ]
 
 { #category : #'stream in' }

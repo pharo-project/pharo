@@ -633,14 +633,15 @@ GLMPresentation >> postCopy [
 
 { #category : #printing }
 GLMPresentation >> printOn: aStream [
+
 	super printOn: aStream.
 	aStream
 		nextPutAll: '(id=';
-		nextPutAll: self identityHash printString;
+		print: self identityHash ;
 		nextPutAll: ' title=';
-		nextPutAll: self titleValue asString;
+		print: self titleValue ;
 		nextPutAll: ' pane=';
-		nextPutAll: self pane printString;
+		print: self pane ;
 		nextPutAll: ')'
 ]
 

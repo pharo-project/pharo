@@ -440,7 +440,10 @@ MenuRegistration >> precondition: aValuable [
 MenuRegistration >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream << ' ( ' << self name asString << ' ) '
+	aStream 
+		<< ' ( ';
+		print: self name; 
+		<< ' ) '
 ]
 
 { #category : #'initialize-release' }

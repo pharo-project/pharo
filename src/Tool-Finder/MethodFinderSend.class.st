@@ -48,10 +48,12 @@ MethodFinderSend >> printOn: aStream [
 	aStream space.
 	arguments ifEmpty: [^ aStream nextPutAll: selector].
 	arguments with: selector keywords do: [:arg :word |
+
 		aStream nextPutAll: word asString.
 		aStream space.
 		aStream print: arg.
 		aStream space.
+
 	].
 	aStream skip: -1.
 ]

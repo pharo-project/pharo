@@ -23,3 +23,8 @@ KMCommandModifier >> initialize [
 KMCommandModifier >> matchesEvent: aKeyboardEvent [
 	^  aKeyboardEvent commandKeyPressed
 ]
+
+{ #category : #printing }
+KMCommandModifier >> printingPosition [
+	^1
+]

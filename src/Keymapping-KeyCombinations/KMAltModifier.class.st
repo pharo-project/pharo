@@ -23,3 +23,8 @@ KMAltModifier >> initialize [
 KMAltModifier >> matchesEvent: aKeyboardEvent [
 	^ aKeyboardEvent altKeyPressed
 ]
+
+{ #category : #printing }
+KMAltModifier >> printingPosition [
+	^2
+]

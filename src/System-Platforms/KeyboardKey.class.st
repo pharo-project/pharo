@@ -661,7 +661,7 @@ KeyboardKey >> printOn: aStream [
 		nextPutAll: 'Key ';
 		nextPutAll: name;
 		nextPutAll: ' code: (';
-		nextPutAll: value asString;
+		print: value;
 		nextPutAll: ')'
 ]
 
