@@ -1,5 +1,5 @@
 "
-SUnit tests for integers
+SUnit tests for integers.
 "
 Class {
 	#name : #IntegerTest,
