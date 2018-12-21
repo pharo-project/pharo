@@ -45,10 +45,14 @@ HaloSpec >> iconSymbol [
 
 { #category : #printing }
 HaloSpec >> printOn: aStream [
-	"Add a textual printout representing the receiver to a stream"
 
 	super printOn: aStream.
-	aStream nextPutAll: ' (', addHandleSelector asString, ' ', iconSymbol asString, ')'
+	aStream 
+		nextPutAll: ' (';
+		print: addHandleSelector;
+		nextPutAll: ' ';
+		print: iconSymbol;
+		nextPutAll: ')'
 ]
 
 { #category : #accessing }
