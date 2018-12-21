@@ -50,7 +50,7 @@ HaloSpec >> printOn: aStream [
 	aStream 
 		nextPutAll: ' (';
 		print: addHandleSelector;
-		nextPutAll: ' ';
+ 		space;
 		print: iconSymbol;
 		nextPutAll: ')'
 ]
