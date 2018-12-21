@@ -778,7 +778,7 @@ MailMessage >> regenerateText [
 		"put the body, being sure to encode it according to the header"
 		encodedBodyText := body content.
 		self decoderClass ifNotNil: 
-			[ encodedBodyText := (self decoderClass mimeEncode: encodedBodyText readStream) upToEnd ].
+			[ encodedBodyText := self decoderClass mimeEncode: encodedBodyText readStream ].
 		str nextPutAll: encodedBodyText ]
 ]
 
