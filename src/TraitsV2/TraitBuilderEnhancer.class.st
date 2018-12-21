@@ -178,7 +178,7 @@ TraitBuilderEnhancer >> isTraitedMetaclass: aBuilder [
 { #category : #'class modifications' }
 TraitBuilderEnhancer >> newMetaclass: aBuilder [
 
-	(aBuilder traitComposition isNotEmpty or: [ aBuilder classTraitComposition isNotEmpty ])
+	(aBuilder traitComposition asTraitComposition isNotEmpty or: [ aBuilder classTraitComposition asTraitComposition isNotEmpty ])
 		ifTrue: [ aBuilder metaclassClass: TraitedMetaclass ].
 				
 	aBuilder metaSuperclass = Trait
