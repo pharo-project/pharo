@@ -193,7 +193,7 @@ SHRange >> printOn: aStream [
 		print: start ;
 		nextPutAll: ' - ';
 		print: end; 
-		nextPutAll: ']'
+ 		nextPut: $]
 ]
 
 { #category : #accessing }
