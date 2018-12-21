@@ -378,7 +378,7 @@ MCWorkingCopy >> printOn: aStream [
 	package name ifNotNil: [ aStream 
 										nextPutAll: '(' ; 
 										print: package name ;
-										nextPutAll: ')']
+ 										nextPut: $)]
 ]
 
 { #category : #accessing }
