@@ -222,10 +222,9 @@ EpAbstractLog >> nullReference [
 EpAbstractLog >> printOn: aStream [
 
 	super printOn: aStream.
-	
 	aStream 
 		nextPut: $(;
-		nextPutAll: self headReference asString;
+		print: self headReference;
 		nextPut: $).
 ]
 
