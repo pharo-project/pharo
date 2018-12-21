@@ -62,7 +62,7 @@ FreeTypeEmbeddedFileInfo >> printOn: aStream [
 	aStream
  			nextPut: ${;
 			print: self locationType;
-			nextPut: '}';
+ 			nextPut: $};
  			nextPut: $(;
 			print: fileContents size;
 			nextPutAll: ' bytes )';
