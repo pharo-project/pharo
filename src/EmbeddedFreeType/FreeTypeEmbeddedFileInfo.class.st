@@ -60,7 +60,7 @@ FreeTypeEmbeddedFileInfo >> locationType [
 FreeTypeEmbeddedFileInfo >> printOn: aStream [
 
 	aStream
-			nextPut: '{';
+ 			nextPut: ${;
 			print: self locationType;
 			nextPut: '}';
  			nextPut: $(;
