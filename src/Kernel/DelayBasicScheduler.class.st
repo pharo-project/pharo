@@ -1,6 +1,6 @@
 "
 I schedule delays in a basic way independent of any particular time-base
-and without any special multi-threaded synchronisation protection.
+and without any special multi-threaded synchronisation protection. 
 
 I provide the delay scheduling loop running as the system's highest priority process 
 waiting for user delay scheduling events or VM events indicating a delay needs to be expired.

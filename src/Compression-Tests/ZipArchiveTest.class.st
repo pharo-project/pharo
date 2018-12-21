@@ -327,3 +327,19 @@ ZipArchiveTest >> testZip [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "zip comment length".
 		self assert: str atEnd ].
 ]
+
+{ #category : #tests }
+ZipArchiveTest >> testisZipArchive [
+	| nonArchive |
+	zip addFile: fileToZip fullName as: fileToZip basename.
+	zip writeToFileNamed: zipFile fullName.
+	self assert: (ZipArchive isZipArchive: zipFile fullName).
+	self assert: (ZipArchive isZipArchive: zipFile).
+	self assert: (zipFile binaryReadStreamDo: [ :s | ZipArchive isZipArchive: s ]).
+	nonArchive := 'non_archive_file_for_test.txt' asFileReference.
+	nonArchive ensureCreateFile.
+	[ self deny: (ZipArchive isZipArchive: nonArchive fullName).
+	self deny: (ZipArchive isZipArchive: nonArchive).
+	self deny: (nonArchive binaryReadStreamDo: [ :s | ZipArchive isZipArchive: s ]) ]
+		ensure: [ nonArchive ensureDelete ]
+]

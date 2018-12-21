@@ -33,7 +33,7 @@ RxParserTest >> test [
 
 	self assert: ('\<t\w+' asRegexIgnoringCase
 		copy: 'now is the Time'
-		translatingMatchesUsing: [:match | match asUppercase]) = 'now is THE TIME'.
+		translatingMatchesUsing: [:match | match asUppercase]) equals: 'now is THE TIME'.
 
 	"the regular expression matches words beginning with either an uppercase or a lowercase T"
 ]
@@ -85,8 +85,7 @@ brackets:"
 	
 	self assert: ('3' matchesRegex: '[^01]').
 	"3 is not in 01 so it matches"
-	
-	
+		
 	self deny: ('30' matchesRegex: '[^01]').		
 	self deny: ('33333333333333333333333330' matchesRegex: '[^01]').	
 	"there is one zero so it does not match"
@@ -102,7 +101,7 @@ between them: `[0-9]' is the same as `[0123456789]'. "
 	self assert: ('9' matchesRegex: '[0-9]').	
 	self deny: ('a' matchesRegex: '[0-9]').
 	self deny: ('01' matchesRegex: '[0-9]').	
-	self assert: ('01442128629839374565' matchesRegex: '[0-9]+').	
+	self assert: ('01442128629839374565' matchesRegex: '[0-9]+')
 	
 ]
 
@@ -110,7 +109,7 @@ between them: `[0-9]' is the same as `[0123456789]'. "
 RxParserTest >> testLookaround [
 	self assert: ('A'   matchesRegex: '(?!ABC).*').
 	self assert: ('AB'  matchesRegex: '(?!ABC).*').
-	self deny:   ('ABC' matchesRegex: '(?!ABC).*').
+	self deny:   ('ABC' matchesRegex: '(?!ABC).*')
 ]
 
 { #category : #tests }
@@ -119,11 +118,11 @@ RxParserTest >> testMatchesInwW [
 	\w	any word constituent character (equivalent to [a-zA-Z0-9:=])
 	\W	any character but a word constituent (equivalent to [^a-xA-Z0-9:=]"
 
-	self assert: ('\w+' asRegex matchesIn: 'now is the time') asArray = #('now' 'is' 'the' 'time').
-	self assert: ('\W+' asRegex matchesIn: 'now is the time') asArray = #(' ' ' ' ' ').
+	self assert: ('\w+' asRegex matchesIn: 'now is the time') asArray equals: #('now' 'is' 'the' 'time').
+	self assert: ('\W+' asRegex matchesIn: 'now is the time') asArray equals: #(' ' ' ' ' ').
 	
 	"why do we get that"
-	self assert: ('\w' asRegex matchesIn: 'now') asArray = #('n' 'o' 'w').
+	self assert: ('\w' asRegex matchesIn: 'now') asArray equals: #('n' 'o' 'w')
 ]
 
 { #category : #tests }
@@ -138,12 +137,11 @@ number of b's, or b followed by any number of a's':"
 	self assert: ('baa' matchesRegex: 'ab*|ba*').	 	
 	self deny: ('baab' matchesRegex: 'ab*|ba*').
 	
-
 	"It is possible to write an expression matching an empty string, for
 example: `a|'.  However, it is an error to apply `*', `+', or `?' to
 such expression: `(a|)*' is an invalid expression."
 
-	self should: ['(a|)*' asRegex] raise: Error.
+	self should: ['(a|)*' asRegex] raise: Error
 
 ]
 
@@ -170,7 +168,7 @@ RxParserTest >> testQuantifier [
 	self assert: ('a'    matchesRegex: 'a{,3}').
 	self assert: ('aa'   matchesRegex: 'a{,3}').
 	self assert: ('aaa'  matchesRegex: 'a{,3}').
-	self deny:   ('aaaa' matchesRegex: 'a{,3}').
+	self deny:   ('aaaa' matchesRegex: 'a{,3}')
 ]
 
 { #category : #tests }
@@ -188,7 +186,7 @@ RxParserTest >> testQuantifierSimple [
 	
 	self assert: ('ab'   matchesRegex: '(ab){,1}').
 	self assert: (''     matchesRegex: '(ab){,1}').
-	self deny:   ('abab' matchesRegex: '(ab){,1}').
+	self deny:   ('abab' matchesRegex: '(ab){,1}')
 ]
 
 { #category : #tests }
@@ -202,7 +200,7 @@ further)."
 
 	self deny: ('ab*' matchesRegex: 'ab*'). "	-- false: star in the right string is special"
 	self assert: ('ab*' matchesRegex: 'ab\*').	 		
-	self assert: ('a\c' matchesRegex: 'a\\c').		 	
+	self assert: ('a\c' matchesRegex: 'a\\c')		 	
 ]
 
 { #category : #tests }
@@ -231,7 +229,7 @@ expression. For example:"
 	self assert: ('ab' matchesRegex: 'a*b').		 		
 	self assert: ('aaaaab' matchesRegex: 'a*b').	
 	self assert: ('b' matchesRegex: 'a*b').	 	
-	self deny: ('aac' matchesRegex: 'a*b').	 		
+	self deny: ('aac' matchesRegex: 'a*b')		
 ]
 
 { #category : #tests }
@@ -251,7 +249,7 @@ set. Below are the examples of how to literally use them in a set:
 	self deny: ('1' matchesRegex: '[^01]').
 	
 	"[^abc] means that everything except abc is matche"
-	self assert: ('^' matchesRegex: '[^01]').
+	self assert: ('^' matchesRegex: '[^01]')
 	
 ]
 
@@ -289,23 +287,7 @@ or more occurrences of ab':"
 RxParserTest >> testTranslatingMatchesUsing [
 	self assert: ('\<t\w+' asRegexIgnoringCase
 		copy: 'now is the Time'
-		translatingMatchesUsing: [:match | match asUppercase]) = 'now is THE TIME'.
+		translatingMatchesUsing: [:match | match asUppercase]) equals: 'now is THE TIME'.
 
 	"the regular expression matches words beginning with either an uppercase or a lowercase T"
-]
-
-{ #category : #tests }
-RxParserTest >> toDotestSpecialCharacterInSetRange [
-	
-	"Special characters within a set are `^', `-', and `]' that closes the
-set. Below are the examples of how to literally use them in a set:
-	[01^]		-- put the caret anywhere except the beginning
-	[01-]		-- put the dash as the last character
-	[]01]		-- put the closing bracket as the first character 
-	[^]01]			(thus, empty and universal sets cannot be specified)"
-
-	self assert: ('0' matchesRegex: '[01^]').
-	
-	self assert: ('0' matchesRegex: '[0-9]').	
-	
 ]

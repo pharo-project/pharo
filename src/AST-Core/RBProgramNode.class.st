@@ -296,6 +296,16 @@ RBProgramNode >> do: aBlock [
 	aBlock value: self
 ]
 
+{ #category : #generation }
+RBProgramNode >> dump [
+	^  String streamContents: [:s | self dumpOn: s]
+]
+
+{ #category : #generation }
+RBProgramNode >> dumpOn: aStream [
+	self subclassResponsibility 
+]
+
 { #category : #comparing }
 RBProgramNode >> equalTo: aNode exceptForVariables: variableNameCollection [ 
 	| dictionary |
@@ -459,6 +469,11 @@ RBProgramNode >> isMessage [
 
 { #category : #testing }
 RBProgramNode >> isMethod [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isParseError [
 	^false
 ]
 

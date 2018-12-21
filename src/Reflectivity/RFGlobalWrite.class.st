@@ -27,5 +27,5 @@ RFGlobalWrite >> value [
 
 { #category : #accessing }
 RFGlobalWrite >> variableName: aSymbol [
-	variable := Smalltalk globals associationAt: aSymbol
+	variable := self environment associationAt: aSymbol
 ]

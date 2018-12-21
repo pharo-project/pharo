@@ -195,7 +195,7 @@ TemporaryVariable >> startpc: anObject [
 
 { #category : #'reflecive api' }
 TemporaryVariable >> write: aValue InContext: aContext [
-	aContext tempNamed: name put: aValue
+	^aContext tempNamed: name put: aValue
 ]
 
 { #category : #'saved temps' }

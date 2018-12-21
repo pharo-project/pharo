@@ -90,6 +90,15 @@ Win32Environment >> removeEnvironmentVariable: nameString [
 	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, 0 ) )
 ]
 
+{ #category : #private }
+Win32Environment >> setEnv: nameString value: valueString [
+	"This method calls the the platform specific set environment routine"
+
+	^ self
+		ffiCall: #(int SetEnvironmentVariableA #(String nameString , String valueString))
+		module: #Kernel32
+]
+
 { #category : #accessing }
 Win32Environment >> removeKey: aKey [
 	"The primitive on Windows currently uses the ascii version of the Windows API.

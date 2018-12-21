@@ -106,13 +106,18 @@ LiteralVariable >> link: aMetaLink [
 
 { #category : #'*Reflectivity' }
 LiteralVariable >> links [
-	^self propertyAt: #links ifAbsent: nil
+	^self propertyAt: #links ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }
 LiteralVariable >> methodNode [
 	self flag: #hack.
 	^nil
+]
+
+{ #category : #'*Reflectivity' }
+LiteralVariable >> postambles [
+	^ self propertyAt: #postambles ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }

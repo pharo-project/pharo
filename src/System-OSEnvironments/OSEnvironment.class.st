@@ -250,6 +250,20 @@ OSEnvironment >> removeKey: aKey [
 ]
 
 { #category : #accessing }
+OSEnvironment >> setEnv: nameString value: valueString [
+	"This method calls the the platform specific set environment routine"
+
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+OSEnvironment >> unsetEnv: string [
+	"This method calls the the platform specific unset environment routine"
+
+	^ self ffiCall: #(int unsetenv #(String string)) module: LibC
+]
+
+{ #category : #accessing }
 OSEnvironment >> values [
 	"Answer a Collection containing the receiver's values."
 	^ Array streamContents: [ :stream|

@@ -1007,7 +1007,7 @@ UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: 
 		fileNameText: pathFileReference basename;
 		initialize;
 		title: title;
-		answerFileName.	
+		answerPathName.	
 	exts ifNotNil: [ fd validExtensions: exts ].
 	path ifNotNil: [ fd selectPath: pathFileReference pathString ].
 	^ (aThemedMorph openModal: fd) answer ifNotNil: #asFileReference
@@ -2707,12 +2707,12 @@ UITheme >> menubarFillStyleFor: aMenubar [
 
 { #category : #'fill-styles-menubar' }
 UITheme >> menubarItemSelectionFillStyleFor: aMenubarItem [
-	^ self taskbarItemSelectedFillStyleFor: aMenubarItem
+	^ self settings menuSelectionColor
 ]
 
 { #category : #'fill-styles-menubar' }
 UITheme >> menubarItemSelectionTextColorFor: aMenubarItem [
-	^ self taskbarItemLabelColorForExpanded: aMenubarItem
+	^ self settings menuSelectionTextColor
 ]
 
 { #category : #services }
@@ -5898,6 +5898,11 @@ UITheme >> updateWorldDockingBars [
 			borderStyle: (self worldMainDockingBarBorderStyleFor: d)]
 ]
 
+{ #category : #'accessing colors' }
+UITheme >> urlColor [
+	^ Color fromHexString: '03A9F4'
+]
+
 { #category : #'fill-styles-scrollbars' }
 UITheme >> useScrollbarThumbShadow [
 	"Answer whether a shadow morph should be displayed when
@@ -5965,28 +5970,28 @@ UITheme >> watcherWindowInactiveFillStyleFor: aWindow [
 UITheme >> whiteTreeExpandedForm [
 	"Answer the form to use for an expanded tree item when a contrasting one is needed."
 
-	^(self forms 
+	^ self forms 
 		at: #whiteTreeExpanded 
 		ifAbsent: [ | f |
 			f := self treeExpandedForm deepCopy.
 			f replaceColor: Color white withColor: Color transparent.
 			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
 			self forms at: #whiteTreeExpanded put: f.
-			self whiteTreeExpandedForm]) scaledByDisplayScaleFactor
+			self whiteTreeExpandedForm]
 ]
 
 { #category : #'label-styles' }
 UITheme >> whiteTreeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item when a contrasting one is needed."
 
-	^(self forms 
+	^ self forms 
 		at: #whiteTreeUnexpanded
 		ifAbsent: [ | f |
 			f := self treeUnexpandedForm deepCopy.
 			f replaceColor: Color white withColor: Color transparent.
 			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
 			self forms at: #whiteTreeUnexpanded put: f.
-			self whiteTreeUnexpandedForm]) scaledByDisplayScaleFactor
+			self whiteTreeUnexpandedForm]
 ]
 
 { #category : #'border-styles' }

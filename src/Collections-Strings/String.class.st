@@ -1138,6 +1138,7 @@ String >> expandMacrosWithArguments: anArray [
 	"'<t>' expandMacros >>> String tab"
 	"'<r>' expandMacros >>> String cr"
 	"'<n>' expandMacros >>> OSPlatform current lineEnding"
+	"'<l>' expandMacros >>> String lf"
 	
 	"Writing '<' character:
 	To write '<', prepend it with a percent sign."
@@ -1166,6 +1167,8 @@ String >> expandMacrosWithArguments: anArray [
 							nextChar := readStream next asUppercase.
 							nextChar == $R
 								ifTrue: [ newStream cr ].
+							nextChar == $L
+								ifTrue: [ newStream lf ].
 							nextChar == $T
 								ifTrue: [ newStream tab ].
 							nextChar == $N

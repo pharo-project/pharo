@@ -789,14 +789,15 @@ StringTest >> testEquality [
 StringTest >> testExpandMacros [
 
 	self
-		assert: '<t><n><r>' expandMacros
+		assert: '<t><n><r><l>' expandMacros
 		equals:
 			(String
 				streamContents: [ :stream | 
 					stream
 						nextPut: Character tab;
 						nextPutAll: OSPlatform current lineEnding;
-						nextPut: Character cr ])
+						nextPut: Character cr;
+						nextPut: Character lf ])
 ]
 
 { #category : #'tests - formatting' }

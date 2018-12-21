@@ -137,6 +137,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
+		spec package: 'NautilusRefactoring-Tests'.
 
 		spec package: 'Ombu'.
 		spec package: 'Epicea'.
@@ -283,7 +284,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
-		spec package: 'FontInfrastructure-Tests'.
+		spec package: 'Fonts-Infrastructure-Tests'.
 		spec package: 'FreeType-Tests'.
 		spec package: 'FreeType-Help'.
 		spec package: 'FuzzyMatcher-Tests'.
@@ -436,7 +437,7 @@ spec group: 'General-Tests-Group' with: #(
 	'EmbeddedFreeType-Tests'
 	'Epicea-Tests-Group'
 	'FileSystem-Tests-Memory'
-	'FontInfrastructure-Tests'
+	'Fonts-Infrastructure-Tests'
 	'FreeType-Tests'
 	'FreeType-Help'
 
@@ -772,6 +773,7 @@ spec group: 'GT&QA-Group' with: #(
 	'Reflectivity-Tools'	"required by Manifest-Core Refactoring-Critics"
 
 	'NautilusRefactoring'	"required by Epicea, SmartSuggestions"
+	'NautilusRefactoring-Tests'
 	'Refactoring-Critics'	"depends on QA, needs cleanup"
 
 	'Glamour-Group'
@@ -839,7 +841,7 @@ BaselineOfIDE >> loadCalypso [
 
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.12.0/src';
+		repository: 'github://pharo-ide/Calypso:v0.13.0/src';
 		onConflict: [ :err | err useIncoming ];
 		onUpgrade: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
@@ -853,7 +855,7 @@ BaselineOfIDE >> loadCalypso [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.4.0';
+		repository: 'github://pharo-vcs/iceberg:v1.4.1';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 	(Smalltalk classNamed: #IcePharoPlugin) addPharoProjectToIceberg.

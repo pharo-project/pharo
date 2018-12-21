@@ -2244,9 +2244,11 @@ Object >> yourself [
 	To get the receiver we can simply use a cascade as follows:
 		#('hello' 'world') at: 2 put: 'pharo'; yourself
 	and since yourself returns the receiver of the message we will get the modified array.
+	
 	Stepping back using a cascade and yourself is equivalent to declare a variable, assign the expression and return the variable as follows:
 	| a |
-	a := #('hello' 'world') at: 2 put: 'pharo'.
+	a := #('hello' 'world'). 
+	a at: 2 put: 'pharo'.
 	a 
 	"
 	

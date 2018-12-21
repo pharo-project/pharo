@@ -1,7 +1,10 @@
+"
+Manifest for deprecated Ring-Deprecated-ChunkImporter package
+"
 Class {
 	#name : #ManifestRingChunkImporter,
 	#superclass : #PackageManifest,
-	#category : #'Ring-Deprecated-ChunkImporter'
+	#category : #'Ring-Deprecated-ChunkImporter-Manifest'
 }
 
 { #category : #deprecation }

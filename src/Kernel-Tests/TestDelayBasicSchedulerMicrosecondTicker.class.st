@@ -1,6 +1,6 @@
 "
 I specify the tests for the delay scheduler system. My subclasses inherit 
-these tests to run against various combinations of scheduler and ticker.  
+these tests to run against various combinations of scheduler and ticker.   
 
 The scheduler is specified by #classForScheduler.
 The ticker is specified by #classForTicker.

@@ -4,5 +4,5 @@ Small Pharo project to visually connect items in a history-like graph. It uses A
 Class {
 	#name : #ManifestHiedra,
 	#superclass : #PackageManifest,
-	#category : #Hiedra
+	#category : #'Hiedra-Manifest'
 }

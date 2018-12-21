@@ -96,7 +96,12 @@ Slot >> link: aMetaLink [
 
 { #category : #'*Reflectivity' }
 Slot >> links [
-	^self propertyAt: #links ifAbsent: nil
+	^self propertyAt: #links ifAbsent: #()
+]
+
+{ #category : #'*Reflectivity' }
+Slot >> postambles [
+	^ self propertyAt: #postambles ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }
