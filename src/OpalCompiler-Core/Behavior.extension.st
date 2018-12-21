@@ -110,12 +110,12 @@ Behavior >> sourceCodeTemplateFor: aClassOrMetaclass [
 	"Answer an expression to be edited and evaluated in order to define 
 	methods in this class or trait."
 
-		^ aClassOrMetaclass isMeta 
+		^ aClassOrMetaclass isMeta
 				ifTrue: 
 [ 
 'messageSelectorAndArgumentNames
-	"comment stating purpose of factory/class-side message"
-	"scope: class-variables  &  factory/class-instance-variables"	
+	"comment stating purpose of class-side message"
+	"scope: class-variables  &  class-instance-variables"	
 			
 	| temporary variable names |
 	statements' 
