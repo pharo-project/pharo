@@ -107,7 +107,7 @@ EvaluateCommandLineHandler >> evaluateArguments [
 { #category : #activation }
 EvaluateCommandLineHandler >> evaluateStdIn [
 	| stdin |
-	stdin := FileStream stdin ifNil: [ ^ self ].
+	stdin := Stdio stdin ifNil: [ ^ self ].
 	stdin atEnd  ifTrue: [ ^ self ].
 	
 	self flag: #todo. "the whole compilation machinery does not work with stdin directly, hence we load everything a buffer first"
