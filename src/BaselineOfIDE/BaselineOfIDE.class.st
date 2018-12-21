@@ -791,6 +791,7 @@ spec group: #default with: #(
 	'BasicTools'	"dependency"
 	'Athens'
 	'Flashback'
+	'DelaySchedulerDebugUtilities'
 
 	'Mandatory-Group'
 
