@@ -44,13 +44,13 @@ MethodFinderSend >> evaluate [
 { #category : #printing }
 MethodFinderSend >> printOn: aStream [
 
-	aStream nextPutAll: receiver asString.
+	aStream print: receiver.
 	aStream space.
 	arguments ifEmpty: [^ aStream nextPutAll: selector].
 	arguments with: selector keywords do: [:arg :word |
 		aStream nextPutAll: word asString.
 		aStream space.
-		aStream nextPutAll: arg asString.
+		aStream print: arg.
 		aStream space.
 	].
 	aStream skip: -1.
