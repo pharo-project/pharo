@@ -13,7 +13,8 @@ Class >> addClassSlot: aSlot [
 			sharedVariablesFromString: self classVariablesString;
 			sharedPools: self sharedPoolsString;
 			category: self category;
-			environment: self environment]
+			environment: self environment;
+			copyClassSlotsFromExistingClass ]
 ]
 
 { #category : #'*Shift-ClassInstaller' }
