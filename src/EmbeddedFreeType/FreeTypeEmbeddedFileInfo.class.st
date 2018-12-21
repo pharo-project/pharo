@@ -74,7 +74,7 @@ FreeTypeEmbeddedFileInfo >> printOn: aStream [
 			print: styleName;
 			nextPutAll: ' - ';
 			print: postscriptName;
-			nextPutAll: ' ';
+ 			space;
 			nextPutAll:
 				(bold
 					ifTrue: [ 'B' ]
