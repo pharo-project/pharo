@@ -39,6 +39,12 @@ Integer class >> byte1: byte1 byte2: byte2 byte3: byte3 byte4: byte4 [
 	^ value
 ]
 
+{ #category : #testing }
+Integer class >> isAbstract [
+
+	^self name = #Integer
+]
+
 { #category : #'instance creation' }
 Integer class >> new [
 

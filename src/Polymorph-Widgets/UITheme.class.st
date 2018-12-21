@@ -180,7 +180,6 @@ UITheme class >> newDefaultSettings [
 		autoSelectionColor: false;
 		preferRoundCorner: false;
 		fadedBackgroundWindows: false;
-		secondarySelectionColor: self veryLightSelectionColor;
 		flatMenu: true
 ]
 
@@ -995,6 +994,26 @@ UITheme >> chooseDropListIn: aThemedMorph text: aStringOrText title: aString lis
 ]
 
 { #category : #services }
+UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: exts path: path preview: preview [
+	"Answer the result of a file name chooser dialog with the given title, extensions
+	path and preview type.
+	Answer nil or a filename."
+
+	| fd pathFileReference |
+	pathFileReference := path asFileReference.
+	fd := FileDialogWindow basicNew
+		basicTheme: aThemedMorph theme;
+		previewType: preview;
+		fileNameText: pathFileReference basename;
+		initialize;
+		title: title;
+		answerPathName.	
+	exts ifNotNil: [ fd validExtensions: exts ].
+	path ifNotNil: [ fd selectPath: pathFileReference pathString ].
+	^ (aThemedMorph openModal: fd) answer ifNotNil: #asFileReference
+]
+
+{ #category : #services }
 UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path preview: preview [
 	"Answer the result of a file open dialog with the given title, extensions path and preview type.
 	Answer nil or a filename."
@@ -1016,8 +1035,8 @@ UITheme >> chooseFileNameIn: aThemedMorph title: title extensions: exts path: pa
 	"Answer the result of a file name chooser dialog with the given title, extensions
 	path and preview type.
 	Answer nil or a filename."
-
 	| fd |
+	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
 	fd := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
@@ -1045,12 +1064,30 @@ UITheme >> chooseFontIn: aThemedMorph title: aString font: aFont [
 ]
 
 { #category : #services }
+UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: exts path: path preview: preview [
+	"Answer the result of a file name chooser dialog with the given title, extensions
+	path and preview type.
+	Answer nil or a filename."
+
+	| fd pathFileReference |
+	pathFileReference := path asFileReference.
+	fd := (FileDialogWindow newWithTheme: aThemedMorph theme)
+		title: title;
+		fileNameText: pathFileReference basename;
+		answerSaveFile.
+	exts ifNotNil: [ fd validExtensions: exts ].
+	path ifNotNil: [ fd selectPath: path ].
+	^ (aThemedMorph openModal: fd) answer
+]
+
+{ #category : #services }
 UITheme >> chooseFullFileNameIn: aThemedMorph title: title extensions: exts path: path preview: preview [
 	"Answer the result of a file name chooser dialog with the given title, extensions
 	path and preview type.
 	Answer nil or a full filename."
 
 	| fd |
+	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
 	fd := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
@@ -2169,6 +2206,7 @@ UITheme >> fileOpenIn: aThemedMorph title: title extensions: exts path: path pre
 	"Answer the result of a file open dialog with the given title, extensions path and preview type."
 
 	| fd |
+	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
 	fd := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
@@ -2184,6 +2222,7 @@ UITheme >> fileOpenIn: aThemedMorph title: title extensions: exts path: path pre
 UITheme >> fileSaveIn: aThemedMorph title: title extensions: exts path: path [
 	"Answer the result of a file save dialog with the given title, extensions and path."
 
+	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
 	^self fileSaveIn: aThemedMorph title: title initialAnswer: '' extensions: exts path: path
 ]
 
@@ -2192,6 +2231,7 @@ UITheme >> fileSaveIn: aThemedMorph title: title initialAnswer: aFileName extens
 	"Answer the result of a file save dialog with the given title, extensions and path."
 
 	| fd |
+	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
 	fd := (FileDialogWindow newWithTheme: aThemedMorph theme)
 		title: title;
 		fileNameText: aFileName;
@@ -2667,12 +2707,12 @@ UITheme >> menubarFillStyleFor: aMenubar [
 
 { #category : #'fill-styles-menubar' }
 UITheme >> menubarItemSelectionFillStyleFor: aMenubarItem [
-	^ self taskbarItemSelectedFillStyleFor: aMenubarItem
+	^ self settings menuSelectionColor
 ]
 
 { #category : #'fill-styles-menubar' }
 UITheme >> menubarItemSelectionTextColorFor: aMenubarItem [
-	^ self taskbarItemLabelColorForExpanded: aMenubarItem
+	^ self settings menuSelectionTextColor
 ]
 
 { #category : #services }
@@ -5228,7 +5268,7 @@ UITheme >> scrollbarThumbVerticalMiddleForm [
 
 { #category : #'accessing colors' }
 UITheme >> secondarySelectionColor [
-	^ self settings secondarySelectionColor
+	^ Color r: 0.927 g: 0.962 b: 0.995 alpha: 1.0
 ]
 
 { #category : #'accessing colors' }
@@ -5858,6 +5898,11 @@ UITheme >> updateWorldDockingBars [
 			borderStyle: (self worldMainDockingBarBorderStyleFor: d)]
 ]
 
+{ #category : #'accessing colors' }
+UITheme >> urlColor [
+	^ Color fromHexString: '03A9F4'
+]
+
 { #category : #'fill-styles-scrollbars' }
 UITheme >> useScrollbarThumbShadow [
 	"Answer whether a shadow morph should be displayed when
@@ -5925,28 +5970,28 @@ UITheme >> watcherWindowInactiveFillStyleFor: aWindow [
 UITheme >> whiteTreeExpandedForm [
 	"Answer the form to use for an expanded tree item when a contrasting one is needed."
 
-	^(self forms 
+	^ self forms 
 		at: #whiteTreeExpanded 
 		ifAbsent: [ | f |
 			f := self treeExpandedForm deepCopy.
 			f replaceColor: Color white withColor: Color transparent.
 			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
 			self forms at: #whiteTreeExpanded put: f.
-			self whiteTreeExpandedForm]) scaledByDisplayScaleFactor
+			self whiteTreeExpandedForm]
 ]
 
 { #category : #'label-styles' }
 UITheme >> whiteTreeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item when a contrasting one is needed."
 
-	^(self forms 
+	^ self forms 
 		at: #whiteTreeUnexpanded
 		ifAbsent: [ | f |
 			f := self treeUnexpandedForm deepCopy.
 			f replaceColor: Color white withColor: Color transparent.
 			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
 			self forms at: #whiteTreeUnexpanded put: f.
-			self whiteTreeUnexpandedForm]) scaledByDisplayScaleFactor
+			self whiteTreeUnexpandedForm]
 ]
 
 { #category : #'border-styles' }

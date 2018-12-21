@@ -38,7 +38,7 @@ MCVersionReader class >> serviceLoadVersion [
 		selector: #loadVersionStream:fromDirectory:
 		description: 'Load a package version'
 		buttonLabel: 'Load')
-		argumentGetter: [ :fileList | { fileList readOnlyStream . fileList directory } ]
+		argumentGetter: [ :fileList | { fileList binaryReadStream . fileList parent } ]
 ]
 
 { #category : #'*MonticelloFileServices' }
@@ -49,7 +49,7 @@ MCVersionReader class >> serviceMergeVersion [
 		selector: #mergeVersionStream:
 		description: 'Merge a package version into the image'
 		buttonLabel: 'Merge')
-		argumentGetter: [ :fileList | fileList readOnlyStream ]
+		argumentGetter: [ :fileList | fileList binaryReadStream ]
 ]
 
 { #category : #'*MonticelloFileServices' }
@@ -60,7 +60,7 @@ MCVersionReader class >> serviceOpenVersion [
 		selector: #openVersionFromStream:
 		description: 'Open a package version'
 		buttonLabel: 'Open')
-		argumentGetter: [ :fileList | fileList readOnlyStream ]
+		argumentGetter: [ :fileList | fileList binaryReadStream ]
 ]
 
 { #category : #'*MonticelloFileServices' }

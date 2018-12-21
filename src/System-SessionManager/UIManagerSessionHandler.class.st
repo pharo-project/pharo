@@ -16,10 +16,10 @@ Class {
 
 { #category : #'initialize-release' }
 UIManagerSessionHandler class >> initialize [
-	"has to be executed at the end of the GUI category"
+	"has to be executed at the end of the user category"
 	SessionManager default 
 		register: self uniqueInstance
-		inCategory: SessionManager default guiCategory 
+		inCategory: SessionManager default userCategory  
 		atPriority: SmallInteger maxVal
 ]
 

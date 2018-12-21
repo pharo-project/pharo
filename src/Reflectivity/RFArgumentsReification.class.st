@@ -4,12 +4,12 @@ reify args
 Class {
 	#name : #RFArgumentsReification,
 	#superclass : #RFReification,
-	#category : #'Reflectivity-Links'
+	#category : #'Reflectivity-Reifications'
 }
 
 { #category : #'plugin interface' }
 RFArgumentsReification class >> entities [
-	^{RBMessageNode. RBMethodNode. RBBlockNode}
+	^{RBMessageNode. RBMethodNode. RBSequenceNode}
 ]
 
 { #category : #'plugin interface' }
@@ -23,18 +23,16 @@ RFArgumentsReification >> genForRBMessageNode [
 ]
 
 { #category : #generate }
-RFArgumentsReification >> genForRBProgramNode [
+RFArgumentsReification >> genForRBMethodNode [
 	^RBTemporaryNode named: self varName.
 ]
 
 { #category : #generate }
-RFArgumentsReification >> preamble: aNode [
-	^aNode isMessage 
-		ifTrue: [ self preambleForMessage: aNode ]
-		ifFalse: [ self preambleForMethod: aNode ]
+RFArgumentsReification >> genForRBSequenceNode [
+	^RBTemporaryNode named: self varName.
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFArgumentsReification >> preambleForMessage: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -52,18 +50,28 @@ RFArgumentsReification >> preambleForMessage: aNode [
 			arguments add:  (RBTemporaryNode named: name).
 	].
 	preamble addAll: (RBArrayNode statements: arguments).
-	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
+	preamble add: (RFStorePopIntoTempNode named: self varName).
 	preamble addAll: arguments.
 	^ preamble 
 ]
 
-{ #category : #generate }
+{ #category : #preamble }
 RFArgumentsReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
 	arguments := aNode argumentNames collect: [ :name | RBTemporaryNode named: name].
 	preamble addAll: (RBArrayNode statements: arguments).
-	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
+	preamble add: (RFStorePopIntoTempNode named: self varName).
+	^ preamble 
+]
+
+{ #category : #preamble }
+RFArgumentsReification >> preambleSequence: aNode [
+	| preamble arguments |
+	preamble := OrderedCollection new.
+	arguments := aNode parent argumentNames collect: [ :name | RBTemporaryNode named: name].
+	preamble addAll: (RBArrayNode statements: arguments).
+	preamble add: (RFStorePopIntoTempNode named: self varName).
 	^ preamble 
 ]
 

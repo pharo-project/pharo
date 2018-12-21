@@ -1,5 +1,5 @@
 "
-I model a temporary virable, similar to Slot and LiteralVariable.
+I model a temporary variable, similar to Slot and LiteralVariable.
 
 For now I am cread on need and never persisted. (this might change later
 to allow me to be annotated with properties.)
@@ -195,7 +195,7 @@ TemporaryVariable >> startpc: anObject [
 
 { #category : #'reflecive api' }
 TemporaryVariable >> write: aValue InContext: aContext [
-	aContext tempNamed: name put: aValue
+	^aContext tempNamed: name put: aValue
 ]
 
 { #category : #'saved temps' }

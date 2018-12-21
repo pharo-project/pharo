@@ -42,8 +42,7 @@ Exception class >> , anotherException [
 
 { #category : #exceptionselector }
 Exception class >> - anotherException [
-	"Create an exception set containing the receiver 
-	and anotherException as exclusion."
+	"Create an exception set containing the receiver and anotherException as exclusion."
 
 	^ ExceptionSetWithExclusions new
 		add: self;
@@ -101,9 +100,9 @@ Exception class >> signalIn: context [
 { #category : #handling }
 Exception >> debug [
 	"open a debugger on myself"
+	
 	Processor activeProcess 
-		debug: self signalerContext
-		title: self description
+		debug: self signalerContext title: self description
 ]
 
 { #category : #accessing }
@@ -123,7 +122,8 @@ Exception >> defaultResumeValue [
 { #category : #private }
 Exception >> defaultReturnValue [
 	"Answer the value that by default should be returned if the exception is returned"
-	^nil
+	
+	^ nil
 ]
 
 { #category : #accessing }
@@ -138,14 +138,15 @@ Exception >> description [
 
 { #category : #handling }
 Exception >> freeze [
-	"freeze the context stack to keep the exception usable outside the catch blocks"
+	"Freeze the context stack to keep the exception usable outside the catch blocks"
 
 	self freezeUpTo: thisContext
 ]
 
 { #category : #handling }
 Exception >> freezeUpTo:  aContext [
-	"freeze the signal context up to the given context so the exception is usable outside the catch block"
+	"Freeze the signal context up to the given context so the exception is usable outside the catch block"
+	
 	signalContext := signalContext copyTo: aContext
 ]
 
@@ -184,10 +185,9 @@ Exception >> outer [
 	| prevOuterContext |
 	self isResumable 
 		ifTrue: [
-			prevOuterContext := outerContext.
+			prevOuterContext := outerContext. "required and accessed in resumeUnchecked:"
 			outerContext := thisContext contextTag ].
 	self pass.
-
 ]
 
 { #category : #handling }
@@ -223,6 +223,7 @@ Exception >> receiver [
 { #category : #handling }
 Exception >> resignalAs: replacementException [
 	"Signal an alternative exception in place of the receiver."
+	
 	^ replacementException signalIn: signalContext
 ]
 
@@ -272,7 +273,7 @@ Exception >> return: returnValue [
 
 { #category : #handling }
 Exception >> searchFrom: aContext [
-	" Set the context where the handler search will start. "
+	"Set the context where the handler search will start. "
 
 	signalContext := aContext contextTag
 ]

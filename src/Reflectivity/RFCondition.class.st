@@ -14,7 +14,7 @@ Class {
 		'condition',
 		'linkCondition'
 	],
-	#category : #'Reflectivity-Links'
+	#category : #'Reflectivity-Core'
 }
 
 { #category : #'instance creation' }

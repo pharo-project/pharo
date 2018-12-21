@@ -199,6 +199,15 @@ FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
 ]
 
 { #category : #public }
+FileSystemStore >> directoryAt: path nodesDo: aBlock [
+
+	^self
+		directoryAt: path
+		ifAbsent: [ self signalDirectoryDoesNotExist: path ]
+		nodesDo: aBlock
+]
+
+{ #category : #public }
 FileSystemStore >> ensureCreateDirectory: aPath [
 	(self isDirectory: aPath) ifTrue: [ ^ self ].
 	self ensureCreateDirectory: aPath parent.

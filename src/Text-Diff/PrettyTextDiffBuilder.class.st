@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'sourceClass'
 	],
-	#category : #'Text-Diff'
+	#category : #'Text-Diff-Building'
 }
 
 { #category : #'instance creation' }

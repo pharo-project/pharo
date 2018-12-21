@@ -56,6 +56,15 @@ RBReturnNode >> copyInContext: aDictionary [
 		yourself
 ]
 
+{ #category : #accessing }
+RBReturnNode >> dumpOn: aStream [
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ' value: ('.
+	self value dumpOn: aStream.
+	aStream nextPut: $)
+]
+
 { #category : #comparing }
 RBReturnNode >> equalTo: anObject withMapping: aDictionary [ 
 	^self class = anObject class 

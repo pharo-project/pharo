@@ -4,7 +4,7 @@ I reify the receiver of a Message or a method
 Class {
 	#name : #RFReceiverReification,
 	#superclass : #RFReification,
-	#category : #'Reflectivity-Links'
+	#category : #'Reflectivity-Reifications'
 }
 
 { #category : #'plugin interface' }
@@ -28,14 +28,7 @@ RFReceiverReification >> genForRBMethodNode [
 	
 ]
 
-{ #category : #generate }
-RFReceiverReification >> preamble: aNode [
-	^aNode isMessage 
-		ifTrue: [self preambleForMessage: aNode]
-		ifFalse: [{}]
-]
-
-{ #category : #generate }
+{ #category : #preamble }
 RFReceiverReification >> preambleForMessage: aNode [
 	| preamble |
 	preamble := OrderedCollection new.

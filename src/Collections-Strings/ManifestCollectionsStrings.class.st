@@ -14,7 +14,7 @@ ManifestCollectionsStrings class >> dependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestCollectionsStrings class >> manuallyResolvedDependencies [
-	^ #(#'System-Support' #'AST-Core' #'Random-Core' #'OpalCompiler-Core')
+	^ #(#'System-Support' #'AST-Core' #'OpalCompiler-Core')
 ]
 
 { #category : #'meta-data' }

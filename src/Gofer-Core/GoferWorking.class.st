@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'workingCopies'
 	],
-	#category : #'Gofer-Core'
+	#category : #'Gofer-Core-Operations'
 }
 
 { #category : #private }

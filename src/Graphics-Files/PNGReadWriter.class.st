@@ -1,6 +1,10 @@
 "
-I am a subclass of ImageReadWriter that decodes Portable Network Graphics
-(PNG) images.
+I am PNGReadWriter.
+I am a concrete subclass of ImageReadWriter.
+
+I read and write the  Portable Network Graphics (PNG) image format.
+
+  https://en.wikipedia.org/wiki/Portable_Network_Graphics
 
 Submitted by Duane Maxwell
 "

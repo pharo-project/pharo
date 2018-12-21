@@ -39,17 +39,17 @@ DailyNonInteractiveTranscript >> initialize [
 
 { #category : #private }
 DailyNonInteractiveTranscript >> initializeStream [
-	"Open the file stream that I write to or connect to #stdout.
-	I use the proper line end convention.
+	"Open the file stream that I write to or connect to #stdout/#stderr.
+	I will use the platform line end convention.
 	I will append to regular files.
 	Overwrtitten to use #fileNameWithDate"
 	
-	stream := self isStdout 
+	^ stream := self isStdout 
 		ifTrue: [ Stdio stdout ]
-		ifFalse: [ File named: self fileNameWithDate ].
-	self isStdout
-		ifFalse: [ stream setToEnd ].
-	^ stream
+		ifFalse: [ 
+			self isStderr
+				ifTrue: [ Stdio stderr ]
+				ifFalse: [ (File named: self fileNameWithDate) openForAppend ] ]
 ]
 
 { #category : #accessing }

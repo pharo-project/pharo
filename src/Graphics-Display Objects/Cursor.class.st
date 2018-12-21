@@ -1,10 +1,26 @@
 "
-I am a Form that is a possible appearance for a mouse cursor.  My size is always 16x16, ever since the original implementation on the Alto.
+Description
+--------------------
 
-There are many examples available in the ""current cursor"" category of class methods.  For example, ""Cursor normal"" and ""Cursor wait"".  For example:
+I am a Form that is a possible appearance for a mouse cursor. My size is always 16x16, ever since the original implementation on the Alto.
 
-	Cursor wait show
+There are many examples available in the ""constants"" category of class methods. For example, ""Cursor normal"" and ""Cursor wait"". 
 
+Public API and Key Messages
+--------------------
+
+- #showWhile: 	When send to a cursor, it will use the cursor as the current cursor during the block execution
+
+Examples
+--------------------
+
+	""Use the wait cursor for 3 seconds""
+	Cursor wait showWhile: [ 3 second wait ].
+	
+	""Morph implements methods to help with the management of cursors via the hand morph. This is useful when you want to change the cursor and revert the change in different places instead of changinig it during the execution of a block.""
+	self currentHand showTemporaryCursor: Cursor wait. 
+	self flag: #doSomethingHere.
+	self currentHand showTemporaryCursor: nil. ""Reset the cursor to the previous one""
 
 "
 Class {
@@ -866,7 +882,6 @@ Cursor class >> new [
 		fromArray: (Array new: 16 withAll: 0)
 		offset: 0 @ 0
 
-	"Cursor new bitEdit show"
 ]
 
 { #category : #constants }

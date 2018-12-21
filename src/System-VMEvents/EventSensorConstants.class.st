@@ -8,17 +8,25 @@ Class {
 	#superclass : #SharedPool,
 	#classVars : [
 		'BlueButtonBit',
+		'ButtonsBitMask',
 		'CommandKeyBit',
 		'CtrlKeyBit',
 		'EventKeyChar',
 		'EventKeyDown',
 		'EventKeyUp',
 		'EventTypeDragDropFiles',
+		'EventTypeIndexInBuffer',
 		'EventTypeKeyboard',
 		'EventTypeMenu',
 		'EventTypeMouse',
 		'EventTypeNone',
 		'EventTypeWindow',
+		'KeyboardModifierIndexInEventBuffer',
+		'ModifierKeysBitMask',
+		'MouseButtonIndexInEventBuffer',
+		'MouseModifierIndexInEventBuffer',
+		'MouseXCoordinateIndexInEventBuffer',
+		'MouseYCoordinateIndexInEventBuffer',
 		'OptionKeyBit',
 		'RedButtonBit',
 		'ShiftKeyBit',
@@ -40,15 +48,27 @@ EventSensorConstants class >> initialize [
 		initializeSpecialKeyBits;
 		initializeEventTypeConstants;
 		initializeEventKeyConstants;
-		initializeWindowEventConstants
+		initializeWindowEventConstants;
+		initializeEventIndexesConstants
 ]
 
 { #category : #'private - initialization' }
 EventSensorConstants class >> initializeButtonBits [
 
 	RedButtonBit := 4.
-	BlueButtonBit := 2.
-	YellowButtonBit := 1
+	BlueButtonBit := 1.
+	YellowButtonBit := 2.
+	ButtonsBitMask := RedButtonBit | BlueButtonBit | YellowButtonBit
+]
+
+{ #category : #'private - initialization' }
+EventSensorConstants class >> initializeEventIndexesConstants [
+	EventTypeIndexInBuffer := 1.
+	MouseModifierIndexInEventBuffer := 6.
+	MouseButtonIndexInEventBuffer := 5.
+	MouseXCoordinateIndexInEventBuffer := 3.
+	MouseYCoordinateIndexInEventBuffer := 4.
+	KeyboardModifierIndexInEventBuffer := 5
 ]
 
 { #category : #'private - initialization' }
@@ -78,7 +98,8 @@ EventSensorConstants class >> initializeSpecialKeyBits [
 	ShiftKeyBit := 1.
 	CtrlKeyBit := 2.
 	OptionKeyBit := 4.
-	CommandKeyBit := 8
+	CommandKeyBit := 8.
+	ModifierKeysBitMask := OptionKeyBit | CommandKeyBit | CtrlKeyBit
 ]
 
 { #category : #'private - initialization' }

@@ -4,7 +4,7 @@ An EmbeddedFreeTypeFontInstallerTest is a test class for testing the behavior of
 Class {
 	#name : #EmbeddedFreeTypeFontInstallerTest,
 	#superclass : #TestCase,
-	#category : #'EmbeddedFreeType-Tests'
+	#category : #'EmbeddedFreeType-Tests-Installation'
 }
 
 { #category : #accessing }
@@ -36,14 +36,19 @@ EmbeddedFreeTypeFontInstallerTest >> testinstallAllFontsIn [
 
 	| provider fileInfos families |
 	provider := self currentProviderOrError 
-		updateEmbeddedFreeTypeFonts;
-		yourself.
+								updateEmbeddedFreeTypeFonts;
+								yourself.
 	fileInfos := provider fileInfosByFamilyAndGroup.
-	self assert: fileInfos keys size > 1.
-	self assert: (fileInfos includesKey: 'Source Sans Pro').
-	self assert: (fileInfos includesKey: 'Source Code Pro').
+
+	self 
+		assert: fileInfos keys size > 1;
+		assert: (fileInfos includesKey: 'Source Sans Pro');
+		assert: (fileInfos includesKey: 'Source Code Pro').
+
 	families := provider families.
-	self assert: (families includesKey: 'Source Sans Pro').
-	self assert: (families includesKey: 'Source Code Pro').
+	
+	self 
+		assert: (families includesKey: 'Source Sans Pro');
+		assert: (families includesKey: 'Source Code Pro').
 
 ]

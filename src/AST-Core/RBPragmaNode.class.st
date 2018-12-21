@@ -94,6 +94,20 @@ RBPragmaNode >> defines: aName [
 	^ self isPrimitive and: [ arguments anySatisfy: [ :each | each value = aName ] ]
 ]
 
+{ #category : #accessing }
+RBPragmaNode >> dumpOn: aStream [
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ' selector: '.
+	self selector printOn: aStream.
+	aStream nextPutAll: ' arguments: {'.
+	self arguments
+		do: [ :each | 
+			each dumpOn: aStream.
+			aStream nextPutAll: '. ' ].
+	aStream nextPut: $}
+]
+
 { #category : #comparing }
 RBPragmaNode >> equalTo: anObject withMapping: aDictionary [ 
 	self class = anObject class ifFalse: [ ^ false ].

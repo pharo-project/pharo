@@ -1,3 +1,6 @@
+"
+Unit tests for extensions done by Regex package
+"
 Class {
 	#name : #RxExtensionsTest,
 	#superclass : #TestCase,

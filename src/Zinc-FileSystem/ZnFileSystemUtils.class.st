@@ -19,8 +19,8 @@ ZnFileSystemUtils class >> baseNameFor: fileName [
 ZnFileSystemUtils class >> binaryFileStreamFor: fileName [
 	| fileReference |
 	fileReference := fileName asFileReference.
-	^ (fileReference respondsTo: #binaryWriteStream)
-		ifTrue: [ fileReference binaryWriteStream ]
+	^ (fileReference respondsTo: #binaryReadWriteStream)
+		ifTrue: [ fileReference binaryReadWriteStream ]
 		ifFalse: [ fileReference writeStream binary ]
 ]
 

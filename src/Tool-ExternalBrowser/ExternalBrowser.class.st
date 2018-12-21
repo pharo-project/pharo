@@ -1,7 +1,7 @@
 "
 Browser the current image:
 
-	ExternalBrowser openOn: CurrentImage new.
+	ExternalBrowser openOn: Smalltalk image.
 
 Browse a FileOut
 

@@ -110,6 +110,11 @@ ZnCharacterReadWriteStream >> position: anInteger [
 ]
 
 { #category : #accessing }
+ZnCharacterReadWriteStream >> print: object [
+	writeStream print: object
+]
+
+{ #category : #accessing }
 ZnCharacterReadWriteStream >> readOnlyCopy [
 
 	^ readStream
@@ -137,6 +142,12 @@ ZnCharacterReadWriteStream >> skip: anInteger [
 ZnCharacterReadWriteStream >> space [
 	
 	writeStream space
+]
+
+{ #category : #accessing }
+ZnCharacterReadWriteStream >> tab [
+	
+	writeStream tab
 ]
 
 { #category : #accessing }

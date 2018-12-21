@@ -89,6 +89,11 @@ RBParseErrorNode >> isFaulty [
 	^true
 ]
 
+{ #category : #testing }
+RBParseErrorNode >> isParseError [
+	^true
+]
+
 { #category : #accessing }
 RBParseErrorNode >> name [
 	"be polymorphic with variable nodes"

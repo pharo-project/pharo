@@ -238,10 +238,9 @@ LargeInteger >> digitLength [
 
 { #category : #comparing }
 LargeInteger >> hash [
-
-	^ByteArray
-		hashBytes: self
-		startingWith: self species hash
+	^ self digitLength <= 8
+		ifTrue: [ self ]
+		ifFalse: [ ByteArray hashBytes: self startingWith: self species hash ]
 ]
 
 { #category : #'bit manipulation' }
