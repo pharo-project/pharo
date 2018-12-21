@@ -187,7 +187,7 @@ SHRange >> printOn: aStream [
 
 	super printOn: aStream. 
 	aStream 
-		nextPutAll: ' ';
+ 		space;
 		nextPutAll: type;
 		nextPutAll: ' [';
 		print: start ;
