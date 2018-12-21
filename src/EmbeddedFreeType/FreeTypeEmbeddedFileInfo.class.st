@@ -66,7 +66,7 @@ FreeTypeEmbeddedFileInfo >> printOn: aStream [
 			nextPut: '(';
 			print: fileContents size;
 			nextPutAll: ' bytes )';
-			nextPut: '[';
+ 			nextPut: $[;
 			print: index;
 			nextPutAll: '] ';
 			print: familyName;
