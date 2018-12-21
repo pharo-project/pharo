@@ -4,7 +4,7 @@ A LogicalFontManagerTest is a test class for testing the behavior of LogicalFont
 Class {
 	#name : #LogicalFontManagerTest,
 	#superclass : #TestCase,
-	#category : #'FontInfrastructure-Tests'
+	#category : #'Fonts-Infrastructure-Tests'
 }
 
 { #category : #accessing }

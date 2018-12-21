@@ -284,7 +284,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
-		spec package: 'FontInfrastructure-Tests'.
+		spec package: 'Fonts-Infrastructure-Tests'.
 		spec package: 'FreeType-Tests'.
 		spec package: 'FreeType-Help'.
 		spec package: 'FuzzyMatcher-Tests'.
@@ -437,7 +437,7 @@ spec group: 'General-Tests-Group' with: #(
 	'EmbeddedFreeType-Tests'
 	'Epicea-Tests-Group'
 	'FileSystem-Tests-Memory'
-	'FontInfrastructure-Tests'
+	'Fonts-Infrastructure-Tests'
 	'FreeType-Tests'
 	'FreeType-Help'
 
