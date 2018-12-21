@@ -52,7 +52,7 @@ HaloSpec >> printOn: aStream [
 		print: addHandleSelector;
  		space;
 		print: iconSymbol;
-		nextPutAll: ')'
+ 		nextPut: $)
 ]
 
 { #category : #accessing }
