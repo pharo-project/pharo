@@ -351,7 +351,8 @@ SettingBrowser >> buildWindowIn: aWindow [
 	statusView := self statusViewIn: aWindow.
 	statusViewHeight := 100.
 	toolBar := self toolBarIn: aWindow.
-	gap := 3.
+	toolBar inspect.
+	gap := 1.
 	packageListView := self packageListViewIn: aWindow.
 	toolBarY := toolBar minExtent y + gap.
 	aWindow 

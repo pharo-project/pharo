@@ -1770,7 +1770,6 @@ RubAbstractTextArea >> textColor [
 
 { #category : #'accessing text' }
 RubAbstractTextArea >> textColor: newColor [
-	textColor = newColor ifTrue: [^ self].
 	textColor := newColor.
 	self addAttribute: (TextColor color: newColor).
 	self changed.
@@ -1800,7 +1799,7 @@ RubAbstractTextArea >> textStyle: aTextStyle [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 RubAbstractTextArea >> themeChanged [
 	
 	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler | 
