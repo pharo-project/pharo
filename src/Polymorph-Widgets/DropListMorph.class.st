@@ -322,7 +322,7 @@ DropListMorph >> getListSelector: anObject [
 
 { #category : #protocol }
 DropListMorph >> ghostText: aStringOrText [
-	self contentMorph ghostText: aStringOrText asText
+	self contentMorph ghostText: aStringOrText
 ]
 
 { #category : #'event handling' }
