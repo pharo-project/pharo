@@ -34,16 +34,14 @@ RelativePath >> printOn: aStream [
 		ifTrue: [ aStream nextPutAll: 'workingDirectory' ]
 		ifFalse: 
 			[ aStream 
-				nextPutAll: '* ''';
-				print: (self at: 1);
-				nextPut: $'.
+				nextPutAll: '* ';
+				print: (self at: 1).
 			2 to: self size do:
 				[:i |
 				aStream
-					nextPutAll: ' / ''';
-					print: (self at: i);
-					nextPut: $' ]]
-			
+					nextPutAll: ' / ';
+					print: (self at: i) ]]
+
 ]
 
 { #category : #printing }

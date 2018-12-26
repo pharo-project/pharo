@@ -39,9 +39,9 @@ AbsolutePath >> printOn: aStream [
 			[1 to: self size do:
 				[:i |
 				aStream 
-					nextPutAll: ' / ''';
-				 	nextPutAll: (self at: i);
-					nextPut: $']]
+					nextPutAll: ' / ';
+				 	print: (self at: i) ]]
+
 ]
 
 { #category : #printing }
