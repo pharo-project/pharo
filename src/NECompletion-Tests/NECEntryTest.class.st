@@ -37,5 +37,6 @@ NECEntryTest >> testPrintOn [
 	entry := NECSelectorEntry 
 		contents: 'compute'
 		type: #unary:.
-	self assert: 'NECSelectorEntry(compute,unary:)' = entry printString
+	self assert: 'NECSelectorEntry(''compute'',unary:)' equals: entry printString
+
 ]
