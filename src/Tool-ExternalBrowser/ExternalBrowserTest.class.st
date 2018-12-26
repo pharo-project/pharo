@@ -63,11 +63,12 @@ ExternalBrowserTest >> setUp [
 { #category : #running }
 ExternalBrowserTest >> tearDown [ 
 	| newWindows |
-	super tearDown.
 	file deleteIfAbsent: [ ].
 	Smalltalk at: self classNameForTest  ifPresent: [ : cl | cl removeFromSystem ].
 	newWindows := World windowsSatisfying: [ : each | (initialWindows includes: each) not ].
 	newWindows do: #delete.
+	super tearDown.
+
 ]
 
 { #category : #running }
