@@ -29,7 +29,7 @@ SpecDemo class >> defaultSpec [
 			c add: #menu height: self toolbarHeight.
 			c newRow: [ :row | 
 				row add: #list right: listWidth.
-				row addSplitter.
+				row addHSplitter.
 				row add: #page] ];
 		yourself
 	
@@ -61,12 +61,8 @@ SpecDemo class >> on: aModel [
 
 { #category : #specs }
 SpecDemo class >> open [
-
 	<example>
-	
-	^ self new
-		openWithSpec.
-
+	^ self new openWithSpec
 ]
 
 { #category : #accessing }

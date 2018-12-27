@@ -34,14 +34,6 @@ RadioButtonPresenter class >> adapterName [
 ]
 
 { #category : #specs }
-RadioButtonPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(RadioButtonAdapter
-		adapt: #(model))
-]
-
-{ #category : #specs }
 RadioButtonPresenter class >> title [
 
 	^ 'Radio Button'

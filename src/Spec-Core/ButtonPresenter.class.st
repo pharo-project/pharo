@@ -41,14 +41,6 @@ ButtonPresenter class >> adapterName [
 	^ #ButtonAdapter
 ]
 
-{ #category : #specs }
-ButtonPresenter class >> defaultSpec [
-	<spec>
-	
-	^ #(ButtonAdapter
-		adapt: #(model))
-]
-
 { #category : #example }
 ButtonPresenter class >> example [
 	<sampleInstance>
@@ -234,9 +226,9 @@ ButtonPresenter >> registerShortcut: newShortcut [
 	| receiver |
 	receiver := self window.
 	(receiver isNil or: [ newShortcut isNil ]) ifTrue: [ ^ self ].
-
-	receiver model
-		bindKeyCombination: newShortcut 
+	
+	receiver presenter
+		bindKeyCombination: newShortcut
 		toAction: [ self performAction ]
 ]
 

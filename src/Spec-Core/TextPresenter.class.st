@@ -78,14 +78,6 @@ TextPresenter class >> adapterName [
 	^ #TextAdapter
 ]
 
-{ #category : #specs }
-TextPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(TextAdapter
-		adapt: #(model))
-]
-
 { #category : #example }
 TextPresenter class >> example [
 	<sampleInstance>
@@ -172,6 +164,14 @@ TextPresenter >> acceptBlock: aBlockWithOneArgument [
 	The block can return false if the candidate text is to be rejected"
 
 	actionToPerformHolder value: aBlockWithOneArgument
+]
+
+{ #category : #private }
+TextPresenter >> acceptText: aString [
+	"Used to set the text value comming from the adapter (we do not want to re-send 
+	 this value to the adapter, hence we set it 'raw', not triggering events)"
+
+	textHolder rawValue: aString
 ]
 
 { #category : #api }

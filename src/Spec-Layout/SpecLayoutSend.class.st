@@ -8,18 +8,16 @@ Class {
 }
 
 { #category : #'instance creation' }
-SpecLayoutSend class >> selector: selector arguments: arguments [
+SpecLayoutSend class >> selector: selector [
 
 	^ self new
-		arguments: arguments;
 		selector: selector;
 		yourself
 ]
 
-{ #category : #protocol }
-SpecLayoutSend >> asSpecElements [
-
-	^ {self selector.}, self arguments
+{ #category : #accesing }
+SpecLayoutSend >> arguments [
+	^ {  }
 ]
 
 { #category : #protocol }

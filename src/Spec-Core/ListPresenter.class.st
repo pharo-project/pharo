@@ -44,7 +44,6 @@ Class {
 		'selectionHolder',
 		'listHolder',
 		'menuHolder',
-		'shortcutsHolder',
 		'multiSelectionHolder',
 		'multiSelection',
 		'allowToSelect',
@@ -63,14 +62,6 @@ Class {
 ListPresenter class >> adapterName [
 
 	^ #ListAdapter
-]
-
-{ #category : #specs }
-ListPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(ListAdapter
-		adapt: #(model))
 ]
 
 { #category : #example }
@@ -258,7 +249,7 @@ ListPresenter >> initializeValueHolders [
 	multiSelectionHolder := IdentityDictionary new asValueHolder.
 	multiSelection := false asValueHolder.
 	allowToSelect := true asValueHolder.
-	backgroundColorBlock := [ :item :index | Smalltalk ui theme backgroundColor ] asValueHolder.
+	backgroundColorBlock := [ :item :index | self theme backgroundColor ] asValueHolder.
 	autoDeselect := true asValueHolder.
 	listAnnouncer := Announcer new.
 

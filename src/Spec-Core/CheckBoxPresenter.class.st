@@ -24,14 +24,6 @@ CheckBoxPresenter class >> adapterName [
 ]
 
 { #category : #specs }
-CheckBoxPresenter class >> defaultSpec [
-	<spec>
-	
-	^ #(CheckBoxAdapter
-		adapt: #(model))
-]
-
-{ #category : #specs }
 CheckBoxPresenter class >> title [
 
 	^ 'Checkbox Button'

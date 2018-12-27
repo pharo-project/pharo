@@ -24,14 +24,6 @@ DropListPresenter class >> adapterName [
 ]
 
 { #category : #specs }
-DropListPresenter class >> defaultSpec [
-	<spec>
-	
-	^ #(DropListAdapter
-		adapt: #(model))
-]
-
-{ #category : #specs }
 DropListPresenter class >> title [
 
 	^ 'Drop List'

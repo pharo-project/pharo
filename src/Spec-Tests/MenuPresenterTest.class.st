@@ -23,11 +23,11 @@ MenuPresenterTest >> testFromSpecSingle [
 
 { #category : #tests }
 MenuPresenterTest >> testFromSpecSubMenu [
-	| root subMenuRoot parent child subMenu |
+	| root subMenuRoot parent subMenu |
 	root := PluggableMenuSpec withModel: nil.
 	parent := root add: 'parent'.
 	subMenuRoot := PluggableMenuSpec withModel: nil.
-	child := subMenuRoot add: 'child'.
+	subMenuRoot add: 'child'.
 	parent subMenu: subMenuRoot.
 	testedInstance fromSpec: root.
 	subMenu := testedInstance menuGroups first menuItems first subMenu.

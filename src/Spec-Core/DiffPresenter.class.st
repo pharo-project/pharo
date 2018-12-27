@@ -30,14 +30,6 @@ DiffPresenter class >> adapterName [
 	^ #DiffAdapter
 ]
 
-{ #category : #specs }
-DiffPresenter class >> defaultSpec [
-	<spec>
-	
-	^ #(MorphicDiffAdapter
-		adapt: #(model))
-]
-
 { #category : #example }
 DiffPresenter class >> exampleWithOptions [
 	"

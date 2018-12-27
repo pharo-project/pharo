@@ -12,7 +12,7 @@ I provide the following variables and their accessors
 - acceptOnCR is a boolean representing if the key cr trigger an accept action,  it is true by default and must be set before built the widget. (if false it will print a cr).
 - encrypted is a boolean representing if the text appear like stars (it is only an appearance), beDecrypted and beEncrypted are shortcut to set it.
 - entryCompletion is the object used to suggest text while typing, removeEntryCompletion is a shortcut to set it nil.
-- ghostText is the ghost text to display in the text zone.
+- placeholder is the ghost text to display in the text zone.
 
 I provide getters of ValueHolder of my super class actionToPerformHolder and textHolder .
 
@@ -28,10 +28,10 @@ Class {
 	#name : #TextInputFieldPresenter,
 	#superclass : #TextPresenter,
 	#instVars : [
-		'ghostText',
 		'acceptOnCR',
 		'entryCompletion',
-		'isEncrypted'
+		'isEncrypted',
+		'placeholder'
 	],
 	#category : #'Spec-Core-Widgets'
 }
@@ -42,22 +42,14 @@ TextInputFieldPresenter class >> adapterName [
 	^ #TextInputFieldAdapter
 ]
 
-{ #category : #specs }
-TextInputFieldPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(TextInputFieldAdapter
-		adapt: #(model))
-]
-
 { #category : #example }
 TextInputFieldPresenter class >> example [
 	<sampleInstance>
 	^ self new
-	 extent: 300 @ 25;
-	 openWithSpec;
-	 ghostText: 'This is a ghost';
-	 text: 'This is a text'
+		extent: 300 @ 25;
+		openWithSpec;
+		placeholder: 'This is a ghost';
+		text: 'This is a text'
 ]
 
 { #category : #morphic }
@@ -151,33 +143,17 @@ TextInputFieldPresenter >> eventKeyStrokesForPreviousFocus [
 	^ { Character tab shift asKeyCombination }
 ]
 
-{ #category : #api }
-TextInputFieldPresenter >> ghostText [
-	"<api: #inspect>"
-	"Return the ghost text of the text zone"
-
-	^ ghostText value
-]
-
-{ #category : #accessing }
-TextInputFieldPresenter >> ghostText: aText [
-	"<api: #string getter: #ghostText registration: #whenGhostTextChanged:>"
-	"Set the ghost text of the text zone"
-
-	ghostText value: aText.
-]
-
 { #category : #initialization }
 TextInputFieldPresenter >> initialize [
 
 	super initialize.
 	
-	ghostText := '' asValueHolder.
+	placeholder := '' asValueHolder.
 	acceptOnCR := true asValueHolder.
 	entryCompletion := nil asValueHolder.
 	isEncrypted := false asValueHolder.
 	
-	ghostText  whenChangedDo: [ :txt | self changed: #ghostText: with: { txt } ].
+	placeholder  whenChangedDo: [ :txt | self changed: #placeholder: with: { txt } ].
 	acceptOnCR whenChangedDo: [ :bool | self changed: #acceptOnCR: with: { bool } ].
 	isEncrypted whenChangedDo: [ :bool | self changed: #encrypted: with: { bool } ].
 ]
@@ -186,6 +162,20 @@ TextInputFieldPresenter >> initialize [
 TextInputFieldPresenter >> isCodeCompletionAllowed [
 	
 	^ false
+]
+
+{ #category : #api }
+TextInputFieldPresenter >> placeholder [
+	"Return the ghost text of the text zone"
+
+	^ placeholder value
+]
+
+{ #category : #accessing }
+TextInputFieldPresenter >> placeholder: aText [
+	"Set the ghost text of the text zone"
+
+	placeholder value: aText
 ]
 
 { #category : #api }
@@ -217,8 +207,8 @@ TextInputFieldPresenter >> whenEntryCompletionChanged: aBlock [
 ]
 
 { #category : #'api-events' }
-TextInputFieldPresenter >> whenGhostTextChanged: aBlock [
+TextInputFieldPresenter >> whenPlaceholderChanged: aBlock [
 	"aBlock will be performed when ghostText changed"
 	
-	ghostText whenChangedDo: aBlock
+	placeholder whenChangedDo: aBlock
 ]

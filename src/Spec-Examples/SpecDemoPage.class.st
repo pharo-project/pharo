@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'tabManager'
 	],
-	#category : #'Spec-Examples-Demo-Support'
+	#category : #'Spec-Examples-Demo'
 }
 
 { #category : #specs }
@@ -33,6 +33,23 @@ SpecDemoPage class >> priority [
 ]
 
 { #category : #initialization }
+SpecDemoPage >> codeFor: aClass [
+	^ TonelWriter sourceCodeOf: aClass
+]
+
+{ #category : #initialization }
+SpecDemoPage >> codeTab [
+	^ self newTab
+		label: 'Code';
+		icon: (self iconNamed: #changeUpdate);
+		presenter:
+			(self newCode
+				text: (self codeFor: self pageClass);
+				yourself);
+		yourself
+]
+
+{ #category : #initialization }
 SpecDemoPage >> commentFor: aClass [
 
 	^ String streamContents: [ :s |
@@ -45,25 +62,23 @@ SpecDemoPage >> commentFor: aClass [
 
 { #category : #initialization }
 SpecDemoPage >> commentTab [
-	| tab commentInput |
-	tab := self newTab.
-	tab
+	^ self newTab
 		label: 'Comment';
-		icon: (tab iconNamed: #helpIcon);
-		presenter: (commentInput := self newText).
-	commentInput text: (self commentFor: self pageClass).
-	^ tab
+		icon: (self iconNamed: #helpIcon);
+		presenter:
+			(self newText
+				text: (self commentFor: self pageClass);
+				yourself);
+		yourself
 ]
 
 { #category : #initialization }
 SpecDemoPage >> exampleTab [
-	| tab |
-	tab := self newTab.
-	tab
+	^ self newTab
 		label: 'Example';
-		icon: (tab iconNamed: #smallPaint);
-		presenter: (self instantiate: self pageClass).
-	^ tab
+		icon: (self iconNamed: #smallPaint);
+		presenter: (self instantiate: self pageClass);
+		yourself
 ]
 
 { #category : #initialization }
@@ -73,7 +88,8 @@ SpecDemoPage >> initializeWidgets [
 	"tabManager whenTabSelected: [ self updateTitle ]."
 	tabManager
 		addTab: self exampleTab;
-		addTab: self commentTab.
+		addTab: self commentTab;
+		addTab: self codeTab.
 ]
 
 { #category : #initialization }

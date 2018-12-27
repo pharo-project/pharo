@@ -101,8 +101,12 @@ EditableList >> initialize [
 
 { #category : #initialization }
 EditableList >> initializeDialogWindow: aWindow [
-	super initializeDialogWindow: aWindow.
-	aWindow okAction: [ self performOkAction ]
+
+	aWindow 
+		addButton: 'Ok' 
+		do: [ :presenter | 
+			self performOkAction. 
+			presenter close ]
 ]
 
 { #category : #initialization }

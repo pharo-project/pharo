@@ -29,6 +29,13 @@ MorphicLabelAdapterTest >> testEmphasisBold [
 ]
 
 { #category : #tests }
+MorphicLabelAdapterTest >> testEmphasisItalic [
+	label emphasis: #italic.
+	label buildWithSpec.
+	self assert: label widget widget font emphasis equals: 2
+]
+
+{ #category : #tests }
 MorphicLabelAdapterTest >> testEmphasisMultiple [
 	label emphasis: #(bold italic).
 	label buildWithSpec.

@@ -29,9 +29,14 @@ ListPresenterTest >> testWhenListChanged [
 
 	50
 		timesRepeat: [ | ok |
+			ok := false.
 			testedInstance := ListPresenter new.
-			testedInstance items: #(1 2); whenListChanged: [ :aList | ok := aList = testedInstance listItems ]; listItems;	"Call listItems to set the cache"
-			 items: #(1 2 3).
+			testedInstance
+				items: #(1 2);
+				whenListChanged: [ :aList | ok := aList = testedInstance listItems ];
+				listItems;
+				"Call listItems to set the cache"
+				items: #(1 2 3).
 			self assert: ok ]
 ]
 
@@ -45,8 +50,8 @@ ListPresenterTest >> testWhenListChangedOldContents [
 	testedInstance items: oldL.
 	testedInstance
 		whenListChanged: [ :aList :anOldList | 
-			self assert: oldL = anOldList.
-			self assert: newL = aList ].
+			self assert: oldL equals: anOldList.
+			self assert: newL equals: aList ].
 	testedInstance listItems.	"Call listItems to set the cache"
 	testedInstance items: #(1 2 3)
 ]

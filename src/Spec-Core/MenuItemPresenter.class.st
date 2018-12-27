@@ -45,14 +45,6 @@ MenuItemPresenter class >> adapterName [
 	^ #MenuItemAdapter
 ]
 
-{ #category : #specs }
-MenuItemPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(MenuItemAdapter
-		adapt: #(model))
-]
-
 { #category : #accessing }
 MenuItemPresenter >> action [
 
@@ -195,7 +187,9 @@ MenuItemPresenter >> subMenu [
 ]
 
 { #category : #api }
-MenuItemPresenter >> subMenu: aMenuModel [
+MenuItemPresenter >> subMenu: aMenuPresenter [
 
-	subMenu value: aMenuModel
+	aMenuPresenter ifNotNil: [  
+		aMenuPresenter owner: self ].
+	subMenu value: aMenuPresenter
 ]

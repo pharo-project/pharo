@@ -70,8 +70,7 @@ SpecRowLayout >> privateAsArray [
 	
 	self shiftLastWidgets.
 	
-	result addAll: super privateAsArray.
-	^ result asArray
+	^ super privateAsArray
 ]
 
 { #category : #private }

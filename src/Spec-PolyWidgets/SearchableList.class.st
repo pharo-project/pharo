@@ -49,13 +49,11 @@ SearchableList >> initializePresenter [
 
 { #category : #initialization }
 SearchableList >> initializeWidgets [
-
 	listPresenter := self newList.
 	searchPresenter := self newTextInput.
-		
-	searchPresenter 
+	searchPresenter
 		autoAccept: true;
-		ghostText: 'filter'.
+		placeholder: 'filter'
 ]
 
 { #category : #accessing }

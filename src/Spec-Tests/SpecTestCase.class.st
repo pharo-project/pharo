@@ -56,17 +56,19 @@ SpecTestCase >> setUp [
 
 { #category : #running }
 SpecTestCase >> tearDown [
-	
 	window ifNotNil: [ window delete ].
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
 SpecTestCase >> testExample [
-	[window := self classToTest example] on: MessageNotUnderstood do: [  ] 
+	self flag: #todo.	"All widgets should have an example. When it will be done remove this skip"
+	(self classToTest respondsTo: #example) ifFalse: [ self skip ].
+	
+	self shouldnt: [ window := self classToTest example ] raise: Error
 ]
 
 { #category : #tests }
 SpecTestCase >> testOpenWithSpec [
-	self openInstance
+	self shouldnt: [ self openInstance ] raise: Error
 ]

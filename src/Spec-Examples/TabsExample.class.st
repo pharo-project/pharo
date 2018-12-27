@@ -34,27 +34,28 @@ TabsExample class >> open [
 
 { #category : #private }
 TabsExample >> browserTab [
-	| tab |
-	tab := self newTab.
-	tab
+	^ self newTab
 		label: 'Browser';
-		icon: (tab iconNamed: #nautilusIcon);
+		icon: (self iconNamed: #nautilusIcon);
 		presenter:
 			(ClassMethodBrowser new
 				classes: Smalltalk allClasses;
-				yourself).
-	^ tab
+				yourself);
+		yourself
 ]
 
 { #category : #private }
 TabsExample >> dynamicTab [
-	| tab |
-	tab := self newTab.
-	tab
+	^ self newTab
 		label: 'Dynamic';
-		icon: (tab iconNamed: #nautilusIcon);
-		presenter: DynamicWidgetChange new.
-	^ tab
+		icon: (self iconNamed: #nautilusIcon);
+		presenter: DynamicWidgetChange new;
+		yourself
+]
+
+{ #category : #api }
+TabsExample >> initialExtent [
+	^ 900@600
 ]
 
 { #category : #initialization }
@@ -73,26 +74,22 @@ TabsExample >> manager [
 
 { #category : #private }
 TabsExample >> objectClassTab [
-	| tab |
-	tab := self newTab.
-	tab
+	^ self newTab
 		label: 'Object class';
-		icon: (tab iconNamed: #nautilusIcon);
-		presenter: (MessageBrowser new messages: Object methods).
-	^ tab
+		icon: (self iconNamed: #nautilusIcon);
+		presenter: (MessageBrowser new messages: Object methods);
+		yourself
 ]
 
 { #category : #private }
 TabsExample >> objectInspectorTab [
-	|tab|
-	tab := self newTab.
-	tab
+	^ self newTab
 		label: 'Object inspector';
-		icon: (tab iconNamed: #nautilusIcon);
-		retrievingBlock: [ (EyeInspector new
+		icon: (self iconNamed: #nautilusIcon);
+		retrievingBlock: [ EyeInspector new
 				inspect: Object;
-				buildWithSpec: #inspectorSpec) asWidget ].
-			^tab
+				buildWithSpec: #inspectorSpec ];
+		yourself
 ]
 
 { #category : #initialization }

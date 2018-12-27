@@ -35,7 +35,7 @@ MorphicTabManagerAdapter >> buildWidget [
 
 { #category : #'widget API' }
 MorphicTabManagerAdapter >> getTabs [
-	^ [ (self model tabs collect: [ :each | self buildTab: each ]) collect: #asWidget ]
+	^ [ self model tabs collect: [ :each | self buildTab: each ] ]
 ]
 
 { #category : #'spec protocol' }

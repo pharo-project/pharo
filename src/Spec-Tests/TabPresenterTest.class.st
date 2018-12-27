@@ -34,12 +34,12 @@ TabPresenterTest >> testChangeLabel [
 
 	self redMorphTab.
 	manager addTab: testedInstance.
-	self assert: testedInstance label = 'Red Morph'.
+	self assert: testedInstance label equals: 'Red Morph'.
 	testedInstance label: 'Change Before Opening'.
-	self assert: testedInstance label = 'Change Before Opening'.
+	self assert: testedInstance label equals: 'Change Before Opening'.
 	window := manager openWithSpec.
 	testedInstance label: 'Change After Opening'.
-	self assert: testedInstance label = 'Change After Opening'
+	self assert: testedInstance label equals: 'Change After Opening'
 ]
 
 { #category : #tests }

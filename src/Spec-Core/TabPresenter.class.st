@@ -32,14 +32,6 @@ TabPresenter class >> adapterName [
 	^ #TabAdapter
 ]
 
-{ #category : #specs }
-TabPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(TabAdapter
-		adapt: #(model))
-]
-
 { #category : #api }
 TabPresenter >> actions [
 
@@ -186,7 +178,7 @@ TabPresenter >> morphHolder [
 { #category : #api }
 TabPresenter >> presenter: aComposablePresenter [
 	aComposablePresenter owner: self.
-	self retrievingBlock: [ aComposablePresenter buildWithSpec asWidget ]
+	self retrievingBlock: [ aComposablePresenter buildWithSpec ]
 ]
 
 { #category : #api }

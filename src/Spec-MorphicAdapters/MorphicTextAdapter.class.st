@@ -127,12 +127,6 @@ MorphicTextAdapter >> doItReceiver [
 	^ self model doItReceiver
 ]
 
-{ #category : #accessing }
-MorphicTextAdapter >> editingMode [ 
-
-	^ self widget editingMode
-]
-
 { #category : #'widget API' }
 MorphicTextAdapter >> font: aFont [
 	self widgetDo: [ :w | w font: aFont ]

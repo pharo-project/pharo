@@ -18,11 +18,9 @@ SpecLayoutAddColumn class >> block: aBlock layoutFrame: aLayoutFrame [
 
 { #category : #'instance creation' }
 SpecLayoutAddColumn >> block: aBlock layoutFrame: aLayoutFrame [
-
-	| row |
-	row := SpecColumnLayout composed.
-	aBlock value: row.
-	subwidget := row asArray.
-	self layoutFrame: aLayoutFrame.
-	self generateArguments
+	| column |
+	column := SpecColumnLayout composed.
+	aBlock value: column.
+	subwidget := column.
+	self layoutFrame: aLayoutFrame
 ]

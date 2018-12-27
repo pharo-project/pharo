@@ -25,26 +25,74 @@ MorphicWindowAdapter >> aboutTitle [
 		ifFalse: [m class name]].
 ]
 
-{ #category : #protocol }
-MorphicWindowAdapter >> addModelIn: widgetToBuild withSpec: aSpec [
+{ #category : #private }
+MorphicWindowAdapter >> add: containerMorph toWindow: aSpecWindow [
+	aSpecWindow addMorph: containerMorph fullFrame: LayoutFrame identity
+]
+
+{ #category : #private }
+MorphicWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
+	| containerMorph |
 	
-	widgetToBuild
-		addMorph: (self model model buildWithSpec: aSpec)
-		frame: (0@0 corner: 1@1)
+	containerMorph := self newContainerMorph.
+	containerMorph layoutFrame: aMorph layoutFrame.
+
+	"add all decorations (menu, toolbar and statusbar)"
+	self model hasMenu ifTrue: [ self addMenuTo: containerMorph ].
+	self model hasToolBar ifTrue: [ self addToolBarTo: containerMorph ].
+	containerMorph addMorphBack: aMorph.
+	aMorph
+		hResizing: #spaceFill;
+		vResizing: #spaceFill.
+	self model hasStatusBar ifTrue: [ self addStatusBarTo: containerMorph ].
+	
+	self add: containerMorph toWindow: aSpecWindow
+]
+
+{ #category : #private }
+MorphicWindowAdapter >> addMenuTo: aMorph [
+	| menuMorph |
+
+	menuMorph := self model menu buildWithSpec.
+	aMorph addMorphBack: menuMorph.	
+	menuMorph
+		hResizing: #spaceFill;
+		vResizing: #rigid
 ]
 
 { #category : #protocol }
 MorphicWindowAdapter >> addModelIn: widgetToBuild withSpecLayout: aSpec [
-	
-	widgetToBuild
-		addMorph: (self model model buildWithSpecLayout: aSpec)
-		frame: (0@0 corner: 1@1)
+	self
+		addContent: (self model presenter buildWithSpecLayout: aSpec)
+		toWindow: widgetToBuild
 ]
 
 { #category : #'widget API' }
 MorphicWindowAdapter >> addModelItemsToWindowMenu: aMenu [
 
 	self model addMenuItemsToWindowMenu: aMenu
+]
+
+{ #category : #private }
+MorphicWindowAdapter >> addStatusBarTo: aMorph [
+	| statusBarMorph |
+
+	statusBarMorph := self model statusBar buildWithSpec.
+	aMorph addMorphBack: statusBarMorph.	
+	statusBarMorph
+		hResizing: #spaceFill;
+		vResizing: #rigid
+]
+
+{ #category : #private }
+MorphicWindowAdapter >> addToolBarTo: aMorph [
+	| toolbarMorph |
+
+	toolbarMorph := self model toolBar buildWithSpec.
+	aMorph addMorphBack: toolbarMorph.	
+	toolbarMorph
+		hResizing: #spaceFill;
+		vResizing: #rigid
 ]
 
 { #category : #'widget API' }
@@ -55,6 +103,7 @@ MorphicWindowAdapter >> askOkToClose [
 
 { #category : #factory }
 MorphicWindowAdapter >> buildWidget [
+
 	^ SpecWindow new
 		model: model;
 		isResizeable: self isResizeable;
@@ -144,6 +193,17 @@ MorphicWindowAdapter >> modalRelativeTo: aWindow [
 	self widgetDo: [ :w | aWindow setModal: w ]
 ]
 
+{ #category : #private }
+MorphicWindowAdapter >> newContainerMorph [
+		
+	^ PanelMorph new
+		layoutPolicy: TableLayout new; 
+		hResizing: #spaceFill;
+		vResizing: #spaceFill;		
+		listDirection: #topToBottom; 
+		yourself
+]
+
 { #category : #'widget API' }
 MorphicWindowAdapter >> okToChange [
 ^ self model okToChange
@@ -160,16 +220,6 @@ MorphicWindowAdapter >> openModal: aWindow [
 
 	^ self widget 
 		ifNotNil: [:w | w openModal: aWindow asWidget ].
-]
-
-{ #category : #protocol }
-MorphicWindowAdapter >> rebuildWithSpec: aSpec [
-	| sub |
-	
-	sub := self model window submorphs copy.
-	self model window removeAllMorphs.
-	sub allButLast do: [:e | self model window addMorphBack: e ].
-	self model addModelIn: self widget withSpec: aSpec
 ]
 
 { #category : #protocol }

@@ -31,8 +31,8 @@ MethodBrowser class >> defaultSpec2 [
 ^{ #Panel.
 		#changeTableLayout.
 		#listDirection:. 	#bottomToTop.
-		#addMorph:. 		{#model. #listModel.}.
-		#addMorph:. 		{#model. #textModel.}.
+		#addMorph:. 		{#presenter. #listModel.}.
+		#addMorph:. 		{#presenter. #textModel.}.
 		#vResizing:.		 #spaceFill.
 		#hResizing:.		 #spaceFill.}
 ]

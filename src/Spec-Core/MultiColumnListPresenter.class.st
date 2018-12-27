@@ -13,14 +13,6 @@ MultiColumnListPresenter class >> adapterName [
 	^ #MultiColumnListAdapter
 ]
 
-{ #category : #specs }
-MultiColumnListPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(MultiColumnListAdapter
-		adapt: #(model))
-]
-
 { #category : #morphic }
 MultiColumnListPresenter >> listElementAt: anIndex [
 

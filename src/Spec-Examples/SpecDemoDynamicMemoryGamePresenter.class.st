@@ -28,6 +28,11 @@ SpecDemoDynamicMemoryGamePresenter class >> defaultSpec [
 				newRow: #differentCardsCountSlider height: self buttonHeight ]
 ]
 
+{ #category : #example }
+SpecDemoDynamicMemoryGamePresenter class >> example [
+	^ self new openWithSpec
+]
+
 { #category : #accessing }
 SpecDemoDynamicMemoryGamePresenter >> cardPairsCount [
 	^ self differentCardsCountSlider value

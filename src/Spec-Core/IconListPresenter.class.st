@@ -26,14 +26,6 @@ IconListPresenter class >> adapterName [
 	^ #IconListAdapter
 ]
 
-{ #category : #specs }
-IconListPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(IconListAdapter
-		adapt: #(model))
-]
-
 { #category : #example }
 IconListPresenter class >> example [
 	<sampleInstance>

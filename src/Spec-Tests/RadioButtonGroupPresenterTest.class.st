@@ -21,11 +21,11 @@ RadioButtonGroupPresenterTest >> initializeTestedInstance [
 
 { #category : #tests }
 RadioButtonGroupPresenterTest >> testAddRadioButton [
-	self assert: testedInstance buttons size == 0.
+	self assert: testedInstance buttons isEmpty.
 	testedInstance
 		addRadioButton: radio1;
 		addRadioButton: radio2.
-	self assert: testedInstance buttons size == 2
+	self assert: testedInstance buttons size equals: 2
 ]
 
 { #category : #tests }
@@ -48,7 +48,7 @@ RadioButtonGroupPresenterTest >> testCurrentActivated [
 { #category : #tests }
 RadioButtonGroupPresenterTest >> testDefault [
 	testedInstance addRadioButton: radio1.
-	self assert: radio1 state == false
+	self deny: radio1 state
 ]
 
 { #category : #tests }
@@ -56,14 +56,14 @@ RadioButtonGroupPresenterTest >> testLinkRadioButton [
 	testedInstance
 		addRadioButton: radio1;
 		addRadioButton: radio2.
-	self assert: radio1 state == false.
-	self assert: radio2 state == false.
+	self deny: radio1 state.
+	self deny: radio2 state.
 	radio1 click.
-	self assert: radio1 state == true.
-	self assert: radio2 state == false.
+	self assert: radio1 state.
+	self deny: radio2 state.
 	radio2 click.
-	self assert: radio1 state == false.
-	self assert: radio2 state == true
+	self deny: radio1 state.
+	self assert: radio2 state
 ]
 
 { #category : #tests }

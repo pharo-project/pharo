@@ -26,7 +26,6 @@ Class {
 		'min',
 		'quantum',
 		'value',
-		'isSetting',
 		'isChanging',
 		'absoluteValue',
 		'labelHolder'
@@ -38,14 +37,6 @@ Class {
 SliderPresenter class >> adapterName [
 
 	^ #SliderAdapter
-]
-
-{ #category : #specs }
-SliderPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(SliderAdapter
-		adapt: #(model))
 ]
 
 { #category : #specs }

@@ -21,14 +21,6 @@ TabManagerPresenter class >> adapterName [
 	^ #TabManagerAdapter
 ]
 
-{ #category : #specs }
-TabManagerPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(TabManagerAdapter
-		adapt: #(model))
-]
-
 { #category : #dependents }
 TabManagerPresenter >> addDependent: aMorph [
 

@@ -6,7 +6,6 @@ Class {
 	#superclass : #ListPresenter,
 	#instVars : [
 		'iconHolder',
-		'displayBlock',
 		'handlesDoubleClick',
 		'doubleClick',
 		'columns'
@@ -18,14 +17,6 @@ Class {
 FastTablePresenter class >> adapterName [
 
 	^ #FastTableAdapter
-]
-
-{ #category : #specs }
-FastTablePresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(FastTableAdapter
-		adapt: #(model))
 ]
 
 { #category : #example }

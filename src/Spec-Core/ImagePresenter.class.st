@@ -23,14 +23,6 @@ ImagePresenter class >> adapterName [
 	^ #ImageAdapter
 ]
 
-{ #category : #specs }
-ImagePresenter class >> defaultSpec [
-	<spec>
-	
-	^ #(ImageAdapter
-		adapt: #(model))
-]
-
 { #category : #api }
 ImagePresenter >> action [
 	"<api: #inspect>"
