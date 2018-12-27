@@ -35,13 +35,13 @@ RelativePath >> printOn: aStream [
 		ifFalse: 
 			[ aStream 
 				nextPutAll: '* ''';
-				print: (self at: 1);
+				nextPutAll: (self at: 1);
 				nextPut: $'.
 			2 to: self size do:
 				[:i |
 				aStream
 					nextPutAll: ' / ''';
-					print: (self at: i);
+					nextPutAll: (self at: i);
 					nextPut: $' ]]
 			
 ]
