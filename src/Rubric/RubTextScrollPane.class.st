@@ -35,7 +35,7 @@ RubTextScrollPane >> appendText: stringOrText [
 
 { #category : #'text area protocol' }
 RubTextScrollPane >> beNotWrapped [
-	self handleWrappingPolicyChange: [ self textArea beNotWrapped]
+	self handleWrappingPolicyChange: [ self textArea wrapped: false]
 ]
 
 { #category : #'text area protocol' }

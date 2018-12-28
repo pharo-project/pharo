@@ -23,7 +23,7 @@ Class {
 }
 
 { #category : #examples }
-RubTextFieldExample class >> open [
+RubTextFieldExample class >> exampleOpen [
 	| st |
 	st := self new newScrolledText.
 	self spyAnnouncer ifTrue: [st textArea announcer open].
@@ -73,12 +73,6 @@ RubTextFieldExample class >> openWithScrollbarAndBorderOfWidth: anInteger [
 RubTextFieldExample class >> spyAnnouncer [
 	"Set it to true if you want to observe text area announcements"
 	^ false
-]
-
-{ #category : #accessing }
-RubTextFieldExample >> acceptString: aString [
-	self string: aString.
-	^ true
 ]
 
 { #category : #accessing }
@@ -138,7 +132,9 @@ RubTextFieldExample >> newScrolledTextWithScrollbarAndBorderOfWidth: anInteger [
 
 { #category : #'user interface' }
 RubTextFieldExample >> setText: aText from: aView [ 
-	^ self acceptString: aText string
+	self string: aText string.
+	"return true to remove unaccepted edit adornment in tge view"
+	^ true
 ]
 
 { #category : #accessing }

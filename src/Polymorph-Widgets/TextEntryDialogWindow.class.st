@@ -56,7 +56,6 @@ TextEntryDialogWindow >> newTextEditorMorph [
 		setText: #entryText:
 		getEnabled: nil
 		help: nil)
-		acceptOnCR: false;
 		selectAll
 ]
 

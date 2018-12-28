@@ -55,10 +55,10 @@ LongMessageDialogWindow >> newTextMorph [
 		getText: #entryText
 		setText: #entryText:
 		getEnabled: nil)
-			styled: false;
+			beForPlainText;
 			minWidth: Display width // 4;
 			minHeight: Display height // 4;
-			disable.
+			beReadOnly.
 	^tm
 ]
 
