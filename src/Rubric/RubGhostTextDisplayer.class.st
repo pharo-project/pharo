@@ -39,7 +39,7 @@ RubGhostTextDisplayer >> computedWidthFrom: aRectangle [
 
 { #category : #'initialize-release' }
 RubGhostTextDisplayer >> defaultTextColor [
-	^ Color lightGray
+	^ self theme ghostTextColor
 ]
 
 { #category : #geometry }

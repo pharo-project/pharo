@@ -109,7 +109,7 @@ Class {
 
 { #category : #settings }
 RubAbstractTextArea class >> backgroundColor [
-	^ BackgroundColor ifNil: [ BackgroundColor := Color white] 
+	^ BackgroundColor ifNil: [ self theme backgroundColor ] 
 ]
 
 { #category : #settings }
@@ -589,8 +589,10 @@ RubAbstractTextArea >> defaultBounds [
 
 { #category : #defaults }
 RubAbstractTextArea >> defaultColor [
-	"answer the default color/fill style for the receiver"
-	^ self class backgroundColor
+	"Answer the default color/fill style for the receiver.
+	If the settings has been used then honor it, else returns the theme color"
+	  
+	^ BackgroundColor ifNil: [ self theme backgroundColor ]
 ]
 
 { #category : #menu }
