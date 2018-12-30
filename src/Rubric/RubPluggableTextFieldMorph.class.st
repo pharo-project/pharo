@@ -365,8 +365,3 @@ RubPluggableTextFieldMorph >> whenReturnEntered: anAnnouncement [
 RubPluggableTextFieldMorph >> withDropListButton [
 	self withRulerNamed: #dropListButton
 ]
-
-{ #category : #compat }
-RubPluggableTextFieldMorph >> wrapFlag: aBoolean [
-	self flag: #userShouldBeRevisited.
-]
