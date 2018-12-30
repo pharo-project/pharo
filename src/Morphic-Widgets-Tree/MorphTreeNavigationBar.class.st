@@ -281,9 +281,9 @@ MorphTreeNavigationBar >> pageSize: anInteger [
 ]
 
 { #category : #accessing }
-MorphTreeNavigationBar >> pageSizeFromString: aString [
+MorphTreeNavigationBar >> pageSizeInput: aString [
 	| input |
-	input := aString asString trimBoth.
+	input := aString trimBoth.
 	input ifEmpty: [input := '1'].
 	(input beginsWith: '/' )
 		ifTrue: [ | numberOfPages |
@@ -304,11 +304,6 @@ MorphTreeNavigationBar >> pageSizeFromString: aString [
 ]
 
 { #category : #accessing }
-MorphTreeNavigationBar >> pageSizeToString [
-	^ self pageSize asString
-]
-
-{ #category : #accessing }
 MorphTreeNavigationBar >> pagerColor [
 	^ treeMorph pagerColor
 ]
@@ -325,15 +320,31 @@ MorphTreeNavigationBar >> spacer: hsize [
 
 { #category : #accessing }
 MorphTreeNavigationBar >> textEntryLabel: aLabel get: getSel set: setSel help: helpText class: aClass [
-	^ RubPluggableTextFieldMorph new
+ 	| pt |
+	pt := PluggableTextFieldMorph new
+		convertTo: aClass;
+		alwaysAccept: true;
 		on: self
 		text: getSel
 		accept: setSel
 		readSelection: nil
 		menu: nil;
-		setBalloonText: helpText;
-		yourself
-
+		acceptOnCR: true;
+		getEnabledSelector: nil;
+		font: self preferedFont;
+		cornerStyle: #square;
+		hResizing: #spaceFill;
+		vResizing: #rigid;
+		borderStyle: (BorderStyle inset width: 1);
+		color: Color white;
+		hideScrollBarsIndefinitely;
+		extent: 24@ (self preferedFont height + 4);
+		setBalloonText: helpText.
+	pt textMorph
+		autoFit: true;
+		wrapFlag: false;
+		margins: (1@0) asMargin.
+	^pt
 ]
 
 { #category : #accessing }

@@ -300,13 +300,13 @@ TimeProfiler >> menu: menu shifted: b [
 
 { #category : #'UI specific' }
 TimeProfiler >> minPercentageToExpand [
-	^ minPercentageToExpand ifNil: [minPercentageToExpand := 3.0]
+	^ minPercentageToExpand ifNil: [minPercentageToExpand := 3]
 ]
 
 { #category : #'UI specific' }
 TimeProfiler >> minPercentageToExpand: aPercentage [
 	minPercentageToExpand := aPercentage.
-	self changed: #minPercentageToExpand
+	self changed: #minPercentageToExpand.
 
 ]
 
@@ -668,10 +668,10 @@ TimeProfiler >> threshold [
 
 { #category : #accessing }
 TimeProfiler >> threshold: aTreshold [
-	(aTreshold ~= threshold and: [ aTreshold between: 0 and: 1000 ])
-		ifFalse: [ ^ self ].
-	threshold := aTreshold.
-	self updateList.
+	(aTreshold ~= threshold and: [aTreshold between: 0 and: 1000])
+		ifTrue: [
+			threshold := aTreshold.
+			self updateList].
 	self changed: #threshold
 ]
 

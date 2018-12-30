@@ -263,6 +263,8 @@ PluggableTextFieldMorph >> keystrokeFromTextMorph: anEvent [
 		ifTrue: [self closeChooser].
 	^ (super keystrokeFromTextMorph: anEvent)
 		or: [entryCompletion notNil and: [entryCompletion keystroke: anEvent from: self]]
+			
+	
 ]
 
 { #category : #initialization }

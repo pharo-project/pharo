@@ -16,8 +16,7 @@ Class {
 		'scrollPane',
 		'rulers',
 		'enabled',
-		'highlights',
-		'getBackgroundColorSelector'
+		'highlights'
 	],
 	#category : #'Rubric-Editing-Widgets'
 }
@@ -48,7 +47,6 @@ editing it here.  Accept anyway?' translated)
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> acceptTextInModel [
-
 	self model ifNil: [ ^ true ].
 	 ^ self setTextSelector numArgs = 2
 		ifTrue: [ self model perform: self setTextSelector with: self text with: self ]
@@ -130,12 +128,12 @@ RubScrolledTextMorph >> autoAccept: aBoolean [
 
 { #category : #accessing }
 RubScrolledTextMorph >> backgroundColor [
-	^self scrollPane color
+	^self color
 ]
 
 { #category : #accessing }
 RubScrolledTextMorph >> backgroundColor: aColor [
-	self scrollPane color: aColor
+	self color: aColor
 ]
 
 { #category : #'model protocol' }
@@ -451,24 +449,6 @@ RubScrolledTextMorph >> formatSourceCode [
 	self textArea formatMethodCode
 ]
 
-{ #category : #accessing }
-RubScrolledTextMorph >> getBackgroundColorFromModel [
-	"Retrieve the color from the model"
-
-	self getBackgroundColorSelector ifNil: [^ self ].
-	^ self model perform: self getBackgroundColorSelector withEnoughArguments: {self}.
-]
-
-{ #category : #accessing }
-RubScrolledTextMorph >> getBackgroundColorSelector [ 
-	^ getBackgroundColorSelector 
-]
-
-{ #category : #accessing }
-RubScrolledTextMorph >> getBackgroundColorSelector: aSelector [
-	getBackgroundColorSelector := aSelector
-]
-
 { #category : #'accessing menu' }
 RubScrolledTextMorph >> getMenuPolicy: aGetMenuPolicy [
 	self textArea getMenuPolicy: aGetMenuPolicy
@@ -525,11 +505,6 @@ RubScrolledTextMorph >> getTextSelector [
 { #category : #'model protocol' }
 RubScrolledTextMorph >> getTextSelector: aSymbol [ 
 	getTextSelector  := aSymbol
-]
-
-{ #category : #'accessing rulers' }
-RubScrolledTextMorph >> ghostText: aText [
-	self withGhostText: aText
 ]
 
 { #category : #'accessing rulers' }
@@ -1045,13 +1020,6 @@ RubScrolledTextMorph >> textColor: aColor [
 ]
 
 { #category : #accessing }
-RubScrolledTextMorph >> textFont [
-	"We should clean"
-	
-	^ self textArea font
-]
-
-{ #category : #accessing }
 RubScrolledTextMorph >> textFont: aFont [
 	self textArea font: aFont
 ]
@@ -1237,7 +1205,6 @@ RubScrolledTextMorph >> withFocusBorder [
 
 { #category : #'accessing rulers' }
 RubScrolledTextMorph >> withGhostText: aText [
-	aText ifNil: [ ^ self withoutRulerNamed: #ghostText ].
 	self withRulerNamed: #ghostText.
 	self ghostTextRuler updateTextWith: aText asText.
 	self ghostTextRuler comeToFront

@@ -320,7 +320,7 @@ PopupChoiceDialogWindow >> newFilterEntry [
 		getEnabled: nil
 		help: 'Filters the options according to a matching substring' translated.
 	entry acceptOnCR: false.
-	entry crAction: (MessageSend receiver: self selector: #ok).
+	entry textMorph crAction: (MessageSend receiver: self selector: #ok).
 	^entry 
 
 ]

@@ -47,7 +47,7 @@ SearchMorph >> addToList: aString [
 
 { #category : #accessing }
 SearchMorph >> content: anObject [ 
-	content := anObject asString trimBoth.
+	content := anObject trimBoth.
 	self addToList: content.
 	self listSelectionIndex: (self list indexOf: content).
 	self updateList
@@ -153,15 +153,18 @@ SearchMorph >> maxSize: aNumber [
 
 { #category : #drawing }
 SearchMorph >> newContentMorph [
-	| editorMorph|
-	editorMorph := super newContentMorph.
+	|pluggableTextMorph|
+	pluggableTextMorph := super newContentMorph.
 
-	editorMorph 
+	pluggableTextMorph 
 		autoAccept: false;
-		withoutAdornment;
-		changedAction: [:aString| self contentChanged: aString asString].
-	editorMorph announcer when: RubKeystroke send: #whenKeystroke: to: self.
-	^ editorMorph
+		askBeforeDiscardingEdits: false;
+		setProperty: #wantsFrameAdornments toValue: false;
+		changedAction: [:aString| self contentChanged: aString asString];
+		eventHandler: MorphicEventHandler new.
+		
+	pluggableTextMorph on: #keyStroke send: #keyStroke:fromMorph: to: self.
+	^ pluggableTextMorph
 ]
 
 { #category : #private }
@@ -210,10 +213,4 @@ SearchMorph >> updateSelector [
 { #category : #accessing }
 SearchMorph >> updateSelector: aSymbol [ 
 	updateSelector := aSymbol
-]
-
-{ #category : #'event handling' }
-SearchMorph >> whenKeystroke: anAnnouncement [
-	^ self keyStroke: anAnnouncement event fromMorph: anAnnouncement morph
-
 ]

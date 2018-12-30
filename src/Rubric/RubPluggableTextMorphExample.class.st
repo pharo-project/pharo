@@ -5,6 +5,8 @@ see example class side
 Class {
 	#name : #RubPluggableTextMorphExample,
 	#superclass : #Model,
+	#traits : 'TViewModel',
+	#classTraits : 'TViewModel classTrait',
 	#instVars : [
 		'selection',
 		'scrollValue',
@@ -13,7 +15,7 @@ Class {
 		'selectedMethodName',
 		'enabled'
 	],
-	#category : #'Rubric-Compatibility-toBeDeprecated'
+	#category : #'Rubric-Editing-Widgets-Examples'
 }
 
 { #category : #example }

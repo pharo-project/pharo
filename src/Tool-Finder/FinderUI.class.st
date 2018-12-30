@@ -551,7 +551,7 @@ FinderUI >> currentSearchMode [
 { #category : #accessing }
 FinderUI >> currentSearchMode: aSymbol [
 	self finder searchingStringSilently: self searchingTextArea contentMorph textMorph text asString.
-	self searchingTextArea contentMorph hasUnacceptedEdits: false.
+	self searchingTextArea contentMorph textMorph hasUnacceptedEdits: false.
 	self finder currentSearchMode: aSymbol
 ]
 

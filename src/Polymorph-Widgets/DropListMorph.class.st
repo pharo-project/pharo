@@ -18,7 +18,8 @@ Class {
 		'getEnabledSelector',
 		'enabled',
 		'useSelectionIndex',
-		'wrapSelector'
+		'wrapSelector',
+		'defaultContents'
 	],
 	#category : #'Polymorph-Widgets'
 }
@@ -162,8 +163,15 @@ DropListMorph >> defaultColor [
 
 { #category : #private }
 DropListMorph >> defaultContents [
-	"needs nothing to activate the ghostText"
-	^ ''
+	
+	^ defaultContents
+]
+
+{ #category : #accessing }
+DropListMorph >> defaultContents: anObject [
+	"Set the value of defaultContents"
+
+	defaultContents := anObject
 ]
 
 { #category : #protocol }
@@ -255,7 +263,7 @@ DropListMorph >> font [
 DropListMorph >> font: aFont [
 	"Set the content font"
 
-	self contentMorph font: aFont
+	self contentMorph beAllFont: aFont
 ]
 
 { #category : #protocol }
@@ -322,7 +330,15 @@ DropListMorph >> getListSelector: anObject [
 
 { #category : #protocol }
 DropListMorph >> ghostText: aStringOrText [
-	self contentMorph ghostText: aStringOrText
+	| text |
+	
+	text := aStringOrText asText asMorph.
+	text textColor: self theme disabledColor.
+	
+	self contentMorph contents = self defaultContents
+		ifTrue: [ self contentMorph contents: text ].
+	
+	self defaultContents: text.
 ]
 
 { #category : #'event handling' }
@@ -354,6 +370,8 @@ DropListMorph >> initialize [
 	listSelectionIndex := 0.
 	enabled := true.
 	list := #().
+	"needs something to keep font"
+	defaultContents := ' '.
 	self
 		useSelectionIndex: true;
 		clipSubmorphs: true;
@@ -476,7 +494,8 @@ DropListMorph >> listMouseDown: evt [
 	"Click outside the list."
 
 	(self listMorph fullContainsPoint: evt position)
-		ifTrue: [ self listMorph changeModelSelection: (self listMorph rowAtLocation: evt position) ].
+		ifTrue: [ 
+			self listMorph changeModelSelection: (self listMorph rowAtLocation: evt position) ].
 	self hideList
 ]
 
@@ -553,13 +572,14 @@ DropListMorph >> newButtonMorph [
 DropListMorph >> newContentMorph [
 	"Answer a new content morph"
 
-	^ RubTextFieldArea new
+	^TextMorphForFieldView new
+		contents: self defaultContents;
+		margins: (Margin left: 2 right: 2 top: 0 bottom: 1);
+		borderStyle: (BorderStyle simple width: 0);
 		vResizing: #shrinkWrap;
 		hResizing: #spaceFill;
-		beReadOnly;
-		yourself
-		
-		
+		autoFit: false;
+		lock.
 ]
 
 { #category : #drawing }
@@ -709,6 +729,7 @@ DropListMorph >> showList [
 { #category : #'stepping and presenter' }
 DropListMorph >> step [
 	"Reset mouse focus to the list if it is showing."
+
 	self listVisible ifTrue: [
 		self activeHand mouseFocus ifNil: [
 			 self listMorph wantsKeyboardFocus ifTrue: [
@@ -716,7 +737,7 @@ DropListMorph >> step [
 			self activeHand newMouseFocus: self listMorph]]
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #testing }
 DropListMorph >> stepTime [
 	"Answer the desired time between steps in milliseconds."
 
@@ -775,7 +796,7 @@ DropListMorph >> updateContentColor: paneColor [
 { #category : #private }
 DropListMorph >> updateContentMorphWith: aString [
 
-	self contentMorph setTextWith: aString asString
+	self contentMorph contents: aString
 ]
 
 { #category : #testing }
@@ -785,7 +806,7 @@ DropListMorph >> updateContents [
 	self updateContentMorphWith:
 		(self listSelectionIndex > 0
 			ifTrue: [self listMorph wrapItem: (self list at: self listSelectionIndex) index: self listSelectionIndex ]
-			ifFalse: [ '' ]) 
+			ifFalse: [ self defaultContents ]) 
 ]
 
 { #category : #updating }
@@ -860,12 +881,6 @@ DropListMorph >> wantsKeyboardFocus [
 
 	^super wantsKeyboardFocus and: [
 		self allowKeyboardFocus]
-]
-
-{ #category : #'stepping and presenter' }
-DropListMorph >> wantsSteps [
-	"Step is very very time consuming..."
-	^ false
 ]
 
 { #category : #wrapping }
