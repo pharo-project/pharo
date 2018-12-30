@@ -217,7 +217,7 @@ TestRunner >> buildClassesSearch [
 	^ SearchMorph new
 		model: self;
 		updateSelector: #classSearchUpdate:;
-		ghostText: 'TestCase #1 | TestCase #2';
+		ghostText: 'TestCaseA|TestCaseB';
 		yourself
 ]
 
@@ -251,9 +251,9 @@ TestRunner >> buildFailures [
 TestRunner >> buildPackageSearch [
 
 	^ SearchMorph new
-		ghostText: 'Package #1 | Package #2';
 		model: self;
 		updateSelector: #packageSearchUpdate:;
+		ghostText: 'PackageA|PackageB';
 		yourself
 ]
 
@@ -275,14 +275,12 @@ TestRunner >> buildPackages [
 { #category : #newbuilding }
 TestRunner >> buildStatus [
 
-	^ (RubPluggableTextMorph
+	^ (PluggableTextFieldMorph
 		on: self 
 		text: #statusText 
 		accept: nil 
 		readSelection: nil 
 		menu: #statusMenu:)
-			beReadOnly;
-			beWrapped;
 			textColor: self theme textColorForNonStandardBackground;
 			getColorSelector: #statusColor ; 
 			yourself.
@@ -398,7 +396,7 @@ TestRunner >> classesSearchFrame [
 		leftFraction: 0.25;
 		rightFraction: 0.5;
 		bottomFraction: 0 ;
-		bottomOffset: (StandardFonts defaultFont height + 6)
+		bottomOffset: (StandardFonts defaultFont height + 10)
 ]
 
 { #category : #actions }
@@ -766,7 +764,7 @@ TestRunner >> packageMenu: aMenu [
 TestRunner >> packageSearchFrame [
 	^LayoutFrame new
 		rightFraction: 0.25;
-		bottomFraction: 0 offset: (Smalltalk ui theme textFont height + 6)
+		bottomFraction: 0 offset: (Smalltalk ui theme textFont height + 10)
 ]
 
 { #category : #building }
@@ -1111,7 +1109,7 @@ TestRunner >> statusFrame [
 
 { #category : #building }
 TestRunner >> statusHeight [
-	^ self theme textFont height * 3
+	^ self theme textFont height * 4
 ]
 
 { #category : #'accessing-menu' }

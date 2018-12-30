@@ -60,11 +60,6 @@ EditableDropListMorph >> adoptPaneColor: paneColor [
 	self contentMorph fillStyle: Color transparent 
 ]
 
-{ #category : #'public accessing' }
-EditableDropListMorph >> beReadOnly [ 
-	self contentMorph beReadOnly 
-]
-
 { #category : #accessing }
 EditableDropListMorph >> content [
 	^ content
@@ -94,6 +89,12 @@ EditableDropListMorph >> default: anObject [
 	self contentMorph default: anObject
 ]
 
+{ #category : #private }
+EditableDropListMorph >> defaultContents [
+	"needs nothing to activate the ghostText"
+	^ ''
+]
+
 { #category : #accessing }
 EditableDropListMorph >> enabled: aBoolean [
 	"Set the value of enabled"
@@ -110,6 +111,12 @@ EditableDropListMorph >> font: aFont [
 
 	self listMorph font: aFont.
 	self contentMorph font: aFont
+]
+
+{ #category : #protocol }
+EditableDropListMorph >> ghostText: aText [
+	self contentMorph ghostText: aText
+
 ]
 
 { #category : #private }
@@ -129,14 +136,16 @@ EditableDropListMorph >> listHeight [
 EditableDropListMorph >> minHeight [
 	"Answer the minimum height for the drop list."
 	
-	^self theme textFont height 
+	^self theme textFont height + 7
 ]
 
 { #category : #drawing }
 EditableDropListMorph >> newContentMorph [
 	"Answer a new content morph"
-	| pt | 
-	pt := RubPluggableTextFieldMorph new
+	
+	| pt |
+	pt := PluggableTextFieldMorph new
+		convertTo: String;
 		alwaysAccept: true;
 		on: self
 		text: #content
@@ -148,8 +157,16 @@ EditableDropListMorph >> newContentMorph [
 		font: self theme textFont;
 		cornerStyle: (self theme textEntryCornerStyleIn: self);
 		hResizing: #spaceFill;
+		vResizing: #spaceFill;
+		borderStyle: (BorderStyle simple width: 0);
+		hideScrollBarsIndefinitely;
 		setBalloonText: nil.
-		^ pt
+		
+	pt textMorph autoFit: true;
+		wrapFlag: false;
+		margins: self theme editableDropListMargins.
+		
+	^ pt
 ]
 
 { #category : #private }

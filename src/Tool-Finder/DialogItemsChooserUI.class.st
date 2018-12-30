@@ -570,7 +570,7 @@ DialogItemsChooserUI >> selectedItemsProbablyRestricted [
 						(string last = $*) 
 							ifTrue: [string]
 							ifFalse:[string, '*']].
-	^self selectedItems select: [:each | matcher asString match: each].
+	^self selectedItems select: [:each | matcher match: each].
 ]
 
 { #category : #accessing }

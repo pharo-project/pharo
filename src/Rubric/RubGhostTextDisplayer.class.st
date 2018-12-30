@@ -39,7 +39,7 @@ RubGhostTextDisplayer >> computedWidthFrom: aRectangle [
 
 { #category : #'initialize-release' }
 RubGhostTextDisplayer >> defaultTextColor [
-	^ self theme ghostTextColor
+	^ Color lightGray
 ]
 
 { #category : #geometry }
@@ -155,6 +155,6 @@ RubGhostTextDisplayer >> updateMarginsWith: aMargin [
 RubGhostTextDisplayer >> updateTextWith: aText [
 	self
 		handleTextChangeWhile: [ 
-			ghostText updateTextWith: aText asText.
+			ghostText updateTextWith: aText.
 			ghostText textColor: self textColor ]
 ]

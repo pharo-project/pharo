@@ -31,7 +31,8 @@ Class {
 		'dataSourceBlock',
 		'filterBlock',
 		'chooseBlock',
-		'chooser'
+		'chooser',
+		'previousToken'
 	],
 	#category : #'Polymorph-Widgets'
 }
@@ -63,6 +64,7 @@ EntryCompletion class >> exampleTextEntryWithCompletionDialog [
 EntryCompletion >> choose: aToken [
 	chooseBlock 
 		ifNotNil: [self closeChooser.
+			previousToken := aToken.
 			chooseBlock value: aToken]
 ]
 
@@ -94,7 +96,9 @@ EntryCompletion >> chooserWith: aToken [
 			meaningfulApplicants := (applicants copyWithout: nil) asSet.
 			meaningfulApplicants isEmpty 
 				ifFalse: [(meaningfulApplicants size = 1 and: [aToken = meaningfulApplicants anyOne])
-					ifFalse: [self setChooserWith: aToken labels: applicants]]].
+					ifFalse: [(previousToken isNil or: [previousToken size ~= aToken size])
+						ifTrue: [self setChooserWith: aToken labels: applicants]]].
+			previousToken := aToken].
 	^ chooser
 ]
 
@@ -137,7 +141,7 @@ EntryCompletion >> filterBlock: aBlock [
 { #category : #accessing }
 EntryCompletion >> filteredValuesWith: aToken [
 	^ (self dataSourceBlock value: aToken) 
-		select: [:v | aToken isNil or: [aToken isEmpty or: [v isNil or: [self filterBlock value: v value: aToken]]]]
+		select: [:v | aToken isNil or: [v isNil or: [self filterBlock value: v value: aToken]]]
 ]
 
 { #category : #'event-handling' }
@@ -155,19 +159,13 @@ EntryCompletion >> keystroke: anEvent from: aMorph [
 			aMorph takeKeyboardFocus.
 			^ true].
 	(chooser isNil and: [ anEvent keyCharacter = Character arrowDown])
-		ifTrue: [
+		ifTrue: [previousToken := nil.
 			self openChooserWith: aMorph textMorph text string from: aMorph.
-			"chooser ifNotNil: [^ true]"].
+			chooser ifNotNil: [^ true]].
 	^ chooser 
 		ifNil: [false]
 		ifNotNil: [chooser keyStroke: anEvent]
 	
-]
-
-{ #category : #'event-handling' }
-EntryCompletion >> keystrokeInChooser: anEvent [
-	anEvent keyCharacter = Character escape
-		ifTrue: [ chooser := nil ]
 ]
 
 { #category : #'event-handling' }
@@ -176,20 +174,23 @@ EntryCompletion >> mouseDownFromTextMorph: anEvent [
 ]
 
 { #category : #accessing }
-EntryCompletion >> openChooserWith: aToken from: aFieldMorph [
+EntryCompletion >> openChooserWith: aToken from: aFieldMorph [ 
 	self closeChooser.
 	self chooserWith: aToken.
 	chooser
 		ifNotNil: [ | baseColor |
-			baseColor := aFieldMorph window ifNil: [ aFieldMorph color veryMuchLighter ] ifNotNil: [ :w | w paneColor veryMuchLighter ].
+			baseColor := aFieldMorph window
+				ifNil: [aFieldMorph color veryMuchLighter]
+				ifNotNil: [:w | w paneColor veryMuchLighter].
 			chooser baseColor: baseColor.
 			chooser oneMenuOfWidth: aFieldMorph bounds width - aFieldMorph layoutInset - (aFieldMorph borderWidth * 2) - 2.
+			
 			chooser fillStyle: (aFieldMorph theme textEditorNormalFillStyleFor: aFieldMorph).
+			chooser open.
 			chooser requestor: aFieldMorph.
 			chooser position: aFieldMorph bottomLeft + (aFieldMorph borderWidth @ 0).
-			chooser boundsInWorld bottomLeft y > chooser allowedArea bottom
-				ifTrue: [ chooser forcesHeight: chooser allowedArea bottom - (chooser boundsInWorld topLeft y + 2) ].
-			chooser open ].
+			chooser boundsInWorld bottomLeft y  > chooser allowedArea bottom
+                		ifTrue: [chooser forcesHeight: (chooser allowedArea bottom - (chooser boundsInWorld topLeft y + 2))]].
 	^ chooser
 ]
 
@@ -197,16 +198,15 @@ EntryCompletion >> openChooserWith: aToken from: aFieldMorph [
 EntryCompletion >> openChooserWithAllOrCloseFrom: aFieldMorph [ 
 	chooser 
 		ifNotNil: [self closeChooser]
-		ifNil: [
-			self openChooserWith: aFieldMorph getText asString from: aFieldMorph].
+		ifNil: [self openChooserWith: nil from: aFieldMorph].
 	^ chooser
 ]
 
 { #category : #accessing }
 EntryCompletion >> positionChooser [
-	"Position the chooser to fit on the display."
+        "Position the chooser to fit on the display."
 
-	
+   
 ]
 
 { #category : #accessing }
@@ -225,7 +225,6 @@ EntryCompletion >> setChooserWith: aToken labels: labels [
 	chooser 
 		ifNil: [chooser := IdentifierChooserMorph 
 							labels: labels
-							chooseBlock: [:token | self choose: token].
-					chooser on: #keyStroke send: #keystrokeInChooser: to: self].
+							chooseBlock: [:token | self choose: token]].
 	^ chooser
 ]

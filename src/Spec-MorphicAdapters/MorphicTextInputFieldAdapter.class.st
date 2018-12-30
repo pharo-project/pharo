@@ -29,7 +29,8 @@ MorphicTextInputFieldAdapter >> adapt: aModel [
 { #category : #factory }
 MorphicTextInputFieldAdapter >> buildWidget [
 	| plu |
-	plu := RubPluggableTextFieldMorph new
+	plu := PluggableTextFieldMorph new
+		convertTo: String;
 		on: self
 			text: #getText
 			accept: #accept:
@@ -47,7 +48,8 @@ MorphicTextInputFieldAdapter >> buildWidget [
 		dropEnabled: self dropEnabled;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
-		acceptOnCR: self acceptOnCR.
+		acceptOnCR: self acceptOnCR;
+		hideScrollBarsIndefinitely.
 	^ plu
 ]
 

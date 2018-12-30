@@ -401,7 +401,7 @@ SettingDeclaration >> inputWidgetForString [
 		class: (Smalltalk globals at: self type)
 		getEnabled: #enabled
 		default: self defaultValue.
-	self ghostHelp ifNotNil: [ :gh | widget ghostText: gh ].
+	widget ghostText: self ghostHelp.
 	widget contentMorph wantsFrameAdornments: true.
 	widget hResizing: #rigid.
 	widget width: 450.

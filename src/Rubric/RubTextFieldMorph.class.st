@@ -5,21 +5,10 @@ Class {
 	#name : #RubTextFieldMorph,
 	#superclass : #RubScrolledTextMorph,
 	#instVars : [
-		'hasValidText',
-		'acceptOnCR'
+		'hasValidText'
 	],
 	#category : #'Rubric-Editing-Widgets'
 }
-
-{ #category : #accessing }
-RubTextFieldMorph >> acceptOnCR [
-	^ acceptOnCR 
-]
-
-{ #category : #accessing }
-RubTextFieldMorph >> acceptOnCR: aBoolean [
-	acceptOnCR := aBoolean
-]
 
 { #category : #drawing }
 RubTextFieldMorph >> adornmentColor [
@@ -63,8 +52,7 @@ RubTextFieldMorph >> initialize [
 	super initialize.
 	self textArea announcer when: RubReturnEntered  send: #whenReturnEntered: to: self.
 	self scrollbarsShowNever.
-	self extent: self extent.
-	acceptOnCR := true
+	self extent: self extent
 ]
 
 { #category : #private }
@@ -89,8 +77,6 @@ RubTextFieldMorph >> textFieldHeight [
 
 { #category : #'event handling' }
 RubTextFieldMorph >> whenReturnEntered: anAnnouncement [
-	self acceptOnCR
-		ifTrue: [
-			anAnnouncement accepted: true ].
 	self changed
+
 ]
