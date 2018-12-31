@@ -28,22 +28,26 @@ RubScrolledTextMorph class >> on: aModel [
 ]
 
 { #category : #'model protocol' }
+RubScrolledTextMorph >> accept [
+	self acceptContents.
+]
+
+{ #category : #'model protocol' }
 RubScrolledTextMorph >> acceptContents [
 	(self autoAccept not and: [ self canDiscardEdits and: [ self alwaysAccept not ] ])
 		ifTrue: [ ^ self flash ].
 	self hasEditingConflicts
-		ifTrue: [  
-			(self
+		ifTrue: [ (self
 				confirm:
 					'Caution! This method may have been
 changed elsewhere since you started
 editing it here.  Accept anyway?' translated)
 				ifFalse: [ ^ self flash ] ].
 	self acceptTextInModel == true
-		ifTrue: [
-			self hasUnacceptedEdits: false.
-			self rulers do: [ :r | r textAccepted ].
-			self announcer announce: (RubTextAccepted morph: self) ]
+		ifFalse: [ ^ self ].
+	self hasUnacceptedEdits: false.
+	self rulers do: [ :r | r textAccepted ].
+	self announcer announce: (RubTextAccepted morph: self)
 ]
 
 { #category : #'model protocol' }
@@ -95,7 +99,6 @@ RubScrolledTextMorph >> alwaysAccept: aBoolean [
 
 
 	alwaysAccept := aBoolean
-
 ]
 
 { #category : #'accessing rulers' }
@@ -124,7 +127,7 @@ RubScrolledTextMorph >> autoAccept: aBoolean [
 	"Whether I should accept my contents on each change."
 	autoAccept := aBoolean.
 	aBoolean
-		ifTrue: [ self withoutAdornment; acceptContents]
+		ifTrue: [ self withoutAdornment]
 		ifFalse: [ self withAdornment ]
 ]
 

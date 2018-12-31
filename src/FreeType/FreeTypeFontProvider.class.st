@@ -380,12 +380,10 @@ FreeTypeFontProvider >> platformImageRelativeDirectories [
 
 { #category : #'file paths' }
 FreeTypeFontProvider >> platformVMRelativeDirectories [
-	
-	| directory |
-	directory :=  Smalltalk vm path asFileReference / 'Fonts'.
-	directory exists
-		ifTrue: [ ^ { directory } ].
-	^ #()
+  | directory |
+  directory := Smalltalk vm directory asFileReference / 'Fonts'.
+  directory exists ifTrue: [ ^{directory} ].
+  ^#()
 ]
 
 { #category : #'loading and updating' }
