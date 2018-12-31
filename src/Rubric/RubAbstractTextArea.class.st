@@ -109,7 +109,7 @@ Class {
 
 { #category : #settings }
 RubAbstractTextArea class >> backgroundColor [
-	^ BackgroundColor ifNil: [ BackgroundColor := self theme backgroundColor ] 
+	^ BackgroundColor ifNil: [ self theme backgroundColor ]
 ]
 
 { #category : #settings }

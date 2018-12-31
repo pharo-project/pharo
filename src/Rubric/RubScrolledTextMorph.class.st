@@ -1378,6 +1378,13 @@ RubScrolledTextMorph >> withoutTextSegmentIcons [
 ]
 
 { #category : #accessing }
+RubScrolledTextMorph >> wrapFlag: aBoolean [
+	aBoolean
+		ifTrue: [ self beWrapped ]
+		ifFalse: [ self beNotWrapped ]
+]
+
+{ #category : #accessing }
 RubScrolledTextMorph >> wrapped [
 	^ self scrollPane wrapped
 ]
