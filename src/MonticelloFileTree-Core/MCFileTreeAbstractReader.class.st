@@ -30,32 +30,32 @@ MCFileTreeAbstractReader >> addClassAndMethodDefinitionsFromDirectory: aDirector
 
 { #category : #utilities }
 MCFileTreeAbstractReader >> addClassAndMethodDefinitionsFromDirectoryEntries: entries [
-    | timestamp |
-    self noMethodMetaData
-        ifTrue: [ timestamp := self info author , ' ' , self info date mmddyyyy , ' ' , self info time print24 ].
-    entries
-        do: [ :element | 
-            element isDirectory
-                ifTrue: [ 
-                    | directory |
-                    directory := self fileUtils directoryFromEntry: element.
-                    ((self separateMethodMetaAndSource or: [ self noMethodMetaData ])
-                        ifTrue: [ directory entries select: [ :entry | entry name endsWith: '.st' ] ]
-                        ifFalse: [ directory entries ])
-                        do: [ :file | 
-                            | definition |
-                            (definition := self definitionFromFile: file inDirectory: directory)
-                                ifNotNil: [ 
-                                    definition isMethodDefinition
-                                        ifTrue: [ 
-                                            self separateMethodMetaAndSource
-                                                ifTrue: [ 
-                                                    directory
-                                                        fileNamed: definition selector asString , '.meta'
-                                                        do: [ :fileStream | definition setTimeStamp: (Author fixStamp: fileStream contents) ] ].
-                                            self noMethodMetaData
-                                                ifTrue: [ definition setTimeStamp: timestamp ] ].
-                                    definitions add: definition ] ] ] ]
+	| timestamp |
+	self noMethodMetaData
+		ifTrue: [ timestamp := self info author , ' ' , self info date mmddyyyy , ' '
+				, self info time print24 ].
+	entries
+		do: [ :element | 
+			element isDirectory
+				ifTrue: [ | directory |
+					directory := self fileUtils directoryFromEntry: element.
+					((self separateMethodMetaAndSource or: [ self noMethodMetaData ])
+						ifTrue: [ self loadableDefinitionsFrom: directory ]
+						ifFalse: [ directory entries ])
+						do: [ :file | 
+							| definition |
+							(definition := self
+								definitionFromFile: file
+								inDirectory: directory)
+								ifNotNil: [ definition isMethodDefinition
+										ifTrue: [ self separateMethodMetaAndSource
+												ifTrue: [ directory
+														fileNamed: definition selector asString , '.meta'
+														do:
+															[ :fileStream | definition setTimeStamp: (Author fixStamp: fileStream contents) ] ].
+											self noMethodMetaData
+												ifTrue: [ definition setTimeStamp: timestamp ] ].
+									definitions add: definition ] ] ] ]
 ]
 
 { #category : #utilities }
@@ -115,6 +115,15 @@ MCFileTreeAbstractReader >> hasMonticelloMetadata [
 ]
 
 { #category : #utilities }
+MCFileTreeAbstractReader >> isLoadableDefinitionFile: entry [
+
+	"Reject hidden files"
+	(entry name beginsWith: '.') ifTrue: [ ^ false ].
+
+	^ entry name endsWith: '.st'
+]
+
+{ #category : #utilities }
 MCFileTreeAbstractReader >> loadDefinitions [
     | entries |
     definitions := OrderedCollection new.
@@ -144,6 +153,11 @@ MCFileTreeAbstractReader >> loadDependencies [
                         info:
                             (self extractInfoFrom: (self parseMember: 'dependencies' , self fileUtils pathNameDelimiter asString , entry name))) ].
     dependencies := dependencies asArray
+]
+
+{ #category : #utilities }
+MCFileTreeAbstractReader >> loadableDefinitionsFrom: directory [
+	^ directory entries select: [ :entry | self isLoadableDefinitionFile: entry ]
 ]
 
 { #category : #accessing }
