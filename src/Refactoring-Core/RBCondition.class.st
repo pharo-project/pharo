@@ -402,7 +402,7 @@ RBCondition >> errorBlockFor: aBoolean [
 
 { #category : #printing }
 RBCondition >> printOn: aStream [ 
-	aStream print: type
+	aStream nextPutAll: type asString
 ]
 
 { #category : #'initialize-release' }
