@@ -1,15 +1,15 @@
 Class {
-	#name : #RubPluggableTextFieldWithEntryCompletionExample,
+	#name : #RubTextFieldWithEntryCompletionExample,
 	#superclass : #Object,
 	#instVars : [
 		'pkgName',
 		'announcer'
 	],
-	#category : #'Rubric-Compatibility-toBeDeprecated'
+	#category : #'Rubric-Editing-Widgets-Examples'
 }
 
 { #category : #examples }
-RubPluggableTextFieldWithEntryCompletionExample class >> exampleOpen [
+RubTextFieldWithEntryCompletionExample class >> exampleOpen [
 	| st |
 	st := self new newScrolledText.
 	self spyAnnouncer ifTrue: [st textArea announcer open].
@@ -19,23 +19,23 @@ RubPluggableTextFieldWithEntryCompletionExample class >> exampleOpen [
 ]
 
 { #category : #examples }
-RubPluggableTextFieldWithEntryCompletionExample class >> spyAnnouncer [
+RubTextFieldWithEntryCompletionExample class >> spyAnnouncer [
 	"Set it to true if you want to observe text area announcements"
 	^ false
 ]
 
 { #category : #accessing }
-RubPluggableTextFieldWithEntryCompletionExample >> announcer [
+RubTextFieldWithEntryCompletionExample >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : #menu }
-RubPluggableTextFieldWithEntryCompletionExample >> getMyMenu: aMenu [
+RubTextFieldWithEntryCompletionExample >> getMyMenu: aMenu [
 	^ nil
 ]
 
 { #category : #'user interface' }
-RubPluggableTextFieldWithEntryCompletionExample >> newScrolledText [
+RubTextFieldWithEntryCompletionExample >> newScrolledText [
 	| st |
 	st := (RubPluggableTextFieldMorph new
 		on: self
@@ -52,7 +52,7 @@ RubPluggableTextFieldWithEntryCompletionExample >> newScrolledText [
 ]
 
 { #category : #accessing }
-RubPluggableTextFieldWithEntryCompletionExample >> packagesEntryCompletion [
+RubTextFieldWithEntryCompletionExample >> packagesEntryCompletion [
 	| applicants |
 	applicants := RPackageOrganizer default packages
 		collect: [ :package | package packageName asString ].
@@ -63,17 +63,17 @@ RubPluggableTextFieldWithEntryCompletionExample >> packagesEntryCompletion [
 ]
 
 { #category : #accessing }
-RubPluggableTextFieldWithEntryCompletionExample >> pkgName [
+RubTextFieldWithEntryCompletionExample >> pkgName [
 	^ pkgName
 ]
 
 { #category : #accessing }
-RubPluggableTextFieldWithEntryCompletionExample >> pkgName: aPackageName [
+RubTextFieldWithEntryCompletionExample >> pkgName: aPackageName [
 	pkgName := aPackageName.
 	^ true
 ]
 
 { #category : #'user interface' }
-RubPluggableTextFieldWithEntryCompletionExample >> readMySelection: aSelection [
+RubTextFieldWithEntryCompletionExample >> readMySelection: aSelection [
 	^ 1 to: -1
 ]

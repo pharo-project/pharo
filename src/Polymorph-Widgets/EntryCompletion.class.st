@@ -143,25 +143,22 @@ EntryCompletion >> filteredValuesWith: aToken [
 { #category : #'event-handling' }
 EntryCompletion >> handlesKeyboard: anEvent [
 	^ anEvent keyCharacter = Character arrowDown
-		or: [chooser notNil and: [ anEvent keyCharacter = Character escape]]
+		or: [anEvent keyCharacter = Character escape]
 ]
 
 { #category : #'event-handling' }
 EntryCompletion >> keystroke: anEvent from: aMorph [
-	(self handlesKeyboard: anEvent) 
-		ifFalse: [^ false].
-	(chooser notNil and: [ anEvent keyCharacter = Character escape])
-		ifTrue: [self closeChooser. 
-			aMorph takeKeyboardFocus.
-			^ true].
-	(chooser isNil and: [ anEvent keyCharacter = Character arrowDown])
-		ifTrue: [
-			self openChooserWith: aMorph textMorph text string from: aMorph.
-			"chooser ifNotNil: [^ true]"].
-	^ chooser 
-		ifNil: [false]
-		ifNotNil: [chooser keyStroke: anEvent]
-	
+	(self handlesKeyboard: anEvent)
+		ifFalse: [ ^ false ].
+	(anEvent keyCharacter = Character escape)
+		ifTrue: [ chooser
+				ifNotNil: [ self closeChooser.
+					aMorph takeKeyboardFocus ]
+				ifNil: [ self openChooserWith: aMorph textMorph text string from: aMorph ].
+			^ true ].
+	(chooser isNil and: [ anEvent keyCharacter = Character arrowDown ])
+		ifTrue: [ self openChooserWith: aMorph textMorph text string from: aMorph ].
+	^ chooser ifNil: [ false ] ifNotNil: [ chooser keyStroke: anEvent ]
 ]
 
 { #category : #'event-handling' }

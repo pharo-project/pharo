@@ -17,7 +17,8 @@ Class {
 		'rulers',
 		'enabled',
 		'highlights',
-		'getBackgroundColorSelector'
+		'getBackgroundColorSelector',
+		'askBeforeDiscardingEdits'
 	],
 	#category : #'Rubric-Editing-Widgets'
 }
@@ -113,6 +114,13 @@ RubScrolledTextMorph >> appendText: stringOrText [
 
 	self scrollPane appendText: stringOrText.	
 	self resetState
+]
+
+{ #category : #accessing }
+RubScrolledTextMorph >> askBeforeDiscardingEdits: aBoolean [
+	"Set the flag that determines whether the user should be asked before discarding unaccepted edits."
+
+	askBeforeDiscardingEdits := aBoolean
 ]
 
 { #category : #accessing }
@@ -233,7 +241,8 @@ RubScrolledTextMorph >> borderWidth: anInteger [
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> canDiscardEdits [
-	^self hasUnacceptedEdits not
+	^ (hasUnacceptedEdits and: [askBeforeDiscardingEdits]) not
+
 ]
 
 { #category : #'model protocol' }
@@ -642,6 +651,7 @@ RubScrolledTextMorph >> initialize [
 	super initialize.
 	self clipSubmorphs: true.
 	enabled := true.
+	askBeforeDiscardingEdits := true.
 	rulers := SortedCollection sortBlock: [ :a :b | b level > a level ].
 	self addMorph: (scrollPane := self newScrollPane).
 	self announcer when: RubConfigurationChange send: #whenConfigurationChanged: to: self.
@@ -1379,9 +1389,7 @@ RubScrolledTextMorph >> withoutTextSegmentIcons [
 
 { #category : #accessing }
 RubScrolledTextMorph >> wrapFlag: aBoolean [
-	aBoolean
-		ifTrue: [ self beWrapped ]
-		ifFalse: [ self beNotWrapped ]
+	self wrapped: aBoolean
 ]
 
 { #category : #accessing }

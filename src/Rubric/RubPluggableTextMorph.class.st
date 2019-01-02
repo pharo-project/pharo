@@ -10,7 +10,6 @@ Class {
 	#name : #RubPluggableTextMorph,
 	#superclass : #RubScrolledTextMorph,
 	#instVars : [
-		'askBeforeDiscardingEdits',
 		'getEnabledSelector'
 	],
 	#category : #'Rubric-Compatibility-toBeDeprecated'
@@ -36,13 +35,6 @@ RubPluggableTextMorph class >> on: anObject text: getTextSel accept: setTextSel 
 		readSelection: getSelectionSel
 		menu: getMenuSel
 		setSelection: setSelectionSel
-]
-
-{ #category : #accessing }
-RubPluggableTextMorph >> askBeforeDiscardingEdits: aBoolean [
-	"Set the flag that determines whether the user should be asked before discarding unaccepted edits."
-
-	askBeforeDiscardingEdits := aBoolean
 ]
 
 { #category : #'undo-redo' }
