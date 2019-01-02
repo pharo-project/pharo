@@ -51,7 +51,8 @@ ClassFactoryWithOrganization >> newClassNamed: aString subclassOf: aClass instan
 				sharedVariablesFromString: classVarsString;
 				sharedPools: '';
 				category: category asSymbol;
-				environment: self organization environment ].
+				environment: self organization environment;
+				copyClassSlotsFromExistingClass ].
 	self createdClasses add: newClass.
 	^ newClass
 ]
@@ -78,7 +79,8 @@ ClassFactoryWithOrganization >> newSubclassOf: aClass instanceVariableNames: ivN
 				sharedVariablesFromString: classVarsString;
 				sharedPools: '';
 				category: category asSymbol;
-				environment: self organization environment ].
+				environment: self organization environment;
+				copyClassSlotsFromExistingClass ].
 	self createdClasses add: newClass.
 	^ newClass
 ]
