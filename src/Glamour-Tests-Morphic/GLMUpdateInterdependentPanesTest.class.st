@@ -166,7 +166,7 @@ GLMUpdateInterdependentPanesTest >> testTwoInterdependentPanesShouldUpdateTheRen
 	self assert: ((browser paneNamed: #one) port: #selection) value equals: 5.
 	self assert: ((browser paneNamed: #two) port: #selection) value equals: 5.
 
-	World doOneCycle.
+	self waitUntilUIRedrawed.
 
 	morphOne := self findWherePresentationIs: (browser paneNamed: #one) presentations first in: window.
 	self assert: morphOne notNil.
