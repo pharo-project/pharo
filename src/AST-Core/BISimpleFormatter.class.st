@@ -82,11 +82,6 @@ BISimpleFormatter >> codeStream: anObject [
 ]
 
 { #category : #'public interface' }
-BISimpleFormatter >> containerWidth: anInteger [
-	"nothing done on purpose"
-]
-
-{ #category : #'public interface' }
 BISimpleFormatter >> format: aParseTree [
 	originalSource := aParseTree source.
 	self visitNode: aParseTree.
