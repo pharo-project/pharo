@@ -29,7 +29,7 @@ ShLayoutDefinition >> builder: anObject [
 
 { #category : #accessing }
 ShLayoutDefinition >> classSlots [
-	^ classSlots
+	^ classSlots ifNil: [ #() ]
 ]
 
 { #category : #accessing }
@@ -55,6 +55,13 @@ ShLayoutDefinition >> copy: slotCollection ifUsedIn: aClass [
 				ifNone: [ aSlot ] ]
 ]
 
+{ #category : #copying }
+ShLayoutDefinition >> copyClassSlotsIfNeeded: oldSlots [ 
+
+	classSlots ifNotNil: [ ^ self ].
+	classSlots := (oldSlots select: #isLocal thenCollect: [ :e | e copy index: nil; yourself ])
+]
+
 { #category : #accessing }
 ShLayoutDefinition >> copySlotsIfUsedIn: oldClass [
 	"I copy the slots if they are used in oldClass. As the slots has state (usually the index) they cannot be shared between the old and the new class."
@@ -62,7 +69,7 @@ ShLayoutDefinition >> copySlotsIfUsedIn: oldClass [
 	oldClass ifNil: [ ^ self ].
 	
 	slots := self copy: slots ifUsedIn: oldClass.
-	classSlots := self copy: classSlots ifUsedIn: oldClass class.
+	classSlots := self copy: self classSlots ifUsedIn: oldClass class.
 
 ]
 
@@ -71,7 +78,6 @@ ShLayoutDefinition >> initialize [
 	super initialize.
 
 	slots := #().
-	classSlots := #().
 	sharedPools := #().
 	sharedVariables := #().
 
