@@ -96,7 +96,9 @@ GLMListMorphicTest >> testOnlyOneMorphPerRowInList [
 		to: #one;
 		andShow: [ :a | a list display: [ :x | x ] ].
 	window := browser openOn: (1 to: 100).
-	World doOneCycle.
+
+	self waitUntilUIRedrawed.
+
 	listMorph := self find: MorphTreeMorph in: window.
 	nodeMorphs := (self find: MorphTreeTransformMorph in: listMorph) submorphs.
 	self assert: nodeMorphs size equals: 100.
