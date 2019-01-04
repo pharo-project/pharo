@@ -21,7 +21,7 @@ Class {
 	#classInstVars : [
 		'all'
 	],
-	#category : #FontInfrastructure
+	#category : #'Fonts-Infrastructure'
 }
 
 { #category : #accessing }
@@ -709,22 +709,22 @@ LogicalFont >> printOn: aStream [
 	aStream
 		cr;
 		nextPutAll: ' familyName: ';
-		nextPutAll: familyName asString;
+		print: familyName ;
 		cr;
 		nextPutAll: ' emphasis: ';
-		nextPutAll: emphasis asString;
+		print: emphasis ;
 		cr;
 		nextPutAll: ' pointSize: ';
-		nextPutAll: pointSize asString;
+		print: pointSize ;
 		cr;
 		nextPutAll: ' realFont: ';
-		nextPutAll: realFont asString;
+		print: realFont ;
 		nextPutAll: ' weight: ';
-		nextPutAll: weightValue asString;
+		print: weightValue ;
 		nextPutAll: ' stretch: ';
-		nextPutAll: stretchValue asString;
+		print: stretchValue ;
 		nextPutAll: ' slant: ';
-		nextPutAll: slantValue asString
+		print: slantValue 
 ]
 
 { #category : #accessing }
@@ -760,15 +760,20 @@ LogicalFont >> storeOn: aStream [
 	aStream 
 		nextPutAll: 'LogicalFont';
 		nextPutAll: '
-		familyName: '; nextPutAll: self familyName printString ;
+		familyName: '; 
+		print: self familyName  ;
 		nextPutAll: '
-		pointSize: '; nextPutAll: self pointSize asString;
+		pointSize: '; 
+		print: self pointSize ;
 		nextPutAll: '
-		stretchValue: '; nextPutAll: self stretchValue asString;
+		stretchValue: '; 
+		print: self stretchValue ;
 		nextPutAll: '
-		weightValue: '; nextPutAll: self weightValue asString;
+		weightValue: '; 
+		print: self weightValue ;
 		nextPutAll: '
-		slantValue: '; nextPutAll: self slantValue asString.
+		slantValue: '; 
+		print: self slantValue.
 ]
 
 { #category : #accessing }

@@ -1137,6 +1137,13 @@ Color >> basicPixelValueForDepth: d [
 	self error: 'unknown pixel depth: ' , d printString
 ]
 
+{ #category : #'accessing - higher level' }
+Color >> beOpaque [
+	"Set the transparency of the receiver to opaque, i.e. alpha to 1.0."
+	
+	^ self alpha: 1.0
+]
+
 { #category : #transformations }
 Color >> blacker [
 	

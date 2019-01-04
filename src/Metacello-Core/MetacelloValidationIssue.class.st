@@ -94,7 +94,7 @@ MetacelloValidationIssue >> printOn: aStream [
 				space;
 				nextPut: ${;
 				space;
-				nextPutAll: self reasonCode asString;
+				print: self reasonCode;
 				space;
 				nextPut: $} ].
 	(self configurationClass ~~ nil or: [ self callSite ~~ nil ])
@@ -106,12 +106,12 @@ MetacelloValidationIssue >> printOn: aStream [
 			self configurationClass ~~ nil
 				ifTrue: [ 
 					aStream
-						nextPutAll: self configurationClass name asString;
+						print: self configurationClass name;
 						space ].
 			self callSite ~~ nil
 				ifTrue: [ 
 					aStream
-						nextPutAll: self callSite name asString;
+						print: self callSite name;
 						space ].
 			aStream nextPut: $] ]
 ]

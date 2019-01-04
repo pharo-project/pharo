@@ -1,3 +1,6 @@
+"
+Test sample for MethodFinderTest
+"
 Class {
 	#name : #MethodFinderBottomClass,
 	#superclass : #MethodFinderTopClass,
@@ -25,7 +28,7 @@ MethodFinderBottomClass >> = other [
 	^ instanceVariable = other instanceVariable.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderBottomClass >> InApprovedAndInForbiddenSetMethod [
 
 	 ^ self
@@ -37,50 +40,50 @@ MethodFinderBottomClass >> instanceVariable [
 	^ instanceVariable.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderBottomClass >> modifyMethod: x [
 
 	instanceVariable := x.
 	^ x.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderBottomClass >> multipleArgumentsMethod: x and: y [
 
 	^ x
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderBottomClass >> oneArgumentMethod: x [
 
 	^ x + 0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderBottomClass >> onlyBottomDefinedApprovedMethod [
 
 	^self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderBottomClass >> onlyBottomDefinedDisapprovedMethod [
 
 	^self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderBottomClass >> otherOneArgumentMethod: s [
 
 	^ s, ''
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderBottomClass >> topApprovedButBottomDisapprovedMethod [
 
 	^self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderBottomClass >> topDisapprovedButBottomApprovedMethod [
 
 	^self

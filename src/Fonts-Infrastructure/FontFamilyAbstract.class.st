@@ -8,7 +8,7 @@ Class {
 		'familyName',
 		'members'
 	],
-	#category : #FontInfrastructure
+	#category : #'Fonts-Infrastructure'
 }
 
 { #category : #'member lookup' }
@@ -47,7 +47,7 @@ FontFamilyAbstract >> members [
 { #category : #printing }
 FontFamilyAbstract >> printOn: aStream [
 	aStream 
-		nextPutAll: self class name asString;
+		print: self class name;
 		nextPut: $ ;
-		nextPutAll: self familyName printString
+		print: self familyName
 ]

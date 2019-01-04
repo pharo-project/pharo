@@ -624,8 +624,10 @@ FTTableMorph >> keyboardFocusChange: aBoolean [
 
 { #category : #layout }
 FTTableMorph >> minHeight [ 
-
-	^ 100
+	"Ceiling is required because there is strange behavior when this method return float.
+	In that case table stop respond to any events like clicks"
+	
+	^ self class defaultRowHeight ceiling
 ]
 
 { #category : #layout }

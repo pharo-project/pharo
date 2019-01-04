@@ -71,14 +71,14 @@ SpaceTallyItem >> instanceCount: aNumber [
 SpaceTallyItem >> printOn: aStream [
 
 	analyzedClassName isNil
-		ifFalse: [aStream nextPutAll: analyzedClassName asString]. 
+		ifFalse: [ aStream print: analyzedClassName ]. 
 	aStream nextPutAll: ' ('.
 	codeSize isNil
-		ifFalse: [aStream nextPutAll: 'code size: ' ;  nextPutAll: codeSize asString]. 
+		ifFalse: [ aStream nextPutAll: 'code size: ' ;  print: codeSize ]. 
 	instanceCount isNil
-		ifFalse: [aStream nextPutAll: ' instance count: ' ;  nextPutAll: instanceCount asString]. 
+		ifFalse: [ aStream nextPutAll: ' instance count: ' ;  print: instanceCount ]. 
 	spaceForInstances isNil
-		ifFalse: [aStream nextPutAll: ' space for instances: ' ;  nextPutAll: spaceForInstances asString]. 
+		ifFalse: [ aStream nextPutAll: ' space for instances: ' ;  print: spaceForInstances ]. 
 	aStream nextPut: $).
 	
 ]

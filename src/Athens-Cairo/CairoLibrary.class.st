@@ -21,7 +21,7 @@ CairoLibrary >> unix32ModuleName [
 	Look in a number of known locations, or LD_LIBRARY_PATH."
 
 	(#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib'),
-			(((OSEnvironment current getEnv: 'LD_LIBRARY_PATH') ifNil: [ '' ]) substrings: ':'))
+			((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':'))
 		do: [ :path | 
 			| libraryPath |
 			libraryPath := path asFileReference / 'libcairo.so.2'.
@@ -38,7 +38,7 @@ CairoLibrary >> unix64ModuleName [
 	Look in a number of known locations, or LD_LIBRARY_PATH."
 
 	(#('/lib/x86_64-linux-gnu' '/usr/lib'),
-			(((OSEnvironment current getEnv: 'LD_LIBRARY_PATH') ifNil: [ '' ]) substrings: ':'))
+			((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':'))
 		do: [ :path | 
 			| libraryPath |
 			libraryPath := path asFileReference / 'libcairo.so.2'.

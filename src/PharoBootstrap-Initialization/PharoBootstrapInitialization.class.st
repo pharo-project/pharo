@@ -66,7 +66,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	UIManager default activate.
 
 	Smalltalk sourceFileVersionString: 'PharoV60'.
-	(Smalltalk class classVariableNamed: 'LastImagePath') value: Smalltalk primImagePath. "set the default value"
+	(Smalltalk class classVariableNamed: 'LastImagePath') value: Smalltalk imagePath. "set the default value"
 	SourceFiles := SourceFileArray new.
 	
 	"Create the ASTCache and add it to the startup list"

@@ -1161,7 +1161,8 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition cl
 		layoutClass: layoutClass;
 		slots: slotDefinition;
 		sharedVariables: classVarDefinition;
-		category: aCategorySymbol ].
+		category: aCategorySymbol;
+		copyClassSlotsFromExistingClass ].
 
 ]
 
@@ -1182,7 +1183,8 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition c
 		slots: slotDefinition;
 		sharedVariables:  classVarDefinition;
 		sharedPools: someSharedPoolNames;
-		category: aCategorySymbol ].
+		category: aCategorySymbol;
+		copyClassSlotsFromExistingClass ].
 
 ]
 
@@ -1205,7 +1207,8 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 				superclass: self;
 				slots: slotDefinition;
 				sharedVariables: classVarDefinition;
-				category: aCategorySymbol ]
+				category: aCategorySymbol;
+				copyClassSlotsFromExistingClass ]
 ]
 
 { #category : #'subclass creation - slots' }
@@ -1224,8 +1227,8 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 		slots: slotDefinition;
 		sharedVariables:  classVarDefinition;
 		sharedPools: someSharedPoolNames;
-		category: aCategorySymbol ].
-
+		category: aCategorySymbol;
+		copyClassSlotsFromExistingClass ]
 ]
 
 { #category : #'accessing class hierarchy' }

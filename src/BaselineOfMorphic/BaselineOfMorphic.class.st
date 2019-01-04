@@ -53,7 +53,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'EmergencyEvaluator'.
 		spec package: 'FileSystem-Zip'.
-		spec package: 'FontInfrastructure'.
+		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
 		spec package: 'Fuel-Core'.
 		spec package: 'Fuel-Platform-Core'.
