@@ -490,11 +490,6 @@ BIConfigurableFormatter >> codeStream: anObject [
 	codeStream := anObject
 ]
 
-{ #category : #'public interface' }
-BIConfigurableFormatter >> containerWidth: anInteger [
-	self installNewValueInContext: {(#maxLineLength: -> anInteger)}
-]
-
 { #category : #private }
 BIConfigurableFormatter >> currentLineLength [
 	^ codeStream position - lineStart

@@ -138,7 +138,7 @@ RubSmalltalkCodeMode >> formatMethodCode [
 	| source tree formatted |
 	source := self textArea text asString.
 	tree := RBParser parseMethod: source onError: [ :msg :pos | ^ self ].
-	formatted := tree formattedCodeWithMaxLineLength: self maxFormatterLineLength.
+	formatted := tree formattedCode.
 	formatted = source
 		ifTrue: [ ^ self ].
 	self textArea updateTextWith: formatted
@@ -154,13 +154,6 @@ RubSmalltalkCodeMode >> hasBindingOf: aString [
 RubSmalltalkCodeMode >> hasBindingThatBeginsWith: aString [ 
 	" For the shout styler "
 	^ self model notNil and: [ self model hasBindingThatBeginsWith: aString ]
-]
-
-{ #category : #formatting }
-RubSmalltalkCodeMode >> maxFormatterLineLength [
-	^ self textArea wrapped
-		ifTrue: [ (self textArea innerBounds width / 9) integerPart ]
-		ifFalse: [ 70 ]
 ]
 
 { #category : #parsing }
