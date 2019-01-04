@@ -10,8 +10,11 @@
 #
 # Optional input environment variables:
 #
-# - BOOTSTRAP_CACHE
-# - BOOTSTRAP_REPOSITORY
+# - BOOTSTRAP_CACHE		# Working directory during building
+# - BOOTSTRAP_REPOSITORY	# Location of the pharo git clone
+# - BOOTSTRAP_VMTARGET		# Location of the target VM
+#				  This can be set when a custom VM is to be 
+#				  used during bootstrap.
 #
 if [ -z "${BUILD_NUMBER}" ]
 then
@@ -39,12 +42,17 @@ then
 fi
 export BOOTSTRAP_CACHE
 
-# Ensure that BOOTSTRAP_REPOSITORY is propagated
 # This is the VM used to bootstrap, i.e. the target VM
-VM="${BOOTSTRAP_CACHE}/vmtarget/pharo --headless"
 
 # Flags to run the image
 IMAGE_FLAGS="--no-default-preferences"
 
 # Include pharo version 
 . $(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)/envversion.sh
+
+if [ -z "${BOOTSTRAP_VMTARGET}" ]
+then
+    VM="${BOOTSTRAP_CACHE}/vmtarget/pharo --headless"
+else
+    VM="${BOOTSTRAP_VMTARGET}/pharo --headless"
+fi
