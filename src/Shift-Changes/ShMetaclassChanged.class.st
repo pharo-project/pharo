@@ -27,5 +27,5 @@ ShMetaclassChanged >> hasChangeClassSideShape [
 
 { #category : #propagating }
 ShMetaclassChanged >> propagateToSubclasses: anotherBuilder [
-		anotherBuilder changes add: self.
+	anotherBuilder changes add: self
 ]

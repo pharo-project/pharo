@@ -347,6 +347,11 @@ TaAbstractComposition >> isLocalAliasSelector: aSymbol [
 	^ false
 ]
 
+{ #category : #testing }
+TaAbstractComposition >> isNotEmpty [
+	^ self isEmpty not
+]
+
 { #category : #accessing }
 TaAbstractComposition >> name [
 	self subclassResponsibility 

@@ -67,11 +67,17 @@ ShDefaultBuilderEnhancer >> initializeBuilder: aBuilder [
 	aBuilder addChangeComparer: ShBitLayoutChangeDetector.
 	aBuilder addChangeComparer: ShClassSlotChangeDetector.
 	aBuilder addChangeComparer: ShSuperclassChangedDetector.
+	aBuilder addChangeComparer: ShMetaclassChangeDetector.
 
 ]
 
 { #category : #events }
 ShDefaultBuilderEnhancer >> metaclassCreated: builder [
+]
+
+{ #category : #'class modifications' }
+ShDefaultBuilderEnhancer >> newMetaclass: builder [
+	^ builder metaclassClass new
 ]
 
 { #category : #'class modifications' }
