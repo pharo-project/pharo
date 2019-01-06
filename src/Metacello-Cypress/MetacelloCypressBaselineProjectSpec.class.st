@@ -6,3 +6,8 @@ Class {
 	#superclass : #MetacelloMCBaselineOfProjectSpec,
 	#category : #'Metacello-Cypress-Specs'
 }
+
+{ #category : #merging }
+MetacelloCypressBaselineProjectSpec >> validateMergeForSpec: aSpec [
+	
+]
