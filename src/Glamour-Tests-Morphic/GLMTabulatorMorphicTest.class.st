@@ -37,7 +37,8 @@ GLMTabulatorMorphicTest >> testSizeAndSpan [
 	window := browser openOn: #('Should be scaled at 2/3' 'Should be fixed' 'Should be scaled at 1/3').
 	{200@500. 100@300} do: [:ext |
 		window extent: ext.
-		World doOneCycle.
+		self waitUntilUIRedrawed.
+
 		panes := window submorphs last submorphs last: 3.
 		heights := panes collect: [ :each | each height+2 ].
 		self assert: panes first owner height equals: heights sum.
@@ -54,11 +55,14 @@ GLMTabulatorMorphicTest >> testSpawnTabulator [
 	browser := GLMTabulator new.
 	window := browser openOn: ($a to: $d).
 	self assert: window model == browser.
-	self repeatAssert: [
-		window submorphs last 
+	
+	self waitUntilUIRedrawed.
+
+	self assert: 
+		(window submorphs last 
 					submorphs last 
 						submorphs last 
-							submorphs last class] equals: GLMPaginatedMorphTreeMorph
+							submorphs last class) equals: GLMPaginatedMorphTreeMorph
 
 ]
 
@@ -71,7 +75,9 @@ GLMTabulatorMorphicTest >> testStatusbar [
 	browser transmit to: #one; andShow: [:a | a list display: #(1 2 3)].
 	window := browser openOn: 42.
 	((browser paneNamed: #one) port: #status) value: 2.
-	World doOneCycle.
+
+	self waitUntilUIRedrawed.
+
 	statusMorph := (window submorphs last: 2) first submorphs first.	
 	self assert: (statusMorph isKindOf: LabelMorph)
 ]

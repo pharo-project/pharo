@@ -131,10 +131,11 @@ MCPackageManager class >> managersForCategory: aSystemCategory do: aBlock [
 
    foundOne ifTrue: [^self].
 	["Loop over categories until we found a matching one"
-	self registry at: (MCPackage named: cat) ifPresent:[:mgr|
-		aBlock value: mgr.
-		foundOne := true.
-	].
+
+	self registry keys detect: [ :aPackage | aPackage name sameAs: cat ] ifFound: [:aPackage | |mgr| 
+		mgr := self registry at: aPackage.
+		aBlock value: mgr. foundOne := true ].
+
 	index := cat lastIndexOf: $-.
 	index > 0]whileTrue:[
 		"Step up to next level package"

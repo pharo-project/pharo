@@ -75,9 +75,10 @@ RBConjunctiveCondition >> neitherFailed [
 
 { #category : #printing }
 RBConjunctiveCondition >> printOn: aStream [ 
-	aStream nextPutAll: left asString;
+	aStream 
+		print: left;
 		nextPutAll: ' & ';
-		nextPutAll: right asString
+		print: right
 
 ]
 

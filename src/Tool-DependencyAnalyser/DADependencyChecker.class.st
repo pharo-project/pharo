@@ -109,9 +109,9 @@ DADependencyChecker >> shortestPathToPackageIntroducingDependency: dependencyPac
 			shortestPathToPackageIntroducingDependency: #'Athens-Core' startingFrom: 'Monticello'.
 	The answer will be the shortest path (one, not all) going from #Monticello to #'Athens-Core',
 	showing dependencies that leads to the introduction of the  #'Athens-Core' dependency.
-		=> #(#Monticello #Kernel #'System-Settings' #'Morphic-Widgets-Windows' #'Rubric' #'Athens-Morphic' #'Athens-Core').
-	Now, we know that System-Settings brings the whole graphical environment with him and that we should avoid the dependency 
-	between #Kernel and #'System-Settings'."
+		=> #(#Monticello #Kernel #'System-Settings-Core' #'Morphic-Widgets-Windows' #'Rubric' #'Athens-Morphic' #'Athens-Core').
+	Now, we know that System-Settings-Core brings the whole graphical environment with him and that we should avoid the dependency 
+	between #Kernel and #'System-Settings-Core'."
 	| dijkstra |
 	report ifNil: [ ^ self ].
 	dijkstra := MalDijkstra new.

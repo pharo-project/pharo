@@ -17,6 +17,7 @@ Class {
 	#classVars : [
 		'BackgroundProcess',
 		'HighIOPriority',
+		'IdleTime',
 		'LowIOPriority',
 		'SystemBackgroundPriority',
 		'SystemRockBottomPriority',
@@ -30,10 +31,35 @@ Class {
 
 { #category : #'background process' }
 ProcessorScheduler class >> idleProcess [
-	"A default background process which is invisible."
+	"A default background process which is invisible. During the idle time, the delays may not wake up."
 
 	[true] whileTrue:
-		[self relinquishProcessorForMicroseconds: 50000]
+		[self relinquishProcessorForMicroseconds: IdleTime]
+]
+
+{ #category : #settings }
+ProcessorScheduler class >> idleTime [
+
+	"The default idle time for the Pharo process in case of inactivity. In idle mode, the system can be awakened by a signal. This value can limit the minimal delay time."
+	
+	^ IdleTime
+]
+
+{ #category : #settings }
+ProcessorScheduler class >> idleTime: microsecondsCount [
+
+	IdleTime := microsecondsCount
+]
+
+{ #category : #settings }
+ProcessorScheduler class >> idleTimeSettingOn: aBuilder [
+	<systemsettings>
+	
+	(aBuilder setting: #idleTime)
+		target: self;
+		parent: #pharoSystem ;
+		label: 'Default idle time for the system (microseconds)' ;
+		description: 'Detault idle time for the Pharo process in case of inactivity. In idle mode, the system can be awakened by a signal. This value can limit the minimal delay time.'
 ]
 
 { #category : #'class initialization' }
@@ -48,6 +74,7 @@ ProcessorScheduler class >> initialize [
 	LowIOPriority := 60.
 	HighIOPriority := 70.
 	TimingPriority := 80.
+	IdleTime := 50000.
 
 	SessionManager default
 		registerSystemClassNamed: self name

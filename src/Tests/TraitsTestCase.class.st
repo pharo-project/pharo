@@ -191,8 +191,7 @@ TraitsTestCase >> tearDown [
 	self createdClassesAndTraits
 		do: [ :aClassOrTrait || behaviorName |
 			behaviorName := aClassOrTrait name.
-			Smalltalk globals at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem ].
-			ChangeSet current removeClassChanges: behaviorName ].
+			Smalltalk globals at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ]].
 	createdClassesAndTraits := nil.
 	SystemAnnouncer announcer: oldAnnouncer.
 	super tearDown 

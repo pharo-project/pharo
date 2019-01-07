@@ -19,7 +19,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFValueReification class >> entities [
-	^{RBVariableNode. RBAssignmentNode. RBReturnNode. RBMessageNode . RBLiteralValueNode . RBLiteralArrayNode. RBArrayNode . RBBlockNode . RBCascadeNode . RBMethodNode . LiteralVariable . Slot} 
+	^{RBValueNode . RBReturnNode. RBMethodNode . LiteralVariable . Slot} 
 ]
 
 { #category : #'plugin interface' }
@@ -45,7 +45,7 @@ RFValueReification >> genForLiteralVariable [
 
 { #category : #generate }
 RFValueReification >> genForRBArrayNode [
-	^RBVariableNode named: #RFReifyValueVar
+	^RBVariableNode named: self varName
 ]
 
 { #category : #generate }
@@ -56,12 +56,12 @@ RFValueReification >> genForRBAssignmentNode [
 
 { #category : #generate }
 RFValueReification >> genForRBBlockNode [
-	^RBVariableNode named: #RFReifyValueVar
+	^RBVariableNode named: self varName
 ]
 
 { #category : #generate }
 RFValueReification >> genForRBCascadeNode [
-	^RBVariableNode named: #RFReifyValueVar
+	^RBVariableNode named: self varName
 ]
 
 { #category : #generate }
@@ -76,17 +76,17 @@ RFValueReification >> genForRBLiteralValueNode [
 
 { #category : #generate }
 RFValueReification >> genForRBMessageNode [
-	^RBVariableNode named: #RFReifyValueVar
+	^RBVariableNode named: self varName
 ]
 
 { #category : #generate }
 RFValueReification >> genForRBMethodNode [
-	^RBTemporaryNode named: #RFValueReificationVar
+	^RBTemporaryNode named: self varName
 ]
 
 { #category : #generate }
 RFValueReification >> genForRBReturnNode [
-	^RBVariableNode named: #RFReifyValueVar
+	^RBVariableNode named: self varName
 ]
 
 { #category : #generate }
@@ -98,23 +98,14 @@ RFValueReification >> genForRBVariableNode [
 { #category : #generate }
 RFValueReification >> postamble: aNode [
 	(aNode isKindOf: RBProgramNode) ifFalse: [ ^#() ].
-	aNode isMessage ifTrue: [^RFStoreIntoTempNode named: 'RFReifyValueVar'. ].
-	aNode isCascade ifTrue: [^RFStoreIntoTempNode named: 'RFReifyValueVar'. ].
-	aNode isBlock ifTrue: [^RFStoreIntoTempNode named: #RFReifyValueVar].
+	aNode isMessage ifTrue: [^RFStoreIntoTempNode named: self varName. ].
+	aNode isCascade ifTrue: [^RFStoreIntoTempNode named: self varName. ].
+	aNode isBlock ifTrue: [^RFStoreIntoTempNode named: self varName].
 	^super postamble: aNode.
 	 
 ]
 
-{ #category : #generate }
-RFValueReification >> preamble: aNode [
-	(aNode isKindOf: RBProgramNode) ifFalse: [ ^#() ].
-	aNode isReturn ifTrue: [^RFStoreIntoTempNode named: #RFReifyValueVar].
-	aNode isDynamicArray ifTrue: [ ^self preambleForArray: aNode ].
-	^#().
-	 
-]
-
-{ #category : #generate }
+{ #category : #preamble }
 RFValueReification >> preambleForArray: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -133,8 +124,18 @@ RFValueReification >> preambleForArray: aNode [
 			arguments add:  (RBTemporaryNode named: name).
 	].
 	preamble addAll: (RBArrayNode statements: arguments).
-	preamble add: (RFStorePopIntoTempNode named: 'RFReifyValueVar').
+	preamble add: (RFStorePopIntoTempNode named: self varName).
 	preamble addAll: arguments.
 	^ preamble 
 	
+]
+
+{ #category : #preamble }
+RFValueReification >> preambleForReturn: aNode [
+	^ RFStoreIntoTempNode named: self varName
+]
+
+{ #category : #generate }
+RFValueReification >> varName [
+	^#RFReifyValueVar
 ]

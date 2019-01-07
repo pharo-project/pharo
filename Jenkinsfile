@@ -8,6 +8,20 @@ def isWindows(){
     return env.NODE_LABELS.toLowerCase().contains('windows')
 }
 
+// Answers if we are in a development branch (we assume is a development branch if it starts with "Pharo")
+def isDevelopmentBranch() {
+	def branchName =  env.BRANCH_NAME 
+	def baseName = branchName.substring(0, 5)
+	
+	return baseName == "Pharo"
+}
+
+// Extracts Pharo version from the development branch (if it is "Pharo7.0" it will answer "7.0")
+def getPharoVersionFromBranch() {
+	def branchName =  env.BRANCH_NAME 
+	return branchName.substring(5)
+}
+
 def shell(params){
     if(isWindows()) bat(params) 
     else sh(params)
@@ -16,10 +30,22 @@ def shell(params){
 def runTests(architecture, prefix=''){
   cleanWs()
   dir(env.STAGE_NAME) {
-    unstash "bootstrap${architecture}"
-    shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
-    junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
-    archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
+    try {
+        unstash "bootstrap${architecture}"
+        shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
+        junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
+        archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
+    }finally{
+        // I am archiving the logs to check for crashes and errors.
+        if(fileExists('PharoDebug.log')){
+            shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}.log"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-${env.STAGE_NAME}.log", fingerprint: true
+        }
+        if(fileExists('crash.dmp')){
+            shell "mv crash.dmp crash-${env.STAGE_NAME}.dmp"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "crash-${env.STAGE_NAME}.dmp", fingerprint: true
+        }
+    }
   }
 }
 
@@ -38,9 +64,9 @@ def notifyBuild(status){
   if (env.CHANGE_ID != null){
     buildKind = "PR ${env.CHANGE_ID}"
   }
-  if( env.BRANCH_NAME == "development" ) {
+  if( isDevelopmentBranch() ) {
     toMail = "pharo-dev@lists.pharo.org"
-    buildKind = "7.0-dev"
+    buildKind = getPharoVersionFromBranch()
   }
   
   //We checkout scm to have access to the log information
@@ -88,14 +114,6 @@ ${mailMessage}
 Build Url: ${env.BUILD_URL}
 """
 
-  // If we are building development, add information about the uploads
-  if( env.BRANCH_NAME == "development" ) {
-  """"
-Check for latest built images in http://files.pharo.org:
- - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.32bit.zip
- - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.64bit.zip
-"""
-  }
   mail to: toMail, cc: 'guillermopolito@gmail.com', subject: "[Pharo ${buildKind}] Build #${env.BUILD_NUMBER}: ${title}", body: body
   } catch (e) {
     //If there is an error during mail send, just print it and continue
@@ -142,7 +160,7 @@ def bootstrapImage(){
         }
       }
   
-      if( env.BRANCH_NAME == "development" ) {
+      if( isDevelopmentBranch() ) {
         stage("Upload to files.pharo.org") {
           dir("bootstrap-cache") {
               shell "BUILD_NUMBER=${env.BUILD_ID} bash ../bootstrap/scripts/prepare_for_upload.sh"

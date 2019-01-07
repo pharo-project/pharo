@@ -77,7 +77,8 @@ RFASTTranslator >> emitPrepareLinkAfter: aNode [
 	copied := #().
 	aNode hasMetalinkAfter ifFalse: [^self].
 	aNode allAfterAreWeak ifTrue: [ ^self ].
-	aNode isMethod ifTrue: [ copied := aNode argumentNames, aNode tempNames ].
+	aNode isMethod ifTrue: [ copied := aNode argumentNames, aNode temporaryNames ].
+	aNode isSequence ifTrue: [ copied := aNode parent argumentNames, aNode parent temporaryNames ].
 	methodBuilder
 		pushClosureCopyCopiedValues: copied
 		args: #()
@@ -266,7 +267,7 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 	].
 	effectTranslator visitNode: aMethodNode body.
 	aMethodNode isPrimitive ifFalse: [self emitMetaLinkAfterNoEnsure: aMethodNode].
-	(aMethodNode hasProperty: #wrappedPrimitive) ifTrue: [methodBuilder pushTemp: #RFValueReificationVar; returnTop].
+	(aMethodNode hasProperty: #wrappedPrimitive) ifTrue: [methodBuilder pushTemp: #RFReifyValueVar; returnTop].
 	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop].
 
 ]

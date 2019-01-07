@@ -28,7 +28,7 @@ Class {
 	#instVars : [
 		'files'
 	],
-	#category : 'Fuel-Tools-Pharo-CommandLineHandler'
+	#category : #'Fuel-Tools-Pharo-CommandLineHandler'
 }
 
 { #category : #accessing }
@@ -80,9 +80,9 @@ FLFuelCommandLineHandler >> manageFile: aFileReference [
 
 	aFileReference readStreamDo: [ :stream |
 		stream binary.
-		FileStream stdout nextPutAll: 'Materializing from file: ', aFileReference fullName; lf.
+		Stdio stdout nextPutAll: 'Materializing from file: '; nextPutAll: aFileReference fullName; lf.
 		FLMaterializer new materializeFrom: stream.
-		FileStream stdout nextPutAll: 'Materialization finished'; lf.
+		Stdio stdout nextPutAll: 'Materialization finished'; lf.
 		].
 ]
 

@@ -20,7 +20,7 @@ PackageManifest class >> description [
 
 { #category : #'meta-data - dependency analyser' }
 PackageManifest class >> ignoredDependencies [
-	^ #(#'System-Settings')
+	^ #(#'System-Settings-Core')
 ]
 
 { #category : #testing }

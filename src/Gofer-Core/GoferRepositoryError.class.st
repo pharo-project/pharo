@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'repository'
 	],
-	#category : #'Gofer-Core'
+	#category : #'Gofer-Core-Exceptions'
 }
 
 { #category : #'instance creation' }

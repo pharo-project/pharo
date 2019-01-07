@@ -11,7 +11,7 @@ To do in the future:
 Class {
 	#name : #EmbeddedFreeTypeFontFontDescription,
 	#superclass : #Object,
-	#category : #EmbeddedFreeType
+	#category : #'EmbeddedFreeType-Base'
 }
 
 { #category : #testing }
@@ -38,6 +38,12 @@ EmbeddedFreeTypeFontFontDescription class >> installFontsIn: provider [
 	provider
 		addFromFileContents: self fontContents 
 		baseName: self originalFileName 
+]
+
+{ #category : #testing }
+EmbeddedFreeTypeFontFontDescription class >> isAbstract [ 
+	^self name = #EmbeddedFreeTypeFontFontDescription 
+	
 ]
 
 { #category : #accessing }

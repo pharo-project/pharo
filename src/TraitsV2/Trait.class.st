@@ -92,7 +92,8 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 				category: aCategory;
 				traitComposition: aTraitCompositionOrCollection asTraitComposition;
 				classTraitComposition: aTraitCompositionOrCollection asTraitComposition classComposition;
-				classSlots: #() ].
+				classSlots: #();
+				copyClassSlotsFromExistingClass ].
 			
 	self assert: [ trait class class = MetaclassForTraits ].
 	self assert: [ trait class superclass = Trait ].

@@ -6,12 +6,12 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestOpalCompilerCore class >> ignoredDependencies [
-	^ #(#'Morphic-Base' #'System-Settings')
+	^ #(#'Morphic-Base' #'System-Settings-Core')
 ]
 
 { #category : #'meta-data - dependency analyser' }
 ManifestOpalCompilerCore class >> manuallyResolvedDependencies [
-	^ #(#'Morphic-Base' #'Transcript-Core' #'System-Settings' #CodeExport #'System-Announcements' #'System-Sources')
+	^ #(#'Morphic-Base' #'Transcript-Core' #'System-Settings-Core' #CodeExport #'System-Announcements' #'System-Sources')
 ]
 
 { #category : #'code-critics' }

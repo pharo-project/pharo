@@ -51,10 +51,10 @@ EpExpressionEvaluation >> initializeExpression: anExpression [
 
 { #category : #printing }
 EpExpressionEvaluation >> printOn: aStream [
-	super printOn: aStream.
 
+	super printOn: aStream.
 	aStream 
 		nextPut: $(;
-		nextPutAll: self expression asString;
+		print: self expression;
 		nextPut: $)
 ]

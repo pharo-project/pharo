@@ -763,7 +763,7 @@ SmalltalkImage >> image [
 SmalltalkImage >> imageDirectory [
 	"Answer the directory containing the current image."
 
-	^ self primImagePath asFileReference parent
+	^ self imagePath asFileReference parent
 ]
 
 { #category : #'image, changes name' }
@@ -1128,14 +1128,9 @@ SmalltalkImage >> memoryHogs [
 
 { #category : #miscellaneous }
 SmalltalkImage >> metacelloPlatformAttributes [
-	"Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general."
-
-	| attributes systemeVersion |
-	attributes := OrderedCollection withAll: #(#squeakCommon #pharo).
-	systemVersion := SystemVersion current.
-	attributes add: (String streamContents: [ :stream | stream << 'pharo' << systemVersion major << '.x' ]) asSymbol.
-	attributes add: (String streamContents: [ :stream | stream << 'pharo' << systemVersion major << $. << systemVersion minor << '.x' ]) asSymbol.
-	^ attributes asArray
+    "Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general." 
+    "For release integrators, we should not have #'pharo1.3x' **and** #'pharo1.4.x'"
+   ^ #(#squeakCommon #pharo #'pharo7.x' #'pharo7.0.x')
 ]
 
 { #category : #'special objects' }
@@ -1334,7 +1329,7 @@ SmalltalkImage >> primBytesLeft [
 	^0
 ]
 
-{ #category : #'image, changes name' }
+{ #category : #primitives }
 SmalltalkImage >> primImagePath [
 	"Answer the full path name for the current image."
 	"Smalltalk imageName"
@@ -1343,7 +1338,7 @@ SmalltalkImage >> primImagePath [
 	self primitiveFailed
 ]
 
-{ #category : #'image, changes name' }
+{ #category : #primitives }
 SmalltalkImage >> primImagePath: newName [
 	"Set the the full path name for the current image.  All further snapshots will use this."
 

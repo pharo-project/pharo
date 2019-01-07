@@ -14,6 +14,6 @@ DADependencyItemDiff >> hasChanged [
 
 { #category : #printing }
 DADependencyItemDiff >> printOn: aStream [
-	aStream 
-		nextPutAll: self content asString.
+	
+	aStream print: self content 
 ]
