@@ -51,7 +51,7 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
-	JobProgressMorph initialize.
+	JobProgressBarMorph initialize.
 	IdentityTransform initialize.
 
 	EventSensorConstants initialize.
