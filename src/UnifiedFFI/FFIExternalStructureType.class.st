@@ -69,6 +69,12 @@ FFIExternalStructureType >> initializeObjectClass: aClass [
 	self initialize
 ]
 
+{ #category : #testing }
+FFIExternalStructureType >> isExternalStructure [
+
+	^ true
+]
+
 { #category : #accessing }
 FFIExternalStructureType >> objectClass [
 	^ objectClass
