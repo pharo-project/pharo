@@ -10,9 +10,7 @@ Class {
 	#name : #RubPluggableTextFieldMorph,
 	#superclass : #RubTextFieldMorph,
 	#instVars : [
-		'askBeforeDiscardingEdits',
 		'default',
-		'entryCompletion',
 		'endRow',
 		'getEnabledSelector',
 		'converter',
@@ -49,25 +47,6 @@ RubPluggableTextFieldMorph >> acceptTextInModel [
 ]
 
 { #category : #accessing }
-RubPluggableTextFieldMorph >> askBeforeDiscardingEdits: aBoolean [
-	"Set the flag that determines whether the user should be asked before discarding unaccepted edits."
-
-	askBeforeDiscardingEdits := aBoolean
-]
-
-{ #category : #encryption }
-RubPluggableTextFieldMorph >> beDecrypted [
-
-	self textMorph font: TextStyle defaultFont.
-]
-
-{ #category : #encryption }
-RubPluggableTextFieldMorph >> beEncrypted [
-
-	self textMorph font: (StrikeFont passwordFontSize: self theme textFont pointSize).
-]
-
-{ #category : #accessing }
 RubPluggableTextFieldMorph >> changedAction: aBlock [
 	changedAction := aBlock
 ]
@@ -85,12 +64,6 @@ RubPluggableTextFieldMorph >> checkTextWithConverter [
 { #category : #testing }
 RubPluggableTextFieldMorph >> chooserHasFocus [
 	^ entryCompletion notNil and: [entryCompletion chooser notNil and: [entryCompletion chooser hasKeyboardFocus]]
-]
-
-{ #category : #accessing }
-RubPluggableTextFieldMorph >> closeChooser [	
-	entryCompletion
-		ifNotNil: [entryCompletion closeChooser]
 ]
 
 { #category : #'model protocol' }
@@ -131,48 +104,10 @@ RubPluggableTextFieldMorph >> default: anObject [
 	default := anObject
 ]
 
-{ #category : #protocol }
-RubPluggableTextFieldMorph >> disable [
-	self beReadOnly 
-]
-
 { #category : #drawing }
 RubPluggableTextFieldMorph >> drawOn: aCanvas [ 
 	"Eventually draw the helpText"
 	super drawOn: aCanvas
-]
-
-{ #category : #accessing }
-RubPluggableTextFieldMorph >> encrypted: aBoolean [
-
-	aBoolean
-		ifTrue: [ self beEncrypted ]
-		ifFalse: [ self beDecrypted ]
-]
-
-{ #category : #accessing }
-RubPluggableTextFieldMorph >> entryCompletion [ 
-	^ entryCompletion 
-]
-
-{ #category : #accessing }
-RubPluggableTextFieldMorph >> entryCompletion: anEntryCompletion [
-	entryCompletion := anEntryCompletion.
-	entryCompletion 
-		ifNotNil: [ entryCompletion chooseBlock isNil
-			ifTrue: [entryCompletion chooseBlock: [:v | self setText: v. self acceptTextInModel ]]
-			ifFalse: [ | blk | 
-				blk := entryCompletion chooseBlock.
-				entryCompletion chooseBlock: [:v | self setText: v. self acceptTextInModel. blk value: v]]].
-
-]
-
-{ #category : #focus }
-RubPluggableTextFieldMorph >> focusChanged [
-	(self hasFocus or: [self chooserHasFocus])
-		ifFalse: [self closeChooser].
-	super focusChanged
-
 ]
 
 { #category : #accessing }
@@ -221,20 +156,6 @@ RubPluggableTextFieldMorph >> hasValidText [
 ]
 
 { #category : #initialization }
-RubPluggableTextFieldMorph >> initialize [
-	super initialize.
-	self beDecrypted.
-	askBeforeDiscardingEdits := true
-]
-
-{ #category : #focus }
-RubPluggableTextFieldMorph >> keyboardFocusChange: aBoolean [
-	self closeChooser.
-	super keyboardFocusChange: aBoolean.
-
-]
-
-{ #category : #initialization }
 RubPluggableTextFieldMorph >> layoutChanged [
 	super layoutChanged.
 	endRow 
@@ -251,49 +172,10 @@ RubPluggableTextFieldMorph >> model: anObject [
 	anObject addDependent: self textArea
 ]
 
-{ #category : #'model protocol' }
-RubPluggableTextFieldMorph >> on: aModel text: aGetTextSelector accept: aSetTextSelector readSelection: aReadSelectionSelector menu: aGetMenuSelector [
-	self getTextSelector: aGetTextSelector.
-	self setTextSelector: aSetTextSelector.
-	self getSelectionSelector: aReadSelectionSelector.
-	aGetMenuSelector
-		ifNil: [ self textArea forbidMenu ]
-		ifNotNil: [ self menuProvider: aModel selector: aGetMenuSelector ].
-	self on: aModel
-]
-
-{ #category : #'model protocol' }
-RubPluggableTextFieldMorph >> on: anObject text: getTextSel accept: setTextSel readSelection: getSelectionSel menu: getMenuSel setSelection: setSelectionSel [
-	self
-		on: anObject
-		text: getTextSel
-		accept: setTextSel
-		readSelection: getSelectionSel
-		menu: getMenuSel.
-	setSelectionSelector := setSelectionSel.
-	self borderWidth: 1.
-	self setText: self getTextFromModel.
-	self setSelection: self getSelectionFromModel
-]
-
-{ #category : #accessing }
-RubPluggableTextFieldMorph >> openChooser [	
-	entryCompletion
-		ifNotNil: [
-			entryCompletion openChooserWith: self textArea text string from: self]
-]
-
-{ #category : #initialization }
-RubPluggableTextFieldMorph >> outOfWorld: aWorld [
-	self closeChooser.
-	super outOfWorld: aWorld
-]
-
 { #category : #'event handling' }
 RubPluggableTextFieldMorph >> textChanged [
 	super textChanged.
 	self checkTextWithConverter.
-	self updateChooser.
 	changedAction ifNotNil: [changedAction value: self getText ].
 ]
 
@@ -329,12 +211,6 @@ RubPluggableTextFieldMorph >> update: aSymbol [
 	^ self
 ]
 
-{ #category : #'event handling' }
-RubPluggableTextFieldMorph >> updateChooser [
-	entryCompletion
-		ifNotNil: [  self openChooser ] 
-]
-
 { #category : #updating }
 RubPluggableTextFieldMorph >> updateEnabled [
 	"Update the enablement state."
@@ -344,26 +220,10 @@ RubPluggableTextFieldMorph >> updateEnabled [
 			self enabled: (self model perform: self getEnabledSelector)]]
 ]
 
-{ #category : #accessing }
-RubPluggableTextFieldMorph >> wantsFrameAdornments: aBoolean [
-	aBoolean ifTrue: [ self withAdornment  ] ifFalse: [ self withoutAdornment ]
-]
-
-{ #category : #'event handling' }
-RubPluggableTextFieldMorph >> whenKeystrokeInTextArea: anAnnouncement [
-	super whenKeystrokeInTextArea: anAnnouncement.
-	entryCompletion ifNotNil: [entryCompletion keystroke: anAnnouncement event from: self]
-]
-
 { #category : #'event handling' }
 RubPluggableTextFieldMorph >> whenReturnEntered: anAnnouncement [
 	super whenReturnEntered: anAnnouncement.
 	crAction ifNotNil: [ crAction value ]
-]
-
-{ #category : #initialization }
-RubPluggableTextFieldMorph >> withDropListButton [
-	self withRulerNamed: #dropListButton
 ]
 
 { #category : #compat }

@@ -16,7 +16,8 @@ Class {
 		'scrollPane',
 		'rulers',
 		'enabled',
-		'highlights'
+		'highlights',
+		'askBeforeDiscardingEdits'
 	],
 	#category : #'Rubric-Editing-Widgets'
 }
@@ -27,22 +28,23 @@ RubScrolledTextMorph class >> on: aModel [
 ]
 
 { #category : #'model protocol' }
+RubScrolledTextMorph >> accept [
+	self acceptContents
+]
+
+{ #category : #'model protocol' }
 RubScrolledTextMorph >> acceptContents [
-	(self autoAccept not and: [ self canDiscardEdits and: [ self alwaysAccept not ] ])
-		ifTrue: [ ^ self flash ].
+	(self autoAccept not and: [ self canDiscardEdits and: [ self alwaysAccept not ] ]) ifTrue: [ ^ self flash ].
 	self hasEditingConflicts
-		ifTrue: [  
-			(self
+		ifTrue: [ (self
 				confirm:
 					'Caution! This method may have been
 changed elsewhere since you started
-editing it here.  Accept anyway?' translated)
-				ifFalse: [ ^ self flash ] ].
-	self acceptTextInModel == true
-		ifTrue: [
-			self hasUnacceptedEdits: false.
-			self rulers do: [ :r | r textAccepted ].
-			self announcer announce: (RubTextAccepted morph: self) ]
+editing it here.  Accept anyway?' translated) ifFalse: [ ^ self flash ] ].
+	self acceptTextInModel == true ifFalse: [ ^ self ].
+	self hasUnacceptedEdits: false.
+	self rulers do: [ :r | r textAccepted ].
+	self announcer announce: (RubTextAccepted morph: self)
 ]
 
 { #category : #'model protocol' }
@@ -111,19 +113,25 @@ RubScrolledTextMorph >> appendText: stringOrText [
 ]
 
 { #category : #accessing }
+RubScrolledTextMorph >> askBeforeDiscardingEdits: aBoolean [
+	"Set the flag that determines whether the user should be asked before discarding unaccepted edits."
+
+	askBeforeDiscardingEdits := aBoolean
+]
+
+{ #category : #accessing }
 RubScrolledTextMorph >> autoAccept [
 	"Answer whether the editor accepts its contents on each change."
 
-	^autoAccept ifNil: [autoAccept := false]
+	^ autoAccept ifNil: [ autoAccept := false ]
 ]
 
 { #category : #accessing }
 RubScrolledTextMorph >> autoAccept: aBoolean [
 	"Whether I should accept my contents on each change."
+
 	autoAccept := aBoolean.
-	aBoolean
-		ifTrue: [ self withoutAdornment; acceptContents]
-		ifFalse: [ self withAdornment ]
+	aBoolean ifTrue: [ self withoutAdornment ] ifFalse: [ self withAdornment ]
 ]
 
 { #category : #accessing }
@@ -228,7 +236,7 @@ RubScrolledTextMorph >> borderWidth: anInteger [
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> canDiscardEdits [
-	^self hasUnacceptedEdits not
+	^ (hasUnacceptedEdits and: [ askBeforeDiscardingEdits ]) not
 ]
 
 { #category : #'model protocol' }
@@ -619,6 +627,7 @@ RubScrolledTextMorph >> initialize [
 	super initialize.
 	self clipSubmorphs: true.
 	enabled := true.
+	askBeforeDiscardingEdits := true.
 	rulers := SortedCollection sortBlock: [ :a :b | b level > a level ].
 	self addMorph: (scrollPane := self newScrollPane).
 	self announcer when: RubConfigurationChange send: #whenConfigurationChanged: to: self.
@@ -1345,6 +1354,11 @@ RubScrolledTextMorph >> withoutTextField [
 RubScrolledTextMorph >> withoutTextSegmentIcons [
 	self withoutRulerNamed: #textSegmentIcons
 
+]
+
+{ #category : #accessing }
+RubScrolledTextMorph >> wrapFlag: aBoolean [
+	self wrapped: aBoolean
 ]
 
 { #category : #accessing }
