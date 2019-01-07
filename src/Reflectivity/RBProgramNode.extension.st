@@ -55,7 +55,7 @@ RBProgramNode >> hasMetalink [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> hasMetalink: aMetaLink [
-	^self links isNotNil and: [(self links includes: aMetaLink)]
+	^self links includes: aMetaLink
 ]
 
 { #category : #'*Reflectivity' }
@@ -102,12 +102,17 @@ RBProgramNode >> link: aMetaLink [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> links [
-	^self propertyAt: #links ifAbsent: nil
+	^self propertyAt: #links ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> nodesWithLinks [
-	^ self allChildren select: [ :e | e links isNotNil ]
+	^ self allChildren select: [ :e | e links isNotEmpty ]
+]
+
+{ #category : #'*Reflectivity' }
+RBProgramNode >> postambles [
+	^self propertyAt: #postambles ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }

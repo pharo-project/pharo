@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'elements'
 	],
-	#category : #'Ring-Deprecated-Core-Containers'
+	#category : #'Ring-Deprecated-Core-Containers-Base'
 }
 
 { #category : #'adding/removing' }

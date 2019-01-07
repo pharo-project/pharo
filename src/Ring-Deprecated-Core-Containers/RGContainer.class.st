@@ -4,7 +4,7 @@ A concrete container already knows how to treat classes, methods and packages.
 Class {
 	#name : #RGContainer,
 	#superclass : #RGAbstractContainer,
-	#category : #'Ring-Deprecated-Core-Containers'
+	#category : #'Ring-Deprecated-Core-Containers-Base'
 }
 
 { #category : #'image package loading' }

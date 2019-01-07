@@ -47,7 +47,7 @@ Class {
 		'SpecialSelectors',
 		'Tools'
 	],
-	#category : #'System-Support'
+	#category : #'System-Support-Image'
 }
 
 { #category : #cleanup }
@@ -763,7 +763,7 @@ SmalltalkImage >> image [
 SmalltalkImage >> imageDirectory [
 	"Answer the directory containing the current image."
 
-	^ self primImagePath asFileReference parent
+	^ self imagePath asFileReference parent
 ]
 
 { #category : #'image, changes name' }
@@ -1329,7 +1329,7 @@ SmalltalkImage >> primBytesLeft [
 	^0
 ]
 
-{ #category : #'image, changes name' }
+{ #category : #primitives }
 SmalltalkImage >> primImagePath [
 	"Answer the full path name for the current image."
 	"Smalltalk imageName"
@@ -1338,7 +1338,7 @@ SmalltalkImage >> primImagePath [
 	self primitiveFailed
 ]
 
-{ #category : #'image, changes name' }
+{ #category : #primitives }
 SmalltalkImage >> primImagePath: newName [
 	"Set the the full path name for the current image.  All further snapshots will use this."
 

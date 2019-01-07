@@ -4,7 +4,7 @@ SearchFacade is a facade for creating searching dialog window
 Class {
 	#name : #SearchFacade,
 	#superclass : #Object,
-	#category : #'Tool-Base'
+	#category : #'Tool-Base-Utilities'
 }
 
 { #category : #'message search' }
@@ -40,6 +40,32 @@ SearchFacade class >> hierarchySearchFor: aClass [
 	| classes |
 	classes := aClass allSuperclasses reverse, (aClass allSubclasses sorted: [ :a :b| a name <= b name ]).
 	^ self classSearchIn: classes
+]
+
+{ #category : #'package search' }
+SearchFacade class >> mcPackageSearch [
+	^ self mcPackageSearchRejectAll: [ :aPackage | false ] withInitialFilter: nil
+]
+
+{ #category : #'package search' }
+SearchFacade class >> mcPackageSearchRejectAll: aRejectBlock [
+	^ self mcPackageSearchRejectAll: aRejectBlock withInitialFilter: nil
+]
+
+{ #category : #'package search' }
+SearchFacade class >> mcPackageSearchRejectAll: aRejectBlock withInitialFilter: filter [
+	| workingCopies |
+	
+	workingCopies := MCWorkingCopy allManagers asSortedCollection: [ :a :b | a packageName <= b packageName].
+	workingCopies := workingCopies reject: aRejectBlock.
+	
+	^ ListDialogWindow new
+				getList: [ :regex | workingCopies select: [ :workingCopy | regex search: workingCopy package name] ];
+				displayBlock: [ :workingCopy | workingCopy package name ];
+				title: 'Monticello packages';
+				initialFilter: (filter ifNil: [ '' ] ifNotNil: [ filter]);
+				yourself. 
+
 ]
 
 { #category : #'message search' }

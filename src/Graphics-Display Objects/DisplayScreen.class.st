@@ -24,7 +24,7 @@ Class {
 		'ScreenSave',
 		'Title'
 	],
-	#category : #'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects-Screen'
 }
 
 { #category : #accessing }

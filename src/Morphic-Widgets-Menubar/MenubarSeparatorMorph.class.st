@@ -1,7 +1,13 @@
+"
+Description
+--------------------
+
+I am a simple morph used by the MenubarMorph to add some separators. Use me via the #addSeparator method of MenubarMorph.
+"
 Class {
 	#name : #MenubarSeparatorMorph,
 	#superclass : #SimpleButtonMorph,
-	#category : #'Morphic-Widgets-Menubar'
+	#category : #'Morphic-Widgets-Menubar-View'
 }
 
 { #category : #initialization }

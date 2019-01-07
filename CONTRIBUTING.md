@@ -8,21 +8,15 @@ If you found a bug or issue with Pharo please let us know. You can report bugs o
 ### How to report a bug
 *  Take the latest stable or latest development system, ideally using the latest virtual machine is better (check [download](https://pharo.org/download) page).
 *  Make sure that you can reproduce the bug.
-*  Send a mail to the mailing-list pharo-dev mailing if you are not sure, check if the bug was already reported on https://pharo.manuscript.com/
-*  Open a bug entry on https://pharo.manuscript.com/
+*  Send a mail to the mailing-list pharo-dev mailing if you are not sure, check if the bug was already reported on https://github.com/pharo-project/pharo/issues
+*  Open a bug entry on https://github.com/pharo-project/pharo/issues
 *  Do not forget to mention the virtual machine version, your OS and other crucial information
 *  Follow your bug. Indeed it may happen that your bug is fixed by introducing another bug fix and you can verify and close it.
 *  Watch the video from the [Pharo TechTalk February 2018](https://www.youtube.com/watch?v=VW7XrFjnbyw) for a step by step tutorial.
 
 ### How to propose a bug fix or enhancement
 
-First check if your change has already been entered into [Manuscript](https://pharo.manuscript.com/), and consider watching the [overview video](https://vimeo.com/162493974) of the steps documented below. (Manuscript used to be called Fugbugz, you will see this old name used a lot instead)
-
-#### Prerequisites
-
-In order to propose a bug fix or enhancement for Pharo you need:
-
-- An account for the [Manuscript Pharo Issue Tracker](https://pharo.manuscript.com/), so that you can change the status of an issue. This status changes is important because it will launches the monkey (a robot that will load and run the tests automatically).
+First check if your change has already been entered into the [issue tracker](https://github.com/pharo-project/pharo/issues), and consider watching the [overview video](https://vimeo.com/162493974) of the steps documented below. 
 
 #### Pharo 70 and git
 
@@ -43,7 +37,7 @@ You also need an account on [SmalltalkHub](http://smalltalkhub.com/) with comm
 In summary you will do the following:
 
 - Take the latest stable or latest development system, ideally using the latest virtual machine (check the [downloads](https://pharo.org/download)).
-- Do a fix for a given bug, or a new bug you entered on the [Manuscript issue tracker](https://pharo.manuscript.com/).
+- Do a fix for a given bug, or a new bug you entered on the [issue tracker](https://github.com/pharo-project/pharo/issues).
 - Create a code fix (ideally with a unit test exercising the working code)
 - Create a slice (group of packages):
     - Open the Monticello Browser.

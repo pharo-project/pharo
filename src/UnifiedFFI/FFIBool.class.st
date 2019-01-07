@@ -33,6 +33,12 @@ FFIBool >> basicHandle: aHandle at: index put: value [
 	^ aHandle booleanAt: index put: value
 ]
 
+{ #category : #accessing }
+FFIBool >> defaultReturnOnError [
+
+	^ false
+]
+
 { #category : #'stack parameter classification' }
 FFIBool >> stackValueParameterClass [
 	^ #integer

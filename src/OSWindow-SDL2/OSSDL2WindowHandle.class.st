@@ -1,5 +1,5 @@
 "
-i am the OSWindowHandle interface implemented using SDL2 library
+I am the OSWindowHandle interface implemented using SDL2 library
 
 my handle is an SDL_Window
 "
@@ -14,7 +14,7 @@ Class {
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #'OSWindow-SDL2'
+	#category : #'OSWindow-SDL2-Base'
 }
 
 { #category : #'instance creation' }
@@ -177,6 +177,13 @@ OSSDL2WindowHandle >> initWithHandle: aHandle attributes: attributes [
 	attributes applyTo: self
 ]
 
+{ #category : #'text input' }
+OSSDL2WindowHandle >> isTextInputActive [
+	"See https://wiki.libsdl.org/SDL_IsTextInputActive"
+
+	^ handle isTextInputActive
+]
+
 { #category : #testing }
 OSSDL2WindowHandle >> isValid [
 	^ true
@@ -234,7 +241,7 @@ OSSDL2WindowHandle >> newGenericRenderer [
 		yourself
 ]
 
-{ #category : #'*OSWindow-SDL2-OpenGL' }
+{ #category : #'instance creation' }
 OSSDL2WindowHandle >> newOpenGLRenderer [
 	^ renderer := OSSDL2GLRenderer new 
 		window: self;
@@ -340,6 +347,20 @@ OSSDL2WindowHandle >> show [
 { #category : #cursor }
 OSSDL2WindowHandle >> showCursor: aBoolean [
 	SDL2 showCursor: (aBoolean ifTrue: [SDL_ENABLE] ifFalse: [SDL_DISABLE]).
+]
+
+{ #category : #'text input' }
+OSSDL2WindowHandle >> startTextInput [
+	"See https://wiki.libsdl.org/SDL_StartTextInput"
+
+	handle startTextInput
+]
+
+{ #category : #'text input' }
+OSSDL2WindowHandle >> stopTextInput [
+	"See https://wiki.libsdl.org/SDL_StopTextInput"
+
+	handle stopTextInput
 ]
 
 { #category : #accessing }

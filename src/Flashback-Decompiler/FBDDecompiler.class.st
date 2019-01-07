@@ -35,7 +35,7 @@ Class {
 		'loopsArray',
 		'method'
 	],
-	#category : #'Flashback-Decompiler'
+	#category : #'Flashback-Decompiler-Base'
 }
 
 { #category : #'instruction decoding forward' }

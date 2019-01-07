@@ -6,7 +6,7 @@ I represent a keyboard Key. I am mapped from the platform specific keycodes into
 Class {
 	#name : #Key,
 	#superclass : #KeyboardKey,
-	#category : #Deprecated70
+	#category : #'Deprecated70-Obsolete'
 }
 
 { #category : #deprecation }

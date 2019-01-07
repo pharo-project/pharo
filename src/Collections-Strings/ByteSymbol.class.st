@@ -5,7 +5,7 @@ Class {
 	#name : #ByteSymbol,
 	#superclass : #Symbol,
 	#type : #bytes,
-	#category : #'Collections-Strings'
+	#category : #'Collections-Strings-Base'
 }
 
 { #category : #primitives }

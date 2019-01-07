@@ -34,7 +34,7 @@ T2TraitWithSlots >> testClassUsingStatefulTraits [
 	t1 := self newTrait: #T1 with: #(aSlot).
 	c1 := self newClass: #C1 superclass: Object with: #() uses: { t1 }. 
 
-	self assert: c1 slots isEmpty
+	self assertCollection: c1 slots hasSameElements: { c1 slotNamed: #aSlot }.
 ]
 
 { #category : #tests }
@@ -45,7 +45,7 @@ T2TraitWithSlots >> testClassUsingStatefulTraitsAndLocalSlots [
 	t1 := self newTrait: #T1 with: #(aSlot).
 	c1 := self newClass: #C1 superclass: Object with: #(anotherSlot) uses: { t1 }. 
 
-	self assertCollection: c1 slots hasSameElements: { c1 slotNamed: #anotherSlot }
+	self assertCollection: c1 slots hasSameElements: { c1 slotNamed: #aSlot. c1 slotNamed: #anotherSlot }
 ]
 
 { #category : #tests }

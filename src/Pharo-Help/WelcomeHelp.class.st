@@ -17,9 +17,9 @@ WelcomeHelp class >> bookName [
 { #category : #pages }
 WelcomeHelp class >> changeLog [
 	^ HelpTopic 
-		title: 'ChangeLog'
-		contents: (self heading: 'Highlights (aka New Stuff) in Pharo 7.0alpha'),
-'- moving the development process to git and github (see ',(self url: 'https://github.com/pharo-project/pharo'),')
+		title: 'Changelog'
+		contents: (self heading: 'Changelog highlights'),
+'- moving the development process to git and GitHub (see ',(self url: 'https://github.com/pharo-project/pharo'),')
 - bootstraping of a smaller image that will not include compiler/parser (Compiler and related packages are exported and loaded using a binary exporter named Hermes)
 - integration of Renraku quality framework
 - integration of WebBrowser
@@ -171,6 +171,17 @@ A very interesting starting point would be looking into the "Updated Pharo by Ex
 '
 ]
 
+{ #category : #'world menu' }
+WelcomeHelp class >> menuCommandOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #'Welcome to Pharo')
+		parent: #Help;
+		order: 1.2;
+		action: [ self open ];
+		icon: ((self iconNamed: #pharoIcon) scaledToSize: 16@16);
+		help: 'Welcome window for Pharo' 
+]
+
 { #category : #showing }
 WelcomeHelp class >> open [
 	<script>
@@ -211,6 +222,22 @@ WelcomeHelp class >> pages [
 	^ #(welcome changeLog learn exploreEnvironment useExternalPackages documentation gettingHelp)
 ]
 
+{ #category : #pages }
+WelcomeHelp class >> pharoVersionString [
+
+	| version | 
+	
+	version := SystemVersion current.
+
+	^ String streamContents: [ :aStream  |
+		version hasValidBuildNumber ifTrue: [ 
+			aStream nextPutAll: 'build: '.
+			version build printOn: aStream.
+			aStream nextPutAll: ', '. ].
+		aStream nextPutAll: 'commit: '.
+		aStream nextPutAll: version commitHashShort ]
+]
+
 { #category : #defaults }
 WelcomeHelp class >> slowNetworkDefaults [
 	"Do not display network bound catalog projects in spotter to keep it responsive."
@@ -245,9 +272,9 @@ The catalog can be enabled in Spotter by enabling the "Display catalog projects 
 { #category : #pages }
 WelcomeHelp class >> welcome [
 	^ HelpTopic 
-		title: 'Welcome to Pharo 7.0alpha'
-		contents: (self heading: 'Pharo 7.0alpha'), 
-		
+		title: 'Welcome to ', Smalltalk version
+		contents: (self heading: Smalltalk version withSubtitle: self pharoVersionString), 
+
 'Welcome to Pharo, an immersive live programming environment.
 
 Pharo is a pure object-oriented programming language and a powerful environment, focused on simplicity and immediate feedback (think IDE and OS rolled into one).

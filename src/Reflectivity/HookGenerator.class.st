@@ -28,12 +28,9 @@ HookGenerator class >> node: aNode [
 
 { #category : #results }
 HookGenerator >> afterHooks [
-	| statements |
-	statements := links 
+	^ links 
 			select: [ :each | each control = #after ] 
 			thenCollect:  [ :link | (self hookFor: link) parent: node].
-			
-	^(RBBlockNode body: (RBSequenceNode statements: statements flattened)) parent: node.
 ]
 
 { #category : #results }
@@ -67,9 +64,11 @@ HookGenerator >> entity: anEntity node: aNode links: aCollection [
 { #category : #private }
 HookGenerator >> genReification: aSymbolOrNode for: aLink [
 	| plugin | 
-	aSymbolOrNode isSymbol not ifTrue: [ ^ aSymbolOrNode]. 
-	plugin := (plugins at: aSymbolOrNode ifAbsent: [self error: 'reification not supported for this entity']) entity: entity link: aLink.	
-	 ^plugin perform: self selectorForNode
+	(aSymbolOrNode isKindOf: RBProgramNode) ifTrue: [ ^ aSymbolOrNode].
+	plugin := aSymbolOrNode isSymbol 
+		ifTrue: [(plugins at: aSymbolOrNode ifAbsent: [self error: 'reification not supported for this entity']) entity: entity link: aLink]
+		ifFalse: [ aSymbolOrNode link: aLink; entity: entity. aSymbolOrNode ].
+	^plugin perform: self selectorForNode
 ]
 
 { #category : #private }
@@ -121,6 +120,8 @@ HookGenerator >> hookFor: aLink [
 				hook }].
 	aLink hasCondition ifTrue: [hook := self wrapCondition: hook link: aLink].
 	(aLink hasMetaLevel or: [self hasOption: #optionMetalevel for: aLink]) ifTrue: [hook := self wrapInContext: hook link: aLink].		
+	
+	hook propertyAt: #hook put: true.
 			
 	^ hook
 ]
@@ -144,6 +145,18 @@ HookGenerator >> plugins [
 ]
 
 { #category : #results }
+HookGenerator >> postamble [
+	| postamble |
+	"This is code executed just before the #after link"
+	
+	postamble := OrderedCollection new.
+	links do: [:link |  
+		plugins do: [ :plugin | (link allReifications includes: plugin key) ifTrue: [postamble addAll: ((plugin entity: entity link: link) postamble: entity)]]].
+		
+	^postamble
+]
+
+{ #category : #results }
 HookGenerator >> preamble [
 	| preamble |
 	"Very simplistic now: needs to do some optimizatons"
@@ -153,7 +166,7 @@ HookGenerator >> preamble [
 		plugins do: [ :plugin | (link allReifications includes: plugin key) ifTrue: [preamble addAll: ((plugin entity: entity link: link) preamble: entity)]].
 		link control = #instead ifTrue: [
 				"for instead links, the preamble needs to clean the stack. For now just implemented for message sends"
-				entity isMessage ifTrue: [
+				((entity isKindOf: RBProgramNode) and: [node isMessage]) ifTrue: [
 					entity numArgs + 1 timesRepeat: [preamble add: (RFStorePopIntoTempNode named: #RFBalancestack)]]]].
 	^preamble
 ]
@@ -198,7 +211,4 @@ HookGenerator >> wrapInContext: hook link: aLink [
 		receiver: (RFLiteralVariableNode value: aLink)
 		selector: #valueInContext:
 		arguments: {self encloseInBlock: hook}
-				
-
-	
 ]

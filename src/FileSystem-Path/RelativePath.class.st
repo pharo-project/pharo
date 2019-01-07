@@ -28,21 +28,21 @@ RelativePath >> isRoot [
 
 { #category : #printing }
 RelativePath >> printOn: aStream [
+
 	aStream nextPutAll: 'Path '.
 	self isWorkingDirectory
-		ifTrue: [aStream nextPutAll: 'workingDirectory']
+		ifTrue: [ aStream nextPutAll: 'workingDirectory' ]
 		ifFalse: 
-			[aStream 
+			[ aStream 
 				nextPutAll: '* ''';
-				nextPutAll: (self at: 1) asString;
+				nextPutAll: (self at: 1);
 				nextPut: $'.
 			2 to: self size do:
 				[:i |
 				aStream
 					nextPutAll: ' / ''';
 					nextPutAll: (self at: i);
-					nextPut: $']]
-					
+					nextPut: $' ]]
 			
 ]
 

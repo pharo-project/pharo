@@ -1,5 +1,5 @@
 "
-SUnit tests for SystemVersion
+SUnit tests for SystemVersion.
 "
 Class {
 	#name : #SystemVersionTest,
@@ -14,14 +14,13 @@ SystemVersionTest >> checkIsCompatibleWithResultOfVersionMessage: aString [
 	"
 	
 	| rx |
-	rx := '(Pharo)([0-9]+)[.]([0-9]+)[.]([0-9]+)([a-zA-Z]+)' asRegex.
+	rx := '(Pharo)([0-9]+)[.]([0-9]+)[.]([0-9]+)([a-zA-Z0-9]+)*' asRegex.
 	self 
 		assert: (rx matches: aString);
 		assert: (rx subexpression: 2) equals: 'Pharo';
 		assert: (rx subexpression: 3) asNumber > 0;
 		assert: (rx subexpression: 4) asNumber >= 0;
-		assert: (rx subexpression: 5) asNumber >= 0;
-		assert: (rx subexpression: 6) notEmpty
+		assert: (rx subexpression: 5) asNumber >= 0.
 ]
 
 { #category : #tests }
@@ -48,9 +47,9 @@ SystemVersionTest >> testDoNotBreakSmalltalkVersion [
 { #category : #tests }
 SystemVersionTest >> testDottedMajorMinorPatch [ 
 	 
-	self assert: (SystemVersion fromVersionString: 'RPharo3.7+alpha') dottedMajorMinorPatch = '3.7.0'.
-	self assert: (SystemVersion fromVersionString: 'Pharo1.0+ALPHA') dottedMajorMinorPatch = '1.0.0'.
-	self assert: (SystemVersion fromVersionString: 'Pharo1.1') dottedMajorMinorPatch = '1.1.0'.
+	self assert: (SystemVersion fromVersionString: 'RPharo3.7+alpha') dottedMajorMinorPatch equals: '3.7.0'.
+	self assert: (SystemVersion fromVersionString: 'Pharo1.0+ALPHA') dottedMajorMinorPatch equals: '1.0.0'.
+	self assert: (SystemVersion fromVersionString: 'Pharo1.1') dottedMajorMinorPatch equals: '1.1.0'.
 ]
 
 { #category : #'tests - instance creation' }
@@ -164,19 +163,19 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildWithoutSuffix [
 { #category : #tests }
 SystemVersionTest >> testMajorMinorVersion [ 
 	 	
-	self assert: (SystemVersion fromVersionString: 'RPharo3.7+alpha') majorMinorVersion = 'RPharo3.7.0'.
-	self assert: (SystemVersion fromVersionString: 'Pharo1.0+ALPHA') majorMinorVersion = 'Pharo1.0.0'.
-	self assert: (SystemVersion fromVersionString: 'Pharo1.1') majorMinorVersion = 'Pharo1.1.0'.
-	self assert: (SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorVersion = 'Pharo1.1.7'.
+	self assert: (SystemVersion fromVersionString: 'RPharo3.7+alpha') majorMinorVersion equals: 'RPharo3.7.0'.
+	self assert: (SystemVersion fromVersionString: 'Pharo1.0+ALPHA') majorMinorVersion equals: 'Pharo1.0.0'.
+	self assert: (SystemVersion fromVersionString: 'Pharo1.1') majorMinorVersion equals: 'Pharo1.1.0'.
+	self assert: (SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorVersion equals: 'Pharo1.1.7'.
 ]
 
 { #category : #tests }
 SystemVersionTest >> testMajorMinorWithSeparatingString [ 
 	
-	self assert: ((SystemVersion fromVersionString: 'RPharo3.7+alpha') majorMinorPatch: '-') = '3-7-0'.
-	self assert: ((SystemVersion fromVersionString: 'Pharo1.0+ALPHA') majorMinorPatch: '')  = '100'.
-	self assert: ((SystemVersion fromVersionString: 'Pharo1.1') majorMinorPatch: '.') = '1.1.0'.
-	self assert: ((SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorPatch: '.') = '1.1.7'.
+	self assert: ((SystemVersion fromVersionString: 'RPharo3.7+alpha') majorMinorPatch: '-') equals: '3-7-0'.
+	self assert: ((SystemVersion fromVersionString: 'Pharo1.0+ALPHA') majorMinorPatch: '') equals: '100'.
+	self assert: ((SystemVersion fromVersionString: 'Pharo1.1') majorMinorPatch: '.') equals: '1.1.0'.
+	self assert: ((SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorPatch: '.') equals: '1.1.7'.
 ]
 
 { #category : #'tests - parsing' }

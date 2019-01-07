@@ -30,39 +30,55 @@ ReflectivityExamples class >> metaLinkOptions [
 
 { #category : #examples }
 ReflectivityExamples >> exampleArray [
-	<sampleInstance>
 	^ {3}
 ]
 
 { #category : #examples }
 ReflectivityExamples >> exampleAssignment [
-	<sampleInstance>
 	| temp |
 	temp := (1 + 2).
 	^temp
 ]
 
 { #category : #examples }
+ReflectivityExamples >> exampleAssignmentClassVar [
+	ClassVar := (1 + 2).
+	^ClassVar
+]
+
+{ #category : #examples }
+ReflectivityExamples >> exampleAssignmentIvar [
+	ivar := (1 + 2).
+	^ivar
+]
+
+{ #category : #examples }
 ReflectivityExamples >> exampleBlock [
-	<sampleInstance>
-	^ [2 + 3] value
+	^ [2 + 3] value 
 ]
 
 { #category : #examples }
 ReflectivityExamples >> exampleBlockNoValue [
-	<sampleInstance>
 	^ [2 + 3]
 ]
 
 { #category : #examples }
+ReflectivityExamples >> exampleBlockWithArg [
+	^ [:a | a + 3] value: 2 
+]
+
+{ #category : #examples }
+ReflectivityExamples >> exampleCascade [
+	^1 sin; yourself
+]
+
+{ #category : #examples }
 ReflectivityExamples >> exampleClassVarRead [
-	<sampleInstance>
 	^ClassVar
 ]
 
 { #category : #examples }
 ReflectivityExamples >> exampleGlobalRead [
-	<sampleInstance>
 	^GlobalForTesting
 ]
 
@@ -77,25 +93,21 @@ ReflectivityExamples >> exampleIfTrueIfFalse [
 
 { #category : #examples }
 ReflectivityExamples >> exampleIvarRead [
-	<sampleInstance>
-	^ivar 
+	^ivar
 ]
 
 { #category : #examples }
 ReflectivityExamples >> exampleLazyInit [
-	<sampleInstance>
 	^ singleton ifNil: [singleton := self new initialize]
 ]
 
 { #category : #examples }
 ReflectivityExamples >> exampleLiteral [
-	<sampleInstance>
 	^ 2
 ]
 
 { #category : #examples }
 ReflectivityExamples >> exampleLiteralArray [
-	<sampleInstance>
 	^ #(1)
 ]
 
@@ -106,22 +118,25 @@ ReflectivityExamples >> exampleMethod [
 ]
 
 { #category : #examples }
+ReflectivityExamples >> exampleMethod2 [
+
+	2 + 3
+]
+
+{ #category : #examples }
 ReflectivityExamples >> exampleMethodMultipleSites [
-	<sampleInstance>
 	Transcript show: Object new.
 	^ 2 + 3
 ]
 
 { #category : #examples }
 ReflectivityExamples >> exampleMethodWithMetaLinkOptions [
-	<sampleInstance>
 	<metaLinkOptions: #( +optionCompileOnLinkInstallation)>
 	^ 2 + 3
 ]
 
 { #category : #examples }
 ReflectivityExamples >> examplePrimitiveMethod [
-	<sampleInstance>
 	"returns image path"
 	<primitive: 121>
 	^ 2 + 3
@@ -144,20 +159,17 @@ ReflectivityExamples >> exampleSendNoReturn [
 
 { #category : #examples }
 ReflectivityExamples >> exampleSendTwoArgs [
-	<sampleInstance>
 	^ Array with: 1 with: 2
 ]
 
 { #category : #examples }
 ReflectivityExamples >> exampleTwoSends [
-	<sampleInstance>
 	3 + 4.
 	^ 2 + 3
 ]
 
 { #category : #examples }
 ReflectivityExamples >> exampleWithArg: anArg [
-	<sampleInstance>
 	^ 2 + anArg
 ]
 

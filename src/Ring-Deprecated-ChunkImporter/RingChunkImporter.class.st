@@ -17,7 +17,7 @@ Class {
 		'package',
 		'doIts'
 	],
-	#category : #'Ring-Deprecated-ChunkImporter'
+	#category : #'Ring-Deprecated-ChunkImporter-Base'
 }
 
 { #category : #'instance creation' }

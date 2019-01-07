@@ -23,7 +23,7 @@ NoUnusedTemporaryVariablesLeftTest >> tearDown [
 NoUnusedTemporaryVariablesLeftTest >> testNoUnusedTemporaryVariablesLeft [
 	"Fail if there are methods who have unused temporary variables"
 	| found validExceptions remaining |
-	found := CompiledMethod allInstances
+	found := (SystemNavigation default allBehaviors flatCollect: #localMethods)
 		select: [ :m | m ast temporaries anySatisfy: [ :x | x binding isUnused ] ].
 	
 	"No other exceptions beside the ones mentioned here should be allowed"	

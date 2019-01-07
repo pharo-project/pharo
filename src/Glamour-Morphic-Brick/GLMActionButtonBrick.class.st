@@ -96,6 +96,12 @@ GLMActionButtonBrick >> hShrinkWrap [
 							ifNotNil: [ self icon width max: self hoverIcon width ] ] ]) ]
 ]
 
+{ #category : #'brick-morph-mouse-events' }
+GLMActionButtonBrick >> handlesMouseDown: evt [
+
+	^ clickAction notNil
+]
+
 { #category : #'action-button-actions' }
 GLMActionButtonBrick >> hoverAction: anObject [
 

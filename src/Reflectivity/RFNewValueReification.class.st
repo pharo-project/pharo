@@ -4,7 +4,7 @@ reify newValue
 Class {
 	#name : #RFNewValueReification,
 	#superclass : #RFReification,
-	#category : #'Reflectivity-Links'
+	#category : #'Reflectivity-Reifications'
 }
 
 { #category : #'plugin interface' }
@@ -28,9 +28,20 @@ RFNewValueReification >> genForRBVariableNode [
 	^RBTemporaryNode named: #RFNewValueReificationVar.
 ]
 
-{ #category : #generate }
-RFNewValueReification >> preamble: aNode [
-		link control= #instead 
+{ #category : #preamble }
+RFNewValueReification >> preambleForAssignment: aNode [
+	"balance stack for instead"
+	link control= #instead
+		ifTrue: [ ^RFStorePopIntoTempNode named: #RFNewValueReificationVar  ]
+		ifFalse: [^RFStoreIntoTempNode named: #RFNewValueReificationVar  ]
+	
+	
+]
+
+{ #category : #preamble }
+RFNewValueReification >> preambleForVariable: aNode [
+	"balance stack for instead"
+	link control= #instead
 		ifTrue: [ ^RFStorePopIntoTempNode named: #RFNewValueReificationVar  ]
 		ifFalse: [^RFStoreIntoTempNode named: #RFNewValueReificationVar  ]
 	

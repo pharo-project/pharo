@@ -39,7 +39,7 @@ Class {
 	#pools : [
 		'VTermOutputStyles'
 	],
-	#category : #'System-CommandLine'
+	#category : #'System-CommandLine-VTerm-Driver'
 }
 
 { #category : #'instance creation' }
@@ -51,12 +51,12 @@ VTermOutputDriver2 class >> on: anOutputStream [
 
 { #category : #'instance creation' }
 VTermOutputDriver2 class >> stderr [
-	^ self on: FileStream stderr
+	^ self on: Stdio stderr
 ]
 
 { #category : #'instance creation' }
 VTermOutputDriver2 class >> stdout [
-	^ self on: FileStream stdout
+	^ self on: Stdio stdout
 ]
 
 { #category : #'character printing' }

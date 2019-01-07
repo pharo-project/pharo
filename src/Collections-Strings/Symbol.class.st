@@ -33,7 +33,7 @@ Class {
 		'SelectorTable',
 		'SymbolTable'
 	],
-	#category : #'Collections-Strings'
+	#category : #'Collections-Strings-Base'
 }
 
 { #category : #initialization }

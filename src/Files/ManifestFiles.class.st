@@ -1,3 +1,6 @@
+"
+Includes file and directory handling as well as file streams
+"
 Class {
 	#name : #ManifestFiles,
 	#superclass : #PackageManifest,

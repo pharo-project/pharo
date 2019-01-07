@@ -6,7 +6,7 @@ By inheritance it knows how to treat classes and methods
 Class {
 	#name : #RGSlice,
 	#superclass : #RGContainer,
-	#category : #'Ring-Deprecated-Core-Containers'
+	#category : #'Ring-Deprecated-Core-Containers-Base'
 }
 
 { #category : #'adding/removing' }

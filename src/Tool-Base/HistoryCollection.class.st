@@ -1,4 +1,9 @@
 "
+/!\ THIS CLASS IS DEPRECATED /!\
+
+This class is unused in Pharo and does not bring much value for Pharo users. It will be removed in Pharo 8.
+==========================================================
+
 I'm a data structure used to store an history.
 
 My behavior is
@@ -14,8 +19,13 @@ Class {
 		'storage',
 		'maxSize'
 	],
-	#category : #'Tool-Base'
+	#category : #'Tool-Base-Utilities'
 }
+
+{ #category : #deprecation }
+HistoryCollection class >> isDeprecated [
+	^ true
+]
 
 { #category : #'instance creation' }
 HistoryCollection class >> maxSize: anInteger [

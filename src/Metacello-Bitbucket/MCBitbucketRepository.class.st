@@ -33,11 +33,6 @@ MCBitbucketRepository class >> isEnabled [
 ]
 
 { #category : #private }
-MCBitbucketRepository class >> projectTagsUrlFor: projectPath [
-  ^ 'https://bitbucket.org/api/1.0/repositories/' , projectPath , '/tags'
-]
-
-{ #category : #private }
 MCBitbucketRepository class >> projectZipUrlFor: projectPath versionString: versionString [
   ^ 'https://bitbucket.org/' , projectPath , '/get/' , versionString , '.zip'
 ]
@@ -65,4 +60,9 @@ MCBitbucketRepository >> normalizeTagsData: jsonObject [
       sha := tagObject at: 'node'.
       tagDict at: tag put: sha ].
   ^ tagDict
+]
+
+{ #category : #private }
+MCBitbucketRepository >> projectTagsUrlFor: projectPath [
+  ^ 'https://bitbucket.org/api/1.0/repositories/' , projectPath , '/tags'
 ]

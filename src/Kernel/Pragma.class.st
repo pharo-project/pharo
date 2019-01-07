@@ -103,6 +103,7 @@ Pragma >> = aPragma [
 	self species == aPragma species ifFalse: [^false].
 
 	self method = aPragma method ifFalse: [^false].
+	self method selector = aPragma method selector ifFalse: [ ^false ].
 	self keyword = aPragma keyword ifFalse: [^false].
 	self arguments = aPragma arguments ifFalse: [^false].
 

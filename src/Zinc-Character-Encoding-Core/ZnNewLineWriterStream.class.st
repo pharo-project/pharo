@@ -36,6 +36,12 @@ ZnNewLineWriterStream class >> on: aStream [
 		yourself
 ]
 
+{ #category : #'open/close' }
+ZnNewLineWriterStream >> close [ 
+
+	^stream close
+]
+
 { #category : #flushing }
 ZnNewLineWriterStream >> flush [
 	^ stream flush

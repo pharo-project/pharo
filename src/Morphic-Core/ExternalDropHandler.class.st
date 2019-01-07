@@ -52,32 +52,30 @@ ExternalDropHandler class >> initialize [
 ]
 
 { #category : #accessing }
-ExternalDropHandler class >> lookupExternalDropHandler: stream [
+ExternalDropHandler class >> lookupExternalDropHandler: aFileReference [
 
-	| types extension serviceHandler |
-	types := stream mimeTypes.
+	| types serviceHandler |
+	types := aFileReference mimeTypes.
 
 	types ifNotNil: [
 		self registeredHandlers do: [:handler | 
 			(handler matchesTypes: types)
 				ifTrue: [^handler]]].
 
-	extension := stream name asFileReference extension.
 	self registeredHandlers do: [:handler | 
-		(handler matchesExtension: extension)
+		(handler matchesExtension: aFileReference extension)
 				ifTrue: [^handler]].
-	serviceHandler := self lookupServiceBasedHandler: stream.
+	serviceHandler := self lookupServiceBasedHandler: aFileReference.
 	^serviceHandler
 		ifNil: [self defaultHandler]
 ]
 
 { #category : #accessing }
-ExternalDropHandler class >> lookupServiceBasedHandler: dropStream [
+ExternalDropHandler class >> lookupServiceBasedHandler: aFileReference [
 	"the file was just droped, let's do our job"
-	| fileName services theOne |
-	fileName := dropStream name.
+	| services theOne |
 
-	services := (Smalltalk tools fileList itemsForFile: fileName asFileReference)
+	services := (Smalltalk tools fileList itemsForFile: aFileReference)
 		reject: [:svc | self unwantedSelectors includes: svc selector].
 
 	"no service, default behavior"
@@ -86,7 +84,7 @@ ExternalDropHandler class >> lookupServiceBasedHandler: dropStream [
 
 	theOne := self chooseServiceFrom: services.
 	^theOne
-		ifNotNil: [ExternalDropHandler type: nil extension: nil action: [:stream | theOne performServiceFor: stream]]
+		ifNotNil: [ExternalDropHandler type: nil extension: nil action: [:stream | theOne performServiceFor: aFileReference]]
 ]
 
 { #category : #accessing }

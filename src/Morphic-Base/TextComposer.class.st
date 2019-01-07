@@ -1,3 +1,6 @@
+"
+Utility class to compose text
+"
 Class {
 	#name : #TextComposer,
 	#superclass : #Object,

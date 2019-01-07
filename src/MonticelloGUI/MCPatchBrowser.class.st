@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'selection'
 	],
-	#category : #MonticelloGUI
+	#category : #'MonticelloGUI-Tools'
 }
 
 { #category : #'instance creation' }

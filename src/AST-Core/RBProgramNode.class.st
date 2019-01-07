@@ -296,6 +296,16 @@ RBProgramNode >> do: aBlock [
 	aBlock value: self
 ]
 
+{ #category : #generation }
+RBProgramNode >> dump [
+	^  String streamContents: [:s | self dumpOn: s]
+]
+
+{ #category : #generation }
+RBProgramNode >> dumpOn: aStream [
+	self subclassResponsibility 
+]
+
 { #category : #comparing }
 RBProgramNode >> equalTo: aNode exceptForVariables: variableNameCollection [ 
 	| dictionary |
@@ -323,14 +333,7 @@ RBProgramNode >> evaluatedFirst: aNode [
 
 { #category : #accessing }
 RBProgramNode >> formattedCode [
-	^ self formattedCodeWithMaxLineLength: 70
-]
-
-{ #category : #accessing }
-RBProgramNode >> formattedCodeWithMaxLineLength: anInteger [
-	^ self formatterClass new
-		containerWidth: anInteger;
-		format: self
+	^ self formatterClass new format: self
 ]
 
 { #category : #accessing }
@@ -459,6 +462,11 @@ RBProgramNode >> isMessage [
 
 { #category : #testing }
 RBProgramNode >> isMethod [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isParseError [
 	^false
 ]
 
