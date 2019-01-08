@@ -508,6 +508,11 @@ RubScrolledTextMorph >> getTextSelector: aSymbol [
 ]
 
 { #category : #'accessing rulers' }
+RubScrolledTextMorph >> ghostText: aText [
+	self withGhostText: aText
+]
+
+{ #category : #'accessing rulers' }
 RubScrolledTextMorph >> ghostTextRuler [
 	^ self rulerNamed: #ghostText
 ]
@@ -1205,6 +1210,7 @@ RubScrolledTextMorph >> withFocusBorder [
 
 { #category : #'accessing rulers' }
 RubScrolledTextMorph >> withGhostText: aText [
+	aText ifNil: [ ^ self withoutRulerNamed: #ghostText ].
 	self withRulerNamed: #ghostText.
 	self ghostTextRuler updateTextWith: aText asText.
 	self ghostTextRuler comeToFront

@@ -11,7 +11,7 @@ Class {
 AColorSelectorMorph >> color: aColor [
 	"Set the gradient colors."
 	
-	super color: aColor asNontranslucentColor.
+	super color: aColor beOpaque. 
 	self fillStyle: self defaultFillStyle
 ]
 

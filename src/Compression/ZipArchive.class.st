@@ -244,10 +244,10 @@ ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 ZipArchive >> readFrom: aStreamOrFileName [
 	| stream name eocdPosition |
 	stream := aStreamOrFileName isStream
-		ifTrue: [name := aStreamOrFileName printString. aStreamOrFileName]
+		ifTrue: [ name := aStreamOrFileName printString. aStreamOrFileName ]
 		ifFalse: [ File openForReadFileNamed: (name := aStreamOrFileName asFileReference fullName) ].
 	eocdPosition := self class findEndOfCentralDirectoryFrom: stream.
-	eocdPosition <= 0 ifTrue: [self error: 'can''t find EOCD position'].
+	eocdPosition <= 0 ifTrue: [ ZipArchiveError signal: 'can''t find EOCD position' ].
 	self readEndOfCentralDirectoryFrom: stream.
 	stream position: eocdPosition - centralDirectorySize.
 	self readMembersFrom: stream named: name
@@ -261,7 +261,7 @@ ZipArchive >> readMembersFrom: stream named: fileName [
 		signature := self readSignatureFrom: stream.
 		signature = EndOfCentralDirectorySignature ifTrue: [ ^self ].
 		signature = CentralDirectoryFileHeaderSignature
-			ifFalse: [ self error: 'bad CD signature at ', (stream position - 4) printStringHex ].
+			ifFalse: [ ZipArchiveError signal: 'bad CD signature at ', (stream position - 4) printStringHex ].
 		newMember readFrom: stream.
 		newMember looksLikeDirectory ifTrue: [ newMember := newMember asDirectory ].
 		self addMember: newMember.
@@ -277,7 +277,7 @@ ZipArchive >> readSignatureFrom: stream [
 	stream next: 4 into: signatureData.
 	({ CentralDirectoryFileHeaderSignature . LocalFileHeaderSignature . EndOfCentralDirectorySignature }
 		includes: signatureData)
-			ifFalse: [ ^self error: 'bad signature ', signatureData asString asHex, ' at position ', (stream position - 4) asString ].
+			ifFalse: [ ^ ZipArchiveError signal: 'bad signature ', signatureData asString asHex, ' at position ', (stream position - 4) asString ].
 	^signatureData
 
 ]
@@ -362,7 +362,7 @@ ZipArchive >> writeToFileNamed: aFileName prepending: aString [
 	
 	"Catch attempts to overwrite existing zip file"
 	(self canWriteToFileNamed: aFileName)
-		ifFalse: [ ^self error: (aFileName, ' is needed by one or more members in this archive') ].
+		ifFalse: [ ^ ZipArchiveError signal: (aFileName, ' is needed by one or more members in this archive') ].
 	
 	(File named: aFileName)
 		writeStreamDo: [ :stream | self writeTo: stream prepending: aString ]	
@@ -373,7 +373,7 @@ ZipArchive >> writeToFileNamed: aFileName prependingFileNamed: anotherFileName [
 	
 	"Catch attempts to overwrite existing zip file"
 	(self canWriteToFileNamed: aFileName)
-		ifFalse: [ ^self error: (aFileName, ' is needed by one or more members in this archive') ].
+		ifFalse: [ ^ZipArchiveError signal: (aFileName, ' is needed by one or more members in this archive') ].
 	
 	(File named: aFileName)
 		writeStreamDo: [ :stream | self writeTo: stream prependingFileNamed: anotherFileName ]	

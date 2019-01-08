@@ -239,6 +239,12 @@ GTGenericStackDebugger >> debuggingActionsPragmas [
 	^ #( debuggingAction )
 ]
 
+{ #category : #opening }
+GTGenericStackDebugger >> filteredStack [
+
+	^ (self session stackOfSize: 50 ) select: [ :aContext | (aContext method hasPragmaNamed: #debuggerCompleteToSender) not ]
+]
+
 { #category : #'printing/formatting' }
 GTGenericStackDebugger >> formatStackClassColumnForContext: aContext [
 
@@ -344,9 +350,11 @@ GTGenericStackDebugger >> methodCodeWidgetIn: composite forContext: aContext [
 
 { #category : #opening }
 GTGenericStackDebugger >> openWithFullView [
-	"Create and schedule a full debugger with the given label. Do not
-	terminate the current active process."
+	"Create and schedule a full debugger with the given label. Do not terminate the current active process.
 	
+	We also select the first non filtered context, this mean that we will ignore some methods like halts or debug method to select the first interesting line in the debugger."
+
+	self setDebuggerToFirstNonFilteredContext.
 	self open
 ]
 
@@ -485,6 +493,16 @@ GTGenericStackDebugger >> send [
 	self session stepInto: self currentContext.
 	self updateBrowser.
 
+]
+
+{ #category : #opening }
+GTGenericStackDebugger >> setDebuggerToFirstNonFilteredContext [
+	"I set the debugger to the first non filtered stack"
+
+	| selection |
+	selection := self stackPresentation selection.
+	(selection isNil or: [ selection method hasPragmaNamed: #debuggerCompleteToSender ])
+		ifTrue: [ self stackPresentation selection: self filteredStack first ]
 ]
 
 { #category : #accessing }

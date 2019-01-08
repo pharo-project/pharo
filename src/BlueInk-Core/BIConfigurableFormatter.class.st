@@ -475,10 +475,9 @@ BIConfigurableFormatter >> bracketWith: bracketString around: aBlock [
 
 { #category : #private }
 BIConfigurableFormatter >> characterSeparatorMethodSignatureFor: aMethodNode [
-	^ [ 
-	(self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
-		ifTrue: [ self newLine ]
-		ifFalse: [ self space ] ]
+	^ (self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
+			ifTrue: [ self newLine ]
+			ifFalse: [ self space ]
 ]
 
 { #category : #accessing }
@@ -489,11 +488,6 @@ BIConfigurableFormatter >> codeStream [
 { #category : #accessing }
 BIConfigurableFormatter >> codeStream: anObject [
 	codeStream := anObject
-]
-
-{ #category : #'public interface' }
-BIConfigurableFormatter >> containerWidth: anInteger [
-	self installNewValueInContext: {(#maxLineLength: -> anInteger)}
 ]
 
 { #category : #private }
@@ -1213,7 +1207,7 @@ BIConfigurableFormatter >> privateFormatMethodPatternMonoLineFor: aMethodNode [
 			codeStream nextPutAll: key.
 			self space.
 			self visitNode: arg ]
-		separatedBy: (self characterSeparatorMethodSignatureFor: aMethodNode)
+		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode ]
 ]
 
 { #category : #private }
@@ -1233,7 +1227,7 @@ BIConfigurableFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 			codeStream nextPutAll: key.
 			self space.
 			self visitNode: arg ]
-		separatedBy: (self characterSeparatorMethodSignatureFor: aMethodNode).
+		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode].
 	self newLines: 1
 ]
 
@@ -1445,6 +1439,16 @@ BIConfigurableFormatter >> visitLiteralNode: aLiteralNode [
 	aLiteralNode value isLiteral
 		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
 		ifTrue: [ self writeString: aLiteralNode sourceText ]
+]
+
+{ #category : #visiting }
+BIConfigurableFormatter >> visitLiteralVariableNode: aLiteralVariableNode [
+	| binding |
+	binding := aLiteralVariableNode binding.
+	self writeString: binding key storeString, ' -> '.
+	aLiteralVariableNode binding value isLiteral
+		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
+		ifTrue: [ self writeString:  binding value asString ]
 ]
 
 { #category : #visiting }

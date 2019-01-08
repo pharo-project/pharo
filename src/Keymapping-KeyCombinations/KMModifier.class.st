@@ -98,6 +98,16 @@ KMModifier >> printOn: aStream [
 	aStream << name
 ]
 
+{ #category : #printing }
+KMModifier >> printOsRepresentationOn: aStream [
+	aStream << name asLowercase
+]
+
+{ #category : #printing }
+KMModifier >> printingPosition [
+	^self subclassResponsibility
+]
+
 { #category : #comparing }
 KMModifier >> species [
 

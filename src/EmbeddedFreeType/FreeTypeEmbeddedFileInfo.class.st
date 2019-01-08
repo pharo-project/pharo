@@ -58,18 +58,40 @@ FreeTypeEmbeddedFileInfo >> locationType [
 
 { #category : #printing }
 FreeTypeEmbeddedFileInfo >> printOn: aStream [
-	"super printOn: aStream."
-	aStream 
-		nextPutAll:  '{', self locationType asString,'}';
-		nextPutAll: '(' , fileContents size asString, ' bytes )';
-		nextPutAll: '[',index asString,'] ';
-		nextPutAll: familyName asString;
-		nextPutAll: ' - ', styleName asString;
-		nextPutAll: ' - ', postscriptName asString;		
-		nextPutAll: ' ',(bold ifTrue:['B'] ifFalse:['']);
-		nextPutAll: ' ',(italic ifTrue:['I'] ifFalse:['']);
-		nextPutAll: ' ',(fixedWidth ifTrue:['Monospaced'] ifFalse:['']);
-		nextPutAll: ' ',(stretchValue asString);
-		nextPutAll: ' ',(weightValue asString);	
-		cr
+
+	aStream
+ 			nextPut: ${;
+			print: self locationType;
+ 			nextPut: $};
+ 			nextPut: $(;
+			print: fileContents size;
+			nextPutAll: ' bytes )';
+ 			nextPut: $[;
+			print: index;
+			nextPutAll: '] ';
+			print: familyName;
+			nextPutAll: ' - ';
+			print: styleName;
+			nextPutAll: ' - ';
+			print: postscriptName;
+ 			space;
+			nextPutAll:
+				(bold
+					ifTrue: [ 'B' ]
+					ifFalse: [ '' ]);
+			nextPutAll: ' ';
+			nextPutAll:
+				(italic
+					ifTrue: [ 'I' ]
+					ifFalse: [ '' ]);
+			nextPutAll: ' ';
+			nextPutAll:
+				(fixedWidth
+					ifTrue: [ 'Monospaced' ]
+					ifFalse: [ '' ]);
+			nextPutAll: ' ';
+			print: stretchValue;
+			nextPutAll: ' ';
+			print: weightValue;
+			cr
 ]

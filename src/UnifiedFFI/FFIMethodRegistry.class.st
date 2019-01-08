@@ -44,7 +44,7 @@ FFIMethodRegistry class >> resetAll [
 	I am not supposed to be performed when image is just saved to avoid possible problem which can happen when we reset all caches and continue to work"
 	self uniqueInstance reset.
 	FFICallbackFunctionResolution reset.
-	FFIExternalStructure allSubclassesDo: #reset.
+	FFIExternalStructure resetAllStructures.
 	uniqueInstance := nil.
 ]
 

@@ -218,6 +218,12 @@ FFIExternalType >> initialize [
 ]
 
 { #category : #testing }
+FFIExternalType >> isExternalStructure [
+
+	^ false
+]
+
+{ #category : #testing }
 FFIExternalType >> isExternalType [
 	^ true
 ]

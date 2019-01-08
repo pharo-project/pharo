@@ -30,10 +30,22 @@ def shell(params){
 def runTests(architecture, prefix=''){
   cleanWs()
   dir(env.STAGE_NAME) {
-    unstash "bootstrap${architecture}"
-    shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
-    junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
-    archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
+    try {
+        unstash "bootstrap${architecture}"
+        shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
+        junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
+        archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
+    }finally{
+        // I am archiving the logs to check for crashes and errors.
+        if(fileExists('PharoDebug.log')){
+            shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}.log"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-${env.STAGE_NAME}.log", fingerprint: true
+        }
+        if(fileExists('crash.dmp')){
+            shell "mv crash.dmp crash-${env.STAGE_NAME}.dmp"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "crash-${env.STAGE_NAME}.dmp", fingerprint: true
+        }
+    }
   }
 }
 
