@@ -212,11 +212,8 @@ ZipArchiveMember >> contentStreamFromEncoding: encodingName [
 { #category : #reading }
 ZipArchiveMember >> contents [
 	"Answer my contents as a string."
-	| s |
-	s := (String new: self uncompressedSize) writeStream.
-	self extractTo: s.
-	s text.
-	^s contents
+	^ ByteArray new: self uncompressedSize streamContents: [ :s | 
+		self extractTo: s ]
 ]
 
 { #category : #reading }

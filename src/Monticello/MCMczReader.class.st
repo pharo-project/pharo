@@ -114,7 +114,7 @@ MCMczReader >> infoCache [
 MCMczReader >> loadDefinitions [
 	definitions := OrderedCollection new.
 	(self zip memberNamed: 'snapshot.bin') ifNotNil:
-		[:m | [^ definitions := (MCDataStream on: m contentStream) next definitions]
+		[:m | [^ definitions := (MCDataStream on: m contents readStream) next definitions ]
 			on: Error do: [:fallThrough |]].
 	"otherwise"
 	(self zip membersMatching: 'snapshot/*')
