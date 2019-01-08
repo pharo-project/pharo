@@ -91,7 +91,8 @@ function set_version_variables() {
 		set_version_pull_request_variables
 	fi
 	
-	# this is just to make things clear (and because they could change in the future, who knows :P)
-	PHARO_VM_VERSION="${PHARO_SHORT_VERSION}"
+	# I will use 70 vm for now (we still do not have 80 vm)
+	#PHARO_VM_VERSION="${PHARO_SHORT_VERSION}"
+	PHARO_VM_VERSION="70"
 	PHARO_COMMIT_HASH="$(git rev-parse --verify HEAD)"
 } 
