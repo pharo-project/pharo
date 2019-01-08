@@ -156,6 +156,7 @@ BaselineOfIDE >> baseline: spec [
 		
 		spec package: 'BlueInk-Core'.
 		
+		spec package: 'Transcript-NonInteractive-Tests'.
 		spec package: 'Collections-Tests'.
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
