@@ -133,8 +133,7 @@ BaselineOfIDE >> baseline: spec [
 			spec loads: 'slot-tests'. 
 			spec repository: repository
 		].
-
-		spec package: 'ReleaseTests'. 
+ 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
 		spec package: 'NautilusRefactoring-Tests'.
@@ -174,7 +173,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'OpalCompiler-Tests'.
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
-		spec package: 'ReleaseTests'.
+		spec package: 'Release-Tests'.
 		spec package: 'Ring-Deprecated-Tests-Containers'.
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'System-DependenciesTests'.
@@ -749,7 +748,6 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Multilingual-Tests'
 	'OpalCompiler-Tests' 
 	'Random-Tests'
-	"'ReleaseTests'"
 	'Ring-Deprecated-Tests-Kernel'
 	'Ring-Deprecated-Tests-Containers' 
 	'Tests' 
@@ -769,7 +767,7 @@ spec group: 'GT&QA-Group' with: #(
 	'GeneralRules-Tests' "depends on QA, needs cleanup"
 	'Kernel-Rules'		"depends on QA, DependencyAnalyzer, needs cleanup"
 
-	'ReleaseTests' 		"required by Manifest-Core Refactoring-Critics"
+	'Release-Tests' 		"required by Manifest-Core Refactoring-Critics"
 	'Reflectivity-Tools'	"required by Manifest-Core Refactoring-Critics"
 
 	'NautilusRefactoring'	"required by Epicea, SmartSuggestions"

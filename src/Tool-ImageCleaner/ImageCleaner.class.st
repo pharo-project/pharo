@@ -40,24 +40,19 @@ ImageCleaner class >> cleanUpForRelease [
 { #category : #accessing }
 ImageCleaner class >> examplePackages [
 	<script: 'self examplePackages inspect'>
-	
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Examples' ]
+	^ RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Examples' ]
 ]
 
 { #category : #accessing }
 ImageCleaner class >> helpPackages [
 	<script: 'self helpPackages inspect'>
-	
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
+	^ RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
 ]
 
 { #category : #accessing }
 ImageCleaner class >> testPackages [
 	<script: 'self testPackages inspect'>
-	
-	^ (RPackageOrganizer default packageNames
-		select: [ :each | (each endsWith: '-Tests') or: [ each includesSubstring: '-Tests-' ] ])
-		copyWithout: 'ReleaseTests'
+	^ RPackageOrganizer default packageNames select: [ :each | (each endsWith: '-Tests') or: [ each includesSubstring: '-Tests-' ] ]
 ]
 
 { #category : #api }
@@ -137,12 +132,12 @@ ImageCleaner >> cleanUpProcesses [
 
 { #category : #cleaning }
 ImageCleaner >> examplePackages [
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: 'Examples' ]
+	^ self class examplePackages
 ]
 
 { #category : #cleaning }
 ImageCleaner >> helpPackages [
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
+	^ self class helpPackages
 ]
 
 { #category : #cleaning }
@@ -179,7 +174,5 @@ ImageCleaner >> removeEmptyPackages [
 
 { #category : #cleaning }
 ImageCleaner >> testPackages [
-	^ (RPackageOrganizer default packageNames
-		select: [ :each | (each endsWith: '-Tests') or: [ each includesSubstring: '-Tests-' ] ])
-		copyWithout: 'ReleaseTests'
+	^ self class testPackages
 ]

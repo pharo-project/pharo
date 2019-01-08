@@ -4,7 +4,7 @@ Test to check if there are methods who have unused temporary variables in the im
 Class {
 	#name : #NoUnusedTemporaryVariablesLeftTest,
 	#superclass : #TestCase,
-	#category : #'ReleaseTests-CleanCode'
+	#category : #'Release-Tests-CleanCode'
 }
 
 { #category : #accessing }
