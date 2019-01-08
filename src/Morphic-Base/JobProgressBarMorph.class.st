@@ -23,11 +23,6 @@ Class {
 	#category : #'Morphic-Base-ProgressBar'
 }
 
-{ #category : #'class initialization' }
-JobProgressBarMorph class >> initialize [ 
-	self isInterruptable: true
-]
-
 { #category : #settings }
 JobProgressBarMorph class >> interruptionSetting: aBuilder [ 
 	<systemsettings>
@@ -41,7 +36,7 @@ JobProgressBarMorph class >> interruptionSetting: aBuilder [
 
 { #category : #accessing }
 JobProgressBarMorph class >> isInterruptable [
-	^ IsInterruptable
+	^ IsInterruptable ifNil: [ IsInterruptable := true ]
 ]
 
 { #category : #accessing }
