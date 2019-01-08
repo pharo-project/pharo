@@ -479,7 +479,7 @@ spec group: 'General-Tests-Group' with: #(
 	'System-Identification-Tests'		
 	'System-DependenciesTests'
 	'System-BasicCommandLineHandler-Tests'
-	'Transcript-NonInteractive-Tests'.
+	'Transcript-NonInteractive-Tests'
 	'PharoDocComment-Tests'	"standalone"
 ).	
 
