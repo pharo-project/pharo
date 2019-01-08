@@ -133,7 +133,8 @@ BaselineOfIDE >> baseline: spec [
 			spec loads: 'slot-tests'. 
 			spec repository: repository
 		].
- 
+ 	
+		spec package: 'Release-Tests'.
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
 		spec package: 'NautilusRefactoring-Tests'.
@@ -173,7 +174,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'OpalCompiler-Tests'.
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
-		spec package: 'Release-Tests'.
 		spec package: 'Ring-Deprecated-Tests-Containers'.
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'System-DependenciesTests'.
