@@ -205,20 +205,15 @@ ZipArchiveMember >> contentStreamFromEncoding: encodingName [
 	"Answer my contents as a text stream.
 	Interpret the raw bytes with given encodingName"
 
-	| s |
-	s := MultiByteBinaryOrTextStream on: (String new: self uncompressedSize).
-	s converter:  (TextConverter newForEncoding: encodingName).
-	self extractTo: s.
-	s reset.
-	^ s
-
+	^ (ByteArray new: self uncompressedSize streamContents: [ :stream |
+		self extractTo: stream ]) decodeWith: encodingName
 ]
 
 { #category : #reading }
 ZipArchiveMember >> contents [
 	"Answer my contents as a string."
 	| s |
-	s := RWBinaryOrTextStream on: (String new: self uncompressedSize).
+	s := (String new: self uncompressedSize) writeStream.
 	self extractTo: s.
 	s text.
 	^s contents
@@ -228,9 +223,8 @@ ZipArchiveMember >> contents [
 ZipArchiveMember >> contentsFrom: start to: finish [
 	"Answer my contents as a string."
 	| s |
-	s := RWBinaryOrTextStream on: (String new: finish - start + 1).
+	s := (String new: finish - start + 1) writeStream.
 	self extractTo: s from: start to: finish.
-	s text.
 	^s contents
 ]
 

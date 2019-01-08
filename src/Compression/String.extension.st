@@ -35,15 +35,11 @@ String >> unzipped [
 
 { #category : #'*Compression' }
 String >> zipped [
-	| stream gzstream |
+	| gzstream |
 
-	stream := RWBinaryOrTextStream on: String new.
-
-	gzstream := GZipWriteStream on: stream.
-	gzstream nextPutAll: self.
-	gzstream close.
-	stream reset.
-
-	^ stream contents
-
+	^ String streamContents: [ :stream |
+		gzstream := GZipWriteStream on: stream.
+		gzstream nextPutAll: self.
+		gzstream close.
+ 	]
 ]
