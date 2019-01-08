@@ -93,4 +93,5 @@ function set_version_variables() {
 	
 	# this is just to make things clear (and because they could change in the future, who knows :P)
 	PHARO_VM_VERSION="${PHARO_SHORT_VERSION}"
+	PHARO_COMMIT_HASH="$(git rev-parse --verify HEAD)"
 } 
