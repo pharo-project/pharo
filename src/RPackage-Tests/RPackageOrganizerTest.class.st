@@ -402,6 +402,20 @@ RPackageOrganizerTest >> testSilentlyRenameCategoryToBe [
 ]
 
 { #category : #tests }
+RPackageOrganizerTest >> testUnpackagedClassesWithMethods [
+
+	| aClass |
+	aClass := self createNewClassNamed: 'RTestClass' inCategory: RPackage defaultPackageName.
+	
+	self assert: aClass package name equals: RPackage defaultPackageName.
+	
+	aClass compile: 'm1'.
+	
+	self assert: (aClass >> #m1) package name equals: RPackage defaultPackageName.
+
+]
+
+{ #category : #tests }
 RPackageOrganizerTest >> testUnregisterBasedOnNames [
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.

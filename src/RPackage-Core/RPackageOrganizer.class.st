@@ -335,6 +335,12 @@ RPackageOrganizer >> debuggingName: aString [
 	debuggingName := aString
 ]
 
+{ #category : #accessing }
+RPackageOrganizer >> defaultPackage [
+
+	^ self packageNamed: RPackage defaultPackageName
+]
+
 { #category : #initialization }
 RPackageOrganizer >> defineUnpackagedClassesPackage [
 	^ self ensureExistAndRegisterPackageNamed: self packageClass defaultPackageName

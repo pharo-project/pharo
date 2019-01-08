@@ -34,5 +34,5 @@ CompiledMethod >> packageFromOrganizer: anRPackageOrganizer [
 			self origin isMeta
 				ifFalse: [ each includesSelector: originSelector ofClassName: self origin instanceSide originalName]
 				ifTrue: [ each includesSelector: originSelector ofMetaclassName: self origin instanceSide originalName]] 
-		ifNone: [ nil ]
+		ifNone: [ anRPackageOrganizer defaultPackage ]
 ]
