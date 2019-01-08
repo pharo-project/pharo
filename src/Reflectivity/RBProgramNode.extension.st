@@ -156,6 +156,7 @@ RBProgramNode >> removeLink: aMetaLink [
 	self links remove: aMetaLink ifAbsent: [  ].
 	self links ifEmpty: [ self removeProperty: #links ].
 	self clearReflectivityAnnotations.
+	self methodNode methodClass isObsolete ifTrue:[^self].
 	self methodNode method removeLink: aMetaLink.
 	SystemAnnouncer uniqueInstance announce: (MetalinkChanged linkRemoved: aMetaLink fromNode: self)
 ]
