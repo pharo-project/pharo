@@ -35,28 +35,6 @@ ZipWriteStream class >> baseLength [
 	^BaseLength
 ]
 
-{ #category : #'regression test' }
-ZipWriteStream class >> compressAndDecompress: aFile using: tempFile stats: stats [
-
-	| fileSize tempStream result |
-	aFile ifNil: [^nil].
-	fileSize := aFile size.
-	(fileSize < 1"00000" "or:[fileSize > 1000000]") ifTrue:[aFile close. ^nil].
-	Transcript cr; show:'Testing ', aFile name,' ... '.
-	tempStream := File openForWriteFileNamed: tempFile fullName.
-	'Compressing ', aFile name,'...' displayProgressFrom:  1 to: aFile size during: [ :bar |
-			result := self regressionCompress: aFile into: tempStream notifiying: bar stats: stats].
-	result ifTrue: [
-		'Validating ', aFile name,'...' displayProgressFrom: 0 to: aFile size during: [ :bar |
-				result := self regressionDecompress: aFile from: tempStream notifying: bar stats: stats]].
-	aFile close.
-	tempStream close.
-	tempFile delete.
-	result ~~ false ifTrue: [
-		Transcript show:' ok (', (result * 100 truncateTo: 0.01) printString,')'].
-	^result
-]
-
 { #category : #accessing }
 ZipWriteStream class >> distanceCodes [
 	^DistanceCodes
@@ -76,19 +54,6 @@ ZipWriteStream class >> extraLengthBits [
 ZipWriteStream class >> initialize [
 	"ZipWriteStream initialize"
 	VerboseLevel := 0
-]
-
-{ #category : #'regression test' }
-ZipWriteStream class >> logProblem: reason for: aFile [
-	| errFile |
-	errFile := FileStream fileNamed:'problems.log'.
-	errFile position: errFile size.
-	errFile cr; nextPutAll: aFile name;
-			cr; nextPutAll: reason.
-	errFile close.
-	self trace:' failed (', reason,')'.
-	aFile close.
-	^false
 ]
 
 { #category : #accessing }
@@ -140,72 +105,6 @@ ZipWriteStream class >> regressionCompress: aFile into: tempFile notifiying: pro
 	zip close.
 	tempFile nextPutAll: encoded contents.
 	^true
-]
-
-{ #category : #'regression test' }
-ZipWriteStream class >> regressionDecompress: aFile from: tempFile notifying: progressBar stats: stats [
-	"Validate aFile as decompressed from tempFile"
-
-	| unzip rawSize compressedSize buffer1 buffer2 |
-	rawSize := aFile size.
-	compressedSize := tempFile size.
-	aFile ascii.
-	aFile position: 0.
-	tempFile ascii.
-	tempFile position: 0.
-	buffer1 := ByteArray new: 4096.
-	buffer2 := buffer1 copy.
-	unzip := FastInflateStream on: tempFile.
-	[ aFile atEnd ]
-		whileFalse: [ 
-			progressBar current: aFile position.
-			buffer1 := aFile nextInto: buffer1.
-			buffer2 := unzip nextInto: buffer2.
-			buffer1 = buffer2
-				ifFalse: [ ^ self logProblem: 'contents ' for: aFile ] ].
-	unzip next ifNotNil: [ ^ self logProblem: 'EOF' for: aFile ].
-	stats at: #rawSize put: (stats at: #rawSize ifAbsent: [ 0 ]) + rawSize.
-	stats at: #compressedSize put: (stats at: #compressedSize ifAbsent: [ 0 ]) + compressedSize.
-	^ compressedSize asFloat / rawSize asFloat
-]
-
-{ #category : #'regression test' }
-ZipWriteStream class >> regressionTest [ "ZipWriteStream regressionTest"
-	"Compress and decompress everything we can 
-	find to validate that compression works as expected."
-	self regressionTestFrom: FileSystem workingDirectory.
-]
-
-{ #category : #'regression test' }
-ZipWriteStream class >> regressionTestFrom: fd [
-	"ZipWriteStream regressionTestFrom: FileSystem disk workingDirectory"
-	"ZipWriteStream regressionTestFrom: (FileSystem disk root)"
-	| tempFile stats |
-	Transcript clear.
-	stats := Dictionary new.
-	tempFile := FileSystem disk workingDirectory / '$$sqcompress$$'.
-	tempFile delete.
-	self regressionTestFrom: fd using: tempFile stats: stats.
-]
-
-{ #category : #'regression test' }
-ZipWriteStream class >> regressionTestFrom: fd using: tempFile stats: stats [
-	| files |
-	files := fd files asSortedCollection.
-	files do: [ :file | 
-		file = tempFile ifFalse: [
-			self 
-				compressAndDecompress: (File openForReadFileNamed: file fullName) 
-				using: tempFile 
-				stats: stats]].
-	
-	stats at: #numFiles put: (stats at: #numFiles ifAbsent:[0]) + files size.
-	files := nil.
-	
-	self printRegressionStats: stats from: fd.
-	fd directories asSortedCollection do:[:directory|
-		self regressionTestFrom: directory using: tempFile stats: stats.
-	].
 ]
 
 { #category : #crc }

@@ -69,11 +69,10 @@ MCMczWriter >> serializeDefinitions: aCollection [
 
 { #category : #serializing }
 MCMczWriter >> serializeInBinary: aSnapshot [
-	| writer s |
-	s := RWBinaryOrTextStream on: String new.
-	writer := MCDataStream on: s.
-	writer nextPut: aSnapshot.
-	^ s contents
+	
+	^ ByteArray streamContents: [ :str | | writer |
+		writer := MCDataStream on: str.
+		writer nextPut: aSnapshot ]
 ]
 
 { #category : #serializing }
