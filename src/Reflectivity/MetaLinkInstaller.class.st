@@ -139,10 +139,10 @@ MetaLinkInstaller >> initialize [
 	linkToNodesMapper := MetaLinkNodesMapper new.
 	superJumpLinks := OrderedCollection new.
 	
-	SystemAnnouncer uniqueInstance when: MetalinkChanged do: [ :announcement :annoucer | self metalinkChanged: announcement ].
-	SystemAnnouncer uniqueInstance when: MethodModified do: [ :announcement :annoucer | self methodChanged: announcement ].
-	SystemAnnouncer uniqueInstance when: MethodRemoved do: [ :announcement :annoucer | self methodRemoved: announcement ].
-	SystemAnnouncer uniqueInstance when: MethodAdded  do: [ :announcement :annoucer | self methodAdded: announcement ]
+	SystemAnnouncer uniqueInstance weak subscribe: MetalinkChanged send: #metalinkChanged: to: self.
+	SystemAnnouncer uniqueInstance weak subscribe: MethodModified send: #methodChanged: to: self.
+	SystemAnnouncer uniqueInstance weak subscribe: MethodRemoved send: #methodRemoved: to: self.
+	SystemAnnouncer uniqueInstance weak subscribe: MethodAdded  send: #methodAdded: to: self
 ]
 
 { #category : #installation }
