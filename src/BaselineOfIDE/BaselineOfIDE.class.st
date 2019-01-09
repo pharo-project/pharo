@@ -156,6 +156,7 @@ BaselineOfIDE >> baseline: spec [
 		
 		spec package: 'BlueInk-Core'.
 		
+		spec package: 'Transcript-NonInteractive-Tests'.
 		spec package: 'Collections-Tests'.
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
@@ -314,6 +315,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'PerformMessageCommandLineHandler'.
 		spec package: 'Pharo-Help'.
 		spec package: 'PharoDocComment'.
+		spec package: 'PharoDocComment-Tests'.
 		spec package: 'Polymorph-Widgets-Rules'.
 		spec package: 'ProfStef-Tests'.
 		spec package: 'Random-Tests'.
@@ -477,6 +479,8 @@ spec group: 'General-Tests-Group' with: #(
 	'System-Identification-Tests'		
 	'System-DependenciesTests'
 	'System-BasicCommandLineHandler-Tests'
+	'Transcript-NonInteractive-Tests'
+	'PharoDocComment-Tests'	"standalone"
 ).	
 
 spec group: 'FuzzyMatcher-Core-Group' with: #(
