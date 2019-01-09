@@ -55,3 +55,21 @@ RBRenameClassVariableTest >> testRenameClassVar [
 													in: class
 													classified: aSmalllintContext protocols]]')
 ]
+
+{ #category : #tests }
+RBRenameClassVariableTest >> testRenameClassVarInSharedPool [
+	| refactoring class userClass |
+	refactoring := RBRenameClassVariableRefactoring 
+		rename: #Var1
+		to: #VarOne
+		in: RBSharedPoolForTest.
+	self executeRefactoring: refactoring.
+	
+	class := refactoring model classNamed: #RBSharedPoolForTest.
+	userClass := refactoring model classNamed: #RBClassUsingSharedPoolForTest.
+	
+	self assert: (class parseTreeFor: #msg1) = (RBParser parseMethod: 'msg1 ^ VarOne').	
+	self assert: (class parseTreeFor: #msg2) = (RBParser parseMethod: 'msg2 ^ VarOne').	
+	self assert: (userClass parseTreeFor: #msg3) = (RBParser parseMethod: 'msg3 ^ VarOne').	
+
+]
