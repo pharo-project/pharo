@@ -19,7 +19,8 @@ find ${CACHE}
 # WARNING: If you change this, you will need to change "runKernelTests.sh" too
 #
 PHARO_NAME_PREFIX=$(find ${CACHE} -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2 | cut -d'-' -f 1-2)
-PHARO_VM_VERSION=$(echo "${PHARO_NAME_PREFIX}" | cut -d'-' -f 1| cut -c 6- | cut -d'.' -f 1-2 | sed 's/\.//')
+#PHARO_VM_VERSION=$(echo "${PHARO_NAME_PREFIX}" | cut -d'-' -f 1| cut -c 6- | cut -d'.' -f 1-2 | sed 's/\.//')
+PHARO_VM_VERSION"70"
 
 ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh ${PHARO_VM_VERSION} vm ${1}
 
