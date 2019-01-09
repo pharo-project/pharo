@@ -5423,12 +5423,12 @@ UITheme >> subgroupColorFrom: paneColor [
 
 { #category : #'accessing colors' }
 UITheme >> successBackgroundColor [
-	^ self successTextColor darker darker
+	^ self successTextColor lighter lighter
 ]
 
 { #category : #'accessing colors' }
 UITheme >> successTextColor [
-	^ Color green
+	^ Color r: 0 g: 0.5 b: 0
 ]
 
 { #category : #'border-styles' }
