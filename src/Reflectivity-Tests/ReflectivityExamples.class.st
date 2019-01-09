@@ -184,19 +184,16 @@ ReflectivityExamples >> exampleWithArg: anArg [
 ReflectivityExamples >> initialize [
 	ivar := 33.
 	ClassVar := #AClassVar.
+	self removeTemporaryMethods.
 	self compileTemporaryMethods
 ]
 
-{ #category : #'as yet unclassified' }
-ReflectivityExamples >> methodToBeModified [ ^nil
-]
-
-{ #category : #'as yet unclassified' }
-ReflectivityExamples >> methodToBeRemoved [ ^nil
-]
-
-{ #category : #'as yet unclassified' }
-ReflectivityExamples >> stubMethod [ ^nil
+{ #category : #initialization }
+ReflectivityExamples >> removeTemporaryMethods [
+	
+	self class removeSelector: #methodToBeRemoved.
+	self class removeSelector: #methodToBeModified.
+	self class removeSelector: #stubMethod
 ]
 
 { #category : #tagging }

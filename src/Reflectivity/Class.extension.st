@@ -37,16 +37,3 @@ Class >> link: aMetaLink toTemporary: aTempVar [
 	self flag: 'Not sure what it should do. The tests are not passing for this... See method testLinkClassToTempVarNamed'.
 	aTempVar link: aMetaLink
 ]
-
-{ #category : #'*Reflectivity' }
-Class >> link: aMetaLink toTemporaryNamed: aTempVarName inMethod: aMethodName [
-"	self
-		link: aMetaLink
-		toTemporary: (MetalinkTargetResolver temporaryNamed: aTempVarName inMethod: aMethodName for: self)
-	"
-		self
-		link: aMetaLink
-		toTemporaryNamed: aTempVarName
-		inMethod: aMethodName
-		option: #all
-]

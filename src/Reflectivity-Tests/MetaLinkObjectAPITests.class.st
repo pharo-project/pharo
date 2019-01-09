@@ -27,8 +27,9 @@ MetaLinkObjectAPITests >> linkForTemp [
 		control: #after
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 MetaLinkObjectAPITests >> setUp [
+	super setUp.
 	tag := OrderedCollection new.
 	MetaLink uninstallAll 
 ]
@@ -38,9 +39,10 @@ MetaLinkObjectAPITests >> tagExec: aTag [
 	tag add: aTag
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 MetaLinkObjectAPITests >> tearDown [
-	MetaLink uninstallAll
+	MetaLink uninstallAll.
+	super tearDown.
 ]
 
 { #category : #'class api' }

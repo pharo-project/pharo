@@ -12,6 +12,7 @@ Class {
 
 { #category : #running }
 LinkInstallerTests >> setUp [
+	super setUp.
 	Smalltalk garbageCollectMost.
 	MetaLink uninstallAll.
 	Smalltalk garbageCollectMost.
@@ -24,9 +25,11 @@ LinkInstallerTests >> setUp [
 { #category : #running }
 LinkInstallerTests >> tearDown [
 	ReflectivityExamples2 new removeModifiedMethodWithInstVarAccess.
+	ReflectivityExamples new removeTemporaryMethods.
 	Smalltalk garbageCollectMost.
 	MetaLink uninstallAll.
-	Smalltalk garbageCollectMost
+	Smalltalk garbageCollectMost.
+	super tearDown.
 ]
 
 { #category : #nodes }
@@ -449,6 +452,7 @@ LinkInstallerTests >> testPermaLinkNotInstalledOnObjectIfExistsInClass [
 	self assert: link nodes size equals: 8.		
 	
 	link uninstall.
+	ReflectivityExamples2 new removeNewMethodWithInstVarAccess.	
 	
 ]
 

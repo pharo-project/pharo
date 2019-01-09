@@ -25,17 +25,18 @@ ReflectivityExamples2 >> exampleMethod2 [
 		contents
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #generation }
 ReflectivityExamples2 >> generateNewMethodWithInstVarAccess [
-	self class compile:'newMethodWithInstVarAccess
+	self class
+		compile:
+			'newMethodWithInstVarAccess
 	instVar := 5.
 	instVar := 6.
 	instVar > 5 ifTrue:[^ instVar raisedTo: 2]'
-	
-
+		classified: 'example'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #example }
 ReflectivityExamples2 >> methodWithClassVarAccess [
 	classVar := 5.
 	classVar := 6.
@@ -44,7 +45,7 @@ ReflectivityExamples2 >> methodWithClassVarAccess [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #example }
 ReflectivityExamples2 >> methodWithInstVarAccess [
 	instVar := 5.
 	instVar := 6.
@@ -63,7 +64,7 @@ ReflectivityExamples2 >> methodWithOverrides: str1 with: str2 [
 	^str1, str2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #example }
 ReflectivityExamples2 >> methodWithTempVarAccess [
 	|temp|
 	temp := 5.
@@ -73,7 +74,7 @@ ReflectivityExamples2 >> methodWithTempVarAccess [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #example }
 ReflectivityExamples2 >> modifyMethodWithInstVarAccess [
 	self class compile:'modifiedMethodWithInstVarAccess
 	instVar > 5 ifTrue:[^ instVar raisedTo: 2]'
@@ -81,7 +82,7 @@ ReflectivityExamples2 >> modifyMethodWithInstVarAccess [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #example }
 ReflectivityExamples2 >> newMethodWithInstVarAccess [
 	instVar := 5.
 	instVar := 6.
@@ -93,17 +94,18 @@ ReflectivityExamples2 >> removeModifiedMethodWithInstVarAccess [
 	self class removeSelector: #modifiedMethodWithInstVarAccess
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #removing }
 ReflectivityExamples2 >> removeNewMethodWithInstVarAccess [
 	self class removeSelector: #newMethodWithInstVarAccess
 ]
 
-{ #category : #removing }
+{ #category : #generation }
 ReflectivityExamples2 >> resetModifiedMethodWithInstVarAccess [
-	self class compile:'modifiedMethodWithInstVarAccess
+	self class
+		compile:
+			'modifiedMethodWithInstVarAccess
 	instVar := 5.
 	instVar := 6.
 	instVar > 5 ifTrue:[^ instVar raisedTo: 2]'
-	
-
+		classified: 'example'
 ]
