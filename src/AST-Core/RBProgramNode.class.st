@@ -333,14 +333,7 @@ RBProgramNode >> evaluatedFirst: aNode [
 
 { #category : #accessing }
 RBProgramNode >> formattedCode [
-	^ self formattedCodeWithMaxLineLength: 70
-]
-
-{ #category : #accessing }
-RBProgramNode >> formattedCodeWithMaxLineLength: anInteger [
-	^ self formatterClass new
-		containerWidth: anInteger;
-		format: self
+	^ self formatterClass new format: self
 ]
 
 { #category : #accessing }

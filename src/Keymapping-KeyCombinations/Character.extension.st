@@ -7,7 +7,10 @@ Character >> alt [
 
 { #category : #'*Keymapping-KeyCombinations' }
 Character >> asKeyCombination [
-	^ KMSingleKeyCombination from: self
+	| lowerCaseCombination |
+	self asLowercase = self ifTrue: [^ KMSingleKeyCombination from: self].
+	lowerCaseCombination := KMSingleKeyCombination from: self asLowercase.
+	^KMModifiedKeyCombination modifier: KMModifier shift character: lowerCaseCombination.
 ]
 
 { #category : #'*Keymapping-KeyCombinations' }

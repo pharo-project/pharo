@@ -50,15 +50,11 @@ FileSystemResolver >> resolve: aSymbol [
 
 { #category : #resolving }
 FileSystemResolver >> resolveString: aString [
-	| decoded fs |
-	"The argument string is actually a byte array encoded differently on each platform.
-	We are transforming it to an image string.
-	We assume for now that the string is utf8 encoded."
-	decoded := aString asByteArray utf8Decoded.
+	| fs |
 	fs := FileSystem disk.
 	^ FileReference 
 		fileSystem: fs 
-		path: (fs pathFromString: decoded)
+		path: (fs pathFromString: aString)
 ]
 
 { #category : #resolving }

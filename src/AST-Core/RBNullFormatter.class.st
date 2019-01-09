@@ -31,11 +31,6 @@ RBNullFormatter class >> formatAsYouReadPolicy: aBoolean [
 ]
 
 { #category : #'public interface' }
-RBNullFormatter >> containerWidth: anInteger [
-	"doing nothing on purpose"
-]
-
-{ #category : #'public interface' }
 RBNullFormatter >> format: aParseTree [ 
 	^ aParseTree source
 		ifNil: [	self visitNode: aParseTree.

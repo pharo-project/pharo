@@ -123,9 +123,9 @@ DosTimestamp >> low16Bits [
 DosTimestamp >> printOn: aStream [
 
 	aStream
-		nextPutAll: self asDateAndTime printString;
+		print: self asDateAndTime ;
 		nextPutAll: ' (';
-		nextPutAll: self value asString;
+		print: self value ;
 		nextPut: $).
 ]
 

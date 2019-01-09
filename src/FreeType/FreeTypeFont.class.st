@@ -321,7 +321,7 @@ FreeTypeFont >> getLinearWidthOf: aCharacter [
 	face validate.
 	face setPixelWidth: em height: em.
 	[face loadCharacter: charCode flags: (LoadNoBitmap bitOr: (LoadIgnoreTransform bitOr: "FreeTypeSettings current hintingFlags" 2 "no hinting"))]
-		on: FT2Error do:[:e |
+		on: FT2Error , PrimitiveFailed do:[:e |
 			face loadGlyph: 0 flags: (LoadNoBitmap bitOr: (LoadIgnoreTransform bitOr: FreeTypeSettings current hintingFlags "no hinting")) ].
 	glyph := face glyph.
 	la := glyph linearHorizontalAdvance.
@@ -363,7 +363,7 @@ FreeTypeFont >> getWidthOf: aCharacter [
 	hintingFlags := FreeTypeSettings current hintingFlags.
 	flags :=  LoadNoBitmap bitOr:( LoadIgnoreTransform bitOr: hintingFlags). 
 	[face loadCharacter: charCode flags: flags.
-	] on:FT2Error do:[:e | "character not in map?"^0]. 
+	] on:FT2Error, PrimitiveFailed do:[:e | "character not in map?"^0]. 
 	glyph := face glyph.
 	"When not hinting FreeType sets the advance to the truncated linearAdvance.
 	The characters appear squashed together. Rounding is probably better, so we 
