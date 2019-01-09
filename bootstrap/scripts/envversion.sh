@@ -9,7 +9,8 @@
 function is_release_build() {
 	set -f
 	local versionTag=$(git tag --list --points-at HEAD | grep -E "^v[0-9]+\.[0-9]+.[0-9]+(\-[a-zA-Z0-9_]+)?$")
-    if [ "${versionTag}" == "" ]; then
+    set +f
+	if [ "${versionTag}" == "" ]; then
         echo 0
     else
         echo 1
@@ -26,6 +27,7 @@ function ensure_branch_name() {
 	if [ "${BRANCH_NAME}" == "" ]; then
 		set -f
 		BRANCH_NAME="$(git branch | grep \* | cut -d' ' -f 2)"
+	    set +f
 	fi
 }
 
