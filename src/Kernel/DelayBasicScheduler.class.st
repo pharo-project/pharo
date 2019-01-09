@@ -175,6 +175,7 @@ DelayBasicScheduler >> runBackendLoopAtTimingPriority [
 	"Unit tests may run this at a lower priority" 
 
 	"Debug lines to help code review. Could be removed after a settling in period"
+	<haltOrBreakpointForTesting>
 
 	[  [runTimerEventLoop] whileTrue: 
 		[	|nowTick|
@@ -205,6 +206,7 @@ DelayBasicScheduler >> runBackendLoopAtTimingPriority [
 
 { #category : #'user-api' }
 DelayBasicScheduler >> schedule: aDelay [
+	<haltOrBreakpointForTesting>
 	"This is the front-half of scheduling a delay. Invoked from user processes. 
 	 For back-half see #scheduleAtTimingPriority"
 
@@ -326,6 +328,7 @@ DelayBasicScheduler >> suspend [
 
 { #category : #'private - timing priority process' }
 DelayBasicScheduler >> suspendAtTimingPriority [
+	<haltOrBreakpointForTesting>
 	"Private! This is the front-half for suspending the delay scheduler to prevent
 	 wake-up of delayed threads in the middle of snapshotting. For front-half see #suspend"
 	debug ifTrue: [ self halt ].
@@ -355,6 +358,7 @@ DelayBasicScheduler >> ticker [
 
 { #category : #'user-api' }
 DelayBasicScheduler >> unschedule: aDelay [
+	<haltOrBreakpointForTesting>
 	"This is the front-half of unscheduling a delay. Invoked from user processes. 
 	 For back-half see #unscheduleAtTimingPriority"
 
