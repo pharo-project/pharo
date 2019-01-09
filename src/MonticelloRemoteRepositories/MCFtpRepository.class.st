@@ -108,12 +108,12 @@ MCFtpRepository >> password: passwordString [
 { #category : #required }
 MCFtpRepository >> readStreamForFileNamed: aString do: aBlock [
 	
-	^ self clientDo:
-		[:client | | stream |
+	| bytes |
+	
+	^ self clientDo: [:client | 
 		client binary.
-		stream := RWBinaryOrTextStream on: String new.
-		stream nextPutAll: (client getFileNamed: aString).
-		aBlock value: stream reset]
+		bytes := ByteArray streamContents: [ :stream | stream nextPutAll: (client getFileNamed: aString) asByteArray ].
+		aBlock value: bytes readStream]
 ]
 
 { #category : #accessing }
@@ -123,11 +123,13 @@ MCFtpRepository >> user: userString [
 
 { #category : #required }
 MCFtpRepository >> writeStreamForFileNamed: aString replace: ignoreBoolean do: aBlock [
-	| stream |
-	stream := RWBinaryOrTextStream on: String new.
-	aBlock value: stream.
+
+	| bytes |
+	bytes := ByteArray streamContents: [ :stream |
+		aBlock value: stream].
+	
 	self clientDo:
-		[:client |
-		client binary.
-		client putFileStreamContents: stream reset as: aString]
+			[:client |
+			client binary.
+			client putFileStreamContents: bytes readStream as: aString]
 ]
