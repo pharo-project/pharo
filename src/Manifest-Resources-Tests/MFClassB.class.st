@@ -15,5 +15,5 @@ MFClassB >> method2 [
 { #category : #'as yet unclassified' }
 MFClassB >> method3 [
 	|foo|
-	self halt.
+	1+1.
 ]
