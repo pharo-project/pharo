@@ -128,7 +128,7 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> renderStretchedGlyph: aCharacter dep
 	hintingFlags := FreeTypeSettings current hintingFlags.
 	flags :=  LoadNoBitmap bitOr:( LoadIgnoreTransform bitOr: hintingFlags). 
 	face loadCharacter:charCode flags: flags. 
-	] on: FT2Error do:[:e | 
+	] on: FT2Error, PrimitiveFailed do:[:e | 
 		^(GlyphForm extent: 0@0 depth: depth)
 			advance: 0@0;
 			linearAdvance: 0@0;
