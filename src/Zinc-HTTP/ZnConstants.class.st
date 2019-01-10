@@ -21,6 +21,7 @@ ZnConstants class >> defaultHTTPVersion [
 
 { #category : #accessing }
 ZnConstants class >> defaultServerString [ 
+	
 	^DefaultServerString ifNil: [ DefaultServerString := self frameworkNameAndVersion , ' (' , self systemVersion , ')' ]
 
 ]
