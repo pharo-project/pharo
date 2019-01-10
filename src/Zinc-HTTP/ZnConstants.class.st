@@ -8,6 +8,7 @@ Class {
 	#superclass : #Object,
 	#classVars : [
 		'DefaultMaximumEntitySize',
+		'DefaultServerString',
 		'HTTPStatusCodes'
 	],
 	#category : #'Zinc-HTTP-Support'
@@ -20,7 +21,15 @@ ZnConstants class >> defaultHTTPVersion [
 
 { #category : #accessing }
 ZnConstants class >> defaultServerString [ 
-	^ self frameworkNameAndVersion , ' (' , self systemVersion , ')'
+	^DefaultServerString ifNil: [ DefaultServerString := self frameworkNameAndVersion , ' (' , self systemVersion , ')' ]
+
+]
+
+{ #category : #accessing }
+ZnConstants class >> defaultServerString: aString [ 
+
+	DefaultServerString := aString
+
 ]
 
 { #category : #accessing }
