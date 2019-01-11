@@ -54,13 +54,12 @@ GTPlaygroundBasicTest >> testPageActionsIn [
 		title: ''A mock page action'''
 		classified: '*GTMockTests'.
 		
-	[ self assert: selector notNil.
+	self assert: selector notNil.
 	window := playground openOn: (GTPlayPage new saveContent: 'a:=1. b:=a+1').
 	actions := playground pageActions.
 	self deny: actions size isZero.
 	action := actions detect: [ :eachAction | eachAction title = 'A mock page action' ].
-	self deny: action isNil ]
-		ensure: [ playground class removeSelector: selector ]
+	self deny: action isNil
 ]
 
 { #category : #running }
@@ -76,13 +75,12 @@ GTPlaygroundBasicTest >> testPlaygroundActionsIn [
 		title: ''A mock playground action'''
 		classified: '*GTMockTests'.
 		
-	[ self assert: selector notNil.
+	self assert: selector notNil.
 	window := playground openOn: (GTPlayPage new saveContent: 'a:=1. b:=a+1').
 	actions := playground playgroundActions.
 	self deny: actions size isZero.
 	action := actions detect: [ :eachAction | eachAction title = 'A mock playground action' ].
-	self deny: action isNil ]
-		ensure: [ playground class removeSelector: selector ]
+	self deny: action isNil
 ]
 
 { #category : #running }
