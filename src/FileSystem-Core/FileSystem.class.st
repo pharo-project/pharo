@@ -610,7 +610,7 @@ FileSystem >> move: sourcePath to: destination [
 	If destPath is a file, raise FileExists.
 	If destPath is a directory, move the sourcePath in to the directory"
 
-	| fullDestination |
+	| fullDestination destinationPath |
 
 	destination isFile ifTrue: [ FileExists signalWith: destination ].
 	destination isDirectory
@@ -618,9 +618,11 @@ FileSystem >> move: sourcePath to: destination [
 		ifFalse: [ fullDestination := destination ].
 	self = destination fileSystem ifTrue: 
 	[
+		destinationPath := fullDestination resolve path.
+		sourcePath = destinationPath ifTrue: [ ^fullDestination ].
 		"Ideally we would test whether the source and destination are on the same filesystem from the OSs perspective.
 		Since we can't do that, just try rename, and if that fails, copy and delete."
-		[ self rename: sourcePath to: fullDestination resolve path ]
+		[ self rename: sourcePath to: destinationPath ]
 			on: Error
 			do: [ :error | self copyAndDelete: sourcePath to: fullDestination ].
 	] ifFalse:
