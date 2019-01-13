@@ -19,26 +19,11 @@ FFI_x86_64_SystemV class >> isActive [
 ]
 
 { #category : #'default abi' }
-FFI_x86_64_SystemV >> areStructuresSplitIntoRegisters [
-	^ true
-]
-
-{ #category : #'default abi' }
 FFI_x86_64_SystemV >> computeStructureRegisterPassingLayout: aStructureClass [
 	| layout |
 	aStructureClass structureSize > self maxStructureSizeToPassInRegisters ifTrue: [ ^ nil ].
 	layout := aStructureClass flatStructureLayout sysVAMD64PostProcess.
 	^ layout isPassedInMemory ifTrue: [ nil ] ifFalse: [ layout ]
-]
-
-{ #category : #'default abi' }
-FFI_x86_64_SystemV >> floatRegisterCountForParameterPassing [
-	^ 8
-]
-
-{ #category : #'default abi' }
-FFI_x86_64_SystemV >> integerRegisterCountForParameterPassing [
-	^ 6
 ]
 
 { #category : #'default abi' }

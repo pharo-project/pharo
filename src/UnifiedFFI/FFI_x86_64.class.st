@@ -30,26 +30,6 @@ FFI_x86_64 >> externalULongType [
 ]
 
 { #category : #'default abi' }
-FFI_x86_64 >> floatRegisterSize [
-	^ 8
-]
-
-{ #category : #'default abi' }
-FFI_x86_64 >> integerRegisterSize [
-	^ 8
-]
-
-{ #category : #types }
-FFI_x86_64 >> longType [
-	^ FFIInt64
-]
-
-{ #category : #'default abi' }
 FFI_x86_64 >> returnSingleFloatsAsDoubles [
 	^ false
-]
-
-{ #category : #types }
-FFI_x86_64 >> ulongType [
-	^ FFIUInt64
 ]

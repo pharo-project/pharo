@@ -28,28 +28,3 @@ FFI_x86_64_Windows >> externalLongType [
 FFI_x86_64_Windows >> externalULongType [
 	^ ExternalType ulong
 ]
-
-{ #category : #'default abi' }
-FFI_x86_64_Windows >> floatRegisterCountForParameterPassing [
-	^ 4
-]
-
-{ #category : #'default abi' }
-FFI_x86_64_Windows >> integerRegisterCountForParameterPassing [
-	^ 4
-]
-
-{ #category : #types }
-FFI_x86_64_Windows >> longType [
-	^ FFIInt32
-]
-
-{ #category : #'default abi' }
-FFI_x86_64_Windows >> shadowCallSpaceSize [
-	^ 32
-]
-
-{ #category : #types }
-FFI_x86_64_Windows >> ulongType [
-	^ FFIUInt32
-]
