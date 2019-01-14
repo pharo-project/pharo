@@ -41,6 +41,12 @@ FFICallbackArgumentReader >> basicExtractInteger [
 ]
 
 { #category : #extracting }
+FFICallbackArgumentReader >> basicExtractPointer [
+	
+	^ ExternalAddress fromAddress: (self basicExtractUnsignedInteger)
+]
+
+{ #category : #extracting }
 FFICallbackArgumentReader >> basicExtractUnsignedInteger [
 	
 	| baseAddressToRead offsetOfBaseAddress type pair |
@@ -146,6 +152,7 @@ FFICallbackArgumentReader >> extractPointerOfType: aType [
 FFICallbackArgumentReader >> extractStructType: type [ 
 	
 	| pair baseAddressToRead offsetOfBaseAddress |
+	
 	pair := self nextBaseAddressForStructure: type.
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.

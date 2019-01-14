@@ -1,9 +1,8 @@
 Class {
 	#name : #FFISystemV64CallbackArgumentReader,
-	#superclass : #FFICallbackArgumentReader,
+	#superclass : #FFIAbstract64BitsArgumentReader,
 	#instVars : [
-		'currentFloatRegisterIndex',
-		'currentIntegerRegisterIndex'
+		'currentFloatRegisterIndex'
 	],
 	#category : #'UnifiedFFI-Architecture'
 }
@@ -15,13 +14,7 @@ FFISystemV64CallbackArgumentReader >> currentFloatRegisterIndex [
 
 { #category : #accessing }
 FFISystemV64CallbackArgumentReader >> currentIntegerRegisterIndex [
-	^ currentIntegerRegisterIndex
-]
-
-{ #category : #accessing }
-FFISystemV64CallbackArgumentReader >> floatRegisterPointer [
-	
-	^ callbackContext floatregargsp
+	^ currentRegisterIndex
 ]
 
 { #category : #updating }
@@ -33,7 +26,7 @@ FFISystemV64CallbackArgumentReader >> increateFloatRegisterIndex [
 { #category : #updating }
 FFISystemV64CallbackArgumentReader >> increateIntegerRegisterIndex [
 	
-	currentIntegerRegisterIndex := currentIntegerRegisterIndex + 1
+	currentRegisterIndex := currentRegisterIndex + 1
 ]
 
 { #category : #initialization }
@@ -41,13 +34,7 @@ FFISystemV64CallbackArgumentReader >> initialize [
 
 	super initialize.
 	currentFloatRegisterIndex := 1.
-	currentIntegerRegisterIndex := 1.	
-]
 
-{ #category : #accessing }
-FFISystemV64CallbackArgumentReader >> integerRegisterPointer [
-	
-	^ callbackContext intregargsp
 ]
 
 { #category : #'calculating-offsets' }
@@ -84,9 +71,9 @@ FFISystemV64CallbackArgumentReader >> nextBaseAddressForStructure: type [
 	(type externalTypeSize > FFIArchitecture forCurrentArchitecture maxStructureSizeToPassInRegisters)
 		ifTrue: [ ^ super nextBaseAddressFor: type ].
 
-	baseOffset := (self currentIntegerRegisterIndex - 1) * Smalltalk wordSize + 1.
+	baseOffset := (currentRegisterIndex - 1) * Smalltalk wordSize + 1.
 	"We have to increase the current register index used"
-	currentIntegerRegisterIndex := currentIntegerRegisterIndex + (type externalTypeSize / Smalltalk wordSize) ceiling.
+	currentRegisterIndex := currentRegisterIndex + (type externalTypeSize / Smalltalk wordSize) ceiling.
 	 		
 	^ { self integerRegisterPointer.  baseOffset}
 	
