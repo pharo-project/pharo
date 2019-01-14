@@ -9,11 +9,8 @@ Class {
 
 { #category : #'as yet unclassified' }
 MFClassB >> method2 [
-	|foo|
 ]
 
 { #category : #'as yet unclassified' }
 MFClassB >> method3 [
-	|foo|
-	1+1.
 ]

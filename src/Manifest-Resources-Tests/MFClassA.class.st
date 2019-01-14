@@ -9,6 +9,4 @@ Class {
 
 { #category : #'as yet unclassified' }
 MFClassA >> method [
-	|foo|
-	1+1.
 ]
