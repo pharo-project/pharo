@@ -235,6 +235,12 @@ FFIExternalType >> isExternalType [
 ]
 
 { #category : #testing }
+FFIExternalType >> isFloatType [
+
+	^ false
+]
+
+{ #category : #testing }
 FFIExternalType >> isPointer [
 	^ self pointerArity > 0
 ]

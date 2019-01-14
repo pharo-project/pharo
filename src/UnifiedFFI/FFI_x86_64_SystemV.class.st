@@ -31,3 +31,11 @@ FFI_x86_64_SystemV >> maxStructureSizeToPassInRegisters [
 	"Four eightbytes according to the ABI documentation."
 	^ 16
 ]
+
+{ #category : #callbacks }
+FFI_x86_64_SystemV >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [ 
+
+	^ FFISystemV64CallbackArgumentReader
+		forCallback: aCallback
+		inContext: aCallbackContext
+]

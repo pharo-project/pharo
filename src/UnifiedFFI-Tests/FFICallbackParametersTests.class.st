@@ -4,6 +4,9 @@ Class {
 	#instVars : [
 		'callback'
 	],
+	#classVars : [
+		'ARRAY'
+	],
 	#pools : [
 		'FFITestEnumeration'
 	],
@@ -157,7 +160,51 @@ FFICallbackParametersTests >> testMixingParameters [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testPassingDoubleStructureInTheStack [ 
+FFICallbackParametersTests >> testPassing2DoubleStructureInTheStack [ 
+			
+	| param |
+	callback := FFICallback 
+		signature: #(int (FFITestStructure2DoubleStructure a))
+		block: [ :a |
+			self assert: a x equals: 2.0. 
+			self assert: a y equals: 3.0. 
+
+			99
+		].
+
+	param := FFITestStructure2DoubleStructure externalNew
+		x: 2.0;
+		y: 3.0;
+		autoRelease;
+		yourself.
+
+	self assert: (self callCallback: callback withArgs: { param }) equals: 99.
+]
+
+{ #category : #running }
+FFICallbackParametersTests >> testPassing2Int64StructureInTheStack [ 
+			
+	| param |
+	callback := FFICallback 
+		signature: #(int (FFITestStructure2Int64Structure a))
+		block: [ :a |
+			self assert: a x equals: 2. 
+			self assert: a y equals: 3. 
+
+			99
+		].
+
+	param := FFITestStructure2Int64Structure externalNew
+		x: 2;
+		y: 3;
+		autoRelease;
+		yourself.
+
+	self assert: (self callCallback: callback withArgs: { param }) equals: 99.
+]
+
+{ #category : #running }
+FFICallbackParametersTests >> testPassing4DoubleStructureInTheStack [ 
 			
 	| param |
 	callback := FFICallback 
@@ -180,6 +227,58 @@ FFICallbackParametersTests >> testPassingDoubleStructureInTheStack [
 		x: 2.0;
 		y: 3;
 		w: 5.0;
+		z: 7;
+		autoRelease;
+		yourself.
+
+	self assert: (self callCallback: callback withArgs: { param }) equals: 99.
+]
+
+{ #category : #running }
+FFICallbackParametersTests >> testPassing4Int64StructureInTheStack [ 
+			
+	| param |
+	callback := FFICallback 
+		signature: #(int (FFITestStructure4Int64Structure a))
+		block: [ :a |
+			self assert: a x equals: 2. 
+			self assert: a y equals: 3. 
+			self assert: a w equals: 5. 
+			self assert: a z equals: 7. 
+
+			99
+		].
+
+	param := FFITestStructure4Int64Structure externalNew
+		x: 2;
+		y: 3;
+		w: 5;
+		z: 7;
+		autoRelease;
+		yourself.
+
+	self assert: (self callCallback: callback withArgs: { param }) equals: 99.
+]
+
+{ #category : #running }
+FFICallbackParametersTests >> testPassing4IntStructureInTheStack [ 
+			
+	| param |
+	callback := FFICallback 
+		signature: #(int (FFITestStructureIntStructure a))
+		block: [ :a |
+			self assert: a x equals: 2. 
+			self assert: a y equals: 3. 
+			self assert: a w equals: 5. 
+			self assert: a z equals: 7. 
+
+			99
+		].
+
+	param := FFITestStructureIntStructure externalNew
+		x: 2;
+		y: 3;
+		w: 5;
 		z: 7;
 		autoRelease;
 		yourself.

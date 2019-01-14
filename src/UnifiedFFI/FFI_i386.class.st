@@ -14,6 +14,7 @@ FFI_i386 class >> isActive [
 
 { #category : #callback }
 FFI_i386 >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [
+
 	^ FFIi386CallbackArgumentReader
 		forCallback: aCallback
 		inContext: aCallbackContext
