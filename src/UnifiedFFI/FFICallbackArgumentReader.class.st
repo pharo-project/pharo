@@ -174,11 +174,13 @@ FFICallbackArgumentReader >> initialize [
 { #category : #'calculating-offsets' }
 FFICallbackArgumentReader >> nextBaseAddressFor: type [
 
-	| baseAddressToRead offsetOfBaseAddress |
+	| baseAddressToRead offsetOfBaseAddress typeSize |
+
+	typeSize := type isPointer ifTrue: [ Smalltalk wordSize ] ifFalse: [ type externalTypeSize ].
 
 	baseAddressToRead := self stackPointer.
 	offsetOfBaseAddress := currentStackOffset.
-	currentStackOffset := currentStackOffset + type externalTypeSize.
+	currentStackOffset := currentStackOffset + typeSize.
 
 	^ {baseAddressToRead. offsetOfBaseAddress}
 ]

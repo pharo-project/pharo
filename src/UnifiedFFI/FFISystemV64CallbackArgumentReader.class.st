@@ -84,9 +84,9 @@ FFISystemV64CallbackArgumentReader >> nextBaseAddressForStructure: type [
 	(type externalTypeSize > FFIArchitecture forCurrentArchitecture maxStructureSizeToPassInRegisters)
 		ifTrue: [ ^ super nextBaseAddressFor: type ].
 
-	baseOffset := (self currentIntegerRegisterIndex - 1) * 8 + 1.
+	baseOffset := (self currentIntegerRegisterIndex - 1) * Smalltalk wordSize + 1.
 	"We have to increase the current register index used"
-	currentIntegerRegisterIndex := currentIntegerRegisterIndex + (type externalTypeSize / 8) ceiling.
+	currentIntegerRegisterIndex := currentIntegerRegisterIndex + (type externalTypeSize / Smalltalk wordSize) ceiling.
 	 		
 	^ { self integerRegisterPointer.  baseOffset}
 	

@@ -1,3 +1,6 @@
+"
+This TestSuite evaluates the correct implementation of the callback parameter extraction.
+"
 Class {
 	#name : #FFICallbackParametersTests,
 	#superclass : #TestCase,
@@ -289,7 +292,7 @@ FFICallbackParametersTests >> testPassing4IntStructureInTheStack [
 { #category : #running }
 FFICallbackParametersTests >> testPassingStructureInTheStack [ 
 	
-	| param expect |
+	| param |
 	callback := FFICallback 
 		signature: #(int (FFITestStructureSmallIntFloatStructure a))
 		block: [ :a |
