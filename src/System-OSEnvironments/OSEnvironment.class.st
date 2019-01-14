@@ -6,19 +6,9 @@ Get access using:
 
 Low level API
 
-- getEnv: aVariableName
-Gets the value of an environment variable called `aVariableName`
-It is the system reponsibility to manage the encoding.
-Rationale: A common denominator for all platforms providing an already decoded string, because windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation.
-
-- getEnvRaw: anEncodedVariableName
-Gets the value of an environment variable called `anEncodedVariableName` already encoded.
-It is the user responsibility to encode and decode argument and return values in the encoding of this preference.
-Rationale: Some systems may want to have the liberty to use different encodings, or even to put binary data in the variables.
-
-- getEnv: aVariableName encoding: anEncoding
-Gets the value of an environment variable called `aVariableName` using `anEncoding` to encode/decode arguments and return values.
-Rationale: *xes could use different encodings
+- getEnv: aKey
+Gets the value of an environment variable called `aKey`
+I use the default encoding, and return nil when my value is not found
 "
 Class {
 	#name : #OSEnvironment,
@@ -185,6 +175,14 @@ OSEnvironment >> at: aKey put: aValue [
 OSEnvironment >> do: aBlock [
 
 	^self valuesDo: aBlock
+]
+
+{ #category : #accessing }
+OSEnvironment >> getEnv: aKey [
+	"Gets the value of an environment variable called `aKey`.
+	Returns nil if not found."
+
+	^ self at: aKey ifAbsent: [ nil ]
 ]
 
 { #category : #testing }
