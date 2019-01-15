@@ -84,7 +84,7 @@ ZnDefaultServerDelegate >> errorResponse: request [
 	optionally with a user defined message."
 	
 	| message |
-	message := request uri queryAt: 'message' ifAbsent: [ 'An artifical error' ].
+	message := request uri queryAt: 'message' ifAbsent: [ 'An artificial error' ].
 	Error signal: message
 ]
 
