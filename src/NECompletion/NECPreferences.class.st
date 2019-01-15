@@ -28,20 +28,17 @@ Class {
 
 { #category : #private }
 NECPreferences class >> availableControllers [
-	^NECController withAllSubclasses
+	^ NECController withAllSubclasses
 ]
 
 { #category : #accessing }
 NECPreferences class >> availablePopupShortcuts [
-	^ {
-		Character space shift. 
-		Character tab asKeyCombination}
+	^ {Character space shift . Character tab asKeyCombination}
 ]
 
 { #category : #accessing }
-NECPreferences class >> backgroundColor [ 
-	^backgroundColor ifNil: [ 
-		backgroundColor := (Smalltalk ui theme settings menuColor ifNil: [ Color white ]) ]
+NECPreferences class >> backgroundColor [
+	^ backgroundColor
 ]
 
 { #category : #accessing }
@@ -78,29 +75,33 @@ NECPreferences class >> currentController [
 ]
 
 { #category : #defaults }
+NECPreferences class >> defaultBackgroundColor [
+	^ Smalltalk ui theme menuColor
+]
+
+{ #category : #defaults }
 NECPreferences class >> defaultPopupDelay [
 	^ 200
 ]
 
 { #category : #defaults }
 NECPreferences class >> defaultPopupShortcut [
-	^Character tab asShortcut
+	^ Character tab asShortcut
 ]
 
 { #category : #defaults }
 NECPreferences class >> defaultPopupShowAutomatic [
-	^true
+	^ true
 ]
 
 { #category : #defaults }
 NECPreferences class >> defaultSpaceAfterCompletion [
-	^true
+	^ true
 ]
 
 { #category : #defaults }
 NECPreferences class >> defaultUseEnterToAccept [
-	
-	^ false
+	^ true
 ]
 
 { #category : #accessing }
@@ -131,7 +132,7 @@ NECPreferences class >> initialize [
 	smartCharacters := true.
 	expandPrefixes := true.
 	captureNavigationKeys := false.
-	useEnterToAccept := true.
+	useEnterToAccept := self defaultUseEnterToAccept.
 	smartCharactersMapping := Dictionary new.
 	smartCharactersMapping
 		at: $( put: $) -> true;
@@ -141,10 +142,10 @@ NECPreferences class >> initialize [
 		at: $' put: $' -> true;
 		at: $< put: $> -> false;
 		at: $| put: $| -> false.
-		
+
 	smartCharactersWithSingleSpace := ''.
 	smartCharactersWithDoubleSpace := '[]{}'.
-	backgroundColor := Smalltalk ui theme settings menuColor ifNil: [ Color white ].
+	backgroundColor := self defaultBackgroundColor.
 	popupShowWithShortcut := self defaultPopupShortcut.
 	popupShowAutomatic := self defaultPopupShowAutomatic.
 	popupAutomaticDelay := self defaultPopupDelay.
@@ -153,7 +154,7 @@ NECPreferences class >> initialize [
 
 { #category : #accessing }
 NECPreferences class >> popupAutomaticDelay [
-	^popupAutomaticDelay ifNil: [ popupAutomaticDelay := self defaultPopupDelay ] 
+	^ popupAutomaticDelay
 ]
 
 { #category : #accessing }
@@ -163,7 +164,7 @@ NECPreferences class >> popupAutomaticDelay: anObject [
 
 { #category : #accessing }
 NECPreferences class >> popupShowAutomatic [
-	^ popupShowAutomatic ifNil: [ popupShowAutomatic := self defaultPopupShowAutomatic ]
+	^ popupShowAutomatic
 ]
 
 { #category : #accessing }
@@ -173,7 +174,7 @@ NECPreferences class >> popupShowAutomatic: aBoolean [
 
 { #category : #accessing }
 NECPreferences class >> popupShowWithShortcut [
-	^ popupShowWithShortcut ifNil: [ popupShowWithShortcut := self defaultPopupShortcut ]
+	^ popupShowWithShortcut
 ]
 
 { #category : #accessing }
@@ -280,7 +281,7 @@ NECPreferences class >> smartCharactersWithSingleSpace: aString [
 
 { #category : #accessing }
 NECPreferences class >> spaceAfterCompletion [
-	^ spaceAfterCompletion ifNil: [ spaceAfterCompletion := true ]
+	^ spaceAfterCompletion
 ]
 
 { #category : #accessing }
@@ -295,7 +296,7 @@ NECPreferences class >> useController: aClass [
 
 { #category : #accessing }
 NECPreferences class >> useEnterToAccept [
-	^ useEnterToAccept ifNil: [ useEnterToAccept := self defaultUseEnterToAccept ]
+	^ useEnterToAccept
 ]
 
 { #category : #accessing }
