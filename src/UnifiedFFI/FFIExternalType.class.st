@@ -199,12 +199,6 @@ FFIExternalType >> externalTypeWithArity [
 		ifFalse: [ self externalType ]
 ]
 
-{ #category : #callbacks }
-FFIExternalType >> extractPointerFrom: aCallbackArgumentReader [ 
-
-	aCallbackArgumentReader extractPointerOfType: self
-]
-
 { #category : #'accessing array' }
 FFIExternalType >> handle: aHandle at: index [ 
 	self isPointer ifTrue: [ ^ aHandle pointerAt: index ].

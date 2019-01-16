@@ -1,10 +1,31 @@
+"
+I represent the parsing of arguments in the SystemV 64 bits calling convention.
+In this convention the passing of the parameters is done in the registers for the first 6 integers and the first 6 floats.
+The count of the register used is indepent of the type. Ex: 
+
+int f(int a, int b, float x, float y, int c)
+
+a -> 1st int register.
+b -> 2nd int register.
+x -> 1st float register.
+y -> 2nd float register.
+c -> 3rd int register.
+
+If there are more that 6 parameters of a given type, the seventh goes in the stack.
+
+The structs in this calling convention are passed in the stack or in the registers.
+If a struct occupies #maxStructureSizeToPassInRegisters bytes or less it is passed in the registers. Using the two next registers available.
+If there are no available registers or the struct is bigger, the stack is used. 
+
+All the integer types are promoted to Int64 or UInt64.
+"
 Class {
 	#name : #FFISystemV64CallbackArgumentReader,
 	#superclass : #FFIAbstract64BitsArgumentReader,
 	#instVars : [
 		'currentFloatRegisterIndex'
 	],
-	#category : #'UnifiedFFI-Architecture'
+	#category : #'UnifiedFFI-Callbacks'
 }
 
 { #category : #accessing }
@@ -35,6 +56,14 @@ FFISystemV64CallbackArgumentReader >> initialize [
 	super initialize.
 	currentFloatRegisterIndex := 1.
 
+]
+
+{ #category : #'instance creation' }
+FFISystemV64CallbackArgumentReader >> maxStructureSizeToPassInRegisters [
+
+	"I am the max size of registers passed in the general purpouse registres.
+	The structures that are bigger are passed through the stack"
+	^ 16
 ]
 
 { #category : #'calculating-offsets' }
@@ -68,7 +97,7 @@ FFISystemV64CallbackArgumentReader >> nextBaseAddressForStructure: type [
 	| baseOffset |
 
 	"If the structure is maller than the max size, it is passed in the general purpouse registers."
-	(type externalTypeSize > FFIArchitecture forCurrentArchitecture maxStructureSizeToPassInRegisters)
+	(type externalTypeSize > self maxStructureSizeToPassInRegisters)
 		ifTrue: [ ^ super nextBaseAddressFor: type ].
 
 	baseOffset := (currentRegisterIndex - 1) * Smalltalk wordSize + 1.

@@ -30,12 +30,6 @@ FFI_x86_64_Windows >> externalULongType [
 ]
 
 { #category : #'instance creation' }
-FFI_x86_64_Windows >> maxStructureSizeToPassInRegisters [
-
-	^ 16
-]
-
-{ #category : #'instance creation' }
 FFI_x86_64_Windows >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [ 
 
 	^ FFIWin64CallbackArgumentReader 

@@ -1,3 +1,49 @@
+"
+I am an abstract class that is responsible for extracting the arguments of a callback.
+The callbacks provides the arguments in different forms depending of the architecture.
+Each of my subclasses implements special behavior for the given architectures.
+I have the common behavior for all the architectures.
+
+Basically, I am a stateful object that is used during the process of extraction.
+I am created with a callback and a callback context.
+A new instance of myself is created in each callback invocation, and it should not be reused.
+
+From the callback I extract the type of return of the callback and the type of the parameters.
+
+I am used in the method FFICallback >> #argumentsFor: stackPointer context: callbackContext.
+Each of the architectures is able to create the correct subclass of me.
+
+My users just use the #extractArguments method and then access teh arguments through #arguments.
+
+In the extractArguments, I take the arguments from the FFICallback and send my message extractNext: with the type of the arguments.
+
+The #extractNext: method checks if the type represents a pointer or a value type. 
+If it is a pointer the message #extractPointerOfType: is used. If it is a value,
+there is a double dispatch with the type. The message #extractFromCallbackOn: is sent to the type.
+
+Then the type use one of the following methods to indicate its type: 
+
+#extractCharacterType
+#extractDouble
+#extractFloat
+#extractIntegerType 
+#extractExternalString: 
+#extractStructType:
+
+Each of this methods calculates the base address and the correct offset to extract the value or the pointer. For this calculation the messages #nextBaseAddressFor: aType and #nextBaseAddressForStructure: aStructType are used.
+
+My base implementation extracts all the parameters from the stack. So the base address is always the stack pointer and the offset is updated according to the type.
+
+Once the base address is opteined, the type objects is used with the message #handle:at: to get the value from the stack.
+
+These methods all modify the collection of extracted elements.
+
+Note: 
+
+When a callback should return a struct by copy, the caller function allocates the returning struct. 
+The pointer to this struct is stored in a new first parameter to the callback. This hidden parameter is extracted in the #initialize if it is required.
+The callback can access to the pointer through the returnValueHolder instance variable.
+"
 Class {
 	#name : #FFICallbackArgumentReader,
 	#superclass : #Object,
@@ -8,7 +54,7 @@ Class {
 		'extractedArguments',
 		'returnValueHolder'
 	],
-	#category : #'UnifiedFFI-Architecture'
+	#category : #'UnifiedFFI-Callbacks'
 }
 
 { #category : #'as yet unclassified' }
@@ -81,6 +127,13 @@ FFICallbackArgumentReader >> callbackContext: anObject [
 ]
 
 { #category : #extracting }
+FFICallbackArgumentReader >> extractArguments [
+
+	callback functionSpec arguments do: [ :type | self extractNext: type ].
+
+]
+
+{ #category : #extracting }
 FFICallbackArgumentReader >> extractCharacterType [
 
 	extractedArguments add: self basicExtractUnsignedInteger asCharacter
@@ -132,7 +185,7 @@ FFICallbackArgumentReader >> extractIntegerType [
 FFICallbackArgumentReader >> extractNext: aFFIType [
 
 	aFFIType isPointer
-		ifTrue: [ aFFIType extractPointerFrom: self ]
+		ifTrue: [ self extractPointerOfType: aFFIType ]
 		ifFalse: [ aFFIType extractFromCallbackOn: self ]
 ]
 
@@ -181,6 +234,10 @@ FFICallbackArgumentReader >> initialize [
 { #category : #'calculating-offsets' }
 FFICallbackArgumentReader >> nextBaseAddressFor: type [
 
+	"I calculate the base address to read an argument from a callback context.
+	In my implementation all the arguments are read from the stack.
+	The space of each type depends of its own size."
+
 	| baseAddressToRead offsetOfBaseAddress typeSize |
 
 	typeSize := type isPointer ifTrue: [ Smalltalk wordSize ] ifFalse: [ type externalTypeSize ].
@@ -195,11 +252,19 @@ FFICallbackArgumentReader >> nextBaseAddressFor: type [
 { #category : #'calculating-offsets' }
 FFICallbackArgumentReader >> nextBaseAddressForStructure: type [
 
+	"I calculate the base address to read an struct argument.
+	The handling of structs is different in the subclases, but in myself the handle of 
+	structs is performed in the stack, so the calculation of addresses is perform in the same
+	way as non-struct arguments."
+
+
 	^ self nextBaseAddressFor: type
 ]
 
 { #category : #types }
 FFICallbackArgumentReader >> stackIntegerType [
+	
+	"Depending of the architecture there are different types used in the stack for the integers."
 	
 	^ self subclassResponsibility
 ]
@@ -212,5 +277,7 @@ FFICallbackArgumentReader >> stackPointer [
 { #category : #types }
 FFICallbackArgumentReader >> stackUnsignedIntegerType [
 	
+	"Depending of the architecture there are different types used in the stack for the unsigned integers."
+
 	^ self subclassResponsibility
 ]

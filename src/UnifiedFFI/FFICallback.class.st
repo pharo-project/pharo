@@ -60,8 +60,7 @@ FFICallback class >> forAddress: address [
 { #category : #'private primitives' }
 FFICallback class >> primQsort: array with: count with: size with: compare [
 	self
-		ffiCall: #(void qsort (FFIExternalArray array, size_t count, size_t size, FFICallback compare)) 
-		module: LibC
+		ffiCall: #(void qsort (FFIExternalArray array, size_t count, size_t size, FFICallback compare)) 		module: LibC
 ]
 
 { #category : #'instance creation' }
@@ -75,9 +74,9 @@ FFICallback >> argumentsFor: stackPointer context: callbackContext [
 	| callbackArgumentReader | 
 	
 	callbackArgumentReader := FFIArchitecture forCurrentArchitecture newCallbackArgumentReaderForCallback: self inContext: callbackContext.
-	
-	functionSpec arguments do: [ :type | callbackArgumentReader extractNext: type ].
 
+	callbackArgumentReader extractArguments.
+	
 	self assert: functionSpec arguments size = callbackArgumentReader arguments size.
 
 	^ callbackArgumentReader arguments.
