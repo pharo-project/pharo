@@ -28,6 +28,7 @@ MorphicIconListAdapter >> buildWidget [
 			setBalloonText: self help; 
 			hResizing: 	#spaceFill;
 			vResizing: 	#spaceFill;
+			backgroundColoringBlockOrSelector: #backgroundColorFor:at: ;
 			yourself
 ]
 
