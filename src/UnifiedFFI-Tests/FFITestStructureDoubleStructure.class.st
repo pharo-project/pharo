@@ -1,8 +1,5 @@
-"
-I am a structure that in the AMD64 SystemV ABI is passed in 1 integer register, and in 1 float register.
-"
 Class {
-	#name : #FFITestStructureSmallIntFloatStructure,
+	#name : #FFITestStructureDoubleStructure,
 	#superclass : #FFIExternalStructure,
 	#classVars : [
 		'OFFSET_W',
@@ -14,60 +11,60 @@ Class {
 }
 
 { #category : #'field definition' }
-FFITestStructureSmallIntFloatStructure class >> fieldsDesc [
+FFITestStructureDoubleStructure class >> fieldsDesc [
 	"self rebuildFieldAccessors"
 	^ #(
-	float x;
-	int32 y;
-	float z;
-	float w;
+	double x;
+	double y;
+	double z;
+	double w;
 	)
 ]
 
 { #category : #'accessing structure variables' }
-FFITestStructureSmallIntFloatStructure >> w [
+FFITestStructureDoubleStructure >> w [
 	"This method was automatically generated"
-	^handle floatAt: OFFSET_W
+	^handle doubleAt: OFFSET_W
 ]
 
 { #category : #'accessing structure variables' }
-FFITestStructureSmallIntFloatStructure >> w: anObject [
+FFITestStructureDoubleStructure >> w: anObject [
 	"This method was automatically generated"
-	handle floatAt: OFFSET_W put: anObject
+	handle doubleAt: OFFSET_W put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-FFITestStructureSmallIntFloatStructure >> x [
+FFITestStructureDoubleStructure >> x [
 	"This method was automatically generated"
-	^handle floatAt: OFFSET_X
+	^handle doubleAt: OFFSET_X
 ]
 
 { #category : #'accessing structure variables' }
-FFITestStructureSmallIntFloatStructure >> x: anObject [
+FFITestStructureDoubleStructure >> x: anObject [
 	"This method was automatically generated"
-	handle floatAt: OFFSET_X put: anObject
+	handle doubleAt: OFFSET_X put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-FFITestStructureSmallIntFloatStructure >> y [
+FFITestStructureDoubleStructure >> y [
 	"This method was automatically generated"
-	^handle signedLongAt: OFFSET_Y
+	^handle doubleAt: OFFSET_Y
 ]
 
 { #category : #'accessing structure variables' }
-FFITestStructureSmallIntFloatStructure >> y: anObject [
+FFITestStructureDoubleStructure >> y: anObject [
 	"This method was automatically generated"
-	handle signedLongAt: OFFSET_Y put: anObject
+	handle doubleAt: OFFSET_Y put: anObject
 ]
 
 { #category : #'accessing structure variables' }
-FFITestStructureSmallIntFloatStructure >> z [
+FFITestStructureDoubleStructure >> z [
 	"This method was automatically generated"
-	^handle floatAt: OFFSET_Z
+	^handle doubleAt: OFFSET_Z
 ]
 
 { #category : #'accessing structure variables' }
-FFITestStructureSmallIntFloatStructure >> z: anObject [
+FFITestStructureDoubleStructure >> z: anObject [
 	"This method was automatically generated"
-	handle floatAt: OFFSET_Z put: anObject
+	handle doubleAt: OFFSET_Z put: anObject
 ]

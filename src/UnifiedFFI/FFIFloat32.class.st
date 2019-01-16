@@ -48,3 +48,9 @@ FFIFloat32 >> emitPointerArityRoll: aBuilder context: aContext [
 		arity: self pointerArity
 		selector: #packAsFloatToArity:
 ]
+
+{ #category : #callbacks }
+FFIFloat32 >> extractFromCallbackOn: aCallbackArgumentReader [ 
+	
+	aCallbackArgumentReader extractFloat
+]
