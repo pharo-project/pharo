@@ -16,7 +16,7 @@ OSEnvironment current at: 'HOME' encoding: ZnCharacterEncoder utf8.
 
 # Implementation Details
 
-I use try to use a primitive to get/set environment variables, and if it fails or it is not available, I use corresponding ffi calls using byteArrays with encoded strings as argument.
+I try to use a primitive to get/set environment variables, and if it fails or it is not available, I use corresponding ffi calls using byteArrays with encoded strings as argument.
 "
 Class {
 	#name : #UnixEnvironment,
