@@ -115,8 +115,8 @@ SourceFile >> path [
 ]
 
 { #category : #accessing }
-SourceFile >> path: arg1 [
-	path := arg1
+SourceFile >> path: aPath [
+	path := aPath
 ]
 
 { #category : #accessing }
