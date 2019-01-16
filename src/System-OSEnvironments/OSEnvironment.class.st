@@ -4,21 +4,16 @@ Get access using:
 
 	Smalltalk os environment
 
-Low level API
+I have a Dictionary-like API to access the system environment variables.
+The common denominator for all platforms implements a simple API that uses strings.
+In other words, methods
 
-- getEnv: aVariableName
-Gets the value of an environment variable called `aVariableName`
-It is the system reponsibility to manage the encoding.
-Rationale: A common denominator for all platforms providing an already decoded string, because windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation.
+- #at:
+- #at:put:
 
-- getEnvRaw: anEncodedVariableName
-Gets the value of an environment variable called `anEncodedVariableName` already encoded.
-It is the user responsibility to encode and decode argument and return values in the encoding of this preference.
-Rationale: Some systems may want to have the liberty to use different encodings, or even to put binary data in the variables.
+and its variants receive normal strings and decide wether they have to encode those strings to platform bytes or not depending on the platform.
 
-- getEnv: aVariableName encoding: anEncoding
-Gets the value of an environment variable called `aVariableName` using `anEncoding` to encode/decode arguments and return values.
-Rationale: *xes could use different encodings
+My subclasses may or may not provide additional APIs to have more control on the particular encoding used.
 "
 Class {
 	#name : #OSEnvironment,
@@ -185,6 +180,20 @@ OSEnvironment >> at: aKey put: aValue [
 OSEnvironment >> do: aBlock [
 
 	^self valuesDo: aBlock
+]
+
+{ #category : #accessing }
+OSEnvironment >> getEnv: aKey [
+	"Gets the value of an environment variable called `aKey`.
+	Returns nil if not found."
+	self
+		deprecated: 'Use #at: instead'
+		on: '16 January 2019'
+		in: #Pharo7
+		transformWith: '`@receiver getEnv: `@arg' 
+						-> '`@receiver at: `@arg ifAbsent: [ nil ]'.
+
+ 	^ self at: aKey ifAbsent: [ nil ]
 ]
 
 { #category : #testing }

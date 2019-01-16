@@ -1,5 +1,22 @@
 "
 I am a specialized OSEnvironment version for *nix systems (Linux, OSX).
+See my superclass to understand my common usage.
+
+# Encoding Management
+
+I provide a variant of the Dictionary-like API that receives an extra argument specifying an encoding.
+Valid encodings are those specified by the Zinc-Character-Encoding-* packages.
+The API accepts both encoding objects and symbols which are used to lookup encodings.
+
+For example, the following usages are valid:
+
+OSEnvironment current at: 'HOME' encoding: #utf8.
+OSEnvironment current at: 'HOME' encoding: #utf8 asZnCharacterEncoder.
+OSEnvironment current at: 'HOME' encoding: ZnCharacterEncoder utf8.
+
+# Implementation Details
+
+I use try to use a primitive to get/set environment variables, and if it fails or it is not available, I use corresponding ffi calls using byteArrays with encoded strings as argument.
 "
 Class {
 	#name : #UnixEnvironment,
@@ -113,7 +130,7 @@ UnixEnvironment >> at: aKey put: aValue encoding: anEncoding [
 UnixEnvironment >> basicGetEnvRaw: encodedVariableName [
 
 	"PRIVATE: This primitive call works on Strings, while the correct way to manage encodings is with raw data.
-	Use me through #getEnvRaw: to correctly marshall data."
+	Use me through #rawAt: to correctly marshall data."
 	
 	"Gets the value of an environment variable called `anEncodedVariableName` already encoded but in ByteString form."
 	
@@ -126,7 +143,7 @@ UnixEnvironment >> basicGetEnvRaw: encodedVariableName [
 UnixEnvironment >> basicGetEnvRawViaFFI: arg1 [
 
 	"PRIVATE: This FFI call works on Strings, while the correct way to manage encodings is with raw data.
-	Use me through #getEnvViaFFI: to correctly marshall data."
+	Use me through #basicGetEnvRaw: to correctly marshall data."
 
 	"This method calls the Standard C Library getenv() function.
 	The name of the argument (arg1) should fit decompiled version."
