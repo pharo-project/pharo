@@ -124,7 +124,7 @@ SystemNavigation >> allClassesUsingSharedPool: aString [
 ]
 
 { #category : #query }
-SystemNavigation >> allExistingProtocolsFor: instanceSideBoolean [
+SystemNavigation >> allExistingProtocolsFor: instanceSide [
 	"Answer all protocols on instance or class side"
 	
 	| allExistingProtocols |
@@ -132,7 +132,7 @@ SystemNavigation >> allExistingProtocolsFor: instanceSideBoolean [
 		inject: IdentitySet new
 		into: [ :col :e | 
 			| class |
-			class := instanceSideBoolean
+			class := instanceSide
 				ifTrue: [ e instanceSide ]
 				ifFalse: [ e classSide ].
 			col
