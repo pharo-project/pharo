@@ -9,5 +9,6 @@ Class {
 
 { #category : #'as yet unclassified' }
 MFClassA >> method [
+	|foo|
 	"This instance variable is there to trigger the 'Temporary variable not read or written' critics rule for the test SmallintManifestCheckerTest>>testCriticsOf rule"
 ]
