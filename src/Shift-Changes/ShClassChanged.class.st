@@ -22,5 +22,10 @@ ShClassChanged >> builder: anObject [
 
 { #category : #propagating }
 ShClassChanged >> propagateToSubclasses: anotherBuilder [
-	anotherBuilder changes add: self.
+
+	anotherBuilder changes add: (ShSuperclassChanged new
+		builder: builder;
+		oldClass: oldClass;
+		yourself
+	).
 ]
