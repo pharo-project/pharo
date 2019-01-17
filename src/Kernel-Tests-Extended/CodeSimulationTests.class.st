@@ -25,6 +25,7 @@ CodeSimulationTests >> methodWithError [
 
 { #category : #tests }
 CodeSimulationTests >> methodWithHalt [
+	<haltOrBreakpointForTesting>
 	self halt
 ]
 

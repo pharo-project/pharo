@@ -57,6 +57,7 @@ TabExample >> delete [
 
 { #category : #'tabs creation' }
 TabExample >> freshListTab [
+	<haltOrBreakpointForTesting>
 	^ (TabMorph
 		label: 'Fresh List'
 		icon: nil
