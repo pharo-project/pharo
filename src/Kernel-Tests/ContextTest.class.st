@@ -100,6 +100,12 @@ ContextTest >> testActivateReturnValue [
 	self assert:  ((aSender activateReturn: aMethodContext value: #()) receiver = aMethodContext).
 ]
 
+{ #category : #private }
+ContextTest >> testActiveHomeMethodContext [
+	self assert: (aMethodContext activeHome == aMethodContext).
+	self assert: (aMethodContext activeHome == aMethodContext home).
+]
+
 { #category : #tests }
 ContextTest >> testFindContextSuchThat [
 	self assert: (aMethodContext findContextSuchThat: [:each| true]) printString = aMethodContext printString.
