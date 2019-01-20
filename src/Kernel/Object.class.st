@@ -977,6 +977,12 @@ Object >> halt: aString [
 ]
 
 { #category : #halting }
+Object >> haltFromCount: anInteger [ 
+	<debuggerCompleteToSender>
+	Halt fromCount: anInteger.
+]
+
+{ #category : #halting }
 Object >> haltIf: condition [
 	<debuggerCompleteToSender>
 	Halt if: condition.

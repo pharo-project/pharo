@@ -72,6 +72,13 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
+{ #category : #halting }
+Halt class >> fromCount: anInteger [
+	<debuggerCompleteToSender>
+	^ self
+		onCountWithBehavior: [ :node | (node propertyAt: #haltCount) >= anInteger ]
+]
+
 { #category : #private }
 Halt class >> haltIfBlock: aBlock withCallingObjectFrom: haltSenderContext [
 
@@ -136,19 +143,28 @@ Halt class >> now: aString [
 ]
 
 { #category : #halting }
-Halt class >> onCount: anInteger [ 
-	"Halt on the anInteger-th time through"
-	<debuggerCompleteToSender>	
-	| callingContext node | 
+Halt class >> onCount: anInteger [
+	<debuggerCompleteToSender>
+	^ self
+		onCountWithBehavior: [ :node | (node propertyAt: #haltCount) = anInteger ]
+]
+
+{ #category : #halting }
+Halt class >> onCountWithBehavior: behaviorBlock [
+	"Halt on the anInteger-th time through, as defined in the behavior block passed as parameter.
+	First parameter of the behaviorBlock is the AST node corresponding to the halt call."
+
+	<debuggerCompleteToSender>
+	| callingContext node |
 	"if the compiler is not loaded, we fall back on the standard halt "
-	self environment at: #OpalCompiler ifAbsent: [ ^self now ].
-	
-	callingContext := thisContext sender sender.
+	self environment at: #OpalCompiler ifAbsent: [ ^ self now ].
+	callingContext := thisContext sender sender sender.
 	node := callingContext sourceNodeExecuted.
-	(node hasProperty: #haltCount) ifFalse: [
-		node propertyAt: #haltCount put: 0].
-	 node propertyAt: #haltCount put: (node propertyAt: #haltCount) + 1.
-	((node propertyAt: #haltCount) >= anInteger) ifTrue: [ ^self signal ].
+	(node hasProperty: #haltCount)
+		ifFalse: [ node propertyAt: #haltCount put: 0 ].
+	node propertyAt: #haltCount put: (node propertyAt: #haltCount) + 1.
+	(behaviorBlock value: node)
+		ifTrue: [ ^ self signal ]
 ]
 
 { #category : #halting }
