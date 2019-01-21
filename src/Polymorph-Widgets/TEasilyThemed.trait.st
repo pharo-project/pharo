@@ -263,7 +263,7 @@ TEasilyThemed >> fileOpen: title extensions: exts path: path [
 { #category : #services }
 TEasilyThemed >> fileOpen: title extensions: exts path: path preview: preview [
 	"Answer the result of a file open dialog with the given title, extensions to show, path and preview type."
-	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
+	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview: instead.' on: '26 October 2018' in: #Pharo7.
 	^self theme
 		fileOpenIn: self
 		title: title
@@ -275,7 +275,7 @@ TEasilyThemed >> fileOpen: title extensions: exts path: path preview: preview [
 { #category : #services }
 TEasilyThemed >> fileSave: title [
 	"Answer the result of a file save dialog with the given title."
-	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
+	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path: instead.' on: '26 October 2018' in: #Pharo7.
 	^self
 		fileSave: title
 		extensions: nil
@@ -285,7 +285,7 @@ TEasilyThemed >> fileSave: title [
 { #category : #services }
 TEasilyThemed >> fileSave: title extensions: exts [
 	"Answer the result of a file save dialog with the given title."
-	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
+	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path: instead.' on: '26 October 2018' in: #Pharo7.
 	^self
 		fileSave: title
 		extensions: exts
@@ -295,7 +295,7 @@ TEasilyThemed >> fileSave: title extensions: exts [
 { #category : #services }
 TEasilyThemed >> fileSave: title extensions: exts path: path [
 	"Answer the result of a file save dialog with the given title, extensions to show and path."
-	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
+	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path: instead.' on: '26 October 2018' in: #Pharo7.
 	^self theme
 		fileSaveIn: self
 		title: title
@@ -305,7 +305,7 @@ TEasilyThemed >> fileSave: title extensions: exts path: path [
 
 { #category : #services }
 TEasilyThemed >> fileSave: title initialAnswer: aFileName extensions: exts path: path [
-	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
+	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path: instead.' on: '26 October 2018' in: #Pharo7.
 	^self theme
 		fileSaveIn: self
 		title: title
@@ -317,7 +317,7 @@ TEasilyThemed >> fileSave: title initialAnswer: aFileName extensions: exts path:
 { #category : #services }
 TEasilyThemed >> fileSave: title path: path [
 	"Answer the result of a file save open dialog with the given title."
-	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
+	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path: instead.' on: '26 October 2018' in: #Pharo7.
 	^self
 		fileSave: title
 		extensions: nil
