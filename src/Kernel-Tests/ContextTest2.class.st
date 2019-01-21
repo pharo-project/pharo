@@ -27,6 +27,7 @@ ContextTest2 class >> returnNonActiveContextOfBlock [
 
 { #category : #running }
 ContextTest2 >> setUp [
+	super setUp.
 	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
 ]
 
