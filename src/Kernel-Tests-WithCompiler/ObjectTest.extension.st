@@ -2,6 +2,7 @@ Extension { #name : #ObjectTest }
 
 { #category : #'*Kernel-Tests-WithCompiler' }
 ObjectTest >> testHaltOnCount [
+	<haltOrBreakpointForTesting>
 
 	| anObject |
 	anObject := Object new.
