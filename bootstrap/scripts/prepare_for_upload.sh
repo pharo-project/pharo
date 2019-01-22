@@ -31,7 +31,6 @@ if [ $(is_release_build) == 1 ]; then
 	cp "${FULL_IMAGE_NAME64}" stable-64.zip
 fi
 
-
 for f in ${PHARO_NAME_PREFIX}*-32bit-*.zip; do
 	#If it is not base image
 	BITNESS=32bit
