@@ -5,6 +5,7 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
+SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 . ${SCRIPTS}/envversion.sh
 
 #Get the hash of the built image
@@ -29,7 +30,6 @@ if [ $(is_release_build) == 1 ]; then
 	cp "${FULL_IMAGE_NAME32}" stable-32.zip
 	cp "${FULL_IMAGE_NAME64}" stable-64.zip
 fi
-
 
 for f in ${PHARO_NAME_PREFIX}*-32bit-*.zip; do
 	#If it is not base image
