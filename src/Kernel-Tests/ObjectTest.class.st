@@ -19,11 +19,13 @@ ObjectTest >> a1 [
 
 { #category : #private }
 ObjectTest >> b [
+	<haltOrBreakpointForTesting>
 	self haltIf: #testHaltIf.
 ]
 
 { #category : #private }
 ObjectTest >> b1 [
+	<haltOrBreakpointForTesting>
 	self haltIf: #testasdasdfHaltIf.
 ]
 
@@ -98,6 +100,7 @@ ObjectTest >> testDisplayStringLimitedString [
 
 { #category : #'tests - debugging' }
 ObjectTest >> testHaltIf [
+	<haltOrBreakpointForTesting>
 
 	self shouldHaltWhen: [self haltIf: true].
 	self shouldntHaltWhen: [self haltIf: false].

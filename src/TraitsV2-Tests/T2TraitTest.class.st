@@ -133,8 +133,7 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSuperc
 	self assertCollection: c2 class selectors sorted equals: #().
 	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {}.
 
-	"When a class that uses traits has a empty traitComposition it still keeps being a TraitedClass"
-	self assertCollection: c2 class selectors sorted equals: #().
+	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted.
 
 ]
 
@@ -153,6 +152,40 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperc
 
 	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted.
 
+]
+
+{ #category : #tests }
+T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethods [
+	| t1 t2 c1 |
+	
+	t1 := self createT1.
+	t2 := self createT2.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1 + t2.
+
+	self assert: (c1 class includesSelector: #traits).
+
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {}.		
+
+	self deny: (c1 class includesSelector: #traits)
+]
+
+{ #category : #tests }
+T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
+	| t1 t2 c2 c1 |
+	
+	t1 := self createT1.
+	t2 := self createT2.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
+	c2 := self newClass: #C2 superclass: c1 with: '' asSlotCollection uses: t2.
+
+	self assert: (c1 class includesSelector: #traits).
+	self deny: (c2 class includesSelector: #traits).
+	
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {}.		
+
+	self deny: (c1 class includesSelector: #traits).
+	self assert: (c2 class includesSelector: #traits).
+	
 ]
 
 { #category : #tests }

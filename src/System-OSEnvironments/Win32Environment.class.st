@@ -1,5 +1,16 @@
 "
-I am a specialized OSEnvironment for Windows
+I am a specialized OSEnvironment for Windows.
+See my superclass to understand my common usage.
+
+# Encoding Management
+
+Windows hides the environment variables encoding through its API, and it's not up to the user how to encode them.
+Thus, I do not propose an API to specify encodings.
+
+# Implementation Details 
+
+I use FFI calls to manage encodings. Pharo strings are first encoded in utf8 and used to create Win32 WideStrings, whose are used in the windows function calls.
+See Win32WideString
 "
 Class {
 	#name : #Win32Environment,
@@ -90,15 +101,6 @@ Win32Environment >> removeEnvironmentVariable: nameString [
 	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, 0 ) )
 ]
 
-{ #category : #private }
-Win32Environment >> setEnv: nameString value: valueString [
-	"This method calls the the platform specific set environment routine"
-
-	^ self
-		ffiCall: #(int SetEnvironmentVariableA #(String nameString , String valueString))
-		module: #Kernel32
-]
-
 { #category : #accessing }
 Win32Environment >> removeKey: aKey [
 	"The primitive on Windows currently uses the ascii version of the Windows API.
@@ -110,6 +112,15 @@ Win32Environment >> removeKey: aKey [
 	"From MSDN: If the function fails, the return value is zero."
 	return = 0 ifTrue: [ 
 		self error: 'An error occurred while removing environment variable ', aKey asString ].
+]
+
+{ #category : #private }
+Win32Environment >> setEnv: nameString value: valueString [
+	"This method calls the the platform specific set environment routine"
+
+	^ self
+		ffiCall: #(int SetEnvironmentVariableA #(String nameString , String valueString))
+		module: #Kernel32
 ]
 
 { #category : #private }
