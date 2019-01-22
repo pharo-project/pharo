@@ -5,6 +5,7 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
+SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 . ${SCRIPTS}/envversion.sh
 
 #Get the hash of the built image
