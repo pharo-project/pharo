@@ -420,61 +420,70 @@ ZnServerTests >> testRespond [
 
 { #category : #testing }
 ZnServerTests >> testSession [
-	self withServerDo: [ :server | | client sessionId |
-		client := ZnClient new url: (server localUrl addPathSegment: #session); yourself.
-		self assert: client session cookieJar cookies isEmpty.
-		client get.
-		self assert: client isSuccess.
-		self assert: client session cookieJar cookies size = 1.
-		sessionId := client session cookieJar cookies anyOne value.
-		self assert: (client contents includesSubstring: sessionId).
-		client get.
-		self assert: client isSuccess.
-		self assert: client session cookieJar cookies size = 1.
-		self assert: client session cookieJar cookies anyOne value equals: sessionId.
-		self assert: (client contents includesSubstring: sessionId) ]
-
+	self
+		withServerDo: [ :server | 
+			| client sessionId |
+			client := ZnClient new
+				url: (server localUrl addPathSegment: #session);
+				yourself.
+			self assertEmpty: client session cookieJar cookies.
+			client get.
+			self assert: client isSuccess.
+			self assert: client session cookieJar cookies size = 1.
+			sessionId := client session cookieJar cookies anyOne value.
+			self assert: (client contents includesSubstring: sessionId).
+			client get.
+			self assert: client isSuccess.
+			self assert: client session cookieJar cookies size = 1.
+			self assert: client session cookieJar cookies anyOne value equals: sessionId.
+			self assert: (client contents includesSubstring: sessionId) ]
 ]
 
 { #category : #testing }
 ZnServerTests >> testSessionExpired [
-	self withServerDo: [ :server | | client sessionId |
-		client := ZnClient new url: (server localUrl addPathSegment: #session); yourself.
-		self assert: client session cookieJar cookies isEmpty.
-		client get.
-		self assert: client isSuccess.
-		self assert: client session cookieJar cookies size = 1.
-		sessionId := client session cookieJar cookies anyOne value.
-		self assert: (client contents includesSubstring: sessionId).
-		"Kill the server session as if it was expired"
-		server sessionManager removeSessionWithId: sessionId.
-		"The client still presents the old session id but should get a new one"
-		client get.
-		self assert: client isSuccess.
-		self assert: client session cookieJar cookies size = 1.
-		self deny: client session cookieJar cookies anyOne value = sessionId ]
-
+	self
+		withServerDo: [ :server | 
+			| client sessionId |
+			client := ZnClient new
+				url: (server localUrl addPathSegment: #session);
+				yourself.
+			self assertEmpty: client session cookieJar cookies.
+			client get.
+			self assert: client isSuccess.
+			self assert: client session cookieJar cookies size = 1.
+			sessionId := client session cookieJar cookies anyOne value.
+			self assert: (client contents includesSubstring: sessionId).
+			"Kill the server session as if it was expired"
+			server sessionManager removeSessionWithId: sessionId.
+			"The client still presents the old session id but should get a new one"
+			client get.
+			self assert: client isSuccess.
+			self assert: client session cookieJar cookies size = 1.
+			self deny: client session cookieJar cookies anyOne value = sessionId ]
 ]
 
 { #category : #testing }
 ZnServerTests >> testSessionRoute [
-	self withServerDo: [ :server | | client sessionId |
-		server route: 'r1'.
-		self assert: server route equals: 'r1'.
-		client := ZnClient new url: (server localUrl addPathSegment: #session); yourself.
-		self assert: client session cookieJar cookies isEmpty.
-		client get.
-		self assert: client isSuccess.
-		self assert: client session cookieJar cookies size = 1.
-		sessionId := client session cookieJar cookies anyOne value.
-		self assert: (client contents includesSubstring: sessionId).
-		self assert: (sessionId endsWith: '.r1').
-		client get.
-		self assert: client isSuccess.
-		self assert: client session cookieJar cookies size = 1.
-		self assert: client session cookieJar cookies anyOne value equals: sessionId.
-		self assert: (client contents includesSubstring: sessionId) ]
-
+	self
+		withServerDo: [ :server | 
+			| client sessionId |
+			server route: 'r1'.
+			self assert: server route equals: 'r1'.
+			client := ZnClient new
+				url: (server localUrl addPathSegment: #session);
+				yourself.
+			self assertEmpty: client session cookieJar cookies.
+			client get.
+			self assert: client isSuccess.
+			self assert: client session cookieJar cookies size = 1.
+			sessionId := client session cookieJar cookies anyOne value.
+			self assert: (client contents includesSubstring: sessionId).
+			self assert: (sessionId endsWith: '.r1').
+			client get.
+			self assert: client isSuccess.
+			self assert: client session cookieJar cookies size = 1.
+			self assert: client session cookieJar cookies anyOne value equals: sessionId.
+			self assert: (client contents includesSubstring: sessionId) ]
 ]
 
 { #category : #testing }

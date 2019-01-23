@@ -628,11 +628,10 @@ SUnitTest >> testSuite [
 
 { #category : #testing }
 SUnitTest >> testWatchDogProcessShouldNotBeCatchedAsForkedProcess [
-
 	| env |
 	env := CurrentExecutionEnvironment value.
-	
-	self assert: env forkedProcesses isEmpty
+
+	self assertEmpty: env forkedProcesses
 ]
 
 { #category : #testing }

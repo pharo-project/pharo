@@ -92,7 +92,7 @@ LRUCacheTests >> testCustomWeight [
 LRUCacheTests >> testEmpty [
 	| emptyCache |
 	emptyCache := self newCache.
-	self assert: emptyCache isEmpty.
+	self assertEmpty: emptyCache.
 	self assert: emptyCache size isZero.
 	self assert: emptyCache hits isZero.
 	self assert: emptyCache misses isZero.
@@ -207,7 +207,7 @@ LRUCacheTests >> testOne [
 	cache := self newCache.
 	cache at: #foo ifAbsentPut: [ 100 ].
 	self assert: (cache includesKey: #foo).
-	self deny: cache isEmpty.
+	self denyEmpty: cache.
 	self assert: cache size equals: 1.
 	self assert: cache totalWeight equals: 1.
 	self assert: cache hits isZero.
@@ -311,10 +311,9 @@ LRUCacheTests >> testRandomAccess [
 LRUCacheTests >> testRemoveAll [
 	| cache |
 	cache := self newCache.
-	1 to: 10 do: [ :each | 
-		cache at: each ifAbsentPut: [ each ] ].
+	1 to: 10 do: [ :each | cache at: each ifAbsentPut: [ each ] ].
 	cache removeAll.
-	self assert: cache isEmpty.
+	self assertEmpty: cache.
 	self assert: cache size isZero.
 	self assert: cache totalWeight isZero.
 	self assert: cache misses equals: 10.
@@ -330,7 +329,7 @@ LRUCacheTests >> testRemoveOne [
 	cache := self newCache.
 	cache at: #foo ifAbsentPut: [ 100 ].
 	cache removeKey: #foo.
-	self assert: cache isEmpty.
+	self assertEmpty: cache.
 	self assert: cache size isZero.
 	self assert: cache totalWeight isZero.
 	self deny: (cache includesKey: #foo).

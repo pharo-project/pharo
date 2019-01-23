@@ -30,7 +30,7 @@ TDictionaryRemovingTest >> nonEmptyDict [
 { #category : #'tests - fixture' }
 TDictionaryRemovingTest >> test0FixtureDictionaryRemovingTest [
 	self nonEmptyDict.
-	self deny: self nonEmptyDict isEmpty.
+	self denyEmpty: self nonEmptyDict.
 	self keyNotInNonEmptyDict.
 	self deny: (self nonEmptyDict keys includes: self keyNotInNonEmptyDict)
 ]

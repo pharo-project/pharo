@@ -21,7 +21,7 @@ GTSpotterEventCollectorTest >> testBundle [
 	| events bundle |
 	"collecting data"
 	events := OrderedCollection new.
-	events 
+	events
 		add: GTSpotterRecorderOpenEvent new;
 		add: GTSpotterRecorderShowPreviewEvent new;
 		add: GTSpotterRecorderExitAnnouncementEvent new;
@@ -34,17 +34,14 @@ GTSpotterEventCollectorTest >> testBundle [
 	"first delivery"
 	bundle := collector bundle.
 	self assert: collector postponedEvents size equals: 2.
-	7 to: 8 do: [ :index |
-		self assert: (events at: index) == (collector postponedEvents at: index - 6) ].
+	7 to: 8 do: [ :index | self assert: (events at: index) == (collector postponedEvents at: index - 6) ].
 	self assert: bundle size equals: 6.
-	bundle withIndexDo: [ :eachEvent :index |
-		self assert: (events at: index) class = eachEvent class ].
+	bundle withIndexDo: [ :eachEvent :index | self assert: (events at: index) class = eachEvent class ].
 	"second delivery"
 	bundle := collector bundle.
 	self assert: collector postponedEvents size equals: 2.
-	7 to: 8 do: [ :index |
-		self assert: (events at: index) == (collector postponedEvents at: index - 6) ].
-	self assert: bundle isEmpty.
+	7 to: 8 do: [ :index | self assert: (events at: index) == (collector postponedEvents at: index - 6) ].
+	self assertEmpty: bundle.
 	"third delivery"
 	collector add: GTSpotterRecorderExitAnnouncementEvent new.
 	bundle := collector bundle.
@@ -52,7 +49,7 @@ GTSpotterEventCollectorTest >> testBundle [
 	self assert: bundle size equals: 3.
 	self assert: bundle first class equals: (events at: 7) class.
 	self assert: bundle second class equals: (events at: 8) class.
-	self assert: bundle third class equals: GTSpotterRecorderExitAnnouncementEvent.
+	self assert: bundle third class equals: GTSpotterRecorderExitAnnouncementEvent
 ]
 
 { #category : #tests }

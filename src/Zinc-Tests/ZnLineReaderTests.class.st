@@ -7,11 +7,11 @@ Class {
 { #category : #testing }
 ZnLineReaderTests >> testBinary [
 	| input reader |
-	input := ('Foo', String crlf, 'Bar', String crlf) asByteArray.
+	input := ('Foo' , String crlf , 'Bar' , String crlf) asByteArray.
 	reader := ZnLineReader on: input readStream.
 	self assert: reader nextLine = 'Foo'.
 	self assert: reader nextLine = 'Bar'.
-	self assert: reader nextLine isEmpty
+	self assertEmpty: reader nextLine
 ]
 
 { #category : #testing }
@@ -33,9 +33,9 @@ ZnLineReaderTests >> testLineTooLongDefault [
 { #category : #testing }
 ZnLineReaderTests >> testSimple [
 	| input reader |
-	input := 'Foo', String crlf, 'Bar', String crlf.
+	input := 'Foo' , String crlf , 'Bar' , String crlf.
 	reader := ZnLineReader on: input readStream.
 	self assert: reader nextLine = 'Foo'.
 	self assert: reader nextLine = 'Bar'.
-	self assert: reader nextLine isEmpty
+	self assertEmpty: reader nextLine
 ]

@@ -27,9 +27,9 @@ TAsStringCommaAndDelimiterTest >> nonEmpty1Element [
 { #category : #'tests - fixture' }
 TAsStringCommaAndDelimiterTest >> test0FixtureAsStringCommaAndDelimiterTest [
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self empty.
-	self assert: self empty isEmpty.
+	self assertEmpty: self empty.
 	self nonEmpty1Element.
 	self assert: self nonEmpty1Element size = 1
 ]

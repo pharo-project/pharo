@@ -19,42 +19,37 @@ GoferReferenceTest >> testBranchAfterAuthorIsNotABranch [
 	queryReference := GoferVersionReference name: 'Seaside-Core-jf.configcleanup.3'.
 	self assert: queryReference packageName equals: 'Seaside-Core'.
 	self assert: queryReference author equals: 'jf.configcleanup'.
-	self assert: queryReference branch isEmpty.
+	self assertEmpty: queryReference branch.
 	self assert: queryReference versionNumber equals: 3.
-	
+
 	queryReference := GoferVersionReference name: 'Seaside-Core-lr.configcleanup.extraspeedup.69'.
 	self assert: queryReference packageName equals: 'Seaside-Core'.
 	self assert: queryReference author equals: 'lr.configcleanup.extraspeedup'.
-	self assert: queryReference branch isEmpty.
+	self assertEmpty: queryReference branch.
 	self assert: queryReference versionNumber equals: 69.
 
 	queryReference := GoferVersionReference name: 'Seaside-Core-lr.configcleanup42.extraspeedup.69'.
 	self assert: queryReference packageName equals: 'Seaside-Core'.
 	self assert: queryReference author equals: 'lr.configcleanup42.extraspeedup'.
-	self assert: queryReference branch isEmpty.
+	self assertEmpty: queryReference branch.
 	self assert: queryReference versionNumber equals: 69
-
 ]
 
 { #category : #'tests - reference' }
 GoferReferenceTest >> testContraintShouldFindLatestVersion [
 	| constraintReference reference |
-	constraintReference := GoferConstraintReference 
-		name: 'GoferBar'
-		constraint: [ :ref | true ].
+	constraintReference := GoferConstraintReference name: 'GoferBar' constraint: [ :ref | true ].
 	self assert: (constraintReference resolveAllWith: gofer) size equals: 4.
-	
+
 	reference := constraintReference resolveWith: gofer.
-		
+
 	self assert: reference packageName equals: 'GoferBar'.
 	self assert: reference author equals: 'lr'.
-	self assert: reference branch isEmpty.
+	self assertEmpty: reference branch.
 	self assert: reference versionNumber equals: 1.
 	self assert: reference repository equals: self monticelloRepository.
-	
-	constraintReference := GoferConstraintReference 
-									name: 'GoferBar'
-									constraint: [ :ref | ref branch = 'branch' ].
+
+	constraintReference := GoferConstraintReference name: 'GoferBar' constraint: [ :ref | ref branch = 'branch' ].
 
 	self assert: (constraintReference resolveAllWith: gofer) size equals: 2.
 
@@ -65,10 +60,8 @@ GoferReferenceTest >> testContraintShouldFindLatestVersion [
 	self assert: reference branch equals: 'branch'.
 	self assert: reference versionNumber equals: 2.
 	self assert: reference repository equals: self monticelloRepository.
-	
-	constraintReference := GoferConstraintReference 
-									name: 'GoferBar'
-									constraint: [ :ref | ref author = 'jf' ].
+
+	constraintReference := GoferConstraintReference name: 'GoferBar' constraint: [ :ref | ref author = 'jf' ].
 
 	self assert: (constraintReference resolveAllWith: gofer) size equals: 1.
 
@@ -76,16 +69,14 @@ GoferReferenceTest >> testContraintShouldFindLatestVersion [
 
 	self assert: reference packageName equals: 'GoferBar'.
 	self assert: reference author equals: 'jf'.
-	self assert: reference branch isEmpty.
+	self assertEmpty: reference branch.
 	self assert: reference versionNumber equals: 1.
 	self assert: reference repository equals: self monticelloRepository.
-	
-	constraintReference := GoferConstraintReference 
-										name: 'GoferBar'
-										constraint: [ :ref | false ].
-										
-	self assert: (constraintReference resolveAllWith: gofer) isEmpty.
-	self should: [ constraintReference resolveWith: gofer ] raise: Error.
+
+	constraintReference := GoferConstraintReference name: 'GoferBar' constraint: [ :ref | false ].
+
+	self assertEmpty: (constraintReference resolveAllWith: gofer).
+	self should: [ constraintReference resolveWith: gofer ] raise: Error
 ]
 
 { #category : #'tests - working' }
@@ -119,7 +110,7 @@ GoferReferenceTest >> testPackageShouldFindLatestVersion [
 
 	self assert: reference packageName equals: 'GoferFoo'.
 	self assert: reference author equals: 'lr'.
-	self assert: reference branch isEmpty.
+	self assertEmpty: reference branch.
 	self assert: reference versionNumber equals: 4.
 	self assert: reference repository equals: self monticelloRepository
 ]
@@ -137,10 +128,10 @@ GoferReferenceTest >> testResolvedShouldFindLatestVersion [
 	| versionReference reference |
 	versionReference := GoferResolvedReference name: 'GoferFoo-lr.2' repository: self monticelloRepository.
 	reference := versionReference resolveWith: gofer.
-	
+
 	self assert: reference packageName equals: 'GoferFoo'.
 	self assert: reference author equals: 'lr'.
-	self assert: reference branch isEmpty.
+	self assertEmpty: reference branch.
 	self assert: reference versionNumber equals: 2.
 	self assert: reference repository equals: self monticelloRepository
 ]
@@ -158,13 +149,13 @@ GoferReferenceTest >> testVersionShouldFindLatestVersion [
 	| versionReference reference |
 	versionReference := GoferVersionReference name: 'GoferFoo-lr.2'.
 	reference := versionReference resolveWith: gofer.
-	
+
 	self assert: reference packageName equals: 'GoferFoo'.
 	self assert: reference author equals: 'lr'.
 	self assert: reference versionNumber equals: 2.
-	self assert: reference branch isEmpty.
+	self assertEmpty: reference branch.
 	self assert: reference repository equals: self monticelloRepository.
-	
+
 	versionReference := GoferVersionReference name: 'GoferFoo-lr.3'.
 	self should: [ versionReference resolveWith: gofer ] raise: Error
 ]
@@ -181,31 +172,30 @@ GoferReferenceTest >> testVersionShouldFindWorkingCopy [
 { #category : #tests }
 GoferReferenceTest >> testVersionShouldParseComplexName [
 	| queryReference |
-	
 	queryReference := GoferVersionReference name: 'Seaside2.8b5'.
 	self assert: queryReference packageName equals: 'Seaside2'.
-	self assert: queryReference author isEmpty.
+	self assertEmpty: queryReference author.
 	self assert: queryReference branch equals: '8b5'.
 	self assert: queryReference versionNumber equals: 0.
-	
+
 	queryReference := GoferVersionReference name: 'Seaside2.8b5-avi.1'.
 	self assert: queryReference packageName equals: 'Seaside2'.
 	self assert: queryReference author equals: 'avi'.
 	self assert: queryReference branch equals: '8b5'.
 	self assert: queryReference versionNumber equals: 1.
-	
+
 	queryReference := GoferVersionReference name: 'Seaside-Core-pmm.2'.
 	self assert: queryReference packageName equals: 'Seaside-Core'.
 	self assert: queryReference author equals: 'pmm'.
-	self assert: queryReference branch isEmpty.
+	self assertEmpty: queryReference branch.
 	self assert: queryReference versionNumber equals: 2.
-	
+
 	queryReference := GoferVersionReference name: 'Seaside-Core.configcleanup-jf.3'.
 	self assert: queryReference packageName equals: 'Seaside-Core'.
 	self assert: queryReference author equals: 'jf'.
 	self assert: queryReference branch equals: 'configcleanup'.
 	self assert: queryReference versionNumber equals: 3.
-	
+
 	queryReference := GoferVersionReference name: 'Seaside-Core.configcleanup.extraspeedup-lr.69'.
 	self assert: queryReference packageName equals: 'Seaside-Core'.
 	self assert: queryReference author equals: 'lr'.
@@ -217,5 +207,4 @@ GoferReferenceTest >> testVersionShouldParseComplexName [
 	self assert: queryReference author equals: 'lr'.
 	self assert: queryReference branch equals: 'configcleanup42.extraspeedup'.
 	self assert: queryReference versionNumber equals: 69
-
 ]

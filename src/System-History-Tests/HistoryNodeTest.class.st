@@ -41,7 +41,7 @@ HistoryNodeTest >> testGroup [
 
 { #category : #tests }
 HistoryNodeTest >> testOneGroup [
-	| h i c i2 i3 i4 | 
+	| h i c i2 i3 i4 |
 	h := HistoryNode new.
 	h addItem: (i := HistoryLeaf new).
 	self assert: h size equals: 1.
@@ -50,7 +50,7 @@ HistoryNodeTest >> testOneGroup [
 	self assert: h size equals: 2.
 	self assert: (h at: 1) equals: i.
 	self assert: (c := h at: 2) isComposite.
-	self assert: c isEmpty.
+	self assertEmpty: c.
 	h addItem: (i2 := HistoryLeaf new).
 	self assert: h size equals: 2.
 	self assert: c size equals: 1.
@@ -62,9 +62,6 @@ HistoryNodeTest >> testOneGroup [
 	h closeGroup.
 	h addItem: (i4 := HistoryLeaf new).
 	self assert: h size equals: 3
-	
-	
-
 ]
 
 { #category : #tests }

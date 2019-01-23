@@ -25,19 +25,16 @@ TRemoveTest >> nonEmptyWithoutEqualElements [
 
 { #category : #'tests - fixture' }
 TRemoveTest >> test0FixtureTRemoveTest [
-
 	| duplicate |
 	self empty.
 	self nonEmptyWithoutEqualElements.
-	self deny: self nonEmptyWithoutEqualElements isEmpty.
+	self denyEmpty: self nonEmptyWithoutEqualElements.
 	duplicate := true.
-	self nonEmptyWithoutEqualElements
-		detect: [ :each | (self nonEmptyWithoutEqualElements occurrencesOf: each) > 1 ]
-		ifNone: [ duplicate := false ].
-	self assert: duplicate = false.
+	self nonEmptyWithoutEqualElements detect: [ :each | (self nonEmptyWithoutEqualElements occurrencesOf: each) > 1 ] ifNone: [ duplicate := false ].
+	self deny: duplicate equals: false.
 	self elementNotIn.
-	self assert: self empty isEmpty.
-	self deny: self nonEmptyWithoutEqualElements isEmpty.
+	self assertEmpty: self empty.
+	self denyEmpty: self nonEmptyWithoutEqualElements.
 	self deny: (self nonEmptyWithoutEqualElements includes: self elementNotIn)
 ]
 

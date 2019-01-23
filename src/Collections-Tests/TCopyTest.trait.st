@@ -39,13 +39,12 @@ TCopyTest >> nonEmpty [
 
 { #category : #'tests - fixture' }
 TCopyTest >> test0CopyTest [
-
 	self empty.
-	self assert: self empty isEmpty.
+	self assertEmpty: self empty.
 	self nonEmpty.
-	self assert: self nonEmpty notEmpty.
+	self denyEmpty: self nonEmpty notEmpty.
 	self collectionWithElementsToRemove.
-	self assert: self collectionWithElementsToRemove notEmpty.
+	self denyEmpty: self collectionWithElementsToRemove notEmpty.
 	self collectionWithElementsToRemove do: [ :each | self assert: (self nonEmpty includes: each) ].
 	self elementToAdd.
 	self deny: (self nonEmpty includes: self elementToAdd).

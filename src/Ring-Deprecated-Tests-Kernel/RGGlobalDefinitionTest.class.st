@@ -38,7 +38,7 @@ RGGlobalDefinitionTest >> testPoolDefinition [
 	| pool newClass |
 	pool := RGClassDefinition createSharedPoolNamed: #TextConstants.
 	self assert: pool isPool.
-	self assert: pool users isEmpty.
+	self assertEmpty: pool users.
 	self assert: pool parent equals: Smalltalk globals.
 	newClass := RGClassDefinition named: #OrderedCollection.
 	pool addUser: newClass.
@@ -48,5 +48,5 @@ RGGlobalDefinitionTest >> testPoolDefinition [
 	pool := RGClassDefinition named: #TextConstants.
 	pool superclassName: #SharedPool.
 	self assert: pool isPool.
-	self assert: pool users isEmpty
+	self assertEmpty: pool users
 ]
