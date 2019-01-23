@@ -76,7 +76,7 @@ NECPreferences class >> currentController [
 
 { #category : #defaults }
 NECPreferences class >> defaultBackgroundColor [
-	^ Smalltalk ui theme menuColor
+	^ self theme menuColor
 ]
 
 { #category : #defaults }
@@ -287,6 +287,11 @@ NECPreferences class >> spaceAfterCompletion [
 { #category : #accessing }
 NECPreferences class >> spaceAfterCompletion: anObject [
 	spaceAfterCompletion := anObject
+]
+
+{ #category : #accessing }
+NECPreferences class >> theme [
+	^ Smalltalk ui theme
 ]
 
 { #category : #private }
