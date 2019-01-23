@@ -19,3 +19,13 @@ ShClassChanged >> builder: anObject [
 	builder := anObject.
 	oldClass := builder oldClass copyForAnnouncement.
 ]
+
+{ #category : #propagating }
+ShClassChanged >> propagateToSubclasses: anotherBuilder [
+
+	anotherBuilder changes add: (ShSuperclassChanged new
+		builder: builder;
+		oldClass: oldClass;
+		yourself
+	).
+]

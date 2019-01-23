@@ -44,6 +44,12 @@ FFIExternalString >> externalTypeSize [
 	^ self pointerSize "i am live and die as a pointer (a char*)"
 ]
 
+{ #category : #callbacks }
+FFIExternalString >> extractFromCallbackOn: aFFICallbackArgumentReader [ 
+	
+	aFFICallbackArgumentReader extractExternalString: self
+]
+
 { #category : #'stack parameter classification' }
 FFIExternalString >> stackValueParameterClass [
 	^ #integer

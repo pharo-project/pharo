@@ -13,7 +13,7 @@ SystemNavigationOnNewlyCreatedEnvironmentTest class >> shouldInheritSelectors [
 ^true
 ]
 
-{ #category : #'setUp-tearDown' }
+{ #category : #setUp }
 SystemNavigationOnNewlyCreatedEnvironmentTest >> createSystemNavigationToTest [
 	
 	| environment nav |
@@ -23,7 +23,19 @@ SystemNavigationOnNewlyCreatedEnvironmentTest >> createSystemNavigationToTest [
 	^nav
 ]
 
-{ #category : #testing }
+{ #category : #tests }
+SystemNavigationOnNewlyCreatedEnvironmentTest >> testAllExistingProtocolsFor [
+	"refined from the superclass. Because in a created environment there is no existing protocols."
+	
+	| instSideProtocols classSideProtocols |
+	instSideProtocols := self systemNavigationToTest allExistingProtocolsFor: true. 
+	classSideProtocols := self systemNavigationToTest allExistingProtocolsFor: false.
+	self assert: instSideProtocols isEmpty.	
+	self assert: classSideProtocols isEmpty.
+
+]
+
+{ #category : #tests }
 SystemNavigationOnNewlyCreatedEnvironmentTest >> testAllReferencesToPool [
 	| result |
 	
@@ -31,7 +43,7 @@ SystemNavigationOnNewlyCreatedEnvironmentTest >> testAllReferencesToPool [
 	self assert: result isEmpty. "FooSharedPool is not in this environment"
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SystemNavigationOnNewlyCreatedEnvironmentTest >> testEnsureDefaultEnvironmentNotUsed [
 	
 	| allClasses originalProtoObjectClass originalObjectClass anotherObjectClass |

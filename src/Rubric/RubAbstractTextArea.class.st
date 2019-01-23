@@ -109,7 +109,8 @@ Class {
 
 { #category : #settings }
 RubAbstractTextArea class >> backgroundColor [
-	^ BackgroundColor ifNil: [ BackgroundColor := Color white] 
+	"Do not store it on purpose so that settings can take precedence over theme."
+	^ BackgroundColor ifNil: [ self theme backgroundColor ]
 ]
 
 { #category : #settings }
@@ -589,8 +590,10 @@ RubAbstractTextArea >> defaultBounds [
 
 { #category : #defaults }
 RubAbstractTextArea >> defaultColor [
-	"answer the default color/fill style for the receiver"
-	^ self class backgroundColor
+	"Answer the default color/fill style for the receiver. If the settings has been used then honor it, else returns the theme color"
+
+  	^ self class backgroundColor
+
 ]
 
 { #category : #menu }
@@ -1800,7 +1803,7 @@ RubAbstractTextArea >> textStyle: aTextStyle [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #notification }
 RubAbstractTextArea >> themeChanged [
 	
 	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler | 
