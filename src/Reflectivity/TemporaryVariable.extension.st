@@ -7,7 +7,8 @@ TemporaryVariable >> afterLinks [
 
 { #category : #'*Reflectivity' }
 TemporaryVariable >> assignmentNodes [
-	^ self astNodes select: [ :ast | ast isWrite  ]
+	^ (self astNodes select: [ :ast | ast isWrite ])
+		collect: [ :node | node parent ]
 ]
 
 { #category : #'*Reflectivity' }
