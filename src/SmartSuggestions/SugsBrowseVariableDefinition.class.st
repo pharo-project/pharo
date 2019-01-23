@@ -2,18 +2,18 @@
 I add a menu to variables to browse the defintion
 "
 Class {
-	#name : #SugsBrowseVariableDefintion,
+	#name : #SugsBrowseVariableDefinition,
 	#superclass : #SugsSuggestion,
 	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #accessing }
-SugsBrowseVariableDefintion class >> nodes [
+SugsBrowseVariableDefinition class >> nodes [
 	^{RBVariableNode}
 ]
 
 { #category : #execution }
-SugsBrowseVariableDefintion >> execute [
+SugsBrowseVariableDefinition >> execute [
 	| semanticVariable |
 	semanticVariable := context selectedNode binding.
 	semanticVariable isInstance ifTrue: [ ^semanticVariable slot definingClass browse ].
@@ -23,6 +23,6 @@ SugsBrowseVariableDefintion >> execute [
 ]
 
 { #category : #display }
-SugsBrowseVariableDefintion >> label [
+SugsBrowseVariableDefinition >> label [
 	^ 'Browse Variable definition' translated
 ]
