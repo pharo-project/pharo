@@ -23,6 +23,15 @@ FTRegexFilter >> matches: aString [
 { #category : #accessing }
 FTRegexFilter >> pattern: aString [
 	super pattern: aString.
-	
-	regex := aString asRegexIgnoringCase
+
+	regex := self patternFromString: aString
+]
+
+{ #category : #accessing }
+FTRegexFilter >> patternFromString: aString [
+	" do not throw an error if the pattern is bad - important in case of auto-accepting"
+
+	^ [ aString asRegexIgnoringCase ]
+		on: RegexSyntaxError
+		do: [ :ex |  ]
 ]
