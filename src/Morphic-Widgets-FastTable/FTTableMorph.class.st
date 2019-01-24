@@ -43,7 +43,7 @@ Class {
 		'resizable',
 		'trialHSB'
 	],
-	#category : #'Morphic-Widgets-FastTable'
+	#category : #'Morphic-Widgets-FastTable-Core'
 }
 
 { #category : #accessing }

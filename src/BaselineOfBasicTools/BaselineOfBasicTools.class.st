@@ -53,6 +53,9 @@ BaselineOfBasicTools >> baseline: spec [
 					repository: repository ].
 
 		spec package: 'Morphic-Widgets-FastTable'.
+		spec package: 'Morphic-Widgets-FastTable-Trees'.
+		spec package: 'Morphic-Widgets-FastTable-Examples'.
+		spec package: 'Morphic-Widgets-FastTable-Compatibility'.
 		
 		spec package: 'Tool-ExternalBrowser'.
 		spec package: 'BlueInk-Core'. 
