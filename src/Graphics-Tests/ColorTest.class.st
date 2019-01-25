@@ -102,13 +102,13 @@ ColorTest >> testFromHexString [
 	color := 	Color fromHexString: 'FFFFFF'.
 	self assert: color equals: Color white.
 
-	color := 	Color fromHexString: 'ff0000'.
+	color := Color fromHexString: 'ff0000'.
 	self assert: color equals: Color red.
 
-	color := 	Color fromHexString: '#ff0000'.
+	color := Color fromHexString: '#ff0000'.
 	self assert: color equals: Color red.
 
-	color := 	Color fromHexString: '#FF00FFFF'.
+	color := Color fromHexString: '#FF00FFFF'.
 	self assert: color equals: Color magenta.
 
 	color := 	Color fromHexString: '#FF00FF55'.
