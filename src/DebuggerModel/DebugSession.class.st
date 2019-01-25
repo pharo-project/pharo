@@ -100,13 +100,6 @@ DebugSession class >> named: aString on: aProcess startedAt: aContext [
 		detectUIProcess
 ]
 
-{ #category : #context }
-DebugSession >> activePC: aContext [ 
-	^ (self isLatestContext: aContext)
-		ifTrue: [ interruptedContext pc ]
-		ifFalse: [ self previousPC: aContext ]
-]
-
 { #category : #'debugging actions' }
 DebugSession >> clear [
 	"If after resuming the process the user does plan to reuse this session with
@@ -305,12 +298,6 @@ DebugSession >> peelToFirstLike: aContext [
 DebugSession >> prepareTestToRunAgain [
 
 	self interruptedContext receiver prepareToRunAgain
-]
-
-{ #category : #context }
-DebugSession >> previousPC: aContext [
-	^ (aContext method pcPreviousTo: aContext pc)
-		ifNil: [ aContext pc ]
 ]
 
 { #category : #accessing }
