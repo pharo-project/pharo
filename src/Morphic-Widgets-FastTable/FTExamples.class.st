@@ -501,6 +501,7 @@ FTExamples class >> exampleTable1 [
 		onAnnouncement: FTStrongSelectionChanged 
 			do: [ :ann | ('double-click on row: ', (ann selectedRowIndex asString)) crLog ];
 		beMultipleSelection;
+		beResizable;
 		yourself.
 		
 	^ table openInWindow
@@ -526,6 +527,7 @@ FTExamples class >> exampleTable2 [
 		onAnnouncement: FTStrongSelectionChanged 
 			do: [ :ann | ('double-click on row: ', (ann selectedRowIndex asString)) crLog ];
 		beMultipleSelection;
+		beResizable;
 		yourself.
 		
 	^ table openInWindow
@@ -553,6 +555,7 @@ FTExamples class >> exampleTable3 [
 		onAnnouncement: FTStrongSelectionChanged 
 			do: [ :ann | ('double-click on row: ', (ann selectedRowIndex asString)) crLog ];
 		beMultipleSelection;
+		beResizable;
 		yourself.
 		
 	^ table openInWindow
@@ -582,6 +585,7 @@ FTExamples class >> exampleTable4 [
 		onAnnouncement: FTStrongSelectionChanged 
 			do: [ :ann | ('double-click on row: ', (ann selectedRowIndex asString)) crLog ];
 		beMultipleSelection;
+		beResizable;
 		yourself.
 		
 	^ table openInWindow
