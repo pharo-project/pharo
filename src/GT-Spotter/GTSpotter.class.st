@@ -279,15 +279,6 @@ GTSpotter >> gtDisplayOn: stream [
 	stream nextPutAll: 'Spotter'
 ]
 
-{ #category : #inspecting }
-GTSpotter >> gtInspectorStepsIn: composite [
-	<gtInspectorPresentationOrder: 40>
-	composite list
-		title: 'Steps';
-		display: [ self steps ];
-		when: [ self steps notEmpty ]
-]
-
 { #category : #'event handling' }
 GTSpotter >> handleExceptionsDuring: aBlock [
 	self exceptionHandler handleExceptionsDuring: aBlock
@@ -343,16 +334,6 @@ GTSpotter >> initialize [
 	super initialize.
 	
 	processorsFilter := GTSpotterSettingsProcessorFilter new
-]
-
-{ #category : #'actions api' }
-GTSpotter >> inspectIt [
-	| result |
-	Smalltalk compiler
-		silentlyDo: [ result := Smalltalk compiler evaluate: text string trimBoth ]
-		exceptionDo: [ :ex | ^ex  ].
-	result inspect.
-	self exitDueTo: #inspectIt 
 ]
 
 { #category : #testing }
@@ -543,30 +524,6 @@ GTSpotter >> setText: aText from: aView [
 	^ true
 ]
 
-{ #category : #'actions api' }
-GTSpotter >> shiftPressed: aBoolean [
-
-	self isShiftPressed = aBoolean ifTrue: [ ^ self ].
-	
-	isShiftPressed := aBoolean.
-	
-	self isShiftPressed
-		ifTrue: [ self notifyRevealHints ]
-		ifFalse: [ self notifyHideHints ]
-
-	
-]
-
-{ #category : #'actions api' }
-GTSpotter >> showPreview [
-
-	self isPreviewVisible ifTrue: [ ^ self ].
-	isPreviewVisible := true.
-	self class showPreview.
-	self notifyShowPreview
-	
-]
-
 { #category : #accessing }
 GTSpotter >> steps [
 
@@ -583,12 +540,4 @@ GTSpotter >> terminateProcessors [
 GTSpotter >> text [
 
 	^ text ifNil: [ text := '' asText ]
-]
-
-{ #category : #'actions api' }
-GTSpotter >> togglePreview [
-
-	self isPreviewVisible
-		ifTrue: [ self hidePreview ]
-		ifFalse: [ self showPreview ]
 ]

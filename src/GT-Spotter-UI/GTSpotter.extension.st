@@ -59,6 +59,25 @@ GTSpotter >> gtDisplaySpotterMorphOn: aComposite [
 ]
 
 { #category : #'*GT-Spotter-UI' }
+GTSpotter >> gtInspectorStepsIn: composite [
+	<gtInspectorPresentationOrder: 40>
+	composite list
+		title: 'Steps';
+		display: [ self steps ];
+		when: [ self steps notEmpty ]
+]
+
+{ #category : #'*GT-Spotter-UI' }
+GTSpotter >> inspectIt [
+	| result |
+	Smalltalk compiler
+		silentlyDo: [ result := Smalltalk compiler evaluate: text string trimBoth ]
+		exceptionDo: [ :ex | ^ex  ].
+	result inspect.
+	self exitDueTo: #inspectIt 
+]
+
+{ #category : #'*GT-Spotter-UI' }
 GTSpotter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Spotter)
@@ -118,4 +137,36 @@ GTSpotter >> requestNextCategoryStepWith: aProcessorLink for: anEventType [
 		collect: [ :each | each asSpotterCandidateLink renderingProcessor: aProcessorLink ].
 		
 	self requestNextStepWith: collection for: anEventType
+]
+
+{ #category : #'*GT-Spotter-UI' }
+GTSpotter >> shiftPressed: aBoolean [
+
+	self isShiftPressed = aBoolean ifTrue: [ ^ self ].
+	
+	isShiftPressed := aBoolean.
+	
+	self isShiftPressed
+		ifTrue: [ self notifyRevealHints ]
+		ifFalse: [ self notifyHideHints ]
+
+	
+]
+
+{ #category : #'*GT-Spotter-UI' }
+GTSpotter >> showPreview [
+
+	self isPreviewVisible ifTrue: [ ^ self ].
+	isPreviewVisible := true.
+	self class showPreview.
+	self notifyShowPreview
+	
+]
+
+{ #category : #'*GT-Spotter-UI' }
+GTSpotter >> togglePreview [
+
+	self isPreviewVisible
+		ifTrue: [ self hidePreview ]
+		ifFalse: [ self showPreview ]
 ]
