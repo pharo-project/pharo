@@ -226,6 +226,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GT-EventRecorder'.
 
 		spec package: 'GT-Spotter'.
+		spec package: 'GT-Spotter-UI'.
 		spec package: 'GT-SpotterExtensions-Core'.
 
 		spec package: 'Tool-Catalog'.	"standalone"
@@ -683,6 +684,7 @@ spec group: 'GT-Core-Group' with: #(
 	'GT-Playground'
 	'GT-EventRecorder'
 	'GT-Spotter'
+	'GT-Spotter-UI'
 	'GT-SpotterExtensions-Core'
 	'GT-Spotter-EventRecorder'
 	'GT-Debugger'
