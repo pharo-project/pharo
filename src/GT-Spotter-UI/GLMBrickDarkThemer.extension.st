@@ -1,6 +1,6 @@
 Extension { #name : #GLMBrickDarkThemer }
 
-{ #category : #'*GT-Spotter' }
+{ #category : #'*GT-Spotter-UI' }
 GLMBrickDarkThemer >> spotterThemer [
 
 	^ self

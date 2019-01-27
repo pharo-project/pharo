@@ -9,7 +9,7 @@ Class {
 		'autoHide',
 		'processorKeyBindings'
 	],
-	#category : #'GT-Spotter-UI'
+	#category : #'GT-Spotter-UI-Widgets'
 }
 
 { #category : #actions }

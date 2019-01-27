@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSpotterBreadcrumbSeparatorRenderer,
 	#superclass : #GLMBrickRenderer,
-	#category : #'GT-Spotter-Renderer'
+	#category : #'GT-Spotter-UI-Renderer'
 }
 
 { #category : #rendering }

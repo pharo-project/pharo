@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSpotterBrickThemer,
 	#superclass : #GLMBrickThemer,
-	#category : #'GT-Spotter-Theme'
+	#category : #'GT-Spotter-UI-Theme'
 }
 
 { #category : #'brick-rubric' }

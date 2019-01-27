@@ -115,13 +115,6 @@ GTSpotterProcessor >> prepareProcessorInContext: aContext [
 	allFilteredCandidates := nil
 ]
 
-{ #category : #private }
-GTSpotterProcessor >> render: anObject [
-	^ GTSpotterItemBrick new
-		icon: (nil);
-		text: (anObject gtDisplayString)
-]
-
 { #category : #testing }
 GTSpotterProcessor >> shouldFilterInContext: aSpotterContext [
 	^ aSpotterContext notEmpty 
