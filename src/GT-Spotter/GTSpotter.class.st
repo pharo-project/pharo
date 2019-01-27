@@ -550,9 +550,6 @@ GTSpotter >> shiftPressed: aBoolean [
 	
 	isShiftPressed := aBoolean.
 	
-	SmalltalkImage current vm canHandleShiftPressed
-		ifTrue: [ ^ isShiftPressed := false ].
-
 	self isShiftPressed
 		ifTrue: [ self notifyRevealHints ]
 		ifFalse: [ self notifyHideHints ]

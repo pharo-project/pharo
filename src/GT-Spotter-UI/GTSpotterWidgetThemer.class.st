@@ -360,10 +360,7 @@ GTSpotterWidgetThemer >> hintHideStyleFor: aBrick [
 
 { #category : #styles }
 GTSpotterWidgetThemer >> hintRevealArrowStyleFor: aBrick [
-	
-	SmalltalkImage current vm canHandleShiftPressed
-		ifTrue: [ ^ self ].
-	
+		
 	aBrick ifNil: [ ^ self ].
 	(aBrick valueOfProperty: #brickSpotterIsReveal ifAbsent: [ false ])
 		ifTrue: [ ^ self ].
@@ -378,10 +375,7 @@ GTSpotterWidgetThemer >> hintRevealArrowStyleFor: aBrick [
 
 { #category : #styles }
 GTSpotterWidgetThemer >> hintRevealStyleFor: aBrick [
-	
-	SmalltalkImage current vm canHandleShiftPressed
-		ifTrue: [ ^ self ].
-	
+		
 	aBrick ifNil: [ ^ self ].
 	(aBrick valueOfProperty: #brickSpotterIsReveal ifAbsent: [ false ])
 		ifTrue: [ ^ self ].
