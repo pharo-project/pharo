@@ -6,7 +6,6 @@ set -o xtrace
 
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 . ${SCRIPTS}/envvars.sh
-. ${SCRIPTS}/envversion.sh
 
 set_version_variables
 
