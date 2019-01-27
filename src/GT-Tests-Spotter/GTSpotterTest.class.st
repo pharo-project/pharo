@@ -28,8 +28,15 @@ GTSpotterTest >> assertText: aTextualObject do: aBlock [
 ]
 
 { #category : #tests }
+GTSpotterTest >> setUp [ 
+	
+	spotter := GTMockSpotter new
+		exceptionHandler: GTSpotterDebuggingExceptionHandler new;
+		yourself
+]
+
+{ #category : #tests }
 GTSpotterTest >> testEmptyTextInput [
-	self testNewSpotter.
 	
 	self assertText: Text new do: [ self assert: spotter text isEmpty ].
 	self assertText: (Text fromString: '') do: [ self assert: spotter text isEmpty ].
@@ -58,7 +65,6 @@ GTSpotterTest >> testHistorizingTheSameObjectRemovesPreviousOccurences [
 
 { #category : #tests }
 GTSpotterTest >> testInitialText [
-	self testNewSpotter.
 	
 	self flag: 'is this instvar still required ? we have context'.
 	self assert: spotter getText isEmptyOrNil.
@@ -68,11 +74,6 @@ GTSpotterTest >> testInitialText [
 
 { #category : #tests }
 GTSpotterTest >> testInstanceCreation [
-	self shouldnt: [ spotter := GTMockSpotter new ] raise: Error.
-	self shouldnt: [ 
-		spotter := GTMockSpotter new
-			exceptionHandler: GTSpotterDebuggingExceptionHandler new;
-			yourself ] raise: Error.
 	
 	self assert: spotter notNil.
 	self assert: spotter steps isEmpty.
@@ -80,10 +81,16 @@ GTSpotterTest >> testInstanceCreation [
 ]
 
 { #category : #tests }
+GTSpotterTest >> testInstanceCreationSmokeTest [
+
+	self shouldnt: [ spotter := GTMockSpotter new ] raise: Error.
+
+]
+
+{ #category : #tests }
 GTSpotterTest >> testNewSpotter [
 	| step1 |
-	self testInstanceCreation.
-	
+		
 	self assert: spotter notNil.
 	self assert: spotter hasSteps not.
 	self assert: spotter steps isEmpty.
