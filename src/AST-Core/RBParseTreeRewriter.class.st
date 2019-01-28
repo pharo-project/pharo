@@ -1,37 +1,24 @@
 "
-ParseTreeRewriter walks over and transforms its RBProgramNode held in its instance variable tree. If the tree is modified, then answer is set to true, and the modified tree can be retrieved by the #tree method.
+ParseTreeRewriter walks over and transforms its RBProgramNode (tree). If the tree is modified, then answer is set to true, and the modified tree can be retrieved by the #tree method.
 
 Here is a little script to rewrite a self halt into self dormantHalt. 
 
 	| rewriter node |
 	rewriter := RBParseTreeRewriter new.
-	rewriter replace: 'self halt' with: 'self dormantHalt'.
+	rewriter replace: 'self halt' with: 'self dormatHalt'.
 	node := (ProtoObjectTest>>#testIfNil) parseTree.
 	rewriter executeTree: node.
 	^ node formattedCode
 
-The method executeTree: replaces the argument node based on the replace rules. It returns false when no transformation has been applied, and true when a transformation occured.
+Note how do we get the transformed code. 
 
-Here is an example how to install a transformed method. 
-
-	| rewriter node method |
-	rewriter := RBParseTreeRewriter new.
-	rewriter replace: 'self shouldnt: [re compile] raise: Error' with: 'self compileIsOK'.
-	method := (AClass>>#aSelectortest).
-	node := method parseTree.
-	(rewriter executeTree: node)
-		ifFalse: [ ^ self ].
-	method origin
-		compile: node formattedCode
-		classified: method protocol
-
-For other examples, have a look at implementation of method deprecated:transformWith:
-that is used as follows. This method rewrite during execution a pattern.
+Have a look at the users of deprecated:
 
 		deprecated: 'Please use #isPinnedInMemory instead'
 		transformWith: '`@receiver isPinned' -> '`@receiver isPinnedInMemory'.
 
 You can also have a look at the ParseTreeRewriterTest class
+
 
 Instance Variables:
 	tree	<RBProgramNode>	the parse tree we're transforming
