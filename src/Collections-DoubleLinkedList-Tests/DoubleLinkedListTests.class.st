@@ -1,7 +1,10 @@
+"
+Unit tests for DoubleLinkedList
+"
 Class {
 	#name : #DoubleLinkedListTests,
 	#superclass : #TestCase,
-	#category : #'Collections-DoubleLinkedList-Tests'
+	#category : #'Collections-DoubleLinkedList-Tests-Base'
 }
 
 { #category : #testing }
