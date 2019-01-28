@@ -69,17 +69,17 @@ AthensTextRenderTest class >> test2 [
 	surf drawDuring: [ :canvas | 
 		
 		canvas setPaint: (Color white ).
-		canvas drawShape: (0@0 corner: 300@300).
+		canvas drawShape: (0@0 corner: 500@300).
 		canvas pathTransform scaleBy: 1.
 
-		canvas pathTransform translateX: 300 Y: 0.
+		canvas pathTransform translateX: 0 Y: 0.
 
 		canvas setPaint: Color yellow.
 		canvas pathTransform rotateByDegrees: 0.
 		c renderOn: canvas
 	].
 
-	Display getCanvas translucentImage: surf form at: 0@0
+	Display getCanvas translucentImage: surf asForm at: 0@0
 
 
 ]
@@ -123,7 +123,7 @@ LogicalFont
 		canvas pathTransform translateBy: 0 @11 .
 	].
 	].
-	Display getCanvas translucentImage: surf form at: 100@100
+	Display getCanvas translucentImage: surf asForm at: 100@100
 
 
 ]
@@ -161,7 +161,7 @@ LogicalFont
 			canvas pathTransform translateBy: 0.1@10.
 		]
 	].
-	Display getCanvas translucentImage: surf form at: 100@100
+	Display getCanvas translucentImage: surf asForm at: 100@100
 
 
 ]
@@ -195,7 +195,7 @@ LogicalFont
 			canvas pathTransform translateBy: 10@0.1.
 		]
 	].
-	Display getCanvas translucentImage: surf form at: 100@100
+	Display getCanvas translucentImage: surf asForm at: 100@100
 
 
 ]
