@@ -67,24 +67,25 @@ FTTableContainerMorph >> calculateColumnWidths [
 	- collect remaining undefined columnwidth 
 	- return if all fit 
 	  or collect and distribute remaining width"
-	| undefinedColumnWidths widths remainingWidth |
 
+	| undefinedColumnWidths widths remainingWidth |
 	remainingWidth := self owner bounds width.
 
 	widths := self owner columns
-		collect: [ :c | | columnWidth | 
-			columnWidth := c acquireWidth: remainingWidth. 
-			remainingWidth := remainingWidth - columnWidth. 
+		collect: [ :c | 
+			| columnWidth |
+			columnWidth := c acquireWidth: remainingWidth.
+			remainingWidth := remainingWidth - columnWidth.
 			columnWidth ].
-   "all fit - finish"		
-	undefinedColumnWidths := widths count: #isZero.
-   undefinedColumnWidths isZero ifTrue:[^ widths].
 
-   "collect and distribute remaining space"
-	^ widths collect: [ :c | 
-		c = 0
-			ifTrue: [ remainingWidth / undefinedColumnWidths]
-			ifFalse: [ c ] ]
+	"all fit - finish"
+	undefinedColumnWidths := widths count: #isZero.
+	undefinedColumnWidths isZero
+		ifTrue: [ widths size > 1 ifTrue: [ "Set the remaining space to the last column" widths at: widths size put: widths last + remainingWidth ].
+			^ widths ].
+
+	"collect and distribute remaining space"
+	^ widths collect: [ :c | c = 0 ifTrue: [ remainingWidth / undefinedColumnWidths ] ifFalse: [ c ] ]
 ]
 
 { #category : #private }

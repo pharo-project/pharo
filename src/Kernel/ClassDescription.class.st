@@ -28,7 +28,7 @@ ClassDescription >> acceptsLoggingOfCompilation [
 { #category : #'accessing method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category [
 	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
-	
+
 	priorMethodOrNil := self 
 		compiledMethodAt: selector 
 		ifAbsent: [ nil ].

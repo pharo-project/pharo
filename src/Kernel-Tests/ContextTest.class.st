@@ -7,7 +7,7 @@ aReceiver         - just some arbitrary object, ""Rectangle origin: 100@100 corn
 aSender           - just some arbitrary object, thisContext
 aCompiledMethod - just some arbitrary method, ""Rectangle rightCenter"".
 aMethodContext   - just some arbitray context ...  
-
+nonActiveBlockContext  - the Context of a block whose home context is not in its sender chain (because the method that created this block already returned)
 
 "
 Class {
@@ -18,9 +18,11 @@ Class {
 		'aReceiver',
 		'aMethodContext',
 		'aSender',
-		'instVarForTestLookupSymbol'
+		'instVarForTestLookupSymbol',
+		'nonActiveBlockContext'
 	],
 	#classVars : [
+		'Block',
 		'classVarForTestLookupSymbol'
 	],
 	#category : #'Kernel-Tests-Methods'
@@ -32,6 +34,17 @@ ContextTest class >> contextWithTempForTesting [
 	string := 'test'.
 	^ [self class. string asUppercase] asContext.
 
+]
+
+{ #category : #helper }
+ContextTest class >> createBlock [
+	^ [ thisContext ].
+]
+
+{ #category : #helper }
+ContextTest class >> returnNonActiveContextOfBlock [
+	Block := self createBlock.
+	^ Block value.
 ]
 
 { #category : #private }
@@ -101,6 +114,17 @@ ContextTest >> testActivateReturnValue [
 ]
 
 { #category : #tests }
+ContextTest >> testActiveBlockContextHomeAndActiveHome [
+	[ self assert: thisContext home == thisContext activeHome.] value.
+]
+
+{ #category : #private }
+ContextTest >> testActiveHomeMethodContext [
+	self assert: (aMethodContext activeHome == aMethodContext).
+	self assert: (aMethodContext activeHome == aMethodContext home).
+]
+
+{ #category : #tests }
 ContextTest >> testFindContextSuchThat [
 	self assert: (aMethodContext findContextSuchThat: [:each| true]) printString = aMethodContext printString.
 	self assert: (aMethodContext hasContext: aMethodContext). 
@@ -118,6 +142,18 @@ ContextTest >> testMethodContext [
 ContextTest >> testMethodIsBottomContext [
 	self assert: aMethodContext bottomContext = aSender.
 	self assert: aMethodContext secondFromBottom = aMethodContext.
+]
+
+{ #category : #tests }
+ContextTest >> testNonActiveBlockContextActiveHome [
+	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
+	self assert: (nonActiveBlockContext activeHome) isNil.
+]
+
+{ #category : #tests }
+ContextTest >> testNonActiveBlockContextHome [
+	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
+	self assert: (nonActiveBlockContext home) isNotNil.
 ]
 
 { #category : #tests }

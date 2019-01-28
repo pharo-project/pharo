@@ -221,6 +221,7 @@ MetacelloVersionValidator >> recordValidationCriticalWarning: aString callSite: 
 
 { #category : #accessing }
 MetacelloVersionValidator >> recordValidationCriticalWarning: aString versionString: versionString callSite: callSite reasonCode: aSymbol [
+	<haltOrBreakpointForTesting>
 	"reasonCodes:
 		#packageNameMismatch
 		#projectClassNameFileMismatch
@@ -253,6 +254,7 @@ MetacelloVersionValidator >> recordValidationError: aString callSite: callSite r
 
 { #category : #accessing }
 MetacelloVersionValidator >> recordValidationError: aString versionString: versionString callSite: callSite reasonCode: aSymbol [
+	<haltOrBreakpointForTesting>
 	"reasonCodes:
 		#noVersionForSymbolicVersion
 		#duplicateNames
@@ -293,6 +295,7 @@ MetacelloVersionValidator >> recordValidationWarning: aString callSite: callSite
 
 { #category : #accessing }
 MetacelloVersionValidator >> recordValidationWarning: aString versionString: versionString callSite: callSite reasonCode: aSymbol [
+	<haltOrBreakpointForTesting>
 	"reasonCodes:
 		#onlyBaselineVersion
 		#noVersionSpecified
