@@ -140,7 +140,7 @@ ZnHTTPSTests >> testGetPharoVersion [
 	self assert: lastBuildVersion isString.
 	self assert: lastBuildVersion size > 0.
 	version := (lastBuildVersion copyAfter: $>) copyUpTo: $<.
-	self denyEmpty: version
+	self deny: version isEmpty
 ]
 
 { #category : #testing }
