@@ -28,7 +28,6 @@ AsciiCharsetTest >> testIsCasedLetter [
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsClosePunctuation [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -36,7 +35,9 @@ AsciiCharsetTest >> testIsClosePunctuation [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isClosePunctuation: ch) equals: (charset isClosePunctuation: ch) ]
+		self
+			assert: (Unicode isClosePunctuation: ch)
+			equals: (charset isClosePunctuation: ch) ]
 ]
 
 { #category : #'generated tests' }
@@ -262,7 +263,6 @@ AsciiCharsetTest >> testIsModifierSymbol [
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsNonspacingMark [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -270,12 +270,13 @@ AsciiCharsetTest >> testIsNonspacingMark [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isNonspacingMark: ch) equals: (charset isNonspacingMark: ch) ]
+		self
+			assert: (Unicode isNonspacingMark: ch)
+			equals: (charset isNonspacingMark: ch) ]
 ]
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsOpenPunctuation [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -283,12 +284,13 @@ AsciiCharsetTest >> testIsOpenPunctuation [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isOpenPunctuation: ch) equals: (charset isOpenPunctuation: ch) ]
+		self
+			assert: (Unicode isOpenPunctuation: ch)
+			equals: (charset isOpenPunctuation: ch) ]
 ]
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsOtherLetter [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -296,12 +298,13 @@ AsciiCharsetTest >> testIsOtherLetter [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isOtherLetter: ch) equals: (charset isOtherLetter: ch) ]
+		self
+			assert: (Unicode isOtherLetter: ch)
+			equals: (charset isOtherLetter: ch) ]
 ]
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsOtherNumber [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -309,12 +312,13 @@ AsciiCharsetTest >> testIsOtherNumber [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isOtherNumber: ch) equals: (charset isOtherNumber: ch) ]
+		self
+			assert: (Unicode isOtherNumber: ch)
+			equals: (charset isOtherNumber: ch) ]
 ]
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsOtherPunctuation [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -322,12 +326,13 @@ AsciiCharsetTest >> testIsOtherPunctuation [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isOtherPunctuation: ch) equals: (charset isOtherPunctuation: ch) ]
+		self
+			assert: (Unicode isOtherPunctuation: ch)
+			equals: (charset isOtherPunctuation: ch) ]
 ]
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsOtherSymbol [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -335,12 +340,13 @@ AsciiCharsetTest >> testIsOtherSymbol [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isOtherSymbol: ch) equals: (charset isOtherSymbol: ch) ]
+		self
+			assert: (Unicode isOtherSymbol: ch)
+			equals: (charset isOtherSymbol: ch) ]
 ]
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsParagraphSeparator [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -348,12 +354,13 @@ AsciiCharsetTest >> testIsParagraphSeparator [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isParagraphSeparator: ch) equals: (charset isParagraphSeparator: ch) ]
+		self
+			assert: (Unicode isParagraphSeparator: ch)
+			equals: (charset isParagraphSeparator: ch) ]
 ]
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsPrivateOther [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -361,12 +368,13 @@ AsciiCharsetTest >> testIsPrivateOther [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isPrivateOther: ch) equals: (charset isPrivateOther: ch) ]
+		self
+			assert: (Unicode isPrivateOther: ch)
+			equals: (charset isPrivateOther: ch) ]
 ]
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsSpaceSeparator [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -374,12 +382,13 @@ AsciiCharsetTest >> testIsSpaceSeparator [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isSpaceSeparator: ch) equals: (charset isSpaceSeparator: ch) ]
+		self
+			assert: (Unicode isSpaceSeparator: ch)
+			equals: (charset isSpaceSeparator: ch) ]
 ]
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsSpacingCombiningMark [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -387,12 +396,13 @@ AsciiCharsetTest >> testIsSpacingCombiningMark [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isSpacingCombiningMark: ch) equals: (charset isSpacingCombiningMark: ch) ]
+		self
+			assert: (Unicode isSpacingCombiningMark: ch)
+			equals: (charset isSpacingCombiningMark: ch) ]
 ]
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsSurrogateOther [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -400,12 +410,13 @@ AsciiCharsetTest >> testIsSurrogateOther [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isSurrogateOther: ch) equals: (charset isSurrogateOther: ch) ]
+		self
+			assert: (Unicode isSurrogateOther: ch)
+			equals: (charset isSurrogateOther: ch) ]
 ]
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsTitlecaseLetter [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -413,12 +424,13 @@ AsciiCharsetTest >> testIsTitlecaseLetter [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isTitlecaseLetter: ch) equals: (charset isTitlecaseLetter: ch) ]
+		self
+			assert: (Unicode isTitlecaseLetter: ch)
+			equals: (charset isTitlecaseLetter: ch) ]
 ]
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsUppercase [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |
@@ -426,5 +438,7 @@ AsciiCharsetTest >> testIsUppercase [
 	0 to: charset maxValue do: [ :asciiValue | 
 		| ch |
 		ch := Character value: asciiValue.
-		self assert: (Unicode isUppercase: ch) equals: (charset isUppercase: ch) ]
+		self
+			assert: (Unicode isUppercase: ch)
+			equals: (charset isUppercase: ch) ]
 ]
