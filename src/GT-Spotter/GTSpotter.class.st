@@ -257,6 +257,11 @@ GTSpotter >> defaultExceptionHandler [
 	^ GTSpotterDeploymentExceptionHandler new
 ]
 
+{ #category : #accessing }
+GTSpotter >> defaultFilterClass [
+    ^ GTFilterFuzzy
+]
+
 { #category : #'accessing-defaults' }
 GTSpotter >> defaultPagerModel [
 	^ GLMPagerModel new

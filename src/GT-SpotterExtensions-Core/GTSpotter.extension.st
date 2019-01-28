@@ -76,7 +76,7 @@ GTSpotter >> spotterClipboardFor: aStep [
 		items: [ Clipboard default recentItems ];
 		itemName: [ :item | item asString contractTo: 100 ];
 		itemFilterName: [ :item | item asString ];
-		filter: GTFilterSubstrings;
+		filter: self defaultFilterClass;
 		actLogic: [ :item :step |
 			step exit.
 			item asString inspect ];
@@ -101,7 +101,7 @@ GTSpotter >> spotterDirtyMonticelloPackagesFor: aStep [
 			allCandidates: [ MCWorkingCopy allManagers select: #modified ];
 			title: 'Dirty Monticello packages';
 			itemIcon: [ Smalltalk ui icons iconNamed: #dirtyPackageIcon ];
-			filter: GTFilterSubstring;
+			filter: self defaultFilterClass;
 			wantsToDisplayOnEmptyQuery: true
 ]
 
@@ -123,7 +123,7 @@ GTSpotter >> spotterForCachedPlaygroundPagesFor: aStep [
 			allCandidates: [ GTPlayBook instance pages ];
 			title: 'Playground cached pages';
 			itemName: [ :page | page content asString contractTo: 100 ];
-			filter: GTFilterSubstring
+			filter: self defaultFilterClass
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
@@ -132,7 +132,7 @@ GTSpotter >> spotterForClassesFor: aStep [
 	aStep listProcessor
 			allCandidates: [ Smalltalk allClassesAndTraits ];
 			title: 'Classes';
-			filter: GTFilterSubstring;
+			filter: self defaultFilterClass;
 			itemIcon: #systemIcon;
 			keyBinding: $b meta;
 			wantsToDisplayOnEmptyQuery: false
@@ -184,7 +184,7 @@ GTSpotter >> spotterForGlobalVarsFor: aStep [
 				assoc value isTrait not]] ];
 			title: 'Global variables';
 			itemName:[:global | global key ];
-			filter: GTFilterSubstring;
+			filter: self defaultFilterClass;
 			wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -196,7 +196,7 @@ GTSpotter >> spotterForHelpTopicFor: aStep [
 			title: 'Help topics';
 			itemName: [ :helpTopic | helpTopic title ];
 			itemIcon: [ :helpTopic | helpTopic gtTopicIcon ];
-			matchSubstrings;
+			filter: self defaultFilterClass;
 			wantsToDisplayOnEmptyQuery: true
 ]
 
@@ -227,7 +227,7 @@ GTSpotter >> spotterForMetacelloConfigurationsFor: aStep [
 					thenCollect: #project ];
 			itemName: [ :each | each configuration class name ];
 			itemIcon: [ Smalltalk ui icons iconNamed: #config ];
-			filter: GTFilterSubstring;
+			filter: self defaultFilterClass;
 			wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -239,7 +239,7 @@ GTSpotter >> spotterForPackagesFor: aStep [
 			title: 'Packages';
 			itemName: [ :package | package name ];
 			itemIcon: [ Smalltalk ui icons iconNamed: #packageIcon ];
-			filter: GTFilterSubstring;
+			filter: self defaultFilterClass;
 			wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -250,7 +250,7 @@ GTSpotter >> spotterForPragmasFor: aStep [
 			allCandidates: [ PragmaType all ];
 			title: 'Pragmas';
 			itemName: [ :pragma | pragma keyword ];
-			filter: GTFilterSubstring;
+			filter: self defaultFilterClass;
 			wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -275,7 +275,7 @@ GTSpotter >> spotterForRepositoriesFor: aStep [
 		allCandidates: [ MCRepositoryGroup default repositories ];
 		itemIcon: #systemIcon;
 		wantsToDisplayOnEmptyQuery: false;
-		filter: GTFilterSubstring
+		filter: self defaultFilterClass
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
@@ -305,7 +305,7 @@ GTSpotter >> spotterForStashedPlaygroundPagesFor: aStep [
 						title: (file basename copyUpTo: $-) ] ];
 			title: 'Playground named pages';
 			itemName: [ :page | page title, ' - ', page content asString contractTo: 100 ];
-			filter: GTFilterSubstring
+			filter: self defaultFilterClass
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
@@ -318,7 +318,7 @@ GTSpotter >> spotterHistoryFor: aStep [
 				item class = GTSpotterProcessorLink 
 					ifTrue: [ item processor itemNameFor: item value ] " HACK: this triggers a recursion ! ... but processor is undefined for aCandidate "
 					ifFalse: [ item gtDisplayString ] ];
-			filter: GTFilterSubstring
+			filter: self defaultFilterClass
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
@@ -328,7 +328,7 @@ GTSpotter >> spotterImplementorsFor: aStep [
 	aStep listProcessor
 		title: 'Implementors';
 		filter: GTFilterImplementor item: [ :filter :context | 
-			SystemNavigation default allBehaviorsDo: [ :class | class localMethods do: filter ] ];
+			SystemNavigation default allBehaviorsDo: [ :class | class methodsDo: filter ] ];
 		keyBinding: $m meta;
 		wantsToDisplayOnEmptyQuery: false
 ]
