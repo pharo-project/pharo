@@ -13,19 +13,19 @@
 # - BOOTSTRAP_CACHE
 # - BOOTSTRAP_REPOSITORY
 #
-if [ -z "${BUILD_NUMBER}" ]
+if [ -z ${BUILD_NUMBER+x} ]
 then
     echo "BUILD_NUMBER not specified, exiting"
     exit 1
 fi
 
-if [ -z "${BOOTSTRAP_ARCH}" ]
+if [ -z ${BOOTSTRAP_ARCH+x} ]
 then
     echo "BOOTSTRAP_ARCH not specified, exiting"
     exit 1
 fi
 
-if [ -z "${BOOTSTRAP_REPOSITORY}" ]
+if [ -z ${BOOTSTRAP_REPOSITORY+x} ]
 then
   ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." ; pwd -P)"
   export BOOTSTRAP_REPOSITORY="${ROOT_DIR}"
@@ -33,7 +33,7 @@ else
   ROOT_DIR="$(pwd -P)"
 fi
 
-if [ -z "${BOOTSTRAP_CACHE}" ]
+if [ -z ${BOOTSTRAP_CACHE+x} ]
 then
   BOOTSTRAP_CACHE=${ROOT_DIR}/bootstrap-cache
 fi
