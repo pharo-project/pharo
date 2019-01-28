@@ -53,3 +53,4 @@ This source code repository is exported in [Tonel format](https://github.com/pha
 ## How to contribute
 
 Pharo is an opensource project very friendly to contributions of the users. See the document [CONTRIBUTING](CONTRIBUTING.md) how you can help to improve Pharo.
+
