@@ -15,7 +15,7 @@ Class {
 	#category : #'AST-Core-Formatter'
 }
 
-{ #category : #initialize }
+{ #category : #accessing }
 RBNullFormatter class >> formatAsYouReadPolicy [
 	"Return whether the formatter is continously formatting"
 
@@ -23,7 +23,7 @@ RBNullFormatter class >> formatAsYouReadPolicy [
 
 ]
 
-{ #category : #initialize }
+{ #category : #accessing }
 RBNullFormatter class >> formatAsYouReadPolicy: aBoolean [
 	"Return whether the formatter is continously formatting"
 
@@ -40,7 +40,7 @@ RBNullFormatter >> format: aParseTree [
 { #category : #initialization }
 RBNullFormatter >> initialize [
 	super initialize.
-	codeStream := (String new: 256) writeStream.
+	codeStream := (String new: 256) writeStream
 ]
 
 { #category : #visiting }

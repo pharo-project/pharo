@@ -5,7 +5,7 @@ set -o nounset
 set -o xtrace
 
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
-. ${SCRIPTS}/envversion.sh
+. ${SCRIPTS}/envvars.sh
 
 set_version_variables
 

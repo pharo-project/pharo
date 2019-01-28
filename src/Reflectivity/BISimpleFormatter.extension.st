@@ -4,8 +4,10 @@ Extension { #name : #BISimpleFormatter }
 BISimpleFormatter >> visitLiteralVariableNode: aLiteralVariableNode [
 	| binding |
 	binding := aLiteralVariableNode binding.
-	self writeString: binding key storeString, ' -> '.
-	aLiteralVariableNode binding value isLiteral
-		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
-		ifTrue: [ self writeString:  binding value asString ]
+	self writeString: binding key storeString , ' -> '.
+	self
+		writeString:
+			(aLiteralVariableNode binding value isLiteral
+				ifFalse: [ '''<an unprintable nonliteral value>''' ]
+				ifTrue: [ binding value asString ])
 ]
