@@ -67,12 +67,6 @@ RBProgramNode >> package [
 ]
 
 { #category : #'*renraku' }
-RBProgramNode >> reverseNodesDo: aBlock [ 
-	self children reverseDo: [ :each | each reverseNodesDo: aBlock ].
-	aBlock value: self
-]
-
-{ #category : #'*renraku' }
 RBProgramNode >> suitableRulesFrom: aReRuleManager [ 
 	^ aReRuleManager nodeRules
 ]

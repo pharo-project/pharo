@@ -33,7 +33,7 @@ RBStringReplacement >> startPosition [
 	^startPosition
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBStringReplacement >> startPosition: anInteger [ 
 	startPosition := anInteger
 ]
@@ -43,7 +43,7 @@ RBStringReplacement >> stopPosition [
 	^stopPosition
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBStringReplacement >> stopPosition: anInteger [ 
 	stopPosition := anInteger
 ]
@@ -53,7 +53,7 @@ RBStringReplacement >> string [
 	^string
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBStringReplacement >> string: aString [ 
 	string := aString
 ]
