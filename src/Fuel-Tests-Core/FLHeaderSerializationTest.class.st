@@ -4,7 +4,7 @@ SUnit tests for header serialization in fuel
 Class {
 	#name : #FLHeaderSerializationTest,
 	#superclass : #FLSerializationTest,
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #tests }

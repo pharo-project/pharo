@@ -9,7 +9,7 @@ GLMCompositePresentationTest >> testAdd [
 	| composite |
 	composite := GLMCompositePresentation new.
 	composite add: GLMPresentation new.
-	self denyEmpty: composite.
+	self deny: composite isEmpty.
 	self assert: composite presentations size equals: 1
 ]
 

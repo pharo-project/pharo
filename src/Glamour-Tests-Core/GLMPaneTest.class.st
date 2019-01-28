@@ -118,7 +118,7 @@ GLMPaneTest >> testNamed [
 	self assert: aPane name equals: 1.
 	self assert: aPane browser equals: GLMNoBrowser new.
 	self assertEmpty: aPane ports.
-	self assertEmpty: aPane presentations
+	self assert: aPane presentations isEmpty
 ]
 
 { #category : #tests }
@@ -128,7 +128,7 @@ GLMPaneTest >> testNamedIn [
 	self assert: aPane name equals: 1.
 	self assert: aPane browser equals: 2.
 	self assertEmpty: aPane ports.
-	self assertEmpty: aPane presentations
+	self assert: aPane presentations isEmpty
 ]
 
 { #category : #tests }

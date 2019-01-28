@@ -133,7 +133,7 @@ GTSpotterStepTest >> assertProcessorMatching: aBlock [
 { #category : #convenience }
 GTSpotterStepTest >> assertProcessorNotEmpty [
 	self assert: currentProcessor notNil.
-	self denyEmpty: currentProcessor allFilteredCandidates
+	self deny: currentProcessor allFilteredCandidates isEmpty
 ]
 
 { #category : #convenience }

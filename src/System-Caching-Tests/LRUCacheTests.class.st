@@ -207,7 +207,7 @@ LRUCacheTests >> testOne [
 	cache := self newCache.
 	cache at: #foo ifAbsentPut: [ 100 ].
 	self assert: (cache includesKey: #foo).
-	self denyEmpty: cache.
+	self deny: cache isEmpty.
 	self assert: cache size equals: 1.
 	self assert: cache totalWeight equals: 1.
 	self assert: cache hits isZero.

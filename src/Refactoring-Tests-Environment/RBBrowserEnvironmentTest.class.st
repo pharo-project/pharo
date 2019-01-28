@@ -518,7 +518,7 @@ RBBrowserEnvironmentTest >> uniqueClassesIn: aBrowserEnvironment [
 ]
 
 { #category : #private }
-RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [
+RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [ 
 	self labelFor: aBrowserEnvironment.
 	self uniqueClassesIn: aBrowserEnvironment.
 	self numberSelectorsFor: aBrowserEnvironment.
@@ -529,6 +529,5 @@ RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [
 	self protocolsFor: aBrowserEnvironment.
 	self classesFor: aBrowserEnvironment.
 	self keysFor: aBrowserEnvironment.
-	self assert: aBrowserEnvironment problemCount = 0.
-	self assertEmpty: aBrowserEnvironment
+	self assert: aBrowserEnvironment problemCount = 0 = aBrowserEnvironment isEmpty
 ]
