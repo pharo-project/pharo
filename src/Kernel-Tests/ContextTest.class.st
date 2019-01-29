@@ -44,7 +44,7 @@ ContextTest class >> createBlock [
 { #category : #helper }
 ContextTest class >> returnNonActiveContextOfBlock [
 	Block := self createBlock.
-	^ Block value.
+	^ Block value
 ]
 
 { #category : #private }
@@ -115,13 +115,14 @@ ContextTest >> testActivateReturnValue [
 
 { #category : #tests }
 ContextTest >> testActiveBlockContextHomeAndActiveHome [
-	[ self assert: thisContext home == thisContext activeHome.] value.
+	[ self assert: thisContext home identicalTo:  thisContext activeHome.] value
 ]
 
 { #category : #private }
 ContextTest >> testActiveHomeMethodContext [
-	self assert: (aMethodContext activeHome == aMethodContext).
-	self assert: (aMethodContext activeHome == aMethodContext home).
+	self
+		assert: aMethodContext activeHome identicalTo: aMethodContext;
+		assert: aMethodContext activeHome identicalTo: aMethodContext home
 ]
 
 { #category : #tests }
@@ -140,8 +141,9 @@ ContextTest >> testMethodContext [
 
 { #category : #tests }
 ContextTest >> testMethodIsBottomContext [
-	self assert: aMethodContext bottomContext = aSender.
-	self assert: aMethodContext secondFromBottom = aMethodContext.
+	self
+		assert: aMethodContext bottomContext equals: aSender;
+		assert: aMethodContext secondFromBottom equals: aMethodContext
 ]
 
 { #category : #tests }
