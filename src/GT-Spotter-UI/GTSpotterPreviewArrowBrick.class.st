@@ -7,7 +7,7 @@ Class {
 		'spotterModel',
 		'isTriangleVisible'
 	],
-	#category : #'GT-Spotter-UI'
+	#category : #'GT-Spotter-UI-Widgets'
 }
 
 { #category : #actions }

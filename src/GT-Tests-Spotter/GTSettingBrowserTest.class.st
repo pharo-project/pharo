@@ -16,11 +16,3 @@ GTSettingBrowserTest >> testgroupedAndSortedSpotterExtensions [
 { #category : #tests }
 GTSettingBrowserTest >> testshouldSpotterIgnoreProcessorDefinedInMethod [
 ]
-
-{ #category : #tests }
-GTSettingBrowserTest >> testspotterExtensionTitleOf [
-	
-	| t |
-	t := GTSpotterExtensionSettings spotterExtensionTitleOf: MCPackage>> #spotterForPackageFor:.
-	self assert: t equals: 'Packages'
-]

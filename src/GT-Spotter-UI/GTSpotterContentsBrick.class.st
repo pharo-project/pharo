@@ -6,7 +6,7 @@ Class {
 		'dropDownBrick',
 		'spotterModel'
 	],
-	#category : #'GT-Spotter-UI'
+	#category : #'GT-Spotter-UI-Widgets'
 }
 
 { #category : #accessing }
