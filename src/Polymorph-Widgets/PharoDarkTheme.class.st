@@ -16,7 +16,7 @@ Class {
 
 { #category : #accessing }
 PharoDarkTheme class >> baseColor [
-	^ Color veryDarkGray
+	^ Color r: 0.224 g: 0.236 b: 0.247
 ]
 
 { #category : #accessing }
@@ -26,12 +26,12 @@ PharoDarkTheme class >> basePassiveBackgroundColor [
 
 { #category : #accessing }
 PharoDarkTheme class >> baseSelectionColor [
-	^ Color r: 97 g: 163 b: 225 range: 255
+	^ Color r: 0.322 g: 0.427 b: 0.502
 ]
 
 { #category : #accessing }
 PharoDarkTheme class >> darkBaseColor [
-	^ Color veryDarkGray
+	^ Color r: 0.098 g: 0.125 b: 0.145
 ]
 
 { #category : #accessing }
@@ -70,7 +70,12 @@ PharoDarkTheme class >> veryLightSelectionColor [
 
 { #category : #'accessing colors' }
 PharoDarkTheme >> backgroundColor [
-	^ Color r: 0.130 g: 0.130 b: 0.130
+	^ Color r: 0.109 g: 0.129 b: 0.145
+]
+
+{ #category : #accessing }
+PharoDarkTheme >> badgeTextColor [
+	^ Color r: 0.098 g: 0.098 b: 0.098
 ]
 
 { #category : #'accessing colors' }
@@ -81,12 +86,12 @@ PharoDarkTheme >> balloonBackgroundColor [
 
 { #category : #'accessing colors' }
 PharoDarkTheme >> borderColor [ 
-	^ Color darkGray darker darker darker
+	^ Color r: 0.063 g: 0.082 b: 0.098
 ]
 
 { #category : #'accessing colors' }
 PharoDarkTheme >> buttonColor [
-	^ self backgroundColor lighter lighter
+	^ Color r: 0.169 g: 0.224 b: 0.267
 ]
 
 { #category : #'border-styles-buttons' }
@@ -193,7 +198,7 @@ PharoDarkTheme >> dangerTextColor [
 { #category : #'fill-styles' }
 PharoDarkTheme >> desktopColor [
 
-	^ Color darkGray darker
+	^ Color r: 0.137 g: 0.177 b: 0.196
 ]
 
 { #category : #'basic-colors-diffs' }
@@ -279,7 +284,7 @@ PharoDarkTheme >> lessConspicuousColorFrom: aColor [
 { #category : #'accessing colors' }
 PharoDarkTheme >> lightBackgroundColor [
 
-	^ Color r: 0.218 g: 0.217 b: 0.217
+	^ Color r: 0.247 g: 0.302 b: 0.337
 ]
 
 { #category : #'accessing colors' }
