@@ -592,6 +592,28 @@ FTExamples class >> exampleTable4 [
 ]
 
 { #category : #examples }
+FTExamples class >> exampleTable5 [
+	"Show a table with cell selection mode"
+
+	<sampleInstance>
+	<example>
+	| table ds |
+	ds := FTExampleMethodTableDataSource for: Object.
+	table := FTTableMorph new
+		extent: 650 @ 500;
+		addColumn: (FTColumn id: 'Name');
+		addColumn: (FTColumn id: 'Protocol');
+		addColumn: (FTColumn id: 'Origin');
+		dataSource: ds;
+		selectRowIndex: 1;
+		beMultipleSelection;
+		beCellSelection;
+		showFirstRowSelection;
+		yourself.
+	^ table openInWindow
+]
+
+{ #category : #examples }
 FTExamples class >> exampleTableHorizontalScroll [
 	"Show a table with all Object methods, with a header,
 	 all fixed width columns as horizontal scroll."

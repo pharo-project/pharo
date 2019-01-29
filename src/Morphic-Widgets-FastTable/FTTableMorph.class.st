@@ -30,7 +30,6 @@ Class {
 		'dataSource',
 		'intercellSpacing',
 		'rowHeight',
-		'selectedRowIndexes',
 		'highlightedRowIndexes',
 		'selectionStrategy',
 		'columns',
@@ -41,7 +40,9 @@ Class {
 		'needToggleAtMouseUp',
 		'function',
 		'resizable',
-		'trialHSB'
+		'trialHSB',
+		'selectionModeStrategy',
+		'selectedIndexes'
 	],
 	#category : #'Morphic-Widgets-FastTable'
 }
@@ -142,9 +143,19 @@ FTTableMorph >> basicMoveShowIndexTo: aNumber [
 ]
 
 { #category : #private }
-FTTableMorph >> basicSelectRowIndexes: anArray [
-	selectedRowIndexes := anArray asArray.
+FTTableMorph >> basicSelectIndexes: anArray [
+	selectedIndexes := anArray asArray
+]
 
+{ #category : #private }
+FTTableMorph >> basicSelectRowIndexes: anArray [
+	self deprecated: 'Use #basicSelectIndexes: instead' transformWith: '`@receiver basicSelectRowIndexes: `@statements' -> '`@receiver basicSelectIndexes: `@statements'.
+	self basicSelectIndexes: anArray
+]
+
+{ #category : #accessing }
+FTTableMorph >> beCellSelection [
+	self selectionModeStrategy: (FTCellSelectionStrategy table: self)
 ]
 
 { #category : #accessing }
@@ -160,6 +171,11 @@ FTTableMorph >> beNotResizable [
 { #category : #accessing }
 FTTableMorph >> beResizable [
 	resizable := true
+]
+
+{ #category : #accessing }
+FTTableMorph >> beRowSelection [
+	self selectionModeStrategy: (FTRowSelectionStrategy table: self)
 ]
 
 { #category : #accessing }
@@ -368,7 +384,7 @@ FTTableMorph >> hasHighlighted [
 
 { #category : #testing }
 FTTableMorph >> hasSelection [
-	^ self selectedRowIndexes notEmpty
+	^ self selectedIndexes notEmpty
 ]
 
 { #category : #'accessing colors' }
@@ -448,21 +464,22 @@ FTTableMorph >> horizontalScrollBarValue: aNumber [
 ]
 
 { #category : #initialization }
-FTTableMorph >> initialize [ 
+FTTableMorph >> initialize [
 	super initialize.
 	showIndex := 0.
 	showColumnHeaders := true.
-	selectedRowIndexes := #().
+	self initializeSelectedIndexes.
 	highlightedRowIndexes := #().
 	columns := #().
 	needToggleAtMouseUp := false.
 	self beNotResizable.
 	self beSingleSelection.
+	self beRowSelection.
 	self enableSearch.
 	self initializeScrollBars.
 	self initializeContainer.
 	self initializeKeyBindings.
-	
+
 	self resizeAllSubviews
 ]
 
@@ -475,21 +492,12 @@ FTTableMorph >> initializeContainer [
 { #category : #initialization }
 FTTableMorph >> initializeKeyBindings [
 	"add keybindings used by table"
-	self 
-		bindKeyCombination: Character arrowUp shift | Character arrowUp asKeyCombination
-		toAction: [ :target :morph :event | self keyStrokeArrowUp: event ].
-	self 
-		bindKeyCombination: Character arrowDown shift | Character arrowDown asKeyCombination
-		toAction: [ :target :morph :event | self keyStrokeArrowDown: event ].
-	self 
-		bindKeyCombination: Character home asKeyCombination
-		toAction: [ self selectRowIndex: 1 ].
-	self 
-		bindKeyCombination: Character end asKeyCombination
-		toAction: [ self selectRowIndex: self numberOfRows ].
-	self 
-		bindKeyCombination: $a meta  
-		toAction: [ self selectAllRowIndexes ]
+
+	self bindKeyCombination: Character arrowUp shift | Character arrowUp asKeyCombination toAction: [ :target :morph :event | self keyStrokeArrowUp: event ].
+	self bindKeyCombination: Character arrowDown shift | Character arrowDown asKeyCombination toAction: [ :target :morph :event | self keyStrokeArrowDown: event ].
+	self bindKeyCombination: Character home asKeyCombination toAction: [ self selectRowIndex: 1 ].
+	self bindKeyCombination: Character end asKeyCombination toAction: [ self selectRowIndex: self numberOfRows ].
+	self bindKeyCombination: PharoShortcuts current selectAllShortcut toAction: [ self selectAllRowIndexes ]
 ]
 
 { #category : #initialization }
@@ -507,6 +515,11 @@ FTTableMorph >> initializeScrollBars [
 			yourself.
 		self addMorph: horizontalScrollBar
 		].
+]
+
+{ #category : #initialization }
+FTTableMorph >> initializeSelectedIndexes [
+	selectedIndexes := #()
 ]
 
 { #category : #initialization }
@@ -894,9 +907,48 @@ FTTableMorph >> secondarySelectionColor: aColor [
 ]
 
 { #category : #'accessing selection' }
+FTTableMorph >> selectAllCellIndexes [
+	| cellIndexes |
+	self isMultipleSelection ifFalse: [ ^ self ].
+	cellIndexes := OrderedCollection new.
+	1 to: self numberOfRows do: [ :c | 1 to: self numberOfColumns do: [ :r | cellIndexes add: {c . r} ] ].
+	self selectIndexes: cellIndexes asArray
+]
+
+{ #category : #'accessing selection' }
 FTTableMorph >> selectAllRowIndexes [
 	self isMultipleSelection ifFalse: [ ^ self ].
 	self selectRowIndexes: (1 to: self numberOfRows) asArray 
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectCellIndex: anArray [
+	self selectIndexes: {anArray}
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectCellIndexRow: aNumber column: anotherNumber [
+	self selectCellIndex: {aNumber . anotherNumber}
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectIndexes: anArray [
+	self selectIndexes: anArray andMakeVisibleIf: true
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSelection [
+	| oldSelectedIndexes |
+	anArray = selectedIndexes ifTrue: [ ^ self ].
+	oldSelectedIndexes := selectedIndexes.
+	self basicSelectIndexes: anArray.
+	shouldEnsureVisibleSelection ifTrue: [ self ensureVisibleFirstSelection ].
+	self refresh.
+	self
+		doAnnounce:
+			((FTSelectionChanged from: oldSelectedIndexes to: selectedIndexes)
+				fastTable: self;
+				yourself)
 ]
 
 { #category : #'accessing selection' }
@@ -913,35 +965,42 @@ FTTableMorph >> selectRowIndex: rowIndex event: event [
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectRowIndexes: anArray [
-	self selectRowIndexes: anArray andMakeVisibleIf: true
+	self selectIndexes: anArray
 ]
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectRowIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSelection [
-	| oldSelectedRowIndexes |
-	anArray = selectedRowIndexes
-		ifTrue: [ ^ self ].
-	oldSelectedRowIndexes := selectedRowIndexes.
-	self basicSelectRowIndexes: anArray.
-	shouldEnsureVisibleSelection ifTrue: [ self ensureVisibleFirstSelection ].
-	self refresh.
 	self
-		doAnnounce:
-			((FTSelectionChanged from: oldSelectedRowIndexes to: selectedRowIndexes)
-				fastTable: self;
-				yourself)
+		deprecated: 'Use #selectIndexes:andMakeVisibleIf: instead'
+		transformWith: '`@receiver selectRowIndexes: `@statements1 andMakeVisibleIf: `@statements2' -> '`@receiver selectIndexes: `@statements1 andMakeVisibleIf: `@statements2'.
+	self selectIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSelection
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectedCellIndexes [
+	self selectionModeStrategy isCellSelection ifFalse: [ self error: 'This table is not in cell selection mode.' ].
+	^ self selectedIndexes
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectedIndex [
+	^ self selectedIndexes ifNotEmpty: [ :indexes | indexes first ] ifEmpty: [ 0 ]
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectedIndexes [
+	^ selectedIndexes
 ]
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectedRowIndex [
-	^ self selectedRowIndexes 
-		ifNotEmpty: [ :indexes | indexes first ]
-		ifEmpty: [ 0 ] 
+	^ self selectedRowIndexes ifNotEmpty: [ :indexes | indexes first ] ifEmpty: [ 0 ]
 ]
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectedRowIndexes [
-	^ selectedRowIndexes
+	self selectionModeStrategy isRowSelection ifFalse: [ self error: 'This table is not in row selection mode.' ].
+	^ self selectedIndexes
 ]
 
 { #category : #'accessing colors' }
@@ -952,6 +1011,19 @@ FTTableMorph >> selectionColor [
 { #category : #'accessing colors' }
 FTTableMorph >> selectionColor: aColor [
 	selectionColor := aColor
+]
+
+{ #category : #accessing }
+FTTableMorph >> selectionModeStrategy [
+	^ selectionModeStrategy
+]
+
+{ #category : #accessing }
+FTTableMorph >> selectionModeStrategy: aStrategy [
+	(selectionModeStrategy = aStrategy) ifTrue: [ ^ self ].
+
+	selectionModeStrategy := aStrategy.
+	self initializeSelectedIndexes
 ]
 
 { #category : #private }

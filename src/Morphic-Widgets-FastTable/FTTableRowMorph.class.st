@@ -4,10 +4,7 @@ All my work is to keep cells.
 "
 Class {
 	#name : #FTTableRowMorph,
-	#superclass : #Morph,
-	#instVars : [
-		'selectionColor'
-	],
+	#superclass : #FTSelectableMorph,
 	#category : #'Morphic-Widgets-FastTable'
 }
 
@@ -68,22 +65,4 @@ FTTableRowMorph >> mouseEnter: evt [
 FTTableRowMorph >> mouseLeave: evt [
 	
 	self color: self selectionColor 
-]
-
-{ #category : #initialize }
-FTTableRowMorph >> mouseOverColor [
-	^ Smalltalk ui theme lightBackgroundColor
-]
-
-{ #category : #initialize }
-FTTableRowMorph >> selectionColor [
-
-	^selectionColor
-]
-
-{ #category : #accessing }
-FTTableRowMorph >> selectionColor: aColor [
-
-	selectionColor := aColor.
-	self color: selectionColor
 ]
