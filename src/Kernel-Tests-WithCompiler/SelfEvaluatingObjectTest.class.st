@@ -50,5 +50,6 @@ SelfEvaluatingObjectTest >> testObjects [
 
 	self assert: (1 to: 10) isSelfEvaluating.
 	self assert: (1->2) isSelfEvaluating.
+	self assert: Color red isSelfEvaluating.
 
 ]
