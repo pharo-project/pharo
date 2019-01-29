@@ -72,7 +72,7 @@ FTTableRowMorph >> mouseLeave: evt [
 
 { #category : #initialize }
 FTTableRowMorph >> mouseOverColor [
-	^ Smalltalk ui theme lightBackgroundColor
+	^ self theme lightBackgroundColor
 ]
 
 { #category : #initialize }
