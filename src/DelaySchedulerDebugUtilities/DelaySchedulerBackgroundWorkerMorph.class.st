@@ -24,7 +24,7 @@ Class {
 		'stringMorph',
 		'morphDeleted'
 	],
-	#category : #'Morphic-Tests-Processes'
+	#category : #DelaySchedulerDebugUtilities
 }
 
 { #category : #action }
