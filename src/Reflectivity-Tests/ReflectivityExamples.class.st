@@ -28,6 +28,13 @@ ReflectivityExamples class >> metaLinkOptions [
 	}
 ]
 
+{ #category : #initialization }
+ReflectivityExamples >> compileTemporaryMethods [
+	self class compile: 'methodToBeRemoved ^nil'.
+	self class compile: 'methodToBeModified ^nil'.
+	self class compile: 'stubMethod ^nil'
+]
+
 { #category : #examples }
 ReflectivityExamples >> exampleArray [
 	^ {3}
@@ -177,6 +184,16 @@ ReflectivityExamples >> exampleWithArg: anArg [
 ReflectivityExamples >> initialize [
 	ivar := 33.
 	ClassVar := #AClassVar.
+	self removeTemporaryMethods.
+	self compileTemporaryMethods
+]
+
+{ #category : #initialization }
+ReflectivityExamples >> removeTemporaryMethods [
+	
+	self class removeSelector: #methodToBeRemoved.
+	self class removeSelector: #methodToBeModified.
+	self class removeSelector: #stubMethod
 ]
 
 { #category : #tagging }

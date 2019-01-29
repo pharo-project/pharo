@@ -110,6 +110,11 @@ Slot >> preambles [
 ]
 
 { #category : #'*Reflectivity' }
+Slot >> readNodes [
+	^ self astNodes select: [ :each | each isRead ]
+]
+
+{ #category : #'*Reflectivity' }
 Slot >> removeLink: aMetaLink [
 	self links remove: aMetaLink.
 	self usingMethods do: [:method | method removeLink: aMetaLink].
