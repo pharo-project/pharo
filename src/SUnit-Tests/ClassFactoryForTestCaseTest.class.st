@@ -113,19 +113,15 @@ ClassFactoryForTestCaseTest >> testMultipleClassCreation [
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testPackageCleanUp [
 	| createdClassNames allClasses |
-	3 timesRepeat: [
-		factory newClassInCategory: #One].
-	2 timesRepeat: [
-		factory newClassInCategory: #Two].
+	3 timesRepeat: [ factory newClassInCategory: #One ].
+	2 timesRepeat: [ factory newClassInCategory: #Two ].
 	createdClassNames := factory createdClassNames.
-	factory cleanUp.	
-	self assert: (factory createdClasses allSatisfy: [:class| class isObsolete]). 
+	factory cleanUp.
+	self assert: (factory createdClasses allSatisfy: [ :class | class isObsolete ]).
 	allClasses := SystemNavigation new allClasses.
-	self assert: (factory createdClasses noneSatisfy: [:class| allClasses includes: class]).
-	self assert: (SystemOrganization categoriesMatching: factory packageName, '*') isEmpty. 
-	self class environment at: #ChangeSet ifPresent: [:changeSet |
-		self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ].
-
+	self assert: (factory createdClasses noneSatisfy: [ :class | allClasses includes: class ]).
+	self assertEmpty: (SystemOrganization categoriesMatching: factory packageName , '*').
+	self class environment at: #ChangeSet ifPresent: [ :changeSet | self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
 ]
 
 { #category : #testing }
@@ -144,13 +140,13 @@ ClassFactoryForTestCaseTest >> testSingleClassCreation [
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testSingleClassFastCreation [
-	|class elementsInCategoryForTest |
+	| class elementsInCategoryForTest |
 	class := factory newClass.
 	self assert: (SystemNavigation new allClasses includes: class).
-	elementsInCategoryForTest := SystemOrganization listAtCategoryNamed: factory defaultCategory. 
+	elementsInCategoryForTest := SystemOrganization listAtCategoryNamed: factory defaultCategory.
 	self assert: elementsInCategoryForTest = {class name}.
-	self assert: class instVarNames isEmpty.
-	self assert: class classPool isEmpty
+	self assertEmpty: class instVarNames.
+	self assertEmpty: class classPool
 ]
 
 { #category : #testing }

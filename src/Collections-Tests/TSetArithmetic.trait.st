@@ -52,11 +52,10 @@ TSetArithmetic >> numberOfSimilarElementsInIntersection [
 
 { #category : #'tests - fixture' }
 TSetArithmetic >> test0FixtureSetAritmeticTest [
-
 	self collection.
-	self deny: self collection isEmpty.
+	self denyEmpty: self collection.
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self anotherElementOrAssociationNotIn.
 	self collection isDictionary
 		ifTrue: [ self deny: (self collection associations includes: self anotherElementOrAssociationNotIn key) ]
@@ -67,15 +66,13 @@ TSetArithmetic >> test0FixtureSetAritmeticTest [
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testDifference [
 	"Answer the set theoretic difference of two collections."
-	
-	| difference |
-	self assert: (self collectionWithoutEqualElements difference: self collectionWithoutEqualElements) isEmpty.
-	self assert: (self empty difference: self collectionWithoutEqualElements) isEmpty.
-	difference := (self collectionWithoutEqualElements difference: self empty).
-	self assert: difference size = self collectionWithoutEqualElements size.
-	self collectionWithoutEqualElements do: [ :each |
-		self assert: (difference includes: each) ].
 
+	| difference |
+	self assertEmpty: (self collectionWithoutEqualElements difference: self collectionWithoutEqualElements).
+	self assertEmpty: (self empty difference: self collectionWithoutEqualElements).
+	difference := self collectionWithoutEqualElements difference: self empty.
+	self assert: difference size = self collectionWithoutEqualElements size.
+	self collectionWithoutEqualElements do: [ :each | self assert: (difference includes: each) ]
 ]
 
 { #category : #'tests - set arithmetic' }
@@ -113,22 +110,19 @@ TSetArithmetic >> testDifferenceWithSeparateCollection [
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testIntersectionBasic [
-
 	| inter |
 	inter := self collection intersection: (self collectionClass with: self anotherElementOrAssociationIn).
-	self deny: inter isEmpty.
+	self denyEmpty: inter.
 	self assert: (inter includes: self anotherElementOrAssociationIn value)
 ]
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testIntersectionEmpty [
-	
 	| inter |
 	inter := self empty intersection: self empty.
-	self assert: inter isEmpty. 
+	self assertEmpty: inter.
 	inter := self empty intersection: self collection.
 	self assert: inter equals: self empty
-	
 ]
 
 { #category : #'tests - set arithmetic' }
@@ -165,8 +159,5 @@ TSetArithmetic >> testUnion [
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testUnionOfEmpties [
-	
-	self assert:  (self empty union: self empty) isEmpty.
-	
-	
+	self assertEmpty: (self empty union: self empty)
 ]

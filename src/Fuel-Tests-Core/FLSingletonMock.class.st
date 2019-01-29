@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'Instance'
 	],
-	#category : 'Fuel-Tests-Core-Mocks'
+	#category : #'Fuel-Tests-Core-Mocks'
 }
 
 { #category : #accessing }

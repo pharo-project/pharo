@@ -26,7 +26,7 @@ SettingsStonReaderTest >> testBasic [
 
 { #category : #tests }
 SettingsStonReaderTest >> testEmptyStream [
-	self assert: reader stream contents isEmpty
+	self assertEmpty: reader stream contents
 ]
 
 { #category : #tests }

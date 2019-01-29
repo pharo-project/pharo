@@ -34,7 +34,7 @@ RBVariableTypeTest >> testCompositeLintRuleTypes [
 	self assert: (types includes: (typer model classFor: Collection)).
 	types := typer typesFor: '-rules-'.
 	self assert: (types includes: (typer model classFor: RBLintRuleTest)).
-	self assert: (typer guessTypesFor: 'asdf') isEmpty.
+	self assertEmpty: (typer guessTypesFor: 'asdf').
 	typer printString
 ]
 

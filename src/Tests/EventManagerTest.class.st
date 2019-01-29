@@ -94,8 +94,8 @@ EventManagerTest >> testCopy [
 	you make a copy of anEventManager"
 
 	eventSource when: #blah send: #yourself to: eventListener.
-	self assert: eventSource actionMap keys isEmpty not.
-	self assert: eventSource copy actionMap keys isEmpty
+	self denyEmpty: eventSource actionMap keys.
+	self assertEmpty: eventSource copy actionMap keys
 ]
 
 { #category : #'running-broadcast query' }

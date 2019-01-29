@@ -53,7 +53,7 @@ FTTableMorph class >> defaultAllowsDeselection [
 
 { #category : #accessing }
 FTTableMorph class >> defaultBackgroundColor [
-	^ Smalltalk ui theme listBackgroundColor
+	^ self theme listBackgroundColor
 ]
 
 { #category : #accessing }
@@ -65,7 +65,7 @@ FTTableMorph class >> defaultColumn [
 FTTableMorph class >> defaultHeaderColor [
 	self flag: #todo. "I think we should deprecate all this headerColor stuff. This is 
 	responsibility of data source, after all"
-	^ Smalltalk ui theme fastTableHeaderColor
+	^ self theme fastTableHeaderColor
 ]
 
 { #category : #accessing }
@@ -80,12 +80,12 @@ FTTableMorph class >> defaultRowHeight [
 
 { #category : #accessing }
 FTTableMorph class >> defaultSecondarySelectionColor [
-	^ Smalltalk ui theme secondarySelectionColor
+	^ self theme secondarySelectionColor
 ]
 
 { #category : #accessing }
 FTTableMorph class >> defaultSelectionColor [
-	^ Smalltalk ui theme selectionColor
+	^ self theme selectionColor
 ]
 
 { #category : #temporary }

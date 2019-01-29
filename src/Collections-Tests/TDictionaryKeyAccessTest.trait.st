@@ -16,11 +16,11 @@ TDictionaryKeyAccessTest >> nonEmptyWithoutEqualsValues [
 TDictionaryKeyAccessTest >> test0FixtureDictionaryKeyAccess [
 	| collection equals |
 	self nonEmptyWithoutEqualsValues.
-	self deny: self nonEmptyWithoutEqualsValues isEmpty.
+	self denyEmpty: self nonEmptyWithoutEqualsValues.
 	equals := true.
 	collection := self nonEmptyWithoutEqualsValues values.
 	collection detect: [ :each | (collection occurrencesOf: each) > 1 ] ifNone: [ equals := false ].
-	self assert: equals = false.
+	self deny: equals.
 	self valueNotIn.
 	self deny: (self nonEmptyWithoutEqualsValues values includes: self valueNotIn)
 ]

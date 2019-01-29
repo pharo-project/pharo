@@ -20,22 +20,21 @@ TDictionaryAssociationAccessTest >> nonEmpty [
 { #category : #'tests - fixture' }
 TDictionaryAssociationAccessTest >> test0FixtureDictionaryAssocitionAccess [
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self keyNotIn.
 	self deny: (self nonEmpty keys includes: self keyNotIn)
 ]
 
 { #category : #'tests - dictionary assocition access' }
 TDictionaryAssociationAccessTest >> testAssociationAt [
-
 	| collection keyIn result |
 	collection := self nonEmpty.
 	keyIn := collection keys anyOne.
 
-	result := collection associationAt: keyIn. 
+	result := collection associationAt: keyIn.
 
-	self assert: (result key) = keyIn.
-	self assert: (result value ) = (collection at: keyIn ).
+	self assert: result key equals: keyIn.
+	self assert: result value equals: (collection at: keyIn)
 ]
 
 { #category : #'tests - dictionary assocition access' }

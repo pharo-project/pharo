@@ -31,10 +31,8 @@ TIterateTest >> test0FixtureIterateTest [
 	self collectionWithoutNilElements.
 	self assert: (self collectionWithoutNilElements occurrencesOf: nil) = 0.
 	res := true.
-	self collectionWithoutNilElements
-		detect: [ :each | (self collectionWithoutNilElements occurrencesOf: each) > 1 ]
-		ifNone: [ res := false ].
-	self assert: res = false
+	self collectionWithoutNilElements detect: [ :each | (self collectionWithoutNilElements occurrencesOf: each) > 1 ] ifNone: [ res := false ].
+	self deny: res
 ]
 
 { #category : #'tests - iterating' }
@@ -92,11 +90,9 @@ TIterateTest >> testBasicCollect [
 
 { #category : #'tests - iterating' }
 TIterateTest >> testBasicCollectEmpty [
-
 	| res |
-	res := self empty collect: [:each | each class].
-	self assert: res isEmpty
-	
+	res := self empty collect: [ :each | each class ].
+	self assertEmpty: res
 ]
 
 { #category : #'tests - iterating' }
@@ -117,19 +113,17 @@ TIterateTest >> testBasicCollectThenDo [
 
 { #category : #'tests - iterating' }
 TIterateTest >> testCollectOnEmpty [
-	self assert: (self empty collect: [:e | self fail]) isEmpty
+	self assertEmpty: (self empty collect: [ :e | self fail ])
 ]
 
 { #category : #'tests - iterating' }
 TIterateTest >> testCollectThenDoOnEmpty [
-
-	self assert: (self empty collect: [:e | self fail] thenDo: [ self fail ]) isEmpty
+	self assertEmpty: (self empty collect: [ :e | self fail ] thenDo: [ self fail ])
 ]
 
 { #category : #'tests - iterating' }
 TIterateTest >> testCollectThenSelectOnEmpty [
-
-	self assert: (self empty collect: [:e | self fail] thenSelect: [:e | self fail ]) isEmpty
+	self assertEmpty: (self empty collect: [ :e | self fail ] thenSelect: [ :e | self fail ])
 ]
 
 { #category : #'tests - iterating' }
@@ -263,12 +257,9 @@ TIterateTest >> testReject [
 { #category : #'tests - iterating' }
 TIterateTest >> testRejectAllThenCollect [
 	| result |
-	
-	result := self collectionWithoutNilElements 
-		reject: [ :each | each notNil ] 
-		thenCollect: [ :each| self fail ].
-	
-	self assert: result isEmpty
+	result := self collectionWithoutNilElements reject: [ :each | each notNil ] thenCollect: [ :each | self fail ].
+
+	self assertEmpty: result
 ]
 
 { #category : #'tests - iterating' }
@@ -331,8 +322,7 @@ TIterateTest >> testRejectThenCollect [
 
 { #category : #'tests - iterating' }
 TIterateTest >> testRejectThenCollectEmpty [
-
-	self assert: (self empty reject: [:e | self fail ] thenCollect: [ :each| self fail ]) isEmpty
+	self assertEmpty: (self empty reject: [ :e | self fail ] thenCollect: [ :each | self fail ])
 ]
 
 { #category : #'tests - iterating' }
@@ -360,8 +350,7 @@ TIterateTest >> testRejectThenDo [
 
 { #category : #'tests - iterating' }
 TIterateTest >> testRejectThenDoOnEmpty [
-
-	self assert: (self empty reject: [:e | self fail ] thenDo: [ self fail ]) isEmpty
+	self assertEmpty: (self empty reject: [ :e | self fail ] thenDo: [ self fail ])
 ]
 
 { #category : #'tests - iterating' }
@@ -380,12 +369,9 @@ TIterateTest >> testSelect [
 { #category : #'tests - iterating' }
 TIterateTest >> testSelectNoneThenCollect [
 	| result |
-	
-	result := self collectionWithoutNilElements 
-		select: [ :each | each isNil ] 
-		thenCollect: [ :each| self fail ].
-	
-	self assert: result isEmpty
+	result := self collectionWithoutNilElements select: [ :each | each isNil ] thenCollect: [ :each | self fail ].
+
+	self assertEmpty: result
 ]
 
 { #category : #'tests - iterating' }
@@ -401,9 +387,7 @@ TIterateTest >> testSelectNoneThenDo [
 
 { #category : #'tests - iterating' }
 TIterateTest >> testSelectOnEmpty [
-
-	self assert: (self empty select: [:e | self fail]) isEmpty
-	
+	self assertEmpty: (self empty select: [ :e | self fail ])
 ]
 
 { #category : #'tests - iterating' }
@@ -437,8 +421,7 @@ TIterateTest >> testSelectThenCollect [
 
 { #category : #'tests - iterating' }
 TIterateTest >> testSelectThenCollectOnEmpty [
-
-	self assert: (self empty select: [:e | self fail ] thenCollect: [ self fail ]) isEmpty
+	self assertEmpty: (self empty select: [ :e | self fail ] thenCollect: [ self fail ])
 ]
 
 { #category : #'tests - iterating' }
@@ -466,8 +449,7 @@ TIterateTest >> testSelectThenDo [
 
 { #category : #'tests - iterating' }
 TIterateTest >> testSelectThenDoOnEmpty [
-
-	self assert: (self empty select: [:e | self fail ] thenDo: [ self fail ]) isEmpty
+	self assertEmpty: (self empty select: [ :e | self fail ] thenDo: [ self fail ])
 ]
 
 { #category : #'tests - iterating' }

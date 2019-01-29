@@ -26,9 +26,9 @@ TOccurrencesTest >> empty [
 TOccurrencesTest >> test0FixtureOccurrencesTest [
 	| tmp |
 	self empty.
-	self assert: self empty isEmpty.
+	self assertEmpty: self empty.
 	self collectionWithoutEqualElements.
-	self deny: self collectionWithoutEqualElements isEmpty.
+	self denyEmpty: self collectionWithoutEqualElements.
 	tmp := OrderedCollection new.
 	self collectionWithoutEqualElements
 		do: [ :each | 
@@ -49,8 +49,8 @@ TOccurrencesTest >> testOccurrencesOf [
 { #category : #'tests - occurrencesOf' }
 TOccurrencesTest >> testOccurrencesOfEmpty [
 	| result |
-	result := self empty occurrencesOf: (self collectionWithoutEqualElements anyOne).
-	self assert: result = 0
+	result := self empty occurrencesOf: self collectionWithoutEqualElements anyOne.
+	self assert: result equals: 0
 ]
 
 { #category : #'tests - occurrencesOf' }

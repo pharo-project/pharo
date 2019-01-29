@@ -8,7 +8,7 @@ Class {
 GLMBrowserTest >> testAddPane [
 	| browser pane |
 	browser := GLMBrowser new.
-	self assert: browser panes isEmpty.
+	self assertEmpty: browser panes.
 	pane := GLMPane new.
 	browser addPane: pane.
 	self assert: pane browser equals: browser
@@ -18,7 +18,7 @@ GLMBrowserTest >> testAddPane [
 GLMBrowserTest >> testAddTransmissions [
 	| browser transmission |
 	browser := GLMBrowser new.
-	self assert: browser transmissions isEmpty.
+	self assertEmpty: browser transmissions.
 	transmission := GLMTransmission new.
 	browser addTransmission: transmission.
 	self assert: transmission browser equals: browser
@@ -91,7 +91,7 @@ GLMBrowserTest >> testTransmissionTriggeredAnnounced [
 	browser
 		when: GLMTransmissionTriggered
 		do: [ :ann | announcements add: ann ].
-	self assert: announcements isEmpty.
+	self assertEmpty: announcements.
 	transmission transmit.
 	self assert: announcements size equals: 1
 ]

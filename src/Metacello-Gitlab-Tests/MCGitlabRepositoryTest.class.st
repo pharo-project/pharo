@@ -23,7 +23,7 @@ MCGitlabRepositoryTest >> testLocation [
 		assert: repository hostname equals: 'gitlab.com';
 		assert: repository projectPath equals: 'pharo-project/pharo';
 		assert: repository projectVersion equals: 'master';
-		assert: repository repoPath isEmpty;
+		assertEmpty: repository repoPath;
 		assert: repository sshPort isNil.
 
 	repository := MCGitlabRepository location: 'gitlab://pharo-project/pharo'.
@@ -31,7 +31,7 @@ MCGitlabRepositoryTest >> testLocation [
 		assert: repository hostname equals: 'gitlab.com';
 		assert: repository projectPath equals: 'pharo-project/pharo';
 		assert: repository projectVersion equals: 'master';
-		assert: repository repoPath isEmpty;
+		assertEmpty: repository repoPath;
 		assert: repository sshPort isNil
 ]
 
@@ -62,7 +62,7 @@ MCGitlabRepositoryTest >> testSelfHostedLocation [
 		assert: repository hostname equals: 'git.pharo.org';
 		assert: repository projectPath equals: 'pharo-project/pharo';
 		assert: repository projectVersion equals: 'master';
-		assert: repository repoPath isEmpty;
+		assertEmpty: repository repoPath;
 		assert: repository sshPort isNil.
 
 	repository := MCGitlabRepository location: 'gitlab://git.pharo.org:pharo-project/pharo'.
@@ -70,7 +70,7 @@ MCGitlabRepositoryTest >> testSelfHostedLocation [
 		assert: repository hostname equals: 'git.pharo.org';
 		assert: repository projectPath equals: 'pharo-project/pharo';
 		assert: repository projectVersion equals: 'master';
-		assert: repository repoPath isEmpty;
+		assertEmpty: repository repoPath;
 		assert: repository sshPort isNil
 ]
 
@@ -90,7 +90,7 @@ MCGitlabRepositoryTest >> testSelfHostedLocationWithNonDefaultSSHPort [
 		assert: repository hostname equals: 'git.pharo.org';
 		assert: repository projectPath equals: 'pharo-project/pharo';
 		assert: repository projectVersion equals: 'master';
-		assert: repository repoPath isEmpty;
+		assertEmpty: repository repoPath;
 		assert: repository sshPort equals: '1234'.
 
 	repository := MCGitlabRepository location: 'gitlab://git.pharo.org:1234:pharo-project/pharo'.
@@ -98,6 +98,6 @@ MCGitlabRepositoryTest >> testSelfHostedLocationWithNonDefaultSSHPort [
 		assert: repository hostname equals: 'git.pharo.org';
 		assert: repository projectPath equals: 'pharo-project/pharo';
 		assert: repository projectVersion equals: 'master';
-		assert: repository repoPath isEmpty;
+		assertEmpty: repository repoPath;
 		assert: repository sshPort equals: '1234'
 ]

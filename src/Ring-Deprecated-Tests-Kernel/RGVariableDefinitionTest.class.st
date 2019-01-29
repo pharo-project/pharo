@@ -35,23 +35,22 @@ RGVariableDefinitionTest >> testClassInstanceVariable [
 { #category : #testing }
 RGVariableDefinitionTest >> testClassVariable [
 	| instVar newClass |
-	
-	instVar:= RGClassVariableDefinition named: 'DependentsFields'.
-	
-	self assert: (instVar isClassVariable).
-	self assert: (instVar isVariable).
-	self assert: (instVar name = 'DependentsFields').
-	self assert: (instVar parent isNil).
-	self assert: (instVar isMetaSide not).   
-	
-	newClass:= RGClassDefinition named: #Object.
-	instVar:= (RGClassVariableDefinition named: 'DependentsFields') parent: newClass.
-	
-	self assert: (instVar parent = newClass).
-	self assert: (newClass classVariables isEmpty).
-	
+	instVar := RGClassVariableDefinition named: 'DependentsFields'.
+
+	self assert: instVar isClassVariable.
+	self assert: instVar isVariable.
+	self assert: instVar name = 'DependentsFields'.
+	self assert: instVar parent isNil.
+	self assert: instVar isMetaSide not.
+
+	newClass := RGClassDefinition named: #Object.
+	instVar := (RGClassVariableDefinition named: 'DependentsFields') parent: newClass.
+
+	self assert: instVar parent = newClass.
+	self assertEmpty: newClass classVariables.
+
 	newClass classVariables add: instVar.
-	self assert: (newClass classVariables size = 1).
+	self assert: newClass classVariables size = 1
 ]
 
 { #category : #testing }
@@ -75,22 +74,21 @@ RGVariableDefinitionTest >> testInstanceVariable [
 { #category : #testing }
 RGVariableDefinitionTest >> testPoolVariable [
 	| poolVar newClass |
-	
-	poolVar:= RGPoolVariableDefinition named: 'TextConstants'.
-	
-	self assert: (poolVar isPoolVariable).
-	self assert: (poolVar isVariable).
-	self assert: (poolVar name = 'TextConstants').
-	self assert: (poolVar parent isNil).
-	self assert: (poolVar isMetaSide not).
-	
-	newClass:= RGClassDefinition named: #OrderedCollection.
-	poolVar:= (RGPoolVariableDefinition named:  'TextConstants' ) parent: newClass.
-	self assert: (poolVar parent = newClass).
-	self assert: (newClass sharedPools isEmpty).
-	
+	poolVar := RGPoolVariableDefinition named: 'TextConstants'.
+
+	self assert: poolVar isPoolVariable.
+	self assert: poolVar isVariable.
+	self assert: poolVar name = 'TextConstants'.
+	self assert: poolVar parent isNil.
+	self assert: poolVar isMetaSide not.
+
+	newClass := RGClassDefinition named: #OrderedCollection.
+	poolVar := (RGPoolVariableDefinition named: 'TextConstants') parent: newClass.
+	self assert: poolVar parent = newClass.
+	self assertEmpty: newClass sharedPools.
+
 	newClass sharedPools add: poolVar.
-	self assert: (newClass sharedPools size = 1).
+	self assert: newClass sharedPools size = 1
 ]
 
 { #category : #testing }

@@ -81,21 +81,19 @@ ShClassInstallerTest >> testChangingSuperclassInTheHierarchy [
 
 { #category : #tests }
 ShClassInstallerTest >> testChangingSuperclassToOther [
+	superClass := self newClass: #ShCITestClass slots: #(var1).
+	superClass2 := self newClass: #ShCITestClass2 slots: #().
+	subClass := self newClass: #ShCISubTestClass superclass: superClass2 slots: #().
 
-	superClass := self newClass:#ShCITestClass slots:#(var1).
-	superClass2 := self newClass:#ShCITestClass2 slots:#().
-	subClass := self newClass:#ShCISubTestClass superclass: superClass2 slots:#().
+	subClass := self newClass: #ShCISubTestClass superclass: superClass slots: #().
 
-	subClass := 	self newClass:#ShCISubTestClass superclass: superClass slots:#().
+	superClass2 := self newClass: #ShCITestClass2 superclass: superClass slots: #().
 
-   superClass2 := self newClass:#ShCITestClass2 superclass: superClass slots:#().
-
-	self deny: superClass subclasses isEmpty.
-	self assert: superClass2 subclasses isEmpty.
-	self assertCollection: superClass subclasses equals: { subClass. superClass2 }. 
+	self denyEmpty: superClass subclasses.
+	self assertEmpty: superClass2 subclasses.
+	self assertCollection: superClass subclasses equals: {subClass . superClass2}.
 	self assert: subClass superclass equals: superClass.
-	self assert: superClass2 superclass equals: superClass.
-
+	self assert: superClass2 superclass equals: superClass
 ]
 
 { #category : #tests }

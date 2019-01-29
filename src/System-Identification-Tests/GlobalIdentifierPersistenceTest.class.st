@@ -118,6 +118,7 @@ GlobalIdentifierPersistenceTest >> testLoad2 [
 { #category : #tests }
 GlobalIdentifierPersistenceTest >> testLoad3 [
 	"Load stored values."
+
 	| values loaded |
 	persistence checker: self newFalseChecker.
 	values := Dictionary new.
@@ -125,7 +126,7 @@ GlobalIdentifierPersistenceTest >> testLoad3 [
 	persistence save: values.
 	loaded := Dictionary new.
 	persistence load: loaded.
-	self assert: loaded isEmpty.
+	self assertEmpty: loaded
 ]
 
 { #category : #tests }

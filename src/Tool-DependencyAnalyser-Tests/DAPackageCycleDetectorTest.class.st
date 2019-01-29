@@ -152,8 +152,8 @@ DAPackageCycleDetectorTest >> testDequeue [
 	| dequeue |
 	aPackageCycleDetection initializeQueueWith: packageA.
 	dequeue := aPackageCycleDetection dequeue.
-	self assert: (dequeue = packageA).
-	self assert: self queue isEmpty
+	self assert: dequeue equals: packageA.
+	self assertEmpty: self queue
 ]
 
 { #category : #tests }
@@ -218,7 +218,7 @@ DAPackageCycleDetectorTest >> testReset [
 	aPackageCycleDetection findCycles: aPDPackageRelation.
 	self assert: aPackageCycleDetection cycles size = 3.
 	aPackageCycleDetection reset.
-	self assert: aPackageCycleDetection cycles isEmpty
+	self assertEmpty: aPackageCycleDetection cycles
 ]
 
 { #category : #tests }
