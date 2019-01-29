@@ -165,6 +165,12 @@ RBAssignmentNode >> precedence [
 	^5
 ]
 
+{ #category : #'adding/removing' }
+RBAssignmentNode >> removeNode: aNode [
+
+	self replaceNode: aNode withNode: aNode receiver
+]
+
 { #category : #replacing }
 RBAssignmentNode >> replaceNode: aNode withNode: anotherNode [ 
 	value == aNode ifTrue: [self value: anotherNode].
