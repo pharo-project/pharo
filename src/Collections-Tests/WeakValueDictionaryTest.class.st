@@ -38,9 +38,7 @@ WeakValueDictionaryTest >> keyWithGarbageCollectedValue [
 
 { #category : #tests }
 WeakValueDictionaryTest >> testAssociationsWithGarbageCollectedValue [
-
-	self assert: self dictionaryWithGarbageCollectedValue associations isEmpty
-
+	self assertEmpty: self dictionaryWithGarbageCollectedValue associations
 ]
 
 { #category : #tests }

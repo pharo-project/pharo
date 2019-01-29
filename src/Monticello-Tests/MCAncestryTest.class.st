@@ -83,7 +83,7 @@ MCAncestryTest >> testLinearPath [
 
 { #category : #tests }
 MCAncestryTest >> testPathToMissingAncestor [
-	self assert: (self tree allAncestorsOnPathTo: MCVersionInfo new) isEmpty
+	self assertEmpty: (self tree allAncestorsOnPathTo: MCVersionInfo new)
 ]
 
 { #category : #building }

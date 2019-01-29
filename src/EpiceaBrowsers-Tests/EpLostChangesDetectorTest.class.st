@@ -12,26 +12,22 @@ Class {
 
 { #category : #tests }
 EpLostChangesDetectorTest >> testDetectInEmptyLog [
-
 	detector := EpLostChangesDetector newWithLog: monitor log.
 	self deny: detector hasLostChanges.
-	self assert: detector lostChanges isEmpty.
+	self assertEmpty: detector lostChanges.
 
-	self assert: monitor log entries isEmpty. "Just to be sure of the assumed precondition"
-
+	self assertEmpty: monitor log entries	"Just to be sure of the assumed precondition"
 ]
 
 { #category : #tests }
 EpLostChangesDetectorTest >> testDetectNoChange [
-
 	classFactory newClass.
 	monitor log store flush.
 	detector := EpLostChangesDetector newWithLog: monitor log.
 	self deny: detector hasLostChanges.
-	self assert: detector lostChanges isEmpty.
+	self assertEmpty: detector lostChanges.
 
-	self assert: monitor log entriesCount equals: 2. "Just to be sure of the assumed precondition: category and only one class created"
-
+	self assert: monitor log entriesCount equals: 2	"Just to be sure of the assumed precondition: category and only one class created"
 ]
 
 { #category : #tests }
@@ -66,6 +62,6 @@ EpLostChangesDetectorTest >> testDetectOneChangeButFileDeleted [
 
 	detector := EpLostChangesDetector newWithLog: logWithALostChange.
 	self deny: detector hasLostChanges.
-	self assert: detector lostChanges isEmpty.
+	self assertEmpty: detector lostChanges.
 
 ]

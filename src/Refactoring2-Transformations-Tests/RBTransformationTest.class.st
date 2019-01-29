@@ -157,24 +157,21 @@ RBTransformationTest >> tearDown [
 { #category : #testing }
 RBTransformationTest >> testAPI [
 	"all classes must implement #storeOn: and #transform"
-	
+
 	| incompleteTransformations |
 	incompleteTransformations := RBTransformation allSubclasses
 		select: [ :each | 
 			| selectors |
 			selectors := each methods collect: #selector.
-	
-			each subclasses isEmpty
-				and: [ (selectors includes: #privateTransform) not
-				and: [ (selectors includes: #storeOn:) not ] ] ].
-	self assert: incompleteTransformations isEmpty.
-	
+
+			each subclasses isEmpty and: [ (selectors includes: #privateTransform) not and: [ (selectors includes: #storeOn:) not ] ] ].
+	self assertEmpty: incompleteTransformations.
+
 	incompleteTransformations := RBCompositeTransformation allSubclasses
 		select: [ :each | 
 			| selectors |
 			selectors := each methods collect: #selector.
-	
-			each subclasses isEmpty
-				and: [ (selectors includes: #buildTransformations) not ] ].
-	self assert: incompleteTransformations isEmpty.
+
+			each subclasses isEmpty and: [ (selectors includes: #buildTransformations) not ] ].
+	self assertEmpty: incompleteTransformations
 ]

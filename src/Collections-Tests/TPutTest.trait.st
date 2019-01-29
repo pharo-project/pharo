@@ -29,21 +29,20 @@ TPutTest >> nonEmpty [
 TPutTest >> test0FixturePutOneOrMoreElementsTest [
 	self aValue.
 
-	
+
 	self indexArray.
-	self indexArray do: [
-		:each| 
-		self assert: each class = SmallInteger. 
-		self assert: (each>=1 & each<= self nonEmpty size).
-		].
-	
+	self indexArray
+		do: [ :each | 
+			self assert: each class = SmallInteger.
+			self assert: (each >= 1 & each) <= self nonEmpty size ].
+
 	self assert: self indexArray size = self valueArray size.
-	
+
 	self empty.
-	self assert: self empty isEmpty .
-	
+	self assertEmpty: self empty.
+
 	self nonEmpty.
-	self deny: self nonEmpty  isEmpty.
+	self denyEmpty: self nonEmpty
 ]
 
 { #category : #'tests - puting with indexes' }

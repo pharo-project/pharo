@@ -243,86 +243,87 @@ SlotIntegrationTest >> testRemoveInstVarNamedClassInterface [
 { #category : #tests }
 SlotIntegrationTest >> testRemoveInstVarNamedWithTrait2 [
 	"Add instance variables using the builder interface"
-	
-	aClass := self make: [ :builder |
-		builder 
-			name: self aClassName;
-			traitComposition: TOne;
-			slots: #( x )
-		].
+
+	aClass := self
+		make: [ :builder | 
+			builder
+				name: self aClassName;
+				traitComposition: TOne;
+				slots: #(x) ].
 
 	self assert: aClass instVarNames equals: #(x).
-	
-	self assert: TOne traitUsers asArray equals: { aClass }.
-	
+
+	self assert: TOne traitUsers asArray equals: {aClass}.
+
 	self assert: (aClass canUnderstand: #one).
 	self assert: aClass new one equals: 1.
 
 	aClass removeInstVarNamed: #x.
-	
-	self assert: aClass instVarNames isEmpty.
-	
-	self assert: TOne traitUsers asArray equals: { aClass }.
-	
+
+	self assertEmpty: aClass instVarNames.
+
+	self assert: TOne traitUsers asArray equals: {aClass}.
+
 	self assert: (aClass canUnderstand: #one).
-	self assert: aClass new one equals: 1.
+	self assert: aClass new one equals: 1
 ]
 
 { #category : #tests }
 SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 	"Test reshaping a class which is head of a hierarchy of 4 levels"
-	
+
 	"level 1"
+
 	aClass := Object
-		subclass: self aClassName 
-		instanceVariableNames: '' 
-		classVariableNames: '' 
-		poolDictionaries: '' 
+		subclass: self aClassName
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: aClass subclasses isEmpty.
+	self assertEmpty: aClass subclasses.
 	aClass classLayout checkIntegrity.
 
 	"level 2"
 	anotherClass := aClass
-		subclass: self anotherClassName 
-		instanceVariableNames: '' 
-		classVariableNames: '' 
-		poolDictionaries: '' 
+		subclass: self anotherClassName
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
 		category: self aCategory.
-	
-	self assert: aClass subclasses equals: { anotherClass }.
-	self assert: anotherClass subclasses isEmpty.
+
+	self assert: aClass subclasses equals: {anotherClass}.
+	self assertEmpty: anotherClass subclasses.
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 
 	"level 3"
 	yetAnotherClass := anotherClass
-		subclass: self yetAnotherClassName 
-		instanceVariableNames: '' 
-		classVariableNames: '' 
-		poolDictionaries: '' 
+		subclass: self yetAnotherClassName
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: aClass subclasses equals: { anotherClass }.
-	self assert: anotherClass subclasses equals: { yetAnotherClass }.
-	self assert: yetAnotherClass subclasses isEmpty.
+	self assert: aClass subclasses equals: {anotherClass}.
+	self assert: anotherClass subclasses equals: {yetAnotherClass}.
+	self assertEmpty: yetAnotherClass subclasses.
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 	yetAnotherClass classLayout checkIntegrity.
 
 	"level 4"
 	yetYetAnotherClass := yetAnotherClass
-		subclass: self yetYetAnotherClassName 
-		instanceVariableNames: '' 
-		classVariableNames: '' 
-		poolDictionaries: '' 
+		subclass: self yetYetAnotherClassName
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: aClass subclasses equals: { anotherClass }.
-	self assert: anotherClass subclasses equals: { yetAnotherClass }.
-	self assert: yetAnotherClass subclasses equals: { yetYetAnotherClass }.
-	self assert: yetYetAnotherClass subclasses isEmpty.
+	self assert: aClass subclasses equals: {anotherClass}.
+	self assert: anotherClass subclasses equals: {yetAnotherClass}.
+	self assert: yetAnotherClass subclasses equals: {yetYetAnotherClass}.
+	self assertEmpty: yetYetAnotherClass subclasses.
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 	yetAnotherClass classLayout checkIntegrity.
@@ -330,17 +331,17 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 
 	"reshape level 1"
 	aClass := Object
-		subclass: self aClassName 
-		instanceVariableNames: 'x' 
-		classVariableNames: '' 
-		poolDictionaries: '' 
+		subclass: self aClassName
+		instanceVariableNames: 'x'
+		classVariableNames: ''
+		poolDictionaries: ''
 		category: self aCategory.
 
 	self assert: aClass instVarNames equals: #(x).
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 	yetAnotherClass classLayout checkIntegrity.
-	yetYetAnotherClass classLayout checkIntegrity.
+	yetYetAnotherClass classLayout checkIntegrity
 ]
 
 { #category : #tests }

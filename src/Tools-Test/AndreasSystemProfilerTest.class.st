@@ -81,7 +81,7 @@ AndreasSystemProfilerTest >> testTallyTreePrint [
 		orThreshold: 1.
 	
 	"Nothing is printed since there is no tab"
-	self assert: stream contents isEmpty
+	self assertEmpty: stream contents
 ]
 
 { #category : #'tests tally' }

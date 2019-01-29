@@ -4,7 +4,7 @@ SUnit tests for fuel versioning
 Class {
 	#name : #FLVersionTest,
 	#superclass : #FLSerializationTest,
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #tests }

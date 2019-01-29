@@ -37,7 +37,7 @@ SettingsStonWriterTest >> testBasic [
 { #category : #tests }
 SettingsStonWriterTest >> testEmptyStream [
 	fileStream flush.
-	self assert: fileReference contents isEmpty
+	self assertEmpty: fileReference contents
 ]
 
 { #category : #tests }

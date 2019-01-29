@@ -26,36 +26,36 @@ SystemNavigationOnNewlyCreatedEnvironmentTest >> createSystemNavigationToTest [
 { #category : #tests }
 SystemNavigationOnNewlyCreatedEnvironmentTest >> testAllExistingProtocolsFor [
 	"refined from the superclass. Because in a created environment there is no existing protocols."
-	
-	| instSideProtocols classSideProtocols |
-	instSideProtocols := self systemNavigationToTest allExistingProtocolsFor: true. 
-	classSideProtocols := self systemNavigationToTest allExistingProtocolsFor: false.
-	self assert: instSideProtocols isEmpty.	
-	self assert: classSideProtocols isEmpty.
 
+	| instSideProtocols classSideProtocols |
+	instSideProtocols := self systemNavigationToTest allExistingProtocolsFor: true.
+	classSideProtocols := self systemNavigationToTest allExistingProtocolsFor: false.
+	self assertEmpty: instSideProtocols.
+	self assertEmpty: classSideProtocols
 ]
 
 { #category : #tests }
 SystemNavigationOnNewlyCreatedEnvironmentTest >> testAllReferencesToPool [
 	| result |
-	
 	result := self systemNavigationToTest allReferencesToPool: FooSharedPool.
-	self assert: result isEmpty. "FooSharedPool is not in this environment"
+	self assertEmpty: result	"FooSharedPool is not in this environment"
 ]
 
 { #category : #tests }
 SystemNavigationOnNewlyCreatedEnvironmentTest >> testEnsureDefaultEnvironmentNotUsed [
-	
 	| allClasses originalProtoObjectClass originalObjectClass anotherObjectClass |
 	allClasses := self systemNavigationToTest allClasses.
-	self assert: allClasses isEmpty.
-	originalProtoObjectClass := Smalltalk globals at: #ProtoObject.		
+	self assertEmpty: allClasses.
+	originalProtoObjectClass := Smalltalk globals at: #ProtoObject.
 	originalObjectClass := Smalltalk globals at: #Object.
-	
-	DangerousClassNotifier disableDuring: [
-		anotherObjectClass := self classFactory newClassNamed: #Object subclassOf: originalProtoObjectClass instanceVariableNames: '' classVariableNames:  'DependentsFields'].
-	
-	self assert: ((self environmentToTest at: #Object) = anotherObjectClass).
-	self assert: ((Smalltalk globals at: #Object) = originalObjectClass).
-	
+
+	DangerousClassNotifier
+		disableDuring: [ anotherObjectClass := self classFactory
+				newClassNamed: #Object
+				subclassOf: originalProtoObjectClass
+				instanceVariableNames: ''
+				classVariableNames: 'DependentsFields' ].
+
+	self assert: (self environmentToTest at: #Object) = anotherObjectClass.
+	self assert: (Smalltalk globals at: #Object) = originalObjectClass
 ]

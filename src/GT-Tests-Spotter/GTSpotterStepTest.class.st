@@ -17,15 +17,15 @@ Class {
 GTSpotterStepTest >> assertCandidateMatching: aBlock [
 	| candidates |
 	self assert: currentProcessor notNil.
-	
+
 	candidates := currentProcessor allFilteredCandidates select: [ :each | aBlock value: each ].
-	
-	self deny: candidates isEmpty.
+
+	self denyEmpty: candidates.
 	self assert: candidates size = 1.
-	
+
 	currentCandidate := candidates anyOne.
 	self assert: currentCandidate notNil.
-	
+
 	^ currentCandidate
 ]
 
@@ -43,7 +43,7 @@ GTSpotterStepTest >> assertDiveIn: aSelector [
 
 	" get and validate the link "
 	link := spotter currentStep candidates getCandidateLink: currentCandidate in: currentProcessor.
-	
+
 	self assert: link notNil.
 	self assert: link candidate == currentCandidate.
 	self assert: link processor == currentProcessor.
@@ -51,19 +51,19 @@ GTSpotterStepTest >> assertDiveIn: aSelector [
 	" set the selection - like the UI would do "
 	self shouldnt: [ spotter currentStep select: link ] raise: Error.
 	self assert: spotter currentStep selected == link.
-	
+
 	" perform the dive operation - like the UI would do "
 	self shouldnt: [ spotter currentStep perform: aSelector ] raise: Error.
 	currentStep := spotter currentStep.
 	currentProcessor := currentCandidate := previousContext := currentContext := nil.
-	
-	self deny: spotter steps isEmpty .
+
+	self denyEmpty: spotter steps.
 	self assert: spotter steps size > previousStepsSize.
 	self assert: spotter steps size = (previousStepsSize + 1).
-	
+
 	self deny: previousStep = currentStep.
 	self deny: previousStep = spotter currentStep.
-	self assert: currentStep = spotter currentStep.
+	self assert: currentStep = spotter currentStep
 ]
 
 { #category : #convenience }
@@ -133,7 +133,7 @@ GTSpotterStepTest >> assertProcessorMatching: aBlock [
 { #category : #convenience }
 GTSpotterStepTest >> assertProcessorNotEmpty [
 	self assert: currentProcessor notNil.
-	self deny: currentProcessor allFilteredCandidates isEmpty.
+	self deny: currentProcessor allFilteredCandidates isEmpty
 ]
 
 { #category : #convenience }

@@ -524,7 +524,7 @@ ArrayTest >> subCollectionNotIn [
 ArrayTest >> test0FixtureIncludeTest [
 	| anElementIn |
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self elementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self elementNotIn ] ifNone: [ anElementIn := false ].
@@ -532,24 +532,24 @@ ArrayTest >> test0FixtureIncludeTest [
 	self anotherElementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self anotherElementNotIn ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn equals: false.
+	self deny: anElementIn.
 	self collection.
 	self empty.
-	self assert: self empty isEmpty.
+	self assertEmpty: self empty.
 	self collectionOfFloat.
 	self collectionOfFloat do: [ :each | self assert: each isFloat ].
 	self elementInForIncludesTest.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self elementInForIncludesTest ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn equals: true
+	self assert: anElementIn
 ]
 
 { #category : #'tests - fixture' }
 ArrayTest >> test0FixtureOccurrencesTest [
 	self empty.
-	self assert: self empty isEmpty.
+	self assertEmpty: self empty.
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self elementInForOccurrences.
 	self assert: (self nonEmpty includes: self elementInForOccurrences).
 	self elementNotInForOccurrences.

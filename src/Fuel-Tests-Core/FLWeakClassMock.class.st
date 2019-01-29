@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'instVar1'
 	],
-	#category : 'Fuel-Tests-Core-Mocks'
+	#category : #'Fuel-Tests-Core-Mocks'
 }
 
 { #category : #accessing }
