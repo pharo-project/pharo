@@ -104,3 +104,29 @@ Behavior >> sourceCodeTemplate [
 	| temporary variable names |
 	statements'
 ]
+
+{ #category : #'*OpalCompiler-Core' }
+Behavior >> sourceCodeTemplateFor: aClassOrMetaclass [ 
+	"Answer an expression to be edited and evaluated in order to define 
+	methods in this class or trait."
+
+		^ aClassOrMetaclass isMeta
+				ifTrue: 
+[ 
+'messageSelectorAndArgumentNames
+	"comment stating purpose of class-side message"
+	"scope: class-variables  &  class-instance-variables"	
+			
+	| temporary variable names |
+	statements' 
+]
+				ifFalse: 
+[ 
+'messageSelectorAndArgumentNames
+	"comment stating purpose of instance-side message"
+	"scope: class-variables  &  instance-variables"	
+			
+	| temporary variable names |
+	statements'
+]
+]
