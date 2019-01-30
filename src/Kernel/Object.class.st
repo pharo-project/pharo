@@ -977,9 +977,11 @@ Object >> halt: aString [
 ]
 
 { #category : #halting }
-Object >> haltFromCount: anInteger [ 
+Object >> haltFromCount: anInteger [
+	"Always halt after a count has been reached"
+
 	<debuggerCompleteToSender>
-	Halt fromCount: anInteger.
+	Halt fromCount: anInteger
 ]
 
 { #category : #halting }
@@ -1007,9 +1009,11 @@ Object >> haltIfTest [
 ]
 
 { #category : #halting }
-Object >> haltOnCount: anInteger [ 
+Object >> haltOnCount: anInteger [
+	"Halts once when a count is reached"
+
 	<debuggerCompleteToSender>
-	Halt onCount: anInteger.
+	Halt onCount: anInteger
 ]
 
 { #category : #halting }

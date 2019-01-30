@@ -74,6 +74,8 @@ Class {
 
 { #category : #halting }
 Halt class >> fromCount: anInteger [
+	"Always halt after a count has been reached"
+
 	<debuggerCompleteToSender>
 	^ self
 		onCountWithBehavior: [ :node | (node propertyAt: #haltCount) >= anInteger ]
@@ -144,6 +146,8 @@ Halt class >> now: aString [
 
 { #category : #halting }
 Halt class >> onCount: anInteger [
+	"Halts once when a count is reached"
+
 	<debuggerCompleteToSender>
 	^ self
 		onCountWithBehavior: [ :node | (node propertyAt: #haltCount) = anInteger ]
