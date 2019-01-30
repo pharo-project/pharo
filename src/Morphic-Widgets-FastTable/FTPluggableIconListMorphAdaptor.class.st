@@ -497,10 +497,10 @@ FTPluggableIconListMorphAdaptor >> update: symbol [
 
 { #category : #updating }
 FTPluggableIconListMorphAdaptor >> updateList [
-	(showIndex < self dataSource numberOfRows and: [ self isRowIndexVisible: showIndex ])
+	(showIndex < self dataSource numberOfRows and: [ self isIndexVisible: showIndex ])
 		ifFalse: [ self resetPosition ].
 	self basicUpdateSelectionIndex.
-	(self hasSelection and: [ (self isRowIndexVisible: self selectedIndex) ])
+	(self hasSelection and: [ (self isIndexVisible: self selectedIndex) ])
 		ifFalse: [ self resetPosition.
 			self ensureVisibleFirstSelection ].
 	self refresh

@@ -261,7 +261,7 @@ FTExamples class >> exampleEditableList1 [
 		extent: 300 @ 550;
 		dataSource: (FTExampleDropDataSource new elements: data);
 		selectIndex: 1;
-		showFirstRowSelection;
+		showFirstSelection;
 		onAnnouncement: FTStrongSelectionChanged
 			do: [ :ann | 
 			| index morph ed |
@@ -328,7 +328,7 @@ FTExamples class >> exampleList2 [
 		extent: 300 @ 550;
 		dataSource: (FTExampleMethodListDataSource for: Object);
 		selectIndex: 42;
-		showFirstRowSelection;
+		showFirstSelection;
 		allowDeselection;
 		yourself.
 
@@ -348,7 +348,7 @@ FTExamples class >> exampleList3 [
 		extent: 300 @ 550;
 		dataSource: (FTExampleMethodListDataSource for: Object);
 		selectIndex: 42;
-		showFirstRowSelection;
+		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('row selected: ' , ann newSelectedRowIndexes asString) crLog ];
 		yourself.
 
@@ -369,7 +369,7 @@ FTExamples class >> exampleList4 [
 		extent: 300 @ 550;
 		dataSource: (FTExampleMethodListDataSource for: Object);
 		selectIndex: 42;
-		showFirstRowSelection;
+		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('row selected: ' , ann newSelectedRowIndexes asString) crLog ];
 		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		yourself.
@@ -392,7 +392,7 @@ FTExamples class >> exampleList5 [
 		extent: 300 @ 550;
 		dataSource: (FTExampleMethodListDataSource for: Object);
 		selectIndexes: #(42 43);
-		showFirstRowSelection;
+		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedRowIndexes asString) crLog ];
 		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		beMultipleSelection;
@@ -496,7 +496,7 @@ FTExamples class >> exampleTable1 [
 		addColumn: (FTColumn id: 'Origin');
 		dataSource: (FTExampleMethodTableDataSource for: Object);
 		selectIndex: 1;
-		showFirstRowSelection;
+		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedRowIndexes asString) crLog ];
 		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		beMultipleSelection;
@@ -520,7 +520,7 @@ FTExamples class >> exampleTable2 [
 		addColumn: (FTColumn id: 'Origin');
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
 		selectIndex: 1;
-		showFirstRowSelection;
+		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedRowIndexes asString) crLog ];
 		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		beMultipleSelection;
@@ -546,7 +546,7 @@ FTExamples class >> exampleTable3 [
 		intercellSpacing: 1;
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
 		selectIndex: 1;
-		showFirstRowSelection;
+		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedRowIndexes asString) crLog ];
 		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		beMultipleSelection;
@@ -574,7 +574,7 @@ FTExamples class >> exampleTable4 [
 		intercellSpacing: 8 @ 1;
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
 		selectIndex: 1;
-		showFirstRowSelection;
+		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedRowIndexes asString) crLog ];
 		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		beMultipleSelection;
@@ -602,7 +602,7 @@ FTExamples class >> exampleTableHorizontalScroll [
 		intercellSpacing: 1;
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
 		selectIndex: 1;
-		showFirstRowSelection;
+		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedRowIndexes asString) crLog ];
 		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		beMultipleSelection;

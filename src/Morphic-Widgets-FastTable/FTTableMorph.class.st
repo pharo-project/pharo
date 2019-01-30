@@ -402,11 +402,11 @@ FTTableMorph >> highlightRowIndexes: anArray [
 
 	self basicHighlightRowIndexes: anArray.
 
-	(self hasHighlighted and: [ (self isRowIndexVisible: self highlightedRowIndex) not ])
+	(self hasHighlighted and: [ (self isIndexVisible: self highlightedRowIndex) not ])
 		ifTrue: [ self moveShowIndexTo: self highlightedRowIndexes first.
 			^ self ].
 
-	(self hasSelection and: [ (self isRowIndexVisible: self selectedIndex) not ])
+	(self hasSelection and: [ (self isIndexVisible: self selectedIndex) not ])
 		ifTrue: [ self moveShowIndexTo: self selectedIndex.
 			^ self ].
 
@@ -539,6 +539,16 @@ FTTableMorph >> isHorizontalScrollBarVisible [
 ]
 
 { #category : #testing }
+FTTableMorph >> isIndexSelected: rowIndex [
+	^ self selectedIndexes includes: rowIndex
+]
+
+{ #category : #testing }
+FTTableMorph >> isIndexVisible: anIndex [
+	^ self container isRowIndexVisible: anIndex
+]
+
+{ #category : #testing }
 FTTableMorph >> isMultipleSelection [
 	^ selectionStrategy isMultiple
 ]
@@ -549,13 +559,15 @@ FTTableMorph >> isResizable [
 ]
 
 { #category : #testing }
-FTTableMorph >> isRowIndexSelected: rowIndex [
-	^ self selectedIndexes includes: rowIndex
+FTTableMorph >> isRowIndexSelected: anIndex [
+	self deprecated: 'Use #isIndexSelected: instead' transformWith: '`@receiver isRowIndexSelected: `@statements1' -> '`@receiver isIndexSelected: `@statements1'.
+	^ self isIndexSelected: anIndex
 ]
 
 { #category : #testing }
 FTTableMorph >> isRowIndexVisible: rowIndex [
-	^ self container isRowIndexVisible: rowIndex
+	self deprecated: 'Use #isIndexVisible: instead' transformWith: '`@receiver isRowIndexVisible: `@statements1' -> '`@receiver isIndexVisible: `@statements1'.
+	^ self isIndexVisible: rowIndex
 ]
 
 { #category : #testing }
@@ -1010,6 +1022,12 @@ FTTableMorph >> showColumnHeaders [
 
 { #category : #accessing }
 FTTableMorph >> showFirstRowSelection [
+	self deprecated: 'Use #showFirstSelection instead' transformWith: '`@receiver showFirstRowSelection' -> '`@receiver showFirstSelection'.
+	^ self showFirstSelection
+]
+
+{ #category : #accessing }
+FTTableMorph >> showFirstSelection [
 	self hasSelection ifFalse: [ ^ self ].
 	self moveShowIndexTo: self selectedIndex
 ]
@@ -1033,7 +1051,7 @@ FTTableMorph >> showMenuForPosition: aPoint [
 FTTableMorph >> showMenuForRowIndex: rowIndex columnIndex: columnIndex [
 	| menu |
 
-	(rowIndex notNil and: [ (self isRowIndexSelected: rowIndex) not ]) ifTrue: [ 
+	(rowIndex notNil and: [ (self isIndexSelected: rowIndex) not ]) ifTrue: [ 
 		self selectIndex: rowIndex ].
 
 	menu := self dataSource 
