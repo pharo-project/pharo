@@ -411,7 +411,7 @@ FTPluggableIconListMorphAdaptor >> scrollValue [
 
 { #category : #ignored }
 FTPluggableIconListMorphAdaptor >> searchedElement: index [
-	self highlightRowIndex: index
+	self highlightIndex: index
 ]
 
 { #category : #private }

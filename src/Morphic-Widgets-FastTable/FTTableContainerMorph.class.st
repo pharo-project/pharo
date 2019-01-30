@@ -185,7 +185,7 @@ FTTableContainerMorph >> drawOn: canvas [
 	y := self top.
 	cellWidth := self width - self class rowLeftMargin.
 	cellHeight := self table rowHeight rounded.
-	highligtedRowIndexes := self table selectedIndexes , self table highlightedRowIndexes.
+	highligtedRowIndexes := self table selectedIndexes , self table highlightedIndexes.
 	primarySelectionIndex := self table selectedIndex.
 
 	"For some superweird reason, calling #calculateExposedRows here instead in #changed (where

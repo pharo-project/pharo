@@ -26,11 +26,12 @@ Class {
 		'verticalScrollBar',
 		'horizontalScrollBar',
 		'selectionColor',
+		'selectedIndexes',
+		'highlightedIndexes',
 		'showIndex',
 		'dataSource',
 		'intercellSpacing',
 		'rowHeight',
-		'highlightedRowIndexes',
 		'selectionStrategy',
 		'columns',
 		'secondarySelectionColor',
@@ -40,8 +41,7 @@ Class {
 		'needToggleAtMouseUp',
 		'function',
 		'resizable',
-		'trialHSB',
-		'selectedIndexes'
+		'trialHSB'
 	],
 	#category : #'Morphic-Widgets-FastTable'
 }
@@ -131,8 +131,14 @@ FTTableMorph >> autoScrollHeightLimit [
 ]
 
 { #category : #private }
+FTTableMorph >> basicHighlightIndexes: anArray [
+	highlightedIndexes := anArray asArray
+]
+
+{ #category : #private }
 FTTableMorph >> basicHighlightRowIndexes: anArray [
-	highlightedRowIndexes := anArray asArray
+	self deprecated: 'Use #basicHighlightIndexes: instead' transformWith: '`@receiver basicHighlightRowIndexes: `@statements' -> '`@receiver basicHighlightIndexes: `@statements'.
+	^ self basicHighlightIndexes: anArray
 ]
 
 { #category : #private }
@@ -366,7 +372,7 @@ FTTableMorph >> hasDataSource [
 
 { #category : #testing }
 FTTableMorph >> hasHighlighted [
-	^ self highlightedRowIndexes notEmpty
+	^ self highlightedIndexes notEmpty
 ]
 
 { #category : #testing }
@@ -392,18 +398,18 @@ FTTableMorph >> hideColumnHeaders [
 ]
 
 { #category : #'accessing selection' }
-FTTableMorph >> highlightRowIndex: aNumber [
-	self highlightRowIndexes: { aNumber }
+FTTableMorph >> highlightIndex: aNumber [
+	self highlightIndexes: { aNumber }
 ]
 
 { #category : #'accessing selection' }
-FTTableMorph >> highlightRowIndexes: anArray [
-	anArray = highlightedRowIndexes ifTrue: [ ^ self ].
+FTTableMorph >> highlightIndexes: anArray [
+	anArray = highlightedIndexes ifTrue: [ ^ self ].
 
-	self basicHighlightRowIndexes: anArray.
+	self basicHighlightIndexes: anArray.
 
-	(self hasHighlighted and: [ (self isIndexVisible: self highlightedRowIndex) not ])
-		ifTrue: [ self moveShowIndexTo: self highlightedRowIndexes first.
+	(self hasHighlighted and: [ (self isIndexVisible: self highlightedIndex) not ])
+		ifTrue: [ self moveShowIndexTo: self highlightedIndexes first.
 			^ self ].
 
 	(self hasSelection and: [ (self isIndexVisible: self selectedIndex) not ])
@@ -414,15 +420,37 @@ FTTableMorph >> highlightRowIndexes: anArray [
 ]
 
 { #category : #'accessing selection' }
+FTTableMorph >> highlightRowIndex: aNumber [
+	self deprecated: 'Use #highlightIndex: instead' transformWith: '`@receiver highlightRowIndex: `@statements1' -> '`@receiver highlightIndex: `@statements1'.
+	self highlightIndex: aNumber
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> highlightRowIndexes: anArray [
+	self deprecated: 'Use #highlightIndexes: instead' transformWith: '`@receiver highlightRowIndexes: `@statements1' -> '`@receiver highlightIndexes: `@statements1'.
+	self highlightIndexes: anArray
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> highlightedIndex [
+	^ self highlightedIndexes ifNotEmpty: #first ifEmpty: [ 0 ]
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> highlightedIndexes [
+	^ highlightedIndexes
+]
+
+{ #category : #'accessing selection' }
 FTTableMorph >> highlightedRowIndex [
-	^ self highlightedRowIndexes 
-		ifNotEmpty: [ :indexes | indexes first ]
-		ifEmpty: [ 0 ] 
+	self deprecated: 'Use #highlightedIndex instead' transformWith: '`@receiver highlightedRowIndex' -> '`@receiver highlightedIndex'.
+	^ self highlightedIndex
 ]
 
 { #category : #'accessing selection' }
 FTTableMorph >> highlightedRowIndexes [
-	^ highlightedRowIndexes
+	self deprecated: 'Use #highlightedIndexes instead' transformWith: '`@receiver highlightedRowIndexes' -> '`@receiver highlightedIndexes'.
+	^ self highlightedIndexes
 ]
 
 { #category : #private }
@@ -454,7 +482,7 @@ FTTableMorph >> initialize [
 	showIndex := 0.
 	showColumnHeaders := true.
 	selectedIndexes := #().
-	highlightedRowIndexes := #().
+	highlightedIndexes := #().
 	columns := #().
 	needToggleAtMouseUp := false.
 	self beNotResizable.
