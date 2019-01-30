@@ -476,11 +476,21 @@ FTTableMorph >> initializeContainer [
 FTTableMorph >> initializeKeyBindings [
 	"add keybindings used by table"
 
-	self bindKeyCombination: Character arrowUp shift | Character arrowUp asKeyCombination toAction: [ :target :morph :event | self keyStrokeArrowUp: event ].
-	self bindKeyCombination: Character arrowDown shift | Character arrowDown asKeyCombination toAction: [ :target :morph :event | self keyStrokeArrowDown: event ].
-	self bindKeyCombination: Character home asKeyCombination toAction: [ self selectFirst ].
-	self bindKeyCombination: Character end asKeyCombination toAction: [ self selectLast ].
-	self bindKeyCombination: PharoShortcuts current selectAllShortcut toAction: [ self selectAll ]
+	self
+		bindKeyCombination: Character arrowUp shift | Character arrowUp asKeyCombination 
+		toAction: [ :target :morph :event | self keyStrokeArrowUp: event ].
+	self 
+		bindKeyCombination: Character arrowDown shift | Character arrowDown asKeyCombination 
+		toAction: [ :target :morph :event | self keyStrokeArrowDown: event ].
+	self 
+		bindKeyCombination: Character home asKeyCombination 
+		toAction: [ self selectFirst ].
+	self 
+		bindKeyCombination: Character end asKeyCombination 
+		toAction: [ self selectLast ].
+	self 
+		bindKeyCombination: PharoShortcuts current selectAllShortcut 
+		toAction: [ self selectAll ]
 ]
 
 { #category : #initialization }
