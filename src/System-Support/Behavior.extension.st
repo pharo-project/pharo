@@ -32,17 +32,6 @@ Behavior >> allUnsentMessages [
 ]
 
 { #category : #'*System-Support' }
-Behavior >> methodsReferencingClass: aClass [
-
-	^self methodsReferencingClasses: { aClass }
-]
-
-{ #category : #'*System-Support' }
-Behavior >> methodsReferencingClasses: aCollectionOfClasses [
-	^ self methods select: [ :meth | meth referencedClasses includesAny: aCollectionOfClasses ]
-]
-
-{ #category : #'*System-Support' }
 Behavior >> referencedClasses [
 	"Return the set of classes that are directly referenced by my methods"
 
