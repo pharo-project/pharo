@@ -67,6 +67,11 @@ MorphTreeChangeRequest class >> pageSize: anInteger [
 ]
 
 { #category : #'instance creation' }
+MorphTreeChangeRequest class >>scrollSelectionIntoView [
+	^ self new action: #scrollSelectionIntoView
+]
+
+{ #category : #'instance creation' }
 MorphTreeChangeRequest class >> selectAll [
 	^ self new action: #selectAll
 ]
