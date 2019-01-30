@@ -85,7 +85,7 @@ GLMFastTreeDataSource >> dataCache [
 
 { #category : #selecting }
 GLMFastTreeDataSource >> explicitSelection: anObject [
-	self table selectRowIndexes: (self searchText: anObject asString)
+	self table selectIndexes: (self searchText: anObject asString)
 ]
 
 { #category : #accessing }
@@ -188,7 +188,7 @@ GLMFastTreeDataSource >> strongSelection: ann [
 	self announcer
 		announce:
 			(GLMTreeMorphStrongSelectionChanged new
-				strongSelectionValue: (self elementAt: ann selectedRowIndex) data;
+				strongSelectionValue: (self elementAt: ann selectedIndex) data;
 				yourself)
 ]
 
