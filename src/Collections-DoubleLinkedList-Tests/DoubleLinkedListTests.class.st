@@ -74,11 +74,10 @@ DoubleLinkedListTests >> testDo [
 DoubleLinkedListTests >> testEmpty [
 	| list |
 	list := DoubleLinkedList new.
-	self assert: list isEmpty.
+	self assertEmpty: list.
 	self should: [ list first ] raise: CollectionIsEmpty.
 	self should: [ list last ] raise: CollectionIsEmpty.
 	list do: [ :each | self fail ]
-	
 ]
 
 { #category : #testing }
@@ -145,10 +144,10 @@ DoubleLinkedListTests >> testOneRemoveFirst [
 	list := DoubleLinkedList new.
 	list add: #one.
 	list removeFirst.
-	self assert: list isEmpty.
+	self assertEmpty: list.
 	list add: #one.
 	list removeLast.
-	self assert: list isEmpty
+	self assertEmpty: list
 ]
 
 { #category : #testing }
@@ -157,10 +156,10 @@ DoubleLinkedListTests >> testOneRemoveLast [
 	list := DoubleLinkedList new.
 	list add: #one.
 	list removeLast.
-	self assert: list isEmpty.
+	self assertEmpty: list.
 	list add: #one.
 	list removeLast.
-	self assert: list isEmpty
+	self assertEmpty: list
 ]
 
 { #category : #testing }

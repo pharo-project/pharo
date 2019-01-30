@@ -8,7 +8,7 @@ Class {
 		'serializationEnvironment',
 		'materializationEnvironment'
 	],
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #running }

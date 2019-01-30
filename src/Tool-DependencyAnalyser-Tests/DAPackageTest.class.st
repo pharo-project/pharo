@@ -41,7 +41,7 @@ DAPackageTest >> testBeIncluded [
 { #category : #tests }
 DAPackageTest >> testCleardependencies [
 	aPackage clearDependencies.
-	self assert: (aPackage dependencies isEmpty)
+	self assertEmpty: aPackage dependencies
 ]
 
 { #category : #tests }
@@ -101,15 +101,15 @@ DAPackageTest >> testDependenciesSizeTo [
 
 { #category : #tests }
 DAPackageTest >> testDependenciesTo [
-	self assert: (aPackage dependenciesTo: aSecondPackage packageName) size = 1.
-	self assert: (aPackage dependenciesTo: 'Test') isEmpty
+	self assert: (aPackage dependenciesTo: aSecondPackage packageName) size equals: 1.
+	self assertEmpty: (aPackage dependenciesTo: 'Test')
 ]
 
 { #category : #tests }
 DAPackageTest >> testDependentPackages [
-	self assert: (aPackage dependentPackages size = 1).
+	self assert: aPackage dependentPackages size equals: 1.
 	self assert: (aPackage dependentPackages anySatisfy: [ :package | package = aSecondPackage ]).
-	self assert: (aSecondPackage dependentPackages isEmpty)
+	self assertEmpty: aSecondPackage dependentPackages
 ]
 
 { #category : #tests }
@@ -153,8 +153,8 @@ DAPackageTest >> testReferenceDependenciesFrom [
 { #category : #tests }
 DAPackageTest >> testRemoveAllInternal [
 	aPackage clearDependencies.
-	aPackage add: (DAPackageDependency from:aPackage to:aPackage).
-	aPackage add: (DAPackageDependency from:aSecondPackage to:aSecondPackage).
+	aPackage add: (DAPackageDependency from: aPackage to: aPackage).
+	aPackage add: (DAPackageDependency from: aSecondPackage to: aSecondPackage).
 	aPackage removeAllInternal.
-	self assert: (aPackage dependencies isEmpty)
+	self assertEmpty: aPackage dependencies
 ]

@@ -9,7 +9,7 @@ GLMPortTest >> testPanePortTransmissionCallingReceiveIn [
 	| originPort destinationPort transmission |
 	originPort := GLMTestPane new port: #originPort.
 	destinationPort := GLMTestPane new port: #destinationPort.
-	self assert: destinationPort seenTransmissions isEmpty.
+	self assertEmpty: destinationPort seenTransmissions.
 	transmission := (GLMTransmission new)
 		addActiveOrigin: originPort;
 		destination: destinationPort;

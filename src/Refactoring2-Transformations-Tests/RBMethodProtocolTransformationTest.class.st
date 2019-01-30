@@ -26,33 +26,18 @@ RBMethodProtocolTransformationTest >> testMethodDoesNotExist [
 
 { #category : #testing }
 RBMethodProtocolTransformationTest >> testRefactoring [
-
 	| refactoring |
-	self assert: ( RBDummyEmptyClass
-		organization protocolOrganizer
-		protocolNamed: 'empty protocol 2' ) isEmpty.
-	
-	refactoring := (RBMethodProtocolTransformation
-						protocol: 'empty protocol 2'
-						inMethod: #someMethod
-						inClass: #RBDummyEmptyClass)
-						asRefactoring transform.
+	self assert: (RBDummyEmptyClass organization protocolOrganizer protocolNamed: 'empty protocol 2') isEmpty.
+
+	refactoring := (RBMethodProtocolTransformation protocol: 'empty protocol 2' inMethod: #someMethod inClass: #RBDummyEmptyClass) asRefactoring transform.
 	RBRefactoringManager instance addRefactoring: refactoring.
 
-	self assert: ( RBDummyEmptyClass
-		organization protocolOrganizer
-		protocolNamed: 'empty protocol 2' ) isEmpty not.
-	
-	refactoring := (RBMethodProtocolTransformation 
-						protocol: 'empty protocol 1'
-						inMethod: #someMethod
-						inClass: #RBDummyEmptyClass)
-						asRefactoring transform.
+	self deny: (RBDummyEmptyClass organization protocolOrganizer protocolNamed: 'empty protocol 2') isEmpty.
+
+	refactoring := (RBMethodProtocolTransformation protocol: 'empty protocol 1' inMethod: #someMethod inClass: #RBDummyEmptyClass) asRefactoring transform.
 	RBRefactoringManager instance addRefactoring: refactoring.
-		
-	self assert: ( RBDummyEmptyClass
-		organization protocolOrganizer
-		protocolNamed: 'empty protocol 2' ) isEmpty.
+
+	self assert: (RBDummyEmptyClass organization protocolOrganizer protocolNamed: 'empty protocol 2') isEmpty
 ]
 
 { #category : #testing }

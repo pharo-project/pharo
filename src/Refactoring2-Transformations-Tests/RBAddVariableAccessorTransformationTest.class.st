@@ -6,42 +6,29 @@ Class {
 
 { #category : #testing }
 RBAddVariableAccessorTransformationTest >> testExistingInstanceVariableAccessors [
-
 	| refactoring |
-	refactoring := (RBAddVariableAccessorTransformation 
-						instanceVariable: 'name'
-						class: #RBDummyLintRuleTest)
-						asRefactoring transform.
-		
-	self assert: refactoring changes changes isEmpty
+	refactoring := (RBAddVariableAccessorTransformation instanceVariable: 'name' class: #RBDummyLintRuleTest) asRefactoring transform.
+	self assertEmpty: refactoring changes changes
 ]
 
 { #category : #testing }
 RBAddVariableAccessorTransformationTest >> testNewClassVariableAccessors [
-
 	| refactoring class |
-	refactoring := (RBAddVariableAccessorTransformation 
-						classVariable: 'Foo1'
-						class: #RBDummyLintRuleTest)
-						asRefactoring transform.
-	
+	refactoring := (RBAddVariableAccessorTransformation classVariable: 'Foo1' class: #RBDummyLintRuleTest) asRefactoring transform.
+
 	class := refactoring model metaclassNamed: #RBDummyLintRuleTest.
-	self deny: refactoring changes changes isEmpty.
-	self assert: (class parseTreeFor: #foo1) = (RBParser parseMethod: 'foo1 ^Foo1').
-	self assert: (class parseTreeFor: #foo1:) = (RBParser parseMethod: 'foo1: anObject Foo1 := anObject')
+	self denyEmpty: refactoring changes changes.
+	self assert: (class parseTreeFor: #foo1) equals: (RBParser parseMethod: 'foo1 ^Foo1').
+	self assert: (class parseTreeFor: #foo1:) equals: (RBParser parseMethod: 'foo1: anObject Foo1 := anObject')
 ]
 
 { #category : #testing }
 RBAddVariableAccessorTransformationTest >> testNewInstanceVariableAccessors [
-
 	| refactoring class |
-	refactoring := (RBAddVariableAccessorTransformation
-						instanceVariable: 'foo1'
-						class: #RBDummyLintRuleTest)
-						asRefactoring transform.
-		
+	refactoring := (RBAddVariableAccessorTransformation instanceVariable: 'foo1' class: #RBDummyLintRuleTest) asRefactoring transform.
+
 	class := refactoring model classNamed: #RBDummyLintRuleTest.
-	self deny: refactoring changes changes isEmpty.
+	self denyEmpty: refactoring changes changes.
 	self assert: (class parseTreeFor: #foo1) = (RBParser parseMethod: 'foo1 ^foo1').
 	self assert: (class parseTreeFor: #foo1:) = (RBParser parseMethod: 'foo1: anObject foo1 := anObject')
 ]
@@ -62,15 +49,11 @@ RBAddVariableAccessorTransformationTest >> testNonExistantName [
 
 { #category : #testing }
 RBAddVariableAccessorTransformationTest >> testRefactoring [
-
 	| refactoring class |
-	refactoring := (RBAddVariableAccessorTransformation 
-						instanceVariable: 'foo1'
-						class: #RBDummyLintRuleTest)
-						asRefactoring transform.
-		
+	refactoring := (RBAddVariableAccessorTransformation instanceVariable: 'foo1' class: #RBDummyLintRuleTest) asRefactoring transform.
+
 	class := refactoring model classNamed: #RBDummyLintRuleTest.
-	self deny: refactoring changes changes isEmpty.
+	self denyEmpty: refactoring changes changes.
 	self assert: (class parseTreeFor: #foo1) = (RBParser parseMethod: 'foo1 ^foo1').
 	self assert: (class parseTreeFor: #foo1:) = (RBParser parseMethod: 'foo1: anObject foo1 := anObject')
 ]

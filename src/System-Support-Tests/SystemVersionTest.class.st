@@ -54,72 +54,77 @@ SystemVersionTest >> testDottedMajorMinorPatch [
 
 { #category : #'tests - instance creation' }
 SystemVersionTest >> testInstanceCreation [
-
 	| version |
-	version := (SystemVersion new).
-	self 
+	version := SystemVersion new.
+	self
 		assert: version type equals: 'Pharo';
 		assert: version major equals: 0;
 		assert: version minor equals: 0;
-		assert: version suffix isEmpty;
-		assert: version build equals: SystemVersion invalidBuildNumber;	
-		assert: version commitHash isEmpty;
-		assert: version commitHashShort isEmpty;
-		assert: version commitHashShort isEmpty;		
+		assertEmpty: version suffix;
+		assert: version build equals: SystemVersion invalidBuildNumber;
+		assertEmpty: version commitHash;
+		assertEmpty: version commitHashShort;
+		assertEmpty: version commitHashShort;
 		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-0.0')
 ]
 
 { #category : #'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinor [
-
 	| version |
-	version := (SystemVersion major: 6 minor: 1 patch: 199).
-	self 
+	version := SystemVersion major: 6 minor: 1 patch: 199.
+	self
 		assert: version type equals: 'Pharo';
 		assert: version major equals: 6;
 		assert: version minor equals: 1;
 		assert: version patch equals: 199;
-		assert: version suffix isEmpty;
+		assertEmpty: version suffix;
 		assert: version build equals: SystemVersion invalidBuildNumber;
-		assert: version commitHash isEmpty;
-		assert: version commitHashShort isEmpty;		
+		assertEmpty: version commitHash;
+		assertEmpty: version commitHashShort;
 		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-6.1.199')
 ]
 
 { #category : #'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffix [
-
 	| version |
-	version := (SystemVersion major: 7 minor: 0 patch: 199 suffix: 'alpha').
-	self 
+	version := SystemVersion
+		major: 7
+		minor: 0
+		patch: 199
+		suffix: 'alpha'.
+	self
 		assert: version type equals: 'Pharo';
 		assert: version major equals: 7;
 		assert: version minor equals: 0;
 		assert: version patch equals: 199;
 		assert: version suffix equals: 'alpha';
 		assert: version build equals: SystemVersion invalidBuildNumber;
-		assert: version commitHash isEmpty;
-		assert: version commitHashShort isEmpty;		
+		assertEmpty: version commitHash;
+		assertEmpty: version commitHashShort;
 		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-7.0.199+alpha')
 ]
 
 { #category : #'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuild [
-
 	| version |
-	version := (SystemVersion major: 7 minor: 0 patch: 199 suffix: 'alpha' build: 142).
-	self 
-		assert: version type equals: 'Pharo';	
+	version := SystemVersion
+		major: 7
+		minor: 0
+		patch: 199
+		suffix: 'alpha'
+		build: 142.
+	self
+		assert: version type equals: 'Pharo';
 		assert: version major equals: 7;
 		assert: version minor equals: 0;
 		assert: version patch equals: 199;
 		assert: version suffix equals: 'alpha';
 		assert: version build equals: 142;
-		assert: version commitHash isEmpty;
-		assert: version commitHashShort isEmpty;		
+		assertEmpty: version commitHash;
+		assertEmpty: version commitHashShort;
 		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-7.0.199+alpha.build.142')
 ]
@@ -144,19 +149,23 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildCommitHash [
 
 { #category : #'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildWithoutSuffix [
-
 	| version |
-	version := (SystemVersion major: 7 minor: 0 patch: 199 suffix: '' build: 142).
-	self 
-		assert: version type equals: 'Pharo';	
+	version := SystemVersion
+		major: 7
+		minor: 0
+		patch: 199
+		suffix: ''
+		build: 142.
+	self
+		assert: version type equals: 'Pharo';
 		assert: version major equals: 7;
 		assert: version minor equals: 0;
 		assert: version patch equals: 199;
-		assert: version suffix isEmpty;
+		assertEmpty: version suffix;
 		assert: version build equals: 142;
-		assert: version commitHash isEmpty;
-		assert: version commitHashShort isEmpty;
-		assert: version date notNil;		
+		assertEmpty: version commitHash;
+		assertEmpty: version commitHashShort;
+		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-7.0.199+build.142')
 ]
 

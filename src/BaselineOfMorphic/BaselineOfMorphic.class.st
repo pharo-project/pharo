@@ -75,6 +75,8 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'Transcript-Core'.
 
+		spec package: 'Native-Browser'.
+		
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Examples'.
 		spec package: 'Morphic-Widgets-Basic'.
@@ -324,7 +326,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	World assuredCanvas.
 
 	UIManager default uiProcess resume.
-	PharoLightTheme beCurrent.
+	PharoDarkTheme beCurrent.
 	(World windowsSatisfying: [:w | w model canDiscardEdits]) do: [:w | w delete].
 	self cleanUpAfterMorphicInitialization.
 

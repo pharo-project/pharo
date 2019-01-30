@@ -488,35 +488,23 @@ StringTest >> testAsSignedInteger [
 
 { #category : #'tests - converting' }
 StringTest >> testAsSmalltalkComment [
-
-	| exampleStrings  |
-	exampleStrings := #(
-		''
-		' '
-		'"'
-		'""'
-		'"""'
-		'abc"abc'
-		'abc""abc'
-		'abc"hello"abc'
-		'abc"'
-		'"abc' ).
+	| exampleStrings |
+	exampleStrings := #('' ' ' '"' '""' '"""' 'abc"abc' 'abc""abc' 'abc"hello"abc' 'abc"' '"abc').
 
 	"check that the result of scanning the comment is empty"
-	exampleStrings do: [ :s |
-		| tokens  |
-		tokens := s asComment parseLiterals.
-		self assert: (tokens isEmpty) ].
+	exampleStrings
+		do: [ :s | 
+			| tokens |
+			tokens := s asComment parseLiterals.
+			self assertEmpty: tokens ].
 
 	"check that the result has the same non-quote characters as the original"
-	exampleStrings do: [ :s |
-		self assert: (s copyWithout: $") equals: (s asComment copyWithout: $")].
+	exampleStrings do: [ :s | self assert: (s copyWithout: $") equals: (s asComment copyWithout: $") ].
 
 	"finnaly, test for some common kinds of inputs"
 	self assert: 'abc' asComment equals: '"abc"'.
 	self assert: 'abc"abc' asComment equals: '"abc""abc"'.
-	self assert: 'abc""abc' asComment equals: '"abc""abc"'.
-		
+	self assert: 'abc""abc' asComment equals: '"abc""abc"'
 ]
 
 { #category : #tests }
@@ -979,11 +967,10 @@ StringTest >> testFindTokensEscapedBy01 [
 
 { #category : #'tests - tokenizing' }
 StringTest >> testFindTokensEscapedBy02 [
-
 	| tokens |
 	string := ''.
 	tokens := string findTokens: ',' escapedBy: '"'.
-	self assert: tokens isEmpty
+	self assertEmpty: tokens
 ]
 
 { #category : #'tests - tokenizing' }
@@ -1578,7 +1565,7 @@ StringTest >> testLinesDoWithCrLfBetween [
 StringTest >> testLoremIpsum [
 	| fillerText |
 	fillerText := String loremIpsum.
-	self deny: fillerText isEmpty.
+	self denyEmpty: fillerText.
 	self assert: (fillerText beginsWith: 'Lorem ipsum').
 	self assert: (fillerText endsWith: 'laborum.').
 	self assert: fillerText lines first equals: fillerText.

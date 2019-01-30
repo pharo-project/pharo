@@ -4,7 +4,7 @@ SUnit tests for fuel serialization of hashed collections
 Class {
 	#name : #FLHashedCollectionSerializationTest,
 	#superclass : #FLSerializationTest,
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #tests }

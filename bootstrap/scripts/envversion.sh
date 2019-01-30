@@ -100,7 +100,10 @@ function set_version_variables() {
 	# I will use 70 vm for now (we still do not have 80 vm)
 	#PHARO_VM_VERSION="${PHARO_SHORT_VERSION}"
 	PHARO_VM_VERSION="70"
-	PHARO_COMMIT_HASH="$(git rev-parse --verify HEAD)"
+	
+	# Prefix the commit hash with a g, to be compatible with git-describe commit hashes
+	# https://git-scm.com/docs/git-describe
+	PHARO_COMMIT_HASH="g$(git rev-parse --verify HEAD)"
 	popd > /dev/null
 } 
 

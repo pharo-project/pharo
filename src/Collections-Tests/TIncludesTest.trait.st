@@ -33,17 +33,17 @@ TIncludesTest >> nonEmpty [
 TIncludesTest >> test0FixtureIncludeTest [
 	| anElementIn |
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self elementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self elementNotIn ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn equals: false.
+	self deny: anElementIn.
 	self anotherElementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self anotherElementNotIn ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn equals: false.
+	self deny: anElementIn.
 	self empty.
-	self assert: self empty isEmpty
+	self assertEmpty: self empty
 ]
 
 { #category : #'tests - includes' }

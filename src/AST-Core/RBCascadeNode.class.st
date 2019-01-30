@@ -108,6 +108,14 @@ RBCascadeNode >> isFaulty [
 	^self messages anySatisfy: #isFaulty
 ]
 
+{ #category : #accessing }
+RBCascadeNode >> leftmostChainReceiver [
+
+	^ self receiver isMessage
+		ifTrue: [ self receiver receiver ]
+		ifFalse: [ self receiver ]
+]
+
 { #category : #matching }
 RBCascadeNode >> match: aNode inContext: aDictionary [ 
 	aNode class = self class ifFalse: [^false].
@@ -128,7 +136,7 @@ RBCascadeNode >> messages: messageNodeCollection [
 	messages do: [:each | each parent: self]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBCascadeNode >> messages: messageNodes semicolons: integerCollection [ 
 	self messages: messageNodes.
 	semicolons := integerCollection
@@ -155,6 +163,12 @@ RBCascadeNode >> precedence [
 { #category : #accessing }
 RBCascadeNode >> receiver [
 	^self messages first receiver
+]
+
+{ #category : #'adding/removing' }
+RBCascadeNode >> removeNode: aNode [
+
+	self messages remove: aNode ifAbsent: [ ]
 ]
 
 { #category : #replacing }

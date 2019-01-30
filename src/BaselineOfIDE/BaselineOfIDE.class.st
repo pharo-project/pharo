@@ -90,7 +90,7 @@ BaselineOfIDE >> additionalInitialization [
 	
 	RubAbstractTextArea highlightMessageSend: true.
 	
-	PharoLightTheme beCurrent.
+	PharoDarkTheme beCurrent.
 	
 	SDL_Event initialize.
 	
@@ -226,6 +226,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GT-EventRecorder'.
 
 		spec package: 'GT-Spotter'.
+		spec package: 'GT-Spotter-UI'.
 		spec package: 'GT-SpotterExtensions-Core'.
 
 		spec package: 'Tool-Catalog'.	"standalone"
@@ -290,7 +291,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FreeType-Help'.
 		spec package: 'FuzzyMatcher-Tests'.
 		spec package: 'GT-EventRecorder-Tests'.
-		spec package: 'GT-Spotter-EventRecorder'.
 		spec package: 'GT-Tests-Debugger'.
 		spec package: 'GT-Tests-Inspector'.
 		spec package: 'GT-Tests-Playground'.
@@ -683,8 +683,8 @@ spec group: 'GT-Core-Group' with: #(
 	'GT-Playground'
 	'GT-EventRecorder'
 	'GT-Spotter'
+	'GT-Spotter-UI'
 	'GT-SpotterExtensions-Core'
-	'GT-Spotter-EventRecorder'
 	'GT-Debugger'
 	'GT-BytecodeDebugger'
 	'GT-SUnitDebugger'

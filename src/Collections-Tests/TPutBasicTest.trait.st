@@ -39,16 +39,15 @@ TPutBasicTest >> nonEmpty [
 TPutBasicTest >> test0FixturePutTest [
 	self aValue.
 	self anotherValue.
-	
+
 	self anIndex.
-	self nonEmpty isDictionary 
-		ifFalse:[self assert: (self anIndex >=1 & self anIndex <= self nonEmpty size).].
-	
+	self nonEmpty isDictionary ifFalse: [ self assert: (self anIndex >= 1 & self anIndex) <= self nonEmpty size ].
+
 	self empty.
-	self assert: self empty isEmpty .
-	
+	self assertEmpty: self empty.
+
 	self nonEmpty.
-	self deny: self nonEmpty  isEmpty.
+	self denyEmpty: self nonEmpty
 ]
 
 { #category : #'tests - at put' }

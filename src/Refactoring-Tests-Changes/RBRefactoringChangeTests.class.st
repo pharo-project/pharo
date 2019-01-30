@@ -392,16 +392,21 @@ RBRefactoringChangeTests >> testPerformAddRemoveMethodInteractively [
 { #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformChangeClass [
 	| change |
-	change := changes defineClass: self class name , ' subclass: #' , self changeMock name , '
+	change := changes
+		defineClass:
+			self class name , ' subclass: #' , self changeMock name
+				,
+					'
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	poolDictionaries: ''''
 	category: ''' , self class category , ''''.
-	self perform: change do: [ 
-		self assert: change changeClass superclass equals: self class.
-		self assert: change changeClass instVarNames isEmpty ].
+	self
+		perform: change
+		do: [ self assert: change changeClass superclass equals: self class.
+			self assertEmpty: change changeClass instVarNames ].
 	self assert: change changeClass superclass equals: Object.
-	self assert: change changeClass instVarNames notEmpty.
+	self denyEmpty: change changeClass instVarNames.
 	self assert: change definedClass equals: self changeMock
 ]
 
@@ -417,10 +422,14 @@ RBRefactoringChangeTests >> testPerformChangeComment [
 { #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformChangeMetaclass [
 	| change |
-	change := changes defineClass: self changeMock name , ' class 
+	change := changes
+		defineClass:
+			self changeMock name
+				,
+					' class 
 	instanceVariableNames: '''''.
-	self perform: change do: [ self assert: change changeClass class instVarNames isEmpty ].
-	self assert: change changeClass class instVarNames notEmpty.
+	self perform: change do: [ self assertEmpty: change changeClass class instVarNames ].
+	self denyEmpty: change changeClass class instVarNames.
 	self assert: change definedClass equals: self changeMock class
 ]
 

@@ -166,8 +166,7 @@ ProtoObjectTest >> testNotTheSame [
 ProtoObjectTest >> testPointersTo [
 	| myObject myArray |
 	myObject := Object new.
-   self assert: myObject pointersTo isEmpty.
-	myArray := {myObject. myObject}.
-	self assert: myObject pointersTo asArray equals: {myArray}.
-
+	self assertEmpty: myObject pointersTo.
+	myArray := {myObject . myObject}.
+	self assert: myObject pointersTo asArray equals: {myArray}
 ]
