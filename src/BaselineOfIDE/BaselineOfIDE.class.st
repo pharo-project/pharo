@@ -179,7 +179,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Ring-Deprecated-Tests-Containers'.
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'System-DependenciesTests'.
-		spec package: 'DelaySchedulerDebugUtilities'.
 		
 		spec package: 'System-Serial Port'.
 		
@@ -795,7 +794,6 @@ spec group: #default with: #(
 	'BasicTools'	"dependency"
 	'Athens'
 	'Flashback'
-	'DelaySchedulerDebugUtilities'
 
 	'Mandatory-Group'
 
