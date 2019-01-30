@@ -475,21 +475,12 @@ FTTableMorph >> initializeContainer [
 { #category : #initialization }
 FTTableMorph >> initializeKeyBindings [
 	"add keybindings used by table"
-	self 
-		bindKeyCombination: Character arrowUp shift | Character arrowUp asKeyCombination
-		toAction: [ :target :morph :event | self keyStrokeArrowUp: event ].
-	self 
-		bindKeyCombination: Character arrowDown shift | Character arrowDown asKeyCombination
-		toAction: [ :target :morph :event | self keyStrokeArrowDown: event ].
-	self 
-		bindKeyCombination: Character home asKeyCombination
-		toAction: [ self selectRowIndex: 1 ].
-	self 
-		bindKeyCombination: Character end asKeyCombination
-		toAction: [ self selectRowIndex: self numberOfRows ].
-	self 
-		bindKeyCombination: $a meta  
-		toAction: [ self selectAllRowIndexes ]
+
+	self bindKeyCombination: Character arrowUp shift | Character arrowUp asKeyCombination toAction: [ :target :morph :event | self keyStrokeArrowUp: event ].
+	self bindKeyCombination: Character arrowDown shift | Character arrowDown asKeyCombination toAction: [ :target :morph :event | self keyStrokeArrowDown: event ].
+	self bindKeyCombination: Character home asKeyCombination toAction: [ self selectFirst ].
+	self bindKeyCombination: Character end asKeyCombination toAction: [ self selectLast ].
+	self bindKeyCombination: PharoShortcuts current selectAllShortcut toAction: [ self selectAll ]
 ]
 
 { #category : #initialization }
@@ -894,9 +885,24 @@ FTTableMorph >> secondarySelectionColor: aColor [
 ]
 
 { #category : #'accessing selection' }
+FTTableMorph >> selectAll [
+	^ self selectAllRowIndexes
+]
+
+{ #category : #'accessing selection' }
 FTTableMorph >> selectAllRowIndexes [
 	self isMultipleSelection ifFalse: [ ^ self ].
 	self selectRowIndexes: (1 to: self numberOfRows) asArray 
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectFirst [
+	^ self selectRowIndex: 1
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectLast [
+	^ self selectRowIndex: self numberOfRows
 ]
 
 { #category : #'accessing selection' }
