@@ -27,6 +27,8 @@ GTSpotterTest >> assertText: aTextualObject do: aBlock [
 
 { #category : #running }
 GTSpotterTest >> setUp [ 
+
+	super setUp.
 	
 	spotter := GTMockSpotter new
 		exceptionHandler: GTSpotterDebuggingExceptionHandler new;
