@@ -524,13 +524,13 @@ FTTableMorph >> initializeKeyBindings [
 		toAction: [ :target :morph :event | self keyStrokeArrowDown: event ].
 	self 
 		bindKeyCombination: Character home asKeyCombination
-		toAction: [ self selectIndex: 1 ].
+		toAction: [ self selectFirst ].
 	self 
 		bindKeyCombination: Character end asKeyCombination
-		toAction: [ self selectIndex: self numberOfRows ].
+		toAction: [ self selectLast ].
 	self 
 		bindKeyCombination: PharoShortcuts current selectAllShortcut
-		toAction: [ self selectAllIndexes ]
+		toAction: [ self selectAll ]
 ]
 
 { #category : #initialization }
@@ -949,8 +949,8 @@ FTTableMorph >> secondarySelectionColor: aColor [
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectAllIndexes [
-	self isMultipleSelection ifFalse: [ ^ self ].
-	self selectIndexes: (1 to: self numberOfRows) asArray 
+	self deprecated: 'Use #selectAll instead' transformWith: '`@receiver selectAllIndexes' -> '`@receiver selectAl'.
+	self selectAll
 ]
 
 { #category : #'accessing selection' }

@@ -598,10 +598,10 @@ FTExamples class >> exampleTable5 [
 		addColumn: (FTColumn id: 'Protocol');
 		addColumn: (FTColumn id: 'Origin');
 		dataSource: ds;
-		selectRowIndex: 1;
+		selectIndex: 1;
 		beMultipleSelection;
 		beCellSelection;
-		showFirstRowSelection;
+		showFirstSelection;
 		yourself.
 	^ table openInWindow
 ]

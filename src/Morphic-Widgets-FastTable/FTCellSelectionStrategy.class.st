@@ -11,7 +11,11 @@ FTCellSelectionStrategy >> isCellSelection [
 
 { #category : #private }
 FTCellSelectionStrategy >> selectAll [
-	self table selectAllCellIndexes
+	| cellIndexes |
+	self isMultipleSelection ifFalse: [ ^ self ].
+	cellIndexes := OrderedCollection new.
+	1 to: self table numberOfRows do: [ :rowIndex | 1 to: self table numberOfColumns do: [ :columnIndex | cellIndexes add: {rowIndex . columnIndex} ] ].
+	self table selectIndexes: cellIndexes asArray
 ]
 
 { #category : #private }

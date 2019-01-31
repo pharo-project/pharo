@@ -11,7 +11,8 @@ FTRowSelectionStrategy >> isRowSelection [
 
 { #category : #private }
 FTRowSelectionStrategy >> selectAll [
-	self table selectAllRowIndexes
+	self isMultipleSelection ifFalse: [ ^ self ].
+	self table selectIndexes: (1 to: self table numberOfRows) asArray
 ]
 
 { #category : #private }
