@@ -16,13 +16,13 @@ FTMultipleSelection >> isMultiple [
 { #category : #private }
 FTMultipleSelection >> selectAppendingRowIndex: rowIndex [
 	| currentSelection newSelection |
-	currentSelection := self table selectedRowIndexes.
+	currentSelection := self table selectedIndexes.
 	
 	newSelection := (currentSelection includes: rowIndex)
 		ifTrue: [ currentSelection copyWithout: rowIndex ]
 		ifFalse: [ currentSelection copyWithFirst: rowIndex].
 		
-	self table selectRowIndexes: newSelection
+	self table selectIndexes: newSelection
 ]
 
 { #category : #accessing }
@@ -38,7 +38,7 @@ FTMultipleSelection >> selectRowIndexes: rowIndex previous: oldSelection [
 	"I ensure the selected row index is the first in selection range so I can handle it better. 
 	 I do not like to assume and probably I will need the concept of 'selection', but for now 
 	 let's not abuse :)"
-	self table selectRowIndexes: (((oldSelection includes: rowIndex)
+	self table selectIndexes: (((oldSelection includes: rowIndex)
 		ifTrue: [ oldSelection copyWithout: rowIndex ]
 		ifFalse: [ oldSelection] )
 		copyWithFirst: rowIndex)
@@ -50,7 +50,7 @@ FTMultipleSelection >> selectRowIndexesUpTo: endIndex [
 	 This is used in case of multiple selections (when holding shift)"
 	| oldSelected firstIndex step |
 
-	oldSelected := self table selectedRowIndexes.
+	oldSelected := self table selectedIndexes.
 	firstIndex :=  oldSelected 
 		ifNotEmpty: [ oldSelected first ]
 		ifEmpty: [ endIndex ].

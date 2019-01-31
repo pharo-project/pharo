@@ -26,12 +26,12 @@ Class {
 		'verticalScrollBar',
 		'horizontalScrollBar',
 		'selectionColor',
+		'selectedIndexes',
+		'highlightedIndexes',
 		'showIndex',
 		'dataSource',
 		'intercellSpacing',
 		'rowHeight',
-		'selectedRowIndexes',
-		'highlightedRowIndexes',
 		'selectionStrategy',
 		'columns',
 		'secondarySelectionColor',
@@ -131,8 +131,14 @@ FTTableMorph >> autoScrollHeightLimit [
 ]
 
 { #category : #private }
+FTTableMorph >> basicHighlightIndexes: anArray [
+	highlightedIndexes := anArray asArray
+]
+
+{ #category : #private }
 FTTableMorph >> basicHighlightRowIndexes: anArray [
-	highlightedRowIndexes := anArray asArray
+	self deprecated: 'Use #basicHighlightIndexes: instead' transformWith: '`@receiver basicHighlightRowIndexes: `@statements' -> '`@receiver basicHighlightIndexes: `@statements'.
+	^ self basicHighlightIndexes: anArray
 ]
 
 { #category : #private }
@@ -142,9 +148,14 @@ FTTableMorph >> basicMoveShowIndexTo: aNumber [
 ]
 
 { #category : #private }
-FTTableMorph >> basicSelectRowIndexes: anArray [
-	selectedRowIndexes := anArray asArray.
+FTTableMorph >> basicSelectIndexes: anArray [
+	selectedIndexes := anArray asArray
+]
 
+{ #category : #private }
+FTTableMorph >> basicSelectRowIndexes: anArray [
+	self deprecated: 'Use #basicSelectIndexes: instead' transformWith: '`@receiver basicSelectRowIndexes: `@statements' -> '`@receiver basicSelectIndexes: `@statements'.
+	self basicSelectIndexes: anArray
 ]
 
 { #category : #accessing }
@@ -305,11 +316,9 @@ FTTableMorph >> ensureAtLeastOneColumn [
 FTTableMorph >> ensureVisibleFirstSelection [
 	| rowIndex |
 	self hasSelection ifFalse: [ ^ self ].
-	rowIndex := self selectedRowIndex.
-	(self container isRowIndexFullyVisible: rowIndex) ifFalse: [ 
-		rowIndex < self showIndex 
-			ifTrue: [ self moveShowIndexTo: rowIndex ]
-			ifFalse: [ self moveShowIndexTo: (rowIndex - self container calculateMinVisibleRows + 1) ] ]
+	rowIndex := self selectedIndex.
+	(self container isRowIndexFullyVisible: rowIndex)
+		ifFalse: [ rowIndex < self showIndex ifTrue: [ self moveShowIndexTo: rowIndex ] ifFalse: [ self moveShowIndexTo: rowIndex - self container calculateMinVisibleRows + 1 ] ]
 ]
 
 { #category : #accessing }
@@ -363,12 +372,12 @@ FTTableMorph >> hasDataSource [
 
 { #category : #testing }
 FTTableMorph >> hasHighlighted [
-	^ self highlightedRowIndexes notEmpty
+	^ self highlightedIndexes notEmpty
 ]
 
 { #category : #testing }
 FTTableMorph >> hasSelection [
-	^ self selectedRowIndexes notEmpty
+	^ self selectedIndexes notEmpty
 ]
 
 { #category : #'accessing colors' }
@@ -389,39 +398,59 @@ FTTableMorph >> hideColumnHeaders [
 ]
 
 { #category : #'accessing selection' }
+FTTableMorph >> highlightIndex: aNumber [
+	self highlightIndexes: { aNumber }
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> highlightIndexes: anArray [
+	anArray = highlightedIndexes ifTrue: [ ^ self ].
+
+	self basicHighlightIndexes: anArray.
+
+	(self hasHighlighted and: [ (self isIndexVisible: self highlightedIndex) not ])
+		ifTrue: [ self moveShowIndexTo: self highlightedIndexes first.
+			^ self ].
+
+	(self hasSelection and: [ (self isIndexVisible: self selectedIndex) not ])
+		ifTrue: [ self moveShowIndexTo: self selectedIndex.
+			^ self ].
+
+	self refresh
+]
+
+{ #category : #'accessing selection' }
 FTTableMorph >> highlightRowIndex: aNumber [
-	self highlightRowIndexes: { aNumber }
+	self deprecated: 'Use #highlightIndex: instead' transformWith: '`@receiver highlightRowIndex: `@statements1' -> '`@receiver highlightIndex: `@statements1'.
+	self highlightIndex: aNumber
 ]
 
 { #category : #'accessing selection' }
 FTTableMorph >> highlightRowIndexes: anArray [
-	anArray = highlightedRowIndexes ifTrue: [ ^ self ].
-	
-	self basicHighlightRowIndexes: anArray. 
-	
-	(self hasHighlighted and: [ (self isRowIndexVisible: self highlightedRowIndex) not ]) 
-		ifTrue: [ 
-			self moveShowIndexTo: self highlightedRowIndexes first.
-			^ self ].
-	
-	(self hasSelection and: [ (self isRowIndexVisible: self selectedRowIndex) not  ])
-		ifTrue: [ 
-			self moveShowIndexTo: self selectedRowIndex.
-			^ self ].
-	
-	self refresh.
+	self deprecated: 'Use #highlightIndexes: instead' transformWith: '`@receiver highlightRowIndexes: `@statements1' -> '`@receiver highlightIndexes: `@statements1'.
+	self highlightIndexes: anArray
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> highlightedIndex [
+	^ self highlightedIndexes ifNotEmpty: #first ifEmpty: [ 0 ]
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> highlightedIndexes [
+	^ highlightedIndexes
 ]
 
 { #category : #'accessing selection' }
 FTTableMorph >> highlightedRowIndex [
-	^ self highlightedRowIndexes 
-		ifNotEmpty: [ :indexes | indexes first ]
-		ifEmpty: [ 0 ] 
+	self deprecated: 'Use #highlightedIndex instead' transformWith: '`@receiver highlightedRowIndex' -> '`@receiver highlightedIndex'.
+	^ self highlightedIndex
 ]
 
 { #category : #'accessing selection' }
 FTTableMorph >> highlightedRowIndexes [
-	^ highlightedRowIndexes
+	self deprecated: 'Use #highlightedIndexes instead' transformWith: '`@receiver highlightedRowIndexes' -> '`@receiver highlightedIndexes'.
+	^ self highlightedIndexes
 ]
 
 { #category : #private }
@@ -452,8 +481,8 @@ FTTableMorph >> initialize [
 	super initialize.
 	showIndex := 0.
 	showColumnHeaders := true.
-	selectedRowIndexes := #().
-	highlightedRowIndexes := #().
+	selectedIndexes := #().
+	highlightedIndexes := #().
 	columns := #().
 	needToggleAtMouseUp := false.
 	self beNotResizable.
@@ -539,6 +568,16 @@ FTTableMorph >> isHorizontalScrollBarVisible [
 ]
 
 { #category : #testing }
+FTTableMorph >> isIndexSelected: rowIndex [
+	^ self selectedIndexes includes: rowIndex
+]
+
+{ #category : #testing }
+FTTableMorph >> isIndexVisible: anIndex [
+	^ self container isRowIndexVisible: anIndex
+]
+
+{ #category : #testing }
 FTTableMorph >> isMultipleSelection [
 	^ selectionStrategy isMultiple
 ]
@@ -549,13 +588,15 @@ FTTableMorph >> isResizable [
 ]
 
 { #category : #testing }
-FTTableMorph >> isRowIndexSelected: rowIndex [
-	^ self selectedRowIndexes includes: rowIndex
+FTTableMorph >> isRowIndexSelected: anIndex [
+	self deprecated: 'Use #isIndexSelected: instead' transformWith: '`@receiver isRowIndexSelected: `@statements1' -> '`@receiver isIndexSelected: `@statements1'.
+	^ self isIndexSelected: anIndex
 ]
 
 { #category : #testing }
 FTTableMorph >> isRowIndexVisible: rowIndex [
-	^ self container isRowIndexVisible: rowIndex
+	self deprecated: 'Use #isIndexVisible: instead' transformWith: '`@receiver isRowIndexVisible: `@statements1' -> '`@receiver isIndexVisible: `@statements1'.
+	^ self isIndexVisible: rowIndex
 ]
 
 { #category : #testing }
@@ -593,7 +634,7 @@ FTTableMorph >> keyStroke: event [
 { #category : #'event handling' }
 FTTableMorph >> keyStrokeArrowDown: event [
 	| rowIndex |
-	rowIndex := self selectedRowIndex.
+	rowIndex := self selectedIndex.
 	rowIndex < self numberOfRows
 		ifFalse: [ ^ self ].
 	self resetFunction.
@@ -603,7 +644,7 @@ FTTableMorph >> keyStrokeArrowDown: event [
 { #category : #'event handling' }
 FTTableMorph >> keyStrokeArrowUp: event [
 	| rowIndex |
-	rowIndex := self selectedRowIndex.
+	rowIndex := self selectedIndex.
 	rowIndex > 1
 		ifFalse: [ ^ self ].
 	self resetFunction.
@@ -641,15 +682,11 @@ FTTableMorph >> minWidth [
 FTTableMorph >> mouseDown: event [
 	| rowIndex |
 	"perform the click"
-	
 	needToggleAtMouseUp ifTrue: [ ^ self ].
-	
+
 	rowIndex := self container rowIndexContainingPoint: event cursorPoint.
-	(self selectedRowIndexes includes: rowIndex)
-		ifFalse: [ self selectRowIndex: rowIndex event: event ]
-		ifTrue: [ needToggleAtMouseUp := true ].	"If the cell is selected we let the mouse up toggle to avoid any problem with the drag and drop"
-	self wantsKeyboardFocus
-		ifTrue: [ self takeKeyboardFocus ].
+	(self selectedIndexes includes: rowIndex) ifFalse: [ self selectRowIndex: rowIndex event: event ] ifTrue: [ needToggleAtMouseUp := true ].	"If the cell is selected we let the mouse up toggle to avoid any problem with the drag and drop"
+	self wantsKeyboardFocus ifTrue: [ self takeKeyboardFocus ].
 	event hand waitForClicksOrDrag: self event: event
 ]
 
@@ -900,9 +937,40 @@ FTTableMorph >> selectAll [
 ]
 
 { #category : #'accessing selection' }
-FTTableMorph >> selectAllRowIndexes [
+FTTableMorph >> selectAllIndexes [
 	self isMultipleSelection ifFalse: [ ^ self ].
-	self selectRowIndexes: (1 to: self numberOfRows) asArray 
+	self selectIndexes: (1 to: self numberOfRows) asArray 
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectAllRowIndexes [
+	self deprecated: 'Use #selectAllIndexes instead' transformWith: '`@receiver selectAllRowIndexes' -> '`@receiver selectAllIndexes'.
+	^ self selectAllIndexes
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectIndex: anArray [
+	self selectIndexes: {anArray}
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectIndexes: anArray [
+	self selectIndexes: anArray andMakeVisibleIf: true
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSelection [
+	| oldSelectedIndexes |
+	anArray = selectedIndexes ifTrue: [ ^ self ].
+	oldSelectedIndexes := selectedIndexes.
+	self basicSelectIndexes: anArray.
+	shouldEnsureVisibleSelection ifTrue: [ self ensureVisibleFirstSelection ].
+	self refresh.
+	self
+		doAnnounce:
+			((FTSelectionChanged from: oldSelectedIndexes to: selectedIndexes)
+				fastTable: self;
+				yourself)
 ]
 
 { #category : #'accessing selection' }
@@ -917,47 +985,51 @@ FTTableMorph >> selectLast [
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectRowIndex: aNumber [
-	self selectRowIndexes: { aNumber }
+	self deprecated: 'Use #selectIndex: instead' transformWith: '`@receiver selectRowIndex: `@statements1' -> '`@receiver selectIndex: `@statements1'.
+	self selectIndex: aNumber
 ]
 
 { #category : #private }
 FTTableMorph >> selectRowIndex: rowIndex event: event [
 	rowIndex
 		ifNotNil: [ selectionStrategy selectRowIndex: rowIndex event: event ]
-		ifNil: [ self selectRowIndexes: #() ].
+		ifNil: [ self selectIndexes: #() ].
 ]
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectRowIndexes: anArray [
-	self selectRowIndexes: anArray andMakeVisibleIf: true
+	self deprecated: 'Use #selectIndexes: instead' transformWith: '`@receiver selectRowIndexes: `@statements1' -> '`@receiver selectIndexes: `@statements1'.
+	self selectIndexes: anArray
 ]
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectRowIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSelection [
-	| oldSelectedRowIndexes |
-	anArray = selectedRowIndexes
-		ifTrue: [ ^ self ].
-	oldSelectedRowIndexes := selectedRowIndexes.
-	self basicSelectRowIndexes: anArray.
-	shouldEnsureVisibleSelection ifTrue: [ self ensureVisibleFirstSelection ].
-	self refresh.
 	self
-		doAnnounce:
-			((FTSelectionChanged from: oldSelectedRowIndexes to: selectedRowIndexes)
-				fastTable: self;
-				yourself)
+		deprecated: 'Use #selectIndexes:andMakeVisibleIf: instead'
+		transformWith: '`@receiver selectRowIndexes: `@statements1 andMakeVisibleIf: `@statements2' -> '`@receiver selectIndexes: `@statements1 andMakeVisibleIf: `@statements2'.
+	self selectIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSelection
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectedIndex [
+	^ self selectedIndexes ifNotEmpty: #first ifEmpty: [ 0 ]
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectedIndexes [
+	^ selectedIndexes
 ]
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectedRowIndex [
-	^ self selectedRowIndexes 
-		ifNotEmpty: [ :indexes | indexes first ]
-		ifEmpty: [ 0 ] 
+	self deprecated: 'Use #selectedIndex instead' transformWith: '`@receiver selectedRowIndex' -> '`@receiver selectedIndex'.
+	^ self selectedIndex
 ]
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectedRowIndexes [
-	^ selectedRowIndexes
+	self deprecated: 'Use #selectedIndexes instead' transformWith: '`@receiver selectedRowIndexes' -> '`@receiver selectedIndexes'.
+	^ self selectedIndexes
 ]
 
 { #category : #'accessing colors' }
@@ -994,8 +1066,14 @@ FTTableMorph >> showColumnHeaders [
 
 { #category : #accessing }
 FTTableMorph >> showFirstRowSelection [
+	self deprecated: 'Use #showFirstSelection instead' transformWith: '`@receiver showFirstRowSelection' -> '`@receiver showFirstSelection'.
+	^ self showFirstSelection
+]
+
+{ #category : #accessing }
+FTTableMorph >> showFirstSelection [
 	self hasSelection ifFalse: [ ^ self ].
-	self moveShowIndexTo: self selectedRowIndex
+	self moveShowIndexTo: self selectedIndex
 ]
 
 { #category : #private }
@@ -1017,8 +1095,8 @@ FTTableMorph >> showMenuForPosition: aPoint [
 FTTableMorph >> showMenuForRowIndex: rowIndex columnIndex: columnIndex [
 	| menu |
 
-	(rowIndex notNil and: [ (self isRowIndexSelected: rowIndex) not ]) ifTrue: [ 
-		self selectRowIndex: rowIndex ].
+	(rowIndex notNil and: [ (self isIndexSelected: rowIndex) not ]) ifTrue: [ 
+		self selectIndex: rowIndex ].
 
 	menu := self dataSource 
 		menuColumn: (columnIndex ifNotNil: [self columns at: columnIndex])
@@ -1042,7 +1120,7 @@ FTTableMorph >> startDrag: event [
 	event hand anyButtonPressed ifFalse: [ ^self ].
 	self hasSelection ifFalse: [ ^ self ].
 			
-	passengers := self selectedRowIndexes collect: [ :each | self dataSource passengerAt: each ].
+	passengers := self selectedIndexes collect: [ :each | self dataSource passengerAt: each ].
 	transferMorph := self dataSource transferFor: passengers from: self.
 	transferMorph align: transferMorph draggedMorph topLeft with: event position.
 	transferMorph dragTransferType: self dataSource dragTransferType.

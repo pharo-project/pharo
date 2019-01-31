@@ -95,7 +95,7 @@ TGLMFastTable >> executeMenuAction: anAction [
 
 { #category : #selecting }
 TGLMFastTable >> explicitSelection: anObject [ 
-	self table selectRowIndex: (self elements indexOf: anObject)
+	self table selectIndex: (self elements indexOf: anObject)
 ]
 
 { #category : #'accessing - cache' }
@@ -192,7 +192,7 @@ TGLMFastTable >> shouldUseCache [
 { #category : #selecting }
 TGLMFastTable >> strongSelection: ann [
 	self announcer announce: (GLMTreeMorphStrongSelectionChanged new 
-		strongSelectionValue: (self elementAt: ann selectedRowIndex);
+		strongSelectionValue: (self elementAt: ann selectedIndex);
 		yourself)
 ]
 

@@ -152,10 +152,10 @@ FTPluggableIconListMorphAdaptor >> basicUpdateSelectionIndex [
 	self getIndexSelector ifNil: [ ^ self ].
 	
 	rowIndex := self model perform: self getIndexSelector.
-	rowIndex = self selectedRowIndex ifTrue: [ ^ self ].
+	rowIndex = self selectedIndex ifTrue: [ ^ self ].
 	rowIndex = 0
-		ifTrue: [ self basicSelectRowIndexes: #() ]
-		ifFalse: [ self basicSelectRowIndexes: { rowIndex } ]
+		ifTrue: [ self basicSelectIndexes: #() ]
+		ifFalse: [ self basicSelectIndexes: { rowIndex } ]
 ]
 
 { #category : #'accessing selectors' }
@@ -277,7 +277,7 @@ FTPluggableIconListMorphAdaptor >> interactWithSelection [
 	
 	self hasSelection ifFalse: [ ^ self ].
 	"this is a horrible hack, but well... that's how it is implemented :("
-	cell := (self container exposedRows at: self selectedRowIndex) submorphs first. "the cell is there"
+	cell := (self container exposedRows at: self selectedIndex) submorphs first. "the cell is there"
 	cell submorphsDo: [ :each | each update: #interact ]
 ]
 
@@ -411,7 +411,7 @@ FTPluggableIconListMorphAdaptor >> scrollValue [
 
 { #category : #ignored }
 FTPluggableIconListMorphAdaptor >> searchedElement: index [
-	self highlightRowIndex: index
+	self highlightIndex: index
 ]
 
 { #category : #private }
@@ -497,10 +497,10 @@ FTPluggableIconListMorphAdaptor >> update: symbol [
 
 { #category : #updating }
 FTPluggableIconListMorphAdaptor >> updateList [
-	(showIndex < self dataSource numberOfRows and: [ self isRowIndexVisible: showIndex ])
+	(showIndex < self dataSource numberOfRows and: [ self isIndexVisible: showIndex ])
 		ifFalse: [ self resetPosition ].
 	self basicUpdateSelectionIndex.
-	(self hasSelection and: [ (self isRowIndexVisible: self selectedRowIndex) ])
+	(self hasSelection and: [ (self isIndexVisible: self selectedIndex) ])
 		ifFalse: [ self resetPosition.
 			self ensureVisibleFirstSelection ].
 	self refresh
