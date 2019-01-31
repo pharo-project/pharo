@@ -933,7 +933,7 @@ FTTableMorph >> secondarySelectionColor: aColor [
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectAll [
-	^ self selectAllRowIndexes
+	^ self selectAllIndexes
 ]
 
 { #category : #'accessing selection' }
@@ -975,12 +975,12 @@ FTTableMorph >> selectIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSele
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectFirst [
-	^ self selectRowIndex: 1
+	^ self selectIndex: 1
 ]
 
 { #category : #'accessing selection' }
 FTTableMorph >> selectLast [
-	^ self selectRowIndex: self numberOfRows
+	^ self selectIndex: self numberOfRows
 ]
 
 { #category : #'accessing selection' }
