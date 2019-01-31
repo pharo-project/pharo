@@ -133,7 +133,7 @@ GLMFastListDataSource >> rowMorphForElement: element [
 
 { #category : #selecting }
 GLMFastListDataSource >> selectTable: aTable element: anObject [ 
-	aTable selectRowIndex: (self elements indexOf: anObject)
+	aTable selectIndex: (self elements indexOf: anObject)
 ]
 
 { #category : #accessing }
