@@ -295,11 +295,11 @@ FTTreeDataSource >> updateSelectionWithCollectBlock: aBlock [
 	newly selected elements are visible. Use #ensureVisibleFirstSelection for that."
 
 	| index |
-	self table selectedRowIndexes ifEmpty: [ ^ self ].
+	self table selectedIndexes ifEmpty: [ ^ self ].
 	
 	index := self indexOfChangedItem.
 	self table 
-		selectRowIndexes: ((self table selectedRowIndexes collect: [ :ind | 
+		selectIndexes: ((self table selectedIndexes collect: [ :ind | 
 			aBlock value: ind value: index ]) asSet) asArray 
 		andMakeVisibleIf: false
 ]

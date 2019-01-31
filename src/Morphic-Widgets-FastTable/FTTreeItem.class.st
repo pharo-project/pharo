@@ -132,8 +132,8 @@ FTTreeItem >> selectedRowsIndexesFrom: anInteger [
 	| index selfSelection |
 	index := anInteger.
 	self recentlyChanged
-		ifTrue: [ ^ (self dataSource table selectedRowIndexes select: [ :each | each between: index and: index + self numberOfVisibleChildren ]) ifEmpty: [ {} ] ifNotEmpty: [ {index} ] ].
-	selfSelection := (self dataSource table selectedRowIndexes includes: index)
+		ifTrue: [ ^ (self dataSource table selectedIndexes select: [ :each | each between: index and: index + self numberOfVisibleChildren ]) ifEmpty: [ {} ] ifNotEmpty: [ {index} ] ].
+	selfSelection := (self dataSource table selectedIndexes includes: index)
 		ifTrue: [ {index} ]
 		ifFalse: [ {} ].
 	self isExpanded

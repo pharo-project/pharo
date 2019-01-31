@@ -178,19 +178,16 @@ FTTableContainerMorph >> defaultColor [
 { #category : #drawing }
 FTTableContainerMorph >> drawOn: canvas [
 	| x y cellWidth cellHeight rowsToDisplay rowSubviews highligtedRowIndexes primarySelectionIndex |
-	
 	super drawOn: canvas.
-	self canRefreshValues ifFalse: [ ^ self ]. "Nothing to update yet"
+	self canRefreshValues ifFalse: [ ^ self ].	"Nothing to update yet"
 
 	x := self left + self class rowLeftMargin.
-	y := self top.	
+	y := self top.
 	cellWidth := self width - self class rowLeftMargin.
-	cellHeight := self table rowHeight rounded. 
-	highligtedRowIndexes := 
-		self table selectedIndexes, 
-		self table highlightedRowIndexes.
+	cellHeight := self table rowHeight rounded.
+	highligtedRowIndexes := self table selectedIndexes , self table highlightedIndexes.
 	primarySelectionIndex := self table selectedIndex.
-	
+
 	"For some superweird reason, calling #calculateExposedRows here instead in #changed (where
 	 it should be called) is 10x faster. Since the whole purpose of this component is speed, for 
 	 now I'm calling it here and adding the #setNeedRecalculateRows mechanism. 
@@ -223,15 +220,17 @@ FTTableContainerMorph >> drawOn: canvas [
 		rowSubviews add: row ].
 
 	"We should notify existing rows about deletion and new rows about insertion. 
-	It is required to correctly manage stepping animation of cells"						
-	submorphs do: [:each | 
-		each privateOwner: nil; outOfWorld: self world].
+	It is required to correctly manage stepping animation of cells"
+	submorphs
+		do: [ :each | 
+			each
+				privateOwner: nil;
+				outOfWorld: self world ].
 	submorphs := rowSubviews asArray.
-	submorphs do: [:each | each intoWorld: self world].
-	
-	self table isResizable 
-		ifTrue: [ self addResizeSplitters ].
-	
+	submorphs do: [ :each | each intoWorld: self world ].
+
+	self table isResizable ifTrue: [ self addResizeSplitters ].
+
 
 	needsRefreshExposedRows := false
 ]

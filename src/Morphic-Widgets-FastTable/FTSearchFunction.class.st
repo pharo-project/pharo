@@ -27,8 +27,8 @@ FTSearchFunction >> keyStroke: anEvent [
 	(anEvent anyModifierKeyPressed
 		or: [ anEvent keyCharacter isAlphaNumeric not ])
 		ifTrue: [ ^ false ].
-	currentSelIndex := self table selectedRowIndex.
-	currentHighlightedIndexes := self table highlightedRowIndexes.
+	currentSelIndex := self table selectedIndex.
+	currentHighlightedIndexes := self table highlightedIndexes.
 	self showSearchFieldFromKeystrokeEvent: anEvent.
 	^ true
 ]
@@ -38,8 +38,8 @@ FTSearchFunction >> realSearch [
 	| founds |
 	founds := self table dataSource searchText: pattern.
 
-	founds ifNotEmpty: [ self table selectRowIndex: founds first ].
-	self table highlightRowIndexes: founds.
+	founds ifNotEmpty: [ self table selectIndex: founds first ].
+	self table highlightIndexes: founds.
 	
 	^ founds notEmpty
 ]
@@ -65,8 +65,8 @@ FTSearchFunction >> showSearchFieldFromKeystrokeEvent: anEvent [
 		withEditedContentsDo:
 				[ :contents :editor | 
 			contents
-				ifEmpty: [ founds ifTrue: [self table selectRowIndex: currentSelIndex]. 
-					self table highlightRowIndexes: currentHighlightedIndexes ]
+				ifEmpty: [ founds ifTrue: [self table selectIndex: currentSelIndex]. 
+					self table highlightIndexes: currentHighlightedIndexes ]
 				ifNotEmpty:
 					[ founds := self searchFor: contents.
 					founds
@@ -80,8 +80,8 @@ FTSearchFunction >> showSearchFieldFromKeystrokeEvent: anEvent [
 									(contents
 										addAttribute: (TextColor new color: Color red);
 										yourself) ] ] ];
-		whenEditorEscapedDo: [ founds ifTrue: [self table selectRowIndex: currentSelIndex].
-			self table highlightRowIndexes: currentHighlightedIndexes ].
+		whenEditorEscapedDo: [ founds ifTrue: [self table selectIndex: currentSelIndex].
+			self table highlightIndexes: currentHighlightedIndexes ].
 	ed autoAccept: true.
 	founds
 		ifFalse: [ s addAttribute: (TextColor new color: Color red) ]
