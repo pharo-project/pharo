@@ -22,7 +22,7 @@ TCopySequenceableWithOrWithoutSpecificElements >> nonEmpty [
 TCopySequenceableWithOrWithoutSpecificElements >> test0FixtureCopyWithOrWithoutSpecificElementsTest [
 
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self indexInNonEmpty.
 	self assert: self indexInNonEmpty > 0.
 	self assert: self indexInNonEmpty <= self nonEmpty size

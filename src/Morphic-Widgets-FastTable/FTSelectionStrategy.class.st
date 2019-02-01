@@ -51,10 +51,7 @@ FTSelectionStrategy >> table [
 
 { #category : #private }
 FTSelectionStrategy >> toggleRowIndex: rowIndex [
-	((self table selectedRowIndexes includes: rowIndex) 
-		and: [ self table selectedRowIndexes size = 1 "just one selected"
-		and: [ self table allowsDeselection ] ])
-			ifTrue: [  self table selectRowIndexes: #() ]
-			ifFalse: [
-				self table selectRowIndex: rowIndex ]
+	((self table selectedIndexes includes: rowIndex) and: [ self table selectedIndexes size = 1 and: [ self table allowsDeselection ]	"just one selected" ])
+		ifTrue: [ self table selectIndexes: #() ]
+		ifFalse: [ self table selectIndex: rowIndex ]
 ]

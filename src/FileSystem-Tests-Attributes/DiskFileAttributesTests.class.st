@@ -124,6 +124,22 @@ DiskFileAttributesTests >> testFileSize [
 ]
 
 { #category : #tests }
+DiskFileAttributesTests >> testFromPlatformPath [
+
+	| testString platformByteArray nativeByteArray |
+
+	testString := '1234žřč'.
+	platformByteArray := { 
+		#Win32 -> #[49 0 50 0 51 0 52 0 126 1 89 1 13 1].
+		#Win64 -> #[49 0 50 0 51 0 52 0 126 1 89 1 13 1].
+		#unix -> testString utf8Encoded.
+		#'Mac OS' -> #[49 50 51 52 122 204 140 114 204 140 99 204 140].
+	 } asDictionary at: OSPlatform current platformName asSymbol.
+	nativeByteArray := File fromPlatformPath: platformByteArray.
+	self assert: nativeByteArray utf8Decoded equals: testString.
+]
+
+{ #category : #tests }
 DiskFileAttributesTests >> testIsBlock [
 
 	self collectionAssert: [ :each | each isBlock ] equals: false.
@@ -212,10 +228,95 @@ DiskFileAttributesTests >> testNLink [
 ]
 
 { #category : #tests }
+DiskFileAttributesTests >> testPermissions [
+
+	| fileReference oldPermissions newPermissions |
+
+	fileReference := (FileLocator temp / ('FileAttributesTests-', UUIDGenerator next asString, '.txt')) resolve.
+
+	fileReference createFile.
+	[ 
+		oldPermissions := self tempFileEntry permissions.
+		newPermissions := FileSystemPermission posixPermissions: 8r007.
+		"Check that the existing permissions don't happen to match the test permissions"
+		self assert: oldPermissions ~= newPermissions.
+
+		"Setting permissions aren't supported on Windows"
+		OSPlatform current isWindows ifTrue: [ 
+			self should: [ fileReference permissions: newPermissions ] raise: Error ]
+		ifFalse: [ 
+			fileReference permissions: newPermissions.
+			self assert: fileReference permissions equals: newPermissions ].
+	] ensure: [ fileReference delete ]
+]
+
+{ #category : #tests }
+DiskFileAttributesTests >> testSymlinkUidGid [
+
+	| fileReference oldUid oldGid |
+
+	fileReference := FileLocator temp / ('FileAttributesTests-', UUIDGenerator next asString, '.txt').
+	fileReference createFile.
+	[ 
+		oldUid := fileReference uid.
+		oldGid := fileReference gid.
+
+		"Setting ownership isn't supported on Windows"
+		OSPlatform current isWindows ifTrue: [ 
+			self should: [ fileReference symlinkUid: nil gid: nil ] raise: Error ]
+		ifFalse: [ 
+			"Since we can't reliably determine new test ids, call the method without changing values.
+			This will at least test that the primitive can be called and doesn't do something unexpected."
+			fileReference symlinkUid: nil gid: nil.
+			self assert: fileReference uid equals: oldUid.
+			self assert: fileReference gid equals: oldGid ].
+	] ensure: [ fileReference delete ]
+]
+
+{ #category : #tests }
 DiskFileAttributesTests >> testTargetFile [
 
 	"The temporary file isn't a symbolic link, so the targetFile is not supported"
 	self attributesCollectionDo: [ :each |
 		self should: [ each targetFileReference ] raise: FileAttributeNotSupported ].
 
+]
+
+{ #category : #tests }
+DiskFileAttributesTests >> testToPlatformPath [
+
+	| testString platformByteArray expectedByteArray |
+
+	testString := '1234žřč'.
+	platformByteArray := File toPlatformPath: testString.
+	expectedByteArray := { 
+		#Win32 -> #[49 0 50 0 51 0 52 0 126 1 89 1 13 1].
+		#Win64 -> #[49 0 50 0 51 0 52 0 126 1 89 1 13 1].
+		#unix -> testString utf8Encoded.
+		#'Mac OS' -> #[49 50 51 52 122 204 140 114 204 140 99 204 140].
+	 } asDictionary at: OSPlatform current platformName asSymbol.
+	self assert: platformByteArray equals: expectedByteArray.
+]
+
+{ #category : #tests }
+DiskFileAttributesTests >> testUidGid [
+
+	| fileReference oldUid oldGid |
+
+	fileReference := FileLocator temp / ('FileAttributesTests-', UUIDGenerator next asString, '.txt').
+	fileReference createFile.
+	[ 
+		oldUid := fileReference uid.
+		oldGid := fileReference gid.
+
+		"Setting ownership isn't supported on Windows"
+		OSPlatform current isWindows ifTrue: [ 
+			self should: [ fileReference uid: nil gid: nil ] raise: Error ]
+		ifFalse: [ 
+			"Since we can't reliably determine new test ids, call the method without changing values.
+			This will at least test that the primitive can be called and doesn't do something unexpected."
+			fileReference uid: nil gid: nil.
+			self assert: fileReference uid equals: oldUid.
+			self assert: fileReference gid equals: oldGid ].
+	] ensure: [ fileReference delete ]
 ]

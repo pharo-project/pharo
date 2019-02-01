@@ -1,7 +1,10 @@
+"
+Different Encodings for Multilingual support
+"
 Class {
 	#name : #ManifestMultilingualEncodings,
 	#superclass : #PackageManifest,
-	#category : #'Multilingual-Encodings'
+	#category : #'Multilingual-Encodings-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

@@ -6,33 +6,20 @@ RBMethodNode >> compiledMethod [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBMethodNode >> decompileString [ 
-
-	^ self formattedCode 
-
-]
-
-{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysis [
 
 	self compilationContext ifNil: [ self methodClass: nil class ].
 
 	self
 		compilationContext semanticAnalyzerClass new
-		compilationContext: self compilationContext;
-		analyze: self
+			compilationContext: self compilationContext;
+			analyze: self
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysisIn: behavior [
 	self methodClass: behavior.
 	self doSemanticAnalysis
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> doSemanticAnalysisInContext: aCompilationContext [
-	self compilationContext: aCompilationContext.
-	self doSemanticAnalysis.
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -70,7 +57,7 @@ RBMethodNode >> generate: trailer [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateIR [
 	| ir |
-	scope ifNil: [self doSemanticAnalysisInContext: self compilationContext ].
+	scope ifNil: [self doSemanticAnalysis].
  	ir := (self compilationContext astTranslatorClass new
 			visitNode: self)
 			ir.
@@ -104,11 +91,6 @@ RBMethodNode >> ir: aIRMethodNode [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> irInstruction [
 	^ self ir
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> methodOrBlockNode [
-	"^ self"
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -202,11 +184,4 @@ RBMethodNode >> sourceText: aString [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> startWithoutParentheses [
 	^ 1
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> tempNames [
-	"compatibility method to old MethodNode"
-	self flag: #Clean.
-	^ self argumentNames, self temporaryNames
 ]

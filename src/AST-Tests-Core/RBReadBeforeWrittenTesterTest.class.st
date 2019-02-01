@@ -1,3 +1,6 @@
+"
+SUnit tests for RBReadBeforeWrittenTester
+"
 Class {
 	#name : #RBReadBeforeWrittenTesterTest,
 	#superclass : #TestCase,
@@ -35,9 +38,13 @@ RBReadBeforeWrittenTesterTest >> testReadBeforeWritten [
 
 { #category : #tests }
 RBReadBeforeWrittenTesterTest >> testReadBeforeWritten1 [
-	self 
-		assert: (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: (RBParser 
-						parseMethod: 'addAll: aCollection 
+	self
+		assertEmpty:
+			(RBReadBeforeWrittenTester
+				variablesReadBeforeWrittenIn:
+					(RBParser
+						parseMethod:
+							'addAll: aCollection 
 	"Answer aCollection, having added all elements
 	 of aCollection to the receiver.
 
@@ -65,6 +72,5 @@ RBReadBeforeWrittenTesterTest >> testReadBeforeWritten1 [
 						ifFalse: [element == newObject]]
 							whileFalse: 
 								[(hashIndex := hashIndex + 1) > elementsSize ifTrue: [hashIndex := 1]]]].
-	^aCollection')) 
-				isEmpty
+	^aCollection'))
 ]

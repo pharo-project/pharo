@@ -79,7 +79,7 @@ ReadWriteStreamTest >> testContents [
 ReadWriteStreamTest >> testIsEmpty [
 	| stream |
 	stream := self emptyStream.
-	self assert: stream isEmpty.
+	self assertEmpty: stream.
 	stream nextPut: $a.
 	self deny: stream isEmpty.
 	stream reset.

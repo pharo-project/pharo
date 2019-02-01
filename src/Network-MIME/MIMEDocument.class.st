@@ -284,13 +284,13 @@ MIMEDocument >> parts [
 MIMEDocument >> printOn: aStream [
 	aStream nextPutAll: self class name;
 		nextPutAll: ' (';
-		nextPutAll: self mimeType asString;
+		print: self mimeType;
 		nextPutAll: ', '.
 	contents
-		ifNotNil: [aStream
-			nextPutAll: self contents size printString;
-			nextPutAll: ' bytes)']
-		ifNil: [aStream nextPutAll: 'unknown size)'].
+		ifNotNil: [ aStream
+			print: self contents size;
+			nextPutAll: ' bytes)' ]
+		ifNil: [ aStream nextPutAll: 'unknown size)' ].
 ]
 
 { #category : #private }
@@ -299,11 +299,10 @@ MIMEDocument >> privateContent: aString [
 ]
 
 { #category : #files }
-MIMEDocument >> saveToFile: anAbsolutePathString [
-
-	FileStream forceNewFileNamed: anAbsolutePathString do: [ :str |
-		str binary.
-		str nextPutAll: (self contents) ].
+MIMEDocument >> saveToFile: pathString [
+	pathString asFileReference 
+		binaryWriteStreamDo: [ :out | 
+			out nextPutAll: self contents ]
 ]
 
 { #category : #accessing }

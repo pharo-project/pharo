@@ -1,5 +1,5 @@
 "
-SUnit tests for integers
+SUnit tests for integers.
 "
 Class {
 	#name : #IntegerTest,
@@ -559,6 +559,12 @@ IntegerTest >> testIntegerReadsOkFromString [
 	self assert: (Integer readFrom: '-a3' base: 16) = -163.
 ]
 
+{ #category : #'tests - other' }
+IntegerTest >> testIsAbstract [ 
+
+	self assert: Integer isAbstract 
+]
+
 { #category : #'tests - basic' }
 IntegerTest >> testIsInteger [
 
@@ -799,6 +805,12 @@ IntegerTest >> testNegativeIntegerPrinting [
 { #category : #'tests - instance creation' }
 IntegerTest >> testNew [
 	self should: [Integer new] raise: self defaultTestError. 
+]
+
+{ #category : #'tests - other' }
+IntegerTest >> testNotInstantiable [
+
+	self should: [ Integer new ] raise: Exception
 ]
 
 { #category : #'tests - printing' }

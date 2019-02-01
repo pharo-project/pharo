@@ -138,25 +138,22 @@ RGClassDefinitionTest >> testExistingClass [
 { #category : #testing }
 RGClassDefinitionTest >> testNonExistingClass [
 	| newClass |
-	
-	newClass:= RGClassDefinition named:  #Connection.
-	self assert: (newClass isClass).
-	self assert: (newClass instanceVariables isEmpty).
-	self assert: (newClass classVariables isEmpty).
-	self assert: (newClass sharedPools isEmpty).
-	self assert: (newClass hasMetaclass not).
-	self assert: (newClass hasComment not).
-	self assert: (newClass hasStamp not).
-	self assert: (newClass parent = Smalltalk globals).
-	self assert: (newClass package isNil).
-	self assert: (newClass category isNil).
-	self assert: (newClass hasMethods not).
-	self assert: (newClass hasSuperclass not).
-	self assert: (newClass hasTraitComposition not).
-	self assert: (newClass isDefined not).
-	self assert: (newClass hasProtocols not).
-	
-	
+	newClass := RGClassDefinition named: #Connection.
+	self assert: newClass isClass.
+	self assertEmpty: newClass instanceVariables.
+	self assertEmpty: newClass classVariables.
+	self assertEmpty: newClass sharedPools.
+	self assert: newClass hasMetaclass not.
+	self assert: newClass hasComment not.
+	self assert: newClass hasStamp not.
+	self assert: newClass parent = Smalltalk globals.
+	self assert: newClass package isNil.
+	self assert: newClass category isNil.
+	self assert: newClass hasMethods not.
+	self assert: newClass hasSuperclass not.
+	self assert: newClass hasTraitComposition not.
+	self assert: newClass isDefined not.
+	self assert: newClass hasProtocols not
 ]
 
 { #category : #testing }
@@ -233,28 +230,26 @@ RGClassDefinitionTest >> testWithCategory [
 { #category : #testing }
 RGClassDefinitionTest >> testWithClassInstanceVariables [
 	| newClass metaClass classInstVar |
-	
-	newClass:= RGClassDefinition named:  #HashTableSizes.
+	newClass := RGClassDefinition named: #HashTableSizes.
 	newClass withMetaclass.
-	metaClass:= newClass classSide.
+	metaClass := newClass classSide.
 	metaClass addInstanceVariables: #(sizes).
-	
-	self assert: (metaClass instanceVariables size = 1).
-	self assert: (metaClass instVarNames size = 1).
-	self assert: (metaClass allInstVarNames size = 1).
-	
-	classInstVar:= metaClass instanceVariableNamed: #sizes.
-	self assert: (classInstVar notNil).
-	self assert: (classInstVar parent = metaClass).
-	self assert: (classInstVar isClassInstanceVariable).
-	self assert: (classInstVar isVariable).
-	self assert: (classInstVar parentName = metaClass name).
-	self assert: (classInstVar realClass = HashTableSizes class).
-	
+
+	self assert: metaClass instanceVariables size equals: 1.
+	self assert: metaClass instVarNames size equals: 1.
+	self assert: metaClass allInstVarNames size equals: 1.
+
+	classInstVar := metaClass instanceVariableNamed: #sizes.
+	self assert: classInstVar notNil.
+	self assert: classInstVar parent = metaClass.
+	self assert: classInstVar isClassInstanceVariable.
+	self assert: classInstVar isVariable.
+	self assert: classInstVar parentName = metaClass name.
+	self assert: classInstVar realClass = HashTableSizes class.
+
 	metaClass removeInstVarNamed: #sizes.
-	self assert: (metaClass instanceVariables isEmpty).
-	self assert: ((metaClass instanceVariableNamed: #sizes) isNil).
-	
+	self assertEmpty: metaClass instanceVariables.
+	self assert: (metaClass instanceVariableNamed: #sizes) isNil
 ]
 
 { #category : #testing }
@@ -353,50 +348,49 @@ RGClassDefinitionTest >> testWithInstanceVariables [
 { #category : #testing }
 RGClassDefinitionTest >> testWithPoolDictionaries [
 	| newClass poolVar |
-	
-	newClass:= (RGClassDefinition named:  #Text)
-						addSharedPoolNamed: #TextConstants;
-						yourself.
+	newClass := (RGClassDefinition named: #Text)
+		addSharedPoolNamed: #TextConstants;
+		yourself.
 
-	self assert: (newClass sharedPools size = 1).
-	self assert: (newClass sharedPoolNames size = 1).
-	self assert: (newClass allSharedPools size = 1).  "no hierarchy"
-	self assert: (newClass allSharedPoolNames size = 1).
-	
-	poolVar:= newClass sharedPoolNamed: #TextConstants.
-	self assert: (poolVar notNil).
-	self assert: (poolVar isPoolVariable).
-	self assert: (poolVar isVariable).
-	self assert: (poolVar parent = newClass).
-	self assert: (poolVar parentName == newClass name).
-	self assert: (poolVar realClass = Text).
-	
+	self assert: newClass sharedPools size = 1.
+	self assert: newClass sharedPoolNames size = 1.
+	self assert: newClass allSharedPools size = 1.	"no hierarchy"
+	self assert: newClass allSharedPoolNames size = 1.
+
+	poolVar := newClass sharedPoolNamed: #TextConstants.
+	self assert: poolVar notNil.
+	self assert: poolVar isPoolVariable.
+	self assert: poolVar isVariable.
+	self assert: poolVar parent = newClass.
+	self assert: poolVar parentName == newClass name.
+	self assert: poolVar realClass = Text.
+
 	newClass withMetaclass.
-	self assert: (newClass classSide allSharedPoolNames size = 1).
-	
+	self assert: newClass classSide allSharedPoolNames size = 1.
+
 	newClass removeSharedPoolNamed: #TextConstants.
-	self assert: (newClass sharedPools isEmpty).
+	self assertEmpty: newClass sharedPools
 ]
 
 { #category : #testing }
 RGClassDefinitionTest >> testWithProtocols [
 	| newMethod newClass |
-	
-	newClass:= RGClassDefinition named: #OrderedCollection.
-	newMethod:= (RGMethodDefinition named: #add:)
-					 parent: newClass;
-					protocol: 'adding'; 
-					sourceCode: 'add: newObject
+	newClass := RGClassDefinition named: #OrderedCollection.
+	newMethod := (RGMethodDefinition named: #add:)
+		parent: newClass;
+		protocol: 'adding';
+		sourceCode:
+			'add: newObject
 									^self addLast: newObject'.
-	
+
 	newClass addMethod: newMethod.
 	newClass addProtocol: 'accessing'.
-	
-	self assert: (newClass hasProtocols).
-	self assert: (newClass protocols size = 2).
+
+	self assert: newClass hasProtocols.
+	self assert: newClass protocols size = 2.
 	self assert: (newClass includesProtocol: 'accessing').
-	self assert: ((newClass methodsInProtocol: 'adding') size = 1).
-	self assert: ((newClass methodsInProtocol: 'accessing') isEmpty)
+	self assert: (newClass methodsInProtocol: 'adding') size = 1.
+	self assertEmpty: (newClass methodsInProtocol: 'accessing')
 ]
 
 { #category : #testing }

@@ -1,5 +1,11 @@
 "
 My single instance, named Processor, coordinates the use of the physical processor by all Processes requiring service.
+
+My instances variables are managed by the VM. The VM has for role to choose which process should be executed and when.
+
+NB: DelayScheduler is THE HIGHEST priority code which is run in Pharo. See DelayScheduler for additional comments.
+
+
 "
 Class {
 	#name : #ProcessorScheduler,
@@ -11,6 +17,7 @@ Class {
 	#classVars : [
 		'BackgroundProcess',
 		'HighIOPriority',
+		'IdleTime',
 		'LowIOPriority',
 		'SystemBackgroundPriority',
 		'SystemRockBottomPriority',
@@ -24,10 +31,35 @@ Class {
 
 { #category : #'background process' }
 ProcessorScheduler class >> idleProcess [
-	"A default background process which is invisible."
+	"A default background process which is invisible. During the idle time, the delays may not wake up."
 
 	[true] whileTrue:
-		[self relinquishProcessorForMicroseconds: 50000]
+		[self relinquishProcessorForMicroseconds: IdleTime]
+]
+
+{ #category : #settings }
+ProcessorScheduler class >> idleTime [
+
+	"The default idle time for the Pharo process in case of inactivity. In idle mode, the system can be awakened by a signal. This value can limit the minimal delay time."
+	
+	^ IdleTime
+]
+
+{ #category : #settings }
+ProcessorScheduler class >> idleTime: microsecondsCount [
+
+	IdleTime := microsecondsCount
+]
+
+{ #category : #settings }
+ProcessorScheduler class >> idleTimeSettingOn: aBuilder [
+	<systemsettings>
+	
+	(aBuilder setting: #idleTime)
+		target: self;
+		parent: #pharoSystem ;
+		label: 'Default idle time for the system (microseconds)' ;
+		description: 'Detault idle time for the Pharo process in case of inactivity. In idle mode, the system can be awakened by a signal. This value can limit the minimal delay time.'
 ]
 
 { #category : #'class initialization' }
@@ -42,6 +74,7 @@ ProcessorScheduler class >> initialize [
 	LowIOPriority := 60.
 	HighIOPriority := 70.
 	TimingPriority := 80.
+	IdleTime := 50000.
 
 	SessionManager default
 		registerSystemClassNamed: self name
@@ -121,6 +154,7 @@ ProcessorScheduler >> highIOPriority [
 { #category : #accessing }
 ProcessorScheduler >> highestPriority [
 	"Answer the number of priority levels currently available for use."
+	"NB: If you are looking to set a priority when forking a process, please use the methods in 'priority names' protocol"
 
 	^quiescentProcessLists size
 ]
@@ -283,6 +317,8 @@ ProcessorScheduler >> terminateActive [
 ProcessorScheduler >> timingPriority [
 	"Answer the priority at which the system processes keeping track of real 
 	time should run."
+	"BEFORE USING IT: please read the 'Original word of advice' in the DelayScheduler class comment. 
+	TL;DR: for top priority processes use 'Processor timingPriority - 1' except if you really know what you are doing!"
 
 	^TimingPriority
 ]

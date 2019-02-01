@@ -436,7 +436,8 @@ SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: 
    rofa ifNil: [ ^ absentBlock value ].  
 
    stream := rofa at: index.
-
+	stream ifNil: [ ^ absentBlock value ].
+	
    position > (files at: index) size ifTrue: [ 
 		self finishedReading: rofa from: queue. 
 		^ absentBlock value 

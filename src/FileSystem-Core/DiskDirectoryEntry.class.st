@@ -172,11 +172,14 @@ DiskDirectoryEntry >> gtInspectAttributesIn: composite [
 	| attrDictionary |
 
 	attrDictionary := Dictionary new.
-	self class methodsDo: [ :method |
+	[self class methodsDo: [ :method |
 		method methodNode arguments size = 0 ifTrue:
 			[ attrDictionary at: method selector put:
-				(method selector value: self) ] ].
+				(method selector value: self) ] ]]
+		on: FileDoesNotExistException
+		do: [ nil ].
 	^(attrDictionary gtInspectorItemsIn: composite)
+		when: [ attrDictionary isNotEmpty ];
 		title: 'Attributes';
 		yourself.
 ]

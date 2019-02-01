@@ -17,19 +17,17 @@ JobTest >> tearDown [
 
 { #category : #tests }
 JobTest >> testChildJob [
-	
 	| wasRun |
-	
 	wasRun := false.
-	
-	[ :job | 	
-		[ :job2 | 
-			self assert: job children size equals: 1.
-			self assert: job children first equals: job2.
-			wasRun := true ] asJob run.
-	
-		self assert: job children isEmpty ] asJob run.
-	
+
+	[ :job | 
+	[ :job2 | 
+	self assert: job children size equals: 1.
+	self assert: job children first equals: job2.
+	wasRun := true ] asJob run.
+
+	self assertEmpty: job children ] asJob run.
+
 	self assert: wasRun
 ]
 
@@ -48,7 +46,6 @@ JobTest >> testCurrentJob [
 
 { #category : #tests }
 JobTest >> testJobAnnouncements [
-	
 	| announcements |
 	announcements := OrderedCollection new.
 
@@ -56,13 +53,11 @@ JobTest >> testJobAnnouncements [
 	Job jobAnnouncer weak when: JobEnd send: #add: to: announcements.
 	Job jobAnnouncer weak when: JobChange send: #add: to: announcements.
 
-	self assert: announcements isEmpty.
+	self assertEmpty: announcements.
 
-	[ :job | job currentValue: 1 ] asJob run.	
-	
-	self 
-		assert: (announcements collect: #class as: Array)
-		equals: {JobStart. JobChange. JobEnd}.
+	[ :job | job currentValue: 1 ] asJob run.
+
+	self assert: (announcements collect: #class as: Array) equals: {JobStart . JobChange . JobEnd}.
 
 	Job jobAnnouncer unsubscribe: announcements
 ]
@@ -130,11 +125,10 @@ JobTest >> testProgressChangeByCurrentValue [
 
 { #category : #tests }
 JobTest >> testSingleJob [
-
 	| wasRun |
 	wasRun := false.
 	[ :job | 
-		self assert: job children isEmpty.
-		wasRun := true ] asJob run.	
+	self assertEmpty: job children.
+	wasRun := true ] asJob run.
 	self assert: wasRun
 ]

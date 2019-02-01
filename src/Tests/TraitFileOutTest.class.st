@@ -12,6 +12,12 @@ Class {
 	#category : #'Tests-Traits'
 }
 
+{ #category : #accessing }
+TraitFileOutTest class >> defaultTimeLimit [
+	
+	^ 15 seconds
+]
+
 { #category : #running }
 TraitFileOutTest >> categoryName [
 	^'Traits-Tests-FileOut'

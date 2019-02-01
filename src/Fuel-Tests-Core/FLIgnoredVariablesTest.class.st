@@ -4,7 +4,7 @@ SUnit tests for serialization with ignored variables
 Class {
 	#name : #FLIgnoredVariablesTest,
 	#superclass : #FLClassSerializationTest,
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #tests }

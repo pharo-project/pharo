@@ -20,6 +20,11 @@ FFICallbackTests >> intregargsp [
 	^ nil
 ]
 
+{ #category : #running }
+FFICallbackTests >> runCaseManaged [
+	^ self runCase
+]
+
 { #category : #tests }
 FFICallbackTests >> testCqsort [
 	| unsorted expected values callback results |

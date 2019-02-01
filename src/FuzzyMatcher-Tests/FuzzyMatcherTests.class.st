@@ -4,7 +4,7 @@ Tests for FuzzyMatcher.
 Class {
 	#name : #FuzzyMatcherTests,
 	#superclass : #TestCase,
-	#category : #'FuzzyMatcher-Tests'
+	#category : #'FuzzyMatcher-Tests-Tests'
 }
 
 { #category : #asserting }
@@ -87,21 +87,14 @@ FuzzyMatcherTests >> testClassSideAPI [
 
 { #category : #tests }
 FuzzyMatcherTests >> testEmptyPattern [
-
 	| matcher |
-	
 	matcher := self newMatcher.
-	
+
 	self
-	
-		assert: matcher pattern isEmpty; 
-		
-		assert: matcher scoreFor: '' 		equals: 0;
-		assert: matcher scoreFor: 'abc' 	equals: 0;
-		assert: matcher scoreFor: '   ' 	equals: 0.
-			
-			
-	
+		assertEmpty: matcher pattern;
+		assert: matcher scoreFor: '' equals: 0;
+		assert: matcher scoreFor: 'abc' equals: 0;
+		assert: matcher scoreFor: '   ' equals: 0
 ]
 
 { #category : #tests }

@@ -10,7 +10,7 @@ Class {
 { #category : #examples }
 WebBrowser class >> example [
 
-	self openOn: 'http://www.pharo.org'
+	self openOn: 'http://pharo.org'
 ]
 
 { #category : #testing }

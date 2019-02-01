@@ -1,7 +1,10 @@
+"
+Basic classes for Morphic - a direct-manipulation User Interface (UI) construction kit 
+"
 Class {
 	#name : #ManifestMorphicBase,
 	#superclass : #PackageManifest,
-	#category : #'Morphic-Base'
+	#category : #'Morphic-Base-Manifest'
 }
 
 { #category : #'code-critics' }

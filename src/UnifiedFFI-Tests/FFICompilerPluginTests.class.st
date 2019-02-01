@@ -21,6 +21,8 @@ FFICompilerPluginTests >> ffiCopyString: aString to: dest [
 
 { #category : #tests }
 FFICompilerPluginTests >> ffiCopyStringWithError: aString to: destError [
+	"This method explicitly uses a non-matching variable dest in the FFI call to provoke an error"
+	
 	^ self ffiCall: #(String strcpy #(String dest , String aString)) 
 ]
 
@@ -45,9 +47,9 @@ FFICompilerPluginTests >> testDecompilationOfFFIMethodShouldHaveNamedArgs [
 { #category : #tests }
 FFICompilerPluginTests >> testExecutionOfWrongFFIMethodShouldRaiseAnError [
 	self
-		should: [ 	| buffer result |
-	buffer := ByteArray new: 12.
-	result := self ffiCopyStringWithError: 'Hello World!' to: buffer. ]
+		should: [ | buffer |
+			buffer := ByteArray new: 12.
+			self ffiCopyStringWithError: 'Hello World!' to: buffer ]
 		raise: FFIVariableNameNotFound
 ]
 

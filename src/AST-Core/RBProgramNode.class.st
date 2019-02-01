@@ -296,6 +296,16 @@ RBProgramNode >> do: aBlock [
 	aBlock value: self
 ]
 
+{ #category : #generation }
+RBProgramNode >> dump [
+	^  String streamContents: [:s | self dumpOn: s]
+]
+
+{ #category : #generation }
+RBProgramNode >> dumpOn: aStream [
+	self subclassResponsibility 
+]
+
 { #category : #comparing }
 RBProgramNode >> equalTo: aNode exceptForVariables: variableNameCollection [ 
 	| dictionary |
@@ -323,14 +333,7 @@ RBProgramNode >> evaluatedFirst: aNode [
 
 { #category : #accessing }
 RBProgramNode >> formattedCode [
-	^ self formattedCodeWithMaxLineLength: 70
-]
-
-{ #category : #accessing }
-RBProgramNode >> formattedCodeWithMaxLineLength: anInteger [
-	^ self formatterClass new
-		containerWidth: anInteger;
-		format: self
+	^ self formatterClass new format: self
 ]
 
 { #category : #accessing }
@@ -459,6 +462,11 @@ RBProgramNode >> isMessage [
 
 { #category : #testing }
 RBProgramNode >> isMethod [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isParseError [
 	^false
 ]
 
@@ -605,6 +613,11 @@ RBProgramNode >> methodComments [
 { #category : #accessing }
 RBProgramNode >> methodNode [
 	^parent ifNotNil: [parent methodNode]
+]
+
+{ #category : #accessing }
+RBProgramNode >> methodOrBlockNode [
+	^ parent ifNotNil: [ parent methodOrBlockNode ]
 ]
 
 { #category : #accessing }
@@ -772,6 +785,12 @@ RBProgramNode >> replaceWith: aNode [
 	parent replaceNode: self withNode: aNode
 ]
 
+{ #category : #enumeration }
+RBProgramNode >> reverseNodesDo: aBlock [ 
+	self children reverseDo: [ :each | each reverseNodesDo: aBlock ].
+	aBlock value: self
+]
+
 { #category : #querying }
 RBProgramNode >> selfMessages [
 	^(self sendNodes select: [ :node | node isSelfSend ] thenCollect: [ :node | node selector ]) asSet
@@ -801,7 +820,19 @@ RBProgramNode >> size [
 
 { #category : #accessing }
 RBProgramNode >> source [
-	^parent notNil ifTrue: [parent source] ifFalse: [nil]
+	^ parent notNil ifTrue: [ parent source ] ifFalse: [ nil ]
+]
+
+{ #category : #accessing }
+RBProgramNode >> sourceCode [
+
+	| interval |
+	interval := self sourceInterval.
+	interval ifEmpty: [ ^ '' ].
+	
+	^ self source 
+		copyFrom: interval first
+		to: interval last
 ]
 
 { #category : #accessing }
@@ -833,6 +864,12 @@ RBProgramNode >> statementNode [
 
 	(parent isNil or: [parent isSequence]) ifTrue: [^self].
 	^parent statementNode
+]
+
+{ #category : #accessing }
+RBProgramNode >> statements [
+	^ #()
+	
 ]
 
 { #category : #accessing }

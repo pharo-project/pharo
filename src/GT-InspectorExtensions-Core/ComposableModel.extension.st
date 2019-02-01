@@ -10,7 +10,7 @@ ComposableModel >> gtInspectorModelNestingIn: composite [
 			each value class allInstVarNames 
 				collect: [ :iv | iv->(each value instVarNamed: iv) ]
 				thenSelect: [ :association | 
-					(association value isKindOf: ComposableModel) 
+					(association value isKindOf: ComposablePresenter) 
 						and: [ (#('owner' 'window') includes: association key) not ] ] ];
 		format: [ :association | association key , ': ' , association value asString ];
 		send: #value

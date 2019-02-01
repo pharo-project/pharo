@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'recentTools'
 	],
-	#category : #'Tool-Base'
+	#category : #'Tool-Base-Registration'
 }
 
 { #category : #settings }
@@ -111,7 +111,7 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		order: 0;
 		keyText: 'o, b';
 		help: 'System browser to browse and edit code.';
-		iconName: #smallWindowIcon
+		iconName: #smallSystemBrowser
 ]
 
 { #category : #'registry access' }

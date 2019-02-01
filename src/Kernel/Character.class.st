@@ -711,27 +711,16 @@ Character >> lowercase [
 ]
 
 { #category : #printing }
-Character >> printOn: arg1 [
-	| tmp1 |
-	(self asInteger > 32 and: [ self asInteger ~= 127 ])
-		ifTrue: [ | tmp3 |
-			tmp3 := arg1.
-			tmp3
-				nextPut: $$;
-				nextPut: self ]
-		ifFalse: [ tmp1 := self class constantNameFor: self.
-			arg1 nextPutAll: self class name.
-			tmp1 notNil
-				ifTrue: [ | tmp5 |
-					tmp5 := arg1.
-					tmp5
-						space;
-						nextPutAll: tmp1 ]
-				ifFalse: [ | tmp7 |
-					tmp7 := arg1.
-					tmp7
-						nextPutAll: ' value: ';
-						print: self asInteger ] ]
+Character >> printOn: aStream [
+	| name |
+	(self asInteger > 32 and: [ self asInteger ~= 127])
+		ifTrue: [ aStream nextPut: $$; nextPut: self ]
+		ifFalse: [
+			name := self class constantNameFor: self.
+			aStream nextPutAll: self class name.
+			name notNil
+				ifTrue: [ aStream space; nextPutAll: name ]
+				ifFalse: [ aStream nextPutAll: ' value: '; print: self asInteger ] ]
 ]
 
 { #category : #printing }
@@ -762,37 +751,27 @@ Character >> shouldBePrintedAsLiteral [
 ]
 
 { #category : #printing }
-Character >> storeBinaryOn: arg1 [
+Character >> storeBinaryOn: aStream [
 	self asInteger < 256
-		ifTrue: [ arg1 basicNextPut: self asInteger ]
-		ifFalse: [ arg1 nextInt32Put: self asInteger ]
+		ifTrue: [ aStream basicNextPut: self asInteger ]
+		ifFalse: [ aStream nextInt32Put: self asInteger ]
 ]
 
 { #category : #printing }
-Character >> storeOn: arg1 [
-	| tmp1 |
+Character >> storeOn: aStream [
+	"Common character literals are preceded by '$', however special need to be encoded differently: for some this might be done by using one of the shortcut constructor methods for the rest we have to create them by ascii-value."
+
+	| name |
 	self shouldBePrintedAsLiteral
-		ifTrue: [ | tmp3 |
-			tmp3 := arg1.
-			tmp3
-				nextPut: $$;
-				nextPut: self ]
-		ifFalse: [ tmp1 := self class constantNameFor: self.
-			tmp1 notNil
-				ifTrue: [ | tmp5 |
-					tmp5 := arg1.
-					tmp5
-						nextPutAll: self class name;
-						space;
-						nextPutAll: tmp1 ]
-				ifFalse: [ | tmp7 |
-					tmp7 := arg1.
-					tmp7
-						nextPut: $(;
-						nextPutAll: self class name;
-						nextPutAll: ' value: ';
-						print: self asInteger;
-						nextPut: $) ] ]
+		ifTrue: [ aStream nextPut: $$; nextPut: self ]
+		ifFalse: [
+			name := self class constantNameFor: self.
+			name notNil
+				ifTrue: [ aStream nextPutAll: self class name; space; nextPutAll: name ]
+				ifFalse: [
+					aStream 
+						nextPut: $(; nextPutAll: self class name; 
+						nextPutAll: ' value: '; print: self asInteger; nextPut: $) ] ]
 ]
 
 { #category : #converting }

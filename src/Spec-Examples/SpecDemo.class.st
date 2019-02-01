@@ -36,6 +36,20 @@ SpecDemo class >> defaultSpec [
 	
 ]
 
+{ #category : #'user interface' }
+SpecDemo class >> menuExamplesOn: aBuilder [
+	"Add a custom menu item to the world menu"
+
+	<worldMenu>
+	(aBuilder item: #'Spec examples')
+		iconName: #smallHelpIcon;
+		parent: #Help;
+		order: 3.5;
+		help: 'Open Spec demo browser.';
+		action: [ self open ].
+	aBuilder withSeparatorAfter	
+]
+
 { #category : #'instance creation' }
 SpecDemo class >> on: aModel [
 

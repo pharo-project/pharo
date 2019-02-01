@@ -27,14 +27,16 @@ TRBProgramNodeVisitor >> visitArrayNode: anArrayNode [
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitAssignmentNode: anAssignmentNode [
 
-	self visitNode: anAssignmentNode variable.
-	self visitNode: anAssignmentNode value
+	self 
+		visitNode: anAssignmentNode variable;
+		visitNode: anAssignmentNode value
 ]
 
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitBlockNode: aBlockNode [ 
-	self visitArgumentNodes: aBlockNode arguments.
-	self visitNode: aBlockNode body
+	self 
+		visitArgumentNodes: aBlockNode arguments;
+		visitNode: aBlockNode body
 ]
 
 { #category : #visiting }
@@ -72,7 +74,7 @@ TRBProgramNodeVisitor >> visitMessageNode: aMessageNode [
 TRBProgramNodeVisitor >> visitMethodNode: aMethodNode [ 
 	self visitArgumentNodes: aMethodNode arguments.
 	aMethodNode pragmas
-		do: [ :each | self visitNode: each ].
+		do: [:each | self visitNode: each ].
 	self visitNode: aMethodNode body
 ]
 
@@ -87,15 +89,17 @@ TRBProgramNodeVisitor >> visitParseErrorNode: anErrorNode [
 
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitPatternBlockNode: aRBPatternBlockNode [ 
-	self visitArgumentNodes: aRBPatternBlockNode arguments.
-	self visitNode: aRBPatternBlockNode body
+	self 
+		visitArgumentNodes: aRBPatternBlockNode arguments;
+		visitNode: aRBPatternBlockNode body
 ]
 
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [ 
-	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
-	self visitArgumentNodes: aRBPatternWrapperBlockNode arguments.
-	self visitNode: aRBPatternWrapperBlockNode body
+	self 
+		visitNode: aRBPatternWrapperBlockNode wrappedNode;
+		visitArgumentNodes: aRBPatternWrapperBlockNode arguments;
+		visitNode: aRBPatternWrapperBlockNode body
 ]
 
 { #category : #visiting }

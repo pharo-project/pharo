@@ -68,6 +68,14 @@ RBVariableNode >> copyInContext: aDictionary [
 	^ self class named: name.
 ]
 
+{ #category : #generation }
+RBVariableNode >> dumpOn: aStream [
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ' named: '.
+	self name printOn: aStream
+]
+
 { #category : #comparing }
 RBVariableNode >> equalTo: anObject withMapping: aDictionary [ 
 	^self class = anObject class and: 
@@ -85,7 +93,7 @@ RBVariableNode >> hash [
 	^self name hash
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RBVariableNode >> initialize [
 	super initialize.
 	name := ''.
@@ -148,7 +156,7 @@ RBVariableNode >> name: aName [
 	name := aName asSymbol.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBVariableNode >> named: aName start: aPosition [
 
 	self name: aName.

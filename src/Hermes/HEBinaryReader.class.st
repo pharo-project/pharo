@@ -19,7 +19,7 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : #Hermes
+	#category : #'Hermes-CommandLineHandler'
 }
 
 { #category : #'initialize-release' }

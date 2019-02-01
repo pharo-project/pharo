@@ -1,5 +1,8 @@
+"
+Basic tools and tool registry
+"
 Class {
 	#name : #ManifestToolBase,
 	#superclass : #PackageManifest,
-	#category : #'Tool-Base'
+	#category : #'Tool-Base-Manifest'
 }

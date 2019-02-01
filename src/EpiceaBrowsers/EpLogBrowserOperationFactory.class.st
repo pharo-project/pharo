@@ -100,7 +100,7 @@ EpLogBrowserOperationFactory >> latestEventsFrom: previewEventsTheOldestFirst [
 	
 	| aLog filter |
 	aLog := EpLog newWithStore: (OmMemoryStore withAll: previewEventsTheOldestFirst).
-	logBrowserModel := EpLogBrowserModel newWithLog: aLog.
+	logBrowserModel := EpLogBrowserPresenter newWithLog: aLog.
 	filter := EpLatestCodeChangeFilter new
 		logBrowserModel: logBrowserModel;
 		yourself.

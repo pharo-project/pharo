@@ -54,6 +54,14 @@ RBLiteralValueNode >> copyInContext: aDictionary [
 	^ self class value: self value
 ]
 
+{ #category : #generation }
+RBLiteralValueNode >> dumpOn: aStream [
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ' value: '.
+	self value printOn: aStream
+]
+
 { #category : #testing }
 RBLiteralValueNode >> isFaulty [
 	^false
@@ -81,7 +89,7 @@ RBLiteralValueNode >> value [
 	^ value
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition [
 
 	value := aValue.
@@ -89,7 +97,7 @@ RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition [
 	stop := anotherPosition.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition source: aString [ 
 
 	self value: aValue start: aPosition stop: anotherPosition.

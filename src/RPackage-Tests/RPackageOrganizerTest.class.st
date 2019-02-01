@@ -164,6 +164,25 @@ RPackageOrganizerTest >> testEmpty [
 ]
 
 { #category : #tests }
+RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
+	| p1 p2 c1 |
+	p1 := self createNewPackageNamed: 'P1'.
+	p2 := self createNewPackageNamed: 'P2'.
+
+	self packageOrganizer basicRegisterPackage: p1.
+	self packageOrganizer basicRegisterPackage: p2.
+
+	c1 := self createNewClassNamed: #C1 inPackage: p2.
+	
+	c1 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*p1-something'.
+	packageOrganizer addMethod: (c1 >> #methodPackagedInP1).
+
+	self deny: (packageOrganizer includesPackageNamed: #'p1-something').
+	self assert: (p1 extensionClasses includes: c1)
+
+]
+
+{ #category : #tests }
 RPackageOrganizerTest >> testFullRegistration [	
 
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
@@ -357,14 +376,11 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 { #category : #'tests extending' }
 RPackageOrganizerTest >> testRegistrationExtendingPackages [
 	| p |
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
+	self assertEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
 	p := self pointRectangleInGraphElement.
-	(self packageOrganizer
-					registerExtendingPackage:  p
-					forClass: self quadrangleClass).
-	self deny: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement.
-	
+	self packageOrganizer registerExtendingPackage: p forClass: self quadrangleClass.
+	self denyEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
+	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement
 ]
 
 { #category : #'tests extensions' }
@@ -401,16 +417,11 @@ RPackageOrganizerTest >> testUnregisterBasedOnNames [
 
 { #category : #'tests extending' }
 RPackageOrganizerTest >> testUnregistrationExtendingPackages [
-	| p |	
+	| p |
 	p := self pointRectangleInGraphElement.
-	self packageOrganizer
-		registerExtendingPackage: p
-		forClass: self quadrangleClass.
-	self deny: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
+	self packageOrganizer registerExtendingPackage: p forClass: self quadrangleClass.
+	self denyEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
 	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement.
-	self packageOrganizer
-					unregisterExtendingPackage:  p
-					forClass: self quadrangleClass.
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
-	
+	self packageOrganizer unregisterExtendingPackage: p forClass: self quadrangleClass.
+	self assertEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass)
 ]

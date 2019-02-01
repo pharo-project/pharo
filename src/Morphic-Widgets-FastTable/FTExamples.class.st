@@ -255,29 +255,36 @@ FTExamples class >> exampleEasyList3 [
 FTExamples class >> exampleEditableList1 [
 	<sampleInstance>
 	<example>
-	| list data|
+	| list data |
 	data := OrderedCollection with: 'A' with: 'B' with: 'C'.
 	list := FTTableMorph new
-		extent: 300@550;
+		extent: 300 @ 550;
 		dataSource: (FTExampleDropDataSource new elements: data);
-		selectRowIndex: 1;
-		showFirstRowSelection;
-		onAnnouncement: FTStrongSelectionChanged 
-			do: [ :ann | |index morph ed |
-				index := ann selectedRowIndex.
-				morph := list visibleRowMorphAtIndex: index.
-				ed := RubFloatingEditorBuilder new
-					customizeEditorWith: [ :editor | 
-						editor scrollbarsShowNever.
-						editor bounds: (morph bounds insetBy: (Margin left: -2 top: 0 right: 0 bottom: 0  ))
-					];
+		selectIndex: 1;
+		showFirstSelection;
+		onAnnouncement: FTStrongSelectionChanged
+			do: [ :ann | 
+			| index morph ed |
+			index := ann selectedIndex.
+			morph := list visibleRowMorphAtIndex: index.
+			ed := RubFloatingEditorBuilder new
+				customizeEditorWith: [ :editor | 
+					editor scrollbarsShowNever.
+					editor
+						bounds:
+							(morph bounds
+								insetBy:
+									(Margin
+										left: -2
+										top: 0
+										right: 0
+										bottom: 0)) ];
 				withEditedContentsDo: [ :editedContents | 
 					data at: index put: editedContents asString.
-					list refresh].
-				ed openEditorWithContents: (data at: index) 
-		];
+					list refresh ].
+			ed openEditorWithContents: (data at: index) ];
 		yourself.
-		
+
 	^ list openInWindow
 ]
 
@@ -313,20 +320,19 @@ FTExamples class >> exampleList1 [
 { #category : #examples }
 FTExamples class >> exampleList2 [
 	"Show a list with all Object methods and preselects one item"
+
 	<example>
 	<sampleInstance>
 	| list |
-
 	list := FTTableMorph new
-		extent: 300@550;
+		extent: 300 @ 550;
 		dataSource: (FTExampleMethodListDataSource for: Object);
-		selectRowIndex: 42;
-		showFirstRowSelection;
+		selectIndex: 42;
+		showFirstSelection;
 		allowDeselection;
 		yourself.
 
 	^ list openInWindow
-
 ]
 
 { #category : #examples }
@@ -334,19 +340,18 @@ FTExamples class >> exampleList3 [
 	"Show a list with all Object methods, 
 		- preselects one element
 	 	- responds to selection changes"
+
 	<example>
 	<sampleInstance>
 	| list |
-
 	list := FTTableMorph new
-		extent: 300@550;
+		extent: 300 @ 550;
 		dataSource: (FTExampleMethodListDataSource for: Object);
-		selectRowIndex: 42;
-		showFirstRowSelection;
-		onAnnouncement: FTSelectionChanged 
-			do: [ :ann | ('row selected: ', (ann newSelectedRowIndexes asString)) crLog ];
+		selectIndex: 42;
+		showFirstSelection;
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('row selected: ' , ann newSelectedRowIndexes asString) crLog ];
 		yourself.
-		
+
 	^ list openInWindow
 ]
 
@@ -356,21 +361,19 @@ FTExamples class >> exampleList4 [
 		- preselects one element 
 		- respond to selection changes
 		- respond to strong selections (double click)"
+
 	<sampleInstance>
 	<example>
 	| list |
-
 	list := FTTableMorph new
-		extent: 300@550;
+		extent: 300 @ 550;
 		dataSource: (FTExampleMethodListDataSource for: Object);
-		selectRowIndex: 42;
-		showFirstRowSelection;
-		onAnnouncement: FTSelectionChanged 
-			do: [ :ann | ('row selected: ', (ann newSelectedRowIndexes asString)) crLog ];
-		onAnnouncement: FTStrongSelectionChanged 
-			do: [ :ann | ('double-click on row: ', (ann selectedRowIndex asString)) crLog ];
+		selectIndex: 42;
+		showFirstSelection;
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('row selected: ' , ann newSelectedRowIndexes asString) crLog ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		yourself.
-		
+
 	^ list openInWindow
 ]
 
@@ -381,22 +384,20 @@ FTExamples class >> exampleList5 [
 		- respond to selection changes
 		- respond to strong selections (double click)
 		- allows multiple selection"
+
 	<sampleInstance>
 	<example>
 	| list |
-
 	list := FTTableMorph new
-		extent: 300@550;
+		extent: 300 @ 550;
 		dataSource: (FTExampleMethodListDataSource for: Object);
-		selectRowIndexes: #(42 43);
-		showFirstRowSelection;
-		onAnnouncement: FTSelectionChanged 
-			do: [ :ann | ('rows selected: ', (ann newSelectedRowIndexes asString)) crLog ];
-		onAnnouncement: FTStrongSelectionChanged 
-			do: [ :ann | ('double-click on row: ', (ann selectedRowIndex asString)) crLog ];
+		selectIndexes: #(42 43);
+		showFirstSelection;
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedRowIndexes asString) crLog ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		beMultipleSelection;
 		yourself.
-		
+
 	^ list openInWindow
 ]
 
@@ -484,106 +485,102 @@ FTExamples class >> exampleOutline2 [
 { #category : #examples }
 FTExamples class >> exampleTable1 [
 	"Show a table with all Object methods"
+
 	<sampleInstance>
 	<example>
 	| table |
-
 	table := FTTableMorph new
-		extent: 650@500;
+		extent: 650 @ 500;
 		addColumn: (FTColumn id: 'Name');
 		addColumn: (FTColumn id: 'Protocol');
 		addColumn: (FTColumn id: 'Origin');
 		dataSource: (FTExampleMethodTableDataSource for: Object);
-		selectRowIndex: 1;
-		showFirstRowSelection;
-		onAnnouncement: FTSelectionChanged 
-			do: [ :ann | ('rows selected: ', (ann newSelectedRowIndexes asString)) crLog ];
-		onAnnouncement: FTStrongSelectionChanged 
-			do: [ :ann | ('double-click on row: ', (ann selectedRowIndex asString)) crLog ];
+		selectIndex: 1;
+		showFirstSelection;
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedRowIndexes asString) crLog ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		beMultipleSelection;
+		beResizable;
 		yourself.
-		
+
 	^ table openInWindow
 ]
 
 { #category : #examples }
 FTExamples class >> exampleTable2 [
 	"Show a table with all Object methods, with a fixed width"
+
 	<sampleInstance>
 	<example>
 	| table |
-
 	table := FTTableMorph new
-		extent: 650@500;
+		extent: 650 @ 500;
 		addColumn: ((FTColumn id: 'Name') width: 350);
 		addColumn: (FTColumn id: 'Protocol');
 		addColumn: (FTColumn id: 'Origin');
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
-		selectRowIndex: 1;
-		showFirstRowSelection;
-		onAnnouncement: FTSelectionChanged 
-			do: [ :ann | ('rows selected: ', (ann newSelectedRowIndexes asString)) crLog ];
-		onAnnouncement: FTStrongSelectionChanged 
-			do: [ :ann | ('double-click on row: ', (ann selectedRowIndex asString)) crLog ];
+		selectIndex: 1;
+		showFirstSelection;
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedRowIndexes asString) crLog ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		beMultipleSelection;
+		beResizable;
 		yourself.
-		
+
 	^ table openInWindow
 ]
 
 { #category : #examples }
 FTExamples class >> exampleTable3 [
 	"Show a table with all Object methods, with a header"
+
 	<sampleInstance>
 	<example>
 	| table |
-
 	table := FTTableMorph new
-		extent: 650@500;
+		extent: 650 @ 500;
 		addColumn: ((FTColumn id: '#') width: 40);
 		addColumn: ((FTColumn id: 'Name') width: 350);
 		addColumn: (FTColumn id: 'Protocol');
 		addColumn: (FTColumn id: 'Origin');
 		intercellSpacing: 1;
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
-		selectRowIndex: 1;
-		showFirstRowSelection;
-		onAnnouncement: FTSelectionChanged 
-			do: [ :ann | ('rows selected: ', (ann newSelectedRowIndexes asString)) crLog ];
-		onAnnouncement: FTStrongSelectionChanged 
-			do: [ :ann | ('double-click on row: ', (ann selectedRowIndex asString)) crLog ];
+		selectIndex: 1;
+		showFirstSelection;
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedRowIndexes asString) crLog ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		beMultipleSelection;
+		beResizable;
 		yourself.
-		
+
 	^ table openInWindow
 ]
 
 { #category : #examples }
 FTExamples class >> exampleTable4 [
 	"Show a table with all Object methods, with a resizable header"
+
 	<sampleInstance>
 	<example>
 	| table |
-
 	table := FTTableMorph new
-		extent: 650@500;
+		extent: 650 @ 500;
 		addColumn: ((FTColumn id: '#') width: 40);
 		addColumn: ((FTColumn id: 'Name') width: 350);
 		addColumn: (FTColumn id: 'Protocol');
 		addColumn: (FTColumn id: 'Origin');
 		hideColumnHeaders;
 		beResizable;
-		intercellSpacing: 8@1;
+		intercellSpacing: 8 @ 1;
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
-		selectRowIndex: 1;
-		showFirstRowSelection;
-		onAnnouncement: FTSelectionChanged 
-			do: [ :ann | ('rows selected: ', (ann newSelectedRowIndexes asString)) crLog ];
-		onAnnouncement: FTStrongSelectionChanged 
-			do: [ :ann | ('double-click on row: ', (ann selectedRowIndex asString)) crLog ];
+		selectIndex: 1;
+		showFirstSelection;
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedRowIndexes asString) crLog ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		beMultipleSelection;
+		beResizable;
 		yourself.
-		
+
 	^ table openInWindow
 ]
 
@@ -591,28 +588,27 @@ FTExamples class >> exampleTable4 [
 FTExamples class >> exampleTableHorizontalScroll [
 	"Show a table with all Object methods, with a header,
 	 all fixed width columns as horizontal scroll."
-	<example>
+
 	"self exampleTableHorizontalScroll"
+
+	<example>
 	| table |
-	
 	table := FTTableMorph newTrialHorizontalScrollBar
-		extent: 650@500;
+		extent: 650 @ 500;
 		addColumn: ((FTColumn id: '#') width: 40);
 		addColumn: ((FTColumn id: 'Name') width: 350);
 		addColumn: ((FTColumn id: 'Protocol') width: 200);
 		addColumn: ((FTColumn id: 'Origin') width: 200);
 		intercellSpacing: 1;
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
-		selectRowIndex: 1;
-		showFirstRowSelection;
-		onAnnouncement: FTSelectionChanged 
-			do: [ :ann | ('rows selected: ', (ann newSelectedRowIndexes asString)) crLog ];
-		onAnnouncement: FTStrongSelectionChanged 
-			do: [ :ann | ('double-click on row: ', (ann selectedRowIndex asString)) crLog ];
+		selectIndex: 1;
+		showFirstSelection;
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedRowIndexes asString) crLog ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
 		beMultipleSelection;
 		yourself.
-		
-	^table openInWindow.
+
+	^ table openInWindow
 ]
 
 { #category : #'tree examples' }

@@ -12,6 +12,18 @@ FFIFloatType >> callbackReturnOn: callbackContext for: aFloat [
 	^ callbackContext floatResult: aFloat
 ]
 
+{ #category : #accessing }
+FFIFloatType >> defaultReturnOnError [
+
+	^ 0.0
+]
+
+{ #category : #testing }
+FFIFloatType >> isFloatType [
+	
+	^ true
+]
+
 { #category : #'stack parameter classification' }
 FFIFloatType >> stackValueParameterClass [
 	^ #float

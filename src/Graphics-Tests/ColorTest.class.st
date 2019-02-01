@@ -95,6 +95,28 @@ ColorTest >> testColorFrom [
 ]
 
 { #category : #tests }
+ColorTest >> testFromHexString [
+
+	| color |
+	
+	color := Color fromHexString: 'FFFFFF'.
+	self assert: color equals: Color white.
+
+	color := Color fromHexString: 'ff0000'.
+	self assert: color equals: Color red.
+
+	color := Color fromHexString: '#ff0000'.
+	self assert: color equals: Color red.
+
+	color := Color fromHexString: '#FF00FFFF'.
+	self assert: color equals: Color magenta.
+
+	color := Color fromHexString: '#FF00FF55'.
+	self assert: (color alpha > 0.3 and: [color alpha < 0.4])
+
+]
+
+{ #category : #tests }
 ColorTest >> testFromString [
 	self assert: ((Color fromString: '#FF8800') asHexString sameAs: 'ff8800');
 		assert: ((Color fromString: 'FF8800') asHexString sameAs: 'ff8800');

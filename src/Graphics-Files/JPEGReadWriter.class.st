@@ -1,4 +1,13 @@
 "
+I am JPEGReadWriter.
+I am a concrete subclass of ImageReadWriter.
+
+I implement the JPEG image format.
+
+  https://en.wikipedia.org/wiki/JPEG
+
+NOTE: I only implement reading, not writing, see PluginBasedJPEGReadWriter for that.
+
 I am a subclass of ImageReadWriter that understands JFIF file streams, and can decode JPEG images.
 This code is based upon the Independent Joint Photographic Experts Group (IJPEG) software, originally written in C by Tom Lane, Philip Gladstone, Luis Ortiz, Jim Boucher, Lee Crocker, Julian Minguillon, George Phillips, Davide Rossi, Ge' Weijers, and other members of the Independent JPEG Group.
 
@@ -222,6 +231,11 @@ JPEGReadWriter class >> initialize [
 		add: 221 -> #parseDecoderRestartInterval;
 		add: 224 -> #parseAPPn;
 		add: 225 -> #parseAPPn
+]
+
+{ #category : #'image reading/writing' }
+JPEGReadWriter class >> putForm: aForm onStream: aBinaryWriteStream [ 
+	self error: 'JPEGReadWriter supports decoding, for encoding, look at PluginBasedJPEGReadWriter'
 ]
 
 { #category : #'image reading/writing' }

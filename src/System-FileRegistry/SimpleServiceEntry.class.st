@@ -32,7 +32,7 @@ Class {
 		'argumentGetter',
 		'buttonLabel'
 	],
-	#category : #'System-FileRegistry'
+	#category : #'System-FileRegistry-Base'
 }
 
 { #category : #'instance creation' }
@@ -158,10 +158,10 @@ SimpleServiceEntry >> printOn: aStream [
 
 	aStream nextPutAll: self class name; nextPutAll: ': ('.
 	self provider notNil
-		ifTrue: [aStream nextPutAll: provider printString].
+		ifTrue: [ aStream print: provider ].
 	aStream nextPutAll: ' --- '. 
 	self selector notNil
-		ifTrue: [aStream nextPutAll: selector asString].
+		ifTrue: [ aStream print: selector ].
 	aStream nextPut: $)
 
 

@@ -1,5 +1,16 @@
 "
-I am a specialized OSEnvironment for Windows
+I am a specialized OSEnvironment for Windows.
+See my superclass to understand my common usage.
+
+# Encoding Management
+
+Windows hides the environment variables encoding through its API, and it's not up to the user how to encode them.
+Thus, I do not propose an API to specify encodings.
+
+# Implementation Details 
+
+I use FFI calls to manage encodings. Pharo strings are first encoded in utf8 and used to create Win32 WideStrings, whose are used in the windows function calls.
+See Win32WideString
 "
 Class {
 	#name : #Win32Environment,
@@ -13,66 +24,58 @@ Win32Environment class >> isDefaultFor: aPlatform [
 ]
 
 { #category : #accessing }
-Win32Environment >> environmentStrings [
-	 ^ self ffiCall: #( void * GetEnvironmentStrings () ) module: #Kernel32
+Win32Environment >> at: aKey ifAbsent: aBlock [
+	"The primitive on Windows currently uses the ascii version of the Windows API.
+	In such chase try to get value of the environment variable using FFI."
+
+	^ self getEnvVariable: aKey bufferSize: 500 ifAbsent: aBlock
 ]
 
 { #category : #accessing }
-Win32Environment >> getEnv: aVariableName [
-	
-	<todo>
-	"The primitive on Windows is currently broken (2017-08-05) and instead of failing it can return nil.
-	In such chase try to get value of the environment variable using FFI."
+Win32Environment >> at: aKey put: aValue [
+	"The primitive on Windows currently uses the ascii version of the Windows API.
+	In such chase try to set the value of the environment variable using FFI."
 
-    | result | 
-    
-    result := super getEnv: aVariableName.
-    ^ result ifNil: [self getEnvViaFFI: aVariableName ]
+	| w32Key w32Value return |
+	w32Key := aKey asWin32WideString.
+	w32Value := aValue asWin32WideString.
+	return := self setEnvironmentVariable: w32Key value: w32Value.	
+
+	"From MSDN: If the function fails, the return value is zero."
+	return = 0 ifTrue: [ 
+		self error: 'An error occurred while setting environment variable ', aKey asString, ' to ', aValue asString ].
 ]
 
 { #category : #private }
-Win32Environment >> getEnv: arg1 buffer: arg2 size: arg3 [
-	"If the function succeeds, the return value is the number of characters stored in the buffer pointed to by aBuffer, not including the terminating null character.
-	
-If aBuffer is not large enough to hold the data, the return value is the buffer size, in characters, required to hold the string and its terminating null character and the contents of aBuffer are undefined.
-
-If the function fails, the return value is zero. If the specified environment variable was not found in the environment block, GetLastError returns ERROR_ENVVAR_NOT_FOUND.
-
-Important note: arguments of this method are named like the decompiler would use it so it could be used
-                in the startup process for the case no source file is found.
-
-    arg1 : a name as string representing the environment variable
-    arg2 : the buffer
-    arg3 : an integer with the size of the buffer
-"
-	 ^ self ffiCall: #( int GetEnvironmentVariableA ( String arg1, char *arg2, int arg3 ) ) module: #Kernel32
+Win32Environment >> environmentStrings [
+	 ^ self ffiCall: #( void * GetEnvironmentStrings () )
 ]
 
 { #category : #private }
-Win32Environment >> getEnvSize: arg1 [
-	"
-	Return the buffer size of the given environment variable.
+Win32Environment >> ffiLibraryName [
 
-   Important note: arguments of this method are named like the decompiler would use 
-   it so it could be used in the startup process for the case no source file is    
-   found.
-
-    arg1 : a name as string representing the environment variable	
-	
-	"
-	^ self ffiCall: #( int GetEnvironmentVariableA ( String arg1, nil, 0 ) ) module: #Kernel32
+	^ #Kernel32
 ]
 
 { #category : #private }
-Win32Environment >> getEnvViaFFI: aVariableName [
-	| valueSize buffer |
-	valueSize := self getEnvSize: aVariableName.
-	valueSize = 0 
-		ifTrue: [ ^ nil ].
-	buffer := ByteArray new: valueSize.
-	(self getEnv: aVariableName buffer: buffer size: valueSize) = (valueSize - 1)
-		ifFalse: [ ^ nil ].
-	^ buffer allButLast asString
+Win32Environment >> getEnvVariable: aVariableName bufferSize: aSize ifAbsent: aBlock [
+	| name buffer return |
+
+	name := aVariableName asWin32WideString.
+	buffer := Win32WideString new: aSize.
+	return := OSPlatform current getEnvironmentVariable: name into: buffer size: aSize + 1.
+	
+	"From MSDN: If the function fails, the return value is zero. If the specified environment variable was not found in the environment block, GetLastError returns ERROR_ENVVAR_NOT_FOUND."
+	return = 0 ifTrue: [ 
+		OSPlatform current lastError = "ERROR_ENVVAR_NOT_FOUND" 16r000000CB
+			ifTrue: [ ^ aBlock value ]
+			ifFalse: [ self error: 'An error occurred while fetching environment variable ', aVariableName asString ] ].
+	
+	"From MSDN: If lpBuffer is not large enough to hold the data, the return value is the buffer size, in characters,
+	required to hold the string and its terminating null character and the contents of lpBuffer are undefined."
+	return > aSize ifTrue: [ ^ self getEnvVariable: aVariableName bufferSize: return ifAbsent: aBlock ].
+	
+	^ buffer asString
 ]
 
 { #category : #enumeration }
@@ -93,12 +96,35 @@ Win32Environment >> keysAndValuesDo: aBlock [
 ]
 
 { #category : #private }
-Win32Environment >> setEnv: nameString value: valueString [
-	"This method calls the Standard C Library getenv() function"
-	 ^ self ffiCall: #( int SetEnvironmentVariableA ( String nameString, String valueString ) ) module: #Kernel32
+Win32Environment >> removeEnvironmentVariable: nameString [
+
+	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, 0 ) )
 ]
 
 { #category : #accessing }
-Win32Environment >> unsetEnv: aString [
-	^ self setEnv: aString value: nil
+Win32Environment >> removeKey: aKey [
+	"The primitive on Windows currently uses the ascii version of the Windows API.
+	In such chase try to get value of the environment variable using FFI."
+
+	| return |
+	return := self removeEnvironmentVariable: aKey asWin32WideString.
+
+	"From MSDN: If the function fails, the return value is zero."
+	return = 0 ifTrue: [ 
+		self error: 'An error occurred while removing environment variable ', aKey asString ].
+]
+
+{ #category : #private }
+Win32Environment >> setEnv: nameString value: valueString [
+	"This method calls the the platform specific set environment routine"
+
+	^ self
+		ffiCall: #(int SetEnvironmentVariableA #(String nameString , String valueString))
+		module: #Kernel32
+]
+
+{ #category : #private }
+Win32Environment >> setEnvironmentVariable: nameString value: valueString [
+
+	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, Win32WideString valueString ) )
 ]

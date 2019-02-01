@@ -1,15 +1,18 @@
+"
+Default command line handling
+"
 Class {
 	#name : #ManifestSystemCommandLineHandler,
 	#superclass : #PackageManifest,
-	#category : #'System-CommandLineHandler'
+	#category : #'System-CommandLineHandler-Manifest'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'meta-data - dependency analyser' }
 ManifestSystemCommandLineHandler class >> ignoredDependencies [
-	^ #(#'System-Settings' #StartupPreferences)
+	^ #(#'System-Settings-Core' #StartupPreferences)
 ]
 
 { #category : #'meta-data - dependency analyser' }
 ManifestSystemCommandLineHandler class >> manuallyResolvedDependencies [
-	^ #(#'FileSystem-Core' #'System-Settings' #'System-Support')
+	^ #(#'FileSystem-Core' #'System-Settings-Core' #'System-Support')
 ]

@@ -106,6 +106,17 @@ RBAssignmentNode >> directlyUses: aNode [
 	^aNode = value ifTrue: [true] ifFalse: [self isDirectlyUsed]
 ]
 
+{ #category : #generation }
+RBAssignmentNode >> dumpOn: aStream [
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ' variable: ('.
+	self variable dumpOn: aStream.
+	aStream nextPutAll: ') value: ('.
+	self value dumpOn: aStream.
+	aStream nextPut: $)
+]
+
 { #category : #comparing }
 RBAssignmentNode >> equalTo: anObject withMapping: aDictionary [ 
 	^self class = anObject class and: 
@@ -152,6 +163,12 @@ RBAssignmentNode >> postCopy [
 { #category : #accessing }
 RBAssignmentNode >> precedence [
 	^5
+]
+
+{ #category : #'adding/removing' }
+RBAssignmentNode >> removeNode: aNode [
+
+	self replaceNode: aNode withNode: aNode receiver
 ]
 
 { #category : #replacing }

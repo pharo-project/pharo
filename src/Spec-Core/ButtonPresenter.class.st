@@ -191,6 +191,8 @@ ButtonPresenter >> initialize [
 		(aMenuModel isNil or: [ aMenuModel isBlock ]) ifFalse: [ aMenuModel applyTo: self ] ].
 		
 	self bindKeyCombination: Character space toAction: [ self action ].
+	
+	self color: nil.
 ]
 
 { #category : #morphic }

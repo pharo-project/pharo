@@ -97,7 +97,7 @@ FTColumnResizerMorph >> mouseMove: anEvent [
 	anEvent hand temporaryCursor ifNil: [^ self].
 	traceMorph ifNil: [
 		traceMorph := Morph newBounds: (self bounds withHeight: container height).
-		traceMorph color: Smalltalk ui theme fastTableColumnResizingColor.
+		traceMorph color: self theme fastTableColumnResizingColor.
 		traceMorph borderWidth: 0.
 		container addMorph: traceMorph].
 	traceMorph position: (anEvent cursorPoint x - lastMouse second x) @ traceMorph position y
@@ -146,7 +146,7 @@ FTColumnResizerMorph >> resizeCursor [
 { #category : #private }
 FTColumnResizerMorph >> setGrabbedColor [
 	"Set the color of the receiver when it is grabbed."
-	self fillStyle: Smalltalk ui theme fastTableColumnSplitterSelectedColor
+	self fillStyle: self theme fastTableColumnSplitterSelectedColor
 ]
 
 { #category : #'Polymorph-Widgets' }

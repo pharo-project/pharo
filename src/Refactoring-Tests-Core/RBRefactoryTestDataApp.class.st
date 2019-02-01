@@ -132,6 +132,7 @@ RBRefactoryTestDataApp >> contains [
 
 { #category : #lint }
 RBRefactoryTestDataApp >> cruft [
+	<haltOrBreakpointForTesting>
 	self halt
 ]
 

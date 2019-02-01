@@ -315,12 +315,6 @@ TraitedClass >> removeSelector: aSelector [
 	TraitChange removeSelector: aSelector on: self.
 ]
 
-{ #category : #initialization }
-TraitedClass >> slots [
-	"I remove the slots comming from a traitComposition"
-	^ super slots reject:[ :e  | self traitComposition slots includes:e ]
-]
-
 { #category : #'accessing tags' }
 TraitedClass >> tagsForMethods [
 	"Any method could be tagged with multiple symbols for user purpose. 

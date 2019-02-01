@@ -96,7 +96,9 @@ GLMListMorphicTest >> testOnlyOneMorphPerRowInList [
 		to: #one;
 		andShow: [ :a | a list display: [ :x | x ] ].
 	window := browser openOn: (1 to: 100).
-	World doOneCycle.
+
+	self waitUntilUIRedrawed.
+
 	listMorph := self find: MorphTreeMorph in: window.
 	nodeMorphs := (self find: MorphTreeTransformMorph in: listMorph) submorphs.
 	self assert: nodeMorphs size equals: 100.
@@ -229,7 +231,7 @@ GLMListMorphicTest >> testUpdateFromModel [
 	treeMorphOne2 := self find: MorphTreeMorph in: window.
 	self assert: (treeMorphOne2 model roots collect: #item) equals: #(5 6 7 8) asOrderedCollection.
 	self assert: treeMorphOne1 ~= treeMorphOne2.
-	self assert: window submorphs last submorphs last submorphs first submorphs isEmpty.
+	self assertEmpty: window submorphs last submorphs last submorphs first submorphs.
 	((browser paneNamed: #one) port: #selection) value: 5.
 	treeMorphTwo2 := self findLast: MorphTreeMorph in: window.
 	self assert: (treeMorphTwo2 model roots collect: #item) equals: #(50 51 52) asOrderedCollection.

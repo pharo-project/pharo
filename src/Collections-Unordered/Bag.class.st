@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'contents'
 	],
-	#category : #'Collections-Unordered'
+	#category : #'Collections-Unordered-Bags'
 }
 
 { #category : #'instance creation' }
@@ -79,7 +79,8 @@ Bag >> asBag [
 { #category : #converting }
 Bag >> asSet [
 	"Answer a set with the elements of the receiver."
-
+	"#(1 2 2 3 1 1 1) asBag asSet >>> #(1 2 2 3 1 1 1) asSet"
+	
 	^ contents keys asSet
 ]
 
@@ -96,6 +97,9 @@ Bag >> at: index put: anObject [
 { #category : #accessing }
 Bag >> cumulativeCounts [
 	"Answer with a collection of cumulative percents covered by elements so far."
+	
+	"#(1 2 2 3 1 1 1) asBag cumulativeCounts >>> {57.1->1 . 85.7->2 . 100.0->3}"
+	
 	| s n |
 	s := self size / 100.0. n := 0.
 	^ self sortedCounts asArray collect:
@@ -118,9 +122,12 @@ Bag >> doWithOccurrences: aTwoArgBlock [
 
 { #category : #testing }
 Bag >> includes: anObject [ 
-	"Refer to the comment in Collection|includes:."
+	"Answer whether anObject is one of the receiver's elements."
 
-	^contents includesKey: anObject
+	"#(1 2 2 3 1 1 1) includes: 5 >>> false"
+	"#(1 2 2 3 1 1 1) includes: 1 >>> true"
+	
+	^ contents includesKey: anObject
 ]
 
 { #category : #enumerating }
@@ -132,11 +139,13 @@ Bag >> keysAndValuesDo: aTwoArgBlock [
 
 { #category : #testing }
 Bag >> occurrencesOf: anObject [ 
-	"Refer to the comment in Collection|occurrencesOf:."
-
-	(self includes: anObject)
-		ifTrue: [^contents at: anObject]
-		ifFalse: [^0]
+	"Answer how many of the receiver's elements are equal to anObject."
+	
+	"#(1 2 2 3 1 1 1) asBag occurrencesOf: 1 >>> 4"
+	
+	^ (self includes: anObject)
+		ifTrue: [ contents at: anObject]
+		ifFalse: [ 0 ]
 ]
 
 { #category : #copying }
@@ -147,7 +156,10 @@ Bag >> postCopy [
 
 { #category : #removing }
 Bag >> remove: oldObject ifAbsent: exceptionBlock [ 
-	"Refer to the comment in Collection|remove:ifAbsent:."
+	"Remove oldObject from the receiver's elements. If several of the 
+	elements are equal to oldObject, only one is removed. If no element is 
+	equal to oldObject, answer the result of evaluating anExceptionBlock. 
+	Otherwise, answer the argument, oldObject."
 
 	| count |
 	count := contents at: oldObject ifAbsent: [^ exceptionBlock value].
@@ -175,6 +187,8 @@ Bag >> setContents: aDictionary [
 Bag >> size [
 	"Answer how many elements the receiver contains."
 
+	"#(1 2 2 3 1 1 1) asBag size >>> 7"
+	
 	| tally |
 	tally := 0.
 	contents do: [:each | tally := tally + each].
@@ -197,7 +211,8 @@ Bag >> sortedCounts [
 { #category : #accessing }
 Bag >> sortedElements [
 	"Answer with a collection of elements with counts, sorted by element."
-	"Suggested by l. Uzonyi"
+	
+	"#(1 2 2 3 1 1 1) asBag sortedElements >>> {1->4. 2->2. 3->1}"
 	
 	^contents associations
  		sort;
@@ -206,7 +221,10 @@ Bag >> sortedElements [
 
 { #category : #'math functions' }
 Bag >> sum [
+	"Return the sum (+) of the elements held in the receiver."
 	"Faster than the superclass implementation when you hold many instances of the same value (which you probably do, otherwise you wouldn't be using a Bag)."
+	
+	"#(1 2 2 3 1 1 1) sum >>> 11"
 	
 	| sum first |
 	first := true.
@@ -215,7 +233,7 @@ Bag >> sum [
 			ifTrue: [ sum := value * count. first := false ]
 			ifFalse: [ sum := sum + (value * count) ] ].
 	first ifTrue: [ self errorEmptyCollection ].
-	^sum
+	^ sum
 ]
 
 { #category : #accessing }

@@ -24,7 +24,7 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: category
 ProperMethodCategorizationTest >> testCloneMethodNeedsToBeInCopyingProtocol [
 	"The #clone methods should be in method protocol 'copying'"
 	
-	self assureAll: #clone areCategorizedIn: #copying  whenSubclassOf: Object
+	self assureAll: #clone areCategorizedIn: #copying whenSubclassOf: Object
 
 ]
 
@@ -32,7 +32,7 @@ ProperMethodCategorizationTest >> testCloneMethodNeedsToBeInCopyingProtocol [
 ProperMethodCategorizationTest >> testCopyMethodNeedsToBeInCopyingProtocol [
 	"The #copy methods should be in method protocol 'copying'"
 	
-	self assureAll: #copy areCategorizedIn: #copying  whenSubclassOf: Object
+	self assureAll: #copy areCategorizedIn: #copying whenSubclassOf: Object
 
 ]
 
@@ -40,7 +40,7 @@ ProperMethodCategorizationTest >> testCopyMethodNeedsToBeInCopyingProtocol [
 ProperMethodCategorizationTest >> testDeepCopyMethodNeedsToBeInCopyingProtocol [
 	"The #deepCopy methods should be in method protocol 'copying'"
 	
-	self assureAll: #deepCopy areCategorizedIn: #copying  whenSubclassOf: Object
+	self assureAll: #deepCopy areCategorizedIn: #copying whenSubclassOf: Object
 
 ]
 
@@ -48,7 +48,7 @@ ProperMethodCategorizationTest >> testDeepCopyMethodNeedsToBeInCopyingProtocol [
 ProperMethodCategorizationTest >> testEqualMethodNeedsToBeInComparingProtocol [
 	"The #= method should be in method protocol 'comparing'"
 	
-	self assureAll: #= areCategorizedIn: #comparing  whenSubclassOf: Object
+	self assureAll: #= areCategorizedIn: #comparing whenSubclassOf: Object
 
 ]
 
@@ -56,7 +56,7 @@ ProperMethodCategorizationTest >> testEqualMethodNeedsToBeInComparingProtocol [
 ProperMethodCategorizationTest >> testFinalizeMethodNeedsToBeInComparingProtocol [
 	"The #finalize method should be in method protocol 'finalization'"
 	
-	self assureAll: #finalize areCategorizedIn: #finalization  whenSubclassOf: Object
+	self assureAll: #finalize areCategorizedIn: #finalization whenSubclassOf: Object
 
 ]
 
@@ -64,7 +64,7 @@ ProperMethodCategorizationTest >> testFinalizeMethodNeedsToBeInComparingProtocol
 ProperMethodCategorizationTest >> testFinalizeValuesMethodNeedsToBeInComparingProtocol [
 	"The #finalizeValues methods should be in method protocol 'finalization'"
 	
-	self assureAll: #finalizeValues areCategorizedIn: #finalization  whenSubclassOf: Object
+	self assureAll: #finalizeValues areCategorizedIn: #finalization whenSubclassOf: Object
 
 ]
 
@@ -72,29 +72,29 @@ ProperMethodCategorizationTest >> testFinalizeValuesMethodNeedsToBeInComparingPr
 ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 	"The #hash method should be in method protocol 'comparing'"
 	
-	self assureAll: #hash areCategorizedIn: #comparing  whenSubclassOf: Object
+	self assureAll: #hash areCategorizedIn: #comparing whenSubclassOf: Object
 
 ]
 
 { #category : #tests }
 ProperMethodCategorizationTest >> testNoEmptyProtocols [
 	"Check that we have no protocols left without methods"
-	
+
 	| violating protocolsWithoutMethods |
 	violating := Dictionary new.
 	ProtoObject withAllSubclasses
 		do: [ :cls | 
 			protocolsWithoutMethods := cls organization protocolOrganizer protocols select: [ :e | e isEmpty and: [ e canBeRemoved ] ].
-			protocolsWithoutMethods notEmpty
-				ifTrue: [ violating at: cls put: protocolsWithoutMethods ] ].
-	self assert: violating isEmpty
+			protocolsWithoutMethods notEmpty ifTrue: [ violating at: cls put: protocolsWithoutMethods ] ].
+
+	self assertEmpty: violating
 ]
 
 { #category : #'tests - object' }
 ProperMethodCategorizationTest >> testPostCopyMethodNeedsToBeInCopyingProtocol [
 	"The #postCopy methods should be in method protocol 'copying'"
 	
-	self assureAll: #postCopy areCategorizedIn: #copying  whenSubclassOf: Object
+	self assureAll: #postCopy areCategorizedIn: #copying whenSubclassOf: Object
 
 ]
 
@@ -102,7 +102,7 @@ ProperMethodCategorizationTest >> testPostCopyMethodNeedsToBeInCopyingProtocol [
 ProperMethodCategorizationTest >> testRunCaseMethodInSUnitTestsNeedsToBeInRunningProtocol [
 	"The #tearDown method in SUnit test classes should be in method protocol 'running'"
 	
-	self assureAll: #runCase areCategorizedIn: #running  whenSubclassOf: TestCase
+	self assureAll: #runCase areCategorizedIn: #running whenSubclassOf: TestCase
 
 ]
 
@@ -110,7 +110,7 @@ ProperMethodCategorizationTest >> testRunCaseMethodInSUnitTestsNeedsToBeInRunnin
 ProperMethodCategorizationTest >> testSetUpMethodInSUnitTestsNeedsToBeInRunningProtocol [
 	"The #setUp method in SUnit test classes should be in method protocol 'running'"
 
-	self assureAll: #setUp areCategorizedIn: #running  whenSubclassOf: TestCase
+	self assureAll: #setUp areCategorizedIn: #running whenSubclassOf: TestCase
 
 ]
 
@@ -118,7 +118,7 @@ ProperMethodCategorizationTest >> testSetUpMethodInSUnitTestsNeedsToBeInRunningP
 ProperMethodCategorizationTest >> testShallowCopyMethodNeedsToBeInCopyingProtocol [
 	"The #shallowCopy methods should be in method protocol 'copying'"
 	
-	self assureAll: #shallowCopy areCategorizedIn: #copying  whenSubclassOf: Object
+	self assureAll: #shallowCopy areCategorizedIn: #copying whenSubclassOf: Object
 
 ]
 
@@ -126,7 +126,7 @@ ProperMethodCategorizationTest >> testShallowCopyMethodNeedsToBeInCopyingProtoco
 ProperMethodCategorizationTest >> testTearDownMethodInSUnitTestsNeedsToBeInRunningProtocol [
 	"The #tearDown method in SUnit test classes should be in method protocol 'running'"
 	
-	self assureAll: #tearDown areCategorizedIn: #running  whenSubclassOf: TestCase
+	self assureAll: #tearDown areCategorizedIn: #running whenSubclassOf: TestCase
 
 ]
 
@@ -134,6 +134,6 @@ ProperMethodCategorizationTest >> testTearDownMethodInSUnitTestsNeedsToBeInRunni
 ProperMethodCategorizationTest >> testVeryDeepCopyMethodNeedsToBeInCopyingProtocol [
 	"The #veryDeepCopy methods should be in method protocol 'copying'"
 	
-	self assureAll: #veryDeepCopy areCategorizedIn: #copying  whenSubclassOf: Object
+	self assureAll: #veryDeepCopy areCategorizedIn: #copying whenSubclassOf: Object
 
 ]

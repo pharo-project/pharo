@@ -23,6 +23,11 @@ OCClassScope >> class: aBehavior [
 	class := aBehavior
 ]
 
+{ #category : #accessing }
+OCClassScope >> environment [
+	^class classPool
+]
+
 { #category : #lookup }
 OCClassScope >> findVariable: lookupBlock ifNone: notFoundBlock [ 
 

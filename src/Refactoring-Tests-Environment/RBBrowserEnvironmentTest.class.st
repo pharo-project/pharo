@@ -27,26 +27,24 @@ RBBrowserEnvironmentTest class >> packageNamesUnderTest [
 ]
 
 { #category : #private }
-RBBrowserEnvironmentTest >> categoriesFor: anEnvironment [ 
+RBBrowserEnvironmentTest >> categoriesFor: anEnvironment [
 	| allCategories |
 	allCategories := IdentitySet withAll: universalEnvironment categories.
 	allCategories removeAll: anEnvironment categories.
-	anEnvironment not categories 
-		do: [ :each | allCategories remove: each ifAbsent: [ ] ].
-	allCategories 
-		do: [ :each | self assert: (universalEnvironment classNamesFor: each) isEmpty ]
+	anEnvironment not categories do: [ :each | allCategories remove: each ifAbsent: [  ] ].
+	allCategories do: [ :each | self assertEmpty: (universalEnvironment classNamesFor: each) ]
 ]
 
 { #category : #private }
-RBBrowserEnvironmentTest >> classNamesFor: anEnvironment [ 
+RBBrowserEnvironmentTest >> classNamesFor: anEnvironment [
 	| classNames allClassNames |
 	classNames := IdentitySet new
 		addAll: anEnvironment classNames asSet;
 		addAll: anEnvironment not classNames;
 		yourself.
 	allClassNames := universalEnvironment classNames asSortedCollection.
-	self assert: classNames asSortedCollection 	= allClassNames.
-	self assert: (anEnvironment & anEnvironment not) classNames isEmpty.
+	self assert: classNames asSortedCollection = allClassNames.
+	self assertEmpty: (anEnvironment & anEnvironment not) classNames.
 	self assert: (anEnvironment | anEnvironment not) classNames asSortedCollection = allClassNames
 ]
 
@@ -61,12 +59,12 @@ RBBrowserEnvironmentTest >> classVariableWriter [
 ]
 
 { #category : #private }
-RBBrowserEnvironmentTest >> classesFor: aBrowserEnvironment [ 
+RBBrowserEnvironmentTest >> classesFor: aBrowserEnvironment [
 	| allClasses |
 	allClasses := aBrowserEnvironment classes asSet.
 	allClasses addAll: aBrowserEnvironment not classes.
-	RBBrowserEnvironment new allClassesDo: [:each | allClasses remove: each].
-	self assert: allClasses isEmpty
+	RBBrowserEnvironment new allClassesDo: [ :each | allClasses remove: each ].
+	self assertEmpty: allClasses
 ]
 
 { #category : #private }
@@ -78,12 +76,12 @@ RBBrowserEnvironmentTest >> copyFor: aBrowserEnvironment [
 ]
 
 { #category : #private }
-RBBrowserEnvironmentTest >> keysFor: aBrowserEnvironment [ 
+RBBrowserEnvironmentTest >> keysFor: aBrowserEnvironment [
 	| allKeys |
 	allKeys := IdentitySet withAll: aBrowserEnvironment keys.
 	allKeys addAll: aBrowserEnvironment not keys.
 	allKeys removeAll: Smalltalk globals keys.
-	self assert: allKeys isEmpty
+	self assertEmpty: allKeys
 ]
 
 { #category : #private }
@@ -296,31 +294,29 @@ RBBrowserEnvironmentTest >> testMatches [
 
 { #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testNotEnvironment [
-	| notPrintStringEnvironment printStringEnvironment kernelEnvironment notKernelEnvironment|
+	| notPrintStringEnvironment printStringEnvironment kernelEnvironment notKernelEnvironment |
 	printStringEnvironment := universalEnvironment referencesTo: #printString.
 	notPrintStringEnvironment := printStringEnvironment not.
-	kernelEnvironment := (RBPackageEnvironment packageName: 'Kernel').
+	kernelEnvironment := RBPackageEnvironment packageName: 'Kernel'.
 	notKernelEnvironment := kernelEnvironment not.
 
 	self universalTestFor: notPrintStringEnvironment.
-	self assert: (notPrintStringEnvironment referencesTo: #printString) isEmpty.
+	self assertEmpty: (notPrintStringEnvironment referencesTo: #printString).
 	self assert: (notPrintStringEnvironment not includesClass: RBBrowserEnvironmentTest).
-	self assert: (notPrintStringEnvironment not 
-			includesSelector: #testNotEnvironment
-			in: RBBrowserEnvironmentTest).
+	self assert: (notPrintStringEnvironment not includesSelector: #testNotEnvironment in: RBBrowserEnvironmentTest).
 	self assert: (notKernelEnvironment includesPackage: 'Kernel' asPackage) not.
-	self assert: (notKernelEnvironment & kernelEnvironment) packages isEmpty
+	self assertEmpty: (notKernelEnvironment & kernelEnvironment) packages
 ]
 
 { #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testNotEnvironmentWithClassEnvironments [
 	| numberEnvironment notNumberEnvironment |
-	numberEnvironment := (RBBrowserEnvironment new) forClasses: Number withAllSubclasses.
+	numberEnvironment := RBBrowserEnvironment new forClasses: Number withAllSubclasses.
 	notNumberEnvironment := numberEnvironment not.
 
 	self universalTestFor: notNumberEnvironment.
 	self deny: (notNumberEnvironment includesClass: Number).
-	self assert: (notNumberEnvironment & numberEnvironment) classes isEmpty.
+	self assertEmpty: (notNumberEnvironment & numberEnvironment) classes.
 	self assert: (notNumberEnvironment not includesClass: Number)
 ]
 
@@ -465,14 +461,12 @@ RBBrowserEnvironmentTest >> testVariableEnvironmentAddRemove [
 
 { #category : #testing }
 RBBrowserEnvironmentTest >> testVariableEnvironmentClassVars [
-"test variable environment for class vars, refered on the class side only"
-	| classRefs |
-	classRefs := RBVariableEnvironment
-		referencesToClassVariable: 'ClassSideOnlyVariable'
-		in: self class.
-	self universalTestFor: classRefs.
-	self assert: classRefs methods isEmpty not.
+	"test variable environment for class vars, refered on the class side only"
 
+	| classRefs |
+	classRefs := RBVariableEnvironment referencesToClassVariable: 'ClassSideOnlyVariable' in: self class.
+	self universalTestFor: classRefs.
+	self denyEmpty: classRefs methods
 ]
 
 { #category : #testing }

@@ -148,7 +148,7 @@ TaCompositionElement >> selectors [
 
 { #category : #accessing }
 TaCompositionElement >> slots [
-	^ innerClass slots 
+	^ innerClass allSlots 
 ]
 
 { #category : #printing }

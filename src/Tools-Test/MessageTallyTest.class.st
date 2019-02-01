@@ -19,7 +19,7 @@ MessageTallyTest >> testClosedTally [
 				openResultWindow: false.
 				
 	"The tally is closed, therefore nothing may be accessed"
-	self assert: (tally receivers isNil)
+	self assert: tally receivers isNil
 ]
 
 { #category : #basic }
@@ -27,8 +27,8 @@ MessageTallyTest >> testInstantiation [
 
 	| messageTally |
 	messageTally := MessageTally new.
-	self assert: (messageTally time = 0).
-	self assert: (messageTally tally = 0)
+	self assert: messageTally time equals: 0.
+	self assert: messageTally tally equals: 0
 ]
 
 { #category : #sampling }
@@ -43,7 +43,7 @@ MessageTallyTest >> testSampling1 [
 				closeAfter: false.
 
 	"No process is accessible from the tally, the reason is that using the sampling method execute the block in the current process"
-	self assert: (tally process isNil).
+	self assert: tally process isNil
 
 
 ]
@@ -51,20 +51,19 @@ MessageTallyTest >> testSampling1 [
 { #category : #tallying }
 MessageTallyTest >> testTallySends [
 
-	| tally thisMethod allProcesses numberOfProcesses processUsedByTally tallyForPrintString tallyForPrintStringBase |
+	| tally thisMethod allProcesses processUsedByTally tallyForPrintString tallyForPrintStringBase |
 	allProcesses := Process allInstances.
-	numberOfProcesses := allProcesses size.
-
+	 
 	tally := MessageTally 
 				tallySendsTo: nil 
-				inBlock:  [ 3.14159 printString ] 
+				inBlock:  [ 3.14159s printString ] 
 				showTree: true 
 				closeAfter: false 
 				openResultWindow: false.
 	
 	"tally is for this test method"
 	thisMethod := self class >> #testTallySends.
-	self assert: (tally hash = thisMethod hash).
+	self assert: tally hash equals: thisMethod hash.
 	self assert: (tally method == thisMethod).
 	self assert: (tally theClass == self class).
 
@@ -76,33 +75,29 @@ MessageTallyTest >> testTallySends [
 	self assert: (tally tally >= 50).
 	"The tally is not close, therefore the tree may be crawled over"
 	self assert: (tally receivers isArray).
-	self assert: (tally receivers size = 2).
+	self assert: tally receivers size equals: 2.
 	
 	"--------"
 	tallyForPrintString := tally receivers second.
-	"Since 3.14159 is a float"
-	self assert: (tallyForPrintString theClass includesBehavior: Float).
+	"Since 3.14159s is a ScaledDecimal"
+	self assert: (tallyForPrintString theClass includesBehavior: ScaledDecimal).
 	"the executed method is Number>>printString"
-	self assert: (tallyForPrintString method == ( Number>>#printString)).
+	self assert: (tallyForPrintString method == (Number>>#printString)).
 	self assert: (tallyForPrintString tally >= 50).
 
 	"--------"
 	tallyForPrintStringBase := tallyForPrintString receivers first.
-	"The receiver is still a Float"
-	self assert: (tallyForPrintString theClass includesBehavior: Float).
+	"The receiver is still a ScaledDecimal"
+	self assert: (tallyForPrintString theClass includesBehavior: ScaledDecimal).
 	"the executed method is Number>>printStringBase: this time"
 	self assert: (tallyForPrintStringBase method == ( Number>>#printStringBase:)).
 	self assert: (tallyForPrintStringBase tally >= 50).
 	
 	"The method printStringBase: calls two methods:
-	   SequenceableCollection class >> streamContents: and Float >> printOn:base:"
+	   SequenceableCollection class >> streamContents: and ScaledDecimal >> printOn:base:"
 	
-	self assert: (tallyForPrintStringBase receivers size = 1).
-	
-	"streamContents: is been tallied 13 times and printOn:base: 59 times"
-	self assert: (tallyForPrintStringBase receivers size = 1).	
-	self assert: ((tallyForPrintStringBase receivers first tally) >= 128 ).	
-
+	self assert: tallyForPrintStringBase receivers size equals: 1.	
+	self assert: ((tallyForPrintStringBase receivers first tally) >= 50 ).	
 
 	"We close to explicitely release reference of the process, the class and methods"
 	tally close.
@@ -117,10 +112,11 @@ MessageTallyTest >> testTallyShouldNotContainsAReturn [
 	"The block passed to MessageTally should not have a ^ "
 	
 	self should: [ MessageTally
-					tallySendsTo: nil 
-					inBlock:  [ ^ 3.14159 printString ] 
-					showTree: true 
-					closeAfter: false 
-					openResultWindow: false ] raise: Error.
+						tallySendsTo: nil 
+						inBlock:  [ ^ 3.14159 printString ] 
+						showTree: true 
+						closeAfter: false 
+						openResultWindow: false ] 
+		 raise: Error
 	
 ]

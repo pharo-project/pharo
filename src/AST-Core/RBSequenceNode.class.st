@@ -89,6 +89,20 @@ RBSequenceNode >> addNode: aNode [
 ]
 
 { #category : #'adding nodes' }
+RBSequenceNode >> addNode: aNode after: anotherNode [
+
+	| index |
+	index := self indexOfNode: anotherNode.
+	index = 0
+		ifTrue: [ ^ self addNode: aNode ].
+	statements := statements asOrderedCollection
+		add: aNode afterIndex: index;
+		yourself.
+	aNode parent: self.
+	^ aNode
+]
+
+{ #category : #'adding nodes' }
 RBSequenceNode >> addNode: aNode before: anotherNode [
 	| index |
 	index := self indexOfNode: anotherNode.
@@ -108,6 +122,14 @@ RBSequenceNode >> addNodeFirst: aNode [
 		addFirst: aNode;
 		yourself.
 	^ aNode
+]
+
+{ #category : #'adding nodes' }
+RBSequenceNode >> addNodeLast: aNode [
+
+	self lastIsReturn
+		ifTrue: [ self addNode: aNode before: self statements last ]
+		ifFalse: [ self addNode: aNode ]
 ]
 
 { #category : #'adding nodes' }
@@ -228,6 +250,24 @@ RBSequenceNode >> directlyUses: aNode [
 	^false
 ]
 
+{ #category : #generation }
+RBSequenceNode >> dumpOn: aStream [
+	aStream nextPutAll: self class name.
+	self temporaries
+		ifNotEmpty: [ aStream nextPutAll: ' temporaries: {'.
+			self temporaries
+				do: [ :each | 
+					each dumpOn: aStream.
+					aStream nextPutAll: '. ' ].
+			aStream nextPut: $} ].
+	aStream nextPutAll: ' statements: {'.
+	self statements
+		do: [ :each | 
+			each dumpOn: aStream.
+			aStream nextPutAll: '. ' ].
+	aStream nextPut: $}
+]
+
 { #category : #comparing }
 RBSequenceNode >> equalTo: anObject withMapping: aDictionary [ 
 	self class = anObject class ifFalse: [^false].
@@ -239,6 +279,12 @@ RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
 	self temporaries
 		do: [:each | aDictionary removeKey: each name ifAbsent: []].
 	^true
+]
+
+{ #category : #testing }
+RBSequenceNode >> hasTemporaryNamed: aString [
+
+	^ temporaries anySatisfy: [ :temp | temp name = aString ]
 ]
 
 { #category : #comparing }
@@ -296,7 +342,7 @@ RBSequenceNode >> leftBar: anInteger [
 	leftBar := anInteger
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBSequenceNode >> leftBar: leftInteger temporaries: variableNodes rightBar: rightInteger [ 
 	leftBar := leftInteger.
 	self temporaries: variableNodes.

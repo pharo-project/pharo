@@ -46,7 +46,7 @@ SystemResolver >> changes [
 
 { #category : #origins }
 SystemResolver >> image [
-	^ self resolveString: Smalltalk primImagePath
+	^ self resolveString: Smalltalk imagePath
 ]
 
 { #category : #origins }
@@ -72,5 +72,5 @@ SystemResolver >> vmBinary [
 
 { #category : #origins }
 SystemResolver >> vmDirectory [
-	^ self resolveString: Smalltalk vm primVmDirectoryPath
+	^ self resolveString: Smalltalk vm directory
 ]

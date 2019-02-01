@@ -90,9 +90,7 @@ BaselineOfIDE >> additionalInitialization [
 	
 	RubAbstractTextArea highlightMessageSend: true.
 	
-	PharoLightTheme beCurrent.
-	
-	Smalltalk ui theme settings secondarySelectionColor: (Color r: 0.927 g: 0.962 b: 0.995 alpha: 1.0).
+	PharoDarkTheme beCurrent.
 	
 	SDL_Event initialize.
 	
@@ -139,6 +137,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
+		spec package: 'NautilusRefactoring-Tests'.
 
 		spec package: 'Ombu'.
 		spec package: 'Epicea'.
@@ -157,6 +156,7 @@ BaselineOfIDE >> baseline: spec [
 		
 		spec package: 'BlueInk-Core'.
 		
+		spec package: 'Transcript-NonInteractive-Tests'.
 		spec package: 'Collections-Tests'.
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
@@ -195,6 +195,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Metacello-TestsMCCore'.	"standalone"
 		spec package: 'Metacello-TestsPlatform'.	"standalone"
 		spec package: 'Metacello-TestsReference'.	"standalone"
+		spec package: 'Metacello-Gitlab-Tests'.
 
 		spec package: 'RPackage-Tests'.
 		spec package: 'Monticello-Tests'.
@@ -225,6 +226,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GT-EventRecorder'.
 
 		spec package: 'GT-Spotter'.
+		spec package: 'GT-Spotter-UI'.
 		spec package: 'GT-SpotterExtensions-Core'.
 
 		spec package: 'Tool-Catalog'.	"standalone"
@@ -284,12 +286,11 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
-		spec package: 'FontInfrastructure-Tests'.
+		spec package: 'Fonts-Infrastructure-Tests'.
 		spec package: 'FreeType-Tests'.
 		spec package: 'FreeType-Help'.
 		spec package: 'FuzzyMatcher-Tests'.
 		spec package: 'GT-EventRecorder-Tests'.
-		spec package: 'GT-Spotter-EventRecorder'.
 		spec package: 'GT-Tests-Debugger'.
 		spec package: 'GT-Tests-Inspector'.
 		spec package: 'GT-Tests-Playground'.
@@ -314,6 +315,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'PerformMessageCommandLineHandler'.
 		spec package: 'Pharo-Help'.
 		spec package: 'PharoDocComment'.
+		spec package: 'PharoDocComment-Tests'.
 		spec package: 'Polymorph-Widgets-Rules'.
 		spec package: 'ProfStef-Tests'.
 		spec package: 'Random-Tests'.
@@ -353,7 +355,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
 		spec package: 'Zinc-Character-Encoding-Tests'.
-		spec package: 'Zinc-Resource-Meta-FileSystem'.	
+		spec package: 'Zinc-Resource-Meta-FileSystem'.			
+		spec package: 'Zinc-HTTP-Examples'.
 		spec package: 'Zinc-Tests'.
 		spec package: 'System-Identification-Tests'.
 
@@ -362,6 +365,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BaselineOfMetacello'.
 		
 		spec package: 'ReferenceFinder-Core'.
+
+		spec package: 'Refactoring2-Core'.
+		spec package: 'Refactoring2-Transformations'.
+		spec package: 'Refactoring2-Transformations-Tests'.
 
       self groups: spec.
 	].
@@ -432,7 +439,7 @@ spec group: 'General-Tests-Group' with: #(
 	'EmbeddedFreeType-Tests'
 	'Epicea-Tests-Group'
 	'FileSystem-Tests-Memory'
-	'FontInfrastructure-Tests'
+	'Fonts-Infrastructure-Tests'
 	'FreeType-Tests'
 	'FreeType-Help'
 
@@ -467,10 +474,13 @@ spec group: 'General-Tests-Group' with: #(
 	'Tools-Test'
 	'Zinc-Resource-Meta-FileSystem'	
 	'Zinc-Resource-Meta-Tests'
+	'Zinc-HTTP-Examples'
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
 	'System-Identification-Tests'		
 	'System-DependenciesTests'
 	'System-BasicCommandLineHandler-Tests'
+	'Transcript-NonInteractive-Tests'
+	'PharoDocComment-Tests'	"standalone"
 ).	
 
 spec group: 'FuzzyMatcher-Core-Group' with: #(
@@ -564,7 +574,8 @@ spec group: 'Metacello-Tests-Group' with: #(
 	'Metacello-TestsMC'	
 	'Metacello-TestsMCCore'	
 	'Metacello-TestsPlatform'	
-	'Metacello-TestsReference'	
+	'Metacello-TestsReference'
+	'Metacello-Gitlab-Tests'
 ).
 
 spec group: 'Refactoring-Rules-Group' with: #(
@@ -672,8 +683,8 @@ spec group: 'GT-Core-Group' with: #(
 	'GT-Playground'
 	'GT-EventRecorder'
 	'GT-Spotter'
+	'GT-Spotter-UI'
 	'GT-SpotterExtensions-Core'
-	'GT-Spotter-EventRecorder'
 	'GT-Debugger'
 	'GT-BytecodeDebugger'
 	'GT-SUnitDebugger'
@@ -751,6 +762,12 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Text-Tests'		"required by Multilingual-Tests"
 ).
 
+spec group: 'Refactoring2-Group' with: #(
+	'Refactoring2-Core'
+	'Refactoring2-Transformations'
+	'Refactoring2-Transformations-Tests'
+).
+
 spec group: 'GT&QA-Group' with: #(
 	'GeneralRules'		"depends on QA, needs cleanup"
 	'GeneralRules-Tests' "depends on QA, needs cleanup"
@@ -760,6 +777,7 @@ spec group: 'GT&QA-Group' with: #(
 	'Reflectivity-Tools'	"required by Manifest-Core Refactoring-Critics"
 
 	'NautilusRefactoring'	"required by Epicea, SmartSuggestions"
+	'NautilusRefactoring-Tests'
 	'Refactoring-Critics'	"depends on QA, needs cleanup"
 
 	'Glamour-Group'
@@ -813,6 +831,8 @@ spec group: #default with: #(
 	"Importing tests of Traits"
 	'Traits'
 	'Slot'
+	
+	'Refactoring2-Group'
 ).
 
 ]
@@ -825,12 +845,12 @@ BaselineOfIDE >> loadCalypso [
 
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.11.5';
+		repository: 'github://pharo-ide/Calypso:v0.15.3/src';
 		onConflict: [ :err | err useIncoming ];
 		onUpgrade: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
 
-	(self class environment at: #ClyBrowser) beAllDefault.
+	(self class environment at: #ClyBrowserMorph) beAllDefault.
 	
 	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
 ]
@@ -839,7 +859,7 @@ BaselineOfIDE >> loadCalypso [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.2.2';
+		repository: 'github://pharo-vcs/iceberg:v1.5.6';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 	(Smalltalk classNamed: #IcePharoPlugin) addPharoProjectToIceberg.

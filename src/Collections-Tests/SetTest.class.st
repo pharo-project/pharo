@@ -325,9 +325,9 @@ SetTest >> testCopy [
 	full add: 3.
 	full add: 2.
 	newFull := full copy.
-	self assert: (full size = newFull size).
-	self assert: ((full select: [:each | (newFull includes: each) not]) isEmpty).
-	self assert: ((newFull select: [:each | (full includes: each) not]) isEmpty).
+	self assert: full size = newFull size.
+	self assertEmpty: (full select: [ :each | (newFull includes: each) not ]).
+	self assertEmpty: (newFull select: [ :each | (full includes: each) not ])
 ]
 
 { #category : #'tests - copy' }
@@ -337,15 +337,14 @@ SetTest >> testCopyNonEmptyWithoutAllNotIncluded [
 
 { #category : #'tests - some' }
 SetTest >> testCopyWithout [
-	| newFull | 
+	| newFull |
 	full add: 3.
 	full add: 2.
 	newFull := full copyWithout: 3.
-	self assert: (newFull size = (full size - 1)).
+	self assert: newFull size = (full size - 1).
 	self deny: (newFull includes: 3).
-	self assert: ((newFull select: [:each | (full includes: each) not]) isEmpty).
-	self assert: ((full select: [:each | (newFull includes: each) not]) = (Set with: 3)).
-	
+	self assertEmpty: (newFull select: [ :each | (full includes: each) not ]).
+	self assert: (full select: [ :each | (newFull includes: each) not ]) = (Set with: 3)
 ]
 
 { #category : #'tests - some' }
@@ -368,8 +367,8 @@ SetTest >> testDoWithoutNoDuplicates [
 
 { #category : #'tests - enumerating' }
 SetTest >> testFlatCollect [
-	self assert: (#(1 2) asSet flatCollect: [ :x | 1 to: (2 * x) ]) = #(1 2 3 4) asSet.
-	self assert: (#() asSet flatCollect: [:x | 1 to: 4 ]) isEmpty
+	self assert: (#(1 2) asSet flatCollect: [ :x | 1 to: 2 * x ]) = #(1 2 3 4) asSet.
+	self assertEmpty: (#() asSet flatCollect: [ :x | 1 to: 4 ])
 ]
 
 { #category : #'tests - enumerating' }
@@ -421,22 +420,24 @@ SetTest >> testIncludesElementIsNotThere [
 ]
 
 { #category : #'tests - some' }
-SetTest >> testIntersection [ 
+SetTest >> testIntersection [
 	| newFull col |
-	full add: 3; add: 2.
+	full
+		add: 3;
+		add: 2.
 	col := full intersection: full.
-	self assert: (full = col).
+	self assert: full = col.
 
 	newFull := Set with: 8 with: 9 with: #z.
 	col := newFull intersection: full.
-	self assert: (col isEmpty).
-	
-	newFull add: 5; add: #abc; add: 7.
+	self assertEmpty: col.
+
+	newFull
+		add: 5;
+		add: #abc;
+		add: 7.
 	col := newFull intersection: full.
-	self assert: ((full select: [:each | (newFull includes: each)]) = col).
-	
-	
-	
+	self assert: (full select: [ :each | newFull includes: each ]) = col
 ]
 
 { #category : #'tests - integrity' }

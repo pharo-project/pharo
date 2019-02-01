@@ -9,6 +9,9 @@ I extend my parent functionality by adding:
 Class {
 	#name : #FFIExternalStructure,
 	#superclass : #ExternalStructure,
+	#classVars : [
+		'LastCompilationPlatform'
+	],
 	#classInstVars : [
 		'externalStructureAlignment'
 	],
@@ -180,6 +183,15 @@ FFIExternalStructure class >> isNormalAlignedStructure [
 	^ true
 ]
 
+{ #category : #accessing }
+FFIExternalStructure class >> nestedStructures [
+
+	"Retuns the direct nested structures of this structure"
+	^ self fieldSpec types
+		select: [ :each | each isExternalStructure and: [ each isPointer not ] ]
+		thenCollect: [ :each | each objectClass ]
+]
+
 { #category : #private }
 FFIExternalStructure class >> offsetFieldPrefix [
 	^ 'OFFSET'
@@ -218,8 +230,41 @@ FFIExternalStructure class >> removeAllOffsetVariables [
 ]
 
 { #category : #'class management' }
-FFIExternalStructure class >> reset [ 
-	compiledSpec := nil
+FFIExternalStructure class >> reset [
+	"Reset this structure and all its nested structures"
+	self resetStructureIfNotIn: Set new
+]
+
+{ #category : #'class management' }
+FFIExternalStructure class >> resetAllStructures [
+	"Reset the offsets of all structures.
+	This is required when there is a platform change since type sizes and padding rules change.
+	
+	Manage nested structures with a recursive approach.
+	Stop recursing using a tracking collection of already reset structures."
+	
+	| alreadyReset currentCompilationPlatform |
+	currentCompilationPlatform := { OSPlatform current family . Smalltalk vm wordSize }.
+	LastCompilationPlatform = currentCompilationPlatform
+		ifTrue: [ ^ self ].
+	
+	LastCompilationPlatform := currentCompilationPlatform.
+	alreadyReset := IdentitySet new.
+	self allSubclassesDo: [ :each | each resetStructureIfNotIn: alreadyReset ].
+]
+
+{ #category : #'class management' }
+FFIExternalStructure class >> resetStructureIfNotIn: alreadyReset [
+	"Reset myself by recompiling all my fields.
+	
+	Reset all my nested structures recursively if any.
+	Stop recursing using a tracking collection of already reset structures."
+	(alreadyReset includes: self)
+		ifTrue: [ ^ self ].
+
+	alreadyReset add: self.
+	self nestedStructures do: [ :each | each resetStructureIfNotIn: alreadyReset ].
+	self compileFields.
 ]
 
 { #category : #accessing }

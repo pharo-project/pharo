@@ -4,7 +4,7 @@ SUnit tests to guide users with fuel serialization
 Class {
 	#name : #FLUserGuidesTest,
 	#superclass : #FLSerializationTest,
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #running }

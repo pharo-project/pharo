@@ -31,13 +31,6 @@ RBMethodNode >> metaLinkOptionsFromClassAndMethod [
 ]
 
 { #category : #'*Reflectivity' }
-RBMethodNode >> method [
-	"return the method that I have been compiled for"
-	self compilationContext ifNil: [ ^nil ].
-	^self compilationContext getClass >> self selector
-]
-
-{ #category : #'*Reflectivity' }
 RBMethodNode >> optionsFor: aLink [
 	| options |
 	options := aLink options copy.

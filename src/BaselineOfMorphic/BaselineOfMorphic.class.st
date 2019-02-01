@@ -53,7 +53,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'EmergencyEvaluator'.
 		spec package: 'FileSystem-Zip'.
-		spec package: 'FontInfrastructure'.
+		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
 		spec package: 'Fuel-Core'.
 		spec package: 'Fuel-Platform-Core'.
@@ -75,6 +75,8 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'Transcript-Core'.
 
+		spec package: 'Native-Browser'.
+		
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Examples'.
 		spec package: 'Morphic-Widgets-Basic'.
@@ -105,7 +107,8 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'System-Caching'.
 		spec package: 'System-History'.
 		spec package: 'System-Installers'.
-		spec package: 'System-Settings'.
+		spec package: 'System-Settings-Core'.
+		spec package: 'System-Settings-Browser'.
 		spec package: 'System-Sound'.
 		
 		spec package: 'Text-Diff'.
@@ -323,7 +326,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	World assuredCanvas.
 
 	UIManager default uiProcess resume.
-	PharoLightTheme beCurrent.
+	PharoDarkTheme beCurrent.
 	(World windowsSatisfying: [:w | w model canDiscardEdits]) do: [:w | w delete].
 	self cleanUpAfterMorphicInitialization.
 

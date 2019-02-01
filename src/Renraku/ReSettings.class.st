@@ -74,8 +74,11 @@ ReSettings class >> showErrors [
 ]
 
 { #category : #'settings-accessing' }
-ReSettings class >> showErrors: anObject [
-	self uniqueInstance showErrors: anObject
+ReSettings class >> showErrors: aBoolean [
+
+	ReExceptionStrategy current: (aBoolean 
+		ifTrue: [ RePassExceptionStrategy ]
+		ifFalse: [ ReIgnoreExceptionStrategy ]).
 ]
 
 { #category : #'settings-definition' }

@@ -380,12 +380,10 @@ FreeTypeFontProvider >> platformImageRelativeDirectories [
 
 { #category : #'file paths' }
 FreeTypeFontProvider >> platformVMRelativeDirectories [
-	
-	| directory |
-	directory :=  Smalltalk vm path asFileReference / 'Fonts'.
-	directory exists
-		ifTrue: [ ^ { directory } ].
-	^ #()
+  | directory |
+  directory := Smalltalk vm directory asFileReference / 'Fonts'.
+  directory exists ifTrue: [ ^{directory} ].
+  ^#()
 ]
 
 { #category : #'loading and updating' }
@@ -503,7 +501,7 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 	["we use the primNewFaceFromFile:index: method because we want to do this as fast as possible and we don't need the face registered because it will be explicitly destroyed later"
 	face newFaceFromFile: path index: i.
 	face loadFields]
-		on: FT2Error
+		on: FT2Error, PrimitiveFailed
 		do: [:e | ^self failedToOpen: face from: path index: i ].
 	(face height notNil  and:[face hasFamilyName and:[face hasStyleName and:[face isValid]]])
 		ifFalse: [ ^self failedToOpen:face from: path index: i ]

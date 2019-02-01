@@ -60,8 +60,7 @@ FFICallback class >> forAddress: address [
 { #category : #'private primitives' }
 FFICallback class >> primQsort: array with: count with: size with: compare [
 	self
-		ffiCall: #(void qsort (FFIExternalArray array, size_t count, size_t size, FFICallback compare)) 
-		module: LibC
+		ffiCall: #(void qsort (FFIExternalArray array, size_t count, size_t size, FFICallback compare)) 		module: LibC
 ]
 
 { #category : #'instance creation' }
@@ -69,65 +68,27 @@ FFICallback class >> signature: aSignature block: aBlock [
 	^ self new signature: aSignature block: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #evaluation }
 FFICallback >> argumentsFor: stackPointer context: callbackContext [
-	| index architecture intRegisterCount intRegisterSize intRegisterIndex floatRegisterCount floatRegisterSize floatRegisterIndex floatRegisters intRegisters structureRegisterLayout |
-	self flag: 'TODO: Refactor and improve this code.'.
-	architecture := FFIArchitecture forCurrentArchitecture.
+
+	| callbackArgumentReader | 
 	
-	intRegisterCount := architecture integerRegisterCountForParameterPassing.
-	intRegisterSize := architecture integerRegisterSize.
-	intRegisterIndex := 0.
+	callbackArgumentReader := FFIArchitecture forCurrentArchitecture newCallbackArgumentReaderForCallback: self inContext: callbackContext.
+
+	callbackArgumentReader extractArguments.
 	
-	floatRegisterCount := architecture floatRegisterCountForParameterPassing.
-	floatRegisterSize := architecture floatRegisterSize.
-	floatRegisterIndex := 0.
+	self assert: functionSpec arguments size = callbackArgumentReader arguments size.
+
+	^ callbackArgumentReader arguments.
+]
+
+{ #category : #evaluation }
+FFICallback >> executeWithArguments: argumentValues [
 	
-	floatRegisters := callbackContext floatregargsp.
-	intRegisters := callbackContext intregargsp.
-	
-	index := 1 + architecture shadowCallSpaceSize.
-	^ functionSpec arguments 
-		collect: [ :each | | value parameterClass |
-			parameterClass := each stackParameterClass.
-			(parameterClass == #integer and: [ intRegisterIndex < intRegisterCount and: [each typeSize <= intRegisterSize ]]) ifTrue: [
-				value := each callbackValueFor: intRegisters at: intRegisterIndex*intRegisterSize + 1.
-				intRegisterIndex := intRegisterIndex + 1
-			] ifFalse: [ 
-				(parameterClass == #float and: [ floatRegisterIndex < floatRegisterCount and: [each typeSize <= floatRegisterSize ]]) ifTrue: [
-					value := each callbackValueFor: floatRegisters at: floatRegisterIndex*floatRegisterSize + 1.
-					floatRegisterIndex := floatRegisterIndex + 1
-				] ifFalse: [
-					(parameterClass == #structure and:
-					[ (structureRegisterLayout := architecture computeStructureRegisterPassingLayout: each objectClass) isNotNil and:
-					[intRegisterIndex + structureRegisterLayout integerRegisterCount <= intRegisterSize and:
-					[floatRegisterIndex + structureRegisterLayout floatRegisterCount <= floatRegisterSize]]]) ifTrue: [
-						"This is structure whose content was splitted in registers."
-						value := each objectClass new.
-						structureRegisterLayout fields do: [ :structureField |
-							structureField registerClass == #integer ifTrue: [
-								1 to: structureField size do: [ :i |
-									value getHandle byteAt: structureField offset + i put:
-										(intRegisters unsignedByteAt: intRegisterIndex*intRegisterSize + i)
-								].
-							] ifFalse: [
-								self assert: structureField registerClass == #float.
-								1 to: structureField size do: [ :i |
-									value getHandle byteAt: structureField offset + i put:
-										(floatRegisters unsignedByteAt: floatRegisterIndex*floatRegisterSize + i)
-								].
-								floatRegisterIndex := floatRegisterIndex + 1
-							] 
-						]
-					] ifFalse: [ 
-						"Memory parameter" 
-						value := each callbackValueFor: stackPointer at: index.
-						index := index + each typeSize.
-					]
-				].
-			].
-		
-			value ].	
+	^ [ block valueWithArguments: argumentValues ]
+		on: Error 
+		fork: [ :e | e pass ]
+		return: [ self returnOnError ]
 ]
 
 { #category : #private }
@@ -144,6 +105,11 @@ FFICallback >> ffiInstVarArgument: argName generator: generator [
 		yourself
 ]
 
+{ #category : #accessing }
+FFICallback >> functionSpec [
+	^ functionSpec
+]
+
 { #category : #private }
 FFICallback >> newParser [ 
 	^ FFIFunctionParser new
@@ -151,6 +117,12 @@ FFICallback >> newParser [
 			requestor: self;
 			yourself);
 		yourself
+]
+
+{ #category : #private }
+FFICallback >> returnOnError [
+
+	^ functionSpec returnType defaultReturnOnError
 ]
 
 { #category : #initialization }
@@ -169,12 +141,11 @@ FFICallback >> thunk [
 ]
 
 { #category : #evaluation }
-FFICallback >> valueWithContext: callbackContext sp: stackPointer [ 
+FFICallback >> valueWithContext: callbackContext sp: stackPointer [
 	| argumentValues |
-	
-	self flag: #todo. "This can be optimised in a shadow method"
+
 	argumentValues := self argumentsFor: stackPointer context: callbackContext.
 	^ functionSpec returnType 
 		callbackReturnOn: callbackContext 
-		for: (block valueWithArguments: argumentValues)
+		for: (self executeWithArguments: argumentValues)
 ]

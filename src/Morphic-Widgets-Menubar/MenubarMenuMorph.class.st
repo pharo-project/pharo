@@ -1,7 +1,13 @@
+"
+Description
+--------------------
+
+I am a specialization of the MenuMorph for the Menubar. I adapt the keyboard navigation of the menubar.
+"
 Class {
 	#name : #MenubarMenuMorph,
 	#superclass : #MenuMorph,
-	#category : #'Morphic-Widgets-Menubar'
+	#category : #'Morphic-Widgets-Menubar-View'
 }
 
 { #category : #events }

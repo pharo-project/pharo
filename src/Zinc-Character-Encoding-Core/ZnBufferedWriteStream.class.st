@@ -65,6 +65,12 @@ ZnBufferedWriteStream >> close [
 	stream close
 ]
 
+{ #category : #testing }
+ZnBufferedWriteStream >> closed [
+	
+	^ stream closed
+]
+
 { #category : #accessing }
 ZnBufferedWriteStream >> cr [
 	self nextPut: Character cr

@@ -21,9 +21,9 @@ TCloneTest >> nonEmpty [
 { #category : #'tests - fixture' }
 TCloneTest >> test0FixtureCloneTest [
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self empty.
-	self assert: self empty isEmpty
+	self assertEmpty: self empty
 ]
 
 { #category : #'tests - copy - clone' }
@@ -38,19 +38,14 @@ TCloneTest >> testCopyCreatesNewObject [
 
 { #category : #'tests - copy - clone' }
 TCloneTest >> testCopyEmpty [
-	
-	| copy | 
-	copy := self empty copy.
-	self assert: copy isEmpty.
+	self assertEmpty: self empty copy
 ]
 
 { #category : #'tests - copy - clone' }
 TCloneTest >> testCopyNonEmpty [
-	
-	| copy | 
+	| copy |
 	copy := self nonEmpty copy.
-	self deny: copy isEmpty.
+	self denyEmpty: copy.
 	self assert: copy size = self nonEmpty size.
-	self nonEmpty do: 
-		[:each | copy includes: each]
+	self nonEmpty do: [ :each | copy includes: each ]
 ]

@@ -385,12 +385,12 @@ FileLocator >> asPath [
 	^self resolve asPath
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 FileLocator >> binaryReadStream [
 	^ self resolve binaryReadStream
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 FileLocator >> binaryWriteStream [
 	"Answer a binary write stream on the receiver"
 

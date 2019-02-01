@@ -33,17 +33,6 @@ FFIArchitecture class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self basicNew initialize ]
 ]
 
-{ #category : #'default abi' }
-FFIArchitecture >> areStructuresSplitIntoRegisters [
-	^ false
-]
-
-{ #category : #'default abi' }
-FFIArchitecture >> computeStructureRegisterPassingLayout: aStructureClass [
-	^ nil
-	
-]
-
 { #category : #types }
 FFIArchitecture >> externalLongType [
 	^ ExternalType long
@@ -59,39 +48,9 @@ FFIArchitecture >> externalULongType [
 	^ ExternalType ulong
 ]
 
-{ #category : #'default abi' }
-FFIArchitecture >> floatRegisterCountForParameterPassing [
-	^ 0
-]
-
-{ #category : #'default abi' }
-FFIArchitecture >> floatRegisterSize [
-	self subclassResponsibility
-]
-
-{ #category : #'default abi' }
-FFIArchitecture >> integerRegisterCountForParameterPassing [
-	^ 0
-]
-
-{ #category : #'default abi' }
-FFIArchitecture >> integerRegisterSize [
-	self subclassResponsibility
-]
-
-{ #category : #types }
-FFIArchitecture >> longType [
-	^ FFIInt32
-]
-
 { #category : #types }
 FFIArchitecture >> longTypeSize [
 	^ self externalLongType byteSize
-]
-
-{ #category : #'default abi' }
-FFIArchitecture >> maxStructureSizeToPassInRegisters [
-	^ 0
 ]
 
 { #category : #'default abi' }
@@ -99,17 +58,7 @@ FFIArchitecture >> returnSingleFloatsAsDoubles [
 	self subclassResponsibility
 ]
 
-{ #category : #'default abi' }
-FFIArchitecture >> shadowCallSpaceSize [
-	^ 0
-]
-
 { #category : #types }
 FFIArchitecture >> sizeTTypeSize [
 	^ self externalSizeTType byteSize
-]
-
-{ #category : #types }
-FFIArchitecture >> ulongType [
-	^ FFIUInt32
 ]

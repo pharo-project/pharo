@@ -344,8 +344,7 @@ TraitPureBehaviorTest >> testTraitCompositionWithCycles [
 
 { #category : #testing }
 TraitPureBehaviorTest >> testTraitsAccessor [
-	
-	self assert: self c1 traits isEmpty.
+	self assertEmpty: self c1 traits.
 	self assert: (self c2 traits hasEqualElements: (Array with: self t5))
 ]
 

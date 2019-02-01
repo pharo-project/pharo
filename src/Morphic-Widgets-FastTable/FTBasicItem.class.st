@@ -51,12 +51,17 @@ Class {
 
 { #category : #'expanding-collapsing' }
 FTBasicItem class >> expandedForm [
-	^ Smalltalk ui theme treeExpandedForm
+	^ self theme treeExpandedForm
+]
+
+{ #category : #accessing }
+FTBasicItem class >> theme [
+	^ Smalltalk ui theme
 ]
 
 { #category : #'expanding-collapsing' }
 FTBasicItem class >> unexpandedForm [
-	^ Smalltalk ui theme treeUnexpandedForm
+	^ self theme treeUnexpandedForm
 ]
 
 { #category : #accessing }

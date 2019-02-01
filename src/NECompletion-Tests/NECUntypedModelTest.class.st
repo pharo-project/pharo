@@ -64,20 +64,18 @@ NECUntypedModelTest >> testCaseSensitive [
 NECUntypedModelTest >> testCaseSensitivity [
 	| model instances |
 	self assert: NECPreferences caseSensitive.
-	model := NECUntypedModel 
-		class: NECTestClass
-		temporaries: OrderedCollection new.
+	model := NECUntypedModel class: NECTestClass temporaries: OrderedCollection new.
 	model narrowWith: 'typesugg'.
-	self assert: model isEmpty.
-	
+	self assertEmpty: model.
+
 	NECPreferences caseSensitive: false.
 	model narrowWith: 'typesugg'.
 	instances := model entriesOfType: #instVar.
 	self assert: instances size == 2.
 	self assert: (instances includes: 'typeSuggestingParameter').
-	
+
 	model narrowWith: 'dict'.
-	self assert: model notEmpty.
+	self deny: model isEmpty.
 	self assert: ((model entriesOfType: #globalVar) includes: 'Dictionary')
 ]
 
@@ -85,8 +83,8 @@ NECUntypedModelTest >> testCaseSensitivity [
 NECUntypedModelTest >> testEmpty [
 	| model |
 	model := NECUntypedModel new.
-	self assert: model isEmpty.
-	self assert: model entries isEmpty.
+	self assertEmpty: model.
+	self assertEmpty: model entries.
 	self assert: model entryCount == 0
 ]
 
@@ -177,34 +175,34 @@ NECUntypedModelTest >> testMessage [
 NECUntypedModelTest >> testNarrowWith [
 	| count model |
 	model := NECUntypedModel new.
-	self assert: model isEmpty.
-	
+	self assertEmpty: model.
+
 	model narrowWith: 'ba'.
 	count := model entryCount.
 	self assert: count == model entries size.
-	self assert: model isEmpty not.
-	
+	self deny: model isEmpty.
+
 	model narrowWith: 'bar'.
 	self assert: count > model entryCount.
-	
+
 	model narrowWith: 'barXXXX'.
 	self assert: model isEmpty.
-	
+
 	model narrowWith: 'ba'.
 	self assert: count == model entryCount.
-	
+
 	model narrowWith: 'save'.
-	self assert: model isEmpty not.
-	
+	self deny: model isEmpty.
+
 	model narrowWith: ''.
-	self assert: model isEmpty
+	self assertEmpty: model
 ]
 
 { #category : #tests }
 NECUntypedModelTest >> testNoEntriesWithSpace [
 	| model separatorEntry |
 	model := NECUntypedModel new.
-	self assert: model isEmpty.
+	self assertEmpty: model.
 	model narrowWith: 'b'.
 	separatorEntry := model entries detect: 
 					[:each | 

@@ -38,9 +38,7 @@ Class {
 { #category : #'instance creation' }
 GrowlMorph class >> contents: contentString [
 	
-	^ self new
-		label: '' contents: contentString;
-		yourself
+	^ self label: '' contents: contentString
 ]
 
 { #category : #settings }
@@ -92,19 +90,19 @@ GrowlMorph class >> label: aString contents: contentString [
 { #category : #'instance creation' }
 GrowlMorph class >> openWithContents: contentString [
 
-	^ self type = #window 
-		ifTrue: [ MessageDialogWindow new message: contentString ]
-		ifFalse: [ (self contents: contentString) openInWorld ]
+	^ self openWithLabel: '' 
+		contents: contentString 
+		backgroundColor: nil 
+		labelColor: nil
 ]
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithLabel: aString contents: contentString [
 
-	^ self type = #window 
-		ifTrue: [ MessageDialogWindow new message: contentString ]
-		ifFalse: [ (self label: aString contents: contentString) openInWorld ]
-		
-	
+	^ self openWithLabel: aString 
+		contents: contentString 
+		backgroundColor: nil 
+		labelColor: nil
 ]
 
 { #category : #'instance creation' }
@@ -112,23 +110,23 @@ GrowlMorph class >> openWithLabel: aString contents: contentString backgroundCol
 	
 	^ self type = #window 
 		ifTrue: [ MessageDialogWindow new message: contentString ]
-		ifFalse: [ (self label: aString contents: contentString)
-			backgroundColor: aColor;
-			labelColor: aLabelColor;
-			contentsColor: aLabelColor; 
-			openInWorld ]
-
-
+		ifFalse: [ 
+			| anInstance |
+			anInstance := self label: aString contents: contentString.
+			aColor ifNotNil: [ anInstance backgroundColor: aColor ].
+			aLabelColor ifNotNil: [ 
+				anInstance labelColor: aLabelColor.
+				anInstance contentsColor: aLabelColor ].
+			anInstance openInWorld ]
 ]
 
 { #category : #'instance creation' }
 GrowlMorph class >> openWithLabel: aString contents: contentString color: aColor [
 	
-	^ self type = #window 
-		ifTrue: [ MessageDialogWindow new message: contentString ]
-		ifFalse: [ (self label: aString contents: contentString)
-			backgroundColor: aColor;
-			openInWorld ]
+	^ self openWithLabel: aString 
+		contents: contentString 
+		backgroundColor: aColor 
+		labelColor: nil
 ]
 
 { #category : #position }
@@ -353,7 +351,7 @@ GrowlMorph >> nextColorStep: aColor [
 	^ aColor alpha: self alpha
 ]
 
-{ #category : #internal }
+{ #category : #display }
 GrowlMorph >> openInWorld [
 
 	self position: self unoccupiedPosition.

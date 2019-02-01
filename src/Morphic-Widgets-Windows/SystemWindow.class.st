@@ -53,7 +53,7 @@ SystemWindow class >> buildShortcutsOn: aBuilder [
 	(aBuilder shortcut: #close)
 		category: #WindowShortcuts
 		default: PharoShortcuts current closeWindowShortcut
-		do: [ :target | target closeWindowAction ]
+		do: [ :target | SystemWindow closeTopWindow ]
 		description: 'Close this window'.
 ]
 
@@ -465,10 +465,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		ifFalse: [ #Maximize ].
 	(aBuilder item: maximizeLabel)
 		action: [ aBuilder model expandBoxHit ];
-		iconName: #windowMaximizeForm.
-	aBuilder model isCollapsed
-		ifFalse: [ (aBuilder item: #'Window color...')
-				action: [ aBuilder model setWindowColor ] ]
+		iconName: #windowMaximizeForm
 ]
 
 { #category : #'top window' }

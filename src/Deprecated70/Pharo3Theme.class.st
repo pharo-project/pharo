@@ -4,7 +4,7 @@ Use PharoLightTheme now
 Class {
 	#name : #Pharo3Theme,
 	#superclass : #PharoLightTheme,
-	#category : #Deprecated70
+	#category : #'Deprecated70-Obsolete'
 }
 
 { #category : #compatibility }

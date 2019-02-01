@@ -53,11 +53,6 @@ RBProgramNode >> isClean [
 ]
 
 { #category : #'*opalcompiler-core' }
-RBProgramNode >> methodOrBlockNode [
-	^ parent ifNotNil: [ parent methodOrBlockNode ]
-]
-
-{ #category : #'*opalcompiler-core' }
 RBProgramNode >> owningScope [
 
 	^ parent owningScope 

@@ -30,27 +30,21 @@ TDictionaryIncludesWithIdentityCheckTest >> nonEmptyWithCopyNonIdentical [
 TDictionaryIncludesWithIdentityCheckTest >> test0FixtureDictionaryIncludes [
 	| in |
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self valueNotInNonEmpty.
 	in := false.
-	self nonEmpty
-		valuesDo: [ :assoc | 
-			assoc = self valueNotInNonEmpty
-				ifTrue: [ in := true ] ].
-	self assert: in = false.
+	self nonEmpty valuesDo: [ :assoc | assoc = self valueNotInNonEmpty ifTrue: [ in := true ] ].
+	self deny: in.
 	self keyNotInNonEmpty.
 	in := false.
-	self nonEmpty
-		keysDo: [ :assoc | 
-			assoc = self keyNotInNonEmpty
-				ifTrue: [ in := true ] ].
-	self assert: in = false
+	self nonEmpty keysDo: [ :assoc | assoc = self keyNotInNonEmpty ifTrue: [ in := true ] ].
+	self deny: in
 ]
 
 { #category : #'tests - fixture' }
 TDictionaryIncludesWithIdentityCheckTest >> test0FixtureDictionaryIncludesIdentity [
 	self nonEmptyWithCopyNonIdentical.
-	self deny: self nonEmptyWithCopyNonIdentical isEmpty.
+	self denyEmpty: self nonEmptyWithCopyNonIdentical.
 	self nonEmptyWithCopyNonIdentical do: [ :each | self deny: each == each copy ]
 ]
 

@@ -26,6 +26,12 @@ OmStoreTest >> beforeAndAfterFlushStore: aBlock [
 	aBlock value.
 ]
 
+{ #category : #resources }
+OmStoreTest >> directoryForTests [
+
+	^ FileLocator temp asFileReference / 'ombu-tests'
+]
+
 { #category : #running }
 OmStoreTest >> setUp [
 	super setUp.
@@ -55,7 +61,7 @@ OmStoreTest >> tearDown [
 
 { #category : #tests }
 OmStoreTest >> testEntries [
-	self assert: store entries isEmpty.
+	self assertEmpty: store entries
 ]
 
 { #category : #tests }
@@ -232,8 +238,8 @@ OmStoreTest >> testReferenceTo [
 { #category : #tests }
 OmStoreTest >> testRefreshEmpty [
 	store refresh.
-	
-	self assert: store entries isEmpty.
+
+	self assertEmpty: store entries
 ]
 
 { #category : #tests }

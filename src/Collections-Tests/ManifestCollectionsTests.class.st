@@ -4,7 +4,7 @@ I contain tests for collections
 Class {
 	#name : #ManifestCollectionsTests,
 	#superclass : #PackageManifest,
-	#category : #'Collections-Tests'
+	#category : #'Collections-Tests-Manifest'
 }
 
 { #category : #'meta-data' }

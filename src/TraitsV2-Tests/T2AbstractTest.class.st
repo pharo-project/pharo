@@ -11,6 +11,11 @@ Class {
 }
 
 { #category : #'instance creation' }
+T2AbstractTest >> newClass: aName [ 
+	^self newClass: aName with: #() uses: #()
+]
+
+{ #category : #'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aComposition [
 	
 	^ self newClass: aName superclass: aSuperclass with: slots uses: aComposition category: 'TraitsV2-Tests-TestClasses' 

@@ -22,21 +22,15 @@ TDictionaryIncludesTest >> nonEmpty [
 TDictionaryIncludesTest >> test0FixtureDictionaryIncludes [
 	| in |
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self valueNotInNonEmpty.
 	in := false.
-	self nonEmpty
-		valuesDo: [ :assoc | 
-			assoc = self valueNotInNonEmpty
-				ifTrue: [ in := true ] ].
-	self assert: in = false.
+	self nonEmpty valuesDo: [ :assoc | assoc = self valueNotInNonEmpty ifTrue: [ in := true ] ].
+	self deny: in.
 	self keyNotInNonEmpty.
 	in := false.
-	self nonEmpty
-		keysDo: [ :assoc | 
-			assoc = self keyNotInNonEmpty
-				ifTrue: [ in := true ] ].
-	self assert: in = false
+	self nonEmpty keysDo: [ :assoc | assoc = self keyNotInNonEmpty ifTrue: [ in := true ] ].
+	self deny: in
 ]
 
 { #category : #'tests - dictionary including' }

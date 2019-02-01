@@ -181,14 +181,69 @@ FileSystem >> copyAndDelete: sourcePath to: destination [
 	If there is no file at sourcePath, raise FileDoesNotExist.
 	If destPath is a file, raise FileExists.
 	If an error occurs during the operation, try and roll back to the original state."
-	
-	[
-		self copy: sourcePath toReference: destination.
-		self delete: sourcePath.
-	] on: Error do: [ :error |
-		destination delete.
-		error signal.
-	]
+
+	^(self isDirectory: sourcePath) ifTrue: 
+		[ self copyDirectoryAndDelete: sourcePath to: destination ]
+	ifFalse:
+		[ self copyFileAndDelete: sourcePath to: destination ].
+
+]
+
+{ #category : #private }
+FileSystem >> copyDirectory: sourcePath toReference: destination [
+	"Copy the source directory to the (yet to be created) destination"
+
+	destination createDirectory.
+	store directoryAt: sourcePath nodesDo:
+		[ :entry | | basename |
+			basename := store basenameFromEntry: entry.
+			(store basicIsDirectory: entry) ifTrue: 
+				[ self copyDirectory: sourcePath / basename toReference: destination / basename ]
+			ifFalse:
+				[ self copy: sourcePath / basename toReference: destination / basename ] ]
+]
+
+{ #category : #private }
+FileSystem >> copyDirectoryAndDelete: sourcePath to: destination [
+	"Copy the directory sourcePath to the destination referred as destPath.
+	If destination exists (and is a directory), add sourcePath basename to it,
+	otherwise create destination as a directory a copy the contents of sourcePath in to it.
+	If there is no file at sourcePath, raise FileDoesNotExist.
+	If destPath is a file, raise FileExists.
+	If an error occurs during the operation, try and roll back to the original state."
+
+	"The source must be a directory"
+	(self isDirectory: sourcePath) ifFalse: 
+		[ (FileException fileName: sourcePath pathString)
+				message: 'not a directory';
+				signal ].
+	"The destination musn't exist yet"
+	destination exists ifTrue: 
+		[ FileAlreadyExistsException signalWith: destination ].
+
+	[self copyDirectory: sourcePath toReference: destination] 
+		on: Error 
+		do: [ :error |
+			destination delete.
+			error signal].
+	(FileReference fileSystem: self path: sourcePath) deleteAll.
+	^destination
+]
+
+{ #category : #private }
+FileSystem >> copyFileAndDelete: sourcePath to: destination [
+	"Copy the file referenced as sourcePath to the destination referred as destPath.  
+	If there is no file at sourcePath, raise FileDoesNotExist.
+	If destPath is a file, raise FileExists.
+	If an error occurs during the operation, try and roll back to the original state."
+
+	[self copy: sourcePath toReference: destination] 
+		on: Error 
+		do: [ :error |
+			destination delete.
+			error signal].
+	self delete: sourcePath.
+	^destination
 ]
 
 { #category : #private }
@@ -333,6 +388,27 @@ FileSystem >> exists: aResolvable [
 { #category : #public }
 FileSystem >> extensionDelimiter [
 	^ $.
+]
+
+{ #category : #public }
+FileSystem >> file: aResolvable posixPermissions: anInteger [
+	"Set the mode of aResolvable to anInteger (as defined by chmod())"
+
+	^store file: (self resolve: aResolvable) posixPermissions: anInteger
+]
+
+{ #category : #public }
+FileSystem >> file: aResolvable symlinkUid: uidInteger gid: gidInteger [
+	"Set the owner and group of aResolvable by numeric id."
+
+	^store file: (self resolve: aResolvable) symlinkUid: uidInteger gid: gidInteger.
+]
+
+{ #category : #public }
+FileSystem >> file: aResolvable uid: uidInteger gid: gidInteger [
+	"Set the owner and group of aResolvable by numeric id."
+
+	^store file: (self resolve: aResolvable) uid: uidInteger gid: gidInteger.
 ]
 
 { #category : #'public-enumerating' }
@@ -534,7 +610,7 @@ FileSystem >> move: sourcePath to: destination [
 	If destPath is a file, raise FileExists.
 	If destPath is a directory, move the sourcePath in to the directory"
 
-	| fullDestination |
+	| fullDestination destinationPath |
 
 	destination isFile ifTrue: [ FileExists signalWith: destination ].
 	destination isDirectory
@@ -542,9 +618,11 @@ FileSystem >> move: sourcePath to: destination [
 		ifFalse: [ fullDestination := destination ].
 	self = destination fileSystem ifTrue: 
 	[
+		destinationPath := fullDestination resolve path.
+		sourcePath = destinationPath ifTrue: [ ^fullDestination ].
 		"Ideally we would test whether the source and destination are on the same filesystem from the OSs perspective.
 		Since we can't do that, just try rename, and if that fails, copy and delete."
-		[ self rename: sourcePath to: fullDestination resolve path ]
+		[ self rename: sourcePath to: destinationPath ]
 			on: Error
 			do: [ :error | self copyAndDelete: sourcePath to: fullDestination ].
 	] ifFalse:
