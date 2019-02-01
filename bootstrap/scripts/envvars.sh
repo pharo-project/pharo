@@ -43,7 +43,7 @@ fi
 export BOOTSTRAP_CACHE
 
 # This is the VM used to bootstrap, i.e. the target VM
-if [ -z "${BOOTSTRAP_VMTARGET}" ]
+if [ -z ${BOOTSTRAP_VMTARGET+x} ]
 then
     VM="${BOOTSTRAP_CACHE}/vmtarget/pharo --headless"
 else
