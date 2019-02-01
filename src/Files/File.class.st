@@ -949,6 +949,8 @@ File class >> signalError: error for: aByteArray [
 		[ ^FileDoesNotExistException signalWith: pathString ].
 	errorNumber = self getAttributesFailed ifTrue: 
 		[ ^FileDoesNotExistException signalWith: pathString ].
+	errorNumber = self unsupportedOperation ifTrue: 
+		[ ^FileAttributeNotSupported signalWith: pathString ].
 	^FileException signalWith: pathString.
 ]
 

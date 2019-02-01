@@ -57,7 +57,7 @@ FileAttributesPluginPrimsTests >> testPrimCloseDirString [
 	"FileAttributesPluginPrims>>primClosedir: only accepts a ByteArray, anything else should raise an error"
 
 	self
-		should: [ primitives primClosedir: 'a string' ]
+		should: [ primitives primClosedir: 'not a buffer' ]
 		raise: PrimitiveFailed
 		withExceptionDo: [ :exception | 
 			self assert: exception selector equals: #'bad argument' ].
