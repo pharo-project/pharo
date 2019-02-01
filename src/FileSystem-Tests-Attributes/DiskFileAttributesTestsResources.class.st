@@ -42,7 +42,8 @@ DiskFileAttributesTestsResources >> setUp [
 
 	| ws |
 
-	file := FileLocator temp / ('FileAttributesTests-', UUIDGenerator next asString, '.txt').
+	super setUp.
+	file := FileLocator temp / ('FileAttributesTests-žřč-', UUIDGenerator next asString, '.txt').
 	beforeCreationTime := DateAndTime now.
 	"Remove the nanoseconds"
 	beforeCreationTime := DateAndTime
@@ -64,5 +65,6 @@ DiskFileAttributesTestsResources >> setUp [
 { #category : #running }
 DiskFileAttributesTestsResources >> tearDown [
 
+	super tearDown.
 	file delete.
 ]

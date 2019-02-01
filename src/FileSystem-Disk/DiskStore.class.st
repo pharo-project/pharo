@@ -104,6 +104,13 @@ DiskStore >> = other [
 	^ self species = other species
 ]
 
+{ #category : #accessing }
+DiskStore >> accessTimeOf: aPath [
+	"Return the date of last access of the File described by aPath"
+
+	^DateAndTime fromSqueakTime: (File fileAttribute: (self stringFromPath: aPath) number: 9)
+]
+
 { #category : #private }
 DiskStore >> basenameFromEntry: entry [
 	^ entry at: 1
@@ -146,20 +153,18 @@ DiskStore >> basicEntryAt: aPath [
 ]
 
 { #category : #private }
-DiskStore >> basicIsDirectory: anEntry [
-	^ anEntry at: 4
+DiskStore >> basicIsDirectory: aNode [
+	| mask statAttributes |
+
+	statAttributes := aNode at: 2.
+	statAttributes ifNil: [ ^false ].
+	mask := statAttributes at: 2.
+	^(mask bitAnd: File s_IFMT) = File s_IFDIR
 ]
 
 { #category : #private }
 DiskStore >> basicIsFile: anEntry [
 	^ (anEntry at: 4) not
-]
-
-{ #category : #private }
-DiskStore >> basicIsSymlink: anEntry [
-	^(anEntry size >= 7)
-		ifTrue: [ anEntry at: 7 ]
-		ifFalse: [ false ]
 ]
 
 { #category : #private }
@@ -186,6 +191,19 @@ DiskStore >> basicPosixPermissions: anEntry [
 { #category : #private }
 DiskStore >> basicSizeOf: anEntry [
 	^ (anEntry at: 5)
+]
+
+{ #category : #accessing }
+DiskStore >> changeTimeOf: aPath [
+	"Answer the time the metadata of aPath was last changed.
+	On platforms that don't support change time, use the modification time."
+
+	| pathString squeakTime |
+	
+	pathString := self stringFromPath: aPath.
+	squeakTime := (File fileAttribute: pathString number: 11) ifNil: 
+			[ File fileAttribute: pathString number: 12 ].
+	^DateAndTime fromSqueakTime: squeakTime
 ]
 
 { #category : #public }
@@ -228,6 +246,18 @@ DiskStore >> createDirectory: path [
 ]
 
 { #category : #accessing }
+DiskStore >> creationTimeOf: aPath [
+	"Answer the creation time of aPath.  If the platform doesn't support creation time, use change time"
+	| pathString squeakTime |
+
+	pathString := self stringFromPath: aPath.
+	squeakTime := (File fileAttribute: pathString number: 12) ifNil: 
+			[ File fileAttribute: pathString number: 11 ].
+	^DateAndTime fromSqueakTime: squeakTime
+
+]
+
+{ #category : #accessing }
 DiskStore >> defaultWorkingDirectory [
 	"Answer the default working directory, which is defined as the directory where the image resides."
 
@@ -239,7 +269,7 @@ DiskStore >> defaultWorkingDirectory [
 DiskStore >> delete: path [
 	| pathString encodedPathString |
 	
-	(self exists: path)
+	((self exists: path) or: [ self isSymlink: path ])
 		ifFalse: [ ^ FileDoesNotExistException signalWith: path ].
 		
 	pathString := self stringFromPath: path.
@@ -251,9 +281,119 @@ DiskStore >> delete: path [
 			(File named: pathString) delete ]
 ]
 
+{ #category : #accessing }
+DiskStore >> deviceIdOf: aPath [
+	"Return the device id of the file at aPath"
+	^File fileAttribute: (self stringFromPath: aPath) number: 4
+]
+
+{ #category : #public }
+DiskStore >> directoryAt: aPath  directoryNodesDo: aBlock [
+	^ self 
+		directoryAt: aPath 
+		nodesDo: [ :node |
+			(self basicIsDirectory: node) 
+				ifTrue: [ aBlock value: node ]].
+]
+
+{ #category : #public }
+DiskStore >> directoryAt: aPath fileNodesDo: aBlock [
+	^ self 
+		directoryAt: aPath 
+		nodesDo: [ :node |
+			(self basicIsDirectory: node) 
+				ifFalse: [ aBlock value: node ]].
+]
+
+{ #category : #public }
+DiskStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
+
+	^[ self directoryAt: aPath nodesDo: aBlock ]
+		on: DirectoryDoesNotExist, FileDoesNotExistException
+		do: [ absentBlock value ].
+
+]
+
+{ #category : #private }
+DiskStore >> directoryAt: aPath nodesDo: aBlock [
+
+	| pathString openDir dirPointer entryData fileName attributes targetName |
+	
+	pathString := File encodePathString: (self stringFromPath: aPath).
+	(self isDirectory: aPath) ifFalse:
+		[ ^self signalDirectoryDoesNotExist: aPath ].
+
+	openDir := File primOpendir: pathString.
+	openDir ifNil: [ ^nil ].
+	(openDir isArray and: [openDir size = 3]) ifTrue: [ 
+		"New VM (FileAttributesPlugin > 1.4)"
+		dirPointer := openDir at: 3.
+		entryData := openDir. ]
+	ifFalse: [ 
+		"Old VM (FileAttributesPlugin <= 1.4.x)"
+		dirPointer := openDir.
+		entryData := File primReaddir: dirPointer ].
+	[
+		[ entryData notNil ] whileTrue:
+			[
+				fileName := entryData first.
+				entryData at: 1 put: (File decodePathString: fileName).
+				attributes := entryData at: 2.
+				attributes ifNotNil: 
+					[ targetName := attributes at: 1.
+					targetName ifNotNil: [ attributes at: 1 put: (File decodePathString: targetName) ] ].
+				aBlock value: entryData.
+				entryData := File primReaddir: dirPointer.
+			]
+	] ensure: [ File primClosedir: dirPointer ].
+]
+
+{ #category : #public }
+DiskStore >> entryFromNode: node path: path for: aFileSystem [
+
+	| entryPath |
+	entryPath := path / (self basenameFromEntry: node).
+	^DiskDirectoryEntry reference: (FileReference fileSystem: aFileSystem path: entryPath).
+
+]
+
+{ #category : #public }
+DiskStore >> exists: aPath [
+
+	aPath isRoot ifTrue: [ ^true ].
+	^File exists: (self stringFromPath: aPath).
+]
+
+{ #category : #public }
+DiskStore >> file: path posixPermissions: anInteger [
+	"Set the mode of pathString to anInteger (as defined by chmod())"
+
+	^File file:(self stringFromPath: path) posixPermissions: anInteger
+]
+
+{ #category : #public }
+DiskStore >> file: path symlinkUid: uidInteger gid: gidInteger [
+	"Set the owner and group of path by numeric id."
+
+	^File file: (self stringFromPath: path) symlinkUid: uidInteger gid: gidInteger
+]
+
+{ #category : #public }
+DiskStore >> file: path uid: uidInteger gid: gidInteger [
+	"Set the owner and group of path by numeric id."
+
+	^File file: (self stringFromPath: path) uid: uidInteger gid: gidInteger
+]
+
 { #category : #printing }
 DiskStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'File @ '
+]
+
+{ #category : #accessing }
+DiskStore >> gidOf: aPath [
+	"Return the gid of the File described by aPath"
+	^File fileAttribute: (self stringFromPath: aPath) number: 7
 ]
 
 { #category : #accessing }
@@ -272,18 +412,28 @@ DiskStore >> initialize [
 	maxFileNameLength := Smalltalk vm maxFilenameLength ifNil: [ 255 ].
 ]
 
-{ #category : #public }
+{ #category : #accessing }
+DiskStore >> inodeOf: aPath [
+	"Return the inode number of the File described by aPath"
+	^File fileAttribute: (self stringFromPath: aPath) number: 3
+]
+
+{ #category : #testing }
+DiskStore >> isBlock: aPath [
+	"Answer a boolean indicating whether the supplied path is a Block file"
+	^File isBlock: (self stringFromPath: aPath)
+]
+
+{ #category : #testing }
+DiskStore >> isCharacter: aPath [
+	"Answer a boolean indicating whether the supplied path is a Character file"
+	^File isCharacter: (self stringFromPath: aPath)
+]
+
+{ #category : #accessing }
 DiskStore >> isDirectory: aPath [
-	| entry |
-	
-	aPath isRoot ifTrue: [ ^ true ].
-	
-	entry := self  basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: [  false ]
-		ifFalse: [ self basicIsDirectory: entry ].
-	
+	"Answer a boolean indicating whether the supplied path is a Directory file"
+	^aPath isRoot or: [File isDirectory: (self stringFromPath: aPath)]
 ]
 
 { #category : #testing }
@@ -291,54 +441,56 @@ DiskStore >> isDiskFileSystem [
 	^ true
 ]
 
-{ #category : #public }
-DiskStore >> isFile: aPath [
-	| entry |
-	
-	aPath isRoot ifTrue: [ ^ false ].
-	
-	entry := self  basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: [  false ]
-		ifFalse: [ self basicIsFile: entry ].
-	
+{ #category : #testing }
+DiskStore >> isExecutable: aPath [
+
+	^File isExecutable: (self stringFromPath: aPath)
 ]
 
-{ #category : #public }
+{ #category : #testing }
+DiskStore >> isFIFO: aPath [
+	"Answer a boolean indicating whether the supplied path is a FIFO file (pipe)"
+	^File isFIFO: (self stringFromPath: aPath)
+]
+
+{ #category : #testing }
+DiskStore >> isFile: aPath [
+	"Answer a boolean indicating whether the supplied path is a file, i.e. not a directory"
+
+	aPath isRoot ifTrue: [ ^false ].
+	^File isFile: (self stringFromPath: aPath)	
+]
+
+{ #category : #testing }
 DiskStore >> isReadable: aPath [
-	(self exists: aPath) ifFalse: [ ^ false ].
-	self flag: 'TODO: we need a decent primitive for this...'.
-	(self basicOpen: aPath writable: false) 
-		ifNotNil: [ :id|
-			File close: id.
-			^ true].
-	^ false
+
+	^File isReadable: (self stringFromPath: aPath)
+]
+
+{ #category : #testing }
+DiskStore >> isRegular: aPath [
+	"Answer a boolean indicating whether the supplied path is a Regular file"
+	^File isRegular: (self stringFromPath: aPath)
+]
+
+{ #category : #testing }
+DiskStore >> isSocket: aPath [
+	"Answer a boolean indicating whether the supplied path is a Socket file"
+	^File isSocket: (self stringFromPath: aPath)
 ]
 
 { #category : #public }
 DiskStore >> isSymlink: aPath [
-	| entry |
-	
+	"Answer a boolean indicating whether aPath is a symbolic link"
+
 	aPath isRoot ifTrue: [ ^false ].
-	
-	entry := self  basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: [  false ]
-		ifFalse: [ self basicIsSymlink: entry ].
-	
+	^File isSymlink: (self stringFromPath: aPath)
 ]
 
-{ #category : #public }
+{ #category : #testing }
 DiskStore >> isWritable: aPath [
-	(self exists: aPath) ifFalse: [ ^ false ].
-	self flag: 'TODO: we need a decent primitive for this...'.
-	(self basicOpen: aPath writable: true) 
-		ifNotNil: [ :id|
-			File close: id.
-			^ true].
-	^ false
+
+	^File isWritable: (self stringFromPath: aPath)
 ]
 
 { #category : #public }
@@ -346,20 +498,32 @@ DiskStore >> maxFileNameLength [
 	^ maxFileNameLength
 ]
 
+{ #category : #accessing }
+DiskStore >> modificationTimeOf: aPath [
+	"Return the date of last modification of the File described by aPath"
+
+	^DateAndTime fromSqueakTime: (File fileAttribute: (self stringFromPath: aPath) number: 10)
+]
+
 { #category : #private }
 DiskStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
-	
-	| entry |
-	
-	aPath isRoot ifTrue: [ ^ presentBlock value: self rootNode ].
-	
-	entry := self basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: absentBlock
-		ifFalse: [
-			entry at: 1 put: aPath basename.
-			presentBlock value: entry ].
+	"FileSystemStore provides a general implementation of the attributes originally supported by FilePlugin.  This assumes always retrieving a set of attributes and accessing the required attribute.  However this is expensive for the disk system (one or more Arrays has to be instantiated and garbage collected for a single attribute).  FileAttributesPlugin allows file attributes to be retrieved one at a time, so this method should never be used for DiskStore"
+
+	^self shouldNotImplement
+]
+
+{ #category : #accessing }
+DiskStore >> numberOfHardLinks: aPath [
+	"Return the number of hard links for the File described by aPath"
+	^File fileAttribute: (self stringFromPath: aPath) number: 5
+]
+
+{ #category : #accessing }
+DiskStore >> permissions: aPath [
+	"Answer the FileSystemPermissions for the supplied path"
+
+	^FileSystemPermission posixPermissions: (File posixPermissions: (self stringFromPath: aPath))
+
 ]
 
 { #category : #public }
@@ -376,4 +540,16 @@ DiskStore >> rename: sourcePath to: destinationPath [
 { #category : #private }
 DiskStore >> rootNode [
 	^ #('' 0 0 true 0 8r555)
+]
+
+{ #category : #accessing }
+DiskStore >> sizeOf: aPath [
+	"Return the size of the File described by aPath"
+	^File fileAttribute: (self stringFromPath: aPath) number: 8.
+]
+
+{ #category : #accessing }
+DiskStore >> uidOf: aPath [
+	"Return the uid of the File described by aPath"
+	^File fileAttribute: (self stringFromPath: aPath) number: 6
 ]
