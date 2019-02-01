@@ -43,11 +43,20 @@ Class {
 }
 
 { #category : #'instance creation' }
-FTTreeFunctionStrategy class >> filterWith: aRegex dataSource: aDataSource [
+FTTreeFunctionStrategy class >> filterWith: aString dataSource: aDataSource [
 	^ self new
-		pattern: aRegex;
+		pattern: (self patternFromString: aString);
 		dataSource: aDataSource;
 		filter
+]
+
+{ #category : #updating }
+FTTreeFunctionStrategy class >> patternFromString: aString [
+	" do not throw an error if the pattern is bad - important in case of auto-accepting"
+
+	^ [ aString asRegexIgnoringCase ]
+		on: RegexSyntaxError
+		do: [ :ex | '' asRegexIgnoringCase ]
 ]
 
 { #category : #'instance creation' }

@@ -24,11 +24,10 @@ TCopySequenceableSameContents >> nonEmpty [
 
 { #category : #'tests - fixture' }
 TCopySequenceableSameContents >> test0FixtureCopySameContentsTest [
-
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self empty.
-	self assert: self empty isEmpty
+	self assertEmpty: self empty
 ]
 
 { #category : #'tests - copying same contents' }
@@ -74,10 +73,9 @@ TCopySequenceableSameContents >> testShallowCopy [
 
 { #category : #'tests - copying same contents' }
 TCopySequenceableSameContents >> testShallowCopyEmpty [
-
 	| result |
 	result := self empty shallowCopy.
-	self assert: result isEmpty
+	self assertEmpty: result
 ]
 
 { #category : #'tests - copying same contents' }

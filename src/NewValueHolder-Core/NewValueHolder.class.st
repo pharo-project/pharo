@@ -105,13 +105,13 @@ NewValueHolder >> value: anObject [
 { #category : #accessing }
 NewValueHolder >> valueChanged [
 	
-	self announcer announce: (ValueChanged newValue: value)
+	self announcer announce: (ValueChanged newValue: self value)
 ]
 
 { #category : #accessing }
 NewValueHolder >> valueChanged: oldValue [
 	
-	self announcer announce: (ValueChanged oldValue: oldValue newValue: value)
+	self valueChanged: oldValue to: self value
 ]
 
 { #category : #accessing }

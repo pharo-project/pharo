@@ -81,17 +81,14 @@ StopwatchTest >> testMultipleTimings [
 
 { #category : #tests }
 StopwatchTest >> testNew [
-
 	| sw |
 	sw := Stopwatch new.
-	
-	self 
-		assert: (sw isSuspended);
-		assert: (sw state = #suspended);
-		deny: (sw isActive);
-		assert: (sw timespans isEmpty)
 
-
+	self
+		assert: sw isSuspended;
+		assert: sw state = #suspended;
+		deny: sw isActive;
+		assertEmpty: sw timespans
 ]
 
 { #category : #tests }
@@ -116,16 +113,14 @@ StopwatchTest >> testReActivate [
 
 { #category : #tests }
 StopwatchTest >> testReset [
-
 	| sw |
 	sw := Stopwatch new.
 	sw activate.
-	
-	sw reset.
-	self 
-		assert: (sw isSuspended);
-		assert: (sw timespans isEmpty)
 
+	sw reset.
+	self
+		assert: sw isSuspended;
+		assertEmpty: sw timespans
 ]
 
 { #category : #tests }

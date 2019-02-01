@@ -118,14 +118,13 @@ ClassTest >> testAddSlotAnonymous [
 
 { #category : #'tests - access' }
 ClassTest >> testAllSharedPools [
-
 	self assert: Point allSharedPools equals: OrderedCollection new.
 	self assert: Date sharedPools first equals: ChronologyConstants.
 	self assert: Date sharedPools size equals: 1.	"a metaclass does not have shared pools since only classes have shared pools"
 
 	self assert: RootClassPoolUser sharedPools size equals: 1.
 	self assert: ClassMultiplePoolUser sharedPools size equals: 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
-	self assert: SubclassPoolUser sharedPools isEmpty
+	self assertEmpty: SubclassPoolUser sharedPools
 ]
 
 { #category : #'as yet unclassified' }
@@ -218,12 +217,9 @@ ClassTest >> testIsInstanceSide [
 ClassTest >> testMethodsReferencingClass [
 	self assert: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest111)) equals: {(ClassTest >> #testOrdersACollectionOfClassesBySuperclass)}.
 	self
-		assert: ((ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest1)) sort: [ :a :b | a name <= b name]) asArray
-		equals:
-			{ClassTest>>#referencingMethod1. 
-			ClassTest>>#referencingMethod2. 
-			ClassTest>>#testOrdersACollectionOfClassesBySuperclass}.
-	self assert: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #BehaviorTest)) isEmpty
+		assert: ((ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest1)) sort: [ :a :b | a name <= b name ]) asArray
+		equals: {(ClassTest >> #referencingMethod1) . (ClassTest >> #referencingMethod2) . (ClassTest >> #testOrdersACollectionOfClassesBySuperclass)}.
+	self assertEmpty: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #BehaviorTest))
 ]
 
 { #category : #'tests - navigation' }
@@ -342,14 +338,13 @@ ClassTest >> testSharedPoolOfVarNamed [
 
 { #category : #'tests - access' }
 ClassTest >> testSharedPools [
-
 	self assert: Point sharedPools equals: OrderedCollection new.
 	self assert: Date sharedPools first equals: ChronologyConstants.
 	self assert: Date sharedPools size equals: 1.	"a metaclass does not have shared pools since only classes have shared pools"
 	Date class sharedPools.
 	self assert: RootClassPoolUser sharedPools size equals: 1.
 	self assert: ClassMultiplePoolUser sharedPools size equals: 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
-	self assert: SubclassPoolUser sharedPools isEmpty
+	self assertEmpty: SubclassPoolUser sharedPools
 ]
 
 { #category : #'tests - class creation' }

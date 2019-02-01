@@ -9,7 +9,7 @@ GLMCompositePresentationTest >> testAdd [
 	| composite |
 	composite := GLMCompositePresentation new.
 	composite add: GLMPresentation new.
-	self assert: composite isEmpty not.
+	self deny: composite isEmpty.
 	self assert: composite presentations size equals: 1
 ]
 
@@ -103,9 +103,7 @@ GLMCompositePresentationTest >> testCreateTabulator [
 
 { #category : #tests }
 GLMCompositePresentationTest >> testCreation [
-	| composite |
-	composite := GLMCompositePresentation new.
-	self assert: composite isEmpty
+	self assertEmpty: GLMCompositePresentation new
 ]
 
 { #category : #tests }

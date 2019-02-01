@@ -21,9 +21,9 @@ OSEnvironmentTest >> testAsDictionary [
 OSEnvironmentTest >> testAssociations [
 	| associations |
 	associations := self instance associations.
-	self deny: associations isEmpty.
+	self denyEmpty: associations.
 	self assert: associations anyOne key isString.
-	self assert: associations anyOne value isString.
+	self assert: associations anyOne value isString
 ]
 
 { #category : #tests }
@@ -67,11 +67,10 @@ OSEnvironmentTest >> testEnvironmentFor [
 { #category : #tests }
 OSEnvironmentTest >> testKeys [
 	| env keys |
-	
 	env := self instance.
 	keys := env keys.
-	
-	self deny: keys isEmpty.
+
+	self denyEmpty: keys.
 	self assert: keys anyOne isString.
 	self assert: (env includesKey: keys anyOne)
 ]
@@ -79,11 +78,10 @@ OSEnvironmentTest >> testKeys [
 { #category : #tests }
 OSEnvironmentTest >> testValues [
 	| env values |
-	
 	env := self instance.
 	values := env values.
-	
-	self deny: values isEmpty.
+
+	self denyEmpty: values.
 	self assert: values anyOne isString.
 	self assert: (env includes: values anyOne)
 ]

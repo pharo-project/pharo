@@ -29,7 +29,7 @@ GTEventMultiBundleTest >> setUp [
 
 { #category : #tests }
 GTEventMultiBundleTest >> testEntity [
-	self assert: multiBundle entity isEmpty
+	self assertEmpty: multiBundle entity
 ]
 
 { #category : #tests }

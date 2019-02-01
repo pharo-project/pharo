@@ -57,5 +57,5 @@ GTSnippets >> snippetAtOrEmpty: anObject [
 
 { #category : #accessing }
 GTSnippets >> snippets [ 
-	^ snippets ifNil: [ snippets := IdentityDictionary new ]
+	^ snippets ifNil: [ snippets := WeakIdentityKeyDictionary new ]
 ]

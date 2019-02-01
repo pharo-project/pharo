@@ -16,19 +16,19 @@
 #				  This can be set when a custom VM is to be 
 #				  used during bootstrap.
 #
-if [ -z "${BUILD_NUMBER}" ]
+if [ -z ${BUILD_NUMBER+x} ]
 then
     echo "BUILD_NUMBER not specified, exiting"
     exit 1
 fi
 
-if [ -z "${BOOTSTRAP_ARCH}" ]
+if [ -z ${BOOTSTRAP_ARCH+x} ]
 then
     echo "BOOTSTRAP_ARCH not specified, exiting"
     exit 1
 fi
 
-if [ -z "${BOOTSTRAP_REPOSITORY}" ]
+if [ -z ${BOOTSTRAP_REPOSITORY+x} ]
 then
   ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." ; pwd -P)"
   export BOOTSTRAP_REPOSITORY="${ROOT_DIR}"
@@ -36,13 +36,19 @@ else
   ROOT_DIR="$(pwd -P)"
 fi
 
-if [ -z "${BOOTSTRAP_CACHE}" ]
+if [ -z ${BOOTSTRAP_CACHE+x} ]
 then
   BOOTSTRAP_CACHE=${ROOT_DIR}/bootstrap-cache
 fi
 export BOOTSTRAP_CACHE
 
 # This is the VM used to bootstrap, i.e. the target VM
+if [ -z "${BOOTSTRAP_VMTARGET}" ]
+then
+    VM="${BOOTSTRAP_CACHE}/vmtarget/pharo --headless"
+else
+    VM="${BOOTSTRAP_VMTARGET}/pharo --headless"
+fi
 
 # Flags to run the image
 IMAGE_FLAGS="--no-default-preferences"
@@ -50,9 +56,3 @@ IMAGE_FLAGS="--no-default-preferences"
 # Include pharo version 
 . $(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)/envversion.sh
 
-if [ -z "${BOOTSTRAP_VMTARGET}" ]
-then
-    VM="${BOOTSTRAP_CACHE}/vmtarget/pharo --headless"
-else
-    VM="${BOOTSTRAP_VMTARGET}/pharo --headless"
-fi

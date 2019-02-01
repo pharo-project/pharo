@@ -376,14 +376,11 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 { #category : #'tests extending' }
 RPackageOrganizerTest >> testRegistrationExtendingPackages [
 	| p |
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
+	self assertEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
 	p := self pointRectangleInGraphElement.
-	(self packageOrganizer
-					registerExtendingPackage:  p
-					forClass: self quadrangleClass).
-	self deny: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement.
-	
+	self packageOrganizer registerExtendingPackage: p forClass: self quadrangleClass.
+	self denyEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
+	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement
 ]
 
 { #category : #'tests extensions' }
@@ -420,16 +417,11 @@ RPackageOrganizerTest >> testUnregisterBasedOnNames [
 
 { #category : #'tests extending' }
 RPackageOrganizerTest >> testUnregistrationExtendingPackages [
-	| p |	
+	| p |
 	p := self pointRectangleInGraphElement.
-	self packageOrganizer
-		registerExtendingPackage: p
-		forClass: self quadrangleClass.
-	self deny: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
+	self packageOrganizer registerExtendingPackage: p forClass: self quadrangleClass.
+	self denyEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
 	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement.
-	self packageOrganizer
-					unregisterExtendingPackage:  p
-					forClass: self quadrangleClass.
-	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
-	
+	self packageOrganizer unregisterExtendingPackage: p forClass: self quadrangleClass.
+	self assertEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass)
 ]

@@ -19,19 +19,16 @@ TIterateSequencedReadableTest >> nonEmptyMoreThan1Element [
 
 { #category : #'tests - fixture' }
 TIterateSequencedReadableTest >> test0FixtureIterateSequencedReadableTest [
-
-	| res |	
+	| res |
 	self nonEmptyMoreThan1Element.
 	self assert: self nonEmptyMoreThan1Element size > 1.
-		
+
 	self empty.
-	self assert: self empty isEmpty.
-	
+	self assertEmpty: self empty.
+
 	res := true.
-	self nonEmptyMoreThan1Element    
-	detect: [ :each | (self nonEmptyMoreThan1Element occurrencesOf: each) > 1 ]
-	ifNone: [ res := false ].
-	self assert: res = false
+	self nonEmptyMoreThan1Element detect: [ :each | (self nonEmptyMoreThan1Element occurrencesOf: each) > 1 ] ifNone: [ res := false ].
+	self deny: res
 ]
 
 { #category : #'tests - iterate on sequenced reable collections' }
@@ -179,31 +176,25 @@ TIterateSequencedReadableTest >> testKeysAndValuesDo [
 
 { #category : #'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testKeysAndValuesDoEmpty [
-
 	| result |
-	result:= OrderedCollection new.
-	
-	self empty keysAndValuesDo: 
-		[:i :value| result add: (value+i) ].
-	
-	self assert: result isEmpty
+	result := OrderedCollection new.
+
+	self empty keysAndValuesDo: [ :i :value | result add: value + i ].
+
+	self assertEmpty: result
 ]
 
 { #category : #'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testPairsCollect [
-	
 	| index result |
 	index := 0.
-	
-	result := self nonEmptyMoreThan1Element pairsCollect: 
-		[:each1 :each2 | 
-			self assert: (self nonEmptyMoreThan1Element indexOf: each2 ) equals: (index := index + 2).
-			(self nonEmptyMoreThan1Element indexOf: each2) = ((self nonEmptyMoreThan1Element indexOf: each1) + 1)].
-	
-	result do: 
-		[:each | self assert: each equals: true ]
-	
 
+	result := self nonEmptyMoreThan1Element
+		pairsCollect: [ :each1 :each2 | 
+			self assert: (self nonEmptyMoreThan1Element indexOf: each2) equals: (index := index + 2).
+			(self nonEmptyMoreThan1Element indexOf: each2) = ((self nonEmptyMoreThan1Element indexOf: each1) + 1) ].
+
+	result do: [ :each | self assert: each ]
 ]
 
 { #category : #'tests - iterate on sequenced reable collections' }
@@ -238,9 +229,9 @@ TIterateSequencedReadableTest >> testReverseDo [
 TIterateSequencedReadableTest >> testReverseDoEmpty [
 	| result |
 	result := OrderedCollection new.
-	self empty reverseDo: [: each | result add: each ].
-	
-	self assert: result isEmpty
+	self empty reverseDo: [ :each | result add: each ].
+
+	self assertEmpty: result
 ]
 
 { #category : #'tests - iterate on sequenced reable collections' }

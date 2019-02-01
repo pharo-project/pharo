@@ -9,15 +9,15 @@ Class {
 
 { #category : #tests }
 KMKeymapBuilderTest >> testAddKeymapCreatesCategory [
-	self assert: KMRepository default categories isEmpty.
-	
+	self assertEmpty: KMRepository default categories.
+
 	KMRepository default
 		initializeKeymap: #test
-		executingOn: $r ctrl, $r asKeyCombination, $r asKeyCombination
+		executingOn: $r ctrl , $r asKeyCombination , $r asKeyCombination
 		doing: [ :receiver | "nothing" ]
 		inCategory: #Testing
 		platform: #all.
-	
+
 	self assert: (KMRepository default includesCategoryNamed: #Testing).
 	self assert: KMRepository default categories size equals: 1
 ]

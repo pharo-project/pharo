@@ -26,19 +26,16 @@ TCopyPartOfSequenceableForMultipliness >> test0FixtureCopyPartOfForMultipliness 
 
 { #category : #'tests - copying part of sequenceable for multipliness' }
 TCopyPartOfSequenceableForMultipliness >> testCopyAfterLastWithDuplicate [
-
-	| result element  collection |
+	| result element collection |
 	collection := self collectionWithSameAtEndAndBegining.
 	element := collection first.
-	
+
 	"collectionWithSameAtEndAndBegining first and last elements are equals.
 	'copyAfter:' should copy after the last occurence of element :"
-	result := collection copyAfterLast: (element ).
-	
+	result := collection copyAfterLast: element.
+
 	"Verify content"
-	self assert: result isEmpty
-
-
+	self assertEmpty: result
 ]
 
 { #category : #'tests - copying part of sequenceable for multipliness' }
@@ -82,17 +79,14 @@ TCopyPartOfSequenceableForMultipliness >> testCopyUpToLastWithDuplicate [
 
 { #category : #'tests - copying part of sequenceable for multipliness' }
 TCopyPartOfSequenceableForMultipliness >> testCopyUpToWithDuplicate [
-
-	| result element  collection |
+	| result element collection |
 	collection := self collectionWithSameAtEndAndBegining.
 	element := collection last.
-	
+
 	"collectionWithSameAtEndAndBegining first and last elements are equals.
  	 'copyUpTo:' should copy until the first occurence"
-	result := collection copyUpTo: (element ).
-	
+	result := collection copyUpTo: element.
+
 	"Verify content"
-	self assert: result isEmpty
-
-
+	self assertEmpty: result
 ]

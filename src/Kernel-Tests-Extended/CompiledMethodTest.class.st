@@ -376,9 +376,9 @@ CompiledMethodTest >> testLiterals [
 	"#literals should not expose implementation hack that the last two literals are 
 	used for name of method and class"
 
-	self assert: (Object >> #yourself) literals isEmpty.
+	self assertEmpty: (Object >> #yourself) literals.
 	self assert: (Object >> #yourself) allLiterals size equals: 2.
-	self deny: ((Object >> #yourself) hasLiteral: #yourself).
+	self deny: (Object >> #yourself hasLiteral: #yourself)
 ]
 
 { #category : #'as yet unclassified' }

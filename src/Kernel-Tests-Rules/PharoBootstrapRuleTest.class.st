@@ -26,26 +26,22 @@ PharoBootstrapRuleTest >> tearDown [
 PharoBootstrapRuleTest >> testRuleDoesNotFailIfAppliedOnNonBootstrapPackage [
 	| rule critiques |
 	rule := PharoBootstrapRule new.
-	rule class 
-		classVarNamed: 'DependencyChecker'
-		put: PharoBootstrapAnalyzerStubWithNoNewDependency.
+	rule class classVarNamed: 'DependencyChecker' put: PharoBootstrapAnalyzerStubWithNoNewDependency.
 
 	critiques := rule check: (RPackage named: #P1).
 
-	self assert: critiques isEmpty
+	self assertEmpty: critiques
 ]
 
 { #category : #tests }
 PharoBootstrapRuleTest >> testRuleDoesNotFailIfNoNewExternalDependency [
 	| rule critiques |
 	rule := PharoBootstrapRule new.
-	rule class 
-		classVarNamed: 'DependencyChecker'
-		put: PharoBootstrapAnalyzerStubWithNoNewDependency.
+	rule class classVarNamed: 'DependencyChecker' put: PharoBootstrapAnalyzerStubWithNoNewDependency.
 
 	critiques := rule check: (RPackage named: #Kernel).
 
-	self assert: critiques isEmpty
+	self assertEmpty: critiques
 ]
 
 { #category : #tests }
