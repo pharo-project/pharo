@@ -31,7 +31,7 @@ CombinedChar class >> isCompositionCharacter: charCode [
 { #category : #testing }
 CombinedChar class >> isDiacriticals: unicode [
 
-	^ Diacriticals includes: unicode.
+	^ Diacriticals includes: unicode
 
 ]
 
