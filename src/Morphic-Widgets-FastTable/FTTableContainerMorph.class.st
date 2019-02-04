@@ -177,7 +177,7 @@ FTTableContainerMorph >> defaultColor [
 
 { #category : #drawing }
 FTTableContainerMorph >> drawOn: canvas [
-	| x y cellWidth cellHeight rowsToDisplay rowSubviews highligtedRowIndexes primarySelectionIndex |
+	| x y cellWidth cellHeight rowsToDisplay rowSubviews highligtedIndexes primarySelectionIndex |
 	super drawOn: canvas.
 	self canRefreshValues ifFalse: [ ^ self ].	"Nothing to update yet"
 
@@ -185,7 +185,7 @@ FTTableContainerMorph >> drawOn: canvas [
 	y := self top.
 	cellWidth := self width - self class rowLeftMargin.
 	cellHeight := self table rowHeight rounded.
-	highligtedRowIndexes := self table selectedIndexes , self table highlightedIndexes.
+	highligtedIndexes := self table selectedIndexes , self table highlightedIndexes.
 	primarySelectionIndex := self table selectedIndex.
 
 	"For some superweird reason, calling #calculateExposedRows here instead in #changed (where
@@ -196,28 +196,25 @@ FTTableContainerMorph >> drawOn: canvas [
 
 	rowsToDisplay := self exposedRows.
 	rowSubviews := OrderedCollection new: rowsToDisplay size + 1.
-	headerRow ifNotNil: [ 
-		headerRow bounds: (self left@y extent: self width@cellHeight).
-		y := y + cellHeight + self table intercellSpacing y.		
-		rowSubviews add: headerRow ].
+	headerRow
+		ifNotNil: [ headerRow bounds: (self left @ y extent: self width @ cellHeight).
+			y := y + cellHeight + self table intercellSpacing y.
+			rowSubviews add: headerRow ].
 	
-	rowsToDisplay keysAndValuesDo: [ :rowIndex :row | | visibleHeight |
-		visibleHeight := cellHeight min: (self bottom - y). 
-		row bounds: (x@y extent: cellWidth@visibleHeight).
-		y := y + visibleHeight + self table intercellSpacing y.
-		
-		"rowSubviews add: row.		
-		(self table selectionMode == #column)		 
-		 ifTrue: [row submorphs withIndexDo: [ :each :columnIndex |
-				 (SelectedCellIndexes includes: (Array with:rowIndex with:columnIndex)) 
-					ifTrue: [ each columnSelectionColor: (self table colorForSelection:(primarySelectionCellIndex first = rowIndex and:primarySelectionCellIndex second = columnIndex )) ]]]	
-				ifFalse:[(highligtedRowIndexes includes: rowIndex) ifTrue: [ 
-			row selectionColor: (self table colorForSelection: primarySelectionIndex = rowIndex) ]].	"
-		
-		
-		(highligtedRowIndexes includes: rowIndex) ifTrue: [ 
-			row selectionColor: (self table colorForSelection: primarySelectionIndex = rowIndex) ].
-		rowSubviews add: row ].
+	rowsToDisplay
+		keysAndValuesDo: [ :rowIndex :row | 
+			| visibleHeight |
+			visibleHeight := cellHeight min: self bottom - y.
+			row bounds: (x @ y extent: cellWidth @ visibleHeight).
+			y := y + visibleHeight + self table intercellSpacing y.
+
+			rowSubviews add: row.
+
+			(self table selectionModeStrategy
+				selectablesToHighlightFromRow: row
+				at: rowIndex
+				withHighlightedIndexes: highligtedIndexes
+				andPrimaryIndex: primarySelectionIndex) keysAndValuesDo: [ :morph :isPrimary | morph selectionColor: (self table colorForSelection: isPrimary) ] ].
 
 	"We should notify existing rows about deletion and new rows about insertion. 
 	It is required to correctly manage stepping animation of cells"

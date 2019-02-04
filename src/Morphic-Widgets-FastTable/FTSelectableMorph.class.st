@@ -7,12 +7,12 @@ Class {
 	#category : #'Morphic-Widgets-FastTable'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 FTSelectableMorph >> defaultColor [
 	^ Color transparent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 FTSelectableMorph >> initialize [
 	super initialize.
 	selectionColor := self defaultColor
@@ -33,15 +33,13 @@ FTSelectableMorph >> mouseOverColor [
 	^ self theme lightBackgroundColor
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 FTSelectableMorph >> selectionColor [
-
-	^selectionColor
+	^ selectionColor
 ]
 
 { #category : #accessing }
 FTSelectableMorph >> selectionColor: aColor [
-
 	selectionColor := aColor.
 	self color: selectionColor
 ]

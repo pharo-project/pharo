@@ -20,26 +20,19 @@ FTTableRowMorph class >> table: aTableMorph [
 		yourself
 ]
 
-{ #category : #initialize }
-FTTableRowMorph >> defaultColor [
-	^Color transparent 
-]
-
 { #category : #'event handling' }
 FTTableRowMorph >> handlesMouseOver: evt [
+	self table ifNotNil: [ :table | ^ table selectionModeStrategy isRowSelection ].
+	^ false
 
-	^true
 ]
 
 { #category : #initialization }
-FTTableRowMorph >> initialize [ 
+FTTableRowMorph >> initialize [
 	super initialize.
 	self
-		clipSubmorphs:true;
-		layoutPolicy: FTRowLayout new.
-		
-	selectionColor := self defaultColor
-	
+		clipSubmorphs: true;
+		layoutPolicy: FTRowLayout new
 ]
 
 { #category : #initialization }
@@ -49,20 +42,4 @@ FTTableRowMorph >> initializeTable: tableMorph [
 		cellInset: tableMorph intercellSpacing";
 		layoutInset: tableMorph intercellSpacing".
 	self flag: #todo. "Check if layout inset works better"
-]
-
-{ #category : #'event handling' }
-FTTableRowMorph >> mouseEnter: evt [
-
-	self color: (
-		selectionColor isTransparent 
-			ifTrue: [ self mouseOverColor ]
-			ifFalse: [ self mouseOverColor mixed: 0.5 with: selectionColor ]
-	)
-]
-
-{ #category : #'event handling' }
-FTTableRowMorph >> mouseLeave: evt [
-	
-	self color: self selectionColor 
 ]

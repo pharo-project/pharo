@@ -29,8 +29,13 @@ FTSelectionStrategy >> isSimple [
 ]
 
 { #category : #accessing }
-FTSelectionStrategy >> selectRowIndex: rowIndex event: event [
+FTSelectionStrategy >> selectIndex: rowIndex event: event [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+FTSelectionStrategy >> selectionModeStrategy [
+	^ self table selectionModeStrategy
 ]
 
 { #category : #accessing }
@@ -44,8 +49,8 @@ FTSelectionStrategy >> table: aTable [
 ]
 
 { #category : #private }
-FTSelectionStrategy >> toggleRowIndex: rowIndex [
-	((self table selectedIndexes includes: rowIndex) and: [ self table selectedIndexes size = 1 and: [ self table allowsDeselection ]	"just one selected" ])
-		ifTrue: [ self table selectIndexes: #() ]
-		ifFalse: [ self table selectIndex: rowIndex ]
+FTSelectionStrategy >> toggleIndex: index [
+	((self table selectedIndexes includes: index) and: [ self table selectedIndexes size = 1 and: [ self table allowsDeselection ]	"just one selected" ])
+		ifTrue: [ self table deselectAll ]
+		ifFalse: [ self table selectIndex: index ]
 ]
