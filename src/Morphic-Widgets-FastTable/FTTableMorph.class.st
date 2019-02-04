@@ -98,10 +98,8 @@ FTTableMorph class >> newTrialHorizontalScrollBar [
 
 { #category : #'drag and drop' }
 FTTableMorph >> acceptDroppingMorph: aMorph event: event [
-	self dataSource 
-		dropElements: aMorph passenger 
-		index: ((self container rowIndexContainingPoint: event position) ifNil: [ 0 ]).
-	self basicHighlightRowIndexes: #().
+	self dataSource dropElements: aMorph passenger index: ((self container rowIndexContainingPoint: event position) ifNil: [ 0 ]).
+	self basicHighlightIndexes: #().
 	self refresh
 ]
 
@@ -716,35 +714,27 @@ FTTableMorph >> mouseEnterDragging: event [
 { #category : #'event handling' }
 FTTableMorph >> mouseLeaveDragging: event [
 	"The mouse has left with a button down."
-	
-	(self dropEnabled and: [event hand hasSubmorphs]) 
-		ifFalse: [ "no d&d" ^ super mouseLeaveDragging: event].
-		
-	self basicHighlightRowIndexes: #().
+
+	(self dropEnabled and: [ event hand hasSubmorphs ]) ifFalse: [ "no d&d" ^ super mouseLeaveDragging: event ].
+
+	self basicHighlightIndexes: #().
 	self refresh
-				
 ]
 
 { #category : #'event handling' }
 FTTableMorph >> mouseMove: event [
 	event isDraggingEvent ifFalse: [ ^ self ].
-	event hand hasSubmorphs ifFalse: [ ^self ].
-	(self wantsDroppedMorph: event hand submorphs first event: event) ifFalse: [ ^self ].
-	
-	(self container rowIndexContainingPoint: event position) 
-		ifNotNil: [ :rowIndex | 
-			self basicHighlightRowIndexes: { rowIndex }.
-			self refresh ].
-	
-	(self container bounds containsPoint: event position) ifTrue: [ 
-		(event position y <= (self container top + self autoScrollHeightLimit)) ifTrue: [ 
-			^self verticalScrollBar scrollUp: 1
-		].
-		(event position y >= (self container bottom - self autoScrollHeightLimit)) ifTrue: [ 
-			^self verticalScrollBar scrollDown: 1
-		] 			
-	]
+	event hand hasSubmorphs ifFalse: [ ^ self ].
+	(self wantsDroppedMorph: event hand submorphs first event: event) ifFalse: [ ^ self ].
 
+	(self container rowIndexContainingPoint: event position)
+		ifNotNil: [ :rowIndex | 
+			self basicHighlightIndexes: {rowIndex}.
+			self refresh ].
+
+	(self container bounds containsPoint: event position)
+		ifTrue: [ event position y <= (self container top + self autoScrollHeightLimit) ifTrue: [ ^ self verticalScrollBar scrollUp: 1 ].
+			event position y >= (self container bottom - self autoScrollHeightLimit) ifTrue: [ ^ self verticalScrollBar scrollDown: 1 ] ]
 ]
 
 { #category : #'event handling' }
@@ -945,6 +935,13 @@ FTTableMorph >> secondarySelectionColor [
 { #category : #'accessing colors' }
 FTTableMorph >> secondarySelectionColor: aColor [
 	secondarySelectionColor := aColor
+]
+
+{ #category : #'accessing selection' }
+FTTableMorph >> selectAll [
+	self isMultipleSelection ifFalse: [ ^ self ].
+
+	self selectionModeStrategy selectAll
 ]
 
 { #category : #'accessing selection' }
