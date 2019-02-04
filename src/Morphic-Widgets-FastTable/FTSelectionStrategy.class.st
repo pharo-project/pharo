@@ -12,21 +12,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-FTSelectionStrategy class >> new [
-	self error: 'Use #table:'
-]
-
-{ #category : #'instance creation' }
 FTSelectionStrategy class >> table: aFastTableMorph [
-	^ self basicNew
-		initializeTable: aFastTableMorph;
+	^ self new
+		table: aFastTableMorph;
 		yourself
-]
-
-{ #category : #initialization }
-FTSelectionStrategy >> initializeTable: aTable [
-	table := aTable.
-	self initialize
 ]
 
 { #category : #testing }
@@ -47,6 +36,11 @@ FTSelectionStrategy >> selectRowIndex: rowIndex event: event [
 { #category : #accessing }
 FTSelectionStrategy >> table [
 	^ table
+]
+
+{ #category : #accessing }
+FTSelectionStrategy >> table: aTable [
+	table := aTable
 ]
 
 { #category : #private }
