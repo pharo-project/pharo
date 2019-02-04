@@ -1,26 +1,26 @@
 Class {
-	#name : #FTRowSelectionStrategy,
+	#name : #FTRowSelectionModeStrategy,
 	#superclass : #FTSelectionModeStrategy,
 	#category : #'Morphic-Widgets-FastTable-Selection'
 }
 
 { #category : #testing }
-FTRowSelectionStrategy >> isRowSelection [
+FTRowSelectionModeStrategy >> isRowSelection [
 	^ true
 ]
 
 { #category : #private }
-FTRowSelectionStrategy >> selectAll [
+FTRowSelectionModeStrategy >> selectAll [
 	self isMultipleSelection ifFalse: [ ^ self ].
 	self table selectIndexes: (1 to: self table numberOfRows) asArray
 ]
 
 { #category : #private }
-FTRowSelectionStrategy >> selectFirst [
+FTRowSelectionModeStrategy >> selectFirst [
 	self table selectRowIndex: 1
 ]
 
 { #category : #private }
-FTRowSelectionStrategy >> selectLast [
+FTRowSelectionModeStrategy >> selectLast [
 	self table selectRowIndex: self table numberOfRows
 ]

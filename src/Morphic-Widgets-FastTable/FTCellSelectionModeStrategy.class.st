@@ -1,16 +1,16 @@
 Class {
-	#name : #FTCellSelectionStrategy,
+	#name : #FTCellSelectionModeStrategy,
 	#superclass : #FTSelectionModeStrategy,
 	#category : #'Morphic-Widgets-FastTable-Selection'
 }
 
 { #category : #testing }
-FTCellSelectionStrategy >> isCellSelection [
+FTCellSelectionModeStrategy >> isCellSelection [
 	^ true
 ]
 
 { #category : #private }
-FTCellSelectionStrategy >> selectAll [
+FTCellSelectionModeStrategy >> selectAll [
 	| cellIndexes |
 	self isMultipleSelection ifFalse: [ ^ self ].
 	cellIndexes := OrderedCollection new.
@@ -19,11 +19,11 @@ FTCellSelectionStrategy >> selectAll [
 ]
 
 { #category : #private }
-FTCellSelectionStrategy >> selectFirst [
+FTCellSelectionModeStrategy >> selectFirst [
 	self table selectCellIndexRow: 1 column: 1
 ]
 
 { #category : #private }
-FTCellSelectionStrategy >> selectLast [
+FTCellSelectionModeStrategy >> selectLast [
 	self table selectCellIndexRow: self table numberOfRows column: self table numberOfColumns
 ]

@@ -161,7 +161,7 @@ FTTableMorph >> basicSelectRowIndexes: anArray [
 
 { #category : #accessing }
 FTTableMorph >> beCellSelection [
-	self selectionModeStrategy: (FTCellSelectionStrategy table: self)
+	self selectionModeStrategy: (FTCellSelectionModeStrategy table: self)
 ]
 
 { #category : #accessing }
@@ -181,7 +181,7 @@ FTTableMorph >> beResizable [
 
 { #category : #accessing }
 FTTableMorph >> beRowSelection [
-	self selectionModeStrategy: (FTRowSelectionStrategy table: self)
+	self selectionModeStrategy: (FTRowSelectionModeStrategy table: self)
 ]
 
 { #category : #accessing }
