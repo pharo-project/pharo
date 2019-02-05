@@ -9,14 +9,16 @@ Examples:
 -------------
 FTTableMorph new
 	extent: 200@400;
-	dataSource: (FTSimpleDataSource elements: (1 to: 10000) );
-	openInWindow.
+	dataSource: (FTSimpleDataSource elements: (1 to: 10000));
+	openInWindow
 	
 You can check better examples in FTExamples
 
 A FastTable have the possibility to be searchable, this is activate by default. 
 You can disable this with the method #disableSearch.
 But you also have the possibility to make your FastTable filterable with the method #enableFilter. But search and filter cannot be use in the same time.
+
+I manage different kind of selections through a strategy design pattern. For example I have a strategy to manage simple or multiple selection and I have a strategy to manage cell or row selection.
 "
 Class {
 	#name : #FTTableMorph,

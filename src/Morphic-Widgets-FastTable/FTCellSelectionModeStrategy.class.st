@@ -1,8 +1,26 @@
+"
+Description
+--------------------
+
+I am a strategy to manage the behaviour of a FTTableMorph in case we are in a cell selection mode.
+
+My indexes are stored as tuples whose first element designate the selected row and second element the selected column.
+
+Examples
+--------------------
+
+	FTCellSelectionModeStrategy table: aFTTableMorph
+"
 Class {
 	#name : #FTCellSelectionModeStrategy,
 	#superclass : #FTSelectionModeStrategy,
 	#category : #'Morphic-Widgets-FastTable-Selection'
 }
+
+{ #category : #testing }
+FTCellSelectionModeStrategy >> allowsCellSelection [
+	^ true
+]
 
 { #category : #accessing }
 FTCellSelectionModeStrategy >> indexFromPosition: aTuple [
@@ -35,11 +53,6 @@ FTCellSelectionModeStrategy >> is: anIndex beforeColumn: aColumnIndex [
 { #category : #testing }
 FTCellSelectionModeStrategy >> is: anIndex bellowRow: aRowIndex [
 	^ anIndex first > aRowIndex
-]
-
-{ #category : #testing }
-FTCellSelectionModeStrategy >> isCellSelection [
-	^ true
 ]
 
 { #category : #accessing }

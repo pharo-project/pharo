@@ -1,3 +1,26 @@
+"
+Description
+--------------------
+
+
+I manage the different selection modes of a FastTable.
+
+I manage the different behaviours between row and cell selections. Maybe we could also add column selection later.
+
+I am part of a Strategy design pattern and I am used by a FTTableMroph.
+
+Examples
+--------------------
+
+	FTCellSelectionModeStrategy table: aFTTableMorph
+ 
+Internal Representation and Key Implementation Points.
+--------------------
+
+    Instance Variables
+	table:		<aFTTableMorph>		The fast table whose selection I manage.
+
+"
 Class {
 	#name : #FTSelectionModeStrategy,
 	#superclass : #Object,
@@ -14,8 +37,20 @@ FTSelectionModeStrategy class >> table: aTable [
 		yourself
 ]
 
+{ #category : #testing }
+FTSelectionModeStrategy >> allowsCellSelection [
+	^ false
+]
+
+{ #category : #testing }
+FTSelectionModeStrategy >> allowsRowSelection [
+	^ false
+]
+
 { #category : #accessing }
 FTSelectionModeStrategy >> indexFromPosition: aTuple [
+	"I receive a tuple representing a row and a column index in my table and I should return the index of the selectable element that can be selected at this position."
+
 	^ self subclassResponsibility
 ]
 
@@ -46,16 +81,6 @@ FTSelectionModeStrategy >> is: anIndex bellowRow: aRowIndex [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
-FTSelectionModeStrategy >> isCellSelection [
-	^ false
-]
-
-{ #category : #testing }
-FTSelectionModeStrategy >> isRowSelection [
-	^ false
-]
-
 { #category : #accessing }
 FTSelectionModeStrategy >> nullIndex [
 	^ self subclassResponsibility
@@ -63,6 +88,8 @@ FTSelectionModeStrategy >> nullIndex [
 
 { #category : #accessing }
 FTSelectionModeStrategy >> rowIndexFrom: anIndex [
+	"From the index of the selectable I should return the row index."
+
 	^ self subclassResponsibility
 ]
 
@@ -119,7 +146,6 @@ FTSelectionModeStrategy >> selectablesToHighlightFromRow: aFTRow at: aRowIndex w
 
 { #category : #accessing }
 FTSelectionModeStrategy >> selectedRowIndex [
-	self flag: #todo.	"Check this is used at the end"
 	^ self rowIndexFrom: self table selectedIndex
 ]
 

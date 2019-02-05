@@ -1,8 +1,26 @@
+"
+Description
+--------------------
+
+I am a strategy to manage the behaviour of a FTTableMorph in case we are in a row selection mode.
+
+My indexes are integers defining the index of the selected row.
+
+Examples
+--------------------
+
+	FTRowSelectionModeStrategy table: aFTTableMorph
+"
 Class {
 	#name : #FTRowSelectionModeStrategy,
 	#superclass : #FTSelectionModeStrategy,
 	#category : #'Morphic-Widgets-FastTable-Selection'
 }
+
+{ #category : #testing }
+FTRowSelectionModeStrategy >> allowsRowSelection [
+	^ true
+]
 
 { #category : #accessing }
 FTRowSelectionModeStrategy >> indexFromPosition: aTuple [
@@ -38,11 +56,6 @@ FTRowSelectionModeStrategy >> is: anIndex beforeColumn: aColumn [
 { #category : #testing }
 FTRowSelectionModeStrategy >> is: anIndex bellowRow: aRowIndex [
 	^ anIndex > aRowIndex
-]
-
-{ #category : #testing }
-FTRowSelectionModeStrategy >> isRowSelection [
-	^ true
 ]
 
 { #category : #accessing }
