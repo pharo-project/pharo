@@ -4,7 +4,7 @@ Description
 
 I am a morph that can be selected by a user in a FastTable.
 
-I manage the color changes whe the user is doing a mouse over or a selection.
+I manage the color changes when the user is doing a mouse over or a selection.
 "
 Class {
 	#name : #FTSelectableMorph,
