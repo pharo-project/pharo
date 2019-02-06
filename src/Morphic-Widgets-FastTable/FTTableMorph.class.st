@@ -330,7 +330,9 @@ FTTableMorph >> ensureVisibleFirstSelection [
 	| rowIndex |
 	(self hasSelection not or: [ self container isRowIndexFullyVisible: (rowIndex := self selectionModeStrategy selectedRowIndex) ]) ifTrue: [ ^ self ].
 
-	rowIndex < self showIndex ifTrue: [ self moveShowIndexTo: rowIndex ] ifFalse: [ self moveShowIndexTo: rowIndex - self container calculateMinVisibleRows + 1 ]
+	rowIndex < self showIndex
+		ifTrue: [ self moveShowIndexTo: self selectedIndex ]
+		ifFalse: [ self moveShowIndexTo: (self selectionModeStrategy indexForRow: rowIndex - self container calculateMinVisibleRows + 1) ]
 ]
 
 { #category : #accessing }

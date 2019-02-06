@@ -48,6 +48,11 @@ FTSelectionModeStrategy >> allowsRowSelection [
 ]
 
 { #category : #accessing }
+FTSelectionModeStrategy >> indexForRow: aRowIndex [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 FTSelectionModeStrategy >> indexFromPosition: aTuple [
 	"I receive a tuple representing a row and a column index in my table and I should return the index of the selectable element that can be selected at this position."
 
@@ -116,21 +121,29 @@ FTSelectionModeStrategy >> selectLast [
 
 { #category : #accessing }
 FTSelectionModeStrategy >> selectableIndexAbove: anIndex [
+	"When getting in this method we should already know there is a selectable above this one."
+
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 FTSelectionModeStrategy >> selectableIndexAfter: anIndex [
+	"When getting in this method we should already know there is a selectable after this one."
+	
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 FTSelectionModeStrategy >> selectableIndexBefore: anIndex [
+	"When getting in this method we should already know there is a selectable before this one."
+
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 FTSelectionModeStrategy >> selectableIndexBellow: anIndex [
+	"When getting in this method we should already know there is a selectable before this one."
+
 	^ self subclassResponsibility
 ]
 

@@ -23,6 +23,11 @@ FTRowSelectionModeStrategy >> allowsRowSelection [
 ]
 
 { #category : #accessing }
+FTRowSelectionModeStrategy >> indexForRow: aRowIndex [
+	^ aRowIndex
+]
+
+{ #category : #accessing }
 FTRowSelectionModeStrategy >> indexFromPosition: aTuple [
 	^ aTuple first
 ]
@@ -41,14 +46,14 @@ FTRowSelectionModeStrategy >> is: anIndex aboveRow: aRowIndex [
 
 { #category : #testing }
 FTRowSelectionModeStrategy >> is: anIndex afterColumn: aColumnIndex [
-	"Not possible for rows."
+	"A row cannot be before or after a column."
 
 	^ false
 ]
 
 { #category : #testing }
 FTRowSelectionModeStrategy >> is: anIndex beforeColumn: aColumn [
-	"Not possible for rows."
+	"A row cannot be before or after a column."
 
 	^ false
 ]

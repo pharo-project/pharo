@@ -23,6 +23,11 @@ FTCellSelectionModeStrategy >> allowsCellSelection [
 ]
 
 { #category : #accessing }
+FTCellSelectionModeStrategy >> indexForRow: aRowIndex [
+	^ {aRowIndex . self table selectedIndex second}
+]
+
+{ #category : #accessing }
 FTCellSelectionModeStrategy >> indexFromPosition: aTuple [
 	^ aTuple
 ]
