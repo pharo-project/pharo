@@ -537,7 +537,7 @@ FTTableMorph >> initializeKeyBindings [
 		bindKeyCombination: Character end asKeyCombination
 		toAction: [ self selectLast ].
 	self 
-		bindKeyCombination: PharoShortcuts current selectAllShortcut
+		bindKeyCombination: self shortcutProvider selectAllShortcut
 		toAction: [ self selectAll ]
 ]
 
@@ -747,11 +747,6 @@ FTTableMorph >> mouseLeaveDragging: event [
 
 { #category : #'event handling' }
 FTTableMorph >> mouseMove: event [
-	self mouseMoveSelection
-		ifTrue: [ (self selectionModeStrategy selectableIndexContainingPoint: event cursorPoint)
-				ifNotNil: [ :index | (self selectedIndexes includes: index) ifFalse: [ self selectIndex: index event: event ] ifTrue: [ needToggleAtMouseUp := true ] ]
-				ifNil: [ ^ self ] ].
-
 	event isDraggingEvent ifFalse: [ ^ self ].
 	event hand hasSubmorphs ifFalse: [ ^ self ].
 
@@ -1106,6 +1101,11 @@ FTTableMorph >> setMultipleSelection: aBoolean [
 	aBoolean
 		ifTrue: [ self beMultipleSelection ]
 		ifFalse: [ self beSingleSelection ]
+]
+
+{ #category : #accessing }
+FTTableMorph >> shortcutProvider [
+	^ PharoShortcuts current
 ]
 
 { #category : #accessing }
