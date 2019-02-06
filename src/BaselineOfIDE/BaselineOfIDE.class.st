@@ -273,6 +273,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Balloon-Tests'.
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
+		spec package: 'Morphic-Widgets-FastTable-Tests'.
 		spec package: 'CodeImport-Tests'.
 		spec package: 'Collections-DoubleLinkedList-Tests'.
 		spec package: 'Collections-Arithmetic-Tests'.
@@ -450,6 +451,8 @@ spec group: 'General-Tests-Group' with: #(
 	'Keymapping-Tests'
 
 	'Morphic-Tests'
+	
+	'Morphic-Widgets-FastTable-Tests'
 	'NECompletion-Tests'
 	'NewValueHolder-Tests'
 	'ProfStef-Tests'
