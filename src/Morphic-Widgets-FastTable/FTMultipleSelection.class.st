@@ -48,6 +48,7 @@ FTMultipleSelection >> selectIndexesUpTo: endIndex [
 	"Selects a range of selectables, from what is already selected to a new index. 
 	 This is used in case of multiple selections (when holding shift)"
 
+	| oldSelected firstIndex step |
 	oldSelected := self table selectedIndexes.
 	firstIndex :=  oldSelected 
 		ifNotEmpty: [ oldSelected first ]
