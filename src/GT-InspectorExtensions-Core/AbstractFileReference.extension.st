@@ -106,7 +106,7 @@ AbstractFileReference >> gtInspectorItemsIn: composite [
 			each isDirectory 
 				ifTrue: [ GLMUIThemeExtraIcons glamorousFolder ] 
 				ifFalse: [ GLMUIThemeExtraIcons glamorousBrowse ] ];
-		when: [self isDirectory and: [self hasChildren]];
+		when: [ self isDirectory ];
 		selectionAct: [:table | table selection delete. table update] entitled: 'Delete';
 		act: [ :table |
 			 (UIManager default request: 'New Directory name?' initialAnswer: '') 
