@@ -34,6 +34,12 @@ FTSelectionStrategy >> selectIndex: rowIndex event: event [
 ]
 
 { #category : #accessing }
+FTSelectionStrategy >> selectRowIndex: rowIndex event: event [
+	self deprecated: 'Use #selectIndex:event: instead.' transformWith: '`@receiver selectRowIndex: `@statements1 event: `@statements2' -> '`@receiver selectIndex: `@statements1 event: `@statements2'.
+	self selectIndex: rowIndex event: event
+]
+
+{ #category : #accessing }
 FTSelectionStrategy >> selectionModeStrategy [
 	^ self table selectionModeStrategy
 ]
@@ -53,4 +59,10 @@ FTSelectionStrategy >> toggleIndex: index [
 	((self table selectedIndexes includes: index) and: [ self table selectedIndexes size = 1 and: [ self table allowsDeselection ]	"just one selected" ])
 		ifTrue: [ self table deselectAll ]
 		ifFalse: [ self table selectIndex: index ]
+]
+
+{ #category : #private }
+FTSelectionStrategy >> toggleRowIndex: index [
+	self deprecated: 'Use #toggleIndex: instead.' transformWith: '`@receiver toggleRowIndex: `@statements' -> '`@receiver toggleIndex: `@statements'.
+	self toggleIndex: index
 ]
