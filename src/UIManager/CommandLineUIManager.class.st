@@ -411,7 +411,7 @@ CommandLineUIManager >> stdout [
 
 { #category : #'ui requests' }
 CommandLineUIManager >> syntaxErrorNotificationDefaultAction: aSyntaxErrorNotification [
-	"log the syntax notificaiton and print a nicely formatted and colored syntax error on stderr"
+	"log the syntax notification and print a nicely formatted and colored syntax error on stderr"
 	Smalltalk logDuring: [ :logger |
 		logger print: aSyntaxErrorNotification; cr.
 		aSyntaxErrorNotification signalerContext errorReportOn: logger ].
