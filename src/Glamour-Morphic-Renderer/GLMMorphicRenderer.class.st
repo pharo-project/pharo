@@ -45,11 +45,6 @@ GLMMorphicRenderer >> renderActionListPresentation: anActionListPresentation [
 	^GLMMorphicActionListRenderer render: anActionListPresentation from: self
 ]
 
-{ #category : #'rendering browsers' }
-GLMMorphicRenderer >> renderDashboard: aBrowser [ 
-	^ GLMMorphicDashboardRenderer render: aBrowser from: self
-]
-
 { #category : #'rendering presentations' }
 GLMMorphicRenderer >> renderDiffPresentation: aPresentation [
 	^ GLMMorphicDiffRenderer render: aPresentation from: self
