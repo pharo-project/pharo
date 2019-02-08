@@ -450,7 +450,7 @@ GTSpotterWidgetThemer >> itemActionbarStyleFor: aBrick [
 { #category : #values }
 GTSpotterWidgetThemer >> itemHeight [
 
-	^  16 + Smalltalk ui theme labelFont height
+	^  16 + self theme labelFont height
 ]
 
 { #category : #values }

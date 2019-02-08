@@ -9,11 +9,11 @@ Trait {
 { #category : #'brick-text' }
 GLMBrickTextStyle >> textFamilyName [
 
-	^ Smalltalk ui theme labelFont familyName
+	^ self theme labelFont familyName
 ]
 
 { #category : #'brick-text' }
 GLMBrickTextStyle >> textFontSize [
 
-	^ Smalltalk ui theme labelFont pointSize
+	^ self theme labelFont pointSize
 ]
