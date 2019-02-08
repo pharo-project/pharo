@@ -14,6 +14,6 @@ FTSimpleSelection >> isMultiple [
 ]
 
 { #category : #accessing }
-FTSimpleSelection >> selectRowIndex: rowIndex event: event [
-	self toggleRowIndex: rowIndex
+FTSimpleSelection >> selectIndex: rowIndex event: event [
+	self toggleIndex: rowIndex
 ]
