@@ -25,7 +25,7 @@ instance variables
 "
 Class {
 	#name : #RBComment,
-	#superclass : #Object,
+	#superclass : #RBNode,
 	#instVars : [
 		'contents',
 		'start'
@@ -76,7 +76,7 @@ RBComment >> stop [
 	^ start + self size - 1
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBComment >> with: aString at: startPosition [
 	start := startPosition.
 	contents := aString.
