@@ -167,7 +167,7 @@ ReAbstractCritique >> popDescriptionUp [
 	UIManager default longMessage: self description title: self title
 ]
 
-{ #category : #initialization }
+{ #category : #printing }
 ReAbstractCritique >> printOn: aStream [
 
 	super printOn: aStream.
