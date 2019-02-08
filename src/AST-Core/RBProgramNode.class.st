@@ -65,11 +65,6 @@ RBProgramNode class >> resetFormatter [
 	
 ]
 
-{ #category : #visiting }
-RBProgramNode >> acceptVisitor: aProgramNodeVisitor [ 
-	self subclassResponsibility
-]
-
 { #category : #replacing }
 RBProgramNode >> addReplacement: aStringReplacement [
 	parent ifNil: [^self].

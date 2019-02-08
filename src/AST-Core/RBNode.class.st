@@ -15,3 +15,8 @@ Class {
 	#superclass : #Object,
 	#category : #'AST-Core-Nodes'
 }
+
+{ #category : #visiting }
+RBNode >> acceptVisitor: aProgramNodeVisitor [ 
+	self subclassResponsibility
+]
