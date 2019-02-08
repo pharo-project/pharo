@@ -30,7 +30,7 @@ Class Variables:
 "
 Class {
 	#name : #RBProgramNode,
-	#superclass : #Object,
+	#superclass : #RBNode,
 	#instVars : [
 		'parent',
 		'properties'
@@ -63,11 +63,6 @@ RBProgramNode class >> resetFormatter [
 	self formatterClass: nil
 
 	
-]
-
-{ #category : #visiting }
-RBProgramNode >> acceptVisitor: aProgramNodeVisitor [ 
-	self subclassResponsibility
 ]
 
 { #category : #replacing }
