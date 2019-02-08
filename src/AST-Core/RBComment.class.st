@@ -57,8 +57,9 @@ RBComment >> contents [
 { #category : #testing }
 RBComment >> intersectsInterval: anInterval [ 
 	"Make comments polymorphic with program nodes for hit detection"
+	
 	^(anInterval first between: self start and: self stop) 
-		or: [self start between: anInterval first and: anInterval last]
+		or: [ self start between: anInterval first and: anInterval last ]
 ]
 
 { #category : #printing }
@@ -76,7 +77,7 @@ RBComment >> size [
 
 { #category : #accessing }
 RBComment >> start [
-	^ start.
+	^ start
 ]
 
 { #category : #accessing }
@@ -87,6 +88,6 @@ RBComment >> stop [
 { #category : #initialization }
 RBComment >> with: aString at: startPosition [
 	start := startPosition.
-	contents := aString.
+	contents := aString
 
 ]

@@ -17,6 +17,6 @@ Class {
 }
 
 { #category : #visiting }
-RBNode >> acceptVisitor: aProgramNodeVisitor [ 
+RBNode >> acceptVisitor: aProgramNodeVisitor [
 	self subclassResponsibility
 ]
