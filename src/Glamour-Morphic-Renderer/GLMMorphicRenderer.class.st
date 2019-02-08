@@ -174,24 +174,6 @@ GLMMorphicRenderer >> renderTreePresentation: aPresentation [
 ]
 
 { #category : #'rendering browsers' }
-GLMMorphicRenderer >> renderValidator: aBrowser [ 
-
-	| tmpValidatorRenderer |
-	tmpValidatorRenderer :=  GLMMorphicValidatorRenderer new.
-	aBrowser  setSpecificAnnouncementActionsTo: tmpValidatorRenderer.  
-	^ tmpValidatorRenderer render: aBrowser from: self
-]
-
-{ #category : #'rendering browsers' }
-GLMMorphicRenderer >> renderWizard: aGLMWizard [
-
-	|tmpRenderer|
-	tmpRenderer :=  GLMMorphicWizardRenderer new.
-	aGLMWizard  setSpecificAnnouncementActionsTo: tmpRenderer.  
-	^ (tmpRenderer renderer: self) render: aGLMWizard
-]
-
-{ #category : #'rendering browsers' }
 GLMMorphicRenderer >> renderWrapper: aBrowser [ 
 	^ GLMMorphicWrapperRenderer render: aBrowser from: self
 ]
