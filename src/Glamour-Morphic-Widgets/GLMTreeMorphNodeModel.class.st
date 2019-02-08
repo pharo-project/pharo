@@ -3,8 +3,7 @@ Class {
 	#superclass : #MorphTreeNodeModel,
 	#instVars : [
 		'contents',
-		'containerTree',
-		'onSelection'
+		'containerTree'
 	],
 	#category : #'Glamour-Morphic-Widgets'
 }

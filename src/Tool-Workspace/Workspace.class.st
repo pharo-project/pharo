@@ -24,7 +24,6 @@ Class {
 		'bindings',
 		'window',
 		'fileName',
-		'lineEnding',
 		'encoding',
 		'textView'
 	],

@@ -6,12 +6,6 @@ Class {
 	#superclass : #FFIExternalObject,
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
-	#instVars : [
-		'surface',
-		'origin',
-		'direction',
-		'extent'
-	],
 	#pools : [
 		'AthensCairoDefinitions'
 	],

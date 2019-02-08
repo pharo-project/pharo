@@ -29,7 +29,6 @@ Class {
 		'maxBalloonHelpLineLength',
 		'desktopImageLayout',
 		'menuSelectionColor',
-		'secondarySelectionColor',
 		'findReplaceSelectionColor',
 		'selectionBarColor',
 		'unfocusedSelectionColor',

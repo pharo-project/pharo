@@ -6,7 +6,8 @@ Class {
 	#name : #TermInfoCharacter,
 	#superclass : #NullTermInfo,
 	#instVars : [
-		'cache'
+		'cache',
+		'out'
 	],
 	#category : #'System-CommandLine-Utilities'
 }

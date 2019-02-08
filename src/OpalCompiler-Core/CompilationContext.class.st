@@ -31,7 +31,6 @@ Class {
 		'forSyntaxHighlighting',
 		'encoderClass',
 		'astTransformPlugins',
-		'usesFullBlockClosure',
 		'requestorScopeClass',
 		'bindings'
 	],

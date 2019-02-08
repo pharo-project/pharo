@@ -1,9 +1,6 @@
 Class {
 	#name : #MCClassDefinitionTest,
 	#superclass : #MCTestCase,
-	#instVars : [
-		'previousChangeSet'
-	],
 	#category : #'Monticello-Tests-Base'
 }
 

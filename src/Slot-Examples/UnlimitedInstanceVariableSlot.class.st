@@ -6,8 +6,7 @@ Class {
 	#superclass : #Slot,
 	#instVars : [
 		'baseSlot',
-		'offset',
-		'baseSlotSize'
+		'offset'
 	],
 	#category : #'Slot-Examples-base'
 }

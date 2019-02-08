@@ -5,8 +5,7 @@ Class {
 	#name : #ClassTest,
 	#superclass : #ClassTestCase,
 	#instVars : [
-		'className',
-		'renamedName'
+		'className'
 	],
 	#category : #'Kernel-Tests-Extended-Classes'
 }

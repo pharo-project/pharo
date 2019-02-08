@@ -23,10 +23,6 @@ Class {
 		'duplicateValue',
 		'nonEmptyWithString'
 	],
-	#classInstVars : [
-		'testToto',
-		'pt1'
-	],
 	#category : #'Collections-Tests-Unordered'
 }
 

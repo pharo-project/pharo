@@ -7,10 +7,6 @@ As Pharo doesn't yet provide a mechanism to set the attributes, pick a few well 
 Class {
 	#name : #DiskFileAttributesTests,
 	#superclass : #TestCase,
-	#instVars : [
-		'temporaryFile',
-		'primitives'
-	],
 	#category : #'FileSystem-Tests-Attributes'
 }
 
@@ -51,14 +47,6 @@ DiskFileAttributesTests >> collectionAssert: aBlock equals: expected [
 
 	self attributesCollectionDo:
 		[ :each | self assert: (aBlock value: each) equals: expected ].
-]
-
-{ #category : #running }
-DiskFileAttributesTests >> setUp [
-
-	super setUp.
-	primitives := File.
-
 ]
 
 { #category : #'private-helpers' }

@@ -3,7 +3,6 @@ Class {
 	#superclass : #GoferPackageReference,
 	#instVars : [
 		'packageFilename',
-		'version',
 		'workingCopy'
 	],
 	#category : #'Metacello-MC-Gofer'

@@ -44,7 +44,6 @@ Class {
 		'selectionHolder',
 		'listHolder',
 		'menuHolder',
-		'shortcutsHolder',
 		'multiSelectionHolder',
 		'multiSelection',
 		'allowToSelect',

@@ -3,7 +3,6 @@ Class {
 	#superclass : #RBRefactoringBrowserTest,
 	#instVars : [
 		'manager',
-		'changeSet',
 		'model'
 	],
 	#category : #'Refactoring-Tests-Core'

@@ -10,9 +10,6 @@ Class {
 		'empty',
 		'nonEmpty'
 	],
-	#classInstVars : [
-		'testSize'
-	],
 	#category : #'Collections-Tests-Stack'
 }
 
