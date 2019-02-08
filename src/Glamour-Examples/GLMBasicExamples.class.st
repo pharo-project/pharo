@@ -233,101 +233,6 @@ GLMBasicExamples >> compoundTaggedTree [
 	^ browser
 ]
 
-{ #category : #browsers }
-GLMBasicExamples >> dashboard [
-
-	<glmBrowser: 'Dashboard' input: '42'>
-	"self new dashboard openOn: 42"
-	
-	|tmpBrowser|
-	tmpBrowser := GLMDashboard new.
-	tmpBrowser addPaneNamed: #first.
-	tmpBrowser addPaneNamed: #second.
-	tmpBrowser addPaneNamed: #third.
-	tmpBrowser addPaneNamed: #fourth.
-	tmpBrowser addPaneNamed: #fifth.
-	
-	tmpBrowser transmit to: #first; andShow: [:a |
-		a list
-			display: [:i | #(a b c d e f g)];
-			yourself
-		].
-	tmpBrowser transmit to: #second; andShow: [:a |
-		a list
-			display: [:i | #(a b c d e f g)]
-		].
-	tmpBrowser transmit to: #third; andShow: [:a |
-		a list
-			display: [:i | #(a b c d e f g)]
-		].
-	tmpBrowser transmit to: #fourth; andShow: [:a |
-		a list
-			display: [:i | #(a b c d e f g)]
-		].
-	tmpBrowser transmit to: #fifth; andShow: [:a |
-		a list
-			display: [:i | #(a b c d e f g h i j k l m n o p q r s t u v w x y z)]
-		].
-	^ tmpBrowser
-]
-
-{ #category : #browsers }
-GLMBasicExamples >> dashboardWithSpecificLayouts [
-	"self new dashboardWithSpecificLayouts openOn: 42"
-
-	<glmBrowser: 'Dashboard specifying layouts' input: '42'>
-	| tmpBrowser |
-	tmpBrowser := GLMDashboard new.
-	tmpBrowser addPaneNamed: #first layout: (0 @ 0 corner: 0.33 @ 0.5).
-	tmpBrowser addPaneNamed: #second layout: (0.33 @ 0 corner: 0.66 @ 0.5).
-	tmpBrowser addPaneNamed: #third layout: (0 @ 0.5 corner: 0.33 @ 1).
-	tmpBrowser addPaneNamed: #fourth layout: (0.33 @ 0.5 corner: 0.66 @ 1).
-	tmpBrowser addPaneNamed: #fifth layout: (0.66 @ 0 corner: 1 @ 1).
-	tmpBrowser transmit
-		to: #first;
-		andShow: [ :a | 
-					a list
-						display: [ :i | #(#a #b #c #d #e) ];
-						yourself ].
-	tmpBrowser transmit
-		to: #second;
-		andShow: [ :a | a list display: [ :i | #(#a #b #c #d #e) ] ].
-	tmpBrowser transmit
-		to: #third;
-		andShow: [ :a | a list display: [ :i | #(#a #b #c #d #e) ] ].
-	tmpBrowser transmit
-		to: #fourth;
-		andShow: [ :a | a list display: [ :i | #(#a #b #c #d #e) ] ].
-	tmpBrowser transmit
-		to: #fifth;
-		andShow: [ :a | a list display: [ :i | #(#a #b #c #d #e) ] ].
-	^ tmpBrowser
-]
-
-{ #category : #browsers }
-GLMBasicExamples >> dashboardsInDashboard [
-
-	<glmBrowser: 'Dashboards in dashboard' input: '42'>
-	"self new dashboard openOn: 42"
-	
-	|tmpBrowser|
-	tmpBrowser := GLMDashboard new.
-	tmpBrowser addPaneNamed: #dashboard.
-	tmpBrowser addPaneNamed: #second.
-	tmpBrowser addPaneNamed: #third.
-	
-	tmpBrowser transmit to: #dashboard; andShow: [:a |
-		a custom: (self dashboard)
-		].
-	tmpBrowser transmit to: #second; andShow: [:a |
-		a custom: (self dashboard)
-		].
-	tmpBrowser transmit to: #third; andShow: [:a |
-		a custom: (self dashboard)
-		].
-	^ tmpBrowser
-]
-
 { #category : #others }
 GLMBasicExamples >> diff [
 	<glmBrowser: 'Diff' input: '#(#(abc def ghi) #(abc xyz))'>
@@ -521,29 +426,6 @@ GLMBasicExamples >> listDragAndDrop [
 				list update.
 				true ]
 			].
-	^ browser
-]
-
-{ #category : #'explicit selection' }
-GLMBasicExamples >> listsInDashboardWithUpdatedSelection [
-	"self new listsInDashboardWithUpdatedSelection openOn: 10"
-	<glmBrowser: 'Updated selection in dashboard' input: '10'>
-	| browser |
-	browser := GLMDashboard new.
-	browser addPaneNamed: #one; addPaneNamed: #two; addPaneNamed: #three.
-	browser transmit to: #one; andShow: [ :a | 
-		a tree
-			display: [:x | 1 to: x ]].
-	browser transmit to: #two; andShow: [ :a | 
-		a tree
-			display: [:x | 1 to: x + 2 ]].
-	browser transmit to: #three; andShow: [ :a |
-		a tree
-			beMultiple;
-			display: [:x | 1 to: x ]].
-	browser transmit to: #two port: #selection; from: #one; transformed: [:x | x + 2].
-	browser transmit to: #one port: #selection; from: #two; transformed: [:x | x - 2].
-	browser transmit to: #three port: #selection; from: #two; transformed: [:x | (1 to: (x - 2)) ].
 	^ browser
 ]
 
