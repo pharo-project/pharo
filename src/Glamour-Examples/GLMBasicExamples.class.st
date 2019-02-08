@@ -1518,37 +1518,6 @@ GLMBasicExamples >> validatingPresentation [
 
 ]
 
-{ #category : #browsers }
-GLMBasicExamples >> validator [
-	<glmBrowser: 'Validator' input: '42'>
-	"self new validator openOn: 42"
-
-	| finder validator |
-	finder := GLMFinder new.
-	validator := GLMValidator new.
-	validator validator: 'Ok' act: [:x | ].
-	validator show: [:a | a list display: [:x | 1 to: x ]].
-	finder show: [:a | a custom: validator].
-	^ finder
-]
-
-{ #category : #browsers }
-GLMBasicExamples >> validatorDynamic [
-	<glmBrowser: 'Dynamic validator' input: '42'>
-	"self new validatorDynamic openOn: 42"
-
-	| finder validator |
-	finder := GLMFinder new.
-	validator := GLMValidator new.
-	validator validator: 'Ok' act: [:x | ].
-	validator show: [:a | 
-		a dynamic display: [:x |
-			GLMListPresentation new display: [:y | 1 to: y]
-			] ].
-	finder show: [:a | a custom: validator].
-	^ finder
-]
-
 { #category : #others }
 GLMBasicExamples >> watcher [
 	"self new watcher openOn: (Collection methods)"
@@ -1568,23 +1537,6 @@ GLMBasicExamples >> watcher [
 		toWatcher;
 		andShow: [ :a | a pharoMethod display: #sourceCode ].
 	^ browser
-]
-
-{ #category : #browsers }
-GLMBasicExamples >> wizard [
-	"<glmBrowser: 'Wizard' input: '100'>"
-	"self new wizard inspect openOn: 100"
-
-	| wizard |
-	self flag: 'this example does not work in the example browser'.
-	wizard := GLMWizard new.
-	(wizard genericStep: #step)
-		show: [:a | 
-			a list
-				display: [:list | 1 to: 100] ];
-		name: 'Wizard pane';
-		size: 2.
-	^ wizard
 ]
 
 { #category : #browsers }
