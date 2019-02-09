@@ -522,15 +522,6 @@ RGMethodDefinition >> package: aRGPackage [
 	package:= aRGPackage
 ]
 
-{ #category : #printing }
-RGMethodDefinition >> printOn: aStream [ 
-
-	self parentName ifNotNil: [
-		aStream nextPutAll: self parentName;
-				  nextPutAll: '>>' ].
-	aStream print: self selector
-]
-
 { #category : #accessing }
 RGMethodDefinition >> protocol [
 

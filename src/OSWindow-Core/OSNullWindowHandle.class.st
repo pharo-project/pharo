@@ -53,7 +53,7 @@ OSNullWindowHandle >> extent: newExtent [
 OSNullWindowHandle >> hide [
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 OSNullWindowHandle >> initialize [
 	super initialize.
 	

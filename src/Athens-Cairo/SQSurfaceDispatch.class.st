@@ -89,7 +89,7 @@ SQSurfaceDispatch >> getSurfaceFormatFn: aCallback [
 		put: (ExternalAddress fromAddress: aCallback thunk address)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SQSurfaceDispatch >> initialize [
 	super initialize.
 	self

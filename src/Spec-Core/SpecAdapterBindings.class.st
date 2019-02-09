@@ -18,7 +18,7 @@ SpecAdapterBindings class >> isAbstract [
 	^ self name = #SpecAdapterBindings
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 SpecAdapterBindings >> initialize [
 
 	super initialize.

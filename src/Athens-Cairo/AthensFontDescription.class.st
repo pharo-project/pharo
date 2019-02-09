@@ -126,7 +126,7 @@ AthensFontDescription >> gravity: aNumber [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensFontDescription >> initialize [
 	super initialize.
 	family := 'monospace'.

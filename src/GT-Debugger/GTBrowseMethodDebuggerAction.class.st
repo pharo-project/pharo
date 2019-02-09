@@ -45,7 +45,7 @@ GTBrowseMethodDebuggerAction >> id [
 	^ #gtBrowseMethodDebuggerAction
 ]
 
-{ #category : #actions }
+{ #category : #initialization }
 GTBrowseMethodDebuggerAction >> initialize [
 	super initialize.
 	self needsUpdate: false

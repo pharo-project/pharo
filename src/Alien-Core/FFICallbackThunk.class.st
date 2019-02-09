@@ -138,7 +138,7 @@ FFICallbackThunk >> free [
 			 self class freeBlockInExecutablePage: address]]
 ]
 
-{ #category : #'instance initalization' }
+{ #category : #initialization }
 FFICallbackThunk >> initialize [
 	"Initialize the receiver with a __ccall thunk."
 	Callback abi caseOf: {

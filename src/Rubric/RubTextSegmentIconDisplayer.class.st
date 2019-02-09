@@ -150,7 +150,7 @@ RubTextSegmentIconDisplayer >> iconPositionOfSegment: aSegment [
 		translateBy: 0 negated @ (self offset y negated + self bounds top)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubTextSegmentIconDisplayer >> initialize [
 	super initialize.
 	self clipSubmorphs: false

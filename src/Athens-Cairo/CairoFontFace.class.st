@@ -62,7 +62,7 @@ cairo_font_face_t * cairo_ft_font_face_create_for_ft_face
 	^ self ffiCall: #( CairoFontFace cairo_ft_font_face_create_for_ft_face(void * aFace , int flags )) 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CairoFontFace >> initialize [ 
 	self autoRelease 
 ]
