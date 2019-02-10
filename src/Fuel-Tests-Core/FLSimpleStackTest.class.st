@@ -27,7 +27,7 @@ FLSimpleStackTest >> testGrow [
 
 { #category : #testing }
 FLSimpleStackTest >> testIsEmpty [
-	self assertEmpty: FLSimpleStack new
+	self assert: FLSimpleStack new isEmpty
 ]
 
 { #category : #testing }
@@ -36,7 +36,7 @@ FLSimpleStackTest >> testPop [
 	stack := FLSimpleStack new.
 	stack push: 1.
 	stack pop.
-	self assertEmpty: stack
+	self assert: stack isEmpty
 ]
 
 { #category : #testing }
