@@ -8,10 +8,9 @@ Class {
 		'serializer',
 		'materializer',
 		'classFactory',
-		'streamFactory',
-		'traits'
+		'streamFactory'
 	],
-	#category : #'Fuel-Tests-Core-Base'
+	#category : 'Fuel-Tests-Core-Base'
 }
 
 { #category : #accessing }
@@ -57,11 +56,6 @@ FLSerializationTest >> assertSerializationIdentityOf: anObject [
 { #category : #accessing }
 FLSerializationTest >> classFactory [
 	^classFactory
-]
-
-{ #category : #'traits-factory' }
-FLSerializationTest >> cleanUpTraits [
-	self traits do: [ :aTrait | self removeFromSystem: aTrait ]
 ]
 
 { #category : #cleaning }
@@ -134,24 +128,25 @@ FLSerializationTest >> newSubclassOf: aClass  instanceVariableNames: ivNamesStri
 
 { #category : #'traits-factory' }
 FLSerializationTest >> newTraitNamed: traitName inCategory: aCategory [
-
-	^ Trait 
-		named: traitName asSymbol
+	^ self classFactory
+		newTraitNamed: traitName asSymbol
 		uses: Array new 
 		category: aCategory asSymbol
 ]
 
 { #category : #'traits-factory' }
 FLSerializationTest >> newTraitSuffixed: suffix [
-
-	| trait |
-	trait := Trait 
-		named: (self traitNamePrefix, suffix) asSymbol
+	^ self classFactory
+		newTraitNamed: (self traitNamePrefix, suffix) asSymbol
 		uses: Array new 
-		category: (self classFactory packageName, '-', self classFactory defaultCategoryPostfix) asSymbol.
-	self traits add: trait.
-	
-	^ trait
+		category: (self classFactory packageName, '-', self classFactory defaultCategoryPostfix) asSymbol
+]
+
+{ #category : #'traits-factory' }
+FLSerializationTest >> registerBehavior: aBehavior [
+	aBehavior isTrait
+		ifTrue: [ self classFactory createdTraits add: aBehavior ]
+		ifFalse: [ self classFactory createdClasses add: aBehavior ]
 ]
 
 { #category : #cleaning }
@@ -164,6 +159,7 @@ FLSerializationTest >> resultOfSerializeAndMaterialize: anObject [
 
 	self serialize: anObject.
 	^ self materialized
+
 ]
 
 { #category : #running }
@@ -228,7 +224,7 @@ FLSerializationTest >> setUp [
 
 { #category : #running }
 FLSerializationTest >> setUpClassFactory [
-	classFactory := ClassFactoryForTestCase new
+	classFactory := FLPlatform current classFactoryForTestCaseClass new
 
 ]
 
@@ -249,14 +245,13 @@ FLSerializationTest >> streamFactory [
 
 { #category : #running }
 FLSerializationTest >> tearDown [
-	
-	"Traits should be cleaned before classFactory because it seems class factory only knwos how to clean classes, not traits."
-	self tearDownTraits.
-	self tearDownClassFactory.
-	self tearDownGlobalVariables.
+	self
+		tearDownClassFactory;
+		tearDownGlobalVariables.
 	self streamFactory tearDown.
 	self tearDownInstanceVariables.
-	super tearDown.
+	
+	super tearDown
 ]
 
 { #category : #running }
@@ -281,19 +276,9 @@ FLSerializationTest >> tearDownInstanceVariables [
 				put: nil ] ]
 ]
 
-{ #category : #running }
-FLSerializationTest >> tearDownTraits [
-	self cleanUpTraits
-]
-
 { #category : #'traits-factory' }
 FLSerializationTest >> traitNamePrefix [
 	^'FLTraitForTesting'
-]
-
-{ #category : #accessing }
-FLSerializationTest >> traits [	
-	^ traits ifNil: [ traits := OrderedCollection new ]
 ]
 
 { #category : #'stream-strategies' }

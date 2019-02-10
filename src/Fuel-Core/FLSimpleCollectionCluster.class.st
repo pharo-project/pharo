@@ -9,9 +9,8 @@ Class {
 
 { #category : #'serialize/materialize' }
 FLSimpleCollectionCluster >> materializeReferencesOf: anObject with: aDecoder [
-	aDecoder nextEncodedPositiveInteger "anObject size"
-		 timesRepeat: 
-			[ anObject add: aDecoder nextEncodedReference ]
+	aDecoder nextEncodedPositiveInteger timesRepeat: [
+		anObject add: aDecoder nextEncodedReference ]
 ]
 
 { #category : #analyzing }
@@ -20,14 +19,4 @@ FLSimpleCollectionCluster >> referencesOf: anObject do: aBlock [
 	anObject
 		do: [ :each | aBlock value: each ]
 
-]
-
-{ #category : #'serialize/materialize' }
-FLSimpleCollectionCluster >> serializeReferencesOf: anObject with: anEncoder [
-	| refs |
-	refs := self references at: anObject ifAbsent: [ ^ self ].
-	anEncoder encodePositiveInteger: refs first.
-	refs allButFirst do: [ :each |
-		anEncoder encodeReferenceTo: each ]
-	
 ]

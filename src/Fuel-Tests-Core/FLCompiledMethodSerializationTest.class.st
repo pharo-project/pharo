@@ -58,7 +58,7 @@ FLCompiledMethodSerializationTest >> testInstalled [
 	self assert: materialized == theCompiledMethod
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 FLCompiledMethodSerializationTest >> testInstalledModified [
 	| copy materialized |
 	"Since Pharo 3.0 decompilation of compiled methods is no longer possible.
