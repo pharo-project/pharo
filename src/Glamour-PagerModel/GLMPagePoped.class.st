@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'smooth'
 	],
-	#category : #'Glamour-Morphic-Pager-Announcement'
+	#category : #'Glamour-PagerModel-Announcements'
 }
 
 { #category : #'as yet unclassified' }

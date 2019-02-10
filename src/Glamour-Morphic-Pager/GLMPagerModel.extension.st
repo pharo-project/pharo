@@ -1,26 +1,4 @@
-Class {
-	#name : #GLMPagerModel,
-	#superclass : #Object,
-	#instVars : [
-		'numberOfVisiblePages',
-		'announcer',
-		'firstVisiblePageIndex',
-		'pagesCount',
-		'lastVisiblePageIndex',
-		'selectedPageIndex',
-		'focusedMorphs',
-		'focusedPageIndex',
-		'virtualFirstVisiblePageIndex',
-		'virtualLastVisiblePageIndex',
-		'scrollButtonIconRenderBlock',
-		'isDependenciesShown',
-		'scrollToRightTask',
-		'isNotificationsAllowed',
-		'scrollingDelay',
-		'minimumPageNumberForScrollbar'
-	],
-	#category : #'Glamour-Morphic-Pager-Model'
-}
+Extension { #name : #GLMPagerModel }
 
 { #category : #'*Glamour-Morphic-Pager' }
 GLMPagerModel >> assignFocusableMorph: aMorph withPaneAt: paneIndex [

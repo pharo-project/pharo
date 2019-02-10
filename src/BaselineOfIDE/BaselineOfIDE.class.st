@@ -203,6 +203,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Glamour-Announcements'.
 		spec package: 'Glamour-Helpers'.
 		spec package: 'Glamour-Core'.
+		spec package: 'Glamour-Tasks'.
+		spec package: 'Glamour-PagerModel'.
 		spec package: 'Glamour-Presentations'.
 		spec package: 'Glamour-Browsers'.
 		spec package: 'Glamour-Examples'.
@@ -652,6 +654,8 @@ spec group: 'Glamour-Core-Group' with: #(
 	'Glamour-Announcements'
 	'Glamour-Helpers'
 	'Glamour-Core'
+	'Glamour-Tasks'
+	'Glamour-PagerModel'
 	'Glamour-Presentations'
 	'Glamour-Browsers'
 	'Glamour-Examples'
