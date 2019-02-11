@@ -14,51 +14,45 @@ FTMultipleSelection >> isMultiple [
 ]
 
 { #category : #private }
-FTMultipleSelection >> selectAppendingRowIndex: rowIndex [
+FTMultipleSelection >> selectAppendingIndex: index [
 	| currentSelection newSelection |
 	currentSelection := self table selectedIndexes.
 	
-	newSelection := (currentSelection includes: rowIndex)
-		ifTrue: [ currentSelection copyWithout: rowIndex ]
-		ifFalse: [ currentSelection copyWithFirst: rowIndex].
+	newSelection := (currentSelection includes: index)
+		ifTrue: [ currentSelection copyWithout: index ]
+		ifFalse: [ currentSelection copyWithFirst: index].
 		
 	self table selectIndexes: newSelection
 ]
 
 { #category : #accessing }
-FTMultipleSelection >> selectRowIndex: rowIndex event: event [
-	event shiftPressed ifTrue: [ ^ self selectRowIndexesUpTo: rowIndex ].
-	event commandKeyPressed ifTrue: [ ^ self selectAppendingRowIndex: rowIndex ].
-	self toggleRowIndex: rowIndex
-
+FTMultipleSelection >> selectIndex: index event: event [
+	event shiftPressed ifTrue: [ ^ self selectIndexesUpTo: index ].
+	OSPlatform current isMacOS
+		ifTrue: [ event commandKeyPressed ifTrue: [ ^ self selectAppendingIndex: index ] ]
+		ifFalse: [ event controlKeyPressed ifTrue: [ ^ self selectAppendingIndex: index ] ].
+	self toggleIndex: index
 ]
 
 { #category : #private }
-FTMultipleSelection >> selectRowIndexes: rowIndex previous: oldSelection [		
-	"I ensure the selected row index is the first in selection range so I can handle it better. 
+FTMultipleSelection >> selectIndexes: index previous: oldSelection [
+	"I ensure the selected index is the first in selection range so I can handle it better. 
 	 I do not like to assume and probably I will need the concept of 'selection', but for now 
 	 let's not abuse :)"
-	self table selectIndexes: (((oldSelection includes: rowIndex)
-		ifTrue: [ oldSelection copyWithout: rowIndex ]
-		ifFalse: [ oldSelection] )
-		copyWithFirst: rowIndex)
+
+	self table selectIndexes: (((oldSelection includes: index) ifTrue: [ oldSelection copyWithout: index ] ifFalse: [ oldSelection ]) copyWithFirst: index)
 ]
 
 { #category : #private }
-FTMultipleSelection >> selectRowIndexesUpTo: endIndex [
-	"Selects a range of rows, from what is already selected to a new rowIndex. 
+FTMultipleSelection >> selectIndexesUpTo: endIndex [
+	"Selects a range of selectables, from what is already selected to a new index. 
 	 This is used in case of multiple selections (when holding shift)"
-	| oldSelected firstIndex step |
 
+	| oldSelected firstIndex |
 	oldSelected := self table selectedIndexes.
 	firstIndex :=  oldSelected 
 		ifNotEmpty: [ oldSelected first ]
 		ifEmpty: [ endIndex ].
-	step := firstIndex <= endIndex 
-		ifTrue: [ 1 ] 
-		ifFalse: [ -1 ]. 
 
-	self 
-		selectRowIndexes: endIndex 
-		previous: (oldSelected union: (firstIndex to: endIndex by: step))
+	self selectIndexes: endIndex previous: (oldSelected union: (self table selectionModeStrategy indexesToSelectInMultipleSelectionFrom: firstIndex to: endIndex))
 ]

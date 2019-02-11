@@ -63,7 +63,7 @@ MetacelloVersionMethodSection >> parent: anObject [
 	parent := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 MetacelloVersionMethodSection >> printOn: aStream [
   aStream
     nextPutAll: self class name asString;

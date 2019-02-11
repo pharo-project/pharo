@@ -128,7 +128,7 @@ GLMFastListDataSource >> rowMorphForElement: element [
 	rowElements
 		add: (self formatedDisplayValueOf: element) asMorph asReadOnlyMorph;
 		addAll: (self tagMorphsFrom: self glamourPresentation for: element).
-	^ Smalltalk ui theme newRowIn: World for: rowElements
+	^ self theme newRowIn: World for: rowElements
 ]
 
 { #category : #selecting }
@@ -139,6 +139,11 @@ GLMFastListDataSource >> selectTable: aTable element: anObject [
 { #category : #accessing }
 GLMFastListDataSource >> tagsToFilterBy [
 	^ tagsToFilterBy ifNil: [ tagsToFilterBy := OrderedCollection new ]
+]
+
+{ #category : #factory }
+GLMFastListDataSource >> theme [
+	^ Smalltalk ui theme
 ]
 
 { #category : #'drag and drop' }

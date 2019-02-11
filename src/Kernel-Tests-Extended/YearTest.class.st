@@ -14,6 +14,19 @@ YearTest >> classToBeTested [
 ]
 
 { #category : #tests }
+YearTest >> testFirstThursday [
+		
+	1800 to: 2000 do:
+		[ :y |
+			| firstThursday |
+			firstThursday := (Year year: y) firstThursday.
+			self assert: firstThursday dayOfWeek equals: 5.
+			self assert: firstThursday year equals: y.
+			self assert: (firstThursday - 1 week) year equals: y - 1 ]
+
+]
+
+{ #category : #tests }
 YearTest >> testOffset [
 	"Check that the offset is maintained when creating a new instance of Month from a DateAndTime"
 

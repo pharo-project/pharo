@@ -36,7 +36,7 @@ FTFilterFunction >> filter [
 
 	table dataSource: (pattern ifEmpty: [ initialDataSource ] ifNotEmpty: [ initialDataSource newDataSourceMatching: (filterClass pattern: pattern) ]).
 	table refresh.
-	table selectIndexes: #().
+	table deselectAll.
 		
 	self isExplicite
 		ifTrue: [ self resizeWidget ]

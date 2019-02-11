@@ -291,7 +291,7 @@ GLMTransmission >> presentations: aCompositePresentation [
 	self transmissionStrategy presentations: aCompositePresentation
 ]
 
-{ #category : #transmitting }
+{ #category : #printing }
 GLMTransmission >> printOn: aStream [ 
 	 
 	aStream 
