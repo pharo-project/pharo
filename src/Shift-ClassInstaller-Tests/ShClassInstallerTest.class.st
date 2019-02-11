@@ -63,6 +63,21 @@ ShClassInstallerTest >> testChangingHierarchy [
 ]
 
 { #category : #tests }
+ShClassInstallerTest >> testChangingSlotCallsInitializeSlotOnInstanceMigration [
+
+	| className someInstance |
+	className := #ShClassWithNormalSlots.
+	newClass := self newClass: className slots:#( someSlot ).
+	someInstance := newClass	new.
+
+	"Migrate the class changing the slot definition"
+	self newClass: className slots: { #someSlot => ShTestSlot }.
+	
+	"The slot should have initialized the value"
+	self assert: (someInstance readSlotNamed: #someSlot) equals: 'initialized'
+]
+
+{ #category : #tests }
 ShClassInstallerTest >> testChangingSuperclassInTheHierarchy [
 
 	superClass := self newClass:#ShCITestClass slots:#(var1 var2).
@@ -113,6 +128,30 @@ ShClassInstallerTest >> testClassWithComment [
 	
 	self assert: newClass comment equals: 'I have a comment'.
 	self assert: newClass organization commentStamp equals: 'anStamp'.
+]
+
+{ #category : #tests }
+ShClassInstallerTest >> testClassWithSlotCallsInitializeSlotOnInstanceCreation [
+
+	| className someInstance |
+	className := #ShClassWithNormalSlots.
+	newClass := self newClass: className slots: { #someSlot => ShTestSlot }.
+
+	someInstance := newClass	new.
+	
+	"The slot should have initialized the value"
+	self assert: (someInstance readSlotNamed: #someSlot) equals: 'initialized'
+]
+
+{ #category : #tests }
+ShClassInstallerTest >> testClassWithSlotHasInitializeMethodWithInitializeSlots [
+
+	| className |
+	className := #ShClassWithNormalSlots.
+	newClass := self newClass: className slots: { #someSlot => ShTestSlot }.
+	
+	self assert: ((newClass >> #initialize) ast statements
+		includes: (RBParser parseExpression: 'self class initializeSlots: self')).
 ]
 
 { #category : #tests }
