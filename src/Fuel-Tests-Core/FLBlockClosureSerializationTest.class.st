@@ -7,9 +7,6 @@ Class {
 	#classVars : [
 		'ClassVariableForTesting'
 	],
-	#classInstVars : [
-		'interval'
-	],
 	#category : #'Fuel-Tests-Core-Base'
 }
 

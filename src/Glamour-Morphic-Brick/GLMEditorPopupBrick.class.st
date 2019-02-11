@@ -5,8 +5,6 @@ Class {
 	#name : #GLMEditorPopupBrick,
 	#superclass : #GLMEmptyPopupBrick,
 	#instVars : [
-		'titleBrick',
-		'titleText',
 		'textModel',
 		'textEditBrick'
 	],

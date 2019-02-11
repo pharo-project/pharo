@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'announcer',
 		'toolbarMorph',
-		'headerMorph',
-		'tabSelectorWidth'
+		'headerMorph'
 	],
 	#category : #'Glamour-Morphic-Widgets'
 }

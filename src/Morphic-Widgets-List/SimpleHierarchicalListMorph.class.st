@@ -22,10 +22,6 @@ Class {
 		'lastKeystrokes',
 		'searchedElement'
 	],
-	#classInstVars : [
-		'expandedForm',
-		'notExpandedForm'
-	],
 	#category : #'Morphic-Widgets-List'
 }
 

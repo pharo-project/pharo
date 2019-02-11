@@ -1,6 +1,9 @@
 Class {
 	#name : #SlotMigrationTest,
 	#superclass : #SlotSilentTest,
+	#instVars : [
+		'instance'
+	],
 	#category : #'Slot-Tests'
 }
 

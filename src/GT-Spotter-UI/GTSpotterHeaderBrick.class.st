@@ -2,7 +2,6 @@ Class {
 	#name : #GTSpotterHeaderBrick,
 	#superclass : #GLMBrick,
 	#instVars : [
-		'stepsBrick',
 		'searchField',
 		'closeButton',
 		'spotterModel',

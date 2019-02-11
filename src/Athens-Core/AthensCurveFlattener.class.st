@@ -8,7 +8,6 @@ Class {
 	#superclass : #AthensPathSegmentConverter,
 	#instVars : [
 		'transform',
-		'inverseTransform',
 		'lengthTolerance',
 		'lengthToleranceSquared'
 	],

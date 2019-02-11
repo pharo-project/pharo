@@ -166,7 +166,6 @@ Class {
 		'spec',
 		'owner',
 		'isGroup',
-		'ordering',
 		'precondition'
 	],
 	#category : #'MenuRegistration-Core'

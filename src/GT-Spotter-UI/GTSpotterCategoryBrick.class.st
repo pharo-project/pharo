@@ -2,7 +2,6 @@ Class {
 	#name : #GTSpotterCategoryBrick,
 	#superclass : #GLMInteractableBrick,
 	#instVars : [
-		'listBrick',
 		'titleBrick',
 		'stepModel',
 		'category'

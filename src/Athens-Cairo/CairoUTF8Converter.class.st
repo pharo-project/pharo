@@ -6,8 +6,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'buffer',
-		'len',
-		'asm',
 		'encoder',
 		'bs'
 	],

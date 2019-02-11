@@ -6,7 +6,6 @@ Class {
 	#superclass : #RubParagraphDecorator,
 	#instVars : [
 		'styler',
-		'shoutIsAvailable',
 		'text',
 		'replaceStart',
 		'replaceStop'

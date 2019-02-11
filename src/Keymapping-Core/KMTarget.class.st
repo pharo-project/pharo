@@ -5,11 +5,8 @@ Class {
 	#name : #KMTarget,
 	#superclass : #Object,
 	#instVars : [
-		'realTarget',
 		'morph',
-		'targetSelector',
-		'directKeymaps',
-		'perInstanceCategories'
+		'targetSelector'
 	],
 	#category : #'Keymapping-Core'
 }

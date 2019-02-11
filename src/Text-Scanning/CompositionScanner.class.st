@@ -57,7 +57,8 @@ Class {
 		'lineHeightAtSpace',
 		'baselineAtSpace',
 		'lastBreakIsNotASpace',
-		'nextIndexAfterLineBreak'
+		'nextIndexAfterLineBreak',
+		'wantsColumnBreaks'
 	],
 	#category : #'Text-Scanning-Base'
 }

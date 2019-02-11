@@ -28,8 +28,7 @@ Class {
 		'b1',
 		'a2',
 		'a3',
-		'b2',
-		'p4'
+		'b2'
 	],
 	#category : #'RPackage-Tests'
 }

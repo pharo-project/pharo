@@ -121,7 +121,6 @@ Class {
 		'emphasisCode',
 		'kern',
 		'indentationLevel',
-		'wantsColumnBreaks',
 		'pendingKernX'
 	],
 	#classVars : [

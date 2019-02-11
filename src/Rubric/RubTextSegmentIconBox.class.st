@@ -2,7 +2,6 @@ Class {
 	#name : #RubTextSegmentIconBox,
 	#superclass : #Morph,
 	#instVars : [
-		'icon',
 		'previouslyIn'
 	],
 	#category : #'Rubric-Editing-Widgets'

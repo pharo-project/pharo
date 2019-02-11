@@ -1,10 +1,6 @@
 Class {
 	#name : #SlotClassVariableTest,
 	#superclass : #SlotClassBuilderTest,
-	#instVars : [
-		'announcement',
-		'collectedAnnouncements'
-	],
 	#category : #'Slot-Tests'
 }
 

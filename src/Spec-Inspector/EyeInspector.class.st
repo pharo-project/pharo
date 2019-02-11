@@ -11,9 +11,6 @@ Class {
 		'list',
 		'description'
 	],
-	#classInstVars : [
-		'useAutoRefresh'
-	],
 	#category : #'Spec-Inspector-Base'
 }
 
