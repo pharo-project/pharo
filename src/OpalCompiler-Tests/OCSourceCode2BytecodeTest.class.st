@@ -4,6 +4,9 @@ I provide at least one test which corresponds to a message sent by InstructionSt
 Class {
 	#name : #OCSourceCode2BytecodeTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'instVar'
+	],
 	#classVars : [
 		'ClassVar'
 	],
