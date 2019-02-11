@@ -84,7 +84,7 @@ StandardWindow >> flash [
 
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 StandardWindow >> initialize [
 	"Initialize the receiver."
 

@@ -189,7 +189,7 @@ CompositionScanner >> endOfRun [
 
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CompositionScanner >> initialize [
 	wantsColumnBreaks := false.
 	super initialize

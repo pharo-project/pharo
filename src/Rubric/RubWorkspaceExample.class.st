@@ -128,7 +128,7 @@ RubWorkspaceExample >> hasBindingThatBeginsWith: aString [
 	^false
 ]
 
-{ #category : #shout }
+{ #category : #initialization }
 RubWorkspaceExample >> initialize [
 	super initialize.
 	textModel := RubScrolledTextModel new

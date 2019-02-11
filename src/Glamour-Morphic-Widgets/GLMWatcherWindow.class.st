@@ -136,7 +136,7 @@ GLMWatcherWindow >> inactiveTitleFillStyle [
 	^ SolidFillStyle color: Color transparent
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GLMWatcherWindow >> initialize [
 	super initialize.
 	self fillStyle: self defaultFillStyle.

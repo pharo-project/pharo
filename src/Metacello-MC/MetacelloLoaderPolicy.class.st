@@ -76,7 +76,7 @@ MetacelloLoaderPolicy >> ignoreImage: anObject [
 	ignoreImage := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MetacelloLoaderPolicy >> initialize [
 
 	self 

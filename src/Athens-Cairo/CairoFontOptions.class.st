@@ -130,7 +130,7 @@ CairoFontOptions >> hintStyleSlight [
 	^ self setHintStyle: CAIRO_HINT_STYLE_SLIGHT
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CairoFontOptions >> initialize [ 
 	self autoRelease.
 	self setDefaults

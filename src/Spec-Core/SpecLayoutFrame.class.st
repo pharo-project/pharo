@@ -89,7 +89,7 @@ SpecLayoutFrame >> hasNoOffsets [
 	
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 SpecLayoutFrame >> initialize [
 
 	super initialize.

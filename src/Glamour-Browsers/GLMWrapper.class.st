@@ -19,7 +19,7 @@ GLMWrapper >> defaultPane [
 	^ self panes anyOne 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMWrapper >> initialize [
 	super initialize.
 	self addDefaultPane.

@@ -216,7 +216,7 @@ AthensBalloonSurface >> imageTransform [
 	^ imageTransform
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensBalloonSurface >> initialize [
 	pathTransform := AthensAffineTransform new.
 	paintTransform := AthensAffineTransform new.

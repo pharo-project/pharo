@@ -47,7 +47,7 @@ RubTextFieldMorph >> hasValidText: aBoolean [
 	hasValidText := aBoolean
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubTextFieldMorph >> initialize [
 	super initialize.
 	self textArea announcer when: RubReturnEntered  send: #whenReturnEntered: to: self.

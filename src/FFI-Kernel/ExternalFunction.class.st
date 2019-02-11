@@ -176,7 +176,7 @@ ExternalFunction >> flags [
 	^flags
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ExternalFunction >> initialize [
 	"Initialize the receiver"
 	handle := ExternalAddress new.

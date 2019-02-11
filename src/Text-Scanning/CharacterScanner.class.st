@@ -262,7 +262,7 @@ CharacterScanner >> indentationLevel: anInteger [
 	indentationLevel := anInteger
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CharacterScanner >> initialize [
 	destX := destY := leftMargin := 0.
 ]

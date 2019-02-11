@@ -201,7 +201,7 @@ GTPlayBook >> gtPagesIn: composite [
 		filterOn: [ :text :each | text match: each content ]
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 GTPlayBook >> initialize [
 	self flag: 'error handling'.
 	

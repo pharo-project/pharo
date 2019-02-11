@@ -39,7 +39,7 @@ CacheStatistics >> hits [
 	^ hits
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CacheStatistics >> initialize [
 	super initialize.
 	hits := misses := 0

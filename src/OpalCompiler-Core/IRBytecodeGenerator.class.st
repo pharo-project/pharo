@@ -329,7 +329,7 @@ IRBytecodeGenerator >> inBlock: bool [
 	inBlock := bool.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 IRBytecodeGenerator >> initialize [
 
 	super initialize.

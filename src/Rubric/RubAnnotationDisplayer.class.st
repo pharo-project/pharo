@@ -120,7 +120,7 @@ RubAnnotationDisplayer >> fontToUse [
 	^ RubAbstractTextArea lineNumbersFont 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubAnnotationDisplayer >> initialize [
 	super initialize.
 	self side: #bottom.

@@ -93,7 +93,7 @@ AthensTextScanner >> endLine: index [
 	currentLine  endIndex: index
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 AthensTextScanner >> initialize [
 	lines := OrderedCollection new.
 	currentAttributes := #().
