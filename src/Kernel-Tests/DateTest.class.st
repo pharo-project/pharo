@@ -468,38 +468,62 @@ DateTest >> testPreviousByName [
 
 { #category : #tests }
 DateTest >> testPrintFormat [
+	| printFormat printedDate |
+	printFormat := #(1 2 3 $/ 1 1).
+	self assert: (january23rd2004 printFormat: printFormat) equals: '23/1/2004'.
 
-	| format |
-	format := DatePrintFormatTester on: january23rd2004.
-	format dayPosition: 1 monthPosition: 2 yearPosition: 3 delimiter: $/ monthType: 1 yearType: 1.
-	format shouldEqual: '23/1/2004'.
-	
-	format delimiter: $-.
-	format shouldEqual: '23-1-2004'.
-	
-	format	monthType: 1 shouldPrintAs: 1 asString "index".
-	format monthType: 2 shouldPrintAs: 'Jan'.
-	format monthType: 3 shouldPrintAs: 'January'.
-	
-	"Out of range month types leave month blank"
-	format monthType: 4.
-	format shouldEqual: '23--2004' "no month".
+	printFormat at: 4 put: $-.
+	printedDate := january23rd2004 printFormat: printFormat.
+	self assert: printedDate equals: '23-1-2004'.
 
-	format	yearType: 1 shouldPrintAs: '2004'.
-	format yearType: 2 shouldPrintAs: '04'.
-	
-	"Out of range year types -> short year"
-	format yearType: 3 shouldPrintAs: '04'.
-	
+	"Month type 1 should print the index of the month."
+	printFormat at: 5 put: 1.
+	self assert: ((printedDate splitOn: $-) at: 2) equals: '1'.
+
+	"Month type 2 should print the abbreviation of the month name."
+	printFormat at: 5 put: 2.
+	printedDate := january23rd2004 printFormat: printFormat.
+	self assert: ((printedDate splitOn: $-) at: 2) equals: 'Jan'.
+
+	"Month type 2 should print the full month name."
+	printFormat at: 5 put: 3.
+	printedDate := january23rd2004 printFormat: printFormat.
+	self assert: ((printedDate splitOn: $-) at: 2) equals: 'January'.
+
+	"Month type 4 should not print the month."
+	printFormat at: 5 put: 4.
+	printedDate := january23rd2004 printFormat: printFormat.
+	self assert: ((printedDate splitOn: $-) at: 2) equals: ''.
+
+	"Year type 1 should print the full year."
+	printFormat at: 6 put: 1.
+	printedDate := january23rd2004 printFormat: printFormat.
+	self assert: ((printedDate splitOn: $-) at: 3) equals: '2004'.
+
+	"Year type 2 should print the year abbreviation."
+	printFormat at: 6 put: 2.
+	printedDate := january23rd2004 printFormat: printFormat.
+	self assert: ((printedDate splitOn: $-) at: 3) equals: '04'.
+
+	"Year type 2 should print the year abbreviation."
+	printFormat at: 6 put: 2.
+	printedDate := january23rd2004 printFormat: printFormat.
+	self assert: ((printedDate splitOn: $-) at: 3) equals: '04'.
+
+	"Out of range year types -> short year."
+	printFormat at: 6 put: 3.
+	printedDate := january23rd2004 printFormat: printFormat.
+	self assert: ((printedDate splitOn: $-) at: 3) equals: '04'.
+
 	"Usage examples"
-	self 
-		assert: june2nd1973 mmddyyyy = '6/2/1973';
-		assert: june2nd1973 yyyymmdd = '1973-06-02';
-		assert: (june2nd1973 printFormat: #(3 1 2 $! 2 1 1)) = '1973!2!Jun';
-		assert: (june2nd1973 printFormat: #(1 2 3 0 1 1 2)) = '02061973';		
-		assert: (june2nd1973 printFormat: #(2 1 3 0 1 1 2)) = '06021973';		
-		assert: (june2nd1973 printFormat: #(3 2 1 0 1 1 2)) = '19730602';
-		assert: (june2nd1973 printFormat: #(1 2 3 0 1 1 1)) = '261973'.
+	self
+		assert: june2nd1973 mmddyyyy equals: '6/2/1973';
+		assert: june2nd1973 yyyymmdd equals: '1973-06-02';
+		assert: (june2nd1973 printFormat: #(3 1 2 $! 2 1 1)) equals: '1973!2!Jun';
+		assert: (june2nd1973 printFormat: #(1 2 3 0 1 1 2)) equals: '02061973';
+		assert: (june2nd1973 printFormat: #(2 1 3 0 1 1 2)) equals: '06021973';
+		assert: (june2nd1973 printFormat: #(3 2 1 0 1 1 2)) equals: '19730602';
+		assert: (june2nd1973 printFormat: #(1 2 3 0 1 1 1)) equals: '261973'
 ]
 
 { #category : #tests }
