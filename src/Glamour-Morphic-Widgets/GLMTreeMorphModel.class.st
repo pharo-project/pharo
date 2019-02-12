@@ -9,7 +9,6 @@ Class {
 		'roots',
 		'glamourPresentation',
 		'childrenBlock',
-		'onSelection',
 		'displayFormat',
 		'tagsToFilterBy',
 		'glmAnnouncer',

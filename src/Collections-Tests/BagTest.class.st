@@ -11,8 +11,6 @@ Class {
 		'nonEmpty',
 		'collectResult',
 		'emptyButAllocatedWith20',
-		'elementExistsTwice',
-		'element',
 		'collectionWithElement',
 		'collectionIn',
 		'collectionNotIn',

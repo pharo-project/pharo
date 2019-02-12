@@ -18,7 +18,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'keyText',
-		'font',
 		'owner'
 	],
 	#category : #'Morphic-Base-Menus'

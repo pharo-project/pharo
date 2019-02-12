@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'matrix1',
 		'matrix2',
-		'matrix3',
 		'matrix23'
 	],
 	#category : #'Collections-Tests-Sequenceable'

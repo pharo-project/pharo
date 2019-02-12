@@ -10,8 +10,7 @@ Class {
 	#superclass : #RPackageTestCase,
 	#instVars : [
 		'packageOrganizer',
-		'previousAuthor',
-		'quadrangleClass'
+		'previousAuthor'
 	],
 	#category : #'RPackage-Tests'
 }

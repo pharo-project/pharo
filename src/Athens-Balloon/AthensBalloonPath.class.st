@@ -6,8 +6,7 @@ Class {
 	#superclass : #AthensPath,
 	#instVars : [
 		'bounds',
-		'contours',
-		'last'
+		'contours'
 	],
 	#category : #'Athens-Balloon-Path'
 }

@@ -15,13 +15,6 @@ I representing an elliptical arc, using endpoint parametrization:
 Class {
 	#name : #AthensEllipticalArcSegment,
 	#superclass : #AthensPathSegment,
-	#instVars : [
-		'radii',
-		'phi',
-		'large',
-		'sweep',
-		'endPoint'
-	],
 	#category : #'Athens-Core-Paths'
 }
 

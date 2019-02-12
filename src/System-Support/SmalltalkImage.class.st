@@ -30,9 +30,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'globals',
-		'deferredStartupActions',
 		'specialObjectsArray',
-		'session',
 		'vm'
 	],
 	#classVars : [

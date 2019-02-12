@@ -12,7 +12,6 @@ Class {
 	#name : #SpecTableLayoutAddSpacer,
 	#superclass : #SpecTableLayoutAdd,
 	#instVars : [
-		'commands',
 		'spaceFillWeight',
 		'size',
 		'orientation'

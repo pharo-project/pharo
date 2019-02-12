@@ -6,7 +6,6 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'cache',
-		'cache1K',
 		'fullCache',
 		'font1',
 		'font1XGlyph',

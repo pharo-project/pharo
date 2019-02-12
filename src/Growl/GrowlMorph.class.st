@@ -21,7 +21,6 @@ Class {
 		'alpha',
 		'actionBlock',
 		'vanishDelay',
-		'attr',
 		'labelAttr',
 		'contentsAttr',
 		'labelColor',

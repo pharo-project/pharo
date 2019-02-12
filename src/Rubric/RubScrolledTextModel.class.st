@@ -11,7 +11,6 @@ Class {
 		'announcer',
 		'text',
 		'primarySelectionInterval',
-		'textSegments',
 		'interactionModel'
 	],
 	#category : #'Rubric-Editing-Widgets'

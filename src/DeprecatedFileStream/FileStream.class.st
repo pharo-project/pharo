@@ -190,9 +190,6 @@ To use the file system for most applications, you typically create a FileStream.
 Class {
 	#name : #FileStream,
 	#superclass : #ReadWriteStream,
-	#instVars : [
-		'rwmode'
-	],
 	#classVars : [
 		'Stderr',
 		'Stdin',

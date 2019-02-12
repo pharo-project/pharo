@@ -6,7 +6,6 @@ Class {
 	#superclass : #Model,
 	#instVars : [
 		'textModel',
-		'code',
 		'className',
 		'selector',
 		'classIsMeta'

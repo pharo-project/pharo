@@ -15,8 +15,7 @@ Class {
 		'methods',
 		'classesAndMetaClasses',
 		'extensionClasses',
-		'systemCategories',
-		'overriddenMethods'
+		'systemCategories'
 	],
 	#classInstVars : [
 		'cacheActive',

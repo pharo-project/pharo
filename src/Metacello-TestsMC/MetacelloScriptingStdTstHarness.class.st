@@ -4,8 +4,6 @@ Class {
 	#instVars : [
 		'registry',
 		'undefinedSymbols',
-		'monticelloRepository',
-		'configurationRepository',
 		'initialWorkingCopyList'
 	],
 	#category : #'Metacello-TestsMC'

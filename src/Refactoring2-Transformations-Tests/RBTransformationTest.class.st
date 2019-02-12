@@ -2,7 +2,6 @@ Class {
 	#name : #RBTransformationTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'changes',
 		'manager',
 		'model'
 	],

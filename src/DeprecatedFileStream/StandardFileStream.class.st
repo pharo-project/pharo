@@ -15,7 +15,8 @@ Class {
 	#instVars : [
 		'name',
 		'fileID',
-		'buffer1'
+		'buffer1',
+		'rwmode'
 	],
 	#classVars : [
 		'Registry'

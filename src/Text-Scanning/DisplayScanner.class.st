@@ -55,7 +55,6 @@ Class {
 		'foregroundColor',
 		'backgroundColor',
 		'defaultTextColor',
-		'paragraphColor',
 		'morphicOffset',
 		'ignoreColorChanges',
 		'lastDisplayableIndex',

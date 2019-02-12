@@ -1,9 +1,6 @@
 Class {
 	#name : #MCGitlabRepositoryTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'hostname'
-	],
 	#category : #'Metacello-Gitlab-Tests'
 }
 

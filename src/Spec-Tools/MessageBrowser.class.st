@@ -19,8 +19,7 @@ Class {
 		'cachedHierarchy',
 		'model',
 		'topologicSortHolder',
-		'textConverterHolder',
-		'browsedEnvironment'
+		'textConverterHolder'
 	],
 	#category : #'Spec-Tools-Senders'
 }

@@ -9,7 +9,8 @@ Class {
 	#superclass : #Editor,
 	#instVars : [
 		'model',
-		'editingState'
+		'editingState',
+		'selectionShowing'
 	],
 	#classVars : [
 		'CaseSensitiveFinds',

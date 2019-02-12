@@ -2,10 +2,6 @@ Class {
 	#name : #HiNodesAndLinksIteratorWithTwoLinkModelsTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'a',
-		'b',
-		'c',
-		'd',
 		'expectedArray',
 		'reversedNodes',
 		'parentsLinkBuilder',
@@ -66,7 +62,7 @@ HiNodesAndLinksIteratorWithTwoLinkModelsTest >> testBasicExpected [
 	|/ 
 	a 	
 	"
-		
+	| a b c |		
 	reversedNodes := {
 		a := HiTestNode content: $a parents: {}.
 		b := HiTestNode content: $b parents: { a }.	

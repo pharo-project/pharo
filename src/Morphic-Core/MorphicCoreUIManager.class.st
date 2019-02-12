@@ -4,10 +4,6 @@ This is a very simplified version of MorphicUIManager for Moprhic subset that co
 Class {
 	#name : #MorphicCoreUIManager,
 	#superclass : #DummyUIManager,
-	#instVars : [
-		'interactiveParser',
-		'activeTranscript'
-	],
 	#classVars : [
 		'UIProcess'
 	],

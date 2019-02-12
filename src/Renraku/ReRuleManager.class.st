@@ -13,9 +13,8 @@ Class {
 		'rules'
 	],
 	#classInstVars : [
-		'uniqueInstance',
-		'managers',
-		'default'
+		'default',
+		'managers'
 	],
 	#category : #'Renraku-Utility'
 }

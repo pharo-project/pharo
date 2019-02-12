@@ -15,7 +15,6 @@ Class {
 		'emptyButAllocatedWith20',
 		'otherCollection',
 		'indexCollection',
-		'elementExistsTwice',
 		'collectionWithElement',
 		'collectionOfFloat',
 		'elementNotIn',
@@ -28,7 +27,6 @@ Class {
 		'collectionOfCollectionsOfInts',
 		'collectionOfCollectionsOfStrings',
 		'withCharacters',
-		'collectionNotIncluded',
 		'simpleCollection',
 		'collectionOfString',
 		'collectionWithSameBeginingEnd'

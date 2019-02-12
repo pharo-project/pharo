@@ -7,8 +7,7 @@ Class {
 	#name : #Editor,
 	#superclass : #Object,
 	#instVars : [
-		'morph',
-		'selectionShowing'
+		'morph'
 	],
 	#classVars : [
 		'BlinkingCursor',

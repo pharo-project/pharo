@@ -57,8 +57,7 @@ Class {
 		'previousSelection',
 		'undoManager',
 		'lastParenLocation',
-		'mouseDownInterval',
-		'secondarySelectionToken'
+		'mouseDownInterval'
 	],
 	#category : #'Text-Edition'
 }

@@ -5,7 +5,6 @@ Class {
 	#name : #PSMCClassChangeWrapper,
 	#superclass : #PSMCChangeWrapper,
 	#instVars : [
-		'conflict',
 		'contents'
 	],
 	#category : #'Tool-Diff-Wrapper'
