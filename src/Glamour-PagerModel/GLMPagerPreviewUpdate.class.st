@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'pageIndex'
 	],
-	#category : #'Glamour-Morphic-Pager-Announcement'
+	#category : #'Glamour-PagerModel-Announcements'
 }
 
 { #category : #accessing }
