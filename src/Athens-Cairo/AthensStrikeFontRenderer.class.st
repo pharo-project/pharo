@@ -47,7 +47,7 @@ AthensStrikeFontRenderer >> font: anObject [
 	font := anObject
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 AthensStrikeFontRenderer >> initialize [
 	super initialize.
 	font := nil.

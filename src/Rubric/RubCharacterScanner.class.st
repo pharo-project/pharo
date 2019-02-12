@@ -177,7 +177,7 @@ RubCharacterScanner >> indentationLevel: anInteger [
 	indentationLevel := anInteger
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubCharacterScanner >> initialize [
 	super initialize.
 	destX := destY := leftMargin := 0.

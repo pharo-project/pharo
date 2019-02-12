@@ -71,7 +71,7 @@ When displaying or rendering underlined text, this value corresponds to the vert
 "
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 AthensTextRenderer >> initialize [
 	color := Color black.
 ]

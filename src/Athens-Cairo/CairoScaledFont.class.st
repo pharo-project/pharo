@@ -150,7 +150,7 @@ CairoScaledFont >> initWithFace: cairo_face [
 	self autoRelease.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CairoScaledFont >> initialize [ 
 	super initialize.
 	self status ~= CAIRO_STATUS_SUCCESS 

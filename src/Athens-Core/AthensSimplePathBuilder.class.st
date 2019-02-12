@@ -102,7 +102,7 @@ AthensSimplePathBuilder >> cwArcTo: endPt angle: rot [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensSimplePathBuilder >> initialize [
 	"A new path always starts from implicit (moveTo:0@0) segment.
 	If next segment is moveTo: , the point of already existing move segment will be changed,

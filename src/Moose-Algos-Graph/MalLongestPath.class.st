@@ -51,7 +51,7 @@ MalLongestPath >> edgeClass [
 	^ MalGraphEdge
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MalLongestPath >> initialize [
 	super initialize.
 	previousRanks := OrderedCollection new

@@ -69,7 +69,7 @@ RBApplyClassDeprecationRefactoring >> deprecatedClass: anObject [
 	deprecatedClass := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBApplyClassDeprecationRefactoring >> initialize [
 
 	super initialize.

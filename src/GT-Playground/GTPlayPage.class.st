@@ -154,7 +154,7 @@ GTPlayPage >> gtInspectorContentIn: composite [
 		installDefaultSelectionActions
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 GTPlayPage >> initialize [
 	super initialize.
 	self content: ''.

@@ -9,7 +9,7 @@ Class {
 	#category : #'Metacello-MC-Specs'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MetacelloVisitedPackages >> initialize [
 
 	groups := Set new.

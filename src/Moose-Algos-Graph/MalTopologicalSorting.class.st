@@ -22,7 +22,7 @@ MalTopologicalSorting >> graphHasEdges [
 	^ (nodes allSatisfy: [ :node | node nextNodes isEmpty ]) not
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MalTopologicalSorting >> initialize [
 	super initialize.
 	sortedElements := OrderedCollection new

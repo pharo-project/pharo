@@ -7,7 +7,7 @@ Class {
 	#category : #'Glamour-PagerModel-Announcements'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 GLMPagePoped >> initialize [
 	super initialize.
 	

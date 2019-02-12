@@ -75,7 +75,7 @@ LessonView >> hasBindingThatBeginsWith: aString [
 	^ false
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 LessonView >> initialize [
 
 	super initialize.

@@ -74,7 +74,7 @@ RubPluggableTextMorph >> hasUnacceptedEdits: aBoolean [
 		ifFalse: [ hasEditingConflicts := false ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubPluggableTextMorph >> initialize [
 	super initialize.
 	hasUnacceptedEdits := false.

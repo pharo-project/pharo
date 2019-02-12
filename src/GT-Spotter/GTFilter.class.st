@@ -120,7 +120,7 @@ GTFilter >> hasFilteredItems [
 	^ self filteredItems isEmptyOrNil not
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 GTFilter >> initialize [
 	super initialize.
 	

@@ -25,7 +25,7 @@ AthensAffineTransform >> clearTranslation [
 	x := y := 0.0
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensAffineTransform >> initialize [
 	self loadIdentity
 ]

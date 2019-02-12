@@ -262,7 +262,7 @@ PharoDarkTheme >> errorPopperBackgroundColor [
 	^ Color red muchDarker 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 PharoDarkTheme >> initialize [
 
 	super initialize.

@@ -195,7 +195,7 @@ DisplayScanner >> fillTextBackground [
 	self subclassResponsibility
 ]
 
-{ #category : #displaying }
+{ #category : #initialization }
 DisplayScanner >> initialize [
 	super initialize.
 	ignoreColorChanges := false.

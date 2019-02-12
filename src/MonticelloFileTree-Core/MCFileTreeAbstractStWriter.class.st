@@ -54,7 +54,7 @@ MCFileTreeAbstractStWriter >> fileUtils [
     ^ MCFileTreeFileUtils current
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCFileTreeAbstractStWriter >> initialize [
     stWriter := MCFileTreePackageStructureStWriter new
         initializers: (initializers := Set new);
