@@ -95,7 +95,7 @@ TGLMFastTable >> executeMenuAction: anAction [
 
 { #category : #selecting }
 TGLMFastTable >> explicitSelection: anObject [ 
-	self table selectRowIndex: (self elements indexOf: anObject)
+	self table selectIndex: (self elements indexOf: anObject)
 ]
 
 { #category : #'accessing - cache' }
@@ -170,16 +170,12 @@ TGLMFastTable >> resetDataCache [
 { #category : #selecting }
 TGLMFastTable >> selection: ann [
 	| selection |
-	selection := ann newSelectedRowIndexes select: [ :each | each ~= 0 ] thenCollect: [ :each | self elementAt: each ].
+	selection := ann newSelectedIndexes select: [ :each | each ~= 0 ] thenCollect: [ :each | self elementAt: each ].
 	selection
-		ifNotEmpty: [ 
-			self announcer
+		ifNotEmpty: [ self announcer
 				announce:
 					(GLMTreeMorphSelectionChanged new
-						selectionValue:
-								((selection size = 1 and: [ self glamourPresentation isSingle ])
-										ifTrue: [ selection first ]
-										ifFalse: [ selection ]);
+						selectionValue: ((selection size = 1 and: [ self glamourPresentation isSingle ]) ifTrue: [ selection first ] ifFalse: [ selection ]);
 						selectionPathValue: selection;
 						yourself) ]
 ]
@@ -192,7 +188,7 @@ TGLMFastTable >> shouldUseCache [
 { #category : #selecting }
 TGLMFastTable >> strongSelection: ann [
 	self announcer announce: (GLMTreeMorphStrongSelectionChanged new 
-		strongSelectionValue: (self elementAt: ann selectedRowIndex);
+		strongSelectionValue: (self elementAt: ann selectedIndex);
 		yourself)
 ]
 

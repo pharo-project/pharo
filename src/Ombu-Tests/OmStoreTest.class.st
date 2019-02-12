@@ -61,7 +61,7 @@ OmStoreTest >> tearDown [
 
 { #category : #tests }
 OmStoreTest >> testEntries [
-	self assert: store entries isEmpty.
+	self assertEmpty: store entries
 ]
 
 { #category : #tests }
@@ -238,8 +238,8 @@ OmStoreTest >> testReferenceTo [
 { #category : #tests }
 OmStoreTest >> testRefreshEmpty [
 	store refresh.
-	
-	self assert: store entries isEmpty.
+
+	self assertEmpty: store entries
 ]
 
 { #category : #tests }

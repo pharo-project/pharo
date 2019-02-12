@@ -42,5 +42,5 @@ ChangesBrowserTest >> testInitializeWidgets [
 
 { #category : #tests }
 ChangesBrowserTest >> testPickedChanges [
-	self assert: browser pickedChanges isEmpty
+	self assertEmpty: browser pickedChanges
 ]

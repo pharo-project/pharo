@@ -293,7 +293,7 @@ PathTest >> testIsChildOfReference [
 
 { #category : #tests }
 PathTest >> testIsEmpty [
-	self assert: (Path workingDirectory) isEmpty
+	self assertEmpty: Path workingDirectory
 ]
 
 { #category : #tests }

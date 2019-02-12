@@ -141,7 +141,7 @@ RBTransformation >> defaultEnvironment [
 	^ RBBrowserEnvironment new
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RBTransformation >> initialize [
 
 	preconditionChecking := false

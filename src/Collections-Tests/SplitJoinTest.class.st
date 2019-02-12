@@ -32,10 +32,6 @@ self showDocumentation
 Class {
 	#name : #SplitJoinTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'eg',
-		'stringToSplit'
-	],
 	#category : #'Collections-Tests-SplitJoin'
 }
 

@@ -1,9 +1,6 @@
 Class {
 	#name : #GLMPaginatedMorphTreeMorph,
 	#superclass : #PaginatedMorphTreeMorph,
-	#instVars : [
-		'stopStepping'
-	],
 	#category : #'Glamour-Morphic-Widgets'
 }
 

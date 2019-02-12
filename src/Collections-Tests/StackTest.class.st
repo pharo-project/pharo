@@ -10,9 +10,6 @@ Class {
 		'empty',
 		'nonEmpty'
 	],
-	#classInstVars : [
-		'testSize'
-	],
 	#category : #'Collections-Tests-Stack'
 }
 
@@ -55,23 +52,20 @@ StackTest >> testEmptyError [
 
 { #category : #tests }
 StackTest >> testPop [
-
 	| aStack res elem |
-	elem := 'anElement'.	
+	elem := 'anElement'.
 	aStack := Stack new.
-	self assert: aStack isEmpty.
-	
+	self assertEmpty: aStack.
+
 	aStack push: 'a'.
 	aStack push: elem.
-	res := aStack pop.	
+	res := aStack pop.
 	self assert: res = elem.
 	self assert: res == elem.
-	
+
 	self assert: aStack size = 1.
 	aStack pop.
-	self assert: aStack isEmpty.
-
-
+	self assertEmpty: aStack
 ]
 
 { #category : #tests }
@@ -110,13 +104,12 @@ StackTest >> testSize [
 
 { #category : #tests }
 StackTest >> testTop [
-
 	| aStack |
 	aStack := Stack new.
-	self assert: aStack isEmpty.
+	self assertEmpty: aStack.
 	aStack push: 'a'.
 	aStack push: 'b'.
 	self assert: aStack top = 'b'.
 	self assert: aStack top = 'b'.
-	self assert: aStack size = 2.
+	self assert: aStack size = 2
 ]

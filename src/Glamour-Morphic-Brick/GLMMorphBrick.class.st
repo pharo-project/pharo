@@ -13,7 +13,6 @@ Class {
 	#superclass : #GLMBrick,
 	#instVars : [
 		'morph',
-		'resizing',
 		'isLayouting',
 		'vResizing',
 		'hResizing'

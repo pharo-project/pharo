@@ -161,6 +161,11 @@ TestAsserter >> assertCollection: actual includesAll: subcollection [
 		description: [ actual asString , ' does not include all in ' , subcollection asString ]
 ]
 
+{ #category : #asserting }
+TestAsserter >> assertEmpty: aCollection [
+	^ self assert: aCollection isEmpty description: aCollection asString , ' should have been empty'
+]
+
 { #category : #factory }
 TestAsserter >> classForTestResource [
 	^ TestResource
@@ -308,6 +313,11 @@ TestAsserter >> denyCollection: actual equals: expected [
 	^ self
 		deny: expected = actual
 		description: [ self unexpectedEqualityStringBetween: actual and: expected ]
+]
+
+{ #category : #asserting }
+TestAsserter >> denyEmpty: aCollection [
+	^ self assert: aCollection isNotEmpty description: aCollection asString , ' should not have been empty'
 ]
 
 { #category : #asserting }

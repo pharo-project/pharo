@@ -1,9 +1,6 @@
 Class {
 	#name : #IRBuilderTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'testIvar'
-	],
 	#classVars : [
 		'TestToPush'
 	],

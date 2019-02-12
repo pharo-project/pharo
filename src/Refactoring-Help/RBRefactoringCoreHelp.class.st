@@ -103,7 +103,7 @@ env := RBBrowserEnvironment new forPackageNames:{''Kernel''}.
 env allClasses "-> a list of all classes in package Kernel"
 
 or open a browser
-env browse "-> starts Nautilus showing only this package"
+env browse "-> starts Calypso showing only this package"
 
 and you can further restrict this package environment by calling one of the other factory methods:
 
@@ -323,7 +323,7 @@ The chapter "RBPatternParser and metavariables" describes the added syntax eleme
 
 In this chapter we show some example expressions and how to test and use them.
 
-Nautilus has a search function that is the simples way to use and see the result of searching expressions with pattern syntax. Open the the class menu / Refactoring / Code Rewrite / Search code or Rewrite code entry.
+Calypso has a search function that is the simples way to use and see the result of searching expressions with pattern syntax. Open the the class menu / Refactoring / Code Rewrite / Search code or Rewrite code entry.
 
 Search code
 The search code menu will put a search pattern template in the code pane:

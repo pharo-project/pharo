@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'index'
 	],
-	#category : 'Fuel-Tests-Core-Mocks'
+	#category : #'Fuel-Tests-Core-Mocks'
 }
 
 { #category : #serialization }

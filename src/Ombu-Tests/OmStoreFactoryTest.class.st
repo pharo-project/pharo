@@ -15,11 +15,10 @@ OmStoreFactoryTest >> aStoreName [
 
 { #category : #tests }
 OmStoreFactoryTest >> testNullStore [
-
 	| factory store |
 	factory := OmStoreFactory new.
 	store := factory null.
-	self assert: store entries isEmpty.
+	self assertEmpty: store entries.
 	self assert: factory null == store description: 'Singleton'
 ]
 

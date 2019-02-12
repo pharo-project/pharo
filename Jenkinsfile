@@ -154,7 +154,7 @@ def bootstrapImage(){
         stage ("Convert Image - 32->64") {
           dir("conversion") {
             shell "cp ../bootstrap-cache/*.zip ."
-            shell "bash ../bootstrap/scripts/transform_32_into_64.sh"
+            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ../bootstrap/scripts/transform_32_into_64.sh"
             shell "mv *-64bit-*.zip ../bootstrap-cache"
           }
         }

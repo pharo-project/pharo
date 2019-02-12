@@ -30,17 +30,12 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : #FTCellMorph,
-	#superclass : #Morph,
+	#superclass : #FTSelectableMorph,
 	#instVars : [
 		'topSeparator'
 	],
 	#category : #'Morphic-Widgets-FastTable'
 }
-
-{ #category : #initialize }
-FTCellMorph >> defaultColor [
-	^ Color transparent
-]
 
 { #category : #drawing }
 FTCellMorph >> drawOn: aCanvas [
@@ -65,7 +60,7 @@ FTCellMorph >> initialize [
 
 { #category : #drawing }
 FTCellMorph >> seperatorColor [
-	^ Smalltalk ui theme scrollbarColor
+	^ self theme scrollbarColor
 ]
 
 { #category : #accessing }

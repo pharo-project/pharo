@@ -35,7 +35,7 @@ IRFix >> convertStorePop: assoc forSeq: seq [
 	seq remove: pop.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 IRFix >> initialize [
 
 	super initialize.

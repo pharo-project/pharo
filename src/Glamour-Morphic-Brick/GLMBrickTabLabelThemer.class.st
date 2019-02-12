@@ -10,13 +10,13 @@ Class {
 { #category : #'brick-tab-label' }
 GLMBrickTabLabelThemer >> normalBackgroundStyleFor: aBrick [
 
-	^ Smalltalk ui theme tabLabelNormalFillStyleFor: aBrick
+	^ self theme tabLabelNormalFillStyleFor: aBrick
 ]
 
 { #category : #'brick-tab-label' }
 GLMBrickTabLabelThemer >> normalBorderStyleFor: aBrick [
 
-	^ Smalltalk ui theme tabLabelNormalBorderStyleFor: aBrick
+	^ self theme tabLabelNormalBorderStyleFor: aBrick
 ]
 
 { #category : #'brick-tab-label' }
@@ -29,13 +29,13 @@ GLMBrickTabLabelThemer >> normalStyleFor: aBrick [
 { #category : #'brick-tab-label' }
 GLMBrickTabLabelThemer >> selectedBackgroundStyleFor: aBrick [
 
-	^ Smalltalk ui theme tabLabelSelectedFillStyleFor: aBrick
+	^ self theme tabLabelSelectedFillStyleFor: aBrick
 ]
 
 { #category : #'brick-tab-label' }
 GLMBrickTabLabelThemer >> selectedBorderStyleFor: aBrick [
 
-	^ Smalltalk ui theme tabLabelSelectedBorderStyleFor: aBrick
+	^ self theme tabLabelSelectedBorderStyleFor: aBrick
 ]
 
 { #category : #'brick-tab-label' }

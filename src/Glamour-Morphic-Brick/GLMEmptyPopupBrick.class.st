@@ -12,7 +12,6 @@ Class {
 		'contentBrick',
 		'popupLayout',
 		'closer',
-		'padding',
 		'inset',
 		'spacing'
 	],

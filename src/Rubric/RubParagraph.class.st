@@ -348,7 +348,7 @@ RubParagraph >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 	^ self composer indentationOfLineIndex: lineIndex ifBlank: aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubParagraph >> initialize [ 
 	super initialize.
 	drawingEnabled := true.

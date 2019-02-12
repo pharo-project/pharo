@@ -158,7 +158,7 @@ GTSpotterContext >> filter: anObject [
 	filter := anObject
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 GTSpotterContext >> initialize [
 	super initialize.
 	

@@ -57,7 +57,7 @@ RubScrolledTextExtra >> defaultColor [
 	^ self defaultBackgroundColor 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextExtra >> initialize [
 	super initialize.
 	self clipSubmorphs: true

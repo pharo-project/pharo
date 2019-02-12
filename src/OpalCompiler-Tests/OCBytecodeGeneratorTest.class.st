@@ -1,9 +1,6 @@
 Class {
 	#name : #OCBytecodeGeneratorTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'a'
-	],
 	#category : #'OpalCompiler-Tests-Bytecode'
 }
 

@@ -29,18 +29,24 @@ Class {
 	#name : #FTStrongSelectionChanged,
 	#superclass : #FTAnnouncement,
 	#instVars : [
-		'selectedRowIndex',
-		'event'
+		'event',
+		'selectedIndex'
 	],
 	#category : #'Morphic-Widgets-FastTable-Announcement'
 }
 
 { #category : #'instance creation' }
-FTStrongSelectionChanged class >> rowIndex: aNumber event: anEvent [
-	^ self new 
-		selectedRowIndex: aNumber;
+FTStrongSelectionChanged class >> index: aNumber event: anEvent [
+	^ self new
+		selectedIndex: aNumber;
 		event: anEvent;
 		yourself
+]
+
+{ #category : #'instance creation' }
+FTStrongSelectionChanged class >> rowIndex: aNumber event: anEvent [
+	self deprecated: 'Use #index:event: instead' transformWith: '`@receiver rowIndex: `@statements1 event: `@statements2' -> '`@receiver index: `@statements1 event: `@statements2'.
+	^ self index: aNumber event: anEvent
 ]
 
 { #category : #accessing }
@@ -54,11 +60,23 @@ FTStrongSelectionChanged >> event: anEvent [
 ]
 
 { #category : #accessing }
-FTStrongSelectionChanged >> selectedRowIndex [
-	^ selectedRowIndex
+FTStrongSelectionChanged >> selectedIndex [
+	^ selectedIndex
 ]
 
 { #category : #accessing }
-FTStrongSelectionChanged >> selectedRowIndex: anObject [
-	selectedRowIndex := anObject
+FTStrongSelectionChanged >> selectedIndex: anObject [
+	selectedIndex := anObject
+]
+
+{ #category : #accessing }
+FTStrongSelectionChanged >> selectedRowIndex [
+	self deprecated: 'Use #selectedIndex instead' transformWith: '`@receiver selectedRowIndex' -> '`@receiver selectedIndex'.
+	^ self selectedIndex
+]
+
+{ #category : #accessing }
+FTStrongSelectionChanged >> selectedRowIndex: aNumber [
+	self deprecated: 'Use #selectedIndex: instead' transformWith: '`@receiver selectedRowIndex: `@statements1' -> '`@receiver selectedIndex: `@statements1'.
+	self selectedIndex: aNumber
 ]

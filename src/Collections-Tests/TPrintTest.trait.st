@@ -14,7 +14,7 @@ TPrintTest >> nonEmpty [
 { #category : #'tests - fixture' }
 TPrintTest >> test0FixturePrintTest [
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty
+	self denyEmpty: self nonEmpty
 ]
 
 { #category : #'tests - printing' }

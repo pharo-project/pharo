@@ -52,9 +52,8 @@ TraitTest >> testAddAndRemoveMethodsInClassOrTrait [
 ]
 
 { #category : #testing }
-TraitTest >> testAllClassVarNames [	
-	
-	self assert: self t1 allClassVarNames isEmpty
+TraitTest >> testAllClassVarNames [
+	self assertEmpty: self t1 allClassVarNames
 ]
 
 { #category : #testing }
@@ -388,19 +387,16 @@ TraitTest >> testTraitCompositionRespectsParenthesis [
 TraitTest >> testTraitRemoval [
 	self flag: #fix.	"It has to be refactored when Mariano's ClassBuilder for testCase is integrated :)"
 	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ 
-			| aClass aTrait |
-			[ 
-			aTrait := self createTrait.
+		suspendAllWhile: [ | aClass aTrait |
+			[ aTrait := self createTrait.
 			aClass := self createClassUsing: aTrait.
-			self assert: aClass localSelectors isEmpty.
+			self assertEmpty: aClass localSelectors.
 			aClass removeFromComposition: aTrait.
-			self assert: aClass localSelectors isEmpty.
-			self assert: aClass organization allMethodSelectors isEmpty.
+			self assertEmpty: aClass localSelectors.
+			self assertEmpty: aClass organization allMethodSelectors.
 			self deny: aClass hasTraitComposition.
-			self deny: (aTrait traitUsers includes: aClass). ]
-				ensure: [ 
-					aClass removeFromSystem: false.
+			self deny: (aTrait traitUsers includes: aClass) ]
+				ensure: [ aClass removeFromSystem: false.
 					aTrait removeFromSystem: false ] ]
 ]
 
@@ -426,15 +422,15 @@ TraitTest >> testTraitsUsersSanity [
 { #category : #testing }
 TraitTest >> testUsers [
 	self assert: self t1 traitUsers size = 3.
-	self assert: (self t1 traitUsers includesAll: {self t4. self t5. self t6 }).
-	self assert: self t3 traitUsers isEmpty.
+	self assert: (self t1 traitUsers includesAll: {self t4 . self t5 . self t6}).
+	self assertEmpty: self t3 traitUsers.
 	self assert: self t5 traitUsers size = 1.
 	self assert: self t5 traitUsers anyOne = self c2.
 	self c2 setTraitComposition: self t1 + self t5.
 	self assert: self t5 traitUsers size = 1.
 	self assert: self t5 traitUsers anyOne = self c2.
 	self c2 setTraitComposition: self t2 asTraitComposition.
-	self assert: self t5 traitUsers isEmpty
+	self assertEmpty: self t5 traitUsers
 ]
 
 { #category : #testing }

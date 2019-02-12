@@ -96,7 +96,8 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 	(Smalltalk at: #FileLocator) initialize.
 	(Smalltalk at: #DiskStore) initialize.
 	(Smalltalk at: #FileHandle) initialize.
-	(Smalltalk at: #MultiByteFileStream) initialize
+	(Smalltalk at: #MultiByteFileStream) initialize.
+	(Smalltalk at: #File) initialize
 ]
 
 { #category : #'public api' }

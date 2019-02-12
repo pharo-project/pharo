@@ -26,7 +26,7 @@ TSequencedConcatenationTest >> secondCollection [
 { #category : #'tests - fixture' }
 TSequencedConcatenationTest >> test0FixtureSequencedConcatenationTest [
 	self empty.
-	self assert: self empty isEmpty.
+	self assertEmpty: self empty.
 	self firstCollection.
 	self secondCollection
 ]

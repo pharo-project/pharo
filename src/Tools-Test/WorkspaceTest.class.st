@@ -9,6 +9,5 @@ Class {
 
 { #category : #tests }
 WorkspaceTest >> testEmptyContent [
-
-	self assert: (Workspace new contents isEmpty)
+	self assertEmpty: Workspace new contents
 ]

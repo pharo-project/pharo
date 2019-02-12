@@ -123,7 +123,7 @@ AthensStrokePaint >> fillPaint: anObject [
 	fillPaint := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensStrokePaint >> initialize [
 	self setDefaults.
 ]

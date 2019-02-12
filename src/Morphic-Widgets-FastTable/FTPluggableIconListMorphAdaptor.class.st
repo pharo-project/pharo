@@ -152,10 +152,10 @@ FTPluggableIconListMorphAdaptor >> basicUpdateSelectionIndex [
 	self getIndexSelector ifNil: [ ^ self ].
 	
 	rowIndex := self model perform: self getIndexSelector.
-	rowIndex = self selectedRowIndex ifTrue: [ ^ self ].
+	rowIndex = self selectedIndex ifTrue: [ ^ self ].
 	rowIndex = 0
-		ifTrue: [ self basicSelectRowIndexes: #() ]
-		ifFalse: [ self basicSelectRowIndexes: { rowIndex } ]
+		ifTrue: [ self basicSelectIndexes: #() ]
+		ifFalse: [ self basicSelectIndexes: { rowIndex } ]
 ]
 
 { #category : #'accessing selectors' }
@@ -277,7 +277,7 @@ FTPluggableIconListMorphAdaptor >> interactWithSelection [
 	
 	self hasSelection ifFalse: [ ^ self ].
 	"this is a horrible hack, but well... that's how it is implemented :("
-	cell := (self container exposedRows at: self selectedRowIndex) submorphs first. "the cell is there"
+	cell := (self container exposedRows at: self selectedIndex) submorphs first. "the cell is there"
 	cell submorphsDo: [ :each | each update: #interact ]
 ]
 
@@ -411,7 +411,7 @@ FTPluggableIconListMorphAdaptor >> scrollValue [
 
 { #category : #ignored }
 FTPluggableIconListMorphAdaptor >> searchedElement: index [
-	self highlightRowIndex: index
+	self highlightIndex: index
 ]
 
 { #category : #private }
@@ -423,8 +423,8 @@ FTPluggableIconListMorphAdaptor >> selectionChanged: ann [
 
 { #category : #private }
 FTPluggableIconListMorphAdaptor >> selectionChangedResetIfEmpty: ann [
-	self resetListSelector  ifNil: [ ^ self ].
-	ann newSelectedRowIndexes ifNotEmpty: [ ^ self ].
+	self resetListSelector ifNil: [ ^ self ].
+	ann newSelectedIndexes ifNotEmpty: [ ^ self ].
 
 	self model perform: self resetListSelector
 ]
@@ -433,30 +433,18 @@ FTPluggableIconListMorphAdaptor >> selectionChangedResetIfEmpty: ann [
 FTPluggableIconListMorphAdaptor >> selectionChangedUpdateIndex: ann [
 	self setIndexSelector ifNil: [ ^ self ].
 
-	self model
-		perform: self setIndexSelector
-		with: (ann newSelectedRowIndexes 
-			ifNotEmpty: [ :indexes | indexes first ]
-			ifEmpty: [ 0 ])
+	self model perform: self setIndexSelector with: (ann newSelectedIndexes ifNotEmpty: [ :indexes | indexes first ] ifEmpty: [ 0 ])
 ]
 
 { #category : #private }
 FTPluggableIconListMorphAdaptor >> selectionChangedUpdateStatus: ann [
 	"Updates the status of selection (informs new selections and deselections)"
-	self setSelectionListSelector ifNil: [ ^ self ].	
-	
-	ann oldSelectedRowIndexes do: [ :each | 
-		self model 
-			perform: self setSelectionListSelector 
-			with: each
-			with: false ].
-	
-	ann newSelectedRowIndexes do: [ :each | 
-		self model 
-			perform: self setSelectionListSelector 
-			with: each
-			with: true ].
 
+	self setSelectionListSelector ifNil: [ ^ self ].
+
+	ann oldSelectedIndexes do: [ :each | self model perform: self setSelectionListSelector with: each with: false ].
+
+	ann newSelectedIndexes do: [ :each | self model perform: self setSelectionListSelector with: each with: true ]
 ]
 
 { #category : #'accessing selectors' }
@@ -497,10 +485,10 @@ FTPluggableIconListMorphAdaptor >> update: symbol [
 
 { #category : #updating }
 FTPluggableIconListMorphAdaptor >> updateList [
-	(showIndex < self dataSource numberOfRows and: [ self isRowIndexVisible: showIndex ])
+	(showIndex < self dataSource numberOfRows and: [ self isIndexVisible: showIndex ])
 		ifFalse: [ self resetPosition ].
 	self basicUpdateSelectionIndex.
-	(self hasSelection and: [ (self isRowIndexVisible: self selectedRowIndex) ])
+	(self hasSelection and: [ (self isIndexVisible: self selectedIndex) ])
 		ifFalse: [ self resetPosition.
 			self ensureVisibleFirstSelection ].
 	self refresh

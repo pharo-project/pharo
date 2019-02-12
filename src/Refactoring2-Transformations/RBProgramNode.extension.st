@@ -2,26 +2,15 @@ Extension { #name : #RBProgramNode }
 
 { #category : #'*Refactoring2-Transformations' }
 RBProgramNode >> allAccesses [
-
-	^ self allChildren select: #isVariable
+	self flag: #Clean. "allAccesses is returning all the variables not whether the variable is read or set. 
+	We should rename this method to allVariables"
+	^ self allChildren select: [ :each | each isVariable ]
 ]
 
 { #category : #'*Refactoring2-Transformations' }
-RBProgramNode >> parentSuchAs: aBlock [
-
-	^ (self parent perform: aBlock)
+RBProgramNode >> parentSuchAs: aPredicateSelector [
+	self flag: #Bogus. "either there is a precondition stating that there is a parent matching or we need to check and return something when there is no parent marching."
+	^ (self parent perform: aPredicateSelector)
 		ifTrue: [ self parent ]
-		ifFalse: [ ^ self parent parentSuchAs: aBlock ]
-]
-
-{ #category : #'*Refactoring2-Transformations' }
-RBProgramNode >> sourceCode [
-
-	| interval |
-	interval := self sourceInterval.
-	interval ifEmpty: [ ^ '' ].
-	
-	^ self source 
-		copyFrom: interval first
-		to: interval last
+		ifFalse: [ ^ self parent parentSuchAs: aPredicateSelector ]
 ]

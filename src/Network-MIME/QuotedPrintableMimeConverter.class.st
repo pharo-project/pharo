@@ -36,7 +36,7 @@ Class {
 	#category : #'Network-MIME-Converter'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 QuotedPrintableMimeConverter >> initialize [
 	super initialize.
 	newline := String cr

@@ -64,7 +64,7 @@ AthensBalloonImagePaint >> form: anObject [
 	direction := form extent x @0.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 AthensBalloonImagePaint >> initialize [
 
 	super initialize.

@@ -21,7 +21,7 @@ GLMEvaluateSelection >> action: anObject [
 	action := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GLMEvaluateSelection >> initialize [
 	super initialize.
 	isSyncronous := false

@@ -23,7 +23,7 @@ TransferPresenter >> from: aModel [
 	source value: aModel
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 TransferPresenter >> initialize [
 
 	super initialize.

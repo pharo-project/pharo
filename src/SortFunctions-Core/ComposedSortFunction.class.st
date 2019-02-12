@@ -41,7 +41,7 @@ ComposedSortFunction >> hash [
 	^baseSortFunction hash hashMultiply
 ]
 
-{ #category : #'initailize-release' }
+{ #category : #initialization }
 ComposedSortFunction >> initialize [
 	super initialize.
 	baseSortFunction := self class default

@@ -15,9 +15,7 @@ Class {
 	#name : #GLMTextualPresentation,
 	#superclass : #GLMFormatedPresentation,
 	#instVars : [
-		'selectedText',
 		'cursorPosition',
-		'text',
 		'doItReceiver',
 		'doItContext',
 		'textBlock',

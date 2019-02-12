@@ -6,7 +6,6 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'delivery',
-		'announcer',
 		'semaphore'
 	],
 	#category : #'GT-EventRecorder-Tests-Support'

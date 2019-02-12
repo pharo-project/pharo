@@ -557,9 +557,14 @@ GTGenericStackDebugger >> sugsContext [
 GTGenericStackDebugger >> textAttributesForStackEntry: aContext [
 
 	(self selectedContext isNil or: self class enableStackColoring not) 
-		ifTrue: [ ^ {TextColor color: Smalltalk ui theme textColor} ].
+		ifTrue: [ ^ {TextColor color: self theme textColor} ].
 
-	^ Smalltalk ui theme styleContext: aContext from: self.
+	^ self theme styleContext: aContext from: self.
+]
+
+{ #category : #'printing/formatting' }
+GTGenericStackDebugger >> theme [ 
+	^ Smalltalk ui theme
 ]
 
 { #category : #building }

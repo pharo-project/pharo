@@ -12,7 +12,9 @@ Class {
 		'mczConfigurationRepository',
 		'configurationDirectory',
 		'externalDirectory',
-		'sampleDirectory'
+		'sampleDirectory',
+		'configurationRepository',
+		'monticelloRepository'
 	],
 	#category : #'Metacello-TestsMC'
 }

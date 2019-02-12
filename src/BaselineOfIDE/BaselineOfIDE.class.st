@@ -90,7 +90,7 @@ BaselineOfIDE >> additionalInitialization [
 	
 	RubAbstractTextArea highlightMessageSend: true.
 	
-	PharoLightTheme beCurrent.
+	PharoDarkTheme beCurrent.
 	
 	SDL_Event initialize.
 	
@@ -203,6 +203,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Glamour-Announcements'.
 		spec package: 'Glamour-Helpers'.
 		spec package: 'Glamour-Core'.
+		spec package: 'Glamour-Tasks'.
+		spec package: 'Glamour-PagerModel'.
 		spec package: 'Glamour-Presentations'.
 		spec package: 'Glamour-Browsers'.
 		spec package: 'Glamour-Examples'.
@@ -226,6 +228,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GT-EventRecorder'.
 
 		spec package: 'GT-Spotter'.
+		spec package: 'GT-Spotter-UI'.
 		spec package: 'GT-SpotterExtensions-Core'.
 
 		spec package: 'Tool-Catalog'.	"standalone"
@@ -272,6 +275,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Balloon-Tests'.
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
+		spec package: 'Morphic-Widgets-FastTable-Tests'.
 		spec package: 'CodeImport-Tests'.
 		spec package: 'Collections-DoubleLinkedList-Tests'.
 		spec package: 'Collections-Arithmetic-Tests'.
@@ -290,7 +294,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FreeType-Help'.
 		spec package: 'FuzzyMatcher-Tests'.
 		spec package: 'GT-EventRecorder-Tests'.
-		spec package: 'GT-Spotter-EventRecorder'.
 		spec package: 'GT-Tests-Debugger'.
 		spec package: 'GT-Tests-Inspector'.
 		spec package: 'GT-Tests-Playground'.
@@ -450,6 +453,8 @@ spec group: 'General-Tests-Group' with: #(
 	'Keymapping-Tests'
 
 	'Morphic-Tests'
+	
+	'Morphic-Widgets-FastTable-Tests'
 	'NECompletion-Tests'
 	'NewValueHolder-Tests'
 	'ProfStef-Tests'
@@ -649,6 +654,8 @@ spec group: 'Glamour-Core-Group' with: #(
 	'Glamour-Announcements'
 	'Glamour-Helpers'
 	'Glamour-Core'
+	'Glamour-Tasks'
+	'Glamour-PagerModel'
 	'Glamour-Presentations'
 	'Glamour-Browsers'
 	'Glamour-Examples'
@@ -683,8 +690,8 @@ spec group: 'GT-Core-Group' with: #(
 	'GT-Playground'
 	'GT-EventRecorder'
 	'GT-Spotter'
+	'GT-Spotter-UI'
 	'GT-SpotterExtensions-Core'
-	'GT-Spotter-EventRecorder'
 	'GT-Debugger'
 	'GT-BytecodeDebugger'
 	'GT-SUnitDebugger'

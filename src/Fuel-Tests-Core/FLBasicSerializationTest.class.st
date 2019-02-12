@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'currentTimeZone'
 	],
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #failures }

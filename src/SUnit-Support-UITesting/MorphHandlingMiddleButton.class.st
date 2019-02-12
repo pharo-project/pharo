@@ -5,7 +5,6 @@ Class {
 	#name : #MorphHandlingMiddleButton,
 	#superclass : #Morph,
 	#instVars : [
-		'menu',
 		'receivedBlueButtonUp',
 		'receivedBlueButtonDown'
 	],

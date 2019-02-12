@@ -126,7 +126,7 @@ AbstractCache >> hits [
 	^ statistics hits
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 AbstractCache >> initialize [
 	super initialize.
 	weight := CacheWeight new.

@@ -118,7 +118,7 @@ UUIDGenerator >> computeNodeIdentifier [
 	^ (MD5 hashMessage: nodeData) hash asByteArrayOfSize: 4
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 UUIDGenerator >> initialize [
 	super initialize.
 	random := Random new.

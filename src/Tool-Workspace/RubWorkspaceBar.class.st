@@ -74,7 +74,7 @@ RubWorkspaceBar >> fontToUse [
 	^ RubAbstractTextArea lineNumbersFont 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubWorkspaceBar >> initialize [
 	super initialize.
 	self side: #bottom.

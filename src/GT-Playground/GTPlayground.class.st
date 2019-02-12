@@ -381,6 +381,7 @@ GTPlayground >> codePresentationIn: composite [
 { #category : #building }
 GTPlayground >> compose [
 	self title: self defaultPlaygroundTitle.
+	self titleIcon: self playgroundIcon.
 	self act: [:b | b update] icon: GLMUIThemeExtraIcons glamorousRefresh entitled: 'Update'.
 	self act: [:b | 
 		HelpBrowser open selectTopicSatisfying: [:each |
@@ -520,6 +521,12 @@ GTPlayground >> playgroundActionsIn: aGTPlayground [
 	"Build Playground actions that appears on the title bar."
 	self playgroundActions do: [ :eachAction | 
 		aGTPlayground addAction: eachAction ]
+]
+
+{ #category : #accessing }
+GTPlayground >> playgroundIcon [
+	
+	^ self iconNamed: #workspace
 ]
 
 { #category : #'accessing-dynamic' }

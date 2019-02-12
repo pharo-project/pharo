@@ -82,7 +82,7 @@ PragmaType >> pragmas: aCollection [
 	pragmas := aCollection
 ]
 
-{ #category : #ui }
+{ #category : #printing }
 PragmaType >> printOn: stream [
 	stream nextPutAll: self keyword
 ]

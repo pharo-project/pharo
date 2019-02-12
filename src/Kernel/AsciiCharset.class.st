@@ -1,6 +1,5 @@
 "
-This class defines the attributes of the ASCII character set.  It's here to be used while boostrapping the image; eventually, it will be replaced by the
-Unicode character set.
+This class defines the attributes of the ASCII character set.  It's here to be used while boostrapping the image; eventually, it will be replaced by the Unicode character set.
 
 Character objects delegate behaviour to one of the  character sets AsciiCharSet, Latin1, or Unicode. 
 "
@@ -55,7 +54,6 @@ AsciiCharset class >> isDecimalDigit: char [
 
 { #category : #'character classification' }
 AsciiCharset class >> isDigit: aCharacter [
-
 	^ aCharacter between: $0 and: $9
 ]
 
@@ -81,9 +79,8 @@ AsciiCharset class >> isInitialQuote: char [
 
 { #category : #'character classification' }
 AsciiCharset class >> isLetter: aCharacter [
-
 	^ (aCharacter between: $a and: $z)
-		or: [ (aCharacter between: $A and: $Z) ]	
+		or: [ aCharacter between: $A and: $Z ]
 ]
 
 { #category : #'character classification' }
@@ -103,8 +100,7 @@ AsciiCharset class >> isLineSeparator: char [
 
 { #category : #'character classification' }
 AsciiCharset class >> isLowercase: aCharacter [
-
-	^ (aCharacter between: $a and: $z)
+	^ aCharacter between: $a and: $z
 ]
 
 { #category : #'character classification' }
@@ -179,8 +175,7 @@ AsciiCharset class >> isTitlecaseLetter: char [
 
 { #category : #'character classification' }
 AsciiCharset class >> isUppercase: aCharacter [
-
-	^ (aCharacter between: $A and: $Z)
+	^ aCharacter between: $A and: $Z
 ]
 
 { #category : #sizing }
@@ -198,7 +193,8 @@ AsciiCharset class >> toLowercase: aCharacter [
 
 	(aCharacter between: $A and: $Z)
 		ifFalse: [ ^ aCharacter ].
-	^ Character value: aCharacter asciiValue + $a asInteger - $A asInteger
+	^ Character
+		value: aCharacter asciiValue + $a asInteger - $A asInteger
 ]
 
 { #category : #casing }
@@ -206,10 +202,11 @@ AsciiCharset class >> toUppercase: aCharacter [
 	"(AsciiCharset new toUppercase: $a) >>> $A.
 	(AsciiCharset new toUppercase: $A) >>> $A.
 	(AsciiCharset new toUppercase: $!) >>> $!"
+
 	(aCharacter between: $a and: $z)
 		ifFalse: [ ^ aCharacter ].
-	
-	^ Character value: (aCharacter asciiValue - $a asInteger + $A asInteger )
+	^ Character
+		value: aCharacter asciiValue - $a asInteger + $A asInteger
 ]
 
 { #category : #'character classification' }
