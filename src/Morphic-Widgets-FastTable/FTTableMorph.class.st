@@ -699,11 +699,13 @@ FTTableMorph >> mouseEnterDragging: event [
 { #category : #'event handling' }
 FTTableMorph >> mouseLeaveDragging: event [
 	"The mouse has left with a button down."
-
-	(self dropEnabled and: [ event hand hasSubmorphs ])
-		ifFalse: [ "no d&d" ^ super mouseLeaveDragging: event ].
-	self basicHighlightIndexes: #().
+	
+	(self dropEnabled and: [event hand hasSubmorphs]) 
+		ifFalse: [ "no d&d" ^ super mouseLeaveDragging: event].
+		
+	self basicHighlightRowIndexes: #().
 	self refresh
+				
 ]
 
 { #category : #'event handling' }
