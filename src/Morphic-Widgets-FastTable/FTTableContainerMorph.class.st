@@ -244,6 +244,12 @@ FTTableContainerMorph >> exposedRows [
 	^ exposedRows
 ]
 
+{ #category : #accessing }
+FTTableContainerMorph >> headerRow [
+
+	^ headerRow
+]
+
 { #category : #initialization }
 FTTableContainerMorph >> initialize [ 
 	super initialize.
@@ -319,7 +325,8 @@ FTTableContainerMorph >> table [
 { #category : #updating }
 FTTableContainerMorph >> updateAllRows [
 	self table isShowColumnHeaders 
-		ifTrue: [ self updateHeaderRow ].
+		ifTrue: [ self updateHeaderRow ]
+		ifFalse: [ headerRow := nil ].
 	self updateExposedRows.
 	
 ]
