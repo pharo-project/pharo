@@ -35,13 +35,6 @@ GLMPagerModel >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> assignFocusableMorph: aMorph withPaneAt: paneIndex [
-	"assigns previosely focused morph with corresponding pane"
-	
-	focusedViews at: paneIndex put: aMorph.
-]
-
 { #category : #accessing }
 GLMPagerModel >> circleButtonSize [
 	^ 22
@@ -100,15 +93,6 @@ GLMPagerModel >> diminishToRight [
 	self recomputeState.
 ]
 
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> doNotNotifyDuring: aBlock [
-	|allowed|
-	allowed := self isNotificationsAllowed.
-	isNotificationsAllowed := false.
-	aBlock cull: self.
-	allowed ifTrue: [ isNotificationsAllowed := true ]
-]
-
 { #category : #panes }
 GLMPagerModel >> enlargeToLeft [
 
@@ -126,30 +110,6 @@ GLMPagerModel >> enlargeToRight [
 { #category : #accessing }
 GLMPagerModel >> firstVisiblePageIndex [
 	^ firstVisiblePageIndex
-]
-
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> focusPaneAt: pageIndex [
-	"tries to focus previosely focused morph at specified pane by its index"
-	
-	( self isFocusedMorphVisibleAt: pageIndex ) ifTrue: [
-		focusedPageIndex := pageIndex.
-		(self focusedViewAt: pageIndex) activeHand newKeyboardFocus: (self focusedViewAt: pageIndex).
-		self notifyFocusedPageChanged.
-	].
-]
-
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> focusedMorphChanged: aMorph at: pageIndex [
-	"call this method if a morph was focused in a pane with specified index. As a result corresponding pane will be marked as selected"
-	
-	
-	self assignFocusableMorph: aMorph withPaneAt: pageIndex.
-	
-	focusedPageIndex = pageIndex ifFalse: [ 
-		focusedPageIndex := pageIndex.
-		self notifyFocusedPageChanged ]
-	
 ]
 
 { #category : #accessing }
@@ -229,15 +189,6 @@ GLMPagerModel >> isDependenciesShown: aBoolean [
 	isDependenciesShown := aBoolean
 ]
 
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> isFocusedMorphVisibleAt: paneIndex [
-	|morph|
-	
-	morph := self focusedViewAt: paneIndex.
-	morph ifNil: [ ^ false ].
-	^ morph isInWorld.
-]
-
 { #category : #accessing }
 GLMPagerModel >> isNotificationsAllowed [
 
@@ -270,7 +221,7 @@ GLMPagerModel >> minimumPageNumberForScrollbar: aNumber [
 	minimumPageNumberForScrollbar := aNumber
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #panes }
 GLMPagerModel >> normalizePaneIndex: anIndex [
 	"retunes normalized pane index. For example: returns 1 if index < 1 and size if index > self size"
 	
@@ -356,59 +307,6 @@ GLMPagerModel >> numberOfVisiblePages [
 	^ numberOfVisiblePages
 ]
 
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> popAndReplacePane: aMorph [
-	
-	self doNotNotifyDuring: [ :m |
-		m popPane;
-			pushPane: aMorph smooth: false ].
-		
-	self notifyPagePoppedAndReplaced: aMorph
-]
-
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> popPane [
-
-	self popPane: false.
-]
-
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> popPane: isSmooth [
-
-	self invariant.
-	
-	pagesCount >= 1 ifTrue: [
-		|scrollTo smooth|
-		smooth := isSmooth.
-		
-		focusedViews removeKey: pagesCount  ifAbsent: [ true ].
-		pagesCount := pagesCount - 1.
-		
-		firstVisiblePageIndex = 1 ifTrue: [ smooth := false ].
-		
-		lastVisiblePageIndex > pagesCount ifTrue: [
-			firstVisiblePageIndex := firstVisiblePageIndex - 1.
-			lastVisiblePageIndex := lastVisiblePageIndex - 1.
-		].
-	
-		firstVisiblePageIndex := firstVisiblePageIndex max: 1.
-	
-		pagesCount = 0 ifTrue: [
-			selectedPageIndex := 0.
-			firstVisiblePageIndex := 0.
-		].
-		
-		self selectedPageIndex > pagesCount ifTrue: [
-			self selectedPageIndex: pagesCount.
-		].
-	
-		scrollTo := ((pagesCount = firstVisiblePageIndex) & (pagesCount > self numberOfVisiblePages)).
-		self notifyPagePoped: smooth.
-	].
-
-	self invariant.
-]
-
 { #category : #private }
 GLMPagerModel >> privateRecomputeIndexesAfterScrollAt: aFloat [
 	"while rounding fractional part < 0.5"
@@ -458,13 +356,13 @@ GLMPagerModel >> pushPane: aMorph smooth: aBoolean [
 	self invariant.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GLMPagerModel >> recomputeState [
 	self recomputeState: true
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 GLMPagerModel >> recomputeState: isSmooth [
 	"recomputes current model state and if necessary notifies all listeners about changes"
 	|tmpNumberOfVisiblePages notifyNumberOfVisiblePagesChanged|
@@ -563,42 +461,9 @@ GLMPagerModel >> scrollingDelay: anInteger [
 	scrollingDelay := anInteger
 ]
 
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> selectToLeft [
-	"moves focus to left"
-	
-	self selectedPageIndex: (self selectedPageIndex - 1).
-]
-
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> selectToRight [
-	"moves focus to right"
-	
-	self selectedPageIndex: (self selectedPageIndex + 1).
-]
-
 { #category : #accessing }
 GLMPagerModel >> selectedPageIndex [
 	^ selectedPageIndex
-]
-
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> selectedPageIndex: anIndex [
-	| normalizedIndex |
-	"changes current selected page and scrolls to it if necessary. Also if possible re-focused available morph"
-	
-	normalizedIndex := self normalizePaneIndex: anIndex.
-	
-	(self isPaneVisible: normalizedIndex) ifFalse: [
-		"we need to scroll if new selected page is invisible"
-		self scrollToPane: (normalizedIndex < self firstVisiblePageIndex ifTrue: [ normalizedIndex ] ifFalse: [(normalizedIndex - self numberOfVisiblePages + 1)]).
-	].
-	
-	selectedPageIndex := normalizedIndex.
-	self focusPaneAt: normalizedIndex.
-	self notifySelectedPageChanged.
-
-	self invariant.
 ]
 
 { #category : #accessing }
@@ -606,34 +471,10 @@ GLMPagerModel >> size [
 	^ pagesCount.
 ]
 
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> switchPaneTo: anIndex [
-	| normalizedIndex |
-	"switches pane to specified. Works as scrollToPane, but additionaly selects and focuses that pane."
-	
-	self invariant.
-	
-	normalizedIndex := self normalizePaneIndex: anIndex.
-	
-	self scrollToPane: normalizedIndex.	
-	self focusPaneAt: normalizedIndex.
-	
-	selectedPageIndex := normalizedIndex.
-	self notifySelectedPageChanged.
-	
-	self invariant.
-]
-
 { #category : #scrolling }
 GLMPagerModel >> synchronizeScrollTo: aValue [
 	
 	self notifySynchronizeScrollTo: aValue.
-]
-
-{ #category : #'as yet unclassified' }
-GLMPagerModel >> updatePreview: anIndex [
-
-	self announcer announce: (GLMPagerPreviewUpdate new pageIndex: anIndex )
 ]
 
 { #category : #private }
