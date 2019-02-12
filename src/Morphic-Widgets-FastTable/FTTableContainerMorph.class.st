@@ -356,7 +356,7 @@ FTTableContainerMorph >> updateHeaderRow [
 	 Please, note that If one of the headers is nil, I assume all are nil and I return. 
 	 This is probably not the best approach, but like that I enforce people defines at least 
 	 a default if they want headers."
-	| columnHeaders columnWidths previousDisplayColumn |
+	| columnHeaders columnWidths |
 
 	self canRefreshValues ifFalse: [ ^ self ].
 
@@ -372,7 +372,7 @@ FTTableContainerMorph >> updateHeaderRow [
 			color: self table headerColor;
 			width: columnWidth.
 		columnHeaders at: index put: headerCell.
-		previousDisplayColumn := FTDisplayColumn column: each width: columnWidth ].
+		FTDisplayColumn column: each width: columnWidth ].
 	 
 	headerRow := (FTTableRowMorph table: self table)
 		privateOwner: self;
