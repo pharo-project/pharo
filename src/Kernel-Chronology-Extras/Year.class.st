@@ -103,3 +103,9 @@ Year >> printOn: aStream [
 	aStream nextPutAll: ')'.
 
 ]
+
+{ #category : #private }
+Year >> species [
+
+	^Timespan
+]
