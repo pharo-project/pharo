@@ -1056,11 +1056,6 @@ RBParser >> scannerClass [
 ]
 
 { #category : #'private-classes' }
-RBParser >> selfNodeClass [
-	^ RBSelfNode
-]
-
-{ #category : #'private-classes' }
 RBParser >> sequenceNodeClass [
 	^ RBSequenceNode
 ]
@@ -1074,16 +1069,6 @@ RBParser >> step [
 			[currentToken := nextToken.
 			nextToken := nil]
 		ifFalse: [currentToken := scanner next].
-]
-
-{ #category : #'private-classes' }
-RBParser >> superNodeClass [
-	^ RBSuperNode
-]
-
-{ #category : #'private-classes' }
-RBParser >> thisContextNodeClass [
-	^ RBThisContextNode
 ]
 
 { #category : #'private-classes' }
