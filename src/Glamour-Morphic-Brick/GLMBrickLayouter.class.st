@@ -31,9 +31,8 @@ rootWidthNode
 Class {
 	#name : #GLMBrickLayouter,
 	#superclass : #Object,
-	#classInstVars : [
-		'uniqueInstance'
-	],
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#category : #'Glamour-Morphic-Brick-Layouts-Utils'
 }
 
@@ -125,11 +124,6 @@ GLMBrickLayouter class >> example [
 	^ bricks
 	
 	
-]
-
-{ #category : #accessing }
-GLMBrickLayouter class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
 { #category : #accessing }
