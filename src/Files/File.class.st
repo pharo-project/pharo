@@ -170,13 +170,19 @@ File class >> deleteDirectory: fullPath [
 ]
 
 { #category : #'primitives-path' }
-File class >> deleteFile: aFileName [
-	"Delete the file of the given name. 
-	Return self if the primitive succeeds, nil otherwise."
+File class >> deleteFile: fullPathString [
+	"Delete the supplied UTF8 encoded path.  Answer nil on failure."
 
-	<primitive: 'primitiveFileDelete' module: 'FilePlugin'>
-	^ nil
+	| utf8Path |
 
+	utf8Path := fullPathString utf8Encoded.
+	self
+		retryWithGC: [ self primDeleteFile: utf8Path ]
+		until: [ :result | result notNil ]
+		forFileNamed: fullPathString.
+	(self primExists: utf8Path) ifTrue: 
+		[ (CannotDeleteFileException new messageText: 'Could not delete file ' , name,
+			'. Check the file is not open.') signal ].
 ]
 
 { #category : #'primitives-path' }
@@ -607,6 +613,16 @@ File class >> primClosedir: directoryPointerBytes [
 
 	<primitive: 'primitiveClosedir' module: 'FileAttributesPlugin' error: error>
 	^self signalError: error for: 'primClosedir'
+]
+
+{ #category : #'primitives-path' }
+File class >> primDeleteFile: aFileName [
+	"Delete the file of the given name. 
+	Return self if the primitive succeeds, nil otherwise."
+
+	<primitive: 'primitiveFileDelete' module: 'FilePlugin'>
+	^ nil
+
 ]
 
 { #category : #'primitives-file attributes' }
@@ -1098,13 +1114,10 @@ File >> checkDoesNotExist [
 
 { #category : #'open/close' }
 File >> delete [
-	"We retries with GC because in some platforms open files cannot be open"
-	self class
-		retryWithGC: [ self class deleteFile: name utf8Encoded ]
-		until: [ :result | result notNil ]
-		forFileNamed: name.
-	self exists
-		ifTrue: [ (CannotDeleteFileException new messageText: 'Could not delete file ' , name,'. Check the file is not open.') signal ].
+	"Delete the receiver"
+
+	^self class deleteFile: name.
+
 ]
 
 { #category : #testing }
