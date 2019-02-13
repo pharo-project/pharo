@@ -70,19 +70,15 @@ RBParseErrorNode >> body: aSequenceNode [
 ]
 
 { #category : #generation }
-RBParseErrorNode >> dumpOn: aStream [ 
+RBParseErrorNode >> dumpOn: aStream [
 	aStream
 		nextPutAll: self class name;
 		nextPutAll: ' errorMessage: '.
 	self errorMessage printOn: aStream.
-	aStream
-		nextPutAll: ' value: '.
+	aStream nextPutAll: ' value: '.
 	self value printOn: aStream.
- 
-	aStream
-		nextPutAll: ' at: '.
-	self start printOn: aStream.
- 
+	aStream nextPutAll: ' at: '.
+	self start printOn: aStream
 ]
 
 { #category : #accessing }
