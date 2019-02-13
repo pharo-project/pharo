@@ -114,6 +114,18 @@ RBDumpNodeTest >> testDumpOnSelfClassMethods [
 ]
 
 { #category : #tests }
+RBDumpNodeTest >> testErrorNodeDump [
+	| node dumpedNode |
+	node := RBParser parseFaultyExpression: '( +'.
+	dumpedNode := Smalltalk compiler evaluate: node dump.
+	
+	self assert: dumpedNode class equals: RBParseErrorNode. 
+	self assert: node class equals: dumpedNode class.
+	self assert: node printString equals: dumpedNode printString.
+	
+]
+
+{ #category : #tests }
 RBDumpNodeTest >> testGlobalNodeDump [
 	| node dumpedNode |
 	"Global nodes are only generated when a semantic analysis is triggered on a method"

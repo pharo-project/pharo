@@ -69,6 +69,22 @@ RBParseErrorNode >> body: aSequenceNode [
 	"I am not a valid MethodNode, but go one with parsing"
 ]
 
+{ #category : #generation }
+RBParseErrorNode >> dumpOn: aStream [ 
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ' errorMessage: '.
+	self errorMessage printOn: aStream.
+	aStream
+		nextPutAll: ' value: '.
+	self value printOn: aStream.
+ 
+	aStream
+		nextPutAll: ' at: '.
+	self start printOn: aStream.
+ 
+]
+
 { #category : #accessing }
 RBParseErrorNode >> errorMessage [
 	^ errorMessage
