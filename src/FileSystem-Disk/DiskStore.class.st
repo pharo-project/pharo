@@ -353,7 +353,9 @@ DiskStore >> entryFromNode: node path: path for: aFileSystem [
 
 	| entryPath |
 	entryPath := path / (self basenameFromEntry: node).
-	^DiskDirectoryEntry reference: (FileReference fileSystem: aFileSystem path: entryPath).
+	^DiskDirectoryEntry 
+		reference: (FileReference fileSystem: aFileSystem path: entryPath)
+		statAttributes: (node at: 2).
 
 ]
 

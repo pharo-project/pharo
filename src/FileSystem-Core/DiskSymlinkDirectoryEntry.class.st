@@ -1,3 +1,8 @@
+"
+DiskSymlinkDirectoryEntry provides the same information as DiskDirectoryEntry, but for the symbolic link (and not the target file).
+
+See DiskDirectoryEntry for more information.
+"
 Class {
 	#name : #DiskSymlinkDirectoryEntry,
 	#superclass : #DiskDirectoryEntry,
