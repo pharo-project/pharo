@@ -452,6 +452,22 @@ FTExamples class >> exampleListWithExplicitSearch [
 ]
 
 { #category : #examples }
+FTExamples class >> exampleListWithHeader [
+	"Show a list with all Object methods"
+
+	<example>
+	<sampleInstance>
+	| list |
+	list := FTTableMorph new
+		extent: 300 @ 550;
+		addColumn: (FTColumn id: 'Name');
+		dataSource: (FTExampleMethodListDataSource for: Object);
+		yourself.
+
+	^ list openInWindow
+]
+
+{ #category : #examples }
 FTExamples class >> exampleOutline1 [
 	<example>
 	| list |
