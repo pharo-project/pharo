@@ -20,6 +20,19 @@ DiskFileSystemTest >> testDefaultWorkingDirectory [
 ]
 
 { #category : #tests }
+DiskFileSystemTest >> testEntriesHaveAttributes [
+	"Disk entries returned by FileReference>>entries should be pre-loaded with statAttributes"
+
+	| entries |
+
+	entries := FileLocator imageDirectory resolve entries.
+	"Ensure that we are actually checking entries"
+	self assert: entries isNotEmpty.
+	"We can't use the accessor method to get the statAttributes since does lazy initialisation"
+	self assert: (entries select: [ :each | (each instVarNamed: 'statAttributes') isNil ]) isEmpty.
+]
+
+{ #category : #tests }
 DiskFileSystemTest >> testEqual [
 	| other |
 	other := self createFileSystem.

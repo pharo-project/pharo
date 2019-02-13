@@ -1,3 +1,28 @@
+"
+DiskDirectoryEntry holds attributes for a single file / directory on the disk.
+
+The actual attributes are held in two arrays which are returned directly from the #fileAttributes:mask: primitive.  See statAttributes and accessAttributes, below.
+
+DiskDirectoryEntry's are not normally created directly, but are returned as a result of sending the #entry or #entries messages to a FileReference.
+
+If the receiver's file is a symbolic link, the information contained in the receiver is for the target file, not the symbolic link.  See also DiskSymlinkDirectoryEntry.
+
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	accessAttributes:		<Array>  An array of booleans indicating whether the image has read, write and execute access to the file.
+	statAttributes:		<Array>  See File class>>primFileAttributes:mask: for the list of attributes.
+
+
+    Implementation Points
+
+- statAttributes mostly corresponds with the information returned by the posix stat() call, thus its name.
+- accessAttributes mostly corresponds with the information returned by the posix array() call, thus its name.
+
+accessAttributes is relatively expensive to retrieve, so is loaded lazily only if requested.
+
+"
 Class {
 	#name : #DiskDirectoryEntry,
 	#superclass : #FileSystemDirectoryEntry,
@@ -23,6 +48,13 @@ DiskDirectoryEntry class >> fileSystem: aFilesystem path: aPath [
 	"Create a directory entry given a filesystem and a path in such filesystem."
 
 	^ self reference: (aFilesystem referenceTo: aPath)
+]
+
+{ #category : #'instance creation' }
+DiskDirectoryEntry class >> reference: aFileReference statAttributes: anArray [
+	"Answer an instance of the receiver pre-loaded with the supplied attributes"
+
+	^self new initializeWithReference: aFileReference statAttributes: anArray
 ]
 
 { #category : #'instance creation' }
@@ -189,6 +221,14 @@ DiskDirectoryEntry >> hasCreationTime [
 	"Answer a boolean indicating whether the receiver has a creation timestamp, or is just using the change timestamp."
 
 	^(self statAttributes at: 12) isNotNil
+]
+
+{ #category : #'initialize-release' }
+DiskDirectoryEntry >> initializeWithReference: aFileReference statAttributes: anArray [
+
+	super initialize.	
+	reference := aFileReference.
+	statAttributes := anArray
 ]
 
 { #category : #accessing }
