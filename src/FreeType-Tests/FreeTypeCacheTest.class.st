@@ -17,7 +17,7 @@ Class {
 	#pools : [
 		'FreeTypeCacheConstants'
 	],
-	#category : #'FreeType-Tests-cache'
+	#category : #'FreeType-Tests-Cache'
 }
 
 { #category : #running }
