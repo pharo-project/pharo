@@ -267,7 +267,7 @@ DiskStore >> defaultWorkingDirectory [
 
 { #category : #public }
 DiskStore >> delete: path [
-	| pathString encodedPathString |
+	| pathString |
 
 	((self exists: path) or: [ self isSymlink: path ])
 		ifFalse: [ ^ FileDoesNotExistException signalWith: path ].
@@ -275,8 +275,7 @@ DiskStore >> delete: path [
 	pathString := self stringFromPath: path.
 
 	(self isDirectory: path) ifTrue: 
-		[ encodedPathString := File encodePathString: pathString.
-		File deleteDirectory: encodedPathString ]
+		[ File deleteDirectory: (File encodePathString: pathString) ]
 	ifFalse: 
 		[ File deleteFile: pathString ]
 ]
