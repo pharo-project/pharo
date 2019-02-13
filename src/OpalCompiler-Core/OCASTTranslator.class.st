@@ -32,8 +32,6 @@ Class {
 OCASTTranslator class >> initialize [
 	"OCASTTranslator initialize"
 	
-	super initialize.
-	
 	OptimizedMessages := { 
 	#caseOf: -> #emitCaseOf: .
 	#caseOf:otherwise: -> #emitCaseOfOtherwise: .
