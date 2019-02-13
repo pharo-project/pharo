@@ -62,11 +62,10 @@ Note that in #finalizeResourceData: you cannot access any other properties of yo
 Class {
 	#name : #FFIExternalResourceManager,
 	#superclass : #Object,
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#instVars : [
 		'registry'
-	],
-	#classInstVars : [
-		'uniqueInstance'
 	],
 	#category : #'UnifiedFFI-External-Resources'
 }
@@ -84,16 +83,6 @@ FFIExternalResourceManager class >> addResource: anObject data: aData [
 { #category : #'resource management' }
 FFIExternalResourceManager class >> addResource: anObject executor: anExecutor [
 	self uniqueInstance addResource: anObject executor: anExecutor
-]
-
-{ #category : #'instance creation' }
-FFIExternalResourceManager class >> reset [
-	uniqueInstance := nil
-]
-
-{ #category : #accessing }
-FFIExternalResourceManager class >> uniqueInstance [ 
-	^ uniqueInstance ifNil: [ uniqueInstance  := super new ]
 ]
 
 { #category : #'external resource management' }
