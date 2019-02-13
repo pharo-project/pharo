@@ -5,11 +5,10 @@ Registry is used to know exactly which methods are executing FFI-NB calls and th
 Class {
 	#name : #FFIMethodRegistry,
 	#superclass : #Object,
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#instVars : [
 		'compiledMethods'
-	],
-	#classInstVars : [
-		'uniqueInstance'
 	],
 	#category : #'UnifiedFFI-Base'
 }
@@ -18,7 +17,7 @@ Class {
 FFIMethodRegistry class >> cleanUp: aggressive [
 	"Only delete change sets when being aggressive"
 	self uniqueInstance reset.
-	uniqueInstance := nil
+	self reset
 	
 ]
 
@@ -27,11 +26,6 @@ FFIMethodRegistry class >> initialize [
 	SessionManager default
 		registerSystemClassNamed: self name
 		atPriority: 60
-]
-
-{ #category : #'instance creation' }
-FFIMethodRegistry class >> new [
-	self error: 'Use #uniqueInstance'
 ]
 
 { #category : #'system startup' }
@@ -45,7 +39,7 @@ FFIMethodRegistry class >> resetAll [
 	self uniqueInstance reset.
 	FFICallbackFunctionResolution reset.
 	FFIExternalStructure resetAllStructures.
-	uniqueInstance := nil.
+	self reset.
 ]
 
 { #category : #'system startup' }
@@ -60,11 +54,6 @@ FFIMethodRegistry class >> startUp: isImageStarting [
 	isImageStarting ifFalse: [ ^ self ].
 	
 	self resetAll
-]
-
-{ #category : #'instance creation' }
-FFIMethodRegistry class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := super new ]
 ]
 
 { #category : #accessing }
