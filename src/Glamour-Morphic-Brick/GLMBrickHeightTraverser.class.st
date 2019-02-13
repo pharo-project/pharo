@@ -1,21 +1,15 @@
 Class {
 	#name : #GLMBrickHeightTraverser,
 	#superclass : #GLMBrickLayoutTraverser,
-	#classInstVars : [
-		'uniqueInstance'
-	],
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#category : #'Glamour-Morphic-Brick-Layouts-Utils'
 }
 
 { #category : #cleanup }
 GLMBrickHeightTraverser class >> cleanUp [
+	self reset
 
-	uniqueInstance := nil
-]
-
-{ #category : #accessing }
-GLMBrickHeightTraverser class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
 { #category : #private }
