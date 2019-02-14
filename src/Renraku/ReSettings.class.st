@@ -4,12 +4,11 @@ i have settings for QA recording functions
 Class {
 	#name : #ReSettings,
 	#superclass : #Object,
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#instVars : [
 		'inspectorPlugin',
 		'spotterPlugin'
-	],
-	#classInstVars : [
-		'uniqueInstance'
 	],
 	#category : #'Renraku-Utility'
 }
@@ -18,7 +17,7 @@ Class {
 ReSettings class >> cleanUp [
 	
 	
-	uniqueInstance := nil
+	self reset
 ]
 
 { #category : #'settings-accessing' }
@@ -120,12 +119,6 @@ ReSettings class >> spotterPluginSettingsOn: aBuilder [
 		description: 'Enable GTSpotter plugin which shows a group with critiques and allows to preview them.';
 		default: false;
 		parent: #qualityAssistant.
-]
-
-{ #category : #accessing }
-ReSettings class >> uniqueInstance [
-	
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
 { #category : #initialization }
