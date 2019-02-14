@@ -1,9 +1,8 @@
 Class {
 	#name : #GLMVerticalLinearLayout,
 	#superclass : #GLMLinearLayout,
-	#classInstVars : [
-		'uniqueInstance'
-	],
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#category : #'Glamour-Morphic-Brick-Layouts'
 }
 
@@ -11,19 +10,6 @@ Class {
 GLMVerticalLinearLayout class >> cleanUp [
 
 	self reset
-]
-
-{ #category : #accessing }
-GLMVerticalLinearLayout class >> reset [
-	"
-	self reset
-	"
-	uniqueInstance := nil
-]
-
-{ #category : #accessing }
-GLMVerticalLinearLayout class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
 { #category : #layout }
