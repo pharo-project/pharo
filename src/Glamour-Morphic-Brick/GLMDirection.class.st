@@ -1,9 +1,8 @@
 Class {
 	#name : #GLMDirection,
 	#superclass : #Object,
-	#classInstVars : [
-		'uniqueInstance'
-	],
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#category : #'Glamour-Morphic-Brick-Utils-Geometry'
 }
 
@@ -11,12 +10,7 @@ Class {
 GLMDirection class >> cleanUp [
 	super cleanUp.
 	
-	uniqueInstance := nil
-]
-
-{ #category : #accessing }
-GLMDirection class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
+	self reset
 ]
 
 { #category : #arithmetic }
