@@ -18,7 +18,7 @@ Class {
 		'help',
 		'name'
 	],
-	#category : #'MenuRegistration-Menuspec'
+	#category : #'MenuRegistration-Core'
 }
 
 { #category : #accessing }

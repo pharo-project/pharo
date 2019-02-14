@@ -11,7 +11,7 @@ Class {
 		'items',
 		'parentMenu'
 	],
-	#category : #'MenuRegistration-Menuspec'
+	#category : #'MenuRegistration-Core'
 }
 
 { #category : #'instance creation' }
