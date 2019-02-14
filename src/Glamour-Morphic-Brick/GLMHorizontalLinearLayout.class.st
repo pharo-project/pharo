@@ -1,9 +1,8 @@
 Class {
 	#name : #GLMHorizontalLinearLayout,
 	#superclass : #GLMLinearLayout,
-	#classInstVars : [
-		'uniqueInstance'
-	],
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#category : #'Glamour-Morphic-Brick-Layouts'
 }
 
@@ -11,19 +10,6 @@ Class {
 GLMHorizontalLinearLayout class >> cleanUp [
 
 	self reset
-]
-
-{ #category : #accessing }
-GLMHorizontalLinearLayout class >> reset [
-	"
-	self reset
-	"
-	uniqueInstance := nil
-]
-
-{ #category : #accessing }
-GLMHorizontalLinearLayout class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
 { #category : #layout }
