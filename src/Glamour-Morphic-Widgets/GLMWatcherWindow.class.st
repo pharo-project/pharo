@@ -7,13 +7,12 @@ GLMWatcherWindow reset.
 Class {
 	#name : #GLMWatcherWindow,
 	#superclass : #SystemWindow,
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#instVars : [
 		'isOpen',
 		'contentsMorph',
 		'process'
-	],
-	#classInstVars : [
-		'uniqueInstance'
 	],
 	#category : #'Glamour-Morphic-Widgets'
 }
@@ -28,17 +27,6 @@ GLMWatcherWindow class >> buildKeymapsOn: aBuilder [
 		do: [ :morph | self uniqueInstance toggleOpen ].
 
 	aBuilder attachShortcutCategory: #Glamour to: Morph.
-]
-
-{ #category : #'instance creation' }
-GLMWatcherWindow class >> reset [ 
-	"self reset"
-	uniqueInstance := nil
-]
-
-{ #category : #'instance creation' }
-GLMWatcherWindow class >> uniqueInstance [ 
-	^ uniqueInstance ifNil: [uniqueInstance := self new]
 ]
 
 { #category : #settings }
