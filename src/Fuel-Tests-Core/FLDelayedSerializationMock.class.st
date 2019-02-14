@@ -1,7 +1,7 @@
 Class {
 	#name : #FLDelayedSerializationMock,
 	#superclass : #FLSerialization,
-	#category : 'Fuel-Tests-Core-Mocks'
+	#category : #'Fuel-Tests-Core-Mocks'
 }
 
 { #category : #serializing }

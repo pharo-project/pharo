@@ -163,7 +163,7 @@ MorphicTreeAdapter >> iconFor: aNode [
 	^ self model iconFor: aNode
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 MorphicTreeAdapter >> initialize [
 
 	super initialize.

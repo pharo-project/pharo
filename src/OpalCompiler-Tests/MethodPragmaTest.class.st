@@ -61,9 +61,9 @@ MethodPragmaTest >> testAllNamedFromTo [
 	pragmasCompiled := self pragma: #foo: selector: #bar times: 5.
 	pragmasDetected := Pragma allNamed: #foo: from: self class to: Object.
 	self assert: pragmasDetected = pragmasCompiled.
-	
+
 	pragmasDetected := Pragma allNamed: #foo: from: Object to: Object.
-	self assert: pragmasDetected isEmpty.
+	self assertEmpty: pragmasDetected
 ]
 
 { #category : #'testing-finding' }
@@ -92,9 +92,9 @@ MethodPragmaTest >> testAllNamedIn [
 	pragmasCompiled := self pragma: #foo: selector: #bar times: 5.
 	pragmasDetected := Pragma allNamed: #foo: in: self class.
 	self assert: pragmasDetected = pragmasCompiled.
-	
+
 	pragmasDetected := Pragma allNamed: #foo: in: Object.
-	self assert: pragmasDetected isEmpty.
+	self assertEmpty: pragmasDetected
 ]
 
 { #category : #'testing-finding' }

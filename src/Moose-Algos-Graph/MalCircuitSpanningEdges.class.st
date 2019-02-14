@@ -58,7 +58,7 @@ MalCircuitSpanningEdges >> findIndirectCircuits [
 		]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 MalCircuitSpanningEdges >> initialize [ 
 
 	super initialize.

@@ -26,7 +26,6 @@ Class {
 		'min',
 		'quantum',
 		'value',
-		'isSetting',
 		'isChanging',
 		'absoluteValue',
 		'labelHolder'

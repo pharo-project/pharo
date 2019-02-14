@@ -94,5 +94,5 @@ ClassTraitTest >> testUsers [
 	self assert: self t5 classSide traitUsers size = 1.
 	self assert: self t5 classSide traitUsers anyOne = self c2 class.
 	self c2 setTraitComposition: self t2 asTraitComposition.
-	self assert: self t5 classSide traitUsers isEmpty
+	self assertEmpty: self t5 classSide traitUsers
 ]

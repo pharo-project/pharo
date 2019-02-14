@@ -1082,10 +1082,8 @@ RxMatcherTest >> testMatchesInDo [
 	| matcher expected |
 	matcher := self matcherClass forString: '\w+'.
 	expected := #('now' 'is' 'the' 'time') asOrderedCollection.
-	matcher 
-		matchesIn: 'now is the time'
-		do: [ :each | self assert: each = expected removeFirst ].
-	self assert: expected isEmpty
+	matcher matchesIn: 'now is the time' do: [ :each | self assert: each = expected removeFirst ].
+	self assertEmpty: expected
 ]
 
 { #category : #'testing-protocol' }
@@ -1111,10 +1109,8 @@ RxMatcherTest >> testMatchesOnStreamDo [
 	| matcher expected |
 	matcher := self matcherClass forString: '\w+'.
 	expected := #('now' 'is' 'the' 'time') asOrderedCollection.
-	matcher 
-		matchesOnStream: 'now is the time' readStream
-		do: [ :each | self assert: each = expected removeFirst ].
-	self assert: expected isEmpty
+	matcher matchesOnStream: 'now is the time' readStream do: [ :each | self assert: each = expected removeFirst ].
+	self assertEmpty: expected
 ]
 
 { #category : #'testing-protocol' }
@@ -1130,10 +1126,11 @@ RxMatcherTest >> testMatchingRangesIn [
 	| matcher expected |
 	matcher := self matcherClass forString: '\w+'.
 	expected := #(1 3 5 6 8 10 12 15) asOrderedCollection.
-	(matcher matchingRangesIn: 'now is the time') do: [ :range |
-		self assert: range first = expected removeFirst.
-		self assert: range last = expected removeFirst ].
-	self assert: expected isEmpty
+	(matcher matchingRangesIn: 'now is the time')
+		do: [ :range | 
+			self assert: range first = expected removeFirst.
+			self assert: range last = expected removeFirst ].
+	self assertEmpty: expected
 ]
 
 { #category : #testing }

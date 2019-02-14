@@ -80,7 +80,7 @@ AthensTextLine >> heightAndDescent [
 	^ height + maxDescent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 AthensTextLine >> initialize [
 	commands := tail := nil.
 	width := height := maxAscent := maxDescent := 0.

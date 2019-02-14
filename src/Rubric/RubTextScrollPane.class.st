@@ -202,7 +202,7 @@ RubTextScrollPane >> hideOrShowScrollBar [
 	self updateScrollbars
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubTextScrollPane >> initialize [
 	super initialize.
 	self scroller extent: self textArea extent.

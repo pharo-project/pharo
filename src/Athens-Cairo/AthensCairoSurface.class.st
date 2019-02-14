@@ -596,7 +596,7 @@ AthensCairoSurface >> height [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoSurface >> initialize [
 	"the handle should be set already since we using an NB callout to create an instance"
 	handle value = 0 ifTrue: [ 

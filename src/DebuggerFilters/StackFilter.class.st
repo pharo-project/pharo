@@ -4,9 +4,6 @@ A filter on the current stack for debugging
 Class {
 	#name : #StackFilter,
 	#superclass : #Object,
-	#instVars : [
-		'stack'
-	],
 	#category : #DebuggerFilters
 }
 

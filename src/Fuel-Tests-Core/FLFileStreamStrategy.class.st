@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fileStreamClass'
 	],
-	#category : 'Fuel-Tests-Core-StreamStrategies'
+	#category : #'Fuel-Tests-Core-StreamStrategies'
 }
 
 { #category : #'instance creation' }

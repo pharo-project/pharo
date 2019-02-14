@@ -79,9 +79,9 @@ TraitCompositionTest >> testCompositionFromArray [
 TraitCompositionTest >> testEmptyTrait [
 	| composition |
 	composition := {} asTraitComposition.
-	
-	self assert: composition isEmpty.
-	self assert: composition traits isEmpty
+
+	self assertEmpty: composition.
+	self assertEmpty: composition traits
 ]
 
 { #category : #'testing-basic' }

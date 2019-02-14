@@ -78,7 +78,7 @@ KMCategory >> hasKeymapNamed: aKeymapEntryName at: aPlatform [
 	^ (self entriesAt: aPlatform) hasKeymapNamed: aKeymapEntryName
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KMCategory >> initialize [
 
 	super initialize.

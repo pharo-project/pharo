@@ -26,7 +26,7 @@ MalTarjan >> findNode: aModel ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MalTarjan >> initialize [
 	super initialize.
 	nodes := Dictionary new

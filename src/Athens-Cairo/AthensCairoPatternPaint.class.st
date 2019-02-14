@@ -6,12 +6,6 @@ Class {
 	#superclass : #FFIExternalObject,
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
-	#instVars : [
-		'surface',
-		'origin',
-		'direction',
-		'extent'
-	],
 	#pools : [
 		'AthensCairoDefinitions'
 	],
@@ -90,7 +84,7 @@ AthensCairoPatternPaint >> defaultExtend [
 	^  CAIRO_EXTEND_NONE
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoPatternPaint >> initialize [
 	handle value = 0 
 		ifTrue: [ self error: 'Error creating new paint' ].

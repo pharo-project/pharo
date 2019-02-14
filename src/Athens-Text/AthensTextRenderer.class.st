@@ -71,7 +71,7 @@ When displaying or rendering underlined text, this value corresponds to the vert
 "
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 AthensTextRenderer >> initialize [
 	color := Color black.
 ]
@@ -119,7 +119,7 @@ AthensTextRenderer >> renderCharactersFrom: start to: stop [
 	" accumulate advance while rendering spans"
 	"canvas drawShape: (advance x @ advance y extent: 2 @ 2)."
 	glyphRenderer advance: advance.
-	advance := advance + (glyphRenderer renderCharacters: text from: start to: stop).
+	advance := advance + (glyphRenderer renderCharacters: text asString from: start to: stop).
 	
 
 ]

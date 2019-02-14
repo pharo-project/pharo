@@ -76,6 +76,7 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 		ifFalse: [ newClass basicNew ].
 
 	newClass allSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
+			newSlot initialize: newObject.
 			newSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	newClass isVariable

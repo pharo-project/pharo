@@ -189,6 +189,15 @@ MemoryStore >> delete: path [
 		ifAbsent: [ DirectoryDoesNotExist signalWith: path parent ]
 ]
 
+{ #category : #public }
+MemoryStore >> entryFromNode: node path: path for: aFileSystem [
+
+	| entryPath |
+	entryPath := path / (self basenameFromEntry: node).
+	^MemoryDirectoryEntry reference: (FileReference fileSystem: aFileSystem path: entryPath).
+
+]
+
 { #category : #printing }
 MemoryStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'memory://'
@@ -207,6 +216,43 @@ MemoryStore >> initialize [
 { #category : #testing }
 MemoryStore >> isMemoryFileSystem [
 	^ true
+]
+
+{ #category : #testing }
+MemoryStore >> isReadable: aPath [
+	"Answer a boolean indicating whether the supplied path is a readable entry (directory or file).
+	MemoryStore doesn't implement access controls, always true if the file exists."
+
+	^self exists: aPath
+
+]
+
+{ #category : #accessing }
+MemoryStore >> isRegular: aPath [
+	"Answer a boolean indicating whether the entry at aPath is writable.
+	Memory store only supports regular files."
+
+	^self isFile: aPath
+]
+
+{ #category : #testing }
+MemoryStore >> isWritable: aPath [
+	"Answer a boolean indicating whether the supplied path is a writable entry (directory or file).
+	MemoryStore doesn't implement access controls, always true if the file exists."
+
+	^self exists: aPath
+
+]
+
+{ #category : #private }
+MemoryStore >> nodeAt: aPath [
+	| current |
+	current := self root.
+	aPath do: [ :segment | 
+		current isDirectory
+			ifTrue: [ current := current fileEntryAt: segment ifAbsent: [ ^ FileDoesNotExistException signalWith: aPath ]]
+			ifFalse: [ ^ FileDoesNotExistException signalWith: aPath ]].
+	^ current
 ]
 
 { #category : #private }

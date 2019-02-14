@@ -411,7 +411,7 @@ GLMPresentation >> hasTransformation [
 	^ transformation isNotNil and: [ transformation ~= #yourself ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMPresentation >> initialize [
 	super initialize.
 	updateActions := OrderedCollection new.

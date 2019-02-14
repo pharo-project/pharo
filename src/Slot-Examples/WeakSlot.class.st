@@ -14,7 +14,7 @@ This slot inherits from IndexedSlot to guarantee that this slot has a real field
 Class {
 	#name : #WeakSlot,
 	#superclass : #IndexedSlot,
-	#category : #'Slot-Examples-base'
+	#category : #'Slot-Examples-Base'
 }
 
 { #category : #'code generation' }

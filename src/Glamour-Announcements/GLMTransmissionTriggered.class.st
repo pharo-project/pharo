@@ -4,8 +4,5 @@ A GLMTransmissionTriggered is announced by a browser when a transmission brokere
 Class {
 	#name : #GLMTransmissionTriggered,
 	#superclass : #Announcement,
-	#instVars : [
-		'transmission'
-	],
 	#category : #'Glamour-Announcements'
 }

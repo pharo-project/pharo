@@ -29,7 +29,6 @@ Class {
 	#name : #GradientPaint,
 	#superclass : #AthensAbstractPaint,
 	#instVars : [
-		'stops',
 		'colorRamp'
 	],
 	#category : #'Athens-Core-Paints'

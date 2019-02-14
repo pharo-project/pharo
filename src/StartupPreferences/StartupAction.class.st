@@ -8,7 +8,6 @@ Class {
 		'code',
 		'hasBeenExecuted',
 		'runOnce',
-		'nameOfItem',
 		'name'
 	],
 	#category : #StartupPreferences

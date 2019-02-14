@@ -16,20 +16,27 @@ GTSpotterTest >> assertText: aTextualObject [
 GTSpotterTest >> assertText: aTextualObject do: aBlock [
 	| result |
 	" self: emulate a view. Forget about a separate GTSpotterMockView. kiss :) "
-	self shouldnt: [ result := spotter setText: aTextualObject from: self. ] raise: Error.
-	
+	self shouldnt: [ result := spotter setText: aTextualObject from: self ] raise: Error.
+
 	self assert: result.
 	self deny: spotter hasSteps not.
-	self deny: spotter steps isEmpty.
+	self denyEmpty: spotter steps.
+
+	self shouldnt: [ aBlock value ] raise: Error
+]
+
+{ #category : #running }
+GTSpotterTest >> setUp [ 
+
+	super setUp.
 	
-	self shouldnt: [ aBlock value ] raise: Error.
-	
-	
+	spotter := GTMockSpotter new
+		exceptionHandler: GTSpotterDebuggingExceptionHandler new;
+		yourself
 ]
 
 { #category : #tests }
 GTSpotterTest >> testEmptyTextInput [
-	self testNewSpotter.
 	
 	self assertText: Text new do: [ self assert: spotter text isEmpty ].
 	self assertText: (Text fromString: '') do: [ self assert: spotter text isEmpty ].
@@ -58,7 +65,6 @@ GTSpotterTest >> testHistorizingTheSameObjectRemovesPreviousOccurences [
 
 { #category : #tests }
 GTSpotterTest >> testInitialText [
-	self testNewSpotter.
 	
 	self flag: 'is this instvar still required ? we have context'.
 	self assert: spotter getText isEmptyOrNil.
@@ -68,33 +74,36 @@ GTSpotterTest >> testInitialText [
 
 { #category : #tests }
 GTSpotterTest >> testInstanceCreation [
-	self shouldnt: [ spotter := GTMockSpotter new ] raise: Error.
-	self shouldnt: [ 
-		spotter := GTMockSpotter new
-			exceptionHandler: GTSpotterDebuggingExceptionHandler new;
-			yourself ] raise: Error.
-	
+
 	self assert: spotter notNil.
-	self assert: spotter steps isEmpty.
+	self assertEmpty: spotter steps.
 	self deny: spotter hasMultipleSteps
+]
+
+{ #category : #tests }
+GTSpotterTest >> testInstanceCreationSmokeTest [
+
+	self shouldnt: [ spotter := GTMockSpotter new ] raise: Error.
+
 ]
 
 { #category : #tests }
 GTSpotterTest >> testNewSpotter [
 	| step1 |
-	self testInstanceCreation.
-	
+
 	self assert: spotter notNil.
 	self assert: spotter hasSteps not.
-	self assert: spotter steps isEmpty.
+	self assertEmpty: spotter steps.
 	self deny: spotter hasMultipleSteps.
-	
+
 	self shouldnt: [ step1 := spotter currentStep ] raise: Error.
-	
-	self flag: '#currentStep is not always cached in spotter - especially when it is a new/empty spotter. In that case #currentStep will always return a new instance of a step. The implementation would be more polymorphic, oo-style, simpler and with much less ifTrue/ifFalse if the initial-state were regarded as a step as well (as an inst-var not in the inst-var-list of #steps). Maybe use a separate type to distinguish? GTSpotterInitialStep ... '.
+
+	self
+		flag:
+			'#currentStep is not always cached in spotter - especially when it is a new/empty spotter. In that case #currentStep will always return a new instance of a step. The implementation would be more polymorphic, oo-style, simpler and with much less ifTrue/ifFalse if the initial-state were regarded as a step as well (as an inst-var not in the inst-var-list of #steps). Maybe use a separate type to distinguish? GTSpotterInitialStep ... '.
 	"self assert: step1 == spotter currentStep"
-	
+
 	self assert: step1 notNil.
 	self assert: spotter hasSteps not.
-	self assert: spotter steps isEmpty.
+	self assertEmpty: spotter steps
 ]

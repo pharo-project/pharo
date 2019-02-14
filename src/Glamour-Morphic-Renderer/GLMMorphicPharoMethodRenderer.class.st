@@ -27,7 +27,7 @@ GLMMorphicPharoMethodRenderer >> morph [
 		beForSmalltalkCode;
 		getSelectionSelector: #primarySelectionInterval;
 		model: textModel;
-		color: Smalltalk ui theme backgroundColor;
+		color: self theme backgroundColor;
 		textFont: StandardFonts codeFont;
 		yourself.
 	

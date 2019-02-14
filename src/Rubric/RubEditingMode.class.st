@@ -79,7 +79,7 @@ RubEditingMode >> editorClass [
 	^ RubTextEditor 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingMode >> initialize [
 	super initialize.
 	acceptAllowed := true

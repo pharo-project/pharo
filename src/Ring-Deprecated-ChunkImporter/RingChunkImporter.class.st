@@ -111,7 +111,7 @@ RingChunkImporter >> fromFileNamed: aName [
 	self fileInFrom: aName asFileReference readStream.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RingChunkImporter >> initialize [
 	super initialize.
 	package := RGPackage named: 'ChangeSet'.

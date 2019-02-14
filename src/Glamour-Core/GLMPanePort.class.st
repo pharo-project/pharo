@@ -49,7 +49,7 @@ GLMPanePort >> pane: aPane [
 	pane := aPane
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 GLMPanePort >> printOn: aStream [ 
 	 
 	aStream 

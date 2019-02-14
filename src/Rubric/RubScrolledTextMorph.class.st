@@ -614,7 +614,7 @@ RubScrolledTextMorph >> horizontalRulers [
 	^self rulers select: [ :r | r isHorizontal ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> initialize [
 	super initialize.
 	self clipSubmorphs: true.

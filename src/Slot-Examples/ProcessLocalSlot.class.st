@@ -26,7 +26,7 @@ obj local. “nil” <—— Now we don’t
 Class {
 	#name : #ProcessLocalSlot,
 	#superclass : #IndexedSlot,
-	#category : #'Slot-Examples-base'
+	#category : #'Slot-Examples-Base'
 }
 
 { #category : #'code generation' }

@@ -22,7 +22,7 @@ Most refactoring operations fall into one of three categories:
 
 Class Refactoring, Method Refactoring and Source Refactoring.
 
-The following pages describe the refactorings available in the System Browser - Nautilus.
+The following pages describe the refactorings available in the System Browser - Calypso.
 Depending on the kind of Refactoring (Class/Method/Source) you can find and apply the refactoring from the "Refactoring" Menu on the class-, method- or code-pane.
 
 Executing a refactoring will open a changes browser that lets you see and (depending on the current operation) select which change to apply.

@@ -17,15 +17,15 @@ Class {
 GTSpotterStepTest >> assertCandidateMatching: aBlock [
 	| candidates |
 	self assert: currentProcessor notNil.
-	
+
 	candidates := currentProcessor allFilteredCandidates select: [ :each | aBlock value: each ].
-	
-	self deny: candidates isEmpty.
+
+	self denyEmpty: candidates.
 	self assert: candidates size = 1.
-	
+
 	currentCandidate := candidates anyOne.
 	self assert: currentCandidate notNil.
-	
+
 	^ currentCandidate
 ]
 
@@ -43,7 +43,7 @@ GTSpotterStepTest >> assertDiveIn: aSelector [
 
 	" get and validate the link "
 	link := spotter currentStep candidates getCandidateLink: currentCandidate in: currentProcessor.
-	
+
 	self assert: link notNil.
 	self assert: link candidate == currentCandidate.
 	self assert: link processor == currentProcessor.
@@ -51,19 +51,19 @@ GTSpotterStepTest >> assertDiveIn: aSelector [
 	" set the selection - like the UI would do "
 	self shouldnt: [ spotter currentStep select: link ] raise: Error.
 	self assert: spotter currentStep selected == link.
-	
+
 	" perform the dive operation - like the UI would do "
 	self shouldnt: [ spotter currentStep perform: aSelector ] raise: Error.
 	currentStep := spotter currentStep.
 	currentProcessor := currentCandidate := previousContext := currentContext := nil.
-	
-	self deny: spotter steps isEmpty .
+
+	self denyEmpty: spotter steps.
 	self assert: spotter steps size > previousStepsSize.
 	self assert: spotter steps size = (previousStepsSize + 1).
-	
+
 	self deny: previousStep = currentStep.
 	self deny: previousStep = spotter currentStep.
-	self assert: currentStep = spotter currentStep.
+	self assert: currentStep = spotter currentStep
 ]
 
 { #category : #convenience }
@@ -133,7 +133,7 @@ GTSpotterStepTest >> assertProcessorMatching: aBlock [
 { #category : #convenience }
 GTSpotterStepTest >> assertProcessorNotEmpty [
 	self assert: currentProcessor notNil.
-	self deny: currentProcessor allFilteredCandidates isEmpty.
+	self deny: currentProcessor allFilteredCandidates isEmpty
 ]
 
 { #category : #convenience }
@@ -326,104 +326,6 @@ GTSpotterStepTest >> testMock [
 	self assert: spotter class = GTMockSpotter.
 	self assert: spotter newStep class = GTMockSpotterStep.
 	self assert: spotter newStep asyncTask class = GTMockSpotterTask.
-]
-
-{ #category : #tests }
-GTSpotterStepTest >> testProcessorForClasses [
-	self assertSearch: 'Collection'.
-	self assertProcessorByTitle: 'Classes'.
-	self assertProcessorNotEmpty.
-	self assertProcessorIncludesAll: (self subclassesOf: Collection 
-														filterBySubstring: 'Collection' 
-														inPackage: 'Collections-Abstract')
-]
-
-{ #category : #tests }
-GTSpotterStepTest >> testProcessorForImplementors [
-	| partialImplementors |
-	self assertSearch: 'do:'.
-	self assertProcessorByTitle: 'Implementors'.
-	self assertProcessorNotEmpty.
-	
-	partialImplementors := (SystemNavigation default allImplementorsOf: #do:) collect: [ :rm | rm compiledMethod ].
-	self assertProcessorIncludesAll: partialImplementors.
-	self assert: currentProcessor allFilteredCandidates size > partialImplementors size.
-	
-	self assertSearch: 'size'.
-	self assertProcessorByTitle: 'Implementors'.
-	self assertProcessorNotEmpty.
-	
-	partialImplementors := (SystemNavigation default allImplementorsOf: #size) collect: [ :rm | rm compiledMethod ].
-	self assertProcessorIncludesAll: partialImplementors.
-	self assert: currentProcessor allFilteredCandidates size > partialImplementors size.
-]
-
-{ #category : #tests }
-GTSpotterStepTest >> testProcessorForPragmas [
-	self assertSearch: 'spotterOrder:'.
-	self assertProcessorByTitle: 'Pragmas'.
-	self assertProcessorNotEmpty.
-	self assert: currentProcessor allFilteredCandidates size >= 1.
-	self assertCandidateMatching: [ :each | each class = PragmaType and: [ each keyword = #spotterOrder: ] ]  
-]
-
-{ #category : #tests }
-GTSpotterStepTest >> testProcessorForPragmasThenDiveIn [
-	self testProcessorForPragmas.
-	
-	self assertDiveIn.
-	
-	self assertSearch: ''.
-
-	self assertProcessorByTitle: 'Pragmas'.
-	self assertProcessorNotEmpty.
-	self assertProcessorIncludesAll: (self pragmas: #spotterOrder:).
-		
-	self assertProcessorByTitle: 'Users'.
-	self assertProcessorNotEmpty.
-	self assertProcessorIncludesAll: (self users: #spotterOrder:).
-	
-	self assertSearch: 'spotterForClassesFor:'.
-	
-	self assertProcessorByTitle: 'Pragmas'.
-	self assertProcessorNotEmpty.
-	self assertProcessorIncludes: (self pragma: #spotterOrder: of: (GTSpotter >> #spotterForClassesFor:)).
-	
-	self assertSearch: 'extensionsPragma'.
-	
-	self assertProcessorByTitle: 'Users'.
-	self assertProcessorNotEmpty.
-	self assertProcessorIncludes: (GTSpotter class >> #extensionsPragma).
-	
-	self assertSearch: 'spotterForF'.
-	
-	self assertProcessorByTitle: 'Pragmas'.
-	self assertProcessorNotEmpty.
-	self assertProcessorIncludes: (self pragma: #spotterOrder: of: (GTSpotter >> #spotterForFilesFor:)).
-	self assertProcessorIncludes: (self pragma: #spotterOrder: of: (FileReference lookupSelector: #spotterForFilesFor:)).
-	
-	self assertDiveOut.
-	
-	self assert: currentStep context text = 'spotterOrder:'
-]
-
-{ #category : #tests }
-GTSpotterStepTest >> testProcessorForPragmasThenDiveInCategory [
-	self testProcessorForPragmas.
-	
-	" diving into the category (without search) just reveals what was shown before - so this can be repeated infinitely and should return the same result each time "
-	4 timesRepeat: [
-		self assertDiveInCategory.
-		self assertProcessorByTitle: 'Pragmas'.
-		self assertProcessorNotEmpty.
-		self assert: currentProcessor allFilteredCandidates size >= 1.
-		self assertCandidateMatching: [ :each | each class = PragmaType and: [ each keyword = #spotterOrder: ] ]  ].
-	
-	4 timesRepeat: [
-		self assert: currentStep context text = ''.
-		self assertDiveOut ].
-	
-	self assert: currentStep context text = 'spotterOrder:'
 ]
 
 { #category : #'private-navigation' }

@@ -5,11 +5,6 @@ RBBlockNode >> enclosingMethodOrBlockNode [
 	^ parent ifNotNil: [ parent methodOrBlockNode ]
 ]
 
-{ #category : #'*opalcompiler-core' }
-RBBlockNode >> hasBlockReturn [
-	^ self body lastIsReturn
-]
-
 { #category : #'*OpalCompiler-Core' }
 RBBlockNode >> ir [
 
@@ -56,16 +51,6 @@ RBBlockNode >> isInlinedLoop [
 	(parent parent isDynamicArray and: [parent parent parent isMessage and: [parent parent parent isInlineCase]]) ifTrue: [^ true].
 	parent isInlineCase ifTrue: [^ true].  "otherwise branch"
 	^ false
-]
-
-{ #category : #'*opalcompiler-core' }
-RBBlockNode >> lastIsReturn [
-	^ false
-]
-
-{ #category : #'*opalcompiler-core' }
-RBBlockNode >> methodOrBlockNode [
-	"^ self"
 ]
 
 { #category : #'*opalcompiler-core' }

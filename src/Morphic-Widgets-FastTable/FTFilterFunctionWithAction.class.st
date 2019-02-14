@@ -51,8 +51,8 @@ FTFilterFunctionWithAction >> action: aBlockClosure named: aString [
 FTFilterFunctionWithAction >> beExplicite [
 	super beExplicite.
 	table addMorph: actionButton.
-	table selectedRowIndex = 0
-		ifTrue: [ table selectRowIndex: 1 ]
+	table selectedIndex = 0
+		ifTrue: [ table selectIndex: 1 ]
 ]
 
 { #category : #execute }
@@ -61,8 +61,8 @@ FTFilterFunctionWithAction >> execute [
 		cull: table dataSource
 		cull: field getTextFromModel asString
 		cull:
-			(table selectedRowIndex = 0
-				ifFalse: [ table dataSource realElementAt: table selectedRowIndex ]
+			(table selectedIndex = 0
+				ifFalse: [ table dataSource realElementAt: table selectedIndex ]
 				ifTrue: [ nil ])
 ]
 
@@ -104,6 +104,5 @@ FTFilterFunctionWithAction >> resizeWidget [
 FTFilterFunctionWithAction >> showWidget [
 	super showWidget.
 	table addMorph: actionButton.
-	table selectedRowIndex = 0
-		ifTrue: [ table selectRowIndex: 1 ]
+	table selectedIndex = 0 ifTrue: [ table selectIndex: 1 ]
 ]

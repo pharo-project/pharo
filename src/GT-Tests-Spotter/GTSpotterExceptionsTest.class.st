@@ -29,15 +29,15 @@ GTSpotterExceptionsTest class >> reset [
 
 { #category : #private }
 GTSpotterExceptionsTest >> assertException: anErrorClass [
-	self deny: self class exceptions isEmpty.
+	self denyEmpty: self class exceptions.
 	self assert: (self class exceptions anySatisfy: [ :e | e class == anErrorClass ]).
-	self assert: self class fatals isEmpty.
+	self assertEmpty: self class fatals
 ]
 
 { #category : #private }
 GTSpotterExceptionsTest >> assertNoExceptions [
-	self assert: self class exceptions isEmpty.
-	self assert: self class fatals isEmpty.
+	self assertEmpty: self class exceptions.
+	self assertEmpty: self class fatals
 ]
 
 { #category : #private }

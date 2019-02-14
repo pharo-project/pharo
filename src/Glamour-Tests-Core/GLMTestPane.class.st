@@ -1,9 +1,6 @@
 Class {
 	#name : #GLMTestPane,
 	#superclass : #GLMPane,
-	#instVars : [
-		'seenTransmissions'
-	],
 	#category : #'Glamour-Tests-Core'
 }
 

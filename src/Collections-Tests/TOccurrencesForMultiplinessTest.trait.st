@@ -56,12 +56,11 @@ TOccurrencesForMultiplinessTest >> test0FixtureOccurrencesForMultiplinessTest [
 
 { #category : #'tests - fixture' }
 TOccurrencesForMultiplinessTest >> test0FixtureOccurrencesTest [
-
 	| tmp |
 	self empty.
-	self assert: self empty isEmpty.
+	self assertEmpty: self empty.
 	self collectionWithoutEqualElements.
-	self deny: self collectionWithoutEqualElements isEmpty.
+	self denyEmpty: self collectionWithoutEqualElements.
 	tmp := OrderedCollection new.
 	self collectionWithoutEqualElements
 		do: [ :each | 

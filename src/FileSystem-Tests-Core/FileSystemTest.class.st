@@ -458,17 +458,28 @@ FileSystemTest >> testFile [
 
 { #category : #tests }
 FileSystemTest >> testFileNames [
+	"Ensure that file name character encoding works properly"
 	| reference |
-	#('test one' 'test with two' 'test-äöü' 'test.äöü') do: [ :each |
+	#('test one' 'test with two' 'test-äöü' 'test.äöü' 'test-žřč') do: [ :each |
 		reference := filesystem workingDirectory / each.
-		self assert: reference basename = each.
-		self deny: reference exists.
+		"Enclose assertion failure text in blocks so that the string manipulation 
+		only occurs on failure (which should be uncommon).
+		Convert the strings to byte arrays so that the encoding can be easily seen."
+		self assert: reference basename = each
+			description: [ 'basename ', reference basename asByteArray printString, ' ~= ', each asByteArray printString ].
+		self deny: reference exists
+			description: [ reference basename, ' exists but should not' ].
 		reference
 			writeStreamDo: [ :stream | stream nextPutAll: 'gooly' ]
 			ifPresent: [ self fail ].
-		[	self assert: reference exists.
+		[	self assert: reference exists
+				description: [ reference basename, ' should exist but does not' ].
 			self assert: (filesystem workingDirectory children
-				anySatisfy: [ :ref | ref = reference ]) ]
+					anySatisfy: [ :ref | ref = reference ])
+				description: [ | childrenByteArrays |
+					childrenByteArrays := filesystem workingDirectory children collect: [ :child |
+						child basename asByteArray ].
+					 'children ', childrenByteArrays printString, ' does not include ', reference basename asByteArray printString ] ]
 		ensure: [ reference delete ] ]
 ]
 

@@ -8,8 +8,7 @@ Class {
 		'fileToZip',
 		'zip',
 		'subdir',
-		'zipFile',
-		'fileSystem'
+		'zipFile'
 	],
 	#category : #'Compression-Tests-Archives'
 }

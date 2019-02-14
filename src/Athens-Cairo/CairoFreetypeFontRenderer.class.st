@@ -152,7 +152,7 @@ CairoFreetypeFontRenderer >> glyphsOf: aString from: start to: end [
 	^ glyphs
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CairoFreetypeFontRenderer >> initialize [ 
 	utfConverter := CairoUTF8Converter new.
 	advance := 0@0.

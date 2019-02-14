@@ -27,22 +27,22 @@ SlotExampleMovieAndPersonTest >> testAddActors [
 
 { #category : #tests }
 SlotExampleMovieAndPersonTest >> testAddAndRemoveActors [
-
 	| m1 m2 p1 p2 |
-	
 	m1 := SlotExampleMovie named: 'M1'.
 	m2 := SlotExampleMovie named: 'M2'.
 	p1 := SlotExamplePerson named: 'P1'.
 	p2 := SlotExamplePerson named: 'P2'.
-	
-	m1 addActor: p1; addActor: p2.
+
+	m1
+		addActor: p1;
+		addActor: p2.
 	m2 addActor: p2.
 
 	m1 removeActor: p2.
 	self assert: p2 actedInMovies size equals: 1.
 	m2 removeActor: p2.
-	self assert: p2 actedInMovies isEmpty.
-	
+	self assertEmpty: p2 actedInMovies.
+
 	self should: [ m2 removeActor: p2 ] raise: Error
 ]
 
@@ -86,79 +86,69 @@ SlotExampleMovieAndPersonTest >> testAddMovieDirectorTwice [
 
 { #category : #tests }
 SlotExampleMovieAndPersonTest >> testChangeMovieDirector [
-
 	| movie p1 p2 |
-	
 	movie := SlotExampleMovie named: 'Jaws'.
 	p1 := SlotExamplePerson named: 'P1'.
 	p2 := SlotExamplePerson named: 'P2'.
-	
+
 	movie director: p1.
 	self assert: movie director equals: p1.
 	self assert: p1 directedMovies anyOne equals: movie.
-	self assert: p2 directedMovies isEmpty.
-	
+	self assertEmpty: p2 directedMovies.
+
 	movie director: p2.
 	self assert: movie director equals: p2.
-	self assert: p1 directedMovies isEmpty.
-	self assert: p2 directedMovies anyOne equals: movie.
+	self assertEmpty: p1 directedMovies.
+	self assert: p2 directedMovies anyOne equals: movie
 ]
 
 { #category : #tests }
 SlotExampleMovieAndPersonTest >> testNewMovie [
-
 	| movie |
-	
 	movie := SlotExampleMovie new.
 	self assert: movie name isNil.
 	self assert: movie director isNil.
 	self assert: movie actors isCollection.
-	self assert: movie actors isEmpty.
+	self assertEmpty: movie actors
 ]
 
 { #category : #tests }
 SlotExampleMovieAndPersonTest >> testNewPerson [
-
 	| person |
-	
 	person := SlotExamplePerson new.
 	self assert: person name isNil.
 	self assert: person directedMovies isCollection.
-	self assert: person directedMovies isEmpty.
+	self assertEmpty: person directedMovies
 ]
 
 { #category : #tests }
 SlotExampleMovieAndPersonTest >> testSetAndRemoveMovieDirector [
-
 	| movie person |
-	
 	movie := SlotExampleMovie named: 'Jaws'.
 	person := SlotExamplePerson named: 'Peter'.
-	
+
 	movie director: person.
 	self assert: movie director equals: person.
 	self assert: person directedMovies anyOne equals: movie.
-	
+
 	person directedMovies remove: movie.
 	self assert: movie director isNil.
-	self assert: person directedMovies isEmpty.	
+	self assertEmpty: person directedMovies
 ]
 
 { #category : #tests }
 SlotExampleMovieAndPersonTest >> testSetAndUnsetMovieDirector [
-
 	| movie person |
-	
 	movie := SlotExampleMovie named: 'Jaws'.
 	person := SlotExamplePerson named: 'Peter'.
-	
+
 	movie director: person.
 	self assert: movie director equals: person.
 	self assert: person directedMovies anyOne equals: movie.
-	
+
 	movie director: nil.
 	self assert: movie director isNil.
-	self assert: person directedMovies isEmpty.
+	self assertEmpty: person directedMovies
 ]
 
 { #category : #tests }

@@ -19,7 +19,6 @@ Class {
 		'generalMapperFactory',
 		'globalSymbols',
 		'internalMethods',
-		'globalMappers',
 		'globalEnvironment'
 	],
 	#category : #'Fuel-Core-Base'

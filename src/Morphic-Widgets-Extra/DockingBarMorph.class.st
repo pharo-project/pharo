@@ -139,10 +139,10 @@ DockingBarMorph >> add: wordingString icon: aForm help: helpString action: anAct
 ]
 
 { #category : #construction }
-DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMenuMorph [ 
+DockingBarMorph >> add: wordingString icon: aForm help: helpString subMenu: aMenuMorph [
 	"Append the given submenu with the given label."
 	
-	self add: wordingString icon: aForm help: helpString action: nil keyText: nil
+	self add: wordingString icon: aForm help: helpString subMenu: aMenuMorph action: nil keyText: nil
 ]
 
 { #category : #construction }

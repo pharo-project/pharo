@@ -33,10 +33,9 @@ HelpTopicTest >> testAddingSubtopic [
 
 { #category : #testing }
 HelpTopicTest >> testInitialization [
-
 	self assert: topic title = 'Unnamed Topic'.
-	self assert: topic key isEmpty.
-	self assert: topic contents isEmpty 
+	self assertEmpty: topic key.
+	self assertEmpty: topic contents
 ]
 
 { #category : #testing }

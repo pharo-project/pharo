@@ -304,18 +304,12 @@ RBParserTest >> testIsA [
 	| nodes types |
 	nodes := Bag new.
 	types := Set new.
-	#(#(#isAssignment 1) #(#isBlock 1) #(#isCascade 1) #(#isLiteralNode 2) #(#isMessage 3) #(#isMethod 1) #(#isReturn 1) #(#isSequence 2) #(#isValue 15) #(#isVariable 7) #(#isUsed 10) #(#isDirectlyUsed 9) #(#hasParentheses 1) #(#isBinary 0) #(#isPrimitive 0) #(#isImmediateNode 10) #(#isWrite 1) #(#isRead 3)) 
-		do: 
-			[:each | 
-			each last timesRepeat: [nodes add: each first].
-			types add: each first].
-	self treeWithEverything nodesDo: 
-			[:each | 
-			types do: 
-					[:sel | 
-					((each respondsTo: sel) and: [each perform: sel]) 
-						ifTrue: [nodes remove: sel]]].
-	self assert: nodes isEmpty
+	#(#(#isAssignment 1) #(#isBlock 1) #(#isCascade 1) #(#isLiteralNode 2) #(#isMessage 3) #(#isMethod 1) #(#isReturn 1) #(#isSequence 2) #(#isValue 15) #(#isVariable 7) #(#isUsed 10) #(#isDirectlyUsed 9) #(#hasParentheses 1) #(#isBinary 0) #(#isPrimitive 0) #(#isImmediateNode 10) #(#isWrite 1) #(#isRead 3))
+		do: [ :each | 
+			each last timesRepeat: [ nodes add: each first ].
+			types add: each first ].
+	self treeWithEverything nodesDo: [ :each | types do: [ :sel | ((each respondsTo: sel) and: [ each perform: sel ]) ifTrue: [ nodes remove: sel ] ] ].
+	self assertEmpty: nodes
 ]
 
 { #category : #'tests parsing' }
@@ -360,8 +354,7 @@ RBParserTest >> testMethodPatterns [
 { #category : #tests }
 RBParserTest >> testModifying [
 	| tree |
-	tree := self parserClass  
-				parseMethod: 'foo: a bar: b | c | self first. self second. a + b + c'.
+	tree := self parserClass parseMethod: 'foo: a bar: b | c | self first. self second. a + b + c'.
 	self deny: tree lastIsReturn.
 	self deny: (tree body statements at: 2) isUsed.
 	self assert: tree body statements last arguments first isUsed.
@@ -374,23 +367,23 @@ RBParserTest >> testModifying [
 	tree
 		addReturn;
 		selector: #bar:foo:.
-	(tree body)
+	tree body
 		addTemporaryNamed: 'd';
 		removeTemporaryNamed: 'c'.
-	self compare: tree
-		to: (self parserClass  
-				parseMethod: 'bar: a foo: b | d | self first. self second. ^a + b + c').
-	self 
-		assert: ((tree argumentNames asSet)
+	self compare: tree to: (self parserClass parseMethod: 'bar: a foo: b | d | self first. self second. ^a + b + c').
+	self
+		assertEmpty:
+			(tree argumentNames asSet
 				removeAll: #('a' 'b');
-				yourself) isEmpty.
-	self 
-		assert: ((tree allDefinedVariables asSet)
+				yourself).
+	self
+		assertEmpty:
+			(tree allDefinedVariables asSet
 				removeAll: #('a' 'b' 'd');
-				yourself) isEmpty.
-	tree := self parserClass  parseExpression: 'self foo: 0'.
+				yourself).
+	tree := self parserClass parseExpression: 'self foo: 0'.
 	tree selector: #+.
-	self compare: tree to: (self parserClass  parseExpression: 'self + 0').
+	self compare: tree to: (self parserClass parseExpression: 'self + 0')
 ]
 
 { #category : #'tests parsing' }
@@ -540,7 +533,6 @@ RBParserTest >> testParseFaultyMethodStop [
 { #category : #'tests parsing' }
 RBParserTest >> testParseMethodWithErrorTokenIsWellFormed [
 	| node strangeMethod body statement message errorNode |
-	
 	strangeMethod := '
 	selector  
 		|temp| 
@@ -550,7 +542,7 @@ RBParserTest >> testParseMethodWithErrorTokenIsWellFormed [
 
 	self assert: node isMethod.
 	self assert: node isFaulty.
-	self assert: node arguments isEmpty.
+	self assertEmpty: node arguments.
 
 	body := node body.
 	self assert: body isSequence.
@@ -559,20 +551,20 @@ RBParserTest >> testParseMethodWithErrorTokenIsWellFormed [
 
 	statement := body statements first.
 	self assert: statement isFaulty.
-	self assert: statement isAssignment .
-	
+	self assert: statement isAssignment.
+
 	message := statement value.
 	self assert: message isFaulty.
 	self assert: message arguments size equals: 1.
 
 	errorNode := message arguments at: 1.
 	self assert: errorNode isFaulty.
-	self assert: errorNode value equals: 'wrong because no end.
+	self
+		assert: errorNode value
+		equals:
+			'wrong because no end.
 		^temp'.
 	self assert: errorNode errorMessage equals: 'Unmatched '' in string literal.' translated
-	
-	
-	
 ]
 
 { #category : #'tests parsing' }

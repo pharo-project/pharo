@@ -78,7 +78,7 @@ RBRenameInstanceVariableRefactoring >> executeRefactoring: aRefactoring [
 	RBParser parseExpression: aRefactoring storeString
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRenameInstanceVariableRefactoring >> initialize [
 	super initialize.
 	renameAccessors := false

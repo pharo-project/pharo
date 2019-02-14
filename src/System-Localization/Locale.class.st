@@ -17,18 +17,7 @@ Class {
 	#name : #Locale,
 	#superclass : #Object,
 	#instVars : [
-		'id',
-		'shortDate',
-		'longDate',
-		'time',
-		'decimalSymbol',
-		'digitGrouping',
-		'currencySymbol',
-		'currencyNotation',
-		'measurement',
-		'offsetLocalToUTC',
-		'offsetVMToUTC',
-		'dstActive'
+		'id'
 	],
 	#classVars : [
 		'Activated',

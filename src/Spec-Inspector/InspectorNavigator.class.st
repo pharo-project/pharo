@@ -8,7 +8,6 @@ Class {
 		'inspector',
 		'history',
 		'canBeRefreshed',
-		'listOfOpenedInspectors',
 		'toolbar'
 	],
 	#category : #'Spec-Inspector-Widgets'

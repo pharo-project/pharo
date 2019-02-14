@@ -24,7 +24,7 @@ TDictionaryEnumeratingTest >> nonEmptyDict [
 { #category : #'tests - fixture' }
 TDictionaryEnumeratingTest >> test0FixtureDictionaryEnumeratingTest [
 	self nonEmptyDict.
-	self deny: self nonEmptyDict isEmpty
+	self denyEmpty: self nonEmptyDict
 ]
 
 { #category : #'tests - dictionnary enumerating' }

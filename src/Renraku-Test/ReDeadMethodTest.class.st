@@ -1,9 +1,6 @@
 Class {
 	#name : #ReDeadMethodTest,
 	#superclass : #ReCodeBasedTestCase,
-	#instVars : [
-		'validTestPackage'
-	],
 	#category : #'Renraku-Test'
 }
 

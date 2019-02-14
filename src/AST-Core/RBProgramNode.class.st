@@ -30,7 +30,7 @@ Class Variables:
 "
 Class {
 	#name : #RBProgramNode,
-	#superclass : #Object,
+	#superclass : #RBNode,
 	#instVars : [
 		'parent',
 		'properties'
@@ -63,11 +63,6 @@ RBProgramNode class >> resetFormatter [
 	self formatterClass: nil
 
 	
-]
-
-{ #category : #visiting }
-RBProgramNode >> acceptVisitor: aProgramNodeVisitor [ 
-	self subclassResponsibility
 ]
 
 { #category : #replacing }
@@ -616,6 +611,11 @@ RBProgramNode >> methodNode [
 ]
 
 { #category : #accessing }
+RBProgramNode >> methodOrBlockNode [
+	^ parent ifNotNil: [ parent methodOrBlockNode ]
+]
+
+{ #category : #accessing }
 RBProgramNode >> newSource [
 	^self formattedCode
 ]
@@ -780,6 +780,12 @@ RBProgramNode >> replaceWith: aNode [
 	parent replaceNode: self withNode: aNode
 ]
 
+{ #category : #enumeration }
+RBProgramNode >> reverseNodesDo: aBlock [ 
+	self children reverseDo: [ :each | each reverseNodesDo: aBlock ].
+	aBlock value: self
+]
+
 { #category : #querying }
 RBProgramNode >> selfMessages [
 	^(self sendNodes select: [ :node | node isSelfSend ] thenCollect: [ :node | node selector ]) asSet
@@ -809,7 +815,19 @@ RBProgramNode >> size [
 
 { #category : #accessing }
 RBProgramNode >> source [
-	^parent notNil ifTrue: [parent source] ifFalse: [nil]
+	^ parent notNil ifTrue: [ parent source ] ifFalse: [ nil ]
+]
+
+{ #category : #accessing }
+RBProgramNode >> sourceCode [
+
+	| interval |
+	interval := self sourceInterval.
+	interval ifEmpty: [ ^ '' ].
+	
+	^ self source 
+		copyFrom: interval first
+		to: interval last
 ]
 
 { #category : #accessing }
@@ -841,6 +859,12 @@ RBProgramNode >> statementNode [
 
 	(parent isNil or: [parent isSequence]) ifTrue: [^self].
 	^parent statementNode
+]
+
+{ #category : #accessing }
+RBProgramNode >> statements [
+	^ #()
+	
 ]
 
 { #category : #accessing }

@@ -10,7 +10,6 @@ Class {
 		'categories',
 		'orderingList',
 		'sortingBlock',
-		'updatingBlock',
 		'okToolbar',
 		'categoryList'
 	],

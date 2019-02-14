@@ -617,7 +617,7 @@ AthensSurfaceExamples >> createSurface: anExtent [
 	^ self class newSurface: anExtent
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 AthensSurfaceExamples >> initialize [
 
 	super initialize.

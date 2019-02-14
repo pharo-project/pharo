@@ -207,17 +207,17 @@ GLMCompositePresentationMorphicTest >> testTabsWithActions [
 	| browser |
 	browser := GLMTabulator new.
 	browser column: #one.
-	(browser transmit)
+	browser transmit
 		to: #one;
 		andShow: [ :a | 
-					a list act: #inspect entitled: 'Inspect'.
-					a text ].
+			a list act: #inspect entitled: 'Inspect'.
+			a text ].
 	window := browser openOn: 42.
-	self assert: self compositeTabGroup toolbarMorph submorphs notEmpty.
+	self denyEmpty: self compositeTabGroup toolbarMorph submorphs.
 	self compositeTabGroup selectedPageIndex: 2.
-	self assert: self compositeTabGroup toolbarMorph submorphs isEmpty.
+	self assertEmpty: self compositeTabGroup toolbarMorph submorphs.
 	self compositeTabGroup selectedPageIndex: 1.
-	self assert: self compositeTabGroup toolbarMorph submorphs notEmpty
+	self denyEmpty: self compositeTabGroup toolbarMorph submorphs
 ]
 
 { #category : #tests }

@@ -1028,7 +1028,7 @@ RubAbstractTextArea >> highlightMessageSend [
 	^ self class highlightMessageSend
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubAbstractTextArea >> initialize [
 	super initialize.
 	self compose.

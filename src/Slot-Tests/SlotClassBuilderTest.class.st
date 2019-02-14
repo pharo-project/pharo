@@ -3,10 +3,8 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'aClass',
-		'instance',
 		'anotherClass',
-		'yetAnotherClass',
-		'yetYetAnotherClass'
+		'yetAnotherClass'
 	],
 	#category : #'Slot-Tests'
 }

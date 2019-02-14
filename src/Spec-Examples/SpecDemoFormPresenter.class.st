@@ -58,7 +58,7 @@ SpecDemoFormPresenter >> form: anObject [
 	form := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 SpecDemoFormPresenter >> initialize [
 
 	self model: SpecDemoFormModel new.

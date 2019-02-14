@@ -79,7 +79,7 @@ GLMBrowser >> initialExtent: aPoint [
 	initialExtent := aPoint
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMBrowser >> initialize [
 	super initialize.
 	panes := OrderedCollection new.

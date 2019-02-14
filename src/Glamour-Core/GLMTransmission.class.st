@@ -223,7 +223,7 @@ GLMTransmission >> fromOutsidePort: aPortSymbol transformed: aBlock [
 	^ self from: #outer port: aPortSymbol transformed: aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMTransmission >> initialize [
 	super initialize.
 	transmissionStrategy := GLMNoStrategy new.
@@ -291,7 +291,7 @@ GLMTransmission >> presentations: aCompositePresentation [
 	self transmissionStrategy presentations: aCompositePresentation
 ]
 
-{ #category : #transmitting }
+{ #category : #printing }
 GLMTransmission >> printOn: aStream [ 
 	 
 	aStream 

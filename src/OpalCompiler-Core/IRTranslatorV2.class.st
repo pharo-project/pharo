@@ -59,7 +59,7 @@ IRTranslatorV2 >> currentScope [
 	^currentScope top
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 IRTranslatorV2 >> initialize [
 	currentScope := Stack new.
 	tempVectorStack := Stack new.

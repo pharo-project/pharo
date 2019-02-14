@@ -32,7 +32,7 @@ ExternalLibrary >> handle [
 	^handle
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ExternalLibrary >> initialize [
 	"Initialize the receiver"
 	name := self class moduleName.

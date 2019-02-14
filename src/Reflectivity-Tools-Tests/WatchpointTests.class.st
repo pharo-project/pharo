@@ -54,65 +54,59 @@ WatchpointTests >> testAddWatchpointsSameNode [
 
 { #category : #'deleting history' }
 WatchpointTests >> testDeleteAllHistory [
-	|node1 node2 watchpoint1 watchpoint2|
-	
-	node1 := (WPDummy>>#exampleAssignment:) ast body children first.
+	| node1 node2 watchpoint1 watchpoint2 |
+	node1 := (WPDummy >> #exampleAssignment:) ast body children first.
 	watchpoint1 := Watchpoint in: node1.
-	node2 := (WPDummy>>#exampleAssignment) ast body children first.
+	node2 := (WPDummy >> #exampleAssignment) ast body children first.
 	watchpoint2 := Watchpoint in: node2.
-	
+
 	WPDummy new exampleAssignment: 2.
 	WPDummy new exampleAssignment.
-		
-	self assert: (watchpoint1 values first value = 2).
-	self assert: (watchpoint2 values first value = 1).
-	
+
+	self assert: watchpoint1 values first value = 2.
+	self assert: watchpoint2 values first value = 1.
+
 	Watchpoint deleteAllHistory.
-	
-	self assert: watchpoint1 values isEmpty.
-	self assert: watchpoint2 values isEmpty.
-	
+
+	self assertEmpty: watchpoint1 values.
+	self assertEmpty: watchpoint2 values.
+
 	watchpoint1 uninstall.
-	watchpoint2 uninstall.
-	
+	watchpoint2 uninstall
 ]
 
 { #category : #'deleting history' }
 WatchpointTests >> testDeleteHistory [
-	|node watchpoint|
-	
-	node := (WPDummy>>#exampleAssignment:) ast body children first.
+	| node watchpoint |
+	node := (WPDummy >> #exampleAssignment:) ast body children first.
 	watchpoint := Watchpoint in: node.
 	WPDummy new exampleAssignment: 1.
 	WPDummy new exampleAssignment: 2.
-	
-	self assert: (watchpoint values first value = 1).
-	self assert: (watchpoint values second value = 2).
-	
+
+	self assert: watchpoint values first value = 1.
+	self assert: watchpoint values second value = 2.
+
 	watchpoint deleteHistory.
-	self assert: watchpoint values isEmpty.
-	
-	watchpoint uninstall.
-	
+	self assertEmpty: watchpoint values.
+
+	watchpoint uninstall
 ]
 
 { #category : #'deleting history' }
 WatchpointTests >> testDeleteHistoryFromNode [
-	|node watchpoint|
-	
-	node := (WPDummy>>#exampleAssignment:) ast body children first.
+	| node watchpoint |
+	node := (WPDummy >> #exampleAssignment:) ast body children first.
 	watchpoint := Watchpoint in: node.
 	WPDummy new exampleAssignment: 1.
 	WPDummy new exampleAssignment: 2.
-	
-	self assert: (watchpoint values first value = 1).
-	self assert: (watchpoint values second value = 2).
-	
+
+	self assert: watchpoint values first value = 1.
+	self assert: watchpoint values second value = 2.
+
 	Watchpoint deleteHistoryFrom: node.
-	self assert: watchpoint values isEmpty.
-	
-	watchpoint uninstall.
-	
+	self assertEmpty: watchpoint values.
+
+	watchpoint uninstall
 ]
 
 { #category : #values }

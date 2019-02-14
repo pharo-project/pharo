@@ -43,9 +43,9 @@ TEmptySequenceableTest >> selectorToAccessValuePutIn [
 { #category : #'tests - fixture' }
 TEmptySequenceableTest >> test0FixtureEmptySequenceableTest [
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self empty.
-	self assert: self empty isEmpty
+	self assertEmpty: self empty
 ]
 
 { #category : #'tests - sequence isempty' }

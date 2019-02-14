@@ -83,7 +83,7 @@ FullBlockClosure >> outerContext: ctxt [
 	outerContext := ctxt
 ]
 
-{ #category : #private }
+{ #category : #printing }
 FullBlockClosure >> printOn: s [
 	[ super printOn: s ] on: Error do: [ :ex | s << '![' << ex messageText << ']!' ]
 ]

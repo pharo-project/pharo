@@ -57,7 +57,8 @@ Class {
 		'lineHeightAtSpace',
 		'baselineAtSpace',
 		'lastBreakIsNotASpace',
-		'nextIndexAfterLineBreak'
+		'nextIndexAfterLineBreak',
+		'wantsColumnBreaks'
 	],
 	#category : #'Text-Scanning-Base'
 }
@@ -189,7 +190,7 @@ CompositionScanner >> endOfRun [
 
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CompositionScanner >> initialize [
 	wantsColumnBreaks := false.
 	super initialize

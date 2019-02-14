@@ -77,10 +77,9 @@ FileReferenceTest >> testAllEntries [
 	ref := filesystem / 'alpha'.
 	entries := ref allEntries.
 	self assert: entries size equals: 4.
-	entries
-		do: [ :entry | 
-			self assert: entry class equals: FileSystemDirectoryEntry.
-			self assert: (ref = entry reference or: [ ref contains: entry reference ]) ].
+	entries do: [:entry |
+		self assert: entry class = MemoryDirectoryEntry.
+		self assert: (ref = entry reference or: [ref contains: entry reference])].
 	self assert: (entries collect: [ :ea | ea basename ]) equals: #('alpha' 'beta' 'gamma' 'delta') ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
@@ -456,11 +455,10 @@ FileReferenceTest >> testEntries [
 	ref := filesystem / 'alpha'.
 	entries := ref entries.
 	self assert: entries size equals: 2.
-	entries
-		do: [ :entry | 
-			self assert: entry class equals: FileSystemDirectoryEntry.
-			self assert: (entry reference isChildOf: ref).
-			self assert: (#('beta' 'gamma') includes: entry reference basename) ] ]
+	entries do: [:entry |
+		self assert: entry class = MemoryDirectoryEntry.
+		self assert: (entry reference isChildOf: ref).
+		self assert: (#('beta' 'gamma') includes: entry reference basename)] ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 

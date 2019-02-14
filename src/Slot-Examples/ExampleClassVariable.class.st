@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'state'
 	],
-	#category : #'Slot-Examples-base'
+	#category : #'Slot-Examples-Base'
 }
 
 { #category : #'meta-object-protocol' }
