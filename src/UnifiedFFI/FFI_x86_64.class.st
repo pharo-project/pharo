@@ -7,11 +7,10 @@ Class {
 	#category : #'UnifiedFFI-Architecture'
 }
 
-{ #category : #private }
-FFI_x86_64 class >> uniqueInstance [
-	self = FFI_x86_64 
-		ifTrue: [ self error: 'I''m an abstract class, use one of my children instead.' ].
-	^ super uniqueInstance
+{ #category : #testing }
+FFI_x86_64 class >> isAbstract [ 
+
+	^self name = #FFI_x86_64
 ]
 
 { #category : #types }
