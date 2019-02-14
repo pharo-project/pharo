@@ -163,7 +163,7 @@ PSMCPatchMorph >> changesMenu: m [
 		enablementSelector: #selectionHasActualClass.
 	menu lastItem
 		font: self theme menuFont;
-		icon: Smalltalk tools browser taskbarIcon;
+		icon: (self iconNamed: #smallWindowIcon);
 		keyText: 'Cmd+b'.
 	menu addLine.
 	menu

@@ -296,7 +296,7 @@ RubAbstractTextArea class >> highlightMessageSend: aBoolean [
 
 { #category : #settings }
 RubAbstractTextArea class >> lineNumbersBackgroundColor [
-	^ LineNumbersBackgroundColor ifNil: [ LineNumbersBackgroundColor := Smalltalk ui theme backgroundColor darker] 
+	^ LineNumbersBackgroundColor ifNil: [ LineNumbersBackgroundColor := self theme backgroundColor darker] 
 ]
 
 { #category : #settings }
@@ -316,7 +316,7 @@ RubAbstractTextArea class >> lineNumbersFont: aFont [
 
 { #category : #settings }
 RubAbstractTextArea class >> lineNumbersTextColor [
-	^ LineNumbersTextColor ifNil: [ LineNumbersTextColor := Smalltalk ui theme lineNumberColor ]
+	^ LineNumbersTextColor ifNil: [ LineNumbersTextColor := self theme lineNumberColor ]
 ]
 
 { #category : #settings }

@@ -417,7 +417,7 @@ MorphTreeMorph >> adoptPaneColor: paneColor [
 	
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
-	self color: (self preferedPaneColor ifNil: [ Smalltalk ui theme backgroundColor ] ).
+	self color: (self preferedPaneColor ifNil: [ self theme backgroundColor ] ).
 
 ]
 
@@ -888,7 +888,7 @@ MorphTreeMorph >> expandedForm [
 MorphTreeMorph >> expandedFormForMorph: aMorph [
 	"Answer the form to use for expanded items."
 	
-	^ ((aMorph selected) and: [self selectionColor luminance < 0.7])
+	^ (aMorph selected and: [self selectionColor luminance < 0.7])
 		ifTrue: [self theme whiteTreeExpandedForm]
 		ifFalse: [self theme treeExpandedForm]
 ]

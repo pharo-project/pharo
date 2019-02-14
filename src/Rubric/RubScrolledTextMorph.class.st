@@ -277,7 +277,7 @@ RubScrolledTextMorph >> cursor [
 
 { #category : #defaults }
 RubScrolledTextMorph >> defaultBackgroundColor [ 
-	^ Smalltalk ui theme backgroundColor
+	^ self theme backgroundColor
 ]
 
 { #category : #defaults }
