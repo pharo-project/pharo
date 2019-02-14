@@ -6,24 +6,18 @@ I am cleared when the current morph loses focus or when a full match announcemen
 Class {
 	#name : #KMBuffer,
 	#superclass : #Object,
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#instVars : [
 		'buffer',
 		'currentEvent'
-	],
-	#classInstVars : [
-		'uniqueInstance'
 	],
 	#category : #'Keymapping-Core'
 }
 
 { #category : #'initialize-release' }
 KMBuffer class >> resetUniqueInstance [
-	uniqueInstance := nil 
-]
-
-{ #category : #accessing }
-KMBuffer class >> uniqueInstance [
-	^uniqueInstance ifNil: [ uniqueInstance := self new ].
+	self reset
 ]
 
 { #category : #accessing }
