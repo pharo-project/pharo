@@ -11,6 +11,8 @@ The completion occurs in specific character position. The editor is responsible 
 Class {
 	#name : #NECController,
 	#superclass : #Object,
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#instVars : [
 		'model',
 		'menuMorph',
@@ -21,9 +23,6 @@ Class {
 	],
 	#classVars : [
 		'ContextClass'
-	],
-	#classInstVars : [
-		'uniqueInstance'
 	],
 	#category : #'NECompletion-View'
 }
@@ -85,17 +84,6 @@ NECController class >> registerToolsOn: registry [
 	"self registerToolsOn: Smalltalk tools" 
 	registry register: self as: #codeCompletion
 
-]
-
-{ #category : #'instance creation' }
-NECController class >> reset [
-	uniqueInstance := nil
-	
-]
-
-{ #category : #'instance creation' }
-NECController class >> uniqueInstance [
-	^uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
 { #category : #accessing }
