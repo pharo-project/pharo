@@ -4,9 +4,8 @@ I contain some functionality shared between code entities
 Class {
 	#name : #ReCriticEngine,
 	#superclass : #Object,
-	#classInstVars : [
-		'uniqueInstance'
-	],
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#category : #'Renraku-Utility'
 }
 
@@ -26,12 +25,6 @@ ReCriticEngine class >> guidedBy: anEntity ban: aCritique [
 ReCriticEngine class >> nodeCritiquesOf: anEntity [
 
 	^ self uniqueInstance nodeCritiquesOf: anEntity
-]
-
-{ #category : #accessing }
-ReCriticEngine class >> uniqueInstance [
-
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
 { #category : #running }
