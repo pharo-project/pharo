@@ -4,9 +4,8 @@ I represent the no-reference. I implement the null object design pattern.
 Class {
 	#name : #OmNullReference,
 	#superclass : #OmAbstractReference,
-	#classInstVars : [
-		'uniqueInstance'
-	],
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#category : #'Ombu-Entries'
 }
 
@@ -16,11 +15,6 @@ OmNullReference class >> fromSton: stonReader [
 	stonReader parseListDo: [ :each :index | "nothing to read" ].
 
 	^ self uniqueInstance
-]
-
-{ #category : #'instance creation' }
-OmNullReference class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
 { #category : #testing }
