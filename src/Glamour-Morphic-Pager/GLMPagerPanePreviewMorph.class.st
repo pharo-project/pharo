@@ -4,12 +4,11 @@ I am a morph showing a preview image of another morph.  I should be used like a 
 Class {
 	#name : #GLMPagerPanePreviewMorph,
 	#superclass : #ImageMorph,
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#instVars : [
 		'thumbnail',
 		'position'
-	],
-	#classInstVars : [
-		'uniqueInstance'
 	],
 	#category : #'Glamour-Morphic-Pager-Morphic'
 }
@@ -17,19 +16,14 @@ Class {
 { #category : #cleanup }
 GLMPagerPanePreviewMorph class >> cleanUp [
 	super cleanUp.
-	uniqueInstance := nil
+	self reset
 ]
 
 { #category : #actions }
 GLMPagerPanePreviewMorph class >> remove [
 
 	self uniqueInstance delete.	
-	uniqueInstance := nil.
-]
-
-{ #category : #accessing }
-GLMPagerPanePreviewMorph class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := GLMPagerPanePreviewMorph new ].
+	self reset.
 ]
 
 { #category : #actions }
