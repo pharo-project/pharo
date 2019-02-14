@@ -1,21 +1,15 @@
 Class {
 	#name : #GLMBrickWidthTraverser,
 	#superclass : #GLMBrickLayoutTraverser,
-	#classInstVars : [
-		'uniqueInstance'
-	],
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#category : #'Glamour-Morphic-Brick-Layouts-Utils'
 }
 
 { #category : #cleanup }
 GLMBrickWidthTraverser class >> cleanUp [
 
-	uniqueInstance := nil
-]
-
-{ #category : #accessing }
-GLMBrickWidthTraverser class >> uniqueInstance [
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
+	self reset
 ]
 
 { #category : #private }
