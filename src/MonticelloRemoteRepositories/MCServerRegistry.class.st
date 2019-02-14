@@ -4,20 +4,13 @@ Registry for metacello servers
 Class {
 	#name : #MCServerRegistry,
 	#superclass : #Object,
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#instVars : [
 		'registry'
 	],
-	#classInstVars : [
-		'uniqueInstance'
-	],
 	#category : #MonticelloRemoteRepositories
 }
-
-{ #category : #'instance creation' }
-MCServerRegistry class >> uniqueInstance [
-
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ].
-]
 
 { #category : #initialization }
 MCServerRegistry >> initialize [
