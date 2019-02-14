@@ -46,7 +46,7 @@ RBParseTreeRule >> foundMatchFor: aProgramNode [
 	^aProgramNode
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBParseTreeRule >> methodSearchString: aString [ 
 	searchTree := RBParser parseRewriteMethod: aString
 ]
@@ -69,7 +69,7 @@ RBParseTreeRule >> performOn: aProgramNode [
 		
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBParseTreeRule >> searchString: aString [ 
 	searchTree := RBParser parseRewriteExpression: aString
 ]

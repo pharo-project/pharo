@@ -139,7 +139,7 @@ RBPackageEnvironment >> packages [
 	^ packages
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBPackageEnvironment >> packages: aCollection [
 	packages addAll: aCollection
 ]

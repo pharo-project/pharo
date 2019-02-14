@@ -232,7 +232,7 @@ RBRefactoring >> model [
 		ifFalse: [model]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRefactoring >> model: aRBNamespace [ 
 	model := aRBNamespace
 ]

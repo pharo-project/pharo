@@ -472,7 +472,7 @@ NECContext >> receiverClass [
 	^ receiverClass
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NECContext >> setController: aECController class: aClass source: aString position: anInteger [ 
 	controller := aECController.
 	theClass := aClass.

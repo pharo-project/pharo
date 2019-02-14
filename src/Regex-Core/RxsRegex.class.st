@@ -31,7 +31,7 @@ RxsRegex >> dispatchTo: aMatcher [
 	^aMatcher syntaxRegex: self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsRegex >> initializeBranch: aBranch regex: aRegex [
 	"See class comment for instance variable description."
 

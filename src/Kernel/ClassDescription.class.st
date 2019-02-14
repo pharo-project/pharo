@@ -943,7 +943,7 @@ ClassDescription >> numberOfMethods [
 		ifFalse: [ num + self classSide numberOfMethods ] 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ClassDescription >> obsolete [
 	"Make the receiver obsolete."
 	self superclass removeSubclass: self.
@@ -1165,7 +1165,7 @@ ClassDescription >> subclassesDo: aBlock [
 	^self subclasses do: aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ClassDescription >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
@@ -1244,7 +1244,7 @@ ClassDescription >> untagFrom: aSymbol [
 	package addClass: self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ClassDescription >> updateInstances: oldInstances from: oldClass isMeta: isMeta [
 	"Recreate any existing instances of the argument, oldClass, as instances of the receiver,
 	 which is a newly changed class. Permute variables as necessary, and forward old instances
@@ -1268,7 +1268,7 @@ ClassDescription >> updateInstances: oldInstances from: oldClass isMeta: isMeta 
 	^ nil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ClassDescription >> updateInstancesFrom: oldClass [
 	"Recreate any existing instances of the argument, oldClass, as instances of 
 	the receiver, which is a newly changed class. Permute variables as 

@@ -352,7 +352,7 @@ BytecodeEncoder >> stream: s [
 	stream := s
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 BytecodeEncoder >> streamToMethod: aCompiledMethod [
 	stream := WriteStream with: aCompiledMethod.
 	stream position: aCompiledMethod initialPC - 1

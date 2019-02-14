@@ -167,18 +167,17 @@ GLMFastTreeDataSource >> rowMorphForItem: anItem [
 { #category : #selecting }
 GLMFastTreeDataSource >> selection: ann [
 	| selection |
-	selection := ann newSelectedRowIndexes
+	selection := ann newSelectedIndexes
 		select: [ :each | each ~= 0 ]
 		thenCollect: [ :each | (self elementAt: each) data ].
 	selection
-		ifNotEmpty: [ 
-			self announcer
+		ifNotEmpty: [ self announcer
 				announce:
 					(GLMTreeMorphSelectionChanged new
 						selectionValue:
-								((selection size = 1 and: [ self glamourPresentation isSingle ])
-										ifTrue: [ selection first ]
-										ifFalse: [ selection ]);
+							((selection size = 1 and: [ self glamourPresentation isSingle ])
+								ifTrue: [ selection first ]
+								ifFalse: [ selection ]);
 						selectionPathValue: selection;
 						yourself) ]
 ]

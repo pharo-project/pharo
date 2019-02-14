@@ -23,7 +23,7 @@ EpEntryAdded >> entry [
 	^ entry
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 EpEntryAdded >> initializeWith: anEntry [
 
 	self initialize.

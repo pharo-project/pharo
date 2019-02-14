@@ -359,7 +359,7 @@ RBMoveMethodRefactoring >> replaceVariableReferences [
 	parseTree := replacer tree
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBMoveMethodRefactoring >> selector: aSymbol class: aClass variable: aVariableName [ 
 	selector := aSymbol.
 	class := self classObjectFor: aClass.

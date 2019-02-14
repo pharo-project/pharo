@@ -136,7 +136,7 @@ CairoFontOptions >> initialize [
 	self setDefaults
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CairoFontOptions >> resourceData [
 
 	^ handle value

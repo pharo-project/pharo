@@ -207,7 +207,7 @@ InputEventFetcher >> registerHandler: handler [
 	self eventHandlers add: handler
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 InputEventFetcher >> shutDown [
 	self terminateEventLoop.
 	inputSemaphore ifNotNil: [Smalltalk unregisterExternalObject: inputSemaphore]
@@ -222,7 +222,7 @@ InputEventFetcher >> signalEvent: eventBuffer [
 		handler handleEvent: eventBuffer]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 InputEventFetcher >> startUp [
 	inputSemaphore := Semaphore new.
 	self primSetInputSemaphore: (Smalltalk registerExternalObject: inputSemaphore).
@@ -230,7 +230,7 @@ InputEventFetcher >> startUp [
 	self installEventLoop
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 InputEventFetcher >> terminateEventLoop [
 	"Terminate the event loop process. Terminate the old process if any."
 	"InputEventFetcher default terminateEventLoop"

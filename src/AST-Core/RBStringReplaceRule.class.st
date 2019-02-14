@@ -65,12 +65,12 @@ RBStringReplaceRule >> foundMatchFor: aProgramNode [
 	^newNode
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBStringReplaceRule >> methodReplaceString: replaceString [ 
 	replaceTree := RBParser parseRewriteMethod: replaceString
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBStringReplaceRule >> replaceString: replaceString [ 
 	replaceTree := RBParser parseRewriteExpression: replaceString.
 	searchTree isSequence = replaceTree isSequence 

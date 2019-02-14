@@ -7,7 +7,7 @@ Class {
 	#category : #'FileSystem-Tests-Disk-Base'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DiskFileSystemTest >> createFileSystem [
 	^ FileSystem store: (DiskStore activeClass createDefault)
 ]

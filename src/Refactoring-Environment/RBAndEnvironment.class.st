@@ -26,7 +26,7 @@ RBAndEnvironment >> andedEnvironment [
 	^andedEnvironment
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBAndEnvironment >> andedEnvironment: aBrowserEnvironment [ 
 	andedEnvironment := aBrowserEnvironment
 ]

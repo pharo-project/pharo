@@ -257,7 +257,7 @@ TraitedMetaclass >> localSelectors [
 	^ localMethods keys
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 TraitedMetaclass >> obsolete [
 
 	super obsolete.

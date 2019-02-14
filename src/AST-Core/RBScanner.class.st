@@ -241,7 +241,7 @@ RBScanner >> nextPut: anObject [
 	self shouldNotImplement
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBScanner >> on: aStream [ 
 	buffer := (String new: 60) writeStream.
 	stream := aStream.

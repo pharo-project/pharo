@@ -42,13 +42,13 @@ GLMHighlighterTextRubEditingMode >> stylerDecorator: anObject [
 	stylerDecorator := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMHighlighterTextRubEditingMode >> updateTextAreaWhenPlugged [
 	self withStyler.
 	super updateTextAreaWhenPlugged
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMHighlighterTextRubEditingMode >> updateTextAreaWhenUnplugged [
 	self withoutStyler.
 	super updateTextAreaWhenUnplugged
@@ -56,7 +56,7 @@ GLMHighlighterTextRubEditingMode >> updateTextAreaWhenUnplugged [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMHighlighterTextRubEditingMode >> withStyler [
 	self textArea withDecorator: self stylerDecorator
 ]

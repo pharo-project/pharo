@@ -62,7 +62,7 @@ RBRefactoryChange >> name [
 	^name isNil ifTrue: [self changeString] ifFalse: [name]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRefactoryChange >> name: aString [
 	name := aString
 ]

@@ -93,7 +93,7 @@ RBDummyCompositeLintRuleTest >> problemCount [
 	^rules inject: 0 into: [:count :each | count + each problemCount]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBDummyCompositeLintRuleTest >> resetResult [
 	rules do: [:each | each resetResult]
 ]
@@ -103,7 +103,7 @@ RBDummyCompositeLintRuleTest >> rules [
 	^rules
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBDummyCompositeLintRuleTest >> rules: aCollection [
 	rules := aCollection
 ]

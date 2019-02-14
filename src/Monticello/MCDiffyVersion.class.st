@@ -92,7 +92,7 @@ MCDiffyVersion >> fileName [
 	^ (self class nameForVer: info name base: base name), '.', self writerClass extension
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCDiffyVersion >> initializeWithPackage: aPackage info: aVersionInfo dependencies: aCollection baseInfo: baseVersionInfo patch: aPatch [
 	patch := aPatch.
 	base := baseVersionInfo.

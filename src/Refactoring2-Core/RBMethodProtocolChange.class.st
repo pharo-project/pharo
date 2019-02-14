@@ -60,7 +60,7 @@ RBMethodProtocolChange >> parseTree [
 		onError: [ :str :pos | ^ nil ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBMethodProtocolChange >> selector: aSelector in: aClass classified: aProtocol [
 
 	selector := aSelector.

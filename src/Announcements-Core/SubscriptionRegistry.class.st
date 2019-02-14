@@ -97,7 +97,7 @@ SubscriptionRegistry >> replace: subscription with: newOne [
 	^ newOne
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SubscriptionRegistry >> reset [
 	"subscriber -> subscriptions"
 	

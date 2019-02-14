@@ -208,7 +208,7 @@ OSEnvironment >> includesKey: aKey [
 	^ self at: aKey ifPresent: [ :value | true ] ifAbsent: [ false ].
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 OSEnvironment >> initializeWith: anOSPlatform [
 	super initialize.
 	platform := anOSPlatform

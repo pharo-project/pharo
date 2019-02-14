@@ -143,7 +143,7 @@ ObjectLayout >> initialize [
 	compactClassIndex := 0
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ObjectLayout >> initializeInstance: anInstance [
 	self subclassResponsibility
 ]

@@ -32,7 +32,7 @@ AthensCompositePaint >> athensFillRectangle: aRect on: anAthensCanvas [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCompositePaint >> fromFillStyles: fillStyles on: aCanvas [
 
 	paints := fillStyles collect: [:each | each asAthensPaintOn: aCanvas ]

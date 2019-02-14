@@ -37,7 +37,7 @@ GLMPortEvent >> hasChanged [
 	^ self value ~~ self oldValue
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMPortEvent >> initializeOn: aPort previouslyValued: anObject [ 
 	self initializeOn: aPort previouslyValued: anObject in: OrderedCollection new
 ]

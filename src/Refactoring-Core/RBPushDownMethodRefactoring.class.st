@@ -55,7 +55,7 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 				ifFalse: [each compile: code classified: protocols]]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass [ 
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection

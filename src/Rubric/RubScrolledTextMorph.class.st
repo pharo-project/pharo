@@ -152,32 +152,32 @@ RubScrolledTextMorph >> beEditable [
 	self textArea beEditable 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> beForPlainText [
 	self textArea beForPlainText
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> beForSmalltalkCode [
 	self textArea beForSmalltalkCode.
 	self withTextSegmentIcons.
 	self textArea font: StandardFonts codeFont
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> beForSmalltalkCodeInClass: aClass [
 	self textArea beForSmalltalkCodeInClass: aClass.
 	self withTextSegmentIcons.
 	self textArea font: StandardFonts codeFont
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> beForSmalltalkCodeWithDefaultFont [
 	self textArea beForSmalltalkCodeWithDefaultFont.
 	self withTextSegmentIcons
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> beForSmalltalkComment [
 	self textArea beForSmalltalkComment
 ]
@@ -301,7 +301,7 @@ RubScrolledTextMorph >> defaultGhostTextMorph [
 	^ gt
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> defaultScrollTarget [
 	| textArea |
 	textArea := self textAreaClass new.

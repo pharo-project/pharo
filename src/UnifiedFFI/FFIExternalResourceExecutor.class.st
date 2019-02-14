@@ -81,7 +81,7 @@ FFIExternalResourceExecutor >> initialize [
 	session := Smalltalk session
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FFIExternalResourceExecutor >> resourceClass: aResourceClass data: aData [
 	resourceClass := aResourceClass.
 	data := aData

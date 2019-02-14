@@ -126,7 +126,7 @@ RubParagraphDecorator >> text [
 	^self paragraph text
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubParagraphDecorator >> unplug [
 	next
 		ifNotNil: [ 

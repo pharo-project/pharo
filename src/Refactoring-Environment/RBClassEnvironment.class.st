@@ -76,7 +76,7 @@ RBClassEnvironment >> classSelectorDictionary [
 				yourself ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBClassEnvironment >> classes: aCollection [ 
 	aCollection do: [ :each | self addClass: each ]
 ]

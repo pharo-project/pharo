@@ -51,7 +51,7 @@ RBConjunctiveCondition >> errorStringFor: aBoolean [
 		ifFalse: [self perform: failed]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBConjunctiveCondition >> left: aCondition right: aCondition2 [ 
 	left := aCondition.
 	right := aCondition2.

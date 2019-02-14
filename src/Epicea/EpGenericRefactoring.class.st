@@ -28,7 +28,7 @@ EpGenericRefactoring >> asRBRefactoring [
 	^ self class compiler evaluate: storeString
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 EpGenericRefactoring >> initializeWith: aRBRefactoring [
 	self initialize.
 	storeString := aRBRefactoring storeString

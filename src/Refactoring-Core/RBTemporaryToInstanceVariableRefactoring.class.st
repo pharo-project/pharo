@@ -52,7 +52,7 @@ RBTemporaryToInstanceVariableRefactoring >> checkForValidTemporaryVariable [
 							expandMacrosWith: temporaryVariableName)]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBTemporaryToInstanceVariableRefactoring >> class: aClass selector: aSelector variable: aVariableName [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.

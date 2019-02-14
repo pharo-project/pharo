@@ -355,7 +355,7 @@ NECController >> setEditor: anObject [
 	editor morph onAnnouncement: MorphLostFocus send: #closeMenu to: self.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NECController >> setModel: aStringHolder [ 
 	model := aStringHolder
 ]

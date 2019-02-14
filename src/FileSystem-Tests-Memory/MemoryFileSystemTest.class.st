@@ -7,7 +7,7 @@ Class {
 	#category : #'FileSystem-Tests-Memory-Base'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MemoryFileSystemTest >> createFileSystem [
 	^ FileSystem memory
 ]

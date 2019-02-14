@@ -300,7 +300,7 @@ RBTransformationRuleTest >> resetResult [
 	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChange
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBTransformationRuleTest >> rewriteUsing: searchReplacer [ 
 	rewriteRule := searchReplacer.
 	self resetResult

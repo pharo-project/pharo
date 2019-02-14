@@ -490,7 +490,7 @@ FileSystem >> hash [
 	^ store hash
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FileSystem >> initializeWithStore: aStore [
 	store := aStore
 ]

@@ -646,7 +646,7 @@ SettingBrowser >> regexpSearch: aBoolean [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SettingBrowser >> release [
 	treeHolder release.
 	treeHolder := nil.

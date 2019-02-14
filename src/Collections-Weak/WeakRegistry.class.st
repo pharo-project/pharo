@@ -108,7 +108,7 @@ WeakRegistry >> initialize [
 	self installFinalizer.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 WeakRegistry >> installFinalizer [
 	" do nothing, pharo does not supports it right now
 	valueDictionary finalizer: #finalizeValues

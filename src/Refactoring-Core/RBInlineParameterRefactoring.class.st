@@ -88,7 +88,7 @@ RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [
 	^searcher executeTree: aTree initialAnswer: OrderedCollection new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBInlineParameterRefactoring >> inlineParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self classObjectFor: aClass.

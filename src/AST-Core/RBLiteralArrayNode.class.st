@@ -62,7 +62,7 @@ RBLiteralArrayNode >> contents [
 	^contents
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBLiteralArrayNode >> contents: aRBLiteralNodeCollection [ 
 	contents := aRBLiteralNodeCollection.
 	contents do: [:each | each parent: self]
@@ -145,7 +145,7 @@ RBLiteralArrayNode >> replaceSourceWith: aNode [
 		do: [:first :second | first = second ifFalse: [ first replaceSourceWith: second]]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBLiteralArrayNode >> startPosition: startInteger contents: anArray stopPosition: stopInteger isByteArray: aBoolean [ 
 	start := startInteger.
 	self contents: anArray.

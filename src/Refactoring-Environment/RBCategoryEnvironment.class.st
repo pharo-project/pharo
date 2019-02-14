@@ -41,7 +41,7 @@ RBCategoryEnvironment >> addCategory: aSymbol [
 	categories add: aSymbol
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBCategoryEnvironment >> categories: aCollection [
 	categories addAll: aCollection
 ]

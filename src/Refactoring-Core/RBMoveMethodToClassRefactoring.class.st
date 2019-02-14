@@ -44,7 +44,7 @@ RBMoveMethodToClassRefactoring >> classModelOf: aClass [
 	^classModel
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBMoveMethodToClassRefactoring >> method: aMethod class: aClass [
 	method := aMethod.
 	class := self classObjectFor: aClass.

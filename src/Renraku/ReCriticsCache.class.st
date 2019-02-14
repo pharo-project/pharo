@@ -7,7 +7,7 @@ Class {
 	#category : #'Renraku-CriticBrowser'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ReCriticsCache >> initCache [
 
 

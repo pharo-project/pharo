@@ -663,7 +663,7 @@ AthensCairoSurface >> privateHeight [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoSurface >> resourceData [
 	^ { handle value. id. context handle }
 ]

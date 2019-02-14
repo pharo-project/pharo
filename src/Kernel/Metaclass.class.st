@@ -289,7 +289,7 @@ Metaclass >> sharedPools [
 	^OrderedCollection new.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Metaclass >> slots: slotCollection [ 
 
 	| theClass |

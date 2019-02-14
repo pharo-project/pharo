@@ -125,7 +125,7 @@ MetacelloDirective >> spec [
 	^spec
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MetacelloDirective >> spec: packageOrVersionSpec loader: aLoader [
 
 	spec := packageOrVersionSpec.

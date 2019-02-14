@@ -663,7 +663,7 @@ RubParagraph >> totalTextHeight [
 	^self lines last bottom
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubParagraph >> unplug [
 	self releaseComposer.
 	textArea := nil.

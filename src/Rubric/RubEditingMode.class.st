@@ -120,7 +120,7 @@ RubEditingMode >> model [
 	^ self textArea model
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingMode >> plugin: aTextArea [ 
 	textArea := aTextArea.
 	previousEditorClass := self textArea editorClass.
@@ -153,7 +153,7 @@ RubEditingMode >> textStyle [
 	^ self textArea textStyle
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingMode >> unplug [
 	previousEditorClass = self textArea editor class
 		ifFalse: [ 
@@ -164,7 +164,7 @@ RubEditingMode >> unplug [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingMode >> updateTextAreaWhenPlugged [
 	self textArea
 		restoreSelectionIndexesAfter: [ 
@@ -174,7 +174,7 @@ RubEditingMode >> updateTextAreaWhenPlugged [
 			self textArea updateTextWith: t ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingMode >> updateTextAreaWhenUnplugged [
 
 ]

@@ -1359,7 +1359,7 @@ Context >> printOn: aStream [
 			outerContext printOn: aStream ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Context >> privRefresh [
 	"Reinitialize the receiver so that it is in the state it was at its creation."
 	 closureOrNil
@@ -1375,7 +1375,7 @@ Context >> privRefresh [
 				[:i | self tempAt: i put: nil]]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Context >> privRefreshWith: aCompiledMethod [ 
 	"Reinitialize the receiver as though it had been for a different method. 
 	 Used by a Debugger when one of the methods to which it refers is 

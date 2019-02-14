@@ -304,7 +304,7 @@ RBTransformationDummyRuleTest >> resetResult [
 	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChange
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBTransformationDummyRuleTest >> rewriteUsing: searchReplacer [ 
 	rewriteRule := searchReplacer.
 	self resetResult

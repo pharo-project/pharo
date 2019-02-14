@@ -25,7 +25,7 @@ RBNegationCondition >> check [
 	^condition check not
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBNegationCondition >> condition: aCondition [ 
 	condition := aCondition.
 	self errorMacro: condition errorMacro

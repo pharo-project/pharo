@@ -424,7 +424,7 @@ RBAbstractClass >> model [
 	^model
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBAbstractClass >> model: aRBSmalltalk [
 	model := aRBSmalltalk
 ]

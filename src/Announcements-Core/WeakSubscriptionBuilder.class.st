@@ -21,7 +21,7 @@ WeakSubscriptionBuilder class >> on: announcer [
 	^ self new announcer: announcer
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 WeakSubscriptionBuilder >> announcer: anAnnouncer [
 	announcer := anAnnouncer 
 ]

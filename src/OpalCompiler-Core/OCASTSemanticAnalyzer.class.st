@@ -92,7 +92,7 @@ OCASTSemanticAnalyzer >> lookupVariableForWrite: aVariableNode [
 	^var
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 OCASTSemanticAnalyzer >> scope: aSemScope [
 	scope := aSemScope
 ]
