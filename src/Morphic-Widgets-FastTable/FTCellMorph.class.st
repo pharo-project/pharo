@@ -44,6 +44,12 @@ FTCellMorph >> drawOn: aCanvas [
 		ifTrue: [ aCanvas line: bounds topLeft to: bounds topRight color: self seperatorColor ]
 ]
 
+{ #category : #'event handling' }
+FTCellMorph >> handlesMouseOver: evt [
+	self table ifNotNil: [ :table | ^ table selectionModeStrategy allowsCellSelection ].
+	^ false
+]
+
 { #category : #initialization }
 FTCellMorph >> initialize [
 	super initialize.

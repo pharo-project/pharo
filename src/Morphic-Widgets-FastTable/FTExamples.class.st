@@ -499,6 +499,110 @@ FTExamples class >> exampleOutline2 [
 ]
 
 { #category : #examples }
+FTExamples class >> exampleSortableList [
+	"Show a list with all Object methods with a header"
+
+	<example>
+	<sampleInstance>
+	| list |
+	list := FTTableMorph new
+		extent: 300 @ 550;
+		addColumn:
+			((FTColumn id: 'Class name')
+				sortableOnProperty: #printString;
+				yourself);
+		dataSource: (FTExampleDataSource elements: Smalltalk allClassesAndTraits shuffled);
+		yourself.
+
+	^ list openInWindow
+]
+
+{ #category : #examples }
+FTExamples class >> exampleSortableTable1 [
+	"Show a table with all Object methods"
+
+	<sampleInstance>
+	<example>
+	| table |
+	table := FTTableMorph new
+		extent: 650 @ 500;
+		addColumn:
+			((FTColumn id: 'Name')
+				sortableOnProperty: #name;
+				yourself);
+		addColumn:
+			((FTColumn id: 'Protocol')
+				sortableOnProperty: #protocol;
+				yourself);
+		addColumn:
+			((FTColumn id: 'Origin')
+				sortableOnProperty: [ :entity | entity origin name ];
+				yourself);
+		dataSource: (FTExampleMethodTableDataSource for: Object);
+		selectFirst;
+		showFirstSelection;
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crLog ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
+		beMultipleSelection;
+		beResizable;
+		yourself.
+
+	^ table openInWindow
+]
+
+{ #category : #examples }
+FTExamples class >> exampleSortableTable2 [
+	"Show a table with all Object methods"
+
+	<sampleInstance>
+	<example>
+	| table |
+	table := FTTableMorph new
+		extent: 650 @ 500;
+		addColumn:
+			((FTColumn id: 'Icon')
+				width: 40;
+				yourself);
+		addColumn:
+			((FTColumn id: 'Name')
+				sortableOnProperty: #name;
+				yourself);
+		addColumn:
+			((FTColumn id: 'Number of methods')
+				sortableOnProperty: #numberOfMethods;
+				yourself);
+		addColumn:
+			((FTColumn id: 'Number of instance variables')
+				sortableOnProperty: #numberOfInstanceVariables;
+				yourself);
+		dataSource: FTExampleClassInfoTableDataSource new;
+		selectFirst;
+		showFirstSelection;
+		beResizable;
+		yourself.
+
+	^ table openInWindow
+]
+
+{ #category : #examples }
+FTExamples class >> exampleSortableTree [
+	"Show a list with all Object methods with a header"
+
+	<example>
+	<sampleInstance>
+	| ds |
+	ds := FTTreeDataSource roots: (ProtoObject allSubclasses reject: [ :e | e isMeta ]) children: [ :data | data subclasses ].
+	FTTableMorph new
+		extent: 200 @ 400;
+		addColumn:
+			((FTColumn id: 'Class name')
+				sortableOnProperty: #printString;
+				yourself);
+		dataSource: ds;
+		openInWindow
+]
+
+{ #category : #examples }
 FTExamples class >> exampleTable1 [
 	"Show a table with all Object methods"
 
