@@ -10,18 +10,10 @@ ReSystemAnnouncer uniqueInstance week ...
 Class {
 	#name : #ReSystemAnnouncer,
 	#superclass : #Announcer,
-	#classInstVars : [
-		'uniqueInstance'
-	],
+	#traits : 'TSingleton',
+	#classTraits : 'TSingleton classTrait',
 	#category : #'Renraku-Announcements'
 }
-
-{ #category : #'instance creation' }
-ReSystemAnnouncer class >> uniqueInstance [
-	"I'm a singleton…"
-	
-	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
-]
 
 { #category : #announce }
 ReSystemAnnouncer >> notifyCritique: aCritique descriptionViewedFor: anEntity [
