@@ -288,7 +288,7 @@ FTTreeDataSource >> searchText: aString [
 { #category : #sorting }
 FTTreeDataSource >> sortElements: aSortFunction [
 	unsortedElements ifNil: [ unsortedElements := self rootsItems ].
-	self rootItem children: (self rootItem children copy sort: aSortFunction)
+	self rootItem children: (self rootItem children sorted: aSortFunction)
 ]
 
 { #category : #sorting }

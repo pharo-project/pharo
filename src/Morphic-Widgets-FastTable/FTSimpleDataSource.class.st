@@ -76,7 +76,7 @@ FTSimpleDataSource >> searchText: aString [
 { #category : #sorting }
 FTSimpleDataSource >> sortElements: aSortFunction [
 	unsortedElements ifNil: [ unsortedElements := self elements ].
-	self elements: (self elements copy sort: aSortFunction)
+	self elements: (self elements sorted: aSortFunction)
 ]
 
 { #category : #sorting }
