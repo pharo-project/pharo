@@ -4,7 +4,7 @@ I am a shortcut handler that installs keymappings in the system.
 Class {
 	#name : #KMShortcutHandler,
 	#superclass : #Object,
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Base'
 }
 
 { #category : #'shortcut-handling' }

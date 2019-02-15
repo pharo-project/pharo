@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'debug'
 	],
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Debugging'
 }
 
 { #category : #logging }
@@ -66,10 +66,12 @@ KMLog class >> logger [
 
 { #category : #debugging }
 KMLog class >> removeDebug [
+	<script>
 	debug := false
 ]
 
 { #category : #debugging }
 KMLog class >> setDebug [
+	<script>
 	debug := true
 ]
