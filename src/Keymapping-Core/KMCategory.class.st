@@ -8,7 +8,7 @@ Class {
 		'name',
 		'platforms'
 	],
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Categories'
 }
 
 { #category : #'instance creation' }
@@ -46,7 +46,7 @@ KMCategory >> bindToObject: anObject andMorph: aMorph [
 	^ KMCategoryBinding target: anObject morph: aMorph category: self.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KMCategory >> buildKeymapOnMethod: method [
 
 	self addKeymapEntry: (self perform: method selector)

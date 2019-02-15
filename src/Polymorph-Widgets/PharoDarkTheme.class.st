@@ -317,7 +317,7 @@ PharoDarkTheme >> menuItemDisabledTextColorFor: aMenuItem [
 	^ Color lightGray
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 PharoDarkTheme >> newRadioMarkerForm [
 	"Answer a new checkbox marker form."
 

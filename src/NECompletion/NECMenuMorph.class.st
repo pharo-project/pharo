@@ -179,7 +179,7 @@ NECMenuMorph class >> scrollArrowSize [
 
 { #category : #'preferences-colors' }
 NECMenuMorph class >> scrollColor [
-	^ Smalltalk ui theme selectionColor
+	^ self theme selectionColor
 ]
 
 { #category : #'help text' }

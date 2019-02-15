@@ -248,7 +248,7 @@ RBAssignmentNode >> variable: varNode [
 	variable parent: self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBAssignmentNode >> variable: aVariableNode value: aValueNode position: anInteger [ 
 	self variable: aVariableNode.
 	self value: aValueNode.

@@ -63,7 +63,7 @@ BitsLayout >> extendWord [
 		signal
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 BitsLayout >> initializeInstance: anInstance [
 ]
 

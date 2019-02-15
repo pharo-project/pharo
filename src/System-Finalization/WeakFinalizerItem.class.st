@@ -95,7 +95,7 @@ WeakFinalizerItem >> list: aList [
 	list := aList
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 WeakFinalizerItem >> list: weakFinalizationList object: anObject [
 	self assert: (weakFinalizationList class == WeakFinalizationList).
 	list := weakFinalizationList.
@@ -103,7 +103,7 @@ WeakFinalizerItem >> list: weakFinalizationList object: anObject [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 WeakFinalizerItem >> list: weakFinalizationList object: anObject executor: anExecutor [
 	self assert: (weakFinalizationList class == WeakFinalizationList).
 	list := weakFinalizationList.

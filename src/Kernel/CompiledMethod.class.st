@@ -353,7 +353,7 @@ CompiledMethod >> copyWithSource: aString [
 	^self copyWithTrailerBytes: (CompiledMethodTrailer new sourceCode: aString) 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CompiledMethod >> copyWithTrailerBytes: trailer [
 "Testing:
 	(CompiledMethod compiledMethodAt: #copyWithTrailerBytes:)
@@ -907,7 +907,7 @@ CompiledMethod >> readsField: varIndex [
 	^ super readsField: varIndex 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CompiledMethod >> removeFromSystem [
 	^ self methodClass removeSelector: self selector
 ]

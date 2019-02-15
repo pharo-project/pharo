@@ -357,7 +357,7 @@ MCGitBasedNetworkRepository >> calculateRepositoryDirectory [
 	^ directory
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCGitBasedNetworkRepository >> canUpgradeTo: anMCGitBasedRepository [
   (anMCGitBasedRepository isKindOf: self class)
     ifFalse: [ ^ false ].
@@ -404,7 +404,7 @@ MCGitBasedNetworkRepository >> ensureLocalRepository [
 	self resolveLocalRespository
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCGitBasedNetworkRepository >> flushCache [
   "the directory acts like a cache since we download the directory from a git-based repository (github, bitbucket, etc.)"
 	| directory |
@@ -423,7 +423,7 @@ MCGitBasedNetworkRepository >> flushCache [
 		ifFalse: [ localRepository resetDirectory ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCGitBasedNetworkRepository >> flushForScriptGet [
 
 	self class 
@@ -508,7 +508,7 @@ MCGitBasedNetworkRepository >> projectPath: anObject [
     projectPath := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCGitBasedNetworkRepository >> projectPath: aProjectPath projectVersion: aProjectVersion repoPath: aRepoPath [
   self projectPath: aProjectPath.
   self projectVersion: aProjectVersion.	"Important that projectVersion be set AFTER projectPath"

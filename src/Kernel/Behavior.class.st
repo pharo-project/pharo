@@ -1474,7 +1474,7 @@ Behavior >> nextQuotePosIn: sourceString startingFrom: commentStart [
 	^nextQuotePos
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Behavior >> nonObsoleteClass [
 	"Attempt to find and return the current version of this obsolete class"
 
@@ -1889,7 +1889,7 @@ Behavior >> superclass: aClass [
 			superclass: aClass].
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Behavior >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver.
 	Must only be sent to a new instance; else we would need Object flushCache."

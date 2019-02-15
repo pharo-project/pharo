@@ -21,7 +21,7 @@ RxmPredicate class >> with: unaryBlock [
 	^self new predicate: unaryBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxmPredicate >> bePerform: aSelector [
 	"Match any single character that answers true  to this message."
 
@@ -30,7 +30,7 @@ RxmPredicate >> bePerform: aSelector [
 		RxParser doHandlingMessageNotUnderstood: [char perform: aSelector]]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxmPredicate >> bePerformNot: aSelector [
 	"Match any single character that answers false to this message."
 
@@ -55,7 +55,7 @@ RxmPredicate >> matchAgainst: aMatcher [
 			^false]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxmPredicate >> predicate: aBlock [
 	"This link will match any single character for which <aBlock>
 	evaluates to true."

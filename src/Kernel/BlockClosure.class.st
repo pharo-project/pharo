@@ -541,7 +541,7 @@ BlockClosure >> outerContext [
 	^outerContext
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 BlockClosure >> outerContext: aContext startpc: aStartpc numArgs: argCount copiedValues: anArrayOrNil [
 	outerContext := aContext.
 	startpc := aStartpc.

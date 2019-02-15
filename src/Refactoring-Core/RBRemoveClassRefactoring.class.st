@@ -32,7 +32,7 @@ RBRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameColl
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRemoveClassRefactoring >> classNames: aClassNameCollection [ 
 	classNames := aClassNameCollection
 ]

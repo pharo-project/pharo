@@ -51,7 +51,7 @@ RBRenameClassVariableRefactoring >> preconditions [
 			& (RBCondition isGlobal: newName asString in: self model) not
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRenameClassVariableRefactoring >> rename: aVarName to: aName in: aClass [
 	self variable: aVarName class: aClass.
 	newName := aName

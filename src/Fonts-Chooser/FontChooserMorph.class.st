@@ -146,7 +146,7 @@ FontChooserMorph >> fontPreviewPanel [
 		[ fontPreviewPanel := self newScrollPaneFor: self newFontPreviewInnerPanel ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FontChooserMorph >> initializeLabelArea [
 	"Customize the window bar by removing all the decorations"
 	
@@ -157,7 +157,7 @@ FontChooserMorph >> initializeLabelArea [
 		removeMenuBox
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FontChooserMorph >> initializeWithModel: aFontChooser [
 	self 
 		model: aFontChooser;

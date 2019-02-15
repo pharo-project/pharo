@@ -143,7 +143,7 @@ FileSystemDirectoryEntry >> gid [
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FileSystemDirectoryEntry >> initializeWithReference: ref [ 
 
 	super initialize.	

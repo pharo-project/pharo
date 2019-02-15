@@ -120,7 +120,7 @@ AthensCairoCanvas >> handle [
 	^ handle value
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoCanvas >> initializeWithSurface: anAthensSurface [	
 	super initializeWithSurface: anAthensSurface.
 	self paintMode default.

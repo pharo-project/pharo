@@ -113,7 +113,7 @@ ToolRegistry >> informNoDebugger [
 			Processor activeProcess terminate ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ToolRegistry >> initDefaultToolSet [
 	
 	"Query the system for registering tools"

@@ -80,7 +80,7 @@ RxMatchOptimizer >> determineTestMethod [
 	^[:char :matcher | testers contains: [:t | t value: char value: matcher]]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxMatchOptimizer >> initialize: aRegex ignoreCase: aBoolean [ 
 	"Set `testMethod' variable to a can-match predicate block:
 	two-argument block which accepts a lookahead character

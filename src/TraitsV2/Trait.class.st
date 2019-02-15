@@ -228,7 +228,7 @@ Trait >> rebuildMethodDictionary [
 	^ true
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Trait >> removeFromSystem: logged [
 	
 	"When a trait is removed from the system it should:

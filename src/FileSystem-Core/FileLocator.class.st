@@ -426,7 +426,7 @@ FileLocator >> hash [
 	^ origin hash bitXor: path hash
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FileLocator >> initializeWithOrigin: aSymbol path: aPath [
 	self initialize.
 	origin := aSymbol.

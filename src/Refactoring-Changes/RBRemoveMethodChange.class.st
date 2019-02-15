@@ -62,7 +62,7 @@ RBRemoveMethodChange >> selector [
 	^ selector
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRemoveMethodChange >> selector: aSymbol [
 	selector := aSymbol
 ]

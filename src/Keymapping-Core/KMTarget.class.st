@@ -8,7 +8,7 @@ Class {
 		'morph',
 		'targetSelector'
 	],
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Base'
 }
 
 { #category : #'instance creation' }

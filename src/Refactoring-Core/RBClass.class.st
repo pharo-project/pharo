@@ -219,7 +219,7 @@ RBClass >> privatePoolDictionaryNames [
 	^poolDictionaryNames
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBClass >> realName: aSymbol [ 
 	self realClass: (self class environment at: aSymbol)
 ]

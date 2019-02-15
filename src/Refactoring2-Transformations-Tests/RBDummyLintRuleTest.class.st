@@ -107,7 +107,7 @@ RBDummyLintRuleTest >> problemCount [
 	^self subclassResponsibility
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBDummyLintRuleTest >> resetResult [
 ]
 

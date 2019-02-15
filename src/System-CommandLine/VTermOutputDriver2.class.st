@@ -203,7 +203,7 @@ VTermOutputDriver2 >> clearToEnd [
 	^self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 VTermOutputDriver2 >> close [
 	"Stdout shouldn't be closed"
 

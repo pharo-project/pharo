@@ -96,7 +96,7 @@ UserInterruptHandler >> processToInterrupt [
 	^fallback
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UserInterruptHandler >> setInterruptKeyValue: anInt [
 	interruptKey := anInt
 

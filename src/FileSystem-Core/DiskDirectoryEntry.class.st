@@ -223,7 +223,7 @@ DiskDirectoryEntry >> hasCreationTime [
 	^(self statAttributes at: 12) isNotNil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DiskDirectoryEntry >> initializeWithReference: aFileReference statAttributes: anArray [
 
 	super initialize.	

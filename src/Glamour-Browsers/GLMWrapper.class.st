@@ -9,7 +9,7 @@ Class {
 	#category : #'Glamour-Browsers-Other'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMWrapper >> addDefaultPane [
 	self addPane: (GLMPane named: #default)
 ]

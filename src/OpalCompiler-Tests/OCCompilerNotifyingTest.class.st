@@ -74,7 +74,7 @@ OCCompilerNotifyingTest >> evaluateSelectionNumber: n [
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 OCCompilerNotifyingTest >> initializeTextWithoutError [
 	"Remove the errors from the text to be compiled and answer the text without errors.
 	Meanwhile, collect the expected error messages and their expected position."
@@ -106,7 +106,7 @@ OCCompilerNotifyingTest >> setUp [
 	failure := Object new.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 OCCompilerNotifyingTest >> setUpForErrorsIn: aTextWithErrorsEnclosedInBackQuote [
   "Extract the expectedErrors, the expectedErrorPositions and set up a TextMorph containing the text without errors.
   each section separated by % in aTextWithErrorsEnclosedInBackQuote will be evaluated separately.

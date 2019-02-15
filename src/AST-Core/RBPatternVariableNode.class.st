@@ -43,7 +43,7 @@ RBPatternVariableNode >> copyInContext: aDictionary [
 		ifFalse: [ (aDictionary at: self) copy ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBPatternVariableNode >> initializePatternVariables [
 	| myname |
 	myname := self name.
@@ -120,7 +120,7 @@ RBPatternVariableNode >> matchingClass [
 	^RBVariableNode
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBPatternVariableNode >> named: aName start: aPosition [
 
 	super named: aName start: aPosition.

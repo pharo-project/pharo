@@ -59,7 +59,7 @@ FreeTypeFace class >> fromFile: aFileName index: anInteger [
 FreeTypeFace class >> rememberFontDir: aDirecory [
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FreeTypeFace >> actAsExecutor [
 	super actAsExecutor.
 	filename := '<finalizer>'.

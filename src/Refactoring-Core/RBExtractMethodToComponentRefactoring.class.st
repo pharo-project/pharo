@@ -35,7 +35,7 @@ RBExtractMethodToComponentRefactoring class >> model: aRBSmalltalk extract: anIn
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBExtractMethodToComponentRefactoring >> extract: anInterval from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.

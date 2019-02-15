@@ -76,7 +76,7 @@ RGAbstractContainer >> elementsDo: aBlock [
 	elements valuesDo: [ :collection | collection do: [ :each | aBlock value: each ] ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RGAbstractContainer >> flushElements [
 
 	elements:= IdentityDictionary new

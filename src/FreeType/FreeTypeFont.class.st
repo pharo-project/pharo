@@ -502,7 +502,7 @@ FreeTypeFont >> hintedWidthOf: aCharacter [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FreeTypeFont >> initialize: aFont [
 
 	self face: aFont face.
@@ -717,7 +717,7 @@ FreeTypeFont >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FreeTypeFont >> releaseCachedState [
 	face releaseCachedState.
 	FreeTypeCache current removeAllForFont: self.

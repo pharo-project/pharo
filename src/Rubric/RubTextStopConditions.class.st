@@ -81,7 +81,7 @@ RubTextStopConditions >> postCopy [
 	stops := stops copy
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubTextStopConditions >> setStops: stopArray [
 	stops := stopArray
 ]

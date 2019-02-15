@@ -66,7 +66,7 @@ AthensCairoPaintMode >> availableModes [
 	)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoPaintMode >> canvas: aCanvas [
 	canvas := aCanvas
 ]

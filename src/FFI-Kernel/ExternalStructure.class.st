@@ -287,7 +287,7 @@ ExternalStructure class >> typedef [
 	^self externalType typedef
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ExternalStructure >> free [
 	"Free the handle pointed to by the receiver"
 	(handle ~~ nil and:[handle isExternalAddress]) ifTrue:[handle free].

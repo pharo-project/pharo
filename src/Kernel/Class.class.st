@@ -403,7 +403,7 @@ Class >> copyForAnnouncement [
 	^ newClass
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> declareClassVariables: newVars [ 
 	"Declare class variables common to all instances. Answer whether 
 	recompilation is advisable."
@@ -819,7 +819,7 @@ Class >> newSubclass [
 	"Point newSubclass new"
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> obsolete [
 	"Change the receiver and all of its subclasses to an obsolete class."
 	self == Object 
@@ -909,14 +909,14 @@ Class >> removeClassVariable: aGlobal [
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> removeFromSystem [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing 
 	instances will refer to an obsolete version of the receiver."
 	self removeFromSystem: true.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> removeFromSystem: logged [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing  instances will refer to an obsolete version of the receiver.
 	Keep the class name and category for triggering the system change message. If we wait to long, then we get obsolete information which is not what we want.
@@ -936,7 +936,7 @@ Class >> removeFromSystem: logged [
 	logged ifTrue: [SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory].
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> removeFromSystemUnlogged [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing instances will refer to an obsolete version of the receiver.  Do not log the removal either to the current change set nor to the system changes log"
 	^self removeFromSystem: false
@@ -1252,14 +1252,14 @@ Class >> subclassesDo: aBlock [
 	self subclasses do: aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
 	self subclasses: nil. 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> unload [
 	"Sent when a the class is removed.  Does nothing, but may be overridden by (class-side) subclasses."
 ]

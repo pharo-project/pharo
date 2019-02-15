@@ -121,7 +121,7 @@ RBToken >> start [
 	^ sourcePointer ifNil: [ 0 ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBToken >> start: anInteger [ 
 	sourcePointer := anInteger
 ]

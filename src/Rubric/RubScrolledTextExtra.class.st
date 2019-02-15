@@ -196,7 +196,7 @@ RubScrolledTextExtra >> topRendererOrSelf [
 	^self paragraphProvider
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextExtra >> unplug [
 	self paragraphProvider
 		ifNotNil: [ 

@@ -110,7 +110,7 @@ RBInlineMethodRefactoring >> hasMultipleReturns [
 	^false
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBInlineMethodRefactoring >> inline: anInterval inMethod: aSelector forClass: aClass [ 
 	sourceSelector := aSelector.
 	class := self classObjectFor: aClass.

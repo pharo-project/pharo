@@ -257,7 +257,7 @@ ReferenceFinder >> searchVariablesIn: anObject [
 	^nil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ReferenceFinder >> startFrom: anObject [ 
 	backlinks := OrderedCollection new.
 	self addBacklinkLevel.

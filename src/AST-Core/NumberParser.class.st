@@ -430,7 +430,7 @@ NumberParser >> nextUnsignedIntegerOrNilBase: aRadix [
 	^high
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NumberParser >> on: aStringOrStream [ 
 	sourceStream := aStringOrStream isString 
 		ifTrue: [ aStringOrStream readStream ]

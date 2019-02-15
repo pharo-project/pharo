@@ -31,7 +31,7 @@ AthensQuadSegment >> endPoint [
 	^ to
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensQuadSegment >> from: pt0 via: pt1 to: p [
 
 	via := pt1.

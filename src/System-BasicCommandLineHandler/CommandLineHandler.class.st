@@ -226,13 +226,13 @@ CommandLineHandler >> initialize [
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CommandLineHandler >> initializeStderr [
 	"install the line end conversion and initialize the converter"
 	stderr := VTermOutputDriver stderr.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CommandLineHandler >> initializeStdout [
 	"install the line end conversion and initialize the converter"
 	stdout := VTermOutputDriver stdout.

@@ -140,7 +140,7 @@ RBRemoveMethodRefactoring >> preconditions [
 						true])
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRemoveMethodRefactoring >> removeMethods: selectorCollection from: aClass [ 
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection

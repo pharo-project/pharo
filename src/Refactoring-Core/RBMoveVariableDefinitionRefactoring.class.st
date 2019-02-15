@@ -71,7 +71,7 @@ RBMoveVariableDefinitionRefactoring >> checkParseTree [
 		ifFalse: [self refactoringError: 'Variable is possibly read before written']
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBMoveVariableDefinitionRefactoring >> class: aClass selector: aSelector interval: anInterval [ 
 	interval := anInterval.
 	class := self classObjectFor: aClass.

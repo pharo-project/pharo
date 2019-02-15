@@ -282,7 +282,7 @@ ByteArray >> printOn: aStream [
 	aStream nextPut: $]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ByteArray >> readHexFrom: aStream [
 	"Initialize the receiver from a hexadecimal string representation"
 	| map v ch value |

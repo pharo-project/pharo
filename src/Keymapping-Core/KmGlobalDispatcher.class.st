@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'dispatcher'
 	],
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Dispatching'
 }
 
 { #category : #dispatching }
@@ -18,7 +18,7 @@ KmGlobalDispatcher >> dispatch: anEventBuffer [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KmGlobalDispatcher >> dispatcher: aDispatcher [
 	dispatcher := aDispatcher
 ]

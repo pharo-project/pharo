@@ -69,7 +69,7 @@ RBRenameClassChange >> printOn: aStream [
 		nextPut: $!
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRenameClassChange >> rename: oldString to: newString [ 
 	oldName := oldString.
 	newName := newString

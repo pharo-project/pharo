@@ -154,7 +154,7 @@ AthensSceneView >> layoutChanged [
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensSceneView >> minimumExtent [
 	^ 300@300
 ]

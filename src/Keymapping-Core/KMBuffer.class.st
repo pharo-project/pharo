@@ -13,7 +13,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Base'
 }
 
 { #category : #'initialize-release' }

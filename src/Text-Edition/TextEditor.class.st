@@ -1553,7 +1553,7 @@ TextEditor >> indent: delta fromStream: inStream toStream: outStream [
 				skip := ch == cr ifTrue: [delta] ifFalse: [skip + 1]]]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 TextEditor >> initWithMorph: aMorph [
 	morph := aMorph.
 	self resetState 
@@ -2006,7 +2006,7 @@ TextEditor >> replaceSelectionWith: aText [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 TextEditor >> resetState [ 
 	"Establish the initial conditions for editing the paragraph: place caret 
 	before first character, set the emphasis to that of the first character,
@@ -2265,12 +2265,12 @@ TextEditor >> startOfTyping: anIntegerIndex [
 	self editingState startOfTyping:  anIntegerIndex
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 TextEditor >> stateArray [
 	^ Array with: self editingState
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 TextEditor >> stateArrayPut: stateArray [
 	editingState := stateArray at: 1.
 

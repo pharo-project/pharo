@@ -1448,7 +1448,7 @@ SystemWindow >> openInWorldExtent: extent [
 SystemWindow >> openModal [
 
 	self openInWorld.
-	Smalltalk ui theme runModal: self.
+	self theme runModal: self.
 ]
 
 { #category : #panes }

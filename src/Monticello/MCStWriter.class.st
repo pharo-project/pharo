@@ -38,7 +38,7 @@ MCStWriter >> chunkContents: aBlock [
 		cr
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCStWriter >> stream: aStream [
 
 	stream := ChunkWriteStream on: aStream

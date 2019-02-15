@@ -134,7 +134,7 @@ RBExtractMethodRefactoring >> existingSelector [
 		ifNone: [nil]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBExtractMethodRefactoring >> extract: anInterval from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.

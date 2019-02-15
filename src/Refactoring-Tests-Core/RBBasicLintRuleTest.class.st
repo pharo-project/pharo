@@ -262,7 +262,7 @@ RBBasicLintRuleTest class >> utilityProtocols [
 	^#('*utilit*')
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicLintRuleTest >> anInstVar [
 	^ anInstVar
 ]
@@ -282,12 +282,12 @@ RBBasicLintRuleTest >> checkMethod: aSmalllintContext [
 	^methodBlock value: aSmalllintContext value: result
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicLintRuleTest >> classBlock [
 	^ self anInstVar + 5
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicLintRuleTest >> classBlock: aBlock [
 	classBlock := aBlock testMethod1
 ]
@@ -317,12 +317,12 @@ RBBasicLintRuleTest >> method: anObject1 with: anObject2 lots: anObject3 of: anO
 	^ anObject5 + anObject1 > (anObject4 - anObject2 + anObject3)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicLintRuleTest >> methodBlock: aBlock [
 	methodBlock := aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicLintRuleTest >> newResultClass: aClass [ 
 "New one:)"
 	result := aClass new
@@ -349,7 +349,7 @@ RBBasicLintRuleTest >> result: aResult [
 	result := aResult copyEmpty
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicLintRuleTest >> resultClass: aClass [ 
 	result := aClass new
 ]

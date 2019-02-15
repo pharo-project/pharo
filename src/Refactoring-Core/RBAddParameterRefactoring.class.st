@@ -39,7 +39,7 @@ RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSe
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelector: newSel initializer: init [ 
 	self 
 		renameMethod: aSelector

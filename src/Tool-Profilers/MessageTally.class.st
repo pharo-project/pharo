@@ -829,7 +829,7 @@ MessageTally >> sonsOver: threshold [
 	^sons
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MessageTally >> spyAllEvery: millisecs on: aBlock [
 	"Create a spy and spy on the given block at the specified rate."
 	"Spy all the system processes"
@@ -870,7 +870,7 @@ MessageTally >> spyAllEvery: millisecs on: aBlock [
 		time := Time millisecondClockValue - time0]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MessageTally >> spyEvery: millisecs on: aBlock [
 	"Create a spy and spy on the given block at the specified rate."
 	"Spy only on the active process (in which aBlock is run)"
@@ -911,7 +911,7 @@ MessageTally >> spyEvery: millisecs on: aBlock [
 		time := Time millisecondClockValue - time0]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MessageTally >> spyEvery: millisecs onProcess: aProcess forMilliseconds: msecDuration [
 	"Create a spy and spy on the given process at the specified rate."
 	| myDelay time0 endTime observedProcess sem |
