@@ -15,7 +15,7 @@ Class {
 	#classVars : [
 		'Singleton'
 	],
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Base'
 }
 
 { #category : #cleanup }

@@ -8,7 +8,7 @@ Class {
 		'namedRegistry',
 		'anonymousRegistry'
 	],
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Base'
 }
 
 { #category : #accessing }
