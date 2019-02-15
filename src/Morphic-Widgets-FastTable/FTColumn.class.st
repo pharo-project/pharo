@@ -115,7 +115,12 @@ FTColumn >> sortDataSource: aDataSource [
 
 { #category : #sorting }
 FTColumn >> sortableOnProperty: aProperty [
-	self sortingStrategy: (FTDefaultColumnSortingStrategy column: self property: aProperty)
+	self sortingStrategy: (FTPropertyColumnSortingStrategy column: self property: aProperty)
+]
+
+{ #category : #sorting }
+FTColumn >> sortableUsing: aSortFunction [
+	self sortingStrategy: (FTSortFunctionColumnSortingStrategy column: self sortFunction: aSortFunction)
 ]
 
 { #category : #accessing }

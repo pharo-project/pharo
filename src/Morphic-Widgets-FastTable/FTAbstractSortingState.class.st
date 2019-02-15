@@ -4,7 +4,7 @@ Description
 
 I am an abstract class defining the API of a sorting state.
 
-I'll manage the behavior of a FTDefaultColumnSortingStrategy that is related to its state.	
+I'll manage the behavior of a aTSortingStrategyWithState subclasses using me that is related to its state.	
 	
 I follow the State design pattern.
  
@@ -12,7 +12,7 @@ Internal Representation and Key Implementation Points.
 --------------------
 
     Instance Variables
-	context:		<aFTDefaultColumnSortingStategy>	The context I am the state of.
+	context:		<aTSortingStrategyWithState>	The context I am the state of.
 
 "
 Class {

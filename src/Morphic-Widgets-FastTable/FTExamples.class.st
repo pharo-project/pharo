@@ -518,6 +518,25 @@ FTExamples class >> exampleSortableList [
 ]
 
 { #category : #examples }
+FTExamples class >> exampleSortableList2 [
+	"Show a list with all Object methods with a header"
+
+	<example>
+	<sampleInstance>
+	| list |
+	list := FTTableMorph new
+		extent: 300 @ 550;
+		addColumn:
+			((FTColumn id: 'Class name')
+				sortableUsing: #printString ascending;
+				yourself);
+		dataSource: (FTExampleDataSource elements: Smalltalk allClassesAndTraits shuffled);
+		yourself.
+
+	^ list openInWindow
+]
+
+{ #category : #examples }
 FTExamples class >> exampleSortableTable1 [
 	"Show a table with all Object methods"
 
@@ -574,6 +593,40 @@ FTExamples class >> exampleSortableTable2 [
 		addColumn:
 			((FTColumn id: 'Number of instance variables')
 				sortableOnProperty: #numberOfInstanceVariables;
+				yourself);
+		dataSource: FTExampleClassInfoTableDataSource new;
+		selectFirst;
+		showFirstSelection;
+		beResizable;
+		yourself.
+
+	^ table openInWindow
+]
+
+{ #category : #examples }
+FTExamples class >> exampleSortableTable3 [
+	"Show a table with all Object methods"
+
+	<sampleInstance>
+	<example>
+	| table |
+	table := FTTableMorph new
+		extent: 650 @ 500;
+		addColumn:
+			((FTColumn id: 'Icon')
+				width: 40;
+				yourself);
+		addColumn:
+			((FTColumn id: 'Name')
+				sortableUsing: #name ascending;
+				yourself);
+		addColumn:
+			((FTColumn id: 'Number of methods')
+				sortableUsing: #numberOfMethods ascending , #name ascending; "Sort by number of methods, if the same, sort by name."
+				yourself);
+		addColumn:
+			((FTColumn id: 'Number of instance variables')
+				sortableUsing: #numberOfInstanceVariables ascending , #name ascending; "Sort by number of inst var, if the same, sort by name."
 				yourself);
 		dataSource: FTExampleClassInfoTableDataSource new;
 		selectFirst;

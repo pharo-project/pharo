@@ -42,7 +42,7 @@ FTAbstractSortingStateTest >> setUp [
 	super setUp.
 	state := self actualClass
 		context:
-			(FTDefaultColumnSortingStrategy new
+			(FTPropertyColumnSortingStrategy new
 				property: #yourself;
 				yourself).
 	state context state: state

@@ -1,19 +1,19 @@
 "
-A FTDefaultColumnSortingStrategyTest is a test class for testing the behavior of FTDefaultColumnSortingStrategy
+A FTPropertyColumnSortingStrategyTest is a test class for testing the behavior of FTPropertyColumnSortingStrategy
 "
 Class {
-	#name : #FTDefaultColumnSortingStrategyTest,
+	#name : #FTPropertyColumnSortingStrategyTest,
 	#superclass : #FTAbstractColumnSortingStrategyTest,
 	#category : #'Morphic-Widgets-FastTable-Tests-Sorting'
 }
 
 { #category : #accessing }
-FTDefaultColumnSortingStrategyTest >> actualClass [
-	^ FTDefaultColumnSortingStrategy
+FTPropertyColumnSortingStrategyTest >> actualClass [
+	^ FTPropertyColumnSortingStrategy
 ]
 
 { #category : #tests }
-FTDefaultColumnSortingStrategyTest >> testProperty [
+FTPropertyColumnSortingStrategyTest >> testProperty [
 	| dataSource |
 	dataSource := self dataSourceForTesting.
 	strategy property: #yourself.
@@ -27,7 +27,7 @@ FTDefaultColumnSortingStrategyTest >> testProperty [
 ]
 
 { #category : #tests }
-FTDefaultColumnSortingStrategyTest >> testReset [
+FTPropertyColumnSortingStrategyTest >> testReset [
 	| dataSource |
 	dataSource := self dataSourceForTesting.
 	strategy property: #yourself.
@@ -40,7 +40,7 @@ FTDefaultColumnSortingStrategyTest >> testReset [
 ]
 
 { #category : #tests }
-FTDefaultColumnSortingStrategyTest >> testSortDataSource [
+FTPropertyColumnSortingStrategyTest >> testSortDataSource [
 	| dataSource |
 	dataSource := self dataSourceForTesting.
 	strategy property: #yourself.
