@@ -12,7 +12,7 @@ Class {
 
 { #category : #sorting }
 FTDescendingSortingState >> executeSortingOn: aDataSource [
-	aDataSource sortWith: [ :entity | self context property value: entity ] descending
+	aDataSource sortWith: self context ascendingSortFunction reversed
 ]
 
 { #category : #accessing }

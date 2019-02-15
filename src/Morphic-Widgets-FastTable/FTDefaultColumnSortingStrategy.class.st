@@ -36,6 +36,11 @@ FTDefaultColumnSortingStrategy class >> column: aColumn property: aValuable [
 		yourself
 ]
 
+{ #category : #accessing }
+FTDefaultColumnSortingStrategy >> ascendingSortFunction [
+	^ [ :entity | self property value: entity ] ascending
+]
+
 { #category : #initialization }
 FTDefaultColumnSortingStrategy >> initialize [
 	super initialize.
