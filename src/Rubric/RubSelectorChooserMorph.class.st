@@ -73,7 +73,7 @@ RubSelectorChooserMorph >> comeToFront [
 
 { #category : #accessing }
 RubSelectorChooserMorph >> defaultBaseColor [
-	^  (self theme menuColorFor: self) muchLighter
+	^ (self theme menuColorFor: self) muchLighter
 ]
 
 { #category : #drawing }

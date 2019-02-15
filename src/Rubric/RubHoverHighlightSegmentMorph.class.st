@@ -17,7 +17,7 @@ RubHoverHighlightSegmentMorph >> defaultBorderColor [
 
 { #category : #initialization }
 RubHoverHighlightSegmentMorph >> defaultColor [
-	^ Smalltalk ui theme secondarySelectionColor
+	^ self theme secondarySelectionColor
 ]
 
 { #category : #initialization }

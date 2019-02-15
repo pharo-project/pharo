@@ -555,8 +555,3 @@ IdentifierChooserMorph >> switchToPreviousColumn [
 			ifFalse: [prevIdx - 1]]
 
 ]
-
-{ #category : #accessing }
-IdentifierChooserMorph >> theme [
-		^ Smalltalk ui theme 
-]
