@@ -295,7 +295,7 @@ PragmaMenuBuilder >> pragmaKeywords: aCollection [
 	pragmaKeywords addAll: (aCollection collect: [:k | k asSymbol])
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 PragmaMenuBuilder >> release [
 	self pragmaCollector unsubscribe: self.
 	pragmaCollector := nil.

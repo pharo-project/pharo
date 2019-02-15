@@ -57,7 +57,7 @@ MalLongestPath >> initialize [
 	previousRanks := OrderedCollection new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MalLongestPath >> initializeRootNodes [
 	self computeRootNodes.
 	self setRanks: self rootNodes at: 0

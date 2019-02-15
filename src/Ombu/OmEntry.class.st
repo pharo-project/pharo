@@ -39,7 +39,7 @@ OmEntry >> hash [
 	^ self species hash bitXor: self content hash
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 OmEntry >> initializeWithContent: anObject [
 	self initialize.
 	content := anObject.

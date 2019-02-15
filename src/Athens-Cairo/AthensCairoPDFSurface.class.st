@@ -36,7 +36,7 @@ AthensCairoPDFSurface class >> registerSurface: surface [
 	"do not register my instances with SurfacePlugin"
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoPDFSurface >> resourceData [
 	^ handle value 
 ]

@@ -31,7 +31,7 @@ Semaphore >> = anObject [
 	^ self == anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Semaphore >> consumeAllSignals [
 	"Consume any excess signals the receiver may have accumulated."
 
@@ -128,7 +128,7 @@ Semaphore >> hash [
 	^ self identityHash
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Semaphore >> initSignals [
 	"Consume any excess signals the receiver may have accumulated."
 
@@ -141,7 +141,7 @@ Semaphore >> isSignaled [
 	^excessSignals > 0
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Semaphore >> resumeProcess: aProcess [
 	"Remove the given process from the list of waiting processes (if it's there) and resume it.  This is used when a process asked for its wait to be timed out."
 

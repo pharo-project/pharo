@@ -31,7 +31,7 @@ RxsBranch >> dispatchTo: aMatcher [
 	^aMatcher syntaxBranch: self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsBranch >> initializePiece: aPiece branch: aBranch [
 	"See class comment for instance variables description."
 

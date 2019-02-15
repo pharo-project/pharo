@@ -98,7 +98,7 @@ MCGitlabRepository >> hostname [
 	^ hostname
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCGitlabRepository >> hostname: aString [ 
 	hostname := aString
 ]

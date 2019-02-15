@@ -76,7 +76,7 @@ GLMRubTextFieldMorph >> forceHeight: anObject [
 	customHeight := anObject.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMRubTextFieldMorph >> newScrollPane [
 	"using hacked ScrollPane to remove focus border"
 	| sp |

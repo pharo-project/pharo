@@ -7,7 +7,7 @@ Class {
 	#category : #'Refactoring-Critics'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBParseTreeEnvironment >> matcher: aParseTreeSearcher [
 	matcher := aParseTreeSearcher
 ]

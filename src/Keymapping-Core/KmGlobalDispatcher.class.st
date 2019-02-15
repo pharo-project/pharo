@@ -18,7 +18,7 @@ KmGlobalDispatcher >> dispatch: anEventBuffer [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KmGlobalDispatcher >> dispatcher: aDispatcher [
 	dispatcher := aDispatcher
 ]

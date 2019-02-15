@@ -126,7 +126,7 @@ RBInlineAllSendersRefactoring >> selfSendIn: aTree [
 	^searcher executeTree: aTree initialAnswer: nil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBInlineAllSendersRefactoring >> sendersOf: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.

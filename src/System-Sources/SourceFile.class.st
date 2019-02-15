@@ -27,7 +27,7 @@ SourceFile >> atEnd [
 	^ stream atEnd
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SourceFile >> close [
 
 	stream ifNil: [ ^ self ].

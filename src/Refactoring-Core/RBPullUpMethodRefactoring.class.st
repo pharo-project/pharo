@@ -228,7 +228,7 @@ RBPullUpMethodRefactoring >> pullUp: aSelector [
 		classified: (class protocolsFor: aSelector)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBPullUpMethodRefactoring >> pullUp: selectorCollection from: aClass [ 
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection.

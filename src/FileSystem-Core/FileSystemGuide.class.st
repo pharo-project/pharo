@@ -42,7 +42,7 @@ FileSystemGuide >> initialize [
 	work := OrderedCollection new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FileSystemGuide >> initializeWithVisitor: aVisitor [
 	self initialize.
 	visitor := aVisitor.

@@ -22,7 +22,7 @@ EpPropagateRefactoring >> asRBRefactoring [
 	^ EpRBPropagateRefactoring target: targetRefactoring asRBRefactoring
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 EpPropagateRefactoring >> initializeWith: aTargetRefactoring [
 	self initialize.
 	

@@ -18,12 +18,12 @@ RubEditingArea >> autoScroll: anEvent [
 	scrollPane scrollWhenMouseMove: anEvent pivotPoint: self scrollPivot
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingArea >> beForPlainText [
 	self editingMode: RubPlainTextMode new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingArea >> beForSmalltalkCode [
 	self editingMode: RubSmalltalkCodeMode new
 
@@ -36,7 +36,7 @@ RubEditingArea >> beForSmalltalkCodeInClass: aClass [
 		yourself)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingArea >> beForSmalltalkCodeWithDefaultFont [
 	self editingMode: RubSmalltalkCodeMode new.
 	self font: StandardFonts defaultFont

@@ -445,7 +445,7 @@ MenuRegistration >> printOn: aStream [
 		<< ' ) '
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MenuRegistration >> release [
 	itemList := nil.
 	self releaseActionMap.
@@ -458,7 +458,7 @@ MenuRegistration >> removeItem: anItem [
 	self itemList remove: anItem 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MenuRegistration >> reset [
 	itemList 
 		ifNotNil: [

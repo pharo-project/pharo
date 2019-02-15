@@ -492,7 +492,7 @@ FT2Face >> maxAdvanceWidth [
 	^maxAdvanceWidth
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FT2Face >> newFaceFromExternalMemory: aFreeTypeExternalMemory index: anInteger [
 	| memSize holder returnCode |
 
@@ -509,7 +509,7 @@ FT2Face >> newFaceFromExternalMemory: aFreeTypeExternalMemory index: anInteger [
 	self autoRelease.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FT2Face >> newFaceFromFile: file index: anInteger [
 	| holder returnCode fileName |
 	

@@ -41,7 +41,7 @@ RBRefactoryVariableChange >> changeSymbol [
 	self subclassResponsibility
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRefactoryVariableChange >> class: aBehavior variable: aString [ 
 	self changeClass: aBehavior.
 	variable := aString

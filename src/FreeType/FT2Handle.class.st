@@ -31,7 +31,7 @@ FT2Handle class >> startUp: isImageStarting [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FT2Handle >> beNull [
 	
 	^ self handle beNull

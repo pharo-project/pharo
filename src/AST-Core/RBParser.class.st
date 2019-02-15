@@ -1041,7 +1041,7 @@ RBParser >> saveCommentsDuring: aBlock [
 		ensure: [ comments := comments, currentComments ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBParser >> scanner: aScanner [ 
 	scanner := aScanner.
 	pragmas := nil.

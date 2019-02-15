@@ -33,7 +33,7 @@ RBCreateAccessorsForVariableRefactoring class >> variable: aVarName class: aClas
 		classVariable: aBoolean; yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBCreateAccessorsForVariableRefactoring >> classVariable: aBoolean [ 
 	classVariable := aBoolean
 ]

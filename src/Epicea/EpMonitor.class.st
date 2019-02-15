@@ -345,7 +345,7 @@ EpMonitor >> handleError: error [
 		ifFalse: [ 'EpMonitor could not log a change. You can enable debugging with "EpMonitor current debugMode: true".' logCr ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 EpMonitor >> initializeWithLog: aLog [
 
 	self initialize.

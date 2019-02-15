@@ -67,7 +67,7 @@ CairoFontFace >> initialize [
 	self autoRelease 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CairoFontFace >> initializeWithFreetypeFace: aFace [
 	FFIExternalResourceManager
 		addResource: self

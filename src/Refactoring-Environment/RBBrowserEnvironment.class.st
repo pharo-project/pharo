@@ -436,7 +436,7 @@ RBBrowserEnvironment >> label [
 		ifFalse: [ label ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBrowserEnvironment >> label: aString [
 	label := aString
 ]

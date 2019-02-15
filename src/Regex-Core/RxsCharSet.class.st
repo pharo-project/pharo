@@ -55,7 +55,7 @@ RxsCharSet >> hasPredicates [
 	^elements contains: [:some | some isEnumerable not]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsCharSet >> initializeElements: aCollection negated: aBoolean [
 	"See class comment for instance variables description."
 

@@ -146,7 +146,7 @@ MCFileTreeStCypressWriter >> fileNameMapFor: aMethodDefinitionCollection [
   ^ filenameMetaMap
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCFileTreeStCypressWriter >> propertyFileExtension [
   ^ self repository propertyFileExtension
 ]
@@ -210,7 +210,7 @@ MCFileTreeStCypressWriter >> writeClassDefinition: definition to: classPath [
           (self methodDefinitions at: definition className ifAbsent: [ #() ]) ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCFileTreeStCypressWriter >> writeDefinitions: aCollection [
   | classDirExtension extensionClasses extensionMethodDefinitions extensionMethodMap methodHolders |
   self writeBasicDefinitions: aCollection.
@@ -331,7 +331,7 @@ MCFileTreeStCypressWriter >> writeMethodProperties: classMethodDefinitions [
     STON put: properties asJsonOnStreamPretty: fileStream
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCFileTreeStCypressWriter >> writePropertiesFile [
   | properties |
   properties := Dictionary new.

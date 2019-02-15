@@ -124,7 +124,7 @@ RBChangeMethodNameRefactoring >> renameMessageSends [
 	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [ 
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.

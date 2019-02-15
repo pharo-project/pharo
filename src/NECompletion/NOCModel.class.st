@@ -72,7 +72,7 @@ NOCModel >> initialize [
 	classTable := NOCCompletionTable classes.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NOCModel >> initializeSelectors [
 ]
 

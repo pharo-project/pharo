@@ -509,7 +509,7 @@ CompiledCode >> longPrintOn: aStream [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CompiledCode >> needsFrameSize: newFrameSize [
 	"Set the largeFrameBit to accomodate the newFrameSize"
 	(self numTemps + newFrameSize) > LargeFrame ifTrue:
@@ -702,7 +702,7 @@ CompiledCode >> sendsToSuper [
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb sendsToSuper ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CompiledCode >> setFrameBit: boolean [ 
 	"true for large frame, else false"
 	| largeFrameBit newHeader |

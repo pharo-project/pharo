@@ -24,14 +24,14 @@ RxsMessagePredicate >> dispatchTo: aBuilder [
 	^aBuilder syntaxMessagePredicate: self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsMessagePredicate >> initializeSelector: aSelector [
 	"The selector must be a one-argument message understood by Character."
 
 	selector := aSelector
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsMessagePredicate >> initializeSelector: aSelector negated: aBoolean [
 	"The selector must be a one-argument message understood by Character."
 

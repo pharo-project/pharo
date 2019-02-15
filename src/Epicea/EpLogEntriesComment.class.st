@@ -38,7 +38,7 @@ EpLogEntriesComment >> copyWithEntryReferences: aCollection [
 		newComment: self newComment
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 EpLogEntriesComment >> initializeWithEntryReferences: aCollection oldComment: theOldComment newComment: theNewComment [ 
 	self initializeWith: aCollection.
 	oldComment := theOldComment.

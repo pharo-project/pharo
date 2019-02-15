@@ -665,12 +665,12 @@ KeyboardKey >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KeyboardKey >> withValue: aValue [
 	self withValue: aValue andName: self class unknownKeyName
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KeyboardKey >> withValue: aValue andName: aName [
 	value := aValue.
 	name := aName

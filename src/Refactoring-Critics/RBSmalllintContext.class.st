@@ -161,7 +161,7 @@ RBSmalllintContext >> protocols [
 	^Array with: self protocol
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBSmalllintContext >> release [
 	literalProcess notNil ifTrue: [literalProcess terminate].
 	super release

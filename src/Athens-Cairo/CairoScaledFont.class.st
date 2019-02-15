@@ -142,7 +142,7 @@ CairoScaledFont >> getExtentsOfGlyphs: glyphs ofLength: num into: extents [
 		
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CairoScaledFont >> initWithFace: cairo_face [
 
 	face := cairo_face.

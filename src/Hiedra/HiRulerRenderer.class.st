@@ -33,7 +33,7 @@ HiRulerRenderer >> canvasPointsForAll: aCollectionOfNodes [
 		(rulerBuilder centerOfColumnIndex: rulerPoint x) @ (rulerBuilder centerOfRowIndex: rulerPoint y) ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 HiRulerRenderer >> initializeWithModel: aModel athensCanvas: aCanvas ruler: aRuler [
 	self initialize.
 		

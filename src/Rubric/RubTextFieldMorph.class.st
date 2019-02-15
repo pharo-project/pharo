@@ -61,7 +61,7 @@ RubTextFieldMorph >> resetState [
 	super resetState
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubTextFieldMorph >> textAreaClass [
 	^ RubTextFieldArea
 ]

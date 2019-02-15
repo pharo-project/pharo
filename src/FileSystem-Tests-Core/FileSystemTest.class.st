@@ -35,12 +35,12 @@ FileSystemTest class >> shouldInheritSelectors [
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FileSystemTest >> createFileSystem [
 	self subclassResponsibility 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FileSystemTest >> markForCleanup: anObject [
 	toDelete add: (filesystem resolve: anObject)
 ]

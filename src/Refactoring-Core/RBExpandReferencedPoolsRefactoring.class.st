@@ -58,7 +58,7 @@ RBExpandReferencedPoolsRefactoring >> computePoolsToMove [
 	searcher executeTree: parseTree
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBExpandReferencedPoolsRefactoring >> forMethod: aParseTree fromClass: aClass toClasses: classCollection [ 
 	fromClass := self model classFor: aClass.
 	parseTree := aParseTree.

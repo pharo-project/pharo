@@ -242,7 +242,7 @@ RxMatcher >> hookBranchOf: regexNode onto: endMarker [
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxMatcher >> initialize: syntaxTreeRoot ignoreCase: aBoolean [
 	"Compile thyself for the regex with the specified syntax tree.
 	See comment and `building' protocol in this class and 

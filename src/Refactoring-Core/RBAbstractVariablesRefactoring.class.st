@@ -109,7 +109,7 @@ RBAbstractVariablesRefactoring >> abstractInstanceVariables [
 	variables do: [ :each | self abstractInstanceVariable: each ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBAbstractVariablesRefactoring >> abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [ 
 	| poolRefactoring |
 	tree := aBRProgramNode.

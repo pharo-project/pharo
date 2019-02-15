@@ -94,7 +94,7 @@ RBRefactoryChangeManager >> clearUndoRedoList [
 	redo := OrderedCollection new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRefactoryChangeManager >> connectToChanges [
 	SystemAnnouncer uniqueInstance weak
 		when: CategoryAdded,
@@ -114,7 +114,7 @@ RBRefactoryChangeManager >> connectToChanges [
 		to: self.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRefactoryChangeManager >> disconnectFromChanges [
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
@@ -165,7 +165,7 @@ RBRefactoryChangeManager >> redoOperation [
 		undo add: change execute ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRefactoryChangeManager >> release [
 	self disconnectFromChanges.
 	super release.	

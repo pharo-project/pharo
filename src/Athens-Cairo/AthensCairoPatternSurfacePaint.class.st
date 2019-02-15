@@ -62,7 +62,7 @@ AthensCairoPatternSurfacePaint >> extent: aPatternExtent [
 	extent:= aPatternExtent
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoPatternSurfacePaint >> initializeFor: anAthensCairoSurface [ 
 	self initialize.
 	surface := anAthensCairoSurface .

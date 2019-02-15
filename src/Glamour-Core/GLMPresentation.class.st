@@ -428,7 +428,7 @@ GLMPresentation >> initialize: aBlock [
 	initializationBlock := aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMPresentation >> initializePresentation [
 	initializationBlock ifNotNil: [ initializationBlock value: self ]
 ]
