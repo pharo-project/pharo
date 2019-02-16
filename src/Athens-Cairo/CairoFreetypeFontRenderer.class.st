@@ -13,7 +13,6 @@ Class {
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
 		'font',
-		'surface',
 		'utfConverter',
 		'canvas',
 		'advance',
