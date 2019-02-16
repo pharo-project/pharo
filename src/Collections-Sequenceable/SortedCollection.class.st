@@ -177,7 +177,7 @@ SortedCollection >> defaultSort: i to: j [
 				 l := j.
 				 [[l := l - 1.  k <= l and: [dij <= (array at: l)]]
 				   whileTrue.  "i.e. while dl succeeds dij"
-				  [k := k + 1.  k <= l and: [(array at: k) <= dij]]
+				  [k := k + 1.  k < j and: [(array at: k) <= dij]]
 				   whileTrue.  "i.e. while dij succeeds dk"
 				  k <= l]
 				   whileTrue:
@@ -290,7 +290,7 @@ SortedCollection >> sort: i to: j [
 				 l := j.
 				 [[l := l - 1.  k <= l and: [sortBlock value: dij value: (array at: l)]]
 				   whileTrue.  "i.e. while dl succeeds dij"
-				  [k := k + 1.  k <= l and: [sortBlock value: (array at: k) value: dij]]
+				  [k := k + 1.  k < j and: [sortBlock value: (array at: k) value: dij]]
 				   whileTrue.  "i.e. while dij succeeds dk"
 				  k <= l]
 				   whileTrue:
