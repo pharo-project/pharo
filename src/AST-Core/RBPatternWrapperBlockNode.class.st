@@ -37,6 +37,11 @@ RBPatternWrapperBlockNode >> precedence [
 ]
 
 { #category : #accessing }
+RBPatternWrapperBlockNode >> sentMessages [
+	^ wrappedNode sentMessages
+]
+
+{ #category : #accessing }
 RBPatternWrapperBlockNode >> wrappedNode [
 	^wrappedNode
 ]

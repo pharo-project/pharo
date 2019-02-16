@@ -401,6 +401,22 @@ RBProgramNodeTest >> testReplaceVariable [
 	self assert: tree newSource equals: 'run "1" 123 "2"'
 ]
 
+{ #category : #'testing-messages' }
+RBProgramNodeTest >> testSentMessages [
+	| tree messages |
+	tree := RBParser
+		parseRewriteMethod:
+			'methodName
+				| temp |
+				1 send1 send2; send3.
+				temp := [:each | {4 send4} send5].
+				temp send6 `{:node | node notASentMessage}'.
+	messages := tree sentMessages.
+	self assert: messages size equals: 6.
+	1 to: 6 do:
+		[ :i | self assert: (messages includes: ('send' , i printString) asSymbol) ]
+]
+
 { #category : #'testing-comments' }
 RBProgramNodeTest >> testSetCommentsToNil [
 
