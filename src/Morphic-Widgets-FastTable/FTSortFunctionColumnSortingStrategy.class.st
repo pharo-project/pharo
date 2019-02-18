@@ -21,9 +21,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : #FTSortFunctionColumnSortingStrategy,
-	#superclass : #FTAbstractColumnSortingStrategy,
-	#traits : 'TSortingStrategyWithState',
-	#classTraits : 'TSortingStrategyWithState classTrait',
+	#superclass : #FTStateBasedColumnSortingStrategy,
 	#instVars : [
 		'sortFunction'
 	],
