@@ -311,13 +311,15 @@ AbstractFileReference >> delete [
 
 { #category : #operations }
 AbstractFileReference >> deleteAll [
-	"Delete this directory and all children of it, raise an error if the file does not exist."
+	"Delete this directory and all children of it, raise an error if the file does not exist.
+	Don't follow symbolic links (so files outside the receiver's tree will not be deleted)."
 	DeleteVisitor delete: self resolve
 ]
 
 { #category : #operations }
 AbstractFileReference >> deleteAllChildren [
-	"delete all children of the receiver, raise an error if the receiver does not exist"
+	"Delete all children of the receiver, raise an error if the receiver does not exist.
+	Don't follow symbolic links (so files outside the receiver's tree will not be deleted)."
 	
 	self children do: [:aReference | aReference deleteAll ]
 ]
