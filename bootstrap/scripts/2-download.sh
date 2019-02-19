@@ -33,7 +33,7 @@ then
     # Downloads a SPUR vm for the configured architecture
     mkdir ${BOOTSTRAP_CACHE}/vmtarget
     cd ${BOOTSTRAP_CACHE}/vmtarget
-    ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 70 vmLatest $BOOTSTRAP_ARCH
+    ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 70 vm $BOOTSTRAP_ARCH
     cd -
 fi
 echo "Target VM: $(${VM} --version | grep Hash)"
