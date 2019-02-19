@@ -13,7 +13,7 @@ overriden from RBRemoveVariableTransformation and RBAddVariableAccessorTransform
 "
 Class {
 	#name : #RBPullUpVariableTransformation,
-	#superclass : #RBCompositeVariableTransformation,
+	#superclass : #RBInHierarchyVariableTransformation,
 	#category : #'Refactoring2-Transformations-Model'
 }
 
@@ -34,28 +34,6 @@ RBPullUpVariableTransformation >> buildTransformations [
 				class: className
 				classVariable: isClassVariable);
 		yourself
-]
-
-{ #category : #printing }
-RBPullUpVariableTransformation >> storeOn: aStream [ 
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' variable: '.
-	variableName storeOn: aStream.
-	aStream nextPutAll: ' class: '.
-	className storeOn: aStream.
-	aStream nextPutAll: ' classVariable: '.
-	isClassVariable storeOn: aStream.
-	aStream nextPut: $)
-]
-
-{ #category : #api }
-RBPullUpVariableTransformation >> variable: aVariableName class: aClassName classVariable: aBoolean [
-
-	variableName := aVariableName.
-	isClassVariable := aBoolean.
-	className := aClassName.
 ]
 
 { #category : #private }

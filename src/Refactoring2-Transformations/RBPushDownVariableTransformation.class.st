@@ -13,7 +13,7 @@ overriden from RBAddVariableTransformation and RBRemoveVariableAccessorTransform
 "
 Class {
 	#name : #RBPushDownVariableTransformation,
-	#superclass : #RBCompositeVariableTransformation,
+	#superclass : #RBInHierarchyVariableTransformation,
 	#category : #'Refactoring2-Transformations-Model'
 }
 
@@ -73,28 +73,6 @@ RBPushDownVariableTransformation >> preconditionsForInstanceVariable [
 
 	^ (RBCondition definesInstanceVariable: variableName in: self definingClass) 
 		& (RBCondition accessesInstanceVariable: variableName in: self definingClass showIn: self)
-]
-
-{ #category : #printing }
-RBPushDownVariableTransformation >> storeOn: aStream [ 
-
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' variable: '.
-	variableName storeOn: aStream.
-	aStream nextPutAll: ' class: '.
-	className storeOn: aStream.
-	aStream nextPutAll: ' classVariable: '.
-	isClassVariable storeOn: aStream.
-	aStream nextPut: $)
-]
-
-{ #category : #api }
-RBPushDownVariableTransformation >> variable: aVariableName class: aClassName classVariable: aBoolean [
-
-	variableName := aVariableName.
-	isClassVariable := aBoolean.
-	className := aClassName.
 ]
 
 { #category : #private }
