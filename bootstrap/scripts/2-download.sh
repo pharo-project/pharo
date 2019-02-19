@@ -36,4 +36,5 @@ then
     ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 70 vmLatest $BOOTSTRAP_ARCH
     cd -
 fi
+echo "Target VM: $(${VM} --version | grep Hash)"
 
