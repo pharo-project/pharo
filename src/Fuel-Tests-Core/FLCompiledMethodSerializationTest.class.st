@@ -25,7 +25,7 @@ FLCompiledMethodSerializationTest >> testDoIt [
 	self assert: theCompiledMethod isDoIt.
 	self assert: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod trailer hasSource.
-	self assertEmpty: theCompiledMethod trailer.
+	self assert: theCompiledMethod trailer isEmpty.
 	self deny: theCompiledMethod trailer hasSourcePointer.
 
 	materialized := self resultOfSerializeAndMaterialize: theCompiledMethod.
@@ -58,7 +58,7 @@ FLCompiledMethodSerializationTest >> testInstalled [
 	self assert: materialized == theCompiledMethod
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 FLCompiledMethodSerializationTest >> testInstalledModified [
 	| copy materialized |
 	"Since Pharo 3.0 decompilation of compiled methods is no longer possible.
@@ -101,7 +101,7 @@ FLCompiledMethodSerializationTest >> testNotInstalled [
 	self deny: theCompiledMethod isInstalled.
 	self deny: theCompiledMethod isDoIt.
 	self deny: theCompiledMethod trailer hasSource.
-	self assertEmpty: theCompiledMethod trailer.
+	self assert: theCompiledMethod trailer isEmpty.
 	self deny: theCompiledMethod trailer hasSourcePointer.
 	
 	materialized := self resultOfSerializeAndMaterialize: theCompiledMethod.

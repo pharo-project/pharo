@@ -78,7 +78,7 @@ FLFileStreamStrategy >> readStreamDo: aValuable [
 
 { #category : #'test support' }
 FLFileStreamStrategy >> tearDown [
-	(File named: self fileName) delete
+	FLPlatform current deleteFileNamed: self fileName
 ]
 
 { #category : #writing }

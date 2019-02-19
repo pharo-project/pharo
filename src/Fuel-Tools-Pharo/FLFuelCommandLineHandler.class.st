@@ -58,16 +58,13 @@ FLFuelCommandLineHandler class >> isResponsibleFor: aCommandLine [
 { #category : #activation }
 FLFuelCommandLineHandler >> activate [
 	self manageFiles.
-	(self commandLine hasOption: 'save')
-		ifTrue: [
-			ThreadSafeTranscript install.
-			Smalltalk addDeferredStartupAction: [
-				Smalltalk snapshot: true andQuit: true.
-				NonInteractiveTranscript new install.
-			]
-		].
-	(self commandLine hasOption: 'quit')
-		ifTrue: [ self exitSuccess ].
+	(self commandLine hasOption: 'save') ifTrue: [
+		ThreadSafeTranscript install.
+		SessionManager default addDeferredStartupAction: [
+			Smalltalk snapshot: true andQuit: true.
+			NonInteractiveTranscript new install ] ].
+	(self commandLine hasOption: 'quit') ifTrue: [
+		self exitSuccess ]
 ]
 
 { #category : #accessing }
@@ -77,13 +74,16 @@ FLFuelCommandLineHandler >> fileExtension [
 
 { #category : #manage }
 FLFuelCommandLineHandler >> manageFile: aFileReference [
-
+	Stdio stdout
+		nextPutAll: 'Materializing from file: ';
+		nextPutAll: aFileReference fullName;
+		lf.
 	aFileReference readStreamDo: [ :stream |
 		stream binary.
-		Stdio stdout nextPutAll: 'Materializing from file: '; nextPutAll: aFileReference fullName; lf.
-		FLMaterializer new materializeFrom: stream.
-		Stdio stdout nextPutAll: 'Materialization finished'; lf.
-		].
+		FLMaterializer new materializeFrom: stream ].
+	Stdio stdout
+		nextPutAll: 'Materialization finished';
+		lf
 ]
 
 { #category : #manage }

@@ -11,16 +11,18 @@ Class {
 FLBinaryFileStreamStrategy >> readStreamDo: aValuable [
 	"Evaluates the argument with a read stream. Answers the result."
 	
-	^ ((Smalltalk globals at: #File)
-		named: self fileName) readStreamDo: [ :aStream |
-			aValuable value: aStream ]
+	^ FLPlatform current
+		fileNamed: self fileName
+		readStreamDo: [ :aStream |
+			aValuable value: aStream binary ]
 ]
 
 { #category : #writing }
 FLBinaryFileStreamStrategy >> writeStreamDo: aValuable [
 	"Evaluates the argument with a write stream. Answers the result."
 
-	^ ((Smalltalk globals at: #File)
-		named: self fileName) writeStreamDo: [ :aStream | 
-			aValuable value: aStream ]
+	^ FLPlatform current
+		fileNamed: self fileName
+		writeStreamDo: [ :aStream | 
+			aValuable value: aStream binary ]
 ]
