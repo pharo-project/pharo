@@ -134,6 +134,8 @@ BaselineOfIDE >> baseline: spec [
 			spec repository: repository
 		].
 
+		spec baseline: 'Clap' with: [ spec repository: repository ].
+		
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
@@ -801,7 +803,8 @@ spec group: #default with: #(
 	'BasicTools'	"dependency"
 	'Athens'
 	'Flashback'
-
+	'Clap'
+	
 	'Mandatory-Group'
 
 	'Kernel-Tests-Group'
