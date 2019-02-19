@@ -184,12 +184,6 @@ Canvas >> drawString: s in: boundsRect font: fontOrNil color: c underline: under
 	^self drawString: s from: 1 to: s size in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc
 ]
 
-{ #category : #drawing }
-Canvas >> encryptedParagraph: para bounds: bounds color: c [
-	"Draw the given paragraph"
-	^self subclassResponsibility
-]
-
 { #category : #accessing }
 Canvas >> extent [
 	"Return the physical extent of the output device"
