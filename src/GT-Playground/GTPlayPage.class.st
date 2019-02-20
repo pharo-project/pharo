@@ -10,7 +10,6 @@ Class {
 		'title',
 		'content',
 		'creationTime',
-		'modificationTime',
 		'publishedUrl',
 		'persistenceStrategies'
 	],

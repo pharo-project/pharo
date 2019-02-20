@@ -5,7 +5,6 @@ Class {
 	#name : #GTSnippets,
 	#superclass : #Object,
 	#instVars : [
-		'instance',
 		'snippets'
 	],
 	#classInstVars : [
