@@ -230,9 +230,7 @@ RGContainer >> classesDo: aBlock [
 
 { #category : #'image package loading' }
 RGContainer >> cleanEmptyPackages [
-
-	(self packages select:[ :pck| pck classes size isZero and:[ pck methods size isZero ] ])
-		do:[ :pck| self removePackage: pck ]
+	(self packages select: [ :pck | pck classes isEmpty and: [ pck methods isEmpty ] ]) do: [ :pck | self removePackage: pck ]
 ]
 
 { #category : #accessing }

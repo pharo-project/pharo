@@ -66,14 +66,13 @@ WeakAnnouncerTest >> longTestCase [
 
 { #category : #tests }
 WeakAnnouncerTest >> testNoDeadWeakSubscriptions [
-
 	self longTestCase.
 
-	5 timesRepeat: [ Smalltalk garbageCollect ].		
-	
-	self assert: (WeakAnnouncementSubscription allInstances select: [ :sub | sub subscriber isNil ]) size isZero.
-	
-	self assert: (WeakAnnouncementSubscription allInstances select: [ :sub | sub subscriber isNil ]) size isZero
+	5 timesRepeat: [ Smalltalk garbageCollect ].
+
+	self assertEmpty: (WeakAnnouncementSubscription allInstances select: [ :sub | sub subscriber isNil ]).
+
+	self assertEmpty: (WeakAnnouncementSubscription allInstances select: [ :sub | sub subscriber isNil ])
 ]
 
 { #category : #tests }

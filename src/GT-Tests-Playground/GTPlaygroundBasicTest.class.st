@@ -57,7 +57,7 @@ GTPlaygroundBasicTest >> testPageActionsIn [
 	self assert: selector notNil.
 	window := playground openOn: (GTPlayPage new saveContent: 'a:=1. b:=a+1').
 	actions := playground pageActions.
-	self deny: actions size isZero.
+	self denyEmpty: actions.
 	action := actions detect: [ :eachAction | eachAction title = 'A mock page action' ].
 	self deny: action isNil
 ]
@@ -78,7 +78,7 @@ GTPlaygroundBasicTest >> testPlaygroundActionsIn [
 	self assert: selector notNil.
 	window := playground openOn: (GTPlayPage new saveContent: 'a:=1. b:=a+1').
 	actions := playground playgroundActions.
-	self deny: actions size isZero.
+	self denyEmpty: actions.
 	action := actions detect: [ :eachAction | eachAction title = 'A mock playground action' ].
 	self deny: action isNil
 ]
