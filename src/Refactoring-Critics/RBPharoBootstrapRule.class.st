@@ -4,9 +4,6 @@ I check that packages constituing the Pharo Bootstrap do not depend on any other
 Class {
 	#name : #RBPharoBootstrapRule,
 	#superclass : #RBArchitectureLintRule,
-	#instVars : [
-		'renrakuRule'
-	],
 	#category : #'Refactoring-Critics-ArchitectureRules'
 }
 

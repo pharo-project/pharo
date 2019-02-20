@@ -10,7 +10,6 @@ Class {
 		'fileReference',
 		'entryPositionsByLocalName',
 		'entryCount',
-		'entryReader',
 		'writingDeferrer',
 		'entryByLocalName',
 		'mustRefresh',
