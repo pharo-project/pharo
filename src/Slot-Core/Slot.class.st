@@ -64,7 +64,7 @@ Slot class >> named: aSymbol [
 
 { #category : #settings }
 Slot class >> showSlotClassDefinition [
-	^slotClassDefinition ifNil: [ slotClassDefinition := false ]
+	^ slotClassDefinition ifNil: [ slotClassDefinition := true ]
 ]
 
 { #category : #settings }
