@@ -1,3 +1,8 @@
+"
+I generate the documentation for a parameter.
+
+I handle the general semantic structure of the documentation, but delegate the actual format to a formatter.
+"
 Class {
 	#name : #ClapDocumenter,
 	#superclass : #Object,

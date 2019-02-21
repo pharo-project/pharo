@@ -1,3 +1,6 @@
+"
+I evaluate code passed via standard input or as arguments from the command line.
+"
 Class {
 	#name : #ClapCodeEvaluator,
 	#superclass : #Object,
@@ -23,7 +26,7 @@ ClapCodeEvaluator class >> evaluate [
 			multiple: true;
 			meaning: [ :match | "let's copy all the bytes, twice, because the VM assumes some 8-bit encoding…"
 				String space join: (match allOccurrencesCollect: #word) ];
-			defaultMeaning: [ :match | "in the absence of an explicit argument, read from standard input"
+			implicitMeaning: [ :match | "in the absence of an explicit argument, read from standard input"
 				match context stdin upToEnd ]);
 		meaning: [ :args | 
 			args	atName: 'help' ifFound: [ :help | help value; exitSuccess ].

@@ -1,11 +1,11 @@
 "
 Examples and demos of Clap commands (see class side, protocol commandline). Each of those methods builds and returns a command specification, which you can then run or just match against an actual invocation (an array of strings, as would be passed by a shell).
 
-Arbitrary command instances can be run as do-its, e.g.:
-	ClapCommandLineExamples hello runWith: #('hello' 'Pharo').
-	ClapCommandLineExamples git runWith: #('git' 'help' 'remote').
-	
-To inspect the matches without activating the commands, replace #runWith: with #match:
+Arbitrary command instances can be run as do-its, but pay attention that text printed on the standard output will go nowhere unless the VM was launched from a terminal window:
+	ClapCommandLineExamples hello activateWith: #('hello' 'Pharo').
+	ClapCommandLineExamples git activateWith: #('git' 'help' 'remote').
+
+To inspect the matches without activating the commands, replace #activateWith: with #match:
 	ClapCommandLineExamples hello match: #('hello' 'Pharo').
 	ClapCommandLineExamples git match: #('git' 'help' 'remote').
 
@@ -62,6 +62,13 @@ ClapCommandLineExamples class >> hello [
 		add: ((ClapFlag withName: 'whisper') description: 'Greet discretely');
 		add: ((ClapFlag withName: 'shout') description: 'Greet loudly');
 		add:
+			((ClapFlag withName: 'language')
+				description: 'Select language of greeting';
+				add: ((ClapPositional withName: 'langCode')
+					meaning: [ :pos | pos word asSymbol ];
+					implicitMeaning: [ #en ]);
+				meaning: [ :flag | (flag atName: 'langCode') value ]);
+		add:
 			((ClapPositional withName: 'who')
 				description: 'Recipient of the greetings';
 				multiple: true;
@@ -88,6 +95,36 @@ ClapCommandLineExamples >> argumentAt: argumentName [
 	^ (arguments atName: argumentName) value
 ]
 
+{ #category : #running }
+ClapCommandLineExamples >> defaultLanguage [
+	^ #en
+]
+
+{ #category : #running }
+ClapCommandLineExamples >> greeting [
+	| langs |
+	langs := self greetingTranslations.
+	^ langs at: self language
+		ifAbsent: [ langs at: self defaultLanguage ]
+]
+
+{ #category : #running }
+ClapCommandLineExamples >> greetingTranslations [
+	^ {
+		#en -> 'hello'.
+		#eo -> 'saluton'.
+		#es -> 'hola'.
+		#fr -> 'bonjour'.
+		#uk -> 'pryvit'.
+		#pt -> 'olá'
+	} asDictionary
+]
+
+{ #category : #running }
+ClapCommandLineExamples >> language [
+	^ self argumentAt: 'language'
+]
+
 { #category : #'accessing - private' }
 ClapCommandLineExamples >> outStream [
 	^ outStream ifNil: [ outStream := VTermOutputDriver on: arguments context stdout ]
@@ -100,7 +137,7 @@ ClapCommandLineExamples >> recipients [
 
 { #category : #running }
 ClapCommandLineExamples >> sayHello [
-	arguments validateAll.
+	"arguments validateAll."
 	self sayHelloOn: self outStream
 ]
 
@@ -108,7 +145,7 @@ ClapCommandLineExamples >> sayHello [
 ClapCommandLineExamples >> sayHelloOn: aStream [
 	self recipients do: [ :each |
 		aStream
-			<< (self voice: 'hello, ' , each);
+			<< (self voice: self greeting , ', ' , each);
 			lf ]
 ]
 

@@ -1,3 +1,9 @@
+"
+I represent the non-occurrence of a parameter in the argument sequence.
+
+My instances are only created on demand in response to a query for a parameter that was not recognized in the argument sequence, i.e. it was omitted.
+When evaluated with #value or #value:, my meaning is given by the implicit meaning block of my specification.
+"
 Class {
 	#name : #ClapImplicit,
 	#superclass : #ClapSubExpression,

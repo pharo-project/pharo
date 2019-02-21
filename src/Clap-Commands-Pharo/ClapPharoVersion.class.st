@@ -1,3 +1,6 @@
+"
+I report release and version information about the image and VM, in various formats.
+"
 Class {
 	#name : #ClapPharoVersion,
 	#superclass : #Object,

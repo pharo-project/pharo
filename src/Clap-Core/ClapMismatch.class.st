@@ -1,5 +1,5 @@
 "
-I represent a class which represents a failed match.
+I am a failed match of my specification at a given word of the arguments sequence.
 "
 Class {
 	#name : #ClapMismatch,

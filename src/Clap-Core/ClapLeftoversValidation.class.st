@@ -1,3 +1,6 @@
+"
+I validate a Clap context by checking that it has matched completely, i.e. no word remains unmatched by a parameter.
+"
 Class {
 	#name : #ClapLeftoversValidation,
 	#superclass : #ClapValidation,

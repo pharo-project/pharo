@@ -1,3 +1,7 @@
+"
+I represent a validation criterium that various subjects might have to pass at a later point.
+My subclasses implement specific validations for Clap parameters.
+"
 Class {
 	#name : #ClapValidation,
 	#superclass : #Object,

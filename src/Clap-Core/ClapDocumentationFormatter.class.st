@@ -1,3 +1,8 @@
+"
+I wrap a stream and generate documentation in a concrete format.
+
+The intent is that sister classes will implement various concrete formats (HTML, Man page, LaTeX, colored terminal output…)
+"
 Class {
 	#name : #ClapDocumentationFormatter,
 	#superclass : #Object,

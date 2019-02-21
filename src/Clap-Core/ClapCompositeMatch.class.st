@@ -1,3 +1,8 @@
+"
+I am a match for a composite parameter specification, and thus cover a (possibly empty) range of words in the arguments sequence.
+
+I provide methods for querying and accessing the matches of my specification's children parameters.
+"
 Class {
 	#name : #ClapCompositeMatch,
 	#superclass : #ClapExplicit,

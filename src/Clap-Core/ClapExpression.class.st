@@ -1,5 +1,6 @@
 "
-I represent the concrete manifestation of a formal parameter during a command activation.
+I am a concrete manifestation (a match) of my specification (a ClapParameter) in the context of a specific command-line invocation.
+
 "
 Class {
 	#name : #ClapExpression,

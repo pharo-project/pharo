@@ -1,3 +1,6 @@
+"
+I aggregate multiple validation diagnostics together.
+"
 Class {
 	#name : #ClapValidationReport,
 	#superclass : #Object,

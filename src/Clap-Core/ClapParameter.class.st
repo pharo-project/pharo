@@ -73,24 +73,6 @@ ClapParameter >> canonicalName: aString [
 ]
 
 { #category : #accessing }
-ClapParameter >> defaultMeaning [
-	self
-		deprecated: 'Renamed to #implicitMeaning'
-		transformWith: '`@receiver defaultMeaning' -> '`@receiver implicitMeaning'.
-	
-	^ self implicitMeaning
-]
-
-{ #category : #initialization }
-ClapParameter >> defaultMeaning: aBlock [
-	self
-		deprecated: 'Renamed to #implicitMeaning:'
-		transformWith: '`@receiver defaultMeaning: `@block' -> '`@receiver implicitMeaning: `@block'.
-
-	self implicitMeaning: aBlock
-]
-
-{ #category : #accessing }
 ClapParameter >> description [
 	^ description
 ]

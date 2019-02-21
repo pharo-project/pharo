@@ -1,3 +1,7 @@
+"
+I am a node in the match tree.
+My parent is either the match I'm a child of, or the context for the whole command invocation.
+"
 Class {
 	#name : #ClapSubExpression,
 	#superclass : #ClapExpression,

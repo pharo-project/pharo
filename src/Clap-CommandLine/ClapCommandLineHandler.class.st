@@ -1,5 +1,5 @@
 "
-A thin layer to hook Clap into the existing command-line system
+I hook Clap into the existing command-line handlers system.
 "
 Class {
 	#name : #ClapCommandLineHandler,

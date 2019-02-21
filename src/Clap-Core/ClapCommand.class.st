@@ -41,7 +41,7 @@ ClapCommand class >> forHelp [
 		add: ((ClapPositional withName: 'topic')
 			description: 'The subcommand to document (defaults to the current one)';
 			meaning: [ :pos :cmd | cmd subcommandNamed: pos word ifNone: nil ];
-			defaultMeaning: [ :pos :cmd | cmd ]);
+			implicitMeaning: [ :pos :cmd | cmd ]);
 
 		meaning: [ :match | | doc parent query topic |
 			doc := ClapDocumenter on: match context stdout.

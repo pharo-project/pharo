@@ -1,3 +1,6 @@
+"
+I am a leaf match, covering a single word of the argument sequence.
+"
 Class {
 	#name : #ClapWordMatch,
 	#superclass : #ClapExplicit,

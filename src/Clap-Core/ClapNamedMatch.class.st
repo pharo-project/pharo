@@ -1,3 +1,6 @@
+"
+I am a match for a named composite parameter; I cover at least one word (corresponding to one of my specification's aliases).
+"
 Class {
 	#name : #ClapNamedMatch,
 	#superclass : #ClapCompositeMatch,

@@ -1,3 +1,8 @@
+"
+I represent an explicit match over words in the argument sequence, which constitutes an explicit occurrence of my specification.
+
+My instances have a value, given by the meaning block of my specification.
+"
 Class {
 	#name : #ClapExplicit,
 	#superclass : #ClapSubExpression,

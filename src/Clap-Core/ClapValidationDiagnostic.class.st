@@ -1,3 +1,7 @@
+"
+I am the result of applying a validation to a given subject.
+If the subject does not pass my criterium, I can provide a helpful description why.
+"
 Class {
 	#name : #ClapValidationDiagnostic,
 	#superclass : #Object,
@@ -16,7 +20,7 @@ ClapValidationDiagnostic class >> of: aValidation subject: anExpression [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ClapValidationDiagnostic >> description [
 	^ validation failureDescriptionFor: subject
 ]
