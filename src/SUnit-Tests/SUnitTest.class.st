@@ -396,7 +396,7 @@ SUnitTest >> testFileOutResult [
 	self
 		assert: fileout
 		equals:
-			'3 run, 1 passes, 0 skipped, 0 expected failures, 1 failures, 1 errors, 0 unexpected passes
+			'3 ran, 1 passed, 0 skipped, 0 expected failures, 1 failure, 1 error, 0 passed unexpected
 Failures:
 SUnitTest(TestAsserter)>>#fail
 
