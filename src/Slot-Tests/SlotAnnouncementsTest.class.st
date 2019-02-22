@@ -289,7 +289,7 @@ SlotAnnouncementsTest >> testFixedClassWhenTraitCompositionChangedShouldAnnounce
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	
 	"Set a new trait composition"
 	Object 
@@ -320,7 +320,7 @@ SlotAnnouncementsTest >> testFixedClassWithTraitCreatedShouldntAnnounceClassModi
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	self deny: aClass classLayout isVariable.
 	self assert: (aClass traitComposition syntacticallyEquals: TOne asTraitComposition).
 ]
@@ -396,7 +396,7 @@ SlotAnnouncementsTest >> testVariableByteClassWhenTraitCompositionChangedShouldA
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	
 	"Set a new trait composition"
 	Object 
@@ -427,7 +427,7 @@ SlotAnnouncementsTest >> testVariableByteClassWithTraitCreatedShouldntAnnounceCl
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	self assert: aClass classLayout isVariable.
 	self assert: aClass classLayout isBits.
 	self assert: aClass classLayout isBytes.
@@ -448,7 +448,7 @@ SlotAnnouncementsTest >> testVariableClassWhenTraitCompositionChangedShouldAnnou
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	
 	"Set a new trait composition"
 	Object 
@@ -479,7 +479,7 @@ SlotAnnouncementsTest >> testVariableClassWithTraitCreatedShouldntAnnounceClassM
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	self assert: aClass classLayout isVariable.
 	self deny: aClass classLayout isBits .
 	self assert: (aClass traitComposition syntacticallyEquals: TOne asTraitComposition).
@@ -499,7 +499,7 @@ SlotAnnouncementsTest >> testVariableWordClassWhenTraitCompositionChangedShouldA
 		poolDictionaries: ''
 		package: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	
 	"Set a new trait composition"
 	Object 
@@ -530,7 +530,7 @@ SlotAnnouncementsTest >> testVariableWordClassWithTraitCreatedShouldntAnnounceCl
 		poolDictionaries: ''
 		package: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	self assert: aClass classLayout isVariable.
 	self assert: aClass classLayout isBits.
 	self assert: aClass classLayout isWords.
@@ -551,7 +551,7 @@ SlotAnnouncementsTest >> testWeakClassWhenTraitCompositionChangedShouldAnnounceC
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	
 	"Set a new trait composition"
 	Object 
@@ -582,7 +582,7 @@ SlotAnnouncementsTest >> testWeakClassWithTraitCreatedShouldntAnnounceClassModif
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	self assert: aClass classLayout isVariable.
 	self assert: aClass classLayout isWeak.
 	self assert: (aClass traitComposition syntacticallyEquals: TOne asTraitComposition).
