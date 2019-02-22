@@ -30,6 +30,17 @@ FFIMethodRegistry class >> initialize [
 ]
 
 { #category : #'instance creation' }
+FFIMethodRegistry class >> menuCommandOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: 'FFI reset')
+		action: [ self resetAll ];
+		order: 0.91;
+		parent: #Tools;
+		help: 'Resets FFI';
+		icon: (Smalltalk ui icons iconNamed: #smallUpdate)
+]
+
+{ #category : #'instance creation' }
 FFIMethodRegistry class >> new [
 	self error: 'Use #uniqueInstance'
 ]
