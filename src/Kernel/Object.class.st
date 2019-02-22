@@ -325,7 +325,9 @@ Object >> addDependent: anObject [
 
 { #category : #converting }
 Object >> as: aSimilarClass [
-	"Create an object of class aSimilarClass that has similar contents to the receiver."
+	"Create an object of class aSimilarClass that has similar contents to the receiver if the object is not already an instance of this class."
+
+	aSimilarClass == self class ifTrue: [ ^ self ].
 
 	^ aSimilarClass newFrom: self
 ]
