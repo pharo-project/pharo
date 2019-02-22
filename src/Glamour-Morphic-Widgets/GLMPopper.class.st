@@ -36,17 +36,6 @@ GLMPopper class >> installAlarm: aSelector for: anObject withArguments: anArray 
 		at: Time millisecondClockValue + 50.
 ]
 
-{ #category : #utilities }
-GLMPopper class >> installAlarmFor: aBlock [
-	<deprecated: 'Please use installAlarm: for: instead.
-		Installing alarm for a block without existing references is not the best practice as it can be garbage collected and alarm will never be launched.'>
-	World
-		addAlarm: #value
-		withArguments: #()
-		for: aBlock
-		at: Time millisecondClockValue + 50.
-]
-
 { #category : #public }
 GLMPopper >> computeOriginFor: aMorph [
 	| desiredTop desiredLeft |
