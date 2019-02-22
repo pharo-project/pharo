@@ -143,6 +143,7 @@ TGLMFastTable >> menuColumn: column row: rowIndex [
 			selector: #executeMenuAction:
 			argument: action)
 			icon:  action icon;
+			balloonText: action help;
 			enabled: (action isEnabledOn: self glamourPresentation);
 			keyText: (action hasShortcut 
 				ifTrue: [ action shortcutAsString ]
