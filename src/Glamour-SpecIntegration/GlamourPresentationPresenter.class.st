@@ -21,16 +21,6 @@ GlamourPresentationPresenter class >> defaultSpec [
 ]
 
 { #category : #example }
-GlamourPresentationPresenter class >> exampleGLMExamples [
-	<sampleInstance>
-	"open the Glamour Examples Browser"
-	|ui|
-	ui := GlamourPresentationPresenter new.
-	ui presentationClass: GLMExamplesBrowser startOn: GLMBasicExamples.
-	^ ui openWithSpec
-]
-
-{ #category : #example }
 GlamourPresentationPresenter class >> exampleGLMPharoScript [
 	<sampleInstance>
 	^ GlamourPresentationPresenter new openWithSpec.
