@@ -17,6 +17,7 @@ Class {
 		'griddingOn'
 	],
 	#classVars : [
+		'ShouldShowWorldMenu',
 		'ShouldSwapMenuOpenerButtons',
 		'WindowEventHandler',
 		'WorldAnnouncer'
@@ -26,7 +27,8 @@ Class {
 
 { #category : #'initialize-release' }
 PasteUpMorph class >> initialize [
-	ShouldSwapMenuOpenerButtons := false
+	ShouldSwapMenuOpenerButtons := false.
+	self shouldShowWorldMenu: true
 ]
 
 { #category : #acessing }
@@ -40,6 +42,26 @@ PasteUpMorph class >> isMenuOpenByLeftClick [
 "
 
 	^ self shouldSwapMenuOpenerButtons ==> [ Smalltalk os isMacOS ]
+]
+
+{ #category : #accessing }
+PasteUpMorph class >> shouldShowWorldMenu [
+	^ ShouldShowWorldMenu
+]
+
+{ #category : #accessing }
+PasteUpMorph class >> shouldShowWorldMenu: anObject [
+	ShouldShowWorldMenu := anObject
+]
+
+{ #category : #settings }
+PasteUpMorph class >> shouldShowWorldMenuSettingOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #shouldShowWorldMenu)
+		target: self;
+		parent: #morphic;
+		label: 'Show world menu';
+		description: 'Whether the World''s world menu should be shown or not on a click in the World.'
 ]
 
 { #category : #acessing }
@@ -663,6 +685,10 @@ PasteUpMorph >> initializeDesktopCommandKeySelectors [
 PasteUpMorph >> invokeWorldMenu: evt [
 	"Put up the world menu, triggered by the passed-in event."
 	| menu |
+	
+	"If the user does not want a world menu, do not invoke it."
+	self class shouldShowWorldMenu ifFalse: [ ^ self ].
+	
 	self bringTopmostsToFront.
 	"put up screen menu"
 	(menu := self worldMenu) popUpEvent: evt in: self.
