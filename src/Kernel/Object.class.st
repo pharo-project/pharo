@@ -1787,6 +1787,10 @@ Object >> printStringLimitedTo: limit using: printBlock [
 
 { #category : #streaming }
 Object >> putOn: aStream [
+	"Write the receiver onto aStream.
+	In general we assume aStream accepts the receiver as element type.
+	Return self."
+	
 	aStream nextPut: self
 ]
 

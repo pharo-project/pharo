@@ -2135,6 +2135,11 @@ String >> printOn: aStream [
 
 { #category : #streaming }
 String >> putOn: aStream [
+	"Write the receiver onto aStream by iterating over its elements.
+	In general we assume aStream accepts the receiver's elements as element type.
+	This is an optimisation.
+	Return self."
+
 	aStream nextPutAll: self
 ]
 

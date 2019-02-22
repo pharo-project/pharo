@@ -1347,13 +1347,6 @@ Integer >> printWithCommasSignedOn: aStream [
 	^ self printSeparatedBy: $, every: 3 signed: true on: aStream
 ]
 
-{ #category : #streaming }
-Integer >> putOn: aStream [
-	aStream isBinary
-		ifTrue: [ self asByteArray do: [ :each | aStream nextPut: each ] ]
-		ifFalse: [ self asString putOn: aStream ]
-]
-
 { #category : #arithmetic }
 Integer >> quo: aNumber [ 
 	"Refer to the comment in Number quo: "

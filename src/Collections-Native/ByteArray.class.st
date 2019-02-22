@@ -282,6 +282,16 @@ ByteArray >> printOn: aStream [
 	aStream nextPut: $]
 ]
 
+{ #category : #streaming }
+ByteArray >> putOn: aStream [
+	"Write the receiver onto aStream by iterating over its elements.
+	In general we assume aStream accepts the receiver's elements as element type.
+	This is an optimisation.
+	Return self."
+
+	aStream nextPutAll: self
+]
+
 { #category : #initialization }
 ByteArray >> readHexFrom: aStream [
 	"Initialize the receiver from a hexadecimal string representation"
