@@ -484,7 +484,12 @@ SystemNavigation >> confirmRemovalOf: aSelector on: aClass [
 	"Determine if it is okay to remove the given selector. Answer 1 if it  
 	should be removed, 2 if it should be removed followed by a senders  
 	browse, and 3 if it should not be removed."
+	
+	"Smalltalk systemNavigation confirmRemovalOf: #tearDown on: TestCase>>> 3"
+	"Smalltalk systemNavigation confirmRemovalOf: #prepareToRunAgain on: TestCase >>> 3"
+	
 	| count answer caption allCalls |
+	
 	allCalls := self allCallsOn: aSelector.
 	(count := allCalls size) = 0
 		ifTrue: [^ 1].
@@ -494,9 +499,8 @@ SystemNavigation >> confirmRemovalOf: aSelector on: aClass [
 					and: [allCalls first selector == aSelector])
 				ifTrue: [^ 1]].
 	"only sender is itself"
-	caption := 'The message ', aSelector printString ,' has ' , count printString , ' sender'.
-	count > 1
-		ifTrue: [caption := caption copyWith: $s].
+	caption := 'The message ', aSelector printString ,' has ' , count printString , ' sender' asPluralBasedOn: count.
+	
 	answer := UIManager default 
 		chooseFrom: #('Remove it'
 				'Remove, then browse senders'
@@ -518,6 +522,9 @@ SystemNavigation >> confirmRemovalOfSelectors: aCollection on: aClass [
 	"Determine if it is okay to remove the given selector. Answer 1 if it  
 	should be removed, 2 if it should be removed followed by a senders  
 	browse, and 3 if it should not be removed."
+	
+	"Smalltalk systemNavigation confirmRemovalOfSelectors: {#tearDown} on: TestCase >>> 3"
+	"Smalltalk systemNavigation confirmRemovalOfSelectors: {#tearDown. #setUp} on: TestCase >>> 3"
 
 	| collection count answer caption allCalls selectors oneCalls |
 	collection := aCollection asOrderedCollection copy.
@@ -538,10 +545,9 @@ SystemNavigation >> confirmRemovalOfSelectors: aCollection on: aClass [
 	collection ifEmpty: [ ^ 1 ].
 	count := collection sum: [ :sel | (self allCallsOn: sel) size ].
 	selectors := collection joinUsing: ', #' last: ' and #'.
-	"ugly but faster"
-	caption := count = 1
-		ifTrue: [ 'The messages #' , selectors , ' have ' , count printString , ' sender' ]
-		ifFalse: [ 'The messages #' , selectors , ' have ' , count printString , ' senders' ].
+	
+	caption := 'The <1?message:messages> #<2s> <1?has:have> <3p> <4?sender:senders' expandMacrosWithArguments: {collection size = 1. selectors. count. count = 1}.
+	
 	answer := UIManager default
 		chooseFrom:
 			#('Remove them' 'Remove, then browse senders (if still existing)' 'Don''t remove, but show me those senders' 'Forget it -- do nothing -- sorry I asked')
@@ -550,6 +556,7 @@ SystemNavigation >> confirmRemovalOfSelectors: aCollection on: aClass [
 		ifTrue: [ collection do: [ :aSelector | self browseAllSendersOf: aSelector ] ].
 	answer = 0
 		ifTrue: [ answer := 3 ].
+		
 	"If user didn't answer, treat it as cancel"
 	^ answer min: 3
 ]
