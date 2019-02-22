@@ -207,7 +207,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Glamour-PagerModel'.
 		spec package: 'Glamour-Presentations'.
 		spec package: 'Glamour-Browsers'.
-		spec package: 'Glamour-Examples'.
 		spec package: 'Glamour-Morphic-Brick'.
 		spec package: 'Glamour-Tests-Core'.
 		spec package: 'Glamour-Tests-Resources'.
@@ -658,7 +657,6 @@ spec group: 'Glamour-Core-Group' with: #(
 	'Glamour-PagerModel'
 	'Glamour-Presentations'
 	'Glamour-Browsers'
-	'Glamour-Examples'
 	'Glamour-Morphic-Brick'
 	'Glamour-Morphic-Theme'
 	'Glamour-Morphic-Widgets'
