@@ -128,6 +128,24 @@ WriteStreamTest >> testIsEmpty [
 ]
 
 { #category : #tests }
+WriteStreamTest >> testLessThanLessThan [
+	"Tests for #<< output operator shortcut on WriteStreams"
+	
+	self 
+		assert: (String streamContents: [ :out | out << $a << 'bcd' << $e ])
+		equals: 'abcde'.
+	self 
+		assert: (ByteArray streamContents: [ :out | out << 1 << #[2 3 4] << 5 ])
+		equals: #[1 2 3 4 5].
+	self 
+		assert: (Array streamContents: [ :out | out << 1 << #(2 3 4) asOrderedCollection << 5 ])
+		equals: #(1 2 3 4 5).
+	"no conversions, wrong element type"
+	self should: [ String streamContents: [ :out | out << 1234 ] ] raise: Error.
+	self should: [ ByteArray streamContents: [ :out | out << 1234 ] ] raise: Error
+]
+
+{ #category : #tests }
 WriteStreamTest >> testNew [
 
 	self should: [self streamClass new] raise: Error. 

@@ -1576,6 +1576,10 @@ SequenceableCollection >> polynomialEval: thisX [
 
 { #category : #streaming }
 SequenceableCollection >> putOn: aStream [
+	"Write the receiver onto aStream by iterating over its elements.
+	In general we assume aStream accepts the receiver's elements as element type.
+	Return self."
+
 	self do: [ :each | each putOn: aStream ]
 ]
 
