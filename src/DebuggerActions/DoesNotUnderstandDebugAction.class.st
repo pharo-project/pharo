@@ -82,7 +82,7 @@ DoesNotUnderstandDebugAction >> defaultLabel [
 { #category : #accessing }
 DoesNotUnderstandDebugAction >> defaultOrder [
 
-	^ 45
+	^ 1
 ]
 
 { #category : #actions }

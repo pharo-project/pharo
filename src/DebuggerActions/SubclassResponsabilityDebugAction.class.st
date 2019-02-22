@@ -57,7 +57,7 @@ SubclassResponsabilityDebugAction >> defaultLabel [
 { #category : #accessing }
 SubclassResponsabilityDebugAction >> defaultOrder [
 
-	^ 45
+	^ 1
 ]
 
 { #category : #actions }
