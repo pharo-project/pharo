@@ -6,17 +6,16 @@ Class {
 
 { #category : #tests }
 ClapDocumentationTest >> testHelloShortUsage [
-	| command doc |
+	| command doc lines |
 	command := ClapCommandLineExamples hello.
 	
 	doc := ClapDocumenter stringFrom: [ :documenter | documenter explain: command ].
+	lines := doc lines.
 	
 	self assert: (doc endsWith: OSPlatform current lineEnding).
-	self
-		assert: (doc lines first: 3)
-		equals: #(
-			'Provides greetings'
-			''
-			'Usage: hello [--help] [--whisper] [--shout] [<who>]'
-		)
+	self assert: lines first equals: 'Provides greetings'.
+	self assertEmpty: lines second.
+	self assert: (lines third beginsWith: 'Usage: hello').
+	self assert: (lines third endsWith: '[<who>]').
+
 ]
