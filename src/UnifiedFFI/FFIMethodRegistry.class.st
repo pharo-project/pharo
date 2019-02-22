@@ -29,7 +29,7 @@ FFIMethodRegistry class >> initialize [
 		atPriority: 60
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'world menu' }
 FFIMethodRegistry class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: 'FFI reset')
