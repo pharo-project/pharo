@@ -54,6 +54,20 @@ ObjectTest >> shouldntHaltWhen: aBlock [
 ]
 
 { #category : #tests }
+ObjectTest >> testAs [
+	| coll1 coll2 |
+	coll1 := { 1 . 2 . 3 }.
+	coll2 := coll1 as: OrderedCollection.
+	
+	self assert: coll2 equals: (OrderedCollection with: 1 with: 2 with: 3).
+	self deny: coll1 == coll2.
+	
+	"If the object has the right type, do nothing."
+	coll2 := coll1 as: Array.
+	self assert: coll1 == coll2
+]
+
+{ #category : #tests }
 ObjectTest >> testBecome [	
 	"this test should that all the variables pointing to an object are pointing now to another one, and all
       object pointing to the other are pointing to the object"
