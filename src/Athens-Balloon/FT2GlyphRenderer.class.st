@@ -20,7 +20,7 @@ Class {
 		'descend',
 		'origin',
 		'currentColor',
-		'hAdvance'
+		'font'
 	],
 	#pools : [
 		'FT2Constants'

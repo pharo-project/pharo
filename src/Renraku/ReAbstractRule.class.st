@@ -8,9 +8,6 @@ RenrakuRuleHelp readInHelpBrowser
 Class {
 	#name : #ReAbstractRule,
 	#superclass : #Object,
-	#instVars : [
-		'one'
-	],
 	#classInstVars : [
 		'enabled'
 	],

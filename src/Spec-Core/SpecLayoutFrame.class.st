@@ -9,7 +9,6 @@ Class {
 	#instVars : [
 		'bottomFraction',
 		'bottomOffset',
-		'layout',
 		'leftFraction',
 		'leftOffset',
 		'rightFraction',

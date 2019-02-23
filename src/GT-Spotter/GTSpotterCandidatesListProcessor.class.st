@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'allCandidatesBlock',
 		'candidatesLimit',
-		'queryMatchingBlock',
 		'title',
 		'itemNameBlock',
 		'itemIconBlock',

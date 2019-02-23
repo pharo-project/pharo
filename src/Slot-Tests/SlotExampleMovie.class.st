@@ -6,7 +6,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'#name',
-		'#year',
 		'#director => ToOneRelationSlot inverse: #directedMovies inClass: #SlotExamplePerson',
 		'#actors => ToManyRelationSlot inverse: #actedInMovies inClass: #SlotExamplePerson'
 	],
@@ -15,10 +14,9 @@ Class {
 
 { #category : #'instance creation' }
 SlotExampleMovie class >> named: aString [
-
-	^self new
-		name: aString
-		
+	^ self new
+		name: aString;
+		yourself
 ]
 
 { #category : #accessing }

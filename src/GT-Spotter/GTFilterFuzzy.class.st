@@ -1,9 +1,6 @@
 Class {
 	#name : #GTFilterFuzzy,
 	#superclass : #GTOrderedFilter,
-	#instVars : [
-		'matcher'
-	],
 	#category : #'GT-Spotter-Filters'
 }
 

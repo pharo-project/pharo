@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'content',
 		'parents',
-		'owner',
 		'origin'
 	],
 	#category : #'Hiedra-Tests'

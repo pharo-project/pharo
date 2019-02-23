@@ -5,7 +5,6 @@ Class {
 	#name : #AthensTextScanner,
 	#superclass : #Object,
 	#instVars : [
-		'paragraph',
 		'text',
 		'currentLine',
 		'lines',

@@ -8,7 +8,6 @@ Class {
 		'currentSession',
 		'currentImagePathString',
 		'currentStore',
-		'alternativeStore',
 		'baseLocator',
 		'announcer',
 		'writingDeferDuration',

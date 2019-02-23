@@ -112,7 +112,6 @@ RelationSlot >> inClass: aTargetClassOrSymbol [
 
 { #category : #initialization }
 RelationSlot >> inverse: anInverseSymbol inClass: aTargetClassOrSymbol [
-
 	self inClass: aTargetClassOrSymbol.
 	inverseName := anInverseSymbol.
 ]

@@ -9,9 +9,6 @@ This smells checks methods having #(#true #false #nil) in their literal frame si
 Class {
 	#name : #RBLiteralArrayContainsSuspiciousTrueFalseOrNilRule,
 	#superclass : #ReNodeBasedRule,
-	#instVars : [
-		'matcher'
-	],
 	#category : #'GeneralRules-Migrated'
 }
 

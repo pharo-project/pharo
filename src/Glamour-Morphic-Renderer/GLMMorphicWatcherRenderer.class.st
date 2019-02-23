@@ -4,9 +4,6 @@ This is a special widget renderer in that it will get to render multiple panes o
 Class {
 	#name : #GLMMorphicWatcherRenderer,
 	#superclass : #GLMMorphicWidgetRenderer,
-	#instVars : [
-		'process'
-	],
 	#category : #'Glamour-Morphic-Renderer'
 }
 

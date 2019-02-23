@@ -1,10 +1,6 @@
 Class {
 	#name : #GlamourousBenchmark,
 	#superclass : #Object,
-	#instVars : [
-		'progressBarSize',
-		'progress'
-	],
 	#category : #'Glamour-Tests-Core'
 }
 

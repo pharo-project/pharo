@@ -14,10 +14,9 @@ Class {
 
 { #category : #'instance creation' }
 SlotExamplePerson class >> named: aString [
-
-	^self new
-		name: aString
-		
+	^ self new
+		name: aString;
+		yourself
 ]
 
 { #category : #accessing }
