@@ -11,7 +11,7 @@ EpAnnouncementsTest >> assertMonitorAnnouncesUpdateWhen: aBlock [
 	wasAnnounced := false.
 
 	monitor announcer
-		subscribe: EpMonitorStateUpdated
+		when: EpMonitorStateUpdated
 		do: [ :announcement | wasAnnounced := true ].
 	
 	aBlock
