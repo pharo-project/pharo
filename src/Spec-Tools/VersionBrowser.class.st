@@ -12,13 +12,16 @@ Class {
 }
 
 { #category : #api }
-VersionBrowser class >> browseVersionsForClass: aClass selector: aSelector [ 
-	| method |
-	method := (aClass compiledMethodAt: aSelector) ifNil: [ ^self ].
-	
-	^ self new
-		browseVersionsOf: method
-		
+VersionBrowser class >> browseVersionsForClass: aClass selector: aSelector [
+	^ aClass
+		compiledMethodAt: aSelector
+		ifPresent: [ :method | self new browseVersionsOf: method ]
+		ifAbsent: [ self
+				inform:
+					('No method {1} in class {2}'
+						format:
+							{aSelector.
+							aClass printString}) ]
 ]
 
 { #category : #api }
