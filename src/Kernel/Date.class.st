@@ -120,3 +120,9 @@ Date >> printOn: aStream format: formatArray [
 	
 	BasicDatePrinter default printDate: self format: formatArray on: aStream
 ]
+
+{ #category : #private }
+Date >> species [
+
+	^Timespan
+]
