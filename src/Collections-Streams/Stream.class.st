@@ -227,11 +227,3 @@ Stream >> upToEnd [
 		elements add: self next ].
 	^elements
 ]
-
-{ #category : #accessing }
-Stream >> write: anObject [
-	"Like <<, but returns the object putOn the receiver."
-
-	anObject putOn: self.
-	^ anObject.
-]

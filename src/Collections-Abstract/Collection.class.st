@@ -1290,11 +1290,6 @@ Collection >> union: aCollection [
 	^ self species withAll: set asArray
 ]
 
-{ #category : #'filter streaming' }
-Collection >> write: anObject [ 
-	^ self add: anObject
-]
-
 { #category : #enumerating }
 Collection >> | aCollection [
 	^ self union: aCollection
