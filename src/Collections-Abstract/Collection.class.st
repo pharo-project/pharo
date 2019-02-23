@@ -1290,8 +1290,13 @@ Collection >> union: aCollection [
 	^ self species withAll: set asArray
 ]
 
-{ #category : #'filter streaming' }
-Collection >> write: anObject [ 
+{ #category : #deprecated }
+Collection >> write: anObject [
+
+	self
+		deprecated: 'Please use #add: instead'
+		transformWith: '`@receiver write: `@statements1' 
+						-> '`@receiver add: `@statements1'.
 	^ self add: anObject
 ]
 
