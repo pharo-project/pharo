@@ -1290,6 +1290,16 @@ Collection >> union: aCollection [
 	^ self species withAll: set asArray
 ]
 
+{ #category : #deprecated }
+Collection >> write: anObject [
+
+	self
+		deprecated: 'Please use #add: instead'
+		transformWith: '`@receiver write: `@statements1' 
+						-> '`@receiver add: `@statements1'.
+	^ self add: anObject
+]
+
 { #category : #enumerating }
 Collection >> | aCollection [
 	^ self union: aCollection
