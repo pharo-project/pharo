@@ -66,7 +66,8 @@ Class {
 		'childrenBlock',
 		'rootItem',
 		'maxDepth',
-		'searchStrategy'
+		'searchStrategy',
+		'unsortedElements'
 	],
 	#classVars : [
 		'SearchStrategies'
@@ -196,6 +197,11 @@ FTTreeDataSource >> expandRoots [
 	self tableRefresh
 ]
 
+{ #category : #accessing }
+FTTreeDataSource >> headerColumn: column [
+	^ self basicHeaderCellFor: column
+]
+
 { #category : #updating }
 FTTreeDataSource >> indexOfChangedItem [
 	"I should be call when the user of the Fast Tree collapse or extand an Item. I return the index of the changed item. I should not be used by an other method than #updateSelectionWithCollectBlock:."
@@ -277,6 +283,18 @@ FTTreeDataSource >> searchText: aString [
 	"I delegate the search to a FTTreeFunctionStrategy."
 
 	^ (self class searchStrategies at: self searchStrategy ifAbsent: [ self class searchStrategies at: #default ]) searchWith: aString dataSource: self
+]
+
+{ #category : #sorting }
+FTTreeDataSource >> sortElements: aSortFunction [
+	unsortedElements ifNil: [ unsortedElements := self rootsItems ].
+	self rootItem children: (self rootItem children sorted: aSortFunction)
+]
+
+{ #category : #sorting }
+FTTreeDataSource >> unsortElements [
+	self rootItem children: unsortedElements.
+	unsortedElements := nil
 ]
 
 { #category : #updating }

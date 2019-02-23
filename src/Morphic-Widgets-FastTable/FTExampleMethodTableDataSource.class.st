@@ -41,8 +41,7 @@ FTExampleMethodTableDataSource >> iconFor: rowIndex [
 { #category : #initialization }
 FTExampleMethodTableDataSource >> initializeClass: aClass [
 	self initialize.
-	self elements: ((aClass selectors sorted: [ :a :b | a < b ])
-		collect: [ :each | FTExampleMethodModel method: aClass>>each ])
+	self elements: ((aClass allSelectors sorted: [ :a :b | a < b ]) collect: [ :each | FTExampleMethodModel method: (aClass lookupSelector: each) ])
 ]
 
 { #category : #accessing }

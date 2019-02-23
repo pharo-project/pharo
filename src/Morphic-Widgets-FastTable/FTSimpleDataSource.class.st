@@ -7,7 +7,8 @@ Class {
 	#name : #FTSimpleDataSource,
 	#superclass : #FTDataSource,
 	#instVars : [
-		'elements'
+		'elements',
+		'unsortedElements'
 	],
 	#category : #'Morphic-Widgets-FastTable-DataSource'
 }
@@ -43,11 +44,7 @@ FTSimpleDataSource >> elements: anObject [
 
 { #category : #accessing }
 FTSimpleDataSource >> headerColumn: column [
-	column id ifNil: [ ^ nil ]. 
-	^ FTCellMorph new 
-		listCentering: #center;
-		addMorph: column id asMorph;
-		yourself
+	^ self basicHeaderCellFor: column
 ]
 
 { #category : #accessing }
@@ -74,4 +71,18 @@ FTSimpleDataSource >> searchText: aString [
 		((self toString: each) beginsWith: aString)
 			ifTrue: [ result add: index ] ].
 	^ result asArray
+]
+
+{ #category : #sorting }
+FTSimpleDataSource >> sortElements: aSortFunction [
+	unsortedElements ifNil: [ unsortedElements := self elements ].
+	self elements: (self elements sorted: aSortFunction)
+]
+
+{ #category : #sorting }
+FTSimpleDataSource >> unsortElements [
+	unsortedElements ifNil: [ ^ self ].
+
+	self elements: unsortedElements.
+	unsortedElements := nil
 ]
