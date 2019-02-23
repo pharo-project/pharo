@@ -133,7 +133,7 @@ KMDispatcher >> dispatchKeystroke: aKeyEvent [
 
 	KMBuffer uniqueInstance addEvent: aKeyEvent.
 
-	chain := KMDispatchChain from: (KmGlobalDispatcher new dispatcher: self; yourself) andDispatcher: self.
+	chain := KMDispatchChain from: (KMGlobalDispatcher new dispatcher: self; yourself) andDispatcher: self.
 	chain dispatch: aKeyEvent.
 ]
 
