@@ -227,3 +227,15 @@ Stream >> upToEnd [
 		elements add: self next ].
 	^elements
 ]
+
+{ #category : #deprecated }
+Stream >> write: anObject [
+
+	self
+		deprecated: 'Please use #putOn: on the argument instead'
+		transformWith: '`@receiver write: `@statements1' 
+						-> '`@statements1 putOn: `@receiver' .
+	anObject putOn: self.		
+	^ anObject.
+	
+]
