@@ -42,7 +42,7 @@ RubFindReplaceService class >> dialog [
 
 { #category : #accessing }
 RubFindReplaceService >> caseSensitive [
-	^ caseSensitive ifNil: [caseSensitive := TextEditor caseSensitiveFinds]
+	^ caseSensitive ifNil: [caseSensitive := RubAbstractTextArea caseSensitiveFinds]
 ]
 
 { #category : #accessing }
