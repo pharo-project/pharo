@@ -21,12 +21,20 @@ CodeExporter class >> writeSourceCodeFrom: aStream baseName: baseName isSt: stOr
 CodeExporter class >> writeSourceCodeFrom: aStream toFileReference: aFileReference [
 	"Write the supplied changes to aFileReference"
 
-	aFileReference 
+	aFileReference
 		ensureDelete;
-		binaryWriteStreamDo: [ :outputStream |
-		(ZnCharacterWriteStream on: outputStream encoding: 'utf8')
-			nextPutAll: aStream contents.
-	].
+		binaryWriteStreamDo: [ :outputStream | (ZnCharacterWriteStream on: outputStream encoding: 'utf8') nextPutAll: aStream contents ].
 
-	self inform: 'Filed out to: ', String cr, aFileReference pathString
+	UIManager default
+		inform:
+			(String
+				streamContents: [ :s | 
+					s
+						nextPutAll: 'Filed out to: ';
+						cr;
+						nextPutAll: aFileReference pathString;
+						cr;
+						cr;
+						nextPutAll: 'Click to open location' ])
+		actionOnClick: [ aFileReference openInNativeBrowser ]
 ]
