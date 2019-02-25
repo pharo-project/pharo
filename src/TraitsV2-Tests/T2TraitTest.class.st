@@ -232,3 +232,22 @@ T2TraitTest >> testSequence [
 	self assert: obj getValues equals: 6.
 	self assert: obj getValues2 equals: 12
 ]
+
+{ #category : #tests }
+T2TraitTest >> testSubclasses [
+	| t1 t2 |
+		
+	t1 := self createT1.
+	t2 := self newTrait: #T2 with: #(aa bb) uses: t1.
+
+	self deny: t1 hasSubclasses.
+	self deny: t2 hasSubclasses.	
+
+	self assert: t1 subclasses isEmpty.
+	self assert: t2 subclasses isEmpty.	
+		
+	self deny: t1 hasSubclasses.
+	self deny: t2 hasSubclasses.	
+
+
+]
