@@ -39,3 +39,15 @@ RubTextFieldArea >> sanitize: aText [
 RubTextFieldArea >> walkAlongDisplayedLine [
 	^ false
 ]
+
+{ #category : #'compatibility-toBeDeprecated' }
+RubTextFieldArea >> wrapFlag: aBoolean [
+	" not effect for a text field because such a morph is never wrapped "
+]
+
+{ #category : #'compatibility-toBeDeprecated' }
+RubTextFieldArea >> wrapped: aBoolean [
+
+	self deprecated: 'Obsolete'
+		 transformWith: '`@receiver wrapped: `@statements' -> ''
+]
