@@ -1415,17 +1415,6 @@ Behavior >> methodsReadingSlot: aSlot [
 	^self methods select: [ :method | method readsSlot: aSlot ]
 ]
 
-{ #category : #navigation }
-Behavior >> methodsReferencingClass: aClass [
-
-	^self methodsReferencingClasses: { aClass }
-]
-
-{ #category : #navigation }
-Behavior >> methodsReferencingClasses: aCollectionOfClasses [
-	^ self methods select: [ :meth | meth referencedClasses includesAny: aCollectionOfClasses ]
-]
-
 { #category : #queries }
 Behavior >> methodsWritingSlot: aSlot [
 	^self methods select: [ :method | method writesSlot: aSlot ]

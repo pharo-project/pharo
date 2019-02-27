@@ -13,23 +13,23 @@ WeakMessageSendTest >> testCollectArguments [
 	"Fogbugz issue 18127"
 	"Test is passed if no primitve fails"
 	
-	| msg rcvr c|
+	| msg rcvr arg|
 	
 	rcvr := OrderedCollection new.
-	c := Color green.
-	msg := WeakMessageSend receiver: rcvr selector: #add: arguments: { Color black }.
+	arg := #( 42 ).
+	msg := WeakMessageSend receiver: rcvr selector: #add: arguments: { 4 }.
 	
 	msg valueWithArguments: {}.
 	
-	self assertCollection: rcvr asArray equals: { Color black }.
+	self assertCollection: rcvr asArray equals: { 4 }.
 	
-	msg valueWithArguments: { #a . WeakArray with: c }.
+	msg valueWithArguments: { #a . WeakArray with: arg }.
 	
-	self assertCollection: rcvr asArray equals: { Color black . #a }.
+	self assertCollection: rcvr asArray equals: { 4 . #a }.
 	
-	msg valueWithArguments: (WeakArray with: c).
+	msg valueWithArguments: (WeakArray with: arg).
 	
-	self assertCollection: rcvr asArray equals: { Color black . #a  . Color green }.
+	self assertCollection: rcvr asArray equals: { 4 . #a  . #(42) }.
 ]
 
 { #category : #tests }
