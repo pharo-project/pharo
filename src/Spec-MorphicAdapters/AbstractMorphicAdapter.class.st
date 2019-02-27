@@ -7,9 +7,23 @@ Class {
 	#category : #'Spec-MorphicAdapters-Base'
 }
 
+{ #category : #accessing }
+AbstractMorphicAdapter class >> adaptingName [
+	"Override me if adapter will not follow the common pattern"
+
+	"remove 'Morphic' part and *in general*, I will have the adapting name"
+
+	^ (self name allButFirst: 7) asSymbol
+]
+
+{ #category : #accessing }
+AbstractMorphicAdapter class >> allAdapters [
+
+	^ self allSubclasses
+]
+
 { #category : #specs }
 AbstractMorphicAdapter class >> defaultSpec [
-
 	^ SpecLayout composed
 ]
 
@@ -25,10 +39,26 @@ AbstractMorphicAdapter >> acceptDroppingMorph: draggedMorph event: event inMorph
 	^ self acceptDropBlock cull: draggedMorph model model cull: event cull: source model model
 ]
 
+{ #category : #initialization }
+AbstractMorphicAdapter >> adapt: aPresenter [
+
+	super adapt: aPresenter.
+	self flag: #TODO. "this should be here, but is interfering with old layouts reason why 
+	 I'm moving it to MorphicLayoutAdapter >> #applyStyle:to:"
+	"self applyStyle: self widget."
+]
+
 { #category : #protocol }
 AbstractMorphicAdapter >> add: aWidget [
 	
 	self widgetDo: [ :w | w ensureLayoutAndAddMorph: aWidget asWidget ]
+]
+
+{ #category : #initialization }
+AbstractMorphicAdapter >> applyStyle: morph [
+	"this will apply general properties to the built morph"
+	
+	self style applyTo: morph
 ]
 
 { #category : #dispatch }
@@ -107,7 +137,7 @@ AbstractMorphicAdapter >> disable [
 { #category : #'drag and drop' }
 AbstractMorphicAdapter >> dragEnabled [
 
-	^ self model dragEnabled
+	^ self presenter dragEnabled
 ]
 
 { #category : #'drag and drop' }
@@ -137,7 +167,7 @@ AbstractMorphicAdapter >> dragTransformationBlock [
 { #category : #'drag and drop' }
 AbstractMorphicAdapter >> dropEnabled [
 
-	^ self model dropEnabled
+	^ self presenter dropEnabled
 ]
 
 { #category : #'drag and drop' }
@@ -154,8 +184,7 @@ AbstractMorphicAdapter >> enable [
 
 { #category : #protocol }
 AbstractMorphicAdapter >> enabled [
-	
-	^ self model enabled
+	^ self model isEnabled
 ]
 
 { #category : #protocol }
@@ -281,6 +310,27 @@ AbstractMorphicAdapter >> setBalloonText: aString [
 AbstractMorphicAdapter >> setModal: aWindow [ 
 
 	self widgetDo: [ :w | w setModal: aWindow ]
+]
+
+{ #category : #accessing }
+AbstractMorphicAdapter >> style [
+	"i.e. ButtonAdapter = Button"
+	
+	^ self styleAt: self styleName
+]
+
+{ #category : #accessing }
+AbstractMorphicAdapter >> styleAt: aName [
+	"i.e. ButtonAdapter = Button"
+	
+	^ MorphicStyleSheet current atClass: aName
+]
+
+{ #category : #accessing }
+AbstractMorphicAdapter >> styleName [
+	"i.e. ButtonAdapter = Button"
+	
+	^ ((self className allButFirst: 7) allButLast: 7) asSymbol
 ]
 
 { #category : #'drag and drop' }

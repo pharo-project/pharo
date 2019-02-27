@@ -21,36 +21,19 @@ Class {
 
 { #category : #specs }
 SpecDemoButtonsPresenter class >> defaultSpec [
-
-	<spec: #default>
-
-	| fontWidth rowHeight buttonHeight |
-	fontWidth := (StandardFonts defaultFont widthOfString: 'M').
-	rowHeight := self inputTextHeight.
-	buttonHeight := rowHeight*1.3.
-	
-	^ SpecLayout composed
-		newColumn: [ :col | 
-
-		col newRow: [ :row | 
-				row add: #buttonNormal.
-				row add: #buttonDisabled.
-				row add: #buttonWithIcon.
-				row add: #buttonWithIconOnly.
-				row add: #buttonHighlighted.
-				 ] height: buttonHeight.
-			
-		col newRow: [ :row | 
-				row add: #buttonWithColor.
-				row add: #buttonWithMenu.
-				row add: #buttonWithShortcut.
-				row add: #buttonWithHelp.
-				row add: #buttonWithDifferentFont.
-				 ] 	height: buttonHeight.
-
-		"fill the rest of the space"
-		col newRow: [ :row |  ] ]; 
-		yourself.	
+	^ SpecGridLayout new
+		beColumnHomogeneous;
+		borderWidth: 0;
+		add: #buttonNormal at: 1 @ 1;
+		add: #buttonDisabled at: 2 @ 1;
+		add: #buttonWithIcon at: 3 @ 1;
+		add: #buttonWithIconOnly at: 4 @ 1;
+		add: #buttonHighlighted at: 5 @ 1;
+		add: #buttonWithColor at: 1 @ 2;
+		add: #buttonWithMenu at: 2 @ 2;
+		add: #buttonWithShortcut at: 3 @ 2;
+		add: #buttonWithHelp at: 4 @ 2;
+		add: #buttonWithDifferentFont at: 5 @ 2
 ]
 
 { #category : #accessing }
@@ -110,6 +93,7 @@ SpecDemoButtonsPresenter >> buttonWithHelp [
 
 { #category : #accessing }
 SpecDemoButtonsPresenter >> buttonWithHelp: anObject [
+
 	buttonWithHelp := anObject
 ]
 
@@ -161,49 +145,48 @@ SpecDemoButtonsPresenter >> initializePresenter [
 
 { #category : #initialization }
 SpecDemoButtonsPresenter >> initializeWidgets [
-
-	buttonNormal := self newButton 
-		label: 'normal'.
-	buttonDisabled := self newButton 
+	buttonNormal := self newButton label: 'normal'.
+	buttonDisabled := self newButton
 		label: 'disabled';
 		disable;
 		yourself.
-	buttonWithIcon := self newButton 
+	buttonWithIcon := self newButton
 		label: 'with icon';
-		icon: (self iconNamed: #pharo);
-		yourself.		
-	buttonWithIconOnly := self newButton 
-		icon: (self iconNamed: #pharo);
+		icon: ((self iconNamed: #pharo) scaledToSize: 16 @ 16);
+		yourself.
+	buttonWithIconOnly := self newButton
+		icon: ((self iconNamed: #pharo) scaledToSize: 16 @ 16);
 		help: 'This button has only icon, no label';
-		yourself.		
-	buttonHighlighted := self newButton 
+		yourself.
+	buttonHighlighted := self newButton
 		label: 'highlighted';
 		state: true;
-		yourself.	
-	buttonWithColor := self newButton 
+		yourself.
+	buttonWithColor := self newButton
 		label: 'red';
 		color: Color red;
 		yourself.
-	buttonWithMenu := self newButton 
+	buttonWithMenu := self newButton
 		label: 'with menu';
 		menu: self subMenu;
-		yourself.		
-	buttonWithShortcut := self newButton 
+		yourself.
+	buttonWithShortcut := self newButton
 		shortcut: $o meta;
 		label: 'with shortcut';
-		yourself.	
-	buttonWithHelp := self newButton 
+		yourself.
+	buttonWithHelp := self newButton
 		label: 'with help';
-		help: 'This button shows
+		help:
+			'This button shows
 a multiline help';
-		yourself.	
+		yourself.
 
-	buttonWithDifferentFont := self newButton 
+	buttonWithDifferentFont := self newButton
 		label: 'different font';
 		font: StandardFonts codeFont;
-		yourself.	
-			
-	self focusOrder 
+		yourself.
+
+	self focusOrder
 		add: buttonNormal;
 		add: buttonDisabled;
 		add: buttonWithIcon;
@@ -213,8 +196,7 @@ a multiline help';
 		add: buttonWithMenu;
 		add: buttonWithShortcut;
 		add: buttonWithHelp;
-		add: buttonWithDifferentFont.
-																																																								
+		add: buttonWithDifferentFont
 ]
 
 { #category : #initialization }

@@ -1,6 +1,6 @@
 Class {
 	#name : #LabelledContainerTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#category : #'Spec-Tests-PolyWidgets-Elementary'
 }
 
@@ -11,20 +11,20 @@ LabelledContainerTest >> classToTest [
 
 { #category : #running }
 LabelledContainerTest >> initializeTestedInstance [
-	testedInstance content: TestingComposablePresenter.
+	presenter content: TestingComposablePresenter.
 ]
 
 { #category : #tests }
 LabelledContainerTest >> testContent [
-	testedInstance content: ListPresenter.
-	self assert: testedInstance subwidget class equals: ListPresenter
+	presenter content: ListPresenter.
+	self assert: presenter subwidget class equals: ListPresenter
 ]
 
 { #category : #tests }
 LabelledContainerTest >> testDoesNotUnderstand [
-	testedInstance content: ListPresenter.
-	testedInstance items: {'aaa' . 'bbb' . 'ccc'}.
-	self assertCollection: testedInstance listItems hasSameElements: {'aaa' . 'bbb' . 'ccc'}
+	presenter content: ListPresenter.
+	presenter items: {'aaa' . 'bbb' . 'ccc'}.
+	self assertCollection: presenter model items hasSameElements: {'aaa' . 'bbb' . 'ccc'}
 ]
 
 { #category : #tests }

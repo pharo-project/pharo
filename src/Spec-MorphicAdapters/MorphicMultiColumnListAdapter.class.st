@@ -15,8 +15,6 @@ MorphicMultiColumnListAdapter >> buildWidget [
 		getListSizeSelector: #listSize;
 		getIndexSelector: #getIndex;
 		setIndexSelector: #setIndex:;
-		getSelectionListSelector: #getSelectionStateFor:;
-		setSelectionListSelector: #setSelectionStateFor:at:;
 		getListElementSelector: #listElementAt:;
 		resetListSelector: #resetListSelection;
 		getMenuSelector: #menu:shifted:;

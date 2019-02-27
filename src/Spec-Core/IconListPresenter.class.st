@@ -13,26 +13,15 @@ todo
 "
 Class {
 	#name : #IconListPresenter,
-	#superclass : #ListPresenter,
+	#superclass : #ColumnedListPresenter,
 	#instVars : [
-		'iconHolder'
+		'iconHolder',
+		'iconColumn',
+		'descriptionColumn',
+		'displayBlock'
 	],
 	#category : #'Spec-Core-Widgets'
 }
-
-{ #category : #specs }
-IconListPresenter class >> adapterName [
-
-	^ #IconListAdapter
-]
-
-{ #category : #specs }
-IconListPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(IconListAdapter
-		adapt: #(model))
-]
 
 { #category : #example }
 IconListPresenter class >> example [
@@ -44,6 +33,22 @@ IconListPresenter class >> example [
 		items: (1 to: 10) asArray;
 		openWithSpec.
 	^ example
+]
+
+{ #category : #accessing }
+IconListPresenter >> displayBlock [
+	^ displayBlock
+]
+
+{ #category : #accessing }
+IconListPresenter >> displayBlock: anObject [
+	displayBlock := anObject
+]
+
+{ #category : #initialization }
+IconListPresenter >> displayValueOf: anObject [
+
+	^ displayBlock value: anObject
 ]
 
 { #category : #api }
@@ -62,8 +67,7 @@ IconListPresenter >> icons [
 
 { #category : #api }
 IconListPresenter >> icons: aBlock [
-	"<api: #block getter: #icon registration: #whenIconsChanged: >"
-	"Set a block which takes an item as argument and returns the icon to display in the list"
+
 	iconHolder value: aBlock
 ]
 
@@ -71,8 +75,20 @@ IconListPresenter >> icons: aBlock [
 IconListPresenter >> initialize [
 
 	super initialize.
-
+	displayBlock := #yourself.
 	iconHolder := [:item | nil ] asValueHolder.
+	self hideColumnHeaders.
+	self
+		addColumn: (iconColumn := (ImageTableColumn title: 'Icon' evaluated: [:item | 
+			self getIconFor: item ]));
+		addColumn: (descriptionColumn := (StringTableColumn title: 'Description' evaluated: [ :item |
+			self displayValueOf: item ]))
+]
+
+{ #category : #compatibility }
+IconListPresenter >> updateList [
+	self adapter widget refresh.
+	self unselectAll
 ]
 
 { #category : #'api-events' }

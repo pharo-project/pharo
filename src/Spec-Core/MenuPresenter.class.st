@@ -30,7 +30,8 @@ Class {
 		'groups',
 		'title',
 		'icon',
-		'autoRefresh'
+		'autoRefresh',
+		'shortcutGroup'
 	],
 	#category : #'Spec-Core-Widgets'
 }
@@ -42,19 +43,11 @@ MenuPresenter class >> adapterName [
 ]
 
 { #category : #specs }
-MenuPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(MenuAdapter
-		adapt: #(model))
-]
-
-{ #category : #specs }
 MenuPresenter class >> popup [
 	<spec>
 	
 	^ #(MenuAdapter
-		adaptAsPopup: #(model))
+		adaptAsPopup: #(presenter))
 ]
 
 { #category : #'api-building' }
@@ -77,6 +70,7 @@ MenuPresenter >> addGroup: aBlock [
 { #category : #private }
 MenuPresenter >> addMenuGroup: aMenuGroup [
 
+	aMenuGroup owner: self.
 	groups add: aMenuGroup.
 	self autoRefresh 
 		ifNotNil: [ aMenuGroup autoRefresh: self autoRefresh ]
@@ -174,6 +168,21 @@ MenuPresenter >> printOn: aStream [
 				nextPutAll: ' ''';
 				nextPutAll: t;
 				nextPutAll: '''' ]
+]
+
+{ #category : #accessing }
+MenuPresenter >> shortcutGroup [
+	"Some platforms use acceleration groups to store shortcut keys. 
+	 if that's the case, we use this property to access it later (and store 
+	 in windows, for example)"
+	
+	^ shortcutGroup
+]
+
+{ #category : #accessing }
+MenuPresenter >> shortcutGroup: aKeyGroup [
+	
+	shortcutGroup := aKeyGroup
 ]
 
 { #category : #api }

@@ -32,14 +32,6 @@ TreeNodePresenter class >> adapterName [
 	^ #TreeNodeAdapter
 ]
 
-{ #category : #specs }
-TreeNodePresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(TreeNodeAdapter
-		adapt: #(model))
-]
-
 { #category : #api }
 TreeNodePresenter >> allSelectedItems [
 	| result |

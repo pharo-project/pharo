@@ -17,26 +17,26 @@ Class {
 WorkingCopyToolBar class >> defaultSpec [ 
 
 	^ {#ContainerPresenter.
-			#add: . {{#model . #packageButton.} . #layout: .  #(FrameLayout
+			#add: . {{#presenter . #packageButton.} . #layout: .  #(FrameLayout
 										rightFraction: 0.25
 										bottomFraction: 0
 										bottomOffset: 25)} . 
 
-			#add: . {{#model . #configButton.} .
+			#add: . {{#presenter . #configButton.} .
 						#layout: . #(FrameLayout
 										leftFraction: 0.25
 										rightFraction: 0.5
 										bottomFraction: 0
 										bottomOffset: 25) } .
 											
-			#add: . {{#model . #sliceButton.} .
+			#add: . {{#presenter . #sliceButton.} .
 						#layout: . #(FrameLayout
 										leftFraction: 0.5
 										rightFraction: 0.75
 										bottomFraction: 0
 										bottomOffset: 25) } .											
 
-			#add: . {{#model . #browseButton.} .
+			#add: . {{#presenter . #browseButton.} .
 						#layout: . #(FrameLayout
 										leftFraction: 0.75
 										bottomFraction: 0

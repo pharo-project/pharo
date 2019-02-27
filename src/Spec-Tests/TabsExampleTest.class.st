@@ -1,6 +1,6 @@
 Class {
 	#name : #TabsExampleTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#category : #'Spec-Tests-Examples'
 }
 

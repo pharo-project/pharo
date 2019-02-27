@@ -1,6 +1,6 @@
 Class {
 	#name : #AbstractTwoButtonsTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#category : #'Spec-Tests-PolyWidgets-Support'
 }
 
@@ -14,23 +14,23 @@ AbstractTwoButtonsTest >> testFirstActionSecondAction [
 	| action1 action2 |
 	action1 := false.
 	action2 := false.
-	testedInstance firstAction: [ action1 := true ] secondAction: [ action2 := true ].
-	testedInstance firstButton performAction.
-	testedInstance secondButton performAction.
+	presenter firstAction: [ action1 := true ] secondAction: [ action2 := true ].
+	presenter firstButton performAction.
+	presenter secondButton performAction.
 	self assert: action1.
 	self assert: action2
 ]
 
 { #category : #tests }
 AbstractTwoButtonsTest >> testFirstIconSecondIcon [
-	testedInstance firstIcon: #thumbsUp secondIcon: #thumbsDown.
-	self assert: testedInstance firstButton icon == (self iconNamed: #thumbsUp).
-	self assert: testedInstance secondButton icon == (self iconNamed: #thumbsDown)
+	presenter firstIcon: #thumbsUp secondIcon: #thumbsDown.
+	self assert: presenter firstButton icon == (self iconNamed: #thumbsUp).
+	self assert: presenter secondButton icon == (self iconNamed: #thumbsDown)
 ]
 
 { #category : #tests }
 AbstractTwoButtonsTest >> testFirstLabelSecondLabel [
-	testedInstance firstLabel: 'label 1' secondLabel: 'label 2'.
-	self assert: testedInstance firstButton label asString equals: 'label 1'.
-	self assert: testedInstance secondButton label asString equals: 'label 2'
+	presenter firstLabel: 'label 1' secondLabel: 'label 2'.
+	self assert: presenter firstButton label asString equals: 'label 1'.
+	self assert: presenter secondButton label asString equals: 'label 2'
 ]

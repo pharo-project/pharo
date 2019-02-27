@@ -1,6 +1,6 @@
 Class {
 	#name : #ImagePresenterTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#category : #'Spec-Tests-Core-Widgets'
 }
 
@@ -12,7 +12,7 @@ ImagePresenterTest >> classToTest [
 { #category : #tests }
 ImagePresenterTest >> testSwitchAutoScale [
 	| autoState |
-	autoState := testedInstance autoScale.
-	testedInstance switchAutoscale.
-	self assert: testedInstance autoScale equals: autoState not
+	autoState := presenter autoScale.
+	presenter switchAutoscale.
+	self assert: presenter autoScale equals: autoState not
 ]

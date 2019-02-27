@@ -33,14 +33,6 @@ MenuGroupPresenter class >> adapterName [
 	^ #MenuGroupAdapter
 ]
 
-{ #category : #specs }
-MenuGroupPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(MenuGroupAdapter
-		adapt: #(model))
-]
-
 { #category : #api }
 MenuGroupPresenter >> addItem: aBlock [
 	| item |
@@ -53,6 +45,7 @@ MenuGroupPresenter >> addItem: aBlock [
 { #category : #private }
 MenuGroupPresenter >> addMenuItem: aMenuItem [
 
+	aMenuItem owner: self.
 	items add: aMenuItem.
 	self autoRefresh 
 		ifNotNil: [ aMenuItem autoRefresh: self autoRefresh ]
@@ -74,7 +67,7 @@ MenuGroupPresenter >> autoRefresh: aBoolean [
 MenuGroupPresenter >> buildWithSpecLayout: aSpecLayout [
 	"Build the widget using the spec name provided as argument"
 	| adapter widget|
-	adapter := self adapterFrom: aSpecLayout model: self.
+	adapter := self adapterFrom: aSpecLayout.
 	widget := adapter asWidget.
 	self announce: (WidgetBuilt model: self widget: widget).
 	^ widget

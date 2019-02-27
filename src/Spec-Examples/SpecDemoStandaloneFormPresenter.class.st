@@ -150,24 +150,22 @@ SpecDemoStandaloneFormPresenter >> dateLabel: anObject [
 
 { #category : #'model updates' }
 SpecDemoStandaloneFormPresenter >> fillFormWithWorkingModel [
-
 	| aModel |
-	
 	aModel := self workingModel.
-
 	self nameTextInput text: aModel name.
-	self surnameTextInput text: aModel surname.	
+	self surnameTextInput text: aModel surname.
 	self number1Input text: aModel number1 asString.
 	self number2Input text: aModel number2 asString.
 	self scaleInput value: aModel scale.
 	self passwordInput text: aModel password.
 	self checkboxInput state: aModel rememberMe.
 	self dateInput date: aModel date.
-	
-	genderGroup default: (genderButtons detect: [:each | each key = aModel gender]) value.
-
-	self workingModel items withIndexDo: [ :item :index |
-		self itemsInput setSelectionStateFor: index at: (self workingModel selectedItems includes: item) ].
+	genderGroup
+		default: (genderButtons detect: [ :each | each key = aModel gender ]) value.
+	self itemsInput selection
+		selectIndexes:
+			(self workingModel items
+				collect: [ :elem | self itemsInput model shownItems indexOf: elem ]).
 	self itemsInput changed: #listElementAt:
 ]
 
@@ -177,8 +175,8 @@ SpecDemoStandaloneFormPresenter >> fillModelWithFormContent [
 	self workingModel
 		name: self nameTextInput text;
 		surname: self surnameTextInput text;
-		number1: number1Input text asNumber;
-		number2: (NumberParser parse: number2Input text readStream onError: [0]);
+		number1: number1Input number;
+		number2: number2Input number;
 		scale: self scaleInput value;
 		password: self passwordInput text;
 		rememberMe: self checkboxInput state;
@@ -212,17 +210,8 @@ SpecDemoStandaloneFormPresenter >> genderLabel: anObject [
 
 { #category : #initialization }
 SpecDemoStandaloneFormPresenter >> initializePresenter [
-	
-	self submitButton action: [self submit].	
-	self restoreButton action: [self restore].
-	
-	self number1Input whenTextChanged: [ 
-		| receivedText newText |
-		receivedText := self number1Input text asString.
-		newText := receivedText select: [ :aCharacter | aCharacter isDigit ].
-		newText = receivedText ifFalse: [ 
-			self number1Input textHolder rawValue: newText.
-			self number1Input textHolder valueChanged: newText] ]
+	self submitButton action: [ self submit ].
+	self restoreButton action: [ self restore ]
 ]
 
 { #category : #initialization }
@@ -233,34 +222,31 @@ SpecDemoStandaloneFormPresenter >> initializeWidgets [
 
 	surnameLabel := self newLabel label: 'surname:'.
 	surnameTextInput := self newTextInput autoAccept: true.
-	surnameTextInput ghostText: 'empty'.
-
+	surnameTextInput placeholder: 'empty'.
 	number1Label := self newLabel label: 'number 1:'.
-	number1Input := self newTextInput autoAccept: true.
+	number1Input := self newNumberInput autoAccept: true.
 
 	number2Label := self newLabel label: 'number 2:'.
-	number2Input := self newTextInput autoAccept: true.
+	number2Input := self newNumberInput autoAccept: true; beFloat; digits: 3; climbRate: 0.005; minimum: 10.005; maximum: 20.05.
 
 	scaleLabel := self newLabel label: 'scale:'.
 	scaleInput := self newSlider.
 
 	passwordLabel := self newLabel label: 'password:'.
-	passwordInput := self newTextInput encrypted: true; autoAccept: true..
-
+	passwordInput := self newTextInput
+		encrypted: true;
+		autoAccept: true.
 	checkboxLabel := self newLabel label: 'remember me'.
 	checkboxInput := self newCheckBox state: true.
 
 	dateLabel := self newLabel label: 'date:'.
 	dateInput := self instantiate: DatePresenter.
-	dateInput displayBlock: [:item | item yyyymmdd ].
-	
-	genderButtons := self model genders collect: [ :each |
-		each -> (RadioButtonPresenter new label: each asString) ].  
-
+	dateInput displayBlock: [ :item | item yyyymmdd ].
+	genderButtons := self model genders
+		collect: [ :each | each -> (RadioButtonPresenter new label: each asString) ].
 	genderLabel := self newLabel label: 'gender:'.
-	genderGroup := self instantiate: RadioButtonGroupPresenter .
-	genderButtons do: [ :each | genderGroup addRadioButton: each value].
-	
+	genderGroup := self instantiate: RadioButtonGroupPresenter.
+	genderButtons do: [ :each | genderGroup addRadioButton: each value ].
 	itemsLabel := self newLabel label: 'items:'.
 	itemsInput := self newList.
 	itemsInput beMultipleSelection.
@@ -268,16 +254,15 @@ SpecDemoStandaloneFormPresenter >> initializeWidgets [
 
 	submitButton := self newButton label: 'Submit'.
 	restoreButton := self newButton label: 'Restore'.
-	
-	self focusOrder 
+
+	self focusOrder
 		add: nameTextInput;
 		add: surnameTextInput;
 		add: number1Input;
 		add: number2Input;
 		add: scaleInput;
 		add: passwordInput;
-		add: checkboxInput.
-		
+		add: checkboxInput
 ]
 
 { #category : #accessing }

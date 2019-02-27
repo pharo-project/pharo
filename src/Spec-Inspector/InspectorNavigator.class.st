@@ -105,7 +105,7 @@ InspectorNavigator >> customMenuActions [
 ]
 
 { #category : #accessing }
-InspectorNavigator >> defaultWindowModelClass [
+InspectorNavigator >> defaultWindowPresenterClass [
 	^ TickingWindowPresenter
 ]
 

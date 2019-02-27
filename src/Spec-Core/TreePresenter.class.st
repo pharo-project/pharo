@@ -37,14 +37,7 @@ Class {
 
 { #category : #specs }
 TreePresenter class >> adapterName [
-]
-
-{ #category : #specs }
-TreePresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(TreeAdapter
-		adapt: #(model))
+	^ #TreeAdapter
 ]
 
 { #category : #examples }
@@ -95,7 +88,6 @@ TreePresenter class >> exampleOfAutoRefreshOnExpand [
 { #category : #examples }
 TreePresenter class >> exampleWithCustomColumnsAndNodes [
 	<haltOrBreakpointForTesting>
-	"self exampleWithCustomColumnsAndNodes"
 	| m col1 col2 |
 
 	m := TreePresenter new.
@@ -139,7 +131,6 @@ TreePresenter class >> exampleWithCustomColumnsAndNodes [
 { #category : #examples }
 TreePresenter class >> exampleWithCustomColumnsAndNodesAndChildren [
 	<haltOrBreakpointForTesting>
-	"self exampleWithCustomColumnsAndNodesAndChildren"
 
 	| m col1 col2 |
 	m := TreePresenter new.
@@ -472,9 +463,9 @@ TreePresenter >> initialize [
 	isCheckList := false asValueHolder.
 	keyStroke := [ :key | ] asValueHolder.
 	multiSelection := false asValueHolder.
-	evenRowColor := Smalltalk ui theme backgroundColor asValueHolder.
-	oddRowColor := Smalltalk ui theme backgroundColor asValueHolder.
-	preferedPaneColor := Smalltalk ui theme backgroundColor asValueHolder.
+	evenRowColor := self theme backgroundColor asValueHolder.
+	oddRowColor := self theme backgroundColor asValueHolder.
+	preferedPaneColor := self theme backgroundColor asValueHolder.
 	resizerWidth := 2 asValueHolder.
 	rowInset := 2 asValueHolder.
 	iconBlock := [ :each : node | node icon ] asValueHolder.

@@ -1,6 +1,6 @@
 Class {
 	#name : #IconListPresenterTest,
-	#superclass : #ListPresenterTest,
+	#superclass : #AbstractListPresenterTest,
 	#category : #'Spec-Tests-Core-Widgets'
 }
 
@@ -11,8 +11,8 @@ IconListPresenterTest >> classToTest [
 
 { #category : #tests }
 IconListPresenterTest >> testGetIconFor [
-	testedInstance
+	presenter
 		items: #(#add #back #catalog);
 		icons: [ :item |  Smalltalk ui icons iconNamed: item asSymbol ].
-	self assert: (testedInstance getIconFor: #add) equals: (Smalltalk ui icons iconNamed: #add)
+	self assert: (presenter getIconFor: #add) equals: (Smalltalk ui icons iconNamed: #add)
 ]

@@ -3,7 +3,8 @@ Extension { #name : #Morph }
 { #category : #'*Spec-MorphicAdapters' }
 Morph >> asSpecAdapter [
 
-	^ MorphicGenericAdapter 
+	^ (SpecBindings value new 
+		adapterClass: #GenericAdapter)
 		morph: self
 ]
 

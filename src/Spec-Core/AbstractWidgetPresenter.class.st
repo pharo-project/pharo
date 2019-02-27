@@ -50,8 +50,9 @@ AbstractWidgetPresenter class >> adapterName [
 
 { #category : #specs }
 AbstractWidgetPresenter class >> defaultSpec [
+	<spec: #default>
 
-	^ { self adapterName. #adapt:. #model }
+	^ { self adapterName. #adapt:. #presenter }
 ]
 
 { #category : #'drag and drop' }
@@ -119,7 +120,7 @@ AbstractWidgetPresenter >> color: aColor [
 
 { #category : #initialization }
 AbstractWidgetPresenter >> defaultColor [
-	^ Smalltalk ui theme backgroundColor
+	^ self theme backgroundColor
 ]
 
 { #category : #'drag and drop' }
@@ -186,7 +187,13 @@ AbstractWidgetPresenter >> enable [
 { #category : #api }
 AbstractWidgetPresenter >> enabled [
 	"<api: #inspect>"
-	^ enabledHolder value
+	
+	self 
+		deprecated:  'Please use #isEnabled instead' 
+		transformWith:  '`@receiver enabled' 
+						-> '`@receiver isEnabled'.
+	
+	^ self isEnabled
 ]
 
 { #category : #api }
@@ -237,7 +244,6 @@ AbstractWidgetPresenter >> help: aString [
 AbstractWidgetPresenter >> initialize [
 
 	super initialize.
-
 	helpHolder := nil asValueHolder.
 	borderWidth := 0 asValueHolder.
 	borderColor := Color transparent asValueHolder.
@@ -245,36 +251,38 @@ AbstractWidgetPresenter >> initialize [
 	dragEnabled := false asValueHolder.
 	dropEnabled := false asValueHolder.
 	dragTransformationBlock := [ :item :source | item ] asValueHolder.
-	wantDropBlock := [ :draggedItem :event :source | self dropEnabled ] asValueHolder.
-	acceptDropBlock := [ :draggedItem :event :source | ] asValueHolder.
-	transferBlock := [:passenger :source | self defaultTransferFor: passenger from: source ] asValueHolder.
+	wantDropBlock := [ :draggedItem :event :source | self dropEnabled ]
+		asValueHolder.
+	acceptDropBlock := [ :draggedItem :event :source |  ] asValueHolder.
+	transferBlock := [ :passenger :source | self defaultTransferFor: passenger from: source ]
+		asValueHolder.
 	color := self defaultColor asValueHolder.
-	
-	helpHolder whenChangedDo: [:string | 
-		self widget ifNotNil: [:w | w update: #setBalloonText: with: { string } ] ].
-	
-	borderWidth whenChangedDo: [:int | 
-		self widget ifNotNil: [:w | w update: #borderWidth: with: { int } ] ].
-	
-	borderColor whenChangedDo: [:newColor | 
-		self widget ifNotNil: [:w | w update: #borderColor: with: { newColor } ] ].
-	
-	color whenChangedDo: [:newColor | 
-		self widget ifNotNil: [:w | w update: #color: with: { newColor } ] ].
-	
-	enabledHolder whenChangedDo: [:b |
-		self widget ifNotNil: [:w | w update: #enabled: with: { b } ] ].
-	
-	dragEnabled whenChangedDo: [:b |
-		self widget ifNotNil: [:w | w update: #dragEnabled: with: { b } ] ].
-	
-	dropEnabled whenChangedDo: [:b |
-		self widget ifNotNil: [:w | w update: #dropEnabled: with: { b } ] ].
+	helpHolder whenChangedDo: [ :string | 
+		self withAdapterDo: [ :w | 
+			w update: #setBalloonText: with: {string} ] ].
+	borderWidth whenChangedDo: [ :int | 
+		self withWidgetDo: [ :w | w update: #borderWidth: with: {int} ] ].
+	borderColor whenChangedDo: [ :newColor | 
+		self withWidgetDo: [ :w | w update: #borderColor: with: {newColor} ] ].
+	color whenChangedDo: [ :newColor | 
+		self withAdapterDo: [ :w | w update: #color: with: {newColor} ] ].
+	enabledHolder whenChangedDo: [ :b | 
+		self withAdapterDo: [ :w | w update: #enabled: with: {b} ] ].
+	dragEnabled whenChangedDo: [ :b | 
+		self withWidgetDo: [ :w | w update: #dragEnabled: with: {b} ] ].
+	dropEnabled whenChangedDo: [ :b | 
+		self withWidgetDo: [ :w | w update: #dropEnabled: with: {b} ] ]
 ]
 
 { #category : #initialization }
 AbstractWidgetPresenter >> initializeWidgets [ 
 	"ignore this method since there is no composition in basic widgets"
+]
+
+{ #category : #api }
+AbstractWidgetPresenter >> isEnabled [
+
+	^ enabledHolder value
 ]
 
 { #category : #'drag and drop' }
