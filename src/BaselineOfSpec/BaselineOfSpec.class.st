@@ -26,6 +26,9 @@ BaselineOfSpec >> addHackToLoadSpec [
 BaselineOfSpec >> baseline: spec [
 	<baseline>
 
+	| repository |
+	repository := self packageRepositoryURL.
+
 	spec for: #common do: [ 
 		spec 
 			preLoadDoIt: #addHackToLoadSpec;
@@ -35,7 +38,7 @@ BaselineOfSpec >> baseline: spec [
 			baseline: 'ParametrizedTests' 
 			with: [ 
 				spec
-					repository: 'github://tesonep/ParametrizedTests/src';
+					repository: repository;
   					loads: 'default' ].
 
 		spec 
