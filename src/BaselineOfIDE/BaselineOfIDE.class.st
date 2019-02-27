@@ -156,6 +156,7 @@ BaselineOfIDE >> baseline: spec [
 		
 		spec package: 'BlueInk-Core'.
 		
+		spec package: 'Transcript-NonInteractive-Tests'.
 		spec package: 'Collections-Tests'.
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
@@ -449,6 +450,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Keymapping-Tests'
 
 	'Morphic-Tests'
+	'Morphic-Widgets-FastTable-Tests'
 	'NECompletion-Tests'
 	'NewValueHolder-Tests'
 	'ProfStef-Tests'
@@ -478,6 +480,8 @@ spec group: 'General-Tests-Group' with: #(
 	'System-Identification-Tests'		
 	'System-DependenciesTests'
 	'System-BasicCommandLineHandler-Tests'
+	'Transcript-NonInteractive-Tests'
+	'PharoDocComment-Tests'	"standalone"
 ).	
 
 spec group: 'FuzzyMatcher-Core-Group' with: #(
@@ -646,9 +650,10 @@ spec group: 'Glamour-Core-Group' with: #(
 	'Glamour-Announcements'
 	'Glamour-Helpers'
 	'Glamour-Core'
+	'Glamour-Tasks'
+	'Glamour-PagerModel'
 	'Glamour-Presentations'
 	'Glamour-Browsers'
-	'Glamour-Examples'
 	'Glamour-Morphic-Brick'
 	'Glamour-Morphic-Theme'
 	'Glamour-Morphic-Widgets'
@@ -680,8 +685,8 @@ spec group: 'GT-Core-Group' with: #(
 	'GT-Playground'
 	'GT-EventRecorder'
 	'GT-Spotter'
+	'GT-Spotter-UI'
 	'GT-SpotterExtensions-Core'
-	'GT-Spotter-EventRecorder'
 	'GT-Debugger'
 	'GT-BytecodeDebugger'
 	'GT-SUnitDebugger'
