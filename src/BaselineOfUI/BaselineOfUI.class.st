@@ -35,8 +35,9 @@ BaselineOfUI >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 
-		spec baseline: 'Spec' with: [spec repository: repository].
+		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [spec repository: repository].
+		spec baseline: 'Spec' with: [spec repository: repository].
 
 		spec package: 'StartupPreferences'.
 		
