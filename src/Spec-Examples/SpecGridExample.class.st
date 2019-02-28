@@ -7,7 +7,7 @@ Class {
 		'label2',
 		'input2'
 	],
-	#category : #'Spec-Layout-Grid'
+	#category : #'Spec-Examples'
 }
 
 { #category : #specs }
