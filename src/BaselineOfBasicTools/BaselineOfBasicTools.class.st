@@ -58,8 +58,6 @@ BaselineOfBasicTools >> baseline: spec [
 				spec
 					loads: #('UI' 'Help' 'JenkinsSupport');
 					repository: repository ].
-
-		spec package: 'Morphic-Widgets-FastTable'.
 		
 		spec package: 'Tool-ExternalBrowser'.
 		spec package: 'BlueInk-Core'. 

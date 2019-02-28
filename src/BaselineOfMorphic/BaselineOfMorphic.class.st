@@ -89,6 +89,8 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Menubar'.
 		spec package: 'Morphic-Widgets-Tree'.
 		spec package: 'Morphic-Widgets-Windows'.
+		spec package: 'Morphic-Widgets-FastTable'.
+		
 		spec package: 'Multilingual-OtherLanguages'.
 		spec package: 'Multilingual-TextConverterOtherLanguages'.
 
