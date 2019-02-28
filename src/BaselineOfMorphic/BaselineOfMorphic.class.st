@@ -91,6 +91,9 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Windows'.
 		spec package: 'Morphic-Widgets-FastTable'.
 		
+		"Several packages depend on Rubric as a basic Morphic component"
+		spec package: 'Rubric'.
+		
 		spec package: 'Multilingual-OtherLanguages'.
 		spec package: 'Multilingual-TextConverterOtherLanguages'.
 
