@@ -5,11 +5,16 @@ Class {
 	#name : #ClapPharoVersion,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'formats'
+		'stream'
 	],
 	#category : #'Clap-Commands-Pharo'
 }
+
+{ #category : #'instance creation' }
+ClapPharoVersion class >> showVersionsNamed: formatNames [
+	self new
+		showVersionsNamed: formatNames
+]
 
 { #category : #'command line' }
 ClapPharoVersion class >> version [
@@ -23,42 +28,32 @@ ClapPharoVersion class >> version [
 		add: ((ClapFlag withName: 'hash') description: 'Integration commit hash');
 		add: ((ClapFlag withName: 'vm') description: 'VM build and version');
 		add: ((ClapFlag withName: 'license') description: 'Licensing and copyright');
-		meaning: [ :args |
+		meaning: [ :args | | formats |
 			args atName: 'help' ifFound: [ :help |
 				help value; exitSuccess ].
 			args validateAll.
 
-			(self with: args) execute ]
-]
-
-{ #category : #'instance creation' }
-ClapPharoVersion class >> with: arguments [
-	^ self new
-		setArguments: arguments;
-		yourself
-]
-
-{ #category : #execution }
-ClapPharoVersion >> execute [
-	self formats do: [ :each |
-		stream
-			nextPutAll: (self perform: each);
-			lf ].
-	stream flush
+			formats := args flags collect: [ :each | each specification canonicalName asSymbol ].
+			self showVersionsNamed: (formats ifEmpty: [ #(full) ]) ]
 ]
 
 { #category : #accessing }
-ClapPharoVersion >> formats [
-	^ formats ifEmpty: [ #(full) ]
+ClapPharoVersion >> formatSelectorFor: formatName [
+	^ formatName asSymbol , #VersionString
 ]
 
-{ #category : #formats }
-ClapPharoVersion >> full [
+{ #category : #accessing }
+ClapPharoVersion >> formatStringFor: formatName [
+	^ self perform: (self formatSelectorFor: formatName)
+]
+
+{ #category : #'version strings' }
+ClapPharoVersion >> fullVersionString [
 	^ SystemVersion current imageVersionString
 ]
 
-{ #category : #formats }
-ClapPharoVersion >> hash [
+{ #category : #'version strings' }
+ClapPharoVersion >> hashVersionString [
 	^ SystemVersion current commitHash
 ]
 
@@ -67,28 +62,35 @@ ClapPharoVersion >> initialize [
 	stream := VTermOutputDriver stdout
 ]
 
-{ #category : #formats }
-ClapPharoVersion >> license [
-	^ Smalltalk licenseString
+{ #category : #'version strings' }
+ClapPharoVersion >> licenseVersionString [
+	^ Smalltalk licenseVersionString
 ]
 
-{ #category : #formats }
-ClapPharoVersion >> numeric [
+{ #category : #'version strings' }
+ClapPharoVersion >> numericVersionString [
 	^ SystemVersion current highestUpdate printString
 ]
 
-{ #category : #formats }
-ClapPharoVersion >> release [
+{ #category : #'version strings' }
+ClapPharoVersion >> releaseVersionString [
 	^ SystemVersion current shortVersionString
 ]
 
-{ #category : #initialization }
-ClapPharoVersion >> setArguments: arguments [
-	formats := arguments flags collect: [ :each |
-		each specification canonicalName asSymbol ]
+{ #category : #printing }
+ClapPharoVersion >> showVersionNamed: formatName [
+	stream
+		nextPutAll: (self formatStringFor: formatName);
+		lf
 ]
 
-{ #category : #formats }
-ClapPharoVersion >> vm [
+{ #category : #printing }
+ClapPharoVersion >> showVersionsNamed: formatNames [
+	formatNames do: [ :each | self showVersionNamed: each ].
+	stream flush
+]
+
+{ #category : #'version strings' }
+ClapPharoVersion >> vmVersionString [
 	^ Smalltalk vm version
 ]

@@ -16,17 +16,22 @@ Class {
 
 { #category : #running }
 ClapMatchesTest >> setUp [
+	super setUp.
 	dirFlag := (ClapFlag withName: 'directory')
-		add: (ClapPositional withName: 'DIR').
+		add: (ClapPositional withName: 'DIR');
+		yourself.
 	slowFlag := ClapFlag withName: 'slow'.
 	
 	clap := (ClapCommand withName: 'clap')
 		add: dirFlag;
 		add: ((ClapCommand withName: 'this')
-			add: slowFlag);
+			add: slowFlag; yourself);
+			yourself;
 		add: ((ClapCommand withName: 'that')
 			add: (ClapFlag withName: 'encore');
-			add: (ClapPositional withName: 'clappee'))
+			add: (ClapPositional withName: 'clappee');
+			yourself);
+		yourself
 ]
 
 { #category : #running }
@@ -129,7 +134,7 @@ ClapMatchesTest >> testRootPositionalBeforeSubcommand [
 
 { #category : #running }
 ClapMatchesTest >> testSubcommandAccessing [
-	| match found |
+	| match |
 	match := clap match: #('clap' 'this').
 	
 	self deny: match isMismatch.

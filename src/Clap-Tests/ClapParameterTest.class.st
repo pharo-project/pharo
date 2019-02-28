@@ -19,6 +19,7 @@ ClapParameterTest >> classToTest [
 
 { #category : #running }
 ClapParameterTest >> setUp [
+	super setUp.
 	subject := self classToTest withName: self subjectName
 ]
 

@@ -10,6 +10,7 @@ Class {
 
 { #category : #running }
 ClapContextTest >> setUp [
+	super setUp.
 	hello := ClapCommandLineExamples hello.
 	context := ClapContext specification: hello
 ]
