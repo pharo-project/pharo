@@ -127,6 +127,10 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'StartupPreferences'.
 		spec package: 'System-Identification'.
+		
+		"Tool-Base extends and uses morphic, so it depends on it"
+		spec package: 'Tool-Base'.
+
 	].
 
 ]

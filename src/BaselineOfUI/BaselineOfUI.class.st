@@ -50,7 +50,6 @@ BaselineOfUI >> baseline: spec [
 
 		spec package: 'Fonts-Chooser'.
 
-		spec package: 'Tool-Base'.
 		spec package: 'Transcript-Tool'.
 		spec package: 'Tool-Workspace'.
 
