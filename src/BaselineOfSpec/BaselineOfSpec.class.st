@@ -38,8 +38,3 @@ BaselineOfSpec >> baseline: spec [
 	spec for: #'pharo7.x' do: [ 
 		spec package: 'Spec-Pharo7To8Compatibility' ]
 ]
-
-{ #category : #'pre/post load' }
-BaselineOfSpec >> shouldInstallHack [
-	^ {CommandLineUIManager. NonInteractiveUIManager} anySatisfy: [ :e | UIManager default isKindOf: e ]
-]
