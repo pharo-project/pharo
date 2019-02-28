@@ -146,12 +146,6 @@ SpecBoxLayout >> initialize [
 ]
 
 { #category : #testing }
-SpecBoxLayout >> isFlexible [
-	
-	^ flexible
-]
-
-{ #category : #testing }
 SpecBoxLayout >> isHomogeneous [
 
 	^ homogeneous
