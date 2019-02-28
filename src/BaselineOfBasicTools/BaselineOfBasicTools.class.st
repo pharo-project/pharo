@@ -43,9 +43,10 @@ BaselineOfBasicTools >> baseline: spec [
 
 		"Load first SUnit core"
 		spec
-			baseline: 'SUnit' with: [
+			baseline: 'SUnitCore' with: [
 				spec
 					loads: 'Core';
+					className: 'BaselineOfSUnit';
 					repository: repository ].
 		spec
 			baseline: 'UI' with: [spec repository: repository];
