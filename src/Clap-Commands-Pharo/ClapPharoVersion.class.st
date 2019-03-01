@@ -64,7 +64,7 @@ ClapPharoVersion >> initialize [
 
 { #category : #'version strings' }
 ClapPharoVersion >> licenseVersionString [
-	^ Smalltalk licenseVersionString
+	^ Smalltalk licenseString
 ]
 
 { #category : #'version strings' }
