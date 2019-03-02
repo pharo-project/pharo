@@ -39,13 +39,13 @@ Class {
 }
 
 { #category : #'instance creation' }
-ZipArchiveMember class >> newFromDirectory: aFileName [
-	^ZipDirectoryMember newNamed: aFileName
+ZipArchiveMember class >> newFromDirectory: aFileReference [
+	^ZipDirectoryMember newFromDirectory: aFileReference
 ]
 
 { #category : #'instance creation' }
-ZipArchiveMember class >> newFromFile: aFileName [
-	^ZipNewFileMember newNamed: aFileName
+ZipArchiveMember class >> newFromFile: aFileReference [
+	^ZipNewFileMember newFromFile: aFileReference
 ]
 
 { #category : #'instance creation' }

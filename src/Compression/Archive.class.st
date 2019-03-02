@@ -11,29 +11,29 @@ Class {
 }
 
 { #category : #'archive operations' }
-Archive >> addDirectory: aFileName [
-	^self addDirectory: aFileName as: aFileName
+Archive >> addDirectory: aFileReference [
+	^self addDirectory: aFileReference as: aFileReference path pathString
 
 ]
 
 { #category : #'archive operations' }
-Archive >> addDirectory: aFileName as: anotherFileName [
+Archive >> addDirectory: aFileReference as: anotherFileName [
 	| newMember |
-	newMember := self memberClass newFromDirectory: aFileName.
+	newMember := self memberClass newFromDirectory: aFileReference.
 	self addMember: newMember.
 	newMember localFileName: anotherFileName.
 	^newMember
 ]
 
 { #category : #'archive operations' }
-Archive >> addFile: aFileName [
-	^self addFile: aFileName as: aFileName
+Archive >> addFile: aFileReference [
+	^self addFile: aFileReference as: aFileReference path pathString
 ]
 
 { #category : #'archive operations' }
-Archive >> addFile: aFileName as: anotherFileName [
+Archive >> addFile: aFileReference as: anotherFileName [
 	| newMember |
-	newMember := self memberClass newFromFile: aFileName.
+	newMember := self memberClass newFromFile: aFileReference.
 	newMember localFileName: anotherFileName.
 	self addMember: newMember.
 	^newMember
