@@ -29,16 +29,14 @@ InputTextDropList class >> defaultSpec [
 { #category : #example }
 InputTextDropList class >> example [
 	<sampleInstance>
-	| ex |
-	ex := self new.
-	ex
-		ghostText: 'a Number';
+	^ self new
+		placeholder: 'a Number';
 		displayBlock: [ :item | item asString ];
 		items: {'Potatoes' . 'Carrots' . 'Onions'};
 		extent: 350 @ 50;
 		title: 'InputTextDropList example';
-		openWithSpec.
-	^ ex
+		openWithSpec;
+		yourself
 ]
 
 { #category : #'api-shortcuts' }
@@ -76,11 +74,6 @@ InputTextDropList >> entryCompletion: anEntryCompletion [
 	self input entryCompletion: anEntryCompletion
 ]
 
-{ #category : #'api-shortcuts' }
-InputTextDropList >> ghostText: aText [
-	self input ghostText: aText
-]
-
 { #category : #initialization }
 InputTextDropList >> initializeWidgets [
 	input := self instantiate: TextInputFieldPresenter.
@@ -103,6 +96,11 @@ InputTextDropList >> items: aList [
 { #category : #'api-shortcuts' }
 InputTextDropList >> listSize [
 	self dropList listSize
+]
+
+{ #category : #'api-shortcuts' }
+InputTextDropList >> placeholder: aText [
+	self input placeholder: aText
 ]
 
 { #category : #'api-shortcuts' }

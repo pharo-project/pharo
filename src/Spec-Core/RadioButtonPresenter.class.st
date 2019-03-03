@@ -34,14 +34,6 @@ RadioButtonPresenter class >> adapterName [
 ]
 
 { #category : #specs }
-RadioButtonPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(RadioButtonAdapter
-		adapt: #(model))
-]
-
-{ #category : #specs }
 RadioButtonPresenter class >> title [
 
 	^ 'Radio Button'
@@ -95,7 +87,7 @@ RadioButtonPresenter >> initialize [
 RadioButtonPresenter >> privateSetState: aBoolean [
 	"Should only be used by RadioButtonGroup"
 	
-	stateHolder value: aBoolean.
+	state := aBoolean.
 	self changed: #state
 ]
 
@@ -104,16 +96,16 @@ RadioButtonPresenter >> state: aBoolean [
 	"Set if the radio is activated or not"
 
 	<api: #boolean getter: #state>
-	self canDeselectByClick
-		ifTrue: [ stateHolder value: aBoolean ]
-		ifFalse: [ self state
-				ifFalse: [ stateHolder value: aBoolean ] ]
+	(self canDeselectByClick and: [ self state not ])
+		ifTrue: [ 
+			state := aBoolean.
+			^ self ]
 ]
 
 { #category : #accessing }
 RadioButtonPresenter >> stateHolder [
 	
-	^ stateHolder
+	^ state
 ]
 
 { #category : #'protocol-events' }

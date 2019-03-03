@@ -26,7 +26,7 @@ LabelledInputTextDropList class >> example [
 	| example |
 	example := self abstractExample.
 	example
-		ghostText: 'ghost text';
+		placeholder: 'ghost text';
 		items: {'item 1' . 'item 2'};
 		displayBlock: [ :item | item asString ];
 		extent: 450 @ 50;
@@ -69,11 +69,6 @@ LabelledInputTextDropList >> entryCompletion: anEntryCompletion [
 	^ self input entryCompletion: anEntryCompletion
 ]
 
-{ #category : #'api-shortcuts' }
-LabelledInputTextDropList >> ghostText: aText [
-	^ self input ghostText: aText
-]
-
 { #category : #initialization }
 LabelledInputTextDropList >> initializeWidgets [
 super initializeWidgets.
@@ -98,6 +93,11 @@ LabelledInputTextDropList >> items: aList [
 { #category : #'api-shortcuts' }
 LabelledInputTextDropList >> listSize [
 	^ self dropList listSize
+]
+
+{ #category : #'api-shortcuts' }
+LabelledInputTextDropList >> placeholder: aText [
+	^ self input placeholder: aText
 ]
 
 { #category : #'api-shortcuts' }

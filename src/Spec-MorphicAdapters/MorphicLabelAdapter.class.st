@@ -10,6 +10,13 @@ Class {
 	#category : #'Spec-MorphicAdapters-Base'
 }
 
+{ #category : #initialization }
+MorphicLabelAdapter >> applyStyle: aMorph [
+
+	super applyStyle: aMorph.
+	aMorph fitContents
+]
+
 { #category : #factory }
 MorphicLabelAdapter >> buildWidget [
 	| label |
@@ -24,6 +31,7 @@ MorphicLabelAdapter >> buildWidget [
 		setBalloonText: self help;
 		color: self model color;
 		emphasis: (self emphasisCodeFor: self model emphasis).
+		
 	^ label
 ]
 

@@ -18,6 +18,11 @@ SpecSplitterHorizontal class >> commands: commands [
 		yourself
 ]
 
+{ #category : #protocol }
+SpecSplitterHorizontal >> arguments [
+	^ {(self commands identityIndexOf: self)}
+]
+
 { #category : #accessing }
 SpecSplitterHorizontal >> commands [
 	
@@ -28,15 +33,6 @@ SpecSplitterHorizontal >> commands [
 SpecSplitterHorizontal >> commands: anObject [
 	
 	commands := anObject
-]
-
-{ #category : #protocol }
-SpecSplitterHorizontal >> generateArguments [
-	| index |
-
-	index := self commands identityIndexOf: self.
-
-	self arguments: { index }
 ]
 
 { #category : #initialization }

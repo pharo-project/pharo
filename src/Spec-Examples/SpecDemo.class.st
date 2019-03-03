@@ -29,7 +29,7 @@ SpecDemo class >> defaultSpec [
 			c add: #menu height: self toolbarHeight.
 			c newRow: [ :row | 
 				row add: #list right: listWidth.
-				row addSplitter.
+				row addHSplitter.
 				row add: #page] ];
 		yourself
 	
@@ -61,12 +61,8 @@ SpecDemo class >> on: aModel [
 
 { #category : #specs }
 SpecDemo class >> open [
-
 	<example>
-	
-	^ self new
-		openWithSpec.
-
+	^ self new openWithSpec
 ]
 
 { #category : #accessing }
@@ -108,22 +104,20 @@ SpecDemo >> extent [
 
 { #category : #initialization }
 SpecDemo >> initializePresenter [
-
-	list setSelectedItem: self selectedPage.
-	
-	list whenSelectedItemChanged: [ :newPageClass |
-		newPageClass
-			ifNotNil: [
-			newPageClass = self selectedPage
-				ifFalse: [
-					self selectedPage: newPageClass. 
-					page := self instantiate: newPageClass.
-				
-					self needRebuild: false.
-					self buildWithSpec.
-					list setSelectedItem: self selectedPage ] ]
-			ifNil: [ "Avoid the user to have no page selected at all."
-				list setSelectedItem: self selectedPage ] ].
+	list selectItem: self selectedPage.
+	list
+		whenSelectionChangedDo: [ :selection | 
+			[ :newPageClass | 
+			newPageClass
+				ifNotNil: [ newPageClass = self selectedPage
+						ifFalse: [ self selectedPage: newPageClass.
+							page := self instantiate: newPageClass.
+							self needRebuild: false.
+							self buildWithSpec.
+							list selectedItem: self selectedPage ] ]
+				ifNil:
+					[ "Avoid the user to have no page selected at all." list setSelectedItem: self selectedPage ] ]
+				cull: selection selectedItem ]
 ]
 
 { #category : #initialization }

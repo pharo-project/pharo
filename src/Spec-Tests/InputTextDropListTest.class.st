@@ -1,6 +1,6 @@
 Class {
 	#name : #InputTextDropListTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#category : #'Spec-Tests-PolyWidgets-Elementary'
 }
 

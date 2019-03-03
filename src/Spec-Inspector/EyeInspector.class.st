@@ -186,7 +186,7 @@ EyeInspector >> doItContext [
 
 { #category : #accessing }
 EyeInspector >> elements [
-	^ self list listItems
+	^ self list model shownItems
 ]
 
 { #category : #inspecting }
@@ -238,13 +238,12 @@ EyeInspector >> initializeWidgets [
 ]
 
 { #category : #inspecting }
-EyeInspector >> inspect: anObject [ 
+EyeInspector >> inspect: anObject [
 	"This is called to update the inspector model with a new object, updates the UI"
 
 	self object: anObject.
-	self list setSelectedIndex: 1.
+	self list selectIndex: 1.
 	self refresh
-	
 ]
 
 { #category : #menu }
@@ -257,12 +256,10 @@ EyeInspector >> inspectionMenu: aMenu [
 { #category : #'event-handling' }
 EyeInspector >> keepScrollPositionOf: specHolder during: aBlock [
 	| scrollValue |
-	specHolder widget 
-		ifNil: [ ^ aBlock value ].
-		
+	specHolder adapter ifNil: [ ^ aBlock value ].
 	scrollValue := description scrollValue.
 	aBlock value.
-	description scrollValue: scrollValue.
+	description scrollValue: scrollValue
 ]
 
 { #category : #private }
@@ -287,30 +284,25 @@ EyeInspector >> limit2 [
 
 { #category : #accessing }
 EyeInspector >> list [
-	^ list ifNil: [ 
-		list := self instantiate: FastTablePresenter.
-		list 
-			handlesDoubleClick: true;
-			whenSelectedItemChanged: [ :item |
-				self refreshDescription: item ];
-			doubleClickAction: [ self diveIntoSelectedObject ]. ]
+	^ list
+		ifNil: [ list := self instantiate: FastTablePresenter.
+			list
+				handlesDoubleClick: true;
+				whenSelectionChangedDo: [ :selection | [ :item | self refreshDescription: item ] cull: selection selectedItem ];
+				doubleClickAction: [ self diveIntoSelectedObject ] ]
 ]
 
 { #category : #'event-handling' }
 EyeInspector >> objectChanged [
 	"triggered when the inspected object is changed"
-	
+
 	self updateList.
-	
-	self text doItReceiver: self object. 
+	self text doItReceiver: self object.
 	self description doItReceiver: self object.
-	  
-	self text doItContext: self doItContext. 
+	self text doItContext: self doItContext.
 	self description doItContext: self doItContext.
-	
-	self text widget ifNotNil: [:w | w editingMode classOrMetaClass: self objectClass]
-	
-	
+	self text adapter
+		ifNotNil: [ :w | w editingMode classOrMetaClass: self objectClass ]
 ]
 
 { #category : #accessing }
@@ -411,15 +403,17 @@ EyeInspector >> saveElement: newText [
 
 { #category : #accessing }
 EyeInspector >> selectedElement [
-	^ self list selectedItem ifNil: [ 
-		"sometimes the new list model desynchronize its selected index from its selected element,
+	^ self list selection selectedItem
+		ifNil:
+			[ "sometimes the new list model desynchronize its selected index from its selected element,
 		this mean that the inspector evaluates 'list setSelectedIndex: 1' but 'list selectedItem' still returns nil.
 		This code fixes this case, that is triggered for example when you do Cmd+c in an ObjectExplorer."
-		self list selectedIndex ifNotNil: [ :currentIndex | 
-			currentIndex = 0
-				ifTrue: [ ^ nil ].
-			self list listItems ifNotEmpty: [ :aList | 
-				aList at: currentIndex  ] ] ]
+			self list selectedIndex
+				ifNotNil: [ :currentIndex | 
+					currentIndex = 0
+						ifTrue: [ ^ nil ].
+					self list listItems
+						ifNotEmpty: [ :aList | aList at: currentIndex ] ] ]
 ]
 
 { #category : #accessing }
@@ -482,20 +476,21 @@ EyeInspector >> updateList [
 	"update the list of elements displayed according to the new object"
 
 	| elements |
-"	self haltOnce."
-	elements := self generateElements.	
-	self list listItems = elements ifTrue: [ ^ self ].
+	"	self haltOnce."
+	elements := self generateElements.
+	self list model shownItems = elements
+		ifTrue: [ ^ self ].
 	"first reset the items to make sure we don't interfere with the display block"
 	"self list items: #()."
 	self list displayBlock: [ :eyeElement | self labelFor: eyeElement ].
 	self list items: elements.
-	
+
 	"handle when last item of list is removed"
-	(self list selectedIndex > self list listItems size) ifTrue: [ self list setSelectedIndex: self list listItems size  ].
-	
+	self list selection selectedIndex > self list model shownItems size
+		ifTrue: [ self list setSelectedIndex: self list listItems size ].
+
 	"handle when selected dictionary key is removed"
-	self list setSelectedIndex: self list selectedIndex.
-	
+	self list selectIndex: self list selection selectedIndex.
 	self list menu: [ :aMenu | self inspectionMenu: aMenu ]
 ]
 

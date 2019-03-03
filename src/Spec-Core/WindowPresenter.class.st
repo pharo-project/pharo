@@ -5,11 +5,14 @@ Class {
 	#name : #WindowPresenter,
 	#superclass : #AbstractWidgetPresenter,
 	#instVars : [
-		'model',
+		'presenter',
 		'initialExtent',
-		'title',
 		'isClosedHolder',
-		'isResizeable'
+		'isResizeable',
+		'statusbarHolder',
+		'toolBarHolder',
+		'menuHolder',
+		'centered'
 	],
 	#category : #'Spec-Core-Support'
 }
@@ -20,12 +23,11 @@ WindowPresenter class >> adapterName [
 	^ #WindowAdapter
 ]
 
-{ #category : #specs }
-WindowPresenter class >> defaultSpec [
-	<spec>
-	
-	^ #(WindowAdapter
-		adapt: #(model))
+{ #category : #'instance creation' }
+WindowPresenter class >> presenter: aPresenter [
+	^ self new
+		presenter: aPresenter;
+		yourself
 ]
 
 { #category : #api }
@@ -35,71 +37,55 @@ WindowPresenter >> aboutText [
 	  - else use the behavior defined in super
 	"
 
-	^aboutText value
-		ifNil: [self model
-			ifNil: [ super aboutText ]
-			ifNotNil: [:m | m aboutText ]]
-		ifNotNil: [ aboutText value ]
+	^ aboutText value ifNil: [ self presenter ifNil: [ super aboutText ] ifNotNil: #aboutText ] ifNotNil: [ aboutText value ]
 ]
 
 { #category : #api }
 WindowPresenter >> aboutTitle [
 	"Answer the title of my About window"
 
-	(self model respondsTo: #aboutTitle)
-		ifTrue: [^self model aboutTitle].
-	^(self model respondsTo: #toolName)
-		ifTrue: [self model toolName]
-		ifFalse: [self model class name].
-
+	(self presenter respondsTo: #aboutTitle) ifTrue: [ ^ self presenter aboutTitle ].
+	
+	^ self presenter toolName
 ]
 
 { #category : #menu }
 WindowPresenter >> addMenuItemsToWindowMenu: aMenu [
 
-	self model addMenuItemsToWindowMenu: aMenu
-]
-
-{ #category : #private }
-WindowPresenter >> addModelIn: widget withSpec: aSpec [
-
-	self model ifNil: [ ^ self ].
-	
-	self changed: #addModelIn:withSpec: with: { widget . aSpec }
+	self presenter addMenuItemsToWindowMenu: aMenu
 ]
 
 { #category : #private }
 WindowPresenter >> addModelIn: widget withSpecLayout: aSpec [
-
-	self model ifNil: [ ^ self ].
 	
-	self changed: #addModelIn:withSpecLayout: with: { widget . aSpec }
+	self presenter ifNil: [ ^ self ].
+	self initializeWindow.
+	self 
+		changed: #addModelIn:withSpecLayout:
+		with: { widget. aSpec }
 ]
 
 { #category : #menu }
 WindowPresenter >> addModelItemsToWindowMenu: aMenu [
-
-	self model addModelItemsToWindowMenu: aMenu
+	self presenter addModelItemsToWindowMenu: aMenu
 ]
 
 { #category : #api }
 WindowPresenter >> askOkToClose [
-
-	^ self model askOkToClose
+	^ self presenter askOkToClose
 ]
 
 { #category : #private }
 WindowPresenter >> buildWithSpecLayout: aSpec [
 	"Build the widget using the spec name provided as argument"
-	| adapter widget |
-	
-	(self spec notNil and: [ self needRebuild not ])
-		ifTrue: [ widget := self spec instance ]
-		ifFalse: [
-			adapter := self privateAdapterFromModel: self withSpec: self defaultSpecSelector.
-			widget := adapter widget.
-			self addModelIn: widget withSpecLayout: aSpec ].
+	| widget |
 
+	(self spec notNil and: [ self needRebuild not ])
+		ifTrue: [ 
+			widget := self widget ]
+		ifFalse: [ 
+			widget := (self adapterFrom: self retrieveDefaultSpec) widget.
+			self addModelIn: widget withSpecLayout: aSpec ].
 	self ensureExtentFor: widget.
 	
 	^ widget
@@ -114,7 +100,7 @@ WindowPresenter >> cancelled [
 { #category : #api }
 WindowPresenter >> centered [
 
-	self changed: #centered with: #()
+	centered value: true
 ]
 
 { #category : #api }
@@ -138,24 +124,42 @@ WindowPresenter >> defaultInitialExtent [
 { #category : #focus }
 WindowPresenter >> giveFocusToNextFrom: aModel [ 
 
-	^ self model giveFocusToNextFrom: aModel
+	^ self presenter giveFocusToNextFrom: aModel
 ]
 
 { #category : #focus }
 WindowPresenter >> giveFocusToPreviousFrom: aModel [ 
 
-	^ self model giveFocusToPreviousFrom: aModel 
+	^ self presenter giveFocusToPreviousFrom: aModel 
+]
+
+{ #category : #testing }
+WindowPresenter >> hasMenu [ 
+	
+	^ self menu notNil
+]
+
+{ #category : #testing }
+WindowPresenter >> hasStatusBar [
+	
+	^ self statusBar notNil
+]
+
+{ #category : #testing }
+WindowPresenter >> hasToolBar [
+	
+	^ self toolBar notNil
+	and: [ self toolBar notEmpty ]
 ]
 
 { #category : #api }
 WindowPresenter >> initialExtent [
-
 	^ initialExtent value
-		ifNil: [ self model 
-			ifNil: [ self defaultInitialExtent ]
-			ifNotNil: [:m | m extent
-				ifNil: [ m initialExtent
-					ifNil: [ self defaultInitialExtent ] ] ] ]
+		ifNil: [ self presenter
+				ifNil: [ self defaultInitialExtent ]
+				ifNotNil: [ :m | 
+					m extent
+						ifNil: [ m initialExtent ifNil: [ self defaultInitialExtent ] ] ] ]
 ]
 
 { #category : #initialization }
@@ -163,13 +167,30 @@ WindowPresenter >> initialize [
 
 	super initialize.
 
-	model := nil asValueHolder.
+	presenter := nil asValueHolder.
 	initialExtent := nil asValueHolder.
-	title := self class title asValueHolder.
 	isClosedHolder := false asValueHolder.
 	isResizeable := true asValueHolder.
+	centered := false asValueHolder.
+
+	menuHolder := nil asValueHolder.
+	toolBarHolder := nil asValueHolder.
+	statusbarHolder := nil asValueHolder.
 	
-	model whenChangedDo: [:m | self updateTitle ].
+	presenter whenChangedDo: [ :m | self updateTitle ].
+	centered whenChangedDo: [ :m | self changed: #centered with: #() ]
+]
+
+{ #category : #initialization }
+WindowPresenter >> initializeWindow [
+		
+	self presenter initializeWindow: self
+]
+
+{ #category : #testing }
+WindowPresenter >> isCentered [
+
+	^ centered value
 ]
 
 { #category : #testing }
@@ -202,6 +223,18 @@ WindowPresenter >> maximize [
 ]
 
 { #category : #api }
+WindowPresenter >> menu [
+
+	^ menuHolder value
+]
+
+{ #category : #api }
+WindowPresenter >> menu: aMenuPresenter [
+
+	^ menuHolder value: aMenuPresenter
+]
+
+{ #category : #api }
 WindowPresenter >> minimize [
 
 	self changed: #minimize with: #()
@@ -213,22 +246,9 @@ WindowPresenter >> modalRelativeTo: aWindow [
 	self changed: #modalRelativeTo: with: { aWindow }
 ]
 
-{ #category : #accessing }
-WindowPresenter >> model [
-	
-	^ model value
-]
-
-{ #category : #api }
-WindowPresenter >> model: aModel [
-
-	model value: aModel
-]
-
 { #category : #private }
 WindowPresenter >> okToChange [
-
-	^ self model okToChange
+	^ self presenter okToChange
 ]
 
 { #category : #api }
@@ -245,10 +265,16 @@ WindowPresenter >> openWithSpecLayout: aSpec [
 	self updateTitle.
 ]
 
-{ #category : #private }
-WindowPresenter >> rebuildWithSpec: aSpec [
+{ #category : #accessing }
+WindowPresenter >> presenter [
+	
+	^ presenter value
+]
 
-	self changed: #rebuildWithSpec: with: { aSpec }.
+{ #category : #accessing }
+WindowPresenter >> presenter: aPresenter [
+
+	presenter value: aPresenter
 ]
 
 { #category : #private }
@@ -258,27 +284,45 @@ WindowPresenter >> rebuildWithSpecLayout: aSpec [
 ]
 
 { #category : #api }
-WindowPresenter >> taskbarIcon [
+WindowPresenter >> statusBar [
 
-	^ model value 
+	^ statusbarHolder value
+]
+
+{ #category : #api }
+WindowPresenter >> statusBar: aStatusbarPresenter [
+
+	^ statusbarHolder value: aStatusbarPresenter
+]
+
+{ #category : #api }
+WindowPresenter >> taskbarIcon [
+	^ self presenter
 		ifNil: [ super taskbarIcon ]
-		ifNotNil: [ :m |
-			m windowIcon
-				ifNil: [ m taskbarIcon ] ]
+		ifNotNil: [ :pres | pres windowIcon ifNil: [ pres taskbarIcon ] ]
 ]
 
 { #category : #private }
 WindowPresenter >> title [
-
-	^ self model
-		ifNil: [ super title ]
-		ifNotNil: [:m | m title ]
+	^ self presenter ifNil: [ super title ] ifNotNil: [ :m | m title ]
 ]
 
 { #category : #private }
 WindowPresenter >> title: aString [
+	self changed: #title: with: {aString}.
+	self presenter title: aString
+]
 
-	self changed: #title: with: { aString }
+{ #category : #api }
+WindowPresenter >> toolBar [
+
+	^ toolBarHolder value
+]
+
+{ #category : #api }
+WindowPresenter >> toolBar: aToolbarPresenter [
+
+	^ toolBarHolder value: aToolbarPresenter
 ]
 
 { #category : #api }
@@ -307,8 +351,6 @@ WindowPresenter >> whenClosedDo: aBlock [
 
 { #category : #updating }
 WindowPresenter >> windowIsClosing [
-
 	isClosedHolder value: true.
-	
-	self model windowIsClosing 
+	self presenter windowIsClosing
 ]

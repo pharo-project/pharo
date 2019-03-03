@@ -59,8 +59,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Fuel-Platform-Core'.
 		spec package: 'Fuel-Platform-Pharo-Core'.
 		spec package: 'Fuel-Platform-Pharo-07'.
-	
-		spec package: 'Fuel-Tools-Pharo'.
 
 		spec package: 'Fonts-Abstract'.
 
@@ -91,6 +89,11 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Menubar'.
 		spec package: 'Morphic-Widgets-Tree'.
 		spec package: 'Morphic-Widgets-Windows'.
+		spec package: 'Morphic-Widgets-FastTable'.
+		
+		"Several packages depend on Rubric as a basic Morphic component"
+		spec package: 'Rubric'.
+		
 		spec package: 'Multilingual-OtherLanguages'.
 		spec package: 'Multilingual-TextConverterOtherLanguages'.
 
@@ -124,6 +127,10 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'StartupPreferences'.
 		spec package: 'System-Identification'.
+		
+		"Tool-Base extends and uses morphic, so it depends on it"
+		spec package: 'Tool-Base'.
+
 	].
 
 ]

@@ -6,9 +6,10 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'id',
-		'width'
+		'width',
+		'table'
 	],
-	#category : #'Spec-Core-Support'
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #'instance creation' }
@@ -38,6 +39,28 @@ SpecFTColumn >> id [
 { #category : #initialization }
 SpecFTColumn >> id: anObject [
 	id := anObject
+]
+
+{ #category : #accessing }
+SpecFTColumn >> readObject: anObject [
+
+	"Fast table presenters have a block that returns an array that is mapped by this column"
+	^ self transform: (table displayBlock value: anObject)
+]
+
+{ #category : #accessing }
+SpecFTColumn >> table [
+	^ table
+]
+
+{ #category : #accessing }
+SpecFTColumn >> table: anObject [
+	table := anObject
+]
+
+{ #category : #accessing }
+SpecFTColumn >> title [
+	^ id
 ]
 
 { #category : #accessing }
