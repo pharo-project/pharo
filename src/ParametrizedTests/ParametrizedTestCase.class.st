@@ -100,7 +100,7 @@ ParametrizedTestCase >> printOn: aStream [
 	
 ]
 
-{ #category : #private }
+{ #category : #running }
 ParametrizedTestCase >> setUp [
 	super setUp.
 	self parametersToUse do: [ :aParameter | aParameter applyTo: self ].

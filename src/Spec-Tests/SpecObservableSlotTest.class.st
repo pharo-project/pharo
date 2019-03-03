@@ -7,7 +7,7 @@ Class {
 	#category : #'Spec-Tests-Observable'
 }
 
-{ #category : #tests }
+{ #category : #running }
 SpecObservableSlotTest >> setUp [
 
 	super setUp.
