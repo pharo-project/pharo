@@ -59,7 +59,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout #'Tool-Catalog') sorted
+	^ #(#'Athens-Morphic' 'Glamour-Morphic-Widgets' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout #'Tool-Catalog' 'ParametrizedTests') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -136,10 +136,11 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownMorphicDependencies [
+	"ideally this list should be empty"
 
-	"ideally this list should be empty"	
-
-	^ #(#DebuggerActions #'Fonts-Chooser' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Rubric #Shout #'Spec-Core' #'Tool-Base' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers') sorted
+	^ #(#'Fonts-Chooser' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Spec-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
+	#'Athens-Morphic' 	"Rubric has a dependency on It" )
+		sorted
 ]
 
 { #category : #'known dependencies' }
@@ -158,6 +159,15 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core' #CodeImport) sorted
 ]
 
+{ #category : #'known-dependencies' }
+SystemDependenciesTest >> knownSpecDependencies [
+	
+	^ #(
+		'WebBrowser-Core' "Spec's Link adapter"
+		'Keymapping-Settings' "Spec's KeymapBrowser example tool"
+		) sorted
+]
+
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownUFFIDependencies [
 
@@ -171,7 +181,7 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Athens-Morphic' #MonticelloGUI #'Morphic-Widgets-FastTable' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
+	^ #(#'Athens-Morphic' #'Glamour-Morphic-Widgets' #MonticelloGUI #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
 ]
 
 { #category : #utilities }
@@ -192,12 +202,6 @@ SystemDependenciesTest >> metacelloPackageNames [
 	  BaselineOfMonticello corePackageNames,
 	  BaselineOfMonticello remoteRepositoriesPackageNames,
 	  BaselineOfMetacello allPackageNames
-]
-
-{ #category : #accessing }
-SystemDependenciesTest >> specPackageNames [
-
-	^ #(#'Spec-Core' #'Spec-Layout' #'Keymapping-Pragmas' #'Keymapping-Core' #'Keymapping-KeyCombinations' #'MenuRegistration' #'NewValueHolder-Core') sorted
 ]
 
 { #category : #tests }
@@ -289,6 +293,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
 	BaselineOfSpec.
+	BaselineOfParametrizedTests.
 	BaselineOfSUnit.
 	BaselineOfTraits.
 	BaselineOfUI.
@@ -389,7 +394,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfTraits corePackages,		
+		BaselineOfTraits corePackages,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
@@ -441,12 +446,27 @@ SystemDependenciesTest >> testExternalSpecDependencies [
 	self longTestCase.
 	
 	dependencies := (self externalDependendiesOf: (
-			self metacelloPackageNames,
-			BaselineOfTraits corePackages,			
-			self specPackageNames )) 
-		copyWithoutAll: self knownMetacelloDependencies.
+		"Language"
+		self metacelloPackageNames,
+		self tonelCorePackageNames,
+		BaselineOfTraits corePackages,
+		BaselineOfUnifiedFFI allPackageNames,
+
+		"Morphic - for Morphic backend"
+		BaselineOfDisplay allPackageNames,
+		BaselineOfMorphicCore allPackageNames,
+		BaselineOfMorphic allPackageNames,
+		BaselineOfMenuRegistration allPackageNames,
+
+		BaselineOfSpec allPackageNames,
 	
-	self assertCollection: dependencies equals: #()
+
+		"Tests"
+		BaselineOfSUnit defaultPackageNames,
+		BaselineOfParametrizedTests allPackageNames))
+			copyWithoutAll: self knownMorphicDependencies, self knownBasicToolsDependencies, self knownUIDependencies.
+
+	self assertCollection: dependencies equals: self knownSpecDependencies
 ]
 
 { #category : #tests }
@@ -477,6 +497,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
 		BaselineOfTraits corePackages,
+		BaselineOfParametrizedTests allPackageNames,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
