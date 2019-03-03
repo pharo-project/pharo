@@ -22,17 +22,6 @@ SpecObservablePoint >> initialize [
 	self class initializeSlots: self.
 ]
 
-{ #category : #events }
-SpecObservablePoint >> observablePropertyNamed: aName [
-	
-	(self class slotNamed: aName) isObservableSlot
-		ifFalse: [ SpecNonObservableSlotError signal: aName ].
-
-	"Obtain the raw value.
-	We need to access the underlying value holder to subscribe to it"
-	^ self instVarNamed: aName
-]
-
 { #category : #accessing }
 SpecObservablePoint >> x [
 	^ x
