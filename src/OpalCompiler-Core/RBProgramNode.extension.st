@@ -5,7 +5,7 @@ RBProgramNode >> asDoit [
 	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
 	^RBMethodNode 
 		selector: #DoIt
-		body: self asSequenceNode addReturn.
+		body: self asSequenceNode transformLastToReturn.
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -16,7 +16,7 @@ RBProgramNode >> asDoitForContext: aContext [
 	methodNode := RBMethodNode 
 		selector: #DoItIn:
 		arguments: { RBVariableNode named: 'ThisContext' } 
-		body: self asSequenceNode addReturn.
+		body: self asSequenceNode transformLastToReturn.
 	
 	methodNode methodClass: aContext receiver class.
 	methodNode rewriteTempsForContext: aContext.
