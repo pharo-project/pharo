@@ -181,11 +181,9 @@ EpLogBrowserPresenter >> beHistoryMode [
 
 { #category : #modes }
 EpLogBrowserPresenter >> beRevertMode [
-
 	self title: 'Epicea - Revert Changes'.
-	self toolbarModel beRevertMode.
-	showEntryItemMenu := false.
-
+	self toolbarPresenter beRevertMode.
+	showEntryItemMenu := false
 ]
 
 { #category : #'menu - operations' }
@@ -570,26 +568,13 @@ EpLogBrowserPresenter >> initializeEntryContentPresenter [
 ]
 
 { #category : #initialization }
-EpLogBrowserPresenter >> initializeItemsModelPerformFilterWorkaround: widgetBuildAnnouncement [
-	"Problem: FastTableModel sends #explicitFilter to the FTTableMorph in MorphicFastTableAdapter>>buildWidget but the EpEntryItem in the itemsModel are not compatible."
-	
-	widgetBuildAnnouncement widget disableFunction
-]
-
-{ #category : #initialization }
 EpLogBrowserPresenter >> initializeItemsPresenter [
-
 	self itemsPresenter
 		beMultipleSelection;
-"		autoDeselect: true; -> not implemented yet?"
+		"		autoDeselect: true; -> not implemented yet?"
 		displayBlock: [ :entryReference | self morphForItemAt: entryReference ];
-		whenSelectionChanged: [ self refreshEntryContentModelDeferrer schedule ];
-		menu: [ self menuMorphForSelectedItems ].
-		
-	self itemsPresenter announcer weak
-		when: WidgetBuilt
-		send: #initializeItemsModelPerformFilterWorkaround: to: self.
-
+		whenSelectionChangedDo: [ self refreshEntryContentModelDeferrer schedule ];
+		menu: [ self menuMorphForSelectedItems ]
 ]
 
 { #category : #initialization }
@@ -610,7 +595,7 @@ EpLogBrowserPresenter >> initializeToolbarPresenter [
 EpLogBrowserPresenter >> initializeWidgets [
 
 	self instantiatePresenters: {
-		#itemsPresenter -> #FastTablePresenter.
+		#itemsPresenter -> #ListPresenter.
 		#toolbarPresenter -> #EpLogBrowserToolbarPresenter.
 		#entryContentPresenter -> #DiffPresenter. 
 		}.
@@ -780,14 +765,13 @@ EpLogBrowserPresenter >> refactoringMenuActions [
 
 { #category : #refreshing }
 EpLogBrowserPresenter >> refresh [
-
 	"Refresh log"
-	self itemsPresenter resetSelection. "Needed, else #items: can silently fail"
+
+	self itemsPresenter unselectAll.	"Needed, else #items: can silently fail"
 	self itemsPresenter items: self filteredEntryReferences reversed.
 
-	"Refresh toolbar"	
-	self toolbarPresenter refresh.
-
+	"Refresh toolbar"
+	self toolbarPresenter refresh
 ]
 
 { #category : #refreshing }
