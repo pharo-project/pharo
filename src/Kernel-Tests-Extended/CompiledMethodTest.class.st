@@ -342,7 +342,7 @@ CompiledMethodTest >> testIsInstalled [
 	method := (self class)>>#returnTrue.
 	self assert: method isInstalled.
 
-	"now make an orphaned method by just deleting the class."
+	
 
 	Smalltalk removeClassNamed: #TUTU.
 
@@ -353,9 +353,12 @@ CompiledMethodTest >> testIsInstalled [
 		category: self categoryNameForTemporaryClasses.
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
-	Smalltalk removeClassNamed: #TUTU.
 
+	"now make an orphaned method by just deleting the method."
+	cls removeSelector: #foo.
+	
 	self deny: method isInstalled. 
+	Smalltalk removeClassNamed: #TUTU.
 ]
 
 { #category : #'tests - testing' }
