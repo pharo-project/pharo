@@ -23,32 +23,6 @@ GLMTabulatorMorphicTest >> testMultipleInitialSelection [
 ]
 
 { #category : #tests }
-GLMTabulatorMorphicTest >> testSizeAndSpan [
-	"combining span (=fractional width/height) and size (=fixed width/height) did not work correctly before.
-	2 is added in height comparisons because the layout code leaves one pixel offset on top and bottom."
-	| browser panes heights |
-	browser := GLMTabulator new.
-	browser row: #top span: 2.
-	browser row: #middle size: 80.
-	browser row: #bottom.
-	browser transmit to: #top; transformation: #first; andShow: [ :p | p text ].
-	browser transmit to: #middle; transformation: #second; andShow: [ :p | p text ].
-	browser transmit to: #bottom; transformation: #last; andShow: [ :p | p text ].
-	window := browser openOn: #('Should be scaled at 2/3' 'Should be fixed' 'Should be scaled at 1/3').
-	{200@500. 100@300} do: [:ext |
-		window extent: ext.
-		self waitUntilUIRedrawed.
-
-		panes := window submorphs last submorphs last: 3.
-		heights := panes collect: [ :each | each height+2 ].
-		self assert: panes first owner height equals: heights sum.
-		self assert: panes last bottom + 1 equals: panes first owner bottom.
-		self assert: heights second equals: 80.
-		self assert: (heights first - (heights sum - 80 / 3 * 2)) abs <= 1.
-		self assert: (heights last - (heights sum - 80 / 3)) abs <= 1]
-]
-
-{ #category : #tests }
 GLMTabulatorMorphicTest >> testSpawnTabulator [
 
 	| browser |

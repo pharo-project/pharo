@@ -47,9 +47,8 @@ ListSelectionPresenter class >> example [
 ]
 
 { #category : #initialization }
-ListSelectionPresenter >> initializePresenter [ 
-
-	listModel whenSelectionChanged: [ self updateText ]
+ListSelectionPresenter >> initializePresenter [
+	listModel whenSelectionChangedDo: [ self updateText ]
 ]
 
 { #category : #initialization }

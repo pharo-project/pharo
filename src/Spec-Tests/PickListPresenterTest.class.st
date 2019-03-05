@@ -1,6 +1,6 @@
 Class {
 	#name : #PickListPresenterTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#category : #'Spec-Tests-PolyWidgets-ListAndTree'
 }
 

@@ -1,6 +1,6 @@
 Class {
 	#name : #RGBSlidersTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#category : #'Spec-Tests-PolyWidgets-Support'
 }
 
@@ -11,31 +11,32 @@ RGBSlidersTest >> classToTest [
 
 { #category : #tests }
 RGBSlidersTest >> testColor [
-	|random red green blue |
+	| random red green blue |
 	random := Random new.
 	red := random nextInt: 255.
-	green :=  random nextInt: 255.
-	blue :=  random nextInt: 255.
+	green := random nextInt: 255.
+	blue := random nextInt: 255.
 	
-	testedInstance redSlider value: red.
-	testedInstance greenSlider value:green.
-	testedInstance blueSlider value:blue.
-	
-	self assert: (testedInstance color) = 
-	(Color
-		r: red
-		g: green
-		b: blue
-		range: 255).
+	presenter redSlider value: red.
+	presenter greenSlider value: green.
+	presenter blueSlider value: blue.
+	self
+		assert: presenter color
+		equals:
+			(Color
+				r: red
+				g: green
+				b: blue
+				range: 255)
 ]
 
 { #category : #tests }
 RGBSlidersTest >> testwhenChangedDo [
 	| numberOfChanges |
 	numberOfChanges := 0.
-	testedInstance whenChangedDo: [ numberOfChanges := numberOfChanges + 1 ].
-	testedInstance redSlider value: 66.
-	testedInstance greenSlider value: 17.
-	testedInstance blueSlider value: 200.
-	self assert: numberOfChanges = 3
+	presenter whenChangedDo: [ numberOfChanges := numberOfChanges + 1 ].
+	presenter redSlider value: 66.
+	presenter greenSlider value: 17.
+	presenter blueSlider value: 200.
+	self assert: numberOfChanges equals: 3
 ]

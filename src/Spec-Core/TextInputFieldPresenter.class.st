@@ -12,7 +12,7 @@ I provide the following variables and their accessors
 - acceptOnCR is a boolean representing if the key cr trigger an accept action,  it is true by default and must be set before built the widget. (if false it will print a cr).
 - encrypted is a boolean representing if the text appear like stars (it is only an appearance), beDecrypted and beEncrypted are shortcut to set it.
 - entryCompletion is the object used to suggest text while typing, removeEntryCompletion is a shortcut to set it nil.
-- ghostText is the ghost text to display in the text zone.
+- placeholder is the ghost text to display in the text zone.
 
 I provide getters of ValueHolder of my super class actionToPerformHolder and textHolder .
 
@@ -28,10 +28,11 @@ Class {
 	#name : #TextInputFieldPresenter,
 	#superclass : #TextPresenter,
 	#instVars : [
-		'ghostText',
-		'acceptOnCR',
-		'entryCompletion',
-		'isEncrypted'
+		'#acceptOnCR',
+		'#entryCompletion',
+		'#isVisible => SpecObservableSlot',
+		'#placeholder => SpecObservableSlot',
+		'#maxLength => SpecObservableSlot'
 	],
 	#category : #'Spec-Core-Widgets'
 }
@@ -42,22 +43,14 @@ TextInputFieldPresenter class >> adapterName [
 	^ #TextInputFieldAdapter
 ]
 
-{ #category : #specs }
-TextInputFieldPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(TextInputFieldAdapter
-		adapt: #(model))
-]
-
 { #category : #example }
 TextInputFieldPresenter class >> example [
 	<sampleInstance>
 	^ self new
-	 extent: 300 @ 25;
-	 openWithSpec;
-	 ghostText: 'This is a ghost';
-	 text: 'This is a text'
+		extent: 300 @ 25;
+		openWithSpec;
+		placeholder: 'This is a ghost';
+		text: 'This is a text'
 ]
 
 { #category : #morphic }
@@ -95,30 +88,63 @@ TextInputFieldPresenter >> actionToPerformHolder [
 
 { #category : #api }
 TextInputFieldPresenter >> beDecrypted [
-	"<api: #do>"
-	"Decrypt the entered text"
+	self
+		deprecated: 'Use #beVisible instead'
+		transformWith: '`@receiver beDecrypted' 
+						-> '`@receiver beVisible'.
 	
-	self encrypted: false
+	self beVisible
 ]
 
 { #category : #api }
 TextInputFieldPresenter >> beEncrypted [
-"	<api: #do>"
-	"Encrypt the entered text"
+
+	self
+		deprecated: 'Use #beInvisible instead'
+		transformWith: '`@receiver beEncrypted' 
+						-> '`@receiver beInvisible'.
 	
-	self encrypted: true
+	self beInvisible
+]
+
+{ #category : #api }
+TextInputFieldPresenter >> beInvisible [
+	
+	self beVisible: false
+]
+
+{ #category : #api }
+TextInputFieldPresenter >> beVisible [
+	
+	self beVisible: true
+]
+
+{ #category : #api }
+TextInputFieldPresenter >> beVisible: aBoolean [
+	
+	isVisible := aBoolean
 ]
 
 { #category : #accessing }
 TextInputFieldPresenter >> encrypted [
 
-	^ isEncrypted value
+	self
+		deprecated: 'Use #isVisible instead'
+		transformWith: '`@receiver encrypted' 
+						-> '`@receiver isVisible'.
+
+	^ self isVisible not
 ]
 
 { #category : #accessing }
 TextInputFieldPresenter >> encrypted: aBoolean [
 
-	isEncrypted value: aBoolean 
+	self
+		deprecated: 'Use #beVisible: instead'
+		transformWith: '`@receiver encrypted: `@arg' 
+						-> '`@receiver beVisible: `@arg not'.
+
+	self beVisible: aBoolean not.
 ]
 
 { #category : #api }
@@ -151,41 +177,60 @@ TextInputFieldPresenter >> eventKeyStrokesForPreviousFocus [
 	^ { Character tab shift asKeyCombination }
 ]
 
-{ #category : #api }
-TextInputFieldPresenter >> ghostText [
-	"<api: #inspect>"
-	"Return the ghost text of the text zone"
-
-	^ ghostText value
-]
-
-{ #category : #accessing }
-TextInputFieldPresenter >> ghostText: aText [
-	"<api: #string getter: #ghostText registration: #whenGhostTextChanged:>"
-	"Set the ghost text of the text zone"
-
-	ghostText value: aText.
-]
-
 { #category : #initialization }
 TextInputFieldPresenter >> initialize [
 
+	self class initializeSlots: self.
 	super initialize.
 	
-	ghostText := '' asValueHolder.
+	maxLength := 0.
+	placeholder := ''.
 	acceptOnCR := true asValueHolder.
 	entryCompletion := nil asValueHolder.
-	isEncrypted := false asValueHolder.
-	
-	ghostText  whenChangedDo: [ :txt | self changed: #ghostText: with: { txt } ].
+	isVisible := true.
 	acceptOnCR whenChangedDo: [ :bool | self changed: #acceptOnCR: with: { bool } ].
-	isEncrypted whenChangedDo: [ :bool | self changed: #encrypted: with: { bool } ].
 ]
 
 { #category : #NOCompletion }
 TextInputFieldPresenter >> isCodeCompletionAllowed [
 	
 	^ false
+]
+
+{ #category : #testing }
+TextInputFieldPresenter >> isInvisible [
+	
+	^ isVisible not
+]
+
+{ #category : #testing }
+TextInputFieldPresenter >> isVisible [
+	
+	^ isVisible
+]
+
+{ #category : #accessing }
+TextInputFieldPresenter >> maxLength [
+	^ maxLength
+]
+
+{ #category : #accessing }
+TextInputFieldPresenter >> maxLength: anInteger [ 
+	
+	maxLength := anInteger.
+	self updateText.
+]
+
+{ #category : #api }
+TextInputFieldPresenter >> placeholder [
+
+	^ placeholder
+]
+
+{ #category : #accessing }
+TextInputFieldPresenter >> placeholder: aText [
+
+	placeholder := aText
 ]
 
 { #category : #api }
@@ -197,9 +242,26 @@ TextInputFieldPresenter >> removeEntryCompletion [
 ]
 
 { #category : #accessing }
+TextInputFieldPresenter >> text: aText [
+
+	| truncatedText |
+	truncatedText := self maxLength = 0
+		ifTrue: [ aText ]
+		ifFalse: [ aText first: (self maxLength min: aText size) ].
+	super text: truncatedText
+]
+
+{ #category : #accessing }
 TextInputFieldPresenter >> textHolder [
 
 	^ textHolder
+]
+
+{ #category : #accessing }
+TextInputFieldPresenter >> updateText [
+
+	"Update text but applying lenght constraints"
+	self text: self text.
 ]
 
 { #category : #'api-events' }
@@ -217,8 +279,19 @@ TextInputFieldPresenter >> whenEntryCompletionChanged: aBlock [
 ]
 
 { #category : #'api-events' }
-TextInputFieldPresenter >> whenGhostTextChanged: aBlock [
-	"aBlock will be performed when ghostText changed"
+TextInputFieldPresenter >> whenMaxLengthChangedDo: aBlockClosure [ 
 	
-	ghostText whenChangedDo: aBlock
+	self property: #maxLength whenChangedDo: aBlockClosure
+]
+
+{ #category : #'api-events' }
+TextInputFieldPresenter >> whenPlaceholderChangedDo: aBlock [
+	
+	self property: #placeholder whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+TextInputFieldPresenter >> whenVisibilityChangedDo: aBlockClosure [ 
+	
+	self property: #isVisible whenChangedDo: aBlockClosure
 ]

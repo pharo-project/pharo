@@ -40,14 +40,6 @@ SliderPresenter class >> adapterName [
 ]
 
 { #category : #specs }
-SliderPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(SliderAdapter
-		adapt: #(model))
-]
-
-{ #category : #specs }
 SliderPresenter class >> example [
 	<sampleInstance>
 	| slider |

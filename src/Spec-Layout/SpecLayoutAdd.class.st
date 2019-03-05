@@ -6,7 +6,8 @@ Class {
 	#superclass : #SpecLayoutSend,
 	#instVars : [
 		'layoutFrame',
-		'subwidget'
+		'subwidget',
+		'subwidgetArguments'
 	],
 	#category : #'Spec-Layout-Actions'
 }
@@ -18,6 +19,13 @@ SpecLayoutAdd class >> subwidget: subwidget layoutFrame: aLayoutFrame [
 		subwidget: subwidget 
 		layoutFrame: aLayoutFrame asSpecLayoutFrame; 
 		yourself
+]
+
+{ #category : #'instance creation' }
+SpecLayoutAdd >> arguments [
+	"We store the result because it change the state of the layouts and should be called only one time. I do not like this implementation but we'll clean later if we have time."
+	subwidgetArguments ifNil: [ subwidgetArguments := self subwidgetArguments ].
+	^ {{subwidgetArguments. #layout:. layoutFrame generateSpec}}
 ]
 
 { #category : #protocol }
@@ -49,19 +57,12 @@ SpecLayoutAdd >> fractions [
 	^ layoutFrame fractionRectangle
 ]
 
-{ #category : #'instance creation' }
-SpecLayoutAdd >> generateArguments [
-	
-	self arguments: {{subwidget .#layout:. layoutFrame generateSpec}}.
-]
-
 { #category : #initialization }
 SpecLayoutAdd >> initialize [
 
 	super initialize.
 	self selector: #add:.
-	layoutFrame := SpecLayoutFrame identity.
-	subwidget := nil.
+	layoutFrame := SpecLayoutFrame identity
 ]
 
 { #category : #accessing }
@@ -144,46 +145,24 @@ SpecLayoutAdd >> subwidget: anObject [
 ]
 
 { #category : #'instance creation' }
-SpecLayoutAdd >> subwidget: aSpec fractions: frac offsets: off [
-
+SpecLayoutAdd >> subwidget: aSpec layoutFrame: aLayoutFrame [
 	subwidget := aSpec isSymbol
-				ifTrue: [{#model. aSpec}]
-				ifFalse: [
-					aSpec isCollection
-						ifTrue: [
-							aSpec isEmpty 
-								ifTrue: [ "should raise an error" ]
-								ifFalse: [ aSpec first == #model 
-											ifTrue: [ aSpec ]
-											ifFalse: [ {#model}, aSpec ]]]
-						ifFalse: [ 
-							"Not a symbol or a collection. We assume it's an object to add directly (like a morph by example)"
-							aSpec ]].
-	self fractions: frac.
-	self offsets: off.
-	
-	self generateArguments
+		ifTrue: [ {#presenter.
+			aSpec} ]
+		ifFalse: [ aSpec isCollection
+				ifTrue: [ aSpec isEmpty
+						ifTrue: [ "should raise an error" ]
+						ifFalse: [ self flag: #todo.	"In one version of Pharo the #model should disaper. It's just here for retro compatibility"
+							(#(#model #presenter) anySatisfy: [ :symbol | aSpec first = symbol ])
+								ifTrue: [ aSpec ]
+								ifFalse: [ {#presenter} , aSpec ] ] ]
+				ifFalse: [ "Not a symbol or a collection. We assume it's an object to add directly (like a morph by example)" aSpec ] ].
+	layoutFrame := aLayoutFrame
 ]
 
 { #category : #'instance creation' }
-SpecLayoutAdd >> subwidget: aSpec layoutFrame: aLayoutFrame [
-	
-	subwidget := aSpec isSymbol
-				ifTrue: [{#model. aSpec}]
-				ifFalse: [
-					aSpec isCollection
-						ifTrue: [
-							aSpec isEmpty 
-								ifTrue: [ "should raise an error" ]
-								ifFalse: [ aSpec first == #model 
-											ifTrue: [ aSpec ]
-											ifFalse: [ {#model}, aSpec ]]]
-						ifFalse: [ 
-							"Not a symbol or a collection. We assume it's an object to add directly (like a morph by example)"
-							aSpec ]].
-	
-	layoutFrame := aLayoutFrame.
-	self generateArguments
+SpecLayoutAdd >> subwidgetArguments [
+	^ subwidget asArray
 ]
 
 { #category : #protocol }

@@ -78,14 +78,6 @@ TextPresenter class >> adapterName [
 	^ #TextAdapter
 ]
 
-{ #category : #specs }
-TextPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(TextAdapter
-		adapt: #(model))
-]
-
 { #category : #example }
 TextPresenter class >> example [
 	<sampleInstance>
@@ -174,6 +166,14 @@ TextPresenter >> acceptBlock: aBlockWithOneArgument [
 	actionToPerformHolder value: aBlockWithOneArgument
 ]
 
+{ #category : #private }
+TextPresenter >> acceptText: aString [
+	"Used to set the text value comming from the adapter (we do not want to re-send 
+	 this value to the adapter, hence we set it 'raw', not triggering events)"
+
+	textHolder rawValue: aString
+]
+
 { #category : #api }
 TextPresenter >> askBeforeDiscardingEdits [
 
@@ -243,7 +243,8 @@ TextPresenter >> clearSelection [
 
 { #category : #'undo-redo' }
 TextPresenter >> clearUndoManager [
-	self widget ifNotNil: #clearUndoManager
+
+	self withAdapterDo: #clearUndoManager
 ]
 
 { #category : #api }
@@ -280,6 +281,15 @@ TextPresenter >> doItReceiver [
 TextPresenter >> doItReceiver: anObject [
 
 	doItReceiver value: anObject
+]
+
+{ #category : #api }
+TextPresenter >> enabled: aBoolean [
+
+	super enabled: aBoolean.
+	self 
+		changed: #enabled: 
+		with: { aBoolean }
 ]
 
 { #category : #focus }
@@ -374,6 +384,12 @@ TextPresenter >> initialize [
 	self beForText.
 	self registerEvents.
 	self registerEventsForShout
+]
+
+{ #category : #initialization }
+TextPresenter >> initializePorts [
+
+	self addInputPort: TextPresenterPort new
 ]
 
 { #category : #'api-shout' }
@@ -540,7 +556,13 @@ TextPresenter >> text: aText [
 
 { #category : #private }
 TextPresenter >> textArea [
-	^ self widget widget 
+	^ self adapter widget
+]
+
+{ #category : #simulating }
+TextPresenter >> type: aString [ 
+	"For simulation: Do as if we type the given string"
+	self text: aString
 ]
 
 { #category : #api }
@@ -622,6 +644,18 @@ TextPresenter >> whenScrollValueChanged: aBlock [
 
 { #category : #'api-events' }
 TextPresenter >> whenTextChanged: aBlock [
+	"Set a block to perform when the text changed"
+	
+	self
+		deprecated: 'Use #whenTextChangedDo: instead.'
+		transformWith: '`@receiver whenTextChanged: `@statement' 
+			-> '`@receiver whenTextChangedDo: `@statement'.
+	
+	textHolder whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+TextPresenter >> whenTextChangedDo: aBlock [
 	"Set a block to perform when the text changed"
 	
 	textHolder whenChangedDo: aBlock

@@ -8,6 +8,21 @@ Class {
 	#category : #'Spec-StubAdapter-Adapters'
 }
 
+{ #category : #accessing }
+SpecStubAbstractAdapter class >> adaptingName [
+	"Override me if adapter will not follow the common pattern"
+
+	"remove 'SpecStub' part and *in general*, I will have the adapting name"
+
+	^ (self name allButFirst: 8) asSymbol
+]
+
+{ #category : #accessing }
+SpecStubAbstractAdapter class >> allAdapters [
+
+	^ self allSubclasses
+]
+
 { #category : #protocol }
 SpecStubAbstractAdapter >> add: aWidget [
 ]

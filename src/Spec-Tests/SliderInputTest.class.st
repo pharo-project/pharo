@@ -1,6 +1,6 @@
 Class {
 	#name : #SliderInputTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#category : #'Spec-Tests-PolyWidgets-Elementary'
 }
 

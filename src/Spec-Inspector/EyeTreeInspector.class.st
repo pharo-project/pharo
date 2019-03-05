@@ -40,7 +40,7 @@ EyeTreeInspector >> childrenForObject: anObject [
 { #category : #'event-handling' }
 EyeTreeInspector >> elementChanged [
 	self text doItReceiver: self selectedElement value.
-	self text widget
+	self text adapter
 		ifNotNil: [ :w | 
 			w widget editingMode
 				classOrMetaClass: self selectedElement value class ]
@@ -93,7 +93,7 @@ EyeTreeInspector >> labelFor: anEyeElement [
 { #category : #'event-handling' }
 EyeTreeInspector >> objectChanged [
 	self text doItReceiver: self object.
-	self text widget
+	self text adapter
 		ifNotNil: [ :w | w editingMode classOrMetaClass: self object class ].
 	self tree
 		roots: self roots;

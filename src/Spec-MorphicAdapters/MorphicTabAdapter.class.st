@@ -30,15 +30,15 @@ MorphicTabAdapter >> bindModel: aTabModel andWidget: aWidget [
 ]
 
 { #category : #factory }
-MorphicTabAdapter >> buildWidgetWith: aTabModel [
+MorphicTabAdapter >> buildWidgetWith: aTabPresenter [
 	^ TabMorph new
-		model: aTabModel;
-		label: aTabModel label;
-		icon: aTabModel icon;
-		retrievingBlock: aTabModel retrievingBlock;
-		morph: aTabModel contents;
-		menu: aTabModel menu;
-		closeable: aTabModel closeable;
-		setActionsFrom: [ aTabModel actions ];
+		model: aTabPresenter;
+		label: aTabPresenter label;
+		icon: aTabPresenter icon;
+		retrievingBlock: aTabPresenter retrievingBlock;
+		morph: aTabPresenter contents;
+		menu: aTabPresenter menu;
+		closeable: aTabPresenter closeable;
+		setActionsFrom: [ aTabPresenter actions ];
 		yourself
 ]

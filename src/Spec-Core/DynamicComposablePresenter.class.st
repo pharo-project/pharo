@@ -63,16 +63,10 @@ DynamicComposablePresenter >> initializeWidgets [
 ]
 
 { #category : #'instance creation' }
-DynamicComposablePresenter >> instantiateModels: aCollectionOfPairs [
+DynamicComposablePresenter >> instantiatePresenters: aCollectionOfPairs [
  
 	aCollectionOfPairs pairsDo: [ :k :v |
 		widgets at: k asSymbol put: (self createInstanceFor: v) ]
-]
-
-{ #category : #'instance creation' }
-DynamicComposablePresenter >> instantiatePresenters: aCollectionOfPairs [
- 
-	^ self instantiateModels: aCollectionOfPairs
 ]
 
 { #category : #accessing }
@@ -107,8 +101,6 @@ DynamicComposablePresenter >> retrieveSpec: aSelector [
 	self layout ifNil: [ ^ super retrieveSpec: aSelector ].
 
 	^ self layout
-		selector: aSelector;
-		yourself
 ]
 
 { #category : #accessing }

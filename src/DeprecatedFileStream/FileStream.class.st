@@ -8,7 +8,7 @@ What you should remember:
 - DO NOT USE FileStream class
 - 'file.txt' asFileReference readStream and similar methods now return an instance of ZnCharacterReadStream instead of MultiByteFileStream
 - 'file.txt' asFileReference writeStream and similar methods now return an instance of ZnCharacterWriteStream instead of MultiByteFileStream
-- the new API has a more clear separation between binary and text files
+- the new API has a clearer separation between binary and text files
 
 1. Basic Files
 By default files are binary. Not buffered.
@@ -18,8 +18,8 @@ Obsolete code:
 FileStream readOnlyFileNamed: '1.txt' do: [ :stream | 
     stream upToEnd ].
 New code:
-(File named: ‘name’) readStream.
-(File named: ‘name’) readStreamDo: [ :stream | … ].
+(File named: 'name') readStream.
+(File named: 'name') readStreamDo: [ :stream | … ].
 '1.txt' asFileReference readStreamDo: [ :stream | 
     stream upToEnd ].
 

@@ -1,56 +1,25 @@
 "
+=== Deprecated ===
+Use TablePresenter instead.
+
 A MultiColumnListPresenter is a spec presenter for Multi columns list
+
+
+This presenter configures the columns based on the displayBlock of the first item.
+The displayBlock should return an array with the values for each of the columns.
+The number of elements of the array of the first element's display value is used as the number of columns.
+I Assume all my elements have the same number of columns.
+All columns have the same size
 "
 Class {
 	#name : #MultiColumnListPresenter,
-	#superclass : #ListPresenter,
+	#superclass : #FastTablePresenter,
 	#category : #'Spec-Core-Widgets'
 }
 
-{ #category : #specs }
-MultiColumnListPresenter class >> adapterName [
-
-	^ #MultiColumnListAdapter
-]
-
-{ #category : #specs }
-MultiColumnListPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(MultiColumnListAdapter
-		adapt: #(model))
-]
-
-{ #category : #morphic }
-MultiColumnListPresenter >> listElementAt: anIndex [
-
-	^ self wrapItem: (self listItems at: anIndex) index: anIndex 
-]
-
-{ #category : #morphic }
-MultiColumnListPresenter >> setIndex: anIndex [
-
-	self allowToSelect ifFalse: [ ^ self ].
-	self okToChange ifFalse: [ ^ self ].
-	selectionHolder index value: anIndex.
-	selectionHolder selection value: (self listItems at: anIndex ifAbsent: [ nil ]).
-]
-
 { #category : #api }
-MultiColumnListPresenter >> setSelectedIndex: anIndex [
-	"<api: #integer min: 0 max: #listSize getter: #selectedIndex registration: #whenSelectionIndexChanged:>"
-	"Set the index of the item you want to be selected"
-	| idx selection |
+MultiColumnListPresenter >> items: items [
 	
-	self allowToSelect ifFalse: [ ^ self ].
-	self okToChange ifFalse: [ ^ self ].
-	self listSize isZero ifTrue:  [ ^self ].
-	idx := anIndex min: self listSize.
-	selection := self listItems 
-					at: idx 
-					ifAbsent: [ idx := 0.
-								nil ].
-	
-	selectionHolder index value: idx.
-	selectionHolder selection value: selection.
+	items ifNotEmpty: [ self numberOfColumns: (displayBlock value: items first) size ].
+	super items: items
 ]

@@ -23,14 +23,6 @@ TreeColumnPresenter class >> adapterName [
 	^ #TreeColumnAdapter
 ]
 
-{ #category : #specs }
-TreeColumnPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(TreeColumnAdapter
-		adapt: #(model))
-]
-
 { #category : #api }
 TreeColumnPresenter >> container [
 

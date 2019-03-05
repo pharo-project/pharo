@@ -14,7 +14,7 @@ Class {
 
 { #category : #private }
 RBAddTraitChange class >> definitionPatterns [
-	^ #('Trait named: `#traitName uses: `@traitComposition category: `#category')
+	^ #('Trait named: `#traitName uses: `@traitComposition category: `#category' 'Trait named: `#traitName uses: `@traitComposition slots: `@slotDefinition category: `#category' )
 ]
 
 { #category : #converting }

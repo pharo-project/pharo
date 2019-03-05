@@ -1,6 +1,6 @@
 Class {
 	#name : #DropListPresenterTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#category : #'Spec-Tests-Core-Widgets'
 }
 

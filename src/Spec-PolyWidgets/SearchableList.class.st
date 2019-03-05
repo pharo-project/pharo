@@ -38,24 +38,24 @@ SearchableList class >> example [
 
 { #category : #initialization }
 SearchableList >> initializePresenter [
-
-	searchPresenter whenTextChanged: [:newText || text |
-		text :=  searchPresenter getText asLowercase.
-		text isEmpty
-			ifTrue: [ listPresenter resetFilteringBlock ]
-			ifFalse: [
-				listPresenter filteringBlock: [:col | col select: [:e | e asLowercase beginsWith: searchPresenter getText asLowercase ]]]]
+	searchPresenter
+		whenTextChangedDo: [ :newText | 
+			| text |
+			text := searchPresenter getText asLowercase.
+			text isEmpty
+				ifTrue: [ listPresenter model resetFilter ]
+				ifFalse: [ listPresenter model
+						filterWith:
+							[ :element :col | element asLowercase beginsWith: searchPresenter getText asLowercase ] ] ]
 ]
 
 { #category : #initialization }
 SearchableList >> initializeWidgets [
-
 	listPresenter := self newList.
 	searchPresenter := self newTextInput.
-		
-	searchPresenter 
+	searchPresenter
 		autoAccept: true;
-		ghostText: 'filter'.
+		placeholder: 'filter'
 ]
 
 { #category : #accessing }

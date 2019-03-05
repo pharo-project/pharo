@@ -12,3 +12,13 @@ SpecStubListAdapter >> buildWidget [
 
 	^ SpecStubListView new
 ]
+
+{ #category : #factory }
+SpecStubListAdapter >> refreshWidgetList [
+
+]
+
+{ #category : #factory }
+SpecStubListAdapter >> refreshWidgetSelection [
+
+]

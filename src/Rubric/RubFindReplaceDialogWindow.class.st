@@ -9,14 +9,28 @@ Class {
 	],
 	#classVars : [
 		'Finds',
-		'Replacements'
+		'Replacements',
+		'Singleton'
 	],
 	#category : #'Rubric-Editing-FindReplaceService'
 }
 
+{ #category : #cleanup }
+RubFindReplaceDialogWindow class >> cleanUp [
+	Singleton ifNotNil: [ 
+			Singleton close.
+			Singleton := nil ]
+]
+
 { #category : #accessing }
 RubFindReplaceDialogWindow class >> finds [
 	^ Finds ifNil: [Finds := OrderedCollection new]
+]
+
+{ #category : #accessing }
+RubFindReplaceDialogWindow class >> initialize [
+	"EditorFindReplaceDialogWindow initialize"
+	Singleton := nil.
 ]
 
 { #category : #accessing }
@@ -25,8 +39,19 @@ RubFindReplaceDialogWindow class >> maxPreviousListSize [
 ]
 
 { #category : #accessing }
+RubFindReplaceDialogWindow class >> on: aTextView [
+	^ self singleton on: aTextView
+]
+
+{ #category : #accessing }
 RubFindReplaceDialogWindow class >> replacements [
 	^ Replacements ifNil: [Replacements := OrderedCollection new]
+]
+
+{ #category : #accessing }
+RubFindReplaceDialogWindow class >> singleton [ 
+	^ Singleton ifNil: [Singleton := self new].
+
 ]
 
 { #category : #'user-interface' }
@@ -44,7 +69,6 @@ RubFindReplaceDialogWindow >> buildWindowMenu [
 	aMenu lastItem icon: self theme windowCloseForm.
 	aMenu addLine.
 	aMenu add: 'About' selector: #showAbout.
-	aMenu lastItem icon: self theme smallHelpIcon.
 	^ aMenu
 ]
 
@@ -246,10 +270,6 @@ RubFindReplaceDialogWindow >> newFindTextEntryMorph [
 		withDropListButton;
 		crAction: [:t | self find];
 		yourself.
-	pt textMorph
-		autoFit: true;
-		wrapFlag: false;
-		margins: (2@1) asMargin.
 	findTextField := pt.
 	^ pt
 
@@ -313,10 +333,6 @@ RubFindReplaceDialogWindow >> newReplaceTextEntryMorph [
 			crAction: [:t | self replace];
 			withDropListButton;
 			yourself.
-	pt textMorph
-		autoFit: true;
-		wrapFlag: false;
-		margins: (2@1) asMargin.
 	^ pt
 
 ]

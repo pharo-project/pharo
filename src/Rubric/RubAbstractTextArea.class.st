@@ -109,7 +109,6 @@ Class {
 
 { #category : #settings }
 RubAbstractTextArea class >> backgroundColor [
-	"Do not store it on purpose so that settings can take precedence over theme."
 	^ BackgroundColor ifNil: [ self theme backgroundColor ]
 ]
 
@@ -1028,7 +1027,7 @@ RubAbstractTextArea >> highlightMessageSend [
 	^ self class highlightMessageSend
 ]
 
-{ #category : #initialization }
+{ #category : #initialize }
 RubAbstractTextArea >> initialize [
 	super initialize.
 	self compose.
@@ -1773,7 +1772,6 @@ RubAbstractTextArea >> textColor [
 
 { #category : #'accessing text' }
 RubAbstractTextArea >> textColor: newColor [
-	textColor = newColor ifTrue: [^ self].
 	textColor := newColor.
 	self addAttribute: (TextColor color: newColor).
 	self changed.
@@ -1803,7 +1801,7 @@ RubAbstractTextArea >> textStyle: aTextStyle [
 
 ]
 
-{ #category : #notification }
+{ #category : #updating }
 RubAbstractTextArea >> themeChanged [
 	
 	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler | 
