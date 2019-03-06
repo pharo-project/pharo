@@ -77,19 +77,19 @@ Bag >> asBag [
 ]
 
 { #category : #converting }
-Bag >> asDictionary [
-	"Answer a Dictionary with values and counts (a copy)"
-	"(Bag newFrom: 'aabbbc') asDictionary >>> { 'a'->2. 'b'->3. 'c'->1 }"
- 
-	^self valuesAndCounts copy
-]
-
-{ #category : #converting }
 Bag >> asSet [
 	"Answer a set with the elements of the receiver."
 	"#(1 2 2 3 1 1 1) asBag asSet >>> #(1 2 2 3 1 1 1) asSet"
 	
 	^ contents keys asSet
+]
+
+{ #category : #enumerating }
+Bag >> associationsDo: aBlock [
+	"Evaluate aBlock for each of the receiver's elements (key/value 
+	associations).  Provided for compatibility with Dictionaries"
+
+	self doWithOccurrences: [ :key :occurence | aBlock value: key->occurence ]
 ]
 
 { #category : #accessing }
