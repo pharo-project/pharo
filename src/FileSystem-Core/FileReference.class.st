@@ -357,15 +357,15 @@ FileReference >> lastFileFor: baseFileName extension: extension [
 
 	"FileSystem workingDirectory lastFileFor: 'games' extension: 'ston'"
 
-	| files |
-	files := self childrenMatching: baseFileName , '.*.' , extension.
-	files ifEmpty: [ ^ self error: 'No file with number pattern' ].
-	"splitting twice but for now a simple '*.*.*' does not work since it selects: name.45.677.mcz"
-	files := files select: [ :each | (each basename splitOn: $.) size = 3].
-	^ (files
-		asSortedCollection:
-			[ :a :b | ((a basename splitOn: $.) at: 2) asNumber < ((b basename splitOn: $.) at: 2) asNumber ])
-		last
+	| version |
+
+	version := self versionNumberFor: baseFileName extension: extension.
+	^(version
+		ifNil: [ self error: 'No file with number pattern' ]
+		ifNotNil: [ version = 0
+			ifTrue: [ baseFileName, '.', extension ]
+			ifFalse: [ baseFileName , '.' , version asString , '.' , extension ] ]) asFileReference 
+
 ]
 
 { #category : #accessing }
@@ -407,17 +407,12 @@ FileReference >> nextNameFor: baseFileName extension: extension [
 
 	"(FileSystem workingDirectory nextNameFor: 'games' extension: 'ston') asFileReference ensureCreateFile"
 
-	| files splits version |
-	files := self childrenMatching: baseFileName , '.*.' , extension.
-	files ifEmpty: [ ^ baseFileName , '.1.' , extension ].
-	splits := files
-		collect: [ :filename | filename basename splitOn: $. ]
-		thenSelect: [ :split | (split at: 1) = baseFileName and: [ split size = 3 ] ].
-	splits := splits asSortedCollection: [ :a :b | (a at: 2) asNumber < (b at: 2) asNumber ].
-	version := splits isEmpty
-		ifTrue: [ 1 ]
-		ifFalse: [ (splits last at: 2) asNumber + 1 ].
-	^ baseFileName , '.' , version asString , '.' , extension
+	| version |
+
+	version := self versionNumberFor: baseFileName extension: extension.
+	^version
+		ifNil: [ baseFileName, '.1.', extension ]
+		ifNotNil: [ baseFileName , '.' , (version+1) asString , '.' , extension ]
 ]
 
 { #category : #utilities }
@@ -426,24 +421,24 @@ FileReference >> nextVersion [
 	preceding the file extension.  Increment the version number and answer the new file name.
 	If a version number is not found, return just the file"
 
-	| parent version versionNumbers nameWithoutExtension |
-	
+	| parent basename nameWithoutExtension extension max index |
+
 	self exists
 		ifFalse: [ ^ self ].
-	
+
 	parent := self parent.
-	nameWithoutExtension := self basename copyUpTo: $..
-	
-	versionNumbers := parent children 
-				select: [ :f| 
-					(f basename beginsWith: nameWithoutExtension) ]
-				thenCollect: [ :f| 
-					Number squeezeNumberOutOfString: (f basename last: (f basename size - nameWithoutExtension size - 1))   ifFail: [ 0 ]].
-	
-	versionNumbers ifEmpty: [ ^self ].
-	
-	version := versionNumbers max + 1.
-	^ parent / (nameWithoutExtension , '.', version asString) , self extension
+	extension := self extension.
+	basename := self basename.
+	nameWithoutExtension := basename copyFrom: 1 to: (basename size - extension size - 1).
+	"At this stage nameWithoutExtension may still include a version number.  Remove it if necessary"
+	index := nameWithoutExtension size.
+	[ index > 0 and: [ (nameWithoutExtension at: index) isDigit ] ] whileTrue:
+		[ index := index - 1 ].
+	((index between: 1 and: nameWithoutExtension size - 1) and: [ (nameWithoutExtension at: index) = $. ]) ifTrue: 
+		[ nameWithoutExtension := nameWithoutExtension copyFrom: 1 to: index-1 ].
+
+	max := parent versionNumberFor: nameWithoutExtension extension: extension.
+	^ parent / (nameWithoutExtension, '.', (max+1) asString) , self extension
 ]
 
 { #category : #accessing }
@@ -578,6 +573,26 @@ FileReference >> uid: uid gid: gid [
 	An id of nil leaves it unchanged."
 
 	^filesystem file: self path uid: uid gid: gid
+]
+
+{ #category : #versions }
+FileReference >> versionNumberFor: basename extension: extension [
+	"Answer the latest (largest) version number for the specified file.
+	0 = basename.extension exists, but nothing later.
+	nil = no file exists"
+
+	| regex maxVersion |
+
+	regex := (basename, '.(\d+).', extension) asRegex.
+	maxVersion := 0.
+	self fileSystem childNamesAt: self path do: [ :child |
+		(regex matches: child) ifTrue: 
+			[ maxVersion := maxVersion max: (regex subexpression: 2) asNumber ] ].
+	^maxVersion = 0
+		ifTrue: [ (self / (basename, '.', extension)) asFileReference exists 
+			ifTrue: [ 0 ]
+			ifFalse: [ nil ] ]
+		ifFalse: [ maxVersion ]
 ]
 
 { #category : #streams }
