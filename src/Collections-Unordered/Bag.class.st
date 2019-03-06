@@ -77,6 +77,13 @@ Bag >> asBag [
 ]
 
 { #category : #converting }
+Bag >> asDictionary [
+	"Answer a Dictionary with values and counts (a copy)"
+ 
+	^self valuesAndCounts copy
+]
+
+{ #category : #converting }
 Bag >> asSet [
 	"Answer a set with the elements of the receiver."
 	"#(1 2 2 3 1 1 1) asBag asSet >>> #(1 2 2 3 1 1 1) asSet"

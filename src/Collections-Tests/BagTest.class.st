@@ -369,6 +369,22 @@ BagTest >> testAsBag [
 ]
 
 { #category : #'basic tests' }
+BagTest >> testAsDictionary [
+
+	| aBag aDictonary |
+	aBag := Bag new.	
+	aBag add:'a' withOccurrences: 4.
+	aBag add:'b' withOccurrences: 2.
+	aDictonary := aBag asDictionary.
+	self assert: aDictonary size equals: 2.
+	self assert: (aDictonary at: 'a') equals: 4.
+	self assert: aBag asDictionary equals: aBag valuesAndCounts.
+	self deny: aBag asDictionary == aBag valuesAndCounts.
+	
+	
+]
+
+{ #category : #'basic tests' }
 BagTest >> testAsSet [
 
 	| aBag aSet |
