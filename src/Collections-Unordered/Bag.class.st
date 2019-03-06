@@ -79,6 +79,7 @@ Bag >> asBag [
 { #category : #converting }
 Bag >> asDictionary [
 	"Answer a Dictionary with values and counts (a copy)"
+	"(Bag newFrom: 'aabbbc') asDictionary >>> { 'a'->2. 'b'->3. 'c'->1 }"
  
 	^self valuesAndCounts copy
 ]
