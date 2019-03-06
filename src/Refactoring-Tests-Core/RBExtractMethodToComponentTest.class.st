@@ -16,9 +16,9 @@ RBExtractMethodToComponentTest >> testBadInterval [
 		shouldFail: (RBExtractMethodToComponentRefactoring 
 				extract: (self 
 						convertInterval: (80 to: 147)
-						for: (RBBasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
+						for: (RBBasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 				from: #subclassOf:overrides:
-				in: RBBasicLintRuleTest class)
+				in: RBBasicLintRuleTestData class)
 ]
 
 { #category : #'failure tests' }
@@ -27,21 +27,21 @@ RBExtractMethodToComponentTest >> testExtractFailure [
 		shouldFail: (RBExtractMethodToComponentRefactoring 
 				extract: (self 
 						convertInterval: (80 to: 269)
-						for: (RBBasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
+						for: (RBBasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 				from: #subclassOf:overrides:
-				in: RBBasicLintRuleTest class);
+				in: RBBasicLintRuleTestData class);
 		shouldFail: (RBExtractMethodToComponentRefactoring 
 				extract: (self 
 						convertInterval: (53 to: 56)
-						for: (RBBasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
+						for: (RBBasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 				from: #subclassOf:overrides:
-				in: RBBasicLintRuleTest class);
+				in: RBBasicLintRuleTestData class);
 		shouldFail: (RBExtractMethodToComponentRefactoring 
 				extract: (self 
 						convertInterval: (77 to: 222)
-						for: (RBBasicLintRuleTest class sourceCodeAt: #subclassResponsibilityNotDefined))
+						for: (RBBasicLintRuleTestData class sourceCodeAt: #subclassResponsibilityNotDefined))
 				from: #subclassResponsibilityNotDefined
-				in: RBBasicLintRuleTest class)
+				in: RBBasicLintRuleTestData class)
 ]
 
 { #category : #tests }
@@ -50,9 +50,9 @@ RBExtractMethodToComponentTest >> testExtractMethodAtEndOfMethodThatNeedsReturn 
 	refactoring := RBExtractMethodToComponentRefactoring 
 		extract: (self 
 				convertInterval: (52 to: 133)
-				for: (RBLintRuleTest sourceCodeAt: #openEditor))
+				for: (RBLintRuleTestData sourceCodeAt: #openEditor))
 		from: #openEditor
-		in: RBLintRuleTest.
+		in: RBLintRuleTestData.
 	self 
 		setupMethodNameFor: refactoring
 		toReturn: #foo:.
@@ -65,7 +65,7 @@ RBExtractMethodToComponentTest >> testExtractMethodAtEndOfMethodThatNeedsReturn 
 	self 
 		setupVariableTypesFor: refactoring
 		toReturn: (Array with: (refactoring model classNamed: #Collection)).
-	class := refactoring model classNamed: #RBLintRuleTest.
+	class := refactoring model classNamed: #RBLintRuleTestData.
 	selectorsSize := class selectors size.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	self assert: (class parseTreeFor: #openEditor) = (RBParser parseMethod: 'openEditor
@@ -114,5 +114,5 @@ RBExtractMethodToComponentTest >> testNonExistantSelector [
 	self shouldFail: (RBExtractMethodToComponentRefactoring 
 			extract: (10 to: 20)
 			from: #checkClass1:
-			in: RBBasicLintRuleTest)
+			in: RBBasicLintRuleTestData)
 ]

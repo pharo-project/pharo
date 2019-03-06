@@ -15,9 +15,9 @@ RBAddClassVariableTest >> testAddClassVariable [
 	| refactoring |
 	refactoring := RBAddClassVariableRefactoring 
 		variable: 'Asdf'
-		class: RBTransformationRuleTest.
+		class: RBTransformationRuleTestData.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBTransformationRuleTest) directlyDefinesClassVariable: #Asdf)
+	self assert: ((refactoring model classNamed: #RBTransformationRuleTestData) directlyDefinesClassVariable: #Asdf)
 ]
 
 { #category : #'failure tests' }
@@ -25,17 +25,17 @@ RBAddClassVariableTest >> testAlreadyExistingName [
 	self
 		shouldFail: (RBAddClassVariableRefactoring 
 				variable: #RecursiveSelfRule
-				class: RBTransformationRuleTest);
+				class: RBTransformationRuleTestData);
 		shouldFail: (RBAddClassVariableRefactoring 
 				variable: self objectClassVariable
-				class: RBTransformationRuleTest)
+				class: RBTransformationRuleTestData)
 ]
 
 { #category : #'failure tests' }
 RBAddClassVariableTest >> testMetaClassFailure [
 	self shouldFail: (RBAddClassVariableRefactoring 
 			variable: #VariableName
-			class: RBTransformationRuleTest class)
+			class: RBTransformationRuleTestData class)
 ]
 
 { #category : #'failure tests' }

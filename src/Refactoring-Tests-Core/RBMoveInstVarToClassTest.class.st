@@ -11,6 +11,6 @@ RBMoveInstVarToClassTest >> testMoveInstVarToClassAlreadyDefined [
 			(RBMoveInstVarToClassRefactoring
 				model: model
 				variable: 'result'
-				class: RBBasicLintRuleTest
-				oldClass: RBFooLintRuleTest)
+				class: RBBasicLintRuleTestData
+				oldClass: RBFooLintRuleTestData)
 ]

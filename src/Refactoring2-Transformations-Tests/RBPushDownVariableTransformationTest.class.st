@@ -288,7 +288,7 @@ RBPushDownVariableTransformationTest >> testVariableDoesNotExist [
 	self
 		shouldFail: (RBPushDownVariableTransformation
 						instanceVariable: 'foo'
-						class: #RBBasicLintRuleTest)
+						class: #RBBasicLintRuleTestData)
 						asRefactoring;
 		shouldFail: (RBPushDownVariableTransformation
 						model: model
@@ -297,6 +297,6 @@ RBPushDownVariableTransformationTest >> testVariableDoesNotExist [
 						asRefactoring;
 		shouldFail: (RBPushDownVariableTransformation 
 						classVariable: #Foo
-						class: #RBBasicLintRuleTest)
+						class: #RBBasicLintRuleTestData)
 						asRefactoring
 ]

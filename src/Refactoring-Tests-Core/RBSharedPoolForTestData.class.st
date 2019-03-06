@@ -1,5 +1,5 @@
 Class {
-	#name : #RBSharedPoolForTest,
+	#name : #RBSharedPoolForTestData,
 	#superclass : #SharedPool,
 	#classVars : [
 		'Var1'
@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #accessing }
-RBSharedPoolForTest >> msg1 [
+RBSharedPoolForTestData >> msg1 [
 	
 	^ Var1
 ]
 
 { #category : #accessing }
-RBSharedPoolForTest >> msg2 [
+RBSharedPoolForTestData >> msg2 [
 	
 	^ Var1
 ]

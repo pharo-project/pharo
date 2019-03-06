@@ -9,9 +9,9 @@ RBPushDownMethodTest >> testPushDownMethod [
 	| refactoring class |
 	refactoring := RBPushDownMethodRefactoring 
 		pushDown: #(#name: )
-		from: RBLintRuleTest.
+		from: RBLintRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBLintRuleTest.
+	class := refactoring model classNamed: #RBLintRuleTestData.
 	self deny: (class directlyDefinesMethod: #name:).
 	class subclasses do: 
 		[ :each | 
@@ -28,13 +28,13 @@ RBPushDownMethodTest >> testPushDownMethodOnNonAbstractClass [
 { #category : #tests }
 RBPushDownMethodTest >> testPushDownMethodThatReferencesPoolDictionary [
 	| refactoring class parseTree |
-	parseTree := RBLintRuleTest parseTreeFor: #junk.
+	parseTree := RBLintRuleTestData parseTreeFor: #junk.
 	self proceedThroughWarning: 
 		[ refactoring := RBPushDownMethodRefactoring 
 			pushDown: #(#junk )
-			from: RBLintRuleTest.
+			from: RBLintRuleTestData.
 		self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBLintRuleTest.
+	class := refactoring model classNamed: #RBLintRuleTestData.
 	self deny: (class directlyDefinesMethod: #junk).
 	class subclasses do: 
 		[ :each | 
@@ -47,6 +47,6 @@ RBPushDownMethodTest >> testPushDownNonExistantMenu [
 	| refactoring |
 	refactoring := RBPushDownMethodRefactoring 
 		pushDown: #(#someMethodThatDoesNotExist )
-		from: RBLintRuleTest.
+		from: RBLintRuleTestData.
 	self shouldFail: refactoring
 ]

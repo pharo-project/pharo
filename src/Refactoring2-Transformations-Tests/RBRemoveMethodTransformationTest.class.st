@@ -15,7 +15,7 @@ RBRemoveMethodTransformationTest >> testMethodIsReferenced [
 
 	self shouldFail: (RBRemoveMethodTransformation
 							selector: #checkClass:
-							from: #RBBasicLintRuleTest)
+							from: #RBBasicLintRuleTestData)
 							asRefactoring 
 ]
 
@@ -24,7 +24,7 @@ RBRemoveMethodTransformationTest >> testMethodSendsSuper [
 
 	self shouldFail: (RBRemoveMethodTransformation
 							selector: #new
-							from: RBBasicLintRuleTest class)
+							from: RBBasicLintRuleTestData class)
 							asRefactoring
 ]
 

@@ -17,11 +17,11 @@ RBAddVariableTransformationTest >> testAddClassVariable [
 	| refactoring |
 	refactoring := (RBAddVariableTransformation 
 						classVariable: 'Asdf'
-						class: #RBTransformationRuleTest)
+						class: #RBTransformationRuleTestData)
 						asRefactoring transform.
 	
 	self assert: ((refactoring model
-		classNamed: #RBTransformationRuleTest)
+		classNamed: #RBTransformationRuleTestData)
 		directlyDefinesClassVariable: #Asdf)
 ]
 
@@ -31,11 +31,11 @@ RBAddVariableTransformationTest >> testAddInstanceVariable [
 	| refactoring |
 	refactoring := (RBAddVariableTransformation 
 						instanceVariable: 'asdf'
-						class: #RBTransformationRuleTest)
+						class: #RBTransformationRuleTestData)
 						asRefactoring transform.
 		
 	self assert: ((refactoring model
-		classNamed: #RBTransformationRuleTest)
+		classNamed: #RBTransformationRuleTestData)
 		directlyDefinesInstanceVariable: 'asdf')
 ]
 
@@ -45,19 +45,19 @@ RBAddVariableTransformationTest >> testAlreadyExistingName [
 	self
 		shouldFail: (RBAddVariableTransformation 
 						instanceVariable: 'class'
-						class: #RBTransformationRuleTest)
+						class: #RBTransformationRuleTestData)
 						asRefactoring;
 		shouldFail: (RBAddVariableTransformation 
 						instanceVariable: 'name'
-						class: #RBTransformationRuleTest)
+						class: #RBTransformationRuleTestData)
 						asRefactoring;
 		shouldFail: (RBAddVariableTransformation 
 						classVariable: #RecursiveSelfRule
-						class: #RBTransformationRuleTest)
+						class: #RBTransformationRuleTestData)
 						asRefactoring;
 		shouldFail: (RBAddVariableTransformation 
 						classVariable: self objectClassVariable
-						class: #RBTransformationRuleTest)
+						class: #RBTransformationRuleTestData)
 						asRefactoring 
 ]
 

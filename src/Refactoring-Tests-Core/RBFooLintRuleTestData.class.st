@@ -1,6 +1,6 @@
 Class {
-	#name : #RBFooLintRuleTest,
-	#superclass : #RBLintRuleTest,
+	#name : #RBFooLintRuleTestData,
+	#superclass : #RBLintRuleTestData,
 	#instVars : [
 		'result'
 	],
@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-RBFooLintRuleTest >> foo [
+RBFooLintRuleTestData >> foo [
 	^ 6
 ]

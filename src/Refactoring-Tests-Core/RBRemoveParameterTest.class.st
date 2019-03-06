@@ -9,11 +9,11 @@ RBRemoveParameterTest >> testNonExistantName [
 	self
 		shouldFail: (RBRemoveParameterRefactoring 
 				removeParameter: 'asdf'
-				in: RBBasicLintRuleTest
+				in: RBBasicLintRuleTestData
 				selector: #checkClass:);
 		shouldFail: (RBRemoveParameterRefactoring 
 				removeParameter: 'aSmalllintContext'
-				in: RBBasicLintRuleTest
+				in: RBBasicLintRuleTestData
 				selector: #checkClass1:)
 ]
 

@@ -9,7 +9,7 @@ RBRenameInstanceVariableTest >> testAlreadyExistingName [
 	self shouldFail: (RBRenameInstanceVariableRefactoring 
 			rename: 'classBlock'
 			to: 'name'
-			in: RBBasicLintRuleTest)
+			in: RBBasicLintRuleTestData)
 ]
 
 { #category : #'failure tests' }
@@ -17,15 +17,15 @@ RBRenameInstanceVariableTest >> testNonExistantName [
 	self shouldFail: (RBRenameInstanceVariableRefactoring 
 			rename: 'foo'
 			to: 'newFoo'
-			in: RBBasicLintRuleTest)
+			in: RBBasicLintRuleTestData)
 ]
 
 { #category : #tests }
 RBRenameInstanceVariableTest >> testRenameInstVar [
 	| refactoring class |
-	refactoring := RBRenameInstanceVariableRefactoring rename: 'classBlock' to: 'asdf' in: RBBasicLintRuleTest.
+	refactoring := RBRenameInstanceVariableRefactoring rename: 'classBlock' to: 'asdf' in: RBBasicLintRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBBasicLintRuleTest.
+	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').
 	self deny: (class directlyDefinesInstanceVariable: 'classBlock').
 	self
@@ -53,9 +53,9 @@ RBRenameInstanceVariableTest >> testRenameInstVar [
 { #category : #tests }
 RBRenameInstanceVariableTest >> testRenameInstVarNotAccessors [
 	| refactoring class |
-	refactoring := RBRenameInstanceVariableRefactoring rename: 'result' to: 'whatever' in: RBBasicLintRuleTest renameAccessors: false.
+	refactoring := RBRenameInstanceVariableRefactoring rename: 'result' to: 'whatever' in: RBBasicLintRuleTestData renameAccessors: false.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBBasicLintRuleTest.
+	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class directlyDefinesInstanceVariable: 'whatever').
 	self deny: (class directlyDefinesInstanceVariable: 'result').
 	
