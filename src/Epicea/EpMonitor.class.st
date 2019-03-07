@@ -37,6 +37,13 @@ EpMonitor class >> current: aMonitor [
 	current := aMonitor
 ]
 
+{ #category : #enabling }
+EpMonitor class >> disableDuring: aBlock [
+	"Disable the default monitor during the execution of a block"
+	
+	self current disableDuring: aBlock
+]
+
 { #category : #testing }
 EpMonitor class >> hasCurrent [
 	"Answer if there is an instance of this class that is #current (without creating the instance if one not already exists)."
