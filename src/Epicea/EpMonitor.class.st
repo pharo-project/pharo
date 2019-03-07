@@ -320,8 +320,8 @@ EpMonitor >> disableDuring: aBlock [
 	| currentStatus |
 	currentStatus := self isEnabled.
 	self disable.
-	aBlock value.
-	self enabled: currentStatus
+	[ aBlock value ]
+		ensure: [ self enabled: currentStatus ]
 ]
 
 { #category : #enabling }

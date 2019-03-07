@@ -17,6 +17,18 @@ EpDisabledIntegrationTest >> testDisableDuring [
 ]
 
 { #category : #tests }
+EpDisabledIntegrationTest >> testDisableDuringWithInteruption [
+	monitor enable.
+	self assert: monitor isEnabled.
+	[ monitor
+		disableDuring: [ self deny: monitor isEnabled.
+			self error ] ]
+		on: Error
+		do: [ "We just want to test the case with an error." ].
+	self assert: monitor isEnabled
+]
+
+{ #category : #tests }
 EpDisabledIntegrationTest >> testEnable [
 	monitor enable.
 	
