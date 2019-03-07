@@ -89,7 +89,7 @@ Bag >> associationsDo: aBlock [
 	"Evaluate aBlock for each of the receiver's elements (key/value 
 	associations).  Provided for compatibility with Dictionaries"
 
-	self doWithOccurrences: [ :key :occurence | aBlock value: key->occurence ]
+	contents associationsDo: aBlock
 ]
 
 { #category : #accessing }
