@@ -158,7 +158,7 @@ RBSequenceNode >> addNodesFirst: aCollection [
 	^ aCollection
 ]
 
-{ #category : #accessing }
+{ #category : #'adding nodes' }
 RBSequenceNode >> addReturn [
 	| node |
 	statements isEmpty
@@ -494,6 +494,12 @@ RBSequenceNode >> temporaryVariables [
 	^(super temporaryVariables asOrderedCollection)
 		addAll: self temporaryNames;
 		yourself
+]
+
+{ #category : #'adding nodes' }
+RBSequenceNode >> transformLastToReturn [
+	"transform the last statement, but this method returns the sequence, not the returnNode"
+	self addReturn
 ]
 
 { #category : #testing }
