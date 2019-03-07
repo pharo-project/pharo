@@ -24,7 +24,7 @@ RBExtractMethodTransformationTest >> testBadInterval [
 							extract: (self sourceCodeAt: (80 to: 147)
 								forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
 							from: #subclassOf:overrides: to: #bla
-							in: #'RBBasicLintRuleTest class')
+							in: #'RBBasicLintRuleTestData class')
 							asRefactoring
 	
 ]
@@ -36,21 +36,21 @@ RBExtractMethodTransformationTest >> testExtractFailure [
 			extract: (self sourceCodeAt: (80 to: 269)
 						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
 			from: #subclassOf:overrides:
-			to: #foo in: #'RBBasicLintRuleTest class')
+			to: #foo in: #'RBBasicLintRuleTestData class')
 			asRefactoring.
 	
 	self shouldFail: (RBExtractMethodTransformation
 			extract: (self sourceCodeAt: (53 to: 56)
 						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
 			from: #subclassOf:overrides:
-			to: #foo in: #'RBBasicLintRuleTest class')
+			to: #foo in: #'RBBasicLintRuleTestData class')
 			asRefactoring.
 	
 	self shouldFail: (RBExtractMethodTransformation
 			extract: (self sourceCodeAt: (77 to: 222)
 						forMethod: #subclassResponsibilityNotDefined in: RBBasicLintRuleTestData class)
 			from: #subclassResponsibilityNotDefined
-			to: #foo in: #'RBBasicLintRuleTest class')
+			to: #foo in: #'RBBasicLintRuleTestData class')
 			asRefactoring
 ]
 
