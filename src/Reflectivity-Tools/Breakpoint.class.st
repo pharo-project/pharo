@@ -87,11 +87,11 @@ Breakpoint class >> isInstalledIn: aMethod [
 { #category : #'class initialization' }
 Breakpoint class >> registerInsterestToSystemAnnouncement [
 	<systemEventRegistration>
-	SystemAnnouncer uniqueInstance
-		unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak subscribe: MethodRemoved send: #handleMethodRemoved: to: self.
-	SystemAnnouncer uniqueInstance weak subscribe: MethodModified send: #handleMethodModified: to: self.
-	SystemAnnouncer uniqueInstance weak subscribe: ClassRemoved send: #handleClassRemoved: to: self.
+
+	SystemAnnouncer uniqueInstance unsubscribe: self.
+	SystemAnnouncer uniqueInstance weak when: MethodRemoved send: #handleMethodRemoved: to: self.
+	SystemAnnouncer uniqueInstance weak when: MethodModified send: #handleMethodModified: to: self.
+	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self.
 ]
 
 { #category : #cleanup }
