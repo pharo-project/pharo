@@ -25,8 +25,6 @@ BaselineOfSpec >> baseline: spec [
 		spec 
 			package: 'Spec-Core' with: [ spec requires: #('Spec-Layout') ];
 			package: 'Spec-Deprecated80'with: [ spec requires: #('Spec-Tests' 'Spec-MorphicAdapters') ];
-			package: 'Spec-Deprecated'with: [ spec requires: #('Spec-Core' 'Spec-Deprecated80' 'Spec-PolyWidgets' 'Spec-MorphicAdapters') ];
-
 			package: 'Spec-Inspector'with: [ spec requires: #('Spec-PolyWidgets') ];
 			package: 'Spec-Layout';
 			package: 'Spec-MorphicAdapters' with: [ spec requires: #('Spec-Core') ];
