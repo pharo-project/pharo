@@ -311,6 +311,20 @@ EpMonitor >> disable [
 ]
 
 { #category : #enabling }
+EpMonitor >> disableDuring: aBlock [
+	"Disable all logging during the execution of a block.
+	
+	Example:
+		EpMonitor current disableDuring: [ self generateApplicationTemplate ]"
+
+	| currentStatus |
+	currentStatus := self isEnabled.
+	self disable.
+	aBlock value.
+	self enabled: currentStatus
+]
+
+{ #category : #enabling }
 EpMonitor >> enable [
 	"Enable monitoring IDE announcements."
 	
