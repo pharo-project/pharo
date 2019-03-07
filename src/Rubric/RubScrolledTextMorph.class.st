@@ -241,7 +241,7 @@ RubScrolledTextMorph >> borderWidth: anInteger [
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> canDiscardEdits [
-	^ (hasUnacceptedEdits and: [askBeforeDiscardingEdits]) not
+	^ (self hasUnacceptedEdits and: [askBeforeDiscardingEdits]) not
 
 ]
 
