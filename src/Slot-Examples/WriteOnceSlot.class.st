@@ -4,7 +4,7 @@ A slot on which one can write only once.
 Class {
 	#name : #WriteOnceSlot,
 	#superclass : #IndexedSlot,
-	#category : #'Slot-Examples-base'
+	#category : #'Slot-Examples-Base'
 }
 
 { #category : #initialization }

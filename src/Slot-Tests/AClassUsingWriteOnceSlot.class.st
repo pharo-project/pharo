@@ -5,7 +5,7 @@ Class {
 	#name : #AClassUsingWriteOnceSlot,
 	#superclass : #Object,
 	#instVars : [
-		'x'
+		'#x => WriteOnceSlot'
 	],
 	#category : #'Slot-Tests-Data'
 }
@@ -18,11 +18,11 @@ AClassUsingWriteOnceSlot >> initialize [
 
 { #category : #accessing }
 AClassUsingWriteOnceSlot >> modify: value [
-	x := value.
+	x := value. 
 	
 ]
 
 { #category : #accessing }
 AClassUsingWriteOnceSlot >> read [ 	
-	^ x
+	^ x 
 ]
