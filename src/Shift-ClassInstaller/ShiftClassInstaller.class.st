@@ -69,10 +69,8 @@ ShiftClassInstaller >> comment: newClass [
 
 { #category : #building }
 ShiftClassInstaller >> copyClassSlotsFromExistingClass [
-	| anOldClass oldSlots |
-	builder name ifNil: [ ^ self ].
-	anOldClass := self installingEnvironment classNamed: builder name.
-	oldSlots := anOldClass class classLayout slotScope visibleSlots.
+	| oldSlots |
+	oldSlots := oldClass class classLayout slotScope visibleSlots.
 	self builder layoutDefinition copyClassSlotsIfNeeded: oldSlots
 ]
 
