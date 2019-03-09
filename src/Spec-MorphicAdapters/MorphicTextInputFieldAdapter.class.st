@@ -29,8 +29,7 @@ MorphicTextInputFieldAdapter >> adapt: aModel [
 { #category : #factory }
 MorphicTextInputFieldAdapter >> buildWidget [
 	| plu |
-	plu := PluggableTextFieldMorph new
-		convertTo: String;
+	plu := RubPluggableTextFieldMorph new
 		on: self
 			text: #getText
 			accept: #accept:
