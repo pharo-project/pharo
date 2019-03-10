@@ -220,13 +220,17 @@ ToolRegistry >> openWorkspace [
 ToolRegistry >> register: anObject as: aNameSelector [
 	"Register a tool class under given name"
 	tools at: aNameSelector put: anObject.
-	self announcer announce: (ToolRegistryToolRegistered tool: anObject) 
+	self announcer announce: (ToolRegistryToolRegistered tool: anObject name: aNameSelector) 
 ]
 
 { #category : #registration }
 ToolRegistry >> remove: aName [
+
+	| toolToRemove |
+	
 	"remove tool with given name"
-	tools removeKey: aName ifAbsent: []
+	toolToRemove := tools removeKey: aName ifAbsent: [].
+	self announcer announce: (ToolRegistryToolRegistered tool: toolToRemove name: aName) 
 ]
 
 { #category : #announcer }
