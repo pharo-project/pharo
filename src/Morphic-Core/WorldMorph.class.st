@@ -415,8 +415,8 @@ WorldMorph >> initialize [
  	super initialize.
 	
 	"subscribe to the tools registry to update the world menu when needed"
-	Smalltalk tools whenToolRegistered: [ worldState defaultWorldMenu ].
-	Smalltalk tools whenToolUnregistered: [ worldState defaultWorldMenu ].
+	Smalltalk tools whenToolRegistered: [ :tool :toolName | worldState defaultWorldMenu ].
+	Smalltalk tools whenToolUnregistered: [ :tool :toolName | worldState defaultWorldMenu ].
 ]
 
 { #category : #'change reporting' }

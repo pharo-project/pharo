@@ -51,7 +51,7 @@ Class {
 ToolRegistry >> announcer [
 	announcer ifNil: [ announcer := Announcer new ].
 	
-	^ announcer weak
+	^ announcer
 ]
 
 { #category : #misc }
@@ -265,11 +265,11 @@ ToolRegistry >> using: aToolName do: aBlock [
 { #category : #announcer }
 ToolRegistry >> whenToolRegistered: aBlock [
 
-	self announcer when: ToolRegistryToolRegistered do: aBlock 
+	self announcer weak when: ToolRegistryToolRegistered do: aBlock 
 ]
 
 { #category : #announcer }
 ToolRegistry >> whenToolUnregistered: aBlock [
 
-	self announcer when: ToolRegistryToolUnregistered do: aBlock 
+	self announcer weak when: ToolRegistryToolUnregistered do: aBlock 
 ]

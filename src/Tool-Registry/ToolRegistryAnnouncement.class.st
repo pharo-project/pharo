@@ -1,3 +1,6 @@
+"
+An abstract announcement class for tool registry announcements
+"
 Class {
 	#name : #ToolRegistryAnnouncement,
 	#superclass : #Announcement,
