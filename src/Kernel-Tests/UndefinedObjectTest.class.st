@@ -21,6 +21,22 @@ UndefinedObjectTest >> testDeepCopy [
 	self assert: nil deepCopy isNil
 ]
 
+{ #category : #test }
+UndefinedObjectTest >> testFindUndeclaredVariableIn [
+
+	
+	| ast missingClass |
+	
+	missingClass := #MissingTestClass.
+	ast := RBParser parseExpression: missingClass, ' new'.
+	
+	ast receiver binding: OCUndeclaredVariable new.
+	self assert: (nil findUndeclaredVariableIn: ast) name equals: missingClass.
+	
+	ast receiver binding: OCLiteralVariable new.
+	self assert: (nil findUndeclaredVariableIn: ast) equals: nil
+]
+
 { #category : #'tests - testing' }
 UndefinedObjectTest >> testHaltIfNil [
 	<haltOrBreakpointForTesting>
