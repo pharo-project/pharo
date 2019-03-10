@@ -1027,7 +1027,7 @@ RubAbstractTextArea >> highlightMessageSend [
 	^ self class highlightMessageSend
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubAbstractTextArea >> initialize [
 	super initialize.
 	self compose.
@@ -1380,7 +1380,7 @@ RubAbstractTextArea >> paragraphWasComposedFrom: startIndex to: stopIndex [
 				ifFalse: [ self updateExtentFromParagraph ] ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubAbstractTextArea >> plugFindReplace [
 	self announcer 
 		when:  MorphGotFocus send: #whenTextAreaGotFocus: to: RubFindReplaceService default;
@@ -1839,7 +1839,7 @@ RubAbstractTextArea >> unplug [
 	
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubAbstractTextArea >> unplugFindReplace [
 	self announcer unsubscribe: RubFindReplaceService default
 
