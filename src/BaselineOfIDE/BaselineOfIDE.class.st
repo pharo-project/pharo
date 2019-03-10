@@ -880,6 +880,9 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	Author fullName: self class name.
 	
+	"collect and process the standard tools registrations"
+	Smalltalk tools initDefaultToolSet.
+	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 
 	MCMethodDefinition initializersEnabled: false.
