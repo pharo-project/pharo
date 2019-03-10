@@ -40,7 +40,8 @@ KMPragmaKeymapBuilder class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
 	SystemAnnouncer uniqueInstance 
 		unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak subscribe: MethodAdded, MethodModified, MethodRemoved 
+	SystemAnnouncer uniqueInstance weak 
+		when: MethodAdded, MethodModified, MethodRemoved 
 		send: #event: 
 		to: self.
 ]

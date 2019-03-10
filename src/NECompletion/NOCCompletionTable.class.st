@@ -54,7 +54,7 @@ NOCCompletionTable class >> registerInterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance 
 		unsubscribe: self.
 		
-	SystemAnnouncer uniqueInstance weak subscribe: MethodAdded, MethodModified 
+	SystemAnnouncer uniqueInstance weak when: MethodAdded, MethodModified 
 			send: #methodChanged: 
 			to: self.
 		

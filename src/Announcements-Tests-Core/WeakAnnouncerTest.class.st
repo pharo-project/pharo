@@ -87,7 +87,7 @@ WeakAnnouncerTest >> testNoWeakBlock [
 
 	counter := 0.
 
-	(announcer subscribe: AnnouncementMockA do: [ :ann | counter := counter + 1 ]) makeWeak.
+	(announcer when: AnnouncementMockA do: [ :ann | counter := counter + 1 ]) makeWeak.
 	
 	Smalltalk garbageCollect.
 	announcer announce: AnnouncementMockA.
