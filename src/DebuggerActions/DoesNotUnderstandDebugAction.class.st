@@ -51,22 +51,14 @@ DoesNotUnderstandDebugAction >> closeWindow [
 ]
 
 { #category : #private }
-DoesNotUnderstandDebugAction >> createMissingClassIn: aContext [
-	| senderContext variableNode previousContext errorMsgNode |
-	
-	variableNode := nil.
-	
-	[ senderContext := aContext sender.
-	errorMsgNode := senderContext method sourceNodeExecutedForPC: senderContext pc.
-	variableNode := self findUndeclaredVariableIn: errorMsgNode ]
-		on: Error
-		do: [ ^self ].
+DoesNotUnderstandDebugAction >> createMissingClassWith: variableNode in: aContext [
+	|  previousContext  |
 		
 	OCUndeclaredVariableWarning new
 		node: variableNode;
 		defineClass: variableNode name.
 		
-	previousContext := aContext stack second.
+	previousContext := aContext sender.
 	
 	self closeWindow.
 	
@@ -91,11 +83,13 @@ DoesNotUnderstandDebugAction >> executeAction [
 	MessageNotUnderstood exception. Create a stub for the method that was
 	missing and proceed into it, or create a class if it was missing instead"
 	
-	| msg msgCategory chosenClass |
+	| msg msgCategory chosenClass exception |
 	
 	msg := self interruptedContext tempAt: 1.
-	(msg lookupClass == UndefinedObject ) ifTrue: [ 
-		self createMissingClassIn: self interruptedContext ].
+	exception := self interruptedContext tempAt: 2.
+	
+	(exception class == ClassNotUnderstood) ifTrue: [ 
+		self createMissingClassWith: exception variableNode in: self interruptedContext ].
 	
 	chosenClass := self 
 		askForSuperclassOf: self interruptedContext receiver class
@@ -108,14 +102,6 @@ DoesNotUnderstandDebugAction >> executeAction [
 		inClass: chosenClass 
 		forContext: self interruptedContext.
 	self debugger selectTopContext
-]
-
-{ #category : #private }
-DoesNotUnderstandDebugAction >> findUndeclaredVariableIn: errorMsgNode [
-	^ errorMsgNode allChildren
-		detect: [ :n | n isVariable and: [ n isUndeclared ] ]
-		ifNone: [ errorMsgNode parent allChildren
-				detect: [ :n | n isVariable and: [ n isUndeclared ] ] ]
 ]
 
 { #category : #accessing }
