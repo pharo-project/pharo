@@ -412,7 +412,11 @@ WorldMorph >> handsReverseDo: aBlock [
 { #category : #initialization }
 WorldMorph >> initialize [ 
 	worldState := WorldState new.
- 	super initialize
+ 	super initialize.
+	
+	"subscribe to the tools registry to update the world menu when needed"
+	Smalltalk tools whenToolRegistered: [ worldState defaultWorldMenu ].
+	Smalltalk tools whenToolUnregistered: [ worldState defaultWorldMenu ].
 ]
 
 { #category : #'change reporting' }

@@ -41,10 +41,18 @@ Class {
 	#name : #ToolRegistry,
 	#superclass : #Object,
 	#instVars : [
-		'tools'
+		'tools',
+		'announcer'
 	],
-	#category : #'Tool-Base-Registration'
+	#category : #'Tool-Registry'
 }
+
+{ #category : #announcer }
+ToolRegistry >> announcer [
+	announcer ifNil: [ announcer := Announcer new ].
+	
+	^ announcer weak
+]
 
 { #category : #misc }
 ToolRegistry >> browseDirectToolReferences [
@@ -212,13 +220,25 @@ ToolRegistry >> openWorkspace [
 ToolRegistry >> register: anObject as: aNameSelector [
 	"Register a tool class under given name"
 	tools at: aNameSelector put: anObject.
-	WorldState defaultWorldMenu
+	self announcer announce: (ToolRegistryToolRegistered tool: anObject) 
 ]
 
 { #category : #registration }
 ToolRegistry >> remove: aName [
 	"remove tool with given name"
 	tools removeKey: aName ifAbsent: []
+]
+
+{ #category : #announcer }
+ToolRegistry >> resetAnnouncer [
+
+	"unregister all current weak subscriptions because it can cause a memory leak"
+	announcer subscriptions subscriptions
+ 		select: [:each | each isKindOf: WeakAnnouncementSubscription] 
+		thenDo: [:each | each weakRegistry remove: each subscriber ifAbsent: []]. 
+	Smalltalk garbageCollect.
+		
+	announcer := nil.
 ]
 
 { #category : #tools }
@@ -236,4 +256,16 @@ ToolRegistry >> using: aToolName do: aBlock [
 	
 	tool := tools at: aToolName ifAbsent: [ ^ self ].
 	tool ifNotNil: [ ^ aBlock value: tool value ]
+]
+
+{ #category : #announcer }
+ToolRegistry >> whenToolRegistered: aBlock [
+
+	self announcer when: ToolRegistryToolRegistered do: aBlock 
+]
+
+{ #category : #announcer }
+ToolRegistry >> whenToolUnregistered: aBlock [
+
+	self announcer when: ToolRegistryToolUnregistered do: aBlock 
 ]

@@ -91,10 +91,8 @@ MorphicMenuItemAdapter >> defaultModifierShortcut [
 
 { #category : #'widget API' }
 MorphicMenuItemAdapter >> enabled [
-	| enabled | 
-	
-	enabled := self model enabled.
-	
+	| enabled |
+	enabled := self model isEnabled.
 	^ (enabled isBlock or: [ enabled isMessageSend ])
 		ifTrue: [ enabled cull: self model ]
 		ifFalse: [ enabled ]
