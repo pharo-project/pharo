@@ -108,7 +108,7 @@ GTPlayground class >> isGTPlaygroundEnabled [
 { #category : #'world menu' }
 GTPlayground class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: Smalltalk tools workspace title asSymbol)
+	(aBuilder item: #Playground)
 		parent: #Tools;
 		action: [ Smalltalk tools openWorkspace ];
 		order: 10;
