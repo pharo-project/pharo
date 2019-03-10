@@ -10,5 +10,5 @@ RubScrolledTextMorphText >> testGhostText [
 	scrolledText := RubScrolledTextMorph new 
 				ghostText: 'This is a cool ghost text';
 				yourself.
-	self assert: scrolledText ghostText equals: 'This is a cool ghost text'
+	self assert: scrolledText ghostText string equals: 'This is a cool ghost text'
 ]

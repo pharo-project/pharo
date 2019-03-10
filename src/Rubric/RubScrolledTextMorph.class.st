@@ -539,6 +539,11 @@ RubScrolledTextMorph >> getTextSelector: aSymbol [
 	getTextSelector  := aSymbol
 ]
 
+{ #category : #accessing }
+RubScrolledTextMorph >> ghostText [
+	^ (self rulerNamed: #ghostText) ghostText text
+]
+
 { #category : #'accessing rulers' }
 RubScrolledTextMorph >> ghostText: aText [
 	self withGhostText: aText
