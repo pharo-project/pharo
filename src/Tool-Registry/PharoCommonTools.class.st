@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'recentTools'
 	],
-	#category : #'Tool-Base-Registration'
+	#category : #'Tool-Registry'
 }
 
 { #category : #settings }
