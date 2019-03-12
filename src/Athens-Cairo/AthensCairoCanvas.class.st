@@ -96,6 +96,21 @@ AthensCairoCanvas >> fill [
 
 ]
 
+{ #category : #initialization }
+AthensCairoCanvas >> fillRule [
+	^ self ffiCall: #( cairo_fill_rule_t cairo_get_fill_rule ( self ) )
+]
+
+{ #category : #accessing }
+AthensCairoCanvas >> fillRuleEvenOdd [
+	self setFillRule: CAIRO_FILL_RULE_EVEN_ODD
+]
+
+{ #category : #accessing }
+AthensCairoCanvas >> fillRuleWinding [
+	self setFillRule: CAIRO_FILL_RULE_WINDING
+]
+
 { #category : #private }
 AthensCairoCanvas >> getCurrentPoint [
 
@@ -270,6 +285,11 @@ AthensCairoCanvas >> setClipRect: aRectOrNil [
 				height: aRectOrNil height;
 				primClip
 			]
+]
+
+{ #category : #initialization }
+AthensCairoCanvas >> setFillRule: aCairoFillRule [
+	^ self ffiCall: #( void cairo_set_fill_rule ( self, cairo_fill_rule_t aCairoFillRule ) )
 ]
 
 { #category : #private }
