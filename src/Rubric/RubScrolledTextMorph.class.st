@@ -165,32 +165,32 @@ RubScrolledTextMorph >> beEditable [
 	self textArea beEditable 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> beForPlainText [
 	self textArea beForPlainText
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> beForSmalltalkCode [
 	self textArea beForSmalltalkCode.
 	self withTextSegmentIcons.
 	self textArea font: StandardFonts codeFont
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> beForSmalltalkCodeInClass: aClass [
 	self textArea beForSmalltalkCodeInClass: aClass.
 	self withTextSegmentIcons.
 	self textArea font: StandardFonts codeFont
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> beForSmalltalkCodeWithDefaultFont [
 	self textArea beForSmalltalkCodeWithDefaultFont.
 	self withTextSegmentIcons
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> beForSmalltalkComment [
 	self textArea beForSmalltalkComment
 ]
@@ -315,7 +315,7 @@ RubScrolledTextMorph >> defaultGhostTextMorph [
 	^ gt
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> defaultScrollTarget [
 	| textArea |
 	textArea := self textAreaClass new.
@@ -539,6 +539,11 @@ RubScrolledTextMorph >> getTextSelector: aSymbol [
 	getTextSelector  := aSymbol
 ]
 
+{ #category : #accessing }
+RubScrolledTextMorph >> ghostText [
+	^ (self rulerNamed: #ghostText) ghostText text
+]
+
 { #category : #'accessing rulers' }
 RubScrolledTextMorph >> ghostText: aText [
 	self withGhostText: aText
@@ -592,6 +597,7 @@ RubScrolledTextMorph >> handlesMouseWheel: evt [
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> hasEditingConflicts [
+	self flag: #todo. "can discard lazy initialization"
 	^ hasEditingConflicts ifNil: [ hasEditingConflicts := false ] 
 ]
 
@@ -619,6 +625,7 @@ RubScrolledTextMorph >> hasRulerNamed: aKey [
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> hasUnacceptedEdits [
+	self flag: #todo. "can discard lazy initialization"
 	^ hasUnacceptedEdits ifNil: [ hasUnacceptedEdits := false ] 
 ]
 
@@ -646,12 +653,14 @@ RubScrolledTextMorph >> horizontalRulers [
 	^self rulers select: [ :r | r isHorizontal ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> initialize [
 	super initialize.
 	self clipSubmorphs: true.
 	enabled := true.
 	askBeforeDiscardingEdits := true.
+	hasEditingConflicts := false.
+	hasUnacceptedEdits := false.
 	rulers := SortedCollection sortBlock: [ :a :b | b level > a level ].
 	self addMorph: (scrollPane := self newScrollPane).
 	self announcer when: RubConfigurationChange send: #whenConfigurationChanged: to: self.
@@ -776,7 +785,7 @@ RubScrolledTextMorph >> moveCursorToIndex: anIndex [
 	self selectFrom: anIndex to: anIndex - 1
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> newScrollPane [
 	| sp |
 	sp := RubTextScrollPane new.
@@ -845,8 +854,8 @@ RubScrolledTextMorph >> removeAllRulers [
 
 { #category : #private }
 RubScrolledTextMorph >> resetState [
-	hasEditingConflicts := nil.
-	hasUnacceptedEdits := nil.
+	hasEditingConflicts := false.
+	hasUnacceptedEdits := false.
 	self changed
 ]
 
@@ -1027,7 +1036,7 @@ RubScrolledTextMorph >> textArea [
 	^ self scrollPane ifNotNil: [:sp | sp textArea]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubScrolledTextMorph >> textAreaClass [
 	^ RubEditingArea
 ]

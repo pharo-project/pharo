@@ -20,7 +20,7 @@ RubDropListButtonRuler >> computedWidthFrom: aRectangle [
 	^ downArrowBtn width
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubDropListButtonRuler >> initialize [ 
 	super initialize.
 	side := #right
