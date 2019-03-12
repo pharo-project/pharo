@@ -191,14 +191,15 @@ GTSpecPreDebugWindow >> initializePresenter [
 
 { #category : #'initialization widgets' }
 GTSpecPreDebugWindow >> initializeStackPane [
+	
 	self stackPane
 		displayBlock: [ :aContext | self columnsFor: aContext ];
-		items: self filteredStack;
-		whenSelectionChangedDo: [ :selection | 
-			[ :aContext | 
+		items: self filteredStack ;
+		whenSelectedItemChanged: [ :aContext | 
 			"Set the selection before, as debugAction removes the link with the debugger. "
 			self debugger stackPresentation selection: aContext.
-			self openFullDebugger ] cull: selection selectedItem ]
+			self openFullDebugger ]
+		
 ]
 
 { #category : #accessing }
