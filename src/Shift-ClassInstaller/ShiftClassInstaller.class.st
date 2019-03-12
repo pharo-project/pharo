@@ -69,7 +69,6 @@ ShiftClassInstaller >> comment: newClass [
 
 { #category : #building }
 ShiftClassInstaller >> copyClassSlotsFromExistingClass [
-	oldClass class ifNil: [ ^self ]. "happens in the boostrap"
 	self builder layoutDefinition copyClassSlotsIfNeeded: oldClass class slots
 ]
 

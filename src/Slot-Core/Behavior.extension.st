@@ -5,6 +5,7 @@ Behavior >> classLayout [
 	^ layout
 		ifNil: [ 
 			| superLayout scope |
+			superclass ifNil: [ ^ EmptyLayout instance ].
 			superLayout := superclass classLayout.
 			scope := superLayout slotScope extend.
 			layout := superLayout class extending: superLayout scope: scope host: self ]
