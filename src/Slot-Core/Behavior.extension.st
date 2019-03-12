@@ -6,7 +6,7 @@ Behavior >> classLayout [
 		ifNil: [ 
 			| superLayout scope |
 			superLayout := superclass 
-				ifNil: [ FixedLayout new ] "happend in the bootrap"
+				ifNil: [ FixedLayout new slotScope: LayoutEmptyScope instance] "happend in the bootrap"
 				ifNotNil: [:sl | sl classLayout].
 			scope := superLayout slotScope extend.
 			layout := superLayout class extending: superLayout scope: scope host: self ]
