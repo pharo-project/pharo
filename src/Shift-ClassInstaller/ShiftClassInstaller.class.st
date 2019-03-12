@@ -67,6 +67,11 @@ ShiftClassInstaller >> comment: newClass [
 	builder comment ifNotNil: [ newClass classComment: builder comment stamp: builder commentStamp ]
 ]
 
+{ #category : #building }
+ShiftClassInstaller >> copyClassSlotsFromExistingClass [
+	self builder layoutDefinition copyClassSlotsIfNeeded: oldClass class slots
+]
+
 { #category : #copying }
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
 	| newObject |
@@ -151,6 +156,9 @@ ShiftClassInstaller >> make: aBlock [
 
 	[	
 		builder oldClass: oldClass.
+		
+		self copyClassSlotsFromExistingClass.
+		
 		newClass := builder build.
 
 		self validateReadOnlyInstancesOf: oldClass.

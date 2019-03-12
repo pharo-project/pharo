@@ -612,8 +612,7 @@ Class >> ephemeronSubclass: t instanceVariableNames: f
 			sharedVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
+			environment: self environment ].
 ]
 
 { #category : #private }
@@ -703,8 +702,7 @@ Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poo
 			sharedVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
+			environment: self environment ].
 ]
 
 { #category : #compiling }
@@ -1137,8 +1135,7 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 				sharedVariablesFromString: d;
 				sharedPools: s;
 				category: cat;
-				environment: self environment;
-				copyClassSlotsFromExistingClass ]
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation - slots' }
@@ -1161,8 +1158,7 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition cl
 		layoutClass: layoutClass;
 		slots: slotDefinition;
 		sharedVariables: classVarDefinition;
-		category: aCategorySymbol;
-		copyClassSlotsFromExistingClass ].
+		category: aCategorySymbol ].
 
 ]
 
@@ -1183,8 +1179,7 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition c
 		slots: slotDefinition;
 		sharedVariables:  classVarDefinition;
 		sharedPools: someSharedPoolNames;
-		category: aCategorySymbol;
-		copyClassSlotsFromExistingClass ].
+		category: aCategorySymbol ].
 
 ]
 
@@ -1207,8 +1202,7 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 				superclass: self;
 				slots: slotDefinition;
 				sharedVariables: classVarDefinition;
-				category: aCategorySymbol;
-				copyClassSlotsFromExistingClass ]
+				category: aCategorySymbol ]
 ]
 
 { #category : #'subclass creation - slots' }
@@ -1227,8 +1221,7 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 		slots: slotDefinition;
 		sharedVariables:  classVarDefinition;
 		sharedPools: someSharedPoolNames;
-		category: aCategorySymbol;
-		copyClassSlotsFromExistingClass ]
+		category: aCategorySymbol ]
 ]
 
 { #category : #'accessing class hierarchy' }
@@ -1330,8 +1323,7 @@ Class >> variableByteSubclass: t instanceVariableNames: f
 			sharedVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
-			environment: self  environment;
-			copyClassSlotsFromExistingClass ].
+			environment: self  environment ].
 ]
 
 { #category : #'subclass creation - variable' }
@@ -1366,8 +1358,7 @@ Class >> variableSubclass: t instanceVariableNames: f classVariableNames: d pool
 			sharedVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
+			environment: self environment ].
 ]
 
 { #category : #'subclass creation - variable' }
@@ -1428,8 +1419,7 @@ Class >> variableWordSubclass: t instanceVariableNames: f
 			sharedVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
+			environment: self environment ].
 ]
 
 { #category : #'subclass creation - weak' }
@@ -1470,8 +1460,7 @@ Class >> weakSubclass: t instanceVariableNames: f
 			sharedVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
+			environment: self environment ].
 ]
 
 { #category : #'subclass creation - weak' }
