@@ -13,7 +13,7 @@ RBSearchTest >> buildArgumentSearch [
 	self 
 		createArgumentSearchWith: 'aSmalllintContext'
 		selectors: #(#checkMethod: #checkClass: )
-		inClass: RBBasicLintRuleTest
+		inClass: RBBasicLintRuleTestData
 ]
 
 { #category : #accessing }
@@ -21,7 +21,7 @@ RBSearchTest >> buildMessageSearch [
 	self 
 		createSearchWith: '``@receiver -> ``@arg'
 		selectors: #(#superSends #superSends )
-		inClass: RBTransformationRuleTest
+		inClass: RBTransformationRuleTestData
 ]
 
 { #category : #accessing }
@@ -34,7 +34,7 @@ RBSearchTest >> buildMethodArgumentSearch [
 				#createMatcherFor:method:
 				#createParseTreeRule:name:
 			)
-		inClass: RBBasicLintRuleTest class
+		inClass: RBBasicLintRuleTestData class
 ]
 
 { #category : #accessing }
@@ -43,7 +43,7 @@ RBSearchTest >> buildMethodSearch [
 	self 
 		createMethodSearchWith: '`@methodName: `@args ^`@object `@methodName: `@args'
 		selectors: #(#problemCount #isEmpty )
-		inClass: RBTransformationRuleTest
+		inClass: RBTransformationRuleTestData
 ]
 
 { #category : #accessing }
@@ -51,7 +51,7 @@ RBSearchTest >> buildMethodTitleSearch [
 	self 
 		createMethodSearchWith: 'initialize | `@temps | `@.Stmts'
 		selectors: #(#initialize )
-		inClass: RBBasicLintRuleTest
+		inClass: RBBasicLintRuleTestData
 ]
 
 { #category : #accessing }
@@ -68,7 +68,7 @@ RBSearchTest >> buildSimpleLiteralSearch [
 				yourself ].
 	search answer: #(#protocolsToCheck ) asBag.
 	(classSearches 
-		at: RBBasicLintRuleTest class
+		at: RBBasicLintRuleTestData class
 		ifAbsentPut: [ Set new ]) add: search
 ]
 
@@ -90,7 +90,7 @@ RBSearchTest >> buildSimpleVariableSearch [
 				#newResultClass:
 				#viewResults
 			)
-		inClass: RBBasicLintRuleTest
+		inClass: RBBasicLintRuleTestData
 ]
 
 { #category : #accessing }
@@ -104,7 +104,7 @@ RBSearchTest >> buildStatementSearch [
 				#viewResults
 				#superSends
 			)
-		inClass: RBTransformationRuleTest
+		inClass: RBTransformationRuleTestData
 ]
 
 { #category : #accessing }

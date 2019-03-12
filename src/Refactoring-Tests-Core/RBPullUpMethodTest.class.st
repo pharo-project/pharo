@@ -50,19 +50,19 @@ RBPullUpMethodTest >> testPullUpMethodWithCopyOverriddenMethodsDown [
 	self proceedThroughWarning: 
 		[ refactoring := RBPullUpMethodRefactoring 
 			pullUp: #(#isComposite )
-			from: RBCompositeLintRuleTest.
+			from: RBCompositeLintRuleTestData.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBBasicLintRuleTest) parseTreeFor: #isComposite) = (RBParser parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: ('RBFoo' , 'LintRuleTest') asSymbol) parseTreeFor: #isComposite) = (RBParser parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: #RBLintRuleTest) parseTreeFor: #isComposite) = (RBParser parseMethod: 'isComposite ^true').
-	self deny: ((refactoring model classNamed: #RBCompositeLintRuleTest) directlyDefinesMethod: #isComposite)
+	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeFor: #isComposite) = (RBParser parseMethod: 'isComposite ^false').
+	self assert: ((refactoring model classNamed: ('RBFoo' , 'LintRuleTestData') asSymbol) parseTreeFor: #isComposite) = (RBParser parseMethod: 'isComposite ^false').
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeFor: #isComposite) = (RBParser parseMethod: 'isComposite ^true').
+	self deny: ((refactoring model classNamed: #RBCompositeLintRuleTestData) directlyDefinesMethod: #isComposite)
 ]
 
 { #category : #'failure tests' }
 RBPullUpMethodTest >> testPullUpReferencesInstVar [
 	self shouldFail: (RBPullUpMethodRefactoring 
 			pullUp: #(#checkClass: )
-			from: RBBasicLintRuleTest)
+			from: RBBasicLintRuleTestData)
 ]
 
 { #category : #'failure tests' }

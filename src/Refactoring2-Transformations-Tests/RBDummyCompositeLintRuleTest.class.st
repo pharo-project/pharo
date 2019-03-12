@@ -15,10 +15,10 @@ RBDummyCompositeLintRuleTest class >> allRules [
 { #category : #'all checks' }
 RBDummyCompositeLintRuleTest class >> lintChecks [
 	^ self 
-		rules: (RBBasicLintRuleTest protocolsToCheck collect: 
+		rules: (RBBasicLintRuleTestData protocolsToCheck collect: 
 			[ :each | 
 			self 
-				ruleFor: RBBasicLintRuleTest
+				ruleFor: RBBasicLintRuleTestData
 				protocol: each ])
 		name: 'Lint checks'
 ]
@@ -48,7 +48,7 @@ RBDummyCompositeLintRuleTest class >> rules: aCollection name: aString [
 { #category : #'all checks' }
 RBDummyCompositeLintRuleTest class >> transformations [
 	^ self 
-		ruleFor: RBTransformationRuleTest
+		ruleFor: RBTransformationRuleTestData
 		protocol: 'transformations'
 ]
 

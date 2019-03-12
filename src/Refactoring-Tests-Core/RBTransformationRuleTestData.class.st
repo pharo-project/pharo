@@ -1,6 +1,6 @@
 Class {
-	#name : #RBTransformationRuleTest,
-	#superclass : #RBFooLintRuleTest,
+	#name : #RBTransformationRuleTestData,
+	#superclass : #RBFooLintRuleTestData,
 	#instVars : [
 		'rewriteRule',
 		'builder',
@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #transformations }
-RBTransformationRuleTest class >> assignmentInIfTrue [
+RBTransformationRuleTestData class >> assignmentInIfTrue [
 	^self rewrite: #(
 			#('``@Boolean ifTrue: [`variable := ``@true] ifFalse: [`variable := ``@false]'
 			"->"
@@ -26,7 +26,7 @@ RBTransformationRuleTest class >> assignmentInIfTrue [
 ]
 
 { #category : #transformations }
-RBTransformationRuleTest class >> atIfAbsent [
+RBTransformationRuleTestData class >> atIfAbsent [
 	^self rewrite: #(
 			#('``@dictionary at: ``@key 
 					ifAbsent: [| `@temps | 
@@ -54,7 +54,7 @@ RBTransformationRuleTest class >> atIfAbsent [
 ]
 
 { #category : #transformations }
-RBTransformationRuleTest class >> betweenAnd [
+RBTransformationRuleTestData class >> betweenAnd [
 	^self rewrite: #(
 			#('``@a >= ``@b and: [``@a <= ``@c]' "->" '``@a between: ``@b and: ``@c')
 			#('``@a >= ``@b & (``@a <= ``@c)' "->" '``@a between: ``@b and: ``@c')
@@ -77,12 +77,12 @@ RBTransformationRuleTest class >> betweenAnd [
 ]
 
 { #category : #cleanup }
-RBTransformationRuleTest class >> cleanUp [
+RBTransformationRuleTestData class >> cleanUp [
 	self nuke
 ]
 
 { #category : #transformations }
-RBTransformationRuleTest class >> detectIfNone [
+RBTransformationRuleTestData class >> detectIfNone [
 	^self rewrite: #(
 			#('(``@collection detect: [:`each | | `@temps | ``@.Statements] ifNone: [nil]) isNil'
 				"->"	'(``@collection contains: [:`each | | `@temps | ``@.Statements]) not')
@@ -101,7 +101,7 @@ RBTransformationRuleTest class >> detectIfNone [
 ]
 
 { #category : #transformations }
-RBTransformationRuleTest class >> equalNil [
+RBTransformationRuleTestData class >> equalNil [
 	^self
 		rewrite: #(
 			#('``@object = nil'	"->"	'``@object isNil') 
@@ -113,7 +113,7 @@ RBTransformationRuleTest class >> equalNil [
 ]
 
 { #category : #transformations }
-RBTransformationRuleTest class >> guardClause [
+RBTransformationRuleTestData class >> guardClause [
 	^self
 		rewrite: #(
 			#('`@methodName: `@args 
@@ -145,7 +145,7 @@ RBTransformationRuleTest class >> guardClause [
 ]
 
 { #category : #'class initialization' }
-RBTransformationRuleTest class >> initializeAfterLoad1 [
+RBTransformationRuleTestData class >> initializeAfterLoad1 [
 	RecursiveSelfRule := RBParseTreeSearcher new.
 	RecursiveSelfRule
 		addMethodSearches: #('`@methodName: `@args | `@temps | self `@methodName: `@args' '`@methodName: `@args | `@temps | ^self `@methodName: `@args')
@@ -153,7 +153,7 @@ RBTransformationRuleTest class >> initializeAfterLoad1 [
 ]
 
 { #category : #transformations }
-RBTransformationRuleTest class >> minMax [
+RBTransformationRuleTestData class >> minMax [
 	^self rewrite: #(
 			#('``@a < ``@b ifTrue: [``@a] ifFalse: [``@b]'	"->"	'``@a min: ``@b')
 			#('``@a <= ``@b ifTrue: [``@a] ifFalse: [``@b]'	"->"	'``@a min: ``@b')
@@ -184,7 +184,7 @@ RBTransformationRuleTest class >> minMax [
 ]
 
 { #category : #transformations }
-RBTransformationRuleTest class >> notElimination [
+RBTransformationRuleTestData class >> notElimination [
 	^self
 		rewrite: #(
 			#('``@object not not'	"->"	'``@object') 
@@ -215,12 +215,12 @@ RBTransformationRuleTest class >> notElimination [
 ]
 
 { #category : #'class initialization' }
-RBTransformationRuleTest class >> nuke [
+RBTransformationRuleTestData class >> nuke [
 	RecursiveSelfRule := nil
 ]
 
 { #category : #'instance creation' }
-RBTransformationRuleTest class >> rewrite: stringArrays methods: aBoolean name: aName [ 
+RBTransformationRuleTestData class >> rewrite: stringArrays methods: aBoolean name: aName [ 
 	| rewriteRule |
 	rewriteRule := RBParseTreeRewriter new.
 	stringArrays do: 
@@ -234,7 +234,7 @@ RBTransformationRuleTest class >> rewrite: stringArrays methods: aBoolean name: 
 ]
 
 { #category : #transformations }
-RBTransformationRuleTest class >> showWhileBlocks [
+RBTransformationRuleTestData class >> showWhileBlocks [
 	^self
 		rewrite: #(
 			#('``@cursor showWhile: [| `@temps | ``@.Statements. `var := ``@object]'
@@ -246,7 +246,7 @@ RBTransformationRuleTest class >> showWhileBlocks [
 ]
 
 { #category : #transformations }
-RBTransformationRuleTest class >> superSends [
+RBTransformationRuleTestData class >> superSends [
 	^(self new)
 		name: 'Rewrite super messages to self messages when both refer to same method';
 		superSends;
@@ -254,7 +254,7 @@ RBTransformationRuleTest class >> superSends [
 ]
 
 { #category : #transformations }
-RBTransformationRuleTest class >> unwindBlocks [
+RBTransformationRuleTestData class >> unwindBlocks [
 	^self
 		rewrite: #(
 			#('[| `@temps | ``@.Statements. `var := ``@object] ensure: ``@block'
@@ -270,7 +270,7 @@ RBTransformationRuleTest class >> unwindBlocks [
 ]
 
 { #category : #accessing }
-RBTransformationRuleTest >> checkMethod: aSmalllintContext [ 
+RBTransformationRuleTestData >> checkMethod: aSmalllintContext [ 
 	class := aSmalllintContext selectedClass.
 	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
 			[(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
@@ -281,33 +281,33 @@ RBTransformationRuleTest >> checkMethod: aSmalllintContext [
 ]
 
 { #category : #testing }
-RBTransformationRuleTest >> hasConflicts [
+RBTransformationRuleTestData >> hasConflicts [
 	^true
 ]
 
 { #category : #testing }
-RBTransformationRuleTest >> isEmpty [
+RBTransformationRuleTestData >> isEmpty [
 	^builder changes isEmpty
 ]
 
 { #category : #accessing }
-RBTransformationRuleTest >> problemCount [
+RBTransformationRuleTestData >> problemCount [
 	^builder problemCount
 ]
 
 { #category : #accessing }
-RBTransformationRuleTest >> resetResult [
+RBTransformationRuleTestData >> resetResult [
 	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChange
 ]
 
 { #category : #initialization }
-RBTransformationRuleTest >> rewriteUsing: searchReplacer [ 
+RBTransformationRuleTestData >> rewriteUsing: searchReplacer [ 
 	rewriteRule := searchReplacer.
 	self resetResult
 ]
 
 { #category : #rules }
-RBTransformationRuleTest >> superSends [
+RBTransformationRuleTestData >> superSends [
 	| rule |
 	rule := RBParseTreeRewriter new.
 	rule addSearch: 'super `@message: ``@args'
@@ -321,7 +321,7 @@ RBTransformationRuleTest >> superSends [
 ]
 
 { #category : #private }
-RBTransformationRuleTest >> viewResults [
+RBTransformationRuleTestData >> viewResults [
 	"I reset the result so that we don't fill up memory with methods to compile in the builder."
 
 	builder inspect.

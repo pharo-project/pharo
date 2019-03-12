@@ -88,12 +88,12 @@ RBAddParameterTest >> testBadInitializationCode [
 	self
 		shouldFail: (RBAddParameterRefactoring 
 				addParameterToMethod: #name
-				in: RBLintRuleTest
+				in: RBLintRuleTestData
 				newSelector: #name:
 				initializer: 'foo:');
 		shouldFail: (RBAddParameterRefactoring 
 				addParameterToMethod: #name
-				in: RBLintRuleTest
+				in: RBLintRuleTestData
 				newSelector: #name:
 				initializer: 'foo')
 ]
@@ -105,7 +105,7 @@ RBAddParameterTest >> testModelBadInitializationCode [
 	refactoring := RBAddParameterRefactoring 
 		model: model
 		addParameterToMethod: #name1
-		in: RBLintRuleTest
+		in: RBLintRuleTestData
 		newSelector: #name1:
 		initializer: 'AddParameterRefactoring new'.
 	self shouldFail: refactoring
@@ -114,11 +114,11 @@ RBAddParameterTest >> testModelBadInitializationCode [
 { #category : #'failure tests' }
 RBAddParameterTest >> testModelNonExistantName [
 	| refactoring |
-	(model classNamed: #RBLintRuleTest) removeMethod: #name.
+	(model classNamed: #RBLintRuleTestData) removeMethod: #name.
 	refactoring := RBAddParameterRefactoring 
 		model: model
 		addParameterToMethod: #name
-		in: RBLintRuleTest
+		in: RBLintRuleTestData
 		newSelector: #nameNew:
 		initializer: 'nil'.
 	self shouldFail: refactoring
@@ -128,7 +128,7 @@ RBAddParameterTest >> testModelNonExistantName [
 RBAddParameterTest >> testNonExistantName [
 	self shouldFail: (RBAddParameterRefactoring 
 			addParameterToMethod: #name1
-			in: RBLintRuleTest
+			in: RBLintRuleTestData
 			newSelector: #name1:
 			initializer: 'nil')
 ]

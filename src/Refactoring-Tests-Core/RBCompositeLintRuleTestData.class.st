@@ -1,6 +1,6 @@
 Class {
-	#name : #RBCompositeLintRuleTest,
-	#superclass : #RBLintRuleTest,
+	#name : #RBCompositeLintRuleTestData,
+	#superclass : #RBLintRuleTestData,
 	#instVars : [
 		'rules'
 	],
@@ -8,23 +8,23 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBCompositeLintRuleTest class >> allRules [
+RBCompositeLintRuleTestData class >> allRules [
 	^self ruleFor: self protocol: 'all checks'
 ]
 
 { #category : #'all checks' }
-RBCompositeLintRuleTest class >> lintChecks [
+RBCompositeLintRuleTestData class >> lintChecks [
 	^ self 
-		rules: (RBBasicLintRuleTest protocolsToCheck collect: 
+		rules: (RBBasicLintRuleTestData protocolsToCheck collect: 
 			[ :each | 
 			self 
-				ruleFor: RBBasicLintRuleTest
+				ruleFor: RBBasicLintRuleTestData
 				protocol: each ])
 		name: 'Lint checks'
 ]
 
 { #category : #'instance creation' }
-RBCompositeLintRuleTest class >> ruleFor: aClass protocol: aProtocol [ 
+RBCompositeLintRuleTestData class >> ruleFor: aClass protocol: aProtocol [ 
 	^self
 		rules: (((RBBrowserEnvironment new selectorsFor: aProtocol asSymbol in: aClass class)
 				collect: [:selector | aClass perform: selector])
@@ -34,26 +34,26 @@ RBCompositeLintRuleTest class >> ruleFor: aClass protocol: aProtocol [
 ]
 
 { #category : #'instance creation' }
-RBCompositeLintRuleTest class >> rules: aCollection [ 
+RBCompositeLintRuleTestData class >> rules: aCollection [ 
 	^self new rules: aCollection
 ]
 
 { #category : #'instance creation' }
-RBCompositeLintRuleTest class >> rules: aCollection name: aString [ 
+RBCompositeLintRuleTestData class >> rules: aCollection name: aString [ 
 	^(self new) rules: aCollection;
 		name: aString;
 		yourself
 ]
 
 { #category : #'all checks' }
-RBCompositeLintRuleTest class >> transformations [
+RBCompositeLintRuleTestData class >> transformations [
 	^ self 
-		ruleFor: RBTransformationRuleTest
+		ruleFor: RBTransformationRuleTestData
 		protocol: 'transformations'
 ]
 
 { #category : #accessing }
-RBCompositeLintRuleTest >> checkClass: aSmalllintContext [ 
+RBCompositeLintRuleTestData >> checkClass: aSmalllintContext [ 
 	rules do: 
 			[:each | 
 			each checkClass: aSmalllintContext.
@@ -61,7 +61,7 @@ RBCompositeLintRuleTest >> checkClass: aSmalllintContext [
 ]
 
 { #category : #accessing }
-RBCompositeLintRuleTest >> checkMethod: aSmalllintContext [ 
+RBCompositeLintRuleTestData >> checkMethod: aSmalllintContext [ 
 	rules do: 
 			[:each | 
 			each checkMethod: aSmalllintContext.
@@ -69,46 +69,46 @@ RBCompositeLintRuleTest >> checkMethod: aSmalllintContext [
 ]
 
 { #category : #accessing }
-RBCompositeLintRuleTest >> failedRules [
+RBCompositeLintRuleTestData >> failedRules [
 	^rules inject: OrderedCollection new into: [:oc :each | oc addAll: each failedRules; yourself]
 ]
 
 { #category : #testing }
-RBCompositeLintRuleTest >> hasConflicts [
+RBCompositeLintRuleTestData >> hasConflicts [
 	^(rules detect: [:each | each hasConflicts] ifNone: [nil]) notNil
 ]
 
 { #category : #testing }
-RBCompositeLintRuleTest >> isComposite [
+RBCompositeLintRuleTestData >> isComposite [
 	^true
 ]
 
 { #category : #testing }
-RBCompositeLintRuleTest >> isEmpty [
+RBCompositeLintRuleTestData >> isEmpty [
 	^(rules detect: [:each | each isEmpty not] ifNone: [nil]) isNil
 ]
 
 { #category : #accessing }
-RBCompositeLintRuleTest >> problemCount [
+RBCompositeLintRuleTestData >> problemCount [
 	^rules inject: 0 into: [:count :each | count + each problemCount]
 ]
 
 { #category : #initialization }
-RBCompositeLintRuleTest >> resetResult [
+RBCompositeLintRuleTestData >> resetResult [
 	rules do: [:each | each resetResult]
 ]
 
 { #category : #accessing }
-RBCompositeLintRuleTest >> rules [
+RBCompositeLintRuleTestData >> rules [
 	^rules
 ]
 
 { #category : #initialization }
-RBCompositeLintRuleTest >> rules: aCollection [
+RBCompositeLintRuleTestData >> rules: aCollection [
 	rules := aCollection
 ]
 
 { #category : #private }
-RBCompositeLintRuleTest >> viewResults [
+RBCompositeLintRuleTestData >> viewResults [
 	rules do: [:each | each viewResults]
 ]

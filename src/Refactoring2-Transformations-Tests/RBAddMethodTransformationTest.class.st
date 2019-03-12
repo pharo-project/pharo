@@ -16,7 +16,7 @@ RBAddMethodTransformationTest >> testBadSourceCode [
 
 	self shouldFail: (RBAddMethodTransformation
 							sourceCode: 'asdf ^super ^printString'
-							in: RBBasicLintRuleTest
+							in: RBBasicLintRuleTestData
 							withProtocol: #accessing)
 							asRefactoring
 ]
@@ -27,7 +27,7 @@ RBAddMethodTransformationTest >> testMethodAlreadyExists [
 	self 
 		shouldFail: (RBAddMethodTransformation
 			sourceCode: 'printString ^super printString'
-			in: #RBBasicLintRuleTest
+			in: #RBBasicLintRuleTestData
 			withProtocol: #accessing)
 			asRefactoring;
 		shouldFail: (RBAddMethodTransformation 

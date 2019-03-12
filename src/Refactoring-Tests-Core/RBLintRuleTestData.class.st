@@ -1,5 +1,9 @@
+"
+This hierarchy is code that is used as test data to test the refactoring engine. As such the code might make
+no sense or have lots of easy possible improvements... but as it is used for testing, they should not be fixed.
+"
 Class {
-	#name : #RBLintRuleTest,
+	#name : #RBLintRuleTestData,
 	#superclass : #Object,
 	#instVars : [
 		'name',
@@ -15,25 +19,25 @@ Class {
 }
 
 { #category : #foo }
-RBLintRuleTest class >> someFooMethod [
+RBLintRuleTestData class >> someFooMethod [
 	^ 'does nothing here:)'
 ]
 
 { #category : #foo }
-RBLintRuleTest class >> someOtherFooMethod [
+RBLintRuleTestData class >> someOtherFooMethod [
 	^ 'does nothing here even better:)'
 ]
 
 { #category : #accessing }
-RBLintRuleTest >> checkClass: aSmalllintContext [
+RBLintRuleTestData >> checkClass: aSmalllintContext [
 ]
 
 { #category : #accessing }
-RBLintRuleTest >> checkMethod: aSmalllintContext [
+RBLintRuleTestData >> checkMethod: aSmalllintContext [
 ]
 
 { #category : #accessing }
-RBLintRuleTest >> displayName [
+RBLintRuleTestData >> displayName [
 	| nameStream |
 	nameStream := WriteStream on: (String new: 64).
 	nameStream nextPutAll: self name;
@@ -44,51 +48,51 @@ RBLintRuleTest >> displayName [
 ]
 
 { #category : #private }
-RBLintRuleTest >> failedRules [
+RBLintRuleTestData >> failedRules [
 	^self isEmpty
 		ifTrue: [#()]
 		ifFalse: [Array with: self]
 ]
 
 { #category : #testing }
-RBLintRuleTest >> hasConflicts [
+RBLintRuleTestData >> hasConflicts [
 	^false
 ]
 
 { #category : #initialization }
-RBLintRuleTest >> initialize [
+RBLintRuleTestData >> initialize [
 	name := ''
 ]
 
 { #category : #testing }
-RBLintRuleTest >> isComposite [
+RBLintRuleTestData >> isComposite [
 	^false
 ]
 
 { #category : #testing }
-RBLintRuleTest >> isEmpty [
+RBLintRuleTestData >> isEmpty [
 	self subclassResponsibility
 ]
 
 { #category : #testing }
-RBLintRuleTest >> junk [
+RBLintRuleTestData >> junk [
 	^ RBRefactoryTestDataApp printString 
 		copyFrom: 1
 		to: CR
 ]
 
 { #category : #accessing }
-RBLintRuleTest >> name [
+RBLintRuleTestData >> name [
 	^name
 ]
 
 { #category : #accessing }
-RBLintRuleTest >> name: aString [ 
+RBLintRuleTestData >> name: aString [ 
 	name := aString
 ]
 
 { #category : #accessing }
-RBLintRuleTest >> openEditor [
+RBLintRuleTestData >> openEditor [
 	| rules |
 	rules := self failedRules.
 	rules isEmpty ifTrue: [^self].
@@ -96,39 +100,39 @@ RBLintRuleTest >> openEditor [
 ]
 
 { #category : #printing }
-RBLintRuleTest >> printOn: aStream [ 
+RBLintRuleTestData >> printOn: aStream [ 
 	name isNil
 		ifTrue: [super printOn: aStream]
 		ifFalse: [aStream nextPutAll: name]
 ]
 
 { #category : #accessing }
-RBLintRuleTest >> problemCount [
+RBLintRuleTestData >> problemCount [
 	^self subclassResponsibility
 ]
 
 { #category : #initialization }
-RBLintRuleTest >> resetResult [
+RBLintRuleTestData >> resetResult [
 ]
 
 { #category : #accessing }
-RBLintRuleTest >> run [
+RBLintRuleTestData >> run [
 	^Object printOn: self
 ]
 
 { #category : #accessing }
-RBLintRuleTest >> runOnEnvironment: anEnvironment [ 
+RBLintRuleTestData >> runOnEnvironment: anEnvironment [ 
 	^Object printOn: self onEnvironment: anEnvironment
 ]
 
 { #category : #accessing }
-RBLintRuleTest >> someOtherDemoMethod [
+RBLintRuleTestData >> someOtherDemoMethod [
 	| temp |
 	temp := self new.
 	^ temp junk
 ]
 
 { #category : #private }
-RBLintRuleTest >> viewResults [
+RBLintRuleTestData >> viewResults [
 	self subclassResponsibility
 ]

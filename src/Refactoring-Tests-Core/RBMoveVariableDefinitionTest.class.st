@@ -65,18 +65,18 @@ RBMoveVariableDefinitionTest >> testNonExistantName [
 	self
 		shouldFail: (RBMoveVariableDefinitionRefactoring 
 				bindTight: (1 to: 10)
-				in: RBLintRuleTest
+				in: RBLintRuleTestData
 				selector: #name1);
 		shouldFail: (RBMoveVariableDefinitionRefactoring 
 				bindTight: (self 
 						convertInterval: (44 to: 54)
-						for: (RBLintRuleTest sourceCodeAt: #displayName))
-				in: RBLintRuleTest
+						for: (RBLintRuleTestData sourceCodeAt: #displayName))
+				in: RBLintRuleTestData
 				selector: #displayName);
 		shouldFail: (RBMoveVariableDefinitionRefactoring 
 				bindTight: (self 
 						convertInterval: (16 to: 25)
-						for: (RBLintRuleTest sourceCodeAt: #displayName))
-				in: RBLintRuleTest
+						for: (RBLintRuleTestData sourceCodeAt: #displayName))
+				in: RBLintRuleTestData
 				selector: #displayName)
 ]

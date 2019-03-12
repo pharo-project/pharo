@@ -1,6 +1,6 @@
 Class {
-	#name : #RBBasicLintRuleTest,
-	#superclass : #RBLintRuleTest,
+	#name : #RBBasicLintRuleTestData,
+	#superclass : #RBLintRuleTestData,
 	#instVars : [
 		'methodBlock',
 		'result',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #private }
-RBBasicLintRuleTest class >> canCall: aSelector in: aClass from: anApplication [
+RBBasicLintRuleTestData class >> canCall: aSelector in: aClass from: anApplication [
 	"This method contains on purpose not implemented messages, such as rootApplication "
 	| methodApp root |
 	(aClass canUnderstand: aSelector) ifFalse: [^false].
@@ -22,12 +22,12 @@ RBBasicLintRuleTest class >> canCall: aSelector in: aClass from: anApplication [
 ]
 
 { #category : #private }
-RBBasicLintRuleTest class >> classShouldNotOverride [
+RBBasicLintRuleTestData class >> classShouldNotOverride [
 	^#(#== #class)
 ]
 
 { #category : #private }
-RBBasicLintRuleTest class >> createMatcherFor: codeStrings method: aBoolean [ 
+RBBasicLintRuleTestData class >> createMatcherFor: codeStrings method: aBoolean [ 
 	| matcher |
 	matcher := RBParseTreeSearcher new.
 	aBoolean
@@ -37,7 +37,7 @@ RBBasicLintRuleTest class >> createMatcherFor: codeStrings method: aBoolean [
 ]
 
 { #category : #'instance creation' }
-RBBasicLintRuleTest class >> createParseTreeRule: codeStrings method: aBoolean name: aName [ 
+RBBasicLintRuleTestData class >> createParseTreeRule: codeStrings method: aBoolean name: aName [ 
 	| detector matcher |
 	detector := self new.
 	detector name: aName.
@@ -50,14 +50,14 @@ RBBasicLintRuleTest class >> createParseTreeRule: codeStrings method: aBoolean n
 ]
 
 { #category : #'instance creation' }
-RBBasicLintRuleTest class >> createParseTreeRule: codeStrings name: aName [ 
+RBBasicLintRuleTestData class >> createParseTreeRule: codeStrings name: aName [ 
 	^self createParseTreeRule: codeStrings
 		method: false
 		name: aName
 ]
 
 { #category : #'unnecessary code' }
-RBBasicLintRuleTest class >> justSendsSuper [
+RBBasicLintRuleTestData class >> justSendsSuper [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Method just sends super message'.
@@ -71,21 +71,21 @@ RBBasicLintRuleTest class >> justSendsSuper [
 ]
 
 { #category : #private }
-RBBasicLintRuleTest class >> longMethodSize [
+RBBasicLintRuleTestData class >> longMethodSize [
 	^10
 ]
 
 { #category : #private }
-RBBasicLintRuleTest class >> metaclassShouldNotOverride [
+RBBasicLintRuleTestData class >> metaclassShouldNotOverride [
 	^#(#name #comment)
 ]
 
 { #category : #'possible bugs' }
-RBBasicLintRuleTest class >> modifiesCollection [
+RBBasicLintRuleTestData class >> modifiesCollection [
 	| detector addSearcher |
 	detector := self new.
 	detector name: 'Modifies collection while iterating over it'.
-	addSearcher := RBBasicLintRuleTest modifiesCollection.
+	addSearcher := RBBasicLintRuleTestData modifiesCollection.
 	detector methodBlock: 
 			[:context :result | 
 			addSearcher executeTree: context parseTree initialAnswer: false.
@@ -95,12 +95,12 @@ RBBasicLintRuleTest class >> modifiesCollection [
 ]
 
 { #category : #private }
-RBBasicLintRuleTest class >> new [
+RBBasicLintRuleTestData class >> new [
 	^super new
 ]
 
 { #category : #miscellaneous }
-RBBasicLintRuleTest class >> precedence [
+RBBasicLintRuleTestData class >> precedence [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Inspect instances of "A + B * C" might be "A + (B * C)"'.
@@ -115,12 +115,12 @@ RBBasicLintRuleTest class >> precedence [
 ]
 
 { #category : #accessing }
-RBBasicLintRuleTest class >> protocolsToCheck [
+RBBasicLintRuleTestData class >> protocolsToCheck [
 	^#('bugs' 'possible bugs' 'unnecessary code' 'intention revealing' 'miscellaneous')
 ]
 
 { #category : #'possible bugs' }
-RBBasicLintRuleTest class >> sentNotImplementedInApplication [
+RBBasicLintRuleTestData class >> sentNotImplementedInApplication [
 	| detector |
 	detector := self new.
 	detector name: 'Messages sent but not implemented in application'.
@@ -152,7 +152,7 @@ RBBasicLintRuleTest class >> sentNotImplementedInApplication [
 ]
 
 { #category : #private }
-RBBasicLintRuleTest class >> subclassOf: aClass overrides: aSelector [ 
+RBBasicLintRuleTestData class >> subclassOf: aClass overrides: aSelector [ 
 	| subs |
 	subs := aClass subclasses.
 	1 to: subs size
@@ -166,7 +166,7 @@ RBBasicLintRuleTest class >> subclassOf: aClass overrides: aSelector [
 ]
 
 { #category : #bugs }
-RBBasicLintRuleTest class >> subclassResponsibilityNotDefined [
+RBBasicLintRuleTestData class >> subclassResponsibilityNotDefined [
 	| detector subclassResponsibilitySymbol |
 	detector := self new.
 	subclassResponsibilitySymbol := 'subclassResponsibility' asSymbol.
@@ -186,12 +186,12 @@ RBBasicLintRuleTest class >> subclassResponsibilityNotDefined [
 ]
 
 { #category : #private }
-RBBasicLintRuleTest class >> superMessages [
+RBBasicLintRuleTestData class >> superMessages [
 	^#(#release #postCopy #postBuildWith: #preBuildWith: #postOpenWith: #noticeOfWindowClose: #initialize)
 ]
 
 { #category : #'possible bugs' }
-RBBasicLintRuleTest class >> superSends [
+RBBasicLintRuleTestData class >> superSends [
 	| detector |
 	detector := self new.
 	detector name: 'Missing super sends'.
@@ -208,7 +208,7 @@ RBBasicLintRuleTest class >> superSends [
 ]
 
 { #category : #'intention revealing' }
-RBBasicLintRuleTest class >> toDo [
+RBBasicLintRuleTestData class >> toDo [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Uses to:do: instead of do:, with:do: or timesRepeat:'.
@@ -231,7 +231,7 @@ RBBasicLintRuleTest class >> toDo [
 ]
 
 { #category : #miscellaneous }
-RBBasicLintRuleTest class >> utilityMethods [
+RBBasicLintRuleTestData class >> utilityMethods [
 	| detector |
 	detector := self new.
 	detector name: 'Utility methods'.
@@ -256,50 +256,50 @@ RBBasicLintRuleTest class >> utilityMethods [
 ]
 
 { #category : #private }
-RBBasicLintRuleTest class >> utilityProtocols [
+RBBasicLintRuleTestData class >> utilityProtocols [
 	"If a method is defined in one of these protocols, then don't check if its a utility method."
 
 	^#('*utilit*')
 ]
 
 { #category : #initialization }
-RBBasicLintRuleTest >> anInstVar [
+RBBasicLintRuleTestData >> anInstVar [
 	^ anInstVar
 ]
 
 { #category : #'initialize-release' }
-RBBasicLintRuleTest >> anInstVar: anObject [
+RBBasicLintRuleTestData >> anInstVar: anObject [
 	anInstVar := anObject
 ]
 
 { #category : #accessing }
-RBBasicLintRuleTest >> checkClass: aSmalllintContext [ 
+RBBasicLintRuleTestData >> checkClass: aSmalllintContext [ 
 	^classBlock value: aSmalllintContext value: result
 ]
 
 { #category : #accessing }
-RBBasicLintRuleTest >> checkMethod: aSmalllintContext [ 
+RBBasicLintRuleTestData >> checkMethod: aSmalllintContext [ 
 	^methodBlock value: aSmalllintContext value: result
 ]
 
 { #category : #initialization }
-RBBasicLintRuleTest >> classBlock [
+RBBasicLintRuleTestData >> classBlock [
 	^ self anInstVar + 5
 ]
 
 { #category : #initialization }
-RBBasicLintRuleTest >> classBlock: aBlock [
+RBBasicLintRuleTestData >> classBlock: aBlock [
 	classBlock := aBlock testMethod1
 ]
 
 { #category : #accessing }
-RBBasicLintRuleTest >> foobar [
+RBBasicLintRuleTestData >> foobar [
 
 	^#( true false )
 ]
 
 { #category : #initialization }
-RBBasicLintRuleTest >> initialize [
+RBBasicLintRuleTestData >> initialize [
 	super initialize.
 	self anInstVar: 1.
 	classBlock := [:context :aResult | ].
@@ -308,58 +308,58 @@ RBBasicLintRuleTest >> initialize [
 ]
 
 { #category : #testing }
-RBBasicLintRuleTest >> isEmpty [
+RBBasicLintRuleTestData >> isEmpty [
 	^result isEmpty
 ]
 
 { #category : #private }
-RBBasicLintRuleTest >> method: anObject1 with: anObject2 lots: anObject3 of: anObject4 arguments: anObject5 [
+RBBasicLintRuleTestData >> method: anObject1 with: anObject2 lots: anObject3 of: anObject4 arguments: anObject5 [
 	^ anObject5 + anObject1 > (anObject4 - anObject2 + anObject3)
 ]
 
 { #category : #initialization }
-RBBasicLintRuleTest >> methodBlock: aBlock [
+RBBasicLintRuleTestData >> methodBlock: aBlock [
 	methodBlock := aBlock
 ]
 
 { #category : #initialization }
-RBBasicLintRuleTest >> newResultClass: aClass [ 
+RBBasicLintRuleTestData >> newResultClass: aClass [ 
 "New one:)"
 	result := aClass new
 ]
 
 { #category : #accessing }
-RBBasicLintRuleTest >> problemCount [
+RBBasicLintRuleTestData >> problemCount [
 	^result problemCount
 ]
 
 { #category : #'initialize-release' }
-RBBasicLintRuleTest >> resetResult [
+RBBasicLintRuleTestData >> resetResult [
 	result := result copyEmpty.
 	result label: name
 ]
 
 { #category : #accessing }
-RBBasicLintRuleTest >> result [
+RBBasicLintRuleTestData >> result [
 	^result
 ]
 
 { #category : #'initialize-release' }
-RBBasicLintRuleTest >> result: aResult [ 
+RBBasicLintRuleTestData >> result: aResult [ 
 	result := aResult copyEmpty
 ]
 
 { #category : #initialization }
-RBBasicLintRuleTest >> resultClass: aClass [ 
+RBBasicLintRuleTestData >> resultClass: aClass [ 
 	result := aClass new
 ]
 
 { #category : #accessing }
-RBBasicLintRuleTest >> someDemoMethod [
+RBBasicLintRuleTestData >> someDemoMethod [
 	^ self junk
 ]
 
 { #category : #private }
-RBBasicLintRuleTest >> viewResults [
+RBBasicLintRuleTestData >> viewResults [
 	result openEditor
 ]

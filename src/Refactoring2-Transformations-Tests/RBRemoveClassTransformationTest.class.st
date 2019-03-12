@@ -41,7 +41,7 @@ RBRemoveClassTransformationTest >> testRemoveClassWithBadName [
 RBRemoveClassTransformationTest >> testRemoveClassWithReferences [
 
 	self shouldFail: (RBRemoveClassTransformation
-							className: #RBBasicLintRuleTest)
+							className: #RBBasicLintRuleTestData)
 							asRefactoring 
 ]
 
@@ -49,7 +49,7 @@ RBRemoveClassTransformationTest >> testRemoveClassWithReferences [
 RBRemoveClassTransformationTest >> testRemoveClassWithSubclasses [
 
 	self shouldFail: (RBRemoveClassTransformation
-							className: #RBFooLintRuleTest1)
+							className: #RBFooLintRuleTestData1)
 							asRefactoring
 ]
 

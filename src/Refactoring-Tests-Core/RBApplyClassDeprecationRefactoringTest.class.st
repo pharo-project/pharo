@@ -8,10 +8,10 @@ Class {
 RBApplyClassDeprecationRefactoringTest >> testBadName [
 	self
 		shouldFail: (RBApplyClassDeprecationRefactoring 
-				rename: RBLintRuleTest
+				rename: RBLintRuleTestData
 				to: self objectClassVariable);
 		shouldFail: (RBApplyClassDeprecationRefactoring 
-				rename: RBLintRuleTest
+				rename: RBLintRuleTestData
 				to: #'Ob ject')
 ]
 

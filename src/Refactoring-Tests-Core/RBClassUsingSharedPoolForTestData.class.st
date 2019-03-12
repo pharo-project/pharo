@@ -1,14 +1,14 @@
 Class {
-	#name : #RBClassUsingSharedPoolForTest,
+	#name : #RBClassUsingSharedPoolForTestData,
 	#superclass : #Object,
 	#pools : [
-		'RBSharedPoolForTest'
+		'RBSharedPoolForTestData'
 	],
 	#category : #'Refactoring-Tests-Core-Data'
 }
 
 { #category : #'as yet unclassified' }
-RBClassUsingSharedPoolForTest >> msg3 [
+RBClassUsingSharedPoolForTestData >> msg3 [
 
 	^ Var1
 ]

@@ -16,9 +16,9 @@ RBExtractMethodTest >> testBadInterval [
 		shouldFail: (RBExtractMethodRefactoring 
 				extract: (self 
 						convertInterval: (80 to: 147)
-						for: (RBBasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
+						for: (RBBasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 				from: #subclassOf:overrides:
-				in: RBBasicLintRuleTest class)
+				in: RBBasicLintRuleTestData class)
 ]
 
 { #category : #'failure tests' }
@@ -27,21 +27,21 @@ RBExtractMethodTest >> testExtractFailure [
 		shouldFail: (RBExtractMethodRefactoring 
 				extract: (self 
 						convertInterval: (80 to: 269)
-						for: (RBBasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
+						for: (RBBasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 				from: #subclassOf:overrides:
-				in: RBBasicLintRuleTest class);
+				in: RBBasicLintRuleTestData class);
 		shouldFail: (RBExtractMethodRefactoring 
 				extract: (self 
 						convertInterval: (53 to: 56)
-						for: (RBBasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
+						for: (RBBasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 				from: #subclassOf:overrides:
-				in: RBBasicLintRuleTest class);
+				in: RBBasicLintRuleTestData class);
 		shouldFail: (RBExtractMethodRefactoring 
 				extract: (self 
 						convertInterval: (77 to: 222)
-						for: (RBBasicLintRuleTest class sourceCodeAt: #subclassResponsibilityNotDefined))
+						for: (RBBasicLintRuleTestData class sourceCodeAt: #subclassResponsibilityNotDefined))
 				from: #subclassResponsibilityNotDefined
-				in: RBBasicLintRuleTest class)
+				in: RBBasicLintRuleTestData class)
 ]
 
 { #category : #tests }
@@ -50,14 +50,14 @@ RBExtractMethodTest >> testExtractMethodAtEndOfMethodThatNeedsReturn [
 	refactoring := RBExtractMethodRefactoring 
 		extract: (self 
 				convertInterval: (52 to: 133)
-				for: (RBLintRuleTest sourceCodeAt: #openEditor))
+				for: (RBLintRuleTestData sourceCodeAt: #openEditor))
 		from: #openEditor
-		in: RBLintRuleTest.
+		in: RBLintRuleTestData.
 	self 
 		setupMethodNameFor: refactoring
 		toReturn: #foo:.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBLintRuleTest.
+	class := refactoring model classNamed: #RBLintRuleTestData.
 	self assert: (class parseTreeFor: #openEditor) = (RBParser parseMethod: 'openEditor
 	| rules |
 	rules := self failedRules.
@@ -73,14 +73,14 @@ RBExtractMethodTest >> testExtractMethodThatMovesTemporaryVariable [
 	refactoring := RBExtractMethodRefactoring 
 		extract: (self 
 				convertInterval: (22 to: 280)
-				for: (RBTransformationRuleTest sourceCodeAt: #superSends))
+				for: (RBTransformationRuleTestData sourceCodeAt: #superSends))
 		from: #superSends
-		in: RBTransformationRuleTest.
+		in: RBTransformationRuleTestData.
 	self 
 		setupMethodNameFor: refactoring
 		toReturn: #foo1.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBTransformationRuleTest.
+	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #superSends) = (RBParser parseMethod: 'superSends
 	| rule |
 	rule := self foo1.
@@ -102,14 +102,14 @@ RBExtractMethodTest >> testExtractMethodThatNeedsArgument [
 	refactoring := RBExtractMethodRefactoring 
 		extract: (self 
 				convertInterval: (145 to: 343)
-				for: (RBTransformationRuleTest sourceCodeAt: #checkMethod:))
+				for: (RBTransformationRuleTestData sourceCodeAt: #checkMethod:))
 		from: #checkMethod:
-		in: RBTransformationRuleTest.
+		in: RBTransformationRuleTestData.
 	self 
 		setupMethodNameFor: refactoring
 		toReturn: #foo:.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBTransformationRuleTest.
+	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:) = (RBParser parseMethod: 'checkMethod: aSmalllintContext 
 	class := aSmalllintContext selectedClass.
 	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
@@ -127,14 +127,14 @@ RBExtractMethodTest >> testExtractMethodThatNeedsTemporaryVariable [
 	refactoring := RBExtractMethodRefactoring 
 		extract: (self 
 				convertInterval: (78 to: 197)
-				for: (RBLintRuleTest sourceCodeAt: #displayName))
+				for: (RBLintRuleTestData sourceCodeAt: #displayName))
 		from: #displayName
-		in: RBLintRuleTest.
+		in: RBLintRuleTestData.
 	self 
 		setupMethodNameFor: refactoring
 		toReturn: #foo:.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBLintRuleTest.
+	class := refactoring model classNamed: #RBLintRuleTestData.
 	self assert: (class parseTreeFor: #displayName) = (RBParser parseMethod: 'displayName
 	| nameStream |
 	nameStream := WriteStream on: (String new: 64).
@@ -195,5 +195,5 @@ RBExtractMethodTest >> testNonExistantSelector [
 	self shouldFail: (RBExtractMethodRefactoring 
 			extract: (10 to: 20)
 			from: #checkClass1:
-			in: RBBasicLintRuleTest)
+			in: RBBasicLintRuleTestData)
 ]

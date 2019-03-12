@@ -43,10 +43,10 @@ RBProtectVariableTransformationTest >> testClassVariable [
 	| refactoring class |
 	refactoring := (RBProtectVariableTransformation 
 						classVariable: 'RecursiveSelfRule'
-						class: #RBTransformationRuleTest)
+						class: #RBTransformationRuleTestData)
 						asRefactoring transform.
 	
-	class := (refactoring model classNamed: #RBTransformationRuleTest) theMetaClass.
+	class := (refactoring model classNamed: #RBTransformationRuleTestData) theMetaClass.
 	self assert: (class parseTreeFor: #recursiveSelfRule)
 			equals: (RBParser parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
 	self assert: (class parseTreeFor: #recursiveSelfRule:) 
@@ -60,7 +60,7 @@ RBProtectVariableTransformationTest >> testClassVariable [
 				self recursiveSelfRule
 					addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
 					-> [:aNode :answer | true]').
-	self assert: ((refactoring model classNamed: #RBTransformationRuleTest) parseTreeFor: #checkMethod:) 
+	self assert: ((refactoring model classNamed: #RBTransformationRuleTestData) parseTreeFor: #checkMethod:) 
 			equals: (RBParser parseMethod: 'checkMethod: aSmalllintContext 
 				class := aSmalllintContext selectedClass.
 				(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
@@ -136,7 +136,7 @@ RBProtectVariableTransformationTest >> testMetaclassFailure [
 
 	self shouldFail: (RBProtectVariableTransformation 
 							classVariable: #RecursiveSelfRule
-							class: RBTransformationRuleTest class)
+							class: RBTransformationRuleTestData class)
 							asRefactoring
 ]
 
@@ -146,10 +146,10 @@ RBProtectVariableTransformationTest >> testRefactoring [
 	| refactoring class |
 	refactoring := (RBProtectVariableTransformation
 						instanceVariable: 'builder'
-						class: #RBTransformationRuleTest)
+						class: #RBTransformationRuleTestData)
 						asRefactoring transform.
 	
-	class := refactoring model classNamed: #RBTransformationRuleTest.
+	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #builder) equals: (RBParser parseMethod: 'builder ^builder').
 	self assert: (class parseTreeFor: #builder:) equals: (RBParser parseMethod: 'builder: anObject
 	builder := anObject').
@@ -174,10 +174,10 @@ RBProtectVariableTransformationTest >> testTransform [
 	| transformation class |
 	transformation := (RBProtectVariableTransformation
 							instanceVariable: 'class'
-							class: #RBTransformationRuleTest)
+							class: #RBTransformationRuleTestData)
 							transform.
 		
-	class := transformation model classNamed: #RBTransformationRuleTest.
+	class := transformation model classNamed: #RBTransformationRuleTestData.
 	self assert: (class directlyDefinesLocalMethod: #class1).
 	self assert: (class directlyDefinesLocalMethod: #class:).
 	
@@ -211,11 +211,11 @@ RBProtectVariableTransformationTest >> testVariableDoesNotExist [
 	self
 		shouldFail: (RBProtectVariableTransformation 
 						instanceVariable: 'foo'
-						class: #RBBasicLintRuleTest)
+						class: #RBBasicLintRuleTestData)
 						asRefactoring;
 		shouldFail: (RBProtectVariableTransformation 
 						classVariable: #Foo
-						class: #RBBasicLintRuleTest)
+						class: #RBBasicLintRuleTestData)
 						asRefactoring
 ]
 
@@ -243,11 +243,11 @@ RBProtectVariableTransformationTest >> testVariableNotDirectlyDefined [
 	self 
 		shouldFail: (RBProtectVariableTransformation 
 						instanceVariable: 'name'
-						class: #RBBasicLintRuleTest)
+						class: #RBBasicLintRuleTestData)
 						asRefactoring;
 		shouldFail: (RBProtectVariableTransformation 
 						classVariable: #DependentsFields
-						class: #RBBasicLintRuleTest)
+						class: #RBBasicLintRuleTestData)
 						asRefactoring;
 		shouldFail: (RBProtectVariableTransformation 
 						model: model

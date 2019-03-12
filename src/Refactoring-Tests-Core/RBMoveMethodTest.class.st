@@ -10,7 +10,7 @@ RBMoveMethodTest >> testMoveMethodIntoArgument [
 	self proceedThroughWarning: 
 		[ refactoring := RBMoveMethodRefactoring 
 			selector: #checkMethod:
-			class: RBTransformationRuleTest
+			class: RBTransformationRuleTestData
 			variable: 'aSmalllintContext'.
 		self 
 			setupSelfArgumentNameFor: refactoring
@@ -22,7 +22,7 @@ RBMoveMethodTest >> testMoveMethodIntoArgument [
 			setupMethodNameFor: refactoring
 			toReturn: #foo:.
 		self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBTransformationRuleTest.
+	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:) = (RBParser parseMethod: 'checkMethod: aSmalllintContext aSmalllintContext foo: self').
 	self assert: ((refactoring model classNamed: #RBSmalllintContext) parseTreeFor: #foo:) = (RBParser parseMethod: 'foo: transformationRule
 	transformationRule class: self selectedClass.
@@ -48,7 +48,7 @@ RBMoveMethodTest >> testMoveMethodIntoClassVariable [
 	self proceedThroughWarning: 
 		[ refactoring := RBMoveMethodRefactoring 
 			selector: #checkMethod:
-			class: RBTransformationRuleTest
+			class: RBTransformationRuleTestData
 			variable: 'RecursiveSelfRule'.
 		self 
 			setupSelfArgumentNameFor: refactoring
@@ -61,7 +61,7 @@ RBMoveMethodTest >> testMoveMethodIntoClassVariable [
 			toReturn: #foo:foo:
 			withArguments: #('transformationRule' 'aSmalllintContext' ).
 		self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBTransformationRuleTest.
+	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:) = (RBParser parseMethod: 'checkMethod: aSmalllintContext RecursiveSelfRule foo: self foo: aSmalllintContext').
 	self assert: ((refactoring model classNamed: #RBParseTreeSearcher) parseTreeFor: #foo:foo:) = (RBParser parseMethod: 'foo: transformationRule foo: aSmalllintContext
 	transformationRule class: aSmalllintContext selectedClass.
@@ -85,7 +85,7 @@ RBMoveMethodTest >> testMoveMethodIntoInstanceVariable [
 	self proceedThroughWarning: 
 		[ refactoring := RBMoveMethodRefactoring 
 			selector: #checkMethod:
-			class: RBTransformationRuleTest
+			class: RBTransformationRuleTestData
 			variable: 'rewriteRule'.
 		self 
 			setupSelfArgumentNameFor: refactoring
@@ -98,7 +98,7 @@ RBMoveMethodTest >> testMoveMethodIntoInstanceVariable [
 			toReturn: #foo:foo:
 			withArguments: #('transformationRule' 'aSmalllintContext' ).
 		self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBTransformationRuleTest.
+	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:) = (RBParser parseMethod: 'checkMethod: aSmalllintContext rewriteRule foo: self foo: aSmalllintContext').
 	self assert: ((refactoring model classNamed: #RBParseTreeRewriter) parseTreeFor: #foo:foo:) = (RBParser parseMethod: 'foo: transformationRule foo: aSmalllintContext
 	transformationRule class: aSmalllintContext selectedClass.
@@ -122,7 +122,7 @@ RBMoveMethodTest >> testMoveMethodThatReferencesPoolDictionary [
 	self proceedThroughWarning: 
 		[ refactoring := RBMoveMethodRefactoring 
 			selector: #junk
-			class: RBLintRuleTest
+			class: RBLintRuleTestData
 			variable: 'RefactoryTestDataApp'.
 		self 
 			setupSelfArgumentNameFor: refactoring
@@ -134,7 +134,7 @@ RBMoveMethodTest >> testMoveMethodThatReferencesPoolDictionary [
 			setupMethodNameFor: refactoring
 			toReturn: #junk1.
 		self executeRefactoring: refactoring ].
-	class := refactoring model classNamed: #RBLintRuleTest.
+	class := refactoring model classNamed: #RBLintRuleTestData.
 	self assert: (class parseTreeFor: #junk) = (RBParser parseMethod: 'junk ^RefactoryTestDataApp junk1').
 	self assert: ((refactoring model metaclassNamed: #RBRefactoryTestDataApp) parseTreeFor: #junk1) = (RBParser parseMethod: 'junk1
 	^RBRefactoryTestDataApp printString copyFrom: 1 to: CR').

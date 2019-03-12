@@ -15,17 +15,17 @@ RBAddMethodTest >> testAddMethod [
 	| refactoring |
 	refactoring := RBAddMethodRefactoring 
 		addMethod: 'printString1 ^super printString'
-		toClass: RBBasicLintRuleTest
+		toClass: RBBasicLintRuleTestData
 		inProtocols: #(#accessing ).
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBBasicLintRuleTest) parseTreeFor: #printString1) = (RBParser parseMethod: 'printString1 ^super printString')
+	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeFor: #printString1) = (RBParser parseMethod: 'printString1 ^super printString')
 ]
 
 { #category : #'failure tests' }
 RBAddMethodTest >> testBadMethod [
 	self shouldFail: (RBAddMethodRefactoring 
 			addMethod: 'asdf ^super ^printString'
-			toClass: RBBasicLintRuleTest
+			toClass: RBBasicLintRuleTestData
 			inProtocols: #(#accessing ))
 ]
 
@@ -33,7 +33,7 @@ RBAddMethodTest >> testBadMethod [
 RBAddMethodTest >> testExistingSelector [
 	self shouldFail: (RBAddMethodRefactoring 
 			addMethod: 'printString ^super printString'
-			toClass: RBBasicLintRuleTest
+			toClass: RBBasicLintRuleTestData
 			inProtocols: #(#accessing ))
 ]
 

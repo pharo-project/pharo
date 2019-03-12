@@ -625,7 +625,7 @@ RBBasicDummyLintRuleTest class >> modifiesCollection [
 	| detector addSearcher |
 	detector := self new.
 	detector name: 'Modifies collection while iterating over it'.
-	addSearcher := RBBasicLintRuleTest modifiesCollection.
+	addSearcher := RBBasicLintRuleTestData modifiesCollection.
 	detector methodBlock: 
 			[:context :result | 
 			addSearcher executeTree: context parseTree initialAnswer: false.
