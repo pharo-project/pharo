@@ -107,6 +107,7 @@ Breakpoint class >> removeAll [
 
 { #category : #removing }
 Breakpoint class >> removeBreakpointsFromMethod: aMethod [ 
+	AllBreakpoints ifNil: [ ^self ].
 	AllBreakpoints copy do: [ :breakpoint |
 		breakpoint link methods
 			detect: [ :m | m == aMethod ]
