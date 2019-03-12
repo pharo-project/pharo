@@ -8,7 +8,7 @@ Class {
 		'previousBreakpoints',
 		'cls'
 	],
-	#category : #'Reflectivity-Tools-Tests'
+	#category : #'Reflectivity-Tests-Breakpoints'
 }
 
 { #category : #utilities }

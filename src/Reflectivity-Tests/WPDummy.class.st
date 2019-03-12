@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'foo'
 	],
-	#category : #'Reflectivity-Tools-Tests'
+	#category : #'Reflectivity-Tests-Testdata'
 }
 
 { #category : #examples }

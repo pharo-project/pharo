@@ -26,8 +26,13 @@ Class {
 	#classVars : [
 		'AllBreakpoints'
 	],
-	#category : #'Reflectivity-Tools-Breakpoints'
+	#category : #'Reflectivity-Breakpoints'
 }
+
+{ #category : #'as yet unclassified' }
+Breakpoint class >> all [ 
+	^ AllBreakpoints
+]
 
 { #category : #all }
 Breakpoint class >> browseAll [
