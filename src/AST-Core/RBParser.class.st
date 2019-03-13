@@ -438,12 +438,15 @@ RBParser >> parseCascadeMessage [
 
 { #category : #'error handling' }
 RBParser >> parseErrorNode: aMessageString [
-	| sourceString |
-	currentToken isError 
+	| sourceString errorPosition |
+	currentToken isError
 		ifTrue: [ ^ RBParseErrorNode errorMessage: currentToken cause value: currentToken value at: currentToken start ].
-	sourceString := source copyFrom: self errorPosition to: source size.
-	^ RBParseErrorNode
-		errorMessage: aMessageString value: sourceString at: self errorPosition
+	errorPosition := self errorPosition.
+	"the error at the end means in some cases that the start of the error is before"
+	aMessageString = ''')'' expected'
+		ifTrue: [ errorPosition := source findLastOccurrenceOfString: '(' startingAt: 1 ].
+	sourceString := source copyFrom: errorPosition to: source size.
+	^ RBParseErrorNode errorMessage: aMessageString value: sourceString at: self errorPosition
 ]
 
 { #category : #accessing }
