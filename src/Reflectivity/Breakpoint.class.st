@@ -31,14 +31,14 @@ Class {
 
 { #category : #'as yet unclassified' }
 Breakpoint class >> all [ 
-	^ AllBreakpoints
+	^ AllBreakpoints ifNil: [ AllBreakpoints := OrderedCollection new ]
 ]
 
 { #category : #all }
 Breakpoint class >> browseAll [
 	<script>
 	| methods |
-	methods := AllBreakpoints flatCollect: [ :breakpoint | breakpoint link methods ].
+	methods := self all flatCollect: [ :breakpoint | breakpoint link methods ].
 	Smalltalk tools messageList browse: methods
 ]
 
@@ -55,10 +55,10 @@ Breakpoint class >> cleanUp [
 
 { #category : #'system announcements' }
 Breakpoint class >> handleClassRemoved: anAnnouncement [
-	AllBreakpoints copy do: [ :breakpoint |
+	self all copy do: [ :breakpoint |
 		breakpoint link methods
 			detect: [ :m | m methodClass = anAnnouncement classRemoved ]
-			ifFound: [ AllBreakpoints remove: breakpoint ] ]
+			ifFound: [ self all remove: breakpoint ] ]
 ]
 
 { #category : #'system announcements' }
@@ -80,7 +80,7 @@ Breakpoint class >> initialize [
 { #category : #querying }
 Breakpoint class >> isInstalledIn: aMethod [
 
-	AllBreakpoints do: [ :breakpoint |
+	self all do: [ :breakpoint |
 		breakpoint link methods 
 			detect: [ :m | m == aMethod ]
 			ifFound: [ ^ true ]
@@ -102,23 +102,22 @@ Breakpoint class >> registerInsterestToSystemAnnouncement [
 { #category : #cleanup }
 Breakpoint class >> removeAll [ 
 	<script>
-	AllBreakpoints copy do: #remove.
+	self all copy do: #remove.
 ]
 
 { #category : #removing }
 Breakpoint class >> removeBreakpointsFromMethod: aMethod [ 
-	AllBreakpoints ifNil: [ ^self ].
-	AllBreakpoints copy do: [ :breakpoint |
+	self all copy do: [ :breakpoint |
 		breakpoint link methods
 			detect: [ :m | m == aMethod ]
-			ifFound: [ AllBreakpoints remove: breakpoint ] ]
+			ifFound: [ self all remove: breakpoint ] ]
 ]
 
 { #category : #cleanup }
 Breakpoint class >> removeFrom: aNode [
 	| links breakpointsToRemove |
 	links := aNode beforeLinks select: [ :link | link metaObject = Break].
-	breakpointsToRemove := AllBreakpoints select: [ :br | links includes: br link].
+	breakpointsToRemove := self all select: [ :br | links includes: br link].
 	breakpointsToRemove do: #remove.
 ]
 
