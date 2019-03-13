@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'yetYetAnotherClass'
 	],
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #running }

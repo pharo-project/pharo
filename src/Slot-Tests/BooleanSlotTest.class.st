@@ -1,3 +1,6 @@
+"
+Tests for BooleanSlot
+"
 Class {
 	#name : #BooleanSlotTest,
 	#superclass : #SlotSilentTest,

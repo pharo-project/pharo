@@ -1,3 +1,6 @@
+"
+Test for PropertySlot
+"
 Class {
 	#name : #PropertySlotTest,
 	#superclass : #SlotSilentTest,

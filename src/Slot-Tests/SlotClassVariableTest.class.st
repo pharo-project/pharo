@@ -1,7 +1,7 @@
 Class {
 	#name : #SlotClassVariableTest,
 	#superclass : #SlotClassBuilderTest,
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #tests }

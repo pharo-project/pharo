@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'One'
 	],
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-Data'
 }
 
 { #category : #'class initialization' }
