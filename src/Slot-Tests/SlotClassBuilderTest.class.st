@@ -6,7 +6,7 @@ Class {
 		'anotherClass',
 		'yetAnotherClass'
 	],
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #'helpers-names' }

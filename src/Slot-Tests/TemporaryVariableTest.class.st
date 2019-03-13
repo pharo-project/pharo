@@ -1,7 +1,10 @@
+"
+Tests for TemporaryVariable 
+"
 Class {
 	#name : #TemporaryVariableTest,
 	#superclass : #TestCase,
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-VariablesAndSlots'
 }
 
 { #category : #tests }

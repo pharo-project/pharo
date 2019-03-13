@@ -1,10 +1,13 @@
+"
+Tests for ClassVariable
+"
 Class {
 	#name : #ClassVariableTest,
 	#superclass : #TestCase,
 	#classVars : [
 		'TestVariable'
 	],
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-VariablesAndSlots'
 }
 
 { #category : #'tests  - properties' }

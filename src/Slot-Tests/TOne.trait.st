@@ -3,7 +3,7 @@ I am a trait used for testing.
 "
 Trait {
 	#name : #TOne,
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-Data'
 }
 
 { #category : #testing }
