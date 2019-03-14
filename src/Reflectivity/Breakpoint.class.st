@@ -26,14 +26,19 @@ Class {
 	#classVars : [
 		'AllBreakpoints'
 	],
-	#category : #'Reflectivity-Tools-Breakpoints'
+	#category : #'Reflectivity-Breakpoints'
 }
+
+{ #category : #'as yet unclassified' }
+Breakpoint class >> all [ 
+	^ AllBreakpoints ifNil: [ AllBreakpoints := OrderedCollection new ]
+]
 
 { #category : #all }
 Breakpoint class >> browseAll [
 	<script>
 	| methods |
-	methods := AllBreakpoints flatCollect: [ :breakpoint | breakpoint link methods ].
+	methods := self all flatCollect: [ :breakpoint | breakpoint link methods ].
 	Smalltalk tools messageList browse: methods
 ]
 
@@ -50,10 +55,10 @@ Breakpoint class >> cleanUp [
 
 { #category : #'system announcements' }
 Breakpoint class >> handleClassRemoved: anAnnouncement [
-	AllBreakpoints copy do: [ :breakpoint |
+	self all copy do: [ :breakpoint |
 		breakpoint link methods
 			detect: [ :m | m methodClass = anAnnouncement classRemoved ]
-			ifFound: [ AllBreakpoints remove: breakpoint ] ]
+			ifFound: [ self all remove: breakpoint ] ]
 ]
 
 { #category : #'system announcements' }
@@ -68,14 +73,13 @@ Breakpoint class >> handleMethodRemoved: anAnnouncement [
 
 { #category : #initialization }
 Breakpoint class >> initialize [
-	AllBreakpoints := OrderedCollection new.
 	self registerInsterestToSystemAnnouncement 
 ]
 
 { #category : #querying }
 Breakpoint class >> isInstalledIn: aMethod [
 
-	AllBreakpoints do: [ :breakpoint |
+	self all do: [ :breakpoint |
 		breakpoint link methods 
 			detect: [ :m | m == aMethod ]
 			ifFound: [ ^ true ]
@@ -97,22 +101,22 @@ Breakpoint class >> registerInsterestToSystemAnnouncement [
 { #category : #cleanup }
 Breakpoint class >> removeAll [ 
 	<script>
-	AllBreakpoints copy do: #remove.
+	self all copy do: #remove.
 ]
 
 { #category : #removing }
 Breakpoint class >> removeBreakpointsFromMethod: aMethod [ 
-	AllBreakpoints copy do: [ :breakpoint |
+	self all copy do: [ :breakpoint |
 		breakpoint link methods
 			detect: [ :m | m == aMethod ]
-			ifFound: [ AllBreakpoints remove: breakpoint ] ]
+			ifFound: [ self all remove: breakpoint ] ]
 ]
 
 { #category : #cleanup }
 Breakpoint class >> removeFrom: aNode [
 	| links breakpointsToRemove |
 	links := aNode beforeLinks select: [ :link | link metaObject = Break].
-	breakpointsToRemove := AllBreakpoints select: [ :br | links includes: br link].
+	breakpointsToRemove := self all select: [ :br | links includes: br link].
 	breakpointsToRemove do: #remove.
 ]
 
@@ -155,7 +159,7 @@ Breakpoint >> initialize [
 
 { #category : #install }
 Breakpoint >> install [
-	AllBreakpoints add: self.
+	self class all add: self.
 	self node link: self link
 ]
 
@@ -202,6 +206,6 @@ Breakpoint >> options: anArray [
 
 { #category : #install }
 Breakpoint >> remove [
-	AllBreakpoints remove: self.
+	self class all remove: self.
 	link uninstall
 ]

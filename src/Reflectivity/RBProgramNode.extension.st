@@ -44,8 +44,29 @@ RBProgramNode >> clearReflectivityAnnotations [
 ]
 
 { #category : #'*Reflectivity' }
+RBProgramNode >> counter [
+	
+	self hasExecutionCounter ifFalse:[^nil].
+	^(self beforeLinks detect: [ :link | link metaObject class = ExecutionCounter]) metaObject
+]
+
+{ #category : #'*Reflectivity' }
 RBProgramNode >> hasBeenExecuted [
 	^self propertyAt: #tagExecuted ifAbsent: false
+]
+
+{ #category : #'*Reflectivity' }
+RBProgramNode >> hasBreakpoint [
+	
+	self hasMetalinkBefore ifFalse: [ ^false ].
+	^self beforeLinks anySatisfy: [ :link | link metaObject = Break ]
+]
+
+{ #category : #'*Reflectivity' }
+RBProgramNode >> hasExecutionCounter [
+	
+	self hasMetalinkBefore ifFalse: [ ^false ].
+	^self beforeLinks anySatisfy: [ :link | link metaObject class = ExecutionCounter ]
 ]
 
 { #category : #'*Reflectivity' }
@@ -74,6 +95,13 @@ RBProgramNode >> hasMetalinkBefore [
 RBProgramNode >> hasMetalinkInstead [
 		self hasMetalink ifFalse: [^false].
 		^self insteadLinks isNotEmpty
+]
+
+{ #category : #'*Reflectivity' }
+RBProgramNode >> hasWatchpoint [
+	
+	self hasMetalinkAfter ifFalse: [ ^false ].
+	^self afterLinks anySatisfy: [ :link | link metaObject class = Watchpoint ]
 ]
 
 { #category : #'*Reflectivity' }
@@ -134,4 +162,11 @@ RBProgramNode >> removeLink: aMetaLink [
 { #category : #'*Reflectivity' }
 RBProgramNode >> tagExecuted [
 	^self propertyAt: #tagExecuted put: true 
+]
+
+{ #category : #'*Reflectivity' }
+RBProgramNode >> watchpoint [
+	
+	self hasWatchpoint ifFalse:[^nil].
+	^(self afterLinks detect: [ :link | link metaObject class = Watchpoint ]) metaObject
 ]
