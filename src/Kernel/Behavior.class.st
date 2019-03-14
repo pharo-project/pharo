@@ -635,13 +635,6 @@ Behavior >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlock 
 	^ self methodDict at: selector ifPresent: anotherBlock ifAbsent: aBlock
 ]
 
-{ #category : #'accessing method dictionary' }
-Behavior >> compress [
-	"Compact the method dictionary of the receiver."
-
-	self methodDict rehash
-]
-
 { #category : #queries }
 Behavior >> copiedFromSuperclass: method [
 	"Returns the methods that the receiver copied with its ancestors"
