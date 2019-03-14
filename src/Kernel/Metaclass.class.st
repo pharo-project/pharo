@@ -300,6 +300,19 @@ Metaclass >> soleInstance [
 	^thisClass
 ]
 
+{ #category : #compiling }
+Metaclass >> sourceCodeTemplate [
+	"Answer an expression to be edited and evaluated in order to define 
+	methods in this class or trait."
+
+	^ 'messageSelectorAndArgumentNames
+	"comment stating purpose of class-side message"
+	"scope: class-variables  &  class-instance-variables"	
+			
+	| temporary variable names |
+	statements'
+]
+
 { #category : #'class hierarchy' }
 Metaclass >> subclasses [
 	"Answer the receiver's subclasses."

@@ -1754,6 +1754,19 @@ Behavior >> sourceCodeAt: selector ifAbsent: aBlock [
 	^ (self compiledMethodAt: selector ifAbsent: [^ aBlock value]) sourceCode.
 ]
 
+{ #category : #compiling }
+Behavior >> sourceCodeTemplate [
+	"Answer an expression to be edited and evaluated in order to define 
+	methods in this class or trait."
+
+	^ 'messageSelectorAndArgumentNames
+	"comment stating purpose of instance-side message"
+	"scope: class-variables  &  instance-variables"	
+			
+	| temporary variable names |
+	statements'
+]
+
 { #category : #testing }
 Behavior >> sourceMatchesBytecodeAt: selector [
 	"Answers true if the source code at the selector compiles to the bytecode at the selector, and false

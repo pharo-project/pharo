@@ -214,3 +214,10 @@ BehaviorTest >> testallSuperclassesIncluding [
 	self assert: (cls includes: Collection). 
 	self assert: (cls includes: SequenceableCollection). 
 ]
+
+{ #category : #tests }
+BehaviorTest >> testsourceCodeTemplateFor [
+	"check for distictive source code templates for class-side and instance-side"
+	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side message'). 
+	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side message') 
+]
