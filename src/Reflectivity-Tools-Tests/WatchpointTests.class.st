@@ -8,7 +8,7 @@ Class {
 WatchpointTests >> testAddSameWatchpointSameNode [
 	|node watchpoint watchpoint2|
 	
-	node := (WPDummy>>#exampleAssignment) ast body children first.
+	node := (ReflectivityExamples>>#exampleAssignment) ast body children first.
 	watchpoint := Watchpoint in: node.
 	watchpoint2 := Watchpoint in: node.
 	
@@ -24,7 +24,7 @@ WatchpointTests >> testAddSameWatchpointSameNode [
 WatchpointTests >> testAddWatchpoint [
 	|node watchpoint|
 	
-	node := (WPDummy>>#exampleAssignment) ast body children first.
+	node := (ReflectivityExamples>>#exampleAssignment) ast body children first.
 	watchpoint := Watchpoint in: node.
 	
 	self assert: node hasWatchpoint.
@@ -40,7 +40,7 @@ WatchpointTests >> testAddWatchpoint [
 WatchpointTests >> testAddWatchpointsSameNode [
 	|node watchpoint watchpoint2|
 	
-	node := (WPDummy>>#exampleAssignment) ast body children first.
+	node := (ReflectivityExamples>>#exampleAssignment) ast body children first.
 	watchpoint := Watchpoint in: node.
 	watchpoint2 := Watchpoint in: node.
 	
@@ -55,16 +55,16 @@ WatchpointTests >> testAddWatchpointsSameNode [
 { #category : #'deleting history' }
 WatchpointTests >> testDeleteAllHistory [
 	| node1 node2 watchpoint1 watchpoint2 |
-	node1 := (WPDummy >> #exampleAssignment:) ast body children first.
+	node1 := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body statements first.
 	watchpoint1 := Watchpoint in: node1.
-	node2 := (WPDummy >> #exampleAssignment) ast body children first.
+	node2 := (ReflectivityExamples >> #exampleAssignmentIvar) ast body statements first.
 	watchpoint2 := Watchpoint in: node2.
 
-	WPDummy new exampleAssignment: 2.
-	WPDummy new exampleAssignment.
+	ReflectivityExamples new exampleAssignmentIvar: 2.
+	ReflectivityExamples new exampleAssignmentIvar.
 
 	self assert: watchpoint1 values first value = 2.
-	self assert: watchpoint2 values first value = 1.
+	self assert: watchpoint2 values first value = 3.
 
 	Watchpoint deleteAllHistory.
 
@@ -78,13 +78,13 @@ WatchpointTests >> testDeleteAllHistory [
 { #category : #'deleting history' }
 WatchpointTests >> testDeleteHistory [
 	| node watchpoint |
-	node := (WPDummy >> #exampleAssignment:) ast body children first.
+	node := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body children first.
 	watchpoint := Watchpoint in: node.
-	WPDummy new exampleAssignment: 1.
-	WPDummy new exampleAssignment: 2.
+	ReflectivityExamples new exampleAssignmentIvar: 1.
+	ReflectivityExamples new exampleAssignmentIvar: 2.
 
-	self assert: watchpoint values first value = 1.
-	self assert: watchpoint values second value = 2.
+	self assert: watchpoint values first value equals: 1.
+	self assert: watchpoint values second value equals: 2.
 
 	watchpoint deleteHistory.
 	self assertEmpty: watchpoint values.
@@ -95,10 +95,10 @@ WatchpointTests >> testDeleteHistory [
 { #category : #'deleting history' }
 WatchpointTests >> testDeleteHistoryFromNode [
 	| node watchpoint |
-	node := (WPDummy >> #exampleAssignment:) ast body children first.
+	node := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body children first.
 	watchpoint := Watchpoint in: node.
-	WPDummy new exampleAssignment: 1.
-	WPDummy new exampleAssignment: 2.
+	ReflectivityExamples new exampleAssignmentIvar: 1.
+	ReflectivityExamples new exampleAssignmentIvar: 2.
 
 	self assert: watchpoint values first value = 1.
 	self assert: watchpoint values second value = 2.
@@ -113,11 +113,11 @@ WatchpointTests >> testDeleteHistoryFromNode [
 WatchpointTests >> testSaveOneValue [
 	|node watchpoint|
 	
-	node := (WPDummy>>#exampleAssignment) ast body children first.
+	node := (ReflectivityExamples>>#exampleAssignmentIvar) ast body children first.
 	watchpoint := Watchpoint in: node.
-	WPDummy new exampleAssignment.
+	ReflectivityExamples new exampleAssignmentIvar.
 	
-	self assert: (watchpoint values first value = 1).
+	self assert: (watchpoint values first value = 3).
 	
 	watchpoint uninstall.
 	
@@ -127,10 +127,10 @@ WatchpointTests >> testSaveOneValue [
 WatchpointTests >> testSaveValues [
 	|node watchpoint|
 	
-	node := (WPDummy>>#exampleAssignment:) ast body children first.
+	node := (ReflectivityExamples>>#exampleAssignmentIvar:) ast body children first.
 	watchpoint := Watchpoint in: node.
-	WPDummy new exampleAssignment: 1.
-	WPDummy new exampleAssignment: 2.
+	ReflectivityExamples new exampleAssignmentIvar: 1.
+	ReflectivityExamples new exampleAssignmentIvar: 2.
 	
 	self assert: (watchpoint values first value = 1).
 	self assert: (watchpoint values second value = 2).
@@ -143,11 +143,11 @@ WatchpointTests >> testSaveValues [
 WatchpointTests >> testSendMessage [
 	|node watchpoint|
 	
-	node := (WPDummy>>#exampleMessageSend) ast body children first.
+	node := (ReflectivityExamples>>#exampleMessageSend) ast body children first.
 	watchpoint := Watchpoint in: node.
-	WPDummy new exampleMessageSend.
+	ReflectivityExamples new exampleMessageSend.
 	
-	self assert: (watchpoint values first value = 5).
+	self assert: (watchpoint values first value class = ReflectivityExamples).
 	
 	watchpoint uninstall.
 	
@@ -157,21 +157,21 @@ WatchpointTests >> testSendMessage [
 WatchpointTests >> testStopRecording [
 	|node watchpoint dummy|
 	
-	node := (WPDummy>>#exampleAssignment:) ast body children first.
+	node := (ReflectivityExamples>>#exampleAssignmentIvar:) ast body children first.
 	watchpoint := Watchpoint in: node.
-	dummy := WPDummy new.
+	dummy := ReflectivityExamples new.
 	
-	dummy exampleAssignment: 1.
-	dummy exampleAssignment: 2.
+	dummy exampleAssignmentIvar: 1.
+	dummy exampleAssignmentIvar: 2.
 	self assert: (watchpoint values size = 2).
 	self assert: (watchpoint values second value = 2).
 	
 	watchpoint stop.
-	dummy exampleAssignment: 3.
+	dummy exampleAssignmentIvar: 3.
 	self assert: (watchpoint values size = 2).
 	
 	watchpoint start.
-	dummy exampleAssignment: 4.
+	dummy exampleAssignmentIvar: 4.
 	self assert: (watchpoint values size = 3).
 	self assert: (watchpoint values third value = 4).
 	
@@ -185,10 +185,10 @@ WatchpointTests >> testStopRecording [
 WatchpointTests >> testTimestamp [
 	|node watchpoint|
 	
-	node := (WPDummy>>#exampleAssignment:) ast body children first.
+	node := (ReflectivityExamples>>#exampleAssignmentIvar:) ast body children first.
 	watchpoint := Watchpoint in: node.
 	
-	1 to: 10 do:[:i| WPDummy new exampleAssignment: i].
+	1 to: 10 do:[:i| ReflectivityExamples new exampleAssignmentIvar: i].
 	1 to: 9 do: [:i|  
 		|older newer|
 		older := watchpoint values at: i.
@@ -204,7 +204,7 @@ WatchpointTests >> testTimestamp [
 WatchpointTests >> testWatchpointTwice [
 	|node watchpoint|
 	
-	node := (WPDummy>>#exampleAssignment) ast body children first.
+	node := (ReflectivityExamples>>#exampleAssignment) ast body statements first.
 	watchpoint := Watchpoint in: node.
 	
 	self should: [watchpoint install] raise: Error.
