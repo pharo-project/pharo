@@ -39,10 +39,3 @@ RPackage >> packageManifest [
 		detect: [ :each | each isManifest ]
 		ifNone: [ TheManifestBuilder new createManifestNamed: name]
 ]
-
-{ #category : #'*Manifest-Core' }
-RPackage >> packageManifestOrNil [
-	^ self definedClasses
-		detect: [ :each | each isManifest ]
-		ifNone: [ nil ]
-]
