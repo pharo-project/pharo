@@ -705,11 +705,6 @@ SmallDictionary >> removeKey: key ifAbsent: aBlock [
 	^value
 ]
 
-{ #category : #removing }
-SmallDictionary >> removeUnreferencedKeys [
-	^ self unreferencedKeys do: [ :key | self removeKey: key ]
-]
-
 { #category : #enumerating }
 SmallDictionary >> select: aBlock [ 
 	"Evaluate aBlock with each of my values as the argument. Collect into a
@@ -749,11 +744,6 @@ SmallDictionary >> storeOn: aStream [
 			aStream store: each].
 	noneYet ifFalse: [ aStream nextPutAll: '; yourself'].
 	aStream nextPut: $)
-]
-
-{ #category : #private }
-SmallDictionary >> unreferencedKeys [
-	^ Dictionary unreferencedKeysIn: self
 ]
 
 { #category : #accessing }
