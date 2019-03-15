@@ -2,18 +2,18 @@
 Visual tests for correct rendering of text using Athens
 "
 Class {
-	#name : #AthensTextRenderTest,
+	#name : #AthensTextRenderManualTests,
 	#superclass : #Object,
 	#category : #'Athens-Examples-Demos'
 }
 
 { #category : #utilities }
-AthensTextRenderTest class >> surfaceClass [
+AthensTextRenderManualTests class >> surfaceClass [
 	^ AthensCairoSurface
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> test1 [
+AthensTextRenderManualTests class >> test1 [
 	<example>
 	
 	|  t  c  |
@@ -47,7 +47,7 @@ globalBounds:  toLocal:
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> test2 [
+AthensTextRenderManualTests class >> test2 [
 	<example>
 	
 	| t c surf |
@@ -68,7 +68,7 @@ AthensTextRenderTest class >> test2 [
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> test3 [
+AthensTextRenderManualTests class >> test3 [
 	<example>
 	
 	| t  c surf |
@@ -95,7 +95,7 @@ AthensTextRenderTest class >> test3 [
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> test4 [
+AthensTextRenderManualTests class >> test4 [
 	<example>
 	
 	| t  c surf |
@@ -119,7 +119,7 @@ AthensTextRenderTest class >> test4 [
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> test5 [
+AthensTextRenderManualTests class >> test5 [
 	<example>
 	
 	| t  c surf |
@@ -142,7 +142,7 @@ AthensTextRenderTest class >> test5 [
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> testBlitting [
+AthensTextRenderManualTests class >> testBlitting [
 	<example>
 	
 	| fnt form blt |
@@ -177,7 +177,7 @@ AthensTextRenderTest class >> testBlitting [
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> testText [
+AthensTextRenderManualTests class >> testText [
 	
 	|  t  |
 	t := 'The safety constraint is that the garbage collector 
@@ -207,7 +207,7 @@ safety violation.
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> testWindow [
+AthensTextRenderManualTests class >> testWindow [
 	<example>
 
 	^ ((PluggableTextMorph
@@ -218,7 +218,7 @@ AthensTextRenderTest class >> testWindow [
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> testWindowRender [
+AthensTextRenderManualTests class >> testWindowRender [
 	<example>
 	
 	| surf |
