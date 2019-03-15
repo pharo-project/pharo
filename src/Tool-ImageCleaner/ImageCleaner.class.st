@@ -82,7 +82,6 @@ ImageCleaner >> cleanUpForRelease [
 
 	Author fullName: 'MrCleaner'.
 	self cleanUpMethods.
-	OrderedCollection compactAllInstances.
 	self class environment at: #MetacelloProjectRegistration ifPresent: [ :class | class resetRegistry ].
 	SystemNavigation new
 		allObjectsDo: [ :each | 
@@ -100,7 +99,7 @@ ImageCleaner >> cleanUpForRelease [
 		cleanOutUndeclared; 
 		fixObsoleteReferences;
 		cleanUp: true except: #() confirming: false.	
-
+	HashedCollection rehashAll.		
 	Author reset
 ]
 
