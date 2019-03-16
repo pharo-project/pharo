@@ -51,9 +51,9 @@ NNavDirectionChild class >> findSelectionFor: navigationContext [
 
 { #category : #'step into' }
 NNavDirectionChild class >> selectionChildrenScope: selected for: node [
+	
 	| children |
-
 	node ifNil: [ ^selected ].
 	children := self childNodeFor: node.
-	^children ifNil: [ selected ] ifNotNil: [children start to: children stop]
+	^ children ifNil: [ selected ] ifNotNil: [ children start to: children stop ]
 ]
