@@ -354,7 +354,7 @@ RubSmalltalkEditor >> completionAround:  aBlock  keyStroke: anEvent [
 
 { #category : #'completion engine' }
 RubSmalltalkEditor >> completionEngine [
-	^ completionEngine ifNil: [ Transcript show: 'Alert'. (Smalltalk tools codeCompletion) ]
+	^ completionEngine
 ]
 
 { #category : #'completion engine' }
