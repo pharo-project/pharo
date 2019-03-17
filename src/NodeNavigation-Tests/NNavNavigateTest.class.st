@@ -9,8 +9,8 @@ Class {
 
 { #category : #sibling }
 NNavNavigateTest >> testNextBrotherItsTheNextOfTheChilds [
-	| bigBrother littleBrother brother parent |
-	
+
+	| bigBrother littleBrother brother parent |	
 	parent := RBSequenceNode new.
 	bigBrother := RBVariableNode named: 'pp'. 
 	parent addNode: bigBrother.
@@ -18,16 +18,16 @@ NNavNavigateTest >> testNextBrotherItsTheNextOfTheChilds [
 	littleBrother := RBVariableNode named: 'roque'.
 	parent addNode: littleBrother.
 	
-	brother := NNavDirectionSibling brotherNodeFor: bigBrother .
-	self assert: brother equals: littleBrother  .
+	brother := NNavDirectionSibling brotherNodeFor: bigBrother.
+	self assert: brother equals: littleBrother
 	
 
 ]
 
 { #category : #'sibling-prev' }
 NNavNavigateTest >> testNextBrotherItsThePreviousOfTheChilds [
+
 	| bigBrother middleBrother littleBrother brother parent |
-	
 	parent := RBSequenceNode new.
 	bigBrother := RBVariableNode named: 'big'. 
 	parent addNode: bigBrother.
@@ -38,16 +38,16 @@ NNavNavigateTest >> testNextBrotherItsThePreviousOfTheChilds [
 	littleBrother := RBVariableNode named: 'little'.
 	parent addNode: littleBrother.
 	
-	brother := NNavDirectionPreviousBrother brotherNodeFor: middleBrother .
-	self assert: brother equals: bigBrother  .
+	brother := NNavDirectionPreviousBrother brotherNodeFor: middleBrother.
+	self assert: brother equals: bigBrother
 	
 
 ]
 
 { #category : #'sibling-prev' }
 NNavNavigateTest >> testNextBrotherWhenItsTheFirstItsTheLast [
-	| bigBrother middleBrother littleBrother brother parent |
-	
+
+	| bigBrother middleBrother littleBrother brother parent |	
 	parent := RBSequenceNode new.
 	bigBrother := RBVariableNode named: 'big'. 
 	parent addNode: bigBrother.
@@ -59,13 +59,13 @@ NNavNavigateTest >> testNextBrotherWhenItsTheFirstItsTheLast [
 	parent addNode: littleBrother.
 	
 	brother := NNavDirectionPreviousBrother brotherNodeFor: bigBrother.
-	self assert: brother equals: littleBrother .
+	self assert: brother equals: littleBrother
 ]
 
 { #category : #sibling }
 NNavNavigateTest >> testNextBrotherWhenItsTheLasItsTheFirst [
-	| bigBrother littleBrother brother parent |
-	
+
+	| bigBrother littleBrother brother parent |	
 	parent := RBSequenceNode new.
 	bigBrother := RBVariableNode named: 'pp'. 
 	parent addNode: bigBrother.
@@ -74,11 +74,12 @@ NNavNavigateTest >> testNextBrotherWhenItsTheLasItsTheFirst [
 	parent addNode: littleBrother.
 	
 	brother := NNavDirectionSibling brotherNodeFor: littleBrother.
-	self assert: brother equals: bigBrother .
+	self assert: brother equals: bigBrother
 ]
 
 { #category : #children }
 NNavNavigateTest >> testNextChildWhenHasChildsIsTheBiggerOne [
+
 	| bigBrother littleBrother child parentRenamed |
 	
 	parentRenamed := RBSequenceNode new.
@@ -88,42 +89,42 @@ NNavNavigateTest >> testNextChildWhenHasChildsIsTheBiggerOne [
 	littleBrother := RBVariableNode named: 'roque'.
 	parentRenamed addNode: littleBrother.
 	
-	child := NNavDirectionFirstChild childNodeFor:  parentRenamed .
-	self assert: child equals: bigBrother .
+	child := NNavDirectionFirstChild childNodeFor:  parentRenamed.
+	self assert: child equals: bigBrother
 ]
 
 { #category : #children }
 NNavNavigateTest >> testNextChildWhenItHasNotChildsItIsNil [
-	| child parent |
-	
+
+	| child parent |	
 	parent := RBSequenceNode new.
 	
-	child := NNavDirectionFirstChild childNodeFor:  parent .
-	self assert: child isNil .
+	child := NNavDirectionFirstChild childNodeFor:  parent.
+	self assert: child isNil
 ]
 
 { #category : #sibling }
 NNavNavigateTest >> testNotBrotherWhenOrphan [
-	| orphanNode brother |
-	
+
+	| orphanNode brother |	
 	orphanNode := RBVariableNode named: 'roque'.
 	brother := NNavDirectionPreviousBrother brotherNodeFor: orphanNode.
-	self assert: brother isNil.
+	self assert: brother isNil
 ]
 
 { #category : #'sibling-prev' }
 NNavNavigateTest >> testNotPreviousBrotherWhenOrphan [
-	| orphanNode brother |
-	
+
+	| orphanNode brother |	
 	orphanNode := RBVariableNode named: 'roque'.
 	brother := NNavDirectionPreviousBrother  brotherNodeFor: orphanNode.
-	self assert: brother isNil.
+	self assert: brother isNil
 ]
 
 { #category : #sibling }
 NNavNavigateTest >> testSameNodeIsTheBrotherWhenOnlyChild [
-	| uniqueChildNode brother parent |
-	
+
+	| uniqueChildNode brother parent |	
 	parent := RBSequenceNode new.
 	uniqueChildNode := RBVariableNode named: 'roque'.
 	parent addNode: uniqueChildNode.
@@ -132,5 +133,5 @@ NNavNavigateTest >> testSameNodeIsTheBrotherWhenOnlyChild [
 	self assert: parent children size equals: 1.
 	
 	brother := NNavDirectionSibling brotherNodeFor: uniqueChildNode.
-	self assert: brother equals: uniqueChildNode .
+	self assert: brother equals: uniqueChildNode
 ]
