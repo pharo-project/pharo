@@ -92,7 +92,8 @@ Class {
 		'cursor',
 		'segments',
 		'getMenuPolicy',
-		'mouseDownPoint'
+		'mouseDownPoint',
+		'completionEngine'
 	],
 	#classVars : [
 		'BackgroundColor',
@@ -535,6 +536,14 @@ RubAbstractTextArea >> closingDelimiters [
 
 ]
 
+{ #category : #completion }
+RubAbstractTextArea >> completionPostAction [
+	Transcript show: 'a';cr.
+	self hasCompletionEngine 
+		ifTrue: [ completionEngine uniqueInstance closeMenu ]
+
+]
+
 { #category : #composing }
 RubAbstractTextArea >> compose [
 
@@ -910,8 +919,7 @@ RubAbstractTextArea >> handleKeystroke: anEvent [
 		ifTrue: [
 			"We need to check for completion here because otherwise it will try to handle the keystroke, 
 			even if it was already processed."
-			(Smalltalk tools hasToolNamed: #codeCompletion) 
-				ifTrue: [ Smalltalk tools codeCompletion uniqueInstance closeMenu ].
+			self completionPostAction.
 			^ self].
 	(self handlesKeyStroke: anEvent)
 		ifFalse: [^ self].
@@ -982,6 +990,13 @@ RubAbstractTextArea >> handlesMouseDown: evt [
 RubAbstractTextArea >> handlesMouseOver: evt [ 
 	"Do I want to receive mouseEnter: and mouseLeave: when the button is up and the hand is empty?"
 	^ self enabled
+]
+
+{ #category : #completion }
+RubAbstractTextArea >> hasCompletionEngine [
+	
+	^ completionEngine isNil not
+	
 ]
 
 { #category : #'accessing decorators' }
@@ -1679,6 +1694,12 @@ RubAbstractTextArea >> selectionStart [
 { #category : #'accessing selection' }
 RubAbstractTextArea >> selectionStop [
 	^ self editingState selectionStop
+]
+
+{ #category : #completion }
+RubAbstractTextArea >> setCompletionEngine: anEngine [
+
+	completionEngine := anEngine
 ]
 
 { #category : #private }

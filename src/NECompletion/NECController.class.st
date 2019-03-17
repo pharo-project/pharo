@@ -43,7 +43,7 @@ NECController class >> codeCompletionAround: aBlock textMorph: aTextMorph keyStr
 	"Inserts code completion if allowed in this morph"
 	
 	| editor stringHolder completionAllowed controller |
-	
+	Transcript show: 'x'.
 	editor := aTextMorph editor.
 	stringHolder := editor ifNotNil:[ editor model ].
 	completionAllowed := self allowModel: stringHolder.
