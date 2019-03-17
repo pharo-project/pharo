@@ -589,6 +589,14 @@ RubSmalltalkEditorTest >> testInstanceVersusSharedCompletionEngine [
 	textEditor := RubSmalltalkEditor new.
 	self assert: textEditor completionEngine isNil.
 	
+	RubSmalltalkEditor completionEngine: NECController.
+	self assert: textEditor completionEngine isNil.
+	
+	"but now when we create a new one it gets the correct engine"
+	textEditor := RubSmalltalkEditor new.
+	self assert: textEditor completionEngine equals: NECController.
+	
+	
 	] ensure: [ RubSmalltalkEditor completionEngine: currentCompletion ]
 	
 ]
