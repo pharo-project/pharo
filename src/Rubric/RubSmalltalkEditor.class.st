@@ -6,7 +6,8 @@ Class {
 	#superclass : #RubTextEditor,
 	#instVars : [
 		'selectorChooser',
-		'notificationStrategy'
+		'notificationStrategy',
+		'completionEngine'
 	],
 	#classVars : [
 		'CompletionEngine'
@@ -131,6 +132,12 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		do: [ :target | target editor widenSelectionOfIt ]
 		description: 'Widen selection'.
 	
+]
+
+{ #category : #'completion engine' }
+RubSmalltalkEditor class >> completionEngine [
+	
+	^ CompletionEngine
 ]
 
 { #category : #'completion engine' }
@@ -347,13 +354,14 @@ RubSmalltalkEditor >> completionAround:  aBlock  keyStroke: anEvent [
 
 { #category : #'completion engine' }
 RubSmalltalkEditor >> completionEngine [
-	^ CompletionEngine
+	^ completionEngine ifNil: [ Transcript show: 'Alert'. (Smalltalk tools codeCompletion) ]
 ]
 
 { #category : #'completion engine' }
 RubSmalltalkEditor >> completionEngine: aCompletionEngine [
 
-	CompletionEngine := aCompletionEngine
+	completionEngine := aCompletionEngine.
+	self textArea setCompletionEngine: aCompletionEngine. 
 ]
 
 { #category : #'new selection' }
@@ -734,7 +742,10 @@ RubSmalltalkEditor >> implementorsOfIt: aKeyboardEvent [
 { #category : #initialization }
 RubSmalltalkEditor >> initialize [
 	super initialize.
-	notificationStrategy := RubTextInsertionStrategy new editor: self
+	notificationStrategy := RubTextInsertionStrategy new editor: self.
+	completionEngine := CompletionEngine. 
+	"this way we can instance-based and shared completion between all the instances
+	of editor instances."
 ]
 
 { #category : #keymapping }
@@ -782,7 +793,7 @@ RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 { #category : #'completion engine' }
 RubSmalltalkEditor >> isCompletionEnabled [
 
-	^ CompletionEngine isNil not
+	^ completionEngine isNil not
 ]
 
 { #category : #testing }

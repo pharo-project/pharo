@@ -575,6 +575,24 @@ RubSmalltalkEditorTest >> testBestNodeWithValidValueMidSource [
 
 ]
 
+{ #category : #'tests-completion' }
+RubSmalltalkEditorTest >> testInstanceVersusSharedCompletionEngine [
+
+	| textEditor currentCompletion |
+	[ currentCompletion := RubSmalltalkEditor completionEngine.
+	textEditor := RubSmalltalkEditor new.
+	self assert: textEditor completionEngine equals: currentCompletion.
+	
+	RubSmalltalkEditor noCompletion.
+	"here we show that an existing editor is not impacted by the shared behavior"
+	self assert: textEditor completionEngine equals: currentCompletion.
+	textEditor := RubSmalltalkEditor new.
+	self assert: textEditor completionEngine isNil.
+	
+	] ensure: [ RubSmalltalkEditor completionEngine: currentCompletion ]
+	
+]
+
 { #category : #'tests-jumpFind' }
 RubSmalltalkEditorTest >> testJumpOnAssignment [
 	"Should position after an asignment giving the possibility to widen selection on the assigned expressions"
@@ -1006,6 +1024,39 @@ RubSmalltalkEditorTest >> testPlaygroundWidenOnSelf [
 	self 
 		positionBefore: 'msg2';
 		assertWidensToRegex: ';.*msg2' playground: true
+	
+]
+
+{ #category : #'tests-completion' }
+RubSmalltalkEditorTest >> testSettingCompletionFromEditor [
+
+	| currentCompletion |
+	[ currentCompletion := RubSmalltalkEditor completionEngine. 
+	
+	RubSmalltalkEditor completionEngine: NECController.
+	self assert: RubSmalltalkEditor completionEngine equals: NECController.
+	
+	] ensure: [ RubSmalltalkEditor completionEngine: currentCompletion ]
+	
+]
+
+{ #category : #'tests-completion' }
+RubSmalltalkEditorTest >> testSettingCompletionFromEditorToTextArea [
+
+	| textEditor currentCompletion |
+	[ currentCompletion := RubSmalltalkEditor completionEngine.
+	
+	RubSmalltalkEditor completionEngine: NECController.
+	textEditor := RubSmalltalkEditor new.
+	self assert: textEditor completionEngine equals: NECController.
+	textEditor textArea: RubEditingArea new. 
+	self assert: textEditor textArea completionEngine equals: NECController.
+	
+	textEditor completionEngine: nil. 
+	self assert: textEditor completionEngine equals: nil.
+	self assert: textEditor textArea completionEngine equals: nil.
+	
+	] ensure: [ RubSmalltalkEditor completionEngine: currentCompletion ]
 	
 ]
 

@@ -537,6 +537,13 @@ RubAbstractTextArea >> closingDelimiters [
 ]
 
 { #category : #completion }
+RubAbstractTextArea >> completionEngine [
+	
+	^ completionEngine 
+	
+]
+
+{ #category : #completion }
 RubAbstractTextArea >> completionPostAction [
 	Transcript show: 'a';cr.
 	self hasCompletionEngine 

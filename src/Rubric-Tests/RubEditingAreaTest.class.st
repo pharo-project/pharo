@@ -90,9 +90,3 @@ RubEditingAreaTest >> testMouseMoveAfterDoubleClick [
 	self assert: area markBlock stringIndex equals: 9.
 	self assert: area pointBlock stringIndex equals: 17.
 ]
-
-{ #category : #'tests-accessing selection' }
-RubEditingAreaTest >> testTextAreaHasCompletion [
-	self deny: area hasCompletionEngine.
-	self 
-]
