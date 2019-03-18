@@ -333,7 +333,7 @@ ClassTest >> testRemoveClassSlot [
 	tutu removeClassSlot: slot2.
 	self assert: tutu class instVarNames equals: #(#X).
 	tutu removeClassSlot: slot1.
-	self assert: tutu class instVarNames equals: #()
+	self assert: tutu class instVarNames equals: #().
 ]
 
 { #category : #'tests - access' }
