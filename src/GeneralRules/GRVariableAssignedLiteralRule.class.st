@@ -31,7 +31,7 @@ GRVariableAssignedLiteralRule >> check: aSlot of: aClass forCritiquesDo: aCritic
 
 	aClass withAllSubclassesDo: [ :class |
 		class methods do: [ :method |
-			(method writesField: aSlot index) ifTrue: [ 
+			(method writesSlot: aSlot) ifTrue: [ 
 				theMethod
 					ifNotNil: [ ^ self ]
 					ifNil: [theMethod := method ] ] ] ].
