@@ -17,18 +17,10 @@ BaselineOfTelePharoSupport >> baseline: spec [
 	repository := self packageRepositoryURL.
 
 	spec for: #common do: [
-		self tonel: spec.
-
 		spec baseline: 'SUnit' with: [spec repository: repository].
+		spec baseline: 'Display' with: [spec repository: repository].
 
 		spec package: 'SortFunctions-Core'.
 		spec package: 'Tool-Registry'.
 	].
-]
-
-{ #category : #baseline }
-BaselineOfTelePharoSupport >> tonel: spec [
-	spec
-		baseline: 'Tonel' 
-		with: [ spec repository: 'github://pharo-vcs/tonel:v1.0.13' ]
 ]
