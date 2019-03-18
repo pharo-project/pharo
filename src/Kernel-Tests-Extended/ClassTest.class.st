@@ -69,13 +69,14 @@ ClassTest >> tearDown [
 
 { #category : #tests }
 ClassTest >> testAddClassSlot [
-
-	| tutu |
+	| tutu slot1 slot2 |
 	tutu := Smalltalk globals at: #TUTU.
-	tutu addClassSlot: #'X' => InstanceVariableSlot.
-	self assert: tutu class instVarNames = #(#'X').
-	tutu addClassSlot: #'Y' => InstanceVariableSlot.
-	self assert: tutu class instVarNames = #(#'X' #'Y')
+	slot1 := #X => InstanceVariableSlot.
+	slot2 := #Y => InstanceVariableSlot.
+	tutu addClassSlot: slot1.
+	self assert: tutu class instVarNames equals: #(#X).
+	tutu addClassSlot: slot2.
+	self assert: tutu class instVarNames equals: #(#X #Y)
 ]
 
 { #category : #tests }
@@ -317,6 +318,22 @@ ClassTest >> testReferencedClasses [
 		do: [ :assoc | 
 			self assert: assoc key referencedClasses notEmpty.
 			self assert: (assoc key referencedClasses asSet includesAll: assoc value asSet)]
+]
+
+{ #category : #tests }
+ClassTest >> testRemoveClassSlot [
+	| tutu slot1 slot2 |
+	tutu := Smalltalk globals at: #TUTU.
+	slot1 := #X => InstanceVariableSlot.
+	slot2 := #Y => InstanceVariableSlot.
+	tutu addClassSlot: slot1.
+	self assert: tutu class instVarNames equals: #(#X).
+	tutu addClassSlot: slot2.
+	self assert: tutu class instVarNames equals: #(#X #Y).
+	tutu removeClassSlot: slot2.
+	self assert: tutu class instVarNames equals: #(#X).
+	tutu removeClassSlot: slot1.
+	self assert: tutu class instVarNames equals: #().
 ]
 
 { #category : #'tests - access' }
