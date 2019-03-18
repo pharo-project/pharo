@@ -310,6 +310,8 @@ SmalltalkEditor >> classNamesContainingIt [
 { #category : #private }
 SmalltalkEditor >> codeCompletionAround:  aBlock textMorph:  aTextMorph keyStroke: anEvent [
 	"I'm a editor for Smalltalk, so, ok do completion around"
+	
+	Transcript show: 'Old stuff';cr.
 	Smalltalk tools codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: anEvent
 ]
 
