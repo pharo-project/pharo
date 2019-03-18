@@ -7,7 +7,7 @@ Class {
 	#category : #'Athens-Morphic'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 AthensTextMorph >> contents: stringOrText wrappedTo: width [
 	"Accept new text contents.  Lay it out, wrapping to width.
 	Then fit my height to the result."
@@ -16,7 +16,7 @@ AthensTextMorph >> contents: stringOrText wrappedTo: width [
 	self newContents: stringOrText
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 AthensTextMorph >> createParagraph [
 	| newParagraph |
 	self setDefaultContentsIfNil.
@@ -42,13 +42,13 @@ AthensTextMorph >> createParagraph [
 	^ paragraph
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextMorph >> paragraph [
 	^ paragraph ifNil: [ paragraph := self createParagraph ].
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextMorph >> selectionColor: aColor [
 	selectionColor := aColor.
 	

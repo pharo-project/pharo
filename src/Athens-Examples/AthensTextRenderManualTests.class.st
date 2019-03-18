@@ -2,23 +2,22 @@
 Visual tests for correct rendering of text using Athens
 "
 Class {
-	#name : #AthensTextRenderTest,
+	#name : #AthensTextRenderManualTests,
 	#superclass : #Object,
 	#category : #'Athens-Examples-Demos'
 }
 
 { #category : #utilities }
-AthensTextRenderTest class >> surfaceClass [
+AthensTextRenderManualTests class >> surfaceClass [
 	^ AthensCairoSurface
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> test1 [
+AthensTextRenderManualTests class >> test1 [
 	<example>
 	
 	|  t  c  |
-
-t := '
+	t := '
 AthensTextRenderTest test1
 
 leftFlush
@@ -35,93 +34,60 @@ TextStyle default alignment
 
 
 globalBounds:  toLocal: 
-' 
-asText .
+' asText.
 
 	t addAttribute: (TextColor new color: Color red) from: 3 to: 10.
 	t addAttribute: (TextEmphasis italic) from: 5 to: 13.
-
 	c := AthensTextComposer scan: t for: AthensTextScanner new.
-
-
 	AthensSceneView new
-	scene:  [:canvas |
-		canvas pathTransform scaleBy: 0.8.
-		c renderOn: canvas
-	];
+		scene:  [:canvas |
+			canvas pathTransform scaleBy: 0.8.
+			c renderOn: canvas ];
 	openInWindow
-	 
-
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> test2 [
+AthensTextRenderManualTests class >> test2 [
 	<example>
 	
-	|  t  c surf |
+	| t c surf |
 	t := self testText. 
 	t addAttribute: (AthensTextBackground new color: (Color green alpha: 0.3 )) from: 1 to: 267.
-
 	c := AthensTextComposer scan: t for: AthensTextScanner new.
-
 	surf := self surfaceClass extent: Display extent.
-	
 	surf drawDuring: [ :canvas | 
-		
-		canvas setPaint: (Color white ).
+		canvas setPaint: (Color white).
 		canvas drawShape: (0@0 corner: 500@300).
 		canvas pathTransform scaleBy: 1.
-
 		canvas pathTransform translateX: 0 Y: 0.
-
 		canvas setPaint: Color yellow.
 		canvas pathTransform rotateByDegrees: 0.
 		c renderOn: canvas
 	].
-
 	Display getCanvas translucentImage: surf asForm at: 0@0
-
-
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> test3 [
+AthensTextRenderManualTests class >> test3 [
 	<example>
 	
-	|  t  c surf |
-
-"t := '12345 pi kl mn op gj the text must flow' "
-
-t := 'qW' 
-asText .
-	t addAttribute: (TextFontReference toFont: (
-LogicalFont
- familyName: 'Arial'
- pointSize: 8
-)).
-
+	| t  c surf |
+	t := 'qW' asText.
+	t addAttribute: (TextFontReference toFont: (LogicalFont familyName: 'Arial' pointSize: 8)).
 	c := AthensTextComposer scan: t for: AthensTextScanner new.
-
 	surf := self surfaceClass extent: Display extent.
 	surf drawDuring: [ :canvas | 
-		
 		canvas setPaint: (Color yellow alpha: 0.5).
 		canvas drawShape: (0@0 corner: 300@300).
-
 		canvas pathTransform translateBy: 200@200.
-				
-"		canvas pathTransform rotateByDegrees: 90. "
 		canvas pathTransform scaleBy: 4.
-	1 to: 10 do: [:i |
-		
-		canvas setPaint: (Color blue alpha: 0.5).
-		canvas drawShape: (0@0 corner: 100@10).
-		
-		c renderOn: canvas.
-		
-		canvas pathTransform rotateByDegrees: 5. 
-		canvas pathTransform translateBy: 0 @11 .
-	].
+		1 to: 10 do: [:i |
+			canvas setPaint: (Color blue alpha: 0.5).
+			canvas drawShape: (0@0 corner: 100@10).
+			c renderOn: canvas.
+			canvas pathTransform rotateByDegrees: 5. 
+			canvas pathTransform translateBy: 0 @11.
+		].
 	].
 	Display getCanvas translucentImage: surf asForm at: 100@100
 
@@ -129,32 +95,18 @@ LogicalFont
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> test4 [
+AthensTextRenderManualTests class >> test4 [
 	<example>
 	
-	|  t  c surf |
-
-"t := '12345 pi kl mn op gj the text must flow' "
-
-t := 'Unfortunately this class has not been documented yet.' 
-asText .
-	t addAttribute: (TextFontReference toFont: (
-LogicalFont
- familyName: 'Tahoma'
- pointSize: 10
-)).
+	| t  c surf |
+	t := 'Unfortunately this class has not been documented yet.' asText.
+	t addAttribute: (TextFontReference toFont: (LogicalFont familyName: 'Tahoma' pointSize: 10)).
 	t addAttribute: (TextColor new color: Color red) from: 3 to: 10.
-
-
 	c := AthensTextComposer scan: t for: AthensTextScanner new.
-
 	surf := self surfaceClass extent: Display extent.
-	
 	surf drawDuring: [ :canvas | 
-		
 		canvas setPaint: (Color yellow alpha: 0.5).
 		canvas drawShape: (0@0 corner: 300@300).
-
 		canvas pathTransform scaleBy: 1.
 		1 to: 20 do: [:i |
 			c renderOn: canvas.
@@ -167,28 +119,17 @@ LogicalFont
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> test5 [
+AthensTextRenderManualTests class >> test5 [
 	<example>
 	
-	|  t  c surf |
-
-"t := '12345 pi kl mn op gj the text must flow' "
-
-t := 'U' 
-asText .
-	t addAttribute: (TextFontReference toFont: (
-LogicalFont
- familyName: 'Tahoma'
- pointSize: 10
-)).
+	| t  c surf |
+	t := 'U' asText.
+	t addAttribute: (TextFontReference toFont: (LogicalFont familyName: 'Tahoma' pointSize: 10)).
 	c := AthensTextComposer scan: t for: AthensTextScanner new.
-
 	surf := self surfaceClass extent: Display extent.
 	surf drawDuring: [ :canvas | 
-		
 		canvas setPaint: (Color yellow alpha: 0.5).
 		canvas drawShape: (0@0 corner: 300@300).
-
 		canvas pathTransform scaleBy: 1.
 		1 to: 20 do: [:i |
 			c renderOn: canvas.
@@ -201,21 +142,17 @@ LogicalFont
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> testBlitting [
+AthensTextRenderManualTests class >> testBlitting [
 	<example>
 	
 	| fnt form blt |
-
-	fnt := LogicalFont
-	 familyName: 'Arial'
- 	pointSize: 24.
+	fnt := LogicalFont familyName: 'Arial' pointSize: 24.
 
 	form := fnt realFont
 		glyphOf: $W
 				destDepth: 8
 				colorValue: 1
 				subpixelPosition: 0.
-
 
 	blt := BitBlt toForm: Display.
 	
@@ -226,32 +163,24 @@ AthensTextRenderTest class >> testBlitting [
 		halftoneForm: nil;
 		combinationRule: 41;
 		width: form width;
-		height: form height;
-		
+		height: form height;		
 		copyBitsColor: 0
 		alpha: 255
 		gammaTable:  FreeTypeSettings current gammaTable
 		ungammaTable: FreeTypeSettings current gammaInverseTable.
-		
-"	blt copyForm: form to: 100@100 rule: 41."
 	Display forceToScreen.
 	
-"
-	Display getCanvas translucentImage: form at: 0@0.		
 
-"
 	
 	
 
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> testText [
-	<example>
+AthensTextRenderManualTests class >> testText [
 	
 	|  t  |
-
-t := 'The safety Dconstraint is that the garbage collector 
+	t := 'The safety constraint is that the garbage collector 
 MUST NOT collect any storage that then becomes needed to continue correct execution of the program. Should weak references 
 be added, then garbage collection decisions become observable. 
 Based on a suggestion from Cameron McCormack, we state the 
@@ -267,37 +196,29 @@ collected, such as by nullifying a weak reference to X, if operational
 semantics of remaining execution requires the traversal of a strong 
 (non-weak) reference to X, then the previous report demonstrates a 
 safety violation. 
-' 
-asText .
-	t addAttribute: (TextFontReference toFont: (
-LogicalFont
- familyName: 'Arial'
- pointSize: 8
-)).
+' asText.
+	t addAttribute: (TextFontReference toFont: (LogicalFont familyName: 'Arial' pointSize: 8)).
 	t addAttribute: (TextEmphasis italic) from: 5 to: 100.
 	t addAttribute: (TextColor new color: (Color red)) from: 10 to: 60.
 	t addAttribute: (TextEmphasis italic) from: 100 to: 200.
 	t addAttribute: (TextColor new color: Color green) from: 230 to: 360.
-
-	t addAttribute: (
-		TextFontReference toFont: ( LogicalFont familyName: 'Tahoma'  pointSize: 14)) from: 88 to: 200.
-
+	t addAttribute: (TextFontReference toFont: ( LogicalFont familyName: 'Tahoma'  pointSize: 14)) from: 88 to: 200.
 	^ t
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> testWindow [
+AthensTextRenderManualTests class >> testWindow [
 	<example>
 
-	^ (AthensPluggableTextMorph
+	^ ((PluggableTextMorph
 		on: self
 		text: #testText
-		accept: nil) embeddedInMorphicWindowLabeled: 'A fancy looking title text'
+		accept: nil) embeddedInMorphicWindowLabeled: 'A fancy looking title text') openInWorld
 
 ]
 
 { #category : #tests }
-AthensTextRenderTest class >> testWindowRender [
+AthensTextRenderManualTests class >> testWindowRender [
 	<example>
 	
 	| surf |

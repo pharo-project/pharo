@@ -213,6 +213,32 @@ FileReference >> exists [
 	^ filesystem exists: path
 ]
 
+{ #category : #versions }
+FileReference >> extractVersionNumberFrom: filename basename: basename extension: extension [
+	"Answer the version number written in filename considering 
+	that it consists of basename and extension.
+	For example filename=basename.10.extension will return 10.
+	filename=basename.extension without number will return 0
+	It returns nil if given file does not satisfy this pattern"
+
+	"ensure prefix basename."
+	| versionStart versionEnd |
+	(filename beginsWith: basename) ifFalse: [^nil].
+	(filename size > basename size and: [(filename at: basename size + 1) = $.]) 
+		ifFalse: [ ^nil ].
+	"ensure suffix .extension"
+	(filename endsWith: extension) ifFalse: [^nil].
+	(filename size > extension size and: [(filename at: filename size - extension size) = $.])
+		 ifFalse: [ ^nil ].
+	
+	versionStart := basename size + 2.
+	versionEnd := filename size - extension size - 1.
+	versionStart to: versionEnd do: [:i | 
+		(filename at: i) isDigit ifFalse: [ ^nil ] ].
+	versionStart > versionEnd ifTrue: [ ^0]. "means pattern baseline.extension"
+	^(filename copyFrom: versionStart to: versionEnd) asNumber
+]
+
 { #category : #accessing }
 FileReference >> fileSystem [
 	"Return the filesystem to which the receiver belong."
@@ -580,14 +606,11 @@ FileReference >> versionNumberFor: basename extension: extension [
 	"Answer the latest (largest) version number for the specified file.
 	0 = basename.extension exists, but nothing later.
 	nil = no file exists"
-
-	| regex maxVersion |
-
-	regex := (basename, '.(\d+).', extension) asRegex.
+	| maxVersion |
 	maxVersion := 0.
-	self fileSystem childNamesAt: self path do: [ :child |
-		(regex matches: child) ifTrue: 
-			[ maxVersion := maxVersion max: (regex subexpression: 2) asNumber ] ].
+	self fileSystem childNamesAt: self path do: [ :child | | childVersion |
+		childVersion := self extractVersionNumberFrom: child basename: basename extension: extension.
+		childVersion ifNotNil: [ maxVersion := maxVersion max: childVersion ]].
 	^maxVersion = 0
 		ifTrue: [ (self / (basename, '.', extension)) asFileReference exists 
 			ifTrue: [ 0 ]

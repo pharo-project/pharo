@@ -7,5 +7,5 @@ SmalltalkEditor >> isWorkspace [
 
 { #category : #'*NodeNavigation' }
 SmalltalkEditor >> sourceTextArea [
-	^morph
+	^ morph
 ]
