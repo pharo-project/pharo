@@ -1370,11 +1370,12 @@ ClassDescription >> whichCategoryIncludesSelector: aSelector [
 ]
 
 { #category : #'testing method dictionary' }
-ClassDescription >> whichSelectorsAccess: instVarName [ 
+ClassDescription >> whichSelectorsAccess: instVarName [
 	"Answer a set of selectors whose methods access the argument, 
 	instVarName, as a named instance variable."
 
 	| slot |
+	(self hasSlotNamed: instVarName) ifFalse: [ ^#() ].
 	slot := self slotNamed: instVarName.
 	^ self selectors select:  [:sel | | method |
 		method := self compiledMethodAt: sel.
