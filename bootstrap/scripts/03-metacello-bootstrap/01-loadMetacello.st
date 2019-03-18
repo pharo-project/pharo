@@ -55,3 +55,5 @@ MCGitHubRepository initialize.
 MCGitBasedNetworkRepository initialize.
 
 SystemAnnouncer restoreAllNotifications.
+
+ZnMimeType initialize.
