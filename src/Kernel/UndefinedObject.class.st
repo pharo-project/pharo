@@ -50,6 +50,11 @@ UndefinedObject >> asSetElement [
 	^ SetElement withNil
 ]
 
+{ #category : #accessing }
+UndefinedObject >> at: index put: anObject [ 
+	self shouldNotImplement 
+]
+
 { #category : #'bottom context' }
 UndefinedObject >> canHandleSignal: exception [
 	"When no more handler (on:do:) context left in sender chain this gets called"
