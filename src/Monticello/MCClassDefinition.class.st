@@ -268,8 +268,7 @@ MCClassDefinition >> createClass [
 				classTraitComposition: self classTraitCompositionCompiled;
 				comment: comment stamp: commentStamp;
 				category: category;
-				environment: superClass environment;
-				copyClassSlotsFromExistingClass ] ]
+				environment: superClass environment ] ]
 		on: Warning , DuplicatedVariableError
 		do: [ :ex | ex resume ]
 ]

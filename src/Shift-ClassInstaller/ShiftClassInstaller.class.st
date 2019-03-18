@@ -67,17 +67,29 @@ ShiftClassInstaller >> comment: newClass [
 	builder comment ifNotNil: [ newClass classComment: builder comment stamp: builder commentStamp ]
 ]
 
+{ #category : #building }
+ShiftClassInstaller >> copyClassSlotsFromExistingClass [
+	self builder layoutDefinition copyClassSlotsIfNeeded: oldClass class slots
+]
+
 { #category : #copying }
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
-	| newObject |
+	| newObject hiddenSlots |
 	
 	newObject := newClass isVariable
 		ifTrue: [ newClass basicNew: oldObject size ]
 		ifFalse: [ newClass basicNew ].
 
+	"first initalize all hidden slots"
+	hiddenSlots := newClass classLayout allSlots reject: [:each | each isVisible].
+	hiddenSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
+			newSlot initialize: newObject.
+			newSlot write: (oldSlot read: oldObject) to: newObject ]  ].
+
+	"the initalize all visible slots"
 	newClass allSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
 			newSlot initialize: newObject.
-			newSlot write: (oldSlot read: oldObject) to: newObject ] ].
+		   newSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	newClass isVariable
 		ifTrue: [ 1 to: oldObject basicSize do: [ :offset | newObject basicAt: offset put: (oldObject basicAt: offset) ] ].
@@ -151,6 +163,9 @@ ShiftClassInstaller >> make: aBlock [
 
 	[	
 		builder oldClass: oldClass.
+		
+		self copyClassSlotsFromExistingClass.
+		
 		newClass := builder build.
 
 		self validateReadOnlyInstancesOf: oldClass.

@@ -1,7 +1,7 @@
 Class {
 	#name : #SlotLayoutExtensionTest,
 	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #helpers }

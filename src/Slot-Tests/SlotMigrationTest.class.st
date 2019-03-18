@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'instance'
 	],
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #tests }

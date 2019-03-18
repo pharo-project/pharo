@@ -1,13 +1,16 @@
+"
+tests for Slots 
+"
 Class {
 	#name : #SlotTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'ivarForTesting'
 	],
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-VariablesAndSlots'
 }
 
-{ #category : #tests }
+{ #category : #'tests - misc' }
 SlotTest >> testAsSlotCollection [
 	
  	self assert: 'a b' asSlotCollection = {#a => InstanceVariableSlot. #b => InstanceVariableSlot}.
@@ -28,27 +31,27 @@ ivarH ivarE
 ' asSlotCollection collect: #name) = #(#ivarA #ivarB #ivarC #ivarD #iv2arF #ivarG #ivarH #ivarE)
 ]
 
-{ #category : #'tests - properties' }
+{ #category : #'tests - read/write' }
 SlotTest >> testIsReadInMethod [
 	
 	ivarForTesting printString.
 	self assert: ((self class slotNamed: #ivarForTesting) isReadIn: self class >> testSelector)
 ]
 
-{ #category : #'tests - properties' }
+{ #category : #'tests - read/write' }
 SlotTest >> testIsWrittenInMethod [
 	
 	ivarForTesting := #test.
 	self assert: ((self class slotNamed: #ivarForTesting) isWrittenIn: self class >> testSelector)
 ]
 
-{ #category : #'tests - properties' }
+{ #category : #'tests - read/write' }
 SlotTest >> testNotReadInMethod [
 	
 	self deny: ((self class slotNamed: #ivarForTesting) isReadIn: self class >> testSelector)
 ]
 
-{ #category : #'tests - properties' }
+{ #category : #'tests - read/write' }
 SlotTest >> testNotWrittenInMethodWhenItIsOnlyRead [
 	
 	ivarForTesting printString.

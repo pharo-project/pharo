@@ -51,14 +51,22 @@ DoesNotUnderstandDebugAction >> closeWindow [
 ]
 
 { #category : #private }
-DoesNotUnderstandDebugAction >> createMissingClassWith: variableNode in: aContext [
-	|  previousContext  |
+DoesNotUnderstandDebugAction >> createMissingClassIn: aContext [
+	| senderContext variableNode previousContext errorMsgNode |
+	
+	variableNode := nil.
+	
+	[ senderContext := aContext sender.
+	errorMsgNode := senderContext method sourceNodeExecutedForPC: senderContext pc.
+	variableNode := self findUndeclaredVariableIn: errorMsgNode ]
+		on: Error
+		do: [ ^self ].
 		
 	OCUndeclaredVariableWarning new
 		node: variableNode;
 		defineClass: variableNode name.
 		
-	previousContext := aContext sender.
+	previousContext := aContext stack second.
 	
 	self closeWindow.
 	
@@ -83,7 +91,7 @@ DoesNotUnderstandDebugAction >> executeAction [
 	MessageNotUnderstood exception. Create a stub for the method that was
 	missing and proceed into it, or create a class if it was missing instead"
 	
-	| msg msgCategory chosenClass exception |
+	| msg msgCategory chosenClass |
 	
 	msg := self interruptedContext tempAt: 1.
 	exception := self interruptedContext tempAt: 2.
@@ -102,6 +110,14 @@ DoesNotUnderstandDebugAction >> executeAction [
 		inClass: chosenClass 
 		forContext: self interruptedContext.
 	self debugger selectTopContext
+]
+
+{ #category : #private }
+DoesNotUnderstandDebugAction >> findUndeclaredVariableIn: errorMsgNode [
+	^ errorMsgNode allChildren
+		detect: [ :n | n isVariable and: [ n isUndeclared ] ]
+		ifNone: [ errorMsgNode parent allChildren
+				detect: [ :n | n isVariable and: [ n isUndeclared ] ] ]
 ]
 
 { #category : #accessing }

@@ -1080,6 +1080,19 @@ FileReferenceTest >> testUpToAll [
 ]
 
 { #category : #'tests - handy utils' }
+FileReferenceTest >> testVersionNumberForComplexFileName [
+	
+	| dir |
+	[
+		dir := filesystem / 'dir'.
+		(dir / 'test?*file.ston') ensureCreateFile.
+	
+		self assert: (dir versionNumberFor: 'test?*file' extension: 'ston') equals: 0
+	
+	] 	ensure: [ (filesystem / 'dir') ensureDeleteAll ].
+]
+
+{ #category : #'tests - handy utils' }
 FileReferenceTest >> testVersionNumberForExtension [
 	
 	| childFiles dir |

@@ -635,13 +635,6 @@ Behavior >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlock 
 	^ self methodDict at: selector ifPresent: anotherBlock ifAbsent: aBlock
 ]
 
-{ #category : #'accessing method dictionary' }
-Behavior >> compress [
-	"Compact the method dictionary of the receiver."
-
-	self methodDict rehash
-]
-
 { #category : #queries }
 Behavior >> copiedFromSuperclass: method [
 	"Returns the methods that the receiver copied with its ancestors"
@@ -1482,11 +1475,7 @@ Behavior >> numberOfInstanceVariables [
 
 { #category : #initialization }
 Behavior >> obsolete [
-	"Invalidate and recycle local methods,
-	e.g., zap the method dictionary if can be done safely."
-	self canZapMethodDictionary
-		ifTrue: [self methodDict: self emptyMethodDictionary].
-
+	"nothing to be done"
 ]
 
 { #category : #'obsolete subclasses' }
@@ -1756,6 +1745,19 @@ Behavior >> sourceCodeAt: selector [
 Behavior >> sourceCodeAt: selector ifAbsent: aBlock [
 
 	^ (self compiledMethodAt: selector ifAbsent: [^ aBlock value]) sourceCode.
+]
+
+{ #category : #compiling }
+Behavior >> sourceCodeTemplate [
+	"Answer an expression to be edited and evaluated in order to define 
+	methods in this class or trait."
+
+	^ 'messageSelectorAndArgumentNames
+	"comment stating purpose of instance-side message"
+	"scope: class-variables  &  instance-variables"	
+			
+	| temporary variable names |
+	statements'
 ]
 
 { #category : #testing }

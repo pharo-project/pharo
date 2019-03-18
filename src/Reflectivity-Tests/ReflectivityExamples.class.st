@@ -53,6 +53,12 @@ ReflectivityExamples >> exampleAssignmentIvar [
 ]
 
 { #category : #examples }
+ReflectivityExamples >> exampleAssignmentIvar: anObject [
+	ivar := anObject.
+	^ivar
+]
+
+{ #category : #examples }
 ReflectivityExamples >> exampleBlock [
 	^ [2 + 3] value 
 ]
@@ -109,6 +115,11 @@ ReflectivityExamples >> exampleLiteral [
 { #category : #examples }
 ReflectivityExamples >> exampleLiteralArray [
 	^ #(1)
+]
+
+{ #category : #examples }
+ReflectivityExamples >> exampleMessageSend [
+	self tagExec: #yes
 ]
 
 { #category : #examples }

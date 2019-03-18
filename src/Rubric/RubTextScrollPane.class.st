@@ -57,7 +57,7 @@ RubTextScrollPane >> currentVScrollBarThickness [
 		ifFalse: [ 0 ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubTextScrollPane >> defaultScrollTarget [
 	^ RubEditingArea new
 ]
@@ -271,7 +271,7 @@ RubTextScrollPane >> position: aPoint [
 	super position: aPoint
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubTextScrollPane >> registerTextArea [
 	self hasTextArea
 		ifTrue: [
@@ -460,7 +460,7 @@ RubTextScrollPane >> unplug [
 	super unplug
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubTextScrollPane >> unregisterTextArea [
 	self hasTextArea
 		ifTrue: [ 

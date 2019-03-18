@@ -29,8 +29,7 @@ MorphicTextInputFieldAdapter >> adapt: aModel [
 { #category : #factory }
 MorphicTextInputFieldAdapter >> buildWidget [
 	| plu |
-	plu := PluggableTextFieldMorph new
-		convertTo: String;
+	plu := RubPluggableTextFieldMorph new
 		on: self
 			text: #getText
 			accept: #accept:
@@ -48,14 +47,14 @@ MorphicTextInputFieldAdapter >> buildWidget [
 		dropEnabled: self dropEnabled;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
-		acceptOnCR: self acceptOnCR;
-		maxLength: self presenter maxLength;
-		hideScrollBarsIndefinitely.
-
+		acceptOnCR: self acceptOnCR.
+		"maxLength: self presenter maxLength."
+		"comment for now."
 	self presenter whenTextChangedDo: [ :text | plu setText: text ].
 	self presenter whenPlaceholderChangedDo: [ :text | plu ghostText: text ].
 	self presenter whenVisibilityChangedDo: [ :isVisible | plu encrypted: isVisible not ].	
-	self presenter whenMaxLengthChangedDo: [ :length | plu maxLength: length ].
+	"self presenter whenMaxLengthChangedDo: [ :length | plu maxLength: length ]."
+	"comment for now."
 	^ plu
 ]
 

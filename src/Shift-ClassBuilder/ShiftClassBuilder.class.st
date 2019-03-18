@@ -191,19 +191,6 @@ ShiftClassBuilder >> compileMethods [
 
 ]
 
-{ #category : #copying }
-ShiftClassBuilder >> copyClassSlotsFromExistingClass [
-	"Ugly helper method: I copy over the class slots of the class in my builder environment."
-
-	| anOldClass oldSlots |
-	
-	anOldClass := self environment at: name ifAbsent: [ ^ self ].
-	oldSlots := anOldClass class classLayout slotScope visibleSlots.
-	
-	self layoutDefinition copyClassSlotsIfNeeded: oldSlots
-
-]
-
 { #category : #building }
 ShiftClassBuilder >> copyOrganization [
 	newClass organization copyFrom: oldClass organization.
@@ -302,7 +289,6 @@ ShiftClassBuilder >> fillFor: aClass [
 		sharedPools: aClass sharedPoolsString;
 		category: aClass category;
 		environment: aClass environment;
-		copyClassSlotsFromExistingClass;
 		oldClass: aClass.
 		
 	self builderEnhancer fillBuilder: self from: aClass.

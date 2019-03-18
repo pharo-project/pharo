@@ -589,11 +589,6 @@ OrderedDictionary >> removeKeys: aKeyCollection [
 						ifAbsent: [nil]]]
 ]
 
-{ #category : #removing }
-OrderedDictionary >> removeUnreferencedKeys [
-	^ self unreferencedKeys do: [:each | self removeKey: each]
-]
-
 { #category : #enumerating }
 OrderedDictionary >> select: aBlock [
 	^ self species newFrom:
@@ -618,11 +613,6 @@ OrderedDictionary >> storeOn: aStream [
 				separatedBy: [ aStream << ';' ].
 			aStream << '; yourself' ].
 	aStream << ')'
-]
-
-{ #category : #private }
-OrderedDictionary >> unreferencedKeys [
-	^ Dictionary unreferencedKeysIn: self
 ]
 
 { #category : #accessing }

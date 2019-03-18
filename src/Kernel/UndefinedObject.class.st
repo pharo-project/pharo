@@ -98,7 +98,6 @@ UndefinedObject >> doesNotUnderstand: aMessage [
 			ifTrue: [ aMessage sentTo: self ]
 			ifFalse: [ resumeValue ] .
 			
-	
 ]
 
 { #category : #'class hierarchy' }
@@ -106,17 +105,6 @@ UndefinedObject >> environment [
 	"Necessary to support disjoint class hierarchies."
 
 	^self class environment
-]
-
-{ #category : #'reflective operations' }
-UndefinedObject >> findUndeclaredVariableIn: ast [
-	"Walk the ast of the current statment and find the undeclared variable node, or nil (if none).
-	Assumes there is only one such variable in an executing statement"
-	
-	ast nodesDo: [:node |
-		(node isVariable and: [ node isUndeclared]) ifTrue: [ ^node ]].
-
-	^nil
 ]
 
 { #category : #testing }

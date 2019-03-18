@@ -133,6 +133,7 @@ RubTextFieldMorph >> focusChanged [
 
 { #category : #'model protocol' }
 RubTextFieldMorph >> hasValidText [
+	self flag: #todo. "can discard lazy initialization"
 	^ hasValidText ifNil: [ hasValidText := true ] 
 ]
 
@@ -141,9 +142,10 @@ RubTextFieldMorph >> hasValidText: aBoolean [
 	hasValidText := aBoolean
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubTextFieldMorph >> initialize [
 	super initialize.
+	hasValidText := true.
 	self textArea announcer when: RubReturnEntered  send: #whenReturnEntered: to: self.
 	self scrollbarsShowNever.
 	self extent: self extent.
@@ -204,11 +206,11 @@ RubTextFieldMorph >> outOfWorld: aWorld [
 
 { #category : #private }
 RubTextFieldMorph >> resetState [
-	hasValidText := nil.
+	hasValidText := true.
 	super resetState
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubTextFieldMorph >> textAreaClass [
 	^ RubTextFieldArea
 ]

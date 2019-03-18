@@ -1,3 +1,6 @@
+"
+Test for PropertySlot
+"
 Class {
 	#name : #PropertySlotTest,
 	#superclass : #SlotSilentTest,
@@ -140,6 +143,36 @@ PropertySlotTest >> testRemovePropertySlot2 [
 	self deny:	(aClass hasSlot: propertySlot1).
 	self deny: 	(aClass hasSlot: propertySlot2).
 	self deny:	(aClass classLayout hasSlotNamed:  #'_propertyBaseSlot'). 
+]
+
+{ #category : #tests }
+PropertySlotTest >> testRemovePropertySlotWithInstance [
+	"add two property slots, remove one"
+	
+	| propertySlot1 propertySlot2 instance |
+	
+	propertySlot1 := #prop1 => PropertySlot.
+	propertySlot2 := #prop2 => PropertySlot.
+	
+	aClass := self make: [ :builder |
+		builder 
+			slots: {propertySlot1 . propertySlot2 }
+		].
+
+	instance := aClass new.
+
+	propertySlot1 write: 41 to: instance.
+	propertySlot2 write: 42 to: instance.
+
+	self assert: (propertySlot1 read: instance) equals: 41.
+	self assert: (propertySlot2 read: instance) equals: 42.
+
+	aClass removeSlot: propertySlot1.
+	
+	self assert:	(aClass hasSlot: propertySlot2).
+	self deny: 	(aClass hasSlot: propertySlot1).
+	
+	
 ]
 
 { #category : #tests }

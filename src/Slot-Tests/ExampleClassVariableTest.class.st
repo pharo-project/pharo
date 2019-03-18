@@ -1,3 +1,6 @@
+"
+Test for class variables
+"
 Class {
 	#name : #ExampleClassVariableTest,
 	#superclass : #SlotSilentTest,

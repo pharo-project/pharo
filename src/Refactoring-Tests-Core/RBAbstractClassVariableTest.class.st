@@ -15,9 +15,9 @@ RBAbstractClassVariableTest >> testAbstractClassVariable [
 	| refactoring meta class |
 	refactoring := RBAbstractClassVariableRefactoring 
 		variable: 'RecursiveSelfRule'
-		class: RBTransformationRuleTest.
+		class: RBTransformationRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBTransformationRuleTest.
+	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	meta := class classSide.
 	self assert: (meta parseTreeFor: #recursiveSelfRule) = (RBParser parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
 	self assert: (meta parseTreeFor: #recursiveSelfRule:) = (RBParser parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
@@ -42,14 +42,14 @@ RBAbstractClassVariableTest >> testAbstractClassVariable [
 RBAbstractClassVariableTest >> testInheritedName [
 	self shouldFail: (RBAbstractClassVariableRefactoring 
 			variable: #DependentsFields
-			class: RBBasicLintRuleTest)
+			class: RBBasicLintRuleTestData)
 ]
 
 { #category : #'failure tests' }
 RBAbstractClassVariableTest >> testMetaClassFailure [
 	self shouldFail: (RBAbstractClassVariableRefactoring 
 			variable: #RecursiveSelfRule
-			class: RBTransformationRuleTest class)
+			class: RBTransformationRuleTestData class)
 ]
 
 { #category : #tests }
@@ -96,5 +96,5 @@ RBAbstractClassVariableTest >> testModelAbstractClassVariableOverridenMethodsInS
 RBAbstractClassVariableTest >> testNonExistantName [
 	self shouldFail: (RBAbstractClassVariableRefactoring 
 			variable: #Foo
-			class: RBBasicLintRuleTest)
+			class: RBBasicLintRuleTestData)
 ]

@@ -70,8 +70,7 @@ HEInstaller >> build: aHEClass [
 		sharedVariables:  (self asClassVariables:aHEClass classVariables);
 		sharedPools: aHEClass sharedPools;
 		category: aHEClass category;
-		classSlots: (self asSlots: aHEClass classInstancevariables);
-		copyClassSlotsFromExistingClass ].
+		classSlots: (self asSlots: aHEClass classInstancevariables) ].
 	
 	self processTraitsFrom: aHEClass in: newClass.
 	

@@ -87,7 +87,7 @@ RubCursor class >> rubricSettingsOn: aBuilder [
 						range: (0 to: 1000) ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubCursor >> aboutToBeRemoved [
 	self beNotVisible.
 	self removeAlarm.
@@ -134,17 +134,17 @@ RubCursor >> beVisible [
 		ifTrue: [ self color: self actualCursorColor ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubCursor >> defaultBounds [
 	^ 0 @ 0 corner: 0 @ 0
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubCursor >> defaultColor [ 
 	^ Color transparent
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubCursor >> defaultVisibleCursorColor [
 	^ self theme textColor
 ]

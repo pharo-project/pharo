@@ -81,15 +81,6 @@ Metaclass >> bindingOf: varName [
 	^self instanceSide classBindingOf: varName
 ]
 
-{ #category : #testing }
-Metaclass >> canZapMethodDictionary [
-	"Return true if it is safe to zap the method dictionary on #obsolete"
-
-	self soleInstance
-		ifNil: [ ^ true ]
-		ifNotNil: [ ^ self soleInstance canZapMethodDictionary ]
-]
-
 { #category : #accessing }
 Metaclass >> category [
 	^ self instanceSide category
@@ -279,6 +270,12 @@ Metaclass >> removeInstVarNamed: aString [
 	self instanceVariableNames: newString
 ]
 
+{ #category : #'instance variables' }
+Metaclass >> removeSlot: aClassSlot [
+
+	^self instanceSide removeClassSlot: aClassSlot
+]
+
 { #category : #'class hierarchy' }
 Metaclass >> removeSubclass: aClass [
 	"Do nothing."
@@ -307,6 +304,19 @@ Metaclass >> soleInstance [
 	"The receiver has only one instance. Answer it."
 
 	^thisClass
+]
+
+{ #category : #compiling }
+Metaclass >> sourceCodeTemplate [
+	"Answer an expression to be edited and evaluated in order to define 
+	methods in this class or trait."
+
+	^ 'messageSelectorAndArgumentNames
+	"comment stating purpose of class-side message"
+	"scope: class-variables  &  class-instance-variables"	
+			
+	| temporary variable names |
+	statements'
 ]
 
 { #category : #'class hierarchy' }

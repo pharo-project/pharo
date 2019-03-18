@@ -35,14 +35,14 @@ HashedCollection class >> cleanUp: aggressive [
 
 ]
 
-{ #category : #initialization }
+{ #category : #cleanup }
 HashedCollection class >> compactAll [
-	"HashedCollection rehashAll"	
+	"HashedCollection compactAll"	
 		
 	self allSubclassesDo: #compactAllInstances
 ]
 
-{ #category : #initialization }
+{ #category : #cleanup }
 HashedCollection class >> compactAllInstances [
 	"Do not use #allInstancesDo: because rehash may create new instances."
 	
@@ -75,14 +75,14 @@ HashedCollection class >> newFrom: aCollection [
 	^self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : #cleanup }
 HashedCollection class >> rehashAll [
 	"HashedCollection rehashAll"	
 		
 	self allSubclassesDo: #rehashAllInstances
 ]
 
-{ #category : #initialization }
+{ #category : #cleanup }
 HashedCollection class >> rehashAllInstances [
 	"Do not use #allInstancesDo: because rehash may create new instances."
 	

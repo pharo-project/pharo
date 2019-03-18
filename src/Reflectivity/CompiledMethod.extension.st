@@ -26,6 +26,13 @@ CompiledMethod >> destroyTwin [
 ]
 
 { #category : #'*Reflectivity' }
+CompiledMethod >> hasBreakpoint [
+	^ Breakpoint isInstalledIn: self
+	
+	
+]
+
+{ #category : #'*Reflectivity' }
 CompiledMethod >> hasLinks [
 	self reflectiveMethod ifNil: [ ^false ].
 	^self reflectiveMethod hasLinks. 

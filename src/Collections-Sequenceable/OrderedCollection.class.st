@@ -87,7 +87,21 @@ OrderedCollection class >> arrayType [
 	^ Array
 ]
 
-{ #category : #initialization }
+{ #category : #cleanup }
+OrderedCollection class >> cleanUp: aggressive [
+	"Rehash all instances when cleaning aggressively"
+
+	aggressive ifTrue: [self compactAll].
+]
+
+{ #category : #cleanup }
+OrderedCollection class >> compactAll [
+	"OrderedCollection compactAll"	
+		
+	self allSubclassesDo: #compactAllInstances
+]
+
+{ #category : #cleanup }
 OrderedCollection class >> compactAllInstances [
 	self allInstances do: #compact
 ]

@@ -43,12 +43,12 @@ RBRemoveMethodTest >> testRemoveMethod [
 RBRemoveMethodTest >> testRemoveReferenced [
 	self shouldFail: (RBRemoveMethodRefactoring 
 			removeMethods: #(#checkClass: )
-			from: RBBasicLintRuleTest)
+			from: RBBasicLintRuleTestData)
 ]
 
 { #category : #'failure tests' }
 RBRemoveMethodTest >> testRemoveSameMethodButSendsSuper [
 	self shouldWarn: (RBRemoveMethodRefactoring 
 			removeMethods: #(#new )
-			from: RBBasicLintRuleTest class)
+			from: RBBasicLintRuleTestData class)
 ]

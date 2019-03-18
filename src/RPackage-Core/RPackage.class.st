@@ -1119,6 +1119,13 @@ RPackage >> organizer [
 ]
 
 { #category : #accessing }
+RPackage >> packageManifestOrNil [
+	^ self definedClasses
+		detect: [ :each | each isManifest ]
+		ifNone: [ nil ]
+]
+
+{ #category : #accessing }
 RPackage >> packageName [
 
 	^ name

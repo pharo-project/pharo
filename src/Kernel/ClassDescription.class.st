@@ -958,7 +958,6 @@ ClassDescription >> numberOfMethods [
 ClassDescription >> obsolete [
 	"Make the receiver obsolete."
 	self superclass removeSubclass: self.
-	self organization: nil.
 	super obsolete.
 ]
 
@@ -1063,6 +1062,12 @@ ClassDescription >> removeSelector: selector [
 	super removeSelector: selector.
 		
 	SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: origin
+]
+
+{ #category : #'instance variables' }
+ClassDescription >> removeSlot: aSlot [
+
+	^self subclassResponsibility 
 ]
 
 { #category : #organization }

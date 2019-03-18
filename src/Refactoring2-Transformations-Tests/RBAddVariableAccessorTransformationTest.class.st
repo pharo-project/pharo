@@ -39,11 +39,11 @@ RBAddVariableAccessorTransformationTest >> testNonExistantName [
 	self
 		shouldFail: (RBAddVariableAccessorTransformation 
 						classVariable: #Foo
-						class: #RBBasicLintRuleTest)
+						class: #RBBasicLintRuleTestData)
 						asRefactoring;
 		shouldFail: (RBAddVariableAccessorTransformation 
 						instanceVariable: 'foo'
-						class: #RBBasicLintRuleTest)
+						class: #RBBasicLintRuleTestData)
 						asRefactoring
 ]
 

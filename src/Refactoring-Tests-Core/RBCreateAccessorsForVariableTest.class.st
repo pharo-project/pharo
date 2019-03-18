@@ -15,7 +15,7 @@ RBCreateAccessorsForVariableTest >> testExistingInstanceVariableAccessors [
 	| ref |
 	ref := RBCreateAccessorsForVariableRefactoring 
 		variable: 'name'
-		class: RBLintRuleTest
+		class: RBLintRuleTestData
 		classVariable: false.
 	self executeRefactoring: ref.
 	self assertEmpty: ref changes changes.
@@ -28,10 +28,10 @@ RBCreateAccessorsForVariableTest >> testNewClassVariableAccessors [
 	| ref class |
 	ref := RBCreateAccessorsForVariableRefactoring 
 		variable: 'Foo1'
-		class: RBLintRuleTest
+		class: RBLintRuleTestData
 		classVariable: true.
 	self executeRefactoring: ref.
-	class := ref model metaclassNamed: #RBLintRuleTest.
+	class := ref model metaclassNamed: #RBLintRuleTestData.
 	self denyEmpty: ref changes changes.
 	self assert: ref setterMethod == #foo1:.
 	self assert: ref getterMethod == #foo1.
@@ -42,9 +42,9 @@ RBCreateAccessorsForVariableTest >> testNewClassVariableAccessors [
 { #category : #tests }
 RBCreateAccessorsForVariableTest >> testNewInstanceVariableAccessors [
 	| ref class |
-	ref := RBCreateAccessorsForVariableRefactoring variable: 'foo1' class: RBLintRuleTest classVariable: false.
+	ref := RBCreateAccessorsForVariableRefactoring variable: 'foo1' class: RBLintRuleTestData classVariable: false.
 	self executeRefactoring: ref.
-	class := ref model classNamed: #RBLintRuleTest.
+	class := ref model classNamed: #RBLintRuleTestData.
 	self denyEmpty: ref changes changes.
 	self assert: ref setterMethod == #foo1:.
 	self assert: ref getterMethod == #foo1.
@@ -57,10 +57,10 @@ RBCreateAccessorsForVariableTest >> testNonExistantName [
 	self
 		shouldFail: (RBCreateAccessorsForVariableRefactoring 
 				variable: #Foo
-				class: RBBasicLintRuleTest
+				class: RBBasicLintRuleTestData
 				classVariable: true);
 		shouldFail: (RBCreateAccessorsForVariableRefactoring 
 				variable: 'foo'
-				class: RBBasicLintRuleTest
+				class: RBBasicLintRuleTestData
 				classVariable: true)
 ]

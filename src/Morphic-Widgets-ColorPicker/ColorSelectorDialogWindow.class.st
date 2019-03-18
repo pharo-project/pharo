@@ -159,7 +159,6 @@ ColorSelectorDialogWindow >> newColorComponentFieldMorph: aspect [
 		class: Integer
 		getEnabled: nil
 		help: nil)
-		acceptOnFocusChange: true;
 		minWidth: 40
 ]
 

@@ -44,7 +44,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotDefineVariable [
 						asRefactoring;
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
 						classVariable: 'Foo1'
-						class: #RBFooLintRuleTest)
+						class: #RBFooLintRuleTestData)
 						asRefactoring 
 ]
 
@@ -59,7 +59,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotUnderstandAccesso
 						asRefactoring;
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
 						classVariable: 'RecursiveSelfRule'
-						class: #RBTransformationRuleTest)
+						class: #RBTransformationRuleTestData)
 						asRefactoring 
 ]
 
@@ -69,11 +69,11 @@ RBRemoveDirectAccessToVariableTransformationTest >> testInheritedName [
 	self
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
 						instanceVariable: 'name'
-						class: #RBBasicLintRuleTest)
+						class: #RBBasicLintRuleTestData)
 						asRefactoring;
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
 						classVariable: #DependentsFields
-						class: #RBBasicLintRuleTest)
+						class: #RBBasicLintRuleTestData)
 						asRefactoring 
 ]
 
@@ -97,7 +97,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testMetaclassFailure [
 
 	self shouldFail: (RBRemoveDirectAccessToVariableTransformation 
 							classVariable: #RecursiveSelfRule
-							class: RBTransformationRuleTest class)
+							class: RBTransformationRuleTestData class)
 							asRefactoring 
 ]
 
@@ -107,11 +107,11 @@ RBRemoveDirectAccessToVariableTransformationTest >> testNonExistantName [
 	self
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
 						instanceVariable: 'foo'
-						class: #RBBasicLintRuleTest)
+						class: #RBBasicLintRuleTestData)
 						asRefactoring;
 		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
 						classVariable: #Foo
-						class: #RBBasicLintRuleTest)
+						class: #RBBasicLintRuleTestData)
 						asRefactoring 
 ]
 
@@ -150,10 +150,10 @@ RBRemoveDirectAccessToVariableTransformationTest >> testTransform [
 	| transformation class |
 	transformation := (RBRemoveDirectAccessToVariableTransformation
 							instanceVariable: 'class'
-							class: #RBTransformationRuleTest)
+							class: #RBTransformationRuleTestData)
 							transform.
 	
-	class := transformation model classNamed: #RBTransformationRuleTest.
+	class := transformation model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #superSends)
 		  equals: (RBParser parseMethod: 
 	'superSends
