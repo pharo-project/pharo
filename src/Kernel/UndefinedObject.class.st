@@ -77,11 +77,46 @@ UndefinedObject >> deepCopy [
 	with self."
 ]
 
+{ #category : #'reflective operations' }
+UndefinedObject >> doesNotUnderstand: aMessage [
+	<debuggerCompleteToSender>
+	"Handle the fact that there was an attempt to send the given message to an Undeclared variable (nil), hence the receiver does not understand this message (typically #new)."
+	"Testing: (3 activeProcess)"
+
+	| exception resumeValue node |
+	
+	(node := self findUndeclaredVariableIn: thisContext sender sourceNodeExecuted) ifNil: [ 
+		 ^super doesNotUnderstand: aMessage ].
+				
+	(exception := VariableNotDeclared new)
+			message: aMessage;
+			variableNode: node;
+			receiver: self.
+			
+	resumeValue := exception signal.
+	^ exception reachedDefaultHandler
+			ifTrue: [ aMessage sentTo: self ]
+			ifFalse: [ resumeValue ] .
+			
+	
+]
+
 { #category : #'class hierarchy' }
 UndefinedObject >> environment [
 	"Necessary to support disjoint class hierarchies."
 
 	^self class environment
+]
+
+{ #category : #'reflective operations' }
+UndefinedObject >> findUndeclaredVariableIn: ast [
+	"Walk the ast of the current statment and find the undeclared variable node, or nil (if none).
+	Assumes there is only one such variable in an executing statement"
+	
+	ast nodesDo: [:node |
+		(node isVariable and: [ node isUndeclared]) ifTrue: [ ^node ]].
+
+	^nil
 ]
 
 { #category : #testing }
