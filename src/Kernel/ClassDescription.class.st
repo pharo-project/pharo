@@ -1023,10 +1023,9 @@ ClassDescription >> reformatAll [
 
 { #category : #'instance variables' }
 ClassDescription >> removeInstVarNamed: aString [ 
-	"Remove the argument, aString, as one of the receiver's instance 
-	variables. Create an error notification if the argument is not found."
+	"Remove the argument, aString, as one of the receiver's instance variables."
 
-	^self subclassResponsibility
+	^self removeSlot: (self slotNamed: aString)
 ]
 
 { #category : #'accessing tags' }
