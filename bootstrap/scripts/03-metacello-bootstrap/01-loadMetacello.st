@@ -57,3 +57,5 @@ MCGitBasedNetworkRepository initialize.
 SystemAnnouncer restoreAllNotifications.
 
 ZnMimeType initialize.
+
+MCMethodDefinition initializersEnabled: true.
