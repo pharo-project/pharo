@@ -88,7 +88,7 @@ UndefinedObject >> doesNotUnderstand: aMessage [
 	(node := self findUndeclaredVariableIn: thisContext sender sourceNodeExecuted) ifNil: [ 
 		 ^super doesNotUnderstand: aMessage ].
 				
-	(exception := ClassNotUnderstood new)
+	(exception := VariableNotDeclared new)
 			message: aMessage;
 			variableNode: node;
 			receiver: self.

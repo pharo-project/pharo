@@ -88,7 +88,7 @@ DoesNotUnderstandDebugAction >> executeAction [
 	msg := self interruptedContext tempAt: 1.
 	exception := self interruptedContext tempAt: 2.
 	
-	(exception class == ClassNotUnderstood) ifTrue: [ 
+	(exception class == VariableNotDeclared) ifTrue: [ 
 		self createMissingClassWith: exception variableNode in: self interruptedContext ].
 	
 	chosenClass := self 

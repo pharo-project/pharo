@@ -2,7 +2,7 @@
 This exception is provided to support doesNotUnderstand: on missing classes (Undeclared variables)
 "
 Class {
-	#name : #ClassNotUnderstood,
+	#name : #VariableNotDeclared,
 	#superclass : #MessageNotUnderstood,
 	#instVars : [
 		'variableNode'
@@ -11,12 +11,12 @@ Class {
 }
 
 { #category : #accessing }
-ClassNotUnderstood >> classSymbol [
+VariableNotDeclared >> classSymbol [
 	^ self variableNode name
 ]
 
 { #category : #accessing }
-ClassNotUnderstood >> smartDescription [
+VariableNotDeclared >> smartDescription [
 	
 	message ifNil: [^self description].
 
@@ -25,11 +25,11 @@ ClassNotUnderstood >> smartDescription [
 ]
 
 { #category : #accessing }
-ClassNotUnderstood >> variableNode [
+VariableNotDeclared >> variableNode [
 	^ variableNode
 ]
 
 { #category : #accessing }
-ClassNotUnderstood >> variableNode: anObject [
+VariableNotDeclared >> variableNode: anObject [
 	variableNode := anObject
 ]
