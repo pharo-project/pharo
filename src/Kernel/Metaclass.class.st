@@ -270,6 +270,12 @@ Metaclass >> removeInstVarNamed: aString [
 	self instanceVariableNames: newString
 ]
 
+{ #category : #'instance variables' }
+Metaclass >> removeSlot: aClassSlot [
+
+	^self instanceSide removeClassSlot: aClassSlot
+]
+
 { #category : #'class hierarchy' }
 Metaclass >> removeSubclass: aClass [
 	"Do nothing."

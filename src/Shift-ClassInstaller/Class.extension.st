@@ -26,6 +26,22 @@ Class >> addSlot: aSlot [
 ]
 
 { #category : #'*Shift-ClassInstaller' }
+Class >> removeClassSlot: aSlot [
+
+	^ self classInstaller update: self to: [ :builder |
+		builder
+			superclass: self superclass;
+			name: self name;
+			layoutClass: self classLayout class;
+			slots: self slots;
+			classSlots: (self class classLayout slots copyWithout: aSlot);
+			sharedVariablesFromString: self classVariablesString;
+			sharedPools: self sharedPoolsString;
+			category: self category;
+			environment: self environment ]
+]
+
+{ #category : #'*Shift-ClassInstaller' }
 Class >> removeSlot: aSlot [ 
 	
 	(self classLayout slots includes: aSlot)

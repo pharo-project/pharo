@@ -1064,6 +1064,12 @@ ClassDescription >> removeSelector: selector [
 	SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: origin
 ]
 
+{ #category : #'instance variables' }
+ClassDescription >> removeSlot: aSlot [
+
+	^self subclassResponsibility 
+]
+
 { #category : #organization }
 ClassDescription >> reorganize [
 	"During fileIn, !Rectangle reorganize! allows Rectangle to seize control and treat the next chunk as its organization.  See the transfer of control where ReadWriteStream fileIn calls scanFrom:"
