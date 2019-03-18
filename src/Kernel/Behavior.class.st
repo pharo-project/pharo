@@ -2003,19 +2003,6 @@ Behavior >> whichClassIncludesSelector: aSymbol [
 	^ self superclass whichClassIncludesSelector: aSymbol
 ]
 
-{ #category : #'testing method dictionary' }
-Behavior >> whichSelectorsAccess: instVarName [ 
-	"Answer a set of selectors whose methods access the argument, 
-	instVarName, as a named instance variable."
-
-	| instVarIndex |
-	instVarIndex := self instVarIndexFor: instVarName ifAbsent: [^#()].
-	^ self selectors select:  [:sel | 
-		((self compiledMethodAt: sel)
-			readsField: instVarIndex)
-			or: [(self compiledMethodAt: sel) writesField: instVarIndex]]
-]
-
 { #category : #queries }
 Behavior >> whichSelectorsAssign: instVarName [ 
 	"Answer a Set of selectors whose methods store into the argument, 

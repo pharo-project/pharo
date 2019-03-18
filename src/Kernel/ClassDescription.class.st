@@ -1369,6 +1369,18 @@ ClassDescription >> whichCategoryIncludesSelector: aSelector [
 		ifFalse: [^nil]
 ]
 
+{ #category : #'testing method dictionary' }
+ClassDescription >> whichSelectorsAccess: instVarName [ 
+	"Answer a set of selectors whose methods access the argument, 
+	instVarName, as a named instance variable."
+
+	| slot |
+	slot := self slotNamed: instVarName.
+	^ self selectors select:  [:sel | | method |
+		method := self compiledMethodAt: sel.
+		(method readsSlot: slot) or: [method writesSlot: slot]]
+]
+
 { #category : #organization }
 ClassDescription >> zapOrganization [
 	"Remove the organization of this class by message categories.
