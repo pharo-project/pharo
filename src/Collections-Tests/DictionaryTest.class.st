@@ -411,7 +411,7 @@ DictionaryTest >> testDictionaryPublicProtocolCompatibility [
 		do: [ :assoc | 
 			assoc value protocols
 				reject: [ :protocol | 
-					#('private' 'print' 'copy' 'compar' '*')
+					#('private' 'print' 'undeclared' 'copy' 'compar' '*')
 						anySatisfy: [ :each | protocol asString beginsWith: each ] ]
 				thenDo: [ :protocol | 
 					(assoc value selectorsInProtocol: protocol)
