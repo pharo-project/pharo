@@ -1375,7 +1375,7 @@ ClassDescription >> whichCategoryIncludesSelector: aSelector [
 		ifFalse: [^nil]
 ]
 
-{ #category : #'testing method dictionary' }
+{ #category : #queries }
 ClassDescription >> whichSelectorsAccess: instVarName [
 	"Answer a set of selectors whose methods access the argument, 
 	instVarName, as a named instance variable."
@@ -1386,6 +1386,35 @@ ClassDescription >> whichSelectorsAccess: instVarName [
 	^ self selectors select:  [:sel | | method |
 		method := self compiledMethodAt: sel.
 		(method readsSlot: slot) or: [method writesSlot: slot]]
+]
+
+{ #category : #queries }
+ClassDescription >> whichSelectorsAssign: instVarName [ 
+	"Answer a Set of selectors whose methods store into the argument, 
+	instVarName, as a named instance variable."
+	^self whichSelectorsStoreInto: instVarName
+]
+
+{ #category : #queries }
+ClassDescription >> whichSelectorsRead: aString [
+	
+	| slot |
+	(self hasSlotNamed: aString) ifFalse: [ ^#() ].
+	slot := self slotNamed: aString.
+	^ self selectors select: [ :each |
+		(self compiledMethodAt: each) readsSlot: slot ]
+]
+
+{ #category : #queries }
+ClassDescription >> whichSelectorsStoreInto: instVarName [ 
+	"Answer a Set of selectors whose methods access the argument, 
+	instVarName, as a named instance variable."
+	| slot |
+	(self hasSlotNamed: instVarName) ifFalse: [ ^#() ].
+	slot := self slotNamed: instVarName.
+	^ self selectors select: [:sel | (self compiledMethodAt: sel) writesSlot: slot]
+
+	"Point whichSelectorsStoreInto: 'x'."
 ]
 
 { #category : #organization }
