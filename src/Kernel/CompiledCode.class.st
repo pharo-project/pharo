@@ -591,12 +591,7 @@ CompiledCode >> readsRef: literalAssociation [
 
 { #category : #scanning }
 CompiledCode >> readsSlot: aSlot [
-	| nodes |
-	nodes := self ast allChildren.
-	nodes := nodes select: #isVariable.
-	nodes := nodes select: #isInstance.
-	nodes := nodes reject: [ :node | node parent isAssignment and: [ node parent variable = node ] ].
-	^ nodes anySatisfy: [ :node | node binding slot == aSlot ]
+	^aSlot isReadIn: self
 ]
 
 { #category : #accessing }
@@ -804,12 +799,5 @@ CompiledCode >> writesRef: literalAssociation [
 
 { #category : #scanning }
 CompiledCode >> writesSlot: aSlot [
-	self ast nodesDo: [ :node | 
-		node isVariable and: [
-			node parent isAssignment and: [  
-				(node parent variable = node) and: [  
-					node isInstance and: [
-						(node binding slot ==  aSlot)
-					 		ifTrue: [^true]]]]]]. 
-	^false
+	^aSlot isWrittenIn: self
 ]
