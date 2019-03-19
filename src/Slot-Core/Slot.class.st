@@ -230,10 +230,7 @@ Slot >> isLocal [
 { #category : #testing }
 Slot >> isReadIn: aCompiledCode [
 	| nodes |
-	nodes := aCompiledCode ast allChildren.
-	nodes := nodes select: #isVariable.
-	nodes := nodes select: #isInstance.
-	nodes := nodes reject: [ :node | node parent isAssignment and: [ node parent variable = node ] ].
+	nodes := aCompiledCode ast instanceVariableReadNodes.
 	^ nodes anySatisfy: [ :node | node binding slot == self ]
 ]
 
@@ -261,14 +258,9 @@ Slot >> isVisible [
 
 { #category : #testing }
 Slot >> isWrittenIn: aCompiledCode [
-	aCompiledCode ast nodesDo: [ :node | 
-		node isVariable and: [
-			node parent isAssignment and: [  
-				(node parent variable = node) and: [  
-					node isInstance and: [
-						(node binding slot ==  self)
-					 		ifTrue: [^true]]]]]]. 
-	^false
+	| nodes |
+	nodes := aCompiledCode ast instanceVariableWriteNodes.
+	^ nodes anySatisfy: [ :node | node binding slot == self ]
 ]
 
 { #category : #'class building' }
