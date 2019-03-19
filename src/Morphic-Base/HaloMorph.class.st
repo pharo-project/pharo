@@ -749,7 +749,7 @@ HaloMorph >> doDebug: evt with: menuHandle [
 
 	menu := innerTarget buildDebugMenu: evt hand.
 	menu buildTitle: [ :menuTitle | menuTitle
-		title: (innerTarget externalName truncateWithElipsisTo: 40);
+		title: (innerTarget externalName asString truncateWithElipsisTo: 40);
 		"icon: Smalltalk ui icons smallDebugIcon;"
 		withCloseBox;
 		withPinBox
