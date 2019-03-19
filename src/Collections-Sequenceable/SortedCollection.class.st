@@ -233,7 +233,8 @@ SortedCollection >> join: aCollection [
 { #category : #'math functions' }
 SortedCollection >> median [
 	"Return the middle element, or as close as we can get."
-
+	"{1 . 2 . 3 . 4 . 5} asSortedCollection  median >>> 3"
+	
 	^ self at: self size + 1 // 2
 ]
 
