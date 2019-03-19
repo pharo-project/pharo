@@ -365,6 +365,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
+		spec package: 'BaselineOfTelePharoSupport'.
 		
 		spec package: 'ReferenceFinder-Core'.
 
@@ -830,6 +831,7 @@ spec group: #default with: #(
 	'BaselineOfPharoBootstrap'
 	'BaselineOfMonticello'
 	'BaselineOfMetacello'
+	'BaselineOfTelePharoSupport'
 	
 	"Importing tests of Shift"
 	'Shift'
