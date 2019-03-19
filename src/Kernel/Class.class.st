@@ -940,13 +940,6 @@ Class >> removeFromSystemUnlogged [
 	^self removeFromSystem: false
 ]
 
-{ #category : #'instance variables' }
-Class >> removeInstVarNamed: aString [ 
-	"Remove the argument, aString, as one of the receiver's instance variables."
-
-	^self removeSlot: (self slotNamed: aString)
-]
-
 { #category : #'pool variables' }
 Class >> removeSharedPool: aDictionary [ 
 	"Remove the pool dictionary, aDictionary, as one of the receiver's pool 
