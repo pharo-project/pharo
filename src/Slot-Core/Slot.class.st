@@ -217,6 +217,12 @@ Slot >> installingIn: aClass [
 ]
 
 { #category : #testing }
+Slot >> isAccessedIn: aCompiledCode [
+	^aCompiledCode ast instanceVariableNodes
+		anySatisfy: [ :node | node binding slot == self ]
+]
+
+{ #category : #testing }
 Slot >> isGlobal [
 	^false
 ]

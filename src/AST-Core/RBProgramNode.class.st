@@ -357,6 +357,11 @@ RBProgramNode >> hashForCollection: aCollection [
 ]
 
 { #category : #querying }
+RBProgramNode >> instanceVariableNodes [
+		^self variableNodes select: [:each | each isInstance]
+]
+
+{ #category : #querying }
 RBProgramNode >> instanceVariableReadNodes [
 		^self variableReadNodes select: [:each | each isInstance]
 ]
