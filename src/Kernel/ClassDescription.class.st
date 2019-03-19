@@ -1382,9 +1382,8 @@ ClassDescription >> whichSelectorsAccess: instVarName [
 	| slot |
 	(self hasSlotNamed: instVarName) ifFalse: [ ^#() ].
 	slot := self slotNamed: instVarName.
-	^ self selectors select:  [:sel | | method |
-		method := self compiledMethodAt: sel.
-		(method readsSlot: slot) or: [method writesSlot: slot]]
+	^ self selectors select:  [:sel |
+		slot isAccessedIn: (self compiledMethodAt: sel)]
 ]
 
 { #category : #queries }
@@ -1400,8 +1399,8 @@ ClassDescription >> whichSelectorsRead: aString [
 	| slot |
 	(self hasSlotNamed: aString) ifFalse: [ ^#() ].
 	slot := self slotNamed: aString.
-	^ self selectors select: [ :each |
-		(self compiledMethodAt: each) readsSlot: slot ]
+	^ self selectors select:  [:sel |
+		slot isReadIn: (self compiledMethodAt: sel)]
 ]
 
 { #category : #queries }
@@ -1411,7 +1410,8 @@ ClassDescription >> whichSelectorsStoreInto: instVarName [
 	| slot |
 	(self hasSlotNamed: instVarName) ifFalse: [ ^#() ].
 	slot := self slotNamed: instVarName.
-	^ self selectors select: [:sel | (self compiledMethodAt: sel) writesSlot: slot]
+	^ self selectors select:  [:sel |
+		slot isWrittenIn: (self compiledMethodAt: sel)]
 
 	"Point whichSelectorsStoreInto: 'x'."
 ]
