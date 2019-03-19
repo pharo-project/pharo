@@ -175,7 +175,7 @@ BehaviorTest >> testMethodsWritingSlot [
 	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
 
 	numberViaSlot := (Point methodsWritingSlot: (Point slotNamed: #x)) size.
-	numberViaIVar := (Point whichSelectorsAssign: 'x') size.
+	numberViaIVar := (Point whichSelectorsStoreInto: 'x') size.
 	self assert: numberViaSlot = numberViaIVar.
 ]
 
