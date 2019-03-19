@@ -16,6 +16,8 @@ Class {
 		'CAIRO_EXTEND_PAD',
 		'CAIRO_EXTEND_REFLECT',
 		'CAIRO_EXTEND_REPEAT',
+		'CAIRO_FILL_RULE_EVEN_ODD',
+		'CAIRO_FILL_RULE_WINDING',
 		'CAIRO_FONT_SLANT_ITALIC',
 		'CAIRO_FONT_SLANT_NORMAL',
 		'CAIRO_FONT_SLANT_OBLIQUE',
@@ -117,6 +119,7 @@ Class {
 		'CAIRO_SUBPIXEL_ORDER_RGB',
 		'CAIRO_SUBPIXEL_ORDER_VBGR',
 		'CAIRO_SUBPIXEL_ORDER_VRGB',
+		'cairo_fill_rule_t',
 		'cairo_font_slant_t',
 		'cairo_font_type_t',
 		'cairo_font_weight_t',
@@ -166,7 +169,8 @@ AthensCairoDefinitions class >> initialize [
 		initialize_cairo_hint_style_t;
 		initialize_cairo_antialias_t;
 		init_cairo_subpixel_order_t;
-		initialize_cairo_hint_metrics_t.
+		initialize_cairo_hint_metrics_t;
+		initialize_cairo_fill_rule_t.
 		
 
 ]
@@ -198,6 +202,16 @@ AthensCairoDefinitions class >> initialize_cairo_extend_t [
     CAIRO_EXTEND_REFLECT :=2.
     CAIRO_EXTEND_PAD := 3.
 "} cairo_extend_t"
+
+]
+
+{ #category : #initialization }
+AthensCairoDefinitions class >> initialize_cairo_fill_rule_t [
+"	typedef enum _cairo_status {"
+   CAIRO_FILL_RULE_WINDING := 0.
+	CAIRO_FILL_RULE_EVEN_ODD := 1.
+
+    
 
 ]
 
@@ -373,7 +387,7 @@ AthensCairoDefinitions class >> initialize_cairo_status_t [
 { #category : #'as yet unclassified' }
 AthensCairoDefinitions class >> initialize_types [
 	
-	cairo_status_t := cairo_font_type_t :=  cairo_line_join_t  := cairo_line_cap_t := cairo_status_t := cairo_font_slant_t := cairo_font_weight_t := cairo_operator_t  := #int.
+	cairo_status_t := cairo_font_type_t :=  cairo_line_join_t  := cairo_line_cap_t := cairo_status_t := cairo_font_slant_t := cairo_font_weight_t := cairo_operator_t  := cairo_fill_rule_t := #int.
 	
 	cairo_pattern_t := #AthensCairoPatternPaint.
 	
