@@ -1389,8 +1389,10 @@ ClassDescription >> whichSelectorsAccess: instVarName [
 
 { #category : #queries }
 ClassDescription >> whichSelectorsAssign: instVarName [ 
-	"Answer a Set of selectors whose methods store into the argument, 
-	instVarName, as a named instance variable."
+	self
+		deprecated: 'Please use #whichSelectorsStoreInto: instead'
+		transformWith: '`@receiver whichSelectorsAssign: `@statements' 
+						-> '`@receiver whichSelectorsStoreInto: `@statements'.
 	^self whichSelectorsStoreInto: instVarName
 ]
 
