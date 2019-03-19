@@ -2009,39 +2009,9 @@ Behavior >> whichClassIncludesSelector: aSymbol [
 	^ self superclass whichClassIncludesSelector: aSymbol
 ]
 
-{ #category : #queries }
-Behavior >> whichSelectorsAssign: instVarName [ 
-	"Answer a Set of selectors whose methods store into the argument, 
-	instVarName, as a named instance variable."
-	^self whichSelectorsStoreInto: instVarName
-]
-
-{ #category : #queries }
-Behavior >> whichSelectorsRead: aString [
-	
-	| index |
-	index := self
-		instVarIndexFor: aString
-		ifAbsent: [ ^ #() ].
-	^ self selectors select: [ :each |
-		(self compiledMethodAt: each)
-			readsField: index ]
-]
-
 { #category : #'testing method dictionary' }
 Behavior >> whichSelectorsReferTo: literal [ 
 	^ self thoroughWhichSelectorsReferTo: literal
-]
-
-{ #category : #'testing method dictionary' }
-Behavior >> whichSelectorsStoreInto: instVarName [ 
-	"Answer a Set of selectors whose methods access the argument, 
-	instVarName, as a named instance variable."
-	| instVarIndex |
-	instVarIndex := self instVarIndexFor: instVarName ifAbsent: [^#()].
-	^ self selectors select: [:sel | (self compiledMethodAt: sel) writesField: instVarIndex]
-
-	"Point whichSelectorsStoreInto: 'x'."
 ]
 
 { #category : #queries }
