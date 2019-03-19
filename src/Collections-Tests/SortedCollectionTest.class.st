@@ -719,11 +719,21 @@ SortedCollectionTest >> testLastIndexOfStartingAt [
 ]
 
 { #category : #'tests - basic' }
-SortedCollectionTest >> testMedian [
+SortedCollectionTest >> testMedianForEvenSizeCollection [
 	
 	|aSortedCollection|
-	aSortedCollection := (1 to: 10) asSortedCollection.
-	self assert: aSortedCollection median equals: 5.
+	aSortedCollection := {1 .2 . 3 . 4 . 5 . 6 } asSortedCollection.
+	self assert: aSortedCollection median equals: 3.5
+	
+	
+]
+
+{ #category : #'tests - basic' }
+SortedCollectionTest >> testMedianForOddSizeCollection [
+	
+	|aSortedCollection|
+	aSortedCollection := {1 .2 . 3 . 4 . 5 . 6 .7} asSortedCollection.
+	self assert: aSortedCollection median equals: 4.
 	
 	aSortedCollection := SortedCollection new.
 	aSortedCollection 
@@ -733,6 +743,14 @@ SortedCollectionTest >> testMedian [
 
 	self assert: aSortedCollection median equals: 'porcinet'
 	
+]
+
+{ #category : #'tests - basic' }
+SortedCollectionTest >> testMedianWithNumbers [
+
+	| aSortedCollection |
+	aSortedCollection := (1 to: 10) asSortedCollection.
+ 	self assert: aSortedCollection median equals: 5.5
 ]
 
 { #category : #'tests - basic' }
