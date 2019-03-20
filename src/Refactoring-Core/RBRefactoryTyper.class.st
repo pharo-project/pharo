@@ -69,10 +69,18 @@ RBRefactoryTyper class >> newFor: aRBNamespace [
 
 { #category : #accessing }
 RBRefactoryTyper class >> typesFor: variableName in: aParseTree model: aRBSmalltalk [ 
-
-	^ self new
-			typesFor: variableName in: aParseTree model: aRBSmalltalk;
-			yourself
+	| searcher messages |
+	searcher := RBParseTreeSearcher new.
+	searcher matches: variableName , ' `@message: ``@args'
+		do: 
+			[:aNode :answer | 
+			answer
+				add: aNode selector;
+				yourself].
+	messages := searcher executeTree: aParseTree initialAnswer: Set new.
+	^(self new)
+		model: aRBSmalltalk;
+		findTypeFor: messages
 ]
 
 { #category : #private }
@@ -506,5 +514,6 @@ RBRefactoryTyper >> typesFor: variableName in: aParseTree model: aRBSmalltalk [
 	messages := searcher executeTree: aParseTree initialAnswer: Set new.
 	^ self
 		model: aRBSmalltalk;
-		findTypeFor: messages
+		findTypeFor: messages; 
+		yourself
 ]
