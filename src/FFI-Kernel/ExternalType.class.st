@@ -297,7 +297,7 @@ ExternalType class >> noticeRenamingOf: aClass from: oldName to: newName [
 
 { #category : #private }
 ExternalType class >> pointerSpec [
-	^(4 bitOr: FFIFlagPointer)
+	^(Smalltalk wordSize bitOr: FFIFlagPointer)
 ]
 
 { #category : #'type constants' }
@@ -580,7 +580,9 @@ ExternalType >> printStructureFieldStartingAt: initialSpecIndex withName: name i
 	(spec bitClear: FFIStructSizeMask) = FFIFlagStructure ifTrue:
 		[| next |
 		 next := initialSpecIndex + 1.
-		 aStream nextPutAll: 'struct {'.
+		 aStream
+			nextPutAll: subStructureClassBinding value compositeName;
+			nextPutAll: ' {'.
 		 subStructureClassBinding value fields withIndexDo:
 			[:tuple :i|
 			aStream cr.
@@ -595,18 +597,24 @@ ExternalType >> printStructureFieldStartingAt: initialSpecIndex withName: name i
 		 self assert: (next - 1 = compiledSpec size or: [(compiledSpec at: next) = FFIFlagStructure]).
 		 ^next <= compiledSpec size ifTrue: [next + 1] ifFalse: [next]].
 	self assert: (spec anyMask: FFIFlagPointer).
-	aStream nextPutAll: 'struct '; nextPutAll: subStructureClassBinding value name; nextPutAll: ' *'; nextPutAll: name.
+	(subStructureClassBinding value isKindOf: ExternalUnion)
+			ifTrue: [aStream nextPutAll: 'union ']
+			ifFalse: [aStream nextPutAll: 'struct '].
+	aStream nextPutAll: subStructureClassBinding value name; nextPutAll: ' *'; nextPutAll: name.
 	^initialSpecIndex + 1
 ]
 
 { #category : #printing }
 ExternalType >> printTypedefOn: s [
 	s nextPutAll: 'typedef '.
-	(compiledSpec first bitClear: FFIStructSizeMask) = FFIFlagStructure
+	(referentClass notNil
+	 and: [(compiledSpec first bitClear: FFIStructSizeMask) = FFIFlagStructure])
 		ifTrue:
 			[| next |
 			 next := 2.
-			 s nextPutAll: 'struct {'.
+			 s
+				nextPutAll: referentClass compositeName;
+				nextPutAll: ' {'.
 			 referentClass fields withIndexDo:
 				[:tuple :i|
 				s cr.
