@@ -42,6 +42,24 @@ PropertySlot >> emitValue: methodBuilder [
 	
 ]
 
+{ #category : #testing }
+PropertySlot >> isAccessedIn: aMethod [
+	(baseSlot isAccessedIn: aMethod) ifFalse: [ ^false ].
+	^super isAccessedIn: aMethod
+]
+
+{ #category : #testing }
+PropertySlot >> isReadIn: aMethod [
+	(baseSlot isReadIn: aMethod) ifFalse: [ ^false ].
+	^super isReadIn: aMethod
+]
+
+{ #category : #testing }
+PropertySlot >> isWrittenIn: aMethod [
+	(baseSlot isWrittenIn: aMethod) ifFalse: [ ^false ].
+	^super isWrittenIn: aMethod
+]
+
 { #category : #'class building' }
 PropertySlot >> layoutChanged: aClass [
 	super layoutChanged: aClass.

@@ -76,6 +76,24 @@ BooleanSlot >> installingIn: aClass [
 	offset := self calculateOffset: aClass.
 ]
 
+{ #category : #testing }
+BooleanSlot >> isAccessedIn: aMethod [
+	(baseSlot isAccessedIn: aMethod) ifFalse: [ ^false ].
+	^super isAccessedIn: aMethod
+]
+
+{ #category : #testing }
+BooleanSlot >> isReadIn: aMethod [
+	(baseSlot isReadIn: aMethod) ifFalse: [ ^false ].
+	^super isReadIn: aMethod
+]
+
+{ #category : #testing }
+BooleanSlot >> isWrittenIn: aMethod [
+	(baseSlot isWrittenIn: aMethod) ifFalse: [ ^false ].
+	^super isWrittenIn: aMethod
+]
+
 { #category : #'class building' }
 BooleanSlot >> layoutChanged: aClass [
 	super layoutChanged: aClass.
