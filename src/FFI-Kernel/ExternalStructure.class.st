@@ -109,10 +109,10 @@ ExternalStructure class >> compileAlias: spec withAccessors: aSymbol [
 	isPointerField := fieldType last = $*.
 	fieldType := fieldType copyWithout: $*.
 	externalType := ExternalType atomicTypeNamed: fieldType.
-	externalType == nil ifTrue:["non-atomic"
+	externalType isNil ifTrue:["non-atomic"
 		Symbol hasInterned: fieldType ifTrue:[:sym|
 			externalType := ExternalType structTypeNamed: sym]].
-	externalType == nil ifTrue:[
+	externalType isNil ifTrue:[
 		Transcript show:'(', fieldType,' is void)'.
 		externalType := ExternalType void].
 	isPointerField ifTrue:[externalType := externalType asPointerType].
@@ -452,10 +452,10 @@ ExternalStructure >> compositeName [
 	^self class compositeName
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #finalization }
 ExternalStructure >> free [
 	"Free the handle pointed to by the receiver"
-	(handle ~~ nil and:[handle isExternalAddress]) ifTrue:[handle free].
+	(handle notNil and:[handle isExternalAddress]) ifTrue:[handle free].
 	handle := nil.
 ]
 

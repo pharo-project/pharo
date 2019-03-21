@@ -14,8 +14,8 @@ For example if we define a subclass:
 Then set the fields like this:
     UnionExample class compile: 'fields  ^#( (name ''char*'') (color ''ulong'') )' classified: 'garbage'.
 
-It means that this type will represents
-- either a string (accessed thru the field #name)
+It means that this type will represent
+- either a string (accessed through the field #name)
 - or an unsigned 32bit integer (accessed thru the field #color).
 
 It represents the following C type:

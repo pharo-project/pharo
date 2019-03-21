@@ -8,8 +8,12 @@ ByteArray >> asExternalPointer [
 
 { #category : #'*FFI-Kernel' }
 ByteArray >> booleanAt: byteOffset [
-	"Booleans are just integers in C word"
-	^(self integerAt: byteOffset size: 1 signed: false) ~= 0
+	"Returns the boolean the byte at index byteOffset of this ByteArray represents in the C convention ( A byte representing the 0 integer corresponds to false, while all other integers corresponds to true).
+	Examples:
+	(#[1 2 0 4] booleanAt: 2) >>> true.
+	(#[1 2 0 4] booleanAt: 3) >>> false."
+
+	^ (self integerAt: byteOffset size: 1 signed: false) ~= 0
 ]
 
 { #category : #'*FFI-Kernel' }
@@ -27,6 +31,8 @@ ByteArray >> doubleAt: byteOffset [
 { #category : #'*FFI-Kernel' }
 ByteArray >> doubleAt: byteOffset put: value [
 	<primitive:'primitiveFFIDoubleAtPut' module:'SqueakFFIPrims'>
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #doubleAt:put: index: byteOffset value: value ].
 	^self primitiveFailed
 ]
 
@@ -39,6 +45,8 @@ ByteArray >> floatAt: byteOffset [
 { #category : #'*FFI-Kernel' }
 ByteArray >> floatAt: byteOffset put: value [
 	<primitive:'primitiveFFIFloatAtPut' module:'SqueakFFIPrims'>
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #floatAt:put: index: byteOffset value: value ].
 	^self primitiveFailed
 ]
 
