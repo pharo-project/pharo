@@ -134,7 +134,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				superclass: self;
 				slots: someSlots;
 				layoutClass: aLayout;
-				sharedVariables: someClassVariables;
+				classVariables: someClassVariables;
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
@@ -151,7 +151,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				superclass: self;
 				slots: someSlots;
 				layoutClass: aLayout;
-				sharedVariables: someClassVariables;
+				classVariables: someClassVariables;
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
@@ -168,7 +168,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				superclass: self;
 				slots: someSlots;
 				layoutClass: aLayout;
-				sharedVariablesFromString: someClassVariablesNames;
+				classVariablesFromString: someClassVariablesNames;
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
@@ -185,7 +185,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				superclass: self;
 				slots: someSlots;
 				layoutClass: aLayout;
-				sharedVariablesFromString: someClassVariablesNames;
+				classVariablesFromString: someClassVariablesNames;
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;

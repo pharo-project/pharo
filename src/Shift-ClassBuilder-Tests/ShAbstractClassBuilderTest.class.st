@@ -54,6 +54,14 @@ ShAbstractClassBuilderTest >> validateClassSlots: addedSlots superclass: aSuperC
 ]
 
 { #category : #validation }
+ShAbstractClassBuilderTest >> validateClassVariables: allVariables [
+	| resultVariables |
+	resultVariables  := result classPool keys.
+
+	self assertCollection: resultVariables equals: allVariables 
+]
+
+{ #category : #validation }
 ShAbstractClassBuilderTest >> validateMethods: selectors [
 	self doValidateMethods: selectors on: result
 ]
@@ -73,14 +81,6 @@ ShAbstractClassBuilderTest >> validateResult [
 { #category : #validation }
 ShAbstractClassBuilderTest >> validateSharedPools: pools [
 	self assertCollection: result sharedPools equals: pools asOrderedCollection.
-]
-
-{ #category : #validation }
-ShAbstractClassBuilderTest >> validateSharedVariables: allVariables [
-	| resultVariables |
-	resultVariables  := result classPool keys.
-
-	self assertCollection: resultVariables equals: allVariables 
 ]
 
 { #category : #validation }

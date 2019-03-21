@@ -67,7 +67,7 @@ HEInstaller >> build: aHEClass [
 		superclass: superclass;
 		layoutClass: layoutType;
 		slots: (self asSlots: aHEClass instanceVariables);
-		sharedVariables:  (self asClassVariables:aHEClass classVariables);
+		classVariables:  (self asClassVariables:aHEClass classVariables);
 		sharedPools: aHEClass sharedPools;
 		category: aHEClass category;
 		classSlots: (self asSlots: aHEClass classInstancevariables) ].

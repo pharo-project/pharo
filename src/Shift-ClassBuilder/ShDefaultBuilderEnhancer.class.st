@@ -61,7 +61,7 @@ ShDefaultBuilderEnhancer >> hasToSkipSlot: aSlot [
 ShDefaultBuilderEnhancer >> initializeBuilder: aBuilder [
 
 	aBuilder addChangeComparer: ShSharedPoolChangeDetector.
-	aBuilder addChangeComparer: ShSharedVariablesChangeDetector.
+	aBuilder addChangeComparer: ShClassVariablesChangeDetector.
 	aBuilder addChangeComparer: ShSlotChangeDetector.
 	aBuilder addChangeComparer: ShLayoutChangeDetector.
 	aBuilder addChangeComparer: ShBitLayoutChangeDetector.
@@ -81,9 +81,9 @@ ShDefaultBuilderEnhancer >> newMetaclass: builder [
 ]
 
 { #category : #'class modifications' }
-ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables sharing: sharedPoolsString [
+ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: classVariables sharing: sharedPoolsString [
 	newClass
-		declareClassVariables: sharedVariables;
+		declareClassVariables: classVariables;
 		sharing: sharedPoolsString
 ]
 

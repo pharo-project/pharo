@@ -5,6 +5,48 @@ Class {
 }
 
 { #category : #tests }
+ShCreateClassTest >> testClassVariables [
+	builder name: #SHClassWithClassVariable.
+	result := builder
+		classVariables: {(#aClassVariable => ClassVariable)};
+		build.
+
+	self validateResult.
+	self validateSuperclass: Object.
+	self validateClassVariables: #(aClassVariable)
+]
+
+{ #category : #tests }
+ShCreateClassTest >> testClassVariablesAsArray [
+	builder name: #SHClassWithClassVariable.
+	result := builder
+		classVariablesFromString: #(aClassVariable);
+		build.
+
+	self validateResult.
+	self validateSuperclass: Object.
+	self validateClassVariables: #(aClassVariable)
+]
+
+{ #category : #tests }
+ShCreateClassTest >> testClassVariablesAsString [
+	builder name: #SHClassWithClassVariable.
+	result := builder
+		classVariablesFromString: 'aClassVariable';
+		build.
+
+	self validateResult.
+	self validateSuperclass: Object.
+	self validateClassVariables: #(aClassVariable)
+]
+
+{ #category : #tests }
+ShCreateClassTest >> testClassVariablesWithSlot [
+	builder name: #SHClassWithClassVariable.
+	self should: [ builder classVariablesFromString: {#aClassVariable asSlot} ] raise: Error.
+]
+
+{ #category : #tests }
 ShCreateClassTest >> testClassWithClassSlots [
 	builder
 		name: #SHTestClassWithClassSlots;
@@ -79,48 +121,6 @@ ShCreateClassTest >> testSharedPool [
 	self validateResult.
 	self validateSuperclass: Object.
 	self validateSharedPools: {ShTestSharedPool}
-]
-
-{ #category : #tests }
-ShCreateClassTest >> testSharedVariables [
-	builder name: #SHClassWithSharedVariable.
-	result := builder
-		sharedVariables: {(#aSharedVariable => ClassVariable)};
-		build.
-
-	self validateResult.
-	self validateSuperclass: Object.
-	self validateSharedVariables: #(aSharedVariable)
-]
-
-{ #category : #tests }
-ShCreateClassTest >> testSharedVariablesAsArray [
-	builder name: #SHClassWithSharedVariable.
-	result := builder
-		sharedVariablesFromString: #(aSharedVariable);
-		build.
-
-	self validateResult.
-	self validateSuperclass: Object.
-	self validateSharedVariables: #(aSharedVariable)
-]
-
-{ #category : #tests }
-ShCreateClassTest >> testSharedVariablesAsString [
-	builder name: #SHClassWithSharedVariable.
-	result := builder
-		sharedVariablesFromString: 'aSharedVariable';
-		build.
-
-	self validateResult.
-	self validateSuperclass: Object.
-	self validateSharedVariables: #(aSharedVariable)
-]
-
-{ #category : #tests }
-ShCreateClassTest >> testSharedVariablesWithSlot [
-	builder name: #SHClassWithSharedVariable.
-	self should: [ builder sharedVariablesFromString: {#aSharedVariable asSlot} ] raise: Error.
 ]
 
 { #category : #tests }

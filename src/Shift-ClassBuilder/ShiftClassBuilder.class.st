@@ -148,6 +148,21 @@ ShiftClassBuilder >> classTraitComposition: aValue [
 ]
 
 { #category : #accessing }
+ShiftClassBuilder >> classVariables: aCollection [
+	self layoutDefinition classVariables: (aCollection collect:[:e | e asClassVariable]).
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> classVariablesFromString: aStringOrArray [
+	layoutDefinition classVariables: (aStringOrArray isString
+        ifTrue: [ (aStringOrArray substrings: ' ') collect: [ :x | x asSymbol => ClassVariable ] ]
+        ifFalse: [ aStringOrArray collect: [ :x | 
+                x isSymbol
+                    ifTrue: [ x => ClassVariable ]
+                    ifFalse: [ self error: 'Shared variables can only be String or an array of Symbols' ] ] ])
+]
+
+{ #category : #accessing }
 ShiftClassBuilder >> comment [
 	^ comment
 ]
@@ -230,7 +245,7 @@ ShiftClassBuilder >> createMetaclass [
 ShiftClassBuilder >> createSharedVariables [
 	self builderEnhancer 
 		on: newClass
-		declareClassVariables: self layoutDefinition sharedVariables
+		declareClassVariables: self layoutDefinition classVariables
 		sharing: self layoutDefinition sharedPoolsString.
 	
 ]
@@ -284,8 +299,8 @@ ShiftClassBuilder >> fillFor: aClass [
 		superclass: aClass superclass;
 		name: aClass getName;
 		layoutClass: aClass classLayout class;
-		slots: aClass localSlots ;
-		sharedVariables: aClass classVariables;
+		slots: aClass localSlots;
+		classVariables: aClass classVariables;
 		sharedPools: aClass sharedPoolsString;
 		category: aClass category;
 		environment: aClass environment;
@@ -420,17 +435,19 @@ ShiftClassBuilder >> sharedPools: aString [
 
 { #category : #accessing }
 ShiftClassBuilder >> sharedVariables: aCollection [
-	self layoutDefinition sharedVariables: (aCollection collect:[:e | e asClassVariable]).
+	self deprecated: 'Please use #classVariables: instead'
+		transformWith: '`@receiver sharedVariables: `@statements' -> '`@receiver classVariables: `@statements'.
+	self classVariables: aCollection
 ]
 
 { #category : #accessing }
 ShiftClassBuilder >> sharedVariablesFromString: aStringOrArray [
-	layoutDefinition sharedVariables: (aStringOrArray isString
-        ifTrue: [ (aStringOrArray substrings: ' ') collect: [ :x | x asSymbol => ClassVariable ] ]
-        ifFalse: [ aStringOrArray collect: [ :x | 
-                x isSymbol
-                    ifTrue: [ x => ClassVariable ]
-                    ifFalse: [ self error: 'Shared variables can only be String or an array of Symbols' ] ] ])
+	self
+		deprecated: 'Please use #classVariablesFromString: instead'
+		transformWith: '`@receiver sharedVariablesFromString: `@statements' -> '`@receiver classVariablesFromString: `@statements'.
+	^self classVariablesFromString: aStringOrArray
+		
+	
 ]
 
 { #category : #accessing }

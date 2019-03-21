@@ -39,7 +39,7 @@ SlotClassVariableTest >> testClassVariableDoesNotDuplicatesSubclassesOfSuperclas
 		builder
 			name: self anotherClassName;
 			superclass: class1;
-			sharedVariablesFromString: 'ASharedVariable' ].
+			classVariablesFromString: 'AClassVariable' ].
 	self assert: class1 subclasses equals: { class2 }.
 
 ]

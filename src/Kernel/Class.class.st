@@ -609,7 +609,7 @@ Class >> ephemeronSubclass: t instanceVariableNames: f
 			name: t;
 			layoutClass: EphemeronLayout;
 			slots: f asSlotCollection;
-			sharedVariablesFromString: d;
+			classVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
 			environment: self environment ].
@@ -699,7 +699,7 @@ Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poo
 			name: t;
 			layoutClass: ImmediateLayout;
 			slots: f asSlotCollection;
-			sharedVariablesFromString: d;
+			classVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
 			environment: self environment ].
@@ -1125,7 +1125,7 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 				name: t;
 				layoutClass: self classLayout class;
 				slots: f asSlotCollection;
-				sharedVariablesFromString: d;
+				classVariablesFromString: d;
 				sharedPools: s;
 				category: cat;
 				environment: self environment ]
@@ -1150,7 +1150,7 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition cl
 		superclass: self;
 		layoutClass: layoutClass;
 		slots: slotDefinition;
-		sharedVariables: classVarDefinition;
+		classVariables: classVarDefinition;
 		category: aCategorySymbol ].
 
 ]
@@ -1170,7 +1170,7 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition c
 		superclass: self;
 		layoutClass: layoutClass;
 		slots: slotDefinition;
-		sharedVariables:  classVarDefinition;
+		classVariables: classVarDefinition;
 		sharedPools: someSharedPoolNames;
 		category: aCategorySymbol ].
 
@@ -1194,7 +1194,7 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 				name: aSubclassSymbol;
 				superclass: self;
 				slots: slotDefinition;
-				sharedVariables: classVarDefinition;
+				classVariables: classVarDefinition;
 				category: aCategorySymbol ]
 ]
 
@@ -1212,7 +1212,7 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 		builder name: aSubclassSymbol;
 		superclass: self;
 		slots: slotDefinition;
-		sharedVariables:  classVarDefinition;
+		classVariables: classVarDefinition;
 		sharedPools: someSharedPoolNames;
 		category: aCategorySymbol ]
 ]
@@ -1313,7 +1313,7 @@ Class >> variableByteSubclass: t instanceVariableNames: f
 			name: t;
 			layoutClass: actualLayoutClass;
 			slots: f asSlotCollection;
-			sharedVariablesFromString: d;
+			classVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
 			environment: self  environment ].
@@ -1348,7 +1348,7 @@ Class >> variableSubclass: t instanceVariableNames: f classVariableNames: d pool
 			name: t;
 			layoutClass: VariableLayout;
 			slots: f asSlotCollection;
-			sharedVariablesFromString: d;
+			classVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
 			environment: self environment ].
@@ -1409,7 +1409,7 @@ Class >> variableWordSubclass: t instanceVariableNames: f
 			name: t;
 			layoutClass: WordLayout;
 			slots: f asSlotCollection;
-			sharedVariablesFromString: d;
+			classVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
 			environment: self environment ].
@@ -1450,7 +1450,7 @@ Class >> weakSubclass: t instanceVariableNames: f
 			name: t;
 			layoutClass: WeakLayout;
 			slots: f asSlotCollection;
-			sharedVariablesFromString: d;
+			classVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
 			environment: self environment ].

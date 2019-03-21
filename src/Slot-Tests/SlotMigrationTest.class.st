@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #tests }
-SlotMigrationTest >> testAddSharedVariableKeepSubclasses [
+SlotMigrationTest >> testAddClassVariableKeepSubclasses [
 	"Reproduces fogbugz case 13028"
 
 	"Define original hierarchy"
@@ -30,7 +30,7 @@ SlotMigrationTest >> testAddSharedVariableKeepSubclasses [
 		builder 
 			name: self aClassName;
 			superclass: Object;
-			sharedVariablesFromString: 'Var' ]. 
+			classVariablesFromString: 'Var' ]. 
 	
 	self assert: aClass subclasses size equals: 1.
 	self assert: aClass subclasses anyOne == anotherClass.

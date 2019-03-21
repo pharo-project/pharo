@@ -42,6 +42,51 @@ SlotAnnouncementsTest >> tearDown [
 ]
 
 { #category : #tests }
+SlotAnnouncementsTest >> testChangeInClassVariablesAndSharedPoolsShouldAnnounceClassModified [
+
+	self subscribeOn: ClassModifiedClassDefinition.
+	
+	"Create a class"
+	aClass := self make: [ :builder | 
+		builder 
+			name: self aClassName ].
+
+	self assert: self collectedAnnouncements size equals: 0.
+	
+	"Modify the class"
+	aClass := self make: [ :builder | 
+		builder 
+			name: self aClassName;
+			sharedPools: 'TestSharedPool';
+			classVariablesFromString: 'A B' ].
+
+	self assert: self collectedAnnouncements size equals: 1.
+	self assert: self collectedAnnouncements first newClassDefinition equals: aClass.
+]
+
+{ #category : #tests }
+SlotAnnouncementsTest >> testChangeInClassVariablesShouldAnnounceClassModified [
+
+	self subscribeOn: ClassModifiedClassDefinition.
+	
+	"Create a class"
+	aClass := self make: [ :builder | 
+		builder 
+			name: self aClassName ].
+
+	self assert: self collectedAnnouncements size equals: 0.
+	
+	"Modify the class"
+	aClass := self make: [ :builder | 
+		builder 
+			name: self aClassName;
+			classVariablesFromString: 'A B C' ].
+
+	self assert: self collectedAnnouncements size equals: 1.
+	self assert: self collectedAnnouncements first newClassDefinition equals: aClass.
+]
+
+{ #category : #tests }
 SlotAnnouncementsTest >> testChangeInSharedPoolShouldAnnounceClassModified [
 
 	self subscribeOn: ClassModifiedClassDefinition.
@@ -58,51 +103,6 @@ SlotAnnouncementsTest >> testChangeInSharedPoolShouldAnnounceClassModified [
 		builder 
 			name: self aClassName;
 			sharedPools: 'TestSharedPool' ].
-
-	self assert: self collectedAnnouncements size equals: 1.
-	self assert: self collectedAnnouncements first newClassDefinition equals: aClass.
-]
-
-{ #category : #tests }
-SlotAnnouncementsTest >> testChangeInSharedVariablesAndSharedPoolsShouldAnnounceClassModified [
-
-	self subscribeOn: ClassModifiedClassDefinition.
-	
-	"Create a class"
-	aClass := self make: [ :builder | 
-		builder 
-			name: self aClassName ].
-
-	self assert: self collectedAnnouncements size equals: 0.
-	
-	"Modify the class"
-	aClass := self make: [ :builder | 
-		builder 
-			name: self aClassName;
-			sharedPools: 'TestSharedPool';
-			sharedVariablesFromString: 'A B' ].
-
-	self assert: self collectedAnnouncements size equals: 1.
-	self assert: self collectedAnnouncements first newClassDefinition equals: aClass.
-]
-
-{ #category : #tests }
-SlotAnnouncementsTest >> testChangeInSharedVariablesShouldAnnounceClassModified [
-
-	self subscribeOn: ClassModifiedClassDefinition.
-	
-	"Create a class"
-	aClass := self make: [ :builder | 
-		builder 
-			name: self aClassName ].
-
-	self assert: self collectedAnnouncements size equals: 0.
-	
-	"Modify the class"
-	aClass := self make: [ :builder | 
-		builder 
-			name: self aClassName;
-			sharedVariablesFromString: 'A B C' ].
 
 	self assert: self collectedAnnouncements size equals: 1.
 	self assert: self collectedAnnouncements first newClassDefinition equals: aClass.

@@ -87,7 +87,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 				superclass: nil;
 				metaSuperclass: self;
 				slots: someSlots;
-				sharedVariables: '';
+				classVariables: '';
 				sharedPools: '';
 				category: aCategory;
 				traitComposition: aTraitCompositionOrCollection asTraitComposition;

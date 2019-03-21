@@ -17,7 +17,7 @@ ExampleClassVariableTest >> testCreateClassWithClassVariable [
 	
 	aClass := self make: [ :builder |
 		builder 
-			sharedVariables: {classVar}
+			classVariables: {classVar}
 		].
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar').
@@ -37,7 +37,7 @@ ExampleClassVariableTest >> testCreateClassWithTwoClassVariable [
 	
 	aClass := self make: [ :builder |
 		builder 
-			sharedVariables: {classVar1. classVar2}
+			classVariables: {classVar1. classVar2}
 		].
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar1').
@@ -57,7 +57,7 @@ ExampleClassVariableTest >> testMigrateClassVar [
 	
 	aClass := self make: [ :builder |
 		builder 
-			sharedVariables: {#ClassVar}
+			classVariables: {#ClassVar}
 		].
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar').
@@ -67,7 +67,7 @@ ExampleClassVariableTest >> testMigrateClassVar [
 	
 	aClass := self make: [ :builder |
 		builder 
-			sharedVariables: {classVar}
+			classVariables: {classVar}
 		].
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar').

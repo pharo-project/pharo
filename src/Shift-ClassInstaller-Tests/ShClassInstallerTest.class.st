@@ -24,7 +24,7 @@ ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots
 				name: className;
 				superclass: aSuperclass;
 				slots: slots;
-				sharedVariables: '';
+				classVariables: '';
 				sharedPools: '';
 				category: 'Shift-ClassInstaller-Tests' ]
 ]
@@ -118,7 +118,7 @@ ShClassInstallerTest >> testClassWithComment [
 				name: #SHClassWithComment;
 				superclass: Object;
 				slots: #();
-				sharedVariables: '';
+				classVariables: '';
 				sharedPools: '';
 				category: 'Shift-ClassInstaller-Tests';
 				comment: 'I have a comment'; 

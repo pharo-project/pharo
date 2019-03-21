@@ -9,8 +9,8 @@ Class {
 		'slots',
 		'classSlots',
 		'sharedPools',
-		'sharedVariables',
-		'builder'
+		'builder',
+		'classVariables'
 	],
 	#category : #'Shift-ClassBuilder'
 }
@@ -35,6 +35,16 @@ ShLayoutDefinition >> classSlots [
 { #category : #accessing }
 ShLayoutDefinition >> classSlots: anObject [
 	classSlots := anObject collect: [ :e | e asSlot ].
+]
+
+{ #category : #accessing }
+ShLayoutDefinition >> classVariables [
+	^ classVariables
+]
+
+{ #category : #accessing }
+ShLayoutDefinition >> classVariables: anObject [
+	classVariables := anObject
 ]
 
 { #category : #accessing }
@@ -79,7 +89,7 @@ ShLayoutDefinition >> initialize [
 
 	slots := #().
 	sharedPools := #().
-	sharedVariables := #().
+	classVariables := #().
 
 ]
 
@@ -115,17 +125,19 @@ ShLayoutDefinition >> sharedPoolsString [
 
 { #category : #accessing }
 ShLayoutDefinition >> sharedVariables [
-	^ sharedVariables
+	self
+		deprecated: 'Please use #classVariables instead'
+		transformWith: '`@receiver sharedVariables' -> '`@receiver classVariables'.
+	
+	^ self classVariables
 ]
 
 { #category : #accessing }
 ShLayoutDefinition >> sharedVariables: anObject [
-	sharedVariables := anObject
-]
-
-{ #category : #accessing }
-ShLayoutDefinition >> sharedVariablesString [
-	^ (sharedVariables collect:[:e | e key]) joinUsing: ' '.
+		self
+		deprecated: 'Please use #classVariables: instead'
+		transformWith: '`@receiver sharedVariables: `@statements' -> '`@receiver classVariables: `@statements'.
+	self classVariables: anObject
 ]
 
 { #category : #accessing }
