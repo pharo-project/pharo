@@ -119,6 +119,11 @@ TestCase class >> buildSuiteFromSelectors [
 	^self buildSuiteFromMethods: self allTestSelectors
 ]
 
+{ #category : #'accessing comment' }
+TestCase class >> comment [
+	^'This class contains tests'
+]
+
 { #category : #coverage }
 TestCase class >> coverage [
 	"returns the coverage determined by a simple static analysis of test coverage 
