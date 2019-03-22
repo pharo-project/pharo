@@ -121,7 +121,9 @@ TestCase class >> buildSuiteFromSelectors [
 
 { #category : #'accessing comment' }
 TestCase class >> comment [
-	^'This class contains tests'
+	^super hasComment
+		ifTrue: [ super comment ] 
+		ifFalse: ['This class contains tests'].
 ]
 
 { #category : #coverage }
@@ -223,6 +225,11 @@ TestCase class >> generateLastStoredRunMethod [
 		self class
 			compile: (self lastRunMethodNamed: #lastStoredRun)
 			classified: 'history' ]
+]
+
+{ #category : #'accessing comment' }
+TestCase class >> hasComment [
+	^true
 ]
 
 { #category : #testing }
