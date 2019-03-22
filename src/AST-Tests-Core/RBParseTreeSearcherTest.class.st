@@ -10,11 +10,15 @@ Class {
 	#category : #'AST-Tests-Core'
 }
 
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> parseTreeSearcher [
+	^ RBParseTreeSearcher new
+]
+
 { #category : #running }
 RBParseTreeSearcherTest >> setUp [
 	super setUp.
-	searcher := RBParseTreeSearcher new.
-	
+	searcher := self parseTreeSearcher
 ]
 
 { #category : #'tests - to de refined' }
@@ -43,23 +47,36 @@ RBParseTreeSearcherTest >> testDynamicArrayWithStatementListPattern [
 
 { #category : #'tests - to de refined' }
 RBParseTreeSearcherTest >> testSearching [
-
-	searcher matches: '``@rcv at: ``@arg `sel: ``@arg1'
-		do: [:aNode :answer | answer + 1].
-	self 
-		assert: (searcher executeTree: (RBParser parseExpression: 'self at: 1 put: 2; at: 2 ifAbsent: []; ifAbsent: 2 at: 1; at: 4; foo') initialAnswer: 0) 
+	searcher
+		matches: '``@rcv at: ``@arg `sel: ``@arg1'
+		do: [ :aNode :answer | answer + 1 ].
+	self
+		assert:
+			(searcher
+				executeTree:
+					(RBParser
+						parseExpression: 'self at: 1 put: 2; at: 2 ifAbsent: []; ifAbsent: 2 at: 1; at: 4; foo')
+				initialAnswer: 0)
 		equals: 2.
-	searcher := RBParseTreeSearcher new.
-	searcher matches: '``@rcv `at: ``@arg1 `at: ``@arg2'
-		do: [:aNode :answer | answer + 1].
-	self 
-		assert: (searcher executeTree: (RBParser parseExpression: 'self at: 1 at: 3; at: 1 put: 32; at: 2; foo; at: 1 at: 1 at: 2')
-				initialAnswer: 0) 
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: '``@rcv `at: ``@arg1 `at: ``@arg2'
+		do: [ :aNode :answer | answer + 1 ].
+	self
+		assert:
+			(searcher
+				executeTree:
+					(RBParser
+						parseExpression: 'self at: 1 at: 3; at: 1 put: 32; at: 2; foo; at: 1 at: 1 at: 2')
+				initialAnswer: 0)
 		equals: 1.
-	searcher := RBParseTreeSearcher new.
-	searcher matchesMethod: 'at: `object `put: `o1 ``@rcv `put: 1'
-		do: [:aNode :answer | true].
-	self assert: (searcher 
+	searcher := self parseTreeSearcher.
+	searcher
+		matchesMethod: 'at: `object `put: `o1 ``@rcv `put: 1'
+		do: [ :aNode :answer | true ].
+	self
+		assert:
+			(searcher
 				executeTree: (RBParser parseMethod: 'at: a put: b self foo put: 1')
 				initialAnswer: false)
 ]

@@ -33,6 +33,7 @@ GRIvarNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriticBlock [
 
 { #category : #enumerating }
 GRIvarNeitherReadNorWrittenRule >> critiqueFor: aClass about: aSlot [
+
 	| crit |
 	crit := ReTrivialCritique
 		withAnchor: (ReVarSearchSourceAnchor

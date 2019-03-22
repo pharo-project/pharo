@@ -47,8 +47,8 @@ GRVariableAssignedLiteralRule >> check: aSlot of: aClass forCritiquesDo: aCritic
 
 { #category : #'running-helpers' }
 GRVariableAssignedLiteralRule >> critiqueFor: aClass about: aVarName [
-	| crit |
 
+	| crit |
 	crit := ReTrivialCritique
 		withAnchor: (ReVarSearchSourceAnchor
 			entity: aClass
