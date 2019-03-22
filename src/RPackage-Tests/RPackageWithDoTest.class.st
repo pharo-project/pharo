@@ -80,22 +80,6 @@ RPackageWithDoTest >> testDoC [
 	self assert: x equals: 3
 ]
 
-{ #category : #tests }
-RPackageWithDoTest >> testImageContainsOneSubscribedOrganizer [
-	"to be sure that this is real default one"
-	self assert: (self organizerAnnouncer hasSubscriber: self packageOrganizerClass default) description: 'System announcer should have the default instance of the organizer as subscriber.'.
-	"note that this test is not precise enough because I could get the wrong one."
-	
-	[ self assert: self packageOrganizerClass allInstances size equals: 1 ]
-		on: AssertionFailure
-		do: [ :ex | 
-			"If it fails it might be because there was other instances created by other tests. Run some full GC and re-test to see if it's a real regression."
-			5 timesRepeat: [ Smalltalk garbageCollect ].
-			self assert: self packageOrganizerClass allInstances size equals: 1 ]
-
-	"To debug: self packageOrganizerClass allInstances collect: [:each | self announcer hasSubscriber: each ] "
-]
-
 { #category : #'simple ensure tests' }
 RPackageWithDoTest >> testOnDo [
 	self doOnDo: [ self error ].
