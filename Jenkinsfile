@@ -96,10 +96,10 @@ Pull request url: ${pullRequestUrl}
 """
       title = pullRequestTitle
       def issueNumber = pullRequestJSON['head']['ref'].split('-')[0]
-      def fogbugzUrl = "https://pharo.fogbugz.com/f/cases/${issueNumber}"
+      def issueUrl = "https://github.com/pharo-project/pharo/issues/${issueNumber}"
       
       mailMessage += """
-Issue Url: ${fogbugzUrl}"""
+Issue Url: ${issueUrl}"""
     } else {
       mailMessage += """
 No associated issue found"""
