@@ -168,6 +168,14 @@ CompiledMethodTest >> testBytecode [
 ]
 
 { #category : #'tests - accessing' }
+CompiledMethodTest >> testComments [
+	self
+		assert: (CompiledMethod >> #comments) comments first
+		equals: 'Answer a string representing the comments in the method. Return an empty collection if the method''s source code does not contain a comment.'.
+	self assert: (CompiledMethod >> #compiledMethod) comments isEmpty
+]
+
+{ #category : #'tests - accessing' }
 CompiledMethodTest >> testComparison [
 	| method1 method2 |
 	method1 := Float class >> #nan.
