@@ -446,7 +446,7 @@ RGMethodDefinition >> isTestMethod [
 		ifFalse: [ ^ false ].
 	selectorString := self selector asString.
 	"unary selectors starting with 'should' are supposed to be treated as test methods too"
-	((selectorString beginsWith: 'test') or: [ selectorString beginsWith: 'should' ])
+	(((selectorString beginsWith: 'test') or: [ selectorString beginsWith: 'should' ]) or: [ (self pragmaAt: #test) isNotNil ])
 		ifFalse: [ ^ false ].
 	"Is the receiver a TestCase test method?"
 	self methodClass isTestCase

@@ -645,3 +645,9 @@ SUnitTest >> testWithExceptionDo [
 		]
 			
 ]
+
+{ #category : #testing }
+SUnitTest >> this_is_a_test [
+	<test>
+	self assert: true
+]

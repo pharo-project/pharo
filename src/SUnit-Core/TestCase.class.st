@@ -551,7 +551,9 @@ TestCase class >> sunitVersion [
 
 { #category : #accessing }
 TestCase class >> testSelectors [
-	^(self selectors select: [ :each | (each beginsWith: 'test') and: [each numArgs isZero]])
+	^self selectors select: [ :each |
+		each numArgs isZero and: [
+			(each beginsWith: 'test') or: [ (self >> each pragmaAt: #test) isNotNil ]]]
 ]
 
 { #category : #dependencies }
