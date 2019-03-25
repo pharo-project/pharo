@@ -13,5 +13,4 @@ If you found a bug or issue with Pharo please let us know. You can report bugs o
 
 ### How to propose a bug fix or enhancement
 * First, sign the [license agreement](http://files.pharo.org/media/PharoSoftwareDistributionAgreement.pdf).
-
-See the wiki page: *https://github.com/pharo-project/pharo/wiki/Contribute-a-fix-to-Pharo*
+* See the wiki page: *https://github.com/pharo-project/pharo/wiki/Contribute-a-fix-to-Pharo*
