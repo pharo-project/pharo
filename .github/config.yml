@@ -17,7 +17,7 @@ requestInfoLabelToAdd: more-information-needed
 
 # Comment to be posted to on first time issues
 newIssueWelcomeComment: >
-  Thanks for opening your first issue here!
+  Thanks for opening your first issue! You can find information of how to do a Pull Request here: https://github.com/pharo-project/pharo/wiki/Contribute-a-fix-to-Pharo
 
 # Configuration for new-pr-welcome - https://github.com/behaviorbot/new-pr-welcome
 
