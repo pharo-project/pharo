@@ -75,6 +75,7 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 { #category : #asserting }
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
 	"Take a second argument wich is a message string that describes the reason for the failure, this string will be displayed by the Test Runner"
+	<debuggerCompleteToSender>
 
 	aBooleanOrBlock value
 		ifFalse: [ | aString |
