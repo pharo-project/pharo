@@ -63,10 +63,6 @@ BitsLayout >> extendWord [
 		signal
 ]
 
-{ #category : #initialization }
-BitsLayout >> initializeInstance: anInstance [
-]
-
 { #category : #testing }
 BitsLayout >> isBits [
 	^ true
