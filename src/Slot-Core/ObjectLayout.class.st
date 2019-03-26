@@ -38,12 +38,6 @@ ObjectLayout class >> layoutForType: typeSymbol [
 	Error signal: 'Invalid layout type: ', typeSymbol asString.
 ]
 
-{ #category : #diff }
-ObjectLayout >> computeChangesFrom: other in: modification [
-	other hasSlots ifTrue: [
-		modification removals: other allSlots asArray ]
-]
-
 { #category : #extending }
 ObjectLayout >> extend [
 	"Answer a default extension of me."
@@ -151,23 +145,4 @@ ObjectLayout >> initializeInstance: anInstance [
 { #category : #format }
 ObjectLayout >> instanceSpecification [
 	self subclassResponsibility
-]
-
-{ #category : #reshaping }
-ObjectLayout >> reshapeFrom: oldScope to: newParentLayout [
-	"Answer the reshaped version of me for a new parent layout."
-
-	| newScope |
-	newScope := self slotScope 
-		rebase: oldScope 
-		to: newParentLayout slotScope.
-	^ newParentLayout extendAgain: self with: newScope.
-]
-
-{ #category : #reshaping }
-ObjectLayout >> reshapeTo: aModification [
-	^ self class 
-		extending: aModification classLayout
-		scope: LayoutEmptyScope instance
-		host: self host
 ]
