@@ -168,11 +168,6 @@ GLMMorphicRenderer >> renderTreePresentation: aPresentation [
 	^ GLMMorphicTreeRenderer render: aPresentation from: self
 ]
 
-{ #category : #'rendering browsers' }
-GLMMorphicRenderer >> renderWrapper: aBrowser [ 
-	^ GLMMorphicWrapperRenderer render: aBrowser from: self
-]
-
 { #category : #accessing }
 GLMMorphicRenderer >> window [
 	^ window

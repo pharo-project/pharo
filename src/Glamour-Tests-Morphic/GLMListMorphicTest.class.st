@@ -35,8 +35,11 @@ GLMListMorphicTest >> testListDoubleClickWithMultipleSelection [
 { #category : #tests }
 GLMListMorphicTest >> testMultipleSelectionWithChange [
 	| browser firstTreeMorph secondTreeMorph treeNodeMorph lastTreeNodeMorph |
-	browser := GLMWrapper new.
-	browser show: [ :a | 
+	browser := GLMTabulator new.
+	browser column: #one.
+	(browser transmit)
+		to: #one;
+		andShow: [ :a | 
 					(a list)
 						beMultiple;
 						display: [ :x | x - 2 to: x ] ].
