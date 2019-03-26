@@ -14,15 +14,6 @@ BitsLayout >> extend [
 	^ self species new 
 ]
 
-{ #category : #reshaping }
-BitsLayout >> extendAgain: aLayout with: aScope [ 
-	"Answer my default layout since any subclass of me only can have my layout type."
-
-	^ self extend
-		host: host;
-		yourself
-]
-
 { #category : #extending }
 BitsLayout >> extendByte [
 	IncompatibleLayoutConflict new
@@ -95,23 +86,4 @@ BitsLayout >> isVariable [
 { #category : #testing }
 BitsLayout >> isWords [
 	^ false
-]
-
-{ #category : #reshaping }
-BitsLayout >> reshapeFrom: oldScope to: newParentLayout [
-	"Answer the reshaped version of me for a new parent layout.
-
-	If the new parent layout has not fields, then the new version 
-	is just a copy of me. But if it has fields, that means that 
-	the new version of me cannot be a bits layout anymore, so the
-	answer is a new default layout. "
-
-	^ newParentLayout hasFields 
-		ifTrue: [ 
-			(newParentLayout extend)
-				host: host;
-				yourself ]
-		ifFalse: [ 
-			self copy ]
-
 ]
