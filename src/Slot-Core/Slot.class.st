@@ -365,11 +365,6 @@ Slot >> removeProperty: propName ifAbsent: aBlock [
 	^ property
 ]
 
-{ #category : #'class building' }
-Slot >> removingFrom: aClass [
-	"I am called by the class builder. This way a Slot can change the class it is installed in"
-]
-
 { #category : #accessing }
 Slot >> scope: aScope [
 	"ignored, subclasses can override to analyze the scope they are to be installed in"
