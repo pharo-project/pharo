@@ -35,8 +35,7 @@ HandleMorph >> initialize [
 HandleMorph >> justDroppedInto: aMorph event: anEvent [
 	"So that when the hand drops me (into the world) I go away"
 	self removeHalo.
-	lastPointBlock ifNotNil: [lastPointBlock value: self center].
-	self flag: #arNote. "Probably unnecessary"
+	lastPointBlock ifNotNil: [lastPointBlock value: self center]. "Probably unnecessary"
 	anEvent hand releaseKeyboardFocus: self.
 	self changed.
 	self delete.
@@ -46,28 +45,20 @@ HandleMorph >> justDroppedInto: aMorph event: anEvent [
 { #category : #'event handling' }
 HandleMorph >> keyStroke: evt [
 	"Check for cursor keys"
+
 	| keyValue |
-	owner isHandMorph ifFalse:[^self].
+	owner isHandMorph ifFalse: [ ^ self ].
 	keyValue := evt keyValue.
-	keyValue = 28 ifTrue:[^self position: self position - (1@0)].
-	keyValue = 29 ifTrue:[^self position: self position + (1@0)].
-	keyValue = 30 ifTrue:[^self position: self position - (0@1)].
-	keyValue = 31 ifTrue:[^self position: self position + (0@1)].
+	keyValue = 28 ifTrue: [ ^ self position: self position - (1 @ 0) ].
+	keyValue = 29 ifTrue: [ ^ self position: self position + (1 @ 0) ].
+	keyValue = 30 ifTrue: [ ^ self position: self position - (0 @ 1) ].
+	keyValue = 31 ifTrue: [ ^ self position: self position + (0 @ 1) ].
 	"Special case for return"
-	keyValue = 13 ifTrue:[
-		"Drop the receiver and be done"
-	self flag: #arNote. "Probably unnecessary"
-		owner releaseKeyboardFocus: self.
-		self delete].
-
-]
-
-{ #category : #'stepping and presenter' }
-HandleMorph >> startStepping [
-	"Make the receiver the keyboard focus for editing"
-	super startStepping.
-	"owner isHandMorph ifTrue:[owner newKeyboardFocus: self]."
-self flag: #arNote. "make me #handleKeyboard:"
+	keyValue = 13
+		ifTrue: [ "Drop the receiver and be done"
+			"Probably unnecessary"
+			owner releaseKeyboardFocus: self.
+			self delete ]
 ]
 
 { #category : #'stepping and presenter' }

@@ -548,7 +548,7 @@ NECMenuMorph >> mouseDown: evt [
 			
 	super mouseDown: evt.
 	evt wasHandled: false.
-	self flag: #fixme "ugly hack".
+	self flag: #pharoFixMe "ugly hack".
 	controller editor morph owner owner
 		takeKeyboardFocus;
 		handleMouseDown: evt.

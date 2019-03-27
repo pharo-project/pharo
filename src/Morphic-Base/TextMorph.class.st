@@ -1312,13 +1312,9 @@ TextMorph >> paragraph [
 ]
 
 { #category : #editing }
-TextMorph >> passKeyboardFocusTo: otherMorph [ 
-	| w |
-	self flag: #arNote.	"Do we need this?!"
-	(w := self world) isNil 
-		ifFalse: 
-			[w 
-				handsDo: [:h | h keyboardFocus == self ifTrue: [h newKeyboardFocus: otherMorph]]]
+TextMorph >> passKeyboardFocusTo: otherMorph [
+	self flag: #pharoFixMe. "Do we need this?!"
+	self world ifNotNil: [ :world | world handsDo: [ :h | h keyboardFocus == self ifTrue: [ h newKeyboardFocus: otherMorph ] ] ]
 ]
 
 { #category : #'linked frames' }

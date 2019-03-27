@@ -114,7 +114,7 @@ FTCellSelectionModeStrategy >> selectableIndexContainingPoint: aPoint [
 FTCellSelectionModeStrategy >> selectablesToHighlightFromRow: aFTRow at: aRowIndex withHighlightedIndexes: highligtedIndexes andPrimaryIndex: primarySelectionIndex [
 	| selectablesToColorMap |
 	selectablesToColorMap := Dictionary new.
-	self flag: #clean.	"I do not like this #submorphs thing."
+	self flag: #pharoFixMe.	"Currently, the rows in FastTable have cells in submorphs, but the API should be improved to provide better cell iterations instead of letting external users touch row submorphs."
 	aFTRow submorphs
 		withIndexDo: [ :each :columnIndex | 
 			| cellIndex |

@@ -75,7 +75,7 @@ UnlimitedInstanceVariableSlot >> layoutChanged: aClass [
 		^self. ].
 	"here we need to be more clever: if a subclass defines it, 
 	move the difiniton here"
-	self flag: #TBD.
+	self flag: #pharoTodo.
 	aClass addSlot: (baseSlot := #'_ivarArrayBaseSlot' => BaseSlot default: (Array new: 1)).
 	
 ]

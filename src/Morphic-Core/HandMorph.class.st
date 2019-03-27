@@ -501,7 +501,6 @@ HandMorph >> generateKeyboardEvent: evtBuf [
 					ifTrue: [charCode := combinedChar combined charCode].
 				combinedChar := nil]].
 
-	self flag: #fixme.
 	"This piece of code handles the creation of scrolling events. When a scroll is done by the user, the VM forwards a keystroke event with the up/down key. So we reconvert it to a MouseWheelEvent in that case."
 	(type = #keystroke 
 	 and: [(buttons anyMask: 16) 
@@ -513,7 +512,7 @@ HandMorph >> generateKeyboardEvent: evtBuf [
 					hand: self
 					stamp: stamp].
    "If charCode is not single-byte, we definately have Unicode input. Zero keyValue to avoid garbage values from som VMs."
-   self flag:'I need to look at the windows vm side, to see why this keyvalue is generated in the first place'.
+   self flag: #pharoFixMe. "I need to look at the windows vm side, to see why this keyvalue is generated in the first place".
    (charCode notNil and:[charCode > 255]) ifTrue: [keyValue:=0].
 	keyEvent := KeyboardEvent new
 		setType: type
