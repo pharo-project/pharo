@@ -10,6 +10,7 @@ Class {
 { #category : #running }
 DebugSessionContexts >> setUp [
 	"Creates a debugSession in a way that mimicks the real way DebugSessions are created normally in the image (in a process, a halt is raised, the process creates a debugSession and gets suspended). Note that this isn't a perfect replica of the normal way a debugSession gets created, because the normal way involves the UIManager and would create a pre-debug window."
+	super setUp.
 	process := [ | debugSession |	
 	debugSession := Processor activeProcess newDebugSessionNamed: 'test' startedAt: (debuggedThisContext := thisContext).
 	Processor activeProcess suspend ] fork.
