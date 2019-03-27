@@ -93,7 +93,8 @@ Class {
 		'segments',
 		'getMenuPolicy',
 		'mouseDownPoint',
-		'completionEngine'
+		'completionEngine',
+		'maxLength'
 	],
 	#classVars : [
 		'BackgroundColor',
@@ -1183,6 +1184,20 @@ RubAbstractTextArea >> markIndex: markIndex pointIndex: pointIndex [
 ]
 
 { #category : #accessing }
+RubAbstractTextArea >> maxLength [
+	"Answer the maximum number of characters that may be typed."
+
+	^ maxLength 
+]
+
+{ #category : #accessing }
+RubAbstractTextArea >> maxLength: anInteger [
+	"Set the maximum number of characters that may be typed."
+
+	maxLength := anInteger max: 0
+]
+
+{ #category : #accessing }
 RubAbstractTextArea >> menuAllowed [
 	^ menuAllowed ifNil: [ menuAllowed := self defaultMenuAllowed  ]
 ]
@@ -1718,7 +1733,7 @@ RubAbstractTextArea >> setEmphasisHere [
 RubAbstractTextArea >> setTextWith: stringOrText [
 	"Accept new text contents."
 
-	self handleParagraphChange: [self privateText: stringOrText]
+	self handleParagraphChange: [ self privateText: (self validateTextFrom: stringOrText) ]
 ]
 
 { #category : #'find-replace' }
@@ -1904,13 +1919,13 @@ RubAbstractTextArea >> updateMarginsWith: aMargin [
 { #category : #'accessing text' }
 RubAbstractTextArea >> updateTextWith: aStringOrText [
 	self
-		handleEdit: [ 
-			self
+		handleEdit: [ self
 				beEditableWhile: [ 
-					aStringOrText = self text
-						ifFalse: [ 
-							self selectAll.							
-							self editor replaceSelectionWith: aStringOrText.
+					| s |
+					s := self validateTextFrom: aStringOrText.
+					s = self text
+						ifFalse: [ self selectAll.
+							self editor replaceSelectionWith: s.
 							self deselect ] ] ]
 ]
 
@@ -1919,6 +1934,15 @@ RubAbstractTextArea >> userString [
 	"Do I have a text string to be searched on?"
 
 	^ self text string
+]
+
+{ #category : #'accessing text' }
+RubAbstractTextArea >> validateTextFrom: aStringOrText [
+	^ self maxLength
+		ifNil: [ aStringOrText ]
+		ifNotNil: [ aStringOrText size <= self maxLength
+				ifFalse: [ aStringOrText copyFrom: 1 to: self maxLength ]
+				ifTrue: [ aStringOrText ] ]
 ]
 
 { #category : #copying }

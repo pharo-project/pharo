@@ -214,13 +214,15 @@ RubTextAreaExamples class >> profileSourcesFileViewing [
 { #category : #examples }
 RubTextAreaExamples class >> rightFlushed [
 	"self rightFlushed"
-
-	RubEditingArea new
+	<sampleInstance>
+	
+	^ RubEditingArea new
 		beWrapped;
 		width: 300;
 		updateTextWith: 'AAAAAA' , Character cr asString , 'BBBB';
 		rightFlush;
-		openInWorld
+		openInWorld;
+		yourself
 ]
 
 { #category : #NOcompletion }
