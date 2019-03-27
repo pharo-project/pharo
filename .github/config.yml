@@ -3,7 +3,7 @@
 # *Required* Comment to reply with
 requestInfoReplyComment: >
   This issue has either a default title or empty body. We would appreciate it if you could provide more information. 
-  Note: I am not a very intelligent bot, I can only react to new comments. Please add a comment for me after if you 
+  Note: I am not a very intelligent bot, I can only react to new comments. Please add a comment for me if you 
   update the body or title.
 
 # *OPTIONAL* default titles to check against for lack of descriptiveness
