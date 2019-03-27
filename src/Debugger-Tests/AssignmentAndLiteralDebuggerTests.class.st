@@ -4,7 +4,7 @@ Class {
 	#category : #'Debugger-Tests'
 }
 
-{ #category : #tests }
+{ #category : #running }
 AssignmentAndLiteralDebuggerTests >> setUp [
 	super setUp.
 	self settingUpSessionAndProcessAndContextForBlock: [ |var| var:=4].
