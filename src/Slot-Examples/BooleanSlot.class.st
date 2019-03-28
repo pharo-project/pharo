@@ -56,16 +56,21 @@ BooleanSlot >> emitValue: methodBuilder [
 BooleanSlot >> installingIn: aClass [
 	| booleanSlots |
 	super installingIn: aClass.
+	
 	"we reuse a baselot if it is already there, if not, we add it"
- 	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
- 	aClass classLayout 
- 		resolveSlot: #'_booleanBaseSlot'   
- 		ifFound:  [: slot |  baseSlot := slot ]
- 		ifNone: [aClass addSlot: (baseSlot := #'_booleanBaseSlot' => BaseSlot default: 0)].
+	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
+	aClass classLayout 
+		resolveSlot: #'_booleanBaseSlot'   
+		ifFound:  [: slot |  baseSlot := slot ]
+		ifNone: [aClass addSlot: (baseSlot := #'_booleanBaseSlot' => BaseSlot default: 0)].
+	
+	"my offset in the base slot is defined by the order of all BooleanSlots in the Hierarchy"
+	booleanSlots := aClass allSlots select: [ :each | each isKindOf: self class ].	
+	offset := booleanSlots indexOf: self.
 
-  	"my offset in the base slot is defined by the order of all BooleanSlots in the Hierarchy"
- 	booleanSlots := aClass allSlots select: [ :each | each isKindOf: self class ].	
- 	offset := booleanSlots indexOf: self.
+	
+
+	
 ]
 
 { #category : #testing }

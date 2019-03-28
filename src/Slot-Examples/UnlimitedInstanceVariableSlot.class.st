@@ -45,16 +45,18 @@ UnlimitedInstanceVariableSlot >> growBaseSlot: aClass [
 UnlimitedInstanceVariableSlot >> installingIn: aClass [
 	| unlimitedSlots |
 	super installingIn: aClass.
+	
 	"we reuse a baselot if it is already there, if not, we add it"
- 	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
- 	aClass classLayout 
- 		resolveSlot: #'_ivarArrayBaseSlot'   
- 		ifFound:  [: slot |  baseSlot := slot. self growBaseSlot: aClass. ]
- 		ifNone: [aClass addSlot: (baseSlot := #'_ivarArrayBaseSlot' => BaseSlot default: (Array new: 1))].
+	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
+	aClass classLayout 
+		resolveSlot: #'_ivarArrayBaseSlot'   
+		ifFound:  [: slot |  baseSlot := slot. self growBaseSlot: aClass. ]
+		ifNone: [aClass addSlot: (baseSlot := #'_ivarArrayBaseSlot' => BaseSlot default: (Array new: 1))].
+	
+	"my offset in the base slot is defined by the order of all BooleanSlots in the Hierarchy"
+	unlimitedSlots := aClass allSlots select: [ :each | each isKindOf: self class ].
+	offset := unlimitedSlots indexOf: self.
 
-  	"my offset in the base slot is defined by the order of all BooleanSlots in the Hierarchy"
- 	unlimitedSlots := aClass allSlots select: [ :each | each isKindOf: self class ].
- 	offset := unlimitedSlots indexOf: self.
 ]
 
 { #category : #accessing }

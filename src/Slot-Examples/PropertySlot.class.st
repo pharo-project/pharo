@@ -42,15 +42,17 @@ PropertySlot >> emitValue: methodBuilder [
 	
 ]
 
-{ #category : #testing }
+{ #category : #'class building' }
 PropertySlot >> installingIn: aClass [
 	super installingIn: aClass.
+	
 	"we reuse a baselot if it is already there, if not, we add it"
 	"TODO: this does not take into account adding PropertySlot higher up in the Hierarchy"
-	aClass classLayout
-		resolveSlot: #'_propertyBaseSlot'
+	aClass classLayout 
+		resolveSlot: #'_propertyBaseSlot'   
 		ifFound:  [: slot |  baseSlot := slot ]
 		ifNone: [aClass addSlot: (baseSlot := #'_propertyBaseSlot' => BaseSlot default: Dictionary new)].
+	
 ]
 
 { #category : #testing }
