@@ -585,31 +585,14 @@ Behavior >> cleanUp: aggressive [
 
 { #category : #'accessing method dictionary' }
 Behavior >> commentsAt:  selector [
-	"Answer a string representing the first comment in the method associated with selector.  Return an empty string if the relevant source file is not available, or if the method's source code does not contain a comment.  Not smart enough to bypass quotes in string constants, but does map doubled quote into a single quote."
-
-
-	^self commentsIn:  (self sourceCodeAt: selector) asString.
+	self 
+		deprecated: 'use #comments on the method instead' 
+		transformWith: '`@receiver commentsAt: `@argument'
+						-> '(`@receiver compiledMethodAt: `@argument) comments'.
 	
-"Behavior commentsAt: #commentsAt:"
-]
-
-{ #category : #'accessing method dictionary' }
-Behavior >> commentsIn: sourceString [
-
+	^(self compiledMethodAt: selector) comments.
 	
-	| commentStart nextQuotePos someComments aPos |
-	('*"*' match: sourceString) ifFalse: [^#()].
-	someComments:= OrderedCollection new.
-	sourceString size = 0 ifTrue: [^ someComments].
-	aPos:=1.
-	nextQuotePos:= 0.
-	[commentStart := sourceString findString: '"' startingAt: aPos.
-	nextQuotePos:= self nextQuotePosIn: sourceString startingFrom: commentStart.
-	(commentStart ~= 0 and: [nextQuotePos >commentStart])] whileTrue: [
-		commentStart ~= nextQuotePos ifTrue: [
-			someComments add: ((sourceString copyFrom: commentStart + 1 to: nextQuotePos - 1) copyReplaceAll: '""' with: '"').].
-	aPos := nextQuotePos+1].
-	^someComments
+
 ]
 
 { #category : #'accessing method dictionary' }
@@ -774,14 +757,13 @@ Behavior >> findOriginMethodOf: aMethod [
 
 { #category : #'accessing method dictionary' }
 Behavior >> firstCommentAt:  selector [
-	"Answer a string representing the first comment in the method associated with selector.  Return an empty string if the relevant source file is not available, or if the method's source code does not contain a comment.  Not smart enough to bypass quotes in string constants, but does map doubled quote into a single quote."
-
-	|someComments|
-	someComments := self commentsAt: selector.
-	^someComments isEmpty ifTrue: [''] ifFalse: [someComments first]
-
-
-"Behavior firstCommentAt: #firstCommentAt:"
+	
+	self 
+		deprecated: 'use #firstComment on the method instead' 
+		transformWith: '`@receiver commentsAt: `@argument'
+						-> '(`@receiver compiledMethodAt: `@argument) firstComment'.
+	
+	^(self compiledMethodAt: selector) firstComment
 ]
 
 { #category : #'accessing method dictionary' }
@@ -1446,16 +1428,6 @@ Behavior >> new: sizeRequested [
 	^ (self basicNew: sizeRequested) initialize  
 ]
 
-{ #category : #'accessing method dictionary' }
-Behavior >> nextQuotePosIn: sourceString startingFrom: commentStart [
-	| pos nextQuotePos |
-	pos := commentStart + 1.
-	[((nextQuotePos := sourceString findString: '"' startingAt: pos) == (sourceString findString: '""' startingAt: pos)) and: [nextQuotePos ~= 0]]
-		whileTrue:
-			[pos := nextQuotePos + 2].
-	^nextQuotePos
-]
-
 { #category : #initialization }
 Behavior >> nonObsoleteClass [
 	"Attempt to find and return the current version of this obsolete class"
@@ -2009,39 +1981,9 @@ Behavior >> whichClassIncludesSelector: aSymbol [
 	^ self superclass whichClassIncludesSelector: aSymbol
 ]
 
-{ #category : #queries }
-Behavior >> whichSelectorsAssign: instVarName [ 
-	"Answer a Set of selectors whose methods store into the argument, 
-	instVarName, as a named instance variable."
-	^self whichSelectorsStoreInto: instVarName
-]
-
-{ #category : #queries }
-Behavior >> whichSelectorsRead: aString [
-	
-	| index |
-	index := self
-		instVarIndexFor: aString
-		ifAbsent: [ ^ #() ].
-	^ self selectors select: [ :each |
-		(self compiledMethodAt: each)
-			readsField: index ]
-]
-
 { #category : #'testing method dictionary' }
 Behavior >> whichSelectorsReferTo: literal [ 
 	^ self thoroughWhichSelectorsReferTo: literal
-]
-
-{ #category : #'testing method dictionary' }
-Behavior >> whichSelectorsStoreInto: instVarName [ 
-	"Answer a Set of selectors whose methods access the argument, 
-	instVarName, as a named instance variable."
-	| instVarIndex |
-	instVarIndex := self instVarIndexFor: instVarName ifAbsent: [^#()].
-	^ self selectors select: [:sel | (self compiledMethodAt: sel) writesField: instVarIndex]
-
-	"Point whichSelectorsStoreInto: 'x'."
 ]
 
 { #category : #queries }

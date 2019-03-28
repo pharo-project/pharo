@@ -6,7 +6,11 @@ Class {
 	#superclass : #RubTextEditor,
 	#instVars : [
 		'selectorChooser',
-		'notificationStrategy'
+		'notificationStrategy',
+		'completionEngine'
+	],
+	#classVars : [
+		'CompletionEngine'
 	],
 	#category : #'Rubric-Editing-Code'
 }
@@ -130,7 +134,25 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 	
 ]
 
-{ #category : #NOcompletion }
+{ #category : #'completion engine' }
+RubSmalltalkEditor class >> completionEngine [
+	
+	^ CompletionEngine
+]
+
+{ #category : #'completion engine' }
+RubSmalltalkEditor class >> completionEngine: anEngine [
+	
+	CompletionEngine := anEngine
+]
+
+{ #category : #'completion engine' }
+RubSmalltalkEditor class >> noCompletion [
+
+	CompletionEngine := nil
+]
+
+{ #category : #'completion engine' }
 RubSmalltalkEditor >> atCompletionPosition [
 	"Return true if the cursor is at a possible completion position"
 	| cursorPosition |
@@ -318,10 +340,28 @@ RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
 	^ self compile: self selectionAsStream for: anObject in: evalContext
 ]
 
-{ #category : #private }
+{ #category : #'completion engine' }
 RubSmalltalkEditor >> completionAround:  aBlock  keyStroke: anEvent [
 	"I'm a editor for Smalltalk, so, ok do completion around"
-	Smalltalk tools codeCompletionAround: aBlock textMorph: textArea keyStroke: anEvent
+	
+	self isCompletionEnabled 
+		ifTrue: [ self completionEngine 
+						codeCompletionAround: aBlock 
+						textMorph: textArea 
+						keyStroke: anEvent
+					]
+]
+
+{ #category : #'completion engine' }
+RubSmalltalkEditor >> completionEngine [
+	^ completionEngine
+]
+
+{ #category : #'completion engine' }
+RubSmalltalkEditor >> completionEngine: aCompletionEngine [
+
+	completionEngine := aCompletionEngine.
+	self textArea setCompletionEngine: aCompletionEngine. 
 ]
 
 { #category : #'new selection' }
@@ -702,7 +742,10 @@ RubSmalltalkEditor >> implementorsOfIt: aKeyboardEvent [
 { #category : #initialization }
 RubSmalltalkEditor >> initialize [
 	super initialize.
-	notificationStrategy := RubTextInsertionStrategy new editor: self
+	notificationStrategy := RubTextInsertionStrategy new editor: self.
+	completionEngine := CompletionEngine. 
+	"this way we can instance-based and shared completion between all the instances
+	of editor instances."
 ]
 
 { #category : #keymapping }
@@ -747,6 +790,12 @@ RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 	
 ]
 
+{ #category : #'completion engine' }
+RubSmalltalkEditor >> isCompletionEnabled [
+
+	^ completionEngine isNil not
+]
+
 { #category : #testing }
 RubSmalltalkEditor >> isSmalltalkEditor [
 	^ true 
@@ -772,12 +821,16 @@ RubSmalltalkEditor >> jumpToNextKeywordOfIt: isForwardJump [
 
 { #category : #'typing support' }
 RubSmalltalkEditor >> keystroke: aKeyboardEvent [
+
+	self isCompletionEnabled 
+		ifFalse: [ ^ super keystroke: aKeyboardEvent ].
 	self
 		completionAround: [ 
 			(self selectorChooserHandlesKeyboard: aKeyboardEvent)
 				ifFalse: [ super keystroke: aKeyboardEvent ].
 			self selectorChooserKeystroke: aKeyboardEvent ]
 		keyStroke: aKeyboardEvent
+	
 ]
 
 { #category : #'menu messages' }
@@ -1136,6 +1189,7 @@ RubSmalltalkEditor >> selectorChooserFocusChange [
 { #category : #'basic-completion' }
 RubSmalltalkEditor >> selectorChooserHandlesKeyboard: aKeyboardEvent [
 	"Return true or false on whether the code editor can handle keyboard event"
+	
 	^ (selectorChooser notNil and: [ selectorChooser handlesKeyboard: aKeyboardEvent ])
 
 ]
@@ -1236,6 +1290,14 @@ RubSmalltalkEditor >> tallySelection [
 	self tally: self selectionAsStream
 	
 
+]
+
+{ #category : #'completion engine' }
+RubSmalltalkEditor >> textArea: atextArea [
+
+	atextArea setCompletionEngine: self completionEngine.
+	"Right now RubTextEditor does not support completion"
+	super textArea: atextArea
 ]
 
 { #category : #'menu messages' }

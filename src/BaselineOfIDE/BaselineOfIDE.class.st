@@ -134,6 +134,8 @@ BaselineOfIDE >> baseline: spec [
 			spec repository: repository
 		].
 
+		spec baseline: 'Clap' with: [ spec repository: repository ].
+		
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
@@ -365,6 +367,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
+		spec package: 'BaselineOfTelePharoSupport'.
 		
 		spec package: 'ReferenceFinder-Core'.
 
@@ -799,7 +802,8 @@ spec group: #default with: #(
 	'BasicTools'	"dependency"
 	'Athens'
 	'Flashback'
-
+	'Clap'
+	
 	'Mandatory-Group'
 
 	'Kernel-Tests-Group'
@@ -830,6 +834,7 @@ spec group: #default with: #(
 	'BaselineOfPharoBootstrap'
 	'BaselineOfMonticello'
 	'BaselineOfMetacello'
+	'BaselineOfTelePharoSupport'
 	
 	"Importing tests of Shift"
 	'Shift'
@@ -850,7 +855,7 @@ BaselineOfIDE >> loadCalypso [
 
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.15.3/src';
+		repository: 'github://pharo-ide/Calypso:v0.16.1/src';
 		onConflict: [ :err | err useIncoming ];
 		onUpgrade: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').

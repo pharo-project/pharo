@@ -9,7 +9,7 @@ e.g. make a class lile this:
 Object subclass: #TT
 	slots: { #i => ComputedSlot with: [ :o | o class methods size ] }
 	classVariables: {  }
-	category: 'TT'
+	package: 'TT'
 "
 Class {
 	#name : #ComputedSlot,

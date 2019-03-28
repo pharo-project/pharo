@@ -1052,7 +1052,7 @@ TextMorph >> justified [
 { #category : #'event handling' }
 TextMorph >> keyStroke: evt [ 
 	"Handle a keystroke event."
-
+	Transcript show: 'TextMorph';cr.
 	(Smalltalk tools hasToolNamed: #codeCompletion) 
 		ifTrue: [ 
 			Smalltalk tools 

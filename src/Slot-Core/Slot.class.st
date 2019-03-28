@@ -217,6 +217,12 @@ Slot >> installingIn: aClass [
 ]
 
 { #category : #testing }
+Slot >> isAccessedIn: aCompiledCode [
+	^aCompiledCode ast instanceVariableNodes
+		anySatisfy: [ :node | node binding slot == self ]
+]
+
+{ #category : #testing }
 Slot >> isGlobal [
 	^false
 ]
@@ -229,7 +235,8 @@ Slot >> isLocal [
 
 { #category : #testing }
 Slot >> isReadIn: aCompiledCode [
-	^aCompiledCode readsSlot: self
+	^aCompiledCode ast instanceVariableReadNodes
+		 anySatisfy: [ :node | node binding slot == self ]
 ]
 
 { #category : #testing }
@@ -256,7 +263,8 @@ Slot >> isVisible [
 
 { #category : #testing }
 Slot >> isWrittenIn: aCompiledCode [
-	^aCompiledCode writesSlot: self
+	^aCompiledCode ast instanceVariableWriteNodes
+		anySatisfy: [ :node | node binding slot == self ]
 ]
 
 { #category : #'class building' }

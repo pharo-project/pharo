@@ -454,22 +454,22 @@ RBRefactoringTest >> testConditions [
 				errorString: 'false'.
 	condition errorMacro: '<1?true:false>'.
 	self deny: condition check.
-	self assert: condition errorString = 'false'.
+	self assert: condition errorString equals: 'false'.
 	self assert: condition not check.
-	self assert: condition printString = 'false'.
-	self assert: condition not printString = 'NOT false'.
+	self assert: condition printString equals: 'false'.
+	self assert: condition not printString equals: 'NOT false'.
 	self deny: (condition not & condition) check.
 	self 
-		assert: (condition not & condition) printString = 'NOT false & false'.
+		assert: (condition not & condition) printString equals: 'NOT false & false'.
 	self assert: (condition & condition) not check.
 	self assert: (condition | condition not) check.
 	self deny: (newCondition := condition | condition) check.
-	self assert: newCondition errorString = 'false AND false'.
+	self assert: newCondition errorString equals: 'false AND false'.
 	self assert: (condition not | condition not) check.
 	self deny: (newCondition := condition & condition) check.
-	self assert: newCondition errorString = 'false'.
+	self assert: newCondition errorString equals: 'false'.
 	self assert: (condition not & condition not) check.
-	self assert: (condition & condition) errorString = 'false OR false'
+	self assert: (condition & condition) errorString equals: 'false OR false'
 ]
 
 { #category : #tests }

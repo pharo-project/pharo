@@ -88,32 +88,26 @@ RBCreateAccessorsForVariableRefactoring >> definingClass [
 RBCreateAccessorsForVariableRefactoring >> findGetterMethod [
 	| definingClass matcher |
 	definingClass := self definingClass.
-	matcher := RBParseTreeSearcher getterMethod: variableName.
-	^self possibleGetterSelectors detect: 
-			[:each | 
-			(self 
-				checkClass: definingClass
-				selector: each
-				using: matcher) notNil 
-				and: [(definingClass subclassRedefines: each) not]]
-		ifNone: [nil]
+	matcher := self parseTreeSearcherClass getterMethod: variableName.
+	^ self possibleGetterSelectors
+		detect: [ :each | 
+			(self checkClass: definingClass selector: each using: matcher) notNil
+				and: [ (definingClass subclassRedefines: each) not ] ]
+		ifNone: [ nil ]
 ]
 
 { #category : #'private-accessing' }
 RBCreateAccessorsForVariableRefactoring >> findSetterMethod [
 	| definingClass matcher |
 	definingClass := self definingClass.
-	matcher := self needsReturnForSetter 
-				ifTrue: [RBParseTreeSearcher returnSetterMethod: variableName]
-				ifFalse: [RBParseTreeSearcher setterMethod: variableName].
-	^self possibleSetterSelectors detect: 
-			[:each | 
-			(self 
-				checkClass: definingClass
-				selector: each
-				using: matcher) notNil 
-				and: [(definingClass subclassRedefines: each) not]]
-		ifNone: [nil]
+	matcher := self needsReturnForSetter
+		ifTrue: [ self parseTreeSearcherClass returnSetterMethod: variableName ]
+		ifFalse: [ self parseTreeSearcherClass setterMethod: variableName ].
+	^ self possibleSetterSelectors
+		detect: [ :each | 
+			(self checkClass: definingClass selector: each using: matcher) notNil
+				and: [ (definingClass subclassRedefines: each) not ] ]
+		ifNone: [ nil ]
 ]
 
 { #category : #'private-accessing' }
@@ -183,31 +177,29 @@ RBCreateAccessorsForVariableRefactoring >> transform [
 ]
 
 { #category : #testing }
-RBCreateAccessorsForVariableRefactoring >> usesAssignmentOf: aString in: aClass classVariable: isClassVar [ 
+RBCreateAccessorsForVariableRefactoring >> usesAssignmentOf: aString in: aClass classVariable: isClassVar [
 	| matcher definingClass |
-	matcher := RBParseTreeSearcher new.
+	matcher := self parseTreeSearcher.
 	matcher
 		answer: false;
 		matches: aString , ' := ``@object'
-			do: [ :aNode :answer | answer or: [ aNode isUsed and: [ aNode methodNode selector ~= aString] ] ].
-	definingClass := isClassVar 
+			do: [ :aNode :answer | 
+			answer
+				or: [ aNode isUsed and: [ aNode methodNode selector ~= aString ] ] ].
+	definingClass := isClassVar
 		ifTrue: [ aClass instanceSide ]
 		ifFalse: [ aClass ].
-	^ (definingClass withAllSubclasses , (isClassVar 
-			ifTrue: [ definingClass classSide withAllSubclasses ]
-			ifFalse: 
-				[ #() ]) 
-		detect: 
-			[ :each | 
-			((isClassVar 
+	^ (definingClass withAllSubclasses
+		,
+			(isClassVar
+				ifTrue: [ definingClass classSide withAllSubclasses ]
+				ifFalse: [ #() ])
+		detect: [ :each | 
+			((isClassVar
 				ifTrue: [ each whichSelectorsReferToClassVariable: aString ]
-				ifFalse: [ each whichSelectorsReferToInstanceVariable: aString ]) 
-				detect: 
-					[ :sel | 
-					self 
-						checkClass: each
-						selector: sel
-						using: matcher ]
+				ifFalse: [ each whichSelectorsReferToInstanceVariable: aString ])
+				detect:
+					[ :sel | self checkClass: each selector: sel using: matcher ]
 				ifNone: [ nil ]) notNil ]
 		ifNone: [ nil ]) notNil
 ]

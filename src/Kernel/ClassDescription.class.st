@@ -651,9 +651,7 @@ ClassDescription >> hasClassSide [
 { #category : #'accessing comment' }
 ClassDescription >> hasComment [
 	"return whether this class truly has a comment other than the default"
-	| org |
-	org := self instanceSide organization.
-	^org classComment isEmptyOrNil not
+	^self instanceSide organization hasComment
 ]
 
 { #category : #'instance variables' }
@@ -1023,10 +1021,9 @@ ClassDescription >> reformatAll [
 
 { #category : #'instance variables' }
 ClassDescription >> removeInstVarNamed: aString [ 
-	"Remove the argument, aString, as one of the receiver's instance 
-	variables. Create an error notification if the argument is not found."
+	"Remove the argument, aString, as one of the receiver's instance variables."
 
-	^self subclassResponsibility
+	^self removeSlot: (self slotNamed: aString)
 ]
 
 { #category : #'accessing tags' }
@@ -1375,7 +1372,7 @@ ClassDescription >> whichCategoryIncludesSelector: aSelector [
 		ifFalse: [^nil]
 ]
 
-{ #category : #'testing method dictionary' }
+{ #category : #queries }
 ClassDescription >> whichSelectorsAccess: instVarName [
 	"Answer a set of selectors whose methods access the argument, 
 	instVarName, as a named instance variable."
@@ -1383,9 +1380,40 @@ ClassDescription >> whichSelectorsAccess: instVarName [
 	| slot |
 	(self hasSlotNamed: instVarName) ifFalse: [ ^#() ].
 	slot := self slotNamed: instVarName.
-	^ self selectors select:  [:sel | | method |
-		method := self compiledMethodAt: sel.
-		(method readsSlot: slot) or: [method writesSlot: slot]]
+	^ self selectors select:  [:sel |
+		slot isAccessedIn: (self compiledMethodAt: sel)]
+]
+
+{ #category : #queries }
+ClassDescription >> whichSelectorsAssign: instVarName [ 
+	self
+		deprecated: 'Please use #whichSelectorsStoreInto: instead'
+		transformWith: '`@receiver whichSelectorsAssign: `@statements' 
+						-> '`@receiver whichSelectorsStoreInto: `@statements'.
+	^self whichSelectorsStoreInto: instVarName
+]
+
+{ #category : #queries }
+ClassDescription >> whichSelectorsRead: aString [
+	
+	| slot |
+	(self hasSlotNamed: aString) ifFalse: [ ^#() ].
+	slot := self slotNamed: aString.
+	^ self selectors select:  [:sel |
+		slot isReadIn: (self compiledMethodAt: sel)]
+]
+
+{ #category : #queries }
+ClassDescription >> whichSelectorsStoreInto: instVarName [ 
+	"Answer a Set of selectors whose methods access the argument, 
+	instVarName, as a named instance variable."
+	| slot |
+	(self hasSlotNamed: instVarName) ifFalse: [ ^#() ].
+	slot := self slotNamed: instVarName.
+	^ self selectors select:  [:sel |
+		slot isWrittenIn: (self compiledMethodAt: sel)]
+
+	"Point whichSelectorsStoreInto: 'x'."
 ]
 
 { #category : #organization }
