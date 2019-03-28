@@ -133,6 +133,11 @@ AbstractLayout >> resolveSlot: aName [
 	self error: 'No slots found'
 ]
 
+{ #category : #api }
+AbstractLayout >> resolveSlot: aName ifFound: foundBlock ifNone: exceptionBlock [
+	^exceptionBlock value
+]
+
 { #category : #accessing }
 AbstractLayout >> slotScope [
 	^ LayoutEmptyScope instance
