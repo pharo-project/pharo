@@ -5,19 +5,19 @@ As Pharo doesn't yet provide a mechanism to set the attributes, pick a few well 
 
 "
 Class {
-	#name : #DiskFileAttributesTests,
+	#name : #DiskFileAttributesTest,
 	#superclass : #TestCase,
-	#category : #'FileSystem-Tests-Attributes'
+	#category : #'FileSystem-Tests-Attributes-Tests'
 }
 
 { #category : #accessing }
-DiskFileAttributesTests class >> resources [
+DiskFileAttributesTest class >> resources [
 
-	^Array with: DiskFileAttributesTestsResources.
+	^Array with: DiskFileAttributesTestsResource.
 ]
 
 { #category : #'private-helpers' }
-DiskFileAttributesTests >> attributesCollection [
+DiskFileAttributesTest >> attributesCollection [
 	"Answer an array of FileAttributes for the test resource file.
 	This is currently a single entry, but leaving the infrastructure in place in case it is extended."
 	
@@ -27,14 +27,14 @@ DiskFileAttributesTests >> attributesCollection [
 ]
 
 { #category : #'private-helpers' }
-DiskFileAttributesTests >> attributesCollectionDo: aBlock [
+DiskFileAttributesTest >> attributesCollectionDo: aBlock [
 	"Evaluate the supplied block for each of the attribute cache modes"
 
 	^self attributesCollection do: aBlock
 ]
 
 { #category : #'private-helpers' }
-DiskFileAttributesTests >> collectionAssert: aBlock [
+DiskFileAttributesTest >> collectionAssert: aBlock [
 	"Evaluate the assertion block for each of the FileAttribute cache modes"
 
 	self attributesCollectionDo:
@@ -42,7 +42,7 @@ DiskFileAttributesTests >> collectionAssert: aBlock [
 ]
 
 { #category : #'private-helpers' }
-DiskFileAttributesTests >> collectionAssert: aBlock equals: expected [
+DiskFileAttributesTest >> collectionAssert: aBlock equals: expected [
 	"Evaluate the assertion block for each of the FileAttribute cache modes"
 
 	self attributesCollectionDo:
@@ -50,7 +50,7 @@ DiskFileAttributesTests >> collectionAssert: aBlock equals: expected [
 ]
 
 { #category : #'private-helpers' }
-DiskFileAttributesTests >> tempFileEntry [
+DiskFileAttributesTest >> tempFileEntry [
 
 	| file |
 	
@@ -59,13 +59,13 @@ DiskFileAttributesTests >> tempFileEntry [
 ]
 
 { #category : #'private-helpers' }
-DiskFileAttributesTests >> tempFileResource [
+DiskFileAttributesTest >> tempFileResource [
 
-	^DiskFileAttributesTestsResources current
+	^DiskFileAttributesTestsResource current
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testAccessTime [
+DiskFileAttributesTest >> testAccessTime [
 
 	| resource accessTime |
 	resource := self tempFileResource.
@@ -77,7 +77,7 @@ DiskFileAttributesTests >> testAccessTime [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testCreationTime [
+DiskFileAttributesTest >> testCreationTime [
 
 	| resource creationTime |
 	resource := self tempFileResource.
@@ -89,7 +89,7 @@ DiskFileAttributesTests >> testCreationTime [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testExists [
+DiskFileAttributesTest >> testExists [
 
 	| file |
 	file := self tempFileResource file resolve.
@@ -97,7 +97,7 @@ DiskFileAttributesTests >> testExists [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testExistsNot [
+DiskFileAttributesTest >> testExistsNot [
 
 	| file |
 	file := '/thisfileshouldnot.exist' asFileReference.
@@ -106,13 +106,13 @@ DiskFileAttributesTests >> testExistsNot [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testFileSize [
+DiskFileAttributesTest >> testFileSize [
 
 	self collectionAssert: [ :each | each size ] equals: 72.
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testFromPlatformPath [
+DiskFileAttributesTest >> testFromPlatformPath [
 
 	| testString platformByteArray nativeByteArray |
 
@@ -128,19 +128,19 @@ DiskFileAttributesTests >> testFromPlatformPath [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testIsBlock [
+DiskFileAttributesTest >> testIsBlock [
 
 	self collectionAssert: [ :each | each isBlock ] equals: false.
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testIsCharacter [
+DiskFileAttributesTest >> testIsCharacter [
 
 	self collectionAssert: [ :each | each isCharacter ] equals: false.
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testIsDirectory [
+DiskFileAttributesTest >> testIsDirectory [
 
 	| file |
 
@@ -150,7 +150,7 @@ DiskFileAttributesTests >> testIsDirectory [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testIsExecutable [
+DiskFileAttributesTest >> testIsExecutable [
 
 	| file filesystem path |
 	file := FileLocator vmBinary resolve.
@@ -161,43 +161,43 @@ DiskFileAttributesTests >> testIsExecutable [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testIsFIFO [
+DiskFileAttributesTest >> testIsFIFO [
 
 	self collectionAssert: [ :each | each isFIFO ] equals: false.
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testIsReadable [
+DiskFileAttributesTest >> testIsReadable [
 
 	self collectionAssert: [ :each | each isReadable ].
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testIsRegular [
+DiskFileAttributesTest >> testIsRegular [
 
 	self collectionAssert: [ :each | each isRegular ]
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testIsSocket [
+DiskFileAttributesTest >> testIsSocket [
 
 	self collectionAssert: [ :each | each isSocket ] equals: false.
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testIsSymlink [
+DiskFileAttributesTest >> testIsSymlink [
 
 	self collectionAssert: [ :each | each isSymlink ] equals: false.
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testIsWriteable [
+DiskFileAttributesTest >> testIsWriteable [
 
 	self collectionAssert: [ :each | each isWritable ].
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testModificationTime [
+DiskFileAttributesTest >> testModificationTime [
 
 	| resource modificationTime |
 	resource := self tempFileResource.
@@ -209,7 +209,7 @@ DiskFileAttributesTests >> testModificationTime [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testNLink [
+DiskFileAttributesTest >> testNLink [
 	"Assume that there is only one hard link to the just created temporary file"
 
 	OSPlatform current name = #'Win32' ifTrue: 
@@ -219,7 +219,7 @@ DiskFileAttributesTests >> testNLink [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testPermissions [
+DiskFileAttributesTest >> testPermissions [
 
 	| fileReference oldPermissions newPermissions |
 
@@ -242,7 +242,7 @@ DiskFileAttributesTests >> testPermissions [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testSymlinkUidGid [
+DiskFileAttributesTest >> testSymlinkUidGid [
 
 	| fileReference oldUid oldGid |
 
@@ -265,7 +265,7 @@ DiskFileAttributesTests >> testSymlinkUidGid [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testTargetFile [
+DiskFileAttributesTest >> testTargetFile [
 
 	"The temporary file isn't a symbolic link, so the targetFile is not supported"
 	self attributesCollectionDo: [ :each |
@@ -274,7 +274,7 @@ DiskFileAttributesTests >> testTargetFile [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testToPlatformPath [
+DiskFileAttributesTest >> testToPlatformPath [
 
 	| testString platformByteArray expectedByteArray |
 
@@ -290,7 +290,7 @@ DiskFileAttributesTests >> testToPlatformPath [
 ]
 
 { #category : #tests }
-DiskFileAttributesTests >> testUidGid [
+DiskFileAttributesTest >> testUidGid [
 
 	| fileReference oldUid oldGid |
 

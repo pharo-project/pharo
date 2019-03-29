@@ -5,22 +5,22 @@ As Pharo doesn't provide a mechanism to set the attributes, pick a few well know
 
 "
 Class {
-	#name : #FileReferenceAttributeTests,
+	#name : #FileReferenceAttributeTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'primitives'
 	],
-	#category : #'FileSystem-Tests-Attributes'
+	#category : #'FileSystem-Tests-Attributes-Tests'
 }
 
 { #category : #resources }
-FileReferenceAttributeTests class >> resources [
+FileReferenceAttributeTest class >> resources [
 
-	^Array with: DiskFileAttributesTestsResources.
+	^Array with: DiskFileAttributesTestsResource.
 ]
 
 { #category : #running }
-FileReferenceAttributeTests >> setUp [
+FileReferenceAttributeTest >> setUp [
 
 	super setUp.
 	primitives := File.
@@ -28,13 +28,13 @@ FileReferenceAttributeTests >> setUp [
 ]
 
 { #category : #private }
-FileReferenceAttributeTests >> tempFileResource [
+FileReferenceAttributeTest >> tempFileResource [
 
-	^DiskFileAttributesTestsResources current
+	^DiskFileAttributesTestsResource current
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testAccessTime [
+FileReferenceAttributeTest >> testAccessTime [
 
 	| resource accessTime |
 	resource := self tempFileResource.
@@ -46,7 +46,7 @@ FileReferenceAttributeTests >> testAccessTime [
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testChangeTime [
+FileReferenceAttributeTest >> testChangeTime [
 
 	| resource changeTime |
 	resource := self tempFileResource.
@@ -58,7 +58,7 @@ FileReferenceAttributeTests >> testChangeTime [
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testCreationTime [
+FileReferenceAttributeTest >> testCreationTime [
 
 	| resource creationTime |
 	resource := self tempFileResource.
@@ -70,13 +70,13 @@ FileReferenceAttributeTests >> testCreationTime [
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testExists [
+FileReferenceAttributeTest >> testExists [
 
 	self assert: self tempFileResource file exists
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testFileSize [
+FileReferenceAttributeTest >> testFileSize [
 
 	self assert: self tempFileResource file size equals: 72.
 	self assert: self tempFileResource file entry size equals: self tempFileResource file size.
@@ -84,7 +84,7 @@ FileReferenceAttributeTests >> testFileSize [
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testIsBlock [
+FileReferenceAttributeTest >> testIsBlock [
 
 	self deny: self tempFileResource file isBlock.
 	self assert: self tempFileResource file entry isBlock equals: self tempFileResource file isBlock.
@@ -92,7 +92,7 @@ FileReferenceAttributeTests >> testIsBlock [
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testIsCharacter [
+FileReferenceAttributeTest >> testIsCharacter [
 
 	self deny: self tempFileResource file isCharacter.
 	self assert: self tempFileResource file entry isCharacter equals: self tempFileResource file isCharacter.
@@ -100,7 +100,7 @@ FileReferenceAttributeTests >> testIsCharacter [
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testIsDirectory [
+FileReferenceAttributeTest >> testIsDirectory [
 
 	self assert: self tempFileResource file isDirectory equals: false.
 	self assert: self tempFileResource file entry isDirectory equals: self tempFileResource file isDirectory.
@@ -108,21 +108,21 @@ FileReferenceAttributeTests >> testIsDirectory [
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testIsExecutable [
+FileReferenceAttributeTest >> testIsExecutable [
 
 	self assert: FileLocator vmBinary isExecutable.
 	self assert: FileLocator vmBinary entry isExecutable equals: FileLocator vmBinary isExecutable
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testIsFIFO [
+FileReferenceAttributeTest >> testIsFIFO [
 
 	self assert: self tempFileResource file isFIFO equals: false.
 	self assert: self tempFileResource file entry isFIFO equals: self tempFileResource file isFIFO.
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testIsFile [
+FileReferenceAttributeTest >> testIsFile [
 
 	self assert: self tempFileResource file isFile.
 	self assert: self tempFileResource file entry isFile equals: self tempFileResource file isFile.
@@ -130,42 +130,42 @@ FileReferenceAttributeTests >> testIsFile [
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testIsReadable [
+FileReferenceAttributeTest >> testIsReadable [
 
 	self assert: self tempFileResource file isReadable.
 	self assert: self tempFileResource file entry isReadable equals: self tempFileResource file isReadable.
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testIsRegular [
+FileReferenceAttributeTest >> testIsRegular [
 
 	self assert: self tempFileResource file isRegular.
 	self assert: self tempFileResource file entry isRegular equals: self tempFileResource file isRegular
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testIsSocket [
+FileReferenceAttributeTest >> testIsSocket [
 
 	self assert: self tempFileResource file isSocket equals: false.
 	self assert: self tempFileResource file entry isSocket equals: self tempFileResource file isSocket.
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testIsSymlink [
+FileReferenceAttributeTest >> testIsSymlink [
 
 	self assert: self tempFileResource file isSymlink equals: false.
 	self assert: self tempFileResource file entry isSymlink equals: self tempFileResource file isSymlink.
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testIsWriteable [
+FileReferenceAttributeTest >> testIsWriteable [
 
 	self assert: self tempFileResource file isWritable.
 	self assert: self tempFileResource file entry isWritable equals: self tempFileResource file isWritable.
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testModificationTime [
+FileReferenceAttributeTest >> testModificationTime [
 
 	| resource modificationTime |
 	resource := self tempFileResource.
@@ -177,7 +177,7 @@ FileReferenceAttributeTests >> testModificationTime [
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testNLink [
+FileReferenceAttributeTest >> testNLink [
 	"Assume that there is only one hard link to the just created temporary file"
 
 	OSPlatform current name = #'Win32' ifTrue: 
@@ -188,7 +188,7 @@ FileReferenceAttributeTests >> testNLink [
 ]
 
 { #category : #tests }
-FileReferenceAttributeTests >> testTargetFile [
+FileReferenceAttributeTest >> testTargetFile [
 
 	"The temporary file isn't a symbolic link, so the targetFile isn't supported"
 	self should: [ self tempFileResource file targetPath ] raise: FileAttributeNotSupported.

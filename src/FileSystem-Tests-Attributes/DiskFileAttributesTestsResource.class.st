@@ -12,33 +12,33 @@ DiskFileAttributesTestsResources is currently used by FileReferenceAttributeTest
     Implementation Points
 "
 Class {
-	#name : #DiskFileAttributesTestsResources,
+	#name : #DiskFileAttributesTestsResource,
 	#superclass : #TestResource,
 	#instVars : [
 		'file',
 		'beforeCreationTime',
 		'afterCreationTime'
 	],
-	#category : #'FileSystem-Tests-Attributes'
+	#category : #'FileSystem-Tests-Attributes-Resources'
 }
 
 { #category : #accessing }
-DiskFileAttributesTestsResources >> afterCreationTime [
+DiskFileAttributesTestsResource >> afterCreationTime [
 	^ afterCreationTime
 ]
 
 { #category : #accessing }
-DiskFileAttributesTestsResources >> beforeCreationTime [
+DiskFileAttributesTestsResource >> beforeCreationTime [
 	^ beforeCreationTime
 ]
 
 { #category : #accessing }
-DiskFileAttributesTestsResources >> file [
+DiskFileAttributesTestsResource >> file [
 	^ file
 ]
 
 { #category : #running }
-DiskFileAttributesTestsResources >> setUp [
+DiskFileAttributesTestsResource >> setUp [
 
 	| ws |
 
@@ -63,7 +63,7 @@ DiskFileAttributesTestsResources >> setUp [
 ]
 
 { #category : #running }
-DiskFileAttributesTestsResources >> tearDown [
+DiskFileAttributesTestsResource >> tearDown [
 
 	super tearDown.
 	file delete.
