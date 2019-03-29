@@ -679,6 +679,23 @@ FileSystemTest >> testRootIsNotAFile [
 	self deny: (filesystem isFile: Path root)
 ]
 
+{ #category : #'tests-streams-compatibility' }
+FileSystemTest >> testTooManyDirectoryDescriptorOpened [
+	| opened testSize |
+
+	self halt.
+	testSize := 1025.
+	opened := OrderedCollection new:testSize.
+
+	self should: 
+		[1 to: testSize do: [ :x | opened add: ((File primOpendir: '/etc') at:3)]] 
+	raise: Error.
+	
+	opened do:[:each |
+    File primClosedir: each. ]
+
+]
+
 { #category : #tests }
 FileSystemTest >> testWorking [
 	self assert: filesystem workingDirectory fileSystem = filesystem.
