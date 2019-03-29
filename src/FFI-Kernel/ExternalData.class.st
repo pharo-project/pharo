@@ -81,6 +81,16 @@ ExternalData >> fromCStrings [
 	^strings
 ]
 
+{ #category : #printing }
+ExternalData >> printOn: stream [
+
+	stream 
+		nextPut: $(;
+		print: type; 
+		nextPut: $). 
+	self getHandle printOn: stream.
+]
+
 { #category : #private }
 ExternalData >> setHandle: aHandle type: aType [
 	handle := aHandle.
