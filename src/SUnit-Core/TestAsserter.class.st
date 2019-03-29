@@ -279,7 +279,7 @@ TestAsserter >> defaultTestFailure [
 
 { #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock [
-	"to assert something that should not be true"
+	"This method raises an AssertionFailure if aBooleanOrBlock evaluates to true."
 	self deny: aBooleanOrBlock description: 'Denial failed'
 ]
 
@@ -299,6 +299,8 @@ TestAsserter >> deny: actualNumber closeTo: expectedNumber precision: epsilon [
 
 { #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock description: aString [
+	"This method raises an AssertionFailure with aString as #messageText if
+	 aBooleanOrBlock evaluates to true."
 	self deny: aBooleanOrBlock description: aString resumable: false
 ]
 
