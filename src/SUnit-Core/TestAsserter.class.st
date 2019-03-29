@@ -66,7 +66,7 @@ TestAsserter class >> suiteClass [
 { #category : #asserting }
 TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 	"Tell whether the actualNumber and expectedNumber are close from each with a margin of 0.0001"
-
+	<debuggerCompleteToSender>
 	^ self
 		assert: (actualNumber closeTo: expectedNumber)
 		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
@@ -75,7 +75,7 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 { #category : #asserting }
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
 	"Take a second argument wich is a message string that describes the reason for the failure, this string will be displayed by the Test Runner"
-
+	<debuggerCompleteToSender>
 	aBooleanOrBlock value
 		ifFalse: [ | aString |
 			aString := aStringOrBlock value.
@@ -107,7 +107,7 @@ TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: r
 { #category : #asserting }
 TestAsserter >> assert: actual equals: expected [
 	"Validate whether or not the actual value is equal than the expected, if the assertion fails it provides a description that show both the actual and the expected value"
-	
+	<debuggerCompleteToSender>
 	^ self
 		assert: actual = expected
 		description: [self comparingStringBetween: actual and: expected]
@@ -277,7 +277,7 @@ TestAsserter >> defaultTestFailure [
 { #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock [
 	"to assert something that should not be true"
-
+	<debuggerCompleteToSender>
 	self assert: aBooleanOrBlock value not
 ]
 
@@ -371,7 +371,7 @@ TestAsserter >> logFailure: aString [
 { #category : #asserting }
 TestAsserter >> should: aBlock [
 	"Evaluate the Block first then execute the assertion"
-
+	<debuggerCompleteToSender>
 	self assert: aBlock value
 ]
 
@@ -385,7 +385,7 @@ TestAsserter >> should: aBlock description: aString [
 TestAsserter >> should: aBlock notTakeMoreThan: aDuration [
     "Evaluate aBlock and if it takes more than given duration
     to run we report a test failure. "
-
+	<debuggerCompleteToSender>
 	^ aBlock valueWithin: aDuration onTimeout: [
 		self 
 			assert: false 
@@ -405,7 +405,7 @@ TestAsserter >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
 { #category : #asserting }
 TestAsserter >> should: aBlock raise: anExceptionalEvent [
 	"To test that a particular exception is raised during the execution of a Block"
-
+	<debuggerCompleteToSender>
 	^ self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
 ]
 
@@ -432,19 +432,20 @@ TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionInclude
 
 { #category : #asserting }
 TestAsserter >> should: aBlock raise: anException withExceptionDo: anotherBlock [ 
-
+	<debuggerCompleteToSender>
 	^self assert: (self executeShould: aBlock inScopeOf: anException withExceptionDo: anotherBlock)
 ]
 
 { #category : #asserting }
 TestAsserter >> shouldFix: aBlock [
 	"Run the block expecting an Exception. Throw an assertion failure if the block does NOT throw an exception."
-
+	<debuggerCompleteToSender>
 	^ self should: aBlock raise: Exception
 ]
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock [
+	<debuggerCompleteToSender>
 	self deny: aBlock value
 			
 ]
@@ -457,7 +458,7 @@ TestAsserter >> shouldnt: aBlock description: aString [
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent [  
-	 
+	<debuggerCompleteToSender>
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
 			
 ]
