@@ -67,7 +67,7 @@ EpApplyVisitor >> visitClassModification: aModifiedClassChange [
 		evaluate: aModifiedClassChange newClass definitionSource;
 		evaluate: aModifiedClassChange newClass classSide definitionSource.
 		
-	self flag: #todo. "Workaround to issue 16836 in fogbugz."
+	self flag: #pharoFixMe. "Workaround to issue 16836 in fogbugz."
 	self
 		behaviorNamed: aModifiedClassChange behaviorAffectedName
 		ifPresent: [ :aClass | 

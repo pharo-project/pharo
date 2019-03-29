@@ -100,7 +100,7 @@ RBPushDownVariableTransformation >> variable: aVariableName class: aClassName cl
 { #category : #private }
 RBPushDownVariableTransformation >> variableDefinitionsInHierarchy [
 
-	self flag: #todo. "why the behavior is different for class and instance variable?"
+	self flag: #pharoTodo. "why the behavior is different for class and instance variable?"
 	^ isClassVariable
 		ifTrue: [ self definingClass allSubclasses reject: [ :each |
 			(each whichSelectorsReferToClassVariable: variableName) isEmpty

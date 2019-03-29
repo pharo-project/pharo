@@ -27,11 +27,7 @@ EpCategoryChange class >> named: aName packageName: aPackageName [
 
 { #category : #private }
 EpCategoryChange class >> packageNameFromCategoryName: aName [
-
-	self flag: #todo. "Is it really necessary to know the package name?"
-	^ (RPackage organizer packageMatchingExtensionName: aName) 
-		ifNotNil: [ :package | package name ]
-		ifNil: [ aName ]
+	^ (RPackage organizer packageMatchingExtensionName: aName) ifNotNil: [ :package | package name ] ifNil: [ aName ]
 ]
 
 { #category : #accessing }

@@ -33,7 +33,7 @@ FLMigrationTest >> testBadDestinationVariableRename [
 	self serialize: aPoint.
 	self should: [ self materialized ] raise: Error. 
 	
-	self flag: #todo."Assert an specific materialization error"
+	self flag: #pharoTodo "Assert an specific materialization error"
 ]
 
 { #category : #'tests-automatic' }
