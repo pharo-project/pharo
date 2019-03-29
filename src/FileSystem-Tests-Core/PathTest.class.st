@@ -205,10 +205,10 @@ PathTest >> testExtendingPath [
 	self assert: ref segments equals: #('a' 'b' 'c' 'd' '..' 'e').
 
 	ref := '/a/b/c' asPath / './d'.
-	self assert: (ref segments equals: #('a' 'b' 'c' 'd')).
+	self assert: ref segments equals: #('a' 'b' 'c' 'd').
 
 	ref := '/a/b/c' asPath / 'd/.'.
-	self assert: (ref segments equals: #('a' 'b' 'c' 'd')).
+	self assert: ref segments equals: #('a' 'b' 'c' 'd').
 
 	ref := '/a/b/c' asPath / 'd/./e'.
 	self assert: ref segments equals: #('a' 'b' 'c' 'd' 'e').
