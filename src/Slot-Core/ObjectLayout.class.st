@@ -139,7 +139,7 @@ ObjectLayout >> initialize [
 
 { #category : #initialization }
 ObjectLayout >> initializeInstance: anInstance [
-	self subclassResponsibility
+	"do nothing by default, overriden by PointerLayout"
 ]
 
 { #category : #format }
