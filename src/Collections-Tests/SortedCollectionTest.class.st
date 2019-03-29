@@ -4,8 +4,8 @@ SUnit tests for sorted collections
 Class {
 	#name : #SortedCollectionTest,
 	#superclass : #CollectionRootTest,
-	#traits : 'TIterateSequencedReadableTest + TPrintOnSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TIncludesWithIdentityCheckTest + (TSequencedElementAccessTest - {#testAtAll}) + TSubCollectionAccess + TIndexAccessForMultipliness + TRemoveTest + TConvertTest + TConvertAsSetForMultiplinessIdentityTest + TAddTest + TBeginsEndsWith + (TCopySequenceableSameContents - {#testShuffled}) + TSetArithmetic + TRemoveByIndexTest + TCopyPartOfSequenceable + TCopyPartOfSequenceableForMultipliness + (TCopySequenceableWithOrWithoutSpecificElements - {#testForceToPaddingStartWith. #testForceToPaddingWith. #testCopyWithFirst. #testCopyWithoutIndex}) + TCopySequenceableWithReplacementForSorted + TCopyTest + TConvertAsSortedTest + TSequencedStructuralEqualityTest + TCreationWithTest + TOccurrencesForMultiplinessTest',
-	#classTraits : 'TIterateSequencedReadableTest classTrait + TPrintOnSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIncludesWithIdentityCheckTest classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TIndexAccessForMultipliness classTrait + TRemoveTest classTrait + TConvertTest classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TAddTest classTrait + TBeginsEndsWith classTrait + TCopySequenceableSameContents classTrait + TSetArithmetic classTrait + TRemoveByIndexTest classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacementForSorted classTrait + TCopyTest classTrait + TConvertAsSortedTest classTrait + TSequencedStructuralEqualityTest classTrait + TCreationWithTest classTrait + TOccurrencesForMultiplinessTest classTrait',
+	#traits : 'TIterateSequencedReadableTest + TPrintOnSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TIncludesWithIdentityCheckTest + (TSequencedElementAccessTest - {#testAtAll}) + TSubCollectionAccess + TIndexAccess + TIndexAccessForMultipliness + TRemoveTest + TConvertTest + TConvertAsSetForMultiplinessIdentityTest + TAddTest + TBeginsEndsWith + (TCopySequenceableSameContents - {#testShuffled}) + TSetArithmetic + TRemoveByIndexTest + TCopyPartOfSequenceable + TCopyPartOfSequenceableForMultipliness + (TCopySequenceableWithOrWithoutSpecificElements - {#testForceToPaddingStartWith. #testForceToPaddingWith. #testCopyWithFirst. #testCopyWithoutIndex}) + TCopySequenceableWithReplacementForSorted + TCopyTest + TConvertAsSortedTest + TSequencedStructuralEqualityTest + TCreationWithTest + TOccurrencesForMultiplinessTest',
+	#classTraits : 'TIterateSequencedReadableTest classTrait + TPrintOnSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIncludesWithIdentityCheckTest classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TIndexAccess classTrait + TIndexAccessForMultipliness classTrait + TRemoveTest classTrait + TConvertTest classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TAddTest classTrait + TBeginsEndsWith classTrait + TCopySequenceableSameContents classTrait + TSetArithmetic classTrait + TRemoveByIndexTest classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacementForSorted classTrait + TCopyTest classTrait + TConvertAsSortedTest classTrait + TSequencedStructuralEqualityTest classTrait + TCreationWithTest classTrait + TOccurrencesForMultiplinessTest classTrait',
 	#instVars : [
 		'nonEmpty',
 		'elementExistsTwice',
@@ -666,26 +666,6 @@ SortedCollectionTest >> testIndexOfSubCollectionStartingAt [
 		indexOfSubCollection: subcollection
 		startingAt: 2.
 	self assert: index equals: 0
-]
-
-{ #category : #'tests - index access' }
-SortedCollectionTest >> testIndexOfSubCollectionStartingAtIfAbsent [
-	 
-	| absent subcollection collection |
-	collection := self collectionMoreThan1NoDuplicates.
-	subcollection := self collectionMoreThan1NoDuplicates.
-	absent := false.
-	collection 
-		indexOfSubCollection: subcollection
-		startingAt: 1
-		ifAbsent: [ absent := true ].
-	self assert: absent equals: false.
-	absent := false.
-	collection 
-		indexOfSubCollection: subcollection
-		startingAt: 2
-		ifAbsent: [ absent := true ].
-	self assert: absent equals: true
 ]
 
 { #category : #'tests - index access' }
