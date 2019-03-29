@@ -33,5 +33,5 @@ FileSystemResolverTest >> createResolver [
 { #category : #running }
 FileSystemResolverTest >> setUp [
 	super setUp.
-	resolver := self createResolver.
+	resolver := self createResolver
 ]
