@@ -76,11 +76,6 @@ SUnitTest >> expectedFailurePasses [
 	self assert: true.
 ]
 
-{ #category : #testing }
-SUnitTest >> expectedFailures [
-	^super expectedFailures "#() "
-]
-
 { #category : #private }
 SUnitTest >> failedChildProcessTest [
 	"During this test forked process should signal error.
