@@ -274,8 +274,7 @@ TestAsserter >> deny: aBooleanOrBlock [
 
 { #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock description: aString [
-	self assert: aBooleanOrBlock value not description: aString
-			
+	self deny: aBooleanOrBlock description: aString resumable: false
 ]
 
 { #category : #asserting }
