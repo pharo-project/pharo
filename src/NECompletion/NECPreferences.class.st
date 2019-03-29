@@ -67,13 +67,6 @@ NECPreferences class >> caseSensitive: aBoolean [
 	caseSensitive := aBoolean
 ]
 
-{ #category : #private }
-NECPreferences class >> currentController [ 
-	^ (Smalltalk tools hasToolNamed: #codeCompletion)
-		ifTrue: [ Smalltalk tools codeCompletion ]
-		ifFalse: [ nil ]
-]
-
 { #category : #defaults }
 NECPreferences class >> defaultBackgroundColor [
 	^ self theme menuColor
@@ -199,8 +192,9 @@ NECPreferences class >> settingsOn: aBuilder [
 							(aBuilder pickOne: #completionController)
 								order: -1;
 								label: 'Controller';
-								getSelector: #currentController;
-								setSelector: #useController:;
+								target: RubSmalltalkEditor;
+								getSelector: #completionEngine;
+								setSelector: #completionEngine:;
 								domainValues: availableControllers ].
 					(aBuilder setting: #backgroundColor)
 						label: 'Background Color'.
@@ -292,11 +286,6 @@ NECPreferences class >> spaceAfterCompletion: anObject [
 { #category : #accessing }
 NECPreferences class >> theme [
 	^ Smalltalk ui theme
-]
-
-{ #category : #private }
-NECPreferences class >> useController: aClass [
-	aClass registerToolsOn: Smalltalk tools
 ]
 
 { #category : #accessing }
