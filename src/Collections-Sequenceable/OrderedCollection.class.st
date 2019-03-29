@@ -548,6 +548,11 @@ OrderedCollection >> join: aCollection [
 	^ result
 ]
 
+{ #category : #accessing }
+OrderedCollection >> lastIndex [
+	^ lastIndex
+]
+
 { #category : #private }
 OrderedCollection >> makeRoomAtFirst [
 	"Make some empty slots at the front of the array. If we have more than 50% free space, then just move the elements, so that the first 50% of the slots are free, otherwise add new free slots to the front by growing. Precondition: firstIndex = 1"
