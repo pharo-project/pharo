@@ -27,16 +27,6 @@ ExternalData >> copyFrom: start to: stop [
 ]
 
 { #category : #'*UnifiedFFI' }
-ExternalData >> printOn: stream [
-
-	stream 
-		nextPut: $(;
-		print: type; 
-		nextPut: $). 
-	self getHandle printOn: stream.
-]
-
-{ #category : #'*UnifiedFFI' }
 ExternalData >> readString [
 	self isNull ifTrue: [ ^ nil ].
 	^ self fromCString
