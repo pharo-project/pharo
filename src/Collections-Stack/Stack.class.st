@@ -3,12 +3,19 @@ I implement a simple Stack. #push: adds a new object of any kind on top of the s
 "
 Class {
 	#name : #Stack,
-	#superclass : #Object,
+	#superclass : #Collection,
 	#instVars : [
 		'aCollection'
 	],
 	#category : #'Collections-Stack-Base'
 }
+
+{ #category : #enumerating }
+Stack >> do: aBlockClosure [ 
+	aCollection do: aBlockClosure.
+	
+
+]
 
 { #category : #'as yet unclassified' }
 Stack >> ifEmpty: emptyBlock ifNotEmpty: notEmptyBlock [ 
