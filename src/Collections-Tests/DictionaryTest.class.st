@@ -559,17 +559,6 @@ DictionaryTest >> testIsHealthy [
 ]
 
 { #category : #'tests - dictionary key access' }
-DictionaryTest >> testKeyAtIdentityValueIfAbsent [
-
-	| dict value result |
-	dict := self nonEmpty.
-	value := dict values anyOne.
-	result := dict keyAtIdentityValue: value ifAbsent: [ nil ].
-	self assert: (dict at: result) equals: value.
-	self assert: (dict keyAtIdentityValue: self valueNotIn ifAbsent: [ nil ]) isNil
-]
-
-{ #category : #'tests - dictionary key access' }
 DictionaryTest >> testKeyAtValueIfAbsent [
  
 	| dict value result |
