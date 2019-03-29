@@ -335,6 +335,14 @@ TestAsserter >> denyCollection: actual equals: expected [
 ]
 
 { #category : #asserting }
+TestAsserter >> denyCollection: actual includesAll: subcollection [
+
+	^ self
+		assert: (actual includesAll: subcollection) not
+		description: [ actual asString , ' does not include all in ' , subcollection asString ]
+]
+
+{ #category : #asserting }
 TestAsserter >> denyEmpty: aCollection [
 	^ self assert: aCollection isNotEmpty description: aCollection asString , ' should not have been empty'
 ]
