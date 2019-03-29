@@ -5,8 +5,7 @@ Class {
 	#name : #EpLostChangesDetectorTest,
 	#superclass : #EpEnabledIntegrationTest,
 	#instVars : [
-		'detector',
-		'detectedLostChanges'
+		'detector'
 	],
 	#category : #'EpiceaBrowsers-Tests-Integration'
 }
@@ -74,7 +73,7 @@ EpLostChangesDetectorTest >> testDetectOneChangeDetectedAndOneIgnored [
 { #category : #tests }
 EpLostChangesDetectorTest >> testDetectThreeChanges [
 
-	| logWithLostChanges numberOfLostChanges expectedLostClassNames |
+	| logWithLostChanges numberOfLostChanges expectedLostClassNames detectedLostChanges |
 
 	"Build a log with several lost changes (class additions)"
 	numberOfLostChanges := 3.
