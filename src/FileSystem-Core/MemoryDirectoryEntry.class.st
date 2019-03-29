@@ -70,3 +70,10 @@ MemoryDirectoryEntry >> posixPermissions [
 	
 	^8r777
 ]
+
+{ #category : #accessing }
+MemoryDirectoryEntry >> size [ 
+	^self isFile 
+		ifTrue: [ reference size ]
+		ifFalse: [ 0 ]
+]
