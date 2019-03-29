@@ -76,11 +76,7 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
 	"Take a second argument wich is a message string that describes the reason for the failure, this string will be displayed by the Test Runner"
 
-	aBooleanOrBlock value
-		ifFalse: [ | aString |
-			aString := aStringOrBlock value.
-			self logFailure: aString.
-			self classForTestResult failure signal: aString ]
+	self assert: aBooleanOrBlock description: aStringOrBlock resumable: false
 ]
 
 { #category : #asserting }
