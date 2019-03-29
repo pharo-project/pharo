@@ -269,8 +269,7 @@ TestAsserter >> defaultTestFailure [
 { #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock [
 	"to assert something that should not be true"
-
-	self assert: aBooleanOrBlock value not
+	self deny: aBooleanOrBlock description: 'Denial failed'
 ]
 
 { #category : #asserting }
