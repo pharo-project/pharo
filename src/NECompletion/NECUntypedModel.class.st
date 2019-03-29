@@ -52,9 +52,11 @@ NECUntypedModel >> addAdditionals: aCollection [
 { #category : #private }
 NECUntypedModel >> addVariables [
 	includeVariables ifFalse: [^ self].
-	self addToEntries: localVars.
+	self addToEntries: classVars.
 	self addToEntries: instVars.
-	self addToEntries: classVars
+	self addToEntries: localVars.
+	
+	
 ]
 
 { #category : #initialization }
@@ -91,7 +93,7 @@ NECUntypedModel >> initializeInstVars [
 NECUntypedModel >> initializeSelectors [
 	| case |
 	self resetSelectors.
-	narrowString size < 2 ifTrue: [ ^ self ].
+	narrowString size < 2  ifTrue: [ ^ self ].
 	case :=  NECPreferences caseSensitive.
 	includeSelectors
 		ifTrue: [ Symbol selectorTable do: [ :symbol | | toadd | 

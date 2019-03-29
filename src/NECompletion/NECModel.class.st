@@ -10,7 +10,7 @@ Class {
 		'narrowString',
 		'entries'
 	],
-	#category : #'NECompletion-Model'
+	#category : 'NECompletion-Model'
 }
 
 { #category : #'instance creation' }
@@ -35,7 +35,7 @@ NECModel >> addToEntries: aCollection [
 		each contents 
 			occursInWithEmpty: narrowString
 			caseSensitive: caseSensitive ].
-	entries addAll: temp
+	entries addAllFirst: temp
 ]
 
 { #category : #accessing }
