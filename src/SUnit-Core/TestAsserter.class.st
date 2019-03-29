@@ -144,12 +144,12 @@ TestAsserter >> assertCollection: actualCollection equals: expectedCollection [
 ]
 
 { #category : #asserting }
-TestAsserter >> assertCollection: actual hasSameElements: expected [
+TestAsserter >> assertCollection: actualCollection hasSameElements: expected [
 	"Assert that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements."
 
 	| missingElements additionalElements |
-	additionalElements := actual difference: expected.
-	missingElements := expected difference: (actual intersection: expected).
+	additionalElements := actualCollection difference: expected.
+	missingElements := expected difference: (actualCollection intersection: expected).
 	self
 		assert: (additionalElements isEmpty and: [ missingElements isEmpty ])
 		description:
@@ -169,14 +169,14 @@ TestAsserter >> assertCollection: actual hasSameElements: expected [
 ]
 
 { #category : #asserting }
-TestAsserter >> assertCollection: actual includesAll: subcollection [
+TestAsserter >> assertCollection: actualCollection includesAll: subcollection [
 	"Raises an AssertionFailure if actualCollection does not include all the elements of expectedCollection (using #includesAll: message).
 	 I also provide a specialized message for the AssertionFailure in case I fail.
 	"
 
 	^ self
-		assert: (actual includesAll: subcollection)
-		description: [ actual asString , ' does not include all in ' , subcollection asString ]
+		assert: (actualCollection includesAll: subcollection)
+		description: [ actualCollection asString , ' does not include all in ' , subcollection asString ]
 ]
 
 { #category : #asserting }
@@ -361,14 +361,14 @@ TestAsserter >> denyCollection: actualCollection equals: expectedCollection [
 ]
 
 { #category : #asserting }
-TestAsserter >> denyCollection: actual includesAll: subcollection [
+TestAsserter >> denyCollection: actualCollection includesAll: subcollection [
 	"Raises an AssertionFailure if actualCollection INCLUDES all the elements of expectedCollection (by negating result of #includesAll: message).
 	 I also provide a specialized message for the AssertionFailure in case I fail.
 	"
 	
 	^ self
-		assert: (actual includesAll: subcollection) not
-		description: [ actual asString , ' does not include all in ' , subcollection asString ]
+		assert: (actualCollection includesAll: subcollection) not
+		description: [ actualCollection asString , ' does not include all in ' , subcollection asString ]
 ]
 
 { #category : #asserting }
