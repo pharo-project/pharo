@@ -4,11 +4,6 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
-{ #category : #tests }
-GLMTextMorphicTest >> expectedFailures [
-	^ #(testUpdatingTextPortUpdatesTheMorph)
-]
-
 { #category : #private }
 GLMTextMorphicTest >> simulateOnlyOneClickOn: aMorph [
 	(Delay forMilliseconds: HandMorph doubleClickTime + 1) wait.
@@ -93,6 +88,7 @@ GLMTextMorphicTest >> testUnregisterFromAnnouncementsWhenUpdating [
 
 { #category : #tests }
 GLMTextMorphicTest >> testUpdatingTextPortUpdatesTheMorph [
+	<expectedFailure>
 	| composite textMorph |
 	composite := GLMCompositePresentation new with: [:a | a text ].
 	window := composite openOn: 'fourtytwo'.

@@ -34,11 +34,6 @@ WriteBarrierTest >> alwaysWritableObjects [
 		Processor activeProcess }
 ]
 
-{ #category : #'expected failures' }
-WriteBarrierTest >> expectedFailures [
-	^ #( testMutateByteArrayUsingDoubleAtPut testMutateByteArrayUsingFloatAtPut )
-]
-
 { #category : #'guinea pigs' }
 WriteBarrierTest >> maybeReadOnlyObjects [
 	"ByteObject, Variable object, fixed sized object"
@@ -91,6 +86,7 @@ WriteBarrierTest >> testMutateByteArrayUsingByteAtPut [
 
 { #category : #'tests - object' }
 WriteBarrierTest >> testMutateByteArrayUsingDoubleAtPut [
+	<expectedFailure>
 	| guineaPig |
 	guineaPig := ByteArray new: 8.
 	guineaPig beReadOnlyObject.
@@ -111,6 +107,7 @@ WriteBarrierTest >> testMutateByteArrayUsingDoubleAtPut [
 
 { #category : #'tests - object' }
 WriteBarrierTest >> testMutateByteArrayUsingFloatAtPut [
+	<expectedFailure>
 	| guineaPig |
 	guineaPig := ByteArray new: 5.
 	guineaPig beReadOnlyObject.

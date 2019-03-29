@@ -30,11 +30,6 @@ GLMRubricTextMorphicTest >> checkInitializeBlockSetsTextSelectionForPresentation
 ]
 
 { #category : #tests }
-GLMRubricTextMorphicTest >> expectedFailures [
-	^ #(testUpdatingTextPortUpdatesTheMorph)
-]
-
-{ #category : #tests }
 GLMRubricTextMorphicTest >> noTestAcceptKeyCanBeOverriden [
 	| composite textMorph overriden shortcut|
 	overriden := false.
@@ -219,6 +214,7 @@ GLMRubricTextMorphicTest >> testUpdatingScriptPresentationPreservesSelection [
 
 { #category : #tests }
 GLMRubricTextMorphicTest >> testUpdatingTextPortUpdatesTheMorph [
+	<expectedFailure>
 	| composite textMorph |
 	composite := GLMCompositePresentation new with: [:a | a text ].
 	window := composite openOn: 'fourtytwo'.
