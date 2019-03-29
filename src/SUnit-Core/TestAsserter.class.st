@@ -84,20 +84,24 @@ TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
 ]
 
 { #category : #asserting }
-TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: resumableBoolean [ 
-	"if resumable: true the test won't stop when the assertion fails, the test will continue it's excecution"
-	
-	| exception |
+TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: resumableBoolean [
+	"Checks if aBooleanOrBlock evaluates to true (by sending #value message to it).
+	 The message text of the assertion failure exception thrown in case aBooleanOrBlock
+	 evaluates to false is determinated by the evaluation of aStringOrBlock (again by
+	 sending #value message to it).
+	 The resumableBoolean flag is used to decide if the assertion failure signalled by
+	 the source code below should be resumable or not.
+	"
+	| exception aString |
 	aBooleanOrBlock value
-		ifFalse: 
-			[|aString|
-			aString := aStringOrBlock value.
-			self logFailure: aString.
-			exception := resumableBoolean
-						ifTrue: [self classForTestResult resumableFailure]
-						ifFalse: [self classForTestResult failure].
-			exception signal: aString]
-			
+		ifTrue: [ ^ self ].
+	
+	aString := aStringOrBlock value.
+	self logFailure: aString.
+	exception := resumableBoolean
+		ifTrue: [ self classForTestResult resumableFailure ]
+		ifFalse: [ self classForTestResult failure ].
+	exception signal: aString
 ]
 
 { #category : #asserting }
