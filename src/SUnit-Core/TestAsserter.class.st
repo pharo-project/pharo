@@ -284,6 +284,20 @@ TestAsserter >> deny: aBooleanOrBlock [
 ]
 
 { #category : #asserting }
+TestAsserter >> deny: actualNumber closeTo: expectedNumber [
+	self deny: actualNumber closeTo: expectedNumber precision: self class defaultPrecisionsForCloseToComparison
+]
+
+{ #category : #asserting }
+TestAsserter >> deny: actualNumber closeTo: expectedNumber precision: epsilon [
+	"Tell whether the actualNumber and expectedNumber are NOT close from each with a margin of epsilon"
+
+	^ self
+		assert: (actualNumber closeTo: expectedNumber precision: epsilon) not
+		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
+]
+
+{ #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock description: aString [
 	self deny: aBooleanOrBlock description: aString resumable: false
 ]
