@@ -26,8 +26,6 @@ FileReferenceTest >> setUp [
 { #category : #tests }
 FileReferenceTest >> testAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
-
-	<publicTest>
 	| ref children |
 	[ filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -48,8 +46,6 @@ FileReferenceTest >> testAllChildren [
 { #category : #tests }
 FileReferenceTest >> testAllDirectories [
 	"allDirectories returns all folders recursively nested in a reference"
-
-	<publicTest>
 	| ref children |
 	[ filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -317,8 +313,6 @@ FileReferenceTest >> testContents [
 { #category : #tests }
 FileReferenceTest >> testDeleteAll [
 	"allChildren returns all the files and folders recursively nested in a reference"
-
-	<publicTest>
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -336,8 +330,6 @@ FileReferenceTest >> testDeleteAll [
 { #category : #tests }
 FileReferenceTest >> testDeleteAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
-
-	<publicTest>
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -520,7 +512,6 @@ FileReferenceTest >> testGrandchildOfReference [
 
 { #category : #tests }
 FileReferenceTest >> testHasChildren [
-	<publicTest>
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -536,7 +527,6 @@ FileReferenceTest >> testHasChildren [
 
 { #category : #tests }
 FileReferenceTest >> testHasDirectories [
-	<publicTest>
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -551,7 +541,6 @@ FileReferenceTest >> testHasDirectories [
 
 { #category : #tests }
 FileReferenceTest >> testHasFiles [
-	<publicTest>
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
