@@ -35,5 +35,5 @@ CopyVisitorTest >> testAll [
 		copy: (source / 'alpha') 
 		to: (dest / 'alpha').
 	self assert: (dest isDirectory: '/alpha').
-	self assert: (dest isFile: '/alpha/beta/gamma').
+	self assert: (dest isFile: '/alpha/beta/gamma')
 ]

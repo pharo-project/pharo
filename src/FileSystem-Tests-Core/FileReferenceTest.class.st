@@ -78,7 +78,7 @@ FileReferenceTest >> testAllEntries [
 	entries := ref allEntries.
 	self assert: entries size equals: 4.
 	entries do: [:entry |
-		self assert: entry class = MemoryDirectoryEntry.
+		self assert: entry class equals: MemoryDirectoryEntry.
 		self assert: (ref = entry reference or: [ref contains: entry reference])].
 	self assert: (entries collect: [ :ea | ea basename ]) equals: #('alpha' 'beta' 'gamma' 'delta') ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
@@ -238,7 +238,7 @@ FileReferenceTest >> testChildOfPath [
 	parent := Path / 'griffle'.
 	child := filesystem / 'griffle' / 'nurb'.
 	self deny: (child isChildOf: parent).
-	self deny: (parent isChildOf: child).
+	self deny: (parent isChildOf: child)
 ]
 
 { #category : #tests }
@@ -247,7 +247,7 @@ FileReferenceTest >> testChildOfReference [
 	parent := filesystem / 'griffle'.
 	child := filesystem / 'griffle' / 'nurb'.
 	self assert: (child isChildOf: parent).
-	self deny: (parent isChildOf: child).
+	self deny: (parent isChildOf: child)
 ]
 
 { #category : #tests }
@@ -456,7 +456,7 @@ FileReferenceTest >> testEntries [
 	entries := ref entries.
 	self assert: entries size equals: 2.
 	entries do: [:entry |
-		self assert: entry class = MemoryDirectoryEntry.
+		self assert: entry class equals: MemoryDirectoryEntry.
 		self assert: (entry reference isChildOf: ref).
 		self assert: (#('beta' 'gamma') includes: entry reference basename)] ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
@@ -515,7 +515,7 @@ FileReferenceTest >> testGrandchildOfReference [
 	griffle := filesystem / 'griffle'.
 	nurb := filesystem / 'griffle' / 'plonk' / 'nurb'.
 	self deny: (griffle isChildOf: nurb).
-	self deny: (nurb isChildOf: griffle).
+	self deny: (nurb isChildOf: griffle)
 ]
 
 { #category : #tests }
@@ -796,8 +796,8 @@ FileReferenceTest >> testParent [
 	| ref parent |
 	ref := filesystem * 'plonk' / 'griffle'.
 	parent := ref parent.
-	self assert: parent class = ref class.
-	self assert: (parent path at: 1) = 'plonk'
+	self assert: parent class equals: ref class.
+	self assert: (parent path at: 1) equals: 'plonk'
 ]
 
 { #category : #tests }
@@ -869,7 +869,7 @@ FileReferenceTest >> testPathRelativeTo [
 	parent := filesystem / 'griffle'.
 	childPath := Path / 'griffle' / 'plonk' / 'nurb'.
 	relative := childPath relativeTo: parent.
-	self assert: relative = (Path * 'plonk' / 'nurb')
+	self assert: relative equals: (Path * 'plonk' / 'nurb')
 ]
 
 { #category : #tests }
@@ -949,7 +949,7 @@ FileReferenceTest >> testRelativeToPath [
 	parentPath := Path / 'griffle'.
 	child := filesystem / 'griffle' / 'plonk' / 'nurb'.
 	relative := child relativeTo: parentPath.
-	self assert: relative = (Path * 'plonk' / 'nurb')
+	self assert: relative equals: (Path * 'plonk' / 'nurb')
 ]
 
 { #category : #tests }
@@ -958,7 +958,7 @@ FileReferenceTest >> testRelativeToReference [
 	parent := filesystem / 'griffle'.
 	child := filesystem  / 'griffle' / 'plonk' / 'nurb'.
 	relative := child relativeTo: parent.
-	self assert: relative = (Path * 'plonk' / 'nurb')
+	self assert: relative equals: (Path * 'plonk' / 'nurb')
 ]
 
 { #category : #tests }
@@ -1018,9 +1018,9 @@ FileReferenceTest >> testSimpleResolution [
 	relative := (Path * 'griffle') / 'zonk'.
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
-	self assert: (absolute path at: 1) = 'plonk'.
-	self assert: (absolute path at: 2) = 'griffle'.
-	self assert: (absolute path at: 3) = 'zonk'.
+	self assert: (absolute path at: 1) equals: 'plonk'.
+	self assert: (absolute path at: 2) equals: 'griffle'.
+	self assert: (absolute path at: 3) equals: 'zonk'.
 	
 	
 ]
@@ -1030,10 +1030,10 @@ FileReferenceTest >> testSlash [
 	| ref result |
 	ref := filesystem * 'plonk'.
 	result := ref / 'griffle'.
-	self assert: result class = ref class.
+	self assert: result class equals: ref class.
 	self assert: result  isRelative.
-	self assert: (result path at: 1) = 'plonk'.
-	self assert: (result path at: 2) = 'griffle'.
+	self assert: (result path at: 1) equals: 'plonk'.
+	self assert: (result path at: 2) equals: 'griffle'.
 
 ]
 
@@ -1136,7 +1136,7 @@ FileReferenceTest >> testWithExtentionAddsExtension [
 	ref := filesystem * 'plonk'.
 	result := ref withExtension: 'griffle'.
 	self assert: result isRelative.
-	self assert: result basename = 'plonk.griffle'
+	self assert: result basename equals: 'plonk.griffle'
 ]
 
 { #category : #tests }
@@ -1161,8 +1161,8 @@ FileReferenceTest >> testWithoutExtension [
 FileReferenceTest >> testWorkingDirectoryParent [
 	| wd |
 	wd := filesystem referenceTo: Path workingDirectory.
-	self assert: wd parent path size = 1.
-	self assert: (wd parent path at: 1) = '..'.
+	self assert: wd parent path size equals: 1.
+	self assert: (wd parent path at: 1) equals: '..'.
 ]
 
 { #category : #tests }

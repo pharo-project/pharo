@@ -20,7 +20,7 @@ GuideTest class >> isAbstract [
 GuideTest >> assertVisitedIs: anArray [
 	visited with: anArray do:
 		[:entry :basename | 
-		self assert: entry reference basename = basename]
+		self assert: entry reference basename equals: basename]
 ]
 
 { #category : #running }
@@ -33,10 +33,10 @@ GuideTest >> setUp [
 
 { #category : #visitor }
 GuideTest >> visitDirectory: aReference [
-	visited add: aReference.
+	visited add: aReference
 ]
 
 { #category : #visitor }
 GuideTest >> visitFile: aReference [
-	visited add: aReference.
+	visited add: aReference
 ]
