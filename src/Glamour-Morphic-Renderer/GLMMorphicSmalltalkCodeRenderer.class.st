@@ -87,7 +87,7 @@ GLMMorphicSmalltalkCodeRenderer >> textModelFor: aPresentation [
 { #category : #rendering }
 GLMMorphicSmalltalkCodeRenderer >> textMorphForModel: aTextModel [
 	| morph  |
-	morph := GLMPluggableTextMorph new.
+	morph := RubPluggableTextMorph new.
 	morph styler workspace: aTextModel.
 	morph
 		on: aTextModel

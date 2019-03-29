@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'hello'
 	],
-	#category : 'Clap-Tests-Integration'
+	#category : #'Clap-Tests-Integration'
 }
 
 { #category : #running }

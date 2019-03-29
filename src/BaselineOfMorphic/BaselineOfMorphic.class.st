@@ -344,9 +344,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	Stdio stdout nextPutAll: 'UIManager changed:' ; nextPutAll: UIManager default class name ; lf.
 
 	TextEditor initialize.
-	SmalltalkEditor initialize.
-
-	Stdio stdout nextPutAll: 'SmalltalkEditor initialized.'; lf.
 
 	MenubarMorph initialize.	
 
