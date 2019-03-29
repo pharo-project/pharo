@@ -184,6 +184,17 @@ TestAsserter >> assertCollection: actualCollection includesAll: subcollection [
 ]
 
 { #category : #asserting }
+TestAsserter >> assertCollection: actualCollection includesAny: subcollection [
+	"Raises an AssertionFailure if actualCollection does not include any of the elements of 
+	 expectedCollection (using #includesAny: message).
+    I also provide a specialized message for the AssertionFailure in case I fail.
+ 	"
+	^ self
+		assert: (actualCollection includesAny: subcollection)
+		description: [ actualCollection asString , ' does not include any of ' , subcollection asString ]
+]
+
+{ #category : #asserting }
 TestAsserter >> assertEmpty: aCollection [
 	^ self assert: aCollection isEmpty description: aCollection asString , ' should have been empty'
 ]
@@ -373,6 +384,17 @@ TestAsserter >> denyCollection: actualCollection includesAll: subcollection [
 	^ self
 		assert: (actualCollection includesAll: subcollection) not
 		description: [ actualCollection asString , ' does not include all in ' , subcollection asString ]
+]
+
+{ #category : #asserting }
+TestAsserter >> denyCollection: actualCollection includesAny: subcollection [
+	"Raises an AssertionFailure if actualCollection includes any of the elements of 
+	 expectedCollection (by negating result of #includesAny: message).
+    I also provide a specialized message for the AssertionFailure in case I fail.
+ 	"
+	^ self
+		assert: (actualCollection includesAny: subcollection) not
+		description: [ actualCollection asString , ' includes one element of ' , subcollection asString ]
 ]
 
 { #category : #asserting }
