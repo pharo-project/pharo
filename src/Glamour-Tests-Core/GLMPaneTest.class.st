@@ -5,11 +5,6 @@ Class {
 }
 
 { #category : #tests }
-GLMPaneTest >> expectedFailures [
-	^ #(testPortsInmmutability testPresentationsInmmutability)
-]
-
-{ #category : #tests }
 GLMPaneTest >> testAllRecursivePresentations [
 	| browser |
 	browser := GLMTabulator new.
@@ -144,6 +139,7 @@ GLMPaneTest >> testPorts [
 
 { #category : #tests }
 GLMPaneTest >> testPortsInmmutability [
+	<expectedFailure>
 	| aPane ports |
 	aPane := GLMPane in: 1.
 	self assertEmpty: aPane ports.
@@ -214,6 +210,7 @@ GLMPaneTest >> testPresentations [
 
 { #category : #tests }
 GLMPaneTest >> testPresentationsInmmutability [
+	<expectedFailure>
 	| aPane presentations |
 	aPane := GLMPane in: 1.
 	self assertEmpty: aPane presentations.

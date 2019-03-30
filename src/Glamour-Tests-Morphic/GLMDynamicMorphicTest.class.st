@@ -5,11 +5,6 @@ Class {
 }
 
 { #category : #tests }
-GLMDynamicMorphicTest >> expectedFailures [ 
-	^ #(testWithDisplay)
-]
-
-{ #category : #tests }
 GLMDynamicMorphicTest >> testSurroundingPanel [
 	| browser dynamicContainerMorph |
 	browser := GLMTabulator new.
@@ -44,6 +39,7 @@ GLMDynamicMorphicTest >> testUpdate [
 
 { #category : #tests }
 GLMDynamicMorphicTest >> testWithDisplay [
+	<expectedFailure>
 	| browser dynamic stacker text textMorph |
 	browser := GLMTabulator new column: #stacker; yourself.
 	browser transmit to: #stacker; andShow: [:c | 

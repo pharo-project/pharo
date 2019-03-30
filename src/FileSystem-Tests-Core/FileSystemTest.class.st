@@ -49,7 +49,7 @@ FileSystemTest >> markForCleanup: anObject [
 FileSystemTest >> setUp [
 	super setUp.
 	filesystem := self createFileSystem.
-	toDelete := OrderedCollection new.
+	toDelete := OrderedCollection new
 ]
 
 { #category : #running }
@@ -79,8 +79,9 @@ FileSystemTest >> testBinaryReadStreamDo [
 		should: [ reference binaryReadStreamDo: [ :stream | self assert: false ] ] 
 		raise: FileDoesNotExistException.
 	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
-	self assert: (reference readStreamDo: [ :stream | stream contents asString ]) 
-		= 'griffle'
+	self 
+		assert: (reference readStreamDo: [ :stream | stream contents asString ]) 
+		equals: 'griffle'
 ]
 
 { #category : #'tests-streams-compatibility' }
@@ -103,7 +104,7 @@ FileSystemTest >> testBinaryReadStreamIfAbsent [
 	self assert: (reference binaryReadStreamIfAbsent: [ true ]).
 	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
 	stream := reference binaryReadStreamIfAbsent: [ false ].
-	self assert: stream contents asString = 'griffle'.
+	self assert: stream contents asString equals: 'griffle'.
 	stream close
 ]
 
@@ -122,10 +123,10 @@ FileSystemTest >> testChildrenAt [
 	
 	entries := filesystem childrenAt: directory.
 	
-	self assert: entries size = 2.
+	self assert: entries size equals: 2.
 	entries do: [ :ea | 
 		self assert: (ea isKindOf: Path).
-		self assert: ea parent = (filesystem resolve: directory).
+		self assert: ea parent equals: (filesystem resolve: directory).
 		self assert: (#('griffle' 'bint' ) includes: ea basename) ]
 ]
 
@@ -144,9 +145,9 @@ FileSystemTest >> testChildrenSorting [
 	self markForCleanup: directory.
 	
 	sorted := (filesystem childrenAt: directory) sorted.
-	self assert: sorted size = 2.
-	self assert: (sorted at: 1) basename = 'alfa'.
-	self assert: (sorted at: 2) basename = 'beta'.
+	self assert: sorted size equals: 2.
+	self assert: (sorted at: 1) basename equals: 'alfa'.
+	self assert: (sorted at: 2) basename equals: 'beta'
 ]
 
 { #category : #tests }
@@ -163,7 +164,9 @@ FileSystemTest >> testChildrenSortingRoot [
 	self markForCleanup: directory1.
 	self markForCleanup: directory2.
 	
-	self assert: filesystem workingDirectory children sorted size = filesystem workingDirectory children size
+	self 
+		assert: filesystem workingDirectory children sorted size 
+		equals: filesystem workingDirectory children size
 ]
 
 { #category : #tests }
@@ -235,15 +238,16 @@ FileSystemTest >> testCopySourceDoesntExist [
 
 { #category : #tests }
 FileSystemTest >> testCopyWithCorrectBasename [
-        | directory |
-        self
-                markForCleanup: 'gooly';
-                markForCleanup: 'plonk'.
-        directory := filesystem workingDirectory.
-        (directory / 'gooly') ensureCreateFile.
-        directory / 'gooly' copyTo: directory / 'plonk'.
-        self assert: (directory / 'plonk') exists.
-        self assert: (directory childNames includes: 'plonk')
+	| directory |
+ 	self
+        markForCleanup: 'gooly';
+        markForCleanup: 'plonk'.
+	directory := filesystem workingDirectory.
+ 	(directory / 'gooly') ensureCreateFile.
+	directory / 'gooly' copyTo: directory / 'plonk'.
+ 
+	self assert: (directory / 'plonk') exists.
+ 	self assert: (directory childNames includes: 'plonk')
 ]
 
 { #category : #tests }
@@ -291,7 +295,7 @@ FileSystemTest >> testCreateDirectoryNotCreateParent [
 	| path |
 	path := filesystem workingDirectory / 'plonk' / 'griffle'.
 	self should:[path createDirectory] raise: DirectoryDoesNotExist.
-	self assert: path exists not.
+	self assert: path exists not
 ]
 
 { #category : #tests }
@@ -309,7 +313,7 @@ FileSystemTest >> testCreateFileNotCreateParent [
 	| path |
 	path := '/plonk/griffles' asFileReference.
 	self should:[path createFile] raise: DirectoryDoesNotExist .
-	self assert: path exists not.
+	self assert: path exists not
 ]
 
 { #category : #tests }
@@ -333,7 +337,7 @@ FileSystemTest >> testDelete [
 	reference := ( filesystem workingDirectory / 'file') ensureCreateFile.
 	reference delete.
 	
-	self deny: reference exists. 
+	self deny: reference exists
 		
 
 ]
@@ -406,10 +410,10 @@ FileSystemTest >> testEntriesAt [
 		markForCleanup: directory.
 	
 	entries := filesystem entriesAt: directory.
-	self assert: entries size = 2.
+	self assert: entries size equals: 2.
 	entries do: [ :ea | 
 		self assert: (ea isKindOf: FileSystemDirectoryEntry).
-		self assert: ea reference parent path = (filesystem resolve: directory).
+		self assert: ea reference parent path equals: (filesystem resolve: directory).
 		self assert: (#('griffle' 'bint' ) includes: ea reference basename).
 		self assert: ea isDirectory ]
 ]
@@ -432,8 +436,8 @@ FileSystemTest >> testEntryAt [
 	
 	self assert: entry1 isDirectory.
 	self assert: entry2 isDirectory.
-	self assert: entry1 reference = (filesystem referenceTo: path1) asAbsolute.
-	self assert: entry2 reference = (filesystem referenceTo: path2) asAbsolute.
+	self assert: entry1 reference equals: (filesystem referenceTo: path1) asAbsolute.
+	self assert: entry2 reference equals: (filesystem referenceTo: path2) asAbsolute.
 
 	self assert: entry1 creationTime < entry2 creationTime.
 	self assert: entry1 modificationTime < entry2 modificationTime.
@@ -516,13 +520,13 @@ FileSystemTest >> testMoveToFailingExistingDestination [
 	"Cleanup after running"
 	self 
 		markForCleanup: (base / 'folder' / 'newFile');
-		markForCleanup: (base / 'folder') ;
+		markForCleanup: (base / 'folder');
 		markForCleanup: (base / 'file').	
 	
 	"Destination exists already"
 	self should: [ file moveTo: (folder / 'newFile') ] raise: Error.
 	self assert: (base / 'file') exists.
-	self assert: (folder / 'newFile') exists.
+	self assert: (folder / 'newFile') exists
 ]
 
 { #category : #tests }
@@ -543,7 +547,7 @@ FileSystemTest >> testMoveToFailingMissingDestination [
 	self deny: (base / 'folder') exists.
 	self should: [ file moveTo: (base / 'folder' / 'newFile') ] raise: Error.
 	self assert: (base / 'file') exists.
-	self deny: (base / 'folder' / 'newFile') exists.
+	self deny: (base / 'folder' / 'newFile') exists
 ]
 
 { #category : #tests }
@@ -563,7 +567,7 @@ FileSystemTest >> testMoveToFailingMissingSource [
 	"Destination exists already"
 	self should: [ (base / 'file') moveTo: (folder / 'newFile') ] raise: Error.
 	self deny: (base / 'file') exists.
-	self deny: (folder / 'newFile') exists.
+	self deny: (folder / 'newFile') exists
 ]
 
 { #category : #tests }
@@ -610,8 +614,9 @@ FileSystemTest >> testReadStreamDo [
 		should: [ reference readStreamDo: [ :stream | self assert: false ] ] 
 		raise: FileDoesNotExistException.
 	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
-	self assert: (reference readStreamDo: [ :stream | stream contents asString ]) 
-		= 'griffle'
+	self 
+		assert: (reference readStreamDo: [ :stream | stream contents asString ]) 
+		equals: 'griffle'
 ]
 
 { #category : #'tests-streams' }
@@ -634,7 +639,7 @@ FileSystemTest >> testReadStreamIfAbsent [
 	self assert: (reference readStreamIfAbsent: [ true ]).
 	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
 	stream := reference readStreamIfAbsent: [ false ].
-	self assert: stream contents asString = 'griffle'.
+	self assert: stream contents asString equals: 'griffle'.
 	stream close
 ]
 
@@ -659,8 +664,8 @@ FileSystemTest >> testReferenceTo [
 
 { #category : #tests }
 FileSystemTest >> testRoot [
-	self assert: filesystem root fileSystem = filesystem.
-	self assert: filesystem root path = Path root.
+	self assert: filesystem root fileSystem equals: filesystem.
+	self assert: filesystem root path equals: Path root.
 	self assert: filesystem root isRoot.
 ]
 
@@ -681,8 +686,8 @@ FileSystemTest >> testRootIsNotAFile [
 
 { #category : #tests }
 FileSystemTest >> testWorking [
-	self assert: filesystem workingDirectory fileSystem = filesystem.
-	self assert: filesystem workingDirectory path = filesystem workingDirectoryPath
+	self assert: filesystem workingDirectory fileSystem equals: filesystem.
+	self assert: filesystem workingDirectory path equals: filesystem workingDirectoryPath
 ]
 
 { #category : #'tests-streams' }

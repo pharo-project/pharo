@@ -20,20 +20,3 @@ GlamourPresentationPresenter class >> examplePlaygroundAndInspectorOn42 [
 		
 	ui openWithSpecLayout: lay.
 ]
-
-{ #category : #'*GT-Playground' }
-GlamourPresentationPresenter class >> examplePlaygroundOn42 [
-	<sampleInstance>
-	"open a playground on 42"
-	^ self playgroundOn: '42'
-]
-
-{ #category : #'*GT-Playground' }
-GlamourPresentationPresenter class >> playgroundOn: aStringOrText [
-	"Open a playground with aStringOrText. Execute the following code:"
-	"self playgroundOn: '21 + 21'"
-	|ui|
-	ui := GlamourPresentationPresenter new.
-	ui presentationClass: GTPlayground startOn: (GTPlayPage new saveContent: aStringOrText).
-	^ ui openWithSpec
-]

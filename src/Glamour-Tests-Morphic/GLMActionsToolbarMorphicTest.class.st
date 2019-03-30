@@ -4,14 +4,10 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
-{ #category : #'as yet unclassified' }
-GLMActionsToolbarMorphicTest >> expectedFailures [
-	^ #(testDynamicActionsAreUpdated)
-]
-
 { #category : #tests }
 GLMActionsToolbarMorphicTest >> testDynamicActionsAreUpdated [
 	| browser toolbar status count|
+	<expectedFailure>
 	count := 0.
 	browser := GLMTabulator new.
 	browser addStatusbar.

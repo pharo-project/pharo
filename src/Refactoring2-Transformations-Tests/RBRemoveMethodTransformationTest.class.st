@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #testing }
-RBRemoveMethodTransformationTest >> expectedFailures [
-
-	^ #(testMethodSendsSuper)
-]
-
-{ #category : #testing }
 RBRemoveMethodTransformationTest >> testMethodIsReferenced [
 
 	self shouldFail: (RBRemoveMethodTransformation
@@ -21,7 +15,7 @@ RBRemoveMethodTransformationTest >> testMethodIsReferenced [
 
 { #category : #testing }
 RBRemoveMethodTransformationTest >> testMethodSendsSuper [
-
+	<expectedFailure>
 	self shouldFail: (RBRemoveMethodTransformation
 							selector: #new
 							from: RBBasicLintRuleTestData class)

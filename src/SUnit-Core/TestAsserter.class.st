@@ -34,6 +34,12 @@ TestAsserter class >> classForTestSuite [
 	^ TestSuite
 ]
 
+{ #category : #accessing }
+TestAsserter class >> defaultPrecisionsForCloseToComparison [
+	"This number comes from the one used in Float>>#closeTo: implementation."
+	^ 0.0001
+]
+
 { #category : #logging }
 TestAsserter class >> failureLog [
 	^Transcript
@@ -65,44 +71,56 @@ TestAsserter class >> suiteClass [
 
 { #category : #asserting }
 TestAsserter >> assert: actualNumber closeTo: expectedNumber [
-	"Tell whether the actualNumber and expectedNumber are close from each with a margin of 0.0001"
+	"Tell whether the actualNumber and expectedNumber ARE close to each others with a margin of
+	 the default precision (see class-side method #defaultPrecisionsForCloseToComparison).
+	"
+	self assert: actualNumber closeTo: expectedNumber precision: self class defaultPrecisionsForCloseToComparison
+]
+
+{ #category : #asserting }
+TestAsserter >> assert: actualNumber closeTo: expectedNumber precision: epsilon [
+	"Tell whether the actualNumber and expectedNumber ARE close to each others with a margin of epsilon."
 
 	^ self
-		assert: (actualNumber closeTo: expectedNumber)
+		assert: (actualNumber closeTo: expectedNumber precision: epsilon)
 		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
 ]
 
 { #category : #asserting }
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
-	"Take a second argument wich is a message string that describes the reason for the failure, this string will be displayed by the Test Runner"
+	"This method raises an AssertionFailure with aString as #messageText if
+	 aBooleanOrBlock evaluates to false.
+	"
 
-	aBooleanOrBlock value
-		ifFalse: [ | aString |
-			aString := aStringOrBlock value.
-			self logFailure: aString.
-			self classForTestResult failure signal: aString ]
+	self assert: aBooleanOrBlock description: aStringOrBlock resumable: false
 ]
 
 { #category : #asserting }
-TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: resumableBoolean [ 
-	"if resumable: true the test won't stop when the assertion fails, the test will continue it's excecution"
-	
-	| exception |
+TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: resumableBoolean [
+	"Checks if aBooleanOrBlock evaluates to true (by sending #value message to it).
+	 The message text of the assertion failure exception thrown in case aBooleanOrBlock
+	 evaluates to false is determinated by the evaluation of aStringOrBlock (again by
+	 sending #value message to it).
+	 The resumableBoolean flag is used to decide if the assertion failure signalled by
+	 the source code below should be resumable or not.
+	"
+	| exception aString |
 	aBooleanOrBlock value
-		ifFalse: 
-			[|aString|
-			aString := aStringOrBlock value.
-			self logFailure: aString.
-			exception := resumableBoolean
-						ifTrue: [self classForTestResult resumableFailure]
-						ifFalse: [self classForTestResult failure].
-			exception signal: aString]
-			
+		ifTrue: [ ^ self ].
+	
+	aString := aStringOrBlock value.
+	self logFailure: aString.
+	exception := resumableBoolean
+		ifTrue: [ self classForTestResult resumableFailure ]
+		ifFalse: [ self classForTestResult failure ].
+	exception signal: aString
 ]
 
 { #category : #asserting }
 TestAsserter >> assert: actual equals: expected [
-	"Validate whether or not the actual value is equal than the expected, if the assertion fails it provides a description that show both the actual and the expected value"
+	"This method raises an AssertionFailure if actual is different (using #= message) from expected.
+	 Else it does nothing and execution continues.
+	"
 	
 	^ self
 		assert: actual = expected
@@ -111,7 +129,7 @@ TestAsserter >> assert: actual equals: expected [
 
 { #category : #asserting }
 TestAsserter >> assert: actual identicalTo: expected [
-	"Verify whether the actual and the expected are the same object (have the same object pointer)"
+	"Verify whether the actual and the expected are the same object (have the same object pointer so #== returns true)."
 	
 	^ self
 		assert: expected == actual
@@ -119,21 +137,23 @@ TestAsserter >> assert: actual identicalTo: expected [
 ]
 
 { #category : #asserting }
-TestAsserter >> assertCollection: actual equals: expected [
-	"Specialized test method that generates a proper error message for collection"
+TestAsserter >> assertCollection: actualCollection equals: expectedCollection [
+	"Raises an AssertionFailure if actualCollection is not equal to expectedCollection (using #= message).
+	 I also provide a specialized message for the AssertionFailure in case I fail.
+	"
 
 	^ self
-		assert: expected = actual
-		description: [ self comparingCollectionBetween: actual and: expected ]
+		assert: actualCollection = expectedCollection
+		description: [ self comparingCollectionBetween: actualCollection and: expectedCollection ]
 ]
 
 { #category : #asserting }
-TestAsserter >> assertCollection: actual hasSameElements: expected [
+TestAsserter >> assertCollection: actualCollection hasSameElements: expected [
 	"Assert that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements."
 
 	| missingElements additionalElements |
-	additionalElements := actual difference: expected.
-	missingElements := expected difference: (actual intersection: expected).
+	additionalElements := actualCollection difference: expected.
+	missingElements := expected difference: (actualCollection intersection: expected).
 	self
 		assert: (additionalElements isEmpty and: [ missingElements isEmpty ])
 		description:
@@ -153,12 +173,25 @@ TestAsserter >> assertCollection: actual hasSameElements: expected [
 ]
 
 { #category : #asserting }
-TestAsserter >> assertCollection: actual includesAll: subcollection [
-	"Specialized test method that generates a proper error message for collection"
+TestAsserter >> assertCollection: actualCollection includesAll: subcollection [
+	"Raises an AssertionFailure if actualCollection does not include all the elements of expectedCollection (using #includesAll: message).
+	 I also provide a specialized message for the AssertionFailure in case I fail.
+	"
 
 	^ self
-		assert: (actual includesAll: subcollection)
-		description: [ actual asString , ' does not include all in ' , subcollection asString ]
+		assert: (actualCollection includesAll: subcollection)
+		description: [ actualCollection asString , ' does not include all in ' , subcollection asString ]
+]
+
+{ #category : #asserting }
+TestAsserter >> assertCollection: actualCollection includesAny: subcollection [
+	"Raises an AssertionFailure if actualCollection does not include any of the elements of 
+	 expectedCollection (using #includesAny: message).
+    I also provide a specialized message for the AssertionFailure in case I fail.
+ 	"
+	^ self
+		assert: (actualCollection includesAny: subcollection)
+		description: [ actualCollection asString , ' does not include any of ' , subcollection asString ]
 ]
 
 { #category : #asserting }
@@ -272,28 +305,52 @@ TestAsserter >> defaultTestFailure [
 
 { #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock [
-	"to assert something that should not be true"
+	"This method raises an AssertionFailure if aBooleanOrBlock evaluates to true."
+	self deny: aBooleanOrBlock description: 'Denial failed'
+]
 
-	self assert: aBooleanOrBlock value not
+{ #category : #asserting }
+TestAsserter >> deny: actualNumber closeTo: expectedNumber [
+	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of
+	 the default precision (see class-side method #defaultPrecisionsForCloseToComparison).
+	"
+	self deny: actualNumber closeTo: expectedNumber precision: self class defaultPrecisionsForCloseToComparison
+]
+
+{ #category : #asserting }
+TestAsserter >> deny: actualNumber closeTo: expectedNumber precision: epsilon [
+	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of epsilon."
+
+	^ self
+		assert: (actualNumber closeTo: expectedNumber precision: epsilon) not
+		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
 ]
 
 { #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock description: aString [
-	self assert: aBooleanOrBlock value not description: aString
-			
+	"This method raises an AssertionFailure with aString as #messageText if
+	 aBooleanOrBlock evaluates to true."
+	self deny: aBooleanOrBlock description: aString resumable: false
 ]
 
 { #category : #asserting }
-TestAsserter >> deny: aBooleanOrBlock description: aString resumable: resumableBoolean [ 
+TestAsserter >> deny: aBooleanOrBlock description: aStringOrBlock resumable: resumableBoolean [
+	"Checks if aBooleanOrBlock evaluates to false (by sending #value message to it).
+	 aStringOrBlock and resumableBoolean parameters are used similarly as in
+	 TestAsserter>>#assert:description:resumable:.
+	"
 	self
 		assert: aBooleanOrBlock value not
-		description: aString
+		description: aStringOrBlock
 		resumable: resumableBoolean
 			
 ]
 
 { #category : #asserting }
 TestAsserter >> deny: actual equals: expected [
+	"This method raises an AssertionFailure if actual is equals (using #= message) to expected.
+	 Else it does nothing and execution continues.
+	"
 	^ self
 		deny: expected = actual
 		description: [self unexpectedEqualityStringBetween: actual and: expected]
@@ -301,18 +358,43 @@ TestAsserter >> deny: actual equals: expected [
 
 { #category : #asserting }
 TestAsserter >> deny: actual identicalTo: expected [
+	"Verify whether the actual and the expected are NOT the same object (have the same object pointer so #== returns false)."
 	^ self
 		deny: expected == actual
 		description: [self unexpectedIdentityEqualityStringBetween: actual and: expected]
 ]
 
 { #category : #asserting }
-TestAsserter >> denyCollection: actual equals: expected [
-	"Specialized test method that generates a proper error message for collection"
+TestAsserter >> denyCollection: actualCollection equals: expectedCollection [
+	"Raises an AssertionFailure if actualCollection IS EQUAL to expectedCollection (using #= message).
+	 I also provide a specialized message for the AssertionFailure in case I fail.
+	"
 
 	^ self
-		deny: expected = actual
-		description: [ self unexpectedEqualityStringBetween: actual and: expected ]
+		deny: actualCollection = expectedCollection
+		description: [ self unexpectedEqualityStringBetween: actualCollection and: expectedCollection ]
+]
+
+{ #category : #asserting }
+TestAsserter >> denyCollection: actualCollection includesAll: subcollection [
+	"Raises an AssertionFailure if actualCollection INCLUDES all the elements of expectedCollection (by negating result of #includesAll: message).
+	 I also provide a specialized message for the AssertionFailure in case I fail.
+	"
+	
+	^ self
+		assert: (actualCollection includesAll: subcollection) not
+		description: [ actualCollection asString , ' does not include all in ' , subcollection asString ]
+]
+
+{ #category : #asserting }
+TestAsserter >> denyCollection: actualCollection includesAny: subcollection [
+	"Raises an AssertionFailure if actualCollection includes any of the elements of 
+	 expectedCollection (by negating result of #includesAny: message).
+    I also provide a specialized message for the AssertionFailure in case I fail.
+ 	"
+	^ self
+		assert: (actualCollection includesAny: subcollection) not
+		description: [ actualCollection asString , ' includes one element of ' , subcollection asString ]
 ]
 
 { #category : #asserting }
