@@ -67,29 +67,16 @@ ShiftClassInstaller >> comment: newClass [
 	builder comment ifNotNil: [ newClass classComment: builder comment stamp: builder commentStamp ]
 ]
 
-{ #category : #building }
-ShiftClassInstaller >> copyClassSlotsFromExistingClass [
-	self builder layoutDefinition copyClassSlotsIfNeeded: oldClass class slots
-]
-
 { #category : #copying }
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
-	| newObject hiddenSlots |
+	| newObject |
 	
 	newObject := newClass isVariable
 		ifTrue: [ newClass basicNew: oldObject size ]
 		ifFalse: [ newClass basicNew ].
 
-	"first initalize all hidden slots"
-	hiddenSlots := newClass classLayout allSlots reject: [:each | each isVisible].
-	hiddenSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
-			newSlot initialize: newObject.
-			newSlot write: (oldSlot read: oldObject) to: newObject ]  ].
-
-	"the initalize all visible slots"
 	newClass allSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
-			newSlot initialize: newObject.
-		   newSlot write: (oldSlot read: oldObject) to: newObject ] ].
+			newSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	newClass isVariable
 		ifTrue: [ 1 to: oldObject basicSize do: [ :offset | newObject basicAt: offset put: (oldObject basicAt: offset) ] ].
@@ -154,18 +141,13 @@ ShiftClassInstaller >> lookupOldClass [
 ]
 
 { #category : #building }
-ShiftClassInstaller >> make: aBlock [
+ShiftClassInstaller >> make [
 	| newClass |
-
-	aBlock value: builder.
 
 	self lookupOldClass.
 
 	[	
 		builder oldClass: oldClass.
-		
-		self copyClassSlotsFromExistingClass.
-		
 		newClass := builder build.
 
 		self validateReadOnlyInstancesOf: oldClass.
@@ -195,6 +177,22 @@ ShiftClassInstaller >> make: aBlock [
 	self notifyChanges.
 
 	^ newClass
+]
+
+{ #category : #building }
+ShiftClassInstaller >> make: aBlock [
+	
+	aBlock value: builder.
+
+	^self make
+]
+
+{ #category : #building }
+ShiftClassInstaller >> makeFromString: aStringClassDefinition [
+	
+	builder buildFromAST: (CDClassDefinitionParser parse: aStringClassDefinition).
+
+	^self make
 ]
 
 { #category : #migrating }
@@ -251,6 +249,7 @@ ShiftClassInstaller >> oldClass: anObject [
 ShiftClassInstaller >> recategorize: aClass to: newCategory [
 	| oldCategory |
 	oldCategory := oldClass ifNotNil:[oldClass basicCategory].
+	newCategory ifNil:  [ ^self ].
 	oldCategory == newCategory asSymbol
 		ifTrue: [ ^ self ].
 
