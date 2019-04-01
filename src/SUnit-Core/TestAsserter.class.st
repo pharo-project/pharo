@@ -91,7 +91,7 @@ TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
 	"This method raises an AssertionFailure with aString as #messageText if
 	 aBooleanOrBlock evaluates to false.
 	"
-
+	<debuggerCompleteToSender>
 	self assert: aBooleanOrBlock description: aStringOrBlock resumable: false
 ]
 
@@ -104,6 +104,7 @@ TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: r
 	 The resumableBoolean flag is used to decide if the assertion failure signalled by
 	 the source code below should be resumable or not.
 	"
+	<debuggerCompleteToSender>
 	| exception aString |
 	aBooleanOrBlock value
 		ifTrue: [ ^ self ].
@@ -449,7 +450,7 @@ TestAsserter >> logFailure: aString [
 { #category : #asserting }
 TestAsserter >> should: aBlock [
 	"Evaluate the Block first then execute the assertion"
-
+	<debuggerCompleteToSender>
 	self assert: aBlock value
 ]
 
@@ -463,7 +464,7 @@ TestAsserter >> should: aBlock description: aString [
 TestAsserter >> should: aBlock notTakeMoreThan: aDuration [
     "Evaluate aBlock and if it takes more than given duration
     to run we report a test failure. "
-
+	<debuggerCompleteToSender>
 	^ aBlock valueWithin: aDuration onTimeout: [
 		self 
 			assert: false 
@@ -483,7 +484,7 @@ TestAsserter >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
 { #category : #asserting }
 TestAsserter >> should: aBlock raise: anExceptionalEvent [
 	"To test that a particular exception is raised during the execution of a Block"
-
+	<debuggerCompleteToSender>
 	^ self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
 ]
 
@@ -510,14 +511,14 @@ TestAsserter >> should: aBlock raise: anExceptionalEvent whoseDescriptionInclude
 
 { #category : #asserting }
 TestAsserter >> should: aBlock raise: anException withExceptionDo: anotherBlock [ 
-
+	<debuggerCompleteToSender>
 	^self assert: (self executeShould: aBlock inScopeOf: anException withExceptionDo: anotherBlock)
 ]
 
 { #category : #asserting }
 TestAsserter >> shouldFix: aBlock [
 	"Run the block expecting an Exception. Throw an assertion failure if the block does NOT throw an exception."
-
+	<debuggerCompleteToSender>
 	^ self should: aBlock raise: Exception
 ]
 
@@ -535,7 +536,7 @@ TestAsserter >> shouldnt: aBlock description: aString [
 
 { #category : #asserting }
 TestAsserter >> shouldnt: aBlock raise: anExceptionalEvent [  
-	 
+	<debuggerCompleteToSender>
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
 			
 ]
