@@ -201,14 +201,6 @@ ShiftClassInstaller >> make: aBlock [
 	^self make
 ]
 
-{ #category : #building }
-ShiftClassInstaller >> makeFromString: aStringClassDefinition [
-	
-	builder buildFromAST: (CDClassDefinitionParser parse: aStringClassDefinition).
-
-	^self make
-]
-
 { #category : #migrating }
 ShiftClassInstaller >> migrateClassTo: newClass [
 	| slotsToMigrate |

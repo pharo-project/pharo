@@ -2,7 +2,8 @@ Extension { #name : #ShiftClassBuilder }
 
 { #category : #'*ClassParser' }
 ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [ 
-
+ 
+|package|
 	self name: aCDClassDefinitionNode className.
 	aCDClassDefinitionNode superclassName = #nil ifFalse:[
 	self superclass: (superclassResolver resolve: aCDClassDefinitionNode superclassName inEnv: buildEnvironment).]
@@ -18,7 +19,8 @@ ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 	
 	self slots: (aCDClassDefinitionNode slots collect: [:e| e asSlot]).
 	self sharedVariables:(aCDClassDefinitionNode sharedSlots collect: [:e| e]).
-	self category: aCDClassDefinitionNode packageName.
+	aCDClassDefinitionNode packageName ifNotNil:[:cat | package:= cat] ifNil:[package:= self category].
+	self category: package.
 	self layoutDefinition sharedPools: (aCDClassDefinitionNode sharedPools collect: [:e | e name]).
 	
 	aCDClassDefinitionNode traitDefinition ifNotNil:[:traitDef| traitDef originalNode formattedCode.

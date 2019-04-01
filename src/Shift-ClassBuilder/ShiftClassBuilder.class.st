@@ -315,6 +315,8 @@ ShiftClassBuilder >> initialize [
 	
 	changeComparers := OrderedCollection new.
 	changes := Set new.
+	
+	category := 'Unclassified'
 ]
 
 { #category : #building }
