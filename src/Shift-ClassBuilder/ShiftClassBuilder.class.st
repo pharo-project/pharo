@@ -305,6 +305,7 @@ ShiftClassBuilder >> hasToMigrateInstances [
 ShiftClassBuilder >> initialize [
 	super initialize.
 	
+	self useStrictSuperclass.
 	superclassName := #Object.
 
 	layoutDefinition := ShLayoutDefinition new.

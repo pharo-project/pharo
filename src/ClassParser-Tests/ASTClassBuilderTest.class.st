@@ -13,6 +13,17 @@ ASTClassBuilderTest >> environment [
 ]
 
 { #category : #running }
+ASTClassBuilderTest >> setUp [ 
+
+super setUp.
+]
+
+{ #category : #running }
+ASTClassBuilderTest >> tearDown [
+super tearDown.
+]
+
+{ #category : #running }
 ASTClassBuilderTest >> testCreateEphemeronClassNamed [
 
    | ast class |
@@ -404,7 +415,7 @@ ASTClassBuilderTest >> testDefaultResolve [
 { #category : #resolveSuperclass }
 ASTClassBuilderTest >> testUseUndefinedClass [
  	
-   | ast class |
+   | ast |
 
 	ast := CDClassDefinitionParser parse: 'PoPouet subclass: #TestClass'.
 
