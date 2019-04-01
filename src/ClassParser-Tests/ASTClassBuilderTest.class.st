@@ -401,7 +401,7 @@ ASTClassBuilderTest >> testCreateWeakClassWithAll [
 
 { #category : #resolveSuperclass }
 ASTClassBuilderTest >> testDefaultResolve [
-	| ast class |
+	| ast |
 
 	ast := CDClassDefinitionParser parse: 'cdfgdf subclass: #TestSubClass
 															uses: TOccurrencesTest'.
