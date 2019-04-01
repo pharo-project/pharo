@@ -161,6 +161,7 @@ ShiftClassInstaller >> make [
 
 	[	
 		builder oldClass: oldClass.
+		self copyClassSlotsFromExistingClass.
 		newClass := builder build.
 
 		self validateReadOnlyInstancesOf: oldClass.
