@@ -154,18 +154,13 @@ ShiftClassInstaller >> lookupOldClass [
 ]
 
 { #category : #building }
-ShiftClassInstaller >> make: aBlock [
+ShiftClassInstaller >> make [
 	| newClass |
-
-	aBlock value: builder.
 
 	self lookupOldClass.
 
 	[	
 		builder oldClass: oldClass.
-		
-		self copyClassSlotsFromExistingClass.
-		
 		newClass := builder build.
 
 		self validateReadOnlyInstancesOf: oldClass.
@@ -195,6 +190,22 @@ ShiftClassInstaller >> make: aBlock [
 	self notifyChanges.
 
 	^ newClass
+]
+
+{ #category : #building }
+ShiftClassInstaller >> make: aBlock [
+	
+	aBlock value: builder.
+
+	^self make
+]
+
+{ #category : #building }
+ShiftClassInstaller >> makeFromString: aStringClassDefinition [
+	
+	builder buildFromAST: (CDClassDefinitionParser parse: aStringClassDefinition).
+
+	^self make
 ]
 
 { #category : #migrating }
