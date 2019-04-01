@@ -30,8 +30,7 @@ Class {
 		'extensibleProperties',
 		'changeComparers',
 		'changes',
-		'metaSuperclass',
-		'superclassResolver'
+		'metaSuperclass'
 	],
 	#classVars : [
 		'BuilderEnhancer'
@@ -461,11 +460,6 @@ ShiftClassBuilder >> superclassName: anObject [
 ]
 
 { #category : #accessing }
-ShiftClassBuilder >> superclassResolver: asuperclassResolver [
-	superclassResolver:= asuperclassResolver.
-]
-
-{ #category : #accessing }
 ShiftClassBuilder >> traitComposition [
 	^ extensibleProperties at: #traitComposition ifAbsent: {}
 ]
@@ -480,13 +474,6 @@ ShiftClassBuilder >> tryToFillOldClass [
 	oldClass ifNotNil: [ ^self ].
 	name ifNil: [ ^self ].
 	self oldClass: (self buildEnvironment classNamed: self name)
-]
-
-{ #category : #building }
-ShiftClassBuilder >> useStrictSuperclass [
-"default behavior"
-"If i am use, the superResolver will resolve unknown superclass by raising an error"
-	self superclassResolver: ClassResolverStrictResolve new.
 ]
 
 { #category : #'private validating' }
