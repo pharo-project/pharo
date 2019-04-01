@@ -53,6 +53,17 @@ StepOverTests >> stepB3 [
 ]
 
 { #category : #tests }
+StepOverTests >> stepC1 [
+	self stepC2.
+]
+
+{ #category : #tests }
+StepOverTests >> stepC2 [
+	1+1.
+	^ 2
+]
+
+{ #category : #tests }
 StepOverTests >> testErrorSignalledDuringStepOverShouldBeCaught [
 	"An Error signaled while being steppedOver should not be unhandled"
 	self settingUpSessionAndProcessAndContextForBlock: [ Error signal: 'hey'. ].
@@ -76,6 +87,40 @@ StepOverTests >> testStepOver [
 	"Checking if the stepOver stepped over the call to stepA2 and brought the execution to the return node of stepA1"
 	self assert: session interruptedContext method equals: self class >>#stepA1.
 	self assert: (self class>>#stepA1 sourceNodeForPC: session interruptedContext pc) isReturn.
+]
+
+{ #category : #tests }
+StepOverTests >> testStepOverComputedReturn [
+	"When doing a stepOver on a return node whose return value is already computed, the current context returns and the session goes to the message node responsible for the context that just returned" 
+	"<-> indicates the node being executed
+	Initial situation:
+		#stepC2
+			1+1
+			<^2> 
+		#stepC1
+			<self stepC2>
+	After a StepOver:
+		#stepC1
+			<self stepC2>
+	"
+	| node |
+	self settingUpSessionAndProcessAndContextForBlock: [ self stepC1 ].
+	session stepInto.	session stepInto.
+	"Reached stepC1"
+	self assert: session interruptedContext method equals: self class >>#stepC1.
+	session stepInto.
+	"Reached stepC2"
+	self assert: session interruptedContext method equals: self class >>#stepC2.
+	session stepInto.
+	"Reached ^2 node of stepC2"
+	self assert: session interruptedContext method equals: self class >>#stepC2.
+	self assert: (self class>>#stepC2 sourceNodeForPC: session interruptedContext pc) isReturn.
+	session stepOver.
+	"The initial step done by stepOver should return the stepC2 context, ending the stepOver in the stepC1 context, on the 'self stepC2' node"
+	self assert: session interruptedContext method equals: self class >>#stepC1.
+	node := self class >>#stepC1 sourceNodeForPC: session interruptedContext pc.
+	self assert: node receiver isSelf.
+	self assert: node selector equals: #stepC2.
 ]
 
 { #category : #tests }
