@@ -375,11 +375,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring2-Transformations'.
 		spec package: 'Refactoring2-Transformations-Tests'.
 
-		spec package: 'ClassParser'.
-		spec package: 'ClassParser-Tests'.
-		spec package: 'UndefinedClasses'.
-		spec package: 'UndefinedClasses-Tests'.
-
       self groups: spec.
 	].
 
@@ -802,12 +797,6 @@ spec group: 'GT&QA-Group' with: #(
 	'Reflectivity-Group'
 ).		
 
-spec group: 'UndefinedClasses-Group' with: #(
-		'ClassParser'
-		'ClassParser-Tests'
-		'UndefinedClasses'
-		'UndefinedClasses-Tests'
-).		
 
 spec group: #default with: #(
 	'BasicTools'	"dependency"
@@ -854,7 +843,6 @@ spec group: #default with: #(
 	'Slot'
 	
 	'Refactoring2-Group'
-	'UndefinedClasses-Group'
 ).
 
 ]
