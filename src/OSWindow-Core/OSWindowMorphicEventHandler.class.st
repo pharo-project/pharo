@@ -136,8 +136,6 @@ OSWindowMorphicEventHandler >> handleEvent: anEvent [
 	morphicEvent := anEvent accept: self.
 	morphicEvent isMorphicEvent ifFalse: [ ^ self ].
 	
-	self flag: #todo. "Why this was in a queue who was never called?"
-	"self enqueue: morphicEvent."
 	self dispatchMorphicEvent: morphicEvent
 	
 ]

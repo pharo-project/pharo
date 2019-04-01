@@ -14,7 +14,12 @@ Class {
 
 { #category : #'stream-protocol' }
 MemoryFileSystemFile >> at: index [
-	self flag: #todo. "out of bounds checks?"
+	index > bytes size
+		ifTrue: [ SubscriptOutOfBounds
+				signalFor: index
+				lowerBound: (1 min: bytes size)
+				upperBound: bytes size
+				in: self ].
 	^ bytes at: index
 ]
 

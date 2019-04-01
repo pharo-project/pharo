@@ -283,8 +283,6 @@ NECMenuMorph >> delete [
 NECMenuMorph >> detailMessage [
 
 	^ String streamContents: [:stream |
-		self flag: #todo. "Removing for now... most of the shortcuts are broken and no time or need now to fix them" 
-		"stream << 'ctrl-h=help'."
 		NECPreferences captureNavigationKeys ifTrue: [
 			stream << (detailMorph
 				ifNil: ['-> open detail']
@@ -358,11 +356,8 @@ NECMenuMorph >> drawMessageOn: aCanvas in: rectangle [
 { #category : #drawing }
 NECMenuMorph >> drawModelMessageOn: aCanvas in: rectangle [ 
 	| message |
-	
-	self flag: #todo. "Removing for now... most of the shortcuts are broken and no time or need now to fix them" 
-
 	message := context model hasMessage 
-		ifTrue: [ context model message ", ' | ctrl-h=help'" ]
+		ifTrue: [ context model message ]
 		ifFalse: [ self detailMessage ].
 	aCanvas 
 		drawString: message
@@ -548,7 +543,7 @@ NECMenuMorph >> mouseDown: evt [
 			
 	super mouseDown: evt.
 	evt wasHandled: false.
-	self flag: #fixme "ugly hack".
+	self flag: #pharoFixMe "ugly hack".
 	controller editor morph owner owner
 		takeKeyboardFocus;
 		handleMouseDown: evt.

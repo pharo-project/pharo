@@ -59,7 +59,7 @@ IndeterminatedProgressBarMorph >> indeterminateStepIncrease [
 
 { #category : #initialization }
 IndeterminatedProgressBarMorph >> initialize [
-	self flag: #todo. "I think this class should be merged in ProgressBarMorph in Pharo 8."
+	self flag: #pharoTodo. "I think this class should be merged in ProgressBarMorph in Pharo 8."
 	super initialize.
 	oddPassage := true
 ]

@@ -133,8 +133,7 @@ RubTextFieldMorph >> focusChanged [
 
 { #category : #'model protocol' }
 RubTextFieldMorph >> hasValidText [
-	self flag: #todo. "can discard lazy initialization"
-	^ hasValidText ifNil: [ hasValidText := true ] 
+	^ hasValidText
 ]
 
 { #category : #'model protocol' }

@@ -53,8 +53,7 @@ EpMonitor class >> hasCurrent [
 
 { #category : #accessing }
 EpMonitor class >> logsDirectory [
-	self flag: #todo.	"The base locator could have a wrong fileSystem"
-
+	self flag: #pharoFixMe.	"The base locator could have a wrong fileSystem"
 	^ self current sessionStore baseLocator asFileReference
 ]
 

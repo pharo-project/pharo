@@ -304,7 +304,7 @@ GLMStringBrick >> onDrawAthensCanvas: aCanvas [
 	aCanvas pathTransform restoreAfter:[ 
 			aCanvas pathTransform translateBy: (self calculateTextPosition - self brickBounds origin).
 			aCanvas pathTransform translateX: 0 Y: font getPreciseAscent.
-			self flag: #todo.	"scaled, so that FT-Plugin and Athens don't mix cached faces"
+			"scaled, so that FT-Plugin and Athens don't mix cached faces"
 			aCanvas pathTransform scaleBy: 1.0000001 @ 1.0000001.
 			aCanvas setPaint: self textColor.
 			aCanvas setFont: self font.

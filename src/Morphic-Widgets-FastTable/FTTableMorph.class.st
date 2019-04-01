@@ -66,8 +66,10 @@ FTTableMorph class >> defaultColumn [
 
 { #category : #accessing }
 FTTableMorph class >> defaultHeaderColor [
-	self flag: #todo. "I think we should deprecate all this headerColor stuff. This is 
-	responsibility of data source, after all"
+	self flag: #pharoFixMe.	"I think we should deprecate all this headerColor stuff. This is 
+	responsibility of data source, after all.
+	
+	Cyril: I added a deprecation on #headerColor: explaining how to update the users of this method. In Pharo 9 we can remove all this."
 	^ self theme fastTableHeaderColor
 ]
 
@@ -401,6 +403,12 @@ FTTableMorph >> headerColor [
 
 { #category : #'accessing colors' }
 FTTableMorph >> headerColor: aColor [
+	self
+		deprecated:
+			'This method will be removed in the next Pharo version. The header color is not the responsibility of the FastTable. If you want to change the color of the table''s header you should do it in the datasource. In the datasource there is a method to return a header''s cell, you should change the color there.'
+		on: '29-04-2019'
+		in: #Pharo8.
+	"When this method will be removed, remove also #headerColor and related methods."
 	headerColor := aColor
 ]
 
@@ -649,7 +657,7 @@ FTTableMorph >> isYellowButtonReallyPressed: anEvent [
 
 { #category : #'event handling' }
 FTTableMorph >> keyStroke: event [
-	self flag: #todo.	"If the function is explicit this should be redirect to the function widget."
+	self flag: #pharoTodo. "If the function is explicit this should be redirect to the function widget."
 	((super keyStroke: event) or: [ self navigationKey: event ])
 		ifTrue: [ ^ true ].
 		

@@ -38,9 +38,8 @@ EpMonticelloVersionsLoad >> accept: aChangeVisitor [
 
 { #category : #accessing }
 EpMonticelloVersionsLoad >> affectedPackageName [
-	
-	self flag: #todo. "FIX: imprecise answer"
-	
+	self flag: #pharoFixMe.	"FIX: imprecise answer"
+
 	^ self packageNames first
 ]
 

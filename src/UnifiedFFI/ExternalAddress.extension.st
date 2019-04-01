@@ -144,7 +144,7 @@ ExternalAddress >> registerAsExternalResource [
 ExternalAddress >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
 	| dstAddress srcAddress repSize |
 	
-	self flag: #todo. "Maybe replace it with a primitive (like the one at Alien)?"
+	self flag: #pharoTodo. "Maybe replace it with a primitive (like the one at Alien)?"
 	repSize := stop - start + 1.
 	dstAddress := start = 1 
 		ifTrue: [ self ] 

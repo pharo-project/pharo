@@ -122,14 +122,6 @@ StringMorph >> addEmphasis: aCodeOrTextEmphasis [
 	self emphasis: (emphasis bitOr: aCodeOrTextEmphasis value)
 ]
 
-{ #category : #'halos and balloon help' }
-StringMorph >> addOptionalHandlesTo: aHalo box: box [
-	self flag: #deferred.
-
-	"Eventually...
-	self addFontHandlesTo: aHalo box: box"
-]
-
 { #category : #drawing }
 StringMorph >> areasRemainingToFill: aRectangle [
 

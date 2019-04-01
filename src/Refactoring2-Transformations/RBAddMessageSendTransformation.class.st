@@ -69,7 +69,7 @@ RBAddMessageSendTransformation >> preconditions [
 		& (RBCondition
 			withBlock: [ | messageNode |
 				messageNode := RBParser parseExpression: message.
-				messageNode allAccesses allSatisfy: [ :e | 
+				messageNode allVariables allSatisfy: [ :e | 
 					(self definingMethod hasArgumentNamed: e name)
 					or: [ self definingMethod hasTemporaryNamed: e name ] ]]
 			errorString: ('Some variables in this message send are not defined in method named <1s>.'
@@ -84,7 +84,7 @@ RBAddMessageSendTransformation >> privateTransform [
 	messageNode := RBParser parseExpression: message.
 
 	"if the message requires variables, look for the right variables in this context"
-	variables := messageNode allAccesses.
+	variables := messageNode allVariables.
 	assignments := ( methodTree allChildren 
 		select: #isAssignment )
 		select: [ :each | variables includes: each variable ].

@@ -13,16 +13,12 @@ Class {
 
 { #category : #'instance creation' }
 EpMonitorLogNode class >> for: anEpMonitor [
+	self flag: #pharoFixMe.	"note: this is a workaround given this information is needed to build the references graph, but it's not available from 'theLog' when it's empty"
 
-	self flag: #fix.
-	
 	^ self new
 		theLog: anEpMonitor basicLog;
-		headReference: anEpMonitor log headReference; 
-			"note: this is a workaround given this information is needed to build the references graph,
-			but it's not available from 'theLog' when it's empty"
+		headReference: anEpMonitor log headReference;
 		yourself
-
 ]
 
 { #category : #converting }
