@@ -20,9 +20,3 @@ CDSharedVariableNode class >> slot: aSlot node: aNode [
 CDSharedVariableNode >> asClassVariable [
 	^ ClassVariable named: self name.
 ]
-
-{ #category : #suggestions }
-CDSharedVariableNode >> specialCommands [
-	
-	^ SugsSuggestionFactory commandsForClassVariable
-]

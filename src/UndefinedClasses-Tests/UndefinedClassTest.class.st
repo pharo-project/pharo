@@ -28,7 +28,7 @@ UndefinedClassTest >> createClassFromDefinitionString: aString [
 	^ ClassDefinitionHandler createClassFromDefinitionString: aString
 ]
 
-{ #category : #setup }
+{ #category : #running }
 UndefinedClassTest >> tearDown [
 
 	self class environment at: #Foo ifPresent: [ :c | c removeFromSystem ].

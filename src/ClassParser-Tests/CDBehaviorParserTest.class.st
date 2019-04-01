@@ -68,7 +68,7 @@ CDBehaviorParserTest >> selectionOf: aText [
 	^ start to: start
 ]
 
-{ #category : #tests }
+{ #category : #running }
 CDBehaviorParserTest >> setUp [
 
 	super setUp.
