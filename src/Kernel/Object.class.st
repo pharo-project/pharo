@@ -372,7 +372,7 @@ Object >> assert: aBlock [
 { #category : #asserting }
 Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
-	
+	<debuggerCompleteToSender>
 	aBlock value 
 		ifFalse: [ AssertionFailure signal: aStringOrBlock value ]
 ]
