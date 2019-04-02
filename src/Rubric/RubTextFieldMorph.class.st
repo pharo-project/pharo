@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'hasValidText',
 		'acceptOnCR',
-		'entryCompletion'
+		'entryCompletion',
+		'maxLength'
 	],
 	#category : #'Rubric-Editing-Widgets'
 }
@@ -149,6 +150,7 @@ RubTextFieldMorph >> initialize [
 	self scrollbarsShowNever.
 	self extent: self extent.
 	acceptOnCR := true.
+	maxLength := 0.
 	self beDecrypted
 ]
 
@@ -163,6 +165,26 @@ RubTextFieldMorph >> keyboardFocusChange: aBoolean [
 RubTextFieldMorph >> manageLayoutInBounds: aRectangle [
 	super manageLayoutInBounds: aRectangle.
 	self closeChooser 
+]
+
+{ #category : #accessing }
+RubTextFieldMorph >> maxLength [
+	
+	"Returns the max length of this text field.
+	0 meaning unlimited"
+	^ maxLength
+]
+
+{ #category : #accessing }
+RubTextFieldMorph >> maxLength: anInteger [
+	"Sets the max length of the text field.
+	0 means unlimited"
+	maxLength := anInteger.
+	maxLength = 0 ifTrue: [ ^ self ].
+	
+	"If the contents of this textfield exceed the max length, contents are truncated"
+	self getText size > maxLength
+		ifTrue: [ self setText: (self getText first: maxLength) ]
 ]
 
 { #category : #'model protocol' }
