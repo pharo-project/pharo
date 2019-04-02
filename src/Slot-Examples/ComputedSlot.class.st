@@ -30,6 +30,15 @@ ComputedSlot >> block [
 	^block
 ]
 
+{ #category : #'code generation' }
+ComputedSlot >> emitValue: methodBuilder [
+
+		methodBuilder
+			pushLiteral: block;
+			pushReceiver;
+			send: #cull:.
+]
+
 { #category : #comparing }
 ComputedSlot >> hasSameDefinitionAs: otherSlot [
 
@@ -55,7 +64,7 @@ ComputedSlot >> printOn: aStream [
 
 { #category : #'meta-object-protocol' }
 ComputedSlot >> read: anObject [
-	^block value: anObject
+	^block cull: anObject
 	
 ]
 
