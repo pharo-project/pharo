@@ -156,10 +156,11 @@ NECController >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [
 { #category : #keyboard }
 NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	"I return a boolean. 
-	true when I have handled the event and no futher processing is needed by the caller."
+	true when I have handled the event and no futher processing is needed by the caller.
+	
+	This method would be cleaner if splitted."
 
 	| keyCharacter controlKeyPressed |
-	self flag: #fixme.	"this method should be split up"
 	self setEditor: anEditor.
 	self setModel: editor model.
 	keyCharacter := aKeyboardEvent keyCharacter.
@@ -209,9 +210,6 @@ NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 				ifTrue: [ 
 					menuMorph insertCommonPrefixOrSelected
 						ifTrue: [ ^ true ] ] ].
-	self flag: #todo.	"Removing for now... most of the shortcuts are broken and no time or need now to fix them"	"(keyCharacter = $h and: [ controlKeyPressed ]) ifTrue: [ 
-		menuMorph help.
-		^ true ]."
 	keyCharacter = Character backspace
 		ifTrue: [ 
 			editor isCaretBehindChar

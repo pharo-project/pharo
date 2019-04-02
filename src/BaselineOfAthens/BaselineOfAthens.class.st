@@ -15,8 +15,8 @@ BaselineOfAthens >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ self flag: #todo.	"Inter packages dependencies are now added but it is missing some dependencies on other projects such as Morphic for Athens-Morphic"
-
+		do: [ 
+			"Inter packages dependencies are now added but it is missing some dependencies on other projects such as Morphic for Athens-Morphic"
 			"Dependencies"
 			self
 				display: spec;

@@ -11,7 +11,7 @@ Class {
 RPackageCategorySynchronisationTest >> testAddCategoryCreatesPackage [
 	"test that when we add a category that does not yet correspond to an existing package, a new package is created"
 		
-	self flag: #todo. "To be removed when Categories are kicked out"
+	self flag: #pharoTodo. "To be removed when Categories are kicked out"
 	
 	self addXCategory.
 	self assert: (self organizer includesPackageNamed: #XXXXX)
@@ -23,7 +23,7 @@ RPackageCategorySynchronisationTest >> testAddCategoryIsAlreadyAPackageDoesNotCr
 	
 	|tmpPackage|
 	
-	self flag: #todo. "To be removed when Categories are kicked out"
+	self flag: #pharoTodo. "To be removed when Categories are kicked out"
 	
 	self addXCategory.
 	tmpPackage := self organizer packageNamed: #XXXXX.

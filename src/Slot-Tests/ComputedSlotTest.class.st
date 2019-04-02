@@ -35,6 +35,18 @@ ComputedSlotTest >> testReadComputedSlotReflective [
 ]
 
 { #category : #tests }
+ComputedSlotTest >> testReadComputedSlotReflectiveNoArg [
+	| slot object |
+	aClass := self make: [ :builder | builder slots: {(#slot1 => ComputedSlot with: [ 3 + 2 ] )} ].
+	self assert: (aClass hasSlotNamed: #slot1).
+
+	slot := aClass slotNamed: #slot1.
+	object := aClass new.
+	
+	self assert: (slot read: object) equals: 5.
+]
+
+{ #category : #tests }
 ComputedSlotTest >> testWriteComputedSlotCompiled [
 	| object |
 	aClass := self

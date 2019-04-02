@@ -359,7 +359,6 @@ TraitTest >> testPrintingClassSide [
 
 { #category : #testing }
 TraitTest >> testRemoveFromSystem [
-	self flag: #fix.	"It has to be refactored when Mariano's ClassBuilder for testCase is integrated :)"
 	SystemAnnouncer uniqueInstance
 		suspendAllWhile: [ 
 			| aClass aTrait |
@@ -385,7 +384,6 @@ TraitTest >> testTraitCompositionRespectsParenthesis [
 
 { #category : #testing }
 TraitTest >> testTraitRemoval [
-	self flag: #fix.	"It has to be refactored when Mariano's ClassBuilder for testCase is integrated :)"
 	SystemAnnouncer uniqueInstance
 		suspendAllWhile: [ | aClass aTrait |
 			[ aTrait := self createTrait.

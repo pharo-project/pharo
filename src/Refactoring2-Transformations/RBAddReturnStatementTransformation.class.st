@@ -61,7 +61,7 @@ RBAddReturnStatementTransformation >> preconditions [
 		& (RBCondition
 			withBlock: [ | returnNode |
 				returnNode := RBParser parseExpression: returnValue.
-				returnNode allAccesses allSatisfy: [ :e | 
+				returnNode allVariables allSatisfy: [ :e | 
 					(self definingMethod hasArgumentNamed: e name)
 					or: [ self definingMethod hasTemporaryNamed: e name ] ]]
 			errorString: ('Some variables in this return statement are not defined in method named <1s>.'

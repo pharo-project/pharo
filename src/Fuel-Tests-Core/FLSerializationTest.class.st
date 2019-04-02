@@ -10,7 +10,7 @@ Class {
 		'classFactory',
 		'streamFactory'
 	],
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #accessing }

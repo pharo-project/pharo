@@ -82,7 +82,7 @@ PluggableCanvas >> fillOval: r color: c borderWidth: borderWidth borderColor: bo
 PluggableCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor: bc [
 	"Fill the given oval."
 	(aFillStyle isBitmapFill and:[aFillStyle isKindOf: InfiniteForm]) ifTrue:[
-		self flag: #fixThis.
+		self flag: #pharoFixMe. "See FormCanvas>>fillOval:fillStyle:borderWidth:borderColor:"
 		^self fillOval: aRectangle color: aFillStyle borderWidth: bw borderColor: bc].
 	(aFillStyle isSolidFill) ifTrue:[
 		^self fillOval: aRectangle color: aFillStyle asColor borderWidth: bw borderColor: bc].
