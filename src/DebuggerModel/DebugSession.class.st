@@ -211,9 +211,7 @@ DebugSession >> isContextPostMortem: selectedContext [
 	| suspendedContext |
 	suspendedContext := interruptedProcess suspendedContext.
 	suspendedContext ifNil: [ ^ false ].
-	(suspendedContext == selectedContext)
-		ifTrue: [ ^ false ].
-	^ (suspendedContext findContextSuchThat: [:c | c sender == selectedContext]) isNil
+	^ (suspendedContext hasContext: selectedContext) not.
 ]
 
 { #category : #testing }
