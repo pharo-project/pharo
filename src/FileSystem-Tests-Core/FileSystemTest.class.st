@@ -364,6 +364,31 @@ FileSystemTest >> testDirectory [
 	self deny: (filesystem exists: path)
 ]
 
+{ #category : #'tests - directory entries' }
+FileSystemTest >> testDirectoryEntrySizeForDirectory [
+
+	| path entry |
+	path := Path * 'plonk'.
+	self markForCleanup: path.
+	
+	filesystem ensureCreateDirectory: path.
+	
+	entry := filesystem workingDirectory entries detect: [:each | each basename = 'plonk' ] ifNone: [ self fail: 'plonk test folder missing' ].
+	self assert: entry size equals: 0
+]
+
+{ #category : #'tests - directory entries' }
+FileSystemTest >> testDirectoryEntrySizeForFile [
+
+	| entry reference |
+ 
+	self markForCleanup: (reference := filesystem workingDirectory / 'griffle'). 
+	reference writeStreamDo: [ :stream | stream nextPutAll: 'Pharo' ].
+	
+	entry := filesystem workingDirectory entries detect: [:each | each basename = 'griffle' ] ifNone: [ self fail: 'griffle test file missing' ].
+	self assert: entry size equals: 5
+]
+
 { #category : #tests }
 FileSystemTest >> testEnsureDirectory [
 	| path |
