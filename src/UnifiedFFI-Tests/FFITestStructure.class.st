@@ -11,6 +11,7 @@ Class {
 		'OFFSET_INT64',
 		'OFFSET_LONG',
 		'OFFSET_SHORT',
+		'OFFSET_SIZE_T',
 		'OFFSET_ULONG'
 	],
 	#category : #'UnifiedFFI-Tests-Test-Data'
@@ -27,6 +28,7 @@ FFITestStructure class >> fieldsDesc [
 		double double;
 		int64 int64;
 		ulong ulong;
+		size_t size_t;
 		)
 ]
 
@@ -105,6 +107,18 @@ FFITestStructure >> short [
 FFITestStructure >> short: anObject [
 	"This method was automatically generated"
 	handle signedShortAt: OFFSET_SHORT put: anObject
+]
+
+{ #category : #'accessing structure variables' }
+FFITestStructure >> size_t [
+	"This method was automatically generated"
+	^handle platformSizeTAt: OFFSET_SIZE_T
+]
+
+{ #category : #'accessing structure variables' }
+FFITestStructure >> size_t: anObject [
+	"This method was automatically generated"
+	^handle platformSizeTAt: OFFSET_SIZE_T put: anObject
 ]
 
 { #category : #'accessing structure variables' }
