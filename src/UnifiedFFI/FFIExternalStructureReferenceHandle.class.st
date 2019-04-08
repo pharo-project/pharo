@@ -143,6 +143,23 @@ FFIExternalStructureReferenceHandle >> platformLongAt: byteOffset put: value [
 ]
 
 { #category : #accessing }
+FFIExternalStructureReferenceHandle >> platformSizeTAt: byteOffset [
+	^ self 
+		integerAt: byteOffset 
+		size: FFIArchitecture forCurrentArchitecture sizeTTypeSize
+		signed: false
+]
+
+{ #category : #accessing }
+FFIExternalStructureReferenceHandle >> platformSizeTAt: byteOffset put: value [
+	self 
+		integerAt: byteOffset
+		put: value
+		size: FFIArchitecture forCurrentArchitecture sizeTTypeSize
+		signed: false
+]
+
+{ #category : #accessing }
 FFIExternalStructureReferenceHandle >> platformUnsignedLongAt: byteOffset [
 	^ handle platformUnsignedLongAt: startOffset + byteOffset
 ]
