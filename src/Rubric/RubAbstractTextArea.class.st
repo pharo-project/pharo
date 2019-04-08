@@ -910,9 +910,12 @@ RubAbstractTextArea >> handleBoundsChange: aBlock [
 { #category : #editing }
 RubAbstractTextArea >> handleEdit: editBlock [
 	"Ensure that changed areas get suitably redrawn"
+	| prev |
+	self maxLength ifNotNil: [ prev := self text copy ].
 	editBlock value.
-	self selectionChanged.  "Note new selection"
-
+	(self maxLength notNil and: [ self text size > self maxLength ])
+		ifTrue: [ ^ self updateTextWith: prev ].
+	self selectionChanged	"Note new selection"
 ]
 
 { #category : #'event handling' }
@@ -1080,12 +1083,20 @@ RubAbstractTextArea >> isReadOnly [
 { #category : #'event handling' }
 RubAbstractTextArea >> keyStroke: anEvent [
 	"Handle a keystroke event."
+
 	anEvent keyCharacter = Character cr
-		ifTrue: [ self handleReturnKey ifTrue: [ ^ self ] ].
-	anEvent hand anyButtonPressed ifTrue: [ ^self ].
-	self scrollPane ifNotNil: [ :sp | (sp scrollByKeyboard: anEvent) ifTrue: [^self] ].
-	anEvent isUserInterrupt ifTrue: [^self].
-	self handleEdit: [ self editor keystroke: anEvent ].
+		ifTrue: [ self handleReturnKey
+				ifTrue: [ ^ self ] ].
+	anEvent hand anyButtonPressed
+		ifTrue: [ ^ self ].
+	self scrollPane
+		ifNotNil: [ :sp | 
+			(sp scrollByKeyboard: anEvent)
+				ifTrue: [ ^ self ] ].
+	anEvent isUserInterrupt
+		ifTrue: [ ^ self ].
+	self
+		handleEdit: [ self editor keystroke: anEvent ].
 	self scrollSelectionIntoView: nil
 ]
 

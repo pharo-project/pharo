@@ -726,6 +726,16 @@ RubScrolledTextMorph >> margins: aMargin [
 	self textArea margins: aMargin
 ]
 
+{ #category : #accessing }
+RubScrolledTextMorph >> maxLength [
+	^ self textArea maxLength
+]
+
+{ #category : #accessing }
+RubScrolledTextMorph >> maxLength: anInteger [
+	self textArea maxLength: anInteger
+]
+
 { #category : #'accessing menu' }
 RubScrolledTextMorph >> menuAllowed: aBoolean [
 	self textArea menuAllowed: aBoolean
