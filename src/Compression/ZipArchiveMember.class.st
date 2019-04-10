@@ -205,8 +205,10 @@ ZipArchiveMember >> contentStreamFromEncoding: encodingName [
 	"Answer my contents as a text stream.
 	Interpret the raw bytes with given encodingName"
 
-	^ (ByteArray new: self uncompressedSize streamContents: [ :stream |
-		self extractTo: stream ]) decodeWith: encodingName
+	^ ((ByteArray new: self uncompressedSize streamContents: [ :stream |
+		self extractTo: stream ])
+			decodeWith: encodingName)
+				readStream
 ]
 
 { #category : #reading }
