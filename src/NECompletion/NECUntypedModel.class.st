@@ -78,7 +78,7 @@ NECUntypedModel >> initialize [
 	classVars := SortedCollection new.
 	includeSelectors := true.
 	includeVariables := true.
-	environment := Smalltalk globals.
+	environment := self class environment.
 ]
 
 { #category : #initialization }
