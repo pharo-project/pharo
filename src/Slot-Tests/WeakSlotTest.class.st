@@ -7,18 +7,15 @@ Class {
 { #category : #tests }
 WeakSlotTest >> testReadWeakSlotCompiled [
 	| object slot |
-	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
+	slot := #slot1 => WeakSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
 	
 	object := aClass new.
 	
-	"The slot is virtual and does not use memory"
-	self assert: object basicSize  equals: 0.
-	
 	"now compile an accessor and read"
 	self compileAccessorsFor: slot.
-	self assert: object slot1 equals: 5.
+	self assert: object slot1 equals: nil.
 ]
 
 { #category : #tests }
@@ -30,7 +27,6 @@ WeakSlotTest >> testReadWriteWeakSlotReflective [
 	object := aClass new.
 	
 	slot write: 5 to: object.
-	
 	self assert: (slot read: object) equals: 5.
 ]
 
@@ -60,6 +56,5 @@ WeakSlotTest >> testWriteWeakSlotCompiled [
 	"now compile an accessor and write"
 	self compileAccessorsFor: slot.
 	object slot1: 10.
-	"the write is ignored"
 	self assert: object slot1 equals: 10.
 ]
