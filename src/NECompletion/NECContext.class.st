@@ -37,7 +37,8 @@ Class {
 		'model',
 		'controller',
 		'variables',
-		'selectors'
+		'selectors',
+		'globals'
 	],
 	#category : #'NECompletion-Model'
 }
@@ -267,13 +268,23 @@ NECContext >> findSourceRangeFor: aNumber [
 										ifFalse: [^ nil]]]]]
 ]
 
+{ #category : #accessing }
+NECContext >> globals [
+	^ globals
+]
+
+{ #category : #accessing }
+NECContext >> globals: anObject [
+	globals := anObject
+]
+
 { #category : #'private-type-guessing' }
 NECContext >> guessArgument: aSHRange [ 
 	| name |
 	name := self sourceOf: aSHRange.
 	(name = 'html') ifTrue: [
-		 Smalltalk at: #WAHtmlCanvas ifPresent: [ :canvasClass | ^canvasClass].
-		 Smalltalk at: #WARenderCanvas ifPresent: [ :canvasClass | ^canvasClass]].
+		 globals at: #WAHtmlCanvas ifPresent: [ :canvasClass | ^canvasClass].
+		 globals at: #WARenderCanvas ifPresent: [ :canvasClass | ^canvasClass]].
 	^ NECInstVarTypeGuesser getClassFromTypeSuggestingName: name
 ]
 
@@ -305,7 +316,7 @@ NECContext >> guessClassVarClass: aSHRange [
 { #category : #'private-type-guessing' }
 NECContext >> guessGlobal: aNumber [ 
 	| aClass |
-	aClass := Smalltalk 
+	aClass := globals
 		at: (self sourceOf: (ranges at: aNumber)) asSymbol
 		ifAbsent: [ ^ nil ].
 	
@@ -395,7 +406,8 @@ NECContext >> initialize [
 	selectors := true.
 	ranges := OrderedCollection new.
 	completionIndex := 0.
-	completionToken := nil
+	completionToken := nil.
+	globals := Smalltalk.
 ]
 
 { #category : #'private-compute-index' }

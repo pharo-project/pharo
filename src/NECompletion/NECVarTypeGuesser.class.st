@@ -18,6 +18,7 @@ Class {
 
 { #category : #private }
 NECVarTypeGuesser class >> classFrom: className [
+
 	^ Smalltalk globals at: className asSymbol ifAbsent: [  ]
 ]
 
