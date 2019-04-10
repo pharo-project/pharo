@@ -13,10 +13,8 @@ Class {
 
 { #category : #'instance creation' }
 ComposedSlot class >> named: aSymbol [
-	| instance |
-	instance := super named: aSymbol.
-	instance implementor: (InstanceVariableSlot named: aSymbol).
-	^instance
+	^(super named: aSymbol) implementor: (InstanceVariableSlot named: aSymbol).
+
 ]
 
 { #category : #accessing }
@@ -42,7 +40,7 @@ ComposedSlot >> index: anInteger [
 
 { #category : #testing }
 ComposedSlot >> isVirtual [
-	"indexed slots are the only not virtual slots for now"
+	"the base slot defines if we are virtual"
 	^self baseSlot isVirtual
 ]
 

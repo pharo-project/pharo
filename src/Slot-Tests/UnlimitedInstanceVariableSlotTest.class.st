@@ -7,7 +7,7 @@ Class {
 { #category : #'test - unlimited ivars' }
 UnlimitedInstanceVariableSlotTest >> testExampleIvarSlot [
 
-	| object slot reader writer |
+	| object slot |
 	
 	slot := #slot1 => UnlimitedInstanceVariableSlot.
 
@@ -22,24 +22,7 @@ UnlimitedInstanceVariableSlotTest >> testExampleIvarSlot [
 	slot write: 5 to: object.
 	self assert: (slot read: object) == 5.
 	
-		"compiled accessors to test code gen"
-	reader := String streamContents: [ :str |
-		str 
-			nextPutAll: slot name;
-			cr;tab;
-			nextPutAll: ' ^';
-			nextPutAll: slot name.
-		 ].
-	writer := String streamContents: [ :str |
-		str 
-			nextPutAll: slot name;
-			nextPutAll: ': anObject';
-			cr;tab;
-			nextPutAll: slot name;
-			nextPutAll: ':= anObject.'.
-		].
-	aClass compile: reader classified: 'accessing'.
-	aClass compile: writer classified: 'accessing'.
+	self compileAccessorsFor: slot.
 	
 	self assert: object slot1 == 5.
 	object slot1: false.

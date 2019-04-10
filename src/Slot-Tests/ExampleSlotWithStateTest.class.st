@@ -18,7 +18,7 @@ ExampleSlotWithStateTest >> testExampleClassSide [
 
 { #category : #tests }
 ExampleSlotWithStateTest >> testExampleSlotWithState [
-	| slot reader writer |
+	| slot |
 	aClass := self
 		make:
 			[ :builder | builder slots: {(#slot1 => ExampleSlotWithState)} ].
@@ -28,25 +28,7 @@ ExampleSlotWithStateTest >> testExampleSlotWithState [
 	slot := aClass slotNamed: #slot1.
 	slot write: 5 to: aClass new.
 	self assert: (slot read: aClass new) equals: 5.
-	reader := String
-		streamContents: [ :str | 
-			str
-				nextPutAll: slot name;
-				cr;
-				tab;
-				nextPutAll: ' ^';
-				nextPutAll: slot name ].
-	writer := String
-		streamContents: [ :str | 
-			str
-				nextPutAll: slot name;
-				nextPutAll: ': anObject';
-				cr;
-				tab;
-				nextPutAll: slot name;
-				nextPutAll: ':= anObject.' ].
-	aClass compile: reader classified: 'accessing'.
-	aClass compile: writer classified: 'accessing'.
+	self compileAccessorsFor: slot.
 	aClass new slot1: 10.
 	self assert: aClass new slot1 equals: 10
 ]

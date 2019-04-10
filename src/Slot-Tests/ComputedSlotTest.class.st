@@ -6,10 +6,9 @@ Class {
 
 { #category : #tests }
 ComputedSlotTest >> testReadComputedSlotCompiled [
-	| object |
-	aClass := self
-		make:
-			[ :builder | builder slots: {(#slot1 => ComputedSlot with: [:obj | 3 + 2 ] )} ].
+	| object slot |
+	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
+	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
 	
 	object := aClass new.
@@ -18,17 +17,16 @@ ComputedSlotTest >> testReadComputedSlotCompiled [
 	self assert: object basicSize  equals: 0.
 	
 	"now compile an accessor and read"
-	aClass compile: 'slot1 ^slot1' classified: 'accessing'.
+	self compileAccessorsFor: slot.
 	self assert: object slot1 equals: 5.
 ]
 
 { #category : #tests }
 ComputedSlotTest >> testReadComputedSlotReflective [
 	| slot object |
-	aClass := self make: [ :builder | builder slots: {(#slot1 => ComputedSlot with: [:obj | 3 + 2 ] )} ].
+	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
+	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
-
-	slot := aClass slotNamed: #slot1.
 	object := aClass new.
 	
 	self assert: (slot read: object) equals: 5.
@@ -37,10 +35,10 @@ ComputedSlotTest >> testReadComputedSlotReflective [
 { #category : #tests }
 ComputedSlotTest >> testReadComputedSlotReflectiveNoArg [
 	| slot object |
-	aClass := self make: [ :builder | builder slots: {(#slot1 => ComputedSlot with: [ 3 + 2 ] )} ].
+	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
+	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
 
-	slot := aClass slotNamed: #slot1.
 	object := aClass new.
 	
 	self assert: (slot read: object) equals: 5.
@@ -48,17 +46,15 @@ ComputedSlotTest >> testReadComputedSlotReflectiveNoArg [
 
 { #category : #tests }
 ComputedSlotTest >> testWriteComputedSlotCompiled [
-	| object |
-	aClass := self
-		make:
-			[ :builder | builder slots: {(#slot1 => ComputedSlot with: [:obj | 3 + 2 ] )} ].
+	| slot object |
+	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
+	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
 	
 	object := aClass new.
 	
 	"now compile an accessor and write"
-	aClass compile: 'slot1 ^slot1' classified: 'accessing'.
-	aClass compile: 'slot1: anObject slot1 := anObject' classified: 'accessing'.
+	self compileAccessorsFor: slot.
 	object slot1: 10.
 	"the write is ignored"
 	self assert: object slot1 equals: 5.
