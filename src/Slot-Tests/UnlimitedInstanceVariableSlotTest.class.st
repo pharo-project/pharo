@@ -11,10 +11,7 @@ UnlimitedInstanceVariableSlotTest >> testExampleIvarSlot [
 	
 	slot := #slot1 => UnlimitedInstanceVariableSlot.
 
-	aClass := self make: [ :builder |
-		builder 
-			slots: {slot}
-		].
+	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (slot instVarNamed: 'baseSlot') isNotNil.
 
 	object := aClass new. 
@@ -37,10 +34,7 @@ UnlimitedInstanceVariableSlotTest >> testExampleTwoIvarSlots [
 	slot1 := #slot1 => UnlimitedInstanceVariableSlot.
 	slot2 := #slot2 => UnlimitedInstanceVariableSlot.
 
-	aClass := self make: [ :builder |
-		builder 
-			slots: {slot1 . slot2 }
-		].
+	aClass := self make: [ :builder | builder slots: {slot1 . slot2 }].
 
 	self assert: (slot1 instVarNamed: 'baseSlot') isNotNil.
 	self assert: (slot1 instVarNamed: 'baseSlot') == (slot2 instVarNamed: 'baseSlot').
