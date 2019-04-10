@@ -105,7 +105,7 @@ NECUntypedModel >> initializeInstVars [
 NECUntypedModel >> initializeSelectors [
 	self resetSelectors.
 	narrowString size < 2  ifTrue: [ ^ self ].
-	self flag:#DoWeWantAllSelectors.
+	self flag: #DoWeWantAllSelectors. "I think we only want to have the selectors in the environment"
 	includeSelectors
 		ifTrue: [ Symbol selectorTable do: [ :symbol | | toadd | 
 					"for small strings, we do not do substring matching as we get too many matches (slow)"
