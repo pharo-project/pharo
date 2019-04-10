@@ -36,6 +36,24 @@ RubTextFieldAreaTest >> simulatedKeyStrokeFromChar: aCharacter alt: useAlt ctrl:
 ]
 
 { #category : #tests }
+RubTextFieldAreaTest >> testInsertionWithMaxLength [
+	| m |
+	m := RubTextFieldArea new
+		width: 300;
+		maxLength: 3;
+		yourself.
+	self assert: m string isEmpty.
+	m privateReplaceFrom: 1 to: 0 with: 'AAA'.
+	self assert: m string equals: 'AAA'.
+	m privateReplaceFrom: 1 to: 3 with: 'BBB'.
+	self assert: m string equals: 'BBB'.
+	m privateReplaceFrom: 3 to: 3 with: 'CCC'.
+	self assert: m string equals: 'BBC'.
+	m privateReplaceFrom: 3 to: 2 with: 'DDD'.
+	self assert: m string equals: 'BBD'
+]
+
+{ #category : #tests }
 RubTextFieldAreaTest >> testKeyStrokeBackSpaceWithMaxLength [
 	| m |
 	m := RubTextFieldArea new
@@ -44,13 +62,15 @@ RubTextFieldAreaTest >> testKeyStrokeBackSpaceWithMaxLength [
 		yourself.
 	self assert: m string size equals: 0.
 	m handleEvent: (self simulatedKeyStrokeFromChar: $a).
-	self assert: m string  equals: 'a'.
+	self assert: m string equals: 'a'.
 	m handleEvent: (self simulatedKeyStrokeFromChar: $b).
-	self assert: m string  equals: 'ab'.
+	self assert: m string equals: 'ab'.
 	m handleEvent: (self simulatedKeyStrokeFromChar: Character backspace).
-	self assert: m string  equals: 'a'.
+	self assert: m string equals: 'a'.
 	m handleEvent: (self simulatedKeyStrokeFromChar: $c).
-	self assert: m string  equals: 'ac'.
+	self assert: m string equals: 'ac'.
+	m handleEvent: (self simulatedKeyStrokeFromChar: $d).
+	self assert: m string equals: 'ac'
 ]
 
 { #category : #tests }
@@ -60,16 +80,16 @@ RubTextFieldAreaTest >> testKeyStrokeWithMaxLength [
 		width: 300;
 		maxLength: 0;
 		yourself.
-	self assert: m string size isZero.
+	self assert: m string isEmpty.
 	m handleEvent: (self simulatedKeyStrokeFromChar: $a).
-	self assert: m string size isZero.
+	self assert: m string isEmpty.
 	m maxLength: 2.
 	m keyStroke: (self simulatedKeyStrokeFromChar: $a).
-	self assert: m string size equals: 1.
-	m keyStroke: (self simulatedKeyStrokeFromChar: $a).
-	self assert: m string size = 2.
-	m keyStroke: (self simulatedKeyStrokeFromChar: $a).
-	self assert: m string size = 2
+	self assert: m string equals: 'a'.
+	m keyStroke: (self simulatedKeyStrokeFromChar: $b).
+	self assert: m string equals: 'ab'.
+	m keyStroke: (self simulatedKeyStrokeFromChar: $c).
+	self assert: m string equals: 'ab'.
 ]
 
 { #category : #tests }
@@ -116,4 +136,66 @@ RubTextFieldAreaTest >> testMaxLengthTruncatesText [
 	self assert: m text size equals: 1.
 	m updateTextWith: ''.
 	self assert: m text size equals: 0
+]
+
+{ #category : #tests }
+RubTextFieldAreaTest >> testPrivateReplaceFromTo [
+	| m |
+	m := RubTextFieldArea new
+		width: 300;
+		yourself.
+	self assert: m string isEmpty.
+	m privateReplaceFrom: 1 to: 0 with: 'AAA'.
+	self assert: m string equals: 'AAA'.
+	m privateReplaceFrom: 1 to: 3 with: 'BBB'.
+	self assert: m string equals: 'BBB'.
+	m privateReplaceFrom: 3 to: 3 with: 'CCC'.
+	self assert: m string equals: 'BBCCC'.
+	m privateReplaceFrom: 3 to: 2 with: 'DDD'.
+	self assert: m string equals: 'BBDDDCCC'
+]
+
+{ #category : #tests }
+RubTextFieldAreaTest >> testReplacementWithMaxLength [
+	| m |
+	m := RubTextFieldArea new
+		width: 300;
+		maxLength: 3;
+		yourself.
+	m setTextWith: 'AAAA'.
+	self assert: m string equals: 'AAA'.
+	m privateReplaceFrom: 1 to: 3 with: 'BBB'.
+	self assert: m string equals: 'BBB'.
+	m privateReplaceFrom: 3 to: 3 with: 'CCC'.
+	self assert: m string equals: 'BBC'.
+	m privateReplaceFrom: 1 to: 3 with: 'XXXXXXXXXXXXXXXXXX'.
+	self assert: m string equals: 'XXX'
+]
+
+{ #category : #tests }
+RubTextFieldAreaTest >> testnewSizeAfterUpdate [
+	| m |
+	" "
+	m := RubTextFieldArea new
+		width: 300;
+		yourself.
+	m setTextWith: ''.
+	self assert: m text isEmpty.
+	"the  receiver text  size after inserting 'BBB' would be 3"
+	self
+		assert: (m newSizeAfterUpdateFrom: 1 to: 0 with: 'BBB')
+		equals: 3.
+	m setTextWith: 'AAAA'.
+	self assert: m string equals: 'AAAA'.
+	"the receiver text  size after the replacement 'BBB' would be 4 "
+	self 
+		assert: (m newSizeAfterUpdateFrom: 1 to: 3 with: 'BBB')
+		equals: 4.
+	self
+		assert: (m newSizeAfterUpdateFrom: 1 to: 4 with: 'BBB')
+		equals: 3.
+	"the receiver text  size after inserting 'BBB' at start  would be 7 "
+	self
+		assert: (m newSizeAfterUpdateFrom: 1 to: 0 with: 'BBB')
+		equals: 7
 ]

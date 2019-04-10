@@ -910,11 +910,8 @@ RubAbstractTextArea >> handleBoundsChange: aBlock [
 { #category : #editing }
 RubAbstractTextArea >> handleEdit: editBlock [
 	"Ensure that changed areas get suitably redrawn"
-	| prev |
-	self maxLength ifNotNil: [ prev := self text copy ].
+
 	editBlock value.
-	(self maxLength notNil and: [ self text size > self maxLength ])
-		ifTrue: [ ^ self updateTextWith: prev ].
 	self selectionChanged	"Note new selection"
 ]
 
@@ -1359,6 +1356,17 @@ RubAbstractTextArea >> newPrimarySelection [
 
 ]
 
+{ #category : #editing }
+RubAbstractTextArea >> newSizeAfterUpdateFrom: start to: stop with: aText [
+	" compute and return my text new size avec an insertion/replacement with aText.
+	the receiver is not update "
+
+	| replSize |
+	" replSize is the additional size"
+	replSize := aText size - (stop - start + 1).
+	^ self text size + replSize
+]
+
 { #category : #'interactive error protocol' }
 RubAbstractTextArea >> nextTokenFrom: start direction: dir [
 	^ self editor nextTokenFrom: start direction: dir
@@ -1483,8 +1491,19 @@ RubAbstractTextArea >> privateMoveBy: delta [
 
 { #category : #editing }
 RubAbstractTextArea >> privateReplaceFrom: start to: stop with: aText [
-	self paragraph replaceFrom: start to: stop with: aText.
-
+	self maxLength
+		ifNotNil: [ | newSize |
+			newSize := self newSizeAfterUpdateFrom: start to: stop with: aText.
+			newSize > self maxLength
+				ifTrue: [ | t |
+					t := self text.
+					t replaceFrom: start to: stop with: aText.
+					self paragraph
+						replaceFrom: 1
+						to: self text size
+						with: (t copyFrom: 1 to: maxLength).
+					^ self ] ].
+	self paragraph replaceFrom: start to: stop with: aText
 ]
 
 { #category : #private }
