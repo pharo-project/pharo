@@ -12,7 +12,7 @@ NECSelectorEntry >> browseWith: anECContext [
 	"If there's a corresponding class, search for the method there,
 	otherwise search for the method in the system."
 
-	self flag:#SmalltalkReferences.
+	self flag: #SmalltalkReferences. "Reference to Smalltalk tools"
 	(self guessTypeWith: anECContext)
 		ifNotNil: [ :clazz|
 			Smalltalk tools browser openOnClass: clazz.

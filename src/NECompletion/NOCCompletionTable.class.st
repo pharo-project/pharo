@@ -167,7 +167,7 @@ NOCCompletionTable >> maxNumberOfEntries [
 
 { #category : #protocol }
 NOCCompletionTable >> quickFillWithCategoryOf: cls [
-	self flag:#SmalltalkReference.
+	self flag: #SmalltalkReference.
 	(Smalltalk organization classesInCategory: cls instanceSide category) do: [:e | self quickFillWithClass: e]
 ]
 
