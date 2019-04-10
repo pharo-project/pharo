@@ -786,8 +786,8 @@ ClassDescription >> isClassSide [
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
-	"Point isClassSide >>> true"
-	"Point class isClassSide >>> false"
+	"Point isClassSide >>> false"
+	"Point class isClassSide >>> true"
 	
 	^ self isClassSide not
 ]

@@ -240,17 +240,12 @@ Object class >> whatIsAPrimitive [
 Object >> -> anObject [
 	"Answer an Association between self and anObject"
 	"the code of Association>>#key:value: is inline here for speed"
-	"The following example creates an association whose key is number 1 and value string 'one'.
-	1 -> 'one'
-	>>> 1 -> 'one'
-
-	(1 -> 'one') key
-	>>> 1
-
-	(1 -> 'one') value
-	>>> 'one'
+	"The following example creates an association whose key is number 1 and value string 'one'."
+	"(1 -> 'one') >>> 1 -> 'one'"
+	"(1 -> 'one') key >>> 1"
+	"(1 -> 'one') value >>> 'one'"
 	
-	Note that key and value can be ANY object."
+	"Note that key and value can be ANY object."
 	
 	^Association basicNew key: self value: anObject
 ]
