@@ -7,9 +7,8 @@ I am a Slot that does not allocate one field for each slot. Instead, all Boolean
 "
 Class {
 	#name : #BooleanSlot,
-	#superclass : #Slot,
+	#superclass : #DerivedSlot,
 	#instVars : [
-		'baseSlot',
 		'offset'
 	],
 	#category : #'Slot-Examples-Base'
@@ -73,24 +72,6 @@ BooleanSlot >> installingIn: aClass [
 	
 ]
 
-{ #category : #testing }
-BooleanSlot >> isAccessedIn: aMethod [
-	(baseSlot isAccessedIn: aMethod) ifFalse: [ ^false ].
-	^super isAccessedIn: aMethod
-]
-
-{ #category : #testing }
-BooleanSlot >> isReadIn: aMethod [
-	(baseSlot isReadIn: aMethod) ifFalse: [ ^false ].
-	^super isReadIn: aMethod
-]
-
-{ #category : #testing }
-BooleanSlot >> isWrittenIn: aMethod [
-	(baseSlot isWrittenIn: aMethod) ifFalse: [ ^false ].
-	^super isWrittenIn: aMethod
-]
-
 { #category : #accessing }
 BooleanSlot >> offset [
 	^offset
@@ -106,7 +87,7 @@ BooleanSlot >> todo [
 	'
     - adding a Booleanslot in between --> offsets need to be updated?
 	 - removing BooleanSlot in the middle	
-	 - adding booleanslot higher in the hierarchy: move baseselot (same as in TODO for DictionarySlot)
+	 - adding booleanslot higher in the hierarchy: move baseselot (same as in TODO for PropertySlot)
 	'
 ]
 

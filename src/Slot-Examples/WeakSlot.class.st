@@ -42,6 +42,7 @@ WeakSlot >> emitValue: aMethodBuilder [
 
 { #category : #initialization }
 WeakSlot >> initialize: anObject [
+
 	super write: (WeakArray new: 1) to: anObject
 ]
 
@@ -60,6 +61,5 @@ WeakSlot >> wantsInitalization [
 { #category : #'meta-object-protocol' }
 WeakSlot >> write: aValue to: anObject [
 
-	(super read: anObject) at: 1 put: aValue.
-	^ aValue
+	^(super read: anObject) at: 1 put: aValue.
 ]

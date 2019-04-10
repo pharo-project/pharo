@@ -129,8 +129,7 @@ AbstractLayout >> isWeak [
 
 { #category : #accessing }
 AbstractLayout >> resolveSlot: aName [
-	self flag: 'Signal rather than error'.
-	self error: 'No slots found'
+	^SlotNotFound signalForName: aName
 ]
 
 { #category : #api }
