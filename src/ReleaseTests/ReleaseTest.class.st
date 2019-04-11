@@ -162,6 +162,20 @@ ReleaseTest >> testObsoleteClasses [
 					print: obsoleteClasses ]]
 ]
 
+{ #category : #testing }
+ReleaseTest >> testPharoVersionFileExists [
+
+	"Test there is a pharo.version file next to this image containing the short version of this pharo image.
+	This file is required by the Pharo launcher to correctly detect the Pharo version we are running on."
+	
+	| pharoVersionFile |
+	pharoVersionFile := FileLocator imageDirectory / 'pharo.version'.
+	self assert: pharoVersionFile exists.
+	self
+		assert: pharoVersionFile readStream contents trimBoth
+		equals: SystemVersion current major asString,  SystemVersion current minor asString
+]
+
 { #category : #'testing - rpackage' }
 ReleaseTest >> testRPackageOrganizer [
 	"Ensure other tests temporary created organizers are collected"
