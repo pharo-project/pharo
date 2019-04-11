@@ -368,9 +368,9 @@ GTGenericStackDebugger >> openWithNotification: notificationString [
 	"NOTE: When this method returns, a new process has been scheduled to
 	run the windows, and thus this notifier, but the previous active porcess
 	has not been suspended. The sender will do this."
-	
-	GTSpecPreDebugWindow new 
-		setTitle: self title;
+
+	GTSpecPreDebugWindow new
+		title: self title;
 		message: notificationString;
 		openWithSpec;
 		debugger: self

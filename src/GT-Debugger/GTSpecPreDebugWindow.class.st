@@ -9,17 +9,14 @@ Class {
 	#superclass : #DynamicComposablePresenter,
 	#instVars : [
 		'debugger',
-		'title',
 		'message'
 	],
 	#category : #'GT-Debugger-UI'
 }
 
 { #category : #specs }
-GTSpecPreDebugWindow class >> spec [
-	<spec: #default>
-		^ SpecLayout composed
-			yourself
+GTSpecPreDebugWindow class >> defaultSpec [
+	^ SpecLayout composed
 ]
 
 { #category : #'actions lookup' }
@@ -44,28 +41,15 @@ GTSpecPreDebugWindow >> buildButtonWidgetsSpecForActions: aCollection [
 
 { #category : #'building widgets' }
 GTSpecPreDebugWindow >> buildNotifierPaneWidgetsSpec [
-	
-	^ self message 
-		ifNil: [ {#stackPane. #MultiColumnListPresenter} ] 
-		ifNotNil: [ {#codePane. #TextPresenter} ]
+	^ self message
+		ifNil: [ {#stackPane . #TablePresenter} ]
+		ifNotNil: [ {#codePane . #TextPresenter} ]
 ]
 
 { #category : #actions }
 GTSpecPreDebugWindow >> clear [
 
 	self debugger ifNotNil: [ :aDebugger | aDebugger windowIsClosing ]
-]
-
-{ #category : #'building widgets' }
-GTSpecPreDebugWindow >> clearWidget [
-
-	self widgets removeAll.
-	
-	self needFullRebuild: true.
-	self needRebuild: false.
-	
- 	self buildWithSpecLayout: self emptyLayout	
-
 ]
 
 { #category : #actions }
@@ -179,26 +163,24 @@ GTSpecPreDebugWindow >> initializeCodePane [
 
 { #category : #initialization }
 GTSpecPreDebugWindow >> initializePresenter [
-
 	super initializePresenter.
-	
-	debugger whenChangedDo: [ :aDebugger |
-		aDebugger 
-			ifNil: [ self clearWidget ] 
-			ifNotNil:  [ self rebuildWidget ]	 ]
 
+	debugger whenChangedDo: [ :aDebugger | aDebugger ifNotNil: [ self rebuildWidget ] ]
 ]
 
 { #category : #'initialization widgets' }
 GTSpecPreDebugWindow >> initializeStackPane [
 	self stackPane
-		displayBlock: [ :aContext | self columnsFor: aContext ];
+		addColumn: (StringTableColumn title: 'Class' evaluated: [ :aContext | self debugger formatStackClassColumnForContext: aContext ]);
+		addColumn: (StringTableColumn title: 'Method' evaluated: [ :aContext | self debugger formatStackMethodColumnForContext: aContext ]);
+		addColumn: (StringTableColumn title: 'Extra' evaluated: [ :aContext | self debugger formatStackExtraColumnForContext: aContext ]);
 		items: self filteredStack;
 		whenSelectionChangedDo: [ :selection | 
-			[ :aContext | 
-			"Set the selection before, as debugAction removes the link with the debugger. "
-			self debugger stackPresentation selection: aContext.
-			self openFullDebugger ] cull: selection selectedItem ]
+			selection selectedItem
+				in: [ :aContext | 
+					"Set the selection before, as debugAction removes the link with the debugger. "
+					self debugger stackPresentation selection: aContext.
+					self openFullDebugger ] ]
 ]
 
 { #category : #accessing }
@@ -285,18 +267,11 @@ GTSpecPreDebugWindow >> setFocusOrderForActions: aCollection [
 
 { #category : #api }
 GTSpecPreDebugWindow >> setTitle: aString [
-
-	title := aString.
-	self updateTitle 
+	self deprecated: 'Use #title:' transformWith: '`@receiver setTitle: `@argument' -> '`@receiver title: `@argument'.
+	self title: aString
 ]
 
 { #category : #accessing }
 GTSpecPreDebugWindow >> stackPane [
-	^widgets at: #stackPane
-]
-
-{ #category : #api }
-GTSpecPreDebugWindow >> title [
-
-	^ title 
+	^ self widgets at: #stackPane
 ]
