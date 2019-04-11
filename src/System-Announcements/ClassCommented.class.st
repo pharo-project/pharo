@@ -27,7 +27,7 @@ ClassCommented class >> class: aClass oldComment: oldComment newComment: newComm
 
 { #category : #'instance creation' }
 ClassCommented class >> classCommented: aClass [
-	self flag: #fixMePlease. "nils? no way! "
+	self flag: #pharoFixMe. "nils? no way! "
 	^self class: aClass oldComment: nil newComment: nil oldStamp: nil newStamp: nil
 ]
 

@@ -128,7 +128,7 @@ FFIExternalStructureReferenceHandle >> isExternalAddress [
 
 { #category : #testing }
 FFIExternalStructureReferenceHandle >> isNull [
-	self flag: #todo. "This is probably wrong"
+	self flag: #pharoTodo. "This is probably wrong"
 	^ handle isNull
 ]
 

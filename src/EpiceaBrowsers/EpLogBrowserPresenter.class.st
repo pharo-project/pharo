@@ -875,9 +875,9 @@ EpLogBrowserPresenter >> selectedEntryItems [
 
 { #category : #'menu - accessing' }
 EpLogBrowserPresenter >> selectedEntryReferences [
-	self flag: #todo. "Workaround: FastTableModel might return nil items"
+	"Before there was a workaround here to reject nils because it used a FastTablePresenter instead of a list presenter. I have the impression that the workaround is not needed with ListPresenter and I removed the workaround. In case you find a bug were we get nils here, just report it and we will add back the workaround to reject nils with a better comment."
 
-	^ self itemsPresenter selectedItemsSorted reversed select: [:each | each isNotNil ]
+	^ self itemsPresenter selectedItemsSorted reversed
 ]
 
 { #category : #accessing }

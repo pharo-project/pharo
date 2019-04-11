@@ -165,7 +165,7 @@ MenuItemMorph >> contents: aString withMarkers: aBool inverse: inverse [
 	aBool ifFalse: [^super contents: aString].
 	self removeAllMorphs.	"get rid of old markers if updating"
 	self hasIcon ifTrue: [ self icon: nil ].
-	self flag: #CleanYesNoOnOffAfter.
+	self flag: #pharoFixMe.
 	(aString isKindOf: Association)
 		ifTrue: [ super contents: aString value. 
 				marker := aString key   

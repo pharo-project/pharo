@@ -75,9 +75,7 @@ MalCircuitSpanningEdges >> nodeClass [
 
 { #category : #running }
 MalCircuitSpanningEdges >> run [
-
-	self flag: #todo.	"for stability, we should sort edges by their label"
+	self flag: #pharoTodo.	"for stability, we should sort edges by their label"
 	self findDirectCircuits.
 	self findIndirectCircuits
-
 ]

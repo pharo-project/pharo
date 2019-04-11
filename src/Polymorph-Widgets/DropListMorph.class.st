@@ -557,6 +557,7 @@ DropListMorph >> newContentMorph [
 		vResizing: #shrinkWrap;
 		hResizing: #spaceFill;
 		beReadOnly;
+		lock;
 		yourself
 		
 		

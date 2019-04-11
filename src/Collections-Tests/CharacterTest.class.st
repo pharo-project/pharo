@@ -86,6 +86,18 @@ CharacterTest >> testIsSeparator [
     Character alphabet do: [ :each | self deny: each isSeparator ]
 ]
 
+{ #category : #tests }
+CharacterTest >> testMaxVal [
+	"Check that Character class>>maxVal is returning the correct value:
+	- A character created with the value has the same code point
+	- Attempting to create a character with maxVal+1 fails"
+
+	self assert: (Character value: Character maxVal) codePoint 
+			equals: Character maxVal.
+	self should: [ Character value: Character maxVal + 1 ]
+			raise: PrimitiveFailed
+]
+
 { #category : #'tests - instance creation' }
 CharacterTest >> testNew [
 

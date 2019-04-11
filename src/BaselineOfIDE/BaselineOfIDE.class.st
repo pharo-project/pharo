@@ -375,6 +375,11 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring2-Transformations'.
 		spec package: 'Refactoring2-Transformations-Tests'.
 
+		spec package: 'ClassParser'.
+		spec package: 'ClassParser-Tests'.
+		spec package: 'UndefinedClasses'.
+		spec package: 'UndefinedClasses-Tests'.
+
       self groups: spec.
 	].
 
@@ -797,6 +802,12 @@ spec group: 'GT&QA-Group' with: #(
 	'Reflectivity-Group'
 ).		
 
+spec group: 'UndefinedClasses-Group' with: #(
+		'ClassParser'
+		'ClassParser-Tests'
+		'UndefinedClasses'
+		'UndefinedClasses-Tests'
+).		
 
 spec group: #default with: #(
 	'BasicTools'	"dependency"
@@ -843,6 +854,7 @@ spec group: #default with: #(
 	'Slot'
 	
 	'Refactoring2-Group'
+	'UndefinedClasses-Group'
 ).
 
 ]
@@ -855,7 +867,7 @@ BaselineOfIDE >> loadCalypso [
 
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.15.3/src';
+		repository: 'github://pharo-ide/Calypso:v0.16.1/src';
 		onConflict: [ :err | err useIncoming ];
 		onUpgrade: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
@@ -869,7 +881,7 @@ BaselineOfIDE >> loadCalypso [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.5.6';
+		repository: 'github://pharo-vcs/iceberg:v1.6.0';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 	(Smalltalk classNamed: #IcePharoPlugin) addPharoProjectToIceberg.

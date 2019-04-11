@@ -52,9 +52,11 @@ NECUntypedModel >> addAdditionals: aCollection [
 { #category : #private }
 NECUntypedModel >> addVariables [
 	includeVariables ifFalse: [^ self].
-	self addToEntries: localVars.
+	self addToEntries: classVars.
 	self addToEntries: instVars.
-	self addToEntries: classVars
+	self addToEntries: localVars.
+	
+	
 ]
 
 { #category : #initialization }
@@ -89,20 +91,18 @@ NECUntypedModel >> initializeInstVars [
 
 { #category : #private }
 NECUntypedModel >> initializeSelectors [
-	| case |
 	self resetSelectors.
-	narrowString size < 2 ifTrue: [ ^ self ].
-	case :=  NECPreferences caseSensitive.
+	narrowString size < 2  ifTrue: [ ^ self ].
 	includeSelectors
 		ifTrue: [ Symbol selectorTable do: [ :symbol | | toadd | 
 					"for small strings, we do not do substring matching as we get too many matches (slow)"
 					toadd := narrowString size <= 2 
-						ifTrue: [ symbol beginsWithEmpty: narrowString caseSensitive: case] 
-						ifFalse: [symbol includesSubstring: narrowString caseSensitive: case].
+						ifTrue: [ symbol beginsWithEmpty: narrowString caseSensitive: self isCaseSensitive] 
+						ifFalse: [symbol includesSubstring: narrowString caseSensitive: self isCaseSensitive].
 					toadd ifTrue: [ selectors add: (NECSelectorEntry contents: symbol type: #selector) ] ] ].
 	includeVariables
 		ifTrue: [ Smalltalk globals keysDo: [ :symbol  | 
-					(symbol includesSubstring: narrowString caseSensitive: case)
+					(symbol includesSubstring: narrowString caseSensitive: self isCaseSensitive)
 						ifTrue: [ selectors add: (NECGlobalEntry contents: symbol ) ] ] ].
 	self sortSelectors
 ]

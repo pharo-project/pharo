@@ -23,7 +23,7 @@ PathTest >> testAbsolutePath [
 	self assert: (path at: 3) equals: 'grandChild'.
 	
 	path := AbsolutePath from: '/' delimiter: $/.
-	self assert: path equals: Path root.
+	self assert: path equals: Path root
 	
 
 ]
@@ -178,7 +178,7 @@ PathTest >> testEqual [
 	a := Path * 'plonk'.
 	b := Path * 'plonk'.
 	self deny: a == b.
-	self assert: a equals: b.
+	self assert: a equals: b
 ]
 
 { #category : #tests }
@@ -205,10 +205,10 @@ PathTest >> testExtendingPath [
 	self assert: ref segments equals: #('a' 'b' 'c' 'd' '..' 'e').
 
 	ref := '/a/b/c' asPath / './d'.
-	self assert: (ref segments = #('a' 'b' 'c' 'd')).
+	self assert: ref segments equals: #('a' 'b' 'c' 'd').
 
 	ref := '/a/b/c' asPath / 'd/.'.
-	self assert: (ref segments = #('a' 'b' 'c' 'd')).
+	self assert: ref segments equals: #('a' 'b' 'c' 'd').
 
 	ref := '/a/b/c' asPath / 'd/./e'.
 	self assert: ref segments equals: #('a' 'b' 'c' 'd' 'e').
@@ -262,7 +262,7 @@ PathTest >> testIsAbsoluteWindowsPathReturnsFalseWhenNoWindowsAbsolutePathProvid
   
 	self deny: (Path isAbsoluteWindowsPath: 'tmp').
 	self deny: (Path isAbsoluteWindowsPath: '/tmp').
-	self deny: (Path isAbsoluteWindowsPath: '/tmp/test').
+	self deny: (Path isAbsoluteWindowsPath: '/tmp/test')
 ]
 
 { #category : #tests }
@@ -357,7 +357,7 @@ PathTest >> testParentParent [
 	path := (Path * '..') parent.
 	self assert: path size equals: 2.
 	self assert: (path at: 1) equals: '..'.
-	self assert: (path at: 2) equals: '..'.
+	self assert: (path at: 2) equals: '..'
 ]
 
 { #category : #tests }
@@ -367,7 +367,7 @@ PathTest >> testParentResolution [
 	relative := Path parent / 'griffle' / 'zonk'.
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
-	self assert: absolute segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk').
+	self assert: absolute segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk')
 
 ]
 
@@ -391,7 +391,7 @@ PathTest >> testParse [
 	self assert: path size equals: 3.
 	self assert: (path at: 1) equals: 'parent'.
 	self assert: (path at: 2) equals: 'child'.
-	self assert: (path at: 3) equals: 'grandChild'.
+	self assert: (path at: 3) equals: 'grandChild'
 	
 
 ]
@@ -403,7 +403,7 @@ PathTest >> testParseBogus [
 	path := Path from: 'parent?<>~ \child/grandChild' delimiter: $/.
 	self assert: path size equals: 2.
 	self assert: (path at: 1) equals: 'parent?<>~ \child'.
-	self assert: (path at: 2) equals: 'grandChild'.
+	self assert: (path at: 2) equals: 'grandChild'
 	
 
 ]
@@ -527,7 +527,7 @@ PathTest >> testRelativeFromString [
 	self assert: path isRelative.
 	self assert: path size equals: 2.
 	self assert: (path at: 1) equals: 'plonk'.
-	self assert: (path at: 2) equals: 'griffle'.
+	self assert: (path at: 2) equals: 'griffle'
 ]
 
 { #category : #tests }
@@ -539,7 +539,7 @@ PathTest >> testRelativeFromStringNormalization [
 	
 	self assert: path isRelative.
 	self assert: path size equals: 3.
-	self assert: path segments equals: #('plonk' '..' 'griffle').
+	self assert: path segments equals: #('plonk' '..' 'griffle')
 ]
 
 { #category : #tests }
@@ -564,7 +564,7 @@ PathTest >> testRelativeFromStringParent [
 	self assert: path isRelative.
 	self assert: path size equals: 2.
 	self assert: (path at: 1) equals: '..'.
-	self assert: (path at: 2) equals: '..'.
+	self assert: (path at: 2) equals: '..'
 ]
 
 { #category : #tests }
@@ -666,7 +666,7 @@ PathTest >> testResolveString [
 	self assert: result class equals: path class.
 	self assert: result size equals: 2.
 	self assert: (result at: 1) equals: 'plonk'.
-	self assert: (result at: 2) equals: 'griffle'.
+	self assert: (result at: 2) equals: 'griffle'
 ]
 
 { #category : #tests }

@@ -651,9 +651,7 @@ ClassDescription >> hasClassSide [
 { #category : #'accessing comment' }
 ClassDescription >> hasComment [
 	"return whether this class truly has a comment other than the default"
-	| org |
-	org := self instanceSide organization.
-	^org classComment isEmptyOrNil not
+	^self instanceSide organization hasComment
 ]
 
 { #category : #'instance variables' }
@@ -788,8 +786,8 @@ ClassDescription >> isClassSide [
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
-	"Point isClassSide >>> true"
-	"Point class isClassSide >>> false"
+	"Point isClassSide >>> false"
+	"Point class isClassSide >>> true"
 	
 	^ self isClassSide not
 ]
@@ -1379,11 +1377,12 @@ ClassDescription >> whichSelectorsAccess: instVarName [
 	"Answer a set of selectors whose methods access the argument, 
 	instVarName, as a named instance variable."
 
-	| slot |
-	(self hasSlotNamed: instVarName) ifFalse: [ ^#() ].
-	slot := self slotNamed: instVarName.
-	^ self selectors select:  [:sel |
-		slot isAccessedIn: (self compiledMethodAt: sel)]
+	^self
+		slotNamed: instVarName
+		ifFound: [ :slot | 
+			self selectors
+				select: [ :sel | slot isAccessedIn: self>>sel ] ]
+		ifNone: [  #() ]
 ]
 
 { #category : #queries }
@@ -1396,26 +1395,27 @@ ClassDescription >> whichSelectorsAssign: instVarName [
 ]
 
 { #category : #queries }
-ClassDescription >> whichSelectorsRead: aString [
-	
-	| slot |
-	(self hasSlotNamed: aString) ifFalse: [ ^#() ].
-	slot := self slotNamed: aString.
-	^ self selectors select:  [:sel |
-		slot isReadIn: (self compiledMethodAt: sel)]
+ClassDescription >> whichSelectorsRead: instVarName [
+	"Answer a Set of selectors whose methods read the argument, 
+	instVarName, as a named instance variable."
+
+	^ self
+		slotNamed: instVarName
+		ifFound:
+			[ :slot | self selectors select: [ :sel | slot isReadIn: self >> sel ] ]
+		ifNone: [ #() ]
 ]
 
 { #category : #queries }
-ClassDescription >> whichSelectorsStoreInto: instVarName [ 
+ClassDescription >> whichSelectorsStoreInto: instVarName [
 	"Answer a Set of selectors whose methods access the argument, 
 	instVarName, as a named instance variable."
-	| slot |
-	(self hasSlotNamed: instVarName) ifFalse: [ ^#() ].
-	slot := self slotNamed: instVarName.
-	^ self selectors select:  [:sel |
-		slot isWrittenIn: (self compiledMethodAt: sel)]
 
-	"Point whichSelectorsStoreInto: 'x'."
+	^ self
+		slotNamed: instVarName
+		ifFound:
+			[ :slot | self selectors select: [ :sel | slot isWrittenIn: self >> sel ] ]
+		ifNone: [ #() ]
 ]
 
 { #category : #organization }

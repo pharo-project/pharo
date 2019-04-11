@@ -56,6 +56,12 @@ HashedCollection class >> empty [
 		yourself
 ]
 
+{ #category : #testing }
+HashedCollection class >> isAbstract [
+
+	^self name = #HashedCollection
+]
+
 { #category : #'instance creation' }
 HashedCollection class >> new [
 	^ self basicNew

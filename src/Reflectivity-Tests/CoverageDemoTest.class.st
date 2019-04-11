@@ -51,7 +51,7 @@ CoverageDemoTest >> testCoverageControlFlow [
 		deny:
 			(ReflectivityExamples >> #exampleIfTrueIfFalse) blockNodes first
 				hasBeenExecuted.
-	self flag: #TBD.	"should be true. need to implement links on optimized block bodies"
+	self flag: #pharoTodo.	"should be true. need to implement links on optimized block bodies"
 	self
 		deny:
 			(ReflectivityExamples >> #exampleIfTrueIfFalse) blockNodes first body

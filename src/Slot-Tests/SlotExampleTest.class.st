@@ -11,28 +11,22 @@ Class {
 { #category : #tests }
 SlotExampleTest >> testAccessorInstanceVariableSlot [
 	| slot object |
-	
-	aClass := self make: [ :builder |
-		builder 
-			slots: {#slot1 =>AccessorInstanceVariableSlot  }
-		].
-
+	aClass := self
+		make:
+			[ :builder | builder slots: {(#slot1 => AccessorInstanceVariableSlot)} ].
 	self assert: (aClass hasSlotNamed: #slot1).
-	
+
 	"test refletive write and read"
 	slot := aClass slotNamed: #slot1.
 	object := aClass new.
 	slot write: 5 to: object.
-	self assert: (slot read: object) = 5.
-	
-	"test generated accessors"
+	self assert: (slot read: object) equals: 5.
 	object slot1: 10.
-	self assert: object slot1 = 10.
+	self assert: object slot1 equals: 10.
 	
-	
-	
-	
-	
+	"did we create accessors?"
+	self assert: (aClass includesSelector: #slot1).
+	self assert: (aClass includesSelector: #slot1:).
 ]
 
 { #category : #tests }
@@ -44,7 +38,7 @@ SlotExampleTest >> testExampleClassSide [
 		].
 
 	self assert: (aClass class hasSlotNamed: #slot1).
-	self assert: aClass class slotDefinitionString =  '{ #slot1 => ExampleSlotWithState }'.
+	self assert: aClass class slotDefinitionString equals:  '{ #slot1 => ExampleSlotWithState }'.
 ]
 
 { #category : #'test - unlimited ivars' }
@@ -104,9 +98,9 @@ SlotExampleTest >> testExampleSlotWithDefaultValue [
 	slot := aClass slotNamed: #slot1.
 	object := aClass new.
 
-	self assert: (slot read: object) = 5.
+	self assert: (slot read: object) equals: 5.
 	slot write: 10 to: object.
-	self assert: (slot read: object) = 10.
+	self assert: (slot read: object) equals: 10.
 	
 	
 	
@@ -117,45 +111,36 @@ SlotExampleTest >> testExampleSlotWithDefaultValue [
 { #category : #tests }
 SlotExampleTest >> testExampleSlotWithState [
 	| slot reader writer |
-	
-	aClass := self make: [ :builder |
-		builder 
-			slots: {#slot1 =>ExampleSlotWithState  }
-		].
-
+	aClass := self
+		make:
+			[ :builder | builder slots: {(#slot1 => ExampleSlotWithState)} ].
 	self assert: (aClass hasSlotNamed: #slot1).
-	
+
 	"test refletive write and read"
 	slot := aClass slotNamed: #slot1.
 	slot write: 5 to: aClass new.
-	self assert: (slot read: aClass new) = 5.
-	
-	"compiled accessors to test code gen"
-	reader := String streamContents: [ :str |
-		str 
-			nextPutAll: slot name;
-			cr;tab;
-			nextPutAll: ' ^';
-			nextPutAll: slot name.
-		 ].
-	writer := String streamContents: [ :str |
-		str 
-			nextPutAll: slot name;
-			nextPutAll: ': anObject';
-			cr;tab;
-			nextPutAll: slot name;
-			nextPutAll: ':= anObject.'.
-		].
+	self assert: (slot read: aClass new) equals: 5.
+	reader := String
+		streamContents: [ :str | 
+			str
+				nextPutAll: slot name;
+				cr;
+				tab;
+				nextPutAll: ' ^';
+				nextPutAll: slot name ].
+	writer := String
+		streamContents: [ :str | 
+			str
+				nextPutAll: slot name;
+				nextPutAll: ': anObject';
+				cr;
+				tab;
+				nextPutAll: slot name;
+				nextPutAll: ':= anObject.' ].
 	aClass compile: reader classified: 'accessing'.
 	aClass compile: writer classified: 'accessing'.
-	
 	aClass new slot1: 10.
-	self assert: aClass new slot1 = 10.
-	
-	
-	
-	
-	
+	self assert: aClass new slot1 equals: 10
 ]
 
 { #category : #'test - unlimited ivars' }

@@ -222,7 +222,7 @@ ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "FFIMethodRegistr
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" clean --release
 
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save "Pharo"
-echo "70" > pharo.version
+echo "${PHARO_SHORT_VERSION}" > pharo.version
 
 # clean bak sources files
 rm -f *.bak

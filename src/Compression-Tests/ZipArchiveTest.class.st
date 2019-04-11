@@ -182,11 +182,10 @@ ZipArchiveTest >> testDate29Feb2000 [
 { #category : #tests }
 ZipArchiveTest >> testFilePermissions [
 
-	| nestedFileToZip fileModified folderModified folderMember fileMember |
+	| nestedFileToZip folderMember fileMember |
 	nestedFileToZip := subdir / '_test-zip-file'.
 	nestedFileToZip writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ].
-	fileModified := nestedFileToZip entry modification asTime.
-	folderModified := subdir entry modification asTime.
+	
 	folderMember := zip
 		addDirectory: subdir
 		as: subdir basename.

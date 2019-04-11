@@ -28,14 +28,15 @@ NECModel >> addSelectors [
 ]
 
 { #category : #private }
-NECModel >> addToEntries: aCollection [ 
-	| temp caseSensitive |
-	caseSensitive := NECPreferences caseSensitive.
-	temp := aCollection select: [ :each | 
-		each contents 
-			occursInWithEmpty: narrowString
-			caseSensitive: caseSensitive ].
-	entries addAll: temp
+NECModel >> addToEntries: aCollection [
+	"This method add some elements to the entries collection. Elements are added first in the entry collection."
+	| temp |
+	temp := aCollection
+		select: [ :each | 
+			each contents
+				occursInWithEmpty: narrowString
+				caseSensitive: self isCaseSensitive ].
+	entries addAllFirst: temp
 ]
 
 { #category : #accessing }
@@ -100,6 +101,12 @@ NECModel >> initialize [
 { #category : #initialization }
 NECModel >> initializeSelectors [ 
 	self subclassResponsibility 
+]
+
+{ #category : #private }
+NECModel >> isCaseSensitive [
+	"if you want eCompletion to be case sensitive or not."
+	^ NECPreferences caseSensitive
 ]
 
 { #category : #testing }
@@ -172,18 +179,16 @@ NECModel >> setClass: aClass [
 
 { #category : #private }
 NECModel >> sortSelectors [
-	| case |
-	case :=  NECPreferences caseSensitive.
 	selectors sort: 
 		[ :a :b | 
 		| scoreA scoreB |
 		scoreA := scoreB := 0.
 		(a contents 
 			beginsWithEmpty: narrowString
-			caseSensitive: case) ifFalse: [ scoreA := 2 ].
+			caseSensitive: self isCaseSensitive) ifFalse: [ scoreA := 2  ].
 		(b contents 
 			beginsWithEmpty: narrowString
-			caseSensitive: case) ifFalse: [ scoreB := 2 ].
+			caseSensitive: self isCaseSensitive) ifFalse: [ scoreB := 2  ].
 		a contents < b contents
 			ifTrue: [ scoreB := scoreB + 1 ]
 			ifFalse: [ scoreA := scoreA + 1 ].

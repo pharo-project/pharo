@@ -240,6 +240,7 @@ ByteString >> isAsciiString [
 { #category : #testing }
 ByteString >> isByteString [
 	"Answer whether the receiver is a ByteString"
+	"'abc' isByteString >>> true"
 	^true
 ]
 
@@ -248,6 +249,8 @@ ByteString >> isOctetString [
 	"Answer whether the receiver can be represented as a byte string. 
 	This is different from asking whether the receiver *is* a ByteString 
 	(i.e., #isByteString)"
+	"'abc' isOctetString >>> true"
+	
 	^ true.
 
 ]

@@ -5,11 +5,6 @@ Class {
 }
 
 { #category : #tests }
-GLMScriptingTest >> expectedFailures [ 
-	^ #(testFinderWithPreviousPort)
-]
-
-{ #category : #tests }
 GLMScriptingTest >> testActionDefinition [
 	| browser |
 	browser := GLMTabulator new.
@@ -129,6 +124,7 @@ GLMScriptingTest >> testEntityInUpdateAction [
 
 { #category : #tests }
 GLMScriptingTest >> testFinderWithPreviousPort [
+	<expectedFailure>
 	| browser |
 	browser := GLMFinder new.
 	browser show: [:a | 

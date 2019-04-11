@@ -12,6 +12,12 @@ Collection class >> empty [
 	^ self new
 ]
 
+{ #category : #testing }
+Collection class >> isAbstract [
+
+	^self name = #Collection
+]
+
 { #category : #'instance creation' }
 Collection class >> with: anObject [ 
 	"Answer an instance of me containing anObject."
