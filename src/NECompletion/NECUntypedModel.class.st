@@ -9,7 +9,8 @@ Class {
 		'localVars',
 		'includeVariables',
 		'includeSelectors',
-		'classVars'
+		'classVars',
+		'environment'
 	],
 	#category : #'NECompletion-Model'
 }
@@ -59,6 +60,16 @@ NECUntypedModel >> addVariables [
 	
 ]
 
+{ #category : #accessing }
+NECUntypedModel >> environment [
+	^ environment
+]
+
+{ #category : #accessing }
+NECUntypedModel >> environment: anObject [
+	environment := anObject
+]
+
 { #category : #initialization }
 NECUntypedModel >> initialize [
 	super initialize.
@@ -67,6 +78,7 @@ NECUntypedModel >> initialize [
 	classVars := SortedCollection new.
 	includeSelectors := true.
 	includeVariables := true.
+	environment := self class environment.
 ]
 
 { #category : #initialization }
@@ -93,6 +105,7 @@ NECUntypedModel >> initializeInstVars [
 NECUntypedModel >> initializeSelectors [
 	self resetSelectors.
 	narrowString size < 2  ifTrue: [ ^ self ].
+	self flag: #DoWeWantAllSelectors. "I think we only want to have the selectors in the environment"
 	includeSelectors
 		ifTrue: [ Symbol selectorTable do: [ :symbol | | toadd | 
 					"for small strings, we do not do substring matching as we get too many matches (slow)"
@@ -101,7 +114,7 @@ NECUntypedModel >> initializeSelectors [
 						ifFalse: [symbol includesSubstring: narrowString caseSensitive: self isCaseSensitive].
 					toadd ifTrue: [ selectors add: (NECSelectorEntry contents: symbol type: #selector) ] ] ].
 	includeVariables
-		ifTrue: [ Smalltalk globals keysDo: [ :symbol  | 
+		ifTrue: [ environment keysDo: [ :symbol  | 
 					(symbol includesSubstring: narrowString caseSensitive: self isCaseSensitive)
 						ifTrue: [ selectors add: (NECGlobalEntry contents: symbol ) ] ] ].
 	self sortSelectors

@@ -285,6 +285,7 @@ NECPreferences class >> spaceAfterCompletion: anObject [
 
 { #category : #accessing }
 NECPreferences class >> theme [
+	self flag: #SmalltalkReference.
 	^ Smalltalk ui theme
 ]
 

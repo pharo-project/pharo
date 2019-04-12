@@ -10,7 +10,7 @@ Class {
 { #category : #operations }
 NECGlobalEntry >> guessTypeWith: anECContext [ 
 	| globalEntry |
-	globalEntry := Smalltalk at: contents ifAbsent: [^ nil].
+	globalEntry := anECContext globals at: contents ifAbsent: [^ nil].
 	globalEntry isBehavior ifTrue: [^ globalEntry].
 	globalEntry ifNotNil: [^ globalEntry class].
 	^ nil
