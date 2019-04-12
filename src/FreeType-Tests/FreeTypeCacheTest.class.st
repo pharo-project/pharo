@@ -119,6 +119,59 @@ FreeTypeCacheTest >> testFreeTypeCacheEntry [
 ]
 
 { #category : #tests }
+FreeTypeCacheTest >> testGlyphAccessIsThreadSafe [
+	"This test tests that concurrent glyph access does not break FreeType's cache.
+	Basically the test renders a Rubric morph in concurrent green threads on a big string, and then we compare that the drawn morphs should be bit identical.
+	We have made some measurements and observed that putting three concurrent processes made the chance of hitting the bug to almost 94%.
+	We arrived to this 94% by (repeteadly) running this test 100 times and observing the number of broken cases (and calculating the average).
+	
+	By applying some probabilities, we concluded that running it just 5 times makes it highly reproducible.
+	
+	p := 0.94 asScaledDecimal.
+	hittingTheBug := 0.
+	notHittingTheBug := 1 - hittingTheBug.
+	4 timesRepeat: [ 
+		hittingTheBug := hittingTheBug + (notHittingTheBug * p).
+		notHittingTheBug := 1 - hittingTheBug ].
+	hittingTheBug.
+	
+	After 5 iterations, hittingTheBug = 0.99999969s8.
+	
+	Still, this test is weak in terms of dependencies because it depends in the rendering of Morphic and Rubrik.
+	However, trying to simplify it makes the loop inside the testBlock tighter producing less race conditions, and thus it makes the probability of the test drop from 94% to <40%.
+	"	
+
+	| iterations concurrencyLevel |
+	self timeLimit: 10 seconds.
+	iterations := 5.
+	concurrencyLevel := 3.
+	
+	iterations timesRepeat: [
+		 | sem text canvases testBlock |
+		sem := Semaphore new.
+		text := (String loremIpsum: 25*1024).
+		FreeTypeCache current removeAll.
+		canvases := OrderedCollection new.
+			
+		testBlock := [  | canvas |
+			canvas := FormCanvas extent: 1000@1000.
+			canvases add: canvas.
+			(RubScrolledTextMorph new)
+					setText: text;
+					font: StandardFonts codeFont;
+					bounds: (0@0 corner: canvas form extent);
+					fullDrawOn: canvas.
+			sem signal ].
+
+		concurrencyLevel timesRepeat: [ testBlock forkAt: 39 ].
+		concurrencyLevel timesRepeat: [ sem wait ].	
+	
+		self assert: (canvases collect: [ :each | each form bits ] as: Set) size equals: 1 ].
+
+
+]
+
+{ #category : #tests }
 FreeTypeCacheTest >> testInstanceInitialization [
 	self assert: (cache instVarNamed: #maximumSize) = FreeTypeCache defaultMaximumSize.
 	self assert: (cache instVarNamed: #used) = 0.
