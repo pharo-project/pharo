@@ -282,9 +282,6 @@ NECContext >> globals: anObject [
 NECContext >> guessArgument: aSHRange [ 
 	| name |
 	name := self sourceOf: aSHRange.
-	(name = 'html') ifTrue: [
-		 globals at: #WAHtmlCanvas ifPresent: [ :canvasClass | ^canvasClass].
-		 globals at: #WARenderCanvas ifPresent: [ :canvasClass | ^canvasClass]].
 	^ NECInstVarTypeGuesser getClassFromTypeSuggestingName: name
 ]
 
