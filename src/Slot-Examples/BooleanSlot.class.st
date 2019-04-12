@@ -82,15 +82,6 @@ BooleanSlot >> read: anObject [
 	^((self baseSlotRead: anObject) bitAt: offset) == 1
 ]
 
-{ #category : #TODO }
-BooleanSlot >> todo [
-	'
-    - adding a Booleanslot in between --> offsets need to be updated?
-	 - removing BooleanSlot in the middle	
-	 - adding booleanslot higher in the hierarchy: move baseselot (same as in TODO for PropertySlot)
-	'
-]
-
 { #category : #'meta-object-protocol' }
 BooleanSlot >> write: aValue to: anObject [
 		| newInteger |

@@ -74,14 +74,6 @@ Slot class >> slotSetting: aBuilder [
 		target: self
 ]
 
-{ #category : #composition }
-Slot >> + anotherSlot [
-	^anotherSlot new 
-		implementor: self;
-		name: name
-	
-]
-
 { #category : #comparing }
 Slot >> = other [
 	"Every subclass that adds state must redefine this method"
