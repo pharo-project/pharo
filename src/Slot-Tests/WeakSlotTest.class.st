@@ -1,53 +1,53 @@
 Class {
-	#name : #ComputedSlotTest,
+	#name : #WeakSlotTest,
 	#superclass : #SlotSilentTest,
 	#category : #'Slot-Tests-Examples'
 }
 
 { #category : #tests }
-ComputedSlotTest >> testReadComputedSlotCompiled [
+WeakSlotTest >> testReadWeakSlotCompiled [
 	| object slot |
-	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
+	slot := #slot1 => WeakSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
 	
 	object := aClass new.
-	
-	"The slot is virtual and does not use memory"
-	self assert: object basicSize  equals: 0.
 	
 	"now compile an accessor and read"
 	self compileAccessorsFor: slot.
-	self assert: object slot1 equals: 5.
+	self assert: object slot1 equals: nil.
 ]
 
 { #category : #tests }
-ComputedSlotTest >> testReadComputedSlotReflective [
+WeakSlotTest >> testReadWriteWeakSlotReflective [
 	| slot object |
-	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
+	slot := #slot1 => WeakSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
 	object := aClass new.
 	
+	slot write: 5 to: object.
 	self assert: (slot read: object) equals: 5.
 ]
 
 { #category : #tests }
-ComputedSlotTest >> testReadComputedSlotReflectiveNoArg [
+WeakSlotTest >> testWeakSlotIsWeak [
 	| slot object |
-	slot := #slot1 => ComputedSlot with: [3 + 2 ].
+	slot := #slot1 => WeakSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
-
 	object := aClass new.
 	
-	self assert: (slot read: object) equals: 5.
+	slot write: Object new to: object.
+	Smalltalk garbageCollect.
+	"the value is GCed and we get nil"
+	self assert: (slot read: object) equals: nil.
 ]
 
 { #category : #tests }
-ComputedSlotTest >> testWriteComputedSlotCompiled [
+WeakSlotTest >> testWriteWeakSlotCompiled [
 	| slot object |
-	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
+	slot := #slot1 => WeakSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
 	
@@ -56,6 +56,5 @@ ComputedSlotTest >> testWriteComputedSlotCompiled [
 	"now compile an accessor and write"
 	self compileAccessorsFor: slot.
 	object slot1: 10.
-	"the write is ignored"
-	self assert: object slot1 equals: 5.
+	self assert: object slot1 equals: 10.
 ]

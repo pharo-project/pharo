@@ -3,9 +3,8 @@ We store state in a hidden array. Contrary to normal instance variables the numb
 "
 Class {
 	#name : #UnlimitedInstanceVariableSlot,
-	#superclass : #Slot,
+	#superclass : #DerivedSlot,
 	#instVars : [
-		'baseSlot',
 		'offset'
 	],
 	#category : #'Slot-Examples-Base'
