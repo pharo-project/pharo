@@ -187,7 +187,7 @@ def launchBenchmark(){
 	projectName = env.JOB_NAME
 	
     //We checkout scm to have access to the log information
-    checkout scm	
+    //checkout scm	
 	
     if (env.CHANGE_ID != null){
 		//If I am in a PR the head of the repository is a merge of the base commit (the development branch) and the PR commit.
