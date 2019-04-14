@@ -5,6 +5,7 @@ Class {
 	#name : #FFITestPointerStructure,
 	#superclass : #FFIExternalStructure,
 	#classVars : [
+		'OFFSET_LONGPOINTER',
 		'OFFSET_NESTEDPOINTER',
 		'OFFSET_ONE',
 		'OFFSET_POINTER',
@@ -21,12 +22,27 @@ FFITestPointerStructure class >> fieldsDesc [
 		long two;
 		void *pointer;
 		FFITestStructure *nestedPointer;
+		long *longPointer;
 		)
 ]
 
 { #category : #'class initialization' }
 FFITestPointerStructure class >> initialize [
 	"self rebuildFieldAccessors"
+]
+
+{ #category : #'accessing structure variables' }
+FFITestPointerStructure >> longPointer [
+	"This method was automatically generated"
+	^ExternalData 
+		fromHandle: (handle platformLongAt: OFFSET_LONGPOINTER)
+		type: FFIArchitecture forCurrentArchitecture externalLongType asPointerType
+]
+
+{ #category : #'accessing structure variables' }
+FFITestPointerStructure >> longPointer: anObject [
+	"This method was automatically generated"
+	handle pointerAt: OFFSET_LONGPOINTER put: anObject getHandle.
 ]
 
 { #category : #'accessing structure variables' }

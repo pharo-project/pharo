@@ -216,12 +216,17 @@ FFIExternalStructureTests >> testStructWithArray [
 
 { #category : #tests }
 FFIExternalStructureTests >> testStructWithPointerAccess [
-	| s1 s2 |	
+	| s1 s2 pointer |	
 
 	s1 := FFITestPointerStructure new.
 	self assert: s1 getHandle isExternalAddress not.
 	self assert: s1 pointer isNull.
 	self assert: s1 nestedPointer isNull.
+
+	"Test that setting a pointer gets us a pointer back."
+	pointer := ExternalAddress gcallocate: 8.
+	s1 longPointer: (ExternalData fromHandle: pointer).
+	self assert: s1 longPointer getHandle equals: pointer.
 	
 	s2 := FFITestStructure externalNew.
 	s2 long: 42.

@@ -50,15 +50,15 @@ FFICalloutTests >> testBuildingFnSpec [
 	
 	generator
 		requestor: self;
-		methodArgs: #(arg1 arg2 arg3 arg11 arg12);
-		namedFnSpec: #( long* fn (int self ,  String arg1, void**arg2, TYPEVAR arg1, char arg3, 0, nil, true, false , CLASSVAR, ExternalAddress arg11, ByteArray arg12 ) ).
+		methodArgs: #(arg1 arg2 arg3 arg11 arg12 arg13);
+		namedFnSpec: #( long* fn (int self ,  String arg1, void**arg2, TYPEVAR arg1, char arg3, 0, nil, true, false , CLASSVAR, ExternalAddress arg11, ByteArray arg12, long*arg13 ) ).
 
 
 	type := generator fnSpec returnType.
 	self assert: type class equals: FFILong.	
 	self assert: type pointerArity equals: 1.
 	
-	self assert: (generator fnSpec arguments size) equals: 12.
+	self assert: (generator fnSpec arguments size) equals: 13.
 	s := generator fnSpec arguments readStream.
 
 "int self"		self checkTypeSelf: s next class: FFIInt32 arity: 0.
@@ -73,6 +73,7 @@ FFICalloutTests >> testBuildingFnSpec [
 "CLASSVAR"		self checkType: s next class: FFIConst value: 100.
 "ExternalAddress"	self checkType: s next class: FFIOop arity: 0 argument: 'arg11'.
 "ByteArray" 			self checkType: s next class: FFIOop arity: 0 argument: 'arg12'.
+"long*"			self checkType: s next class: FFILong arity: 1 argument: 'arg13'.
 ]
 
 { #category : #tests }
