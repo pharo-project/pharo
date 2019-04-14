@@ -195,8 +195,8 @@ def launchBenchmark(){
 	
 		    if (env.CHANGE_ID != null){
 				//If I am in a PR the head of the repository is a merge of the base commit (the development branch) and the PR commit.
-				//I take the second parent of this commit. It is the commit in the PR 
-				commit = shellOutput('git log HEAD^2 -1 --format="%H"')
+				//I take the first parent of this commit. It is the commit in the PR 
+				commit = shellOutput('git log HEAD^1 -1 --format="%H"')
 				isPR = true
 			}else{
 				// If it is not a PR the commit to evaluate and put the status in github is the current commit
