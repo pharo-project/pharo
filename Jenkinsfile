@@ -205,7 +205,7 @@ def launchBenchmark(){
 			}
 	
 	
-			build job: 'pharo-benchmarks', parameters: [text(name: 'originProjectName', value: projectName), booleanParam(name: 'isPR', value: isPR), text(name: 'commit', value: commit)]
+			build job: 'pharo-benchmarks', parameters: [text(name: 'originProjectName', value: projectName), booleanParam(name: 'isPR', value: isPR), text(name: 'commit', value: commit)], wait: false
 		}
 	}
 }
