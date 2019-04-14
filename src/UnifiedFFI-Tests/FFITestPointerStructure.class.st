@@ -35,7 +35,7 @@ FFITestPointerStructure class >> initialize [
 FFITestPointerStructure >> longPointer [
 	"This method was automatically generated"
 	^ExternalData 
-		fromHandle: (handle platformLongAt: OFFSET_LONGPOINTER)
+		fromHandle: (handle pointerAt: OFFSET_LONGPOINTER)
 		type: FFIArchitecture forCurrentArchitecture externalLongType asPointerType
 ]
 

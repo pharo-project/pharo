@@ -42,11 +42,9 @@ FFISizeT >> emitSelector [
 { #category : #accessing }
 FFISizeT >> offsetPointerReadFieldAt: offsetVariableName [
 	^ '^ExternalData 
-		fromHandle: (handle {1}: {2})
+		fromHandle: (handle pointerAt: {1})
 		type: FFIArchitecture forCurrentArchitecture externalSizeTType asPointerType'
-	format: { 
-		self emitSelector.
-		offsetVariableName }
+	format: { offsetVariableName }
 ]
 
 { #category : #accessing }

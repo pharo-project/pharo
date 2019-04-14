@@ -50,11 +50,9 @@ FFIULong >> emitSelector [
 { #category : #'private emitting code' }
 FFIULong >> offsetPointerReadFieldAt: offsetVariableName [
 	^ '^ExternalData 
-		fromHandle: (handle {1}: {2})
+		fromHandle: (handle pointerAt: {1})
 		type: FFIArchitecture forCurrentArchitecture externalULongType asPointerType'
-	format: { 
-		self emitSelector.
-		offsetVariableName }
+	format: { offsetVariableName }
 ]
 
 { #category : #'emitting code' }
