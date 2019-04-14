@@ -779,7 +779,7 @@ MailMessage >> regenerateText [
 		encodedBodyText := body content.
 		self decoderClass ifNotNil: 
 			[ encodedBodyText := self decoderClass mimeEncode: encodedBodyText readStream ].
-		str nextPutAll: encodedBodyText ]
+		str nextPutAll: encodedBodyText contents]
 ]
 
 { #category : #fields }

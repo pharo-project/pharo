@@ -71,18 +71,18 @@ AthensParagraph >> extent [
 
 { #category : #'as yet unclassified' }
 AthensParagraph >> extraSelectionChanged [
-"
+	"
 	refreshExtraSelection := true
 "
 
-	self flag: #foo
+	self flag: #pharoToRemove	"This method is only needed for TextMorphForEditView. This class is planned for removal with PluggableTextMorph. When it will be removed, this class can probably be cleaned."
 ]
 
 { #category : #'as yet unclassified' }
 AthensParagraph >> findReplaceSelectionRegex: aRegex [
-"	findReplaceSelectionRegex := aRegex. "
-	self flag: #foo
+	"	findReplaceSelectionRegex := aRegex. "
 
+	self flag: #pharoToRemove	"This method is only needed for TextMorphForEditView. This class is planned for removal with PluggableTextMorph. When it will be removed, this class can probably be cleaned."
 ]
 
 { #category : #'as yet unclassified' }
@@ -104,8 +104,9 @@ AthensParagraph >> positionWhenComposed: pos [
 
 { #category : #'as yet unclassified' }
 AthensParagraph >> secondarySelection: aSubstring [
-"	secondarySelection := aSubstring."
-	self flag: #foo.
+	"	secondarySelection := aSubstring."
+
+	self flag: #pharoToRemove	"This method is only needed for TextMorphForEditView. This class is planned for removal with PluggableTextMorph. When it will be removed, this class can probably be cleaned."
 ]
 
 { #category : #'as yet unclassified' }

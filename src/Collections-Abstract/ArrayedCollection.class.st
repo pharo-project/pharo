@@ -7,6 +7,12 @@ Class {
 	#category : #'Collections-Abstract-Base'
 }
 
+{ #category : #testing }
+ArrayedCollection class >> isAbstract [
+
+	^self name = #ArrayedCollection
+]
+
 { #category : #'instance creation' }
 ArrayedCollection class >> new [
 	"Answer a new instance of me, with size = 0."

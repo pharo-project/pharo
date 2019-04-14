@@ -1,5 +1,23 @@
 "
 SUnit tests for exceptions
+
+Some of these tests are of the form:
+`self assertSuccess: (ExceptionTester new runTest: <<<aSelector>>> )`
+For example:
+	The code of ExceptionTests>>#testDoubleOuterPass is `self assertSuccess: (ExceptionTester new runTest: #doubleOuterPassTest )`.
+	In this example, <<<aSelector>>> = #doubleOuterPassTest.
+
+Here is how these tests are performed:
+- ExceptionTester has instance variables 'log' and 'suiteLog' of type OrderedCollection
+- ExceptionTester>>#runTest: adds <<<aSelector>>> as a string to 'suiteLog' and clears 'log'
+- ExceptionTester>>#runTest: performs the method named <<<aSelector>>>.
+  <<<aSelector>>> has an exception-based control flow, and calls methods like #doSomething, #doSomethingElse etc... at some points of it. These methods just add specific strings to 'log' to build a sort of trace of where the execution went.
+- If a MyTestError exception would leave method <<<aSelector>>> uncaught, it is caught, the incident is added to 'log', and <<<aSelector>>>'s execution is stopped
+- After performing <<<aSelector>>>, ExceptionTester>>#runTest: performs its twin method: <<<aSelector>>>Results (In the example from above, it would be #doubleOuterPassTestResults). This twin method builds the expected value of 'log' by creating an OrderedCollection and filling it with the  right specific strings in the expected order.
+- ExceptionTester>>#runTest: compares 'log' and the expected value of 'log'. If they are the same, it appends the 'succeeded' string to the '<<<aSelector>>>' string that was stored in 'suiteLog' earlier. If they are different, it appends the 'failed' string instead.
+- Finally, ExceptionTests>>#assertSuccess: asserts that the first element of 'suiteLog' ends with the 'suceeded' string
+
+
 "
 Class {
 	#name : #ExceptionTests,

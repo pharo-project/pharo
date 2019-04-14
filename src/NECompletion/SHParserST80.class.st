@@ -276,7 +276,7 @@ SHParserST80 >> isSelectorCharacter: aCharacter [
 { #category : #'token testing' }
 SHParserST80 >> isTokenExternalFunctionCallingConvention [
 	| descriptorClass |
-	descriptorClass := Smalltalk
+	descriptorClass := environment
 				at: #ExternalFunction
 				ifAbsent: [].
 	descriptorClass

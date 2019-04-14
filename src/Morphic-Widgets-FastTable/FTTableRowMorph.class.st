@@ -41,5 +41,5 @@ FTTableRowMorph >> initializeTable: tableMorph [
 	self 
 		cellInset: tableMorph intercellSpacing";
 		layoutInset: tableMorph intercellSpacing".
-	self flag: #todo. "Check if layout inset works better"
+	self flag: #pharoTodo. "Check if layout inset works better"
 ]

@@ -96,11 +96,13 @@ RBInlineAllSendersRefactoring >> messagesNotReplaced [
 ]
 
 { #category : #transforming }
-RBInlineAllSendersRefactoring >> numberOfSelfSendsIn: aParseTree [ 
+RBInlineAllSendersRefactoring >> numberOfSelfSendsIn: aParseTree [
 	| search |
-	search := RBParseTreeSearcher new.
-	search matches: self messagePattern do: [:aNode :answer | answer + 1].
-	^search executeTree: aParseTree initialAnswer: 0
+	search := self parseTreeSearcher.
+	search
+		matches: self messagePattern
+		do: [ :aNode :answer | answer + 1 ].
+	^ search executeTree: aParseTree initialAnswer: 0
 ]
 
 { #category : #preconditions }
@@ -119,11 +121,13 @@ RBInlineAllSendersRefactoring >> removeMethod [
 ]
 
 { #category : #transforming }
-RBInlineAllSendersRefactoring >> selfSendIn: aTree [ 
+RBInlineAllSendersRefactoring >> selfSendIn: aTree [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: self messagePattern do: [:aNode :answer | ^aNode].
-	^searcher executeTree: aTree initialAnswer: nil
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: self messagePattern
+		do: [ :aNode :answer | ^ aNode ].
+	^ searcher executeTree: aTree initialAnswer: nil
 ]
 
 { #category : #initialization }

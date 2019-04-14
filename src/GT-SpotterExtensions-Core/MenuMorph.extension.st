@@ -33,7 +33,7 @@ MenuMorph class >> gtExampleMenuMorph [
 { #category : #'*GT-SpotterExtensions-Core' }
 MenuMorph >> spotterItemsFor: aStep [
 	<spotterOrder: 10>
-	self flag: #refactoringViolationForSpotterActDefault:.
+	self flag: #pharoFixMe. "refactoring violation for spotterActDefault:"
 	^ aStep listProcessor 
 		title: 'Items';
 		candidatesLimit: Float infinity;

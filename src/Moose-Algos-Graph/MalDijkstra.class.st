@@ -110,7 +110,7 @@ MalDijkstra >> start: aDijsktraNode [
 { #category : #running }
 MalDijkstra >> traverse: node [
 
-	self flag: #todo. "optimize traversal of nodes"
+	self flag: #pharoTodo. "optimize traversal of nodes"
 	node nextEdges do: [:edge |
 		edge isVisited ifFalse: [
 			edge to pathWeight: (edge to pathWeight min: (node pathWeight + edge weight)).

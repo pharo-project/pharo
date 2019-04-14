@@ -47,14 +47,12 @@ MorphicTextInputFieldAdapter >> buildWidget [
 		dropEnabled: self dropEnabled;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
-		acceptOnCR: self acceptOnCR.
-		"maxLength: self presenter maxLength."
-		"comment for now."
+		acceptOnCR: self acceptOnCR;
+		maxLength: self presenter maxLength.
 	self presenter whenTextChangedDo: [ :text | plu setText: text ].
 	self presenter whenPlaceholderChangedDo: [ :text | plu ghostText: text ].
 	self presenter whenVisibilityChangedDo: [ :isVisible | plu encrypted: isVisible not ].	
-	"self presenter whenMaxLengthChangedDo: [ :length | plu maxLength: length ]."
-	"comment for now."
+	self presenter whenMaxLengthChangedDo: [ :length | plu maxLength: length ].
 	^ plu
 ]
 
