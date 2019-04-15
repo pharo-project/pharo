@@ -36,8 +36,17 @@ Slot class >> asSlot [
 
 { #category : #validating }
 Slot class >> checkValidName: aSymbol [
+
+	aSymbol startsWithDigit ifTrue: [ 
+		^ InvalidSlotName signalFor: aSymbol ].
+
 	aSymbol isPseudovariableName ifTrue: [ 
+		^ InvalidSlotName signalFor: aSymbol ].
+	
+
+	(aSymbol allSatisfy: [ :aCharacter | aCharacter isAlphaNumeric or: [ aCharacter = $_ ] ]) ifFalse: [ 
 		^ InvalidSlotName signalFor: aSymbol ]
+
 ]
 
 { #category : #'class initialization' }
