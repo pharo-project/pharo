@@ -675,6 +675,11 @@ KeyboardKey >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
+{ #category : #accessing }
+KeyboardKey >> value [
+	^ value
+]
+
 { #category : #initialization }
 KeyboardKey >> withValue: aValue [
 	self withValue: aValue andName: self class unknownKeyName
