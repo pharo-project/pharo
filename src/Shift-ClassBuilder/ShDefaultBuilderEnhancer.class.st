@@ -75,6 +75,18 @@ ShDefaultBuilderEnhancer >> initializeBuilder: aBuilder [
 ShDefaultBuilderEnhancer >> metaclassCreated: builder [
 ]
 
+{ #category : #events }
+ShDefaultBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstaller [ 
+
+	aShiftClassInstaller migrateInstancesTo: aClass
+]
+
+{ #category : #events }
+ShDefaultBuilderEnhancer >> migrateToClass: aClass installer: aShiftClassInstaller [ 
+
+	aShiftClassInstaller migrateClassTo: aClass
+]
+
 { #category : #'class modifications' }
 ShDefaultBuilderEnhancer >> newMetaclass: builder [
 	^ builder metaclassClass new

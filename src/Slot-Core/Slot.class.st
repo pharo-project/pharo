@@ -17,7 +17,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'name',
-		'owningClass'
+		'owningClass',
+		'definingClass'
 	],
 	#classVars : [
 		'Properties'
@@ -110,13 +111,13 @@ Slot >> baseSlot [
 { #category : #accessing }
 Slot >> definingClass [
 	
-	^ self propertyAt: #definingClass ifAbsent: [ self owningClass ]
+	^ definingClass ifNil: [ self owningClass ]
 ]
 
 { #category : #accessing }
 Slot >> definingClass: aClass [
 
-	self propertyAt: #definingClass put: aClass
+	definingClass := aClass
 ]
 
 { #category : #printing }

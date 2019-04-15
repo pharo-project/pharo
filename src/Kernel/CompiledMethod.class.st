@@ -418,6 +418,9 @@ CompiledMethod >> getSourceFromFile [
 CompiledMethod >> getSourceReplacingSelectorWith: newSelector [
 	| oldKeywords newKeywords source newSource oldSelector start |
 	source := self sourceCode.
+	
+	source ifNil: [ ^ nil ].
+	
 	oldSelector := self selector.
 	oldSelector = newSelector ifTrue: [ ^ source ].
 	
