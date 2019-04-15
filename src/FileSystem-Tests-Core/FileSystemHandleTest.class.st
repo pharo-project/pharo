@@ -45,7 +45,7 @@ FileSystemHandleTest >> tearDown [
 { #category : #tests }
 FileSystemHandleTest >> testAt [
 	handle at: 1 write: (ByteArray with: 3) startingAt: 1 count: 1.
-	self assert: (handle at: 1) = 3
+	self assert: (handle at: 1) equals: 3
 ]
 
 { #category : #tests }
@@ -54,7 +54,7 @@ FileSystemHandleTest >> testAtPut [
 	handle at: 1 put: 3.
 	in := ByteArray new: 1.
 	handle at: 1 read: in startingAt: 1 count: 1.
-	self assert: in first = 3
+	self assert: in first equals: 3
 ]
 
 { #category : #tests }
@@ -113,7 +113,7 @@ FileSystemHandleTest >> testIO [
 	in := ByteArray new: 3.
 	handle at: 1 write: out startingAt: 1 count: 3.
 	handle at: 1 read: in startingAt: 1 count: 3.
-	self assert: out = in.
+	self assert: out equals: in
 ]
 
 { #category : #tests }
@@ -124,8 +124,8 @@ FileSystemHandleTest >> testReadBufferTooLarge [
 	in atAllPut: 9.
 	handle at: 1 write: out startingAt: 1 count: 3.
 	result := handle at: 1 read: in startingAt: 2 count: 4.
-	self assert: result = 3.
-	self assert: in = #(9 1 2 3 9) asByteArray.
+	self assert: result equals: 3.
+	self assert: in equals: #(9 1 2 3 9) asByteArray
 ]
 
 { #category : #tests }
@@ -144,7 +144,7 @@ FileSystemHandleTest >> testReadOnly [
 
 { #category : #tests }
 FileSystemHandleTest >> testReference [
-	self assert: handle reference = reference asAbsolute
+	self assert: handle reference equals: reference asAbsolute
 ]
 
 { #category : #tests }
@@ -152,7 +152,7 @@ FileSystemHandleTest >> testSizeAfterGrow [
 	| out |
 	out := #(1 2 3) asByteArray.
 	handle at: 1 write: out startingAt: 1 count: 3.
-	self assert: handle size = 3
+	self assert: handle size equals: 3
 ]
 
 { #category : #tests }
@@ -161,7 +161,7 @@ FileSystemHandleTest >> testSizeNoGrow [
 	bytes := #(1 2 3 4) asByteArray.
 	handle at: 1 write: bytes startingAt: 1 count: 3.
 	handle at: 4 write: bytes startingAt: 4 count: 1.
-	self assert: handle size = 4
+	self assert: handle size equals: 4
 ]
 
 { #category : #tests }
@@ -170,7 +170,7 @@ FileSystemHandleTest >> testTruncate [
 	out := #(1 2 3 4 5) asByteArray.
 	handle at: 1 write: out startingAt: 1 count: 5.
 	handle truncateTo: 3.
-	self assert: handle size = 3
+	self assert: handle size equals: 3
 ]
 
 { #category : #tests }

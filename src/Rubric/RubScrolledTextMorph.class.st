@@ -597,8 +597,7 @@ RubScrolledTextMorph >> handlesMouseWheel: evt [
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> hasEditingConflicts [
-	self flag: #todo. "can discard lazy initialization"
-	^ hasEditingConflicts ifNil: [ hasEditingConflicts := false ] 
+	^ hasEditingConflicts
 ]
 
 { #category : #'model protocol' }
@@ -625,8 +624,7 @@ RubScrolledTextMorph >> hasRulerNamed: aKey [
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> hasUnacceptedEdits [
-	self flag: #todo. "can discard lazy initialization"
-	^ hasUnacceptedEdits ifNil: [ hasUnacceptedEdits := false ] 
+	^ hasUnacceptedEdits
 ]
 
 { #category : #'model protocol' }

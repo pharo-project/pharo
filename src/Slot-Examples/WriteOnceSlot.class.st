@@ -30,9 +30,8 @@ WriteOnceSlot >> wantsInitalization [
 
 { #category : #'meta-object-protocol' }
 WriteOnceSlot >> write: aValue to: anObject [
-	| asso |
-	asso := super read: anObject.
-	(self isWritten: anObject)
-		ifTrue: [ asso key: aValue value: false ]
+
+	^(self isWritten: anObject)
+		ifTrue: [ (super read: anObject) key: aValue value: false. aValue ]
 		ifFalse: [ self error: 'only one assigment allowed' ]
 ]

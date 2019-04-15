@@ -432,7 +432,7 @@ FileStream class >> standardIOStreamNamed: moniker forWrite: forWrite [
 	
 	| index |
 	
-	self flag: #todo. "This is an ugly hack, while waiting for a real fix for windows. There  several problems with this approach, but it allow us to run tests, etc."
+	"This is an ugly hack, while waiting for a real fix for windows. There  several problems with this approach, but it allow us to run tests, etc."
 	Smalltalk os isWin32 
 		ifTrue: [ 
 			[ ^ MultiByteFileStream forceNewFileNamed: moniker asString ]

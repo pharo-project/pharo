@@ -8,6 +8,61 @@ Class {
 }
 
 { #category : #tests }
+MailMessageTest >> testAttachment [
+	"Test if the attachment of a file to a mail works.
+		Create a file and attach it to a MailMessage. After that, delete the file.
+		Compare both mail texts but remove the CelesteAttachment string before because this is a random string."
+
+	| theMailMessage theResultMailText theFilename |
+	theMailMessage := MailMessage empty
+		addAlternativePart: 'This is plain text.' contentType: 'text/plain';
+		addAlternativePart: '<html><head></head><body>This is html text</body></html>'
+			contentType: 'text/html';
+		yourself.
+	theFilename := 'testfile.txt'.
+	(File named: theFilename)
+		writeStreamDo: [ :stream | 
+			stream
+				nextPutAll: 'This is the text of the mail attachment to be generated' ].
+	theMailMessage
+		addAttachmentFrom: (File named: theFilename) openForWrite
+		withName: theFilename.
+	theMailMessage setField: 'from' toString: 'test@test.de'.
+	theMailMessage regenerateBodyFromParts.
+	theResultMailText := theMailMessage text.
+	File deleteFile: theFilename.
+	self
+		assert:
+			((theResultMailText findTokens: '--==')
+				reject: [ :each | 'CelesteAttachment*' match: each ])
+		equals:
+			(('Mime-version: 1.0
+From: test@test.de
+Content-type: multipart/alternative;boundary="==CelesteAttachment57344=="
+
+
+
+--==CelesteAttachment57344==
+Content-type: text/plain
+
+This is plain text.
+--==CelesteAttachment57344==
+Content-type: text/html
+
+<html><head></head><body>This is html text</body></html>
+--==CelesteAttachment57344==
+Content-transfer-encoding: base64
+Content-disposition: attachment;filename="testfile.txt"
+Content-type: application/octet-stream
+
+VGhpcyBpcyB0aGUgdGV4dCBvZiB0aGUgbWFpbCBhdHRhY2htZW50IHRvIGJlIGdlbmVyYXRl
+ZA==
+--==CelesteAttachment57344==--
+' findTokens: '--==')
+				reject: [ :each | 'CelesteAttachment*' match: each ])
+]
+
+{ #category : #tests }
 MailMessageTest >> testCreateFromString [
 
 	| text message |

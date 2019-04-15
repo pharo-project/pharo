@@ -70,3 +70,8 @@ MemoryDirectoryEntry >> posixPermissions [
 	
 	^8r777
 ]
+
+{ #category : #accessing }
+MemoryDirectoryEntry >> size [ 
+	^reference size
+]

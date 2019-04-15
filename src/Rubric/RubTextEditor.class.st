@@ -1341,7 +1341,6 @@ RubTextEditor >> inOutdent: aKeyboardEvent delta: delta [
 	Derived from work by Larry Tesler back in December 1985."
 
 	| cr realStart realStop lines startLine stopLine start stop adjustStart indentation size numLines inStream newString outStream |
-	self flag: #toBeReviewed.
 	cr := Character cr.
 
 	"Operate on entire lines, but remember the real selection for re-highlighting later"
@@ -1964,8 +1963,6 @@ RubTextEditor >> saveContentsInFile [
 	"Save the receiver's contents string to a file, prompting the user for a file-name.  Suggest a reasonable file-name."
 
 	| fileName stringToSave parentWindow labelToUse suggestedName lastIndex |
-	self flag: #beurk.
-
 	stringToSave := self string. 
 	stringToSave size = 0 ifTrue: [^self inform: 'nothing to save.'].
 	parentWindow := self model dependents 
@@ -2253,24 +2250,18 @@ RubTextEditor >> setEmphasisHereFromTextForward: lookForward [
 { #category : #private }
 RubTextEditor >> setIndices: shiftPressed forward: forward [
 	"Little helper method that sets the moving and fixed indices according to some flags."
+
 	| indices |
 	indices := Dictionary new.
-	self flag: 'to be reviewed'.
-	(shiftPressed)
-		ifTrue: [
-			indices at: #moving put: self pointIndex.
-			indices at: #fixed put: self markIndex
-		] ifFalse: [
-			forward
-				ifTrue:[
-					indices at: #moving put: self stopIndex.
-					indices at: #fixed put: self startIndex.
-				] ifFalse: [
-					indices at: #moving put: self startIndex.
-					indices at: #fixed put: self stopIndex.
-				]
-		].
-	^indices
+	shiftPressed
+		ifTrue: [ indices at: #moving put: self pointIndex.
+			indices at: #fixed put: self markIndex ]
+		ifFalse: [ forward
+				ifTrue: [ indices at: #moving put: self stopIndex.
+					indices at: #fixed put: self startIndex ]
+				ifFalse: [ indices at: #moving put: self startIndex.
+					indices at: #fixed put: self stopIndex ] ].
+	^ indices
 ]
 
 { #category : #'menu messages' }

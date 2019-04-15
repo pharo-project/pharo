@@ -1,5 +1,7 @@
 "
 Utility class to test exceptions
+
+For a partial explaination of how this class is used, look at the comment of class ExceptionTests.
 "
 Class {
 	#name : #ExceptionTester,

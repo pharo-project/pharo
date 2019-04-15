@@ -150,6 +150,15 @@ RubPluggableTextFieldMorph >> model: anObject [
 	anObject addDependent: self textArea
 ]
 
+{ #category : #'set and get' }
+RubPluggableTextFieldMorph >> setTextAndAccept: aText [ 
+	
+	self 
+		setText: aText;
+		hasUnacceptedEdits: true;
+		accept
+]
+
 { #category : #'event handling' }
 RubPluggableTextFieldMorph >> textChanged [
 	super textChanged.

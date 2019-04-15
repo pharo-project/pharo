@@ -12,6 +12,7 @@ NECSelectorEntry >> browseWith: anECContext [
 	"If there's a corresponding class, search for the method there,
 	otherwise search for the method in the system."
 
+	self flag: #SmalltalkReferences. "Reference to Smalltalk tools"
 	(self guessTypeWith: anECContext)
 		ifNotNil: [ :clazz|
 			Smalltalk tools browser openOnClass: clazz.
@@ -70,7 +71,7 @@ NECSelectorEntry >> guessTypeWith: anECContext [
 	"If the variable is a class, i return the variable itself or its class name.
 	Otherwise i return nil."
 	| globalEntry |
-	globalEntry := Smalltalk at: contents ifAbsent: [^ nil].
+	globalEntry := anECContext globals at: contents ifAbsent: [^ nil].
 	globalEntry isBehavior ifTrue: [^ globalEntry].
 	globalEntry ifNotNil: [^ globalEntry class].
 	^ nil

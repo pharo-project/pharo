@@ -479,13 +479,6 @@ NautilusRefactoring >> notifyNoVariablesIn: aClass [
 	RefactoringAborted signal.
 ]
 
-{ #category : #option }
-NautilusRefactoring >> openEnvironment: anEnvironment for: aRefactoring [
-	anEnvironment isEmpty
-		ifTrue: [ ^ self inform: 'Empty scope' ].
-	Smalltalk tools browser openInEnvironment: anEnvironment
-]
-
 { #category : #performing }
 NautilusRefactoring >> performRefactoring: aRefactoring [
 	"Try to properly label aRefactoring and perform it or open the changes browser, depending on the preferences of the user."
@@ -1139,9 +1132,7 @@ NautilusRefactoring >> refactoringOptions: aRefactoring [
 		setOption: #alreadyDefined
 		toUse: [ :ref :class :selector | self shouldOverride: selector in: class ];
 		setOption: #useExistingMethod
-		toUse: [ :ref :selector | self shouldUseExistingMethod: selector ];
-		setOption: #openBrowser
-		toUse: [ :ref :env | self openEnvironment: env  for: ref]
+		toUse: [ :ref :selector | self shouldUseExistingMethod: selector ]
 ]
 
 { #category : #'class var' }

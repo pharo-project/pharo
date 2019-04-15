@@ -52,6 +52,6 @@ BaseSlot >> isVisible [
 
 { #category : #'meta-object-protocol' }
 BaseSlot >> wantsInitalization [
-	"if a slot wants to hable initalization, return true here"
+	"we need to call the initialize to set the default value for the base slot"
 	^true
 ]

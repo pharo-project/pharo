@@ -41,17 +41,9 @@ Slot class >> checkValidName: aSymbol [
 
 { #category : #'class initialization' }
 Slot class >> initialize [
-	Properties
-		ifNil: [ self initializeProperties ]
-		ifNotNil: [ | newDict | 
-			newDict := WeakIdentityKeyDictionary newFrom: Properties.
-			newDict rehash.
-			Properties := newDict ]
-]
-
-{ #category : #'class initialization' }
-Slot class >> initializeProperties [
-	Properties := WeakIdentityKeyDictionary new.
+	Properties := Properties
+		ifNil: [ WeakIdentityKeyDictionary new. ]
+		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
 ]
 
 { #category : #'instance creation' }
@@ -110,9 +102,9 @@ Slot >> asSlot [
 	^ self
 ]
 
-{ #category : #'class building' }
-Slot >> changingIn: aClass [
-	"the slot was changed. Default is to do nothing"
+{ #category : #accessing }
+Slot >> baseSlot [
+	^self
 ]
 
 { #category : #accessing }
@@ -365,11 +357,6 @@ Slot >> removeProperty: propName ifAbsent: aBlock [
 	^ property
 ]
 
-{ #category : #'class building' }
-Slot >> removingFrom: aClass [
-	"I am called by the class builder. This way a Slot can change the class it is installed in"
-]
-
 { #category : #accessing }
 Slot >> scope: aScope [
 	"ignored, subclasses can override to analyze the scope they are to be installed in"
@@ -397,7 +384,7 @@ Slot >> usingMethods [
 
 { #category : #'meta-object-protocol' }
 Slot >> wantsInitalization [
-	"if a slot wants to hable initalization, return true here"
+	"if a slot wants to enable instance initalization, return true here"
 	^false
 ]
 

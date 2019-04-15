@@ -194,7 +194,7 @@ SourceFileArray >> changesWriteStreamDo: aBlock [
 	changesFile isReadOnly ifTrue: [ ^ self ].
 	changesFile setToEnd.
 	
-	[ ^ aBlock value: changesFile] ensure: [ self emptyReadStreamsQueue ]
+	^ aBlock value: changesFile
 ]
 
 { #category : #'public - file system operations' }
@@ -237,8 +237,7 @@ SourceFileArray >> deferFlushDuring: aBlock [
 	
 	^ [ aBlock value ] ensure: [
 		flushChanges := true.
-		self flushChangesFile.
-		self emptyReadStreamsQueue ]
+		self flushChangesFile ]
 ]
 
 { #category : #'public - file system operations' }
@@ -311,7 +310,6 @@ SourceFileArray >> flushChangesFile [
 	
 	flushChanges ifFalse: [ ^ self ].
 	self changesFileStream ifNotNil: #flush.
-	self emptyReadStreamsQueue.
 ]
 
 { #category : #'public - file system operations' }
@@ -323,8 +321,7 @@ SourceFileArray >> forceChangesToDisk [
 	changesFile flush.
 	changesFile close.
 	changesFile tryOpen.
-	changesFile setToEnd.
-	self emptyReadStreamsQueue
+	changesFile setToEnd
 ]
 
 { #category : #'public - string reading' }
@@ -568,7 +565,6 @@ SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlo
 	(ChunkWriteStream on: file) nextChunkPut: aString.
 
 	self flushChangesFile.
-	self emptyReadStreamsQueue.
 
 	successBlock value: (self sourcePointerFromFileIndex: 2 andPosition: position)
 ]
