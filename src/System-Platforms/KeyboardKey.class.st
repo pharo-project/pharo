@@ -257,7 +257,7 @@ KeyboardKey class >> initializeKeyTable [
 		16r007c bar "XK_bar"
 		16r007d braceright "XK_braceright"
 		16r007e asciitilde "XK_asciitilde")
-			pairsDo: [ :keyCode :keyname | KeyTable at: keyCode put: (self basicNew withValue: keyCode andName: keyname asUppercase) ].
+			pairsDo: [ :keyCode :keyname | KeyTable at: keyCode put: (self basicNew withValue: keyCode andName: keyname) ].
 ]
 
 { #category : #macos }
