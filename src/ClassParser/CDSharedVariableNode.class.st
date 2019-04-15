@@ -39,9 +39,3 @@ CDSharedVariableNode >> isVariable [
 		^false ].
 	^existingClass hasClassVarNamed: name asSymbol
 ]
-
-{ #category : #suggestions }
-CDSharedVariableNode >> specialCommands [
-
-	^ SugsSuggestionFactory commandsForClassVariable
-]
