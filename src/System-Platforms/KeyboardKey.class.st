@@ -604,6 +604,16 @@ KeyboardKey class >> macOSVirtualKeyTable [
 	^MacosVirtualKeyTable
 ]
 
+{ #category : #'instance creation' }
+KeyboardKey class >> named: aString [
+	"Returns the instance of myself having aString as name.
+	
+	 (KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)
+	"
+	
+	^ KeyTable detect: [ :keyboardKey | keyboardKey name = aString ]
+]
+
 { #category : #unix }
 KeyboardKey class >> unixVirtualKeyTable [
 	UnixVirtualKeyTable ifNil: [ self initializeUnixVirtualKeyTable. ].
