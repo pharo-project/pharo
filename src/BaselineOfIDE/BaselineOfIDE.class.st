@@ -355,6 +355,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'System-Settings-Tests'.
 		spec package: 'System-Support-Rules'.
 		spec package: 'System-Support-Tests'.
+		spec package: 'System-Platforms-Tests'.
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
