@@ -345,6 +345,9 @@ CompiledMethod >> classBinding: aBinding [
 { #category : #accessing }
 CompiledMethod >> codeForNoSource [
 	"if everything fails, decompile the bytecode"
+	"If there is no compiler, we cannot decompile it"	
+	Smalltalk hasCompiler ifFalse: [ ^ nil ].
+	
 	 ^(self compiler decompileMethod: self) formattedCode
 ]
 
