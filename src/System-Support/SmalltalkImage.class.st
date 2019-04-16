@@ -750,6 +750,12 @@ SmalltalkImage >> hasClassNamed: aString [
 	^ globals hasClassNamed: aString
 ]
 
+{ #category : #compiler }
+SmalltalkImage >> hasCompiler [
+
+	^ self compilerClass isNotNil
+]
+
 { #category : #image }
 SmalltalkImage >> image [
 	"Answer the object to query about the current object memory and execution environment."
