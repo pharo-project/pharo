@@ -227,32 +227,6 @@ KeyboardKey class >> initializeKeyTable [
 		16r005f underscore "XK_underscore"
 		16r0060 grave "XK_grave"
 		"16r0060 quoteleft" "XK_quoteleft"
-		16r0061 a "XK_a"
-		16r0062 b "XK_b"
-		16r0063 c "XK_c"
-		16r0064 d "XK_d"
-		16r0065 e "XK_e"
-		16r0066 f "XK_f"
-		16r0067 g "XK_g"
-		16r0068 h "XK_h"
-		16r0069 i "XK_i"
-		16r006a j "XK_j"
-		16r006b k "XK_k"
-		16r006c l "XK_l"
-		16r006d m "XK_m"
-		16r006e n "XK_n"
-		16r006f o "XK_o"
-		16r0070 p "XK_p"
-		16r0071 q "XK_q"
-		16r0072 r "XK_r"
-		16r0073 s "XK_s"
-		16r0074 t "XK_t"
-		16r0075 u "XK_u"
-		16r0076 v "XK_v"
-		16r0077 w "XK_w"
-		16r0078 x "XK_x"
-		16r0079 y "XK_y"
-		16r007a z "XK_z"
 		16r007b braceleft "XK_braceleft"
 		16r007c bar "XK_bar"
 		16r007d braceright "XK_braceright"
@@ -262,6 +236,7 @@ KeyboardKey class >> initializeKeyTable [
 
 { #category : #macos }
 KeyboardKey class >> initializeMacOSVirtualKeyTable [
+	self flag: #TODO. "Some values are missing, need to gather them from users who are able to."
 	MacosVirtualKeyTable := Dictionary new.
 	MacosVirtualKeyTable
 		at: 16r24 put: (self value: 16rff0d); " kVK_Return                    = 0x24"
@@ -293,7 +268,7 @@ KeyboardKey class >> initializeMacOSVirtualKeyTable [
 		at: 16r67 put: (self value: 16rffc8); "  kVK_F11                       = 0x67"
 		at: 16r6D put: (self value: 16rffc7); "  kVK_F10                       = 0x6D"
 		at: 16r6F put: (self value: 16rffc9); "  kVK_F12                       = 0x6F"
-		at: 16r72 put: (self value: 16r72); "  kVK_Help                      = 0x72" "Not mapped"
+		"at: 16r72 put: (self value: 16r72);" "  kVK_Help                      = 0x72" "Not mapped"
 		at: 16r73 put: (self value: 16rff50); "  kVK_Home                      = 0x73"
 		at: 16r74 put: (self value: 16rff55); "  kVK_PageUp                    = 0x74"
 		at: 16r75 put: (self value: 16rffff); "  kVK_ForwardDelete             = 0x75"
@@ -374,6 +349,7 @@ KeyboardKey class >> initializeMacOSVirtualKeyTable [
 
 { #category : #unix }
 KeyboardKey class >> initializeUnixVirtualKeyTable [
+	self flag: #TODO. "Some values are missing, need to gather them from users who are able to."
 	UnixVirtualKeyTable := Dictionary new.
 	UnixVirtualKeyTable
 		at: Character cr asciiValue put: (self value: 16rff0d); " kVK_Return       = 0x24"
@@ -406,7 +382,7 @@ KeyboardKey class >> initializeUnixVirtualKeyTable [
 		at: -1 put: (self value: 16rffc8); "  kVK_F11                              = 0x67"
 		at: -1 put: (self value: 16rffc7); "  kVK_F10                              = 0x6D"
 		at: -1 put: (self value: 16rffc9); "  kVK_F12                              = 0x6F"
-		at: -1 put: (self value: 16r72); "  kVK_Help                               = 0x72" "Not mapped"
+		"at: -1 put: (self value: 16r72);" "  kVK_Help                               = 0x72" "Not mapped"
 		at: Character home asciiValue put: (self value: 16rff50); "  kVK_Home      = 0x73"
 		at: Character pageUp asciiValue put: (self value: 16rff55); "  kVK_PageUp  = 0x74"
 		at: Character delete asciiValue put: (self value: 16rffff); "  kVK_ForwardDelete   = 0x75"
@@ -487,6 +463,7 @@ KeyboardKey class >> initializeUnixVirtualKeyTable [
 
 { #category : #windows }
 KeyboardKey class >> initializeWindowsVirtualKeyTable [
+	self flag: #TODO. "Some values are missing, need to gather them from users who are able to."
 	WindowsVirtualKeyTable := Dictionary new.
 	WindowsVirtualKeyTable
 		at: 16r0d put: (self value: 16rff0d); " kVK_Return                    = 0x24"
@@ -519,7 +496,7 @@ KeyboardKey class >> initializeWindowsVirtualKeyTable [
 		at: 16r79 put: (self value: 16rffc8); "  kVK_F11                       = 0x67"
 		at: 16r7a put: (self value: 16rffc7); "  kVK_F10                       = 0x6D"
 		at: 16r7b put: (self value: 16rffc9); "  kVK_F12                       = 0x6F"
-		at: 16r2f put: (self value: 16r72); "  kVK_Help                      = 0x72" "Not mapped"
+		"at: 16r2f put: (self value: 16r72);" "  kVK_Help                      = 0x72" "Not mapped"
 		at: 16r24 put: (self value: 16rff50); "  kVK_Home                      = 0x73"
 		at: 16r21 put: (self value: 16rff55); "  kVK_PageUp                    = 0x74"
 		at: 16r2e put: (self value: 16rffff); "  kVK_ForwardDelete             = 0x75"
@@ -604,6 +581,16 @@ KeyboardKey class >> macOSVirtualKeyTable [
 	^MacosVirtualKeyTable
 ]
 
+{ #category : #'instance creation' }
+KeyboardKey class >> named: aString [
+	"Returns the instance of myself having aString as name.
+	
+	 (KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)
+	"
+	
+	^ KeyTable detect: [ :keyboardKey | keyboardKey name = aString ]
+]
+
 { #category : #unix }
 KeyboardKey class >> unixVirtualKeyTable [
 	UnixVirtualKeyTable ifNil: [ self initializeUnixVirtualKeyTable. ].
@@ -663,6 +650,11 @@ KeyboardKey >> printOn: aStream [
 		nextPutAll: ' code: (';
 		print: value;
 		nextPutAll: ')'
+]
+
+{ #category : #accessing }
+KeyboardKey >> value [
+	^ value
 ]
 
 { #category : #initialization }
