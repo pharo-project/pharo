@@ -116,3 +116,25 @@ CDBehaviorParserTest >> testClassDefFromLegacyStringHasSlots [
 	self assert: classDefinition slotNodes first name equals: self firstInstanceVariableName.
 	self assert: classDefinition slotNodes second name equals: self secondInstanceVariableName.
 ]
+
+{ #category : #tests }
+CDBehaviorParserTest >> testClassNameNodeHaveParentReference [
+
+	| nameNode |
+	nameNode := classDefinition classNameNode.
+	
+	self assert: nameNode parent identicalTo: classDefinition.
+	self assert: nameNode classDefinitionNode identicalTo: classDefinition.
+	self assert: (classDefinition children includes: nameNode)
+]
+
+{ #category : #tests }
+CDBehaviorParserTest >> testSlotNodesHaveParentReference [
+
+	| slotNode |
+	slotNode := classDefinition slotNodes first.
+	
+	self assert: slotNode parent identicalTo: classDefinition.
+	self assert: slotNode classDefinitionNode identicalTo: classDefinition.
+	self assert: (classDefinition children includes: slotNode)
+]
