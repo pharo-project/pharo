@@ -772,7 +772,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Ring-Deprecated-Tests-Containers' 
 	'Tests' 
 	'Zinc-Character-Encoding-Tests' 
-
+	'System-Platforms-Tests'
 	'Text-Tests'		"required by Multilingual-Tests"
 ).
 
