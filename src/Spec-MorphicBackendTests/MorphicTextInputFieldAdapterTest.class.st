@@ -11,7 +11,6 @@ MorphicTextInputFieldAdapterTest >> classToTest [
 
 { #category : #tests }
 MorphicTextInputFieldAdapterTest >> testChangeWidgetTextUpdatesPresenter [
-
 	self widget setTextAndAccept: 'some text'.
 	
 	self assert: presenter text equals: 'some text'
@@ -26,7 +25,6 @@ MorphicTextInputFieldAdapterTest >> testInvisibilityIsSetInWidget [
 
 { #category : #tests }
 MorphicTextInputFieldAdapterTest >> testMaxLengthIsSetInWidget [
-
 	presenter maxLength: 10.
 	self assert: self widget maxLength equals: 10
 ]
