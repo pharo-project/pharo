@@ -515,7 +515,7 @@ MenuMorph >> addUpdating: wordingSelector target: target selector: aSymbol argum
  
 	|aString str|
 	aString := (MessageSend receiver: target selector: wordingSelector) valueWithEnoughArguments: argList.
-	self flag: #CleanYesNoOnOffAfter.
+	self flag: #pharoFixMe.
 	(aString isKindOf: Association)
 	     ifTrue: [aString := aString value]
 		ifFalse: [
@@ -535,7 +535,7 @@ MenuMorph >> addUpdating: wordingSelector target: target selector: aSymbol argum
 MenuMorph >> addWithLabel: aLabelString enablement: anEnablementSelector action: aSymbol [
 	"Append a menu item with the given label. If the item is selected, it will send the given selector to the target object with the given arguments. If the selector takes one more argument than the number of arguments in the given list, then the triggering event is supplied as as the last argument.  In this variant, the wording of the menu item is constant, and the optional enablementSelector determines whether or not the item should be enabled."
 
-	self flag: #ToDeprecate.
+	self flag: #pharoToDeprecate.
 	self
 		addToggle: aLabelString
 		target: defaultTarget
@@ -736,8 +736,8 @@ MenuMorph >> displayFiltered: evt [
 { #category : #menu }
 MenuMorph >> doButtonAction [
 	"Do the receiver's inherent button action.  Makes sense for the kind of MenuMorph that is a wrapper for a single menu-item -- pass it on the the item"
-	self flag: '?'.
-	self hasItems ifTrue: [self menuItems first doButtonAction]
+
+	self hasItems ifTrue: [ self menuItems first doButtonAction ]
 ]
 
 { #category : #drawing }

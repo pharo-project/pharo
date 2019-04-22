@@ -29,5 +29,5 @@ AbstractEnumerationVisitorTest >> root [
 { #category : #running }
 AbstractEnumerationVisitorTest >> setUp [
 	super setUp.
-	self setUpGreek.
+	self setUpGreek
 ]

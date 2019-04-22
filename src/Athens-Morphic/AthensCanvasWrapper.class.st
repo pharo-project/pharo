@@ -26,14 +26,10 @@ AthensCanvasWrapper >> allocateForm: extentPoint [
 
 { #category : #'canvas converting' }
 AthensCanvasWrapper >> asShadowDrawingCanvas [
-	self flag: #todo.	"this may not work, but it
-doesn't hurt yet and HandMorph relies on this"
-	^ (ShadowDrawingCanvas on: self) shadowColor: (Color orange alpha: 0.2)
-]
+	"this may not work, but it 
+	doesn't hurt yet and HandMorph relies on this"
 
-{ #category : #'canvas drawing-support' }
-AthensCanvasWrapper >> cache: aRectangle using: aCache during: aBlock [ 
-	self flag:#noKnownSender
+	^ (ShadowDrawingCanvas on: self) shadowColor: (Color orange alpha: 0.2)
 ]
 
 { #category : #private }
@@ -241,7 +237,7 @@ AthensCanvasWrapper >> drawString: aString from: firstIndex to: lastIndex in: bo
 			self canvas pathTransform restoreAfter:[ | advance |
 			self canvas pathTransform translateBy: bounds origin.
 			self canvas pathTransform translateX: 0 Y: font getPreciseAscent.
-			self flag: #todo.	"scaled, so that FT-Plugin and Athens don't mix cached faces"
+			self flag: #pharoTodo. "scaled, so that FT-Plugin and Athens don't mix cached faces"
 			self canvas pathTransform scaleBy: 1.0000001 @ 1.0000001.
 			self canvas setPaint: aColor.
 			self canvas setFont: font.
@@ -267,7 +263,7 @@ AthensCanvasWrapper >> drawString: aString in: bounds font: aFontOrNil color: aC
 			self canvas pathTransform restoreAfter:[ 
 			self canvas pathTransform translateBy: bounds origin.
 			self canvas pathTransform translateX: 0 Y: font getPreciseAscent.
-			self flag: #todo.	"scaled, so that FT-Plugin and Athens don't mix cached faces"
+			self flag: #pharoTodo. "scaled, so that FT-Plugin and Athens don't mix cached faces"
 			self canvas pathTransform scaleBy: 1.0000001 @ 1.0000001.
 			self canvas setPaint: aColor.
 			self canvas setFont: font.
@@ -296,7 +292,7 @@ AthensCanvasWrapper >> extent [
 
 { #category : #'canvas drawing' }
 AthensCanvasWrapper >> fillColor: aColor [
-	self flag:#NoKnownSender
+	self deprecated: 'We think there is no senders of this method. If the deprecation is raised please report it with the steps to reproduce.'
 ]
 
 { #category : #'canvas drawing-ovals' }
@@ -430,13 +426,12 @@ AthensCanvasWrapper >> fullDrawMorph: aMorph [
 
 { #category : #private }
 AthensCanvasWrapper >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
- 
-    self flag: #MayBeWrong.
-    self canvas pathTransform
-        restoreAfter: [ 
-            self canvas pathTransform translateBy: aPoint.
-            self canvas setPaint: aForm.
-            self canvas drawShape: (0 @ 0 extent: sourceRect extent) ] 
+	"This implementation may be wrong. If you have a bug it might be a good idea to dig a little here."
+
+	self canvas pathTransform
+		restoreAfter: [ self canvas pathTransform translateBy: aPoint.
+			self canvas setPaint: aForm.
+			self canvas drawShape: (0 @ 0 extent: sourceRect extent) ]
 ]
 
 { #category : #private }

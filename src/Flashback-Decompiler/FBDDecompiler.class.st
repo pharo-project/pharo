@@ -235,6 +235,11 @@ FBDDecompiler >> generateNativeBoostCallErrorMethodFrom: aCompiledMethod [
 		class: aCompiledMethod methodClass
 ]
 
+{ #category : #'data flow instructions' }
+FBDDecompiler >> goToNextInstruction [
+	instructionStream nextInstruction
+]
+
 { #category : #private }
 FBDDecompiler >> incrArgCount [
 	argCount := argCount + 1
@@ -568,11 +573,7 @@ FBDDecompiler >> shouldUseOriginalMethod: aCompiledMethod [
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> skipTemps: numTemps [
-	self flag: #FIXME. "should dispatch to the encoder"
-	instructionStream method encoderClass name = #EncoderForSistaV1
-		ifTrue: [ numTemps > 0 ifTrue: [ instructionStream nextInstruction ] ]
-		ifFalse: [ numTemps timesRepeat: [ instructionStream nextInstruction ] ]
-	
+	instructionStream method encoderClass skipTemps: numTemps for: self
 ]
 
 { #category : #'data flow instructions' }

@@ -30,11 +30,6 @@ GLMMorphicRenderer >> renderAccordionCompositePresentation: aCompositePresentati
 	^ GLMMorphicAccordionRenderer render: aCompositePresentation from: self
 ]
 
-{ #category : #'rendering browsers' }
-GLMMorphicRenderer >> renderAccumulator: aBrowser [ 
-	^ GLMMorphicAccumulatorRenderer render: aBrowser from: self
-]
-
 { #category : #'rendering actions' }
 GLMMorphicRenderer >> renderAction: anAction [
 	^ GLMMorphicActionRenderer render: anAction from: self
@@ -166,11 +161,6 @@ GLMMorphicRenderer >> renderTextPresentation: aTextPresentation [
 { #category : #'rendering presentations' }
 GLMMorphicRenderer >> renderTreePresentation: aPresentation [ 
 	^ GLMMorphicTreeRenderer render: aPresentation from: self
-]
-
-{ #category : #'rendering browsers' }
-GLMMorphicRenderer >> renderWrapper: aBrowser [ 
-	^ GLMMorphicWrapperRenderer render: aBrowser from: self
 ]
 
 { #category : #accessing }

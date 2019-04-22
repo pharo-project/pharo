@@ -29,7 +29,7 @@ FFIExternalPackedStructureTests >> testExternallyAllocatedStructure [
 		self assert: struct2 long equals: 100.	
 		self assert: struct2 float equals: 1.0.	
 		self assert: struct2 double equals: 2.0.	
-		self flag: #todo. "This is not yet implemented"
+		self flag: #pharoTodo. "This is not yet implemented"
 		"self assert: (struct2 int64 = 123456789101112)."	 ] 
 	ensure: [  struct free ]
 ]
@@ -48,7 +48,7 @@ FFIExternalPackedStructureTests >> testStructAccess [
 	struct long: 100.
 	struct float: 1.0.
 	struct double: 2.0.
-		self flag: #todo. "This is not yet implemented"
+		self flag: #pharoTodo. "This is not yet implemented"
 	"struct int64: 123456789101112."
 	
 	self assert: struct byte equals: 10.

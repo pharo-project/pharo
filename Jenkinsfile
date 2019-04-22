@@ -32,18 +32,18 @@ def runTests(architecture, prefix=''){
   dir(env.STAGE_NAME) {
     try {
         unstash "bootstrap${architecture}"
-        shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
-        junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
-        archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
+        shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}'"
+        junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}${prefix}*.xml"
+        archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
     }finally{
         // I am archiving the logs to check for crashes and errors.
         if(fileExists('PharoDebug.log')){
-            shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}.log"
-            archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-${env.STAGE_NAME}.log", fingerprint: true
+            shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}${prefix}.log"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-${env.STAGE_NAME}${prefix}.log", fingerprint: true
         }
         if(fileExists('crash.dmp')){
-            shell "mv crash.dmp crash-${env.STAGE_NAME}.dmp"
-            archiveArtifacts allowEmptyArchive: true, artifacts: "crash-${env.STAGE_NAME}.dmp", fingerprint: true
+            shell "mv crash.dmp crash-${env.STAGE_NAME}${prefix}.dmp"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "crash-${env.STAGE_NAME}${prefix}.dmp", fingerprint: true
         }
     }
   }
@@ -96,10 +96,10 @@ Pull request url: ${pullRequestUrl}
 """
       title = pullRequestTitle
       def issueNumber = pullRequestJSON['head']['ref'].split('-')[0]
-      def fogbugzUrl = "https://pharo.fogbugz.com/f/cases/${issueNumber}"
+      def issueUrl = "https://github.com/pharo-project/pharo/issues/${issueNumber}"
       
       mailMessage += """
-Issue Url: ${fogbugzUrl}"""
+Issue Url: ${issueUrl}"""
     } else {
       mailMessage += """
 No associated issue found"""

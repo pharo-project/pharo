@@ -267,7 +267,9 @@ ShClassInstallerTest >> testTryingToModifyReadOnlyInstances [
 	obj2 := newClass new.	
 	obj2 instVarNamed: #anInstanceVariable put: 17.
 
-	self should: [self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable)] raise: Error.
+	self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable).
+
+	self assert: obj isReadOnlyObject.	
 
 ]
 
@@ -286,6 +288,8 @@ ShClassInstallerTest >> testTryingToModifyReadOnlySubInstances [
 	obj2 instVarNamed: #aSuperVariable put: 11.
 	obj2 instVarNamed: #anInstanceVariable put: 17.
 
-	self should: [self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable)] raise: Error.
+	self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable).
+	
+	self assert: obj isReadOnlyObject.	
 
 ]

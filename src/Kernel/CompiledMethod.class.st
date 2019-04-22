@@ -345,34 +345,10 @@ CompiledMethod >> classBinding: aBinding [
 { #category : #accessing }
 CompiledMethod >> codeForNoSource [
 	"if everything fails, decompile the bytecode"
+	"If there is no compiler, we cannot decompile it"	
+	Smalltalk hasCompiler ifFalse: [ ^ nil ].
+	
 	 ^(self compiler decompileMethod: self) formattedCode
-]
-
-{ #category : #accessing }
-CompiledMethod >> comments [
-	"Maybe this method should be rewritten to use the AST instead"
-	
-	"Answer a string representing the comments in the method. Return an empty collection if the relevant source file is not available, or if the method's source code does not contain a comment.  Not smart enough to bypass quotes in string constants, but does map doubled quote into a single quote."
-	
-	^self commentsIn: self sourceCode
-]
-
-{ #category : #private }
-CompiledMethod >> commentsIn: sourceString [
-
-	| commentStart nextQuotePos someComments aPos |
-	('*"*' match: sourceString) ifFalse: [^#()].
-	someComments:= OrderedCollection new.
-	sourceString isEmpty ifTrue: [^ someComments].
-	aPos:=1.
-	nextQuotePos:= 0.
-	[commentStart := sourceString findString: '"' startingAt: aPos.
-	nextQuotePos:= self nextQuotePosIn: sourceString startingFrom: commentStart.
-	(commentStart ~= 0 and: [nextQuotePos >commentStart])] whileTrue: [
-		commentStart ~= nextQuotePos ifTrue: [
-			someComments add: ((sourceString copyFrom: commentStart + 1 to: nextQuotePos - 1) copyReplaceAll: '""' with: '"').].
-	aPos := nextQuotePos+1].
-	^someComments
 ]
 
 { #category : #'source code management' }
@@ -420,15 +396,6 @@ CompiledMethod >> embeddSourceInTrailer [
 ]
 
 { #category : #accessing }
-CompiledMethod >> firstComment [	
-	"Answer a string representing the first comment in the method associated with selector.  Return an empty string if the relevant source file is not available, or if the method's source code does not contain a comment.  Not smart enough to bypass quotes in string constants, but does map doubled quote into a single quote."
-	
-	^self comments 
-		ifEmpty: [ #() ]
-		ifNotEmpty: [ :comments | comments first ] 
-]
-
-{ #category : #accessing }
 CompiledMethod >> flushCache [
 	"Tell the virtual machine to remove all references to this method from its method lookup caches, and to discard any optimized version 	of the method, if it has any of these.  This must be done whenever a method is modified in place, such as modifying its literals or 	machine code, to reflect the revised code.  c.f. Behavior>>flushCache & Symbol>>flushCache.  Essential.	 See MethodDictionary class 	comment."
 
@@ -454,6 +421,9 @@ CompiledMethod >> getSourceFromFile [
 CompiledMethod >> getSourceReplacingSelectorWith: newSelector [
 	| oldKeywords newKeywords source newSource oldSelector start |
 	source := self sourceCode.
+	
+	source ifNil: [ ^ nil ].
+	
 	oldSelector := self selector.
 	oldSelector = newSelector ifTrue: [ ^ source ].
 	
@@ -710,16 +680,6 @@ CompiledMethod >> methodClass: aClass [
 { #category : #accessing }
 CompiledMethod >> name [
 	^ self printString
-]
-
-{ #category : #private }
-CompiledMethod >> nextQuotePosIn: sourceString startingFrom: commentStart [
-	| pos nextQuotePos |
-	pos := commentStart + 1.
-	[((nextQuotePos := sourceString findString: '"' startingAt: pos) == (sourceString findString: '""' startingAt: pos)) and: [nextQuotePos ~= 0]]
-		whileTrue:
-			[pos := nextQuotePos + 2].
-	^nextQuotePos
 ]
 
 { #category : #accessing }

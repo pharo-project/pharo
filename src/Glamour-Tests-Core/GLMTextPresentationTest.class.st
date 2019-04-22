@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #tests }
-GLMTextPresentationTest >> expectedFailures [
-
-	^ #(testTextPortIsPopulatedByDefault)
-]
-
-{ #category : #tests }
 GLMTextPresentationTest >> testSelectedText [
 	| presentation |
 	presentation := GLMRubricTextPresentation new.
@@ -31,6 +25,7 @@ GLMTextPresentationTest >> testSelectionIntervalInitialization [
 
 { #category : #tests }
 GLMTextPresentationTest >> testTextPortIsPopulatedByDefault [
+	<expectedFailure>
 	| composite |
 	composite := (GLMCompositePresentation new with: [:a | a text ]) startOn: '42'.
 	self assert: composite presentations first text equals: '42'

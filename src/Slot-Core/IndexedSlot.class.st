@@ -38,7 +38,7 @@ IndexedSlot >> index: anIndex [
 
 { #category : #testing }
 IndexedSlot >> isVirtual [
-	"virtual slots do not take up space in the object and have size = 0"
+	"indexed slots are the only not virtual slots for now"
 	^false
 ]
 

@@ -86,9 +86,7 @@ InfiniteForm >> displayOnPort: aPort at: offset [
 
 	| targetBox patternBox savedMap top left |
 
-	self flag: #bob.
-
-	"this *may* not get called at the moment. I have been trying to figure out the right way for this to work and am using #displayOnPort:offsetBy: as my current offering - Bob"
+	self flag: #pharoFixMe. "this *may* not get called at the moment. I have been trying to figure out the right way for this to work and am using #displayOnPort:offsetBy: as my current offering - Bob"
 
 	(patternForm isForm) ifFalse: [
 		"patternForm is a Pattern or Color; just use it as a mask for BitBlt"

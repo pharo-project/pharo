@@ -9,7 +9,7 @@ e.g. make a class lile this:
 Object subclass: #TT
 	slots: { #i => ComputedSlot with: [ :o | o class methods size ] }
 	classVariables: {  }
-	category: 'TT'
+	package: 'TT'
 "
 Class {
 	#name : #ComputedSlot,
@@ -28,6 +28,15 @@ ComputedSlot >> = other [
 { #category : #accessing }
 ComputedSlot >> block [
 	^block
+]
+
+{ #category : #'code generation' }
+ComputedSlot >> emitValue: methodBuilder [
+
+		methodBuilder
+			pushLiteral: block;
+			pushReceiver;
+			send: #cull:.
 ]
 
 { #category : #comparing }
@@ -55,7 +64,7 @@ ComputedSlot >> printOn: aStream [
 
 { #category : #'meta-object-protocol' }
 ComputedSlot >> read: anObject [
-	^block value: anObject
+	^block cull: anObject
 	
 ]
 

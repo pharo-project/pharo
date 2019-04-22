@@ -565,7 +565,7 @@ ChangeSorterApplication >> openChangeSetBrowser [
 	| cs |
 	
 	cs := self selectedChangeSet ifNil: [^self].
-	^Smalltalk tools browser openInEnvironment: (RBBrowserEnvironment new forClasses: cs changedClasses)
+	^Smalltalk tools messageList browseClasses: cs changedClasses
 ]
 
 { #category : #initialization }

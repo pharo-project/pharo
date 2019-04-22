@@ -19,16 +19,10 @@ SlotErrorsTest >> assertInvalidClassName: aName [
 		raise: InvalidGlobalName
 ]
 
-{ #category : #running }
-SlotErrorsTest >> expectedFailures [ 
-
-	^ #(testCannotBeRecompiled)
-]
-
 { #category : #tests }
 SlotErrorsTest >> testCannotBeRecompiled [
-
 	| superclass |
+	<expectedFailure>
 	superclass := self make: [ :builder | 
 		builder 
 			superclass: Object;

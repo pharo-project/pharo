@@ -59,7 +59,7 @@ FFIExternalStructureTests >> testExternallyAllocatedStructure [
 		self assert: struct2 long equals: 100.	
 		self assert: struct2 float equals: 1.0.	
 		self assert: struct2 double equals: 2.0.	
-		self flag: #todo. "This is not yet implemented"
+		self flag: #pharoTodo. "This is not yet implemented"
 		"self assert: struct2 int64 equals: 123456789101112."	 ] 
 	ensure: [  struct free ]
 ]
@@ -127,6 +127,7 @@ FFIExternalStructureTests >> testNestedStructure [
 	s1 nested byte: 42.
 	s1 nested float: 4.0.
 	s1 nested double: 42.0.
+	s1 nested size_t: 23.
 
 	s1 nested long: -123456.
 	s1 nested ulong: 123456.
@@ -136,6 +137,7 @@ FFIExternalStructureTests >> testNestedStructure [
 	self assert: s1 nested double equals: 42.0.	
 	self assert: s1 nested long equals: -123456.
 	self assert: s1 nested ulong equals: 123456.
+	self assert: s1 nested size_t equals: 23.
 
 ]
 
@@ -176,7 +178,7 @@ FFIExternalStructureTests >> testStructAccess [
 	struct long: 100.
 	struct float: 1.0.
 	struct double: 2.0.
-		self flag: #todo. "This is not yet implemented"
+		self flag: #pharoTodo. "This is not yet implemented"
 	"struct int64: 123456789101112."
 	
 	self assert: struct byte equals: 10.

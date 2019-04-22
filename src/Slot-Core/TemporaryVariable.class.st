@@ -23,19 +23,10 @@ Class {
 
 { #category : #'class initialization' }
 TemporaryVariable class >> initialize [
-	Properties
-		ifNil: [ self initializeProperties ]
-		ifNotNil: [ | newDict | 
-			newDict := WeakIdentityKeyDictionary newFrom: Properties.
-			newDict rehash.
-			Properties := newDict ].
-	PersistentTemps ifNil: [ PersistentTemps := Set new]
-		
-]
-
-{ #category : #'class initialization' }
-TemporaryVariable class >> initializeProperties [
-	Properties := WeakIdentityKeyDictionary new.
+	Properties := Properties
+		ifNil: [ WeakIdentityKeyDictionary new ]
+		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash ].
+	PersistentTemps ifNil: [ PersistentTemps := Set new ]
 ]
 
 { #category : #'instance creation' }

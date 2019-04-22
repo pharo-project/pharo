@@ -294,6 +294,11 @@ RBTransformationDummyRuleTest >> isEmpty [
 RBTransformationDummyRuleTest >> newUnclassifiedMethod [
 ]
 
+{ #category : #rules }
+RBTransformationDummyRuleTest >> parseTreeRewriter [
+	^ RBParseTreeRewriter new
+]
+
 { #category : #accessing }
 RBTransformationDummyRuleTest >> problemCount [
 	^builder problemCount
@@ -313,14 +318,15 @@ RBTransformationDummyRuleTest >> rewriteUsing: searchReplacer [
 { #category : #rules }
 RBTransformationDummyRuleTest >> superSends [
 	| rule |
-	rule := RBParseTreeRewriter new.
-	rule addSearch: 'super `@message: ``@args'
-				-> (
-					[:aNode | 
+	rule := self parseTreeRewriter.
+	rule
+		addSearch:
+			'super `@message: ``@args'
+				->
+					([ :aNode | 
 					(class withAllSubclasses
-						detect: [:each | each includesSelector: aNode selector]
-						ifNone: [nil]) isNil]
-							-> 'self `@message: ``@args').
+						detect: [ :each | each includesSelector: aNode selector ]
+						ifNone: [ nil ]) isNil ] -> 'self `@message: ``@args').
 	self rewriteUsing: rule
 ]
 

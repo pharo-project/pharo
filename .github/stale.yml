@@ -30,9 +30,10 @@ staleLabel: stale
 
 # Comment to post when marking as stale. Set to `false` to disable
 markComment: >
-  This issue has been automatically marked as stale because it has not had
-  recent activity. It will be closed if no further activity occurs. Thank you
-  for your contributions.
+  To limit bug bankruptcy (see https://www.joelonsoftware.com/2012/07/09/software-inventory/)
+  this issue has been automatically marked as stale because it has not had any activity in 8 months. 
+  It will be closed in 1 month if no further activity occurs. If this issue remains important to you, 
+  please comment to reactivate the issue. Thank you for your contributions.
 
 # Comment to post when removing the stale label.
 # unmarkComment: >
@@ -53,9 +54,10 @@ pulls:
    daysUntilStale: 20
    daysUntilClose: 10
    markComment: >
-     This pull request has been automatically marked as stale because it has not had
-     recent activity. It will be closed if no further activity occurs. Thank you
-     for your contributions.
+     It is hard to review old PRs so this PR has been marked as stale since there has been 
+     no activity the last 20 days. It will be closed in 10 days if no further activity occurs. 
+     A simple comment will reactivate the PR, but please also consider updating the PR to 
+     the latest SNAPSHOT build to make it easier for reviewers.
 
 # issues:
 #   exemptLabels:

@@ -168,7 +168,7 @@ TraitPureBehaviorTest >> testMethodClass [
 	
 	self deny: m1 == m2.
 	
-	self deny: m1 sourcePointer = m2 sourcePointer.
+	self assert: m1 sourcePointer = m2 sourcePointer.
 ]
 
 { #category : #'testing-applying trait composition' }

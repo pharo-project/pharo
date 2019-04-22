@@ -209,6 +209,13 @@ Character class >> linefeed [
 	^self value: 10
 ]
 
+{ #category : #constants }
+Character class >> maxVal [
+	"Answer the maximum value (code point) for a Character."
+
+	^ (2 ** 30) - 1
+]
+
 { #category : #'accessing untypeable characters' }
 Character class >> nbsp [
 	"non-breakable space. Latin1 encoding common usage."

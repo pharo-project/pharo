@@ -4,11 +4,6 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
-{ #category : #setup }
-GLMAnnouncementPropagationTest >> expectedFailures [
-	^ #(testEntityPropogationAnnouncements testSimplePropagation)
-]
-
 { #category : #running }
 GLMAnnouncementPropagationTest >> setUp [
 	super setUp.
@@ -23,6 +18,7 @@ GLMAnnouncementPropagationTest >> tearDown [
 
 { #category : #tests }
 GLMAnnouncementPropagationTest >> testEntityPropogationAnnouncements [
+	<expectedFailure>
 	"This tests the order in which announcements are raised in nested browsers. 
  
 	This is of importance as, in this test, we add a browser to a pane when a 
@@ -158,6 +154,7 @@ GLMAnnouncementPropagationTest >> testSimpleEmptyPane [
 
 { #category : #tests }
 GLMAnnouncementPropagationTest >> testSimplePropagation [
+	<expectedFailure>
 	| browser |
 	browser := GLMTabulator new.
 	browser column: #pane1.

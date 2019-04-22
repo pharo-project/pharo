@@ -597,8 +597,7 @@ RubScrolledTextMorph >> handlesMouseWheel: evt [
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> hasEditingConflicts [
-	self flag: #todo. "can discard lazy initialization"
-	^ hasEditingConflicts ifNil: [ hasEditingConflicts := false ] 
+	^ hasEditingConflicts
 ]
 
 { #category : #'model protocol' }
@@ -625,8 +624,7 @@ RubScrolledTextMorph >> hasRulerNamed: aKey [
 
 { #category : #'model protocol' }
 RubScrolledTextMorph >> hasUnacceptedEdits [
-	self flag: #todo. "can discard lazy initialization"
-	^ hasUnacceptedEdits ifNil: [ hasUnacceptedEdits := false ] 
+	^ hasUnacceptedEdits
 ]
 
 { #category : #'model protocol' }
@@ -724,6 +722,16 @@ RubScrolledTextMorph >> manageLayoutInBounds: aRectangle [
 RubScrolledTextMorph >> margins: aMargin [
 	"polymorphism with text area"
 	self textArea margins: aMargin
+]
+
+{ #category : #accessing }
+RubScrolledTextMorph >> maxLength [
+	^ self textArea maxLength
+]
+
+{ #category : #accessing }
+RubScrolledTextMorph >> maxLength: anInteger [
+	self textArea maxLength: anInteger
 ]
 
 { #category : #'accessing menu' }

@@ -74,7 +74,7 @@ FLHookedSubstitutionTest >> testProxyByTarget [
 FLHookedSubstitutionTest >> testProxyByTargetAnalisysIsPropagated [
 
 	| aProxyClass result pair | 
-	self flag: #todo. "I don't understand what are we testing here."
+	self flag: #pharoTodo. "I don't understand what are we testing here."
 
 	aProxyClass := (self newSubclassOf: Object instanceVariableNames: 'target' classVariableNames: '') 
 		duringTestCompileSilently: 'target: x  target := x';

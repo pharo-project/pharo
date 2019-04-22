@@ -74,7 +74,7 @@ GLMMorphicTextRenderer >> textModelFor: aPresentation [
 
 { #category : #rendering }
 GLMMorphicTextRenderer >> textMorphForModel:  aTextModel [
-	^ (GLMPluggableTextMorph
+	^ (RubPluggableTextMorph
 		on: aTextModel
 		text: #text
 		accept: #accept:notifying:

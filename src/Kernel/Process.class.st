@@ -455,7 +455,7 @@ Process >> pvtSignal: anException list: aList [
 	"Since this method is not called in a normal way, we need to take care
 	that it doesn't directly return to the caller (because I believe that could
 	have the potential to push an unwanted object on the caller's stack)."
-
+	<debuggerCompleteToSender>
 	| blocker |
 	self isActiveProcess ifFalse: [^self].
 	anException signal.
