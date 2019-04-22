@@ -4,9 +4,6 @@ I am the superclass of standard layouts for Objects.
 Class {
 	#name : #ObjectLayout,
 	#superclass : #AbstractLayout,
-	#instVars : [
-		'compactClassIndex'
-	],
 	#category : #'Slot-Core-Layout'
 }
 
@@ -130,11 +127,6 @@ ObjectLayout >> format [
 	format := self instanceSpecification.
 	format := (format bitShift: 16) + fieldSize.
 	^ format
-]
-
-{ #category : #initialization }
-ObjectLayout >> initialize [
-	compactClassIndex := 0
 ]
 
 { #category : #initialization }

@@ -131,10 +131,9 @@ SystemNavigation >> browseAllStoresInto: instVarName from: aClass [
 
 { #category : #'*Tool-Base' }
 SystemNavigation >> browseAllUsersOfTrait: aTrait [
-	"Create and openenvironment  a browser on each class or trait that imports aTrait"
-
-	^Smalltalk tools browser openInEnvironment: (RBBrowserEnvironment new forClasses: aTrait traitUsers)
+	"Launch a class-list list browser on all classes or traits which import aTrait"
 	
+	^Smalltalk tools browser messageList browseClasses: aTrait traitUsers
 ]
 
 { #category : #'*Tool-Base' }
@@ -202,8 +201,7 @@ SystemNavigation >> browseClassesWithNamesContaining: aString caseSensitive: cas
 	
 	|  classes |
 	classes :=  self environment allClasses select: [:class | (class name includesSubstring: aString caseSensitive: caseSensitive)].				
-	^Smalltalk tools browser openInEnvironment: (RBBrowserEnvironment new forClasses: classes).
-									
+	^Smalltalk tools messageList browseClasses: classes
 ]
 
 { #category : #'*Tool-Base' }

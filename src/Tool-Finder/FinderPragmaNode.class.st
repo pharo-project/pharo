@@ -9,7 +9,7 @@ Class {
 
 { #category : #private }
 FinderPragmaNode >> browse [
-	Smalltalk tools browser openInEnvironment: (RBBrowserEnvironment default forPragmas:{ self item})
+	Smalltalk tools messageList browseSendersOf: self item
 ]
 
 { #category : #private }

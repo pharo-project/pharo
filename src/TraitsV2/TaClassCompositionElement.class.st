@@ -23,7 +23,9 @@ TaClassCompositionElement >> selectors [
 { #category : #accessing }
 TaClassCompositionElement >> slots [
 	^ innerClass allSlots
-		reject: [ :e | TraitedClass allSlots anySatisfy: [ :x | x name = e name ] ]
+		reject: [ :e | 
+			(Trait slots , 
+			TraitedClass allSlots) anySatisfy: [ :x | x name = e name ] ]
 		
 ]
 

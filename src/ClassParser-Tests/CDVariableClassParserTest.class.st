@@ -23,5 +23,5 @@ CDVariableClassParserTest >> classDefinitionString [
 { #category : #helpers }
 CDVariableClassParserTest >> testVariableClassIsVariable [
 
-	self assert: (classDefinition isVariable)
+	self assert: classDefinition isVariableClass
 ]

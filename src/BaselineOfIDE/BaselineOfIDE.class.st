@@ -355,6 +355,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'System-Settings-Tests'.
 		spec package: 'System-Support-Rules'.
 		spec package: 'System-Support-Tests'.
+		spec package: 'System-Platforms-Tests'.
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
@@ -771,7 +772,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Ring-Deprecated-Tests-Containers' 
 	'Tests' 
 	'Zinc-Character-Encoding-Tests' 
-
+	'System-Platforms-Tests'
 	'Text-Tests'		"required by Multilingual-Tests"
 ).
 
@@ -867,7 +868,7 @@ BaselineOfIDE >> loadCalypso [
 
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.16.1/src';
+		repository: 'github://pharo-ide/Calypso:v0.16.2/src';
 		onConflict: [ :err | err useIncoming ];
 		onUpgrade: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
