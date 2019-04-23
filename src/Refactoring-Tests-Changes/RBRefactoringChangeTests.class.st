@@ -14,7 +14,7 @@ RBRefactoringChangeTests class >> packageNamesUnderTest [
 
 { #category : #mocking }
 RBRefactoringChangeTests >> changeMock [
-	^ Smalltalk at: #RBRefactoringChangeMock
+	^ Smalltalk globals at: #RBRefactoringChangeMock
 ]
 
 { #category : #mocking }
@@ -69,7 +69,7 @@ RBRefactoringChangeTests >> perform: aChange do: aBlock [
 
 { #category : #mocking }
 RBRefactoringChangeTests >> removeMockClass [
-	Smalltalk removeClassNamed: #RBRefactoringChangeMock.
+	Smalltalk globals removeClassNamed: #RBRefactoringChangeMock.
 ]
 
 { #category : #mocking }
@@ -77,7 +77,7 @@ RBRefactoringChangeTests >> selectionInterval [
 	^ 1 to: 0
 ]
 
-{ #category : #running }
+{ #category : #setup }
 RBRefactoringChangeTests >> setUp [
 	super setUp.
 	self createMockClass.
@@ -92,7 +92,7 @@ RBRefactoringChangeTests >> stringTestFor: aChange [
 	self assert: (aChange displayString isString and: [ aChange displayString notEmpty ])
 ]
 
-{ #category : #running }
+{ #category : #setup }
 RBRefactoringChangeTests >> tearDown [
 	self removeMockClass.
 	super tearDown.
@@ -247,7 +247,7 @@ RBRefactoringChangeTests >> testCompileInClass [
 	self assert: change isMeta not.
 	self assert: change selector equals: #setUp.
 	self assert: change source equals: 'setUp'.
-	self assert: change protocol equals: #running.
+	self assert: change protocol equals: #setup.
 	self universalTestFor: change
 ]
 
@@ -314,10 +314,10 @@ RBRefactoringChangeTests >> testPerformAddRemoveClass [
 	poolDictionaries: ''''
 	category: ''' , self class category , ''''.
 	self perform: change do: [
-		self assert: (Smalltalk hasClassNamed: change changeClassName).
+		self assert: (Smalltalk globals hasClassNamed: change changeClassName).
 		self assert: change definedClass name equals: change changeClassName.
 		self assert: change definedClass isBehavior ].
-	self deny: (Smalltalk hasClassNamed: change changeClassName).
+	self deny: (Smalltalk globals hasClassNamed: change changeClassName).
 	self assert: change definedClass isObsolete
 ]
 
@@ -338,10 +338,10 @@ RBRefactoringChangeTests >> testPerformAddRemoveClassInteractively [
 	poolDictionaries: ''''
 	category: ''' , self class category , '''' for: self.
 	self perform: change do: [ 
-		self assert: (Smalltalk hasClassNamed: change changeClassName).
+		self assert: (Smalltalk globals hasClassNamed: change changeClassName).
 		self assert: change definedClass name equals: change changeClassName.
 		self assert: change definedClass isBehavior ].
-	self deny: (Smalltalk hasClassNamed: change changeClassName).
+	self deny: (Smalltalk globals hasClassNamed: change changeClassName).
 	self assert: change definedClass isObsolete
 	
 ]
@@ -459,10 +459,10 @@ RBRefactoringChangeTests >> testPerformRenameClass [
 	| change |
 	change := changes renameClass: self changeMock to: self changeMock name , 'Plus'.
 	self perform: change do: [ 
-		self deny: (Smalltalk hasClassNamed: change oldName).
-		self assert: (Smalltalk hasClassNamed: change newName) ].
-	self assert: (Smalltalk hasClassNamed: change oldName).
-	self deny: (Smalltalk hasClassNamed: change newName)
+		self deny: (Smalltalk globals hasClassNamed: change oldName).
+		self assert: (Smalltalk globals hasClassNamed: change newName) ].
+	self assert: (Smalltalk globals hasClassNamed: change oldName).
+	self deny: (Smalltalk globals hasClassNamed: change newName)
 ]
 
 { #category : #'tests-perform' }
