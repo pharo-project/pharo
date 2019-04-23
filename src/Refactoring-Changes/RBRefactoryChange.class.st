@@ -77,7 +77,7 @@ RBRefactoryChange >> name: aString [
 	name := aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBRefactoryChange >> nameToDisplay [
 
 	^ self name

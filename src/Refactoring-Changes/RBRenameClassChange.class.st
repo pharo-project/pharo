@@ -50,7 +50,7 @@ RBRenameClassChange >> hash [
 	^ (self class hash bitXor: self oldName hash) bitXor: self newName hash
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBRenameClassChange >> nameToDisplay [
 
 	^ self printString
@@ -64,6 +64,13 @@ RBRenameClassChange >> newName [
 { #category : #accessing }
 RBRenameClassChange >> oldName [
 	^ oldName
+]
+
+{ #category : #accessing }
+RBRenameClassChange >> oldVersionTextToDisplay [
+	^ String streamContents: [ :s | 
+			self changes do: [ :c | 	s << c oldVersionTextToDisplay; cr ]]
+
 ]
 
 { #category : #printing }
@@ -88,4 +95,18 @@ RBRenameClassChange >> renameChangesForClass: oldClassName to: newClassName [
 	oldName asSymbol = oldClassName
 		ifTrue: [ change rename: newClassName to: newName ].
 	^ change
+]
+
+{ #category : #accessing }
+RBRenameClassChange >> textToDisplay [
+	^ String streamContents: [ :s | 
+         s << self printString ; cr.
+         self changes do: [ :c | 	s << c textToDisplay; cr ]]
+
+]
+
+{ #category : #accessing }
+RBRenameClassChange >> whatToDisplayIn: aChangeBrowser [
+	^ { self }
+	
 ]

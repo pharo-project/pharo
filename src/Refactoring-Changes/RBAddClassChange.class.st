@@ -34,12 +34,12 @@ RBAddClassChange class >> definitionPatterns [
 { #category : #converting }
 RBAddClassChange >> asUndoOperation [
 	| class |
-	class := Smalltalk globals
-		at: self changeClassName
-		ifAbsent: [ nil ].
+	class := onSystemDictionary 
+					at: self changeClassName
+					ifAbsent: [ nil ].
 	^ class isBehavior
-		ifTrue: [ RBRefactoryChangeManager changeFactory addClassDefinition: class definition ]
-		ifFalse: [ RBRefactoryChangeManager changeFactory removeClassNamed: self changeClassName ]
+		ifTrue: [ changeFactory addClassDefinition: class definition ]
+		ifFalse: [ changeFactory removeClassNamed: self changeClassName ]
 ]
 
 { #category : #accessing }
@@ -54,7 +54,7 @@ RBAddClassChange >> classVariableNames [
 
 { #category : #private }
 RBAddClassChange >> definitionClass [
-	^ Smalltalk globals at: (self superclassName ifNil: [ ^ ProtoObject ])
+	^ onSystemDictionary at: (self superclassName ifNil: [ ^ ProtoObject ])
 ]
 
 { #category : #private }
@@ -82,7 +82,7 @@ RBAddClassChange >> instanceVariableNames [
 	^ instanceVariableNames
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBAddClassChange >> nameToDisplay [
 
 	^ self changeString
@@ -96,4 +96,10 @@ RBAddClassChange >> sharedPoolNames [
 { #category : #accessing }
 RBAddClassChange >> superclassName [
 	^ superclassName
+]
+
+{ #category : #accessing }
+RBAddClassChange >> textToDisplay [
+
+	^ self definition
 ]
