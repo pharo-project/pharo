@@ -108,6 +108,12 @@ RBRenameVariableChange >> isMeta [
 	^ isMeta
 ]
 
+{ #category : #'as yet unclassified' }
+RBRenameVariableChange >> nameToDisplay [
+
+	^ 'Rename ', self oldName, ' into ', self newName
+]
+
 { #category : #accessing }
 RBRenameVariableChange >> newName [
 	^ newName

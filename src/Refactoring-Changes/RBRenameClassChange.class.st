@@ -29,7 +29,7 @@ RBRenameClassChange >> = aRenameClassChange [
 
 { #category : #accessing }
 RBRenameClassChange >> changeClass [
-	^ Smalltalk globals at: oldName asSymbol ifAbsent: [ Smalltalk globals at: newName asSymbol ]
+	^ onSystemDictionary at: oldName asSymbol ifAbsent: [ onSystemDictionary at: newName asSymbol ]
 ]
 
 { #category : #private }
@@ -48,6 +48,12 @@ RBRenameClassChange >> executeNotifying: aBlock [
 { #category : #comparing }
 RBRenameClassChange >> hash [
 	^ (self class hash bitXor: self oldName hash) bitXor: self newName hash
+]
+
+{ #category : #'as yet unclassified' }
+RBRenameClassChange >> nameToDisplay [
+
+	^ self printString
 ]
 
 { #category : #accessing }

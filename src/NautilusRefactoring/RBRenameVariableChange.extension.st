@@ -1,12 +1,6 @@
 Extension { #name : #RBRenameVariableChange }
 
 { #category : #'*NautilusRefactoring' }
-RBRenameVariableChange >> nameToDisplay [
-
-	^ 'Rename ', self oldName, ' into ', self newName
-]
-
-{ #category : #'*NautilusRefactoring' }
 RBRenameVariableChange >> textToDisplay [
 
 	self printString

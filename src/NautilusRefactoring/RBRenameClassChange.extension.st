@@ -1,12 +1,6 @@
 Extension { #name : #RBRenameClassChange }
 
 { #category : #'*NautilusRefactoring' }
-RBRenameClassChange >> nameToDisplay [
-
-	^ self printString
-]
-
-{ #category : #'*NautilusRefactoring' }
 RBRenameClassChange >> oldVersionTextToDisplay [
 	^ String streamContents: [ :s | 
 			self changes do: [ :c | 	s << c oldVersionTextToDisplay; cr ]]

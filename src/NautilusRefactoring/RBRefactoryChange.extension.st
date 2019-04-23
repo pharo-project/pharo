@@ -6,12 +6,6 @@ RBRefactoryChange >> accept: aText notifying: aController [
 ]
 
 { #category : #'*NautilusRefactoring' }
-RBRefactoryChange >> nameToDisplay [
-
-	^ self name
-]
-
-{ #category : #'*NautilusRefactoring' }
 RBRefactoryChange >> oldVersionTextToDisplay [
 
 	^ ''

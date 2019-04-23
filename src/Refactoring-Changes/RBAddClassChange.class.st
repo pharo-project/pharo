@@ -82,6 +82,12 @@ RBAddClassChange >> instanceVariableNames [
 	^ instanceVariableNames
 ]
 
+{ #category : #'as yet unclassified' }
+RBAddClassChange >> nameToDisplay [
+
+	^ self changeString
+]
+
 { #category : #accessing }
 RBAddClassChange >> sharedPoolNames [
 	^ poolDictionaryNames
