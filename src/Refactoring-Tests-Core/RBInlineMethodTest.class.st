@@ -39,11 +39,11 @@ RBInlineMethodTest >> testInlineMethod [
 	refactoring := RBInlineMethodRefactoring 
 		inline: (self 
 				convertInterval: (455 to: 504)
-				for: (RBBasicLintRuleTest class sourceCodeAt: #sentNotImplementedInApplication))
+				for: (RBBasicLintRuleTestData class sourceCodeAt: #sentNotImplementedInApplication))
 		inMethod: #sentNotImplementedInApplication
-		forClass: RBBasicLintRuleTest class.
+		forClass: RBBasicLintRuleTestData class.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model metaclassNamed: #RBBasicLintRuleTest) parseTreeFor: #sentNotImplementedInApplication) = (RBParser parseMethod: 'sentNotImplementedInApplication
+	self assert: ((refactoring model metaclassNamed: #RBBasicLintRuleTestData) parseTreeFor: #sentNotImplementedInApplication) = (RBParser parseMethod: 'sentNotImplementedInApplication
 									| detector |
 									detector := self new.
 									detector name: ''Messages sent but not implemented in application''.
@@ -277,9 +277,9 @@ RBInlineMethodTest >> testOverriden [
 	self shouldWarn: (RBInlineMethodRefactoring 
 			inline: (self 
 					convertInterval: (15 to: 26)
-					for: (RBLintRuleTest sourceCodeAt: #failedRules))
+					for: (RBLintRuleTestData sourceCodeAt: #failedRules))
 			inMethod: #failedRules
-			forClass: RBLintRuleTest)
+			forClass: RBLintRuleTestData)
 ]
 
 { #category : #'failure tests' }
@@ -297,7 +297,7 @@ RBInlineMethodTest >> testReturn [
 	self shouldFail: (RBInlineMethodRefactoring 
 			inline: (self 
 					convertInterval: (418 to: 485)
-					for: (RBBasicLintRuleTest class sourceCodeAt: #utilityMethods))
+					for: (RBBasicLintRuleTestData class sourceCodeAt: #utilityMethods))
 			inMethod: #utilityMethods
-			forClass: RBBasicLintRuleTest class)
+			forClass: RBBasicLintRuleTestData class)
 ]

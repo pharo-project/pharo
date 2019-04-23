@@ -43,7 +43,7 @@ ZipArchiveTest >> tearDown [
 { #category : #tests }
 ZipArchiveTest >> testAddNonExistentFile [
 	
-	self should: [ zip addFile: 'it_would_be_crazy_if_this_file_existed.ext' ] raise: FileDoesNotExistException.
+	self should: [ zip addFile: 'it_would_be_crazy_if_this_file_existed.ext' asFileReference ] raise: FileDoesNotExistException.
 ]
 
 { #category : #tests }
@@ -57,10 +57,10 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 	fileModified := nestedFileToZip entry modification.
 	folderModified := subdir entry modification.
 	zip
-		addDirectory: subdir fullName
+		addDirectory: subdir
 		as: subdir basename.
 	zip	
-		addFile: nestedFileToZip fullName
+		addFile: nestedFileToZip
 		as: nestedFileToZip basename.
 		
 	zip writeToFileNamed: zipFile fullName.
@@ -182,16 +182,15 @@ ZipArchiveTest >> testDate29Feb2000 [
 { #category : #tests }
 ZipArchiveTest >> testFilePermissions [
 
-	| nestedFileToZip fileModified folderModified folderMember fileMember |
+	| nestedFileToZip folderMember fileMember |
 	nestedFileToZip := subdir / '_test-zip-file'.
 	nestedFileToZip writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ].
-	fileModified := nestedFileToZip entry modification asTime.
-	folderModified := subdir entry modification asTime.
+	
 	folderMember := zip
-		addDirectory: subdir fullName
+		addDirectory: subdir
 		as: subdir basename.
 	fileMember := zip	
-		addFile: nestedFileToZip fullName
+		addFile: nestedFileToZip
 		as: nestedFileToZip basename.
 	zip writeToFileNamed: zipFile fullName.
 	
@@ -228,8 +227,8 @@ ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
 		writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ];
 		yourself.
 	zip
-		addDirectory: subdir fullName as: subdir basename;
-		addFile: nestedFileToZip fullName as: nestedFileToZip basename;
+		addDirectory: subdir as: subdir basename;
+		addFile: nestedFileToZip as: nestedFileToZip basename;
 		writeToFileNamed: zipFile fullName;
 		close.
 	ZipArchive new
@@ -259,7 +258,7 @@ ZipArchiveTest >> testZip [
 	
 	realModificationStamp := fileToZip entry modification.
 	zip	
-		addFile: fileToZip fullName
+		addFile: fileToZip
 		as: fileToZip basename.
 	
 	zip writeToFileNamed: zipFile fullName.
@@ -330,7 +329,7 @@ ZipArchiveTest >> testZip [
 { #category : #tests }
 ZipArchiveTest >> testisZipArchive [
 	| nonArchive |
-	zip addFile: fileToZip fullName as: fileToZip basename.
+	zip addFile: fileToZip as: fileToZip basename.
 	zip writeToFileNamed: zipFile fullName.
 	self assert: (ZipArchive isZipArchive: zipFile fullName).
 	self assert: (ZipArchive isZipArchive: zipFile).

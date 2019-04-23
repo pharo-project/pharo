@@ -651,9 +651,7 @@ ClassDescription >> hasClassSide [
 { #category : #'accessing comment' }
 ClassDescription >> hasComment [
 	"return whether this class truly has a comment other than the default"
-	| org |
-	org := self instanceSide organization.
-	^org classComment isEmptyOrNil not
+	^self instanceSide organization hasComment
 ]
 
 { #category : #'instance variables' }
@@ -788,8 +786,8 @@ ClassDescription >> isClassSide [
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
-	"Point isClassSide >>> true"
-	"Point class isClassSide >>> false"
+	"Point isClassSide >>> false"
+	"Point class isClassSide >>> true"
 	
 	^ self isClassSide not
 ]
@@ -958,7 +956,6 @@ ClassDescription >> numberOfMethods [
 ClassDescription >> obsolete [
 	"Make the receiver obsolete."
 	self superclass removeSubclass: self.
-	self organization: nil.
 	super obsolete.
 ]
 
@@ -1024,10 +1021,9 @@ ClassDescription >> reformatAll [
 
 { #category : #'instance variables' }
 ClassDescription >> removeInstVarNamed: aString [ 
-	"Remove the argument, aString, as one of the receiver's instance 
-	variables. Create an error notification if the argument is not found."
+	"Remove the argument, aString, as one of the receiver's instance variables."
 
-	^self subclassResponsibility
+	^self removeSlot: (self slotNamed: aString)
 ]
 
 { #category : #'accessing tags' }
@@ -1063,6 +1059,12 @@ ClassDescription >> removeSelector: selector [
 	super removeSelector: selector.
 		
 	SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: origin
+]
+
+{ #category : #'instance variables' }
+ClassDescription >> removeSlot: aSlot [
+
+	^self subclassResponsibility 
 ]
 
 { #category : #organization }
@@ -1368,6 +1370,52 @@ ClassDescription >> whichCategoryIncludesSelector: aSelector [
 	(self includesSelector: aSelector)
 		ifTrue: [^ self organization categoryOfElement: aSelector]
 		ifFalse: [^nil]
+]
+
+{ #category : #queries }
+ClassDescription >> whichSelectorsAccess: instVarName [
+	"Answer a set of selectors whose methods access the argument, 
+	instVarName, as a named instance variable."
+
+	^self
+		slotNamed: instVarName
+		ifFound: [ :slot | 
+			self selectors
+				select: [ :sel | slot isAccessedIn: self>>sel ] ]
+		ifNone: [  #() ]
+]
+
+{ #category : #queries }
+ClassDescription >> whichSelectorsAssign: instVarName [ 
+	self
+		deprecated: 'Please use #whichSelectorsStoreInto: instead'
+		transformWith: '`@receiver whichSelectorsAssign: `@statements' 
+						-> '`@receiver whichSelectorsStoreInto: `@statements'.
+	^self whichSelectorsStoreInto: instVarName
+]
+
+{ #category : #queries }
+ClassDescription >> whichSelectorsRead: instVarName [
+	"Answer a Set of selectors whose methods read the argument, 
+	instVarName, as a named instance variable."
+
+	^ self
+		slotNamed: instVarName
+		ifFound:
+			[ :slot | self selectors select: [ :sel | slot isReadIn: self >> sel ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : #queries }
+ClassDescription >> whichSelectorsStoreInto: instVarName [
+	"Answer a Set of selectors whose methods access the argument, 
+	instVarName, as a named instance variable."
+
+	^ self
+		slotNamed: instVarName
+		ifFound:
+			[ :slot | self selectors select: [ :sel | slot isWrittenIn: self >> sel ] ]
+		ifNone: [ #() ]
 ]
 
 { #category : #organization }

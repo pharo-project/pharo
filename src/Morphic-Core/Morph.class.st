@@ -2160,7 +2160,7 @@ Morph >> dismissMorph [
 
 	| w |
 	w := self world ifNil:[^self].
-	w deleteAllHalos; stopStepping: self.
+	w stopStepping: self.
 	self delete
 ]
 
@@ -5391,9 +5391,8 @@ Morph >> root [
 Morph >> rootMorphsAt: aPoint [
 	"Return the list of root morphs containing the given point, excluding the receiver.
 	ar 11/8/1999: Moved into morph for an incredibly ugly hack in 3D worlds"
-self flag: #arNote. "check this at some point"
-	^ self submorphs select:
-		[:m | (m fullContainsPoint: aPoint) and: [m isLocked not]]
+
+	^ self submorphs select: [ :m | (m fullContainsPoint: aPoint) and: [ m isLocked not ] ]
 ]
 
 { #category : #'rotate scale and flex' }
@@ -6023,7 +6022,7 @@ Morph >> tabHitWithEvent: anEvent [
 	itemToHighlight := fieldList atWrap: 
 		(anIndex ifNotNil: [anEvent shiftPressed ifTrue: [anIndex - 1] ifFalse: [anIndex + 1]]
 				ifNil: [1]).
-	anEvent hand newKeyboardFocus: itemToHighlight. self flag: #arNote. "really???"
+	anEvent hand newKeyboardFocus: itemToHighlight. "really???"
 	itemToHighlight editor selectAll.
 	itemToHighlight invalidRect: itemToHighlight bounds 
 ]

@@ -54,7 +54,7 @@ NOCCompletionTable class >> registerInterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance 
 		unsubscribe: self.
 		
-	SystemAnnouncer uniqueInstance weak subscribe: MethodAdded, MethodModified 
+	SystemAnnouncer uniqueInstance weak when: MethodAdded, MethodModified 
 			send: #methodChanged: 
 			to: self.
 		
@@ -167,6 +167,7 @@ NOCCompletionTable >> maxNumberOfEntries [
 
 { #category : #protocol }
 NOCCompletionTable >> quickFillWithCategoryOf: cls [
+	self flag: #SmalltalkReference.
 	(Smalltalk organization classesInCategory: cls instanceSide category) do: [:e | self quickFillWithClass: e]
 ]
 

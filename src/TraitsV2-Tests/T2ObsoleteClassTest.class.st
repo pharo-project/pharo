@@ -47,69 +47,6 @@ T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsersClassSide [
 ]
 
 { #category : #tests }
-T2ObsoleteClassTest >> testObsoleteClassRemovesMethods [
-	| t1 t2 c1 |
-	t1 := self newTrait: #T1 with: #() uses: {}.
-	t1 compile: 'm1 ^ 1'.
-
-	t2 := self newTrait: #T2 with: #() uses: {}.
-	t2 compile: 'm2 ^ 1'.
-
-	c1 := self newClass: #C1 with: #() uses: t1 + t2.
-
-	c1 compile: 'localM1 ^ 1'.
-
-	self assert: (c1 methodDict includesKey: #m1).
-	self assert: (c1 methodDict includesKey: #m2).
-	self deny: (c1 localMethodDict includesKey: #m1).
-	self deny: (c1 localMethodDict includesKey: #m2).
-	self assert: (c1 localMethodDict includesKey: #localM1).
-
-	c1 removeFromSystem.
-	createdClasses remove: c1.
-
-	self deny: (c1 methodDict includesKey: #m1).
-	self deny: (c1 methodDict includesKey: #m2).
-
-	"Accessing directly because there is no more accesor method"
-	self assertEmpty: (c1 class instVarNamed: #baseLocalMethods).
-	self deny: ((c1 class instVarNamed: #baseLocalMethods) includesKey: #m1).
-	self deny: ((c1 class instVarNamed: #baseLocalMethods) includesKey: #m2).
-	self deny: ((c1 class instVarNamed: #baseLocalMethods) includesKey: #localM1)
-]
-
-{ #category : #tests }
-T2ObsoleteClassTest >> testObsoleteClassRemovesMethodsClassSide [
-	| t1 t2 c1 |
-	t1 := self newTrait: #T1 with: #() uses: {}.
-	t1 compile: 'm1 ^ 1'.
-
-	t2 := self newTrait: #T2 with: #() uses: {}.
-	t2 compile: 'm2 ^ 1'.
-
-	c1 := self newClass: #C1 with: #()  uses: {}.
-	c1 class setTraitComposition: t1 + t2. 
-
-	c1 class compile: 'localM1 ^ 1'.
-
-	self assert: (c1 class methodDict includesKey: #m1).
-	self assert: (c1 class methodDict includesKey: #m2).
-	self deny: (c1 class localMethodDict includesKey: #m1).
-	self deny: (c1 class localMethodDict includesKey: #m2).
-	self assert: (c1 class localMethodDict includesKey: #localM1).
-	
-	c1 removeFromSystem.
-	createdClasses remove: c1.
-	
-	self deny: (c1 class methodDict includesKey: #m1).
-	self deny: (c1 class methodDict includesKey: #m2).
-	self deny: (c1 class localMethodDict includesKey: #m1).
-	self deny: (c1 class localMethodDict includesKey: #m2).
-	self deny: (c1 class localMethodDict includesKey: #localM1).
-
-]
-
-{ #category : #tests }
 T2ObsoleteClassTest >> testObsoleteTraitIsRemovedFromUsers [
 	| t1 t2 t3 |
 	t1 := self newTrait: #T1 with: #() uses: {}.

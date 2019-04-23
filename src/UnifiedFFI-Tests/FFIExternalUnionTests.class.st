@@ -23,7 +23,7 @@ FFIExternalUnionTests >> testUnionAccess [
 	self assert: (union float ~= 0).
 	self assert: (union double ~= 0).
 	
-		self flag: #todo. "This is not yet implemented"
+		self flag: #pharoTodo. "This is not yet implemented"
 	"struct int64: 123456789101112."
 
 ]

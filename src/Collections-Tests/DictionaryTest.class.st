@@ -411,7 +411,7 @@ DictionaryTest >> testDictionaryPublicProtocolCompatibility [
 		do: [ :assoc | 
 			assoc value protocols
 				reject: [ :protocol | 
-					#('private' 'print' 'copy' 'compar' '*')
+					#('private' 'print' 'undeclared' 'copy' 'compar' '*')
 						anySatisfy: [ :each | protocol asString beginsWith: each ] ]
 				thenDo: [ :protocol | 
 					(assoc value selectorsInProtocol: protocol)
@@ -556,17 +556,6 @@ DictionaryTest >> testIsHealthy [
 	a2 key: 0.
 	self deny: dict isHealthy ]
 		ensure: [ dict removeAll ]
-]
-
-{ #category : #'tests - dictionary key access' }
-DictionaryTest >> testKeyAtIdentityValueIfAbsent [
-
-	| dict value result |
-	dict := self nonEmpty.
-	value := dict values anyOne.
-	result := dict keyAtIdentityValue: value ifAbsent: [ nil ].
-	self assert: (dict at: result) equals: value.
-	self assert: (dict keyAtIdentityValue: self valueNotIn ifAbsent: [ nil ]) isNil
 ]
 
 { #category : #'tests - dictionary key access' }

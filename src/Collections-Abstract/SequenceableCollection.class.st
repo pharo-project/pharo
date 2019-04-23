@@ -12,6 +12,12 @@ SequenceableCollection class >> << blockWithArg [
 	^ self streamContents: blockWithArg
 ]
 
+{ #category : #testing }
+SequenceableCollection class >> isAbstract [
+
+	^self name = #SequenceableCollection
+]
+
 { #category : #'stream creation' }
 SequenceableCollection class >> new: newSize streamContents: blockWithArg [
 	| stream |

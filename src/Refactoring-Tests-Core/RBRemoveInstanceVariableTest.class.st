@@ -22,14 +22,14 @@ RBRemoveInstanceVariableTest >> testModelRemoveInstanceVariable [
 RBRemoveInstanceVariableTest >> testNonExistantName [
 	self shouldFail: (RBRemoveInstanceVariableRefactoring 
 			variable: 'name1'
-			class: RBLintRuleTest)
+			class: RBLintRuleTestData)
 ]
 
 { #category : #'failure tests' }
 RBRemoveInstanceVariableTest >> testReferencedVariable [
 	self shouldFail: (RBRemoveInstanceVariableRefactoring 
 			variable: 'name'
-			class: RBLintRuleTest)
+			class: RBLintRuleTestData)
 ]
 
 { #category : #tests }
@@ -37,8 +37,8 @@ RBRemoveInstanceVariableTest >> testRemoveInstVar [
 	| refactoring class |
 	refactoring := RBRemoveInstanceVariableRefactoring 
 		variable: 'foo1'
-		class: RBLintRuleTest.
-	class := refactoring model classNamed: #RBLintRuleTest.
+		class: RBLintRuleTestData.
+	class := refactoring model classNamed: #RBLintRuleTestData.
 	self assert: (class definesInstanceVariable: 'foo1').
 	self executeRefactoring: refactoring.
 	self deny: (class definesInstanceVariable: 'foo1')

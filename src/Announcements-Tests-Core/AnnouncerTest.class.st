@@ -72,7 +72,7 @@ AnnouncerTest >> testNoArgBlock [
 
 	| counter |
 	counter := nil.
-	announcer subscribe: AnnouncementMockA do: [ counter := 1 ].
+	announcer when: AnnouncementMockA do: [ counter := 1 ].
 	announcer announce: AnnouncementMockA new.
 	self assert: counter equals: 1
 ]
@@ -109,14 +109,10 @@ AnnouncerTest >> testPreparationAnnouncementDeliveryWhenNoSubscriptions [
 { #category : #'tests - subscribing' }
 AnnouncerTest >> testSubscribeBlock [
 	| announcement instance |
-	announcer
-		subscribe: AnnouncementMockA
-		do: [ :ann | announcement := ann ].
-		
+	announcer when: AnnouncementMockA do: [ :ann | announcement := ann ].
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: instance.
-	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
 	self assert: announcement isNil
@@ -126,13 +122,11 @@ AnnouncerTest >> testSubscribeBlock [
 AnnouncerTest >> testSubscribeClassWithExclusion [
 	| announcement instance |
 	announcer
-		subscribe: AnnouncementMockB - AnnouncementMockC
+		when: AnnouncementMockB - AnnouncementMockC
 		do: [ :ann | announcement := ann ].
-		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
 	self assert: announcement equals: instance.
-	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
 	self assert: announcement isNil
@@ -142,28 +136,25 @@ AnnouncerTest >> testSubscribeClassWithExclusion [
 AnnouncerTest >> testSubscribeOnSpecificAnnouncer [
 	| announcement instance |
 	announcer
-		subscribe: (AnnouncementMockB where: [:ann | ann parameter = #expectedParam] )
+		when: (AnnouncementMockB where: [ :ann | ann parameter = #expectedParam ])
 		do: [ :ann | announcement := ann ].
-		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: nil.
-
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
 	self assert: announcement equals: nil.
-
 	announcement := nil.
 	instance := announcer announce: (AnnouncementMockB with: #wrongParam).
 	self assert: announcement equals: nil.
-
 	announcement := nil.
-	instance := announcer announce: (AnnouncementMockB with: #expectedParam).
+	instance := announcer
+		announce: (AnnouncementMockB with: #expectedParam).
 	self assert: announcement equals: instance.
-	
 	announcement := nil.
-	instance := announcer announce: (AnnouncementMockC with: #expectedParam).
-	self assert: announcement equals: instance.
+	instance := announcer
+		announce: (AnnouncementMockC with: #expectedParam).
+	self assert: announcement equals: instance
 ]
 
 { #category : #'tests - subscribing' }
@@ -184,17 +175,14 @@ AnnouncerTest >> testSubscribeSend [
 AnnouncerTest >> testSubscribeSet [
 	| announcement instance |
 	announcer
-		subscribe: AnnouncementMockA , AnnouncementMockC
+		when: AnnouncementMockA , AnnouncementMockC
 		do: [ :ann | announcement := ann ].
-		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: instance.
-	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
 	self assert: announcement isNil.
-	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
 	self assert: announcement equals: instance
@@ -204,17 +192,14 @@ AnnouncerTest >> testSubscribeSet [
 AnnouncerTest >> testSubscribeSetWithExclusion [
 	| announcement instance |
 	announcer
-		subscribe: AnnouncementMockA , AnnouncementMockB - AnnouncementMockC
+		when: (AnnouncementMockA , AnnouncementMockB) - AnnouncementMockC
 		do: [ :ann | announcement := ann ].
-		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: instance.
-	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
 	self assert: announcement equals: instance.
-	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
 	self assert: announcement isNil
@@ -224,17 +209,16 @@ AnnouncerTest >> testSubscribeSetWithExclusion [
 AnnouncerTest >> testSubscribeSetWithExclusionOfMultipleAnnouncements [
 	| announcement instance |
 	announcer
-		subscribe: AnnouncementMockA , AnnouncementMockB - AnnouncementMockC - AnnouncementMockA
+		when:
+			(AnnouncementMockA , AnnouncementMockB) - AnnouncementMockC
+				- AnnouncementMockA
 		do: [ :ann | announcement := ann ].
-		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement isNil.
-	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
 	self assert: announcement equals: instance.
-	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
 	self assert: announcement isNil
@@ -244,13 +228,11 @@ AnnouncerTest >> testSubscribeSetWithExclusionOfMultipleAnnouncements [
 AnnouncerTest >> testSubscribeSetWithExclusionOfSetItem [
 	| announcement instance |
 	announcer
-		subscribe: AnnouncementMockA , AnnouncementMockC - AnnouncementMockA
+		when: (AnnouncementMockA , AnnouncementMockC) - AnnouncementMockA
 		do: [ :ann | announcement := ann ].
-		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement isNil.
-	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
 	self assert: announcement equals: instance
@@ -259,21 +241,16 @@ AnnouncerTest >> testSubscribeSetWithExclusionOfSetItem [
 { #category : #'tests - subscribing' }
 AnnouncerTest >> testSubscribeSubclass [
 	| announcement instance |
-	announcer
-		subscribe: AnnouncementMockB
-		do: [ :ann | announcement := ann ].
-		
+	announcer when: AnnouncementMockB do: [ :ann | announcement := ann ].
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement isNil.
-
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
 	self assert: announcement equals: instance.
-	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
-	self assert: announcement equals: instance.
+	self assert: announcement equals: instance
 ]
 
 { #category : #tests }
@@ -296,7 +273,9 @@ AnnouncerTest >> testTwoArgBlock [
 
 	| flag |
 	flag := false.
-	announcer subscribe: AnnouncementMockA do: [ :ann :announcer2 | flag := announcer2 == announcer ].
+	announcer
+		when: AnnouncementMockA
+		do: [ :ann :announcer2 | flag := announcer2 == announcer ].
 	announcer announce: AnnouncementMockA new.
 	self assert: flag
 ]
@@ -304,12 +283,8 @@ AnnouncerTest >> testTwoArgBlock [
 { #category : #'tests - unsubscribing' }
 AnnouncerTest >> testUnsubscribeBlock [
 	| announcement |
-	announcer
-		subscribe: AnnouncementMockA
-		do: [ :ann | announcement := ann ].
-	announcer
-		unsubscribe: self.
-
+	announcer when: AnnouncementMockA do: [ :ann | announcement := ann ].
+	announcer unsubscribe: self.
 	announcement := nil.
 	announcer announce: AnnouncementMockA new.
 	self assert: announcement isNil
@@ -330,16 +305,13 @@ AnnouncerTest >> testUnsubscribeSend [
 AnnouncerTest >> testUnsubscribeSet [
 	| announcement |
 	announcer
-		subscribe: AnnouncementMockA , AnnouncementMockB
+		when: AnnouncementMockA , AnnouncementMockB
 		do: [ :ann | announcement := ann ].
-	announcer
-		unsubscribe: self.
-
+	announcer unsubscribe: self.
 	announcement := nil.
 	announcer announce: AnnouncementMockA new.
 	self assert: announcement isNil.
-	
 	announcement := nil.
 	announcer announce: AnnouncementMockB new.
-	self assert: announcement isNil.
+	self assert: announcement isNil
 ]

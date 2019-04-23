@@ -7,14 +7,14 @@ Class {
 { #category : #values }
 GTSpotterWidgetDarkThemer >> backgroundColor [
 	"used as background color for all panes"
-	^ Color r: 0.25 g: 0.25 b: 0.25
+	^ Smalltalk ui theme lightBackgroundColor slightlyLighter
 ]
 
 { #category : #values }
 GTSpotterWidgetDarkThemer >> borderColor [
 	"color that is used for border and dividers of UI parts of Spotter
 	for example divider between header and results or between preview and list"
-	^ self backgroundColor darker
+	^ Smalltalk ui theme borderColor
 ]
 
 { #category : #values }

@@ -1,6 +1,6 @@
 Class {
 	#name : #TabPresenterTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#instVars : [
 		'manager'
 	],
@@ -19,9 +19,9 @@ TabPresenterTest >> initializeTestedInstance [
 
 { #category : #'instance creation' }
 TabPresenterTest >> redMorphTab [
-	testedInstance
+	presenter
 		label: 'Red Morph';
-		icon: (testedInstance iconNamed: #smallBackIcon);
+		icon: (presenter iconNamed: #smallBackIcon);
 		contents:
 			(Morph new
 				color: Color red;
@@ -33,13 +33,13 @@ TabPresenterTest >> testChangeLabel [
 	"issue 14885"
 
 	self redMorphTab.
-	manager addTab: testedInstance.
-	self assert: testedInstance label = 'Red Morph'.
-	testedInstance label: 'Change Before Opening'.
-	self assert: testedInstance label = 'Change Before Opening'.
+	manager addTab: presenter.
+	self assert: presenter label equals: 'Red Morph'.
+	presenter label: 'Change Before Opening'.
+	self assert: presenter label equals: 'Change Before Opening'.
 	window := manager openWithSpec.
-	testedInstance label: 'Change After Opening'.
-	self assert: testedInstance label = 'Change After Opening'
+	presenter label: 'Change After Opening'.
+	self assert: presenter label equals: 'Change After Opening'
 ]
 
 { #category : #tests }
@@ -49,6 +49,6 @@ TabPresenterTest >> testSetOwner [
 	| button |
 	button := ButtonPresenter new.
 	self assert: button owner equals: nil.
-	testedInstance presenter: button.
-	self assert: button owner equals: testedInstance
+	presenter presenter: button.
+	self assert: button owner equals: presenter
 ]

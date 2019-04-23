@@ -12,6 +12,12 @@ Collection class >> empty [
 	^ self new
 ]
 
+{ #category : #testing }
+Collection class >> isAbstract [
+
+	^self name = #Collection
+]
+
 { #category : #'instance creation' }
 Collection class >> with: anObject [ 
 	"Answer an instance of me containing anObject."
@@ -937,6 +943,9 @@ Collection >> isSequenceable [
 
 { #category : #'math functions' }
 Collection >> median [
+	"Return the middle element, or as close as we can get."
+	"{1 . 2 . 3 . 4 . 5} median >>> 3"
+	
 	^ self asSortedCollection median
 ]
 

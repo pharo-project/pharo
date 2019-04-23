@@ -1,7 +1,7 @@
 "
 CharacterSetComplement is a space efficient implementation of (CharacterSet complement) taking care of WideCharacter (code > 255)
 
-However, it will maintain a byteArrayMap for character <= 255 in a cache keeping 
+However, it will maintain a byteArrayMap for character <= 255 in a cache for performance
 
 instance variables:
 	absent <CharacterSet> contains character that are not in the set (i.e. my complement)
@@ -69,10 +69,11 @@ CharacterSetComplement >> complement: aCharacterSet [
 
 { #category : #enumerating }
 CharacterSetComplement >> do: aBlock [
-	"evaluate aBlock with each character in the set.
-	don't do it, there are too many..."
+	"evaluate aBlock with each character in the set"
 
-	self shouldNotImplement
+	0 to: self size - 1 do: [ :codePoint | | ch |
+		ch := Character value: codePoint.
+		(self includes: ch) ifTrue: [ aBlock value: ch ] ]
 ]
 
 { #category : #enumerating }
@@ -153,9 +154,10 @@ CharacterSetComplement >> select: aBlock [
 
 { #category : #accessing }
 CharacterSetComplement >> size [
-	"Is this 2**32-absent size ?"
-	
-	^self shouldNotImplement
+	"The size is all characters minus those explicitly excluded"
+
+	"Character values include 0, so we need to add 1."
+	^Character maxVal + 1 - absent size
 ]
 
 { #category : #printing }

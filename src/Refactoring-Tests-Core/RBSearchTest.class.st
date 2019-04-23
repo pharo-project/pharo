@@ -13,7 +13,7 @@ RBSearchTest >> buildArgumentSearch [
 	self 
 		createArgumentSearchWith: 'aSmalllintContext'
 		selectors: #(#checkMethod: #checkClass: )
-		inClass: RBBasicLintRuleTest
+		inClass: RBBasicLintRuleTestData
 ]
 
 { #category : #accessing }
@@ -21,7 +21,7 @@ RBSearchTest >> buildMessageSearch [
 	self 
 		createSearchWith: '``@receiver -> ``@arg'
 		selectors: #(#superSends #superSends )
-		inClass: RBTransformationRuleTest
+		inClass: RBTransformationRuleTestData
 ]
 
 { #category : #accessing }
@@ -34,7 +34,7 @@ RBSearchTest >> buildMethodArgumentSearch [
 				#createMatcherFor:method:
 				#createParseTreeRule:name:
 			)
-		inClass: RBBasicLintRuleTest class
+		inClass: RBBasicLintRuleTestData class
 ]
 
 { #category : #accessing }
@@ -43,7 +43,7 @@ RBSearchTest >> buildMethodSearch [
 	self 
 		createMethodSearchWith: '`@methodName: `@args ^`@object `@methodName: `@args'
 		selectors: #(#problemCount #isEmpty )
-		inClass: RBTransformationRuleTest
+		inClass: RBTransformationRuleTestData
 ]
 
 { #category : #accessing }
@@ -51,24 +51,27 @@ RBSearchTest >> buildMethodTitleSearch [
 	self 
 		createMethodSearchWith: 'initialize | `@temps | `@.Stmts'
 		selectors: #(#initialize )
-		inClass: RBBasicLintRuleTest
+		inClass: RBBasicLintRuleTestData
 ]
 
 { #category : #accessing }
 RBSearchTest >> buildSimpleLiteralSearch [
 	| search |
-	search := RBParseTreeSearcher new.
-	search 
-		matchesAnyTreeOf: (Array with: (RBParser parseExpression: '#(''bugs'' ''possible bugs'' ''unnecessary code'' ''intention revealing'' ''miscellaneous'')'))
-		do: 
-			[ :aNode :answer | 
+	search := self parseTreeSearcher.
+	search
+		matchesAnyTreeOf:
+			(Array
+				with:
+					(RBParser
+						parseExpression:
+							'#(''bugs'' ''possible bugs'' ''unnecessary code'' ''intention revealing'' ''miscellaneous'')'))
+		do: [ :aNode :answer | 
 			answer
-				remove: self currentSelector
-					ifAbsent: [ self error: 'failed' ];
+				remove: self currentSelector ifAbsent: [ self error: 'failed' ];
 				yourself ].
-	search answer: #(#protocolsToCheck ) asBag.
-	(classSearches 
-		at: RBBasicLintRuleTest class
+	search answer: #(#protocolsToCheck) asBag.
+	(classSearches
+		at: RBBasicLintRuleTestData class
 		ifAbsentPut: [ Set new ]) add: search
 ]
 
@@ -90,7 +93,7 @@ RBSearchTest >> buildSimpleVariableSearch [
 				#newResultClass:
 				#viewResults
 			)
-		inClass: RBBasicLintRuleTest
+		inClass: RBBasicLintRuleTestData
 ]
 
 { #category : #accessing }
@@ -104,54 +107,59 @@ RBSearchTest >> buildStatementSearch [
 				#viewResults
 				#superSends
 			)
-		inClass: RBTransformationRuleTest
+		inClass: RBTransformationRuleTestData
 ]
 
 { #category : #accessing }
-RBSearchTest >> createArgumentSearchWith: aCodeString selectors: selectorCollection inClass: aClass [ 
+RBSearchTest >> createArgumentSearchWith: aCodeString selectors: selectorCollection inClass: aClass [
 	| search |
-	search := RBParseTreeSearcher new.
-	search matchesAnyArgumentOf: (Array with: aCodeString)
-		do: 
-			[:aNode :answer | 
+	search := self parseTreeSearcher.
+	search
+		matchesAnyArgumentOf: (Array with: aCodeString)
+		do: [ :aNode :answer | 
 			answer
-				remove: self currentSelector ifAbsent: [self error: 'failed'];
-				yourself].
+				remove: self currentSelector ifAbsent: [ self error: 'failed' ];
+				yourself ].
 	search answer: selectorCollection asBag.
-	(classSearches at: aClass ifAbsentPut: [Set new]) add: search
+	(classSearches at: aClass ifAbsentPut: [ Set new ]) add: search
 ]
 
 { #category : #accessing }
-RBSearchTest >> createMethodSearchWith: aCodeString selectors: selectorCollection inClass: aClass [ 
+RBSearchTest >> createMethodSearchWith: aCodeString selectors: selectorCollection inClass: aClass [
 	| search |
-	search := RBParseTreeSearcher new.
-	search matchesAnyMethodOf: (Array with: aCodeString)
-		do: 
-			[:aNode :answer | 
+	search := self parseTreeSearcher.
+	search
+		matchesAnyMethodOf: (Array with: aCodeString)
+		do: [ :aNode :answer | 
 			answer
-				remove: self currentSelector ifAbsent: [self error: 'failed'];
-				yourself].
+				remove: self currentSelector ifAbsent: [ self error: 'failed' ];
+				yourself ].
 	search answer: selectorCollection asBag.
-	(classSearches at: aClass ifAbsentPut: [Set new]) add: search
+	(classSearches at: aClass ifAbsentPut: [ Set new ]) add: search
 ]
 
 { #category : #accessing }
-RBSearchTest >> createSearchWith: aCodeString selectors: selectorCollection inClass: aClass [ 
+RBSearchTest >> createSearchWith: aCodeString selectors: selectorCollection inClass: aClass [
 	| search |
-	search := RBParseTreeSearcher new.
-	search matches: aCodeString
-		do: 
-			[:aNode :answer | 
+	search := self parseTreeSearcher.
+	search
+		matches: aCodeString
+		do: [ :aNode :answer | 
 			answer
-				remove: self currentSelector ifAbsent: [self error: 'failed'];
-				yourself].
+				remove: self currentSelector ifAbsent: [ self error: 'failed' ];
+				yourself ].
 	search answer: selectorCollection asBag.
-	(classSearches at: aClass ifAbsentPut: [Set new]) add: search
+	(classSearches at: aClass ifAbsentPut: [ Set new ]) add: search
 ]
 
 { #category : #accessing }
 RBSearchTest >> currentSelector [
 	^ currentSelector
+]
+
+{ #category : #accessing }
+RBSearchTest >> parseTreeSearcher [
+	^ RBParseTreeSearcher new
 ]
 
 { #category : #running }

@@ -28,7 +28,7 @@ MorphicTreeAdapterTest >> testDefaultRowColors [
 	defaultColor := Smalltalk ui theme backgroundColor.
 	treeWithItems buildWithSpec.
 	self
-		assert: treeWithItems widget widget rowColors
+		assert: treeWithItems adapter widget rowColors
 		equals: (Array with: defaultColor with: defaultColor)
 ]
 
@@ -38,7 +38,7 @@ MorphicTreeAdapterTest >> testRowColorsAfterBuild [
 	treeWithItems oddRowColor: Color red.
 	treeWithItems evenRowColor: Color green.
 	self
-		assert: treeWithItems widget widget rowColors
+		assert: treeWithItems adapter widget rowColors
 		equals: (Array with: Color green with: Color red)
 ]
 
@@ -48,6 +48,6 @@ MorphicTreeAdapterTest >> testRowColorsBeforeBuild [
 	treeWithItems evenRowColor: Color green.
 	treeWithItems buildWithSpec.
 	self
-		assert: treeWithItems widget widget rowColors
+		assert: treeWithItems adapter widget rowColors
 		equals: (Array with: Color green with: Color red)
 ]

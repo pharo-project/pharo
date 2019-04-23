@@ -23,10 +23,9 @@ Class {
 }
 
 { #category : #examples }
-RubTextFieldExample class >> open [
+RubTextFieldExample class >> exampleOpen [
 	| st |
 	st := self new newScrolledText.
-	self spyAnnouncer ifTrue: [st textArea announcer open].
  	st openInWorld
 
 ]
@@ -37,7 +36,6 @@ RubTextFieldExample class >> openAutoAccept [
 	model := self new.
 	st := model newScrolledTextAutoAccept.
 	model inspect.
-	self spyAnnouncer ifTrue: [st textArea announcer open].
  	st openInWorld
 
 ]
@@ -46,7 +44,6 @@ RubTextFieldExample class >> openAutoAccept [
 RubTextFieldExample class >> openWithBorderOfWidth: anInteger [
 	| st |
 	st := self new newScrolledTextWithBorderOfWidth: anInteger.
-	self spyAnnouncer ifTrue: [st textArea announcer open].
  	st openInWorld
 
 ]
@@ -55,7 +52,6 @@ RubTextFieldExample class >> openWithBorderOfWidth: anInteger [
 RubTextFieldExample class >> openWithScrollbar [
 	| st |
 	st := self new newScrolledTextWithScrollbar.
-	self spyAnnouncer ifTrue: [st textArea announcer open].
  	st openInWorld
 
 ]
@@ -64,21 +60,8 @@ RubTextFieldExample class >> openWithScrollbar [
 RubTextFieldExample class >> openWithScrollbarAndBorderOfWidth: anInteger [
 	| st |
 	st := self new newScrolledTextWithScrollbarAndBorderOfWidth: anInteger.
-	self spyAnnouncer ifTrue: [st textArea announcer open].
  	st openInWorld
 
-]
-
-{ #category : #examples }
-RubTextFieldExample class >> spyAnnouncer [
-	"Set it to true if you want to observe text area announcements"
-	^ false
-]
-
-{ #category : #accessing }
-RubTextFieldExample >> acceptString: aString [
-	self string: aString.
-	^ true
 ]
 
 { #category : #accessing }
@@ -138,7 +121,9 @@ RubTextFieldExample >> newScrolledTextWithScrollbarAndBorderOfWidth: anInteger [
 
 { #category : #'user interface' }
 RubTextFieldExample >> setText: aText from: aView [ 
-	^ self acceptString: aText string
+	self string: aText string.
+	"return true to remove unaccepted edit adornment in tge view"
+	^ true
 ]
 
 { #category : #accessing }

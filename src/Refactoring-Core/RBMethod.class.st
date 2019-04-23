@@ -96,6 +96,16 @@ RBMethod >> parseTree [
 	^RBParser parseMethod: self source onError: [:str :pos | ^nil]
 ]
 
+{ #category : #testing }
+RBMethod >> parseTreeSearcherClass [
+	^ RBParseTreeSearcher
+]
+
+{ #category : #testing }
+RBMethod >> parserTreeSearcher [
+	^ self parseTreeSearcherClass new
+]
+
 { #category : #printing }
 RBMethod >> printOn: aStream [ 
 	class printOn: aStream.
@@ -110,46 +120,47 @@ RBMethod >> protocols [
 ]
 
 { #category : #testing }
-RBMethod >> refersToClassNamed: aSymbol [ 
+RBMethod >> refersToClassNamed: aSymbol [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: aSymbol asString do: [:node :answer | true].
-	^(searcher executeTree: self parseTree initialAnswer: false) 
-		or: [self refersToSymbol: aSymbol]
+	searcher := self parserTreeSearcher.
+	searcher matches: aSymbol asString do: [ :node :answer | true ].
+	^ (searcher executeTree: self parseTree initialAnswer: false)
+		or: [ self refersToSymbol: aSymbol ]
 ]
 
 { #category : #testing }
-RBMethod >> refersToSymbol: aSymbol [ 
+RBMethod >> refersToSymbol: aSymbol [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
+	searcher := self parserTreeSearcher.
 	searcher
-		matches: aSymbol printString do: [:node :answer | true];
+		matches: aSymbol printString do: [ :node :answer | true ];
 		matches: '`#literal'
-			do: [:node :answer | answer or: [self literal: node value containsReferenceTo: aSymbol]].
-	(RBScanner isSelector: aSymbol) 
-		ifTrue: 
-			[searcher 
-				matches: '`@object ' , (RBParseTreeSearcher buildSelectorString: aSymbol)
-				do: [:node :answer | true]].
-	^searcher executeTree: self parseTree initialAnswer: false
+			do:
+				[ :node :answer | answer or: [ self literal: node value containsReferenceTo: aSymbol ] ].
+	(RBScanner isSelector: aSymbol)
+		ifTrue: [ searcher
+				matches:
+					'`@object '
+						, (self parseTreeSearcherClass buildSelectorString: aSymbol)
+				do: [ :node :answer | true ] ].
+	^ searcher executeTree: self parseTree initialAnswer: false
 ]
 
 { #category : #testing }
-RBMethod >> refersToVariable: aString [ 
+RBMethod >> refersToVariable: aString [
 	| searcher tree |
 	tree := self parseTree.
-	((tree defines: aString) or: [tree body defines: aString]) 
-		ifTrue: [^false].
-	searcher := RBParseTreeSearcher new.
+	((tree defines: aString) or: [ tree body defines: aString ])
+		ifTrue: [ ^ false ].
+	searcher := self parserTreeSearcher.
 	searcher
-		matches: aString do: [:node :answer | true];
+		matches: aString do: [ :node :answer | true ];
 		matches: '[:`@vars | | `@temps | `@.Stmts]'
-			do: 
-				[:node :answer | 
-				answer or: 
-						[((node defines: aString) or: [node body defines: aString]) not 
-							and: [searcher executeTree: node body initialAnswer: false]]].
-	^searcher executeTree: self parseTree initialAnswer: false
+			do: [ :node :answer | 
+			answer
+				or: [ ((node defines: aString) or: [ node body defines: aString ]) not
+						and: [ searcher executeTree: node body initialAnswer: false ] ] ].
+	^ searcher executeTree: self parseTree initialAnswer: false
 ]
 
 { #category : #accessing }

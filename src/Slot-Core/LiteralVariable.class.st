@@ -30,17 +30,9 @@ LiteralVariable class >> checkValidName: aString [
 
 { #category : #'class initialization' }
 LiteralVariable class >> initialize [
-	Properties
-		ifNil: [ self initializeProperties ]
-		ifNotNil: [ | newDict | 
-			newDict := WeakIdentityKeyDictionary newFrom: Properties.
-			newDict rehash.
-			Properties := newDict ]
-]
-
-{ #category : #'class initialization' }
-LiteralVariable class >> initializeProperties [
-	Properties := WeakIdentityKeyDictionary new.
+	Properties := Properties
+		ifNil: [ WeakIdentityKeyDictionary new. ]
+		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
 ]
 
 { #category : #'instance creation' }

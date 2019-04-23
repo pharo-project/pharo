@@ -20,5 +20,6 @@ NNavDirectionPreviousSelection class >> buildShortcut: aBuilder [
 
 { #category : #'stand out' }
 NNavDirectionPreviousSelection class >> findSelectionFor: navigationContext [
+
 	^ navigationContext lastSelection 
 ]

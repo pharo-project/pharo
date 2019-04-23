@@ -14,10 +14,10 @@ RBChildrenToSiblingsTest >> setUp [
 RBChildrenToSiblingsTest >> testBadName [
 	self shouldFail: (RBChildrenToSiblingsRefactoring 
 			name: #'Obje ct'
-			class: RBLintRuleTest
+			class: RBLintRuleTestData
 			subclasses: (Array 
-					with: RBBasicLintRuleTest
-					with: RBCompositeLintRuleTest))
+					with: RBBasicLintRuleTestData
+					with: RBCompositeLintRuleTestData))
 ]
 
 { #category : #'failure tests' }
@@ -25,16 +25,16 @@ RBChildrenToSiblingsTest >> testExistingName [
 	self
 		shouldFail: (RBChildrenToSiblingsRefactoring 
 				name: #Object
-				class: RBLintRuleTest
+				class: RBLintRuleTestData
 				subclasses: (Array 
-						with: RBBasicLintRuleTest
-						with: RBCompositeLintRuleTest));
+						with: RBBasicLintRuleTestData
+						with: RBCompositeLintRuleTestData));
 		shouldFail: (RBChildrenToSiblingsRefactoring 
 				name: #Processor
-				class: RBLintRuleTest
+				class: RBLintRuleTestData
 				subclasses: (Array 
-						with: RBBasicLintRuleTest
-						with: RBCompositeLintRuleTest))
+						with: RBBasicLintRuleTestData
+						with: RBCompositeLintRuleTestData))
 ]
 
 { #category : #'failure tests' }
@@ -43,18 +43,18 @@ RBChildrenToSiblingsTest >> testInvalidSubclass [
 			name: #Foo
 			class: RBRefactoringTest
 			subclasses: (Array 
-					with: RBBasicLintRuleTest
-					with: RBCompositeLintRuleTest))
+					with: RBBasicLintRuleTestData
+					with: RBCompositeLintRuleTestData))
 ]
 
 { #category : #'failure tests' }
 RBChildrenToSiblingsTest >> testMetaClassFailure [
 	self shouldFail: (RBChildrenToSiblingsRefactoring 
 			name: #Foo
-			class: RBLintRuleTest class
+			class: RBLintRuleTestData class
 			subclasses: (Array 
-					with: RBBasicLintRuleTest class
-					with: RBCompositeLintRuleTest class))
+					with: RBBasicLintRuleTestData class
+					with: RBCompositeLintRuleTestData class))
 ]
 
 { #category : #tests }

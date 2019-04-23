@@ -565,25 +565,22 @@ ChangeSorterApplication >> openChangeSetBrowser [
 	| cs |
 	
 	cs := self selectedChangeSet ifNil: [^self].
-	^Smalltalk tools browser openInEnvironment: (RBBrowserEnvironment new forClasses: cs changedClasses)
+	^Smalltalk tools messageList browseClasses: cs changedClasses
 ]
 
 { #category : #initialization }
 ChangeSorterApplication >> registerChangeActions [
-	
 	changesListPresenter
-		whenSelectedItemChanged: [:change | 
-			classesListPresenter resetSelection.
+		whenSelectionChangedDo: [ :selection | 
+			[ :change | 
+			classesListPresenter unselectAll.
 			self updateTextContents.
-			change 
-				ifNil: [
-					classesListPresenter items: {}.
-					methodsListPresenter items: {}.
-					]
-				ifNotNil: [
-					classesListPresenter items: (change changedClasses sort: [:a :b | a name < b name ]).
-					 ]].
-	
+			change
+				ifNil: [ classesListPresenter items: {}.
+					methodsListPresenter items: {} ]
+				ifNotNil: [ classesListPresenter
+						items: (change changedClasses sort: [ :a :b | a name < b name ]) ] ]
+				cull: selection selectedItem ]
 ]
 
 { #category : #shortcuts }
@@ -603,15 +600,18 @@ ChangeSorterApplication >> registerChangeSetShortcuts: aWidget [
 
 { #category : #initialization }
 ChangeSorterApplication >> registerClassActions [
-	
-	classesListPresenter whenSelectedItemChanged: [:class | 
-		methodsListPresenter resetSelection.
-		self updateTextContents.
-		textPresenter behavior: class.
-		textPresenter aboutToStyle: false.
-		class 
-			ifNil: [ methodsListPresenter items: {} ]
-			ifNotNil: [ methodsListPresenter items: (self selectedChangeSet selectorsInClass: class name) sort ]].
+	classesListPresenter
+		whenSelectionChangedDo: [ :selection | 
+			[ :class | 
+			methodsListPresenter unselectAll.
+			self updateTextContents.
+			textPresenter behavior: class.
+			textPresenter aboutToStyle: false.
+			class
+				ifNil: [ methodsListPresenter items: {} ]
+				ifNotNil: [ methodsListPresenter
+						items: (self selectedChangeSet selectorsInClass: class name) sort ] ]
+				cull: selection selectedItem ]
 ]
 
 { #category : #shortcuts }
@@ -635,9 +635,8 @@ ChangeSorterApplication >> registerMethodShortcuts: aWidget [
 
 { #category : #initialization }
 ChangeSorterApplication >> registerSelectorActions [
-
-	methodsListPresenter whenSelectedItemChanged: [:selector |
-		self updateTextContents ]
+	methodsListPresenter
+		whenSelectionChangedDo: [ :selection | [ :selector | self updateTextContents ] cull: selection selectedItem ]
 ]
 
 { #category : #'menu - change set' }
@@ -700,8 +699,7 @@ ChangeSorterApplication >> rename [
 
 { #category : #api }
 ChangeSorterApplication >> selectedChangeSet [
-
-	 ^ changesListPresenter selectedItem
+	^ changesListPresenter selection selectedItem
 ]
 
 { #category : #api }
@@ -712,8 +710,7 @@ ChangeSorterApplication >> selectedChangeSetIndex [
 
 { #category : #api }
 ChangeSorterApplication >> selectedClass [
-
-	 ^ classesListPresenter selectedItem
+	^ classesListPresenter selection selectedItem
 ]
 
 { #category : #api }
@@ -722,16 +719,9 @@ ChangeSorterApplication >> selectedClassIndex [
 	 ^ classesListPresenter selectedIndex
 ]
 
-{ #category : #accessing }
-ChangeSorterApplication >> selectedMessage [ 
-
-	^ self selectedClass >> self selectedSelector
-]
-
 { #category : #api }
 ChangeSorterApplication >> selectedSelector [
-
-	 ^ methodsListPresenter selectedItem
+	^ methodsListPresenter selection selectedItem
 ]
 
 { #category : #api }
@@ -803,15 +793,14 @@ ChangeSorterApplication >> updateChangesList [
 
 { #category : #api }
 ChangeSorterApplication >> updateClassesList [
-	
 	| sel |
 	sel := self selectedClass.
-	
 	self selectedChangeSet
-			ifNil: [ classesListPresenter items: {} ]
-			ifNotNil: [:change |	classesListPresenter items: (change changedClasses sort: [:a :b | a name < b name ])].
-				
-	classesListPresenter setSelectedItem: sel
+		ifNil: [ classesListPresenter items: {} ]
+		ifNotNil: [ :change | 
+			classesListPresenter
+				items: (change changedClasses sort: [ :a :b | a name < b name ]) ].
+	classesListPresenter selectItem: sel
 ]
 
 { #category : #api }
@@ -854,6 +843,5 @@ ChangeSorterApplication >> updateTextContents [
 
 { #category : #'api-events' }
 ChangeSorterApplication >> whenChangesListChanges: aBlock [
-
-	changesListPresenter whenListChanged: aBlock
+	changesListPresenter whenModelChangedDo: aBlock
 ]

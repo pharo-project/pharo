@@ -3,29 +3,14 @@ An FastTablePresenter is a spec presenter for a FastTable
 "
 Class {
 	#name : #FastTablePresenter,
-	#superclass : #ListPresenter,
+	#superclass : #ColumnedListPresenter,
 	#instVars : [
 		'iconHolder',
 		'handlesDoubleClick',
-		'doubleClick',
-		'columns'
+		'displayBlock'
 	],
 	#category : #'Spec-Core-Widgets'
 }
-
-{ #category : #specs }
-FastTablePresenter class >> adapterName [
-
-	^ #FastTableAdapter
-]
-
-{ #category : #specs }
-FastTablePresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(FastTableAdapter
-		adapt: #(model))
-]
 
 { #category : #example }
 FastTablePresenter class >> example [
@@ -47,36 +32,28 @@ FastTablePresenter class >> exampleMultipleSelection [
 	example
 		items: (1 to: 10);
 		beMultipleSelection;
-		whenSelectionChanged: [ :selection | selection logCr ];
+		whenSelectionChangedDo: [ :selection | selection logCr ];
 		openWithSpec.
 	^ example
 ]
 
-{ #category : #accessing }
-FastTablePresenter >> columns [
-	^ columns
+{ #category : #'api-columns' }
+FastTablePresenter >> addColumn: aColumn [
+
+	aColumn table: self.
+	super addColumn: aColumn.
 ]
 
-{ #category : #api }
-FastTablePresenter >> doubleClick: event [
+{ #category : #initialization }
+FastTablePresenter >> displayBlock [
 
-	doubleClick value cull: event
+	^ displayBlock
 ]
 
-{ #category : #api }
-FastTablePresenter >> doubleClickAction [
-	"<api: #inspect>"
-	"Return the block evaluated on double click"
-	
-	^ doubleClick value
-]
+{ #category : #initialization }
+FastTablePresenter >> displayBlock: aBlock [
 
-{ #category : #api }
-FastTablePresenter >> doubleClickAction: aBlock [
-	"<api: #block getter:#doubleClickAction registration: #whenDoubleClickActionChanged:>"
-	"Set the block evaluated on double click."
-	
-	doubleClick value: aBlock
+	displayBlock := aBlock
 ]
 
 { #category : #api }
@@ -116,8 +93,10 @@ FastTablePresenter >> icons: aBlock [
 
 { #category : #initialization }
 FastTablePresenter >> initialize [
+
+	displayBlock := #yourself.
 	super initialize.
-	columns := {SpecFTColumn new}
+	self addColumn: SpecFTColumn new
 ]
 
 { #category : #initialization }
@@ -127,27 +106,22 @@ FastTablePresenter >> initializeValueHolders [
 
 	iconHolder := [:item | nil ] asValueHolder.
 	handlesDoubleClick := false asValueHolder.
-	doubleClick := [  ] asValueHolder.
-
 ]
 
-{ #category : #accessing }
+{ #category : #'api-columns' }
 FastTablePresenter >> numberOfColumns: aNumber [
-	columns := ((1 to: aNumber) collect: [ :index | FTArrayIndexColumn index: index ] )
+
+	columns := OrderedCollection new.
+	((1 to: aNumber) do: [ :index | 
+		self addColumn: (SpecFTArrayIndexColumn index: index) ] )
 ]
 
-{ #category : #accessing }
+{ #category : #'api-columns' }
 FastTablePresenter >> numberOfColumns: aNumber withWidths: widths [
-	columns := ((1 to: aNumber) collect: [ :index | 
-		FTArrayIndexColumn index: index width: (widths at: index) ] )
-]
 
-{ #category : #private }
-FastTablePresenter >> prepareForFilteredDataSourceWith: items [
-
-	listHolder := items asValueHolder.
-	listHolder whenChangedDo: [ self refreshListItems ].
-	listItemsCache := nil
+	columns := OrderedCollection new.
+	((1 to: aNumber) do: [ :index | 
+		self addColumn: (SpecFTArrayIndexColumn index: index) ] )
 ]
 
 { #category : #initialization }

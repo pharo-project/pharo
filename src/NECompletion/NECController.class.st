@@ -43,7 +43,6 @@ NECController class >> codeCompletionAround: aBlock textMorph: aTextMorph keyStr
 	"Inserts code completion if allowed in this morph"
 	
 	| editor stringHolder completionAllowed controller |
-	
 	editor := aTextMorph editor.
 	stringHolder := editor ifNotNil:[ editor model ].
 	completionAllowed := self allowModel: stringHolder.
@@ -71,19 +70,22 @@ NECController class >> contextClass: aClass [
 ]
 
 { #category : #'class initialization' }
-NECController class >> initialize [ 
+NECController class >> initialize [
+	"self initialize"
+	
 	self register
 ]
 
 { #category : #'tools registry' }
 NECController class >> register [
-	self registerToolsOn: Smalltalk tools.
+
+	RubSmalltalkEditor completionEngine: self.
 ]
 
 { #category : #'tools registry' }
 NECController class >> registerToolsOn: registry [
 	"self registerToolsOn: Smalltalk tools" 
-	registry register: self as: #codeCompletion
+	registry remove: #codeCompletion
 
 ]
 
@@ -154,10 +156,11 @@ NECController >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [
 { #category : #keyboard }
 NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	"I return a boolean. 
-	true when I have handled the event and no futher processing is needed by the caller."
+	true when I have handled the event and no futher processing is needed by the caller.
+	
+	This method would be cleaner if splitted."
 
 	| keyCharacter controlKeyPressed |
-	self flag: #fixme.	"this method should be split up"
 	self setEditor: anEditor.
 	self setModel: editor model.
 	keyCharacter := aKeyboardEvent keyCharacter.
@@ -207,9 +210,6 @@ NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 				ifTrue: [ 
 					menuMorph insertCommonPrefixOrSelected
 						ifTrue: [ ^ true ] ] ].
-	self flag: #todo.	"Removing for now... most of the shortcuts are broken and no time or need now to fix them"	"(keyCharacter = $h and: [ controlKeyPressed ]) ifTrue: [ 
-		menuMorph help.
-		^ true ]."
 	keyCharacter = Character backspace
 		ifTrue: [ 
 			editor isCaretBehindChar

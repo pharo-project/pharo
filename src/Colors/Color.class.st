@@ -1045,6 +1045,7 @@ Color >> asColorref [
 	"Convert the receiver into a colorref, i.e, a number embedding r,g,b on 24 bits"
 	"(Color red asColorref) >>> 229"
 	"(Color white asColorref) >>>  16777215"
+	
 	^(self red * 255) asInteger + ((self green * 255) asInteger << 8) + ((self blue * 255) asInteger << 16)
 ]
 

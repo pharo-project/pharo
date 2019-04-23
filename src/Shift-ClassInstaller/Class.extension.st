@@ -5,16 +5,8 @@ Class >> addClassSlot: aSlot [
 
 	^ self classInstaller update: self to: [ :builder |
 		builder
-			superclass: self superclass;
-			name: self name;
-			layoutClass: self classLayout class;
-			slots: self slots;
-			classSlots: (self class classLayout slots copyWith: aSlot);
-			sharedVariablesFromString: self classVariablesString;
-			sharedPools: self sharedPoolsString;
-			category: self category;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ]
+			fillFor: self;
+			classSlots: (self class classLayout slots copyWith: aSlot)]
 ]
 
 { #category : #'*Shift-ClassInstaller' }
@@ -24,6 +16,15 @@ Class >> addSlot: aSlot [
 		builder
 			fillFor: self;
 			slots: (self localSlots copyWith: aSlot)].
+]
+
+{ #category : #'*Shift-ClassInstaller' }
+Class >> removeClassSlot: aSlot [
+
+	^ self classInstaller update: self to: [ :builder |
+		builder
+			fillFor: self;
+			classSlots: (self class classLayout slots copyWithout: aSlot)]
 ]
 
 { #category : #'*Shift-ClassInstaller' }

@@ -1,7 +1,10 @@
+"
+Tests for GlobalVariable
+"
 Class {
 	#name : #GlobalVariableTest,
 	#superclass : #TestCase,
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-VariablesAndSlots'
 }
 
 { #category : #'tests  - properties' }

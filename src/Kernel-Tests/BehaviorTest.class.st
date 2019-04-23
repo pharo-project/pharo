@@ -175,7 +175,7 @@ BehaviorTest >> testMethodsWritingSlot [
 	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
 
 	numberViaSlot := (Point methodsWritingSlot: (Point slotNamed: #x)) size.
-	numberViaIVar := (Point whichSelectorsAssign: 'x') size.
+	numberViaIVar := (Point whichSelectorsStoreInto: 'x') size.
 	self assert: numberViaSlot = numberViaIVar.
 ]
 
@@ -213,4 +213,11 @@ BehaviorTest >> testallSuperclassesIncluding [
 	self deny: (cls includes: Object). 
 	self assert: (cls includes: Collection). 
 	self assert: (cls includes: SequenceableCollection). 
+]
+
+{ #category : #tests }
+BehaviorTest >> testsourceCodeTemplateFor [
+	"check for distictive source code templates for class-side and instance-side"
+	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side message'). 
+	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side message') 
 ]

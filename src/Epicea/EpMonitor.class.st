@@ -37,6 +37,13 @@ EpMonitor class >> current: aMonitor [
 	current := aMonitor
 ]
 
+{ #category : #enabling }
+EpMonitor class >> disableDuring: aBlock [
+	"Disable the default monitor during the execution of a block"
+	
+	self current disableDuring: aBlock
+]
+
 { #category : #testing }
 EpMonitor class >> hasCurrent [
 	"Answer if there is an instance of this class that is #current (without creating the instance if one not already exists)."
@@ -46,8 +53,7 @@ EpMonitor class >> hasCurrent [
 
 { #category : #accessing }
 EpMonitor class >> logsDirectory [
-	self flag: #todo.	"The base locator could have a wrong fileSystem"
-
+	self flag: #pharoFixMe.	"The base locator could have a wrong fileSystem"
 	^ self current sessionStore baseLocator asFileReference
 ]
 
@@ -308,6 +314,20 @@ EpMonitor >> disable [
 
 	self announceMonitorStateUpdated.
 
+]
+
+{ #category : #enabling }
+EpMonitor >> disableDuring: aBlock [
+	"Disable all logging during the execution of a block.
+	
+	Example:
+		EpMonitor current disableDuring: [ self generateApplicationTemplate ]"
+
+	| currentStatus |
+	currentStatus := self isEnabled.
+	self disable.
+	[ aBlock value ]
+		ensure: [ self enabled: currentStatus ]
 ]
 
 { #category : #enabling }

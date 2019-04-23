@@ -408,7 +408,7 @@ CompilationContext >> encoderClass: anObject [
 
 { #category : #accessing }
 CompilationContext >> environment [
-	^ environment ifNil: [ environment := Smalltalk globals ]
+	^ environment ifNil: [ environment := self getClass environment ]
 ]
 
 { #category : #accessing }

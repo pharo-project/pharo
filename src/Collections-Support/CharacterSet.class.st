@@ -1,5 +1,11 @@
 "
-A set of characters.  Lookups for inclusion are very fast.
+A set of characters: 
+
+- Lookups for inclusion are very fast.
+- CharacterSet will automatically convert itself to a WideCharacterSet if a character with value > 255 is added.
+- Tests for inclusion can be done on any Character value (up to Character maxVal).
+
+See the package comments for a description of how each of the classes in Collections-Support-CharacterSets is used.
 "
 Class {
 	#name : #CharacterSet,

@@ -21,30 +21,30 @@ RBRenameTemporaryTest >> testBadName [
 		shouldFail: (RBRenameTemporaryRefactoring 
 				renameTemporaryFrom: (self 
 						convertInterval: (15 to: 19)
-						for: (RBLintRuleTest sourceCodeAt: #openEditor))
+						for: (RBLintRuleTestData sourceCodeAt: #openEditor))
 				to: 'name'
-				in: RBLintRuleTest
+				in: RBLintRuleTestData
 				selector: #openEditor);
 		shouldFail: (RBRenameTemporaryRefactoring 
 				renameTemporaryFrom: (self 
 						convertInterval: (15 to: 19)
-						for: (RBLintRuleTest sourceCodeAt: #openEditor))
+						for: (RBLintRuleTestData sourceCodeAt: #openEditor))
 				to: 'rules'
-				in: RBLintRuleTest
+				in: RBLintRuleTestData
 				selector: #openEditor);
 		shouldFail: (RBRenameTemporaryRefactoring 
 				renameTemporaryFrom: (self 
 						convertInterval: (15 to: 19)
-						for: (RBLintRuleTest sourceCodeAt: #openEditor))
+						for: (RBLintRuleTestData sourceCodeAt: #openEditor))
 				to: 'DependentFields'
-				in: RBLintRuleTest
+				in: RBLintRuleTestData
 				selector: #openEditor);
 		shouldFail: (RBRenameTemporaryRefactoring 
 				renameTemporaryFrom: (self 
 						convertInterval: (15 to: 19)
-						for: (RBLintRuleTest sourceCodeAt: #openEditor))
+						for: (RBLintRuleTestData sourceCodeAt: #openEditor))
 				to: 'a b'
-				in: RBLintRuleTest
+				in: RBLintRuleTestData
 				selector: #openEditor)
 ]
 
@@ -75,12 +75,12 @@ RBRenameTemporaryTest >> testRenameTemporary [
 	refactoring := RBRenameTemporaryRefactoring 
 		renameTemporaryFrom: (self 
 				convertInterval: (15 to: 19)
-				for: (RBLintRuleTest sourceCodeAt: #openEditor))
+				for: (RBLintRuleTestData sourceCodeAt: #openEditor))
 		to: 'asdf'
-		in: RBLintRuleTest
+		in: RBLintRuleTestData
 		selector: #openEditor.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBLintRuleTest) parseTreeFor: #openEditor) = (RBParser parseMethod: 'openEditor
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeFor: #openEditor) = (RBParser parseMethod: 'openEditor
 								| asdf |
 								asdf := self failedRules.
 								asdf isEmpty ifTrue: [^self].

@@ -1,7 +1,7 @@
 Class {
 	#name : #SlotExampleMovieAndPersonTest,
 	#superclass : #TestCase,
-	#category : #'Slot-Tests-Associations'
+	#category : #'Slot-Tests-Examples - Associations'
 }
 
 { #category : #tests }

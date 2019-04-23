@@ -43,9 +43,9 @@ MorphTreePager >> buildPanel [
 						getEnabled: #notOnFirstPage
 						help: 'Previous page'.
 			widgets add: previousButton.
-			wid := self textEntryLabel: '' get: #currentPage set: #currentPage: help: 'Index of page to view' translated class: Integer.
+			wid := self textEntryLabel: '' get: #currentPageToString set: #currentPageInput: help: 'Index of page to view' translated class: String.
 			wid hResizing: #rigid.
-			wid width: (self preferedFont widthOfString: '1000').
+			wid width: (self preferedFont widthOfString: '1000000').
 			widgets add: wid.
 			widgets add: (self buttonLabel: self class smallDiezeIcon actionSelector: #choosePage arguments: {} getEnabled: nil help: 'Choose page').
 			nextButton := self
@@ -66,12 +66,12 @@ MorphTreePager >> buildPanel [
 	widgets add: (LabelMorph contents: 'Page size: ' font: self preferedFont).
 	pageSizeEditor := self
 				textEntryLabel: 'Page size'
-				get: #pageSize
-				set: #pageSizeInput:
+				get: #pageSizeToString
+				set: #pageSizeFromString:
 				help: 'Change the page size or the number of pages if the input begins with "/"' translated
 				class: String.
 	pageSizeEditor hResizing: #rigid.
-	pageSizeEditor width: (self preferedFont widthOfString: '10000').
+	pageSizeEditor width: (self preferedFont widthOfString: '1000000').
 	widgets add: pageSizeEditor.
 	self withSearch
 		ifTrue: [searchEditor := self
@@ -135,8 +135,23 @@ MorphTreePager >> currentPageFirstIndex [
 ]
 
 { #category : #accessing }
+MorphTreePager >> currentPageInput: aString [
+	| input currPage |
+	input := aString asString trimBoth.
+	input ifEmpty: [treeMorph flash.
+		^ false].
+	currPage := Integer readFromString: input.
+	^ self currentPage: currPage
+]
+
+{ #category : #accessing }
 MorphTreePager >> currentPageLastIndex [
 	^ pageSize ifNil: [self nodeList size] ifNotNil: [(self currentPageFirstIndex + pageSize - 1) min: self nodeList size]
+]
+
+{ #category : #accessing }
+MorphTreePager >> currentPageToString [
+	^ self currentPage asString
 ]
 
 { #category : #testing }

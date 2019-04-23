@@ -25,9 +25,7 @@ RBAddAccessorsForClassTransformationTest >> testRefactoring [
 RBAddAccessorsForClassTransformationTest >> testTransform [
 
 	| transformation class |
-	transformation := (RBAddAccessorsForClassTransformation
-							className: self changeMock name)
-							transform.
+	transformation := (RBAddAccessorsForClassTransformation className: self changeMock name) transform.
 	
 	self assert: transformation model changes changes size equals: 2.
 	

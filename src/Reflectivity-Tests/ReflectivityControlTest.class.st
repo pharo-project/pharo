@@ -359,6 +359,26 @@ ReflectivityControlTest >> testAfterSlot [
 	self assert: tag equals: #ivar
 ]
 
+{ #category : #'tests - after - variables' }
+ReflectivityControlTest >> testAfterSlotWrite [
+	| iVar instance |
+	iVar := ReflectivityExamples slotNamed: #ivar.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #after;
+		arguments: #(name).
+	iVar link: link.
+	self assert: iVar hasMetalink.
+	self
+		assert: (ReflectivityExamples >> #exampleAssignmentIvar) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignmentIvar equals: 3.
+	self assert: tag equals: #ivar
+]
+
 { #category : #'tests - after' }
 ReflectivityControlTest >> testAfterVariableNode [
 	| variableNode |
@@ -621,6 +641,44 @@ ReflectivityControlTest >> testBeforeSequence [
 	self assert: ReflectivityExamples new exampleAssignment equals: 3.
 	self assert: tag equals: 'yes'.
 	self assert: (ReflectivityExamples >> #exampleAssignment) class equals: CompiledMethod.
+]
+
+{ #category : #'tests - after - variables' }
+ReflectivityControlTest >> testBeforeSlot [
+	| iVar instance |
+	iVar := ReflectivityExamples slotNamed: #ivar.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #before;
+		arguments: #(name).
+	iVar link: link.
+	self assert: iVar hasMetalink.
+	self
+		assert: (ReflectivityExamples >> #exampleIvarRead) class
+		equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleIvarRead equals: 33.
+	self assert: tag equals: #ivar
+]
+
+{ #category : #'tests - after - variables' }
+ReflectivityControlTest >> testBeforeSlotWrite [
+	| iVar instance |
+	iVar := ReflectivityExamples slotNamed: #ivar.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		control: #before;
+		arguments: #(name).
+	iVar link: link.
+	self assert: iVar hasMetalink.
+	self assert: (ReflectivityExamples >> #exampleAssignmentIvar) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignmentIvar equals: 3.
+	self assert: tag equals: #ivar
 ]
 
 { #category : #'tests - before' }

@@ -258,18 +258,6 @@ TraitedMetaclass >> localSelectors [
 ]
 
 { #category : #initialization }
-TraitedMetaclass >> obsolete [
-
-	super obsolete.
-	self canZapMethodDictionary
-		ifTrue: [
-			localMethods := self emptyMethodDictionary.
-			baseLocalMethods := self emptyMethodDictionary].
-	
-
-]
-
-{ #category : #initialization }
 TraitedMetaclass >> rebuildMethodDictionary [
 	| selectors removedSelectors modified |
 	

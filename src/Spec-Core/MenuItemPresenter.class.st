@@ -33,7 +33,6 @@ Class {
 		'icon',
 		'description',
 		'state',
-		'enabled',
 		'autoRefresh'
 	],
 	#category : #'Spec-Core-Widgets'
@@ -43,14 +42,6 @@ Class {
 MenuItemPresenter class >> adapterName [
 
 	^ #MenuItemAdapter
-]
-
-{ #category : #specs }
-MenuItemPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(MenuItemAdapter
-		adapt: #(model))
 ]
 
 { #category : #accessing }
@@ -89,18 +80,6 @@ MenuItemPresenter >> description: aString [
 	description value: aString
 ]
 
-{ #category : #accessing }
-MenuItemPresenter >> enabled [
-
-	^ enabled value
-]
-
-{ #category : #accessing }
-MenuItemPresenter >> enabled: aBoolean [
-
-	enabled value: aBoolean
-]
-
 { #category : #'api-building' }
 MenuItemPresenter >> fromSpec: aSpec [
 
@@ -131,7 +110,6 @@ MenuItemPresenter >> initialize [
 	super initialize.
 
 	action := [] asValueHolder.
-	enabled := true asValueHolder.
 	state := nil asValueHolder.
 	description := nil asValueHolder.
 	name := '' asValueHolder.
@@ -156,11 +134,11 @@ MenuItemPresenter >> name: aString [
 { #category : #api }
 MenuItemPresenter >> performMenuActionWith: aMenuItem [
 	| en |
-
-	en := self enabled.
-	en isBlock ifTrue: [ en := en value ].
-	en ifFalse: [ ^ self ].
-
+	en := self isEnabled.
+	en isBlock
+		ifTrue: [ en := en value ].
+	en
+		ifFalse: [ ^ self ].
 	action value cull: aMenuItem
 ]
 
@@ -195,7 +173,9 @@ MenuItemPresenter >> subMenu [
 ]
 
 { #category : #api }
-MenuItemPresenter >> subMenu: aMenuModel [
+MenuItemPresenter >> subMenu: aMenuPresenter [
 
-	subMenu value: aMenuModel
+	aMenuPresenter ifNotNil: [  
+		aMenuPresenter owner: self ].
+	subMenu value: aMenuPresenter
 ]

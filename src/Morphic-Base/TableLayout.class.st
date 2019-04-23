@@ -340,7 +340,7 @@ TableLayout >> computeGlobalCellArrangement: cells in: newBounds horizontal: aBo
 			first := nil]].
 	first ifNotNil:[
 		last := LayoutCell new.
-		last cellSize: (maxExtent x * n) @ (maxExtent y). self flag: #arNote."@@@: n is not correct!"
+		last cellSize: (maxExtent x * n) @ (maxExtent y). self flag: #pharoFixMe."@@@: n is not correct!"
 		last nextCell: first.
 		output nextPut: last].
 	^output contents
@@ -407,7 +407,7 @@ TableLayout >> indexForInserting: aPoint inList: morphList horizontal: aBool tar
 					cmp3 := [:rect | aPoint x < rect left]]]. 
 	morphList keysAndValuesDo: 
 			[:index :m | | box | 
-			self flag: #arNote.	"it is not quite clear if we can really use #fullBounds here..."
+			self flag: #pharoFixMe.	"it is not quite clear if we can really use #fullBounds here..."
 			box := m fullBounds.
 			noWrap 
 				ifTrue: 

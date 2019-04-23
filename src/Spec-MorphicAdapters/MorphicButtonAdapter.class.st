@@ -109,3 +109,9 @@ MorphicButtonAdapter >> state [
 
 	^ self model state
 ]
+
+{ #category : #accessing }
+MorphicButtonAdapter >> unscaledInitialExtent [
+
+	^ 15@26
+]

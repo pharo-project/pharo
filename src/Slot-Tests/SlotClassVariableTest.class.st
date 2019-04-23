@@ -1,7 +1,7 @@
 Class {
 	#name : #SlotClassVariableTest,
 	#superclass : #SlotClassBuilderTest,
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #tests }
@@ -62,8 +62,7 @@ SlotClassVariableTest >> testSlotIsPersistedAfterRebuildOfClass [
 	class1 := self make: [ :builder | 
 		builder
 			name: self aClassName;
-			superclass: Object;
-			copyClassSlotsFromExistingClass ].
+			superclass: Object ].
 
 	self assert: class1 class slots size equals: 1.
 	self assert: (class1 class slots at:1) name equals: #Foo.

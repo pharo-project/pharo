@@ -46,6 +46,20 @@ T2TraitTest >> createT2 [
 ]
 
 { #category : #tests }
+T2TraitTest >> testClassHavingAnInstanceVariableUsersDifferenThanUsers [
+	| t1 aClass |
+
+	t1 := self newTrait: #T1 with: #(users).
+
+	aClass := self newClass: #C1 superclass: Object with: #() uses: {}.
+	aClass class setTraitComposition: { t1 }.
+	
+	self assert: (aClass class allSlots anySatisfy: [:e | e name = #users]).
+	self assert: (aClass class slotNamed: #users) definingClass equals: t1
+
+]
+
+{ #category : #tests }
 T2TraitTest >> testClassTraits [
 	| t1 t2 aClass |
 
@@ -75,6 +89,18 @@ T2TraitTest >> testClassTraits [
 	
 	self assert: aClass anAlias equals: 21.
 	self assert: aClass aSelector equals: 21.
+]
+
+{ #category : #tests }
+T2TraitTest >> testClassUsingTraitsDoesNotHaveUsers [
+	| t1 aClass |
+
+	t1 := self newTrait: #T1 with: #().
+
+	aClass := self newClass: #C1 superclass: Object with: #() uses: {t1}.
+	
+	self assert: (aClass class allSlots noneSatisfy: [:e | e name = #users])
+
 ]
 
 { #category : #tests }
@@ -231,4 +257,36 @@ T2TraitTest >> testSequence [
 	
 	self assert: obj getValues equals: 6.
 	self assert: obj getValues2 equals: 12
+]
+
+{ #category : #tests }
+T2TraitTest >> testSubclasses [
+	| t1 t2 |
+		
+	t1 := self createT1.
+	t2 := self newTrait: #T2 with: #(aa bb) uses: t1.
+
+	self deny: t1 hasSubclasses.
+	self deny: t2 hasSubclasses.	
+
+	self assert: t1 subclasses isEmpty.
+	self assert: t2 subclasses isEmpty.	
+		
+	self deny: t1 hasSubclasses.
+	self deny: t2 hasSubclasses.	
+
+
+]
+
+{ #category : #tests }
+T2TraitTest >> testTraitHaveUsersInstanceVariable [
+	| t1 aClass |
+
+	t1 := self newTrait: #T1 with: #(users).
+
+	aClass := self newClass: #C1 superclass: Object with: #() uses: {t1}.
+	
+	self assert: (aClass allSlots anySatisfy: [:e | e name = #users]).
+	self assert: (aClass slotNamed: #users) definingClass equals: t1
+
 ]

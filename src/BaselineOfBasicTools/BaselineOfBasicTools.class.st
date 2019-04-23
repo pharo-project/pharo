@@ -41,6 +41,13 @@ BaselineOfBasicTools >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 
+		"Load first SUnit core"
+		spec
+			baseline: 'SUnitCore' with: [
+				spec
+					loads: 'Core';
+					className: 'BaselineOfSUnit';
+					repository: repository ].
 		spec
 			baseline: 'UI' with: [spec repository: repository];
 			baseline: 'Athens' with: [ 
@@ -51,8 +58,6 @@ BaselineOfBasicTools >> baseline: spec [
 				spec
 					loads: #('UI' 'Help' 'JenkinsSupport');
 					repository: repository ].
-
-		spec package: 'Morphic-Widgets-FastTable'.
 		
 		spec package: 'Tool-ExternalBrowser'.
 		spec package: 'BlueInk-Core'. 

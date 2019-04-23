@@ -2,14 +2,20 @@ Extension { #name : #RBProgramNode }
 
 { #category : #'*Refactoring2-Transformations' }
 RBProgramNode >> allAccesses [
-	self flag: #Clean. "allAccesses is returning all the variables not whether the variable is read or set. 
-	We should rename this method to allVariables"
+	self deprecated: 'Use #allVariables instead' transformWith: '`@receiver allAccesses' -> '`@receiver allVariables'.
+	^ self allVariables
+]
+
+{ #category : #'*Refactoring2-Transformations' }
+RBProgramNode >> allVariables [
+	"Return all the variables in subnodes"
+
 	^ self allChildren select: [ :each | each isVariable ]
 ]
 
 { #category : #'*Refactoring2-Transformations' }
 RBProgramNode >> parentSuchAs: aPredicateSelector [
-	self flag: #Bogus. "either there is a precondition stating that there is a parent matching or we need to check and return something when there is no parent marching."
+	self flag: #pharoFixMe. "either there is a precondition stating that there is a parent matching or we need to check and return something when there is no parent matching."
 	^ (self parent perform: aPredicateSelector)
 		ifTrue: [ self parent ]
 		ifFalse: [ ^ self parent parentSuchAs: aPredicateSelector ]

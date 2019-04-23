@@ -1,6 +1,6 @@
 Class {
 	#name : #DatePresenterTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#category : #'Spec-Tests-PolyWidgets-Widgets'
 }
 
@@ -16,6 +16,6 @@ DatePresenterTest >> testOnDateChosen [
 	mookChoseDate
 		calendar: StandardWindow new;
 		date: Date tomorrow.
-	testedInstance onDateChosen: mookChoseDate.
-	self assert: testedInstance date equals: Date tomorrow
+	presenter onDateChosen: mookChoseDate.
+	self assert: presenter date equals: Date tomorrow
 ]

@@ -38,7 +38,6 @@ RPackageMonticelloSynchronisationTest >> testUnloadMCPackageRemovesRPackage [
 	MCWorkingCopy forPackage: (MCPackage new name: 'XXXXX').
 	(self allManagers detect: [:each | each packageName = 'XXXXX']) unload.
 
-	self flag: #fixme."See comment in RPackageOrganizer>>update:"
 	self deny: (self organizer includesPackageNamed: #XXXXX).
 ]
 

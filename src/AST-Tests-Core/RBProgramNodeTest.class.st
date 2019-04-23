@@ -208,6 +208,14 @@ RBProgramNodeTest >> testPropertyAtIfAbsentPut [
 ]
 
 { #category : #'testing-properties' }
+RBProgramNodeTest >> testPropertyAtIfPresentIfAbsent [
+	self assert: (self node propertyAt: #foo ifPresent:[ false ] ifAbsent: [ true ]) equals: true.
+	self node propertyAt: #foo put: true.
+	self assert: (self node propertyAt: #foo ifPresent:[ true ] ifAbsent: [ false ]).
+	self assert: (self node propertyAt: #toto ifPresent:[ false ] ifAbsent: [ true ])
+]
+
+{ #category : #'testing-properties' }
 RBProgramNodeTest >> testRemoveProperty [
 	self should: [ self node removeProperty: #foo ] raise: Error.
 	self node propertyAt: #foo put: true.

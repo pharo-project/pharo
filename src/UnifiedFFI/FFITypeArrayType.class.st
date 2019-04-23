@@ -39,7 +39,7 @@ FFITypeArrayType >> externalTypeSize [
 
 { #category : #'emitting code' }
 FFITypeArrayType >> offsetReadArrayAt: offsetVariableName [
-	self flag: #todo. "This is not working in all cases for 32/64 bits (
+	self flag: #pharoTodo. "This is not working in all cases for 32/64 bits (
 	externalTypeSize could be different)"
 	^ String streamContents:[ :stream|
 		stream 
@@ -62,7 +62,7 @@ FFITypeArrayType >> offsetReadFieldAt: offsetVariableName [
 
 { #category : #'emitting code' }
 FFITypeArrayType >> offsetWriteFieldAt: offsetVariableName with: valueName [
-	self flag: #todo. "This is not working in all cases for 32/64 bits (
+	self flag: #pharoTodo. "This is not working in all cases for 32/64 bits (
 	externalTypeSize could be different)"
 	^ String streamContents:[ :stream|
 		stream 

@@ -108,13 +108,13 @@ GTPlayground class >> isGTPlaygroundEnabled [
 { #category : #'world menu' }
 GTPlayground class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: Smalltalk tools workspace title asSymbol)
+	(aBuilder item: #Playground)
 		parent: #Tools;
 		action: [ Smalltalk tools openWorkspace ];
 		order: 10;
 		keyText: 'o, w';
 		help: 'A window used as a scratchpad area where fragments of Pharo code can be entered, stored, edited, and evaluated.';
-		icon: Smalltalk tools workspace taskbarIcon
+		icon: (self iconNamed: #workspaceIcon)
 ]
 
 { #category : #'instance creation' }

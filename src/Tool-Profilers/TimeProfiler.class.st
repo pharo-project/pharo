@@ -300,13 +300,13 @@ TimeProfiler >> menu: menu shifted: b [
 
 { #category : #'UI specific' }
 TimeProfiler >> minPercentageToExpand [
-	^ minPercentageToExpand ifNil: [minPercentageToExpand := 3]
+	^ minPercentageToExpand ifNil: [minPercentageToExpand := 3.0]
 ]
 
 { #category : #'UI specific' }
 TimeProfiler >> minPercentageToExpand: aPercentage [
 	minPercentageToExpand := aPercentage.
-	self changed: #minPercentageToExpand.
+	self changed: #minPercentageToExpand
 
 ]
 
@@ -342,8 +342,7 @@ TimeProfiler >> open [
 		getText: #selectedMethodCode
 		setText: #selectedMethodCode:notifying:
 		getEnabled: nil.
-	"The next line is a fix for https://pharo.fogbugz.com/f/cases/22428/Code-in-TimeProfiler-is-no-longer-highlighted but I have the impression that the problem comes from the constructor used before. Since we are close to the release I'll just fix it here but later we should check the constructor method."
-	codePane styler: (SHRBTextStyler new view: codePane; yourself).
+
 	codePane getMenuSelector: #codePaneMenu:shifted:.
 	codePane font: StandardFonts codeFont.
 	self withToolBar
@@ -670,10 +669,10 @@ TimeProfiler >> threshold [
 
 { #category : #accessing }
 TimeProfiler >> threshold: aTreshold [
-	(aTreshold ~= threshold and: [aTreshold between: 0 and: 1000])
-		ifTrue: [
-			threshold := aTreshold.
-			self updateList].
+	(aTreshold ~= threshold and: [ aTreshold between: 0 and: 1000 ])
+		ifFalse: [ ^ self ].
+	threshold := aTreshold.
+	self updateList.
 	self changed: #threshold
 ]
 

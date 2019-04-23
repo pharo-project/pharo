@@ -1,6 +1,6 @@
 Class {
 	#name : #MethodToolbarTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#category : #'Spec-Tests-PolyWidgets-Toolbar'
 }
 

@@ -15,9 +15,9 @@ RBAbstractInstanceVariableTest >> testAbstractInstanceVariable [
 	| refactoring class |
 	refactoring := RBAbstractInstanceVariableRefactoring 
 		variable: 'class'
-		class: RBTransformationRuleTest.
+		class: RBTransformationRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBTransformationRuleTest.
+	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #class1) = (RBParser parseMethod: 'class1 ^class').
 	self assert: (class parseTreeFor: #class:) = (RBParser parseMethod: 'class: anObject
 	class := anObject').
@@ -105,7 +105,7 @@ RBAbstractInstanceVariableTest >> testAbstractWithDefaultNamesUsed [
 RBAbstractInstanceVariableTest >> testInheritedName [
 	self shouldFail: (RBAbstractInstanceVariableRefactoring 
 			variable: 'name'
-			class: RBBasicLintRuleTest)
+			class: RBBasicLintRuleTestData)
 ]
 
 { #category : #tests }
@@ -133,5 +133,5 @@ RBAbstractInstanceVariableTest >> testMetaclassInstanceVariables [
 RBAbstractInstanceVariableTest >> testNonExistantName [
 	self shouldFail: (RBAbstractInstanceVariableRefactoring 
 			variable: 'foo'
-			class: RBBasicLintRuleTest)
+			class: RBBasicLintRuleTestData)
 ]

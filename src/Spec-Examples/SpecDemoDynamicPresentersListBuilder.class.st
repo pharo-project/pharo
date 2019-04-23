@@ -7,6 +7,11 @@ Class {
 	#category : #'Spec-Examples-Demo-Dynamic'
 }
 
+{ #category : #example }
+SpecDemoDynamicPresentersListBuilder class >> example [
+	^ self new openWithSpec
+]
+
 { #category : #specs }
 SpecDemoDynamicPresentersListBuilder class >> pageName [
 

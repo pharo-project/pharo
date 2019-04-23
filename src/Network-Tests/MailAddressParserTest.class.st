@@ -11,6 +11,15 @@ Class {
 }
 
 { #category : #tests }
+MailAddressParserTest >> testAddressesAndNamePairsIn [
+
+	| address |
+	address := MailAddressParser addressesAndNamePairsIn: 'first last <person@company.com>'.
+	self assert: address size equals: 1.
+	self assert: address first equals: #('first last' 'person@company.com').
+]
+
+{ #category : #tests }
 MailAddressParserTest >> testAddressesIn [
 
 	| testString correctAnswer |

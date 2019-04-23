@@ -25,7 +25,7 @@ CheckBoxExample class >> defaultSpec [
 			#add:.	{ self topSpec. #layout:. 	#(#SpecLayoutFrame
 													bottomFraction: 0
 													bottomOffset: 20) }.
-			#add:.	{{#model . #container } . #layout: . #(#SpecLayoutFrame topOffset: 22) }
+			#add:.	{{#presenter . #container } . #layout: . #(#SpecLayoutFrame topOffset: 22) }
 	   }
 ]
 
@@ -35,9 +35,9 @@ CheckBoxExample class >> defaultSpec2 [
 	^ { #Panel.
 			#changeTableLayout.
 			#listDirection:.		#rightToLeft.
-			#addMorph:. {#model.	#button1.}.
-			#addMorph:. {#model.	#button2.}.
-			#addMorph:. {#model.	#button3.}.
+			#addMorph:. {#presenter.	#button1.}.
+			#addMorph:. {#presenter.	#button2.}.
+			#addMorph:. {#presenter.	#button3.}.
 			#hResizing:.	#shrinkWrap.
 			#vResizing:.	#shrinkWrap.	}
 ]
@@ -75,16 +75,16 @@ CheckBoxExample class >> title [
 CheckBoxExample class >> topSpec [
 
 	^ { #ContainerPresenter.
-			#add:. {{#model .	#button1 } . #layout:.  #(#SpecLayoutFrame
+			#add:. {{#presenter .	#button1 } . #layout:.  #(#SpecLayoutFrame
 															rightFraction: 0.33
 															bottomFraction: 0
 															bottomOffset: 25)}.
-			#add:.  {{#model .	#button2 } . #layout:. #(#SpecLayoutFrame
+			#add:.  {{#presenter .	#button2 } . #layout:. #(#SpecLayoutFrame
 															leftFraction: 0.33
 															rightFraction: 0.66
 															bottomFraction: 0
 															bottomOffset: 25)}.
-			#add:.  {{#model .	#button3 } . #layout:. #(#SpecLayoutFrame
+			#add:.  {{#presenter .	#button3 } . #layout:. #(#SpecLayoutFrame
 															leftFraction: 0.66
 															bottomFraction: 0
 															bottomOffset: 25)}}

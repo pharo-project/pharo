@@ -81,15 +81,6 @@ Metaclass >> bindingOf: varName [
 	^self instanceSide classBindingOf: varName
 ]
 
-{ #category : #testing }
-Metaclass >> canZapMethodDictionary [
-	"Return true if it is safe to zap the method dictionary on #obsolete"
-
-	self soleInstance
-		ifNil: [ ^ true ]
-		ifNotNil: [ ^ self soleInstance canZapMethodDictionary ]
-]
-
 { #category : #accessing }
 Metaclass >> category [
 	^ self instanceSide category
@@ -267,16 +258,9 @@ Metaclass >> postCopy [
 ]
 
 { #category : #'instance variables' }
-Metaclass >> removeInstVarNamed: aString [ 
-	"Remove the argument, aString, as one of the receiver's instance variables."
+Metaclass >> removeSlot: aClassSlot [
 
-	| newArray newString |
-	(self instVarNames includes: aString)
-		ifFalse: [self error: aString , ' is not one of my instance variables'].
-	newArray := self instVarNames copyWithout: aString.
-	newString := ''.
-	newArray do: [:aString2 | newString := aString2 , ' ' , newString].
-	self instanceVariableNames: newString
+	^self instanceSide removeClassSlot: aClassSlot
 ]
 
 { #category : #'class hierarchy' }
@@ -307,6 +291,19 @@ Metaclass >> soleInstance [
 	"The receiver has only one instance. Answer it."
 
 	^thisClass
+]
+
+{ #category : #compiling }
+Metaclass >> sourceCodeTemplate [
+	"Answer an expression to be edited and evaluated in order to define 
+	methods in this class or trait."
+
+	^ 'messageSelectorAndArgumentNames
+	"comment stating purpose of class-side message"
+	"scope: class-variables  &  class-instance-variables"	
+			
+	| temporary variable names |
+	statements'
 ]
 
 { #category : #'class hierarchy' }

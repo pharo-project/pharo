@@ -45,8 +45,8 @@ RBAddClassTest >> testExistingName [
 RBAddClassTest >> testInvalidSubclass [
 	self shouldFail: (RBAddClassRefactoring 
 			addClass: #Foo
-			superclass: RBCompositeLintRuleTest
-			subclasses: (Array with: RBBasicLintRuleTest)
+			superclass: RBCompositeLintRuleTestData
+			subclasses: (Array with: RBBasicLintRuleTestData)
 			category: #'Refactory-Tesing')
 ]
 

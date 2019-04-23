@@ -523,7 +523,7 @@ UITheme >> buttonMiddleRightForm [
 UITheme >> buttonMinHeight [
 	"Answer the minumum height of a button for this theme."
 	
-	^24 * World displayScaleFactor
+	^ 18 * World displayScaleFactor
 ]
 
 { #category : #defaults }
@@ -878,7 +878,7 @@ UITheme >> checkboxButtonSelectedDisabledBorderStyleFor: aCheckboxButton [
 UITheme >> checkboxButtonSelectedDisabledFillStyleFor: aCheckboxButton [
 	"Return the selected disabled checkbox button fillStyle for the given button."
 	
-	^self checkboxButtonDisabledFillStyleFor: aCheckboxButton
+	^self checkboxButtonSelectedFillStyleFor:  aCheckboxButton
 ]
 
 { #category : #'fill-styles-buttons' }
@@ -2079,7 +2079,7 @@ UITheme >> dropListButtonLabelFor: aDropList [
 UITheme >> dropListControlButtonWidth [
 	"Answer the width of a drop list control button for this theme."
 	
-	^20
+	^ 18
 ]
 
 { #category : #'border-styles' }
@@ -2965,7 +2965,7 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel  get: getSel set: 
 	is provided in case of initial nil returns."
 
 	|pt|
-	pt := PluggableTextFieldMorph new
+	pt := RubPluggableTextFieldMorph new
 		autoAccept: true;
 		alwaysAccept: true;
 		convertTo: aClass;
@@ -2981,15 +2981,8 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel  get: getSel set: 
 		hResizing: #spaceFill;
 		vResizing: #rigid;
 		borderStyle: (BorderStyle inset width: 1);
-		selectionColor: self selectionColor;
-		hideScrollBarsIndefinitely;
-		extent: 24@(aFont height + 8);
 		setBalloonText: helpText;
 		entryCompletion: anEntryCompletion.
-	pt textMorph
-		autoFit: true;
-		wrapFlag: false;
-		margins: (2@1) asMargin.
 	^pt
 
 ]
@@ -3550,7 +3543,7 @@ UITheme >> newDialogPanelIn: aThemedMorph [
 UITheme >> newDropListIn: aThemedMorph for: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel useIndex: useIndex help: helpText [
 	"Answer a drop list for the given model."
 
-	^(DropListMorph basicNew
+	^(EditableDropListMorph basicNew
 		basicTheme: self;
 			initialize;
 			useSelectionIndex: useIndex;
@@ -3566,7 +3559,9 @@ UITheme >> newDropListIn: aThemedMorph for: aModel list: listSel getSelected: ge
 		hResizing: #spaceFill;
 		vResizing: #shrinkWrap;
 		setBalloonText: helpText;
-		basicTheme: nil
+		basicTheme: nil;
+		beReadOnly;
+		yourself
 ]
 
 { #category : #'morph creation' }
@@ -4357,7 +4352,7 @@ UITheme >> newTaskbarThumbnailIn: aThemedMorph for: aWindow [
 UITheme >> newTextEditorIn: aThemedMorph for: aModel getText: getSel setText: setSel getEnabled: enabledSel menu: aMenuSelector [
 	"Answer a text (Smalltalk code) editor for the given model."
 
-	^PluggableTextMorph new
+	^ RubPluggableTextMorph new
 		on: aModel
 		text: getSel
 		accept: setSel
@@ -4370,8 +4365,6 @@ UITheme >> newTextEditorIn: aThemedMorph for: aModel getText: getSel setText: se
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		borderStyle: (BorderStyle inset width: 1);
-		"color: Color darkGray;
-		selectionColor: self selectionColor;"
 		removeProperty: #theme
 ]
 
@@ -4380,7 +4373,7 @@ UITheme >> newTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel clas
 	"Answer a text entry for the given model."
 
 	|pt|
-	pt := PluggableTextFieldMorph new
+	pt := RubPluggableTextFieldMorph new
 		convertTo: aClass;
 		alwaysAccept: true;
 		on: aModel
@@ -4394,16 +4387,7 @@ UITheme >> newTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel clas
 		cornerStyle: (self textEntryCornerStyleIn: aThemedMorph);
 		hResizing: #spaceFill;
 		vResizing: #rigid;
-		borderStyle: (BorderStyle inset width: 1);
-		"color: Color white;"
-		selectionColor: self selectionColor;
-		hideScrollBarsIndefinitely;
-		extent: 24@(self textFont height + 8);
 		setBalloonText: helpText.
-	pt textMorph
-		autoFit: true;
-		wrapFlag: false;
-		margins: (2@1) asMargin.
 	^pt
 ]
 
@@ -4412,7 +4396,7 @@ UITheme >> newTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel clas
 	"Answer a text entry for the given model."
 
 	|pt|
-	pt := PluggableTextFieldMorph new
+	pt := RubPluggableTextFieldMorph new
 		convertTo: aClass;
 		alwaysAccept: true;
 		on: aModel
@@ -4426,18 +4410,8 @@ UITheme >> newTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel clas
 		cornerStyle: (self textEntryCornerStyleIn: aThemedMorph);
 		hResizing: #spaceFill;
 		vResizing: #rigid;
-		borderStyle: (BorderStyle inset width: 1);
-		"color: Color darkGray;
-		selectionColor: self selectionColor;"
-		hideScrollBarsIndefinitely;
-		extent: 24@(self textFont height + 8);
 		setBalloonText: helpText;
 		entryCompletion: anEntryCompletion.
-
-	pt textMorph
-		autoFit: true;
-		wrapFlag: false;
-		margins: (2@1) asMargin.
 	^pt
 ]
 
@@ -4509,10 +4483,10 @@ UITheme >> newToolbarIn: aThemedMorph [
 		listDirection: #leftToRight;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap.
-	bar
+	"bar
 		addMorphBack: (self newToolSpacerIn: aThemedMorph);
 		addMorphBack: (self newToolbarHandleIn: aThemedMorph);
-		addMorphBack: (self newToolSpacerIn: aThemedMorph).
+		addMorphBack: (self newToolSpacerIn: aThemedMorph)."
 	^bar
 ]
 

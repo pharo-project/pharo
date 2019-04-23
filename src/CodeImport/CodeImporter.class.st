@@ -183,7 +183,7 @@ CodeImporter >> requestor: anObject [
 
 { #category : #fileHandling }
 CodeImporter >> selectTextConverterForCode [
-	self flag: #fix.  "This should not be here probably."
+	self flag: #pharoFixMe.  "This should not be here probably."
 	
 	"We need to see the first three bytes in order to see the origin of the file"
 	readStream binary.

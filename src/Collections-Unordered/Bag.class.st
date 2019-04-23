@@ -84,6 +84,14 @@ Bag >> asSet [
 	^ contents keys asSet
 ]
 
+{ #category : #enumerating }
+Bag >> associationsDo: aBlock [
+	"Evaluate aBlock for each of the receiver's elements (key/value 
+	associations).  Provided for compatibility with Dictionaries"
+
+	contents associationsDo: aBlock
+]
+
 { #category : #accessing }
 Bag >> at: index [ 
 	self errorNotKeyed

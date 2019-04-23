@@ -625,7 +625,7 @@ RBBasicDummyLintRuleTest class >> modifiesCollection [
 	| detector addSearcher |
 	detector := self new.
 	detector name: 'Modifies collection while iterating over it'.
-	addSearcher := RBBasicLintRuleTest modifiesCollection.
+	addSearcher := RBBasicLintRuleTestData modifiesCollection.
 	detector methodBlock: 
 			[:context :result | 
 			addSearcher executeTree: context parseTree initialAnswer: false.
@@ -683,18 +683,26 @@ RBBasicDummyLintRuleTest class >> overridesSpecialMessage [
 ]
 
 { #category : #miscellaneous }
+RBBasicDummyLintRuleTest class >> parseTreeSearcher [
+	^ RBParseTreeSearcher new
+]
+
+{ #category : #miscellaneous }
 RBBasicDummyLintRuleTest class >> precedence [
 	| detector matcher |
 	detector := self new.
-	detector name: 'Inspect instances of "A + B * C" might be "A + (B * C)"'.
-	matcher := RBParseTreeSearcher new.
-	matcher addSearches: #('``@A + ``@B * ``@C' '``@A - ``@B * ``@C')
-				-> [:aNode :answer | answer or: [aNode receiver parentheses isEmpty]].
-	detector methodBlock: 
-			[:context :result | 
+	detector
+		name: 'Inspect instances of "A + B * C" might be "A + (B * C)"'.
+	matcher := self parseTreeSearcher.
+	matcher
+		addSearches:
+			#('``@A + ``@B * ``@C' '``@A - ``@B * ``@C')
+				-> [ :aNode :answer | answer or: [ aNode receiver parentheses isEmpty ] ].
+	detector
+		methodBlock: [ :context :result | 
 			(matcher executeTree: context parseTree initialAnswer: false)
-				ifTrue: [result addClass: context selectedClass selector: context selector]].
-	^detector
+				ifTrue: [ result addClass: context selectedClass selector: context selector ] ].
+	^ detector
 ]
 
 { #category : #accessing }

@@ -10,13 +10,13 @@ Class {
 	#superclass : #ComposablePresenter,
 	#instVars : [
 		'directory',
-		'hiedraRulerController',
 		'monitor',
 		'hiedraCheckBoxPresenter',
 		'logNodesTreePresenter',
 		'openSettingsButtonPresenter',
 		'refreshButtonPresenter',
-		'selectDirectoryButtonPresenter'
+		'selectDirectoryButtonPresenter',
+		'hiedraColumnController'
 	],
 	#category : #'EpiceaBrowsers-UI-Graph'
 }
@@ -82,18 +82,13 @@ EpLogNodeGraphPresenter >> initializeHiedraCheckBoxPresenter [
 { #category : #initialization }
 EpLogNodeGraphPresenter >> initializeHiedraController [
 
-	hiedraRulerController := HiRulerController new.
-	
-	hiedraRulerController treeModel: self logNodesTreePresenter.
-	self logNodesTreePresenter whenRootsChanged: [
-		hiedraRulerController updateFromTree ].
-	
-	hiedraRulerController rulerBuilder
-		rowSize: self rowSize;
-		columnSize: self rowSize // 3.
-	
-	hiedraRulerController rulerBuilder addLinkBuilder: [ :linkBuilder |
-		linkBuilder targetsBlock: [ :node | node referencedNodes ] ].
+	hiedraColumnController := HiColumnController new.	
+	hiedraColumnController pageSize: 100.
+	hiedraColumnController renderer
+		rowHeight: self rowHeight;
+		cellWidth: self rowHeight // 3;
+		arrowSize: 2.0;
+		nodeConnectionOffset: 2.5.
 
 	"Set zero inset, else there is an empty gap cutting Hiedra links."
 	self logNodesTreePresenter rowInset: 0.
@@ -106,8 +101,9 @@ EpLogNodeGraphPresenter >> initializeLogNodesTreePresenter [
 	self initializeHiedraController.
 
 	self logNodesTreePresenter columns:	{	
-		hiedraRulerController newTreeColumnModel
-			initialWidth: 50
+		TreeColumnPresenter new	
+			displayBlock: [ :item | hiedraColumnController cellMorphAtValue: item content ];
+			initialWidth: 50;
 			yourself.
 
 		TreeColumnPresenter new
@@ -222,7 +218,6 @@ EpLogNodeGraphPresenter >> refreshLogNodesTreePresenter [
 			on: FileSystemError 
 			do: [ :error | self inform: error asString ].
 
-	self flag: #fix. "hacky"
 	self isMonitorDirectory ifTrue: [
 		| currentGlobalName |
 		currentGlobalName := self monitor sessionStore store globalName.
@@ -230,13 +225,24 @@ EpLogNodeGraphPresenter >> refreshLogNodesTreePresenter [
 		nodes := { EpMonitorLogNode for: self monitor }, nodes.
 	].
 
+	"Obtain the references between nodes only if the checkbox is selected since it's a potentially expensive process."
 	self hiedraCheckBoxPresenter state ifTrue: [
 		nodes 
 			do: [ :node | node populateReferencedNodesWith: nodes ]
-			displayingProgress: ('Analyzing ', directory asString)].
+			displayingProgress: ('Analyzing ', directory asString) ].
+
+	hiedraColumnController ruler: (HiRulerBuilder
+		newRulerValues: nodes
+		linksBlock: [ :node | node referencedNodes asArray ]).
+	hiedraColumnController reset.
 
 	self logNodesTreePresenter roots: nodes.
+]
 
+{ #category : #accessing }
+EpLogNodeGraphPresenter >> rowHeight [
+
+	^ 23
 ]
 
 { #category : #accessing }

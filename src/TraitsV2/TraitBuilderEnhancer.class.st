@@ -175,6 +175,16 @@ TraitBuilderEnhancer >> isTraitedMetaclass: aBuilder [
 	
 ]
 
+{ #category : #events }
+TraitBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstaller [ 
+
+	"Traits does not have instances"
+	aClass isTrait 
+		ifTrue: [ ^ self ].
+
+	super migrateInstancesTo: aClass installer: aShiftClassInstaller 
+]
+
 { #category : #'class modifications' }
 TraitBuilderEnhancer >> newMetaclass: aBuilder [
 

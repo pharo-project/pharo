@@ -5,6 +5,30 @@ Class {
 }
 
 { #category : #tests }
+EpDisabledIntegrationTest >> testDisableDuring [
+	monitor enable.
+	self assert: monitor isEnabled.
+	monitor disableDuring: [ self deny: monitor isEnabled ].
+	self assert: monitor isEnabled.
+	monitor disable.
+	self deny: monitor isEnabled.
+	monitor disableDuring: [ self deny: monitor isEnabled ].
+	self deny: monitor isEnabled.
+]
+
+{ #category : #tests }
+EpDisabledIntegrationTest >> testDisableDuringWithInteruption [
+	monitor enable.
+	self assert: monitor isEnabled.
+	[ monitor
+		disableDuring: [ self deny: monitor isEnabled.
+			self error ] ]
+		on: Error
+		do: [ "We just want to test the case with an error." ].
+	self assert: monitor isEnabled
+]
+
+{ #category : #tests }
 EpDisabledIntegrationTest >> testEnable [
 	monitor enable.
 	

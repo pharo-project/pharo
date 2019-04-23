@@ -34,6 +34,7 @@ NECEntry >> browseWith: anECContext [
 	| guessType |
 	guessType := self guessTypeWith: anECContext.
 	guessType ifNil: [^ false].
+	self flag: #SmalltalkReference. "Reference to Smalltalk tools"
 	Smalltalk tools browser openOnClass: guessType.
 	^ true
 ]

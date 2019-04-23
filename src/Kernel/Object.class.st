@@ -240,17 +240,12 @@ Object class >> whatIsAPrimitive [
 Object >> -> anObject [
 	"Answer an Association between self and anObject"
 	"the code of Association>>#key:value: is inline here for speed"
-	"The following example creates an association whose key is number 1 and value string 'one'.
-	1 -> 'one'
-	>>> 1 -> 'one'
-
-	(1 -> 'one') key
-	>>> 1
-
-	(1 -> 'one') value
-	>>> 'one'
+	"The following example creates an association whose key is number 1 and value string 'one'."
+	"(1 -> 'one') >>> 1 -> 'one'"
+	"(1 -> 'one') key >>> 1"
+	"(1 -> 'one') value >>> 'one'"
 	
-	Note that key and value can be ANY object."
+	"Note that key and value can be ANY object."
 	
 	^Association basicNew key: self value: anObject
 ]
@@ -365,13 +360,14 @@ Object >> asString [
 Object >> assert: aBlock [
 	"Throw an assertion error if aBlock does not evaluates to true.
 	We check for true explicitly to make the assertion fail for non booleans"
+	<debuggerCompleteToSender>
 	self assert: aBlock description: 'Assertion failed'.
 ]
 
 { #category : #asserting }
 Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
-	
+	<debuggerCompleteToSender>
 	aBlock value 
 		ifFalse: [ AssertionFailure signal: aStringOrBlock value ]
 ]

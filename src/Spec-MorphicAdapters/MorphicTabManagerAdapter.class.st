@@ -32,14 +32,14 @@ MorphicTabManagerAdapter >> buildWidget [
 
 { #category : #'widget API' }
 MorphicTabManagerAdapter >> getTabs [
-	^ [ (self model tabs collect: [ :each | self buildTab: each ]) collect: #asWidget ]
+	^ [ self model tabs collect: [ :each | self buildTab: each ] ]
 ]
 
 { #category : #'spec protocol' }
 MorphicTabManagerAdapter >> removeTab: aTab [
 	"In Morphic, Tab removal is triggered on Tab, on TabManager."
 
-	aTab widget delete
+	aTab adapter delete
 ]
 
 { #category : #'widget API' }

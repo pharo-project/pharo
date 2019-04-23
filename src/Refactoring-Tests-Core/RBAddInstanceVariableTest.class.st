@@ -15,9 +15,9 @@ RBAddInstanceVariableTest >> testAddInstanceVariable [
 	| refactoring |
 	refactoring := RBAddInstanceVariableRefactoring 
 		variable: 'asdf'
-		class: RBTransformationRuleTest.
+		class: RBTransformationRuleTestData.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBTransformationRuleTest) directlyDefinesInstanceVariable: 'asdf')
+	self assert: ((refactoring model classNamed: #RBTransformationRuleTestData) directlyDefinesInstanceVariable: 'asdf')
 ]
 
 { #category : #tests }
@@ -45,10 +45,10 @@ RBAddInstanceVariableTest >> testAlreadyExistingName [
 	self
 		shouldFail: (RBAddInstanceVariableRefactoring 
 				variable: 'class'
-				class: RBTransformationRuleTest);
+				class: RBTransformationRuleTestData);
 		shouldFail: (RBAddInstanceVariableRefactoring 
 				variable: 'name'
-				class: RBTransformationRuleTest)
+				class: RBTransformationRuleTestData)
 ]
 
 { #category : #'failure tests' }

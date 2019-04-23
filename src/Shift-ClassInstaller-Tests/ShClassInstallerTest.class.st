@@ -26,8 +26,7 @@ ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots
 				slots: slots;
 				sharedVariables: '';
 				sharedPools: '';
-				category: 'Shift-ClassInstaller-Tests';
-				copyClassSlotsFromExistingClass ]
+				category: 'Shift-ClassInstaller-Tests' ]
 ]
 
 { #category : #running }
@@ -123,8 +122,7 @@ ShClassInstallerTest >> testClassWithComment [
 				sharedPools: '';
 				category: 'Shift-ClassInstaller-Tests';
 				comment: 'I have a comment'; 
-				commentStamp: 'anStamp';				
-				copyClassSlotsFromExistingClass ].
+				commentStamp: 'anStamp' ].
 	
 	self assert: newClass comment equals: 'I have a comment'.
 	self assert: newClass organization commentStamp equals: 'anStamp'.
@@ -269,7 +267,9 @@ ShClassInstallerTest >> testTryingToModifyReadOnlyInstances [
 	obj2 := newClass new.	
 	obj2 instVarNamed: #anInstanceVariable put: 17.
 
-	self should: [self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable)] raise: Error.
+	self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable).
+
+	self assert: obj isReadOnlyObject.	
 
 ]
 
@@ -288,6 +288,8 @@ ShClassInstallerTest >> testTryingToModifyReadOnlySubInstances [
 	obj2 instVarNamed: #aSuperVariable put: 11.
 	obj2 instVarNamed: #anInstanceVariable put: 17.
 
-	self should: [self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable)] raise: Error.
+	self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable).
+	
+	self assert: obj isReadOnlyObject.	
 
 ]

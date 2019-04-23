@@ -70,6 +70,12 @@ RubGhostTextDisplayer >> fontPointSize: anInteger [
 ]
 
 { #category : #accessing }
+RubGhostTextDisplayer >> ghostText [ 
+	"Return the editing area of the ghostText"
+	^ ghostText
+]
+
+{ #category : #accessing }
 RubGhostTextDisplayer >> handleTextChangeWhile: aBlock [ 
 	aBlock value.
 	self showHideGhostText
@@ -155,6 +161,6 @@ RubGhostTextDisplayer >> updateMarginsWith: aMargin [
 RubGhostTextDisplayer >> updateTextWith: aText [
 	self
 		handleTextChangeWhile: [ 
-			ghostText updateTextWith: aText.
+			ghostText updateTextWith: aText asText.
 			ghostText textColor: self textColor ]
 ]

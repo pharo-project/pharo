@@ -138,8 +138,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
-				category: aCategory;
-				copyClassSlotsFromExistingClass ]
+				category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
@@ -156,8 +155,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
-				category: aCategory;
-				copyClassSlotsFromExistingClass ]
+				category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
@@ -174,8 +172,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
-				category: aCategory;
-				copyClassSlotsFromExistingClass ]
+				category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
@@ -192,8 +189,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
-				category: aCategory;
-				copyClassSlotsFromExistingClass ]
+				category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }

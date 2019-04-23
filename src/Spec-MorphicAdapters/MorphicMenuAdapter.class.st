@@ -14,6 +14,12 @@ MorphicMenuAdapter class >> adaptAsPopup: aComposablePresenter [
 		yourself
 ]
 
+{ #category : #accessing }
+MorphicMenuAdapter class >> adaptingAliases [ 
+	
+	^ #( MenuBarAdapter )
+]
+
 { #category : #initialization }
 MorphicMenuAdapter >> adaptAsPopup: aComposablePresenter [
 

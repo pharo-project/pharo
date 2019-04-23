@@ -1,6 +1,6 @@
 Class {
 	#name : #SliderPresenterTest,
-	#superclass : #SpecTestCase,
+	#superclass : #SpecSmokeTestCase,
 	#category : #'Spec-Tests-Core-Widgets'
 }
 
@@ -11,22 +11,22 @@ SliderPresenterTest >> classToTest [
 
 { #category : #running }
 SliderPresenterTest >> initMinMax [
- testedInstance min: 0;
+ presenter min: 0;
 		max: 100
 ]
 
 { #category : #tests }
 SliderPresenterTest >> testAbsoluteValue [
 	self initMinMax.
-	testedInstance absoluteValue: 0.5.
-	self assert: testedInstance value == 50
+	presenter absoluteValue: 0.5.
+	self assert: presenter value == 50
 ]
 
 { #category : #tests }
 SliderPresenterTest >> testReset [
 	self initMinMax.
-	testedInstance
+	presenter
 		value: 50;
 		reset.
-	self assert: testedInstance value == 0
+	self assert: presenter value == 0
 ]

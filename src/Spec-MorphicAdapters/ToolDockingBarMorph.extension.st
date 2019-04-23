@@ -25,7 +25,7 @@ ToolDockingBarMorph >> adoptMenuItemModel: item accumulator: controls [
 			controls add: button ]
 		ifNotNil: [ 
 			self emptyAccumulator: controls.
-			self addMorphBack: (self theme newToolSpacerIn: self).
+			self addMorphBack: (Smalltalk ui theme newToolSpacerIn: self).
 			self 
 				add: item name
 				font: Smalltalk ui theme menuBarFont

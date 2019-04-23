@@ -8,9 +8,30 @@ Class {
 }
 
 { #category : #factory }
+SpecStubWindowAdapter >> addContent: aView toWindow: aSpecWindow [
+
+
+]
+
+{ #category : #factory }
+SpecStubWindowAdapter >> addModelIn: widgetToBuild withSpecLayout: aSpec [
+	self
+		addContent: (self model presenter buildWithSpecLayout: aSpec)
+		toWindow: widgetToBuild
+]
+
+{ #category : #factory }
 SpecStubWindowAdapter >> buildWidget [
 
 	^ SpecStubWindowView new
+]
+
+{ #category : #factory }
+SpecStubWindowAdapter >> close [
+]
+
+{ #category : #factory }
+SpecStubWindowAdapter >> delete [
 ]
 
 { #category : #factory }

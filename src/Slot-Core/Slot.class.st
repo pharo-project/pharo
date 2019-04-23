@@ -17,7 +17,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'name',
-		'owningClass'
+		'owningClass',
+		'definingClass'
 	],
 	#classVars : [
 		'Properties'
@@ -35,23 +36,24 @@ Slot class >> asSlot [
 
 { #category : #validating }
 Slot class >> checkValidName: aSymbol [
+
+	aSymbol startsWithDigit ifTrue: [ 
+		^ InvalidSlotName signalFor: aSymbol ].
+
 	aSymbol isPseudovariableName ifTrue: [ 
+		^ InvalidSlotName signalFor: aSymbol ].
+	
+
+	(aSymbol allSatisfy: [ :aCharacter | aCharacter isAlphaNumeric or: [ aCharacter = $_ ] ]) ifFalse: [ 
 		^ InvalidSlotName signalFor: aSymbol ]
+
 ]
 
 { #category : #'class initialization' }
 Slot class >> initialize [
-	Properties
-		ifNil: [ self initializeProperties ]
-		ifNotNil: [ | newDict | 
-			newDict := WeakIdentityKeyDictionary newFrom: Properties.
-			newDict rehash.
-			Properties := newDict ]
-]
-
-{ #category : #'class initialization' }
-Slot class >> initializeProperties [
-	Properties := WeakIdentityKeyDictionary new.
+	Properties := Properties
+		ifNil: [ WeakIdentityKeyDictionary new. ]
+		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
 ]
 
 { #category : #'instance creation' }
@@ -110,21 +112,21 @@ Slot >> asSlot [
 	^ self
 ]
 
-{ #category : #'class building' }
-Slot >> changingIn: aClass [
-	"the slot was changed. Default is to do nothing"
+{ #category : #accessing }
+Slot >> baseSlot [
+	^self
 ]
 
 { #category : #accessing }
 Slot >> definingClass [
 	
-	^ self propertyAt: #definingClass ifAbsent: [ self owningClass ]
+	^ definingClass ifNil: [ self owningClass ]
 ]
 
 { #category : #accessing }
 Slot >> definingClass: aClass [
 
-	self propertyAt: #definingClass put: aClass
+	definingClass := aClass
 ]
 
 { #category : #printing }
@@ -217,6 +219,12 @@ Slot >> installingIn: aClass [
 ]
 
 { #category : #testing }
+Slot >> isAccessedIn: aCompiledCode [
+	^aCompiledCode ast instanceVariableNodes
+		anySatisfy: [ :node | node binding slot == self ]
+]
+
+{ #category : #testing }
 Slot >> isGlobal [
 	^false
 ]
@@ -229,7 +237,8 @@ Slot >> isLocal [
 
 { #category : #testing }
 Slot >> isReadIn: aCompiledCode [
-	^aCompiledCode readsSlot: self
+	^aCompiledCode ast instanceVariableReadNodes
+		 anySatisfy: [ :node | node binding slot == self ]
 ]
 
 { #category : #testing }
@@ -256,7 +265,8 @@ Slot >> isVisible [
 
 { #category : #testing }
 Slot >> isWrittenIn: aCompiledCode [
-	^aCompiledCode writesSlot: self
+	^aCompiledCode ast instanceVariableWriteNodes
+		anySatisfy: [ :node | node binding slot == self ]
 ]
 
 { #category : #'class building' }
@@ -357,11 +367,6 @@ Slot >> removeProperty: propName ifAbsent: aBlock [
 	^ property
 ]
 
-{ #category : #'class building' }
-Slot >> removingFrom: aClass [
-	"I am called by the class builder. This way a Slot can change the class it is installed in"
-]
-
 { #category : #accessing }
 Slot >> scope: aScope [
 	"ignored, subclasses can override to analyze the scope they are to be installed in"
@@ -389,7 +394,7 @@ Slot >> usingMethods [
 
 { #category : #'meta-object-protocol' }
 Slot >> wantsInitalization [
-	"if a slot wants to hable initalization, return true here"
+	"if a slot wants to enable instance initalization, return true here"
 	^false
 ]
 

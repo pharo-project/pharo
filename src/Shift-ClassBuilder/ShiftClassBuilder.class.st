@@ -30,7 +30,8 @@ Class {
 		'extensibleProperties',
 		'changeComparers',
 		'changes',
-		'metaSuperclass'
+		'metaSuperclass',
+		'superclassResolver'
 	],
 	#classVars : [
 		'BuilderEnhancer'
@@ -191,19 +192,6 @@ ShiftClassBuilder >> compileMethods [
 
 ]
 
-{ #category : #copying }
-ShiftClassBuilder >> copyClassSlotsFromExistingClass [
-	"Ugly helper method: I copy over the class slots of the class in my builder environment."
-
-	| anOldClass oldSlots |
-	
-	anOldClass := self environment at: name ifAbsent: [ ^ self ].
-	oldSlots := anOldClass class classLayout slotScope visibleSlots.
-	
-	self layoutDefinition copyClassSlotsIfNeeded: oldSlots
-
-]
-
 { #category : #building }
 ShiftClassBuilder >> copyOrganization [
 	newClass organization copyFrom: oldClass organization.
@@ -298,11 +286,10 @@ ShiftClassBuilder >> fillFor: aClass [
 		name: aClass getName;
 		layoutClass: aClass classLayout class;
 		slots: aClass localSlots ;
-		sharedVariablesFromString: aClass classVariablesString;
+		sharedVariables: aClass classVariables;
 		sharedPools: aClass sharedPoolsString;
 		category: aClass category;
 		environment: aClass environment;
-		copyClassSlotsFromExistingClass;
 		oldClass: aClass.
 		
 	self builderEnhancer fillBuilder: self from: aClass.
@@ -318,6 +305,7 @@ ShiftClassBuilder >> hasToMigrateInstances [
 ShiftClassBuilder >> initialize [
 	super initialize.
 	
+	self useStrictSuperclass.
 	superclassName := #Object.
 
 	layoutDefinition := ShLayoutDefinition new.
@@ -327,6 +315,8 @@ ShiftClassBuilder >> initialize [
 	
 	changeComparers := OrderedCollection new.
 	changes := Set new.
+	
+	category := 'Unclassified'
 ]
 
 { #category : #building }
@@ -474,6 +464,11 @@ ShiftClassBuilder >> superclassName: anObject [
 ]
 
 { #category : #accessing }
+ShiftClassBuilder >> superclassResolver: asuperclassResolver [
+	superclassResolver:= asuperclassResolver.
+]
+
+{ #category : #accessing }
 ShiftClassBuilder >> traitComposition [
 	^ extensibleProperties at: #traitComposition ifAbsent: {}
 ]
@@ -488,6 +483,13 @@ ShiftClassBuilder >> tryToFillOldClass [
 	oldClass ifNotNil: [ ^self ].
 	name ifNil: [ ^self ].
 	self oldClass: (self buildEnvironment classNamed: self name)
+]
+
+{ #category : #building }
+ShiftClassBuilder >> useStrictSuperclass [
+"default behavior"
+"If i am use, the superResolver will resolve unknown superclass by raising an error"
+	self superclassResolver: ClassResolverStrictResolve new.
 ]
 
 { #category : #'private validating' }

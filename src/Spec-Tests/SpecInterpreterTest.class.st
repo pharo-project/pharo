@@ -18,7 +18,7 @@ SpecInterpreterTest >> setUp [
 	super setUp.
 	specInterpreterClass := SpecInterpreter.
 	specInterpreter := specInterpreterClass new.
-	specInterpreter model: TestingComposablePresenter new
+	specInterpreter presenter: TestingComposablePresenter new
 ]
 
 { #category : #running }
@@ -31,53 +31,42 @@ SpecInterpreterTest >> tearDown [
 ]
 
 { #category : #tests }
-SpecInterpreterTest >> testBuildWidgetForWithSpec [
-	| model morph |
-	model := TestingComposablePresenter new.
-	morph := model buildWithSpec: #testingSpec.
-	self assert: morph model == model.
-	self assert: model widget class = RubPluggableTextMorph
-]
-
-{ #category : #tests }
 SpecInterpreterTest >> testConvertRandomSymbolOfClassToInstance [
-	
 	| symbol instance |
 	symbol := #PluggableListMorph.
-	
 	instance := specInterpreter convertSymbolOfClassToInstance: symbol.
-	self assert: (instance class name = symbol)
+	self assert: instance class name equals: symbol
 ]
 
 { #category : #tests }
 SpecInterpreterTest >> testDynamicBuild [
-
 	| model widget1 widget2 widget3 |
 	model := TestingComposablePresenter new.
- 	model openWithSpec close.
-	widget1 := model list widget.
-	
 	model openWithSpec close.
-	widget2 := model list widget.
-	
+	widget1 := model list adapter.
+	model openWithSpec close.
+	widget2 := model list adapter.
 	self deny: widget1 == widget2.
-	
 	model list needRebuild: false.
 	model needRebuild: false.
 	model openWithSpec close.
-	widget3 := model list widget.
-	
+	widget3 := model list adapter.
 	self assert: widget2 == widget3.
 	self assert: model needRebuild
 ]
 
 { #category : #tests }
 SpecInterpreterTest >> testInterpretASpecModelMorphAssociation [
-
 	| spec model morph |
 	model := AbstractWidgetPresenter new.
-	spec := {#PluggableListMorph. #model:. #model}.
-	morph := specInterpreterClass interpretASpec: spec model: model.
-	
-	self assert: (model widget == morph).
+	spec := {#PluggableListMorph . #model: . #presenter}.
+	morph := specInterpreterClass interpretASpec: spec presenter: model.
+	self assert: model adapter == morph
+]
+
+{ #category : #tests }
+SpecInterpreterTest >> testInterpreterCanAccessPresenterVariablesWithoutAccessor [
+	| window |
+	[ self shouldnt: [ window := SpecMockPesenterWithoutGetter new openWithSpec ] raise: MessageNotUnderstood ]
+		ensure: [ window ifNotNil: #close ]
 ]
