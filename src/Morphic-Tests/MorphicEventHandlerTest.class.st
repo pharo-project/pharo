@@ -88,11 +88,9 @@ MorphicEventHandlerTest >> testMouseEnterEventIsNotDuplicated [
 		stamp: nil.
 
 	self assert: mockObject counter equals: 0.
-	self assert: mockObject counter2 equals: 0.
 
 	mockObject stringMorph handleMouseEnter: evt.
-	self assert: mockObject counter equals: 1.
-	self assert: mockObject counter2 equals: 0 ]
+	self assert: mockObject counter equals: 1 ]
 		ensure: [ window ifNotNil: #close ]
 ]
 
