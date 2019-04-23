@@ -34,7 +34,7 @@ WorldPresenter class >> setUpWorld [
 ]
 
 { #category : #private }
-WorldPresenter >> addModelIn: container withSpecLayout: aSpec [
+WorldPresenter >> addPresenterIn: container withSpecLayout: aSpec [
 
 	self presenter ifNil: [ ^ self ].
 	widget := self presenter buildWithSpecLayout: aSpec.

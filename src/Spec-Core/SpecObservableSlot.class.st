@@ -38,6 +38,12 @@ SpecObservableSlot >> isObservableSlot [
 ]
 
 { #category : #initialization }
+SpecObservableSlot >> rawRead: anObject [
+
+	^ super read: anObject
+]
+
+{ #category : #initialization }
 SpecObservableSlot >> read: anObject [
 
 	^ (super read: anObject) value
@@ -52,6 +58,6 @@ SpecObservableSlot >> wantsInitalization [
 { #category : #initialization }
 SpecObservableSlot >> write: aValue to: anObject [
 
-	(super read: anObject) value: aValue.
+	(super read: anObject) ifNotNil: [ :v | v value: aValue ].
 	^ aValue
 ]

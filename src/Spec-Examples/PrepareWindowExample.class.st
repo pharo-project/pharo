@@ -59,26 +59,36 @@ PrepareWindowExample >> initializeWindow: aWindowPresenter [
 	"I'm called whenever the component will be displayed in a window (or dialog). 
 	 This is usually attained sending #openWithSpec or #openDialogWithSpec."
 	
-	aWindowPresenter 
-		menu: (menu := self newMenu);
+	super initializeWindow: aWindowPresenter.
+	aWindowPresenter
+		menu: (menu := self newMenubar);
 		toolBar: (toolBar := self newToolBar);
 		statusBar: (statusBar := self newStatusBar)
 ]
 
 { #category : #'private factory' }
 PrepareWindowExample >> newFileMenu [
-		
-	^ MenuPresenter new addGroup: [ :group |
-		group 
-			addItem: [ :item | item name: 'Push message'; action: [ self pushMessage ] ];
-			addItem: [ :item | item name: 'Pop message'; action: [ self popMessage ] ] ]
+	^ self newMenu
+		addItem: [ :item | 
+			item
+				name: 'Push message';
+				action: [ self pushMessage ] ];
+		addItem: [ :item | 
+			item
+				name: 'Pop message';
+				action: [ self popMessage ] ];
+		yourself
 ]
 
 { #category : #'private factory' }
-PrepareWindowExample >> newMenu [
-		
-	^ MenuBarPresenter new addGroup: [ :group |
-		group addItem: [ :item | item name: 'File'; subMenu: self newFileMenu ] ]
+PrepareWindowExample >> newMenubar [
+	^ self newMenuBar
+		addGroup: [ :group | 
+			group
+				addItem: [ :item | 
+					item
+						name: 'File';
+						subMenu: self newFileMenu ] ]
 ]
 
 { #category : #'private factory' }
@@ -115,6 +125,7 @@ PrepareWindowExample >> newToolBar [
 	^ ToolBarPresenter new 
 		addItem: self newPushMessageToolBarItem;
 		addItem: self newPopMessageToolBarItem;
+		addItem: self newPopMessageToolBarItem position: ToolBarItemPosition right;
 		yourself
 ]
 

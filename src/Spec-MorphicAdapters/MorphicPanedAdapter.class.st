@@ -55,12 +55,13 @@ MorphicPanedAdapter >> layout [
 
 { #category : #factory }
 MorphicPanedAdapter >> layout: aLayout [
-
 	layout := aLayout.
-	widget := aLayout direction newWidgetOn: self.
-	widget layoutPolicy position: aLayout position.
-	self selector: self splitterNewSelector.
+	widget
+		ifNil: [ widget := aLayout direction newWidgetOn: self.
+			widget layoutPolicy position: aLayout position.
+			self selector: self splitterNewSelector ].
 
+	super layout: aLayout
 ]
 
 { #category : #factory }

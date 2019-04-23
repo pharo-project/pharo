@@ -22,7 +22,7 @@ MorphicNumberInputFieldAdapter >> buildWidget [
 	| textMorph iconsContainer |
 	
 	textMorph := super buildWidget.
-	textMorph eventHandler: (MorphicEventHandler new on: #keyStroke send: #keystroke:from: to: self).
+	textMorph announcer when: RubKeystroke send: #keystroke: to: self.
 
 	"We add an arrow up and arrow down to the morph to match common input number implementations"	
 	iconsContainer := Morph new
@@ -51,7 +51,7 @@ MorphicNumberInputFieldAdapter >> buildWidget [
 
 { #category : #actions }
 MorphicNumberInputFieldAdapter >> decreaseValueOf: aTextMorph [
-	aTextMorph setTextAndAccept: (self decreasedValueFrom: aTextMorph getText)
+	aTextMorph setText: (self decreasedValueFrom: aTextMorph getText)
 ]
 
 { #category : #actions }
@@ -84,7 +84,7 @@ MorphicNumberInputFieldAdapter >> inBounds: aNumber [
 
 { #category : #actions }
 MorphicNumberInputFieldAdapter >> increaseValueOf: aTextMorph [
-	aTextMorph setTextAndAccept: (self increasedValueFrom: aTextMorph getText)
+	aTextMorph setText: (self increasedValueFrom: aTextMorph getText)
 ]
 
 { #category : #actions }
@@ -108,14 +108,14 @@ MorphicNumberInputFieldAdapter >> inferiorToMaximum: aNumber [
 ]
 
 { #category : #events }
-MorphicNumberInputFieldAdapter >> keystroke: aKeyboardEvent from: aTextMorph [
+MorphicNumberInputFieldAdapter >> keystroke: aRubricEvent [
 
-	aKeyboardEvent keyCharacter = Character arrowUp
-		ifTrue: [ self increaseValueOf: aTextMorph.
+	aRubricEvent event keyCharacter = Character arrowUp
+		ifTrue: [ self increaseValueOf: aRubricEvent morph.
 			^ true ].
 
-	aKeyboardEvent keyCharacter = Character arrowDown
-		ifTrue: [ self decreaseValueOf: aTextMorph.
+	aRubricEvent event keyCharacter = Character arrowDown
+		ifTrue: [ self decreaseValueOf: aRubricEvent morph.
 			^ true ].
 		
 	^ false

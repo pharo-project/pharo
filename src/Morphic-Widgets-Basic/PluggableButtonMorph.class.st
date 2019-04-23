@@ -560,7 +560,7 @@ PluggableButtonMorph >> getMenu: shiftPressed [
 
 	| menu |
 	getMenuSelector isNil ifTrue: [^nil].
-	menu := UIManager default newMenuIn: self for: model.
+	menu := self theme newMenuIn: self for: model.
 	getMenuSelector numArgs = 1 
 		ifTrue: [^model perform: getMenuSelector with: menu].
 	getMenuSelector numArgs = 2 

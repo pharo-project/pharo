@@ -27,6 +27,11 @@ TabsExample class >> example [
 	^ self open
 ]
 
+{ #category : #deprecation }
+TabsExample class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 TabsExample class >> open [
 	^self new openWithSpec

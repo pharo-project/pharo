@@ -60,52 +60,33 @@ SpecDemoFormPresenter >> form: anObject [
 
 { #category : #initialization }
 SpecDemoFormPresenter >> initialize [
-
 	self model: SpecDemoFormModel new.
-	super initialize.
+	super initialize
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 SpecDemoFormPresenter >> initializeWidgets [
-
 	form := (self instantiate: SpecDemoLabeledContainer)
 		label: 'form';
-		subwidget: (self instantiate:  SpecDemoStandaloneFormPresenter on: self announcingObject).
+		subwidget: (self instantiate: SpecDemoStandaloneFormPresenter on: self announcingObject).
 	resultPane := (self instantiate: SpecDemoLabeledContainer)
 		label: 'result';
-		subwidget: (table := self newDataTable).
+		subwidget: (table := self newTable).
 
-	self focusOrder 
+	table
+		addColumn: (StringTableColumn title: 'Name' evaluated: #key);
+		addColumn: (StringTableColumn title: 'Value' evaluated: #value);
+		items: self model elements;
+		beResizable.
+
+	self focusOrder
 		add: form;
-		add: table.
-		
+		add: table
 ]
 
 { #category : #accessing }
 SpecDemoFormPresenter >> modelChanged [
-
-	table widget dataSource model: self model.
-	table widget refresh.
-]
-
-{ #category : #accessing }
-SpecDemoFormPresenter >> newDataTable [
-
-	| aTable tableDataSource |
-	aTable := FTTableMorph new
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		asSpecAdapter.
-
-	tableDataSource := SpecDemoFormTableDataSource for: self model.
-		
-	aTable widget 
-		beResizable.
-	tableDataSource addColumnsTo: aTable widget.
-	aTable widget dataSource: tableDataSource.
-
-	^ aTable
-		
+	table items: self model elements
 ]
 
 { #category : #accessing }

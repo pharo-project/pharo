@@ -28,7 +28,7 @@ SpecStubAbstractAdapter >> add: aWidget [
 ]
 
 { #category : #factory }
-SpecStubAbstractAdapter >> addModelIn: widgetToBuild withSpecLayout: aSpec [
+SpecStubAbstractAdapter >> addPresenterIn: widgetToBuild withSpecLayout: aSpec [
 	
 	
 ]
@@ -39,10 +39,34 @@ SpecStubAbstractAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 
 ]
 
+{ #category : #initialization }
+SpecStubAbstractAdapter >> borderColor: color [
+]
+
+{ #category : #initialization }
+SpecStubAbstractAdapter >> borderWidth: width [
+]
+
 { #category : #factory }
 SpecStubAbstractAdapter >> buildWidget [
 
 	^ self class new
+]
+
+{ #category : #initialization }
+SpecStubAbstractAdapter >> color: color [
+]
+
+{ #category : #initialization }
+SpecStubAbstractAdapter >> dragEnabled: aBoolean [
+]
+
+{ #category : #initialization }
+SpecStubAbstractAdapter >> dropEnabled: aBoolean [
+]
+
+{ #category : #initialization }
+SpecStubAbstractAdapter >> enabled: aBoolean [
 ]
 
 { #category : #protocol }
@@ -64,6 +88,10 @@ SpecStubAbstractAdapter >> layout: aLayout [
 
 { #category : #protocol }
 SpecStubAbstractAdapter >> removeSubWidgets [
+]
+
+{ #category : #initialization }
+SpecStubAbstractAdapter >> setBalloonText: aString [
 ]
 
 { #category : #factory }

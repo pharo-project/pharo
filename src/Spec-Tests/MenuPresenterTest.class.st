@@ -36,3 +36,9 @@ MenuPresenterTest >> testFromSpecSubMenu [
 	self assert: subMenu menuGroups first menuItems first name equals: 'child'.
 	self openInstance
 ]
+
+{ #category : #tests }
+MenuPresenterTest >> testValue [ 
+
+	self assert: presenter value equals: presenter
+]

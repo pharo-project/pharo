@@ -27,15 +27,6 @@ SearchableList class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
-SearchableList class >> example [
-	<sampleInstance>
-	"self example"
-
-	^ self new
-		items: #(#aaa #abc #axz #bbb #bfbg #bof #c); openWithSpec
-]
-
 { #category : #initialization }
 SearchableList >> initializePresenter [
 	searchPresenter

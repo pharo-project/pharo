@@ -9,10 +9,12 @@ I provide the following variables and their accessors
 Class {
 	#name : #ImagePresenter,
 	#superclass : #AbstractWidgetPresenter,
+	#traits : 'TSpecObservable',
+	#classTraits : 'TSpecObservable classTrait',
 	#instVars : [
-		'imageHolder',
-		'actionHolder',
-		'autoScaleHolder'
+		'#image => SpecObservableSlot',
+		'#action => SpecObservableSlot',
+		'#autoScale => SpecObservableSlot'
 	],
 	#category : #'Spec-Core-Widgets'
 }
@@ -25,70 +27,55 @@ ImagePresenter class >> adapterName [
 
 { #category : #api }
 ImagePresenter >> action [
-	"<api: #inspect>"
 
-	^ actionHolder value
+	^ action
 ]
 
 { #category : #api }
 ImagePresenter >> action: aBlock [
 	"Set the action of the image"
-	"<api: #block getter: #action>"
-	actionHolder value: aBlock
-]
-
-{ #category : #'api-valueHolder' }
-ImagePresenter >> actionHolder [
-	"To be able to register action when the action is changed."
-	^ actionHolder
+	action := aBlock
 ]
 
 { #category : #api }
 ImagePresenter >> autoScale [
-	"<api: #inspect>"
 
-	^ autoScaleHolder value
-]
-
-{ #category : #'api-valueHolder' }
-ImagePresenter >> autoScaleHolder [
-	"To be able to register action when the autoscale is changed."
-
-	^ autoScaleHolder
+	^ autoScale
 ]
 
 { #category : #api }
 ImagePresenter >> image [
-	"<api: #inspect>"
 
-	^ imageHolder value
+	^ image
 ]
 
 { #category : #api }
 ImagePresenter >> image: aForm [
-	"<api: #image getter: #image>"
-	"Set the form of the imagemorph"
 	
-	imageHolder value: aForm
-]
-
-{ #category : #'api-valueHolder' }
-ImagePresenter >> imageHolder [
-	"To be able to register action when the image is changed."
-	^ imageHolder
+	image := aForm
 ]
 
 { #category : #initialization }
 ImagePresenter >> initialize [
+	self class initializeSlots: self.
 	super initialize.
-	imageHolder := nil asValueHolder.
-	actionHolder := [] asValueHolder. 
-	autoScaleHolder := false asValueHolder.
-	imageHolder whenChangedDo: [ self changed: #getImage ].
+	
+	image := nil.
+	action := []. 
+	autoScale := false.
+
+"	imageHolder whenChangedDo: [ self changed: #getImage ].
+"
 ]
 
 { #category : #api }
 ImagePresenter >> switchAutoscale [
-	autoScaleHolder value: autoScaleHolder value not.
-	self changed: #switchAutoscale with: {}
+	autoScale := autoScale not.
+
+]
+
+{ #category : #events }
+ImagePresenter >> whenImageChangeDo: aBlockClosure [ 
+	
+	self property: #image whenChangedDo: aBlockClosure 
 ]
