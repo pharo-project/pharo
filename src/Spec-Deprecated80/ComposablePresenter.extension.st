@@ -36,10 +36,10 @@ ComposablePresenter >> newMultiColumnList [
 { #category : #'*Spec-Deprecated80' }
 ComposablePresenter >> newTab [
 
-	self 
+	"self 
 		deprecated: 'Use newNotebook instead' 
 		on: '2019-01-24' 
-		in: #Pharo8.
+		in: #Pharo8."
 	^ self instantiate: TabPresenter
 ]
 
@@ -47,10 +47,10 @@ ComposablePresenter >> newTab [
 ComposablePresenter >> newTabManager [
 	
 	
-	self 
+	"self 
 		deprecated: 'Use newNotebook instead' 
 		on: '2019-01-24' 
-		in: #Pharo8.
+		in: #Pharo8."
 	
 	^ self instantiate: TabManagerPresenter
 ]
