@@ -383,8 +383,9 @@ OpalCompiler >> encoderClass: aClass [
 ]
 
 { #category : #accessing }
-OpalCompiler >> environment: anSmallTalkImage [
-	self compilationContext environment: anSmallTalkImage 
+OpalCompiler >> environment: anEnvironment [
+	"Set the environment (dictionary of class, traits and globals) used during the compilation"
+	self compilationContext environment: anEnvironment 
 ]
 
 { #category : #'public access' }
