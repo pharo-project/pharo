@@ -12,6 +12,6 @@ baseline: spec
 		spec
 			 package: 'Pharo30Bootstrap'.
 		spec baseline: 'Ring2' with: [ spec
-			repository: 'github://tesonep/Ring2:production-dev/src';
+			repository: 'github://pavel-krivanek/Ring2:RGPackageRenamed/src';
   			loads: 'bootstrap' ].  			
 ]
