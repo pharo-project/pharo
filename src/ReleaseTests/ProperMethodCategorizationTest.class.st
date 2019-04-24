@@ -35,7 +35,7 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedInProtocols:
 		 ].
 	self 
 		assert: violating isEmpty 
-		description: ('Subclasses of {1} should have #{2} methods in protocol {3}' format: { aClass asString. selector. protocols })
+		description: ('Subclasses of {1} should have #{2} methods in one of the following protocols {3}' format: { aClass asString. selector. protocols })
 
 ]
 
