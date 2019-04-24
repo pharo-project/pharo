@@ -22,7 +22,7 @@ ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 		ifTrue: [ self layoutClass: WeakLayout ].
 	aCDClassDefinitionNode isImmediate
 		ifTrue: [ self layoutClass: ImmediateLayout ].
-	aCDClassDefinitionNode isVariable
+	aCDClassDefinitionNode isVariableClass
 		ifTrue: [ self layoutClass: VariableLayout ].
 	aCDClassDefinitionNode isWords
 		ifTrue: [ self layoutClass: WordLayout ].

@@ -23,7 +23,7 @@ TrueTest >> testAnd [
 { #category : #'tests - converting' }
 TrueTest >> testAsBit [
 
-       self assert: (true asBit = 1).
+	self assert: true asBit equals: 1
 ]
 
 { #category : #'tests - controlling' }

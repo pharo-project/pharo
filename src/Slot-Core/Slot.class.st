@@ -17,7 +17,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'name',
-		'owningClass'
+		'owningClass',
+		'definingClass'
 	],
 	#classVars : [
 		'Properties'
@@ -35,8 +36,17 @@ Slot class >> asSlot [
 
 { #category : #validating }
 Slot class >> checkValidName: aSymbol [
+
+	aSymbol startsWithDigit ifTrue: [ 
+		^ InvalidSlotName signalFor: aSymbol ].
+
 	aSymbol isPseudovariableName ifTrue: [ 
+		^ InvalidSlotName signalFor: aSymbol ].
+	
+
+	(aSymbol allSatisfy: [ :aCharacter | aCharacter isAlphaNumeric or: [ aCharacter = $_ ] ]) ifFalse: [ 
 		^ InvalidSlotName signalFor: aSymbol ]
+
 ]
 
 { #category : #'class initialization' }
@@ -110,13 +120,13 @@ Slot >> baseSlot [
 { #category : #accessing }
 Slot >> definingClass [
 	
-	^ self propertyAt: #definingClass ifAbsent: [ self owningClass ]
+	^ definingClass ifNil: [ self owningClass ]
 ]
 
 { #category : #accessing }
 Slot >> definingClass: aClass [
 
-	self propertyAt: #definingClass put: aClass
+	definingClass := aClass
 ]
 
 { #category : #printing }

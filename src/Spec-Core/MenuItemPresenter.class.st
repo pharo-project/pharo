@@ -134,8 +134,8 @@ MenuItemPresenter >> name: aString [
 { #category : #api }
 MenuItemPresenter >> performMenuActionWith: aMenuItem [
 	| en |
-	
-	en := self isEnabled.
+
+  en := self isEnabled.
 	en isBlock ifTrue: [ en := en value ].
 	en ifFalse: [ ^ self ].
 	

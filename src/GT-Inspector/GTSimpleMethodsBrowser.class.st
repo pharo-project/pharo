@@ -11,14 +11,6 @@ Class {
 }
 
 { #category : #building }
-GTSimpleMethodsBrowser >> accumulatedSourceOf: m for: object in: composite [
-	composite accumulator with: [ :acc | 
-		acc show: [ :a |
-			a title: [ :method | method selector ].
-			self sourceOf: m for: object in: a ] ]
-]
-
-{ #category : #building }
 GTSimpleMethodsBrowser >> classesIn: a [
 	^ a fastList
 		title: 'Class Hierarchy';
