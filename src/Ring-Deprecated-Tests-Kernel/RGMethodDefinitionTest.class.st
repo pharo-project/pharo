@@ -325,11 +325,11 @@ RGMethodDefinitionTest >> testExtensionMethod [
 
 	newMethod:= (Collection >> #+) asRingDefinition.	
 	self assert: (newMethod isMethod).  
-	self assert: (newMethod protocol = '*Collections-arithmetic').
+	self assert: newMethod protocol equals: '*Collections-arithmetic'.
 	self assert: (newMethod isExtension).
 	
-	newPackage := RGPackage named: #Package.
-	newPackageExt := RGPackage named:  #PackageExtensions.
+	newPackage := RGPackageDefinition named: #Package.
+	newPackageExt := RGPackageDefinition named:  #PackageExtensions.
 	newClass := RGClassDefinition named: #Class.
 	newMethod := (RGMethodDefinition named: #foo) parent: newClass.
 	newPackage addClass: newClass.

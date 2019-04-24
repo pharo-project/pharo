@@ -2,21 +2,21 @@
 SUnit tests for packages
 "
 Class {
-	#name : #RGPackageTest,
+	#name : #RGPackageDefinitionTest,
 	#superclass : #TestCase,
 	#category : #'Ring-Deprecated-Tests-Containers-Base'
 }
 
 { #category : #deprecation }
-RGPackageTest class >> isDeprecated [
+RGPackageDefinitionTest class >> isDeprecated [
 	^true
 ]
 
 { #category : #testing }
-RGPackageTest >> testAddingClass [
+RGPackageDefinitionTest >> testAddingClass [
 	| newPackage newClass |
 	
-	newPackage:= RGPackage named: #'Collections-Sequenceable'.
+	newPackage:= RGPackageDefinition named: #'Collections-Sequenceable'.
 	newClass:= RGClassDefinition named: #OrderedCollection.
 	newPackage addClass: newClass.
 	
@@ -26,10 +26,10 @@ RGPackageTest >> testAddingClass [
 ]
 
 { #category : #testing }
-RGPackageTest >> testAddingPackage [
+RGPackageDefinitionTest >> testAddingPackage [
 	| newPackage childPackage |
 	
-	newPackage:= RGPackage named: #'Collections'.
+	newPackage:= RGPackageDefinition named: #'Collections'.
 	newPackage addPackageNamed: #'Collections-Sequenceable'.
 		
 	self assert: (newPackage includesPackageNamed: #'Collections-Sequenceable').
@@ -41,9 +41,9 @@ RGPackageTest >> testAddingPackage [
 ]
 
 { #category : #testing }
-RGPackageTest >> testNewPackage [
+RGPackageDefinitionTest >> testNewPackage [
 	| newPackage |
-	newPackage := RGPackage named: 'Collections-Sequenceable'.
+	newPackage := RGPackageDefinition named: 'Collections-Sequenceable'.
 
 	self assert: newPackage isPackage.
 	self assert: newPackage name = 'Collections-Sequenceable'.

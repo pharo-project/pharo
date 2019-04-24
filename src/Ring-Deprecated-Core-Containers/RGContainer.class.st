@@ -56,7 +56,7 @@ RGContainer class >> packageOfClass: aRGBehaviorDefinition using: packageNames [
 	pName := (packageNames 
 				detect: [ :each| each = aRGBehaviorDefinition category ]
 				ifNone: [ packageNames detect:[ :each| self category: aRGBehaviorDefinition category matches: each ] ifNone:[ nil ] ]).
-	^ pName ifNotNil:[ RGPackage named: pName ]
+	^ pName ifNotNil:[ RGPackageDefinition named: pName ]
 ]
 
 { #category : #'image package loading' }
@@ -77,7 +77,7 @@ RGContainer class >> packageOfMethod: aRGMethodDefinition using: packageKeys [
 	aRGMethodDefinition protocol ifNil: [ ^ nil ].
 	pName := (packageKeys 
 				detect: [ :each| self category: aRGMethodDefinition protocol asLowercase matches: each value ] ifNone:[ nil ]).
-	^ pName ifNotNil:[ RGPackage named: pName key ]
+	^ pName ifNotNil:[ RGPackageDefinition named: pName key ]
 ]
 
 { #category : #'adding/removing' }
@@ -117,7 +117,7 @@ RGContainer >> addPackageNamed: packageName [
 	"adds a child package with the given name"
 
 	(self includesPackageNamed: packageName) ifTrue: [ ^self ].
-	self addPackage: (RGPackage named: packageName)
+	self addPackage: (RGPackageDefinition named: packageName)
 ]
 
 { #category : #'adding/removing' }
@@ -378,7 +378,7 @@ RGContainer >> loadPackagesFromImage [
 	| rgPackage rgPackageKeys |
 	rgPackageKeys := OrderedCollection new.
 	self class allManagers do: [ :pck | 
-		rgPackage := RGPackage named: pck package name asSymbol.
+		rgPackage := RGPackageDefinition named: pck package name asSymbol.
 		rgPackageKeys add: (rgPackage name -> ('*', rgPackage name asLowercase)).
 		self addPackage: rgPackage ].
 	^ rgPackageKeys
