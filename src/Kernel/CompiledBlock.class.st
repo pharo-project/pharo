@@ -44,6 +44,12 @@ CompiledBlock >> hash [
 ]
 
 { #category : #testing }
+CompiledBlock >> isCompiledBlock [
+	
+	^ true
+]
+
+{ #category : #testing }
 CompiledBlock >> isTestMethod [
 	^ false
 ]

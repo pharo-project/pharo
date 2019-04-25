@@ -90,7 +90,10 @@ CompiledCode >> allLiterals [
 
 { #category : #'source code management' }
 CompiledCode >> argumentNames [
-	^ self ast argumentNames
+	^self 
+		propertyAt: #argumentNames 
+		ifAbsent: [ self ast argumentNames ]
+
 ]
 
 { #category : #converting }
@@ -370,6 +373,12 @@ CompiledCode >> isCollection [
 ]
 
 { #category : #testing }
+CompiledCode >> isCompiledBlock [
+	
+	^ false
+]
+
+{ #category : #testing }
 CompiledCode >> isExternalCallPrimitive [
 	^self primitive = 120
 ]
@@ -533,7 +542,7 @@ CompiledCode >> numTemps [
 { #category : #accessing }
 CompiledCode >> numberOfReservedLiterals [
 
-	self subclassResponsibility
+	^ self subclassResponsibility 
 ]
 
 { #category : #literals }
