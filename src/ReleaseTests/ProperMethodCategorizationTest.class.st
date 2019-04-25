@@ -129,7 +129,7 @@ ProperMethodCategorizationTest >> testRunCaseMethodInSUnitTestsNeedsToBeInRunnin
 ProperMethodCategorizationTest >> testSetUpMethodInSUnitTestsNeedsToBeInRunningProtocol [
 	"The #setUp method in SUnit test classes should be in method protocol 'running'"
 
-	self assureAll: #setUp areCategorizedInProtocols: #(#running #setup) whenSubclassOf: TestCase
+	self assureAll: #setUp areCategorizedInProtocols: #(#running) whenSubclassOf: TestCase
 
 ]
 
@@ -145,7 +145,7 @@ ProperMethodCategorizationTest >> testShallowCopyMethodNeedsToBeInCopyingProtoco
 ProperMethodCategorizationTest >> testTearDownMethodInSUnitTestsNeedsToBeInRunningProtocol [
 	"The #tearDown method in SUnit test classes should be in method protocol 'running'"
 	
-	self assureAll: #tearDown areCategorizedInProtocols: #(#running #setup) whenSubclassOf: TestCase
+	self assureAll: #tearDown areCategorizedInProtocols: #(#running) whenSubclassOf: TestCase
 
 ]
 
