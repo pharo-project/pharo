@@ -14,7 +14,7 @@ RBCompositeRefactoryChange >> category: aString for: aClass [
 
 { #category : #'*Refactoring2-Core' }
 RBCompositeRefactoryChange >> removeProtocolNamed: aString in: aClass [ 
-	self flag: 3todo. 
+	self flag: #todo. 
 	"This change is not made via the changefactory!!!"
 	^ self addChange: (RBRemoveProtocolChange removeProtocolNamed: aString in: aClass)
 ]
