@@ -44,6 +44,12 @@ CompiledBlock >> hash [
 ]
 
 { #category : #testing }
+CompiledBlock >> isCompiledBlock [
+	
+	^ true
+]
+
+{ #category : #testing }
 CompiledBlock >> isTestMethod [
 	^ false
 ]
@@ -63,6 +69,12 @@ CompiledBlock >> methodClass [
 { #category : #accessing }
 CompiledBlock >> methodNode [
 	^ self outerCode methodNode
+]
+
+{ #category : #accessing }
+CompiledBlock >> numberOfReservedLiterals [
+
+	^ 1
 ]
 
 { #category : #accessing }
