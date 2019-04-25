@@ -26,7 +26,7 @@ CDTraitNode >> name: aString [
 	name := aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 CDTraitNode >> toString [ 
-	^self name
+	^ self name
 ]

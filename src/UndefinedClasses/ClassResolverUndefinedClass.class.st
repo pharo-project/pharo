@@ -1,5 +1,5 @@
 "
-My strategy is to create an UndefinedClassin the case the class doesn't exist.
+My strategy is to create an UndefinedClass in the case the class doesn't exist.
 "
 Class {
 	#name : #ClassResolverUndefinedClass,
@@ -9,6 +9,7 @@ Class {
 
 { #category : #resolving }
 ClassResolverUndefinedClass >> resolve: aClassName [
-"should build an undefined class instead of creating (build + install)"
-	^UndefinedClass createUndefinedClassNamed: aClassName package:  RPackage defaultPackageName.
+	"should build an undefined class instead of creating (build + install)"
+	
+	^ UndefinedClass createUndefinedClassNamed: aClassName package:  RPackage defaultPackageName
 ]

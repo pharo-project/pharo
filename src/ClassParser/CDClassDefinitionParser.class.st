@@ -1,9 +1,9 @@
 "
-ClassParser uses the default node representation of classes to parse class definition and 
-return a dedicated class tree. 
+I use the default node representation of classes to parse class definition and  return a dedicated class tree
+composed of node representing the definition of a class definition.  
 
-The basic idea behing ClassParser is to reuse as much as possible as the current infrastructure
-and not to reimplement yet another parser. 
+The basic idea behing the implementation is to reuse as much as possible as the current parser infrastructure
+and not to reimplement yet another parser. This is why this class defines a visitMessageNode: method. 
 
 Main public API is 
 	- parse: aString
@@ -237,13 +237,8 @@ CDClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
 CDClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 
 	(self isInstanceSideDefinition: aRBMessageNode)
-		ifTrue: [ "instance "
-			self parseSuperclassNode: aRBMessageNode receiver.
-			 ]
-		ifFalse: [ "metaclass" 
-			self parseClassName: aRBMessageNode receiver receiver
-			].
-	
+		ifTrue: [ self parseSuperclassNode: aRBMessageNode receiver ]
+		ifFalse: [ self parseClassName: aRBMessageNode receiver receiver ].
 	
 	aRBMessageNode selectorParts
 		with: aRBMessageNode arguments

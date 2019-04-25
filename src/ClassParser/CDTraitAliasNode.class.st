@@ -33,8 +33,8 @@ CDTraitAliasNode >> isTraitAliasNode [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 CDTraitAliasNode >> toString [ 
-		"should replace aliasName"
+	"should replace aliasName"
 	^ subject name, ' -> ', aliasName
 ]

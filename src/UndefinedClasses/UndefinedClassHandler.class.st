@@ -1,5 +1,5 @@
 "
-I am an handler for the creation of UndefinedClass
+I am an handler for the creation of UndefinedClass.
 "
 Class {
 	#name : #UndefinedClassHandler,
