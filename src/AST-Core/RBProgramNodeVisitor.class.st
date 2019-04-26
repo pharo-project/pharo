@@ -77,6 +77,7 @@ RBProgramNodeVisitor >> visitMethodNode: aMethodNode [
 	aMethodNode pragmas
 		do: [ :each | self visitNode: each ].
 	self visitNode: aMethodNode body
+
 ]
 
 { #category : #visiting }
@@ -128,6 +129,14 @@ RBProgramNodeVisitor >> visitSuperNode: aSuperNode [
 ]
 
 { #category : #visiting }
+RBProgramNodeVisitor >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode [ 
+	"| temp |"
+	"temp is a temporary node as we can find in the body of methods, but it can't be visited the same way."
+	"Redirect the message on argumentNodeVisitor as a way to keep retrocompatibility"
+	^self visitArgumentNode: aTemporaryDeclarationNode 
+]
+
+{ #category : #visiting }
 RBProgramNodeVisitor >> visitTemporaryNode: aNode [ 
 	"Sent *each time* a temporary node is found"
 	^ self visitVariableNode: aNode
@@ -136,7 +145,7 @@ RBProgramNodeVisitor >> visitTemporaryNode: aNode [
 { #category : #visiting }
 RBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [ 
 	"This is triggered when defining the temporaries between the pipes"
-	^self visitArgumentNodes: aNodeCollection
+	^aNodeCollection do: [ :each | self visitTemporaryDeclarationNode: each ]
 ]
 
 { #category : #visiting }

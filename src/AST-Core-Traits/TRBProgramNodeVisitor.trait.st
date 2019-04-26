@@ -129,6 +129,11 @@ TRBProgramNodeVisitor >> visitSuperNode: aSuperNode [
 ]
 
 { #category : #visiting }
+TRBProgramNodeVisitor >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode [
+	^self visitArgumentNode: aTemporaryDeclarationNode 
+]
+
+{ #category : #visiting }
 TRBProgramNodeVisitor >> visitTemporaryNode: aNode [ 
 	"Sent *each time* a temporary node is found"
 	^ self visitVariableNode: aNode
@@ -137,7 +142,7 @@ TRBProgramNodeVisitor >> visitTemporaryNode: aNode [
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [ 
 	"This is triggered when defining the temporaries between the pipes"
-	^self visitArgumentNodes: aNodeCollection
+	^aNodeCollection do: [ :each | self visitTemporaryDeclarationNode: each ]
 ]
 
 { #category : #visiting }
