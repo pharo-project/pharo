@@ -182,7 +182,7 @@ NotebookMorph >> pageWithModel: anObject [
 
 { #category : #private }
 NotebookMorph >> removePage: aPage [
-	| removedPageIndex subscriptions |
+	| removedPageIndex |
 	removedPageIndex := self pages indexOf: aPage.
 
 	self suspendAnnouncementsDuring: [ super removePage: aPage ].

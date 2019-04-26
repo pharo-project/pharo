@@ -11,18 +11,12 @@ ListCommonPropertiestTest >> classToTest [
 
 { #category : #running }
 ListCommonPropertiestTest >> testRemoveHeaderTitleInPresenterRemovesColumnHeaderMorph [
+	SystemVersion current major = 7 ifTrue: [ "Test failing in Pharo7 due to a bug in FastTable" ^ self skip ].
 
-	| tableContainer |
-	
-	SystemVersion current major = 7
-		ifTrue: [
-			"Test failing in Pharo7 due to a bug in FastTable"
-			^ self skip ].
-	
 	self presenter headerTitle: 'test'.
 	self presenter hideHeaderTitle.
 
-	backendForTest denyHasHeader: self widget.
+	backendForTest denyHasHeader: self widget
 ]
 
 { #category : #running }

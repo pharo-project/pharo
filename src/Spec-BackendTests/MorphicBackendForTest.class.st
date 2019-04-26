@@ -10,8 +10,6 @@ Class {
 
 { #category : #asserting }
 MorphicBackendForTest >> assertHasHeader: aFTTableMorph [ 
-
-	| tableContainer |
 	self waitUntilUIRedrawed.
 
 	self assert: (aFTTableMorph instVarNamed: #showColumnHeaders)
@@ -130,8 +128,6 @@ MorphicBackendForTest >> openInstanceOf: aTest [
 
 { #category : #running }
 MorphicBackendForTest >> runTest: aBlock [
-	| oldApplication |
-
 	app := SpecApplication new.
 	app useBackend: #Morphic.
 	aBlock value

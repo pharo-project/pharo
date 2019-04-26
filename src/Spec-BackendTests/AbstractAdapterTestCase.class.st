@@ -124,8 +124,8 @@ AbstractAdapterTestCase >> runCase [
 
 { #category : #running }
 AbstractAdapterTestCase >> setUp [
+	super setUp. "This super is useless but it's to make the release tests happy."
 	self error: 'Do not override me.... use #initializeTestedInstance'
-
 ]
 
 { #category : #accessing }
