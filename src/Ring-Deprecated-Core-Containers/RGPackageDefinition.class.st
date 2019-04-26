@@ -5,7 +5,7 @@ A package can also know in which package is defined
 
 "
 Class {
-	#name : #RGPackage,
+	#name : #RGPackageDefinition,
 	#superclass : #RGContainer,
 	#instVars : [
 		'package'
@@ -14,20 +14,20 @@ Class {
 }
 
 { #category : #'adding/removing' }
-RGPackage >> addElement: aRGDefinition in: aCollection [
+RGPackageDefinition >> addElement: aRGDefinition in: aCollection [
 
 	aRGDefinition package: self.
 	super addElement: aRGDefinition in: aCollection.
 ]
 
 { #category : #'managing container' }
-RGPackage >> addInContainer: anRGContainer [
+RGPackageDefinition >> addInContainer: anRGContainer [
 
 	anRGContainer addPackage: self
 ]
 
 { #category : #'adding/removing' }
-RGPackage >> addMethod: aRGMethodDefinition [
+RGPackageDefinition >> addMethod: aRGMethodDefinition [
 	"aRGMethodDefinition needs to satisfy the status isMethod"
 
 	aRGMethodDefinition isMethod ifFalse:[ ^self ].
@@ -40,21 +40,21 @@ RGPackage >> addMethod: aRGMethodDefinition [
 ]
 
 { #category : #accessing }
-RGPackage >> categories [
+RGPackageDefinition >> categories [
 	"Retrieves class categories of the receiver"
 	
 	^self elements at: #categories
 ]
 
 { #category : #accessing }
-RGPackage >> categories: aCollection [
+RGPackageDefinition >> categories: aCollection [
 	"Set the class categories collection"
 	
 	self elements at: #categories put: (aCollection asOrderedCollection)
 ]
 
 { #category : #accessing }
-RGPackage >> classNames [
+RGPackageDefinition >> classNames [
 
 	^ self classes isDictionary
 		ifTrue: [ self classes keys ]
@@ -62,34 +62,34 @@ RGPackage >> classNames [
 ]
 
 { #category : #accessing }
-RGPackage >> classes [
+RGPackageDefinition >> classes [
 	"Retrieves a collection (by default a dictionary) of classes defined in the receiver and classes holding extension methods"
 	
 	^self definedClasses, self extendedClasses 
 ]
 
 { #category : #accessing }
-RGPackage >> definedClassNames [
+RGPackageDefinition >> definedClassNames [
 
 	^ super classNames
 ]
 
 { #category : #accessing }
-RGPackage >> definedTraits [
+RGPackageDefinition >> definedTraits [
 	"Retrieves the traits defined in the receiver"
 
 	^self traits
 ]
 
 { #category : #testing }
-RGPackage >> definesClass: aRGBehaviorDefinition [
+RGPackageDefinition >> definesClass: aRGBehaviorDefinition [
 	"Returns true if the receiver includes aRGBehaviorDefinition in the defined classes"
 
 	^ self includesClass: aRGBehaviorDefinition
 ]
 
 { #category : #testing }
-RGPackage >> definesOrExtendsClass: aRGBehaviorDefinition [
+RGPackageDefinition >> definesOrExtendsClass: aRGBehaviorDefinition [
 	"Returns true whether the class, aRGBehaviorDefinition, is one locally defined classes of the receiver or 
 	if the receiver extends such class (that is defined in another package)"
 	
@@ -97,7 +97,7 @@ RGPackage >> definesOrExtendsClass: aRGBehaviorDefinition [
 ]
 
 { #category : #accessing }
-RGPackage >> extendedClassNames [
+RGPackageDefinition >> extendedClassNames [
 
 	^ self extendedClasses isDictionary
 		ifTrue: [ self extendedClasses keys ]
@@ -105,7 +105,7 @@ RGPackage >> extendedClassNames [
 ]
 
 { #category : #accessing }
-RGPackage >> extendedClasses [
+RGPackageDefinition >> extendedClasses [
 	"Retrieves the classes holding the extension methods and returns a dictionary as well"
 	|  classesOfExt |
 	classesOfExt := Dictionary new.
@@ -118,35 +118,35 @@ RGPackage >> extendedClasses [
 ]
 
 { #category : #accessing }
-RGPackage >> extendedSelectors [
+RGPackageDefinition >> extendedSelectors [
 	"Retrieves the names of the methods"
 	
 	^ self extensionMethods keys
 ]
 
 { #category : #testing }
-RGPackage >> extendsClass: aRGBehaviorDefinition [
+RGPackageDefinition >> extendsClass: aRGBehaviorDefinition [
 	"Returns true if the receiver extends aRGBehaviorDefinition (that is defined in another package)"
 	
 	^ self extendedClasses includes: aRGBehaviorDefinition
 ]
 
 { #category : #accessing }
-RGPackage >> extensionMethods [
+RGPackageDefinition >> extensionMethods [
 	"Retrieves extension methods"
 	
 	^self elements at: #extensionMethods
 ]
 
 { #category : #accessing }
-RGPackage >> extensionMethods: aCollection [
+RGPackageDefinition >> extensionMethods: aCollection [
 	"Set the extension methods collection"
 	
 	self elements at: #extensionMethods put: aCollection
 ]
 
 { #category : #initialization }
-RGPackage >> initialize [
+RGPackageDefinition >> initialize [
 
 	super initialize.
 	self withoutPackages.	"By default the receiver has no child packages"
@@ -155,13 +155,13 @@ RGPackage >> initialize [
 ]
 
 { #category : #testing }
-RGPackage >> isPackage [
+RGPackageDefinition >> isPackage [
 
 	^true
 ]
 
 { #category : #lookup }
-RGPackage >> lookupClassNamed: className [
+RGPackageDefinition >> lookupClassNamed: className [
 	"Look for the class named className in the receiver's defined classes or in any of its package children"
 	| class |
 	
@@ -175,7 +175,7 @@ RGPackage >> lookupClassNamed: className [
 ]
 
 { #category : #accessing }
-RGPackage >> methods [
+RGPackageDefinition >> methods [
 	"Retrieves all the methods defined in the receiver. 
 	#methods holds the methods of defined classes"
 	
@@ -183,7 +183,7 @@ RGPackage >> methods [
 ]
 
 { #category : #metrics }
-RGPackage >> numberOfLinesOfCode [
+RGPackageDefinition >> numberOfLinesOfCode [
 	
 	^ self 
 		annotationNamed: #numberOfLinesOfCode
@@ -195,28 +195,28 @@ RGPackage >> numberOfLinesOfCode [
 ]
 
 { #category : #accessing }
-RGPackage >> package [
+RGPackageDefinition >> package [
 	"Retrieves the  package in which self is contained"
 
 	^package
 ]
 
 { #category : #accessing }
-RGPackage >> package: aRGPackage [
+RGPackageDefinition >> package: aRGPackage [
 	"Sets the outer package of the receiver if exists"
 
 	package:= aRGPackage
 ]
 
 { #category : #accessing }
-RGPackage >> parent [
+RGPackageDefinition >> parent [
 	"Retrieves the environment linked to this package"
 	
 	^self environment
 ]
 
 { #category : #printing }
-RGPackage >> printOn: aStream [
+RGPackageDefinition >> printOn: aStream [
 	aStream
 		nextPutAll: self class name;
 		nextPutAll: '(';
@@ -225,13 +225,13 @@ RGPackage >> printOn: aStream [
 ]
 
 { #category : #accessing }
-RGPackage >> realPackage [
+RGPackageDefinition >> realPackage [
 
 	^ RPackageOrganizer default packageNamed: self name
 ]
 
 { #category : #'adding/removing' }
-RGPackage >> removeMethod: aRGMethodDefinition [
+RGPackageDefinition >> removeMethod: aRGMethodDefinition [
 
 	self 
 		removeElement: aRGMethodDefinition 
@@ -241,7 +241,7 @@ RGPackage >> removeMethod: aRGMethodDefinition [
 ]
 
 { #category : #'adding/removing' }
-RGPackage >> withoutCategories [
+RGPackageDefinition >> withoutCategories [
 
 	self removeElementsCategorized: #categories
 ]
