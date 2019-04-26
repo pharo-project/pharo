@@ -140,6 +140,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
 		spec package: 'NautilusRefactoring-Tests'.
+		
+		spec package: 'Debugging-Core-Tests'.
 
 		spec package: 'Ombu'.
 		spec package: 'Epicea'.
@@ -438,6 +440,7 @@ spec group: 'General-Help-Group' with: #(
 
 spec group: 'General-Tests-Group' with: #(
 	'Kernel-Tests-Group' "dependency"
+	'Debugging-Core-Tests'
 	'Monticello-Tests'	"required by MonticelloMocks"
 	'MonticelloMocks'
 	'Fuel-Tests-Core'
