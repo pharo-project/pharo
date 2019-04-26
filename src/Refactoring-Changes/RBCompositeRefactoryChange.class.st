@@ -89,22 +89,22 @@ RBCompositeRefactoryChange >> changesSize [
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> comment: aString in: aClass [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory comment: aString in: aClass)
+	^ self addChange: (changeFactory comment: aString in: aClass)
 ]
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> compile: source in: class [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory addMethodSource: source in: class)
+	^ self addChange: (changeFactory addMethodSource: source in: class)
 ]
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> compile: source in: class classified: aProtocol [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory addMethodSource: source in: class classified: aProtocol)
+	^ self addChange: (changeFactory addMethodSource: source in: class classified: aProtocol)
 ]
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> defineClass: aString [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory addClassDefinition: aString)
+	^ self addChange: (changeFactory addClassDefinition: aString)
 ]
 
 { #category : #private }
@@ -152,32 +152,32 @@ RBCompositeRefactoryChange >> removeChange: aChange [
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> removeClass: aClass [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory removeClassNamed: aClass name)
+	^ self addChange: (changeFactory removeClassNamed: aClass name)
 ]
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> removeClassNamed: aSymbol [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory removeClassNamed: aSymbol)
+	^ self addChange: (changeFactory removeClassNamed: aSymbol)
 ]
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> removeClassVariable: variableName from: aClass [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory removeClassVariable: variableName from: aClass)
+	^ self addChange: (changeFactory removeClassVariable: variableName from: aClass)
 ]
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> removeInstanceVariable: variableName from: aClass [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory removeInstanceVariable: variableName from: aClass)
+	^ self addChange: (changeFactory removeInstanceVariable: variableName from: aClass)
 ]
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> removeMethod: aSelector from: aClass [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory removeMethod: aSelector from: aClass)
+	^ self addChange: (changeFactory removeMethod: aSelector from: aClass)
 ]
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> removePool: aPoolVariable from: aClass [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory removePoolVariable: aPoolVariable from: aClass)
+	^ self addChange: (changeFactory removePoolVariable: aPoolVariable from: aClass)
 ]
 
 { #category : #accessing }
@@ -190,15 +190,15 @@ RBCompositeRefactoryChange >> renameChangesForClass: oldClassName to: newClassNa
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> renameClass: class to: newName [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory renameClass: class to: newName)
+	^ self addChange: (changeFactory renameClass: class to: newName)
 ]
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> renameClassVariable: oldName to: newName in: aClass [
-	^ self addChange: (RBRefactoryChangeManager changeFactory renameClassVariable: oldName to: newName in: aClass)
+	^ self addChange: (changeFactory renameClassVariable: oldName to: newName in: aClass)
 ]
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> renameInstanceVariable: oldName to: newName in: aClass [
-	^ self addChange: (RBRefactoryChangeManager changeFactory renameInstanceVariable: oldName to: newName in: aClass)
+	^ self addChange: (changeFactory renameInstanceVariable: oldName to: newName in: aClass)
 ]

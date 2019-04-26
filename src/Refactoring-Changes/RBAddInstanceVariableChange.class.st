@@ -9,7 +9,7 @@ Class {
 
 { #category : #converting }
 RBAddInstanceVariableChange >> asUndoOperation [
-	^ RBRefactoryChangeManager changeFactory removeInstanceVariable: self variable from: self changeClass
+	^ changeFactory removeInstanceVariable: self variable from: self changeClass
 ]
 
 { #category : #printing }
