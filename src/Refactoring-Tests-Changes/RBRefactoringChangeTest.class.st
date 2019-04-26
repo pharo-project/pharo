@@ -80,7 +80,7 @@ RBRefactoringChangeTest >> selectionInterval [
 	^ 1 to: 0
 ]
 
-{ #category : #setup }
+{ #category : #running }
 RBRefactoringChangeTest >> setUp [
 	super setUp.
 	workingEnvironment := Smalltalk globals.
@@ -97,7 +97,7 @@ RBRefactoringChangeTest >> stringTestFor: aChange [
 	self assert: (aChange displayString isString and: [ aChange displayString notEmpty ])
 ]
 
-{ #category : #setup }
+{ #category : #running }
 RBRefactoringChangeTest >> tearDown [
 	self removeMockClass.
 	super tearDown.
@@ -252,7 +252,7 @@ RBRefactoringChangeTest >> testCompileInClass [
 	self assert: change isMeta not.
 	self assert: change selector equals: #setUp.
 	self assert: change source equals: 'setUp'.
-	self assert: change protocol equals: #setup.
+	self assert: change protocol equals: #running.
 	self universalTestFor: change
 ]
 

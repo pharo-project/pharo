@@ -1,6 +1,6 @@
 Extension { #name : #RGMethodDefinition }
 
-{ #category : #'*NautilusRefactoring' }
+{ #category : #'*Refactoring-Changes' }
 RGMethodDefinition >> nameToDisplay [
 
 	^ self printString

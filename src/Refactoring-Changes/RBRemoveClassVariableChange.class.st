@@ -9,7 +9,7 @@ Class {
 
 { #category : #converting }
 RBRemoveClassVariableChange >> asUndoOperation [
-	^ RBRefactoryChangeManager changeFactory addClassVariable: self variable to: self changeClass
+	^ changeFactory addClassVariable: self variable to: self changeClass
 ]
 
 { #category : #accessing }

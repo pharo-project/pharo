@@ -20,12 +20,12 @@ RBAddTraitChange class >> definitionPatterns [
 { #category : #converting }
 RBAddTraitChange >> asUndoOperation [
 	| trait |
-	trait := Smalltalk globals
+	trait := onSystemDictionary 
 		at: self changeClassName
 		ifAbsent: [ nil ].
 	^ trait isTrait
-		ifTrue: [ RBRefactoryChangeManager changeFactory addTraitDefinition: trait definition ]
-		ifFalse: [ RBRefactoryChangeManager changeFactory removeClassNamed: self changeClassName ]
+		ifTrue: [ changeFactory addTraitDefinition: trait definition ]
+		ifFalse: [ changeFactory removeClassNamed: self changeClassName ]
 ]
 
 { #category : #accessing }

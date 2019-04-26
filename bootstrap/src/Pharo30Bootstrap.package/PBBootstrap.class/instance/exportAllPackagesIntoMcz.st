@@ -2,5 +2,5 @@ preparation
 exportAllPackagesIntoMcz
 
 	self mczCache directory ensureDeleteAll; ensureCreateDirectory.
-	self originRepository allFileNames do: [ :packageName |
+	self packagesToExportAsMCZ do: [ :packageName |
 		self exportIntoMcz: packageName ].
