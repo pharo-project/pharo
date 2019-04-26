@@ -85,7 +85,7 @@ FFICallback >> argumentsFor: stackPointer context: callbackContext [
 { #category : #evaluation }
 FFICallback >> executeWithArguments: argumentValues [
 	
-	^ [ block valueWithArguments: argumentValues ]
+	^ [ block valueWithArguments: argumentValues asArray ]
 		on: Error 
 		fork: [ :e | e pass ]
 		return: [ self returnOnError ]

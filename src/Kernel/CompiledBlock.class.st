@@ -22,6 +22,12 @@ CompiledBlock >> hasMethodReturn [
 		 self encoderClass methodReturnBytecodes includes: byte]
 ]
 
+{ #category : #'accessing-pragmas & properties' }
+CompiledBlock >> hasPragmaNamed: aSymbol [
+
+	^ false
+]
+
 { #category : #comparing }
 CompiledBlock >> hash [
 	"CompiledMethod>>#= compares code, i.e. same literals and same bytecode.
