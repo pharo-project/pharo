@@ -140,8 +140,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
 		spec package: 'NautilusRefactoring-Tests'.
-		
-		spec package: 'Debugging-Core-Tests'.
 
 		spec package: 'Ombu'.
 		spec package: 'Epicea'.
@@ -174,6 +172,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-Tests'.
 		spec package: 'Kernel-Tests-Extended'.
 		spec package: 'Kernel-Tests-WithCompiler'.
+		spec package: 'Debugging-Core-Tests'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
 		spec package: 'OpalCompiler-Tests'.
@@ -440,7 +439,6 @@ spec group: 'General-Help-Group' with: #(
 
 spec group: 'General-Tests-Group' with: #(
 	'Kernel-Tests-Group' "dependency"
-	'Debugging-Core-Tests'
 	'Monticello-Tests'	"required by MonticelloMocks"
 	'MonticelloMocks'
 	'Fuel-Tests-Core'
@@ -758,6 +756,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Kernel-Tests' 
 	'Kernel-Tests-Extended' 
 	'Kernel-Tests-WithCompiler' 
+	'Debugging-Core-Tests'
 	'AST-Tests-Core' "requires BlueInk-Core"
 	'Announcements-Tests-Core'
 	'Compression-Tests' 
