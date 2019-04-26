@@ -9,6 +9,7 @@ OCNewCompilerWithChangesFunctionalTests >> testBlockReturning [
 	
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
+									options: #(-optionFullBlockClosure);	
 									encoderClass:  EncoderForV3PlusClosures; 
 									source: 'open
 	(self announcements at: self index ifAbsent: [ ^ self ]) 
@@ -50,7 +51,8 @@ OCNewCompilerWithChangesFunctionalTests >> testBlockTemp [
 	
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
-							encoderClass:  EncoderForV3PlusClosures; 
+							encoderClass:  EncoderForV3PlusClosures;
+							options: #(-optionFullBlockClosure); 
 									source: 'testBlockTemp
 	| block block1 block2 |
 	block := [ :arg | [ arg ] ].
@@ -134,7 +136,8 @@ OCNewCompilerWithChangesFunctionalTests >> testDifferentBlocksWithSameArgumentNa
 	
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
-									encoderClass:  EncoderForV3PlusClosures; 
+									encoderClass:  EncoderForV3PlusClosures;
+									options: #(-optionFullBlockClosure); 
 									source: 'exampleNestedBlock
 												| b c z |
 												b := [:a | 
@@ -210,7 +213,8 @@ OCNewCompilerWithChangesFunctionalTests >> testMethodArgument [
 	
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new 
-											encoderClass:  EncoderForV3PlusClosures; 
+											encoderClass:  EncoderForV3PlusClosures;
+											options: #(-optionFullBlockClosure);
 											source: 'testMethodArgument
 															| temp block |
 															temp := 0.
@@ -288,7 +292,8 @@ OCNewCompilerWithChangesFunctionalTests >> testMethodTemp [
 	
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
-									encoderClass:  EncoderForV3PlusClosures; 
+									encoderClass:  EncoderForV3PlusClosures;
+									options: #(-optionFullBlockClosure);
 									source: 'testMethodTemp
 													| block1 block2 |
 													block1 := self methodArgument: 1.
@@ -356,7 +361,8 @@ OCNewCompilerWithChangesFunctionalTests >> testModulePrimitive [
 	
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new 
-	encoderClass:  EncoderForV3PlusClosures; 
+	encoderClass:  EncoderForV3PlusClosures;
+	options: #(-optionFullBlockClosure);
 	source: 'copyBitsAgain
 	"Primitive. See BitBlt|copyBits, also a Primitive. Essential. See Object
 	documentation whatIsAPrimitive."
@@ -389,7 +395,8 @@ OCNewCompilerWithChangesFunctionalTests >> testModulePrimitive [
 OCNewCompilerWithChangesFunctionalTests >> testMultiElementArray [
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new 
-									encoderClass:  EncoderForV3PlusClosures; 
+									encoderClass:  EncoderForV3PlusClosures;
+									options: #(-optionFullBlockClosure);
 									source: 'method
 	^{1. 2. 3. 4. 5. 6 }';
 									class: OCMockCompilationClass;
@@ -422,7 +429,8 @@ OCNewCompilerWithChangesFunctionalTests >> testOneFloat [
 	
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new 
-		encoderClass:  EncoderForV3PlusClosures; 
+		encoderClass:  EncoderForV3PlusClosures;
+		options: #(-optionFullBlockClosure); 
 	source: 'one
 	
 	^1.0';
@@ -462,7 +470,8 @@ OCNewCompilerWithChangesFunctionalTests >> testReturnBlockInMethod [
 	
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
-											encoderClass:  EncoderForV3PlusClosures; 
+											encoderClass:  EncoderForV3PlusClosures;
+											options: #(-optionFullBlockClosure); 
 											source: 'methodArgument: anObject
 														^ [ anObject ]';
 											class: OCMockCompilationClass;
@@ -491,7 +500,8 @@ OCNewCompilerWithChangesFunctionalTests >> testSetUp [
 	
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
-									encoderClass:  EncoderForV3PlusClosures; 
+									encoderClass:  EncoderForV3PlusClosures;
+									options: #(-optionFullBlockClosure);
 									source: 'setUp
 												super setUp.
 												collection := OrderedCollection new';
@@ -524,7 +534,8 @@ OCNewCompilerWithChangesFunctionalTests >> testSimpleArray [
 	
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
-									encoderClass:  EncoderForV3PlusClosures; 
+									encoderClass:  EncoderForV3PlusClosures;
+									options: #(-optionFullBlockClosure);
 									source: 'method
 	^{1}';
 									class: OCMockCompilationClass;
@@ -547,7 +558,8 @@ OCNewCompilerWithChangesFunctionalTests >> testSteamContentsLimitedToSequenceabl
 	| aCompiledMethod bytecode expected |
 	
 	aCompiledMethod := OpalCompiler new
-									encoderClass:  EncoderForV3PlusClosures; 
+									encoderClass:  EncoderForV3PlusClosures;
+									options: #(-optionFullBlockClosure); 
 									source: 'streamContents: blockWithArg limitedTo: sizeLimit
 												| stream |
 												stream := LimitedWriteStream on: (self new: (100 min: sizeLimit)).
@@ -616,7 +628,8 @@ OCNewCompilerWithChangesFunctionalTests >> testToDoArgumentNotInlined [
 	
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
-									encoderClass:  EncoderForV3PlusClosures; 
+									encoderClass:  EncoderForV3PlusClosures;
+									options: #(-optionFullBlockClosure);
 									source: 'testToDoArgumentNotInlined
 													| block |
 													block := [ :index |
@@ -674,7 +687,8 @@ OCNewCompilerWithChangesFunctionalTests >> testToDoInsideTempNotInlined [
 	"Some instructions are the same but we have a different number at he begining, and the storeTemp and popIntoTemp issue"
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
-										encoderClass:  EncoderForV3PlusClosures; 
+										encoderClass:  EncoderForV3PlusClosures;
+										options: #(-optionFullBlockClosure);
 										source: 'testToDoInsideTempNotInlined
 														| block |
 														block := [ :index | 
@@ -742,7 +756,8 @@ OCNewCompilerWithChangesFunctionalTests >> testToDoOutsideTempNotInlined [
 	"there seems to be a better indexzation of the temps we have one more"
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
-										encoderClass:  EncoderForV3PlusClosures; 
+										encoderClass:  EncoderForV3PlusClosures;
+										options: #(-optionFullBlockClosure);
 										source: 'testToDoOutsideTempNotInlined
 														| block temp |
 														block := [ :index | 
@@ -814,7 +829,8 @@ OCNewCompilerWithChangesFunctionalTests >> testWhileModificationAfterNotInlined 
 	"The bytecodes integers are different in some cases."
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
-										encoderClass:  EncoderForV3PlusClosures; 
+										encoderClass:  EncoderForV3PlusClosures;
+										options: #(-optionFullBlockClosure);
 										source: 'testWhileModificationAfterNotInlined
 														| index block |
 														index := 0.
@@ -903,7 +919,8 @@ OCNewCompilerWithChangesFunctionalTests >> testWhileModificationBeforeNotInlined
 	"The bytecodes integers are different in some cases."
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
-										encoderClass:  EncoderForV3PlusClosures; 
+										options: #(-optionFullBlockClosure);
+										encoderClass:  EncoderForV3PlusClosures;
 										source: 'testWhileModificationBeforeNotInlined
 														| index block |
 														index := 0.
@@ -991,7 +1008,8 @@ OCNewCompilerWithChangesFunctionalTests >> testWhileWithTempNotInlined [
 	"The bytecodes integers are different in some cases."
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new
-										encoderClass:  EncoderForV3PlusClosures; 
+										encoderClass:  EncoderForV3PlusClosures;
+										options: #(-optionFullBlockClosure);
 										source: 'testWhileWithTempNotInlined
 	| index block |
 	index := 0.
