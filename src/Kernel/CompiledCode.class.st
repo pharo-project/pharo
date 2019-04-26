@@ -379,6 +379,12 @@ CompiledCode >> isCompiledBlock [
 ]
 
 { #category : #testing }
+CompiledCode >> isDoIt [
+	
+	^ false
+]
+
+{ #category : #testing }
 CompiledCode >> isExternalCallPrimitive [
 	^self primitive = 120
 ]
@@ -578,6 +584,12 @@ CompiledCode >> primitiveErrorVariableName [
 			and: [(ecIndex := kwds indexOf: 'error:') > 0]) ifTrue:
 				[^pragma argumentAt: ecIndex]]].
 	^nil
+]
+
+{ #category : #testing }
+CompiledCode >> propertyAt: aString ifAbsent: aFullBlockClosure [ 
+	
+	^ aFullBlockClosure value
 ]
 
 { #category : #scanning }
