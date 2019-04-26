@@ -63,6 +63,7 @@ ShiftClassBuilder >> addChangeComparer: aChangeComparer [
 ShiftClassBuilder >> build [	
 	self tryToFillOldClass.
 	self detectBuilderEnhancer.
+	self builderEnhancer validateRedefinition: self oldClass. 
 	
 	self validateSuperclass.
 	self compareWithOldClass.
