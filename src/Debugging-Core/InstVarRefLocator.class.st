@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'bingo'
 	],
-	#category : #'Debugging-Core'
+	#category : #'Debugging-Core-Base'
 }
 
 { #category : #initialization }

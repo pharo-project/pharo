@@ -2,7 +2,7 @@
 SUnit tests for code simulation
 "
 Class {
-	#name : #CodeSimulationTests,
+	#name : #CodeSimulationTest,
 	#superclass : #TestCase,
 	#classVars : [
 		'log'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #private }
-CodeSimulationTests >> indexedBasicAt: index [ 
+CodeSimulationTest >> indexedBasicAt: index [ 
 	<primitive: 60 error: code >
 	^ code
 
@@ -19,39 +19,33 @@ CodeSimulationTests >> indexedBasicAt: index [
 ]
 
 { #category : #tests }
-CodeSimulationTests >> methodWithError [
+CodeSimulationTest >> methodWithError [
 	self error: 'my error'
 ]
 
 { #category : #tests }
-CodeSimulationTests >> methodWithHalt [
-	<haltOrBreakpointForTesting>
-	self halt
-]
-
-{ #category : #tests }
-CodeSimulationTests >> methodWithTranscript [
+CodeSimulationTest >> methodWithTranscript [
 	Transcript show: 'something'
 ]
 
 { #category : #tests }
-CodeSimulationTests >> runSimulated: aBlock [
+CodeSimulationTest >> runSimulated: aBlock [
 	thisContext runSimulated: aBlock contextAtEachStep: [ :current |  ]
 ]
 
 { #category : #tests }
-CodeSimulationTests >> testDNU [
+CodeSimulationTest >> testDNU [
 
 	self should: [ self runSimulated: [self absentMethod] ] raise: MessageNotUnderstood
 ]
 
 { #category : #tests }
-CodeSimulationTests >> testError [
+CodeSimulationTest >> testError [
 	self should: [ self runSimulated: [self methodWithError] ] raise: Error
 ]
 
 { #category : #'tests - primitives' }
-CodeSimulationTests >> testErrorCodeNotFound [
+CodeSimulationTest >> testErrorCodeNotFound [
 	| ctx result resultSimu |
 	
 	self skip.
@@ -77,7 +71,7 @@ CodeSimulationTests >> testErrorCodeNotFound [
 ]
 
 { #category : #'tests - primitives' }
-CodeSimulationTests >> testErrorCodeNotFoundIndexed [
+CodeSimulationTest >> testErrorCodeNotFoundIndexed [
 	| ctx result resultSimu |
 	
 	Smalltalk vm isRunningCog ifFalse: [^self].
@@ -102,7 +96,7 @@ CodeSimulationTests >> testErrorCodeNotFoundIndexed [
 ]
 
 { #category : #'tests - primitives' }
-CodeSimulationTests >> testErrorToken [
+CodeSimulationTest >> testErrorToken [
 	| token1 token2 |
 	
 	token1 := Context primitiveFailToken.
@@ -114,37 +108,27 @@ CodeSimulationTests >> testErrorToken [
 ]
 
 { #category : #tests }
-CodeSimulationTests >> testErrorWithErrorHandler [
+CodeSimulationTest >> testErrorWithErrorHandler [
 	self runSimulated: [[self methodWithError] on: Error do: [:err | ]]  
 ]
 
 { #category : #tests }
-CodeSimulationTests >> testGoodSimulation [
+CodeSimulationTest >> testGoodSimulation [
 	self runSimulated: [ 1 + 2 ].
 ]
 
 { #category : #tests }
-CodeSimulationTests >> testHalt [
-	self should: [ self runSimulated: [self methodWithHalt] ] raise: Halt
-]
-
-{ #category : #tests }
-CodeSimulationTests >> testHaltWithHaltHandler [
-	self runSimulated: [[self methodWithHalt] on: Halt do: [:err |]]  
-]
-
-{ #category : #tests }
-CodeSimulationTests >> testTranscriptPrinting [
+CodeSimulationTest >> testTranscriptPrinting [
 	self runSimulated: [self methodWithTranscript]  
 ]
 
 { #category : #tests }
-CodeSimulationTests >> testTranscriptPrintingWithOpenedTranscriptExists [
+CodeSimulationTest >> testTranscriptPrintingWithOpenedTranscriptExists [
 	self runSimulated: [self methodWithTranscript]  
 ]
 
 { #category : #private }
-CodeSimulationTests >> veryBasicAt: index [ 
+CodeSimulationTest >> veryBasicAt: index [ 
 	<primitive: 'dooo' module: 'bar' error: code>
 	^ code
 

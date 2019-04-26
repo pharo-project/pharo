@@ -69,7 +69,7 @@ Halt resetOnce
 Class {
 	#name : #Halt,
 	#superclass : #Exception,
-	#category : #'Kernel-Exceptions'
+	#category : #'Debugging-Core-Halt'
 }
 
 { #category : #halting }
@@ -220,4 +220,12 @@ Halt >> defaultAction [
 
 	^ UIManager default unhandledErrorDefaultAction: self
 	"^ UnhandledError signalForException: self" 
+]
+
+{ #category : #private }
+Halt >> handleProcessCompletionIfNeeded: aProcess with: aContext [
+	^ aContext methodNode
+		pragmaNamed: #debuggerCompleteToSender
+		ifPresent: [ aProcess completeTo: aContext sender ]
+		ifAbsent: [ nil ]
 ]

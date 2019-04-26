@@ -42,6 +42,12 @@ CompiledCode >> abstractBytecodeMessagesFrom: startpc to: endpc do: aBlock [
 ]
 
 { #category : #'*Debugging-Core' }
+CompiledCode >> containsHalt [
+
+	^ self sendsAnySelectorOf: #( halt halt: haltIf: haltIfNil haltOnCount: haltOnce)
+]
+
+{ #category : #'*Debugging-Core' }
 CompiledCode >> hasInstVarRef [
 	self localHasInstVarRef ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb hasInstVarRef ]

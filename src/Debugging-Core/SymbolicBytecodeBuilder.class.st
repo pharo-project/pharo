@@ -12,7 +12,7 @@ Class {
 		'oldPC',
 		'symbolicBytecodes'
 	],
-	#category : #'Debugging-Core'
+	#category : #'Debugging-Core-Base'
 }
 
 { #category : #decoding }

@@ -14,7 +14,7 @@ Class {
 		'offset',
 		'bytes'
 	],
-	#category : #'Debugging-Core'
+	#category : #'Debugging-Core-Base'
 }
 
 { #category : #comparing }

@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'accumulator'
 	],
-	#category : #'Debugging-Core'
+	#category : #'Debugging-Core-Base'
 }
 
 { #category : #'reflective operations' }

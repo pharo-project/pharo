@@ -10,7 +10,7 @@ Class {
 		'blockEnd',
 		'joinOffsets'
 	],
-	#category : #'Debugging-Core'
+	#category : #'Debugging-Core-Base'
 }
 
 { #category : #'instance creation' }

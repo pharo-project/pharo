@@ -162,12 +162,6 @@ CompiledCode >> comment [
 	^ self methodClass firstPrecodeCommentFor: self selector
 ]
 
-{ #category : #testing }
-CompiledCode >> containsHalt [
-
-	^ self sendsAnySelectorOf: #( halt halt: haltIf: haltIfNil haltOnCount: haltOnce)
-]
-
 { #category : #'source code management' }
 CompiledCode >> definition [
 	"Polymorphic to class definition"
