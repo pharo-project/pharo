@@ -1249,7 +1249,7 @@ Color >> colorForInsets [
 ]
 
 { #category : #conversions }
-Color >> contrastingColor [
+Color >> contrastingBlackAndWhiteColor [
 	"Answer black or white depending on the luminance."
 
 	self isTransparent ifTrue: [ ^ self class black].

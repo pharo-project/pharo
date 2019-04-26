@@ -232,7 +232,7 @@ RubTextSegmentIconDisplayer >> verticalSeparatorBounds [
 
 { #category : #accessing }
 RubTextSegmentIconDisplayer >> verticalSeparatorColor [
-	^ (self textArea backgroundColor contrastingColor ) alpha: 0.3
+	^ (self textArea backgroundColor contrastingBlackAndWhiteColor ) alpha: 0.3
 ]
 
 { #category : #accessing }

@@ -240,7 +240,7 @@ ThemeSettings >> findReplaceSelectionTextColor [
 	"Answer the value of the selectionTextColor for find/replace"
 
 	^ findReplaceSelectionTextColor 
-		ifNil: [ self findReplaceSelectionColor contrastingColor ]
+		ifNil: [ self findReplaceSelectionColor contrastingBlackAndWhiteColor ]
 ]
 
 { #category : #accessing }
@@ -511,7 +511,7 @@ ThemeSettings >> secondarySelectionTextColor [
 	"Answer the value of selectionTextColor"
 
 	^ secondarySelectionTextColor 
-		ifNil: [ Smalltalk ui theme secondarySelectionColor contrastingColor ]
+		ifNil: [ Smalltalk ui theme secondarySelectionColor contrastingBlackAndWhiteColor ]
 ]
 
 { #category : #accessing }
