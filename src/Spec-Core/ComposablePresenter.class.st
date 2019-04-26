@@ -804,6 +804,13 @@ ComposablePresenter >> newNotebook [
 ]
 
 { #category : #widgets }
+ComposablePresenter >> newNotebookPage [
+
+	self flag: #TODO. "NotebookPage needs to be a Presenter?"
+	^ NotebookPage new
+]
+
+{ #category : #widgets }
 ComposablePresenter >> newNullPresenter [
 	^ self instantiate: NullPresenter
 ]

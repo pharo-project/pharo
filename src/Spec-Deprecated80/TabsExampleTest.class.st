@@ -8,8 +8,3 @@ Class {
 TabsExampleTest class >> isDeprecated [
 	^ true
 ]
-
-{ #category : #running }
-TabsExampleTest >> classToTest [
-	^ TabsExample
-]

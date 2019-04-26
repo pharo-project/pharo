@@ -42,6 +42,5 @@ TreeSingleSelectionMode >> selectedPath [
 TreeSingleSelectionMode >> selectedPaths [
 	
 	selection ifEmpty: [ ^ #() ].
-	
 	^ { selection }
 ]
