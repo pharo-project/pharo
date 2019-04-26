@@ -45,6 +45,11 @@ ASTCache class >> initialize [
 	SessionManager default registerSystemClassNamed: self name
 ]
 
+{ #category : #accessing }
+ASTCache class >> remove: aCompiledMethod [
+	default removeKey: aCompiledMethod
+]
+
 { #category : #'initialization-release' }
 ASTCache class >> reset [
 	default reset.

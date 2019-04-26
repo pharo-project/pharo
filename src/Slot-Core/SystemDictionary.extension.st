@@ -10,7 +10,10 @@ SystemDictionary >> declare: key from: aDictionary [
 	(self includesKey: key) ifTrue: [^ self].
 	(aDictionary includesKey: key)
 		ifTrue: 
-			[self add: ((aDictionary associationAt: key) primitiveChangeClassTo: GlobalVariable new).
+			[ |undeclared |
+			undeclared := (aDictionary associationAt: key).
+			self add: (undeclared primitiveChangeClassTo: GlobalVariable new).
+			undeclared usingMethods collect: #compiledMethod thenDo: #resetASTCache.
 			aDictionary removeKey: key]
 		ifFalse: 
 			[self add: (GlobalVariable key: key)]

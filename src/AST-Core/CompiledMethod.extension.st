@@ -28,3 +28,10 @@ CompiledMethod >> parseTree [
 		onError: [ :msg :pos | 
 			^ self decompile ]) methodClass: self methodClass.
 ]
+
+{ #category : #'*AST-Core' }
+CompiledMethod >> resetASTCache [
+	"Reset the ast cache for this method"
+
+	ASTCache remove: self
+]
