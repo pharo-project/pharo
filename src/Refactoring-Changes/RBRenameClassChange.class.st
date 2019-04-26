@@ -29,7 +29,7 @@ RBRenameClassChange >> = aRenameClassChange [
 
 { #category : #accessing }
 RBRenameClassChange >> changeClass [
-	^ Smalltalk globals at: oldName asSymbol ifAbsent: [ Smalltalk globals at: newName asSymbol ]
+	^ (self classNamed: oldName) ifNil: [ self classNamed: newName ]
 ]
 
 { #category : #private }

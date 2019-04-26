@@ -6,6 +6,11 @@ RBRefactoryChange >> accept: aText notifying: aController [
 ]
 
 { #category : #'*NautilusRefactoring' }
+RBRefactoryChange >> classNamed: aClassName [
+	^self class environment classNamed: aClassName
+]
+
+{ #category : #'*NautilusRefactoring' }
 RBRefactoryChange >> nameToDisplay [
 
 	^ self name

@@ -35,7 +35,7 @@ RBRefactoryClassChange >> asUndoOperation [
 { #category : #accessing }
 RBRefactoryClassChange >> changeClass [
 	| class |
-	class := Smalltalk globals at: self changeClassName ifAbsent: [ ^ nil ].
+	class := self classNamed: self changeClassName.
 	^ isMeta ifTrue: [ class classSide ] ifFalse: [ class ]
 ]
 

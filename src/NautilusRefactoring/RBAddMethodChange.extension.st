@@ -29,9 +29,8 @@ RBAddMethodChange >> accept: aText notifying: aController [
 RBAddMethodChange >> oldVersionTextToDisplay [
 	| class |
 	
-	class := Smalltalk 
-				at: className asSymbol
-				ifAbsent: [ ^ super oldVersionTextToDisplay ].
+	class := (self classNamed: className)
+				ifNil: [ ^ super oldVersionTextToDisplay ].
 				
 	isMeta ifTrue: [ class := class classSide ].
 				

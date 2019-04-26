@@ -34,9 +34,7 @@ RBAddClassChange class >> definitionPatterns [
 { #category : #converting }
 RBAddClassChange >> asUndoOperation [
 	| class |
-	class := Smalltalk globals
-		at: self changeClassName
-		ifAbsent: [ nil ].
+	class := self classNamed: self changeClassName.
 	^ class isBehavior
 		ifTrue: [ RBRefactoryChangeManager changeFactory addClassDefinition: class definition ]
 		ifFalse: [ RBRefactoryChangeManager changeFactory removeClassNamed: self changeClassName ]
@@ -54,7 +52,7 @@ RBAddClassChange >> classVariableNames [
 
 { #category : #private }
 RBAddClassChange >> definitionClass [
-	^ Smalltalk globals at: (self superclassName ifNil: [ ^ ProtoObject ])
+	^ self classNamed: (self superclassName ifNil: [ ^ ProtoObject ])
 ]
 
 { #category : #private }
