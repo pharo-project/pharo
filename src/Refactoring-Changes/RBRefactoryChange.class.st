@@ -7,7 +7,10 @@ Class {
 	#name : #RBRefactoryChange,
 	#superclass : #Object,
 	#instVars : [
-		'name'
+		'name',
+		'factory',
+		'changeFactory',
+		'onSystemDictionary'
 	],
 	#category : #'Refactoring-Changes'
 }
@@ -57,6 +60,13 @@ RBRefactoryChange >> executeNotifying: aBlock [
 	self subclassResponsibility
 ]
 
+{ #category : #initialization }
+RBRefactoryChange >> initialize [ 
+	super initialize.
+	onSystemDictionary := Smalltalk globals.
+	changeFactory := RBRefactoryChangeManager changeFactory
+]
+
 { #category : #accessing }
 RBRefactoryChange >> name [
 	^name isNil ifTrue: [self changeString] ifFalse: [name]
@@ -65,6 +75,12 @@ RBRefactoryChange >> name [
 { #category : #initialization }
 RBRefactoryChange >> name: aString [
 	name := aString
+]
+
+{ #category : #accessing }
+RBRefactoryChange >> nameToDisplay [
+
+	^ self name
 ]
 
 { #category : #accessing }
