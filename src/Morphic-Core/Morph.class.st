@@ -2928,32 +2928,34 @@ Morph >> handleMouseDown: anEvent [
 { #category : #'events-processing' }
 Morph >> handleMouseEnter: anEvent [
 	"System level event handling."
-	(anEvent isDraggingEvent) ifTrue:[
-		(self handlesMouseOverDragging: anEvent) ifTrue:[
-			anEvent wasHandled: true.
-			self mouseEnterDragging: anEvent].
-		^ self eventHandler ifNotNil: [:handler | handler mouseEnterDragging: anEvent fromMorph: self ]].
-	self wantsBalloon
-		ifTrue:[anEvent hand triggerBalloonFor: self after: self balloonHelpDelayTime].
-	(self handlesMouseOver: anEvent) ifTrue:[
-		anEvent wasHandled: true.
-		self mouseEnter: anEvent ].
-	^ self eventHandler ifNotNil: [:handler | handler mouseEnter: anEvent fromMorph: self ].
+
+	anEvent isDraggingEvent
+		ifTrue: [ (self handlesMouseOverDragging: anEvent)
+				ifTrue: [ anEvent wasHandled: true.
+					self mouseEnterDragging: anEvent ].
+			^ self eventHandler ifNotNil: [ :handler | handler mouseEnterDragging: anEvent fromMorph: self ] ].
+	self wantsBalloon ifTrue: [ anEvent hand triggerBalloonFor: self after: self balloonHelpDelayTime ].
+
+	^ (self handlesMouseOver: anEvent)
+		ifTrue: [ anEvent wasHandled: true.
+			self mouseEnter: anEvent ]
+		ifFalse: [ self eventHandler ifNotNil: [ :handler | handler mouseEnter: anEvent fromMorph: self ] ]
 ]
 
 { #category : #'events-processing' }
 Morph >> handleMouseLeave: anEvent [
 	"System level event handling."
+
 	anEvent hand removePendingBalloonFor: self.
-	anEvent isDraggingEvent ifTrue:[
-		(self handlesMouseOverDragging: anEvent) ifTrue:[
-			anEvent wasHandled: true.
-			self mouseLeaveDragging: anEvent].
-		^ self eventHandler ifNotNil: [:handler | handler mouseLeave: anEvent fromMorph: self ]].
-	(self handlesMouseOver: anEvent) ifTrue:[
-		anEvent wasHandled: true.
-		self mouseLeave: anEvent ].
-	^ self eventHandler ifNotNil: [:handler | handler mouseLeave: anEvent fromMorph: self ]
+	anEvent isDraggingEvent
+		ifTrue: [ (self handlesMouseOverDragging: anEvent)
+				ifTrue: [ anEvent wasHandled: true.
+					self mouseLeaveDragging: anEvent ].
+			^ self eventHandler ifNotNil: [ :handler | handler mouseLeave: anEvent fromMorph: self ] ].
+	^ (self handlesMouseOver: anEvent)
+		ifTrue: [ anEvent wasHandled: true.
+			self mouseLeave: anEvent ]
+		ifFalse: [ self eventHandler ifNotNil: [ :handler | handler mouseLeave: anEvent fromMorph: self ] ]
 ]
 
 { #category : #'events-processing' }
