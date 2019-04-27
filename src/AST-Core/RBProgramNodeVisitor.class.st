@@ -65,6 +65,12 @@ RBProgramNodeVisitor >> visitLiteralNode: aLiteralNode [
 ]
 
 { #category : #visiting }
+RBProgramNodeVisitor >> visitLiteralValueNode: aLiteralValueNode [
+	"Default behavior redirect to visitLiteralNode for retrocompatibility"
+	^self visitLiteralNode: aLiteralValueNode 
+]
+
+{ #category : #visiting }
 RBProgramNodeVisitor >> visitMessageNode: aMessageNode [ 
 	(aMessageNode isCascaded not or: [aMessageNode isFirstCascaded]) 
 		ifTrue: [self visitNode: aMessageNode receiver].
