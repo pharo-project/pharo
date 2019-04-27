@@ -163,7 +163,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 { #category : #'known-dependencies' }
 SystemDependenciesTest >> knownSpecDependencies [
 	
-	^ #('AST-Tests-Core' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
+	^ #(
 		'WebBrowser-Core' "Spec's Link adapter"
 		'Keymapping-Settings' "Spec's KeymapBrowser example tool"
 		) sorted

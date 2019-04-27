@@ -22,10 +22,10 @@ AbstractTextPresenter >> aboutToStyle: aBoolean [
 	"<api: #boolean getter: #isAboutToStyle registration: #whenAboutToStyleChanged:>"
 	"Set if the text zone must be styled"
 	
-	self 
+	"self 
 		deprecated: 'This has been moved to specific presenters' 
 		on: '2019-04-15'
-		in: #Pharo8
+		in: #Pharo8"
 ]
 
 { #category : #'api-shout' }
