@@ -1249,7 +1249,7 @@ Color >> colorForInsets [
 ]
 
 { #category : #conversions }
-Color >> contrastingColor [
+Color >> contrastingBlackAndWhiteColor [
 	"Answer black or white depending on the luminance."
 
 	self isTransparent ifTrue: [ ^ self class black].
@@ -1267,14 +1267,6 @@ Color >> contrastingColorAdjustment [
 	^ self luminance > 0.5
 		ifTrue: [ self darker ] 
 		ifFalse:  [ self lighter ]
-]
-
-{ #category : #conversions }
-Color >> contrastingForegroundColor [
-        "Make a foreground color contrasting with me"
-        ^self luminance >= 0.5
-                ifTrue: [self class black]
-                ifFalse: [self class white]
 ]
 
 { #category : #transformations }

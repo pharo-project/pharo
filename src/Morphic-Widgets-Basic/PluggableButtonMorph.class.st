@@ -355,8 +355,8 @@ PluggableButtonMorph >> changed [
 			or: [label isMorph]) ifFalse: [
 				pc := self normalColor.
 				lc := self enabled
-					ifTrue: [pc contrastingColor]
-					ifFalse: [pc contrastingColor muchDarker].
+					ifTrue: [pc contrastingBlackAndWhiteColor]
+					ifFalse: [pc contrastingBlackAndWhiteColor muchDarker].
 				self labelMorph color: lc]].
 	super changed
 ]
@@ -499,7 +499,7 @@ PluggableButtonMorph >> focusBounds [
 PluggableButtonMorph >> focusColor [
 	"Answer the keyboard focus indication color."
 
-	^self color contrastingColor
+	^self color contrastingBlackAndWhiteColor
 ]
 
 { #category : #accessing }

@@ -2616,7 +2616,7 @@ UITheme >> menuItemDisabledTextColorFor: aMenuItem [
 	"Answer the color to use for disabled menu item text."
 
 	^((aMenuItem color luminance - aMenuItem owner color luminance) abs < 0.3)
-		ifTrue: [aMenuItem owner color contrastingColor muchDarker]
+		ifTrue: [aMenuItem owner color contrastingBlackAndWhiteColor muchDarker]
 		ifFalse: [aMenuItem owner color muchDarker]
 ]
 
@@ -2638,7 +2638,7 @@ UITheme >> menuItemNormalTextColorFor: aMenuItem [
 	"Answer the color to use for normal menu item text."
 
 	^((aMenuItem color luminance - aMenuItem owner paneColor luminance) abs < 0.3)
-		ifTrue: [aMenuItem owner paneColor contrastingColor]
+		ifTrue: [aMenuItem owner paneColor contrastingBlackAndWhiteColor]
 		ifFalse: [aMenuItem color]
 ]
 
