@@ -293,6 +293,7 @@ RBProgramNode >> do: aBlock [
 
 { #category : #generation }
 RBProgramNode >> dump [
+	"Generate the Pharo code from self"
 	| visitor |
 	visitor := RBDumpVisitor new.
 	self acceptVisitor: visitor.

@@ -1,3 +1,18 @@
+"
+I represent a visitor that generates Pharo code
+
+I visit an Pharo AST, and generate corresponding valid Pharo Code.
+
+I'm used by reflexivity.
+
+try me! 
+(RBDumpVisitor >> #stream) ast dump
+
+Instance Variables
+	stream:		<Object>		The stream holding the output. Filled up throughout the visit.
+
+
+"
 Class {
 	#name : #RBDumpVisitor,
 	#superclass : #RBProgramNodeVisitor,
@@ -73,15 +88,6 @@ RBDumpVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
 		nextPutAll: aLiteralArrayNode class name;
 		nextPutAll: ' value: #('.
 	(aLiteralArrayNode contents collect: [ :each | each value ]) printOn: stream delimiter: ' '.
-	stream nextPutAll: ')'
-]
-
-{ #category : #visiting }
-RBDumpVisitor >> visitLiteralNode: aLiteralNode [
-	stream
-		nextPutAll: aLiteralNode class name;
-		nextPutAll: ' value: #('.
-	(aLiteralNode contents collect: [ :each | each value ]) printOn: stream delimiter: ' '.
 	stream nextPutAll: ')'
 ]
 
