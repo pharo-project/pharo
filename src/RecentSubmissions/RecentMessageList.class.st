@@ -1,8 +1,10 @@
 "
-MessageList is a simple object that holds a set of ordered method definitions.
-See MessageList example for an example.
+RecentMessageList is a simple object that holds a set of ordered method/class definitions.
+It is used by the EmergencyEvaluator (Transcripter) to be able to revert the last method that you 
+edited and that totally broke the system. 
 
-MessageList example
+We can open the RecentMessageList as a tool (and the dependencies to the message browser is not that nice).
+We will have to improve this in the future. 
 
 Instance Variables:
 	methodReferenceList	<Collection>
@@ -49,7 +51,7 @@ RecentMessageList class >> new [
 { #category : #'instance creation' }
 RecentMessageList class >> open [
 	
-	self new open.
+	self new open
 ]
 
 { #category : #menu }
@@ -60,7 +62,7 @@ RecentMessageList class >> recentMessageListMenuOn: aBuilder [
 		action: [ self  open];
 		parent: #Tools;
 		order: 720; 
-		keyText: 'r';
+		keyText: 'z';
 		help: 'The recent message list is an handy tools to check what you recently did.';
 		icon: self icon
 	
@@ -149,14 +151,14 @@ RecentMessageList >> addMethodReference: aMethodReference. [
 	self updateView
 ]
 
-{ #category : #actions }
+{ #category : #private }
 RecentMessageList >> addMethodReferenceSilently: aMethodReference [
 
 	self methodReferenceList add: aMethodReference.
 	lastEntry := aMethodReference.
 ]
 
-{ #category : #actions }
+{ #category : #private }
 RecentMessageList >> checkSize [
 
 	| result |
@@ -188,12 +190,16 @@ RecentMessageList >> createTheMethodReference: aModifiedMethodEvent [
 	
 	| method |
 	method := aModifiedMethodEvent method.
-	^ (RGMethodDefinition
+	^ ((RGMethodDefinition
 		realClass: method methodClass
-		selector: method selector) asHistorical
+		selector: method selector)
+		package: (RGPackageDefinition new name: method package packageName)
+		;yourself ) asHistorical
+		
+
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 RecentMessageList >> defaultMaxListSize [
 
 	^ 100
@@ -235,7 +241,7 @@ RecentMessageList >> methodReferenceList [
 	^ methodReferenceList
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 RecentMessageList >> methodReferenceList: anObject [
 
 	methodReferenceList := anObject
