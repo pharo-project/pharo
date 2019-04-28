@@ -43,19 +43,42 @@ RecentMessageList class >> open [
 	self new open.
 ]
 
+{ #category : #menu }
+RecentMessageList class >> recentMessageListMenuOn: aBuilder [ 
+	<worldMenu> 
+	
+	(aBuilder item: #'Recent Messages')
+		action: [ RecentMessageList open];
+		parent: #Tools;
+		order: 720; 
+		help: 'The recent message list is an handy tools to check what you recently did.';
+		icon: self icon
+	
+]
+
 { #category : #'instance creation' }
 RecentMessageList class >> resetUniqueInstance [
 	"Reset the singleton of the recentMessageBrowser model, so if you execute it you will lose all the history of the recent messages."
 	"self resetUniqueInstance"
 	
-	self stopNotifications.
+	self stopReceivingNotifications.
 	self uniqueInstance triggerEvent: #reset.
 	UniqueInstance := nil
 	
 ]
 
 { #category : #events }
-RecentMessageList class >> stopNotifications [
+RecentMessageList class >> startReceivingNotifications [
+	"self startReceivingNotifications"
+	
+	self resetUniqueInstance.
+	"to force the iniatialize again since it is the initialize that is doing the registration 
+	of the instance to the systemAnnouncer."
+	self uniqueInstance
+]
+
+{ #category : #events }
+RecentMessageList class >> stopReceivingNotifications [
 	SystemAnnouncer uniqueInstance unsubscribe: self uniqueInstance
 ]
 
@@ -154,7 +177,6 @@ RecentMessageList >> createTheMethodReference: aModifiedMethodEvent [
 	
 	| method |
 	method := aModifiedMethodEvent method.
-
 	^ (RGMethodDefinition
 		realClass: method methodClass
 		selector: method selector) asHistorical
@@ -216,7 +238,7 @@ RecentMessageList >> open [
 		topologicSort: false;
 		sortingBlock: [ :a :b | a timeStamp > b timeStamp ];
 		messages: methodReferenceList;
-		title: 'Recently accepted Methods' translated;
+		title: 'Recently accepted methods' translated;
 		open
 ]
 

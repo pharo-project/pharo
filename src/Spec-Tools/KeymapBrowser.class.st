@@ -101,7 +101,7 @@ KeymapBrowser >> initialExtent [
 { #category : #initialization }
 KeymapBrowser >> initializePresenter [
 	filterField
-		whenTextChanged: [ :text | 
+		whenTextChangedDo: [ :text | 
 			clearFilterButton enabled: text isNotEmpty.
 			self setFilter: text ].
 	clearFilterButton action: [ filterField text: '' ]
@@ -113,14 +113,14 @@ KeymapBrowser >> initializeWidgets [
 	kmTable := self newMultiColumnList.
 	kmTable displayBlock: [ :item | self wrapItem: item ].
 	kmTable sortingBlock: [ :a :b | a categoryName < b categoryName ].
-	kmTable menu: [ :m :s| self menu:m shifted:s].
+	kmTable menu: [ :m :s | self menu: m shifted: s ].
 	filterField := self newTextInput.
 	filterField removeEntryCompletion.
-	filterField ghostText: 'Filter'.
+	filterField placeholder: 'Filter'.
 	filterField autoAccept: true.
 	clearFilterButton := self newButton.
 	clearFilterButton icon: (self iconNamed: #smallCancelIcon).
-	clearFilterButton enabled:false.
+	clearFilterButton enabled: false.
 	self collectAllShortcuts
 ]
 
