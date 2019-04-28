@@ -77,15 +77,6 @@ RBLiteralArrayNode >> copyInContext: aDictionary [
 		isByteArray: isByteArray
 ]
 
-{ #category : #generation }
-RBLiteralArrayNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' value: #('.
-	(self contents collect: [ :each | each value ]) printOn: aStream delimiter: ' '.
-	aStream nextPutAll: ')'
-]
-
 { #category : #comparing }
 RBLiteralArrayNode >> equalTo: anObject withMapping: aDictionary [ 
 	self class = anObject class ifFalse: [^false].

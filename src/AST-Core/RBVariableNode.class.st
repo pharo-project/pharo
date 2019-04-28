@@ -68,14 +68,6 @@ RBVariableNode >> copyInContext: aDictionary [
 	^ self class named: name.
 ]
 
-{ #category : #generation }
-RBVariableNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' named: '.
-	self name printOn: aStream
-]
-
 { #category : #comparing }
 RBVariableNode >> equalTo: anObject withMapping: aDictionary [ 
 	^self class = anObject class and: 

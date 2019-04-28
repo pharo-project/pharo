@@ -149,21 +149,6 @@ RBBlockNode >> directlyUses: aNode [
 	^false
 ]
 
-{ #category : #generation }
-RBBlockNode >> dumpOn: aStream [
-	aStream nextPutAll: self class name.
-	self arguments
-		ifNotEmpty: [ aStream nextPutAll: ' arguments: {'.
-			self arguments
-				do: [ :each | 
-					each dumpOn: aStream.
-					aStream nextPutAll: '. ' ].
-			aStream nextPutAll: '}' ].
-	aStream nextPutAll: ' body: ('.
-	self body dumpOn: aStream.
-	aStream nextPut: $)
-]
-
 { #category : #comparing }
 RBBlockNode >> equalTo: anObject withMapping: aDictionary [ 
 	self class = anObject class ifFalse: [^false].

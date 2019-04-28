@@ -46,20 +46,12 @@ RBLiteralValueNode >> = anObject [
 
 { #category : #visiting }
 RBLiteralValueNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitLiteralNode: self
+	^aProgramNodeVisitor visitLiteralValueNode: self
 ]
 
 { #category : #matching }
 RBLiteralValueNode >> copyInContext: aDictionary [
 	^ self class value: self value
-]
-
-{ #category : #generation }
-RBLiteralValueNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' value: '.
-	self value printOn: aStream
 ]
 
 { #category : #testing }

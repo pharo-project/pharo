@@ -119,23 +119,6 @@ RBMessageNode >> debugHighlightStop [
 	^ self stopWithoutParentheses
 ]
 
-{ #category : #generation }
-RBMessageNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' receiver: ('.
-	self receiver dumpOn: aStream.
-	aStream nextPutAll: ') selector: '.
-	self selector printOn: aStream.
-	self arguments
-		ifNotEmpty: [ aStream nextPutAll: ' arguments: {'.
-			self arguments
-				do: [ :each | 
-					each dumpOn: aStream.
-					aStream nextPutAll: '. ' ].
-			aStream nextPut: $} ]
-]
-
 { #category : #comparing }
 RBMessageNode >> equalTo: anObject withMapping: aDictionary [ 
 	self class = anObject class ifFalse: [^false].
