@@ -92,6 +92,11 @@ RBDumpVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
 ]
 
 { #category : #visiting }
+RBDumpVisitor >> visitLiteralNode: aLiteralNode [
+	self visitLiteralValueNode: aLiteralNode
+]
+
+{ #category : #visiting }
 RBDumpVisitor >> visitLiteralValueNode: aLiteralValueNode [
 	stream
 		nextPutAll: aLiteralValueNode class name;
