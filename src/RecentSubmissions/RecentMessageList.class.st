@@ -32,6 +32,15 @@ RecentMessageList class >> icon [
 	^ self iconNamed: #recentMessagesIcon
 ]
 
+{ #category : #initialization }
+RecentMessageList class >> initialize [ 
+	"Once loaded the recent message is active. 
+	Decided not to use the startUp to be able to keep the list over snapshots."
+	"self initialize"
+	
+	self startReceivingNotifications
+]
+
 { #category : #'instance creation' }
 RecentMessageList class >> new [
 	^ self uniqueInstance
@@ -48,9 +57,10 @@ RecentMessageList class >> recentMessageListMenuOn: aBuilder [
 	<worldMenu> 
 	
 	(aBuilder item: #'Recent Messages')
-		action: [ RecentMessageList open];
+		action: [ self  open];
 		parent: #Tools;
 		order: 720; 
+		keyText: 'r';
 		help: 'The recent message list is an handy tools to check what you recently did.';
 		icon: self icon
 	
@@ -161,7 +171,8 @@ RecentMessageList >> checkSize [
 
 { #category : #actions }
 RecentMessageList >> clearAll [
-
+	"Flush the current kept entities and restart."
+	
 	self methodReferenceList: OrderedCollection new.
 	self updateView.
 ]
@@ -185,7 +196,7 @@ RecentMessageList >> createTheMethodReference: aModifiedMethodEvent [
 { #category : #accessing }
 RecentMessageList >> defaultMaxListSize [
 
-	^100
+	^ 100
 ]
 
 { #category : #initialization }
@@ -259,7 +270,7 @@ RecentMessageList >> registerToAnnouncements [
 
 { #category : #private }
 RecentMessageList >> removeAClass: anEvent [
-	
+	"When we remove a class, we remove all the methods that belonged to such class."
 	| tempList |
 	tempList := self methodReferenceList select:[:each | each className = anEvent classRemoved name asSymbol].
 	tempList do: [:each | self removeMethodReference: each]
