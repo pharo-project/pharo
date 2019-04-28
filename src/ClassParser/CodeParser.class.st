@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'originalString'
 	],
-	#category : #'UndefinedClasses-Core'
+	#category : #ClassParser
 }
 
 { #category : #parsing }
@@ -23,7 +23,7 @@ CodeParser >> parse: aString [
 	| ast |
 	^ [ RBParser parseMethod: aString ]
 		on: Notification
-		do: [  ast := RBParser parseExpression: aString.
+		do: [ ast := RBParser parseExpression: aString.
 				[ CDClassDefinitionParser fromASTNode: ast ]
 					on: Notification
 					do: [ ast ] ]

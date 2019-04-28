@@ -1,5 +1,5 @@
 "
-I'm an error signaled when a part of a class definition is not recognized. 
+I'm an error (notification) signaled when a part of a class definition is not recognized. 
 "
 Class {
 	#name : #CDUnrecognizedClassPart,
