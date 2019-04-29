@@ -53,6 +53,20 @@ ButtonPresenterTest >> testAskBeforeChanging [
 ]
 
 { #category : #tests }
+ButtonPresenterTest >> testContextMenu [
+	| menu changed |
+	
+	self assert: presenter contextMenu isNil.
+	menu := MenuPresenter new.
+	changed := false.
+	presenter whenMenuChangedDo: [ 
+		changed := true. ].
+	presenter contextMenu: menu.
+	self assert: presenter contextMenu equals: menu.
+	self assert: changed
+]
+
+{ #category : #tests }
 ButtonPresenterTest >> testEnabled [
 	self assert: presenter isEnabled.
 	self openInstance.
@@ -138,19 +152,15 @@ ButtonPresenterTest >> testWhenActionPerformedDoAfterAction [
 
 { #category : #tests }
 ButtonPresenterTest >> testWhenHelpChanged [
-
 	presenter help: 'label1'.
-
-	presenter whenHelpChanged: [ :new :old | 
-		self assert: old equals: 'label1'. self assert: new equals: 'label2'].
-
+	presenter
+		whenHelpChangedDo: [ :new :old | 
+			self assert: old equals: 'label1'.
+			self assert: new equals: 'label2' ].
 	self assert: presenter help equals: 'label1'.
-
 	self openInstance.
 	presenter help: 'label2'.
-
-	self assert: presenter help equals: 'label2'.
-
+	self assert: presenter help equals: 'label2'
 ]
 
 { #category : #tests }

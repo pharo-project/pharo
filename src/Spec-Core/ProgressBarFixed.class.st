@@ -48,7 +48,7 @@ ProgressBarFixed >> value: aNumber [
 	valueHolder value: aNumber
 ]
 
-{ #category : #enumerating }
+{ #category : #'api-events' }
 ProgressBarFixed >> whenValueChangedDo: aBlock [
 	valueHolder whenChangedDo: aBlock
 ]

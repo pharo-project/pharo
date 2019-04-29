@@ -10,11 +10,14 @@ Class {
 	#category : #'Spec-Examples-Demo'
 }
 
+{ #category : #accessing }
+SpecDemoPage class >> availablePages [
+	^ self allSubclasses sort: #priority ascending
+]
+
 { #category : #specs }
 SpecDemoPage class >> defaultSpec [
-	<spec>
-	
-	^ SpecLayout composed
+	^ SpecBoxLayout newVertical
 		add: #tabManager;
 		yourself
 ]
@@ -42,7 +45,7 @@ SpecDemoPage >> codeTab [
 	^ NotebookPage
 		title: 'Code'
 		icon: (self iconNamed: #changeUpdate)
-		provider: [ self newCode
+		provider: [ self newText
 				text: (self codeFor: self pageClass);
 				yourself ]
 ]

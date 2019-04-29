@@ -18,7 +18,7 @@ ListSelectionPresenterPort class >> portName [
 ListSelectionPresenterPort >> attachTransmission: aTransmission [
 
 	self presenter whenSelectionChangedDo: [ :selection | 
-		aTransmission toPort
-			incomingTransmission: (aTransmission transformed: selection selectedItem)
-			from: self ]
+		self 
+			transmitWith: aTransmission 
+			value: selection selectedItem ]
 ]

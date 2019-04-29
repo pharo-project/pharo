@@ -34,18 +34,6 @@ SelectEntity class >> defaultSpec [
 
 ]
 
-{ #category : #example }
-SelectEntity class >> example [
-	self new
-		selectDialog: [ FastTablePresenter new
-				items: #(Henrik Peter);
-				yourself ];
-		displaySymbol: #asString;
-		placeholder: 'Names';
-		possibleEntities: [ #(Diego Stephan Norbert Stephane Marcus Torsten Sven Sean) sorted ];
-		openDialogWithSpec
-]
-
 { #category : #api }
 SelectEntity >> displaySymbol [
 	"<api: #inspect>"

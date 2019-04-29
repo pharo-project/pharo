@@ -23,8 +23,9 @@ Class {
 		'dateLabel',
 		'dateInput',
 		'genderLabel',
-		'genderGroup',
 		'genderButtons',
+		'maleButton',
+		'femaleButton',
 		'itemsLabel',
 		'itemsInput',
 		'submitButton',
@@ -89,7 +90,8 @@ SpecDemoStandaloneFormPresenter class >> defaultSpec [
 
 	col newRow: [ :row | 
 				row add: #genderLabel top: 0 bottom: rowHeight left: nil right: labelsWidth.
-				row add: #genderGroup]
+				row add: #maleButton.
+				row add: #femaleButton.]
 			height: rowHeight*2.
 
 	col newRow: [ :row | 
@@ -148,6 +150,11 @@ SpecDemoStandaloneFormPresenter >> dateLabel: anObject [
 	dateLabel := anObject
 ]
 
+{ #category : #accessing }
+SpecDemoStandaloneFormPresenter >> femaleButton [
+	^ femaleButton
+]
+
 { #category : #'model updates' }
 SpecDemoStandaloneFormPresenter >> fillFormWithWorkingModel [
 	| aModel |
@@ -160,13 +167,9 @@ SpecDemoStandaloneFormPresenter >> fillFormWithWorkingModel [
 	self passwordInput text: aModel password.
 	self checkboxInput state: aModel rememberMe.
 	self dateInput date: aModel date.
-	genderGroup
-		default: (genderButtons detect: [ :each | each key = aModel gender ]) value.
-	self itemsInput selection
-		selectIndexes:
-			(self workingModel items
-				collect: [ :elem | self itemsInput model shownItems indexOf: elem ]).
-	self itemsInput changed: #listElementAt:
+	(genderButtons at: aModel gender) state: true.
+
+	self itemsInput selectItems: self workingModel selectedItems
 ]
 
 { #category : #'model updates' }
@@ -182,20 +185,10 @@ SpecDemoStandaloneFormPresenter >> fillModelWithFormContent [
 		rememberMe: self checkboxInput state;
 		date: self dateInput date.
 
-	 self workingModel gender: (genderButtons detect: [:each | each value = genderGroup currentActivated]) key.
+	self workingModel gender: (genderButtons associations detect: [ :each | each value state ]) key.
 	
 	self workingModel selectedItems: self itemsInput selectedItems.
 
-]
-
-{ #category : #accessing }
-SpecDemoStandaloneFormPresenter >> genderGroup [
-	^ genderGroup
-]
-
-{ #category : #accessing }
-SpecDemoStandaloneFormPresenter >> genderGroup: anObject [
-	genderGroup := anObject
 ]
 
 { #category : #accessing }
@@ -234,7 +227,7 @@ SpecDemoStandaloneFormPresenter >> initializeWidgets [
 
 	passwordLabel := self newLabel label: 'password:'.
 	passwordInput := self newTextInput
-		encrypted: true;
+		bePassword;
 		autoAccept: true.
 	checkboxLabel := self newLabel label: 'remember me'.
 	checkboxInput := self newCheckBox state: true.
@@ -242,11 +235,16 @@ SpecDemoStandaloneFormPresenter >> initializeWidgets [
 	dateLabel := self newLabel label: 'date:'.
 	dateInput := self instantiate: DatePresenter.
 	dateInput displayBlock: [ :item | item yyyymmdd ].
-	genderButtons := self model genders
-		collect: [ :each | each -> (RadioButtonPresenter new label: each asString) ].
+	
+	maleButton := self newRadioButton label: 'male'. 
+	femaleButton := self newRadioButton label: 'female'.
+	maleButton associatedRadioButtons: { femaleButton }.
+	genderButtons := Dictionary newFrom: { 
+		#male -> maleButton.
+		#female -> femaleButton
+	}.
+		
 	genderLabel := self newLabel label: 'gender:'.
-	genderGroup := self instantiate: RadioButtonGroupPresenter.
-	genderButtons do: [ :each | genderGroup addRadioButton: each value ].
 	itemsLabel := self newLabel label: 'items:'.
 	itemsInput := self newList.
 	itemsInput beMultipleSelection.
@@ -283,6 +281,11 @@ SpecDemoStandaloneFormPresenter >> itemsLabel [
 { #category : #accessing }
 SpecDemoStandaloneFormPresenter >> itemsLabel: anObject [
 	itemsLabel := anObject
+]
+
+{ #category : #accessing }
+SpecDemoStandaloneFormPresenter >> maleButton [
+	^ maleButton
 ]
 
 { #category : #initialization }

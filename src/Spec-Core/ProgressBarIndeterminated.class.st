@@ -15,7 +15,7 @@ Class {
 	#category : #'Spec-Core-Widgets-Utils'
 }
 
-{ #category : #enumerating }
+{ #category : #'api-events' }
 ProgressBarIndeterminated >> whenValueChangedDo: aBlock [
 	"Value cannot change in indeterminate state"
 ]

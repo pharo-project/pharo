@@ -77,6 +77,11 @@ MorphicTableCellBuilder >> rowIndex: anObject [
 ]
 
 { #category : #visiting }
+MorphicTableCellBuilder >> visitCheckboxColumn: aTableColumn [
+	self addCellColumn: aTableColumn
+]
+
+{ #category : #visiting }
 MorphicTableCellBuilder >> visitImageColumn: aTableColumn [
 	
 	self addCellColumn: aTableColumn

@@ -11,7 +11,8 @@ Class {
 		'owner',
 		'presenterProvider',
 		'titleHolder',
-		'iconHolder'
+		'iconHolder',
+		'layoutSpecHolder'
 	],
 	#category : #'Spec-Core-Widgets-Tab'
 }
@@ -23,6 +24,17 @@ NotebookPage class >> title: aString icon: anIcon provider: aBlock [
 		title: aString;
 		icon: anIcon;
 		presenterProvider: aBlock;
+		yourself
+]
+
+{ #category : #'instance creation' }
+NotebookPage class >> title: aString icon: anIcon provider: aBlock layoutSpec: aSymbol [
+
+	^ self new 
+		title: aString;
+		icon: anIcon;
+		presenterProvider: aBlock;
+		layoutSpec: aSymbol;
 		yourself
 ]
 
@@ -53,9 +65,20 @@ NotebookPage >> initialize [
 	super initialize.
 	titleHolder := nil asValueHolder.
 	iconHolder := nil asValueHolder.
+	layoutSpecHolder := nil asValueHolder.
 	
 	titleHolder whenChangedDo: [ self pageTitleChanged ].
 	iconHolder whenChangedDo: [ self pageTitleChanged ]
+]
+
+{ #category : #accessing }
+NotebookPage >> layoutSpec [
+	^ layoutSpecHolder value
+]
+
+{ #category : #accessing }
+NotebookPage >> layoutSpec: aSymbol [
+	layoutSpecHolder value: aSymbol
 ]
 
 { #category : #accessing }

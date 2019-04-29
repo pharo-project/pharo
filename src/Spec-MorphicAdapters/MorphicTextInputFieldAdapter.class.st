@@ -14,6 +14,13 @@ MorphicTextInputFieldAdapter >> accept: aText [
 ]
 
 { #category : #'widget API' }
+MorphicTextInputFieldAdapter >> accept: aText notifying: aNotifyier [
+	"We use #asString because rubric send Text instead of strings."
+
+	super accept: aText asString notifying: aNotifyier
+]
+
+{ #category : #'widget API' }
 MorphicTextInputFieldAdapter >> acceptOnCR [
 
 	^ self model acceptOnCR
@@ -21,44 +28,46 @@ MorphicTextInputFieldAdapter >> acceptOnCR [
 
 { #category : #initialization }
 MorphicTextInputFieldAdapter >> adapt: aModel [
-	
+
 	super adapt: aModel.
 	aModel whenBuiltDo: [ :w | w widget color: Smalltalk ui theme backgroundColor ]
 ]
 
 { #category : #factory }
 MorphicTextInputFieldAdapter >> buildWidget [
-	| plu |
-	plu := RubPluggableTextFieldMorph new
-		on: self
-			text: #getText
-			accept: #accept:
-			readSelection: nil
-			menu: nil
-			setSelection: #setSelection:.
-	plu
+	| newWidget |
+	self flag: #pharo7.	"When support for P7 will be dropped, remove this compatibility hack."
+	newWidget := ((self class environment at: #SpecRubTextFieldMorph ifAbsent: [ RubTextFieldMorph ]) on: self)
+		getTextSelector: #getText;
+		setTextSelector: #accept:notifying:;
+		getSelectionSelector: #readSelection;
+		menuProvider: self selector: #codePaneMenu:shifted:;
+		setSelectionSelector: #setSelection:;
 		entryCompletion: self entryCompletion;
-		autoAccept: self autoAccept;
 		ghostText: self placeholder;
+		encrypted: self encrypted;
 		enabled: self enabled;
-		encrypted: self presenter isVisible not;
+		askBeforeDiscardingEdits: self askBeforeDiscardingEdits;
+		autoAccept: self autoAccept;
+		vResizing: #spaceFill;
+		hResizing: #spaceFill;
 		setBalloonText: self help;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		acceptOnCR: self acceptOnCR;
-		maxLength: self presenter maxLength.
-	self presenter whenTextChangedDo: [ :text | plu setText: text ].
-	self presenter whenPlaceholderChangedDo: [ :text | plu ghostText: text ].
-	self presenter whenVisibilityChangedDo: [ :isVisible | plu encrypted: isVisible not ].	
-	self presenter whenMaxLengthChangedDo: [ :length | plu maxLength: length ].
-	^ plu
+		maxLength: self presenter maxLength;
+		yourself.
+
+	self presenter whenTextChangedDo: [ :text | newWidget setText: text ].
+	self presenter whenPlaceholderChangedDo: [ :text | newWidget ghostText: text ].
+	self presenter whenPasswordChangedDo: [ :isPassword | newWidget encrypted: isPassword ].
+	self presenter whenMaxLengthChangedDo: [ :length | newWidget maxLength: length ].
+
+	^ newWidget
 ]
 
 { #category : #'widget API' }
 MorphicTextInputFieldAdapter >> encrypted [
-	^ self model isVisible
+	^ self model isPassword
 ]
 
 { #category : #'spec protocol' }
@@ -75,10 +84,16 @@ MorphicTextInputFieldAdapter >> entryCompletion [
 	^ self model entryCompletion
 ]
 
-{ #category : #NOCompletion }
-MorphicTextInputFieldAdapter >> isCodeCompletionAllowed [
+{ #category : #testing }
+MorphicTextInputFieldAdapter >> isPassword [
 	
-	^ false
+	^ self widget font isKindOf: FixedFaceFont
+]
+
+{ #category : #accessing }
+MorphicTextInputFieldAdapter >> placeHolderText [
+	
+	^ widget ghostText 
 ]
 
 { #category : #'widget API' }
@@ -89,4 +104,11 @@ MorphicTextInputFieldAdapter >> placeholder [
 { #category : #'widget API' }
 MorphicTextInputFieldAdapter >> placeholder: aText [
 	^ self model placeholder: aText
+]
+
+{ #category : #accessing }
+MorphicTextInputFieldAdapter >> text: aString [
+	widget
+		setText: aString;
+		acceptTextInModel
 ]

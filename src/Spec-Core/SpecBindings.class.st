@@ -17,5 +17,5 @@ Class {
 
 { #category : #accessing }
 SpecBindings >> default [
-	^ self class environment at: #MorphicAdapterBindings
+	^ (self class environment at: #MorphicAdapterBindings) new
 ]
