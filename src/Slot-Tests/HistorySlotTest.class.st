@@ -43,7 +43,7 @@ HistorySlotTest >> testAddTwoElementsHistoryRead [
 	instance slot1: 25.
 	instance slot1: 35.
 	self assert: instance slot1 equals: 35.
-	self assert: (slot readHistory: instance) size equals: 3
+	self assert: (slot readHistory: instance) asArray equals: #(nil 25 35)
 ]
 
 { #category : #tests }
