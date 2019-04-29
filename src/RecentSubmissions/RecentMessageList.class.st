@@ -188,13 +188,12 @@ RecentMessageList >> createAClassReference: aCommentedEvent [
 { #category : #private }
 RecentMessageList >> createTheMethodReference: aModifiedMethodEvent [
 	
-	| method |
+	| method methodDef |
+
 	method := aModifiedMethodEvent method.
-	^ ((RGMethodDefinition
-		realClass: method methodClass
-		selector: method selector)
-		package: (RGPackageDefinition new name: method package packageName)
-		;yourself ) asHistorical
+	methodDef := (RGMethodDefinition realClass: method methodClass selector: method selector).
+	method package packageName ifNotNil: [ methodDef package: (RGPackageDefinition new name: method package packageName) ].
+	^ methodDef asHistorical
 		
 
 ]
