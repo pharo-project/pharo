@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #visiting }
-RBGlobalNode >> acceptVisitor: aProgramNodeVisitor [ 
+RBGlobalNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitGlobalNode: self
 ]
 

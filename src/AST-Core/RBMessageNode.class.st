@@ -61,8 +61,8 @@ RBMessageNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBMessageNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitMessageNode: self
+RBMessageNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitMessageNode: self
 ]
 
 { #category : #accessing }

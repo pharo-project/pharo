@@ -48,8 +48,8 @@ RBLiteralArrayNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBLiteralArrayNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitLiteralArrayNode: self
+RBLiteralArrayNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitLiteralArrayNode: self
 ]
 
 { #category : #accessing }

@@ -44,8 +44,8 @@ RBAssignmentNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBAssignmentNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitAssignmentNode: self
+RBAssignmentNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitAssignmentNode: self
 ]
 
 { #category : #'accessing-token' }
