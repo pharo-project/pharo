@@ -53,8 +53,8 @@ RBVariableNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBVariableNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitVariableNode: self
+RBVariableNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitVariableNode: self
 ]
 
 { #category : #converting }

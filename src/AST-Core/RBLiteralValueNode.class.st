@@ -45,8 +45,8 @@ RBLiteralValueNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBLiteralValueNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitLiteralValueNode: self
+RBLiteralValueNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitLiteralValueNode: self
 ]
 
 { #category : #matching }

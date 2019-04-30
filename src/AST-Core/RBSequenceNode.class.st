@@ -63,8 +63,8 @@ RBSequenceNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBSequenceNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitSequenceNode: self
+RBSequenceNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitSequenceNode: self
 ]
 
 { #category : #'adding nodes' }

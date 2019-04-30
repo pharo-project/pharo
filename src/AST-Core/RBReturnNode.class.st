@@ -37,7 +37,7 @@ RBReturnNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBReturnNode >> acceptVisitor: aProgramNodeVisitor [ 
+RBReturnNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitReturnNode: self
 ]
 

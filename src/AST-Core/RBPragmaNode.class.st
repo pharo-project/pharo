@@ -47,7 +47,7 @@ RBPragmaNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBPragmaNode >> acceptVisitor: aProgramNodeVisitor [ 
+RBPragmaNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitPragmaNode: self
 ]
 

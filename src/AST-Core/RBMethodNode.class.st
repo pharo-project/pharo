@@ -87,8 +87,8 @@ RBMethodNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBMethodNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitMethodNode: self
+RBMethodNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitMethodNode: self
 ]
 
 { #category : #'adding/removing' }

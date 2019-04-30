@@ -37,8 +37,8 @@ RBCascadeNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBCascadeNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitCascadeNode: self
+RBCascadeNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitCascadeNode: self
 ]
 
 { #category : #querying }

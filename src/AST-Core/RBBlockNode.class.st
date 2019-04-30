@@ -53,8 +53,8 @@ RBBlockNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBBlockNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitBlockNode: self
+RBBlockNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitBlockNode: self
 ]
 
 { #category : #accessing }

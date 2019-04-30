@@ -30,7 +30,7 @@ RBLiteralNode >> = anObject [
 
 { #category : #visiting }
 RBLiteralNode >> acceptVisitor: aProgramNodeVisitor [
-	^aProgramNodeVisitor visitLiteralNode:self
+	^ aProgramNodeVisitor visitLiteralNode: self
 ]
 
 { #category : #comparing }

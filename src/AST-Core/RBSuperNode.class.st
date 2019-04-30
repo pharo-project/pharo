@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #visiting }
-RBSuperNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitSuperNode: self
+RBSuperNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitSuperNode: self
 ]
 
 { #category : #testing }

@@ -40,7 +40,7 @@ RBParseErrorNode >> = anObject [
 
 { #category : #visiting }
 RBParseErrorNode >> acceptVisitor: aProgramNodeVisitor [
-	^ aProgramNodeVisitor visitParseErrorNode: self.
+	^ aProgramNodeVisitor visitParseErrorNode: self
 ]
 
 { #category : #converting }
