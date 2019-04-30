@@ -1,7 +1,6 @@
 "
-I represent a visitor that generates Pharo code
-
-I visit an Pharo AST, and generate corresponding valid Pharo Code.
+I'm a visitor that generates code whose execution will recreate the visited node (similarly to storeOn: protocol).
+This is handy because we can simply serialize the object in a textual form without requiring a separate parser.
 
 I'm used by reflexivity.
 
@@ -24,12 +23,12 @@ Class {
 
 { #category : #initialization }
 RBDumpVisitor >> initialize [
-	stream := String new writeStream.
+	stream := String new writeStream
 ]
 
 { #category : #initialization }
 RBDumpVisitor >> stream [
-	^stream
+	^ stream
 ]
 
 { #category : #visiting }
