@@ -1,11 +1,11 @@
 Class {
-	#name : #CodeHandlerTest,
+	#name : #CodeParserTest,
 	#superclass : #TestCase,
-	#category : #'UndefinedClasses-Tests'
+	#category : #'ClassParser-Tests'
 }
 
 { #category : #tests }
-CodeHandlerTest >> testArbitraryExpressionStringReturnsProgramNodeThatIsNotMethodNode [
+CodeParserTest >> testArbitraryExpressionStringReturnsProgramNodeThatIsNotMethodNode [
 
 	| astNode |
 	astNode := CodeParser parse: '1 + ( self foo: #( asd gdf 434 4.0 ))'.
@@ -13,7 +13,7 @@ CodeHandlerTest >> testArbitraryExpressionStringReturnsProgramNodeThatIsNotMetho
 ]
 
 { #category : #tests }
-CodeHandlerTest >> testClassDefinitionStringReturnsClassDefinitionNode [
+CodeParserTest >> testClassDefinitionStringReturnsClassDefinitionNode [
 
 	| astNode |
 	astNode := CodeParser parse: 'Box subclass: #Box2
@@ -24,7 +24,7 @@ CodeHandlerTest >> testClassDefinitionStringReturnsClassDefinitionNode [
 ]
 
 { #category : #tests }
-CodeHandlerTest >> testMethodDefinitionStringReturnsMethodNode [
+CodeParserTest >> testMethodDefinitionStringReturnsMethodNode [
 
 	| astNode |
 	astNode := CodeParser parse: 'm1
