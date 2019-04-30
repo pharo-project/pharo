@@ -92,3 +92,34 @@ SlotClassVariableTest >> testWantsInitializationAddsInitializeSlot [
 	self assert: (class1 >> #initialize) literals second equals: #initializeSlots:
 
 ]
+
+{ #category : #tests }
+SlotClassVariableTest >> testWantsInitializationSkipInitializeSlotIfAlreadyInHierarchy [
+	| class1 class2 |	
+	
+	class1 := self make: [ :builder | 
+		builder
+			name: self aClassName;
+			superclass: Object;
+			slots: { 
+				ExampleSlotWithDefaultValue new 
+					name: #defaultValue;
+					default: 42;
+					yourself } ].
+
+	self assert: class1 slots size equals: 1.
+	self assert: ((class1 >> #initialize) hasLiteral: #initializeSlots:).
+
+	class2 := self make: [ :builder | 
+		builder
+			name: self anotherClassName;
+			superclass: class1;
+			slots: { 
+				ExampleSlotWithDefaultValue new 
+					name: #otherDefaultValue;
+					default: 42;
+					yourself } ].
+
+	self assert: class2 slots size equals: 1.
+	self deny: ((class2 >> #initialize) hasLiteral: #initializeSlots:)
+]

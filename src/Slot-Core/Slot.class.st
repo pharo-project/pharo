@@ -97,7 +97,7 @@ Slot >> = other [
 Slot >> addSlotInitToInitialize: aClass [
 	|  source |
 
-	((aClass>>#initialize) hasLiteral: #initializeSlots:) ifTrue: [ ^ self ].
+	(self sendsInitializeSlots: aClass) ifTrue: [ ^ self ].
 	
 	source := 'initialize
 	
@@ -372,6 +372,21 @@ Slot >> removeProperty: propName ifAbsent: aBlock [
 { #category : #accessing }
 Slot >> scope: aScope [
 	"ignored, subclasses can override to analyze the scope they are to be installed in"
+]
+
+{ #category : #private }
+Slot >> sendsInitializeSlots: aClass [
+		
+	(aClass includesSelector: #initialize) ifFalse: [ 
+		^ self sendsInitializeSlots: aClass superclass ].
+	"verify implemented here"
+	((aClass>>#initialize) hasLiteral: #initializeSlots:) 
+		ifTrue: [ ^ true ].
+	"if it calls superclass, verify there"
+	((aClass>>#initialize) hasLiteral: #initialize) 
+		ifTrue: [ ^ self sendsInitializeSlots: aClass superclass ].
+	"is not implemented"
+	^ false
 ]
 
 { #category : #accessing }
