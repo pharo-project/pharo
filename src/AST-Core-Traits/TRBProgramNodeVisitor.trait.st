@@ -130,7 +130,11 @@ TRBProgramNodeVisitor >> visitSuperNode: aSuperNode [
 
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode [
-	^self visitArgumentNode: aTemporaryDeclarationNode 
+	"| temp |
+	temp is a temporary node as we can find in the body of methods, but it can't be visited the same way.
+	Redirect the message on argumentNodeVisitor as a way to keep retrocompatibility"
+
+	^ self visitArgumentNode: aTemporaryDeclarationNode
 ]
 
 { #category : #visiting }
@@ -140,9 +144,11 @@ TRBProgramNodeVisitor >> visitTemporaryNode: aNode [
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [ 
+TRBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [
 	"This is triggered when defining the temporaries between the pipes"
-	^aNodeCollection do: [ :each | self visitTemporaryDeclarationNode: each ]
+
+	^ aNodeCollection
+		do: [ :each | self visitTemporaryDeclarationNode: each ]
 ]
 
 { #category : #visiting }

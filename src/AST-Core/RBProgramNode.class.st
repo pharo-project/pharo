@@ -293,11 +293,12 @@ RBProgramNode >> do: aBlock [
 
 { #category : #generation }
 RBProgramNode >> dump [
-	"Generate the Pharo code from self"
+	"Generate a literal expression that recreates the receiver"
+
 	| visitor |
 	visitor := RBDumpVisitor new.
 	self acceptVisitor: visitor.
-	^visitor stream contents
+	^ visitor stream contents
 ]
 
 { #category : #comparing }
