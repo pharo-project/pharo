@@ -96,15 +96,17 @@ Slot >> = other [
 { #category : #private }
 Slot >> addSlotInitToInitialize: aClass [
 	|  source |
+
+	((aClass>>#initialize) hasLiteral: #initializeSlots:) ifTrue: [ ^ self ].
 	
-	((aClass>>#initialize) hasLiteral: #initializeSlots:)ifTrue: [^self ].
+	source := 'initialize
 	
-	source := (aClass>>#initialize) sourceCode.
-	(source endsWith: '.') ifFalse: [ source := source, '.' ].
-	source := source, '
-	self class initializeSlots: self.'.
-	Author useAuthor: 'Generated' during: [aClass compile: source classified: 'initialization']. 
-	
+	self class initializeSlots: self.
+	', ((aClass>>#initialize) sourceCode).
+
+	Author 
+		useAuthor: 'Generated' 
+		during: [ aClass compile: source classified: 'initialization' ]
 ]
 
 { #category : #converting }
