@@ -192,7 +192,7 @@ RecentMessageList >> createTheMethodReference: aModifiedMethodEvent [
 
 	method := aModifiedMethodEvent method.
 	methodDef := (RGMethodDefinition realClass: method methodClass selector: method selector).
-	method package packageName ifNotNil: [ methodDef package: (RGPackageDefinition new name: method package packageName) ].
+	method package ifNotNil: [ methodDef package: (RGPackageDefinition new name: method package packageName) ].
 	^ methodDef asHistorical
 		
 
