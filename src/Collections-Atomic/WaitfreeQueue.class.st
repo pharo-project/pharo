@@ -1,7 +1,6 @@
 "
 This is a thread-safe implementation of a queue with wait-free operations. 
-It is guaranteed that any message sent to my instance (like adding new item, or fetching item) will not block sender,
-nor enter a waiting loop.
+It is guaranteed that any message sent to my instance (like adding new item, or fetching item) will not block sender, nor enter a waiting loop.
 
 The implementation is based on atomicity of simple assignment operations, which can't be interrupted in a middle,
 i.e. two assignment statements in a row, like:
@@ -164,7 +163,7 @@ WaitfreeQueue >> itemCount [
 	"Answer the number of items in the queue including zombies. 
 	If queue is currently in the middle of extraction by other process, give a (very) approximate answer.
 	
-	This method having a non-deterministic results, because of nature of concurrent shared queue. 
+	This method has a non-deterministic result due to the design of the concurrent shared queue. 
 	"
 	
 	| item count |
@@ -176,7 +175,7 @@ WaitfreeQueue >> itemCount [
 
 	count = 0 ifTrue: [
 		"if queue is locked by other process, check the tail and give a (very) approximate answer."
-		^ tail object == dummy ifTrue: [ 0 ] ifFalse: [ 1]
+		^ tail object == dummy ifTrue: [ 0 ] ifFalse: [ 1 ]
 		].	
 
 	^ count
