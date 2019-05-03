@@ -378,14 +378,16 @@ Slot >> scope: aScope [
 { #category : #private }
 Slot >> sendsInitializeSlots: aClass [
 		
-	(aClass includesSelector: #initialize) ifFalse: [ 
-		^ self sendsInitializeSlots: aClass superclass ].
+	aClass isTrait ifFalse: [ 
+		(aClass includesSelector: #initialize) ifFalse: [ 
+			^ self sendsInitializeSlots: aClass superclass ] ].
 	"verify implemented here"
 	((aClass>>#initialize) hasLiteral: #initializeSlots:) 
 		ifTrue: [ ^ true ].
 	"if it calls superclass, verify there"
-	((aClass>>#initialize) hasLiteral: #initialize) 
-		ifTrue: [ ^ self sendsInitializeSlots: aClass superclass ].
+	aClass isTrait ifFalse: [ 
+		((aClass>>#initialize) hasLiteral: #initialize) 
+			ifTrue: [ ^ self sendsInitializeSlots: aClass superclass ] ].
 	"is not implemented"
 	^ false
 ]
