@@ -380,14 +380,14 @@ MessageBrowser >> handleMethodModified: anAnnouncement [
 	edits := textModel hasUnacceptedEdits.
 	edits
 		ifTrue: [ text := textModel pendingText ].
-	index := listModel selectedIndex.
-	list := listModel listItems
+	index := listModel selection selectedIndex.
+	list := listModel model shownItems
 		remove: sel ifAbsent: [  ];
 		add: item asFullRingDefinition;
 		"to ensure it's still a RGMethod"
 			yourself.
 	self messages: list.
-	listModel setSelectedIndex: index.
+	listModel selectIndex: index.
 	edits
 		ifFalse: [ ^ self ].
 	textModel pendingText: text.
