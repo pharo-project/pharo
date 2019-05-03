@@ -99,10 +99,11 @@ Slot >> addSlotInitToInitialize: aClass [
 
 	(self sendsInitializeSlots: aClass) ifTrue: [ ^ self ].
 	
+	source := (aClass>>#initialize) sourceCode allButFirst: 10.
 	source := 'initialize
 	
-	self class initializeSlots: self.
-	', ((aClass>>#initialize) sourceCode).
+	self class initializeSlots: self.', 
+	source.
 
 	Author 
 		useAuthor: 'Generated' 
