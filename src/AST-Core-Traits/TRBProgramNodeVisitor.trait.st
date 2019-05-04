@@ -41,7 +41,7 @@ TRBProgramNodeVisitor >> visitBlockNode: aBlockNode [
 
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [ 
-	aCascadeNode messages do: [:each | self visitNode: each]
+	aCascadeNode messages do: [:aMessage | self visitNode: aMessage]
 ]
 
 { #category : #visiting }
@@ -132,7 +132,7 @@ TRBProgramNodeVisitor >> visitSuperNode: aSuperNode [
 TRBProgramNodeVisitor >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode [
 	"| temp |
 	temp is a temporary node as we can find in the body of methods, but it can't be visited the same way.
-	Redirect the message on argumentNodeVisitor as a way to keep retrocompatibility"
+	IT redirects the message on argumentNodeVisitor as a way to keep retrocompatibility"
 
 	^ self visitArgumentNode: aTemporaryDeclarationNode
 ]
