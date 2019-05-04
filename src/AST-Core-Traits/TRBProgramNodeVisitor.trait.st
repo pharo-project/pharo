@@ -1,5 +1,5 @@
 "
-A TRBProgramNodeVisitor is a simple  that define visitor methods. 
+A TRBProgramNodeVisitor is a simple Trait that define visitor methods. 
 "
 Trait {
 	#name : #TRBProgramNodeVisitor,
