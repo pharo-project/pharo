@@ -31,6 +31,18 @@ MorphicCheckBoxAdapter >> buildWidget [
 	^ checkButton
 ]
 
+{ #category : #emulating }
+MorphicCheckBoxAdapter >> clicked [
+	
+	widget toggleSelected
+]
+
+{ #category : #accessing }
+MorphicCheckBoxAdapter >> helpText [
+	
+	^ widget balloonText
+]
+
 { #category : #'widget API' }
 MorphicCheckBoxAdapter >> label [
 	

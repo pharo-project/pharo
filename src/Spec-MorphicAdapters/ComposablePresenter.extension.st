@@ -83,7 +83,8 @@ ComposablePresenter >> openWorldWithSpec: aSpec [
 ComposablePresenter >> openWorldWithSpecLayout: aSpec [
 	"Build the widget using the spec name provided as argument and display it into the world"
 
-	^ self openWithSpecLayout: aSpec in: WorldPresenter
+	self flag: #TODO. "Fix this"
+	"^ self openWithSpecLayout: aSpec in: WorldPresenter"
 ]
 
 { #category : #'*Spec-MorphicAdapters' }

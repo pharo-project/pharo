@@ -285,11 +285,11 @@ EyeInspector >> limit2 [
 { #category : #accessing }
 EyeInspector >> list [
 	^ list
-		ifNil: [ list := self instantiate: FastTablePresenter.
-			list
-				handlesDoubleClick: true;
+		ifNil: [ list := self newList
+				activateOnDoubleClick;
 				whenSelectionChangedDo: [ :selection | [ :item | self refreshDescription: item ] cull: selection selectedItem ];
-				doubleClickAction: [ self diveIntoSelectedObject ] ]
+				whenActivatedDo: [ self diveIntoSelectedObject ];
+				yourself ]
 ]
 
 { #category : #'event-handling' }

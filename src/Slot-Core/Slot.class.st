@@ -96,15 +96,18 @@ Slot >> = other [
 { #category : #private }
 Slot >> addSlotInitToInitialize: aClass [
 	|  source |
+
+	(self sendsInitializeSlots: aClass) ifTrue: [ ^ self ].
 	
-	((aClass>>#initialize) hasLiteral: #initializeSlots:)ifTrue: [^self ].
+	source := (aClass>>#initialize) sourceCode allButFirst: 10.
+	source := 'initialize
 	
-	source := (aClass>>#initialize) sourceCode.
-	(source endsWith: '.') ifFalse: [ source := source, '.' ].
-	source := source, '
-	self class initializeSlots: self.'.
-	Author useAuthor: 'Generated' during: [aClass compile: source classified: 'initialization']. 
-	
+	self class initializeSlots: self.', 
+	source.
+
+	Author 
+		useAuthor: 'Generated' 
+		during: [ aClass compile: source classified: 'initialization' ]
 ]
 
 { #category : #converting }
@@ -370,6 +373,23 @@ Slot >> removeProperty: propName ifAbsent: aBlock [
 { #category : #accessing }
 Slot >> scope: aScope [
 	"ignored, subclasses can override to analyze the scope they are to be installed in"
+]
+
+{ #category : #private }
+Slot >> sendsInitializeSlots: aClass [
+		
+	aClass isTrait ifFalse: [ 
+		(aClass includesSelector: #initialize) ifFalse: [ 
+			^ self sendsInitializeSlots: aClass superclass ] ].
+	"verify implemented here"
+	((aClass>>#initialize) hasLiteral: #initializeSlots:) 
+		ifTrue: [ ^ true ].
+	"if it calls superclass, verify there"
+	aClass isTrait ifFalse: [ 
+		((aClass>>#initialize) hasLiteral: #initialize) 
+			ifTrue: [ ^ self sendsInitializeSlots: aClass superclass ] ].
+	"is not implemented"
+	^ false
 ]
 
 { #category : #accessing }

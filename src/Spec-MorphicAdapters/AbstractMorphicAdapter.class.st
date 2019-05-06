@@ -22,11 +22,6 @@ AbstractMorphicAdapter class >> allAdapters [
 	^ self allSubclasses
 ]
 
-{ #category : #specs }
-AbstractMorphicAdapter class >> defaultSpec [
-	^ SpecLayout composed
-]
-
 { #category : #'drag and drop' }
 AbstractMorphicAdapter >> acceptDropBlock [
 
@@ -43,6 +38,8 @@ AbstractMorphicAdapter >> acceptDroppingMorph: draggedMorph event: event inMorph
 AbstractMorphicAdapter >> adapt: aPresenter [
 
 	super adapt: aPresenter.
+	self addSettingsTo: self widget.
+	self widget ifNotNil: [ self applyVisibility ].
 	self flag: #TODO. "this should be here, but is interfering with old layouts reason why 
 	 I'm moving it to MorphicLayoutAdapter >> #applyStyle:to:"
 	"self applyStyle: self widget."
@@ -55,10 +52,30 @@ AbstractMorphicAdapter >> add: aWidget [
 ]
 
 { #category : #initialization }
+AbstractMorphicAdapter >> addSettingsTo: aMorph [
+	
+]
+
+{ #category : #initialization }
 AbstractMorphicAdapter >> applyStyle: morph [
 	"this will apply general properties to the built morph"
 	
 	self style applyTo: morph
+]
+
+{ #category : #initialization }
+AbstractMorphicAdapter >> applyVisibility [
+	
+	"It may happen that some presenters use generic adapters and they do not have an associated presenter.
+	In that case, do not manage visibility..."
+	self presenter ifNil: [ 
+		^ self ].
+
+	self widget visible: self presenter isVisible.
+	self presenter whenVisibleChangedDo: [ :visible |
+		self presenter isVisible
+			ifTrue: [ self widget show ]
+			ifFalse: [ self widget hide ] ]
 ]
 
 { #category : #dispatch }
@@ -71,7 +88,8 @@ AbstractMorphicAdapter >> beginsWith: aString fromList: aMorph [
 { #category : #'protocol-shortcuts' }
 AbstractMorphicAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 
-	self widget ifNotNil: [ :w | w bindKeyCombination: aShortcut toAction: aBlock ]
+	self widgetDo: [ :w | 
+		w bindKeyCombination: aShortcut toAction: aBlock ]
 ]
 
 { #category : #'protocol-shortcuts' }
@@ -184,7 +202,7 @@ AbstractMorphicAdapter >> enable [
 
 { #category : #protocol }
 AbstractMorphicAdapter >> enabled [
-	^ self model isEnabled
+	^ self presenter isEnabled
 ]
 
 { #category : #protocol }
@@ -249,19 +267,29 @@ AbstractMorphicAdapter >> help [
 	^ self model help
 ]
 
+{ #category : #accessing }
+AbstractMorphicAdapter >> helpText [
+	
+	^ self widget balloonText 
+]
+
 { #category : #testing }
 AbstractMorphicAdapter >> isMorphicAdapter [
 
 	^ true
 ]
 
+{ #category : #visibility }
+AbstractMorphicAdapter >> isVisible [
+	
+	^ widget visible
+]
+
 { #category : #protocol }
 AbstractMorphicAdapter >> layout: aLayout [
 	| layout |
-	
 	layout := aLayout asMorphicLayout.
-
-	self widgetDo: [ :w | w layoutFrame: layout ]
+	self widgetDo: [ :w | w layoutFrame: layout ].
 ]
 
 { #category : #dispatch }
@@ -300,6 +328,23 @@ AbstractMorphicAdapter >> removeSubWidgets [
 	self widgetDo: [ :w | w removeAllMorphs ]
 ]
 
+{ #category : #emulating }
+AbstractMorphicAdapter >> rightClicked [
+	| evt |
+
+	evt := MouseButtonEvent new 
+		setType: nil 
+		position: widget center 
+		which: MouseButtonEvent yellowButton 
+		buttons: MouseButtonEvent yellowButton 
+		hand: nil 
+		stamp: nil.
+
+	(widget handlesMouseDown: evt) ifTrue: [
+		widget mouseDown: evt.
+		widget mouseUp: evt ]
+]
+
 { #category : #protocol }
 AbstractMorphicAdapter >> setBalloonText: aString [
 
@@ -310,6 +355,12 @@ AbstractMorphicAdapter >> setBalloonText: aString [
 AbstractMorphicAdapter >> setModal: aWindow [ 
 
 	self widgetDo: [ :w | w setModal: aWindow ]
+]
+
+{ #category : #protocol }
+AbstractMorphicAdapter >> show [ 
+
+	self widgetDo: #show
 ]
 
 { #category : #accessing }

@@ -33,7 +33,7 @@ SpecInterpreterTest >> tearDown [
 { #category : #tests }
 SpecInterpreterTest >> testConvertRandomSymbolOfClassToInstance [
 	| symbol instance |
-	symbol := #PluggableListMorph.
+	symbol := #MenuRegistration.
 	instance := specInterpreter convertSymbolOfClassToInstance: symbol.
 	self assert: instance class name equals: symbol
 ]
@@ -59,7 +59,7 @@ SpecInterpreterTest >> testDynamicBuild [
 SpecInterpreterTest >> testInterpretASpecModelMorphAssociation [
 	| spec model morph |
 	model := AbstractWidgetPresenter new.
-	spec := {#PluggableListMorph . #model: . #presenter}.
+	spec := {#MenuRegistration . #help: . #icon:}.
 	morph := specInterpreterClass interpretASpec: spec presenter: model.
 	self assert: model adapter == morph
 ]

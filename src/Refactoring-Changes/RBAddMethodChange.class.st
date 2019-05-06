@@ -54,8 +54,8 @@ RBAddMethodChange >> asUndoOperation [
 			oldProtocol := RBBrowserEnvironment new whichProtocolIncludes: self selector in: self changeClass.
 			oldProtocol isNil
 				ifTrue: [ oldProtocol := #accessing ].
-			RBRefactoryChangeManager changeFactory addMethodSource: (self methodSourceFor: self selector) in: self changeClass classified: oldProtocol ]
-		ifFalse: [ RBRefactoryChangeManager changeFactory removeMethod: selector from: self changeClass ]
+			changeFactory addMethodSource: (self methodSourceFor: self selector) in: self changeClass classified: oldProtocol ]
+		ifFalse: [ changeFactory removeMethod: selector from: self changeClass ]
 ]
 
 { #category : #accessing }
@@ -120,6 +120,22 @@ RBAddMethodChange >> hash [
 	^ self parseTree hash
 ]
 
+{ #category : #accessing }
+RBAddMethodChange >> oldVersionTextToDisplay [
+	| class |
+	
+	class := onSystemDictionary  
+					at: className asSymbol
+					ifAbsent: [ ^ super oldVersionTextToDisplay ].
+				
+	isMeta ifTrue: [ class := class classSide ].
+				
+	^ class methodDict 
+			at: self selector
+			ifPresent: [:method | method sourceCode ]
+			ifAbsent: [ super oldVersionTextToDisplay ]
+]
+
 { #category : #private }
 RBAddMethodChange >> parseTree [
 	^ RBParser parseMethod: source onError: [ :str :pos | ^ nil ]
@@ -182,4 +198,10 @@ RBAddMethodChange >> selector [
 { #category : #accessing }
 RBAddMethodChange >> source [
 	^ source
+]
+
+{ #category : #accessing }
+RBAddMethodChange >> textToDisplay [
+
+	^ self source
 ]

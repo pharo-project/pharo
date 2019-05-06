@@ -108,7 +108,7 @@ EyeAbstractInspector >> inspect: anObject [
 EyeAbstractInspector >> inspectionMenu: aMenu [
 	| menuModel |
 	self hasSelectedObject ifFalse: [ ^ aMenu ].
-	menuModel := MenuPresenter new.
+	menuModel := self newMenu.
 	self inspectionSubMenu: menuModel.
 	self selectedElement inspectionMenu: menuModel.
 	aMenu addAllMorphs: (menuModel buildWithSpec: #popup) items.

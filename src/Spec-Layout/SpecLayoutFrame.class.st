@@ -14,7 +14,8 @@ Class {
 		'rightFraction',
 		'rightOffset',
 		'topFraction',
-		'topOffset'
+		'topOffset',
+		'owner'
 	],
 	#category : #'Spec-Layout-Support'
 }
@@ -23,6 +24,12 @@ Class {
 SpecLayoutFrame class >> identity [
 	"by default a layout frame is initialized to represent the identity transformation"
 	^ self new
+]
+
+{ #category : #'instance creation' }
+SpecLayoutFrame class >> owner: anObject [
+
+	^ self new owner: anObject; yourself.
 ]
 
 { #category : #converting }
@@ -125,6 +132,18 @@ SpecLayoutFrame >> leftOffset [
 SpecLayoutFrame >> leftOffset: anObject [
 	
 	leftOffset := anObject
+]
+
+{ #category : #accessing }
+SpecLayoutFrame >> owner [
+
+	"Every object instantiated by the SpecInerpreter should have an owner that will assign it to a particular presenter"
+	^ owner
+]
+
+{ #category : #accessing }
+SpecLayoutFrame >> owner: anObject [
+	owner := anObject
 ]
 
 { #category : #accessing }

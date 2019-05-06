@@ -115,7 +115,7 @@ CDNode >> isVariable [
 	^false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 CDNode >> originalNode [
 
 	^originalNode.
@@ -135,7 +135,7 @@ CDNode >> originalNodeSource [
 	
 ]
 
-{ #category : #'' }
+{ #category : #accessing }
 CDNode >> parent [
 	^ parent
 ]

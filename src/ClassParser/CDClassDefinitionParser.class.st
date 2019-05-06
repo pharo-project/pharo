@@ -1,9 +1,7 @@
 "
-ClassParser uses the default node representation of classes to parse class definition and 
-return a dedicated class tree. 
+I use the default node representation of classes to parse class definition and  return a dedicated class tree.
 
-The basic idea behing ClassParser is to reuse as much as possible as the current infrastructure
-and not to reimplement yet another parser. 
+The basic idea behing the implementation is to reuse as much as possible as the current parser infrastructure. This is why this class defines a visitMessageNode: method. 
 
 Main public API is 
 	- parse: aString

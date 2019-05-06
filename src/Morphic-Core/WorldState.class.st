@@ -234,7 +234,7 @@ WorldState class >> saveSession [
 WorldState class >> screenShotCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Screenshot)
-		parent: #Tools;
+		parent: #System;
 		target: World;
 		order: 501;
 		selector: #makeAScreenshot;

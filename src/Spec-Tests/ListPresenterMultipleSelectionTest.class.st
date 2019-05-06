@@ -106,6 +106,58 @@ ListPresenterMultipleSelectionTest >> testSelectIndexTwiceAddsIndexToSelectedInd
 	self assert: presenter selection selectedIndexes asArray equals: #(1)
 ]
 
+{ #category : #'tests-select-index' }
+ListPresenterMultipleSelectionTest >> testSelectIndexesAddsIndexesToSelectedIndexList [
+	presenter selectIndexes: {1 . 2}.
+	self assert: (presenter selection includesIndexes: {1 . 2})
+]
+
+{ #category : #'tests-select-index' }
+ListPresenterMultipleSelectionTest >> testSelectIndexesAddsItemsToSelectedItemList [
+	presenter selectIndexes: {1 . 2}.
+	self assert: (presenter selection includesItems: {10 . 20})
+]
+
+{ #category : #'tests-select-index' }
+ListPresenterMultipleSelectionTest >> testSelectIndexesOutsideRangeHasNoSelectedIndexes [
+	presenter selectIndexes: {4 . 5}.
+	self assert: presenter selection selectedIndexes isEmpty
+]
+
+{ #category : #'tests-select-index' }
+ListPresenterMultipleSelectionTest >> testSelectIndexesOutsideRangeHasNoSelectedItems [
+	presenter selectIndexes: {4 . 5}.
+	self assert: presenter selection selectedItems isEmpty
+]
+
+{ #category : #'tests-select-index' }
+ListPresenterMultipleSelectionTest >> testSelectIndexesOutsideRangeIsEmpty [
+	presenter selectIndexes: {4 . 5}.
+	self assert: presenter selection isEmpty
+]
+
+{ #category : #'tests-select-index' }
+ListPresenterMultipleSelectionTest >> testSelectIndexesThenSelectOutsideRangeKeepsElements [
+	presenter selectIndexes: {1 . 2}.
+	presenter selectIndexes: {50 . 60}.
+	self assert: (presenter selection includesItems: {10 . 20})
+]
+
+{ #category : #'tests-select-index' }
+ListPresenterMultipleSelectionTest >> testSelectIndexesThenSelectOutsideRangeKeepsIndexes [
+	presenter selectIndexes: {1 . 2}.
+	presenter selectIndexes: {50 . 60}.
+	self assert: (presenter selection includesIndexes: {1 . 2})
+]
+
+{ #category : #'tests-select-index' }
+ListPresenterMultipleSelectionTest >> testSelectIndexesTwiceAddsIndexesToSelectedIndexListOnlyOnce [
+	presenter
+		selectIndexes: {1 . 2};
+		selectIndexes: {1 . 2}.
+	self assertCollection: presenter selection selectedIndexes hasSameElements: {1 . 2}
+]
+
 { #category : #'tests-select-item' }
 ListPresenterMultipleSelectionTest >> testSelectItemAddsIndexToSelectedIndexList [
 
@@ -130,7 +182,7 @@ ListPresenterMultipleSelectionTest >> testSelectItemOutsideRangeHasNoSelectedInd
 { #category : #'tests-select-item' }
 ListPresenterMultipleSelectionTest >> testSelectItemOutsideRangeHasNoSelectedItems [
 
-	presenter selectIndex: 400.
+	presenter selectItem: 400.
 	self assert: presenter selection selectedItems isEmpty
 ]
 
@@ -163,6 +215,50 @@ ListPresenterMultipleSelectionTest >> testSelectItemThenSelectOutsideRangeKeepsS
 	presenter selectItem: 10.
 	presenter selectItem: 3000.
 	self assert: presenter selection selectedItems size equals: 1
+]
+
+{ #category : #'tests-select-item' }
+ListPresenterMultipleSelectionTest >> testSelectItemsAddsIndexesToSelectedIndexList [
+	presenter selectItems: {10 . 20}.
+	self assert: (presenter selection includesIndexes: #(1 2))
+]
+
+{ #category : #'tests-select-item' }
+ListPresenterMultipleSelectionTest >> testSelectItemsAddsItemsToSelectedItemList [
+	presenter selectItems: {10 . 20}.
+	self assert: (presenter selection includesItems: {10 . 20})
+]
+
+{ #category : #'tests-select-item' }
+ListPresenterMultipleSelectionTest >> testSelectItemsOutsideRangeHasNoSelectedIndexes [
+	presenter selectItems: {300 . 400}.
+	self assert: presenter selection selectedIndexes isEmpty
+]
+
+{ #category : #'tests-select-item' }
+ListPresenterMultipleSelectionTest >> testSelectItemsOutsideRangeHasNoSelectedItems [
+	presenter selectItems: {300 . 400}.
+	self assert: presenter selection selectedItems isEmpty
+]
+
+{ #category : #'tests-select-item' }
+ListPresenterMultipleSelectionTest >> testSelectItemsOutsideRangeIsEmpty [
+	presenter selectItems: {4000 . 5000}.
+	self assert: presenter selection isEmpty
+]
+
+{ #category : #'tests-select-item' }
+ListPresenterMultipleSelectionTest >> testSelectItemsThenSelectOutsideRangeKeepsElements [
+	presenter selectItems: {10 . 20}.
+	presenter selectItems: {4000 . 5000}.
+	self assert: (presenter selection includesItems: {10 . 20})
+]
+
+{ #category : #'tests-select-item' }
+ListPresenterMultipleSelectionTest >> testSelectItemsThenSelectOutsideRangeKeepsIndexes [
+	presenter selectItems: {10 . 20}.
+	presenter selectItems: {500 . 600}.
+	self assert: (presenter selection includesIndexes: {1 . 2})
 ]
 
 { #category : #'tests-select-index' }

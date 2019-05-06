@@ -14,6 +14,10 @@ MorphicTableColumnVisitor >> visit: aTableColumn [
 ]
 
 { #category : #visiting }
+MorphicTableColumnVisitor >> visitCheckboxColumn: aCheckboxTableColumn [
+]
+
+{ #category : #visiting }
 MorphicTableColumnVisitor >> visitCompositeColumn: aTableColumn [
 	
 	aTableColumn columns do: [ :each |

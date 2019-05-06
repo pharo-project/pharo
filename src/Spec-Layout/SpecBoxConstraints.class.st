@@ -119,5 +119,5 @@ SpecBoxConstraints >> width: aNumber [
 	 this just has sense in the case of expand=false"
 
 	self expand: false.
-	^ width
+	width := aNumber
 ]

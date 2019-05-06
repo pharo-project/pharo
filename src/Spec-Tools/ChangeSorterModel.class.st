@@ -52,7 +52,7 @@ ChangeSorterModel >> buildClassDescriptionFor: changeSet class: class [
 ]
 
 { #category : #text }
-ChangeSorterModel >> buildSelectorDescriptionFor: changeSet class: class selector: selector prettyPrint: prettyPrint showDiff: showDiff [
+ChangeSorterModel >> buildSelectorDescriptionFor: changeSet class: class selector: selector [
 
 	| changeType code |
 	changeType := changeSet atSelector: selector class: class.
@@ -66,10 +66,6 @@ ChangeSorterModel >> buildSelectorDescriptionFor: changeSet class: class selecto
 	(class includesSelector: selector)
 		ifFalse: [^ 'Method was added, but cannot be found!'].
 	code := class sourceCodeAt: selector.
-	prettyPrint
-		ifTrue: [ code := class compiler format: code].						
-	showDiff
-		ifTrue: [ code := self diffFromPriorSourceFor: code ].
 		
 	^ code asText
 ]
@@ -229,7 +225,7 @@ ChangeSorterModel >> rename: aChangeSet [
 ]
 
 { #category : #text }
-ChangeSorterModel >> setContentsOfChangeSet: changeSet forClass: class andSelector: selector prettyPrint: prettyPrint showDiff: showDiff [ 
+ChangeSorterModel >> setContentsOfChangeSet: changeSet forClass: class andSelector: selector [
 	"return the source code that shows in the bottom pane"
 
 	class
@@ -242,7 +238,7 @@ ChangeSorterModel >> setContentsOfChangeSet: changeSet forClass: class andSelect
 			^ self buildClassDescriptionFor: changeSet class: class ]
 		ifNotNil: [
 			"a class and a selector are selected"
-			^ self buildSelectorDescriptionFor: changeSet class: class selector: selector prettyPrint: prettyPrint showDiff: showDiff ]
+			^ self buildSelectorDescriptionFor: changeSet class: class selector: selector ]
 ]
 
 { #category : #'change set' }

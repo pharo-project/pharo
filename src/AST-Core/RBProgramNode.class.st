@@ -259,7 +259,7 @@ RBProgramNode >> copyList: matchNodes inContext: aDictionary [
 { #category : #accessing }
 RBProgramNode >> debugHighlightRange [
 
-	^ self debugHighlightStart to: self debugHighlightStop .
+	^ self debugHighlightStart to: self debugHighlightStop
 ]
 
 { #category : #accessing }

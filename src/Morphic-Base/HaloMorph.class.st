@@ -710,7 +710,7 @@ HaloMorph >> createHandleAt: aPoint color: aColor iconName: iconName [
 				ifFalse: [| image | 
 					image := ImageMorph new.
 					image form: form.
-					image color: aColor contrastingForegroundColor.
+					image color: aColor contrastingBlackAndWhiteColor.
 					image lock.
 					handle addMorphCentered: image]].
 	^ handle
@@ -854,7 +854,7 @@ HaloMorph >> doRot: evt with: rotHandle [
 		ifTrue: [self setColor: Color lightBlue toHandle: rotHandle]
 		ifFalse: [self setColor: Color blue toHandle: rotHandle].
 	rotHandle submorphsDo:
-		[:m | m color: rotHandle color contrastingForegroundColor].
+		[:m | m color: rotHandle color contrastingBlackAndWhiteColor].
 	self removeAllHandlesBut: rotHandle.
 	self showingDirectionHandles ifFalse:
 		[self showDirectionHandles: true addHandles: false].
@@ -876,7 +876,7 @@ HaloMorph >> doScale: evt with: scaleHandle [
 						ifFalse: [Color orange].
 	self setColor: colorToUse toHandle: scaleHandle.
 	scaleHandle
-		submorphsDo: [:m | m color: colorToUse contrastingForegroundColor].
+		submorphsDo: [:m | m color: colorToUse contrastingBlackAndWhiteColor].
 	scaleHandle position: newHandlePos.
 
 ]

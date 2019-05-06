@@ -9,12 +9,14 @@ Class {
 
 { #category : #accessing }
 SpecListFastTableDataSource >> cellColumn: column row: rowIndex [
-	| displayValue cell |
-	displayValue := column readObject: (self model itemAt: rowIndex).
+	| displayValue cell item |
+	item := self model itemAt: rowIndex.
+	displayValue := column readObject: item.
 	cell := FTCellMorph new
 		cellInset: 5;
 		yourself.
-	cell addMorphBack: displayValue asMorph.
+	(self model iconFor: item) ifNotNil: [ :icon | cell addMorphBack: icon asMorph ].
+	cell addMorphBack: displayValue asMorph asReadOnlyMorph.
 	^ cell
 ]
 
@@ -35,7 +37,7 @@ SpecListFastTableDataSource >> headerColumn: column [
 	column id ifNil: [ ^ nil ]. 
 	^ FTCellMorph new 
 		listCentering: #center;
-		addMorph: column id asMorph;
+		addMorph: column id asMorph asReadOnlyMorph;
 		yourself
 ]
 
@@ -46,10 +48,18 @@ SpecListFastTableDataSource >> listModel [
 
 { #category : #accessing }
 SpecListFastTableDataSource >> menuColumn: column row: rowIndex [
-	| menu menuPresenter |
-	menu := UIManager default newMenuIn: self table for: self model.
-	menuPresenter := self model menu: menu shifted: false.
-	^ menuPresenter
+	| menuPresenter |
+
+	menuPresenter := self model contextMenu.
+	menuPresenter ifNil: [ ^ nil ].
+	^ SpecBindings
+		value: self model application adapterBindings
+		during: [ 
+			| m |
+			m := menuPresenter value.
+			m isMorph 
+				ifTrue: [ m ]
+				ifFalse: [ m buildWithSpec ] ]
 ]
 
 { #category : #accessing }
@@ -65,6 +75,7 @@ SpecListFastTableDataSource >> model: anObject [
 { #category : #accessing }
 SpecListFastTableDataSource >> newDataSourceMatching: aFTFilter [
 	| newElements wrappedItem text newDataSource modelCopy |
+	
 	newElements := self elements select: [ :each | 
 		wrappedItem := self model displayValueOf: each.
 		table columns anySatisfy: [ :column | 

@@ -28,16 +28,6 @@ Class {
 	#category : #'Spec-PolyWidgets-ListAndTree'
 }
 
-{ #category : #example }
-EditableList class >> example [
-	<sampleInstance>
-	^self new
-	
-		title: 'Selectors list';
-		list: self selectors;
-	 openWithSpec
-]
-
 { #category : #'instance creation' }
 EditableList class >> new: aCollection [
 	^ self new list: aCollection copy.
@@ -134,7 +124,7 @@ EditableList >> initializePresenter [
 
 { #category : #initialization }
 EditableList >> initializeWidgets [
-	list := self instantiate: FastTablePresenter.
+	list := self newList.
 	addButton := self newButton.
 	removeButton := self newButton.
 	upButton := self newButton.

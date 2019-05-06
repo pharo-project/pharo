@@ -21,8 +21,8 @@ CDTraitExclusionNode >> isTraitExclusionNode [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 CDTraitExclusionNode >> toString [
 	"should replace Exclusions"
-	^subject name ,' - ', exclusions asString.
+	^ subject name ,' - ', exclusions asString.
 ]

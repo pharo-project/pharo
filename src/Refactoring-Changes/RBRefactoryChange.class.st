@@ -7,7 +7,10 @@ Class {
 	#name : #RBRefactoryChange,
 	#superclass : #Object,
 	#instVars : [
-		'name'
+		'name',
+		'factory',
+		'changeFactory',
+		'onSystemDictionary'
 	],
 	#category : #'Refactoring-Changes'
 }
@@ -57,6 +60,13 @@ RBRefactoryChange >> executeNotifying: aBlock [
 	self subclassResponsibility
 ]
 
+{ #category : #initialization }
+RBRefactoryChange >> initialize [ 
+	super initialize.
+	onSystemDictionary := Smalltalk globals.
+	changeFactory := RBRefactoryChangeManager changeFactory
+]
+
 { #category : #accessing }
 RBRefactoryChange >> name [
 	^name isNil ifTrue: [self changeString] ifFalse: [name]
@@ -68,8 +78,26 @@ RBRefactoryChange >> name: aString [
 ]
 
 { #category : #accessing }
+RBRefactoryChange >> nameToDisplay [
+
+	^ self name
+]
+
+{ #category : #accessing }
+RBRefactoryChange >> oldVersionTextToDisplay [
+
+	^ ''
+]
+
+{ #category : #accessing }
 RBRefactoryChange >> renameChangesForClass: oldClassName to: newClassName [
 	"We're in the middle of performing a rename operation. If we stored the class name, we need to change the class name to the new name to perform the compiles."
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+RBRefactoryChange >> textToDisplay [
+
+	^ self name
 ]

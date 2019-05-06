@@ -81,6 +81,13 @@ NotebookMorph >> buildLabelFrom: aStringOrMorph withAction: aMorph [
 			innerLabel ]
 ]
 
+{ #category : #testing }
+NotebookMorph >> hasPageWithModel: anObject [
+	"an utility to easy know if the notebook has a page for a model"
+
+	^ self pages anySatisfy: [ :each | each model = anObject ]
+]
+
 { #category : #accessing }
 NotebookMorph >> headerMorph [
 	^ headerMorph
@@ -177,20 +184,31 @@ NotebookMorph >> pageWithModel: anObject [
 NotebookMorph >> removePage: aPage [
 	| removedPageIndex |
 	removedPageIndex := self pages indexOf: aPage.
-	self announcer suspendAllWhile: [ super removePage: aPage ].
-	self announcer announce: 
-		(LazyTabPageRemoved new 
-			tabs: self; 
-			page: aPage; 
-			pageIndex: removedPageIndex;
-			newIndex: self tabSelectorMorph selectedIndex).
-	self pages isEmpty 
-		ifTrue: [ self contentMorph removeAllMorphs ]
+
+	self suspendAnnouncementsDuring: [ super removePage: aPage ].
+
+	self announcer
+		announce:
+			(LazyTabPageRemoved new
+				tabs: self;
+				page: aPage;
+				pageIndex: removedPageIndex;
+				newIndex: self tabSelectorMorph selectedIndex).
+	self pages isEmpty ifTrue: [ self contentMorph removeAllMorphs ]
 ]
 
 { #category : #private }
 NotebookMorph >> removePageIndex: anInteger [
 	self removePage: (self pages at: anInteger)
+]
+
+{ #category : #private }
+NotebookMorph >> suspendAnnouncementsDuring: aBlock [
+	| subscriptions |
+	subscriptions := self announcer subscriptions subscriptions.
+	subscriptions do: [ :sub | self announcer unsubscribe: sub ].
+	aBlock value.
+	subscriptions do: [ :sub | self announcer basicSubscribe: sub ]
 ]
 
 { #category : #private }

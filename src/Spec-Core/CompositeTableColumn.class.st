@@ -87,3 +87,9 @@ CompositeTableColumn >> initialize [
 	"there will be at least two, if it is composed :)"
 	columns := OrderedCollection new: 2
 ]
+
+{ #category : #testing }
+CompositeTableColumn >> isComposite [
+
+	^ true
+]
