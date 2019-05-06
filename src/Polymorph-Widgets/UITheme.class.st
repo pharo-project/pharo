@@ -5367,7 +5367,7 @@ UITheme >> shStyleTable [
 
 	"Styling depends on shout. If it is not present, means there is no style 
 	 table to apply"
-	^ (Smalltalk classNamed: #SHRBTextStyler)
+	^ (self class environment classNamed: #SHRBTextStyler)
 		ifNotNil: [ :aClass | aClass perform: self shStyleTableName ]
 		ifNil: [ #() ]
 
