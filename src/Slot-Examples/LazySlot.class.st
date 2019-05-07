@@ -8,25 +8,13 @@ The slot instead does the nil check as part of the slot read operation
 "
 Class {
 	#name : #LazySlot,
-	#superclass : #InstanceVariableSlot,
-	#instVars : [
-		'default'
-	],
+	#superclass : #AbstractInitializedSlot,
 	#category : #'Slot-Examples-Base'
 }
 
-{ #category : #comparing }
-LazySlot >> = other [
-	^ super = other and: [default = other default]
-]
-
-{ #category : #accessing }
-LazySlot >> default: anObject [
-	default := anObject
-]
-
 { #category : #'code generation' }
 LazySlot >> emitValue: aMethodBuilder [
+	"generate bytecode for '<varname> ifNil: [default]'"
 	aMethodBuilder
 		pushInstVar: index;
 		pushDup;
@@ -36,27 +24,6 @@ LazySlot >> emitValue: aMethodBuilder [
 		popTop;
 		pushLiteral: default;
 		jumpAheadTarget: #target
-]
-
-{ #category : #comparing }
-LazySlot >> hasSameDefinitionAs: otherSlot [
-	^ (super hasSameDefinitionAs: otherSlot) 
-		and: [ default = otherSlot default ]
-]
-
-{ #category : #comparing }
-LazySlot >> hash [
-	^super hash bitXor: default hash
-]
-
-{ #category : #printing }
-LazySlot >> printOn: aStream [
-	aStream 
-		store: self name;
-		nextPutAll: ' => ';
-		nextPutAll: self class name;
-		nextPutAll: ' default: ';
-		store: default
 ]
 
 { #category : #'meta-object-protocol' }

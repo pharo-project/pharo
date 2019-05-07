@@ -140,8 +140,9 @@ Slot >> definitionString [
 
 { #category : #'code generation' }
 Slot >> emitStore: aMethodBuilder [
+	"generate bytecode to call the reflective write method of the Slot"
 	| tempName |
-	tempName := Object new.
+	tempName := Object new.  "we need a unique Object as a temp name"
 	aMethodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;

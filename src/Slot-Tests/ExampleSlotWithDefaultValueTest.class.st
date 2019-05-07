@@ -15,7 +15,7 @@ ExampleSlotWithDefaultValueTest >> testExampleSlotWithDefaultValue [
 
 	self assert: (aClass hasSlotNamed: #slot1).
 	
-	"test refletive write and read"
+	"test reflective write and read"
 	slot := aClass slotNamed: #slot1.
 	object := aClass new.
 
