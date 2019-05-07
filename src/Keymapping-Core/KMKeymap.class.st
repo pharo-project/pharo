@@ -146,7 +146,7 @@ KMKeymap >> notifyPartialMatchTo: aListener [
 	listeners := aListener isCollection 
 		ifTrue: [ aListener ] 
 		ifFalse: [ { aListener } ].
-	listeners do: #partialMatch
+	listeners do: [ :each | each partialMatch ]
 ]
 
 { #category : #matching }
