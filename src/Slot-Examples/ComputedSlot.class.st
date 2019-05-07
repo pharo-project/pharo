@@ -25,18 +25,13 @@ ComputedSlot >> = other [
 	^ super = other and: [block = other block]
 ]
 
-{ #category : #accessing }
-ComputedSlot >> block [
-	^block
-]
-
 { #category : #'code generation' }
 ComputedSlot >> emitValue: methodBuilder [
-
-		methodBuilder
-			pushLiteral: block;
-			pushReceiver;
-			send: #cull:.
+	"generate the bytcode for 'block cull: self'"
+	methodBuilder
+		pushLiteral: block;
+		pushReceiver;
+		send: #cull:.
 ]
 
 { #category : #comparing }
@@ -64,6 +59,7 @@ ComputedSlot >> printOn: aStream [
 
 { #category : #'meta-object-protocol' }
 ComputedSlot >> read: anObject [
+	"we use #cull to support both 0-arg and 1-arg blocks"
 	^block cull: anObject
 	
 ]
@@ -75,5 +71,5 @@ ComputedSlot >> with: aBlock [
 
 { #category : #'meta-object-protocol' }
 ComputedSlot >> write: aValue to: anObject [
-	"ignored"
+	"ignored, as the slot returns the computed value on read"
 ]

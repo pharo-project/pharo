@@ -42,13 +42,13 @@ InstanceVariableSlot >> definitionString [
 
 { #category : #'code generation' }
 InstanceVariableSlot >> emitStore: methodBuilder [
-
+	"generate store bytecodode"
 	methodBuilder storeInstVar: index
 ]
 
 { #category : #'code generation' }
 InstanceVariableSlot >> emitValue: methodBuilder [
-
+	"emit the bytecode to push ivar"
 	methodBuilder pushInstVar: index.
 
 ]
@@ -66,7 +66,8 @@ InstanceVariableSlot >> isReadIn: aCompiledCode [
 { #category : #testing }
 InstanceVariableSlot >> isSpecial [
 	"I am just a backward compatible ivar slot. Note: my subclasses are special"
-	^(self class = InstanceVariableSlot) not
+
+	^ self class ~= InstanceVariableSlot
 ]
 
 { #category : #testing }

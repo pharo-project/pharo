@@ -25,7 +25,7 @@ LazySlotTest >> testLazySlotReadReflective [
 	slot := #slot1 => LazySlot default: 5 .
 	aClass := self make: [ :builder | builder slots: {slot } ].
 	
-	"test refletive write and read"
+	"test reflective write and read"
 	object := aClass new.
 
 	self assert: (slot read: object) equals: 5.
