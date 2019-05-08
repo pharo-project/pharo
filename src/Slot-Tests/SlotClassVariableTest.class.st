@@ -79,7 +79,7 @@ SlotClassVariableTest >> testWantsInitializationAddsInitializeSlot [
 			name: self aClassName;
 			superclass: Object ].
 		
-	class1 addSlot: (ExampleSlotWithDefaultValue new 
+	class1 addSlot: (InitializedSlot new 
 		name: #defaultValue;
 		default: 42;
 		yourself).
@@ -102,7 +102,7 @@ SlotClassVariableTest >> testWantsInitializationSkipInitializeSlotIfAlreadyInHie
 			name: self aClassName;
 			superclass: Object;
 			slots: { 
-				ExampleSlotWithDefaultValue new 
+				InitializedSlot new 
 					name: #defaultValue;
 					default: 42;
 					yourself } ].
@@ -115,7 +115,7 @@ SlotClassVariableTest >> testWantsInitializationSkipInitializeSlotIfAlreadyInHie
 			name: self anotherClassName;
 			superclass: class1;
 			slots: { 
-				ExampleSlotWithDefaultValue new 
+				InitializedSlot new 
 					name: #otherDefaultValue;
 					default: 42;
 					yourself } ].

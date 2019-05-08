@@ -5,20 +5,53 @@ Class {
 }
 
 { #category : #tests }
-ExampleSlotWithDefaultValueTest >> testExampleSlotWithDefaultValue [
+ExampleSlotWithDefaultValueTest >> testExampleSlotWithDefaultValueCompiled [
 	| slot object|
-	
-	aClass := self make: [ :builder |
-		builder 
-			slots: {#slot1 => ExampleSlotWithDefaultValue default: 5  }
-		].
-
+	slot := #slot1 => InitializedSlot default: 5.
+	aClass := self make: [ :builder | builder slots: {slot}].
 	self assert: (aClass hasSlotNamed: #slot1).
-	
-	"test reflective write and read"
-	slot := aClass slotNamed: #slot1.
+	self compileAccessorsFor: slot.
 	object := aClass new.
 
+	"test compiled write and read"
+	self assert: (object slot1) equals: 5.
+	object slot1: 10.
+	self assert: (object slot1) equals: 10.
+	
+	
+	
+	
+	
+]
+
+{ #category : #tests }
+ExampleSlotWithDefaultValueTest >> testExampleSlotWithDefaultValueReflective [
+	| slot object|
+	slot := #slot1 => InitializedSlot default: 5.
+	aClass := self make: [ :builder | builder slots: {slot}].
+	self assert: (aClass hasSlotNamed: #slot1).
+	object := aClass new.
+
+	"test reflective write and read"
+	self assert: (slot read: object) equals: 5.
+	slot write: 10 to: object.
+	self assert: (slot read: object) equals: 10.
+	
+	
+	
+	
+	
+]
+
+{ #category : #tests }
+ExampleSlotWithDefaultValueTest >> testExampleSlotWithDefaultValueReflectiveSlot [
+	| slot object|
+	slot := #slot1 => InitializedSlot defaultBlock: [4+1].
+	aClass := self make: [ :builder | builder slots: {slot}].
+	self assert: (aClass hasSlotNamed: #slot1).
+	object := aClass new.
+
+	"test reflective write and read"
 	self assert: (slot read: object) equals: 5.
 	slot write: 10 to: object.
 	self assert: (slot read: object) equals: 10.

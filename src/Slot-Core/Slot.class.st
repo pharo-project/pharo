@@ -1,16 +1,20 @@
 "
 I'm a meta-object for accessing a slot in an Object. 
 
-I define a protocol to read (#read:) and to write (#write:to:) values. 
+I define a reflective protocol to read (#read:) and to write (#write:to:) values. 
+
+	For efficiency, subclasses (e.g. InstanceVariableSlot) override #emitStore: and #emitValue: to not call #read: and/or write:to:
 
 For customizing a subclass can override the meta-object-protocol methods. See subclasses for examples. If your subclass holds state, the following must be overridden:
-- Printing: #definitionString must return the source code string to reconstruct an instance. This will be displayed in the class definition. By default, #definitionString is the printString, so you can also override #printOn: instead.
+- Printing: #printOn: must print the source code string to reconstruct an instance. This will be displayed in the class definition. 
 - Equality: #= and #hash must be customized taking account of additional state.
 
+
 Vocabulary:
-- variable: named accessor for a Slot
+- Field: space occupied in an object, used to hold values accessed via Slots
 - Slot: class-side meta-object, mapping of names to values using a MOP to fields
-- field: space occupied in an object, used to hold values accessed via Slots
+
+
 "
 Class {
 	#name : #Slot,
@@ -271,12 +275,6 @@ Slot >> isVisible [
 Slot >> isWrittenIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableWriteNodes
 		anySatisfy: [ :node | node binding slot == self ]
-]
-
-{ #category : #'class building' }
-Slot >> layoutChanged: aClass [
-	"I am called by the class builder. This way a Slot can change the class it is installed in"
-	
 ]
 
 { #category : #accessing }

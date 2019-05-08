@@ -2,6 +2,10 @@
 I add some special behavior: 
 	- I override bytecode generation to generate ivar read and write bytecodes
 	- I print the definition as #name 
+	
+If you subclass this class, take note that as it overrides both #emitStore: and #emitValue: to use the fast bytecode, it will *not* call the reflective #read: and #write:to: methods.
+
+
 "
 Class {
 	#name : #InstanceVariableSlot,
@@ -42,7 +46,7 @@ InstanceVariableSlot >> definitionString [
 
 { #category : #'code generation' }
 InstanceVariableSlot >> emitStore: methodBuilder [
-	"generate store bytecodode"
+	"generate store bytecode"
 	methodBuilder storeInstVar: index
 ]
 
