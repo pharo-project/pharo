@@ -22,13 +22,32 @@ LazySlotTest >> testLazySlotCompiled [
 { #category : #tests }
 LazySlotTest >> testLazySlotReadReflective [
 	| slot object|
-	slot := #slot1 => LazySlot default: 5 .
-	aClass := self make: [ :builder | builder slots: {slot } ].
+	slot := #slot1 => LazySlot default: 5.
+	aClass := self make: [ :builder | builder slots: {slot} ].
 	
 	"test reflective write and read"
 	object := aClass new.
 
 	self assert: (slot read: object) equals: 5.
+	slot write: 10 to: object.
+	self assert: (slot read: object) equals: 10.
+	
+	
+	
+	
+	
+]
+
+{ #category : #tests }
+LazySlotTest >> testLazySlotReadReflectiveBlock [
+	| slot object|
+	slot := #slot1 => LazySlot defaultBlock: [:o | o class] .
+	aClass := self make: [ :builder | builder slots: {slot } ].
+	
+	"test reflective write and read"
+	object := aClass new.
+
+	self assert: (slot read: object) equals: aClass.
 	slot write: 10 to: object.
 	self assert: (slot read: object) equals: 10.
 	
