@@ -11,6 +11,13 @@ Class {
 	#category : #'Slot-Examples-Base'
 }
 
+{ #category : #'code generation' }
+HistorySlot >> emitValue: aMethodBuilder [
+	"for speed, we inline the #last send instead of calling the #read: method"
+	aMethodBuilder pushInstVar: index.
+	aMethodBuilder send: #last
+]
+
 { #category : #initialization }
 HistorySlot >> initialize [
 	size := 5
@@ -34,14 +41,21 @@ HistorySlot >> printOn: aStream [
 ]
 
 { #category : #'meta-object-protocol' }
-HistorySlot >> read: anObject [
+HistorySlot >> rawRead: anObject [
+	"return the wrapper (the collection) used to store the value"
+	^super read: anObject
+]
 
-	^ (super read: anObject) last
+{ #category : #'meta-object-protocol' }
+HistorySlot >> read: anObject [
+	"we return the last value from the collection"
+	^ (self rawRead: anObject) last
 ]
 
 { #category : #'meta-object-protocol' }
 HistorySlot >> readHistory: anObject [
-	^ (super read: anObject)
+	"return the complete history"
+	^ self rawRead: anObject
 ]
 
 { #category : #accessing }
@@ -63,7 +77,7 @@ HistorySlot >> wantsInitalization [
 { #category : #'meta-object-protocol' }
 HistorySlot >> write: aDictionary to: anObject [
 	| history |
-	history := super read: anObject.
+	history := self rawRead: anObject.
 	history size >= size
 		ifTrue: [ history removeFirst ].
 	^ history addLast: aDictionary

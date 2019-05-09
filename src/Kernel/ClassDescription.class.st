@@ -1125,7 +1125,7 @@ ClassDescription >> slotDefinitionString [
 		str nextPutAll: '{ '.
 		self localSlots do: [:slot |
 				str nextPutAll: slot definitionString.
-				useFull := slot useFullDefinition]				
+				useFull := slot needsFullDefinition]				
 			separatedBy: [ 
 				str nextPutAll: '. '.  
 				useFull ifTrue: [ str cr;tab;tab;tab;tab ]].
@@ -1331,21 +1331,19 @@ ClassDescription >> usesPoolVarNamed: aString [
 { #category : #slots }
 ClassDescription >> usesSpecialClassVariables [
 
-	^self classVariables anySatisfy: [ :each | each useFullDefinition ]
+	^self classVariables anySatisfy: [ :each | each needsFullDefinition ]
 ]
 
 { #category : #slots }
 ClassDescription >> usesSpecialSlot [
 	"return true if we define something else than InstanceVariableSlots"
-	^self slots anySatisfy: [ :each | each useFullDefinition ]
+	^self slots anySatisfy: [ :each | each needsFullDefinition ]
 ]
 
 { #category : #slots }
 ClassDescription >> usesSpecialVariables [
     "return true if we define something else than InstanceVariableSlots"
-    ^(self usesSpecialSlot 
-        or: [ self class usesSpecialSlot ])
-        or: [self usesSpecialClassVariables ]
+    ^self usesSpecialSlot or: [ self class usesSpecialSlot or: [self usesSpecialClassVariables ]]
 ]
 
 { #category : #compiling }

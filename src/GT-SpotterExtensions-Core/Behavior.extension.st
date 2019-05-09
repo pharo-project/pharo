@@ -70,7 +70,7 @@ Behavior >> spotterUsedSlotsFor: aStep [
 	<spotterOrder: 70>
 	aStep listProcessor
 			title: 'Full Definition Slots';
-			allCandidates: [ self slots select: [ :slot | slot useFullDefinition ] ];
+			allCandidates: [ self slots select: [ :slot | slot needsFullDefinition ] ];
 			itemName: [ :item | item definitionString ];
 			filter: GTFilterSubstring
 ]

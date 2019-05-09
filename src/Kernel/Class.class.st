@@ -352,7 +352,7 @@ Class >> classVariableDefinitionString [
 		str nextPutAll: '{ '.
 		self classVariables do: [:global |
 				str nextPutAll: global definitionString.
-				fullDef := global useFullDefinition]				
+				fullDef := global needsFullDefinition]				
 			separatedBy: [ 
 				str nextPutAll: '. '.  
 				fullDef ifTrue: [ str cr;tab;tab;tab;tab ]].
@@ -447,9 +447,7 @@ Class >> definitionForNautilus [
 	"Answer a String that defines the receiver."
 
 	| aStream poolString |
-	((self usesSpecialSlot 
-		or: [ self usesSpecialClassVariables ])
-		or: [ Slot showSlotClassDefinition ])
+	(self usesSpecialVariables or: [ Slot showSlotClassDefinition ])
 		ifTrue: [ ^ self definitionForNautilusWithSlots ].
 	poolString := self sharedPoolsString.
 	aStream := (String new: 800) writeStream.

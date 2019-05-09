@@ -56,6 +56,13 @@ Association >> literalEqual: otherLiteral [
 	^self == otherLiteral
 ]
 
+{ #category : #testing }
+Association >> needsFullDefinition [
+	"Implemented here so we can use simple Assocications as Bindings instead of LiteralVariable
+	subclasses"
+	^false
+]
+
 { #category : #printing }
 Association >> printOn: aStream [
 
@@ -72,13 +79,6 @@ Association >> storeOn: aStream [
 	aStream nextPutAll: '->'.
 	value storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #testing }
-Association >> useFullDefinition [
-	"Implemented here so we can use simple Assocications as Bindings instead of LiteralVariable
-	subclasses"
-	^false
 ]
 
 { #category : #evaluating }
