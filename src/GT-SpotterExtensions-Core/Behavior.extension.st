@@ -69,8 +69,8 @@ Behavior >> spotterTraitUsersFor: aStep [
 Behavior >> spotterUsedSlotsFor: aStep [
 	<spotterOrder: 70>
 	aStep listProcessor
-			title: 'Special Slots';
-			allCandidates: [ self slots select: [ :slot | slot isSpecial ] ];
+			title: 'Full Defintion Slots';
+			allCandidates: [ self slots select: [ :slot | slot useFullDefinition ] ];
 			itemName: [ :item | item definitionString ];
 			filter: GTFilterSubstring
 ]

@@ -36,7 +36,7 @@ ComputedSlot >> emitValue: methodBuilder [
 
 { #category : #comparing }
 ComputedSlot >> hasSameDefinitionAs: otherSlot [
-
+	"other then #=, we use string comparition for the blocks here"
 	^ (super hasSameDefinitionAs: otherSlot) 
 		and: [ block printString = otherSlot block printString ]
 

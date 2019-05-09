@@ -113,7 +113,9 @@ ChangesBrowser >> initializeChangesTree [
 
 { #category : #initialization }
 ChangesBrowser >> initializePresenter [
-	changesTree whenHighlightedItemChanged: [ :item | item ifNotNil: [ textArea text: (self buildDiffFor: item content) ] ]
+	changesTree
+		whenHighlightedItemChangedDo:
+			[ :item | item ifNotNil: [ textArea text: (self buildDiffFor: item content) ] ]
 ]
 
 { #category : #initialization }

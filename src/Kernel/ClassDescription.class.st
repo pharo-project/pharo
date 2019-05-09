@@ -1121,14 +1121,14 @@ ClassDescription >> slotDefinitionString [
 
 	"^self slots ifNotEmpty: [self slots asString] ifEmpty: ['{}']"
 	
-	^String streamContents: [ :str | | special |
+	^String streamContents: [ :str | | useFull |
 		str nextPutAll: '{ '.
 		self localSlots do: [:slot |
 				str nextPutAll: slot definitionString.
-				special := slot isSpecial]				
+				useFull := slot useFullDefinition]				
 			separatedBy: [ 
 				str nextPutAll: '. '.  
-				special ifTrue: [ str cr;tab;tab;tab;tab ]].
+				useFull ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 
 ]
@@ -1331,13 +1331,13 @@ ClassDescription >> usesPoolVarNamed: aString [
 { #category : #slots }
 ClassDescription >> usesSpecialClassVariables [
 
-	^self classVariables anySatisfy: [ :each | each isSpecial ]
+	^self classVariables anySatisfy: [ :each | each useFullDefinition ]
 ]
 
 { #category : #slots }
 ClassDescription >> usesSpecialSlot [
 	"return true if we define something else than InstanceVariableSlots"
-	^self slots anySatisfy: [ :each | each isSpecial ]
+	^self slots anySatisfy: [ :each | each useFullDefinition ]
 ]
 
 { #category : #slots }
