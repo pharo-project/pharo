@@ -12,7 +12,7 @@ For customizing a subclass can override the meta-object-protocol methods. See su
 
 Vocabulary:
 - Field: space occupied in an object, used to hold values accessed via Slots
-- Slot: class-side meta-object, implements readind and writing.
+- Slot: class-side meta-object, implements reading and writing.
 
 My state:
 name: I have a name (a symbol).
