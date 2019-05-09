@@ -535,6 +535,15 @@ RBParserTest >> testParseFaultyMethodStop [
 	
 ]
 
+{ #category : #'tests parsing faulty' }
+RBParserTest >> testParseFaultyPragma [
+	| node |
+	node := self parseFaultyMethod: 'a <b:'.
+	self assert: node isMethod.
+	self assert: node pragmas size equals: 1.
+	self assert: node pragmas first isFaulty
+]
+
 { #category : #'tests parsing' }
 RBParserTest >> testParseMethodWithErrorTokenIsWellFormed [
 	| node strangeMethod body statement message errorNode |
