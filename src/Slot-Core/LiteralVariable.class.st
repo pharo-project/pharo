@@ -118,12 +118,6 @@ LiteralVariable >> isSelfEvaluating [
 ]
 
 { #category : #testing }
-LiteralVariable >> isSpecial [
-	"I am more than just a backward compatible Global"
-	^true
-]
-
-{ #category : #testing }
 LiteralVariable >> isWrittenIn: aCompiledCode [
 	^aCompiledCode writesRef: self
 ]
@@ -197,6 +191,13 @@ LiteralVariable >> removeProperty: propName ifAbsent: aBlock [
 		ifAbsent: aBlock.
 	self removePropertiesIfEmpty.
 	^ property
+]
+
+{ #category : #testing }
+LiteralVariable >> useFullDefinition [
+	"only ClassVariable can used a simplified definition"
+
+	^ self class ~= ClassVariable
 ]
 
 { #category : #queries }

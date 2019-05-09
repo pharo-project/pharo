@@ -12,7 +12,13 @@ For customizing a subclass can override the meta-object-protocol methods. See su
 
 Vocabulary:
 - Field: space occupied in an object, used to hold values accessed via Slots
-- Slot: class-side meta-object, mapping of names to values using a MOP to fields
+- Slot: class-side meta-object, implements reading and writing.
+
+My state:
+name: I have a name (a symbol).
+owningClass: the class (or Trait) I am installed in
+definingClass: When I get installed via a Trait, owningClass will be the class and
+the Trait I am coming from (that defined me) is stored here.
 
 
 "
@@ -126,13 +132,12 @@ Slot >> baseSlot [
 
 { #category : #accessing }
 Slot >> definingClass [
-	
+	"if a Slot from a Trait is installed in a class, we store the orginal class of the trait here"
 	^ definingClass ifNil: [ self owningClass ]
 ]
 
 { #category : #accessing }
 Slot >> definingClass: aClass [
-
 	definingClass := aClass
 ]
 
@@ -201,11 +206,11 @@ Slot >> hasProperty: aKey [
 { #category : #comparing }
 Slot >> hasSameDefinitionAs: otherSlot [
 
-	"similar to #= but does not take a slot index into count"
-	self == otherSlot
-		ifTrue: [ ^ true ].
-	^ (self species == otherSlot species) 
-			and: [ name = otherSlot name ]
+	"equal definition. Slots an have additional state that is not part of the definitoon
+	(e.g. the index in IndexSlot).
+	This method then is overriden to not take that state into account"
+	^self = otherSlot
+	
 
 ]
 
@@ -255,12 +260,6 @@ Slot >> isSelfEvaluating [
 ]
 
 { #category : #testing }
-Slot >> isSpecial [
-	"I am more than just a backward compatible ivar slot"
-	^true
-]
-
-{ #category : #testing }
 Slot >> isVirtual [
 	"virtual slots do not take up space in the object and have size = 0"
 	^true
@@ -289,6 +288,7 @@ Slot >> name: aSymbol [
 
 { #category : #accessing }
 Slot >> owningClass [
+	"the class that the slot is installed in"
 	^owningClass
 ]
 
@@ -401,6 +401,12 @@ Slot >> size [
 { #category : #printing }
 Slot >> storeOn: aStream [
 	^self printOn: aStream
+]
+
+{ #category : #testing }
+Slot >> useFullDefinition [
+	"I am more than just a backward compatible ivar slot, I need a full definition "
+	^true
 ]
 
 { #category : #queries }

@@ -33,14 +33,6 @@ AbstractInitializedSlot >> defaultBlock: aBlock [
 ]
 
 { #category : #comparing }
-AbstractInitializedSlot >> hasSameDefinitionAs: otherSlot [
-
-	^ (super hasSameDefinitionAs: otherSlot) 
-		and: [ default = otherSlot default ]
-
-]
-
-{ #category : #comparing }
 AbstractInitializedSlot >> hash [
 	^super hash bitXor: default hash
 ]

@@ -92,7 +92,7 @@ RelationSlot >> hasInverse [
 
 { #category : #comparing }
 RelationSlot >> hasSameDefinitionAs: otherSlot [
-
+	"need to implement as superclass implements it"
 	^ (super hasSameDefinitionAs: otherSlot) 
 		and: [ self targetClassName = otherSlot targetClassName 
 		and: [ inverseName = otherSlot inverseName ] ]

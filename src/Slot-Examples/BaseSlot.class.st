@@ -28,14 +28,6 @@ BaseSlot >> default: anObject [
 ]
 
 { #category : #comparing }
-BaseSlot >> hasSameDefinitionAs: otherSlot [
-
-	^ (super hasSameDefinitionAs: otherSlot) 
-		and: [ default = otherSlot default ]
-
-]
-
-{ #category : #comparing }
 BaseSlot >> hash [
 	^super hash bitXor: default hash
 ]

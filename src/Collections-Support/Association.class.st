@@ -40,13 +40,6 @@ Association >> isSelfEvaluating [
 	^ self class == Association and: [self key isSelfEvaluating and: [self value isSelfEvaluating]]
 ]
 
-{ #category : #testing }
-Association >> isSpecial [
-	"Implemented here so we can use simple Assocications as Bindings instead of LiteralVariable
-	subclasses"
-	^false
-]
-
 { #category : #accessing }
 Association >> key: aKey value: anObject [ 
 	"Store the arguments as the variables of the receiver."
@@ -79,6 +72,13 @@ Association >> storeOn: aStream [
 	aStream nextPutAll: '->'.
 	value storeOn: aStream.
 	aStream nextPut: $)
+]
+
+{ #category : #testing }
+Association >> useFullDefinition [
+	"Implemented here so we can use simple Assocications as Bindings instead of LiteralVariable
+	subclasses"
+	^false
 ]
 
 { #category : #evaluating }
