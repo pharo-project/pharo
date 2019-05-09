@@ -9,9 +9,9 @@ Class {
 }
 
 { #category : #private }
-FFIExternalUnion class >> compileFields: specArray withAccessors: defineBoolean [
-	| totalSize fieldSpec |
-			
+FFIExternalUnion class >> compileFields: specArray withAccessors: aSymbol [
+	| fieldSpec defineBoolean totalSize|
+	defineBoolean := aSymbol = #always.
 	fieldSpec := self fieldSpec.
 	totalSize := 0.	
 	externalStructureAlignment := 1.
