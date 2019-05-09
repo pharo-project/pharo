@@ -44,8 +44,8 @@ RPackageCategorySynchronisationTest >> testRenameCategoryAlsoRenameAllExtensionP
 	YPackage := self organizer packageNamed: #YYYYY.
 	ZPackage := self organizer packageNamed: #ZZZZZ.
 	
-	classInY := self createNewClassNamed: 'ClassInYPackage' inCategory: 'YYYYY'.
-	classInZ := self createNewClassNamed: 'ClassInZPackage' inCategory: 'ZZZZZ'. 
+	classInY := self createNewClassNamed: 'ClassInYPackage' inPackage: 'YYYYY'.
+	classInZ := self createNewClassNamed: 'ClassInZPackage' inPackage: 'ZZZZZ'. 
 	
 	self createMethodNamed:  'extensionFromXInClassInY'  inClass: classInY   inCategory: '*XXXXX'. 
 	self createMethodNamed:  'longNameExtensionFromXInClassInY'  inClass: classInY   inCategory: '*XXXXX-subcategory'.     

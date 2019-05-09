@@ -21,7 +21,7 @@ RPackageTagTest >> testAddClass [
 	| package1 package2 class |
 
 	package1 := (self packageClass named: #Test1) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test1'.
 	
 	self assert: (package1 includesClass: class).
 	
@@ -43,7 +43,7 @@ RPackageTagTest >> testAddClassFromTag [
 	| package1 package2 class |
 
 	package1 := (self packageClass named: #Test1) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test1-TAG1'.
 	
 	self assert: (package1 includesClass: class).
 	self assert: (package1 classTagNamed: #TAG1 ifAbsent: [ nil ]) notNil.
@@ -67,7 +67,7 @@ RPackageTagTest >> testAsRPackage [
 	| package1 tag convertedTag class |
 
 	package1 := (self packageClass named: #Test1) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test1-TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 	
 	tag := (package1 classTagNamed: #TAG1).
@@ -85,7 +85,7 @@ RPackageTagTest >> testAsRPackageWithExtensionMethods [
 	package1 addClassTag: #TAG1.
 
 	(self packageClass named: #Test2) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test2'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test2'.
 
 	class compile: 'foo ^42' classified: '*Test1-TAG1'.
 
@@ -100,7 +100,7 @@ RPackageTagTest >> testPromoteAsRPackage [
 	| package1 package2 class tag1 |
 
 	package1 := (self packageClass named: #Test1) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test1-TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
 	tag1 := package1 classTagNamed: 'TAG1'.
@@ -118,10 +118,10 @@ RPackageTagTest >> testPromoteAsRPackageWithExtension [
 	| packageOriginal packagePromoted class classOther tag |
 
 	packageOriginal := (self packageClass named: #Test1) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test1-TAG1'.
 	class compile: 'foo ^42' classified: #'accessing'.
 
-	classOther := self createNewClassNamed: 'TestClassOther' inCategory: 'XXXX'.
+	classOther := self createNewClassNamed: 'TestClassOther' inPackage: 'XXXX'.
 	classOther compile: 'bar ^42' classified: #'*Test1-TAG1'.
 
 	tag := packageOriginal classTagNamed: 'TAG1'.

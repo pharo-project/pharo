@@ -22,11 +22,11 @@ RPackageTestCase >> allManagers [
 
 { #category : #utilities }
 RPackageTestCase >> createNewClassNamed: aName [
-	^ self createNewClassNamed: aName inCategory: 'RPackageTest'
+	^ self createNewClassNamed: aName inPackage: 'RPackageTest'
 ]
 
 { #category : #utilities }
-RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
+RPackageTestCase >> createNewClassNamed: aName inPackage: cat [
 	
 	| cls |
 	cls := Object subclass: aName
@@ -36,15 +36,6 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 		category: cat.
 	createdClasses add: cls.
 	createdCategories add: cat.
-	^ cls
-]
-
-{ #category : #utilities }
-RPackageTestCase >> createNewClassNamed: aName inPackage: p [
-	
-	| cls |
-	cls := self createNewClassNamed: aName.
-	p addClassDefinition: cls.
 	^ cls
 ]
 
@@ -60,27 +51,18 @@ RPackageTestCase >> createNewPackageNamed: aName [
 
 { #category : #utilities }
 RPackageTestCase >> createNewTraitNamed: aName [
-	^ self createNewTraitNamed: aName inCategory: 'RPackageTest'
+	^ self createNewTraitNamed: aName inPackage: 'RPackageTest'
 ]
 
 { #category : #utilities }
-RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
+RPackageTestCase >> createNewTraitNamed: aName inPackage: aPackageName [
 	
 	| cls |
 	cls := Trait named: aName
 			uses: {}
-			category: cat.
+			package: aPackageName.
 	createdClasses add: cls.
-	createdCategories add: cat.
-	^ cls
-]
-
-{ #category : #utilities }
-RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
-	
-	| cls |
-	cls := self createNewTraitNamed: aName.
-	p addClassDefinition: cls.
+	createdCategories add: aPackageName.
 	^ cls
 ]
 

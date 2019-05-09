@@ -76,7 +76,7 @@ RPackageOrganizerTest >> setUp [
 	packageOrganizer debuggingName: 'For PackageOrganizerTest'.
 	previousAuthor := Author fullName ifNil: [Author fullName: 'RPackage'].
 	
-	self createNewClassNamed: 'QuadrangleForTesting' inCategory: self class category.
+	self createNewClassNamed: 'QuadrangleForTesting' inPackage: self class category.
 	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'.
 ]
 
@@ -387,7 +387,7 @@ RPackageOrganizerTest >> testSilentlyRenameCategoryToBe [
 
 	| class |
 	
-	class := self createNewClassNamed: #ClassForTestAboutSilentRecategorization inCategory: 'RPackage-Tests'.
+	class := self createNewClassNamed: #ClassForTestAboutSilentRecategorization inPackage: 'RPackage-Tests'.
 	class organization addCategory:#foo.
 	self assert: (class organization categories includes: #foo).
 	self deny: (class organization categories includes: #bar).

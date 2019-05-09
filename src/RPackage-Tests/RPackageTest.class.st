@@ -33,7 +33,7 @@ RPackageTest >> testAddClass [
 
 	package1 := (RPackage named: #Test1) register.
 	done := 0.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test1-TAG'.
 	SystemAnnouncer uniqueInstance when: ClassRecategorized do: [ done := done + 1].
 	
 	self assert: (package1 includesClass: class).
@@ -56,7 +56,7 @@ RPackageTest >> testAddClassFromTag [
 	| package1 package2 class |
 
 	package1 := (self packageClass named: #Test1) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test1-TAG'.
 	
 	self assert: (package1 includesClass: class).
 	
@@ -94,7 +94,7 @@ RPackageTest >> testDemoteToRPackageNamed [
 	| package1 package2 class  |
 
 	package1 := (self packageClass named: #'Test1-TAG1') register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test1-TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
 	package1 demoteToTagInPackageNamed: 'Test1'.
@@ -112,7 +112,7 @@ RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 
 	package1 := (self packageClass named: #'Test1-TAG1') register.
 	packageExisting := (self packageClass named: #'Test1') register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test1-TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
 	package1 demoteToTagInPackageNamed: 'Test1'.
@@ -130,7 +130,7 @@ RPackageTest >> testDemoteToRPackageNamedMultilevelPackage1 [
 	| package1 package2  class  |
 
 	package1 := (self packageClass named: #'Test1-TAG1-X1') register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1-X1'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test1-TAG1-X1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
 	package1 demoteToTagInPackageNamed: 'Test1'.
@@ -147,7 +147,7 @@ RPackageTest >> testDemoteToRPackageNamedMultilevelPackage2 [
 	| package1 package2  class  |
 
 	package1 := (self packageClass named: #'Test1-TAG1-X1') register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1-X1'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test1-TAG1-X1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
 	package1 demoteToTagInPackageNamed: 'Test1-TAG1'.
@@ -164,10 +164,10 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 	| packageOriginal packageDemoted class classOther |
 
 	packageOriginal := (RPackage named: #'Test1-TAG1') register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
+	class := self createNewClassNamed: 'TestClass' inPackage: 'Test1-TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
-	classOther := self createNewClassNamed: 'TestClassOther' inCategory: 'XXXX'.
+	classOther := self createNewClassNamed: 'TestClassOther' inPackage: 'XXXX'.
 	classOther compile: 'bar ^42' classified: #'*Test1-TAG1'.
 
 	packageOriginal demoteToTagInPackageNamed: 'Test1'.
@@ -230,7 +230,7 @@ RPackageTest >> testRenameToMakesMCDirty [
 	| package |
 	
 	package := (self packageClass named: #'Test1') register.
-	self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
+	self createNewClassNamed: 'TestClass' inPackage: 'Test1'.
 	
 	package renameTo: 'Test2'.
 	

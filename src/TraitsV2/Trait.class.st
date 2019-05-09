@@ -52,7 +52,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection category: aStrin
 		named: aName
 		uses: aTraitCompositionOrCollection
 		slots: #()
-		category: aString
+		package: aString
 		env: anEnvironment
 ]
 

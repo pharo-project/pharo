@@ -138,7 +138,7 @@ RPackageMCSynchronisationTest >> createNewClassNamed: aName [
 ]
 
 { #category : #private }
-RPackageMCSynchronisationTest >> createNewClassNamed: aName inCategory: aCategoryName [
+RPackageMCSynchronisationTest >> createNewClassNamed: aName inPackage: aCategoryName [
 	
 	| cls |
 	cls := Object subclass: aName asSymbol
@@ -150,12 +150,12 @@ RPackageMCSynchronisationTest >> createNewClassNamed: aName inCategory: aCategor
 ]
 
 { #category : #private }
-RPackageMCSynchronisationTest >> createNewTraitNamed: aName inCategory: aCategoryName [
+RPackageMCSynchronisationTest >> createNewTraitNamed: aName inPackage: aPackageName [
 	
 	| trait |
 	trait := Trait named: aName asSymbol
-			uses: {}
-			category: aCategoryName.
+					uses: {}
+					package: aPackageName.
 	^ trait
 ]
 
@@ -233,7 +233,7 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodBy
 	self addXYCategory. 
 	firstPackage := self organizer  packageNamed: #XXXXX.
 	secondPackage := self organizer  packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass:  class inCategory: '*yyyyy'.
 	
@@ -256,7 +256,7 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicC
 	self addXYCategory. 
 	firstPackage := self organizer  packageNamed: #XXXXX.
 	secondPackage := self organizer  packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 
 	self createMethodNamed: 'stubMethod' inClass:  class inCategory: 'classic'.
 	
@@ -279,7 +279,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	self addXYCategory. 
 	firstPackage := self organizer  packageNamed: #XXXXX.
 	secondPackage := self organizer  packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass:  class inCategory: 'classic category'.
 	
 	class organization classify: #stubMethod under: '*yyyyy'.		
@@ -309,7 +309,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	secondPackage := self organizer packageNamed: #YYYYY.
 	thirdPackage := self organizer packageNamed: #ZZZZZ.
 	
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass:  class inCategory: '*yyyyy'.
 	
 	class organization classify: #stubMethod under: '*zzzzz'.
@@ -332,7 +332,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 	self addXYCategory. 
 	firstPackage := self organizer  packageNamed: #XXXXX.
 	secondPackage := self organizer  packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass:  class inCategory: '*yyyyy'.
 	
 	class organization classify: #stubMethod under: 'classic one'.		

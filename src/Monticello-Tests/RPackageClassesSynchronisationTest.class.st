@@ -15,7 +15,7 @@ RPackageClassesSynchronisationTest >> testAddClassAddItIntoPackageBestMatchName 
 	self addXMatchCategory.
 	
 	tmpPackage := self organizer packageNamed: #'XXXXX'.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX-YYYY'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX-YYYY'.
 
 	self assert: (tmpPackage definesClass: class).
 	self assert: class package equals: tmpPackage
@@ -29,7 +29,7 @@ RPackageClassesSynchronisationTest >> testAddClassAddItIntoPackageExactName [
 	self addXMatchCategory.
 
 	tmpPackage := self organizer packageNamed: #XXXXX.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 
 	self assert: (tmpPackage definesClass: class).
 	self assert: class package equals: tmpPackage
@@ -43,7 +43,7 @@ RPackageClassesSynchronisationTest >> testAddClassUpdateTheOrganizerMappings [
 	self addXCategory.
 	
 	tmpPackage := self organizer packageNamed: #XXXXX.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	 
 	self assert: class package equals: tmpPackage
 ]
@@ -64,7 +64,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRaisesClassRepackaged
 	self addYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	class category: 'YYYYY'.	
 	
 	self assert: ann notNil.
@@ -85,7 +85,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassInThe
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
 	
-	class := self createNewClassNamed: 'NewClass' inCategory: 'YYYYY'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'YYYYY'.
 	
 	class category: 'XXXXX-YYYY'.
 	self assert: (self organizer packageOf: class) = XPackage. 
@@ -103,7 +103,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassInThe
 	self addYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'YYYYY'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'YYYYY'.
 	
 	class category: 'XXXXX'.
 	
@@ -122,7 +122,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassInThe
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
 	
-	class := self createNewClassNamed: 'NewClass' inCategory: 'YYYYY'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'YYYYY'.
 	
 	class category: 'XXXXX'.
 	self deny: (self organizer packageOf: class) = YPackage. 
@@ -142,7 +142,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassMetho
 	YPackage := self organizer packageNamed: #YYYYY.
 	ZPackage := self organizer packageNamed: #ZZZZZ.
 	
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'method1' inClass: class inCategory: 'category'.
 	self createMethodNamed: 'method2' inClass: class inCategory: '*zzzzz'.
 	self createMethodNamed: 'method3' inClass: class inCategory: '*yyyyy'.
@@ -174,7 +174,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassUnregisterTheClassFro
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
 	
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 
 	class category: 'YYYYY'.
 	self deny: (XPackage includesClass: class).
@@ -192,7 +192,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassUnregisterTheClassMet
 	YPackage := self organizer packageNamed: #YYYYY.
 	ZPackage := self organizer packageNamed: #ZZZZZ.
 	
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'method1' inClass: class inCategory: 'category'.
 	self createMethodNamed: 'method2' inClass: class inCategory: '*zzzzz'.
 	self createMethodNamed: 'method3' inClass: class inCategory: '*yyyyy'.
@@ -212,7 +212,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassUpdateTheOrganizerMap
 	self addYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	class category: 'YYYYY'.	
 	self assert: (self organizer packageOf: class) equals: YPackage		
 ]
@@ -230,7 +230,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassWithMetaClassMethodsR
 	YPackage := self organizer packageNamed: #YYYYY.
 	ZPackage := self organizer packageNamed: #ZZZZZ.
 	
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	
 	self createMethodNamed: 'method1' inClass: class classSide inCategory: 'category'.
 	self createMethodNamed: 'method2' inClass: class classSide inCategory: '*yyyyy'.
@@ -254,7 +254,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassWithUnexistingPackage
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self assert: (self organizer packageOf: class) = XPackage. 
 	
 	class category: 'YYYYY'.
@@ -271,7 +271,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassDefinedMe
 	|XPackage  class|
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: 'classic category'. 
 	
 	Smalltalk removeClassNamed: 'NewClass'. 
@@ -286,7 +286,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassExtension
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'. 
 	
 	Smalltalk removeClassNamed: 'NewClass'. 
@@ -300,7 +300,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassFromItsPa
 	|XPackage  class|
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	
 	Smalltalk removeClassNamed: 'NewClass'. 
 	self deny: (XPackage includesClass: class)
@@ -313,7 +313,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUpdateTheOrganizerMappings 
 	|XPackage  class|
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 
 	Smalltalk removeClassNamed: 'NewClass'. 
 	self deny: (self organizer includesPackageBackPointerForClass: class)
@@ -327,7 +327,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedInThePare
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	
-	class := self createNewClassNamed: 'RPackageOldStubClass' inCategory: 'XXXXX'.	
+	class := self createNewClassNamed: 'RPackageOldStubClass' inPackage: 'XXXXX'.	
 	class rename: 'RPackageNewStubClass'.
 	
 	self assert: (XPackage includesClassNamed: 'RPackageNewStubClass'). 
@@ -341,7 +341,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedSelectors
 	| XPackage  class |
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: 'classic category'.
 	
 	class rename: 'RPackageNewStubClass'.
@@ -358,7 +358,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateClassExtensionSelecto
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'.
 	
 	class rename: 'RPackageNewStubClass'.
@@ -374,7 +374,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassDefinedSelec
 	| XPackage  class |
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClassSideOfClass: class  inCategory: 'classic category'.
 	
 	class rename: 'RPackageNewStubClass'.
@@ -391,7 +391,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassExtensionSel
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClassSideOfClass: class  inCategory: '*yyyyy'.
 	
 	class rename: 'RPackageNewStubClass'.
@@ -408,7 +408,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassExtendi
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'RPackageOldStubClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'RPackageOldStubClass' inPackage: 'XXXXX'.
 	self createMethodNamed: #stubMethod inClass: class inCategory: '*yyyyy'. 
 	
 	class rename: 'RPackageNewStubClass'.
@@ -424,7 +424,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassPackage
 	| XPackage class |
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	class := self createNewClassNamed: 'RPackageOldStubClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'RPackageOldStubClass' inPackage: 'XXXXX'.
 	
 	class rename: 'RPackageNewStubClass'.
 	
@@ -439,7 +439,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByAddingExtensionProtoc
 	|class| 
 	self addXCategory.
 	 
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.  
 	class organization addCategory: '*yyyyy' before: nil.
 	
@@ -453,7 +453,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByAddingNewProtocolDoes
 	|XPackage class| 
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.  
 	class organization addCategory: 'accessing' before: nil.
 	
@@ -470,7 +470,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRemovingClassicCatego
 		
 	self addXCategory.
 	XPackage := self organizer packageNamed: 'XXXXX'.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: 'classic category'.
 	class removeProtocol: 'classic category'.
 	self deny: (XPackage includesDefinedSelector: #stubMethod ofClass: class).
@@ -484,7 +484,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRemovingExtensionCate
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage  := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'.
 	
@@ -501,7 +501,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingClassicCatego
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage  := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: 'classic category'.
 	self createMethodNamed: 'stubMethod2' inClass: class  inCategory: 'classic category'.
@@ -522,7 +522,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingClassicCatego
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage  := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: 'classic category'.
 	class organization renameCategory: 'classic category' toBe: '*yyyyy'.
 	self assert: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
@@ -538,7 +538,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCate
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage  := self organizer packageNamed: #YYYYY.
 	ZPackage  := self organizer packageNamed: #ZZZZZ.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'.
 	class organization renameCategory: '*yyyyy' toBe: '*zzzzz'.
 	self assert: (ZPackage includesExtensionSelector: #stubMethod ofClass: class).
@@ -554,7 +554,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCate
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage  := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'.
 	self createMethodNamed: 'stubMethod2' inClass: class  inCategory: '*yyyyy'.
@@ -575,7 +575,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCate
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage  := self organizer packageNamed: #YYYYY.
-	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
+	class := self createNewClassNamed: 'NewClass' inPackage: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'.
 	class organization renameCategory: '*yyyyy' toBe: 'classic category'.
 	self deny: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
