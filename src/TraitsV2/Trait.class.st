@@ -194,7 +194,7 @@ Trait >> definition [
 		self classLayout visibleSlots ifNotEmpty: [ 
 			s tab; nextPutAll: ' slots: ';
 			nextPutAll: self slotDefinitionString; cr. ].
-		s tab; nextPutAll: ' category: ';
+		s tab; nextPutAll: ' package: ';
 			nextPutAll: self category asString printString
 	]
 ]
