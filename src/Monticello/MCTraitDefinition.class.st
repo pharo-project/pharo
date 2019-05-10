@@ -82,7 +82,7 @@ MCTraitDefinition >> createClass [
 		named: name
 		uses: (Smalltalk compiler evaluate: self traitCompositionString)
 		slots: self instanceVariables
-		category: category.
+		package: category.
 	trait ifNotNil: [
 		trait classComment: comment stamp: commentStamp.
 		self classInstanceVariables ifNotEmpty: [
