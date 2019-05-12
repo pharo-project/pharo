@@ -184,7 +184,7 @@ MCTraitDefinition >> printDefinitionOn: stream [
 		
 	stream
 		 tab;
-		 nextPutAll: 'category: ';
+		 nextPutAll: 'package: ';
 		 store: self category asString
 
 ]
