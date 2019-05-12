@@ -131,7 +131,7 @@ FLSerializationTest >> newTraitNamed: traitName inCategory: aCategory [
 	^ self classFactory
 		newTraitNamed: traitName asSymbol
 		uses: Array new 
-		category: aCategory asSymbol
+		tag: aCategory asSymbol
 ]
 
 { #category : #'traits-factory' }
@@ -139,7 +139,7 @@ FLSerializationTest >> newTraitSuffixed: suffix [
 	^ self classFactory
 		newTraitNamed: (self traitNamePrefix, suffix) asSymbol
 		uses: Array new 
-		category: (self classFactory packageName, '-', self classFactory defaultTagPostfix) asSymbol
+		tag: (self classFactory packageName, '-', self classFactory defaultTagPostfix) asSymbol
 ]
 
 { #category : #'traits-factory' }
