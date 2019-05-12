@@ -129,7 +129,7 @@ LiteralVariable >> name: aString [
 
 { #category : #testing }
 LiteralVariable >> needsFullDefinition [
-	"only ClassVariable can used a simplified definition"
+	"only ClassVariable can use a simplified definition"
 
 	^ self class ~= ClassVariable
 ]
