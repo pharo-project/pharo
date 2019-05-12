@@ -18,6 +18,21 @@ HistorySlotTest >> testAddOneElement [
 ]
 
 { #category : #tests }
+HistorySlotTest >> testAddOneElementAndModifyClass [
+	| slot instance |
+	slot := #slot1 => HistorySlot.
+	aClass := self make: [ :builder | builder slots: {slot} ].
+
+	self compileAccessorsFor: slot.
+
+	instance := aClass new.
+	instance slot1: 25.
+	
+	aClass addInstVarNamed: 'x'.
+	self assert: instance slot1 equals: 25
+]
+
+{ #category : #tests }
 HistorySlotTest >> testAddTwoElements [
 	| slot instance |
 	slot := #slot1 => HistorySlot.
@@ -76,4 +91,23 @@ HistorySlotTest >> testIsFirstElementNil [
 	instance := aClass new.
 
   	self assert: (instance slot1)  equals:  nil.
+]
+
+{ #category : #tests }
+HistorySlotTest >> testModifyIvarToHistory [
+	"test if we can transform a standard ivar to a history slot when instances are present"
+
+	| slot instance |
+	slot := #slot1 =>InstanceVariableSlot .
+	aClass := self make: [ :builder | builder slots: {slot} ].
+
+	self compileAccessorsFor: slot.
+
+	instance := aClass new.
+	instance slot1: 25.
+	slot := #slot1 =>HistorySlot.
+	aClass := self make: [ :builder | builder slots: {slot} ].
+	
+	self assert: instance slot1 equals: 25.
+	self assert: (slot readHistory: instance) asArray equals: #(nil 25)
 ]

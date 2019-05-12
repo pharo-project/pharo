@@ -38,7 +38,7 @@ InstanceVariableSlot class >> resetIvarSlots [
 { #category : #printing }
 InstanceVariableSlot >> definitionString [
 	"non special globals are defined by the symbol"
-	^self useFullDefinition
+	^self needsFullDefinition
 		ifTrue: [super definitionString]
 		ifFalse: [self name printString]
 
@@ -73,7 +73,7 @@ InstanceVariableSlot >> isWrittenIn: aCompiledCode [
 ]
 
 { #category : #testing }
-InstanceVariableSlot >> useFullDefinition [
+InstanceVariableSlot >> needsFullDefinition [
 	"I am just a backward compatible ivar slot and can use simple definitons.
 	 Note: my subclasses need full definitons"
 

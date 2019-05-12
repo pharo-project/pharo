@@ -127,6 +127,13 @@ LiteralVariable >> name: aString [
 	self key: aString asSymbol
 ]
 
+{ #category : #testing }
+LiteralVariable >> needsFullDefinition [
+	"only ClassVariable can use a simplified definition"
+
+	^ self class ~= ClassVariable
+]
+
 { #category : #properties }
 LiteralVariable >> properties [
 	^ Properties at: self ifAbsent: nil
@@ -191,13 +198,6 @@ LiteralVariable >> removeProperty: propName ifAbsent: aBlock [
 		ifAbsent: aBlock.
 	self removePropertiesIfEmpty.
 	^ property
-]
-
-{ #category : #testing }
-LiteralVariable >> useFullDefinition [
-	"only ClassVariable can used a simplified definition"
-
-	^ self class ~= ClassVariable
 ]
 
 { #category : #queries }

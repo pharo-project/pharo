@@ -286,6 +286,12 @@ Slot >> name: aSymbol [
 	name := aSymbol
 ]
 
+{ #category : #testing }
+Slot >> needsFullDefinition [
+	"I am more than just a backward compatible ivar slot, I need a full definition "
+	^true
+]
+
 { #category : #accessing }
 Slot >> owningClass [
 	"the class that the slot is installed in"
@@ -401,12 +407,6 @@ Slot >> size [
 { #category : #printing }
 Slot >> storeOn: aStream [
 	^self printOn: aStream
-]
-
-{ #category : #testing }
-Slot >> useFullDefinition [
-	"I am more than just a backward compatible ivar slot, I need a full definition "
-	^true
 ]
 
 { #category : #queries }

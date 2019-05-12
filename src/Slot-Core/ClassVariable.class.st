@@ -15,7 +15,7 @@ Class {
 { #category : #printing }
 ClassVariable >> definitionString [
 	"non special globals are defined by the symbol"
-	^self useFullDefinition
+	^self needsFullDefinition
 		ifTrue: [super definitionString]
 		ifFalse: [self name printString]
 
