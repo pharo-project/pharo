@@ -58,7 +58,7 @@ Association >> literalEqual: otherLiteral [
 
 { #category : #testing }
 Association >> needsFullDefinition [
-	"Implemented here so we can use simple Assocications as Bindings instead of LiteralVariable
+	"Implemented here so we can use simple Associations as Bindings instead of LiteralVariable
 	subclasses"
 	^false
 ]
