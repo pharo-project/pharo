@@ -9,9 +9,9 @@ Class {
 }
 
 { #category : #private }
-FFIExternalPackedStructure class >> compileFields: specArray withAccessors: defineBoolean [
-	| offset fieldSpec |
-			
+FFIExternalPackedStructure class >> compileFields: specArray withAccessors: aSymbol [
+	| offset fieldSpec defineBoolean|
+	defineBoolean := aSymbol = #always.
 	fieldSpec := self fieldSpec.
 	offset := 0.	
 	externalStructureAlignment := self packedStructureAlignment.
