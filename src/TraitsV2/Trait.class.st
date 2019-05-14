@@ -199,18 +199,6 @@ Trait >> definition [
 	]
 ]
 
-{ #category : #accessing }
-Trait >> definitionForNautilus [
-
-	^ self definition
-]
-
-{ #category : #accessing }
-Trait >> definitionForNautilusWithSlots [
-
-	^ self definition
-]
-
 { #category : #testing }
 Trait >> isBaseTrait [
 	

@@ -60,7 +60,7 @@ TransmissionExample >> initializeWidgets [
 				collect: [ :each | aClass -> each ]
 				as: OrderedCollection ]
 		postTransmission: [ :destination :origin | destination selectIndex: 1 ].
-	classes transmitTo: code transform: #definitionForNautilusWithSlots.
+	classes transmitTo: code transform: #definitionWithSlots.
 			
 	protocols 
 		transmitTo: methods 
