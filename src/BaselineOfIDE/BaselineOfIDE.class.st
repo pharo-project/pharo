@@ -882,7 +882,7 @@ BaselineOfIDE >> loadCalypso [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.6.0';
+		repository: 'github://pharo-vcs/iceberg:v1.7.0';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 	(Smalltalk classNamed: #IcePharoPlugin) addPharoProjectToIceberg.
