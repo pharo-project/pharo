@@ -642,12 +642,6 @@ ClassDescription >> definitionForNautilus [
 	^ self definition
 ]
 
-{ #category : #accessing }
-ClassDescription >> definitionForNautilusWithSlots [
-
-	^ self definition
-]
-
 { #category : #'filein/out' }
 ClassDescription >> definitionWithSlots [
 	"the class definition with a way to specify slots. Shown when the class defines special Slot"
