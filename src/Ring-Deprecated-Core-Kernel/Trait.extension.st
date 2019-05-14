@@ -12,12 +12,12 @@ Trait >> asRingDefinition [
 		traitCompositionSource: self traitCompositionString;
 		comment: self organization classComment;
 		stamp: self organization commentStamp;
-		definitionSource: self definition;
+		definitionSource: self oldDefinition;
 		withMetaclass.
 		
 	ring classSide 
 		traitCompositionSource: self classSide traitCompositionString;
-		definitionSource: self classSide definition.
+		definitionSource: self classSide oldDefinition.
 	^ring
 ]
 
