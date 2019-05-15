@@ -590,56 +590,12 @@ ClassDescription >> copyCategory: cat from: aClass classified: newCat [
 { #category : #'filein/out' }
 ClassDescription >> definition [
 	"Answer a String that defines the receiver."
-	| stream poolString |
-	
-	(self usesSpecialVariables or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
+
+	(self needsSlotClassDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
 		^ self definitionWithSlots ].
 	
-	poolString := self sharedPoolsString.
-	stream := (String new: 800) writeStream.
-	superclass
-		ifNotNil: [ stream nextPutAll: superclass name ]
-		ifNil: [ stream nextPutAll: 'ProtoObject' ].
+	^ self definitionWithoutSlots
 	
-	stream
-		nextPutAll: self kindOfSubclass;
-		store: self name.
-	self hasTraitComposition ifTrue: [ 
-		stream
-			crtab;
-			nextPutAll: 'uses: ';
-			nextPutAll: self traitCompositionString ].
-	stream
-		crtab;
-		nextPutAll: 'instanceVariableNames: ';
-		store: self instanceVariablesString.
-	stream
-		crtab;
-		nextPutAll: 'classVariableNames: ';
-		store: self classVariablesString.
-	
-	poolString = '' ifFalse: [ 
-		stream 
-			crtab;
-			nextPutAll: 'poolDictionaries: ';
-			store: poolString ].
-	
-	stream
-		crtab;
-		nextPutAll: 'package: ';
-		store: self category asString.
-		
-	superclass ifNil: [ 
-		stream
-			nextPutAll: '.';
-			cr.
-		stream 
-			nextPutAll: self name.
-		stream
-			space;
-			nextPutAll: 'superclass: nil' ].
-
-	^ stream contents
 ]
 
 { #category : #accessing }
@@ -701,6 +657,58 @@ ClassDescription >> definitionWithSlots [
 		stream space; nextPutAll: 'superclass: nil'. ].
 
 	^ stream contents
+]
+
+{ #category : #'filein/out' }
+ClassDescription >> definitionWithoutSlots [
+	| poolString stream |
+
+	poolString := self sharedPoolsString.
+	stream := (String new: 800) writeStream.
+	superclass
+		ifNotNil: [ stream nextPutAll: superclass name ]
+		ifNil: [ stream nextPutAll: 'ProtoObject' ].
+	
+	stream
+		nextPutAll: self kindOfSubclass;
+		store: self name.
+	self hasTraitComposition ifTrue: [ 
+		stream
+			crtab;
+			nextPutAll: 'uses: ';
+			nextPutAll: self traitCompositionString ].
+	stream
+		crtab;
+		nextPutAll: 'instanceVariableNames: ';
+		store: self instanceVariablesString.
+	stream
+		crtab;
+		nextPutAll: 'classVariableNames: ';
+		store: self classVariablesString.
+	
+	poolString = '' ifFalse: [ 
+		stream 
+			crtab;
+			nextPutAll: 'poolDictionaries: ';
+			store: poolString ].
+	
+	stream
+		crtab;
+		nextPutAll: 'package: ';
+		store: self category asString.
+		
+	superclass ifNil: [ 
+		stream
+			nextPutAll: '.';
+			cr.
+		stream 
+			nextPutAll: self name.
+		stream
+			space;
+			nextPutAll: 'superclass: nil' ].
+
+	^ stream contents
+	
 ]
 
 { #category : #private }

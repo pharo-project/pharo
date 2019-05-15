@@ -114,15 +114,10 @@ Metaclass >> classVarNames [
 Metaclass >> definition [
 	"Refer to the comment in ClassDescription|definition."
 
-	(self usesSpecialSlot or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
+	(self needsSlotClassDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
 		^ self definitionWithSlots ].
 
-	^ String streamContents: [:stream |
-		stream print: self.
-		stream
-			crtab;
-			nextPutAll: 'instanceVariableNames: ';
-			store: self instanceVariablesString ]
+	^ self definitionWithoutSlots
 ]
 
 { #category : #'fileIn/Out' }
@@ -135,6 +130,17 @@ Metaclass >> definitionWithSlots [
 			crtab;
 			nextPutAll: 'slots: ';
 			nextPutAll: self slotDefinitionString ]
+]
+
+{ #category : #'fileIn/Out' }
+Metaclass >> definitionWithoutSlots [
+
+	^ String streamContents: [:stream |
+		stream print: self.
+		stream
+			crtab;
+			nextPutAll: 'instanceVariableNames: ';
+			store: self instanceVariablesString ]
 ]
 
 { #category : #accessing }
