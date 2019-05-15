@@ -1,11 +1,11 @@
 Class {
-	#name : #ExampleSlotWithDefaultValueTest,
+	#name : #InitializedSlotTest,
 	#superclass : #SlotSilentTest,
 	#category : #'Slot-Tests-Examples'
 }
 
 { #category : #tests }
-ExampleSlotWithDefaultValueTest >> testExampleSlotWithDefaultValueCompiled [
+InitializedSlotTest >> testReadWriteCompiled [
 	| slot object|
 	slot := #slot1 => InitializedSlot default: 5.
 	aClass := self make: [ :builder | builder slots: {slot}].
@@ -25,7 +25,7 @@ ExampleSlotWithDefaultValueTest >> testExampleSlotWithDefaultValueCompiled [
 ]
 
 { #category : #tests }
-ExampleSlotWithDefaultValueTest >> testExampleSlotWithDefaultValueReflective [
+InitializedSlotTest >> testReflectiveReadWrite [
 	| slot object|
 	slot := #slot1 => InitializedSlot default: 5.
 	aClass := self make: [ :builder | builder slots: {slot}].
@@ -44,7 +44,7 @@ ExampleSlotWithDefaultValueTest >> testExampleSlotWithDefaultValueReflective [
 ]
 
 { #category : #tests }
-ExampleSlotWithDefaultValueTest >> testExampleSlotWithDefaultValueReflectiveSlot [
+InitializedSlotTest >> testReflectiveReadWriteBlock [
 	| slot object|
 	slot := #slot1 => InitializedSlot defaultBlock: [4+1].
 	aClass := self make: [ :builder | builder slots: {slot}].

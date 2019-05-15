@@ -286,6 +286,12 @@ Slot >> name: aSymbol [
 	name := aSymbol
 ]
 
+{ #category : #accessing }
+Slot >> named: aSymbol [
+	"to be polymorhic with slot class"
+	self name: aSymbol
+]
+
 { #category : #testing }
 Slot >> needsFullDefinition [
 	"I am more than just a backward compatible ivar slot, I need a full definition "
