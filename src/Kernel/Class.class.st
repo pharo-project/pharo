@@ -447,7 +447,7 @@ Class >> definitionForNautilus [
 	"Answer a String that defines the receiver."
 
 	| aStream poolString |
-	(self usesSpecialVariables or: [ Slot showSlotClassDefinition ])
+	(self needsSlotClassDefinition or: [ Slot showSlotClassDefinition ])
 		ifTrue: [ ^ self definitionForNautilusWithSlots ].
 	poolString := self sharedPoolsString.
 	aStream := (String new: 800) writeStream.

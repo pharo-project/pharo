@@ -2,10 +2,7 @@ Extension { #name : #Symbol }
 
 { #category : #'*Slot-Core' }
 Symbol >> => aVariable [
-	aVariable isBehavior
-		ifTrue: [ ^ aVariable named: self].
-	^ aVariable name: self;
-		yourself
+	^ aVariable named: self
 ]
 
 { #category : #'*Slot-Core' }

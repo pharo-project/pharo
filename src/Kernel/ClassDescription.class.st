@@ -334,6 +334,12 @@ ClassDescription >> classThatDefinesInstanceVariable: instVarName [
 	^self superclass ifNotNil: [self superclass classThatDefinesInstanceVariable: instVarName]
 ]
 
+{ #category : #slots }
+ClassDescription >> classVariablesNeedFullDefinition [
+
+	^self classVariables anySatisfy: [ :each | each needsFullDefinition ]
+]
+
 { #category : #printing }
 ClassDescription >> classVariablesString [
 	"Answer a string of my class variable names separated by spaces."
@@ -843,6 +849,12 @@ ClassDescription >> methodsTaggedWith: aSymbol [
 	^self localMethods select: [ :each | each isTaggedWith: aSymbol ]
 ]
 
+{ #category : #slots }
+ClassDescription >> needsSlotClassDefinition [
+    "return true if we define something else than InstanceVariableSlots or normal class variables"
+    ^self slotsNeedFullDefinition or: [ self class slotsNeedFullDefinition or: [self classVariablesNeedFullDefinition ]]
+]
+
 { #category : #private }
 ClassDescription >> newInstanceFrom: oldInstance variable: variable size: instSize [
 	"Create a new instance of the receiver based on the given old instance.
@@ -1158,6 +1170,12 @@ ClassDescription >> slots [
 	^self classLayout visibleSlots
 ]
 
+{ #category : #slots }
+ClassDescription >> slotsNeedFullDefinition [
+	"return true if we define something else than InstanceVariableSlots"
+	^self slots anySatisfy: [ :each | each needsFullDefinition ]
+]
+
 { #category : #private }
 ClassDescription >> spaceUsed [
 	^super spaceUsed + (self hasClassSide
@@ -1326,24 +1344,6 @@ ClassDescription >> usesPoolVarNamed: aString [
 	"Only classes may use a pool variable named: aString"
 	
 	^ false
-]
-
-{ #category : #slots }
-ClassDescription >> usesSpecialClassVariables [
-
-	^self classVariables anySatisfy: [ :each | each needsFullDefinition ]
-]
-
-{ #category : #slots }
-ClassDescription >> usesSpecialSlot [
-	"return true if we define something else than InstanceVariableSlots"
-	^self slots anySatisfy: [ :each | each needsFullDefinition ]
-]
-
-{ #category : #slots }
-ClassDescription >> usesSpecialVariables [
-    "return true if we define something else than InstanceVariableSlots"
-    ^self usesSpecialSlot or: [ self class usesSpecialSlot or: [self usesSpecialClassVariables ]]
 ]
 
 { #category : #compiling }

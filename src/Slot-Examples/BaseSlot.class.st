@@ -34,7 +34,7 @@ BaseSlot >> hash [
 
 { #category : #initalize }
 BaseSlot >> initialize: anObject [
-	self write: default to: anObject
+	self write: default copy to: anObject
 ]
 
 { #category : #testing }

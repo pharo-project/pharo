@@ -186,7 +186,7 @@ MCClassDefinition >> classInstanceVariables [
 
 	variables ifNil: [ ^ #() ].
 
-	^self usesSpecialVariables 
+	^self needsSlotClassDefinition 
 		ifTrue: [ self variablesOfType: #isClassInstanceVariable]
 		ifFalse: [self classInstanceVariablesString asSlotCollection]
 ]
@@ -223,7 +223,7 @@ MCClassDefinition >> classVarNames [
 
 { #category : #printing }
 MCClassDefinition >> classVariables [
-	^self usesSpecialVariables 
+	^self needsSlotClassDefinition 
 		ifTrue: [self sortedVariablesOfType: #isClassVariable ]
 		ifFalse: [(self classVariablesString substrings: ' ') collect: [:x | x asSymbol => ClassVariable]].
 
@@ -391,7 +391,7 @@ MCClassDefinition >> instVarNames [
 
 { #category : #printing }
 MCClassDefinition >> instanceVariables [
-	^self usesSpecialVariables 
+	^self needsSlotClassDefinition 
 		ifTrue: [self variablesOfType: #isInstanceVariable]
 		ifFalse: [self instanceVariablesString asSlotCollection]
 ]
@@ -429,6 +429,14 @@ MCClassDefinition >> kindOfSubclass [
 { #category : #installing }
 MCClassDefinition >> load [
 	self createClass
+]
+
+{ #category : #installing }
+MCClassDefinition >> needsSlotClassDefinition [
+	"this checks if any ivar or class var is using more than just standard definitions.
+	Complex vars are encoded with a string that starts with a # or one that has a space"
+	
+	^self variables anySatisfy: [:var | (var name beginsWith:'#') or: [ var name includes: Character space ]]
 ]
 
 { #category : #accessing }
@@ -621,14 +629,6 @@ MCClassDefinition >> type [
 { #category : #installing }
 MCClassDefinition >> unload [
 	Smalltalk globals removeClassNamed: name
-]
-
-{ #category : #installing }
-MCClassDefinition >> usesSpecialVariables [
-	"this checks if any ivar or class var is using more than just standard definitions.
-	Complex vars are encoded with a string that starts with a # or one that has a space"
-	
-	^self variables anySatisfy: [:var | (var name beginsWith:'#') or: [ var name includes: Character space ]]
 ]
 
 { #category : #accessing }

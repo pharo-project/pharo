@@ -15,7 +15,7 @@ Class {
 
 { #category : #initialization }
 InitializedSlot >> initialize: anObject [
-	self write: (default cull: anObject) to: anObject
+	self write: (default copy cull: anObject) to: anObject
 ]
 
 { #category : #'meta-object-protocol' }

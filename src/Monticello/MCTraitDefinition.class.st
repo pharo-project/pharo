@@ -64,7 +64,7 @@ MCTraitDefinition >> accept: aVisitor [
 { #category : #printing }
 MCTraitDefinition >> classSlotDefinitionString [
 
-	^ self usesSpecialVariables 
+	^ self needsSlotClassDefinition 
 		ifTrue: [ self classInstanceVariables asString ]
 		ifFalse: [ 
 			String streamContents: [ :stream |
@@ -207,7 +207,7 @@ MCTraitDefinition >> slotDefinitionString [
 
 	variables ifNil: [ ^ '{ }' ].
 
-	^ self usesSpecialVariables 
+	^ self needsSlotClassDefinition 
 		ifTrue: [ self instanceVariables asString ]
 		ifFalse: [ 
 			String streamContents: [ :stream |
