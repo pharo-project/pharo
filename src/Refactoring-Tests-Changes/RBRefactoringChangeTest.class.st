@@ -144,7 +144,7 @@ RBRefactoringChangeTest >> testAddClassPattern [
 	self exampleClasses do: [ :class |
 		(class isObsolete or: [ class superclass notNil and: [ class superclass isObsolete ] ]) ifFalse: [
 			| change |
-			change := changes defineClass: class definition.
+			change := changes defineClass: class oldDefinition.
 			self assert: (change isKindOf: RBAddClassChange).
 			self assert: change changeClassName equals: class name.
 
