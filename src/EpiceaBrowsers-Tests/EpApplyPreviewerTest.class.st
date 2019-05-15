@@ -7,7 +7,9 @@ Class {
 { #category : #resources }
 EpApplyPreviewerTest >> assertEmptyPreviewLog [
 
-	self assert: self outputEvents isEmpty description: 'Shouldn''t find anything to apply'.
+	self 
+		assert: self outputEvents isEmpty 
+		description: 'Shouldn''t find anything to apply'
 ]
 
 { #category : #resources }
