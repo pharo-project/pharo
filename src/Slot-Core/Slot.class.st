@@ -289,7 +289,7 @@ Slot >> name: aSymbol [
 { #category : #accessing }
 Slot >> named: aSymbol [
 	"to be polymorhic with slot class"
-	name := aSymbol
+	self name: aSymbol
 ]
 
 { #category : #testing }
