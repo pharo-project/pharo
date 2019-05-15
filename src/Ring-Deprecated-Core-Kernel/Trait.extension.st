@@ -18,6 +18,7 @@ Trait >> asRingDefinition [
 	ring classSide 
 		traitCompositionSource: self classSide traitCompositionString;
 		definitionSource: self classSide oldDefinition.
+
 	^ring
 ]
 
