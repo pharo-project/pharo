@@ -662,7 +662,7 @@ Class >> hasSharedPools [
 
 { #category : #'accessing class hierarchy' }
 Class >> hasSubclasses [
-	^ self subclasses isEmpty not
+	^ self subclasses isNotEmpty
 ]
 
 { #category : #'subclass creation - immediate' }
