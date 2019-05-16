@@ -150,6 +150,15 @@ Exception >> freezeUpTo:  aContext [
 	signalContext := signalContext copyTo: aContext
 ]
 
+{ #category : #private }
+Exception >> handleProcessCompletionIfNeeded: aProcess with: aContext [
+	"I am a hook during process completion in case one of my subclass wants to plug a special behavior.
+	
+	I should return nil if I do nothing."
+
+	^ nil
+]
+
 { #category : #testing }
 Exception >> isNested [
 	"Determine whether the current exception handler is within the scope of another handler for the same exception."
