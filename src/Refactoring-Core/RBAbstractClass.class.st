@@ -153,7 +153,7 @@ RBAbstractClass >> classSide [
 
 { #category : #'method accessing' }
 RBAbstractClass >> compile: aString [ 
-	^ self compile: aString withAttributesFrom: (self methodFor: (RBParser parseMethodPattern: aString))
+	^ self compile: aString withAttributesFrom: (self methodFor: (self parserClass parseMethodPattern: aString))
 ]
 
 { #category : #'method accessing' }
@@ -363,6 +363,7 @@ RBAbstractClass >> inheritsPoolDictionaries [
 
 { #category : #initialization }
 RBAbstractClass >> initialize [
+	super initialize.
 	name := #'Unknown Class'
 ]
 

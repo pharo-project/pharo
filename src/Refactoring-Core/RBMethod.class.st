@@ -93,7 +93,7 @@ RBMethod >> modelClass: aRBClass [
 
 { #category : #accessing }
 RBMethod >> parseTree [
-	^RBParser parseMethod: self source onError: [:str :pos | ^nil]
+	^ self parserClass parseMethod: self source onError: [:str :pos | ^nil]
 ]
 
 { #category : #testing }
