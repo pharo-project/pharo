@@ -79,7 +79,7 @@ RBTransformationTest >> abstractVariableTestData [
 { #category : #mocking }
 RBTransformationTest >> changeMock [
 
-	^ Smalltalk at: #RBRefactoringChangeMock
+	^ Smalltalk globals at: #RBRefactoringChangeMock
 ]
 
 { #category : #mocking }
@@ -124,7 +124,7 @@ RBTransformationTest >> proceedThroughWarning: aBlock [
 { #category : #mocking }
 RBTransformationTest >> removeMockClass [
 
-	Smalltalk removeClassNamed: #RBRefactoringChangeMock.
+	Smalltalk globals removeClassNamed: #RBRefactoringChangeMock.
 ]
 
 { #category : #running }

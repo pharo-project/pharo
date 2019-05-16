@@ -2,7 +2,7 @@ Extension { #name : #Trait }
 
 { #category : #'*Monticello' }
 Trait >> asClassDefinition [
-	self usesSpecialVariables ifFalse: [  
+	self needsSlotClassDefinition ifFalse: [  
 		^ MCTraitDefinition
 			name: self name
 			traitComposition: self traitCompositionString

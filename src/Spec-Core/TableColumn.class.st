@@ -67,6 +67,12 @@ TableColumn >> evaluation: anObject [
 ]
 
 { #category : #testing }
+TableColumn >> isComposite [
+
+	^ false
+]
+
+{ #category : #testing }
 TableColumn >> isEditable [
 
 	^ false
@@ -75,7 +81,7 @@ TableColumn >> isEditable [
 { #category : #accessing }
 TableColumn >> readObject: anObject [ 
 
-	^ self evaluation value: anObject
+	^ self evaluation cull: anObject
 ]
 
 { #category : #accessing }

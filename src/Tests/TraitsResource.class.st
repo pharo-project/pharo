@@ -170,7 +170,7 @@ TraitsResource >> createTraitNamed: aSymbol uses: aTraitComposition [
 	trait := Trait
 		named: aSymbol
 		uses: aTraitComposition
-		category: self categoryName.
+		package: self categoryName.
 	self createdClassesAndTraits add: trait.
 	^trait
 ]

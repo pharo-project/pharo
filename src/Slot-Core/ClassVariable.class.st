@@ -15,7 +15,7 @@ Class {
 { #category : #printing }
 ClassVariable >> definitionString [
 	"non special globals are defined by the symbol"
-	^self isSpecial
+	^self needsFullDefinition
 		ifTrue: [super definitionString]
 		ifFalse: [self name printString]
 
@@ -38,10 +38,4 @@ ClassVariable >> emitValue: methodBuilder [
 { #category : #testing }
 ClassVariable >> isClassVariable [
 	^true
-]
-
-{ #category : #testing }
-ClassVariable >> isSpecial [
-	"I just a class var Note: my subclasses are special"
-	^(self class = ClassVariable) not
 ]

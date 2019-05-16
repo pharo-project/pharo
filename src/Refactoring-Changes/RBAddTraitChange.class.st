@@ -14,18 +14,18 @@ Class {
 
 { #category : #private }
 RBAddTraitChange class >> definitionPatterns [
-	^ #('Trait named: `#traitName uses: `@traitComposition category: `#category' 'Trait named: `#traitName uses: `@traitComposition slots: `@slotDefinition category: `#category' )
+	^ #('Trait named: `#traitName uses: `@traitComposition package: `#package' 'Trait named: `#traitName uses: `@traitComposition slots: `@slotDefinition package: `#package' )
 ]
 
 { #category : #converting }
 RBAddTraitChange >> asUndoOperation [
 	| trait |
-	trait := Smalltalk globals
+	trait := onSystemDictionary 
 		at: self changeClassName
 		ifAbsent: [ nil ].
 	^ trait isTrait
-		ifTrue: [ RBRefactoryChangeManager changeFactory addTraitDefinition: trait definition ]
-		ifFalse: [ RBRefactoryChangeManager changeFactory removeClassNamed: self changeClassName ]
+		ifTrue: [ changeFactory addTraitDefinition: trait definition ]
+		ifFalse: [ changeFactory removeClassNamed: self changeClassName ]
 ]
 
 { #category : #accessing }
@@ -41,5 +41,5 @@ RBAddTraitChange >> definitionClass [
 { #category : #initialization }
 RBAddTraitChange >> fillOutDefinition: aDictionary [
 	className := (aDictionary at: '`#traitName') asSymbol.
-	category := (aDictionary at: '`#category' ifAbsent: [ #Unclassified ]) asSymbol
+	category := (aDictionary at: '`#package' ifAbsent: [ #Unclassified ]) asSymbol
 ]

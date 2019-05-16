@@ -20,15 +20,3 @@ String >> asSlotCollection [
 	whitespaces := ByteString withAll: { Character space . Character tab . Character cr }.
 	^(self substrings: whitespaces) collect: [ :substring | substring asSlot ]
 ]
-
-{ #category : #'*Slot-Core' }
-String >> asValidInstVarName [
-
-	| validName |
-	
-	validName := self select: [ :c | c isAlphaNumeric or: [ c == $_ ] ].
-	
-	^validName first isDigit 
-		ifTrue: [ 'v' , validName ]
-		ifFalse: [ validName ]
-]

@@ -4,9 +4,6 @@ SUnit tests for code simulation
 Class {
 	#name : #CodeSimulationTest,
 	#superclass : #TestCase,
-	#classVars : [
-		'log'
-	],
 	#category : #'Kernel-Tests-Extended-Methods'
 }
 
@@ -35,8 +32,7 @@ CodeSimulationTest >> runSimulated: aBlock [
 
 { #category : #tests }
 CodeSimulationTest >> testDNU [
-
-	self should: [ self runSimulated: [self absentMethod] ] raise: MessageNotUnderstood
+	self should: [ self runSimulated: [ self absentMethod ] ] raise: MessageNotUnderstood
 ]
 
 { #category : #tests }
@@ -50,7 +46,7 @@ CodeSimulationTest >> testErrorCodeNotFound [
 	
 	self skip.
 	
-	Smalltalk vm isRunningCog ifFalse: [^self].
+	Smalltalk vm isRunningCog ifFalse: [ ^ self ].
 	
 	result := self veryBasicAt: 1.
 		
@@ -67,7 +63,7 @@ CodeSimulationTest >> testErrorCodeNotFound [
 		
 	self assert: resultSimu isArray.	
 	self assert: Context  primitiveFailToken first == resultSimu first.
-	self assert: result = resultSimu second.
+	self assert: result equals: resultSimu second.
 ]
 
 { #category : #'tests - primitives' }
@@ -90,9 +86,9 @@ CodeSimulationTest >> testErrorCodeNotFoundIndexed [
 		doPrimitive: 60  method:  (self class>>#indexedBasicAt:) receiver: self args: #(100).
 		
 	self assert: resultSimu isArray.	
-	self assert: resultSimu size = 2.
+	self assert: resultSimu size equals: 2.
 	self assert: Context  primitiveFailToken first == resultSimu first.
-	self assert: result = resultSimu second.
+	self assert: result equals: resultSimu second.
 ]
 
 { #category : #'tests - primitives' }
@@ -103,13 +99,16 @@ CodeSimulationTest >> testErrorToken [
 	token2 := Context primitiveFailTokenFor: 100.
 
 	self assert: token1 first == token2 first.
-	self assert: token1 second == nil.
-	self assert: token2 second == 100.
+	self assert: token1 second isNil.
+	self assert: token2 second equals: 100.
 ]
 
 { #category : #tests }
 CodeSimulationTest >> testErrorWithErrorHandler [
-	self runSimulated: [[self methodWithError] on: Error do: [:err | ]]  
+	self
+		runSimulated: [ [ self methodWithError ]
+				on: Error
+				do: [ :err |  ] ]
 ]
 
 { #category : #tests }
@@ -119,12 +118,12 @@ CodeSimulationTest >> testGoodSimulation [
 
 { #category : #tests }
 CodeSimulationTest >> testTranscriptPrinting [
-	self runSimulated: [self methodWithTranscript]  
+	self runSimulated: [ self methodWithTranscript ]
 ]
 
 { #category : #tests }
 CodeSimulationTest >> testTranscriptPrintingWithOpenedTranscriptExists [
-	self runSimulated: [self methodWithTranscript]  
+	self runSimulated: [ self methodWithTranscript ]
 ]
 
 { #category : #private }

@@ -17,13 +17,13 @@ Class {
 { #category : #specs }
 KeymapBrowser class >> defaultSpec [
 	<spec>
-	^ SpecLayout composed
-		newColumn: [ :c | c newRow: [ :r | 
-							r
-								add: #filterField;
-								add: #clearFilterButton width: 25 ]
-						height: self toolbarHeight.
-					c newRow: [ :r | r add: #kmTable ] ];
+	^ SpecBoxLayout newVertical
+		add:
+			(SpecBoxLayout newHorizontal
+				add: #filterField;
+				add: #clearFilterButton withConstraints: [ :constraints | constraints width: 25 ])
+			withConstraints: [ :constraints | constraints height: self toolbarHeight ];
+		add: #kmTable;
 		yourself
 ]
 
@@ -47,10 +47,8 @@ KeymapBrowser class >> taskbarIconName [
 { #category : #private }
 KeymapBrowser >> browseDefinitionOfSelectedShortcut [
 	| selection action class selector |
-	selection := self kmTable selectedItem.
-	selection ifNil: [ ^ self ].
-	action := selection realValue keymap action.
-	action ifNil: [ ^ self ].
+	selection := self kmTable selectedItem ifNil: [ ^ self ].
+	action := selection realValue keymap action ifNil: [ ^ self ].
 	class := action method methodClass.
 	selector := action method selector.
 	Smalltalk tools browser openOnClass: class selector: selector highlight: selection shortcutName
@@ -68,19 +66,7 @@ KeymapBrowser >> clearFilterButton: anObject [
 
 { #category : #private }
 KeymapBrowser >> collectAllShortcuts [
-	| collection |
-	collection := OrderedCollection new.
-	KMRepository default categories
-		do: [ :cat | 
-			cat keymaps
-				do: [ :keymapping | 
-					collection
-						add:
-							(KMShortcutDeclaration new
-								shortcutName: keymapping name;
-								categoryName: cat name;
-								yourself) ] ].
-	self kmTable items: collection.
+	self kmTable items: self shortcuts
 ]
 
 { #category : #accessing }
@@ -93,7 +79,7 @@ KeymapBrowser >> filterField: anObject [
 	filterField := anObject
 ]
 
-{ #category : #protocol }
+{ #category : #api }
 KeymapBrowser >> initialExtent [
 	^ 600@300
 ]
@@ -109,28 +95,30 @@ KeymapBrowser >> initializePresenter [
 
 { #category : #initialization }
 KeymapBrowser >> initializeWidgets [
-	self title: 'Keymap Browser'.
-	kmTable := self newMultiColumnList.
-	kmTable displayBlock: [ :item | self wrapItem: item ].
-	kmTable sortingBlock: [ :a :b | a categoryName < b categoryName ].
-	kmTable menu: [ :m :s| self menu:m shifted:s].
+	kmTable := self newTable.
+	kmTable
+		addColumn: (StringTableColumn title: 'Shortcut' evaluated: [ :aKMShortcutDeclaration | aKMShortcutDeclaration realValue shortcut asString ]);
+		addColumn: (StringTableColumn title: 'Name' evaluated: #shortcutName);
+		addColumn: (StringTableColumn title: 'Category' evaluated: #categoryName);
+		beResizable;
+		menu: [ :m :s | self menu: m shifted: s ].
 	filterField := self newTextInput.
-	filterField removeEntryCompletion.
-	filterField ghostText: 'Filter'.
-	filterField autoAccept: true.
+	filterField
+		removeEntryCompletion;
+		placeholder: 'Filter';
+		autoAccept: true.
 	clearFilterButton := self newButton.
-	clearFilterButton icon: (self iconNamed: #smallCancelIcon).
-	clearFilterButton enabled:false.
+	clearFilterButton
+		icon: (self iconNamed: #smallCancelIcon);
+		enabled: false.
 	self collectAllShortcuts
 ]
 
 { #category : #private }
 KeymapBrowser >> inspectActionOfSelectedShortcut [
 	| selection action   |
-	selection := self kmTable selectedItem.
-	selection ifNil: [ ^ self ].
-	action := selection realValue keymap.
-	action ifNil: [ ^ self ].
+	selection := self kmTable selectedItem ifNil: [ ^ self ].
+	action := selection realValue keymap ifNil: [ ^ self ].
 	action inspect
 ]
 
@@ -158,18 +146,31 @@ KeymapBrowser >> menu: aMenu shifted: aBoolean [
 
 { #category : #private }
 KeymapBrowser >> setFilter: aFilterText [
-	aFilterText isEmpty
-		ifTrue: [ self kmTable resetFilteringBlock ]
-		ifFalse: [ self kmTable
-				filteringBlock: [ :items | items select: [ :item | 
-						(self wrapItem: item) anySatisfy: [ :s | s includesSubstring: aFilterText caseSensitive: false ] ] ] ]
+	aFilterText
+		ifEmpty: [ self collectAllShortcuts ]
+		ifNotEmpty: [ :filter | 
+			self kmTable
+				items: (self shortcuts select: [ :shortcut | {shortcut realValue shortcut asString . shortcut shortcutName . shortcut categoryName} anySatisfy: [ :s | s includesSubstring: filter caseSensitive: false ] ]) ]
 ]
 
 { #category : #private }
-KeymapBrowser >> wrapItem: aKMShortcutDeclaration [
-	| name categorie |
-	name := aKMShortcutDeclaration shortcutName.
-	categorie := aKMShortcutDeclaration categoryName.
-	^ {aKMShortcutDeclaration realValue shortcut asString . name.
-	categorie}
+KeymapBrowser >> shortcuts [
+	| collection |
+	collection := OrderedCollection new.
+	KMRepository default categories
+		do: [ :cat | 
+			cat keymaps
+				do: [ :keymapping | 
+					collection
+						add:
+							(KMShortcutDeclaration new
+								shortcutName: keymapping name;
+								categoryName: cat name;
+								yourself) ] ].
+	^ collection sorted: #categoryName ascending
+]
+
+{ #category : #initialization }
+KeymapBrowser >> title [
+	^ 'Keymap Browser'
 ]

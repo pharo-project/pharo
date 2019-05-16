@@ -30,16 +30,6 @@ CheckBoxPresenter class >> title [
 ]
 
 { #category : #api }
-CheckBoxPresenter >> enabled: aBoolean [
-	"<api: #boolean getter: #enabled registration: #whenEnabledChanged:>"
-	"Set if the checkbox is enabled (clickable)"
-
-	super enabled: aBoolean.
-	self changed: #enabled.
-
-]
-
-{ #category : #api }
 CheckBoxPresenter >> labelOnLeft [
 
 	^ self changed: #labelOnLeft with: #()

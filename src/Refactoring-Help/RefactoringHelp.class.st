@@ -50,7 +50,7 @@ The Refactoring Framework has its own parser and scanner, creating an abstract s
 RBProgramNode and subclasses
 These are the base and concrete subclasses for all RB-Nodes representing a syntax node class, like RBMethodNode, RBAssignmentNode, RBBlockNode et cetera.
 
-RParseTreeSearcher and RBParseTreeRewriter
+RBParseTreeSearcher and RBParseTreeRewriter
 A refactoring operation uses the tree searcher and rewriter for applying a transformation on the abstract syntax tree.
 They implement a program node visitor.
 

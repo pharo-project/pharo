@@ -40,13 +40,6 @@ Association >> isSelfEvaluating [
 	^ self class == Association and: [self key isSelfEvaluating and: [self value isSelfEvaluating]]
 ]
 
-{ #category : #testing }
-Association >> isSpecial [
-	"Implemented here so we can use simple Assocications as Bindings instead of LiteralVariable
-	subclasses"
-	^false
-]
-
 { #category : #accessing }
 Association >> key: aKey value: anObject [ 
 	"Store the arguments as the variables of the receiver."
@@ -61,6 +54,13 @@ Association >> literalEqual: otherLiteral [
 	Variable bindings are literally equals only if identical.
 	This is how variable sharing works, by preserving identity and changing only the value."
 	^self == otherLiteral
+]
+
+{ #category : #testing }
+Association >> needsFullDefinition [
+	"Implemented here so we can use simple Associations as Bindings instead of LiteralVariable
+	subclasses"
+	^false
 ]
 
 { #category : #printing }

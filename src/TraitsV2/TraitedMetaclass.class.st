@@ -83,7 +83,7 @@ TraitedMetaclass >> definition [
 				nextPutAll: 'uses: ';
 				print: self traitComposition ].
 		
-		(self usesSpecialSlot or: [ Slot showSlotClassDefinition ])
+		(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ])
 			ifFalse: [  
 						strm
 							crtab;

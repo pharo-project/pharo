@@ -79,3 +79,11 @@ MorphicLayoutAdapter >> buildWithSpec: aString [
 
 	^ self buildWithSpec
 ]
+
+{ #category : #'as yet unclassified' }
+MorphicLayoutAdapter >> layout: aLayout [
+
+	"Basic apply visibility to the widget.
+	This call is here because layouts and widgets work differently"
+	self applyVisibility
+]

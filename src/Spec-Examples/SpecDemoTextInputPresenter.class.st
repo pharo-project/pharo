@@ -107,10 +107,10 @@ SpecDemoTextInputPresenter >> initializeWidgets [
 	labelPlaceholderText := self newLabel label: 'Placeholder:'.
 	fieldPlaceholderText := self newTextInput placeholder: 'Placeholder text'.
 	
-	labelEncrypted := self newLabel label: 'Encrypted:'.
+	labelEncrypted := self newLabel label: 'Password:'.
 	fieldEncrypted := self newTextInput
 		text: 'Password';
-		encrypted: true
+		bePassword
 ]
 
 { #category : #accessing }

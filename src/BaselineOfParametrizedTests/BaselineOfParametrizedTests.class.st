@@ -105,9 +105,5 @@ BaselineOfParametrizedTests class >> validate [
 { #category : #baselines }
 BaselineOfParametrizedTests >> baseline: spec [
 	<baseline>
-	spec for: #common do: [ 
-		spec package: #'ParametrizedTests'.
-		
-		spec group: 'default' with: #('ParametrizedTests').	
-	]
+	spec for: #common do: [ spec package: #ParametrizedTests ]
 ]

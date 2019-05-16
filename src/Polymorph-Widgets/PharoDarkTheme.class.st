@@ -359,9 +359,9 @@ PharoDarkTheme >> selectionTextColor [
 ]
 
 { #category : #defaults }
-PharoDarkTheme >> shStyleTable [
+PharoDarkTheme >> shStyleTableName [
 
-	^SHRBTextStyler darkStyleTable
+	^ #darkStyleTable
 ]
 
 { #category : #'fill-styles' }

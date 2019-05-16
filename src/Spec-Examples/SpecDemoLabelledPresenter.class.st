@@ -34,7 +34,7 @@ SpecDemoLabelledPresenter >> email [
 SpecDemoLabelledPresenter >> initializeWidgets [
 	| passwordInput |
 	passwordInput := self newTextInput
-		encrypted: true;
+		bePassword;
 		yourself.
 		
 	email := self instantiate: (LabelledPresenter label: 'Email' input: self newTextInput description: 'Email you will use to send activations mails to your users.').

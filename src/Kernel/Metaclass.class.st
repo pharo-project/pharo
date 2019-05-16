@@ -118,7 +118,7 @@ Metaclass >> definition [
 		[:strm |
 		strm print: self.
 		
-		(self usesSpecialSlot or: [ Slot showSlotClassDefinition ])
+		(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ])
 			ifFalse: [  
 						strm
 							crtab;

@@ -109,6 +109,12 @@ RBRenameVariableChange >> isMeta [
 ]
 
 { #category : #accessing }
+RBRenameVariableChange >> nameToDisplay [
+
+	^ 'Rename ', self oldName, ' into ', self newName
+]
+
+{ #category : #accessing }
 RBRenameVariableChange >> newName [
 	^ newName
 ]
@@ -133,7 +139,21 @@ RBRenameVariableChange >> printOn: aStream [
 	aStream nextPutAll: self displayString
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 RBRenameVariableChange >> removeOldVariable [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+RBRenameVariableChange >> textToDisplay [
+
+	self printString
+]
+
+{ #category : #accessing }
+RBRenameVariableChange >> whatToDisplayIn: aChangeBrowser [
+
+	| result |
+	result := OrderedCollection with: self.
+	^ result, (self changes flatCollect: [:e | e changes ])
 ]

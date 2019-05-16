@@ -75,7 +75,7 @@ ProgressBarProgressing >> refreshDelay: aDelay [
 	refreshDelay := aDelay
 ]
 
-{ #category : #enumerating }
+{ #category : #'api-events' }
 ProgressBarProgressing >> whenValueChangedDo: aBlock [
 	currentValueHolder whenChangedDo: aBlock
 ]

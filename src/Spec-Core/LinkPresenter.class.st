@@ -44,17 +44,6 @@ LinkPresenter class >> adapterName [
 	^ #LinkAdapter
 ]
 
-{ #category : #example }
-LinkPresenter class >> example [
-	<sampleInstance>
-	^ self new
-		url: 'https://pharo.org';
-		label: 'Pharo website';
-		extent: 200 @ 20;
-		openWithSpec;
-		yourself
-]
-
 { #category : #specs }
 LinkPresenter class >> title [
 	^ 'Link presenter'

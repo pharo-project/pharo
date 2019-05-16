@@ -17,9 +17,10 @@ ComposablePresenter >> openExternalWindowWithSpec: aSpec [
 
 { #category : #'*OSWindow-Core' }
 ComposablePresenter >> openExternalWindowWithSpecLayout: aSpec [
-    "Build the widget using the spec name provided as argument and display it into the world"
+	"Build the widget using the spec name provided as argument and display it into the world"
 
-    (window value notNil and: [ self needRebuild not ])
+	self flag: #pharoTodo	"This needs review"
+	"  (window value notNil and: [ self needRebuild not ])
         ifTrue: [
             window value rebuildWithSpecLayout: aSpec ]
         ifFalse: [ 
@@ -27,6 +28,5 @@ ComposablePresenter >> openExternalWindowWithSpecLayout: aSpec [
             window value openWithSpecLayout: aSpec.
             self takeKeyboardFocus ].
         
-    ^ window value
-
+    ^ window value"
 ]

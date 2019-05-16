@@ -6,8 +6,16 @@ I use a builder (MorphicTreeTableCellBuilder) to realise the cell content.
 Class {
 	#name : #MorphicTreeTableDataSource,
 	#superclass : #FTTreeDataSource,
+	#traits : 'TMorphicTableDataSourceCommons',
+	#classTraits : 'TMorphicTableDataSourceCommons classTrait',
 	#category : #'Spec-MorphicAdapters-Table'
 }
+
+{ #category : #accessing }
+MorphicTreeTableDataSource >> allShownItems [
+
+	^ rootItem children flatCollect: [ :e | e withExpandedChildren ].
+]
 
 { #category : #accessing }
 MorphicTreeTableDataSource >> cellColumn: column row: rowIndex [
@@ -35,19 +43,61 @@ MorphicTreeTableDataSource >> cellIndentFor: item [
 ]
 
 { #category : #accessing }
-MorphicTreeTableDataSource >> headerColumn: column [
-
-	column id ifNil: [ ^ nil ].
-	^ FTCellMorph new 
-		listCentering: #left;
-		addMorph: column id asMorph;
-		yourself
+MorphicTreeTableDataSource >> indexOfItem: anItem [ 
+	
+	^ self allShownItems indexOf: anItem
 ]
 
 { #category : #testing }
 MorphicTreeTableDataSource >> isFirstColumn: column [
 	
 	^ (table columns indexOf: column) = 1
+]
+
+{ #category : #accessing }
+MorphicTreeTableDataSource >> itemAtPath: aPath [ 
+	
+	^ self itemAtPath: aPath expanding: false
+]
+
+{ #category : #accessing }
+MorphicTreeTableDataSource >> itemAtPath: aPath expanding: shouldExpandItems [
+	
+	| item |
+	
+	(aPath isNil or: [aPath isEmpty]) ifTrue: [ ^ nil ].
+	item := self rootItem.
+	
+	aPath do: [ :index |
+		(shouldExpandItems and: [item isRoot not]) ifTrue: [ item expand ].
+		item children size < index ifTrue: [ ^ nil ].		
+		item := item children at: index.
+	].
+
+	^ item
+]
+
+{ #category : #paths }
+MorphicTreeTableDataSource >> pathFromIndex: anInteger [ 
+	| item |
+	
+	item := self allShownItems at: anInteger ifAbsent: [ ^ #() ].
+	^ self pathOfItem: item root: rootItem
+]
+
+{ #category : #accessing }
+MorphicTreeTableDataSource >> pathOfItem: anItem root: aRoot [ 
+	
+	aRoot isExpanded ifFalse: [ ^#() ].
+	
+	(aRoot children includes: anItem)
+		ifTrue: [ ^ { aRoot children indexOf: anItem } ].
+		
+	aRoot children withIndexDo: [ :aChild :index | | aSubPath |
+		aSubPath := self pathOfItem: anItem root: aChild.
+		aSubPath ifNotEmpty: [ ^ { index } , aSubPath ] ].
+	
+	^ #().
 ]
 
 { #category : #accessing }

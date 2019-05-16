@@ -185,7 +185,7 @@ TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 	Trait 
 		named: #T
 		uses: self t1
-		category: self class category.
+		package: self class category.
 	self assert: trait methodDict size = 3.
 	self assert: (trait selectors asSet includesAll: #(#m11 #m12 #m13 )).
 	self assert: (trait methodDict at: #m11) sourceCode = 'm11 ^999'.
@@ -253,14 +253,14 @@ TraitPureBehaviorTest >> testPropagationWhenTraitCompositionModifications [
 	Trait 
 		named: #T5
 		uses: self t1 + self t2 - { #m21. #m22 }
-		category: self class category.
+		package: self class category.
 	self assert: self c2 methodDict size = 7.
 
 	"adding methods"
 	Trait 
 		named: #T2
 		uses: self t3
-		category: self class category.
+		package: self class category.
 	self assert: self c2 methodDict size = 10.
 	self assert: (self c2 selectors asSet includesAll: #(#m31 #m32 #m33 ))
 ]

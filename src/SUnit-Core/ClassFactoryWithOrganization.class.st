@@ -35,7 +35,7 @@ ClassFactoryWithOrganization >> newClassNamed: aString subclassOf: aClass instan
 		subclassOf: aClass 
 		instanceVariableNames: ivNamesString 
 		classVariableNames: classVarsString 
-		category:  (self packageName, '-', self defaultCategoryPostfix) asSymbol.
+		category:  (self packageName, '-', self defaultTagPostfix) asSymbol.
 ]
 
 { #category : #creating }
@@ -62,7 +62,7 @@ ClassFactoryWithOrganization >> newSubclassOf: aClass instanceVariableNames: ivN
 		newSubclassOf: aClass 
 		instanceVariableNames: ivNamesString 
 		classVariableNames: classVarsString 
-		category:  (self packageName, '-', self defaultCategoryPostfix) asSymbol.
+		category:  (self packageName, '-', self defaultTagPostfix) asSymbol.
 ]
 
 { #category : #creating }
