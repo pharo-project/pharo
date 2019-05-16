@@ -139,8 +139,7 @@ RBRefactoryChangeManager >> ignoreChangesWhile: aBlock [
 
 { #category : #initialization }
 RBRefactoryChangeManager >> initialize [
-	undo := OrderedCollection new.
-	redo := OrderedCollection new.
+	self clearUndoRedoList.
 	isPerformingRefactoring := false.
 	self connectToChanges
 ]
