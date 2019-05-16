@@ -191,7 +191,7 @@ RBClass >> isSharedPool [
 { #category : #querying }
 RBClass >> methodsUsingClassVariableNamed: aClassVariableName [
  
-	^ (self realClass classVariableNamed: aClassVariableName) usingMethods collect: [ :aMethod | |modelClass|
+	^ (self realClass classVariableNamed: aClassVariableName) usingMethods collect: [ :aMethod | 			|modelClass|
 			modelClass := self model classNamed: aMethod methodClass name.
 			modelClass methodFor: aMethod selector
 		]
@@ -199,8 +199,7 @@ RBClass >> methodsUsingClassVariableNamed: aClassVariableName [
 
 { #category : #accessing }
 RBClass >> poolDictionaryNames: aCollectionOfStrings [ 
-	poolDictionaryNames := (aCollectionOfStrings 
-				collect: [:each | each asSymbol]) asOrderedCollection
+	poolDictionaryNames := (aCollectionOfStrings collect: [:each | each asSymbol]) asOrderedCollection
 ]
 
 { #category : #private }

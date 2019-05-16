@@ -62,3 +62,27 @@ RBClassModelFactory class >> setRBNamespace: aClass [
  
 	RBnamespace := aClass
 ]
+
+{ #category : #'factory access' }
+RBClassModelFactory >> rbClass [ 
+
+	^ self class rbClass
+]
+
+{ #category : #'factory access' }
+RBClassModelFactory >> rbMetaclass [
+
+	^ self class rbMetaclass
+]
+
+{ #category : #'factory access' }
+RBClassModelFactory >> rbMethod [
+
+	^ self class rbMethod
+]
+
+{ #category : #'factory access' }
+RBClassModelFactory >> rbNamespace [
+
+	^ self class rbNamespace
+]

@@ -13,12 +13,12 @@ querying symbols, literals or the whole method source.
 "
 Class {
 	#name : #RBMethod,
-	#superclass : #Object,
+	#superclass : #RBEntity,
 	#instVars : [
-		'class',
 		'compiledMethod',
-		'source',
-		'selector'
+		'class',
+		'selector',
+		'source'
 	],
 	#category : #'Refactoring-Core-Model'
 }
@@ -165,7 +165,7 @@ RBMethod >> refersToVariable: aString [
 
 { #category : #accessing }
 RBMethod >> selector [
-	^selector
+	^ selector
 ]
 
 { #category : #accessing }
