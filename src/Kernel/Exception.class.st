@@ -97,6 +97,15 @@ Exception class >> signalIn: context [
 	^ self new signalIn: context
 ]
 
+{ #category : #private }
+Exception >> completeProcess: aProcess with: aContext [
+	"I am a hook during process completion in case one of my subclass wants to plug a special behavior.
+	
+	By default I retrun my signaler context"
+
+	^ self signalerContext
+]
+
 { #category : #handling }
 Exception >> debug [
 	"open a debugger on myself"
@@ -148,15 +157,6 @@ Exception >> freezeUpTo:  aContext [
 	"Freeze the signal context up to the given context so the exception is usable outside the catch block"
 	
 	signalContext := signalContext copyTo: aContext
-]
-
-{ #category : #private }
-Exception >> handleProcessCompletionIfNeeded: aProcess with: aContext [
-	"I am a hook during process completion in case one of my subclass wants to plug a special behavior.
-	
-	I should return nil if I do nothing."
-
-	^ nil
 ]
 
 { #category : #testing }
