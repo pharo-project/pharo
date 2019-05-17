@@ -148,15 +148,16 @@ Process >> calleeOf: aContext [
 Process >> complete: aContext [
 	"Run self until aContext is popped or an unhandled error is raised.  Return self's new top context, unless an unhandled error was raised then return the signaler context (rather than open a debugger)."
 
-	| ctxt pair error |
+	| ctxt pair |
 	ctxt := suspendedContext.
 	suspendedContext := nil.	"disable this process while running its stack in active process below"
-	pair := Processor activeProcess evaluate: [ ctxt runUntilErrorOrReturnFrom: aContext ] onBehalfOf: self.
+	pair := Processor activeProcess
+				evaluate: [ ctxt runUntilErrorOrReturnFrom: aContext ]
+				onBehalfOf: self.
 	suspendedContext := pair first.
-	error := pair second.
-	error ifNil: [ ^ suspendedContext ].
-	(error handleProcessCompletionIfNeeded: self with: aContext) ifNotNil: [ :result | ^ result ].
-	^ error signalerContext
+	^ pair second
+		ifNil: [ suspendedContext ]
+		ifNotNil: [ :error | error completeProcess: self with: aContext ]
 ]
 
 { #category : #'changing suspended state' }
