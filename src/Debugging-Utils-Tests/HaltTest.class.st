@@ -50,7 +50,7 @@ HaltTest >> shouldntHaltWhen: aBlock [
 	self shouldnt: aBlock raise: Halt.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 HaltTest >> testContainsHalt [
 	
 	| annonClass |
@@ -75,7 +75,7 @@ HaltTest >> testContainsHalt [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 HaltTest >> testHaltFromCount [
 	<haltOrBreakpointForTesting>
 
@@ -123,14 +123,14 @@ HaltTest >> testHaltIf [
 	self shouldntHaltWhen: [self haltIf: [:receiver | receiver class ~= self class]].
 ]
 
-{ #category : #'tests - testing' }
+{ #category : #tests }
 HaltTest >> testHaltIfNil [
 	<haltOrBreakpointForTesting>
 
 	self should: [ nil haltIfNil] raise: Halt.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 HaltTest >> testHaltOnCount [
 	<haltOrBreakpointForTesting>
 
@@ -150,7 +150,7 @@ HaltTest >> testHaltOnCount [
 	self assert: haltCount equals: 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 HaltTest >> testHaltOnce [
 	<haltOrBreakpointForTesting>
 	| anObject block |
