@@ -1,7 +1,7 @@
-Extension { #name : #ObjectTest }
+Extension { #name : #HaltTest }
 
 { #category : #'*Kernel-Tests-WithCompiler' }
-ObjectTest >> testHaltFromCount [
+HaltTest >> testHaltFromCount [
 	<haltOrBreakpointForTesting>
 
 	| anObject haltCount |
@@ -29,7 +29,7 @@ ObjectTest >> testHaltFromCount [
 ]
 
 { #category : #'*Kernel-Tests-WithCompiler' }
-ObjectTest >> testHaltOnCount [
+HaltTest >> testHaltOnCount [
 	<haltOrBreakpointForTesting>
 
 	| anObject haltCount |

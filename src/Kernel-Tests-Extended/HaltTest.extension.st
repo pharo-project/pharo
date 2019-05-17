@@ -1,7 +1,7 @@
-Extension { #name : #ObjectTest }
+Extension { #name : #HaltTest }
 
 { #category : #'*Kernel-Tests-Extended' }
-ObjectTest >> testHaltOnce [
+HaltTest >> testHaltOnce [
 	<haltOrBreakpointForTesting>
 	| anObject block |
 	anObject := Object new.
