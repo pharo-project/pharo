@@ -124,12 +124,6 @@ UndefinedObject >> findUndeclaredVariableIn: ast [
 	^nil
 ]
 
-{ #category : #testing }
-UndefinedObject >> haltIfNil [
-	<debuggerCompleteToSender>
-	Halt now
-]
-
 { #category : #'bottom context' }
 UndefinedObject >> handleSignal: exception [
 	"When no more handler (on:do:) context left in sender chain this gets called.  Return from signal with default action."
