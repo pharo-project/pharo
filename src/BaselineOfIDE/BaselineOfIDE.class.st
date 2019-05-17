@@ -172,6 +172,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-Tests'.
 		spec package: 'Kernel-Tests-Extended'.
 		spec package: 'Kernel-Tests-WithCompiler'.
+		spec package: 'Debugging-Utils-Tests'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
 		spec package: 'OpalCompiler-Tests'.
@@ -438,6 +439,7 @@ spec group: 'General-Help-Group' with: #(
 
 spec group: 'General-Tests-Group' with: #(
 	'Kernel-Tests-Group' "dependency"
+	'Debugging-Utils-Tests'
 	'Monticello-Tests'	"required by MonticelloMocks"
 	'MonticelloMocks'
 	'Fuel-Tests-Core'
@@ -754,7 +756,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Collections-Tests'
 	'Kernel-Tests' 
 	'Kernel-Tests-Extended' 
-	'Kernel-Tests-WithCompiler' 
+	'Kernel-Tests-WithCompiler'
 	'AST-Tests-Core' "requires BlueInk-Core"
 	'Announcements-Tests-Core'
 	'Compression-Tests' 
