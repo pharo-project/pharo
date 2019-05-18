@@ -41,17 +41,17 @@ RBCompositeRefactoryChange >> addChange: aRefactoryChange [
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> addClassVariable: variableName to: aClass [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory addClassVariable: variableName to: aClass)
+	^ self addChange: (changeFactory addClassVariable: variableName to: aClass)
 ]
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> addInstanceVariable: variableName to: aClass [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory addInstanceVariable: variableName to: aClass)
+	^ self addChange: (changeFactory addInstanceVariable: variableName to: aClass)
 ]
 
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> addPool: aPoolVariable to: aClass [ 
-	^ self addChange: (RBRefactoryChangeManager changeFactory addPoolVariable: aPoolVariable to: aClass)
+	^ self addChange: (changeFactory addPoolVariable: aPoolVariable to: aClass)
 ]
 
 { #category : #accessing }
