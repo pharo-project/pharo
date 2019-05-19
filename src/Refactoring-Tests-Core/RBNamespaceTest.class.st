@@ -9,7 +9,7 @@ Class {
 
 { #category : #running }
 RBNamespaceTest >> setUp [ 
-	
+	super setUp.
 	modelFactory := RBClassModelFactory new. 
 ]
 
