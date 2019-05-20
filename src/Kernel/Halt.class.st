@@ -229,3 +229,10 @@ Halt >> defaultAction [
 	^ UIManager default unhandledErrorDefaultAction: self
 	"^ UnhandledError signalForException: self" 
 ]
+
+{ #category : #private }
+Halt >> exception [
+	"In the context management, it might happen that we get an Halt instead of an UnhandledError. The context will ask the exception. In case we have an halt, we should return self."
+
+	^ self
+]
