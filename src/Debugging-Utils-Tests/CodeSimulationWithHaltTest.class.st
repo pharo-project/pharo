@@ -1,7 +1,7 @@
 Class {
 	#name : #CodeSimulationWithHaltTest,
 	#superclass : #CodeSimulationTest,
-	#category : #'Kernel-Tests-Extended-Methods'
+	#category : #'Debugging-Utils-Tests'
 }
 
 { #category : #tests }
