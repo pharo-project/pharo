@@ -37,8 +37,8 @@ BaselineOfSUnit >> baseline: spec [
 				package: 'SUnit-Core';
 				package: 'SUnit-Core-Traits' with: [ spec requires: 'Traits' ];
 				package: 'SUnit-Tests';
-				package: 'SUnit-Visitors' with: [ spec requires: #('SUnit-Core') ];
-				package: 'SUnit-Visitors-Tests' with: [ spec requires: #('SUnit-Visitors') ];
+				package: 'SUnit-Visitor' with: [ spec requires: #('SUnit-Core') ];
+				package: 'SUnit-Visitor-Tests' with: [ spec requires: #('SUnit-Visitor') ];
 				package: 'SUnit-UI';
 				package: 'SUnit-Support-UITesting-Tests';
 				package: 'SUnit-Support-UITesting';
