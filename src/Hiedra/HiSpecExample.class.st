@@ -5,17 +5,16 @@ Class {
 	#name : #HiSpecExample,
 	#superclass : #ComposablePresenter,
 	#instVars : [
-		'tree',
-		'hiedraColumnController'
+		'hiedraColumnController',
+		'table'
 	],
 	#category : #'Hiedra-UI-Examples'
 }
 
 { #category : #specs }
 HiSpecExample class >> defaultSpec [
-	<spec: #default>
-	^ SpecLayout composed
-		newColumn: [ :col | col add: #tree ];
+	^ SpecBoxLayout newVertical
+		add: #table;
 		yourself
 ]
 
@@ -50,7 +49,7 @@ HiSpecExample class >> openExample: selector [
 { #category : #accessing }
 HiSpecExample >> commits: commits [ 
 
-	tree roots: commits.
+	table items: commits.
 
 	hiedraColumnController ruler: (HiRulerBuilder 
 		newRulerValues: commits
@@ -61,53 +60,38 @@ HiSpecExample >> commits: commits [
 	hiedraColumnController reset.
 	
 	"After #reset, we can know the width of the column."
-	tree columns first initialWidth: hiedraColumnController rulerWidth.
+	table columns first width: hiedraColumnController rulerWidth.
 ]
 
 { #category : #initialization }
 HiSpecExample >> initializeWidgets [
 	
-	| rowHeight |
-	tree := self newTree.
+	table := self instantiate: TablePresenter.
 
-	"Important: Ensure the height of rows for Hiedra is the same as the widget's cell height."
-	rowHeight := 30.
-
-	"Important: Set zero inset, else there will be an empty gap cutting Hiedra ruler."
-	tree rowInset: 0.
-	
 	"Configure hiedra controller"
 	hiedraColumnController := HiColumnController new.	
-	"Increase the default value since Spec wants all Morphs initially."
-	hiedraColumnController pageSize: 1000.
+
 	hiedraColumnController renderer
-		rowHeight: rowHeight;
 		nodeRadius: 1.5;
 		nodeBorderWidth: 3.0;
-		arrowSize: 2.5;
-		nodeConnectionOffset: 3.5;
+		arrowSize: 0;
+		nodeConnectionOffset: 3;
 		cellWidth: 8;
 		nodeColor: Smalltalk ui theme textColor.
 	
+	"Adjust the ruler rendering settings with table's row height."
+	hiedraColumnController renderer rowHeight: FTTableMorph defaultRowHeight floor.
+
 	"Configure columns"
-	tree columns:	{
-		TreeColumnPresenter new	
-			displayBlock: [ :item |
-				(hiedraColumnController cellMorphAtValue: item content)
-					height: rowHeight;
-					yourself ];
-			yourself.
-		TreeColumnPresenter new
-			displayBlock: [ :item |
-				item content comment asStringMorph
-					height: rowHeight;
-					yourself ];
-			yourself.
+	table columns:	{
+		ImageTableColumn evaluated: [ :item |
+			hiedraColumnController cellMorphAtValue: item ].
+		StringTableColumn evaluated: #comment.
 	}.
 
 ]
 
 { #category : #accessing }
-HiSpecExample >> tree [
-	^ tree
+HiSpecExample >> table [
+	^ table
 ]
