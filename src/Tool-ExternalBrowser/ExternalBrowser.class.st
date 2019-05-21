@@ -87,7 +87,7 @@ ExternalBrowser class >> serviceBrowseCode [
 		selector: #browseStream:
 		description: 'Open a "file-contents browser" on this file, allowing you to view and selectively load its code'
 		buttonLabel: 'Code')
-		argumentGetter: [ :file| file readStream]
+		argumentGetter: [ :file| file readOnlyStream]
 ]
 
 { #category : #'System-FileRegistry' }
