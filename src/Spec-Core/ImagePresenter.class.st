@@ -57,11 +57,11 @@ ImagePresenter >> image: aForm [
 
 { #category : #initialization }
 ImagePresenter >> initialize [
-	self class initializeSlots: self.
+
 	super initialize.
 	
 	image := nil.
-	action := []. 
+	action := [ ].
 	autoScale := false.
 
 "	imageHolder whenChangedDo: [ self changed: #getImage ].

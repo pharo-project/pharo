@@ -24,6 +24,21 @@ TreeTablePresenterTest >> setUp [
 ]
 
 { #category : #tests }
+TreeTablePresenterTest >> testContextMenu [
+	| menu changed |
+	self flag: #copyPaste.
+	
+	self assert: presenter contextMenu isNil.
+	menu := MenuPresenter new.
+	changed := false.
+	presenter whenMenuChangedDo: [ 
+		changed := true. ].
+	presenter contextMenu: menu.
+	self assert: presenter contextMenu equals: menu.
+	self assert: changed
+]
+
+{ #category : #tests }
 TreeTablePresenterTest >> testUnselectAll [
 
 	presenter beMultipleSelection.

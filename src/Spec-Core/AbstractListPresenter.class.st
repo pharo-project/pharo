@@ -138,18 +138,9 @@ AbstractListPresenter >> filteringBlock: aBlock [
 	filteringBlockHolder value: aBlock
 ]
 
-{ #category : #private }
-AbstractListPresenter >> getSelectionStateFor: anIndex [
-	"Return the current state of the item -if selected or not - in a multiple selection list"
-	"Answer true if the item at index _anIndex_ is selected"
-	
-	self flag: 'refactoring in progress'.
-
-	^ multiSelectionHolder indexes
-]
-
 { #category : #initialization }
 AbstractListPresenter >> initialize [
+
 	super initialize.
 	
 	activationBlock := [ ].
@@ -162,13 +153,6 @@ AbstractListPresenter >> initialize [
 
 	self initializeValueHolders.
 	self registerEvents
-]
-
-{ #category : #initialization }
-AbstractListPresenter >> initializePorts [
-
-	self addOutputPort: ListSelectionPresenterPort new.
-	self addInputPort: ItemsPresenterPort new
 ]
 
 { #category : #initialization }

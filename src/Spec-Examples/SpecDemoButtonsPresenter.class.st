@@ -168,7 +168,7 @@ SpecDemoButtonsPresenter >> initializeWidgets [
 		yourself.
 	buttonWithMenu := self newButton
 		label: 'with menu';
-		menu: self subMenu;
+		contextMenu: self subMenu;
 		yourself.
 	buttonWithShortcut := self newButton
 		shortcut: $o meta;
@@ -180,12 +180,10 @@ SpecDemoButtonsPresenter >> initializeWidgets [
 			'This button shows
 a multiline help';
 		yourself.
-
 	buttonWithDifferentFont := self newButton
 		label: 'different font';
 		font: StandardFonts codeFont;
 		yourself.
-
 	self focusOrder
 		add: buttonNormal;
 		add: buttonDisabled;

@@ -30,6 +30,14 @@ NotebookAdapterTest >> testClickOnPage [
 ]
 
 { #category : #tests }
+NotebookAdapterTest >> testRemoveAll [
+
+	self assert: self adapter numberOfTabs equals: 2.
+	presenter removeAll.
+	self assert: self adapter numberOfTabs equals: 0
+]
+
+{ #category : #tests }
 NotebookAdapterTest >> testRemovePage [
 	| page |
 	presenter addPage: (page := NotebookPage title: 'Mock3' provider: [ LabelPresenter new ]).

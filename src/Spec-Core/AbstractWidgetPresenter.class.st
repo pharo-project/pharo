@@ -230,6 +230,7 @@ AbstractWidgetPresenter >> help: aString [
 AbstractWidgetPresenter >> initialize [
 
 	super initialize.
+
 	helpHolder := nil asValueHolder.
 	borderWidth := 0 asValueHolder.
 	borderColor := Color transparent asValueHolder.

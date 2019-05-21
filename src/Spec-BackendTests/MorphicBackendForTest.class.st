@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #asserting }
-MorphicBackendForTest >> assertHasHeader: aFTTableMorph [ 
+MorphicBackendForTest >> assertHasHeader: aFTTableMorph [
 	self waitUntilUIRedrawed.
 
 	self assert: (aFTTableMorph instVarNamed: #showColumnHeaders)

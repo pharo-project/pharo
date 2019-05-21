@@ -1,6 +1,6 @@
 Class {
 	#name : #RootsPresenterPort,
-	#superclass : #InputPresenterPort,
+	#superclass : #SpecInputPort,
 	#category : #'Spec-Core-Widgets-Tree'
 }
 

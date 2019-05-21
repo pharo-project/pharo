@@ -45,7 +45,7 @@ MorphicCodeAdapter >> initialize [
 { #category : #shout }
 MorphicCodeAdapter >> isAboutToStyle [
 
-	^ true
+	^ self okToStyle
 ]
 
 { #category : #NOCompletion }
@@ -57,7 +57,7 @@ MorphicCodeAdapter >> isCodeCompletionAllowed [
 { #category : #'private-shout' }
 MorphicCodeAdapter >> okToStyle [
 
-	^ true
+	^ self model hasSyntaxHighlight
 ]
 
 { #category : #NOCompletion }
@@ -95,7 +95,7 @@ MorphicCodeAdapter >> setEditingModeFor: textArea withBehavior: aBehavior [
 { #category : #shout }
 MorphicCodeAdapter >> shoutAboutToStyle: aMorph [
 	
-	^ true
+	^ self isAboutToStyle
 ]
 
 { #category : #private }

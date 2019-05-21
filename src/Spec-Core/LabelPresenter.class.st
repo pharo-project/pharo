@@ -56,10 +56,12 @@ LabelPresenter >> emphasis: anEmphasis [
 
 { #category : #initialization }
 LabelPresenter >> initialize [
+
 	super initialize.
+
 	labelHolder := '' asValueHolder.
 	emphasis := #().
-	labelHolder whenChangedDo: [ self changed: #getText ].
+	labelHolder whenChangedDo: [ self changed: #getText ]
 ]
 
 { #category : #api }

@@ -56,10 +56,12 @@ LinkPresenter >> defaultColor [
 
 { #category : #initialization }
 LinkPresenter >> initialize [
+
 	super initialize.
+
 	labelHolder := nil asValueHolder.
 	urlHolder := nil asValueHolder.
-	labelHolder whenChangedDo: [ self changed: #getText ].
+	labelHolder whenChangedDo: [ self changed: #getText ]
 ]
 
 { #category : #api }

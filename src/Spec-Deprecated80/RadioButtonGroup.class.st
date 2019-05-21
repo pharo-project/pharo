@@ -42,7 +42,6 @@ RadioButtonGroup >> addRadioButton: aButton [
 		
 	aButton whenActivatedDo: [ self currentlyActivated: aButton ].
 		
-	aButton canDeselectByClick: self canDeselectByClick.
 	buttons add: aButton.
 	aButton privateSetState: false
 ]
@@ -91,10 +90,7 @@ RadioButtonGroup >> initialize [
 
 	buttons := OrderedCollection new.
 	canDeselectByClick := false asValueHolder.
-	currentlyActivated := nil asValueHolder.
-	
-	self whenCanDeselectByClickChanged: [ :aBoolean | 
-		buttons do: [ :each | each canDeselectByClick: aBoolean ]].
+	currentlyActivated := nil asValueHolder
 ]
 
 { #category : #'as yet unclassified' }
