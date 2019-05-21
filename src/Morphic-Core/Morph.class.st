@@ -3156,7 +3156,7 @@ Morph >> handlesMouseDown: evt [
 
 { #category : #'events-processing' }
 Morph >> handlesMouseMove: anEvent [
-	"Rules say that by default a morph gets #mouseMove if and only if:
+	"Rules say that by default a morph gets #mouseMove if
 		* the hand is not dragging anything,
 			+ and some button is down,
 			+ and the receiver is the current mouse focus."
