@@ -52,18 +52,6 @@ CodePresenter >> behavior: aClass [
 	behavior := aClass
 ]
 
-{ #category : #private }
-CodePresenter >> buildCodeKeyBindings [
-	
-	^ CmdContextMenuActivation buildContextKeyBindingsInContext: (SpecCodeContext for: self)
-]
-
-{ #category : #private }
-CodePresenter >> buildCodeMenu [
-	
-	^ CmdContextMenuActivation buildContextMenuInContext: (SpecCodeContext for: self)
-]
-
 { #category : #'api-shortcuts' }
 CodePresenter >> contextKeyBindings [
 
@@ -122,8 +110,8 @@ CodePresenter >> initialize [
 	
 	self registerEventsForStyling.
 	
-	self contextMenu: self buildCodeMenu.
-	self contextKeyBindings: self buildCodeKeyBindings
+	self contextMenu: [ self getMenu ]"self buildCodeMenu".
+	"self contextKeyBindings: self buildCodeKeyBindings"
 ]
 
 { #category : #initialization }

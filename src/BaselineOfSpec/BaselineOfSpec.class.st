@@ -16,8 +16,7 @@ BaselineOfSpec >> baseline: spec [
 			spec baseline: 'ParametrizedTests' with: [ spec repository: repository ].
 
 			spec
-				package: 'Spec-Core' with: [ spec requires: #('Spec-Layout' 'Spec-Commands') ];
-				package: 'Spec-Commands';
+				package: 'Spec-Core' with: [ spec requires: #('Spec-Layout') ];
 				package: 'Spec-Deprecated80' with: [ spec requires: #('Spec-Tests' 'Spec-PolyWidgets-Tests' 'Spec-MorphicAdapters') ];
 				package: 'Spec-Deprecated' with: [ spec requires: #('Spec-Core' 'Spec-Deprecated80' 'Spec-PolyWidgets' 'Spec-MorphicAdapters') ];
 				
@@ -34,11 +33,4 @@ BaselineOfSpec >> baseline: spec [
 				package: 'Spec-MorphicBackendTests' with: [ spec requires: #('Spec-MorphicAdapters' 'ParametrizedTests' 'Spec-BackendTests') ];
 				package: 'Spec-BackendTests' with: [ spec requires: #('Spec-MorphicAdapters' 'ParametrizedTests') ];
 				package: 'Spec-CompatibilityTests' with: [ spec requires: #('Spec-MorphicBackendTests' 'Spec-Deprecated80') ] ]
-]
-
-{ #category : #accessing }
-BaselineOfSpec >> project [
-	^ super project
-		loadType: #atomic;
-		yourself
 ]
