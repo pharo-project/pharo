@@ -1,7 +1,7 @@
 Class {
 	#name : #RootsPresenterPort,
 	#superclass : #SpecInputPort,
-	#category : #'Spec-Core-Widgets-Tree'
+	#category : #'Spec-Transmission'
 }
 
 { #category : #'handling transmission' }
