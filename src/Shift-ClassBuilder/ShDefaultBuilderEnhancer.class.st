@@ -105,3 +105,8 @@ ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer
 	newClass subclasses do: [ :e | installer remake: e ].
 
 ]
+
+{ #category : #'class modifications' }
+ShDefaultBuilderEnhancer >> validateRedefinition: anOldClass [
+	"subclasses can validate that the new definition is coherent with the old class"
+]
