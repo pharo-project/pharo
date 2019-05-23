@@ -118,12 +118,6 @@ LiteralVariable >> isSelfEvaluating [
 ]
 
 { #category : #testing }
-LiteralVariable >> isSpecial [
-	"I am more than just a backward compatible Global"
-	^true
-]
-
-{ #category : #testing }
 LiteralVariable >> isWrittenIn: aCompiledCode [
 	^aCompiledCode writesRef: self
 ]
@@ -131,6 +125,13 @@ LiteralVariable >> isWrittenIn: aCompiledCode [
 { #category : #accessing }
 LiteralVariable >> name: aString [ 
 	self key: aString asSymbol
+]
+
+{ #category : #testing }
+LiteralVariable >> needsFullDefinition [
+	"only ClassVariable can use a simplified definition"
+
+	^ self class ~= ClassVariable
 ]
 
 { #category : #properties }

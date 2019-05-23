@@ -32,6 +32,11 @@ TabPresenter class >> adapterName [
 	^ #TabAdapter
 ]
 
+{ #category : #deprecation }
+TabPresenter class >> isDeprecated [
+	^ true
+]
+
 { #category : #api }
 TabPresenter >> actions [
 

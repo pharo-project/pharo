@@ -19,8 +19,9 @@ Class {
 
 { #category : #'code generation' }
 WeakSlot >> emitStore: aMethodBuilder [
+	"generate bytecode for 'varname at: 1 put: <stackTop>'"
 	| temp |
-	temp := Object new.
+	temp := Object new. "we need a unique Object as a temp name"
 	"Pop the value to store into a temp to push it back in the right order"
 	aMethodBuilder addTemp: temp.
 	aMethodBuilder storeTemp: temp.
@@ -34,7 +35,7 @@ WeakSlot >> emitStore: aMethodBuilder [
 
 { #category : #'code generation' }
 WeakSlot >> emitValue: aMethodBuilder [
-	"Push the weak array into the stack"
+	"Push the weak array at: 1 on the stack"
 	aMethodBuilder pushInstVar: index.
 	aMethodBuilder pushLiteral: 1.
 	aMethodBuilder send: #at:

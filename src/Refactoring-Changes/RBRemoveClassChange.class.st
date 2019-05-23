@@ -20,7 +20,7 @@ RBRemoveClassChange class >> removeClassName: aSymbol [
 { #category : #converting }
 RBRemoveClassChange >> asUndoOperation [
 	| classChanges |
-	classChanges := RBRefactoryChangeManager changeFactory compositeRefactoryChange.
+	classChanges := changeFactory compositeRefactoryChange.
 	self changeClass withAllSubclasses do: [ :each | 
 		classChanges defineClass: each definition.
 		each class instVarNames 

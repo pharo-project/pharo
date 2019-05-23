@@ -28,13 +28,6 @@ SearchableTree class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #examples }
-SearchableTree class >> example [
-	<sampleInstance>
-	^ self new
-		openWithSpec
-]
-
 { #category : #specs }
 SearchableTree class >> searchAtBottom [
 	<spec: #default>
@@ -146,7 +139,7 @@ SearchableTree >> initialize [
 { #category : #initialization }
 SearchableTree >> initializePresenter [
 	inputField whenTextChangedDo: [ :text | self updateRootFor: text ].
-	tree whenTreeUpdated: [ inputField text: '' ]
+	tree whenTreeUpdatedDo: [ inputField text: '' ]
 ]
 
 { #category : #initialization }

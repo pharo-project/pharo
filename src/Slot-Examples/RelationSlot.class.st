@@ -71,8 +71,9 @@ RelationSlot >> checkValue: aValue [
 
 { #category : #'code generation' }
 RelationSlot >> emitStore: aMethodBuilder [
+	"copy of #emitStore from Slot as my superclass has overriden it"
 	| tempName |
-	tempName := Object new.
+	tempName := Object new.  "we need a unique Object as a temp name"
 	aMethodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
@@ -91,7 +92,7 @@ RelationSlot >> hasInverse [
 
 { #category : #comparing }
 RelationSlot >> hasSameDefinitionAs: otherSlot [
-
+	"need to implement as superclass implements it"
 	^ (super hasSameDefinitionAs: otherSlot) 
 		and: [ self targetClassName = otherSlot targetClassName 
 		and: [ inverseName = otherSlot inverseName ] ]

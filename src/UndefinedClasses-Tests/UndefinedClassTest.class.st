@@ -11,7 +11,7 @@ UndefinedClassTest >> assertClassDoesNotExist: aSymbol [
 
 { #category : #tests }
 UndefinedClassTest >> assertClassExist: aSymbol [
-	self assert: (self class environment at: aSymbol ifPresent: [ true ])
+	self assert: (self class environment includesKey: aSymbol)
 ]
 
 { #category : #compiling }
@@ -25,7 +25,12 @@ UndefinedClassTest >> compile [
 { #category : #compiling }
 UndefinedClassTest >> createClassFromDefinitionString: aString [
 	"self new compile"
-	^ ClassDefinitionHandler createClassFromDefinitionString: aString
+
+	^ ShiftClassInstaller make: [ :builder | 
+		builder
+			useUndefinedClass;
+			buildEnvironment: ShSmalltalkGlobalsEnvironment new;
+			buildFromAST: (CDClassDefinitionParser parse: aString) ]
 ]
 
 { #category : #running }
@@ -63,7 +68,7 @@ UndefinedClassTest >> testCreateSubclassOfArbitraryExpressionReturningNilThrowsE
 ]
 
 { #category : #tests }
-UndefinedClassTest >> testCreateSubclassOfNilCreatesSubclassOfObject [
+UndefinedClassTest >> testCreateSubclassOfNilCreatesSubclassOfNil [
 
 	self assertClassDoesNotExist: #ColoredFoo.
 
@@ -73,7 +78,7 @@ UndefinedClassTest >> testCreateSubclassOfNilCreatesSubclassOfObject [
 		package: ''Box'''.
 	
 	self assertClassExist: #ColoredFoo.
-	self assert: (self class environment at: #ColoredFoo) superclass equals: Object.
+	self assert: (self class environment at: #ColoredFoo) superclass equals: nil.
 ]
 
 { #category : #tests }
@@ -169,8 +174,7 @@ UndefinedClassTest >> testUnknowSuperclassShouldInheritFromUndefinedClass [
 	| newUndefinedClass |
 	self assertClassDoesNotExist: #Foo.
 	
-	UndefinedClassHandler new
-		handleDefinitionString: self undefinedDefinition.
+	self createClassFromDefinitionString: self undefinedDefinition.
 	self assertClassExist: #ColoredFoo.
 	newUndefinedClass := (self class environment at: #ColoredFoo). 
 	self assert: newUndefinedClass superclass equals: (self class environment at: #Foo).

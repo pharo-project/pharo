@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'children',
-		'selector'
+		'selector',
+		'adapter'
 	],
 	#category : #'Spec-Layout-Base'
 }
@@ -17,12 +18,9 @@ SpecExecutableLayout >> adapterName [
 { #category : #accessing }
 SpecExecutableLayout >> add: aName withConstraints: aBlock [
 	| constraints |
-	
 	constraints := self constraintsClass new.
 	aBlock value: constraints.
-	children 
-		at: aName 
-		put: constraints
+	children at: aName put: constraints
 ]
 
 { #category : #converting }
@@ -31,22 +29,28 @@ SpecExecutableLayout >> asArray [
 	self error: 'Should not arrive here. This layout is executable then it will not be interpreted.'
 ]
 
-{ #category : #building }
-SpecExecutableLayout >> buildAdapterFor: aModel bindings: bindings [
-	| adapter |
+{ #category : #converting }
+SpecExecutableLayout >> asSpecLayout [
 	
-	adapter := (bindings adapterClass: self adapterName) adapt: aModel.
+	^ self
+]
+
+{ #category : #building }
+SpecExecutableLayout >> buildAdapterFor: aPresenter bindings: bindings [
+	adapter := (aPresenter needRebuild or: [ aPresenter adapter isNil ])
+		ifTrue: [ (bindings adapterClass: self adapterName) adapt: aPresenter ]
+		ifFalse: [ aPresenter adapter
+				removeSubWidgets;
+				yourself ].
+			
+	"Ensure we remove the flag `no need of rebuild` if it was set."
+	aPresenter needRebuild: true.
+
 	adapter layout: self.
+
 	children
-		keysAndValuesDo: [ :presenterNameOrLayout :constraints | 
-			"Since a layout can be composed (by other layouts), we can include a
-		 presenter or a layout"
-			adapter 
-				add: (self 
-					resolvePresenter: presenterNameOrLayout 
-					model: aModel 
-					bindings: bindings)
-				constraints: constraints ].
+		keysAndValuesDo:
+			[ :presenterNameOrLayout :constraints | "Since a layout can be composed (by other layouts), we can include a presenter or a layout" adapter add: (self resolvePresenter: presenterNameOrLayout model: aPresenter bindings: bindings) constraints: constraints ].
 
 	^ adapter
 ]
@@ -76,12 +80,19 @@ SpecExecutableLayout >> isSpecLayout [
 	^ true
 ]
 
+{ #category : #accessing }
+SpecExecutableLayout >> presenters [
+	
+	^ children keys
+]
+
 { #category : #private }
 SpecExecutableLayout >> resolvePresenter: presenterNameOrLayout model: aModel bindings: bindings [
 
 	"most common case: I receive a symbol that I need to convert into a presenter"
 	presenterNameOrLayout isSymbol ifTrue: [ 
-		^ self subpresenterOrLayoutNamed: presenterNameOrLayout of: aModel ].
+		^ (self subpresenterOrLayoutNamed: presenterNameOrLayout of: aModel)
+			ifNil: [ self error: 'You presenter named "', presenterNameOrLayout , '" from ', aModel printString ,' was not initialized.' ] ].
 	
 	"I receive a layout: dig inside."
 	presenterNameOrLayout isSpecLayout ifTrue: [ 
@@ -89,6 +100,8 @@ SpecExecutableLayout >> resolvePresenter: presenterNameOrLayout model: aModel bi
 	
 	"I receive an arbitrary object (needs to understand #asPresenter)"
 	^ presenterNameOrLayout asPresenter
+		owner: aModel;
+		yourself
 ]
 
 { #category : #accessing }
@@ -103,12 +116,7 @@ SpecExecutableLayout >> selector: anObject [
 
 { #category : #private }
 SpecExecutableLayout >> subpresenterOrLayoutNamed: presenterNameOrLayout of: aPresenter [
-
-	^ aPresenter additionalSubpresentersMap 
-		at: presenterNameOrLayout 
-		ifAbsent: [ aPresenter presenterAt: presenterNameOrLayout ]
-
-	
-
-	
+	^ aPresenter additionalSubpresentersMap
+		at: presenterNameOrLayout
+		ifAbsent: [ aPresenter presenterAt: presenterNameOrLayout ifAbsent: [ self error: 'No presenter named "' , presenterNameOrLayout , '" was found in ' , aPresenter printString ] ]
 ]

@@ -70,12 +70,6 @@ MorphicAdapterTestCase >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
-MorphicAdapterTestCase >> testSmoke [
-
-	self openInstance
-]
-
 { #category : #running }
 MorphicAdapterTestCase >> widget [
 

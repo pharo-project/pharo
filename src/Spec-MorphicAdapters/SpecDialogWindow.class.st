@@ -76,9 +76,8 @@ SpecDialogWindow >> okAction: aBlock [
 { #category : #protocol }
 SpecDialogWindow >> setToolbarFrom: aBlock [
 	| newToolbar |
-	newToolbar := aBlock value.
-	newToolbar owner: self.
 	
+	newToolbar := aBlock value.
 	self toolbar: newToolbar.
 	self model presenter focusOrder addLast: toolbar.
 	toolbar focusOrder addLast: self model
@@ -94,10 +93,13 @@ SpecDialogWindow >> toolbar [
 { #category : #accessing }
 SpecDialogWindow >> toolbar: anObject [
 	| content |
+	
 	toolbar := anObject.
-	anObject owner: self.
-	
 	self removeMorph: (content := self submorphs last).
-	
-	self addMorph: (self newDialogPanel addMorphBack: content; addMorphBack: self newButtonRow; yourself) frame: (0 @ 0 corner: 1 @ 1)
+	self 
+		addMorph: (self newDialogPanel 
+			addMorphBack: content; 
+			addMorphBack: self newButtonRow; 
+			yourself) 
+		frame: (0 @ 0 corner: 1 @ 1)
 ]

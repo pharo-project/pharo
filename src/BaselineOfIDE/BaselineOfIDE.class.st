@@ -172,6 +172,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-Tests'.
 		spec package: 'Kernel-Tests-Extended'.
 		spec package: 'Kernel-Tests-WithCompiler'.
+		spec package: 'Debugging-Utils-Tests'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
 		spec package: 'OpalCompiler-Tests'.
@@ -438,6 +439,7 @@ spec group: 'General-Help-Group' with: #(
 
 spec group: 'General-Tests-Group' with: #(
 	'Kernel-Tests-Group' "dependency"
+	'Debugging-Utils-Tests'
 	'Monticello-Tests'	"required by MonticelloMocks"
 	'MonticelloMocks'
 	'Fuel-Tests-Core'
@@ -754,7 +756,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Collections-Tests'
 	'Kernel-Tests' 
 	'Kernel-Tests-Extended' 
-	'Kernel-Tests-WithCompiler' 
+	'Kernel-Tests-WithCompiler'
 	'AST-Tests-Core' "requires BlueInk-Core"
 	'Announcements-Tests-Core'
 	'Compression-Tests' 
@@ -772,7 +774,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Ring-Deprecated-Tests-Containers' 
 	'Tests' 
 	'Zinc-Character-Encoding-Tests' 
-
+	'System-Platforms-Tests'
 	'Text-Tests'		"required by Multilingual-Tests"
 ).
 
@@ -868,7 +870,7 @@ BaselineOfIDE >> loadCalypso [
 
 	Metacello new
 		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.16.2/src';
+		repository: 'github://pharo-ide/Calypso:v0.16.4/src';
 		onConflict: [ :err | err useIncoming ];
 		onUpgrade: [ :err | err useIncoming ];
 		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
@@ -882,7 +884,7 @@ BaselineOfIDE >> loadCalypso [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.6.0';
+		repository: 'github://pharo-vcs/iceberg:v1.7.0';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 	(Smalltalk classNamed: #IcePharoPlugin) addPharoProjectToIceberg.

@@ -152,7 +152,6 @@ ProfStef class >> openPharoZenWorkspace [
 		text: self pharoZenValuesContents;
 		title: 'Pharo Zen' translated;
 		aboutText: self aboutPharoZen;
-		beForText;
 		openWithSpec
 ]
 

@@ -20,12 +20,10 @@ Class {
 
 { #category : #specs }
 SpecDemoDynamicMemoryGamePresenter class >> defaultSpec [
-
-	^ SpecLayout composed
-		newColumn: [ :mainColumn |
-			mainColumn
-				newRow: #dynamicPresenter;
-				newRow: #differentCardsCountSlider height: self buttonHeight ]
+	^ SpecBoxLayout newVertical
+		add: #dynamicPresenter;
+		add: #differentCardsCountSlider withConstraints: [ :constraints | constraints height: self buttonHeight ];
+		yourself
 ]
 
 { #category : #example }

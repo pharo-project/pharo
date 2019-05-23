@@ -15,7 +15,7 @@ UnlimitedInstanceVariableSlotTest >> testExampleIvarSlot [
 	self assert: (slot instVarNamed: 'baseSlot') isNotNil.
 
 	object := aClass new. 
-	"test refletive write and read"
+	"test reflective write and read"
 	slot write: 5 to: object.
 	self assert: (slot read: object) == 5.
 	

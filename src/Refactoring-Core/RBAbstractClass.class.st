@@ -20,7 +20,7 @@ Like a real class I referre to my superclass and subclass, which again are actua
 "
 Class {
 	#name : #RBAbstractClass,
-	#superclass : #Object,
+	#superclass : #RBEntity,
 	#instVars : [
 		'name',
 		'newMethods',
@@ -153,7 +153,7 @@ RBAbstractClass >> classSide [
 
 { #category : #'method accessing' }
 RBAbstractClass >> compile: aString [ 
-	^ self compile: aString withAttributesFrom: (self methodFor: (RBParser parseMethodPattern: aString))
+	^ self compile: aString withAttributesFrom: (self methodFor: (self parserClass parseMethodPattern: aString))
 ]
 
 { #category : #'method accessing' }
@@ -163,7 +163,7 @@ RBAbstractClass >> compile: aString classified: aSymbolCollection [
 				compile: aString
 				in: self
 				classified: aSymbolCollection.
-	method := RBClassModelFactory rbMethod 
+	method := modelFactory rbMethod 
 				for: self
 				source: aString
 				selector: change selector.
@@ -178,7 +178,7 @@ RBAbstractClass >> compile: aString withAttributesFrom: aRBMethod [
 		compile: aString
 		in: self
 		classified: aRBMethod protocols.
-	method := RBClassModelFactory rbMethod  
+	method := modelFactory rbMethod  
 		for: self
 		source: aString
 		selector: change selector.
@@ -363,6 +363,7 @@ RBAbstractClass >> inheritsPoolDictionaries [
 
 { #category : #initialization }
 RBAbstractClass >> initialize [
+	super initialize.
 	name := #'Unknown Class'
 ]
 
@@ -413,7 +414,7 @@ RBAbstractClass >> methodFor: aSelector [
 			compiledMethod isNil 
 				ifTrue: [nil]
 				ifFalse: 
-					[RBClassModelFactory rbMethod 
+					[modelFactory rbMethod 
 						for: self
 						fromMethod: compiledMethod
 						andSelector: aSelector]]
@@ -702,14 +703,14 @@ RBAbstractClass >> whoDefinesMethod: aSelector [
 
 { #category : #accessing }
 RBAbstractClass >> withAllSubclasses [
-	^(self allSubclasses)
+	^ self allSubclasses
 		add: self;
 		yourself
 ]
 
 { #category : #accessing }
 RBAbstractClass >> withAllSuperclasses [
-	^(self allSuperclasses)
+	^ self allSuperclasses
 		add: self;
 		yourself
 ]

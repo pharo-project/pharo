@@ -282,7 +282,7 @@ T2TraitTest >> testSubclasses [
 T2TraitTest >> testTraitHaveUsersInstanceVariable [
 	| t1 aClass |
 
-	t1 := self newTrait: #T1 with: #().
+	t1 := self newTrait: #T1 with: #(users).
 
 	aClass := self newClass: #C1 superclass: Object with: #() uses: {t1}.
 	

@@ -86,14 +86,14 @@ MessageBrowser class >> browseSendersOf: aSymbol [
 
 { #category : #specs }
 MessageBrowser class >> defaultSpec [
-	<spec>
-	| delta |
-	delta := 13.
-	^ SpecLayout composed 
-			add: #listModel origin: 0@0 corner: 1@0.5 offsetOrigin: 0@0 offsetCorner: 0@(delta negated);
-			add: #toolbarModel origin: 0@0.5 corner: 1@0.5 offsetOrigin: 0@(delta negated) offsetCorner: 0@delta;
-			add: #textModel origin: 0@0.5 corner: 1@1 offsetOrigin: 0@delta offsetCorner: 0@0;
-			yourself
+	^ SpecPanedLayout newVertical
+		add: #listModel;
+		add:
+			(SpecBoxLayout newVertical
+				add: #toolbarModel withConstraints: [ :constraints | constraints height: self buttonHeight ];
+				add: #textModel;
+				yourself);
+		yourself
 ]
 
 { #category : #menu }
@@ -174,20 +174,6 @@ MessageBrowser class >> taskbarIconName [
 	"Answer the icon for an instance of the receiver in a task bar"
 
 	^#referencesIcon
-]
-
-{ #category : #specs }
-MessageBrowser class >> testSpec [
-	<spec: #default>
-	
-	^ SpecLayout composed
-			newColumn: [:col |
-				col 
-					add: #listModel;
-					addSplitter;
-					add: #toolbarModel height: self buttonHeight;
-					add: #textModel ]
-				
 ]
 
 { #category : #specs }
@@ -312,16 +298,15 @@ MessageBrowser >> currentMethod [
 	^ self selectedMessage
 ]
 
-{ #category : #api }
-MessageBrowser >> displayBlock: aBlock [
-
-	^ listModel displayBlock: aBlock
-]
-
 { #category : #'private-focus' }
 MessageBrowser >> ensureKeyBindingsFor: aWidget [
-	
-	self registerListShortcutsFor: listModel
+	aWidget bindKeyCombination: PharoShortcuts current browseShortcut toAction: [ self browseMethod ].
+	aWidget bindKeyCombination: PharoShortcuts current inspectItShortcut toAction: [ self inspectMethod ].
+	aWidget bindKeyCombination: PharoShortcuts current browseImplementorsShortcut toAction: [ self browseMessages ].
+	aWidget bindKeyCombination: PharoShortcuts current browseSendersShortcut toAction: [ self browseSendersOfMessage ].
+	aWidget bindKeyCombination: PharoShortcuts current browseReferencesShortcut toAction: [ self browseClassRefs ].
+	aWidget bindKeyCombination: PharoShortcuts current browseVersionsShortcut toAction: [ self browseVersions ].
+	aWidget bindKeyCombination: PharoShortcuts current removeShortcut toAction: [ self removeMethods ]
 ]
 
 { #category : #'text selection' }
@@ -338,21 +323,21 @@ MessageBrowser >> findFirstOccurrenceOf: searchedString in: textToSearchIn [
 
 { #category : #announcements }
 MessageBrowser >> handleClassRenamed: anAnnouncement [
-	
 	| items selectedIndex |
-	items := listModel listItems collect: [ :rgMethod | | interestedClassName interestedClass |
-		interestedClassName := anAnnouncement oldName.
-		interestedClass := anAnnouncement classRenamed.
-		rgMethod isMetaSide ifTrue: [ 
-			interestedClassName := interestedClassName, ' class'.
-			interestedClass := interestedClass classSide ].
-		rgMethod parentName = interestedClassName ifTrue: [ 
-			(interestedClass >> rgMethod selector) asFullRingDefinition.
-		 	] ifFalse: [ rgMethod ] ].
-	
-	selectedIndex := listModel selectedIndex.
+	items := listModel model shownItems
+		collect: [ :rgMethod | 
+			| interestedClassName interestedClass |
+			interestedClassName := anAnnouncement oldName.
+			interestedClass := anAnnouncement classRenamed.
+			rgMethod isMetaSide
+				ifTrue: [ interestedClassName := interestedClassName , ' class'.
+					interestedClass := interestedClass classSide ].
+			rgMethod parentName = interestedClassName
+				ifTrue: [ (interestedClass >> rgMethod selector) asFullRingDefinition ]
+				ifFalse: [ rgMethod ] ].
+	selectedIndex := listModel selection selectedIndex.
 	self messages: items.
-	listModel setSelectedIndex: selectedIndex.
+	listModel selectIndex: selectedIndex
 ]
 
 { #category : #announcements }
@@ -395,14 +380,14 @@ MessageBrowser >> handleMethodModified: anAnnouncement [
 	edits := textModel hasUnacceptedEdits.
 	edits
 		ifTrue: [ text := textModel pendingText ].
-	index := listModel selectedIndex.
-	list := listModel listItems
+	index := listModel selection selectedIndex.
+	list := listModel model shownItems
 		remove: sel ifAbsent: [  ];
 		add: item asFullRingDefinition;
 		"to ensure it's still a RGMethod"
 			yourself.
 	self messages: list.
-	listModel setSelectedIndex: index.
+	listModel selectIndex: index.
 	edits
 		ifFalse: [ ^ self ].
 	textModel pendingText: text.
@@ -412,34 +397,34 @@ MessageBrowser >> handleMethodModified: anAnnouncement [
 { #category : #announcements }
 MessageBrowser >> handleMethodRemoved: anAnnouncement [
 	| item selection removeItem |
-	
-	self isDisplayed ifFalse: [ ^ self ].
+	self isDisplayed
+		ifFalse: [ ^ self ].
 	refreshingBlockHolder ifNil: [ ^ self ].
-	self okToChange ifFalse: [ ^ self ].
-	
+	self okToChange
+		ifFalse: [ ^ self ].
+
 	"Item is a compiled methed, where the list is populated with RGMethod"
-	item := anAnnouncement method.	
+	item := anAnnouncement method.
 	(item methodClass notNil and: [ item methodClass isObsolete not ])
 		ifFalse: [ ^ self ].
-		
-	selection := listModel selectedIndex.
-	removeItem := listModel selectedItem.
-	(removeItem notNil 
+	selection := listModel selection selectedIndex.
+	removeItem := listModel selection selectedItem.
+	(removeItem notNil
 		and: [ removeItem methodClass = item methodClass
-		and: [ removeItem selector = item selector ] ])
+				and: [ removeItem selector = item selector ] ])
 		ifTrue: [ textModel hasUnacceptedEdits: false ].
-	
-	self messages: (listModel listItems
-		remove: item asFullRingDefinition ifAbsent: [ nil ];
-		yourself).
-
-	listModel selectedIndex: selection
+	self
+		messages:
+			(listModel model shownItems
+				remove: item asFullRingDefinition ifAbsent: [ nil ];
+				yourself).
+	listModel selectIndex: selection
 ]
 
 { #category : #private }
 MessageBrowser >> initialExtent [
 
-	^ (700 min: (World extent x)) @ (550 min: (World extent y))
+	^ (900 min: (World extent x)) @ (550 min: (World extent y))
 ]
 
 { #category : #initialization }
@@ -465,33 +450,32 @@ MessageBrowser >> initializeDropList [
 { #category : #initialization }
 MessageBrowser >> initializePresenter [
 	listModel
-		whenSelectionChangedDo:
-			[ :selection | [ :item | self selectItem: item ] cull: selection selectedItem ].
-	listModel whenModelChangedDo: [ self updateTitle ].
+		whenSelectionChangedDo: [ :selection | [ :item | self selectItem: item ] cull: selection selectedItem ];
+		whenModelChangedDo: [ self updateTitle ].
 	titleHolder whenChangedDo: [ self updateTitle ].
-	textModel
-		acceptBlock:
-			[ :text :notifyer | (self accept: text notifying: notifyer) notNil ]
+	textModel acceptBlock: [ :text :notifyer | (self accept: text notifying: notifyer) notNil ]
 ]
 
 { #category : #initialization }
 MessageBrowser >> initializeWidgets [
-
-	listModel := self instantiate: FastTablePresenter.
+	listModel := self newTable.
 	textModel := self newCode.
 	toolbarModel := self instantiate: MethodToolbar.
-	
-	listModel numberOfColumns: 3 withWidths: #(250 250 50).
-	listModel displayBlock: [ :item | self wrapItem: item ].
+
+	listModel
+		addColumn: (StringTableColumn title: 'Location' evaluated: [ :item | self locationOf: item ]);
+		addColumn: (StringTableColumn title: 'Selector' evaluated: [ :item | self selectorOf: item ]);
+		addColumn: (StringTableColumn title: 'Package' evaluated: [ :item | self packageOf: item ]);
+		beResizable.
+
 	textModel aboutToStyle: true.
 	textModel whenBuiltDo: [ :ann | ann widget font: self codeFont ].
 	refreshingBlockHolder := [ :item | true ] asValueHolder.
-				
+
 	self
 		setListMenu;
 		initializeDropList;
-		setFocus.
-
+		setFocus
 ]
 
 { #category : #actions }
@@ -536,6 +520,19 @@ MessageBrowser >> isMethodDefinition: anItem [
 MessageBrowser >> listModel [
 	
 	^ listModel
+]
+
+{ #category : #accessing }
+MessageBrowser >> locationOf: anItem [
+	^ String
+		streamContents: [ :aStream | 
+			3 to: (cachedHierarchy at: anItem) size do: [ :i | aStream << '    ' ].
+			aStream << (self methodClassNameForItem: anItem) << ' ('.
+			anItem isFromTrait
+				ifTrue: [ aStream
+						<< anItem compiledMethod origin name;
+						space ].
+			aStream << (self protocolNameForItem: anItem) << ')' ]
 ]
 
 { #category : #api }
@@ -601,6 +598,11 @@ MessageBrowser >> packageNameForItem: anItem [
 	^ anItem package ifNil: [ '' ] ifNotNil: [ :package | package name ]
 ]
 
+{ #category : #accessing }
+MessageBrowser >> packageOf: anItem [
+	^ '[' , (self packageNameForItem: anItem) , ']'
+]
+
 { #category : #private }
 MessageBrowser >> protocolNameForItem: anItem [
 	^ anItem category ifNil: [ '' ]
@@ -610,18 +612,6 @@ MessageBrowser >> protocolNameForItem: anItem [
 MessageBrowser >> refreshingBlock: aBlock [
 
 	refreshingBlockHolder value: aBlock
-]
-
-{ #category : #initialization }
-MessageBrowser >> registerListShortcutsFor: aWidget [
-
-	aWidget bindKeyCombination: PharoShortcuts current browseShortcut toAction: [ self browseMethod ].
-	aWidget bindKeyCombination: PharoShortcuts current inspectItShortcut toAction: [ self inspectMethod ].
-	aWidget bindKeyCombination: PharoShortcuts current browseImplementorsShortcut toAction: [ self browseMessages ].
-	aWidget bindKeyCombination: PharoShortcuts current browseSendersShortcut toAction: [ self browseSendersOfMessage ].
-	aWidget bindKeyCombination: PharoShortcuts current browseReferencesShortcut toAction: [ self browseClassRefs ].
-	aWidget bindKeyCombination: PharoShortcuts current browseVersionsShortcut toAction: [ self browseVersions ].
-	aWidget bindKeyCombination: PharoShortcuts current removeShortcut toAction: [ self removeMethods ].
 ]
 
 { #category : #'announcements-registration' }
@@ -701,29 +691,37 @@ MessageBrowser >> selectedClass [
 
 { #category : #accessing }
 MessageBrowser >> selectedItem [
+
 	^ listModel selection selectedItem
 ]
 
 { #category : #api }
 MessageBrowser >> selectedMessage [
+
 	^ listModel selection selectedItem
 ]
 
 { #category : #api }
 MessageBrowser >> selectedMessage: aMessage [
 
-	listModel setSelectedItem: aMessage.
+	listModel selectItem: aMessage.
 ]
 
 { #category : #accessing }
 MessageBrowser >> selectedMethod [
-	self selectedMessage ifNil: [ ^nil ].
+
+	self selectedMessage ifNil: [ ^ nil ].
 	^ self selectedMessage compiledMethod
 ]
 
 { #category : #accessing }
 MessageBrowser >> selectedMethods [
 	^ {self selectedMessage} asOrderedCollection 
+]
+
+{ #category : #accessing }
+MessageBrowser >> selectorOf: anItem [
+	^ anItem selector
 ]
 
 { #category : #initialization }
@@ -737,8 +735,7 @@ MessageBrowser >> setFocus [
 
 { #category : #menus }
 MessageBrowser >> setListMenu [
-	listModel menu: [ :menu |
-		menu addAllFromPragma: 'messageBrowserListMenu' target: self ].
+	listModel contextMenu: [ :menu | menu addAllFromPragma: 'messageBrowserListMenu' target: self ]
 ]
 
 { #category : #api }
@@ -833,7 +830,6 @@ MessageBrowser >> textModel: aModel [
 
 { #category : #private }
 MessageBrowser >> title [
-		
 	^ titleHolder value , ' [' , listModel listSize printString , ']'
 ]
 
@@ -865,20 +861,4 @@ MessageBrowser >> whenSelectedItemChanged: aBlock [
 MessageBrowser >> windowIsClosing [
 	
 	SystemAnnouncer uniqueInstance unsubscribe: self
-]
-
-{ #category : #private }
-MessageBrowser >> wrapItem: anItem [
-	| s packageName |
-	s := String
-		streamContents: [ :aStream | 
-			3 to: (cachedHierarchy at: anItem) size do: [ :i | aStream << '    ' ].
-			aStream << (self methodClassNameForItem: anItem) << ' ('.
-			anItem isFromTrait
-				ifTrue: [ aStream
-						<< anItem compiledMethod origin name;
-						space ].
-			aStream << (self protocolNameForItem: anItem) << ')' ].
-	packageName := self packageNameForItem: anItem.
-	^ {s. anItem selector. ('[' , packageName , ']')}
 ]

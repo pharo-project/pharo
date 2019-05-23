@@ -14,7 +14,7 @@ SpecStubWindowAdapter >> addContent: aView toWindow: aSpecWindow [
 ]
 
 { #category : #factory }
-SpecStubWindowAdapter >> addModelIn: widgetToBuild withSpecLayout: aSpec [
+SpecStubWindowAdapter >> addPresenterIn: widgetToBuild withSpecLayout: aSpec [
 	self
 		addContent: (self model presenter buildWithSpecLayout: aSpec)
 		toWindow: widgetToBuild
@@ -36,6 +36,8 @@ SpecStubWindowAdapter >> delete [
 
 { #category : #factory }
 SpecStubWindowAdapter >> open [
+
+	self presenter windowIsOpening
 ]
 
 { #category : #factory }

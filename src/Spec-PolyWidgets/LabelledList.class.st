@@ -14,17 +14,6 @@ Class {
 	#category : #'Spec-PolyWidgets-Labelled'
 }
 
-{ #category : #example }
-LabelledList class >> example [
-	<sampleInstance>
-	| example |
-	example := self abstractExample.
-	example
-		items: {'item 1' . 'item 2'};
-		openWithSpec.
-	^ example
-]
-
 { #category : #'api-shortcuts' }
 LabelledList >> beMultipleSelection [
 	^ self list beMultipleSelection

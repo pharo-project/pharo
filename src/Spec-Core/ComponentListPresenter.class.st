@@ -36,3 +36,9 @@ ComponentListPresenter >> initialize [
 ComponentListPresenter >> presenters [
 	^ presenters
 ]
+
+{ #category : #initialization }
+ComponentListPresenter >> presenters: aCollection [
+	presenters := aCollection.
+"	self notifyPropertyChanged: #presenters"
+]

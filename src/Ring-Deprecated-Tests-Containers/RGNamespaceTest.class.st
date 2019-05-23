@@ -16,7 +16,7 @@ RGNamespaceTest class >> isDeprecated [
 RGNamespaceTest >> testCreatingNamespace [
 	| newNamespace newPackage newClass |
 	newNamespace := RGNamespace named: #RingNamespace.
-	newPackage := RGPackage named: #'Collections-Sequenceable'.
+	newPackage := RGPackageDefinition named: #'Collections-Sequenceable'.
 	newClass := RGClassDefinition named: #OrderedCollection.
 	newPackage addClass: newClass.
 	newNamespace

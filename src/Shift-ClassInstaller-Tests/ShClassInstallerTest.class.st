@@ -153,6 +153,24 @@ ShClassInstallerTest >> testClassWithSlotHasInitializeMethodWithInitializeSlots 
 ]
 
 { #category : #tests }
+ShClassInstallerTest >> testDuplicateClassPreserveClassSlots [
+	
+	newClass := ShiftClassInstaller
+		make: [ :builder | 
+			builder
+				name: #ShCITestClass;
+				superclass: Object;
+				classSlots: {#aClassInstanceVariable => InstanceVariableSlot};
+				category: 'Shift-ClassInstaller-Tests' ].
+	
+	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
+	
+	self assert: (newClass2 class hasSlotNamed: #aClassInstanceVariable).
+	self assert: (newClass2 class slotNamed: #aClassInstanceVariable) class equals: InstanceVariableSlot.
+	
+]
+
+{ #category : #tests }
 ShClassInstallerTest >> testDuplicateClassPreserveMethods [
 	
 	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => BooleanSlot}.

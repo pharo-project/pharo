@@ -6,8 +6,9 @@ Class {
 
 { #category : #'code generation' }
 SpecObservableSlot >> emitStore: aMethodBuilder [
+	"generate bytecode for 'varName value: <stackTop>'"
 	| temp |
-	temp := Object new.
+	temp := Object new.  "we need a unique Object as a temp name"
 	"We pop the value from the stack into a temp to push it back in the right order"
 	aMethodBuilder addTemp: temp.
 	aMethodBuilder storeTemp: temp.
@@ -38,6 +39,12 @@ SpecObservableSlot >> isObservableSlot [
 ]
 
 { #category : #initialization }
+SpecObservableSlot >> rawRead: anObject [
+
+	^ super read: anObject
+]
+
+{ #category : #initialization }
 SpecObservableSlot >> read: anObject [
 
 	^ (super read: anObject) value
@@ -52,6 +59,6 @@ SpecObservableSlot >> wantsInitalization [
 { #category : #initialization }
 SpecObservableSlot >> write: aValue to: anObject [
 
-	(super read: anObject) value: aValue.
+	(super read: anObject) ifNotNil: [ :v | v value: aValue ].
 	^ aValue
 ]

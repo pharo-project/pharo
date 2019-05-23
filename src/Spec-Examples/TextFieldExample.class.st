@@ -13,13 +13,10 @@ Class {
 
 { #category : #specs }
 TextFieldExample class >> defaultSpec [
-	| textFieldHeight |
-	
-	textFieldHeight := StandardFonts defaultFont height + 15.
-	^ SpecLayout composed
-	 	add: #textField origin: 0@0 corner: 1@0 offsetOrigin: 0@0 offsetCorner: 0@textFieldHeight;
-	 	add: #methodBrowser origin: 0@0 corner: 1@1 offsetOrigin: 0@textFieldHeight offsetCorner: 0@textFieldHeight;
-		yourself 
+	^ SpecBoxLayout newVertical
+		add: #textField withConstraints: [ :constraints | constraints height: StandardFonts defaultFont height + 15 ];
+		add: #methodBrowser;
+		yourself
 ]
 
 { #category : #example }
@@ -34,6 +31,11 @@ TextFieldExample class >> title [
 	^ 'Text Field Example'
 ]
 
+{ #category : #api }
+TextFieldExample >> initialExtent [
+	^ 900@550
+]
+
 { #category : #initialization }
 TextFieldExample >> initializePresenter [
 	
@@ -45,16 +47,14 @@ TextFieldExample >> initializePresenter [
 { #category : #initialization }
 TextFieldExample >> initializeWidgets [
 	methodBrowser := self instantiate: MessageBrowser.
-	
+
 	textField := self newTextInput.
 	textField
 		placeholder: 'Enter a class name';
 		autoAccept: true;
 		removeEntryCompletion.
-		
-	methodBrowser
-		sortingBlock: [ :a :b | a selector < b selector ];
-		displayBlock: [ :m | {m selector} ]
+
+	methodBrowser sortingBlock: [ :a :b | a selector < b selector ]
 ]
 
 { #category : #accessing }

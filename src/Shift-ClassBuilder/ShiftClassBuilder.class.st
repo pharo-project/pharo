@@ -285,7 +285,8 @@ ShiftClassBuilder >> fillFor: aClass [
 		superclass: aClass superclass;
 		name: aClass getName;
 		layoutClass: aClass classLayout class;
-		slots: aClass localSlots ;
+		slots: aClass localSlots;
+		classSlots: aClass class localSlots;
 		sharedVariables: aClass classVariables;
 		sharedPools: aClass sharedPoolsString;
 		category: aClass category;
@@ -322,10 +323,8 @@ ShiftClassBuilder >> initialize [
 { #category : #building }
 ShiftClassBuilder >> installSlots [
 	newClass classLayout slots do: [ :each | each installingIn: newClass ].
-	newClass classLayout slots do: [ :each | each layoutChanged: newClass ].
-	
 	newClass class classLayout slots do: [ :each | each installingIn: newClass class ].
-	newClass class classLayout slots do: [ :each | each layoutChanged: newClass class ].
+
 ]
 
 { #category : #accessing }

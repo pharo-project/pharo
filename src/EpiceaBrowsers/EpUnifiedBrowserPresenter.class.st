@@ -69,8 +69,7 @@ EpUnifiedBrowserPresenter >> initialExtent [
 { #category : #initialization }
 EpUnifiedBrowserPresenter >> initializePresenter [
 	super initializePresenter.
-	self logNodesPresenter logNodesTreePresenter
-		whenSelectedItemChanged: [ :items | self refreshWithLogSelected: items ].
+	self logNodesPresenter logNodesTreePresenter whenSelectedItemChangedDo: [ :items | self refreshWithLogSelected: items ].
 	self initializeRefreshOnSessionUpdate.
 	self initializeWorkaroundToRefreshOnMonitorLogAnnouncement
 ]

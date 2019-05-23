@@ -55,6 +55,14 @@ SpecBoxLayout >> add: aName expand: shouldExpand fill: shouldFill padding: aNumb
 ]
 
 { #category : #adding }
+SpecBoxLayout >> add: aPresenter withConstraints: aBlock [
+	
+	super add: aPresenter withConstraints: aBlock.
+	adapter ifNotNil: [ :theAdapter |
+		theAdapter add: aPresenter constraints: (children at: aPresenter) ]
+]
+
+{ #category : #adding }
 SpecBoxLayout >> addLast: aName [
 
 	self 
@@ -161,6 +169,13 @@ SpecBoxLayout >> isHorizontal [
 SpecBoxLayout >> isVertical [ 
 
 	^ self direction = SpecLayoutDirection vertical
+]
+
+{ #category : #removing }
+SpecBoxLayout >> remove: aPresenter [
+
+	children removeKey: aPresenter.
+	adapter ifNotNil: [ :theAdapter | theAdapter remove: aPresenter ]
 ]
 
 { #category : #accessing }

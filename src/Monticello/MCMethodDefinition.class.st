@@ -219,7 +219,7 @@ timeStamp: timeString
 source: sourceString [
 	className := classString asSymbol.
 	selector := selectorString asSymbol.
-	category := catString asSymbol.
+	category := (catString asSymbol) ifEmpty: [#'as yet unclassified'].
 	timeStamp := timeString.
 	classIsMeta := metaBoolean.
 	source := sourceString withSqueakLineEndings.
