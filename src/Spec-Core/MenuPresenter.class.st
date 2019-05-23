@@ -152,6 +152,7 @@ MenuPresenter >> iconName: aSymbol [
 MenuPresenter >> initialize [
 
 	super initialize.
+
 	groups := OrderedCollection new asValueHolder.
 	title := nil asValueHolder.
 	icon := nil asValueHolder.

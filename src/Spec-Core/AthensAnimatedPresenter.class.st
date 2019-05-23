@@ -17,7 +17,7 @@ AthensAnimatedPresenter class >> adapterName [
 
 { #category : #initialization }
 AthensAnimatedPresenter >> initialize [
-	self class initializeSlots: self.
+
 	super initialize.
 	updateBlock := [  ].
 	self timeline: Timeline new.

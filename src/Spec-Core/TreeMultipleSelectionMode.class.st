@@ -44,6 +44,12 @@ TreeMultipleSelectionMode >> selectedItem [
 ]
 
 { #category : #accessing }
+TreeMultipleSelectionMode >> selectedItems [
+	selection ifEmpty: [ ^ nil ].
+	^ selection collect: [ :path | presenter itemAtPath: path ]
+]
+
+{ #category : #accessing }
 TreeMultipleSelectionMode >> selectedPaths [
 	^ selection
 ]

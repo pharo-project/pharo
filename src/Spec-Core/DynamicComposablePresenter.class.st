@@ -84,7 +84,7 @@ DynamicComposablePresenter >> layout: aLayout [
 DynamicComposablePresenter >> needFullRebuild: aBoolean [
 
 	self needRebuild: aBoolean.
-	self widgetsDo: [:e | e needRebuild: aBoolean ]
+	self widgetsDo: [ :w | w needRebuild: aBoolean ]
 ]
 
 { #category : #api }

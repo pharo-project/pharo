@@ -219,7 +219,7 @@ EyeInspector >> initializePresenter [
 
 	super initializePresenter.
 	description
-		whenTextIsAccepted: [ :newText | 
+		whenTextIsAcceptedDo: [ :newText | 
 			self saveElement: newText.
 			self refreshDescription ]
 ]

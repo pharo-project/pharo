@@ -23,12 +23,12 @@ MorphicTableCellBuilder >> addCell: anObject column: aTableColumn [
 	| morph |
 
 	anObject ifNil: [ ^ self ]. 
-
+	
 	morph := 	anObject asMorph.
-	aTableColumn width ifNotNil: [ :w |
+	aTableColumn isExpandable ifFalse: [ 
 		morph 
-			width: w;
-			hResizing: #rigid ].
+			hResizing: #rigid;
+			width: (aTableColumn width ifNil: [ morph width ]) ].
 	cell addMorphBack: morph.
 ]
 
