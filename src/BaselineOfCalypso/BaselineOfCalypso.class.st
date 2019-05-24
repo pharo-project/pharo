@@ -7,18 +7,22 @@ Class {
 { #category : #baselines }
 BaselineOfCalypso >> baseline: spec [
    <baseline>
+
+	| repository | 
+	repository := self packageRepositoryURL.
+
 	spec for: #'common' do: [
 		spec 
 			baseline: 'ClassAnnotation' with: [
 				spec
-					repository: 'github://pharo-ide/ClassAnnotation:v0.4.0/src';
+					repository: repository;
 					loads: 'Core' ];
 			project: 'ClassAnnotationTests' copyFrom: 'ClassAnnotation' with: [
 				spec loads: 'Tests'];
 			baseline: 'Commander' with: [
-				spec repository: 'github://pharo-ide/Commander:v0.8.0/src' ];
+				spec repository: repository ];
 			baseline: 'SystemCommands' with: [
-				spec repository: 'github://pharo-ide/SystemCommands:v0.12.1/src' ].			
+				spec repository: repository ].
 
 		spec 
 			package: #'Calypso-NavigationModel';

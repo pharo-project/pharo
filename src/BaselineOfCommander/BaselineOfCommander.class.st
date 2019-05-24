@@ -7,11 +7,15 @@ Class {
 { #category : #baselines }
 BaselineOfCommander >> baseline: spec [
 	<baseline>
+
+	| repository | 
+	repository := self packageRepositoryURL.
+	
 	spec for: #'common' do: [
 		spec
 			baseline: #ClassAnnotation with: [ 
 				spec 
-					repository: 'github://pharo-ide/ClassAnnotation:v0.4.0/src';
+					repository: repository;
 					loads: 'Core' ];
 			project: #ClassAnnotationTests copyFrom: #ClassAnnotation with: [
 				spec loads: 'Tests'];
@@ -40,21 +44,5 @@ BaselineOfCommander >> baseline: spec [
 			group: 'Core' with: #(#'Commander-Core');
 			group: 'AllActivators' with: #(#'Commander-Activators-Shortcut' #'Commander-Activators-ContextMenu' #'Commander-Activators-DragAndDrop' #'Commander-Activators-WorldMenu' #'Commander-Activators-TextView' #'Commander-Activators-Mouse');
 			group: 'Tests' with: #(#'Commander-Core-Tests' );
-			group: 'default' with: #('Core' 'AllActivators' 'Tests')].
-		
-		spec for: #'pharo6.x' do: [    
-        self spec70: spec.        
-        spec
-            package: 'Commander-SpecSupport' with: [ 
-                spec requires: #('Spec70Compatibility') ].
-			spec group: 'default' with: #('Core' 'AllActivators' #'Commander-SpecSupport' #'Commander-Examples' 'Tests')] 
-
-]
-
-{ #category : #baselines }
-BaselineOfCommander >> spec70: spec [
-    "for pharo6 compatibility"
-    spec
-        baseline: 'Spec70Compatibility' 
-        with: [ spec repository: 'github://pharo-contributions/Spec70Compatibility:v1.0.0/src' ]
+			group: 'default' with: #('Core' 'AllActivators' 'Tests')]
 ]

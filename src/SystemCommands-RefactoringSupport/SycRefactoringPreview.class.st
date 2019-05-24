@@ -189,15 +189,16 @@ SycRefactoringPreview >> initializeChangesTree [
 
 { #category : #initialization }
 SycRefactoringPreview >> initializePresenter [
-	changesTree whenHighlightedItemChanged: [ :item | item ifNotNil: [ textArea text: (self buildDiffFor: item content) ] ]
+	changesTree
+		whenHighlightedItemChangedDo:
+			[ :item | item ifNotNil: [ textArea text: (self buildDiffFor: item content) ] ]
 ]
 
 { #category : #initialization }
 SycRefactoringPreview >> initializeScopeDropList [
 	scopeDropList
 		displayBlock: [ :scope | scope description capitalized ];
-		whenSelectedItemChanged: [ :scope | 
-			scope ifNotNil: [self updateChanges] ].
+		whenSelectedItemChangedDo: [ :scope | scope ifNotNil: [ self updateChanges ] ]
 ]
 
 { #category : #initialization }

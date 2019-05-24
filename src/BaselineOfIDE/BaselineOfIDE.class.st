@@ -99,7 +99,7 @@ BaselineOfIDE >> additionalInitialization [
 		Undeclared removeUnreferencedKeys.].
 	
 	self loadIceberg.	
-	self loadCalypso.
+	self makeCalypsoDefaultBrowser.
 ]
 
 { #category : #baseline }
@@ -118,6 +118,7 @@ BaselineOfIDE >> baseline: spec [
 		
 		spec baseline: 'Athens' with: [ spec repository: repository ].
 		spec baseline: 'Flashback' with: [ spec repository: repository ].
+		spec baseline: 'Calypso' with: [ spec repository: repository ].
 
 		spec baseline: 'Shift' with: [
 			spec loads: 'shift-tests'. 
@@ -863,24 +864,6 @@ spec group: #default with: #(
 ]
 
 { #category : #actions }
-BaselineOfIDE >> loadCalypso [
-
-	"Load Calypso without Iceberg Metacello integration"
-	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
-
-	Metacello new
-		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.16.4/src';
-		onConflict: [ :err | err useIncoming ];
-		onUpgrade: [ :err | err useIncoming ];
-		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
-
-	(self class environment at: #ClyBrowserMorph) beAllDefault.
-	
-	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
-]
-
-{ #category : #actions }
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
@@ -888,6 +871,12 @@ BaselineOfIDE >> loadIceberg [
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 	(Smalltalk classNamed: #IcePharoPlugin) addPharoProjectToIceberg.
+]
+
+{ #category : #actions }
+BaselineOfIDE >> makeCalypsoDefaultBrowser [
+
+	(self class environment at: #ClyBrowserMorph) beAllDefault.
 ]
 
 { #category : #actions }

@@ -7,10 +7,12 @@ Class {
 { #category : #baselines }
 BaselineOfSystemCommands >> baseline: spec [
    <baseline>
+	| repository | 
+	repository := self packageRepositoryURL.
 
 	spec for: #'common' do: [
 		spec baseline: 'Commander' with: [
-			spec repository: 'github://pharo-ide/Commander:v0.8.0/src' ].
+			spec repository: repository ].
 		spec
 			package: #'SystemCommands-RefactoringSupport' with: [
 				spec requires: #('Commander' ). ]; 
