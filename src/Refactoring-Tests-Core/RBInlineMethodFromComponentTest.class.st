@@ -7,21 +7,24 @@ Class {
 { #category : #tests }
 RBInlineMethodFromComponentTest >> testInlineComponentIntoCascadedMessage [
 	| refactoring |
-	self proceedThroughWarning: 
-		[ refactoring := RBInlineMethodFromComponentRefactoring 
-			inline: (self 
-					convertInterval: (35 to: 79)
-					for: (RBRefactoryTestDataApp sourceCodeAt: #inlineComponent))
-			inMethod: #inlineComponent
-			forClass: RBRefactoryTestDataApp.
-		(refactoring model classNamed: #Behavior) 
-			compile: 'hasImmediateInstances ^self format = 0'
-			classified: #(#accessing ).
-		self 
-			setupInlineExpressionFor: refactoring
-			toReturn: false.
-		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineComponent) = (RBParser parseMethod: 'inlineComponent
+	self
+		proceedThroughWarning: [ refactoring := RBInlineMethodFromComponentRefactoring
+				inline: (35 to: 79)
+				inMethod: #inlineComponent
+				forClass: RBRefactoryTestDataApp.
+			(refactoring model classNamed: #Behavior)
+				compile: 'hasImmediateInstances ^self format = 0'
+				classified: #(#accessing).
+			self setupInlineExpressionFor: refactoring toReturn: false.
+			self executeRefactoring: refactoring ].
+	self
+		assert:
+			((refactoring model classNamed: #RBRefactoryTestDataApp)
+				parseTreeFor: #inlineComponent)
+				=
+					(RBParser
+						parseMethod:
+							'inlineComponent
 	| a aBehavior |
 	a := 5.
 	aBehavior := a class.
@@ -33,31 +36,33 @@ RBInlineMethodFromComponentTest >> testInlineComponentIntoCascadedMessage [
 { #category : #tests }
 RBInlineMethodFromComponentTest >> testInlineComponentMethodMax [
 	| refactoring |
-	self proceedThroughWarning: 
-		[ | class |
-		refactoring := RBInlineMethodFromComponentRefactoring 
-			inline: (self 
-					convertInterval: (47 to: 58)
-					for: (RBRefactoryTestDataApp sourceCodeAt: #inlineMax))
-			inMethod: #inlineMax
-			forClass: RBRefactoryTestDataApp.
-		self 
-			setupInlineExpressionFor: refactoring
-			toReturn: true.
-		class := refactoring model classNamed: #Magnitude.
-		class 
-			compile: 'max: aMagnitude 
+	self
+		proceedThroughWarning: [ | class |
+			refactoring := RBInlineMethodFromComponentRefactoring
+				inline: (47 to: 58)
+				inMethod: #inlineMax
+				forClass: RBRefactoryTestDataApp.
+			self setupInlineExpressionFor: refactoring toReturn: true.
+			class := refactoring model classNamed: #Magnitude.
+			class
+				compile:
+					'max: aMagnitude 
 					"Answer the receiver or the argument, whichever has the greater magnitude."
 
 					self > aMagnitude
 						ifTrue: [^self]
 						ifFalse: [^aMagnitude]'
-			classified: #(#accessing ).
-		self 
-			setupImplementorToInlineFor: refactoring
-			toReturn: class.
-		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineMax) = (RBParser parseMethod: 'inlineMax
+				classified: #(#accessing).
+			self setupImplementorToInlineFor: refactoring toReturn: class.
+			self executeRefactoring: refactoring ].
+	self
+		assert:
+			((refactoring model classNamed: #RBRefactoryTestDataApp)
+				parseTreeFor: #inlineMax)
+				=
+					(RBParser
+						parseMethod:
+							'inlineMax
 								| x y q |
 								x := 5.
 								y := 10.
@@ -70,22 +75,25 @@ RBInlineMethodFromComponentTest >> testInlineComponentMethodMax [
 { #category : #tests }
 RBInlineMethodFromComponentTest >> testInlineEmptyComponentMethod [
 	| refactoring |
-	self proceedThroughWarning: 
-		[ refactoring := RBInlineMethodFromComponentRefactoring 
-			inline: (self 
-					convertInterval: (35 to: 91)
-					for: (RBRefactoryTestDataApp sourceCodeAt: #inlineComponent))
-			inMethod: #inlineComponent
-			forClass: RBRefactoryTestDataApp.
-		self 
-			setupInlineExpressionFor: refactoring
-			toReturn: false.
-		"The following line is needed because some people implement #yourself themselves."
-		self 
-			setupImplementorToInlineFor: refactoring
-			toReturn: (refactoring model classNamed: #Object).
-		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineComponent) = (RBParser parseMethod: 'inlineComponent
+	self
+		proceedThroughWarning: [ refactoring := RBInlineMethodFromComponentRefactoring
+				inline: (35 to: 91)
+				inMethod: #inlineComponent
+				forClass: RBRefactoryTestDataApp.
+			self setupInlineExpressionFor: refactoring toReturn: false.
+			"The following line is needed because some people implement #yourself themselves."
+			self
+				setupImplementorToInlineFor: refactoring
+				toReturn: (refactoring model classNamed: #Object).
+			self executeRefactoring: refactoring ].
+	self
+		assert:
+			((refactoring model classNamed: #RBRefactoryTestDataApp)
+				parseTreeFor: #inlineComponent)
+				=
+					(RBParser
+						parseMethod:
+							'inlineComponent
 	| a anObject |
 	a := 5.
 	anObject := a class.
@@ -96,12 +104,12 @@ RBInlineMethodFromComponentTest >> testInlineEmptyComponentMethod [
 
 { #category : #'failure tests' }
 RBInlineMethodFromComponentTest >> testInlineMethodFromComponentFailure [
-	self shouldFail: (RBInlineMethodFromComponentRefactoring 
-			inline: (self 
-					convertInterval: (50 to: 64)
-					for: (RBRefactoryTestDataApp sourceCodeAt: #inlineFailed))
-			inMethod: #inlineFailed
-			forClass: RBRefactoryTestDataApp)
+	self
+		shouldFail:
+			(RBInlineMethodFromComponentRefactoring
+				inline: (50 to: 64)
+				inMethod: #inlineFailed
+				forClass: RBRefactoryTestDataApp)
 ]
 
 { #category : #tests }
