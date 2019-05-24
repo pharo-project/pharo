@@ -78,12 +78,6 @@ MorphicListAdapter >> buildWidget [
 	^ widget
 ]
 
-{ #category : #'widget API' }
-MorphicListAdapter >> getSelectionStateFor: anIndex [
-
-	^ self model getSelectionStateFor: anIndex
-]
-
 { #category : #accessing }
 MorphicListAdapter >> isShowColumnHeaders [
 	

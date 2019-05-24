@@ -24,20 +24,6 @@ ToolBarPresenterTest >> testAddItem [
 ]
 
 { #category : #tests }
-ToolBarPresenterTest >> testAddItemPosition [
-	| itemLeft itemRight |
-
-	self assert: presenter items isEmpty.
-	presenter addItem: (itemLeft := self newToolbarItem) position: ToolBarItemPosition left.
-	presenter addItem: (itemRight := self newToolbarItem) position: ToolBarItemPosition right.
-	self 
-		assert: presenter items 
-		equals: (Dictionary newFromPairs: { 
-			ToolBarItemPosition left. { itemLeft } asOrderedCollection.
-			ToolBarItemPosition right. { itemRight } asOrderedCollection })
-]
-
-{ #category : #tests }
 ToolBarPresenterTest >> testDisplayMode [
 
 	presenter beBoth.
@@ -55,15 +41,4 @@ ToolBarPresenterTest >> testIsEmpty [
 	self assert: presenter isEmpty.
 	presenter addItem: ToolBarButton new.
 	self deny: presenter isEmpty
-]
-
-{ #category : #tests }
-ToolBarPresenterTest >> testItems [ 
-	| item |
-
-	self assert: presenter items isEmpty.
-	presenter addItem: (item := self newToolbarItem).
-	self 
-		assert: presenter items 
-		equals: (Dictionary newFromPairs: { ToolBarItemPosition left. { item } asOrderedCollection })
 ]

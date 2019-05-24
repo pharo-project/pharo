@@ -181,6 +181,20 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperc
 ]
 
 { #category : #tests }
+T2TraitTest >> testRedefiningAClassAsTraitShouldRaiseError [
+
+	self newClass: #C1.
+	self should: [ self newTrait: #C1 with: #() ] raise: Error 
+]
+
+{ #category : #tests }
+T2TraitTest >> testRedefiningATraitAsAClassShouldRaiseError [
+	
+	self newTrait: #C1 with: #().
+	self should: [ 	self newClass: #C1 ] raise: Error 
+]
+
+{ #category : #tests }
 T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethods [
 	| t1 t2 c1 |
 	

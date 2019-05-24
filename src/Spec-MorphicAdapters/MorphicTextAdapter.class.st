@@ -59,6 +59,7 @@ MorphicTextAdapter >> autoAccept: aBoolean [
 { #category : #factory }
 MorphicTextAdapter >> buildWidget [
 	| newWidget |
+
 	newWidget := RubPluggableTextMorph new
 		on: self
 			text: #getText
@@ -77,7 +78,12 @@ MorphicTextAdapter >> buildWidget [
 		dropEnabled: self dropEnabled;
 		registerScrollChanges: #scrollValueChanged:;
 		yourself.
+		
 	self setEditingModeFor: newWidget.
+	self model additionalKeyBindings ifNotNil: [ :bindings |
+		bindings keysAndValuesDo: [ :shortcut :action | 
+			newWidget bindKeyCombination: shortcut toAction: action ] ].
+	
 	^ newWidget
 ]
 
@@ -100,8 +106,13 @@ MorphicTextAdapter >> clearUserEditFlag [
 
 { #category : #'widget API' }
 MorphicTextAdapter >> codePaneMenu: aMenu shifted: shifted [ 
+	| menuPresenter |
 
-	^ self model codePaneMenu: aMenu shifted: shifted 
+	menuPresenter := self model contextMenu.
+	menuPresenter ifNil: [ ^ nil ].
+	^ SpecBindings
+		value: self model application adapterBindings
+		during: [ menuPresenter value buildWithSpec ]
 ]
 
 { #category : #'widget API' }

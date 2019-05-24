@@ -100,8 +100,6 @@ Class {
 		'#aboutText',
 		'#askOkToClose',
 		'#titleHolder',
-		'#inputPorts',
-		'#outputPorts',
 		'#transmissions',
 		'#additionalSubpresentersMap',
 		'#visible => SpecObservableSlot'
@@ -223,30 +221,16 @@ ComposablePresenter >> addAll: aWindow withSpecLayout: aSpec [
 		frame: (0@0 corner: 1@1).
 ]
 
-{ #category : #'private-ports' }
-ComposablePresenter >> addInputPort: aPort [
-
-	aPort presenter: self.
-	inputPorts ifNil: [ inputPorts := #() ].
-	inputPorts := inputPorts copyWith: aPort
-]
-
 { #category : #'window menu' }
 ComposablePresenter >> addMenuItemsToWindowMenu: aMenu [
 	"Do nothing"
 ]
 
-{ #category : #'private-ports' }
-ComposablePresenter >> addOutputPort: aPort [
-
-	aPort presenter: self.
-	outputPorts ifNil: [ outputPorts := #() ].
-	outputPorts := outputPorts copyWith: aPort
-]
-
 { #category : #'api-shortcuts' }
 ComposablePresenter >> additionalKeyBindings [
 
+	self flag: #TODO. "Think is... not all presenters can have keybindings. Why are we
+	putting this functionality here and not in a trait?"
 	^ additionalKeyBindings
 ]
 
@@ -301,7 +285,10 @@ ComposablePresenter >> applyMenuModel: aMenuModel [
 
 	aMenuModel menuGroups do: [ :group |
 		group menuItems do: [ :item |
-			item shortcut ifNotNil: [ :shortcut | self bindMenuKeyCombination: shortcut toAction: [ item performMenuActionWith: {} ] ].
+			item shortcut ifNotNil: [ :shortcut | 
+				self 
+					bindKeyCombination: shortcut 
+					toAction: [ item performMenuActionWith: #() ] ].
 			item subMenu ifNotNil: [ :subMenu | subMenu applyTo: self	] ] ]
 ]
 
@@ -327,17 +314,10 @@ ComposablePresenter >> askOkToClose: aBoolean [
 { #category : #'api-shortcuts' }
 ComposablePresenter >> bindKeyCombination: aShortcut toAction: aBlock [
 
-	self additionalKeyBindings at: aShortcut put: aBlock.
-	
-	self changed: #bindKeyCombination:toAction: with: {aShortcut . aBlock}
-]
-
-{ #category : #'api-shortcuts' }
-ComposablePresenter >> bindMenuKeyCombination: aShortcut toAction: aBlock [
-
-	self additionalKeyBindings at: aShortcut put: aBlock.
-	
-	self changed: #bindMenuKeyCombination:toAction: with: {aShortcut . aBlock}
+	additionalKeyBindings ifNil: [ additionalKeyBindings := Dictionary new ].
+	additionalKeyBindings at: aShortcut put: aBlock.
+	self withAdapterDo: [ :anAdapter | 
+		anAdapter bindKeyCombination: aShortcut toAction: aBlock ]
 ]
 
 { #category : #'api-window' }
@@ -521,24 +501,16 @@ ComposablePresenter >> initialExtent [
 
 { #category : #initialization }
 ComposablePresenter >> initialize [
-	self class initializeSlots: self.
+
 	super initialize.
 
-	additionalSubpresentersMap := nil.
 	visible := true.
+	additionalSubpresentersMap := nil.
 
-	self initializePorts.
 	self initializePrivateAnnouncer.
 	self initializePrivateValueHolders.
 	self initializePrivateHooks.
-	self initializePrivateAnnouncements.
-]
-
-{ #category : #initialization }
-ComposablePresenter >> initializePorts [
-	
-	"By default, all presenters can receive a change model transmission"
-	self addInputPort: ModelPresenterPort new
+	self initializePrivateAnnouncements
 ]
 
 { #category : #initialization }
@@ -583,7 +555,6 @@ ComposablePresenter >> initializePrivateValueHolders [
 	extentHolder := nil asValueHolder.
 	keyStrokesForNextFocusHolder := { KMNoShortcut new } asValueHolder.
 	keyStrokesForPreviousFocusHolder := { KMNoShortcut new } asValueHolder.
-	additionalKeyBindings := Dictionary new.
 	aboutText := nil asValueHolder.
 	windowIcon := nil asValueHolder.
 	askOkToClose := false asValueHolder.
@@ -609,26 +580,6 @@ ComposablePresenter >> initializeWindow: aWindowPresenter [
 		windowIcon: self windowIcon;
 		askOkToClose: self askOkToClose;
 		aboutText: self aboutText
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> inputPortDefault [
-
-	"first input port will be default. 
-	 this may be bad design and probably needs to be revisited later"
-	^ self inputPorts first
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> inputPortNamed: aSymbol [
-
-	^ self inputPorts detect: [ :each | each name = aSymbol ]
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> inputPorts [
-
-	^ inputPorts
 ]
 
 { #category : #'instance creation' }
@@ -710,7 +661,7 @@ ComposablePresenter >> neglectMenuModel: aMenuModel [
 
 	aMenuModel menuGroups do: [ :group |
 		group menuItems do: [ :item |
-			item shortcut ifNotNil: [ :shortcut | self removeMenuKeyCombination: shortcut ].
+			item shortcut ifNotNil: [ :shortcut | self removeKeyCombination: shortcut ].
 			item subMenu ifNotNil: [ :subMenu | subMenu neglect: self	] ] ]
 ]
 
@@ -852,7 +803,7 @@ ComposablePresenter >> newTextInput [
 ]
 
 { #category : #widgets }
-ComposablePresenter >> newToolbarPresenter [
+ComposablePresenter >> newToolBar [
 
 	^ self instantiate: ToolBarPresenter
 ]
@@ -874,6 +825,11 @@ ComposablePresenter >> okToChange [
 { #category : #'api-shortcuts' }
 ComposablePresenter >> on: aShortcut do: aBlock [
 
+	self 
+		deprecated: 'Use #bindKeyCombination:toAction: instead.' 
+		transformWith: '`@receiver on: `@statements1 do: `@statements2' 
+						-> '`@receiver bindKeyCombination: `@statements1 toAction: `@statements2'.
+
 	self bindKeyCombination: aShortcut toAction: aBlock
 ]
 
@@ -884,26 +840,6 @@ ComposablePresenter >> on: anAnnouncement send: aSelector to: aTarget [
 		when: anAnnouncement 
 		send: aSelector 
 		to: aTarget
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> outputPortDefault [
-
-	"first output port will be default. 
-	 this may be bad design and probably needs to be revisited later"
-	^ self outputPorts first
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> outputPortNamed: aSymbol [
-
-	^ self outputPorts detect: [ :each | each name = aSymbol ]
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> outputPorts [
-
-	^ outputPorts
 ]
 
 { #category : #accessing }
@@ -965,16 +901,8 @@ ComposablePresenter >> registerKeyStrokesForPreviousFor: aWidget [
 ComposablePresenter >> removeKeyCombination: aShortcut [
 
 	self additionalKeyBindings removeKey: aShortcut ifAbsent: [ ^ self ].
-	
-	self changed: #removeKeyCombination: with: {aShortcut}
-]
-
-{ #category : #'api-shortcuts' }
-ComposablePresenter >> removeMenuKeyCombination: aShortcut [
-
-	self additionalKeyBindings removeKey: aShortcut ifAbsent: [ ^ self ].
-	
-	self changed: #removeMenuKeyCombination: with: {aShortcut}
+	self withAdapterDo: [ :anAdapter | 
+		anAdapter removeKeyCombination: aShortcut ]
 ]
 
 { #category : #'api-window' }
@@ -1074,16 +1002,6 @@ ComposablePresenter >> title: aString [
 ComposablePresenter >> toolName [
 
 	^ self class toolName
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> transmit [
-	| newTransmition |
-
-	transmissions ifNil: [ transmissions := Set new ].
-	newTransmition := PresenterTransmission on: self.
-	transmissions add: newTransmition.
-	^ newTransmition
 ]
 
 { #category : #'private-traversing' }

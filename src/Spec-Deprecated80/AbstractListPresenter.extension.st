@@ -12,6 +12,13 @@ AbstractListPresenter >> doubleClickAction: aBlockClosure [
 ]
 
 { #category : #'*Spec-Deprecated80' }
+AbstractListPresenter >> getSelectionStateFor: anIndex [
+	self deprecated: 'This method from the old API will be removed.' transformWith: '`@receiver getSelectionStateFor: `@statements' -> '`@receiver selection selectedIndexes includes: `@statements'.
+
+	^ self selection selectedIndexes includes: anIndex
+]
+
+{ #category : #'*Spec-Deprecated80' }
 AbstractListPresenter >> itemBeginsWithFilter [
 	self deprecated: 'Use #enableItemBeginsWithFilter instead' transformWith: '`@receiver itemBeginsWithFilter' -> '`@receiver enableItemBeginsWithFilter'.
 	self enableItemBeginsWithFilter

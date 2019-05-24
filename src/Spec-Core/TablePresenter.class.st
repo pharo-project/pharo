@@ -60,11 +60,10 @@ TablePresenter >> hideColumnHeaders [
 { #category : #initialization }
 TablePresenter >> initialize [ 
 
-	self class initializeSlots: self.
 	super initialize.
 	showColumnHeaders := true.
 	columns := #().
-	isResizableHolder := false asValueHolder.
+	isResizableHolder := false asValueHolder
 ]
 
 { #category : #accessing }

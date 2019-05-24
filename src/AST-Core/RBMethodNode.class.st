@@ -526,6 +526,14 @@ RBMethodNode >> pragmaNamed: aSymbol ifPresent: foundBlock [
 		ifFound: foundBlock
 ]
 
+{ #category : #testing }
+RBMethodNode >> pragmaNamed: aSymbol ifPresent: presentBlock ifAbsent: absentBlock [
+	^ self pragmas 
+		detect: [ :pragma| pragma selector = aSymbol ]
+		ifFound: presentBlock
+		ifNone: absentBlock
+]
+
 { #category : #accessing }
 RBMethodNode >> pragmas [
 	^ pragmas ifNil: [ #() ]

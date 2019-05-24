@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #'code-critics' }
-ManifestSpecCore class >> ruleEqualsTrueRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#ListPresenter #getSelectionStateFor: #false)) #'2016-07-01T15:56:13.455728+02:00') )
-]
-
-{ #category : #'code-critics' }
 ManifestSpecCore class >> ruleExcessiveMethodsRuleV1FalsePositive [
 	^ #(#(#(#RGClassDefinition #(#ComposablePresenter)) #'2016-07-01T15:56:13.465539+02:00') )
 ]

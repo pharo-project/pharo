@@ -8,7 +8,9 @@ Class {
 	#instVars : [
 		'#doItContext => SpecObservableSlot',
 		'#doItReceiver => SpecObservableSlot',
-		'#behavior => SpecObservableSlot'
+		'#behavior => SpecObservableSlot',
+		'#syntaxHighlight',
+		'#contextKeyBindings'
 	],
 	#category : #'Spec-Core-Widgets'
 }
@@ -50,6 +52,18 @@ CodePresenter >> behavior: aClass [
 	behavior := aClass
 ]
 
+{ #category : #'api-shortcuts' }
+CodePresenter >> contextKeyBindings [
+
+	^ contextKeyBindings
+]
+
+{ #category : #'api-shortcuts' }
+CodePresenter >> contextKeyBindings: aDictionary [
+
+	contextKeyBindings := aDictionary
+]
+
 { #category : #'api-doIt' }
 CodePresenter >> doItContext [
 
@@ -78,17 +92,26 @@ CodePresenter >> doItReceiver: anObject [
 	doItReceiver := anObject
 ]
 
+{ #category : #testing }
+CodePresenter >> hasSyntaxHighlight [
+
+	^ syntaxHighlight
+]
+
 { #category : #initialization }
 CodePresenter >> initialize [ 
 
-	self class initializeSlots: self.
 	super initialize.
 	
 	behavior := nil.
 	doItContext := nil.
 	doItReceiver := nil.
+	self withSyntaxHighlight.
 	
-	self registerEventsForStyling
+	self registerEventsForStyling.
+	
+	self contextMenu: [ self getMenu ]"self buildCodeMenu".
+	"self contextKeyBindings: self buildCodeKeyBindings"
 ]
 
 { #category : #initialization }
@@ -113,4 +136,16 @@ CodePresenter >> whenBehaviorChangedDo: aBlock [
 	self 
 		property: #behavior 
 		whenChangedDo: aBlock
+]
+
+{ #category : #accessing }
+CodePresenter >> withSyntaxHighlight [
+
+	syntaxHighlight := true
+]
+
+{ #category : #accessing }
+CodePresenter >> withoutSyntaxHighlight [
+
+	syntaxHighlight := false
 ]

@@ -141,7 +141,6 @@ DropListPresenter >> iconHolder: aBlock [
 { #category : #initialization }
 DropListPresenter >> initialize [
 
-	self class initializeSlots: self.
 	super initialize.
 	
 	model := SpecCollectionListModel on: #().
@@ -161,12 +160,6 @@ DropListPresenter >> initialize [
 	
 	"
 
-]
-
-{ #category : #initialization }
-DropListPresenter >> initializePorts [
-	self addOutputPort: DropListSelectionPresenterPort new.
-	self addInputPort: ItemsPresenterPort new
 ]
 
 { #category : #api }
@@ -275,6 +268,16 @@ DropListPresenter >> setSelectedItem: anItem [
 ]
 
 { #category : #api }
+DropListPresenter >> sortingBlock [
+	^ self model sortingBlock
+]
+
+{ #category : #api }
+DropListPresenter >> sortingBlock: aBlock [
+	self model sortingBlock: aBlock
+]
+
+{ #category : #api }
 DropListPresenter >> startWithSelection [
 
 	startsWithSelection := true
@@ -311,4 +314,9 @@ DropListPresenter >> whenSelectionIndexChangedDo: aBlock [
 	self deprecated: 'Use whenSelectionChanged:'.
 
 	selection whenSelectionChanged: aBlock
+]
+
+{ #category : #'api-events' }
+DropListPresenter >> whenSortingBlockChangedDo: aBlock [
+	self model whenSortingBlockChangedDo: aBlock
 ]

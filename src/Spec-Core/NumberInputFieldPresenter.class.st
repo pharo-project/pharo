@@ -77,6 +77,7 @@ NumberInputFieldPresenter >> digits: aNumber [
 NumberInputFieldPresenter >> initialize [
 
 	super initialize.
+
 	numberType := nil asValueHolder. 
 	minimum := nil asValueHolder. 
 	maximum := nil asValueHolder. 
