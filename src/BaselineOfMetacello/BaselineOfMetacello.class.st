@@ -18,6 +18,7 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'StartupPreferences';
 			package: 'ConfigurationCommandLineHandler-Core';
 			package: 'PragmaCollector';
+			package: 'Debug-Utils';
 			package: 'Reflectivity';
 			package: 'System-FileRegistry';
 			package: 'MonticelloConfigurations';
