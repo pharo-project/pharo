@@ -12,22 +12,14 @@ WorldState >> addAlarm: aSelector withArguments: argArray for: aTarget at: sched
 ]
 
 { #category : #'*Morphic-Base' }
-WorldState class >> debugOn: aBuilder [
+WorldState class >> debugWorldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Debugging)
 		order: 3.5;
-		with: [ (aBuilder item: #'Remove all Breakpoints')
-				order: 0;
-				help: 'Remove all the breakpoints of the image.';
-				action: [ Breakpoint removeAll ].
-			(aBuilder item: #'Enable all break/inspect once')
+		with: [ (aBuilder item: #'Enable all break/inspect once')
 				order: 0;
 				help: 'Reset the break/inspect once. Once restarted, the first break once encountered will stop the execution.';
-				action: [ Halt resetOnce ].
-			(aBuilder item: #'Reset Counters')
-				order: 0;
-				help: 'Reset the counters on the executions counters.';
-				action: [ ExecutionCounter resetAll ] ]
+				action: [ Halt resetOnce ]]
 ]
 
 { #category : #'*Morphic-Base' }
