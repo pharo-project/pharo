@@ -815,6 +815,7 @@ spec group: 'UndefinedClasses-Group' with: #(
 
 spec group: #default with: #(
 	'BasicTools'	"dependency"
+	'Calypso'
 	'Athens'
 	'Flashback'
 	'Clap'
