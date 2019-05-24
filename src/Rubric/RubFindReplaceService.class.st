@@ -63,13 +63,18 @@ RubFindReplaceService >> convertedFindString [
 
 { #category : #'user-interface' }
 RubFindReplaceService >> dialog [
-	^ dialog ifNil: [ dialog := self newDialog ]
+	^ dialog ifNil: [ 
+		dialog := self newDialog ]
 	
 ]
 
 { #category : #'user-interface' }
 RubFindReplaceService >> dialogIsActiveFor: aTextArea [
-	^ self dialog world notNil and: [ self textArea = aTextArea  ]
+
+	dialog ifNil: [ ^ false ].
+
+	^ (self textArea = aTextArea) and: [ self dialog world notNil ].
+
 ]
 
 { #category : #accessing }
@@ -132,7 +137,7 @@ RubFindReplaceService >> findNext [
 
 { #category : #updating }
 RubFindReplaceService >> findPolicyChanged [
-	self changed: #findPolicy.
+
 	self textArea whenFindTextChanged: RubFindTextChanged new
 ]
 
@@ -176,7 +181,7 @@ RubFindReplaceService >> findText [
 RubFindReplaceService >> findText: aStringOrText [
 	findText := aStringOrText asText.
 	self findPolicyChanged.
-	"self textArea whenFindTextChanged: RubFindTextChanged new."
+	self textArea whenFindTextChanged: RubFindTextChanged new.
 	^ true
 ]
 
