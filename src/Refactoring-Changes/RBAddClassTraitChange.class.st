@@ -14,7 +14,7 @@ RBAddClassTraitChange class >> definitionPatterns [
 
 { #category : #converting }
 RBAddClassTraitChange >> asUndoOperation [
-	^ self class definition: self changeClass classTrait definition
+	^ self class definition: self changeClass classTrait oldDefinition
 ]
 
 { #category : #private }

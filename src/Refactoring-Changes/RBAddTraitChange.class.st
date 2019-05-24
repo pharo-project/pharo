@@ -24,7 +24,7 @@ RBAddTraitChange >> asUndoOperation [
 		at: self changeClassName
 		ifAbsent: [ nil ].
 	^ trait isTrait
-		ifTrue: [ changeFactory addTraitDefinition: trait definition ]
+		ifTrue: [ changeFactory addTraitDefinition: trait oldDefinition ]
 		ifFalse: [ changeFactory removeClassNamed: self changeClassName ]
 ]
 

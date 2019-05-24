@@ -10,5 +10,5 @@ GTSpotterExtensionsOnClassTest >> testBasic [
 	| def cls |
 	cls := self class.
 	def := cls definitionForSpotter.
-	self assert: (def beginsWith: cls definitionForNautilus)
+	self assert: (def beginsWith: cls definition)
 ]

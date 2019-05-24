@@ -38,7 +38,7 @@ RBAddClassChange >> asUndoOperation [
 					at: self changeClassName
 					ifAbsent: [ nil ].
 	^ class isBehavior
-		ifTrue: [ changeFactory addClassDefinition: class definition ]
+		ifTrue: [ changeFactory addClassDefinition: class oldDefinition ]
 		ifFalse: [ changeFactory removeClassNamed: self changeClassName ]
 ]
 
