@@ -124,9 +124,9 @@ RBAddMethodChange >> hash [
 RBAddMethodChange >> oldVersionTextToDisplay [
 	| class |
 	
-	class := onSystemDictionary  
-					at: className asSymbol
-					ifAbsent: [ ^ super oldVersionTextToDisplay ].
+	class := (onSystemDictionary  
+					classNamed: className)
+					ifNil: [ ^ super oldVersionTextToDisplay ].
 				
 	isMeta ifTrue: [ class := class classSide ].
 				

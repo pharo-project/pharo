@@ -35,8 +35,8 @@ RBAddClassChange class >> definitionPatterns [
 RBAddClassChange >> asUndoOperation [
 	| class |
 	class := onSystemDictionary 
-					at: self changeClassName
-					ifAbsent: [ nil ].
+					classNamed: self changeClassName.
+
 	^ class isBehavior
 		ifTrue: [ changeFactory addClassDefinition: class oldDefinition ]
 		ifFalse: [ changeFactory removeClassNamed: self changeClassName ]
@@ -54,7 +54,7 @@ RBAddClassChange >> classVariableNames [
 
 { #category : #private }
 RBAddClassChange >> definitionClass [
-	^ onSystemDictionary at: (self superclassName ifNil: [ ^ ProtoObject ])
+	^ onSystemDictionary classNamed: (self superclassName ifNil: [ #ProtoObject ])
 ]
 
 { #category : #private }
