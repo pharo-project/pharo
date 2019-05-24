@@ -20,6 +20,18 @@ RBRefactoringBrowserTest >> objectClassVariable [
 	^Object classPool keys detect: [:each | true]
 ]
 
+{ #category : #helpers }
+RBRefactoringBrowserTest >> parseExpression: aString [
+
+	^ RBParser parseExpression: aString
+]
+
+{ #category : #helpers }
+RBRefactoringBrowserTest >> parseMethod: aString [ 
+
+	^ RBParser parseMethod: aString
+]
+
 { #category : #private }
 RBRefactoringBrowserTest >> proceedThroughWarning: aBlock [ 
 	aBlock on: RBRefactoringWarning do: [ :ex | ex resume ]

@@ -47,14 +47,8 @@ RBExtractToTemporaryTest >> testExtractToTemporaryForLastStatementInBlock [
 		from: #caller2
 		in: RBRefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self
-		assert:
-			((refactoring model classNamed: #RBRefactoryTestDataApp)
-				parseTreeFor: #caller2)
-				=
-					(RBParser
-						parseMethod:
-							'caller2
+
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #caller2) = (self parseMethod: 'caller2
 	^(1 to: 10) inject: 1 into: [:sum :each | | temp | temp := sum * (self foo: each). temp]')
 ]
 
@@ -67,14 +61,8 @@ RBExtractToTemporaryTest >> testExtractToTemporaryInsideBlock [
 		from: #noMoveDefinition
 		in: RBRefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self
-		assert:
-			((refactoring model classNamed: #RBRefactoryTestDataApp)
-				parseTreeFor: #noMoveDefinition)
-				=
-					(RBParser
-						parseMethod:
-							'noMoveDefinition
+
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #noMoveDefinition) = (self parseMethod: 'noMoveDefinition
 	| temp |
 	^(self collect: 
 			[:each | 
@@ -92,7 +80,7 @@ RBExtractToTemporaryTest >> testExtractToTemporaryWithDuplicates [
 		from: #demoMethodWithDuplicates
 		in: RBRefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #demoMethodWithDuplicates) = (RBParser parseMethod: 'demoMethodWithDuplicates
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #demoMethodWithDuplicates) = (self parseMethod: 'demoMethodWithDuplicates
 	| a b result1 result2 answer temp |
 	a := 3.
 	temp := a + 5.

@@ -3,7 +3,7 @@ SUnit tests for the #dump and #dumpOn: methods on RBProgramNodes
 "
 Class {
 	#name : #RBDumpNodeTest,
-	#superclass : #TestCase,
+	#superclass : #RBParseTreeTest,
 	#category : #'AST-Tests-Core'
 }
 
@@ -11,7 +11,7 @@ Class {
 RBDumpNodeTest >> testArrayNodeDump [
 	| node dumpedNode |
 	"Empty Array"
-	node := RBParser parseExpression: '{}'.
+	node := self parseExpression: '{}'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBArrayNode. 
@@ -19,7 +19,7 @@ RBDumpNodeTest >> testArrayNodeDump [
 	self assert: node printString equals: dumpedNode printString.
 	
 	"non-empty Array"
-	node := RBParser parseExpression: '{1 + 1. true. Object new}'.
+	node := self parseExpression: '{1 + 1. true. Object new}'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBArrayNode. 
@@ -32,7 +32,7 @@ RBDumpNodeTest >> testArrayNodeDump [
 { #category : #tests }
 RBDumpNodeTest >> testAssignmentNodeDump [
 	| node dumpedNode |
-	node := RBParser parseExpression: 'a := 3.'.
+	node := self parseExpression: 'a := 3.'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBAssignmentNode. 
@@ -46,7 +46,7 @@ RBDumpNodeTest >> testAssignmentNodeDump [
 RBDumpNodeTest >> testBlockNodeDump [
 	| node dumpedNode |
 	"Simple block"
-	node := RBParser parseExpression: '[self]'.
+	node := self parseExpression: '[self]'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBBlockNode. 
@@ -54,7 +54,7 @@ RBDumpNodeTest >> testBlockNodeDump [
 	self assert: node printString equals: dumpedNode printString.
 	
 	"Block with argument"
-	node := RBParser parseExpression: '[:each | each]'.
+	node := self parseExpression: '[:each | each]'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBBlockNode. 
@@ -62,7 +62,7 @@ RBDumpNodeTest >> testBlockNodeDump [
 	self assert: node printString equals: dumpedNode printString.
 	
 	"Block with arguments and temps"
-	node := RBParser parseExpression: '[:each :i | |a b| a := each. b := i.]'.
+	node := self parseExpression: '[:each :i | |a b| a := each. b := i.]'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBBlockNode. 
@@ -73,7 +73,7 @@ RBDumpNodeTest >> testBlockNodeDump [
 { #category : #tests }
 RBDumpNodeTest >> testCascadeNodeDump [
 	| node dumpedNode |
-	node := RBParser parseExpression: 'self foo; bar'.
+	node := self parseExpression: 'self foo; bar'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBCascadeNode. 
@@ -116,7 +116,7 @@ RBDumpNodeTest >> testDumpOnSelfClassMethods [
 { #category : #tests }
 RBDumpNodeTest >> testErrorNodeDump [
 	| node dumpedNode |
-	node := RBParser parseFaultyExpression: '( +'.
+	node := self parseFaultyExpression: '( +'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBParseErrorNode. 
@@ -129,7 +129,7 @@ RBDumpNodeTest >> testErrorNodeDump [
 RBDumpNodeTest >> testGlobalNodeDump [
 	| node dumpedNode |
 	"Global nodes are only generated when a semantic analysis is triggered on a method"
-	node := RBParser parseMethod: 'foo ^ Object'.
+	node := self parseMethod: 'foo ^ Object'.
 	dumpedNode := Smalltalk compiler evaluate: node doSemanticAnalysis dump.
 	
 	self assert: dumpedNode statements first value class equals: RBGlobalNode. 
@@ -141,7 +141,7 @@ RBDumpNodeTest >> testGlobalNodeDump [
 { #category : #tests }
 RBDumpNodeTest >> testLiteralArrayNodeDump [
 	| node dumpedNode |
-	node := RBParser parseExpression: '#(1 $a true ''a'')'.
+	node := self parseExpression: '#(1 $a true ''a'')'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBLiteralArrayNode. 
@@ -154,7 +154,7 @@ RBDumpNodeTest >> testLiteralArrayNodeDump [
 RBDumpNodeTest >> testLiteralValueNodeDump [
 	| node dumpedNode |
 	"Numeric are literals"
-	node := RBParser parseExpression: '1'.
+	node := self parseExpression: '1'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBLiteralValueNode. 
@@ -162,7 +162,7 @@ RBDumpNodeTest >> testLiteralValueNodeDump [
 	self assert: node printString equals: dumpedNode printString.
 	
 	"Symbol are literals"
-	node := RBParser parseExpression: '#foo'.
+	node := self parseExpression: '#foo'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBLiteralValueNode. 
@@ -170,7 +170,7 @@ RBDumpNodeTest >> testLiteralValueNodeDump [
 	self assert: node printString equals: dumpedNode printString.
 	
 	"Booleans are literals"
-	node := RBParser parseExpression: 'true'.
+	node := self parseExpression: 'true'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBLiteralValueNode. 
@@ -178,7 +178,7 @@ RBDumpNodeTest >> testLiteralValueNodeDump [
 	self assert: node printString equals: dumpedNode printString.
 	
 	"char are literals"
-	node := RBParser parseExpression: '$a'.
+	node := self parseExpression: '$a'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBLiteralValueNode. 
@@ -186,7 +186,7 @@ RBDumpNodeTest >> testLiteralValueNodeDump [
 	self assert: node printString equals: dumpedNode printString.
 	
 	"String are literals"
-	node := RBParser parseExpression: '''a'''.
+	node := self parseExpression: '''a'''.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBLiteralValueNode. 
@@ -198,7 +198,7 @@ RBDumpNodeTest >> testLiteralValueNodeDump [
 RBDumpNodeTest >> testMessageNodeDump [
 	| node dumpedNode |
 	"Simple selector"
-	node := RBParser parseExpression: 'self foo'.
+	node := self parseExpression: 'self foo'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBMessageNode. 
@@ -206,7 +206,7 @@ RBDumpNodeTest >> testMessageNodeDump [
 	self assert: node printString equals: dumpedNode printString.
 	
 	"With an argument"
-	node := RBParser parseExpression: 'self foo: 1'.
+	node := self parseExpression: 'self foo: 1'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBMessageNode. 
@@ -214,7 +214,7 @@ RBDumpNodeTest >> testMessageNodeDump [
 	self assert: node printString equals: dumpedNode printString.
 	
 	"With many arguments"
-	node := RBParser parseExpression: 'self foo: 1 bar: 2'.
+	node := self parseExpression: 'self foo: 1 bar: 2'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBMessageNode. 
@@ -222,7 +222,7 @@ RBDumpNodeTest >> testMessageNodeDump [
 	self assert: node printString equals: dumpedNode printString.
 	
 	"Binary message"
-	node := RBParser parseExpression: '1 + 2'.
+	node := self parseExpression: '1 + 2'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBMessageNode. 
@@ -234,7 +234,7 @@ RBDumpNodeTest >> testMessageNodeDump [
 { #category : #tests }
 RBDumpNodeTest >> testMethodNodeDump [
 	| node dumpedNode |
-	node := RBParser parseMethod: 'foo <useless>'.
+	node := self parseMethod: 'foo <useless>'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBMethodNode. 
@@ -248,7 +248,7 @@ RBDumpNodeTest >> testMethodNodeDump [
 { #category : #tests }
 RBDumpNodeTest >> testPragmaNodeDump [
 	| node dumpedNode |
-	node := RBParser parseMethod: 'foo <useless>'.
+	node := self parseMethod: 'foo <useless>'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode pragmas first class equals: RBPragmaNode. 
@@ -262,7 +262,7 @@ RBDumpNodeTest >> testPragmaNodeDump [
 { #category : #tests }
 RBDumpNodeTest >> testReturnNodeDump [
 	| node dumpedNode |
-	node := RBParser parseExpression: '^ 1 + 1'.
+	node := self parseExpression: '^ 1 + 1'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBReturnNode. 
@@ -276,7 +276,7 @@ RBDumpNodeTest >> testReturnNodeDump [
 { #category : #tests }
 RBDumpNodeTest >> testSelfNodeDump [
 	| node dumpedNode |
-	node := RBParser parseExpression: 'self'.
+	node := self parseExpression: 'self'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBSelfNode. 
@@ -288,7 +288,7 @@ RBDumpNodeTest >> testSelfNodeDump [
 { #category : #tests }
 RBDumpNodeTest >> testSequenceNodeDump [
 	| node dumpedNode |
-	node := RBParser parseExpression: 'foo. bar.'.
+	node := self parseExpression: 'foo. bar.'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBSequenceNode. 
@@ -302,7 +302,7 @@ RBDumpNodeTest >> testSequenceNodeDump [
 { #category : #tests }
 RBDumpNodeTest >> testSuperNodeDump [
 	| node dumpedNode |
-	node := RBParser parseExpression: 'super'.
+	node := self parseExpression: 'super'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBSuperNode. 
@@ -314,7 +314,7 @@ RBDumpNodeTest >> testSuperNodeDump [
 { #category : #tests }
 RBDumpNodeTest >> testThisContextNodeDump [
 	| node dumpedNode |
-	node := RBParser parseExpression: 'thisContext'.
+	node := self parseExpression: 'thisContext'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBThisContextNode. 
@@ -326,7 +326,7 @@ RBDumpNodeTest >> testThisContextNodeDump [
 { #category : #tests }
 RBDumpNodeTest >> testVariableNodeDump [
 	| node dumpedNode |
-	node := RBParser parseExpression: 'a'.
+	node := self parseExpression: 'a'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
 	self assert: dumpedNode class equals: RBVariableNode. 

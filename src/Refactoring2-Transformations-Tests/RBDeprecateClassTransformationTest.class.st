@@ -20,12 +20,12 @@ RBDeprecateClassTransformationTest >> testTransform [
 	class := transformation model metaclassNamed: self changeMock name.
 	
 	self assert: (class parseTreeFor: #new)
-		equals: (RBParser parseMethod: 'new
+		equals: (self parseMethod: 'new
 				self deprecated: ''Use superclass '' on: ''4 May 2016''  in: #Pharo60.
 				^ super new').
 	self assert: (class parseTreeFor: #deprecated)
-		equals: (RBParser parseMethod: 'deprecated ^ true').
+		equals: (self parseMethod: 'deprecated ^ true').
 	self assert: (class parseTreeFor: #systemIcon)
-		equals: (RBParser parseMethod: 'systemIcon
+		equals: (self parseMethod: 'systemIcon
 				^ Smalltalk ui icons iconNamed: #packageDelete').
 ]

@@ -49,23 +49,12 @@ RBExtractMethodTest >> testExtractMethodAtEndOfMethodThatNeedsReturn [
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
-	self
-		assert:
-			(class parseTreeFor: #openEditor)
-				=
-					(RBParser
-						parseMethod:
-							'openEditor
+
+	self assert: (class parseTreeFor: #openEditor) = (self parseMethod: 'openEditor
 	| rules |
 	rules := self failedRules.
 	^self foo: rules').
-	self
-		assert:
-			(class parseTreeFor: #foo:)
-				=
-					(RBParser
-						parseMethod:
-							'foo: rules
+	self assert: (class parseTreeFor: #foo:) = (self parseMethod: 'foo: rules
 	rules isEmpty ifTrue: [^self].
 	rules size == 1 ifTrue: [^rules first viewResults]')
 ]
@@ -80,23 +69,12 @@ RBExtractMethodTest >> testExtractMethodThatMovesTemporaryVariable [
 	self setupMethodNameFor: refactoring toReturn: #foo1.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
-	self
-		assert:
-			(class parseTreeFor: #superSends)
-				=
-					(RBParser
-						parseMethod:
-							'superSends
+
+	self assert: (class parseTreeFor: #superSends) = (self parseMethod: 'superSends
 	| rule |
 	rule := self foo1.
 	self rewriteUsing: rule').
-	self
-		assert:
-			(class parseTreeFor: #foo1)
-				=
-					(RBParser
-						parseMethod:
-							'foo1 | rule | 	rule := RBParseTreeRewriter new.
+	self assert: (class parseTreeFor: #foo1) = (self parseMethod: 'foo1 | rule | 	rule := RBParseTreeRewriter new.
 	rule addSearch: ''super `@message: ``@args''
 				-> (
 					[:aNode | 
@@ -117,23 +95,12 @@ RBExtractMethodTest >> testExtractMethodThatNeedsArgument [
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
-	self
-		assert:
-			(class parseTreeFor: #checkMethod:)
-				=
-					(RBParser
-						parseMethod:
-							'checkMethod: aSmalllintContext 
+
+	self assert: (class parseTreeFor: #checkMethod:) = (self parseMethod: 'checkMethod: aSmalllintContext 
 	class := aSmalllintContext selectedClass.
 	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
 			[self foo: aSmalllintContext]').
-	self
-		assert:
-			(class parseTreeFor: #foo:)
-				=
-					(RBParser
-						parseMethod:
-							'foo: aSmalllintContext (RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
+	self assert: (class parseTreeFor: #foo:) = (self parseMethod: 'foo: aSmalllintContext (RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
 				ifFalse: 
 					[builder compile: rewriteRule tree printString
 						in: class
@@ -150,24 +117,14 @@ RBExtractMethodTest >> testExtractMethodThatNeedsTemporaryVariable [
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
-	self
-		assert:
-			(class parseTreeFor: #displayName)
-				=
-					(RBParser
-						parseMethod:
-							'displayName
+
+	self assert: (class parseTreeFor: #displayName) = (self parseMethod: 'displayName
 	| nameStream |
 	nameStream := WriteStream on: (String new: 64).
 	self foo: nameStream.
 	^nameStream contents').
-	self
-		assert:
-			(class parseTreeFor: #foo:)
-				=
-					(RBParser
-						parseMethod:
-							'foo: nameStream 	nameStream nextPutAll: self name;
+
+	self assert: (class parseTreeFor: #foo:) = (self parseMethod: 'foo: nameStream 	nameStream nextPutAll: self name;
 		nextPutAll: '' (''.
 	self problemCount printOn: nameStream.
 	nameStream nextPut: $).')
@@ -188,9 +145,9 @@ RBExtractMethodTest >> testModelExtractMethodWithTemporariesSelected [
 	self setupMethodNameFor: refactoring toReturn: #foobar.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #foo) 
-				= (RBParser parseMethod: 'foo [self foobar] value').
+				= (self parseMethod: 'foo [self foobar] value').
 	self assert: (class parseTreeFor: #foobar) 
-				= (RBParser parseMethod: 'foobar |temp | temp := 5. ^temp * temp')
+				= (self parseMethod: 'foobar |temp | temp := 5. ^temp * temp')
 ]
 
 { #category : #tests }
@@ -209,11 +166,11 @@ RBExtractMethodTest >> testModelExtractMethodWithTemporaryAssigned [
 	self setupMethodNameFor: refactoring toReturn: #foobar.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #foo) 
-				= (RBParser parseMethod: 'foo | temp | temp := self foobar. ^temp * temp').
+				= (self parseMethod: 'foo | temp | temp := self foobar. ^temp * temp').
 	self 
-		assert: ((class parseTreeFor: #foobar) = (RBParser 
+		assert: ((class parseTreeFor: #foobar) = (self 
 						parseMethod: 'foobar | bar temp | bar := 5. temp := bar * bar. Transcript show: temp printString; cr. ^temp.')) |
-				((class parseTreeFor: #foobar) = (RBParser 
+				((class parseTreeFor: #foobar) = (self 
 						parseMethod: 'foobar | temp bar | bar := 5. temp := bar * bar. Transcript show: temp printString; cr. ^temp.'))
 ]
 

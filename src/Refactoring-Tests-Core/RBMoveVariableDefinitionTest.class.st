@@ -12,14 +12,8 @@ RBMoveVariableDefinitionTest >> testMoveDefinition [
 		in: RBRefactoryTestDataApp
 		selector: #moveDefinition.
 	self executeRefactoring: refactoring.
-	self
-		assert:
-			((refactoring model classNamed: #RBRefactoryTestDataApp)
-				parseTreeFor: #moveDefinition)
-				=
-					(RBParser
-						parseMethod:
-							'moveDefinition
+
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #moveDefinition) = (self parseMethod: 'moveDefinition
 								^(self collect: 
 										[:each | 
 										| temp |
@@ -40,14 +34,7 @@ RBMoveVariableDefinitionTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACas
 		in: RBRefactoryTestDataApp
 		selector: #referencesConditionFor:.
 	self executeRefactoring: refactoring.
-	self
-		assert:
-			((refactoring model classNamed: #RBRefactoryTestDataApp)
-				parseTreeFor: #referencesConditionFor:)
-				=
-					(RBParser
-						parseMethod:
-							'referencesConditionFor: aClass 
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #referencesConditionFor:) = (self parseMethod: 'referencesConditionFor: aClass 
 								| environment  |
 								^(RBCondition withBlock: 
 										[| association |association := Smalltalk globals associationAt: aClass name

@@ -29,7 +29,7 @@ RBRenameClassChange >> = aRenameClassChange [
 
 { #category : #accessing }
 RBRenameClassChange >> changeClass [
-	^ onSystemDictionary at: oldName asSymbol ifAbsent: [ onSystemDictionary at: newName asSymbol ]
+	^ (onSystemDictionary classNamed: oldName) ifNil: [ onSystemDictionary classNamed: newName ]
 ]
 
 { #category : #private }
