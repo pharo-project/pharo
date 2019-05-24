@@ -50,6 +50,9 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 #Load traits
 ./pharo bootstrap.image loadHermes TraitsV2.hermes --save
 
+#Load Debug utils
+./pharo bootstrap.image loadHermes Debug-Utils.hermes --save
+
 #Loading Tests
 ./pharo bootstrap.image loadHermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication=ignore
 
