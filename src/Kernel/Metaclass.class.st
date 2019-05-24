@@ -114,7 +114,7 @@ Metaclass >> classVarNames [
 Metaclass >> definition [
 	"Refer to the comment in ClassDescription|definition."
 
-	(self needsSlotClassDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
+	(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
 		^ self definitionWithSlots ].
 
 	^ self definitionWithoutSlots

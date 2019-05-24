@@ -337,7 +337,7 @@ ClassDescription >> classThatDefinesInstanceVariable: instVarName [
 { #category : #slots }
 ClassDescription >> classVariablesNeedFullDefinition [
 
-	^self classVariables anySatisfy: [ :each | each needsFullDefinition ]
+	^ self classVariables anySatisfy: [ :each | each needsFullDefinition ]
 ]
 
 { #category : #printing }
@@ -933,7 +933,10 @@ ClassDescription >> methodsTaggedWith: aSymbol [
 { #category : #slots }
 ClassDescription >> needsSlotClassDefinition [
     "return true if we define something else than InstanceVariableSlots or normal class variables"
-    ^self slotsNeedFullDefinition or: [ self class slotsNeedFullDefinition or: [self classVariablesNeedFullDefinition ]]
+
+    ^ self slotsNeedFullDefinition 
+		or: [ self class slotsNeedFullDefinition 
+		or: [ self classVariablesNeedFullDefinition ] ]
 ]
 
 { #category : #private }
