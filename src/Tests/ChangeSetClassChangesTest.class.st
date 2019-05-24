@@ -165,7 +165,7 @@ ChangeSetClassChangesTest >> testChangeClassCategory [
 		classVariableNames: ''
 		poolDictionaries: ''
 		category: 'DeleteMe-1'.
-	saveClassDefinition := (Smalltalk globals classNamed: #JunkClass) definition.
+	saveClassDefinition := (Smalltalk globals classNamed: #JunkClass) oldDefinition.
 	self assert: saveClassDefinition = (ChangeSet current fatDefForClass: (Smalltalk globals classNamed: #JunkClass)).	"Redefine the class, changing only the class category"
 	Object
 		subclass: #JunkClass
@@ -182,7 +182,7 @@ ChangeSetClassChangesTest >> testChangeClassCategory [
 	self
 		assert:
 			(self
-				isDefinition: (Smalltalk globals classNamed: #JunkClass) definition
+				isDefinition: (Smalltalk globals classNamed: #JunkClass) oldDefinition
 				equivalentTo: (ChangeSet current fatDefForClass: (Smalltalk globals classNamed: #JunkClass))).	"Assert that the change has been recorded in the current change set"
 	self
 		assert:
