@@ -62,9 +62,9 @@ RBRenameClassTransformationTest >> testModelRenameSequenceClass [
 	self deny: (model includesClassNamed: #Foo2).
 	self assert: (model includesClassNamed: #Foo3).
 	self assert: ((model classNamed: #Foo3) parseTreeFor: #foo) 
-		  equals: (RBParser parseMethod: 'foo ^ Foo3').
+		  equals: (self parseMethod: 'foo ^ Foo3').
 	self assert: ((model classNamed: #Foo3) parseTreeFor: #objectName) 
-		  equals: (RBParser parseMethod: 'objectName ^ #(Foo3)')
+		  equals: (self parseMethod: 'objectName ^ #(Foo3)')
 ]
 
 { #category : #testing }
@@ -89,9 +89,9 @@ RBRenameClassTransformationTest >> testRefactoring [
 	self assert: (model includesClassNamed: #Thing).
 	self deny: (model includesClassNamed: #Object).
 	self assert: (class parseTreeFor: #foo) 
-		  equals: (RBParser parseMethod: 'foo ^Thing').
+		  equals: (self parseMethod: 'foo ^Thing').
 	self assert: (class parseTreeFor: #objectName) 
-		  equals: (RBParser parseMethod: 'objectName ^#(Thing)').
+		  equals: (self parseMethod: 'objectName ^#(Thing)').
 	self assert: class superclass name equals: #Thing
 ]
 
@@ -108,14 +108,14 @@ RBRenameClassTransformationTest >> testTransform [
 	
 	class := transformation model classNamed: 'RBNewDummyClassName' asSymbol.
 	self assert: (class parseTreeFor: #method1)
-		  equals: (RBParser parseMethod: 'method1 ^ self method2').
+		  equals: (self parseMethod: 'method1 ^ self method2').
 	self deny: (transformation model includesClassNamed: 'RBDummyClassToRename' asSymbol).
 				
 	class := transformation model classNamed: 'RBDummySubclassOfClassToRename' asSymbol.
 	self assert: class superclass 
 		  equals: (transformation model classNamed: 'RBNewDummyClassName' asSymbol).
 	self assert: (class parseTreeFor: #symbolReference) 
-		  equals: (RBParser parseMethod: 'symbolReference ^ #RBNewDummyClassName').
+		  equals: (self parseMethod: 'symbolReference ^ #RBNewDummyClassName').
 	self assert: (class parseTreeFor: #reference) 
-		  equals: (RBParser parseMethod: 'reference ^ RBNewDummyClassName new')
+		  equals: (self parseMethod: 'reference ^ RBNewDummyClassName new')
 ]
