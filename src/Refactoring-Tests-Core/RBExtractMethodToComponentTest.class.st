@@ -68,11 +68,11 @@ RBExtractMethodToComponentTest >> testExtractMethodAtEndOfMethodThatNeedsReturn 
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	selectorsSize := class selectors size.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
-	self assert: (class parseTreeFor: #openEditor) = (RBParser parseMethod: 'openEditor
+	self assert: (class parseTreeFor: #openEditor) = (self parseMethod: 'openEditor
 								| rules |
 								rules := self failedRules.
 								^rules foo: self').
-	self assert: ((refactoring model classNamed: #Collection) parseTreeFor: #foo:) = (RBParser parseMethod: 'foo: asdf
+	self assert: ((refactoring model classNamed: #Collection) parseTreeFor: #foo:) = (self parseMethod: 'foo: asdf
 								self isEmpty ifTrue: [^asdf].
 								self size == 1 ifTrue: [^self first viewResults].
 								^asdf').
@@ -95,11 +95,11 @@ RBExtractMethodToComponentTest >> testMoveWithoutSelfReference [
 	selectorsSize := class selectors size.
 	self executeRefactoring: refactoring.
 	self 
-		assert: (class parseTreeFor: #copyDictionary:) = (RBParser 
+		assert: (class parseTreeFor: #copyDictionary:) = (self 
 						parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
 	self 
 		assert: ((refactoring model classNamed: #Dictionary) 
-				parseTreeFor: #copyWithAssociations) = (RBParser 
+				parseTreeFor: #copyWithAssociations) = (self 
 							parseMethod: 'copyWithAssociations 
 							| newDictionary |
 							newDictionary := Dictionary new: self size.

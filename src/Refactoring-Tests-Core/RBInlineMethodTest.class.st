@@ -43,7 +43,7 @@ RBInlineMethodTest >> testInlineMethod [
 		inMethod: #sentNotImplementedInApplication
 		forClass: RBBasicLintRuleTestData class.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model metaclassNamed: #RBBasicLintRuleTestData) parseTreeFor: #sentNotImplementedInApplication) = (RBParser parseMethod: 'sentNotImplementedInApplication
+	self assert: ((refactoring model metaclassNamed: #RBBasicLintRuleTestData) parseTreeFor: #sentNotImplementedInApplication) = (self parseMethod: 'sentNotImplementedInApplication
 									| detector |
 									detector := self new.
 									detector name: ''Messages sent but not implemented in application''.
@@ -96,7 +96,7 @@ RBInlineMethodTest >> testInlineMethod1 [
 		setupInlineExpressionFor: refactoring
 		toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #caller) = (RBParser parseMethod: 'caller 
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #caller) = (self parseMethod: 'caller 
 									| anObject anObject1 | 
 									anObject := 5.
 									anObject1 := anObject + 1.
@@ -119,7 +119,7 @@ RBInlineMethodTest >> testInlineMethod2 [
 		setupInlineExpressionFor: refactoring
 		toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #caller1) = (RBParser parseMethod: 'caller1 
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #caller1) = (self parseMethod: 'caller1 
 								| anObject each1 anObject1 | 
 								anObject := 5.
 								anObject1 := anObject + 1.
@@ -143,7 +143,7 @@ RBInlineMethodTest >> testInlineMethod3 [
 		setupInlineExpressionFor: refactoring
 		toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #caller2) = (RBParser parseMethod: 'caller2
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #caller2) = (self parseMethod: 'caller2
 								^(1 to: 10) inject: 1 into: [:sum :each | sum * ((1 to: 10) inject: each into: [:sum1 :each1 | sum1 + each1])]	')
 ]
 
@@ -160,7 +160,7 @@ RBInlineMethodTest >> testInlineMethod4 [
 		setupInlineExpressionFor: refactoring
 		toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineJunk) = (RBParser parseMethod: 'inlineJunk
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineJunk) = (self parseMethod: 'inlineJunk
 										| asdf bar1 baz1 asdf1 |
 										bar1 := 
 												[:each | 
@@ -187,7 +187,7 @@ RBInlineMethodTest >> testInlineMethod5 [
 		inMethod: #inlineLast
 		forClass: RBRefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineLast) = (RBParser parseMethod: 'inlineLast
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineLast) = (self parseMethod: 'inlineLast
 									5 = 3 ifTrue: [^self caller] ifFalse: [^	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]]')
 ]
 
@@ -206,7 +206,7 @@ RBInlineMethodTest >> testInlineMethodForSuperSend [
 	self executeRefactoring: refactoring.
 	self 
 		assert: ((model classNamed: #RBRenameInstanceVariableChange) 
-				parseTreeFor: #executeNotifying:) = (RBParser 
+				parseTreeFor: #executeNotifying:) = (self 
 							parseMethod: 'executeNotifying: aBlock 
 									| undo undos undo1 |
 									self addNewVariable.
@@ -240,7 +240,7 @@ RBInlineMethodTest >> testInlineRecursiveCascadedMethod [
 		inMethod: #inlineMethod
 		forClass: RBRefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineMethod) = (RBParser parseMethod: 'inlineMethod
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineMethod) = (self parseMethod: 'inlineMethod
 									| temp temp1 |
 									self foo.
 									temp1 := self foo; inlineMethod; bar.
@@ -260,7 +260,7 @@ RBInlineMethodTest >> testModelInlineRecursiveMethod [
 				forClass: class.
 	self executeRefactoring: refactoring.
 	self 
-		assert: (class parseTreeFor: #foo) = (RBParser 
+		assert: (class parseTreeFor: #foo) = (self 
 						parseMethod: 'foo self bar. self bar. self foo. self bar. self bar')
 ]
 

@@ -3,7 +3,7 @@ SUnit tests for RBParser
 "
 Class {
 	#name : #RBParserTest,
-	#superclass : #TestCase,
+	#superclass : #RBParseTreeTest,
 	#category : #'AST-Tests-Core'
 }
 
@@ -42,11 +42,6 @@ RBParserTest >> parseError: expression onError: aBlock [
 { #category : #private }
 RBParserTest >> parseFaultyExpression: text [
 	^ self parserClass parseFaultyExpression: text
-]
-
-{ #category : #private }
-RBParserTest >> parseFaultyMethod: text [
-	^RBParser parseFaultyMethod: text.
 ]
 
 { #category : #tests }
@@ -118,7 +113,7 @@ RBParserTest >> testBinarySelectors [
 				selectorStrings addLast: (String with: first with: second with: third)]]].
 
 	selectorStrings do: [:each | | methodNode messageNode |
-		methodNode := RBParser parseMethod: each, 'anObject
+		methodNode := self parseMethod: each, 'anObject
 	^self',each,'anObject'.
 		self assert: methodNode selector equals: each asSymbol.
 		self assert: methodNode argumentNames asArray equals: #(anObject).

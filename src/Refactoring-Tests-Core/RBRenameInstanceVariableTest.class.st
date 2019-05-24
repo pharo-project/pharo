@@ -32,7 +32,7 @@ RBRenameInstanceVariableTest >> testRenameInstVar [
 		assert:
 			(class parseTreeFor: #checkClass:)
 				=
-					(RBParser
+					(self
 						parseMethod:
 							'checkClass: aSmalllintContext 
 								^asdf value: aSmalllintContext value: result').
@@ -40,7 +40,7 @@ RBRenameInstanceVariableTest >> testRenameInstVar [
 		assert:
 			(class parseTreeFor: #initialize)
 				=
-					(RBParser
+					(self
 						parseMethod:
 							'initialize
 	super initialize.
