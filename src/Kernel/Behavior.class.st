@@ -17,13 +17,6 @@ Class {
 	#category : #'Kernel-Classes'
 }
 
-{ #category : #testing }
-Behavior class >> canZapMethodDictionary [
-	"Return false since zapping the method dictionary of Behavior class or its subclasses will cause the system to fail."
-
-	^ false
-]
-
 { #category : #cleanup }
 Behavior class >> cleanUp [
 	"Flush the obsolete subclasses."
@@ -527,13 +520,6 @@ Behavior >> canUnderstand: selector [
 		classAndMethodFor: selector
 		do: [ :c :m | true ]
 		ifAbsent: [ false ].
-]
-
-{ #category : #testing }
-Behavior >> canZapMethodDictionary [
-	"Return true if it is safe to zap the method dictionary on #obsolete."
-
-	^ true
 ]
 
 { #category : #'accessing method dictionary' }
