@@ -20,9 +20,7 @@ RBAddTraitChange class >> definitionPatterns [
 { #category : #converting }
 RBAddTraitChange >> asUndoOperation [
 	| trait |
-	trait := onSystemDictionary 
-		at: self changeClassName
-		ifAbsent: [ nil ].
+	trait := onSystemDictionary classOrTraitNamed: self changeClassName.
 	^ trait isTrait
 		ifTrue: [ changeFactory addTraitDefinition: trait definition ]
 		ifFalse: [ changeFactory removeClassNamed: self changeClassName ]
