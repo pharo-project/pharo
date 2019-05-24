@@ -73,6 +73,15 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 ]
 
 { #category : #asserting }
+TestAsserter >> assert: actualNumber closeTo: expectedNumber precision: margin [
+	"Tell whether the actualNumber and expectedNumber are close from each with a given margin"
+
+	^ self
+		assert: (actualNumber closeTo: expectedNumber precision: margin)
+		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
+]
+
+{ #category : #asserting }
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
 	"Take a second argument wich is a message string that describes the reason for the failure, this string will be displayed by the Test Runner"
 
@@ -282,6 +291,24 @@ TestAsserter >> deny: aBooleanOrBlock [
 ]
 
 { #category : #asserting }
+TestAsserter >> deny: actualNumber closeTo: expectedNumber [
+	"Tell whether the actualNumber and expectedNumber are close from each with a margin of 0.0001"
+
+	^ self
+		deny:  (actualNumber closeTo: expectedNumber)
+		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
+]
+
+{ #category : #asserting }
+TestAsserter >> deny: actualNumber closeTo: expectedNumber precision: margin [
+	"Tell whether the actualNumber and expectedNumber are close from each with a given margin"
+
+	^ self
+		deny: (actualNumber closeTo: expectedNumber precision: margin)
+		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
+]
+
+{ #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock description: aString [
 	self assert: aBooleanOrBlock value not description: aString
 			
@@ -317,6 +344,15 @@ TestAsserter >> denyCollection: actual equals: expected [
 	^ self
 		deny: expected = actual
 		description: [ self unexpectedEqualityStringBetween: actual and: expected ]
+]
+
+{ #category : #asserting }
+TestAsserter >> denyCollection: actual includesAll: subcollection [
+	"Specialized test method that generates a proper error message for collection"
+
+	^ self
+		deny: (actual includesAll: subcollection)
+		description: [ actual asString , ' does not include all in ' , subcollection asString ]
 ]
 
 { #category : #asserting }
