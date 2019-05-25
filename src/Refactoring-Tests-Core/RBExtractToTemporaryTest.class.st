@@ -7,24 +7,21 @@ Class {
 { #category : #'failure tests' }
 RBExtractToTemporaryTest >> testBadInterval [
 	self
-		shouldFail: (RBExtractToTemporaryRefactoring 
-				extract: (self 
-						convertInterval: (24 to: 30)
-						for: (RBRefactoryTestDataApp sourceCodeAt: #testMethod))
+		shouldFail:
+			(RBExtractToTemporaryRefactoring
+				extract: (24 to: 30)
 				to: 'asdf'
 				from: #testMethod
 				in: RBRefactoryTestDataApp);
-		shouldFail: (RBExtractToTemporaryRefactoring 
-				extract: (self 
-						convertInterval: (14 to: 105)
-						for: (RBRefactoryTestDataApp sourceCodeAt: #testMethod1))
+		shouldFail:
+			(RBExtractToTemporaryRefactoring
+				extract: (14 to: 105)
 				to: 'asdf'
 				from: #testMethod1
 				in: RBRefactoryTestDataApp);
-		shouldFail: (RBExtractToTemporaryRefactoring 
-				extract: (self 
-						convertInterval: (61 to: 101)
-						for: (RBRefactoryTestDataApp sourceCodeAt: #noMoveDefinition))
+		shouldFail:
+			(RBExtractToTemporaryRefactoring
+				extract: (61 to: 101)
 				to: 'asdf'
 				from: #noMoveDefinition
 				in: RBRefactoryTestDataApp)
@@ -32,26 +29,25 @@ RBExtractToTemporaryTest >> testBadInterval [
 
 { #category : #'failure tests' }
 RBExtractToTemporaryTest >> testBadName [
-	self shouldFail: (RBExtractToTemporaryRefactoring 
-			extract: (self 
-					convertInterval: (14 to: 23)
-					for: (RBRefactoryTestDataApp sourceCodeAt: #testMethod))
-			to: 'a sdf'
-			from: #testMethod
-			in: RBRefactoryTestDataApp)
+	self
+		shouldFail:
+			(RBExtractToTemporaryRefactoring
+				extract: (14 to: 23)
+				to: 'a sdf'
+				from: #testMethod
+				in: RBRefactoryTestDataApp)
 ]
 
 { #category : #tests }
 RBExtractToTemporaryTest >> testExtractToTemporaryForLastStatementInBlock [
 	| refactoring |
-	refactoring := RBExtractToTemporaryRefactoring 
-		extract: (self 
-				convertInterval: (52 to: 73)
-				for: (RBRefactoryTestDataApp sourceCodeAt: #caller2))
+	refactoring := RBExtractToTemporaryRefactoring
+		extract: (52 to: 73)
 		to: 'temp'
 		from: #caller2
 		in: RBRefactoryTestDataApp.
 	self executeRefactoring: refactoring.
+
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #caller2) = (self parseMethod: 'caller2
 	^(1 to: 10) inject: 1 into: [:sum :each | | temp | temp := sum * (self foo: each). temp]')
 ]
@@ -59,14 +55,13 @@ RBExtractToTemporaryTest >> testExtractToTemporaryForLastStatementInBlock [
 { #category : #tests }
 RBExtractToTemporaryTest >> testExtractToTemporaryInsideBlock [
 	| refactoring |
-	refactoring := RBExtractToTemporaryRefactoring 
-		extract: (self 
-				convertInterval: (133 to: 141)
-				for: (RBRefactoryTestDataApp sourceCodeAt: #noMoveDefinition))
+	refactoring := RBExtractToTemporaryRefactoring
+		extract: (133 to: 141)
 		to: 'asdf'
 		from: #noMoveDefinition
 		in: RBRefactoryTestDataApp.
 	self executeRefactoring: refactoring.
+
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #noMoveDefinition) = (self parseMethod: 'noMoveDefinition
 	| temp |
 	^(self collect: 
@@ -80,9 +75,7 @@ RBExtractToTemporaryTest >> testExtractToTemporaryInsideBlock [
 RBExtractToTemporaryTest >> testExtractToTemporaryWithDuplicates [
 	| refactoring |
 	refactoring := RBExtractToTemporaryRefactoring 
-		extract: (self 
-				convertInterval: (73 to: 77)
-				for: (RBRefactoryTestDataApp sourceCodeAt: #demoMethodWithDuplicates))
+		extract: (73 to: 77)
 		to: 'temp'
 		from: #demoMethodWithDuplicates
 		in: RBRefactoryTestDataApp.

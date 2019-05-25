@@ -33,25 +33,23 @@ RBInlineMethodFromComponentTest >> testInlineComponentIntoCascadedMessage [
 { #category : #tests }
 RBInlineMethodFromComponentTest >> testInlineComponentMethodMax [
 	| refactoring |
-	self proceedThroughWarning: 
-		[ | class |
-		refactoring := RBInlineMethodFromComponentRefactoring 
-			inline: (self 
-					convertInterval: (47 to: 58)
-					for: (RBRefactoryTestDataApp sourceCodeAt: #inlineMax))
-			inMethod: #inlineMax
-			forClass: RBRefactoryTestDataApp.
-		self 
-			setupInlineExpressionFor: refactoring
-			toReturn: true.
-		class := refactoring model classNamed: #Magnitude.
-		class 
-			compile: 'max: aMagnitude 
+	self
+		proceedThroughWarning: [ | class |
+			refactoring := RBInlineMethodFromComponentRefactoring
+				inline: (47 to: 58)
+				inMethod: #inlineMax
+				forClass: RBRefactoryTestDataApp.
+			self setupInlineExpressionFor: refactoring toReturn: true.
+			class := refactoring model classNamed: #Magnitude.
+			class
+				compile:
+					'max: aMagnitude 
 					"Answer the receiver or the argument, whichever has the greater magnitude."
 
 					self > aMagnitude
 						ifTrue: [^self]
 						ifFalse: [^aMagnitude]'
+
 			classified: #(#accessing ).
 		self 
 			setupImplementorToInlineFor: refactoring
@@ -70,6 +68,7 @@ RBInlineMethodFromComponentTest >> testInlineComponentMethodMax [
 { #category : #tests }
 RBInlineMethodFromComponentTest >> testInlineEmptyComponentMethod [
 	| refactoring |
+
 	self proceedThroughWarning: 
 		[ refactoring := RBInlineMethodFromComponentRefactoring 
 			inline: (self 
@@ -96,12 +95,12 @@ RBInlineMethodFromComponentTest >> testInlineEmptyComponentMethod [
 
 { #category : #'failure tests' }
 RBInlineMethodFromComponentTest >> testInlineMethodFromComponentFailure [
-	self shouldFail: (RBInlineMethodFromComponentRefactoring 
-			inline: (self 
-					convertInterval: (50 to: 64)
-					for: (RBRefactoryTestDataApp sourceCodeAt: #inlineFailed))
-			inMethod: #inlineFailed
-			forClass: RBRefactoryTestDataApp)
+	self
+		shouldFail:
+			(RBInlineMethodFromComponentRefactoring
+				inline: (50 to: 64)
+				inMethod: #inlineFailed
+				forClass: RBRefactoryTestDataApp)
 ]
 
 { #category : #tests }
