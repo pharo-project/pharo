@@ -103,6 +103,9 @@ Collection >> & aCollection [
 
 { #category : #copying }
 Collection >> , aCollection [
+	"Concatenate the receiver with the argument."
+	"#(1 2 3) , #(4 5 6) >>> #(1 2 3 4 5 6)"
+	
 	^self copy addAll: aCollection; yourself
 ]
 
