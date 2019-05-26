@@ -800,7 +800,8 @@ ChangeSet >> expungeEmptyClassChangeEntries [
 ChangeSet >> fatDefForClass: class [ 
 	| newDef oldDef oldStrm newStrm outStrm oldVars newVars addedVars |
 	class isBehavior ifFalse: [ ^ class definition ].
-	newDef := class definition.
+	
+	newDef := class oldDefinition.
 	oldDef := (self changeRecorderFor: class) priorDefinition.
 	oldDef ifNil: [ ^ newDef ].
 	oldDef = newDef ifTrue: [ ^ newDef ].

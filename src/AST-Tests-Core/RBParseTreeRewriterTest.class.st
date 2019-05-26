@@ -16,6 +16,30 @@ RBParseTreeRewriterTest >> compare: anObject to: anotherObject [
 	self assert: anObject = anotherObject
 ]
 
+{ #category : #helpers }
+RBParseTreeRewriterTest >> parseExpression: aString [
+
+	^ RBParser parseExpression: aString
+]
+
+{ #category : #helpers }
+RBParseTreeRewriterTest >> parseMethod: aString [
+
+	^ RBParser parseMethod: aString
+]
+
+{ #category : #helpers }
+RBParseTreeRewriterTest >> parseRewriteExpression: aString [ 
+
+	^ RBParser parseRewriteExpression: aString
+]
+
+{ #category : #helpers }
+RBParseTreeRewriterTest >> parseRewriteMethod: aString [ 
+
+	^ RBParser parseRewriteMethod: aString
+]
+
 { #category : #running }
 RBParseTreeRewriterTest >> setUp [
 	super setUp.
@@ -38,7 +62,7 @@ RBParseTreeRewriterTest >> testBlockRewrites [
 	self
 		compare: tree
 		to:
-			(RBParser
+			(self
 				parseMethod:
 					'method: xxx
 	<primitive: 1>
@@ -59,7 +83,7 @@ RBParseTreeRewriterTest >> testBlockRewritesAreNotChained [
 	self
 		compare: tree
 		to:
-			(RBParser
+			(self
 				parseMethod:
 					'method: asdf
 	<primitive: 1>
@@ -71,7 +95,7 @@ RBParseTreeRewriterTest >> testBlockRewritesAreNotChained [
 RBParseTreeRewriterTest >> testBlockRewritesArguments [
 	"this test just shows that all the arguments are replaced. Check in contrast with testBlockRewritesArgumentsTakeIntoAccountConditions"
 	| tree |
-	tree := RBParser 
+	tree := self 
 				parseMethod: 'method: asdf bar: bar
 	<primitive: 1>
 	<primitive: 2>
@@ -89,7 +113,7 @@ RBParseTreeRewriterTest >> testBlockRewritesArguments [
 		
 	rewriter executeTree: tree.
 	self compare: tree
-		to: (RBParser 
+		to: (self 
 				parseMethod: 'method: xxx bar: yyy
 	<primitive: 1>
 	<primitive: 2>
@@ -100,7 +124,7 @@ RBParseTreeRewriterTest >> testBlockRewritesArguments [
 RBParseTreeRewriterTest >> testBlockRewritesArgumentsTakeIntoAccountConditions [
 	"this test shows that the condition controls the rewriting on the terms: here the bar argument is not rewritten because the condition is set to false."
 	| tree |
-	tree := RBParser 
+	tree := self 
 				parseMethod: 'method: asdf bar: bar
 	<primitive: 1>
 	<primitive: 2>
@@ -116,7 +140,7 @@ RBParseTreeRewriterTest >> testBlockRewritesArgumentsTakeIntoAccountConditions [
 		
 	rewriter executeTree: tree.
 	self compare: tree
-		to: (RBParser 
+		to: (self 
 				parseMethod: 'method: xxx bar: bar
 	<primitive: 1>
 	<primitive: 2>
@@ -134,7 +158,7 @@ RBParseTreeRewriterTest >> testBlockRewritesFirstRuleTakePrecedence [
 	self
 		compare: tree
 		to:
-			(RBParser
+			(self
 				parseMethod:
 					'method: asdf
 	<primitive: 1>
@@ -154,7 +178,7 @@ RBParseTreeRewriterTest >> testBlockRewritesWithTrueConditionIsNotExecutedWhenNo
 	self
 		compare: tree
 		to:
-			(RBParser
+			(self
 				parseMethod:
 					'method: xxx
 	<primitive: 1>
@@ -171,9 +195,9 @@ RBParseTreeRewriterTest >> testMultimatch [
 		with: '``@object foo: ``@foo'
 		when: [:aNode | (count := count + 1) == 2].
 	self compare: (rewriter
-				executeTree: (RBParser parseExpression: 'self at: (bar at: 3)');
+				executeTree: (self parseExpression: 'self at: (bar at: 3)');
 				tree)
-		to: (RBParser parseExpression: 'self at: (bar foo: 3)')
+		to: (self parseExpression: 'self at: (bar foo: 3)')
 ]
 
 { #category : #'tests - to be refined' }
@@ -182,10 +206,10 @@ RBParseTreeRewriterTest >> testPatternCascade [
 	rewriter replace: 'self `;messages; foo: 4; `;messages1'
 		with: 'self `;messages1; bar: 4; `;messages'.
 	self compare: (rewriter
-				executeTree: (RBParser 
+				executeTree: (self 
 							parseExpression: 'self foo; printString; foo: 4; bar. self foo: 4');
 				tree)
-		to: (RBParser 
+		to: (self 
 				parseExpression: 'self bar; bar: 4; foo; printString. self foo:4')
 ]
 
@@ -196,7 +220,7 @@ RBParseTreeRewriterTest >> testRewriteDoesNotReuseOriginalNodes [
 	that don't refer to the same parent (the method node) and that is wrong."
 
 	| ast search replace |
-	ast := RBParser
+	ast := self
 		parseMethod:
 			'foo
 self statement1.
@@ -222,7 +246,7 @@ RBParseTreeRewriterTest >> testRewriteDynamicArray [
 	rewriter := RBParseTreeRewriter new replace: '
 		{`@first. `@second. `@third}' with: 'Array with: `@first  with: `@second  with: `@third'.
 
-	newSource := (rewriter executeTree: (RBParser parseRewriteExpression: ' {(1 @ 255).	(Color lightMagenta). 3}'))
+	newSource := (rewriter executeTree: (self parseRewriteExpression: ' {(1 @ 255).	(Color lightMagenta). 3}'))
 		ifTrue: [ rewriter tree formattedCode].
 	self assert: newSource equals: 'Array with: 1 @ 255 with: Color lightMagenta with: 3'.
 ]
@@ -236,19 +260,19 @@ RBParseTreeRewriterTest >> testRewriteMethods [
 			| rewrite |
 			rewrite := RBParseTreeRewriter new.
 			rewrite replaceMethod: (each at: 3) with: each last.
-			self compare: (RBParser 
+			self compare: (self 
 						parseMethod: (rewrite
-								executeTree: (RBParser parseMethod: each first);
+								executeTree: (self parseMethod: each first);
 								tree) formattedCode)
-				to: (RBParser parseMethod: (each at: 2)).
+				to: (self parseMethod: (each at: 2)).
 			rewrite := RBParseTreeRewriter new.
-			rewrite replaceTree: (RBParser parseRewriteMethod: (each at: 3))
-				withTree: (RBParser parseRewriteMethod: each last).
-			self compare: (RBParser 
+			rewrite replaceTree: (self parseRewriteMethod: (each at: 3))
+				withTree: (self parseRewriteMethod: each last).
+			self compare: (self 
 						parseMethod: (rewrite
-								executeTree: (RBParser parseMethod: each first);
+								executeTree: (self parseMethod: each first);
 								tree) formattedCode)
-				to: (RBParser parseMethod: (each at: 2))]
+				to: (self parseMethod: (each at: 2))]
 ]
 
 { #category : #'tests - to be refined' }
@@ -300,9 +324,9 @@ RBParseTreeRewriterTest >> testRewrites [
 		rewrite := RBParseTreeRewriter new.
 		rewrite replace: (each at: 3)
 			with: each last.
-		self compare: (RBParser parseExpression: (rewrite executeTree: (RBParser parseExpression: each first);
+		self compare: (self parseExpression: (rewrite executeTree: (self parseExpression: each first);
 				 tree) formattedCode)
-			to: (RBParser parseExpression: (each at: 2))]
+			to: (self parseExpression: (each at: 2))]
 ]
 
 { #category : #setup }

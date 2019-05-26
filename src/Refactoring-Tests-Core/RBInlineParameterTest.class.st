@@ -21,7 +21,7 @@ RBInlineParameterTest >> testInlineLiteralArray [
 		selector: ('inline' , 'ParameterMethod:') asSymbol.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #inlineParameterMethod) = (RBParser parseMethod: 'inlineParameterMethod | aSymbol | aSymbol := #(asdf). ^aSymbol isSymbol').
-	self assert: (class parseTreeFor: #sendInlineParameterMethod) = (RBParser parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').
+	self assert: (class parseTreeFor: #inlineParameterMethod) = (self parseMethod: 'inlineParameterMethod | aSymbol | aSymbol := #(asdf). ^aSymbol isSymbol').
+	self assert: (class parseTreeFor: #sendInlineParameterMethod) = (self parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').
 	self deny: (class directlyDefinesMethod: ('inline' , 'ParameterMethod:') asSymbol)
 ]

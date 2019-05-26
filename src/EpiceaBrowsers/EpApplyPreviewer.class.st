@@ -120,7 +120,7 @@ EpApplyPreviewer >> visitClassChange: aChange [
 	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :aClass |
-			^ aClass definition = aChange behaviorAffected definition
+			^ aClass oldDefinition = aChange behaviorAffected definition
 				ifTrue: [ #() ]
 				ifFalse: [ { EpClassModification oldClass: aClass newClass: aChange behaviorAffected } ]
 			].
