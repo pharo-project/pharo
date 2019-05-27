@@ -775,6 +775,39 @@ ReflectivityReificationTest >> testReifyGlobalVariableValue [
 	self assert: tag equals: #GlobalForTesting.
 ]
 
+{ #category : #'tests - assignment' }
+ReflectivityReificationTest >> testReifyIndexAssigmentIvar [
+	| varNode instance |
+	varNode := (ReflectivityExamples >> #exampleAssignmentIvar)
+		assignmentNodes first.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		arguments: #(index).
+	varNode link: link.
+	self assert: varNode hasMetalink.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleAssignmentIvar equals: 3.
+	self assert: tag equals: 1
+]
+
+{ #category : #'tests - variablenodes' }
+ReflectivityReificationTest >> testReifyIvarIndex [
+	| varNode instance |
+	varNode := (ReflectivityExamples >> #exampleIvarRead) ast body statements last value.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec:;
+		arguments: #(index).
+	varNode link: link.
+	self assert: varNode hasMetalink.
+	self assert: tag isNil.
+	instance := ReflectivityExamples new.
+	self assert: instance exampleIvarRead equals: 33.
+	self assert: tag equals: 1
+]
+
 { #category : #'tests - variablenodes' }
 ReflectivityReificationTest >> testReifyIvarName [
 	| varNode instance |
@@ -1826,7 +1859,7 @@ ReflectivityReificationTest >> testReifyTempValue [
 ReflectivityReificationTest >> testReifyValueAssignmentAfter [
 	"#value for Assignemnt is the new value when #after"
 	| varNode instance |
-	varNode := (ReflectivityExamples >> #exampleAssignment)assignmentNodes first.
+	varNode := (ReflectivityExamples >> #exampleAssignment) assignmentNodes first.
 	link := MetaLink new
 		metaObject: self;
 		selector: #tagExec:;
