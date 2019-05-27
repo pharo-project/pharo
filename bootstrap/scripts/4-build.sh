@@ -147,7 +147,7 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" initializePackages --proto
 
 # Installing compiler through Hermes 
 echo "[Compiler] Installing compiler through Hermes"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes Debug-Utils.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "CompilationContext initialize. OCASTTranslator initialize."
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
 
