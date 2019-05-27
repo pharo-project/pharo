@@ -9,9 +9,7 @@ RBInlineMethodFromComponentTest >> testInlineComponentIntoCascadedMessage [
 	| refactoring |
 	self proceedThroughWarning: 
 		[ refactoring := RBInlineMethodFromComponentRefactoring 
-			inline: (self 
-					convertInterval: (35 to: 79)
-					for: (RBRefactoryTestDataApp sourceCodeAt: #inlineComponent))
+			inline:  (35 to: 79)
 			inMethod: #inlineComponent
 			forClass: RBRefactoryTestDataApp.
 		(refactoring model classNamed: #Behavior) 
@@ -71,9 +69,7 @@ RBInlineMethodFromComponentTest >> testInlineEmptyComponentMethod [
 
 	self proceedThroughWarning: 
 		[ refactoring := RBInlineMethodFromComponentRefactoring 
-			inline: (self 
-					convertInterval: (35 to: 91)
-					for: (RBRefactoryTestDataApp sourceCodeAt: #inlineComponent))
+			inline: (35 to: 91)
 			inMethod: #inlineComponent
 			forClass: RBRefactoryTestDataApp.
 		self 
