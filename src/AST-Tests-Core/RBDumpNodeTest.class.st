@@ -1,5 +1,5 @@
 "
-SUnit tests for the #dump and #dumpOn: methods on RBProgramNodes
+SUnit tests for the RBDumpVisitor visit, called by the #dump method on RBProgramNodes.
 "
 Class {
 	#name : #RBDumpNodeTest,

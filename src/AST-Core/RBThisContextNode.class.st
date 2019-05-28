@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #visiting }
-RBThisContextNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitThisContextNode: self
+RBThisContextNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitThisContextNode: self
 ]

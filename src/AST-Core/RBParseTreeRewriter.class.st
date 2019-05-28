@@ -379,3 +379,8 @@ RBParseTreeRewriter >> visitSequenceNode: aSequenceNode [
 	aSequenceNode temporaries: (self visitTemporaryNodes: aSequenceNode temporaries).
 	aSequenceNode statements: (aSequenceNode statements collect: [ :each | self visitNode: each ])
 ]
+
+{ #category : #visiting }
+RBParseTreeRewriter >> visitTemporaryNodes: aNodeCollection [ 
+	^aNodeCollection collect: [:each | self visitTemporaryDeclarationNode: each]
+]

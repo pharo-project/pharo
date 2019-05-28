@@ -87,8 +87,8 @@ RBMethodNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBMethodNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitMethodNode: self
+RBMethodNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitMethodNode: self
 ]
 
 { #category : #'adding/removing' }
@@ -253,37 +253,6 @@ RBMethodNode >> defines: aName [
 ^ (arguments anySatisfy: [ :each | each name = aName ])
 
 		or: [ self pragmas anySatisfy: [ :pragma | pragma defines: aName ] ]
-]
-
-{ #category : #generation }
-RBMethodNode >> dumpOn: aStream [
-	| hasPragmas |
-	hasPragmas := self pragmas isNotEmpty.
-	hasPragmas
-		ifTrue: [ aStream nextPut: $( ].
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' selector: '.
-	self selector printOn: aStream.
-	self arguments
-		ifNotEmpty: [ aStream nextPutAll: ' arguments: {'.
-			self arguments
-				do: [ :each | 
-					each dumpOn: aStream.
-					aStream nextPutAll: '. ' ].
-			aStream nextPut: $} ].
-	self body
-		ifNotNil: [ aStream nextPutAll: ' body: ('.
-			self body dumpOn: aStream.
-			aStream nextPut: $) ].
-	hasPragmas
-		ifFalse: [ ^ self ].
-	aStream nextPutAll: ') pragmas: {'.
-	self pragmas
-		do: [ :each | 
-			each dumpOn: aStream.
-			aStream nextPutAll: '. ' ].
-	aStream nextPut: $}
 ]
 
 { #category : #comparing }
