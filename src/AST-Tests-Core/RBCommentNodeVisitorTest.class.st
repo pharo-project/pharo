@@ -3,14 +3,14 @@ SUnit tests for RBCommentNodeVisitor
 "
 Class {
 	#name : #RBCommentNodeVisitorTest,
-	#superclass : #TestCase,
+	#superclass : #RBParseTreeTest,
 	#category : #'AST-Tests-Core'
 }
 
 { #category : #tests }
 RBCommentNodeVisitorTest >> testVisitDetect [
 	| node tree |
-	tree := RBParser parseExpression: '
+	tree := self parseExpression: '
 	"comment 1"
 	"comment 2"
 	"comment 3"
@@ -25,7 +25,7 @@ RBCommentNodeVisitorTest >> testVisitDetect [
 { #category : #tests }
 RBCommentNodeVisitorTest >> testVisitDo [
 	| node tree count |
-	tree := RBParser parseExpression: '
+	tree := self parseExpression: '
 	"comment 1"
 	"comment 2"
 	"comment 3"
@@ -41,7 +41,7 @@ RBCommentNodeVisitorTest >> testVisitDo [
 { #category : #tests }
 RBCommentNodeVisitorTest >> testVisitSelect [
 	| node tree |
-	tree := RBParser parseExpression: '
+	tree := self parseExpression: '
 	"comment 1"
 	"comment 2"
 	"comment 3"

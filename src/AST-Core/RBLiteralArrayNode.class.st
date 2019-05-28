@@ -48,8 +48,8 @@ RBLiteralArrayNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBLiteralArrayNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitLiteralArrayNode: self
+RBLiteralArrayNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitLiteralArrayNode: self
 ]
 
 { #category : #accessing }
@@ -75,15 +75,6 @@ RBLiteralArrayNode >> copyInContext: aDictionary [
 		contents: (self copyList: self contents inContext: aDictionary)
 		stopPosition: -1
 		isByteArray: isByteArray
-]
-
-{ #category : #generation }
-RBLiteralArrayNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' value: #('.
-	(self contents collect: [ :each | each value ]) printOn: aStream delimiter: ' '.
-	aStream nextPutAll: ')'
 ]
 
 { #category : #comparing }

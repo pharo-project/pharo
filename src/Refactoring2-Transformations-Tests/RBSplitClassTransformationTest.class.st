@@ -42,12 +42,12 @@ RBSplitClassTransformationTest >> testTransform [
 	self assert: (class instanceVariableNames includes: #newReceiver).
 	
 	self assert: (class parseTreeFor: #receiver:)
-		  equals: (RBParser parseMethod:
+		  equals: (self parseMethod:
 				'receiver: aString
 					newReceiver receiver: aString').
 					
 	self assert: (class parseTreeFor: #receiver)
-		  equals: (RBParser parseMethod:
+		  equals: (self parseMethod:
 				'receiver
 					^ newReceiver receiver 
 						ifNil: [ self receiver: ', 'self' surroundedBySingleQuotes,

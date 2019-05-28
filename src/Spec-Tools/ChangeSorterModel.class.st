@@ -244,7 +244,7 @@ ChangeSorterModel >> setContentsOfChangeSet: changeSet forClass: class andSelect
 { #category : #'change set' }
 ChangeSorterModel >> setCurrentChangeSet: aChangeSet [
 
-	ChangeSet newChanges: aChangeSet.
+	ChangeSet newChanges: aChangeSet
 	
 ]
 

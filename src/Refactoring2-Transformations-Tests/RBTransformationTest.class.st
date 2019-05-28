@@ -103,6 +103,12 @@ RBTransformationTest >> objectClassVariable [
 	^ Object classPool keys detect: [:each | true]
 ]
 
+{ #category : #parsing }
+RBTransformationTest >> parseMethod: aString [
+
+	^ RBParser parseMethod: aString
+]
+
 { #category : #running }
 RBTransformationTest >> perform: aChange do: aBlock [
 	"Perform a change in the system silently, evaluate aBlock and then undo the change again."

@@ -28,6 +28,11 @@ RBLiteralNode >> = anObject [
 	^self class = anObject class
 ]
 
+{ #category : #visiting }
+RBLiteralNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitLiteralNode: self
+]
+
 { #category : #comparing }
 RBLiteralNode >> hash [
 	^self value hash

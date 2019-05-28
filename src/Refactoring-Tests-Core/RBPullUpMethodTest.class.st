@@ -22,7 +22,7 @@ RBPullUpMethodTest >> testPullUpAndCopyDown [
 				pullUp: #(#yourself)
 				from: class).
 	self assert: (class superclass parseTreeFor: #yourself) 
-				= (RBParser parseMethod: 'yourself ^1').
+				= (self parseMethod: 'yourself ^1').
 	self deny: (class directlyDefinesMethod: #yourself).
 	class := model classNamed: #Foo2.
 	self assert: (class directlyDefinesMethod: #yourself).
@@ -52,9 +52,9 @@ RBPullUpMethodTest >> testPullUpMethodWithCopyOverriddenMethodsDown [
 			pullUp: #(#isComposite )
 			from: RBCompositeLintRuleTestData.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeFor: #isComposite) = (RBParser parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: ('RBFoo' , 'LintRuleTestData') asSymbol) parseTreeFor: #isComposite) = (RBParser parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeFor: #isComposite) = (RBParser parseMethod: 'isComposite ^true').
+	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeFor: #isComposite) = (self parseMethod: 'isComposite ^false').
+	self assert: ((refactoring model classNamed: ('RBFoo' , 'LintRuleTestData') asSymbol) parseTreeFor: #isComposite) = (self parseMethod: 'isComposite ^false').
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeFor: #isComposite) = (self parseMethod: 'isComposite ^true').
 	self deny: ((refactoring model classNamed: #RBCompositeLintRuleTestData) directlyDefinesMethod: #isComposite)
 ]
 

@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #visiting }
-RBSelfNode >> acceptVisitor: aProgramNodeVisitor [ 
+RBSelfNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitSelfNode: self
 ]
 

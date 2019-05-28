@@ -178,7 +178,7 @@ RubSmalltalkCodeMode >> shoutAboutToStyle: myShoutStyler [
 
 { #category : #shout }
 RubSmalltalkCodeMode >> shoutStyler [
-	^ self textArea decoratorNamed: #shoutStyler
+	^ self textArea shoutStyler
 ]
 
 { #category : #shout }

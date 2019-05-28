@@ -53,6 +53,16 @@ Breakpoint class >> cleanUp [
 	self removeAll.
 ]
 
+{ #category : #all }
+Breakpoint class >> debugWorldMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #'Remove all Breakpoints')
+		parent: #Debugging;
+		order: 0;
+		help: 'Remove all the breakpoints of the image.';
+		action: [ Breakpoint removeAll ]
+]
+
 { #category : #'system announcements' }
 Breakpoint class >> handleClassRemoved: anAnnouncement [
 	self all copy do: [ :breakpoint |

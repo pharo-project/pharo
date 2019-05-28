@@ -47,7 +47,7 @@ RBPragmaNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBPragmaNode >> acceptVisitor: aProgramNodeVisitor [ 
+RBPragmaNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitPragmaNode: self
 ]
 
@@ -92,20 +92,6 @@ RBPragmaNode >> copyInContext: aDictionary [
 { #category : #testing }
 RBPragmaNode >> defines: aName [
 	^ self isPrimitive and: [ arguments anySatisfy: [ :each | each value = aName ] ]
-]
-
-{ #category : #accessing }
-RBPragmaNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' selector: '.
-	self selector printOn: aStream.
-	aStream nextPutAll: ' arguments: {'.
-	self arguments
-		do: [ :each | 
-			each dumpOn: aStream.
-			aStream nextPutAll: '. ' ].
-	aStream nextPut: $}
 ]
 
 { #category : #comparing }

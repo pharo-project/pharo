@@ -31,6 +31,12 @@ MethodMapTests >> inlinedBlockSourceNode [
 
 ]
 
+{ #category : #helpers }
+MethodMapTests >> parseExpression: aString [
+
+	^ RBParser parseExpression: aString
+]
+
 { #category : #'testing - ast mapping' }
 MethodMapTests >> testBlockAndContextSourceNode [
 		
@@ -51,7 +57,7 @@ MethodMapTests >> testBlockAndContextSourceNode [
 MethodMapTests >> testBlockSourceNode [
 	| sourceNode |
 	sourceNode := [ 1 + 2 ] sourceNode.
-	self assert: sourceNode equals: (RBParser parseExpression: '[ 1 + 2 ]').
+	self assert: sourceNode equals: (self parseExpression: '[ 1 + 2 ]').
 
 
 ]
@@ -60,7 +66,7 @@ MethodMapTests >> testBlockSourceNode [
 MethodMapTests >> testBlockWithArgAndEnclosedBlockSourceNode [
 	| sourceNode |
 	sourceNode := [ :arg |  [ arg ] ] sourceNode.
-	self assert: sourceNode equals: (RBParser parseExpression: '[ :arg | [ arg ] ]').
+	self assert: sourceNode equals: (self parseExpression: '[ :arg | [ arg ] ]').
 
 ]
 
@@ -68,7 +74,7 @@ MethodMapTests >> testBlockWithArgAndEnclosedBlockSourceNode [
 MethodMapTests >> testBlockWithEnclosedBlockSourceNode [
 	| sourceNode |
 	sourceNode := [ [ ] ] sourceNode.
-	self assert: sourceNode equals: (RBParser parseExpression: '[ [ ] ]').
+	self assert: sourceNode equals: (self parseExpression: '[ [ ] ]').
 
 ]
 
@@ -76,7 +82,7 @@ MethodMapTests >> testBlockWithEnclosedBlockSourceNode [
 MethodMapTests >> testBlockWithTempsSourceNode [
 	| sourceNode |
 	sourceNode := [ | t1 t2 | ] sourceNode.
-	self assert: sourceNode equals: (RBParser parseExpression: '[ | t1 t2 | ]').
+	self assert: sourceNode equals: (self parseExpression: '[ | t1 t2 | ]').
 
 ]
 
@@ -261,5 +267,5 @@ MethodMapTests >> testThisContextSourceNodeInInlinedMessage [
 	| inlinedBlockSourceNode |
 	inlinedBlockSourceNode := self inlinedBlockSourceNode.
 	self assert: (inlinedBlockSourceNode isKindOf: RBBlockNode).
-	self assert: inlinedBlockSourceNode equals: (RBParser parseExpression: '[ :i | ^ thisContext sourceNode ]')
+	self assert: inlinedBlockSourceNode equals: (self parseExpression: '[ :i | ^ thisContext sourceNode ]')
 ]
