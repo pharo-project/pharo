@@ -297,12 +297,12 @@ ShiftClassBuilder >> fillFor: aClass [
 		superclass: aClass superclass;
 		name: aClass getName;
 		layoutClass: aClass classLayout class;
-		slots: aClass localSlots ;
-		sharedVariablesFromString: aClass classVariablesString;
+		slots: aClass localSlots;
+		classSlots: aClass class localSlots;
+		sharedVariables: aClass classVariables;
 		sharedPools: aClass sharedPoolsString;
 		category: aClass category;
 		environment: aClass environment;
-		copyClassSlotsFromExistingClass;
 		oldClass: aClass.
 		
 	self builderEnhancer fillBuilder: self from: aClass.
