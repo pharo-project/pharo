@@ -172,8 +172,9 @@ RBParseTreeRewriter class >> variable: aVarName getter: getMethod setter: setMet
 
 { #category : #accessing }
 RBParseTreeRewriter >> executeTree: aParseTree [ 
-	"Replace the argument node based on the replace rules.
-	Return false when no transformation has been applied, and true when a transformation occured."
+	"Replace the argument node based on the replace rules. Return false when no transformation has been applied, and true when a transformation occured.
+	
+	Pay attention the method is not recompile. Just the tree is modified. Look at class comment to see how the method can be compiled"
 	
 	"here is a little script showing a possible way to use executeTree: 
 	| rewriter node |
@@ -196,6 +197,8 @@ RBParseTreeRewriter >> executeTree: aParseTree [
 
 { #category : #private }
 RBParseTreeRewriter >> foundMatch [
+	"Set that the pattern matched is a successful"
+	
 	answer := true
 ]
 
@@ -217,6 +220,8 @@ RBParseTreeRewriter >> replace: searchString with: replaceString [
 
 { #category : #replacing }
 RBParseTreeRewriter >> replace: searchString with: replaceString when: aBlock [ 
+	"Add a new replace pattern when condition is true. To get the replacement executed invoke executeTree: method."
+	
 	self addRule: (RBStringReplaceRule 
 				searchFor: searchString
 				replaceWith: replaceString
