@@ -451,7 +451,9 @@ Class >> definitionForNautilus [
 		on: '2019-05-14'
 		in: #Pharo8
 		transformWith: '`@receiver definitionForNautilus' 
-						-> '`@receiver definition'
+						-> '`@receiver definition'.
+						
+	^ self definition
 ]
 
 { #category : #deprecation }
