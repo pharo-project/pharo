@@ -1,6 +1,7 @@
 "
 ParseTreeRewriter walks over and transforms its RBProgramNode (tree). If the tree is modified, then answer is set to true, and the modified tree can be retrieved by the #tree method.
 
+
 Here is a little script to rewrite a self halt into self dormantHalt. 
 
 	| rewriter node |
@@ -10,7 +11,24 @@ Here is a little script to rewrite a self halt into self dormantHalt.
 	rewriter executeTree: node.
 	^ node formattedCode
 
-Note how do we get the transformed code. 
+Note how do we get the transformed code. You can access the rewritten tree as follows:
+rewriter tree.
+
+Now here is a full script showing how to compile the method back 
+
+   | rewriter ok method |
+	rewriter := RBParseTreeRewriter new.
+	rewriter replaceMethod: self searchPattern with: self targetPattern.
+	method := (BIArrayExpressionTest>>#testNoExtraSpaceAroundPeriod).
+	ok := rewriter executeTree: method parseTree.
+	ok ifFalse: [ ^ 'did not work' ].
+	Author 
+		useAuthor: 'Refactoring'
+		during: [  
+			method origin 
+				compile: rewriter tree formattedCode 
+				classified: method protocol ]
+
 
 Have a look at the users of deprecated:
 
@@ -191,6 +209,8 @@ RBParseTreeRewriter >> lookForMoreMatchesInContext: oldContext [
 
 { #category : #replacing }
 RBParseTreeRewriter >> replace: searchString with: replaceString [ 
+   "Add a new replace pattern. To get the replacement executed invoke executeTree: method."
+
 	self addRule: (RBStringReplaceRule searchFor: searchString
 				replaceWith: replaceString)
 ]
@@ -275,12 +295,16 @@ RBParseTreeRewriter >> replaceMethod: searchString withValueFrom: replaceBlock w
 
 { #category : #replacing }
 RBParseTreeRewriter >> replaceTree: searchTree withTree: replaceTree [ 
+	"Add a replacement between a given tree and a replacement tree. To get the replacement executed invoke executeTree: method."
+	
 	self addRule: (RBStringReplaceRule searchForTree: searchTree
 				replaceWith: replaceTree)
 ]
 
 { #category : #replacing }
 RBParseTreeRewriter >> replaceTree: searchTree withTree: replaceTree when: aBlock [ 
+	"Add a replacement between a given tree and a replacement tree when a condition. To get the replacement executed invoke executeTree: method."
+	
 	self addRule: (RBStringReplaceRule 
 				searchForTree: searchTree
 				replaceWith: replaceTree
@@ -289,6 +313,8 @@ RBParseTreeRewriter >> replaceTree: searchTree withTree: replaceTree when: aBloc
 
 { #category : #accessing }
 RBParseTreeRewriter >> tree [
+	"Return the rewritten tree"
+	
 	^tree
 ]
 
