@@ -470,6 +470,10 @@ Character >> hash [
 
 { #category : #printing }
 Character >> hex [
+	"Returns a string representation of the receiver as hex, prefixed with 16r.  
+	DO NOT CHANGE THIS!  The Cog VMMaker depends on this."
+	"$A hex >>> '16r41'"	
+			
 	^ self asInteger hex
 ]
 
@@ -735,6 +739,8 @@ Character >> printOn: aStream [
 
 { #category : #printing }
 Character >> printStringHex [
+	"$A printStringHex >>> '41'"
+
 	^ self asInteger printStringBase: 16
 ]
 
