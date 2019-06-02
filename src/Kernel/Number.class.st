@@ -554,6 +554,13 @@ Number >> printString [
 
 { #category : #printing }
 Number >> printStringBase: base [
+	"Return a String representation of this number in base b."
+	
+	"10 printStringBase: 10 >>> '10'"
+	"-10 printStringBase: 10 >>> '-10'"
+	"10 printStringBase: 2 >>> '1010'"
+	"10 printStringBase: 16 >>> 'A'"
+	
 	^ String streamContents:
 		[:strm | self printOn: strm base: base]
 ]
@@ -747,6 +754,10 @@ Number >> storeOn: aStream base: base [
 
 { #category : #printing }
 Number >> storeStringBase: base [
+	"Returns a string representation of the receiver in base 16 in a way that executing it will return the receiver."
+	"(10 storeStringBase: 16) >>> '16rA'"
+	"(10 storeStringBase: 10) >>> '10'"
+
 	^ String streamContents: [:strm | self storeOn: strm base: base]
 ]
 
