@@ -619,10 +619,10 @@ SequenceableCollection >> copyReplaceFrom: start to: stop with: replacementColle
 
 { #category : #copying }
 SequenceableCollection >> copyUpThrough: anElement [
-    "Answer all elements up to and including anObject. If there
-     is no such object, answer a copy of the receiver."
-
-	^self first: (self indexOf: anElement ifAbsent: [^ self copy])
+	self 
+		deprecated: 'use #copyUpTo: on the method instead' 
+		transformWith: '`@receiver copyUpThrough: `@argument' -> '`@receiver copyUpTo: `@argument'.
+    ^self copyUpTo: anElement
 ]
 
 { #category : #copying }
