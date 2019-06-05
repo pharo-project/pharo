@@ -72,7 +72,7 @@ Character class >> backspace [
 
 { #category : #'special characters' }
 Character class >> centeredDot [
-	^Character codePoint: 183
+	^self codePoint: 183
 ]
 
 { #category : #initialization }
@@ -130,7 +130,7 @@ Character class >> delete [
 
 { #category : #'special characters' }
 Character class >> devide [
-	^Character codePoint: 247
+	^self codePoint: 247
 ]
 
 { #category : #'instance creation' }
@@ -264,7 +264,7 @@ Character class >> pageUp [
 
 { #category : #'special characters' }
 Character class >> plusOrMinus [
-	^Character codePoint: 177
+	^self codePoint: 177
 ]
 
 { #category : #'instance creation' }
@@ -307,7 +307,7 @@ Character class >> tab [
 
 { #category : #'special characters' }
 Character class >> times [
-	^Character codePoint: 215
+	^self codePoint: 215
 ]
 
 { #category : #'instance creation' }
