@@ -686,7 +686,11 @@ Character >> isSpacingCombiningMark [
 Character >> isSpecial [
 	"Answer whether the receiver is one of the special characters"
 
-	^'+-/\*~<>=@,%|&?!' includes: self
+	('+-/\*~<>=@,%|&?!' includes: self) ifTrue: [ ^true ].
+	"To be in sync with RBScanner>>#initializeClassificationTable, we
+	check for plus-or-minus, centered dot, times, divide"
+	^#(177 183 215 247) includes: self charCode.
+	
 ]
 
 { #category : #testing }
