@@ -70,6 +70,11 @@ Character class >> backspace [
 	^self value: 8
 ]
 
+{ #category : #'special characters' }
+Character class >> centeredDot [
+	^Character codePoint: 183
+]
+
 { #category : #initialization }
 Character class >> characterSet [
 	^ CharSet ifNil: [ AsciiCharset ]
@@ -121,6 +126,11 @@ Character class >> cr [
 { #category : #'accessing untypeable characters' }
 Character class >> delete [
 	^ self value: 127
+]
+
+{ #category : #'special characters' }
+Character class >> devide [
+	^Character codePoint: 247
 ]
 
 { #category : #'instance creation' }
@@ -252,6 +262,11 @@ Character class >> pageUp [
 	^ self value: 11
 ]
 
+{ #category : #'special characters' }
+Character class >> plusOrMinus [
+	^Character codePoint: 177
+]
+
 { #category : #'instance creation' }
 Character class >> separators [
 	"Answer a collection of the standard ASCII separator characters as string."
@@ -271,6 +286,11 @@ Character class >> space [
 	^self value: 32
 ]
 
+{ #category : #'special characters' }
+Character class >> specialCharacters [
+	^'+-/\*~<>=@,%|&?!', {self centeredDot . self devide . self plusOrMinus . self times }
+]
+
 { #category : #queries }
 Character class >> supportsNonASCII [
 
@@ -283,6 +303,11 @@ Character class >> tab [
 	"Answer the Character representing a tab."
 
 	^self value: 9
+]
+
+{ #category : #'special characters' }
+Character class >> times [
+	^Character codePoint: 215
 ]
 
 { #category : #'instance creation' }
@@ -686,11 +711,8 @@ Character >> isSpacingCombiningMark [
 Character >> isSpecial [
 	"Answer whether the receiver is one of the special characters"
 
-	('+-/\*~<>=@,%|&?!' includes: self) ifTrue: [ ^true ].
-	"To be in sync with RBScanner>>#initializeClassificationTable, we
-	check for plus-or-minus, centered dot, times, divide"
-	^#(177 183 215 247) includes: self charCode.
-	
+	^ self class specialCharacters includes: self
+
 ]
 
 { #category : #testing }
