@@ -1039,16 +1039,8 @@ String >> displayStringOn: aStream [
 
 { #category : #printing }
 String >> encodeDoublingQuoteOn: aStream [
-	"Print inside string quotes, doubling inbedded quotes."
-	
-	"(String streamContents: [ :s | 'Foo''Bar' encodeDoublingQuoteOn: s ]) >>> '''Foo''''Bar'''"
-
-	aStream nextPut: $'.
-	self
-		do: [ :character | 
-			aStream nextPut: character.
-			character = $' ifTrue: [ aStream nextPut: character ] ].
-	aStream nextPut: $'
+	self deprecated: 'Use #storeOn: instead' transformWith: '`@receiver encodeDoublingQuoteOn: `@argument' -> '`@receiver storeOn: `@argument'.
+	self storeOn: aStream
 ]
 
 { #category : #testing }
@@ -2313,14 +2305,16 @@ String >> stemAndNumericSuffix [
 ]
 
 { #category : #printing }
-String >> storeOn: aStream [ 
+String >> storeOn: aStream [
 	"Print inside string quotes, doubling inbedded quotes."
+
+	"(String streamContents: [ :s | 'Foo''Bar' storeOn: s ]) >>> '''Foo''''Bar'''"
+
 	| x |
 	aStream nextPut: $'.
-	1 to: self size do:
-		[:i |
+	1 to: self size do: [ :i | 
 		aStream nextPut: (x := self at: i).
-		x = $' ifTrue: [aStream nextPut: x]].
+		x = $' ifTrue: [ aStream nextPut: x ] ].
 	aStream nextPut: $'
 ]
 
