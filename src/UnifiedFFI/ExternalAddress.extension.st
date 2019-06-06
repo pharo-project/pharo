@@ -8,11 +8,6 @@ ExternalAddress >> adoptAddress: anExternalAddress [
 ]
 
 { #category : #'*UnifiedFFI' }
-ExternalAddress >> asExternalAddress [
-	^self
-]
-
-{ #category : #'*UnifiedFFI' }
 ExternalAddress >> autoRelease [
 	^ self class finalizationRegistry add: self
 ]
@@ -137,11 +132,6 @@ ExternalAddress >> pointer [
 ExternalAddress >> pointerAutoRelease [
 	"Same as #pointer (see its comment for detals), but contents are garbage collected automatically"
 	^ self pointer autoRelease
-]
-
-{ #category : #'*UnifiedFFI' }
-ExternalAddress >> referenceStructAt: byteOffset length: length [
-	^self + (byteOffset - 1)
 ]
 
 { #category : #'*UnifiedFFI-Deprecated50' }

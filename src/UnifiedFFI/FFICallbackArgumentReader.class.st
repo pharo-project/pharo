@@ -194,7 +194,7 @@ FFICallbackArgumentReader >> extractPointerOfType: aType [
 
 	| pair baseAddressToRead offsetOfBaseAddress |
 	pair := self nextBaseAddressFor: aType.
-	baseAddressToRead := ExternalAddress fromAddress: pair first address.
+	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
 
 	extractedArguments add: (aType handle: baseAddressToRead at: offsetOfBaseAddress).
@@ -207,7 +207,7 @@ FFICallbackArgumentReader >> extractStructType: type [
 	| pair baseAddressToRead offsetOfBaseAddress |
 	
 	pair := self nextBaseAddressForStructure: type.
-	baseAddressToRead := ExternalAddress fromAddress: pair first address.
+	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
 
 	extractedArguments add: (type handle: baseAddressToRead at: offsetOfBaseAddress).
