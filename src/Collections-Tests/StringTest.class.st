@@ -65,6 +65,11 @@ StringTest >> anotherValue [
 	^ self nonEmpty anyOne
 ]
 
+{ #category : #coverage }
+StringTest >> classToBeTested [
+	^ String
+]
+
 { #category : #'tests - includes' }
 StringTest >> collection [
 	^ 'ghj'
@@ -717,6 +722,11 @@ StringTest >> testDisplayString [
 	| actual |
 	actual := 'some string' displayString.
 	self assert: actual equals: 'some string'
+]
+
+{ #category : #tests }
+StringTest >> testEncodeDoublingQuoteOn [
+	self assert: (String streamContents: [ :s | 'Foo''Bar' encodeDoublingQuoteOn: s ]) equals: '''Foo''''Bar'''
 ]
 
 { #category : #tests }
