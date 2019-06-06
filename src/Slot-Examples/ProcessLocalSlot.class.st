@@ -33,7 +33,7 @@ Class {
 ProcessLocalSlot >> emitStore: aMethodBuilder [
 	"generate bytecode for 'varname value: <stackTop>'"
 	| temp |
-	temp := Object new.  "we need a unique Object as a temp name"
+	temp := '0slotTempForStackManipulation'.
 	"We pop the value from the stack into a temp to push it back in the right order"
 	aMethodBuilder addTemp: temp.
 	aMethodBuilder storeTemp: temp.
