@@ -1,6 +1,16 @@
 Extension { #name : #AbstractTextPresenter }
 
 { #category : #'*Spec-Deprecated80' }
+AbstractTextPresenter >> isAboutToStyle [
+	"Return if the text zone is shouted or not"
+
+	self 
+		deprecated: 'This has been moved to specific presenters' 
+		on: '2019-04-15'
+		in: #Pharo8
+]
+
+{ #category : #'*Spec-Deprecated80' }
 AbstractTextPresenter >> whenAboutToStyleBlockChanged: aBlock [
 	self deprecated: 'Use #whenAboutToStyleBlockChangedDo: instead.' transformWith: '`@receiver whenAboutToStyleBlockChanged: `@statements' -> '`@receiver whenAboutToStyleBlockChangedDo: `@statements'.
 	self whenAboutToStyleBlockChangedDo: aBlock

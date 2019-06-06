@@ -10,7 +10,7 @@ SliderInput class >> example [
 		autoAccept: true;
 		value: 120;
 		extent: 400 @ 50;
-		title: 'SliderInput example';
 		openWithSpec.
+	example withWindowDo: [ :window | window title: 'SliderInput example' ].
 	^ example
 ]

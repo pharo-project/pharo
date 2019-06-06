@@ -1,10 +1,8 @@
 "
-A change sorter is a little tool to manage changes. 
-Developer can give name to change containers and all the change made during this container is active are collected in the container. 
+A ChangeSorterApplication is spec version of the dual sorter.
 
-The DualChangeSorter tool supports manipulation of changes between containers and fileout of the changes.
-
-ChangeSorterPresenter new openWithSpec
+ChangeSorterApplication 
+	new openWithSpec
 "
 Class {
 	#name : #ChangeSorterPresenter,
@@ -34,11 +32,6 @@ ChangeSorterPresenter class >> defaultSpec [
 				add: #methodsListPresenter;
 				add: #textPresenter;
 				yourself)
-]
-
-{ #category : #specs }
-ChangeSorterPresenter class >> title [
-	^ 'Change Sorter'
 ]
 
 { #category : #'menu - change set' }
@@ -354,12 +347,6 @@ ChangeSorterPresenter >> forgetMessage [
 		self setSelectedClassIndex: self selectedClassIndex ]
 ]
 
-{ #category : #api }
-ChangeSorterPresenter >> initialExtent [
-
-	^ 500 @ 350
-]
-
 { #category : #initialization }
 ChangeSorterPresenter >> initialize [
 	model := ChangeSorterModel new.
@@ -384,8 +371,8 @@ ChangeSorterPresenter >> initializePresenter [
 	self registerChangeActions.
 	self registerClassActions.
 	self registerSelectorActions.
-	changesListPresenter items
-		ifNotEmpty: [ changesListPresenter selectIndex: 1 ]
+
+	changesListPresenter items ifNotEmpty: [ changesListPresenter selectIndex: 1 ]
 ]
 
 { #category : #initialization }
@@ -407,8 +394,12 @@ ChangeSorterPresenter >> initializeWidgets [
 
 	changesListPresenter items: self model allChanges.
 	changesListPresenter displayBlock: [ :item | item name ].
-	classesListPresenter sortingBlock: [ :a :b | a name < b name ].
-	textPresenter aboutToStyle: true
+	classesListPresenter sortingBlock: [ :a :b | a name < b name ]
+]
+
+{ #category : #initialization }
+ChangeSorterPresenter >> initializeWindow: aWindowPresenter [
+	aWindowPresenter title: self title
 ]
 
 { #category : #menu }
@@ -499,15 +490,12 @@ ChangeSorterPresenter >> model [
 { #category : #'menu - change set' }
 ChangeSorterPresenter >> newSet [
 	| aSet |
-	self selectedChangeSet
-		ifNil: [ ^ self inform: 'No change set selected' ].
-	self okToChange
-		ifFalse: [ ^ self ].
+	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
+	self okToChange ifFalse: [ ^ self ].
 	aSet := self model createNewSet.
 	aSet
 		ifNotNil: [ self updateChangesList.
-			changesListPresenter selectItem: aSet.
-			self updateWindowTitle ]
+			changesListPresenter setSelectedItem: aSet ]
 ]
 
 { #category : #'menu - change set' }
@@ -552,7 +540,7 @@ ChangeSorterPresenter >> registerClassActions [
 		whenSelectionChangedDo: [ :selection | 
 			self updateTextContents.
 			textPresenter behavior: selection selectedItem.
-			textPresenter aboutToStyle: false.
+			textPresenter syntaxHighlight: false.
 			selection selectedItem
 				ifNil: [ methodsListPresenter items: {} ]
 				ifNotNil: [ :class | 
@@ -635,15 +623,12 @@ ChangeSorterPresenter >> removePreamble [
 { #category : #'menu - change set' }
 ChangeSorterPresenter >> rename [
 	| set |
-	self selectedChangeSet
-		ifNil: [ ^ self inform: 'No change set selected' ].
+	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
 	set := self model rename: self selectedChangeSet.
+
 	changesListPresenter
 		updateList;
-		selectItem: set.
-	"may be it would be better to introduce a hook for selectedItem: and update from this point
-	systematically."
-	self updateWindowTitle
+		setSelectedItem: set
 ]
 
 { #category : #api }
@@ -681,10 +666,8 @@ ChangeSorterPresenter >> selectorsMenu: aBlock [
 
 { #category : #'menu - change set' }
 ChangeSorterPresenter >> setCurrentChangeSet [
-	self selectedChangeSet
-		ifNil: [ ^ self inform: 'No change set selected' ].
-	self model setCurrentChangeSet: self selectedChangeSet.
-	self updateWindowTitle
+	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
+	self model setCurrentChangeSet: self selectedChangeSet
 ]
 
 { #category : #initialization }
@@ -734,10 +717,11 @@ ChangeSorterPresenter >> title [
 
 { #category : #api }
 ChangeSorterPresenter >> updateChangesList [
+
 	| sel |
 	sel := self selectedChangeSet.
 	changesListPresenter items: self model allChanges.
-	changesListPresenter selectItem: sel
+	changesListPresenter setSelectedItem: sel.
 ]
 
 { #category : #api }
@@ -756,6 +740,7 @@ ChangeSorterPresenter >> updateClassesList [
 ChangeSorterPresenter >> updateClassesListAndMessagesList [
 	| sel |
 	sel := methodsListPresenter selectedItem.
+	
 	self updateClassesList.
 	methodsListPresenter setSelectedItem: sel.
 	self updateMessagesList.
@@ -777,15 +762,11 @@ ChangeSorterPresenter >> updateMessagesList [
 ChangeSorterPresenter >> updateTextContents [
 	| text |
 	text := self model setContentsOfChangeSet: self selectedChangeSet forClass: self selectedClass andSelector: self selectedSelector.
-	({'Method was added, but cannot be found!' . 'Added then removed (see versions)' . 'Method has been removed (see versions)'} includes: text)
-		ifTrue: [ textPresenter aboutToStyle: false ]
-		ifFalse: [ textPresenter aboutToStyle: true ].
+	(text asString lines
+		anySatisfy: [ :line | 
+			self model classDescriptionsMap values , {'Method was added, but cannot be found!' . 'Added then removed (see versions)' . 'Method has been removed (see versions)' . 'Class organization was changed.'}
+				includes: line ]) ifTrue: [ textPresenter withoutSyntaxHighlight ] ifFalse: [ textPresenter withSyntaxHighlight ].
 	textPresenter text: text
-]
-
-{ #category : #'menu - change set' }
-ChangeSorterPresenter >> updateWindowTitle [
-	self window title: self title
 ]
 
 { #category : #'api-events' }

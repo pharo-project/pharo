@@ -21,10 +21,10 @@ AbstractTextPresenter >> aboutToStyle: aBoolean [
 	"<api: #boolean getter: #isAboutToStyle registration: #whenAboutToStyleChanged:>"
 	"Set if the text zone must be styled"
 	
-	"self 
+	self 
 		deprecated: 'This has been moved to specific presenters' 
 		on: '2019-04-15'
-		in: #Pharo8"
+		in: #Pharo8
 ]
 
 { #category : #'api-shout' }
@@ -329,16 +329,6 @@ AbstractTextPresenter >> initialize [
 	askBeforeDiscardingEdits := true asValueHolder.
 
 	self registerEvents
-]
-
-{ #category : #'api-shout' }
-AbstractTextPresenter >> isAboutToStyle [
-	"Return if the text zone is shouted or not"
-
-	self 
-		deprecated: 'This has been moved to specific presenters' 
-		on: '2019-04-15'
-		in: #Pharo8
 ]
 
 { #category : #NOCompletion }

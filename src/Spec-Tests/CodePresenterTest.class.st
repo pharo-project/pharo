@@ -12,7 +12,7 @@ CodePresenterTest >> classToTest [
 
 { #category : #tests }
 CodePresenterTest >> testContextKeyBindings [
-	self skip. "The version in Pharo is not complete."
+
 	self assert: presenter contextKeyBindings notNil
 ]
 
@@ -28,4 +28,18 @@ CodePresenterTest >> testContextMenu [
 	presenter contextMenu: menu.
 	self assert: presenter contextMenu equals: menu.
 	self assert: changed
+]
+
+{ #category : #tests }
+CodePresenterTest >> testWhenSyntaxHighlightChangedDo [
+	| count result |
+	count := 0.
+	result := true.
+	presenter
+		whenSyntaxHighlightChangedDo: [ :syntaxHighlight | 
+			count := count + 1.
+			result := syntaxHighlight ].
+	presenter withoutSyntaxHighlight.
+	self assert: count equals: 1.
+	self deny: result
 ]
