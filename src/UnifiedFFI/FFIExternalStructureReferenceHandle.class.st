@@ -42,11 +42,6 @@ FFIExternalStructureReferenceHandle class >> new [
 ]
 
 { #category : #converting }
-FFIExternalStructureReferenceHandle >> asExternalAddress [
-	^ handle + startOffset
-]
-
-{ #category : #converting }
 FFIExternalStructureReferenceHandle >> asExternalPointer [
 	"Convert the receiver assuming that it describes a pointer to an object."
 	^(ExternalAddress new)

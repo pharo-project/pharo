@@ -290,37 +290,6 @@ FFICallbackParametersTests >> testPassing4IntStructureInTheStack [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testPassingPassableStruct [
-	"Tests that a large struct passed by value can be passed to another callback."
-			
-	| param handleWasExternalAddress |
-
-	handleWasExternalAddress := false.
-	callback := FFICallback 
-		signature: #(int (FFITestStructure4Int64Structure a))
-		block: [ :a |
-			self assert: a x equals: 2. 
-			self assert: a y equals: 3. 
-			self assert: a w equals: 5. 
-			self assert: a z equals: 7. 
-
-			handleWasExternalAddress := a getHandle isExternalAddress.
-			99		
-		].
-
-	param := FFITestStructure4Int64Structure externalNew
-		x: 2;
-		y: 3;
-		w: 5;
-		z: 7;
-		autoRelease;
-		yourself.
-
-	self assert: (self callCallback: callback withArgs: { param }) equals: 99.
-	self assert: handleWasExternalAddress description: 'The handle of "a" was an ExternalAddress'.
-]
-
-{ #category : #running }
 FFICallbackParametersTests >> testPassingStructureInTheStack [ 
 	
 	| param |
