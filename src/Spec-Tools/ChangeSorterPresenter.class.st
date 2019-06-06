@@ -1,8 +1,9 @@
 "
-A ChangeSorterApplication is spec version of the dual sorter.
+A change sorter is a little tool to manage changes. 
+Developer can give name to change containers and all the change made during this container is active are collected in the container. 
+The DualChangeSorter tool supports manipulation of changes between containers and fileout of the changes.
 
-ChangeSorterApplication 
-	new openWithSpec
+ChangeSorterPresenter new openWithSpec
 "
 Class {
 	#name : #ChangeSorterPresenter,
@@ -32,6 +33,11 @@ ChangeSorterPresenter class >> defaultSpec [
 				add: #methodsListPresenter;
 				add: #textPresenter;
 				yourself)
+]
+
+{ #category : #specs }
+ChangeSorterPresenter class >> title [
+	^ 'Change sorter'
 ]
 
 { #category : #'menu - change set' }
@@ -372,7 +378,8 @@ ChangeSorterPresenter >> initializePresenter [
 	self registerClassActions.
 	self registerSelectorActions.
 
-	changesListPresenter items ifNotEmpty: [ changesListPresenter selectIndex: 1 ]
+	changesListPresenter items
+		ifNotEmpty: [ changesListPresenter selectIndex: 1 ]
 ]
 
 { #category : #initialization }
@@ -399,7 +406,9 @@ ChangeSorterPresenter >> initializeWidgets [
 
 { #category : #initialization }
 ChangeSorterPresenter >> initializeWindow: aWindowPresenter [
-	aWindowPresenter title: self title
+	aWindowPresenter
+		title: self title;
+		initialExtent: 500 @ 350
 ]
 
 { #category : #menu }
@@ -495,7 +504,8 @@ ChangeSorterPresenter >> newSet [
 	aSet := self model createNewSet.
 	aSet
 		ifNotNil: [ self updateChangesList.
-			changesListPresenter setSelectedItem: aSet ]
+			changesListPresenter setSelectedItem: aSet.
+			self updateWindowTitle ]
 ]
 
 { #category : #'menu - change set' }
@@ -628,7 +638,8 @@ ChangeSorterPresenter >> rename [
 
 	changesListPresenter
 		updateList;
-		setSelectedItem: set
+		setSelectedItem: set.
+	self updateWindowTitle
 ]
 
 { #category : #api }
@@ -667,7 +678,8 @@ ChangeSorterPresenter >> selectorsMenu: aBlock [
 { #category : #'menu - change set' }
 ChangeSorterPresenter >> setCurrentChangeSet [
 	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
-	self model setCurrentChangeSet: self selectedChangeSet
+	self model setCurrentChangeSet: self selectedChangeSet.
+	self updateWindowTitle
 ]
 
 { #category : #initialization }
@@ -717,11 +729,10 @@ ChangeSorterPresenter >> title [
 
 { #category : #api }
 ChangeSorterPresenter >> updateChangesList [
-
 	| sel |
 	sel := self selectedChangeSet.
 	changesListPresenter items: self model allChanges.
-	changesListPresenter setSelectedItem: sel.
+	changesListPresenter selectItem: sel
 ]
 
 { #category : #api }
@@ -740,10 +751,9 @@ ChangeSorterPresenter >> updateClassesList [
 ChangeSorterPresenter >> updateClassesListAndMessagesList [
 	| sel |
 	sel := methodsListPresenter selectedItem.
-	
 	self updateClassesList.
 	methodsListPresenter setSelectedItem: sel.
-	self updateMessagesList.
+	self updateMessagesList
 ]
 
 { #category : #api }
@@ -767,6 +777,11 @@ ChangeSorterPresenter >> updateTextContents [
 			self model classDescriptionsMap values , {'Method was added, but cannot be found!' . 'Added then removed (see versions)' . 'Method has been removed (see versions)' . 'Class organization was changed.'}
 				includes: line ]) ifTrue: [ textPresenter withoutSyntaxHighlight ] ifFalse: [ textPresenter withSyntaxHighlight ].
 	textPresenter text: text
+]
+
+{ #category : #api }
+ChangeSorterPresenter >> updateWindowTitle [
+	self withWindowDo: [ :window | window title: self title ]
 ]
 
 { #category : #'api-events' }
