@@ -144,8 +144,11 @@ FFICallout >> directArgName: typeName ptrArity: ptrArity [
 	"Answer 'direct' type arguments (without argument names): 
 		self, nil,true, false or a constant (like a number)"
 
-	typeName = 'nil'
-		ifTrue: [ ^ FFIConst value: 0 type: (self resolveType: #ulong) ].
+	(typeName = 'NULL' or: [ typeName = 'nil' ])
+		ifTrue: [ 
+			^ (self resolveType: #'void *')
+				loader: (self valueArgumentLoader: ExternalAddress null);
+				yourself ].
 	typeName = 'false'
 		ifTrue: [ ^ FFIConst value: 0 type: (self resolveType: #bool) ].
 	typeName = 'true'
@@ -186,6 +189,14 @@ FFICallout >> integerConstantArgument: anInteger [
 		type: (anInteger >=0 
 			ifTrue: [ self resolveType: #uint32 ]
 			ifFalse: [ self resolveType: #int32 ])
+]
+
+{ #category : #private }
+FFICallout >> integerConstantArgument: anInteger type: aType [
+
+	^ FFIConst 
+		value: anInteger
+		type: (self resolveType: aType)
 ]
 
 { #category : #'argument loaders' }
@@ -404,4 +415,12 @@ FFICallout >> sender: aSenderContext [
 { #category : #private }
 FFICallout >> typeName: aName pointerArity: ptrArity [
 	^ (self resolveType: aName) pointerArity: ptrArity
+]
+
+{ #category : #private }
+FFICallout >> valueArgumentLoader: anObject [
+
+	^ FFIValueArgument new
+		value: anObject;
+		yourself
 ]
