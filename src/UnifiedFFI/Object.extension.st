@@ -82,7 +82,7 @@ Object >> isExternalType [
 
 { #category : #'*UnifiedFFI' }
 Object >> newCallbackWithSignature: signature block: aBlock [
-	self flag: #TODO. "Do we really need this method?"
+	"This method is used to create a callback in the same library and callout api of the receiver"
 	
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
@@ -93,7 +93,7 @@ Object >> newCallbackWithSignature: signature block: aBlock [
 
 { #category : #'*UnifiedFFI' }
 Object >> newCallbackWithSignature: signature block: aBlock library: aFFILibrary [
-	self flag: #TODO. "Do we really need this method?"
+	"This method is used to create a callback in the callout api of the receiver"
 	
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
