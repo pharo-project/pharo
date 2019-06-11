@@ -35,15 +35,11 @@ SystemNavigation >> allBehaviors [
 SystemNavigation >> allBehaviorsDo: aBlock [
 	"Execute a block on each class, metaclass, trait and trait class"
 
-	self environment allClassesDo: [ :aClass | 
-		aBlock
-			value: aClass;
-			value: aClass classSide ].
-
-	self environment allTraitsDo: [ :aTrait | 
-		aBlock
-			value: aTrait;
-			value: aTrait classSide ]
+	self environment valuesDo: [ :aClass |
+		aClass isBehavior ifTrue: [  
+			aBlock
+				value: aClass;
+				value: aClass classSide]].
 ]
 
 { #category : #query }

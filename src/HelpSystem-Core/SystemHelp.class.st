@@ -15,7 +15,7 @@ Class {
 
 { #category : #'private accessing' }
 SystemHelp class >> allSystemHelpPragmas [
-	^(PragmaCollector filter: [:prag | prag keyword = self pragmaKeyword ]) reset collected
+	^(PragmaCollector filter: [:prag | prag keyword = self pragmaKeyword ]) collected
 
 ]
 
