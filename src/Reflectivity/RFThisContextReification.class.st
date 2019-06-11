@@ -19,15 +19,15 @@ RFThisContextReification class >> key [
 
 { #category : #generate }
 RFThisContextReification >> genForInstanceVariableSlot [
-	^RBThisContextNode named: #thisContext
+	^RBThisContextNode new
 ]
 
 { #category : #generate }
 RFThisContextReification >> genForLiteralVariable [
-	^RBThisContextNode named: #thisContext
+	^RBThisContextNode new
 ]
 
 { #category : #generate }
 RFThisContextReification >> genForRBProgramNode [
-	^RBThisContextNode named: #thisContext
+	^RBThisContextNode new
 ]
