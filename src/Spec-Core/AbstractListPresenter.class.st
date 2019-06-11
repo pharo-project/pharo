@@ -123,21 +123,6 @@ AbstractListPresenter >> enableItemSubstringFilter [
 	self itemFilterBlock: [ :each :pattern | each asLowercase includesSubstring: pattern asLowercase ]
 ]
 
-{ #category : #api }
-AbstractListPresenter >> filteringBlock [
-	"<api: #inspect>"
-	"Return the filtering of the items"
-	
-	^ filteringBlockHolder value
-]
-
-{ #category : #api }
-AbstractListPresenter >> filteringBlock: aBlock [
-	"To set the filtering of the items. This filter will be used to filter the visible elements."
-
-	filteringBlockHolder value: aBlock
-]
-
 { #category : #initialization }
 AbstractListPresenter >> initialize [
 
@@ -157,7 +142,6 @@ AbstractListPresenter >> initialize [
 
 { #category : #initialization }
 AbstractListPresenter >> initializeValueHolders [
-	filteringBlockHolder := self defaultFilteringBlock asValueHolder.
 	itemFilterBlockHolder := nil asValueHolder.
 	doubleClickActionHolder := [ ] asValueHolder.
 	contextMenuHolder := nil asValueHolder.
@@ -208,7 +192,7 @@ AbstractListPresenter >> items: aCollection [
 AbstractListPresenter >> listElementAt: anIndex [
 	"Return the item at index _anIndex_"
 
-	^ self model shownItems at: anIndex ifAbsent: [ nil ]
+	^ self model at: anIndex ifAbsent: [ nil ]
 ]
 
 { #category : #private }
@@ -224,7 +208,7 @@ AbstractListPresenter >> listSize [
 
 	"Return the size of the list"
 
-	^ self model shownItems size
+	^ self model size
 ]
 
 { #category : #accessing }
@@ -367,6 +351,11 @@ AbstractListPresenter >> unselectItem: anInteger [
 AbstractListPresenter >> whenActivatedDo: aBlockClosure [ 
 	
 	activationBlock := aBlockClosure.
+]
+
+{ #category : #'api-events' }
+AbstractListPresenter >> whenItemFilterBlockChangedDo: aBlock [
+	itemFilterBlockHolder whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

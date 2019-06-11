@@ -9,7 +9,7 @@ Class {
 		'#doItContext => SpecObservableSlot',
 		'#doItReceiver => SpecObservableSlot',
 		'#behavior => SpecObservableSlot',
-		'#syntaxHighlight',
+		'#syntaxHighlight => SpecObservableSlot',
 		'#contextKeyBindings'
 	],
 	#category : #'Spec-Core-Widgets'
@@ -129,6 +129,11 @@ CodePresenter >> selectedBehavior [
 	^ self behavior
 ]
 
+{ #category : #accessing }
+CodePresenter >> syntaxHighlight: aBoolean [
+	syntaxHighlight := aBoolean 
+]
+
 { #category : #'api-events' }
 CodePresenter >> whenBehaviorChangedDo: aBlock [
 	"Set a block to perform when the behavior class changed"
@@ -138,14 +143,19 @@ CodePresenter >> whenBehaviorChangedDo: aBlock [
 		whenChangedDo: aBlock
 ]
 
-{ #category : #accessing }
-CodePresenter >> withSyntaxHighlight [
+{ #category : #'api-events' }
+CodePresenter >> whenSyntaxHighlightChangedDo: aBlock [
+	"Set a block to perform when the syntax highlight is enabled/disabled"
 
-	syntaxHighlight := true
+	self property: #syntaxHighlight whenChangedDo: aBlock
 ]
 
-{ #category : #accessing }
-CodePresenter >> withoutSyntaxHighlight [
+{ #category : #api }
+CodePresenter >> withSyntaxHighlight [
+	self syntaxHighlight: true
+]
 
-	syntaxHighlight := false
+{ #category : #api }
+CodePresenter >> withoutSyntaxHighlight [
+	self syntaxHighlight: false
 ]

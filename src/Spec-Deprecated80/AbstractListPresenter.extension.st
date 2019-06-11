@@ -12,6 +12,19 @@ AbstractListPresenter >> doubleClickAction: aBlockClosure [
 ]
 
 { #category : #'*Spec-Deprecated80' }
+AbstractListPresenter >> filteringBlock [
+	self
+		deprecated: 'This feature is now removed from Spec 2. If the visible elements of the list need to be changed, it''s the users of the lists that should manage it and update the list of items of the list.'.
+	^ nil
+]
+
+{ #category : #'*Spec-Deprecated80' }
+AbstractListPresenter >> filteringBlock: aBlock [
+	self
+		deprecated: 'This feature is now removed from Spec 2. If the visible elements of the list need to be changed, it''s the users of the lists that should manage it and update the list of items of the list.'
+]
+
+{ #category : #'*Spec-Deprecated80' }
 AbstractListPresenter >> getSelectionStateFor: anIndex [
 	self deprecated: 'This method from the old API will be removed.' transformWith: '`@receiver getSelectionStateFor: `@statements' -> '`@receiver selection selectedIndexes includes: `@statements'.
 
@@ -36,8 +49,8 @@ AbstractListPresenter >> listItems [
 	self
 		deprecated: 'Please use the #model instead'
 		transformWith: '`@receiver listItems' 
-						-> '`@receiver model shownItems'.	
-	^ self model shownItems
+						-> '`@receiver model items'.	
+	^ self model items
 ]
 
 { #category : #'*Spec-Deprecated80' }

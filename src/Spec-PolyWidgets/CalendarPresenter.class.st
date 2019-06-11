@@ -124,9 +124,7 @@ CalendarPresenter >> daysToDisplayCount [
 { #category : #initialization }
 CalendarPresenter >> initialize [
 	super initialize.
-	self
-		title: 'Calendar' translated;
-		whenDaySelectedBlock: [ :aDate | ]
+	self whenDaySelectedBlock: [ :aDate |  ]
 ]
 
 { #category : #initialization }
@@ -143,6 +141,11 @@ CalendarPresenter >> initializeWidgets [
 	namesOfDaysLabels := self newNullPresenter.
 	
 	daysButtons := self newNullPresenter
+]
+
+{ #category : #initialization }
+CalendarPresenter >> initializeWindow: aWindowPresenter [
+	aWindowPresenter title: 'Calendar'
 ]
 
 { #category : #private }
