@@ -8,5 +8,5 @@ NonInteractiveUIManager >> currentWorld [
 	uiManager ifNotNil: [ ^ uiManager currentWorld ].
 	
 	ActiveWorld ifNotNil: [^ActiveWorld].
-	^World
+	^self currentWorld
 ]

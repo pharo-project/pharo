@@ -17,14 +17,14 @@ MorphicCoreUIManager >> checkForNewDisplaySize [
 
   Display extent = DisplayScreen actualScreenSize ifTrue: [^ Display].
   DisplayScreen startUp.
-  World restoreMorphicDisplay.
+  self currentWorld restoreMorphicDisplay.
 
 ]
 
 { #category : #'ui requests' }
 MorphicCoreUIManager >> currentWorld [
   ActiveWorld ifNotNil: [^ActiveWorld].
-  ^World
+  ^self currentWorld
 ]
 
 { #category : #'ui requests' }
@@ -50,8 +50,8 @@ MorphicCoreUIManager >> newDisplayDepthNoRestore: pixelSize [
 MorphicCoreUIManager >> restoreDisplayAfter: aBlock [
 
   aBlock value.
-  World activeHand waitButton.
-  World fullRepaintNeeded.
+  self currentWorld activeHand waitButton.
+  self currentWorld fullRepaintNeeded.
 ]
 
 { #category : #'ui process' }

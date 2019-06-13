@@ -34,7 +34,7 @@ FullscreenMorph >> initialize [
 	super initialize.
 	self
 		changeProportionalLayout;
-		bounds: World clearArea;
+		bounds: self currentWorld clearArea;
 		beSticky
 ]
 

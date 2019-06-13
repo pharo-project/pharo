@@ -98,7 +98,7 @@ WorldState class >> desktopMenuPragmaKeyword [
 { #category : #settings }
 WorldState class >> desktopMenuPragmaKeyword: aString [
 	DesktopMenuPragmaKeyword := aString.
-	World resetWorldMenu.
+	self currentWorld resetWorldMenu.
 
 ]
 
@@ -235,7 +235,7 @@ WorldState class >> screenShotCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Screenshot)
 		parent: #System;
-		target: World;
+		target: self currentWorld;
 		order: 501;
 		selector: #makeAScreenshot;
 		label: 'Screenshot';

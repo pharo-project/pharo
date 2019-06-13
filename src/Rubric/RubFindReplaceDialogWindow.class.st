@@ -329,7 +329,7 @@ RubFindReplaceDialogWindow >> newReplacement [
 
 { #category : #action }
 RubFindReplaceDialogWindow >> open [
-	self openAsIsIn: World.
+	self openAsIsIn: self currentWorld.
 	self extent: self extent.
 	self activate
 

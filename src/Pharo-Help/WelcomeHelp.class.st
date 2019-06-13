@@ -276,7 +276,7 @@ WelcomeHelp class >> openForRelease [
 	| browser window findBlock |
 	
 	findBlock := [ :each | (each isKindOf: SystemWindow) and: [ each label = self bookName ] ]. 
-	World submorphs 
+	self currentWorld submorphs 
 		detect: findBlock 
 		ifFound: [ :oldWindow | oldWindow delete ].
 	browser := self open.

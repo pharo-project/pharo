@@ -49,7 +49,7 @@ MorphicUIManager >> checkForNewDisplaySize [
 
 	Display extent = DisplayScreen actualScreenSize ifTrue: [^ Display].
 	DisplayScreen startUp.
-	World restoreMorphicDisplay.
+	self currentWorld restoreMorphicDisplay.
 
 ]
 
@@ -269,7 +269,7 @@ MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: fal
 { #category : #'ui requests' }
 MorphicUIManager >> currentWorld [
 	ActiveWorld ifNotNil: [^ActiveWorld].
-	^World
+	^self currentWorld
 ]
 
 { #category : #private }
@@ -429,8 +429,8 @@ MorphicUIManager >> lowSpaceWatcherDefaultAction: theInterruptedProcess [
 	"Create a Notifier on the active scheduling process with the given label."
 	| preemptedProcess projectProcess debugSession |
 	ActiveHand ifNotNil:[ActiveHand interrupted].
-	ActiveWorld := World. "reinstall active globals"
-	ActiveHand := World primaryHand.
+	ActiveWorld := self currentWorld. "reinstall active globals"
+	ActiveHand := self currentWorld primaryHand.
 	ActiveHand interrupted. "make sure this one's interrupted too"
 	ActiveEvent := nil.
 
@@ -478,16 +478,16 @@ MorphicUIManager >> modalMorph [
 	[foundWorld or: [sender isNil]]
 		whileFalse: [receiver := sender receiver.
 			((sender selector = #invokeWorldMenu:)
-					or: [receiver == World
+					or: [receiver == self currentWorld
 							and: [sender selector == #handleEvent:
 									or: [sender selector == #findWindow:]]])
 				ifTrue: [foundWorld := true]
 				ifFalse: [sender := sender sender]].
 	foundWorld
 		ifTrue: [^ receiver world
-				ifNil: [World]].
+				ifNil: [self currentWorld]].
 	^ SystemWindow topWindow
-		ifNil: [World]
+		ifNil: [self currentWorld]
 ]
 
 { #category : #'ui requests' }
@@ -551,7 +551,7 @@ MorphicUIManager >> onFontsChanged [
 	StringMorph allSubInstancesDo: [ :s | s layoutChanged ].
 	TextMorph allSubInstancesDo: [ :s | s layoutChanged ].
 	SystemWindow allInstancesDo: [ :w | [ w update: #relabel ] on: Error do: [ :ex | ] ].
-	World ifNotNil: [ :w | w changed ].
+	self currentWorld ifNotNil: [ :w | w changed ].
 ]
 
 { #category : #events }
@@ -568,7 +568,7 @@ MorphicUIManager >> onPrimitiveError: aString [
 								ifFalse: [s cr; print: (context := context sender)]]].
 	Transcripter askForEmergencyEvaluatorOrExitWithText: message.
 	"init hands and redisplay" 
-	World install
+	self currentWorld install
 
 ]
 
@@ -702,15 +702,15 @@ MorphicUIManager >> requestPassword: aStringOrText [
 { #category : #'ui requests' }
 MorphicUIManager >> restoreDisplay [
 
-	World fullRepaintNeeded
+	self currentWorld fullRepaintNeeded
 ]
 
 { #category : #'ui requests' }
 MorphicUIManager >> restoreDisplayAfter: aBlock [
 
 	aBlock value.
-	World activeHand waitButton.
-	World fullRepaintNeeded.
+	self currentWorld activeHand waitButton.
+	self currentWorld fullRepaintNeeded.
 ]
 
 { #category : #'ui process' }

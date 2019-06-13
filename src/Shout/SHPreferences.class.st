@@ -239,12 +239,12 @@ SHPreferences class >> styleTableRow [
 	
 	allStyles := Pragma  allNamed: #styleTable: in: SHRBTextStyler class.
 	^Smalltalk ui theme 
-		newRowIn: World 
+		newRowIn: self currentWorld 
 		for: (
 			{ Smalltalk ui theme buttonLabelForText: 'Predefined styles: ' translated }, 
 			(allStyles collect: [ :eachPragma | 
 				(Smalltalk ui theme 
-					newButtonIn: World 
+					newButtonIn: self currentWorld 
 						for:  self
 						getState: nil 
 						action: #setStyleTableNamed:  

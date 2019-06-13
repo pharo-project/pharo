@@ -45,9 +45,9 @@ TaskbarMorph class >> reset [
 	<script>
 	"Remove the taskbar and add a new one." 
 	
-	(World submorphs select: [:m | m isKindOf: self])
+	(self currentWorld submorphs select: [:m | m isKindOf: self])
 		do: [:tb | tb delete].
-	World createTaskbarIfNecessary
+	self currentWorld createTaskbarIfNecessary
 ]
 
 { #category : #setting }
@@ -67,7 +67,7 @@ TaskbarMorph class >> showTaskbarPreferenceChanged [
 	"Add or remove the taskbar as appropriate.
 	Delegate to the current World."
 	
-	World showWorldTaskbar:  self showTaskbar
+	self currentWorld showWorldTaskbar:  self showTaskbar
 ]
 
 { #category : #setting }

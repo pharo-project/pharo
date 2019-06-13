@@ -300,7 +300,7 @@ AbstractMorphicAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBool
 		position: self widget position + (1 @ 1)
 		keyValue: keyCode
 		charCode: keyCode
-		hand: World activeHand
+		hand: self currentWorld activeHand
 		stamp: Time millisecondClockValue.
 
 	evt sentTo: widget.

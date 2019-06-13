@@ -565,7 +565,7 @@ PluggableListMorph >> getMenu: shiftKeyState [
 ]
 
 { #category : #accessing }
-PluggableListMorph >> getSelectionListSelector: getListSel. [
+PluggableListMorph >> getSelectionListSelector: getListSel [.
 
 	getSelectionListSelector := getListSel
 ]
@@ -1488,7 +1488,7 @@ PluggableListMorph >> setSelectedMorph: aMorph [
 ]
 
 { #category : #accessing }
-PluggableListMorph >> setSelectionListSelector: getListSel. [
+PluggableListMorph >> setSelectionListSelector: getListSel [.
 
 	setSelectionListSelector := getListSel
 ]

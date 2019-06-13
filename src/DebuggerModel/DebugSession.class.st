@@ -180,7 +180,7 @@ DebugSession >> installAlarm: aSelector [
 { #category : #private }
 DebugSession >> installAlarm: aSelector withArgument: args [
 	
-	World
+	self currentWorld
 		addAlarm: aSelector
 		withArguments: args
 		for: self

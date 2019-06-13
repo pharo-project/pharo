@@ -15,12 +15,12 @@ OSWindowClipboard >> chooseRecentClipping [
 
 { #category : #accessing }
 OSWindowClipboard >> clipboardText [
-	^ World osWindow clipboardText
+	^ self currentWorld osWindow clipboardText
 ]
 
 { #category : #accessing }
 OSWindowClipboard >> clipboardText: aString [
-	World osWindow clipboardText: aString asString
+	self currentWorld osWindow clipboardText: aString asString
 ]
 
 { #category : #private }

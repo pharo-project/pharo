@@ -108,7 +108,7 @@ AndreasSystemProfiler class >> spyOnWorldFor: seconds [
 	^self spyOn: [  | deadline |
 		deadline := Time totalSeconds + seconds.
 		[Time totalSeconds < deadline]
-			whileTrue: [ World doOneCycle ]].
+			whileTrue: [ self currentWorld doOneCycle ]].
 ]
 
 { #category : #reporting }

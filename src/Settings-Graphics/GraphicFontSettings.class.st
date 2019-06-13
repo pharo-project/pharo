@@ -23,7 +23,7 @@ GraphicFontSettings class >> fontChoiceButtonForStyle: aSymbol label: aLabel [
 				contents: aLabel asString 
 				font: (TextStyle default fontOfPointSize: (StandardFonts pointSizeForStyleNamed: aSymbol)).
 	^ (self theme 
-		newButtonIn: World
+		newButtonIn: self currentWorld
 		for: self
 		getState: nil 
 		action: #setFontsToStyleNamed:
@@ -38,7 +38,7 @@ GraphicFontSettings class >> fontChoiceButtonForStyle: aSymbol label: aLabel [
 
 { #category : #fonts }
 GraphicFontSettings class >> fontSizeRow [
-	^ self theme newRowIn: World for: {
+	^ self theme newRowIn: self currentWorld for: {
 			self theme buttonLabelForText: 'Predefined styles: ' translated.
 			self fontChoiceButtonForStyle: #small label: 'Small' translated.
 			self fontChoiceButtonForStyle: #medium label: 'Medium' translated.
@@ -60,7 +60,7 @@ GraphicFontSettings class >> resetAllFontToDefault [
 { #category : #fonts }
 GraphicFontSettings class >> resetAllFontToDefaultButton [
 	^ (self theme
-		newButtonIn: World
+		newButtonIn: self currentWorld
 		for: self
 		getState: nil
 		action: #resetAllFontToDefault
@@ -70,7 +70,7 @@ GraphicFontSettings class >> resetAllFontToDefaultButton [
 		help: 'Force all system fonts to be the default one' translated)
 		label:
 			(self theme
-				newRowIn: World
+				newRowIn: self currentWorld
 				for:
 					{(AlphaImageMorph new
 						image: (self iconNamed: #smallRedoIcon)).
