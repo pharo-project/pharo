@@ -199,11 +199,6 @@ UndefinedObject >> isNotNil [
 	^false
 ]
 
-{ #category : #'class hierarchy' }
-UndefinedObject >> literalScannedAs: scannedLiteral notifying: requestor [ 
-	^ scannedLiteral
-]
-
 { #category : #testing }
 UndefinedObject >> notNil [ 
 	"Refer to the comment in Object|notNil."
