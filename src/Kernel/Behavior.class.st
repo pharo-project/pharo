@@ -447,18 +447,6 @@ Behavior >> basicSuperclass: aClass [
 ]
 
 { #category : #private }
-Behavior >> becomeCompact [
-	"Backward compatibility with the Squeak V3 object format.
-	Spur does not have a distinction between compact and non-compact classes."
-]
-
-{ #category : #private }
-Behavior >> becomeCompactSimplyAt: index [
-	"Backward compatibility with the Squeak V3 object format.
-	Spur does not have a distinction between compact and non-compact classes."
-]
-
-{ #category : #private }
 Behavior >> becomeUncompact [
 	"Backward compatibility with the Squeak V3 object format.
 	 Spur does not have a distinction between compact and non-compact classes."
@@ -916,13 +904,6 @@ Behavior >> includesSharedPoolNamed:  aSharedPoolString [
 	"Answer whether the receiver uses the shared pool named aSharedPoolString"
 	
 	^ (self sharedPools anySatisfy: [:each | each name = aSharedPoolString])
-]
-
-{ #category : #private }
-Behavior >> indexIfCompact [
-	"Backward compatibility with the Squeak V3 object format.
-	 Spur does not have a distinction between compact and non-compact classes."
-	^0
 ]
 
 { #category : #'testing class hierarchy' }
