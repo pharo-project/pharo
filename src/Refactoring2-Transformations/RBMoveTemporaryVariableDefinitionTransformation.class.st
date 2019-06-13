@@ -96,7 +96,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkAllBlocksIn: aParseTree 
 { #category : #private }
 RBMoveTemporaryVariableDefinitionTransformation >> checkBlocksIn: aParseTree [
 	| searcher |
-	searcher := self parseTreeSearcher new.
+	searcher := self parseTreeSearcher.
 	searcher
 		matches: '[:`@args | | `@temps | `@.Statements]'
 			do: [ :aNode :answer | answer ];

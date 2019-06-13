@@ -189,6 +189,11 @@ RBTransformation >> options: aDictionary [
 
 { #category : #private }
 RBTransformation >> parseTreeSearcher [
+	^ RBParseTreeSearcher new
+]
+
+{ #category : #private }
+RBTransformation >> parseTreeSearcherClass [
 	^ RBParseTreeSearcher
 ]
 
