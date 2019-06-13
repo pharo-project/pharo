@@ -187,6 +187,11 @@ RBTransformation >> options: aDictionary [
 	options := aDictionary
 ]
 
+{ #category : #private }
+RBTransformation >> parseTreeSearcher [
+	^ RBParseTreeSearcher
+]
+
 { #category : #preconditions }
 RBTransformation >> preconditionChecking [
 
