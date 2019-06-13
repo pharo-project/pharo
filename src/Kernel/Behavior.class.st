@@ -1002,17 +1002,6 @@ Behavior >> instVarNames [
 	^(superSize + 1 to: mySize) collect: [:i | 'inst' , i printString]
 ]
 
-{ #category : #compiling }
-Behavior >> instVarNamesAndOffsetsDo: aBinaryBlock [
-	"This is part of the interface between the compiler and a class's instance or field names.
-	 The class should enumerate aBinaryBlock with the instance variable name strings and
-	 their integer offsets.  The order is important. Names evaluated later will override the
-	 same names occurring earlier."
-
-	"Nothing to do here; ClassDescription introduces named instance variables"
-	^self
-]
-
 { #category : #'accessing instances and variables' }
 Behavior >> instanceCount [
 	"Answer the number of instances of the receiver that are currently in 
@@ -1927,17 +1916,6 @@ Behavior >> unreferencedInstanceVariables [
 	^ self instVarNames reject: [:ivn | 
 		self withAllSubclasses anySatisfy: [:class | 
 			(class whichSelectorsAccess: ivn) notEmpty]]
-]
-
-{ #category : #compiling }
-Behavior >> variablesAndOffsetsDo: aBinaryBlock [
-	"This is the interface between the compiler and a class's instance or field names.  The
-	 class should enumerate aBinaryBlock with the field definitions (with nil offsets) followed
-	 by the instance variable name strings and their integer offsets (1-relative).  The order is
-	 important; names evaluated later will override the same names occurring earlier."
-
-	"Only need to do instance variables here.  CProtoObject introduces field definitions."
-	self instVarNamesAndOffsetsDo: aBinaryBlock
 ]
 
 { #category : #queries }
