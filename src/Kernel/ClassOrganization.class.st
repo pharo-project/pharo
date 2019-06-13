@@ -180,7 +180,7 @@ ClassOrganization >> extensionProtocols [
 
 { #category : #testing }
 ClassOrganization >> hasComment [
-	^ self comment isEmptyOrNil not 
+	^ self commentRemoteString isNotNil
 ]
 
 { #category : #'backward compatibility' }
