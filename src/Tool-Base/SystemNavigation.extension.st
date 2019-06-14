@@ -5,13 +5,15 @@ SystemNavigation >> browseAllAccessesTo: instVarName from: aClass [
 	"Create and schedule a Message Set browser for all the receiver's methods 
 	or any methods of a subclass/superclass that refer to the instance variable name."
 
-	"self new browseAllAccessesTo: 'contents' from: Collection."
+	"self new browseAllAccessesTo: 'x' from: Point."
 
-	| coll slot |
-	coll := self allAccessesTo: instVarName from: aClass.
+	| methods slot |
 	slot := aClass slotNamed: instVarName.
+	methods := (aClass allMethodsAccessingSlot: slot) 
+		collect: [:meth | self createMethodNamed: meth selector realParent: meth methodClass].
+	
 	^ self
-		browseMessageList: coll
+		browseMessageList: methods
 		name: 'Accesses to ' , instVarName
 		autoSelect: instVarName
 		refreshingBlock: [ :method | slot isAccessedIn: method ]
