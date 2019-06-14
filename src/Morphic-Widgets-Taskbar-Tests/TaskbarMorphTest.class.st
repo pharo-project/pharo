@@ -22,7 +22,7 @@ TaskbarMorphTest >> addWindow [
 TaskbarMorphTest >> addWindowToWorld [
 	| morph |
 	morph := Morph new.
-	windows add: morph . 
+	windows add: morph. 
 	^morph
 ]
 
@@ -80,7 +80,8 @@ TaskbarMorphTest >> testEmptyTaskBarList [
 
 { #category : #tests }
 TaskbarMorphTest >> testIfTheTestedMethodIstheSameThatTheOneUsedInProd [
-	self assert: self theMethodInProdThatShouldBeTested bytecode  equals: (self class >> #updateOrderedTasksFrom:) bytecode .
+
+	self assert: self theMethodInProdThatShouldBeTested bytecode equals: (self class >> #updateOrderedTasksFrom:) bytecode
 ]
 
 { #category : #tests }
@@ -137,7 +138,7 @@ TaskbarMorphTest >> testWhenRemovingWindowInWorldListTaskListShouldUpdateConsequ
 	window1 := world addWindow.
 	window2 := world addWindow.
 	taskbar updateTasks.
-	world removeWindow:  window1.
+	world removeWindow: window1.
 	taskbar updateTasks.
 	self assert: taskbar tasks size equals: 1.
 	self assert: taskbar tasks first morph equals: window2.
@@ -173,6 +174,6 @@ TaskbarMorphTest >> updateTasks [
 	| tasksThatShouldBeUpdated  |
 	tasksThatShouldBeUpdated := windows
 		collect: [ :window | self newTaskFor: window ].
-		self updateOrderedTasksFrom: tasksThatShouldBeUpdated
+	self updateOrderedTasksFrom: tasksThatShouldBeUpdated
 	
 ]
