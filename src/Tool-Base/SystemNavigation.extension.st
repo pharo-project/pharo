@@ -7,12 +7,14 @@ SystemNavigation >> browseAllAccessesTo: instVarName from: aClass [
 
 	"self new browseAllAccessesTo: 'contents' from: Collection."
 
-	| coll |
+	| coll slot |
 	coll := self allAccessesTo: instVarName from: aClass.
-	^ self browseMessageList: coll name: 'Accesses to ' , instVarName autoSelect: instVarName refreshingBlock: [ :method | | index |
-			index := aClass instVarIndexFor: instVarName.
-			(method readsField: index)
-				or: [ method writesField: index ] ]
+	slot := aClass slotNamed: instVarName.
+	^ self
+		browseMessageList: coll
+		name: 'Accesses to ' , instVarName
+		autoSelect: instVarName
+		refreshingBlock: [ :method | slot isAccessedIn: method ]
 ]
 
 { #category : #'*Tool-Base' }
