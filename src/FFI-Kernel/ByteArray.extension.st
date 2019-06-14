@@ -12,8 +12,8 @@ ByteArray >> booleanAt: byteOffset [
 	Examples:
 	(#[1 2 0 4] booleanAt: 2) >>> true.
 	(#[1 2 0 4] booleanAt: 3) >>> false."
-	
-	^(self integerAt: byteOffset size: 1 signed: false) ~= 0
+
+	^ (self integerAt: byteOffset size: 1 signed: false) ~= 0
 ]
 
 { #category : #'*FFI-Kernel' }
