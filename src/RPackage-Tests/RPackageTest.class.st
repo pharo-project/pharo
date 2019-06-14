@@ -242,5 +242,5 @@ RPackageTest >> testRoots [
 	| roots |
 	roots := (RPackageOrganizer default packageNamed: #'RPackage-Tests') roots.
 	roots := roots collect: [ :each | each name ].
-	#(RPackageStringExtensionTest RPackageRenameTest TestRPackagePrequisites PackageChecker RPackageTestCase RPackageWithDoTest) do: [ :each | roots includes: each ]
+	#(RPackageStringExtensionTest RPackageRenameTest TestRPackagePrequisites RPackageTestCase RPackageWithDoTest) do: [ :each | roots includes: each ]
 ]
