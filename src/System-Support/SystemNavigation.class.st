@@ -19,11 +19,10 @@ SystemNavigation class >> default [
 
 { #category : #query }
 SystemNavigation >> allAccessesTo: instVarName from: aClass [
-	| coll |
-	coll := OrderedCollection new.
-	aClass
-		withAllSubAndSuperclassesDo: [ :class | (class whichSelectorsAccess: instVarName) do: [ :sel | coll add: (self createMethodNamed: sel realParent: class) ] ].
-	^ coll
+	| methods |
+	methods := aClass allMethodsAccessingSlot: (aClass slotNamed: instVarName).
+	^methods collect: [:meth | self createMethodNamed: meth selector realParent: meth methodClass]
+
 ]
 
 { #category : #query }
