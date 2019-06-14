@@ -1,6 +1,6 @@
 Extension { #name : #BlockClosure }
 
-{ #category : #'*DebuggerFilters-Extension' }
+{ #category : #'*Debugger-Filters-Extension' }
 BlockClosure >> asFilter [
  	^ BlockFilter forBlock: self. 
 ]

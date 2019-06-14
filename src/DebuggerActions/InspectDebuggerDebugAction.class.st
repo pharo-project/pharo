@@ -1,7 +1,7 @@
 Class {
 	#name : #InspectDebuggerDebugAction,
 	#superclass : #DebugAction,
-	#category : #'DebuggerActions-Actions'
+	#category : #'Debugger-Actions-Actions'
 }
 
 { #category : #registration }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'selectors'
 	],
-	#category : #DebuggerFilters
+	#category : #'Debugger-Filters'
 }
 
 { #category : #'instance creation' }

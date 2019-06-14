@@ -4,7 +4,7 @@ Settings for debugging
 Class {
 	#name : #DebugSystemSettings,
 	#superclass : #Object,
-	#category : #'DebuggerModel-Settings'
+	#category : #'Debugger-Model-Settings'
 }
 
 { #category : #'private - settings' }

@@ -23,7 +23,7 @@ Class {
 		'selector',
 		'help'
 	],
-	#category : #'DebuggerActions-Actions'
+	#category : #'Debugger-Actions-Actions'
 }
 
 { #category : #accessing }

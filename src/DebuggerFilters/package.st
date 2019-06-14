@@ -1,1 +1,1 @@
-Package { #name : #DebuggerFilters }
+Package { #name : #'Debugger-Filters' }

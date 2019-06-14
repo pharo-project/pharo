@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'kernelClasses'
 	],
-	#category : #DebuggerFilters
+	#category : #'Debugger-Filters'
 }
 
 { #category : #initialization }

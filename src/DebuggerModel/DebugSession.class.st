@@ -31,7 +31,7 @@ Class {
 	#classVars : [
 		'LogDebuggerStackToFile'
 	],
-	#category : #'DebuggerModel-Base'
+	#category : #'Debugger-Model-Base'
 }
 
 { #category : #'actions registration' }

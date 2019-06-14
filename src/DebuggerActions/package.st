@@ -1,1 +1,1 @@
-Package { #name : #DebuggerActions }
+Package { #name : #'Debugger-Actions' }

@@ -4,7 +4,7 @@ A filter on the current stack for debugging
 Class {
 	#name : #StackFilter,
 	#superclass : #Object,
-	#category : #DebuggerFilters
+	#category : #'Debugger-Filters'
 }
 
 { #category : #operators }
