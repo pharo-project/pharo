@@ -397,7 +397,7 @@ SystemWindow class >> noteTopWindowIn: aWorld [
 { #category : #'top window' }
 SystemWindow class >> sendTopWindowToBack [
  	"Send the top window of the world to the back. Relies on #submorphs array being ordered top to bottom. "
-	ActiveWorld submorphs 
+	self currentWorld submorphs 
 		detect: [ :morph | morph isSystemWindow ] 
 		ifFound: [ :morph | morph sendToBack ].
 ]

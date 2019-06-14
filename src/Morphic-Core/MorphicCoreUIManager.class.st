@@ -23,8 +23,9 @@ MorphicCoreUIManager >> checkForNewDisplaySize [
 
 { #category : #'ui requests' }
 MorphicCoreUIManager >> currentWorld [
-  ActiveWorld ifNotNil: [^ActiveWorld].
-  ^self currentWorld
+
+	ActiveWorld ifNotNil: [ ^ ActiveWorld ].
+	^ World
 ]
 
 { #category : #'ui requests' }

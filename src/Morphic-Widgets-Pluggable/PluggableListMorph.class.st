@@ -1503,7 +1503,7 @@ PluggableListMorph >> specialKeyPressed: anEvent [
 		ifTrue: [" escape key"
 			^ ActiveEvent shiftPressed
 				ifTrue:
-					[ActiveWorld invokeWorldMenuFromEscapeKey]
+					[self currentWorld invokeWorldMenuFromEscapeKey]
 				ifFalse:[ 
 					(self yellowButtonActivity: false) 
 						ifTrue: [ ^ self ]]].

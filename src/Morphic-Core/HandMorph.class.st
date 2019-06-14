@@ -292,8 +292,8 @@ HandMorph >> cursorPoint [
 
 	| pos |
 	pos := self position.
-	(ActiveWorld isNil or: [ActiveWorld == owner]) ifTrue: [^pos].
-	^ActiveWorld point: pos from: owner
+	(self currentWorld isNil or: [self currentWorld == owner]) ifTrue: [^pos].
+	^self currentWorld point: pos from: owner
 ]
 
 { #category : #'balloon help' }

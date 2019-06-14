@@ -268,8 +268,9 @@ MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: fal
 
 { #category : #'ui requests' }
 MorphicUIManager >> currentWorld [
-	ActiveWorld ifNotNil: [^ActiveWorld].
-	^self currentWorld
+
+	ActiveWorld ifNotNil: [ ^ ActiveWorld ].
+	^ World
 ]
 
 { #category : #private }
@@ -786,5 +787,5 @@ MorphicUIManager >> warningDefaultAction: anException [
 
 { #category : #'global state' }
 MorphicUIManager >> world [
-	^ ActiveWorld 
+	^ self currentWorld 
 ]
