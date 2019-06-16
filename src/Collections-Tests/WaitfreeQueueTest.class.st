@@ -15,20 +15,6 @@ WaitfreeQueueTest >> newItems: count [
 	^collection
 ]
 
-{ #category : #'helper methods' }
-WaitfreeQueueTest >> queueFromCollection: aCollection [
-	"Answer a WaitfreeQueue initialised from the supplied collection of items"
-
-	| queue |
-
-	queue := WaitfreeQueue new.
-	(queue instVarNamed: #dummy) next: aCollection first.
-	1 to: aCollection size - 1 do: [ :i |
-		(aCollection at: i) next: (aCollection at: i+1) ].
-	queue instVarNamed: #tail put: aCollection last.
-	^queue
-]
-
 { #category : #tests }
 WaitfreeQueueTest >> testNextOrNil [
 
@@ -115,7 +101,7 @@ WaitfreeQueueTest >> testZombieFirst [
 	| items queue real |
 
 	items := self newItems: 2.
-	queue := self queueFromCollection: items.
+	queue := WaitfreeQueue withAll: items.
 	items first object: (queue instVarNamed: #dummy).
 	items last object: #real.
 
@@ -127,7 +113,7 @@ WaitfreeQueueTest >> testZombieFirst [
 
 
 	items := self newItems: 2.
-	queue := self queueFromCollection: items.
+	queue := WaitfreeQueue withAll: items.
 	items first object: (queue instVarNamed: #dummy).
 	items last object: #real.
 
@@ -146,7 +132,7 @@ WaitfreeQueueTest >> testZombieLast [
 	| items queue real |
 
 	items := self newItems: 2.
-	queue := self queueFromCollection: items.
+	queue := WaitfreeQueue withAll: items.
 	items first object: #real.
 	items last object: (queue instVarNamed: #dummy).
 
@@ -158,7 +144,7 @@ WaitfreeQueueTest >> testZombieLast [
 	self assert: queue nextOrNil isNil.
 
 	items := self newItems: 2.
-	queue := self queueFromCollection: items.
+	queue := WaitfreeQueue withAll: items.
 	items first object: #real.
 	items last object: (queue instVarNamed: #dummy).
 
@@ -181,7 +167,7 @@ WaitfreeQueueTest >> testZombieMiddle [
 	| items queue real |
 
 	items := self newItems: 3.
-	queue := self queueFromCollection: items.
+	queue := WaitfreeQueue withAll: items.
 	items first object: #real1.
 	items second object: (queue instVarNamed: #dummy).
 	items last object: #real2.
@@ -198,7 +184,7 @@ WaitfreeQueueTest >> testZombieMiddle [
 
 
 	items := self newItems: 3.
-	queue := self queueFromCollection: items.
+	queue := WaitfreeQueue withAll: items.
 	items first object: #real1.
 	items second object: (queue instVarNamed: #dummy).
 	items last object: #real2.

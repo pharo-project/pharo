@@ -54,6 +54,13 @@ WaitfreeQueue class >> new: anInteger [
 	^self new
 ]
 
+{ #category : #'instance creation' }
+WaitfreeQueue class >> withAll: aCollection [
+	"Answer an instance of the receiver initialised with the supplied collection of items"
+
+	^self new withAll: aCollection
+]
+
 { #category : #accessing }
 WaitfreeQueue >> findFirst: aBlock [
 	"Note, this method only for backward compatibility. It duplicating the semantics of #nextOrNilSuchThat: completely.
@@ -357,4 +364,14 @@ WaitfreeQueue >> size [
 		].	
 
 	^ count
+]
+
+{ #category : #initialization }
+WaitfreeQueue >> withAll: aCollection [
+	"Initialise the receiver with the supplied items"
+
+	dummy next: aCollection first.
+	1 to: aCollection size - 1 do: [ :i |
+		(aCollection at: i) next: (aCollection at: i+1) ].
+	tail := aCollection last.
 ]
