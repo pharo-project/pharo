@@ -19,11 +19,10 @@ SystemNavigation class >> default [
 
 { #category : #query }
 SystemNavigation >> allAccessesTo: instVarName from: aClass [
-	| coll |
-	coll := OrderedCollection new.
-	aClass
-		withAllSubAndSuperclassesDo: [ :class | (class whichSelectorsAccess: instVarName) do: [ :sel | coll add: (self createMethodNamed: sel realParent: class) ] ].
-	^ coll
+	| methods |
+	methods := aClass allMethodsAccessingSlot: (aClass slotNamed: instVarName).
+	^methods collect: [:meth | self createMethodNamed: meth selector realParent: meth methodClass]
+
 ]
 
 { #category : #query }
@@ -35,15 +34,11 @@ SystemNavigation >> allBehaviors [
 SystemNavigation >> allBehaviorsDo: aBlock [
 	"Execute a block on each class, metaclass, trait and trait class"
 
-	self environment allClassesDo: [ :aClass | 
-		aBlock
-			value: aClass;
-			value: aClass classSide ].
-
-	self environment allTraitsDo: [ :aTrait | 
-		aBlock
-			value: aTrait;
-			value: aTrait classSide ]
+	self environment valuesDo: [ :aClass |
+		aClass isBehavior ifTrue: [  
+			aBlock
+				value: aClass;
+				value: aClass classSide]].
 ]
 
 { #category : #query }

@@ -247,9 +247,9 @@ GTSpotter >> spotterForPackagesFor: aStep [
 GTSpotter >> spotterForPragmasFor: aStep [
 	<spotterOrder: 40>
 	aStep listProcessor 
-			allCandidates: [ PragmaType all ];
+			allCandidates: [ Pragma allInstances collect: [ :e | e keyword ] as: Set ];
 			title: 'Pragmas';
-			itemName: [ :pragma | pragma keyword ];
+			itemName: [ :pragma | pragma ];
 			filter: self defaultFilterClass;
 			wantsToDisplayOnEmptyQuery: false
 ]
@@ -351,7 +351,7 @@ GTSpotter >> spotterWindowsFor: aStep [
 	aStep listProcessor
 			title: 'Windows';
 			candidatesLimit: 10;
-			allCandidates: [ World submorphs 	select: [ :window | window isKindOf: SystemWindow ] ];
+			allCandidates: [ (World submorphs 	select: [ :window | window isKindOf: SystemWindow ] ) allButFirst ] ;
 			itemName: [ :window | '{1} [{2}]' format: { window  label. window className } ];
 			itemIcon: [ :window | window taskbarIcon ];
 			sort:  [ :window1 :window2 | window1 label < window2 label ];

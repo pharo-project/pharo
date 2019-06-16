@@ -1117,7 +1117,8 @@ TestRunner >> statusHeight [
 
 { #category : #'accessing-menu' }
 TestRunner >> statusMenu: aMenu [
-	^ aMenu
+	^ aMenu 
+		defaultTarget: self;
 		add: 'History' selector: #showHistoryMenu;
 		add: 'Store result as progress reference' selector: #storeResultIntoTestCases;
 		add: 'Show progress' selector: #showProgress; 

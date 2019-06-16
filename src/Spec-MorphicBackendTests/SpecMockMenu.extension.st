@@ -1,6 +1,12 @@
 Extension { #name : #SpecMockMenu }
 
 { #category : #'*Spec-MorphicBackendTests' }
+SpecMockMenu >> invokeModal [
+
+	self shown: true
+]
+
+{ #category : #'*Spec-MorphicBackendTests' }
 SpecMockMenu >> isInWorld [
 	
 	^ false
@@ -16,4 +22,8 @@ SpecMockMenu >> popUpEvent: evt in: aWorld [
 SpecMockMenu >> popUpInWorld: aWorld [
 
 	self shown: true
+]
+
+{ #category : #'*Spec-MorphicBackendTests' }
+SpecMockMenu >> setInvokingView: aRubTextEditor [
 ]

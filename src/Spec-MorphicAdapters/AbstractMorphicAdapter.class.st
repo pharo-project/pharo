@@ -92,12 +92,6 @@ AbstractMorphicAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 		w bindKeyCombination: aShortcut toAction: aBlock ]
 ]
 
-{ #category : #'protocol-shortcuts' }
-AbstractMorphicAdapter >> bindMenuKeyCombination: aShortcut toAction: aBlock [
-
-	self widget ifNotNil: [ :w | w bindKeyCombination: aShortcut toAction: aBlock ]
-]
-
 { #category : #protocol }
 AbstractMorphicAdapter >> borderColor [
 
@@ -285,6 +279,35 @@ AbstractMorphicAdapter >> isVisible [
 	^ widget visible
 ]
 
+{ #category : #emulating }
+AbstractMorphicAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+	| evt modifiers |
+	modifiers := 0.
+	shiftBoolean ifTrue: [ modifiers := modifiers | 8 ].
+	metaBoolean ifTrue: [ modifiers := modifiers |
+		(Smalltalk os isWin32 | Smalltalk os isUnix
+			ifTrue: [ 2r00010000 ]
+			ifFalse: [ 2r01000000 ]) ].
+	controlBoolean ifTrue: [ modifiers := modifiers | 2r00010000 ].
+	optionBoolean ifTrue: [ modifiers := modifiers |
+		(Smalltalk os isWin32 | Smalltalk os isUnix
+			ifTrue: [ 2r01000000 ]
+			ifFalse: [ 2r00100000 ]) ].
+	
+	evt := KeyboardEvent new
+		setType: #keystroke
+		buttons: modifiers
+		position: self widget position + (1 @ 1)
+		keyValue: keyCode
+		charCode: keyCode
+		hand: World activeHand
+		stamp: Time millisecondClockValue.
+
+	evt sentTo: widget.
+	"Some time to allow things to happen?"
+	10 milliSeconds wait
+]
+
 { #category : #protocol }
 AbstractMorphicAdapter >> layout: aLayout [
 	| layout |
@@ -313,13 +336,8 @@ AbstractMorphicAdapter >> listRenderOn: aCanvas atRow: aRow bounds: drawBounds c
 { #category : #'protocol-shortcuts' }
 AbstractMorphicAdapter >> removeKeyCombination: aShortcut [
 
-	self widget ifNotNil: [ :w | w removeKeyCombination: aShortcut ]
-]
-
-{ #category : #'protocol-shortcuts' }
-AbstractMorphicAdapter >> removeMenuKeyCombination: aShortcut [
-
-	self widget ifNotNil: [ :w | w removeKeyCombination: aShortcut ]
+	self widgetDo: [ :w | 
+		w removeKeyCombination: aShortcut ]
 ]
 
 { #category : #protocol }

@@ -293,12 +293,12 @@ RBProgramNode >> do: aBlock [
 
 { #category : #generation }
 RBProgramNode >> dump [
-	^  String streamContents: [:s | self dumpOn: s]
-]
+	"Generate a literal expression that recreates the receiver"
 
-{ #category : #generation }
-RBProgramNode >> dumpOn: aStream [
-	self subclassResponsibility 
+	| visitor |
+	visitor := RBDumpVisitor new.
+	self acceptVisitor: visitor.
+	^ visitor stream contents
 ]
 
 { #category : #comparing }

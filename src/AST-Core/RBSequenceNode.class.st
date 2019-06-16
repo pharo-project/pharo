@@ -63,8 +63,8 @@ RBSequenceNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBSequenceNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitSequenceNode: self
+RBSequenceNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitSequenceNode: self
 ]
 
 { #category : #'adding nodes' }
@@ -248,24 +248,6 @@ RBSequenceNode >> defines: aName [
 { #category : #testing }
 RBSequenceNode >> directlyUses: aNode [ 
 	^false
-]
-
-{ #category : #generation }
-RBSequenceNode >> dumpOn: aStream [
-	aStream nextPutAll: self class name.
-	self temporaries
-		ifNotEmpty: [ aStream nextPutAll: ' temporaries: {'.
-			self temporaries
-				do: [ :each | 
-					each dumpOn: aStream.
-					aStream nextPutAll: '. ' ].
-			aStream nextPut: $} ].
-	aStream nextPutAll: ' statements: {'.
-	self statements
-		do: [ :each | 
-			each dumpOn: aStream.
-			aStream nextPutAll: '. ' ].
-	aStream nextPut: $}
 ]
 
 { #category : #comparing }

@@ -18,7 +18,7 @@ RBAddMetaclassChange class >> definitionPatterns [
 
 { #category : #converting }
 RBAddMetaclassChange >> asUndoOperation [
-	^ self class definition: self changeClass class definition
+	^ self class definition: self changeClass class oldDefinition
 ]
 
 { #category : #accessing }

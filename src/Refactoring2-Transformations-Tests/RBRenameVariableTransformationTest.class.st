@@ -18,15 +18,15 @@ RBRenameVariableTransformationTest >> testClassVariable [
 	self assert: (class directlyDefinesClassVariable: #RSR).
 	self deny: (class directlyDefinesClassVariable: #RecursiveSelfRule).
 	self assert: (class theMetaClass parseTreeFor: #initializeAfterLoad1) 
-		  equals: (RBParser parseMethod: 
+		  equals: (self parseMethod: 
 				'initializeAfterLoad1
 					RSR := RBParseTreeSearcher new.
 					RSR addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
 						-> [:aNode :answer | true]').
 	self assert: (class theMetaClass parseTreeFor: #nuke) 
-		  equals: (RBParser parseMethod: 'nuke RSR := nil').
+		  equals: (self parseMethod: 'nuke RSR := nil').
 	self assert: (class parseTreeFor: #checkMethod:) 
-		  equals: (RBParser parseMethod: 
+		  equals: (self parseMethod: 
 				'checkMethod: aSmalllintContext 
 					class := aSmalllintContext selectedClass.
 					(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
@@ -60,11 +60,11 @@ RBRenameVariableTransformationTest >> testRefactoring [
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').
 	self deny: (class directlyDefinesInstanceVariable: 'classBlock').
 	self assert: (class parseTreeFor: #checkClass:)
-		  equals: (RBParser parseMethod:
+		  equals: (self parseMethod:
 				'checkClass: aSmalllintContext 
 					^asdf value: aSmalllintContext value: result').
 	self assert: (class parseTreeFor: #initialize)
-		  equals: (RBParser parseMethod:
+		  equals: (self parseMethod:
 				'initialize
 					super initialize.
 					self anInstVar: 1.
@@ -87,11 +87,11 @@ RBRenameVariableTransformationTest >> testTransform [
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').
 	self deny: (class directlyDefinesInstanceVariable: 'classBlock').
 	self assert: (class parseTreeFor: #checkClass:)
-		  equals: (RBParser parseMethod:
+		  equals: (self parseMethod:
 				'checkClass: aSmalllintContext 
 					^asdf value: aSmalllintContext value: result').
 	self assert: (class parseTreeFor: #initialize)
-		  equals: (RBParser parseMethod:
+		  equals: (self parseMethod:
 				'initialize
 					super initialize.
 					self anInstVar: 1.

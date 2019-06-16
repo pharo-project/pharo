@@ -93,7 +93,9 @@ SliderPresenter >> color: aColor [
 
 { #category : #initialization }
 SliderPresenter >> initialize [
+	
 	super initialize.
+	
 	isHorizontal := true.
 	marksHolder := OrderedCollection new asValueHolder.
 	max := 100 asValueHolder.
@@ -103,45 +105,23 @@ SliderPresenter >> initialize [
 	absoluteValue := 0 asValueHolder.
 	labelHolder := '' asValueHolder.
 	isChanging := false.
-	max
-		whenChangedDo: [ :m | 
-			self
-				changed:
-					{#max:.
-					m} ].
-	min
-		whenChangedDo: [ :m | 
-			self
-				changed:
-					{#min:.
-					m} ].
-	quantum
-		whenChangedDo: [ :m | 
-			self
-				changed:
-					{#quantum:.
-					m} ].
-	value
-		whenChangedDo: [ :v | 
-			isChanging
-				ifFalse: [ isChanging := true.
-					self absoluteValue: (self valueToAbsoluteValue: v).
-					self
-						changed:
-							{#scaledValue:.
-							v}.
-					isChanging := false ].
-			self changed: #value ].
-	absoluteValue
-		whenChangedDo: [ :v | 
-			isChanging
-				ifFalse: [ isChanging := true.
-					self value: (self absoluteValueToValue: v).
-					self
-						changed:
-							{#value:.
-							v}.
-					isChanging := false ] ].
+	
+	max whenChangedDo: [ :m | self changed: {#max:. m} ].
+	min whenChangedDo: [ :m | self changed: {#min:. m} ].
+	quantum whenChangedDo: [ :m | self changed: {#quantum:. m} ].
+	value whenChangedDo: [ :v | 
+		isChanging ifFalse: [ 
+			isChanging := true.
+			self absoluteValue: (self valueToAbsoluteValue: v).
+			self changed: { #scaledValue:. v}.
+			isChanging := false ].
+		self changed: #value ].
+	absoluteValue whenChangedDo: [ :v | 
+		isChanging ifFalse: [ 
+			isChanging := true.
+			self value: (self absoluteValueToValue: v).
+			self changed: { #value:. v}.
+			isChanging := false ] ].
 	labelHolder whenChangedDo: [ :v | self changed: #label ]
 ]
 

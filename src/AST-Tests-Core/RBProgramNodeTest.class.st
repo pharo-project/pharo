@@ -3,7 +3,7 @@ SUnit tests for RBProgramNode
 "
 Class {
 	#name : #RBProgramNodeTest,
-	#superclass : #TestCase,
+	#superclass : #RBParseTreeTest,
 	#instVars : [
 		'node'
 	],
@@ -18,16 +18,6 @@ RBProgramNodeTest class >> packageNamesUnderTest [
 { #category : #accessing }
 RBProgramNodeTest >> node [
 	^ node ifNil: [ node := RBProgramNode new ]
-]
-
-{ #category : #utilities }
-RBProgramNodeTest >> parseExpression: aString [
-	^ RBParser parseExpression: aString
-]
-
-{ #category : #utilities }
-RBProgramNodeTest >> parseMethod: aString [
-	^ RBParser parseMethod: aString
 ]
 
 { #category : #'testing-adding' }
@@ -412,7 +402,7 @@ RBProgramNodeTest >> testReplaceVariable [
 { #category : #'testing-messages' }
 RBProgramNodeTest >> testSentMessages [
 	| tree messages |
-	tree := RBParser
+	tree := self
 		parseRewriteMethod:
 			'methodName
 				| temp |

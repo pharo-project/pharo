@@ -5,8 +5,8 @@ Class {
 	#name : #NotebookPresenter,
 	#superclass : #AbstractWidgetPresenter,
 	#instVars : [
-		'pagesHolder',
-		'selectedPageHolder'
+		'#pagesHolder',
+		'#selectedPage => SpecObservableSlot'
 	],
 	#category : #'Spec-Core-Widgets-Tab'
 }
@@ -29,10 +29,9 @@ NotebookPresenter >> initialize [
 
 	super initialize.
 	pagesHolder := OrderedCollection new asValueHolder.
-	selectedPageHolder := nil asValueHolder.
+	selectedPage := nil.
 	
-	pagesHolder whenChangedDo: [ self pagesChanged ].
-	
+	pagesHolder whenChangedDo: [ self pagesChanged ]
 ]
 
 { #category : #accessing }
@@ -67,12 +66,20 @@ NotebookPresenter >> pagesChanged [
 ]
 
 { #category : #removing }
-NotebookPresenter >> removePage: aNotebookPresenter [
-	pagesHolder remove: aNotebookPresenter
+NotebookPresenter >> removeAll [
+
+	pagesHolder removeAll
+]
+
+{ #category : #removing }
+NotebookPresenter >> removePage: aPage [
+
+	pagesHolder remove: aPage
 ]
 
 { #category : #removing }
 NotebookPresenter >> removePageAt: anIndex [
+
 	pagesHolder removeAt: anIndex
 ]
 
@@ -99,13 +106,14 @@ NotebookPresenter >> selectPageIndex: aNumber [
 { #category : #accessing }
 NotebookPresenter >> selectedPage [ 
 
-	^ selectedPageHolder value
+	^ selectedPage
 ]
 
 { #category : #private }
 NotebookPresenter >> selectedPage: aPage [
+
 	aPage = self selectedPage ifTrue: [ ^ self ].
-	selectedPageHolder value: aPage
+	selectedPage := aPage
 ]
 
 { #category : #accessing }
@@ -132,11 +140,14 @@ NotebookPresenter >> updatePageContent: aPage [
 
 { #category : #enumerating }
 NotebookPresenter >> whenPagesChangedDo: aBlock [
+
 	pagesHolder whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 NotebookPresenter >> whenSelectedPageChangedDo: aBlock [
 
-	selectedPageHolder whenChangedDo: aBlock
+	self 
+		property: #selectedPage 
+		whenChangedDo: aBlock
 ]

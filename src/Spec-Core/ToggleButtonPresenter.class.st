@@ -33,8 +33,7 @@ ToggleButtonPresenter >> action: aBlock [
 
 { #category : #initialization }
 ToggleButtonPresenter >> initialize [
-	self class initializeSlots: self.
+
 	super initialize.
-	
 	action := [  ]
 ]

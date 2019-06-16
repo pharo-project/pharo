@@ -53,8 +53,8 @@ RBBlockNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBBlockNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitBlockNode: self
+RBBlockNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitBlockNode: self
 ]
 
 { #category : #accessing }
@@ -147,21 +147,6 @@ RBBlockNode >> defines: aName [
 { #category : #testing }
 RBBlockNode >> directlyUses: aNode [ 
 	^false
-]
-
-{ #category : #generation }
-RBBlockNode >> dumpOn: aStream [
-	aStream nextPutAll: self class name.
-	self arguments
-		ifNotEmpty: [ aStream nextPutAll: ' arguments: {'.
-			self arguments
-				do: [ :each | 
-					each dumpOn: aStream.
-					aStream nextPutAll: '. ' ].
-			aStream nextPutAll: '}' ].
-	aStream nextPutAll: ' body: ('.
-	self body dumpOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : #comparing }

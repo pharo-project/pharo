@@ -25,7 +25,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 		
 	class := transformation model classNamed: #RBDummyRefactoryTestDataApp.
 	self assert: (class parseTreeFor: #moveDefinition)
-		  equals: (RBParser parseMethod: 'moveDefinition
+		  equals: (self parseMethod: 'moveDefinition
 								^(self collect: 
 										[:each | 
 										| temp |
@@ -50,7 +50,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlo
 							
 	class := transformation model classNamed: #RBDummyRefactoryTestDataApp.
 	self assert: (class parseTreeFor: #referencesConditionFor:)
-		  equals: (RBParser parseMethod: 'referencesConditionFor: aClass 
+		  equals: (self parseMethod: 'referencesConditionFor: aClass 
 						| environment  |
 						^(RBCondition withBlock: 
 								[| association |association := Smalltalk associationAt: aClass name

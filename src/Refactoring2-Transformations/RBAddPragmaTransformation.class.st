@@ -77,10 +77,9 @@ RBAddPragmaTransformation >> privateTransform [
 
 	| methodTree pragmaNode |
 	methodTree := self definingMethod.
-	pragmaNode := RBParser parsePragma: pragma.
-	
+	pragmaNode := self parserClass parsePragma: pragma.
 	methodTree addPragma: pragmaNode.
-	self definingClass compileTree: methodTree.
+	self definingClass compileTree: methodTree
 ]
 
 { #category : #printing }

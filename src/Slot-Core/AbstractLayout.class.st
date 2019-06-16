@@ -97,12 +97,6 @@ AbstractLayout >> host: aClass [
 ]
 
 { #category : #accessing }
-AbstractLayout >> instVarIndexFor: aString ifAbsent: aBlockClosure [
-	"we do not have instance variables"
-	^aBlockClosure value
-]
-
-{ #category : #accessing }
 AbstractLayout >> instVarNames [
 	^ {}
 ]

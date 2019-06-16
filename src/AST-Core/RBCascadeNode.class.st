@@ -37,8 +37,8 @@ RBCascadeNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBCascadeNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitCascadeNode: self
+RBCascadeNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitCascadeNode: self
 ]
 
 { #category : #querying }
@@ -69,18 +69,6 @@ RBCascadeNode >> copyInContext: aDictionary [
 { #category : #testing }
 RBCascadeNode >> directlyUses: aNode [ 
 	^messages last = aNode and: [self isDirectlyUsed]
-]
-
-{ #category : #generation }
-RBCascadeNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' messages: {'.
-	self messages
-		do: [ :each | 
-			each dumpOn: aStream.
-			aStream nextPutAll: '. ' ].
-	aStream nextPut: $}
 ]
 
 { #category : #comparing }

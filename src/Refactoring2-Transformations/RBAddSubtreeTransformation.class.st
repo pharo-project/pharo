@@ -84,23 +84,25 @@ RBAddSubtreeTransformation >> preconditions [
 
 { #category : #executing }
 RBAddSubtreeTransformation >> privateTransform [
-	
 	| parseTree newNode |
 	parseTree := self definingClass parseTreeFor: selector.
 	parseTree ifNil: [ ^ self ].
-	newNode := RBParser parseExpression: sourceCode onError: [ :string :pos | ^ self ].
-	
+	newNode := self parserClass
+		parseExpression: sourceCode
+		onError: [ :string :pos | ^ self ].
+
 	"The method is empty, then just add the new code"
 	parseTree body statements
-		ifEmpty: [ parseTree addNode: newNode. ^ self ].
-	
+		ifEmpty: [ parseTree addNode: newNode.
+			^ self ].
+
 	"It tries to find the block to insert new code.
 	 If not found, e.g., the interval is invalid, it adds the code at the end."
 	parseTree := parseTree allSequenceNodes
 		detect: [ :sequence | sequence intersectsInterval: interval ]
 		ifFound: [ :sequence | self addNode: newNode toSequence: sequence ]
-		ifNone: [ parseTree body addNodeLast: newNode. parseTree ].
-
+		ifNone: [ parseTree body addNodeLast: newNode.
+			parseTree ].
 	self definingClass compileTree: parseTree
 ]
 

@@ -94,7 +94,8 @@ Class {
 		'getMenuPolicy',
 		'mouseDownPoint',
 		'completionEngine',
-		'maxLength'
+		'maxLength',
+		'findReplaceService'
 	],
 	#classVars : [
 		'BackgroundColor',
@@ -810,6 +811,12 @@ RubAbstractTextArea >> findRegex [
 	^ self editor findRegex
 ]
 
+{ #category : #'event handling' }
+RubAbstractTextArea >> findReplaceService [
+	^ findReplaceService ifNil: [
+		findReplaceService := RubFindReplaceService new ].
+]
+
 { #category : #'find-replace' }
 RubAbstractTextArea >> findText [
 	^ self editor findText
@@ -1022,7 +1029,7 @@ RubAbstractTextArea >> hasDecoratorNamed: aKey [
 
 { #category : #'find-replace' }
 RubAbstractTextArea >> hasFindReplaceFocus [
-	^ RubFindReplaceService default dialogIsActiveFor: self
+	^ self findReplaceService dialogIsActiveFor: self
 ]
 
 { #category : #'accessing editing state' }
@@ -1440,9 +1447,9 @@ RubAbstractTextArea >> paragraphWasComposedFrom: startIndex to: stopIndex [
 { #category : #initialization }
 RubAbstractTextArea >> plugFindReplace [
 	self announcer 
-		when:  MorphGotFocus send: #whenTextAreaGotFocus: to: RubFindReplaceService default;
-	 	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: RubFindReplaceService default;	
-		when:  RubSelectionChanged send: #whenTextAreaSelectionChanged: to: RubFindReplaceService default
+		when:  MorphGotFocus send: #whenTextAreaGotFocus: to: self findReplaceService;
+	 	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: self findReplaceService;	
+		when:  RubSelectionChanged send: #whenTextAreaSelectionChanged: to: self findReplaceService
 ]
 
 { #category : #'accessing selection' }
@@ -1915,7 +1922,7 @@ RubAbstractTextArea >> unplug [
 
 { #category : #initialization }
 RubAbstractTextArea >> unplugFindReplace [
-	self announcer unsubscribe: RubFindReplaceService default
+	self announcer unsubscribe: self findReplaceService
 
 ]
 

@@ -318,7 +318,8 @@ SourceFileArray >> forceChangesToDisk [
 
 	| changesFile |
 	changesFile := self changesFileStream.
-	changesFile flush.
+	changesFile isReadOnly ifFalse: [ 
+		changesFile flush ].
 	changesFile close.
 	changesFile tryOpen.
 	changesFile setToEnd

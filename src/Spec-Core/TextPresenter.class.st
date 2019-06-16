@@ -22,6 +22,9 @@ Class {
 	#superclass : #AbstractTextPresenter,
 	#traits : 'TSpecHaveWrappingScrollBars',
 	#classTraits : 'TSpecHaveWrappingScrollBars classTrait',
+	#instVars : [
+		'#scrollValue => SpecObservableSlot'
+	],
 	#category : #'Spec-Core-Widgets'
 }
 
@@ -41,5 +44,37 @@ TextPresenter class >> title [
 TextPresenter >> initialize [ 
 
 	super initialize.
+	self flag: #REVIEW. "We really need scrollValue?"
+	scrollValue := 0 @ 0.	
 	self withScrollBars
+]
+
+{ #category : #initialization }
+TextPresenter >> registerEvents [
+
+	super registerEvents.
+	self whenScrollValueChangedDo: [ :newPosition | 
+		self changed: #setScrollValue: with: { newPosition } ]
+]
+
+{ #category : #api }
+TextPresenter >> scrollValue [
+	"<api: #inspect>"
+	"Return the current scroll position"
+
+	^ scrollValue
+]
+
+{ #category : #api }
+TextPresenter >> scrollValue: aPoint [
+	"Set the scroll position"
+
+	^ scrollValue := aPoint
+]
+
+{ #category : #'api-events' }
+TextPresenter >> whenScrollValueChangedDo: aBlock [
+	"Set a block to perform when the scroll value changed"
+	
+	self property: #scrollValue whenChangedDo: aBlock
 ]

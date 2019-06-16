@@ -3,11 +3,11 @@ Extension { #name : #LabelledTextInput }
 { #category : #'*Spec-Examples' }
 LabelledTextInput class >> example [
 	<sampleInstance>
-	| example |
-	example := self abstractExample.
+	^ super example
+]
+
+{ #category : #'*Spec-Examples' }
+LabelledTextInput class >> setUpExample: example [
 	example input placeholder: 'Tilt'.
-	example
-		extent: 400 @ 50;
-		openWithSpec.
-	^ example
+	example extent: 400 @ 50
 ]
