@@ -81,3 +81,15 @@ CodeAdapterTest >> testTextWithStyle [
 	self assertText: text atInterval: "test" (6 to: 11) isStyle: #comment.	
 	self assertText: text atInterval: "42" (13 to: 14) isStyle: #number.
 ]
+
+{ #category : #tests }
+CodeAdapterTest >> testWithSyntaxHighlight [
+	presenter withSyntaxHighlight.
+	self assert: self adapter hasSyntaxHighlightEnabled
+]
+
+{ #category : #tests }
+CodeAdapterTest >> testWithoutSyntaxHighlight [
+	presenter withoutSyntaxHighlight.
+	self deny: self adapter hasSyntaxHighlightEnabled
+]

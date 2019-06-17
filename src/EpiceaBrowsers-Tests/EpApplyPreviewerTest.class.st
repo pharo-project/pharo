@@ -7,7 +7,9 @@ Class {
 { #category : #resources }
 EpApplyPreviewerTest >> assertEmptyPreviewLog [
 
-	self assert: self outputEvents isEmpty description: 'Shouldn''t find anything to apply'.
+	self 
+		assert: self outputEvents isEmpty 
+		description: 'Shouldn''t find anything to apply'
 ]
 
 { #category : #resources }
@@ -166,7 +168,7 @@ EpApplyPreviewerTest >> testClassAdditionWithClassRemoved [
 	| aClass className classDefinition |
 	aClass := classFactory newClass.
 	className := aClass name.
-	classDefinition := aClass definition.
+	classDefinition := aClass oldDefinition.
 	self setHeadAsInputEntry.
 
 	aClass removeFromSystem.
@@ -182,13 +184,13 @@ EpApplyPreviewerTest >> testClassAdditionWithInstanceVariablesChanged [
 
 	| aClass classDefinition |
 	aClass := classFactory newClass.
-	classDefinition := aClass definition.
+	classDefinition := aClass oldDefinition.
 	self setHeadAsInputEntry.
 	aClass addInstVarNamed: #x.
 
 	self assertOutputsAnEventWith: [:output | 
 		self assert: output class equals: EpClassModification.
-		self assert: output oldClass definitionSource equals: aClass definition.
+		self assert: output oldClass definitionSource equals: aClass oldDefinition.
 		self assert: output newClass definitionSource equals: classDefinition.
 		]
 
@@ -199,13 +201,13 @@ EpApplyPreviewerTest >> testClassAdditionWithSuperclassChanged [
 
 	| aClass classDefinition |
 	aClass := classFactory newClass.
-	classDefinition := aClass definition.
+	classDefinition := aClass oldDefinition.
 	self setHeadAsInputEntry.
 	aClass superclass: Array.
 
 	self assertOutputsAnEventWith: [:output | 
 		self assert: output class equals: EpClassModification.
-		self assert: output oldClass definitionSource equals: aClass definition.
+		self assert: output oldClass definitionSource equals: aClass oldDefinition.
 		self assert: output newClass definitionSource equals: classDefinition.
 		].
 
@@ -219,7 +221,7 @@ EpApplyPreviewerTest >> testClassRemovalWithClassAdded [
 	| aClass className classDefinition |
 	aClass := classFactory newClass.
 	className := aClass name.
-	classDefinition := aClass definition.
+	classDefinition := aClass oldDefinition.
 	aClass removeFromSystem.
 	
 	self setHeadAsInputEntry.
@@ -229,7 +231,7 @@ EpApplyPreviewerTest >> testClassRemovalWithClassAdded [
 	
 	self assertOutputsAnEventWith: [:output | 
 		self assert: output class equals: EpClassRemoval.
-		self assert: output behaviorAffected definitionSource equals: aClass definition.
+		self assert: output behaviorAffected definitionSource equals: aClass oldDefinition.
 		]
 
 ]

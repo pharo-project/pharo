@@ -10,13 +10,6 @@ RBRefactoringBrowserTest class >> isAbstract [
 ]
 
 { #category : #private }
-RBRefactoringBrowserTest >> convertInterval: anInterval for: aString [ 
-	"Convert the interval to ignore differences in end of line conventions."
-
-	^anInterval
-]
-
-{ #category : #private }
 RBRefactoringBrowserTest >> executeRefactoring: aRefactoring [ 
 	aRefactoring primitiveExecute.
 	RBParser parseExpression: aRefactoring storeString
@@ -25,6 +18,18 @@ RBRefactoringBrowserTest >> executeRefactoring: aRefactoring [
 { #category : #private }
 RBRefactoringBrowserTest >> objectClassVariable [
 	^Object classPool keys detect: [:each | true]
+]
+
+{ #category : #helpers }
+RBRefactoringBrowserTest >> parseExpression: aString [
+
+	^ RBParser parseExpression: aString
+]
+
+{ #category : #helpers }
+RBRefactoringBrowserTest >> parseMethod: aString [ 
+
+	^ RBParser parseMethod: aString
 ]
 
 { #category : #private }

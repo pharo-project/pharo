@@ -350,8 +350,6 @@ m
 { #category : #running }
 RBRefactoringTest >> setUp [
 	super setUp.
-	manager := RBRefactoringManager classVarNamed: #Instance.
-	RBRefactoringManager classVarNamed: #Instance put: nil.
 	model := RBClassModelFactory rbNamespace new
 ]
 
@@ -437,14 +435,6 @@ RBRefactoringTest >> shouldWarn: aRefactoring [
 		raise: RBRefactoringWarning
 ]
 
-{ #category : #running }
-RBRefactoringTest >> tearDown [
-
-	RBRefactoringManager instance release.
-	RBRefactoringManager classVarNamed: #Instance put: manager.
-	super tearDown	
-]
-
 { #category : #tests }
 RBRefactoringTest >> testConditions [
 	| condition newCondition |
@@ -470,9 +460,4 @@ RBRefactoringTest >> testConditions [
 	self assert: newCondition errorString equals: 'false'.
 	self assert: (condition not & condition not) check.
 	self assert: (condition & condition) errorString equals: 'false OR false'
-]
-
-{ #category : #tests }
-RBRefactoringTest >> testPrintRefactoringManager [
-	self assert: RBRefactoringManager instance printString isString
 ]

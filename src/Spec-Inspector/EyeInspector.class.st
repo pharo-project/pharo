@@ -186,7 +186,7 @@ EyeInspector >> doItContext [
 
 { #category : #accessing }
 EyeInspector >> elements [
-	^ self list model shownItems
+	^ self list items
 ]
 
 { #category : #inspecting }
@@ -301,8 +301,7 @@ EyeInspector >> objectChanged [
 	self description doItReceiver: self object.
 	self text doItContext: self doItContext.
 	self description doItContext: self doItContext.
-	self text adapter
-		ifNotNil: [ :w | w editingMode classOrMetaClass: self objectClass ]
+	self text ifNotNil: [ :w | w behavior: self objectClass ]
 ]
 
 { #category : #accessing }
@@ -478,7 +477,7 @@ EyeInspector >> updateList [
 	| elements |
 	"	self haltOnce."
 	elements := self generateElements.
-	self list model shownItems = elements
+	self list items = elements
 		ifTrue: [ ^ self ].
 	"first reset the items to make sure we don't interfere with the display block"
 	"self list items: #()."
@@ -486,7 +485,7 @@ EyeInspector >> updateList [
 	self list items: elements.
 
 	"handle when last item of list is removed"
-	self list selection selectedIndex > self list model shownItems size
+	self list selection selectedIndex > self list items size
 		ifTrue: [ self list setSelectedIndex: self list listItems size ].
 
 	"handle when selected dictionary key is removed"

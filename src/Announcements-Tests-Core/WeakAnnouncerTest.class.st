@@ -67,6 +67,8 @@ WeakAnnouncerTest >> longTestCase [
 { #category : #tests }
 WeakAnnouncerTest >> testNoDeadWeakSubscriptions [
 	self longTestCase.
+	"we skip this on the ci as it impact all other ci checks, open issue https://github.com/pharo-project/pharo/issues/2471"
+	self skipOnPharoCITestingEnvironment.
 
 	5 timesRepeat: [ Smalltalk garbageCollect ].
 

@@ -151,7 +151,7 @@ Slot >> definitionString [
 Slot >> emitStore: aMethodBuilder [
 	"generate bytecode to call the reflective write method of the Slot"
 	| tempName |
-	tempName := Object new.  "we need a unique Object as a temp name"
+	tempName := '0slotTempForStackManipulation'.  
 	aMethodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;

@@ -3,7 +3,7 @@ SUnit tests for BISimpleFormatter
 "
 Class {
 	#name : #RBFormatterTest,
-	#superclass : #TestCase,
+	#superclass : #RBParseTreeTest,
 	#category : #'AST-Tests-Core'
 }
 
@@ -46,21 +46,21 @@ RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 	| inputSource tree outputSource |
 	"formatter should not create invalid code by removing whitespace between #= and >"
 	inputSource := 'foo  <selector: #= > ^ self'.
-	tree := RBParser parseMethod: inputSource.
+	tree := self parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
-	self shouldnt: [RBParser parseMethod: outputSource] raise: SyntaxErrorNotification.
+	self shouldnt: [self parseMethod: outputSource] raise: SyntaxErrorNotification.
 	
 	"already worked and still should for non-symbol arguments"
 	inputSource := 'foo  <selector: 0 > ^ self'.
-	tree := RBParser parseMethod: inputSource.
+	tree := self parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
-	self shouldnt: [RBParser parseMethod: outputSource] raise: SyntaxErrorNotification.
+	self shouldnt: [self parseMethod: outputSource] raise: SyntaxErrorNotification.
 	
 	"already worked and should still work for pragmas without arguments"
 	inputSource := 'foo  <selector> ^ self'.
-	tree := RBParser parseMethod: inputSource.
+	tree := self parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
-	self shouldnt: [RBParser parseMethod: outputSource] raise: SyntaxErrorNotification
+	self shouldnt: [self parseMethod: outputSource] raise: SyntaxErrorNotification
 
 
 ]
@@ -69,7 +69,7 @@ RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 RBFormatterTest >> testLiteralDynamicArray [
 	| source tree1 |
 	source := 'foo ^ { ''film'' . ''FILM''} '.
-	tree1 := RBParser parseMethod: source.
+	tree1 := self parseMethod: source.
 	self assert: ((self formatterClass new format: tree1) occurrencesOf: $.) equals: 1
 ]
 
@@ -78,7 +78,7 @@ RBFormatterTest >> testParseError [
 	| inputSource errorNode |
 	"parse error nodes should have the faulty code"
 	inputSource := ')'.
-   errorNode := RBParser parseFaultyExpression: inputSource.
+   errorNode := self parseFaultyExpression: inputSource.
 	self assert: errorNode source equals: errorNode formattedCode
 
 ]
@@ -88,7 +88,7 @@ RBFormatterTest >> testParseError2 [
 	| inputSource errorNode |
 	"parse error nodes should have the faulty code"
 	inputSource := '( 1 + 2'.
-   errorNode := RBParser parseFaultyExpression: inputSource.
+   errorNode := self parseFaultyExpression: inputSource.
 	self assert: errorNode source equals: errorNode formattedCode
 
 ]
@@ -99,7 +99,7 @@ RBFormatterTest >> testPreserveLiteralArrayFormat [
 	"symbols within a literal array can omit the # character, if it is used that way,
 	the formatter should not add a # character but just use the source form."
 	inputSource := '#(#withnumbersign nonumbersign ''string'')'.
-   literalArrayNode := RBParser parseExpression: inputSource.
+   literalArrayNode := self parseExpression: inputSource.
 	self assert: literalArrayNode source equals: literalArrayNode formattedCode
 
 ]
@@ -111,7 +111,7 @@ RBFormatterTest >> testPreserveLiteralNumberFormat [
 	radix float, fractional constants. The formatter should not change the
 	formatting."
 	inputSource := '#(1 4r33 16r0F 0.02 2e-2 -1)'.
-   numbersNode := RBParser parseExpression: inputSource.
+   numbersNode := self parseExpression: inputSource.
 	self assert: numbersNode source equals: numbersNode formattedCode
 
 ]

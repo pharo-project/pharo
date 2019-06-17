@@ -114,21 +114,33 @@ Metaclass >> classVarNames [
 Metaclass >> definition [
 	"Refer to the comment in ClassDescription|definition."
 
-	^ String streamContents: 
-		[:strm |
-		strm print: self.
-		
-		(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ])
-			ifFalse: [  
-						strm
-							crtab;
-							nextPutAll: 'instanceVariableNames: ';
-							store: self instanceVariablesString]
-			ifTrue: [ 
-						strm
-							crtab;
-							nextPutAll: 'slots: ';
-							nextPutAll: self slotDefinitionString]]
+	(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
+		^ self definitionWithSlots ].
+
+	^ self definitionWithoutSlots
+]
+
+{ #category : #'fileIn/Out' }
+Metaclass >> definitionWithSlots [
+	"Refer to the comment in ClassDescription|definition."
+
+	^ String streamContents: [:stream |
+		stream print: self.
+		stream
+			crtab;
+			nextPutAll: 'slots: ';
+			nextPutAll: self slotDefinitionString ]
+]
+
+{ #category : #'fileIn/Out' }
+Metaclass >> definitionWithoutSlots [
+
+	^ String streamContents: [:stream |
+		stream print: self.
+		stream
+			crtab;
+			nextPutAll: 'instanceVariableNames: ';
+			store: self instanceVariablesString ]
 ]
 
 { #category : #accessing }
@@ -239,6 +251,14 @@ Metaclass >> obsoleteSubclasses [
 
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
 	^ self instanceSide obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
+]
+
+{ #category : #'fileIn/Out' }
+Metaclass >> oldDefinition [
+	"Refer to the comment in ClassDescription|definition.
+	 This method is for compatibility with Class>>#oldDefinition"
+
+	^ self definition
 ]
 
 { #category : #compiling }

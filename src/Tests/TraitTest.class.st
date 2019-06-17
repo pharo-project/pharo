@@ -69,18 +69,14 @@ TraitTest >> testComposedBy [
 { #category : #testing }
 TraitTest >> testCompositionCopy [
  
-	| t6compositionCopyFirst |
 	self assert: (self t1 + self t2) allTraits 
 				equals: (self t1 + self t2) copyTraitExpression allTraits.
 	self assert: (self t1 classTrait + self t2 classTrait) allTraits 
 				equals: (self t1 classTrait + self t2 classTrait) copyTraitExpression allTraits.
 	self assert: self t6 traitComposition allTraits 
 				equals: self t6 traitComposition copyTraitExpression allTraits.
-	self 
-		assert: (self t6 asTraitComposition copyTraitExpression allTraits includesAll: { (self t1). (self t2). (self t6) }).
-	"make no undue sharing happens of exclusions and aliases after an expression copy"
-	t6compositionCopyFirst := self t6 traitComposition copyTraitExpression.
-
+	self assert: (self t6 asTraitComposition copyTraitExpression allTraits 
+				includesAll: { (self t1). (self t2). (self t6) }).
 ]
 
 { #category : #testing }

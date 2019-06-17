@@ -4,10 +4,10 @@ Extension { #name : #RGBSliders }
 RGBSliders class >> example [
 	<sampleInstance>
 	| example |
-	example := self new.
-	example
-		title: 'RGBSliders example';
+	example := self new
 		extent: 300 @ 200;
-		openDialogWithSpec.
+		openDialogWithSpec;
+		yourself.
+	example withWindowDo: [ :window | window title: 'RGBSliders example' ].
 	^ example
 ]
