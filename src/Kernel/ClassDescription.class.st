@@ -797,18 +797,13 @@ ClassDescription >> instVarMappingFrom: oldClass [
 { #category : #'instance variables' }
 ClassDescription >> instVarNameForIndex: index [
 	"Answer the named instance variable with index index or nil if none."
+	"we deprecate this as it is not useful know that we have meta objects for variables"
 
-	| superInstSize |
-	index > self instSize ifTrue: [^nil].
-	superInstSize := self superclass ifNil: [0] ifNotNil: [self superclass instSize].
-	index > superInstSize ifTrue:
-		[^self instVarNames at: index - superInstSize].
-	self superclass ifNil: [^nil].
-	^self superclass instVarNameForIndex: index
-
-	"(Object allSubclasses select:
-		[:cls| cls instSize > cls superclass instSize and: [cls subclasses isEmpty and: [cls superclass instSize > 0]]]) collect:
-			[:cls| (1 to: cls instSize) collect: [:i| cls instVarNameForIndex: i]]"
+	| slot |
+	self deprecated: 'Please use the slot API directly'.
+	slot := self classLayout allSlots 
+		detect: [ :each | each isVirtual not and: [ each index = index ] ] ifNone: [^nil].
+	^slot name
 ]
 
 { #category : #'instance variables' }
