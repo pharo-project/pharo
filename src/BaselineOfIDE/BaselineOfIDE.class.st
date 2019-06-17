@@ -118,10 +118,6 @@ BaselineOfIDE >> baseline: spec [
 		
 		spec baseline: 'Athens' with: [ spec repository: repository ].
 		spec baseline: 'Flashback' with: [ spec repository: repository ].
-		spec baseline: 'Calypso' with: [ 
-			spec
-				repository: repository;
-				loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
 
 		spec baseline: 'Shift' with: [
 			spec loads: 'shift-tests'. 
@@ -385,6 +381,12 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ClassParser-Tests'.
 		spec package: 'UndefinedClasses'.
 		spec package: 'UndefinedClasses-Tests'.
+
+		spec baseline: 'Calypso' with: [ 
+			spec
+				repository: repository;
+				loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
+
 
       self groups: spec.
 	].
