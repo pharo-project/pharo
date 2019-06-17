@@ -247,9 +247,9 @@ GTSpotter >> spotterForPackagesFor: aStep [
 GTSpotter >> spotterForPragmasFor: aStep [
 	<spotterOrder: 40>
 	aStep listProcessor 
-			allCandidates: [ PragmaType all ];
+			allCandidates: [ Pragma allInstances collect: [ :e | e keyword ] as: Set ];
 			title: 'Pragmas';
-			itemName: [ :pragma | pragma keyword ];
+			itemName: [ :pragma | pragma ];
 			filter: self defaultFilterClass;
 			wantsToDisplayOnEmptyQuery: false
 ]

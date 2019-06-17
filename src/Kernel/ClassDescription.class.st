@@ -779,15 +779,10 @@ ClassDescription >> instVarIndexFor: instVarName [
 ClassDescription >> instVarIndexFor: instVarName ifAbsent: aBlock [
 	"Answer the index of the named instance variable."
 
-	| index |
-	index := self classLayout instVarIndexFor: instVarName ifAbsent: 0.
-	index = 0 ifTrue: 
-		[^self superclass
-			ifNil: [aBlock value]
-			ifNotNil: [self superclass instVarIndexFor: instVarName ifAbsent: aBlock]].
-	^self superclass
-		ifNil: [index]
-		ifNotNil: [index + self superclass instSize]
+	^self
+		slotNamed: instVarName
+		ifFound: [ :slot | slot isVirtual ifTrue: aBlock ifFalse: [slot index]]
+		ifNone: aBlock
 ]
 
 { #category : #private }
@@ -821,20 +816,6 @@ ClassDescription >> instVarNames [
 	"Answer an Array of the receiver's instance variable names."
 
 	^self localSlots collect: [ :each | each name ]
-]
-
-{ #category : #compiling }
-ClassDescription >> instVarNamesAndOffsetsDo: aBinaryBlock [
-	"This is part of the interface between the compiler and a class's instance or field names.
-	 The class should enumerate aBinaryBlock with the instance variable name strings and
-	 their integer offsets.  The order is important. Names evaluated later will override the
-	 same names occurring earlier."
-
-	| superInstSize |
-	(superInstSize := self superclass notNil ifTrue: [self superclass instSize] ifFalse: [0]) > 0 ifTrue:
-		[self superclass instVarNamesAndOffsetsDo: aBinaryBlock].
-	1 to: self instSize - superInstSize do:
-		[:i| aBinaryBlock value: (self instVarNames at: i) value: i + superInstSize]
 ]
 
 { #category : #'accessing parallel hierarchy' }

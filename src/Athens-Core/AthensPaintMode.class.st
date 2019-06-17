@@ -23,7 +23,7 @@ To query a set of available paint modes, supported by backend, use #availableMod
 Class {
 	#name : #AthensPaintMode,
 	#superclass : #Object,
-	#category : #'Athens-Core'
+	#category : #'Athens-Core-Paints'
 }
 
 { #category : #modes }
