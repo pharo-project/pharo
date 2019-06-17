@@ -359,7 +359,7 @@ InternetConfiguration class >> startUp [
 { #category : #tests }
 InternetConfiguration class >> useFTPProxy [
 	"Return true if UseFTPProxy"
-	"InternetConfiguration useFTPProxy"
+	<script: 'self useFTPProxy inspect'>
 
 	^(self primitiveGetStringKeyedBy: 'UseFTPProxy') = '1'
 
@@ -368,7 +368,7 @@ InternetConfiguration class >> useFTPProxy [
 { #category : #tests }
 InternetConfiguration class >> useGopherProxy [
 	"Return true if UseGopherProxy"
-	"InternetConfiguration useGopherProxy"
+	<script: 'self useGopherProxy inspect'>
 
 	^(self primitiveGetStringKeyedBy: 'UseGopherProxy') = '1'
 
@@ -377,8 +377,8 @@ InternetConfiguration class >> useGopherProxy [
 { #category : #tests }
 InternetConfiguration class >> useHTTPProxy [
 	"Return true if UseHTTPProxy"
-	"InternetConfiguration useHTTPProxy"
-
+	<script: 'self useHTTPProxy inspect'>
+	
 	^(self primitiveGetStringKeyedBy: 'UseHTTPProxy') = '1'
 
 ]
@@ -386,7 +386,7 @@ InternetConfiguration class >> useHTTPProxy [
 { #category : #tests }
 InternetConfiguration class >> usePassiveFTP [
 	"Return true if UsePassiveFTP"
-	"InternetConfiguration usePassiveFTP"
+	<script: 'self usePassiveFTP inspect'>
 
 	^(self primitiveGetStringKeyedBy: 'UsePassiveFTP') = '1'
 
@@ -395,7 +395,7 @@ InternetConfiguration class >> usePassiveFTP [
 { #category : #tests }
 InternetConfiguration class >> useSocks [
 	"Return true if UseSocks"
-	"InternetConfiguration useSocks"
+	<script: 'self useSocks inspect'>
 
 	^(self primitiveGetStringKeyedBy: 'UseSocks') = '1'
 
