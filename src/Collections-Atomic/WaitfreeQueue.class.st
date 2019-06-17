@@ -58,7 +58,15 @@ WaitfreeQueue class >> new: anInteger [
 WaitfreeQueue class >> withAll: aCollection [
 	"Answer an instance of the receiver initialised with the supplied collection of items"
 
-	^self new withAll: aCollection
+	^self new initializeWithAll: aCollection
+]
+
+{ #category : #'private - accessing' }
+WaitfreeQueue >> dummy [
+	"Answer the dummy entry of the receiver.
+	This is internal state and is only for automated unit testing"
+
+	^dummy
 ]
 
 { #category : #accessing }
@@ -140,6 +148,17 @@ WaitfreeQueue >> initialize [
 	dummy object: dummy.
 	tail := dummy.
 
+]
+
+{ #category : #initialization }
+WaitfreeQueue >> initializeWithAll: aCollection [
+	"Initialise the receiver with the supplied items (AtomicQueueItem).
+	This method is not thread safe and should only be used for initialising the queue prior to normal operation (and is normally used only for testing)."
+
+	dummy next: aCollection first.
+	1 to: aCollection size - 1 do: [ :i |
+		(aCollection at: i) next: (aCollection at: i+1) ].
+	tail := aCollection last.
 ]
 
 { #category : #accessing }
@@ -366,12 +385,10 @@ WaitfreeQueue >> size [
 	^ count
 ]
 
-{ #category : #initialization }
-WaitfreeQueue >> withAll: aCollection [
-	"Initialise the receiver with the supplied items"
+{ #category : #'private - accessing' }
+WaitfreeQueue >> tail [
+	"Answer the tail entry of the receiver.
+	This is internal state and is only for automated unit testing"
 
-	dummy next: aCollection first.
-	1 to: aCollection size - 1 do: [ :i |
-		(aCollection at: i) next: (aCollection at: i+1) ].
-	tail := aCollection last.
+	^tail
 ]

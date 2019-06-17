@@ -71,8 +71,7 @@ WaitfreeQueueTest >> testNextOrNilSuchThat [
 	self assert: queue size equals: 5.
 	"But... all items removed with #nextOrNilSuchThat: leave zombie behind"
 	self assert: queue itemCount equals: 6.
-	self assert: (queue instVarNamed: #tail) isZombie.
-
+	self assert: queue tail isZombie.
 
 	11 to: 13 do: [ :i |
 		queue 	nextPut: i ].
@@ -102,7 +101,7 @@ WaitfreeQueueTest >> testZombieFirst [
 
 	items := self newItems: 2.
 	queue := WaitfreeQueue withAll: items.
-	items first object: (queue instVarNamed: #dummy).
+	items first object: queue dummy.
 	items last object: #real.
 
 	real := queue nextOrNil.
@@ -114,7 +113,7 @@ WaitfreeQueueTest >> testZombieFirst [
 
 	items := self newItems: 2.
 	queue := WaitfreeQueue withAll: items.
-	items first object: (queue instVarNamed: #dummy).
+	items first object: queue dummy.
 	items last object: #real.
 
 	real := queue nextOrNilSuchThat: [ :v | v = #real ].
@@ -134,7 +133,7 @@ WaitfreeQueueTest >> testZombieLast [
 	items := self newItems: 2.
 	queue := WaitfreeQueue withAll: items.
 	items first object: #real.
-	items last object: (queue instVarNamed: #dummy).
+	items last object: queue dummy.
 
 	real := queue nextOrNil.
 	self assert: real equals: #real.
@@ -146,7 +145,7 @@ WaitfreeQueueTest >> testZombieLast [
 	items := self newItems: 2.
 	queue := WaitfreeQueue withAll: items.
 	items first object: #real.
-	items last object: (queue instVarNamed: #dummy).
+	items last object: queue dummy.
 
 	real := queue nextOrNilSuchThat: [ :v | v = #real ].
 	self assert: real equals: #real.
@@ -169,7 +168,7 @@ WaitfreeQueueTest >> testZombieMiddle [
 	items := self newItems: 3.
 	queue := WaitfreeQueue withAll: items.
 	items first object: #real1.
-	items second object: (queue instVarNamed: #dummy).
+	items second object: queue dummy.
 	items last object: #real2.
 
 	real := queue nextOrNil.
@@ -186,7 +185,7 @@ WaitfreeQueueTest >> testZombieMiddle [
 	items := self newItems: 3.
 	queue := WaitfreeQueue withAll: items.
 	items first object: #real1.
-	items second object: (queue instVarNamed: #dummy).
+	items second object: queue dummy.
 	items last object: #real2.
 
 	real := queue nextOrNilSuchThat: [ :v | v = #real1 ].
