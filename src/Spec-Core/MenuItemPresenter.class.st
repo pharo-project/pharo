@@ -157,7 +157,7 @@ MenuItemPresenter >> name: aString [
 MenuItemPresenter >> performMenuActionWith: aMenuItem [
 	| en |
 	
-	en := self isEnabled.
+	en := self enabled.
 	en isBlock ifTrue: [ en := en value ].
 	en ifFalse: [ ^ self ].
 	
