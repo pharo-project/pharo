@@ -829,7 +829,11 @@ ClassDescription >> instanceSide [
 
 { #category : #accessing }
 ClassDescription >> instanceVariables [
-	^self instVarNames.
+	"we deprecate this due to bad naming: it returns names, not variables!"
+	self
+		deprecated: 'Please use #instVarNames or #slotNames instead'
+		transformWith: '`@receiver instanceVariables' -> '`@receiver instVarNames'.
+	^self instVarNames
 ]
 
 { #category : #printing }
