@@ -875,6 +875,7 @@ BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
 		repository: 'github://pharo-vcs/iceberg:v1.7.0';
+		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 	(Smalltalk classNamed: #IcePharoPlugin) addPharoProjectToIceberg.
