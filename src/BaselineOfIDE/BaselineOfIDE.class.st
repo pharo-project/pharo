@@ -99,7 +99,7 @@ BaselineOfIDE >> additionalInitialization [
 		Undeclared removeUnreferencedKeys.].
 	
 	self loadIceberg.	
-	self loadCalypso.
+	self makeCalypsoDefaultBrowser.
 ]
 
 { #category : #baseline }
@@ -380,6 +380,12 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ClassParser-Tests'.
 		spec package: 'UndefinedClasses'.
 		spec package: 'UndefinedClasses-Tests'.
+
+		spec baseline: 'Calypso' with: [ 
+			spec
+				repository: repository;
+				loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
+
 
       self groups: spec.
 	].
@@ -855,26 +861,10 @@ spec group: #default with: #(
 	
 	'Refactoring2-Group'
 	'UndefinedClasses-Group'
+	
+	'Calypso'
 ).
 
-]
-
-{ #category : #actions }
-BaselineOfIDE >> loadCalypso [
-
-	"Load Calypso without Iceberg Metacello integration"
-	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
-
-	Metacello new
-		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.16.4/src';
-		onConflict: [ :err | err useIncoming ];
-		onUpgrade: [ :err | err useIncoming ];
-		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
-
-	(self class environment at: #ClyBrowserMorph) beAllDefault.
-	
-	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
 ]
 
 { #category : #actions }
@@ -882,9 +872,16 @@ BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
 		repository: 'github://pharo-vcs/iceberg:v1.7.1';
+		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 	(Smalltalk classNamed: #IcePharoPlugin) addPharoProjectToIceberg.
+]
+
+{ #category : #actions }
+BaselineOfIDE >> makeCalypsoDefaultBrowser [
+
+	(self class environment at: #ClyBrowserMorph) beAllDefault.
 ]
 
 { #category : #actions }
