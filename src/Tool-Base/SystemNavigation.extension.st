@@ -350,23 +350,6 @@ SystemNavigation >> browseSendersOf: aSelector name: labelString autoSelect: aut
 ]
 
 { #category : #'*Tool-Base' }
-SystemNavigation >> browseSharedPoolUsersOf: aClass [
-
-	| pattern list | 
-	self okToChange ifFalse: [^ self ].
-	list := aClass poolUsers.
-	list isEmpty
-		ifTrue: [ ^ self ]
-		ifFalse: [pattern := UIManager default 
-				enterOrRequestFrom: list 
-				lines: #() 
-				title: 'Class name or fragment?'].
-
-	pattern ifNil: [^ self ].
-	pattern browse
-]
-
-{ #category : #'*Tool-Base' }
 SystemNavigation >> browseUndeclaredReferences [
 	"
 	SystemNavigation new browseUndeclaredReferences
