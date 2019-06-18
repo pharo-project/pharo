@@ -113,8 +113,8 @@ SystemNavigation >> allClassesUsingSharedPool: aString [
 { #category : #query }
 SystemNavigation >> allExistingProtocolsFor: instanceSide [
 	"Answer all protocols on instance or class side"
-	
-	^self allBehaviors flatCollectAsSet: [ :class | class protocols ]
+
+	^self allClasses flatCollectAsSet: [ :class | instanceSide ifTrue: [class protocols] ifFalse: [ class class protocols ] ]
 ]
 
 { #category : #private }
