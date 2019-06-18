@@ -34,11 +34,7 @@ SystemNavigation >> allBehaviors [
 SystemNavigation >> allBehaviorsDo: aBlock [
 	"Execute a block on each class, metaclass, trait and trait class"
 
-	self environment valuesDo: [ :aClass |
-		aClass isBehavior ifTrue: [  
-			aBlock
-				value: aClass;
-				value: aClass classSide]].
+	self environment allBehaviorsDo: aBlock
 ]
 
 { #category : #query }
@@ -87,12 +83,8 @@ SystemNavigation >> allClassesDo: aBlock [
 
 { #category : #query }
 SystemNavigation >> allClassesImplementing: aSelector [  
-	"Answer an Array of all classes that implement the message aSelector."
-
-	| aCollection |
-	aCollection := ReadWriteStream on: Array new.
-	self allBehaviorsDo: [:class | (class includesSelector: aSelector) ifTrue: [aCollection nextPut: class]].
-	^ aCollection contents
+	"Answer all classes that implement the message aSelector."
+	^self allBehaviors collect: [:class | class includesSelector: aSelector]
 ]
 
 { #category : #packages }
@@ -122,18 +114,7 @@ SystemNavigation >> allClassesUsingSharedPool: aString [
 SystemNavigation >> allExistingProtocolsFor: instanceSide [
 	"Answer all protocols on instance or class side"
 	
-	| allExistingProtocols |
-	allExistingProtocols := environment allClassesAndTraits
-		inject: IdentitySet new
-		into: [ :col :e | 
-			| class |
-			class := instanceSide
-				ifTrue: [ e instanceSide ]
-				ifFalse: [ e classSide ].
-			col
-				addAll: class protocols;
-				yourself ].
-	^ allExistingProtocols
+	^self allBehaviors flatCollectAsSet: [ :class | class protocols ]
 ]
 
 { #category : #private }
@@ -152,10 +133,7 @@ SystemNavigation >> allGlobalRefsOn: aSymbol [
 SystemNavigation >> allImplementedMessages [
 	"Answer a Collection of all the messages that are implemented in the system."
 	
-	| messages |
-	messages := IdentitySet new.
-	self allBehaviorsDo: [:each | messages addAll: each selectors].
-	^ messages
+	^Symbol selectorTable
 ]
 
 { #category : #query }
@@ -490,10 +468,8 @@ SystemNavigation >> isUnsentMessage: selector [
 
 { #category : #'message sends' }
 SystemNavigation >> isUsedClass: aClass [
-
-	self allBehaviorsDo: [ :behavior | 
-		(behavior hasSelectorReferringTo: aClass binding) ifTrue: [ ^true ]].
-	^ false
+	self deprecated: 'just use #isUsed'.
+	^aClass isUsed
 ]
 
 { #category : #query }
