@@ -24,7 +24,7 @@ ClassTreeNodeExample >> childrenItems [
 { #category : #menu }
 ClassTreeNodeExample >> classButton [
 	^ ( self theme 
-				newButtonIn: World
+				newButtonIn: self currentWorld
 				for: self
 				getState: nil
 				action: #browseItem
@@ -38,7 +38,7 @@ ClassTreeNodeExample >> classButton [
 
 { #category : #menu }
 ClassTreeNodeExample >> commentText [
-	^ ( self theme  newTextIn: World text: self item comment) unlock; wrapFlag: true; yourself
+	^ ( self theme  newTextIn: self currentWorld text: self item comment) unlock; wrapFlag: true; yourself
 ]
 
 { #category : #menu }

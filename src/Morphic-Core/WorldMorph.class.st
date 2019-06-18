@@ -42,12 +42,12 @@ WorldMorph class >> allowDropFiles: anObject [
 
 { #category : #'system startup' }
 WorldMorph class >> cleanUp [
-	World cleanseOtherworldlySteppers.
+	self currentWorld cleanseOtherworldlySteppers.
 ]
 
 { #category : #'extra worlds' }
 WorldMorph class >> cursorOwnerWorld [
-	^ CursorOwnerWorld ifNil: [ World ]
+	^ CursorOwnerWorld ifNil: [ self currentWorld ]
 ]
 
 { #category : #'extra worlds' }
@@ -99,9 +99,9 @@ WorldMorph class >> doOneCycle [
 		world doOneCycle.
 	].
 
-	(World isNotNil and: [(self extraWorldList includes: World) not]) ifTrue: [
-		World doOneCycle.
-		ActiveHand := World activeHand
+	(self currentWorld isNotNil and: [(self extraWorldList includes: self currentWorld) not]) ifTrue: [
+		self currentWorld doOneCycle.
+		ActiveHand := self currentWorld activeHand
 	].
 	
 	
@@ -127,13 +127,13 @@ WorldMorph class >> removeExtraWorld: aWorld [
 
 { #category : #'system startup' }
 WorldMorph class >> shutDown [
-	World ifNotNil: [:world | world triggerEvent: #aboutToLeaveWorld ].
+	self currentWorld ifNotNil: [:world | world triggerEvent: #aboutToLeaveWorld ].
 	self extraWorldList do: [:world | world triggerEvent: #aboutToLeaveWorld ].
 ]
 
 { #category : #'system startup' }
 WorldMorph class >> startUp [
-	World ifNotNil: [:world | world restoreMorphicDisplay].
+	self currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
 	self extraWorldList do: #restoreMorphicDisplay.
 ]
 

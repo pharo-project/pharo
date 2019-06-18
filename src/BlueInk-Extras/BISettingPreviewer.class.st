@@ -48,7 +48,7 @@ BISettingPreviewer class >> defaultSpec [
 { #category : #settings }
 BISettingPreviewer class >> dialogOpenBIPreviewer [
 	^ Smalltalk ui theme
-		newRowIn: World
+		newRowIn: self currentWorld
 		for:
 			{(Smalltalk ui theme buttonLabelForText: 'Open Blue Ink Setting Previewer ').
 			self buildOpenBIInspectorButton}
@@ -159,7 +159,7 @@ BISettingPreviewer >> compiledMethodFromSearchFields [
 BISettingPreviewer >> displayNodeFor: aNode [
 	| nodeMorphLeft nodeMorphRight |
 	nodeMorphLeft := StringMorph contents: aNode item label.
-	nodeMorphRight := (self theme newRowIn: World for: {aNode settingDeclaration inputWidget})
+	nodeMorphRight := (self theme newRowIn: self currentWorld for: {aNode settingDeclaration inputWidget})
 		clipSubmorphs: true;
 		cellInset: 0;
 		width: 570;

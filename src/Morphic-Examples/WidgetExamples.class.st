@@ -71,7 +71,7 @@ WidgetExamples class >> exampleBasicControls [
 	builder := self builder.
 	dialog := (builder newPluggableDialogWindow: 'Example basic controls') useDefaultOKButton.
 	radioModel := ExampleRadioButtonModel new.
-	treeModel := Array with:(MorphWithSubmorphsWrapper with: World).
+	treeModel := Array with:(MorphWithSubmorphsWrapper with: self currentWorld).
 	dialog contentMorph: ((dialog newRow: {
 		dialog newLabelGroup: {
 			'Normal Label'->(dialog newLabel: 'A Label').

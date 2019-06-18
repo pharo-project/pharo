@@ -44,41 +44,41 @@ PolymorphSystemSettings class >> desktopBackgroundChanged [
 	self desktopImageFileName
 		ifEmpty: [UIManager default currentWorld world backgroundMorph: nil]
 		ifNotEmpty: [ [
-				World backgroundImage: (Form fromFileNamed: self desktopImageFileName) layout: self desktopImageLayout 
+				self currentWorld backgroundImage: (Form fromFileNamed: self desktopImageFileName) layout: self desktopImageLayout 
 			] on: Error	do: []
 		].
 	
 	self useDesktopGradientFill
-		ifTrue: [World fillStyle isGradientFill
-				ifTrue: [fill := World fillStyle]
+		ifTrue: [self currentWorld fillStyle isGradientFill
+				ifTrue: [fill := self currentWorld fillStyle]
 				ifFalse: [fill := GradientFillStyle new].
 			fill colorRamp: {0.0 -> self desktopColor darker. 1.0 -> self desktopGradientFillColor lighter}.
-			fill origin: (World perform: self desktopGradientOrigin).
+			fill origin: (self currentWorld perform: self desktopGradientOrigin).
 			self desktopGradientDirection = #Vertical
 				ifTrue: [fill radial: false.
-					fill normal: World width @ 0.
-					fill direction: 0 @ World height].
+					fill normal: self currentWorld width @ 0.
+					fill direction: 0 @ self currentWorld height].
 			self desktopGradientDirection = #Horizontal
 				ifTrue: [fill radial: false.
-					fill normal: 0 @ World height.
-					fill direction: World width @ 0]. 
+					fill normal: 0 @ self currentWorld height.
+					fill direction: self currentWorld width @ 0]. 
 			self desktopGradientDirection = #Radial
 				ifTrue: [
 					fill radial: true.
 					self desktopGradientOrigin = #center
-						ifTrue: [fill direction: World width // 2 @ 0.
-							fill normal: 0 @ (World height // 2)]
-						ifFalse: [fill direction: World width @ 0.
-							fill normal: 0 @ World height]].
-			World fillStyle: fill]
-		ifFalse: [World color: self desktopColor].
+						ifTrue: [fill direction: self currentWorld width // 2 @ 0.
+							fill normal: 0 @ (self currentWorld height // 2)]
+						ifFalse: [fill direction: self currentWorld width @ 0.
+							fill normal: 0 @ self currentWorld height]].
+			self currentWorld fillStyle: fill]
+		ifFalse: [self currentWorld color: self desktopColor].
 		
-		World changed
+		self currentWorld changed
 ]
 
 { #category : #desktop }
 PolymorphSystemSettings class >> desktopColor [
-	^ DesktopColor ifNil: [DesktopColor := World defaultWorldColor] 
+	^ DesktopColor ifNil: [DesktopColor := self currentWorld defaultWorldColor] 
 ]
 
 { #category : #desktop }
@@ -905,10 +905,10 @@ PolymorphSystemSettings class >> setDesktopLogoWith: aMorph [
 				beSticky;
 				lock.
 			"The logo image should appear just below the menu bar"
-			logo position: 10 @ (World menubar height + 10).
-			World backgroundMorph
-				ifNil: [ World addMorphBack: logo ]
-				ifNotNil: [ World addMorph: logo inFrontOf: World backgroundMorph ] ]
+			logo position: 10 @ (self currentWorld menubar height + 10).
+			self currentWorld backgroundMorph
+				ifNil: [ self currentWorld addMorphBack: logo ]
+				ifNotNil: [ self currentWorld addMorph: logo inFrontOf: self currentWorld backgroundMorph ] ]
 ]
 
 { #category : #desktop }

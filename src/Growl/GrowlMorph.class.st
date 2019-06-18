@@ -177,7 +177,7 @@ GrowlMorph >> actionBlock: aBlock [
 { #category : #internal }
 GrowlMorph >> activeGrowlMorphs [
 
-	^World submorphs select: [ :morph | morph isKindOf: GrowlMorph ].
+	^self currentWorld submorphs select: [ :morph | morph isKindOf: GrowlMorph ].
 ]
 
 { #category : #accessing }
@@ -415,7 +415,7 @@ GrowlMorph >> unoccupiedPositionBottomLeft [
 	| startPos area rect morphs |
 	
 	startPos := 10 negated @ (self height + 10).
-	area := World clearArea.
+	area := self currentWorld clearArea.
 	rect := (area bottomLeft - startPos) extent: self extent.
 	
 	morphs := self activeGrowlMorphs.
@@ -432,7 +432,7 @@ GrowlMorph >> unoccupiedPositionBottomRight [
 	| startPos area rect morphs |
 	
 	startPos := (self width + 10 ) @ (self height + 10).
-	area := World clearArea.
+	area := self currentWorld clearArea.
 	rect := (area bottomRight - startPos) extent: self extent.
 	
 	morphs := self activeGrowlMorphs.	
@@ -449,7 +449,7 @@ GrowlMorph >> unoccupiedPositionTopLeft [
 	| startPos area rect morphs |
 	
 	startPos := 10@10.
-	area := World clearArea.
+	area := self currentWorld clearArea.
 	rect := area topLeft + (startPos) extent: self extent.
 	
 	morphs := self activeGrowlMorphs.
@@ -466,7 +466,7 @@ GrowlMorph >> unoccupiedPositionTopRight [
 	| startPos area rect morphs |
 	
 	startPos := (self width + 10 @ 10 negated).
-	area := World clearArea.
+	area := self currentWorld clearArea.
 	rect := (area topRight - startPos) extent: self extent.
 	
 	morphs := self activeGrowlMorphs.	

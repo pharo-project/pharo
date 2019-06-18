@@ -143,10 +143,10 @@ MorphicBackendForTest >> waitUntilUIRedrawed [
 	If I am in the CI the tests and the UI run in different process. So I should not do a #doOneCycle.
 	If I do it, I am in a race condition!"
 	self isRunningInUIProcess ifTrue: [ 
-		World doOneCycle.
+		self currentWorld doOneCycle.
 		^ self.	
 	]. 
 
-	World defer: [ uiWaitingSemaphore ifNotNil: #signal ].	
+	self currentWorld defer: [ uiWaitingSemaphore ifNotNil: #signal ].	
 	uiWaitingSemaphore wait: 500 milliSecond
 ]
