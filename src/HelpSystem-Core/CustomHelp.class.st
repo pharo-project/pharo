@@ -268,6 +268,12 @@ CustomHelp class >> subheading: aString [
 ]
 
 { #category : #accessing }
+CustomHelp class >> systemIcon [ 
+
+	^self icon
+]
+
+{ #category : #accessing }
 CustomHelp class >> theme [
 	^ Smalltalk ui theme
 ]

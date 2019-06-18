@@ -8,11 +8,11 @@ Class {
 	#category : #'FileSystem-Path-Base'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 AbsolutePath class >> addEmptyElementTo: result [
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 AbsolutePath class >> from: aString delimiter: aDelimiterCharater [
 	aString = '/'
 		ifTrue: [ ^ self root ].

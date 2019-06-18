@@ -41,6 +41,23 @@ GLMFastTableDataSource >> rowMorphElementsForFirstColumn: aColumn item: anItem i
 	(self iconFor: anItem) ifNotNil: [ :anIcon | rowElements add: anIcon asMorph ] 
 ]
 
+{ #category : #rendering }
+GLMFastTableDataSource >> rowMorphForColumn: aColumn item: anItem withIndex: aRowIndex [
+	| rowElements |
+	rowElements := OrderedCollection new.
+	
+	(self table columns first == aColumn) ifTrue: [
+		self rowMorphElementsForFirstColumn: aColumn item: anItem in: rowElements ].
+	
+	rowElements
+		addAll: (self 
+			rowMorphElementsForColumn: aColumn glamourColumn 
+			node: (self dataFromPresentationItem: anItem)
+			withIndex: aRowIndex ).
+		
+	^ Smalltalk ui theme newRowIn: self currentWorld for: rowElements
+]
+
 { #category : #private }
 GLMFastTableDataSource >> sortBlock [
 	^ columnToSortBy sortBlock ifNil: [ 

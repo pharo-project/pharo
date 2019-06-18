@@ -753,7 +753,7 @@ NautilusRefactoring >> privateInsertSuperclassFor: class [
 { #category : #'private-inst var' }
 NautilusRefactoring >> privateMoveInstVarToClass: aClass [
 	| newClass |
-	newClass := (SearchFacade classSearchInEnvironment: RBBrowserEnvironment default) chooseFromOwner: World.
+	newClass := (SearchFacade classSearchInEnvironment: RBBrowserEnvironment default) chooseFromOwner: self currentWorld.
 	^ self class: aClass andInstVariable: [ :class :variable | 
 		RBMoveInstVarToClassRefactoring 
 			model: environment
@@ -774,7 +774,7 @@ NautilusRefactoring >> privateMoveMethodFor: aMethod [
 { #category : #'private-method' }
 NautilusRefactoring >> privateMoveMethodToClassFor: aMethod [
 	| class |
-	class := (SearchFacade classSearchInEnvironment: Smalltalk) chooseFromOwner: World.
+	class := (SearchFacade classSearchInEnvironment: Smalltalk) chooseFromOwner: self currentWorld.
 	class ifNil: [ RefactoringAborted signal ].
 	^ RBMoveMethodToClassRefactoring
 		model: environment

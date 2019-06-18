@@ -30,15 +30,14 @@ DropListButton class >> defaultSpec [
 DropListButton class >> example [
 	<sampleInstance>
 	| example |
-	
 	example := self new.
 	example
 		displayBlock: [ :item | item asString ];
 		items: {'Swordian' . 'Gardian' . 'Wizard' . 'Sniper'};
 		label: 'Add';
 		extent: 300 @ 70;
-		title: 'DropListButton example';
 		openWithSpec.
+	example withWindowDo: [ :window | window title: 'DropListButton example' ].
 	^ example
 ]
 

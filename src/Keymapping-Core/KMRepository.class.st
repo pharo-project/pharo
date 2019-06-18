@@ -39,7 +39,7 @@ KMRepository class >> reset [
 	
 	"TODO: a better reset, allowing the KMDispatcher instances to reload all named, updated, keymaps from the resetted KMRepository."
 
-	World setProperty: #kmDispatcher toValue: nil.
+	self currentWorld setProperty: #kmDispatcher toValue: nil.
 	self default: self new.
 	KMCategory allSubclasses
 		select: [ :c | c isGlobalCategory ]

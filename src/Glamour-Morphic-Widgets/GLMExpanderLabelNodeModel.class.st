@@ -36,7 +36,7 @@ GLMExpanderLabelNodeModel >> contents [
 { #category : #accessing }
 GLMExpanderLabelNodeModel >> displayText [
 	^ UITheme current 
-		newTextIn: World
+		newTextIn: self currentWorld
 		text: (self item presentations titleValue ifNil: ['noname']) 
 ]
 
@@ -50,7 +50,7 @@ GLMExpanderLabelNodeModel >> elementColumn [
 	tags withIndexDo:[ :each :index | 
 			row addLast: (self buttonForTag: each 
 									  filter: (tagsFilter at: index ifAbsentPut:[ each ])) ].
-"	^ (UITheme current newRowIn: World for: row) fillStyle: Color veryLightGray
+"	^ (UITheme current newRowIn: self currentWorld for: row) fillStyle: Color veryLightGray
 ]
 
 { #category : #accessing }

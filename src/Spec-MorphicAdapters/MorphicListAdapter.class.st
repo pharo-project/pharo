@@ -37,45 +37,38 @@ MorphicListAdapter >> backgroundColorFor: anItem at: index [
 { #category : #factory }
 MorphicListAdapter >> buildWidget [
 	| datasource |
-	
 	datasource := SpecListFastTableDataSource new.
 	datasource model: self model.
 	widget := FTTableMorph new
 		dataSource: datasource;
 		hideColumnHeaders;
 		beResizable;
-		columns: { self newListColumn };
+		columns: {self newListColumn};
 		setMultipleSelection: self model isMultipleSelection;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled;
 		setBalloonText: self help;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
-		onAnnouncement: FTSelectionChanged
-			send: #selectionChanged:
-			to: self;
-		onAnnouncement: FTStrongSelectionChanged
-			send: #strongSelectionChanged:
-			to: self;
+		onAnnouncement: FTSelectionChanged send: #selectionChanged: to: self;
+		onAnnouncement: FTStrongSelectionChanged send: #strongSelectionChanged: to: self;
 		yourself.
 	self presenter whenModelChangedDo: [ widget refresh ].
-	self presenter
-		whenSelectionChangedDo: [ self refreshWidgetSelection ].
-	self presenter selection
-		whenChangedDo: [ self refreshWidgetSelection ].
+	self presenter whenSelectionChangedDo: [ self refreshWidgetSelection ].
+	self presenter selection whenChangedDo: [ self refreshWidgetSelection ].
 	self refreshWidgetHeaderTitle.
 	self refreshWidgetSelection.
-	self itemFilterBlock
-		ifNotNil: [ :block | 
-			widget
-				enableFilter: (FTSpecFilter block: block);
-				explicitFunction ].
-			
-	widget		
-		bindKeyCombination: Character space
-		toAction: [ self model clickOnSelectedItem ].
-		
+	self presenter whenItemFilterBlockChangedDo: [ :block | self updateItemFilterBlockWith: block ].
+	self updateItemFilterBlockWith: self itemFilterBlock.
+
+	widget bindKeyCombination: Character space toAction: [ self model clickOnSelectedItem ].
+
 	^ widget
+]
+
+{ #category : #emulating }
+MorphicListAdapter >> hasFilter [
+	^ self widget submorphs anySatisfy: [ :each | each isKindOf: RubTextFieldMorph	"This morph is the explicit filter of the list" ]
 ]
 
 { #category : #accessing }
@@ -205,6 +198,15 @@ MorphicListAdapter >> strongSelectionChanged: aFTStrongSelectionChanged [
 	self presenter activatesOnDoubleClick
 		ifTrue: [ self presenter
 				doubleClickAtIndex: aFTStrongSelectionChanged selectedIndex ]
+]
+
+{ #category : #factory }
+MorphicListAdapter >> updateItemFilterBlockWith: block [
+	^ block
+		ifNotNil: [ widget
+				enableFilter: (FTSpecFilter block: block);
+				explicitFunction ]
+		ifNil: [ widget disableFunction ]
 ]
 
 { #category : #events }

@@ -370,6 +370,17 @@ RunArray >> copyReplaceFrom: start to: stop with: replacement [
 ]
 
 { #category : #copying }
+RunArray >> copyUpThrough: anElement [
+	"Optimized"
+
+	| newValues |
+	newValues := values copyUpThrough: anElement.
+	^ self class
+		runs: (runs copyFrom: 1 to: newValues size)
+		values: newValues
+]
+
+{ #category : #copying }
 RunArray >> copyUpTo: anElement [ 
 	"Optimized"
 

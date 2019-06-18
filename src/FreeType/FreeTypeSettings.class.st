@@ -228,7 +228,7 @@ FreeTypeSettings >> hintingSymbol: aSymbol [
 	FreeTypeCache current removeAll.
 	FreeTypeFont allSubInstances do:[:each | each clearCachedMetrics].
 	Paragraph allSubInstances do:[:each | each composeAll].
-	World restoreMorphicDisplay.
+	self currentWorld restoreMorphicDisplay.
 
 
 ]
@@ -259,7 +259,7 @@ FreeTypeSettings >> monitorType [
 FreeTypeSettings >> monitorType: aSymbol [
 	"#LCD or #CRT"
 	subPixelAntiAliasing := aSymbol = #LCD.
-	World restoreMorphicDisplay.
+	self currentWorld restoreMorphicDisplay.
 ]
 
 { #category : #accessing }
@@ -310,7 +310,7 @@ FreeTypeSettings >> setGamma: aFloat [
 						ug := (ug rounded min: 255) max: 0 .
 						gammaTable at: i + 1 put: g.
 						gammaInverseTable at: i + 1 put: ug]].
-				World restoreMorphicDisplay]
+				self currentWorld restoreMorphicDisplay]
 ]
 
 { #category : #accessing }
@@ -329,7 +329,7 @@ FreeTypeSettings >> setSubPixelFilter: ratiosArray [
 		ifFalse:[
 			subPixelFilters := newFilters.
 			FreeTypeCache current removeAllForType: FreeTypeCacheGlyphLCD.
-			World restoreMorphicDisplay]
+			self currentWorld restoreMorphicDisplay]
 ]
 
 { #category : #accessing }

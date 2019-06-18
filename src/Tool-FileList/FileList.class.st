@@ -1062,7 +1062,7 @@ FileList >> openImageInWindow [
 	self reference streamWritable: false do: [ :stream|
 		image := Form fromBinaryStream: stream].
 	
-	(World drawingClass withForm: image) openInWorld
+	(self currentWorld drawingClass withForm: image) openInWorld
 ]
 
 { #category : #initialization }
@@ -1282,7 +1282,7 @@ FileList >> selectEncoding [
 		acceptNewEntry: true;
 		title: 'Encoding' translated;
 		yourself.
-	(ui chooseFromOwner: World) ifNotNil: [ :encoding | self fileEncoding: encoding ]
+	(ui chooseFromOwner: self currentWorld) ifNotNil: [ :encoding | self fileEncoding: encoding ]
 ]
 
 { #category : #private }

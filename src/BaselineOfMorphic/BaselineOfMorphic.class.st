@@ -91,6 +91,8 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Windows'.
 		spec package: 'Morphic-Widgets-FastTable'.
 		
+		spec package: 'Morphic-Widgets-Taskbar-Tests'.
+		
 		"Several packages depend on Rubric as a basic Morphic component"
 		spec package: 'Rubric'.
 		

@@ -4,9 +4,7 @@ Extension { #name : #LabelledContainer }
 LabelledContainer class >> abstractExample [
 	| example |
 	example := self new.
-	example
-		title: self name asString , ' example';
-		label: 'I am a label'.
+	example label: 'I am a label'.
 	^ example
 ]
 
@@ -15,9 +13,14 @@ LabelledContainer class >> example [
 	<sampleInstance>
 	| example |
 	example := self abstractExample.
-	example content: ButtonPresenter.
-	example subwidget
-		label: 'I am a button'.
+	self setUpExample: example.
 	example openDialogWithSpec.
+	example withWindowDo: [ :window | window title: self name asString , ' example' ].
 	^ example
+]
+
+{ #category : #'*Spec-Examples' }
+LabelledContainer class >> setUpExample: example [
+	example content: ButtonPresenter.
+	example subwidget label: 'I am a button'
 ]

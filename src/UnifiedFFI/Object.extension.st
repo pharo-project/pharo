@@ -1,20 +1,30 @@
 Extension { #name : #Object }
 
 { #category : #'*UnifiedFFI' }
+Object >> calloutAPIClass [
+	^ self ffiLibrary calloutAPIClass
+]
+
+{ #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec [
 	<ffiCalloutTranslator>
 	
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
-		function: fnSpec module: self ffiLibraryName
+		options: self ffiLibrary uniqueInstance options;
+		function: fnSpec module: self ffiLibrary uniqueInstance
 ]
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec module: aModuleName [
 	<ffiCalloutTranslator>
 	
-	^ (self ffiCalloutIn: thisContext sender)
+	| ffiLibrary |
+	
+	ffiLibrary := aModuleName asFFILibrary.
+	^ (ffiLibrary calloutAPIClass inContext: thisContext sender)
 		convention: self ffiCallingConvention;
+		options: ffiLibrary options;
 		function: fnSpec module: aModuleName
 ]
 
@@ -22,9 +32,13 @@ Object >> ffiCall: fnSpec module: aModuleName [
 Object >> ffiCall: fnSpec module: aModuleName options: callOptions [
 	<ffiCalloutTranslator>
 	
-	^ (self ffiCalloutIn: thisContext sender)
+	| ffiLibrary |
+	
+	ffiLibrary := aModuleName asFFILibrary.	
+	
+	^ (ffiLibrary calloutAPIClass inContext: thisContext sender)
 		convention: self ffiCallingConvention;
-		options: callOptions;
+		options: (ffiLibrary options), callOptions;
 		function: fnSpec module: aModuleName
 ]
 
@@ -34,8 +48,8 @@ Object >> ffiCall: fnSpec options: callOptions [
 	
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
-		options: callOptions;
-		function: fnSpec module: self ffiLibraryName
+		options: (self ffiLibrary options), callOptions;
+		function: fnSpec module: self ffiLibrary moduleName
 ]
 
 { #category : #'*UnifiedFFI' }
@@ -44,13 +58,15 @@ Object >> ffiCallingConvention [
 ]
 
 { #category : #'*UnifiedFFI' }
-Object >> ffiCallout [
-	^ FFICalloutAPI calloutAPIClass inContext: thisContext sender
+Object >> ffiCalloutIn: aContext [
+	
+	^ self calloutAPIClass inContext: aContext
 ]
 
 { #category : #'*UnifiedFFI' }
-Object >> ffiCalloutIn: aContext [
-	^ FFICalloutAPI calloutAPIClass inContext: aContext
+Object >> ffiLibrary [
+		
+	^ self ffiLibraryName asFFILibrary
 ]
 
 { #category : #'*UnifiedFFI' }
@@ -62,6 +78,28 @@ Object >> ffiLibraryName [
 { #category : #'*UnifiedFFI' }
 Object >> isExternalType [
 	^ false
+]
+
+{ #category : #'*UnifiedFFI' }
+Object >> newCallbackWithSignature: signature block: aBlock [
+	"This method is used to create a callback in the same library and callout api of the receiver"
+	
+	^ (self ffiCalloutIn: thisContext sender)
+		convention: self ffiCallingConvention;
+		newCallbackWithSignature: signature
+			block: aBlock
+			library: self ffiLibrary
+]
+
+{ #category : #'*UnifiedFFI' }
+Object >> newCallbackWithSignature: signature block: aBlock library: aFFILibrary [
+	"This method is used to create a callback in the callout api of the receiver"
+	
+	^ (self ffiCalloutIn: thisContext sender)
+		convention: self ffiCallingConvention;
+		newCallbackWithSignature: signature
+			block: aBlock
+			library: aFFILibrary
 ]
 
 { #category : #'*UnifiedFFI' }

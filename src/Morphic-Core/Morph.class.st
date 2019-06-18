@@ -2188,7 +2188,7 @@ Morph >> displayExtentChanged [
 { #category : #settings }
 Morph >> displayScaleFactor [
 
-	^ World displayScaleFactor
+	^ self currentWorld displayScaleFactor
 ]
 
 { #category : #announcements }
@@ -4579,7 +4579,7 @@ Morph >> outermostOwnerWithYellowButtonMenu [
 { #category : #structure }
 Morph >> outermostWorldMorph [
 
-	^self world ifNil: [ World ].
+	^self world ifNil: [ self currentWorld ].
 ]
 
 { #category : #geometry }
@@ -4770,14 +4770,14 @@ Morph >> preferredDuplicationHandleSelector [
 { #category : #'event handling' }
 Morph >> preferredKeyboardBounds [
 
-	^ self bounds: self bounds in: World.
+	^ self bounds: self bounds in: self currentWorld.
 
 ]
 
 { #category : #'event handling' }
 Morph >> preferredKeyboardPosition [
 
-	^ (self bounds: self bounds in: World) topLeft.
+	^ (self bounds: self bounds in: self currentWorld) topLeft.
 
 ]
 

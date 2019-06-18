@@ -18,7 +18,7 @@ PaginatedMorphTreeModel class >> example [
 
 	| treeMorph aWindow aModel |
 	aModel := self itemsList: (1 to: 100) asArray.
-	aWindow := aModel theme newWindowIn: World for: aModel title: 'Example'.
+	aWindow := aModel theme newWindowIn: self currentWorld for: aModel title: 'Example'.
 	treeMorph := aModel defaultTreeMorph.
 	treeMorph pageSize: 30.
 	treeMorph buildContents.

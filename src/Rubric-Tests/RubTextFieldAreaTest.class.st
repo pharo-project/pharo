@@ -30,7 +30,7 @@ RubTextFieldAreaTest >> simulatedKeyStrokeFromChar: aCharacter alt: useAlt ctrl:
 		position: 0 @ 0
 		keyValue: code
 		charCode: code
-		hand: World currentHand 
+		hand: self currentWorld currentHand 
 		stamp: Time now.
 	^ event
 ]

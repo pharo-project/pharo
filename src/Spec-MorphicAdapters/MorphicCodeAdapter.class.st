@@ -10,6 +10,16 @@ MorphicCodeAdapter >> behavior [
 	^ self model behavior
 ]
 
+{ #category : #factory }
+MorphicCodeAdapter >> buildWidget [
+	| newWidget |
+	newWidget := super buildWidget.
+
+	self presenter whenSyntaxHighlightChangedDo: [ :hasSyntaxHighlight | self setEditingModeFor: newWidget ].
+	
+	^ newWidget
+]
+
 { #category : #'private-shout' }
 MorphicCodeAdapter >> classOrMetaClass: aClass [
 
@@ -36,28 +46,15 @@ MorphicCodeAdapter >> guessTypeForName: aString [
 	^nil
 ]
 
-{ #category : #initialization }
-MorphicCodeAdapter >> initialize [
-
-	super initialize.
-]
-
-{ #category : #shout }
-MorphicCodeAdapter >> isAboutToStyle [
-
-	^ self okToStyle
+{ #category : #private }
+MorphicCodeAdapter >> hasSyntaxHighlight [
+	^ self model hasSyntaxHighlight
 ]
 
 { #category : #NOCompletion }
 MorphicCodeAdapter >> isCodeCompletionAllowed [
 
 	^ true
-]
-
-{ #category : #'private-shout' }
-MorphicCodeAdapter >> okToStyle [
-
-	^ self model hasSyntaxHighlight
 ]
 
 { #category : #NOCompletion }
@@ -79,9 +76,10 @@ MorphicCodeAdapter >> selectedClassOrMetaClass [
 ]
 
 { #category : #private }
-MorphicCodeAdapter >> setEditingModeFor: textArea [ 
-
-	self setEditingModeFor: textArea withBehavior: self behavior
+MorphicCodeAdapter >> setEditingModeFor: textArea [
+	self hasSyntaxHighlight
+		ifTrue: [ self setEditingModeFor: textArea withBehavior: self behavior ]
+		ifFalse: [ super setEditingModeFor: textArea ]
 ]
 
 { #category : #private }
@@ -90,12 +88,6 @@ MorphicCodeAdapter >> setEditingModeFor: textArea withBehavior: aBehavior [
 	aBehavior
 		ifNotNil: [ textArea beForSmalltalkCodeInClass: aBehavior ]		
 		ifNil: [ textArea beForSmalltalkScripting ]
-]
-
-{ #category : #shout }
-MorphicCodeAdapter >> shoutAboutToStyle: aMorph [
-	
-	^ self isAboutToStyle
 ]
 
 { #category : #private }

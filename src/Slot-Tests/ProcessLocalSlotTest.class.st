@@ -5,6 +5,29 @@ Class {
 }
 
 { #category : #tests }
+ProcessLocalSlotTest >> testIsPossibleToSetSlotInBlock [
+	| slot writerString instance |
+	slot := #slot1 => ProcessLocalSlot.
+	aClass := self make: [ :builder | builder slots: {slot} ].
+
+	writerString := String streamContents: [ :str |
+		str 
+			nextPutAll: slot name;
+			nextPutAll: ': anObject';
+			cr;tab;
+			nextPutAll: 'true ifTrue: [ ';
+			nextPutAll: slot name;
+			nextPutAll: ':= anObject ]'.
+		].
+	
+	aClass compile: writerString.
+	
+	instance := aClass new.
+	instance slot1: #test.
+	self assert: (instance instVarNamed: #slot1) value equals: #test.
+]
+
+{ #category : #tests }
 ProcessLocalSlotTest >> testRead [
 	| slot |
 	slot := #slot1 => ProcessLocalSlot.

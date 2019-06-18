@@ -59,14 +59,13 @@ MorphicTextAdapter >> autoAccept: aBoolean [
 { #category : #factory }
 MorphicTextAdapter >> buildWidget [
 	| newWidget |
-
-	newWidget := RubPluggableTextMorph new
-		on: self
-			text: #getText
-			accept: #accept:notifying:
-			readSelection: #readSelection
-			menu: #codePaneMenu:shifted:
-			setSelection: #setSelection:;
+	self flag: #pharo7.	"When support for P7 will be dropped, remove this compatibility hack."
+	newWidget := ((self class environment at: #SpecRubScrolledTextMorph ifAbsent: [ RubScrolledTextMorph ]) on: self)
+		getTextSelector: #getText;
+		setTextSelector: #accept:notifying:;
+		getSelectionSelector: #readSelection;
+		menuProvider: self selector: #codePaneMenu:shifted:;
+		setSelectionSelector: #setSelection:;
 		beWrapped;
 		enabled: self enabled;
 		askBeforeDiscardingEdits: self askBeforeDiscardingEdits;
@@ -78,12 +77,9 @@ MorphicTextAdapter >> buildWidget [
 		dropEnabled: self dropEnabled;
 		registerScrollChanges: #scrollValueChanged:;
 		yourself.
-		
 	self setEditingModeFor: newWidget.
-	self model additionalKeyBindings ifNotNil: [ :bindings |
-		bindings keysAndValuesDo: [ :shortcut :action | 
-			newWidget bindKeyCombination: shortcut toAction: action ] ].
-	
+	self model additionalKeyBindings ifNotNil: [ :bindings | bindings keysAndValuesDo: [ :shortcut :action | newWidget bindKeyCombination: shortcut toAction: action ] ].
+	self presenter whenTextChangedDo: [ :text | newWidget setText: text ].
 	^ newWidget
 ]
 
@@ -94,7 +90,7 @@ MorphicTextAdapter >> canChangeText [
 
 { #category : #'undo-redo' }
 MorphicTextAdapter >> clearUndoManager [
-	self widget clearUndoManager
+	self widget textArea editingState clearUndoManager: nil
 ]
 
 { #category : #'widget API' }

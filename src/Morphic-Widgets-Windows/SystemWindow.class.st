@@ -397,7 +397,7 @@ SystemWindow class >> noteTopWindowIn: aWorld [
 { #category : #'top window' }
 SystemWindow class >> sendTopWindowToBack [
  	"Send the top window of the world to the back. Relies on #submorphs array being ordered top to bottom. "
-	ActiveWorld submorphs 
+	self currentWorld submorphs 
 		detect: [ :morph | morph isSystemWindow ] 
 		ifFound: [ :morph | morph sendToBack ].
 ]
@@ -877,7 +877,7 @@ SystemWindow >> deleteDiscardingChanges [
 		window: self;
 		yourself.
 	self announce: announcement.
-	World announcer announce: announcement
+	self currentWorld announcer announce: announcement
 ]
 
 { #category : #'menu building' }
@@ -1415,7 +1415,7 @@ SystemWindow >> openAsIsIn: aWorld [
 	
 	self announceOpened.
 	
-	World announcer 
+	self currentWorld announcer 
 		announce: (WindowOpened new
 						window: self;
 						yourself).
@@ -1699,7 +1699,7 @@ SystemWindow >> setLabel: aString [
 						label: aString;
 						yourself).
 	self announce: announcement.
-	World announcer announce: announcement.
+	self currentWorld announcer announce: announcement.
 	label ifNil: [^ self].
 	label contents: aString.
 	self labelWidgetAllowance.  "Sets it if not already"

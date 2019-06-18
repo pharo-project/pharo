@@ -102,7 +102,7 @@ SpecMultipleSelectionMode >> selectedItems [
 { #category : #accessing }
 SpecMultipleSelectionMode >> subscriptions [
 
-	^ selectedIndexesValueHolder announcer subscriptions
+	^ selectedIndexesValueHolder announcer subscriptions subscriptions
 ]
 
 { #category : #selecting }

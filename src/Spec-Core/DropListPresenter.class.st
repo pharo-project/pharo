@@ -159,7 +159,6 @@ DropListPresenter >> initialize [
 	iconHolder := [ Name already defined -> :model :item | item icon ] asValueHolder.
 	
 	"
-
 ]
 
 { #category : #api }

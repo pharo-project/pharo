@@ -161,7 +161,7 @@ GLMFastTreeDataSource >> rowMorphForItem: anItem [
 	rowElements
 		add: (self formatedDisplayValueOf: anItem data) asMorph asReadOnlyMorph;
 		addAll: (self tagMorphsFrom: self glamourPresentation for: anItem data).
-	^ Smalltalk ui theme newRowIn: World for: rowElements
+	^ Smalltalk ui theme newRowIn: self currentWorld for: rowElements
 ]
 
 { #category : #selecting }

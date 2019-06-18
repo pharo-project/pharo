@@ -30,7 +30,7 @@ SimplestClassListExample >> defaultTreeMorph [
 { #category : #view }
 SimplestClassListExample >> openDialogOn: aClass [ 
 	rootClass := aClass.
-	^ self openDialogWindowIn: World title: 'All Object subclasses'
+	^ self openDialogWindowIn: self currentWorld title: 'All Object subclasses'
 
 ]
 
