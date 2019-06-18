@@ -206,6 +206,12 @@ Trait >> isBaseTrait [
 ]
 
 { #category : #testing }
+Trait >> isClass [
+	
+	^ false
+]
+
+{ #category : #testing }
 Trait >> isClassTrait [
 	
 	^ false
