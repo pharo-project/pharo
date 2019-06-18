@@ -1,3 +1,6 @@
+"
+Instances of this class represent a directory entry in a memory file system. So basically this class provides similar behavior as a DiscDirectoryEntry but for a memory file system.
+"
 Class {
 	#name : #MemoryDirectoryEntry,
 	#superclass : #FileSystemDirectoryEntry,

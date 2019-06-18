@@ -29,3 +29,17 @@ CodePresenterTest >> testContextMenu [
 	self assert: presenter contextMenu equals: menu.
 	self assert: changed
 ]
+
+{ #category : #tests }
+CodePresenterTest >> testWhenSyntaxHighlightChangedDo [
+	| count result |
+	count := 0.
+	result := true.
+	presenter
+		whenSyntaxHighlightChangedDo: [ :syntaxHighlight | 
+			count := count + 1.
+			result := syntaxHighlight ].
+	presenter withoutSyntaxHighlight.
+	self assert: count equals: 1.
+	self deny: result
+]

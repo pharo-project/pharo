@@ -15,6 +15,7 @@ MorphicBaseMenuAdapter >> icon [
 
 { #category : #protocol }
 MorphicBaseMenuAdapter >> menuGroups [
+
 	^ self model menuGroups reject: [ :e | e isEmpty ]
 ]
 

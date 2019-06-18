@@ -25,7 +25,7 @@ Class {
 { #category : #api }
 RBCustomTransformation class >> model: aRBModel with: aBlockWithOneArg [
 
-	^ (self new)
+	^ self new
 		model: aRBModel;
 		transformationBlock: aBlockWithOneArg;
 		yourself
@@ -34,7 +34,7 @@ RBCustomTransformation class >> model: aRBModel with: aBlockWithOneArg [
 { #category : #api }
 RBCustomTransformation class >> with: aBlockWithOneArg [
 
-	^ (self new)
+	^ self new
 		transformationBlock: aBlockWithOneArg;
 		yourself
 ]

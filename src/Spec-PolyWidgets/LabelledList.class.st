@@ -24,11 +24,6 @@ LabelledList >> displayBlock: aBlock [
 	^self list displayBlock: aBlock
 ]
 
-{ #category : #'api-shortcuts' }
-LabelledList >> filteringBlock: aBlock [
-	^ self list filteringBlock: aBlock
-]
-
 { #category : #initialization }
 LabelledList >> initializeWidgets [
 super initializeWidgets.

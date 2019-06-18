@@ -95,14 +95,13 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkAllBlocksIn: aParseTree 
 
 { #category : #private }
 RBMoveTemporaryVariableDefinitionTransformation >> checkBlocksIn: aParseTree [
-
 	| searcher |
-	searcher := RBParseTreeSearcher new.
+	searcher := self parseTreeSearcher.
 	searcher
 		matches: '[:`@args | | `@temps | `@.Statements]'
-			do: [ :aNode :answer | answer];
-		matches: variableName do: [:aNode :answer | true].
-	^ (searcher executeTree: aParseTree initialAnswer: false)
+			do: [ :aNode :answer | answer ];
+		matches: variableName do: [ :aNode :answer | true ].
+	^ searcher executeTree: aParseTree initialAnswer: false
 ]
 
 { #category : #private }
@@ -148,11 +147,6 @@ RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 		ifFalse: [self refactoringError: 'Variable is an argument'].
 		
 	^ definingNode
-]
-
-{ #category : #private }
-RBMoveTemporaryVariableDefinitionTransformation >> parseTreeSearcher [
-	^ RBParseTreeSearcher new
 ]
 
 { #category : #preconditions }

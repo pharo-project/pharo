@@ -73,10 +73,7 @@ SharedPool class >> localBindingOf: varName [
 
 { #category : #pools }
 SharedPool class >> poolUsers [
-	"Answer an Array of all classes that uses the shared pool"
+	"Answer all classes that uses the shared pool"
 
-	| aCollection |
-	aCollection := ReadWriteStream on: Array new.
-	self environment allClassesDo: [:class | (class includesSharedPoolNamed: self name) ifTrue: [aCollection nextPut: class]].
-	^ aCollection contents
+	^self environment allClasses select:  [:class | class includesSharedPoolNamed: self name]
 ]

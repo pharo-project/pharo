@@ -213,6 +213,11 @@ TreeTablePresenter >> selectPath: aPath [
 ]
 
 { #category : #api }
+TreeTablePresenter >> selectPaths: pathArray [
+	self selection selectPaths: pathArray
+]
+
+{ #category : #api }
 TreeTablePresenter >> selectedItem [
 	
 	^ self selection selectedItem

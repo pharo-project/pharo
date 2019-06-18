@@ -87,7 +87,7 @@ KeymapBrowser >> initialExtent [
 { #category : #initialization }
 KeymapBrowser >> initializePresenter [
 	filterField
-		whenTextChangedDo: [ :text | 
+		whenTextChanged: [ :text | 
 			clearFilterButton enabled: text isNotEmpty.
 			self setFilter: text ].
 	clearFilterButton action: [ filterField text: '' ]
