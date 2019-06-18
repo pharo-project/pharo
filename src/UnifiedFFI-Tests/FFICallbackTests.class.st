@@ -93,7 +93,7 @@ FFICallbackTests >> testEnumerationReturnValue [
 				signature:  #( FFITestEnumeration ())
 				block: [ CCC ].
 	"Dummy value of nil is possible since signature has no arguments"
-	returnValue := cb valueWithContext: self sp: nil. 
+	returnValue := cb backendCallback valueWithContext: self sp: nil. 
 	self assert: returnValue equals: CCC value.
 	
 	
@@ -102,7 +102,7 @@ FFICallbackTests >> testEnumerationReturnValue [
 				signature:  #( FFITestEnumeration ())
 				block: [ CCC value ].
 	"Dummy value of nil is possible since signature has no arguments"
-	returnValue := cb valueWithContext: self sp: nil. 
+	returnValue := cb backendCallback valueWithContext: self sp: nil. 
 	self assert: returnValue equals: CCC value.
 ]
 

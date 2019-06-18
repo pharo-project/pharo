@@ -1,9 +1,14 @@
+"
+I'm a constant in an ffi call. 
+Constants can be used while doing a call, under a very restrictive rule: it has to be possible to parse it to understand which basic type it is.
+
+"
 Class {
 	#name : #FFIConst,
 	#superclass : #FFIExternalType,
 	#instVars : [
 		'value',
-		'externalType'
+		'type'
 	],
 	#category : #'UnifiedFFI-Types'
 }
@@ -14,10 +19,10 @@ FFIConst class >> value: aValue [
 ]
 
 { #category : #'instance creation' }
-FFIConst class >> value: anObject type: anExternalType [
+FFIConst class >> value: anObject type: aType [
 	^ self new 
 		value: anObject;
-		externalType: anExternalType;
+		type: aType;
 		yourself
 ]
 
@@ -38,23 +43,20 @@ FFIConst >> emitReturnArgument: builder context: aContext [
 
 { #category : #accessing }
 FFIConst >> externalType [ 
-	^ externalType
-	
-]
 
-{ #category : #accessing }
-FFIConst >> externalType: anExternalType [ 
-	externalType := anExternalType
+	^ self type externalType
 ]
 
 { #category : #accessing }
 FFIConst >> externalTypeAlignment [
-	^ externalType externalTypeAlignment
+
+	^ self externalType externalTypeAlignment
 ]
 
 { #category : #accessing }
 FFIConst >> externalTypeSize [
-	^ externalType byteSize
+
+	^ self externalType byteSize
 ]
 
 { #category : #accessing }
@@ -71,6 +73,16 @@ FFIConst >> pointerArity: additionalArity [
 FFIConst >> stackValueParameterClass [
 	^ value isFloat ifTrue: [#float] ifFalse: [#integer]
 
+]
+
+{ #category : #accessing }
+FFIConst >> type [
+	^ type
+]
+
+{ #category : #accessing }
+FFIConst >> type: anObject [
+	type := anObject
 ]
 
 { #category : #accessing }
