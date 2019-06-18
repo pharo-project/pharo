@@ -4,8 +4,7 @@ Extension { #name : #NonInteractiveUIManager }
 NonInteractiveUIManager >> currentWorld [
 
 	" err.. we should probably prohibit this message.. but lets play nice"
-	"(uiManager isNotNil and:[ uiManager ~= self ]) ifTrue: [ 
-		^ uiManager currentWorld ]."
+	uiManager ifNotNil: [ ^ uiManager currentWorld ].
 	
 	ActiveWorld ifNotNil: [ ^ ActiveWorld ].
 	^ World
