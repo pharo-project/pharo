@@ -49,11 +49,11 @@ SystemDictionary >> allBehaviors [
 SystemDictionary >> allBehaviorsDo: aBlock [
 	"Execute a block on each class, metaclass, trait and trait class"
 
-	self environment valuesDo: [ :aClass |
+	self valuesDo: [ :aClass |
 		aClass isBehavior ifTrue: [  
 			aBlock
 				value: aClass;
-				value: aClass classSide]].
+				value: aClass classSide]]
 ]
 
 { #category : #'classes and traits' }
