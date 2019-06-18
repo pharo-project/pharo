@@ -37,8 +37,12 @@ DisplayScreen class >> actualScreenDepth [
 DisplayScreen class >> actualScreenSize [
 	"Delegates to active world because it can be something else than the one provided by the VM"
 	
-	self currentWorld ifNil: [ ^ 0@0 ].
-	^ self currentWorld actualScreenSize
+	"The method should be modified to use currentWorld, but the dependency is not possible.
+	We have to remodularize it."
+	self flag: #todo.
+	
+	ActiveWorld ifNil: [ ^ 0@0 ].
+	^ ActiveWorld actualScreenSize
 ]
 
 { #category : #'display box access' }
