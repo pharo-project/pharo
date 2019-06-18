@@ -110,12 +110,12 @@ SystemNavigation >> allClassesInPackageNamed: packageName [
 
 { #category : #query }
 SystemNavigation >> allClassesUsingSharedPool: aString [  
-	"Answer an Array of all classes that uses the shared pool named aString."
+	"Answer all classes that uses the shared pool named aString."
 
-	| aCollection |
-	aCollection := ReadWriteStream on: Array new.
-	self allClassesDo: [:class | (class includesSharedPoolNamed: aString) ifTrue: [aCollection nextPut: class]].
-	^ aCollection contents
+	| pool |
+	self deprecated: 'just use #poolUsers directly'.
+	pool := self environment classNamed: aString ifAbsent: [ ^#() ].
+	^pool poolUsers
 ]
 
 { #category : #query }
@@ -304,22 +304,6 @@ SystemNavigation >> allReferencesToPool: aPool [
 						detect: [ :lit | (lit isVariableBinding and: [ lit key notNil ]) 
 													and: [ aPool includesKey: lit key ] ]
 						ifFound: [ list add: (self createMethodNamed: sel realParent: cls) ] ] ].
-	^ list
-]
-
-{ #category : #query }
-SystemNavigation >> allReferencesToPool: aPool from: aClass [
-	"Answer all the references to variables from aPool"
-
-	| list |
-	list := OrderedCollection new.
-	aClass
-		withAllSubclassesDo: [ :cls | 
-			cls
-				selectorsAndMethodsDo: [ :sel :meth | 
-					meth literals
-						detect: [ :lit | lit isVariableBinding and: [ (aPool bindingOf: lit key) notNil ] ]
-						ifFound: [ list add: (self createMethodNamed: sel realParent: aClass) ] ] ].
 	^ list
 ]
 
