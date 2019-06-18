@@ -32,6 +32,12 @@ FFIAlienCallback >> argumentsFor: stackPointer context: callbackContext [
 ]
 
 { #category : #accessing }
+FFIAlienCallback >> beNull [
+
+	thunk := ExternalAddress null
+]
+
+{ #category : #accessing }
 FFIAlienCallback >> frontendCallback [
 	^ frontendCallback
 ]

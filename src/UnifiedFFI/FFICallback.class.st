@@ -78,6 +78,12 @@ FFICallback >> backendCallback [
 ]
 
 { #category : #accessing }
+FFICallback >> beNull [
+
+	self backendCallback beNull
+]
+
+{ #category : #accessing }
 FFICallback >> calloutAPIClass [
 
 	^ calloutAPIClass ifNil: [ super calloutAPIClass ]
