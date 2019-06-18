@@ -9,6 +9,12 @@ Class {
 }
 
 { #category : #accessing }
+OSWindowClipboard >> beDefault [
+
+	Default := self
+]
+
+{ #category : #accessing }
 OSWindowClipboard >> chooseRecentClipping [
 	^ nil
 ]
