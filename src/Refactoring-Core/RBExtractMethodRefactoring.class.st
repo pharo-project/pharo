@@ -338,21 +338,24 @@ RBExtractMethodRefactoring >> remainingTemporaries [
 	^temps
 ]
 
-{ #category : #accessing }
+{ #category : #renaming }
 RBExtractMethodRefactoring >> renameAllParameters [
+	"Rename all parameters that change"
 	dictParameters ifNotNil: [
 		dictParameters keysAndValuesDo: [ :key : value | 
 			key ~= value ifTrue: [ self renameParameterWith: key to: value ]]
 	]
 ]
 
-{ #category : #accessing }
+{ #category : #renaming }
 RBExtractMethodRefactoring >> renameNode: aParseTree withOldName: oldName toWithName: newName [ 
 	(RBParseTreeRewriter rename: oldName to: newName) executeTree: aParseTree
 ]
 
-{ #category : #accessing }
+{ #category : #renaming }
 RBExtractMethodRefactoring >> renameParameterWith: oldName to: newName [
+	
+	"Rename a parameter of extracted method from oldName to newName"
 	self renameNode: extractedParseTree withOldName: oldName toWithName: newName.
 	
 ]
@@ -400,8 +403,9 @@ RBExtractMethodRefactoring >> transform [
 	class compileTree: modifiedParseTree
 ]
 
-{ #category : #accessing }
-RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldName toWithName: newName [ 
+{ #category : #preconditions }
+RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldName toNewName: newName [ 
+	"Validate if newName is already defined as: instance variable, class variable, another parameter"
 	|conditions block|
 	conditions := ((RBCondition isValidInstanceVariableName: newName for: class)
 		& (RBCondition definesSelector: selector in: class)
@@ -420,7 +424,7 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 		ifTrue: [ self refactoringError: newName asString , ' is already defined' ]
 ]
 
-{ #category : #accessing }
+{ #category : #preconditions }
 RBExtractMethodRefactoring >> validateRenameOf: oldName to: newName [
-	self validateRenameNode: extractedParseTree withOldName: oldName toWithName: newName 
+	self validateRenameNode: extractedParseTree withOldName: oldName toNewName: newName 
 ]
