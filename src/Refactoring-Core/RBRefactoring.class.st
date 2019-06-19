@@ -221,7 +221,7 @@ RBRefactoring >> defaultEnvironment [
 { #category : #transforming }
 RBRefactoring >> execute [
 	self primitiveExecute.
-	RBRefactoringManager instance addRefactoring: self
+	RBRefactoryChangeManager instance performChange: self changes.
 ]
 
 { #category : #transforming }

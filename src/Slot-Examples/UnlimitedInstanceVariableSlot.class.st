@@ -14,7 +14,7 @@ Class {
 UnlimitedInstanceVariableSlot >> emitStore: methodBuilder [
 	"generate bytecode for 'baseSlot at: index put: <stackTop>'"
 	| tempName |
-	tempName := Object new.  "we need a unique Object as a temp name"
+	tempName := '0slotTempForStackManipulation'.
 	methodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;

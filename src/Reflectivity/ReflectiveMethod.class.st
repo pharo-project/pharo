@@ -99,7 +99,7 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 	wrappedMethod := ast generate: compiledMethod trailer.
 	
 	send := RBMessageNode
-		receiver: (RBSelfNode named: #self)
+		receiver: RBSelfNode new
 		selector:  #rFwithArgs:executeMethod:
 		arguments: {RBArrayNode statements: ast arguments . (RFLiteralVariableNode value: wrappedMethod)}.
 	

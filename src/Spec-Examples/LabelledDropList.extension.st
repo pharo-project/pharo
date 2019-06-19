@@ -3,12 +3,13 @@ Extension { #name : #LabelledDropList }
 { #category : #'*Spec-Examples' }
 LabelledDropList class >> example [
 	<sampleInstance>
-	| example |
-	example := self abstractExample.
-example
+	^ super example
+]
+
+{ #category : #'*Spec-Examples' }
+LabelledDropList class >> setUpExample: example [
+	example
 		items: {'item 1' . 'item 2'};
 		displayBlock: [ :item | item asString ];
-		extent: 400 @ 50;
-		openWithSpec.
-	^ example
+		extent: 400 @ 50
 ]

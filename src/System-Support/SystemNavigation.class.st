@@ -19,11 +19,10 @@ SystemNavigation class >> default [
 
 { #category : #query }
 SystemNavigation >> allAccessesTo: instVarName from: aClass [
-	| coll |
-	coll := OrderedCollection new.
-	aClass
-		withAllSubAndSuperclassesDo: [ :class | (class whichSelectorsAccess: instVarName) do: [ :sel | coll add: (self createMethodNamed: sel realParent: class) ] ].
-	^ coll
+	| methods |
+	methods := aClass allMethodsAccessingSlot: (aClass slotNamed: instVarName).
+	^methods collect: [:meth | self createMethodNamed: meth selector realParent: meth methodClass]
+
 ]
 
 { #category : #query }
@@ -35,15 +34,7 @@ SystemNavigation >> allBehaviors [
 SystemNavigation >> allBehaviorsDo: aBlock [
 	"Execute a block on each class, metaclass, trait and trait class"
 
-	self environment allClassesDo: [ :aClass | 
-		aBlock
-			value: aClass;
-			value: aClass classSide ].
-
-	self environment allTraitsDo: [ :aTrait | 
-		aBlock
-			value: aTrait;
-			value: aTrait classSide ]
+	self environment allBehaviorsDo: aBlock
 ]
 
 { #category : #query }
@@ -92,12 +83,8 @@ SystemNavigation >> allClassesDo: aBlock [
 
 { #category : #query }
 SystemNavigation >> allClassesImplementing: aSelector [  
-	"Answer an Array of all classes that implement the message aSelector."
-
-	| aCollection |
-	aCollection := ReadWriteStream on: Array new.
-	self allBehaviorsDo: [:class | (class includesSelector: aSelector) ifTrue: [aCollection nextPut: class]].
-	^ aCollection contents
+	"Answer all classes that implement the message aSelector."
+	^self allBehaviors collect: [:class | class includesSelector: aSelector]
 ]
 
 { #category : #packages }
@@ -115,30 +102,19 @@ SystemNavigation >> allClassesInPackageNamed: packageName [
 
 { #category : #query }
 SystemNavigation >> allClassesUsingSharedPool: aString [  
-	"Answer an Array of all classes that uses the shared pool named aString."
+	"Answer all classes that uses the shared pool named aString."
 
-	| aCollection |
-	aCollection := ReadWriteStream on: Array new.
-	self allClassesDo: [:class | (class includesSharedPoolNamed: aString) ifTrue: [aCollection nextPut: class]].
-	^ aCollection contents
+	| pool |
+	self deprecated: 'just use #poolUsers directly'.
+	pool := self environment classNamed: aString ifAbsent: [ ^#() ].
+	^pool poolUsers
 ]
 
 { #category : #query }
 SystemNavigation >> allExistingProtocolsFor: instanceSide [
 	"Answer all protocols on instance or class side"
-	
-	| allExistingProtocols |
-	allExistingProtocols := environment allClassesAndTraits
-		inject: IdentitySet new
-		into: [ :col :e | 
-			| class |
-			class := instanceSide
-				ifTrue: [ e instanceSide ]
-				ifFalse: [ e classSide ].
-			col
-				addAll: class protocols;
-				yourself ].
-	^ allExistingProtocols
+
+	^self allClasses flatCollectAsSet: [ :class | instanceSide ifTrue: [class protocols] ifFalse: [ class class protocols ] ]
 ]
 
 { #category : #private }
@@ -157,10 +133,7 @@ SystemNavigation >> allGlobalRefsOn: aSymbol [
 SystemNavigation >> allImplementedMessages [
 	"Answer a Collection of all the messages that are implemented in the system."
 	
-	| messages |
-	messages := IdentitySet new.
-	self allBehaviorsDo: [:each | messages addAll: each selectors].
-	^ messages
+	^Symbol selectorTable
 ]
 
 { #category : #query }
@@ -309,22 +282,6 @@ SystemNavigation >> allReferencesToPool: aPool [
 						detect: [ :lit | (lit isVariableBinding and: [ lit key notNil ]) 
 													and: [ aPool includesKey: lit key ] ]
 						ifFound: [ list add: (self createMethodNamed: sel realParent: cls) ] ] ].
-	^ list
-]
-
-{ #category : #query }
-SystemNavigation >> allReferencesToPool: aPool from: aClass [
-	"Answer all the references to variables from aPool"
-
-	| list |
-	list := OrderedCollection new.
-	aClass
-		withAllSubclassesDo: [ :cls | 
-			cls
-				selectorsAndMethodsDo: [ :sel :meth | 
-					meth literals
-						detect: [ :lit | lit isVariableBinding and: [ (aPool bindingOf: lit key) notNil ] ]
-						ifFound: [ list add: (self createMethodNamed: sel realParent: aClass) ] ] ].
 	^ list
 ]
 
@@ -511,10 +468,8 @@ SystemNavigation >> isUnsentMessage: selector [
 
 { #category : #'message sends' }
 SystemNavigation >> isUsedClass: aClass [
-
-	self allBehaviorsDo: [ :behavior | 
-		(behavior hasSelectorReferringTo: aClass binding) ifTrue: [ ^true ]].
-	^ false
+	self deprecated: 'just use #isUsed'.
+	^aClass isUsed
 ]
 
 { #category : #query }

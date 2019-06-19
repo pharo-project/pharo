@@ -5,14 +5,18 @@ SystemNavigation >> browseAllAccessesTo: instVarName from: aClass [
 	"Create and schedule a Message Set browser for all the receiver's methods 
 	or any methods of a subclass/superclass that refer to the instance variable name."
 
-	"self new browseAllAccessesTo: 'contents' from: Collection."
+	"self new browseAllAccessesTo: 'x' from: Point."
 
-	| coll |
-	coll := self allAccessesTo: instVarName from: aClass.
-	^ self browseMessageList: coll name: 'Accesses to ' , instVarName autoSelect: instVarName refreshingBlock: [ :method | | index |
-			index := aClass instVarIndexFor: instVarName.
-			(method readsField: index)
-				or: [ method writesField: index ] ]
+	| methods slot |
+	slot := aClass slotNamed: instVarName.
+	methods := (aClass allMethodsAccessingSlot: slot) 
+		collect: [:meth | self createMethodNamed: meth selector realParent: meth methodClass].
+	
+	^ self
+		browseMessageList: methods
+		name: 'Accesses to ' , instVarName
+		autoSelect: instVarName
+		refreshingBlock: [ :method | slot isAccessedIn: method ]
 ]
 
 { #category : #'*Tool-Base' }
@@ -343,23 +347,6 @@ SystemNavigation >> browseSendersOf: aSelector name: labelString autoSelect: aut
 		name: labelString
 		autoSelect: autoSelectString
 		refreshingBlock: [ :method | method hasSelector: aSelector ]
-]
-
-{ #category : #'*Tool-Base' }
-SystemNavigation >> browseSharedPoolUsersOf: aClass [
-
-	| pattern list | 
-	self okToChange ifFalse: [^ self ].
-	list := aClass poolUsers.
-	list isEmpty
-		ifTrue: [ ^ self ]
-		ifFalse: [pattern := UIManager default 
-				enterOrRequestFrom: list 
-				lines: #() 
-				title: 'Class name or fragment?'].
-
-	pattern ifNil: [^ self ].
-	pattern browse
 ]
 
 { #category : #'*Tool-Base' }

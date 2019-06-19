@@ -193,16 +193,17 @@ ComposablePresenter class >> title [
 	^ 'Untitled window'
 ]
 
-{ #category : #'api-window' }
+{ #category : #TOREMOVE }
 ComposablePresenter >> aboutText [
+	"DO NOT USE
+	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	From now on, if you want to interact with a window you need to:
+	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
+	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
+	
+	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 
-	^ aboutText value ifNil: [ aboutText value: 'The about text for this window has not been set.'; value]
-]
-
-{ #category : #'api-window' }
-ComposablePresenter >> aboutText: aString [
-
-	aboutText value: aString
+	^ aboutText value
 ]
 
 { #category : #private }
@@ -298,17 +299,17 @@ ComposablePresenter >> asPresenter [
 	^ self
 ]
 
-{ #category : #'api-window' }
+{ #category : #TOREMOVE }
 ComposablePresenter >> askOkToClose [
 
+	"DO NOT USE
+	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	From now on, if you want to interact with a window you need to:
+	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
+	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
+	
+	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 	^ askOkToClose value
-]
-
-{ #category : #'api-window' }
-ComposablePresenter >> askOkToClose: aBoolean [
-	self flag: #TODO. "Move this to WindowPresenter (it should be added in 
-	#initializeWindow:"
-	askOkToClose value: aBoolean
 ]
 
 { #category : #'api-shortcuts' }
@@ -493,9 +494,16 @@ ComposablePresenter >> iconNamed: aSymbol [
 	^ self class iconNamed: aSymbol
 ]
 
-{ #category : #'api-window' }
+{ #category : #TOREMOVE }
 ComposablePresenter >> initialExtent [
-
+	
+	"DO NOT USE
+	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	From now on, if you want to interact with a window you need to:
+	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
+	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
+	
+	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 	^ nil
 ]
 
@@ -573,8 +581,12 @@ ComposablePresenter >> initializeWidgets [
 ComposablePresenter >> initializeWindow: aWindowPresenter [
 	"override this to set window values before opening. 
 	 You may want to add a menu, a toolbar or a statusbar"
-	
-	aWindowPresenter 
+
+	"IMPORTANT: Please ovirride this method and set yourself the informations you want in your window.
+	The content of this method is here to help the transition between Spec 1 and 2.
+	In the next Spec version the content of this method will be removed and it will do nothing by default because the goal is to remove the management of all of those informations from Composable to put them in WindowPresenter."
+
+	aWindowPresenter
 		title: self title;
 		initialExtent: self initialExtent;
 		windowIcon: self windowIcon;
@@ -822,17 +834,6 @@ ComposablePresenter >> okToChange [
 		ifFalse: [ true ] 
 ]
 
-{ #category : #'api-shortcuts' }
-ComposablePresenter >> on: aShortcut do: aBlock [
-
-	self 
-		deprecated: 'Use #bindKeyCombination:toAction: instead.' 
-		transformWith: '`@receiver on: `@statements1 do: `@statements2' 
-						-> '`@receiver bindKeyCombination: `@statements1 toAction: `@statements2'.
-
-	self bindKeyCombination: aShortcut toAction: aBlock
-]
-
 { #category : #'api-announcements' }
 ComposablePresenter >> on: anAnnouncement send: aSelector to: aTarget [
 
@@ -935,17 +936,6 @@ ComposablePresenter >> setExtentAndBindingTo: widget [
 	self ensureKeyBindingsFor: widget
 ]
 
-{ #category : #'api-showing' }
-ComposablePresenter >> setModal: aWindow [
-
-	self 
-		deprecated: 'Do not use this directly. Use #openModalWithSpec (and family) instead.' 
-		on: '2019-02-26' 
-		in: #Pharo8.
-	
-	self changed: #setModal: with: { aWindow }
-]
-
 { #category : #'accessing model' }
 ComposablePresenter >> setModel: aDomainObject [
 
@@ -985,17 +975,17 @@ ComposablePresenter >> takeLastKeyboardFocus [
 		ifNotEmpty: [:focus | focus last takeKeyboardFocus ].
 ]
 
-{ #category : #'api-window' }
+{ #category : #TOREMOVE }
 ComposablePresenter >> title [
-	"Return the window's title"
+	"DO NOT USE
+	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	From now on, if you want to interact with a window you need to:
+	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
+	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
+	
+	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 
 	^ titleHolder value
-]
-
-{ #category : #'api-window' }
-ComposablePresenter >> title: aString [
-
-	titleHolder value: aString
 ]
 
 { #category : #TOREMOVE }
@@ -1065,24 +1055,15 @@ ComposablePresenter >> whenWindowChanged: aBlock [
 		do: [ :ann | aBlock cull: ann model ]
 ]
 
-{ #category : #accessing }
-ComposablePresenter >> widget [
-	"I return the adapter responsible of building my widget"
-	
-	self deprecated: 'Should use #adapter instead'
-		transformWith: '`@receiver widget' -> '`@receiver adapter'.
-	
-	^ self spec
-]
-
-{ #category : #api }
+{ #category : #TOREMOVE }
 ComposablePresenter >> windowIcon [
+	"DO NOT USE
+	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	From now on, if you want to interact with a window you need to:
+	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
+	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
+	
+	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 
 	^ windowIcon value
-]
-
-{ #category : #api }
-ComposablePresenter >> windowIcon: aForm [
-
-	windowIcon value: aForm
 ]

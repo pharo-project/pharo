@@ -1,12 +1,32 @@
 "
-A VersionBrowser is a tool made for browsing the several versions of the provided method.
+I am a tool made for browsing the several versions of the provided method.
+
+I will list of the history of the method available in the sources of the image.
+
+Examples
+--------------------
+
+	self browseVersionsForClass: self selector: #initializeWidgets
+	
+ 
+Internal Representation and Key Implementation Points.
+--------------------
+
+    Instance Variables
+	isShowingDiff:			<aBoolean>		Since I can show a diff or a code presenter, I am a boolean here to know which one is currently selected.
+	rgMethod:					<aRGMethod>		The method to browse the versions.
+	sourcePresenter:		<aPresenter>		Either a code or diff presenter depending on the informations the user wants to know.
+					
+	Maybe the #sourcePreseneter management should be extracted into a Strategy design pattern later to have a cleaner code.
+
 "
 Class {
 	#name : #VersionBrowser,
-	#superclass : #Object,
+	#superclass : #AbstractMessageCentricBrowser,
 	#instVars : [
 		'rgMethod',
-		'browser'
+		'sourcePresenter',
+		'isShowingDiff'
 	],
 	#category : #'Spec-Tools-VersionBrowser'
 }
@@ -15,7 +35,7 @@ Class {
 VersionBrowser class >> browseVersionsForClass: aClass selector: aSelector [
 	^ aClass
 		compiledMethodAt: aSelector
-		ifPresent: [ :method | self new browseVersionsOf: method ]
+		ifPresent: [ :method | self browseVersionsForMethod: method ]
 		ifAbsent: [ self
 				inform:
 					('No method {1} in class {2}'
@@ -26,125 +46,52 @@ VersionBrowser class >> browseVersionsForClass: aClass selector: aSelector [
 
 { #category : #api }
 VersionBrowser class >> browseVersionsForMethod: aRingMethod [
-	^ self new
-		browseVersionsOf: aRingMethod
-		
+	^ (self on: aRingMethod) openWithSpec
 ]
 
-{ #category : #'tool registry' }
+{ #category : #specs }
+VersionBrowser class >> defaultSpec [
+	^ SpecPanedLayout newVertical
+		add: #messageList;
+		add:
+			(SpecBoxLayout newVertical
+				add: #toolbarPresenter withConstraints: [ :constraints | constraints height: self buttonHeight ];
+				add: #sourcePresenter;
+				yourself);
+		yourself
+]
+
+{ #category : #'tools registry' }
 VersionBrowser class >> registerToolsOn: registry [
-	"Add ourselves to registry. See [Smalltalk tools]" 
+	"Add ourselves to registry. See [Smalltalk tools]"
+
 	registry register: self as: #versionBrowser
-
 ]
 
-{ #category : #menu }
-VersionBrowser class >> versionsBrowserListMenu: aBuilder [
-	<contextMenu>
-	<versionBrowserListMenu>
-	| browser model |
-	model := aBuilder model.
-	browser := aBuilder model browser.
-	browser selectedMessage notNil
-		ifTrue: [ 
-			(aBuilder item: #'Compare to current')
-				help: 'Compare selected version to the current version';
-				target: model;
-				selector: #compareToCurrentVersion.
-			(aBuilder item: #'Compare to version...')
-				help: 'Compare selected version to another selected version';
-				target: model;
-				selector: #compareToOtherVersion.
-			(aBuilder item: #'Revert to selected version')
-				help: 'Resubmit the selected version, so that it becomes the current version';
-				action: [ model revert: browser selectedItem ]].
-	(aBuilder item: #Senders)
-		keyText: 'n';
-		help: 'Browse all senders of this selector';
-		action: [ model browseSenders ].
-	(aBuilder item: #Implementors)
-		keyText: 'm';
-		help: 'Browse all implementors of this selector';
-		action: [ model browseImplementors ];
-		withSeparatorAfter 
+{ #category : #visiting }
+VersionBrowser >> accept: text notifying: notifyer [
+	^ self selectedMessage
+		ifNotNil: [:message | 
+			message methodClass 
+				compile: text 
+				classified: message protocol
+				notifying: notifyer ]
 ]
 
-{ #category : #menu }
+{ #category : #actions }
 VersionBrowser >> browseImplementors [
 	SystemNavigation new browseAllImplementorsOf: rgMethod selector
 ]
 
-{ #category : #menu }
+{ #category : #actions }
 VersionBrowser >> browseSenders [
 	SystemNavigation new browseSendersOf: rgMethod selector name: 'Senders of ' , rgMethod selector autoSelect: rgMethod selector
 ]
 
 { #category : #'instance creation' }
-VersionBrowser >> browseVersionsOf: aMethod [
-
-	self setRGMethodFrom: aMethod.
-	^ self buildBrowser
-]
-
-{ #category : #'instance creation' }
-VersionBrowser >> browseVersionsOf: method class: aClass meta: meta category: msgCategory selector: aSelector [
-
-	self setRGMethodFrom: method.
-	^ self buildBrowser
-]
-
-{ #category : #accessing }
-VersionBrowser >> browser [
-	^ browser
-]
-
-{ #category : #'instance creation' }
-VersionBrowser >> browserForList: aList [
-	browser := MessageBrowser new.
-	browser
-		topologicSort: false;
-		refreshingBlock: [ :m | false ];
-		sortingBlock: [ :a :b | ";
-		displayBlock: [:changeRecord | self displayStringsFor: changeRecord]" (a annotationNamed: #versionIndex ifAbsent: [ 0 ]) < (b annotationNamed: #versionIndex ifAbsent: [ 0 ]) ].
-
-	browser toolbarModel
-		emptyDropList;
-		addItemLabeled: 'Side By Side' do: [ self showDiffMorphWithConverter: (DiffMorphChangeRecordConverter methodReference: browser textConverter method referencesList: aList) ];
-		addItemLabeled: 'Source' do: [ self showSourceWithConverter: (SourceMethodConverter method: browser textConverter method) ];
-		addItemLabeled: 'Diff' do: [ self showSourceWithConverter: (DiffChangeRecordConverter methodReference: browser textConverter method referencesList: aList) ].
-
-	browser toolbarModel versionModel
-		label: 'Revert';
-		action: [ self revert: browser selectedItem ].
-	browser listModel contextMenu: [ :menu | menu addAllFromPragma: 'versionBrowserListMenu' target: self ].
-	^ browser
-]
-
-{ #category : #'instance creation' }
-VersionBrowser >> buildBrowser [
-	| changeList b |
-
-	changeList := self buildChangeList.
-	
-	self browserForList: changeList.
-	
-	b := browser
-		messages: changeList;
-		title: 'Recent versions of ' , rgMethod asString;
-		openWithSpec.
-	b takeKeyboardFocus.
-		
-	self showDiffMorphWithConverter: (DiffMorphChangeRecordConverter 
-		methodReference: browser textConverter method 
-		referencesList: changeList).
-		
-	^ b	
-]
-
-{ #category : #'instance creation' }
 VersionBrowser >> buildChangeList [
 	rgMethod sourcePointer ifNil:[ ^ #() ].
-	
+
 	^ (SourceFiles
 		changeRecordsFrom: rgMethod sourcePointer
 		className: rgMethod instanceSideParentName
@@ -154,97 +101,196 @@ VersionBrowser >> buildChangeList [
 			rg annotationNamed: #versionIndex put: i ]
 ]
 
-{ #category : #menu }
-VersionBrowser >> compareTo:anOtherVersion withLabel:aLabel [
-	| diff versions selected|
-	selected := browser selectedMessage.
-	versions := Array with:anOtherVersion with: (selected).
-	diff := DiffPresenter new.
-	diff	title: ('Comparison from {1} to {2}' format:{selected stamp . aLabel}).
-	diff text:(DiffMorphChangeRecordConverter 
-		methodReference: anOtherVersion 
-		referencesList: versions) getText.
-      diff openWithSpec.
-
+{ #category : #accessing }
+VersionBrowser >> changeList [
+	^ messageList messages
 ]
 
-{ #category : #menu }
+{ #category : #actions }
+VersionBrowser >> compareTo: anOtherVersion withLabel: aLabel [
+	| versions texts |
+	versions := Array with: anOtherVersion with: self selectedMessage.
+	texts := (DiffMorphChangeRecordConverter methodReference: anOtherVersion referencesList: versions) getText.
+	DiffPresenter new
+		title: ('Comparison from {1} to {2}' format: {versions second stamp . aLabel});
+		leftText: texts first;
+		rightText: texts second;
+		openWithSpec
+]
+
+{ #category : #actions }
 VersionBrowser >> compareToCurrentVersion [
-	self compareTo: rgMethod withLabel:'current version'
+	self compareTo: rgMethod withLabel: 'Current version'
 ]
 
-{ #category : #menu }
+{ #category : #actions }
 VersionBrowser >> compareToOtherVersion [
 	| labels versions index selected |
-	versions := self buildChangeList.
-	labels := versions collect: [ :version | version stamp ].
+	versions := self changeList.
+	labels := versions collect: #stamp.
 	index := UIManager default chooseFrom: labels.
-	index > 0
-		ifFalse: [ ^ self ].
+	index > 0 ifFalse: [ ^ self ].
 	selected := versions at: index.
 	self compareTo: selected withLabel: selected stamp
 ]
 
+{ #category : #initialization }
+VersionBrowser >> initialize [
+	isShowingDiff := false.
+	super initialize
+]
+
+{ #category : #initialization }
+VersionBrowser >> initializePresenter [
+	messageList
+		whenSelectionChangedDo: [ :selection | self selectItem: selection selectedItem ];
+		messages: self buildChangeList.
+		
+	toolbarPresenter dropListModel selectedIndex: 1
+]
+
+{ #category : #initialization }
+VersionBrowser >> initializeWidgets [
+	messageList := self instantiate: MessageList.
+	toolbarPresenter := self instantiate: MethodToolbar.
+
+	messageList
+		topologicSort: false;
+		sortingBlock: [ :a :b | (a annotationNamed: #versionIndex ifAbsent: [ 0 ]) < (b annotationNamed: #versionIndex ifAbsent: [ 0 ]) ];
+		contextMenu: self messageListMenu.
+
+	toolbarPresenter
+		addItemLabeled: 'Side By Side' do: [ self showDiffMorphWithConverter: (DiffMorphChangeRecordConverter methodReference: self textConverter method referencesList: self changeList) ];
+		addItemLabeled: 'Source' do: [ self showSourceWithConverter: (SourceMethodConverter method: self textConverter method) ];
+		addItemLabeled: 'Diff' do: [ self showSourceWithConverter: (DiffChangeRecordConverter methodReference: self textConverter method referencesList: self changeList) ].
+		
+	toolbarPresenter  versionModel
+		label: 'Revert';
+		action: [ self revert: self selectedMessage ]
+]
+
+{ #category : #initialization }
+VersionBrowser >> initializeWindow: aWindowPresenter [
+	super initializeWindow: aWindowPresenter.
+	aWindowPresenter title: 'Recent versions of ' , rgMethod displayName
+]
+
+{ #category : #private }
+VersionBrowser >> installIconStylerFor: anItem [
+	"icons styler are only supported for method definitions (not nil / not for comment definitions    
+	 (those may occure for comment or general string searches)) and in the case the source presenter is not a diff"
+
+	((self isMethodDefinition: anItem) or: [ isShowingDiff not ]) ifFalse: [ ^ self ].
+
+	IconStyler styleText: sourcePresenter withAst: anItem ast
+]
+
 { #category : #accessing }
-VersionBrowser >> displayStringsFor: aMethodVersion [
-	| author version cleanStampParts |
-	
-	"a stamp is a string in the form  'GuillermoPolito 3/4/2015 14:33'"
-	"It may be incomplete, empty or even start with spaces."
-	cleanStampParts := aMethodVersion stamp trim substrings.
-	
-	author := cleanStampParts ifEmpty: [ '<missing>' ] ifNotEmpty: [ :parts | parts first ].
-	version := cleanStampParts ifEmpty: [ '<missing>' ] ifNotEmpty: [ :parts | parts allButFirst joinUsing: ' ' ].
-	
-	^ {author.
-	version.
-	(aMethodVersion realClass name).
-	(aMethodVersion selector).
-	('{' , aMethodVersion category , '}')}
+VersionBrowser >> messageListMenu [
+	^ self newMenu
+		addGroup: [ :aGroup | 
+			aGroup
+				addItem: [ :anItem | 
+					anItem
+						name: 'Compare to current';
+						help: 'Compare selected version to the current version';
+						action: [ self compareToCurrentVersion ] ];
+				addItem: [ :anItem | 
+					anItem
+						name: 'Compare to version...';
+						help: 'Compare selected version to another selected version';
+						action: [ self compareToOtherVersion ] ];
+				addItem: [ :anItem | 
+					anItem
+						name: 'Revert to selected version';
+						help: 'Resubmit the selected version, so that it becomes the current version';
+						action: [ self revert: self selectedMessage ] ];
+				addItem: [ :anItem | 
+					anItem
+						name: 'Senders';
+						shortcut: $n meta;
+						action: [ self browseSenders ] ];
+				addItem: [ :anItem | 
+					anItem
+						name: 'Implementors';
+						shortcut: $m meta;
+						action: [ self browseImplementors ] ] ];
+		yourself
 ]
 
 { #category : #'instance creation' }
 VersionBrowser >> revert: aChangeRecord [
-	aChangeRecord 
-		ifNil: [self inform: 'nothing selected, so nothing done']
-		ifNotNil: [ rgMethod realClass compile: aChangeRecord sourceCode classified: aChangeRecord category withStamp: aChangeRecord stamp notifying:nil].
-		
-	"reinitialize me"	
-	self setRGMethodFrom: (rgMethod realClass >> (rgMethod selector)).
+	aChangeRecord
+		ifNil: [ ^ self inform: 'nothing selected, so nothing done' ]
+		ifNotNil: [ rgMethod realClass
+				compile: aChangeRecord sourceCode
+				classified: aChangeRecord category
+				withStamp: aChangeRecord stamp
+				notifying: nil ].
 
-	browser 
+	"reinitialize me"
+	self setRGMethodFrom: rgMethod realClass >> rgMethod selector.
+
+	messageList
 		messages: self buildChangeList;
-		setSelectedIndex: 1.
+		selectIndex: 1
 ]
 
 { #category : #private }
+VersionBrowser >> selectItem: item [
+	sourcePresenter ifNil: [ ^ self ].
+
+	self
+		setSourceContentWith:
+			(self textConverter
+				method: item;
+				getText).
+
+	sourcePresenter clearUndoManager.
+	self installIconStylerFor: item
+]
+
+{ #category : #'accessing model' }
+VersionBrowser >> setModelBeforeInitialization: aMethod [
+	self setRGMethodFrom: aMethod.
+]
+
+{ #category : #initialization }
 VersionBrowser >> setRGMethodFrom: aMethod [
 "asHistorical, because active RGMethods don't always have the source pointer attached"
 	rgMethod := aMethod asRingDefinition asHistorical.
 ]
 
+{ #category : #private }
+VersionBrowser >> setSourceContentWith: content [
+	isShowingDiff
+		ifTrue: [ (content isText or: [ content isString ])
+				ifTrue: [ sourcePresenter leftText: ''.
+					sourcePresenter rightText: content ]
+				ifFalse: [ sourcePresenter leftText: content first.
+					sourcePresenter rightText: content second ] ]
+		ifFalse: [ sourcePresenter text: content ]
+]
+
 { #category : #'instance creation' }
 VersionBrowser >> showDiffMorphWithConverter: aConverter [
-	| behavior |
-	
-	behavior := browser textModel behavior.
-	browser textModel: browser newDiff.
-	browser needRebuild: false.
-	browser openWithSpec.
-	browser textConverter: aConverter.
-	browser textModel behavior: behavior
+	sourcePresenter := self newDiff.
+	isShowingDiff := true.
+	self needRebuild: false.
+	self buildWithSpec.
+	self textConverter: aConverter.
+	sourcePresenter contextClass: self selectedMessage methodClass.
+	messageList selectIndex: (messageList selectedIndex)
 ]
 
 { #category : #'instance creation' }
 VersionBrowser >> showSourceWithConverter: aConverter [
-	| behavior |
-	
-	behavior := browser textModel behavior.
-	browser textModel: browser newCode.
-	browser needRebuild: false.
-	browser textModel behavior: behavior.
-	browser textConverter: aConverter.
-
-	browser openWithSpec.
-
+	sourcePresenter := self newCode.
+	isShowingDiff := false.
+	self needRebuild: false.
+	self buildWithSpec.
+	self textConverter: aConverter.
+	sourcePresenter acceptBlock: [ :text :notifyer | (self accept: text notifying: notifyer) notNil ].
+	sourcePresenter behavior: self selectedMessage methodClass.
+	messageList selectIndex: (messageList selectedIndex)
 ]

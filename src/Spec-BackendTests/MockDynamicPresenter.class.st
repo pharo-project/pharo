@@ -55,5 +55,5 @@ MockDynamicPresenter >> label [
 
 { #category : #action }
 MockDynamicPresenter >> selectFirstElement [
-	list selectedIndex: 1
+	list selectIndex: 1
 ]

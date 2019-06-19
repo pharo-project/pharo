@@ -779,15 +779,10 @@ ClassDescription >> instVarIndexFor: instVarName [
 ClassDescription >> instVarIndexFor: instVarName ifAbsent: aBlock [
 	"Answer the index of the named instance variable."
 
-	| index |
-	index := self classLayout instVarIndexFor: instVarName ifAbsent: 0.
-	index = 0 ifTrue: 
-		[^self superclass
-			ifNil: [aBlock value]
-			ifNotNil: [self superclass instVarIndexFor: instVarName ifAbsent: aBlock]].
-	^self superclass
-		ifNil: [index]
-		ifNotNil: [index + self superclass instSize]
+	^self
+		slotNamed: instVarName
+		ifFound: [ :slot | slot isVirtual ifTrue: aBlock ifFalse: [slot index]]
+		ifNone: aBlock
 ]
 
 { #category : #private }
@@ -802,18 +797,13 @@ ClassDescription >> instVarMappingFrom: oldClass [
 { #category : #'instance variables' }
 ClassDescription >> instVarNameForIndex: index [
 	"Answer the named instance variable with index index or nil if none."
+	"we deprecate this as it is not useful know that we have meta objects for variables"
 
-	| superInstSize |
-	index > self instSize ifTrue: [^nil].
-	superInstSize := self superclass ifNil: [0] ifNotNil: [self superclass instSize].
-	index > superInstSize ifTrue:
-		[^self instVarNames at: index - superInstSize].
-	self superclass ifNil: [^nil].
-	^self superclass instVarNameForIndex: index
-
-	"(Object allSubclasses select:
-		[:cls| cls instSize > cls superclass instSize and: [cls subclasses isEmpty and: [cls superclass instSize > 0]]]) collect:
-			[:cls| (1 to: cls instSize) collect: [:i| cls instVarNameForIndex: i]]"
+	| slot |
+	self deprecated: 'Please use the slot API directly'.
+	slot := self classLayout allSlots 
+		detect: [ :each | each isVirtual not and: [ each index = index ] ] ifNone: [^nil].
+	^slot name
 ]
 
 { #category : #'instance variables' }
@@ -821,20 +811,6 @@ ClassDescription >> instVarNames [
 	"Answer an Array of the receiver's instance variable names."
 
 	^self localSlots collect: [ :each | each name ]
-]
-
-{ #category : #compiling }
-ClassDescription >> instVarNamesAndOffsetsDo: aBinaryBlock [
-	"This is part of the interface between the compiler and a class's instance or field names.
-	 The class should enumerate aBinaryBlock with the instance variable name strings and
-	 their integer offsets.  The order is important. Names evaluated later will override the
-	 same names occurring earlier."
-
-	| superInstSize |
-	(superInstSize := self superclass notNil ifTrue: [self superclass instSize] ifFalse: [0]) > 0 ifTrue:
-		[self superclass instVarNamesAndOffsetsDo: aBinaryBlock].
-	1 to: self instSize - superInstSize do:
-		[:i| aBinaryBlock value: (self instVarNames at: i) value: i + superInstSize]
 ]
 
 { #category : #'accessing parallel hierarchy' }
@@ -848,7 +824,11 @@ ClassDescription >> instanceSide [
 
 { #category : #accessing }
 ClassDescription >> instanceVariables [
-	^self instVarNames.
+	"we deprecate this due to bad naming: it returns names, not variables!"
+	self
+		deprecated: 'Please use #instVarNames or #slotNames instead'
+		transformWith: '`@receiver instanceVariables' -> '`@receiver instVarNames'.
+	^self instVarNames
 ]
 
 { #category : #printing }
@@ -1388,65 +1368,6 @@ ClassDescription >> untagFrom: aSymbol [
 	packageTag name = aSymbol ifFalse: [ ^self ].
 	packageTag removeClass: self.
 	package addClass: self
-]
-
-{ #category : #initialization }
-ClassDescription >> updateInstances: oldInstances from: oldClass isMeta: isMeta [
-	"Recreate any existing instances of the argument, oldClass, as instances of the receiver,
-	 which is a newly changed class. Permute variables as necessary, and forward old instances
-	 to new instances.  Answer nil to defeat old clients that expect an array of old instances.
-	 The old behaviour, which necessitated a global GC, exchanged identities and answered
-	 the old instances.  But no clients used the result.  This way we avoid the unnecessary GC,"
-
-	| variable instSize newInstances |
-	oldInstances isEmpty
-		ifTrue: [ ^ nil ].	"no instances to convert"
-	isMeta ifTrue:
-		[(oldInstances size = 1
-		  and: [self soleInstance class == self
-				or: [self soleInstance class == oldClass]]) ifFalse:
-			[^self error: 'Metaclasses can only have one instance']].
-	variable := self isVariable.
-	instSize := self instSize.
-	newInstances := Array new: oldInstances size.
-	1 to: oldInstances size do: [ :i | newInstances at: i put: (self newInstanceFrom: (oldInstances at: i) variable: variable size: instSize) ].	"Now perform a bulk mutation of old instances into new ones"
-	oldInstances elementsForwardIdentityTo: newInstances.
-	^ nil
-]
-
-{ #category : #initialization }
-ClassDescription >> updateInstancesFrom: oldClass [
-	"Recreate any existing instances of the argument, oldClass, as instances of 
-	the receiver, which is a newly changed class. Permute variables as 
-	necessary. Return the array of old instances (none of which should be
-	pointed to legally by anyone but the array)."
-	"ar 7/15/1999: The updating below is possibly dangerous. If there are any
-	contexts having an old instance as receiver it might crash the system if
-	the new receiver in which the context is executed has a different layout.
-	See bottom below for a simple example:"
-	| oldInstances |
-	oldInstances := oldClass allInstances asArray.
-	oldInstances := self updateInstances: oldInstances from: oldClass isMeta: self isMeta.
-	^nil
-
-"	| crashingBlock class |
-	class := Object subclass: #CrashTestDummy
-		instanceVariableNames: 'instVar'
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: 'Crash-Test'.
-	class compile:'instVar: value instVar := value'.
-	class compile:'crashingBlock ^[instVar]'.
-	crashingBlock := (class new) instVar: 42; crashingBlock.
-	Object subclass: #CrashTestDummy
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: 'Crash-Test'.
-	crashingBlock.
-	crashingBlock value.
-	"
-
 ]
 
 { #category : #'pool variable' }

@@ -61,13 +61,15 @@ MorphicTreeTableAdapter >> addModelTo: tableMorph [
 
 { #category : #factory }
 MorphicTreeTableAdapter >> basicSelectionChanged: ann [
-	| diff selection |
-
+	| selection |
 	selection := self presenter selection.
 	ann newSelectedIndexes ifEmpty: [ ^ selection unselectAll ].
-
-	diff := ann newSelectedIndexes difference: ann oldSelectedIndexes.
-	diff ifNotEmpty: [ selection selectPath: (self widget dataSource pathFromIndex: diff last) ]
+	(ann newSelectedIndexes difference: ann oldSelectedIndexes) ifEmpty: [ ^ self ].
+	
+	selection
+		selectPaths:
+			(ann newSelectedIndexes
+				collect: [ :i | self widget dataSource pathFromIndex: i ])
 ]
 
 { #category : #factory }

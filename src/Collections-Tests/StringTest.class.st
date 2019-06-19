@@ -65,6 +65,11 @@ StringTest >> anotherValue [
 	^ self nonEmpty anyOne
 ]
 
+{ #category : #coverage }
+StringTest >> classToBeTested [
+	^ String
+]
+
 { #category : #'tests - includes' }
 StringTest >> collection [
 	^ 'ghj'
@@ -1765,6 +1770,11 @@ StringTest >> testSpace [
 	string := String space.
 	self assert: string size equals: 1.
 	self assert: string equals: ' '
+]
+
+{ #category : #tests }
+StringTest >> testStoreOn [
+	self assert: (String streamContents: [ :s | 'Foo''Bar' storeOn: s ]) equals: '''Foo''''Bar'''
 ]
 
 { #category : #'tests - converting' }

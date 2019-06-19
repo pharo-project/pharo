@@ -102,7 +102,7 @@ GLMFastListOutlineDataSource >> rowMorphForElement: element [
 	rowElements
 		add: (self formatedDisplayValueOf: element) asMorph;
 		addAll: (self tagMorphsFrom: self glamourPresentation for: element).
-	^ self theme newRowIn: World for: rowElements
+	^ self theme newRowIn: self currentWorld for: rowElements
 ]
 
 { #category : #accessing }

@@ -1035,16 +1035,24 @@ Object >> instVarAt: index put: anObject [
 
 { #category : #introspection }
 Object >> instVarNamed: aString [
-	"Return the value of the instance variable in me with that name.  Slow and unclean, but very useful. "
+	"Return the value of the instance variable in me with that name.  Slow, but very useful.
+	We support here all slots (even non indexed) but raise a backward compatible exception"
 
-	^ self instVarAt: (self class instVarIndexFor: aString asString ifAbsent: [ InstanceVariableNotFound signalFor: aString asString ])
+	^ self class
+		slotNamed: aString
+		ifFound: [ :slot | slot read: self ]
+		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
 ]
 
 { #category : #introspection }
 Object >> instVarNamed: aString put: aValue [
-	"Store into the value of the instance variable in me of that name. Slow and unclean, but very useful. "
+	"Store into the value of the instance variable in me of that name. Slow, but very useful.
+	We support here all slots (even non indexed) but raise a backward compatible exception"
 
-	^ self instVarAt: (self class instVarIndexFor: aString asString ifAbsent: [ InstanceVariableNotFound signalFor: aString asString ]) put: aValue
+	^ self class
+		slotNamed: aString
+		ifFound: [ :slot | slot write: aValue to: self ]
+		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
 ]
 
 { #category : #testing }
@@ -1746,7 +1754,7 @@ Object >> readSlot: aSlot [
 
 { #category : #introspection }
 Object >> readSlotNamed: aName [
-	^self readSlot: (self class slotNamed: aName)
+	^(self class slotNamed: aName) read: self
 ]
 
 { #category : #dependencies }

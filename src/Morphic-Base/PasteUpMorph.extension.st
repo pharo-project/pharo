@@ -27,7 +27,7 @@ PasteUpMorph >> makeAScreenshot [
 		title: 'Make a screenshot')
 		ifNotNil: [ :choice | 
 			| form name |
-			form := choice = #world ifTrue: [ World imageForm ] ifFalse: [ Form fromUser ].
+			form := choice = #world ifTrue: [ self currentWorld imageForm ] ifFalse: [ Form fromUser ].
 			name := (FileSystem workingDirectory / filePrefix , 'png') nextVersion.
 			PNGReadWriter putForm: form onFileNamed: (FileSystem workingDirectory / filePrefix , 'png') nextVersion.
 			UIManager default

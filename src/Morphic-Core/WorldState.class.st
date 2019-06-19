@@ -98,7 +98,7 @@ WorldState class >> desktopMenuPragmaKeyword [
 { #category : #settings }
 WorldState class >> desktopMenuPragmaKeyword: aString [
 	DesktopMenuPragmaKeyword := aString.
-	World resetWorldMenu.
+	self currentWorld resetWorldMenu.
 
 ]
 
@@ -174,22 +174,27 @@ WorldState class >> pharoItemsOn: aBuilder [
 				target: self;
 				selector: #saveSession;
 				help: 'Save the current version of the image on disk.';
+				order: 2;
 				keyText: 'S';
 				iconName: #smallSaveIcon.
 			(aBuilder item: #'Save as...')
 				target: self;
 				selector: #saveAs;
 				help: 'Save the current version of the image on disk under a new name.';
+				order: 3;
 				iconName: #smallSaveAsIcon.
 			(aBuilder item: #'Save and quit')
 				target: self;
 				selector: #saveAndQuit;
 				help: 'Save the current image on disk, and quit Pharo.';
-				iconName: #smallQuitIcon.
+				order: 4;
+				iconName: #smallQuitIcon;
+				withSeparatorAfter. 
 			(aBuilder item: #Quit)
 				target: self;
 				selector: #quitSession;
 				help: 'Quit Pharo without saving the image on disk.';
+				order: 5;
 				iconName: #smallQuitIcon ]
 ]
 
@@ -235,7 +240,7 @@ WorldState class >> screenShotCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Screenshot)
 		parent: #System;
-		target: World;
+		target: self currentWorld;
 		order: 501;
 		selector: #makeAScreenshot;
 		label: 'Screenshot';

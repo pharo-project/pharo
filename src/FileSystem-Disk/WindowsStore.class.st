@@ -34,6 +34,22 @@ WindowsStore class >> separator [
 	^ $\
 ]
 
+{ #category : #accessing }
+WindowsStore >> accessTimeOf: aPath [
+	"Answer the access time of aPath."
+
+	aPath isRoot ifTrue: [ ^self rootEntry accessTime ].
+	^super accessTimeOf: aPath
+]
+
+{ #category : #accessing }
+WindowsStore >> changeTimeOf: aPath [
+	"Answer the change time of aPath."
+
+	aPath isRoot ifTrue: [ ^self rootEntry changeTime ].
+	^super changeTimeOf: aPath
+]
+
 { #category : #public }
 WindowsStore >> checkName: aFileName fixErrors: fixing [
 	"Check if the file name contains any invalid characters"
@@ -53,9 +69,25 @@ WindowsStore >> checkName: aFileName fixErrors: fixing [
 				ifFalse: [char]]
 ]
 
+{ #category : #accessing }
+WindowsStore >> creationTimeOf: aPath [
+	"Answer the creation time of aPath.  If the platform doesn't support creation time, use change time"
+
+	aPath isRoot ifTrue: [ ^self rootEntry creationTime ].
+	^super creationTimeOf: aPath
+]
+
 { #category : #converting }
 WindowsStore >> currentDisk [
 	^ disk ifNil: [  disk := FileSystem workingDirectory path segments first ]
+]
+
+{ #category : #accessing }
+WindowsStore >> deviceIdOf: aPath [
+	"Return the device id of the file at aPath"
+
+	aPath isRoot ifTrue: [ ^self rootEntry deviceId ].
+	^super deviceIdOf: aPath
 ]
 
 { #category : #private }
@@ -77,6 +109,109 @@ WindowsStore >> directoryAt: aPath nodesDo: aBlock [
 		]
 ]
 
+{ #category : #private }
+WindowsStore >> entryAt: aPath fileSystem: aFilesystem [
+
+	aPath isRoot ifTrue: [ ^aFilesystem store rootEntry ].
+	^super entryAt: aPath fileSystem: aFilesystem
+]
+
+{ #category : #accessing }
+WindowsStore >> gidOf: aPath [
+	"Return the gid of the file at aPath"
+
+	aPath isRoot ifTrue: [ ^self rootEntry gid ].
+	^super gidOf: aPath
+]
+
+{ #category : #accessing }
+WindowsStore >> inodeOf: aPath [
+	"Return the inode of the file at aPath"
+
+	aPath isRoot ifTrue: [ ^self rootEntry inode ].
+	^super inodeOf: aPath
+]
+
+{ #category : #accessing }
+WindowsStore >> isBlock: aPath [
+	"Answer a boolean indicating whether the supplied path is a Block file"
+
+	aPath isRoot ifTrue: [ ^self rootEntry isBlock ].
+	^super isBlock: aPath
+]
+
+{ #category : #accessing }
+WindowsStore >> isCharacter: aPath [
+	"Answer a boolean indicating whether the supplied path is a Character file"
+
+	aPath isRoot ifTrue: [ ^self rootEntry isCharacter ].
+	^super isCharacter: aPath
+]
+
+{ #category : #accessing }
+WindowsStore >> isExecutable: aPath [
+	"Answer a boolean indicating whether the supplied path is executable"
+
+	aPath isRoot ifTrue: [ ^self rootEntry isExecutable ].
+	^super isExecutable: aPath
+]
+
+{ #category : #testing }
+WindowsStore >> isFIFO: aPath [
+	"Answer a boolean indicating whether the supplied path is a FIFO file (pipe)"
+
+	aPath isRoot ifTrue: [ ^self rootEntry isFIFO ].
+	^super isFIFO: aPath
+]
+
+{ #category : #testing }
+WindowsStore >> isReadable: aPath [
+	"Answer a boolean indicating whether the supplied path is readable"
+
+	aPath isRoot ifTrue: [ ^self rootEntry isReadable ].
+	^super isReadable: aPath
+]
+
+{ #category : #testing }
+WindowsStore >> isRegular: aPath [
+	"Answer a boolean indicating whether the supplied path is a Regular file"
+
+	aPath isRoot ifTrue: [ ^self rootEntry isRegular ].
+	^super isRegular: aPath
+]
+
+{ #category : #testing }
+WindowsStore >> isSocket: aPath [
+	"Answer a boolean indicating whether the supplied path is a Socket file"
+
+	aPath isRoot ifTrue: [ ^self rootEntry isSocket ].
+	^super isSocket: aPath
+]
+
+{ #category : #testing }
+WindowsStore >> isWritable: aPath [
+	"Answer a boolean indicating whether the supplied path can be written to"
+
+	aPath isRoot ifTrue: [ ^self rootEntry isWritable ].
+	^super isWritable: aPath
+]
+
+{ #category : #accessing }
+WindowsStore >> modificationTimeOf: aPath [
+	"Answer the modification time of aPath."
+
+	aPath isRoot ifTrue: [ ^self rootEntry modificationTime ].
+	^super modificationTimeOf: aPath
+]
+
+{ #category : #accessing }
+WindowsStore >> numberOfHardLinks: aPath [
+	"Return the number of hard links for the File described by aPath"
+
+	aPath isRoot ifTrue: [ ^self rootEntry numberOfHardLinks ].
+	^super numberOfHardLinks: aPath
+]
+
 { #category : #converting }
 WindowsStore >> pathFromString: aString [
 	"Need to distinguish '' and '/' , so tag latter with invalid character ':'  "
@@ -89,6 +224,14 @@ WindowsStore >> pathFromString: aString [
 		ifFalse: [ self stripDrive: pathElements.
 			RelativePath ].
 	^pathClass withAll: pathElements
+]
+
+{ #category : #accessing }
+WindowsStore >> permissions: aPath [
+	"Answer the FileSystemPermissions for the supplied path"
+
+	aPath isRoot ifTrue: [ ^self rootEntry permissions ].
+	^super permissions: aPath
 ]
 
 { #category : #converting }
@@ -110,7 +253,21 @@ WindowsStore >> printPath: aPath on: aStream [
 		ifTrue: [ aStream nextPut: self delimiter ]
 ]
 
+{ #category : #accessing }
+WindowsStore >> sizeOf: aPath [
+	"Return the size of the File described by aPath"
+	aPath isRoot ifTrue: [ ^self rootEntry size ].
+	^super sizeOf: aPath.
+]
+
 { #category : #converting }
 WindowsStore >> stripDrive: pathElements [
 	pathElements ifNotEmpty: [ pathElements at: 1 put: ( ($: split: pathElements first) last)  ]
+]
+
+{ #category : #accessing }
+WindowsStore >> uidOf: aPath [
+	"Return the uid of the File described by aPath"
+	aPath isRoot ifTrue: [ ^self rootEntry uid ].
+	^super uidOf: aPath.
 ]

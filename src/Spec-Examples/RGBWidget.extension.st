@@ -4,10 +4,10 @@ Extension { #name : #RGBWidget }
 RGBWidget class >> example [
 	<sampleInstance>
 	| example |
-	example := self new.
-	example
-		title: 'RGBWidget exampe';
+	example := self new
 		extent: 300 @ 250;
-		openDialogWithSpec.
+		openDialogWithSpec;
+		yourself.
+	example withWindowDo: [ :window | window title: 'RGBWidget example' ].
 	^ example
 ]

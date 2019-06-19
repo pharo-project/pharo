@@ -97,8 +97,7 @@ MethodBrowser >> initializeWidgets [
 	self focusOrder
 		add: listModel;
 		add: toolbarModel;
-		add: textModel.
-	textModel aboutToStyle: true
+		add: textModel
 ]
 
 { #category : #accessing }

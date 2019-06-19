@@ -7,6 +7,13 @@ Class {
 	#category : #'AST-Core-Nodes'
 }
 
+{ #category : #'instance creation' }
+RBSuperNode class >> new [
+	^super new 
+		named: 'super' start: nil;
+		yourself.
+]
+
 { #category : #visiting }
 RBSuperNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitSuperNode: self

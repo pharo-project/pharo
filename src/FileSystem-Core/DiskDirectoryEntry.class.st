@@ -204,15 +204,15 @@ DiskDirectoryEntry >> gtInspectAttributesIn: composite [
 	| attrDictionary |
 
 	attrDictionary := Dictionary new.
-	[self class methodsDo: [ :method |
+	self class methodsDo: [ :method |
 		method methodNode arguments size = 0 ifTrue:
 			[ attrDictionary at: method selector put:
-				(method selector value: self) ] ]]
-		on: FileDoesNotExistException
-		do: [ nil ].
+				([ (method selector value: self) ]
+					on: Error
+					do: [ 'N/A' translated ]) ] ].
 	^(attrDictionary gtInspectorItemsIn: composite)
 		when: [ attrDictionary isNotEmpty ];
-		title: 'Attributes';
+		title: 'Attributes' translated;
 		yourself.
 ]
 
@@ -311,6 +311,7 @@ DiskDirectoryEntry >> isSocket [
 DiskDirectoryEntry >> isSymlink [
 	"Answer true if the receiver is a symbolic link"
 
+	reference path isRoot ifTrue: [ ^false ].
 	"Don't use cached information as the values might reflect a target file accessed from a symlink."
 	^self primitives isSymlink: self pathString
 ]

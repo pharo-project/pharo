@@ -15,7 +15,7 @@ ClassListNodeExample >> browseItem [
 { #category : #menu }
 ClassListNodeExample >> classButton [
 	^ ( self theme 
-				newButtonIn: World
+				newButtonIn: self currentWorld
 				for: self
 				getState: nil
 				action: #browseItem
@@ -29,7 +29,7 @@ ClassListNodeExample >> classButton [
 
 { #category : #menu }
 ClassListNodeExample >> commentText [
-	^ ( self theme  newTextIn: World text: self item comment) unlock; wrapFlag: true; yourself
+	^ ( self theme  newTextIn: self currentWorld text: self item comment) unlock; wrapFlag: true; yourself
 ]
 
 { #category : #accessing }

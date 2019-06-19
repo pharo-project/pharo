@@ -402,6 +402,13 @@ RBMessageNode >> selector: aSelector [
 ]
 
 { #category : #accessing }
+RBMessageNode >> selectorInterval [
+	| positions |
+	positions := self keywordsIntervals. 
+	^positions first first to: positions last last.
+]
+
+{ #category : #accessing }
 RBMessageNode >> selectorParts [
 	^ self keywords collect: #asSymbol.
 ]

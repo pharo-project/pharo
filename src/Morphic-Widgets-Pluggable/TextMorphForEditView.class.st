@@ -338,7 +338,7 @@ TextMorphForEditView >> preferredKeyboardPosition [
 
 	| pos |
 	pos := super preferredKeyboardPosition.
-	^ pos + (self bounds: self bounds in: World) topLeft.
+	^ pos + (self bounds: self bounds in: self currentWorld) topLeft.
 
 ]
 

@@ -28,7 +28,7 @@ FFIExternalStructureFlatLayout >> addField: registerClass size: fieldSize alignm
 ]
 
 { #category : #building }
-FFIExternalStructureFlatLayout >> addMemoryFieldSize: fieldSize alignment: fieldAlignment. [
+FFIExternalStructureFlatLayout >> addMemoryFieldSize: fieldSize alignment: fieldAlignment [.
 	self addField: #memory size: fieldSize alignment: fieldAlignment
 ]
 

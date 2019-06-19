@@ -9,7 +9,7 @@ See my methods comments for more details.
 Class {
 	#name : #AthensAbstractShape,
 	#superclass : #Object,
-	#category : #'Athens-Core'
+	#category : #'Athens-Core-Shapes'
 }
 
 { #category : #converting }
