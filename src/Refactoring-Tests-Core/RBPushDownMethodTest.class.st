@@ -15,7 +15,7 @@ RBPushDownMethodTest >> testPushDownMethod [
 	self deny: (class directlyDefinesMethod: #name:).
 	class subclasses do: 
 		[ :each | 
-		self assert: (each parseTreeFor: #name:) = (RBParser parseMethod: 'name: aString name := aString') ]
+		self assert: (each parseTreeFor: #name:) = (self parseMethod: 'name: aString name := aString') ]
 ]
 
 { #category : #'failure tests' }

@@ -240,7 +240,7 @@ ThemeSettings >> findReplaceSelectionTextColor [
 	"Answer the value of the selectionTextColor for find/replace"
 
 	^ findReplaceSelectionTextColor 
-		ifNil: [ self findReplaceSelectionColor contrastingColor ]
+		ifNil: [ self findReplaceSelectionColor contrastingBlackAndWhiteColor ]
 ]
 
 { #category : #accessing }
@@ -332,7 +332,7 @@ ThemeSettings >> menuBorderColor [
 ThemeSettings >> menuBorderWidth [
 	"Answer the value of menuColor"
 
-	^ 2 * World displayScaleFactor
+	^ 2 * self currentWorld displayScaleFactor
 ]
 
 { #category : #menu }
@@ -511,7 +511,7 @@ ThemeSettings >> secondarySelectionTextColor [
 	"Answer the value of selectionTextColor"
 
 	^ secondarySelectionTextColor 
-		ifNil: [ Smalltalk ui theme secondarySelectionColor contrastingColor ]
+		ifNil: [ Smalltalk ui theme secondarySelectionColor contrastingBlackAndWhiteColor ]
 ]
 
 { #category : #accessing }

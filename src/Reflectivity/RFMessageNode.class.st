@@ -9,5 +9,5 @@ Class {
 
 { #category : #debugging }
 RFMessageNode >> debugHighlightRange [
-	^parent debugHighlightRange 
+	^ parent debugHighlightRange 
 ]

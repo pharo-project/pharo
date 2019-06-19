@@ -29,30 +29,30 @@ Class {
 
 { #category : #'instance creation' }
 Trait class >> named: aSymbol [
-	^ self named: aSymbol uses: {} category: 'Unclassified'
+	^ self named: aSymbol uses: {} package: 'Unclassified'
 ]
 
 { #category : #'instance creation' }
 Trait class >> named: aSymbol uses: aCompositionOrArray [
-	^ self named: aSymbol uses: aCompositionOrArray category: 'Unclassified'
+	^ self named: aSymbol uses: aCompositionOrArray package: 'Unclassified'
 ]
 
-{ #category : #'instance creation' }
+{ #category : #deprecated }
 Trait class >> named: aSymbol uses: aTraitCompositionOrCollection category: aString [
 	^ self
 		named: aSymbol
 		uses: aTraitCompositionOrCollection
-		category: aString
+		package: aString
 		env: self environment
 ]
 
-{ #category : #'instance creation' }
+{ #category : #deprecated }
 Trait class >> named: aName uses: aTraitCompositionOrCollection category: aString env: anEnvironment [
 	^ self
 		named: aName
 		uses: aTraitCompositionOrCollection
 		slots: #()
-		category: aString
+		package: aString
 		env: anEnvironment
 ]
 
@@ -61,25 +61,51 @@ Trait class >> named: aSymbol uses: aTraitCompositionOrCollection package: aStri
 	^ self
 		named: aSymbol
 		uses: aTraitCompositionOrCollection
-		category: aString
+		package: aString
 		env: self environment
 ]
 
 { #category : #'instance creation' }
+Trait class >> named: aName uses: aTraitCompositionOrCollection package: aString env: anEnvironment [
+	^ self
+		named: aName
+		uses: aTraitCompositionOrCollection
+		slots: #()
+		package: aString
+		env: anEnvironment
+]
+
+{ #category : #deprecated }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory [
 
 	^ self named: aName 
 		uses: aTraitCompositionOrCollection 
 		slots: someSlots 
-		category: aCategory 
+		package: aCategory 
+		env: self environment 
+]
+
+{ #category : #deprecated }
+Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory env: anEnvironment [ 
+	"It is unclear that it is not use by low level library such as MC so we should not use it but we do not remove it for now."
+	
+	^ self named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aCategory env: anEnvironment 
+]
+
+{ #category : #'instance creation' }
+Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName [
+
+	^ self named: aName 
+		uses: aTraitCompositionOrCollection 
+		slots: someSlots 
+		package: aPackageName 
 		env: self environment 
 ]
 
 { #category : #'instance creation' }
-Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory env: anEnvironment [ 
+Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName env: anEnvironment [ 
 
 	| trait |
-
 	trait:= self classInstaller
 		make: [ :builder | 
 			builder
@@ -89,7 +115,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 				slots: someSlots;
 				sharedVariables: '';
 				sharedPools: '';
-				category: aCategory;
+				category: aPackageName;
 				traitComposition: aTraitCompositionOrCollection asTraitComposition;
 				classTraitComposition: aTraitCompositionOrCollection asTraitComposition classComposition;
 				classSlots: #() ].
@@ -168,27 +194,21 @@ Trait >> definition [
 		self classLayout visibleSlots ifNotEmpty: [ 
 			s tab; nextPutAll: ' slots: ';
 			nextPutAll: self slotDefinitionString; cr. ].
-		s tab; nextPutAll: ' category: ';
+		s tab; nextPutAll: ' package: ';
 			nextPutAll: self category asString printString
 	]
-]
-
-{ #category : #accessing }
-Trait >> definitionForNautilus [
-
-	^ self definition
-]
-
-{ #category : #accessing }
-Trait >> definitionForNautilusWithSlots [
-
-	^ self definition
 ]
 
 { #category : #testing }
 Trait >> isBaseTrait [
 	
 	^ true
+]
+
+{ #category : #testing }
+Trait >> isClass [
+	
+	^ false
 ]
 
 { #category : #testing }
@@ -217,6 +237,12 @@ Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCatego
 	"When there is a recategorization of a selector, I propagate the changes to my users"
 	super notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory.
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
+]
+
+{ #category : #'filein/out' }
+Trait >> oldDefinition [
+
+	^ self definition
 ]
 
 { #category : #'accessing method dictionary' }

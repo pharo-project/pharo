@@ -19,19 +19,31 @@ Class {
 
 { #category : #specs }
 SpecDemoListsPresenter class >> defaultSpec [
-	^ SpecLayout composed
-		newColumn: [ :mainColumn | 
-			mainColumn
-				newRow: [ :lists | 
-					lists
-						newColumn: #list1;
-						newColumn: #list2;
-						newColumn: #list3 ];
-				newRow: [ :row | 
-					row
-						newColumn: #multiLabel;
-						newColumn: #label ]
-					height: self labelHeight ];
+	^ SpecBoxLayout newVertical
+		add:
+			(SpecBoxLayout newHorizontal
+				add:
+					(SpecBoxLayout newVertical
+						add: 'Menu' withConstraints: [ :constraints | constraints height: self labelHeight ];
+						add: #list1;
+						yourself);
+				add:
+					(SpecBoxLayout newVertical
+						add: 'Multi selection/Sorting' withConstraints: [ :constraints | constraints height: self labelHeight ];
+						add: #list2;
+						yourself);
+				add:
+					(SpecBoxLayout newVertical
+						add: 'Icons/Filter' withConstraints: [ :constraints | constraints height: self labelHeight ];
+						add: #list3;
+						yourself);
+				yourself);
+		add:
+			(SpecBoxLayout newHorizontal
+				add: #multiLabel;
+				add: #label;
+				yourself)
+			withConstraints: [ :constraints | constraints height: self labelHeight ];
 		yourself
 ]
 
@@ -88,22 +100,23 @@ SpecDemoListsPresenter >> initializePresenter [
 SpecDemoListsPresenter >> initializeWidgets [
 	list1 := self newList.
 	list2 := self newList.
-	list3 := self newIconList.
+	list3 := self newList.
 	label := self newLabel.
 	multiLabel := self newLabel.
 
 	list1
-		items: Smalltalk globals allClasses.
+		items: self class environment allClasses;
+		contextMenu: self list1Menu.
 	list2
-		items: Smalltalk globals allClasses;
+		items: self class environment allClasses;
 		sortingBlock: [ :a :b | a asString size < b asString size ];
 		beMultipleSelection.
 	list3
-		items: Smalltalk globals allClasses;
+		items: self class environment allClasses;
 		itemFilterBlock: [ :item :string | item asString includesSubstring: string ];
 		icons: [ :elem | self iconFor: elem ].
 	label label: 'No selection'.
-	multiLabel label: 'Not multi selection (from list 2 only)'
+	multiLabel label: 'No multi selection (from list 2 only)'
 ]
 
 { #category : #accessing }
@@ -114,6 +127,57 @@ SpecDemoListsPresenter >> label [
 { #category : #accessing }
 SpecDemoListsPresenter >> list1 [
 	^ list1
+]
+
+{ #category : #menu }
+SpecDemoListsPresenter >> list1Menu [
+	^ self newMenu
+		addTitle: 'Context menu example';
+		addGroup: [ :aGroup | 
+			aGroup
+				addItem: [ :anItem | 
+					anItem
+						name: 'Print in transcript';
+						shortcut: $p meta;
+						description: 'Print the selected class on Transcript';
+						action: [ list1 selectedItem logCr ] ];
+				addItem: [ :anItem | 
+					anItem
+						name: 'Browse';
+						iconName: #open;
+						action: [ list1 selectedItem browse ] ];
+				addItem: [ :anItem | 
+					anItem
+						name: 'Print infos';
+						subMenu:
+							(self newMenu
+								addGroup: [ :aSubGroup | 
+									aSubGroup
+										addItem: [ :item | 
+											item
+												name: 'Print number of methods';
+												action: [ list1 selectedItem methods size logCr ] ];
+										addItem: [ :item | 
+											item
+												name: 'Print number of variables';
+												action: [ list1 selectedItem instanceVariables size logCr ] ] ]) ] ];
+		addGroup: [ :aGroup | 
+			aGroup
+				addItem: [ :anItem | 
+					anItem
+						name: 'Item showing only if item a odd number of letters';
+						visibleIf: [ list1 selectedItem printString size odd ];
+						action: [ list1 selectedItem logCr ] ];
+				addItem: [ :anItem | 
+					anItem
+						name: 'Disabled in second group';
+						disable;
+						action: [ list1 selectedItem logCr ] ];
+				addItem: [ :anItem | 
+					anItem
+						name: 'Disabled if class begins with A';
+						enabled: [ list1 selectedItem printString first ~= $A ];
+						action: [ list1 selectedItem logCr ] ] ]
 ]
 
 { #category : #accessing }

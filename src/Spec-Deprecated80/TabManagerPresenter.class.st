@@ -21,6 +21,11 @@ TabManagerPresenter class >> adapterName [
 	^ #TabManagerAdapter
 ]
 
+{ #category : #deprecation }
+TabManagerPresenter class >> isDeprecated [
+	^ true
+]
+
 { #category : #dependents }
 TabManagerPresenter >> addDependent: aMorph [
 

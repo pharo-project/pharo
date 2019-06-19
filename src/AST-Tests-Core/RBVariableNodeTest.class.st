@@ -3,7 +3,7 @@ SUnit tests for RBVariableNode
 "
 Class {
 	#name : #RBVariableNodeTest,
-	#superclass : #TestCase,
+	#superclass : #RBParseTreeTest,
 	#category : #'AST-Tests-Core'
 }
 
@@ -14,7 +14,7 @@ RBVariableNodeTest >> testStartForReplacement [
 	source := 'foo
 	|a b c de d|
 	de := 4'.
-	tree := RBParser parseMethod: source.
+	tree := self parseMethod: source.
 	dTemporary := tree body temporaries last.
 	self assert: dTemporary name equals: #d.
 	self assert: (source copyFrom: dTemporary start to: dTemporary stop) equals: 'd'.
@@ -31,7 +31,7 @@ RBVariableNodeTest >> testStartForReplacement02 [
 	
 d|
 	de := 4'.
-	tree := RBParser parseMethod: source.
+	tree := self parseMethod: source.
 	dTemporary := tree body temporaries last.
 	self assert: dTemporary name equals: #d.
 	self assert: (source copyFrom: dTemporary start to: dTemporary stop) equals: 'd'.

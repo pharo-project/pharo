@@ -22,9 +22,9 @@ BooleanSlot >> baseSlotRead: anObject [
 
 { #category : #'code generation' }
 BooleanSlot >> emitStore: methodBuilder [
+	"generate bytecode for 'baseSlot bitAt: index put: <stackTop>'"
 	| tempName |
-
-	tempName := Object new.
+	tempName := '0slotTempForStackManipulation'.
 	methodBuilder
 		send: #asBit;
 		addTemp: tempName;
@@ -40,13 +40,13 @@ BooleanSlot >> emitStore: methodBuilder [
 
 { #category : #'code generation' }
 BooleanSlot >> emitValue: methodBuilder [
-
-		methodBuilder
-			pushInstVar: baseSlot index;
-			pushLiteral: offset;
-			send: #bitAt:;
-			pushLiteral: 1;
-			send: #==.
+	"generate bytecode for '(<baseSlot> bitAt: offset) == 1'"
+	methodBuilder
+		pushInstVar: baseSlot index;
+		pushLiteral: offset;
+		send: #bitAt:;
+		pushLiteral: 1;
+		send: #==.
 	
 	
 ]

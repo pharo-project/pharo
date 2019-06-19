@@ -12,9 +12,9 @@ Class {
 
 { #category : #'code generation' }
 UnlimitedInstanceVariableSlot >> emitStore: methodBuilder [
+	"generate bytecode for 'baseSlot at: index put: <stackTop>'"
 	| tempName |
-
-	tempName := Object new.
+	tempName := '0slotTempForStackManipulation'.
 	methodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
@@ -27,11 +27,11 @@ UnlimitedInstanceVariableSlot >> emitStore: methodBuilder [
 
 { #category : #'code generation' }
 UnlimitedInstanceVariableSlot >> emitValue: methodBuilder [
-
-		methodBuilder
-			pushInstVar: baseSlot index;
-			pushLiteral: offset;
-			send: #at:
+	"generate bytecode for '<baseSlot> at: offset'"
+	methodBuilder
+		pushInstVar: baseSlot index;
+		pushLiteral: offset;
+		send: #at:
 			
 ]
 

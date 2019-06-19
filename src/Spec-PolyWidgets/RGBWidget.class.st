@@ -19,7 +19,7 @@ Class {
 		'sliders',
 		'extentForPreview'
 	],
-	#category : #'Spec-PolyWidgets-RGBAndShape'
+	#category : #'Spec-PolyWidgets-RGB'
 }
 
 { #category : #specs }
@@ -31,18 +31,6 @@ RGBWidget class >> defaultSpec [
 				add: #preview;
 				add: #sliders ];
 		yourself
-]
-
-{ #category : #example }
-RGBWidget class >> example [
-	<sampleInstance>
-	| example |
-	example := self new.
-	example
-		title: 'RGBWidget exampe';
-		extent: 300 @ 250;
-		openDialogWithSpec.
-	^ example
 ]
 
 { #category : #api }

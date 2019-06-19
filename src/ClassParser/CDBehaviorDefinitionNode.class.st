@@ -21,7 +21,7 @@ CDBehaviorDefinitionNode >> addSlot: aCDSlotNode [
 	self addChild: aCDSlotNode
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 CDBehaviorDefinitionNode >> classDefinitionNode [
 	^self
 ]
@@ -74,7 +74,7 @@ CDBehaviorDefinitionNode >> existingClassIfAbsent: aBlock [
 	^self classNameNode existingClassIfAbsent: aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CDBehaviorDefinitionNode >> initialize [
 	super initialize.
 	slotNodes := OrderedCollection new
@@ -142,7 +142,7 @@ CDBehaviorDefinitionNode >> slots: aCollection [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 CDBehaviorDefinitionNode >> traitDefinition [
 
 	^traitDefinition

@@ -66,6 +66,12 @@ ToolBarButton >> buildMorphOnToolbar: aToolbar [
 	^ button
 ]
 
+{ #category : #simulating }
+ToolBarButton >> click [
+	
+	self execute
+]
+
 { #category : #execution }
 ToolBarButton >> execute [
 	self action cull: self

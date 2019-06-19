@@ -3,7 +3,7 @@ SUnit tests for RBReadBeforeWrittenTester
 "
 Class {
 	#name : #RBReadBeforeWrittenTesterTest,
-	#superclass : #TestCase,
+	#superclass : #RBParseTreeTest,
 	#category : #'AST-Tests-Core'
 }
 
@@ -11,10 +11,10 @@ Class {
 RBReadBeforeWrittenTesterTest >> testReadBeforeWritten [
 	#(('a ifTrue: [^self]' true ) ('self foo. a := b' false ) ('condition ifTrue: [a := b] ifFalse: [self foo: a]' true ) ('condition ifTrue: [a := b] ifFalse: [self foo]. a isNil' true ) ('condition ifTrue: [a := b]. a := c' false ) ('[a := b] whileFalse: [a isNil]' false ) ('self foo: b' false ) ) do: 
 		[:each | 
-		self assert: ((RBReadBeforeWrittenTester readBeforeWritten: #('a' ) in: (RBParser parseExpression: each first))
+		self assert: ((RBReadBeforeWrittenTester readBeforeWritten: #('a' ) in: (self parseExpression: each first))
 				includes: 'a')
 				== each last.
-		self assert: (RBReadBeforeWrittenTester isVariable: 'a' readBeforeWrittenIn: (RBParser parseExpression: each first))
+		self assert: (RBReadBeforeWrittenTester isVariable: 'a' readBeforeWrittenIn: (self parseExpression: each first))
 				equals: each last].
 	#('| temp read written written1 |
 			read ifTrue: [^self].
@@ -32,7 +32,7 @@ RBReadBeforeWrittenTesterTest >> testReadBeforeWritten [
 			self do: [:each | each & read]' ) do: 
 		[:each | 
 		| read | 
-		read := RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: (RBParser parseExpression: each).
+		read := RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: (self parseExpression: each).
 		self assert: (read size = 1 and: [read includes: 'read'])]
 ]
 
@@ -42,7 +42,7 @@ RBReadBeforeWrittenTesterTest >> testReadBeforeWritten1 [
 		assertEmpty:
 			(RBReadBeforeWrittenTester
 				variablesReadBeforeWrittenIn:
-					(RBParser
+					(self
 						parseMethod:
 							'addAll: aCollection 
 	"Answer aCollection, having added all elements

@@ -25,8 +25,7 @@ Class {
 	#name : #DynamicComposablePresenter,
 	#superclass : #ComposablePresenter,
 	#instVars : [
-		'widgets',
-		'layout'
+		'widgets'
 	],
 	#category : #'Spec-Core-Base'
 }
@@ -85,14 +84,25 @@ DynamicComposablePresenter >> layout: aLayout [
 DynamicComposablePresenter >> needFullRebuild: aBoolean [
 
 	self needRebuild: aBoolean.
-	self widgetsDo: [:e | e needRebuild: aBoolean ]
+	self widgetsDo: [ :w | w needRebuild: aBoolean ]
+]
+
+{ #category : #api }
+DynamicComposablePresenter >> openModalWithSpec [
+
+	self layout ifNil: [ ^ super openWithSpec ].
+	^ self application 
+		openModal: self
+		withSpecLayout: self layout
 ]
 
 { #category : #api }
 DynamicComposablePresenter >> openWithSpec [
 
 	self layout ifNil: [ ^ super openWithSpec ].
-	^ self openWithSpecLayout: self layout
+	^ self application 
+		open: self
+		withSpecLayout: self layout
 ]
 
 { #category : #api }

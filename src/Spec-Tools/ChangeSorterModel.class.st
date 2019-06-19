@@ -4,8 +4,39 @@ A ChangeSorterModel is a model used by Change Sorter UIs for computation
 Class {
 	#name : #ChangeSorterModel,
 	#superclass : #AbstractTool,
+	#classVars : [
+		'ClassDescriptionsMap'
+	],
 	#category : #'Spec-Tools-ChangeSorter'
 }
+
+{ #category : #accessing }
+ChangeSorterModel class >> classDescriptionsMap [
+	^ ClassDescriptionsMap
+]
+
+{ #category : #accessing }
+ChangeSorterModel class >> classDescriptionsMap: anObject [
+	ClassDescriptionsMap := anObject
+]
+
+{ #category : #default }
+ChangeSorterModel class >> defaultClassDescriptionsMap [
+	^ Dictionary new
+		at: #remove put: 'Entire class was removed.';
+		at: #addedThenRemoved put: 'Class was added then removed.';
+		at: #rename put: 'Class name was changed.';
+		at: #add put: 'Class definition was added.';
+		at: #change put: 'Class definition was changed.';
+		at: #reorganize put: 'Class organization was changed.';
+		at: #comment put: 'New class comment.';
+		yourself
+]
+
+{ #category : #'class initialization' }
+ChangeSorterModel class >> initialize [
+	self classDescriptionsMap: self defaultClassDescriptionsMap
+]
 
 { #category : #'change set' }
 ChangeSorterModel >> addPreambleTo: aChangeSet [
@@ -29,30 +60,14 @@ ChangeSorterModel >> buildChangeSetDescriptionFor: changeSet [
 
 { #category : #text }
 ChangeSorterModel >> buildClassDescriptionFor: changeSet class: class [
-	| stream |
-
-	stream := (String new: 100) writeStream.
-		(changeSet classChangeAt: class name)
-			do: [:each | 
-				each = #remove
-					ifTrue: [ stream nextPutAll: 'Entire class was removed.'; cr ].
-				each = #addedThenRemoved
-					ifTrue: [ stream nextPutAll: 'Class was added then removed.'; cr ].
-				each = #rename
-					ifTrue: [ stream nextPutAll: 'Class name was changed.'; cr ].
-				each = #add
-					ifTrue: [ stream nextPutAll: 'Class definition was added.'; cr ].
-				each = #change
-					ifTrue: [ stream nextPutAll: 'Class definition was changed.'; cr ].
-				each = #reorganize
-					ifTrue: [ stream nextPutAll: 'Class organization was changed.'; cr ].
-				each = #comment 
-					ifTrue: [ stream nextPutAll: 'New class comment.'; cr ]].
-		^ stream contents
+	^ String streamContents: [ :stream |
+			(changeSet classChangeAt: class name)
+				do: [ :each | stream nextPutAll: (self classDescriptionsMap at: each) ]
+				separatedBy: [ stream cr ] ]
 ]
 
 { #category : #text }
-ChangeSorterModel >> buildSelectorDescriptionFor: changeSet class: class selector: selector prettyPrint: prettyPrint showDiff: showDiff [
+ChangeSorterModel >> buildSelectorDescriptionFor: changeSet class: class selector: selector [
 
 	| changeType code |
 	changeType := changeSet atSelector: selector class: class.
@@ -66,12 +81,13 @@ ChangeSorterModel >> buildSelectorDescriptionFor: changeSet class: class selecto
 	(class includesSelector: selector)
 		ifFalse: [^ 'Method was added, but cannot be found!'].
 	code := class sourceCodeAt: selector.
-	prettyPrint
-		ifTrue: [ code := class compiler format: code].						
-	showDiff
-		ifTrue: [ code := self diffFromPriorSourceFor: code ].
 		
 	^ code asText
+]
+
+{ #category : #accessing }
+ChangeSorterModel >> classDescriptionsMap [
+	^ self class classDescriptionsMap
 ]
 
 { #category : #'change set' }
@@ -229,7 +245,7 @@ ChangeSorterModel >> rename: aChangeSet [
 ]
 
 { #category : #text }
-ChangeSorterModel >> setContentsOfChangeSet: changeSet forClass: class andSelector: selector prettyPrint: prettyPrint showDiff: showDiff [ 
+ChangeSorterModel >> setContentsOfChangeSet: changeSet forClass: class andSelector: selector [
 	"return the source code that shows in the bottom pane"
 
 	class
@@ -242,13 +258,13 @@ ChangeSorterModel >> setContentsOfChangeSet: changeSet forClass: class andSelect
 			^ self buildClassDescriptionFor: changeSet class: class ]
 		ifNotNil: [
 			"a class and a selector are selected"
-			^ self buildSelectorDescriptionFor: changeSet class: class selector: selector prettyPrint: prettyPrint showDiff: showDiff ]
+			^ self buildSelectorDescriptionFor: changeSet class: class selector: selector ]
 ]
 
 { #category : #'change set' }
 ChangeSorterModel >> setCurrentChangeSet: aChangeSet [
 
-	ChangeSet newChanges: aChangeSet.
+	ChangeSet newChanges: aChangeSet
 	
 ]
 

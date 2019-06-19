@@ -1,9 +1,3 @@
-"
-I am the adapter used to realise a TablePresenter.
-I will create a table (using FTTableMorph), using the columns TableColumn* as definitions.
-
-Is important notice here that most of the row/cell creation happens on MorphicTableDataSource. Check there for some implementation details.
-"
 Class {
 	#name : #MorphicTableAdapter,
 	#superclass : #AbstractMorphicAdapter,
@@ -13,32 +7,49 @@ Class {
 { #category : #factory }
 MorphicTableAdapter >> addModelTo: tableMorph [
 
-	self model columns do: [ :each | 
+	self model columns do: [ :each |
 		tableMorph addColumn: (self newColumnFrom: each) ].
 	self ensureAtLeastOneColumnIn: tableMorph.
-
-	self isShowingColumnHeaders 
-		ifTrue: [ tableMorph showColumnHeaders ] 
-		ifFalse: [ tableMorph hideColumnHeaders ].
 
 	self isResizable 
 		ifTrue: [ tableMorph beResizable ] 
 		ifFalse: [ tableMorph beNotResizable ].
+	
+	tableMorph setMultipleSelection: self model isMultipleSelection.
+
+	self refreshShowColumnHeaders.
+	self refreshWidgetSelection.
+	
+	self presenter whenShowColumnHeadersChangedDo: [ :showColumns |
+		self refreshShowColumnHeaders ].
+
+	self presenter whenModelChangedDo: [ widget refresh ].
+	self presenter whenColumnsChangedDo: [ self refreshColumnsInWidget ].
+	
+	tableMorph setBalloonText: self help.
+
+	tableMorph
+		onAnnouncement: FTSelectionChanged
+			send: #selectionChanged:
+			to: self;
+		onAnnouncement: FTStrongSelectionChanged
+			send: #strongSelectionChanged:
+			to: self.
 
 	tableMorph dataSource: self newDataSource
 ]
 
 { #category : #factory }
 MorphicTableAdapter >> buildWidget [
-	| tableMorph |
-	tableMorph := FTTableMorph new
+
+	widget := FTTableMorph new
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		yourself.
 
-	self addModelTo: tableMorph.
+	self addModelTo: widget.
 
-	^ tableMorph
+	^ widget
 ]
 
 { #category : #factory }
@@ -59,6 +70,12 @@ MorphicTableAdapter >> isResizable [
 ]
 
 { #category : #testing }
+MorphicTableAdapter >> isShowColumnHeaders [
+
+	^ widget isShowColumnHeaders 	
+]
+
+{ #category : #testing }
 MorphicTableAdapter >> isShowingColumnHeaders [
 	^ self model isShowingColumnHeaders
 ]
@@ -74,7 +91,103 @@ MorphicTableAdapter >> newColumnFrom: aTableColumn [
 { #category : #'private factory' }
 MorphicTableAdapter >> newDataSource [ 
 
-	^ MorphicTableDataSource new 
-		elements: self model items;
+	^ MorphicTableDataSource new
+		model: self model;
 		yourself
+
+]
+
+{ #category : #factory }
+MorphicTableAdapter >> refreshColumnsInWidget [
+
+	widget columns: (self model columns collect: [ :each | self newColumnFrom: each ]).
+	self ensureAtLeastOneColumnIn: widget.
+]
+
+{ #category : #updating }
+MorphicTableAdapter >> refreshList [
+
+	^ self widget refresh
+]
+
+{ #category : #factory }
+MorphicTableAdapter >> refreshShowColumnHeaders [
+	
+	self presenter isShowingColumnHeaders 
+		ifTrue: [ 
+			self widget
+				showColumnHeaders;
+				refresh ]
+		ifFalse: [ 
+			self widget
+				hideColumnHeaders;
+				refresh ]
+]
+
+{ #category : #refreshing }
+MorphicTableAdapter >> refreshWidgetSelection [
+	| rowIndexes |
+	rowIndexes := self presenter selection selectedIndexes.
+	rowIndexes = self widget selectedIndexes
+		ifTrue: [ ^ self ].
+	rowIndexes isEmpty
+		ifTrue: [ self widget basicSelectIndexes: #() ]
+		ifFalse: [ self widget basicSelectIndexes: rowIndexes ].
+	^ self widget refresh
+]
+
+{ #category : #emulating }
+MorphicTableAdapter >> rightClicked [
+	| evt |
+
+	evt := MouseButtonEvent new 
+		setType: nil 
+		position: widget center 
+		which: MouseButtonEvent yellowButton 
+		buttons: MouseButtonEvent yellowButton 
+		hand: nil 
+		stamp: nil.
+	
+	self widget click: evt
+]
+
+{ #category : #selection }
+MorphicTableAdapter >> selectIndex: anInteger [ 
+
+	(anInteger = 0 and: [ widget selectedIndexes isEmpty ]) ifTrue: [ ^ self ].	
+	(widget selectedIndexes includes: anInteger) ifTrue: [^self].
+	widget selectIndex: anInteger
+]
+
+{ #category : #factory }
+MorphicTableAdapter >> selectionChanged: ann [
+	| diff selection |
+
+	selection := self presenter selection.
+	selection selectIndexes: (selection isMultipleSelection
+		ifTrue: [ 
+			 (ann newSelectedIndexes reject: [ :e | e = 0 ]) ]
+		ifFalse: [ 
+			{ ann newSelectedIndexes
+				ifNotEmpty: [ :indexes | indexes first ]
+				ifEmpty: [ 0 ] } ]).
+
+	diff := ann newSelectedIndexes difference: ann oldSelectedIndexes.
+	(diff notEmpty and: [ self presenter activatesOnSingleClick ])
+		ifTrue: [ self presenter doActivateAtIndex: diff last ].
+		
+	ann newSelectedIndexes ifEmpty: [ selection unselectAll ]
+]
+
+{ #category : #factory }
+MorphicTableAdapter >> strongSelectionChanged: aFTStrongSelectionChanged [
+
+	self presenter activatesOnDoubleClick ifFalse: [ ^ self ].	
+	self presenter doubleClickAtIndex: aFTStrongSelectionChanged selectedIndex
+]
+
+{ #category : #updating }
+MorphicTableAdapter >> updateMenu [
+	
+	"there is no need to updateMenu here because it will be resolved at the dataSource"
 ]

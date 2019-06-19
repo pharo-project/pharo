@@ -18,7 +18,7 @@ TraitTest >> createClassUsing: aTrait [
 { #category : #utilities }
 TraitTest >> createTrait [
 	| trait |
-	trait := Trait named: #ATraitForTests uses: {} category: 'AAA'.
+	trait := Trait named: #ATraitForTests uses: {} package: 'AAA'.
 	trait compile: 'm1 ^1' classified: 'test'.
 	^ trait
 ]
@@ -69,18 +69,14 @@ TraitTest >> testComposedBy [
 { #category : #testing }
 TraitTest >> testCompositionCopy [
  
-	| t6compositionCopyFirst |
 	self assert: (self t1 + self t2) allTraits 
 				equals: (self t1 + self t2) copyTraitExpression allTraits.
 	self assert: (self t1 classTrait + self t2 classTrait) allTraits 
 				equals: (self t1 classTrait + self t2 classTrait) copyTraitExpression allTraits.
 	self assert: self t6 traitComposition allTraits 
 				equals: self t6 traitComposition copyTraitExpression allTraits.
-	self 
-		assert: (self t6 asTraitComposition copyTraitExpression allTraits includesAll: { (self t1). (self t2). (self t6) }).
-	"make no undue sharing happens of exclusions and aliases after an expression copy"
-	t6compositionCopyFirst := self t6 traitComposition copyTraitExpression.
-
+	self assert: (self t6 asTraitComposition copyTraitExpression allTraits 
+				includesAll: { (self t1). (self t2). (self t6) }).
 ]
 
 { #category : #testing }
@@ -88,7 +84,7 @@ TraitTest >> testErrorClassCreation [
     | tmpCategory trait aSubclass aClass |
 	
     tmpCategory := 'TemporaryGeneratedClasses'.
-    trait := Trait named: #TMyTrait uses: {} category: tmpCategory.
+    trait := Trait named: #TMyTrait uses: {} package: tmpCategory.
     
     [ aClass := nil
         subclass: #AClass
@@ -240,11 +236,9 @@ TraitTest >> testExplicitRequirementWithSuperclassImplementatiosAlwaysReturnsThe
 
 { #category : #testing }
 TraitTest >> testForbidInstantiation [
-
-   | tmpCategory trait |
-tmpCategory := 'TemporaryGeneratedClasses'.
-   trait := Trait named: #TMyTrait uses: {} category: tmpCategory.
-    
+	| tmpCategory trait |
+	tmpCategory := 'TemporaryGeneratedClasses'.
+	trait := Trait named: #TMyTrait uses: {} package: tmpCategory.
 	self should: [ trait basicNew ] raise: Error 
 ]
 
@@ -343,10 +337,11 @@ origin of Tr2>>foo is Tr1"
 
 { #category : #testing }
 TraitTest >> testPrinting [
+
 	self assertPrints: self t6 definition
 		like: 'Trait named: #T6
 	uses: T1 + (T2 @ {#m22Alias->#m22})
-	category: ''Tests-Traits'''
+	package: ''Tests-Traits'''
 ]
 
 { #category : #testing }

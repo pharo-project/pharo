@@ -19,43 +19,16 @@ Class {
 
 { #category : #specs }
 CalendarPresenter class >> defaultSpec [
-
-	^ SpecLayout composed
-		newColumn: [ :mainColumn |
-			mainColumn
-				newRow: [ :topRow |
-					topRow
-						newColumn: #previousMonthButton;
-						newColumn: #monthYearLabel;
-						newColumn: #nextMonthButton ] height: self buttonHeight;
-				newRow: #namesOfDaysLabels height: self buttonHeight;
-				newRow: [ :daysRow |
-					daysRow
-						newColumn: #daysButtons ] ]
-]
-
-{ #category : #examples }
-CalendarPresenter class >> exampleInspectClickedDate [
-	CalendarPresenter new
-		adaptToDate: Date today;
-		whenDaySelectedBlock: [ :aDate | aDate inspect ];
-		openWithSpec
-]
-
-{ #category : #examples }
-CalendarPresenter class >> exampleInspectClickedDateAndClose [
-	CalendarPresenter new
-		adaptToDate: Date today;
-		whenDaySelectedBlock: [ :aDate :calendarPresenter | aDate inspect. calendarPresenter window close ];
-		openWithSpec
-]
-
-{ #category : #examples }
-CalendarPresenter class >> exampleSimple [
-	CalendarPresenter new
-		adaptToDate: Date today;
-		whenDaySelectedBlock: [ UIManager default inform: 'A date was clicked.' ];
-		openWithSpec
+	^ SpecBoxLayout newVertical
+		add:
+			(SpecBoxLayout newHorizontal
+				add: #previousMonthButton;
+				add: #monthYearLabel;
+				add: #nextMonthButton)
+			withConstraints: [ :constraints | constraints height: self buttonHeight ];
+		add: #namesOfDaysLabels withConstraints: [ :constraints | constraints height: self buttonHeight ];
+		add: #daysButtons;
+		yourself
 ]
 
 { #category : #adapting }
@@ -151,9 +124,7 @@ CalendarPresenter >> daysToDisplayCount [
 { #category : #initialization }
 CalendarPresenter >> initialize [
 	super initialize.
-	self
-		title: 'Calendar' translated;
-		whenDaySelectedBlock: [ :aDate | ]
+	self whenDaySelectedBlock: [ :aDate |  ]
 ]
 
 { #category : #initialization }
@@ -170,6 +141,11 @@ CalendarPresenter >> initializeWidgets [
 	namesOfDaysLabels := self newNullPresenter.
 	
 	daysButtons := self newNullPresenter
+]
+
+{ #category : #initialization }
+CalendarPresenter >> initializeWindow: aWindowPresenter [
+	aWindowPresenter title: 'Calendar'
 ]
 
 { #category : #private }

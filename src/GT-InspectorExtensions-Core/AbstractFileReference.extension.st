@@ -96,12 +96,16 @@ AbstractFileReference >> gtInspectorItemsIn: composite [
 		column: 'Name' evaluated: [:each | (self isChildOf: each) 
 								ifTrue: [ '..' ] 
 								ifFalse: [ each basename ]] width: 400;
-		column: 'Size' evaluated: [:each | each humanReadableSize] width: 100;
+		column: 'Size' evaluated: [:each | [each humanReadableSize]
+							on: Error 
+							do: [ 'N/A' translated ]] width: 100;
 		column: 'Creation' evaluated: [ :each | 
-			String streamContents: [:s | 
+			[String streamContents: [:s | 
 				each creationTime printYMDOn: s.
 				s nextPut: Character space.
-				each creationTime printHMSOn: s ]];
+				each creationTime printHMSOn: s ]]
+					on: Error 
+					do: [ 'N/A' translated ]];
 		icon: [ :each | 
 			each isDirectory 
 				ifTrue: [ GLMUIThemeExtraIcons glamorousFolder ] 

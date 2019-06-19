@@ -128,7 +128,7 @@ GLMFastListDataSource >> rowMorphForElement: element [
 	rowElements
 		add: (self formatedDisplayValueOf: element) asMorph asReadOnlyMorph;
 		addAll: (self tagMorphsFrom: self glamourPresentation for: element).
-	^ self theme newRowIn: World for: rowElements
+	^ self theme newRowIn: self currentWorld for: rowElements
 ]
 
 { #category : #selecting }

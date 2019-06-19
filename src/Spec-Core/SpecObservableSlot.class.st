@@ -6,12 +6,15 @@ Class {
 
 { #category : #'code generation' }
 SpecObservableSlot >> emitStore: aMethodBuilder [
+	"generate bytecode for 'varName value: <stackTop>'"
+
 	| temp |
-	temp := Object new.
+	temp := '0slotTempForStackManipulation'.
 	"We pop the value from the stack into a temp to push it back in the right order"
 	aMethodBuilder addTemp: temp.
 	aMethodBuilder storeTemp: temp.
-	
+	aMethodBuilder popTop.
+
 	"Push the value holder into the stack, then the value again, then send"
 	aMethodBuilder pushInstVar: index.
 	aMethodBuilder pushTemp: temp.
@@ -38,6 +41,12 @@ SpecObservableSlot >> isObservableSlot [
 ]
 
 { #category : #initialization }
+SpecObservableSlot >> rawRead: anObject [
+
+	^ super read: anObject
+]
+
+{ #category : #initialization }
 SpecObservableSlot >> read: anObject [
 
 	^ (super read: anObject) value
@@ -52,6 +61,6 @@ SpecObservableSlot >> wantsInitalization [
 { #category : #initialization }
 SpecObservableSlot >> write: aValue to: anObject [
 
-	(super read: anObject) value: aValue.
+	(super read: anObject) ifNotNil: [ :v | v value: aValue ].
 	^ aValue
 ]

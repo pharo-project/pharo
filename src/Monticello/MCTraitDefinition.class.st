@@ -64,7 +64,7 @@ MCTraitDefinition >> accept: aVisitor [
 { #category : #printing }
 MCTraitDefinition >> classSlotDefinitionString [
 
-	^ self usesSpecialVariables 
+	^ self needsSlotClassDefinition 
 		ifTrue: [ self classInstanceVariables asString ]
 		ifFalse: [ 
 			String streamContents: [ :stream |
@@ -82,7 +82,7 @@ MCTraitDefinition >> createClass [
 		named: name
 		uses: (Smalltalk compiler evaluate: self traitCompositionString)
 		slots: self instanceVariables
-		category: category.
+		package: category.
 	trait ifNotNil: [
 		trait classComment: comment stamp: commentStamp.
 		self classInstanceVariables ifNotEmpty: [
@@ -184,7 +184,7 @@ MCTraitDefinition >> printDefinitionOn: stream [
 		
 	stream
 		 tab;
-		 nextPutAll: 'category: ';
+		 nextPutAll: 'package: ';
 		 store: self category asString
 
 ]
@@ -207,7 +207,7 @@ MCTraitDefinition >> slotDefinitionString [
 
 	variables ifNil: [ ^ '{ }' ].
 
-	^ self usesSpecialVariables 
+	^ self needsSlotClassDefinition 
 		ifTrue: [ self instanceVariables asString ]
 		ifFalse: [ 
 			String streamContents: [ :stream |

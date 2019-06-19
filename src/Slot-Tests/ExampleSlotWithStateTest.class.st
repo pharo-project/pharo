@@ -19,15 +19,14 @@ ExampleSlotWithStateTest >> testExampleClassSide [
 { #category : #tests }
 ExampleSlotWithStateTest >> testExampleSlotWithState [
 	| slot |
-	aClass := self
-		make:
-			[ :builder | builder slots: {(#slot1 => ExampleSlotWithState)} ].
+	slot := #slot1 => ExampleSlotWithState.
+	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
 
-	"test refletive write and read"
-	slot := aClass slotNamed: #slot1.
+	"test reflective write and read"
 	slot write: 5 to: aClass new.
 	self assert: (slot read: aClass new) equals: 5.
+	"test compiled read and write"
 	self compileAccessorsFor: slot.
 	aClass new slot1: 10.
 	self assert: aClass new slot1 equals: 10

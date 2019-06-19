@@ -12,11 +12,17 @@ RBMethodNodeTest >> methodWithArg: someArgName and: someAnotherArgName [
 
 ]
 
+{ #category : #helpers }
+RBMethodNodeTest >> parseMethod: aString [ 
+
+	^ RBParser parseMethod: aString
+]
+
 { #category : #tests }
 RBMethodNodeTest >> testAddingMethodProperties [
 
 	| ast |
-	ast := RBParser parseMethod: 'one ^ self'.
+	ast := self parseMethod: 'one ^ self'.
 	self assert: ast methodProperties isNil. 
 	
 	ast methodPropertyAt: #testKey put: #testValue.
@@ -40,9 +46,9 @@ RBMethodNodeTest >> testCachingMethodArguments [
 { #category : #tests }
 RBMethodNodeTest >> testSelectorAndArgumentNames [
 
-	self assert: (RBParser parseMethod: 'one ^ self') selectorAndArgumentNames equals: 'one'.
-	self assert: (RBParser parseMethod: 'one:   aOne ^ self') selectorAndArgumentNames equals: 'one:   aOne'.
-	self assert: (RBParser parseMethod: 'one:   aOne two:   aTwo ^ self') selectorAndArgumentNames equals: 'one:   aOne two:   aTwo'.
-	self assert: (RBParser parseMethod: '*   aOne') selectorAndArgumentNames equals: '*   aOne'.
-	self assert: (RBParser parseMethod: '**   aOne') selectorAndArgumentNames equals: '**   aOne'
+	self assert: (self parseMethod: 'one ^ self') selectorAndArgumentNames equals: 'one'.
+	self assert: (self parseMethod: 'one:   aOne ^ self') selectorAndArgumentNames equals: 'one:   aOne'.
+	self assert: (self parseMethod: 'one:   aOne two:   aTwo ^ self') selectorAndArgumentNames equals: 'one:   aOne two:   aTwo'.
+	self assert: (self parseMethod: '*   aOne') selectorAndArgumentNames equals: '*   aOne'.
+	self assert: (self parseMethod: '**   aOne') selectorAndArgumentNames equals: '**   aOne'
 ]

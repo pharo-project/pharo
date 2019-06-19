@@ -1,7 +1,7 @@
 "
-RubTextAreaExamples blueTextOnGrayBacgroundNotWrapped.
-RubTextAreaExamples blueTextOnGrayBacgroundWrappedTo400.
-RubTextAreaExamples blueTextOnGrayBacgroundWrappedTo400Version2.
+RubTextAreaExamples blueTextOnGrayBackgroundNotWrapped.
+RubTextAreaExamples blueTextOnGrayBackgroundWrappedTo400.
+RubTextAreaExamples blueTextOnGrayBackgroundWrappedTo400Version2.
 RubTextAreaExamples profileSourcesFileViewing.
 RubTextAreaExamples rightFlushed.
 RubTextAreaExamples shoutedScriptingTextArea.
@@ -45,8 +45,8 @@ RubTextAreaExamples class >> autoReactingText [
 ]
 
 { #category : #examples }
-RubTextAreaExamples class >> blueTextOnGrayBacgroundNotWrapped [
-	"self blueTextOnGrayBacgroundNotWrapped"
+RubTextAreaExamples class >> blueTextOnGrayBackgroundNotWrapped [
+	"self blueTextOnGrayBackgroundNotWrapped"
 	<sampleInstance>
 	RubEditingArea new
 		backgroundColor: Color lightGray;
@@ -58,8 +58,8 @@ RubTextAreaExamples class >> blueTextOnGrayBacgroundNotWrapped [
 ]
 
 { #category : #examples }
-RubTextAreaExamples class >> blueTextOnGrayBacgroundWrappedTo400 [
-	"self blueTextOnGrayBacgroundWrappedTo400"
+RubTextAreaExamples class >> blueTextOnGrayBackgroundWrappedTo400 [
+	"self blueTextOnGrayBackgroundWrappedTo400"
 	<sampleInstance>
 	RubEditingArea new
 		beWrapped;
@@ -72,8 +72,8 @@ RubTextAreaExamples class >> blueTextOnGrayBacgroundWrappedTo400 [
 ]
 
 { #category : #examples }
-RubTextAreaExamples class >> blueTextOnGrayBacgroundWrappedTo400Version2 [
-	"self blueTextOnGrayBacgroundWrappedTo400Version2"
+RubTextAreaExamples class >> blueTextOnGrayBackgroundWrappedTo400Version2 [
+	"self blueTextOnGrayBackgroundWrappedTo400Version2"
 	<sampleInstance>
 	RubEditingArea new
 		beWrapped;
@@ -178,7 +178,7 @@ RubTextAreaExamples class >> presentationInput [
 						shortcut: Character tab shift
 						action: [ RubEditingArea new
 								beWrapped;
-								width: World width / 3;
+								width: self currentWorld width / 3;
 								updateTextWith: '';
 								takeKeyboardFocus;
 								backgroundColor: Color black;

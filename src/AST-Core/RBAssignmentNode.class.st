@@ -44,8 +44,8 @@ RBAssignmentNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBAssignmentNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitAssignmentNode: self
+RBAssignmentNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitAssignmentNode: self
 ]
 
 { #category : #'accessing-token' }
@@ -104,17 +104,6 @@ RBAssignmentNode >> copyInContext: aDictionary [
 { #category : #testing }
 RBAssignmentNode >> directlyUses: aNode [ 
 	^aNode = value ifTrue: [true] ifFalse: [self isDirectlyUsed]
-]
-
-{ #category : #generation }
-RBAssignmentNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' variable: ('.
-	self variable dumpOn: aStream.
-	aStream nextPutAll: ') value: ('.
-	self value dumpOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : #comparing }

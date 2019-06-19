@@ -348,14 +348,14 @@ Class >> classVarNames [
 Class >> classVariableDefinitionString [
 	"Answer a string that evaluates to the definition of the class Variables"
 	
-	^String streamContents: [ :str | | special |
+	^String streamContents: [ :str | | fullDef |
 		str nextPutAll: '{ '.
 		self classVariables do: [:global |
 				str nextPutAll: global definitionString.
-				special := global isSpecial]				
+				fullDef := global needsFullDefinition]				
 			separatedBy: [ 
 				str nextPutAll: '. '.  
-				special ifTrue: [ str cr;tab;tab;tab;tab ]].
+				fullDef ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 ]
 
@@ -446,98 +446,14 @@ Class >> definesClassVariableNamed: aString [
 Class >> definitionForNautilus [
 	"Answer a String that defines the receiver."
 
-	| aStream poolString |
-	((self usesSpecialSlot 
-		or: [ self usesSpecialClassVariables ])
-		or: [ Slot showSlotClassDefinition ])
-		ifTrue: [ ^ self definitionForNautilusWithSlots ].
-	poolString := self sharedPoolsString.
-	aStream := (String new: 800) writeStream.
-	superclass
-		ifNil: [ aStream nextPutAll: 'ProtoObject' ]
-		ifNotNil: [ aStream nextPutAll: superclass name ].
-	aStream
-		nextPutAll: self kindOfSubclass;
-		store: self name.
-	self hasTraitComposition
-		ifTrue:
-			[ aStream
-				cr;
-				tab;
-				nextPutAll: 'uses: ';
-				nextPutAll: self traitCompositionString ].
-	aStream
-		cr;
-		tab;
-		nextPutAll: 'instanceVariableNames: ';
-		store: self instanceVariablesString.
-	aStream
-		cr;
-		tab;
-		nextPutAll: 'classVariableNames: ';
-		store: self classVariablesString.
-	poolString = ''
-		ifFalse:
-			[ aStream
-				cr;
-				tab;
-				nextPutAll: 'poolDictionaries: ';
-				store: poolString ].
-	aStream
-		cr;
-		tab;
-		nextPutAll: 'package: ';
-		store: self category asString.
-	superclass
-		ifNil:
-			[ aStream
-				nextPutAll: '.';
-				cr.
-			aStream nextPutAll: self name.
-			aStream
-				space;
-				nextPutAll: 'superclass: nil' ].
-	^ aStream contents
-]
-
-{ #category : #accessing }
-Class >> definitionForNautilusWithSlots [
-	"the class definition with a way to specify slots. Shown when the class defines special Slot
-	 NOTE: this is just for testing, the final solution will evolve and be cleaner later"
-
-	| aStream poolString|
-
-	poolString := self sharedPoolsString.
-
-	aStream := (String new: 800) writeStream.
-	superclass 
-		ifNil: [aStream nextPutAll: 'ProtoObject']
-		ifNotNil: [aStream nextPutAll: superclass name].
-	aStream nextPutAll: ' subclass: ';
-			store: self name.
-	(self hasTraitComposition) ifTrue: [
-		aStream cr; tab; nextPutAll: 'uses: ';
-			nextPutAll: self traitCompositionString].
-			
-	(self classLayout isKindOf: FixedLayout) ifFalse: [
-		aStream cr; tab; nextPutAll: 'layout: ';
-			nextPutAll: self classLayout class name].
-	aStream cr; tab; nextPutAll: 'slots: ';
-			nextPutAll: self slotDefinitionString.
-	aStream cr; tab; nextPutAll: 'classVariables: ';
-			nextPutAll: self classVariableDefinitionString.
-	poolString = '' ifFalse: [
-		aStream cr; tab; nextPutAll: 'poolDictionaries: ';
-			store: poolString].
-	aStream cr; tab; nextPutAll: 'package: ';
-			store: self category asString.
-
-	superclass ifNil: [ 
-		aStream nextPutAll: '.'; cr.
-		aStream nextPutAll: self name.
-		aStream space; nextPutAll: 'superclass: nil'. ].
-
-	^ aStream contents
+	self 
+		deprecated: 'Use #definition instead.' 
+		on: '2019-05-14'
+		in: #Pharo8
+		transformWith: '`@receiver definitionForNautilus' 
+						-> '`@receiver definition'.
+						
+	^ self definition
 ]
 
 { #category : #deprecation }
@@ -664,7 +580,7 @@ Class >> hasSharedPools [
 
 { #category : #'accessing class hierarchy' }
 Class >> hasSubclasses [
-	^ self subclasses isEmpty not
+	^ self subclasses isNotEmpty
 ]
 
 { #category : #'subclass creation - immediate' }

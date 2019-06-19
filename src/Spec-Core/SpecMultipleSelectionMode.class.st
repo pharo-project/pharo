@@ -7,7 +7,7 @@ Class {
 	#category : #'Spec-Core-Widgets-Table'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 SpecMultipleSelectionMode >> addSubscription: aSubscription [
 
 	^ selectedIndexesValueHolder announcer basicSubscribe: aSubscription
@@ -29,9 +29,19 @@ SpecMultipleSelectionMode >> includesIndex: anIndex [
 ]
 
 { #category : #testing }
+SpecMultipleSelectionMode >> includesIndexes: aCollection [
+	^ aCollection allSatisfy: [ :anIndex | self selectedIndexes includes: anIndex ]
+]
+
+{ #category : #testing }
 SpecMultipleSelectionMode >> includesItem: anItem [
 
 	^ self selectedItems includes: anItem
+]
+
+{ #category : #testing }
+SpecMultipleSelectionMode >> includesItems: aCollection [
+	^ aCollection allSatisfy: [ :anItem | self selectedItems includes: anItem ]
 ]
 
 { #category : #initialization }
@@ -41,9 +51,10 @@ SpecMultipleSelectionMode >> initialize [
 	selectedIndexesValueHolder := OrderedCollection new asValueHolder
 ]
 
-{ #category : #selecting }
-SpecMultipleSelectionMode >> isEmpty [ 
-	^ selectedIndexesValueHolder value isEmpty
+{ #category : #testing }
+SpecMultipleSelectionMode >> isEmpty [
+	
+	^ self selectedIndexes isEmpty
 ]
 
 { #category : #testing }
@@ -60,11 +71,20 @@ SpecMultipleSelectionMode >> selectAll [
 
 { #category : #selecting }
 SpecMultipleSelectionMode >> selectIndexes: aCollection [
+	| indexes |
+	indexes := (aCollection collect: [ :each | self withinRangeIndex: each ]) asSet.
+	"If all elements are out of range, just ignore the event like for single selection."
+	(indexes isNotEmpty and: [ indexes allSatisfy: [ :each | each = 0 ] ]) ifTrue: [ ^ self ].
 
-	aCollection asSet = selectedIndexesValueHolder value asSet
-		ifTrue: [ ^ self ].
+	indexes := indexes reject: [ :each | each = 0 ].
+	indexes = selectedIndexesValueHolder value asSet ifTrue: [ ^ self ].
 
-	^ selectedIndexesValueHolder value: aCollection asSet asOrderedCollection
+	^ selectedIndexesValueHolder value: indexes asOrderedCollection
+]
+
+{ #category : #selecting }
+SpecMultipleSelectionMode >> selectItems: aCollection [
+	self selectIndexes: (aCollection collect: [ :anItem | self indexOfItem: anItem ])
 ]
 
 { #category : #selecting }
@@ -79,10 +99,10 @@ SpecMultipleSelectionMode >> selectedItems [
 	^ self selectedIndexes collect: [ :idx | self model at: idx ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SpecMultipleSelectionMode >> subscriptions [
 
-	^ selectedIndexesValueHolder announcer subscriptions
+	^ selectedIndexesValueHolder announcer subscriptions subscriptions
 ]
 
 { #category : #selecting }

@@ -55,7 +55,7 @@ Morph >> focusChanged [
 Morph >> focusColor [
 	"Answer the keyboard focus indication color."
 
-	^self borderStyle color contrastingColor
+	^self borderStyle color contrastingBlackAndWhiteColor
 ]
 
 { #category : #'*Polymorph-Widgets' }

@@ -7,52 +7,6 @@ Class {
 	#category : #'Kernel-Tests-Objects'
 }
 
-{ #category : #private }
-ObjectTest >> a [
-	self b.
-]
-
-{ #category : #private }
-ObjectTest >> a1 [
-	self b1.
-]
-
-{ #category : #private }
-ObjectTest >> b [
-	<haltOrBreakpointForTesting>
-	self haltIf: #testHaltIf.
-]
-
-{ #category : #private }
-ObjectTest >> b1 [
-	<haltOrBreakpointForTesting>
-	self haltIf: #testasdasdfHaltIf.
-]
-
-{ #category : #'assertions - halt' }
-ObjectTest >> shouldHaltAfter: aNumber times: aBlock [
-	
-	self shouldHaltWhen: [ aNumber timesRepeat: aBlock ].
-]
-
-{ #category : #'assertions - halt' }
-ObjectTest >> shouldHaltWhen: aBlock [
-
-	self should: aBlock raise: Halt.
-]
-
-{ #category : #'assertions - halt' }
-ObjectTest >> shouldntHaltAfter: aNumber times: aBlock [
-	
-	self shouldntHaltWhen: [ aNumber timesRepeat: aBlock ].
-]
-
-{ #category : #'assertions - halt' }
-ObjectTest >> shouldntHaltWhen: aBlock [
-
-	self shouldnt: aBlock raise: Halt.
-]
-
 { #category : #tests }
 ObjectTest >> testAs [
 	| coll1 coll2 |
@@ -110,26 +64,6 @@ ObjectTest >> testDisplayStringLimitedString [
 	| actual |
 	actual := Object new displayStringLimitedTo: 4.
 	self assert: actual equals: 'an O...etc...'
-]
-
-{ #category : #'tests - debugging' }
-ObjectTest >> testHaltIf [
-	<haltOrBreakpointForTesting>
-
-	self shouldHaltWhen: [self haltIf: true].
-	self shouldntHaltWhen: [self haltIf: false].
-
-	self shouldHaltWhen: [self haltIf: [true]].
-	self shouldntHaltWhen: [self haltIf: [false]].
-
-	self shouldHaltWhen: [self haltIf: #testHaltIf].
-	self shouldntHaltWhen: [self haltIf: #teadfasdfltIf].
-
-	self shouldHaltWhen: [self a].
-	self shouldntHaltWhen: [self a1].
-
-	self shouldHaltWhen: [self haltIf: [:receiver | receiver class = self class]].
-	self shouldntHaltWhen: [self haltIf: [:receiver | receiver class ~= self class]].
 ]
 
 { #category : #tests }

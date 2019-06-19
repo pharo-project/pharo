@@ -84,8 +84,7 @@ EyeAbstractInspector >> initialize [
 { #category : #initialization }
 EyeAbstractInspector >> initializePresenter [
 	object whenChangedDo: [ self objectChanged ].
-	self text
-		whenBuiltDo: [ :w | w widget editingMode classOrMetaClass: self object class ].
+	self text whenBuiltDo: [ :w | self text behavior: self object class ].
 	self initializeShortcuts
 ]
 
@@ -108,7 +107,7 @@ EyeAbstractInspector >> inspect: anObject [
 EyeAbstractInspector >> inspectionMenu: aMenu [
 	| menuModel |
 	self hasSelectedObject ifFalse: [ ^ aMenu ].
-	menuModel := MenuPresenter new.
+	menuModel := self newMenu.
 	self inspectionSubMenu: menuModel.
 	self selectedElement inspectionMenu: menuModel.
 	aMenu addAllMorphs: (menuModel buildWithSpec: #popup) items.
@@ -220,9 +219,7 @@ EyeAbstractInspector >> shortCuts [
 
 { #category : #accessing }
 EyeAbstractInspector >> text [
-	^ text ifNil: [ 
-		text := self newCode.
-		text aboutToStyle: true. ]
+	^ text ifNil: [ text := self newCode ]
 ]
 
 { #category : #accessing }

@@ -15,29 +15,33 @@ MorphicNotebookAdapter class >> cellInset [
 
 { #category : #factory }
 MorphicNotebookAdapter >> addModelTo: aNotebook [
-	
 	self model pages ifEmpty: [ ^ self ].
-	self model pages do: [ :each |
-		aNotebook 
-			addLazyPage: [ self buildContentForPage: each ] 
-			label: (self buildLabelForPage: each).
-		"Since I do not have the page added, I need to take it from the list. 
+	self model pages
+		do: [ :each | 
+			"Since I do not have the page added, I need to take it from the list. 
 		 But I know this will be the last added :)"
-		aNotebook pages last model: each ].
+			self addPage: each to: aNotebook ].
 	"force first page to be drawn"
-	self model selectedPage ifNil: [ 
-		self model selectedPageIndex: 1 ].
-	aNotebook selectedPageIndex: self model selectedPageIndex. 
-	aNotebook announcer 
-		when: NotebookPageChanged 
-		send: #pageChanged:
-		to: self
+	self model selectedPage ifNil: [ self model selectedPageIndex: 1 ].
+	aNotebook selectedPageIndex: self model selectedPageIndex.
+	aNotebook announcer when: NotebookPageChanged send: #pageChanged: to: self
+]
+
+{ #category : #factory }
+MorphicNotebookAdapter >> addPage: each to: aNotebook [
+
+	aNotebook addLazyPage: [ self buildContentForPage: each ] label: (self buildLabelForPage: each).
+	"Since I do not have the page added, I need to take it from the list. But I know this will be the last added :)"
+	aNotebook pages last model: each
 ]
 
 { #category : #factory }
 MorphicNotebookAdapter >> buildContentForPage: aPage [
-		
-	^ aPage retrievePresenter ifNotNil: #buildWithSpec
+	^ aPage retrievePresenter
+		ifNotNil: [ :presenter |
+			aPage layoutSpec
+				ifNil: [ presenter buildWithSpec ]
+				ifNotNil: [ :spec | presenter buildWithSpec: spec ] ]
 ]
 
 { #category : #factory }
@@ -69,23 +73,24 @@ MorphicNotebookAdapter >> buildWidget [
 	notebookMorph := NotebookMorph new
 		vResizing: #spaceFill;
 		hResizing: #spaceFill;
+		setBalloonText: self help;
 		yourself.
 	self addModelTo: notebookMorph.
+
+	self model whenPagesChangedDo: [ :pages | self updatePagesWith: pages ].
+	self model whenSelectedPageChangedDo: [ :page | self selectPage: page ].
 
 	^ notebookMorph
 ]
 
 { #category : #private }
 MorphicNotebookAdapter >> pageChanged: ann [
-
-	self model basicSelectedPage: ann page model
+	self model selectedPage: ann page model
 ]
 
 { #category : #updating }
-MorphicNotebookAdapter >> selectedPage [
-	
-	self widgetDo: [ :w |
-		w page: (w pageWithModel: self model selectedPage) ]
+MorphicNotebookAdapter >> selectPage: aPage [
+	self widgetDo: [ :w | w page: (w pageWithModel: aPage) ]
 ]
 
 { #category : #updating }
@@ -105,4 +110,18 @@ MorphicNotebookAdapter >> updatePageTitle: aPage [
 		w 
 			relabelPage: (w pageWithModel: aPage) 
 			with: (self buildLabelForPage: aPage) ]
+]
+
+{ #category : #updating }
+MorphicNotebookAdapter >> updatePagesWith: aCollection [
+	| pagesToRemove |
+	
+	self widget ifNil: [ ^ self ].
+		
+	pagesToRemove := self widget pages reject: [ :pageMorph | 
+		aCollection anySatisfy: [ :page | page = pageMorph model ] ].
+	pagesToRemove do: [ :pageMorph | self widget removePage: pageMorph ].
+	aCollection 
+		reject: [ :page | self widget hasPageWithModel: page ] 
+		thenDo: [ :page | self addPage: page to: self widget ]
 ]

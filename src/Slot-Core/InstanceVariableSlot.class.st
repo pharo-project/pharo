@@ -2,6 +2,10 @@
 I add some special behavior: 
 	- I override bytecode generation to generate ivar read and write bytecodes
 	- I print the definition as #name 
+	
+If you subclass this class, take note that as it overrides both #emitStore: and #emitValue: to use the fast bytecode, it will *not* call the reflective #read: and #write:to: methods.
+
+
 "
 Class {
 	#name : #InstanceVariableSlot,
@@ -34,7 +38,7 @@ InstanceVariableSlot class >> resetIvarSlots [
 { #category : #printing }
 InstanceVariableSlot >> definitionString [
 	"non special globals are defined by the symbol"
-	^self isSpecial
+	^self needsFullDefinition
 		ifTrue: [super definitionString]
 		ifFalse: [self name printString]
 
@@ -42,13 +46,13 @@ InstanceVariableSlot >> definitionString [
 
 { #category : #'code generation' }
 InstanceVariableSlot >> emitStore: methodBuilder [
-
+	"generate store bytecode"
 	methodBuilder storeInstVar: index
 ]
 
 { #category : #'code generation' }
 InstanceVariableSlot >> emitValue: methodBuilder [
-
+	"emit the bytecode to push ivar"
 	methodBuilder pushInstVar: index.
 
 ]
@@ -64,22 +68,14 @@ InstanceVariableSlot >> isReadIn: aCompiledCode [
 ]
 
 { #category : #testing }
-InstanceVariableSlot >> isSpecial [
-	"I am just a backward compatible ivar slot. Note: my subclasses are special"
-	^(self class = InstanceVariableSlot) not
-]
-
-{ #category : #testing }
 InstanceVariableSlot >> isWrittenIn: aCompiledCode [
 	^aCompiledCode writesField: index
 ]
 
-{ #category : #queries }
-InstanceVariableSlot >> usingMethods [
-	"All methods that read or write the slot, we can do it here without having to use the AST"
-	^self definingClass 
-		ifNil: [ #() ]
-		ifNotNil: [ :definingClass | definingClass withAllSubclasses flatCollect: [:class |  
-		(class whichSelectorsAccess: self name) collect: [:sel | 
-			class compiledMethodAt: sel ]]]
+{ #category : #testing }
+InstanceVariableSlot >> needsFullDefinition [
+	"I am just a backward compatible ivar slot and can use simple definitons.
+	 Note: my subclasses need full definitons"
+
+	^ self class ~= InstanceVariableSlot
 ]

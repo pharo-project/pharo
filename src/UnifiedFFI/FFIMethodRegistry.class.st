@@ -85,12 +85,27 @@ FFIMethodRegistry >> registerMethod: aCompiledMethod [
 ]
 
 { #category : #accessing }
+FFIMethodRegistry >> removeMethod: aMethod [
+
+	aMethod methodClass methodDict
+		at: aMethod selector
+		put: (aMethod propertyValueAt: #ffiNonCompiledMethod)
+]
+
+{ #category : #accessing }
 FFIMethodRegistry >> reset [
 	"FFI compiled methods will keep the old method as a property, making easy to replace it 
 	 when changing platforms."
-	self compiledMethods do: [ :each |
-		each methodClass methodDict 
-			at: each selector 
-			put: (each propertyValueAt: #ffiNonCompiledMethod)].
+	self compiledMethods do: [ :each | self removeMethod: each].
 	self compiledMethods removeAll
+]
+
+{ #category : #reseting }
+FFIMethodRegistry >> resetSingleClass: aClass [
+
+	self compiledMethods
+		select: [ :m | m methodClass = aClass ]
+		thenDo: [ :aMethod | 
+			self removeMethod: aMethod.
+			compiledMethods remove: aMethod ]
 ]

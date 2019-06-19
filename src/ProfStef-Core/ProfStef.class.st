@@ -152,7 +152,6 @@ ProfStef class >> openPharoZenWorkspace [
 		text: self pharoZenValuesContents;
 		title: 'Pharo Zen' translated;
 		aboutText: self aboutPharoZen;
-		beForText;
 		openWithSpec
 ]
 
@@ -251,7 +250,7 @@ ProfStef >> goOn: aTutorialClass [
 ProfStef >> helpBrowserWindow [
 	"Yes this is a hack"
 	
-	^ World systemWindows 
+	^ self currentWorld systemWindows 
 		detect: [ :each | each model class = HelpBrowser ] 
 		ifNone: [ nil ]
 ]

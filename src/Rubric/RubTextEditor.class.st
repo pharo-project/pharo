@@ -6,7 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'defaultKeymappingIndex',
-		'textArea'
+		'textArea',
+		'findReplaceService'
 	],
 	#category : #'Rubric-Editing-Core'
 }
@@ -1213,7 +1214,7 @@ RubTextEditor >> findRegex [
 
 { #category : #'find-select' }
 RubTextEditor >> findReplaceService [
-	^ RubFindReplaceService default
+	^ self textArea findReplaceService
 ]
 
 { #category : #'find-select' }

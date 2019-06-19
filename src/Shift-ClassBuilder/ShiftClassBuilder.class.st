@@ -63,6 +63,7 @@ ShiftClassBuilder >> addChangeComparer: aChangeComparer [
 ShiftClassBuilder >> build [	
 	self tryToFillOldClass.
 	self detectBuilderEnhancer.
+	self builderEnhancer validateRedefinition: self oldClass. 
 	
 	self validateSuperclass.
 	self compareWithOldClass.
@@ -323,10 +324,8 @@ ShiftClassBuilder >> initialize [
 { #category : #building }
 ShiftClassBuilder >> installSlots [
 	newClass classLayout slots do: [ :each | each installingIn: newClass ].
-	newClass classLayout slots do: [ :each | each layoutChanged: newClass ].
-	
 	newClass class classLayout slots do: [ :each | each installingIn: newClass class ].
-	newClass class classLayout slots do: [ :each | each layoutChanged: newClass class ].
+
 ]
 
 { #category : #accessing }

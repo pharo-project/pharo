@@ -20,18 +20,6 @@ LabelledTextInput class >> defaultSpec [
 	^ super labelLeft
 ]
 
-{ #category : #example }
-LabelledTextInput class >> example [
-	<sampleInstance>
-	| example |
-	example := self abstractExample.
-	example input placeholder: 'Tilt'.
-	example
-		extent: 400 @ 50;
-		openWithSpec.
-	^ example
-]
-
 { #category : #'api-shortcuts' }
 LabelledTextInput >> acceptBlock: aBlockWithOneArgument [
 	^ self input acceptBlock: aBlockWithOneArgument

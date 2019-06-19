@@ -47,7 +47,8 @@ TestRunner class >> menuCommandOn: aBuilder [
 		order: 20;
 		keyText: 'o, u';
 		help: 'Let you run and debug SUnit tests.';
-		icon: self taskbarIcon
+		icon: self taskbarIcon.
+	aBuilder withSeparatorAfter	
 ]
 
 { #category : #'instance creation' }
@@ -1116,7 +1117,8 @@ TestRunner >> statusHeight [
 
 { #category : #'accessing-menu' }
 TestRunner >> statusMenu: aMenu [
-	^ aMenu
+	^ aMenu 
+		defaultTarget: self;
 		add: 'History' selector: #showHistoryMenu;
 		add: 'Store result as progress reference' selector: #storeResultIntoTestCases;
 		add: 'Show progress' selector: #showProgress; 

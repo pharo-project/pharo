@@ -308,7 +308,7 @@ PharoDarkTheme >> menuBorderColor [
 
 { #category : #'accessing colors' }
 PharoDarkTheme >> menuBorderWidth [
-	^ self borderWidth * World displayScaleFactor
+	^ self borderWidth * self currentWorld displayScaleFactor
 ]
 
 { #category : #defaults }
@@ -359,9 +359,9 @@ PharoDarkTheme >> selectionTextColor [
 ]
 
 { #category : #defaults }
-PharoDarkTheme >> shStyleTable [
+PharoDarkTheme >> shStyleTableName [
 
-	^SHRBTextStyler darkStyleTable
+	^ #darkStyleTable
 ]
 
 { #category : #'fill-styles' }

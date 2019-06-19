@@ -107,7 +107,7 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	Smalltalk tools register: MCWorkingCopyBrowser as: #monticelloBrowser.
 	
 	BIConfigurableFormatter initialize.
-	
+	RBRefactoryChangeManager nuke.
 	Smalltalk garbageCollect.
 	Smalltalk cleanOutUndeclared. 
 

@@ -1075,7 +1075,8 @@ CompiledMethod >> tags [
 
 { #category : #'source code management' }
 CompiledMethod >> tempNames [
-	^self methodNode tempNames.
+	"on the level of the compiled method, tempNames includes argument names"
+	^self ast argumentNames, self ast temporaryNames
 ]
 
 { #category : #'accessing-tags' }

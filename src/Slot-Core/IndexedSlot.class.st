@@ -22,6 +22,12 @@ IndexedSlot >> = other [
 ]
 
 { #category : #comparing }
+IndexedSlot >> hasSameDefinitionAs: other [
+	"Definiton does not contain index"
+	^super = other
+]
+
+{ #category : #comparing }
 IndexedSlot >> hash [
 	^ (self species hash bitXor: self name hash) bitXor: (self index ifNil: [ 0 ])
 ]

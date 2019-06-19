@@ -36,7 +36,7 @@ MorphicAdapterTestCase >> initializeTestedInstance [
 MorphicAdapterTestCase >> openInstance [
 
 	window ifNil: [ window := presenter openWithSpec ].
-	World doOneCycle.
+	self currentWorld doOneCycle.
 ]
 
 { #category : #private }
@@ -70,12 +70,6 @@ MorphicAdapterTestCase >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
-MorphicAdapterTestCase >> testSmoke [
-
-	self openInstance
-]
-
 { #category : #running }
 MorphicAdapterTestCase >> widget [
 
@@ -83,6 +77,6 @@ MorphicAdapterTestCase >> widget [
 	The action should have been correctly configured before
 	depending on the spec initialization strategy"
 	self openInstance.
-	World doOneCycle.
+	self currentWorld doOneCycle.
 	^ self adapter widget
 ]

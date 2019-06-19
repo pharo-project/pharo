@@ -7,11 +7,14 @@ In particular, I contain a presenterProvider, a block who's responsibility is to
 Class {
 	#name : #NotebookPage,
 	#superclass : #Object,
+	#traits : 'TSpecObservable',
+	#classTraits : 'TSpecObservable classTrait',
 	#instVars : [
-		'owner',
-		'presenterProvider',
-		'titleHolder',
-		'iconHolder'
+		'#owner',
+		'#title => SpecObservableSlot',
+		'#icon => SpecObservableSlot',
+		'#layoutSpec => SpecObservableSlot',
+		'#presenterProvider'
 	],
 	#category : #'Spec-Core-Widgets-Tab'
 }
@@ -27,6 +30,17 @@ NotebookPage class >> title: aString icon: anIcon provider: aBlock [
 ]
 
 { #category : #'instance creation' }
+NotebookPage class >> title: aString icon: anIcon provider: aBlock layoutSpec: aSymbol [
+
+	^ self new 
+		title: aString;
+		icon: anIcon;
+		presenterProvider: aBlock;
+		layoutSpec: aSymbol;
+		yourself
+]
+
+{ #category : #'instance creation' }
 NotebookPage class >> title: aString provider: aBlock [
 
 	^ self new 
@@ -37,25 +51,34 @@ NotebookPage class >> title: aString provider: aBlock [
 
 { #category : #accessing }
 NotebookPage >> icon [
-
-	^ iconHolder value
+	^ icon
 ]
 
 { #category : #accessing }
 NotebookPage >> icon: anIcon [
-
-	iconHolder value: anIcon
+	icon := anIcon
 ]
 
 { #category : #initialization }
 NotebookPage >> initialize [ 
 
+	self class initializeSlots: self.
 	super initialize.
-	titleHolder := nil asValueHolder.
-	iconHolder := nil asValueHolder.
 	
-	titleHolder whenChangedDo: [ self pageTitleChanged ].
-	iconHolder whenChangedDo: [ self pageTitleChanged ]
+	self property: #title whenChangedDo: [ self pageTitleChanged ].
+	self property: #icon whenChangedDo: [ self pageTitleChanged ]
+]
+
+{ #category : #accessing }
+NotebookPage >> layoutSpec [
+
+	^ layoutSpec
+]
+
+{ #category : #accessing }
+NotebookPage >> layoutSpec: aSymbol [
+
+	layoutSpec := aSymbol
 ]
 
 { #category : #accessing }
@@ -105,11 +128,11 @@ NotebookPage >> retrievePresenter [
 { #category : #accessing }
 NotebookPage >> title [
 
-	^ titleHolder value
+	^ title
 ]
 
 { #category : #accessing }
-NotebookPage >> title: anObject [
+NotebookPage >> title: aString [
 
-	titleHolder value: anObject
+	title := aString
 ]

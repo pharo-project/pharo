@@ -13,7 +13,7 @@ Class {
 	#category : #'Spec-Core-Widgets-Utils'
 }
 
-{ #category : #enumerating }
+{ #category : #'api-events' }
 ProgressBarState >> whenValueChangedDo: aBlock [
 	"My subclasses should fire the block when the current value changes."
 

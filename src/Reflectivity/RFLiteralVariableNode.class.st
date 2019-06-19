@@ -14,7 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 RFLiteralVariableNode class >> value: anObject [
-	^self new binding: #RFMetaBinding -> anObject
+	^self new binding: (AdditionalBinding key: #RFMetaBinding value: anObject)
 ]
 
 { #category : #visiting }

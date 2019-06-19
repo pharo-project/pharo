@@ -9,28 +9,14 @@ Class {
 	],
 	#classVars : [
 		'Finds',
-		'Replacements',
-		'Singleton'
+		'Replacements'
 	],
 	#category : #'Rubric-Editing-FindReplaceService'
 }
 
-{ #category : #cleanup }
-RubFindReplaceDialogWindow class >> cleanUp [
-	Singleton ifNotNil: [ 
-			Singleton close.
-			Singleton := nil ]
-]
-
 { #category : #accessing }
 RubFindReplaceDialogWindow class >> finds [
 	^ Finds ifNil: [Finds := OrderedCollection new]
-]
-
-{ #category : #accessing }
-RubFindReplaceDialogWindow class >> initialize [
-	"EditorFindReplaceDialogWindow initialize"
-	Singleton := nil.
 ]
 
 { #category : #accessing }
@@ -40,18 +26,12 @@ RubFindReplaceDialogWindow class >> maxPreviousListSize [
 
 { #category : #accessing }
 RubFindReplaceDialogWindow class >> on: aTextView [
-	^ self singleton on: aTextView
+	^ self new on: aTextView
 ]
 
 { #category : #accessing }
 RubFindReplaceDialogWindow class >> replacements [
 	^ Replacements ifNil: [Replacements := OrderedCollection new]
-]
-
-{ #category : #accessing }
-RubFindReplaceDialogWindow class >> singleton [ 
-	^ Singleton ifNil: [Singleton := self new].
-
 ]
 
 { #category : #'user-interface' }
@@ -349,7 +329,7 @@ RubFindReplaceDialogWindow >> newReplacement [
 
 { #category : #action }
 RubFindReplaceDialogWindow >> open [
-	self openAsIsIn: World.
+	self openAsIsIn: self currentWorld.
 	self extent: self extent.
 	self activate
 

@@ -7,11 +7,17 @@ Class {
 	#category : #'AST-Tests-Core'
 }
 
+{ #category : #helpers }
+RBNullFormatterTest >> parseMethod: aString [ 
+
+	^ RBParser parseMethod: aString
+]
+
 { #category : #tests }
 RBNullFormatterTest >> testGivenAMethodNodeWhenSourceAvailableThenSourceReturnedAsResultOfFormatting [
 	| ast sourceCode |
 	sourceCode := (Collection class>>#with:with:) sourceCode.
-	ast := RBParser parseMethod: sourceCode.
+	ast := self parseMethod: sourceCode.
 	self 
 		assert: (RBNullFormatter new format: ast)
 		equals: sourceCode
@@ -21,7 +27,7 @@ RBNullFormatterTest >> testGivenAMethodNodeWhenSourceAvailableThenSourceReturned
 RBNullFormatterTest >> testGivenAMethodNodeWhenSourceNotAvailableThenSelectorWithWarningMessageReturnedAsResultOfFormatting [
 	| ast sourceCode |
 	sourceCode := (Collection class>>#with:with:) sourceCode.
-	ast := RBParser parseMethod: sourceCode.
+	ast := self parseMethod: sourceCode.
 	ast source: nil.
 	self 
 		assert: (RBNullFormatter new format: ast)

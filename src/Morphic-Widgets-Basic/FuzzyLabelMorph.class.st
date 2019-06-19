@@ -36,7 +36,7 @@ FuzzyLabelMorph >> drawOn: aCanvas [
 		ifTrue: [self color]
 		ifFalse: [pc twiceDarker].
 	fuzzColor := self enabled
-		ifTrue: [labelColor twiceDarker darker contrastingColor alpha: self 
+		ifTrue: [labelColor twiceDarker darker contrastingBlackAndWhiteColor alpha: self 
 alpha]
 		ifFalse: [Color transparent].
 	aCanvas depth < 8 ifTrue: [fuzzColor := Color transparent alpha: 0.001].

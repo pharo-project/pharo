@@ -17,13 +17,6 @@ Class {
 	#category : #'Kernel-Classes'
 }
 
-{ #category : #testing }
-Behavior class >> canZapMethodDictionary [
-	"Return false since zapping the method dictionary of Behavior class or its subclasses will cause the system to fail."
-
-	^ false
-]
-
 { #category : #cleanup }
 Behavior class >> cleanUp [
 	"Flush the obsolete subclasses."
@@ -454,18 +447,6 @@ Behavior >> basicSuperclass: aClass [
 ]
 
 { #category : #private }
-Behavior >> becomeCompact [
-	"Backward compatibility with the Squeak V3 object format.
-	Spur does not have a distinction between compact and non-compact classes."
-]
-
-{ #category : #private }
-Behavior >> becomeCompactSimplyAt: index [
-	"Backward compatibility with the Squeak V3 object format.
-	Spur does not have a distinction between compact and non-compact classes."
-]
-
-{ #category : #private }
 Behavior >> becomeUncompact [
 	"Backward compatibility with the Squeak V3 object format.
 	 Spur does not have a distinction between compact and non-compact classes."
@@ -527,13 +508,6 @@ Behavior >> canUnderstand: selector [
 		classAndMethodFor: selector
 		do: [ :c :m | true ]
 		ifAbsent: [ false ].
-]
-
-{ #category : #testing }
-Behavior >> canZapMethodDictionary [
-	"Return true if it is safe to zap the method dictionary on #obsolete."
-
-	^ true
 ]
 
 { #category : #'accessing method dictionary' }
@@ -932,13 +906,6 @@ Behavior >> includesSharedPoolNamed:  aSharedPoolString [
 	^ (self sharedPools anySatisfy: [:each | each name = aSharedPoolString])
 ]
 
-{ #category : #private }
-Behavior >> indexIfCompact [
-	"Backward compatibility with the Squeak V3 object format.
-	 Spur does not have a distinction between compact and non-compact classes."
-	^0
-]
-
 { #category : #'testing class hierarchy' }
 Behavior >> inheritsFrom: aClass [ 
 	"Answer whether the argument, aClass, is on the receiver's superclass 
@@ -1014,17 +981,6 @@ Behavior >> instVarNames [
 			ifFalse: [self superclass instSize].
 	mySize = superSize ifTrue: [^#()].	
 	^(superSize + 1 to: mySize) collect: [:i | 'inst' , i printString]
-]
-
-{ #category : #compiling }
-Behavior >> instVarNamesAndOffsetsDo: aBinaryBlock [
-	"This is part of the interface between the compiler and a class's instance or field names.
-	 The class should enumerate aBinaryBlock with the instance variable name strings and
-	 their integer offsets.  The order is important. Names evaluated later will override the
-	 same names occurring earlier."
-
-	"Nothing to do here; ClassDescription introduces named instance variables"
-	^self
 ]
 
 { #category : #'accessing instances and variables' }
@@ -1278,45 +1234,6 @@ Behavior >> kindOfSubclass [
 					[self isEphemeronClass
 						ifTrue: [' ephemeronSubclass: ']
 						ifFalse: [' subclass: ']]]
-]
-
-{ #category : #printing }
-Behavior >> literalScannedAs: scannedLiteral notifying: requestor [
-	"Postprocesses a literal scanned by Scanner scanToken (esp. xLitQuote).
-	If scannedLiteral is not an association, answer it.
-	Else, if it is of the form:
-		nil->#NameOfMetaclass
-	answer nil->theMetaclass, if any has that name, else report an error.
-	Else, if it is of the form:
-		#NameOfGlobalVariable->anythiEng
-	answer the global, class, or pool association with that nameE, if any, else
-	add it to Undeclared a answer the new Association."
-
-	| key value |
-	(scannedLiteral isVariableBinding)
-		ifFalse: [^ scannedLiteral].
-	key := scannedLiteral key.
-	value := scannedLiteral value.
-	key ifNil: "###<metaclass soleInstance name>"
-			[(self bindingOf: value) ifNotNil:[:assoc|
-				 (assoc value isKindOf: Behavior)
-					ifTrue: [^ nil->assoc value class]].
-			 requestor notify: 'No such metaclass'.
-			 ^false].
-	(key isSymbol)
-		ifTrue: "##<global var name>"
-			[(self bindingOf: key) ifNotNil:[:assoc | ^assoc].
-			Undeclared at: key put: nil.
-			 ^Undeclared bindingOf: key].
-	requestor notify: '## must be followed by a non-local variable name'.
-	^false
-
-"	Form literalScannedAs: 14 notifying: nil 14
-	Form literalScannedAs: #OneBitForm notiEfying: nil  OneBitForm
-	Form literalScannedAs: ##OneBitForm notifying: nil  OneBitForm->a Form
-	Form literalScannedAs: ##Form notifying: nil   Form->Form
-	Form literalScannedAs: ###Form notifying: nil   nilE->Form class
-"
 ]
 
 { #category : #printing }
@@ -1785,27 +1702,6 @@ Behavior >> startUp: resuming [
 	^self startUp
 ]
 
-{ #category : #printing }
-Behavior >> storeLiteral: aCodeLiteral on: aStream [
-	"Store aCodeLiteral on aStream, changing an Association to ##GlobalName
-	 or ###MetaclassSoleInstanceName format if appropriate"
-	| key value |
-	(aCodeLiteral isVariableBinding)
-		ifFalse:
-			[aCodeLiteral storeOn: aStream.
-			 ^self].
-	key := aCodeLiteral key.
-	(key isNil and: [(value := aCodeLiteral value) isMemberOf: Metaclass])
-		ifTrue:
-			[aStream nextPutAll: '###'; nextPutAll: value soleInstance name.
-			 ^self].
-	(key isSymbol and: [(self bindingOf: key) notNil])
-		ifTrue:
-			[aStream nextPutAll: '##'; nextPutAll: key.
-			 ^self].
-	aCodeLiteral storeOn: aStream
-]
-
 { #category : #accessing }
 Behavior >> subclassDefinerClass [
 	"Answer an evaluator class appropriate for evaluating definitions of new 
@@ -1941,17 +1837,6 @@ Behavior >> unreferencedInstanceVariables [
 	^ self instVarNames reject: [:ivn | 
 		self withAllSubclasses anySatisfy: [:class | 
 			(class whichSelectorsAccess: ivn) notEmpty]]
-]
-
-{ #category : #compiling }
-Behavior >> variablesAndOffsetsDo: aBinaryBlock [
-	"This is the interface between the compiler and a class's instance or field names.  The
-	 class should enumerate aBinaryBlock with the field definitions (with nil offsets) followed
-	 by the instance variable name strings and their integer offsets (1-relative).  The order is
-	 important; names evaluated later will override the same names occurring earlier."
-
-	"Only need to do instance variables here.  CProtoObject introduces field definitions."
-	self instVarNamesAndOffsetsDo: aBinaryBlock
 ]
 
 { #category : #queries }

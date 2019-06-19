@@ -22,7 +22,7 @@ Class {
 	#name : #RadioButtonPresenter,
 	#superclass : #AbstractFormButtonPresenter,
 	#instVars : [
-		'canDeselectByClick'
+		'associatedRadioButtons'
 	],
 	#category : #'Spec-Core-Widgets'
 }
@@ -40,77 +40,47 @@ RadioButtonPresenter class >> title [
 ]
 
 { #category : #accessing }
-RadioButtonPresenter >> actionWhenActivatedHolder [
+RadioButtonPresenter >> associatedRadioButtons [
+	^ associatedRadioButtons
+]
+
+{ #category : #'associated buttons' }
+RadioButtonPresenter >> associatedRadioButtons: aCollection [ 
 	
-	^ actionWhenActivatedHolder
-]
-
-{ #category : #accessing }
-RadioButtonPresenter >> actionWhenDeactivatedHolder [
+	| allElements |
+		
+	allElements := { self } , aCollection.
+	allElements do: [ :e | e basicAssociatedRadioButtons: allElements ].
 	
-	^ actionWhenDeactivatedHolder
+	self state: true.
+	aCollection do: [ :e | e state: false ]
 ]
 
-{ #category : #protocol }
-RadioButtonPresenter >> canDeselectByClick [
-	<api: #inspect>
-	"Return true clicking on a selected radio button deselects it"
-
-	^ canDeselectByClick value
-]
-
-{ #category : #protocol }
-RadioButtonPresenter >> canDeselectByClick: aBoolean [
-	<api: #boolean getter: #canDeselectByClick registration: #whenCanDeselectByClickChanged>
-	"Set if clicking on a selected radio button can deselect it"
+{ #category : #private }
+RadioButtonPresenter >> basicAssociatedRadioButtons: aCollection [ 
 	
-	canDeselectByClick value: aBoolean
-]
-
-{ #category : #api }
-RadioButtonPresenter >> enabled: aBoolean [
-	"<api: #boolean getter: #enabled registration: #whenEnabledChanged:>"
-	"Set if the button is enabled (clickable)"
-
-	super enabled: aBoolean.
-	self changed: #enabled.
-
+	associatedRadioButtons := aCollection copyWithout: self
 ]
 
 { #category : #initialization }
 RadioButtonPresenter >> initialize [
+
 	super initialize.
-	canDeselectByClick := false asValueHolder.
-]
-
-{ #category : #private }
-RadioButtonPresenter >> privateSetState: aBoolean [
-	"Should only be used by RadioButtonGroup"
-	
-	state := aBoolean.
-	self changed: #state
-]
-
-{ #category : #protocol }
-RadioButtonPresenter >> state: aBoolean [
-	"Set if the radio is activated or not"
-
-	<api: #boolean getter: #state>
-	(self canDeselectByClick and: [ self state not ])
-		ifTrue: [ 
-			state := aBoolean.
-			^ self ]
+	state := true.
+	associatedRadioButtons := #()
 ]
 
 { #category : #accessing }
-RadioButtonPresenter >> stateHolder [
-	
-	^ state
-]
+RadioButtonPresenter >> state: aValue [
 
-{ #category : #'protocol-events' }
-RadioButtonPresenter >> whenCanDeselectByClickChanged: aBlock [
-	"This method is triggered when `canDeselectByClick` changes"
+	(associatedRadioButtons noneSatisfy: [ :e | e state ])
+		ifTrue: [ 
+			"If I am the only one in true, I cannot be unselected" 
+			^ self ].
+
+	super state: aValue.
 	
-	canDeselectByClick whenChangedDo: aBlock
+	aValue ifTrue: [ 
+		associatedRadioButtons 
+			do: [ :e | e state: false ]].
 ]

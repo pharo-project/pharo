@@ -53,6 +53,12 @@ ExternalAddress >> gcpointer [
 ]
 
 { #category : #'*UnifiedFFI' }
+ExternalAddress >> getHandle [
+	
+	^ self
+]
+
+{ #category : #'*UnifiedFFI' }
 ExternalAddress class >> loadSymbol: moduleSymbol [
 	"Load global symbol (one that you can find in current VM binary)"
 	^ self 

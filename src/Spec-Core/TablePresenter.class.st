@@ -1,16 +1,12 @@
-"
-A TablePresenter handles a table.
-Tables defines columns (see #addColumn: and TableColumn hierarchy).
-Tables receive items (see #items:) to feed the table.
-
-self example
-
-"
 Class {
 	#name : #TablePresenter,
-	#superclass : #TableBasePresenter,
+	#superclass : #AbstractListPresenter,
+	#traits : 'TSpecObservable',
+	#classTraits : 'TSpecObservable classTrait',
 	#instVars : [
-		'itemsHolder'
+		'#columns => SpecObservableSlot',
+		'#showColumnHeaders => SpecObservableSlot',
+		'#isResizableHolder'
 	],
 	#category : #'Spec-Core-Widgets-Table'
 }
@@ -21,87 +17,90 @@ TablePresenter class >> adapterName [
 	^ #TableAdapter
 ]
 
-{ #category : #example }
-TablePresenter class >> example [
-	<sampleInstance>
-	
-	^ self new
-		addColumn: (ImageTableColumn title: 'Icon' evaluated: #systemIcon);
-		addColumn: (StringTableColumn title: 'Name' evaluated: #name);
-		items: Smalltalk allClasses;
-		doubleClickAction: [ :aClass | self inform: 'Double click on: ', aClass name ];
-		openWithSpec
+{ #category : #api }
+TablePresenter >> addColumn: aColumn [
+
+	columns := columns copyWith: aColumn
 ]
 
-{ #category : #example }
-TablePresenter class >> exampleEditableCell [
+{ #category : #api }
+TablePresenter >> addColumns: aCollection [
 
-	self flag: #TODO
+	aCollection do: [ :each | self addColumn: each ]
+]
+
+{ #category : #api }
+TablePresenter >> beNotResizable [
+	self isResizable: false
+]
+
+{ #category : #api }
+TablePresenter >> beResizable [
+	self isResizable: true
+]
+
+{ #category : #accessing }
+TablePresenter >> columns [
+
+	^ columns
+]
+
+{ #category : #api }
+TablePresenter >> columns: aCollection [
+
+	columns := aCollection
+]
+
+{ #category : #api }
+TablePresenter >> hideColumnHeaders [
+
+	showColumnHeaders := false
 ]
 
 { #category : #initialization }
 TablePresenter >> initialize [ 
 
 	super initialize.
-	itemsHolder := #() asValueHolder.
-	itemsHolder whenChangedDo: [ self itemsChanged ].	
-	
-	doubleClickActionHolder := [ ] asValueHolder.
+	showColumnHeaders := true.
+	columns := #().
+	isResizableHolder := false asValueHolder
 ]
 
 { #category : #accessing }
-TablePresenter >> itemAt: aNumber [
-	
-	^ self items at: aNumber
+TablePresenter >> isResizable [
+	^ isResizableHolder value
 ]
 
 { #category : #accessing }
-TablePresenter >> itemAt: aNumber ifAbsent: aBlock [
-	
-	^ self items 
-		at: aNumber
-		ifAbsent: aBlock
+TablePresenter >> isResizable: aBoolean [
+	isResizableHolder value: aBoolean
 ]
 
-{ #category : #accessing }
-TablePresenter >> items [
+{ #category : #testing }
+TablePresenter >> isShowingColumnHeaders [
 
-	^ itemsHolder value
-]
-
-{ #category : #accessing }
-TablePresenter >> items: aSequenceableCollection [
-
-	itemsHolder value: aSequenceableCollection
-]
-
-{ #category : #private }
-TablePresenter >> itemsChanged [
-
-	self changed: #items
+	^ showColumnHeaders
 ]
 
 { #category : #api }
-TablePresenter >> selectedIndex [
+TablePresenter >> showColumnHeaders [
+
+	showColumnHeaders := true
+]
+
+{ #category : #'api-events' }
+TablePresenter >> whenColumnsChangedDo: aBlock [
 	
-	^ selectionHolder index value
+	self property: #columns whenChangedDo: aBlock
 ]
 
-{ #category : #api }
-TablePresenter >> selectedIndex: index [
-	| selectedIndex selection |
-
-	selection := self itemAt: index ifAbsent: [ nil ].
-	selectedIndex := selection ifNil: [ 0 ].
-
-	selectionHolder index value: selectedIndex.
-	selectionHolder selection value: selection.
+{ #category : #'api-events' }
+TablePresenter >> whenIsResizableChangedDo: aBlock [
+	isResizableHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api }
-TablePresenter >> selectedItem: anObject [ 
-	| index |
-
-	index := self items indexOf: anObject.
-	self selectedIndex: index
+{ #category : #'api-events' }
+TablePresenter >> whenShowColumnHeadersChangedDo: aBlock [
+	
+	self property: #showColumnHeaders whenChangedDo: aBlock
 ]
