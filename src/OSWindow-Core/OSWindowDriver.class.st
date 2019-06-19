@@ -31,6 +31,21 @@ OSWindowDriver class >> current [
 	
 ]
 
+{ #category : #settings }
+OSWindowDriver class >> currentDriverClass [
+
+	^ self current class
+]
+
+{ #category : #settings }
+OSWindowDriver class >> currentDriverClass: aClass [
+
+	self currentDriverClass = aClass ifTrue: [ ^ self ].
+	
+	Current := aClass new.
+	self inform: 'You need to restart your image for this changes to take effect.'
+]
+
 { #category : #'class initialization' }
 OSWindowDriver class >> initialize [
 	SessionManager default registerSystemClassNamed: self name
@@ -52,6 +67,24 @@ OSWindowDriver class >> isSupported [
 OSWindowDriver class >> pickDriver [
 	self subclassesDo: [ :s | s isSuitable ifTrue: [ ^ s new ] ].
 	^ OSNullWindowDriver new
+]
+
+{ #category : #settings }
+OSWindowDriver class >> settingsOn: aBuilder [
+	<systemsettings>
+	
+	(aBuilder group: #oswindow)
+		label: 'OSWindow';
+		parent: #pharoSystem;
+		description: 'OSWindow subsystem';
+		with: [  
+			(aBuilder pickOne: #currentDriverClass)
+				label: 'Driver to use';
+				description: 'Select the driver to use for OSWindow. 
+WARNING: Changing the driver will change the world rendering itself. 
+You will need to restart the image to make this changes take effect.';
+				target: self;
+				domainValues: (self allSubclasses select: [ :each | each isSuitable ]) ]
 ]
 
 { #category : #'system startup' }
