@@ -6,6 +6,8 @@ When handing over a dictionary with additonal binding to the compiler:
         evaluate: 'test := 42'.
 
 all associations are changed to be AdditionaBinding.
+
+AddionalBinding is used, too, by both Slots and Reflectivity to reference directly objects from generated code.
 "
 Class {
 	#name : #AdditionalBinding,
