@@ -16,6 +16,7 @@ Class {
 	#superclass : #Object,
 	#classVars : [
 		'Current',
+		'DriverClass',
 		'Session'
 	],
 	#category : #'OSWindow-Core-Utilities'
@@ -23,26 +24,27 @@ Class {
 
 { #category : #accessing }
 OSWindowDriver class >> current [
-	^ Session == Smalltalk session ifTrue: [ Current ifNil: [Current := self pickDriver ]]
-		ifFalse: [ 
-			Session := Smalltalk session.
-			Current := self pickDriver
-	]
+
+	Session == Smalltalk session ifTrue: [ 
+		^ Current ifNil: [ Current := self driverClass new ] ].
 	
+	Session := Smalltalk session.
+	^ Current := self driverClass new
 ]
 
 { #category : #settings }
-OSWindowDriver class >> currentDriverClass [
+OSWindowDriver class >> driverClass [
 
-	^ self current class
+	^ DriverClass ifNil: [ DriverClass := self pickDriverClass ]
 ]
 
 { #category : #settings }
-OSWindowDriver class >> currentDriverClass: aClass [
+OSWindowDriver class >> driverClass: aClass [
 
-	self currentDriverClass = aClass ifTrue: [ ^ self ].
+	self driverClass = aClass ifTrue: [ ^ self ].
 	
-	Current := aClass new.
+	DriverClass := aClass.
+	Current := nil.
 	self inform: 'You need to restart your image for this changes to take effect.'
 ]
 
@@ -64,9 +66,10 @@ OSWindowDriver class >> isSupported [
 ]
 
 { #category : #'driver selection' }
-OSWindowDriver class >> pickDriver [
-	self subclassesDo: [ :s | s isSuitable ifTrue: [ ^ s new ] ].
-	^ OSNullWindowDriver new
+OSWindowDriver class >> pickDriverClass [
+
+	self subclassesDo: [ :s | s isSuitable ifTrue: [ ^ s ] ].
+	^ OSNullWindowDriver
 ]
 
 { #category : #settings }
@@ -78,7 +81,7 @@ OSWindowDriver class >> settingsOn: aBuilder [
 		parent: #pharoSystem;
 		description: 'OSWindow subsystem';
 		with: [  
-			(aBuilder pickOne: #currentDriverClass)
+			(aBuilder pickOne: #driverClass)
 				label: 'Driver to use';
 				description: 'Select the driver to use for OSWindow. 
 WARNING: Changing the driver will change the world rendering itself. 
