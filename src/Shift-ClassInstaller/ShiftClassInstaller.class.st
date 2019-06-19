@@ -82,9 +82,10 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 
 	"first initalize all hidden slots"
 	hiddenSlots := newClass classLayout allSlots reject: [:each | each isVisible].
-	hiddenSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
+	hiddenSlots do: [ :newSlot | 
 			newSlot initialize: newObject.
-			newSlot write: (oldSlot read: oldObject) to: newObject ]  ].
+			oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
+				newSlot write: (oldSlot read: oldObject) to: newObject ]  ].
 
 	"the initalize all visible slots"
 	newClass allSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 

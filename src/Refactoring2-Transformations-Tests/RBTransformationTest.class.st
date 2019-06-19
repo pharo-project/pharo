@@ -103,6 +103,12 @@ RBTransformationTest >> objectClassVariable [
 	^ Object classPool keys detect: [:each | true]
 ]
 
+{ #category : #parsing }
+RBTransformationTest >> parseMethod: aString [
+
+	^ RBParser parseMethod: aString
+]
+
 { #category : #running }
 RBTransformationTest >> perform: aChange do: aBlock [
 	"Perform a change in the system silently, evaluate aBlock and then undo the change again."
@@ -132,8 +138,6 @@ RBTransformationTest >> setUp [
 
 	super setUp.
 	self createMockClass.
-	manager := RBRefactoringManager classVarNamed: #Instance.
-	RBRefactoringManager classVarNamed: #Instance put: nil.
 	model := RBNamespace2 new
 ]
 
@@ -147,8 +151,6 @@ RBTransformationTest >> shouldFail: aRefactoring [
 { #category : #running }
 RBTransformationTest >> tearDown [
 
-	RBRefactoringManager instance release.
-	RBRefactoringManager classVarNamed: #Instance put: manager.
 	self removeMockClass.
 	super tearDown
 ]

@@ -10,6 +10,31 @@ ListCommonPropertiestTest >> classToTest [
 ]
 
 { #category : #running }
+ListCommonPropertiestTest >> testChangingFromMultipleToSingleSelection [
+	presenter beMultipleSelection.
+	self assert: presenter isMultipleSelection.
+	presenter beSingleSelection.
+	self deny: presenter isMultipleSelection
+]
+
+{ #category : #running }
+ListCommonPropertiestTest >> testChangingFromSingleToMultipleSelection [
+	presenter beSingleSelection.
+	self deny: presenter isMultipleSelection.
+	presenter beMultipleSelection.
+	self assert: presenter isMultipleSelection
+]
+
+{ #category : #running }
+ListCommonPropertiestTest >> testEnablingFilteringUpdateOpenedList [
+	self deny: self adapter hasFilter.
+	presenter enableItemSubstringFilter.
+	self assert: self adapter hasFilter.
+	presenter itemFilterBlock: nil.
+	self deny: self adapter hasFilter
+]
+
+{ #category : #running }
 ListCommonPropertiestTest >> testRemoveHeaderTitleInPresenterRemovesColumnHeaderMorph [
 	SystemVersion current major = 7 ifTrue: [ "Test failing in Pharo7 due to a bug in FastTable" ^ self skip ].
 

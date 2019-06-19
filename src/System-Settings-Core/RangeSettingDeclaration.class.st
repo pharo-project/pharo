@@ -24,8 +24,8 @@ RangeSettingDeclaration >> hasEditableList [
 
 { #category : #'user interface' }
 RangeSettingDeclaration >> inputWidget [
-	^ (self theme newRowIn: World for: {(self theme 
-							newTextEntryIn: World 
+	^ (self theme newRowIn: self currentWorld for: {(self theme 
+							newTextEntryIn: self currentWorld 
 							for: self
 							get: #realValue
 							set: #realValue:

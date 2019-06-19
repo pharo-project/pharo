@@ -1152,13 +1152,13 @@ at once, but for ordinary literal arrays, style every node"
 ]
 
 { #category : #visiting }
-SHRBTextStyler >> visitLiteralNode: aLiteralNode [
+SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 	| value |
-	value := aLiteralNode value.
+	value := aLiteralValueNode value.
 	self 
 		addStyle: (self literalStyleSymbol: value)
 		attribute: (TextClassLink class: value class)
-		forNode: aLiteralNode
+		forNode: aLiteralValueNode
 ]
 
 { #category : #visiting }

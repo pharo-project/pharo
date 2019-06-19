@@ -444,6 +444,7 @@ DiskStore >> isDiskFileSystem [
 
 { #category : #testing }
 DiskStore >> isExecutable: aPath [
+	"Answer a boolean indicating whether the supplied path is executable"
 
 	^File isExecutable: (self stringFromPath: aPath)
 ]
@@ -536,6 +537,17 @@ DiskStore >> rename: sourcePath to: destinationPath [
 	targetPathString := self stringFromPath: destinationPath.
 	encodedTargetPathString := File encodePathString: targetPathString.
 	^ File rename: encodedSourcePathString to: encodedTargetPathString.
+]
+
+{ #category : #private }
+DiskStore >> rootEntry [
+	"Answer a pseudo Directory Entry for the root directory"
+
+	^(DiskDirectoryEntry
+		reference: (FileReference fileSystem: FileSystem disk path: Path root)
+		statAttributes: #(nil 8r40775 0 0 0 0 0 0 0 0 nil 0 22))
+			accessAttributes: #(true false true);
+			yourself
 ]
 
 { #category : #private }

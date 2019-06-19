@@ -46,6 +46,17 @@ SystemDictionary >> allBehaviors [
 ]
 
 { #category : #'classes and traits' }
+SystemDictionary >> allBehaviorsDo: aBlock [
+	"Execute a block on each class, metaclass, trait and trait class"
+
+	self valuesDo: [ :aClass |
+		aClass isBehavior ifTrue: [  
+			aBlock
+				value: aClass;
+				value: aClass classSide]]
+]
+
+{ #category : #'classes and traits' }
 SystemDictionary >> allClasses [  
 	"Return all the class defines in the Smalltalk SystemDictionary"
 

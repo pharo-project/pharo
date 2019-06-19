@@ -8,10 +8,8 @@ Slot >> spotterAccessesFor: aStep [
 			aStep origin isKindOf: Class]]) ifTrue: [
 		aStep listProcessor
 				title: 'Accesses';
-				allCandidates: [ 
-					SystemNavigation default 
-						allAccessesTo: self name 
-						from: aStep previousStep origin ];
+				allCandidates: [  
+						(aStep previousStep origin slotNamed: self name) usingMethods ];
 				itemName: [:each | each asString];
 				filter: GTFilterSubstring ]
 ]

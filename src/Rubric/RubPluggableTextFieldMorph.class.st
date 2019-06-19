@@ -210,5 +210,5 @@ RubPluggableTextFieldMorph >> updateEnabled [
 { #category : #'event handling' }
 RubPluggableTextFieldMorph >> whenReturnEntered: anAnnouncement [
 	super whenReturnEntered: anAnnouncement.
-	crAction ifNotNil: [ crAction value ]
+	crAction ifNotNil: [ crAction cull: nil ]
 ]

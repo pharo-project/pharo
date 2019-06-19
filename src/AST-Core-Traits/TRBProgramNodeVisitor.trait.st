@@ -1,5 +1,5 @@
 "
-A TRBProgramNodeVisitor is a simple  that define visitor methods. 
+A TRBProgramNodeVisitor is a simple Trait that define visitor methods. 
 "
 Trait {
 	#name : #TRBProgramNodeVisitor,
@@ -41,7 +41,7 @@ TRBProgramNodeVisitor >> visitBlockNode: aBlockNode [
 
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [ 
-	aCascadeNode messages do: [:each | self visitNode: each]
+	aCascadeNode messages do: [:aMessage | self visitNode: aMessage]
 ]
 
 { #category : #visiting }
@@ -129,15 +129,26 @@ TRBProgramNodeVisitor >> visitSuperNode: aSuperNode [
 ]
 
 { #category : #visiting }
+TRBProgramNodeVisitor >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode [
+	"| temp |
+	temp is a temporary node as we can find in the body of methods, but it can't be visited the same way.
+	IT redirects the message on argumentNodeVisitor as a way to keep retrocompatibility"
+
+	^ self visitArgumentNode: aTemporaryDeclarationNode
+]
+
+{ #category : #visiting }
 TRBProgramNodeVisitor >> visitTemporaryNode: aNode [ 
 	"Sent *each time* a temporary node is found"
 	^ self visitVariableNode: aNode
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [ 
+TRBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [
 	"This is triggered when defining the temporaries between the pipes"
-	^self visitArgumentNodes: aNodeCollection
+
+	^ aNodeCollection
+		do: [ :each | self visitTemporaryDeclarationNode: each ]
 ]
 
 { #category : #visiting }

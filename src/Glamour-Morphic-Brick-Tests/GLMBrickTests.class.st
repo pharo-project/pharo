@@ -138,7 +138,7 @@ GLMBrickTests >> staticExtent [
 { #category : #defaults }
 GLMBrickTests >> staticHeight [
 
-	^ 100 * World displayScaleFactor
+	^ 100 * self currentWorld displayScaleFactor
 ]
 
 { #category : #defaults }
@@ -150,19 +150,19 @@ GLMBrickTests >> staticSmallExtent [
 { #category : #defaults }
 GLMBrickTests >> staticSmallHeight [
 
-	^ 50 * World displayScaleFactor
+	^ 50 * self currentWorld displayScaleFactor
 ]
 
 { #category : #defaults }
 GLMBrickTests >> staticSmallWidth [
 
-	^ 50 * World displayScaleFactor
+	^ 50 * self currentWorld displayScaleFactor
 ]
 
 { #category : #defaults }
 GLMBrickTests >> staticWidth [
 
-	^ 100 * World displayScaleFactor
+	^ 100 * self currentWorld displayScaleFactor
 ]
 
 { #category : #'tests-layouter' }

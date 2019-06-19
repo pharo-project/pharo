@@ -33,6 +33,61 @@ PrepareWindowExample class >> show [
 	self new openWithSpec
 ]
 
+{ #category : #'private building' }
+PrepareWindowExample >> buildFileMenu [
+
+	^ self newMenu
+		addItem: [ :item | item name: 'Push message'; action: [ self pushMessage ] ];
+		addItem: [ :item | item name: 'Pop message'; action: [ self popMessage ] ];
+		yourself
+]
+
+{ #category : #'private building' }
+PrepareWindowExample >> buildMenuBar [
+
+	^ self newMenuBar
+		addGroup: [ :group | group
+			addItem: [ :item | item name: 'File'; subMenu: self buildFileMenu ] ]
+]
+
+{ #category : #'private building' }
+PrepareWindowExample >> buildPopMessageToolBarItem [
+		
+	^ ToolBarButton new
+		label: 'Pop';
+		icon: (self iconNamed: #glamorousDown);
+		help: 'Pop last status bar message';
+		action: [ self popMessage ];
+		yourself
+]
+
+{ #category : #'private building' }
+PrepareWindowExample >> buildPushMessageToolBarItem [
+		
+	^ ToolBarButton new
+		label: 'Push';
+		icon: (self iconNamed: #glamorousUp);
+		help: 'Push a new status bar message';
+		action: [ self pushMessage ];
+		yourself
+]
+
+{ #category : #'private building' }
+PrepareWindowExample >> buildStatusBar [
+
+	^ StatusBarPresenter new
+]
+
+{ #category : #'private building' }
+PrepareWindowExample >> buildToolBar [
+	
+	^ self newToolBar 
+		addItem: self buildPushMessageToolBarItem;
+		addItem: self buildPopMessageToolBarItem;
+		addItem: self buildPopMessageToolBarItem position: ToolBarItemPosition right;
+		yourself
+]
+
 { #category : #api }
 PrepareWindowExample >> initialExtent [
  
@@ -61,72 +116,9 @@ PrepareWindowExample >> initializeWindow: aWindowPresenter [
 	
 	super initializeWindow: aWindowPresenter.
 	aWindowPresenter
-		menu: (menu := self newMenubar);
-		toolBar: (toolBar := self newToolBar);
-		statusBar: (statusBar := self newStatusBar)
-]
-
-{ #category : #'private factory' }
-PrepareWindowExample >> newFileMenu [
-	^ self newMenu
-		addItem: [ :item | 
-			item
-				name: 'Push message';
-				action: [ self pushMessage ] ];
-		addItem: [ :item | 
-			item
-				name: 'Pop message';
-				action: [ self popMessage ] ];
-		yourself
-]
-
-{ #category : #'private factory' }
-PrepareWindowExample >> newMenubar [
-	^ self newMenuBar
-		addGroup: [ :group | 
-			group
-				addItem: [ :item | 
-					item
-						name: 'File';
-						subMenu: self newFileMenu ] ]
-]
-
-{ #category : #'private factory' }
-PrepareWindowExample >> newPopMessageToolBarItem [
-		
-	^ ToolBarButton new
-		label: 'Pop';
-		icon: (self iconNamed: #glamorousDown);
-		help: 'Pop last status bar message';
-		action: [ self popMessage ];
-		yourself
-]
-
-{ #category : #'private factory' }
-PrepareWindowExample >> newPushMessageToolBarItem [
-		
-	^ ToolBarButton new
-		label: 'Push';
-		icon: (self iconNamed: #glamorousUp);
-		help: 'Push a new status bar message';
-		action: [ self pushMessage ];
-		yourself
-]
-
-{ #category : #'private factory' }
-PrepareWindowExample >> newStatusBar [
-
-	^ StatusBarPresenter new
-]
-
-{ #category : #'private factory' }
-PrepareWindowExample >> newToolBar [
-	
-	^ ToolBarPresenter new 
-		addItem: self newPushMessageToolBarItem;
-		addItem: self newPopMessageToolBarItem;
-		addItem: self newPopMessageToolBarItem position: ToolBarItemPosition right;
-		yourself
+		menu: (menu := self buildMenuBar);
+		toolBar: (toolBar := self buildToolBar);
+		statusBar: (statusBar := self buildStatusBar)
 ]
 
 { #category : #actions }

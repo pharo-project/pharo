@@ -26,7 +26,7 @@ GTSpotter class >> exampleMC [
 GTSpotter class >> exampleWithPreview [
 	<sampleInstance>
 	^ GTSpotterMorph new
-		extent: (World width / 2.5 @ (World height / 1.5)) asIntegerPoint;
+		extent: (self currentWorld width / 2.5 @ (self currentWorld height / 1.5)) asIntegerPoint;
 		spotterModel: self new;
 		showPreview;
 		openCenteredInWorld
@@ -38,7 +38,7 @@ GTSpotter class >> exampleWorldMenu [
 	^ GTSpotterMorph new
 		extent: 400@500;
 		doLayout;
-		spotterModel: (self on: World worldMenu);
+		spotterModel: (self on: self currentWorld worldMenu);
 		openCenteredInWorld
 ]
 

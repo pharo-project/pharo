@@ -114,10 +114,14 @@ MorphicNotebookAdapter >> updatePageTitle: aPage [
 
 { #category : #updating }
 MorphicNotebookAdapter >> updatePagesWith: aCollection [
-	self
-		widgetDo: [ :aNotebook | 
-			| pagesToRemove |
-			pagesToRemove := aNotebook pages reject: [ :pageMorph | aCollection anySatisfy: [ :page | page = pageMorph model ] ].
-			pagesToRemove do: [ :pageMorph | aNotebook removePage: pageMorph ].
-			aCollection reject: [ :page | aNotebook hasPageWithModel: page ] thenDo: [ :page | self addPage: page to: aNotebook ] ]
+	| pagesToRemove |
+	
+	self widget ifNil: [ ^ self ].
+		
+	pagesToRemove := self widget pages reject: [ :pageMorph | 
+		aCollection anySatisfy: [ :page | page = pageMorph model ] ].
+	pagesToRemove do: [ :pageMorph | self widget removePage: pageMorph ].
+	aCollection 
+		reject: [ :page | self widget hasPageWithModel: page ] 
+		thenDo: [ :page | self addPage: page to: self widget ]
 ]

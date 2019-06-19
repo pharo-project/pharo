@@ -24,12 +24,12 @@ GTSpotterProfiler class >> profileOneCycle [
 				spotterModel announcer when: GTSpotterSearchFinished do: [ done := true ].
 					
 				GTSpotterMorph new
-					extent: (World width / 2.4 @ (World height / 1.6)) asIntegerPoint;
+					extent: (self currentWorld width / 2.4 @ (self currentWorld height / 1.6)) asIntegerPoint;
 					spotterModel: spotterModel;
 					openCenteredInWorld.
 		
 				spotterModel class markOpened.
-				[ done ] whileFalse: [ World doOneCycle ] ] ]
+				[ done ] whileFalse: [ self currentWorld doOneCycle ] ] ]
 ]
 
 { #category : #shortcuts }

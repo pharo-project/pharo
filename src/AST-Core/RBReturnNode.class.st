@@ -37,7 +37,7 @@ RBReturnNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBReturnNode >> acceptVisitor: aProgramNodeVisitor [ 
+RBReturnNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitReturnNode: self
 ]
 
@@ -56,15 +56,6 @@ RBReturnNode >> copyInContext: aDictionary [
 	^ self class new
 		value: (self value copyInContext: aDictionary);
 		yourself
-]
-
-{ #category : #accessing }
-RBReturnNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' value: ('.
-	self value dumpOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : #comparing }

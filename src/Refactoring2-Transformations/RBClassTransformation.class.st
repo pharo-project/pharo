@@ -34,3 +34,13 @@ RBClassTransformation >> definingClass [
 		class := self model 
 					classObjectFor: self className ]
 ]
+
+{ #category : #preconditions }
+RBClassTransformation >> parseTreeRewriterClass [
+	^ RBParseTreeRewriter
+]
+
+{ #category : #executing }
+RBClassTransformation >> parserClass [
+	^ RBParser
+]

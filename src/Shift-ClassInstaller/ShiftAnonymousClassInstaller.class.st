@@ -16,7 +16,7 @@ ShiftAnonymousClassInstaller >> comment: newClass [
 ]
 
 { #category : #building }
-ShiftAnonymousClassInstaller >> installInEnvironment: newClass. [
+ShiftAnonymousClassInstaller >> installInEnvironment: newClass [.
 	^ self
 ]
 

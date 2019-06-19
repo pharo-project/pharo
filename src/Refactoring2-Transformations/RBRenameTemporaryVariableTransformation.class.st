@@ -91,18 +91,13 @@ RBRenameTemporaryVariableTransformation >> preconditions [
 
 { #category : #executing }
 RBRenameTemporaryVariableTransformation >> privateTransform [
-
 	| parseTree definingNode variableNode |
 	parseTree := self definingMethod.
-	
 	variableNode := parseTree variableWith: variableName.
 	self checkExistingVariable: variableNode.
-		
 	definingNode := variableNode whoDefines: variableName.
 	self checkNewVariable: definingNode.
-	
-	(RBParseTreeRewriter
-		rename: variableName to: newVariableName)
+	(self parseTreeRewriterClass rename: variableName to: newVariableName)
 		executeTree: definingNode.
 	class compileTree: parseTree
 ]

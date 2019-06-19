@@ -75,8 +75,7 @@ EyePointerExplorer >> object: anObject [
 { #category : #'event-handling' }
 EyePointerExplorer >> objectChanged [
 	self text doItReceiver: self object.
-	self text widget
-		ifNotNil: [ :w | w editingMode classOrMetaClass: self object class ].
+	self text ifNotNil: [ :w | w behavior: self object class ].
 	self tree roots: self roots
 ]
 
