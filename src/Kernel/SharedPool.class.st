@@ -77,3 +77,10 @@ SharedPool class >> poolUsers [
 
 	^self environment allClasses select:  [:class | class includesSharedPoolNamed: self name]
 ]
+
+{ #category : #pools }
+SharedPool class >> usingMethods [
+	"Answer all methods that use one of the variables defined by the shared pool"
+
+	^self classVariables flatCollect: [ :variable | variable usingMethods ]
+]
