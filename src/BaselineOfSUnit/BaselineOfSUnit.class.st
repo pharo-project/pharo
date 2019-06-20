@@ -51,7 +51,7 @@ BaselineOfSUnit >> baseline: spec [
 				group: 'Tests' with: #('SUnit-Tests' 'SUnit-Support-UITesting-Tests' 'SUnit-Visitor-Tests');
 				group: 'Help' with: #('SUnit-Help');
 				group: 'JenkinsSupport' with: #('JenkinsTools-Core' 'JenkinsTools-ExtraReports');
-				group: 'default' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Tests' 'JenkinsTools-Core' 'JenkinsTools-ExtraReports') ]
+				group: 'default' with: #('Core' 'Tests' 'JenkinsSupport' 'Help') ]
 ]
 
 { #category : #accessing }

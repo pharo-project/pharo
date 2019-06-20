@@ -103,37 +103,28 @@ BaselineOfIDE >> additionalInitialization [
 ]
 
 { #category : #baseline }
-BaselineOfIDE >> baseline: spec [ 
-    
+BaselineOfIDE >> baseline: spec [     
 	<baseline>
-
  	| repository | 
-	
 	repository := self packageRepositoryURL.
-       
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 		
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
-		
 		spec baseline: 'Athens' with: [ spec repository: repository ].
 		spec baseline: 'Flashback' with: [ spec repository: repository ].
-
 		spec baseline: 'Shift' with: [
 			spec loads: 'shift-tests'. 
 			spec repository: repository
 		].
-
 		spec baseline: 'Traits' with: [
 			spec loads: 'traits-tests'. 
 			spec repository: repository
 		].
-	
 		spec baseline: 'Slot' with: [
 			spec loads: 'slot-tests'. 
 			spec repository: repository
 		].
-
 		spec baseline: 'Clap' with: [ spec repository: repository ].
 		
 		spec package: 'ReleaseTests'. 
@@ -339,8 +330,12 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Rubric-Tests'.
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
-		spec package: 'SUnit-Tests'.
-		spec package: 'SUnit-Support-UITesting-Tests'.
+		
+		spec baseline: 'SUnit' with: [
+			spec loads: 'Tests'. 
+			spec repository: repository
+		].
+
 		spec package: 'Shout-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
 		spec package: 'Spec-Help'.	
