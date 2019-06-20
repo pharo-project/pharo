@@ -2146,7 +2146,7 @@ VGTigerDemo >> runDemo [
 			Display getCanvas drawImage: surface asForm  at: 0@0 
 	].
 
-	World invalidRect: (World bounds).
+	self currentWorld invalidRect: (self currentWorld bounds).
 	time := Time millisecondClockValue - time.
 	
 	Transcript show: 'Total rendering time: ', time asString,  ' ms, total frames: ' , frames asString ; cr;

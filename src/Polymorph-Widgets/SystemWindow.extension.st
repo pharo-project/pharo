@@ -328,7 +328,7 @@ SystemWindow >> animateClose [
 	steps := self theme settings animationSettings numberOfSteps.
 	rects := ((steps - 1)/steps to: 0 by: -1/steps) collect: [:x |
 		smallRect interpolateTo: restoredRect at: (20 raisedTo: x) - 1 / 19].
-	World displayWorldSafely.
+	self currentWorld displayWorldSafely.
 	self fastAnimateRectangles: rects
 ]
 
@@ -610,7 +610,7 @@ SystemWindow >> fastAnimateRectangles: rects [
 		merged := merged merge: r.
 		delay wait].
 	merged := merged expandBy: 1.
-	World invalidRect: merged from: self
+	self currentWorld invalidRect: merged from: self
 ]
 
 { #category : #'*Polymorph-Widgets' }

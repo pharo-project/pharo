@@ -42,7 +42,7 @@ AbstractTool class >> requestProtocolNameFor: aClass initialAnswer: aString [
 		acceptNewEntry: true;
 		title: 'New Protocol Name' ;
 		yourself.
-	^ ui chooseFromOwner: World
+	^ ui chooseFromOwner: self currentWorld
 ]
 
 { #category : #'world menu' }

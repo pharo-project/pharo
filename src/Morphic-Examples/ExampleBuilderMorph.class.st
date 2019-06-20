@@ -26,7 +26,7 @@ ExampleBuilderMorph >> openModal: aSystemWindow [
 	
 	|baseArea areas searching foundRect|
 	aSystemWindow extent: aSystemWindow initialExtent.
-	areas := World submorphs
+	areas := self currentWorld submorphs
 		select: [:m | m isKindOf: DialogWindow]
 		thenCollect: [:m | m bounds expandBy: 8].
 	baseArea := RealEstateAgent maximumUsableArea insetBy: 8.

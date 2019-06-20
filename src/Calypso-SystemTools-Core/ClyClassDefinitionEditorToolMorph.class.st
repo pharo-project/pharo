@@ -50,8 +50,7 @@ ClyClassDefinitionEditorToolMorph >> defaultIconName [
 { #category : #accessing }
 ClyClassDefinitionEditorToolMorph >> editingText [
 	self flag: #todo.
-	
-	^editingClass definitionForNautilus
+	^ editingClass definition
 ]
 
 { #category : #building }

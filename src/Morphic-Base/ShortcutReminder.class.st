@@ -265,7 +265,7 @@ ShortcutReminder >> positionShortcut: aMorph [
 	
 	| area |
 	
-	area := World clearArea insetBy: 3. 
+	area := self currentWorld clearArea insetBy: 3. 
 	
 	aMorph 
 	cellPositioning: position;

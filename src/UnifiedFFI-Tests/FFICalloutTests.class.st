@@ -21,8 +21,17 @@ FFICalloutTests >> checkType: type class: typeClass arity: ptrArity argument: ar
 ]
 
 { #category : #private }
+FFICalloutTests >> checkType: type class: typeClass arity: ptrArity value: anObject [ 
+
+	self assert: type class equals: typeClass.
+	self assert: type pointerArity equals: ptrArity.
+	self assert: type loader class equals: FFIValueArgument.
+	self assert: type loader value equals: anObject 
+]
+
+{ #category : #private }
 FFICalloutTests >> checkType: type class: typeClass value: const [
-	self assert: type class == typeClass.
+	self assert: type class equals: typeClass.
 	self assert: type value equals: const
 ]
 
@@ -51,14 +60,14 @@ FFICalloutTests >> testBuildingFnSpec [
 	generator
 		requestor: self;
 		methodArgs: #(arg1 arg2 arg3 arg11 arg12);
-		namedFnSpec: #( long* fn (int self ,  String arg1, void**arg2, TYPEVAR arg1, char arg3, 0, nil, true, false , CLASSVAR, ExternalAddress arg11, ByteArray arg12 ) ).
+		namedFnSpec: #( long* fn (int self ,  String arg1, void**arg2, TYPEVAR arg1, char arg3, 0, (ulong)42, nil, NULL, true, false , CLASSVAR, ExternalAddress arg11, ByteArray arg12 ) ).
 
 
 	type := generator fnSpec returnType.
 	self assert: type class equals: FFILong.	
 	self assert: type pointerArity equals: 1.
 	
-	self assert: (generator fnSpec arguments size) equals: 12.
+	self assert: (generator fnSpec arguments size) equals: 14.
 	s := generator fnSpec arguments readStream.
 
 "int self"		self checkTypeSelf: s next class: FFIInt32 arity: 0.
@@ -67,7 +76,9 @@ FFICalloutTests >> testBuildingFnSpec [
 "TYPEVAR arg1"	self checkType: s next class: FFILong arity: 0 argument: 'arg1'.
 "char arg3"		self checkType: s next class: FFICharacterType arity: 0 argument: 'arg3'.
 "0"					self checkType: s next class: FFIConst value: 0.
-"nil"				self checkType: s next class: FFIConst value: 0.
+"(ulong)42"		self checkType: s next class: FFIConst value: 42.
+"nil"				self checkType: s next class: FFIVoid arity: 1 value: ExternalAddress null.
+"NULL"				self checkType: s next class: FFIVoid arity: 1 value: ExternalAddress null.
 "true"				self checkType: s next class: FFIConst value: 1.
 "false"			self checkType: s next class: FFIConst value: 0.
 "CLASSVAR"		self checkType: s next class: FFIConst value: 100.

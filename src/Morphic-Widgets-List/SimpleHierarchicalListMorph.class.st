@@ -90,7 +90,7 @@ SimpleHierarchicalListMorph class >> exampleSubmorphs [
 	| morph |
 	morph :=
 		SimpleHierarchicalListMorph
-			on: [ Array with:  (MorphWithSubmorphsWrapper with: World)  ]
+			on: [ Array with:  (MorphWithSubmorphsWrapper with: self currentWorld)  ]
 			list: #value
 			selected: nil
 			changeSelected: nil

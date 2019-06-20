@@ -26,7 +26,7 @@ AbstractMessageCentricBrowser >> initializeWidgets [
 
 { #category : #initialization }
 AbstractMessageCentricBrowser >> initializeWindow: aWindowPresenter [
-	aWindowPresenter initialExtent: (900 min: World extent x) @ (550 min: World extent y)
+	aWindowPresenter initialExtent: (900 min: self currentWorld extent x) @ (550 min: self currentWorld extent y)
 ]
 
 { #category : #private }

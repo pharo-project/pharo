@@ -47,7 +47,7 @@ RubFloatingEditorBuilder class >> exampleCommandLauncher [
 			editor
 				width: 300;
 				height: 50;
-				center: World center ];
+				center: self currentWorld center ];
 		withEditedContentsDo: [ :newContents | self inform: newContents ];
 		openEditorWithContents: 'self inspect'
 ]
@@ -118,7 +118,7 @@ RubFloatingEditorBuilder >> buildEditor [
 	editor
 		autoAccept: autoAccept;
 		setTextWith: self initialContents.
-	World activeHand addEventListener: self.
+	self currentWorld activeHand addEventListener: self.
 	editor announcer
 		when: MorphLostFocus send: #whenEditorLostFocus: to: self;
 		when: RubTextAccepted send: #whenTextAccepted: to: self;

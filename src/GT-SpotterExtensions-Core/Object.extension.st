@@ -6,7 +6,7 @@ Object >> gtInspectorActionSpot [
 	^ GLMGenericAction new
 		action: [ 
 			GTSpotterMorph new
-				extent: (World width / 2.4 @ (World height / 1.6)) asIntegerPoint;
+				extent: (self currentWorld width / 2.4 @ (self currentWorld height / 1.6)) asIntegerPoint;
 				"extent: 400@500;"
 				doLayout;
 				spotterModel: (GTSpotter on: self);

@@ -151,7 +151,7 @@ OSWindowWorldMorph >> title: aTitle [
 	self flag: 'ToDo'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 OSWindowWorldMorph >> updateDisplay [
 	display isNil ifTrue: [
 		display := Form extent: self extent depth: 32.

@@ -20,7 +20,7 @@ GTSpotterGlobalShortcut class >> openGlobalSpotter [
 	spotterModel := GTSpotter new.
 		
 	GTSpotterMorph new
-		extent: (World width / 2.4 @ (World height / 1.6)) asIntegerPoint;
+		extent: (self currentWorld width / 2.4 @ (self currentWorld height / 1.6)) asIntegerPoint;
 		spotterModel: spotterModel;
 		doLayout;
 		openCenteredInWorld.
@@ -32,7 +32,7 @@ GTSpotterGlobalShortcut class >> openGlobalSpotter [
 GTSpotterGlobalShortcut class >> openGlobalSpotterDebug [
 
 	GTSpotterMorph new
-		extent: (World width / 2.25 @ (World height / 1.25)) asIntegerPoint;
+		extent: (self currentWorld width / 2.25 @ (self currentWorld height / 1.25)) asIntegerPoint;
 		spotterModel: (GTSpotter new
 			beDebugging;
 			yourself);
@@ -43,7 +43,7 @@ GTSpotterGlobalShortcut class >> openGlobalSpotterDebug [
 { #category : #cleanup }
 GTSpotterGlobalShortcut class >> reset [
 	
-	(World findA: GTSpotterMorph) ifNotNil: [ :aSpotterMorph | aSpotterMorph spotterModel exitDueTo: #reset ]
+	(self currentWorld findA: GTSpotterMorph) ifNotNil: [ :aSpotterMorph | aSpotterMorph spotterModel exitDueTo: #reset ]
 ]
 
 { #category : #shortcuts }

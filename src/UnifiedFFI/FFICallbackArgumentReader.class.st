@@ -57,7 +57,7 @@ Class {
 	#category : #'UnifiedFFI-Callbacks'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 FFICallbackArgumentReader class >> forCallback: aCallback inContext: aCallbackContext [
 
 	^ self basicNew
