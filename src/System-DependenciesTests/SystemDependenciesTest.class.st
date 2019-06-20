@@ -180,7 +180,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"	
 
 	^ #('AST-Tests-Core' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
-	#'Athens-Morphic' #'Glamour-Morphic-Widgets' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
+	#'Athens-Morphic' #'Glamour-Morphic-Widgets' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
 ]
 
 { #category : #utilities }
