@@ -50,6 +50,7 @@ BaselineOfBasicTools >> baseline: spec [
 					repository: repository ].
 		spec
 			baseline: 'UI' with: [spec repository: repository];
+			baseline: 'RecentActivity' with: [spec repository: repository];
 			baseline: 'Athens' with: [ 
 				spec
 					loads: 'Cairo-core';
@@ -78,7 +79,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Pharo-Help'.
 		spec package: 'ProfStef-Core'.
 		spec package: 'ProfStef-Help'.
-		spec package: 'RecentSubmissions'.
 		spec package: 'Refactoring-Changes'.
 		spec package: 'Refactoring-Core'.
 		spec package: 'Refactoring-Environment'.

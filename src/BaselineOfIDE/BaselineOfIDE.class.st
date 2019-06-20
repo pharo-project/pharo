@@ -52,8 +52,8 @@ BaselineOfIDE >> additionalInitialization [
 	Smalltalk tools register: ExternalChangesBrowser as: #changeList.
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
+	Smalltalk tools register: RecentActivityList  as: #recentMessageList.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
-	Smalltalk tools register: RecentMessageList as: #recentMessageList.
 	Smalltalk tools register: SyntaxErrorDebugger as: #syntaxErrorDebugger.
 	Smalltalk tools register: TimeProfiler as: #timeProfiler.
 

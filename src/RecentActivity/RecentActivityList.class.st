@@ -10,7 +10,7 @@ Instance Variables:
 	methodReferenceList	<Collection>
 "
 Class {
-	#name : #RecentMessageList,
+	#name : #RecentActivityList,
 	#superclass : #Model,
 	#instVars : [
 		'methodReferenceList',
@@ -20,22 +20,22 @@ Class {
 	#classVars : [
 		'UniqueInstance'
 	],
-	#category : #'RecentSubmissions-Core'
+	#category : #RecentActivity
 }
 
 { #category : #cleanup }
-RecentMessageList class >> cleanUp [
+RecentActivityList class >> cleanUp [
 
 	self resetUniqueInstance.
 ]
 
 { #category : #icons }
-RecentMessageList class >> icon [ 
+RecentActivityList class >> icon [ 
 	^ self iconNamed: #recentMessagesIcon
 ]
 
 { #category : #initialization }
-RecentMessageList class >> initialize [ 
+RecentActivityList class >> initialize [ 
 	"Once loaded the recent message is active. 
 	Decided not to use the startUp to be able to keep the list over snapshots."
 	"self initialize"
@@ -44,18 +44,18 @@ RecentMessageList class >> initialize [
 ]
 
 { #category : #'instance creation' }
-RecentMessageList class >> new [
+RecentActivityList class >> new [
 	^ self uniqueInstance
 ]
 
 { #category : #'instance creation' }
-RecentMessageList class >> open [
+RecentActivityList class >> open [
 	
 	self new open
 ]
 
 { #category : #menu }
-RecentMessageList class >> recentMessageListMenuOn: aBuilder [ 
+RecentActivityList class >> recentMessageListMenuOn: aBuilder [ 
 	<worldMenu> 
 	
 	(aBuilder item: #'Recent Messages')
@@ -69,7 +69,7 @@ RecentMessageList class >> recentMessageListMenuOn: aBuilder [
 ]
 
 { #category : #'instance creation' }
-RecentMessageList class >> resetUniqueInstance [
+RecentActivityList class >> resetUniqueInstance [
 	"Reset the singleton of the recentMessageBrowser model, so if you execute it you will lose all the history of the recent messages."
 	"self resetUniqueInstance"
 	
@@ -80,7 +80,7 @@ RecentMessageList class >> resetUniqueInstance [
 ]
 
 { #category : #events }
-RecentMessageList class >> startReceivingNotifications [
+RecentActivityList class >> startReceivingNotifications [
 	"self startReceivingNotifications"
 	
 	self resetUniqueInstance.
@@ -90,31 +90,31 @@ RecentMessageList class >> startReceivingNotifications [
 ]
 
 { #category : #events }
-RecentMessageList class >> stopReceivingNotifications [
+RecentActivityList class >> stopReceivingNotifications [
 	SystemAnnouncer uniqueInstance unsubscribe: self uniqueInstance
 ]
 
 { #category : #'instance creation' }
-RecentMessageList class >> uniqueInstance [
+RecentActivityList class >> uniqueInstance [
 
 	^UniqueInstance ifNil: [UniqueInstance := self basicNew initialize]
 ]
 
 { #category : #'event handler' }
-RecentMessageList >> aClassHasBeenCommented: anEvent [
+RecentActivityList >> aClassHasBeenCommented: anEvent [
 
 	anEvent newStamp ifNil: [ ^self ].
 	self addMethodReference: (self createAClassReference: anEvent)
 ]
 
 { #category : #'event handler' }
-RecentMessageList >> aClassHasBeenRemoved: anEvent [
+RecentActivityList >> aClassHasBeenRemoved: anEvent [
 
 	self removeAClass: anEvent
 ]
 
 { #category : #'event handler' }
-RecentMessageList >> aClassHasBeenRenamed: anEvent [
+RecentActivityList >> aClassHasBeenRenamed: anEvent [
 
 	| toChangeList |
 	toChangeList := self methodReferenceList select: [:each | each className = anEvent oldName asSymbol].
@@ -123,28 +123,28 @@ RecentMessageList >> aClassHasBeenRenamed: anEvent [
 ]
 
 { #category : #'event handler' }
-RecentMessageList >> aMethodHasBeenAdded: aMethodEvent [
+RecentActivityList >> aMethodHasBeenAdded: aMethodEvent [
 
 	self addMethodReference: (self createTheMethodReference: aMethodEvent)
 
 ]
 
 { #category : #'event handler' }
-RecentMessageList >> aMethodHasBeenModified: aMethodEvent [
+RecentActivityList >> aMethodHasBeenModified: aMethodEvent [
 
 	self addMethodReference: (self createTheMethodReference: aMethodEvent)
 
 ]
 
 { #category : #'event handler' }
-RecentMessageList >> aMethodHasBeenRemoved: aMethodEvent [
+RecentActivityList >> aMethodHasBeenRemoved: aMethodEvent [
 
 	self removeAMethod: aMethodEvent
 
 ]
 
 { #category : #actions }
-RecentMessageList >> addMethodReference: aMethodReference. [
+RecentActivityList >> addMethodReference: aMethodReference [.
 
 	self addMethodReferenceSilently: aMethodReference.
 	self checkSize.
@@ -152,14 +152,14 @@ RecentMessageList >> addMethodReference: aMethodReference. [
 ]
 
 { #category : #private }
-RecentMessageList >> addMethodReferenceSilently: aMethodReference [
+RecentActivityList >> addMethodReferenceSilently: aMethodReference [
 
 	self methodReferenceList add: aMethodReference.
 	lastEntry := aMethodReference.
 ]
 
 { #category : #private }
-RecentMessageList >> checkSize [
+RecentActivityList >> checkSize [
 
 	| result |
 	result := false.
@@ -172,7 +172,7 @@ RecentMessageList >> checkSize [
 ]
 
 { #category : #actions }
-RecentMessageList >> clearAll [
+RecentActivityList >> clearAll [
 	"Flush the current kept entities and restart."
 	
 	self methodReferenceList: OrderedCollection new.
@@ -180,13 +180,13 @@ RecentMessageList >> clearAll [
 ]
 
 { #category : #private }
-RecentMessageList >> createAClassReference: aCommentedEvent [
+RecentActivityList >> createAClassReference: aCommentedEvent [
 
 	^RGCommentDefinition realClass: aCommentedEvent classCommented
 ]
 
 { #category : #private }
-RecentMessageList >> createTheMethodReference: aModifiedMethodEvent [
+RecentActivityList >> createTheMethodReference: aModifiedMethodEvent [
 	
 	| method methodDef |
 
@@ -199,13 +199,13 @@ RecentMessageList >> createTheMethodReference: aModifiedMethodEvent [
 ]
 
 { #category : #initialization }
-RecentMessageList >> defaultMaxListSize [
+RecentActivityList >> defaultMaxListSize [
 
 	^ 100
 ]
 
 { #category : #initialization }
-RecentMessageList >> initialize [ 
+RecentActivityList >> initialize [ 
 	"Initialization"
 	
 	super initialize.
@@ -215,19 +215,19 @@ RecentMessageList >> initialize [
 ]
 
 { #category : #accessing }
-RecentMessageList >> lastEntry [ 
+RecentActivityList >> lastEntry [ 
 
 	^lastEntry
 ]
 
 { #category : #accessing }
-RecentMessageList >> maxListSize [
+RecentActivityList >> maxListSize [
 
 	^maxListSize ifNil: [maxListSize := self defaultMaxListSize]
 ]
 
 { #category : #accessing }
-RecentMessageList >> maxListSize: aNumber [
+RecentActivityList >> maxListSize: aNumber [
 
 	maxListSize := aNumber negative ifTrue: [0] ifFalse:[aNumber].
 	self checkSize
@@ -235,19 +235,19 @@ RecentMessageList >> maxListSize: aNumber [
 ]
 
 { #category : #accessing }
-RecentMessageList >> methodReferenceList [
+RecentActivityList >> methodReferenceList [
 
 	^ methodReferenceList
 ]
 
 { #category : #private }
-RecentMessageList >> methodReferenceList: anObject [
+RecentActivityList >> methodReferenceList: anObject [
 
 	methodReferenceList := anObject
 ]
 
 { #category : #userinterface }
-RecentMessageList >> open [
+RecentActivityList >> open [
 	"opens the system window for recent messages"
 
 	^ MessageBrowser new
@@ -259,7 +259,7 @@ RecentMessageList >> open [
 ]
 
 { #category : #initialization }
-RecentMessageList >> registerToAnnouncements [
+RecentActivityList >> registerToAnnouncements [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	SystemAnnouncer uniqueInstance weak
@@ -274,7 +274,7 @@ RecentMessageList >> registerToAnnouncements [
 ]
 
 { #category : #private }
-RecentMessageList >> removeAClass: anEvent [
+RecentActivityList >> removeAClass: anEvent [
 	"When we remove a class, we remove all the methods that belonged to such class."
 	| tempList |
 	tempList := self methodReferenceList select:[:each | each className = anEvent classRemoved name asSymbol].
@@ -282,7 +282,7 @@ RecentMessageList >> removeAClass: anEvent [
 ]
 
 { #category : #private }
-RecentMessageList >> removeAMethod: aRemovedEvent [
+RecentActivityList >> removeAMethod: aRemovedEvent [
 	
 	| method list |
 	method := aRemovedEvent method.
@@ -294,14 +294,14 @@ RecentMessageList >> removeAMethod: aRemovedEvent [
 ]
 
 { #category : #actions }
-RecentMessageList >> removeMethodReference: aMethodReference [
+RecentActivityList >> removeMethodReference: aMethodReference [
 
 	self methodReferenceList remove: aMethodReference.
 	self updateView.
 ]
 
 { #category : #actions }
-RecentMessageList >> revertLastMethodSubmission [
+RecentActivityList >> revertLastMethodSubmission [
 	"If the most recent method submission was a method change, revert
 	that change, and if it was a submission of a brand-new method, 
 	remove that method."
@@ -321,7 +321,7 @@ RecentMessageList >> revertLastMethodSubmission [
 ]
 
 { #category : #userinterface }
-RecentMessageList >> updateView [
+RecentActivityList >> updateView [
 	
 	self triggerEvent: #changed.
 ]

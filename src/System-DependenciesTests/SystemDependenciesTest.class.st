@@ -46,11 +46,8 @@ SystemDependenciesTest >> dependenciesReport [
 SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 
 	| dependencies | 
-	
 	dependencies := packagesCollection flatCollect: [ :aPackage | self dependenciesReport dependenciesOf: aPackage ] as: Set.
-	
 	dependencies := dependencies copyWithoutAll: packagesCollection.
-	
 	^ dependencies sorted
 ]
 
@@ -139,7 +136,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Fonts-Chooser' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #Shout #'Spec-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
+	^ #(#'Fonts-Chooser' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #Shout #'Spec-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
 	#'Athens-Morphic' 	"Rubric has a dependency on It" )
 		sorted
 ]
@@ -160,7 +157,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core' #CodeImport) sorted
 ]
 
-{ #category : #'known-dependencies' }
+{ #category : #'known dependencies' }
 SystemDependenciesTest >> knownSpecDependencies [
 	
 	^ #(
@@ -296,6 +293,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfSlot.
 	BaselineOfSpec.
 	BaselineOfParametrizedTests.
+	BaselineOfRecentActivity.
 	BaselineOfSUnit.
 	BaselineOfTraits.
 	BaselineOfUI.
@@ -492,9 +490,7 @@ SystemDependenciesTest >> testExternalUFFIDependencies [
 SystemDependenciesTest >> testExternalUIDependencies [
 
 	| dependencies | 
-	
 	self longTestCase.
-	
 	dependencies := (self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
