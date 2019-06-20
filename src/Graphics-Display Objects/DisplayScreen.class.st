@@ -14,7 +14,6 @@ Class {
 	#name : #DisplayScreen,
 	#superclass : #Form,
 	#instVars : [
-		'clippingBox',
 		'extraRegions'
 	],
 	#classVars : [
@@ -213,53 +212,9 @@ DisplayScreen >> beDisplay [
 
 { #category : #other }
 DisplayScreen >> boundingBox [
-	clippingBox == nil
-		ifTrue: [clippingBox := super boundingBox].
-	^ clippingBox
-]
 
-{ #category : #other }
-DisplayScreen >> clippingTo: aRect do: aBlock [ 
-	"Display clippingTo: Rectangle fromUser do:"
-	| saveClip |
-	saveClip := clippingBox.
-	clippingBox := aRect.
-	aBlock value.
-	clippingBox := saveClip
-]
-
-{ #category : #displaying }
-DisplayScreen >> copyBits: rect from: sf at: destOrigin clippingBox: clipRect rule: cr fillColor: hf [ 
-	(BitBlt
-		destForm: self
-		sourceForm: sf
-		fillColor: hf
-		combinationRule: cr
-		destOrigin: destOrigin
-		sourceOrigin: rect origin
-		extent: rect extent
-		clipRect: (clipRect intersect: clippingBox ifNone: [ ^ self ])) copyBits
-]
-
-{ #category : #displaying }
-DisplayScreen >> copyBits: rect from: sf at: destOrigin clippingBox: clipRect rule: cr fillColor: hf map: map [
-	((BitBlt
-		destForm: self
-		sourceForm: sf
-		fillColor: hf
-		combinationRule: cr
-		destOrigin: destOrigin
-		sourceOrigin: rect origin
-		extent: rect extent
-		clipRect: (clipRect intersect: clippingBox ifNone: [ ^ self ] )) colorMap: map) copyBits
-]
-
-{ #category : #private }
-DisplayScreen >> copyFrom: aForm [
-	"Take on all state of aForm, with complete sharing"
-
-	super copyFrom: aForm.
-	clippingBox := super boundingBox
+	ActiveWorld ifNil: [ ^ 0@0 corner: 0@0 ].
+	^ ActiveWorld bounds
 ]
 
 { #category : #deferring }
