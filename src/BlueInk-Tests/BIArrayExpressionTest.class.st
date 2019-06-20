@@ -85,7 +85,7 @@ BIArrayExpressionTest >> testEmptyArray [
 
 { #category : #test }
 BIArrayExpressionTest >> testFormatElement [
-	| expr source |
+	| source |
 	configurationSelector := #basicConfiguration.
 	source := self formatExpression: ' { a:=1. b:=2 } '.
 	self assert: source equals:
