@@ -53,7 +53,7 @@ SystemNavigation >> allCallsOn: aSymbol from: aClass [
 	collection := OrderedCollection  new.
 	aClass withAllSubclassesDo: [ :class |
 		(class whichSelectorsReferTo: aSymbol) do: [:sel |
-				collection add: (sel>>class) methodReference]].
+				collection add: (class>>sel) methodReference]].
 	^collection
 ]
 
@@ -258,7 +258,7 @@ SystemNavigation >> allReferencesToPool: aPool [
 					meth literals
 						detect: [ :lit | (lit isVariableBinding and: [ lit key notNil ]) 
 													and: [ aPool includesKey: lit key ] ]
-						ifFound: [ list add: (cls>>self) methodReference ] ] ].
+						ifFound: [ list add: (cls>>sel) methodReference ] ] ].
 	^ list
 ]
 
