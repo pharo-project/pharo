@@ -121,7 +121,7 @@ SystemNavigation >> allImplementorsOf: aSelector [
 	aCollection := OrderedCollection  new.
 	self allBehaviorsDo: [:class | 
 		(class includesSelector: aSelector)
-			ifTrue: [aCollection add: (class>>self) methodReference]].
+			ifTrue: [aCollection add: (class>>aSelector) methodReference]].
 	^ aCollection
 ]
 
