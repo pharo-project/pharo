@@ -6,8 +6,8 @@ Class {
 	#superclass : #MCDefinition,
 	#instVars : [
 		'baseTrait',
-		'classTraitComposition',
-		'category'
+		'category',
+		'classTraitComposition'
 	],
 	#category : #'Monticello-Modeling'
 }

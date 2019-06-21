@@ -5,10 +5,10 @@ Class {
 	#name : #MCVersionReader,
 	#superclass : #MCReader,
 	#instVars : [
-		'package',
-		'info',
 		'definitions',
-		'dependencies'
+		'dependencies',
+		'info',
+		'package'
 	],
 	#category : #'Monticello-Storing'
 }

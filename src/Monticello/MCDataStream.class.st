@@ -24,9 +24,9 @@ Class {
 	#name : #MCDataStream,
 	#superclass : #Stream,
 	#instVars : [
+		'basePos',
 		'byteStream',
-		'topCall',
-		'basePos'
+		'topCall'
 	],
 	#classVars : [
 		'ReadSelectors',

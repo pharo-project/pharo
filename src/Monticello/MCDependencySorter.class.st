@@ -5,9 +5,9 @@ Class {
 	#name : #MCDependencySorter,
 	#superclass : #Object,
 	#instVars : [
-		'required',
+		'orderedItems',
 		'provided',
-		'orderedItems'
+		'required'
 	],
 	#category : #'Monticello-Loading'
 }

@@ -5,8 +5,8 @@ Class {
 	#name : #MCVersionNameAndMessageRequest,
 	#superclass : #Notification,
 	#instVars : [
-		'suggestion',
-		'suggestedLogComment'
+		'suggestedLogComment',
+		'suggestion'
 	],
 	#category : #'Monticello-Versioning'
 }

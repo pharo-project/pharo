@@ -7,9 +7,9 @@ Class {
 	#name : #MCCacheRepository,
 	#superclass : #MCDirectoryRepository,
 	#instVars : [
+		'cacheEnabled',
 		'packageCaches',
-		'seenFiles',
-		'cacheEnabled'
+		'seenFiles'
 	],
 	#classInstVars : [
 		'default'

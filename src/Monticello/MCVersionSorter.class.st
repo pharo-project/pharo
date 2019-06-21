@@ -5,11 +5,11 @@ Class {
 	#name : #MCVersionSorter,
 	#superclass : #Object,
 	#instVars : [
-		'layers',
 		'depthIndex',
 		'depths',
-		'stepparents',
-		'roots'
+		'layers',
+		'roots',
+		'stepparents'
 	],
 	#category : #'Monticello-Versioning'
 }

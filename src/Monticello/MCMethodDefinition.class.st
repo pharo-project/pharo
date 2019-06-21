@@ -16,11 +16,11 @@ Class {
 	#name : #MCMethodDefinition,
 	#superclass : #MCDefinition,
 	#instVars : [
-		'classIsMeta',
-		'source',
 		'category',
-		'selector',
+		'classIsMeta',
 		'className',
+		'selector',
+		'source',
 		'timeStamp'
 	],
 	#classVars : [

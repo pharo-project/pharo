@@ -5,8 +5,8 @@ Class {
 	#name : #MCScriptDefinition,
 	#superclass : #MCDefinition,
 	#instVars : [
-		'script',
-		'packageName'
+		'packageName',
+		'script'
 	],
 	#category : #'Monticello-Modeling'
 }

@@ -5,12 +5,12 @@ Class {
 	#name : #MCMergeRecord,
 	#superclass : #Object,
 	#instVars : [
-		'version',
-		'packageSnapshot',
 		'ancestorInfo',
 		'ancestorSnapshot',
 		'imagePatch',
-		'mergePatch'
+		'mergePatch',
+		'packageSnapshot',
+		'version'
 	],
 	#category : #'Monticello-Versioning'
 }

@@ -16,14 +16,14 @@ Class {
 	#name : #MCPackageLoader,
 	#superclass : #Object,
 	#instVars : [
-		'requirements',
-		'unloadableDefinitions',
-		'obsoletions',
 		'additions',
-		'removals',
 		'errorDefinitions',
+		'methodAdditions',
+		'obsoletions',
 		'provisions',
-		'methodAdditions'
+		'removals',
+		'requirements',
+		'unloadableDefinitions'
 	],
 	#category : #'Monticello-Loading'
 }

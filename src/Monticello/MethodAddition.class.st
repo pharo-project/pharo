@@ -5,16 +5,16 @@ Class {
 	#name : #MethodAddition,
 	#superclass : #Object,
 	#instVars : [
-		'text',
 		'category',
 		'changeStamp',
-		'requestor',
+		'compiledMethod',
 		'logSource',
 		'myClass',
-		'selector',
-		'compiledMethod',
+		'priorCategoryOrNil',
 		'priorMethodOrNil',
-		'priorCategoryOrNil'
+		'requestor',
+		'selector',
+		'text'
 	],
 	#category : #'Monticello-Loading'
 }

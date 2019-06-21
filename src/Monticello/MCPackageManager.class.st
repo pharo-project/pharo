@@ -13,8 +13,8 @@ Class {
 	#name : #MCPackageManager,
 	#superclass : #Model,
 	#instVars : [
-		'package',
-		'modified'
+		'modified',
+		'package'
 	],
 	#classVars : [
 		'PrivateAnnouncer'

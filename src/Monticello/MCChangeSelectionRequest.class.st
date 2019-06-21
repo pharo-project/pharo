@@ -5,8 +5,8 @@ Class {
 	#name : #MCChangeSelectionRequest,
 	#superclass : #Notification,
 	#instVars : [
-		'patch',
-		'label'
+		'label',
+		'patch'
 	],
 	#category : #'Monticello-Versioning'
 }
