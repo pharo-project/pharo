@@ -145,6 +145,13 @@ RBMethodNode >> argumentNames [
 ]
 
 { #category : #accessing }
+RBMethodNode >> argumentSize [
+	"Return the cumulted length of the parameters (yes parameters are called arguments in Pharo - not good!). It does not count spaces and the selectors"
+	
+	^ self arguments inject: 0 into: [ :sum :each | sum + each name size ]
+]
+
+{ #category : #accessing }
 RBMethodNode >> arguments [
 	^arguments
 ]
@@ -632,6 +639,20 @@ RBMethodNode >> selectorAndArgumentNames [
 { #category : #accessing }
 RBMethodNode >> selectorParts [
 	^ self keywords collect: #asSymbol.
+]
+
+{ #category : #accessing }
+RBMethodNode >> selectorSize [
+	"Return the length of the selector. It does not take into length of parameters"
+	
+	^ selector size
+]
+
+{ #category : #accessing }
+RBMethodNode >> signatureSize [
+	"Return the full length of the method signature (called with a strange name in Pharo: the patterned selector."
+	
+	^ self selectorSize + self argumentSize
 ]
 
 { #category : #accessing }

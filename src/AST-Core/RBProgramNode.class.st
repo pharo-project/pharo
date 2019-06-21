@@ -337,6 +337,14 @@ RBProgramNode >> formatterClass [
 ]
 
 { #category : #testing }
+RBProgramNode >> hasComments [
+	"Answer whether the receiver as comments"
+	
+	^ self comments isNotEmpty
+	
+]
+
+{ #category : #testing }
 RBProgramNode >> hasMultipleReturns [
 	| count |
 	count := 0.
