@@ -492,8 +492,7 @@ Class >> duplicateClassWithNewName: aSymbol [
 { #category : #organization }
 Class >> environment [
 
-	environment ifNil: [^ super environment].
-	^ environment
+	^environment ifNil: [super environment]
 ]
 
 { #category : #organization }

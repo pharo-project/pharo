@@ -21,7 +21,7 @@ SystemNavigation class >> default [
 SystemNavigation >> allAccessesTo: instVarName from: aClass [
 	| methods |
 	methods := aClass allMethodsAccessingSlot: (aClass slotNamed: instVarName).
-	^methods collect: [:meth | self createMethodNamed: meth selector realParent: meth methodClass]
+	^methods collect: [:meth | meth methodReference]
 
 ]
 
@@ -53,7 +53,7 @@ SystemNavigation >> allCallsOn: aSymbol from: aClass [
 	collection := OrderedCollection  new.
 	aClass withAllSubclassesDo: [ :class |
 		(class whichSelectorsReferTo: aSymbol) do: [:sel |
-				collection add: (self createMethodNamed: sel realParent: class)]].
+				collection add: (class>>sel) methodReference]].
 	^collection
 ]
 
@@ -85,16 +85,6 @@ SystemNavigation >> allClassesDo: aBlock [
 SystemNavigation >> allClassesImplementing: aSelector [  
 	"Answer all classes that implement the message aSelector."
 	^self allBehaviors collect: [:class | class includesSelector: aSelector]
-]
-
-{ #category : #query }
-SystemNavigation >> allClassesUsingSharedPool: aString [  
-	"Answer all classes that uses the shared pool named aString."
-
-	| pool |
-	self deprecated: 'just use #poolUsers directly'.
-	pool := self environment classNamed: aString ifAbsent: [ ^#() ].
-	^pool poolUsers
 ]
 
 { #category : #query }
@@ -131,7 +121,7 @@ SystemNavigation >> allImplementorsOf: aSelector [
 	aCollection := OrderedCollection  new.
 	self allBehaviorsDo: [:class | 
 		(class includesSelector: aSelector)
-			ifTrue: [aCollection add: (self createMethodNamed: aSelector realParent: class)]].
+			ifTrue: [aCollection add: (class>>aSelector) methodReference]].
 	^ aCollection
 ]
 
@@ -145,12 +135,12 @@ SystemNavigation >> allLocalCallsOn: aSymbol ofClass: aClass [
 	cls withAllSuperAndSubclassesDo: [ :class |
 		(class whichSelectorsReferTo: aSymbol)
 			do: [:sel |
-				aSet add: (self createMethodNamed: sel realParent: class) ]].
+				aSet add: (class>>sel) methodReference ]].
 		
 	cls class withAllSuperAndSubclassesDo: [ :class |
 		(class whichSelectorsReferTo: aSymbol)
 			do: [:sel |
-				aSet add: (self createMethodNamed: sel realParent: class) ]].
+				aSet add: (class>>sel) methodReference ]].
 	^aSet
 ]
 
@@ -168,7 +158,7 @@ SystemNavigation >> allMethodsSelect: aBlock [
 	aCollection := OrderedCollection new.
 	self allBehaviorsDo: [:class | 
 		class	selectorsAndMethodsDo: [:sel :m | 
-			(aBlock value: m) ifTrue: [aCollection add: (self createMethodNamed: sel realParent: class)]]].
+			(aBlock value: m) ifTrue: [aCollection add: (class>>sel) methodReference]]].
 	^ aCollection
 ]
 
@@ -178,7 +168,7 @@ SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive
 
 	| list addMethod addComment |
 	list := OrderedCollection new.
-	addMethod := [ :mrClass :mrSel | list add: (self createMethodNamed: mrSel realParent:  mrClass)].									
+	addMethod := [ :mrClass :mrSel | list add: (mrClass>>mrSel) methodReference].									
 	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].										
 	self allBehaviorsDo: [:each |
 		each selectorsDo: [:sel | 
@@ -239,7 +229,7 @@ SystemNavigation >> allReferencesTo: aLiteral [
 		| selectors | 
 		selectors :=  class thoroughWhichSelectorsReferTo: aLiteral.
 		selectors do: [ :selector |
-			result addLast: (self createMethodNamed: selector realParent: class) ] ].
+			result addLast: (class>>selector) methodReference ] ].
 	^ result
 ]
 
@@ -268,7 +258,7 @@ SystemNavigation >> allReferencesToPool: aPool [
 					meth literals
 						detect: [ :lit | (lit isVariableBinding and: [ lit key notNil ]) 
 													and: [ aPool includesKey: lit key ] ]
-						ifFound: [ list add: (self createMethodNamed: sel realParent: cls) ] ] ].
+						ifFound: [ list add: (cls>>sel) methodReference ] ] ].
 	^ list
 ]
 
@@ -292,7 +282,7 @@ SystemNavigation >> allSendersOf: selector [
 	senders := OrderedCollection new.
 	self allBehaviorsDo: [ :behavior | 
 		(behavior thoroughWhichSelectorsReferTo: selector) do: [ :sel| 
-			senders add: (self createMethodNamed: sel realParent: behavior) ] ].
+			senders add: (behavior>>sel) methodReference ] ].
 	^ senders
 ]
 
@@ -332,7 +322,7 @@ SystemNavigation >> allStoresInto: instVarName of: aClass [
     | coll |
     coll := OrderedCollection new.
     aClass
-        withAllSubAndSuperclassesDo: [ :class | (class whichSelectorsStoreInto: instVarName) do: [ :sel | coll add: (self createMethodNamed: sel realParent: class) ] ].
+        withAllSubAndSuperclassesDo: [ :class | (class whichSelectorsStoreInto: instVarName) do: [ :sel | coll add: (class>>sel) methodReference ] ].
     ^ coll
 ]
 
@@ -394,7 +384,7 @@ SystemNavigation >> environment [
 { #category : #accessing }
 SystemNavigation >> environment: aSystemDictionary [
 	
-	environment :=  aSystemDictionary
+	environment := aSystemDictionary
 ]
 
 { #category : #private }
@@ -443,12 +433,6 @@ SystemNavigation >> isUnsentMessage: selector [
 	self allBehaviorsDo: [ :behavior | 
 		(behavior thoroughHasSelectorReferringTo: selector) ifTrue: [ ^ false]].
 	^ true
-]
-
-{ #category : #'message sends' }
-SystemNavigation >> isUsedClass: aClass [
-	self deprecated: 'just use #isUsed'.
-	^aClass isUsed
 ]
 
 { #category : #query }
