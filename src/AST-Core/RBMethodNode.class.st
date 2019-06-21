@@ -145,13 +145,6 @@ RBMethodNode >> argumentNames [
 ]
 
 { #category : #accessing }
-RBMethodNode >> argumentSize [
-	"Return the cumulted length of the parameters (yes parameters are called arguments in Pharo - not good!). It does not count spaces and the selectors"
-	
-	^ self arguments inject: 0 into: [ :sum :each | sum + each name size ]
-]
-
-{ #category : #accessing }
 RBMethodNode >> arguments [
 	^arguments
 ]
@@ -233,6 +226,36 @@ RBMethodNode >> compilationContext [
 { #category : #'accessing compiled method' }
 RBMethodNode >> compilationContext: aCompilationContext [
 	compilationContext := aCompilationContext.
+]
+
+{ #category : #'accessing - conceptual' }
+RBMethodNode >> conceptualArgumentSize [
+	"Return the cumulted length of the parameters (yes parameters are called arguments in Pharo - not good!). It does not count spaces and the selectors.
+	Note that this length is based on the tree structure and not the source code. It does not reflect the selection interval but the space the selector would take if displayed on a single line without any space."
+
+	^ self arguments
+		inject: 0
+		into: [ :sum :each | sum + each name size ]
+]
+
+{ #category : #'accessing - conceptual' }
+RBMethodNode >> conceptualSelectorSize [
+	"Return the length of the selector. It does not take into length of parameters nor the spaces.
+	Note that this length is based on the tree structure and not the source code. It does not reflect the selection interval but the space the selector would take if displayed on a single line without any space."
+
+	^ selector size
+]
+
+{ #category : #'accessing - conceptual' }
+RBMethodNode >> conceptualSignatureSize [
+	"Return the full length of the method signature (called with a strange name in Pharo: the patterned selector. Note that this length is based on the tree structure and not the source code. It does not reflect the selection interval but the space the signature would take if displayed on a single line."
+
+	"When we count foo: a b: b, we add three extras spaces so args size * 2 - 1"
+
+	^ self conceptualSelectorSize + self conceptualArgumentSize
+		+ (self arguments
+		ifNotEmpty: [ self arguments size * 2 - 1 ]
+		ifEmpty: [ 0 ])
 ]
 
 { #category : #matching }
@@ -639,20 +662,6 @@ RBMethodNode >> selectorAndArgumentNames [
 { #category : #accessing }
 RBMethodNode >> selectorParts [
 	^ self keywords collect: #asSymbol.
-]
-
-{ #category : #accessing }
-RBMethodNode >> selectorSize [
-	"Return the length of the selector. It does not take into length of parameters"
-	
-	^ selector size
-]
-
-{ #category : #accessing }
-RBMethodNode >> signatureSize [
-	"Return the full length of the method signature (called with a strange name in Pharo: the patterned selector."
-	
-	^ self selectorSize + self argumentSize
 ]
 
 { #category : #accessing }

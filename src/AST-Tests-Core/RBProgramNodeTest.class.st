@@ -170,20 +170,6 @@ RBProgramNodeTest >> testAddTemporaryNamed [
 	self assert: tree temporaries last equals: variable
 ]
 
-{ #category : #'testing-comments' }
-RBProgramNodeTest >> testCommentedMethodHasComments [
-
-	| tree |
-	tree := self parseMethod: 'foo: abd bar: cde  
-		"this is comment"
-		"this is another comment"
-^ abd + cde'.
-
-	self assert: tree hasComments.
-	
-
-]
-
 { #category : #'testing-properties' }
 RBProgramNodeTest >> testHasProperty [
 	self deny: (self node hasProperty: #foo).
@@ -434,40 +420,4 @@ RBProgramNodeTest >> testSetCommentsToNil [
 
 	self node comments: nil.
 	self assert: self node comments equals: #()
-]
-
-{ #category : #'testing-replacing' }
-RBProgramNodeTest >> testSizeOfSignature [
-	| tree |
-	tree := self parseMethod: 'foo: abd bar: cde  
-^ abd + cde'.
-	self assert: tree selectorSize equals: 'foo:bar:' size.
-	self assert: tree argumentSize equals: 'abdcde' size.
-	self assert: tree signatureSize equals: 'abdcde' size + 'foo:bar:' size.
-	
-	tree := self parseMethod: 'foo  
-^ 2 + 3'.
-	self assert: tree selectorSize equals: 'foo' size.
-	self assert: tree argumentSize isZero.
-	self assert: tree signatureSize equals: 'foo' size.
-
-	
-	tree := self parseMethod: '+ x 
-^ 2 + 3'.
-	self assert: tree selectorSize equals: '+' size.
-	self assert: tree argumentSize equals: 'x' size.
-	self assert: tree signatureSize equals: '+' size + 'x' size.
-
-]
-
-{ #category : #'testing-comments' }
-RBProgramNodeTest >> testUncommentMethodDoesNotHaveComments [
-
-	| tree |
-	tree := self parseMethod: 'foo: abd bar: cde  
-^ abd + cde'.
-
-	self deny: tree hasComments.
-	
-
 ]

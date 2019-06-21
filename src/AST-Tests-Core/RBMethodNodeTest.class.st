@@ -43,6 +43,20 @@ RBMethodNodeTest >> testCachingMethodArguments [
 	self assert: (ast methodPropertyAt: #argumentNames) equals: #(someArgName someAnotherArgName)
 ]
 
+{ #category : #'testing-comments' }
+RBMethodNodeTest >> testCommentedMethodHasComments [
+
+	| tree |
+	tree := self parseMethod: 'foo: abd bar: cde  
+		"this is comment"
+		"this is another comment"
+^ abd + cde'.
+
+	self assert: tree hasComments.
+	
+
+]
+
 { #category : #tests }
 RBMethodNodeTest >> testSelectorAndArgumentNames [
 
@@ -51,4 +65,55 @@ RBMethodNodeTest >> testSelectorAndArgumentNames [
 	self assert: (self parseMethod: 'one:   aOne two:   aTwo ^ self') selectorAndArgumentNames equals: 'one:   aOne two:   aTwo'.
 	self assert: (self parseMethod: '*   aOne') selectorAndArgumentNames equals: '*   aOne'.
 	self assert: (self parseMethod: '**   aOne') selectorAndArgumentNames equals: '**   aOne'
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testSizeOfSignatureOfBinaryMethod [
+	| tree |
+	tree := self
+		parseMethod:
+			' + x   
+^ 2 + 3'.
+	self assert: tree conceptualSelectorSize equals: '+' size.
+	self assert: tree conceptualArgumentSize equals: 'x'  size.
+	self assert: tree conceptualSignatureSize equals: '+' size + tree conceptualArgumentSize + 1
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testSizeOfSignatureOfKeywordsMethod [
+	| tree |
+	tree := self
+		parseMethod:
+			'foo: abd bar: cde  
+^ abd + cde'.
+	self assert: tree conceptualSelectorSize equals: 'foo:bar:' size.
+	self assert: tree conceptualArgumentSize equals: 'abdcde' size.
+	self
+		assert: tree conceptualSignatureSize
+		equals: 'abdcde' size + 'foo:bar:' size + 3.
+	
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testSizeOfSignatureOfUnaryMethod [
+	| tree |
+	tree := self
+		parseMethod:
+			'foo  
+^ 2 + 3'.
+	self assert: tree conceptualSelectorSize equals: 'foo' size.
+	self assert: tree conceptualArgumentSize isZero.
+	self assert: tree conceptualSignatureSize equals: 'foo' size
+]
+
+{ #category : #'testing-comments' }
+RBMethodNodeTest >> testUncommentMethodDoesNotHaveComments [
+
+	| tree |
+	tree := self parseMethod: 'foo: abd bar: cde  
+^ abd + cde'.
+
+	self deny: tree hasComments.
+	
+
 ]
