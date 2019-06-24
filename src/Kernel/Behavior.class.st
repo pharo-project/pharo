@@ -200,9 +200,19 @@ Behavior >> allMethods [
 { #category : #queries }
 Behavior >> allMethodsAccessingSlot: aSlot [
 	"return all methods that access aSlot in this class and subclasses"
-	^self withAllSubclasses flatCollect: [ :class |
-		class methodsAccessingSlot: aSlot.
-	]
+	^self withAllSubclasses flatCollect: [ :class | class methodsAccessingSlot: aSlot ]
+]
+
+{ #category : #queries }
+Behavior >> allMethodsReadingSlot: aSlot [
+	"return all methods that access aSlot in this class and subclasses"
+	^self withAllSubclasses flatCollect: [ :class | class methodsReadingSlot: aSlot]
+]
+
+{ #category : #queries }
+Behavior >> allMethodsWritingSlot: aSlot [
+	"return all methods that access aSlot in this class and subclasses"
+	^self withAllSubclasses flatCollect: [ :class | class methodsWritingSlot: aSlot ]
 ]
 
 { #category : #'accessing method dictionary' }
@@ -1712,12 +1722,8 @@ Behavior >> subclassDefinerClass [
 
 { #category : #'accessing instances and variables' }
 Behavior >> subclassInstVarNames [
-	"Answer a Set of the names of the receiver's subclasses' instance 
-	variables."
-	| vars |
-	vars := Set new.
-	self allSubclasses do: [:aSubclass | vars addAll: aSubclass instVarNames].
-	^vars
+	"Answer a Set of the names of the receiver's subclasses' instance variables."
+	^self allSubclasses flatCollectAsSet: [:aSubclass | aSubclass instVarNames]
 ]
 
 { #category : #enumerating }
