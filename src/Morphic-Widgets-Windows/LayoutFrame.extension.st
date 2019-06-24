@@ -1,12 +1,12 @@
 Extension { #name : #LayoutFrame }
 
-{ #category : #'*Spec-MorphicAdapters' }
+{ #category : #'*Morphic-Widgets-Windows' }
 LayoutFrame >> isHorizontallyResizeable [
 
 	^ self rightFraction ~= self leftFraction
 ]
 
-{ #category : #'*Spec-MorphicAdapters' }
+{ #category : #'*Morphic-Widgets-Windows' }
 LayoutFrame >> isVerticallyResizeable [
 
 	^ self bottomFraction ~= self topFraction
