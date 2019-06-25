@@ -120,7 +120,7 @@ SycMethodNameEditor3 >> editParameter [
 	newName := editParameter text asSymbol.
 	selected := argumentsList items at: (argumentsList selection selectedIndex).
 	newName = selected ifTrue: [ ^ self ].
-	refactoring dictParameters: editerArgumentList;
+	refactoring parameterMap: editerArgumentList;
 		   		   validateRenameOf: selected to: newName.
 	editerArgumentList at: (self getKeyOf: selected) put: newName.
 	self updateItem: selected to: newName.
@@ -249,7 +249,7 @@ SycMethodNameEditor3 >> renameMethodAndClose: presenter [
 	^ self previewResult label = '(invalid)'
 		ifTrue: [ self inform: 'Invalid method name' ]
 		ifFalse: [
-			refactoring dictParameters: editerArgumentList.
+			refactoring parameterMap: editerArgumentList.
 			methodName
 				arguments: self getParametersOrder;
 				selector: selectorInput text.

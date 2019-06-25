@@ -16,7 +16,7 @@ Class {
 		'modifiedParseTree',
 		'parameters',
 		'needsReturn',
-		'dictParameters'
+		'parameterMap'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -125,16 +125,6 @@ RBExtractMethodRefactoring >> checkTemporaries [
 { #category : #transforming }
 RBExtractMethodRefactoring >> createTemporariesInExtractedMethodFor: assigned [ 
 	assigned do: [:each | extractedParseTree body addTemporaryNamed: each]
-]
-
-{ #category : #accessing }
-RBExtractMethodRefactoring >> dictParameters [
-	^ dictParameters
-]
-
-{ #category : #accessing }
-RBExtractMethodRefactoring >> dictParameters: aDictionary [
-	dictParameters := aDictionary 
 ]
 
 { #category : #transforming }
@@ -306,6 +296,16 @@ RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: newSend in: modifiedParseTree
 ]
 
+{ #category : #accessing }
+RBExtractMethodRefactoring >> parameterMap [
+	^ parameterMap
+]
+
+{ #category : #accessing }
+RBExtractMethodRefactoring >> parameterMap: aDictionary [
+	parameterMap := aDictionary 
+]
+
 { #category : #transforming }
 RBExtractMethodRefactoring >> placeholderNode [
 	| node |
@@ -341,8 +341,8 @@ RBExtractMethodRefactoring >> remainingTemporaries [
 { #category : #renaming }
 RBExtractMethodRefactoring >> renameAllParameters [
 	"Rename all parameters that change"
-	dictParameters ifNotNil: [
-		dictParameters keysAndValuesDo: [ :key : value | 
+	parameterMap ifNotNil: [
+		parameterMap keysAndValuesDo: [ :key : value | 
 			key ~= value ifTrue: [ self renameParameterWith: key to: value ]]
 	]
 ]
@@ -416,7 +416,7 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 			block
 				ifNotNil: [ self refactoringError: conditions errorString with: block ]
 				ifNil: [ self refactoringError: conditions errorString ] ].
-	(dictParameters values includes: newName) ifTrue: [
+	(parameterMap values includes: newName) ifTrue: [
 		self refactoringError: newName asString , ' is already defined as parameter' ].
 	(aParseTree whoDefines: newName)
 		ifNotNil: [ self refactoringError: newName asString , ' is already defined' ].

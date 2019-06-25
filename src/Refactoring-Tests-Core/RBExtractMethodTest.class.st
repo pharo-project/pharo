@@ -138,7 +138,7 @@ RBExtractMethodTest >> testExtractWithRenamingOfParameters [
 		from: #displayName
 		in: RBLintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
-	refactoring dictParameters: (Dictionary new at: #nameStream put: #newParameter; yourself ).
+	refactoring parameterMap: (Dictionary new at: #nameStream put: #newParameter; yourself ).
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 
@@ -215,7 +215,7 @@ RBExtractMethodTest >> testValidateRenameParameters [
 		from: #displayName
 		in: RBLintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
-	refactoring dictParameters: (Dictionary new at: #nameStream put: #nameStream; yourself ).
+	refactoring parameterMap: (Dictionary new at: #nameStream put: #nameStream; yourself ).
 	"Fail when use instance variables as new parameters"
 	self should: [ refactoring validateRenameOf: #nameStream to: #name ] raise: RBRefactoringError.	
 	self should: [refactoring validateRenameOf: #nameStream to: #foo1] raise: RBRefactoringError.
