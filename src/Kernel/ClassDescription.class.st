@@ -1269,12 +1269,6 @@ ClassDescription >> storeOn: aStream [
 	aStream nextPutAll: self name
 ]
 
-{ #category : #'accessing class hierarchy' }
-ClassDescription >> subclassesDo: aBlock [
-	"Evaluate the argument, aBlock, for each of the receiver's immediate subclasses."
-	^self subclasses do: aBlock
-]
-
 { #category : #initialization }
 ClassDescription >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
