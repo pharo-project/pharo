@@ -10,7 +10,7 @@ Class {
 { #category : #'instance creation' }
 RBSuperNode class >> new [
 	^super new 
-		named: 'super' start: nil;
+		named: 'super' start: 0;
 		yourself.
 ]
 
