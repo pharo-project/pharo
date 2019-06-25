@@ -20,7 +20,7 @@ ClassQueryTest >> testAllCallsOnASymbol [
 
 	| set cm |
 	set := Object allCallsOn: #shallowCopy.
-	cm := (set detect: [ :rgMethod | (rgMethod selector == #copy) and: [rgMethod className = #Object]]) compiledMethod.
+	cm := (set detect: [ :rgMethod | (rgMethod selector == #copy) and: [rgMethod methodClass = Object]]).
 	self assert: (cm literals includes: #shallowCopy)
 ]
 

@@ -1,6 +1,12 @@
 Extension { #name : #SystemNavigation }
 
 { #category : #'*Deprecated80' }
+SystemNavigation >> allCallsOn: aSymbol from: aClass [
+	self deprecated: 'use #allCallsOn: of class directly'.
+	^aClass allCallsOn: aSymbol
+]
+
+{ #category : #'*Deprecated80' }
 SystemNavigation >> allClassesUsingSharedPool: aString [  
 	"Answer all classes that uses the shared pool named aString."
 
