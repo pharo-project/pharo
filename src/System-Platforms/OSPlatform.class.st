@@ -84,6 +84,12 @@ OSPlatform class >> startUp: isImageStarting [
 	Current startUp: isImageStarting
 ]
 
+{ #category : #visiting }
+OSPlatform >> accept: aVisitor [
+
+	self subclassResponsibility	
+]
+
 { #category : #accessing }
 OSPlatform >> current [
 	^ self
