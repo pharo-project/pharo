@@ -9,6 +9,11 @@ Class {
 }
 
 { #category : #'accessing platform' }
+CairoLibrary >> macModuleName [
+	^ 'libcairo.2.dylib'
+]
+
+{ #category : #'accessing platform' }
 CairoLibrary >> unix32ModuleName [
 	"On different flavors of linux the path to library may differ
 	depending on OS distro or whether system is 32 or 64 bit.
