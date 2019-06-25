@@ -1726,12 +1726,6 @@ Behavior >> subclassInstVarNames [
 	^self allSubclasses flatCollectAsSet: [:aSubclass | aSubclass instVarNames]
 ]
 
-{ #category : #enumerating }
-Behavior >> subclassesDo: aBlock [
-	"Evaluate the argument, aBlock, for each of the receiver's immediate subclasses."
-	self subclasses do: aBlock
-]
-
 { #category : #'accessing class hierarchy' }
 Behavior >> superclass [
 	"Answer the receiver's superclass, a Class."
