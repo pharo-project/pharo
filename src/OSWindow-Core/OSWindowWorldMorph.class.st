@@ -158,3 +158,9 @@ OSWindowWorldMorph >> updateDisplay [
 		worldState display: display
 	]
 ]
+
+{ #category : #accessing }
+OSWindowWorldMorph >> worldState [
+
+	^ worldState 
+]

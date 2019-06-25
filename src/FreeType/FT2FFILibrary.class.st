@@ -137,11 +137,6 @@ FT2FFILibrary class >> translateErrorCode: aCode [
 ]
 
 { #category : #'accessing platform' }
-FT2FFILibrary >> macModuleName [ 
-	^ 'libfreetype.dylib'
-]
-
-{ #category : #'accessing platform' }
 FT2FFILibrary >> unixModuleName [
 	^ 'libfreetype.so.6'
 ]

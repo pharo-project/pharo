@@ -332,7 +332,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	UIManager default: MorphicUIManager new.
 
 	World displayWorldSafely.
-	World assuredCanvas.
 
 	UIManager default uiProcess resume.
 	PharoDarkTheme beCurrent.

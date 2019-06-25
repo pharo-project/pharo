@@ -9,8 +9,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'hands',
-		'viewBox',
-		'canvas',
 		'damageRecorder',
 		'stepList',
 		'lastStepTime',
@@ -20,7 +18,8 @@ Class {
 		'lastAlarmTime',
 		'menuBuilder',
 		'activeHand',
-		'currentCursor'
+		'currentCursor',
+		'worldRenderer'
 	],
 	#classVars : [
 		'CanSurrenderToOS',
@@ -347,24 +346,14 @@ WorldState >> alarms [
 ]
 
 { #category : #canvas }
-WorldState >> assuredCanvas [
-
-	(canvas isNil or: [(canvas extent ~= viewBox extent) or: [canvas form depth ~= Display depth]])
-		ifTrue:
-			["allocate a new offscreen canvas the size of the window"
-			self canvas: (Display defaultCanvasClass extent: viewBox extent)].
-	^ self canvas
-]
-
-{ #category : #canvas }
 WorldState >> canvas [
 
-	^ canvas
+	^ self worldRenderer canvas
 ]
 
 { #category : #canvas }
 WorldState >> canvas: x [ 
-	canvas := x.
+	self worldRenderer canvas: x.
 	damageRecorder 
 		ifNil: [damageRecorder := DamageRecorder new]
 		ifNotNil: [damageRecorder doFullRepaint]
@@ -373,8 +362,10 @@ WorldState >> canvas: x [
 { #category : #'update cycle' }
 WorldState >> checkIfUpdateNeeded [
 
-	damageRecorder updateIsNeeded ifTrue: [^true].
-	hands do: [:h | (h hasChanged and: [h needsToBeDrawn]) ifTrue: [^true]].
+	damageRecorder updateIsNeeded ifTrue: [ ^true ].
+		
+	hands do: [:h | 
+		(h hasChanged and: [h needsToBeDrawn]) ifTrue: [^true]].
 	^false  "display is already up-to-date"
 
 ]
@@ -426,6 +417,12 @@ WorldState >> currentCursor: anObject [
 	currentCursor := anObject
 ]
 
+{ #category : #accessing }
+WorldState >> damageRecorder [
+
+	^ damageRecorder 
+]
+
 { #category : #'deferred message' }
 WorldState >> defer: aValuable [
 	"aValuable will be executed in the next UI rendering cycle"
@@ -452,37 +449,7 @@ WorldState >> discoveredMenuTitle [
 WorldState >> displayWorld: aWorld submorphs: submorphs [
 	"Update this world's display."
 
-	| deferredUpdateMode handsToDraw allDamage |
-	submorphs do: [ :m | m fullBounds ].	"force re-layout if needed"
-	self checkIfUpdateNeeded
-		ifFalse: [ ^ self ].	"display is already up-to-date"
-	deferredUpdateMode := self doDeferredUpdatingFor: aWorld.
-	deferredUpdateMode
-		ifFalse: [ self assuredCanvas ].
-	canvas
-		ifNotNil: [ :c | 
-			c
-				roundCornersOf: aWorld
-				during: [ | worldDamageRects handDamageRects |
-					worldDamageRects := self drawWorld: aWorld submorphs: submorphs invalidAreasOn: canvas.	"repair world's damage on canvas"
-					"self handsDo:[:h| h noticeDamageRects: worldDamageRects]."
-					handsToDraw := self selectHandsToDrawForDamage: worldDamageRects.
-					handDamageRects := handsToDraw collect: [ :h | h savePatchFrom: canvas ].
-					allDamage := worldDamageRects , handDamageRects.
-					handsToDraw reverseDo: [ :h | "draw hands onto world canvas" canvas fullDrawMorph: h ] ] ].
-	"*make this true to flash damaged areas for testing*"
-	self class debugShowDamage
-		ifTrue: [ aWorld flashRects: allDamage color: Color black ].
-	"Check that the canvas is not already freed when we want to finish it"
-	canvas ifNotNil: [ :c | c finish ].
-	"quickly copy altered rects of canvas to Display:"
-	deferredUpdateMode
-		ifTrue: [ self forceDamageToScreen: allDamage ]
-		ifFalse: [ canvas showAt: aWorld viewBox origin invalidRects: allDamage ].
-	handsToDraw do: [ :h | h restoreSavedPatchOn: canvas ].	"restore world canvas under hands"
-	Display
-		deferUpdates: false;
-		forceDisplayUpdate
+	worldRenderer displayWorldState: self ofWorld: aWorld submorphs: submorphs
 ]
 
 { #category : #'update cycle' }
@@ -511,18 +478,6 @@ WorldState >> displayWorldSafely: aWorld [
 	].
 ]
 
-{ #category : #'update cycle' }
-WorldState >> doDeferredUpdatingFor: aWorld [
-        "If this platform supports deferred updates, then make my canvas be the Display (or a rectangular portion of it), set the Display to deferred update mode, and answer true. Otherwise, do nothing and answer false. One can set the class variable DisableDeferredUpdates to true to completely disable the deferred updating feature."
-
-	(Display deferUpdates: true) ifNil: [^ false].  "deferred updates not supported"
-	(canvas notNil and: [canvas form == Display]) ifFalse: [
-			aWorld viewBox: Display boundingBox.    "do first since it may clear canvas"
-			self canvas: (Display getCanvas copyClipRect: Display boundingBox)].
-	^ true
-
-]
-
 { #category : #canvas }
 WorldState >> doFullRepaint [
 
@@ -543,7 +498,7 @@ WorldState >> doOneCycleNowFor: aWorld [
 	"Immediately do one cycle of the interaction loop.
 	This should not be called directly, but only via doOneCycleFor:"
 
-	DisplayScreen checkForNewScreenSize.
+	self worldRenderer checkForNewScreenSize.
 
 	"process user input events"
 	LastCycleTime := Time millisecondClockValue.
@@ -647,16 +602,9 @@ WorldState >> fallbackMenuOn: menu [
 ]
 
 { #category : #'update cycle' }
-WorldState >> forceDamageToScreen: allDamage [
-
-	Display forceDamageToScreen: allDamage.
-	
-]
-
-{ #category : #'update cycle' }
 WorldState >> handleFatalDrawingError: errMsg [
 	"Handle a fatal drawing error."
-	Display deferUpdates: false. "Just in case"
+	self worldRenderer deferUpdates: false. "Just in case"
 	self primitiveError: errMsg.
 
 	"Hm... we should jump into a 'safe' worldState here, but how do we find it?!"
@@ -689,7 +637,7 @@ WorldState >> initialize [
 	stepList := Heap sortBlock: self stepListSortBlock.
 	lastStepTime := 0.
 	lastAlarmTime := 0.
-	self viewBox: Display boundingBox
+
 ]
 
 { #category : #'update cycle' }
@@ -899,16 +847,24 @@ WorldState >> triggerAlarmsBefore: nowTime [
 { #category : #canvas }
 WorldState >> viewBox [
 
-	^ viewBox
-]
-
-{ #category : #canvas }
-WorldState >> viewBox: x [
-
-	viewBox := x
+	^ self worldRenderer viewBox
 ]
 
 { #category : #'worldmenu building' }
 WorldState >> worldMenu [
 	^self  menuBuilder menuEntitled: self discoveredMenuTitle.
+]
+
+{ #category : #hands }
+WorldState >> worldRenderer [
+
+    ^ worldRenderer ifNil: [ worldRenderer := NullWorldRenderer new ]
+]
+
+{ #category : #accessing }
+WorldState >> worldRenderer: anObject [
+
+	worldRenderer deactivate.
+	worldRenderer := anObject.
+	worldRenderer activate
 ]

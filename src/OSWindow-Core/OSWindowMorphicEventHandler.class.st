@@ -104,6 +104,7 @@ OSWindowMorphicEventHandler >> convertModifiers: modifiers [
 { #category : #events }
 OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 	morphicWorld defer: [
+				
 		(morphicWorld activeHand isNotNil and: [ anEvent hand isNotNil ]) ifTrue: [
 			morphicWorld activeHand handleEvent: anEvent
 		]
@@ -135,7 +136,7 @@ OSWindowMorphicEventHandler >> handleEvent: anEvent [
 	
 	morphicEvent := anEvent accept: self.
 	morphicEvent isMorphicEvent ifFalse: [ ^ self ].
-	
+		
 	self dispatchMorphicEvent: morphicEvent
 	
 ]
@@ -320,12 +321,6 @@ OSWindowMorphicEventHandler >> visitUnknownEvent: anEvent [
 OSWindowMorphicEventHandler >> visitWindowCloseEvent: anEvent [
 	anEvent suppressDefaultAction.
 	morphicWorld osWindowCloseButtonPressed
-]
-
-{ #category : #visiting }
-OSWindowMorphicEventHandler >> visitWindowExposeEvent: anEvent [
-	"Make sure that the renderer for this window exist."
-	morphicWorld osWindowRenderer
 ]
 
 { #category : #visiting }

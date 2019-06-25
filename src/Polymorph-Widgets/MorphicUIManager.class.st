@@ -31,6 +31,13 @@ MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 
 { #category : #private }
 MorphicUIManager >> activate [
+
+	World worldState worldRenderer: (VMWorldRenderer forWorld: World).
+	Cursor currentCursor: Cursor currentCursor.
+		
+	WorldMorph currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
+	WorldMorph extraWorldList do: #restoreMorphicDisplay.
+
 	activeTranscript 
 		ifNil: [
 			Transcript class == ThreadSafeTranscript ifFalse: [ 
@@ -40,17 +47,6 @@ MorphicUIManager >> activate [
 		ifNotNil: [ Transcript := activeTranscript ].
 		
 	SystemProgressMorph enable.
-]
-
-{ #category : #'ui requests' }
-MorphicUIManager >> checkForNewDisplaySize [
-
-	"Check whether the screen size has changed and if so take appropriate actions"
-
-	Display extent = DisplayScreen actualScreenSize ifTrue: [^ Display].
-	DisplayScreen startUp.
-	self currentWorld restoreMorphicDisplay.
-
 ]
 
 { #category : #'ui requests' }
@@ -277,6 +273,8 @@ MorphicUIManager >> currentWorld [
 MorphicUIManager >> deactivate [
 	activeTranscript := Transcript.
 	SystemProgressMorph disable.
+	
+	World worldState worldRenderer: (NullWorldRenderer forWorld: World).
 ]
 
 { #category : #debug }
