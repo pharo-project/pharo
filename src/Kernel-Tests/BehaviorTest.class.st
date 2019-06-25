@@ -204,6 +204,41 @@ BehaviorTest >> testRemoveProperty [
 	self assert: (self class propertyAt: #testKeySelector) equals: nil
 ]
 
+{ #category : #'tests - queries' }
+BehaviorTest >> testallMethodsAccessingSlot [
+	| methods |	
+	"Check the source code availability to do not fail on images without sources"
+	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
+
+
+	methods := LookupKey allMethodsAccessingSlot: (LookupKey slotNamed: #key).
+	self assert: (methods includes: (Association >>#key:value:))
+
+]
+
+{ #category : #'tests - queries' }
+BehaviorTest >> testallMethodsReadingSlot [
+	| methods |	
+	"Check the source code availability to do not fail on images without sources"
+	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
+
+	methods := LookupKey allMethodsReadingSlot: (LookupKey slotNamed: #key).
+	self assert: (methods includes: (Ephemeron >>#mourn))
+
+]
+
+{ #category : #'tests - queries' }
+BehaviorTest >> testallMethodsWritingSlot [
+	| methods |	
+	"Check the source code availability to do not fail on images without sources"
+	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
+
+
+	methods := LookupKey allMethodsWritingSlot: (LookupKey slotNamed: #key).
+	self assert: (methods includes: (Association >>#key:value:))
+
+]
+
 { #category : #tests }
 BehaviorTest >> testallSuperclassesIncluding [
 		
