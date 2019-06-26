@@ -89,9 +89,3 @@ NullWorldRenderer >> forceDisplayUpdate [
 
 	" Do Nothing "
 ]
-
-{ #category : #'display box access' }
-NullWorldRenderer >> usableArea [
-
-	^ self actualScreenSize
-]
