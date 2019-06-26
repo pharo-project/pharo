@@ -165,6 +165,9 @@ BasicCommandLineHandler >> handleArgument: aString [
 		
 	aString = '--no-quit'
 		ifTrue: [ ^ self noQuit ].
+
+	aString = '--interactive'
+		ifTrue: [ ^ self noQuit ].
 	
 	"none of the previous options matched hence we output an error message"
 	self error.

@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #accessing }
+NullWorldRenderer class >> isApplicableFor: aWorld [
+
+	"This worldRenderer is always applicable"
+	^ true
+]
+
+{ #category : #accessing }
 NullWorldRenderer class >> priority [ 
 
 	^ 0

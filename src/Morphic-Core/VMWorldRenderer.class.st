@@ -9,6 +9,12 @@ Class {
 }
 
 { #category : #accessing }
+VMWorldRenderer class >> isApplicableFor: aWorld [
+
+    ^ Smalltalk isHeadless not
+]
+
+{ #category : #accessing }
 VMWorldRenderer class >> priority [ 
 
 	^ 1

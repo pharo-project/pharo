@@ -8,6 +8,14 @@ Class {
 }
 
 { #category : #accessing }
+AbstractWorldRenderer class >> detectCorrectOneforWorld: aWorld [
+
+(self allSubclasses sorted: [ :a :b | a priority > b priority ])
+        detect: [ :aClass | aClass isApplicableFor: aWorld ]
+        ifFound: [ :aClass | ^ aClass forWorld: aWorld ]
+]
+
+{ #category : #accessing }
 AbstractWorldRenderer class >> forWorld: aWorld [
 
 	^ self new 

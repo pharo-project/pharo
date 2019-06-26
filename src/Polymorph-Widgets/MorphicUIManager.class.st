@@ -26,13 +26,13 @@ MorphicUIManager class >> isActiveManager [
 { #category : #testing }
 MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 
-	^ Smalltalk isHeadless not
+	^ Smalltalk isHeadless not or: [ Smalltalk isHeadless and: [ CommandLineArguments default hasOption: 'interactive'  ] ]
 ]
 
 { #category : #private }
 MorphicUIManager >> activate [
 
-	World worldState worldRenderer: (VMWorldRenderer forWorld: World).
+	World worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneforWorld: World).
 	Cursor currentCursor: Cursor currentCursor.
 		
 	WorldMorph currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
