@@ -1896,9 +1896,9 @@ Behavior >> withAllSubclasses [
 
 { #category : #'accessing class hierarchy' }
 Behavior >> withAllSubclassesDo: aBlock [
-	"Evaluate the argument, aBlock, for the receiver and each of its 
-	subclasses."
-	self withAllSubclasses do: [ :subclass | aBlock value: subclass ].
+	"Evaluate the argument, aBlock, for the receiver and each of its subclasses."
+	
+	self withAllSubclasses do: aBlock
 ]
 
 { #category : #enumerating }
@@ -1910,14 +1910,14 @@ Behavior >> withAllSuperAndSubclassesDo: aBlock [
 
 { #category : #'accessing class hierarchy' }
 Behavior >> withAllSuperclasses [
-	"Answer an OrderedCollection of the receiver and the receiver's 
-	superclasses. The first element is the receiver, 
-	followed by its superclass; the last element is Object."
+	"Answer an OrderedCollection of the receiver and the receiver's superclasses. 
+	The first element is the receiver, followed by its superclass; 
+	the last element is Object."
 
-	| temp |
-	temp := self allSuperclasses.
-	temp addFirst: self.
-	^ temp
+	^self allSuperclasses 
+		addFirst: self; 
+		yourself
+
 ]
 
 { #category : #enumerating }
