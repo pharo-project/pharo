@@ -1,3 +1,7 @@
+"
+I implement the logic to render a world.
+I have different implementations to start the world.
+"
 Class {
 	#name : #AbstractWorldRenderer,
 	#superclass : #Object,

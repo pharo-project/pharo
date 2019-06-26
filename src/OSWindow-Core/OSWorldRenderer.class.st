@@ -1,3 +1,6 @@
+"
+I know how to render the world in an OSWindow
+"
 Class {
 	#name : #OSWorldRenderer,
 	#superclass : #AbstractWorldRenderer,

@@ -1,3 +1,6 @@
+"
+I know how to render the world using the VM backend.
+"
 Class {
 	#name : #VMWorldRenderer,
 	#superclass : #AbstractWorldRenderer,
