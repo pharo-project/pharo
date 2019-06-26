@@ -502,6 +502,19 @@ Character >> hex [
 	^ self asInteger hex
 ]
 
+{ #category : #accessing }
+Character >> hexDigitValue [
+	"Return the case independent hexadecimal digit value of the receiver.
+	$0 to: $9 will return 0 to 9, while $a to $f and $A to $F both will return 10 to 15.
+	If the receiver does not represent a hexadecimal digit, return nil.
+	Returns an integer between 0 and 15."
+	
+	| codePoint |
+	^ ((codePoint := self asInteger) between: 0 and: 127)
+		ifTrue: [ #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil) at: codePoint + 1 ]
+		ifFalse: [ nil ]
+]
+
 { #category : #testing }
 Character >> isAlphaNumeric [
 	"Answer whether the receiver is a letter or a digit."
