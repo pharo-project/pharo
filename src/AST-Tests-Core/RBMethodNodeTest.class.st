@@ -4,7 +4,7 @@ SUnit tests for RBMethodNode
 Class {
 	#name : #RBMethodNodeTest,
 	#superclass : #TestCase,
-	#category : #'AST-Tests-Core'
+	#category : #'AST-Core-Tests'
 }
 
 { #category : #helpers }

@@ -4,7 +4,7 @@ SUnit tests for RBCommentNodeVisitor
 Class {
 	#name : #RBCommentNodeVisitorTest,
 	#superclass : #RBParseTreeTest,
-	#category : #'AST-Tests-Core'
+	#category : #'AST-Core-Tests'
 }
 
 { #category : #tests }

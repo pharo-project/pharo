@@ -1,7 +1,7 @@
 Class {
 	#name : #RBParseTreeTest,
 	#superclass : #TestCase,
-	#category : #'AST-Tests-Core'
+	#category : #'AST-Core-Tests'
 }
 
 { #category : #helpers }

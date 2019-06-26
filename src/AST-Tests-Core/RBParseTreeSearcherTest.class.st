@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'searcher'
 	],
-	#category : #'AST-Tests-Core'
+	#category : #'AST-Core-Tests'
 }
 
 { #category : #helpers }

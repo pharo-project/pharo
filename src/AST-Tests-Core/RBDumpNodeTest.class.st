@@ -4,7 +4,7 @@ SUnit tests for the RBDumpVisitor visit, called by the #dump method on RBProgram
 Class {
 	#name : #RBDumpNodeTest,
 	#superclass : #RBParseTreeTest,
-	#category : #'AST-Tests-Core'
+	#category : #'AST-Core-Tests'
 }
 
 { #category : #tests }

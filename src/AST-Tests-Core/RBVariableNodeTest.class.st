@@ -4,7 +4,7 @@ SUnit tests for RBVariableNode
 Class {
 	#name : #RBVariableNodeTest,
 	#superclass : #RBParseTreeTest,
-	#category : #'AST-Tests-Core'
+	#category : #'AST-Core-Tests'
 }
 
 { #category : #tests }

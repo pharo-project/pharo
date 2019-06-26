@@ -4,7 +4,7 @@ SUnit tests for RBReadBeforeWrittenTester
 Class {
 	#name : #RBReadBeforeWrittenTesterTest,
 	#superclass : #RBParseTreeTest,
-	#category : #'AST-Tests-Core'
+	#category : #'AST-Core-Tests'
 }
 
 { #category : #tests }

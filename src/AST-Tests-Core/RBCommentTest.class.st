@@ -4,7 +4,7 @@ SUnit tests for RBComment
 Class {
 	#name : #RBCommentTest,
 	#superclass : #TestCase,
-	#category : #'AST-Tests-Core'
+	#category : #'AST-Core-Tests'
 }
 
 { #category : #tests }

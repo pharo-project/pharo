@@ -4,7 +4,7 @@ I am testing AST evaluation
 Class {
 	#name : #ASTEvaluationTest,
 	#superclass : #TestCase,
-	#category : #'AST-Tests-Core'
+	#category : #'AST-Core-Tests'
 }
 
 { #category : #tests }
