@@ -475,6 +475,13 @@ WorldMorph >> resetWorldMenu [
 
 ]
 
+{ #category : #'as yet unclassified' }
+WorldMorph >> restoreMorphicDisplay [
+
+	worldState worldRenderer restoreMorphicDisplay
+	
+]
+
 { #category : #stepping }
 WorldMorph >> runLocalStepMethods [
 

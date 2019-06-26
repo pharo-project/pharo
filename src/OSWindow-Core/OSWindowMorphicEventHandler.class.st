@@ -250,7 +250,7 @@ OSWindowMorphicEventHandler >> visitMouseButtonReleaseEvent: anEvent [
 		setType: #mouseUp
 		position: anEvent position 
 		which: (self convertButton: anEvent button)
-		buttons: (self convertModifiers: anEvent modifiers)
+		buttons: (self convertModifiers: anEvent modifiers) | (self convertModifiers: anEvent modifiers)
 		hand: self activeHand
 		stamp: Time millisecondClockValue
 ]
@@ -320,12 +320,13 @@ OSWindowMorphicEventHandler >> visitUnknownEvent: anEvent [
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowCloseEvent: anEvent [
 	anEvent suppressDefaultAction.
-	morphicWorld osWindowCloseButtonPressed
+	
+	self currentWorld defer: [WorldState quitSession].
 ]
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowResizeEvent: anEvent [
 
 	"window resized"
-	morphicWorld checkNewWindowSize.
+	morphicWorld worldState worldRenderer checkForNewScreenSize.
 ]

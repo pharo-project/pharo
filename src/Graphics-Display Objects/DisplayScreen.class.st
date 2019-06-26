@@ -53,13 +53,6 @@ DisplayScreen class >> boundingBox [
 	^Display boundingBox
 ]
 
-{ #category : #'display box access' }
-DisplayScreen class >> checkForNewScreenSize [
-	"Check whether the screen size has changed and if so take appropriate actions"
-
-	UIManager default checkForNewDisplaySize
-]
-
 { #category : #deferring }
 DisplayScreen class >> deferUpdates: aBoolean [
 	| wasDeferred |
@@ -394,8 +387,7 @@ DisplayScreen >> fullscreen [
 { #category : #'screen managing' }
 DisplayScreen >> fullscreen: aBoolean [
 
-	Display fullscreenMode: (LastScreenModeSelected := aBoolean).
-	self currentWorld worldState worldRenderer checkForNewScreenSize.
+	self currentWorld worldState worldRenderer fullscreenMode: (LastScreenModeSelected := aBoolean)
 	
 ]
 

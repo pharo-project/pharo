@@ -36,9 +36,44 @@ AbstractWorldRenderer >> activate [
 ]
 
 { #category : #activation }
+AbstractWorldRenderer >> actualScreenSize [
+
+	self subclassResponsibility 
+]
+
+{ #category : #activation }
 AbstractWorldRenderer >> deactivate [
 
 	self subclassResponsibility 
+]
+
+{ #category : #operations }
+AbstractWorldRenderer >> restoreMorphicDisplay [ 
+
+	world
+		extent: self actualScreenSize;
+		viewBox: self viewBox;
+		handsDo: [:h | h visible: true; showTemporaryCursor: nil];
+		resizeBackgroundMorph;
+		submorphsDo: [ :each | each displayExtentChanged ];
+		fullRepaintNeeded.
+		
+	world defer: [Cursor normal show].
+		
+	world layoutChanged.
+
+]
+
+{ #category : #initialization }
+AbstractWorldRenderer >> usableArea [
+
+	^ self viewBox
+]
+
+{ #category : #'display box access' }
+AbstractWorldRenderer >> viewBox [ 
+
+	^ 0@0 corner: self actualScreenSize
 ]
 
 { #category : #accessing }

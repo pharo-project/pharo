@@ -47,7 +47,8 @@ NullWorldRenderer >> canvas: x [
 { #category : #'display box access' }
 NullWorldRenderer >> checkForNewScreenSize [
 
-	"Do nothing"
+	world restoreMorphicDisplay.
+
 ]
 
 { #category : #activation }
@@ -87,12 +88,6 @@ NullWorldRenderer >> forceDisplayUpdate [
 
 { #category : #'display box access' }
 NullWorldRenderer >> usableArea [
-
-	^ self actualScreenSize
-]
-
-{ #category : #'display box access' }
-NullWorldRenderer >> viewBox [ 
 
 	^ self actualScreenSize
 ]

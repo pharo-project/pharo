@@ -406,8 +406,8 @@ ClyBrowserToolMorph >> isExtraSelectionRequested [
 	(it should be simple #meta modifier. But we don't have it"
 	| lastEvent |
 	lastEvent := ActiveHand lastEvent.
-	^ lastEvent isMouse & lastEvent isMouseDown 
-		and: [Sensor commandKeyPressed or: [ Sensor controlKeyPressed ]]
+	^ lastEvent isMouse and: [ lastEvent isMouseDown 
+		and: [lastEvent commandKeyPressed or: [ lastEvent controlKeyPressed ]]]
 ]
 
 { #category : #accessing }

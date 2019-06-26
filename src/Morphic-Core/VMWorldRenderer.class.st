@@ -36,7 +36,7 @@ VMWorldRenderer >> activate [
     self assuredCanvas.
     DisplayScreen refreshHostWindowTitle.
     Display forceDisplayUpdate.
-    World displayWorld.
+    world displayWorld.
 ]
 
 { #category : #operations }
@@ -77,7 +77,7 @@ VMWorldRenderer >> canvas: x [
 ]
 
 { #category : #'display box access' }
-VMWorldRenderer >> checkForNewDisplaySize [
+VMWorldRenderer >> checkForNewScreenSize [
 
 	"Check whether the screen size has changed and if so take appropriate actions"
 
@@ -86,14 +86,8 @@ VMWorldRenderer >> checkForNewDisplaySize [
    Display setExtent: self actualScreenSize depth: 32.
    Display beDisplay.
 
-	World restoreMorphicDisplay.
+	world restoreMorphicDisplay.
 
-]
-
-{ #category : #'display box access' }
-VMWorldRenderer >> checkForNewScreenSize [
-
-	self checkForNewDisplaySize
 ]
 
 { #category : #activation }
@@ -185,6 +179,13 @@ VMWorldRenderer >> forceDamageToScreen: allDamage [
 VMWorldRenderer >> forceDisplayUpdate [
 
 	^ Display forceDisplayUpdate
+]
+
+{ #category : #operations }
+VMWorldRenderer >> fullscreenMode: aValue [.
+
+	Display fullscreenMode: aValue.
+	self checkForNewScreenSize.
 ]
 
 { #category : #'display box access' }
