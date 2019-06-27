@@ -253,11 +253,6 @@ SpecVersatileDialogPresenter >> footnoteIcon: aForm [
 	footnoteIcon := aForm.
 ]
 
-{ #category : #'api-window' }
-SpecVersatileDialogPresenter >> initialExtent [
-	^ 400@200
-]
-
 { #category : #initialization }
 SpecVersatileDialogPresenter >> initialize [
 
@@ -271,6 +266,7 @@ SpecVersatileDialogPresenter >> initialize [
 
 { #category : #initialization }
 SpecVersatileDialogPresenter >> initializeDialogWindow: aDialogWindowPresenter [
+	aDialogWindowPresenter initialExtent: 400 @ 200
 ]
 
 { #category : #initialization }

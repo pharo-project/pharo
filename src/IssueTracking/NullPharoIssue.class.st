@@ -14,7 +14,7 @@ NullPharoIssue >> number [
 	^ nil
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 NullPharoIssue >> title [
 	^ nil
 ]

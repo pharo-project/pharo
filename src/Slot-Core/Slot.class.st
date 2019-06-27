@@ -151,13 +151,13 @@ Slot >> definitionString [
 Slot >> emitStore: aMethodBuilder [
 	"generate bytecode to call the reflective write method of the Slot"
 	| tempName |
-	tempName := Object new.  "we need a unique Object as a temp name"
+	tempName := '0slotTempForStackManipulation'.  
 	aMethodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
 		popTop;
 		pushReceiver;
-		pushLiteralVariable: #slot -> self;
+		pushLiteralVariable: (AdditionalBinding key: #slot value: self);
 		pushTemp: tempName;
 		send: #writeSlot:value:
 ]
@@ -165,7 +165,7 @@ Slot >> emitStore: aMethodBuilder [
 { #category : #'code generation' }
 Slot >> emitValue: aMethodBuilder [
 	aMethodBuilder
-		pushLiteralVariable: #slot -> self;
+		pushLiteralVariable: (AdditionalBinding key: #slot value: self);
 		pushReceiver;
 		send: #read:
 ]

@@ -45,8 +45,13 @@ AbstractTreeSingleSelectionMode >> replaceOtherSelectionMode: anotherSelection [
 ]
 
 { #category : #selection }
-AbstractTreeSingleSelectionMode >> selectPath: pathArray [
+AbstractTreeSingleSelectionMode >> selectPath: aPath [
 
+	self subclassResponsibility
+]
+
+{ #category : #selection }
+AbstractTreeSingleSelectionMode >> selectPaths: pathArray [
 	self subclassResponsibility
 ]
 

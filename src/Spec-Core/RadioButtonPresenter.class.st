@@ -64,6 +64,7 @@ RadioButtonPresenter >> basicAssociatedRadioButtons: aCollection [
 
 { #category : #initialization }
 RadioButtonPresenter >> initialize [
+
 	super initialize.
 	state := true.
 	associatedRadioButtons := #()

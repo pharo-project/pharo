@@ -65,7 +65,10 @@ MCSnapshotBrowserTest >> assertButtonOn: aString [
 
 { #category : #asserting }
 MCSnapshotBrowserTest >> assertTextIs: aString [
-	self assert: self textMorph text = aString.
+
+	self 
+		assert: self textMorph text 
+		equals: aString
 ]
 
 { #category : #morphic }
@@ -90,7 +93,8 @@ MCSnapshotBrowserTest >> classAComment [
 
 { #category : #private }
 MCSnapshotBrowserTest >> classADefinitionString [
-	^ self mockClassA definition
+
+	^ self mockClassA oldDefinition
 ]
 
 { #category : #private }
@@ -100,7 +104,8 @@ MCSnapshotBrowserTest >> classAProtocols [
 
 { #category : #private }
 MCSnapshotBrowserTest >> classAclassDefinitionString [
-	^ self mockClassA class definition
+
+	^ self mockClassA class definitionWithoutSlots
 ]
 
 { #category : #simulating }

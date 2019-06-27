@@ -250,7 +250,7 @@ ProfStef >> goOn: aTutorialClass [
 ProfStef >> helpBrowserWindow [
 	"Yes this is a hack"
 	
-	^ World systemWindows 
+	^ self currentWorld systemWindows 
 		detect: [ :each | each model class = HelpBrowser ] 
 		ifNone: [ nil ]
 ]

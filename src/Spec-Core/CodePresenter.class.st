@@ -8,7 +8,9 @@ Class {
 	#instVars : [
 		'#doItContext => SpecObservableSlot',
 		'#doItReceiver => SpecObservableSlot',
-		'#behavior => SpecObservableSlot'
+		'#behavior => SpecObservableSlot',
+		'#syntaxHighlight => SpecObservableSlot',
+		'#contextKeyBindings'
 	],
 	#category : #'Spec-Core-Widgets'
 }
@@ -50,6 +52,18 @@ CodePresenter >> behavior: aClass [
 	behavior := aClass
 ]
 
+{ #category : #'api-shortcuts' }
+CodePresenter >> contextKeyBindings [
+
+	^ contextKeyBindings
+]
+
+{ #category : #'api-shortcuts' }
+CodePresenter >> contextKeyBindings: aDictionary [
+
+	contextKeyBindings := aDictionary
+]
+
 { #category : #'api-doIt' }
 CodePresenter >> doItContext [
 
@@ -78,17 +92,26 @@ CodePresenter >> doItReceiver: anObject [
 	doItReceiver := anObject
 ]
 
+{ #category : #testing }
+CodePresenter >> hasSyntaxHighlight [
+
+	^ syntaxHighlight
+]
+
 { #category : #initialization }
 CodePresenter >> initialize [ 
 
-	self class initializeSlots: self.
 	super initialize.
 	
 	behavior := nil.
 	doItContext := nil.
 	doItReceiver := nil.
+	self withSyntaxHighlight.
 	
-	self registerEventsForStyling
+	self registerEventsForStyling.
+	
+	self contextMenu: [ self getMenu ]"self buildCodeMenu".
+	"self contextKeyBindings: self buildCodeKeyBindings"
 ]
 
 { #category : #initialization }
@@ -106,6 +129,11 @@ CodePresenter >> selectedBehavior [
 	^ self behavior
 ]
 
+{ #category : #accessing }
+CodePresenter >> syntaxHighlight: aBoolean [
+	syntaxHighlight := aBoolean 
+]
+
 { #category : #'api-events' }
 CodePresenter >> whenBehaviorChangedDo: aBlock [
 	"Set a block to perform when the behavior class changed"
@@ -113,4 +141,21 @@ CodePresenter >> whenBehaviorChangedDo: aBlock [
 	self 
 		property: #behavior 
 		whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+CodePresenter >> whenSyntaxHighlightChangedDo: aBlock [
+	"Set a block to perform when the syntax highlight is enabled/disabled"
+
+	self property: #syntaxHighlight whenChangedDo: aBlock
+]
+
+{ #category : #api }
+CodePresenter >> withSyntaxHighlight [
+	self syntaxHighlight: true
+]
+
+{ #category : #api }
+CodePresenter >> withoutSyntaxHighlight [
+	self syntaxHighlight: false
 ]

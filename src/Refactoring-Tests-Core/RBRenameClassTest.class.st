@@ -43,9 +43,9 @@ RBRenameClassTest >> testModelRenameClass [
 	self assert: (model includesClassNamed: #Thing).
 	self deny: (model includesClassNamed: #Object).
 	self 
-		assert: (class parseTreeFor: #foo) = (RBParser parseMethod: 'foo ^Thing').
+		assert: (class parseTreeFor: #foo) = (self parseMethod: 'foo ^Thing').
 	self assert: (class parseTreeFor: #objectName) 
-				= (RBParser parseMethod: 'objectName ^#(Thing)').
+				= (self parseMethod: 'objectName ^#(Thing)').
 	self assert: class superclass name = #Thing
 ]
 
@@ -71,9 +71,9 @@ RBRenameClassTest >> testModelRenameSequenceClass [
 	self deny: (model includesClassNamed: #Foo2).
 	self assert: (model includesClassNamed: #Foo3).
 	self assert: ((model classNamed: #Foo3) parseTreeFor: #foo) 
-		= (RBParser parseMethod: 'foo ^ Foo3').
+		= (self parseMethod: 'foo ^ Foo3').
 	self assert: ((model classNamed: #Foo3) parseTreeFor: #objectName) 
-		= (RBParser parseMethod: 'objectName ^ #(Foo3)')
+		= (self parseMethod: 'objectName ^ #(Foo3)')
 ]
 
 { #category : #tests }
@@ -85,7 +85,7 @@ RBRenameClassTest >> testRenameClass [
 	self executeRefactoring: refactoring.
 	self 
 		assert: ((refactoring model classNamed: ('RBNew' , 'ClassName') asSymbol) 
-				parseTreeFor: #method1) = (RBParser parseMethod: 'method1
+				parseTreeFor: #method1) = (self parseMethod: 'method1
 	^self method2').
 	self deny: (refactoring model 
 				includesClassNamed: ('RBClass' , 'ToRename') asSymbol).
@@ -94,10 +94,10 @@ RBRenameClassTest >> testRenameClass [
 	self assert: class superclass 
 				= (refactoring model classNamed: ('RBNew' , 'ClassName') asSymbol).
 	self assert: (class parseTreeFor: #symbolReference) 
-				= (RBParser parseMethod: 'symbolReference
+				= (self parseMethod: 'symbolReference
 								^#RBNewClassName').
 	self assert: (class parseTreeFor: #reference) 
-				= (RBParser parseMethod: 'reference
+				= (self parseMethod: 'reference
 								^RBNewClassName new')
 ]
 

@@ -78,24 +78,19 @@ RBAddMessageSendTransformation >> preconditions [
 
 { #category : #executing }
 RBAddMessageSendTransformation >> privateTransform [
-
-	| methodTree messageNode assignments variables  previousNode |
+	| methodTree messageNode assignments variables previousNode |
 	methodTree := self definingMethod.
-	messageNode := RBParser parseExpression: message.
+	messageNode := self parserClass parseExpression: message.
 
 	"if the message requires variables, look for the right variables in this context"
 	variables := messageNode allVariables.
-	assignments := ( methodTree allChildren 
-		select: #isAssignment )
+	assignments := (methodTree allChildren select: #isAssignment)
 		select: [ :each | variables includes: each variable ].
-		
 	previousNode := assignments detectMax: #stop.
-	
 	previousNode
 		ifNil: [ methodTree body addNodeFirst: messageNode ]
 		ifNotNil: [ previousNode parent addNode: messageNode after: previousNode ].
-	
-	class compileTree: methodTree.
+	class compileTree: methodTree
 ]
 
 { #category : #printing }

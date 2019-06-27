@@ -59,7 +59,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #('AST-Tests-Core' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
+	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
 	#'Athens-Morphic' 'Glamour-Morphic-Widgets' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout #'Tool-Catalog' 'ParametrizedTests') sorted
 ]
 
@@ -182,7 +182,7 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #('AST-Tests-Core' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
+	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
 	#'Athens-Morphic' #'Glamour-Morphic-Widgets' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
 ]
 

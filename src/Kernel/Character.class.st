@@ -70,6 +70,11 @@ Character class >> backspace [
 	^self value: 8
 ]
 
+{ #category : #'special characters' }
+Character class >> centeredDot [
+	^self codePoint: 183
+]
+
 { #category : #initialization }
 Character class >> characterSet [
 	^ CharSet ifNil: [ AsciiCharset ]
@@ -121,6 +126,11 @@ Character class >> cr [
 { #category : #'accessing untypeable characters' }
 Character class >> delete [
 	^ self value: 127
+]
+
+{ #category : #'special characters' }
+Character class >> devide [
+	^self codePoint: 247
 ]
 
 { #category : #'instance creation' }
@@ -252,6 +262,11 @@ Character class >> pageUp [
 	^ self value: 11
 ]
 
+{ #category : #'special characters' }
+Character class >> plusOrMinus [
+	^self codePoint: 177
+]
+
 { #category : #'instance creation' }
 Character class >> separators [
 	"Answer a collection of the standard ASCII separator characters as string."
@@ -271,6 +286,11 @@ Character class >> space [
 	^self value: 32
 ]
 
+{ #category : #'special characters' }
+Character class >> specialCharacters [
+	^'+-/\*~<>=@,%|&?!', {self centeredDot . self devide . self plusOrMinus . self times }
+]
+
 { #category : #queries }
 Character class >> supportsNonASCII [
 
@@ -283,6 +303,11 @@ Character class >> tab [
 	"Answer the Character representing a tab."
 
 	^self value: 9
+]
+
+{ #category : #'special characters' }
+Character class >> times [
+	^self codePoint: 215
 ]
 
 { #category : #'instance creation' }
@@ -470,7 +495,24 @@ Character >> hash [
 
 { #category : #printing }
 Character >> hex [
+	"Returns a string representation of the receiver as hex, prefixed with 16r.  
+	DO NOT CHANGE THIS!  The Cog VMMaker depends on this."
+	"$A hex >>> '16r41'"	
+			
 	^ self asInteger hex
+]
+
+{ #category : #accessing }
+Character >> hexDigitValue [
+	"Return the case independent hexadecimal digit value of the receiver.
+	$0 to: $9 will return 0 to 9, while $a to $f and $A to $F both will return 10 to 15.
+	If the receiver does not represent a hexadecimal digit, return nil.
+	Returns an integer between 0 and 15."
+	
+	| codePoint |
+	^ ((codePoint := self asInteger) between: 0 and: 127)
+		ifTrue: [ #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil) at: codePoint + 1 ]
+		ifFalse: [ nil ]
 ]
 
 { #category : #testing }
@@ -682,7 +724,8 @@ Character >> isSpacingCombiningMark [
 Character >> isSpecial [
 	"Answer whether the receiver is one of the special characters"
 
-	^'+-/\*~<>=@,%|&?!' includes: self
+	^ self class specialCharacters includes: self
+
 ]
 
 { #category : #testing }
@@ -735,6 +778,8 @@ Character >> printOn: aStream [
 
 { #category : #printing }
 Character >> printStringHex [
+	"$A printStringHex >>> '41'"
+
 	^ self asInteger printStringBase: 16
 ]
 

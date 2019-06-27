@@ -48,7 +48,7 @@ RFReification class >> key [
 	^self subclassResponsibility
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 RFReification >> entity: aRBMessageNode [ 
 	entity := aRBMessageNode
 ]
@@ -153,7 +153,7 @@ RFReification >> genForRBVariableNode [
 	^self genForRBProgramNode
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 RFReification >> link: anUndefinedObject [ 
 	link := anUndefinedObject
 ]

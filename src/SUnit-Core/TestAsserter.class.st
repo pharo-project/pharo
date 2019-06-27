@@ -87,6 +87,15 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber precision: epsilon 
 ]
 
 { #category : #asserting }
+TestAsserter >> assert: actualNumber closeTo: expectedNumber precision: margin [
+	"Tell whether the actualNumber and expectedNumber are close from each with a given margin"
+
+	^ self
+		assert: (actualNumber closeTo: expectedNumber precision: margin)
+		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
+]
+
+{ #category : #asserting }
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
 	"This method raises an AssertionFailure with aString as #messageText if
 	 aBooleanOrBlock evaluates to false.
@@ -328,6 +337,24 @@ TestAsserter >> deny: actualNumber closeTo: expectedNumber precision: epsilon [
 ]
 
 { #category : #asserting }
+TestAsserter >> deny: actualNumber closeTo: expectedNumber [
+	"Tell whether the actualNumber and expectedNumber are close from each with a margin of 0.0001"
+
+	^ self
+		deny:  (actualNumber closeTo: expectedNumber)
+		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
+]
+
+{ #category : #asserting }
+TestAsserter >> deny: actualNumber closeTo: expectedNumber precision: margin [
+	"Tell whether the actualNumber and expectedNumber are close from each with a given margin"
+
+	^ self
+		deny: (actualNumber closeTo: expectedNumber precision: margin)
+		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
+]
+
+{ #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock description: aString [
 	"This method raises an AssertionFailure with aString as #messageText if
 	 aBooleanOrBlock evaluates to true."
@@ -396,6 +423,15 @@ TestAsserter >> denyCollection: actualCollection includesAny: subcollection [
 	^ self
 		assert: (actualCollection includesAny: subcollection) not
 		description: [ actualCollection asString , ' includes one element of ' , subcollection asString ]
+]
+
+{ #category : #asserting }
+TestAsserter >> denyCollection: actual includesAll: subcollection [
+	"Specialized test method that generates a proper error message for collection"
+
+	^ self
+		deny: (actual includesAll: subcollection)
+		description: [ actual asString , ' does not include all in ' , subcollection asString ]
 ]
 
 { #category : #asserting }

@@ -61,8 +61,8 @@ RBMessageNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBMessageNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitMessageNode: self
+RBMessageNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitMessageNode: self
 ]
 
 { #category : #accessing }
@@ -117,23 +117,6 @@ RBMessageNode >> debugHighlightStart [
 RBMessageNode >> debugHighlightStop [
 
 	^ self stopWithoutParentheses
-]
-
-{ #category : #generation }
-RBMessageNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' receiver: ('.
-	self receiver dumpOn: aStream.
-	aStream nextPutAll: ') selector: '.
-	self selector printOn: aStream.
-	self arguments
-		ifNotEmpty: [ aStream nextPutAll: ' arguments: {'.
-			self arguments
-				do: [ :each | 
-					each dumpOn: aStream.
-					aStream nextPutAll: '. ' ].
-			aStream nextPut: $} ]
 ]
 
 { #category : #comparing }
@@ -416,6 +399,13 @@ RBMessageNode >> selector [
 RBMessageNode >> selector: aSelector [
 	keywordsPositions := nil.
 	selector := aSelector asSymbol.
+]
+
+{ #category : #accessing }
+RBMessageNode >> selectorInterval [
+	| positions |
+	positions := self keywordsIntervals. 
+	^positions first first to: positions last last.
 ]
 
 { #category : #accessing }

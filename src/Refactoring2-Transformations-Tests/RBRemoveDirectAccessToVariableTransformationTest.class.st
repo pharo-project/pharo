@@ -24,9 +24,9 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 	
 	class := (refactoring model classNamed: #RBRefactoryChangeManager) theMetaClass.
 	self assert: (class parseTreeFor: #initialize) 
-			equals: (RBParser parseMethod: 'initialize self nuke. self undoSize: 20').
+			equals: (self parseMethod: 'initialize self nuke. self undoSize: 20').
 	self assert: (class theNonMetaClass parseTreeFor: #addUndo:) 
-			equals: (RBParser parseMethod: 'addUndo: aRefactoringChange
+			equals: (self parseMethod: 'addUndo: aRefactoringChange
 				undo addLast: aRefactoringChange.
 				undo size > self class undoSize
 					ifTrue: [ undo removeFirst ].
@@ -89,7 +89,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testInstanceVariable [
 	
 	class := model classNamed: #Foo.
 	self assert: (class parseTreeFor: #foo) 
-			equals: (RBParser parseMethod: 'foo ^ self instVarName2: 3')
+			equals: (self parseMethod: 'foo ^ self instVarName2: 3')
 ]
 
 { #category : #testing }
@@ -128,13 +128,14 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 
 	class := refactoring model classNamed: #RBNamespace.
 	self assert: (class parseTreeFor: #includesGlobal:)
-		equals: (RBParser parseMethod: 'includesGlobal: aSymbol 
+		equals: (self parseMethod: 'includesGlobal: aSymbol 
 			(self hasRemoved: aSymbol) ifTrue: [^false].
 			(self includesClassNamed: aSymbol) ifTrue: [^true].
 			self environment at: aSymbol ifAbsent: [^false].
 			^ true').
 	self assert: (class parseTreeFor: #initialize) 
-		equals: (RBParser parseMethod: 'initialize
+		equals: (self parseMethod: 'initialize
+			super initialize.
 			changes := RBRefactoryChangeManager changeFactory compositeRefactoryChange.
 			self environment: RBBrowserEnvironment new.
 			newClasses := IdentityDictionary new.
@@ -155,7 +156,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testTransform [
 	
 	class := transformation model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #superSends)
-		  equals: (RBParser parseMethod: 
+		  equals: (self parseMethod: 
 	'superSends
 		| rule |
 		rule := RBParseTreeRewriter new.
@@ -169,7 +170,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testTransform [
 		self rewriteUsing: rule').
 	
 	self assert: (class parseTreeFor: #checkMethod:)
-		  equals: (RBParser parseMethod:
+		  equals: (self parseMethod:
 	'checkMethod: aSmalllintContext 
 		self class: aSmalllintContext selectedClass.
 		(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 

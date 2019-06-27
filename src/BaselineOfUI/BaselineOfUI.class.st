@@ -37,16 +37,17 @@ BaselineOfUI >> baseline: spec [
 
 		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [spec repository: repository].
+		spec baseline: 'Commander2' with: [spec repository: repository].
 		spec baseline: 'Spec' with: [spec repository: repository].
 
 		spec package: 'StartupPreferences'.
 	
-		"DebuggerActions depends on Fuel-Tools-Pharo"
+		"Debugger-Actions package depends on Fuel-Tools-Pharo"
 		spec package: 'Fuel-Tools-Pharo'.
 
-		spec package: 'DebuggerActions'.
-		spec package: 'DebuggerFilters'.
-		spec package: 'DebuggerModel'.
+		spec package: 'Debugger-Actions'.
+		spec package: 'Debugger-Filters'.
+		spec package: 'Debugger-Model'.
 
 		spec package: 'Fonts-Chooser'.
 

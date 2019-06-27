@@ -12,10 +12,11 @@ Class {
 	#name : #FFICallback,
 	#superclass : #Object,
 	#instVars : [
-		'callback',
-		'thunk',
+		'backendCallback',
 		'functionSpec',
-		'block'
+		'block',
+		'calloutAPIClass',
+		'library'
 	],
 	#category : #'UnifiedFFI-Callbacks'
 }
@@ -54,13 +55,14 @@ FFICallback class >> forAddress: address [
 		Of course, the callback needs to exist before :)
 		And the callback needs to be created with FFICallback (not plain Alien callbacks), then 
 		we can be sure block in fact contains the FFICallback instance"
-	^ (Callback forAddress: address) evaluator
+	^ (Callback forAddress: address) evaluator frontendCallback
 ]
 
 { #category : #'private primitives' }
 FFICallback class >> primQsort: array with: count with: size with: compare [
 	self
-		ffiCall: #(void qsort (FFIExternalArray array, size_t count, size_t size, FFICallback compare)) 		module: LibC
+		ffiCall: #(void qsort (FFIExternalArray array, size_t count, size_t size, FFICallback compare)) 
+		module: LibC
 ]
 
 { #category : #'instance creation' }
@@ -68,27 +70,28 @@ FFICallback class >> signature: aSignature block: aBlock [
 	^ self new signature: aSignature block: aBlock
 ]
 
-{ #category : #evaluation }
-FFICallback >> argumentsFor: stackPointer context: callbackContext [
+{ #category : #accessing }
+FFICallback >> backendCallback [
+	"declare the backend callback"
+	^ backendCallback ifNil: [ backendCallback := self calloutAPIClass newCallbackBackendFor: self ].
 
-	| callbackArgumentReader | 
-	
-	callbackArgumentReader := FFIArchitecture forCurrentArchitecture newCallbackArgumentReaderForCallback: self inContext: callbackContext.
-
-	callbackArgumentReader extractArguments.
-	
-	self assert: functionSpec arguments size = callbackArgumentReader arguments size.
-
-	^ callbackArgumentReader arguments.
 ]
 
-{ #category : #evaluation }
-FFICallback >> executeWithArguments: argumentValues [
-	
-	^ [ block valueWithArguments: argumentValues ]
-		on: Error 
-		fork: [ :e | e pass ]
-		return: [ self returnOnError ]
+{ #category : #accessing }
+FFICallback >> beNull [
+
+	self backendCallback beNull
+]
+
+{ #category : #accessing }
+FFICallback >> calloutAPIClass [
+
+	^ calloutAPIClass ifNil: [ super calloutAPIClass ]
+]
+
+{ #category : #accessing }
+FFICallback >> calloutAPIClass: anObject [
+	calloutAPIClass := anObject
 ]
 
 { #category : #private }
@@ -106,8 +109,25 @@ FFICallback >> ffiInstVarArgument: argName generator: generator [
 ]
 
 { #category : #accessing }
+FFICallback >> ffiLibrary: aFFILibrary [
+
+	library := aFFILibrary
+]
+
+{ #category : #accessing }
+FFICallback >> ffiLibraryName [
+
+	^ (library ifNil: [ 'default' ]) asFFILibrary
+]
+
+{ #category : #accessing }
 FFICallback >> functionSpec [
 	^ functionSpec
+]
+
+{ #category : #accessing }
+FFICallback >> getHandle [
+	^ self thunk
 ]
 
 { #category : #private }
@@ -123,29 +143,30 @@ FFICallback >> newParser [
 FFICallback >> returnOnError [
 
 	^ functionSpec returnType defaultReturnOnError
+
 ]
 
 { #category : #initialization }
-FFICallback >> signature: signature "<String>" block: aBlock [ "<BlockClosure>"
+FFICallback >> signature: signature block: aBlock [
 	functionSpec := self newParser parseAnonymousFunction: signature.
 	block := aBlock.
-	"declare the real callback"
-	callback := Callback forCallbackEvaluator: self.
-	"keeping the thunk here to easy the FFI method compilation"
-	thunk := callback thunk.
+
 ]
 
 { #category : #accessing }
 FFICallback >> thunk [
-	^ thunk
+
+	(block isNil or: [functionSpec isNil])
+		ifTrue: [ ^ ExternalAddress null ].
+
+	^ self backendCallback thunk
 ]
 
-{ #category : #evaluation }
-FFICallback >> valueWithContext: callbackContext sp: stackPointer [
-	| argumentValues |
+{ #category : #evaluating }
+FFICallback >> valueWithArguments: args [
 
-	argumentValues := self argumentsFor: stackPointer context: callbackContext.
-	^ functionSpec returnType 
-		callbackReturnOn: callbackContext 
-		for: (self executeWithArguments: argumentValues)
+	^ [ block valueWithArguments: args ]
+		on: Error 
+		fork: [ :e | e debug ]
+		return: [ self returnOnError ]
 ]

@@ -8,9 +8,9 @@ Class {
 	#traits : 'TSpecObservable',
 	#classTraits : 'TSpecObservable classTrait',
 	#instVars : [
-		'owner',
-		'adapter',
-		'needRebuild'
+		'#owner',
+		'#adapter',
+		'#needRebuild => SpecObservableSlot'
 	],
 	#category : #'Spec-Core-Base'
 }
@@ -171,8 +171,9 @@ Presenter >> hasWindow [
 { #category : #initialization }
 Presenter >> initialize [ 
 
+	self class initializeSlots: self.
 	super initialize.
-	needRebuild := true asValueHolder
+	needRebuild := true
 ]
 
 { #category : #initialization }
@@ -219,13 +220,13 @@ Presenter >> isWindowPresenter [
 { #category : #accessing }
 Presenter >> needRebuild [
 
-	^ needRebuild value
+	^ needRebuild
 ]
 
 { #category : #accessing }
 Presenter >> needRebuild: aBoolean [
 
-	needRebuild value: aBoolean
+	needRebuild := aBoolean
 ]
 
 { #category : #showing }
@@ -355,33 +356,6 @@ Presenter >> spec: anAdapter [
 	
 	self flag: #TODO. "Same as #spec, it needs to go"
 	self adapter: anAdapter
-]
-
-{ #category : #'accessing ports' }
-Presenter >> transmitTo: aPresenter [		
-	
-	^ self owner transmit 
-		from: self to: aPresenter;
-		yourself
-]
-
-{ #category : #'accessing ports' }
-Presenter >> transmitTo: aPresenter transform: aValuable [
-	
-	^ self owner transmit 
-		from: self to: aPresenter;
-		transform: aValuable;
-		yourself
-]
-
-{ #category : #'accessing ports' }
-Presenter >> transmitTo: aPresenter transform: aValuable postTransmission: postValuable [
-	
-	^ self owner transmit 
-		from: self to: aPresenter;
-		transform: aValuable;
-		postTransmission: postValuable;
-		yourself
 ]
 
 { #category : #updating }

@@ -29,12 +29,6 @@ SystemNavigationTest >> createClassFactory [
 	^ ClassFactoryWithOrganization newWithOrganization: self organizationToTest
 ]
 
-{ #category : #utilities }
-SystemNavigationTest >> createMethodNamed: selector realParent: class [
-
-	^ RGMethodDefinition realClass: class selector: selector
-]
-
 { #category : #'setUp-tearDown' }
 SystemNavigationTest >> createSystemNavigationToTest [
 	^SystemNavigation new
@@ -180,17 +174,4 @@ SystemNavigationTest >> testIsUnsentMessage [
 	class := self classFactory newClass.
 	class compileSilently: 'messageNeverSentInTheSystemXXXXThisIsForTest ^self'.
 	self assert: (self systemNavigationToTest isUnsentMessage: class selectors anyOne)
-]
-
-{ #category : #testing }
-SystemNavigationTest >> testRetrievingCategoriesInAPackage [
-	| retrievedCategories |
-	#(#CategoryForTest #'CategoryForTest-Core' #'CategoryForTest-Tests' #CategoryForTest #ForTestCategory #'ForTestCategory-Core') do: [ :catName | self classFactory newClassInCategory: catName ].
-
-	retrievedCategories := self systemNavigationToTest categoriesInPackageNamed: 'CategoryForTest'.
-	self assert: (retrievedCategories includesAll: #(#CategoryForTest #'CategoryForTest-Core' #'CategoryForTest-Tests')).
-	retrievedCategories := self systemNavigationToTest categoriesInPackageNamed: 'CategoryForTest-Core'.
-	self assert: (retrievedCategories includesAll: #(#'CategoryForTest-Core')).
-	retrievedCategories := self systemNavigationToTest categoriesInPackageNamed: 'CategoryFor'.
-	self assertEmpty: retrievedCategories
 ]

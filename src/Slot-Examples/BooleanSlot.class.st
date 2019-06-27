@@ -24,7 +24,7 @@ BooleanSlot >> baseSlotRead: anObject [
 BooleanSlot >> emitStore: methodBuilder [
 	"generate bytecode for 'baseSlot bitAt: index put: <stackTop>'"
 	| tempName |
-	tempName := Object new.  "we need a unique Object as a temp name"
+	tempName := '0slotTempForStackManipulation'.
 	methodBuilder
 		send: #asBit;
 		addTemp: tempName;

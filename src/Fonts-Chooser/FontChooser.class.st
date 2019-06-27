@@ -37,7 +37,7 @@ FontChooser class >> openWithWindowTitle: titleString for: anObject setSelector:
 	world := self currentWorld.
 	(windowMorph := FontChooserMorph withModel: instance)
 		"position: self currentWorld primaryHand position;"
-		position: ((World width-640)/2)@((World height-480)/2);
+		position: ((self currentWorld width-640)/2)@((self currentWorld height-480)/2);
 		extent: 640@480;
 		open.
 	^windowMorph

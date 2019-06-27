@@ -11,6 +11,6 @@ Class {
 WikiStyleHelpTest >> testOpenBrowserOnThisHelpType [
 	| browser |
 	browser := HelpBrowser openOn: WikiStyleHelp.
-	World doOneCycleNow.
+	self currentWorld doOneCycleNow.
 	browser close
 ]

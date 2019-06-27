@@ -4,7 +4,7 @@ Extension { #name : #PasteUpMorph }
 PasteUpMorph >> fitAllVisibleWindows [
 	"Fit all windows as visible"
 	|allowedArea|
-	allowedArea := RealEstateAgent maximumUsableAreaInWorld: World.
+	allowedArea := RealEstateAgent maximumUsableAreaInWorld: self currentWorld.
 	(self  windowsSatisfying: [:w | w isCollapsed not])
 		reverseDo:[:w | 
 			w extent: w initialExtent.  

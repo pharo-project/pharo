@@ -9,9 +9,10 @@ Behavior >> allCallsOn [
 
 { #category : #'*System-Support' }
 Behavior >> allCallsOn: aSymbol [
-	"Answer a SortedCollection of all the methods that call on aSymbol."
+	"Answer of all the methods that call on aSymbol."
 
-	^ self  systemNavigation allCallsOn: aSymbol from: self .
+	^self withAllSubclasses flatCollect: [ :cls | 
+		(cls whichSelectorsReferTo: aSymbol) collect: [:sel | cls>>sel]]
 	
 ]
 

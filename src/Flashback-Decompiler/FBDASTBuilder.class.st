@@ -123,7 +123,7 @@ FBDASTBuilder >> codeMethod: selector arguments: args body: body pragmas: pragma
 
 { #category : #building }
 FBDASTBuilder >> codeReceiver [
-	^ (RBSelfNode named: 'self')
+	^ RBSelfNode new
 ]
 
 { #category : #building }
@@ -143,7 +143,7 @@ FBDASTBuilder >> codeReturn: value [
 
 { #category : #building }
 FBDASTBuilder >> codeSelf [
-	^ (RBSelfNode named: 'self')
+	^ RBSelfNode new
 ]
 
 { #category : #building }
@@ -153,7 +153,7 @@ FBDASTBuilder >> codeSequence: temps [
 
 { #category : #building }
 FBDASTBuilder >> codeSuper [
-	^ (RBSuperNode named: 'super')
+	^ RBSuperNode new
 ]
 
 { #category : #building }
@@ -163,7 +163,7 @@ FBDASTBuilder >> codeTemp: tempName [
 
 { #category : #building }
 FBDASTBuilder >> codeThisContext [
-	^ RBThisContextNode named: 'thisContext'
+	^ RBThisContextNode new
 ]
 
 { #category : #building }

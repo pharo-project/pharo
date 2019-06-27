@@ -87,7 +87,7 @@ UITheme class >> current: aUITheme [
 		balloonMorph setBalloonColorTo: aUITheme balloonBackgroundColor ].
 
 	aUITheme updateWorldDockingBars.
-	World themeChanged.
+	self currentWorld themeChanged.
 	(SystemWindow allSubInstances select:[:e | e owner isNil]) do:#themeChanged.
 ]
 
@@ -348,7 +348,7 @@ UITheme >> borderColor [
 
 { #category : #accessing }
 UITheme >> borderWidth [
-	^ 1 * World displayScaleFactor
+	^ 1 * self currentWorld displayScaleFactor
 ]
 
 { #category : #accessing }
@@ -523,7 +523,7 @@ UITheme >> buttonMiddleRightForm [
 UITheme >> buttonMinHeight [
 	"Answer the minumum height of a button for this theme."
 	
-	^ 18 * World displayScaleFactor
+	^ 18 * self currentWorld displayScaleFactor
 ]
 
 { #category : #defaults }
@@ -817,8 +817,8 @@ UITheme >> centeredAlertIn: aThemedMorph text: aStringOrText title: aString conf
 		title: aString;
 		text: aStringOrText.
 	aBlock value: dialog.
-	dialog left: ((World width / 2) - (dialog width /2)).
-	dialog top: ((World height / 2) - (dialog height /2)).
+	dialog left: ((self currentWorld width / 2) - (dialog width /2)).
+	dialog top: ((self currentWorld height / 2) - (dialog height /2)).
 	aThemedMorph openModal: dialog.
 	^ dialog cancelled not
 ]
@@ -5012,7 +5012,7 @@ UITheme >> scrollbarMinimumThumbThickness [
 	"Answer the minumum width or height of a scrollbar thumb 
 	as appropriate to its orientation."
 	
-	^15 * World displayScaleFactor
+	^15 * self currentWorld displayScaleFactor
 ]
 
 { #category : #'border-styles-scrollbars' }
@@ -5239,7 +5239,7 @@ UITheme >> scrollbarThickness [
 	"Answer the width or height of a scrollbar as appropriate to
 	its orientation."
 	
-	^13 * World displayScaleFactor
+	^13 * self currentWorld displayScaleFactor
 ]
 
 { #category : #'fill-styles' }
@@ -5934,7 +5934,7 @@ UITheme >> updateScrollBarButtonsAspect: aCollection color: aColor [
 UITheme >> updateWorldDockingBars [
 	"Update the world docking bar gradients."
 	
-	World mainDockingBars do: [:d |
+	self currentWorld mainDockingBars do: [:d |
 		d
 			color: (self worldMainDockingBarColorFor: d);
 			gradientRamp: (self class current
@@ -6095,7 +6095,7 @@ UITheme >> windowActiveTitleFillStyleFor: aWindow [
 { #category : #defaults }
 UITheme >> windowBorderWidthFor: aWindow [
 
-	^ 4 * World displayScaleFactor
+	^ 4 * self currentWorld displayScaleFactor
 ]
 
 { #category : #defaults }

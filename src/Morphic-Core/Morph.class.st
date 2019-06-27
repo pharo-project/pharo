@@ -2188,7 +2188,7 @@ Morph >> displayExtentChanged [
 { #category : #settings }
 Morph >> displayScaleFactor [
 
-	^ World displayScaleFactor
+	^ self currentWorld displayScaleFactor
 ]
 
 { #category : #announcements }
@@ -3156,12 +3156,14 @@ Morph >> handlesMouseDown: evt [
 
 { #category : #'events-processing' }
 Morph >> handlesMouseMove: anEvent [
-	"Rules say that by default a morph gets #mouseMove iff
+	"Rules say that by default a morph gets #mouseMove if
 		* the hand is not dragging anything,
 			+ and some button is down,
 			+ and the receiver is the current mouse focus."
 			
-	"self eventHandler ifNotNil: [:handler | ^handler handlesMouseMove: anEvent ]."
+	self eventHandler ifNotNil: [ :handler | 
+		(handler handlesMouseMove: anEvent) ifTrue: [ 
+			^ true ] ].
 				
 	^anEvent hand submorphs isEmpty and: [ 	 
 		(anEvent anyButtonPressed and:[
@@ -4577,7 +4579,7 @@ Morph >> outermostOwnerWithYellowButtonMenu [
 { #category : #structure }
 Morph >> outermostWorldMorph [
 
-	^self world ifNil: [ World ].
+	^self world ifNil: [ self currentWorld ].
 ]
 
 { #category : #geometry }
@@ -4768,14 +4770,14 @@ Morph >> preferredDuplicationHandleSelector [
 { #category : #'event handling' }
 Morph >> preferredKeyboardBounds [
 
-	^ self bounds: self bounds in: World.
+	^ self bounds: self bounds in: self currentWorld.
 
 ]
 
 { #category : #'event handling' }
 Morph >> preferredKeyboardPosition [
 
-	^ (self bounds: self bounds in: World) topLeft.
+	^ (self bounds: self bounds in: self currentWorld) topLeft.
 
 ]
 

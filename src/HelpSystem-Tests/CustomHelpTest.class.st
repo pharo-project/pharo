@@ -12,6 +12,6 @@ Class {
 CustomHelpTest >> testOpenBrowserOnThisHelpType [
 	| browser |
 	browser := HelpBrowser openOn: CustomHelp.
-	World doOneCycleNow.
+	self currentWorld doOneCycleNow.
 	browser close
 ]

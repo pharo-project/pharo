@@ -15,7 +15,8 @@ MorphicMenuBarAdapter >> adoptMenuGroupModel: aGroupModel first: aBoolean [
 			addMorphBack: (self theme newToolSpacerIn: widget) ].
 			
 	controls := OrderedCollection new.
-	aGroupModel menuItems do: [ :item | self adoptMenuItemModel: item accumulator: controls ].
+	aGroupModel menuItems do: [ :item | 
+		self adoptMenuItemModel: item accumulator: controls ].
 	
 	self emptyAccumulator: controls
 ]
@@ -41,6 +42,7 @@ MorphicMenuBarAdapter >> adoptMenuItemModel: item accumulator: controls [
 
 { #category : #private }
 MorphicMenuBarAdapter >> buildButtonFor: item [
+
 	^ self theme
 		newButtonIn: widget
 		for: item
@@ -59,13 +61,15 @@ MorphicMenuBarAdapter >> buildWidget [
 		vResizing: #spaceFill;
 		yourself.
 
-	self menuGroups doWithIndex: [ :aGroup :index | self adoptMenuGroupModel: aGroup first: index = 1 ].
+	self menuGroups doWithIndex: [ :aGroup :index | 
+		self adoptMenuGroupModel: aGroup first: index = 1 ].
 
 	^ widget
 ]
 
 { #category : #private }
 MorphicMenuBarAdapter >> emptyAccumulator: controls [
+
 	controls do: [ :button | widget addMorphBack: button ].
 	controls removeAll
 ]

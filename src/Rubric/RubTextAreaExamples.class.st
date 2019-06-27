@@ -178,7 +178,7 @@ RubTextAreaExamples class >> presentationInput [
 						shortcut: Character tab shift
 						action: [ RubEditingArea new
 								beWrapped;
-								width: World width / 3;
+								width: self currentWorld width / 3;
 								updateTextWith: '';
 								takeKeyboardFocus;
 								backgroundColor: Color black;

@@ -55,7 +55,7 @@ RBVariableTypeTest >> testParseTreeTypes [
 	model := RBClassModelFactory rbNamespace new.
 	types := RBRefactoryTyper 
 				typesFor: 'foo'
-				in: (RBParser 
+				in: (self 
 						parseExpression: 'foo printString; testBasicLintRuleTypes; testParseTreeTypes')
 				model: model.
 	self assert: types size = 1.

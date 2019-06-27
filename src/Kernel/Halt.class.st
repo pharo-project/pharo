@@ -214,10 +214,25 @@ Halt class >> resetOnce [
 			sendNode removeProperty: #Once ifAbsent: [  ]]]
 ]
 
+{ #category : #private }
+Halt >> completeProcess: aProcess with: aContext [
+	^ aContext methodNode
+		pragmaNamed: #debuggerCompleteToSender
+		ifPresent: [ aProcess completeTo: aContext sender ]
+		ifAbsent: [ super completeProcess: aProcess with: aContext ]
+]
+
 { #category : #'priv handling' }
 Halt >> defaultAction [
 	"No one has handled this error, but now give them a chance to decide how to debug it.  If none handle this either then open debugger (see UnhandedError-defaultAction)"
 
 	^ UIManager default unhandledErrorDefaultAction: self
 	"^ UnhandledError signalForException: self" 
+]
+
+{ #category : #private }
+Halt >> exception [
+	"In the context management, it might happen that we get an Halt instead of an UnhandledError. The context will ask the exception. In case we have an halt, we should return self."
+
+	^ self
 ]

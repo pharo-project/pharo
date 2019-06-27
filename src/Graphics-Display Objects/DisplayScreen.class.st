@@ -14,7 +14,6 @@ Class {
 	#name : #DisplayScreen,
 	#superclass : #Form,
 	#instVars : [
-		'clippingBox',
 		'extraRegions'
 	],
 	#classVars : [
@@ -36,6 +35,10 @@ DisplayScreen class >> actualScreenDepth [
 { #category : #accessing }
 DisplayScreen class >> actualScreenSize [
 	"Delegates to active world because it can be something else than the one provided by the VM"
+	
+	"The method should be modified to use currentWorld, but the dependency is not possible.
+	We have to remodularize it."
+	self flag: #todo.
 	
 	ActiveWorld ifNil: [ ^ 0@0 ].
 	^ ActiveWorld actualScreenSize
@@ -209,53 +212,9 @@ DisplayScreen >> beDisplay [
 
 { #category : #other }
 DisplayScreen >> boundingBox [
-	clippingBox == nil
-		ifTrue: [clippingBox := super boundingBox].
-	^ clippingBox
-]
 
-{ #category : #other }
-DisplayScreen >> clippingTo: aRect do: aBlock [ 
-	"Display clippingTo: Rectangle fromUser do:"
-	| saveClip |
-	saveClip := clippingBox.
-	clippingBox := aRect.
-	aBlock value.
-	clippingBox := saveClip
-]
-
-{ #category : #displaying }
-DisplayScreen >> copyBits: rect from: sf at: destOrigin clippingBox: clipRect rule: cr fillColor: hf [ 
-	(BitBlt
-		destForm: self
-		sourceForm: sf
-		fillColor: hf
-		combinationRule: cr
-		destOrigin: destOrigin
-		sourceOrigin: rect origin
-		extent: rect extent
-		clipRect: (clipRect intersect: clippingBox ifNone: [ ^ self ])) copyBits
-]
-
-{ #category : #displaying }
-DisplayScreen >> copyBits: rect from: sf at: destOrigin clippingBox: clipRect rule: cr fillColor: hf map: map [
-	((BitBlt
-		destForm: self
-		sourceForm: sf
-		fillColor: hf
-		combinationRule: cr
-		destOrigin: destOrigin
-		sourceOrigin: rect origin
-		extent: rect extent
-		clipRect: (clipRect intersect: clippingBox ifNone: [ ^ self ] )) colorMap: map) copyBits
-]
-
-{ #category : #private }
-DisplayScreen >> copyFrom: aForm [
-	"Take on all state of aForm, with complete sharing"
-
-	super copyFrom: aForm.
-	clippingBox := super boundingBox
+	ActiveWorld ifNil: [ ^ 0@0 corner: 0@0 ].
+	^ ActiveWorld bounds
 ]
 
 { #category : #deferring }
@@ -398,8 +357,8 @@ DisplayScreen >> fullBoundingBox [
 DisplayScreen >> fullscreen [
 	"Display fullscreen"
 
-	ScreenSave notNil ifTrue: [Display := ScreenSave].
-	clippingBox := super boundingBox
+	ScreenSave ifNil: [ ^ self ].
+	Display := ScreenSave
 ]
 
 { #category : #'screen managing' }
@@ -535,18 +494,23 @@ DisplayScreen >> setExtent: aPoint depth: bitsPerPixel [  "DisplayScreen startUp
 	"RAA 27 Nov 99 - if depth and extent are the same and acceptable, why go through this.
 	also - record when we change so worlds can tell if it is time to repaint"
 
-	(depth == bitsPerPixel and: [aPoint = self extent and: 
-					[self supportsDisplayDepth: bitsPerPixel]]) ifFalse: [
-		bits := nil.  "Free up old bitmap in case space is low"
-		DisplayChangeSignature := (DisplayChangeSignature ifNil: [0]) + 1.
-		(self supportsDisplayDepth: bitsPerPixel)
-			ifTrue:[super setExtent: aPoint depth: bitsPerPixel]
-			ifFalse:[(self supportsDisplayDepth: bitsPerPixel negated)
-				ifTrue:[super setExtent: aPoint depth: bitsPerPixel negated]
-				ifFalse:["Search for a suitable depth"
-					super setExtent: aPoint depth: self findAnyDisplayDepth]].
-	].
-	clippingBox := super boundingBox
+	(depth == bitsPerPixel 
+		and: [ aPoint = self extent 
+		and: [ self supportsDisplayDepth: bitsPerPixel ] ]) 
+		ifTrue: [ ^ self ].
+	
+	bits := nil.  "Free up old bitmap in case space is low"
+	DisplayChangeSignature := (DisplayChangeSignature ifNil: [ 0 ]) + 1.
+	(self supportsDisplayDepth: bitsPerPixel)
+		ifTrue:[ 
+			super setExtent: aPoint depth: bitsPerPixel ]
+		ifFalse:[ 
+			(self supportsDisplayDepth: bitsPerPixel negated)
+				ifTrue:[ 
+					super setExtent: aPoint depth: bitsPerPixel negated ]
+				ifFalse:[ 
+					"Search for a suitable depth"
+					super setExtent: aPoint depth: self findAnyDisplayDepth ] ]
 ]
 
 { #category : #initialization }

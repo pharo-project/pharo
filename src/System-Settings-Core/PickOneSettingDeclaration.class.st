@@ -49,9 +49,9 @@ PickOneSettingDeclaration >> index: anInteger [
 { #category : #'user interface' }
 PickOneSettingDeclaration >> inputWidget [
 	| widget row |
-	row := self theme newRowIn: World for: {
+	row := self theme newRowIn: self currentWorld for: {
 				widget := (self theme 
-						newDropListIn: World
+						newDropListIn: self currentWorld
 						for: self
 						list: #domainValuesLabels
 						getSelected: #index

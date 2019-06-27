@@ -100,8 +100,6 @@ Class {
 		'#aboutText',
 		'#askOkToClose',
 		'#titleHolder',
-		'#inputPorts',
-		'#outputPorts',
 		'#transmissions',
 		'#additionalSubpresentersMap',
 		'#visible => SpecObservableSlot'
@@ -195,16 +193,17 @@ ComposablePresenter class >> title [
 	^ 'Untitled window'
 ]
 
-{ #category : #'api-window' }
+{ #category : #TOREMOVE }
 ComposablePresenter >> aboutText [
+	"DO NOT USE
+	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	From now on, if you want to interact with a window you need to:
+	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
+	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
+	
+	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 
-	^ aboutText value ifNil: [ aboutText value: 'The about text for this window has not been set.'; value]
-]
-
-{ #category : #'api-window' }
-ComposablePresenter >> aboutText: aString [
-
-	aboutText value: aString
+	^ aboutText value
 ]
 
 { #category : #private }
@@ -223,30 +222,16 @@ ComposablePresenter >> addAll: aWindow withSpecLayout: aSpec [
 		frame: (0@0 corner: 1@1).
 ]
 
-{ #category : #'private-ports' }
-ComposablePresenter >> addInputPort: aPort [
-
-	aPort presenter: self.
-	inputPorts ifNil: [ inputPorts := #() ].
-	inputPorts := inputPorts copyWith: aPort
-]
-
 { #category : #'window menu' }
 ComposablePresenter >> addMenuItemsToWindowMenu: aMenu [
 	"Do nothing"
 ]
 
-{ #category : #'private-ports' }
-ComposablePresenter >> addOutputPort: aPort [
-
-	aPort presenter: self.
-	outputPorts ifNil: [ outputPorts := #() ].
-	outputPorts := outputPorts copyWith: aPort
-]
-
 { #category : #'api-shortcuts' }
 ComposablePresenter >> additionalKeyBindings [
 
+	self flag: #TODO. "Think is... not all presenters can have keybindings. Why are we
+	putting this functionality here and not in a trait?"
 	^ additionalKeyBindings
 ]
 
@@ -301,7 +286,10 @@ ComposablePresenter >> applyMenuModel: aMenuModel [
 
 	aMenuModel menuGroups do: [ :group |
 		group menuItems do: [ :item |
-			item shortcut ifNotNil: [ :shortcut | self bindMenuKeyCombination: shortcut toAction: [ item performMenuActionWith: {} ] ].
+			item shortcut ifNotNil: [ :shortcut | 
+				self 
+					bindKeyCombination: shortcut 
+					toAction: [ item performMenuActionWith: #() ] ].
 			item subMenu ifNotNil: [ :subMenu | subMenu applyTo: self	] ] ]
 ]
 
@@ -311,33 +299,26 @@ ComposablePresenter >> asPresenter [
 	^ self
 ]
 
-{ #category : #'api-window' }
+{ #category : #TOREMOVE }
 ComposablePresenter >> askOkToClose [
 
+	"DO NOT USE
+	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	From now on, if you want to interact with a window you need to:
+	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
+	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
+	
+	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 	^ askOkToClose value
-]
-
-{ #category : #'api-window' }
-ComposablePresenter >> askOkToClose: aBoolean [
-	self flag: #TODO. "Move this to WindowPresenter (it should be added in 
-	#initializeWindow:"
-	askOkToClose value: aBoolean
 ]
 
 { #category : #'api-shortcuts' }
 ComposablePresenter >> bindKeyCombination: aShortcut toAction: aBlock [
 
-	self additionalKeyBindings at: aShortcut put: aBlock.
-	
-	self changed: #bindKeyCombination:toAction: with: {aShortcut . aBlock}
-]
-
-{ #category : #'api-shortcuts' }
-ComposablePresenter >> bindMenuKeyCombination: aShortcut toAction: aBlock [
-
-	self additionalKeyBindings at: aShortcut put: aBlock.
-	
-	self changed: #bindMenuKeyCombination:toAction: with: {aShortcut . aBlock}
+	additionalKeyBindings ifNil: [ additionalKeyBindings := Dictionary new ].
+	additionalKeyBindings at: aShortcut put: aBlock.
+	self withAdapterDo: [ :anAdapter | 
+		anAdapter bindKeyCombination: aShortcut toAction: aBlock ]
 ]
 
 { #category : #'api-window' }
@@ -513,32 +494,31 @@ ComposablePresenter >> iconNamed: aSymbol [
 	^ self class iconNamed: aSymbol
 ]
 
-{ #category : #'api-window' }
+{ #category : #TOREMOVE }
 ComposablePresenter >> initialExtent [
-
+	
+	"DO NOT USE
+	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	From now on, if you want to interact with a window you need to:
+	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
+	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
+	
+	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 	^ nil
 ]
 
 { #category : #initialization }
 ComposablePresenter >> initialize [
-	self class initializeSlots: self.
+
 	super initialize.
 
-	additionalSubpresentersMap := nil.
 	visible := true.
+	additionalSubpresentersMap := nil.
 
-	self initializePorts.
 	self initializePrivateAnnouncer.
 	self initializePrivateValueHolders.
 	self initializePrivateHooks.
-	self initializePrivateAnnouncements.
-]
-
-{ #category : #initialization }
-ComposablePresenter >> initializePorts [
-	
-	"By default, all presenters can receive a change model transmission"
-	self addInputPort: ModelPresenterPort new
+	self initializePrivateAnnouncements
 ]
 
 { #category : #initialization }
@@ -583,7 +563,6 @@ ComposablePresenter >> initializePrivateValueHolders [
 	extentHolder := nil asValueHolder.
 	keyStrokesForNextFocusHolder := { KMNoShortcut new } asValueHolder.
 	keyStrokesForPreviousFocusHolder := { KMNoShortcut new } asValueHolder.
-	additionalKeyBindings := Dictionary new.
 	aboutText := nil asValueHolder.
 	windowIcon := nil asValueHolder.
 	askOkToClose := false asValueHolder.
@@ -602,33 +581,17 @@ ComposablePresenter >> initializeWidgets [
 ComposablePresenter >> initializeWindow: aWindowPresenter [
 	"override this to set window values before opening. 
 	 You may want to add a menu, a toolbar or a statusbar"
-	
-	aWindowPresenter 
+
+	"IMPORTANT: Please ovirride this method and set yourself the informations you want in your window.
+	The content of this method is here to help the transition between Spec 1 and 2.
+	In the next Spec version the content of this method will be removed and it will do nothing by default because the goal is to remove the management of all of those informations from Composable to put them in WindowPresenter."
+
+	aWindowPresenter
 		title: self title;
 		initialExtent: self initialExtent;
 		windowIcon: self windowIcon;
 		askOkToClose: self askOkToClose;
 		aboutText: self aboutText
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> inputPortDefault [
-
-	"first input port will be default. 
-	 this may be bad design and probably needs to be revisited later"
-	^ self inputPorts first
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> inputPortNamed: aSymbol [
-
-	^ self inputPorts detect: [ :each | each name = aSymbol ]
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> inputPorts [
-
-	^ inputPorts
 ]
 
 { #category : #'instance creation' }
@@ -710,7 +673,7 @@ ComposablePresenter >> neglectMenuModel: aMenuModel [
 
 	aMenuModel menuGroups do: [ :group |
 		group menuItems do: [ :item |
-			item shortcut ifNotNil: [ :shortcut | self removeMenuKeyCombination: shortcut ].
+			item shortcut ifNotNil: [ :shortcut | self removeKeyCombination: shortcut ].
 			item subMenu ifNotNil: [ :subMenu | subMenu neglect: self	] ] ]
 ]
 
@@ -852,7 +815,7 @@ ComposablePresenter >> newTextInput [
 ]
 
 { #category : #widgets }
-ComposablePresenter >> newToolbarPresenter [
+ComposablePresenter >> newToolBar [
 
 	^ self instantiate: ToolBarPresenter
 ]
@@ -871,12 +834,6 @@ ComposablePresenter >> okToChange [
 		ifFalse: [ true ] 
 ]
 
-{ #category : #'api-shortcuts' }
-ComposablePresenter >> on: aShortcut do: aBlock [
-
-	self bindKeyCombination: aShortcut toAction: aBlock
-]
-
 { #category : #'api-announcements' }
 ComposablePresenter >> on: anAnnouncement send: aSelector to: aTarget [
 
@@ -884,26 +841,6 @@ ComposablePresenter >> on: anAnnouncement send: aSelector to: aTarget [
 		when: anAnnouncement 
 		send: aSelector 
 		to: aTarget
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> outputPortDefault [
-
-	"first output port will be default. 
-	 this may be bad design and probably needs to be revisited later"
-	^ self outputPorts first
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> outputPortNamed: aSymbol [
-
-	^ self outputPorts detect: [ :each | each name = aSymbol ]
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> outputPorts [
-
-	^ outputPorts
 ]
 
 { #category : #accessing }
@@ -965,16 +902,8 @@ ComposablePresenter >> registerKeyStrokesForPreviousFor: aWidget [
 ComposablePresenter >> removeKeyCombination: aShortcut [
 
 	self additionalKeyBindings removeKey: aShortcut ifAbsent: [ ^ self ].
-	
-	self changed: #removeKeyCombination: with: {aShortcut}
-]
-
-{ #category : #'api-shortcuts' }
-ComposablePresenter >> removeMenuKeyCombination: aShortcut [
-
-	self additionalKeyBindings removeKey: aShortcut ifAbsent: [ ^ self ].
-	
-	self changed: #removeMenuKeyCombination: with: {aShortcut}
+	self withAdapterDo: [ :anAdapter | 
+		anAdapter removeKeyCombination: aShortcut ]
 ]
 
 { #category : #'api-window' }
@@ -1005,17 +934,6 @@ ComposablePresenter >> setExtentAndBindingTo: widget [
 	Same for keybindings"
 	self ensureExtentFor: widget.
 	self ensureKeyBindingsFor: widget
-]
-
-{ #category : #'api-showing' }
-ComposablePresenter >> setModal: aWindow [
-
-	self 
-		deprecated: 'Do not use this directly. Use #openModalWithSpec (and family) instead.' 
-		on: '2019-02-26' 
-		in: #Pharo8.
-	
-	self changed: #setModal: with: { aWindow }
 ]
 
 { #category : #'accessing model' }
@@ -1057,33 +975,23 @@ ComposablePresenter >> takeLastKeyboardFocus [
 		ifNotEmpty: [:focus | focus last takeKeyboardFocus ].
 ]
 
-{ #category : #'api-window' }
+{ #category : #TOREMOVE }
 ComposablePresenter >> title [
-	"Return the window's title"
+	"DO NOT USE
+	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	From now on, if you want to interact with a window you need to:
+	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
+	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
+	
+	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 
 	^ titleHolder value
-]
-
-{ #category : #'api-window' }
-ComposablePresenter >> title: aString [
-
-	titleHolder value: aString
 ]
 
 { #category : #TOREMOVE }
 ComposablePresenter >> toolName [
 
 	^ self class toolName
-]
-
-{ #category : #'private-ports' }
-ComposablePresenter >> transmit [
-	| newTransmition |
-
-	transmissions ifNil: [ transmissions := Set new ].
-	newTransmition := PresenterTransmission on: self.
-	transmissions add: newTransmition.
-	^ newTransmition
 ]
 
 { #category : #'private-traversing' }
@@ -1147,24 +1055,15 @@ ComposablePresenter >> whenWindowChanged: aBlock [
 		do: [ :ann | aBlock cull: ann model ]
 ]
 
-{ #category : #accessing }
-ComposablePresenter >> widget [
-	"I return the adapter responsible of building my widget"
-	
-	self deprecated: 'Should use #adapter instead'
-		transformWith: '`@receiver widget' -> '`@receiver adapter'.
-	
-	^ self spec
-]
-
-{ #category : #api }
+{ #category : #TOREMOVE }
 ComposablePresenter >> windowIcon [
+	"DO NOT USE
+	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	From now on, if you want to interact with a window you need to:
+	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
+	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
+	
+	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 
 	^ windowIcon value
-]
-
-{ #category : #api }
-ComposablePresenter >> windowIcon: aForm [
-
-	windowIcon value: aForm
 ]
