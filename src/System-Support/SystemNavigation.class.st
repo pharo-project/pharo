@@ -18,14 +18,6 @@ SystemNavigation class >> default [
 ]
 
 { #category : #query }
-SystemNavigation >> allAccessesTo: instVarName from: aClass [
-	| methods |
-	methods := aClass allMethodsAccessingSlot: (aClass slotNamed: instVarName).
-	^methods collect: [:meth | meth methodReference]
-
-]
-
-{ #category : #query }
 SystemNavigation >> allBehaviors [
 	^ self environment allBehaviors
 ]
@@ -306,15 +298,6 @@ SystemNavigation >> allSentMessages [
 ]
 
 { #category : #query }
-SystemNavigation >> allStoresInto: instVarName of: aClass [
-    | coll |
-    coll := OrderedCollection new.
-    aClass
-        withAllSubAndSuperclassesDo: [ :class | (class whichSelectorsStoreInto: instVarName) do: [ :sel | coll add: (class>>sel) methodReference ] ].
-    ^ coll
-]
-
-{ #category : #query }
 SystemNavigation >> allUnimplementedCalls [
 	"Answer an Array of each message that is sent by an expression in a  
 	method but is not implemented by any object in the system."
@@ -356,12 +339,6 @@ SystemNavigation >> allUnsentMessagesIn: selectorSet [
 	
 	^ (selectorSet copyWithoutAll: self allSentMessages) 
 			select: [ :each | (self allCallsOn: each) isEmpty ]   
-]
-
-{ #category : #query }
-SystemNavigation >> createMethodNamed: aSelector realParent: class [
-
-	^ (class>>aSelector) methodReference
 ]
 
 { #category : #accessing }
