@@ -12,10 +12,10 @@ CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCode [
 	newTrailer := trailer testEncoding.
 	
 	self assert: (trailer kind == #EmbeddedSourceQCompress ).
-	self assert: (newTrailer sourceCode = code).
+	self assert: newTrailer sourceCode equals: code.
 
 	"the last bytecode index must be at 0"
-	self assert: (newTrailer endPC = 0).
+	self assert: newTrailer endPC equals: 0.
 
 	code := 'testEmbeddingSourceCode
 
@@ -26,16 +26,15 @@ CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCode [
 	trailer sourceCode: code.
 	newTrailer := trailer testEncoding.
 	
-	self assert: (newTrailer sourceCode = code).'.
+	self assert: newTrailer sourceCode equals: code.'.
 
 	trailer compressSourceCode: code.
 	self assert: (trailer kind == #EmbeddedSourceZip ).
 	newTrailer := trailer testEncoding.
 	
-	self assert: (newTrailer sourceCode = code).
+	self assert: newTrailer sourceCode equals: code.
 	"the last bytecode index must be at 0"
-	self assert: (newTrailer endPC = 0).
-
+	self assert: newTrailer endPC equals: 0
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -50,7 +49,7 @@ CompiledMethodTrailerTest >> testEmbeddingSourceCode [
 	trailer sourceCode: code.
 	newTrailer := trailer testEncoding.
 	
-	self assert: (newTrailer sourceCode = code).'.
+	self assert: newTrailer sourceCode equals: code.'.
 	
 	"Test a big string"
 	self testEmbeddingSourceCode: (String loremIpsum: 30000).
@@ -59,9 +58,9 @@ CompiledMethodTrailerTest >> testEmbeddingSourceCode [
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
-CompiledMethodTrailerTest >> testEmbeddingSourceCodeBig [
-	
+CompiledMethodTrailerTest >> testEmbeddingSourceCodeBig [	
 	"Test a big string"
-	self testEmbeddingSourceCode: (String loremIpsum: 30000).
+	
+	self testEmbeddingSourceCode: (String loremIpsum: 30000)
 	
 ]

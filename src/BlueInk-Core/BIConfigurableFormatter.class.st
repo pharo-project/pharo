@@ -498,6 +498,7 @@ BIConfigurableFormatter >> currentLineLength [
 { #category : #'public interface' }
 BIConfigurableFormatter >> format: aParseTree [
 	originalSource := aParseTree source.
+	self initializeCodeStream.
 	self visitNode: aParseTree.
 	^ codeStream contents
 ]
@@ -843,8 +844,13 @@ BIConfigurableFormatter >> initialize [
 	self indent: 0.
 	self isInCascadeNode: false.
 	lookaheadCode := IdentityDictionary new.
-	codeStream := WriteStream on: (String new: 256).
+	self initializeCodeStream.
 	context := DefaultPrettyPrintContext
+]
+
+{ #category : #initialization }
+BIConfigurableFormatter >> initializeCodeStream [
+	codeStream := WriteStream on: (String new: 256)
 ]
 
 { #category : #'public interface' }

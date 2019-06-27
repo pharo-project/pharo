@@ -70,7 +70,7 @@ BytecodeEncoder class >> stackDeltaForPrimitive: primitiveIndex in: method [
 
 { #category : #temps }
 BytecodeEncoder >> bindAndJuggle: name [
-	"This is used to insert a new temp and reorcder temps on editing.
+	"This is used to insert a new temp and reorder temps on editing.
 	 It doesn't really work for closure compilation since we have multiple
 	 locations for temps.  Simply signal a reparse is necessary."
 

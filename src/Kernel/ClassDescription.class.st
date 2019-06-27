@@ -110,13 +110,8 @@ ClassDescription >> addSlot: aSlot [
 ClassDescription >> allInstVarNamesEverywhere [
 	"Answer the set of inst var names used by the receiver, all superclasses, and all subclasses"
 
-	| aList |
-	aList := OrderedCollection new.
-	(self allSuperclasses , self withAllSubclasses asOrderedCollection) do:
-		[:cls | aList addAll: cls instVarNames].
-	^ aList asSet
-
-	"BorderedMorph allInstVarNamesEverywhere"
+	^ self allSuperclasses , self withAllSubclasses asOrderedCollection
+		flatCollectAsSet: [ :cls | cls instVarNames ]
 ]
 
 { #category : #'accessing method dictionary' }
@@ -159,17 +154,6 @@ ClassDescription >> allSharedPools [
 { #category : #slots }
 ClassDescription >> allSlots [
 	^self classLayout allVisibleSlots
-]
-
-{ #category : #slots }
-ClassDescription >> allSlotsEverywhere [
-	"Answer the set of slots used by the receiver, all superclasses, and all subclasses"
-
-	| aList |
-	aList := OrderedCollection new.
-	(self allSuperclasses , self withAllSubclasses asOrderedCollection) do:
-		[:cls | aList addAll: cls slots].
-	^ aList asSet
 ]
 
 { #category : #enumerating }
@@ -1283,12 +1267,6 @@ ClassDescription >> storeOn: aStream [
 	"Classes and Metaclasses have global names."
 
 	aStream nextPutAll: self name
-]
-
-{ #category : #'accessing class hierarchy' }
-ClassDescription >> subclassesDo: aBlock [
-	"Evaluate the argument, aBlock, for each of the receiver's immediate subclasses."
-	^self subclasses do: aBlock
 ]
 
 { #category : #initialization }

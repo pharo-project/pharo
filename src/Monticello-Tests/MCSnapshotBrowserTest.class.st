@@ -105,7 +105,7 @@ MCSnapshotBrowserTest >> classAProtocols [
 { #category : #private }
 MCSnapshotBrowserTest >> classAclassDefinitionString [
 
-	^ self mockClassA class oldDefinition
+	^ self mockClassA class definitionWithoutSlots
 ]
 
 { #category : #simulating }

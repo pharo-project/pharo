@@ -97,9 +97,13 @@ TestResource class >> makeAvailable [
 	current := nil.
 	candidate := self new.
 	self resources do: [:each | each availableFor: candidate].
-	[candidate setUp.
+	
+	"Execute the TestResource's #setUp method within the DefaultExecutionEnvironment to prevent
+	forked processes created within #setUp from being terminated by the TestExecutionEnvironment
+	(in #checkForkedProcesses) it is running in."
+	DefaultExecutionEnvironment beActiveDuring: [[candidate setUp.
 	candidate isAvailable ifTrue: [current := candidate]]
-		ensure: [current == candidate ifFalse: [candidate tearDown]]
+		ensure: [current == candidate ifFalse: [candidate tearDown]]]
 ]
 
 { #category : #'instance creation' }

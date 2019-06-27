@@ -10,7 +10,7 @@ Class {
 { #category : #'instance creation' }
 RBThisContextNode class >> new [
 	^super new 
-		named: 'thisContext' start: nil;
+		named: 'thisContext' start: 0;
 		yourself.
 ]
 

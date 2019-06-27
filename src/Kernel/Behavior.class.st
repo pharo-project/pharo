@@ -200,9 +200,19 @@ Behavior >> allMethods [
 { #category : #queries }
 Behavior >> allMethodsAccessingSlot: aSlot [
 	"return all methods that access aSlot in this class and subclasses"
-	^self withAllSubclasses flatCollect: [ :class |
-		class methodsAccessingSlot: aSlot.
-	]
+	^self withAllSubclasses flatCollect: [ :class | class methodsAccessingSlot: aSlot ]
+]
+
+{ #category : #queries }
+Behavior >> allMethodsReadingSlot: aSlot [
+	"return all methods that access aSlot in this class and subclasses"
+	^self withAllSubclasses flatCollect: [ :class | class methodsReadingSlot: aSlot]
+]
+
+{ #category : #queries }
+Behavior >> allMethodsWritingSlot: aSlot [
+	"return all methods that access aSlot in this class and subclasses"
+	^self withAllSubclasses flatCollect: [ :class | class methodsWritingSlot: aSlot ]
 ]
 
 { #category : #'accessing method dictionary' }
@@ -1712,18 +1722,8 @@ Behavior >> subclassDefinerClass [
 
 { #category : #'accessing instances and variables' }
 Behavior >> subclassInstVarNames [
-	"Answer a Set of the names of the receiver's subclasses' instance 
-	variables."
-	| vars |
-	vars := Set new.
-	self allSubclasses do: [:aSubclass | vars addAll: aSubclass instVarNames].
-	^vars
-]
-
-{ #category : #enumerating }
-Behavior >> subclassesDo: aBlock [
-	"Evaluate the argument, aBlock, for each of the receiver's immediate subclasses."
-	self subclasses do: aBlock
+	"Answer a Set of the names of the receiver's subclasses' instance variables."
+	^self allSubclasses flatCollectAsSet: [:aSubclass | aSubclass instVarNames]
 ]
 
 { #category : #'accessing class hierarchy' }
@@ -1896,9 +1896,9 @@ Behavior >> withAllSubclasses [
 
 { #category : #'accessing class hierarchy' }
 Behavior >> withAllSubclassesDo: aBlock [
-	"Evaluate the argument, aBlock, for the receiver and each of its 
-	subclasses."
-	self withAllSubclasses do: [ :subclass | aBlock value: subclass ].
+	"Evaluate the argument, aBlock, for the receiver and each of its subclasses."
+	
+	self withAllSubclasses do: aBlock
 ]
 
 { #category : #enumerating }
@@ -1910,14 +1910,14 @@ Behavior >> withAllSuperAndSubclassesDo: aBlock [
 
 { #category : #'accessing class hierarchy' }
 Behavior >> withAllSuperclasses [
-	"Answer an OrderedCollection of the receiver and the receiver's 
-	superclasses. The first element is the receiver, 
-	followed by its superclass; the last element is Object."
+	"Answer an OrderedCollection of the receiver and the receiver's superclasses. 
+	The first element is the receiver, followed by its superclass; 
+	the last element is Object."
 
-	| temp |
-	temp := self allSuperclasses.
-	temp addFirst: self.
-	^ temp
+	^self allSuperclasses 
+		addFirst: self; 
+		yourself
+
 ]
 
 { #category : #enumerating }

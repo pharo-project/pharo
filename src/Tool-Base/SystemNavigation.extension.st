@@ -10,7 +10,7 @@ SystemNavigation >> browseAllAccessesTo: instVarName from: aClass [
 	| methods slot |
 	slot := aClass slotNamed: instVarName.
 	methods := (aClass allMethodsAccessingSlot: slot) 
-		collect: [:meth | self createMethodNamed: meth selector realParent: meth methodClass].
+		collect: [:meth | meth methodReference].
 	
 	^ self
 		browseMessageList: methods
@@ -559,12 +559,12 @@ SystemNavigation >> methodHierarchyBrowserForClass: aClass selector: sel [
 
 	aClass allSuperclasses reverseDo: [:cl |
 		(cl includesSelector: sel) ifTrue: [
-			list addLast: (self createMethodNamed: sel realParent: cl)]].
+			list addLast: (cl>>sel) methodReference]].
 	aClass allSubclassesDo: [:cl | 
 		(cl includesSelector: sel) ifTrue: [
-			list addLast: ( self createMethodNamed: sel realParent: cl)]].
+			list addLast: (cl>>sel) methodReference ]].
 
-	list addLast: (self createMethodNamed: sel realParent: aClass).
+	list addLast: (aClass>>sel) methodReference.
 	^ self browseMessageList: list name: 'Inheritance of ' , sel
 
 
