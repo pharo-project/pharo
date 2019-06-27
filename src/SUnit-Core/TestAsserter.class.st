@@ -78,15 +78,6 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 ]
 
 { #category : #asserting }
-TestAsserter >> assert: actualNumber closeTo: expectedNumber precision: epsilon [
-	"Tell whether the actualNumber and expectedNumber ARE close to each others with a margin of epsilon."
-
-	^ self
-		assert: (actualNumber closeTo: expectedNumber precision: epsilon)
-		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
-]
-
-{ #category : #asserting }
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
 	"This method raises an AssertionFailure with aString as #messageText if
 	 aBooleanOrBlock evaluates to false.
@@ -311,23 +302,6 @@ TestAsserter >> deny: aBooleanOrBlock [
 ]
 
 { #category : #asserting }
-TestAsserter >> deny: actualNumber closeTo: expectedNumber [
-	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of
-	 the default precision (see class-side method #defaultPrecisionsForCloseToComparison).
-	"
-	self deny: actualNumber closeTo: expectedNumber precision: self class defaultPrecisionsForCloseToComparison
-]
-
-{ #category : #asserting }
-TestAsserter >> deny: actualNumber closeTo: expectedNumber precision: epsilon [
-	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of epsilon."
-
-	^ self
-		assert: (actualNumber closeTo: expectedNumber precision: epsilon) not
-		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
-]
-
-{ #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock description: aString [
 	"This method raises an AssertionFailure with aString as #messageText if
 	 aBooleanOrBlock evaluates to true."
@@ -374,17 +348,6 @@ TestAsserter >> denyCollection: actualCollection equals: expectedCollection [
 	^ self
 		deny: actualCollection = expectedCollection
 		description: [ self unexpectedEqualityStringBetween: actualCollection and: expectedCollection ]
-]
-
-{ #category : #asserting }
-TestAsserter >> denyCollection: actualCollection includesAll: subcollection [
-	"Raises an AssertionFailure if actualCollection INCLUDES all the elements of expectedCollection (by negating result of #includesAll: message).
-	 I also provide a specialized message for the AssertionFailure in case I fail.
-	"
-	
-	^ self
-		assert: (actualCollection includesAll: subcollection) not
-		description: [ actualCollection asString , ' does not include all in ' , subcollection asString ]
 ]
 
 { #category : #asserting }
