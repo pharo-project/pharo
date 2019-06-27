@@ -20,7 +20,6 @@ BaselineOfSpec2 >> baseline: spec [
 				package: 'Spec2-Core' with: [ spec requires: #('Spec2-Layout' 'Spec2-Transmission') ];
 				package: 'Spec2-CommandLine' with: [ spec requires: #('Spec2-Core') ];
 				package: 'Spec2-Help';
-				package: 'Spec2-Deprecated' with: [ spec requires: #('Spec2-Tests' 'Spec2-PolyWidgets-Tests' 'Spec2-Adapters-Morphic') ];
 				package: 'Spec2-Inspector' with: [ spec requires: #('Spec2-PolyWidgets') ];
 				package: 'Spec2-Layout';
 				package: 'Spec2-Transmission';
@@ -41,6 +40,8 @@ BaselineOfSpec2 >> baseline: spec [
 				package: 'Spec2-Compatibility-Tests' with: [ spec requires: #('Spec2-Morphic-Backend-Tests' 'Spec2-Deprecated') ];
 				package: 'Spec2-Tools' with: [ spec requires: #('Spec2-PolyWidgets') ];
 				package: 'Spec2-Examples' with: [ spec requires: #('Spec2-Tools') ];
+				
+				package: 'Spec2-Deprecated' with: [ spec requires: #('Spec2-Tests' 'Spec2-PolyWidgets-Tests' 'Spec2-Adapters-Morphic') ];
 				package: 'Spec2-Deprecated-Tools' with: [ spec requires: #('Spec2-Deprecated' 'Spec2-Tools') ] ]
 ]
 
