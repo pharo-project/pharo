@@ -25,6 +25,6 @@ BaselineOfSpec >> baseline: spec [
 				package: 'Spec-Tests' with: [ spec requires: #('Spec-PolyWidgets' 'Spec-Examples') ];
 				package: 'Spec-PolyWidgets-Tests' with: [ spec requires: #('Spec-Tests' 'Spec-PolyWidgets') ];
 				package: 'Spec-MorphicBackendTests' with: [ spec requires: #('Spec-MorphicAdapters' 'Spec-BackendTests') ];
-				package: 'Spec-BackendTests' with: [ spec requires: #('Spec-MorphicAdapters' 'ParametrizedTests') ];
+				package: 'Spec-BackendTests' with: [ spec requires: #('Spec-MorphicAdapters') ];
 				package: 'Spec-CompatibilityTests' with: [ spec requires: #('Spec-MorphicBackendTests' 'Spec-Deprecated80') ] ]
 ]
