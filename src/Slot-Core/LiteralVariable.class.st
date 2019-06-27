@@ -113,6 +113,11 @@ LiteralVariable >> isReadIn: aCompiledCode [
 ]
 
 { #category : #testing }
+LiteralVariable >> isReferenced [
+	^self usingMethods isNotEmpty
+]
+
+{ #category : #testing }
 LiteralVariable >> isSelfEvaluating [
 	^ self key isSelfEvaluating and: [self value isSelfEvaluating]
 ]
