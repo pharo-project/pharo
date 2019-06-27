@@ -19,7 +19,6 @@ BaselineOfSpec2 >> baseline: spec [
 			spec
 				package: 'Spec2-Core' with: [ spec requires: #('Spec2-Layout' 'Spec2-Transmission') ];
 				package: 'Spec2-CommandLine' with: [ spec requires: #('Spec2-Core') ];
-				package: 'Spec2-Help';
 				package: 'Spec2-Inspector' with: [ spec requires: #('Spec2-PolyWidgets') ];
 				package: 'Spec2-Layout';
 				package: 'Spec2-Transmission';
