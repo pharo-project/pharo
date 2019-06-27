@@ -85,3 +85,10 @@ SlotTest >> testRemoveProperty [
 		
 	self assert: ivar properties isNil.
 ]
+
+{ #category : #'tests - misc' }
+SlotTest >> testisUsed [
+	self assert: InstanceVariableSlot isUsed.
+	self assert: IndexedSlot isUsed. "subclasses are users"
+	self assert: ProcessLocalSlot isUsed. "references count as uses, too"
+]
