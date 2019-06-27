@@ -25,5 +25,5 @@ BIConfigurableFormatterFormattingTest >> testShouldReinitializeCodeStreamBetween
 	formater := BIConfigurableFormatter new installNewContext: context.
 	astNode := RBParser parseExpression: '1'.
 	self assert: (formater format: astNode) equals: '1'.
-	self assert: (formater format: astNode) equals: '1'.
+	self assert: (formater format: astNode) equals: '1'
 ]
