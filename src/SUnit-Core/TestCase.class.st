@@ -10,7 +10,8 @@ Class {
 	#superclass : #TestAsserter,
 	#instVars : [
 		'testSelector',
-		'expectedFails'
+		'expectedFails',
+		'resultType'
 	],
 	#classVars : [
 		'Announcers',
@@ -679,6 +680,11 @@ TestCase >> openDebuggerOnFailingTestMethod [
 		performTest
 ]
 
+{ #category : #testing }
+TestCase >> passed [
+	^ self resultType isPassed
+]
+
 { #category : #private }
 TestCase >> performTest [
 	self perform: testSelector asSymbol
@@ -731,6 +737,16 @@ TestCase >> resources [
 	"We give TestCase this instance-side method so that methods polymorphic with TestSuite can be code-identical.  Having this instance-side method also helps when writing tests of resource behaviour. Except for such tests, it is rare to override this method and should not be done without thought.  If there were a good reason why a single test case needed to share tests requiring different resources, it might be legitimate."
 
 	^self class resources
+]
+
+{ #category : #accessing }
+TestCase >> resultType [
+	^ resultType ifNil: [ resultType := TestResultType newUnknown ]
+]
+
+{ #category : #accessing }
+TestCase >> resultType: anObject [
+	resultType := anObject
 ]
 
 { #category : #running }

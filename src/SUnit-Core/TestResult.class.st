@@ -9,10 +9,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'timeStamp',
-		'failures',
-		'errors',
-		'passed',
-		'skipped'
+		'testResults'
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -122,28 +119,33 @@ TestResult class >> warning [
 { #category : #adding }
 TestResult >> addError: aTestCase [
 	"We cannot use self errors as that incorporates test expectations and so does not return the stored collection."
-
-	^errors add: aTestCase
+	aTestCase resultType: TestResultType newError.
+	^ self addTestCase: aTestCase
 ]
 
 { #category : #adding }
 TestResult >> addFailure: aTestCase [
 	"We cannot use self failures as that incorporates test expectations and so does not return the stored collection."
-
-	^failures add: aTestCase
+	aTestCase resultType: TestResultType newFailure.
+	^ self addTestCase: aTestCase
 ]
 
 { #category : #adding }
 TestResult >> addPass: aTestCase [
 	"We cannot use self passed as that incorporates test expectations and so does not return the stored collection."
-
-	^passed add: aTestCase
+	aTestCase resultType: TestResultType newPass.
+	^ self addTestCase: aTestCase
 ]
 
 { #category : #adding }
 TestResult >> addSkip: aTestCase [
+	aTestCase resultType: TestResultType newWarning.
+	^ self addTestCase: aTestCase
+]
 
-	^skipped add: aTestCase
+{ #category : #private }
+TestResult >> addTestCase: aTestCase [
+	^ testResults add: aTestCase
 ]
 
 { #category : #accessing }
@@ -204,7 +206,8 @@ TestResult >> expectedDefectCount [
 
 { #category : #accessing }
 TestResult >> expectedDefects [
-	^ (errors, failures asOrderedCollection) select: [:each | each shouldPass not] 
+	^ testResults select: [ :each |
+		(each resultType isFailed or: [ each resultType isFailed ]) and: [ each shouldPass not ] ]
 ]
 
 { #category : #accessing }
@@ -214,7 +217,7 @@ TestResult >> expectedPassCount [
 
 { #category : #accessing }
 TestResult >> expectedPasses [
-	^ passed select: [:each | each shouldPass] 
+	^ testResults select: [ :each | each resultType isPassed and: [ each shouldPass ] ]
 ]
 
 { #category : #accessing }
@@ -269,10 +272,7 @@ TestResult >> hasPassed [
 { #category : #initialization }
 TestResult >> initialize [
 	super initialize.
-	passed := OrderedCollection new.
-	failures := Set new.
-	errors := OrderedCollection new.
-	skipped := OrderedCollection new.
+	testResults := OrderedCollection new.
 	timeStamp := DateAndTime now
 ]
 
@@ -360,8 +360,7 @@ TestResult >> runCaseForDebug: aTestCase [
 	aTestCase runCaseManaged.
 	aTestCase announce: TestCaseEnded  withResult: self.
 	"To not affect performance of big test suites following logic is not inside addPass: method"
-	errors remove: aTestCase ifAbsent: [].
-	failures remove: aTestCase ifAbsent: [].
+	testResults remove: aTestCase ifAbsent: [].
 	self addPass: aTestCase]
 		on: self class failure , self class skip, self class warning, self class error
 		do: [:ex | ex sunitAnnounce: aTestCase toResult: self. ex pass]
@@ -393,7 +392,7 @@ TestResult >> selectResultsForTestCase: aTestCaseClass [
 
 { #category : #accessing }
 TestResult >> skipped [
-	^ skipped
+	^ testResults select: [ :each | each resultType isSkipped ]
 ]
 
 { #category : #accessing }
@@ -404,12 +403,7 @@ TestResult >> skippedCount [
 
 { #category : #accessing }
 TestResult >> tests [
-	^(OrderedCollection new: self runCount)
-		addAll: passed;
-		addAll: failures;
-		addAll: errors;
-		addAll: skipped;
-		yourself
+	^ testResults
 ]
 
 { #category : #accessing }
@@ -429,7 +423,7 @@ TestResult >> unexpectedErrorCount [
 
 { #category : #accessing }
 TestResult >> unexpectedErrors [
-	^ errors select: [:each | each shouldPass] 
+	^ testResults select: [:each | each resultType isRaisedError and: [ each shouldPass ] ]
 ]
 
 { #category : #accessing }
@@ -439,7 +433,7 @@ TestResult >> unexpectedFailureCount [
 
 { #category : #accessing }
 TestResult >> unexpectedFailures [
-	^ failures select: [:each | each shouldPass] 
+	^ testResults select: [ :each | each resultType isFailed and: [ each shouldPass ] ]
 ]
 
 { #category : #accessing }
@@ -449,7 +443,7 @@ TestResult >> unexpectedPassCount [
 
 { #category : #accessing }
 TestResult >> unexpectedPasses [
-	^ passed select: [:each | each shouldPass not] 
+	^ testResults select: [:each | each resultType isPassed and: [ each shouldPass not ] ]
 ]
 
 { #category : #history }
