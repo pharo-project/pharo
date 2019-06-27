@@ -76,7 +76,7 @@ SpDemoNotebookPresenter >> objectInspectorPage [
 	^ SpNotebookPage
 		title: 'Object inspector'
 		icon: (self iconNamed: #nautilusIcon)
-		provider: [ SpEyeInspector new
+		provider: [ EyeInspector new
 				inspect: Object;
 				yourself ]
 		layoutSpec: #inspectorSpec

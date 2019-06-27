@@ -2,5 +2,5 @@ Extension { #name : #FileReference }
 
 { #category : #'*Spec2-Inspector' }
 FileReference class >> additionalInspectorClasses [
-	^ super additionalInspectorClasses, { SpEyeFileSystemInspector }
+	^ super additionalInspectorClasses, { EyeFileSystemInspector }
 ]
