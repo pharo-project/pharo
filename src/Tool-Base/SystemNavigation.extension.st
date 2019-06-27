@@ -20,15 +20,6 @@ SystemNavigation >> browseAllAccessesTo: instVarName from: aClass [
 ]
 
 { #category : #'*Tool-Base' }
-SystemNavigation >> browseAllCallsOn: aLiteral localTo: aClass [
-	"Create and schedule a message browser on each method in or below the given class that refers to
-	aLiteral. For example, SystemNavigation new browseAllCallsOn: #open:label: localTo: CodeHolder."
-
-
-	^ self browseAllSendersOf: aLiteral localTo: aClass
-]
-
-{ #category : #'*Tool-Base' }
 SystemNavigation >> browseAllCallsOnClass: aClass [
 	"Create and schedule a message browser on each method that refers to 
 	aClass. For example, SystemNavigation new browseAllCallsOnClass: Object."
@@ -96,21 +87,6 @@ SystemNavigation >> browseAllSendersOf: aLiteral [
 ]
 
 { #category : #'*Tool-Base' }
-SystemNavigation >> browseAllSendersOf: aLiteral localTo: aClass [
-	"Create and schedule a message browser on each method in or below the given class that refers to
-	aLiteral.
-	Example: 
-		SystemNavigation new browseAllSendersOf: #open:label: localTo: CodeHolder."
-
-	aClass ifNil: [ ^self inform: 'no selected class' ].
-	^ self headingAndAutoselectForLiteral: aLiteral do:
-		[:label :autoSelect|
-		self browseMessageList: (aClass allLocalCallsOn: aLiteral) asSortedCollection
-			name: label, ' local to ', aClass name
-			autoSelect: autoSelect]
-]
-
-{ #category : #'*Tool-Base' }
 SystemNavigation >> browseAllSendersOrUsersOf: aLiteralOrClass [ 
 	"Create and schedule a message browser on each method that refers to 
 	a literal or class name"
@@ -125,11 +101,18 @@ SystemNavigation >> browseAllStoresInto: instVarName from: aClass [
     "Create and schedule a Message Set browser for all the receiver's methods 
     or any methods of a subclass/superclass that refer to the instance variable name."
 
-    "self new browseAllStoresInto: 'youpi' from: BalloonEdgeData class."
+    "self new browseAllStoresInto: 'x' from: Point."
 
-    ^ self browseMessageList: (self allStoresInto: instVarName of: aClass)
-                name: 'Stores into ' , instVarName 
-                autoSelect: instVarName
+	| methods slot |
+	slot := aClass slotNamed: instVarName.
+	methods := (aClass allMethodsWritingSlot: slot) 
+		collect: [:meth | meth methodReference].
+	
+	^ self
+		browseMessageList: methods
+		name: 'Stores into ' , instVarName
+		autoSelect: instVarName
+		refreshingBlock: [ :method | slot isWrittenIn: method ]
 
 ]
 

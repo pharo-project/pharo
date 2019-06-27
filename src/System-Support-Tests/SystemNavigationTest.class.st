@@ -29,12 +29,6 @@ SystemNavigationTest >> createClassFactory [
 	^ ClassFactoryWithOrganization newWithOrganization: self organizationToTest
 ]
 
-{ #category : #utilities }
-SystemNavigationTest >> createMethodNamed: selector realParent: class [
-
-	^ RGMethodDefinition realClass: class selector: selector
-]
-
 { #category : #'setUp-tearDown' }
 SystemNavigationTest >> createSystemNavigationToTest [
 	^SystemNavigation new
