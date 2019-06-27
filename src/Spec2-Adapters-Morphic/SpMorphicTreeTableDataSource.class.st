@@ -77,17 +77,6 @@ SpMorphicTreeTableDataSource >> itemAtPath: aPath expanding: shouldExpandItems [
 	^ item
 ]
 
-{ #category : #accessing }
-SpMorphicTreeTableDataSource >> menuColumn: column row: rowIndex [
-	| menuPresenter |
-
-	menuPresenter := self model contextMenu.
-	menuPresenter ifNil: [ ^ nil ].
-	^ SpBindings
-		value: self model application adapterBindings
-		during: [ menuPresenter value buildWithSpec ]
-]
-
 { #category : #paths }
 SpMorphicTreeTableDataSource >> pathFromIndex: anInteger [ 
 	| item |

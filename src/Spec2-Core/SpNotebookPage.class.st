@@ -81,19 +81,6 @@ SpNotebookPage >> layoutSpec: aSymbol [
 	layoutSpec := aSymbol
 ]
 
-{ #category : #events }
-SpNotebookPage >> observablePropertyNamed: aName [
-	| slot |
-	
-	slot := self class slotNamed: aName.
-	slot isObservableSlot
-		ifFalse: [ SpNonObservableSlotError signal: aName ].
-
-	"Obtain the raw value.
-	We need to access the underlying value holder to subscribe to it"
-	^ slot rawRead: self
-]
-
 { #category : #accessing }
 SpNotebookPage >> owner [
 

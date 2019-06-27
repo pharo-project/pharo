@@ -52,18 +52,6 @@ SpCodePresenter >> behavior: aClass [
 	behavior := aClass
 ]
 
-{ #category : #private }
-SpCodePresenter >> buildCodeKeyBindings [
-	
-	^ CmdContextMenuActivation buildContextKeyBindingsInContext: (SpCodeContext for: self)
-]
-
-{ #category : #private }
-SpCodePresenter >> buildCodeMenu [
-	
-	^ CmdContextMenuActivation buildContextMenuInContext: (SpCodeContext for: self)
-]
-
 { #category : #'api-shortcuts' }
 SpCodePresenter >> contextKeyBindings [
 

@@ -32,14 +32,3 @@ SpMorphicTableDataSource >> elements [
 		ifNotNil: #items
 		ifNil: [ #() ]
 ]
-
-{ #category : #accessing }
-SpMorphicTableDataSource >> menuColumn: column row: rowIndex [
-	| menuPresenter |
-
-	menuPresenter := self model contextMenu.
-	menuPresenter ifNil: [ ^ nil ].
-	^ SpBindings
-		value: self model application adapterBindings
-		during: [ menuPresenter value buildWithSpec ]
-]

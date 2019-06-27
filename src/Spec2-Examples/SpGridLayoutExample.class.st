@@ -48,8 +48,8 @@ SpGridLayoutExample class >> open [
 { #category : #'instance creation' }
 SpGridLayoutExample class >> openWithGtk [
 	<script>
-	
-	GtkApplication ensureRunning.
+	self flag: #TODO. "Should be in GTK."
+	self environment at: #GtkApplication ifPresent: #ensureRunning.
 	(SpApplication new 
 		useBackend: #Gtk;
 		new: self)

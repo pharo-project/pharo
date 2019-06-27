@@ -38,19 +38,6 @@ SpAbstractTreeSingleSelectionMode >> isEmpty [
 	^ selection isEmpty
 ]
 
-{ #category : #events }
-SpAbstractTreeSingleSelectionMode >> observablePropertyNamed: aName [
-	| slot |
-	
-	slot := self class slotNamed: aName.
-	slot isObservableSlot
-		ifFalse: [ SpNonObservableSlotError signal: aName ].
-
-	"Obtain the raw value.
-	We need to access the underlying value holder to subscribe to it"
-	^ slot rawRead: self
-]
-
 { #category : #selection }
 SpAbstractTreeSingleSelectionMode >> replaceOtherSelectionMode: anotherSelection [
 
