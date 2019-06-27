@@ -37,7 +37,7 @@ BaselineOfUI >> baseline: spec [
 
 		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [spec repository: repository].
-		spec baseline: 'Commander2' with: [spec repository: repository].
+		spec baseline: 'Spec2' with: [spec repository: repository].
 		spec baseline: 'Spec' with: [spec repository: repository].
 
 		spec package: 'StartupPreferences'.
