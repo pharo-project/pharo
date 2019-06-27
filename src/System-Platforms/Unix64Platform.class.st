@@ -18,6 +18,12 @@ Unix64Platform class >> isActivePlatform [
 	^ (self currentPlatformName = 'unix') and: [ Smalltalk vm wordSize = 8 ]
 ]
 
+{ #category : #visiting }
+Unix64Platform >> accept: aVisitor [
+
+	^ aVisitor visitUnix64: self
+]
+
 { #category : #testing }
 Unix64Platform >> isUnix64 [
 	^ true

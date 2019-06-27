@@ -34,7 +34,7 @@ DateAndTimeDosEpochTest >> tearDown [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testAsDate [
-	self assert: aDateAndTime asDate equals: 'January 1, 1980' asDate.
+	self assert: aDateAndTime asDate equals: 'January 1, 1980' asDate
 
 
 ]
@@ -63,7 +63,7 @@ DateAndTimeDosEpochTest >> testAsLocal [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testAsNanoSeconds [
-	self assert: aDateAndTime asNanoSeconds =  0 asDuration asNanoSeconds
+	self assert: aDateAndTime asNanoSeconds equals: 0 asDuration asNanoSeconds
 	
 
 ]
@@ -77,7 +77,7 @@ DateAndTimeDosEpochTest >> testAsSeconds [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testAsTime [
-	self assert: aDateAndTime asTime equals: Time midnight.
+	self assert: aDateAndTime asTime equals: Time midnight
 
 ]
 
@@ -89,7 +89,7 @@ DateAndTimeDosEpochTest >> testAsUTC [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testCurrent [
-	self deny: aDateAndTime equals: (DateAndTime current).
+	self deny: aDateAndTime equals: (DateAndTime current)
 
 ]
 
@@ -112,13 +112,13 @@ DateAndTimeDosEpochTest >> testDayMonthYearDo [
 	self assert: (aDateAndTime dayMonthYearDo: [:eachDay :eachMonth :eachYear |  iterations := iterations + 1]) equals: 1.
 	self assert: (aDateAndTime dayMonthYearDo: [:eachDay :eachMonth :eachYear |  eachYear]) equals: 1980.
 	self assert: (aDateAndTime dayMonthYearDo: [:eachDay :eachMonth :eachYear |  eachMonth]) equals: 1.
-	self assert: (aDateAndTime dayMonthYearDo: [:eachDay :eachMonth :eachYear |  eachDay]) equals: 1.
+	self assert: (aDateAndTime dayMonthYearDo: [:eachDay :eachMonth :eachYear |  eachDay]) equals: 1
 
 ]
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testDayOfMonth [
-	self assert: aDateAndTime dayOfMonth equals: 1.
+	self assert: aDateAndTime dayOfMonth equals: 1
 
 ]
 
@@ -126,41 +126,41 @@ DateAndTimeDosEpochTest >> testDayOfMonth [
 DateAndTimeDosEpochTest >> testDayOfWeek [
 	self assert: aDateAndTime dayOfWeek equals: 3.
 	self assert: aDateAndTime dayOfWeekAbbreviation equals: 'Tue'.
-	self assert: aDateAndTime dayOfWeekName equals: 'Tuesday'.
+	self assert: aDateAndTime dayOfWeekName equals: 'Tuesday'
 
 ]
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testDayOfYear [
-	self assert: aDateAndTime dayOfYear equals: 1.
+	self assert: aDateAndTime dayOfYear equals: 1
 
 
 ]
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testDaysInMonth [
-	self assert: aDateAndTime daysInMonth equals: 31.
+	self assert: aDateAndTime daysInMonth equals: 31
 
 
 ]
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testDaysInYear [
-	self assert: aDateAndTime daysInYear equals: 366.
+	self assert: aDateAndTime daysInYear equals: 366
 
 
 ]
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testDaysLeftInYear [
-	self assert: aDateAndTime daysLeftInYear equals: 365.
+	self assert: aDateAndTime daysLeftInYear equals: 365
 
 
 ]
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testDuration [
-	self assert: aDateAndTime duration equals: 0 asDuration.
+	self assert: aDateAndTime duration equals: 0 asDuration
 
 
 ]
@@ -179,7 +179,7 @@ DateAndTimeDosEpochTest >> testFirstDayOfMonth [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testFromSeconds [
-	self assert: aDateAndTime equals: (DateAndTime fromSeconds: 2492985600).
+	self assert: aDateAndTime equals: (DateAndTime fromSeconds: 2492985600)
 
 ]
 
@@ -188,7 +188,7 @@ DateAndTimeDosEpochTest >> testFromString [
 	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00:00+00:00').
 	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00:00').
 	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00').
-	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00:00+00:00').
+	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00:00+00:00')
 
 ]
 
@@ -257,7 +257,6 @@ DateAndTimeDosEpochTest >> testMinus [
 	self assert: aDateAndTime - aDateAndTime equals: '0:00:00:00' asDuration.
 	self assert: aDateAndTime - '0:00:00:00' asDuration equals: aDateAndTime.
 	self assert: aDateAndTime - aDuration equals: (DateAndTime year: 1979 month: 12 day: 30 hour: 21 minute: 56 second: 55 nanoSecond: 999999995 offset: 0 hours)
-	" I believe this Failure is a bug in the nanosecond part of (DateAndTime >> year:month:day:hour:minute:second:nanoSecond:offset:)" 
 ]
 
 { #category : #tests }
@@ -295,7 +294,7 @@ DateAndTimeDosEpochTest >> testNoon [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testNow [
-	self deny: aDateAndTime equals: (DateAndTime now).
+	self deny: aDateAndTime equals: (DateAndTime now)
 
 ]
 
@@ -311,9 +310,7 @@ DateAndTimeDosEpochTest >> testOffset [
 DateAndTimeDosEpochTest >> testPlus [
 	self assert: aDateAndTime + '0:00:00:00' equals: aDateAndTime.
 	self assert: aDateAndTime + 0 equals: aDateAndTime.
-	self assert: aDateAndTime + aDuration equals: (DateAndTime year: 1980 month: 1 day: 2 hour: 2 minute: 3 second: 4 nanoSecond: 5 offset: 0 hours )
-	" I believe this is a bug in the nanosecond part of (DateAndTime >> year:month:day:hour:minute:second:nanoSecond:offset:)"
-	
+	self assert: aDateAndTime + aDuration equals: (DateAndTime year: 1980 month: 1 day: 2 hour: 2 minute: 3 second: 4 nanoSecond: 5 offset: 0 hours)
 
 ]
 
@@ -345,7 +342,7 @@ DateAndTimeDosEpochTest >> testTicks [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testTicksOffset [
-	self assert: aDateAndTime equals: (aDateAndTime ticks:  #(2444240 0 0) offset: DateAndTime localOffset).
+	self assert: aDateAndTime equals: (aDateAndTime ticks:  #(2444240 0 0) offset: DateAndTime localOffset)
 
 ]
 
@@ -359,16 +356,14 @@ DateAndTimeDosEpochTest >> testTimeZone [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testTo [
-	self assert: (aDateAndTime to: aDateAndTime) equals: ((DateAndTime year: 1980 month: 1 day: 1) to: (DateAndTime year: 1980 month: 1 day: 1)) 
-	"MessageNotUnderstood: UndefinedObject>>starting:ending:  where UndefinedObject is Timespan "
+	self assert: (aDateAndTime to: aDateAndTime) equals: ((DateAndTime year: 1980 month: 1 day: 1) to: (DateAndTime year: 1980 month: 1 day: 1))
 ]
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testToBy [
 	self assert: (aDateAndTime to: aDateAndTime + 10 days by: 5 days) equals: 
 				((DateAndTime year: 1980 month: 1 day: 1) to:
-				 (DateAndTime year: 1980 month: 1 day: 1) + 10 days by: 5 days ) 
-	"MessageNotUnderstood: UndefinedObject>>starting:ending:  where UndefinedObject is Timespan "
+				 (DateAndTime year: 1980 month: 1 day: 1) + 10 days by: 5 days)
 ]
 
 { #category : #tests }
@@ -390,8 +385,7 @@ DateAndTimeDosEpochTest >> testToday [
 { #category : #tests }
 DateAndTimeDosEpochTest >> testTommorrow [
 	self assert: (DateAndTime today + 24 hours) equals: (DateAndTime tomorrow).
-	self deny: aDateAndTime = (DateAndTime tomorrow).
-     "MessageNotUnderstood: Date class>>starting:"
+	self deny: aDateAndTime = (DateAndTime tomorrow)
 ]
 
 { #category : #tests }
@@ -401,26 +395,26 @@ DateAndTimeDosEpochTest >> testUtcOffset [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testYear [
-	self assert: aDateAndTime year equals: 1980.
+	self assert: aDateAndTime year equals: 1980
 
 	
 ]
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testYearDay [
-	self assert: aDateAndTime equals: (DateAndTime year: 1980 day: 1).
+	self assert: aDateAndTime equals: (DateAndTime year: 1980 day: 1)
 
 ]
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testYearDayHourMinuteSecond [
-	self assert: aDateAndTime equals: (DateAndTime year: 1980 day: 1 hour: 0 minute: 0 second: 0).
+	self assert: aDateAndTime equals: (DateAndTime year: 1980 day: 1 hour: 0 minute: 0 second: 0)
 
 ]
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testYearMonthDay [
-	self assert: aDateAndTime equals: (DateAndTime year: 1980 month: 1 day: 1).
+	self assert: aDateAndTime equals: (DateAndTime year: 1980 month: 1 day: 1)
 
 ]
 
@@ -435,9 +429,7 @@ DateAndTimeDosEpochTest >> testYearMonthDayHourMinuteSecondNanosSecondOffset [
 	self assert: aDateAndTime equals: (DateAndTime year: 1980 month: 1 day: 1 hour: 0 minute: 0 second: 0 nanoSecond: 0 offset:0 hours ).
 	self assert: ((DateAndTime year: 1 month: 1 day: 1 hour: 0 minute: 0 second: 0 nanoSecond: 0 offset: 0 hours ) +
 				(Duration days: 1 hours: 2 minutes: 3 seconds: 4  nanoSeconds: 5) ) equals:  	
-				(DateAndTime year: 1 month: 1 day: 2 hour: 2 minute: 3 second: 4 nanoSecond: 5 offset: 0 hours ) 
-	" I believe this is a bug in the nanosecond part of (DateAndTime >> year:month:day:hour:minute:second:nanoSecond:offset:)"" I believe this is a bug in the nanosecond part of (DateAndTime >> year:month:day:hour:minute:second:nanoSecond:offset:)"   
-
+				(DateAndTime year: 1 month: 1 day: 2 hour: 2 minute: 3 second: 4 nanoSecond: 5 offset: 0 hours) 
 ]
 
 { #category : #tests }

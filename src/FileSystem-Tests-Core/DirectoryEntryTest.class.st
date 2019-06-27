@@ -68,6 +68,24 @@ DirectoryEntryTest >> testReference [
 ]
 
 { #category : #tests }
+DirectoryEntryTest >> testRootEntry [
+	"Check that the root entry contains sensible values.
+	On Windows this requires a pseudo entry to be available."
+
+	| rootEntry |
+
+	rootEntry := (FileReference fileSystem: FileSystem disk path: Path root) entry.
+
+	self assert: rootEntry isDirectory.
+	self deny: rootEntry isFile.
+	self assert: rootEntry size equals: 0.
+	self assert: rootEntry isReadable.
+	self assert: rootEntry isExecutable.
+	self deny: rootEntry isWritable.
+
+]
+
+{ #category : #tests }
 DirectoryEntryTest >> testSize [
 	self assert: self entry size isInteger
 ]

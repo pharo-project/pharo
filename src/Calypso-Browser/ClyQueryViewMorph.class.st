@@ -398,12 +398,12 @@ ClyQueryViewMorph >> findItemsWith: actualObjects [
 { #category : #accessing }
 ClyQueryViewMorph >> grabSelectionAt: rowIndex [
 	| selectedItems |
-	(table isRowIndexSelected: rowIndex) ifTrue: [^self selection].
-	
-	selectedItems := rowIndex = 0 
-		ifTrue: [ #() ] ifFalse: [{self itemAt: rowIndex}].
-		
-	^self newSelectionWith: selectedItems.
+	(table isIndexSelected: rowIndex)
+		ifTrue: [ ^ self selection ].
+	selectedItems := rowIndex = 0
+		ifTrue: [ #() ]
+		ifFalse: [ {(self itemAt: rowIndex)} ].
+	^ self newSelectionWith: selectedItems
 ]
 
 { #category : #testing }

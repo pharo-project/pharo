@@ -164,7 +164,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Network-Tests'.
 		spec package: 'Tests'.
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
-		spec package: 'AST-Tests-Core'.
+		spec package: 'AST-Core-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'Fuel-Tests-Core'.
 		spec package: 'Fuel-Tools-Pharo'.
@@ -760,7 +760,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Kernel-Tests' 
 	'Kernel-Tests-Extended' 
 	'Kernel-Tests-WithCompiler'
-	'AST-Tests-Core' "requires BlueInk-Core"
+	'AST-Core-Tests' "requires BlueInk-Core"
 	'Announcements-Tests-Core'
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 

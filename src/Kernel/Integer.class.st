@@ -63,6 +63,18 @@ Integer class >> new: length neg: neg [
 		ifFalse: [^LargePositiveInteger new: length]
 ]
 
+{ #category : #reading }
+Integer class >> readHexByteFrom: characterReadStream [
+	| highNibble lowNibble |
+	highNibble := characterReadStream next
+		ifNotNil: [ :character | character hexDigitValue ].
+	highNibble ifNil: [ self error: 'hex digit expected' ].
+	lowNibble := characterReadStream next
+		ifNotNil: [ :character | character hexDigitValue ].
+	lowNibble ifNil: [ self error: 'hex digit expected' ].
+	^ (highNibble bitShift: 4) + lowNibble
+]
+
 { #category : #'bit manipulation' }
 Integer >> & aNumber [
 	^ self bitAnd: aNumber
@@ -1187,6 +1199,44 @@ Integer >> print: positiveNumberString on: aStream prefix: prefix length: minimu
 		ifFalse: [aStream nextPutAll: prefix].
 	aStream nextPutAll: positiveNumberString
 	
+]
+
+{ #category : #'printing-numerative' }
+Integer >> printHexByteOn: characterWriteStream [
+	"Assuming the receiver is a byte value [0, 255],
+	print a 2 character hexadecimal representation on characterWriteStream
+	using the uppercase alphabet."
+	
+	(self between: 0 and: 255)
+		ifTrue: [
+			| highNibble lowNibble hexDigits |
+			highNibble := self bitShift: -4.
+			lowNibble := self bitAnd: 15.
+			hexDigits := '0123456789ABCDEF'.
+			characterWriteStream 
+				nextPut: (hexDigits at: highNibble + 1);
+				nextPut: (hexDigits at: lowNibble + 1) ]
+		ifFalse: [ 
+			self error: 'byte value between 0 and 255 expected' ]
+]
+
+{ #category : #'printing-numerative' }
+Integer >> printLowercaseHexByteOn: characterWriteStream [
+	"Assuming the receiver is a byte value [0, 255],
+	print a 2 character hexadecimal representation on characterWriteStream
+	using the lowercase alphabet."
+	
+	(self between: 0 and: 255)
+		ifTrue: [
+			| highNibble lowNibble hexDigits |
+			highNibble := self bitShift: -4.
+			lowNibble := self bitAnd: 15.
+			hexDigits := '0123456789abcdef'.
+			characterWriteStream 
+				nextPut: (hexDigits at: highNibble + 1);
+				nextPut: (hexDigits at: lowNibble + 1) ]
+		ifFalse: [ 
+			self error: 'byte value between 0 and 255 expected' ]
 ]
 
 { #category : #'printing-numerative' }
