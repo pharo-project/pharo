@@ -273,7 +273,7 @@ BaselineOfIDE >> baseline: spec [
 
 		"standalone packages"
 		spec package: 'Announcements-Help'.
-		spec package: 'Announcements-Tests-Core'.
+		spec package: 'Announcements-Core-Tests'.
 		spec package: 'Balloon-Tests'.
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
@@ -761,7 +761,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Kernel-Tests-Extended' 
 	'Kernel-Tests-WithCompiler'
 	'AST-Core-Tests' "requires BlueInk-Core"
-	'Announcements-Tests-Core'
+	'Announcements-Core-Tests'
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
