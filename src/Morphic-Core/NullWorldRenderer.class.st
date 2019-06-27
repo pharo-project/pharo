@@ -68,13 +68,22 @@ NullWorldRenderer >> deferUpdates: aValue [
 { #category : #operations }
 NullWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld submorphs: submorphs [
 
-	"Do Nothing"
-]
+	| canvas worldDamageRects handsToDraw |
 
-{ #category : #operations }
-NullWorldRenderer >> doDeferredUpdatingFor: aWorld [
+	canvas := (Form extent: self actualScreenSize depth: 32) getCanvas.
 
-	"Do Nothing"
+	submorphs do: [ :m | m fullBounds ].	
+
+	aWorldState checkIfUpdateNeeded ifFalse: [^ self].  
+
+	worldDamageRects := aWorldState drawWorld: aWorld submorphs: submorphs invalidAreasOn: canvas.  
+	"repair world's damage on canvas"
+
+	handsToDraw := aWorldState selectHandsToDrawForDamage: worldDamageRects.
+	handsToDraw reverseDo: [:h | canvas fullDrawMorph: h].  "draw hands onto world canvas"
+ 
+	canvas.
+
 ]
 
 { #category : #operations }

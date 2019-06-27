@@ -14,6 +14,12 @@ AbstractMorphicUITest >> defaultWaitDuration [
 ]
 
 { #category : #running }
+AbstractMorphicUITest >> existsUIProcess [
+
+	^ UIManager default uiProcess isNotNil
+]
+
+{ #category : #running }
 AbstractMorphicUITest >> isRunningInUIProcess [
 
 	^ UIManager default uiProcess == Processor activeProcess

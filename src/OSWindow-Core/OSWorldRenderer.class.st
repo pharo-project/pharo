@@ -90,8 +90,6 @@ OSWorldRenderer >> checkForNewScreenSize [
 { #category : #initialization }
 OSWorldRenderer >> deactivate [
 
-	| attributes |
-
 	osWindow ifNotNil: [ osWindow destroy. osWindow := nil ].
 	display := nil.
 	
