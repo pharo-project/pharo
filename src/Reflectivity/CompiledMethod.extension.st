@@ -43,7 +43,7 @@ CompiledMethod >> hasLinks [
 { #category : #'*Reflectivity' }
 CompiledMethod >> hasMetaLinks [
 	self reflectiveMethod ifNil: [ ^false ].
-	^self reflectiveMethod hasLinks. 
+	^self reflectiveMethod hasMetaLinks. 
 ]
 
 { #category : #'*Reflectivity' }
