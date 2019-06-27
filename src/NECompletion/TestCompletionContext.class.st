@@ -21,7 +21,7 @@ Class {
 	#category : #'NECompletion-ExperimentalCompletion'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 TestCompletionContext class >> controller: aNECController class: aClass source: aString position: anInteger [ 
 	^ self new
 		setController: aNECController
