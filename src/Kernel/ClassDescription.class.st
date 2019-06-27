@@ -144,7 +144,7 @@ ClassDescription >> allSelectorsInProtocol: aName [
 
 { #category : #'pool variable' }
 ClassDescription >> allSharedPools [
-	"Answer an ordered collection  of the shared pools the receiver shares, including those defined  in the superclasses of the receiver."
+	"Answer an ordered collection of the shared pools the receiver shares, including those defined  in the superclasses of the receiver."
 	
 	^ OrderedCollection new
 ]
@@ -260,7 +260,6 @@ ClassDescription >> classCommentBlank [
 
 	| stream |
 	stream := (String new: 100) writeStream.
-	
 	stream nextPutAll: 'Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
 
 For the Class part:  State a one line summary. For example, "I represent a paragraph of text".
@@ -588,9 +587,9 @@ ClassDescription >> definitionForNautilus [
 
 { #category : #'filein/out' }
 ClassDescription >> definitionWithSlots [
-	"the class definition with a way to specify slots. Shown when the class defines special Slot"
+	"The class definition with a way to specify slots. Shown when the class defines special Slot"
+	
 	| stream poolString|
-
 	poolString := self sharedPoolsString.
 
 	stream := (String new: 800) writeStream.
@@ -643,8 +642,8 @@ ClassDescription >> definitionWithSlots [
 
 { #category : #'filein/out' }
 ClassDescription >> definitionWithoutSlots [
-	| poolString stream |
 
+	| poolString stream |
 	poolString := self sharedPoolsString.
 	stream := (String new: 800) writeStream.
 	superclass
@@ -719,7 +718,7 @@ ClassDescription >> hasClassSide [
 
 { #category : #'accessing comment' }
 ClassDescription >> hasComment [
-	"return whether this class truly has a comment other than the default"
+	"Return whether this class truly has a comment other than the default"
 	^self instanceSide organization hasComment
 ]
 
@@ -745,9 +744,10 @@ ClassDescription >> hasSlot: aSlot [
 
 { #category : #slots }
 ClassDescription >> hasSlotNamed: aString [
-	"Return true whether the receiver defines an instance variable named aString."
+	"Return true whether the receiver defines an instance variable named aString.
+	this includes non-visible slots"
 	
-	^ self allSlots anySatisfy: [:slot | slot name = aString]
+	^ self classLayout hasSlotNamed: aString
 ]
 
 { #category : #'instance variables' }
