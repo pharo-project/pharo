@@ -4,7 +4,7 @@ SUnit tests for BISimpleFormatter
 Class {
 	#name : #RBFormatterTest,
 	#superclass : #RBParseTreeTest,
-	#category : #'AST-Tests-Core'
+	#category : #'AST-Core-Tests'
 }
 
 { #category : #private }

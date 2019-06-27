@@ -1,7 +1,7 @@
 Class {
 	#name : #RBMessageNodeTest,
 	#superclass : #RBParseTreeTest,
-	#category : #'AST-Tests-Core'
+	#category : #'AST-Core-Tests'
 }
 
 { #category : #testing }
