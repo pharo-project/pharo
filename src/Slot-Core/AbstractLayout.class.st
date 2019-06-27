@@ -73,6 +73,8 @@ AbstractLayout >> hasSlot: aSlot [
 
 { #category : #api }
 AbstractLayout >> hasSlotNamed: aString [
+	"Return true whether the receiver defines an instance variable named aString.
+	this includs non-visible slots"
 	^self allSlots anySatisfy: [:slot | slot name = aString  ]
 ]
 
