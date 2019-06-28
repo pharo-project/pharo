@@ -45,10 +45,22 @@ TestResultType class >> newWarning [
 	^ TestRaisedWarning new
 ]
 
+{ #category : #comparing }
+TestResultType >> = aTestResultType [
+	"TestResultType objects are usually stateless, so they are equal if their classes are equal."
+	^ self class = aTestResultType class
+]
+
 { #category : #accessing }
 TestResultType >> color [
 	"Returns the color to be used when the test is displayed to user."
 	^ self subclassResponsibility
+]
+
+{ #category : #comparing }
+TestResultType >> hash [
+	"TestResultType objects are usually stateless, so the hash is the class' hash."
+	^ self class hash
 ]
 
 { #category : #testing }
