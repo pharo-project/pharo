@@ -1253,18 +1253,6 @@ SequenceableCollection >> indexOfSubCollection: sub startingAt: start ifAbsent: 
 	^ exceptionBlock value
 ]
 
-{ #category : #accessing }
-SequenceableCollection >> integerAt: index [
-	"Return the integer at the given index"
-	^self at: index
-]
-
-{ #category : #accessing }
-SequenceableCollection >> integerAt: index put: value [
-	"Return the integer at the given index"
-	^self at: index put: value
-]
-
 { #category : #converting }
 SequenceableCollection >> isSequenceable [
 	^ true
