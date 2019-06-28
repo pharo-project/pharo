@@ -158,11 +158,12 @@ ClassDescription >> allSlots [
 ClassDescription >> allUnreferencedInstanceVariables [
 	"Return a list of the instance variables known to the receiver which are not referenced in the receiver or any of its subclasses OR superclasses"
 
-	^ self allInstVarNames reject: [:ivn |
-		| definingClass |		
-		definingClass := self classThatDefinesInstanceVariable: ivn.
-		definingClass withAllSubclasses anySatisfy: [:class |  
-				(class whichSelectorsAccess: ivn asSymbol) notEmpty]]
+	^ self allInstVarNames
+		reject: [ :ivn | 
+			| definingClass |
+			definingClass := self classThatDefinesInstVarNamed: ivn.
+			definingClass withAllSubclasses
+				anySatisfy: [ :class | (class whichSelectorsAccess: ivn asSymbol) notEmpty ] ]
 ]
 
 { #category : #authors }
@@ -310,9 +311,11 @@ ClassDescription >> classThatDefinesClassVariable: classVarName [
 ]
 
 { #category : #'instance variables' }
-ClassDescription >> classThatDefinesInstanceVariable: instVarName [
-	(self instVarNames notNil and: [self instVarNames includes: instVarName asString]) ifTrue: [^ self]. 
-	^self superclass ifNotNil: [self superclass classThatDefinesInstanceVariable: instVarName]
+ClassDescription >> classThatDefinesInstVarNamed: instVarName [
+	^self 
+		slotNamed: instVarName
+		 ifFound: [ :slot | slot definingClass  ]
+		 ifNone: nil
 ]
 
 { #category : #slots }
