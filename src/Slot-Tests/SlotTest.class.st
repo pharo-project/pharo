@@ -86,6 +86,11 @@ SlotTest >> testRemoveProperty [
 	self assert: ivar properties isNil.
 ]
 
+{ #category : #'tests - testing' }
+SlotTest >> testisReferenced [
+	self assert: (Point slotNamed: #x) isReferenced
+]
+
 { #category : #'tests - misc' }
 SlotTest >> testisUsed [
 	self assert: InstanceVariableSlot isUsed.
