@@ -4,7 +4,7 @@ Unit tests for extensions done by Regex package
 Class {
 	#name : #RxExtensionsTest,
 	#superclass : #TestCase,
-	#category : #'Regex-Tests-Core'
+	#category : #'Regex-Core-Tests'
 }
 
 { #category : #tests }
