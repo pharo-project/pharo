@@ -126,6 +126,15 @@ TestResult >> addError: aTestCase [
 { #category : #adding }
 TestResult >> addFailure: aTestCase [
 	"We cannot use self failures as that incorporates test expectations and so does not return the stored collection."
+	
+	"Test if the failure was not already in #testResults because if it is resumable,
+	it can be added twice. Before this was managed by the fact that failures were stored
+	in a Set.
+	This behaviour is a bit strange and should be cleaned at some point.
+	For now, we deal with that using the following guard clause."
+	(testResults includes: aTestCase)
+		ifTrue: [ ^ aTestCase ].
+	
 	aTestCase resultType: TestResultType newFailure.
 	^ self addTestCase: aTestCase
 ]
