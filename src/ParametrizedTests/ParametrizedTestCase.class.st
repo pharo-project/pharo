@@ -50,7 +50,7 @@ ParametrizedTestCase class >> buildSuite [
 
 	expandedMatrix ifEmpty: [ ^ self buildSuiteFromSelectors].
 
-	suite := self suiteClass named: self name.
+	suite := self classForTestSuite named: self name.
 	expandedMatrix do: [ :expandedParameters | |internalSuite|
 		internalSuite := self buildSuiteFromSelectors.
 		internalSuite tests do: [ :aTest | aTest parametersToUse: expandedParameters ].

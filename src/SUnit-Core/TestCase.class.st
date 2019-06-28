@@ -82,7 +82,7 @@ TestCase class >> buildSuite [
 	| suite |
 	^self isAbstract
 		ifTrue: 
-			[suite := self suiteClass named: self name asString.
+			[suite := self classForTestSuite named: self name asString.
 			self allSubclasses 
 				do: [:each | each isAbstract ifFalse: [suite addTest: each buildSuiteFromSelectors]].
 			suite]
@@ -107,7 +107,7 @@ TestCase class >> buildSuiteFromLocalSelectors [
 TestCase class >> buildSuiteFromMethods: testMethods [
 
 	^testMethods
-		inject: (self suiteClass named: self name asString)
+		inject: (self classForTestSuite named: self name asString)
 		into: [:suite :selector |
 			suite
 				addTest: (self selector: selector);
