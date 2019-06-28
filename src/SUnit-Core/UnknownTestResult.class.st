@@ -7,7 +7,7 @@ Thus I am an unknown result.
 "
 Class {
 	#name : #UnknownTestResult,
-	#superclass : #TestResultType,
+	#superclass : #TestResultSeverity,
 	#category : #'SUnit-Core-Kernel'
 }
 

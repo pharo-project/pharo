@@ -3,7 +3,7 @@ I model the fact that a test raised an exception that is not an AssertionFailure
 "
 Class {
 	#name : #TestRaisedError,
-	#superclass : #TestResultType,
+	#superclass : #TestResultSeverity,
 	#category : #'SUnit-Core-Kernel'
 }
 

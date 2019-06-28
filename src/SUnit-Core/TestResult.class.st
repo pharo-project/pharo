@@ -119,7 +119,7 @@ TestResult class >> warning [
 { #category : #adding }
 TestResult >> addError: aTestCase [
 	"We cannot use self errors as that incorporates test expectations and so does not return the stored collection."
-	aTestCase resultType: TestResultType newError.
+	aTestCase resultType: TestResultSeverity newError.
 	^ self addTestCase: aTestCase
 ]
 
@@ -135,20 +135,20 @@ TestResult >> addFailure: aTestCase [
 	(testResults includes: aTestCase)
 		ifTrue: [ ^ aTestCase ].
 	
-	aTestCase resultType: TestResultType newFailure.
+	aTestCase resultType: TestResultSeverity newFailure.
 	^ self addTestCase: aTestCase
 ]
 
 { #category : #adding }
 TestResult >> addPass: aTestCase [
 	"We cannot use self passed as that incorporates test expectations and so does not return the stored collection."
-	aTestCase resultType: TestResultType newPass.
+	aTestCase resultType: TestResultSeverity newPass.
 	^ self addTestCase: aTestCase
 ]
 
 { #category : #adding }
 TestResult >> addSkip: aTestCase [
-	aTestCase resultType: TestResultType newWarning.
+	aTestCase resultType: TestResultSeverity newWarning.
 	^ self addTestCase: aTestCase
 ]
 

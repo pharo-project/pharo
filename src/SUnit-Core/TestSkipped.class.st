@@ -3,7 +3,7 @@ I model the fact that a test was skipped during its execution.
 "
 Class {
 	#name : #TestSkipped,
-	#superclass : #TestResultType,
+	#superclass : #TestResultSeverity,
 	#category : #'SUnit-Core-Kernel'
 }
 

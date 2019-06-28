@@ -10,90 +10,90 @@ My subclasses provide concrete types of test results such as:
 Having real objects to model the type of a result allow to delegate some tasks to them such as deciding the color to display for a test.
 "
 Class {
-	#name : #TestResultType,
+	#name : #TestResultSeverity,
 	#superclass : #Object,
 	#category : #'SUnit-Core-Kernel'
 }
 
 { #category : #factory }
-TestResultType class >> newError [
+TestResultSeverity class >> newError [
 	^ TestRaisedError new
 ]
 
 { #category : #factory }
-TestResultType class >> newFailure [
+TestResultSeverity class >> newFailure [
 	^ TestFailed new
 ]
 
 { #category : #factory }
-TestResultType class >> newPass [
+TestResultSeverity class >> newPass [
 	^ TestPassed new
 ]
 
 { #category : #factory }
-TestResultType class >> newSkip [
+TestResultSeverity class >> newSkip [
 	^ TestSkipped new
 ]
 
 { #category : #factory }
-TestResultType class >> newUnknown [
+TestResultSeverity class >> newUnknown [
 	^ UnknownTestResult new
 ]
 
 { #category : #factory }
-TestResultType class >> newWarning [
+TestResultSeverity class >> newWarning [
 	^ TestRaisedWarning new
 ]
 
 { #category : #comparing }
-TestResultType >> = aTestResultType [
+TestResultSeverity >> = aTestResultType [
 	"TestResultType objects are usually stateless, so they are equal if their classes are equal."
 	^ self class = aTestResultType class
 ]
 
 { #category : #accessing }
-TestResultType >> color [
+TestResultSeverity >> color [
 	"Returns the color to be used when the test is displayed to user."
 	^ self subclassResponsibility
 ]
 
 { #category : #comparing }
-TestResultType >> hash [
+TestResultSeverity >> hash [
 	"TestResultType objects are usually stateless, so the hash is the class' hash."
 	^ self class hash
 ]
 
 { #category : #testing }
-TestResultType >> isFailed [
+TestResultSeverity >> isFailed [
 	^ false
 ]
 
 { #category : #testing }
-TestResultType >> isPassed [
+TestResultSeverity >> isPassed [
 	^ false
 ]
 
 { #category : #testing }
-TestResultType >> isRaisedError [
+TestResultSeverity >> isRaisedError [
 	^ false
 ]
 
 { #category : #testing }
-TestResultType >> isRaisedWarning [
+TestResultSeverity >> isRaisedWarning [
 	^ false
 ]
 
 { #category : #testing }
-TestResultType >> isSkipped [
+TestResultSeverity >> isSkipped [
 	^ false
 ]
 
 { #category : #testing }
-TestResultType >> isUnknownTestResult [
+TestResultSeverity >> isUnknownTestResult [
 	^ false
 ]
 
 { #category : #accessing }
-TestResultType >> theme [
+TestResultSeverity >> theme [
 	^ Smalltalk ui theme
 ]

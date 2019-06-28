@@ -3,7 +3,7 @@ I model the fact that a test raised a Warning.
 "
 Class {
 	#name : #TestRaisedWarning,
-	#superclass : #TestResultType,
+	#superclass : #TestResultSeverity,
 	#category : #'SUnit-Core-Kernel'
 }
 

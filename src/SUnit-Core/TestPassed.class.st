@@ -3,7 +3,7 @@ I model the fact that a test passes.
 "
 Class {
 	#name : #TestPassed,
-	#superclass : #TestResultType,
+	#superclass : #TestResultSeverity,
 	#category : #'SUnit-Core-Kernel'
 }
 

@@ -741,7 +741,7 @@ TestCase >> resources [
 
 { #category : #accessing }
 TestCase >> resultType [
-	^ resultType ifNil: [ resultType := TestResultType newUnknown ]
+	^ resultType ifNil: [ resultType := TestResultSeverity newUnknown ]
 ]
 
 { #category : #accessing }

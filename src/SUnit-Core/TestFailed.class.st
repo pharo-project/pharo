@@ -3,7 +3,7 @@ I model the fact that a test fails.
 "
 Class {
 	#name : #TestFailed,
-	#superclass : #TestResultType,
+	#superclass : #TestResultSeverity,
 	#category : #'SUnit-Core-Kernel'
 }
 
