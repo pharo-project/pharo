@@ -6,12 +6,12 @@ I allow to represent the fact that the test hasn't been run yet.
 Thus I am an unknown result.
 "
 Class {
-	#name : #UnknownTestResult,
+	#name : #TestUnknownResult,
 	#superclass : #TestResultSeverity,
 	#category : #'SUnit-Core-Kernel'
 }
 
 { #category : #testing }
-UnknownTestResult >> isUnknownTestResult [
+TestUnknownResult >> isUnknownTestResult [
 	^ true
 ]

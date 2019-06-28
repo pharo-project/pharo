@@ -37,7 +37,7 @@ TestResultSeverity class >> newSkip [
 
 { #category : #factory }
 TestResultSeverity class >> newUnknown [
-	^ UnknownTestResult new
+	^ TestUnknownResult new
 ]
 
 { #category : #factory }
