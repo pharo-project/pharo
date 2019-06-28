@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'parameter'
 	],
-	#category : #'Announcements-Tests-Core-Mocks'
+	#category : #'Announcements-Core-Tests-Mocks'
 }
 
 { #category : #'instance creation' }
