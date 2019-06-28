@@ -385,6 +385,7 @@ TestAsserter >> denyCollection: actualCollection includesAll: subcollection [
 	^ self
 		assert: (actualCollection includesAll: subcollection) not
 		description: [ actualCollection asString , ' does not include all in ' , subcollection asString ]
+]
 
 { #category : #asserting }
 TestAsserter >> denyCollection: actualCollection includesAny: subcollection [
