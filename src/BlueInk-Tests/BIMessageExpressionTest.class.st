@@ -73,7 +73,7 @@ BIMessageExpressionTest >> newLineBeforeFirstKeywordConfiguration [
 
 { #category : #configurations }
 BIMessageExpressionTest >> noIdentsForKeyWordConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -92,7 +92,7 @@ BIMessageExpressionTest >> noIdentsForKeyWordConfiguration [
 
 { #category : #configurations }
 BIMessageExpressionTest >> oneArgumentPerLineConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -111,7 +111,7 @@ BIMessageExpressionTest >> oneArgumentPerLineConfiguration [
 
 { #category : #configurations }
 BIMessageExpressionTest >> oneIdentsForKeyWordConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -471,7 +471,7 @@ BIMessageExpressionTest >> tooLongArgumentConfiguration [
 
 { #category : #configurations }
 BIMessageExpressionTest >> traditionalBinaryPrecedenceConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -493,7 +493,7 @@ BIMessageExpressionTest >> traditionalBinaryPrecedenceConfiguration [
 
 { #category : #configurations }
 BIMessageExpressionTest >> twoIdentsForKeyWordConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"

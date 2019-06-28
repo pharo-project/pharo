@@ -9,13 +9,12 @@ ByteArray >> gtInspectorBytesIn: composite [
 			(self size < 2048 or: [ self confirm: 'Looking at more than 2048 bytes might be slow. Continue ?' ])
 				ifTrue: [ {
 					'hex string' -> (String streamContents: [ :out | 
-						self do: [ :each | 
-							each printOn: out base: 16 nDigits: 2 ] ]).
+						self printHexOn: out ]).
 					'hex lines' -> (String streamContents: [ :out |
 						self withIndexDo: [ :each :index |
 							index = 1 ifFalse: [ 
 								index - 1 \\ 8 = 0 ifTrue: [ out cr ] ifFalse: [ out space ] ].
-								each printOn: out base: 16 nDigits: 2 ] ]).
+								each printHexByteOn: out ] ]).
 					'latin1' -> ([ ZnCharacterEncoder latin1 decodeBytes: self ]
 											on: ZnCharacterEncodingError do: [ :exception | exception ]).
 					'utf8' -> ([ ZnUTF8Encoder new decodeBytes: self ] 

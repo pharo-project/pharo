@@ -145,15 +145,6 @@ ClassTest >> testClassSide [
 	self assert: Point class classSide equals: Point class. 
 ]
 
-{ #category : #'tests - class variables' }
-ClassTest >> testClassVarNames [
-
-	self assert: (Object classVarNames includes: #DependentsFields).
-	
-	"A class and it's meta-class share the class variables"
-	self assert: (Object classVarNames = Object class classVarNames).
-]
-
 { #category : #'as yet unclassified' }
 ClassTest >> testCompileAll [
 	ClassTest compileAll
@@ -435,6 +426,30 @@ ClassTest >> testUsesPoolVarNamed [
 	self assert: (RootClassPoolUser usesPoolVarNamed: 'Author').
 	"a subclass  has  the one of its superclass"
 	self assert: (SubclassPoolUser usesPoolVarNamed: 'Author').
+]
+
+{ #category : #'tests - class variables' }
+ClassTest >> testallClassVariables [
+
+	self assert: SmalltalkImage allClassVariables last name equals: #DependentsFields
+]
+
+{ #category : #'tests - class variables' }
+ClassTest >> testclassVarNames [
+
+	self assert: (Object classVarNames includes: #DependentsFields).
+	
+	"A class and it's meta-class share the class variables"
+	self assert: (Object classVarNames = Object class classVarNames).
+]
+
+{ #category : #'tests - class variables' }
+ClassTest >> testclassVariables [
+
+	self assert: Object classVariables first name equals: #DependentsFields.
+	
+	"A class and it's meta-class share the class variables"
+	self assert: (Object classVariables = Object class classVariables).
 ]
 
 { #category : #'tests - class creation' }
