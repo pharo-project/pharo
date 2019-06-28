@@ -16,15 +16,6 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
-{ #category : #asserting }
-TestAsserter class >> assert: aBoolean description: aString [
-	"Minimal clone of the instance-side assert protocol so that class-side methods can use it."
-
-	aBoolean ifFalse:
-		[self logFailure: aString.
-		self classForTestResult failure signal: aString].
-]
-
 { #category : #accessing }
 TestAsserter class >> defaultPrecisionsForCloseToComparison [
 	"This number comes from the one used in Float>>#closeTo: implementation."

@@ -9,6 +9,15 @@ Trait {
 	#category : #'SUnit-Core-Traits'
 }
 
+{ #category : #asserting }
+TAssertable classSide >> assert: aBoolean description: aString [
+	"Minimal clone of the instance-side assert protocol so that class-side methods can use it."
+
+	aBoolean ifFalse:
+		[self logFailure: aString.
+		self classForTestResult failure signal: aString].
+]
+
 { #category : #factory }
 TAssertable classSide >> classForTestResult [
 	"Returns the class of the test result"
