@@ -19,16 +19,16 @@ RBAbstractClassVariableTest >> testAbstractClassVariable [
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	meta := class classSide.
-	self assert: (meta parseTreeFor: #recursiveSelfRule) = (self parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
-	self assert: (meta parseTreeFor: #recursiveSelfRule:) = (self parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
-	self assert: (meta parseTreeFor: #nuke) = (self parseMethod: 'nuke
+	self assert: (meta parseTreeFor: #recursiveSelfRule) equals: (self parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
+	self assert: (meta parseTreeFor: #recursiveSelfRule:) equals: (self parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
+	self assert: (meta parseTreeFor: #nuke) equals: (self parseMethod: 'nuke
 							self recursiveSelfRule: nil').
-	self assert: (meta parseTreeFor: #initializeAfterLoad1) = (self parseMethod: 'initializeAfterLoad1
+	self assert: (meta parseTreeFor: #initializeAfterLoad1) equals: (self parseMethod: 'initializeAfterLoad1
 							self recursiveSelfRule: RBParseTreeSearcher new.
 							self recursiveSelfRule
 								addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
 										-> [:aNode :answer | true]').
-	self assert: (class parseTreeFor: #checkMethod:) = (self parseMethod: 'checkMethod: aSmalllintContext 
+	self assert: (class parseTreeFor: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext 
 							class := aSmalllintContext selectedClass.
 							(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
 									[(self class recursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
@@ -62,19 +62,19 @@ RBAbstractClassVariableTest >> testModelAbstractClassVariable [
 		variable: 'ClassVarName1'
 		class: class.
 	self executeRefactoring: refactoring.
-	self assert: (meta parseTreeFor: #classVarName1) = (self parseMethod: 'classVarName1 ^ClassVarName1').
-	self assert: (meta parseTreeFor: #classVarName1:) = (self parseMethod: 'classVarName1: anObject ^ClassVarName1 := anObject').
-	self assert: (meta parseTreeFor: #foo) = (self parseMethod: 'foo
+	self assert: (meta parseTreeFor: #classVarName1) equals: (self parseMethod: 'classVarName1 ^ClassVarName1').
+	self assert: (meta parseTreeFor: #classVarName1:) equals: (self parseMethod: 'classVarName1: anObject ^ClassVarName1 := anObject').
+	self assert: (meta parseTreeFor: #foo) equals: (self parseMethod: 'foo
 					^self classVarName1: self classVarName1 * self classVarName1 * self classVarName1').
-	self assert: (class parseTreeFor: #classVarName1) = (self parseMethod: 'classVarName1
+	self assert: (class parseTreeFor: #classVarName1) equals: (self parseMethod: 'classVarName1
 							^self class classVarName1').
-	self assert: (class parseTreeFor: #classVarName1:) = (self parseMethod: 'classVarName1: anObject
+	self assert: (class parseTreeFor: #classVarName1:) equals: (self parseMethod: 'classVarName1: anObject
 							^self class classVarName1: anObject').
-	self assert: (class parseTreeFor: #asdf) = (self parseMethod: 'asdf
+	self assert: (class parseTreeFor: #asdf) equals: (self parseMethod: 'asdf
 						^self classVarName1: (self class classVarName1: self class classVarName1 + 1)').
-	self assert: ((model classNamed: #Bar) parseTreeFor: #foo) = (self parseMethod: 'foo
+	self assert: ((model classNamed: #Bar) parseTreeFor: #foo) equals: (self parseMethod: 'foo
 					instVarName1 := instVarName1 + instVarName2 + self class classVarName1').
-	self assert: ((model classNamed: #Bar) parseTreeFor: #foo) = (self parseMethod: 'foo
+	self assert: ((model classNamed: #Bar) parseTreeFor: #foo) equals: (self parseMethod: 'foo
 						instVarName1 := instVarName1 + instVarName2 + self class classVarName1')
 ]
 
@@ -88,8 +88,8 @@ RBAbstractClassVariableTest >> testModelAbstractClassVariableOverridenMethodsInS
 		variable: 'ClassVarName2'
 		class: class.
 	self executeRefactoring: refactoring.
-	self assert: (meta parseTreeFor: #classVarName21) = (self parseMethod: 'classVarName21 ^ClassVarName2').
-	self assert: (meta parseTreeFor: #classVarName21:) = (self parseMethod: 'classVarName21: anObject ClassVarName2 := anObject')
+	self assert: (meta parseTreeFor: #classVarName21) equals: (self parseMethod: 'classVarName21 ^ClassVarName2').
+	self assert: (meta parseTreeFor: #classVarName21:) equals: (self parseMethod: 'classVarName21: anObject ClassVarName2 := anObject')
 ]
 
 { #category : #'failure tests' }

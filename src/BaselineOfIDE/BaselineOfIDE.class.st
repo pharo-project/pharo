@@ -273,7 +273,7 @@ BaselineOfIDE >> baseline: spec [
 
 		"standalone packages"
 		spec package: 'Announcements-Help'.
-		spec package: 'Announcements-Tests-Core'.
+		spec package: 'Announcements-Core-Tests'.
 		spec package: 'Balloon-Tests'.
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
@@ -331,7 +331,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Reflectivity-Examples'.
 		spec package: 'Reflectivity-Tools-Tests'.
 		spec package: 'Regex-Help'.
-		spec package: 'Regex-Tests-Core'.
+		spec package: 'Regex-Core-Tests'.
 		spec package: 'Renraku-Help'.
 		spec package: 'Renraku-Test'.
 		spec package: 'Ring-Deprecated-Tests-Monticello'.
@@ -472,7 +472,7 @@ spec group: 'General-Tests-Group' with: #(
 	'NewValueHolder-Tests'
 	'ProfStef-Tests'
 	'Reflectivity-Tools-Tests'
-	'Regex-Tests-Core'
+	'Regex-Core-Tests'
 	'Ring-Deprecated-Tests-Monticello'
 	'Rubric-Tests'
 	'ScriptingExtensions-Tests'
@@ -761,7 +761,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Kernel-Tests-Extended' 
 	'Kernel-Tests-WithCompiler'
 	'AST-Core-Tests' "requires BlueInk-Core"
-	'Announcements-Tests-Core'
+	'Announcements-Core-Tests'
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'

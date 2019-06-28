@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'announcingCounter'
 	],
-	#category : #'Announcements-Tests-Core-Mocks'
+	#category : #'Announcements-Core-Tests-Mocks'
 }
 
 { #category : #accessing }

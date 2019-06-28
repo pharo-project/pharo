@@ -6,7 +6,7 @@ Class {
 
 { #category : #configurations }
 BITemporariesExpressionTest >> basicCommentFormatConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -33,7 +33,7 @@ BITemporariesExpressionTest >> commentWithStatementsConfiguration [
 
 { #category : #configurations }
 BITemporariesExpressionTest >> dontRetainBlankLinesBeforeComments [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -48,7 +48,7 @@ BITemporariesExpressionTest >> dontRetainBlankLinesBeforeComments [
 
 { #category : #configurations }
 BITemporariesExpressionTest >> newLinesAfterTemporariesConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -63,7 +63,7 @@ BITemporariesExpressionTest >> newLinesAfterTemporariesConfiguration [
 
 { #category : #configurations }
 BITemporariesExpressionTest >> noNewLinesAfterTemporariesConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -78,7 +78,7 @@ BITemporariesExpressionTest >> noNewLinesAfterTemporariesConfiguration [
 
 { #category : #configurations }
 BITemporariesExpressionTest >> notBasicCommentFormatConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -94,7 +94,7 @@ BITemporariesExpressionTest >> notBasicCommentFormatConfiguration [
 
 { #category : #configurations }
 BITemporariesExpressionTest >> retainBlankLinesBeforeComments [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -264,7 +264,7 @@ BITemporariesExpressionTest >> testTwoLinesAfterTemporaries [
 
 { #category : #configurations }
 BITemporariesExpressionTest >> twoLinesAfterTemporariesConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"

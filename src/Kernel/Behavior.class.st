@@ -596,10 +596,24 @@ Behavior >> compiledMethodAt: selector ifAbsent: aBlock [
 ]
 
 { #category : #'accessing method dictionary' }
-Behavior >> compiledMethodAt: selector ifPresent: anotherBlock ifAbsent: aBlock [
-	"Answer the compiled method associated with the argument, selector (a Symbol), a message selector in the receiver's method dictionary. If the selector is not in the dictionary, return the value of aBlock"
+Behavior >> compiledMethodAt: selector ifPresent: aBlock [
+	"Answer the compiled method associated with the argument, selector (a Symbol),
+	 a message selector in the receiver's method dictionary.
+	 If the selector is in the dictionary, return the value of aBlock.
+	"
 
-	^ self methodDict at: selector ifPresent: anotherBlock ifAbsent: aBlock
+	^ self methodDict at: selector ifPresent: aBlock
+]
+
+{ #category : #'accessing method dictionary' }
+Behavior >> compiledMethodAt: selector ifPresent: aBlock ifAbsent: anotherBlock [
+	"Answer the compiled method associated with the argument, selector (a Symbol),
+	 a message selector in the receiver's method dictionary.
+	 If the selector is in the dictionary, return the value of aBlock.
+	 If the selector is not in the dictionary, return the value of anotherBlock.
+	"
+
+	^ self methodDict at: selector ifPresent: aBlock ifAbsent: anotherBlock
 ]
 
 { #category : #queries }

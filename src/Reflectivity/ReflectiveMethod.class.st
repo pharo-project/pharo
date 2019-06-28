@@ -144,6 +144,14 @@ ReflectiveMethod >> gtInspectorSourceIn: composite [
 
 { #category : #testing }
 ReflectiveMethod >> hasLinks [
+	self
+		deprecated: 'use #hasMetaLinks'
+		transformWith: '`@receiver hasLinks' -> '`@receiver hasMetaLinks'.
+	^ self hasMetaLinks
+]
+
+{ #category : #testing }
+ReflectiveMethod >> hasMetaLinks [
 	^self linkCount > 0.
 ]
 

@@ -8,7 +8,7 @@ Class {
 BILiteralValueExpressionTest >> basicConfiguration [
 
 	^ self contextClass basicNew
-		formatCommentWithStatements:false
+		formatCommentWithStatements: false
 ]
 
 { #category : #tests }

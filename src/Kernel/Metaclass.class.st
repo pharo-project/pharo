@@ -104,10 +104,18 @@ Metaclass >> classSide [
 
 { #category : #'accessing instances and variables' }
 Metaclass >> classVarNames [
+	"Answer the names of the class variables defined in the receiver's instance."
+	
+	self instanceSide ifNil: [ ^ Array new ].
+	^self instanceSide classVarNames
+]
+
+{ #category : #'class variables' }
+Metaclass >> classVariables [
 	"Answer a set of the names of the class variables defined in the receiver's instance."
 	
-	self instanceSide ifNil: [ ^ Set new ].
-	^self instanceSide classVarNames
+	self instanceSide ifNil: [ ^ Array new].
+	^self instanceSide classVariables
 ]
 
 { #category : #'fileIn/Out' }
