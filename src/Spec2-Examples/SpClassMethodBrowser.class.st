@@ -58,11 +58,11 @@ SpClassMethodBrowser >> initializePresenter [
 		transmitTo: methodListPresenter
 		transform: [ :class | class methods sort: #selector descending ]
 		postTransmission: [ :destination | destination selectIndex: 1 ].
-		
+
 	methodListPresenter
 		transmitTo: textPresenter
-		transform: #sourceCode
-		postTransmission: [ :destination :origin :transmited | destination behavior: transmited methodClass ]
+		transform: [ :method | method ifNil: [ '' ] ifNotNil: #sourceCode ]
+		postTransmission: [ :destination :origin :transmited | transmited ifNotNil: [ destination behavior: transmited methodClass ] ]
 ]
 
 { #category : #initialization }
