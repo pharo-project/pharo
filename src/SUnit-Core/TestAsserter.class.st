@@ -77,13 +77,13 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 	self assert: actualNumber closeTo: expectedNumber precision: self class defaultPrecisionsForCloseToComparison
 ]
 
-{ #category : #asserting }
-TestAsserter >> assert: actualNumber closeTo: expectedNumber precision: margin [
-	"Tell whether the actualNumber and expectedNumber are close from each with a given margin"		
+{ #category : #asserting }		
+TestAsserter >> assert: actualNumber closeTo: expectedNumber precision: epsilon [		
+	"Tell whether the actualNumber and expectedNumber ARE close to each others with a margin of epsilon."		
 
-  	^ self		
- 		assert: (actualNumber closeTo: expectedNumber precision: margin)		
- 		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
+	^ self		
+		assert: (actualNumber closeTo: expectedNumber precision: epsilon)		
+		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]		
 ]
 
 { #category : #asserting }
@@ -310,23 +310,22 @@ TestAsserter >> deny: aBooleanOrBlock [
 	self deny: aBooleanOrBlock description: 'Denial failed'
 ]
 
-{ #category : #asserting }
-TestAsserter >> deny: actualNumber closeTo: expectedNumber [
-	"Tell whether the actualNumber and expectedNumber are close from each with a margin of 0.0001"
-
-	^ self
-		deny: (actualNumber closeTo: expectedNumber)
-		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
+{ #category : #asserting }		
+TestAsserter >> deny: actualNumber closeTo: expectedNumber [		
+	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of		
+	 the default precision (see class-side method #defaultPrecisionsForCloseToComparison).		
+	"		
+	self deny: actualNumber closeTo: expectedNumber precision: self class defaultPrecisionsForCloseToComparison		
 ]
 
-{ #category : #asserting }
-TestAsserter >> deny: actualNumber closeTo: expectedNumber precision: margin [
-	"Tell whether the actualNumber and expectedNumber are close from each with a given margin"
+{ #category : #asserting }		
+TestAsserter >> deny: actualNumber closeTo: expectedNumber precision: epsilon [		
+	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of epsilon."		
 
-	^ self
-		deny: (actualNumber closeTo: expectedNumber precision: margin)
-		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]
-]
+	^ self		
+		assert: (actualNumber closeTo: expectedNumber precision: epsilon) not		
+		description: [ self comparingStringBetween: actualNumber and: expectedNumber ]		
+ ]
 
 { #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock description: aString [
@@ -378,13 +377,14 @@ TestAsserter >> denyCollection: actualCollection equals: expectedCollection [
 ]
 
 { #category : #asserting }
-TestAsserter >> denyCollection: actual includesAll: subcollection [
- 	"Specialized test method that generates a proper error message for collection"		
-
-  	^ self		
- 		deny: (actual includesAll: subcollection)		
- 		description: [ actual asString , ' does not include all in ' , subcollection asString ]
-]
+TestAsserter >> denyCollection: actualCollection includesAll: subcollection
+	"Raises an AssertionFailure if actualCollection INCLUDES all the elements of expectedCollection (by negating result of #includesAll: message).
+	 I also provide a specialized message for the AssertionFailure in case I fail.
+	"
+	
+	^ self
+		assert: (actualCollection includesAll: subcollection) not
+		description: [ actualCollection asString , ' does not include all in ' , subcollection asString ]
 
 { #category : #asserting }
 TestAsserter >> denyCollection: actualCollection includesAny: subcollection [
