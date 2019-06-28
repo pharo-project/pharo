@@ -312,7 +312,7 @@ TestAsserter >> deny: aBooleanOrBlock [
 
 { #category : #asserting }
 TestAsserter >> deny: actualNumber closeTo: expectedNumber [
-	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of		
+	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of
 	 the default precision (see class-side method #defaultPrecisionsForCloseToComparison).		
 	"		
 	self deny: actualNumber closeTo: expectedNumber precision: self class defaultPrecisionsForCloseToComparison		
