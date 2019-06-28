@@ -167,6 +167,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'AST-Core-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'Fuel-Tests-Core'.
+		spec package: 'Fuel-Platform-Pharo-Core-Tests'.
 		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
@@ -447,6 +448,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Monticello-Tests'	"required by MonticelloMocks"
 	'MonticelloMocks'
 	'Fuel-Tests-Core'
+	'Fuel-Platform-Pharo-Core-Tests'	
 	'Balloon-Tests'
 	'Collections-DoubleLinkedList-Tests'
 	'Collections-Arithmetic-Tests'

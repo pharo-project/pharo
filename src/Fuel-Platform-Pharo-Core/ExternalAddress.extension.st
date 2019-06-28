@@ -5,6 +5,6 @@ ExternalAddress >> fuelAccept: aGeneralMapper [
 
 	^ aGeneralMapper
 		visitSubstitution: self
-		by: ExternalAddress null
-		onRecursionDo: [ ^ super fuelAccept: aGeneralMapper ]
+		by: self class null
+		onRecursionDo: [ ^ aGeneralMapper visitFixedObject: self ]
 ]
