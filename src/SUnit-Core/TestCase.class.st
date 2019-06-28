@@ -585,7 +585,7 @@ TestCase >> announcer [
 { #category : #private }
 TestCase >> cleanUpInstanceVariables [
 	self class allInstVarNames do: [ :name |
-		name = 'testSelector' ifFalse: [
+		(#(testSelector resultType) includes: name) ifFalse: [
 			self instVarNamed: name put: nil ] ]
 ]
 
