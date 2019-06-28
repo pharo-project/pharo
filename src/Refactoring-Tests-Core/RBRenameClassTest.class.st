@@ -43,10 +43,10 @@ RBRenameClassTest >> testModelRenameClass [
 	self assert: (model includesClassNamed: #Thing).
 	self deny: (model includesClassNamed: #Object).
 	self 
-		assert: (class parseTreeFor: #foo) = (self parseMethod: 'foo ^Thing').
+		assert: (class parseTreeFor: #foo) equals:  (self parseMethod: 'foo ^Thing').
 	self assert: (class parseTreeFor: #objectName) 
-				= (self parseMethod: 'objectName ^#(Thing)').
-	self assert: class superclass name = #Thing
+				equals: (self parseMethod: 'objectName ^#(Thing)').
+	self assert: class superclass name equals: #Thing
 ]
 
 { #category : #tests }
@@ -71,9 +71,9 @@ RBRenameClassTest >> testModelRenameSequenceClass [
 	self deny: (model includesClassNamed: #Foo2).
 	self assert: (model includesClassNamed: #Foo3).
 	self assert: ((model classNamed: #Foo3) parseTreeFor: #foo) 
-		= (self parseMethod: 'foo ^ Foo3').
+		equals: (self parseMethod: 'foo ^ Foo3').
 	self assert: ((model classNamed: #Foo3) parseTreeFor: #objectName) 
-		= (self parseMethod: 'objectName ^ #(Foo3)')
+		equals: (self parseMethod: 'objectName ^ #(Foo3)')
 ]
 
 { #category : #tests }
@@ -85,19 +85,19 @@ RBRenameClassTest >> testRenameClass [
 	self executeRefactoring: refactoring.
 	self 
 		assert: ((refactoring model classNamed: ('RBNew' , 'ClassName') asSymbol) 
-				parseTreeFor: #method1) = (self parseMethod: 'method1
+				parseTreeFor: #method1) equals: (self parseMethod: 'method1
 	^self method2').
 	self deny: (refactoring model 
 				includesClassNamed: ('RBClass' , 'ToRename') asSymbol).
 	class := refactoring model 
 				classNamed: ('RBSubclass' , 'OfClassToRename') asSymbol.
 	self assert: class superclass 
-				= (refactoring model classNamed: ('RBNew' , 'ClassName') asSymbol).
+				equals: (refactoring model classNamed: ('RBNew' , 'ClassName') asSymbol).
 	self assert: (class parseTreeFor: #symbolReference) 
-				= (self parseMethod: 'symbolReference
+				equals: (self parseMethod: 'symbolReference
 								^#RBNewClassName').
 	self assert: (class parseTreeFor: #reference) 
-				= (self parseMethod: 'reference
+				equals: (self parseMethod: 'reference
 								^RBNewClassName new')
 ]
 

@@ -35,8 +35,8 @@ RBCreateAccessorsForVariableTest >> testNewClassVariableAccessors [
 	self denyEmpty: ref changes changes.
 	self assert: ref setterMethod == #foo1:.
 	self assert: ref getterMethod == #foo1.
-	self assert: (class parseTreeFor: #foo1) = (self parseMethod: 'foo1 ^Foo1').
-	self assert: (class parseTreeFor: #foo1:) = (self parseMethod: 'foo1: anObject Foo1 := anObject')
+	self assert: (class parseTreeFor: #foo1) equals: (self parseMethod: 'foo1 ^Foo1').
+	self assert: (class parseTreeFor: #foo1:) equals: (self parseMethod: 'foo1: anObject Foo1 := anObject')
 ]
 
 { #category : #tests }
@@ -48,8 +48,8 @@ RBCreateAccessorsForVariableTest >> testNewInstanceVariableAccessors [
 	self denyEmpty: ref changes changes.
 	self assert: ref setterMethod == #foo1:.
 	self assert: ref getterMethod == #foo1.
-	self assert: (class parseTreeFor: #foo1) = (self parseMethod: 'foo1 ^foo1').
-	self assert: (class parseTreeFor: #foo1:) = (self parseMethod: 'foo1: anObject foo1 := anObject')
+	self assert: (class parseTreeFor: #foo1) equals: (self parseMethod: 'foo1 ^foo1').
+	self assert: (class parseTreeFor: #foo1:) equals: (self parseMethod: 'foo1: anObject foo1 := anObject')
 ]
 
 { #category : #'failure tests' }
