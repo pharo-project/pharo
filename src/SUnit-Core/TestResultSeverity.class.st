@@ -51,12 +51,6 @@ TestResultSeverity >> = aTestResultType [
 	^ self class = aTestResultType class
 ]
 
-{ #category : #accessing }
-TestResultSeverity >> color [
-	"Returns the color to be used when the test is displayed to user."
-	^ self subclassResponsibility
-]
-
 { #category : #comparing }
 TestResultSeverity >> hash [
 	"TestResultType objects are usually stateless, so the hash is the class' hash."

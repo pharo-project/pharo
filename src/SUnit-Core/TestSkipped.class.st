@@ -7,11 +7,6 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
-{ #category : #accessing }
-TestSkipped >> color [
-	^ self theme disabledColor
-]
-
 { #category : #testing }
 TestSkipped >> isSkipped [
 	^ true

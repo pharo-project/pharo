@@ -11,11 +11,6 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
-{ #category : #accessing }
-UnknownTestResult >> color [
-	^ self theme disabledColor
-]
-
 { #category : #testing }
 UnknownTestResult >> isUnknownTestResult [
 	^ true

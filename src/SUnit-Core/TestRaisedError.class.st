@@ -7,11 +7,6 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
-{ #category : #accessing }
-TestRaisedError >> color [
-	^ self theme dangerBackgroundColor
-]
-
 { #category : #testing }
 TestRaisedError >> isRaisedError [
 	^ true
