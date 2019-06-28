@@ -321,19 +321,6 @@ SystemNavigation >> allUnimplementedCalls [
 ]
 
 { #category : #query }
-SystemNavigation >> allUnreferencedClassVariablesOf: aClass [
-	"Answer a list of the names of all the receiver's unreferenced class  
-	vars, including those defined in superclasses"
-	| aList |
-	aList := OrderedCollection new.
-	aClass withAllSuperclasses
-		reverseDo: [:aSuperClass | aSuperClass classVarNames
-				do: [:var | (self allReferencesTo: (aSuperClass classPool associationAt: var)) isEmpty
-						ifTrue: [aList add: var]]].
-	^ aList
-]
-
-{ #category : #query }
 SystemNavigation >> allUnsentMessagesIn: selectorSet [ 
 	"Answer the subset of selectorSet which are not sent anywhere in the system. As allSentMessages does not recurse into nested Arrays, filter with #allCallsOn, which does"
 	
