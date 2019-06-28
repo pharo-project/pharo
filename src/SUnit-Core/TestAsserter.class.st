@@ -313,14 +313,14 @@ TestAsserter >> deny: aBooleanOrBlock [
 { #category : #asserting }
 TestAsserter >> deny: actualNumber closeTo: expectedNumber [
 	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of
-	 the default precision (see class-side method #defaultPrecisionsForCloseToComparison).		
-	"		
-	self deny: actualNumber closeTo: expectedNumber precision: self class defaultPrecisionsForCloseToComparison		
+	 the default precision (see class-side method #defaultPrecisionsForCloseToComparison).
+	"
+	self deny: actualNumber closeTo: expectedNumber precision: self class defaultPrecisionsForCloseToComparison
 ]
 
-{ #category : #asserting }		
-TestAsserter >> deny: actualNumber closeTo: expectedNumber precision: epsilon [		
-	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of epsilon."		
+{ #category : #asserting }
+TestAsserter >> deny: actualNumber closeTo: expectedNumber precision: epsilon [
+	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of epsilon."
 
 	^ self		
 		assert: (actualNumber closeTo: expectedNumber precision: epsilon) not		
@@ -377,7 +377,7 @@ TestAsserter >> denyCollection: actualCollection equals: expectedCollection [
 ]
 
 { #category : #asserting }
-TestAsserter >> denyCollection: actualCollection includesAll: subcollection
+TestAsserter >> denyCollection: actualCollection includesAll: subcollection [
 	"Raises an AssertionFailure if actualCollection INCLUDES all the elements of expectedCollection (by negating result of #includesAll: message).
 	 I also provide a specialized message for the AssertionFailure in case I fail.
 	"
