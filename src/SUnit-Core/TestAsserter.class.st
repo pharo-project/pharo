@@ -310,7 +310,7 @@ TestAsserter >> deny: aBooleanOrBlock [
 	self deny: aBooleanOrBlock description: 'Denial failed'
 ]
 
-{ #category : #asserting }		
+{ #category : #asserting }
 TestAsserter >> deny: actualNumber closeTo: expectedNumber [		
 	"Tell whether the actualNumber and expectedNumber are NOT close to each others with a margin of		
 	 the default precision (see class-side method #defaultPrecisionsForCloseToComparison).		
