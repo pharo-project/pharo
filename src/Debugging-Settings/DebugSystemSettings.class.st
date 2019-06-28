@@ -4,7 +4,7 @@ Settings for debugging
 Class {
 	#name : #DebugSystemSettings,
 	#superclass : #Object,
-	#category : #'Debugger-Model-Settings'
+	#category : #'Debugging-Settings'
 }
 
 { #category : #'private - settings' }
@@ -91,8 +91,7 @@ DebugSystemSettings class >> debugSettingsOn: aBuilder [
 				label: 'Directly open the full Debugger';
 				target: Smalltalk tools debugger;
 				description: 'When true, always directly open the full Debugger view when debugging instead of showing only a small popup' .
-			
-			self addDebugFilterSessingsOn: aBuilder.
+		
 				
 			(aBuilder setting: #logFileName)
 				label: 'Log file name' ;
