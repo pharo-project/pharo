@@ -17,6 +17,13 @@ SystemNavigation >> allClassesUsingSharedPool: aString [
 ]
 
 { #category : #'*Deprecated80' }
+SystemNavigation >> allUnreferencedClassVariablesOf: aClass [
+	"Answer a list of the receiver's unreferenced class vars, including those defined in superclasses"
+	self deprecated: 'just all allUnreferencedClassVariables on the class'.
+	^ aClass allUnreferencedClassVariables
+]
+
+{ #category : #'*Deprecated80' }
 SystemNavigation >> isUsedClass: aClass [
 	self deprecated: 'just use #isUsed'.
 	^aClass isUsed

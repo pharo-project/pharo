@@ -1,8 +1,8 @@
-Extension { #name : #ClassDescription }
+Extension { #name : #Class }
 
 { #category : #'*System-Support' }
-ClassDescription >> allUnreferencedClassVariables [
+Class >> allUnreferencedClassVariables [
 	"Answer a list of the names of all the receiver's unreferenced class vars, including those defined in superclasses"
 
-	^ self systemNavigation allUnreferencedClassVariablesOf: self
+	^ self allClassVariables reject: #isReferenced
 ]
