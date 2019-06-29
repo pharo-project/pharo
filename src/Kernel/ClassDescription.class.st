@@ -156,14 +156,9 @@ ClassDescription >> allSlots [
 
 { #category : #enumerating }
 ClassDescription >> allUnreferencedInstanceVariables [
-	"Return a list of the instance variables known to the receiver which are not referenced in the receiver or any of its subclasses OR superclasses"
+	"Return a list of the instance variables known to the receiver which are not referenced"
 
-	^ self allInstVarNames
-		reject: [ :ivn | 
-			| definingClass |
-			definingClass := self classThatDefinesInstVarNamed: ivn.
-			definingClass withAllSubclasses
-				anySatisfy: [ :class | (class whichSelectorsAccess: ivn asSymbol) notEmpty ] ]
+	^ self allSlots reject: #isReferenced
 ]
 
 { #category : #authors }
