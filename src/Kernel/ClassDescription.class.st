@@ -158,7 +158,7 @@ ClassDescription >> allSlots [
 ClassDescription >> allUnreferencedInstanceVariables [
 	"Return a list of the instance variables known to the receiver which are not referenced"
 
-	^ self allSlots reject: #isReferenced
+	^ self allSlots reject: [:slot | slot isReferenced]
 ]
 
 { #category : #authors }
