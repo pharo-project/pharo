@@ -406,11 +406,6 @@ Behavior >> basicIdentityHash [
 	self primitiveFailed
 ]
 
-{ #category : #accessing }
-Behavior >> basicLocalSelectors [
-	^nil
-]
-
 { #category : #'instance creation' }
 Behavior >> basicNew [
 	"Primitive. Answer an instance of the receiver (which is a class) with no 
@@ -1104,15 +1099,6 @@ Behavior >> isCompact [
 Behavior >> isCompiledMethodClass [
 	"Answer whether the receiver has compiled method instances that mix pointers and bytes."
 	^self instSpec >= 24
-]
-
-{ #category : #accessing }
-Behavior >> isComposedBy: aTrait [
-	"Answers if this object includes trait aTrait into its composition"
-	aTrait isTrait ifFalse: [ ^false].
-	^self hasTraitComposition 
-		ifTrue: [ self traitComposition includesTrait: aTrait ]
-		ifFalse: [ false ]
 ]
 
 { #category : #'testing method dictionary' }
