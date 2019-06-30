@@ -932,25 +932,6 @@ PasteUpMorph >> restoreMainDockingBarDisplay [
 		do: [:each | each updateBounds]
 ]
 
-{ #category : #'world state' }
-PasteUpMorph >> restoreMorphicDisplay [
-
-	DisplayScreen startUp.
-
-	self
-		extent: Display extent;
-		viewBox: Display boundingBox;
-		handsDo: [:h | h visible: true; showTemporaryCursor: nil];
-		resizeBackgroundMorph;
-		submorphsDo: [ :each | each displayExtentChanged ];
-		fullRepaintNeeded.
-		
-	self defer: [Cursor normal show].
-		
-	self layoutChanged.
-
-]
-
 { #category : #gridding }
 PasteUpMorph >> setGridSpec [
 	"Gridding rectangle provides origin and modulus"

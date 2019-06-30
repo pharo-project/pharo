@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-OSSDL2WindowHandle class >> newWithHandle: handle attributes: attributes. [
+OSSDL2WindowHandle class >> newWithHandle: handle attributes: attributes [.
 	^ self basicNew initWithHandle: handle attributes: attributes; yourself
 ]
 

@@ -52,13 +52,6 @@ DisplayScreen class >> boundingBox [
 	^Display boundingBox
 ]
 
-{ #category : #'display box access' }
-DisplayScreen class >> checkForNewScreenSize [
-	"Check whether the screen size has changed and if so take appropriate actions"
-
-	UIManager default checkForNewDisplaySize
-]
-
 { #category : #deferring }
 DisplayScreen class >> deferUpdates: aBoolean [
 	| wasDeferred |
@@ -174,21 +167,6 @@ DisplayScreen class >> refreshHostWindowTitle [
 { #category : #'host window access' }
 DisplayScreen class >> setWindowTitle: aTitle [
 	Title := aTitle.
-	self refreshHostWindowTitle
-]
-
-{ #category : #'system startup' }
-DisplayScreen class >> shutDown [ 
-	"Minimize Display memory saved in image"
-	Display shutDown.
-]
-
-{ #category : #'system startup' }
-DisplayScreen class >> startUp [
-	"DisplayScreen startUp"
-
-	Display setExtent: self actualScreenSize depth: Display nativeDepth.
-	Display beDisplay.
 	self refreshHostWindowTitle
 ]
 
@@ -364,8 +342,7 @@ DisplayScreen >> fullscreen [
 { #category : #'screen managing' }
 DisplayScreen >> fullscreen: aBoolean [
 
-	Display fullscreenMode: (LastScreenModeSelected := aBoolean).
-	DisplayScreen checkForNewScreenSize.
+	self currentWorld worldState worldRenderer fullscreenMode: (LastScreenModeSelected := aBoolean)
 	
 ]
 

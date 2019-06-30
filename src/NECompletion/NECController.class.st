@@ -565,8 +565,9 @@ NECController >> smartStartIndexIn: currentText for: smartCharacter  opposite: o
 
 { #category : #private }
 NECController >> stopCompletionDelay [
-	
-	completionDelay ifNotNil: [ completionDelay terminate ].
+
+    completionDelay ifNotNil: [ 
+        completionDelay isTerminating ifFalse: [ completionDelay terminate ] ]
 ]
 
 { #category : #accessing }
