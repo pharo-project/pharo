@@ -66,6 +66,52 @@ RBPullUpMethodTest >> testPullUpReferencesInstVar [
 ]
 
 { #category : #'failure tests' }
+RBPullUpMethodTest >> testPullUpWhenSuperClassDoesNotDirectlyImplement [
+	| classEnvironment classes |
+	classes := #(#ClassA #ClassB #ClassC)
+		inject: OrderedCollection new
+		into: [ :sum :each | 
+			Smalltalk globals
+				at: each
+				ifPresent: [ :class | 
+					sum
+						add: class;
+						add: class class ].
+			sum ].
+	classEnvironment := RBClassEnvironment classes: classes.
+	model name: 'Test'.
+	"Classes"
+	#('Object subclass: #ClassA
+		instanceVariableNames: ''''
+		classVariableNames: ''''
+		poolDictionaries: ''''
+		category: ''Testing'' ' 'ClassA subclass: #ClassB
+		instanceVariableNames: ''''
+		classVariableNames: ''''
+		poolDictionaries: ''''
+		category: ''Testing'' ' 'ClassB subclass: #ClassC
+		instanceVariableNames: ''''
+		classVariableNames: ''''
+		poolDictionaries: ''''
+		category: ''Testing'' ') do: [ :each | model defineClass: each ].
+	#(#(#ClassA #(#('foo
+			^ ''ClassA foo''' #private))) #(#ClassC #(#('foo
+			^ ''ClassC foo''' #private))))
+		do: [ :each | 
+			| class |
+			class := model classNamed: each first.
+			each last
+				do:
+					[ :methodPair | class compile: methodPair first classified: methodPair last ] ].
+	self
+		shouldntWarn:
+			(RBPullUpMethodRefactoring
+				model: model
+				pullUp: #(#foo)
+				from: (model classNamed: #ClassC))
+]
+
+{ #category : #'failure tests' }
 RBPullUpMethodTest >> testPullUpWithInvalidSuperSend [
 	| class |
 	model 
