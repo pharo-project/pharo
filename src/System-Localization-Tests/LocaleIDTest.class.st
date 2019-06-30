@@ -22,7 +22,7 @@ LocaleIDTest >> germanLocaleID [
 { #category : #tests }
 LocaleIDTest >> testComparision [
 
-	self deny: self germanLocaleID = self frenchLocaleID.
+	self deny: self germanLocaleID equals: self frenchLocaleID.
 	self assert: self germanLocaleID equals: self germanLocaleID.	
 ]
 
