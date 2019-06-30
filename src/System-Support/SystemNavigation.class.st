@@ -94,15 +94,12 @@ SystemNavigation >> allImplementedMessages [
 ]
 
 { #category : #query }
-SystemNavigation >> allImplementorsOf: aSelector [ 
+SystemNavigation >> allImplementorsOf: aSelector [
 	"Answer all the methods that implement the message aSelector."
-	
-	| aCollection |
-	aCollection := OrderedCollection  new.
-	self allBehaviorsDo: [:class | 
-		(class includesSelector: aSelector)
-			ifTrue: [aCollection add: (class>>aSelector) methodReference]].
-	^ aCollection
+
+	^ self allBehaviors
+		select: [ :class | class includesSelector: aSelector ]
+		thenCollect: [ :class | (class >> aSelector) methodReference ]
 ]
 
 { #category : #query }
