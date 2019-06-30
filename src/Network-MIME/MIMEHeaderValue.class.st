@@ -21,11 +21,11 @@ Class {
 
 { #category : #'instance creation' }
 MIMEHeaderValue class >> forField: aFName fromString: aString [
-	"Create a MIMEHeaderValue from aString.  How it is parsed depends on whether it is a MIME specific field or a generic header field."
+	"Create a MIMEHeaderValue from aString. How it is parsed depends on whether it is a MIME specific field or a generic header field."
 
-	(aFName beginsWith: 'content-') 
-		ifTrue: [^self fromMIMEHeader: aString]
-		ifFalse: [^self fromTraditionalHeader: aString]
+	^(aFName beginsWith: 'content-') 
+		ifTrue: [ self fromMIMEHeader: aString ]
+		ifFalse: [ self fromTraditionalHeader: aString ]
 
 ]
 
@@ -61,11 +61,10 @@ MIMEHeaderValue class >> fromTraditionalHeader: aString [
 	"This is a traditional non-MIME header (like Subject:) and so should be stored whole"
 
 	| newValue |
-
 	newValue := self new.
 	newValue mainValue: aString.
 	newValue parameters: #().
-	^newValue.
+	^newValue
 
 ]
 
@@ -113,6 +112,7 @@ MIMEHeaderValue >> parameters: anObject [
 { #category : #printing }
 MIMEHeaderValue >> printOn: aStream [
 	super printOn: aStream.
-	aStream nextPutAll: ': '.
-	aStream nextPutAll: self asHeaderValue
+	aStream 
+		nextPutAll: ': ';
+		nextPutAll: self asHeaderValue
 ]
