@@ -43,7 +43,7 @@ SocketTest >> listenerPort [
 { #category : #running }
 SocketTest >> setUp [
 	super setUp.
-	listenerSocket := Socket newTCP listenOn: self listenerPort backlogSize: 4 interface: self listenerAddress.
+	listenerSocket := Socket newTCP listenOn: self listenerPort backlogSize: 4 interface: self listenerAddress
 
 ]
 
@@ -64,7 +64,7 @@ SocketTest >> testClientConnect [
 	clientSocket := Socket newTCP.
 	clientSocket connectTo: self listenerAddress port: self listenerPort.
 	clientSocket waitForConnectionFor: 2.
-	self assert: clientSocket isConnected.
+	self assert: clientSocket isConnected
 
 ]
 
@@ -76,8 +76,8 @@ SocketTest >> testDataReceive [
 	"It can take a tad for the status change to be visible"
 	(Delay forMilliseconds: 200) wait.
 	self assert: serverSocket dataAvailable.
-	self assert: (serverSocket receiveData = 'Hello World').
-	self deny: (serverSocket dataAvailable).
+	self assert: serverSocket receiveData equals: 'Hello World'.
+	self deny: serverSocket dataAvailable
 
 ]
 
@@ -88,7 +88,7 @@ SocketTest >> testDataSending [
 	self testServerAccept.
 	clientSocket sendData: 'Hello World'.
 	clientSocket waitForSendDoneFor: 2.
-	self assert: clientSocket sendDone.
+	self assert: clientSocket sendDone
 
 
 ]
@@ -98,9 +98,9 @@ SocketTest >> testLocalAddress [
 	"Tests the various localAddress values for sockets"
 
 	self testServerAccept.
-	self assert: listenerSocket localAddress asSocketAddress = self listenerAddress.
-	self assert: clientSocket localAddress asSocketAddress = self listenerAddress.
-	self assert: serverSocket localAddress asSocketAddress = self listenerAddress.
+	self assert: listenerSocket localAddress asSocketAddress equals: self listenerAddress.
+	self assert: clientSocket localAddress asSocketAddress equals: self listenerAddress.
+	self assert: serverSocket localAddress asSocketAddress equals: self listenerAddress
 
 ]
 
@@ -109,9 +109,9 @@ SocketTest >> testLocalPort [
 	"Tests the various localPort values for sockets"
 
 	self testServerAccept.
-	self assert: listenerSocket localPort = self listenerPort.
+	self assert: listenerSocket localPort equals: self listenerPort.
 	self assert: clientSocket localPort > 0.
-	self assert: serverSocket localPort > 0.
+	self assert: serverSocket localPort > 0
 
 ]
 
@@ -120,9 +120,9 @@ SocketTest >> testRemoteAddress [
 	"Tests the various remoteAddress values for sockets"
 
 	self testServerAccept.
-	self assert: listenerSocket remoteAddress = #[0 0 0 0].
-	self assert: clientSocket remoteAddress asSocketAddress = self listenerAddress.
-	self assert: serverSocket remoteAddress asSocketAddress = self listenerAddress.
+	self assert: listenerSocket remoteAddress equals: #[0 0 0 0].
+	self assert: clientSocket remoteAddress asSocketAddress equals: self listenerAddress.
+	self assert: serverSocket remoteAddress asSocketAddress equals: self listenerAddress
 
 ]
 
@@ -131,9 +131,9 @@ SocketTest >> testRemotePort [
 	"Tests the various remoteAddress values for sockets"
 
 	self testServerAccept.
-	self assert: listenerSocket remotePort = 0.
-	self assert: clientSocket remotePort = self listenerPort.
-	self assert: serverSocket remotePort > 0.
+	self assert: listenerSocket remotePort equals: 0.
+	self assert: clientSocket remotePort equals: self listenerPort.
+	self assert: serverSocket remotePort > 0
 
 ]
 
@@ -143,8 +143,8 @@ SocketTest >> testServerAccept [
 
 	self testClientConnect.
 	serverSocket := listenerSocket waitForAcceptFor: 2.
-	self assert: (serverSocket notNil).
-	self assert: (serverSocket isConnected).
+	self assert: serverSocket notNil.
+	self assert: serverSocket isConnected
 
 ]
 
@@ -193,7 +193,7 @@ SocketTest >> testUDPFaultySend [
 		
 		self should: [ socket sendUDPData: #[123] toHost: host port: 1 ] raise: NetworkError.
 		
-	] notTakeMoreThanMilliseconds: 20 .
+	] notTakeMoreThanMilliseconds: 20.
 
-	socket destroy.
+	socket destroy
 ]
