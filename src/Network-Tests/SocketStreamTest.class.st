@@ -47,7 +47,7 @@ SocketStreamTest >> testNextIntoClose [
 	[(Delay forMilliseconds: 100) wait.
 	clientStream close] fork.
 	self assert: (serverStream next: 100 into: (String new: 100) startingAt: 1) 
-		equals: 'A line of text'.
+		equals: 'A line of text'
 
 ]
 
@@ -60,7 +60,7 @@ SocketStreamTest >> testNextIntoCloseNonSignaling [
 	[(Delay forMilliseconds: 100) wait.
 	clientStream close] fork.
 	self assert: (serverStream next: 100 into: (String new: 100) startingAt: 1)
-		equals: 'A line of text'.
+		equals: 'A line of text'
 
 ]
 
@@ -68,12 +68,11 @@ SocketStreamTest >> testNextIntoCloseNonSignaling [
 SocketStreamTest >> testUpTo [
 	"Tests correct behavior of #upTo:"
 
-	clientStream nextPutAll:'A line of text', String cr, 'with more text'; flush.
-	self assert: (serverStream upTo: Character cr) = 'A line of text'.
+	clientStream nextPutAll: 'A line of text', String cr, 'with more text'; flush.
+	self assert: (serverStream upTo: Character cr) equals: 'A line of text'.
 	[(Delay forSeconds: 1) wait.
 	clientStream nextPutAll: String cr; flush] fork.
-	self assert: (serverStream upTo: Character cr) = 'with more text'.
-
+	self assert: (serverStream upTo: Character cr) equals: 'with more text'
 ]
 
 { #category : #'stream protocol' }
@@ -85,7 +84,7 @@ SocketStreamTest >> testUpToAfterCloseNonSignaling [
 	clientStream close.
 	serverStream shouldSignal: false.
 	resp := serverStream upTo: Character cr.
-	self assert: resp = 'A line of text'.
+	self assert: resp equals: 'A line of text'
 ]
 
 { #category : #'stream protocol' }
@@ -94,7 +93,7 @@ SocketStreamTest >> testUpToAfterCloseSignaling [
 
 	clientStream nextPutAll:'A line of text'.
 	clientStream close.
-	self should: [serverStream upTo: Character cr] raise: ConnectionClosed.
+	self should: [serverStream upTo: Character cr] raise: ConnectionClosed
 
 ]
 
@@ -102,11 +101,11 @@ SocketStreamTest >> testUpToAfterCloseSignaling [
 SocketStreamTest >> testUpToAll [
 	"Tests correct behavior of #upToAll"
 
-	clientStream nextPutAll:'A line of text', String crlf, 'with more text'; flush.
-	self assert: (serverStream upToAll: String crlf) = 'A line of text'.
+	clientStream nextPutAll: 'A line of text', String crlf, 'with more text'; flush.
+	self assert: (serverStream upToAll: String crlf) equals: 'A line of text'.
 	[(Delay forSeconds: 1) wait.
 	clientStream nextPutAll: String crlf; flush] fork.
-	self assert: (serverStream upToAll: String crlf) = 'with more text'.
+	self assert: (serverStream upToAll: String crlf) equals: 'with more text'
 
 ]
 
@@ -119,7 +118,7 @@ SocketStreamTest >> testUpToAllAfterCloseNonSignaling [
 	clientStream close.
 	serverStream shouldSignal: false.
 	resp := serverStream upToAll: String crlf.
-	self assert: resp = 'A line of text'.
+	self assert: resp equals: 'A line of text'
 ]
 
 { #category : #'stream protocol' }
@@ -128,7 +127,7 @@ SocketStreamTest >> testUpToAllAfterCloseSignaling [
 
 	clientStream nextPutAll:'A line of text'.
 	clientStream close.
-	self should: [serverStream upToAll: String crlf] raise: ConnectionClosed.
+	self should: [serverStream upToAll: String crlf] raise: ConnectionClosed
 
 ]
 
@@ -137,7 +136,7 @@ SocketStreamTest >> testUpToAllLimit [
 	"Tests correct behavior of #upToAll:limit:"
 
 	clientStream nextPutAll:'A line of text'; flush.
-	self assert: (serverStream upToAll: String crlf limit: 5) = 'A line of text'.
+	self assert: (serverStream upToAll: String crlf limit: 5) equals: 'A line of text'
 ]
 
 { #category : #'stream protocol' }
@@ -146,7 +145,7 @@ SocketStreamTest >> testUpToAllTimeout [
 
 	clientStream nextPutAll: 'A line of text'.
 	serverStream timeout: 1.
-	self should: [serverStream upToAll: String crlf] raise: ConnectionTimedOut.
+	self should: [ serverStream upToAll: String crlf ] raise: ConnectionTimedOut
 
 ]
 
@@ -158,7 +157,7 @@ SocketStreamTest >> testUpToEndClose [
 	[(Delay forMilliseconds: 100) wait.
 	clientStream close] fork.
 	self assert: (serverStream upToEnd) 
-		equals: 'A line of text'.
+		equals: 'A line of text'
 
 ]
 
@@ -171,7 +170,7 @@ SocketStreamTest >> testUpToEndCloseNonSignaling [
 	[(Delay forMilliseconds: 100) wait.
 	clientStream close] fork.
 	self assert: (serverStream upToEnd)
-		equals: 'A line of text'.
+		equals: 'A line of text'
 
 ]
 
@@ -180,19 +179,18 @@ SocketStreamTest >> testUpToMax [
 	"Tests correct behavior of #upToAll:max:"
 
 	clientStream nextPutAll:'A line of text'; flush.
-	self assert: (serverStream upTo: Character cr limit: 5) = 'A line of text'.
+	self assert: (serverStream upTo: Character cr limit: 5) equals: 'A line of text'
 ]
 
 { #category : #'stream protocol' }
 SocketStreamTest >> testUpToSmallInteger [
 	"Tests correct behavior of #upTo:"
 
-	clientStream nextPutAll:'A line of text', String cr, 'with more text'; flush.
-	self assert: (serverStream upTo: Character cr) = 'A line of text'.
+	clientStream nextPutAll: 'A line of text', String cr, 'with more text'; flush.
+	self assert: (serverStream upTo: Character cr) equals: 'A line of text'.
 	[(Delay forSeconds: 1) wait.
 	clientStream nextPutAll: String cr; flush] fork.
-	self assert: (serverStream upTo: 13) = 'with more text'.
-
+	self assert: (serverStream upTo: 13) equals: 'with more text'
 ]
 
 { #category : #'stream protocol' }
@@ -201,8 +199,7 @@ SocketStreamTest >> testUpToTimeout [
 
 	clientStream nextPutAll: 'A line of text'.
 	serverStream timeout: 1.
-	self should: [serverStream upTo: Character cr] raise: ConnectionTimedOut.
-
+	self should: [serverStream upTo: Character cr] raise: ConnectionTimedOut
 ]
 
 { #category : #'stream protocol' }
@@ -215,9 +212,8 @@ SocketStreamTest >> testUpToWithByteArray [
 	clientStream binary.
 	serverStream binary.
 	clientStream nextPutAll: byteArray; flush.
-	self assert: (serverStream upTo: Character cr) asString = 'A line of text'.
+	self assert: (serverStream upTo: Character cr) asString equals: 'A line of text'.
 	[(Delay forSeconds: 1) wait.
 	clientStream nextPut: Character cr; flush] fork.
-	self assert: (serverStream upTo: Character cr) asString = 'with more text'.
-
+	self assert: (serverStream upTo: Character cr) asString equals: 'with more text'
 ]

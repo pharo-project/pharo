@@ -24,7 +24,7 @@ Base64MimeConverterTest >> testBase64Encoded [
 	
 	| encoded |
 	encoded := (Base64MimeConverter mimeEncode: message) contents.
-	self assert: encoded equals: 'Hi There!' asByteArray base64Encoded.
+	self assert: encoded equals: 'Hi There!' asByteArray base64Encoded
 	
 ]
 
@@ -54,5 +54,5 @@ Base64MimeConverterTest >> testMimeEncodeDecode [
 	message reset.
 	message skip: 2.
 	encoded := Base64MimeConverter mimeEncode: message.
-	self assert: encoded contents equals: 'IFRoZXJlIQ=='.
+	self assert: encoded contents equals: 'IFRoZXJlIQ=='
 ]
