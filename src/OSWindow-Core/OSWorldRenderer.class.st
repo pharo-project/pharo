@@ -44,8 +44,6 @@ OSWorldRenderer >> activate [
 	
 	world worldState doFullRepaint.
 	world displayWorld.
-	
-	Stdio stdout << 'World extent:'; << world extent printString ;crlf.
 ]
 
 { #category : #initialization }
@@ -77,8 +75,6 @@ OSWorldRenderer >> checkForNewScreenSize [
 
 	(display isNil or: [display extent = self actualScreenSize]) 
 		ifTrue: [ ^ self ].
-
-	Stdio stdout << 'New size'; crlf.
 
 	display := Form extent: self actualScreenSize depth: 32.
 	self osWindowRenderer form: display.
