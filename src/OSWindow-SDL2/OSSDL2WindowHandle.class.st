@@ -322,11 +322,6 @@ OSSDL2WindowHandle >> setDraggableArea: aRectangle [
 ]
 
 { #category : #cursor }
-OSSDL2WindowHandle >> setMouseCursor: cursorWithMask [
-	self setMouseCursor: cursorWithMask mask: cursorWithMask maskForm
-]
-
-{ #category : #cursor }
 OSSDL2WindowHandle >> setMouseCursor: cursor mask: mask [
 	| cursorBits maskBits extent offset sdlCursor |
 	cursorBits := self convertCursor: cursor.
