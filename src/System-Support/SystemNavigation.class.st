@@ -123,7 +123,7 @@ SystemNavigation >> allLocalCallsOn: aSymbol ofClass: aClass [
 
 { #category : #query }
 SystemNavigation >> allMethods [
-	^ self allBehaviors flatCollect: [ :behavior | behavior methods ]
+	^ self environment allMethods
 
 ]
 

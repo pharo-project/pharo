@@ -88,6 +88,11 @@ SystemDictionary >> allClassesDo: aBlock [
 ]
 
 { #category : #'classes and traits' }
+SystemDictionary >> allMethods [
+	^ self allBehaviors flatCollect: [ :behavior | behavior methods ]
+]
+
+{ #category : #'classes and traits' }
 SystemDictionary >> allTraits [
 	"Return all traits defined in the Smalltalk SystemDictionary"
 
