@@ -155,11 +155,11 @@ SycRefactoringPreview >> initializeWidgets [
 	
 	table
 		addColumn:
-			((CheckBoxTableColumn evaluated: [ :x | selectedRefactorings at: x ])
+			((SpCheckBoxTableColumn evaluated: [ :x | selectedRefactorings at: x ])
 				onActivation: [ :class | self toggleSelectionOf: class ];
 				onDesactivation: [ :class | self toggleSelectionOf: class ];
 				width: 20);
-		addColumn: (StringTableColumn evaluated: #name);
+		addColumn: (SpStringTableColumn evaluated: #name);
 		hideColumnHeaders.
 		
 	diffPresenter disable.
