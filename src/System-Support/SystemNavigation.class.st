@@ -194,20 +194,12 @@ SystemNavigation >> allPrimitiveMethods [
 ]
 
 { #category : #query }
-SystemNavigation >> allReferencesTo: aLiteral [ 
-	"Answer a Collection of all the methods that refer to aLiteral even deeply embedded in literal array."
+SystemNavigation >> allReferencesTo: aLiteral [
+	"Answer all the methods that refer to aLiteral even deeply embedded in literal array."
 
-	"self new allReferencesTo: #+"
-	"self new allReferencesTo: Point binding"
-	
-	| result |
-	result := OrderedCollection new.
-	self allBehaviorsDo: [ :class |
-		| selectors | 
-		selectors :=  class thoroughWhichSelectorsReferTo: aLiteral.
-		selectors do: [ :selector |
-			result addLast: (class>>selector) methodReference ] ].
-	^ result
+	^ self allBehaviors flatCollect: [ :class | 
+			(class thoroughWhichSelectorsReferTo: aLiteral)
+				collect: [ :selector | (class >> selector) methodReference ] ]
 ]
 
 { #category : #query }
@@ -255,12 +247,7 @@ SystemNavigation >> allReferencesToSubstring: aString do: aBlock [
 
 { #category : #'message sends' }
 SystemNavigation >> allSendersOf: selector [ 
-	|  senders |
-	senders := OrderedCollection new.
-	self allBehaviorsDo: [ :behavior | 
-		(behavior thoroughWhichSelectorsReferTo: selector) do: [ :sel| 
-			senders add: (behavior>>sel) methodReference ] ].
-	^ senders
+	^self allReferencesTo: selector
 ]
 
 { #category : #query }
