@@ -23,13 +23,9 @@ MockSycRefactoringPreview >> selectedRefactorings [
 
 { #category : #update }
 MockSycRefactoringPreview >> updateTablePresenter [
-	| mockTreeTableItem2 mockTreeTableItem3 mockTreeTableItem1 |
-	mockTreeTableItem1 := MockTreeTableItem title: 'mockTreeTableItem1'.
-	mockTreeTableItem2 := MockTreeTableItem title: 'mockTreeTableItem2'.
-	mockTreeTableItem3 := MockTreeTableItem title: 'mockTreeTableItem3'.
 	table
 		items:
-			{mockTreeTableItem1.
-			mockTreeTableItem2.
-			mockTreeTableItem3}
+			{(MockTreeTableItem title: 'mockTreeTableItem1').
+			(MockTreeTableItem title: 'mockTreeTableItem2').
+			(MockTreeTableItem title: 'mockTreeTableItem3')}
 ]

@@ -12,15 +12,11 @@ Class {
 
 { #category : #tests }
 SycRefactoringPreview2Test >> fillTableWith3MockItem [
-	| mockTreeTableItem2 mockTreeTableItem3 mockTreeTableItem1 |
-	mockTreeTableItem1 := MockTreeTableItem new.
-	mockTreeTableItem2 := MockTreeTableItem new.
-	mockTreeTableItem3 := MockTreeTableItem new.
 	sycRefactoringPreview table
 		items:
-			{mockTreeTableItem1.
-			mockTreeTableItem2.
-			mockTreeTableItem3}
+			{MockTreeTableItem new.
+			MockTreeTableItem new.
+			MockTreeTableItem new}
 ]
 
 { #category : #setup }
@@ -56,22 +52,17 @@ SycRefactoringPreview2Test >> setUp [
 
 { #category : #tests }
 SycRefactoringPreview2Test >> testDoubleClickAnTableItemShouldChangeTheValueAssociateToKey [
-	| mockTreeTableItem1 mockTreeTableItem2 mockTreeTableItem3 |
-	mockTreeTableItem1 := MockTreeTableItem new.
-	mockTreeTableItem2 := MockTreeTableItem new.
-	mockTreeTableItem3 := MockTreeTableItem new.
+	| mock2 |
+	mock2 := MockTreeTableItem new title: 'mockTable2'.
 	sycRefactoringPreview table
 		items:
-			{mockTreeTableItem1.
-			mockTreeTableItem2.
-			mockTreeTableItem3}.
-	sycRefactoringPreview selectedRefactorings
-		at: mockTreeTableItem3
-		put: true.
-	sycRefactoringPreview table selectIndex: 3.
-	sycRefactoringPreview table doActivateAtIndex: 3.
-	self
-		deny: (sycRefactoringPreview selectedRefactorings at: mockTreeTableItem3)
+			{(MockTreeTableItem new title: 'mockTable1').
+			mock2}.
+	sycRefactoringPreview selectectAllCheckBox.
+	sycRefactoringPreview selectedRefactorings at: mock2 put: true.
+	sycRefactoringPreview table selectIndex: 2.
+	sycRefactoringPreview table doActivateAtIndex: 2.
+	self deny: (sycRefactoringPreview selectedRefactorings at: mock2)
 ]
 
 { #category : #tests }
@@ -81,8 +72,8 @@ SycRefactoringPreview2Test >> testDropListChangeShouldChangeTableItems [
 	self initializeSycRefactoringUsingForScope.
 	sycRefactoringPreview scopeDropList selectedIndex: 2.
 	self
-		assert: sycRefactoringPreview table items
-		equals: {'banane' . 'Tournai Triple'} asOrderedCollection
+		assertCollection: sycRefactoringPreview table items
+		hasSameElements: {'banane' . 'Tournai Triple'}
 ]
 
 { #category : #'initialize-test' }
