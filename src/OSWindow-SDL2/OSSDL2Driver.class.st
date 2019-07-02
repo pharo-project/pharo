@@ -123,6 +123,14 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 ]
 
 { #category : #'events-processing' }
+OSSDL2Driver >> evaluateUserInterrupt: anSDLEvent [.
+	
+	(anSDLEvent type = SDL_KEYDOWN and: [ anSDLEvent keysym scancode = 47 "SDL_SCANCODE_PERIOD"])
+		ifTrue: [ UserInterruptHandler new handleUserInterrupt ]
+
+]
+
+{ #category : #'events-processing' }
 OSSDL2Driver >> eventLoopProcessWithPlugin [
 	| event session semaIndex |
 	event := SDL_Event new.
@@ -248,8 +256,8 @@ OSSDL2Driver >> processEvent: sdlEvent [
 	| event |
 			
 	[  
-		event := self convertEvent: sdlEvent.
-		
+		self evaluateUserInterrupt: sdlEvent.
+		event := self convertEvent: sdlEvent.		
 		event ifNotNil: [ eventQueue nextPut: event ].
 	] on: Error do: [ :err | 
 		"It is critical, that event handling keep running despite errors.
