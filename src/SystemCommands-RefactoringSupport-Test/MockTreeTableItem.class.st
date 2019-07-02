@@ -2,9 +2,7 @@ Class {
 	#name : #MockTreeTableItem,
 	#superclass : #Object,
 	#instVars : [
-		'title',
-		'classsName',
-		'package'
+		'title'
 	],
 	#category : #'SystemCommands-RefactoringSupport-Test'
 }

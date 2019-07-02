@@ -1,9 +1,6 @@
 Class {
 	#name : #MockSycRefactoringPreview2,
 	#superclass : #SycRefactoringPreview,
-	#instVars : [
-		'title'
-	],
 	#category : #'SystemCommands-RefactoringSupport-Test'
 }
 

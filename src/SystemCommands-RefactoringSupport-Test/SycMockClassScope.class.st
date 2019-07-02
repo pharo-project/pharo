@@ -7,7 +7,7 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport-Test'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #mockMethod }
 SycMockClassScope >> content [
 	^ { 'banane' . 'Tournai Triple' }
 ]

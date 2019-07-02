@@ -1,9 +1,6 @@
 Class {
 	#name : #SycMockRBRefactoring,
 	#superclass : #Object,
-	#instVars : [
-		'class'
-	],
 	#category : #'SystemCommands-RefactoringSupport-Test'
 }
 

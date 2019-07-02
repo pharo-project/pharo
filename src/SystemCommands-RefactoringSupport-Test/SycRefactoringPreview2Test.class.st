@@ -78,7 +78,6 @@ SycRefactoringPreview2Test >> testDoubleClickAnTableItemShouldChangeTheValueAsso
 SycRefactoringPreview2Test >> testDropListChangeShouldChangeTableItems [
 	"this method can't be test because i can't isolate the command"
 
-	| tableItemBeforeChangeDropList className |
 	self initializeSycRefactoringUsingForScope.
 	sycRefactoringPreview scopeDropList selectedIndex: 2.
 	self
