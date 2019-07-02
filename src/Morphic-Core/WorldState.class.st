@@ -187,14 +187,14 @@ WorldState class >> pharoItemsOn: aBuilder [
 				selector: #saveAndQuit;
 				help: 'Save the current image on disk, and quit Pharo.';
 				order: 4;
-				iconName: #smallQuitIcon;
-				withSeparatorAfter. 
+				iconName: #smallQuitIcon. 
 			(aBuilder item: #Quit)
 				target: self;
 				selector: #quitSession;
 				help: 'Quit Pharo without saving the image on disk.';
 				order: 5;
-				iconName: #smallQuitIcon ]
+				iconName: #smallQuitIcon;
+				withSeparatorAfter ]
 ]
 
 { #category : #'world menu items' }
