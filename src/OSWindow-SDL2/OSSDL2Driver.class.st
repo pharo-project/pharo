@@ -123,9 +123,14 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 ]
 
 { #category : #'events-processing' }
-OSSDL2Driver >> evaluateUserInterrupt: anSDLEvent [.
+OSSDL2Driver >> evaluateUserInterrupt: anSDLEvent [
+
+	| anEvent |
+
+	anEvent := anSDLEvent mapped.	
+	anEvent ifNil: [ ^ self ].
 	
-	(anSDLEvent type = SDL_KEYDOWN and: [ anSDLEvent keysym scancode = 47 "SDL_SCANCODE_PERIOD"])
+	(anEvent type = SDL_KEYDOWN and: [ anEvent keysym scancode = 47 "SDL_SCANCODE_PERIOD"])
 		ifTrue: [ UserInterruptHandler new handleUserInterrupt ]
 
 ]
