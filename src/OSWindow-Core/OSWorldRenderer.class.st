@@ -44,6 +44,8 @@ OSWorldRenderer >> activate [
 	
 	world worldState doFullRepaint.
 	world displayWorld.
+	
+	OSWindowClipboard new beDefault.
 ]
 
 { #category : #initialization }
@@ -81,6 +83,16 @@ OSWorldRenderer >> checkForNewScreenSize [
 
 	world restoreMorphicDisplay.
 
+]
+
+{ #category : #initialization }
+OSWorldRenderer >> clipboardText [
+	^ osWindow clipboardText
+]
+
+{ #category : #initialization }
+OSWorldRenderer >> clipboardText: aString [
+	osWindow clipboardText: aString asString
 ]
 
 { #category : #initialization }
