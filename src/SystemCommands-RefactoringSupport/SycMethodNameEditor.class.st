@@ -1,6 +1,15 @@
 "
 I am an UI used to rename methods.
-	
+
+HOW TO RUN
+
+SycMethodNameEditor
+		openOn:
+			(RBMethodName
+				selector: (UseOnlyForTest >> #bug:) selector
+				arguments: ((UseOnlyForTest >> #bug:) ast arguments collect: #name))
+				
+
 My jobs is to:
 	- display a preview of your future method name or '(invalid)' when the name is incorrect  (with a LabelPresenter previewResult an instance variable)
 	- display the arguments list of your method and let you modified the order 
@@ -62,16 +71,6 @@ SycMethodNameEditor class >> defaultSpec [
 					withConstraints: [ :aConstraints | aConstraints width: 80 ];
 				add: #previewResult yourself);
 		yourself
-]
-
-{ #category : #examples }
-SycMethodNameEditor class >> example [
-	<script>
-	SycMethodNameEditor
-		openOn:
-			(RBMethodName
-				selector: (UseOnlyForTest >> #bug:) selector
-				arguments: ((UseOnlyForTest >> #bug:) ast arguments collect: #name))
 ]
 
 { #category : #specs }
