@@ -110,8 +110,16 @@ ClassDescription >> addSlot: aSlot [
 ClassDescription >> allInstVarNamesEverywhere [
 	"Answer the set of inst var names used by the receiver, all superclasses, and all subclasses"
 
-	^ self allSuperclasses , self withAllSubclasses asOrderedCollection
-		flatCollectAsSet: [ :cls | cls instVarNames ]
+	^ self withAllSuperAndSubclasses flatCollectAsSet: [ :cls | cls instVarNames ]
+]
+
+{ #category : #'obsolete subclasses' }
+ClassDescription >> allLocalCallsOn: aSymbol [
+	"Answer all the methods that call on aSymbol, anywhere in my class hierarchy."
+
+	^ self instanceSide withAllSuperAndSubclasses flatCollect: [ :class | 
+			(class whichSelectorsReferTo: aSymbol), (class class whichSelectorsReferTo: aSymbol)
+				collect: [ :symbol | class >> symbol ] ]
 ]
 
 { #category : #'accessing method dictionary' }

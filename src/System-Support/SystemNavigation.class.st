@@ -103,25 +103,6 @@ SystemNavigation >> allImplementorsOf: aSelector [
 ]
 
 { #category : #query }
-SystemNavigation >> allLocalCallsOn: aSymbol ofClass: aClass [
-	"Answer a SortedCollection of all the methods that call on aSymbol, anywhere in my class hierarchy."
-	
-	| aSet cls |
-	aSet := Set new.
-	cls := aClass instanceSide.
-	cls withAllSuperAndSubclassesDo: [ :class |
-		(class whichSelectorsReferTo: aSymbol)
-			do: [:sel |
-				aSet add: (class>>sel) methodReference ]].
-		
-	cls class withAllSuperAndSubclassesDo: [ :class |
-		(class whichSelectorsReferTo: aSymbol)
-			do: [:sel |
-				aSet add: (class>>sel) methodReference ]].
-	^aSet
-]
-
-{ #category : #query }
 SystemNavigation >> allMethods [
 	^ self environment allMethods
 
