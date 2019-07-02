@@ -181,14 +181,6 @@ Behavior >> allInstancesOrNil [
 	^nil
 ]
 
-{ #category : #'obsolete subclasses' }
-Behavior >> allLocalCallsOn: aSymbol [
-	"Answer a SortedCollection of all the methods that call on aSymbol, anywhere in my class hierarchy."
-
-	^(SystemNavigation new allLocalCallsOn: aSymbol ofClass: (self instanceSide)).
-
-]
-
 { #category : #'accessing method dictionary' }
 Behavior >> allMethods [
 	"Return the collection of compiled method I and my superclasses are defining"
@@ -1899,6 +1891,13 @@ Behavior >> withAllSubclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for the receiver and each of its subclasses."
 	
 	self withAllSubclasses do: aBlock
+]
+
+{ #category : #'accessing class hierarchy' }
+Behavior >> withAllSuperAndSubclasses [
+	"Answer the receiver's class hierarchy"
+
+	^self allSuperclasses, self withAllSubclasses
 ]
 
 { #category : #enumerating }
