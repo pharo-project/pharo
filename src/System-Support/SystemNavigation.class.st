@@ -163,15 +163,12 @@ SystemNavigation >> allObjectsOrNil [
 
 { #category : #query }
 SystemNavigation >> allPrimitiveMethods [
-	"Answer an OrderedCollection of all the methods that are implemented by primitives."
-	
-	| aColl |
-	aColl := OrderedCollection new: 200.
-	self allBehaviorsDo: [ :class | 
-		class selectorsAndMethodsDo: [ :sel :method | 
-			method isPrimitive
-				ifTrue: [ aColl addLast: class name , ' ' , sel , ' ' , method primitive printString ]]].
-	^ aColl
+	"Answer all the methods that are implemented by primitives."
+
+	^self allMethods
+		select: [ :method | method isPrimitive ]
+		thenCollect: [ :method | method methodClass name , ' ' , 
+			     method selector , ' ', method primitive printString ]
 ]
 
 { #category : #query }
@@ -210,20 +207,6 @@ SystemNavigation >> allReferencesToPool: aPool [
 													and: [ aPool includesKey: lit key ] ]
 						ifFound: [ list add: (cls>>sel) methodReference ] ] ].
 	^ list
-]
-
-{ #category : #query }
-SystemNavigation >> allReferencesToSubstring: aString do: aBlock [
-	"Perform aBlock on all the references to class whose name matches asString."
-	
-	| sortedClasses |
-	aString isEmptyOrNil ifTrue: [ ^ self ].
-	sortedClasses := SortedCollection new sortBlock: [ :a :b | a name size < b name size ].
-	(self allBehaviorsDo: [ :class |
-		(class name includesSubstring: aString caseSensitive: false) 
-			ifTrue: [ sortedClasses add: class ] ]).
-	sortedClasses do: [ :class |
-		self allReferencesTo: class binding do: aBlock ]
 ]
 
 { #category : #'message sends' }
@@ -346,10 +329,8 @@ SystemNavigation >> instanceSideMethodsWithNilKeyInLastLiteral [
 
 { #category : #'message sends' }
 SystemNavigation >> isUnsentMessage: selector [
-
-	self allBehaviorsDo: [ :behavior | 
-		(behavior thoroughHasSelectorReferringTo: selector) ifTrue: [ ^ false]].
-	^ true
+	^ self allBehaviors
+		noneSatisfy: [ :behavior | behavior thoroughHasSelectorReferringTo: selector ]
 ]
 
 { #category : #query }
@@ -436,6 +417,6 @@ SystemNavigation >> obsoleteMethodReferences [
 					ifTrue: [
 						(ref pointersTo) do: [ :meth | 
 							meth isCompiledMethod
-								ifTrue: [meth methodReference ifNotNil: [:mref | references nextPut: mref]]]]]].
+								ifTrue: [references nextPut: meth]]]]].
 	^ references contents
 ]
