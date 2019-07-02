@@ -7,37 +7,37 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport-Test'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #WithoutArguments }
 UseOnlyForTest >> a [ 
 	 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #someArguments }
 UseOnlyForTest >> a: A [ 
 	 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #someArguments }
 UseOnlyForTest >> a: A b: B [ 
 	 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #someArguments }
 UseOnlyForTest >> a: A b: B c: C [
 	 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #longArgument }
 UseOnlyForTest >> bug: qqqjjhhhhhhhhhhhqqqjjhhhhhhhhhhhqqqjjhhhhhhhhhhhqqqjjhhhhhhhhhhhqqqjjhhhhhhhhhhqqqjjhhhhhhhhhhhh [
 		 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #WithoutArguments }
 UseOnlyForTest >> zzzzzzz [
 		 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #longArgument }
 UseOnlyForTest >> zzzzzzz: qqqjjhhhhhhhhhhhqqqjjhhhhhhhhhhhqqqjjhhhhhhhhhhhqqqjjhhhhhhhhhhhqqqjjhhhhhhhhhhqqqjjhhhhhhhhhhhh [
 		 
 ]
