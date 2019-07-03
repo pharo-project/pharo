@@ -176,8 +176,7 @@ SystemNavigation >> allReferencesTo: aLiteral [
 	"Answer all the methods that refer to aLiteral even deeply embedded in literal array."
 
 	^ self allBehaviors flatCollect: [ :class | 
-			(class thoroughWhichSelectorsReferTo: aLiteral)
-				collect: [ :selector | (class >> selector) methodReference ] ]
+			(class thoroughWhichMethodsReferTo: aLiteral) collect: [ :method | method methodReference ] ]
 ]
 
 { #category : #query }

@@ -11,8 +11,7 @@ Behavior >> allCallsOn [
 Behavior >> allCallsOn: aSymbol [
 	"Answer of all the methods that call on aSymbol."
 
-	^self withAllSubclasses flatCollect: [ :cls | 
-		(cls whichSelectorsReferTo: aSymbol) collect: [:sel | cls>>sel]]
+	^self withAllSubclasses flatCollect: [ :cls | cls thoroughWhichMethodsReferTo: aSymbol]
 	
 ]
 
