@@ -62,7 +62,7 @@ TestCompletionContext >> createModel [
 
 	^ NECUntypedModel
 		class: theClass
-		temporaries: (ast isMethod ifTrue: [ ast temporaryNames ] ifFalse: [ #() ])
+		temporaries: (ast isMethod ifTrue: [ ast temporaryNames collect: [:each | NECLocalEntry  contents: each] ] ifFalse: [ #() ])
 		additionals: #()
 		variables: variables
 		selectors: selectors
