@@ -75,7 +75,8 @@ Class {
 		'forceLongForm',
 		'primNumber',
 		'encoderClass',
-		'inBlock'
+		'inBlock',
+		'compilationContext'
 	],
 	#category : #'OpalCompiler-Core-Bytecode'
 }
@@ -163,6 +164,11 @@ IRBytecodeGenerator >> closureFrom: fromSeqId to: toSeqId copyNumCopiedValues: n
 	encoder genPushClosureCopyNumCopiedValues: numCopied numArgs: numArgs2 jumpSize: distance. 
 ]
 
+{ #category : #accessing }
+IRBytecodeGenerator >> compilationContext: aCompilationContext [
+	compilationContext := aCompilationContext
+]
+
 { #category : #results }
 IRBytecodeGenerator >> compiledBlockWith: trailer [
 	| lits header cb |
@@ -203,8 +209,10 @@ IRBytecodeGenerator >> compiledMethodWith: trailer [
 
 { #category : #results }
 IRBytecodeGenerator >> compiledMethodWith: trailer header: header literals: lits [
-	| cm |
-	cm := trailer createMethod: self bytecodes size class: CompiledMethod header: header.
+	| cm cmClass|
+	"we look up the class in the productionEnvironment"
+	cmClass := compilationContext productionEnvironment at: #CompiledMethod ifAbsent: [ CompiledMethod ].
+	cm := trailer createMethod: self bytecodes size class: cmClass header: header.
 	(WriteStream with: cm)
 		position: cm initialPC - 1;
 		nextPutAll: self bytecodes.
@@ -354,6 +362,7 @@ IRBytecodeGenerator >> initialize [
 	forceLongForm := false.
 	"starting label in case one is not provided by client"
 	self label: self newDummySeqId.
+	compilationContext := CompilationContext default.
 	
 
 	
