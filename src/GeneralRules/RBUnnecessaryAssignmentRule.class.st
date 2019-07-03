@@ -15,13 +15,10 @@ RBUnnecessaryAssignmentRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBUnnecessaryAssignmentRule >> check: aNode forCritiquesDo: aCriticBlock [
-	
-	aNode isReturn ifFalse: [ ^ self ].
-	aNode isAssignment ifFalse: [ ^ self ].
-	(aNode whoDefines: aNode variable name) ifNil: [ ^ self ].
-	
-	aCriticBlock cull: (self critiqueFor: aNode)
+RBUnnecessaryAssignmentRule >> basicCheck: aNode [
+	aNode isReturn ifFalse: [ ^ false ].
+	aNode isAssignment ifFalse: [ ^ false ].
+	^ (aNode whoDefines: aNode variable name) isNotNil
 ]
 
 { #category : #accessing }

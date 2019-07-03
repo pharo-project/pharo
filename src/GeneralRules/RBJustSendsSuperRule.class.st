@@ -23,12 +23,8 @@ RBJustSendsSuperRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBJustSendsSuperRule >> check: aMethod forCritiquesDo: aCritiqueBlock [ 
-	(aMethod ast isPrimitive not and: 
-		[ matcher 
-			executeMethod: aMethod ast
-			initialAnswer: false ]) ifTrue: [
-        aCritiqueBlock cull: (self critiqueFor: aMethod) ]
+RBJustSendsSuperRule >> basicCheck: aMethod [
+	^ aMethod ast isPrimitive not and: [ matcher executeMethod: aMethod ast initialAnswer: false ]
 ]
 
 { #category : #accessing }

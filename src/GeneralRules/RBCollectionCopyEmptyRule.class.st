@@ -20,12 +20,8 @@ RBCollectionCopyEmptyRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBCollectionCopyEmptyRule >> check: aClass forCritiquesDo: aCritiqueBlock [
-	((aClass inheritsFrom: Collection)
-	and: [ aClass isVariable 
-	and: [ (aClass includesSelector: #copyEmpty) not 
-	and: [ aClass instVarNames isEmpty not ]]]) ifTrue: [
-		aCritiqueBlock cull: (self critiqueFor: aClass) ]
+RBCollectionCopyEmptyRule >> basicCheck: aClass [
+	^ (aClass inheritsFrom: Collection) and: [ aClass isVariable and: [ (aClass includesSelector: #copyEmpty) not and: [ aClass instVarNames isNotEmpty ] ] ]
 ]
 
 { #category : #accessing }

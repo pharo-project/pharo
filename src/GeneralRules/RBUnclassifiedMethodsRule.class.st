@@ -20,10 +20,8 @@ RBUnclassifiedMethodsRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBUnclassifiedMethodsRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	(aMethod protocol = Protocol unclassified) ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aMethod) ]
-		
+RBUnclassifiedMethodsRule >> basicCheck: aMethod [
+	^ aMethod protocol = Protocol unclassified
 ]
 
 { #category : #accessing }

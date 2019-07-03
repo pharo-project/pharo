@@ -19,18 +19,12 @@ RBUnaryAccessingMethodWithoutReturnRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBUnaryAccessingMethodWithoutReturnRule >> check: aMethod forCritiquesDo: aCriticBlock [
+RBUnaryAccessingMethodWithoutReturnRule >> basicCheck: aMethod [
+	(aMethod numArgs > 0 or: [ aMethod isAbstract ]) ifTrue: [ ^ false ].
+	((aMethod methodClass organization categoryOfElement: aMethod selector) asString beginsWith: 'accessing') ifFalse: [ ^ false ].
+	aMethod ast nodesDo: [ :each | each isReturn ifTrue: [ ^ false ] ].
 
-	(aMethod numArgs > 0 or: [ aMethod isAbstract ]) ifTrue: [ ^ self ].
-	((aMethod methodClass organization categoryOfElement: aMethod selector) asString
-		beginsWith: 'accessing')
-		ifFalse: [ ^ self ].
-	aMethod ast
-		nodesDo: [ :each | 
-			each isReturn
-				ifTrue: [ ^ self ] ].
-	
-	aCriticBlock cull:  (self critiqueFor: aMethod)
+	^ true
 ]
 
 { #category : #accessing }

@@ -16,20 +16,16 @@ RBExtraBlockRule class >> uniqueIdentifierName [
 ]
 
 { #category : #enumerating }
-RBExtraBlockRule >> blockEvaluatingMessages [
-	^ #(#value #value: #value:value: #value:value:value: #valueWithArguments:)
+RBExtraBlockRule >> basicCheck: node [
+	node isMessage ifFalse: [ ^ false ].
+	node receiver isBlock ifFalse: [ ^ false ].
+	node parent isCascade ifTrue: [ ^ false ].
+	^ self blockEvaluatingMessages includes: node selector
 ]
 
 { #category : #enumerating }
-RBExtraBlockRule >> check: node forCritiquesDo: aCriticBlock [
-	node isMessage ifFalse: [ ^ self ].
-	node receiver isBlock ifFalse: [ ^ self ].
-	node parent isCascade ifTrue: [ ^ self ].
-	(self blockEvaluatingMessages includes: node selector)
-		ifFalse: [ ^ self ].
-	
-	aCriticBlock cull: (self critiqueFor: node)
-
+RBExtraBlockRule >> blockEvaluatingMessages [
+	^ #(#value #value: #value:value: #value:value:value: #valueWithArguments:)
 ]
 
 { #category : #accessing }

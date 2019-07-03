@@ -34,11 +34,8 @@ ShouldSendSuperTearDownAsLastMessage class >> superTearDownNotCalledLastIn: aCom
 ]
 
 { #category : #running }
-ShouldSendSuperTearDownAsLastMessage >> check: aMethod forCritiquesDo: aCritiqueBlock [
-
-	((aMethod methodClass inheritsFrom: TestCase)
-		and: [ aMethod selector = #tearDown and: [ self class superTearDownNotCalledLastIn: aMethod ]])
-			ifTrue: [ aCritiqueBlock cull: (self critiqueFor: aMethod) ]
+ShouldSendSuperTearDownAsLastMessage >> basicCheck: aMethod [
+	^ (aMethod methodClass inheritsFrom: TestCase) and: [ aMethod selector = #tearDown and: [ self class superTearDownNotCalledLastIn: aMethod ] ]
 ]
 
 { #category : #accessing }

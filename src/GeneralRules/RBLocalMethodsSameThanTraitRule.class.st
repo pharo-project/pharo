@@ -20,16 +20,16 @@ RBLocalMethodsSameThanTraitRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBLocalMethodsSameThanTraitRule >> check: aClass forCritiquesDo: aCriticBlock [
-	
+RBLocalMethodsSameThanTraitRule >> basicCheck: aClass [
 	"The comparison between methods is made using the ast, this is better than comparing source code only since it does not take into account identations, extra parenthesis, etc"
 
-	(aClass isTrait not and: [ aClass hasTraitComposition and: [  
-		aClass localMethods anySatisfy: [ :method | |traitCompositionMethod |
-			traitCompositionMethod := aClass traitComposition compiledMethodAt: method selector ifAbsent: [nil].
-			traitCompositionMethod notNil and: [
-				(traitCompositionMethod ast = method ast) ] ] ] ]) ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aClass) ]
+	^ aClass isTrait not
+		and: [ aClass hasTraitComposition
+				and: [ aClass localMethods
+						anySatisfy: [ :method | 
+							| traitCompositionMethod |
+							traitCompositionMethod := aClass traitComposition compiledMethodAt: method selector ifAbsent: [ nil ].
+							traitCompositionMethod notNil and: [ traitCompositionMethod ast = method ast ] ] ] ]
 ]
 
 { #category : #accessing }
