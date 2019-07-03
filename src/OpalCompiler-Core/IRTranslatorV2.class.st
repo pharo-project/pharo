@@ -35,7 +35,8 @@ IRTranslatorV2 >> compilationContext [
 { #category : #accessing }
 IRTranslatorV2 >> compilationContext: aContext [
 	compilationContext := aContext.
-	gen := compilationContext bytecodeGeneratorClass newWithEncoderClass: compilationContext encoderClass
+	gen := compilationContext bytecodeGeneratorClass newWithEncoderClass: compilationContext encoderClass.
+	gen compilationContext: aContext.
 ]
 
 { #category : #results }
