@@ -1,9 +1,6 @@
 Class {
 	#name : #SycMockClassScope,
 	#superclass : #Object,
-	#instVars : [
-		'classs'
-	],
 	#category : #'SystemCommands-RefactoringSupport-Test'
 }
 
