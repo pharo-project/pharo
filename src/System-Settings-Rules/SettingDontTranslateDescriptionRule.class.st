@@ -8,11 +8,8 @@ Class {
 }
 
 { #category : #running }
-SettingDontTranslateDescriptionRule >> check: aNode forCritiquesDo: aBlock [
-
-	aNode methodNode ifNotNil: [ :methNode |
-		(self checkPreconditionOn: methNode) ifTrue: [
-			super check: aNode forCritiquesDo: aBlock ] ]
+SettingDontTranslateDescriptionRule >> basicCheck: aNode [
+	^ aNode methodNode ifNil: [ false ] ifNotNil: [ :methNode | self checkPreconditionOn: methNode ]
 ]
 
 { #category : #helpers }

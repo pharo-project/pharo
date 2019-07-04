@@ -14,14 +14,10 @@ ReReturnMethodRule class >> checksMethod [
 ]
 
 { #category : #running }
-ReReturnMethodRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	(aMethod overriddenMethods anySatisfy: [ :method |
-		method hasPragmaNamed: #shouldReturn. ])
-			ifFalse: [ ^ self ].
-	
-	aMethod ast lastIsReturn ifTrue: [ ^ self ].
-	
-	aCriticBlock cull: (self critiqueFor: aMethod)
+ReReturnMethodRule >> basicCheck: aMethod [
+	(aMethod overriddenMethods anySatisfy: [ :method | method hasPragmaNamed: #shouldReturn ]) ifFalse: [ ^ false ].
+
+	^ aMethod ast lastIsReturn not
 ]
 
 { #category : #accessing }
