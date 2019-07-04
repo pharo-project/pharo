@@ -364,7 +364,7 @@ Pharo is a pure object-oriented programming language and a powerful environment,
 For more information, please visit here: ', (self url: 'http://pharo.org'),
 (self subheading: 'Quick setup'),
 'Choose your preferred color theme: ',
-(self doItFrom: 'PharoLightTheme beCurrent' text: 'White Theme'), ' or ',
+(self doItFrom: 'PharoLightTheme beCurrent' text: 'Light Theme'), ' or ',
 (self doItFrom: 'PharoDarkTheme beCurrent' text: 'Dark Theme'), ' 
 
 Click if you have access to a: ',
