@@ -24,9 +24,6 @@ Class {
 { #category : #running }
 MethodNameEditorTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
-
-	"Clement tu dois finir d'init les MethodNameEditor et pense a poser une question a esteban "
-
 	super setUp.
 	presenterMNEThreeSetter := SycMethodNameEditor
 		on:
@@ -45,7 +42,7 @@ MethodNameEditorTest >> setUp [
 				arguments:( (UseOnlyForTest >> #a) ast arguments collect: #name)).
 ]
 
-{ #category : #'action-input' }
+{ #category : #running }
 MethodNameEditorTest >> tearDown [
 	presenterMNEOneGetter ifNotNil: [ :x | x application close ].
 	presenterMNEOneSetter ifNotNil: [ :x | x application close ].
@@ -53,19 +50,7 @@ MethodNameEditorTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #'action-accept' }
-MethodNameEditorTest >> testButtonAcceptClickShouldSetcancelValueToFalse [
-	self flag: #TODO.
-	"i can't test it "
-]
-
-{ #category : #'action-cancel' }
-MethodNameEditorTest >> testButtonCancelClickShouldCloseWindow [
-	self flag: #DONTKNOWN.
-	"i can't test it"
-]
-
-{ #category : #'action-button-down' }
+{ #category : #tests }
 MethodNameEditorTest >> testButtonDownClickShouldModifiedArgumentsList [
 	| arrayBeforeClick arrayAfterClick elt1 elt2 |
 	presenterMNEThreeSetter argumentsList selectIndex: 2.
@@ -83,7 +68,7 @@ MethodNameEditorTest >> testButtonDownClickShouldModifiedArgumentsList [
 				yourself)
 ]
 
-{ #category : #'action-button-down' }
+{ #category : #tests }
 MethodNameEditorTest >> testButtonDownClickShouldModifiedPreviewFinal [
 	presenterMNEThreeSetter argumentsList selectIndex: 1.
 	presenterMNEThreeSetter downButton click.
@@ -92,7 +77,7 @@ MethodNameEditorTest >> testButtonDownClickShouldModifiedPreviewFinal [
 		equals: 'a: B b: A c: C'
 ]
 
-{ #category : #'action-button-down' }
+{ #category : #tests }
 MethodNameEditorTest >> testButtonDownClickShouldSelectionIndexBeDecremented [
 	presenterMNEThreeSetter argumentsList selectIndex: 1.
 	presenterMNEThreeSetter downButton click.
@@ -101,7 +86,7 @@ MethodNameEditorTest >> testButtonDownClickShouldSelectionIndexBeDecremented [
 		equals: 2
 ]
 
-{ #category : #'action-button-up' }
+{ #category : #tests }
 MethodNameEditorTest >> testButtonUpClickShouldModifiedArgumentsList [
 	| arrayBeforeClick arrayAfterClick elt1 elt2 |
 	presenterMNEThreeSetter argumentsList selectIndex: 2.
@@ -119,7 +104,7 @@ MethodNameEditorTest >> testButtonUpClickShouldModifiedArgumentsList [
 				yourself)
 ]
 
-{ #category : #'action-button-up' }
+{ #category : #tests }
 MethodNameEditorTest >> testButtonUpClickShouldModifiedPreviewFinal [
 	presenterMNEThreeSetter argumentsList selectIndex: 2.
 	presenterMNEThreeSetter upButton click.
@@ -128,7 +113,7 @@ MethodNameEditorTest >> testButtonUpClickShouldModifiedPreviewFinal [
 		equals: 'a: B b: A c: C'
 ]
 
-{ #category : #'action-button-up' }
+{ #category : #tests }
 MethodNameEditorTest >> testButtonUpClickShouldSelectionIndexBeDecremented [
 	presenterMNEThreeSetter argumentsList selectIndex: 2.
 	presenterMNEThreeSetter upButton  click.
@@ -137,45 +122,41 @@ MethodNameEditorTest >> testButtonUpClickShouldSelectionIndexBeDecremented [
 		equals: 1
 ]
 
-{ #category : #'action-input' }
+{ #category : #tests }
 MethodNameEditorTest >> testChangeInInputSelectorShouldChangePreviewLabelFinal [
 	presenterMNEThreeSetter selectorInput text: 'd:e:f:'.
 	self assert: presenterMNEThreeSetter previewResult label  equals: 'd: A e: B f: C'
 ]
 
-{ #category : #'action-input' }
+{ #category : #tests }
 MethodNameEditorTest >> testChangeInInputSelectorWithFewAccessorThanArgumentsShouldChangePreviewLabelFinalWithFailedText [
 	presenterMNEThreeSetter selectorInput text: 'd:'.
 	self assert: presenterMNEThreeSetter previewResult label equals: '(invalid)'
 ]
 
-{ #category : #'action-input' }
+{ #category : #tests }
 MethodNameEditorTest >> testChangeInInputSelectorWithNothingShouldChangePreviewLabelFinalWithFailedText [
 	presenterMNEThreeSetter selectorInput text: ''.
 	self assert: presenterMNEThreeSetter previewResult label equals: '(invalid)'
 ]
 
-{ #category : #'action-input' }
+{ #category : #tests }
 MethodNameEditorTest >> testChangeInInputSelectorWithToMuchAccessorThanArgumentsShouldChangePreviewLabelFinalWithFailedText [
 	presenterMNEThreeSetter selectorInput text: 'd:e:f:g:'.
 	self assert: presenterMNEThreeSetter previewResult label equals: '(invalid)'
 ]
 
-{ #category : #'initialize-test' }
-MethodNameEditorTest >> testInitialButtonDownIsDisable [
-	""
-
+{ #category : #tests }
+MethodNameEditorTest >> testInitializationButtonDownIsDisable [
 	self deny: presenterMNEOneGetter downButton isEnabled
 ]
 
-{ #category : #'initialize-test' }
-MethodNameEditorTest >> testInitialButtonUpIsDisable [
-	""
+{ #category : #tests }
+MethodNameEditorTest >> testInitializationButtonUpIsDisable [
 	self deny:  presenterMNEOneGetter upButton isEnabled
 ]
 
-{ #category : #'initialize-test' }
-MethodNameEditorTest >> testInitialSelectedArgumentsIsNil [
-	"test if there nothing item selected in the argumentsList (a ListPresenter) at the opening of the Window "
+{ #category : #tests }
+MethodNameEditorTest >> testInitializationSelectedArgumentsIsNil [
 	self assert:  presenterMNEOneGetter argumentsList selection selectedItem equals: nil
 ]
