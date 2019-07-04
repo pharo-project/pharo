@@ -83,6 +83,14 @@ ClassDescriptionTest >> testSlots [
 	
 ]
 
+{ #category : #'tests - instance variables' }
+ClassDescriptionTest >> testclassThatDefinesInstVarNamed [
+	self assert: (Point classThatDefinesInstVarNamed: 'x') equals: Point.
+	self assert: (Class classThatDefinesInstVarNamed: 'methodDict') equals: Behavior.
+	self assert: (Point classThatDefinesInstVarNamed: 'methodDict') equals: nil.
+	
+]
+
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testprintHierarchy [
 	| expected result |

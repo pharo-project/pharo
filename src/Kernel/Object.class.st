@@ -1094,16 +1094,24 @@ Object >> instVarAt: index put: anObject [
 
 { #category : #introspection }
 Object >> instVarNamed: aString [
-	"Return the value of the instance variable in me with that name.  Slow and unclean, but very useful. "
+	"Return the value of the instance variable in me with that name.  Slow, but very useful.
+	We support here all slots (even non indexed) but raise a backward compatible exception"
 
-	^ self instVarAt: (self class instVarIndexFor: aString asString ifAbsent: [ InstanceVariableNotFound signalFor: aString asString ])
+	^ self class
+		slotNamed: aString
+		ifFound: [ :slot | slot read: self ]
+		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
 ]
 
 { #category : #introspection }
 Object >> instVarNamed: aString put: aValue [
-	"Store into the value of the instance variable in me of that name. Slow and unclean, but very useful. "
+	"Store into the value of the instance variable in me of that name. Slow, but very useful.
+	We support here all slots (even non indexed) but raise a backward compatible exception"
 
-	^ self instVarAt: (self class instVarIndexFor: aString asString ifAbsent: [ InstanceVariableNotFound signalFor: aString asString ]) put: aValue
+	^ self class
+		slotNamed: aString
+		ifFound: [ :slot | slot write: aValue to: self ]
+		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
 ]
 
 { #category : #testing }
@@ -1805,7 +1813,7 @@ Object >> readSlot: aSlot [
 
 { #category : #introspection }
 Object >> readSlotNamed: aName [
-	^self readSlot: (self class slotNamed: aName)
+	^(self class slotNamed: aName) read: self
 ]
 
 { #category : #dependencies }
@@ -1876,8 +1884,9 @@ Object >> setPinned: aBoolean [
 { #category : #pinning }
 Object >> setPinnedInMemory: aBoolean [
 	"The VM's garbage collector routinely moves objects as it reclaims and compacts
-	 memory. But it can also pin an object so that it will not be moved, which can make
-	 it easier to pass objects out through the FFI.  Objects are unpinnned when created.
+	 memory. But it can also pin an object so that it will not be moved around in memory,
+    while still being reclamable by the garbage collector. This can make
+	 it easier to pass objects out through the FFI. Objects are unpinnned when created.
 	 This primitive either pins or unpins an object, and answers if it was already pinned."
 	<primitive: 184 error: ec>
 	^self primitiveFailed

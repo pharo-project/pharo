@@ -83,11 +83,26 @@ MCMethodDefinitionTest >> testComparison [
 MCMethodDefinitionTest >> testLoadAndUnload [
 	|definition|
 	definition := self mockMethod: #one class: 'MCMockClassA' source: 'one ^2' meta: false.
-	self assert: self mockInstanceA one = 1.
+	self assert: self mockInstanceA one equals: 1.
 	definition load.
-	self assert: self mockInstanceA one = 2.
+	self assert: self mockInstanceA one equals: 2.
 	definition unload.
 	self deny: (self mockInstanceA respondsTo: #one)
+]
+
+{ #category : #testing }
+MCMethodDefinitionTest >> testMethodDefinitionWithEmptyProtocolIsClassifiedAsAsYetUnclassified [
+
+	| methodDef |
+	methodDef := (MCMethodDefinition
+			className: #Object
+			classIsMeta: false
+			selector: #name
+			category: '' 
+			timeStamp: nil
+			source: 'name
+	^ self printString').
+	self assert: methodDef category equals: #'as yet unclassified'.
 ]
 
 { #category : #testing }

@@ -16,9 +16,21 @@ FFILibrary class >> asFFILibrary [
 	^ self uniqueInstance
 ]
 
+{ #category : #converting }
+FFILibrary class >> calloutAPIClass [
+
+	^ self uniqueInstance calloutAPIClass 
+]
+
 { #category : #'instance creation' }
 FFILibrary class >> new [
 	self error: 'Use #uniqueInstance'
+]
+
+{ #category : #options }
+FFILibrary class >> options [
+	
+	^ #()
 ]
 
 { #category : #'instance creation' }
@@ -31,6 +43,12 @@ FFILibrary class >> uniqueInstance [
 { #category : #converting }
 FFILibrary >> asFFILibrary [ 
 	^ self
+]
+
+{ #category : #converting }
+FFILibrary >> calloutAPIClass [
+
+	^ FFICalloutAPI calloutAPIClass 
 ]
 
 { #category : #'library path' }
@@ -46,6 +64,18 @@ FFILibrary >> macModuleName [
 { #category : #accessing }
 FFILibrary >> moduleName [ 
 	^ Smalltalk platform ffiModuleName: self
+]
+
+{ #category : #'accessing platform' }
+FFILibrary >> options [
+	
+	^ self class options
+]
+
+{ #category : #accessing }
+FFILibrary >> uniqueInstance [
+	
+	^ self
 ]
 
 { #category : #'accessing platform' }

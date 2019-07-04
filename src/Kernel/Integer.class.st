@@ -63,6 +63,18 @@ Integer class >> new: length neg: neg [
 		ifFalse: [^LargePositiveInteger new: length]
 ]
 
+{ #category : #reading }
+Integer class >> readHexByteFrom: characterReadStream [
+	| highNibble lowNibble |
+	highNibble := characterReadStream next
+		ifNotNil: [ :character | character hexDigitValue ].
+	highNibble ifNil: [ self error: 'hex digit expected' ].
+	lowNibble := characterReadStream next
+		ifNotNil: [ :character | character hexDigitValue ].
+	lowNibble ifNil: [ self error: 'hex digit expected' ].
+	^ (highNibble bitShift: 4) + lowNibble
+]
+
 { #category : #'bit manipulation' }
 Integer >> & aNumber [
 	^ self bitAnd: aNumber
@@ -1028,15 +1040,22 @@ Integer >> growto: n [
 
 { #category : #converting }
 Integer >> hex [
-	"Print the receiver as hex, prefixed with 16r.  DO NOT CHANGE THIS!  The Cog VMMaker depends on this.
-	 Consider using any of
+	"Returns a string representation of the receiver as hex, prefixed with 16r.  
+	DO NOT CHANGE THIS!  The Cog VMMaker depends on this."
+	
+	"Consider using any of
 		printStringHex
 		printStringBase: 16
 		printStringBase: 16 length: 8 padded: true
 		storeStringHex
 		storeStringBase: 16
 		storeStringBase: 16 length: 11 padded: true"
-	^self storeStringBase: 16
+		
+	"12 hex >>> '16r2'"	
+	"10 hex >>> '16rA'"	
+	"-10 hex >>> '-16rA'"	
+		
+	^ self storeStringBase: 16
 ]
 
 { #category : #'bit manipulation' }
@@ -1166,24 +1185,76 @@ Integer >> numerator [
 
 { #category : #printing }
 Integer >> print: positiveNumberString on: aStream prefix: prefix length: minimum padded: zeroFlag [
+	"Return a String based on concatenation of positiveNumberString with prefix then padded by 0 is zeroFlag is set for a minimum length."
+	
+	"(String streamContents: [:s | 10 print: '10' on: s prefix: 'zz' length: 4 padded: true] ) >>> 'zz10'"
+	
+
 	| padLength |
 	padLength := minimum - positiveNumberString size - prefix size.
 	padLength > 0
 		ifTrue: [zeroFlag
-				ifTrue: [aStream nextPutAll: prefix; nextPutAll: (String new: padLength withAll: $0)]
-				ifFalse: [aStream nextPutAll: (String new: padLength withAll: Character space); nextPutAll: prefix]]
+						ifTrue: [aStream nextPutAll: prefix; nextPutAll: (String new: padLength withAll: $0)]
+						ifFalse: [aStream nextPutAll: (String new: padLength withAll: Character space); nextPutAll: prefix]]
 		ifFalse: [aStream nextPutAll: prefix].
 	aStream nextPutAll: positiveNumberString
 	
 ]
 
 { #category : #'printing-numerative' }
+Integer >> printHexByteOn: characterWriteStream [
+	"Assuming the receiver is a byte value [0, 255],
+	print a 2 character hexadecimal representation on characterWriteStream
+	using the uppercase alphabet."
+	
+	(self between: 0 and: 255)
+		ifTrue: [
+			| highNibble lowNibble hexDigits |
+			highNibble := self bitShift: -4.
+			lowNibble := self bitAnd: 15.
+			hexDigits := '0123456789ABCDEF'.
+			characterWriteStream 
+				nextPut: (hexDigits at: highNibble + 1);
+				nextPut: (hexDigits at: lowNibble + 1) ]
+		ifFalse: [ 
+			self error: 'byte value between 0 and 255 expected' ]
+]
+
+{ #category : #'printing-numerative' }
+Integer >> printLowercaseHexByteOn: characterWriteStream [
+	"Assuming the receiver is a byte value [0, 255],
+	print a 2 character hexadecimal representation on characterWriteStream
+	using the lowercase alphabet."
+	
+	(self between: 0 and: 255)
+		ifTrue: [
+			| highNibble lowNibble hexDigits |
+			highNibble := self bitShift: -4.
+			lowNibble := self bitAnd: 15.
+			hexDigits := '0123456789abcdef'.
+			characterWriteStream 
+				nextPut: (hexDigits at: highNibble + 1);
+				nextPut: (hexDigits at: lowNibble + 1) ]
+		ifFalse: [ 
+			self error: 'byte value between 0 and 255 expected' ]
+]
+
+{ #category : #'printing-numerative' }
 Integer >> printOn: aStream base: base length: minimum padded: zeroFlag [
-	| prefix |
+	"Return a String representation of this number in base b with a minimum length and padded by 0 if zeroFlag is set"
 	
+	"(String streamContents: [ :s | 10 printOn: s base: 10 length: 4 padded: true] ) >>> '0010'"
+	"(String streamContents: [ :s | -10 printOn: s base: 10 length: 4 padded: true] ) >>> '-010'"
+	
+
+	| prefix |	
 	prefix := self negative ifTrue: ['-'] ifFalse: [ '' ].
-	
-	self print: (self abs printStringBase: base) on: aStream prefix: prefix length: minimum padded: zeroFlag
+	self 
+		print: (self abs printStringBase: base) 
+		on: aStream 
+		prefix: prefix 
+		length: minimum 
+		padded: zeroFlag
 
 ]
 
@@ -1282,18 +1353,17 @@ Integer >> printString [
 
 { #category : #'printing-numerative' }
 Integer >> printStringBase: base length: minimum padded: zeroFlag [
-	^String streamContents: [:s| self printOn: s base: base length: minimum padded: zeroFlag]
+
+	^ String streamContents: [:s| self printOn: s base: base length: minimum padded: zeroFlag]
 ]
 
 { #category : #'printing-numerative' }
 Integer >> printStringHex [
-	"returns the hex digit part of the integer when printed in hexadecimal format.
-	30 printStringHex 
-		'1E'
-	30 hex
-		 '16r1E' "
+	"Returns the hex digit part of the integer when printed in hexadecimal format."
+	"30 printStringHex >>> '1E'"
+	"30 hex >>> '16r1E'"
 		
-	^self printStringBase: 16
+	^ self printStringBase: 16
 ]
 
 { #category : #'printing-numerative' }
@@ -1449,13 +1519,18 @@ Integer >> storeOn: aStream base: base length: minimum padded: zeroFlag [
 
 { #category : #'printing-numerative' }
 Integer >> storeStringBase: base length: minimum padded: zeroFlag [
-	^String streamContents: [:s| 
-		self storeOn: s base: base length: minimum padded: zeroFlag ]
+	"(10 storeStringBase: 16 length: 6 padded: true) >>> '16r00A'"
+
+	^ String streamContents: [:s| 
+			self storeOn: s base: base length: minimum padded: zeroFlag ]
 ]
 
 { #category : #'printing-numerative' }
 Integer >> storeStringHex [
-	^self storeStringBase: 16
+	"Returns a string representation of the receiver in base 16 in a way that executing it will return the receiver."
+	"10 storeStringHex >>> '16rA'"
+
+	^ self storeStringBase: 16
 ]
 
 { #category : #enumerating }

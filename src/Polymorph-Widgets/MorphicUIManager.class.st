@@ -26,11 +26,18 @@ MorphicUIManager class >> isActiveManager [
 { #category : #testing }
 MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 
-	^ Smalltalk isHeadless not
+	^ Smalltalk isHeadless not or: [ Smalltalk isHeadless and: [ CommandLineArguments new hasOption: 'interactive'  ] ]
 ]
 
 { #category : #private }
 MorphicUIManager >> activate [
+
+	World worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneforWorld: World).
+	Cursor currentCursor: Cursor currentCursor.
+		
+	WorldMorph currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
+	WorldMorph extraWorldList do: #restoreMorphicDisplay.
+
 	activeTranscript 
 		ifNil: [
 			Transcript class == ThreadSafeTranscript ifFalse: [ 
@@ -40,17 +47,6 @@ MorphicUIManager >> activate [
 		ifNotNil: [ Transcript := activeTranscript ].
 		
 	SystemProgressMorph enable.
-]
-
-{ #category : #'ui requests' }
-MorphicUIManager >> checkForNewDisplaySize [
-
-	"Check whether the screen size has changed and if so take appropriate actions"
-
-	Display extent = DisplayScreen actualScreenSize ifTrue: [^ Display].
-	DisplayScreen startUp.
-	World restoreMorphicDisplay.
-
 ]
 
 { #category : #'ui requests' }
@@ -268,14 +264,17 @@ MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: fal
 
 { #category : #'ui requests' }
 MorphicUIManager >> currentWorld [
-	ActiveWorld ifNotNil: [^ActiveWorld].
-	^World
+
+	ActiveWorld ifNotNil: [ ^ ActiveWorld ].
+	^ World
 ]
 
 { #category : #private }
 MorphicUIManager >> deactivate [
 	activeTranscript := Transcript.
 	SystemProgressMorph disable.
+	
+	World worldState worldRenderer: (NullWorldRenderer forWorld: World).
 ]
 
 { #category : #debug }
@@ -429,8 +428,8 @@ MorphicUIManager >> lowSpaceWatcherDefaultAction: theInterruptedProcess [
 	"Create a Notifier on the active scheduling process with the given label."
 	| preemptedProcess projectProcess debugSession |
 	ActiveHand ifNotNil:[ActiveHand interrupted].
-	ActiveWorld := World. "reinstall active globals"
-	ActiveHand := World primaryHand.
+	ActiveWorld := self currentWorld. "reinstall active globals"
+	ActiveHand := self currentWorld primaryHand.
 	ActiveHand interrupted. "make sure this one's interrupted too"
 	ActiveEvent := nil.
 
@@ -478,16 +477,16 @@ MorphicUIManager >> modalMorph [
 	[foundWorld or: [sender isNil]]
 		whileFalse: [receiver := sender receiver.
 			((sender selector = #invokeWorldMenu:)
-					or: [receiver == World
+					or: [receiver == self currentWorld
 							and: [sender selector == #handleEvent:
 									or: [sender selector == #findWindow:]]])
 				ifTrue: [foundWorld := true]
 				ifFalse: [sender := sender sender]].
 	foundWorld
 		ifTrue: [^ receiver world
-				ifNil: [World]].
+				ifNil: [self currentWorld]].
 	^ SystemWindow topWindow
-		ifNil: [World]
+		ifNil: [self currentWorld]
 ]
 
 { #category : #'ui requests' }
@@ -551,7 +550,7 @@ MorphicUIManager >> onFontsChanged [
 	StringMorph allSubInstancesDo: [ :s | s layoutChanged ].
 	TextMorph allSubInstancesDo: [ :s | s layoutChanged ].
 	SystemWindow allInstancesDo: [ :w | [ w update: #relabel ] on: Error do: [ :ex | ] ].
-	World ifNotNil: [ :w | w changed ].
+	self currentWorld ifNotNil: [ :w | w changed ].
 ]
 
 { #category : #events }
@@ -568,7 +567,7 @@ MorphicUIManager >> onPrimitiveError: aString [
 								ifFalse: [s cr; print: (context := context sender)]]].
 	Transcripter askForEmergencyEvaluatorOrExitWithText: message.
 	"init hands and redisplay" 
-	World install
+	self currentWorld install
 
 ]
 
@@ -702,15 +701,15 @@ MorphicUIManager >> requestPassword: aStringOrText [
 { #category : #'ui requests' }
 MorphicUIManager >> restoreDisplay [
 
-	World fullRepaintNeeded
+	self currentWorld fullRepaintNeeded
 ]
 
 { #category : #'ui requests' }
 MorphicUIManager >> restoreDisplayAfter: aBlock [
 
 	aBlock value.
-	World activeHand waitButton.
-	World fullRepaintNeeded.
+	self currentWorld activeHand waitButton.
+	self currentWorld fullRepaintNeeded.
 ]
 
 { #category : #'ui process' }
@@ -786,5 +785,5 @@ MorphicUIManager >> warningDefaultAction: anException [
 
 { #category : #'global state' }
 MorphicUIManager >> world [
-	^ ActiveWorld 
+	^ self currentWorld 
 ]

@@ -10,7 +10,8 @@ Class {
 	#instVars : [
 		'undo',
 		'redo',
-		'isPerformingRefactoring'
+		'isPerformingRefactoring',
+		'changeFactory'
 	],
 	#classVars : [
 		'Instance',
@@ -21,7 +22,7 @@ Class {
 
 { #category : #'change-factory' }
 RBRefactoryChangeManager class >> changeFactory [
-	^self instance changeFactory
+	^ self instance changeFactory
 ]
 
 { #category : #'class initialization' }
@@ -85,7 +86,7 @@ RBRefactoryChangeManager >> addUndo: aRefactoringChange [
 
 { #category : #'change-factory' }
 RBRefactoryChangeManager >> changeFactory [
-	^ RBRefactoryChangeFactory new
+	^ changeFactory
 ]
 
 { #category : #private }
@@ -139,8 +140,9 @@ RBRefactoryChangeManager >> ignoreChangesWhile: aBlock [
 
 { #category : #initialization }
 RBRefactoryChangeManager >> initialize [
-	undo := OrderedCollection new.
-	redo := OrderedCollection new.
+	super initialize.
+	changeFactory := RBRefactoryChangeFactory new.
+	self clearUndoRedoList.
 	isPerformingRefactoring := false.
 	self connectToChanges
 ]

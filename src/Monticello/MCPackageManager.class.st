@@ -162,8 +162,11 @@ MCPackageManager class >> managersForClass: aClass category: methodCategory do: 
 { #category : #'system changes' }
 MCPackageManager class >> managersForClass: aClass do: aBlock [
 
+	| rPackage |
+	rPackage := aClass package.
+
 	self registry do: [:mgr |
-		(mgr packageSet includesClass: aClass)
+		(mgr packageSet packages includes: rPackage)
 			ifTrue: [aBlock value: mgr]]
 ]
 

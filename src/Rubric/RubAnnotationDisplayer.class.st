@@ -4,7 +4,7 @@ I represent a bar with annotations for the text area, like editing mode, line nu
 Class {
 	#name : #RubAnnotationDisplayer,
 	#superclass : #RubScrolledTextSideRuler,
-	#traits : 'TRubWithWrapPolicy + TRubWithLineNumber',
+	#traits : 'TRubWithWrapPolicy + (TRubWithLineNumber - {#fontToUse})',
 	#classTraits : 'TRubWithWrapPolicy classTrait + TRubWithLineNumber classTrait',
 	#instVars : [
 		'lineAnnotation',

@@ -38,11 +38,6 @@ ManifestKernel class >> ruleRBClassNameInSelectorRuleV1FalsePositive [
 ]
 
 { #category : #'code-critics' }
-ManifestKernel class >> ruleRBIfTrueReturnsRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#'AsciiCharset class' #isControlOther: #true)) #'2019-01-28T20:48:11.337676+01:00') )
-]
-
-{ #category : #'code-critics' }
 ManifestKernel class >> ruleRBRefersToClassRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#'Character class' #allByteCharacters #true)) #'2019-01-28T20:55:28.683846+01:00') )
 ]

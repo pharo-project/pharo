@@ -20,27 +20,22 @@ RBMissingSuperSendsRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBMissingSuperSendsRule >> check: aMethod forCritiquesDo: aCriticBlock [
+RBMissingSuperSendsRule >> basicCheck: aMethod [
 	| definer superMethod |
-	aMethod methodClass isMeta ifTrue: [ ^ self ].
-	(self methodsRequiringSuper includes: aMethod selector) ifFalse: [ ^ self ]. 
-	
-	definer := aMethod methodClass superclass ifNotNil: [ :sc |
-		sc whichClassIncludesSelector: aMethod selector ].
-	definer ifNil: [ ^ self ].
-	
+	aMethod methodClass isMeta ifTrue: [ ^ false ].
+	(self methodsRequiringSuper includes: aMethod selector) ifFalse: [ ^ false ].
+
+	definer := aMethod methodClass superclass ifNotNil: [ :sc | sc whichClassIncludesSelector: aMethod selector ].
+	definer ifNil: [ ^ false ].
+
 	"super defines same method"
-	(aMethod superMessages includes: aMethod selector) ifTrue: [ ^self ]. 
-	
+	(aMethod superMessages includes: aMethod selector) ifTrue: [ ^ false ].
+
 	"but I don't call it"
-	superMethod := definer 
-		compiledMethodAt: aMethod selector
-		ifAbsent: [  ].
-	
-	superMethod isReturnSelf ifTrue: [ ^ self ].
-	(superMethod sendsSelector: #subclassResponsibility) ifTrue: [ ^ self ].
-	
-	aCriticBlock cull: (self critiqueFor: aMethod)
+	superMethod := definer compiledMethodAt: aMethod selector ifAbsent: [  ].
+
+	superMethod isReturnSelf ifTrue: [ ^ false ].
+	^ (superMethod sendsSelector: #subclassResponsibility) not
 ]
 
 { #category : #accessing }

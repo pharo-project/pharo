@@ -992,6 +992,24 @@ FileReferenceTest >> testRootParent [
 ]
 
 { #category : #tests }
+FileReferenceTest >> testRootReference [
+	"Check that the root entry contains sensible values.
+	On Windows this requires a pseudo entry to be available."
+
+	| rootReference |
+
+	rootReference := FileReference fileSystem: FileSystem disk path: Path root.
+
+	self assert: rootReference isDirectory.
+	self deny: rootReference isFile.
+	self assert: rootReference size equals: 0.
+	self assert: rootReference isReadable.
+	self assert: rootReference isExecutable.
+	self deny: rootReference isWritable.
+
+]
+
+{ #category : #tests }
 FileReferenceTest >> testSiblingOfReference [
 	| griffle  nurb |
 	griffle := filesystem / 'griffle'.

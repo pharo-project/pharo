@@ -9,10 +9,11 @@ Class {
 	#name : #DropListPresenter,
 	#superclass : #AbstractWidgetPresenter,
 	#instVars : [
-		'listHolder',
-		'selectionHolder',
-		'displayBlock',
-		'iconHolder'
+		'#model => SpecObservableSlot',
+		'#startsWithSelection',
+		'#selection',
+		'#displayBlock => SpecObservableSlot',
+		'#iconBlock => SpecObservableSlot'
 	],
 	#category : #'Spec-Core-Widgets'
 }
@@ -32,34 +33,33 @@ DropListPresenter class >> title [
 { #category : #api }
 DropListPresenter >> addItemLabeled: aString do: aBlock [
 
-	| item |
-	item := DropListItem named: aString do: aBlock.
-	
-	"If you add directly in the contents, the update is not triggered from the value holder"
-	listHolder add: item.
+	self addItemLabeled: aString do: aBlock icon: nil.
 ]
 
 { #category : #api }
 DropListPresenter >> addItemLabeled: aString do: aBlock icon: anIcon [
 
 	| item |
-	item := DropListItem named: aString do: aBlock.
+	item := DropListItem on: aString do: aBlock.
 	item icon: anIcon.
-	"If you add directly in the contents, the update is not triggered from the value holder"
-	listHolder add: item.
+
+	model add: item.
+	"Adding an item adds it to the selection if there is none".
+	self selection isEmpty ifTrue: [ 
+		self selection selectItem: item ]
 ]
 
 { #category : #api }
 DropListPresenter >> displayBlock [
 	
-	^ displayBlock value
+	^ displayBlock
 ]
 
 { #category : #api }
 DropListPresenter >> displayBlock: aBlock [
 	
-	displayBlock value: aBlock 
-	"listHolder replace: [ :e | e display: aBlock; yourself  ]."
+	displayBlock := aBlock 
+
 ]
 
 { #category : #api }
@@ -70,66 +70,95 @@ DropListPresenter >> displayForItem: anItem [
 ]
 
 { #category : #api }
+DropListPresenter >> dropListItems: dropListItems [
+	"Populate the drop list with a list DropListItems"
+	
+	model collection: dropListItems
+]
+
+{ #category : #api }
 DropListPresenter >> emptyList [
 	
-	listHolder value: OrderedCollection new
+	model collection: OrderedCollection new.
+
 ]
 
 { #category : #api }
 DropListPresenter >> getIconFor: anItem [
 
-	^ self iconHolder cull: anItem
+	^ self iconBlock cull: anItem model cull: anItem
 ]
 
 { #category : #api }
 DropListPresenter >> getIndex [
 
-	^ selectionHolder index value
+	^ selection selectedIndex
 ]
 
 { #category : #api }
 DropListPresenter >> getList [
 
-	^ listHolder value
+	^ model items
+]
+
+{ #category : #testing }
+DropListPresenter >> hasIcons [
+	
+	^ iconBlock isNotNil and: [ self model collection anySatisfy: [ :e | e icon isNotNil ] ]
+]
+
+{ #category : #api }
+DropListPresenter >> iconBlock [ 
+	
+	^ iconBlock 
+]
+
+{ #category : #api }
+DropListPresenter >> iconBlock: aBlock [	
+	
+	iconBlock := aBlock
 ]
 
 { #category : #api }
 DropListPresenter >> iconHolder [
+	
+	self 
+		deprecated: 'Use iconBlock instead' 
+		transformWith: '`@receiver iconHolder' -> '`@receiver iconBlock'.
 
-	^ iconHolder value
+	^ self iconBlock
 ]
 
 { #category : #api }
-DropListPresenter >> iconHolder: aBlock [
+DropListPresenter >> iconHolder: aBlock [	
+	self 
+		deprecated: 'Use iconBlock: instead' 
+		transformWith: '`@receiver iconHolder: `@statements1' -> '`@receiver iconBlock: `@statements1'.
 	
-	iconHolder value: aBlock
+	self iconBlock: aBlock
 ]
 
 { #category : #initialization }
 DropListPresenter >> initialize [
 
 	super initialize.
-
-	listHolder := OrderedCollection new asValueHolder.
-	selectionHolder := SelectionValueHolder new.
 	
-	listHolder whenChangedDo: [ 
+	model := SpecCollectionListModel on: #().
+	selection := SpecSingleSelectionMode on: self.
+	displayBlock := [ :itemModel :item | item label ].
+	iconBlock := [ :itemModel :item | item icon ].
+	
+	startsWithSelection := true.
+		
+"	listHolder whenChangedDo: [ 
 		self changed: #getList.
 		self changed: #getIconFor:.
 		self internalResetSelection.].
 				
 	selectionHolder whenChangedDo: [ self changed: #getIndex ].
-	displayBlock := [ :model :item | item label ] asValueHolder.
-	iconHolder := [ :model :item | item icon ] asValueHolder.
+	iconHolder := [ Name already defined -> :model :item | item icon ] asValueHolder.
 	
-	self whenSelectedItemChanged: [:item | item value ]
-]
-
-{ #category : #private }
-DropListPresenter >> internalResetSelection [
-
-	selectionHolder reset.
-	self getList ifNotEmpty: [ self silentlySetSelectedIndex: 1 ]
+	"
 ]
 
 { #category : #api }
@@ -140,7 +169,10 @@ DropListPresenter >> items: aList [
 	
 	| dropListItems |
 	dropListItems := aList collect: [ :e | DropListItem on: e do: [] ].
-	listHolder value: dropListItems
+	model collection: dropListItems.
+	
+	(dropListItems isNotEmpty and: [startsWithSelection and: [ self selection isEmpty ]]) 
+		ifTrue: [ self selectedIndex: 1 ]
 ]
 
 { #category : #api }
@@ -148,7 +180,7 @@ DropListPresenter >> listItems [
 	"<api: #inspect>"
 	"Return the list used to populate the drop list"
 	
-	^ listHolder value collect: [ :e | e model ].
+	^ self getList collect: [ :e | e model ].
 ]
 
 { #category : #api }
@@ -160,11 +192,15 @@ DropListPresenter >> listSize [
 ]
 
 { #category : #api }
-DropListPresenter >> resetSelection [
-	"<api: #do>"
-	"Reset the current selection state"
+DropListPresenter >> model [
+	
+	^ model
+]
 
-	selectionHolder reset
+{ #category : #selection }
+DropListPresenter >> resetSelection [
+	
+	self selection unselectAll 
 ]
 
 { #category : #api }
@@ -175,91 +211,111 @@ DropListPresenter >> selectedIndex [
 	^ self getIndex
 ]
 
-{ #category : #private }
-DropListPresenter >> selectedIndexHolder [
-
-	^ selectionHolder index
+{ #category : #API }
+DropListPresenter >> selectedIndex: anInteger [ 
+	
+	self selection selectIndex: anInteger.
+	"I execute the block associated with the item"
+	self selection selectedItem value.
 ]
 
 { #category : #api }
 DropListPresenter >> selectedItem [
 	"<api: #inspect>"
 
-	^ self selectedItemHolder value model
-]
-
-{ #category : #private }
-DropListPresenter >> selectedItemHolder [
-
-	^ selectionHolder selection
+	^ self selection selectedItem ifNotNil: #model
 ]
 
 { #category : #api }
-DropListPresenter >> setIndex: anIndex [
-	| item |
+DropListPresenter >> selectedItem: anItem [ 
+	
+	| realItem |
+	
+	anItem ifNil: [ self selection unselectAll. ^self ].
+	
+	realItem := model collection detect: [ :each | each model = anItem ].
+	self selection selectItem: realItem.
+	"I execute the block associated with the item"
+	realItem value.
+]
 
-	selectionHolder index value: anIndex.
-	item := (listHolder value at: anIndex ifAbsent: [ nil ]).
-	item value.
-	selectionHolder selection value: item.
-	self changed: #getIndex
+{ #category : #api }
+DropListPresenter >> selection [
+	^ selection
 ]
 
 { #category : #api }
 DropListPresenter >> setSelectedIndex: anIndex [
-	"<api: #integer min:1 max:#listSize getter: #selectedIndex>"
-	"Force the selection of the item at index anIndex"
-	| selection |
+	self
+		deprecated: 'Use #selectedIndex: instead'
+		transformWith:
+			'`@receiver setSelectedIndex: `@argument'
+				-> '`@receiver selectedIndex:`@argument'.
+	^ self selectedIndex: anIndex	
 
-	selection := listHolder value at: anIndex ifAbsent: [ ^ self ].
-	selection value.
-	selectionHolder index value: anIndex.
-	selectionHolder selection value: selection
 ]
 
 { #category : #api }
 DropListPresenter >> setSelectedItem: anItem [
-	"Force the selection of the item anItem"
-	"<api: #st getter: #selectedItem>"
-	| index realItem |
-	index := self listItems indexOf: anItem ifAbsent: [ ^ self ].
-	realItem := listHolder at: index.
-	selectionHolder index value: index.
-	selectionHolder selection value: realItem.
+	self
+		deprecated: 'Use #selectedItem: instead'
+		transformWith:
+			'`@receiver setSelectedItem: `@argument'
+				-> '`@receiver selectedItem:`@argument'.
+	^ self selectedItem: anItem	
+
 ]
 
-{ #category : #private }
-DropListPresenter >> silentlySetSelectedIndex: anIndex [
-	"Force the selection of the item at index anIndex"
-	| selection |
+{ #category : #api }
+DropListPresenter >> sortingBlock [
+	^ self model sortingBlock
+]
 
-	selection := listHolder value at: anIndex ifAbsent: [ ^ self ].
-	selectionHolder index value: anIndex.
-	selectionHolder selection value: selection.
+{ #category : #api }
+DropListPresenter >> sortingBlock: aBlock [
+	self model sortingBlock: aBlock
+]
+
+{ #category : #api }
+DropListPresenter >> startWithSelection [
+
+	startsWithSelection := true
+]
+
+{ #category : #api }
+DropListPresenter >> startWithoutSelection [
+
+	startsWithSelection := false
 ]
 
 { #category : #'api-events' }
-DropListPresenter >> whenSelectedItemChanged: aBlock [
+DropListPresenter >> whenSelectedItemChangedDo: aBlock [
 	"Set a block to perform when the selected item is changed"
 
-	selectionHolder selection whenChangedDo: [ :new :old :announcement :ann | 
-		aBlock cull: (new ifNotNil: [ :item | item model ]) cull: old cull: announcement cull: ann ]
+	selection whenChangedDo: [	aBlock cull: self selectedItem ]
 ]
 
 { #category : #'api-events' }
-DropListPresenter >> whenSelectionChanged: aBlock [
+DropListPresenter >> whenSelectionChangedDo: aBlock [
 	"Set a block to perform when the selection is changed"
 	
 	"The method should be used only if you are interested in the fact that there was a change, without caring about what has changed
 	If you are interested in the items, use whenSelectedItemChanged:
 	If you are interested in the index, use whenSelectionIndexChanged:"
 
-	selectionHolder whenChangedDo: aBlock.
+	selection whenChangedDo: aBlock.
 ]
 
 { #category : #'api-events' }
-DropListPresenter >> whenSelectionIndexChanged: aBlock [
+DropListPresenter >> whenSelectionIndexChangedDo: aBlock [
 	"Set a block to perform when the selected index is changed"
 
-	selectionHolder index whenChangedDo: aBlock
+	self deprecated: 'Use whenSelectionChanged:'.
+
+	selection whenSelectionChanged: aBlock
+]
+
+{ #category : #'api-events' }
+DropListPresenter >> whenSortingBlockChangedDo: aBlock [
+	self model whenSortingBlockChangedDo: aBlock
 ]

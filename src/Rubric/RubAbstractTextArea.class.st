@@ -93,7 +93,9 @@ Class {
 		'segments',
 		'getMenuPolicy',
 		'mouseDownPoint',
-		'completionEngine'
+		'completionEngine',
+		'maxLength',
+		'findReplaceService'
 	],
 	#classVars : [
 		'BackgroundColor',
@@ -809,6 +811,12 @@ RubAbstractTextArea >> findRegex [
 	^ self editor findRegex
 ]
 
+{ #category : #'event handling' }
+RubAbstractTextArea >> findReplaceService [
+	^ findReplaceService ifNil: [
+		findReplaceService := RubFindReplaceService new ].
+]
+
 { #category : #'find-replace' }
 RubAbstractTextArea >> findText [
 	^ self editor findText
@@ -909,9 +917,9 @@ RubAbstractTextArea >> handleBoundsChange: aBlock [
 { #category : #editing }
 RubAbstractTextArea >> handleEdit: editBlock [
 	"Ensure that changed areas get suitably redrawn"
-	editBlock value.
-	self selectionChanged.  "Note new selection"
 
+	editBlock value.
+	self selectionChanged	"Note new selection"
 ]
 
 { #category : #'event handling' }
@@ -1021,7 +1029,7 @@ RubAbstractTextArea >> hasDecoratorNamed: aKey [
 
 { #category : #'find-replace' }
 RubAbstractTextArea >> hasFindReplaceFocus [
-	^ RubFindReplaceService default dialogIsActiveFor: self
+	^ self findReplaceService dialogIsActiveFor: self
 ]
 
 { #category : #'accessing editing state' }
@@ -1080,12 +1088,20 @@ RubAbstractTextArea >> isReadOnly [
 { #category : #'event handling' }
 RubAbstractTextArea >> keyStroke: anEvent [
 	"Handle a keystroke event."
+
 	anEvent keyCharacter = Character cr
-		ifTrue: [ self handleReturnKey ifTrue: [ ^ self ] ].
-	anEvent hand anyButtonPressed ifTrue: [ ^self ].
-	self scrollPane ifNotNil: [ :sp | (sp scrollByKeyboard: anEvent) ifTrue: [^self] ].
-	anEvent isUserInterrupt ifTrue: [^self].
-	self handleEdit: [ self editor keystroke: anEvent ].
+		ifTrue: [ self handleReturnKey
+				ifTrue: [ ^ self ] ].
+	anEvent hand anyButtonPressed
+		ifTrue: [ ^ self ].
+	self scrollPane
+		ifNotNil: [ :sp | 
+			(sp scrollByKeyboard: anEvent)
+				ifTrue: [ ^ self ] ].
+	anEvent isUserInterrupt
+		ifTrue: [ ^ self ].
+	self
+		handleEdit: [ self editor keystroke: anEvent ].
 	self scrollSelectionIntoView: nil
 ]
 
@@ -1181,6 +1197,20 @@ RubAbstractTextArea >> markIndex [
 { #category : #'accessing selection' }
 RubAbstractTextArea >> markIndex: markIndex pointIndex: pointIndex [
 	self handleSelectionChange: [ self editingState markIndex: markIndex pointIndex: pointIndex ]
+]
+
+{ #category : #accessing }
+RubAbstractTextArea >> maxLength [
+	"Answer the maximum number of characters that may be typed."
+
+	^ maxLength 
+]
+
+{ #category : #accessing }
+RubAbstractTextArea >> maxLength: anInteger [
+	"Set the maximum number of characters that may be typed."
+
+	maxLength := anInteger max: 0
 ]
 
 { #category : #accessing }
@@ -1334,6 +1364,17 @@ RubAbstractTextArea >> newPrimarySelection [
 
 ]
 
+{ #category : #editing }
+RubAbstractTextArea >> newSizeAfterUpdateFrom: start to: stop with: aText [
+	" compute and return my text new size avec an insertion/replacement with aText.
+	the receiver is not update "
+
+	| replSize |
+	" replSize is the additional size"
+	replSize := aText size - (stop - start + 1).
+	^ self text size + replSize
+]
+
 { #category : #'interactive error protocol' }
 RubAbstractTextArea >> nextTokenFrom: start direction: dir [
 	^ self editor nextTokenFrom: start direction: dir
@@ -1406,9 +1447,9 @@ RubAbstractTextArea >> paragraphWasComposedFrom: startIndex to: stopIndex [
 { #category : #initialization }
 RubAbstractTextArea >> plugFindReplace [
 	self announcer 
-		when:  MorphGotFocus send: #whenTextAreaGotFocus: to: RubFindReplaceService default;
-	 	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: RubFindReplaceService default;	
-		when:  RubSelectionChanged send: #whenTextAreaSelectionChanged: to: RubFindReplaceService default
+		when:  MorphGotFocus send: #whenTextAreaGotFocus: to: self findReplaceService;
+	 	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: self findReplaceService;	
+		when:  RubSelectionChanged send: #whenTextAreaSelectionChanged: to: self findReplaceService
 ]
 
 { #category : #'accessing selection' }
@@ -1458,8 +1499,19 @@ RubAbstractTextArea >> privateMoveBy: delta [
 
 { #category : #editing }
 RubAbstractTextArea >> privateReplaceFrom: start to: stop with: aText [
-	self paragraph replaceFrom: start to: stop with: aText.
-
+	self maxLength
+		ifNotNil: [ | newSize |
+			newSize := self newSizeAfterUpdateFrom: start to: stop with: aText.
+			newSize > self maxLength
+				ifTrue: [ | t |
+					t := self text.
+					t replaceFrom: start to: stop with: aText.
+					self paragraph
+						replaceFrom: 1
+						to: self text size
+						with: (t copyFrom: 1 to: maxLength).
+					^ self ] ].
+	self paragraph replaceFrom: start to: stop with: aText
 ]
 
 { #category : #private }
@@ -1719,7 +1771,7 @@ RubAbstractTextArea >> setEmphasisHere [
 RubAbstractTextArea >> setTextWith: stringOrText [
 	"Accept new text contents."
 
-	self handleParagraphChange: [self privateText: stringOrText]
+	self handleParagraphChange: [ self privateText: (self validateTextFrom: stringOrText) ]
 ]
 
 { #category : #'find-replace' }
@@ -1870,7 +1922,7 @@ RubAbstractTextArea >> unplug [
 
 { #category : #initialization }
 RubAbstractTextArea >> unplugFindReplace [
-	self announcer unsubscribe: RubFindReplaceService default
+	self announcer unsubscribe: self findReplaceService
 
 ]
 
@@ -1905,13 +1957,13 @@ RubAbstractTextArea >> updateMarginsWith: aMargin [
 { #category : #'accessing text' }
 RubAbstractTextArea >> updateTextWith: aStringOrText [
 	self
-		handleEdit: [ 
-			self
+		handleEdit: [ self
 				beEditableWhile: [ 
-					aStringOrText = self text
-						ifFalse: [ 
-							self selectAll.							
-							self editor replaceSelectionWith: aStringOrText.
+					| s |
+					s := self validateTextFrom: aStringOrText.
+					s = self text
+						ifFalse: [ self selectAll.
+							self editor replaceSelectionWith: s.
 							self deselect ] ] ]
 ]
 
@@ -1920,6 +1972,15 @@ RubAbstractTextArea >> userString [
 	"Do I have a text string to be searched on?"
 
 	^ self text string
+]
+
+{ #category : #'accessing text' }
+RubAbstractTextArea >> validateTextFrom: aStringOrText [
+	^ self maxLength
+		ifNil: [ aStringOrText ]
+		ifNotNil: [ aStringOrText size <= self maxLength
+				ifFalse: [ aStringOrText copyFrom: 1 to: self maxLength ]
+				ifTrue: [ aStringOrText ] ]
 ]
 
 { #category : #copying }

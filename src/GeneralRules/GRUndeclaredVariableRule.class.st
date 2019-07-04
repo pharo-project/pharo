@@ -8,12 +8,8 @@ Class {
 }
 
 { #category : #running }
-GRUndeclaredVariableRule >> check: aNode forCritiquesDo: aCriticBlock [
-	
-	(aNode isVariable and: [
-	 aNode isUndeclared ]) ifTrue: [ 
-		aCriticBlock value: (
-			self critiqueFor: aNode) ]
+GRUndeclaredVariableRule >> basicCheck: aNode [
+	^ aNode isVariable and: [ aNode isUndeclared ]
 ]
 
 { #category : #helpers }

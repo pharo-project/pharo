@@ -15,7 +15,7 @@ RBPushDownMethodTest >> testPushDownMethod [
 	self deny: (class directlyDefinesMethod: #name:).
 	class subclasses do: 
 		[ :each | 
-		self assert: (each parseTreeFor: #name:) = (RBParser parseMethod: 'name: aString name := aString') ]
+		self assert: (each parseTreeFor: #name:) equals: (self parseMethod: 'name: aString name := aString') ]
 ]
 
 { #category : #'failure tests' }
@@ -38,7 +38,7 @@ RBPushDownMethodTest >> testPushDownMethodThatReferencesPoolDictionary [
 	self deny: (class directlyDefinesMethod: #junk).
 	class subclasses do: 
 		[ :each | 
-		self assert: (each parseTreeFor: #junk) = parseTree.
+		self assert: (each parseTreeFor: #junk) equals: parseTree.
 		self assert: (each directlyDefinesPoolDictionary: 'TextConstants' asSymbol) ]
 ]
 

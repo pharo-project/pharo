@@ -1,15 +1,16 @@
 "
-I'm the common superclass of all the class definition nodes. 
-A class definition is an object that is built out of the message sent to a class by the class definition parser. 
+I'm the common superclass of all the class definition nodes.
+A class definition is an object that is built out of the message sent to a class by the class definition parser.
 
-I keep a reference to the original method node (originalNode) I'm created from. 
+I keep a reference to the original method node (originalNode) I'm created from.
 
-Please note the vocabulary, we use the term class definition and class definition parser to refer to the class definition only and not the class with its methods. 
+Please note the vocabulary, we use the term class definition and class definition parser to refer to the class definition only and not the class with its methods.
 "
 Class {
 	#name : #CDNode,
 	#superclass : #Object,
 	#instVars : [
+		'parent',
 		'originalNode',
 		'children'
 	],
@@ -26,8 +27,9 @@ CDNode class >> on: aRBMessageNode [
 
 { #category : #accessing }
 CDNode >> addChild: aChild [
-	
-	children add: aChild
+
+	children add: aChild.
+	aChild parent: self
 ]
 
 { #category : #compatibility }
@@ -52,6 +54,11 @@ CDNode >> bestNodeFor: anInterval [
 CDNode >> children [
 
 	^ children
+]
+
+{ #category : #accessing }
+CDNode >> classDefinitionNode [
+	^parent classDefinitionNode
 ]
 
 { #category : #selection }
@@ -90,7 +97,25 @@ CDNode >> intersectsInterval: anInterval [
 		or: [self start between: anInterval first and: anInterval last]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
+CDNode >> isMessage [
+	"To be polymorphic to RB method nodes"
+	^false
+]
+
+{ #category : #testing }
+CDNode >> isMethod [
+	"To be polymorphic to RB method nodes"
+	^false
+]
+
+{ #category : #testing }
+CDNode >> isVariable [
+	"To be polymorphic to RB method nodes"
+	^false
+]
+
+{ #category : #accessing }
 CDNode >> originalNode [
 
 	^originalNode.
@@ -108,6 +133,21 @@ CDNode >> originalNodeSource [
 
 	^originalNode source.
 	
+]
+
+{ #category : #accessing }
+CDNode >> parent [
+	^ parent
+]
+
+{ #category : #accessing }
+CDNode >> parent: anObject [
+	parent := anObject
+]
+
+{ #category : #accessing }
+CDNode >> sourceInterval [
+	^originalNode sourceInterval
 ]
 
 { #category : #selection }

@@ -256,7 +256,7 @@ PasteUpMorph >> closeAllUnchangedWindows [
 
 { #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> closeAllWindowsDiscardingChanges [
-	World systemWindows do: [:w | [w delete] valueSupplyingAnswer: false]
+	self currentWorld systemWindows do: [:w | [w delete] valueSupplyingAnswer: false]
 ]
 
 { #category : #'Morphic-Base-Windows' }
@@ -922,7 +922,7 @@ PasteUpMorph >> resizeToFitString [
 { #category : #'world state' }
 PasteUpMorph >> restoreDisplay [
 
-	World restoreMorphicDisplay.	"I don't actually expect this to be called"
+	self currentWorld restoreMorphicDisplay.	"I don't actually expect this to be called"
 ]
 
 { #category : #'world state' }
@@ -930,25 +930,6 @@ PasteUpMorph >> restoreMainDockingBarDisplay [
 	"Restore the display of docking bars"
 	self dockingBars
 		do: [:each | each updateBounds]
-]
-
-{ #category : #'world state' }
-PasteUpMorph >> restoreMorphicDisplay [
-
-	DisplayScreen startUp.
-
-	self
-		extent: Display extent;
-		viewBox: Display boundingBox;
-		handsDo: [:h | h visible: true; showTemporaryCursor: nil];
-		resizeBackgroundMorph;
-		submorphsDo: [ :each | each displayExtentChanged ];
-		fullRepaintNeeded.
-		
-	self defer: [Cursor normal show].
-		
-	self layoutChanged.
-
 ]
 
 { #category : #gridding }
@@ -1018,7 +999,7 @@ PasteUpMorph >> toggleResizeToFit [
 PasteUpMorph >> useRoundedCorners [
 	"Somewhat special cased because we do have to fill Display for this"
 	super useRoundedCorners.
-	self == World ifTrue:[Display bits primFill: 0]. "done so that we *don't* get a flash"
+	self == self currentWorld ifTrue:[Display bits primFill: 0]. "done so that we *don't* get a flash"
 ]
 
 { #category : #'project state' }

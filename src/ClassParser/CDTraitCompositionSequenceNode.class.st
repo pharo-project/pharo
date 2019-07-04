@@ -26,12 +26,10 @@ CDTraitCompositionSequenceNode >> sequence: aCollection [
 	sequence := aCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 CDTraitCompositionSequenceNode >> toString [ 
-	|res|
-	res:=(self sequence at: 1) toString,
-		' + ',
-		(self sequence at: 2) toString.
-	^res	
+	| res |
+	res := (self sequence at: 1) toString, ' + ', (self sequence at: 2) toString.
+	^ res	
 	
 ]

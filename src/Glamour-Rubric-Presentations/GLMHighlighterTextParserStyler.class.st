@@ -20,12 +20,6 @@ GLMHighlighterTextParserStyler >> parser: anObject [
 ]
 
 { #category : #accessing }
-GLMHighlighterTextParserStyler >> privateFormat: aText [ 
-	self flag: 'This feature is not supported for now.'.
-	^ aText
-]
-
-{ #category : #accessing }
 GLMHighlighterTextParserStyler >> privateStyle: aText [ 
 	| styledText |
 	aText makeAllColor: Color red.

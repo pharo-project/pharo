@@ -175,6 +175,16 @@ TraitBuilderEnhancer >> isTraitedMetaclass: aBuilder [
 	
 ]
 
+{ #category : #events }
+TraitBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstaller [ 
+
+	"Traits does not have instances"
+	aClass isTrait 
+		ifTrue: [ ^ self ].
+
+	super migrateInstancesTo: aClass installer: aShiftClassInstaller 
+]
+
 { #category : #'class modifications' }
 TraitBuilderEnhancer >> newMetaclass: aBuilder [
 
@@ -216,6 +226,12 @@ TraitBuilderEnhancer >> traitCompositionOf: aBuilder [
 TraitBuilderEnhancer >> traitCompositionOfClass: aClass [ 
 	
 	^ aClass traitComposition asTraitComposition
+]
+
+{ #category : #migrating }
+TraitBuilderEnhancer >> validateRedefinition: anOldClass [
+	(anOldClass isNotNil and: [ anOldClass isTrait ~= builder isTrait ])
+		ifTrue: [ self error: 'A class should not be redefined as a trait. First remove it from the system.' ]
 ]
 
 { #category : #validating }

@@ -13,22 +13,19 @@ Class {
 { #category : #'tests - misc' }
 SlotTest >> testAsSlotCollection [
 	
- 	self assert: 'a b' asSlotCollection = {#a => InstanceVariableSlot. #b => InstanceVariableSlot}.
+ 	self assert: 'a b' asSlotCollection equals: {#a => InstanceVariableSlot. #b => InstanceVariableSlot}.
 	
-	self assert: ('a _a a_a b b_' asSlotCollection collect: [ :i | i name ]) = #(#a #_a #a_a #b #b_) .
+	self assert: ('a _a a_a b b_' asSlotCollection collect: [ :i | i name ]) equals: #(#a #_a #a_a #b #b_) .
 	
-	self assert: ('1' asSlotCollection collect: [ :i | i name ]) = #(#v1).
+	self should: ['1' asSlotCollection] raise: Error.
 	
-	self assert: ('ivarA ivarB
- 
-ivarC
-i%varD iv2arF
+	self should: ['ivarA ivarB i%varD iv2arF' asSlotCollection] raise: Error.
+	self should: ['iva|rG' asSlotCollection] raise: Error.
 
 
 
-iva|rG
-ivarH ivarE
-' asSlotCollection collect: #name) = #(#ivarA #ivarB #ivarC #ivarD #iv2arF #ivarG #ivarH #ivarE)
+
+
 ]
 
 { #category : #'tests - read/write' }
@@ -87,4 +84,16 @@ SlotTest >> testRemoveProperty [
 		equals: nil.
 		
 	self assert: ivar properties isNil.
+]
+
+{ #category : #'tests - testing' }
+SlotTest >> testisReferenced [
+	self assert: (Point slotNamed: #x) isReferenced
+]
+
+{ #category : #'tests - misc' }
+SlotTest >> testisUsed [
+	self assert: InstanceVariableSlot isUsed.
+	self assert: IndexedSlot isUsed. "subclasses are users"
+	self assert: ProcessLocalSlot isUsed. "references count as uses, too"
 ]

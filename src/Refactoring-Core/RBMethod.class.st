@@ -13,12 +13,12 @@ querying symbols, literals or the whole method source.
 "
 Class {
 	#name : #RBMethod,
-	#superclass : #Object,
+	#superclass : #RBEntity,
 	#instVars : [
-		'class',
 		'compiledMethod',
-		'source',
-		'selector'
+		'class',
+		'selector',
+		'source'
 	],
 	#category : #'Refactoring-Core-Model'
 }
@@ -93,7 +93,7 @@ RBMethod >> modelClass: aRBClass [
 
 { #category : #accessing }
 RBMethod >> parseTree [
-	^RBParser parseMethod: self source onError: [:str :pos | ^nil]
+	^ self parserClass parseMethod: self source onError: [:str :pos | ^nil]
 ]
 
 { #category : #testing }
@@ -165,7 +165,7 @@ RBMethod >> refersToVariable: aString [
 
 { #category : #accessing }
 RBMethod >> selector [
-	^selector
+	^ selector
 ]
 
 { #category : #accessing }

@@ -12,6 +12,7 @@ Class {
 	#instVars : [
 		'title',
 		'evaluation',
+		'expandable',
 		'width'
 	],
 	#category : #'Spec-Core-Widgets-Table'
@@ -49,6 +50,18 @@ TableColumn >> acceptColumnVisitor: aBuilder [
 ]
 
 { #category : #accessing }
+TableColumn >> beExpandable [
+
+	expandable := true
+]
+
+{ #category : #accessing }
+TableColumn >> beNotExpandable [
+
+	expandable := false
+]
+
+{ #category : #accessing }
 TableColumn >> evaluated: aValuable [
 
 	evaluation := aValuable
@@ -66,16 +79,36 @@ TableColumn >> evaluation: anObject [
 	evaluation := anObject
 ]
 
+{ #category : #initialization }
+TableColumn >> initialize [
+
+	super initialize.
+	self beExpandable
+]
+
+{ #category : #testing }
+TableColumn >> isComposite [
+
+	^ false
+]
+
 { #category : #testing }
 TableColumn >> isEditable [
 
 	^ false
 ]
 
+{ #category : #testing }
+TableColumn >> isExpandable [
+
+	"if width is defined, it cannot be expandable (because column with take the defined width)"
+	^ expandable and: [ self width isNil ]
+]
+
 { #category : #accessing }
 TableColumn >> readObject: anObject [ 
 
-	^ self evaluation value: anObject
+	^ self evaluation cull: anObject
 ]
 
 { #category : #accessing }

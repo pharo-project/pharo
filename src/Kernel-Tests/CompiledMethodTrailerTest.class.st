@@ -7,7 +7,7 @@ Class {
 	#category : #'Kernel-Tests-Methods'
 }
 
-{ #category : #tests }
+{ #category : #utilities }
 CompiledMethodTrailerTest >> testEmbeddingSourceCode: sourceCode [
 
 	| trailer newTrailer |
@@ -16,17 +16,17 @@ CompiledMethodTrailerTest >> testEmbeddingSourceCode: sourceCode [
 	trailer embeddedSourceCode: sourceCode.
 	newTrailer := trailer testEncoding.
 	
-	self assert: (trailer kind == #EmbeddedSource or: [trailer kind == #EmbeddedSourceWide]).
-	self assert: (newTrailer sourceCode = sourceCode).
+	self assert: (#(EmbeddedSource EmbeddedSourceWide) includes: trailer kind).
+	self assert: newTrailer sourceCode equals: sourceCode.
 
 	"the last bytecode index must be at 0"
-	self assert: (newTrailer endPC = 0).
+	self assert: newTrailer endPC equals: 0.
 ]
 
 { #category : #tests }
-CompiledMethodTrailerTest >> testEmbeddingSourceCodeWide [
-	
+CompiledMethodTrailerTest >> testEmbeddingSourceCodeWide [	
 	"Test that wide strings survive"
+	
 	self testEmbeddingSourceCode: 'doit ^''Под южно дърво, цъфтящо в синьо, бягаше малко пухкаво зайче.'' '.
 	
 ]
@@ -40,15 +40,14 @@ CompiledMethodTrailerTest >> testEncodingNoTrailer [
 	
 	"by default it should be a no-trailer, 4 byte wide so it can be used to store a sourcePointer"	
 	self assert: (trailer kind == #NoTrailer ).
-	self assert: (trailer size = 4).
+	self assert: trailer size equals: 4.
 	
 	trailer := trailer testEncoding.
 	
 	self assert: (trailer kind == #NoTrailer ).
-	self assert: (trailer size = 4).
+	self assert: trailer size equals: 4.
 	"the last bytecode index must be at 0"
-	self assert: (trailer endPC = 0).
-
+	self assert: trailer endPC equals: 0
 ]
 
 { #category : #tests }
@@ -63,7 +62,7 @@ CompiledMethodTrailerTest >> testEncodingSourcePointer [
 		self assert: ( (ptr := method sourcePointer) == trailer sourcePointer).
 		"the last bytecode index must be at 0"
 		ptr ~= 0 ifTrue: [
-			self assert: (method endPC = trailer endPC) ].
+			self assert: method endPC equals: trailer endPC ].
 	 ].
 ]
 
@@ -77,14 +76,13 @@ CompiledMethodTrailerTest >> testEncodingVarLengthSourcePointer [
 	trailer sourcePointer: 1.
 	newTrailer := trailer testEncoding.
 	
-	self assert: (newTrailer sourcePointer = 1).
+	self assert: newTrailer sourcePointer equals: 1.
 	
 	trailer sourcePointer: 16r100000000000000.
 	newTrailer := trailer testEncoding.
-	self assert: (newTrailer sourcePointer = 16r100000000000000).
+	self assert: newTrailer sourcePointer equals: 16r100000000000000.
 	"the last bytecode index must be at 0"
-	self assert: (newTrailer endPC = 0).
-
+	self assert: newTrailer endPC equals: 0
 ]
 
 { #category : #tests }
@@ -94,7 +92,6 @@ CompiledMethodTrailerTest >> testEncodingZeroSourcePointer [
 	
 	trailer := CompiledMethodTrailer new.
 
-	self assert: 
-		(trailer sourcePointer: 0) testEncoding sourcePointer = 0
+	self assert: (trailer sourcePointer: 0) testEncoding sourcePointer equals: 0
 	
 ]

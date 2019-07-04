@@ -3,7 +3,7 @@ Extension { #name : #Class }
 { #category : #'*Monticello' }
 Class >> asClassDefinition [
 	"we use a very ugly hack to encode complex slots as string with MC... later MC should model Slots directly"
-	self usesSpecialVariables ifFalse: [  
+	self needsSlotClassDefinition ifFalse: [  
 	 ^MCClassDefinition
 		name: self name
 		superclassName: (self superclass ifNil: [ nil asString ] ifNotNil: [ self superclass name ])

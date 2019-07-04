@@ -4,7 +4,7 @@ I am the adapter used to bridge a ListPresenter and a PluggableListMorph
 Class {
 	#name : #MorphicListAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #'Spec-MorphicAdapters-Base'
+	#category : #'Spec-MorphicAdapters-List'
 }
 
 { #category : #'widget API' }
@@ -43,40 +43,38 @@ MorphicListAdapter >> buildWidget [
 		dataSource: datasource;
 		hideColumnHeaders;
 		beResizable;
-		columns: { (MorphicTableColumn on: (StringTableColumn 
-			title: self presenter headerTitle
-			evaluated: self presenter displayBlock))
-				yourself };
+		columns: {self newListColumn};
 		setMultipleSelection: self model isMultipleSelection;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled;
 		setBalloonText: self help;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
-		onAnnouncement: FTSelectionChanged
-			send: #selectionChanged:
-			to: self;
-		onAnnouncement: FTStrongSelectionChanged
-			send: #strongSelectionChanged:
-			to: self;
+		onAnnouncement: FTSelectionChanged send: #selectionChanged: to: self;
+		onAnnouncement: FTStrongSelectionChanged send: #strongSelectionChanged: to: self;
 		yourself.
-	
 	self presenter whenModelChangedDo: [ widget refresh ].
-	
+	self presenter whenSelectionChangedDo: [ self refreshWidgetSelection ].
+	self presenter selection whenChangedDo: [ self refreshWidgetSelection ].
 	self refreshWidgetHeaderTitle.
-	
-	self itemFilterBlock
-		ifNotNil: [ :block | 
-			widget
-				enableFilter: (FTSpecFilter block: block);
-				explicitFunction ].
+	self refreshWidgetSelection.
+	self presenter whenItemFilterBlockChangedDo: [ :block | self updateItemFilterBlockWith: block ].
+	self updateItemFilterBlockWith: self itemFilterBlock.
+
+	widget bindKeyCombination: Character space toAction: [ self model clickOnSelectedItem ].
+
 	^ widget
 ]
 
-{ #category : #'widget API' }
-MorphicListAdapter >> getSelectionStateFor: anIndex [
+{ #category : #emulating }
+MorphicListAdapter >> hasFilter [
+	^ self widget submorphs anySatisfy: [ :each | each isKindOf: RubTextFieldMorph	"This morph is the explicit filter of the list" ]
+]
 
-	^ self model getSelectionStateFor: anIndex
+{ #category : #accessing }
+MorphicListAdapter >> isShowColumnHeaders [
+	
+	^ widget isShowColumnHeaders 
 ]
 
 { #category : #'widget API' }
@@ -96,11 +94,14 @@ MorphicListAdapter >> listSize [
 	^ self model listSize
 ]
 
-{ #category : #'widget API' }
-MorphicListAdapter >> menu: aMenu shifted: aBoolean [
-
-	^ (self model menu: aMenu shifted: aBoolean) 
-		
+{ #category : #factory }
+MorphicListAdapter >> newListColumn [
+	
+	^ MorphicTableColumn new 
+		model: (StringTableColumn
+			title: self presenter headerTitle
+			evaluated: self presenter displayBlock);
+		yourself
 ]
 
 { #category : #'widget API' }
@@ -127,16 +128,13 @@ MorphicListAdapter >> refreshWidgetHeaderTitle [
 
 { #category : #'widget API' }
 MorphicListAdapter >> refreshWidgetList [
-	
 	(self widget showIndex < self widget dataSource numberOfRows
-		and: [ self widget isRowIndexVisible: self widget showIndex ])
-			ifFalse: [ self widget resetPosition ].
-	
+		and: [ self widget isIndexVisible: self widget showIndex ])
+		ifFalse: [ self widget resetPosition ].
 	self refreshWidgetSelection.
-
-	(self widget hasSelection and: [ (self widget isRowIndexVisible: self widget selectedRowIndex) ])
-		ifFalse: [ 
-			self widget resetPosition.
+	(self widget hasSelection
+		and: [ self widget isIndexVisible: self widget selectedIndex ])
+		ifFalse: [ self widget resetPosition.
 			self widget ensureVisibleFirstSelection ].
 	self widget refresh
 ]
@@ -151,6 +149,29 @@ MorphicListAdapter >> refreshWidgetSelection [
 		ifTrue: [ self widget basicSelectIndexes: #() ]
 		ifFalse: [ self widget basicSelectIndexes: rowIndexes ].
 	^ self widget refresh
+]
+
+{ #category : #emulating }
+MorphicListAdapter >> rightClicked [
+	| evt |
+
+	evt := MouseButtonEvent new 
+		setType: nil 
+		position: widget center 
+		which: MouseButtonEvent yellowButton 
+		buttons: MouseButtonEvent yellowButton 
+		hand: nil 
+		stamp: nil.
+	
+	self widget click: evt
+]
+
+{ #category : #selecting }
+MorphicListAdapter >> selectIndex: anInteger [ 
+	
+	(anInteger = 0 and: [ widget selectedIndexes isEmpty ]) ifTrue: [ ^ self ].	
+	(widget selectedIndexes includes: anInteger) ifTrue: [^self].
+	widget selectIndex: anInteger
 ]
 
 { #category : #factory }
@@ -177,4 +198,19 @@ MorphicListAdapter >> strongSelectionChanged: aFTStrongSelectionChanged [
 	self presenter activatesOnDoubleClick
 		ifTrue: [ self presenter
 				doubleClickAtIndex: aFTStrongSelectionChanged selectedIndex ]
+]
+
+{ #category : #factory }
+MorphicListAdapter >> updateItemFilterBlockWith: block [
+	^ block
+		ifNotNil: [ widget
+				enableFilter: (FTSpecFilter block: block);
+				explicitFunction ]
+		ifNil: [ widget disableFunction ]
+]
+
+{ #category : #events }
+MorphicListAdapter >> updateMenu [
+	
+	"there is no need to updateMenu here because it will be resolved at the dataSource"
 ]

@@ -690,7 +690,7 @@ RBParser >> parsePragma [
 	self step.
 	pragma := self basicParsePragma.
 	(currentToken isBinary and: [ currentToken value == #> ]) 
-		ifFalse: [ ^ self parserError: '''>'' expected' ].
+		ifFalse: [ ^ self addPragma: (self parserError: '''>'' expected') ].
 	pragma left: start; right: currentToken start.
 	self addPragma: pragma.
 ]
@@ -702,7 +702,7 @@ RBParser >> parsePragmaLiteral [
 			[^currentToken isForByteArray 
 				ifTrue: [self parseLiteralByteArray]
 				ifFalse: [self parseLiteralArray]].
-	currentToken isLiteralToken ifFalse: [self parserError:'Literal constant expected'].
+	currentToken isLiteralToken ifFalse: [^self parserError:'Literal constant expected'].
 	^self parsePrimitiveLiteral
 ]
 

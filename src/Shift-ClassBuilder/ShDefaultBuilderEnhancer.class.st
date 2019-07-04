@@ -75,6 +75,18 @@ ShDefaultBuilderEnhancer >> initializeBuilder: aBuilder [
 ShDefaultBuilderEnhancer >> metaclassCreated: builder [
 ]
 
+{ #category : #events }
+ShDefaultBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstaller [ 
+
+	aShiftClassInstaller migrateInstancesTo: aClass
+]
+
+{ #category : #events }
+ShDefaultBuilderEnhancer >> migrateToClass: aClass installer: aShiftClassInstaller [ 
+
+	aShiftClassInstaller migrateClassTo: aClass
+]
+
 { #category : #'class modifications' }
 ShDefaultBuilderEnhancer >> newMetaclass: builder [
 	^ builder metaclassClass new
@@ -92,4 +104,9 @@ ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer
 	
 	newClass subclasses do: [ :e | installer remake: e ].
 
+]
+
+{ #category : #'class modifications' }
+ShDefaultBuilderEnhancer >> validateRedefinition: anOldClass [
+	"subclasses can validate that the new definition is coherent with the old class"
 ]

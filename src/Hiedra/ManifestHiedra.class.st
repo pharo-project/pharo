@@ -19,5 +19,5 @@ ManifestHiedra class >> ruleModifiesCollectionRuleV1FalsePositive [
 
 { #category : #'code-critics' }
 ManifestHiedra class >> ruleRBToDoCollectRuleV1FalsePositive [
-	^ #(#(#(#RGPackage #(#Hiedra)) #'2019-03-15T18:30:14.575162-03:00') )
+	^ #(#(#(#RGPackageDefinition #(#Hiedra)) #'2019-03-15T18:30:14.575162-03:00') )
 ]

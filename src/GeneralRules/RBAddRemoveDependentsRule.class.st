@@ -20,7 +20,7 @@ RBAddRemoveDependentsRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBAddRemoveDependentsRule >> check: aClass forCritiquesDo: aCriticBlock [
+RBAddRemoveDependentsRule >> basicCheck: aClass [
 	| addSends removeSends |
 	addSends := 0.
 	removeSends := 0.
@@ -30,12 +30,9 @@ RBAddRemoveDependentsRule >> check: aClass forCritiquesDo: aCriticBlock [
 			(aClass compiledMethodAt: sel) ast
 				nodesDo: [ :each | 
 					each isMessage
-						ifTrue: [
-							each selector = #addDependent:
-								ifTrue: [ addSends := addSends + 1 ].
-							each selector = #removeDependent:
-								ifTrue: [ removeSends := removeSends + 1 ] ] ] ].
-	addSends > removeSends ifTrue: [ aCriticBlock cull: (self critiqueFor: aClass) ]
+						ifTrue: [ each selector = #addDependent: ifTrue: [ addSends := addSends + 1 ].
+							each selector = #removeDependent: ifTrue: [ removeSends := removeSends + 1 ] ] ] ].
+	^ addSends > removeSends
 ]
 
 { #category : #accessing }

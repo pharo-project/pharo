@@ -67,7 +67,7 @@ RBRenameTemporaryVariableTransformationTest >> testRename [
 							transform.
 							
 	self assert: ((transformation model classNamed: #RBLintRuleTestData) parseTreeFor: #openEditor)
-		  equals: (RBParser parseMethod: 'openEditor
+		  equals: (self parseMethod: 'openEditor
 								| asdf |
 								asdf := self failedRules.
 								asdf isEmpty ifTrue: [^self].

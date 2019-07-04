@@ -69,6 +69,39 @@ T2TraitWithSlots >> testDefiningClass [
 ]
 
 { #category : #tests }
+T2TraitWithSlots >> testDiamonProblemIsNotConflict [
+	| t1 t2 c1 t3 t4 |
+	
+	t1 := self newTrait: #T1 with: #(anSlot) uses: {}.
+	t2 := self newTrait: #T2 with: #(s2) uses: {t1}.
+	t3 := self newTrait: #T3 with: #(s3) uses: {t1}.
+	t4 := self newTrait: #T4 with: #(s4) uses: {t1}.
+
+	t1 compile: 'm1 ^ anSlot:=42'.
+
+	c1 := self newClass: #C1 with: #(aSlot s2) uses: t2 + t3.
+	c1 traitComposition: c1 traitComposition + t4.
+		
+	self assert: (c1 new perform: #m1) equals: 42.
+
+]
+
+{ #category : #tests }
+T2TraitWithSlots >> testHavingASlotAlreadyInTheHierarchy [
+	| t1 t2 c1 |
+	
+	t1 := self newTrait: #T1 with: #(anSlot) uses: {}.
+	t2 := self newTrait: #T2 with: #(s2) uses: {t1}.
+
+	t1 compile: 'm1 ^ anSlot:=42'.
+
+	c1 := self newClass: #C1 with: #(aSlot s2) uses: t2 + t1.
+		
+	self assert: (c1 new perform: #m1) equals: 42.
+
+]
+
+{ #category : #tests }
 T2TraitWithSlots >> testOwningClass [
 
 	| t1 c1 |

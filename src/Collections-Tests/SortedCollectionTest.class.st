@@ -570,6 +570,20 @@ SortedCollectionTest >> testFlatCollect [
 	self assert: (#(1 2) asSortedCollection flatCollect: [ :x | { x } ]) equals: #(1 2) asOrderedCollection
 ]
 
+{ #category : #tests }
+SortedCollectionTest >> testGroupedBySortedCollection [
+	| collection grouped |
+	collection := Object methods asSortedCollection: #selector ascending.
+	
+	grouped := collection groupedBy: #methodClass.
+	
+	"do we retain the sortblock?"
+	self assert: grouped values first class equals: SortedCollection.
+	self assert: collection sortBlock equals: grouped values first sortBlock.
+	
+	
+]
+
 { #category : #'tests - includes' }
 SortedCollectionTest >> testIdentityIncludes [
 	"Test the comportement in presence of elements 'includes' but not 'identityIncludes'."

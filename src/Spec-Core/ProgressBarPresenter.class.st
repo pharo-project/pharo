@@ -96,7 +96,7 @@ ProgressBarPresenter >> state: anObject [
 	state := anObject
 ]
 
-{ #category : #enumerating }
+{ #category : #'api-events' }
 ProgressBarPresenter >> whenValueChangedDo: aBlock [
 	self state whenValueChangedDo: aBlock
 ]

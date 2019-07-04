@@ -91,7 +91,7 @@ HEInstaller >> buildTrait: aTraitDefinition [
 	newTrait := traitClass
 		named: aTraitDefinition traitName
 		uses: traitComposition
-		category: aTraitDefinition category
+		package: aTraitDefinition category
 		env: environment.
 
 	newTrait classTrait traitComposition: (aTraitDefinition classTraitComposition asLiteralIn: environment) asTraitComposition.

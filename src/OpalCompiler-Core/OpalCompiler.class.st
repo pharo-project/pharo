@@ -159,6 +159,17 @@ OpalCompiler class >> isActive [
 ]
 
 { #category : #overlay }
+OpalCompiler class >> overlayClasses [
+	"here the classes for the overlay can changed. the default is just the compiler"
+	^self package definedClasses
+	
+	"Compiler and AST:
+	self package definedClasses, RBProgramNode package definedClasses, {TRBProgramNodeVisitor}
+	"
+	
+]
+
+{ #category : #overlay }
 OpalCompiler class >> overlayEnvironment [
 	^overlayEnvironment
 ]
@@ -185,9 +196,8 @@ OpalCompiler class >> startUsingOverlayForDevelopment [
 	<script>
 	overlayEnvironment := Dictionary new.
 
-	"now we put a copy of all the classes of the compiler package into the environment"
-	self package definedClasses
-		do: [ :class | overlayEnvironment at: class name put: class copy ].
+	"now we put a copy of all the classes into the environment"
+	self overlayClasses do: [ :class | overlayEnvironment at: class name put: class copy ].
 
 	"now we recompile the classes in the environment with itself as an overlay"
 	overlayEnvironment valuesDo: [ :class | 
@@ -200,7 +210,7 @@ OpalCompiler class >> startUsingOverlayForDevelopment [
 	
 	"make sure superclass pointers are correct"
     overlayEnvironment valuesDo: [ :class | 
-        (overlayEnvironment includesKey: class superclass name) ifTrue: [  
+        (class isTrait not and: [overlayEnvironment includesKey: class superclass name]) ifTrue: [  
             class superclass: (overlayEnvironment at: class superclass name)]].
 	
 	"make the copy the default compiler for the image"
@@ -383,8 +393,9 @@ OpalCompiler >> encoderClass: aClass [
 ]
 
 { #category : #accessing }
-OpalCompiler >> environment: anSmallTalkImage [
-	self compilationContext environment: anSmallTalkImage 
+OpalCompiler >> environment: anEnvironment [
+	"Set the environment (dictionary of class, traits and globals) used during the compilation"
+	self compilationContext environment: anEnvironment 
 ]
 
 { #category : #'public access' }
@@ -694,6 +705,11 @@ OpalCompiler >> parseSelector: aString [
 { #category : #plugins }
 OpalCompiler >> parserClass [
 	^self compilationContext parserClass
+]
+
+{ #category : #accessing }
+OpalCompiler >> productionEnvironment: anObject [
+	compilationContext productionEnvironment: anObject
 ]
 
 { #category : #accessing }

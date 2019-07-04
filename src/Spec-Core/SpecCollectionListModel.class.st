@@ -4,9 +4,7 @@ Class {
 	#instVars : [
 		'announcer',
 		'collection',
-		'filter',
-		'shownCollection',
-		'changedBlock'
+		'sortingBlockHolder'
 	],
 	#category : #'Spec-Core-Widgets-Table'
 }
@@ -17,6 +15,16 @@ SpecCollectionListModel class >> on: aCollection [
 	^ self new
 		collection: aCollection;
 		yourself
+]
+
+{ #category : #adding }
+SpecCollectionListModel >> add: anItem [
+	
+	collection := collection copyWith: anItem.
+	
+	self refreshList.
+	self announcer announce: (ValueChanged newValue: self)
+	
 ]
 
 { #category : #accessing }
@@ -56,13 +64,6 @@ SpecCollectionListModel >> collection: anObject [
 ]
 
 { #category : #accessing }
-SpecCollectionListModel >> filterWith: aBlockClosure [ 
-	
-	filter := aBlockClosure.
-	self refreshList.
-]
-
-{ #category : #accessing }
 SpecCollectionListModel >> indexOf: anIndex ifAbsent: aBlock [
 
 	^ collection indexOf: anIndex ifAbsent: aBlock
@@ -70,9 +71,8 @@ SpecCollectionListModel >> indexOf: anIndex ifAbsent: aBlock [
 
 { #category : #initialization }
 SpecCollectionListModel >> initialize [
-
 	super initialize.
-	filter := [ true ]
+	sortingBlockHolder := nil asValueHolder
 ]
 
 { #category : #accessing }
@@ -83,20 +83,34 @@ SpecCollectionListModel >> items [
 
 { #category : #refreshing }
 SpecCollectionListModel >> refreshList [
-	
-	shownCollection := collection select: [ :elem | filter cull: elem cull: collection ].
+	self sortingBlock ifNotNil: [ :aSortFunction | collection sort: aSortFunction ]
 ]
 
-{ #category : #accessing }
-SpecCollectionListModel >> shownItems [
+{ #category : #collection }
+SpecCollectionListModel >> removeAll [
 	
-	^ shownCollection
+	collection := #().
+	
+	self refreshList.
+	self announcer announce: (ValueChanged newValue: self)
+		
 ]
 
 { #category : #accessing }
 SpecCollectionListModel >> size [
 
 	^ collection size
+]
+
+{ #category : #initialization }
+SpecCollectionListModel >> sortingBlock [
+	^ sortingBlockHolder value
+]
+
+{ #category : #initialization }
+SpecCollectionListModel >> sortingBlock: aBlock [
+	sortingBlockHolder value: aBlock.
+	self refreshList
 ]
 
 { #category : #events }
@@ -109,4 +123,9 @@ SpecCollectionListModel >> whenChangedDo: aBlock [
 				cull: ann newValue 
 				cull: ann oldValue
 				cull: ann ]
+]
+
+{ #category : #events }
+SpecCollectionListModel >> whenSortingBlockChangedDo: aBlock [
+	sortingBlockHolder whenChangedDo: aBlock
 ]

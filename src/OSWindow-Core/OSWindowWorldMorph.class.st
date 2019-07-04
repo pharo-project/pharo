@@ -13,7 +13,9 @@ Class {
 	#instVars : [
 		'display',
 		'closeCallback',
-		'isResizeable'
+		'isResizeable',
+		'osWindow',
+		'session'
 	],
 	#category : #'OSWindow-Core-Morphic'
 }
@@ -99,7 +101,7 @@ OSWindowWorldMorph >> openInWorld [
 	^ self open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 OSWindowWorldMorph >> osWindowCloseButtonPressed [
 	self delete
 ]
@@ -151,10 +153,16 @@ OSWindowWorldMorph >> title: aTitle [
 	self flag: 'ToDo'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 OSWindowWorldMorph >> updateDisplay [
 	display isNil ifTrue: [
 		display := Form extent: self extent depth: 32.
 		worldState display: display
 	]
+]
+
+{ #category : #accessing }
+OSWindowWorldMorph >> worldState [
+
+	^ worldState 
 ]

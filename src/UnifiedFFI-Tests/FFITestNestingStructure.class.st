@@ -30,13 +30,13 @@ FFITestNestingStructure class >> initialize [
 { #category : #'accessing structure variables' }
 FFITestNestingStructure >> nested [
 	"This method was automatically generated"
-	^FFITestStructure fromHandle: (handle referenceStructAt: OFFSET_NESTED length: 28)
+	^ FFITestStructure fromHandle: (handle referenceStructAt: OFFSET_NESTED length: FFITestStructure byteSize)
 ]
 
 { #category : #'accessing structure variables' }
 FFITestNestingStructure >> nested: anObject [
 	"This method was automatically generated"
-	handle structAt: OFFSET_NESTED put: anObject getHandle length: 28.
+	handle structAt: OFFSET_NESTED put: anObject getHandle length: FFITestStructure byteSize
 ]
 
 { #category : #'accessing structure variables' }

@@ -26,7 +26,7 @@ GTInspectorPresentationFilter >> openListChooseLabeled: sString forInspector: aG
 		 rootItems: allElements;
 		 wrapBlockOrSelector: aBlockOrSelector;
 		 autoMultiSelection: true.
-	 (treeModel openDialogWindowIn: World title: sString selectedtems: selectedElements) ifNotNil: [ :selection | 
+	 (treeModel openDialogWindowIn: self currentWorld title: sString selectedtems: selectedElements) ifNotNil: [ :selection | 
 		self perform: aSymbol with: selection with: aGTInspector ]
 ]
 

@@ -23,12 +23,12 @@ MorphicTableCellBuilder >> addCell: anObject column: aTableColumn [
 	| morph |
 
 	anObject ifNil: [ ^ self ]. 
-
+	
 	morph := 	anObject asMorph.
-	aTableColumn width ifNotNil: [ :w |
+	aTableColumn isExpandable ifFalse: [ 
 		morph 
-			width: w;
-			hResizing: #rigid ].
+			hResizing: #rigid;
+			width: (aTableColumn width ifNil: [ morph width ]) ].
 	cell addMorphBack: morph.
 ]
 
@@ -74,6 +74,11 @@ MorphicTableCellBuilder >> rowIndex [
 { #category : #accessing }
 MorphicTableCellBuilder >> rowIndex: anObject [
 	rowIndex := anObject
+]
+
+{ #category : #visiting }
+MorphicTableCellBuilder >> visitCheckboxColumn: aTableColumn [
+	self addCellColumn: aTableColumn
 ]
 
 { #category : #visiting }

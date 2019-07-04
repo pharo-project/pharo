@@ -78,8 +78,14 @@ FFIFunctionParser >> parseArgument [
 
 "
 	char := stream peek.
-	(char isDigit or: [ char = $- ])
-		ifTrue: [ ^ self requestor integerConstantArgument: self parseInt ].
+	
+	"constant conditions"
+	(char isDigit or: [ char = $- ]) ifTrue: [ 
+		^ self requestor integerConstantArgument: self parseInt ].
+	char = $# ifTrue: [ 
+		^ self parseArgumentCastedType ].
+
+	"none of them, parse type and name"
 	typeAndPtrArity := self parseType.
 	self skipSpace.
 	argName := self parseWord.
@@ -101,7 +107,18 @@ FFIFunctionParser >> parseArgument [
 		ptrArity: typeAndPtrArity second.
 	argument isExternalType
 		ifTrue: [ argument validateAfterParse: typeAndPtrArity ].
+
 	^ argument 
+]
+
+{ #category : #parsing }
+FFIFunctionParser >> parseArgumentCastedType [
+	| castedType number |
+
+	castedType := self parseCastedType.
+	self skipSpace.
+	number := self parseInt.
+	^ self requestor integerConstantArgument: number type: castedType
 ]
 
 { #category : #parsing }
@@ -112,14 +129,31 @@ Parse a arguments spec in a form of:
 #( type1 name1 , type2 name2 , nil, true, false , 100 )
 "
 	[ stream atEnd ] whileFalse: [
-		self parseArgument ifNotNil: [:arg | 
-			fnSpec addArgument: arg].
+		self parseArgument ifNotNil: [ :arg | 
+			fnSpec addArgument: arg ].
 		
 		self skipSpace.
 		
-		stream atEnd ifFalse: [ stream peek = $, ifFalse: [ self error: 'comma expected' ].
-			stream next. self skipSpace. ]
-	].
+		stream atEnd ifFalse: [ 
+			stream peek = $, ifFalse: [ 
+				self error: 'comma expected' ].
+			stream next. self skipSpace ] ]
+]
+
+{ #category : #parsing }
+FFIFunctionParser >> parseCastedType [
+	| castedType |
+
+	stream next. "skip $("
+	stream next = $( ifFalse: [ 
+		self error: '$( expected' ].
+	castedType := String new writeStream.	
+	[ stream atEnd not and: [stream peek ~= $) ] ] 
+	whileTrue: [ castedType nextPut: stream next ].
+	stream next. "skip $)"	
+
+	"first one will always be $#"
+	^ castedType contents allButFirst trimmed
 ]
 
 { #category : #parsing }

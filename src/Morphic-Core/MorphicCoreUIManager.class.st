@@ -11,20 +11,10 @@ Class {
 }
 
 { #category : #'ui requests' }
-MorphicCoreUIManager >> checkForNewDisplaySize [
-
-  "Check whether the screen size has changed and if so take appropriate actions"
-
-  Display extent = DisplayScreen actualScreenSize ifTrue: [^ Display].
-  DisplayScreen startUp.
-  World restoreMorphicDisplay.
-
-]
-
-{ #category : #'ui requests' }
 MorphicCoreUIManager >> currentWorld [
-  ActiveWorld ifNotNil: [^ActiveWorld].
-  ^World
+
+	ActiveWorld ifNotNil: [ ^ ActiveWorld ].
+	^ World
 ]
 
 { #category : #'ui requests' }
@@ -50,8 +40,8 @@ MorphicCoreUIManager >> newDisplayDepthNoRestore: pixelSize [
 MorphicCoreUIManager >> restoreDisplayAfter: aBlock [
 
   aBlock value.
-  World activeHand waitButton.
-  World fullRepaintNeeded.
+  self currentWorld activeHand waitButton.
+  self currentWorld fullRepaintNeeded.
 ]
 
 { #category : #'ui process' }

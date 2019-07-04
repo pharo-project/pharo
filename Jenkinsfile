@@ -32,18 +32,18 @@ def runTests(architecture, prefix=''){
   dir(env.STAGE_NAME) {
     try {
         unstash "bootstrap${architecture}"
-        shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
-        junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
-        archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
+        shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}'"
+        junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}${prefix}*.xml"
+        archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
     }finally{
         // I am archiving the logs to check for crashes and errors.
         if(fileExists('PharoDebug.log')){
-            shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}.log"
-            archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-${env.STAGE_NAME}.log", fingerprint: true
+            shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}${prefix}.log"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-${env.STAGE_NAME}${prefix}.log", fingerprint: true
         }
         if(fileExists('crash.dmp')){
-            shell "mv crash.dmp crash-${env.STAGE_NAME}.dmp"
-            archiveArtifacts allowEmptyArchive: true, artifacts: "crash-${env.STAGE_NAME}.dmp", fingerprint: true
+            shell "mv crash.dmp crash-${env.STAGE_NAME}${prefix}.dmp"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "crash-${env.STAGE_NAME}${prefix}.dmp", fingerprint: true
         }
     }
   }
@@ -182,6 +182,34 @@ def bootstrapImage(){
   parallel builders 
 }
 
+def launchBenchmark(){
+    node('unix'){ 
+		stage('launchBenchmark'){
+			
+		    cleanWs()
+			
+			projectName = env.JOB_NAME
+	
+		    //We checkout scm to have access to the log information
+		    checkout scm	
+	
+		    if (env.CHANGE_ID != null){
+				//If I am in a PR the head of the repository is a merge of the base commit (the development branch) and the PR commit.
+				//I take the first parent of this commit. It is the commit in the PR 
+				commit = shellOutput('git log HEAD^1 -1 --format="%H"')
+				isPR = true
+			}else{
+				// If it is not a PR the commit to evaluate and put the status in github is the current commit
+				commit = shellOutput('git log -1 --format="%H"')
+				isPR = false
+			}
+	
+	
+			build job: 'pharo-benchmarks', parameters: [text(name: 'originProjectName', value: projectName), booleanParam(name: 'isPR', value: isPR), text(name: 'commit', value: commit)], wait: false
+		}
+	}
+}
+
 try{
     properties([disableConcurrentBuilds()])
   
@@ -215,6 +243,8 @@ try{
     parallel testers
 
   notifyBuild("SUCCESS")
+
+  launchBenchmark()
 } catch (e) {
   notifyBuild("FAILURE")
   throw e

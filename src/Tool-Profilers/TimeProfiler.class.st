@@ -342,8 +342,7 @@ TimeProfiler >> open [
 		getText: #selectedMethodCode
 		setText: #selectedMethodCode:notifying:
 		getEnabled: nil.
-	"The next line is a fix for https://pharo.fogbugz.com/f/cases/22428/Code-in-TimeProfiler-is-no-longer-highlighted but I have the impression that the problem comes from the constructor used before. Since we are close to the release I'll just fix it here but later we should check the constructor method."
-	codePane styler: (SHRBTextStyler new view: codePane; yourself).
+
 	codePane getMenuSelector: #codePaneMenu:shifted:.
 	codePane font: StandardFonts codeFont.
 	self withToolBar
@@ -689,7 +688,7 @@ TimeProfiler >> toolBarOn: aWindow [
 	toolBar := toolBar := aWindow
 		newToolbar:
 			{((uiTheme
-				newButtonIn: World
+				newButtonIn: self currentWorld
 				for: self
 				getState: nil
 				action: #profileIt
@@ -699,7 +698,7 @@ TimeProfiler >> toolBarOn: aWindow [
 				help: nil)
 				label:
 					(uiTheme
-						newRowIn: World
+						newRowIn: self currentWorld
 						for:
 							{(AlphaImageMorph new
 								image: (self iconNamed: #smallDoItIcon)).
@@ -740,7 +739,7 @@ TimeProfiler >> toolBarOn: aWindow [
 			aWindow newToolSpacer.
 			aWindow newToolSpacer.
 			(uiTheme
-				newCheckboxIn: World
+				newCheckboxIn: self currentWorld
 				for: self
 				getSelected: #reportOtherProcesses
 				setSelected: #reportOtherProcesses:

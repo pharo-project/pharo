@@ -34,11 +34,8 @@ ShouldSendSuperSetUpAsFirstMessage class >> superSetUpNotCalledFirstIn: aCompile
 ]
 
 { #category : #running }
-ShouldSendSuperSetUpAsFirstMessage >> check: aMethod forCritiquesDo: aCritiqueBlock [
-
-	((aMethod methodClass inheritsFrom: TestCase)
-		and: [ aMethod selector = #setUp and: [ self class superSetUpNotCalledFirstIn: aMethod ]])
-			ifTrue: [ aCritiqueBlock cull: (self critiqueFor: aMethod) ]
+ShouldSendSuperSetUpAsFirstMessage >> basicCheck: aMethod [
+	^ (aMethod methodClass inheritsFrom: TestCase) and: [ aMethod selector = #setUp and: [ self class superSetUpNotCalledFirstIn: aMethod ] ]
 ]
 
 { #category : #accessing }

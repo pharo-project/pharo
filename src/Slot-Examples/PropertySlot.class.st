@@ -13,9 +13,9 @@ Class {
 
 { #category : #'code generation' }
 PropertySlot >> emitStore: methodBuilder [
+	"generate bytecode for 'baseSlot at: 1 put: <stackTop>'"
 	| tempName |
-
-	tempName := Object new.
+	tempName := '0slotTempForStackManipulation'.
 	methodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
@@ -29,12 +29,12 @@ PropertySlot >> emitStore: methodBuilder [
 
 { #category : #'code generation' }
 PropertySlot >> emitValue: methodBuilder [
-
-		methodBuilder
-			pushInstVar: baseSlot index;
-			pushLiteral: self name;
-			pushLiteral: nil;
-			send: #at:ifAbsent:
+	"generate bytecode for '<baseSlot> at: name ifAbsent: nil'"
+	methodBuilder
+		pushInstVar: baseSlot index;
+		pushLiteral: self name;
+		pushLiteral: nil;
+		send: #at:ifAbsent:
 	
 	
 ]

@@ -22,8 +22,8 @@ LocaleIDTest >> germanLocaleID [
 { #category : #tests }
 LocaleIDTest >> testComparision [
 
-	self deny: self germanLocaleID = self frenchLocaleID.
-	self assert: self germanLocaleID = self germanLocaleID.	
+	self deny: self germanLocaleID equals: self frenchLocaleID.
+	self assert: self germanLocaleID equals: self germanLocaleID.	
 ]
 
 { #category : #tests }
@@ -32,8 +32,8 @@ LocaleIDTest >> testFromISOString [
 	| locale |
 	locale := LocaleID isoString: 'en-us'.
 	self 
-		assert: locale isoLanguage = 'en';
-		assert: locale isoCountry = 'us'
+		assert: locale isoLanguage equals: 'en';
+		assert: locale isoCountry equals: 'us'
 ]
 
 { #category : #tests }
@@ -42,15 +42,15 @@ LocaleIDTest >> testFromSingleISOString [
 	| locale |
 	locale := LocaleID isoString: 'en'.
 	self 
-		assert: locale isoLanguage = 'en';
+		assert: locale isoLanguage equals: 'en';
 		assert: locale isoCountry isNil
 ]
 
 { #category : #tests }
 LocaleIDTest >> testHashing [
 
-	self assert: self germanLocaleID hash = self germanLocaleID hash.
-	self assert: self frenchLocaleID hash = self frenchLocaleID hash.	
+	self assert: self germanLocaleID hash equals: self germanLocaleID hash.
+	self assert: self frenchLocaleID hash equals: self frenchLocaleID hash.	
 
 ]
 
@@ -59,7 +59,7 @@ LocaleIDTest >> testInstanceCreationWithISOLanguage [
 
 	|germanLocale|
 	germanLocale := LocaleID isoLanguage: 'de'.
-	self assert: germanLocale isoLanguage = 'de'
+	self assert: germanLocale isoLanguage equals: 'de'
 ]
 
 { #category : #tests }
@@ -68,8 +68,8 @@ LocaleIDTest >> testInstanceCreationWithISOLanguageAndCountry [
 	|locale|
 	locale := LocaleID isoLanguage: 'zh' isoCountry: 'CN'.
 	self 
-		assert: locale isoLanguage = 'zh';
-		assert: locale isoCountry = 'CN'
+		assert: locale isoLanguage equals: 'zh';
+		assert: locale isoCountry equals: 'CN'
 ]
 
 { #category : #tests }
@@ -78,8 +78,8 @@ LocaleIDTest >> testPosixNameConversion [
 	| locale |
 	locale := LocaleID posixName: 'en_us'.
 	self 
-		assert: locale isoLanguage = 'en';
-		assert: locale isoCountry = 'us'
+		assert: locale isoLanguage equals: 'en';
+		assert: locale isoCountry equals: 'us'
 ]
 
 { #category : #tests }
@@ -87,6 +87,6 @@ LocaleIDTest >> testPrintString [
 
 	| locale |
 	locale := LocaleID isoString: 'en-us'.	
-	self assert: locale printString = 'en-us'
+	self assert: locale printString equals: 'en-us'
 
 ]

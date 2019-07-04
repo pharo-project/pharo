@@ -345,6 +345,9 @@ CompiledMethod >> classBinding: aBinding [
 { #category : #accessing }
 CompiledMethod >> codeForNoSource [
 	"if everything fails, decompile the bytecode"
+	"If there is no compiler, we cannot decompile it"	
+	Smalltalk hasCompiler ifFalse: [ ^ nil ].
+	
 	 ^(self compiler decompileMethod: self) formattedCode
 ]
 
@@ -418,6 +421,9 @@ CompiledMethod >> getSourceFromFile [
 CompiledMethod >> getSourceReplacingSelectorWith: newSelector [
 	| oldKeywords newKeywords source newSource oldSelector start |
 	source := self sourceCode.
+	
+	source ifNil: [ ^ nil ].
+	
 	oldSelector := self selector.
 	oldSelector = newSelector ifTrue: [ ^ source ].
 	
@@ -1063,7 +1069,8 @@ CompiledMethod >> tags [
 
 { #category : #'source code management' }
 CompiledMethod >> tempNames [
-	^self methodNode tempNames.
+	"on the level of the compiled method, tempNames includes argument names"
+	^self ast argumentNames, self ast temporaryNames
 ]
 
 { #category : #'accessing-tags' }

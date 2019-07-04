@@ -71,14 +71,15 @@ RelationSlot >> checkValue: aValue [
 
 { #category : #'code generation' }
 RelationSlot >> emitStore: aMethodBuilder [
+	"copy of #emitStore from Slot as my superclass has overriden it"
 	| tempName |
-	tempName := Object new.
+	tempName := '0slotTempForStackManipulation'.
 	aMethodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
 		popTop;
 		pushReceiver;
-		pushLiteralVariable: #slot -> self;
+		pushLiteralVariable: (AdditionalBinding key: #slot value: self);
 		pushTemp: tempName;
 		send: #writeSlot:value:
 ]
@@ -91,7 +92,7 @@ RelationSlot >> hasInverse [
 
 { #category : #comparing }
 RelationSlot >> hasSameDefinitionAs: otherSlot [
-
+	"need to implement as superclass implements it"
 	^ (super hasSameDefinitionAs: otherSlot) 
 		and: [ self targetClassName = otherSlot targetClassName 
 		and: [ inverseName = otherSlot inverseName ] ]

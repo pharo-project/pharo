@@ -67,7 +67,7 @@ LiteralVariable >> emitStore: aMethodBuilder [
 		addTemp: tempName;
 		storeTemp: tempName;
 		popTop;
-		pushLiteralVariable: #global -> self;
+		pushLiteralVariable: (AdditionalBinding key: #global value: self);
 		pushTemp: tempName;
 		send: #write:
 ]
@@ -75,7 +75,7 @@ LiteralVariable >> emitStore: aMethodBuilder [
 { #category : #'code generation' }
 LiteralVariable >> emitValue: aMethodBuilder [
 	aMethodBuilder
-		pushLiteralVariable: #global -> self;
+		pushLiteralVariable: (AdditionalBinding key: #global value: self);
 		send: #read
 ]
 
@@ -113,14 +113,13 @@ LiteralVariable >> isReadIn: aCompiledCode [
 ]
 
 { #category : #testing }
-LiteralVariable >> isSelfEvaluating [
-	^ self key isSelfEvaluating and: [self value isSelfEvaluating]
+LiteralVariable >> isReferenced [
+	^self usingMethods isNotEmpty
 ]
 
 { #category : #testing }
-LiteralVariable >> isSpecial [
-	"I am more than just a backward compatible Global"
-	^true
+LiteralVariable >> isSelfEvaluating [
+	^ self key isSelfEvaluating and: [self value isSelfEvaluating]
 ]
 
 { #category : #testing }
@@ -131,6 +130,13 @@ LiteralVariable >> isWrittenIn: aCompiledCode [
 { #category : #accessing }
 LiteralVariable >> name: aString [ 
 	self key: aString asSymbol
+]
+
+{ #category : #testing }
+LiteralVariable >> needsFullDefinition [
+	"only ClassVariable can use a simplified definition"
+
+	^ self class ~= ClassVariable
 ]
 
 { #category : #properties }

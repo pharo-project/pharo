@@ -30,6 +30,22 @@ SpecDemoFormModel >> date: anObject [
 ]
 
 { #category : #accessing }
+SpecDemoFormModel >> elements [
+	^ { 
+		'name' -> self name.
+		'surname' -> self surname.
+		'number 1' -> self number1.
+		'number 2' -> self number2.
+		'scale' -> self scale.
+		'password' -> self password.
+		'rememberMe' -> self rememberMe.
+		'date' -> self date.
+		'gender' -> self gender.
+		'items' -> self selectedItems
+		}
+]
+
+{ #category : #accessing }
 SpecDemoFormModel >> gender [
 	^ gender
 ]
@@ -135,7 +151,7 @@ SpecDemoFormModel >> selectedItems [
 
 { #category : #accessing }
 SpecDemoFormModel >> selectedItems: anObject [
-	selectedItems := anObject
+	selectedItems := anObject asArray
 ]
 
 { #category : #accessing }

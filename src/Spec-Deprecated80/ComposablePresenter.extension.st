@@ -1,6 +1,16 @@
 Extension { #name : #ComposablePresenter }
 
 { #category : #'*Spec-Deprecated80' }
+ComposablePresenter >> aboutText: aString [
+	self window ifNil: [ aboutText value: aString ] ifNotNil: [ :window | window aboutText: aString ]
+]
+
+{ #category : #'*Spec-Deprecated80' }
+ComposablePresenter >> askOkToClose: aBoolean [
+	self window ifNil: [ askOkToClose value: aBoolean ] ifNotNil: [ :window | window askOkToClose: aBoolean ]
+]
+
+{ #category : #'*Spec-Deprecated80' }
 ComposablePresenter >> defaultWindowModelClass [ 
 	self deprecated: 'Use #defaultWindowPresenterClass instead' transformWith: '`@receiver defaultWindowModelClass' -> '`@receiver defaultWindowPresenterClass'.
 	
@@ -22,11 +32,21 @@ ComposablePresenter >> instantiateModels: aCollectionOfPairs [
 ]
 
 { #category : #'*Spec-Deprecated80' }
+ComposablePresenter >> newIconList [
+	self deprecated: 'Please use #newList instead.' transformWith: '`@receiver newIconList' -> '`@receiver newList'.
+	^ self instantiate: IconListPresenter
+]
+
+{ #category : #'*Spec-Deprecated80' }
+ComposablePresenter >> newMultiColumnList [
+	self deprecated: 'Use newTable instead' on: '2019-02-05' in: #Pharo8.
+	^ self instantiate: MultiColumnListPresenter
+]
+
+{ #category : #'*Spec-Deprecated80' }
 ComposablePresenter >> newTab [
 
-	"
-	Commented to allow Iceberg Migration.
-	self 
+	"self 
 		deprecated: 'Use newNotebook instead' 
 		on: '2019-01-24' 
 		in: #Pharo8."
@@ -36,12 +56,61 @@ ComposablePresenter >> newTab [
 { #category : #'*Spec-Deprecated80' }
 ComposablePresenter >> newTabManager [
 	
-	"
-	Commented to allow Iceberg Migration.
-	self 
+	
+	"self 
 		deprecated: 'Use newNotebook instead' 
 		on: '2019-01-24' 
 		in: #Pharo8."
 	
 	^ self instantiate: TabManagerPresenter
+]
+
+{ #category : #'*Spec-Deprecated80' }
+ComposablePresenter >> newTree [
+	
+	self deprecated: 'Use #newTreeTable instead'.
+
+	^ self instantiate: TreePresenter
+]
+
+{ #category : #'*Spec-Deprecated80' }
+ComposablePresenter >> on: aShortcut do: aBlock [
+
+	self 
+		deprecated: 'Use #bindKeyCombination:toAction: instead.' 
+		transformWith: '`@receiver on: `@statements1 do: `@statements2' 
+						-> '`@receiver bindKeyCombination: `@statements1 toAction: `@statements2'.
+
+	self bindKeyCombination: aShortcut toAction: aBlock
+]
+
+{ #category : #'*Spec-Deprecated80' }
+ComposablePresenter >> setModal: aWindow [
+
+	self 
+		deprecated: 'Do not use this directly. Use #openModalWithSpec (and family) instead.' 
+		on: '2019-02-26' 
+		in: #Pharo8.
+	
+	self changed: #setModal: with: { aWindow }
+]
+
+{ #category : #'*Spec-Deprecated80' }
+ComposablePresenter >> title: aString [
+	self window ifNil: [ titleHolder value: aString ] ifNotNil: [ :window | window title: aString ]
+]
+
+{ #category : #'*Spec-Deprecated80' }
+ComposablePresenter >> widget [
+	"I return the adapter responsible of building my widget"
+	
+	self deprecated: 'Should use #adapter instead'
+		transformWith: '`@receiver widget' -> '`@receiver adapter'.
+	
+	^ self spec
+]
+
+{ #category : #'*Spec-Deprecated80' }
+ComposablePresenter >> windowIcon: aForm [
+	self window ifNil: [ windowIcon value: aForm ] ifNotNil: [ :window | window windowIcon: aForm ]
 ]

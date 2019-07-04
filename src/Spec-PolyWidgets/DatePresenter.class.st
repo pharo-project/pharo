@@ -24,30 +24,15 @@ Class {
 	#category : #'Spec-PolyWidgets-Widgets'
 }
 
-{ #category : #example }
-DatePresenter class >> example [
-	<sampleInstance>
-	^ self new openDialogWithSpec
-]
-
-{ #category : #example }
-DatePresenter class >> exampleModal [
-	<sampleInstance>
-	^ self new openDialogWithSpec modalRelativeTo: self currentWorld
-]
-
-{ #category : #accessing }
-DatePresenter class >> spec [
-	<spec: #default>
-
+{ #category : #specs }
+DatePresenter class >> defaultSpec [
 	^ SpecLayout composed
-			newRow: [ :row | 
-				row 
-					newRow: [:ugly | 
-						ugly
-							add: #dateModel;  
-							add: #chooseDateButton width: 50 ]] height: 25
-			yourself.
+		newRow: [ :row | 
+			row
+				add: #dateModel;
+				add: #chooseDateButton width: 50 ]
+			height: 25;
+		yourself
 ]
 
 { #category : #private }
@@ -131,9 +116,6 @@ DatePresenter >> initializeWidgets [
 
 	dateModel := self newTextInput.
 	chooseDateButton := self newButton.
-	
-	dateModel
-		isCodeCompletionAllowed: false.
 	
 	chooseDateButton
 		icon: self iconMorph;

@@ -8,15 +8,34 @@ Class {
 }
 
 { #category : #utilities }
-ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: category whenSubclassOf: aClass [
+ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: protocol whenSubclassOf: aClass [
 	| violating |
 	violating := OrderedCollection new.
 	aClass allSubclassesDo: [:cls | cls methods do: [:m |
-			(m selector = selector and: [ m category ~= category ])
-				ifTrue: [ violating add: m -> m category ]
+			(m selector = selector and: [ m protocol ~= protocol ])
+				ifTrue: [ violating add: m -> m protocol ]
 			]
 		 ].
-	self assert: violating isEmpty description: ('Subclasses of {1} should have #{2} methods in category {3}' format: { aClass asString. selector. category })
+	self 
+		assert: violating isEmpty 
+		description: ('Subclasses of {1} should have #{2} methods in protocol {3}' format: { aClass asString. selector. protocol })
+
+]
+
+{ #category : #utilities }
+ProperMethodCategorizationTest >> assureAll: selector areCategorizedInProtocols: protocols whenSubclassOf: aClass [
+	"Test whether the selector is categorized in at least the collection of protocols"
+	| violating |
+	violating := OrderedCollection new.
+	aClass allSubclassesDo: [:cls | cls methods do: [:m |
+			
+			(m selector = selector and: [ (protocols includes: (m protocol)) not ])
+				ifTrue: [ violating add: m -> m protocol ]
+			]
+		 ].
+	self 
+		assert: violating isEmpty 
+		description: ('Subclasses of {1} should have #{2} methods in one of the following protocols {3}' format: { aClass asString. selector. protocols })
 
 ]
 
@@ -110,7 +129,7 @@ ProperMethodCategorizationTest >> testRunCaseMethodInSUnitTestsNeedsToBeInRunnin
 ProperMethodCategorizationTest >> testSetUpMethodInSUnitTestsNeedsToBeInRunningProtocol [
 	"The #setUp method in SUnit test classes should be in method protocol 'running'"
 
-	self assureAll: #setUp areCategorizedIn: #running whenSubclassOf: TestCase
+	self assureAll: #setUp areCategorizedInProtocols: #(#running) whenSubclassOf: TestCase
 
 ]
 
@@ -126,7 +145,7 @@ ProperMethodCategorizationTest >> testShallowCopyMethodNeedsToBeInCopyingProtoco
 ProperMethodCategorizationTest >> testTearDownMethodInSUnitTestsNeedsToBeInRunningProtocol [
 	"The #tearDown method in SUnit test classes should be in method protocol 'running'"
 	
-	self assureAll: #tearDown areCategorizedIn: #running whenSubclassOf: TestCase
+	self assureAll: #tearDown areCategorizedInProtocols: #(#running) whenSubclassOf: TestCase
 
 ]
 

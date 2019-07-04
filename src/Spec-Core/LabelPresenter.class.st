@@ -56,10 +56,12 @@ LabelPresenter >> emphasis: anEmphasis [
 
 { #category : #initialization }
 LabelPresenter >> initialize [
+
 	super initialize.
+
 	labelHolder := '' asValueHolder.
 	emphasis := #().
-	labelHolder whenChangedDo: [ self changed: #getText ].
+	labelHolder whenChangedDo: [ self changed: #getText ]
 ]
 
 { #category : #api }
@@ -81,4 +83,10 @@ LabelPresenter >> label: aText [
 LabelPresenter >> labelHolder [
 	"To register actions to be done when the label changes."
 	^ labelHolder
+]
+
+{ #category : #'api-events' }
+LabelPresenter >> whenLabelChangedDo: aValuable [
+
+	labelHolder whenChangedDo: aValuable
 ]

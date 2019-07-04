@@ -6,7 +6,7 @@ Shapes do not have to inherit directly from me, for example Rectangle implements
 Class {
 	#name : #AthensShape,
 	#superclass : #AthensAbstractShape,
-	#category : #'Athens-Core'
+	#category : #'Athens-Core-Shapes'
 }
 
 { #category : #converting }

@@ -31,7 +31,8 @@ Class {
 		'title',
 		'icon',
 		'autoRefresh',
-		'shortcutGroup'
+		'shortcutGroup',
+		'defaultGroup'
 	],
 	#category : #'Spec-Core-Widgets'
 }
@@ -60,11 +61,21 @@ MenuPresenter >> addAllFromPragma: pragma target: target [
 
 { #category : #api }
 MenuPresenter >> addGroup: aBlock [
+	"Create a group of items in case you want a multi group menu.
+	In case of a single group menu you can use #addItem: directly."
+
 	| group |
-	
 	group := MenuGroupPresenter new.
 	aBlock value: group.
 	self addMenuGroup: group
+]
+
+{ #category : #api }
+MenuPresenter >> addItem: aBlock [
+	"Add an item to the menu. When the menu group has not been specified previously, add the item in a default group.
+	For managing yourself groups, check #addGroup:"
+
+	self defaultGroup addItem: aBlock
 ]
 
 { #category : #private }
@@ -105,6 +116,14 @@ MenuPresenter >> buildWithSpecAsPopup [
 	^ self buildWithSpec: #popup
 ]
 
+{ #category : #accessing }
+MenuPresenter >> defaultGroup [
+	^ defaultGroup
+		ifNil: [ defaultGroup := MenuGroupPresenter new.
+			self addMenuGroup: defaultGroup.
+			defaultGroup ]
+]
+
 { #category : #'api-building' }
 MenuPresenter >> fromSpec: aSpec [
 
@@ -133,11 +152,18 @@ MenuPresenter >> iconName: aSymbol [
 MenuPresenter >> initialize [
 
 	super initialize.
+
 	groups := OrderedCollection new asValueHolder.
 	title := nil asValueHolder.
 	icon := nil asValueHolder.
 	autoRefresh := nil asValueHolder.
 	autoRefresh whenChangedDo: [ :aBoolean | self menuGroups do: [ :each | each autoRefresh: aBoolean ] ]
+]
+
+{ #category : #testing }
+MenuPresenter >> isMenuPresenter [
+
+	^ true
 ]
 
 { #category : #api }
@@ -171,11 +197,20 @@ MenuPresenter >> printOn: aStream [
 ]
 
 { #category : #accessing }
+MenuPresenter >> rootMenu [
+
+	^ self owner isMenuPresenter 
+		ifTrue: [ self owner rootMenu ]
+		ifFalse: [ self ]
+
+]
+
+{ #category : #accessing }
 MenuPresenter >> shortcutGroup [
 	"Some platforms use acceleration groups to store shortcut keys. 
 	 if that's the case, we use this property to access it later (and store 
 	 in windows, for example)"
-	
+
 	^ shortcutGroup
 ]
 

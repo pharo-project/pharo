@@ -51,8 +51,7 @@ AbstractWidgetPresenter class >> adapterName [
 { #category : #specs }
 AbstractWidgetPresenter class >> defaultSpec [
 	<spec: #default>
-
-	^ { self adapterName. #adapt:. #presenter }
+	^ SpecAbstractWidgetLayout for: self adapterName
 ]
 
 { #category : #'drag and drop' }
@@ -185,20 +184,7 @@ AbstractWidgetPresenter >> enable [
 ]
 
 { #category : #api }
-AbstractWidgetPresenter >> enabled [
-	"<api: #inspect>"
-	
-	self 
-		deprecated:  'Please use #isEnabled instead' 
-		transformWith:  '`@receiver enabled' 
-						-> '`@receiver isEnabled'.
-	
-	^ self isEnabled
-]
-
-{ #category : #api }
 AbstractWidgetPresenter >> enabled: aBoolean [
-	"<api: #boolean getter: #enabled registration: #whenEnabledChanged:>"
 	"Set if the button is enabled (clickable)"
 	
 	enabledHolder value: aBoolean
@@ -244,6 +230,7 @@ AbstractWidgetPresenter >> help: aString [
 AbstractWidgetPresenter >> initialize [
 
 	super initialize.
+
 	helpHolder := nil asValueHolder.
 	borderWidth := 0 asValueHolder.
 	borderColor := Color transparent asValueHolder.
@@ -303,6 +290,14 @@ AbstractWidgetPresenter >> transferFor: passenger from: source [
 	^ transferBlock value value: passenger value: source
 ]
 
+{ #category : #'private-traversing' }
+AbstractWidgetPresenter >> traversePresentersDo: aBlock excluding: excludes [
+	"Terminate"
+
+	excludes add: self.
+	aBlock value: self
+]
+
 { #category : #'drag and drop' }
 AbstractWidgetPresenter >> wantDropBlock [
 
@@ -323,28 +318,28 @@ AbstractWidgetPresenter >> wantsDroppedMorph: draggedMorph event: anEvent inMorp
 ]
 
 { #category : #'api-events' }
-AbstractWidgetPresenter >> whenBorderColorChanged: aBlock [
+AbstractWidgetPresenter >> whenBorderColorChangedDo: aBlock [
 	"Set a block to be performed when the brder width changed"
 	
 	borderColor whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
-AbstractWidgetPresenter >> whenBorderWidthChanged: aBlock [
+AbstractWidgetPresenter >> whenBorderWidthChangedDo: aBlock [
 	"Set a block to be performed when the brder width changed"
 	
 	borderWidth whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
-AbstractWidgetPresenter >> whenEnabledChanged: aBlock [
+AbstractWidgetPresenter >> whenEnabledChangedDo: aBlock [
 	"Set a block to performed when the widget is enabled or disabled"
 	
 	enabledHolder whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
-AbstractWidgetPresenter >> whenHelpChanged: aBlock [
+AbstractWidgetPresenter >> whenHelpChangedDo: aBlock [
 	"Set a block to be performed when the help changed"
 	
 	helpHolder whenChangedDo: aBlock

@@ -25,14 +25,18 @@ ComponentListPresenter >> addPresenter: aPresenter [
 
 { #category : #initialization }
 ComponentListPresenter >> initialize [
-	self class initializeSlots: self.
+
 	super initialize.
-	
-	presenters := OrderedCollection new.
-	
+	presenters := OrderedCollection new
 ]
 
 { #category : #accessor }
 ComponentListPresenter >> presenters [
 	^ presenters
+]
+
+{ #category : #initialization }
+ComponentListPresenter >> presenters: aCollection [
+	presenters := aCollection.
+"	self notifyPropertyChanged: #presenters"
 ]

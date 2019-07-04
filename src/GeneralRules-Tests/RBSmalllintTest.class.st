@@ -350,11 +350,6 @@ RBSmalllintTest >> testGuardingClause [
 ]
 
 { #category : #tests }
-RBSmalllintTest >> testIfTrueReturns [
-	self ruleFor: self currentSelector
-]
-
-{ #category : #tests }
 RBSmalllintTest >> testJustSendsSuper [
 	self ruleFor: self currentSelector
 ]

@@ -10,7 +10,7 @@ PaginatedMorphTreeMorphTests >> testPager [
 
 	| treeMorph aWindow aModel |
 	aModel := PaginatedMorphTreeModel itemsList: (1 to: 100) asArray.
-	aWindow := aModel theme newWindowIn: World for: aModel title: 'test'.
+	aWindow := aModel theme newWindowIn: self currentWorld for: aModel title: 'test'.
 	treeMorph := aModel defaultTreeMorph.
 	treeMorph pageSize: 30.
 	treeMorph buildContents.

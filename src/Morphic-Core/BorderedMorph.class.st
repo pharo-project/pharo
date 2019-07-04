@@ -62,7 +62,7 @@ BorderedMorph >> basicBorderWidth: aNumber [
 
 { #category : #accessing }
 BorderedMorph >> borderColor [
-	^ borderColor
+	^ borderColor 
 ]
 
 { #category : #accessing }

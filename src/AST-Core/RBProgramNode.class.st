@@ -259,7 +259,7 @@ RBProgramNode >> copyList: matchNodes inContext: aDictionary [
 { #category : #accessing }
 RBProgramNode >> debugHighlightRange [
 
-	^ self debugHighlightStart to: self debugHighlightStop .
+	^ self debugHighlightStart to: self debugHighlightStop
 ]
 
 { #category : #accessing }
@@ -293,12 +293,12 @@ RBProgramNode >> do: aBlock [
 
 { #category : #generation }
 RBProgramNode >> dump [
-	^  String streamContents: [:s | self dumpOn: s]
-]
+	"Generate a literal expression that recreates the receiver"
 
-{ #category : #generation }
-RBProgramNode >> dumpOn: aStream [
-	self subclassResponsibility 
+	| visitor |
+	visitor := RBDumpVisitor new.
+	self acceptVisitor: visitor.
+	^ visitor stream contents
 ]
 
 { #category : #comparing }
@@ -334,6 +334,14 @@ RBProgramNode >> formattedCode [
 { #category : #accessing }
 RBProgramNode >> formatterClass [
 	^ self class formatterClass
+]
+
+{ #category : #testing }
+RBProgramNode >> hasComments [
+	"Answer whether the receiver as comments"
+	
+	^ self comments isNotEmpty
+	
 ]
 
 { #category : #testing }

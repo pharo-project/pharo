@@ -28,8 +28,9 @@ NaturalLanguageTranslatorTest >> tearDown [
 NaturalLanguageTranslatorTest >> testRegisterCustomTranslator [
 
 	NaturalLanguageTranslator current: RegisterableTranslatorMock new.
+	
 	"Our custom translator translates the string differently"
-	self assert: 'TestCase' translated equals: 'Testfall'.
+	self assert: 'TestCase' translated equals: 'Testfall'
 	
 	
 ]
@@ -37,5 +38,5 @@ NaturalLanguageTranslatorTest >> testRegisterCustomTranslator [
 { #category : #tests }
 NaturalLanguageTranslatorTest >> testTranslatePureString [
 
-	self assert: 'Pharo' translated = 'Pharo'
+	self assert: 'Pharo' translated equals: 'Pharo'
 ]

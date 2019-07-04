@@ -5,14 +5,23 @@ A paned layout will split (horizontally or vertically) panels (in fixed yet prop
 Class {
 	#name : #MorphicBoxAdapter,
 	#superclass : #MorphicLayoutAdapter,
+	#instVars : [
+		'layout'
+	],
 	#category : #'Spec-MorphicAdapters-Layout'
 }
+
+{ #category : #factory }
+MorphicBoxAdapter >> add: aPresenter [
+ 
+	self add: aPresenter constraints: SpecBoxConstraints new
+]
 
 { #category : #private }
 MorphicBoxAdapter >> addConstraits: constraints toChild: childMorph [
 	"adds constraits by child"
 	| theMorph |
-	
+
 	theMorph := childMorph.
 	constraints isExpand 
 		ifTrue: [ 
@@ -31,10 +40,7 @@ MorphicBoxAdapter >> addConstraits: constraints toChild: childMorph [
 				vResizing: #spaceFill ]
 		ifFalse: [
 			"Set morph to stay rigid"
-			self flag: #TODO. "This works for vertical but has to be inversed for horizontal"
-			theMorph 
-				hResizing: #spaceFill; 
-				vResizing: #rigid.
+			layout direction setRigidityOfNonExpendedMorph: theMorph.
 			constraints width ifNotNil: [ :w | theMorph width: w ].
 			constraints height ifNotNil: [ :h | theMorph height: h ] ].
 	"constraints padding"
@@ -54,16 +60,28 @@ MorphicBoxAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [
 	^ childMorph
 ]
 
+{ #category : #accessing }
+MorphicBoxAdapter >> childrenWidgets [
+	
+	^ widget submorphs first submorphs, widget submorphs second submorphs
+]
+
 { #category : #factory }
 MorphicBoxAdapter >> layout: aLayout [
 
+	layout := aLayout.
+	
+	widget
+		ifNil: [
 	"build of widget was differed up to here (to know what is the direction)"
 	widget := aLayout direction newWidgetOn: self.
 	widget borderWidth: aLayout borderWidth.
 	"the spacing needs to be applied to the inner sub-panels"
 	widget submorphs do: [ :each |
 		each cellInset: aLayout spacing ].
-	"widget homogeneous: aLayout isHomogeneous"
+	"widget homogeneous: aLayout isHomogeneous" ].
+	
+	super layout: aLayout
 ]
 
 { #category : #factory }
@@ -108,4 +126,19 @@ MorphicBoxAdapter >> newVertical [
 			height: 0;
 			yourself);
 		yourself	
+]
+
+{ #category : #accessing }
+MorphicBoxAdapter >> remove: aPresenter [
+
+	| morph |
+	morph := aPresenter adapter widget.	
+	widget submorphs first removeMorph: morph.
+	widget submorphs second removeMorph: morph.
+]
+
+{ #category : #factory }
+MorphicBoxAdapter >> removeSubWidgets [
+	widget submorphs first removeAllMorphs.
+	widget submorphs second removeAllMorphs
 ]

@@ -15,7 +15,7 @@ MailAddressTokenizerTest >> testTokensInAscii [
 		each type -> each text ] as: Array.
 	self 
 		assert: tokensCollection
-		equals: {#Atom->'first'. #Atom->'last'. $<->'<'. #Atom->'person'. $@->'@'. #Atom->'company'. $.->'.'. #Atom->'com'. $>->'>'}.
+		equals: {#Atom->'first'. #Atom->'last'. $<->'<'. #Atom->'person'. $@->'@'. #Atom->'company'. $.->'.'. #Atom->'com'. $>->'>'}
 ]
 
 { #category : #tests }
@@ -47,7 +47,7 @@ MailAddressTokenizerTest >> testTokensInLatin [
 			#Atom->'company'. 
 			$.->'.'. 
 			#Atom->'com'. 
-			$>->'>'}.
+			$>->'>'}
 ]
 
 { #category : #tests }
@@ -79,5 +79,5 @@ MailAddressTokenizerTest >> testTokensInUnicode [
 			#Atom->'company'. 
 			$.->'.'. 
 			#Atom->'com'. 
-			$>->'>'}.
+			$>->'>'}
 ]

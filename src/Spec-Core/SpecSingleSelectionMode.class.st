@@ -7,7 +7,7 @@ Class {
 	#category : #'Spec-Core-Widgets-Table'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 SpecSingleSelectionMode >> addSubscription: aSubscription [
 
 	^ selectedIndexValueHolder announcer basicSubscribe: aSubscription
@@ -38,6 +38,12 @@ SpecSingleSelectionMode >> initialize [
 	selectedIndexValueHolder := 0 asValueHolder
 ]
 
+{ #category : #testing }
+SpecSingleSelectionMode >> isEmpty [
+	
+	^ self selectedIndex = 0
+]
+
 { #category : #selecting }
 SpecSingleSelectionMode >> selectAll [
 
@@ -49,6 +55,13 @@ SpecSingleSelectionMode >> selectIndexes: aCollection [
 
 	aCollection ifEmpty: [ ^ self unselectAll ].
 	self selectIndex: aCollection first.
+]
+
+{ #category : #selecting }
+SpecSingleSelectionMode >> selectItems: aCollection [
+
+	aCollection ifEmpty: [ ^ self unselectAll ].
+	self selectItem: aCollection first.
 ]
 
 { #category : #selecting }
@@ -77,10 +90,12 @@ SpecSingleSelectionMode >> selectedItem [
 { #category : #selecting }
 SpecSingleSelectionMode >> selectedItems [
 	
-	^ { self selectedItem }
+	^ self selectedItem
+		ifNotNil: [ :anItem | { anItem } ]
+		ifNil: [ #() ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SpecSingleSelectionMode >> subscriptions [
 
 	^ selectedIndexValueHolder announcer subscriptions subscriptions

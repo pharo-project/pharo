@@ -183,6 +183,12 @@ SDL2 class >> init: flags [
 ]
 
 { #category : #common }
+SDL2 class >> initEverything [
+	self initLibrary;
+		 initSubSystem: SDL_INIT_EVERYTHING
+]
+
+{ #category : #common }
 SDL2 class >> initGameController [
 	self initLibrary;
 		 initSubSystem: SDL_INIT_GAMECONTROLLER

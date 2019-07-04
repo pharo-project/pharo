@@ -204,6 +204,41 @@ BehaviorTest >> testRemoveProperty [
 	self assert: (self class propertyAt: #testKeySelector) equals: nil
 ]
 
+{ #category : #'tests - queries' }
+BehaviorTest >> testallMethodsAccessingSlot [
+	| methods |	
+	"Check the source code availability to do not fail on images without sources"
+	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
+
+
+	methods := LookupKey allMethodsAccessingSlot: (LookupKey slotNamed: #key).
+	self assert: (methods includes: (Association >>#key:value:))
+
+]
+
+{ #category : #'tests - queries' }
+BehaviorTest >> testallMethodsReadingSlot [
+	| methods |	
+	"Check the source code availability to do not fail on images without sources"
+	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
+
+	methods := LookupKey allMethodsReadingSlot: (LookupKey slotNamed: #key).
+	self assert: (methods includes: (Ephemeron >>#mourn))
+
+]
+
+{ #category : #'tests - queries' }
+BehaviorTest >> testallMethodsWritingSlot [
+	| methods |	
+	"Check the source code availability to do not fail on images without sources"
+	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
+
+
+	methods := LookupKey allMethodsWritingSlot: (LookupKey slotNamed: #key).
+	self assert: (methods includes: (Association >>#key:value:))
+
+]
+
 { #category : #tests }
 BehaviorTest >> testallSuperclassesIncluding [
 		
@@ -220,4 +255,18 @@ BehaviorTest >> testsourceCodeTemplateFor [
 	"check for distictive source code templates for class-side and instance-side"
 	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side message'). 
 	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side message') 
+]
+
+{ #category : #'tests - queries' }
+BehaviorTest >> testthoroughWhichMethodsReferTo [
+	| array |
+	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
+	"normal case"
+	self assert: (Point thoroughWhichMethodsReferTo: #x) notEmpty.
+	"we understand send bytecodes for special selectors"
+	self assert: (Point thoroughWhichMethodsReferTo: #+) notEmpty.
+	"we dive into literal arrays"
+	self assert: (self class thoroughWhichMethodsReferTo: array first) notEmpty.
+	"and we are false for non existing symbols"
+	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
 ]

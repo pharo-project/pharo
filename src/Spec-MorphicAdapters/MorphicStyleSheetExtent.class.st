@@ -1,5 +1,5 @@
 "
-I'm a property to define the initial extent of a morph and weather this morph can be resized (horizontally and/or vertically)
+I'm a property to define the initial extent of a morph and whether this morph can be resized (horizontally and/or vertically)
 "
 Class {
 	#name : #MorphicStyleSheetExtent,

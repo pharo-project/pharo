@@ -110,13 +110,15 @@ ClassDescription >> addSlot: aSlot [
 ClassDescription >> allInstVarNamesEverywhere [
 	"Answer the set of inst var names used by the receiver, all superclasses, and all subclasses"
 
-	| aList |
-	aList := OrderedCollection new.
-	(self allSuperclasses , self withAllSubclasses asOrderedCollection) do:
-		[:cls | aList addAll: cls instVarNames].
-	^ aList asSet
+	^ self withAllSuperAndSubclasses flatCollectAsSet: [ :cls | cls instVarNames ]
+]
 
-	"BorderedMorph allInstVarNamesEverywhere"
+{ #category : #'obsolete subclasses' }
+ClassDescription >> allLocalCallsOn: aSymbol [
+	"Answer all the methods that call on aSymbol, anywhere in my class hierarchy."
+
+	^ self instanceSide withAllSuperAndSubclasses flatCollect: [ :class | 
+			(class thoroughWhichMethodsReferTo: aSymbol), (class class thoroughWhichMethodsReferTo: aSymbol)]
 ]
 
 { #category : #'accessing method dictionary' }
@@ -142,16 +144,14 @@ ClassDescription >> allSelectorsInProtocol: aName [
 	"Answer a list of all the methods of the receiver and all its 
 	superclasses that are in the protocol named aName"
 	
-	| aColl |
-	aColl := OrderedCollection new.
-	self withAllSuperclasses do: [:aClass | 
-		aColl addAll: (aClass organization listAtCategoryNamed: aName) ].
-	^ aColl asSet asArray sort
+	^self withAllSuperclasses
+		flatCollectAsSet: [ :class | class organization listAtCategoryNamed: aName ]
+		
 ]
 
 { #category : #'pool variable' }
 ClassDescription >> allSharedPools [
-	"Answer an ordered collection  of the shared pools the receiver shares, including those defined  in the superclasses of the receiver."
+	"Answer an ordered collection of the shared pools the receiver shares, including those defined  in the superclasses of the receiver."
 	
 	^ OrderedCollection new
 ]
@@ -161,26 +161,11 @@ ClassDescription >> allSlots [
 	^self classLayout allVisibleSlots
 ]
 
-{ #category : #slots }
-ClassDescription >> allSlotsEverywhere [
-	"Answer the set of slots used by the receiver, all superclasses, and all subclasses"
-
-	| aList |
-	aList := OrderedCollection new.
-	(self allSuperclasses , self withAllSubclasses asOrderedCollection) do:
-		[:cls | aList addAll: cls slots].
-	^ aList asSet
-]
-
 { #category : #enumerating }
 ClassDescription >> allUnreferencedInstanceVariables [
-	"Return a list of the instance variables known to the receiver which are not referenced in the receiver or any of its subclasses OR superclasses"
+	"Return a list of the instance variables known to the receiver which are not referenced"
 
-	^ self allInstVarNames reject: [:ivn |
-		| definingClass |		
-		definingClass := self classThatDefinesInstanceVariable: ivn.
-		definingClass withAllSubclasses anySatisfy: [:class |  
-				(class whichSelectorsAccess: ivn asSymbol) notEmpty]]
+	^ self allSlots reject: [:slot | slot isReferenced]
 ]
 
 { #category : #authors }
@@ -278,7 +263,6 @@ ClassDescription >> classCommentBlank [
 
 	| stream |
 	stream := (String new: 100) writeStream.
-	
 	stream nextPutAll: 'Please comment me using the following template inspired by Class Responsibility Collaborator (CRC) design:
 
 For the Class part:  State a one line summary. For example, "I represent a paragraph of text".
@@ -329,9 +313,17 @@ ClassDescription >> classThatDefinesClassVariable: classVarName [
 ]
 
 { #category : #'instance variables' }
-ClassDescription >> classThatDefinesInstanceVariable: instVarName [
-	(self instVarNames notNil and: [self instVarNames includes: instVarName asString]) ifTrue: [^ self]. 
-	^self superclass ifNotNil: [self superclass classThatDefinesInstanceVariable: instVarName]
+ClassDescription >> classThatDefinesInstVarNamed: instVarName [
+	^self 
+		slotNamed: instVarName
+		 ifFound: [ :slot | slot definingClass  ]
+		 ifNone: nil
+]
+
+{ #category : #slots }
+ClassDescription >> classVariablesNeedFullDefinition [
+
+	^ self classVariables anySatisfy: [ :each | each needsFullDefinition ]
 ]
 
 { #category : #printing }
@@ -585,31 +577,11 @@ ClassDescription >> copyCategory: cat from: aClass classified: newCat [
 ClassDescription >> definition [
 	"Answer a String that defines the receiver."
 
-	| aStream |
-	aStream := (String new: 800) writeStream.
-	superclass 
-		ifNil: [aStream nextPutAll: 'ProtoObject']
-		ifNotNil: [aStream nextPutAll: superclass name].
-	aStream nextPutAll: self kindOfSubclass;
-			store: self name.
-	(self hasTraitComposition) ifTrue: [
-		aStream cr; tab; nextPutAll: 'uses: ';
-			nextPutAll: self traitCompositionString].
-	aStream cr; tab; nextPutAll: 'instanceVariableNames: ';
-			store: self instanceVariablesString.
-	aStream cr; tab; nextPutAll: 'classVariableNames: ';
-			store: self classVariablesString.
-	aStream cr; tab; nextPutAll: 'poolDictionaries: ';
-			store: self sharedPoolsString.
-	aStream cr; tab; nextPutAll: 'category: ';
-			store: self category asString.
-
-	superclass ifNil: [ 
-		aStream nextPutAll: '.'; cr.
-		aStream nextPutAll: self name.
-		aStream space; nextPutAll: 'superclass: nil'. ].
-
-	^ aStream contents
+	(self needsSlotClassDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
+		^ self definitionWithSlots ].
+	
+	^ self definitionWithoutSlots
+	
 ]
 
 { #category : #accessing }
@@ -618,10 +590,111 @@ ClassDescription >> definitionForNautilus [
 	^ self definition
 ]
 
-{ #category : #accessing }
-ClassDescription >> definitionForNautilusWithSlots [
+{ #category : #'filein/out' }
+ClassDescription >> definitionWithSlots [
+	"The class definition with a way to specify slots. Shown when the class defines special Slot"
+	
+	| stream poolString|
+	poolString := self sharedPoolsString.
 
-	^ self definition
+	stream := (String new: 800) writeStream.
+	superclass 
+		ifNotNil: [stream nextPutAll: superclass name]
+		ifNil: [stream nextPutAll: 'ProtoObject'].
+	stream 
+		nextPutAll: ' subclass: '; 
+		store: self name.
+	self hasTraitComposition ifTrue: [
+		stream 
+			crtab; 
+			nextPutAll: 'uses: ';
+			nextPutAll: self traitCompositionString ].
+			
+	(self classLayout isKindOf: FixedLayout) ifFalse: [
+		stream 
+			crtab; 
+			nextPutAll: 'layout: ';
+			nextPutAll: self classLayout class name ].
+	
+	stream 
+		crtab; 
+		nextPutAll: 'slots: ';
+		nextPutAll: self slotDefinitionString.
+		
+	stream 
+		crtab; 
+		nextPutAll: 'classVariables: ';
+		nextPutAll: self classVariableDefinitionString.
+	
+	poolString = '' ifFalse: [
+		stream 
+			crtab; 
+			nextPutAll: 'poolDictionaries: ';
+			store: poolString ].
+		
+	stream 
+		crtab; 
+		nextPutAll: 'package: ';
+		store: self category asString.
+
+	superclass ifNil: [ 
+		stream nextPutAll: '.'; cr.
+		stream nextPutAll: self name.
+		stream space; nextPutAll: 'superclass: nil'. ].
+
+	^ stream contents
+]
+
+{ #category : #'filein/out' }
+ClassDescription >> definitionWithoutSlots [
+
+	| poolString stream |
+	poolString := self sharedPoolsString.
+	stream := (String new: 800) writeStream.
+	superclass
+		ifNotNil: [ stream nextPutAll: superclass name ]
+		ifNil: [ stream nextPutAll: 'ProtoObject' ].
+	
+	stream
+		nextPutAll: self kindOfSubclass;
+		store: self name.
+	self hasTraitComposition ifTrue: [ 
+		stream
+			crtab;
+			nextPutAll: 'uses: ';
+			nextPutAll: self traitCompositionString ].
+	stream
+		crtab;
+		nextPutAll: 'instanceVariableNames: ';
+		store: self instanceVariablesString.
+	stream
+		crtab;
+		nextPutAll: 'classVariableNames: ';
+		store: self classVariablesString.
+	
+	poolString = '' ifFalse: [ 
+		stream 
+			crtab;
+			nextPutAll: 'poolDictionaries: ';
+			store: poolString ].
+	
+	stream
+		crtab;
+		nextPutAll: 'package: ';
+		store: self category asString.
+		
+	superclass ifNil: [ 
+		stream
+			nextPutAll: '.';
+			cr.
+		stream 
+			nextPutAll: self name.
+		stream
+			space;
+			nextPutAll: 'superclass: nil' ].
+
+	^ stream contents
+	
 ]
 
 { #category : #private }
@@ -650,7 +723,7 @@ ClassDescription >> hasClassSide [
 
 { #category : #'accessing comment' }
 ClassDescription >> hasComment [
-	"return whether this class truly has a comment other than the default"
+	"Return whether this class truly has a comment other than the default"
 	^self instanceSide organization hasComment
 ]
 
@@ -676,9 +749,10 @@ ClassDescription >> hasSlot: aSlot [
 
 { #category : #slots }
 ClassDescription >> hasSlotNamed: aString [
-	"Return true whether the receiver defines an instance variable named aString."
+	"Return true whether the receiver defines an instance variable named aString.
+	this includes non-visible slots"
 	
-	^ self allSlots anySatisfy: [:slot | slot name = aString]
+	^ self classLayout hasSlotNamed: aString
 ]
 
 { #category : #'instance variables' }
@@ -692,15 +766,10 @@ ClassDescription >> instVarIndexFor: instVarName [
 ClassDescription >> instVarIndexFor: instVarName ifAbsent: aBlock [
 	"Answer the index of the named instance variable."
 
-	| index |
-	index := self classLayout instVarIndexFor: instVarName ifAbsent: 0.
-	index = 0 ifTrue: 
-		[^self superclass
-			ifNil: [aBlock value]
-			ifNotNil: [self superclass instVarIndexFor: instVarName ifAbsent: aBlock]].
-	^self superclass
-		ifNil: [index]
-		ifNotNil: [index + self superclass instSize]
+	^self
+		slotNamed: instVarName
+		ifFound: [ :slot | slot isVirtual ifTrue: aBlock ifFalse: [slot index]]
+		ifNone: aBlock
 ]
 
 { #category : #private }
@@ -715,18 +784,13 @@ ClassDescription >> instVarMappingFrom: oldClass [
 { #category : #'instance variables' }
 ClassDescription >> instVarNameForIndex: index [
 	"Answer the named instance variable with index index or nil if none."
+	"we deprecate this as it is not useful know that we have meta objects for variables"
 
-	| superInstSize |
-	index > self instSize ifTrue: [^nil].
-	superInstSize := self superclass ifNil: [0] ifNotNil: [self superclass instSize].
-	index > superInstSize ifTrue:
-		[^self instVarNames at: index - superInstSize].
-	self superclass ifNil: [^nil].
-	^self superclass instVarNameForIndex: index
-
-	"(Object allSubclasses select:
-		[:cls| cls instSize > cls superclass instSize and: [cls subclasses isEmpty and: [cls superclass instSize > 0]]]) collect:
-			[:cls| (1 to: cls instSize) collect: [:i| cls instVarNameForIndex: i]]"
+	| slot |
+	self deprecated: 'Please use the slot API directly'.
+	slot := self classLayout allSlots 
+		detect: [ :each | each isVirtual not and: [ each index = index ] ] ifNone: [^nil].
+	^slot name
 ]
 
 { #category : #'instance variables' }
@@ -734,20 +798,6 @@ ClassDescription >> instVarNames [
 	"Answer an Array of the receiver's instance variable names."
 
 	^self localSlots collect: [ :each | each name ]
-]
-
-{ #category : #compiling }
-ClassDescription >> instVarNamesAndOffsetsDo: aBinaryBlock [
-	"This is part of the interface between the compiler and a class's instance or field names.
-	 The class should enumerate aBinaryBlock with the instance variable name strings and
-	 their integer offsets.  The order is important. Names evaluated later will override the
-	 same names occurring earlier."
-
-	| superInstSize |
-	(superInstSize := self superclass notNil ifTrue: [self superclass instSize] ifFalse: [0]) > 0 ifTrue:
-		[self superclass instVarNamesAndOffsetsDo: aBinaryBlock].
-	1 to: self instSize - superInstSize do:
-		[:i| aBinaryBlock value: (self instVarNames at: i) value: i + superInstSize]
 ]
 
 { #category : #'accessing parallel hierarchy' }
@@ -761,7 +811,11 @@ ClassDescription >> instanceSide [
 
 { #category : #accessing }
 ClassDescription >> instanceVariables [
-	^self instVarNames.
+	"we deprecate this due to bad naming: it returns names, not variables!"
+	self
+		deprecated: 'Please use #instVarNames or #slotNames instead'
+		transformWith: '`@receiver instanceVariables' -> '`@receiver instVarNames'.
+	^self instVarNames
 ]
 
 { #category : #printing }
@@ -841,6 +895,15 @@ ClassDescription >> methodsTaggedWith: aSymbol [
 	Tags are not inherited from traits. So we only select local methods"
 	
 	^self localMethods select: [ :each | each isTaggedWith: aSymbol ]
+]
+
+{ #category : #slots }
+ClassDescription >> needsSlotClassDefinition [
+    "return true if we define something else than InstanceVariableSlots or normal class variables"
+
+    ^ self slotsNeedFullDefinition 
+		or: [ self class slotsNeedFullDefinition 
+		or: [ self classVariablesNeedFullDefinition ] ]
 ]
 
 { #category : #private }
@@ -957,6 +1020,37 @@ ClassDescription >> obsolete [
 	"Make the receiver obsolete."
 	self superclass removeSubclass: self.
 	super obsolete.
+]
+
+{ #category : #'filein/out' }
+ClassDescription >> oldDefinition [
+	"Answer a String that defines the receiver."
+
+	| aStream |
+	aStream := (String new: 800) writeStream.
+	superclass 
+		ifNil: [aStream nextPutAll: 'ProtoObject']
+		ifNotNil: [aStream nextPutAll: superclass name].
+	aStream nextPutAll: self kindOfSubclass;
+			store: self name.
+	(self hasTraitComposition) ifTrue: [
+		aStream cr; tab; nextPutAll: 'uses: ';
+			nextPutAll: self traitCompositionString].
+	aStream cr; tab; nextPutAll: 'instanceVariableNames: ';
+			store: self instanceVariablesString.
+	aStream cr; tab; nextPutAll: 'classVariableNames: ';
+			store: self classVariablesString.
+	aStream cr; tab; nextPutAll: 'poolDictionaries: ';
+			store: self sharedPoolsString.
+	aStream cr; tab; nextPutAll: 'category: ';
+			store: self category asString.
+
+	superclass ifNil: [ 
+		aStream nextPutAll: '.'; cr.
+		aStream nextPutAll: self name.
+		aStream space; nextPutAll: 'superclass: nil'. ].
+
+	^ aStream contents
 ]
 
 { #category : #organization }
@@ -1121,14 +1215,14 @@ ClassDescription >> slotDefinitionString [
 
 	"^self slots ifNotEmpty: [self slots asString] ifEmpty: ['{}']"
 	
-	^String streamContents: [ :str | | special |
+	^String streamContents: [ :str | | useFull |
 		str nextPutAll: '{ '.
 		self localSlots do: [:slot |
 				str nextPutAll: slot definitionString.
-				special := slot isSpecial]				
+				useFull := slot needsFullDefinition]				
 			separatedBy: [ 
 				str nextPutAll: '. '.  
-				special ifTrue: [ str cr;tab;tab;tab;tab ]].
+				useFull ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 
 ]
@@ -1158,6 +1252,12 @@ ClassDescription >> slots [
 	^self classLayout visibleSlots
 ]
 
+{ #category : #slots }
+ClassDescription >> slotsNeedFullDefinition [
+	"return true if we define something else than InstanceVariableSlots"
+	^self slots anySatisfy: [ :each | each needsFullDefinition ]
+]
+
 { #category : #private }
 ClassDescription >> spaceUsed [
 	^super spaceUsed + (self hasClassSide
@@ -1170,12 +1270,6 @@ ClassDescription >> storeOn: aStream [
 	"Classes and Metaclasses have global names."
 
 	aStream nextPutAll: self name
-]
-
-{ #category : #'accessing class hierarchy' }
-ClassDescription >> subclassesDo: aBlock [
-	"Evaluate the argument, aBlock, for each of the receiver's immediate subclasses."
-	^self subclasses do: aBlock
 ]
 
 { #category : #initialization }
@@ -1257,65 +1351,6 @@ ClassDescription >> untagFrom: aSymbol [
 	package addClass: self
 ]
 
-{ #category : #initialization }
-ClassDescription >> updateInstances: oldInstances from: oldClass isMeta: isMeta [
-	"Recreate any existing instances of the argument, oldClass, as instances of the receiver,
-	 which is a newly changed class. Permute variables as necessary, and forward old instances
-	 to new instances.  Answer nil to defeat old clients that expect an array of old instances.
-	 The old behaviour, which necessitated a global GC, exchanged identities and answered
-	 the old instances.  But no clients used the result.  This way we avoid the unnecessary GC,"
-
-	| variable instSize newInstances |
-	oldInstances isEmpty
-		ifTrue: [ ^ nil ].	"no instances to convert"
-	isMeta ifTrue:
-		[(oldInstances size = 1
-		  and: [self soleInstance class == self
-				or: [self soleInstance class == oldClass]]) ifFalse:
-			[^self error: 'Metaclasses can only have one instance']].
-	variable := self isVariable.
-	instSize := self instSize.
-	newInstances := Array new: oldInstances size.
-	1 to: oldInstances size do: [ :i | newInstances at: i put: (self newInstanceFrom: (oldInstances at: i) variable: variable size: instSize) ].	"Now perform a bulk mutation of old instances into new ones"
-	oldInstances elementsForwardIdentityTo: newInstances.
-	^ nil
-]
-
-{ #category : #initialization }
-ClassDescription >> updateInstancesFrom: oldClass [
-	"Recreate any existing instances of the argument, oldClass, as instances of 
-	the receiver, which is a newly changed class. Permute variables as 
-	necessary. Return the array of old instances (none of which should be
-	pointed to legally by anyone but the array)."
-	"ar 7/15/1999: The updating below is possibly dangerous. If there are any
-	contexts having an old instance as receiver it might crash the system if
-	the new receiver in which the context is executed has a different layout.
-	See bottom below for a simple example:"
-	| oldInstances |
-	oldInstances := oldClass allInstances asArray.
-	oldInstances := self updateInstances: oldInstances from: oldClass isMeta: self isMeta.
-	^nil
-
-"	| crashingBlock class |
-	class := Object subclass: #CrashTestDummy
-		instanceVariableNames: 'instVar'
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: 'Crash-Test'.
-	class compile:'instVar: value instVar := value'.
-	class compile:'crashingBlock ^[instVar]'.
-	crashingBlock := (class new) instVar: 42; crashingBlock.
-	Object subclass: #CrashTestDummy
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: 'Crash-Test'.
-	crashingBlock.
-	crashingBlock value.
-	"
-
-]
-
 { #category : #'pool variable' }
 ClassDescription >> usesLocalPoolVarNamed: aString [
 	^false.
@@ -1326,26 +1361,6 @@ ClassDescription >> usesPoolVarNamed: aString [
 	"Only classes may use a pool variable named: aString"
 	
 	^ false
-]
-
-{ #category : #slots }
-ClassDescription >> usesSpecialClassVariables [
-
-	^self classVariables anySatisfy: [ :each | each isSpecial ]
-]
-
-{ #category : #slots }
-ClassDescription >> usesSpecialSlot [
-	"return true if we define something else than InstanceVariableSlots"
-	^self slots anySatisfy: [ :each | each isSpecial ]
-]
-
-{ #category : #slots }
-ClassDescription >> usesSpecialVariables [
-    "return true if we define something else than InstanceVariableSlots"
-    ^(self usesSpecialSlot 
-        or: [ self class usesSpecialSlot ])
-        or: [self usesSpecialClassVariables ]
 ]
 
 { #category : #compiling }

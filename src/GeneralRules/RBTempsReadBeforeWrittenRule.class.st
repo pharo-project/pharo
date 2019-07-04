@@ -20,12 +20,8 @@ RBTempsReadBeforeWrittenRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBTempsReadBeforeWrittenRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	| a |
-	a asString.
-	a := 1.
-	((RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: aMethod ast) notEmpty) ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aMethod) ]
+RBTempsReadBeforeWrittenRule >> basicCheck: aMethod [
+	^ (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: aMethod ast) isNotEmpty
 ]
 
 { #category : #accessing }

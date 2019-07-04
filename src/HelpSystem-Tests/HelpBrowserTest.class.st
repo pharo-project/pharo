@@ -57,7 +57,7 @@ HelpBrowserTest >> testLazyDefaultHelpBrowser [
 HelpBrowserTest >> testOpen [
 	|browser|
 	browser := self defaultTestClass open.
-	World doOneCycleNow. 
+	self currentWorld doOneCycleNow. 
 	browser close 
 
 

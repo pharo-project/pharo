@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #private }
-GTFilterSubstring >> applyFilterWithQuery [
+GTFilterSubstring >> doApplyFilterWithQuery [
 	| exactMatches prefixMatches otherMatches nonExactMatches |
 	"we want to distinguish between exact matches"
 	exactMatches := OrderedCollection new.
@@ -25,8 +25,11 @@ GTFilterSubstring >> applyFilterWithQuery [
 					itemName size = queryString size 
 						ifTrue: [ 
 							exactMatches add: each.
-							exactMatches size <= self itemsLimit ifTrue: [ 
-								self addItem: each  ] ]
+							self addItem: each.
+														
+							exactMatches size = self itemsLimit ifTrue: [ 
+								self filteredItems: exactMatches.
+								GTLimitArrived signal	] ]							
 						ifFalse: [ prefixMatches add: each ] ]
 				ifFalse: [ otherMatches add: each ] ] ].
 	nonExactMatches := prefixMatches, otherMatches.

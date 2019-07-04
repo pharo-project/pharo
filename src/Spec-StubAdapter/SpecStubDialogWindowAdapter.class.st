@@ -3,7 +3,7 @@ Adapt the presenter on a stub view that displays no real UI elements.
 "
 Class {
 	#name : #SpecStubDialogWindowAdapter,
-	#superclass : #SpecStubAbstractAdapter,
+	#superclass : #SpecStubWindowAdapter,
 	#category : #'Spec-StubAdapter-Adapters'
 }
 
