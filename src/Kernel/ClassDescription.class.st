@@ -118,8 +118,7 @@ ClassDescription >> allLocalCallsOn: aSymbol [
 	"Answer all the methods that call on aSymbol, anywhere in my class hierarchy."
 
 	^ self instanceSide withAllSuperAndSubclasses flatCollect: [ :class | 
-			(class whichSelectorsReferTo: aSymbol), (class class whichSelectorsReferTo: aSymbol)
-				collect: [ :symbol | class >> symbol ] ]
+			(class thoroughWhichMethodsReferTo: aSymbol), (class class thoroughWhichMethodsReferTo: aSymbol)]
 ]
 
 { #category : #'accessing method dictionary' }

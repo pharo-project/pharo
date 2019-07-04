@@ -1780,6 +1780,18 @@ Behavior >> thoroughHasSelectorReferringTo: literal [
 ]
 
 { #category : #'testing method dictionary' }
+Behavior >> thoroughWhichMethodsReferTo: literal [
+	"Answer methods whose methods referes to the argument as a literal. 
+	 Dives into the compact literal notation and embedded literal arrays, 
+    making it slow but thorough "
+
+	| specialIndex |
+	"for speed we check the special selectors here once per class"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: literal.
+	^ self methods select: [ :method | method hasSelector: literal specialSelectorIndex: specialIndex ]
+]
+
+{ #category : #'testing method dictionary' }
 Behavior >> thoroughWhichSelectorsReferTo: literal [
 	"Answer a set of selectors whose methods access the argument as a 
 	literal. Dives into the compact literal notation, making it slow but 
