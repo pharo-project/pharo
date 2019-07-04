@@ -310,7 +310,7 @@ IRMethod >> optimize [
 	
 	"This last two optimizations works but the problem 
 	when you absorb conditional jumps 
-	is that and: / or: chained generate explicitely 
+	is that and: / or: chained generate explicitly 
 	constant conditional jumps to tip the JIt and the 
 	decompiler that they are and: or: and not conditions/loops
 	

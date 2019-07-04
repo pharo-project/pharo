@@ -53,7 +53,7 @@ ZnLimitedReadStream >> close [
 
 { #category : #accessing }
 ZnLimitedReadStream >> collectionSpecies [
-	"I can be set to binary or ascii explicitely.
+	"I can be set to binary or ascii explicitly.
 	If not set, delegate to our wrapped stream."
 	
 	^ binary notNil
