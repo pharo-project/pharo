@@ -21,14 +21,21 @@ OSWindowClipboard >> chooseRecentClipping [
 
 { #category : #accessing }
 OSWindowClipboard >> clipboardText [
-	^ self currentWorld worldState worldRenderer clipboardText
+	^ self worldRenderer clipboardText
 ]
 
 { #category : #accessing }
 OSWindowClipboard >> clipboardText: aString [
-	self currentWorld worldState worldRenderer clipboardText: aString asString
+	self worldRenderer clipboardText: aString asString
 ]
 
 { #category : #private }
 OSWindowClipboard >> noteRecentClipping: text [
+]
+
+{ #category : #accessing }
+OSWindowClipboard >> worldRenderer [ 
+
+	^ self currentWorld worldState worldRenderer
+	
 ]
