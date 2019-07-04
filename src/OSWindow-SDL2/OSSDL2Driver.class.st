@@ -316,7 +316,8 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 
 { #category : #'events-processing' }
 OSSDL2Driver >> setupEventLoop [
-	EventLoopProcess ifNotNil: [ EventLoopProcess terminate ].
+	EventLoopProcess ifNotNil: [ 
+		EventLoopProcess isTerminating ifFalse: [EventLoopProcess terminate. EventLoopProcess := nil] ].
 	EventLoopProcess := self class isVMDisplayUsingSDL2 ifTrue: [ 
 		[ self eventLoopProcessWithVMWindow ] 
 		forkAt: Processor lowIOPriority
