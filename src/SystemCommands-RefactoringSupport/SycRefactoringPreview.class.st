@@ -62,7 +62,7 @@ SycRefactoringPreview >> accept [
 		asJob
 		title: 'Refactoring';
 		run.
-	self window delete
+	self window close
 ]
 
 { #category : #accessing }
@@ -97,7 +97,7 @@ SycRefactoringPreview >> buildDiffFor: aChange [
 
 { #category : #controlling }
 SycRefactoringPreview >> cancel [
-	self window delete
+	self window close
 ]
 
 { #category : #accessing }
