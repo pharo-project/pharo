@@ -10,7 +10,7 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport-Test'
 }
 
-{ #category : #tests }
+{ #category : #running }
 SycRefactoringPreview2Test >> fillTableWith3MockItem [
 	sycRefactoringPreview table
 		items:
@@ -19,7 +19,7 @@ SycRefactoringPreview2Test >> fillTableWith3MockItem [
 			MockTreeTableItem new}
 ]
 
-{ #category : #setup }
+{ #category : #running }
 SycRefactoringPreview2Test >> initializeForInitializeTest [
 	| scopeClass scopePackage |
 	scopePackage := SycMockPackageScope new.
@@ -31,7 +31,7 @@ SycRefactoringPreview2Test >> initializeForInitializeTest [
 			scopeClass}
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 SycRefactoringPreview2Test >> initializeSycRefactoringUsingForScope [
 	| scopeClass scopePackage |
 	scopePackage := SycMockPackageScope new .
@@ -76,7 +76,7 @@ SycRefactoringPreview2Test >> testDropListChangeShouldChangeTableItems [
 		hasSameElements: {'banane' . 'Tournai Triple'}
 ]
 
-{ #category : #'initialize-test' }
+{ #category : #'test-initialization' }
 SycRefactoringPreview2Test >> testInitializationAllCheckBoxDictionarySetTrue [
 	self initializeForInitializeTest.
 	self assert: sycRefactoringPreview selectedRefactorings size equals: 3.
