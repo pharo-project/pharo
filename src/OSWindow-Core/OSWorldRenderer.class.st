@@ -45,7 +45,7 @@ OSWorldRenderer >> activate [
 	world worldState doFullRepaint.
 	world displayWorld.
 	
-	Stdio stdout << 'World extent:'; << world extent printString ;crlf.
+	OSWindowClipboard new beDefault.
 ]
 
 { #category : #initialization }
@@ -78,13 +78,21 @@ OSWorldRenderer >> checkForNewScreenSize [
 	(display isNil or: [display extent = self actualScreenSize]) 
 		ifTrue: [ ^ self ].
 
-	Stdio stdout << 'New size'; crlf.
-
 	display := Form extent: self actualScreenSize depth: 32.
 	self osWindowRenderer form: display.
 
 	world restoreMorphicDisplay.
 
+]
+
+{ #category : #initialization }
+OSWorldRenderer >> clipboardText [
+	^ osWindow clipboardText
+]
+
+{ #category : #initialization }
+OSWorldRenderer >> clipboardText: aString [
+	osWindow clipboardText: aString asString
 ]
 
 { #category : #initialization }
