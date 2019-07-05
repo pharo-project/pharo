@@ -12,7 +12,7 @@ Class {
 
 { #category : #primitives }
 FFIExternalValueHolderTests >> getTime: t [
-     ^self ffiCall: #(long time(TIME_T_PTR t) ) module: LibC
+     ^self ffiCall: #(long time(TIME_T_PTR t)) module: LibC
              
 ]
 
@@ -24,7 +24,7 @@ FFIExternalValueHolderTests >> testCall [
 	object := TIME_T_PTR new.
 
 	time := self getTime: object.
-	self assert: time equals: object value.
+	self assert: time equals: object value
 ]
 
 { #category : #tests }
@@ -38,6 +38,6 @@ FFIExternalValueHolderTests >> testCreateValueHolder [
 	self assert: object value equals: 0.
 	
 	object value: 42.
-	self assert: object value equals: 42.
+	self assert: object value equals: 42
 
 ]

@@ -103,7 +103,7 @@ FFICalloutTests >> testParseOptions [
 	self assert: (generator optionAt: #optStringOrNil).
 	
 	generator parseOptions: #(- optEncoding).
-	self deny: (generator optionAt: #optEncoding).
+	self deny: (generator optionAt: #optEncoding)
 	
 	
 ]

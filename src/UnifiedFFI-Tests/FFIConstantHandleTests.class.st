@@ -17,7 +17,7 @@ FFIConstantHandleTests >> getTime: t [
 
 { #category : #primitives }
 FFIConstantHandleTests >> getTimeReturnConstantHandle: t [
-     ^self ffiCall: #(FFIConstantHandle time(TIME_T_PTR t) ) module: LibC
+     ^self ffiCall: #(FFIConstantHandle time(TIME_T_PTR t)) module: LibC
 ]
 
 { #category : #tests }
@@ -26,7 +26,7 @@ FFIConstantHandleTests >> testCall [
 	
 	object := FFIConstantHandle new.
 	time := self getTime: object.
-	self assert: time equals: object handle.
+	self assert: time equals: object handle
 ]
 
 { #category : #tests }
@@ -37,5 +37,5 @@ FFIConstantHandleTests >> testReturn [
 	
 	object := TIME_T_PTR new value: 0.
 	time := self getTimeReturnConstantHandle: object.
-	self assert: time handle equals: object value.
+	self assert: time handle equals: object value
 ]
