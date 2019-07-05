@@ -71,21 +71,21 @@ SharedPool class >> localBindingOf: varName [
 	^nil
 ]
 
-{ #category : #pools }
+{ #category : #queries }
 SharedPool class >> methodsAccessingPoolVariables [
 	"Answer all methods that use one of the variables defined by the shared pool"
 	^ self classVariables flatCollect: [ :variable | variable usingMethods ]
 ]
 
-{ #category : #pools }
+{ #category : #queries }
 SharedPool class >> poolUsers [
 	"Answer all classes that uses the shared pool"
 
 	^self environment allClasses select:  [:class | class includesSharedPoolNamed: self name]
 ]
 
-{ #category : #pools }
+{ #category : #queries }
 SharedPool class >> usingMethods [
-	"Answer all methods that referene the Pool or of the variables defined by the shared pool"
+	"Answer all methods that reference the Pool the variables defined by the shared pool"
 	^super usingMethods, self methodsAccessingPoolVariables
 ]
