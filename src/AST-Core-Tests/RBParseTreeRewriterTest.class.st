@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'rewriter'
 	],
-	#category : #'AST-Core-Tests'
+	#category : #'AST-Core-Tests-Matching'
 }
 
 { #category : #utilities }
