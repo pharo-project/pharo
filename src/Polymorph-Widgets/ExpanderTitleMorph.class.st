@@ -9,7 +9,7 @@ Class {
 		'buttonMorph',
 		'expanded'
 	],
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Base'
 }
 
 { #category : #accessing }
