@@ -25,7 +25,6 @@ Class {
 
 { #category : #examples }
 HTTPProgress class >> example [
-	"self example"
 	
  	UIManager default informUserDuring: [ :bar |
 		bar label: 'Transfer Demo...'.
