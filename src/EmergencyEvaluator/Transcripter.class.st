@@ -223,7 +223,7 @@ Transcripter >> readEvalPrint [
 				ifTrue: [okToRevert
 						ifTrue: [(self confirm: 'Revert: ' , RecentMessageList uniqueInstance lastEntry asString , ' ?')
 								ifTrue: [RecentMessageList uniqueInstance revertLastMethodSubmission.
-									self cr; show: 'reverted: ' , RecentMessageList uniqueInstance lastEntry asString.
+									self cr; show: 'reverted: '; nextPutAll: RecentMessageList uniqueInstance lastEntry asString.
 									okToRevert := false]]
 						ifFalse: [self cr; show: 'Only one level of revert currently supported']]
 				ifFalse: [self cr;
