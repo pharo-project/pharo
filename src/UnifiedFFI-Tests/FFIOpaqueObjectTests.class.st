@@ -50,7 +50,7 @@ FFIOpaqueObjectTests >> testParseAsBigArityPointer [
 	fnSpec := self newParser parseNamedFunction: #( FFIOpaqueObject **function ( ) ). 
 	returnType := fnSpec returnType.
 	self assert: returnType class equals: FFIOpaqueObjectType.
-	self assert: returnType pointerArity equals: 2.
+	self assert: returnType pointerArity equals: 2
 ]
 
 { #category : #tests }
@@ -65,5 +65,5 @@ FFIOpaqueObjectTests >> testParseAsPointer [
 	fnSpec := self newParser parseNamedFunction: #( FFIOpaqueObject *function ( ) ). 
 	returnType := fnSpec returnType.
 	self assert: returnType class equals: FFIOpaqueObjectType.
-	self assert: returnType pointerArity equals: 1.
+	self assert: returnType pointerArity equals: 1
 ]

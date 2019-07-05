@@ -38,6 +38,6 @@ FFIExternalStructureFieldParserTests >> testParseFieldsStructure [
 	self assert: (fieldSpec typeFor: #double) class equals: FFIFloat64.
 	self assert: (fieldSpec typeFor: #int64) class equals: FFIInt64.
 	self assert: (fieldSpec typeFor: #ulong) class equals: FFIULong.
-	self assert: (fieldSpec typeFor: #size_t) class equals: FFISizeT.
+	self assert: (fieldSpec typeFor: #size_t) class equals: FFISizeT
 	
 ]
