@@ -6,7 +6,7 @@ RBPatternParser needs some extra tests not covered by RBPatternTest for its exte
 Class {
 	#name : #RBPatternParserTest,
 	#superclass : #RBParserTest,
-	#category : #'AST-Core-Tests'
+	#category : #'AST-Core-Tests-Parser'
 }
 
 { #category : #accessing }

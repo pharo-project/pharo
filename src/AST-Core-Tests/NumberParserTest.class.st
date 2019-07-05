@@ -6,7 +6,7 @@ It duplicates NumberParsingTest, with few more tests.
 Class {
 	#name : #NumberParserTest,
 	#superclass : #ClassTestCase,
-	#category : #'AST-Core-Tests'
+	#category : #'AST-Core-Tests-Parser'
 }
 
 { #category : #utilities }
