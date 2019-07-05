@@ -8,7 +8,7 @@ Class {
 		'titleMorph',
 		'announcer'
 	],
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Base'
 }
 
 { #category : #'as yet unclassified' }

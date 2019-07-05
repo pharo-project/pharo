@@ -33,7 +33,7 @@ Class {
 		'chooseBlock',
 		'chooser'
 	],
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Utilities'
 }
 
 { #category : #examples }
