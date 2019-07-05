@@ -4,6 +4,12 @@ Class {
 	#category : #'AST-Core-Tests'
 }
 
+{ #category : #testing }
+RBParseTreeTest class >> isAbstract [ 
+
+	^self name = #RBParseTreeTest
+]
+
 { #category : #helpers }
 RBParseTreeTest >> parseExpression: aString [ 
 
