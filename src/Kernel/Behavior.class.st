@@ -1832,6 +1832,13 @@ Behavior >> unreferencedInstanceVariables [
 ]
 
 { #category : #queries }
+Behavior >> usingMethods [
+	"all methods that reference me"
+	self isAnonymous ifTrue: [ ^#() ].
+	^self binding usingMethods
+]
+
+{ #category : #queries }
 Behavior >> whichClassDefinesClassVar: aString [ 
 	Symbol hasInterned: aString ifTrue: [ :aSymbol |
 		^self whichSuperclassSatisfies: 
