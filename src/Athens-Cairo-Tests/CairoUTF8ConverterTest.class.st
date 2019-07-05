@@ -13,18 +13,16 @@ Class {
 { #category : #running }
 CairoUTF8ConverterTest >> setUp [
 	super setUp.
-	encoder := CairoUTF8Converter new.
+	encoder := CairoUTF8Converter new
 ]
 
 { #category : #tests }
 CairoUTF8ConverterTest >> testEncodingString [
 	|  pos |
-
-	
 	pos := encoder convert: 'abc' from: 1 to: 3.
 	
 	self assert: pos equals: 3.
-	self assert: (encoder buffer first:3)   equals: #[97 98 99]
+	self assert: (encoder buffer first:3) equals: #[97 98 99]
 
 ]
 
@@ -32,13 +30,9 @@ CairoUTF8ConverterTest >> testEncodingString [
 CairoUTF8ConverterTest >> testReusingConverterShouldReplaceOldData [
 	| buf |
 	buf := encoder convertChar: 223 asCharacter.
-	
-	
-	self assert: (buf first:3)   equals: #[195 159 0 ].
-
+	self assert: (buf first: 3) equals: #[195 159 0].
 	buf := encoder convertChar: $b.
-	self assert: (buf first:2)   equals: #[98 0 ]
-
+	self assert: (buf first: 2) equals: #[98 0]
 ]
 
 { #category : #tests }
