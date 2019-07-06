@@ -165,12 +165,6 @@ PharoCommonTools >> cleanUp [
 ]
 
 { #category : #'registry access' }
-PharoCommonTools >> codeCompletion [
-
-	^ self toolNamed: #codeCompletion
-]
-
-{ #category : #'registry access' }
 PharoCommonTools >> debugger [
 
 	^ self toolNamed: #debugger
