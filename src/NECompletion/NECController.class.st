@@ -82,13 +82,6 @@ NECController class >> register [
 	RubSmalltalkEditor completionEngine: self.
 ]
 
-{ #category : #'tools registry' }
-NECController class >> registerToolsOn: registry [
-	"self registerToolsOn: Smalltalk tools" 
-	registry remove: #codeCompletion
-
-]
-
 { #category : #'instance creation' }
 NECController class >> reset [
 	uniqueInstance := nil
