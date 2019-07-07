@@ -120,7 +120,7 @@ SystemNavigation >> browseAllStoresInto: instVarName from: aClass [
 SystemNavigation >> browseAllUsersOfTrait: aTrait [
 	"Launch a class-list list browser on all classes or traits which import aTrait"
 	
-	^Smalltalk tools browser messageList browseClasses: aTrait traitUsers
+	^Smalltalk tools messageList browseClasses: aTrait traitUsers
 ]
 
 { #category : #'*Tool-Base' }
