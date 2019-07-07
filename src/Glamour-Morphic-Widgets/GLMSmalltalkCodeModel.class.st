@@ -84,11 +84,6 @@ GLMSmalltalkCodeModel >> highlightSmalltalkContext: anObject [
 	highlightSmalltalkContext := anObject
 ]
 
-{ #category : #completion }
-GLMSmalltalkCodeModel >> isCodeCompletionAllowed [ 
-	^true
-]
-
 { #category : #accessing }
 GLMSmalltalkCodeModel >> selectedClassOrMetaClass [
 	^ self highlightSmalltalkContext

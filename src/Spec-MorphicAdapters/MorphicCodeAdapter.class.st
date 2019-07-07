@@ -52,12 +52,6 @@ MorphicCodeAdapter >> hasSyntaxHighlight [
 ]
 
 { #category : #NOCompletion }
-MorphicCodeAdapter >> isCodeCompletionAllowed [
-
-	^ true
-]
-
-{ #category : #NOCompletion }
 MorphicCodeAdapter >> receiverClass [
 
 	^ self behavior

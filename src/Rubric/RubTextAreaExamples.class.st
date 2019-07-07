@@ -114,12 +114,6 @@ RubTextAreaExamples class >> interactionModel [
 	^ ModelForShout 
 ]
 
-{ #category : #NOcompletion }
-RubTextAreaExamples class >> isCodeCompletionAllowed [
-
-	^ true.
-]
-
 { #category : #accessing }
 RubTextAreaExamples class >> menu [
 	^ nil
