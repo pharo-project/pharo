@@ -134,12 +134,6 @@ SpMorphicTextAdapter >> hasUnacceptedEdits: aBoolean [
 	self model hasUnacceptedEdits: aBoolean
 ]
 
-{ #category : #testing }
-SpMorphicTextAdapter >> isCodeCompletionAllowed [
-
-	^ false
-]
-
 { #category : #'spec protocol' }
 SpMorphicTextAdapter >> notify: errorMessage at: position in: sourceCode [
 

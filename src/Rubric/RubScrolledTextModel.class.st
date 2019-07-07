@@ -156,13 +156,6 @@ RubScrolledTextModel >> interactionModel: anObject [
 	interactionModel := anObject
 ]
 
-{ #category : #'necompletion-extensions' }
-RubScrolledTextModel >> isCodeCompletionAllowed [
-	| allowed |
-	self reconfigureViewWith: [ :scrolledText | allowed := scrolledText textArea editingMode isCodeCompletionAllowed ].
-	^ allowed
-]
-
 { #category : #menu }
 RubScrolledTextModel >> menu [
 	^ nil

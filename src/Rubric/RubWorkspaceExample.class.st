@@ -130,12 +130,6 @@ RubWorkspaceExample >> initialize [
 	mustDeclareVariables := false
 ]
 
-{ #category : #completion }
-RubWorkspaceExample >> isCodeCompletionAllowed [
-
-	^ true.
-]
-
 { #category : #'user interface' }
 RubWorkspaceExample >> newScrolledText [
 	| st |

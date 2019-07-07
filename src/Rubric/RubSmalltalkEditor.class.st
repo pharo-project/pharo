@@ -791,6 +791,13 @@ RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 ]
 
 { #category : #'completion engine' }
+RubSmalltalkEditor >> isCodeCompletionAllowed [
+	self flag: #TODO. "isCompletionEnabled and isCodeCompletionAllowed need to be unified"
+	^self isCompletionEnabled.
+	
+]
+
+{ #category : #'completion engine' }
 RubSmalltalkEditor >> isCompletionEnabled [
 
 	^ completionEngine isNil not

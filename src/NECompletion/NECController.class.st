@@ -28,11 +28,6 @@ Class {
 	#category : #'NECompletion-View'
 }
 
-{ #category : #testing }
-NECController class >> allowModel: aModel [ 
-	^NECPreferences enabled and: [ aModel isCodeCompletionAllowed ]
-]
-
 { #category : #cleanup }
 NECController class >> cleanUp [
 	self reset
@@ -42,21 +37,17 @@ NECController class >> cleanUp [
 NECController class >> codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: evt [
 	"Inserts code completion if allowed in this morph"
 	
-	| editor stringHolder completionAllowed controller |
-	editor := aTextMorph editor.
-	stringHolder := editor ifNotNil:[ editor model ].
-	completionAllowed := self allowModel: stringHolder.
-	completionAllowed 
-		ifTrue: [ 
-			controller := self uniqueInstance.
-			controller setModel: stringHolder.
-			(controller handleKeystrokeBefore: evt editor: editor)
-				ifTrue:  [^ self ] ].
-
-	aBlock value.
+	| editor controller |
+	NECPreferences enabled ifFalse: [ ^aBlock value ].
+	editor := aTextMorph editor ifNil: [ ^aBlock value ].
+	editor isCodeCompletionAllowed ifFalse: [  ^aBlock value ].
+	controller := self uniqueInstance.
+	controller setModel: editor model.
 	
-	completionAllowed
-		ifTrue: [ controller handleKeystrokeAfter: evt editor: editor ]
+	(controller handleKeystrokeBefore: evt editor: editor) ifTrue:  [^ self ].
+	aBlock value.
+	controller handleKeystrokeAfter: evt editor: editor.
+
 ]
 
 { #category : #accessing }

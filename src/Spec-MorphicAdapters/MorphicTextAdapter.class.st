@@ -134,12 +134,6 @@ MorphicTextAdapter >> hasUnacceptedEdits: aBoolean [
 	self model hasUnacceptedEdits: aBoolean
 ]
 
-{ #category : #testing }
-MorphicTextAdapter >> isCodeCompletionAllowed [
-
-	^ false
-]
-
 { #category : #'spec protocol' }
 MorphicTextAdapter >> notify: errorMessage at: position in: sourceCode [
 
