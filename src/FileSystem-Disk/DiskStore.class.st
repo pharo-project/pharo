@@ -95,12 +95,28 @@ DiskStore class >> reset [
 
 { #category : #current }
 DiskStore class >> resetAsReadOnly [
-	^ CurrentFS := FileSystem store: self activeClass readOnlyVariant createDefault
+
+	"Reset the disk store as read-only. Change indentity of the old store to utilize it in the old users"
+
+	| old |
+	
+	old := CurrentFS.
+	CurrentFS := FileSystem store: self activeClass readOnlyVariant createDefault.
+	old becomeForward: CurrentFS.
+	^ CurrentFS
 ]
 
 { #category : #current }
 DiskStore class >> resetAsWritable [
-	^ CurrentFS := FileSystem store: self activeClass writableVariant createDefault
+
+	"Reset the disk store as writable. Change indentity of the old store to utilize it in the old users"
+
+	| old |
+	
+	old := CurrentFS.
+	CurrentFS := FileSystem store: self activeClass writableVariant createDefault.
+	old becomeForward: CurrentFS.
+	^ CurrentFS
 ]
 
 { #category : #'system startup' }
