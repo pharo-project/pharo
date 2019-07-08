@@ -49,7 +49,10 @@ LanguageEnvironment class >> clearDefault [
 { #category : #accessing }
 LanguageEnvironment class >> currentPlatform [
 
-	^ Locale currentPlatform languageEnvironment.
+	| localeIdClass |
+	"A minimal (headless) image has LanguageEnvironment but not Locale!"
+	localeClass := SmalltalkImage globals at: #Locale ifAbsent: [^self].
+	^ localeClass currentPlatform languageEnvironment.
 
 ]
 
@@ -85,12 +88,14 @@ LanguageEnvironment class >> fileNameConverterClass [
 LanguageEnvironment class >> initKnownEnvironments [
 	"LanguageEnvironment initKnownEnvironments"
 
-	| known |
+	| known localeIdClass |
+	"A minimal (headless) image has LanguageEnvironment but not LocaleID!"
+	localeIdClass := SmalltalkImage globals at: #LocaleID ifAbsent: [^self].
 	known := Dictionary new.
 	self allSubclassesDo: [:subClass | 
 		subClass supportedLanguages do: [:language | | env id | 
 			env := subClass new.
-			id := LocaleID isoString: language.
+			id := localeIdClass isoString: language.
 			env localeID: id.
 			known at: id put: env]].
 	^known
@@ -173,9 +178,12 @@ LanguageEnvironment class >> localeChanged [
 
 { #category : #accessing }
 LanguageEnvironment class >> localeID: localeID [
+	| localeIdClass |
+	"A minimal (headless) image has LanguageEnvironment but not LocaleID!"
+	localeIdClass := SmalltalkImage globals at: #LocaleID ifAbsent: [^self].
 	self knownEnvironments
 		at: localeID ifPresent: [:value | ^ value ];
-		at: LocaleID default ifPresent: [ :value | ^ value ].
+		at: localeIdClass default ifPresent: [ :value | ^ value ].
 	
 	"Something is wrong"
 	self resetKnownEnvironments.
