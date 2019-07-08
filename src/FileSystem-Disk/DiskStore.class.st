@@ -79,10 +79,28 @@ DiskStore class >> maxFileNameLength [
 	self subclassResponsibility 
 ]
 
+{ #category : #public }
+DiskStore class >> readOnlyVariant [
+
+	"return a class variant for read-only store. It should be properly defined in my subclasses"
+
+	^ self
+]
+
 { #category : #current }
 DiskStore class >> reset [
 	DefaultWorkingDirectory := nil.
 	CurrentFS := nil
+]
+
+{ #category : #current }
+DiskStore class >> resetAsReadOnly [
+	^ CurrentFS := FileSystem store: self activeClass readOnlyVariant createDefault
+]
+
+{ #category : #current }
+DiskStore class >> resetAsWritable [
+	^ CurrentFS := FileSystem store: self activeClass writableVariant createDefault
 ]
 
 { #category : #'system startup' }
@@ -97,6 +115,14 @@ DiskStore class >> startUp: resuming [
 	resuming 
 		ifTrue: [ self reset ].
 	DefaultWorkingDirectory := self defaultWorkingDirectory.
+]
+
+{ #category : #public }
+DiskStore class >> writableVariant [
+
+	"return a class variant for read-only store. It should be properly defined in my subclasses"
+
+	^ self
 ]
 
 { #category : #comparing }
@@ -487,6 +513,12 @@ DiskStore >> isSymlink: aPath [
 
 	aPath isRoot ifTrue: [ ^false ].
 	^File isSymlink: (self stringFromPath: aPath)
+]
+
+{ #category : #testing }
+DiskStore >> isWritable [
+
+	^ true
 ]
 
 { #category : #testing }
