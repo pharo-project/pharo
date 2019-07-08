@@ -49,7 +49,7 @@ LanguageEnvironment class >> clearDefault [
 { #category : #accessing }
 LanguageEnvironment class >> currentPlatform [
 
-	| localeIdClass |
+	| localeClass |
 	"A minimal (headless) image has LanguageEnvironment but not Locale!"
 	localeClass := SmalltalkImage globals at: #Locale ifAbsent: [^self].
 	^ localeClass currentPlatform languageEnvironment.
