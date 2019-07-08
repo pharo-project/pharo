@@ -251,7 +251,7 @@ MetaLink >> invalidate [
 
 { #category : #accessing }
 MetaLink >> level [
-	<metaLinkOptions: #( + optionDisabledLink)>
+	<metaLinkOptions: #( #+ optionDisabledLink)>
 	^ level
 ]
 

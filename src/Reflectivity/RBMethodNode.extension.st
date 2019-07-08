@@ -9,8 +9,8 @@ RBMethodNode >> hasOption: aSymbol for: aLink [
 { #category : #'*Reflectivity' }
 RBMethodNode >> metaLinkOptions [
 	^{
-	#metaLinkOptionsFromClassAndMethod -> #( + optionCompileOnLinkInstallation).
-	#metaLinkOptions -> #( + optionCompileOnLinkInstallation)
+	#metaLinkOptionsFromClassAndMethod -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
 	}
 ]
 

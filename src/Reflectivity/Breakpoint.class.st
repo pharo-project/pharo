@@ -164,7 +164,7 @@ Breakpoint >> condition: aCondition [
 
 { #category : #initialization }
 Breakpoint >> initialize [
-	options := #(+ optionCompileOnLinkInstallation + optionAnnounce)
+	options := #(#+ optionCompileOnLinkInstallation + optionAnnounce)
 ]
 
 { #category : #install }

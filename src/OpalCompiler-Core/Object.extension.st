@@ -19,7 +19,7 @@ Object >> mustBeBooleanCompileExpression: context andCache: cache [
 	"Keep same compilation context as the sender node's"
 	methodNode compilationContext: sendNode methodNode compilationContext copy.
 	"Disable inlining so the message send will be unoptimized"
-	methodNode compilationContext compilerOptions: #(- optionInlineIf optionInlineAndOr optionInlineWhile).
+	methodNode compilationContext compilerOptions: #(#- optionInlineIf optionInlineAndOr optionInlineWhile).
 	"Generate the method"	
 	OCASTSemanticCleaner clean: methodNode.
 	method := methodNode generate.

@@ -1311,7 +1311,7 @@ ReflectivityReificationTest >> testReifyOptionArgsAsArray [
 			self assert: args equals: #().
 			self assert: link == link ];
 		selector: #valueWithArguments:;
-		option: #(+ argsAsArray);
+		option: #(#+ argsAsArray);
 		arguments: #(object selector arguments link);
 		control: #after.
 	methodNode link: link.

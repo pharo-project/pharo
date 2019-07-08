@@ -83,13 +83,13 @@ CompiledMethod >> invalidate [
 { #category : #'*Reflectivity' }
 CompiledMethod >> metaLinkOptions [
 	^{
-	#penultimateLiteral -> #( + optionCompileOnLinkInstallation).
-	#selector -> #( + optionCompileOnLinkInstallation).
-	#objectAt: -> #( + optionCompileOnLinkInstallation).
-	#header -> #( + optionCompileOnLinkInstallation).
-	#numLiterals -> #( + optionCompileOnLinkInstallation).
-	#literalAt: -> #( + optionCompileOnLinkInstallation).
-	#metaLinkOptions -> #( + optionCompileOnLinkInstallation)
+	#penultimateLiteral -> #( #+ optionCompileOnLinkInstallation).
+	#selector -> #( #+ optionCompileOnLinkInstallation).
+	#objectAt: -> #( #+ optionCompileOnLinkInstallation).
+	#header -> #( #+ optionCompileOnLinkInstallation).
+	#numLiterals -> #( #+ optionCompileOnLinkInstallation).
+	#literalAt: -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
 	}
 ]
 

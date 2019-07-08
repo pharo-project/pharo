@@ -3,7 +3,7 @@ Extension { #name : #SmalltalkImage }
 { #category : #'*Reflectivity' }
 SmalltalkImage >> metaLinkOptions [
 	^{
-	#vm -> #( + optionCompileOnLinkInstallation).
-	#metaLinkOptions -> #( + optionCompileOnLinkInstallation)
+	#vm -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
 	}
 ]

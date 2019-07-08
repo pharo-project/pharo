@@ -48,7 +48,7 @@ SugsMenuBuilder class >> findBestNodeFor: context [
 		ifTrue: [ 
 			root := Smalltalk compiler
 				source: context code;
-				options: #(+ optionParseErrors);
+				options: #(#+ optionParseErrors);
 				parse.
 			context selectedClass ifNotNil: [ :theClass | root methodNode methodClass: theClass ].
 			root doSemanticAnalysis ]

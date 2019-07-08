@@ -5,7 +5,7 @@ BlockClosure >> rfEnsure: aBlock [
 	"same as #esure, carefully written to never have active meta-links as it is called in the code path that checks for recursion"
 
 	<primitive: 198>
-	<metaLinkOptions: #( + optionDisabledLink)>
+	<metaLinkOptions: #( #+ optionDisabledLink)>
 	| returnValue b |
 	returnValue := self rfvalue.
 	aBlock isNil
@@ -21,7 +21,7 @@ BlockClosure >> rfEnsure: aBlock [
 BlockClosure >> rfvalue [
 	"same as value, for recursion stopping metalinks"
 	<primitive: 201>
-	<metaLinkOptions: #( + optionDisabledLink)>
+	<metaLinkOptions: #( #+ optionDisabledLink)>
 	^self primitiveFailed
 ]
 

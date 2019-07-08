@@ -3,7 +3,7 @@ Extension { #name : #Set }
 { #category : #'*Reflectivity' }
 Set >> metaLinkOptions [
 	^{
-	#parseOptions: -> #( + optionCompileOnLinkInstallation).
-	#metaLinkOptions -> #( + optionCompileOnLinkInstallation)
+	#parseOptions: -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
 	}
 ]

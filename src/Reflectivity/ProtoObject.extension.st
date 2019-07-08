@@ -3,8 +3,8 @@ Extension { #name : #ProtoObject }
 { #category : #'*Reflectivity' }
 ProtoObject >> metaLinkOptions [
 	^{
-	#isNil -> #( + optionCompileOnLinkInstallation).
-	#metaLinkOptions -> #( + optionCompileOnLinkInstallation)
+	#isNil -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
 	}
 ]
 
@@ -23,7 +23,7 @@ ProtoObject >> rfIsEqual: anObject [
 	object (have the same object pointer). Do not redefine the message == in 
 	any other class! Essential. No Lookup. Do not override in any subclass. 
 	See Object documentation whatIsAPrimitive."
-	<metaLinkOptions: #( + optionDisabledLink)>
+	<metaLinkOptions: #( #+ optionDisabledLink)>
 	<primitive: 110>
 	self primitiveFailed
 ]

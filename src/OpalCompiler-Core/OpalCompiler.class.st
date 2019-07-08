@@ -599,7 +599,7 @@ OpalCompiler >> logged: aBoolean [
 OpalCompiler >> noPattern: aBoolean [
 	self compilationContext noPattern: aBoolean.
 	"when we compile an expression, embedd sources, as the resulting method will never be installed"
-	compilationContext parseOptions: #(+ #optionEmbeddSources).
+	compilationContext parseOptions: #(#+ #optionEmbeddSources).
 	
 ]
 
