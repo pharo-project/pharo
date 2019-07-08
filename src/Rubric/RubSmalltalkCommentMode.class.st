@@ -36,6 +36,6 @@ RubSmalltalkCommentMode >> formatMethodCode [
 ]
 
 { #category : #testing }
-RubSmalltalkCommentMode >> isCodeCompletionAllowed [
+RubSmalltalkCommentMode >> isCompletionEnabled [
 	^ false
 ]
