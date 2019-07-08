@@ -15,7 +15,7 @@ Class {
 		'firstButton',
 		'secondButton'
 	],
-	#category : #'Spec2-Deprecated'
+	#category : #'Spec2-Deprecated-Obsolete'
 }
 
 { #category : #deprecation }

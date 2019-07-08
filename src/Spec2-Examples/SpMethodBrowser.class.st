@@ -50,8 +50,7 @@ SpMethodBrowser >> acceptBlock: aBlock [
 
 { #category : #accessing }
 SpMethodBrowser >> action [
-
-	^ textModel actionToPerformHolder content
+	^ textModel acceptBlock
 ]
 
 { #category : #api }

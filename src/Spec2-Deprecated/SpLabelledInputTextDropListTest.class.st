@@ -1,7 +1,7 @@
 Class {
 	#name : #SpLabelledInputTextDropListTest,
 	#superclass : #SpTestCase,
-	#category : #'Spec2-Deprecated'
+	#category : #'Spec2-Deprecated-Tests'
 }
 
 { #category : #deprecation }

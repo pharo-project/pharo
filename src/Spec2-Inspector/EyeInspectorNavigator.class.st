@@ -2,52 +2,52 @@
 This a wrapper around inspectors for diving. It is used in the case where the inspector is dynamically replaced by another inspector. For example, EyeCollectionInspector would be replaced by EyeIntegerInspector.
 "
 Class {
-	#name : #InspectorNavigator,
+	#name : #EyeInspectorNavigator,
 	#superclass : #SpPresenter,
+	#traits : 'TSpObservable',
+	#classTraits : 'TSpObservable classTrait',
 	#instVars : [
-		'inspector',
-		'history',
-		'canBeRefreshed',
-		'toolbar'
+		'#inspector => SpObservableSlot',
+		'#history',
+		'#canBeRefreshed',
+		'#toolbar'
 	],
 	#category : #'Spec2-Inspector-Widgets'
 }
 
 { #category : #specs }
-InspectorNavigator class >> debuggerSpec [
+EyeInspectorNavigator class >> debuggerSpec [
 	<spec: #default>
-	
-	^ SpLayout composed
-		newRow: #toolbar height: self toolbarHeight;
-		add: #inspector withSpec: #debuggerSpec top: self toolbarHeight;
-		yourself
+	^ self layoutForSpec: #debuggerSpec
 ]
 
 { #category : #'instance creation' }
-InspectorNavigator class >> inspect: anObject [
+EyeInspectorNavigator class >> inspect: anObject [
 	^ self openInspector: anObject inspector
 ]
 
 { #category : #specs }
-InspectorNavigator class >> inspectorSpec [
+EyeInspectorNavigator class >> inspectorSpec [
 	<spec>
-	
-	^ SpLayout composed
-		newColumn: [ :c | 
-			c 
-				add: #toolbar height: self toolbarHeight;
-				add: #inspector withSpec: #inspectorSpec ];
+	^ self layoutForSpec: #inspectorSpec
+]
+
+{ #category : #specs }
+EyeInspectorNavigator class >> layoutForSpec: spec [
+	^ SpBoxLayout newVertical
+		add: #toolbar withConstraints: [ :constraints | constraints height: self toolbarHeight ];
+		add: #inspector withConstraints: [ :constraints | constraints spec: spec ];
 		yourself
 ]
 
 { #category : #'instance creation' }
-InspectorNavigator class >> openExplorer: inspector [
+EyeInspectorNavigator class >> openExplorer: inspector [
 
 	^ (self openInspector: inspector) useTreeInspector
 ]
 
 { #category : #'instance creation' }
-InspectorNavigator class >> openInspector: inspector [
+EyeInspectorNavigator class >> openInspector: inspector [
 
 	^ self new
 		inspector: inspector;
@@ -56,29 +56,27 @@ InspectorNavigator class >> openInspector: inspector [
 ]
 
 { #category : #accessing }
-InspectorNavigator >> basicInspector: anEyeInspector [
-	inspector value 
-		ifNotNil: [ :inspect | 
-			inspect owner: nil ].
-	inspector value: anEyeInspector.
-	
-	anEyeInspector 
+EyeInspectorNavigator >> basicInspector: anEyeInspector [
+	inspector ifNotNil: [ :inspect | inspect owner: nil ].
+	inspector := anEyeInspector.
+
+	anEyeInspector
 		owner: self;
-		ownerChanged.
+		ownerChanged
 ]
 
 { #category : #accessing }
-InspectorNavigator >> canBeRefreshed [
+EyeInspectorNavigator >> canBeRefreshed [
 	^ canBeRefreshed
 ]
 
 { #category : #accessing }
-InspectorNavigator >> canBeRefreshed: anObject [
+EyeInspectorNavigator >> canBeRefreshed: anObject [
 	canBeRefreshed := anObject
 ]
 
 { #category : #menu }
-InspectorNavigator >> customMenuActions [
+EyeInspectorNavigator >> customMenuActions [
 	^ [:aMenu :currentGroup |
 		currentGroup addItem: [ :item |
 			item
@@ -105,41 +103,40 @@ InspectorNavigator >> customMenuActions [
 ]
 
 { #category : #accessing }
-InspectorNavigator >> defaultWindowPresenterClass [
+EyeInspectorNavigator >> defaultWindowPresenterClass [
 	^ SpTickingWindowPresenter
 ]
 
 { #category : #actions }
-InspectorNavigator >> diveInto: anObject [
+EyeInspectorNavigator >> diveInto: anObject [
 	self inspect: anObject.
 ]
 
 { #category : #actions }
-InspectorNavigator >> diveIntoSelectedObject [
+EyeInspectorNavigator >> diveIntoSelectedObject [
 	self inspector diveIntoSelectedObject
 ]
 
 { #category : #accessing }
-InspectorNavigator >> history [
+EyeInspectorNavigator >> history [
 	^ history
 ]
 
 { #category : #initialization }
-InspectorNavigator >> initialExtent [
+EyeInspectorNavigator >> initialExtent [
 	^ self inspector initialExtent
 	
 ]
 
 { #category : #initialization }
-InspectorNavigator >> initialize [
+EyeInspectorNavigator >> initialize [
 
 	super initialize.
 	
 	history := NavigationHistory new.
-	inspector := nil asValueHolder.
 	
 	self initializeShortcuts.
-	inspector whenChangedDo: [ :new :old | 
+	self property: #inspector whenChangedDo: [ :new :old | 
 		self updateInspectorFrom: old ].
 	self announcer
 		when: SpWidgetBuilt send: #setRefreshedToTrue to: self.
@@ -150,7 +147,7 @@ InspectorNavigator >> initialize [
 ]
 
 { #category : #initialization }
-InspectorNavigator >> initializeShortcuts [
+EyeInspectorNavigator >> initializeShortcuts [
 	self bindKeyCombination: $[ meta toAction: [ self inspectPrevious ].
 	self bindKeyCombination: $] meta toAction: [ self inspectNext ].
 
@@ -173,14 +170,12 @@ InspectorNavigator >> initializeShortcuts [
 ]
 
 { #category : #initialization }
-InspectorNavigator >> initializeWidgets [
-
-	
-	toolbar := self instantiate: EyeInspectorToolBar.
+EyeInspectorNavigator >> initializeWidgets [
+	toolbar := self instantiate: EyeInspectorToolBar
 ]
 
 { #category : #actions }
-InspectorNavigator >> inspect: anObject [
+EyeInspectorNavigator >> inspect: anObject [
 	| oldInspectorType |
 	oldInspectorType := self inspectorType.
 	self 
@@ -190,44 +185,44 @@ InspectorNavigator >> inspect: anObject [
 ]
 
 { #category : #history }
-InspectorNavigator >> inspectHistoryItem: historyItem [
+EyeInspectorNavigator >> inspectHistoryItem: historyItem [
 	"self inspect: historyItem key .
 	self selectedIndex: historyItem value."
 	self inspector: historyItem key
 ]
 
 { #category : #actions }
-InspectorNavigator >> inspectNext [
+EyeInspectorNavigator >> inspectNext [
 	history hasNext
 		ifFalse: [ ^ self ].
 	self inspectHistoryItem: history next
 ]
 
 { #category : #actions }
-InspectorNavigator >> inspectPrevious [
+EyeInspectorNavigator >> inspectPrevious [
 	history hasPrevious
 		ifFalse: [ ^ self ].
 	self inspectHistoryItem: history previous
 ]
 
 { #category : #accessing }
-InspectorNavigator >> inspector [
-	^ inspector value
+EyeInspectorNavigator >> inspector [
+	^ inspector
 ]
 
 { #category : #accessing }
-InspectorNavigator >> inspector: anEyeInspector [
+EyeInspectorNavigator >> inspector: anEyeInspector [
 	self basicInspector: anEyeInspector.
 	self pushHistory.
 ]
 
 { #category : #accessing }
-InspectorNavigator >> inspectorType [
+EyeInspectorNavigator >> inspectorType [
 	^ self inspector class
 ]
 
 { #category : #accessing }
-InspectorNavigator >> inspectorType: anInspectorClass [
+EyeInspectorNavigator >> inspectorType: anInspectorClass [
 	"Use a new inspector type. Instantiate the given inspector class and replace the current view"
 	| oldScriptAreaTextModel |
 	
@@ -254,12 +249,12 @@ InspectorNavigator >> inspectorType: anInspectorClass [
 ]
 
 { #category : #accessing }
-InspectorNavigator >> inspectorTypes [
+EyeInspectorNavigator >> inspectorTypes [
 	^ self inspector variants
 ]
 
 { #category : #accessing }
-InspectorNavigator >> nextInspectorType [
+EyeInspectorNavigator >> nextInspectorType [
 	| index types |
 	types := self inspectorTypes.
 	index := types 
@@ -269,12 +264,12 @@ InspectorNavigator >> nextInspectorType [
 ]
 
 { #category : #accessing }
-InspectorNavigator >> object [
+EyeInspectorNavigator >> object [
 	^ self inspector object
 ]
 
 { #category : #accessing }
-InspectorNavigator >> previousInspectorType [
+EyeInspectorNavigator >> previousInspectorType [
 	| index types |
 	types := self inspectorTypes.
 	index := types 
@@ -284,72 +279,72 @@ InspectorNavigator >> previousInspectorType [
 ]
 
 { #category : #history }
-InspectorNavigator >> pushHistory [
+EyeInspectorNavigator >> pushHistory [
 	history add: self inspector.
 	self toolbar update.
 ]
 
 { #category : #accessing }
-InspectorNavigator >> selectedIndex [
+EyeInspectorNavigator >> selectedIndex [
 	^ self inspector selectedIndex
 ]
 
 { #category : #accessing }
-InspectorNavigator >> selectedIndex: anInteger [
+EyeInspectorNavigator >> selectedIndex: anInteger [
 	self inspector selectedIndex: anInteger
 ]
 
 { #category : #accessing }
-InspectorNavigator >> selectedObject [
+EyeInspectorNavigator >> selectedObject [
 	^ self inspector selectedObject
 ]
 
 { #category : #private }
-InspectorNavigator >> setRefreshedToTrue [
+EyeInspectorNavigator >> setRefreshedToTrue [
 	"introduced because we should not use weak announcer with on:do:."
 	
 	canBeRefreshed := true
 ]
 
 { #category : #initialization }
-InspectorNavigator >> step [
+EyeInspectorNavigator >> step [
 	self inspector step.
 ]
 
 { #category : #initialization }
-InspectorNavigator >> stepTime [
+EyeInspectorNavigator >> stepTime [
 	^ 1500
 ]
 
 { #category : #updating }
-InspectorNavigator >> takeKeyboardFocus [
+EyeInspectorNavigator >> takeKeyboardFocus [
 	^ self inspector takeKeyboardFocus
 ]
 
 { #category : #accessing }
-InspectorNavigator >> taskbarIcon [
+EyeInspectorNavigator >> taskbarIcon [
 	^ self inspector 
 		ifNil: [ super taskbarIcon ]
 		ifNotNil: [ :anInspector | anInspector taskbarIcon ]
 ]
 
 { #category : #accessing }
-InspectorNavigator >> title [
+EyeInspectorNavigator >> title [
 	^ self inspector title
 ]
 
 { #category : #accessing }
-InspectorNavigator >> toolbar [
+EyeInspectorNavigator >> toolbar [
 	^ toolbar
 ]
 
 { #category : #accessing }
-InspectorNavigator >> toolbar: anObject [ 
+EyeInspectorNavigator >> toolbar: anObject [ 
 	toolbar := anObject 
 ]
 
 { #category : #updating }
-InspectorNavigator >> updateInspectorFrom: oldInspector [
+EyeInspectorNavigator >> updateInspectorFrom: oldInspector [
 
 	self updateTitle.
 	self inspector ifNil: [ ^ self ].
@@ -364,17 +359,17 @@ InspectorNavigator >> updateInspectorFrom: oldInspector [
 ]
 
 { #category : #actions }
-InspectorNavigator >> useBasicInspector [
+EyeInspectorNavigator >> useBasicInspector [
 	self inspectorType: EyeBasicInspector
 ]
 
 { #category : #actions }
-InspectorNavigator >> useDefaultInspector [
+EyeInspectorNavigator >> useDefaultInspector [
 	self inspectorType: self object class inspectorClass
 ]
 
 { #category : #actions }
-InspectorNavigator >> useInspectorAt: index [
+EyeInspectorNavigator >> useInspectorAt: index [
 	"choose an inspector at the given index from the given inspectorTypes.
 	If the index is out of bounds, simply crop it to the neares value"
 	| types |
@@ -383,16 +378,16 @@ InspectorNavigator >> useInspectorAt: index [
 ]
 
 { #category : #actions }
-InspectorNavigator >> useNextInspectorType [
+EyeInspectorNavigator >> useNextInspectorType [
 	self inspectorType: self nextInspectorType
 ]
 
 { #category : #actions }
-InspectorNavigator >> usePreviousInspectorType [
+EyeInspectorNavigator >> usePreviousInspectorType [
 	self inspectorType: self previousInspectorType
 ]
 
 { #category : #actions }
-InspectorNavigator >> useTreeInspector [
+EyeInspectorNavigator >> useTreeInspector [
 	self inspectorType: EyeTreeInspector
 ]

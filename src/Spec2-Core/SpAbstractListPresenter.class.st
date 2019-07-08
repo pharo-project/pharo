@@ -4,18 +4,12 @@ Class {
 	#traits : 'TSpHaveWrappingScrollBars',
 	#classTraits : 'TSpHaveWrappingScrollBars classTrait',
 	#instVars : [
-		'selectionMode',
-		'multiSelectionHolder',
-		'filteringBlockHolder',
-		'autoDeselect',
-		'itemFilterBlockHolder',
-		'allowToSelect',
-		'doubleClickActionHolder',
-		'activationBlock',
-		'activateOnSingleClick',
-		'model',
-		'contextMenuHolder',
-		'scrollBars'
+		'#selectionMode',
+		'#activationBlock',
+		'#activateOnSingleClick',
+		'#model',
+		'#contextMenu => SpObservableSlot',
+		'#itemFilter => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Table'
 }
@@ -73,25 +67,20 @@ SpAbstractListPresenter >> clickItem: anInteger [
 { #category : #api }
 SpAbstractListPresenter >> contextMenu [
 	"Return the block used to defined the menu"
-	
-	^ contextMenuHolder value
+
+	^ contextMenu
 ]
 
 { #category : #api }
 SpAbstractListPresenter >> contextMenu: aValuable [
 	"Set the block used to defined the menu"
-	
-	contextMenuHolder value: aValuable
-]
 
-{ #category : #initialization }
-SpAbstractListPresenter >> defaultFilteringBlock [ 
-	^ [ :col | col ]
+	contextMenu := aValuable
 ]
 
 { #category : #api }
 SpAbstractListPresenter >> disableFilter [
-	self itemFilterBlock: nil
+	self itemFilter: nil
 ]
 
 { #category : #private }
@@ -115,12 +104,12 @@ SpAbstractListPresenter >> doubleClickAtIndex: anIndex [
 
 { #category : #api }
 SpAbstractListPresenter >> enableItemBeginsWithFilter [
-	self itemFilterBlock: [ :each :pattern | each asLowercase beginsWith: pattern asLowercase ]
+	self itemFilter: [ :each :pattern | each asLowercase beginsWith: pattern asLowercase ]
 ]
 
 { #category : #api }
 SpAbstractListPresenter >> enableItemSubstringFilter [
-	self itemFilterBlock: [ :each :pattern | each asLowercase includesSubstring: pattern asLowercase ]
+	self itemFilter: [ :each :pattern | each asLowercase includesSubstring: pattern asLowercase ]
 ]
 
 { #category : #initialization }
@@ -136,17 +125,7 @@ SpAbstractListPresenter >> initialize [
 	self beSingleSelection.
 	self activateOnDoubleClick.
 
-	self initializeValueHolders.
 	self registerEvents
-]
-
-{ #category : #initialization }
-SpAbstractListPresenter >> initializeValueHolders [
-	itemFilterBlockHolder := nil asValueHolder.
-	doubleClickActionHolder := [ ] asValueHolder.
-	contextMenuHolder := nil asValueHolder.
-	allowToSelect := true asValueHolder.
-	autoDeselect := true asValueHolder
 ]
 
 { #category : #testing }
@@ -162,15 +141,15 @@ SpAbstractListPresenter >> itemAt: anInteger [
 ]
 
 { #category : #api }
-SpAbstractListPresenter >> itemFilterBlock [
-	^ itemFilterBlockHolder value
+SpAbstractListPresenter >> itemFilter [
+	^ itemFilter
 ]
 
 { #category : #api }
-SpAbstractListPresenter >> itemFilterBlock: aBlock [
+SpAbstractListPresenter >> itemFilter: aBlock [
 	"This block will be used with the search field of the list to filter it with the user input dynamically."
 
-	itemFilterBlockHolder value: aBlock
+	itemFilter := aBlock
 ]
 
 { #category : #private }
@@ -233,13 +212,8 @@ SpAbstractListPresenter >> newEmptyModel [
 
 { #category : #initialization }
 SpAbstractListPresenter >> registerEvents [
-
-	selectionMode whenChangedDo: [ :selection | 
-		self withAdapterDo: #refreshWidgetSelection ].
-	autoDeselect whenChangedDo: [ :aBoolean | 
-		self changed: #autoDeselect: with: { aBoolean } ].
-	contextMenuHolder whenChangedDo: [ 
-		self withAdapterDo: #updateMenu ]
+	self whenSelectionModeChangedDo: [ :selection | self withAdapterDo: #refreshWidgetSelection ].
+	self whenMenuChangedDo: [ self withAdapterDo: #updateMenu ]
 ]
 
 { #category : #simulation }
@@ -355,14 +329,14 @@ SpAbstractListPresenter >> whenActivatedDo: aBlockClosure [
 
 { #category : #'api-events' }
 SpAbstractListPresenter >> whenItemFilterBlockChangedDo: aBlock [
-	itemFilterBlockHolder whenChangedDo: aBlock
+	self property: #itemFilter whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpAbstractListPresenter >> whenMenuChangedDo: aBlock [
 	"Set a block to value when the menu block has changed"
-	
-	contextMenuHolder whenChangedDo: aBlock
+
+	self property: #contextMenu whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
@@ -378,6 +352,11 @@ SpAbstractListPresenter >> whenSelectionChangedDo: aBlock [
 	The block used as argument will be sent an optional argument with the selection object."
 
 	self selection whenChangedDo: aBlock
+]
+
+{ #category : #accessing }
+SpAbstractListPresenter >> whenSelectionModeChangedDo: aBlock [
+	selectionMode whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

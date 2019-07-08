@@ -144,9 +144,9 @@ SpMorphicGridLayoutComputation >> computeWidgetSizes [
 	| fixedHeight fixedWidth |
 	
 	self layout isRowHomogeneous 
-		ifTrue: [ fixedHeight := self maxHeight ].
+		ifTrue: [ fixedHeight := (bounds height / numRows) asInteger ].
 	self layout isColumnHomogeneous 
-		ifTrue: [ fixedWidth := self maxWidth ].
+		ifTrue: [ fixedWidth := (bounds width / numColumns) asInteger ].
 		
 	rowHeights := Array new: numRows withAll: 0.
 	columnWidths := Array new: numColumns withAll: 0.
@@ -157,7 +157,7 @@ SpMorphicGridLayoutComputation >> computeWidgetSizes [
 			put: (fixedHeight ifNil: [ (rowHeights at: properties row) max: each height ]).
 		columnWidths 
 			at: properties column
-			put: (fixedWidth ifNil: [ (columnWidths at: properties column) max: each width ] ) ]
+			put: (fixedWidth ifNil: [ (columnWidths at: properties column) max: each width ]) ]
 ]
 
 { #category : #accessing }
@@ -177,18 +177,6 @@ SpMorphicGridLayoutComputation >> initializeLayout: aLayout [
 SpMorphicGridLayoutComputation >> layout [
 
 	^ layout
-]
-
-{ #category : #private }
-SpMorphicGridLayoutComputation >> maxHeight [
-
-	^ (morphs collect: #height) max
-]
-
-{ #category : #private }
-SpMorphicGridLayoutComputation >> maxWidth [
-
-	^ (self maxWidthOf: morphs) max: (bounds width / self numColumns) asInteger
 ]
 
 { #category : #private }

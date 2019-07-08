@@ -14,7 +14,7 @@ Class {
 	#name : #SpModalWindowPresenter,
 	#superclass : #SpDialogWindowPresenter,
 	#instVars : [
-		'closeOnBackdropClick'
+		'#closeOnBackdropClick => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Support'
 }
@@ -29,23 +29,18 @@ SpModalWindowPresenter class >> adapterName [
 SpModalWindowPresenter >> closeOnBackdropClick [
 	"If I am set to true, the user will be able to click on the backdrop to close the modal launching the cancel action."
 	
-	^ closeOnBackdropClick value
+	^ closeOnBackdropClick
 ]
 
 { #category : #accessing }
 SpModalWindowPresenter >> closeOnBackdropClick: aBoolean [
 	"If I am set to true, the user will be able to click on the backdrop to close the modal launching the cancel action."
-	
-	closeOnBackdropClick value: aBoolean
-]
 
-{ #category : #accessing }
-SpModalWindowPresenter >> closeOnBackdropClickHolder [
-	^ closeOnBackdropClick
+	closeOnBackdropClick := aBoolean
 ]
 
 { #category : #initialization }
 SpModalWindowPresenter >> initialize [
 	super initialize.
-	closeOnBackdropClick := true asValueHolder
+	closeOnBackdropClick := true
 ]

@@ -42,9 +42,11 @@ Class {
 	#name : #SpListPresenter,
 	#superclass : #SpAbstractListPresenter,
 	#instVars : [
-		'headerTitle',
-		'displayBlockValueHolder',
-		'iconHolder'
+		'#allowToSelect => SpObservableSlot',
+		'#autoDeselect => SpObservableSlot',
+		'#headerTitle => SpObservableSlot',
+		'#display => SpObservableSlot',
+		'#icon => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Table'
 }
@@ -75,23 +77,21 @@ SpListPresenter >> clickOnSelectedItem [
 SpListPresenter >> displayBlock [
 	"Return the one argument block used to wrap your domain specific items.
 	The block should return something that can be displayed in a list - like a String or a Text"
-	
-	^ displayBlockValueHolder value
+
+	^ display
 ]
 
 { #category : #api }
 SpListPresenter >> displayBlock: aBlock [
-	"<api: #block getter:#displayBlock registration: #whenDisplayBlockChanged:>"
 	"Set the one argument block used to wrap your domain specific items.
 	The block should return something that can be displayed in a list - like a String or a Text"
-	
-	displayBlockValueHolder value: aBlock
+
+	display := aBlock
 ]
 
 { #category : #'adapter-api' }
 SpListPresenter >> displayValueAt: anIndex [
-	
-	^ self displayValueOf: (model value at: anIndex)
+	^ self displayValueOf: (model at: anIndex)
 ]
 
 { #category : #'adapter-api' }
@@ -102,93 +102,70 @@ SpListPresenter >> displayValueOf: anObject [
 
 { #category : #testing }
 SpListPresenter >> hasHeaderTitle [
-	
-	^ headerTitle value isEmptyOrNil not
+	^ headerTitle isEmptyOrNil not
 ]
 
 { #category : #accessing }
 SpListPresenter >> headerTitle [
-	^ headerTitle value
+	^ headerTitle
 ]
 
 { #category : #accessing }
-SpListPresenter >> headerTitle: aString [ 
-	
-	headerTitle value: aString
+SpListPresenter >> headerTitle: aString [
+	headerTitle := aString
 ]
 
 { #category : #api }
 SpListPresenter >> hideHeaderTitle [
-	
-	headerTitle value: nil
+	headerTitle := nil
 ]
 
 { #category : #'widget API' }
 SpListPresenter >> iconFor: anItem [
-	^ iconHolder value cull: anItem cull: self
+	^ self icons cull: anItem cull: self
 ]
 
 { #category : #accessing }
 SpListPresenter >> icons [
 	"Return the block which takes an item as argument and returns the icon to display in the list"
 
-	^ iconHolder value
+	^ icon
 ]
 
 { #category : #accessing }
 SpListPresenter >> icons: aBlock [
 	"Set a block which takes an item as argument and returns the icon to display in the list"
 
-	iconHolder value: aBlock
+	icon := aBlock
 ]
 
 { #category : #initialization }
 SpListPresenter >> initialize [
-
 	super initialize.
-	self
-		bindKeyCombination: Character space
-		toAction: [ self clickOnSelectedItem ]	
-]
-
-{ #category : #api }
-SpListPresenter >> initializeValueHolders [
-	super initializeValueHolders.
-	displayBlockValueHolder := [ :object | object asStringOrText ] asValueHolder.
-	headerTitle := nil asValueHolder.
-	iconHolder := [ :item | nil ] asValueHolder
+	autoDeselect := true.
+	allowToSelect := true.
+	display := [ :object | object asStringOrText ].
+	icon := [ :item | nil ].
+	self bindKeyCombination: Character space toAction: [ self clickOnSelectedItem ]
 ]
 
 { #category : #private }
 SpListPresenter >> prepareForFilteredDataSourceWith: items [
-
-	model := items asValueHolder
-
+	model := items
 ]
 
 { #category : #private }
 SpListPresenter >> registerEvents [
-	
 	super registerEvents.
-	displayBlockValueHolder whenChangedDo: [ 
-		self withAdapterDo: #refreshWidgetList ].
-	headerTitle whenChangedDo: [ 
-		self withAdapterDo: #refreshWidgetHeaderTitle ]
-]
-
-{ #category : #api }
-SpListPresenter >> resetFilteringBlock [
-	"<api: #do>"
-	"Reset the filtering block with the default value which consists in showing everything"
-
-	filteringBlockHolder value: self defaultFilteringBlock
+	"Do not use whenAutoDeselectChangedDo: to avoid the deprecation warning."
+	self property: #autoDeselect whenChangedDo: [ :aBoolean | self changed: #autoDeselect: with: {aBoolean} ].
+	self whenDisplayBlockChangedDo: [ self withAdapterDo: #refreshWidgetList ].
+	self property: #headerTitle whenChangedDo: [ self withAdapterDo: #refreshWidgetHeaderTitle ]
 ]
 
 { #category : #private }
 SpListPresenter >> resetListSelection [
-	"Reset the selection manager for multiple selection lists"
-	
-	multiSelectionHolder reset
+	self selectIndex: 0
 ]
 
 { #category : #api }
@@ -196,19 +173,6 @@ SpListPresenter >> resetSortingBlock [
 	"Reset the sortering block with the default value which consists in not sorting"
 
 	self model sortingBlock: nil
-]
-
-{ #category : #private }
-SpListPresenter >> setSelectionStateFor: anIndex at: aBoolean [
-	"Set the selection state of the item at index _anIndex_ in the case of multiple selection list"
-
-	self flag: 'refactoring in progress'.
-	(self allowToSelect and: [ self isMultipleSelection ])
-		ifFalse: [ ^ self ].
-	^ self selection
-		selectIndexes:
-			(self selection selectedIndexes value copyWith: anIndex) asSet
-				asOrderedCollection
 ]
 
 { #category : #api }
@@ -219,34 +183,13 @@ SpListPresenter >> updateList [
 ]
 
 { #category : #'api-events' }
-SpListPresenter >> whenAllowToSelectChangedDo: aBlock [
-	"Set a block to value when the value of allowToSelect has changed"
-	
-	allowToSelect whenChangedDo: aBlock
-]
-
-{ #category : #'api-events' }
-SpListPresenter >> whenAutoDeselectChangedDo: aBlock [
-	"Set a block to value when the value of autoDeselect has changed"
-	
-	autoDeselect whenChangedDo: aBlock
-]
-
-{ #category : #'api-events' }
 SpListPresenter >> whenDisplayBlockChangedDo: aBlock [
 	"Set a block to value when the filtering block has changed"
-	
-	displayBlockValueHolder whenChangedDo: aBlock
-]
 
-{ #category : #'api-events' }
-SpListPresenter >> whenFilteringBlockChangedDo: aBlock [
-	"Set a block to value when the filtering block block has changed"
-	
-	filteringBlockHolder whenChangedDo: aBlock
+	self property: #display whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpListPresenter >> whenIconsChangedDo: aBlock [
-	iconHolder whenChangedDo: aBlock
+	self property: #icon whenChangedDo: aBlock
 ]

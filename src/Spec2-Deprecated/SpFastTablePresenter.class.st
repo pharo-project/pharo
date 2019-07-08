@@ -5,9 +5,9 @@ Class {
 	#name : #SpFastTablePresenter,
 	#superclass : #SpTablePresenter,
 	#instVars : [
-		'iconHolder',
-		'handlesDoubleClick',
-		'displayBlock'
+		'#handlesDoubleClick => SpObservableSlot',
+		'#displayBlock',
+		'#icon => SpObservableSlot'
 	],
 	#category : #'Spec2-Deprecated-Replaced'
 }
@@ -56,53 +56,41 @@ SpFastTablePresenter >> displayBlock: aBlock [
 
 { #category : #api }
 SpFastTablePresenter >> getIconFor: anItem [
-
-	^ iconHolder value cull: anItem cull: self
+	^ self icons cull: anItem cull: self
 ]
 
 { #category : #api }
 SpFastTablePresenter >> handlesDoubleClick [
-
-	^ handlesDoubleClick value
+	^ handlesDoubleClick
 ]
 
 { #category : #api }
 SpFastTablePresenter >> handlesDoubleClick: aBoolean [
-	"<api: #block getter:#handlesDoubleClick registration: #whenHandlesDoubleClickChanged:>"
 	"Enable or disable double click on the list."
-	
-	handlesDoubleClick value: aBoolean
+
+	handlesDoubleClick := aBoolean
 ]
 
 { #category : #api }
 SpFastTablePresenter >> icons [
-	"<api: #inspect>"
 	"Return the block which takes an item as argument and returns the icon to display in the list"
-	
-	^ iconHolder value
+
+	^ icon
 ]
 
 { #category : #api }
 SpFastTablePresenter >> icons: aBlock [
-	"<api: #block getter: #icon registration: #whenIconsChanged: >"
 	"Set a block which takes an item as argument and returns the icon to display in the list"
-	iconHolder value: aBlock
+
+	icon := aBlock
 ]
 
 { #category : #initialization }
 SpFastTablePresenter >> initialize [
-
+	super initialize.
 	displayBlock := #yourself.
-	super initialize
-]
-
-{ #category : #initialization }
-SpFastTablePresenter >> initializeValueHolders [
-
-	super initializeValueHolders.
-
-	iconHolder := [:item | nil ] asValueHolder.
-	handlesDoubleClick := false asValueHolder.
+	icon := [ :item | nil ].
+	handlesDoubleClick := false
 ]
 
 { #category : #'api-columns' }
@@ -126,7 +114,7 @@ SpFastTablePresenter >> numberOfColumns: aNumber withWidths: widths [
 { #category : #initialization }
 SpFastTablePresenter >> registerEvents [
 	super registerEvents.
-	handlesDoubleClick whenChangedDo: [ :bool | self changed: { #handlesDoubleClick . bool } ].
+	self property: #handlesDoubleClick whenChangedDo: [ :bool | self changed: { #handlesDoubleClick . bool } ].
 
 ]
 
@@ -137,9 +125,6 @@ SpFastTablePresenter >> whenIconsChanged: aBlock [
 ]
 
 { #category : #'api-events' }
-SpFastTablePresenter >> whenIconsChangedDo: aBlock [ 
-	
-	iconHolder whenChangedDo: aBlock 
-
-
+SpFastTablePresenter >> whenIconsChangedDo: aBlock [
+	self property: #icon whenChangedDo: aBlock
 ]

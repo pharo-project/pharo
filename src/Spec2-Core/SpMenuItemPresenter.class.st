@@ -46,38 +46,32 @@ SpMenuItemPresenter class >> adapterName [
 
 { #category : #accessing }
 SpMenuItemPresenter >> action [
-
-	^ action value
+	^ action
 ]
 
 { #category : #accessing }
 SpMenuItemPresenter >> action: aBlock [
-
-	action value: aBlock
+	action := aBlock
 ]
 
 { #category : #accessing }
 SpMenuItemPresenter >> autoRefresh [
-
-	^ autoRefresh value
+	^ autoRefresh
 ]
 
 { #category : #accessing }
 SpMenuItemPresenter >> autoRefresh: aBlock [
-
-	autoRefresh value: aBlock
+	autoRefresh := aBlock
 ]
 
 { #category : #api }
 SpMenuItemPresenter >> description [
-
-	^ description value
+	^ description
 ]
 
 { #category : #api }
 SpMenuItemPresenter >> description: aString [
-
-	description value: aString
+	description := aString
 ]
 
 { #category : #'api-building' }
@@ -97,35 +91,26 @@ SpMenuItemPresenter >> fromSpec: aSpec [
 
 { #category : #api }
 SpMenuItemPresenter >> icon [
-
-	^ icon value
+	^ icon
 ]
 
 { #category : #api }
 SpMenuItemPresenter >> icon: anIcon [
-
-	icon value: anIcon
+	icon := anIcon
 ]
 
 { #category : #api }
 SpMenuItemPresenter >> iconName: aSymbol [
-
-	icon value: (self iconNamed: aSymbol)
+	self icon: (self iconNamed: aSymbol)
 ]
 
 { #category : #initialization }
 SpMenuItemPresenter >> initialize [
-
 	super initialize.
 
-	action := [ ] asValueHolder.
-	state := nil asValueHolder.
-	description := nil asValueHolder.
-	name := '' asValueHolder.
-	shortcut := nil asValueHolder.
-	subMenu := nil asValueHolder.
-	autoRefresh := false asValueHolder.
-	icon := nil asValueHolder
+	action := [  ].
+	name := ''.
+	autoRefresh := false
 ]
 
 { #category : #testing }
@@ -136,25 +121,22 @@ SpMenuItemPresenter >> isMenuPresenter [
 
 { #category : #api }
 SpMenuItemPresenter >> name [
-
-	^ name value
+	^ name
 ]
 
 { #category : #api }
 SpMenuItemPresenter >> name: aString [
-
-	name value: aString
+	name := aString
 ]
 
 { #category : #api }
 SpMenuItemPresenter >> performMenuActionWith: aMenuItem [
 	| en |
-
 	en := self isEnabled.
 	en isBlock ifTrue: [ en := en value ].
 	en ifFalse: [ ^ self ].
 
-	action value cull: aMenuItem
+	self action cull: aMenuItem
 ]
 
 { #category : #accessing }
@@ -165,38 +147,31 @@ SpMenuItemPresenter >> rootMenu [
 
 { #category : #api }
 SpMenuItemPresenter >> shortcut [
-
-	^ shortcut value
+	^ shortcut
 ]
 
 { #category : #api }
 SpMenuItemPresenter >> shortcut: aShortcut [
-
-	shortcut value: aShortcut
+	shortcut := aShortcut
 ]
 
 { #category : #accessing }
 SpMenuItemPresenter >> state [
-
-	^ state value
+	^ state
 ]
 
 { #category : #accessing }
 SpMenuItemPresenter >> state: aBoolean [
-
-	state value: aBoolean
+	state := aBoolean
 ]
 
 { #category : #api }
 SpMenuItemPresenter >> subMenu [
-
-	^ subMenu value
+	^ subMenu
 ]
 
 { #category : #api }
 SpMenuItemPresenter >> subMenu: aMenuPresenter [
-
-	aMenuPresenter ifNotNil: [  
-		aMenuPresenter owner: self ].
-	subMenu value: aMenuPresenter
+	aMenuPresenter ifNotNil: [ aMenuPresenter owner: self ].
+	subMenu := aMenuPresenter
 ]

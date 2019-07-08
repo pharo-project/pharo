@@ -4,7 +4,7 @@ A TestingAbstractTwoButtons is a stupid AbstractTwoButtons used to test it.
 Class {
 	#name : #SpTestingAbstractTwoButtons,
 	#superclass : #SpAbstractTwoButtons,
-	#category : #'Spec2-Deprecated'
+	#category : #'Spec2-Deprecated-Obsolete'
 }
 
 { #category : #'as yet unclassified' }

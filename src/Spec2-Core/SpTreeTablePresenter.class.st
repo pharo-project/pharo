@@ -12,14 +12,14 @@ Class {
 	#traits : 'TSpHaveWrappingScrollBars',
 	#classTraits : 'TSpHaveWrappingScrollBars classTrait',
 	#instVars : [
-		'#columns',
+		'#columns => SpObservableSlot',
 		'#showColumnHeaders => SpObservableSlot',
 		'#isResizable => SpObservableSlot',
 		'#selection => SpObservableSlot',
 		'#doubleClickAction => SpObservableSlot',
 		'#roots => SpObservableSlot',
 		'#childrenBlock',
-		'#contextMenuHolder'
+		'#contextMenu => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Tree'
 }
@@ -32,8 +32,7 @@ SpTreeTablePresenter class >> adapterName [
 
 { #category : #api }
 SpTreeTablePresenter >> addColumn: aColumn [
-
-	columns value: (columns value copyWith: aColumn)
+	columns := self columns copyWith: aColumn
 ]
 
 { #category : #'selection mode' }
@@ -77,26 +76,24 @@ SpTreeTablePresenter >> childrenFor: anObject [
 
 { #category : #accessing }
 SpTreeTablePresenter >> columns [
-
-	^ columns value
+	^ columns
 ]
 
 { #category : #api }
 SpTreeTablePresenter >> columns: aCollection [
-
-	columns value: aCollection
+	columns := aCollection
 ]
 
 { #category : #api }
 SpTreeTablePresenter >> contextMenu [
-	^ contextMenuHolder value
+	^ contextMenu
 ]
 
 { #category : #api }
 SpTreeTablePresenter >> contextMenu: aValuable [
 	"Set the block used to defined the menu"
 	
-	contextMenuHolder value: aValuable
+	contextMenu := aValuable
 ]
 
 { #category : #private }
@@ -126,18 +123,16 @@ SpTreeTablePresenter >> hideColumnHeaders [
 
 { #category : #initialization }
 SpTreeTablePresenter >> initialize [
-
 	super initialize.
 
-	self withScrollBars.	
+	self withScrollBars.
 	showColumnHeaders := true.
-	columns := #() asValueHolder.
+	columns := #().
 	isResizable := false.
 	selection := SpTreeSingleSelectionMode on: self.
-	childrenBlock :=  [ :item | #() ].
+	childrenBlock := [ :item | #() ].
 	roots := #().
-	contextMenuHolder := nil asValueHolder.
-	self registerEvents 
+	self registerEvents
 ]
 
 { #category : #accessing }
@@ -190,7 +185,7 @@ SpTreeTablePresenter >> itemAtPath: anArray ifAbsent: aBlock [
 
 { #category : #initialization }
 SpTreeTablePresenter >> registerEvents [
-	contextMenuHolder whenChangedDo: [ self withAdapterDo: #updateMenu ]
+	self whenMenuChangedDo: [ self withAdapterDo: #updateMenu ]
 ]
 
 { #category : #accessing }
@@ -242,9 +237,8 @@ SpTreeTablePresenter >> unselectAll [
 ]
 
 { #category : #'api-events' }
-SpTreeTablePresenter >> whenColumnsChangedDo: aBlockClosure [ 
-	
-	columns whenChangedDo: aBlockClosure 
+SpTreeTablePresenter >> whenColumnsChangedDo: aBlockClosure [
+	self property: #columns whenChangedDo: aBlockClosure
 ]
 
 { #category : #'api-events' }
@@ -256,8 +250,8 @@ SpTreeTablePresenter >> whenIsResizableChangedDo: aBlock [
 { #category : #'api-events' }
 SpTreeTablePresenter >> whenMenuChangedDo: aBlock [
 	"Set a block to value when the menu block has changed"
-	
-	contextMenuHolder whenChangedDo: aBlock
+
+	self property: #contextMenu whenChangedDo: aBlock
 ]
 
 { #category : #accessing }

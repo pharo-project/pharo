@@ -16,8 +16,7 @@ Class {
 
 { #category : #specs }
 SpLabelledTextInput class >> defaultSpec [
-	<spec: #default>
-	^ super labelLeft
+	^ self labelLeft
 ]
 
 { #category : #'api-shortcuts' }

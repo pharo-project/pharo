@@ -19,8 +19,10 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : #SpProgressBarFixed,
 	#superclass : #SpProgressBarState,
+	#traits : 'TSpObservable',
+	#classTraits : 'TSpObservable classTrait',
 	#instVars : [
-		'valueHolder'
+		'#value => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Utils'
 }
@@ -34,21 +36,23 @@ SpProgressBarFixed class >> value: aNumber [
 
 { #category : #initialization }
 SpProgressBarFixed >> initialize [
+	
+	self class initializeSlots: self.
 	super initialize.
-	valueHolder := 0 asValueHolder
+	value := 0
 ]
 
 { #category : #accessing }
 SpProgressBarFixed >> value [
-	^ valueHolder value
+	^ value
 ]
 
 { #category : #accessing }
 SpProgressBarFixed >> value: aNumber [
-	valueHolder value: aNumber
+	value := aNumber
 ]
 
 { #category : #'api-events' }
 SpProgressBarFixed >> whenValueChangedDo: aBlock [
-	valueHolder whenChangedDo: aBlock
+	self property: #value whenChangedDo: aBlock
 ]

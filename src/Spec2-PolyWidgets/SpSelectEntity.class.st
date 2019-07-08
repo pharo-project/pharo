@@ -9,42 +9,40 @@ Class {
 	#name : #SpSelectEntity,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'entity',
-		'selectEntity',
-		'possibleEntities',
-		'displaySymbol',
-		'entityText',
-		'selectDialog',
-		'placeholder'
+		'#entity => SpObservableSlot',
+		'#selectEntity',
+		'#possibleEntities => SpObservableSlot',
+		'#displaySymbol',
+		'#entityText',
+		'#selectDialog => SpObservableSlot',
+		'#placeholder => SpObservableSlot'
 	],
 	#category : #'Spec2-PolyWidgets-Widgets'
 }
 
 { #category : #specs }
 SpSelectEntity class >> defaultSpec [
-	<spec: #default>
-		
-	^SpLayout composed
-		newColumn: [ :col |
-				col newRow: [:row |
-					row add: #entityText;
-						add: #selectEntity width: SpPresenter toolbarHeight]
-					height: SpPresenter toolbarHeight];
+	^ SpBoxLayout newVertical
+		add:
+			(SpBoxLayout newHorizontal
+				add: #entityText;
+				add: #selectEntity withConstraints: [ :constraints | constraints width: self toolbarHeight ];
+				yourself)
+			withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 		yourself
-
 ]
 
 { #category : #api }
 SpSelectEntity >> displaySymbol [
-	"<api: #inspect>"
 	"return the method selector used to get the label of the entity that is for entry completion"
-	^ displaySymbol value ifNil: [ #printString ]
+
+	^ displaySymbol ifNil: [ #printString ]
 ]
 
 { #category : #api }
 SpSelectEntity >> displaySymbol: anObject [
-	displaySymbol value: anObject.
-	entityText entryCompletion: self entitiesEntryCompletion.
+	displaySymbol := anObject.
+	entityText entryCompletion: self entitiesEntryCompletion
 ]
 
 { #category : #entryCompletion }
@@ -61,15 +59,13 @@ SpSelectEntity >> entitiesEntryCompletion [
 
 { #category : #api }
 SpSelectEntity >> entity [
-	
-	^ entity value
+	^ entity
 ]
 
 { #category : #api }
 SpSelectEntity >> entity: anObject [
-	entity value: anObject.
-	anObject ifNotNil: [  
-		self entityText text: (anObject perform: self displaySymbol)] ifNil: [ self entityText text: '' ]
+	entity := anObject.
+	anObject ifNotNil: [ self entityText text: (anObject perform: self displaySymbol) ] ifNil: [ self entityText text: '' ]
 ]
 
 { #category : #accessing }
@@ -85,7 +81,10 @@ SpSelectEntity >> entityText: anObject [
 { #category : #initialization }
 SpSelectEntity >> initialize [
 	super initialize.
-	self initializeValueHolders
+	displaySymbol := #displayString.
+	placeholder := 'Choose one'.
+	possibleEntities := #().
+	selectDialog := [  ]
 ]
 
 { #category : #initialization }
@@ -97,15 +96,6 @@ SpSelectEntity >> initializePresenter [
 				okAction: [  
 					self entity: select selectedItem ]]
 
-]
-
-{ #category : #initialization }
-SpSelectEntity >> initializeValueHolders [
-	displaySymbol := #displayString asValueHolder.
-	entity := nil asValueHolder.
-	placeholder := 'Choose one' asValueHolder.
-	possibleEntities := #() asValueHolder.
-	selectDialog := [  ] asValueHolder
 ]
 
 { #category : #initialization }
@@ -125,41 +115,40 @@ SpSelectEntity >> initializeWidgets [
 
 { #category : #api }
 SpSelectEntity >> placeholder [
-	^ placeholder value ifNil: [ '' ]
+	^ placeholder ifNil: [ '' ]
 ]
 
 { #category : #api }
 SpSelectEntity >> placeholder: aString [
-	placeholder value: aString.
+	placeholder := aString.
 	entityText placeholder: aString
 ]
 
 { #category : #api }
 SpSelectEntity >> possibleEntities [
-	possibleEntities value ifNil: [ ^#() ]
-		ifNotNil: [ ^possibleEntities value value ]
+	^ possibleEntities ifNil: [ #() ] ifNotNil: [ possibleEntities value ]
 ]
 
 { #category : #api }
 SpSelectEntity >> possibleEntities: aBlock [
-	"<api: #block getter: #possibleEntities registration: #whenPossibleEntitiesChanged:>"
 	"Set the block used to return a collection of all possible entity choices"
-	possibleEntities value: aBlock.
-	entityText entryCompletion: self entitiesEntryCompletion.
+
+	possibleEntities := aBlock.
+	entityText entryCompletion: self entitiesEntryCompletion
 ]
 
 { #category : #api }
 SpSelectEntity >> selectDialog [
-	^ selectDialog value
+	^ selectDialog
 ]
 
 { #category : #api }
 SpSelectEntity >> selectDialog: anObject [
-	"<api: #block getter: #selectDialog registration: #whenSelectDialogChanged:>"
 	"Set a block that returns an object that will 
 	first be sent #openDialogWithSpec
 	and then as okAction sent #selectedItem"
-	selectDialog value: anObject
+
+	selectDialog := anObject
 ]
 
 { #category : #accessing }
@@ -174,27 +163,27 @@ SpSelectEntity >> selectEntity: anObject [
 
 { #category : #'api-events' }
 SpSelectEntity >> whenDisplaySymbolChanged: aBlock [
-	displaySymbol whenChangedDo: aBlock
+	self property: #displaySymbol whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSelectEntity >> whenEntityChanged: aBlock [
-	entity whenChangedDo: aBlock
+	self property: #entity whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSelectEntity >> whenPlaceholderChanged: aBlock [
 	"aBlock will be performed when ghostText changed"
-	
-	placeholder whenChangedDo: aBlock
+
+	self property: #placeholder whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSelectEntity >> whenPossibleEntitiesChanged: aBlock [
-	possibleEntities whenChangedDo: aBlock
+	self property: #possibleEntities whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSelectEntity >> whenSelectDialogChanged: aBlock [
-	selectDialog whenChangedDo: aBlock
+	self property: #selectDialog whenChangedDo: aBlock
 ]

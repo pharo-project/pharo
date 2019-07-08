@@ -5,9 +5,9 @@ Class {
 	#name : #SpOkCancelToolbar,
 	#superclass : #SpOkToolbar,
 	#instVars : [
-		'cancelButton',
-		'cancelAction',
-		'cancelled'
+		'#cancelButton',
+		'#cancelAction => SpObservableSlot',
+		'#cancelled => SpObservableSlot'
 	],
 	#category : #'Spec2-Deprecated-Obsolete'
 }
@@ -44,14 +44,12 @@ SpOkCancelToolbar >> cancel [
 
 { #category : #api }
 SpOkCancelToolbar >> cancelAction [
-
-	^ cancelAction value
+	^ cancelAction
 ]
 
 { #category : #api }
 SpOkCancelToolbar >> cancelAction: aBlock [
-
-	^ cancelAction value: aBlock
+	^ cancelAction := aBlock
 ]
 
 { #category : #accessing }
@@ -62,22 +60,19 @@ SpOkCancelToolbar >> cancelButton [
 
 { #category : #api }
 SpOkCancelToolbar >> cancelled [
-
-	^ cancelled value
+	^ cancelled
 ]
 
 { #category : #api }
 SpOkCancelToolbar >> cancelled: aBoolean [
-
-	cancelled value: aBoolean
+	cancelled := aBoolean
 ]
 
 { #category : #initialization }
 SpOkCancelToolbar >> initialize [
-
-	cancelled := false asValueHolder.
-	cancelAction := [ true ] asValueHolder.
-	super initialize.
+	cancelled := false.
+	cancelAction := [ true ].
+	super initialize
 ]
 
 { #category : #initialization }
@@ -100,10 +95,8 @@ SpOkCancelToolbar >> initializeWidgets [
 
 { #category : #api }
 SpOkCancelToolbar >> performCancelAction [
-
-	^ cancelAction value value == false
-		ifFalse: [ 
-			cancelled value: true.
+	^ self cancelAction value == false
+		ifFalse: [ cancelled := true.
 			owner ifNil: [ self delete ] ifNotNil: [ owner delete ] ]
 ]
 

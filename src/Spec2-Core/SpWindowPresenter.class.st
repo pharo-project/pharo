@@ -5,15 +5,15 @@ Class {
 	#name : #SpWindowPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'presenter',
-		'initialExtent',
-		'isClosedHolder',
-		'isResizeable',
-		'statusbarHolder',
-		'toolBarHolder',
-		'menuHolder',
-		'centered',
-		'windowHolder'
+		'#presenter => SpObservableSlot',
+		'#initialExtent => SpObservableSlot',
+		'#isResizeable => SpObservableSlot',
+		'#menu => SpObservableSlot',
+		'#centered => SpObservableSlot',
+		'#isClosed => SpObservableSlot',
+		'#statusbar => SpObservableSlot',
+		'#toolBar => SpObservableSlot',
+		'#window => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Support'
 }
@@ -46,14 +46,12 @@ SpWindowPresenter class >> presenter: aPresenter [
 
 { #category : #api }
 SpWindowPresenter >> aboutText [
-	^ aboutText value
-		ifNil: [ self aboutText: 'The about text for this window has not been set.'.
-			aboutText value ]
+	^ aboutText ifNil: [ aboutText := 'The about text for this window has not been set.' ]
 ]
 
 { #category : #api }
 SpWindowPresenter >> aboutText: aString [
-	aboutText value: aString
+	aboutText := aString
 ]
 
 { #category : #api }
@@ -147,8 +145,7 @@ SpWindowPresenter >> cancelled [
 
 { #category : #api }
 SpWindowPresenter >> centered [
-
-	centered value: true
+	centered := true
 ]
 
 { #category : #api }
@@ -219,38 +216,27 @@ SpWindowPresenter >> hasToolBar [
 
 { #category : #api }
 SpWindowPresenter >> initialExtent [
-
-	^ initialExtent value 
-		ifNil: [ self defaultInitialExtent ]
+	^ initialExtent ifNil: [ self defaultInitialExtent ]
 ]
 
 { #category : #api }
 SpWindowPresenter >> initialExtent: anExtent [
-
-	initialExtent value: anExtent
+	initialExtent := anExtent
 ]
 
 { #category : #initialization }
 SpWindowPresenter >> initialize [
-
 	super initialize.
 
-	presenter := nil asValueHolder.
-	windowHolder := nil asValueHolder.
-	titleHolder := self class defaultTitle asValueHolder.
-	initialExtent := nil asValueHolder.
-	isClosedHolder := true asValueHolder.
-	isResizeable := true asValueHolder.
-	centered := false asValueHolder.
+	titleHolder := self class defaultTitle.
+	isClosed := true.
+	isResizeable := true.
+	centered := false.
 	askOkToClose := true.
 
-	menuHolder := nil asValueHolder.
-	toolBarHolder := nil asValueHolder.
-	statusbarHolder := nil asValueHolder.
-	
 	"presenter whenChangedDo: [ :m | self updateTitle ]."
-	titleHolder whenChangedDo: [ :m | self changed: #title: with: { m } ].
-	centered whenChangedDo: [ :m | self changed: #centered with: #() ]
+	self property: #titleHolder whenChangedDo: [ :m | self changed: #title: with: {m} ].
+	self property: #centered whenChangedDo: [ :m | self changed: #centered with: #() ]
 ]
 
 { #category : #initialization }
@@ -261,14 +247,12 @@ SpWindowPresenter >> initializeWindow [
 
 { #category : #testing }
 SpWindowPresenter >> isCentered [
-
-	^ centered value
+	^ centered
 ]
 
 { #category : #testing }
 SpWindowPresenter >> isClosed [
-
-	^ isClosedHolder value
+	^ isClosed
 ]
 
 { #category : #testing }
@@ -293,14 +277,12 @@ SpWindowPresenter >> isOpen [
 
 { #category : #api }
 SpWindowPresenter >> isResizeable [
-
-	^ isResizeable value
+	^ isResizeable
 ]
 
 { #category : #api }
 SpWindowPresenter >> isResizeable: aBoolean [
-
-	isResizeable value: aBoolean
+	isResizeable := aBoolean
 ]
 
 { #category : #testing }
@@ -317,16 +299,13 @@ SpWindowPresenter >> maximize [
 
 { #category : #api }
 SpWindowPresenter >> menu [
-
-	^ menuHolder value
+	^ menu
 ]
 
 { #category : #api }
 SpWindowPresenter >> menu: aMenuPresenter [
-
-	aMenuPresenter ifNotNil: [ 
-		aMenuPresenter owner: self ].
-	^ menuHolder value: aMenuPresenter
+	aMenuPresenter ifNotNil: [ aMenuPresenter owner: self ].
+	^ menu := aMenuPresenter
 ]
 
 { #category : #api }
@@ -365,15 +344,13 @@ SpWindowPresenter >> openWithSpecLayout: aSpec [
 
 { #category : #accessing }
 SpWindowPresenter >> presenter [
-	
-	^ presenter value
+	^ presenter
 ]
 
 { #category : #accessing }
 SpWindowPresenter >> presenter: aPresenter [
-
 	aPresenter owner: self.
-	presenter value: aPresenter
+	presenter := aPresenter
 ]
 
 { #category : #'private building' }
@@ -392,15 +369,13 @@ SpWindowPresenter >> requestWindowClose [
 
 { #category : #api }
 SpWindowPresenter >> statusBar [
-
-	^ statusbarHolder value
+	^ statusbar
 ]
 
 { #category : #api }
 SpWindowPresenter >> statusBar: aStatusbarPresenter [
-
-	aStatusbarPresenter owner: self.
-	^ statusbarHolder value: aStatusbarPresenter
+	aStatusbarPresenter ifNotNil: [ aStatusbarPresenter owner: self ].
+	^ statusbar := aStatusbarPresenter
 ]
 
 { #category : #api }
@@ -414,28 +389,23 @@ SpWindowPresenter >> taskbarIcon [
 
 { #category : #private }
 SpWindowPresenter >> title [
-
-	^ titleHolder value
+	^ titleHolder
 ]
 
 { #category : #private }
 SpWindowPresenter >> title: aString [
-
-	titleHolder value: aString
+	titleHolder := aString
 ]
 
 { #category : #api }
 SpWindowPresenter >> toolBar [
-
-	^ toolBarHolder value
+	^ toolBar
 ]
 
 { #category : #api }
 SpWindowPresenter >> toolBar: aToolbarPresenter [
-
-	aToolbarPresenter ifNotNil: [ 
-		aToolbarPresenter owner: self ].
-	^ toolBarHolder value: aToolbarPresenter
+	aToolbarPresenter ifNotNil: [ aToolbarPresenter owner: self ].
+	^ toolBar := aToolbarPresenter
 ]
 
 { #category : #api }
@@ -457,49 +427,41 @@ SpWindowPresenter >> updateTitle [
 
 { #category : #'api-events' }
 SpWindowPresenter >> whenClosedDo: aBlock [
-
-	isClosedHolder whenChangedDo: [ :value |
-		value ifTrue: [ aBlock value ] ]
+	self property: #isClosed whenChangedDo: [ :value | value ifTrue: [ aBlock value ] ]
 ]
 
 { #category : #'api-events' }
 SpWindowPresenter >> whenOpenedDo: aBlock [
-
-	isClosedHolder whenChangedDo: [ :value |
-		value ifFalse: [ aBlock value ] ]
+	self property: #isClosed whenChangedDo: [ :value | value ifFalse: [ aBlock value ] ]
 ]
 
 { #category : #accessing }
-SpWindowPresenter >> window [ 
-	
-	^ windowHolder value
+SpWindowPresenter >> window [
+	^ window
 ]
 
 { #category : #accessing }
 SpWindowPresenter >> window: aWindow [
-	
-	windowHolder value: aWindow
+	window := aWindow
 ]
 
 { #category : #private }
 SpWindowPresenter >> windowIcon [
-	^ windowIcon value
+	^ windowIcon
 ]
 
 { #category : #private }
 SpWindowPresenter >> windowIcon: aForm [
-	windowIcon value: aForm
+	windowIcon := aForm
 ]
 
 { #category : #updating }
 SpWindowPresenter >> windowIsClosing [
-	
-	isClosedHolder value: true.
+	isClosed := true.
 	self presenter windowIsClosing
 ]
 
 { #category : #updating }
 SpWindowPresenter >> windowIsOpening [
-	
-	isClosedHolder value: false
+	isClosed := false
 ]

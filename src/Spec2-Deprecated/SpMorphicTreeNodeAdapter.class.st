@@ -4,7 +4,7 @@ I am the bridget between a TreeNodePresenter and a SpecTreeNodeModel
 Class {
 	#name : #SpMorphicTreeNodeAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
-	#category : #'Spec2-Deprecated'
+	#category : #'Spec2-Deprecated-Adapters'
 }
 
 { #category : #deprecation }

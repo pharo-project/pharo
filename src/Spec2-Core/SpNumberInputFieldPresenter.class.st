@@ -7,11 +7,11 @@ Class {
 	#name : #SpNumberInputFieldPresenter,
 	#superclass : #SpTextInputFieldPresenter,
 	#instVars : [
-		'numberType',
-		'minimum',
-		'maximum',
-		'climbRate',
-		'digits'
+		'#numberType => SpObservableSlot',
+		'#minimum => SpObservableSlot',
+		'#maximum => SpObservableSlot',
+		'#climbRate => SpObservableSlot',
+		'#digits => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -50,40 +50,32 @@ SpNumberInputFieldPresenter >> beInteger [
 SpNumberInputFieldPresenter >> climbRate [
 	"This field indicates the jump rate when a spin is present."
 
-	^ climbRate value
+	^ climbRate
 ]
 
 { #category : #accessing }
 SpNumberInputFieldPresenter >> climbRate: aNumber [
-
-	climbRate value: aNumber
+	climbRate := aNumber
 ]
 
 { #category : #accessing }
 SpNumberInputFieldPresenter >> digits [
 	"digits to show when we have a float number"
 
-	^ digits value
+	^ digits
 ]
 
 { #category : #accessing }
 SpNumberInputFieldPresenter >> digits: aNumber [
 	"digits to show when we have a float number"
 
-	digits value: aNumber
+	digits := aNumber
 ]
 
 { #category : #initialization }
 SpNumberInputFieldPresenter >> initialize [
 
 	super initialize.
-
-	numberType := nil asValueHolder. 
-	minimum := nil asValueHolder. 
-	maximum := nil asValueHolder. 
-	climbRate := nil asValueHolder. 
-	digits := nil asValueHolder.
-	
 	self beInteger.
 	self digits: self class defaultDigits.
 	self climbRate: self class defaultClimbRate.
@@ -103,26 +95,22 @@ SpNumberInputFieldPresenter >> isInteger [
 
 { #category : #accessing }
 SpNumberInputFieldPresenter >> maximum [
-
-	^ maximum value
+	^ maximum
 ]
 
 { #category : #accessing }
 SpNumberInputFieldPresenter >> maximum: aNumber [
-
-	maximum value: aNumber
+	maximum := aNumber
 ]
 
 { #category : #accessing }
 SpNumberInputFieldPresenter >> minimum [
-
-	^ minimum value
+	^ minimum
 ]
 
 { #category : #accessing }
 SpNumberInputFieldPresenter >> minimum: aNumber [
-
-	minimum value: aNumber
+	minimum := aNumber
 ]
 
 { #category : #accessing }
@@ -140,8 +128,7 @@ SpNumberInputFieldPresenter >> number: aNumber [
 
 { #category : #accessing }
 SpNumberInputFieldPresenter >> numberType [
-
-	^ numberType value
+	^ numberType
 ]
 
 { #category : #private }
@@ -156,4 +143,34 @@ SpNumberInputFieldPresenter >> rangeMinimum: minNumber maximum: maxNumber [
 
 	self minimum: minNumber.
 	self maximum: maxNumber
+]
+
+{ #category : #accessing }
+SpNumberInputFieldPresenter >> whenClimbRateChangedDo: aBlock [
+	self property: #climbRate whenChangedDo: aBlock
+]
+
+{ #category : #accessing }
+SpNumberInputFieldPresenter >> whenDigitsChangedDo: aBlock [
+	self property: #digits whenChangedDo: aBlock
+]
+
+{ #category : #accessing }
+SpNumberInputFieldPresenter >> whenMaximumChangedDo: aBlock [
+	self property: #maximum whenChangedDo: aBlock
+]
+
+{ #category : #accessing }
+SpNumberInputFieldPresenter >> whenMinimumChangedDo: aBlock [
+	self property: #minimum whenChangedDo: aBlock
+]
+
+{ #category : #accessing }
+SpNumberInputFieldPresenter >> whenNumberChangedDo: aBlock [
+	self whenTextChangedDo: [ :txt | aBlock value: self number ]
+]
+
+{ #category : #accessing }
+SpNumberInputFieldPresenter >> whenNumberTypeChangedDo: aBlock [
+	self property: #numberType whenChangedDo: aBlock
 ]

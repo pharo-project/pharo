@@ -18,12 +18,11 @@ SpMorphicBackend >> adapterBindingsClass [
 
 { #category : #'private notifying' }
 SpMorphicBackend >> notifyError: aSpecNotification [
-
-	GrowlMorph 
-		openWithLabel: 'Error' 
-		contents: aSpecNotification message 
-		backgroundColor: Smalltalk ui theme dangerBackgroundColor
-		labelColor: Smalltalk ui theme textColor
+	GrowlMorph
+		openWithLabel: 'Error'
+		contents: aSpecNotification message
+		backgroundColor: GrowlMorph theme dangerBackgroundColor
+		labelColor: GrowlMorph theme textColor
 ]
 
 { #category : #'private notifying' }
