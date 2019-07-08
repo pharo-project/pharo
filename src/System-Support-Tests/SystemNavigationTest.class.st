@@ -68,15 +68,6 @@ SystemNavigationTest >> testAllExistingProtocolsFor [
 ]
 
 { #category : #testing }
-SystemNavigationTest >> testAllReferencesToPool [
-	| result |
-	result := self systemNavigationToTest allReferencesToPool: FooSharedPool.
-	self assert: result size equals: 1.
-	result := self systemNavigationToTest allReferencesToPool: UnreferencedSharedPool.
-	self assert: result size equals: 0
-]
-
-{ #category : #testing }
 SystemNavigationTest >> testAllSendersOfASelector [
 	| senders selector class otherClass callers |
 	selector := ('aMethod' , 'WithSenders') asSymbol.
