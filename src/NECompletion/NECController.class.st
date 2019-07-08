@@ -38,9 +38,9 @@ NECController class >> codeCompletionAround: aBlock textMorph: aTextMorph keyStr
 	"Inserts code completion if allowed in this morph"
 	
 	| editor controller |
-	NECPreferences enabled ifFalse: [ ^aBlock value ].
+	self isCompletionEnabled ifFalse: [ ^aBlock value ].
 	editor := aTextMorph editor ifNil: [ ^aBlock value ].
-	editor isCodeCompletionAllowed ifFalse: [  ^aBlock value ].
+	editor isCompletionEnabled ifFalse: [  ^aBlock value ].
 	controller := self uniqueInstance.
 	controller setModel: editor model.
 	
@@ -65,6 +65,11 @@ NECController class >> initialize [
 	"self initialize"
 	
 	self register
+]
+
+{ #category : #accessing }
+NECController class >> isCompletionEnabled [
+	^NECPreferences enabled
 ]
 
 { #category : #'tools registry' }
