@@ -122,8 +122,8 @@ SpCodePresenter >> initialize [
 	
 	self registerEventsForStyling.
 	
-	self contextMenu: self buildCodeMenu.
-	self contextKeyBindings: self buildCodeKeyBindings
+	self contextMenu: [ self getMenu ]"self buildCodeMenu".
+	"self contextKeyBindings: self buildCodeKeyBindings"
 ]
 
 { #category : #initialization }
