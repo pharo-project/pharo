@@ -583,6 +583,12 @@ FileSystem >> isSymlink: aResolvable [
 ]
 
 { #category : #'public-testing' }
+FileSystem >> isWritable [ 
+
+	^ self store isWritable
+]
+
+{ #category : #'public-testing' }
 FileSystem >> isWritable: aResolvable [
 	"Resolve the argument, and answer true if the there is
 	a file that can be written to or directory that can be changed."

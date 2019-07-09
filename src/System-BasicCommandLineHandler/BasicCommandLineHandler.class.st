@@ -168,6 +168,9 @@ BasicCommandLineHandler >> handleArgument: aString [
 
 	aString = '--interactive'
 		ifTrue: [ ^ self noQuit ].
+
+	aString = '--readOnlyMode'
+		ifTrue: [ ^ self readOnlyMode ].
 	
 	"none of the previous options matched hence we output an error message"
 	self error.
@@ -255,6 +258,12 @@ BasicCommandLineHandler >> list [
 { #category : #commands }
 BasicCommandLineHandler >> noQuit [
 	"Nothing to be done, unlike the other commands the image continues running"
+]
+
+{ #category : #commands }
+BasicCommandLineHandler >> readOnlyMode [
+
+	"just eat the argument because it was processed with by the DiskStore startUp before"
 ]
 
 { #category : #password }

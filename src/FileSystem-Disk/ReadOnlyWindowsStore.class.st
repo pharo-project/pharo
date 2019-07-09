@@ -81,6 +81,12 @@ ReadOnlyWindowsStore >> handleClass [
 ]
 
 { #category : #public }
+ReadOnlyWindowsStore >> isWritable [
+
+	^ false
+]
+
+{ #category : #public }
 ReadOnlyWindowsStore >> isWritable: aPath [
 
 	^ false

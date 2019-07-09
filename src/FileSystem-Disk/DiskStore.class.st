@@ -17,9 +17,15 @@ Class {
 
 { #category : #current }
 DiskStore class >> activeClass [
-	self allSubclassesDo: [:ea | 
-		ea isActiveClass ifTrue: [^ ea]].
-	^ self
+
+	| writableClass |
+	
+	writableClass := writableClass := self allSubclasses detect: [:each | 
+		each isActiveClass ] ifNone: [ ^ self ].
+	
+	^ self wantsReadOnly 
+		ifFalse: [ writableClass]
+		ifTrue: [ writableClass readOnlyVariant ].
 ]
 
 { #category : #'system startup' }
@@ -131,6 +137,23 @@ DiskStore class >> startUp: resuming [
 	resuming 
 		ifTrue: [ self reset ].
 	DefaultWorkingDirectory := self defaultWorkingDirectory.
+]
+
+{ #category : #public }
+DiskStore class >> wantsReadOnly [
+
+	| arguments | 
+	
+	arguments := Array
+		streamContents: [ :str | 
+			| arg i |
+			i := 0.
+			[ i > 998 or: [ (arg := Smalltalk argumentAt: i) isNil ] ]
+				whileFalse: [ 
+					str nextPut: arg.
+					i := i + 1 ] ].
+
+	^ arguments anySatisfy: [ :each | each = '--readOnlyMode' ]
 ]
 
 { #category : #public }

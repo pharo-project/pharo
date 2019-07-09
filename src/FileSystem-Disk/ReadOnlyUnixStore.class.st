@@ -78,6 +78,12 @@ ReadOnlyUnixStore >> handleClass [
 ]
 
 { #category : #public }
+ReadOnlyUnixStore >> isWritable [
+
+	^ false
+]
+
+{ #category : #public }
 ReadOnlyUnixStore >> isWritable: aPath [
 
 	^ false

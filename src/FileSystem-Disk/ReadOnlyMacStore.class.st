@@ -78,6 +78,12 @@ ReadOnlyMacStore >> handleClass [
 ]
 
 { #category : #public }
+ReadOnlyMacStore >> isWritable [
+
+	^ false
+]
+
+{ #category : #public }
 ReadOnlyMacStore >> isWritable: aPath [
 
 	^ false
