@@ -15,7 +15,7 @@ UnixDynamicLoader class >> isAvailable [
 
 { #category : #misc }
 UnixDynamicLoader >> lastError [
-	^ self ffiCall: #(String dlerror(void))
+	^ self ffiCall: #(String dlerror #(void))
 ]
 
 { #category : #misc }
@@ -25,11 +25,11 @@ UnixDynamicLoader >> loadLibrary: path [
 
 { #category : #misc }
 UnixDynamicLoader >> loadLibrary: filename flag: flag [
-	^ self ffiCall: #(void *dlopen(const char *filename, int flag))
+	^ self ffiCall: #(void #* dlopen #(const char #* filename #, int flag))
 ]
 
 { #category : #misc }
 UnixDynamicLoader >> loadSymbolFrom: handle name: symbol [
-	^ self ffiCall: #(void *dlsym(void *handle, String symbol))
+	^ self ffiCall: #(void #* dlsym #(void #* handle #, String symbol))
 
 ]

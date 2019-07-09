@@ -11,7 +11,7 @@ User32 class>>initialize
 	HWND := #FFIConstantHandle.
 
 User32 class>>getActiveWindow
-	^ self ffiCall: #(HWND GetActiveWindow()) module: 'User32.dll'
+	^ self ffiCall: #(HWND GetActiveWindow #()) module: 'User32.dll'
 ]]]
 "
 Class {

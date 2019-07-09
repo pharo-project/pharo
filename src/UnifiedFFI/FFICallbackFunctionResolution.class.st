@@ -17,7 +17,7 @@ callAbsoluteMethod
 	self absolute: 42.0.
 
 absolute: aNumber
-	self ffiCall: #(double absolute (double aNumber)) options: #(+optCallbackCall)	
+	self ffiCall: #(double absolute #(double aNumber)) options: #(#+ optCallbackCall)	
 
 "
 Class {

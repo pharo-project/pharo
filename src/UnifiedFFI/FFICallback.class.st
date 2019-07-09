@@ -61,7 +61,7 @@ FFICallback class >> forAddress: address [
 { #category : #'private primitives' }
 FFICallback class >> primQsort: array with: count with: size with: compare [
 	self
-		ffiCall: #(void qsort (FFIExternalArray array, size_t count, size_t size, FFICallback compare)) 
+		ffiCall: #(void qsort #(FFIExternalArray array #, size_t count #, size_t size #, FFICallback compare)) 
 		module: LibC
 ]
 

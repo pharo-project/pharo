@@ -16,7 +16,7 @@ here, assume that someExternalFunction() returns some handle (or pointer) to som
 When used as argument type, the value, which is used to pass to the external function is value held in my handle instance variable:
 
 MyExternalObject>>compareWith: anotherExternalObject
-   ^ self ffiCall: #( void compare ( self , MyExternalObject anotherExternalObject))
+   ^ self ffiCall: #( void compare #( self #, MyExternalObject anotherExternalObject))
 
 The main advantage of using ==FFIExternalObject== subclass as a type name for arguments is that it provides type safety by checking the incoming argument, that it is an instance of your class, and nothing else. If not, the primitive will fail without calling the external function.
 
