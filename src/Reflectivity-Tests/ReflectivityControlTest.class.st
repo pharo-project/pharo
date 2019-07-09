@@ -309,7 +309,7 @@ ReflectivityControlTest >> testAfterSendWeak [
 		metaObject: self;
 		selector: #tagExec:;
 		control: #after;
-		option: #(#+ optionWeakAfter);
+		option: #(+ optionWeakAfter);
 		arguments: #(node).
 	sendNode link: link.
 	self assert: sendNode hasMetalinkAfter.
@@ -853,14 +853,14 @@ ReflectivityControlTest >> testFailingDoubleRWInstead [
 		metaObject: readMO; 
 		selector: #value:;
 		control: #instead;
-		options: #(#+ optionCompileOnLinkInstallation);
+		options: #(+ optionCompileOnLinkInstallation);
 		arguments: #(object).
 		
 	writeLink := MetaLink new 
 		metaObject: writeMO; 
 		selector: #value:value:;
 		control: #instead;
-		options: #(#+ optionCompileOnLinkInstallation);
+		options: #(+ optionCompileOnLinkInstallation);
 		arguments: #(newValue object).
 	
 	readSites do: [ :readNode | readNode link: readLink ].
@@ -884,7 +884,7 @@ ReflectivityControlTest >> testFailingDoubleRWInsteadSimplified [
 		metaObject: readMO; 
 		selector: #value:;
 		control: #instead;
-		options: #(#+ optionCompileOnLinkInstallation);
+		options: #(+ optionCompileOnLinkInstallation);
 		arguments: #(object).
 			
 	readNode link: readLink.
@@ -1194,7 +1194,7 @@ ReflectivityControlTest >> testLinkOneShot [
 	sendNode := (ReflectivityExamples>>#exampleMethod) sendNodes first.
 	link := MetaLink new 
 		metaObject: self; 
-		options: #(#+ optionOneShot);
+		options: #(+ optionOneShot);
 		selector: #tagExec.
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
@@ -1214,7 +1214,7 @@ ReflectivityControlTest >> testLinkOptionDisabledLink [
 	sendNode := (ReflectivityExamples>>#exampleMethod) sendNodes first.
 	link := MetaLink new 
 		metaObject: self; 
-		options: #(#+ optionDisabledLink);
+		options: #(+ optionDisabledLink);
 		selector: #tagExec.
 	sendNode link: link.
 	self assert: sendNode hasMetalink.
@@ -1231,7 +1231,7 @@ ReflectivityControlTest >> testLinkoptionInlineCondition [
 	sendNode := (ReflectivityExamples>>#exampleMethod) sendNodes first.
 	link := MetaLink new 
 		metaObject: self; 
-		options: #(#- optionInlineCondition);
+		options: #(- optionInlineCondition);
 		condition: [ true ];
 		selector: #tagExec.
 	sendNode link: link.
@@ -1260,7 +1260,7 @@ ReflectivityControlTest >> testLinkoptionInlineMetaObject [
 	sendNode := (ReflectivityExamples>>#exampleMethod) sendNodes first.
 	link := MetaLink new 
 		metaObject: self; 
-		options: #(#- optionInlineMetaObject);
+		options: #(- optionInlineMetaObject);
 		selector: #tagExec.
 	sendNode link: link.
 	self assert: sendNode hasMetalink.

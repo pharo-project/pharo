@@ -63,7 +63,7 @@ OpalCompilerTests >> testCompileEmbeddsSource [
 	| result |
 	result := Smalltalk compiler
 		class: UndefinedObject;
-		options: #( #+ #optionEmbeddSources );
+		options: #( + #optionEmbeddSources );
 		compile: 'tt ^3+4'.
 	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
 	self deny: result trailer hasSourcePointer. "no sourcePointer"

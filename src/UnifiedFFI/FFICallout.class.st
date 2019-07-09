@@ -291,7 +291,7 @@ FFICallout >> options: anObject [
 FFICallout >> parseOptions: optionsArray [
 	"parse an array, which is a sequence of options in a form of: 
 	
-	#( #+ option1 option2 option3: param3  - option5 -option6: ... )
+	#( + option1 option2 option3: param3  - option5 -option6: ... )
 	
 	each time the #+ is seen, the options which follow it will be subject for inclusion
 	and, correspondingly, if #- seen, then they will be excluded	.

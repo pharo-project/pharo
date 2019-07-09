@@ -5,7 +5,7 @@ Set >> parseOptions: anArray [
 
 	"parse an array, which is a sequence of options in a form of: 
 	
-	#( #+ option1 option2 - option3 ... )
+	#( + option1 option2 - option3 ... )
 	
 	each time the #+ is seen, the options which follow it will be subject for inclusion
 	and, correspondingly, if #- seen, then they will be excluded	.

@@ -24,7 +24,7 @@ ReflectivityExamples class >> exampleMethodWithMetaLinkOptionsViaClass [
 { #category : #options }
 ReflectivityExamples class >> metaLinkOptions [
 	^{
-	#exampleMethodWithMetaLinkOptionsViaClass -> #( #+ optionCompileOnLinkInstallation)
+	#exampleMethodWithMetaLinkOptionsViaClass -> #( + optionCompileOnLinkInstallation)
 	}
 ]
 
@@ -142,7 +142,7 @@ ReflectivityExamples >> exampleMethodMultipleSites [
 
 { #category : #examples }
 ReflectivityExamples >> exampleMethodWithMetaLinkOptions [
-	<metaLinkOptions: #( #+optionCompileOnLinkInstallation)>
+	<metaLinkOptions: #( +optionCompileOnLinkInstallation)>
 	^ 2 + 3
 ]
 

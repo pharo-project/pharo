@@ -39,7 +39,7 @@ ReflectivityDemos >> demoSelfSendLogging [
 		metaObject: [ :context :object | context sender receiver == object
 				ifTrue: [ context crLog ] ];
 		selector: #value:value:;
-		option: #(#+ optionCompileOnLinkInstallation);
+		option: #(+optionCompileOnLinkInstallation);
 		arguments: #(context object);
 		control: #before.
 		
