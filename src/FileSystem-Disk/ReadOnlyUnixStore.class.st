@@ -1,3 +1,6 @@
+"
+I'm a specific store for Unix file systems that allows only read-only access
+"
 Class {
 	#name : #ReadOnlyUnixStore,
 	#superclass : #UnixStore,

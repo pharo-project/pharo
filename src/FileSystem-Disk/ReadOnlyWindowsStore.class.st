@@ -1,5 +1,5 @@
 "
-a Windows store that allows only read-only access
+I'm a specific store for Windows file systems that allows only read-only access
 "
 Class {
 	#name : #ReadOnlyWindowsStore,

@@ -1,3 +1,6 @@
+"
+I'm a specific store for macOS file systems that allows only read-only access
+"
 Class {
 	#name : #ReadOnlyMacStore,
 	#superclass : #MacStore,
