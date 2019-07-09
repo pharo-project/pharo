@@ -1158,7 +1158,7 @@ SmalltalkImage >> newSpecialObjectsArray [
 	"This association holds the active process (a ProcessScheduler)"
 	newArray at: 4 put: (self globals associationAt: #Processor).
 	"Numerous classes below used for type checking and instantiation"
-	newArray at: 5 put: Bitmap.
+	newArray at: 5 put: (self globals at: #Bitmap ifAbsent: [nil]).
 	newArray at: 6 put: SmallInteger.
 	newArray at: 7 put: ByteString.
 	newArray at: 8 put: Array.
@@ -1168,7 +1168,7 @@ SmalltalkImage >> newSpecialObjectsArray [
 	newArray at: 12 put: nil. "was BlockContext."
 	newArray at: 13 put: Point.
 	newArray at: 14 put: LargePositiveInteger.
-	newArray at: 15 put: Display.
+	newArray at: 15 put: (self globals at: #Display ifAbsent: [nil]).
 	newArray at: 16 put: Message.
 	newArray at: 17 put: CompiledMethod.
 	newArray at: 18 put: ((self primitiveGetSpecialObjectsArray at: 18) ifNil: [Semaphore new]). "low space Semaphore"
