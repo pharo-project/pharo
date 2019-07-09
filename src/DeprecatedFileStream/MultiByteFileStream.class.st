@@ -561,6 +561,11 @@ MultiByteFileStream >> nextPutAll: aCollection [
 { #category : #'open/close' }
 MultiByteFileStream >> open: fileName forWrite: writeMode [ 
 	| result |
+
+	(writeMode and: [DiskStore wantsReadOnly]) 
+		ifTrue: [ (CannotDeleteFileException new
+			messageText: 'Attempt to open file ' , fileName, ' as wrtitable on read-only filesystem') signal. ].
+
 	result := super open: fileName forWrite: writeMode.
 	result ifNotNil: [
 			converter ifNil: [self converter: UTF8TextConverter new].

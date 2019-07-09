@@ -17,8 +17,9 @@ ReadOnlyFileHandle >> setReference: aReference writable: aBoolean [
 
 	reference := aReference resolve.
 
-	(ReadOnlyFileException new
-		messageText: 'Attempt to open file ' , reference pathString, ' as writable on a read-only file system') signal.
+	aBoolean ifTrue: [ 
+		(ReadOnlyFileException new
+			messageText: 'Attempt to open file ' , reference pathString, ' as writable on a read-only file system') signal ].
 
 	writable := aBoolean
 ]

@@ -1092,6 +1092,11 @@ File >> basename [
 { #category : #'open/close' }
 File >> basicOpenForWrite: writeMode [ 
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
+	
+	(writeMode and: [ FileSystem disk isWritable not ]) ifTrue: [ 
+		(ReadOnlyFileException new
+			messageText: 'Attempt to open file ' , name, ' as writable on a read-only file system') signal].
+
 	^ self class
 		retryWithGC: [ self class open: name utf8Encoded writable: writeMode ]
 		until:[ :id | id notNil ] 

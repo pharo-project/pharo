@@ -228,7 +228,10 @@ OmFileStore >> flushEntryBuffer [
 		| initialPosition initialLocalName fileStream |
 		self entryBuffer isEmpty ifTrue: [ ^self ].
 		
-		fileStream := ZnCharacterReadWriteStream on: fileReference binaryReadWriteStream encoding: #utf8.
+		[ fileStream := ZnCharacterReadWriteStream on: fileReference binaryReadWriteStream encoding: #utf8. ] on: ReadOnlyFileException do: [ :anException |
+			^ self
+		 ].	
+	
 		[ | anEntryWriter |
 			fileStream setToEnd.
 			
