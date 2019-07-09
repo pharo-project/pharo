@@ -78,8 +78,8 @@ NECController class >> initialize [
 
 { #category : #'tools registry' }
 NECController class >> register [
-
-	RubSmalltalkEditor completionEngine: self.
+	"just for testing: we register the subclass here to test it"
+	RubSmalltalkEditor completionEngine: TestCompletionController
 ]
 
 { #category : #'tools registry' }
