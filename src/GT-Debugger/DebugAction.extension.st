@@ -39,7 +39,6 @@ DebugAction >> specId [
 ]
 
 { #category : #'*GT-Debugger' }
-DebugAction >> specModel [
-
-	^ #GTDebugActionButton
+DebugAction >> specPresenter [
+	^ GTDebugActionButton
 ]
