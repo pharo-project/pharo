@@ -288,23 +288,23 @@ CompilationContext class >> optionsDescription [
 	
 	"each entry is fall-back default value (+/-), option name, description"
 	^ #(
-	(+ optionInlineIf 					'Inline ifTrue:, ifFalse:, ifTrue:ifFalse:, ifFalse:ifTrue: if specific conditions are met (See isInlineIf)')
-	(+ optionInlineIfNil 				'Inline ifNil:, ifNotNil:, ifNil:ifNotNil:, ifNotNil:ifNil: if specific conditions are met (See isInlineIfNil)')
-	(+ optionInlineAndOr 				'Inline and:, or: if specific conditions are met (See isInlineAndOr)')
-	(+ optionInlineWhile 				'Inline whileTrue, whileTrue:, whileFalse:, whileFalse if specific conditions are met (See isInlineWhile)')
-	(+ optionInlineToDo 				'Inline to:do:, to:by:do: if specific conditions are met (See isInlineToDo)')
-	(+ optionInlineCase 				'Inline caseOf:, caseOf:otherwise: if specific conditions are met (See isInlineCase)')
-	(- optionInlineTimesRepeat 		'Inline timesRepeat: if specific conditions are met (See isInlineTimesRepeat)')
-	(- optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
-	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
+	#(#+ optionInlineIf 					'Inline ifTrue:, ifFalse:, ifTrue:ifFalse:, ifFalse:ifTrue: if specific conditions are met (See isInlineIf)')
+	#(#+ optionInlineIfNil 				'Inline ifNil:, ifNotNil:, ifNil:ifNotNil:, ifNotNil:ifNil: if specific conditions are met (See isInlineIfNil)')
+	#(#+ optionInlineAndOr 				'Inline and:, or: if specific conditions are met (See isInlineAndOr)')
+	#(#+ optionInlineWhile 				'Inline whileTrue, whileTrue:, whileFalse:, whileFalse if specific conditions are met (See isInlineWhile)')
+	#(#+ optionInlineToDo 				'Inline to:do:, to:by:do: if specific conditions are met (See isInlineToDo)')
+	#(#+ optionInlineCase 				'Inline caseOf:, caseOf:otherwise: if specific conditions are met (See isInlineCase)')
+	#(#- optionInlineTimesRepeat 		'Inline timesRepeat: if specific conditions are met (See isInlineTimesRepeat)')
+	#(#- optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
+	#(#- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 	
-	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
+	#(#- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
 	
-	(- optionReadOnlyLiterals 			'Compiler sets literals as read-only')
-	(- optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
-	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
-	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
-	(- optionParseErrors 					'Parse syntactically wrong code')
+	#(#- optionReadOnlyLiterals 			'Compiler sets literals as read-only')
+	#(#- optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
+	#(#- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
+	#(#+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
+	#(#- optionParseErrors 					'Parse syntactically wrong code')
 	) 
 ]
 
