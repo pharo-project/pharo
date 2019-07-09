@@ -416,6 +416,7 @@ RBSmalllintTestObject >> stringConcatenation [
 
 { #category : #methods }
 RBSmalllintTestObject >> tempVarOverridesInstVar [
+	<intentionalShadowedVariable: #temporaryVariable>
 	| temporaryVariable |
 	temporaryVariable := 4.
 	^temporaryVariable

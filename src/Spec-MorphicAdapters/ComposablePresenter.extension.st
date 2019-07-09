@@ -4,7 +4,7 @@ Extension { #name : #ComposablePresenter }
 ComposablePresenter >> beginsWith: aString fromList: aMorph [
 	"This method is used bu the list for the search of elements when you are typing directly in the list"
 	
-	^ self ensureMorphicAdapterDo: [ :adapter | adapter beginsWith: aString fromList: aMorph ]
+	^ self ensureMorphicAdapterDo: [ :adpt | adpt beginsWith: aString fromList: aMorph ]
 ]
 
 { #category : #'*Spec-MorphicAdapters' }
@@ -42,21 +42,21 @@ ComposablePresenter >> ensureMorphicAdapterDo: aBlock [
 ComposablePresenter >> heightToDisplayInList: aList [
 	"Return the width of my representation as a list item"
 	
-	^ self ensureMorphicAdapterDo: [ :adapter | adapter heightToDisplayInList: aList ]
+	^ self ensureMorphicAdapterDo: [ :adpt | adpt heightToDisplayInList: aList ]
 ]
 
 { #category : #'*Spec-MorphicAdapters' }
 ComposablePresenter >> heightToDisplayInTree: aTree [
 	"Return the width of my representation as a list item"
 	
-	^ self ensureMorphicAdapterDo: [ :adapter | adapter heightToDisplayInTree: aTree ]
+	^ self ensureMorphicAdapterDo: [ :adpt | adpt heightToDisplayInTree: aTree ]
 ]
 
 { #category : #'*Spec-MorphicAdapters' }
 ComposablePresenter >> listRenderOn: aCanvas atRow: aRow bounds: drawBounds color: drawColor backgroundColor: backgroundColor from: aMorph [
 	"Specify how this object as a list item should be drawn"
 
-	^ self ensureMorphicAdapterDo: [ :adapter | adapter
+	^ self ensureMorphicAdapterDo: [ :adpt | adpt
 		listRenderOn: aCanvas
 		atRow: aRow
 		bounds: drawBounds
@@ -91,7 +91,7 @@ ComposablePresenter >> openWorldWithSpecLayout: aSpec [
 ComposablePresenter >> treeRenderOn: aCanvas bounds: drawBounds color: drawColor font: aFont from: aMorph [
 	"Specify how this object as a list item should be drawn"
 
-	^ self ensureMorphicAdapterDo: [ :adapter | adapter 
+	^ self ensureMorphicAdapterDo: [ :adpt | adpt 
 		treeRenderOn: aCanvas 
 		bounds: drawBounds 
 		color: drawColor 
@@ -103,12 +103,12 @@ ComposablePresenter >> treeRenderOn: aCanvas bounds: drawBounds color: drawColor
 ComposablePresenter >> widthToDisplayInList: aList [
 	"Return the width of my representation as a list item"
 	
-	^ self ensureMorphicAdapterDo: [ :adapter | adapter widthToDisplayInList: aList ]
+	^ self ensureMorphicAdapterDo: [ :adpt | adpt widthToDisplayInList: aList ]
 ]
 
 { #category : #'*Spec-MorphicAdapters' }
 ComposablePresenter >> widthToDisplayInTree: aTree [
 	"Return the width of my representation as a list item"
 	
-	^ self ensureMorphicAdapterDo: [ :adapter | adapter widthToDisplayInTree: aTree ]
+	^ self ensureMorphicAdapterDo: [ :adpt | adpt widthToDisplayInTree: aTree ]
 ]

@@ -9,9 +9,9 @@ RBCustomTransformationTest >> testTransform [
 
 	| transformation newClassName class |
 	newClassName := (self changeMock name, 'Temporary') asSymbol.
-	transformation := RBCustomTransformation with: [ :model |
+	transformation := RBCustomTransformation with: [ :aModel |
 		"add class"
-		model
+		aModel
 			defineClass: ('<1p> subclass: #<2s>
 				instanceVariableNames: ''''
 				classVariableNames: ''''
@@ -22,9 +22,9 @@ RBCustomTransformationTest >> testTransform [
 			with: self class category).
 		
 		"add a comment in the class description"
-		(model classNamed: newClassName) comment: 'Deprecated!!! Use super class'.
+		(aModel classNamed: newClassName) comment: 'Deprecated!!! Use super class'.
 		"add an instance variable"
-		(model classNamed: newClassName) addInstanceVariable: 'asdf' ].
+		(aModel classNamed: newClassName) addInstanceVariable: 'asdf' ].
 
 	transformation transform.
 	self assert: transformation model changes changes size equals: 3.

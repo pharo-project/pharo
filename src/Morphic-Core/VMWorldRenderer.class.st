@@ -96,8 +96,8 @@ VMWorldRenderer >> checkForNewScreenSize [
 { #category : #activation }
 VMWorldRenderer >> deactivate [
 
-	WorldMorph currentWorld ifNotNil: [:world | world triggerEvent: #aboutToLeaveWorld ].
-	WorldMorph extraWorldList do: [:world | world triggerEvent: #aboutToLeaveWorld ].
+	WorldMorph currentWorld ifNotNil: [:theWorld | theWorld triggerEvent: #aboutToLeaveWorld ].
+	WorldMorph extraWorldList do: [:theWorld | theWorld triggerEvent: #aboutToLeaveWorld ].
 
 	InputEventSensor default shutDown.
 	

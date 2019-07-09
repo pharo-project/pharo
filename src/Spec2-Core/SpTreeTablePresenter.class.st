@@ -269,13 +269,13 @@ SpTreeTablePresenter >> whenRootsChangedDo: aBlockClosure [
 { #category : #'api-events' }
 SpTreeTablePresenter >> whenSelectedIndexChangedDo: aBlockClosure [ 
 	
-	self whenSelectionChangedDo: [ :selection | aBlockClosure cull: selection first ]
+	self whenSelectionChangedDo: [ :aSelection | aBlockClosure cull: aSelection first ]
 ]
 
 { #category : #'api-events' }
 SpTreeTablePresenter >> whenSelectedItemChangedDo: aBlockClosure [ 
 	
-	self whenSelectionChangedDo: [ :selection | aBlockClosure cull: selection second ]
+	self whenSelectionChangedDo: [ :aSelection | aBlockClosure cull: aSelection second ]
 ]
 
 { #category : #'api-events' }

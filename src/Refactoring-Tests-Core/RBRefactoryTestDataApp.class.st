@@ -503,6 +503,7 @@ RBRefactoryTestDataApp >> symbolReference [
 
 { #category : #lint }
 RBRefactoryTestDataApp >> tempVarOverridesInstVar [
+	<intentionalShadowedVariable: #temporaryVariable>
 	| temporaryVariable |
 	temporaryVariable := 4.
 	^temporaryVariable
