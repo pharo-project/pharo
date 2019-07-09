@@ -62,7 +62,7 @@ WinPlatform >> ffiLibraryName [
 { #category : #'environment-variables' }
 WinPlatform >> getEnvironmentVariable: lpName into: lpBuffer size: nSize [
 	"Primitive to obtain an environment variable using windows Wide Strings"
-	^ self ffiCall: #(ulong GetEnvironmentVariableW (Win32WideString lpName, Win32WideString  lpBuffer, ulong nSize))
+	^ self ffiCall: 'ulong GetEnvironmentVariableW (Win32WideString lpName, Win32WideString  lpBuffer, ulong nSize)'
 ]
 
 { #category : #accessing }
@@ -95,7 +95,7 @@ WinPlatform >> keyForValue: aKeyValue [
 { #category : #accessing }
 WinPlatform >> lastError [
 
-	^ self ffiCall: #(ulong GetLastError())
+	^ self ffiCall: 'ulong GetLastError()'
 ]
 
 { #category : #accessing }
@@ -112,13 +112,13 @@ WinPlatform >> menuShortcutString [
 { #category : #'string-manipulation' }
 WinPlatform >> multiByteToWideCharacterCodepage: codepage flags: flags input: input inputLen: inputLen output: output outputLen: outputLen [
 
-	^self ffiCall: #(int MultiByteToWideChar(uint codepage, ulong flags, String input, int inputLen, Win32WideString output, int outputLen ))
+	^self ffiCall: 'int MultiByteToWideChar(uint codepage, ulong flags, String input, int inputLen, Win32WideString output, int outputLen )'
 ]
 
 { #category : #'environment-variables' }
 WinPlatform >> setEnvironmentVariable: nameString value: valueString [
 
-	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, Win32WideString valueString ) )
+	 ^ self ffiCall: 'int SetEnvironmentVariableW ( Win32WideString nameString, Win32WideString valueString )'
 ]
 
 { #category : #accessing }
@@ -135,7 +135,7 @@ WinPlatform >> virtualKey: virtualKeyCode [
 
 { #category : #'string-manipulation' }
 WinPlatform >> wideCharacterToMultiByteCodepage: codepage flags: flags input: input inputLen: inputLen output: output outputLen: outputLen [
-	^self ffiCall: #(int WideCharToMultiByte(uint codepage,
+	^self ffiCall: 'int WideCharToMultiByte(uint codepage,
     ulong flags,
     Win32WideString input,
     int inputLen,
@@ -143,5 +143,5 @@ WinPlatform >> wideCharacterToMultiByteCodepage: codepage flags: flags input: in
     int outputLen,
     0,
     0
- ))
+ )'
 ]
