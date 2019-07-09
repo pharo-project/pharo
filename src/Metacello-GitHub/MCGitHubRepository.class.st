@@ -142,6 +142,6 @@ MCGitHubRepository >> normalizeTagsData: jsonObject [
 ]
 
 { #category : #private }
-MCGitHubRepository >> projectTagsUrlFor: projectPath [
-  ^ 'https://api.github.com/repos/' , projectPath , '/tags'
+MCGitHubRepository >> projectTagsUrlFor: projectPath2 [
+  ^ 'https://api.github.com/repos/' , projectPath2 , '/tags'
 ]
