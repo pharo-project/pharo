@@ -31,10 +31,9 @@ GTGenericStackDebugger class >> alwaysOpenFullDebugger: aBoolean [
 { #category : #'utilities api' }
 GTGenericStackDebugger class >> closeAllDebuggers [
 	"GTGenericStackDebugger closeAllDebuggers"
-	(SystemWindow allSubInstances select: [:w | 
-		 w model isKindOf: GTGenericStackDebugger])
-			do: [:w | w delete ].
-	GTSpecPreDebugWindow allInstances do: #delete.
+
+	(SystemWindow allSubInstances select: [ :w | w model isKindOf: GTGenericStackDebugger ]) do: [ :w | w delete ].
+	GTSpecPreDebugPresenter allSubInstances do: #close
 ]
 
 { #category : #'settings api' }
@@ -368,12 +367,14 @@ GTGenericStackDebugger >> openWithNotification: notificationString [
 	"NOTE: When this method returns, a new process has been scheduled to
 	run the windows, and thus this notifier, but the previous active porcess
 	has not been suspended. The sender will do this."
-	
-	GTSpecPreDebugWindow new 
-		setTitle: self title;
+
+	(notificationString
+		ifNil: [ GTSpecPreDebugStackPresenter on: self ]
+		ifNotNil: [ (GTSpecPreDebugNotificationPresenter on: self)
 		message: notificationString;
+		yourself ])
 		openWithSpec;
-		debugger: self
+		setTitle: self title
 ]
 
 { #category : #'printing/formatting' }
