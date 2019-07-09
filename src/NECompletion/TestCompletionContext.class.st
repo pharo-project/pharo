@@ -54,6 +54,7 @@ TestCompletionContext >> context: aCompletionContext [
 TestCompletionContext >> createModel [
 	node isNil ifTrue: [ ^NECEmptyModel new ].
 	node isLiteralNode ifTrue: [ ^NECEmptyModel new ].
+	node isSequence ifTrue: [ ^NECEmptyModel new ].
 	node isMethod ifTrue: [ ^NECEmptyModel new ].
 	self receiverClass
 		ifNotNil: [^ NECTypedModel class: receiverClass].
