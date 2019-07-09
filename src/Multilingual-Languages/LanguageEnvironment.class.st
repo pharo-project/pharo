@@ -51,7 +51,7 @@ LanguageEnvironment class >> currentPlatform [
 
 	| localeClass |
 	"A minimal (headless) image has LanguageEnvironment but not Locale!"
-	localeClass := SmalltalkImage globals at: #Locale ifAbsent: [^self].
+	localeClass := self environment at: #Locale ifAbsent: [^self].
 	^ localeClass currentPlatform languageEnvironment.
 
 ]
@@ -90,7 +90,7 @@ LanguageEnvironment class >> initKnownEnvironments [
 
 	| known localeIdClass |
 	"A minimal (headless) image has LanguageEnvironment but not LocaleID!"
-	localeIdClass := SmalltalkImage globals at: #LocaleID ifAbsent: [^self].
+	localeIdClass := self environment at: #LocaleID ifAbsent: [^self].
 	known := Dictionary new.
 	self allSubclassesDo: [:subClass | 
 		subClass supportedLanguages do: [:language | | env id | 
@@ -180,7 +180,7 @@ LanguageEnvironment class >> localeChanged [
 LanguageEnvironment class >> localeID: localeID [
 	| localeIdClass |
 	"A minimal (headless) image has LanguageEnvironment but not LocaleID!"
-	localeIdClass := SmalltalkImage globals at: #LocaleID ifAbsent: [^self].
+	localeIdClass := self environment at: #LocaleID ifAbsent: [^self].
 	self knownEnvironments
 		at: localeID ifPresent: [:value | ^ value ];
 		at: localeIdClass default ifPresent: [ :value | ^ value ].
