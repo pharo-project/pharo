@@ -14,17 +14,17 @@ WindowsDynamicLoader class >> isAvailable [
 
 { #category : #misc }
 WindowsDynamicLoader >> lastError [
-	^ self ffiCall: #(int32 GetLastError #(void))
+	^ self ffiCall: #(int32 GetLastError(void))
 ]
 
 { #category : #misc }
 WindowsDynamicLoader >> loadLibrary: lpFileName [
-	^ self ffiCall: #(void #* LoadLibrary #(String lpFileName))
+	^ self ffiCall: #(void *LoadLibrary(String lpFileName))
 ]
 
 { #category : #misc }
 WindowsDynamicLoader >> loadSymbolFrom: hModule name: lpProcName [
-	^ self ffiCall: #(void #* GetProcAddress #(void #* hModule #, String lpProcName))
+	^ self ffiCall: #(void *GetProcAddress(void *hModule, String lpProcName))
 
 ]
 

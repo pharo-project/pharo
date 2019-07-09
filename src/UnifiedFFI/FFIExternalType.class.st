@@ -259,8 +259,8 @@ FFIExternalType >> needsArityPacking [
 	"Regular types needs to be ''rolled'' if they are passed as pointers to its calling functions. 
 	 For example, executing consecutivelly this (simplified) two functions: 
 	 [[[
-	 	time := self ffiCall: #(time_t time #(time_t #* t) ). ""this will answer a long.""
-	 	self ffiCall: #(tm #* localtime #(time_t #* time) ) ""this requires a pointer to time."" 
+	 	time := self ffiCall: #(time_t time(time_t* t) ). ""this will answer a long.""
+	 	self ffiCall: #(tm* localtime(time_t* time) ) ""this requires a pointer to time."" 
 	 ]]]
 	 This mechanism allows UnifiedFFI to perform the roll of this pointers for you (it performs 
 	 the equivallent of ==&time== in C). 
@@ -278,7 +278,7 @@ FFIExternalType >> needsArityUnpacking [
 	 from C functions).
 	 For instance, in case you have functions with the form:
 	 [[[ 
-		self ffiCall: #(void getPoint #( double #* x, double #* y)) 
+		self ffiCall: #(void getPoint( double *x, double *y)) 
 	 ]]]
 	 you cannot use instances of Float (since they are immutable in Pharo)... in that case you will
 	 need to use an FFIExternalValueHolder."

@@ -148,7 +148,7 @@ UnixEnvironment >> basicGetEnvRawViaFFI: arg1 [
 	"This method calls the Standard C Library getenv() function.
 	The name of the argument (arg1) should fit decompiled version."
 	
-	 ^ self ffiCall: #( String getenv #(String arg1) ) module: LibC
+	 ^ self ffiCall: #( String getenv (String arg1) ) module: LibC
 ]
 
 { #category : #accessing }
@@ -287,11 +287,11 @@ UnixEnvironment >> removeKey: key encoded: anEncoding [
 UnixEnvironment >> setEnv: nameString value: valueString [
 	"This method calls the Standard C Library setenv() function"
 
-	^ self ffiCall: #(int setenv #(String nameString #, String valueString #, 1)) module: LibC
+	^ self ffiCall: #(int setenv #(String nameString , String valueString , 1)) module: LibC
 ]
 
 { #category : #private }
 UnixEnvironment >> unsetEnv: string [
 	"This method calls the Standard C Library getenv() function"
-	 ^ self ffiCall: #( int unsetenv #(String string) ) module: LibC
+	 ^ self ffiCall: #( int unsetenv (String string) ) module: LibC
 ]

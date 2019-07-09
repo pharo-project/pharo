@@ -58,14 +58,14 @@ LibC class >> system: command [
 LibC >> currentProcessId [
 	"Returns the process identifier (PID) of the calling process."
  
-	 ^self ffiCall: #(int getpid #(void)) 
+	 ^self ffiCall: #(int getpid(void)) 
 ]
 
 { #category : #'api - accessing' }
 LibC >> fgetc: stream [
 	"Get character from stream."
 	 
-	 ^self ffiCall: #(int #* fgetc #(ExternalAddress #* stream))
+	 ^self ffiCall: #(int* fgetc(ExternalAddress* stream))
 ]
 
 { #category : #'private - accessing' }
@@ -75,14 +75,14 @@ LibC >> macModuleName [
 
 { #category : #'api - misc' }
 LibC >> memCopy: src to: dest size: n [
-	^ self ffiCall: #(void #* memcpy #(void #* dest #, const void #* src #, size_t n))
+	^ self ffiCall: #(void *memcpy(void *dest, const void *src, size_t n))
 ]
 
 { #category : #'api - processes' }
 LibC >> parentProcessId [
 	"Returns the process ID of the parent of the calling process."
 	 
-	 ^self ffiCall: #(int getppid #(void))
+	 ^self ffiCall: #(int getppid(void))
 ]
 
 { #category : #'api - piping' }
@@ -126,7 +126,7 @@ LibC >> runCommand: cmd [
 
 { #category : #'api - misc' }
 LibC >> system: command [
-	^ self ffiCall: #(int system #(char #* command))
+	^ self ffiCall: #(int system #(char * command))
 ]
 
 { #category : #'private - accessing' }

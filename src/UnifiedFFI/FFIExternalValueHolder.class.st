@@ -31,7 +31,7 @@ and then use it in function signature:
 
 [ [ [ 
 getFoo: value
-  ^ self ffiCall: #(void getFoo #( SomeType #* value ))
+  ^ self ffiCall: #(void getFoo ( SomeType *  value ))
 ] ] ]
 
 and call it like: 

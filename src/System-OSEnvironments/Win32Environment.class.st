@@ -48,7 +48,7 @@ Win32Environment >> at: aKey put: aValue [
 
 { #category : #private }
 Win32Environment >> environmentStrings [
-	 ^ self ffiCall: #( void #* GetEnvironmentStrings #() )
+	 ^ self ffiCall: #( void * GetEnvironmentStrings () )
 ]
 
 { #category : #private }
@@ -98,7 +98,7 @@ Win32Environment >> keysAndValuesDo: aBlock [
 { #category : #private }
 Win32Environment >> removeEnvironmentVariable: nameString [
 
-	 ^ self ffiCall: #( int SetEnvironmentVariableW #( Win32WideString nameString #, 0 ) )
+	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, 0 ) )
 ]
 
 { #category : #accessing }
@@ -119,12 +119,12 @@ Win32Environment >> setEnv: nameString value: valueString [
 	"This method calls the the platform specific set environment routine"
 
 	^ self
-		ffiCall: #(int SetEnvironmentVariableA #(String nameString #, String valueString))
+		ffiCall: #(int SetEnvironmentVariableA #(String nameString , String valueString))
 		module: #Kernel32
 ]
 
 { #category : #private }
 Win32Environment >> setEnvironmentVariable: nameString value: valueString [
 
-	 ^ self ffiCall: #( int SetEnvironmentVariableW #( Win32WideString nameString #, Win32WideString valueString ) )
+	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, Win32WideString valueString ) )
 ]
