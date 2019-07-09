@@ -1838,9 +1838,7 @@ Behavior >> ultimateSourceCodeAt: selector ifAbsent: aBlock [
 Behavior >> unreferencedInstanceVariables [
 	"Return a list of the instance variables defined in the receiver which are not referenced in the receiver or any of its subclasses."
 
-	^ self instVarNames reject: [:ivn | 
-		self withAllSubclasses anySatisfy: [:class | 
-			(class whichSelectorsAccess: ivn) notEmpty]]
+	^ self slots reject: [:slot | slot isReferenced]
 ]
 
 { #category : #queries }
