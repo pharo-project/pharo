@@ -1,8 +1,13 @@
 Class {
 	#name : #SpSearchableListTest,
 	#superclass : #SpSmokeTestCase,
-	#category : #'Spec2-PolyWidgets-Tests'
+	#category : #'Spec2-Deprecated-Tests'
 }
+
+{ #category : #deprecation }
+SpSearchableListTest class >> isDeprecated [
+	^ true
+]
 
 { #category : #running }
 SpSearchableListTest >> classToTest [

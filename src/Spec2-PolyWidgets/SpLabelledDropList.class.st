@@ -16,9 +16,7 @@ Class {
 
 { #category : #specs }
 SpLabelledDropList class >> defaultSpec [
-	<spec: #default>
-	^ super labelLeft
-
+	^ self labelLeft
 ]
 
 { #category : #'api-shortcuts' }

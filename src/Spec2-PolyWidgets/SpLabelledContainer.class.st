@@ -20,6 +20,11 @@ Class {
 }
 
 { #category : #specs }
+SpLabelledContainer class >> defaultSpec [
+	^ self labelTop
+]
+
+{ #category : #specs }
 SpLabelledContainer class >> labelBottom [
 	<spec>
 	^ SpLayout composed
@@ -54,7 +59,7 @@ SpLabelledContainer class >> labelRight [
 
 { #category : #specs }
 SpLabelledContainer class >> labelTop [
-	<spec: #default>
+	<spec>
 	^ SpLayout composed
 		newColumn: [ :column | 
 			column

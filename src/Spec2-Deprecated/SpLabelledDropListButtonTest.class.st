@@ -1,7 +1,7 @@
 Class {
 	#name : #SpLabelledDropListButtonTest,
 	#superclass : #SpDropListButtonTest,
-	#category : #'Spec2-Deprecated'
+	#category : #'Spec2-Deprecated-Tests'
 }
 
 { #category : #deprecation }

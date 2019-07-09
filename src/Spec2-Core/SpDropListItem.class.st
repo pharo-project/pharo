@@ -5,12 +5,12 @@ Class {
 	#name : #SpDropListItem,
 	#superclass : #Object,
 	#instVars : [
-		'actionHolder',
 		'model',
 		'displayBlock',
-		'icon'
+		'icon',
+		'action'
 	],
-	#category : #'Spec2-Core-Widgets-Support'
+	#category : #'Spec2-Core-Support'
 }
 
 { #category : #'instance creation' }
@@ -33,22 +33,22 @@ SpDropListItem class >> on: anObject do: aBlock [
 ]
 
 { #category : #comparing }
-SpDropListItem >> = another [
+SpDropListItem >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
 
-	self species = another species ifFalse: [ ^ false ].
-	^ self label = another label and: [ self actionHolder = another actionHolder ]
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ self label = anObject label and: [ action = anObject action ]
+]
+
+{ #category : #protocol }
+SpDropListItem >> action [
+	^ action
 ]
 
 { #category : #protocol }
 SpDropListItem >> action: aBlock [
-
-	actionHolder value: aBlock
-]
-
-{ #category : #accessing }
-SpDropListItem >> actionHolder [
-	
-	^ actionHolder
+	action := aBlock
 ]
 
 { #category : #protocol }
@@ -56,6 +56,13 @@ SpDropListItem >> display: aBlock [
 	"aBlock - 1 optional argument, which is the underlying item; returns the string to be displayed"
 
 	displayBlock := aBlock.
+]
+
+{ #category : #comparing }
+SpDropListItem >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ self label hash bitXor: action hash
 ]
 
 { #category : #accessing }
@@ -70,10 +77,9 @@ SpDropListItem >> icon: anObject [
 
 { #category : #initialization }
 SpDropListItem >> initialize [
-
 	super initialize.
 
-	actionHolder := [] asValueHolder.
+	action := [  ].
 	displayBlock := [ :e | e asString ].
 	icon := nil
 ]
@@ -107,5 +113,5 @@ SpDropListItem >> model: anObject [
 SpDropListItem >> value [
 	"This way, I am polymorphic with nil"
 
-	actionHolder value cull: self label cull: self
+	self action cull: self label cull: self
 ]

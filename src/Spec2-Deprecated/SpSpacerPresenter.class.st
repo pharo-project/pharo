@@ -7,7 +7,7 @@ I am a simple presenter to add spacers to spec layouts.
 Class {
 	#name : #SpSpacerPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
-	#category : #'Spec2-Deprecated'
+	#category : #'Spec2-Deprecated-Obsolete'
 }
 
 { #category : #specs }

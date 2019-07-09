@@ -28,15 +28,8 @@ Class {
 	#category : #'Spec2-PolyWidgets-ListAndTree'
 }
 
-{ #category : #'instance creation' }
-SpEditableList class >> new: aCollection [
-	^ self new list: aCollection copy.
-		
-]
-
 { #category : #spec }
-SpEditableList class >> spec [
-	<spec: #default>
+SpEditableList class >> defaultSpec [
 	^ SpLayout composed
 		newColumn:
 			[ :column | 
@@ -57,6 +50,12 @@ SpEditableList class >> spec [
 												add: #bottomButton ]
 									width: 24 ] ] 
 		yourself
+]
+
+{ #category : #'instance creation' }
+SpEditableList class >> new: aCollection [
+	^ self new list: aCollection copy.
+		
 ]
 
 { #category : #accessing }
@@ -81,12 +80,9 @@ SpEditableList >> downButton [
 
 { #category : #initialization }
 SpEditableList >> initialize [
-	"Initialization code for EditableList"
-
-	title := 'Title' asValueHolder.
-	
 	super initialize.
-	okBlock := [ ].
+	title := 'Title'.
+	okBlock := [  ]
 ]
 
 { #category : #initialization }
@@ -194,7 +190,7 @@ SpEditableList >> removeButton [
 
 { #category : #accessing }
 SpEditableList >> title [
-	^ title value
+	^ title
 ]
 
 { #category : #accessing }

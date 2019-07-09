@@ -59,15 +59,11 @@ SpImagePresenter >> image: aForm [
 
 { #category : #initialization }
 SpImagePresenter >> initialize [
-
 	super initialize.
-	
-	image := nil.
-	action := [ ].
-	autoScale := false.
 
-"	imageHolder whenChangedDo: [ self changed: #getImage ].
-"
+	image := nil.
+	action := [  ].
+	autoScale := false
 ]
 
 { #category : #api }

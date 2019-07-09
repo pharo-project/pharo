@@ -18,6 +18,8 @@ I have:
 Class {
 	#name : #SpVersatileDialogPresenter,
 	#superclass : #SpDynamicPresenter,
+	#traits : 'TSpDynamicPresenter',
+	#classTraits : 'TSpDynamicPresenter classTrait',
 	#instVars : [
 		'mainMessage',
 		'mainIcon',
@@ -43,129 +45,99 @@ Class {
 }
 
 { #category : #specs }
-SpVersatileDialogPresenter class >> example1 [ 
-
+SpVersatileDialogPresenter class >> example1 [
 	<example>
-	
 	| dialog |
-	
-	dialog := SpVersatileDialogPresenter new.
-	dialog title: 'Confirmation'.
-	dialog mainMessage: 'Confirm your choice' asText allBold.
-	dialog mainIcon: (self iconNamed: #question).
-	dialog contentArea: 'Do you want to discard your content?'.
-	dialog moreOptionsArea: (dialog newCheckBox label: 'Discard permanently').
-	dialog addButton: #yes text: 'yes' value: #yes.
-	dialog addButton: #no text: 'no' value: #no.
-	dialog addButton: #cancel text: 'cancel' value: #cancel.
-	dialog footnoteIcon: (self iconNamed: #error).
-	dialog footnoteArea: 'This operation can be very dangerous.'.
-	dialog openModalWithSpec.
+	(dialog := SpVersatileDialogPresenter new)
+		mainMessage: 'Confirm your choice' asText allBold;
+		mainIcon: (self iconNamed: #question);
+		contentArea: 'Do you want to discard your content?';
+		moreOptionsArea: (dialog newCheckBox label: 'Discard permanently');
+		addButton: #yes text: 'yes' value: #yes;
+		addButton: #no text: 'no' value: #no;
+		addButton: #cancel text: 'cancel' value: #cancel;
+		footnoteIcon: (self iconNamed: #error);
+		footnoteArea: 'This operation can be very dangerous.';
+		openModalWithSpec.
+	dialog withWindowDo: [ :w | w title: 'Confirmation' ].
 	dialog result logCr.
 
-	self inform: (dialog moreOptionsArea state asString).
-
-
+	self inform: dialog moreOptionsArea state asString
 ]
 
 { #category : #specs }
 SpVersatileDialogPresenter class >> example2 [
-
 	<example>
-	
 	| dialog |
-	
-	dialog := SpVersatileDialogPresenter new.
-	dialog title: 'Confirmation'.
-	dialog mainMessage: 'Save content' asText allBold.
-	dialog addButton: #save text: 'Save' value: true.
-	dialog addButton: #cancel text: 'Cancel' value: false.
-	dialog mainIcon: (self iconNamed: #question).
-	
-	dialog openModalWithSpec.
+	dialog := SpVersatileDialogPresenter new
+		mainMessage: 'Save content' asText allBold;
+		addButton: #save text: 'Save' value: true;
+		addButton: #cancel text: 'Cancel' value: false;
+		mainIcon: (self iconNamed: #question);
+		openModalWithSpec;
+		yourself.
 
-	dialog result logCr.
-
-
-
-
+	dialog withWindowDo: [ :w | w title: 'Confirmation' ].
+	dialog result logCr
 ]
 
 { #category : #specs }
 SpVersatileDialogPresenter class >> example3 [
-
 	<example>
-	
 	| dialog |
-	
-	dialog := SpVersatileDialogPresenter new.
-	dialog title: 'Confirmation'.
-	dialog mainMessage: 'Save content' asText allBold.
-	dialog addButton: #save text: 'Save' value: true.
-	dialog addButton: #cancel text: 'Cancel' value: false.
-	dialog mainIcon: (self iconNamed: #question).
-	
+	dialog := SpVersatileDialogPresenter new
+		mainMessage: 'Save content' asText allBold;
+		addButton: #save text: 'Save' value: true;
+		addButton: #cancel text: 'Cancel' value: false;
+		mainIcon: (self iconNamed: #question);
+		footnoteIcon: (self iconNamed: #error);
+		footnoteArea: 'Saving may take several minutes';
+		yourself.
+
 	(dialog buttonAt: #save) icon: (self iconNamed: #smallSave).
-	dialog footnoteIcon: (self iconNamed: #error).
-	dialog footnoteArea: 'Saving may take several minutes'.
-	
+
 	dialog openModalWithSpec.
-	dialog result logCr.
 
-	
-
-
-
+	dialog withWindowDo: [ :w | w title: 'Confirmation' ].
+	dialog result logCr
 ]
 
 { #category : #specs }
 SpVersatileDialogPresenter class >> example4 [
-
 	<example>
-	
 	| dialog |
-	
 	dialog := SpVersatileDialogPresenter new.
-	dialog title: 'Select mumber'.
-	1 to: 5 do: [ :aNumber |
-		dialog addButton: ('button', aNumber asString) asSymbol 
-			text: aNumber printStringRoman 
-			value: aNumber ].
-	
+
+	1 to: 5 do: [ :aNumber | dialog addButton: ('button' , aNumber asString) asSymbol text: aNumber printStringRoman value: aNumber ].
+
 	dialog defaultButtonId: #button2.
-	
+
 	dialog openModalWithSpec.
-	dialog result logCr.
 
-	
-
-
-
+	dialog withWindowDo: [ :w | w title: 'Select number' ].
+	dialog result logCr
 ]
 
 { #category : #specs }
 SpVersatileDialogPresenter class >> example5 [
-
 	<example>
-	
 	| dialog listPresenter |
-	
 	dialog := SpVersatileDialogPresenter new.
-	dialog title: 'Confirmation'.
 	listPresenter := dialog newList.
 	listPresenter items: #(one two three).
 	dialog contentArea: listPresenter.
-	dialog addButton: #ok text: 'OK' value: true condition: [ listPresenter selection isEmpty not ].
+	dialog
+		addButton: #ok
+		text: 'OK'
+		value: true
+		condition: [ listPresenter selection isEmpty not ].
 	dialog addButton: #cancel text: 'Cancel' value: false.
 	dialog mainIcon: (self iconNamed: #question).
-	
+
 	dialog openModalWithSpec.
 
-	dialog result logCr.
-
-
-
-
+	dialog withWindowDo: [ :w | w title: 'Confirmation' ].
+	dialog result logCr
 ]
 
 { #category : #api }
@@ -176,18 +148,13 @@ SpVersatileDialogPresenter >> addButton: id text: buttonText value: anObject [
 
 { #category : #api }
 SpVersatileDialogPresenter >> addButton: id text: buttonText value: anObject condition: aCondition [
-
 	| aButton |
-	
 	aButton := self newButton label: buttonText.
-	aButton action: [ 
-		aCondition value ifTrue: [ 
-			self return: anObject ] ].
+	aButton action: [ aCondition value ifTrue: [ self return: anObject ] ].
 
 	buttons at: id put: aButton.
 
-	self additionalSubpresentersMap at: id put: aButton.
-	
+	self presenterAt: id put: aButton
 ]
 
 { #category : #api }
@@ -293,72 +260,58 @@ SpVersatileDialogPresenter >> initializeWidgets [
 
 { #category : #accessing }
 SpVersatileDialogPresenter >> layout [
+	| mainLayout row |
+	mainLayout := SpBoxLayout newVertical.
 
-	| mainLayout |
-	
-	mainLayout := SpLayout composed.
-	
-	mainLayout newColumn: [ :column | 
 
-		"if the content area is not defined, place main message next to the main icon"
-		contentArea ifNotNil: [ 
-			mainMessage ifNotNil: [
-				mainMessagePresenter := (mainMessage isString or: [ mainMessage isText ]) 
-					ifTrue: [ self newLabel label: mainMessage ]
-					ifFalse: [ mainMessage ].
-				column add: #mainMessagePresenter ] ].
-		
-		column newRow: [ :row |		
-		mainIcon ifNotNil: [ 
-			mainIconPresenter := self newImage image: self mainIcon.
-			row add: #mainIconPresenter width: (self mainIcon width * 2) ]	.
-		
-		contentArea 
-			ifNotNil: [
-				contentAreaPresenter := (contentArea isString or: [ contentArea isText ]) 
-					ifTrue: [ self newLabel label: contentArea ]
-					ifFalse: [ contentArea ].
-				row add: #contentAreaPresenter ]
-			ifNil: [ 
-				mainMessage ifNotNil: [
-				mainMessagePresenter := (mainMessage isString or: [ mainMessage isText ]) 
-					ifTrue: [ self newLabel label: mainMessage ]
-					ifFalse: [ mainMessage ].
-				row add: #mainMessagePresenter ]  ] ].
+	"if the content area is not defined, place main message next to the main icon"
+	contentArea
+		ifNotNil: [ mainMessage
+				ifNotNil: [ mainMessagePresenter := (mainMessage isString or: [ mainMessage isText ]) ifTrue: [ self newLabel label: mainMessage ] ifFalse: [ mainMessage ].
+					mainLayout add: #mainMessagePresenter ] ].
 
-		column newRow: [ :row |	
-			moreOptionsArea ifNotNil: [
-				moreOptionsButton label: (moreOptionsVisible
-					ifFalse: [ self moreOptionsText ]
-					ifTrue: [ self lessOptionsText ]).
-				moreOptionsButton icon: (moreOptionsVisible
-					ifFalse: [ self iconNamed: #arrowDown ]
-					ifTrue: [ self iconNamed: #arrowUp ]).
-				
-				row add: #moreOptionsButton.
-				moreOptionsAreaPresenter := (moreOptionsArea isString or: [ moreOptionsArea isText ]) 
-					ifTrue: [ self newLabel label: moreOptionsArea ]
-					ifFalse: [ moreOptionsArea ]] .	
-			buttons keysAndValuesDo: [ :buttonKey :aButton |
-				row add: buttonKey ]].
-		
-		moreOptionsVisible ifTrue: [ 
-			column add: #moreOptionsAreaPresenter ].
-		
-		footnoteArea ifNotNil: [
-			column newRow: [ :row |	
-				footnoteIcon ifNotNil: [ 
-					footnoteIconPresenter := self newImage image: footnoteIcon.
-					row add: #footnoteIconPresenter width: (self footnoteIcon width * 2) ]	.
-			
-					footnoteAreaPresenter := (footnoteArea isString or: [ footnoteArea isText ]) 
-						ifTrue: [ self newLabel label: footnoteArea ]
-						ifFalse: [ footnoteArea ].
-					row add: #footnoteAreaPresenter ] ] ].
-		
-		defaultButtonId ifNotNil: [ 
-			(self buttonAt: defaultButtonId) takeKeyboardFocus ].
-	
+	row := SpBoxLayout newHorizontal.
+
+	mainIcon
+		ifNotNil: [ mainIconPresenter := self newImage image: self mainIcon.
+			row add: #mainIconPresenter withConstraints: [ :constraints | constraints width: self mainIcon width * 2 ] ].
+
+	contentArea
+		ifNotNil: [ contentAreaPresenter := (contentArea isString or: [ contentArea isText ]) ifTrue: [ self newLabel label: contentArea ] ifFalse: [ contentArea ].
+			row add: #contentAreaPresenter ]
+		ifNil: [ mainMessage
+				ifNotNil: [ mainMessagePresenter := (mainMessage isString or: [ mainMessage isText ]) ifTrue: [ self newLabel label: mainMessage ] ifFalse: [ mainMessage ].
+					row add: #mainMessagePresenter ] ].
+
+	mainLayout add: row.
+
+	row := SpBoxLayout newHorizontal.
+
+
+	moreOptionsArea
+		ifNotNil: [ moreOptionsButton label: (moreOptionsVisible ifFalse: [ self moreOptionsText ] ifTrue: [ self lessOptionsText ]).
+			moreOptionsButton icon: (self iconNamed: (moreOptionsVisible ifFalse: [ #arrowDown ] ifTrue: [ #arrowUp ])).
+
+			row add: #moreOptionsButton.
+			moreOptionsAreaPresenter := (moreOptionsArea isString or: [ moreOptionsArea isText ]) ifTrue: [ self newLabel label: moreOptionsArea ] ifFalse: [ moreOptionsArea ] ].
+	buttons keysAndValuesDo: [ :buttonKey :aButton | row add: buttonKey ].
+
+	mainLayout add: row.
+
+	moreOptionsVisible ifTrue: [ mainLayout add: #moreOptionsAreaPresenter ].
+
+	footnoteArea
+		ifNotNil: [ row := SpBoxLayout newHorizontal.
+			footnoteIcon
+				ifNotNil: [ footnoteIconPresenter := self newImage image: footnoteIcon.
+					row add: #footnoteIconPresenter withConstraints: [ :constraints | constraints width: self footnoteIcon width * 2 ] ].
+
+			footnoteAreaPresenter := (footnoteArea isString or: [ footnoteArea isText ]) ifTrue: [ self newLabel label: footnoteArea ] ifFalse: [ footnoteArea ].
+			row add: #footnoteAreaPresenter ].
+	mainLayout add: row.
+
+	defaultButtonId ifNotNil: [ (self buttonAt: defaultButtonId) takeKeyboardFocus ].
+
 	^ mainLayout
 ]
 
@@ -435,12 +388,6 @@ SpVersatileDialogPresenter >> moreOptionsText [
 SpVersatileDialogPresenter >> moreOptionsText: aText [
 
 	moreOptionsText := aText.
-]
-
-{ #category : #accessing }
-SpVersatileDialogPresenter >> presenterNamed: aString [
-
-	^ self additionalSubpresentersMap at: aString
 ]
 
 { #category : #accessing }

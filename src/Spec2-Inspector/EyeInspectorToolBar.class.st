@@ -16,14 +16,19 @@ Class {
 { #category : #specs }
 EyeInspectorToolBar class >> defaultSpec [
 	<spec>
-	^ SpLayout composed
-		newRow: [ :r | 
-			r
-				add: #previousButton width: 24;
-				add: #nextButton width: 28;
-				add: #inspectorChoice
-		];
-	yourself.
+	^ SpBoxLayout newHorizontal
+		add: #previousButton
+			withConstraints: [ :constraints | 
+			constraints
+				width: 24;
+				padding: 2 ];
+		add: #nextButton
+			withConstraints: [ :constraints | 
+			constraints
+				width: 24;
+				padding: 2 ];
+		add: #inspectorChoice;
+		yourself
 ]
 
 { #category : #accessing }
@@ -33,24 +38,34 @@ EyeInspectorToolBar >> history [
 
 { #category : #initialization }
 EyeInspectorToolBar >> initialize [
-	isUpdating := false.
 	super initialize.
+	isUpdating := false
+]
+
+{ #category : #initialization }
+EyeInspectorToolBar >> initializePresenter [
+	inspectorChoice whenSelectedItemChanged: [ :inspectorType | self preventUpdatesDuring: [ self inspectorType: inspectorType ] ]
 ]
 
 { #category : #initialization }
 EyeInspectorToolBar >> initializeWidgets [
-	" nothing to do"
+	inspectorChoice := self newDropList.
+	previousButton := self newButton.
+	nextButton := self newButton.
+
+	previousButton
+		label: '<';
+		action: [ self inspectorWrapper inspectPrevious.
+			self update ].
+	nextButton
+		label: '>';
+		action: [ self inspectorWrapper inspectNext.
+			self update ].
+	inspectorChoice displayBlock: [ :label | label ]
 ]
 
 { #category : #accessing }
 EyeInspectorToolBar >> inspectorChoice [
-	inspectorChoice
-		ifNil: [ 
-			inspectorChoice := self instantiate: SpDropListPresenter.
-			inspectorChoice
-				whenSelectedItemChanged: [ :inspectorType |
-					self preventUpdatesDuring: [
-						self inspectorType: inspectorType ]]].
 	^ inspectorChoice
 ]
 
@@ -76,14 +91,6 @@ EyeInspectorToolBar >> inspectorWrapper [
 
 { #category : #accessing }
 EyeInspectorToolBar >> nextButton [
-	nextButton
-		ifNil: [ 
-			nextButton := self instantiate: SpButtonPresenter.
-			nextButton 
-				label: '>';
-				action: [ 
-					self inspectorWrapper inspectNext.
-					self update. ]].
 	^ nextButton
 ]
 
@@ -98,44 +105,30 @@ EyeInspectorToolBar >> preventUpdatesDuring: aBlock [
 
 { #category : #accessing }
 EyeInspectorToolBar >> previousButton [
-	previousButton
-		ifNil: [ 
-			previousButton := self instantiate: SpButtonPresenter.
-			previousButton label: '<'.
-			previousButton
-				action: [ 
-					self inspectorWrapper inspectPrevious.
-					self update. ] ].
 	^ previousButton
 ]
 
 { #category : #'event-handling' }
 EyeInspectorToolBar >> update [
-	self preventUpdatesDuring: [ 
-		self updateInspectorChoice.
-		self updateInspectorType.
-		self previousButton enabled: self history hasPrevious.
-		self nextButton enabled: self history hasNext ]
+	self
+		preventUpdatesDuring: [ self updateInspectorChoice.
+			self updateInspectorType.
+			previousButton enabled: self history hasPrevious.
+			nextButton enabled: self history hasNext ]
 ]
 
 { #category : #'event-handling' }
 EyeInspectorToolBar >> updateInspectorChoice [
 	self inspectorTypes
 		ifNotNil: [ :variants | 
-			self inspectorChoice listItems = variants
-				ifTrue: [  ^ self ].
-			self inspectorChoice
-				items: variants;
-				displayBlock: [ :label | label ]]
+			inspectorChoice listItems = variants ifTrue: [ ^ self ].
+			inspectorChoice items: variants ]
 ]
 
 { #category : #'event-handling' }
 EyeInspectorToolBar >> updateInspectorType [
-	
-	
 	self inspectorType
 		ifNotNil: [ :inspectorClass | 
-			self inspectorChoice selectedItem = inspectorClass
-				ifTrue: [  ^ self ].
-			self inspectorChoice setSelectedItem: inspectorClass ].
+			inspectorChoice selectedItem = inspectorClass ifTrue: [ ^ self ].
+			inspectorChoice selectedItem: inspectorClass ]
 ]

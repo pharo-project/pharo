@@ -11,7 +11,7 @@ I provide shortcuts for the most common methods to avoid the use of the DoesNotU
 Class {
 	#name : #SpLabelledDropListButton,
 	#superclass : #SpLabelledContainer,
-	#category : #'Spec2-Deprecated'
+	#category : #'Spec2-Deprecated-Obsolete'
 }
 
 { #category : #specs }

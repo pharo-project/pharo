@@ -22,15 +22,14 @@ Class {
 	#name : #SpSliderPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'max',
-		'min',
-		'quantum',
-		'value',
-		'isChanging',
-		'absoluteValue',
-		'labelHolder',
-		'marksHolder',
-		'isHorizontal'
+		'#max => SpObservableSlot',
+		'#min => SpObservableSlot',
+		'#quantum => SpObservableSlot',
+		'#value => SpObservableSlot',
+		'#absoluteValue => SpObservableSlot',
+		'#isHorizontal',
+		'#label => SpObservableSlot',
+		'#marks => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -43,17 +42,16 @@ SpSliderPresenter class >> adapterName [
 
 { #category : #api }
 SpSliderPresenter >> absoluteValue [
-	"<api: #inspect>"
 	"Return the position of the slider in a scale between 0 and 1 despite of the min and max value"
-	^ absoluteValue value
+
+	^ absoluteValue
 ]
 
 { #category : #api }
 SpSliderPresenter >> absoluteValue: aFloat [
-	"<api: #float min: 0 max: 1 getter:#absoluteValue registration: #whenAbsoluteValueChanged:>"
 	"Set the position of the slider in a scale between 0 and 1 despite of the min and max value"
 
-	absoluteValue value: aFloat
+	absoluteValue := aFloat
 ]
 
 { #category : #initialization }
@@ -93,36 +91,38 @@ SpSliderPresenter >> color: aColor [
 
 { #category : #initialization }
 SpSliderPresenter >> initialize [
-	
+	| isChanging |
 	super initialize.
-	
+
 	isHorizontal := true.
-	marksHolder := OrderedCollection new asValueHolder.
-	max := 100 asValueHolder.
-	min := 0 asValueHolder.
-	quantum := 1 asValueHolder.
-	value := 0 asValueHolder.
-	absoluteValue := 0 asValueHolder.
-	labelHolder := '' asValueHolder.
+	marks := OrderedCollection new.
+	max := 100.
+	min := 0.
+	quantum := 1.
+	value := 0.
+	absoluteValue := 0.
+	label := ''.
 	isChanging := false.
-	
-	max whenChangedDo: [ :m | self changed: {#max:. m} ].
-	min whenChangedDo: [ :m | self changed: {#min:. m} ].
-	quantum whenChangedDo: [ :m | self changed: {#quantum:. m} ].
-	value whenChangedDo: [ :v | 
-		isChanging ifFalse: [ 
-			isChanging := true.
-			self absoluteValue: (self valueToAbsoluteValue: v).
-			self changed: { #scaledValue:. v}.
-			isChanging := false ].
-		self changed: #value ].
-	absoluteValue whenChangedDo: [ :v | 
-		isChanging ifFalse: [ 
-			isChanging := true.
-			self value: (self absoluteValueToValue: v).
-			self changed: { #value:. v}.
-			isChanging := false ] ].
-	labelHolder whenChangedDo: [ :v | self changed: #label ]
+
+	self whenMaxChangedDo: [ :m | self changed: {#max: . m} ].
+	self whenMinChangedDo: [ :m | self changed: {#min: . m} ].
+	self whenQuantumChangedDo: [ :m | self changed: {#quantum: . m} ].
+	self
+		whenValueChangedDo: [ :v | 
+			isChanging
+				ifFalse: [ isChanging := true.
+					self absoluteValue: (self valueToAbsoluteValue: v).
+					self changed: {#scaledValue: . v}.
+					isChanging := false ].
+			self changed: #value ].
+	self
+		whenAbsoluteValueChangedDo: [ :v | 
+			isChanging
+				ifFalse: [ isChanging := true.
+					self value: (self absoluteValueToValue: v).
+					self changed: {#value: . v}.
+					isChanging := false ] ].
+	self whenLabelChangedDo: [ :v | self changed: #label ]
 ]
 
 { #category : #api }
@@ -137,77 +137,68 @@ SpSliderPresenter >> isVertical [
 
 { #category : #api }
 SpSliderPresenter >> label [
-	"<api: #inspect>"
 	"Return the label of the slider"
 
-	^ labelHolder value
+	^ label
 ]
 
 { #category : #api }
 SpSliderPresenter >> label: aString [
-	"<api: #string getter: #label registration: #whenLabelChanged:>"
 	"Set the label of the slider"
-	
-	labelHolder value: aString
+
+	label := aString
 ]
 
 { #category : #api }
 SpSliderPresenter >> marks [
-	^ marksHolder value
+	^ marks
 ]
 
 { #category : #api }
 SpSliderPresenter >> marks: anObject [
-
-	marksHolder value: anObject
+	marks := anObject
 ]
 
 { #category : #api }
 SpSliderPresenter >> max [
-	"<api: #inspect>"
 	"Return the maximun value"
-	
-	^ max value
+
+	^ max
 ]
 
 { #category : #api }
 SpSliderPresenter >> max: anObject [
-	"<api: #integer min: 1 max: 100 getter:#max registration: #whenMaxChanged:>"
 	"Set the maximun value"
 
-	max value: anObject
+	max := anObject
 ]
 
 { #category : #api }
 SpSliderPresenter >> min [
-	"<api: #inspect>"
 	"Return the minimum value"
-	
-	^ min value
+
+	^ min
 ]
 
 { #category : #api }
 SpSliderPresenter >> min: anObject [
-	"<api: #integer min: 0 max: 99 getter:#min registration: #whenMinChanged:>"
 	"Set the minimum value"
-	
-	min value: anObject
+
+	min := anObject
 ]
 
 { #category : #api }
 SpSliderPresenter >> quantum [
-	"<api: #inspect>"
 	"Return the quantum betwen values"
 
-	^ quantum value
+	^ quantum
 ]
 
 { #category : #api }
 SpSliderPresenter >> quantum: aNumber [
-	"<api: #integer min: #min max: #max getter:#quantum registration: #whenQuantumChanged:>"
 	"Set the quantum betwen values"
 
-	quantum value: aNumber
+	quantum := aNumber
 ]
 
 { #category : #api }
@@ -225,19 +216,17 @@ SpSliderPresenter >> scaleValue: v [
 
 { #category : #api }
 SpSliderPresenter >> value [
-	"<api: #inspect>"
 	"Return the current value in a range between min and max"
 
-	^ value value
+	^ value
 ]
 
 { #category : #api }
 SpSliderPresenter >> value: aNumber [
-	"<api: #integer min: #min max: #max getter:#value registration: #whenValueChanged:>"
 	"Set the value in a range between min and max"
-	
-	value value == aNumber ifTrue: [ ^ self ].
-	value value: aNumber.
+
+	value = aNumber ifTrue: [ ^ self ].
+	value := aNumber
 ]
 
 { #category : #initialization }
@@ -249,47 +238,47 @@ SpSliderPresenter >> valueToAbsoluteValue: v [
 SpSliderPresenter >> whenAbsoluteValueChangedDo: aBlock [
 	"Block performed when the absolute value changed"
 
-	absoluteValue whenChangedDo: aBlock
+	self property: #absoluteValue whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSliderPresenter >> whenLabelChangedDo: aBlock [
 	"Block performed when the label changed"
 
-	labelHolder whenChangedDo: aBlock
+	self property: #label whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSliderPresenter >> whenMarksChangedDo: aBlock [
 	"Block performed when the label changed"
 
-	marksHolder whenChangedDo: aBlock
+	self property: #marks whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSliderPresenter >> whenMaxChangedDo: aBlock [ 
 	"Block performed when the maximum value changed"
 
-	max whenChangedDo: aBlock
+	self property: #max whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSliderPresenter >> whenMinChangedDo: aBlock [ 
 	"Block performed when the minimum value changed"
 
-	min whenChangedDo: aBlock
+	self property: #min whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSliderPresenter >> whenQuantumChangedDo: aBlock [ 
 	"Block performed when the quantum value changed"
 
-	quantum whenChangedDo: aBlock
+	self property: #quantum whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSliderPresenter >> whenValueChangedDo: aBlock [ 
 	"Block performed when the value changed"
 
-	value whenChangedDo: aBlock
+	self property: #value whenChangedDo: aBlock
 ]

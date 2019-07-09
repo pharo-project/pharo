@@ -1,7 +1,7 @@
 Class {
 	#name : #SpEditableListTest,
 	#superclass : #SpSmokeTestCase,
-	#category : #'Spec2-PolyWidgets-Tests'
+	#category : #'Spec2-PolyWidgets-Tests-Tests'
 }
 
 { #category : #running }

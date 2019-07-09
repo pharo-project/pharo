@@ -1,6 +1,11 @@
 Extension { #name : #SpTextInputFieldPresenter }
 
 { #category : #'*Spec2-Deprecated' }
+SpTextInputFieldPresenter >> actionToPerformHolder [
+	self deprecated: 'Spec should not provide a way to get its internals. actionToPerform is not a value holder anymore but an observable slot, thus, this method cannot return anything anymore.'
+]
+
+{ #category : #'*Spec2-Deprecated' }
 SpTextInputFieldPresenter >> beDecrypted [
 	self deprecated: 'Use #beText instead' transformWith: '`@receiver beDecrypted' -> '`@receiver beText'.
 	self beText
@@ -35,6 +40,11 @@ SpTextInputFieldPresenter >> ghostText [
 SpTextInputFieldPresenter >> ghostText: aText [
 	self deprecated: 'This API is too tight to Morph. Use #placeholder: instead.' transformWith: '`@receiver ghostText: `@statement' -> '`@receiver placeholder: `@statement'.
 	self placeholder: aText
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpTextInputFieldPresenter >> textHolder [
+	self deprecated: 'Nobody should access directly to internals of Spec. Now the text is an observable slot and not a value holder.'.
 ]
 
 { #category : #'*Spec2-Deprecated' }

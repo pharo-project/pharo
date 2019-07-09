@@ -38,6 +38,18 @@ SpAbstractListPresenter >> itemBeginsWithFilter [
 ]
 
 { #category : #'*Spec2-Deprecated' }
+SpAbstractListPresenter >> itemFilterBlock [
+	self deprecated: 'Use #itemFilter instead' transformWith: '`@receiver itemFilterBlock' -> '`@receiver itemFilter'.
+	^ self itemFilter
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractListPresenter >> itemFilterBlock: aBlock [
+	self deprecated: 'Use #itemFilter: instead' transformWith: '`@receiver itemFilterBlock: `@statements1' -> '`@receiver itemFilter: `@statements1'.
+	^ self itemFilter: aBlock
+]
+
+{ #category : #'*Spec2-Deprecated' }
 SpAbstractListPresenter >> itemSubstringFilter [
 	self deprecated: 'Use #enableItemSubstringFilter instead' transformWith: '`@receiver itemSubstringFilter' -> '`@receiver enableItemSubstringFilter'.
 	self enableItemSubstringFilter

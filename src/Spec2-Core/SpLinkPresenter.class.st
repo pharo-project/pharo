@@ -33,8 +33,8 @@ Class {
 	#name : #SpLinkPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'urlHolder',
-		'labelHolder'
+		'#label => SpObservableSlot',
+		'#url => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -44,11 +44,6 @@ SpLinkPresenter class >> adapterName [
 	^ #LinkAdapter
 ]
 
-{ #category : #specs }
-SpLinkPresenter class >> title [
-	^ 'Link presenter'
-]
-
 { #category : #initialization }
 SpLinkPresenter >> defaultColor [
 	^ nil
@@ -56,40 +51,37 @@ SpLinkPresenter >> defaultColor [
 
 { #category : #initialization }
 SpLinkPresenter >> initialize [
-
 	super initialize.
 
-	labelHolder := nil asValueHolder.
-	urlHolder := nil asValueHolder.
-	labelHolder whenChangedDo: [ self changed: #getText ]
+	self whenLabelChangedDo: [ self changed: #getText ]
 ]
 
 { #category : #api }
 SpLinkPresenter >> label [
-	^ labelHolder value ifNil: [ self url ]
+	^ label ifNil: [ self url ]
 ]
 
 { #category : #api }
 SpLinkPresenter >> label: aString [
-	^ labelHolder value: aString
-]
-
-{ #category : #accessing }
-SpLinkPresenter >> labelHolder [
-	^ labelHolder
+	^ label := aString
 ]
 
 { #category : #api }
 SpLinkPresenter >> url [
-	^ urlHolder value
+	^ url
 ]
 
 { #category : #api }
 SpLinkPresenter >> url: aString [
-	urlHolder value: aString
+	url := aString
 ]
 
-{ #category : #accessing }
-SpLinkPresenter >> urlHolder [
-	^ urlHolder
+{ #category : #enumerating }
+SpLinkPresenter >> whenLabelChangedDo: aBlock [
+	self property: #label whenChangedDo: aBlock
+]
+
+{ #category : #enumerating }
+SpLinkPresenter >> whenUrlChangedDo: aBlock [
+	self property: #url whenChangedDo: aBlock
 ]
