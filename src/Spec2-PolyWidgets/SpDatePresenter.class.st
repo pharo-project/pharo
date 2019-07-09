@@ -16,10 +16,10 @@ Class {
 	#name : #SpDatePresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'displayBlockHolder',
-		'chooseDateButton',
-		'dateModel',
-		'date'
+		'#chooseDateButton',
+		'#dateModel',
+		'#date',
+		'#displayBlock => SpObservableSlot'
 	],
 	#category : #'Spec2-PolyWidgets-Widgets'
 }
@@ -81,19 +81,17 @@ SpDatePresenter >> defaultDate [
 
 { #category : #api }
 SpDatePresenter >> displayBlock [
-	"<api: #inspect>"
 	"Return the one argument block used to wrap your domain specific items.
 	The block should return something that can be displayed in a list - like a String or a Text"
 	
-	^ displayBlockHolder value
+	^ displayBlock
 ]
 
 { #category : #api }
 SpDatePresenter >> displayBlock: aBlock [
-	"<api: #block getter:#displayBlock registration: #whenDisplayBlockChanged:>"
 	"Set the one argument block used to transfrom your date into a string"
-	
-	displayBlockHolder value: aBlock
+
+	displayBlock := aBlock
 ]
 
 { #category : #private }
@@ -104,11 +102,10 @@ SpDatePresenter >> iconMorph [
 
 { #category : #initialization }
 SpDatePresenter >> initialize [
-
 	super initialize.
-	displayBlockHolder := [ :object | object ifNotNil: [ object asStringOrText ] ifNil: '' ] asValueHolder.
-	displayBlockHolder whenChangedDo: [ self date: self date ].
-	self date: self defaultDate.
+	displayBlock := [ :object | object ifNotNil: [ object asStringOrText ] ifNil: '' ].
+	self property: #displayBlock whenChangedDo: [ self date: self date ].
+	self date: self defaultDate
 ]
 
 { #category : #initialization }

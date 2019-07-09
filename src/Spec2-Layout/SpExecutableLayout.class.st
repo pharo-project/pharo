@@ -37,20 +37,29 @@ SpExecutableLayout >> asSpLayout [
 
 { #category : #building }
 SpExecutableLayout >> buildAdapterFor: aPresenter bindings: bindings [
+
 	adapter := (aPresenter needRebuild or: [ aPresenter adapter isNil ])
-		ifTrue: [ (bindings adapterClass: self adapterName) adapt: aPresenter ]
-		ifFalse: [ aPresenter adapter
+		ifTrue: [ 
+			(bindings adapterClass: self adapterName) adapt: aPresenter ]
+		ifFalse: [ 
+			aPresenter adapter
 				removeSubWidgets;
 				yourself ].
 			
 	"Ensure we remove the flag `no need of rebuild` if it was set."
 	aPresenter needRebuild: true.
-
+	
 	adapter layout: self.
 
-	children
-		keysAndValuesDo:
-			[ :presenterNameOrLayout :constraints | "Since a layout can be composed (by other layouts), we can include a presenter or a layout" adapter add: (self resolvePresenter: presenterNameOrLayout model: aPresenter bindings: bindings) constraints: constraints ].
+	children keysAndValuesDo: [ :presenterNameOrLayout :constraints | 
+		"Since a layout can be composed (by other layouts), we can include a 
+		 presenter or a layout" 
+		adapter 
+			add: (self 
+				resolvePresenter: presenterNameOrLayout 
+				model: aPresenter 
+				bindings: bindings) 
+			constraints: constraints ].
 
 	^ adapter
 ]

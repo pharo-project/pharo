@@ -16,16 +16,22 @@ Class {
 		'searchPresenter',
 		'baseItems'
 	],
-	#category : #'Spec2-PolyWidgets-ListAndTree'
+	#category : #'Spec2-Deprecated-Replaced'
 }
 
 { #category : #specs }
 SpSearchableList class >> defaultSpec [
-
-	^ SpLayout composed
-		newRow: #searchPresenter height: self toolbarHeight;
-		add: #listPresenter top: self toolbarHeight;
+	^ SpBoxLayout newVertical
+		add: #searchPresenter withConstraints: [ :constraints | constraints height: self toolbarHeight ];
+		add: #listPresenter;
 		yourself
+]
+
+{ #category : #deprecation }
+SpSearchableList class >> isDeprecated [
+	"Now lists have a filter integrated in them."
+
+	^ true
 ]
 
 { #category : #initialization }

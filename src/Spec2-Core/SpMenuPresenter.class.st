@@ -27,12 +27,12 @@ Class {
 	#name : #SpMenuPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'groups',
-		'title',
-		'icon',
-		'autoRefresh',
-		'shortcutGroup',
-		'defaultGroup'
+		'#groups',
+		'#title',
+		'#icon',
+		'#autoRefresh => SpObservableSlot',
+		'#shortcutGroup',
+		'#defaultGroup'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -87,11 +87,6 @@ SpMenuPresenter >> addMenuGroup: aMenuGroup [
 		ifNotNil: [ aMenuGroup autoRefresh: self autoRefresh ]
 ]
 
-{ #category : #adding }
-SpMenuPresenter >> addTitle: aString [
-	title value: aString
-]
-
 { #category : #api }
 SpMenuPresenter >> applyTo: aModel [
 
@@ -100,14 +95,12 @@ SpMenuPresenter >> applyTo: aModel [
 
 { #category : #api }
 SpMenuPresenter >> autoRefresh [
-
-	^ autoRefresh value
+	^ autoRefresh
 ]
 
 { #category : #api }
 SpMenuPresenter >> autoRefresh: aBoolean [
-
-	autoRefresh value: aBoolean
+	autoRefresh := aBoolean
 ]
 
 { #category : #api }
@@ -147,32 +140,25 @@ SpMenuPresenter >> fromSpec: aSpec [
 
 { #category : #api }
 SpMenuPresenter >> icon [
-
-	^ icon value
+	^ icon
 ]
 
 { #category : #api }
 SpMenuPresenter >> icon: anIcon [
-
-	icon value: anIcon
+	icon := anIcon
 ]
 
 { #category : #api }
 SpMenuPresenter >> iconName: aSymbol [
-
-	icon value: (self iconNamed: aSymbol)
+	self icon: (self iconNamed: aSymbol)
 ]
 
 { #category : #initialization }
 SpMenuPresenter >> initialize [
-
 	super initialize.
 
-	groups := OrderedCollection new asValueHolder.
-	title := nil asValueHolder.
-	icon := nil asValueHolder.
-	autoRefresh := nil asValueHolder.
-	autoRefresh whenChangedDo: [ :aBoolean | self menuGroups do: [ :each | each autoRefresh: aBoolean ] ]
+	groups := OrderedCollection new.
+	self property: #autoRefresh whenChangedDo: [ :aBoolean | self menuGroups do: [ :each | each autoRefresh: aBoolean ] ]
 ]
 
 { #category : #testing }
@@ -183,8 +169,7 @@ SpMenuPresenter >> isMenuPresenter [
 
 { #category : #api }
 SpMenuPresenter >> menuGroups [
-
-	^ groups value
+	^ groups
 ]
 
 { #category : #api }
@@ -237,12 +222,10 @@ SpMenuPresenter >> shortcutGroup: aKeyGroup [
 
 { #category : #api }
 SpMenuPresenter >> title [
-
-	^ title value
+	^ title
 ]
 
 { #category : #api }
 SpMenuPresenter >> title: aString [
-
-	title value: aString
+	title := aString
 ]

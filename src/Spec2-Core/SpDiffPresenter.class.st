@@ -12,14 +12,14 @@ Class {
 	#name : #SpDiffPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'leftTextHolder',
-		'rightTextHolder',
-		'showOptions',
-		'contextClassHolder',
-		'showOnlyDestination',
-		'showOnlySource',
-		'leftLabelHolder',
-		'rightLabelHolder'
+		'#showOptions => SpObservableSlot',
+		'#showOnlyDestination => SpObservableSlot',
+		'#showOnlySource => SpObservableSlot',
+		'#contextClass => SpObservableSlot',
+		'#leftLabel => SpObservableSlot',
+		'#leftText => SpObservableSlot',
+		'#rightLabel => SpObservableSlot',
+		'#rightText => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -37,132 +37,107 @@ SpDiffPresenter >> clearUndoManager [
 
 { #category : #accessing }
 SpDiffPresenter >> contextClass [
-
-	^ contextClassHolder value
+	^ contextClass
 ]
 
 { #category : #accessing }
 SpDiffPresenter >> contextClass: anObject [
-
-	contextClassHolder value: anObject 
+	contextClass := anObject
 ]
 
 { #category : #initialization }
 SpDiffPresenter >> initialize [
-
 	super initialize.
-	
-	leftTextHolder := '' asValueHolder.
-	rightTextHolder := '' asValueHolder.
-	contextClassHolder := nil asValueHolder.
-	showOptions := true asValueHolder.
-	showOnlyDestination := false asValueHolder.
-	showOnlySource := false asValueHolder.	
-	leftLabelHolder := nil asValueHolder.
-	rightLabelHolder := nil asValueHolder.
-		
-	leftTextHolder whenChangedDo: [ :newText | self changed: #leftText: with: { newText } ].
-	rightTextHolder whenChangedDo: [ :newText | self changed: #rightText: with: { newText } ].
-	contextClassHolder whenChangedDo: [ :newClass | self changed: #contextClass: with: { newClass } ].	
-	showOptions whenChangedDo: [ :aBoolean | self changed: #showOptions: with: { aBoolean }].	
-	showOnlyDestination whenChangedDo: [:aBoolean | self changed: #showOnlyDestination: with: { aBoolean } ].
-	showOnlySource whenChangedDo: [:aBoolean | self changed: #showOnlySource: with: { aBoolean } ].
-	
-	leftLabelHolder whenChangedDo: [:newText | self changed: #leftLabel: with: { newText } ].
-	rightLabelHolder whenChangedDo: [:newText | self changed: #rightLabel: with: { newText } ].
 
+	leftText := ''.
+	rightText := ''.
+	showOptions := true.
+	showOnlyDestination := false.
+	showOnlySource := false.
+
+	self property: #leftText whenChangedDo: [ :newText | self changed: #leftText: with: {newText} ].
+	self property: #rightText whenChangedDo: [ :newText | self changed: #rightText: with: {newText} ].
+	self property: #contextClass whenChangedDo: [ :newClass | self changed: #contextClass: with: {newClass} ].
+	self property: #showOptions whenChangedDo: [ :aBoolean | self changed: #showOptions: with: {aBoolean} ].
+	self property: #showOnlyDestination whenChangedDo: [ :aBoolean | self changed: #showOnlyDestination: with: {aBoolean} ].
+	self property: #showOnlySource whenChangedDo: [ :aBoolean | self changed: #showOnlySource: with: {aBoolean} ].
+	self property: #leftLabel whenChangedDo: [ :newText | self changed: #leftLabel: with: {newText} ].
+	self property: #rightLabel whenChangedDo: [ :newText | self changed: #rightLabel: with: {newText} ]
 ]
 
 { #category : #accessing }
 SpDiffPresenter >> leftLabel [
-
-	^ leftLabelHolder value
+	^ leftLabel
 ]
 
 { #category : #accessing }
 SpDiffPresenter >> leftLabel: anObject [
-
-	leftLabelHolder value: anObject 
+	leftLabel := anObject
 ]
 
 { #category : #accessing }
 SpDiffPresenter >> leftText [
-
-	^ leftTextHolder value
+	^ leftText
 ]
 
 { #category : #accessing }
 SpDiffPresenter >> leftText: anObject [
-
-	leftTextHolder value: anObject 
+	leftText := anObject
 ]
 
 { #category : #accessing }
 SpDiffPresenter >> rightLabel [
-
-	^ rightLabelHolder value
+	^ rightLabel
 ]
 
 { #category : #accessing }
 SpDiffPresenter >> rightLabel: anObject [
-
-	rightLabelHolder value: anObject 
+	rightLabel := anObject
 ]
 
 { #category : #accessing }
 SpDiffPresenter >> rightText [
-
-	^ rightTextHolder value
+	^ rightText
 ]
 
 { #category : #accessing }
 SpDiffPresenter >> rightText: anObject [
-
-	rightTextHolder value: anObject 
+	rightText := anObject
 ]
 
 { #category : #api }
 SpDiffPresenter >> showBoth [
-
-	showOnlySource rawValue: false.
-	showOnlyDestination rawValue: false.
-	self changed: #showBoth with: { }
+	self property: #showOnlySource rawValue: false.
+	self property: #showOnlyDestination rawValue: false.
+	self changed: #showBoth with: {}
 ]
 
 { #category : #api }
 SpDiffPresenter >> showOnlyDestination [
-
-	^ showOnlyDestination value
+	^ showOnlyDestination
 ]
 
 { #category : #api }
 SpDiffPresenter >> showOnlyDestination: aBoolean [
-
-	showOnlyDestination rawValue: false.
-	showOnlyDestination value: aBoolean.
+	showOnlyDestination := aBoolean
 ]
 
 { #category : #api }
 SpDiffPresenter >> showOnlySource [
-
-	^ showOnlySource value
+	^ showOnlySource
 ]
 
 { #category : #api }
 SpDiffPresenter >> showOnlySource: aBoolean [
-
-	showOnlyDestination rawValue: false.
-	showOnlySource value: aBoolean
+	showOnlySource := aBoolean
 ]
 
 { #category : #api }
 SpDiffPresenter >> showOptions [
-
-	^ showOptions value
+	^ showOptions
 ]
 
 { #category : #api }
 SpDiffPresenter >> showOptions: aBoolean [
-
-	showOptions value: aBoolean
+	showOptions := aBoolean
 ]

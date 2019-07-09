@@ -24,10 +24,11 @@ TSpDynamicPresenter >> presenterAt: aName [
 
 { #category : #accessing }
 TSpDynamicPresenter >> presenterAt: aName ifAbsent: aBlock [
-
-	^ self basicPresenters 
-		at: aName 
-		ifAbsent: aBlock
+	^ self basicPresenters
+		at: aName
+		ifAbsent: [ [ self readSlotNamed: aName ]
+				on: SlotNotFound
+				do: aBlock ]
 ]
 
 { #category : #accessing }

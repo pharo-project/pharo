@@ -145,17 +145,11 @@ SpAbstractPresenter >> buildWithSpecLayout: aSpecLayout [
 
 { #category : #'private building' }
 SpAbstractPresenter >> defaultSpecSelector [
-	| selectors |
-	
-	selectors := 
-		(Pragma allNamed: #spec: from: self class class  to: SpAbstractPresenter class class),
-		(Pragma allNamed: #spec from: self class class to: SpAbstractPresenter class class).
-	
-	selectors ifEmpty: [ ^ #defaultSpec ].	
-	selectors size = 1 ifTrue: [ ^ selectors first methodSelector ].
-	^ (selectors detect: [ :each | (each argumentAt: 1) = #default ]) methodSelector
-	
+	(Pragma allNamed: #spec: from: self class class to: SpAbstractPresenter class class) detect: [ :each | (each argumentAt: 1) = #default ] ifFound: [ :pragma | ^ pragma methodSelector ].
 
+	^ (Pragma allNamed: #spec from: self class class to: SpAbstractPresenter class class)
+		ifEmpty: [ #defaultSpec ]
+		ifNotEmpty: [ :pragmas | pragmas size = 1 ifTrue: [ pragmas first methodSelector ] ifFalse: [ #defaultSpec ] ]
 ]
 
 { #category : #accessing }

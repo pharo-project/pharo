@@ -35,6 +35,5 @@ SpComponentListPresenter >> presenters [
 
 { #category : #initialization }
 SpComponentListPresenter >> presenters: aCollection [
-	presenters := aCollection.
-"	self notifyPropertyChanged: #presenters"
+	presenters := aCollection
 ]

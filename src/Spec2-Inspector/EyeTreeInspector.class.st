@@ -13,11 +13,10 @@ Class {
 { #category : #spec }
 EyeTreeInspector class >> inspectorSpec [
 	<spec>
-	
-	^ SpLayout composed
-		newRow: #tree bottom: 0.3;
-		addHSplitter;
-		newRow: #text top: 0.7;
+	^ SpPanedLayout newVertical
+		position: 70 percent;
+		add: #tree;
+		add: #text;
 		yourself
 ]
 

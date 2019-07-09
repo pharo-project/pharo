@@ -8,7 +8,7 @@ SpPresenter >> aboutText: aString [
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.'.
-	self window ifNil: [ aboutText value: aString ] ifNotNil: [ :window | window aboutText: aString ]
+	self window ifNil: [ aboutText := aString ] ifNotNil: [ :window | window aboutText: aString ]
 ]
 
 { #category : #'*Spec2-Deprecated' }
@@ -19,7 +19,7 @@ SpPresenter >> askOkToClose: aBoolean [
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.'.
-	self window ifNil: [ askOkToClose value: aBoolean ] ifNotNil: [ :window | window askOkToClose: aBoolean ]
+	self window ifNil: [ askOkToClose := aBoolean ] ifNotNil: [ :window | window askOkToClose: aBoolean ]
 ]
 
 { #category : #'*Spec2-Deprecated' }
@@ -134,7 +134,7 @@ SpPresenter >> title: aString [
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.'.
-	self window ifNil: [ titleHolder value: aString ] ifNotNil: [ :window | window title: aString ]
+	self window ifNil: [ titleHolder := aString ] ifNotNil: [ :window | window title: aString ]
 ]
 
 { #category : #'*Spec2-Deprecated' }
@@ -155,5 +155,5 @@ SpPresenter >> windowIcon: aForm [
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.'.
-	self window ifNil: [ windowIcon value: aForm ] ifNotNil: [ :window | window windowIcon: aForm ]
+	self window ifNil: [ windowIcon := aForm ] ifNotNil: [ :window | window windowIcon: aForm ]
 ]

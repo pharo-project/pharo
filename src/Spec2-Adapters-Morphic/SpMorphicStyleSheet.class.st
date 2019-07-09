@@ -55,6 +55,11 @@ SpMorphicStyleSheet class >> reset [
 ]
 
 { #category : #accessing }
+SpMorphicStyleSheet class >> theme [
+	^ Smalltalk ui theme
+]
+
+{ #category : #accessing }
 SpMorphicStyleSheet >> addClass: aSymbol style: aStyleSheet [
 
 	self 
@@ -148,6 +153,11 @@ SpMorphicStyleSheet >> propertyAt: aName put: aValue [
 	^ self properties 
 		at: aName 
 		put: aValue
+]
+
+{ #category : #accessing }
+SpMorphicStyleSheet >> theme [
+	^ self class theme
 ]
 
 { #category : #style }

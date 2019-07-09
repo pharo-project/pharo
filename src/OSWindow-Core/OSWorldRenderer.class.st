@@ -154,7 +154,7 @@ OSWorldRenderer >> driver [
 ]
 
 { #category : #operations }
-OSWorldRenderer >> fullscreenMode: aValue [.
+OSWorldRenderer >> fullscreenMode: aValue [
 
 	osWindow fullscreen: aValue.
 	self checkForNewScreenSize.

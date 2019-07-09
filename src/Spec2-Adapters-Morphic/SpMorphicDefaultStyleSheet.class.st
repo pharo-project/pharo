@@ -6,14 +6,12 @@ Class {
 
 { #category : #defaults }
 SpMorphicDefaultStyleSheet >> defaultButtonFontFamily [
-
-	^ Smalltalk ui theme buttonFont familyName
+	^ self theme buttonFont familyName
 ]
 
 { #category : #defaults }
 SpMorphicDefaultStyleSheet >> defaultButtonFontSize [
-
-	^ Smalltalk ui theme buttonFont pointSize
+	^ self theme buttonFont pointSize
 ]
 
 { #category : #initialization }

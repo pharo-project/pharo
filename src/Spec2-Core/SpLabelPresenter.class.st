@@ -16,8 +16,8 @@ Class {
 	#name : #SpLabelPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'labelHolder',
-		'emphasis'
+		'#emphasis',
+		'#label => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -56,37 +56,26 @@ SpLabelPresenter >> emphasis: anEmphasis [
 
 { #category : #initialization }
 SpLabelPresenter >> initialize [
-
 	super initialize.
 
-	labelHolder := '' asValueHolder.
+	label := ''.
 	emphasis := #().
-	labelHolder whenChangedDo: [ self changed: #getText ]
+	self whenLabelChangedDo: [ self changed: #getText ]
 ]
 
 { #category : #api }
 SpLabelPresenter >> label [
-	"<api: #inspect>"
-
-	^ labelHolder value
+	^ label
 ]
 
 { #category : #api }
 SpLabelPresenter >> label: aText [
-	"<api: #string getter: #label>"
 	"Set the text of the label"
-	
-	labelHolder value: aText
-]
 
-{ #category : #'api-valueHolder' }
-SpLabelPresenter >> labelHolder [
-	"To register actions to be done when the label changes."
-	^ labelHolder
+	label := aText
 ]
 
 { #category : #'api-events' }
 SpLabelPresenter >> whenLabelChangedDo: aValuable [
-
-	labelHolder whenChangedDo: aValuable
+	self property: #label whenChangedDo: aValuable
 ]

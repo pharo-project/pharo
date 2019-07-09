@@ -6,7 +6,7 @@ Ialso add support for on the fly refresh
 Class {
 	#name : #SpMorphicTreeColumnAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
-	#category : #'Spec2-Deprecated'
+	#category : #'Spec2-Deprecated-Adapters'
 }
 
 { #category : #deprecation }

@@ -413,14 +413,14 @@ ExternalType >> asPointerType [
 ]
 
 { #category : #converting }
-ExternalType >> asPointerType: pointerSize [
+ExternalType >> asPointerType: anotherPointerSize [
 	"convert the receiver into a pointer type"
 	| type |
 	type := self asPointerType.
-	^type pointerSize = pointerSize
+	^type pointerSize = anotherPointerSize
 		ifTrue: [type]
 		ifFalse:
-			[type copy pointerSize: pointerSize; yourself]
+			[type copy pointerSize: anotherPointerSize; yourself]
 ]
 
 { #category : #accessing }

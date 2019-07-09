@@ -5,42 +5,42 @@ Class {
 	#name : #SpSearchableTree,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'inputField',
-		'roots',
-		'tree',
-		'label',
-		'button'
+		'#inputField',
+		'#roots => SpObservableSlot',
+		'#tree',
+		'#button'
 	],
 	#category : #'Spec2-PolyWidgets-ListAndTree'
 }
 
 { #category : #specs }
 SpSearchableTree class >> defaultSpec [
-	<spec: #default>
-	
-	^ SpLayout composed
-		newRow: [:r |
-			r
-			"add: #label width: 50;"
-			add: #inputField;
-			add: #button width: 25 ] height: 25;
-		newRow: #tree top: 25;
-		yourself
+	^ self searchAtBottom
 ]
 
 { #category : #specs }
 SpSearchableTree class >> searchAtBottom [
-	<spec: #default>
-	
-	^ SpLayout composed
-		newColumn: [:c |
-			c 
-				add: #tree;
-				newRow: [:r |
-					r
-					"add: #label width: 50;"
-					add: #inputField;
-					add: #button width: 25 ] height: 25 ];
+	<spec>
+	^ SpBoxLayout newVertical
+		add: #tree;
+		add:
+			(SpBoxLayout newHorizontal
+				add: #inputField;
+				add: #button withConstraints: [ :constraints | constraints width: 25 ])
+			withConstraints: [ :constraints | constraints height: 25 ];
+		yourself
+]
+
+{ #category : #specs }
+SpSearchableTree class >> searchAtTop [
+	<spec>
+	^ SpBoxLayout newVertical
+		add:
+			(SpBoxLayout newHorizontal
+				add: #inputField;
+				add: #button withConstraints: [ :constraints | constraints width: 25 ])
+			withConstraints: [ :constraints | constraints height: 25 ];
+		add: #tree;
 		yourself
 ]
 
@@ -130,10 +130,9 @@ SpSearchableTree >> iconBlock: aBlock [
 
 { #category : #initialization }
 SpSearchableTree >> initialize [
-
 	super initialize.
 
-	roots := OrderedCollection new asValueHolder
+	roots := OrderedCollection new
 ]
 
 { #category : #initialization }
@@ -146,7 +145,6 @@ SpSearchableTree >> initializePresenter [
 SpSearchableTree >> initializeWidgets [
 	tree := self newTree.
 	inputField := self newTextInput.
-	label := self newLabel.
 	button := self newButton.
 	tree
 		rootNodeHolder: [ :item | 
@@ -162,9 +160,6 @@ SpSearchableTree >> initializeWidgets [
 		icon: (self iconNamed: #smallFindIcon);
 		state: false;
 		action: [ inputField accept ].
-	label
-		label: 'Search:';
-		color: Color black.
 	inputField
 		placeholder: 'Search';
 		entryCompletion: nil;
@@ -189,11 +184,6 @@ SpSearchableTree >> isCheckList: aBoolean [
 SpSearchableTree >> keyStrokeAction: aBlock [
 
 	tree keyStrokeAction: aBlock
-]
-
-{ #category : #accessing }
-SpSearchableTree >> label [
-	^ label
 ]
 
 { #category : #api }
@@ -252,8 +242,7 @@ SpSearchableTree >> roots [
 
 { #category : #api }
 SpSearchableTree >> roots: aCollection [
-
-	roots value: aCollection asOrderedCollection.	
+	roots := aCollection asOrderedCollection.
 	tree roots: aCollection asOrderedCollection
 ]
 
@@ -332,8 +321,7 @@ SpSearchableTree >> whenMenuChanged: aBlock [
 
 { #category : #'api-events' }
 SpSearchableTree >> whenRootsChanged: aBlock [
-
-	roots whenChangedDo: aBlock
+	self property: #roots whenChangedDo: aBlock
 ]
 
 { #category : #'list api-events' }
