@@ -110,7 +110,7 @@ Watchpoint >> install [
 				arguments: #(value);
 				control: #after;
 				condition: [ recording ];
-				option: #(#+ optionWeakAfter +optionAnnounce).
+				option: #(#+ optionWeakAfter #+ optionAnnounce).
 	node link: link.
 	self class allWatchpoints at: node put: self.
 ]
