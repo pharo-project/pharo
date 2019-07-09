@@ -144,7 +144,7 @@ RecentMessageList >> aMethodHasBeenRemoved: aMethodEvent [
 ]
 
 { #category : #actions }
-RecentMessageList >> addMethodReference: aMethodReference. [
+RecentMessageList >> addMethodReference: aMethodReference [
 
 	self addMethodReferenceSilently: aMethodReference.
 	self checkSize.

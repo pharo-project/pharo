@@ -68,7 +68,7 @@ GradientFillStyle >> changeColorSelector: aSymbol hand: aHand morph: aMorph orig
 ]
 
 { #category : #'*Morphic-Base-Balloon' }
-GradientFillStyle >> changeFirstColorIn: aMorph event: evt [.
+GradientFillStyle >> changeFirstColorIn: aMorph event: evt [
 	^self changeColorOf: aMorph rampIndex: 1
 ]
 

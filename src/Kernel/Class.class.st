@@ -270,7 +270,7 @@ Class >> category [
 			ifTrue: [ ^symbol ] ].
 	result := (self environment organization categoryOfElement: self name)
 		ifNil: [ #Unclassified ]
-		ifNotNil: #yourself.
+		ifNotNil: [:value | value].
 	self basicCategory: result.
 	
 	^ result

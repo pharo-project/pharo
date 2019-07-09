@@ -11,7 +11,7 @@ Class {
 GLMSimpleRubricExample >> presentation [
 	^ GLMCompositePresentation new
 		with: [ :a | 
-			| t seg |
+			| t |
 			t := a text.
 			t withLineNumbers: true.
 			t withAnnotation: true.

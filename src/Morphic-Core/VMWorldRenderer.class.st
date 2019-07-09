@@ -185,7 +185,7 @@ VMWorldRenderer >> forceDisplayUpdate [
 ]
 
 { #category : #operations }
-VMWorldRenderer >> fullscreenMode: aValue [.
+VMWorldRenderer >> fullscreenMode: aValue [
 
 	Display fullscreenMode: aValue.
 	self checkForNewScreenSize.
