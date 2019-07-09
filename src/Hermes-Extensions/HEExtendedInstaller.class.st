@@ -25,12 +25,12 @@ HEExtendedInstaller >> duplicationMode: anObject [
 ]
 
 { #category : #'validating existance' }
-HEExtendedInstaller >> existingClass: aHEClass. [
+HEExtendedInstaller >> existingClass: aHEClass [
 	^ duplicationMode existingClass: aHEClass on: self.
 ]
 
 { #category : #'validating existance' }
-HEExtendedInstaller >> existingTrait: aHETrait. [
+HEExtendedInstaller >> existingTrait: aHETrait [
 	^ duplicationMode existingTrait: aHETrait on: self.
 ]
 

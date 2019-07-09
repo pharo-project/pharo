@@ -12,7 +12,7 @@ NautilusRefactoring >> accessorsInstVarNamed: aVariableName from: aClass [
 ]
 
 { #category : #'*SmartSuggestions' }
-NautilusRefactoring >> privateAccessorsClassVarNamed: aVariableName from:  aClass. [
+NautilusRefactoring >> privateAccessorsClassVarNamed: aVariableName from:  aClass [
 	^ RBCreateAccessorsForVariableRefactoring 
 			model: environment
 			variable: aVariableName
@@ -21,7 +21,7 @@ NautilusRefactoring >> privateAccessorsClassVarNamed: aVariableName from:  aClas
 ]
 
 { #category : #'*SmartSuggestions' }
-NautilusRefactoring >> privateAccessorsInstVarNamed: aVariableName from:  aClass. [
+NautilusRefactoring >> privateAccessorsInstVarNamed: aVariableName from:  aClass [
 	^ RBCreateAccessorsForVariableRefactoring 
 			model: environment
 			variable: aVariableName
