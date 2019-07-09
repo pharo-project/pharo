@@ -1120,9 +1120,9 @@ File >> checkWritableFilesystem [
 
 	"We need to check if the image is in the read-only mode. While this is a responsibility of
 	the disk FileSystem that may not be installed in the image, we need to do an ugly workaround
-	using #canUnderstand"
+	using #respondsTo:"
 
-	((FileSystem canUnderstand: #disk) and: [ FileSystem disk isWritable not ]) ifTrue: [ 
+	((FileSystem respondsTo: #disk) and: [ FileSystem disk isWritable not ]) ifTrue: [ 
 		(ReadOnlyFileException new
 			messageText: 'Attempt to open file ' , name, ' as writable on a read-only file system') signal].
 
