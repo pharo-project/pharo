@@ -163,7 +163,7 @@ ExternalAddress >> fromInteger: address [
 	| sz pointer |
 	sz := self size.
 	pointer := ByteArray new: sz.
-	pointer integerAt: 1 put: address size: sz signed: false. .
+	pointer integerAt: 1 put: address size: sz signed: false.
 	self basicAt: 1 put: (pointer byteAt: 1);
 		basicAt: 2 put: (pointer byteAt: 2);
 		basicAt: 3 put: (pointer byteAt: 3);
