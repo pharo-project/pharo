@@ -26,7 +26,7 @@ Class {
 GTPlayBook class >> cacheDirectory [
 	" lazy initialize the cache and always ensure its existence - especially while the image is running "
 	cacheDirectory ifNil: [ cacheDirectory := self defaultCacheDirectory ].
-	cacheDirectory fileSystem isWritable ifFalse: [ ^ nil ].
+	cacheDirectory fileSystem isWritable ifFalse: [ ^ cacheDirectory ].
 	^ cacheDirectory ensureCreateDirectory
 ]
 

@@ -1,5 +1,5 @@
 "
-I'm a specific store for macOS file systems that allows only read-only access
+I'm a specific store for macOS file systems that allows only read-only access. All read-only DiskStore subclasses share the same behavior. Usage of traits would be appropriate here, but it is not used because the kernel should not contain traits.
 "
 Class {
 	#name : #ReadOnlyMacStore,
