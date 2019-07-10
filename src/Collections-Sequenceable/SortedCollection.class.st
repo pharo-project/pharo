@@ -76,10 +76,9 @@ Class {
 
 { #category : #'instance creation' }
 SortedCollection class >> sortBlock: aBlock [ 
-	"Answer an instance of me such that its elements are sorted according to 
-	the criterion specified in aBlock."
+	"Answer an instance of me such that its elements are sorted according to the criterion specified in aBlock."
 
-	^(super new: 10) sortBlock: aBlock
+	^self new sortBlock: aBlock
 ]
 
 { #category : #comparing }
@@ -177,7 +176,7 @@ SortedCollection >> defaultSort: i to: j [
 				 l := j.
 				 [[l := l - 1.  k <= l and: [dij <= (array at: l)]]
 				   whileTrue.  "i.e. while dl succeeds dij"
-				  [k := k + 1.  k <= l and: [(array at: k) <= dij]]
+				  [k := k + 1.  k < j and: [(array at: k) <= dij]]
 				   whileTrue.  "i.e. while dij succeeds dk"
 				  k <= l]
 				   whileTrue:
@@ -195,6 +194,19 @@ SortedCollection >> flatCollect: aBlock [
 	of collection for each element. Equivalent to the lisp's mapcan"
 	
 	^ self flatCollect: aBlock as: OrderedCollection
+]
+
+{ #category : #enumerating }
+SortedCollection >> groupedBy: aBlock [
+	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species."
+	| groups |
+	groups := OrderedDictionary new.
+	self do: [ :each |
+		(groups at: (aBlock value: each) ifAbsentPut: [ OrderedCollection new ]) add: each ].
+	groups associationsDo: [ :association |
+			"need to make sure to create the collection with the same sortblock"
+			association value: (self copyEmpty addAll: association value ; yourself) ].
+	^ groups
 ]
 
 { #category : #private }
@@ -233,8 +245,14 @@ SortedCollection >> join: aCollection [
 { #category : #'math functions' }
 SortedCollection >> median [
 	"Return the middle element, or as close as we can get."
-
-	^ self at: self size + 1 // 2
+	"{1 . 2 . 3 . 4 . 5} asSortedCollection  median >>> 3"
+	
+	| size middle |
+ 	size := self size.
+ 	middle := (size + 1) // 2.
+ 	^ size even
+			ifTrue: [ ((self at: middle) + (self at: middle + 1)) / 2 ]
+			ifFalse: [ self at: middle ]
 ]
 
 { #category : #private }
@@ -290,7 +308,7 @@ SortedCollection >> sort: i to: j [
 				 l := j.
 				 [[l := l - 1.  k <= l and: [sortBlock value: dij value: (array at: l)]]
 				   whileTrue.  "i.e. while dl succeeds dij"
-				  [k := k + 1.  k <= l and: [sortBlock value: (array at: k) value: dij]]
+				  [k := k + 1.  k < j and: [sortBlock value: (array at: k) value: dij]]
 				   whileTrue.  "i.e. while dij succeeds dk"
 				  k <= l]
 				   whileTrue:

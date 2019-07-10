@@ -31,6 +31,12 @@ MethodMapTests >> inlinedBlockSourceNode [
 
 ]
 
+{ #category : #helpers }
+MethodMapTests >> parseExpression: aString [
+
+	^ RBParser parseExpression: aString
+]
+
 { #category : #'testing - ast mapping' }
 MethodMapTests >> testBlockAndContextSourceNode [
 		
@@ -51,7 +57,7 @@ MethodMapTests >> testBlockAndContextSourceNode [
 MethodMapTests >> testBlockSourceNode [
 	| sourceNode |
 	sourceNode := [ 1 + 2 ] sourceNode.
-	self assert: sourceNode equals: (RBParser parseExpression: '[ 1 + 2 ]').
+	self assert: sourceNode equals: (self parseExpression: '[ 1 + 2 ]').
 
 
 ]
@@ -60,7 +66,7 @@ MethodMapTests >> testBlockSourceNode [
 MethodMapTests >> testBlockWithArgAndEnclosedBlockSourceNode [
 	| sourceNode |
 	sourceNode := [ :arg |  [ arg ] ] sourceNode.
-	self assert: sourceNode equals: (RBParser parseExpression: '[ :arg | [ arg ] ]').
+	self assert: sourceNode equals: (self parseExpression: '[ :arg | [ arg ] ]').
 
 ]
 
@@ -68,7 +74,7 @@ MethodMapTests >> testBlockWithArgAndEnclosedBlockSourceNode [
 MethodMapTests >> testBlockWithEnclosedBlockSourceNode [
 	| sourceNode |
 	sourceNode := [ [ ] ] sourceNode.
-	self assert: sourceNode equals: (RBParser parseExpression: '[ [ ] ]').
+	self assert: sourceNode equals: (self parseExpression: '[ [ ] ]').
 
 ]
 
@@ -76,7 +82,7 @@ MethodMapTests >> testBlockWithEnclosedBlockSourceNode [
 MethodMapTests >> testBlockWithTempsSourceNode [
 	| sourceNode |
 	sourceNode := [ | t1 t2 | ] sourceNode.
-	self assert: sourceNode equals: (RBParser parseExpression: '[ | t1 t2 | ]').
+	self assert: sourceNode equals: (self parseExpression: '[ | t1 t2 | ]').
 
 ]
 
@@ -169,7 +175,7 @@ MethodMapTests >> testMethodSourceNodeAtInitialPC [
 
 { #category : #'testing - ast mapping' }
 MethodMapTests >> testMethodSourceNodeAtPC [
-	self assert: (((Object>>#halt) sourceNodeForPC:  22) isKindOf: RBMessageNode).
+	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: RBMessageNode).
 
 ]
 
@@ -190,7 +196,7 @@ MethodMapTests >> testSimpleSourceMapping [
 
 	method := Object>>('ha', 'lt') asSymbol.
 
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: 23.
+	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: (Smalltalk vm for32bit: 23 for64bit: 43).
 	highlight := method sourceCode copyFrom:  range first to: range last.
 	self assert: highlight equals: 'now'.
 
@@ -205,9 +211,15 @@ MethodMapTests >> testSourceMappingBlock [
 	method := MethodMapExamples>>#exampleTempNamedCopying.
 	
 	"Cannot check for class since those encoders are changing names all the time..."
-	pcs := (method encoderClass name endsWith: 'SistaV1')
-		ifTrue: [ 41 to: 45 ]
-		ifFalse: [ 42 to: 46 ].
+	pcs := (Smalltalk vm 
+		for32bit: [
+			(method encoderClass name endsWith: 'SistaV1')
+				ifTrue: [ 41 to: 45 ]
+				ifFalse: [ 42 to: 46 ] ] 
+		for64bit: [
+			(method encoderClass name endsWith: 'SistaV1')
+				ifTrue: [ 73 to: 77 ]
+				ifFalse: [ 74 to: 78 ] ]).		
 	
 	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs first.
 	highlight := method sourceCode copyFrom:  range first to: range last.
@@ -255,5 +267,5 @@ MethodMapTests >> testThisContextSourceNodeInInlinedMessage [
 	| inlinedBlockSourceNode |
 	inlinedBlockSourceNode := self inlinedBlockSourceNode.
 	self assert: (inlinedBlockSourceNode isKindOf: RBBlockNode).
-	self assert: inlinedBlockSourceNode equals: (RBParser parseExpression: '[ :i | ^ thisContext sourceNode ]')
+	self assert: inlinedBlockSourceNode equals: (self parseExpression: '[ :i | ^ thisContext sourceNode ]')
 ]

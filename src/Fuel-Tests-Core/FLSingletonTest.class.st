@@ -4,7 +4,7 @@ SUnit tests for fuel serialization of singletons
 Class {
 	#name : #FLSingletonTest,
 	#superclass : #FLSerializationTest,
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #running }

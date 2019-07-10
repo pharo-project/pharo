@@ -61,8 +61,8 @@ RBMessageNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBMessageNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitMessageNode: self
+RBMessageNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitMessageNode: self
 ]
 
 { #category : #accessing }
@@ -216,6 +216,14 @@ RBMessageNode >> lastIsReturn [
 		and: [ arguments last isBlock and: [ arguments last body lastIsReturn ]]] 
 ]
 
+{ #category : #accessing }
+RBMessageNode >> leftmostChainReceiver [
+
+	^ self receiver isMessage
+		ifTrue: [ self receiver receiver ]
+		ifFalse: [ self receiver ]
+]
+
 { #category : #matching }
 RBMessageNode >> match: aNode inContext: aDictionary [ 
 	aNode class = self class ifFalse: [^false].
@@ -266,7 +274,7 @@ RBMessageNode >> receiver: aValueNode [
 	receiver parent: self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBMessageNode >> receiver: aValueNode selector: aSelector keywordsPositions: positionList arguments: valueNodes [
 	aSelector numArgs == valueNodes size
 		ifFalse: 
@@ -277,6 +285,18 @@ RBMessageNode >> receiver: aValueNode selector: aSelector keywordsPositions: pos
 		arguments: valueNodes;
 		selector: aSelector;
 		keywordsPositions: positionList.
+]
+
+{ #category : #'adding/removing' }
+RBMessageNode >> removeFromTree [
+
+	self parent removeNode: self
+]
+
+{ #category : #'adding/removing' }
+RBMessageNode >> removeNode: aNode [
+
+	self replaceNode: aNode withNode: aNode receiver
 ]
 
 { #category : #accessing }
@@ -379,6 +399,13 @@ RBMessageNode >> selector [
 RBMessageNode >> selector: aSelector [
 	keywordsPositions := nil.
 	selector := aSelector asSymbol.
+]
+
+{ #category : #accessing }
+RBMessageNode >> selectorInterval [
+	| positions |
+	positions := self keywordsIntervals. 
+	^positions first first to: positions last last.
 ]
 
 { #category : #accessing }

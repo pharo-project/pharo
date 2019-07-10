@@ -22,30 +22,30 @@ AthensBalloonStrokePaint >> athensFillRectangle: aRect on: aCanvas [
 
 { #category : #'setting cap styles' }
 AthensBalloonStrokePaint >> capButt [
-	self flag:#todo
+	self flag: #pharoTodo
 ]
 
 { #category : #'setting cap styles' }
 AthensBalloonStrokePaint >> capRound [
-	self flag:#todo
+	self flag: #pharoTodo
 ]
 
 { #category : #'setting cap styles' }
 AthensBalloonStrokePaint >> capSquare [
-	self flag:#todo
+	self flag: #pharoTodo
 ]
 
 { #category : #'setting join styles' }
 AthensBalloonStrokePaint >> joinBevel [
-	self flag:#todo
+	self flag: #pharoTodo
 ]
 
 { #category : #'setting join styles' }
 AthensBalloonStrokePaint >> joinMiter [
-	self flag:#todo
+	self flag: #pharoTodo
 ]
 
 { #category : #'setting join styles' }
 AthensBalloonStrokePaint >> joinRound [
-	self flag:#todo
+	self flag: #pharoTodo
 ]

@@ -17,7 +17,7 @@ Class {
 		'package',
 		'doIts'
 	],
-	#category : #'Ring-Deprecated-ChunkImporter'
+	#category : #'Ring-Deprecated-ChunkImporter-Base'
 }
 
 { #category : #'instance creation' }
@@ -107,14 +107,14 @@ RingChunkImporter >> fileInFrom: aStream [
 { #category : #reading }
 RingChunkImporter >> fromFileNamed: aName [
 	
-	package := RGPackage named: aName.
+	package := RGPackageDefinition named: aName.
 	self fileInFrom: aName asFileReference readStream.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RingChunkImporter >> initialize [
 	super initialize.
-	package := RGPackage named: 'ChangeSet'.
+	package := RGPackageDefinition named: 'ChangeSet'.
 	doIts := Set new.
 ]
 

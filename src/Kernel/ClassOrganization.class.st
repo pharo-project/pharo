@@ -6,10 +6,10 @@ Class {
 	#name : #ClassOrganization,
 	#superclass : #Object,
 	#instVars : [
-		'comment',
 		'commentStamp',
 		'protocolOrganizer',
-		'organizedClass'
+		'organizedClass',
+		'commentRemoteString'
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -140,8 +140,8 @@ ClassOrganization >> classify: selector under: aProtocolName suppressIfDefault: 
 { #category : #accessing }
 ClassOrganization >> comment [
 
-	comment ifNil: [^ ''].
-	^ comment string ifNil: ['']
+	commentRemoteString ifNil: [^ ''].
+	^ commentRemoteString string ifNil: ['']
 ]
 
 { #category : #accessing }
@@ -149,7 +149,7 @@ ClassOrganization >> comment: aString [
 	"Store the comment, aString, associated with the object that refers to the 
 	receiver."
 
-	comment := aString isRemoteString
+	commentRemoteString := aString isRemoteString
 		ifTrue: [ aString ]
 		ifFalse: [ 
 			aString isEmptyOrNil
@@ -160,7 +160,7 @@ ClassOrganization >> comment: aString [
 { #category : #'backward compatibility' }
 ClassOrganization >> commentRemoteString [
 
-	^ comment
+	^ commentRemoteString
 ]
 
 { #category : #accessing }
@@ -180,7 +180,7 @@ ClassOrganization >> extensionProtocols [
 
 { #category : #testing }
 ClassOrganization >> hasComment [
-	^ self comment isEmptyOrNil not 
+	^ self commentRemoteString isNotNil
 ]
 
 { #category : #'backward compatibility' }

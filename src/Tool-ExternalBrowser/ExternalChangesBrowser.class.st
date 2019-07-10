@@ -114,7 +114,7 @@ ExternalChangesBrowser class >> serviceBrowseCSOrSTFile [
 		selector: #openOnStream:
 		description: 'Open a changelist tool on this file'
 		buttonLabel: 'Changes')
-		argumentGetter: [ :stream | stream readOnlyStream ]
+		argumentGetter: [ :stream | stream readStream ]
 ]
 
 { #category : #'file service' }
@@ -177,13 +177,13 @@ ExternalChangesBrowser >> changeSetName: aFileName [
 	changes items: changeSet codeDeclarations.
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ExternalChangesBrowser >> changes [
 
 	^ changes
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ExternalChangesBrowser >> codePane [
 
 	^ codePane
@@ -204,7 +204,7 @@ ExternalChangesBrowser >> compareToCurrent: aMethodDeclaration [
 		inWindowLabeled: 'Comparison to Current Version'
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ExternalChangesBrowser >> deselectAllButton [
 
 	^ deselectAllButton
@@ -216,7 +216,7 @@ ExternalChangesBrowser >> fileIn: aCodeDeclaration [
 	aCodeDeclaration do: #import.
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ExternalChangesBrowser >> fileInSelectedButton [
 
 	^ fileInSelectedButton
@@ -261,7 +261,7 @@ ExternalChangesBrowser >> initializeWidgets [
 	codePane := self newCode.
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ExternalChangesBrowser >> selectAllButton [
 
 	^ selectAllButton

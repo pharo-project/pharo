@@ -30,7 +30,8 @@ Class {
 		'extensibleProperties',
 		'changeComparers',
 		'changes',
-		'metaSuperclass'
+		'metaSuperclass',
+		'superclassResolver'
 	],
 	#classVars : [
 		'BuilderEnhancer'
@@ -62,6 +63,7 @@ ShiftClassBuilder >> addChangeComparer: aChangeComparer [
 ShiftClassBuilder >> build [	
 	self tryToFillOldClass.
 	self detectBuilderEnhancer.
+	self builderEnhancer validateRedefinition: self oldClass. 
 	
 	self validateSuperclass.
 	self compareWithOldClass.
@@ -183,19 +185,12 @@ ShiftClassBuilder >> compareWithOldClass [
 
 { #category : #compiling }
 ShiftClassBuilder >> compileMethods [
+	| toRemove |
 	newClass compileAllFrom: self oldClass.
 
-]
+	toRemove := newClass organization allMethodSelectors reject: [ :aSelector | newClass includesSelector: aSelector ].
+	toRemove do: [ :aSelector | newClass organization removeElement: aSelector  ]
 
-{ #category : #copying }
-ShiftClassBuilder >> copyClassSlotsFromExistingClass [
-	"Ugly helper method: I copy over the class slots of the class in my builder environment."
-
-	| anOldClass oldSlots |
-	anOldClass := self environment at: name ifAbsent: [ ^ self ].
-
-	oldSlots := anOldClass class classLayout slotScope visibleSlots.
-	self classSlots:(oldSlots select: #isLocal thenCollect: [ :e | e copy index: nil; yourself ])
 ]
 
 { #category : #building }
@@ -222,7 +217,7 @@ ShiftClassBuilder >> createClass [
 
 { #category : #building }
 ShiftClassBuilder >> createMetaclass [
-	newMetaclass := self metaclassClass new.
+	newMetaclass := self builderEnhancer newMetaclass: self.
 	
 	self builderEnhancer 
 		configureMetaclass: newMetaclass 	
@@ -291,12 +286,12 @@ ShiftClassBuilder >> fillFor: aClass [
 		superclass: aClass superclass;
 		name: aClass getName;
 		layoutClass: aClass classLayout class;
-		slots: aClass localSlots ;
-		sharedVariablesFromString: aClass classVariablesString;
+		slots: aClass localSlots;
+		classSlots: aClass class localSlots;
+		sharedVariables: aClass classVariables;
 		sharedPools: aClass sharedPoolsString;
 		category: aClass category;
 		environment: aClass environment;
-		copyClassSlotsFromExistingClass;
 		oldClass: aClass.
 		
 	self builderEnhancer fillBuilder: self from: aClass.
@@ -312,6 +307,7 @@ ShiftClassBuilder >> hasToMigrateInstances [
 ShiftClassBuilder >> initialize [
 	super initialize.
 	
+	self useStrictSuperclass.
 	superclassName := #Object.
 
 	layoutDefinition := ShLayoutDefinition new.
@@ -321,15 +317,15 @@ ShiftClassBuilder >> initialize [
 	
 	changeComparers := OrderedCollection new.
 	changes := Set new.
+	
+	category := 'Unclassified'
 ]
 
 { #category : #building }
 ShiftClassBuilder >> installSlots [
 	newClass classLayout slots do: [ :each | each installingIn: newClass ].
-	newClass classLayout slots do: [ :each | each layoutChanged: newClass ].
-	
 	newClass class classLayout slots do: [ :each | each installingIn: newClass class ].
-	newClass class classLayout slots do: [ :each | each layoutChanged: newClass class ].
+
 ]
 
 { #category : #accessing }
@@ -468,6 +464,11 @@ ShiftClassBuilder >> superclassName: anObject [
 ]
 
 { #category : #accessing }
+ShiftClassBuilder >> superclassResolver: asuperclassResolver [
+	superclassResolver:= asuperclassResolver.
+]
+
+{ #category : #accessing }
 ShiftClassBuilder >> traitComposition [
 	^ extensibleProperties at: #traitComposition ifAbsent: {}
 ]
@@ -482,6 +483,13 @@ ShiftClassBuilder >> tryToFillOldClass [
 	oldClass ifNotNil: [ ^self ].
 	name ifNil: [ ^self ].
 	self oldClass: (self buildEnvironment classNamed: self name)
+]
+
+{ #category : #building }
+ShiftClassBuilder >> useStrictSuperclass [
+"default behavior"
+"If i am use, the superResolver will resolve unknown superclass by raising an error"
+	self superclassResolver: ClassResolverStrictResolve new.
 ]
 
 { #category : #'private validating' }

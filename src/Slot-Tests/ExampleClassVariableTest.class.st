@@ -1,3 +1,6 @@
+"
+Test for class variables
+"
 Class {
 	#name : #ExampleClassVariableTest,
 	#superclass : #SlotSilentTest,
@@ -58,7 +61,7 @@ ExampleClassVariableTest >> testMigrateClassVar [
 		].
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar').
-	self assert: (aClass classVariableNamed: #ClassVar) class = ClassVariable.
+	self assert: (aClass classVariableNamed: #ClassVar) class equals: ClassVariable.
 	
 	aClass classVarNamed: 'ClassVar' put: 5.
 	
@@ -68,6 +71,6 @@ ExampleClassVariableTest >> testMigrateClassVar [
 		].
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar').
-	self assert: (aClass classVariableNamed: #ClassVar) class = ExampleClassVariable.
-	self assert: (aClass classVariableNamed: #ClassVar) read = 5.
+	self assert: (aClass classVariableNamed: #ClassVar) class equals: ExampleClassVariable.
+	self assert: (aClass classVariableNamed: #ClassVar) read equals: 5.
 ]

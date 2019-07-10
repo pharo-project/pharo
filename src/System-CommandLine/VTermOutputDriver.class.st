@@ -25,10 +25,6 @@ Class {
 		'light',
 		'blink'
 	],
-	#classInstVars : [
-		'stdoutTerminalInstance',
-		'stderrTerminalInstance'
-	],
 	#category : #'System-CommandLine-VTerm-Driver'
 }
 

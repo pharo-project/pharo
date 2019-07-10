@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : #visiting }
-RBArgumentNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitArgumentNode: self
+RBArgumentNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitArgumentNode: self
 ]
 
 { #category : #converting }

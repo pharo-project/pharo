@@ -8,8 +8,6 @@ Class {
 	#name : #UnicodeTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'rng',
-		'nonCharacters',
 		'unicodeGenerator'
 	],
 	#category : #'Kernel-Tests-Extended-Charset'

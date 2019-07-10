@@ -12,12 +12,6 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
-{ #category : #'temp vector' }
-OCCopyingTempVariable >> indexFromIR [
-
-	^ scope node irInstruction indexForVarNamed: name
-]
-
 { #category : #debugging }
 OCCopyingTempVariable >> indexInTempVectorFromIR: aName [
 	^(scope methodScope node irInstruction tempVectorNamed: name) indexForVarNamed: aName.

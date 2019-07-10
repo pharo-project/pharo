@@ -80,26 +80,28 @@ RBMoveTemporaryVariableDefinitionTransformation >> buildTransformations [
 
 { #category : #private }
 RBMoveTemporaryVariableDefinitionTransformation >> checkAllBlocksIn: aParseTree [
-
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: '[:`@blockTemps | | `@temps | `@.Statements]'
-				do: [ :aNode :answer |
-					(aNode references: variableName) ifTrue: [answer add: aNode].
-					answer ].
-	^ searcher executeTree: aParseTree initialAnswer: OrderedCollection new
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: '[:`@blockTemps | | `@temps | `@.Statements]'
+		do: [ :aNode :answer | 
+			(aNode references: variableName)
+				ifTrue: [ answer add: aNode ].
+			answer ].
+	^ searcher
+		executeTree: aParseTree
+		initialAnswer: OrderedCollection new
 ]
 
 { #category : #private }
 RBMoveTemporaryVariableDefinitionTransformation >> checkBlocksIn: aParseTree [
-
 	| searcher |
-	searcher := RBParseTreeSearcher new.
+	searcher := self parseTreeSearcher.
 	searcher
 		matches: '[:`@args | | `@temps | `@.Statements]'
-			do: [ :aNode :answer | answer];
-		matches: variableName do: [:aNode :answer | true].
-	^ (searcher executeTree: aParseTree initialAnswer: false)
+			do: [ :aNode :answer | answer ];
+		matches: variableName do: [ :aNode :answer | true ].
+	^ searcher executeTree: aParseTree initialAnswer: false
 ]
 
 { #category : #private }

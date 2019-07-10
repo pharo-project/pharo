@@ -144,7 +144,7 @@ BlockClosure >> cull: anArg [
 	"([:x | x + 12] cull: 3)
 	>>> 15
 	"
-	
+	<debuggerCompleteToSender>
 	^numArgs = 0 
 		ifTrue: [self value]
 		ifFalse: [self value: anArg]
@@ -541,7 +541,7 @@ BlockClosure >> outerContext [
 	^outerContext
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 BlockClosure >> outerContext: aContext startpc: aStartpc numArgs: argCount copiedValues: anArrayOrNil [
 	outerContext := aContext.
 	startpc := aStartpc.
@@ -925,7 +925,7 @@ BlockClosure >> valueWithPossibleArgument: anArg [
 BlockClosure >> valueWithin: aDuration onTimeout: timeoutBlock [
 	"Evaluate the receiver.
 	If the evaluation does not complete in less than aDuration evaluate the timeoutBlock instead"
-
+	<debuggerCompleteToSender>
 	| theProcess delay watchdog tag |
 
 	aDuration <= Duration zero ifTrue: [^ timeoutBlock value ].

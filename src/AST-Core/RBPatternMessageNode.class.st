@@ -107,7 +107,7 @@ RBPatternMessageNode >> matchingClass [
 	^RBMessageNode
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBPatternMessageNode >> receiver: aValueNode selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	| message |
 	self

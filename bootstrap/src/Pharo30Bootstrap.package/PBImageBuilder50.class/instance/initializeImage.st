@@ -30,7 +30,7 @@ initializeImage
 			'major' -> versionInfo major.
 			'minor' -> versionInfo minor.
 			'patch' -> versionInfo patch.
-			'suffix' -> versionInfo suffix.
+			'suffix' -> (versionInfo suffix ifNil: [ '' ]).
 			'build' -> versionInfo buildNumber.
 			'hash' -> versionInfo commitHash.
 	} asDictionary).

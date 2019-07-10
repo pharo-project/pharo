@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'readStream',
 		'parsedDeclarations',
-		'nextChar',
 		'classSelector',
 		'classTraitSelector',
 		'commentStampSelector',

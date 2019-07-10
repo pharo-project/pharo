@@ -199,3 +199,9 @@ Month >> printOn: aStream [
 
 	aStream nextPutAll: self monthName, ' ', self year printString.
 ]
+
+{ #category : #private }
+Month >> species [
+
+	^Timespan
+]

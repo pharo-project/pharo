@@ -44,7 +44,7 @@ TestingComposablePresenterWithModel >> modelChanged [
 	
 ]
 
-{ #category : #specs }
+{ #category : #api }
 TestingComposablePresenterWithModel >> title [
 
 	^ 'Point'

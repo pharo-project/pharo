@@ -43,7 +43,7 @@ GLMExpanderTest >> testConditionWhenEmbedded [
 
 { #category : #tests }
 GLMExpanderTest >> testCreation [
-	self assert: GLMExpander new panes isEmpty
+	self assertEmpty: GLMExpander new panes
 ]
 
 { #category : #tests }

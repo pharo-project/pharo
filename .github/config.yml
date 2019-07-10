@@ -1,0 +1,41 @@
+# Configuration for request-info - https://github.com/behaviorbot/request-info
+
+# *Required* Comment to reply with
+requestInfoReplyComment: >
+  This issue has either a default title or empty body. We would appreciate it if you could provide more information. 
+  Note: I am not a very intelligent bot, I can only react to new comments. Please add a comment for me if you 
+  update the body or title.
+
+# *OPTIONAL* default titles to check against for lack of descriptiveness
+# MUST BE ALL LOWERCASE
+#requestInfoDefaultTitles:
+#  - update readme.md
+#  - updates
+
+
+# *OPTIONAL* Label to be added to Issues and Pull Requests with insufficient information given
+requestInfoLabelToAdd: more-information-needed
+# Configuration for new-issue-welcome - https://github.com/behaviorbot/new-issue-welcome
+
+# Comment to be posted to on first time issues
+newIssueWelcomeComment: >
+  Thanks for opening your first issue! Please check the CONTRIBUTING documents for some tips about which information should be provided.
+  You can find information of how to do a Pull Request here: https://github.com/pharo-project/pharo/wiki/Contribute-a-fix-to-Pharo
+
+# Configuration for new-pr-welcome - https://github.com/behaviorbot/new-pr-welcome
+
+# Comment to be posted to on PRs from first time contributors in your repository
+newPRWelcomeComment: >
+  Thanks for opening this pull request! 
+  Now continious integration (CI) will build Pharo with your change and run all tests. 
+  This might fail due to many reasons! Please check if your PR breaks the build or makes tests fail. Feel free to add comments to the PR.
+  After this, before your PR can be merged it needs one or more reviews. Do not hesitate to ask people (on the Mailinglist or 
+  Discord) to help! When the CI shows no problems and there are positive reviews, your PR will be merged.
+
+# Configuration for first-pr-merge - https://github.com/behaviorbot/first-pr-merge
+
+# Comment to be posted to on pull requests merged by a first time user
+firstPRMergeComment: >
+  Congrats on merging your first pull request! Do another one! We try to have a list of (relatively) easy issues here: https://github.com/orgs/pharo-project/projects/8.
+
+# It is recommend to include as many gifs and emojis as possible

@@ -122,14 +122,6 @@ StringMorph >> addEmphasis: aCodeOrTextEmphasis [
 	self emphasis: (emphasis bitOr: aCodeOrTextEmphasis value)
 ]
 
-{ #category : #'halos and balloon help' }
-StringMorph >> addOptionalHandlesTo: aHalo box: box [
-	self flag: #deferred.
-
-	"Eventually...
-	self addFontHandlesTo: aHalo box: box"
-]
-
 { #category : #drawing }
 StringMorph >> areasRemainingToFill: aRectangle [
 
@@ -201,7 +193,7 @@ StringMorph >> contentsClipped: aString [
 { #category : #accessing }
 StringMorph >> contrastingBackgroundColor [
 	"sets the backgroundColor to either black or white, which ever makes the string simplest to read"
-	backgroundColor := self color contrastingColor 
+	backgroundColor := self color contrastingBlackAndWhiteColor 
 ]
 
 { #category : #initialization }

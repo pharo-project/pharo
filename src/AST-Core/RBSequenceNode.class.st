@@ -63,8 +63,8 @@ RBSequenceNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBSequenceNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitSequenceNode: self
+RBSequenceNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitSequenceNode: self
 ]
 
 { #category : #'adding nodes' }
@@ -89,6 +89,20 @@ RBSequenceNode >> addNode: aNode [
 ]
 
 { #category : #'adding nodes' }
+RBSequenceNode >> addNode: aNode after: anotherNode [
+
+	| index |
+	index := self indexOfNode: anotherNode.
+	index = 0
+		ifTrue: [ ^ self addNode: aNode ].
+	statements := statements asOrderedCollection
+		add: aNode afterIndex: index;
+		yourself.
+	aNode parent: self.
+	^ aNode
+]
+
+{ #category : #'adding nodes' }
 RBSequenceNode >> addNode: aNode before: anotherNode [
 	| index |
 	index := self indexOfNode: anotherNode.
@@ -108,6 +122,14 @@ RBSequenceNode >> addNodeFirst: aNode [
 		addFirst: aNode;
 		yourself.
 	^ aNode
+]
+
+{ #category : #'adding nodes' }
+RBSequenceNode >> addNodeLast: aNode [
+
+	self lastIsReturn
+		ifTrue: [ self addNode: aNode before: self statements last ]
+		ifFalse: [ self addNode: aNode ]
 ]
 
 { #category : #'adding nodes' }
@@ -136,7 +158,7 @@ RBSequenceNode >> addNodesFirst: aCollection [
 	^ aCollection
 ]
 
-{ #category : #accessing }
+{ #category : #'adding nodes' }
 RBSequenceNode >> addReturn [
 	| node |
 	statements isEmpty
@@ -241,6 +263,12 @@ RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
+{ #category : #testing }
+RBSequenceNode >> hasTemporaryNamed: aString [
+
+	^ temporaries anySatisfy: [ :temp | temp name = aString ]
+]
+
 { #category : #comparing }
 RBSequenceNode >> hash [
 	^ (self hashForCollection: self temporaries) bitXor: (self hashForCollection: self statements)
@@ -296,7 +324,7 @@ RBSequenceNode >> leftBar: anInteger [
 	leftBar := anInteger
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBSequenceNode >> leftBar: leftInteger temporaries: variableNodes rightBar: rightInteger [ 
 	leftBar := leftInteger.
 	self temporaries: variableNodes.
@@ -448,6 +476,12 @@ RBSequenceNode >> temporaryVariables [
 	^(super temporaryVariables asOrderedCollection)
 		addAll: self temporaryNames;
 		yourself
+]
+
+{ #category : #'adding nodes' }
+RBSequenceNode >> transformLastToReturn [
+	"transform the last statement, but this method returns the sequence, not the returnNode"
+	self addReturn
 ]
 
 { #category : #testing }

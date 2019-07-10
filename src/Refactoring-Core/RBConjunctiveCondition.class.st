@@ -51,7 +51,7 @@ RBConjunctiveCondition >> errorStringFor: aBoolean [
 		ifFalse: [self perform: failed]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBConjunctiveCondition >> left: aCondition right: aCondition2 [ 
 	left := aCondition.
 	right := aCondition2.
@@ -75,9 +75,10 @@ RBConjunctiveCondition >> neitherFailed [
 
 { #category : #printing }
 RBConjunctiveCondition >> printOn: aStream [ 
-	aStream nextPutAll: left asString;
+	aStream 
+		print: left;
 		nextPutAll: ' & ';
-		nextPutAll: right asString
+		print: right
 
 ]
 

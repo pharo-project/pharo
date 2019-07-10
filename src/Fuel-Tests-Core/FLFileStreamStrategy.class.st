@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fileStreamClass'
 	],
-	#category : 'Fuel-Tests-Core-StreamStrategies'
+	#category : #'Fuel-Tests-Core-StreamStrategies'
 }
 
 { #category : #'instance creation' }
@@ -78,7 +78,7 @@ FLFileStreamStrategy >> readStreamDo: aValuable [
 
 { #category : #'test support' }
 FLFileStreamStrategy >> tearDown [
-	(File named: self fileName) delete
+	FLPlatform current deleteFileNamed: self fileName
 ]
 
 { #category : #writing }

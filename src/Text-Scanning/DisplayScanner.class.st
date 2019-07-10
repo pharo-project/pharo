@@ -55,7 +55,6 @@ Class {
 		'foregroundColor',
 		'backgroundColor',
 		'defaultTextColor',
-		'paragraphColor',
 		'morphicOffset',
 		'ignoreColorChanges',
 		'lastDisplayableIndex',
@@ -195,7 +194,7 @@ DisplayScanner >> fillTextBackground [
 	self subclassResponsibility
 ]
 
-{ #category : #displaying }
+{ #category : #initialization }
 DisplayScanner >> initialize [
 	super initialize.
 	ignoreColorChanges := false.

@@ -14,16 +14,18 @@ This slot inherits from IndexedSlot to guarantee that this slot has a real field
 Class {
 	#name : #WeakSlot,
 	#superclass : #IndexedSlot,
-	#category : #'Slot-Examples-base'
+	#category : #'Slot-Examples-Base'
 }
 
 { #category : #'code generation' }
 WeakSlot >> emitStore: aMethodBuilder [
+	"generate bytecode for 'varname at: 1 put: <stackTop>'"
 	| temp |
-	temp := Object new.
+	temp := '0slotTempForStackManipulation'.
 	"Pop the value to store into a temp to push it back in the right order"
 	aMethodBuilder addTemp: temp.
 	aMethodBuilder storeTemp: temp.
+	aMethodBuilder popTop.
 	
 	"Push the weak array into the stack, then the arguments, then send"
 	aMethodBuilder pushInstVar: index.
@@ -34,7 +36,7 @@ WeakSlot >> emitStore: aMethodBuilder [
 
 { #category : #'code generation' }
 WeakSlot >> emitValue: aMethodBuilder [
-	"Push the weak array into the stack"
+	"Push the weak array at: 1 on the stack"
 	aMethodBuilder pushInstVar: index.
 	aMethodBuilder pushLiteral: 1.
 	aMethodBuilder send: #at:
@@ -42,6 +44,7 @@ WeakSlot >> emitValue: aMethodBuilder [
 
 { #category : #initialization }
 WeakSlot >> initialize: anObject [
+
 	super write: (WeakArray new: 1) to: anObject
 ]
 
@@ -60,6 +63,5 @@ WeakSlot >> wantsInitalization [
 { #category : #'meta-object-protocol' }
 WeakSlot >> write: aValue to: anObject [
 
-	(super read: anObject) at: 1 put: aValue.
-	^ aValue
+	^(super read: anObject) at: 1 put: aValue.
 ]

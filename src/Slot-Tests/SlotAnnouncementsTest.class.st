@@ -5,7 +5,7 @@ Class {
 		'announcement',
 		'collectedAnnouncements'
 	],
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #helpers }
@@ -220,19 +220,17 @@ SlotAnnouncementsTest >> testCreateAndChangeWithCommentDoesAnnounceBoth [
 
 { #category : #'tests-comments' }
 SlotAnnouncementsTest >> testCreateAndChangeWithoutCommentDoesNotAnnounce [
-
 	self subscribeOn: ClassCommented.
-	
-	self make: [ :builder |
-		builder 
-			name: self aClassName ].
-	
-	self make: [ :builder | 
-		builder 
-			name: self aClassName;
-			sharedPools: 'TestSharedPool' ].
 
-	self assert: self collectedAnnouncements isEmpty.
+	self make: [ :builder | builder name: self aClassName ].
+
+	self
+		make: [ :builder | 
+			builder
+				name: self aClassName;
+				sharedPools: 'TestSharedPool' ].
+
+	self assertEmpty: self collectedAnnouncements
 ]
 
 { #category : #'tests-comments' }
@@ -259,21 +257,22 @@ SlotAnnouncementsTest >> testCreateWithCommentDoesAnnounce [
 
 { #category : #'tests-comments' }
 SlotAnnouncementsTest >> testEmptyCommentDoesNotAnnounce [
-
 	self subscribeOn: ClassCommented.
-	
-	self make: [ :builder |
-		builder 
-			name: self aClassName;
-			comment: '' ].
 
-	self make: [ :builder |
-		builder 
-			name: self aClassName;
-			comment: '';
-			sharedPools: 'TestSharedPool' ].
+	self
+		make: [ :builder | 
+			builder
+				name: self aClassName;
+				comment: '' ].
 
-	self assert: self collectedAnnouncements isEmpty.
+	self
+		make: [ :builder | 
+			builder
+				name: self aClassName;
+				comment: '';
+				sharedPools: 'TestSharedPool' ].
+
+	self assertEmpty: self collectedAnnouncements
 ]
 
 { #category : #'tests-integration' }
@@ -290,7 +289,7 @@ SlotAnnouncementsTest >> testFixedClassWhenTraitCompositionChangedShouldAnnounce
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	
 	"Set a new trait composition"
 	Object 
@@ -321,7 +320,7 @@ SlotAnnouncementsTest >> testFixedClassWithTraitCreatedShouldntAnnounceClassModi
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	self deny: aClass classLayout isVariable.
 	self assert: (aClass traitComposition syntacticallyEquals: TOne asTraitComposition).
 ]
@@ -397,7 +396,7 @@ SlotAnnouncementsTest >> testVariableByteClassWhenTraitCompositionChangedShouldA
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	
 	"Set a new trait composition"
 	Object 
@@ -428,7 +427,7 @@ SlotAnnouncementsTest >> testVariableByteClassWithTraitCreatedShouldntAnnounceCl
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	self assert: aClass classLayout isVariable.
 	self assert: aClass classLayout isBits.
 	self assert: aClass classLayout isBytes.
@@ -449,7 +448,7 @@ SlotAnnouncementsTest >> testVariableClassWhenTraitCompositionChangedShouldAnnou
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	
 	"Set a new trait composition"
 	Object 
@@ -480,7 +479,7 @@ SlotAnnouncementsTest >> testVariableClassWithTraitCreatedShouldntAnnounceClassM
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	self assert: aClass classLayout isVariable.
 	self deny: aClass classLayout isBits .
 	self assert: (aClass traitComposition syntacticallyEquals: TOne asTraitComposition).
@@ -500,7 +499,7 @@ SlotAnnouncementsTest >> testVariableWordClassWhenTraitCompositionChangedShouldA
 		poolDictionaries: ''
 		package: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	
 	"Set a new trait composition"
 	Object 
@@ -531,7 +530,7 @@ SlotAnnouncementsTest >> testVariableWordClassWithTraitCreatedShouldntAnnounceCl
 		poolDictionaries: ''
 		package: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	self assert: aClass classLayout isVariable.
 	self assert: aClass classLayout isBits.
 	self assert: aClass classLayout isWords.
@@ -552,7 +551,7 @@ SlotAnnouncementsTest >> testWeakClassWhenTraitCompositionChangedShouldAnnounceC
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	
 	"Set a new trait composition"
 	Object 
@@ -583,7 +582,7 @@ SlotAnnouncementsTest >> testWeakClassWithTraitCreatedShouldntAnnounceClassModif
 		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: self collectedAnnouncements size isZero.
+	self assertEmpty: self collectedAnnouncements.
 	self assert: aClass classLayout isVariable.
 	self assert: aClass classLayout isWeak.
 	self assert: (aClass traitComposition syntacticallyEquals: TOne asTraitComposition).

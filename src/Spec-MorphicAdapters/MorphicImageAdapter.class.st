@@ -26,13 +26,17 @@ MorphicImageAdapter >> buildWidget [
 		getImageSelector: #getImage;
 		vResizing: #spaceFill;
 		hResizing: #spaceFill;
-		layout: (self model autoScale 
-				ifTrue: [ #scaledAspect ]
-				ifFalse: [ #center ]);
+		layout: self layoutValue;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled;
 		setBalloonText: self help;
 		update: #getImage.
+
+	self model whenImageChangeDo: [ 
+		self getImage
+			ifNotNil: [ :x | alphaImage image: x ]
+			ifNil: [ alphaImage image: (Form extent: 1 @ 1 depth: 32) ] ].
+
 	^ alphaImage
 ]
 
@@ -48,11 +52,20 @@ MorphicImageAdapter >> getImage [
 	^ self model image
 ]
 
+{ #category : #accessing }
+MorphicImageAdapter >> image [
+	
+	^ widget scaledImage
+]
+
+{ #category : #'widget protocol' }
+MorphicImageAdapter >> layoutValue [
+	^ self model autoScale
+		ifTrue: [ #scaledAspect ]
+		ifFalse: [ #center ]
+]
+
 { #category : #'widget protocol' }
 MorphicImageAdapter >> switchAutoscale [
-	| layoutValue |
-	layoutValue := self model autoScale
-		ifTrue: [ #scaledAspect ]
-		ifFalse: [ #center ].
-	self widgetDo: [ :w | w layout: layoutValue ]
+	self widgetDo: [ :w | w layout: self layoutValue ]
 ]

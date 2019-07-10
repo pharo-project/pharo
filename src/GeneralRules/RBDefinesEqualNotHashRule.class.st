@@ -30,9 +30,8 @@ RBDefinesEqualNotHashRule class >> uniqueIdentifierName [
 ]
 
 { #category : #enumerating }
-RBDefinesEqualNotHashRule >> check: aClass forCritiquesDo: aCritiqueBlock [ 
-	((aClass includesSelector: #=) and: [ (aClass includesSelector: #hash) not ]) ifTrue: [
-        aCritiqueBlock cull: (self critiqueFor: aClass) ]
+RBDefinesEqualNotHashRule >> basicCheck: aClass [
+	^ (aClass includesSelector: #=) and: [ (aClass includesSelector: #hash) not ]
 ]
 
 { #category : #accessing }

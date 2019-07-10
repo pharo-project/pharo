@@ -21,7 +21,7 @@ Class {
 	#pools : [
 		'EventSensorConstants'
 	],
-	#category : #EmergencyEvaluator
+	#category : #'EmergencyEvaluator-Base'
 }
 
 { #category : #launching }
@@ -66,7 +66,7 @@ Transcripter class >> emergencyEvaluatorMenuOn: aBuilder [
 	<worldMenu> 
 	
 	(aBuilder item: #'Emergency Evaluator')
-		action: [self emergencyEvaluator. World restoreMorphicDisplay];
+		action: [self emergencyEvaluator. self currentWorld restoreMorphicDisplay];
 		parent: #Tools;
 		order: 720;
 		help: 'Invoke the emergency evaluator.';
@@ -104,7 +104,7 @@ Transcripter class >> nextChar [
 		ifNotNil: [:evtBuf | 
 			type := evtBuf first.
 			type = EventTypeKeyboard
-				ifTrue: [evt := World currentHand generateKeyboardEvent: evtBuf.
+				ifTrue: [evt := self currentWorld currentHand generateKeyboardEvent: evtBuf.
 					evt isKeystroke
 						ifTrue: [| c |
 							c := evt keyCharacter.

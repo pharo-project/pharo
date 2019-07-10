@@ -44,23 +44,21 @@ self explicitRequirement.
 { #category : #'tests - fixture' }
 TDictionaryCopyingTest >> test0FixtureCloneTest [
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self empty.
-	self assert: self empty isEmpty
+	self assertEmpty: self empty
 ]
 
 { #category : #'tests - fixture' }
 TDictionaryCopyingTest >> test0FixtureDictionaryCopyingTest [
 	| duplicateKey |
 	self nonEmptyDict.
-	self deny: self nonEmptyDict isEmpty.
+	self denyEmpty: self nonEmptyDict.
 	self nonEmptyDifferentFromNonEmptyDict.
-	self deny: self nonEmptyDifferentFromNonEmptyDict isEmpty.
+	self denyEmpty: self nonEmptyDifferentFromNonEmptyDict.
 	duplicateKey := true.
-	self nonEmptyDict keys
-		detect: [ :key | self nonEmptyDifferentFromNonEmptyDict includes: key ]
-		ifNone: [ duplicateKey := false ].
-	self assert: duplicateKey = false
+	self nonEmptyDict keys detect: [ :key | self nonEmptyDifferentFromNonEmptyDict includes: key ] ifNone: [ duplicateKey := false ].
+	self deny: duplicateKey
 ]
 
 { #category : #'tests - copy - clone' }
@@ -74,21 +72,16 @@ TDictionaryCopyingTest >> testCopyCreatesNewObject [
 
 { #category : #'tests - copy - clone' }
 TDictionaryCopyingTest >> testCopyEmpty [
-	
-	| copy | 
-	copy := self empty copy.
-	self assert: copy isEmpty.
+	self assertEmpty: self empty copy
 ]
 
 { #category : #'tests - copy - clone' }
 TDictionaryCopyingTest >> testCopyNonEmpty [
-	
-	| copy | 
+	| copy |
 	copy := self nonEmpty copy.
-	self deny: copy isEmpty.
+	self denyEmpty: copy.
 	self assert: copy size = self nonEmpty size.
-	self nonEmpty do: 
-		[:each | copy includes: each]
+	self nonEmpty do: [ :each | copy includes: each ]
 ]
 
 { #category : #'tests - copying' }

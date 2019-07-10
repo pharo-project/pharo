@@ -4,10 +4,7 @@ All my work is to keep cells.
 "
 Class {
 	#name : #FTTableRowMorph,
-	#superclass : #Morph,
-	#instVars : [
-		'selectionColor'
-	],
+	#superclass : #FTSelectableMorph,
 	#category : #'Morphic-Widgets-FastTable'
 }
 
@@ -23,26 +20,19 @@ FTTableRowMorph class >> table: aTableMorph [
 		yourself
 ]
 
-{ #category : #initialize }
-FTTableRowMorph >> defaultColor [
-	^Color transparent 
-]
-
 { #category : #'event handling' }
 FTTableRowMorph >> handlesMouseOver: evt [
+	self table ifNotNil: [ :table | ^ table selectionModeStrategy allowsRowSelection ].
+	^ false
 
-	^true
 ]
 
 { #category : #initialization }
-FTTableRowMorph >> initialize [ 
+FTTableRowMorph >> initialize [
 	super initialize.
 	self
-		clipSubmorphs:true;
-		layoutPolicy: FTRowLayout new.
-		
-	selectionColor := self defaultColor
-	
+		clipSubmorphs: true;
+		layoutPolicy: FTRowLayout new
 ]
 
 { #category : #initialization }
@@ -51,39 +41,5 @@ FTTableRowMorph >> initializeTable: tableMorph [
 	self 
 		cellInset: tableMorph intercellSpacing";
 		layoutInset: tableMorph intercellSpacing".
-	self flag: #todo. "Check if layout inset works better"
-]
-
-{ #category : #'event handling' }
-FTTableRowMorph >> mouseEnter: evt [
-
-	self color: (
-		selectionColor isTransparent 
-			ifTrue: [ self mouseOverColor ]
-			ifFalse: [ self mouseOverColor mixed: 0.5 with: selectionColor ]
-	)
-]
-
-{ #category : #'event handling' }
-FTTableRowMorph >> mouseLeave: evt [
-	
-	self color: self selectionColor 
-]
-
-{ #category : #initialize }
-FTTableRowMorph >> mouseOverColor [
-	^ Smalltalk ui theme lightBackgroundColor
-]
-
-{ #category : #initialize }
-FTTableRowMorph >> selectionColor [
-
-	^selectionColor
-]
-
-{ #category : #accessing }
-FTTableRowMorph >> selectionColor: aColor [
-
-	selectionColor := aColor.
-	self color: selectionColor
+	self flag: #pharoTodo. "Check if layout inset works better"
 ]

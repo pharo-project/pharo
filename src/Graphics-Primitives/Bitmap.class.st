@@ -103,7 +103,7 @@ Bitmap class >> swapBytesIn: aNonPointerThing from: start to: stop [
 		copyBits
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Bitmap >> asByteArray [
 	"Faster way to make a byte array from me.
 	copyFromByteArray: makes equal Bitmap."
@@ -507,7 +507,7 @@ Bitmap >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Bitmap >> restoreEndianness [
 	"nothing to do here?"
 ]

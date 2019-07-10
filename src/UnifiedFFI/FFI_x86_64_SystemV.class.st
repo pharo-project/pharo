@@ -19,11 +19,6 @@ FFI_x86_64_SystemV class >> isActive [
 ]
 
 { #category : #'default abi' }
-FFI_x86_64_SystemV >> areStructuresSplitIntoRegisters [
-	^ true
-]
-
-{ #category : #'default abi' }
 FFI_x86_64_SystemV >> computeStructureRegisterPassingLayout: aStructureClass [
 	| layout |
 	aStructureClass structureSize > self maxStructureSizeToPassInRegisters ifTrue: [ ^ nil ].
@@ -32,17 +27,15 @@ FFI_x86_64_SystemV >> computeStructureRegisterPassingLayout: aStructureClass [
 ]
 
 { #category : #'default abi' }
-FFI_x86_64_SystemV >> floatRegisterCountForParameterPassing [
-	^ 8
-]
-
-{ #category : #'default abi' }
-FFI_x86_64_SystemV >> integerRegisterCountForParameterPassing [
-	^ 6
-]
-
-{ #category : #'default abi' }
 FFI_x86_64_SystemV >> maxStructureSizeToPassInRegisters [
 	"Four eightbytes according to the ABI documentation."
 	^ 16
+]
+
+{ #category : #callbacks }
+FFI_x86_64_SystemV >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [ 
+
+	^ FFISystemV64CallbackArgumentReader
+		forCallback: aCallback
+		inContext: aCallbackContext
 ]

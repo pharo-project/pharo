@@ -10,7 +10,6 @@ Class {
 		'fileReference',
 		'entryPositionsByLocalName',
 		'entryCount',
-		'entryReader',
 		'writingDeferrer',
 		'entryByLocalName',
 		'mustRefresh',
@@ -248,7 +247,7 @@ OmFileStore >> flushEntryBuffer [
 					nextEntryPut: entry.
 				].
 
-			"In Linux it was necessary to explicitely flush the file stream"
+			"In Linux it was necessary to explicitly flush the file stream"
 			fileStream flush.
 			
 			lastStreamPosition := fileStream size.

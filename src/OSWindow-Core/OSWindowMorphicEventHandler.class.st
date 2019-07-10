@@ -104,6 +104,7 @@ OSWindowMorphicEventHandler >> convertModifiers: modifiers [
 { #category : #events }
 OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 	morphicWorld defer: [
+				
 		(morphicWorld activeHand isNotNil and: [ anEvent hand isNotNil ]) ifTrue: [
 			morphicWorld activeHand handleEvent: anEvent
 		]
@@ -135,9 +136,7 @@ OSWindowMorphicEventHandler >> handleEvent: anEvent [
 	
 	morphicEvent := anEvent accept: self.
 	morphicEvent isMorphicEvent ifFalse: [ ^ self ].
-	
-	self flag: #todo. "Why this was in a queue who was never called?"
-	"self enqueue: morphicEvent."
+		
 	self dispatchMorphicEvent: morphicEvent
 	
 ]
@@ -251,7 +250,7 @@ OSWindowMorphicEventHandler >> visitMouseButtonReleaseEvent: anEvent [
 		setType: #mouseUp
 		position: anEvent position 
 		which: (self convertButton: anEvent button)
-		buttons: (self convertModifiers: anEvent modifiers)
+		buttons: (self convertModifiers: anEvent modifiers) | (self convertModifiers: anEvent modifiers)
 		hand: self activeHand
 		stamp: Time millisecondClockValue
 ]
@@ -321,18 +320,13 @@ OSWindowMorphicEventHandler >> visitUnknownEvent: anEvent [
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowCloseEvent: anEvent [
 	anEvent suppressDefaultAction.
-	morphicWorld osWindowCloseButtonPressed
-]
-
-{ #category : #visiting }
-OSWindowMorphicEventHandler >> visitWindowExposeEvent: anEvent [
-	"Make sure that the renderer for this window exist."
-	morphicWorld osWindowRenderer
+	
+	self currentWorld defer: [WorldState quitSession].
 ]
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowResizeEvent: anEvent [
 
 	"window resized"
-	morphicWorld checkNewWindowSize.
+	morphicWorld worldState worldRenderer checkForNewScreenSize.
 ]

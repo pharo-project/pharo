@@ -4,12 +4,12 @@ A FinderPragmaNode is a Node used to render a pragma in the Finder Tree
 Class {
 	#name : #FinderPragmaNode,
 	#superclass : #FinderNode,
-	#category : #'Tool-Finder'
+	#category : #'Tool-Finder-Tree'
 }
 
 { #category : #private }
 FinderPragmaNode >> browse [
-	Smalltalk tools browser openInEnvironment: (RBBrowserEnvironment default forPragmas:{ self item})
+	Smalltalk tools messageList browseSendersOf: self item
 ]
 
 { #category : #private }

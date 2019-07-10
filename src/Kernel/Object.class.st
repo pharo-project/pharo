@@ -240,17 +240,12 @@ Object class >> whatIsAPrimitive [
 Object >> -> anObject [
 	"Answer an Association between self and anObject"
 	"the code of Association>>#key:value: is inline here for speed"
-	"The following example creates an association whose key is number 1 and value string 'one'.
-	1 -> 'one'
-	>>> 1 -> 'one'
-
-	(1 -> 'one') key
-	>>> 1
-
-	(1 -> 'one') value
-	>>> 'one'
+	"The following example creates an association whose key is number 1 and value string 'one'."
+	"(1 -> 'one') >>> 1 -> 'one'"
+	"(1 -> 'one') key >>> 1"
+	"(1 -> 'one') value >>> 'one'"
 	
-	Note that key and value can be ANY object."
+	"Note that key and value can be ANY object."
 	
 	^Association basicNew key: self value: anObject
 ]
@@ -325,7 +320,9 @@ Object >> addDependent: anObject [
 
 { #category : #converting }
 Object >> as: aSimilarClass [
-	"Create an object of class aSimilarClass that has similar contents to the receiver."
+	"Create an object of class aSimilarClass that has similar contents to the receiver if the object is not already an instance of this class."
+
+	aSimilarClass == self class ifTrue: [ ^ self ].
 
 	^ aSimilarClass newFrom: self
 ]
@@ -363,13 +360,14 @@ Object >> asString [
 Object >> assert: aBlock [
 	"Throw an assertion error if aBlock does not evaluates to true.
 	We check for true explicitly to make the assertion fail for non booleans"
+	<debuggerCompleteToSender>
 	self assert: aBlock description: 'Assertion failed'.
 ]
 
 { #category : #asserting }
 Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
-	
+	<debuggerCompleteToSender>
 	aBlock value 
 		ifFalse: [ AssertionFailure signal: aStringOrBlock value ]
 ]
@@ -977,6 +975,14 @@ Object >> halt: aString [
 ]
 
 { #category : #halting }
+Object >> haltFromCount: anInteger [
+	"Always halt after a count has been reached"
+
+	<debuggerCompleteToSender>
+	Halt fromCount: anInteger
+]
+
+{ #category : #halting }
 Object >> haltIf: condition [
 	<debuggerCompleteToSender>
 	Halt if: condition.
@@ -1001,9 +1007,11 @@ Object >> haltIfTest [
 ]
 
 { #category : #halting }
-Object >> haltOnCount: anInteger [ 
+Object >> haltOnCount: anInteger [
+	"Halts once when a count is reached"
+
 	<debuggerCompleteToSender>
-	Halt onCount: anInteger.
+	Halt onCount: anInteger
 ]
 
 { #category : #halting }
@@ -1086,16 +1094,24 @@ Object >> instVarAt: index put: anObject [
 
 { #category : #introspection }
 Object >> instVarNamed: aString [
-	"Return the value of the instance variable in me with that name.  Slow and unclean, but very useful. "
+	"Return the value of the instance variable in me with that name.  Slow, but very useful.
+	We support here all slots (even non indexed) but raise a backward compatible exception"
 
-	^ self instVarAt: (self class instVarIndexFor: aString asString ifAbsent: [ InstanceVariableNotFound signalFor: aString asString ])
+	^ self class
+		slotNamed: aString
+		ifFound: [ :slot | slot read: self ]
+		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
 ]
 
 { #category : #introspection }
 Object >> instVarNamed: aString put: aValue [
-	"Store into the value of the instance variable in me of that name. Slow and unclean, but very useful. "
+	"Store into the value of the instance variable in me of that name. Slow, but very useful.
+	We support here all slots (even non indexed) but raise a backward compatible exception"
 
-	^ self instVarAt: (self class instVarIndexFor: aString asString ifAbsent: [ InstanceVariableNotFound signalFor: aString asString ]) put: aValue
+	^ self class
+		slotNamed: aString
+		ifFound: [ :slot | slot write: aValue to: self ]
+		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
 ]
 
 { #category : #testing }
@@ -1777,6 +1793,10 @@ Object >> printStringLimitedTo: limit using: printBlock [
 
 { #category : #streaming }
 Object >> putOn: aStream [
+	"Write the receiver onto aStream.
+	In general we assume aStream accepts the receiver as element type.
+	Return self."
+	
 	aStream nextPut: self
 ]
 
@@ -1793,7 +1813,7 @@ Object >> readSlot: aSlot [
 
 { #category : #introspection }
 Object >> readSlotNamed: aName [
-	^self readSlot: (self class slotNamed: aName)
+	^(self class slotNamed: aName) read: self
 ]
 
 { #category : #dependencies }
@@ -1864,8 +1884,9 @@ Object >> setPinned: aBoolean [
 { #category : #pinning }
 Object >> setPinnedInMemory: aBoolean [
 	"The VM's garbage collector routinely moves objects as it reclaims and compacts
-	 memory. But it can also pin an object so that it will not be moved, which can make
-	 it easier to pass objects out through the FFI.  Objects are unpinnned when created.
+	 memory. But it can also pin an object so that it will not be moved around in memory,
+    while still being reclamable by the garbage collector. This can make
+	 it easier to pass objects out through the FFI. Objects are unpinnned when created.
 	 This primitive either pins or unpins an object, and answers if it was already pinned."
 	<primitive: 184 error: ec>
 	^self primitiveFailed
@@ -2244,9 +2265,11 @@ Object >> yourself [
 	To get the receiver we can simply use a cascade as follows:
 		#('hello' 'world') at: 2 put: 'pharo'; yourself
 	and since yourself returns the receiver of the message we will get the modified array.
+	
 	Stepping back using a cascade and yourself is equivalent to declare a variable, assign the expression and return the variable as follows:
 	| a |
-	a := #('hello' 'world') at: 2 put: 'pharo'.
+	a := #('hello' 'world'). 
+	a at: 2 put: 'pharo'.
 	a 
 	"
 	

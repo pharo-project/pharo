@@ -1,3 +1,6 @@
+"
+A package containing command line handlers to import code.
+"
 Class {
 	#name : #ManifestCodeImportCommandLineHandlers,
 	#superclass : #PackageManifest,

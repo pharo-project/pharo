@@ -119,11 +119,14 @@ SocketStream class >> openConnectionToHostNamed: hostName port: portNumber [
 ]
 
 { #category : #private }
-SocketStream >> << items [
+SocketStream >> << anObject [
+	"Write anObject to the receiver, dispatching using #putOn:
+	This is a shortcut for both nextPut: and nextPutAll: since anObject can be both
+	the element type of the receiver as well as a collection of those elements.
+	No further conversions of anObject are applied.
+	Return self to accomodate chaining."
 
- 	items putOn: self.
-	
-	^ self
+ 	anObject putOn: self
 ]
 
 { #category : #private }
@@ -663,9 +666,12 @@ SocketStream >> printOn: aStream [
 
 	aStream nextPutAll: self class name.
 	inBuffer ifNotNil: [
-		aStream nextPutAll: '[inbuf:',
-		(inBuffer size / 1024) rounded asString, 'kb/outbuf:',
-		(outBuffer size / 1024) rounded asString, 'kb]']
+		aStream 
+			nextPutAll: '[inbuf:';
+			print: (inBuffer size / 1024) rounded;
+			nextPutAll: 'kb/outbuf:';
+		 	print: (outBuffer size / 1024) rounded;
+			nextPutAll: 'kb]']
 ]
 
 { #category : #'stream in' }

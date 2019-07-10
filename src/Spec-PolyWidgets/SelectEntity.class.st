@@ -14,8 +14,8 @@ Class {
 		'possibleEntities',
 		'displaySymbol',
 		'entityText',
-		'ghostText',
-		'selectDialog'
+		'selectDialog',
+		'placeholder'
 	],
 	#category : #'Spec-PolyWidgets-Widgets'
 }
@@ -31,17 +31,6 @@ SelectEntity class >> defaultSpec [
 						add: #selectEntity width: ComposablePresenter toolbarHeight]
 					height: ComposablePresenter toolbarHeight];
 		yourself
-
-]
-
-{ #category : #example }
-SelectEntity class >> example [
-	self new
-		selectDialog: [ FastTablePresenter new items: #(Henrik Peter); yourself];
-		displaySymbol: #asString;
-		ghostText: 'Names';
-		possibleEntities: [#(Diego Stephan Norbert Stephane Marcus Torsten Sven Sean) sorted];
-		openDialogWithSpec 
 
 ]
 
@@ -93,17 +82,6 @@ SelectEntity >> entityText: anObject [
 	entityText := anObject
 ]
 
-{ #category : #api }
-SelectEntity >> ghostText [
-	^ ghostText value ifNil: [ '' ]
-]
-
-{ #category : #api }
-SelectEntity >> ghostText: aString [
-	ghostText value: aString.
-	entityText ghostText: aString
-]
-
 { #category : #initialization }
 SelectEntity >> initialize [
 	super initialize.
@@ -125,7 +103,7 @@ SelectEntity >> initializePresenter [
 SelectEntity >> initializeValueHolders [
 	displaySymbol := #displayString asValueHolder.
 	entity := nil asValueHolder.
-	ghostText := 'Choose one' asValueHolder.
+	placeholder := 'Choose one' asValueHolder.
 	possibleEntities := #() asValueHolder.
 	selectDialog := [  ] asValueHolder
 ]
@@ -133,7 +111,7 @@ SelectEntity >> initializeValueHolders [
 { #category : #initialization }
 SelectEntity >> initializeWidgets [
 	entityText := self newTextInput
-		ghostText: self ghostText;
+		placeholder: self placeholder;
 		autoAccept: true;
 		entryCompletion: self entitiesEntryCompletion;
 		yourself.
@@ -143,6 +121,17 @@ SelectEntity >> initializeWidgets [
 	self focusOrder
 		add: entityText;
 		add: selectEntity
+]
+
+{ #category : #api }
+SelectEntity >> placeholder [
+	^ placeholder value ifNil: [ '' ]
+]
+
+{ #category : #api }
+SelectEntity >> placeholder: aString [
+	placeholder value: aString.
+	entityText placeholder: aString
 ]
 
 { #category : #api }
@@ -194,8 +183,10 @@ SelectEntity >> whenEntityChanged: aBlock [
 ]
 
 { #category : #'api-events' }
-SelectEntity >> whenGhostTextChanged: aBlock [
-	ghostText whenChangedDo: aBlock
+SelectEntity >> whenPlaceholderChanged: aBlock [
+	"aBlock will be performed when ghostText changed"
+	
+	placeholder whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

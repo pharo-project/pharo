@@ -35,7 +35,7 @@ RBVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBVariableRefactoring >> variable: aVarName class: aClass [ 
 	class := self classObjectFor: aClass.
 	variableName := aVarName

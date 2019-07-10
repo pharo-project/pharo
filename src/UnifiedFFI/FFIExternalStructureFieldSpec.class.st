@@ -43,3 +43,8 @@ FFIExternalStructureFieldSpec >> initialize [
 FFIExternalStructureFieldSpec >> typeFor: aString [ 
 	^ fields at: aString
 ]
+
+{ #category : #accessing }
+FFIExternalStructureFieldSpec >> types [
+	^ fields values
+]

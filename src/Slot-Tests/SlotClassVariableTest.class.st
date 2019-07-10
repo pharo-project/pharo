@@ -1,11 +1,7 @@
 Class {
 	#name : #SlotClassVariableTest,
 	#superclass : #SlotClassBuilderTest,
-	#instVars : [
-		'announcement',
-		'collectedAnnouncements'
-	],
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #tests }
@@ -66,11 +62,64 @@ SlotClassVariableTest >> testSlotIsPersistedAfterRebuildOfClass [
 	class1 := self make: [ :builder | 
 		builder
 			name: self aClassName;
-			superclass: Object;
-			copyClassSlotsFromExistingClass ].
+			superclass: Object ].
 
 	self assert: class1 class slots size equals: 1.
 	self assert: (class1 class slots at:1) name equals: #Foo.
 	self assert: (class1 class slots at:1) class equals: AccessorInstanceVariableSlot.
 
+]
+
+{ #category : #tests }
+SlotClassVariableTest >> testWantsInitializationAddsInitializeSlot [
+	| class1 |	
+	
+	class1 := self make: [ :builder | 
+		builder
+			name: self aClassName;
+			superclass: Object ].
+		
+	class1 addSlot: (InitializedSlot new 
+		name: #defaultValue;
+		default: 42;
+		yourself).
+
+	self assert: class1 slots size equals: 1.
+
+	self assert: ((class1 >> #initialize) hasLiteral: #initializeSlots:).
+	"validate 'self class initializeSlots: self' is the first message sent"
+	self assert: (class1 >> #initialize) literals first equals: #class.
+	self assert: (class1 >> #initialize) literals second equals: #initializeSlots:
+
+]
+
+{ #category : #tests }
+SlotClassVariableTest >> testWantsInitializationSkipInitializeSlotIfAlreadyInHierarchy [
+	| class1 class2 |	
+	
+	class1 := self make: [ :builder | 
+		builder
+			name: self aClassName;
+			superclass: Object;
+			slots: { 
+				InitializedSlot new 
+					name: #defaultValue;
+					default: 42;
+					yourself } ].
+
+	self assert: class1 slots size equals: 1.
+	self assert: ((class1 >> #initialize) hasLiteral: #initializeSlots:).
+
+	class2 := self make: [ :builder | 
+		builder
+			name: self anotherClassName;
+			superclass: class1;
+			slots: { 
+				InitializedSlot new 
+					name: #otherDefaultValue;
+					default: 42;
+					yourself } ].
+
+	self assert: class2 slots size equals: 1.
+	self deny: ((class2 >> #initialize) hasLiteral: #initializeSlots:)
 ]

@@ -7,13 +7,12 @@ This is the unit test for the class Array. Unit tests are a good way to exercise
 Class {
 	#name : #ArrayTest,
 	#superclass : #CollectionRootTest,
-	#traits : 'TEmptySequenceableTest + TSequencedElementAccessTest + TCloneTest + TIncludesWithIdentityCheckTest + TCopyTest + TCreationWithTest + TPutBasicTest + (TConvertTest - {}) + TOccurrencesForMultiplinessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TReplacementSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TBeginsEndsWith + TPrintOnSequencedTest + TIndexAccess + TSubCollectionAccess + TConvertAsSetForMultiplinessIdentityTest + TCopyPartOfSequenceable + TCopySequenceableSameContents + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TIndexAccessForMultipliness + TCopyPartOfSequenceableForMultipliness + TConvertAsSortedTest + TPutTest + TSequencedStructuralEqualityTest + TSortTest + TSetArithmetic + TEnumeratingTest',
+	#traits : 'TEmptySequenceableTest + TSequencedElementAccessTest + TCloneTest + TIncludesWithIdentityCheckTest + TCopyTest + TCreationWithTest + TPutBasicTest + TConvertTest + TOccurrencesForMultiplinessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TReplacementSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TBeginsEndsWith + TPrintOnSequencedTest + TIndexAccess + TSubCollectionAccess + TConvertAsSetForMultiplinessIdentityTest + TCopyPartOfSequenceable + TCopySequenceableSameContents + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TIndexAccessForMultipliness + TCopyPartOfSequenceableForMultipliness + TConvertAsSortedTest + TPutTest + TSequencedStructuralEqualityTest + TSortTest + TSetArithmetic + TEnumeratingTest',
 	#classTraits : 'TEmptySequenceableTest classTrait + TSequencedElementAccessTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCopyTest classTrait + TCreationWithTest classTrait + TPutBasicTest classTrait + TConvertTest classTrait + TOccurrencesForMultiplinessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TReplacementSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TBeginsEndsWith classTrait + TPrintOnSequencedTest classTrait + TIndexAccess classTrait + TSubCollectionAccess classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacement classTrait + TIndexAccessForMultipliness classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TConvertAsSortedTest classTrait + TPutTest classTrait + TSequencedStructuralEqualityTest classTrait + TSortTest classTrait + TSetArithmetic classTrait + TEnumeratingTest classTrait',
 	#instVars : [
 		'example1',
 		'literalArray',
 		'selfEvaluatingArray',
-		'otherArray',
 		'nonSEArray1',
 		'nonSEarray2',
 		'example2',
@@ -24,7 +23,6 @@ Class {
 		'withCharacters',
 		'unsortedCollection',
 		'sortedInAscendingOrderCollection',
-		'sizeCollection',
 		'collectionNotIncluded',
 		'removedCollection',
 		'elementInForCopy',
@@ -95,7 +93,7 @@ ArrayTest >> anotherValue [
 	^ 66
 ]
 
-{ #category : #'tests - converting' }
+{ #category : #asserting }
 ArrayTest >> assertSameContents: aCollection whenConvertedTo: aClass [ 
 	| result |
 	result := aCollection perform: ('as' , aClass name) asSymbol.
@@ -524,7 +522,7 @@ ArrayTest >> subCollectionNotIn [
 ArrayTest >> test0FixtureIncludeTest [
 	| anElementIn |
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self elementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self elementNotIn ] ifNone: [ anElementIn := false ].
@@ -532,24 +530,24 @@ ArrayTest >> test0FixtureIncludeTest [
 	self anotherElementNotIn.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self anotherElementNotIn ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn equals: false.
+	self deny: anElementIn.
 	self collection.
 	self empty.
-	self assert: self empty isEmpty.
+	self assertEmpty: self empty.
 	self collectionOfFloat.
 	self collectionOfFloat do: [ :each | self assert: each isFloat ].
 	self elementInForIncludesTest.
 	anElementIn := true.
 	self nonEmpty detect: [ :each | each = self elementInForIncludesTest ] ifNone: [ anElementIn := false ].
-	self assert: anElementIn equals: true
+	self assert: anElementIn
 ]
 
 { #category : #'tests - fixture' }
 ArrayTest >> test0FixtureOccurrencesTest [
 	self empty.
-	self assert: self empty isEmpty.
+	self assertEmpty: self empty.
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self elementInForOccurrences.
 	self assert: (self nonEmpty includes: self elementInForOccurrences).
 	self elementNotInForOccurrences.

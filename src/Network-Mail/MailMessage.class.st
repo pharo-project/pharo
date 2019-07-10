@@ -778,8 +778,8 @@ MailMessage >> regenerateText [
 		"put the body, being sure to encode it according to the header"
 		encodedBodyText := body content.
 		self decoderClass ifNotNil: 
-			[ encodedBodyText := (self decoderClass mimeEncode: encodedBodyText readStream) upToEnd ].
-		str nextPutAll: encodedBodyText ]
+			[ encodedBodyText := self decoderClass mimeEncode: encodedBodyText readStream ].
+		str nextPutAll: encodedBodyText contents]
 ]
 
 { #category : #fields }
@@ -932,5 +932,5 @@ MailMessage >> viewImageInBody [
 	| stream image |
 	stream := self body contentStream.
 	image := Form fromBinaryStream: stream.
-	(World drawingClass withForm: image) openInWorld
+	(self currentWorld drawingClass withForm: image) openInWorld
 ]

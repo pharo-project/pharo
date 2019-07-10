@@ -7,7 +7,7 @@ Class {
 		'selector',
 		'isSource'
 	],
-	#category : #'Fuel-Platform-Core'
+	#category : 'Fuel-Platform-Core'
 }
 
 { #category : #'instance creation' }
@@ -23,6 +23,7 @@ FLExtensionWrapper >> compileInTarget [
 	source := self method methodClass instanceSide
 		perform: self method selector
 		withArguments: (1 to: self method selector numArgs) asArray.
+	self targetClass compile: source.
 	self targetClass organization
 		classify: self selector
 		under: self extensionProtocolName
@@ -34,12 +35,14 @@ FLExtensionWrapper >> copySelector: aSelector ofMethod: aCompiledMethod toClass:
 		addAndClassifySelector: aSelector
 		withMethod: aCompiledMethod copy
 		inProtocol: self extensionProtocolName
+		notifying: nil
 ]
 
 { #category : #private }
 FLExtensionWrapper >> copyToTarget [
-	self targetClass
+	FLPlatform current
 		addAndClassifySelector: self selector
+		inClass: self targetClass
 		withMethod: self method copy
 		inProtocol: self extensionProtocolName
 ]
@@ -121,7 +124,7 @@ FLExtensionWrapper >> readSelectorFrom: aPragma argumentNames: argumentNames arg
 	| index |
 	index := argumentNames
 		indexOf: 'selector:'
-		ifAbsent: [ ^ aPragma selector ].
+		ifAbsent: [ ^ aPragma method selector ].
 	
 	^ argumentValues at: index
 ]
@@ -145,12 +148,11 @@ FLExtensionWrapper >> renameAndCompileInTarget [
 	newMethod := FLPlatform current
 		renamedMethodCopyOf: self method
 		selector: self selector.
-	self targetClass
-		addSelector: self selector
-		withMethod: newMethod.
-	self targetClass organization
-		classify: self selector
-		under: self extensionProtocolName
+	FLPlatform current
+		silentlyAddAndClassifySelector: self selector
+		inClass: self targetClass
+		withMethod: newMethod
+		inProtocol: self extensionProtocolName
 ]
 
 { #category : #'initialize-release' }

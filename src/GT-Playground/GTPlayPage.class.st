@@ -10,7 +10,6 @@ Class {
 		'title',
 		'content',
 		'creationTime',
-		'modificationTime',
 		'publishedUrl',
 		'persistenceStrategies'
 	],
@@ -154,7 +153,7 @@ GTPlayPage >> gtInspectorContentIn: composite [
 		installDefaultSelectionActions
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 GTPlayPage >> initialize [
 	super initialize.
 	self content: ''.

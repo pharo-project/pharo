@@ -43,13 +43,14 @@ RBInlineTemporaryRefactoring >> compileMethod [
 { #category : #testing }
 RBInlineTemporaryRefactoring >> hasOnlyOneAssignment [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: assignmentNode variable name , ' := ``@object'
-		do: [:aNode :answer | answer + 1].
-	^(searcher executeTree: definingNode initialAnswer: 0) == 1
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: assignmentNode variable name , ' := ``@object'
+		do: [ :aNode :answer | answer + 1 ].
+	^ (searcher executeTree: definingNode initialAnswer: 0) == 1
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.

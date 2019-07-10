@@ -20,13 +20,13 @@ This repository contains only sources of the Pharo image. The virtual machine is
 
 This repository is being built on a [Jenkins server](https://ci.inria.fr/pharo-ci-jenkins2) and uploaded to [files.pharo.org](https://files.pharo.org).
 
-- [Latest build - 64bit](http://files.pharo.org/image/70/latest-64.zip)
-- [Latest build - 32bit](http://files.pharo.org/image/70/latest.zip) 
+- [Latest build - 64bit](http://files.pharo.org/image/80/latest-64.zip)
+- [Latest build - 32bit](http://files.pharo.org/image/80/latest.zip) 
 
 The minimal image contains the basic Pharo packages without the graphical user interface. It is useful as a base for server-side applications deployment.
 
-- [Minimal image latest build - 64bit](http://files.pharo.org/image/70/latest-minimal-64.zip)
-- [Minimal image latest build - 32bit](http://files.pharo.org/image/70/latest-minimal-32.zip) 
+- [Minimal image latest build - 64bit](http://files.pharo.org/image/80/latest-minimal-64.zip)
+- [Minimal image latest build - 32bit](http://files.pharo.org/image/80/latest-minimal-32.zip) 
 
 
 ## Bootstrapping Pharo from sources
@@ -53,3 +53,6 @@ This source code repository is exported in [Tonel format](https://github.com/pha
 ## How to contribute
 
 Pharo is an opensource project very friendly to contributions of the users. See the document [CONTRIBUTING](CONTRIBUTING.md) how you can help to improve Pharo.
+
+
+

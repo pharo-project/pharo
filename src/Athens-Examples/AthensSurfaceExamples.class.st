@@ -96,6 +96,50 @@ AthensSurfaceExamples class >> drawFontMetrics [
 ]
 
 { #category : #examples }
+AthensSurfaceExamples class >> drawSetFillRule [
+ 	<example>
+	self openViewOn: [ :canvas |
+		| path |	
+		canvas pathTransform
+			translateBy: 100 asPoint.
+		"donut"
+		canvas fillRuleEvenOdd.
+		path := canvas createPath: [ :builder |  
+			builder
+				absolute;
+				moveTo: 50@0;
+				arcCenterX: 0
+					centerY: 0
+					radius: 50
+					startAngle: 0 
+					endAngle: Float pi * 2;
+				moveTo: 30@0;
+				arcCenterX: 0
+					centerY: 0
+					radius: 30
+					startAngle: 0
+					endAngle: Float pi * 2;
+				close.
+			 ].
+		"CAIRO_FILL_RULE_WINDING := 0.
+		CAIRO_FILL_RULE_EVEN_ODD := 1.
+		self assert: canvas fillRule = 1"
+		canvas setPaint: Color blue.
+		canvas drawShape: path.
+		canvas setStrokePaint: Color red.
+		canvas drawShape: path.
+		canvas pathTransform
+			translateBy: 100 asPoint.
+		canvas fillRuleWinding.
+		canvas setPaint: Color red.
+		canvas drawShape: path.
+		canvas setStrokePaint: Color blue.
+		canvas drawShape: path.
+	]
+
+]
+
+{ #category : #examples }
 AthensSurfaceExamples class >> example1 [
 
 	self openViewOn: [ :can |
@@ -617,7 +661,7 @@ AthensSurfaceExamples >> createSurface: anExtent [
 	^ self class newSurface: anExtent
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 AthensSurfaceExamples >> initialize [
 
 	super initialize.

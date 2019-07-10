@@ -151,7 +151,7 @@ A tool now can register a callback like
 
 refactoring setOption:#name_of_an_option toUse:[:a :b: ... a block with needed arguments]
 
-for example, Nautilus sets the option
+for example, Calypso sets the option
 #implementorToInline to a method showing a dialog with a list to choose one of the provided selector names.
 
 In the following example we show how to set the needed options manually. The RBMoveMethodRefactoring will ask us three questions

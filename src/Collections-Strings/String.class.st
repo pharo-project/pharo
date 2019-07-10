@@ -1038,15 +1038,9 @@ String >> displayStringOn: aStream [
 ]
 
 { #category : #printing }
-String >> encodeDoublingQuoteOn: aStream [ 
-	"Print inside string quotes, doubling inbedded quotes."
-	
-	| x |
-	aStream print: $'.
-	1 to: self size do: [:i |
-		aStream print: (x := self at: i).
-		x = $' ifTrue: [aStream print: x]].
-	aStream print: $'
+String >> encodeDoublingQuoteOn: aStream [
+	self deprecated: 'Use #storeOn: instead' transformWith: '`@receiver encodeDoublingQuoteOn: `@argument' -> '`@receiver storeOn: `@argument'.
+	self storeOn: aStream
 ]
 
 { #category : #testing }
@@ -1138,6 +1132,7 @@ String >> expandMacrosWithArguments: anArray [
 	"'<t>' expandMacros >>> String tab"
 	"'<r>' expandMacros >>> String cr"
 	"'<n>' expandMacros >>> OSPlatform current lineEnding"
+	"'<l>' expandMacros >>> String lf"
 	
 	"Writing '<' character:
 	To write '<', prepend it with a percent sign."
@@ -1166,6 +1161,8 @@ String >> expandMacrosWithArguments: anArray [
 							nextChar := readStream next asUppercase.
 							nextChar == $R
 								ifTrue: [ newStream cr ].
+							nextChar == $L
+								ifTrue: [ newStream lf ].
 							nextChar == $T
 								ifTrue: [ newStream tab ].
 							nextChar == $N
@@ -1892,14 +1889,13 @@ String >> keywords [
 
 { #category : #testing }
 String >> lastSpacePosition [
-	"Answer the character position of the final space or other separator character in the receiver, and 0 if none
+	"Answer the character position of the final space or other separator character in the receiver, and 0 if none"
+	"'fred the bear' lastSpacePosition >>> 9"
+	"'ziggie' lastSpacePosition >>> 0"
+	"'elvis ' lastSpacePosition >>> 6"
+	"'elvis  ' lastSpacePosition >>> 7"
+	"'' lastSpacePosition >>> 0"
 
-	'fred the bear' lastSpacePosition
-	'ziggie' lastSpacePosition
-	'elvis ' lastSpacePosition
-	'wimpy  ' lastSpacePosition
-	'' lastSpacePosition
-	"
 	self size to: 1 by: -1 do:
 		[:i | ((self at: i) isSeparator) ifTrue: [^ i]].
 	^ 0
@@ -2132,6 +2128,11 @@ String >> printOn: aStream [
 
 { #category : #streaming }
 String >> putOn: aStream [
+	"Write the receiver onto aStream by iterating over its elements.
+	In general we assume aStream accepts the receiver's elements as element type.
+	This is an optimisation.
+	Return self."
+
 	aStream nextPutAll: self
 ]
 
@@ -2303,14 +2304,16 @@ String >> stemAndNumericSuffix [
 ]
 
 { #category : #printing }
-String >> storeOn: aStream [ 
+String >> storeOn: aStream [
 	"Print inside string quotes, doubling inbedded quotes."
+
+	"(String streamContents: [ :s | 'Foo''Bar' storeOn: s ]) >>> '''Foo''''Bar'''"
+
 	| x |
 	aStream nextPut: $'.
-	1 to: self size do:
-		[:i |
+	1 to: self size do: [ :i | 
 		aStream nextPut: (x := self at: i).
-		x = $' ifTrue: [aStream nextPut: x]].
+		x = $' ifTrue: [ aStream nextPut: x ] ].
 	aStream nextPut: $'
 ]
 

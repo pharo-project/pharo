@@ -19,10 +19,10 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : #Hermes
+	#category : #'Hermes-CommandLineHandler'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 HEBinaryReader >> close [
 	self stream close.
 ]

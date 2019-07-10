@@ -25,6 +25,11 @@ RubFindReplaceDialogWindow class >> maxPreviousListSize [
 ]
 
 { #category : #accessing }
+RubFindReplaceDialogWindow class >> on: aTextView [
+	^ self new on: aTextView
+]
+
+{ #category : #accessing }
 RubFindReplaceDialogWindow class >> replacements [
 	^ Replacements ifNil: [Replacements := OrderedCollection new]
 ]
@@ -44,7 +49,6 @@ RubFindReplaceDialogWindow >> buildWindowMenu [
 	aMenu lastItem icon: self theme windowCloseForm.
 	aMenu addLine.
 	aMenu add: 'About' selector: #showAbout.
-	aMenu lastItem icon: self theme smallHelpIcon.
 	^ aMenu
 ]
 
@@ -246,10 +250,6 @@ RubFindReplaceDialogWindow >> newFindTextEntryMorph [
 		withDropListButton;
 		crAction: [:t | self find];
 		yourself.
-	pt textMorph
-		autoFit: true;
-		wrapFlag: false;
-		margins: (2@1) asMargin.
 	findTextField := pt.
 	^ pt
 
@@ -313,10 +313,6 @@ RubFindReplaceDialogWindow >> newReplaceTextEntryMorph [
 			crAction: [:t | self replace];
 			withDropListButton;
 			yourself.
-	pt textMorph
-		autoFit: true;
-		wrapFlag: false;
-		margins: (2@1) asMargin.
 	^ pt
 
 ]
@@ -333,7 +329,7 @@ RubFindReplaceDialogWindow >> newReplacement [
 
 { #category : #action }
 RubFindReplaceDialogWindow >> open [
-	self openAsIsIn: World.
+	self openAsIsIn: self currentWorld.
 	self extent: self extent.
 	self activate
 

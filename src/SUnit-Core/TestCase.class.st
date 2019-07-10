@@ -119,6 +119,13 @@ TestCase class >> buildSuiteFromSelectors [
 	^self buildSuiteFromMethods: self allTestSelectors
 ]
 
+{ #category : #'accessing comment' }
+TestCase class >> comment [
+	^super hasComment
+		ifTrue: [ super comment ] 
+		ifFalse: ['This class contains tests'].
+]
+
 { #category : #coverage }
 TestCase class >> coverage [
 	"returns the coverage determined by a simple static analysis of test coverage 
@@ -218,6 +225,11 @@ TestCase class >> generateLastStoredRunMethod [
 		self class
 			compile: (self lastRunMethodNamed: #lastStoredRun)
 			classified: 'history' ]
+]
+
+{ #category : #'accessing comment' }
+TestCase class >> hasComment [
+	^true
 ]
 
 { #category : #testing }
@@ -658,6 +670,7 @@ TestCase >> onPharoCITestingEnvironment [
 
 { #category : #running }
 TestCase >> openDebuggerOnFailingTestMethod [
+	<haltOrBreakpointForTesting>
 	"SUnit has halted one step in front of the failing test method. Step over the 'self halt' and 
 	 send into 'self perform: testSelector' to see the failure from the beginning"
 

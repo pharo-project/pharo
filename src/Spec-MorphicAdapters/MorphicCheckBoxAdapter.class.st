@@ -14,7 +14,7 @@ MorphicCheckBoxAdapter >> buildWidget [
 	checkButton := CheckboxMorph
 						on: self 
 						selected: #state
-						changeSelected: #state:. 			
+						changeSelected: #state:.
 	checkButton 
 			label:	self label; 
 			beCheckbox;
@@ -25,7 +25,22 @@ MorphicCheckBoxAdapter >> buildWidget [
 			dragEnabled: self dragEnabled;
 			dropEnabled: self dropEnabled;	
 			labelClickable: self labelClickable.
+			
+	self presenter whenLabelChangedDo: [ :newLabel | checkButton label: newLabel ].
+	self presenter whenChangedDo: [ checkButton updateSelection ].
 	^ checkButton
+]
+
+{ #category : #emulating }
+MorphicCheckBoxAdapter >> clicked [
+	
+	widget toggleSelected
+]
+
+{ #category : #accessing }
+MorphicCheckBoxAdapter >> helpText [
+	
+	^ widget balloonText
 ]
 
 { #category : #'widget API' }
@@ -55,11 +70,11 @@ MorphicCheckBoxAdapter >> labelOnRight [
 { #category : #'widget API' }
 MorphicCheckBoxAdapter >> state [
 	
-	^ self model state
+	^ self presenter state
 ]
 
 { #category : #'widget API' }
 MorphicCheckBoxAdapter >> state: aBoolean [
 	
-	^ self model state: aBoolean
+	^ self presenter state: aBoolean
 ]

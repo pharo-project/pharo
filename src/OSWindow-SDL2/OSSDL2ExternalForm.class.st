@@ -23,7 +23,7 @@ Class {
 	#instVars : [
 		'pointer'
 	],
-	#category : #'OSWindow-SDL2'
+	#category : #'OSWindow-SDL2-Base'
 }
 
 { #category : #initialize }
@@ -44,7 +44,7 @@ OSSDL2ExternalForm >> destroySurface [
 	].
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 OSSDL2ExternalForm >> initialize [
 	super initialize.
 	pointer := nil.

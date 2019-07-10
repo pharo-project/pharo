@@ -13,6 +13,29 @@ Class {
 	#category : #'Kernel-BytecodeEncoders'
 }
 
+{ #category : #'instruction stream support' }
+BytecodeEncoder class >> extensionsFor: pc in: aCompiledMethod into: trinaryBlock [
+	"If the bytecode at pc is an extension, or if the bytecode at pc is preceeded by extensions,
+	 then evaluate aTrinaryBlock with the values of extA and extB and number of extension *bytes*.
+	 If the bytecode at pc is neither an extension or extended then evaluate with 0, 0, 0."
+ 
+	| prevPC |
+	"If there is what appears to be an extension bytecode before this bytecode
+	 then scan for the previous pc to confirm."
+	(pc - 2 >= aCompiledMethod initialPC
+	 and: [self isExtension: (aCompiledMethod at: pc - 2)]) ifTrue:
+		[prevPC := aCompiledMethod pcPreviousTo: pc.
+		 (self nonExtensionPcAt: prevPC in: aCompiledMethod) = pc ifTrue:
+			[^self extensionsAt: prevPC in: aCompiledMethod into: trinaryBlock]].
+	^self extensionsAt: pc in: aCompiledMethod into: trinaryBlock
+]
+
+{ #category : #'instruction stream support' }
+BytecodeEncoder class >> isExtension: byte [
+	"Answer if the bytecode is that of an extension bytecodee (a prefix for other bytecodes to extend their range)."
+	^self subclassResponsibility
+]
+
 { #category : #'bytecode decoding' }
 BytecodeEncoder class >> nonExtensionBytecodeAt: pc in: method [
 	"Answer the actual bytecode at pc in method, skipping past any preceeding extensions."
@@ -21,6 +44,16 @@ BytecodeEncoder class >> nonExtensionBytecodeAt: pc in: method [
 	[self isExtension: (bytecode := method at: thePC)] whileTrue:
 		[thePC := thePC + (self bytecodeSize: bytecode)].
 	^bytecode
+]
+
+{ #category : #'instruction stream support' }
+BytecodeEncoder class >> nonExtensionPcAt: pc in: method [
+	"Answer the pc of the actual bytecode at pc in method, skipping past any preceeding extensions."
+	| thePC bytecode |
+	thePC := pc.
+	[self isExtension: (bytecode := method at: thePC)] whileTrue:
+		[thePC := thePC + (self bytecodeSize: bytecode)].
+	^thePC
 ]
 
 { #category : #'bytecode decoding' }
@@ -37,7 +70,7 @@ BytecodeEncoder class >> stackDeltaForPrimitive: primitiveIndex in: method [
 
 { #category : #temps }
 BytecodeEncoder >> bindAndJuggle: name [
-	"This is used to insert a new temp and reorcder temps on editing.
+	"This is used to insert a new temp and reorder temps on editing.
 	 It doesn't really work for closure compilation since we have multiple
 	 locations for temps.  Simply signal a reparse is necessary."
 
@@ -319,7 +352,7 @@ BytecodeEncoder >> stream: s [
 	stream := s
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 BytecodeEncoder >> streamToMethod: aCompiledMethod [
 	stream := WriteStream with: aCompiledMethod.
 	stream position: aCompiledMethod initialPC - 1

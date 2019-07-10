@@ -23,7 +23,7 @@ RubCodeSizeFeedback >> backgroundColor [
 	"Return the current fillStyle of the receiver."
 
 	| basicColor size |
-	basicColor := Smalltalk ui theme backgroundColor.
+	basicColor := self theme backgroundColor.
 	self paragraph ifNil: [ ^Color transparent ].
 	size := self textSize.
 	size >= self warningLimit

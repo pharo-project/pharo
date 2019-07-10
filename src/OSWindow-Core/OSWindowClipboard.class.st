@@ -9,20 +9,33 @@ Class {
 }
 
 { #category : #accessing }
+OSWindowClipboard >> beDefault [
+
+	Default := self
+]
+
+{ #category : #accessing }
 OSWindowClipboard >> chooseRecentClipping [
 	^ nil
 ]
 
 { #category : #accessing }
 OSWindowClipboard >> clipboardText [
-	^ World osWindow clipboardText
+	^ self worldRenderer clipboardText
 ]
 
 { #category : #accessing }
 OSWindowClipboard >> clipboardText: aString [
-	World osWindow clipboardText: aString asString
+	self worldRenderer clipboardText: aString asString
 ]
 
 { #category : #private }
 OSWindowClipboard >> noteRecentClipping: text [
+]
+
+{ #category : #accessing }
+OSWindowClipboard >> worldRenderer [ 
+
+	^ self currentWorld worldState worldRenderer
+	
 ]

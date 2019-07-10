@@ -46,6 +46,7 @@ ThreadSafeTranscript >> openLabel: aString [
 		setTextSelector: #clear;
 		on: self;
 		beForSmalltalkScripting.
+	m onAnnouncement: MorphDeleted do: [ self announcer unsubscribe: m  ].
 	window addMorph: m frame: (0 @ 0 corner: 1 @ 1).
 	^ window openInWorld
 

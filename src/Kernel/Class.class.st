@@ -186,6 +186,13 @@ Class >> allClassVarNames [
 			^aSet]
 ]
 
+{ #category : #'class variables' }
+Class >> allClassVariables [
+	"Answer the meta objects of all class variables of the class and its superclass"
+
+	^self withAllSuperclasses flatCollect:  [ :each | each classVariables ]
+]
+
 { #category : #'pool variables' }
 Class >> allSharedPools [
 	"Answer an ordered collection of the pools the receiver shares, including those defined  in the superclasses of the receiver."
@@ -263,7 +270,7 @@ Class >> category [
 			ifTrue: [ ^symbol ] ].
 	result := (self environment organization categoryOfElement: self name)
 		ifNil: [ #Unclassified ]
-		ifNotNil: #yourself.
+		ifNotNil: [:value | value].
 	self basicCategory: result.
 	
 	^ result
@@ -348,14 +355,14 @@ Class >> classVarNames [
 Class >> classVariableDefinitionString [
 	"Answer a string that evaluates to the definition of the class Variables"
 	
-	^String streamContents: [ :str | | special |
+	^String streamContents: [ :str | | fullDef |
 		str nextPutAll: '{ '.
 		self classVariables do: [:global |
 				str nextPutAll: global definitionString.
-				special := global isSpecial]				
+				fullDef := global needsFullDefinition]				
 			separatedBy: [ 
 				str nextPutAll: '. '.  
-				special ifTrue: [ str cr;tab;tab;tab;tab ]].
+				fullDef ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 ]
 
@@ -403,7 +410,7 @@ Class >> copyForAnnouncement [
 	^ newClass
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> declareClassVariables: newVars [ 
 	"Declare class variables common to all instances. Answer whether 
 	recompilation is advisable."
@@ -446,98 +453,14 @@ Class >> definesClassVariableNamed: aString [
 Class >> definitionForNautilus [
 	"Answer a String that defines the receiver."
 
-	| aStream poolString |
-	((self usesSpecialSlot 
-		or: [ self usesSpecialClassVariables ])
-		or: [ Slot showSlotClassDefinition ])
-		ifTrue: [ ^ self definitionForNautilusWithSlots ].
-	poolString := self sharedPoolsString.
-	aStream := (String new: 800) writeStream.
-	superclass
-		ifNil: [ aStream nextPutAll: 'ProtoObject' ]
-		ifNotNil: [ aStream nextPutAll: superclass name ].
-	aStream
-		nextPutAll: self kindOfSubclass;
-		store: self name.
-	self hasTraitComposition
-		ifTrue:
-			[ aStream
-				cr;
-				tab;
-				nextPutAll: 'uses: ';
-				nextPutAll: self traitCompositionString ].
-	aStream
-		cr;
-		tab;
-		nextPutAll: 'instanceVariableNames: ';
-		store: self instanceVariablesString.
-	aStream
-		cr;
-		tab;
-		nextPutAll: 'classVariableNames: ';
-		store: self classVariablesString.
-	poolString = ''
-		ifFalse:
-			[ aStream
-				cr;
-				tab;
-				nextPutAll: 'poolDictionaries: ';
-				store: poolString ].
-	aStream
-		cr;
-		tab;
-		nextPutAll: 'package: ';
-		store: self category asString.
-	superclass
-		ifNil:
-			[ aStream
-				nextPutAll: '.';
-				cr.
-			aStream nextPutAll: self name.
-			aStream
-				space;
-				nextPutAll: 'superclass: nil' ].
-	^ aStream contents
-]
-
-{ #category : #accessing }
-Class >> definitionForNautilusWithSlots [
-	"the class definition with a way to specify slots. Shown when the class defines special Slot
-	 NOTE: this is just for testing, the final solution will evolve and be cleaner later"
-
-	| aStream poolString|
-
-	poolString := self sharedPoolsString.
-
-	aStream := (String new: 800) writeStream.
-	superclass 
-		ifNil: [aStream nextPutAll: 'ProtoObject']
-		ifNotNil: [aStream nextPutAll: superclass name].
-	aStream nextPutAll: ' subclass: ';
-			store: self name.
-	(self hasTraitComposition) ifTrue: [
-		aStream cr; tab; nextPutAll: 'uses: ';
-			nextPutAll: self traitCompositionString].
-			
-	(self classLayout isKindOf: FixedLayout) ifFalse: [
-		aStream cr; tab; nextPutAll: 'layout: ';
-			nextPutAll: self classLayout class name].
-	aStream cr; tab; nextPutAll: 'slots: ';
-			nextPutAll: self slotDefinitionString.
-	aStream cr; tab; nextPutAll: 'classVariables: ';
-			nextPutAll: self classVariableDefinitionString.
-	poolString = '' ifFalse: [
-		aStream cr; tab; nextPutAll: 'poolDictionaries: ';
-			store: poolString].
-	aStream cr; tab; nextPutAll: 'package: ';
-			store: self category asString.
-
-	superclass ifNil: [ 
-		aStream nextPutAll: '.'; cr.
-		aStream nextPutAll: self name.
-		aStream space; nextPutAll: 'superclass: nil'. ].
-
-	^ aStream contents
+	self 
+		deprecated: 'Use #definition instead.' 
+		on: '2019-05-14'
+		in: #Pharo8
+		transformWith: '`@receiver definitionForNautilus' 
+						-> '`@receiver definition'.
+						
+	^ self definition
 ]
 
 { #category : #deprecation }
@@ -576,8 +499,7 @@ Class >> duplicateClassWithNewName: aSymbol [
 { #category : #organization }
 Class >> environment [
 
-	environment ifNil: [^ super environment].
-	^ environment
+	^environment ifNil: [super environment]
 ]
 
 { #category : #organization }
@@ -612,8 +534,7 @@ Class >> ephemeronSubclass: t instanceVariableNames: f
 			sharedVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
+			environment: self environment ].
 ]
 
 { #category : #private }
@@ -665,7 +586,7 @@ Class >> hasSharedPools [
 
 { #category : #'accessing class hierarchy' }
 Class >> hasSubclasses [
-	^subclasses notNil
+	^ self subclasses isNotEmpty
 ]
 
 { #category : #'subclass creation - immediate' }
@@ -703,8 +624,7 @@ Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poo
 			sharedVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
+			environment: self environment ].
 ]
 
 { #category : #compiling }
@@ -819,7 +739,7 @@ Class >> newSubclass [
 	"Point newSubclass new"
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> obsolete [
 	"Change the receiver and all of its subclasses to an obsolete class."
 	self == Object 
@@ -909,14 +829,14 @@ Class >> removeClassVariable: aGlobal [
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> removeFromSystem [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing 
 	instances will refer to an obsolete version of the receiver."
 	self removeFromSystem: true.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> removeFromSystem: logged [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing  instances will refer to an obsolete version of the receiver.
 	Keep the class name and category for triggering the system change message. If we wait to long, then we get obsolete information which is not what we want.
@@ -936,17 +856,10 @@ Class >> removeFromSystem: logged [
 	logged ifTrue: [SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory].
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> removeFromSystemUnlogged [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing instances will refer to an obsolete version of the receiver.  Do not log the removal either to the current change set nor to the system changes log"
 	^self removeFromSystem: false
-]
-
-{ #category : #'instance variables' }
-Class >> removeInstVarNamed: aString [ 
-	"Remove the argument, aString, as one of the receiver's instance variables."
-
-	^self removeSlot: (self slotNamed: aString)
 ]
 
 { #category : #'pool variables' }
@@ -1137,8 +1050,7 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 				sharedVariablesFromString: d;
 				sharedPools: s;
 				category: cat;
-				environment: self environment;
-				copyClassSlotsFromExistingClass ]
+				environment: self environment ]
 ]
 
 { #category : #'subclass creation - slots' }
@@ -1224,8 +1136,7 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 		slots: slotDefinition;
 		sharedVariables:  classVarDefinition;
 		sharedPools: someSharedPoolNames;
-		category: aCategorySymbol ].
-
+		category: aCategorySymbol ]
 ]
 
 { #category : #'accessing class hierarchy' }
@@ -1249,14 +1160,14 @@ Class >> subclassesDo: aBlock [
 	self subclasses do: aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
 	self subclasses: nil. 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> unload [
 	"Sent when a the class is removed.  Does nothing, but may be overridden by (class-side) subclasses."
 ]
@@ -1327,8 +1238,7 @@ Class >> variableByteSubclass: t instanceVariableNames: f
 			sharedVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
-			environment: self  environment;
-			copyClassSlotsFromExistingClass ].
+			environment: self  environment ].
 ]
 
 { #category : #'subclass creation - variable' }
@@ -1363,8 +1273,7 @@ Class >> variableSubclass: t instanceVariableNames: f classVariableNames: d pool
 			sharedVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
+			environment: self environment ].
 ]
 
 { #category : #'subclass creation - variable' }
@@ -1425,8 +1334,7 @@ Class >> variableWordSubclass: t instanceVariableNames: f
 			sharedVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
+			environment: self environment ].
 ]
 
 { #category : #'subclass creation - weak' }
@@ -1467,8 +1375,7 @@ Class >> weakSubclass: t instanceVariableNames: f
 			sharedVariablesFromString: d;
 			sharedPools: s;
 			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
+			environment: self environment ].
 ]
 
 { #category : #'subclass creation - weak' }

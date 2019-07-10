@@ -19,8 +19,8 @@ Class {
 { #category : #'instance creation' }
 NNavNavigation class >> new [
 	"yes I'm a singleton"
-	Instance ifNil: [Instance := super new].
-	^Instance. 
+	Instance ifNil: [ Instance := super new ].
+	^ Instance
 ]
 
 { #category : #configuration }
@@ -38,12 +38,12 @@ NNavNavigation class >> useArrowsShortcuts: enable [
 
 { #category : #'current-context' }
 NNavNavigation >> bestNodeForSelection [
+
 	| root |
-	
-	currentEditor isWorkspace 
-		ifTrue: [root := RBParser parseFaultyExpression: self currentText]
-		ifFalse:  [root := RBParser parseFaultyMethod: self currentText]. 
-	^ root bestNodeFor: self textSelection .	
+	root := currentEditor isWorkspace 
+		ifTrue: [ RBParser parseFaultyExpression: self currentText]
+		ifFalse:  [ RBParser parseFaultyMethod: self currentText]. 
+	^ root bestNodeFor: self textSelection	
 ]
 
 { #category : #'current-context' }

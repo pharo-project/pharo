@@ -35,7 +35,7 @@ TabActionButtonMorph >> drawOn: aCanvas [
 TabActionButtonMorph >> forAction: anAction [
 	| baseColor |
 	
-	baseColor := Smalltalk ui theme baseColor.
+	baseColor := self theme baseColor.
 	self extent: anAction icon extent.
 	
 	self activeEnabledNotOverUpFillStyle: baseColor.

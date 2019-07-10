@@ -132,7 +132,7 @@ MalGraphAlgorithm >> graph [
 	^ {self nodes . self edges}
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MalGraphAlgorithm >> initialize [
 	nodes := OrderedCollection new.
 	edges := OrderedCollection new.

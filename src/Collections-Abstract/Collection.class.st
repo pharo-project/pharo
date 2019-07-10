@@ -12,6 +12,12 @@ Collection class >> empty [
 	^ self new
 ]
 
+{ #category : #testing }
+Collection class >> isAbstract [
+
+	^self name = #Collection
+]
+
 { #category : #'instance creation' }
 Collection class >> with: anObject [ 
 	"Answer an instance of me containing anObject."
@@ -97,6 +103,9 @@ Collection >> & aCollection [
 
 { #category : #copying }
 Collection >> , aCollection [
+	"Concatenate the receiver with the argument."
+	"#(1 2 3) , #(4 5 6) >>> #(1 2 3 4 5 6)"
+	
 	^self copy addAll: aCollection; yourself
 ]
 
@@ -937,6 +946,9 @@ Collection >> isSequenceable [
 
 { #category : #'math functions' }
 Collection >> median [
+	"Return the middle element, or as close as we can get."
+	"{1 . 2 . 3 . 4 . 5} median >>> 3"
+	
 	^ self asSortedCollection median
 ]
 
@@ -1290,8 +1302,13 @@ Collection >> union: aCollection [
 	^ self species withAll: set asArray
 ]
 
-{ #category : #'filter streaming' }
-Collection >> write: anObject [ 
+{ #category : #deprecated }
+Collection >> write: anObject [
+
+	self
+		deprecated: 'Please use #add: instead'
+		transformWith: '`@receiver write: `@statements1' 
+						-> '`@receiver add: `@statements1'.
 	^ self add: anObject
 ]
 

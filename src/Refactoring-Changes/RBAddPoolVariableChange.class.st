@@ -9,7 +9,7 @@ Class {
 
 { #category : #converting }
 RBAddPoolVariableChange >> asUndoOperation [
-	^ RBRefactoryChangeManager changeFactory removePoolVariable: self variable from: self changeClass
+	^ changeFactory removePoolVariable: self variable from: self changeClass
 ]
 
 { #category : #accessing }

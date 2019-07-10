@@ -5,7 +5,6 @@ Class {
 	#name : #AthensTextScanner,
 	#superclass : #Object,
 	#instVars : [
-		'paragraph',
 		'text',
 		'currentLine',
 		'lines',
@@ -93,7 +92,7 @@ AthensTextScanner >> endLine: index [
 	currentLine  endIndex: index
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 AthensTextScanner >> initialize [
 	lines := OrderedCollection new.
 	currentAttributes := #().

@@ -171,6 +171,8 @@ GLMFinderMorphicTest >> testSpawnFinder [
 	| browser |
 	browser := GLMFinder new.
 	window := browser openOn: ($a to: $d).
-	self repeatAssert: [window submorphs last class] equals: GLMPaneScroller.
+	
+	self waitUntilUIRedrawed.
+	self assert: window submorphs last class equals: GLMPaneScroller.
 
 ]

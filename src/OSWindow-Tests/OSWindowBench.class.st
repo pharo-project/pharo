@@ -13,7 +13,7 @@ OSWindowBench >> benchEventProcessing [
 	
 	| window sema |
 	
-	window := World osWindow.
+	window := self currentWorld osWindow.
 	sema := Semaphore new.
 	[ 
 		"TimeProfiler spyAllOn:[ sema wait ]"		

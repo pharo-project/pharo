@@ -14,11 +14,11 @@ RBTemporaryToInstanceVariableTest >> setUp [
 RBTemporaryToInstanceVariableTest >> testNonExistantName [
 	self
 		shouldFail: (RBTemporaryToInstanceVariableRefactoring 
-				class: RBBasicLintRuleTest
+				class: RBBasicLintRuleTestData
 				selector: #checkClass:
 				variable: 'asdf');
 		shouldFail: (RBTemporaryToInstanceVariableRefactoring 
-				class: RBBasicLintRuleTest
+				class: RBBasicLintRuleTestData
 				selector: #checkClass1:
 				variable: 'aSmalllintContext')
 ]
@@ -40,12 +40,12 @@ RBTemporaryToInstanceVariableTest >> testRedefinedTemporary [
 RBTemporaryToInstanceVariableTest >> testTemporaryToInstanceVariable [
 	| refactoring class |
 	refactoring := RBTemporaryToInstanceVariableRefactoring 
-		class: RBLintRuleTest
+		class: RBLintRuleTestData
 		selector: #displayName
 		variable: 'nameStream'.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBLintRuleTest.
-	self assert: (class parseTreeFor: #displayName) = (RBParser parseMethod: 'displayName
+	class := refactoring model classNamed: #RBLintRuleTestData.
+	self assert: (class parseTreeFor: #displayName) equals: (self parseMethod: 'displayName
 								nameStream := WriteStream on: (String new: 64).
 								nameStream
 									nextPutAll: self name;

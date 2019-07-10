@@ -82,16 +82,12 @@ RBMoveMethodRefactoring >> buildParseTree [
 RBMoveMethodRefactoring >> checkAssignmentsToVariable [
 	| searcher |
 	variable
-		ifNotNil:
-			[ 
-			searcher := RBParseTreeSearcher new.
+		ifNotNil: [ searcher := self parseTreeSearcher.
 			searcher
 				matches: variable , ' := `@object'
 				do: [ :aNode :answer | true ].
 			(searcher executeTree: parseTree initialAnswer: false)
-				ifTrue:
-					[ 
-					self
+				ifTrue: [ self
 						refactoringError:
 							('Cannot move the method into <1s> since it is assigned'
 								expandMacrosWith: variable) ] ]
@@ -106,11 +102,13 @@ RBMoveMethodRefactoring >> checkForPrimitiveMethod [
 { #category : #preconditions }
 RBMoveMethodRefactoring >> checkForSuperReferences [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: 'super `@message: `@args' do: [:aNode :answer | true].
-	(searcher executeTree: parseTree initialAnswer: false) 
-		ifTrue: 
-			[self refactoringError: 'Cannot move the method since it has a super message send.']
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: 'super `@message: `@args'
+		do: [ :aNode :answer | true ].
+	(searcher executeTree: parseTree initialAnswer: false)
+		ifTrue: [ self
+				refactoringError: 'Cannot move the method since it has a super message send.' ]
 ]
 
 { #category : #preconditions }
@@ -267,25 +265,26 @@ RBMoveMethodRefactoring >> getNewMethodName [
 
 { #category : #transforming }
 RBMoveMethodRefactoring >> hasOnlySelfReturns [
-	^hasOnlySelfReturns isNil 
-		ifTrue: 
-			[| searcher |
-			searcher := RBParseTreeSearcher new.
+	^ hasOnlySelfReturns isNil
+		ifTrue: [ | searcher |
+			searcher := self parseTreeSearcher.
 			searcher
-				matches: '^self' do: [:aNode :answer | answer];
-				matches: '^`@object' do: [:aNode :answer | false].
-			hasOnlySelfReturns := searcher executeTree: parseTree initialAnswer: true]
-		ifFalse: [hasOnlySelfReturns]
+				matches: '^self' do: [ :aNode :answer | answer ];
+				matches: '^`@object' do: [ :aNode :answer | false ].
+			hasOnlySelfReturns := searcher
+				executeTree: parseTree
+				initialAnswer: true ]
+		ifFalse: [ hasOnlySelfReturns ]
 ]
 
 { #category : #testing }
 RBMoveMethodRefactoring >> hasSelfReferences [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: 'self' do: [:aNode :answer | true].
-	self hasOnlySelfReturns 
-		ifTrue: [searcher matches: '^self' do: [:aNode :answer | answer]].
-	^searcher executeTree: parseTree initialAnswer: false
+	searcher := self parseTreeSearcher.
+	searcher matches: 'self' do: [ :aNode :answer | true ].
+	self hasOnlySelfReturns
+		ifTrue: [ searcher matches: '^self' do: [ :aNode :answer | answer ] ].
+	^ searcher executeTree: parseTree initialAnswer: false
 ]
 
 { #category : #testing }
@@ -359,7 +358,7 @@ RBMoveMethodRefactoring >> replaceVariableReferences [
 	parseTree := replacer tree
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBMoveMethodRefactoring >> selector: aSymbol class: aClass variable: aVariableName [ 
 	selector := aSymbol.
 	class := self classObjectFor: aClass.

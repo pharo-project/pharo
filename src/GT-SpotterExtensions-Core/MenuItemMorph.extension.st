@@ -5,7 +5,7 @@ MenuItemMorph class >> gtExampleMenuItemMorphWithSubitems [
 	<gtExample>
 	<label: 'Menu item with subitems'>
 	
-	^ World worldMenu items 
+	^ self currentWorld worldMenu items 
 		detect: [ :each | each contents = 'System' ]
 ]
 
@@ -14,7 +14,7 @@ MenuItemMorph class >> gtExampleMenuItemMorphWithoutSubitems [
 	<gtExample>
 	<label: 'Menu item without subitems'>
 	
-	^ World worldMenu items 
+	^ self currentWorld worldMenu items 
 		detect: [ :each | each contents = 'System Browser' ]
 ]
 

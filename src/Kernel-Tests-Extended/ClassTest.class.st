@@ -5,8 +5,7 @@ Class {
 	#name : #ClassTest,
 	#superclass : #ClassTestCase,
 	#instVars : [
-		'className',
-		'renamedName'
+		'className'
 	],
 	#category : #'Kernel-Tests-Extended-Classes'
 }
@@ -70,13 +69,14 @@ ClassTest >> tearDown [
 
 { #category : #tests }
 ClassTest >> testAddClassSlot [
-
-	| tutu |
+	| tutu slot1 slot2 |
 	tutu := Smalltalk globals at: #TUTU.
-	tutu addClassSlot: #'X' => InstanceVariableSlot.
-	self assert: tutu class instVarNames = #(#'X').
-	tutu addClassSlot: #'Y' => InstanceVariableSlot.
-	self assert: tutu class instVarNames = #(#'X' #'Y')
+	slot1 := #X => InstanceVariableSlot.
+	slot2 := #Y => InstanceVariableSlot.
+	tutu addClassSlot: slot1.
+	self assert: tutu class instVarNames equals: #(#X).
+	tutu addClassSlot: slot2.
+	self assert: tutu class instVarNames equals: #(#X #Y)
 ]
 
 { #category : #tests }
@@ -118,14 +118,13 @@ ClassTest >> testAddSlotAnonymous [
 
 { #category : #'tests - access' }
 ClassTest >> testAllSharedPools [
-
 	self assert: Point allSharedPools equals: OrderedCollection new.
 	self assert: Date sharedPools first equals: ChronologyConstants.
 	self assert: Date sharedPools size equals: 1.	"a metaclass does not have shared pools since only classes have shared pools"
 
 	self assert: RootClassPoolUser sharedPools size equals: 1.
 	self assert: ClassMultiplePoolUser sharedPools size equals: 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
-	self assert: SubclassPoolUser sharedPools isEmpty
+	self assertEmpty: SubclassPoolUser sharedPools
 ]
 
 { #category : #'as yet unclassified' }
@@ -144,15 +143,6 @@ ClassTest >> testClassSide [
 
 	self assert: Point classSide equals: Point class. 
 	self assert: Point class classSide equals: Point class. 
-]
-
-{ #category : #'tests - class variables' }
-ClassTest >> testClassVarNames [
-
-	self assert: (Object classVarNames includes: #DependentsFields).
-	
-	"A class and it's meta-class share the class variables"
-	self assert: (Object classVarNames = Object class classVarNames).
 ]
 
 { #category : #'as yet unclassified' }
@@ -218,12 +208,9 @@ ClassTest >> testIsInstanceSide [
 ClassTest >> testMethodsReferencingClass [
 	self assert: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest111)) equals: {(ClassTest >> #testOrdersACollectionOfClassesBySuperclass)}.
 	self
-		assert: ((ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest1)) sort: [ :a :b | a name <= b name]) asArray
-		equals:
-			{ClassTest>>#referencingMethod1. 
-			ClassTest>>#referencingMethod2. 
-			ClassTest>>#testOrdersACollectionOfClassesBySuperclass}.
-	self assert: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #BehaviorTest)) isEmpty
+		assert: ((ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest1)) sort: [ :a :b | a name <= b name ]) asArray
+		equals: {(ClassTest >> #referencingMethod1) . (ClassTest >> #referencingMethod2) . (ClassTest >> #testOrdersACollectionOfClassesBySuperclass)}.
+	self assertEmpty: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #BehaviorTest))
 ]
 
 { #category : #'tests - navigation' }
@@ -324,6 +311,22 @@ ClassTest >> testReferencedClasses [
 			self assert: (assoc key referencedClasses asSet includesAll: assoc value asSet)]
 ]
 
+{ #category : #tests }
+ClassTest >> testRemoveClassSlot [
+	| tutu slot1 slot2 |
+	tutu := Smalltalk globals at: #TUTU.
+	slot1 := #X => InstanceVariableSlot.
+	slot2 := #Y => InstanceVariableSlot.
+	tutu addClassSlot: slot1.
+	self assert: tutu class instVarNames equals: #(#X).
+	tutu addClassSlot: slot2.
+	self assert: tutu class instVarNames equals: #(#X #Y).
+	tutu removeClassSlot: slot2.
+	self assert: tutu class instVarNames equals: #(#X).
+	tutu removeClassSlot: slot1.
+	self assert: tutu class instVarNames equals: #().
+]
+
 { #category : #'tests - access' }
 ClassTest >> testSharedPoolOfVarNamed [	
 
@@ -342,14 +345,13 @@ ClassTest >> testSharedPoolOfVarNamed [
 
 { #category : #'tests - access' }
 ClassTest >> testSharedPools [
-
 	self assert: Point sharedPools equals: OrderedCollection new.
 	self assert: Date sharedPools first equals: ChronologyConstants.
 	self assert: Date sharedPools size equals: 1.	"a metaclass does not have shared pools since only classes have shared pools"
 	Date class sharedPools.
 	self assert: RootClassPoolUser sharedPools size equals: 1.
 	self assert: ClassMultiplePoolUser sharedPools size equals: 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
-	self assert: SubclassPoolUser sharedPools isEmpty
+	self assertEmpty: SubclassPoolUser sharedPools
 ]
 
 { #category : #'tests - class creation' }
@@ -424,6 +426,30 @@ ClassTest >> testUsesPoolVarNamed [
 	self assert: (RootClassPoolUser usesPoolVarNamed: 'Author').
 	"a subclass  has  the one of its superclass"
 	self assert: (SubclassPoolUser usesPoolVarNamed: 'Author').
+]
+
+{ #category : #'tests - class variables' }
+ClassTest >> testallClassVariables [
+
+	self assert: SmalltalkImage allClassVariables last name equals: #DependentsFields
+]
+
+{ #category : #'tests - class variables' }
+ClassTest >> testclassVarNames [
+
+	self assert: (Object classVarNames includes: #DependentsFields).
+	
+	"A class and it's meta-class share the class variables"
+	self assert: (Object classVarNames = Object class classVarNames).
+]
+
+{ #category : #'tests - class variables' }
+ClassTest >> testclassVariables [
+
+	self assert: Object classVariables first name equals: #DependentsFields.
+	
+	"A class and it's meta-class share the class variables"
+	self assert: (Object classVariables = Object class classVariables).
 ]
 
 { #category : #'tests - class creation' }

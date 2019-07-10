@@ -71,23 +71,23 @@ UITheme class >> current: aUITheme [
 	SystemProgressMorph reset. "reset to use new fill styles"
 	ScrollBar initializeImagesCache. "reset to use new arrows"
 
-	self class environment at: #SHPreferences ifPresent: [:shPreferences |
-		shPreferences setStyleTable: aUITheme shStyleTable. ].
+	self class environment at: #SHPreferences ifPresent: [ :shPreferences |
+		shPreferences setStyleTable: aUITheme shStyleTable ].
 
-	self class environment at: #PolymorphSystemSettings ifPresent: [:polymorphSystemSettings |
-		polymorphSystemSettings desktopColor: aUITheme desktopColor. ].
+	self class environment at: #PolymorphSystemSettings ifPresent: [ :polymorphSystemSettings |
+		polymorphSystemSettings desktopColor: aUITheme desktopColor ].
 	
-	self class environment at: #NECPreferences ifPresent: [:necPreferences |
-		necPreferences backgroundColor: aUITheme windowColor.  ].
+	self class environment at: #NECPreferences ifPresent: [ :necPreferences |
+		necPreferences backgroundColor: aUITheme windowColor ].
 
-	self class environment at: #Paragraph ifPresent: [:paragraph |
-		paragraph insertionPointColor: aUITheme caretColor.  ].
+	self class environment at: #Paragraph ifPresent: [ :paragraph |
+		paragraph insertionPointColor: aUITheme caretColor ].
 
 	self class environment at: #BalloonMorph ifPresent: [:balloonMorph |
-		balloonMorph setBalloonColorTo: aUITheme balloonBackgroundColor. ].
+		balloonMorph setBalloonColorTo: aUITheme balloonBackgroundColor ].
 
 	aUITheme updateWorldDockingBars.
-	World themeChanged.
+	self currentWorld themeChanged.
 	(SystemWindow allSubInstances select:[:e | e owner isNil]) do:#themeChanged.
 ]
 
@@ -180,7 +180,6 @@ UITheme class >> newDefaultSettings [
 		autoSelectionColor: false;
 		preferRoundCorner: false;
 		fadedBackgroundWindows: false;
-		secondarySelectionColor: self veryLightSelectionColor;
 		flatMenu: true
 ]
 
@@ -286,12 +285,28 @@ UITheme >> baseColor [
 	^ self class baseColor
 ]
 
+{ #category : #'basic-colors' }
+UITheme >> baseColorFor: aWidget [
+
+	^ self class baseColor
+]
+
+{ #category : #private }
+UITheme >> basePassiveBackgroundColorFor: aButton [
+	^ self class basePassiveBackgroundColor
+]
+
 { #category : #'fill-styles-scrollbars' }
 UITheme >> baseScrollbarColorFor: aScrollbar [
 	"Return the scrollbar last pane colour or that of our settings if unavailable"
 	
 	^ aScrollbar lastPaneColor 
 		ifNil: [ self scrollbarColor ]
+]
+
+{ #category : #private }
+UITheme >> baseSelectionColorFor: aButton [
+	^ self class baseSelectionColor
 ]
 
 { #category : #scrollbars }
@@ -333,7 +348,7 @@ UITheme >> borderColor [
 
 { #category : #accessing }
 UITheme >> borderWidth [
-	^ 1 * World displayScaleFactor
+	^ 1 * self currentWorld displayScaleFactor
 ]
 
 { #category : #accessing }
@@ -508,7 +523,7 @@ UITheme >> buttonMiddleRightForm [
 UITheme >> buttonMinHeight [
 	"Answer the minumum height of a button for this theme."
 	
-	^24 * World displayScaleFactor
+	^ 18 * self currentWorld displayScaleFactor
 ]
 
 { #category : #defaults }
@@ -546,7 +561,7 @@ UITheme >> buttonNormalFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 	
 	(aButton valueOfProperty: #noFill ifAbsent: [false]) ifTrue: [^ SolidFillStyle color: Color transparent ].
-	^ self glamorousNormalFillStyleFor: aButton height: aButton height
+	^ self normalFillStyleFor: aButton height: aButton height
 ]
 
 { #category : #'fill-styles-buttons' }
@@ -642,7 +657,7 @@ UITheme >> buttonSelectedDisabledFillStyleFor: aButton [
 UITheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 	
-	^ SolidFillStyle color: (self glamorousLightSelectionColorFor: aButton)
+	^ SolidFillStyle color: (self lightSelectionColorFor: aButton)
 	
 ]
 
@@ -802,8 +817,8 @@ UITheme >> centeredAlertIn: aThemedMorph text: aStringOrText title: aString conf
 		title: aString;
 		text: aStringOrText.
 	aBlock value: dialog.
-	dialog left: ((World width / 2) - (dialog width /2)).
-	dialog top: ((World height / 2) - (dialog height /2)).
+	dialog left: ((self currentWorld width / 2) - (dialog width /2)).
+	dialog top: ((self currentWorld height / 2) - (dialog height /2)).
 	aThemedMorph openModal: dialog.
 	^ dialog cancelled not
 ]
@@ -863,7 +878,7 @@ UITheme >> checkboxButtonSelectedDisabledBorderStyleFor: aCheckboxButton [
 UITheme >> checkboxButtonSelectedDisabledFillStyleFor: aCheckboxButton [
 	"Return the selected disabled checkbox button fillStyle for the given button."
 	
-	^self checkboxButtonDisabledFillStyleFor: aCheckboxButton
+	^self checkboxButtonSelectedFillStyleFor:  aCheckboxButton
 ]
 
 { #category : #'fill-styles-buttons' }
@@ -1008,7 +1023,7 @@ UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: 
 		fileNameText: pathFileReference basename;
 		initialize;
 		title: title;
-		answerFileName.	
+		answerPathName.	
 	exts ifNotNil: [ fd validExtensions: exts ].
 	path ifNotNil: [ fd selectPath: pathFileReference pathString ].
 	^ (aThemedMorph openModal: fd) answer ifNotNil: #asFileReference
@@ -1715,6 +1730,11 @@ UITheme >> darkBaseColor [
 	^ self class darkBaseColor
 ]
 
+{ #category : #private }
+UITheme >> darkBaseColorFor: aButton [
+	^ self class darkBaseColor
+]
+
 { #category : #defaults }
 UITheme >> defaultButtonBorderColor [
 	"Answer the color to use for a 'default' button."
@@ -1738,14 +1758,14 @@ UITheme >> defaultMenuTitleColor [
 	^self settings menuTitleColor
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> defaultSettings [
 	"Answer the default settings."
 
 	^self class defaultSettings copy
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> defaultSoundTheme [
 	"Answer the default sound theme.
 	Answer the system sound theme by default."
@@ -2059,7 +2079,7 @@ UITheme >> dropListButtonLabelFor: aDropList [
 UITheme >> dropListControlButtonWidth [
 	"Answer the width of a drop list control button for this theme."
 	
-	^20
+	^ 18
 ]
 
 { #category : #'border-styles' }
@@ -2318,7 +2338,7 @@ UITheme >> groupPanelBorderStyleFor: aGroupPanel [
 
 	^ SimpleBorder new
 		width: 1;
-		baseColor: ((self glamorousBaseColorFor: aGroupPanel))
+		baseColor: ((self baseColorFor: aGroupPanel))
 ]
 
 { #category : #'border-styles' }
@@ -2346,7 +2366,7 @@ UITheme >> initialize [
 	self windowActiveDropShadowStyle: #diffuse
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> initializeForms [
 	"Initialize the receiver's image forms."
 
@@ -2439,6 +2459,16 @@ UITheme >> lightBackgroundColor [
 UITheme >> lightBaseColor [
 
 	^ self class lightBaseColor
+]
+
+{ #category : #private }
+UITheme >> lightColorFor: aButton [
+	^ self class lightBaseColor
+]
+
+{ #category : #private }
+UITheme >> lightSelectionColorFor: aMorph [
+	^ self class lightSelectionColor
 ]
 
 { #category : #'accessing colors' }
@@ -2586,7 +2616,7 @@ UITheme >> menuItemDisabledTextColorFor: aMenuItem [
 	"Answer the color to use for disabled menu item text."
 
 	^((aMenuItem color luminance - aMenuItem owner color luminance) abs < 0.3)
-		ifTrue: [aMenuItem owner color contrastingColor muchDarker]
+		ifTrue: [aMenuItem owner color contrastingBlackAndWhiteColor muchDarker]
 		ifFalse: [aMenuItem owner color muchDarker]
 ]
 
@@ -2608,7 +2638,7 @@ UITheme >> menuItemNormalTextColorFor: aMenuItem [
 	"Answer the color to use for normal menu item text."
 
 	^((aMenuItem color luminance - aMenuItem owner paneColor luminance) abs < 0.3)
-		ifTrue: [aMenuItem owner paneColor contrastingColor]
+		ifTrue: [aMenuItem owner paneColor contrastingBlackAndWhiteColor]
 		ifFalse: [aMenuItem color]
 ]
 
@@ -2708,12 +2738,12 @@ UITheme >> menubarFillStyleFor: aMenubar [
 
 { #category : #'fill-styles-menubar' }
 UITheme >> menubarItemSelectionFillStyleFor: aMenubarItem [
-	^ self taskbarItemSelectedFillStyleFor: aMenubarItem
+	^ self settings menuSelectionColor
 ]
 
 { #category : #'fill-styles-menubar' }
 UITheme >> menubarItemSelectionTextColorFor: aMenubarItem [
-	^ self taskbarItemLabelColorForExpanded: aMenubarItem
+	^ self settings menuSelectionTextColor
 ]
 
 { #category : #services }
@@ -2935,7 +2965,7 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel  get: getSel set: 
 	is provided in case of initial nil returns."
 
 	|pt|
-	pt := PluggableTextFieldMorph new
+	pt := RubPluggableTextFieldMorph new
 		autoAccept: true;
 		alwaysAccept: true;
 		convertTo: aClass;
@@ -2951,15 +2981,8 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel  get: getSel set: 
 		hResizing: #spaceFill;
 		vResizing: #rigid;
 		borderStyle: (BorderStyle inset width: 1);
-		selectionColor: self selectionColor;
-		hideScrollBarsIndefinitely;
-		extent: 24@(aFont height + 8);
 		setBalloonText: helpText;
 		entryCompletion: anEntryCompletion.
-	pt textMorph
-		autoFit: true;
-		wrapFlag: false;
-		margins: (2@1) asMargin.
 	^pt
 
 ]
@@ -3028,7 +3051,7 @@ UITheme >> newBracketSliderIn: aThemedMorph for: aModel getValue: getSel setValu
 		setBalloonText: helpText
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonBottomLeftForm [
 	"Answer the form for the bottom left of a button."
 
@@ -3039,7 +3062,7 @@ UITheme >> newButtonBottomLeftForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonBottomMiddleForm [
 	"Answer the form for the bottom middle of a button."
 
@@ -3050,7 +3073,7 @@ UITheme >> newButtonBottomMiddleForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonBottomRightForm [
 	"Answer the form for the bottom right of a button."
 
@@ -3114,7 +3137,7 @@ UITheme >> newButtonLabelIn: aThemedMorph for: aModel label: aString getEnabled:
 		getEnabledSelector: enabledSel
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonMiddleLeftForm [
 	"Answer the form for the middle left of a button."
 
@@ -3125,7 +3148,7 @@ UITheme >> newButtonMiddleLeftForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonMiddleRightForm [
 	"Answer the form for the middle right of a button."
 
@@ -3136,7 +3159,7 @@ UITheme >> newButtonMiddleRightForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSelectedBottomLeftForm [
 	"Answer the form for the bottom left of a selected button."
 
@@ -3147,7 +3170,7 @@ UITheme >> newButtonSelectedBottomLeftForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSelectedBottomMiddleForm [
 	"Answer the form for the bottom middle of a selected button."
 
@@ -3158,7 +3181,7 @@ UITheme >> newButtonSelectedBottomMiddleForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSelectedBottomRightForm [
 	"Answer the form for the bottom right of a selected button."
 
@@ -3169,7 +3192,7 @@ UITheme >> newButtonSelectedBottomRightForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSelectedMiddleLeftForm [
 	"Answer the form for the middle left of a selected button."
 
@@ -3180,7 +3203,7 @@ UITheme >> newButtonSelectedMiddleLeftForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSelectedMiddleRightForm [
 	"Answer the form for the middle right of a selected button."
 
@@ -3191,7 +3214,7 @@ UITheme >> newButtonSelectedMiddleRightForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSelectedTopLeftForm [
 	"Answer the form for the top left of a selected button."
 
@@ -3202,7 +3225,7 @@ UITheme >> newButtonSelectedTopLeftForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSelectedTopMiddleForm [
 	"Answer the form for the top middle of a selected button."
 
@@ -3213,7 +3236,7 @@ UITheme >> newButtonSelectedTopMiddleForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSelectedTopRightForm [
 	"Answer the form for the top right of a selected button."
 
@@ -3224,7 +3247,7 @@ UITheme >> newButtonSelectedTopRightForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSquareBottomLeftForm [
 	"Answer the form for the bottom left of a square button."
 
@@ -3235,7 +3258,7 @@ UITheme >> newButtonSquareBottomLeftForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSquareBottomRightForm [
 	"Answer the form for the bottom right of a square button."
 
@@ -3246,7 +3269,7 @@ UITheme >> newButtonSquareBottomRightForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSquareSelectedBottomLeftForm [
 	"Answer the form for the bottom left of a selected square button."
 
@@ -3257,7 +3280,7 @@ UITheme >> newButtonSquareSelectedBottomLeftForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSquareSelectedBottomRightForm [
 	"Answer the form for the bottom right of a selected square button."
 
@@ -3268,7 +3291,7 @@ UITheme >> newButtonSquareSelectedBottomRightForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSquareSelectedTopLeftForm [
 	"Answer the form for the top left of a selected square button."
 
@@ -3279,7 +3302,7 @@ UITheme >> newButtonSquareSelectedTopLeftForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSquareSelectedTopRightForm [
 	"Answer the form for the top right of a selected square button."
 
@@ -3290,7 +3313,7 @@ UITheme >> newButtonSquareSelectedTopRightForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSquareTopLeftForm [
 	"Answer the form for the top left of a square button."
 
@@ -3301,7 +3324,7 @@ UITheme >> newButtonSquareTopLeftForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonSquareTopRightForm [
 	"Answer the form for the top right of a square button."
 
@@ -3312,7 +3335,7 @@ UITheme >> newButtonSquareTopRightForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonTopLeftForm [
 	"Answer the form for the top left of a button."
 
@@ -3323,7 +3346,7 @@ UITheme >> newButtonTopLeftForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonTopMiddleForm [
 	"Answer the form for the top middle of a button."
 
@@ -3334,7 +3357,7 @@ UITheme >> newButtonTopMiddleForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newButtonTopRightForm [
 	"Answer the form for the top right of a button."
 
@@ -3360,7 +3383,7 @@ UITheme >> newCancelButtonIn: aThemedMorph for: aModel [
 		help: 'Cancel changes and close the window' translated
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newCheckboxForm [
 	"Answer the form for a normal checkbox."
 
@@ -3407,14 +3430,14 @@ UITheme >> newCheckboxIn: aThemedMorph for: aModel getSelected: getSel setSelect
 	^answer
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newCheckboxMarkerForm [
 	"Answer a new checkbox marker form."
 
 	^ self iconNamed: #checkboxMarkerForm
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newCheckboxSelectedForm [
 	"Answer the form for a selected checkbox."
 
@@ -3520,7 +3543,7 @@ UITheme >> newDialogPanelIn: aThemedMorph [
 UITheme >> newDropListIn: aThemedMorph for: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel useIndex: useIndex help: helpText [
 	"Answer a drop list for the given model."
 
-	^(DropListMorph basicNew
+	^(EditableDropListMorph basicNew
 		basicTheme: self;
 			initialize;
 			useSelectionIndex: useIndex;
@@ -3536,7 +3559,9 @@ UITheme >> newDropListIn: aThemedMorph for: aModel list: listSel getSelected: ge
 		hResizing: #spaceFill;
 		vResizing: #shrinkWrap;
 		setBalloonText: helpText;
-		basicTheme: nil
+		basicTheme: nil;
+		beReadOnly;
+		yourself
 ]
 
 { #category : #'morph creation' }
@@ -3595,7 +3620,7 @@ UITheme >> newFocusIndicatorMorphFor: aMorph [
 		fillStyle: Color transparent;
 		borderStyle: (SimpleBorder new
 			 width: 1;
-			baseColor: (self glamorousBaseSelectionColorFor: aMorph));
+			baseColor: (self baseSelectionColorFor: aMorph));
 		bounds: aMorph focusBounds
 ]
 
@@ -4029,7 +4054,7 @@ UITheme >> newPluggableDialogWindowIn: aThemedMorph title: title for: contentMor
 	^answer
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newRadioButtonForm [
 	"Answer the form for a normal radio button."
 
@@ -4059,14 +4084,14 @@ UITheme >> newRadioButtonIn: aThemedMorph for: aModel getSelected: getSel setSel
 	^answer
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newRadioButtonMarkerForm [
 	"Answer a new radio button marker form. We make it empty because we already have the selected radio button take care of the state."
 
 	^ self iconNamed: #radioButtonMarkerForm
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newRadioButtonSelectedForm [
 	"Answer the form for a selected radio button."
 
@@ -4126,7 +4151,7 @@ UITheme >> newScrollPaneIn: aThemedMorph for: aMorph [
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newScrollbarThumbBottomForm [
 	"Answer the form for the bottom of a scrollbar thumb."
 
@@ -4137,7 +4162,7 @@ UITheme >> newScrollbarThumbBottomForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newScrollbarThumbHorizontalMiddleForm [
 	"Answer the form for the middle of a horizontal scrollbar thumb."
 
@@ -4148,7 +4173,7 @@ UITheme >> newScrollbarThumbHorizontalMiddleForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newScrollbarThumbLeftForm [
 	"Answer the form for the left hand side of a scrollbar thumb."
 
@@ -4159,7 +4184,7 @@ UITheme >> newScrollbarThumbLeftForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newScrollbarThumbRightForm [
 	"Answer the form for the right hand side of a scrollbar thumb."
 
@@ -4170,7 +4195,7 @@ UITheme >> newScrollbarThumbRightForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newScrollbarThumbTopForm [
 	"Answer the form for the top of a scrollbar thumb."
 
@@ -4181,7 +4206,7 @@ UITheme >> newScrollbarThumbTopForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newScrollbarThumbVerticalMiddleForm [
 	"Answer the form for the middle of a vertical scrollbar thumb."
 
@@ -4327,7 +4352,7 @@ UITheme >> newTaskbarThumbnailIn: aThemedMorph for: aWindow [
 UITheme >> newTextEditorIn: aThemedMorph for: aModel getText: getSel setText: setSel getEnabled: enabledSel menu: aMenuSelector [
 	"Answer a text (Smalltalk code) editor for the given model."
 
-	^PluggableTextMorph new
+	^ RubPluggableTextMorph new
 		on: aModel
 		text: getSel
 		accept: setSel
@@ -4340,8 +4365,6 @@ UITheme >> newTextEditorIn: aThemedMorph for: aModel getText: getSel setText: se
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		borderStyle: (BorderStyle inset width: 1);
-		"color: Color darkGray;
-		selectionColor: self selectionColor;"
 		removeProperty: #theme
 ]
 
@@ -4350,7 +4373,7 @@ UITheme >> newTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel clas
 	"Answer a text entry for the given model."
 
 	|pt|
-	pt := PluggableTextFieldMorph new
+	pt := RubPluggableTextFieldMorph new
 		convertTo: aClass;
 		alwaysAccept: true;
 		on: aModel
@@ -4364,16 +4387,7 @@ UITheme >> newTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel clas
 		cornerStyle: (self textEntryCornerStyleIn: aThemedMorph);
 		hResizing: #spaceFill;
 		vResizing: #rigid;
-		borderStyle: (BorderStyle inset width: 1);
-		"color: Color white;"
-		selectionColor: self selectionColor;
-		hideScrollBarsIndefinitely;
-		extent: 24@(self textFont height + 8);
 		setBalloonText: helpText.
-	pt textMorph
-		autoFit: true;
-		wrapFlag: false;
-		margins: (2@1) asMargin.
 	^pt
 ]
 
@@ -4382,7 +4396,7 @@ UITheme >> newTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel clas
 	"Answer a text entry for the given model."
 
 	|pt|
-	pt := PluggableTextFieldMorph new
+	pt := RubPluggableTextFieldMorph new
 		convertTo: aClass;
 		alwaysAccept: true;
 		on: aModel
@@ -4396,18 +4410,8 @@ UITheme >> newTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel clas
 		cornerStyle: (self textEntryCornerStyleIn: aThemedMorph);
 		hResizing: #spaceFill;
 		vResizing: #rigid;
-		borderStyle: (BorderStyle inset width: 1);
-		"color: Color darkGray;
-		selectionColor: self selectionColor;"
-		hideScrollBarsIndefinitely;
-		extent: 24@(self textFont height + 8);
 		setBalloonText: helpText;
 		entryCompletion: anEntryCompletion.
-
-	pt textMorph
-		autoFit: true;
-		wrapFlag: false;
-		margins: (2@1) asMargin.
 	^pt
 ]
 
@@ -4479,10 +4483,10 @@ UITheme >> newToolbarIn: aThemedMorph [
 		listDirection: #leftToRight;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap.
-	bar
+	"bar
 		addMorphBack: (self newToolSpacerIn: aThemedMorph);
 		addMorphBack: (self newToolbarHandleIn: aThemedMorph);
-		addMorphBack: (self newToolSpacerIn: aThemedMorph).
+		addMorphBack: (self newToolSpacerIn: aThemedMorph)."
 	^bar
 ]
 
@@ -4496,7 +4500,7 @@ UITheme >> newToolbarIn: aThemedMorph for: controls [
 	^answer
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newTreeExpandedForm [
 	"Answer a new form for an expanded tree item."
 
@@ -4530,7 +4534,7 @@ UITheme >> newTreeIn: aThemedMorph for: aModel list: listSelector selected: getS
 		
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newTreeUnexpandedForm [
 	"Answer a new form for an unexpanded tree item."
 
@@ -4552,14 +4556,14 @@ UITheme >> newVerticalSeparatorIn: aThemedMorph [
 		vResizing: #spaceFill
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newWindowCloseForm [
 	"Answer a new form for a window close box."
 
 	^ self iconNamed: #windowCloseForm
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newWindowCloseOverForm [
 	"Answer a new form for a window menu box."
 
@@ -4584,7 +4588,7 @@ UITheme >> newWindowIn: aThemedMorph for: aModel title: titleString [
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newWindowInactiveControlForm [
 	"Answer a new form for an inactive window control box."
 
@@ -4595,28 +4599,28 @@ UITheme >> newWindowInactiveControlForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newWindowMaximizeForm [
 	"Answer a new form for a window maximize box."
 
 	^ self iconNamed: #windowMaximizeForm
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newWindowMaximizeOverForm [
 	"Answer a new form for a window menu box."
 
 	^ self newWindowMaximizeForm
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newWindowMenuForm [
 	"Answer a new form for a window menu box."
 
 	^ self iconNamed: #windowMenuForm
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newWindowMenuOverForm [
 	"Answer a new form for a window menu box when the mouse is over it."
 
@@ -4627,21 +4631,21 @@ UITheme >> newWindowMenuOverForm [
 	offset: 0@0)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newWindowMenuPassiveForm [
 	"Answer a new form for a window menu box."
 
 	^ self iconNamed: #windowMenuInactiveForm
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newWindowMinimizeForm [
 	"Answer a new form for a window minimize box."
 
 	^ self iconNamed: #windowMinimizeForm
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> newWindowMinimizeOverForm [
 	"Answer a new form for a window menu box."
 
@@ -4663,6 +4667,26 @@ UITheme >> newYesButtonIn: aThemedMorph for: aModel [
 			help: 'Answer yes and close the window' translated)
 		hResizing: #rigid;
 		vResizing: #rigid
+]
+
+{ #category : #private }
+UITheme >> normalFillStyleFor: aMorph height: anInteger [
+	"Return the normal button fillStyle for the given button."
+
+	^ SolidFillStyle color: (self lightColorFor: aMorph)
+]
+
+{ #category : #private }
+UITheme >> normalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [	
+	| top bottom |
+	top := aColor darker.
+	bottom := aColor.
+	^(GradientFillStyle ramp: {
+			0.0->top.
+			0.7->bottom.})
+		origin: aMorph bounds origin;
+		direction: 0 @ anInteger;
+		radial: false
 ]
 
 { #category : #cursor }
@@ -4755,7 +4779,7 @@ UITheme >> progressBarColorFor: aProgressBar [
 
 { #category : #'fill-styles' }
 UITheme >> progressBarFillStyleFor: aProgressBar [
-	^ self glamorousBasePassiveBackgroundColorFor: aProgressBar
+	^ self basePassiveBackgroundColorFor: aProgressBar
 ]
 
 { #category : #'basic-colors' }
@@ -4767,7 +4791,7 @@ UITheme >> progressBarProgressColorFor: aProgressBar [
 
 { #category : #'fill-styles' }
 UITheme >> progressBarProgressFillStyleFor: aProgressBar [
-	^ (self glamorousLightSelectionColorFor: aProgressBar)
+	^ (self lightSelectionColorFor: aProgressBar)
 ]
 
 { #category : #'fill-styles' }
@@ -4988,7 +5012,7 @@ UITheme >> scrollbarMinimumThumbThickness [
 	"Answer the minumum width or height of a scrollbar thumb 
 	as appropriate to its orientation."
 	
-	^15 * World displayScaleFactor
+	^15 * self currentWorld displayScaleFactor
 ]
 
 { #category : #'border-styles-scrollbars' }
@@ -5143,7 +5167,7 @@ UITheme >> scrollbarNormalThumbBorderStyleFor: aScrollbar [
 { #category : #'fill-styles-scrollbars' }
 UITheme >> scrollbarNormalThumbFillStyleFor: aScrollbar [
 	"Return the normal scrollbar fillStyle for the given scrollbar."
-	^ self glamorousNormalFillStyleFor: aScrollbar height: aScrollbar height
+	^ self normalFillStyleFor: aScrollbar height: aScrollbar height
 ]
 
 { #category : #'fill-styles-scrollbars' }
@@ -5215,7 +5239,7 @@ UITheme >> scrollbarThickness [
 	"Answer the width or height of a scrollbar as appropriate to
 	its orientation."
 	
-	^13 * World displayScaleFactor
+	^13 * self currentWorld displayScaleFactor
 ]
 
 { #category : #'fill-styles' }
@@ -5269,7 +5293,15 @@ UITheme >> scrollbarThumbVerticalMiddleForm [
 
 { #category : #'accessing colors' }
 UITheme >> secondarySelectionColor [
-	^ self settings secondarySelectionColor
+	^ Color r: 0.927 g: 0.962 b: 0.995 alpha: 1.0
+]
+
+{ #category : #private }
+UITheme >> selectedFillStyleFor: aMorph height: anInteger [
+	
+
+	^ SolidFillStyle color: (self lightSelectionColorFor:  aMorph)
+
 ]
 
 { #category : #'accessing colors' }
@@ -5302,7 +5334,7 @@ UITheme >> selectionTextColor [
 UITheme >> separatorFillStyleFor: aSeparator [
 	"Return the separator fillStyle for the given separator."
 	
-	^ SolidFillStyle color: (self glamorousBaseColorFor: aSeparator) darker
+	^ SolidFillStyle color: (self baseColorFor: aSeparator) darker
 ]
 
 { #category : #defaults }
@@ -5333,7 +5365,18 @@ UITheme >> settings: anObject [
 { #category : #accessing }
 UITheme >> shStyleTable [
 
-	^SHRBTextStyler blueStyleTable
+	"Styling depends on shout. If it is not present, means there is no style 
+	 table to apply"
+	^ (self class environment classNamed: #SHRBTextStyler)
+		ifNotNil: [ :aClass | aClass perform: self shStyleTableName ]
+		ifNil: [ #() ]
+
+]
+
+{ #category : #accessing }
+UITheme >> shStyleTableName [
+
+	^ #blueStyleTable
 ]
 
 { #category : #'border-styles' }
@@ -5393,7 +5436,7 @@ UITheme >> splitterPressedFillStyleFor: aSplitter [
 	"Return the pressed splitter fillStyle for the given splitter."
 	
 	|aColor|
-	aColor := self glamorousBaseColorFor: aSplitter.
+	aColor := self baseColorFor: aSplitter.
 	^ (GradientFillStyle ramp: {0.0->aColor lighter. 0.9-> aColor})
 		origin: aSplitter topLeft;
 		direction: (aSplitter splitsTopAndBottom
@@ -5419,17 +5462,17 @@ UITheme >> statusFont [
 UITheme >> subgroupColorFrom: paneColor [
 	"Answer the colour for a subgroup given the pane colour."
 
-	^ self glamorousLightColorFor: paneColor" self class baseColor"
+	^ self lightColorFor: paneColor" self class baseColor"
 ]
 
 { #category : #'accessing colors' }
 UITheme >> successBackgroundColor [
-	^ self successTextColor darker darker
+	^ self successTextColor lighter lighter
 ]
 
 { #category : #'accessing colors' }
 UITheme >> successTextColor [
-	^ Color green
+	^ Color r: 0 g: 0.5 b: 0
 ]
 
 { #category : #'border-styles' }
@@ -5477,7 +5520,7 @@ UITheme >> tabLabelSelectedFillStyleFor: aTabLabel [
 UITheme >> tabPanelBorderStyleFor: aTabGroup [
 	^ Pharo3TabPanelBorder new 
 		width: 1;
-		baseColor: ((self glamorousDarkBaseColorFor: aTabGroup));
+		baseColor: ((self darkBaseColorFor: aTabGroup));
 		tabSelector: aTabGroup tabSelectorMorph
 ]
 
@@ -5706,7 +5749,7 @@ UITheme >> textEditorDisabledBorderStyleFor: aTextEditor [
 UITheme >> textEditorDisabledFillStyleFor: aTextEditor [
 	"Return the disabled fillStyle for the given text editor."
 	
-	^self glamorousBasePassiveBackgroundColorFor: aTextEditor
+	^self basePassiveBackgroundColorFor: aTextEditor
 ]
 
 { #category : #services }
@@ -5887,16 +5930,21 @@ UITheme >> updateScrollBarButtonsAspect: aCollection color: aColor [
 		do: [:each | self updateScrollBarButtonAspect: each color: aColor]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UITheme >> updateWorldDockingBars [
 	"Update the world docking bar gradients."
 	
-	World mainDockingBars do: [:d |
+	self currentWorld mainDockingBars do: [:d |
 		d
 			color: (self worldMainDockingBarColorFor: d);
 			gradientRamp: (self class current
 				worldMainDockingBarNormalFillStyleFor: d) colorRamp;
 			borderStyle: (self worldMainDockingBarBorderStyleFor: d)]
+]
+
+{ #category : #'accessing colors' }
+UITheme >> urlColor [
+	^ Color fromHexString: '03A9F4'
 ]
 
 { #category : #'fill-styles-scrollbars' }
@@ -5940,6 +5988,18 @@ UITheme >> verticesForSimpleArrow: aRectangle [
 	^ vertices
 ]
 
+{ #category : #private }
+UITheme >> veryLightFillStyleFor: aMorph height: anInteger [
+	"Return the very light button fillStyle for the given button."
+	
+	^ SolidFillStyle color: (self veryLightSelectionColorFor: aMorph)
+]
+
+{ #category : #private }
+UITheme >> veryLightSelectionColorFor: aMorph [
+	^ self class veryLightSelectionColor
+]
+
 { #category : #'accessing colors' }
 UITheme >> warningBackgroundColor [
 	^ Color yellow
@@ -5966,28 +6026,28 @@ UITheme >> watcherWindowInactiveFillStyleFor: aWindow [
 UITheme >> whiteTreeExpandedForm [
 	"Answer the form to use for an expanded tree item when a contrasting one is needed."
 
-	^(self forms 
+	^ self forms 
 		at: #whiteTreeExpanded 
 		ifAbsent: [ | f |
 			f := self treeExpandedForm deepCopy.
 			f replaceColor: Color white withColor: Color transparent.
 			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
 			self forms at: #whiteTreeExpanded put: f.
-			self whiteTreeExpandedForm]) scaledByDisplayScaleFactor
+			self whiteTreeExpandedForm]
 ]
 
 { #category : #'label-styles' }
 UITheme >> whiteTreeUnexpandedForm [
 	"Answer the form to use for an unexpanded tree item when a contrasting one is needed."
 
-	^(self forms 
+	^ self forms 
 		at: #whiteTreeUnexpanded
 		ifAbsent: [ | f |
 			f := self treeUnexpandedForm deepCopy.
 			f replaceColor: Color white withColor: Color transparent.
 			(f colorsUsed reject: [:c | c isTransparent]) do: [:c | f replaceColor:  c withColor: c whiter whiter whiter whiter whiter whiter].
 			self forms at: #whiteTreeUnexpanded put: f.
-			self whiteTreeUnexpandedForm]) scaledByDisplayScaleFactor
+			self whiteTreeUnexpandedForm]
 ]
 
 { #category : #'border-styles' }
@@ -6035,7 +6095,7 @@ UITheme >> windowActiveTitleFillStyleFor: aWindow [
 { #category : #defaults }
 UITheme >> windowBorderWidthFor: aWindow [
 
-	^ 4 * World displayScaleFactor
+	^ 4 * self currentWorld displayScaleFactor
 ]
 
 { #category : #defaults }

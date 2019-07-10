@@ -36,7 +36,6 @@ Class {
 	#name : #ConfigurationCommandLineHandler,
 	#superclass : #CommandLineHandler,
 	#instVars : [
-		'version',
 		'repositoryURL',
 		'configurationName'
 	],

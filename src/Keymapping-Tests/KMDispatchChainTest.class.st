@@ -11,7 +11,7 @@ Class {
 KMDispatchChainTest >> testGlobalIsFirst [
 	| chain first |
 	first := nil.
-	chain := KMDispatchChain from: (KmGlobalDispatcher new) andDispatcher: (KMDispatcher new).
+	chain := KMDispatchChain from: (KMGlobalDispatcher new) andDispatcher: (KMDispatcher new).
 	chain do: [ :target | first ifNil: [ first := target ] ].
 	self assert: first isGlobalDispatcher
 ]
@@ -21,7 +21,7 @@ KMDispatchChainTest >> testPassesOnTheTarget [
 	| chain dispatcher passed |
 	dispatcher := KMDispatcher target: Morph new.
 	passed := false.
-	chain := KMDispatchChain from: (KmGlobalDispatcher new) andDispatcher: dispatcher.
+	chain := KMDispatchChain from: (KMGlobalDispatcher new) andDispatcher: dispatcher.
 	chain do: [ :t | t == dispatcher target ifTrue: [ passed := true ] ].
 	self assert: passed
 ]
@@ -29,6 +29,6 @@ KMDispatchChainTest >> testPassesOnTheTarget [
 { #category : #tests }
 KMDispatchChainTest >> testTargetDoesNotIterateTheNil [
 	| chain |
-	chain := KMDispatchChain from: (KmGlobalDispatcher new) andDispatcher: (KMDispatcher new).
+	chain := KMDispatchChain from: (KMGlobalDispatcher new) andDispatcher: (KMDispatcher new).
 	chain do: [ :target | self assert: target notNil ]
 ]

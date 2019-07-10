@@ -24,7 +24,7 @@ FFIExternalStructureTests >> testExternalStructWithArray [
 		equals: {$A. $B. $C. $D. $E}.
 	self 
 		assert: structWithArrays byte10 asArray 
-		equals: #(1 2 3 4 5 6 7 8 9 0).
+		equals: #(1 2 3 4 5 6 7 8 9 0)
 ]
 
 { #category : #tests }
@@ -59,7 +59,7 @@ FFIExternalStructureTests >> testExternallyAllocatedStructure [
 		self assert: struct2 long equals: 100.	
 		self assert: struct2 float equals: 1.0.	
 		self assert: struct2 double equals: 2.0.	
-		self flag: #todo. "This is not yet implemented"
+		self flag: #pharoTodo. "This is not yet implemented"
 		"self assert: struct2 int64 equals: 123456789101112."	 ] 
 	ensure: [  struct free ]
 ]
@@ -74,7 +74,7 @@ FFIExternalStructureTests >> testFlatStructureLayout [
 	self assert: flatLayout fields first registerClass equals: #float.
 	self assert: flatLayout fields second registerClass equals: #float.
 	self assert: flatLayout fields third registerClass equals: #float.
-	self assert: flatLayout fields fourth registerClass equals: #float.
+	self assert: flatLayout fields fourth registerClass equals: #float
 
 ]
 
@@ -88,7 +88,7 @@ FFIExternalStructureTests >> testFlatStructureLayout2 [
 	self assert: flatLayout fields first registerClass equals: #float.
 	self assert: flatLayout fields second registerClass equals: #integer.
 	self assert: flatLayout fields third registerClass equals: #float.
-	self assert: flatLayout fields fourth registerClass equals: #float.
+	self assert: flatLayout fields fourth registerClass equals: #float
 
 ]
 
@@ -102,7 +102,7 @@ FFIExternalStructureTests >> testFlatStructureLayoutSysVAMD64PostProcess [
 	self assert: flatLayout fields first registerClass equals: #float.
 	self assert: flatLayout fields second registerClass equals: #float.
 	self assert: flatLayout integerRegisterCount equals: 0.
-	self assert: flatLayout floatRegisterCount equals: 2.
+	self assert: flatLayout floatRegisterCount equals: 2
 ]
 
 { #category : #tests }
@@ -115,7 +115,7 @@ FFIExternalStructureTests >> testFlatStructureLayoutSysVAMD64PostProcess2 [
 	self assert: flatLayout fields first registerClass equals: #integer.
 	self assert: flatLayout fields second registerClass equals: #float.
 	self assert: flatLayout integerRegisterCount equals: 1.
-	self assert: flatLayout floatRegisterCount equals: 1.
+	self assert: flatLayout floatRegisterCount equals: 1
 	
 ]
 
@@ -127,6 +127,7 @@ FFIExternalStructureTests >> testNestedStructure [
 	s1 nested byte: 42.
 	s1 nested float: 4.0.
 	s1 nested double: 42.0.
+	s1 nested size_t: 23.
 
 	s1 nested long: -123456.
 	s1 nested ulong: 123456.
@@ -136,6 +137,7 @@ FFIExternalStructureTests >> testNestedStructure [
 	self assert: s1 nested double equals: 42.0.	
 	self assert: s1 nested long equals: -123456.
 	self assert: s1 nested ulong equals: 123456.
+	self assert: s1 nested size_t equals: 23
 
 ]
 
@@ -159,7 +161,7 @@ FFIExternalStructureTests >> testNestedStructureWithArray [
 		equals: {$A. $B. $C. $D. $E}.
 	self 
 		assert: nestedStruct nested byte10 asArray 
-		equals: #(1 2 3 4 5 6 7 8 9 0).
+		equals: #(1 2 3 4 5 6 7 8 9 0)
 ]
 
 { #category : #tests }
@@ -176,7 +178,7 @@ FFIExternalStructureTests >> testStructAccess [
 	struct long: 100.
 	struct float: 1.0.
 	struct double: 2.0.
-		self flag: #todo. "This is not yet implemented"
+		self flag: #pharoTodo. "This is not yet implemented"
 	"struct int64: 123456789101112."
 	
 	self assert: struct byte equals: 10.
@@ -208,7 +210,7 @@ FFIExternalStructureTests >> testStructWithArray [
 		equals: {$A. $B. $C. $D. $E}.
 	self 
 		assert: structWithArrays byte10 asArray 
-		equals: #(1 2 3 4 5 6 7 8 9 0).
+		equals: #(1 2 3 4 5 6 7 8 9 0)
 	
 	
 
@@ -227,5 +229,5 @@ FFIExternalStructureTests >> testStructWithPointerAccess [
 	s2 long: 42.
 	s1 nestedPointer: s2.
 	self deny: s1 nestedPointer isNull.
-	self assert: s1 nestedPointer long equals: 42.
+	self assert: s1 nestedPointer long equals: 42
 ]

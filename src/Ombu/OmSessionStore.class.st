@@ -8,7 +8,6 @@ Class {
 		'currentSession',
 		'currentImagePathString',
 		'currentStore',
-		'alternativeStore',
 		'baseLocator',
 		'announcer',
 		'writingDeferDuration',
@@ -146,7 +145,7 @@ OmSessionStore >> headReference [
 OmSessionStore >> imagePathString [
 	"Answer the full path name for the current image."
 
-	^ SmalltalkImage current primImagePath
+	^ SmalltalkImage current imagePath
 ]
 
 { #category : #initialization }

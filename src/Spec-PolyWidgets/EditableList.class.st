@@ -28,16 +28,6 @@ Class {
 	#category : #'Spec-PolyWidgets-ListAndTree'
 }
 
-{ #category : #example }
-EditableList class >> example [
-	<sampleInstance>
-	^self new
-	
-		title: 'Selectors list';
-		list: self selectors;
-	 openWithSpec
-]
-
 { #category : #'instance creation' }
 EditableList class >> new: aCollection [
 	^ self new list: aCollection copy.
@@ -101,8 +91,12 @@ EditableList >> initialize [
 
 { #category : #initialization }
 EditableList >> initializeDialogWindow: aWindow [
-	super initializeDialogWindow: aWindow.
-	aWindow okAction: [ self performOkAction ]
+
+	aWindow 
+		addButton: 'Ok' 
+		do: [ :presenter | 
+			self performOkAction. 
+			presenter close ]
 ]
 
 { #category : #initialization }
@@ -130,7 +124,7 @@ EditableList >> initializePresenter [
 
 { #category : #initialization }
 EditableList >> initializeWidgets [
-	list := self instantiate: FastTablePresenter.
+	list := self newList.
 	addButton := self newButton.
 	removeButton := self newButton.
 	upButton := self newButton.
@@ -170,16 +164,15 @@ EditableList >> list: aList [
 { #category : #private }
 EditableList >> moveElementAt: index to: newIndex [
 	| elementToMove orderedList |
-	
-	(newIndex < 1 or: [ newIndex > list listItems size ]) ifTrue: [ ^self ].
-	
-	elementToMove := list listItems at: index.	
-	orderedList := list listItems asOrderedCollection
+	(newIndex < 1 or: [ newIndex > list items size ])
+		ifTrue: [ ^ self ].
+	elementToMove := list itemAt: index.
+	orderedList := list items copy asOrderedCollection
 		removeAt: index;
 		add: elementToMove beforeIndex: newIndex;
 		yourself.
 	self list: orderedList.
-	self list setSelectedIndex: newIndex.
+	self list selectIndex: newIndex
 ]
 
 { #category : #api }

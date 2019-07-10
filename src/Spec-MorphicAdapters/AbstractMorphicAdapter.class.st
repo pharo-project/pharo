@@ -7,10 +7,19 @@ Class {
 	#category : #'Spec-MorphicAdapters-Base'
 }
 
-{ #category : #specs }
-AbstractMorphicAdapter class >> defaultSpec [
+{ #category : #accessing }
+AbstractMorphicAdapter class >> adaptingName [
+	"Override me if adapter will not follow the common pattern"
 
-	^ SpecLayout composed
+	"remove 'Morphic' part and *in general*, I will have the adapting name"
+
+	^ (self name allButFirst: 7) asSymbol
+]
+
+{ #category : #accessing }
+AbstractMorphicAdapter class >> allAdapters [
+
+	^ self allSubclasses
 ]
 
 { #category : #'drag and drop' }
@@ -25,10 +34,48 @@ AbstractMorphicAdapter >> acceptDroppingMorph: draggedMorph event: event inMorph
 	^ self acceptDropBlock cull: draggedMorph model model cull: event cull: source model model
 ]
 
+{ #category : #initialization }
+AbstractMorphicAdapter >> adapt: aPresenter [
+
+	super adapt: aPresenter.
+	self addSettingsTo: self widget.
+	self widget ifNotNil: [ self applyVisibility ].
+	self flag: #TODO. "this should be here, but is interfering with old layouts reason why 
+	 I'm moving it to MorphicLayoutAdapter >> #applyStyle:to:"
+	"self applyStyle: self widget."
+]
+
 { #category : #protocol }
 AbstractMorphicAdapter >> add: aWidget [
 	
 	self widgetDo: [ :w | w ensureLayoutAndAddMorph: aWidget asWidget ]
+]
+
+{ #category : #initialization }
+AbstractMorphicAdapter >> addSettingsTo: aMorph [
+	
+]
+
+{ #category : #initialization }
+AbstractMorphicAdapter >> applyStyle: morph [
+	"this will apply general properties to the built morph"
+	
+	self style applyTo: morph
+]
+
+{ #category : #initialization }
+AbstractMorphicAdapter >> applyVisibility [
+	
+	"It may happen that some presenters use generic adapters and they do not have an associated presenter.
+	In that case, do not manage visibility..."
+	self presenter ifNil: [ 
+		^ self ].
+
+	self widget visible: self presenter isVisible.
+	self presenter whenVisibleChangedDo: [ :visible |
+		self presenter isVisible
+			ifTrue: [ self widget show ]
+			ifFalse: [ self widget hide ] ]
 ]
 
 { #category : #dispatch }
@@ -41,13 +88,8 @@ AbstractMorphicAdapter >> beginsWith: aString fromList: aMorph [
 { #category : #'protocol-shortcuts' }
 AbstractMorphicAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 
-	self widget ifNotNil: [ :w | w bindKeyCombination: aShortcut toAction: aBlock ]
-]
-
-{ #category : #'protocol-shortcuts' }
-AbstractMorphicAdapter >> bindMenuKeyCombination: aShortcut toAction: aBlock [
-
-	self widget ifNotNil: [ :w | w bindKeyCombination: aShortcut toAction: aBlock ]
+	self widgetDo: [ :w | 
+		w bindKeyCombination: aShortcut toAction: aBlock ]
 ]
 
 { #category : #protocol }
@@ -107,7 +149,7 @@ AbstractMorphicAdapter >> disable [
 { #category : #'drag and drop' }
 AbstractMorphicAdapter >> dragEnabled [
 
-	^ self model dragEnabled
+	^ self presenter dragEnabled
 ]
 
 { #category : #'drag and drop' }
@@ -137,7 +179,7 @@ AbstractMorphicAdapter >> dragTransformationBlock [
 { #category : #'drag and drop' }
 AbstractMorphicAdapter >> dropEnabled [
 
-	^ self model dropEnabled
+	^ self presenter dropEnabled
 ]
 
 { #category : #'drag and drop' }
@@ -154,8 +196,7 @@ AbstractMorphicAdapter >> enable [
 
 { #category : #protocol }
 AbstractMorphicAdapter >> enabled [
-	
-	^ self model enabled
+	^ self presenter isEnabled
 ]
 
 { #category : #protocol }
@@ -220,19 +261,58 @@ AbstractMorphicAdapter >> help [
 	^ self model help
 ]
 
+{ #category : #accessing }
+AbstractMorphicAdapter >> helpText [
+	
+	^ self widget balloonText 
+]
+
 { #category : #testing }
 AbstractMorphicAdapter >> isMorphicAdapter [
 
 	^ true
 ]
 
+{ #category : #visibility }
+AbstractMorphicAdapter >> isVisible [
+	
+	^ widget visible
+]
+
+{ #category : #emulating }
+AbstractMorphicAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+	| evt modifiers |
+	modifiers := 0.
+	shiftBoolean ifTrue: [ modifiers := modifiers | 8 ].
+	metaBoolean ifTrue: [ modifiers := modifiers |
+		(Smalltalk os isWin32 | Smalltalk os isUnix
+			ifTrue: [ 2r00010000 ]
+			ifFalse: [ 2r01000000 ]) ].
+	controlBoolean ifTrue: [ modifiers := modifiers | 2r00010000 ].
+	optionBoolean ifTrue: [ modifiers := modifiers |
+		(Smalltalk os isWin32 | Smalltalk os isUnix
+			ifTrue: [ 2r01000000 ]
+			ifFalse: [ 2r00100000 ]) ].
+	
+	evt := KeyboardEvent new
+		setType: #keystroke
+		buttons: modifiers
+		position: self widget position + (1 @ 1)
+		keyValue: keyCode
+		charCode: keyCode
+		hand: self currentWorld activeHand
+		stamp: Time millisecondClockValue.
+
+	evt sentTo: widget.
+	"Some time to allow things to happen?"
+	10 milliSeconds wait
+]
+
 { #category : #protocol }
 AbstractMorphicAdapter >> layout: aLayout [
 	| layout |
-	
 	layout := aLayout asMorphicLayout.
-
-	self widgetDo: [ :w | w layoutFrame: layout ]
+	self widgetDo: [ :w | w layoutFrame: layout ].
 ]
 
 { #category : #dispatch }
@@ -256,19 +336,31 @@ AbstractMorphicAdapter >> listRenderOn: aCanvas atRow: aRow bounds: drawBounds c
 { #category : #'protocol-shortcuts' }
 AbstractMorphicAdapter >> removeKeyCombination: aShortcut [
 
-	self widget ifNotNil: [ :w | w removeKeyCombination: aShortcut ]
-]
-
-{ #category : #'protocol-shortcuts' }
-AbstractMorphicAdapter >> removeMenuKeyCombination: aShortcut [
-
-	self widget ifNotNil: [ :w | w removeKeyCombination: aShortcut ]
+	self widgetDo: [ :w | 
+		w removeKeyCombination: aShortcut ]
 ]
 
 { #category : #protocol }
 AbstractMorphicAdapter >> removeSubWidgets [
 	
 	self widgetDo: [ :w | w removeAllMorphs ]
+]
+
+{ #category : #emulating }
+AbstractMorphicAdapter >> rightClicked [
+	| evt |
+
+	evt := MouseButtonEvent new 
+		setType: nil 
+		position: widget center 
+		which: MouseButtonEvent yellowButton 
+		buttons: MouseButtonEvent yellowButton 
+		hand: nil 
+		stamp: nil.
+
+	(widget handlesMouseDown: evt) ifTrue: [
+		widget mouseDown: evt.
+		widget mouseUp: evt ]
 ]
 
 { #category : #protocol }
@@ -281,6 +373,33 @@ AbstractMorphicAdapter >> setBalloonText: aString [
 AbstractMorphicAdapter >> setModal: aWindow [ 
 
 	self widgetDo: [ :w | w setModal: aWindow ]
+]
+
+{ #category : #protocol }
+AbstractMorphicAdapter >> show [ 
+
+	self widgetDo: #show
+]
+
+{ #category : #accessing }
+AbstractMorphicAdapter >> style [
+	"i.e. ButtonAdapter = Button"
+	
+	^ self styleAt: self styleName
+]
+
+{ #category : #accessing }
+AbstractMorphicAdapter >> styleAt: aName [
+	"i.e. ButtonAdapter = Button"
+	
+	^ MorphicStyleSheet current atClass: aName
+]
+
+{ #category : #accessing }
+AbstractMorphicAdapter >> styleName [
+	"i.e. ButtonAdapter = Button"
+	
+	^ ((self className allButFirst: 7) allButLast: 7) asSymbol
 ]
 
 { #category : #'drag and drop' }

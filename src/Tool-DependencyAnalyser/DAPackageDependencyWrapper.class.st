@@ -41,7 +41,7 @@ DAPackageDependencyWrapper >> packageName [
 	^ daPackage packageName
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 DAPackageDependencyWrapper >> printOn: aStream [
 	aStream nextPutAll: self packageName
 ]

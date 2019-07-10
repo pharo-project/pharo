@@ -60,9 +60,7 @@ DAPackageRelationGraphDiffTest >> testHasChangedForPackageItemDiffOnOneDependent
 { #category : #running }
 DAPackageRelationGraphDiffTest >> testMakeDependentPackagesDiffOnSameGraph [
 	packageRelationGraphDiff makePackagesDiff.
-		
-	self assert: packageRelationGraphDiff dependentPackagesDiff isEmpty
-	
+	self assertEmpty: packageRelationGraphDiff dependentPackagesDiff
 ]
 
 { #category : #running }
@@ -122,11 +120,8 @@ DAPackageRelationGraphDiffTest >> testPackagesDiffToDisplayBis [
 
 { #category : #running }
 DAPackageRelationGraphDiffTest >> testPackagesDiffToDisplayOnSameGraph [
-	
 	packageRelationGraphDiff make.
-			
-	self assert: (packageRelationGraphDiff packagesDiffToDisplay isEmpty).
-
+	self assertEmpty: packageRelationGraphDiff packagesDiffToDisplay
 ]
 
 { #category : #running }

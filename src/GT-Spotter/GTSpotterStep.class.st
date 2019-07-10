@@ -117,9 +117,9 @@ GTSpotterStep >> candidates [
 
 	^ candidates ifNil: [
 		candidates := GTSpotterCandidatesList new.
-		candidates announcer subscribe: GTSpotterCandidateAdded send: #onCandidateAdded to: self.
-		candidates announcer subscribe: GTSpotterAllCandidatesAdded send: #onCandidateAdded to: self.
-		candidates announcer subscribe: GTSpotterAllCandidatesRemoved do: [ self deselect ].
+		candidates announcer when: GTSpotterCandidateAdded send: #onCandidateAdded to: self.
+		candidates announcer when: GTSpotterAllCandidatesAdded send: #onCandidateAdded to: self.
+		candidates announcer when: GTSpotterAllCandidatesRemoved do: [ self deselect ].
 		candidates ]
 ]
 
@@ -165,29 +165,6 @@ GTSpotterStep >> deselect [
 { #category : #actions }
 GTSpotterStep >> diveIn [
 	self diveInDueTo: #undefined
-]
-
-{ #category : #actions }
-GTSpotterStep >> diveInCategory [
-	"dive in category of selected candidate"
-	^ self diveInCategoryDueTo: #unknown
-	
-]
-
-{ #category : #actions }
-GTSpotterStep >> diveInCategory: aProcessor dueTo: anEventType [
-	"dive in specified aCategory"
-
-	self spotter
-		requestNextCategoryStepWith: (self candidates getProcessorLink: aProcessor) for: #diveInCategory;
-		notifyDiveInCategory: aProcessor for: anEventType
-]
-
-{ #category : #actions }
-GTSpotterStep >> diveInCategoryDueTo: anEventType [
-	"dive in category of selected candidate"
-
-	self diveInCategory: self selected processor dueTo: anEventType
 ]
 
 { #category : #actions }

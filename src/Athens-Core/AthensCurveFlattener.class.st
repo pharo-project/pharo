@@ -8,7 +8,6 @@ Class {
 	#superclass : #AthensPathSegmentConverter,
 	#instVars : [
 		'transform',
-		'inverseTransform',
 		'lengthTolerance',
 		'lengthToleranceSquared'
 	],
@@ -186,7 +185,7 @@ AthensCurveFlattener >> flattenQuadBezier: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCurveFlattener >> initialize [
 
 	super initialize.

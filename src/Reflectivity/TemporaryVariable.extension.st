@@ -7,7 +7,7 @@ TemporaryVariable >> afterLinks [
 
 { #category : #'*Reflectivity' }
 TemporaryVariable >> astNodes [
-	self flag: #FIXME. "will return all temps with the same name... as we do not allow shadowing this is ok but shoudl be fixed later"
+	self flag: #pharoFixMe. "will return all temps with the same name... as we do not allow shadowing this is ok but shoudl be fixed later"
 	^self method variableNodes select: [ :each | (each name = self name)]
 ]
 
@@ -73,7 +73,12 @@ TemporaryVariable >> link: aMetaLink [
 
 { #category : #'*Reflectivity' }
 TemporaryVariable >> links [
-	^self propertyAt: #links ifAbsent: nil
+	^self propertyAt: #links ifAbsent: #()
+]
+
+{ #category : #'*Reflectivity' }
+TemporaryVariable >> postambles [
+	^ self propertyAt: #postambles ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }

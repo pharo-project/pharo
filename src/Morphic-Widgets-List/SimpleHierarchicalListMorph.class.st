@@ -22,10 +22,6 @@ Class {
 		'lastKeystrokes',
 		'searchedElement'
 	],
-	#classInstVars : [
-		'expandedForm',
-		'notExpandedForm'
-	],
 	#category : #'Morphic-Widgets-List'
 }
 
@@ -94,7 +90,7 @@ SimpleHierarchicalListMorph class >> exampleSubmorphs [
 	| morph |
 	morph :=
 		SimpleHierarchicalListMorph
-			on: [ Array with:  (MorphWithSubmorphsWrapper with: World)  ]
+			on: [ Array with:  (MorphWithSubmorphsWrapper with: self currentWorld)  ]
 			list: #value
 			selected: nil
 			changeSelected: nil

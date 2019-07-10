@@ -123,7 +123,7 @@ AthensStrokePaint >> fillPaint: anObject [
 	fillPaint := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensStrokePaint >> initialize [
 	self setDefaults.
 ]
@@ -152,7 +152,7 @@ AthensStrokePaint >> miterLimit: anObject [
 	miterLimit := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensStrokePaint >> setDefaults [
 
 	"Set the default values for strokes"

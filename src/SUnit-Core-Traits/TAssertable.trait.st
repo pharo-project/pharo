@@ -79,6 +79,11 @@ TAssertable >> assertCollection: actual hasSameElements: expected [
 ]
 
 { #category : #asserting }
+TAssertable >> assertEmpty: aCollection [
+	^ self assert: aCollection isEmpty description: aCollection asString , ' should have been empty'
+]
+
+{ #category : #asserting }
 TAssertable >> classForTestResult [
 	"Returns the class of the test result"
 	^ TestResult
@@ -187,6 +192,11 @@ TAssertable >> denyCollection: actual equals: expected [
 	^ self
 		deny: expected = actual
 		description: [ self unexpectedEqualityStringBetween: actual and: expected ]
+]
+
+{ #category : #asserting }
+TAssertable >> denyEmpty: aCollection [
+	^ self assert: aCollection isNotEmpty description: aCollection asString , ' should not have been empty'
 ]
 
 { #category : #asserting }

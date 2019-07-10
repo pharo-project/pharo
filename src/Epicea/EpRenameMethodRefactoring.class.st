@@ -30,7 +30,7 @@ EpRenameMethodRefactoring >> asRBRefactoring [
 		permutation: #()
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 EpRenameMethodRefactoring >> initializeFrom: anOldSelector to: aNewSelector in: aClassName [
 	self initialize.
 	

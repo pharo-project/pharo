@@ -55,8 +55,18 @@ RBCondition class >> checkInstanceVariableName: aName in: aClass [
 ]
 
 { #category : #utilities }
-RBCondition class >> checkMethodName: aName in: aClass [ 
-	^aName isString and: [RBScanner isSelector: aName]
+RBCondition class >> checkMethodName: aString [
+	"Return whether the argument aName is can represent a selector"
+	
+	^ aString isString and: [ RBScanner isSelector: aString ]
+]
+
+{ #category : #utilities }
+RBCondition class >> checkMethodName: aString in: aClass [ 
+	"Return whether the argument aName is can represent a selector"
+	"You probably look for checkMethodName: since the second argument is ignored"
+	
+	^aString isString and: [ RBScanner isSelector: aString ]
 ]
 
 { #category : #'instance creation' }
@@ -390,7 +400,7 @@ RBCondition >> check [
 	^block value
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBCondition >> errorBlock: anObject [
 	errorBlock := anObject
 ]
@@ -405,14 +415,14 @@ RBCondition >> printOn: aStream [
 	aStream nextPutAll: type asString
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBCondition >> type: aSymbol block: aBlock errorString: aString [ 
  	type := aSymbol.
 	block := aBlock.
 	self errorMacro: aString
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBCondition >> withBlock: aBlock [ 
 	block := aBlock.
 	type := #(#generic)

@@ -87,13 +87,20 @@ RBMethodNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBMethodNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitMethodNode: self
+RBMethodNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitMethodNode: self
 ]
 
-{ #category : #accessing }
+{ #category : #'adding/removing' }
 RBMethodNode >> addNode: aNode [
 	^ body addNode: aNode
+]
+
+{ #category : #'adding/removing' }
+RBMethodNode >> addPragma: aPragmaNode [
+
+	pragmas ifNil: [ self pragmas: OrderedCollection new ].
+	pragmas add: aPragmaNode
 ]
 
 { #category : #replacing }
@@ -102,12 +109,12 @@ RBMethodNode >> addReplacement: aStringReplacement [
 	replacements add: aStringReplacement
 ]
 
-{ #category : #accessing }
+{ #category : #'adding/removing' }
 RBMethodNode >> addReturn [
 	^ body addReturn
 ]
 
-{ #category : #accessing }
+{ #category : #'adding/removing' }
 RBMethodNode >> addSelfReturn [
 	^ body addSelfReturn
 ]
@@ -124,6 +131,12 @@ RBMethodNode >> allDefinedVariables [
 	^(self argumentNames asOrderedCollection)
 		addAll: super allDefinedVariables;
 		yourself
+]
+
+{ #category : #iterating }
+RBMethodNode >> allSequenceNodes [
+
+	^ self allChildren select: #isSequence
 ]
 
 { #category : #accessing }
@@ -205,14 +218,44 @@ RBMethodNode >> clearReplacements [
 	replacements := nil
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing compiled method' }
 RBMethodNode >> compilationContext [
 	^ compilationContext
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing compiled method' }
 RBMethodNode >> compilationContext: aCompilationContext [
 	compilationContext := aCompilationContext.
+]
+
+{ #category : #'accessing - conceptual' }
+RBMethodNode >> conceptualArgumentSize [
+	"Return the cumulted length of the parameters (yes parameters are called arguments in Pharo - not good!). It does not count spaces and the selectors.
+	Note that this length is based on the tree structure and not the source code. It does not reflect the selection interval but the space the selector would take if displayed on a single line without any space."
+
+	^ self arguments
+		inject: 0
+		into: [ :sum :each | sum + each name size ]
+]
+
+{ #category : #'accessing - conceptual' }
+RBMethodNode >> conceptualSelectorSize [
+	"Return the length of the selector. It does not take into length of parameters nor the spaces.
+	Note that this length is based on the tree structure and not the source code. It does not reflect the selection interval but the space the selector would take if displayed on a single line without any space."
+
+	^ selector size
+]
+
+{ #category : #'accessing - conceptual' }
+RBMethodNode >> conceptualSignatureSize [
+	"Return the full length of the method signature (called with a strange name in Pharo: the patterned selector. Note that this length is based on the tree structure and not the source code. It does not reflect the selection interval but the space the signature would take if displayed on a single line."
+
+	"When we count foo: a b: b, we add three extras spaces so args size * 2 - 1"
+
+	^ self conceptualSelectorSize + self conceptualArgumentSize
+		+ (self arguments
+		ifNotEmpty: [ self arguments size * 2 - 1 ]
+		ifEmpty: [ 0 ])
 ]
 
 { #category : #matching }
@@ -226,6 +269,13 @@ RBMethodNode >> copyInContext: aDictionary [
 		body: (self body copyInContext: aDictionary);
 		source: (aDictionary at: '-source-' ifAbsentPut: [ self source ]);
 		yourself
+]
+
+{ #category : #accessing }
+RBMethodNode >> decompileString [ 
+
+	^ self formattedCode 
+
 ]
 
 { #category : #testing }
@@ -250,6 +300,27 @@ RBMethodNode >> equalTo: anObject withMapping: aDictionary [
 		(first equalTo: second	withMapping: aDictionary) 
 			ifFalse: [ ^ false ] ].
 	^ true
+]
+
+{ #category : #'tree accessing' }
+RBMethodNode >> extractSubtreeWith: aSourceCode [
+
+	| extractedTree |
+	extractedTree := RBParser parseExpression: aSourceCode onError: [ :string :pos | ^ nil ].
+	extractedTree ifNil: [ ^ nil ].
+	
+	(extractedTree isSequence 
+	and: [extractedTree statements isEmpty]) ifTrue: [ ^ nil ].
+	
+	extractedTree := (extractedTree isSequence "or: [aTree isReturn]")
+		ifTrue: [ RBParseTreeSearcher 
+					 treeMatchingStatements: aSourceCode
+					 in: self ]
+		ifFalse: [ RBParseTreeSearcher
+					  treeMatching: aSourceCode
+					  in: self ].
+			
+	^ extractedTree ifNotNil: [ extractedTree parent: (self parentOfSubtree: extractedTree) ]
 ]
 
 { #category : #accessing }
@@ -369,12 +440,19 @@ RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictio
 			matchNode match: pragmaNode inContext: aDictionary ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing compiled method' }
+RBMethodNode >> method [
+	"return the method that I have been compiled for"
+	self compilationContext ifNil: [ ^nil ].
+	^self compilationContext getClass >> self selector
+]
+
+{ #category : #'accessing compiled method' }
 RBMethodNode >> methodClass [
 	^self compilationContext getClass 
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing compiled method' }
 RBMethodNode >> methodClass: aClass [	
 	compilationContext ifNil: [compilationContext := aClass compiler compilationContext].
 	self compilationContext class: aClass
@@ -394,6 +472,11 @@ RBMethodNode >> methodNode [
 ]
 
 { #category : #accessing }
+RBMethodNode >> methodOrBlockNode [
+	"^ self"
+]
+
+{ #category : #accessing }
 RBMethodNode >> newSource [
 	replacements ifNil: [^self formattedCode].
 	^[self reformatSource] on: Error do: [:ex | ex return: self formattedCode]
@@ -402,6 +485,17 @@ RBMethodNode >> newSource [
 { #category : #accessing }
 RBMethodNode >> numArgs [
 	^self selector numArgs
+]
+
+{ #category : #'tree accessing' }
+RBMethodNode >> parentOfSubtree: subtree [
+
+	| sourceCode |
+	sourceCode := subtree formattedCode.
+	^ self allChildren reversed
+		detect: [ :e | e formattedCode includesSubstring: sourceCode ]
+		ifFound: [ :e | e parent ] 
+		ifNone: [ nil ]
 ]
 
 { #category : #copying }
@@ -429,6 +523,14 @@ RBMethodNode >> pragmaNamed: aSymbol ifPresent: foundBlock [
 	^ self pragmas 
 		detect: [ :pragma| pragma selector = aSymbol ]
 		ifFound: foundBlock
+]
+
+{ #category : #testing }
+RBMethodNode >> pragmaNamed: aSymbol ifPresent: presentBlock ifAbsent: absentBlock [
+	^ self pragmas 
+		detect: [ :pragma| pragma selector = aSymbol ]
+		ifFound: presentBlock
+		ifNone: absentBlock
 ]
 
 { #category : #accessing }
@@ -478,6 +580,26 @@ RBMethodNode >> reformatSource [
 	^ newSource
 ]
 
+{ #category : #'adding/removing' }
+RBMethodNode >> removePragma: aPragmaNode [
+
+	pragmas remove: aPragmaNode ifAbsent: [ ]
+]
+
+{ #category : #'adding/removing' }
+RBMethodNode >> removeSubtree: aTree [
+
+	^ aTree isReturn 
+		ifTrue: [ RBParseTreeRewriter 
+					 replace: aTree formattedCode
+					 with: '' in: self
+					 onInterval: aTree sourceInterval ]
+		ifFalse: [ RBParseTreeRewriter 
+					  replaceStatements: aTree formattedCode
+		 			  with: '' in: self
+					  onInterval: aTree sourceInterval ]
+]
+
 { #category : #accessing }
 RBMethodNode >> renameSelector: newSelector andArguments: varNodeCollection [ 
 	| oldIntervals oldArguments oldSelector |
@@ -518,7 +640,7 @@ RBMethodNode >> selector: aSelector [
 	selector := aSelector asSymbol.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBMethodNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	self 
 		arguments: valueNodes;
@@ -579,6 +701,13 @@ RBMethodNode >> stop [
 ]
 
 { #category : #accessing }
+RBMethodNode >> tempNames [
+	"compatibility method to old MethodNode"
+	self deprecated: 'This method was flagged for cleaning. We have the impression it might not be used so we are deprecating it. If you encounter this deprecation, please report with the scenario to reproduce.'.
+	^ self argumentNames, self temporaryNames
+]
+
+{ #category : #accessing }
 RBMethodNode >> temporaries [
 	^ self body temporaries
 ]
@@ -591,4 +720,17 @@ RBMethodNode >> temporaryNames [
 { #category : #testing }
 RBMethodNode >> uses: aNode [ 
 	^body == aNode and: [aNode lastIsReturn]
+]
+
+{ #category : #'tree accessing' }
+RBMethodNode >> variableWith: aSymbol [
+
+	| matcher block |
+	matcher := RBParseTreeSearcher new.
+	block := [ :aNode :answer | aNode ].
+	
+	matcher
+		matches: aSymbol do: block;
+		matchesArgument: aSymbol do: block.
+	^ matcher executeTree: self initialAnswer: nil
 ]

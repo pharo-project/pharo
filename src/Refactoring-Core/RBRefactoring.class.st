@@ -99,7 +99,9 @@ RBRefactoring class >> setDefaultOption: aSymbol to: aBlock [
 ]
 
 { #category : #utilities }
-RBRefactoring >> associationForClassVariable: aName in: aClass ifAbsent: aBlock [ 
+RBRefactoring >> associationForClassVariable: aName in: aClass ifAbsent: aBlock [
+	"Return the class variable association of class aClass"
+	 
 	^aClass realClass classPool associationAt: aName asSymbol
 		ifAbsent: [aClass realClass classPool associationAt: aName asString ifAbsent: aBlock]
 ]
@@ -219,7 +221,7 @@ RBRefactoring >> defaultEnvironment [
 { #category : #transforming }
 RBRefactoring >> execute [
 	self primitiveExecute.
-	RBRefactoringManager instance addRefactoring: self
+	RBRefactoryChangeManager instance performChange: self changes.
 ]
 
 { #category : #transforming }
@@ -232,7 +234,7 @@ RBRefactoring >> model [
 		ifFalse: [model]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRefactoring >> model: aRBNamespace [ 
 	model := aRBNamespace
 ]
@@ -259,6 +261,16 @@ RBRefactoring >> options [
 { #category : #accessing }
 RBRefactoring >> options: aDictionary [ 
 	options := aDictionary
+]
+
+{ #category : #utilities }
+RBRefactoring >> parseTreeSearcher [
+	^ self parseTreeSearcherClass new
+]
+
+{ #category : #transforming }
+RBRefactoring >> parseTreeSearcherClass [
+	^ RBParseTreeSearcher
 ]
 
 { #category : #transforming }
@@ -439,14 +451,15 @@ RBRefactoring >> uniqueMethodNameFor: anInteger [
 ]
 
 { #category : #utilities }
-RBRefactoring >> whichVariableNode: aParseTree inInterval: anInterval name: aName [ 
+RBRefactoring >> whichVariableNode: aParseTree inInterval: anInterval name: aName [
 	| matcher block |
-	matcher := RBParseTreeSearcher new.
-	block := 
-			[:aNode :answer | 
-			(aNode intersectsInterval: anInterval) ifTrue: [aNode] ifFalse: [answer]].
+	matcher := self parseTreeSearcher.
+	block := [ :aNode :answer | 
+	(aNode intersectsInterval: anInterval)
+		ifTrue: [ aNode ]
+		ifFalse: [ answer ] ].
 	matcher
 		matches: aName do: block;
 		matchesArgument: aName do: block.
-	^matcher executeTree: aParseTree initialAnswer: nil
+	^ matcher executeTree: aParseTree initialAnswer: nil
 ]

@@ -34,6 +34,7 @@ NECEntry >> browseWith: anECContext [
 	| guessType |
 	guessType := self guessTypeWith: anECContext.
 	guessType ifNil: [^ false].
+	self flag: #SmalltalkReference. "Reference to Smalltalk tools"
 	Smalltalk tools browser openOnClass: guessType.
 	^ true
 ]
@@ -94,12 +95,13 @@ NECEntry >> label [
 
 { #category : #printing }
 NECEntry >> printOn: aStream [ 
-	aStream nextPutAll: self class name;
-		 nextPut: $(;
-		 nextPutAll: contents asString;
-		 nextPut: $,;
-		 nextPutAll: self type;
-		 nextPut: $)
+	aStream 
+		nextPutAll: self class name;
+		nextPut: $(;
+		nextPutAll: contents;
+		nextPut: $,;
+		nextPutAll: self type;
+		nextPut: $)
 ]
 
 { #category : #accessing }

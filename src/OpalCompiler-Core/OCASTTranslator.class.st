@@ -32,8 +32,6 @@ Class {
 OCASTTranslator class >> initialize [
 	"OCASTTranslator initialize"
 	
-	super initialize.
-	
 	OptimizedMessages := { 
 	#caseOf: -> #emitCaseOf: .
 	#caseOf:otherwise: -> #emitCaseOfOtherwise: .
@@ -636,7 +634,7 @@ OCASTTranslator >> visitNode: aNode [
 { #category : #'visitor-double dispatching' }
 OCASTTranslator >> visitParseErrorNode: anErrorNode [  
 	methodBuilder 
-		pushLiteralVariable: #error -> anErrorNode asSyntaxErrorNotification;
+		pushLiteralVariable: (AdditionalBinding key: #error value: anErrorNode asSyntaxErrorNotification);
 		send: #signal.
 
 

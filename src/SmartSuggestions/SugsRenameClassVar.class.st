@@ -7,11 +7,6 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #accessing }
-SugsRenameClassVar class >> nodes [
-	^{RBGlobalNode}
-]
-
 { #category : #execution }
 SugsRenameClassVar >> execute [
 	(NautilusRefactoring model: context) renameClassVarNamed: context selectedVariableName from: context selectedClass

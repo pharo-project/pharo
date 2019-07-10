@@ -86,7 +86,9 @@ ExternalAddress >> + offset [
 	"Convert xaddr -> bytes"
 	bytes := self asByteArrayPointer.
 	"Update bytes using platform dependent accessors"
-	bytes unsignedLongAt: 1 put: (bytes unsignedLongAt: 1) + offset.
+	self size = 4
+		ifTrue: [bytes unsignedLongAt: 1 put: (bytes unsignedLongAt: 1) + offset]
+		ifFalse: [bytes unsignedLongLongAt: 1 put: (bytes unsignedLongLongAt: 1) + offset].
 	"Convert bytes -> xaddr"
 	^bytes asExternalPointer
 ]
@@ -95,7 +97,7 @@ ExternalAddress >> + offset [
 ExternalAddress >> asByteArrayPointer [
 	"Answer a ByteArray containing a copy of pointer to the contents of the receiver."
 	| sz |
-	^(ByteArray basicNew: (sz := self class wordSize))
+	^(ByteArray basicNew: (sz := self size))
 		replaceFrom: 1 to: sz with: self startingAt: 1 "answers self"
 ]
 
@@ -108,10 +110,10 @@ ExternalAddress >> asExternalPointer [
 { #category : #converting }
 ExternalAddress >> asInteger [
 	"convert address to integer"
-	^ self asByteArrayPointer integerAt: 1 size: self class wordSize signed: false
+	^ self asByteArrayPointer integerAt: 1 size: self size signed: false
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ExternalAddress >> beNull [
 	"Make the receiver a NULL pointer"
 	self atAllPut: 0.
@@ -144,7 +146,7 @@ ExternalAddress >> finalize [
 	self free
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ExternalAddress >> free [
 	"Primitive. Free the object pointed to on the external heap.
 	Dangerous - may break your system if the receiver hasn't been
@@ -159,9 +161,9 @@ ExternalAddress >> fromInteger: address [
 	"Do we really need this? bf 2/21/2001 23:48"
 
 	| sz pointer |
-	sz := self class wordSize.
+	sz := self size.
 	pointer := ByteArray new: sz.
-	pointer integerAt: 1 put: address size: sz signed: false. .
+	pointer integerAt: 1 put: address size: sz signed: false.
 	self basicAt: 1 put: (pointer byteAt: 1);
 		basicAt: 2 put: (pointer byteAt: 2);
 		basicAt: 3 put: (pointer byteAt: 3);

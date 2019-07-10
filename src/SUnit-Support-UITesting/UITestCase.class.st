@@ -15,7 +15,7 @@ UITestCase >> runCase [
 	Smalltalk isHeadless
 		ifTrue: [ ^ self skip ].
 	SystemProgressMorph allInstances do: [  :spm | spm hide ].
-	World activeHand resetClickState.
+	self currentWorld activeHand resetClickState.
 	result := super runCase .
 	SystemProgressMorph allInstances do: [  :spm | spm show ].
 	^ result

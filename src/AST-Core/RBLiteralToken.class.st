@@ -68,7 +68,7 @@ RBLiteralToken >> source [
 	^source
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBLiteralToken >> source: aString [ 
 	source := aString
 ]
@@ -96,7 +96,7 @@ RBLiteralToken >> storeOn: aStream [
 	value storeOn: aStream
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBLiteralToken >> value: aString start: anInteger stop: stopInteger [ 
 	value := aString.
 	sourcePointer := anInteger.

@@ -167,11 +167,9 @@ EpLogBrowserPresenter >> applySelectedChanges [
 
 { #category : #modes }
 EpLogBrowserPresenter >> beApplyMode [
-
 	self title: 'Epicea - Apply Changes'.
-	self toolbarModel beApplyMode.
-	showEntryItemMenu := false.
-
+	self toolbarPresenter beApplyMode.
+	showEntryItemMenu := false
 ]
 
 { #category : #modes }
@@ -183,11 +181,9 @@ EpLogBrowserPresenter >> beHistoryMode [
 
 { #category : #modes }
 EpLogBrowserPresenter >> beRevertMode [
-
 	self title: 'Epicea - Revert Changes'.
-	self toolbarModel beRevertMode.
-	showEntryItemMenu := false.
-
+	self toolbarPresenter beRevertMode.
+	showEntryItemMenu := false
 ]
 
 { #category : #'menu - operations' }
@@ -572,26 +568,13 @@ EpLogBrowserPresenter >> initializeEntryContentPresenter [
 ]
 
 { #category : #initialization }
-EpLogBrowserPresenter >> initializeItemsModelPerformFilterWorkaround: widgetBuildAnnouncement [
-	"Problem: FastTableModel sends #explicitFilter to the FTTableMorph in MorphicFastTableAdapter>>buildWidget but the EpEntryItem in the itemsModel are not compatible."
-	
-	widgetBuildAnnouncement widget disableFunction
-]
-
-{ #category : #initialization }
 EpLogBrowserPresenter >> initializeItemsPresenter [
-
 	self itemsPresenter
 		beMultipleSelection;
-"		autoDeselect: true; -> not implemented yet?"
+		"		autoDeselect: true; -> not implemented yet?"
 		displayBlock: [ :entryReference | self morphForItemAt: entryReference ];
-		whenSelectionChanged: [ self refreshEntryContentModelDeferrer schedule ];
-		menu: [ self menuMorphForSelectedItems ].
-		
-	self itemsPresenter announcer weak
-		when: WidgetBuilt
-		send: #initializeItemsModelPerformFilterWorkaround: to: self.
-
+		whenSelectionChangedDo: [ self refreshEntryContentModelDeferrer schedule ];
+		menu: [ self menuMorphForSelectedItems ]
 ]
 
 { #category : #initialization }
@@ -612,7 +595,7 @@ EpLogBrowserPresenter >> initializeToolbarPresenter [
 EpLogBrowserPresenter >> initializeWidgets [
 
 	self instantiatePresenters: {
-		#itemsPresenter -> #FastTablePresenter.
+		#itemsPresenter -> #ListPresenter.
 		#toolbarPresenter -> #EpLogBrowserToolbarPresenter.
 		#entryContentPresenter -> #DiffPresenter. 
 		}.
@@ -782,14 +765,13 @@ EpLogBrowserPresenter >> refactoringMenuActions [
 
 { #category : #refreshing }
 EpLogBrowserPresenter >> refresh [
-
 	"Refresh log"
-	self itemsPresenter resetSelection. "Needed, else #items: can silently fail"
+
+	self itemsPresenter unselectAll.	"Needed, else #items: can silently fail"
 	self itemsPresenter items: self filteredEntryReferences reversed.
 
-	"Refresh toolbar"	
-	self toolbarPresenter refresh.
-
+	"Refresh toolbar"
+	self toolbarPresenter refresh
 ]
 
 { #category : #refreshing }
@@ -893,9 +875,9 @@ EpLogBrowserPresenter >> selectedEntryItems [
 
 { #category : #'menu - accessing' }
 EpLogBrowserPresenter >> selectedEntryReferences [
-	self flag: #todo. "Workaround: FastTableModel might return nil items"
+	"Before there was a workaround here to reject nils because it used a FastTablePresenter instead of a list presenter. I have the impression that the workaround is not needed with ListPresenter and I removed the workaround. In case you find a bug were we get nils here, just report it and we will add back the workaround to reject nils with a better comment."
 
-	^ self itemsPresenter selectedItemsSorted reversed select: [:each | each isNotNil ]
+	^ self itemsPresenter selectedItemsSorted reversed
 ]
 
 { #category : #accessing }

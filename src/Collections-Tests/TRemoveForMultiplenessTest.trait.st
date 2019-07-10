@@ -35,15 +35,13 @@ TRemoveForMultiplenessTest >> test0FixtureTRemoveTest [
 	| duplicate |
 	self empty.
 	self nonEmptyWithoutEqualElements.
-	self deny: self nonEmptyWithoutEqualElements isEmpty.
+	self denyEmpty: self nonEmptyWithoutEqualElements.
 	duplicate := true.
-	self nonEmptyWithoutEqualElements
-		detect: [ :each | (self nonEmptyWithoutEqualElements occurrencesOf: each) > 1 ]
-		ifNone: [ duplicate := false ].
+	self nonEmptyWithoutEqualElements detect: [ :each | (self nonEmptyWithoutEqualElements occurrencesOf: each) > 1 ] ifNone: [ duplicate := false ].
 	self assert: duplicate = false.
 	self elementNotIn.
-	self assert: self empty isEmpty.
-	self deny: self nonEmptyWithoutEqualElements isEmpty.
+	self assertEmpty: self empty.
+	self denyEmpty: self nonEmptyWithoutEqualElements.
 	self deny: (self nonEmptyWithoutEqualElements includes: self elementNotIn)
 ]
 
@@ -134,9 +132,7 @@ TRemoveForMultiplenessTest >> testRemoveElementThatExistsTwice [
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveIfAbsent [
-
-	| el res |
-	el := self elementNotIn.
-	res := self nonEmptyWithoutEqualElements remove: el ifAbsent: [ 33 ].
-	self assert: res = 33
+	| res |
+	res := self nonEmptyWithoutEqualElements remove: self elementNotIn ifAbsent: [ 33 ].
+	self assert: res equals: 33
 ]

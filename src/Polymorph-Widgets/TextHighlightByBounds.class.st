@@ -13,7 +13,7 @@ Class {
 		'borderSides',
 		'fillWidth'
 	],
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Utilities'
 }
 
 { #category : #accessing }

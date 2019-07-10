@@ -65,7 +65,7 @@ AthensCairoStrokePaint >> dashes: anAlternateCollectionOfLenghts offset: anOffse
 	dashOffset := anOffset asFloat.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoStrokePaint >> initialize [
 	super initialize.
 

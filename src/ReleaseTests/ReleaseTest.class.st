@@ -56,17 +56,15 @@ ReleaseTest >> knownProcesses [
 ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	| wrong |
 	wrong := OrderedCollection new.
-	Smalltalk globals allClasses do: [:class | 
-		 wrong addAll: (class classVariables reject: [ :each | each isKindOf:  ClassVariable]).
-		].
-	self assert: wrong isEmpty.
+	Smalltalk globals allClasses do: [ :class | wrong addAll: (class classVariables reject: [ :each | each isKindOf: ClassVariable ]) ].
+	self assertEmpty: wrong
 ]
 
 { #category : #testing }
 ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 	| wrong |
-	wrong := Smalltalk globals associations reject: [ :each | each isKindOf:  GlobalVariable].
-	self assert: wrong isEmpty.
+	wrong := Smalltalk globals associations reject: [ :each | each isKindOf: GlobalVariable ].
+	self assertEmpty: wrong
 ]
 
 { #category : #testing }
@@ -102,7 +100,7 @@ ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 { #category : #testing }
 ReleaseTest >> testKeyClassesArePresentInStartupList [
 	| keyClasses registeredHandlers |
-	keyClasses := #(#Delay #ProcessorScheduler #InputEventFetcher #Stdio #OSPlatform #UUIDGenerator #DiskStore #WeakArray #BasicCommandLineHandler).
+	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #WeakArray #BasicCommandLineHandler).
 	registeredHandlers := SessionManager default startupList
 		collect: #handledId.
 	
@@ -143,7 +141,7 @@ ReleaseTest >> testNoEmptyPackages [
 
 	| violating |
 	violating := RPackageOrganizer default packages select: #isEmpty.
-	self assert: violating isEmpty	
+	self assertEmpty: violating
 ]
 
 { #category : #testing }
@@ -162,6 +160,20 @@ ReleaseTest >> testObsoleteClasses [
 				s 
 					nextPutAll: 'Obsolete classes remaining: ';
 					print: obsoleteClasses ]]
+]
+
+{ #category : #testing }
+ReleaseTest >> testPharoVersionFileExists [
+
+	"Test there is a pharo.version file next to this image containing the short version of this pharo image.
+	This file is required by the Pharo launcher to correctly detect the Pharo version we are running on."
+	
+	| pharoVersionFile |
+	pharoVersionFile := FileLocator imageDirectory / 'pharo.version'.
+	self assert: pharoVersionFile exists.
+	self
+		assert: pharoVersionFile readStream contents trimBoth
+		equals: SystemVersion current major asString,  SystemVersion current minor asString
 ]
 
 { #category : #'testing - rpackage' }
@@ -194,24 +206,25 @@ ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupLi
 { #category : #testing }
 ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	"This test documents issue https://pharo.manuscript.com/f/cases/17834"
+	"The Startup of he WorldMorph is now done in the UIManagerHandler"
 	| startupList |
 	
 	startupList := (SessionManager default startupList collect: #handledId).
 	
 	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache FT2Handle) 
 		do: [ :fontClass |
-			self should: [ (startupList indexOf: #WorldMorph) > (startupList indexOf: #SystemSettingsPersistence) ] ]
+			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]
 
 { #category : #'testing - rpackage' }
 ReleaseTest >> testThatAllMethodsArePackaged [
-    | classes instanceMethods classMethods allMethods methodsWithoutPackageInfo|
-    classes := Smalltalk allClassesAndTraits.
-    instanceMethods := classes flatCollect: #methods.
-    classMethods := classes flatCollect: [ :class | class classSide methods ].
-    allMethods := instanceMethods , classMethods.
-    methodsWithoutPackageInfo := allMethods select: [ :method | method package isNil ].
-    self assert: methodsWithoutPackageInfo isEmpty.
+	| classes instanceMethods classMethods allMethods methodsWithoutPackageInfo |
+	classes := Smalltalk allClassesAndTraits.
+	instanceMethods := classes flatCollect: #methods.
+	classMethods := classes flatCollect: [ :class | class classSide methods ].
+	allMethods := instanceMethods , classMethods.
+	methodsWithoutPackageInfo := allMethods select: [ :method | method package isNil ].
+	self assertEmpty: methodsWithoutPackageInfo
 ]
 
 { #category : #testing }
@@ -263,9 +276,9 @@ ReleaseTest >> testUnpackagedClasses [
 { #category : #'testing - rpackage' }
 ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
 	| unpackagePackage |
-	unpackagePackage := RPackageOrganizer default packageNamed: (RPackage defaultPackageName ).
+	unpackagePackage := RPackageOrganizer default packageNamed: RPackage defaultPackageName.
 	"The unpackage package should not have any defined class or extended classes"
-	self assert: unpackagePackage classes isEmpty.
+	self assertEmpty: unpackagePackage classes
 ]
 
 { #category : #testing }

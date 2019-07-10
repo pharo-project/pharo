@@ -4,9 +4,6 @@ GLMExpander aims to implement a Hopscotch-like browser. This is similar to a tre
 Class {
 	#name : #GLMExpander,
 	#superclass : #GLMImplicitBrowser,
-	#instVars : [
-		'rootPane'
-	],
 	#category : #'Glamour-Browsers-Other'
 }
 

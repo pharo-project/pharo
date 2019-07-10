@@ -1,9 +1,9 @@
 "
 I represent a character by storing its associated Unicode. The first 256 characters are created uniquely, so that all instances of latin1 characters ($R, for example) are identical.
 
-	The code point is based on Unicode.  Since Unicode is 21-bit wide character set, we have several bits available for other information.  As the Unicode Standard  states, a Unicode code point doesn't carry the language information.  This is going to be a problem with the languages so called CJK (Chinese, Japanese, Korean.  Or often CJKV including Vietnamese).  Since the characters of those languages are unified and given the same code point, it is impossible to display a bare Unicode code point in an inspector or such tools.  To utilize the extra available bits, we use them for identifying the languages.  Since the old implementation uses the bits to identify the character encoding, the bits are sometimes called ""encoding tag"" or neutrally ""leading char"", but the bits rigidly denotes the concept of languages.
+The code point is based on Unicode. Since Unicode is 21-bit wide character set, we have several bits available for other information.  As the Unicode Standard  states, a Unicode code point doesn't carry the language information.  This is going to be a problem with the languages so called CJK (Chinese, Japanese, Korean.  Or often CJKV including Vietnamese).  Since the characters of those languages are unified and given the same code point, it is impossible to display a bare Unicode code point in an inspector or such tools.  To utilize the extra available bits, we use them for identifying the languages.  Since the old implementation uses the bits to identify the character encoding, the bits are sometimes called ""encoding tag"" or neutrally ""leading char"", but the bits rigidly denotes the concept of languages.
 
-	The other languages can have the language tag if you like.  This will help to break the large default font (font set) into separately loadable chunk of fonts.  However, it is open to the each native speakers and writers to decide how to define the character equality, since the same Unicode code point may have different language tag thus simple #= comparison may return false.
+The other languages can have the language tag if you like.  This will help to break the large default font (font set) into separately loadable chunk of fonts.  However, it is open to the each native speakers and writers to decide how to define the character equality, since the same Unicode code point may have different language tag thus simple #= comparison may return false.
 
 I represent a character by storing its associated ASCII code (extended to 256 codes). My instances are created uniquely, so that all instances of a character ($R, for example) are identical.
 "
@@ -22,6 +22,7 @@ Class {
 { #category : #'instance creation' }
 Character class >> allByteCharacters [
 	"Answer all the characters that can be encoded in a byte"
+	
 	^ (0 to: 255) collect: [:v | Character value: v] as: String
 
 ]
@@ -29,6 +30,7 @@ Character class >> allByteCharacters [
 { #category : #'instance creation' }
 Character class >> allCharacters [
 	"This name is obsolete since only the characters that will fit in a byte can be queried"
+	
 	^self allByteCharacters
 	
 
@@ -68,6 +70,11 @@ Character class >> backspace [
 	^self value: 8
 ]
 
+{ #category : #'special characters' }
+Character class >> centeredDot [
+	^self codePoint: 183
+]
+
 { #category : #initialization }
 Character class >> characterSet [
 	^ CharSet ifNil: [ AsciiCharset ]
@@ -88,6 +95,7 @@ Character class >> characterTable [
 { #category : #'instance creation' }
 Character class >> codePoint: anInteger [ 
 	"Just for ANSI Compliance"	
+		
 	^self value: anInteger
 	
 ]
@@ -105,7 +113,7 @@ Character class >> constantNames [
 	
 	^#(backspace cr delete escape lf newPage space tab
 		arrowDown arrowLeft arrowRight arrowUp
-		enter end home insert nbsp pageDown pageUp null).
+		enter end home insert nbsp pageDown pageUp null)
 ]
 
 { #category : #'accessing untypeable characters' }
@@ -118,6 +126,11 @@ Character class >> cr [
 { #category : #'accessing untypeable characters' }
 Character class >> delete [
 	^ self value: 127
+]
+
+{ #category : #'special characters' }
+Character class >> devide [
+	^self codePoint: 247
 ]
 
 { #category : #'instance creation' }
@@ -157,7 +170,7 @@ Character class >> home [
 { #category : #initialization }
 Character class >> initialize [
 	"Create the DigitsValues table."
-	"Character initialize"
+ 
 	self initializeDigitValues
 ]
 
@@ -171,7 +184,7 @@ Character class >> initializeDigitValues [
 	 "the uppercase letters"
 	10 to: 35 do: [:i | DigitValues at: 55 + i + 1 put: i].
 	"the lowercase letters"
-	10 to: 35 do: [:i | DigitValues at: 87 + i + 1 put: i].
+	10 to: 35 do: [:i | DigitValues at: 87 + i + 1 put: i]
 ]
 
 { #category : #'accessing untypeable characters' }
@@ -189,7 +202,7 @@ Character class >> leadingChar: leadChar code: code [
 		self error: 'lead is out of range'.
 	].
 	code < 256 ifTrue: [ ^self value: code ].
-	^self value: (leadChar bitShift: 22) + code.
+	^self value: (leadChar bitShift: 22) + code
 ]
 
 { #category : #'accessing untypeable characters' }
@@ -204,6 +217,13 @@ Character class >> linefeed [
 	"Answer the Character representing a linefeed."
 
 	^self value: 10
+]
+
+{ #category : #constants }
+Character class >> maxVal [
+	"Answer the maximum value (code point) for a Character."
+
+	^ (2 ** 30) - 1
 ]
 
 { #category : #'accessing untypeable characters' }
@@ -242,15 +262,20 @@ Character class >> pageUp [
 	^ self value: 11
 ]
 
+{ #category : #'special characters' }
+Character class >> plusOrMinus [
+	^self codePoint: 177
+]
+
 { #category : #'instance creation' }
 Character class >> separators [
 	"Answer a collection of the standard ASCII separator characters as string."
 
 	^ #(32 "space"
-		13 "cr"
-		9 "tab"
-		10 "line feed"
-		12 "form feed")
+		 13 "cr"
+		  9 "tab"
+		 10 "line feed"
+		 12 "form feed")
 		collect: [:v | Character value: v] as: String
 ]
 
@@ -259,6 +284,11 @@ Character class >> space [
 	"Answer the Character representing a space."
 
 	^self value: 32
+]
+
+{ #category : #'special characters' }
+Character class >> specialCharacters [
+	^'+-/\*~<>=@,%|&?!', {self centeredDot . self devide . self plusOrMinus . self times }
 ]
 
 { #category : #queries }
@@ -273,6 +303,11 @@ Character class >> tab [
 	"Answer the Character representing a tab."
 
 	^self value: 9
+]
+
+{ #category : #'special characters' }
+Character class >> times [
+	^self codePoint: 215
 ]
 
 { #category : #'instance creation' }
@@ -460,7 +495,24 @@ Character >> hash [
 
 { #category : #printing }
 Character >> hex [
+	"Returns a string representation of the receiver as hex, prefixed with 16r.  
+	DO NOT CHANGE THIS!  The Cog VMMaker depends on this."
+	"$A hex >>> '16r41'"	
+			
 	^ self asInteger hex
+]
+
+{ #category : #accessing }
+Character >> hexDigitValue [
+	"Return the case independent hexadecimal digit value of the receiver.
+	$0 to: $9 will return 0 to 9, while $a to $f and $A to $F both will return 10 to 15.
+	If the receiver does not represent a hexadecimal digit, return nil.
+	Returns an integer between 0 and 15."
+	
+	| codePoint |
+	^ ((codePoint := self asInteger) between: 0 and: 127)
+		ifTrue: [ #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil) at: codePoint + 1 ]
+		ifFalse: [ nil ]
 ]
 
 { #category : #testing }
@@ -614,7 +666,7 @@ Character >> isOtherLetter [
 
 { #category : #testing }
 Character >> isOtherNumber [
-^ self characterSet isOtherNumber: self
+	^ self characterSet isOtherNumber: self
 ]
 
 { #category : #testing }
@@ -672,7 +724,8 @@ Character >> isSpacingCombiningMark [
 Character >> isSpecial [
 	"Answer whether the receiver is one of the special characters"
 
-	^'+-/\*~<>=@,%|&?!' includes: self
+	^ self class specialCharacters includes: self
+
 ]
 
 { #category : #testing }
@@ -711,31 +764,22 @@ Character >> lowercase [
 ]
 
 { #category : #printing }
-Character >> printOn: arg1 [
-	| tmp1 |
-	(self asInteger > 32 and: [ self asInteger ~= 127 ])
-		ifTrue: [ | tmp3 |
-			tmp3 := arg1.
-			tmp3
-				nextPut: $$;
-				nextPut: self ]
-		ifFalse: [ tmp1 := self class constantNameFor: self.
-			arg1 nextPutAll: self class name.
-			tmp1 notNil
-				ifTrue: [ | tmp5 |
-					tmp5 := arg1.
-					tmp5
-						space;
-						nextPutAll: tmp1 ]
-				ifFalse: [ | tmp7 |
-					tmp7 := arg1.
-					tmp7
-						nextPutAll: ' value: ';
-						print: self asInteger ] ]
+Character >> printOn: aStream [
+	| name |
+	(self asInteger > 32 and: [ self asInteger ~= 127])
+		ifTrue: [ aStream nextPut: $$; nextPut: self ]
+		ifFalse: [
+			name := self class constantNameFor: self.
+			aStream nextPutAll: self class name.
+			name notNil
+				ifTrue: [ aStream space; nextPutAll: name ]
+				ifFalse: [ aStream nextPutAll: ' value: '; print: self asInteger ] ]
 ]
 
 { #category : #printing }
 Character >> printStringHex [
+	"$A printStringHex >>> '41'"
+
 	^ self asInteger printStringBase: 16
 ]
 
@@ -762,37 +806,27 @@ Character >> shouldBePrintedAsLiteral [
 ]
 
 { #category : #printing }
-Character >> storeBinaryOn: arg1 [
+Character >> storeBinaryOn: aStream [
 	self asInteger < 256
-		ifTrue: [ arg1 basicNextPut: self asInteger ]
-		ifFalse: [ arg1 nextInt32Put: self asInteger ]
+		ifTrue: [ aStream basicNextPut: self asInteger ]
+		ifFalse: [ aStream nextInt32Put: self asInteger ]
 ]
 
 { #category : #printing }
-Character >> storeOn: arg1 [
-	| tmp1 |
+Character >> storeOn: aStream [
+	"Common character literals are preceded by '$', however special need to be encoded differently: for some this might be done by using one of the shortcut constructor methods for the rest we have to create them by ascii-value."
+
+	| name |
 	self shouldBePrintedAsLiteral
-		ifTrue: [ | tmp3 |
-			tmp3 := arg1.
-			tmp3
-				nextPut: $$;
-				nextPut: self ]
-		ifFalse: [ tmp1 := self class constantNameFor: self.
-			tmp1 notNil
-				ifTrue: [ | tmp5 |
-					tmp5 := arg1.
-					tmp5
-						nextPutAll: self class name;
-						space;
-						nextPutAll: tmp1 ]
-				ifFalse: [ | tmp7 |
-					tmp7 := arg1.
-					tmp7
-						nextPut: $(;
-						nextPutAll: self class name;
-						nextPutAll: ' value: ';
-						print: self asInteger;
-						nextPut: $) ] ]
+		ifTrue: [ aStream nextPut: $$; nextPut: self ]
+		ifFalse: [
+			name := self class constantNameFor: self.
+			name notNil
+				ifTrue: [ aStream nextPutAll: self class name; space; nextPutAll: name ]
+				ifFalse: [
+					aStream 
+						nextPut: $(; nextPutAll: self class name; 
+						nextPutAll: ' value: '; print: self asInteger; nextPut: $) ] ]
 ]
 
 { #category : #converting }

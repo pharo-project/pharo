@@ -35,7 +35,8 @@ IRTranslatorV2 >> compilationContext [
 { #category : #accessing }
 IRTranslatorV2 >> compilationContext: aContext [
 	compilationContext := aContext.
-	gen := compilationContext bytecodeGeneratorClass newWithEncoderClass: compilationContext encoderClass
+	gen := compilationContext bytecodeGeneratorClass newWithEncoderClass: compilationContext encoderClass.
+	gen compilationContext: aContext.
 ]
 
 { #category : #results }
@@ -59,7 +60,7 @@ IRTranslatorV2 >> currentScope [
 	^currentScope top
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 IRTranslatorV2 >> initialize [
 	currentScope := Stack new.
 	tempVectorStack := Stack new.
@@ -253,7 +254,7 @@ IRTranslatorV2 >> visitPushLiteral: lit [
 	 cannot rely on literal class isImmediateClass here or it breaks the bootstrap."
 	({Character.SmallInteger.SmallFloat64} includes: literal class) ifTrue: [ ^ gen pushLiteral: literal ].
 	Smalltalk vm supportsWriteBarrier ifFalse: [ ^ gen pushLiteral: literal ].
-	"For symbol we need to set explicitely to writable or read-only. 
+	"For symbol we need to set explicitly to writable or read-only. 
 	 Compilation to read-only then back to writable keep the object 
 	 read-only if we don't set it back to writable."
 	compilationContext optionReadOnlyLiterals

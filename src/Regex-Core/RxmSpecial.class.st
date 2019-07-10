@@ -19,31 +19,31 @@ RxmSpecial >> beBeginningOfLine [
 	matchSelector := #atBeginningOfLine
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxmSpecial >> beBeginningOfWord [
 
 	matchSelector := #atBeginningOfWord
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxmSpecial >> beEndOfLine [
 
 	matchSelector := #atEndOfLine
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxmSpecial >> beEndOfWord [
 
 	matchSelector := #atEndOfWord
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxmSpecial >> beNotWordBoundary [
 
 	matchSelector := #notAtWordBoundary
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxmSpecial >> beWordBoundary [
 
 	matchSelector := #atWordBoundary

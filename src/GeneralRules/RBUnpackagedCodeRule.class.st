@@ -25,13 +25,8 @@ RBUnpackagedCodeRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBUnpackagedCodeRule >> check: anEntity forCritiquesDo: aCriticBlock [
-
-	anEntity package ifNotNil: [ :package |
-		package isDefault ifFalse: [ ^ self ] ].
-	
-	aCriticBlock cull: (
-		self critiqueFor: anEntity)
+RBUnpackagedCodeRule >> basicCheck: anEntity [
+	^ anEntity package isNotNil and: [ anEntity package isDefault ]
 ]
 
 { #category : #accessing }

@@ -44,8 +44,29 @@ RBProgramNode >> clearReflectivityAnnotations [
 ]
 
 { #category : #'*Reflectivity' }
+RBProgramNode >> counter [
+	
+	self hasExecutionCounter ifFalse:[^nil].
+	^(self beforeLinks detect: [ :link | link metaObject class = ExecutionCounter]) metaObject
+]
+
+{ #category : #'*Reflectivity' }
 RBProgramNode >> hasBeenExecuted [
 	^self propertyAt: #tagExecuted ifAbsent: false
+]
+
+{ #category : #'*Reflectivity' }
+RBProgramNode >> hasBreakpoint [
+	
+	self hasMetalinkBefore ifFalse: [ ^false ].
+	^self beforeLinks anySatisfy: [ :link | link metaObject = Break ]
+]
+
+{ #category : #'*Reflectivity' }
+RBProgramNode >> hasExecutionCounter [
+	
+	self hasMetalinkBefore ifFalse: [ ^false ].
+	^self beforeLinks anySatisfy: [ :link | link metaObject class = ExecutionCounter ]
 ]
 
 { #category : #'*Reflectivity' }
@@ -55,7 +76,7 @@ RBProgramNode >> hasMetalink [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> hasMetalink: aMetaLink [
-	^self links isNotNil and: [(self links includes: aMetaLink)]
+	^self links includes: aMetaLink
 ]
 
 { #category : #'*Reflectivity' }
@@ -74,6 +95,13 @@ RBProgramNode >> hasMetalinkBefore [
 RBProgramNode >> hasMetalinkInstead [
 		self hasMetalink ifFalse: [^false].
 		^self insteadLinks isNotEmpty
+]
+
+{ #category : #'*Reflectivity' }
+RBProgramNode >> hasWatchpoint [
+	
+	self hasMetalinkAfter ifFalse: [ ^false ].
+	^self afterLinks anySatisfy: [ :link | link metaObject class = Watchpoint ]
 ]
 
 { #category : #'*Reflectivity' }
@@ -102,12 +130,17 @@ RBProgramNode >> link: aMetaLink [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> links [
-	^self propertyAt: #links ifAbsent: nil
+	^self propertyAt: #links ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> nodesWithLinks [
-	^ self allChildren select: [ :e | e links isNotNil ]
+	^ self allChildren select: [ :e | e links isNotEmpty ]
+]
+
+{ #category : #'*Reflectivity' }
+RBProgramNode >> postambles [
+	^self propertyAt: #postambles ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }
@@ -129,4 +162,11 @@ RBProgramNode >> removeLink: aMetaLink [
 { #category : #'*Reflectivity' }
 RBProgramNode >> tagExecuted [
 	^self propertyAt: #tagExecuted put: true 
+]
+
+{ #category : #'*Reflectivity' }
+RBProgramNode >> watchpoint [
+	
+	self hasWatchpoint ifFalse:[^nil].
+	^(self afterLinks detect: [ :link | link metaObject class = Watchpoint ]) metaObject
 ]

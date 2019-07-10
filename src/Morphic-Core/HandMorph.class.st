@@ -141,7 +141,7 @@ HandMorph class >> showEvents: aBool [
 	"HandMorph showEvents: true"
 	"HandMorph showEvents: false"
 	ShowEvents := aBool.
-	aBool ifFalse: [ World invalidRect: (0@0 extent: 500@120) ].
+	aBool ifFalse: [ self currentWorld invalidRect: (0@0 extent: 500@120) ].
 ]
 
 { #category : #accessing }
@@ -292,8 +292,8 @@ HandMorph >> cursorPoint [
 
 	| pos |
 	pos := self position.
-	(ActiveWorld isNil or: [ActiveWorld == owner]) ifTrue: [^pos].
-	^ActiveWorld point: pos from: owner
+	(self currentWorld isNil or: [self currentWorld == owner]) ifTrue: [^pos].
+	^self currentWorld point: pos from: owner
 ]
 
 { #category : #'balloon help' }
@@ -501,7 +501,6 @@ HandMorph >> generateKeyboardEvent: evtBuf [
 					ifTrue: [charCode := combinedChar combined charCode].
 				combinedChar := nil]].
 
-	self flag: #fixme.
 	"This piece of code handles the creation of scrolling events. When a scroll is done by the user, the VM forwards a keystroke event with the up/down key. So we reconvert it to a MouseWheelEvent in that case."
 	(type = #keystroke 
 	 and: [(buttons anyMask: 16) 
@@ -513,7 +512,7 @@ HandMorph >> generateKeyboardEvent: evtBuf [
 					hand: self
 					stamp: stamp].
    "If charCode is not single-byte, we definately have Unicode input. Zero keyValue to avoid garbage values from som VMs."
-   self flag:'I need to look at the windows vm side, to see why this keyvalue is generated in the first place'.
+   self flag: #pharoFixMe. "I need to look at the windows vm side, to see why this keyvalue is generated in the first place".
    (charCode notNil and:[charCode > 255]) ifTrue: [keyValue:=0].
 	keyEvent := KeyboardEvent new
 		setType: type
@@ -598,7 +597,7 @@ HandMorph >> grabMorph: aMorph [
 	"Grab the given morph (i.e., add it to this hand and remove it from its current owner) without changing its position. This is used to pick up a morph under the hand's current position, versus attachMorph: which is used to pick up a morph that may not be near this hand."
 	
 	| grabbed |
-	aMorph = World ifTrue: [^ self].
+	aMorph = self currentWorld ifTrue: [^ self].
 	self releaseMouseFocus.
 	grabbed := aMorph aboutToBeGrabbedBy: self.
 	grabbed ifNil: [^self].
@@ -864,7 +863,7 @@ HandMorph >> moveToEvent: anEvent [
 
 { #category : #drawing }
 HandMorph >> needsToBeDrawn [
-	"Return true if this hand must be drawn explicitely instead of being drawn via the hardware cursor. This is the case if it (a) it is a remote hand, (b) it is showing a temporary cursor, or (c) it is not empty and there are any visible submorphs. If using the software cursor, ensure that the hardware cursor is hidden."
+	"Return true if this hand must be drawn explicitly instead of being drawn via the hardware cursor. This is the case if it (a) it is a remote hand, (b) it is showing a temporary cursor, or (c) it is not empty and there are any visible submorphs. If using the software cursor, ensure that the hardware cursor is hidden."
 	"Details:  Return true if this hand has a saved patch to ensure that is is processed by the world. This saved patch will be deleted after one final display pass when it becomes possible to start using the hardware cursor again. This trick gives us one last display cycle to allow us to remove the software cursor and shadow from the display."
 	| cursor |
 	(savedPatch notNil

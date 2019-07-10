@@ -116,7 +116,7 @@ MetacelloCommonMCSpecLoader >> ignoreImage [
 	^self loaderPolicy ignoreImage
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MetacelloCommonMCSpecLoader >> initialize [
 
 	self loaderPolicy

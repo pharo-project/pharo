@@ -5,12 +5,14 @@ Class {
 	#name : #OSWindowWorldState,
 	#superclass : #WorldState,
 	#instVars : [
-		'display'
+		'display',
+		'canvas',
+		'viewBox'
 	],
 	#category : #'OSWindow-Core-Morphic'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #canvas }
 OSWindowWorldState >> assuredCanvas [
 
 	(canvas isNil or: [(canvas extent ~= viewBox extent) or: [canvas form depth ~= Display depth]])
@@ -48,7 +50,7 @@ OSWindowWorldState >> doDeferredUpdatingFor: aWorld [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'update cycle' }
 OSWindowWorldState >> doOneCycleNowFor: aWorld [
 	"process user input events"
 	LastCycleTime := Time millisecondClockValue.

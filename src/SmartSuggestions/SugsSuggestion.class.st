@@ -26,11 +26,6 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #'instance creation' }
-SugsSuggestion class >> for: aClass [
-	^(self subclassesForNode: aClass) collect: [:each |each new]
-]
-
 { #category : #accessing }
 SugsSuggestion class >> nodes [
 	^{RBProgramNode}

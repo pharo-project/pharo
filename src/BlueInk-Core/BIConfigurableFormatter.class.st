@@ -475,10 +475,9 @@ BIConfigurableFormatter >> bracketWith: bracketString around: aBlock [
 
 { #category : #private }
 BIConfigurableFormatter >> characterSeparatorMethodSignatureFor: aMethodNode [
-	^ [ 
-	(self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
-		ifTrue: [ self newLine ]
-		ifFalse: [ self space ] ]
+	^ (self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
+			ifTrue: [ self newLine ]
+			ifFalse: [ self space ]
 ]
 
 { #category : #accessing }
@@ -491,11 +490,6 @@ BIConfigurableFormatter >> codeStream: anObject [
 	codeStream := anObject
 ]
 
-{ #category : #'public interface' }
-BIConfigurableFormatter >> containerWidth: anInteger [
-	self installNewValueInContext: {(#maxLineLength: -> anInteger)}
-]
-
 { #category : #private }
 BIConfigurableFormatter >> currentLineLength [
 	^ codeStream position - lineStart
@@ -504,6 +498,7 @@ BIConfigurableFormatter >> currentLineLength [
 { #category : #'public interface' }
 BIConfigurableFormatter >> format: aParseTree [
 	originalSource := aParseTree source.
+	self initializeCodeStream.
 	self visitNode: aParseTree.
 	^ codeStream contents
 ]
@@ -849,8 +844,13 @@ BIConfigurableFormatter >> initialize [
 	self indent: 0.
 	self isInCascadeNode: false.
 	lookaheadCode := IdentityDictionary new.
-	codeStream := WriteStream on: (String new: 256).
+	self initializeCodeStream.
 	context := DefaultPrettyPrintContext
+]
+
+{ #category : #initialization }
+BIConfigurableFormatter >> initializeCodeStream [
+	codeStream := WriteStream on: (String new: 256)
 ]
 
 { #category : #'public interface' }
@@ -997,6 +997,7 @@ BIConfigurableFormatter >> needsParenthesisFor: aNode [
 	aNode ifNil: [ ^ false ].
 	aNode isValue
 		ifFalse: [ ^ false ].
+	aNode isParseError ifTrue: [ ^false ].
 	parent := aNode parent ifNil: [ ^ false ].
 	(aNode isMessage and: [ 
 		parent isMessage and: [ 
@@ -1212,7 +1213,7 @@ BIConfigurableFormatter >> privateFormatMethodPatternMonoLineFor: aMethodNode [
 			codeStream nextPutAll: key.
 			self space.
 			self visitNode: arg ]
-		separatedBy: (self characterSeparatorMethodSignatureFor: aMethodNode)
+		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode ]
 ]
 
 { #category : #private }
@@ -1232,7 +1233,7 @@ BIConfigurableFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 			codeStream nextPutAll: key.
 			self space.
 			self visitNode: arg ]
-		separatedBy: (self characterSeparatorMethodSignatureFor: aMethodNode).
+		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode].
 	self newLines: 1
 ]
 
@@ -1442,10 +1443,18 @@ BIConfigurableFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 { #category : #visiting }
 BIConfigurableFormatter >> visitLiteralNode: aLiteralNode [
 	aLiteralNode value isLiteral
-		ifFalse: [ 
-
-			self writeString: '''<an unprintable nonliteral value>''' ]
+		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
 		ifTrue: [ self writeString: aLiteralNode sourceText ]
+]
+
+{ #category : #visiting }
+BIConfigurableFormatter >> visitLiteralVariableNode: aLiteralVariableNode [
+	| binding |
+	binding := aLiteralVariableNode binding.
+	self writeString: binding key storeString, ' -> '.
+	aLiteralVariableNode binding value isLiteral
+		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
+		ifTrue: [ self writeString:  binding value asString ]
 ]
 
 { #category : #visiting }
@@ -1479,6 +1488,11 @@ BIConfigurableFormatter >> visitNode: aNode [
 				ifFalse: [ self formatCommentsFor: aNode ].
 			needsParenthesis
 				ifTrue: [ codeStream nextPutAll: self stringInsideParentheses ] ]
+]
+
+{ #category : #visiting }
+BIConfigurableFormatter >> visitParseErrorNode: aNode [
+	self writeString: aNode value
 ]
 
 { #category : #visiting }

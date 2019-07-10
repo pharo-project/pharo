@@ -45,8 +45,8 @@ RBLiteralValueNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBLiteralValueNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitLiteralNode: self
+RBLiteralValueNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitLiteralValueNode: self
 ]
 
 { #category : #matching }
@@ -81,7 +81,7 @@ RBLiteralValueNode >> value [
 	^ value
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition [
 
 	value := aValue.
@@ -89,7 +89,7 @@ RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition [
 	stop := anotherPosition.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition source: aString [ 
 
 	self value: aValue start: aPosition stop: anotherPosition.

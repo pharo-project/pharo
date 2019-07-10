@@ -3,8 +3,7 @@ Class {
 	#superclass : #MorphTreeNodeModel,
 	#instVars : [
 		'contents',
-		'containerTree',
-		'onSelection'
+		'containerTree'
 	],
 	#category : #'Glamour-Morphic-Widgets'
 }
@@ -63,7 +62,7 @@ GLMTreeMorphNodeModel >> contents [
 { #category : #accessing }
 GLMTreeMorphNodeModel >> displayText [
 	^ (UITheme current 
-		newTextIn: World
+		newTextIn: self currentWorld
 		text: (self containerTree glamourPresentation formatedDisplayValueOf: self item))
 			backgroundColor: self textBackgroundColor;
 			yourself
@@ -78,7 +77,7 @@ GLMTreeMorphNodeModel >> elementColumn [
 		addAll: (self tagMorphsFrom: self containerTree glamourPresentation);
 		yourself.
 	
-	^ (UITheme current newRowIn: World for: rowElements).
+	^ (UITheme current newRowIn: self currentWorld for: rowElements).
 ]
 
 { #category : #testing }
@@ -231,7 +230,7 @@ GLMTreeMorphNodeModel >> rowMorphForColumn: aGlamourColumn [
 		add: contentMorph;
 		addAll: tagMorphs;
 		yourself.			
-	^ (UITheme current newRowIn: World for: rowElements)
+	^ (UITheme current newRowIn: self currentWorld for: rowElements)
 ]
 
 { #category : #actions }

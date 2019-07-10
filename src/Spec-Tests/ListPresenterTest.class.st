@@ -1,52 +1,58 @@
-"
-testing ListComposablePresenter
-"
 Class {
 	#name : #ListPresenterTest,
-	#superclass : #SpecTestCase,
+	#superclass : #AbstractListPresenterTest,
 	#category : #'Spec-Tests-Core-Widgets'
 }
 
-{ #category : #running }
+{ #category : #'tests-header' }
 ListPresenterTest >> classToTest [
+	
 	^ ListPresenter
 ]
 
-{ #category : #tests }
-ListPresenterTest >> testSelectAll [
-	| items |
-	items := #(#AAA #BBB #CCC).
-	testedInstance items: items.
-	testedInstance beMultipleSelection.
-	self assert: testedInstance selectedItems equals: #().
-	testedInstance selectAll.
-	self assert: testedInstance selectedItems equals: items
+{ #category : #'tests-header' }
+ListPresenterTest >> testHideHeaderTitleUnsetsTitle [
+
+	presenter
+		headerTitle: 'title';
+		hideHeaderTitle.
+	
+	self deny: presenter hasHeaderTitle
 ]
 
-{ #category : #tests }
-ListPresenterTest >> testWhenListChanged [
-	"Two stages list changed notification."
-
-	50
-		timesRepeat: [ | ok |
-			testedInstance := ListPresenter new.
-			testedInstance items: #(1 2); whenListChanged: [ :aList | ok := aList = testedInstance listItems ]; listItems;	"Call listItems to set the cache"
-			 items: #(1 2 3).
-			self assert: ok ]
+{ #category : #'tests-header' }
+ListPresenterTest >> testIconFor [
+	presenter
+		items: #(#add #back #catalog);
+		icons: [ :item | Smalltalk ui icons iconNamed: item asSymbol ].
+	self assert: (presenter iconFor: #add) equals: (Smalltalk ui icons iconNamed: #add)
 ]
 
-{ #category : #tests }
-ListPresenterTest >> testWhenListChangedOldContents [
-	"access to old and new contents in whenListChanged."
+{ #category : #'tests-header' }
+ListPresenterTest >> testSetHeaderTitleHasTitle [
 
-	| oldL newL |
-	oldL := #(1 2).
-	newL := #(1 2 3).
-	testedInstance items: oldL.
-	testedInstance
-		whenListChanged: [ :aList :anOldList | 
-			self assert: oldL = anOldList.
-			self assert: newL = aList ].
-	testedInstance listItems.	"Call listItems to set the cache"
-	testedInstance items: #(1 2 3)
+	presenter headerTitle: 'title'.
+	
+	self assert: presenter hasHeaderTitle
+]
+
+{ #category : #'tests-header' }
+ListPresenterTest >> testSetHeaderTitleSetsTitle [
+
+	presenter headerTitle: 'title'.
+	
+	self assert: presenter headerTitle equals: 'title'
+]
+
+{ #category : #test }
+ListPresenterTest >> testWhenIconsChangedDo [
+	| icon counter |
+	counter := 0.
+	presenter
+		whenIconsChangedDo: [ :iconBlock | 
+			icon := iconBlock cull: #add.
+			counter := counter + 1 ].
+	presenter icons: [ :item | Smalltalk ui icons iconNamed: item asSymbol ].
+	self assert: icon equals: (Smalltalk ui icons iconNamed: #add).
+	self assert: counter equals: 1
 ]

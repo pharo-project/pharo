@@ -42,30 +42,29 @@ RGClassDefinitionTest >> testAsClassDefinition3 [
 
 { #category : #'*Ring-Deprecated-Tests-Monticello' }
 RGClassDefinitionTest >> testAsFullClassDefinition [
-	
 	| rgClass |
 	rgClass := Class asRingDefinition.
-	self assert: rgClass methods isEmpty.
+	self assertEmpty: rgClass methods.
 	self assert: rgClass superclass isNil.
-	self assert: rgClass subclasses isEmpty.
+	self assertEmpty: rgClass subclasses.
 	self assert: rgClass package name equals: #Kernel.
 
 	rgClass := Class asFullRingDefinition.
-	self assert: rgClass methods notEmpty.
+	self denyEmpty: rgClass methods.
 	self assert: (rgClass methodNamed: #asRingDefinition) package name = #'Ring-Deprecated-Core-Kernel'.
 	self assert: rgClass superclass notNil.
 	self assert: rgClass superclass name = #ClassDescription.
-	self assert: rgClass subclasses notEmpty.
+	self denyEmpty: rgClass subclasses.
 	self assert: rgClass package notNil.
 	self assert: rgClass package = rgClass instanceSide package.
 	self assert: rgClass package name = #Kernel.
 	self assert: rgClass category = #'Kernel-Classes'.
-	self assert: rgClass extensionMethods notEmpty.
-	
+	self denyEmpty: rgClass extensionMethods.
+
 	self assert: rgClass superclass superclass isNil.
 	self assert: rgClass superclass package name equals: #Kernel.
 	self assert: rgClass subclasses first package name equals: #Kernel.
-	
+
 	rgClass := RGClassDefinition classSide asFullRingDefinition.
-	self assert: rgClass package = rgClass instanceSide package.
+	self assert: rgClass package = rgClass instanceSide package
 ]

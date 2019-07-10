@@ -15,12 +15,13 @@ Class {
 	#instVars : [
 		'name',
 		'fileID',
-		'buffer1'
+		'buffer1',
+		'rwmode'
 	],
 	#classVars : [
 		'Registry'
 	],
-	#category : #DeprecatedFileStream
+	#category : #'DeprecatedFileStream-Base'
 }
 
 { #category : #'error handling' }

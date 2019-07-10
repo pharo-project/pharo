@@ -21,8 +21,7 @@ Class {
 		'p4x',
 		'p4y',
 		'p4z',
-		'cellSize',
-		'sourceRGBmap'
+		'cellSize'
 	],
 	#category : #'Graphics-Primitives-BitBlt'
 }

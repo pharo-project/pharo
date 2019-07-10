@@ -94,7 +94,7 @@ RBChildrenToSiblingsRefactoring >> createSubclassResponsibilityFor: aSelector in
 		classified: (aClass protocolsFor: aSelector)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBChildrenToSiblingsRefactoring >> name: aClassName class: aClass subclasses: subclassCollection [ 
 	className := aClassName asSymbol.
 	parent := self model classFor: aClass.

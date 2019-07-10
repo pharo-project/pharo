@@ -71,7 +71,7 @@ RBMoveVariableDefinitionRefactoring >> checkParseTree [
 		ifFalse: [self refactoringError: 'Variable is possibly read before written']
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBMoveVariableDefinitionRefactoring >> class: aClass selector: aSelector interval: anInterval [ 
 	interval := anInterval.
 	class := self classObjectFor: aClass.
@@ -113,16 +113,18 @@ RBMoveVariableDefinitionRefactoring >> storeOn: aStream [
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionRefactoring >> subblocksIn: aParseTree [ 
+RBMoveVariableDefinitionRefactoring >> subblocksIn: aParseTree [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: '[:`@blockTemps | | `@temps | `@.Statements]'
-		do: 
-			[:aNode :answer | 
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: '[:`@blockTemps | | `@temps | `@.Statements]'
+		do: [ :aNode :answer | 
 			(aNode references: name)
-				ifTrue: [answer add: aNode].
-			answer].
-	^searcher executeTree: aParseTree initialAnswer: OrderedCollection new
+				ifTrue: [ answer add: aNode ].
+			answer ].
+	^ searcher
+		executeTree: aParseTree
+		initialAnswer: OrderedCollection new
 ]
 
 { #category : #transforming }
@@ -133,12 +135,12 @@ RBMoveVariableDefinitionRefactoring >> transform [
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionRefactoring >> usesDirectly: aParseTree [ 
+RBMoveVariableDefinitionRefactoring >> usesDirectly: aParseTree [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
+	searcher := self parseTreeSearcher.
 	searcher
 		matches: '[:`@args | | `@temps | `@.Statements]'
-			do: [:aNode :answer | answer];
-		matches: name do: [:aNode :answer | true].
-	^searcher executeTree: aParseTree initialAnswer: false
+			do: [ :aNode :answer | answer ];
+		matches: name do: [ :aNode :answer | true ].
+	^ searcher executeTree: aParseTree initialAnswer: false
 ]

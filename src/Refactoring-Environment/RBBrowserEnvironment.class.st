@@ -117,29 +117,6 @@ RBBrowserEnvironment >> asSelectorEnvironment [
 	^(RBClassEnvironment onEnvironment: self classes: self classes) asSelectorEnvironment
 ]
 
-{ #category : #conversion }
-RBBrowserEnvironment >> asSystemNavigationEnvironment [
-
-	| env globalsNames |
-	"Optimization for the default environment AKA Smalltalk"
-	self class == RBBrowserEnvironment 
-		ifTrue: [ ^ Smalltalk globals ].
-	
-	env := SystemDictionary new.
-	
-	self classesDo: [:each | 
-		env add: ( Smalltalk globals associationAt: each instanceSide name )].
-	self traitsDo:  [:each | 
-		env add: ( Smalltalk globals associationAt: each name )].
-	globalsNames := Smalltalk globals keys asOrderedCollection.
-	globalsNames removeAll: ( Smalltalk globals classNames ).
-	 globalsNames removeAll: ( Smalltalk globals traitNames ).
-	globalsNames do: [:each | 
-		env add: ( Smalltalk globals associationAt: each )].
-
-	^ env
-]
-
 { #category : #'accessing-classes' }
 RBBrowserEnvironment >> associationAt: aKey [
 	^ self associationAt: aKey ifAbsent: [ self error: aKey printString , ' not found' ]
@@ -436,7 +413,7 @@ RBBrowserEnvironment >> label [
 		ifFalse: [ label ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBrowserEnvironment >> label: aString [
 	label := aString
 ]

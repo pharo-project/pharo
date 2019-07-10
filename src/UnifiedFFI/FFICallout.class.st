@@ -144,12 +144,15 @@ FFICallout >> directArgName: typeName ptrArity: ptrArity [
 	"Answer 'direct' type arguments (without argument names): 
 		self, nil,true, false or a constant (like a number)"
 
-	typeName = 'nil'
-		ifTrue: [ ^ FFIConst value: 0 type: (self resolveExternalType: #uint32) ].
+	(typeName = 'NULL' or: [ typeName = 'nil' ])
+		ifTrue: [ 
+			^ (self resolveType: #'void *')
+				loader: (self valueArgumentLoader: ExternalAddress null);
+				yourself ].
 	typeName = 'false'
-		ifTrue: [ ^ FFIConst value: 0 type: (self resolveExternalType: #bool) ].
+		ifTrue: [ ^ FFIConst value: 0 type: (self resolveType: #bool) ].
 	typeName = 'true'
-		ifTrue: [ ^ FFIConst value: 1 type: (self resolveExternalType: #bool) ].
+		ifTrue: [ ^ FFIConst value: 1 type: (self resolveType: #bool) ].
 	ptrArity > 0
 		ifTrue: [ self error: 'missing argument name' ].	"lone self"
 	typeName = 'self'
@@ -180,7 +183,20 @@ FFICallout >> initialize [
 
 { #category : #private }
 FFICallout >> integerConstantArgument: anInteger [
-	^ FFIConst value: anInteger type: (self resolveExternalType:  #uint32)
+
+	^ FFIConst 
+		value: anInteger
+		type: (anInteger >=0 
+			ifTrue: [ self resolveType: #uint32 ]
+			ifFalse: [ self resolveType: #int32 ])
+]
+
+{ #category : #private }
+FFICallout >> integerConstantArgument: anInteger type: aType [
+
+	^ FFIConst 
+		value: anInteger
+		type: (self resolveType: aType)
 ]
 
 { #category : #'argument loaders' }
@@ -343,22 +359,28 @@ FFICallout >> resolveType: aTypeName [
 	
 	newName := aTypeName.
 	ptrArity := 0.
-	"resolve aliases and pointers"	
-	[
-		name := newName asString trimRight.  
+	"resolve aliases and pointers"
+	[ 
+		name := newName asString trimRight.
 		newName := self aliasForType: name.
-		newName last = $* ifTrue: [
+		newName last = $* ifTrue: [ 
 			ptrArity := ptrArity + 1.
 			newName := newName allButLast ].
-		name = newName ] whileFalse.
-	
-	resolver := requestor ifNil: [ self class ].
-	binding := resolver ffiBindingOf: name asSymbol.
-	
-	binding ifNotNil: [ 
-		^ (binding value asExternalTypeOn: self) pointerArity: ptrArity ] .
+		name = newName 
+	] whileFalse.
 
-	^ self error: 'Unable to resolve external type: ', aTypeName
+	resolver := requestor 
+		ifNotNil: [ 
+			requestor isClass
+				ifTrue: [ requestor instanceSide ]
+				ifFalse: [ requestor ] ]
+		ifNil: [ self class ].
+		
+	binding := resolver ffiBindingOf: name asSymbol.
+	binding ifNotNil: [ 
+		^ (binding value asExternalTypeOn: self) pointerArity: ptrArity ].
+
+	^ self error: 'Unable to resolve external type: ' , aTypeName
 ]
 
 { #category : #'spec parsing' }
@@ -393,4 +415,12 @@ FFICallout >> sender: aSenderContext [
 { #category : #private }
 FFICallout >> typeName: aName pointerArity: ptrArity [
 	^ (self resolveType: aName) pointerArity: ptrArity
+]
+
+{ #category : #private }
+FFICallout >> valueArgumentLoader: anObject [
+
+	^ FFIValueArgument new
+		value: anObject;
+		yourself
 ]

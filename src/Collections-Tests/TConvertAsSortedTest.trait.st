@@ -14,9 +14,8 @@ TConvertAsSortedTest >> collectionWithSortableElements [
 
 { #category : #'tests - fixture' }
 TConvertAsSortedTest >> test0FixtureConverAsSortedTest [
-
 	self collectionWithSortableElements.
-	self deny: self collectionWithSortableElements isEmpty
+	self denyEmpty: self collectionWithSortableElements
 ]
 
 { #category : #'tests - as sorted collection' }

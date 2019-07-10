@@ -2,7 +2,6 @@ Class {
 	#name : #GLMMorphicPaneWithoutTitleRenderer,
 	#superclass : #GLMMorphicWidgetRenderer,
 	#instVars : [
-		'container',
 		'paneMorph'
 	],
 	#category : #'Glamour-Morphic-Renderer'

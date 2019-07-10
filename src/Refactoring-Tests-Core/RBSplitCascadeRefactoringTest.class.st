@@ -20,13 +20,13 @@ RBSplitCascadeRefactoringTest >> methodWithCascades [
 { #category : #tests }
 RBSplitCascadeRefactoringTest >> testSplitCascadeRefactoring [
 	| refactoring |
-	refactoring := RBSplitCascadeRefactoring split: (self 
-				convertInterval: (54 to: 55)
-				for: (self class sourceCodeAt: #methodWithCascades))
+	refactoring := RBSplitCascadeRefactoring
+		split: (54 to: 55)
 		from: #methodWithCascades
 		in: self class.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBSplitCascadeRefactoringTest) parseTreeFor: #methodWithCascades) equals: (RBParser parseMethod: 'methodWithCascades
+
+	self assert: ((refactoring model classNamed: #RBSplitCascadeRefactoringTest) parseTreeFor: #methodWithCascades) equals: (self parseMethod: 'methodWithCascades
 	| a receiver |
 	receiver := Object new.
 	receiver initialize.

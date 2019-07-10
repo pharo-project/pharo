@@ -44,6 +44,12 @@ FFICalloutAPI class >> new [
 ]
 
 { #category : #private }
+FFICalloutAPI class >> newCallbackBackendFor: aCallback [
+
+	^ FFIAlienCallback fromFrontendCallback: aCallback
+]
+
+{ #category : #private }
 FFICalloutAPI >> callingConvention [
 	^ callingConvention
 ]
@@ -66,8 +72,9 @@ FFICalloutAPI >> convention: aCallingConvention [
 
 { #category : #action }
 FFICalloutAPI >> function: functionSignature module: moduleNameOrLibrary [
-	| sender ffiMethod |
+	| sender ffiMethod ffiMethodSelector |
 	sender := context ifNil: [ thisContext sender sender ].
+	ffiMethodSelector := thisContext sender method selector.
 
 	"Build new method"
 	ffiMethod := self newBuilder
@@ -82,7 +89,7 @@ FFICalloutAPI >> function: functionSignature module: moduleNameOrLibrary [
 	"Replace with generated ffi method, but save old one for future use"
 	ffiMethod propertyValueAt: #ffiNonCompiledMethod put: (sender methodClass methodDict at: sender selector).
 	"For senders search, one need to keep the selector in the properties"
-	ffiMethod propertyValueAt: #ffiMethodSelector put: sender method sendNodes first selector.
+	ffiMethod propertyValueAt: #ffiMethodSelector put: ffiMethodSelector.
 	sender methodClass methodDict at: sender selector put: ffiMethod.
 	"Register current method as compiled for ffi"
 	FFIMethodRegistry uniqueInstance registerMethod: ffiMethod.
@@ -106,6 +113,15 @@ FFICalloutAPI >> initializeContext: aContext [
 { #category : #action }
 FFICalloutAPI >> newBuilder [
 	^ FFICalloutMethodBuilder calloutAPI: self
+]
+
+{ #category : #'as yet unclassified' }
+FFICalloutAPI >> newCallbackWithSignature: signature block: aBlock library: aLibrary [
+
+	^ (FFICallback signature: signature block: aBlock)
+		calloutAPIClass: self class;
+		ffiLibrary: aLibrary;
+		yourself
 ]
 
 { #category : #accessing }

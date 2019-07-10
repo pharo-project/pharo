@@ -15,22 +15,22 @@ RGNamespaceTest class >> isDeprecated [
 { #category : #testing }
 RGNamespaceTest >> testCreatingNamespace [
 	| newNamespace newPackage newClass |
-	
-	newNamespace := RGNamespace named: #'RingNamespace'.
-	newPackage := RGPackage named:  #'Collections-Sequenceable'.
-	newClass:= RGClassDefinition named: #OrderedCollection.
+	newNamespace := RGNamespace named: #RingNamespace.
+	newPackage := RGPackageDefinition named: #'Collections-Sequenceable'.
+	newClass := RGClassDefinition named: #OrderedCollection.
 	newPackage addClass: newClass.
-	newNamespace addPackage: newPackage;
+	newNamespace
+		addPackage: newPackage;
 		addClass: newClass.
-	
-	self assert: (newNamespace isNamespace).
-	self assert: ((newNamespace packageNamed: #'Collections-Sequenceable') == newPackage).
-	self assert: ((newNamespace classNamed: #OrderedCollection) == newClass).
-	self assert: (newNamespace methods isEmpty).
-	self assert: (newNamespace pools isEmpty).
-	self assert: (newNamespace globalVariables isEmpty).
-	
+
+	self assert: newNamespace isNamespace.
+	self assert: (newNamespace packageNamed: #'Collections-Sequenceable') == newPackage.
+	self assert: (newNamespace classNamed: #OrderedCollection) == newClass.
+	self assertEmpty: newNamespace methods.
+	self assertEmpty: newNamespace pools.
+	self assertEmpty: newNamespace globalVariables.
+
 	newNamespace removeClass: newClass.
-	self assert: ((newNamespace classNamed: #OrderedCollection) isNil).
-	self assert: ((newPackage classNamed: #OrderedCollection) notNil).
+	self assert: (newNamespace classNamed: #OrderedCollection) isNil.
+	self assert: (newPackage classNamed: #OrderedCollection) notNil
 ]

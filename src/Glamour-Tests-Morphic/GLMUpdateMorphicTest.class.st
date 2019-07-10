@@ -15,11 +15,6 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
-{ #category : #tests }
-GLMUpdateMorphicTest >> expectedFailures [
-	^ #(testUpdatePresentationTitle)
-]
-
 { #category : #running }
 GLMUpdateMorphicTest >> setUp [
 	super setUp.
@@ -134,6 +129,7 @@ GLMUpdateMorphicTest >> testUpdateBrowserTitle [
 
 { #category : #tests }
 GLMUpdateMorphicTest >> testUpdatePresentationTitle [
+	<expectedFailure>
 	browser panes first presentations first title: 'something'.
 	browser panes first presentations first update.
 	self assert: listLabelMorph contents equals: 'something'

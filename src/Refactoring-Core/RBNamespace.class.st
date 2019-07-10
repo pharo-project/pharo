@@ -36,7 +36,7 @@ Note, some of my methods for querying method senders and implementors don't work
 "
 Class {
 	#name : #RBNamespace,
-	#superclass : #Object,
+	#superclass : #RBEntity,
 	#instVars : [
 		'changes',
 		'environment',
@@ -232,10 +232,10 @@ RBNamespace >> compile: aString in: aRBClass classified: aSymbol [
 RBNamespace >> createNewClassFor: aBehavior [ 
 	| nonMeta meta className |
 	className := aBehavior instanceSide name.
-	nonMeta := (RBClassModelFactory rbClass existingNamed: className)
+	nonMeta := (modelFactory rbClass existingNamed: className)
 				model: self;
 				yourself.
-	meta := (RBClassModelFactory rbMetaclass existingNamed: className)
+	meta := (modelFactory rbMetaclass existingNamed: className)
 				model: self;
 				yourself.
 	^changedClasses at: className put: (Array with: nonMeta with: meta)
@@ -250,8 +250,8 @@ RBNamespace >> defineClass: aString [
 	newClass isNil
 		ifTrue: [ | newMetaclass |
 			self unmarkAsRemoved: newClassName.
-			newClass := RBClassModelFactory rbClass named: newClassName.
-			newMetaclass := RBClassModelFactory rbMetaclass named: newClassName.
+			newClass := modelFactory rbClass named: newClassName.
+			newMetaclass := modelFactory rbMetaclass named: newClassName.
 			newClass model: self.
 			newMetaclass model: self.
 			newClasses
@@ -324,6 +324,7 @@ RBNamespace >> includesGlobal: aSymbol [
 
 { #category : #initialization }
 RBNamespace >> initialize [
+	super initialize.
 	changes := RBRefactoryChangeManager changeFactory compositeRefactoryChange.
 	environment := RBBrowserEnvironment new.
 	newClasses := IdentityDictionary new.
@@ -496,7 +497,7 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 { #category : #'private-changes' }
 RBNamespace >> replaceClassNameIn: definitionString to: aSymbol [ 
 	| parseTree |
-	parseTree := RBParser parseExpression: definitionString.
+	parseTree := self parserClass parseExpression: definitionString.
 	parseTree receiver: (RBVariableNode named: aSymbol).
 	^parseTree formattedCode
 ]

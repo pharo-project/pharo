@@ -152,6 +152,7 @@ OSWindow >> deliverEvent: anEvent [
 	"TODO..."
 	
 	TraceEvents == true ifTrue: [ Transcript show: anEvent; cr ].
+		
 	eventHandler ifNotNil: [ 
 		eventHandler handleEvent: anEvent ].
 	anEvent performDefaultAction 
@@ -375,7 +376,7 @@ OSWindow >> startTextInput [
 	"Start accepting Unicode text input events.
 	I will start accepting Unicode text input events in the focused window, and start emitting text input and text editing events.
 	Please use me in pair with stopTextInput.
-	On some platforms using I may activates the screen keyboard."
+	On some platforms I may activate the screen keyboard."
 
 	self validHandle startTextInput
 ]

@@ -24,7 +24,7 @@ EpRBPropagateRefactoring >> asEpiceaEvent [
 	^ EpPropagateRefactoring target: targetRefactoring asEpiceaEvent
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 EpRBPropagateRefactoring >> initializeWith: aRefactoring [ 
 	self initialize.
 	targetRefactoring := aRefactoring 

@@ -66,7 +66,7 @@ TTLCache >> handleHit: association ifStale: block [
 	^ link value value
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 TTLCache >> initialize [
 	super initialize.
 	self timeToLive: 1 hour

@@ -30,7 +30,7 @@ Class {
 		'alreadySearchedSelectedItemsListMaxSize',
 		'alreadySearchedUnselectedItemsListMaxSize'
 	],
-	#category : #'Tool-Finder'
+	#category : #'Tool-Finder-UI'
 }
 
 { #category : #accessing }
@@ -340,8 +340,8 @@ DialogItemsChooserUI >> cancelButtonState [
 
 { #category : #display }
 DialogItemsChooserUI >> centering [
-	self left: ((World width / 2) - (self width /2)) rounded.
-	self top: ((World height / 2) - (self height /2)) rounded
+	self left: ((self currentWorld width / 2) - (self width /2)) rounded.
+	self top: ((self currentWorld height / 2) - (self height /2)) rounded
 ]
 
 { #category : #accessing }
@@ -570,7 +570,7 @@ DialogItemsChooserUI >> selectedItemsProbablyRestricted [
 						(string last = $*) 
 							ifTrue: [string]
 							ifFalse:[string, '*']].
-	^self selectedItems select: [:each | matcher match: each].
+	^self selectedItems select: [:each | matcher asString match: each].
 ]
 
 { #category : #accessing }

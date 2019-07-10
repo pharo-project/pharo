@@ -9,21 +9,22 @@ Class {
 
 { #category : #'step over' }
 NNavDirectionSibling class >> brotherNodeFor: node [
-"Finds the next brother for the node"
-	| brothers nodePosition nextBrotherPosition |
+	"Finds the next brother for the node"
 
+	| brothers nodePosition nextBrotherPosition |
 	node ifNil: [ ^nil ].
 	node parent ifNil: [ ^nil ]. "no parent you are orphan"
 	brothers := node parent children.
-	nodePosition := (brothers indexOf: node) .
-	nextBrotherPosition := self brotherPositionFor: nodePosition brothers: brothers .
-	^ brothers at: nextBrotherPosition.
+	nodePosition := (brothers indexOf: node).
+	nextBrotherPosition := self brotherPositionFor: nodePosition brothers: brothers.
+	^ brothers at: nextBrotherPosition
 
 ]
 
 { #category : #'step over' }
 NNavDirectionSibling class >> brotherPositionFor: nodePosition brothers: brothers [
-	^ nodePosition = brothers size ifTrue:  [ 1 ] ifFalse: [ nodePosition + 1 ].
+
+	^ nodePosition = brothers size ifTrue:  [ 1 ] ifFalse: [ nodePosition + 1 ]
 
 ]
 
@@ -43,9 +44,10 @@ NNavDirectionSibling class >> buildShortcut: aBuilder [
 
 { #category : #builder }
 NNavDirectionSibling class >> defaultKeyCombination [
-	^NNavNavigation useArrowsShortcuts 
-		ifTrue: [ Character arrowRight meta shift  ]
-		ifFalse: [ $u meta shift  ]
+
+	^ NNavNavigation useArrowsShortcuts 
+		ifTrue: [ Character arrowRight meta shift ]
+		ifFalse: [ $u meta shift ]
 ]
 
 { #category : #'stand out' }
@@ -58,9 +60,9 @@ NNavDirectionSibling class >> findSelectionFor: navigationContext [
 
 { #category : #'step over' }
 NNavDirectionSibling class >> selectionBrotherScope: selected for: node [
-	| brother |
 
-	node ifNil: [ ^selected ].
+	| brother |
+	node ifNil: [ ^ selected ].
 	brother := self brotherNodeFor:  node.
-	^brother ifNil:[nil] ifNotNil: [ brother start to: brother stop].
+	^brother ifNil:[nil] ifNotNil: [ brother start to: brother stop ]
 ]

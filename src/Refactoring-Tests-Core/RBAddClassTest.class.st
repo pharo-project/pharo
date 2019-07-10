@@ -22,13 +22,13 @@ RBAddClassTest >> testAddClass [
 	newClass := refactoring model classNamed: #FooTest.
 	superClass := refactoring model classNamed: #RBRefactoringTest.
 	classTest := refactoring model classNamed: self class name.
-	self assert: newClass superclass = superClass.
+	self assert: newClass superclass equals: superClass.
 	self assert: (superClass subclasses includes: newClass).
-	self assert: newClass classSide superclass = superClass classSide.
+	self assert: newClass classSide superclass equals: superClass classSide.
 	self assert: (superClass classSide subclasses includes: newClass classSide).
-	self assert: classTest superclass = newClass.
+	self assert: classTest superclass equals: newClass.
 	self assert: (newClass subclasses includes: classTest).
-	self assert: classTest classSide superclass = newClass classSide.
+	self assert: classTest classSide superclass equals: newClass classSide.
 	self assert: (newClass classSide subclasses includes: classTest classSide)
 ]
 
@@ -45,8 +45,8 @@ RBAddClassTest >> testExistingName [
 RBAddClassTest >> testInvalidSubclass [
 	self shouldFail: (RBAddClassRefactoring 
 			addClass: #Foo
-			superclass: RBCompositeLintRuleTest
-			subclasses: (Array with: RBBasicLintRuleTest)
+			superclass: RBCompositeLintRuleTestData
+			subclasses: (Array with: RBBasicLintRuleTestData)
 			category: #'Refactory-Tesing')
 ]
 
@@ -72,13 +72,13 @@ RBAddClassTest >> testModelAddClass [
 		category: #'Refactory-Testing'.
 	self executeRefactoring: refactoring.
 	newClass := model classNamed: #FooTest.
-	self assert: newClass superclass = superClass.
+	self assert: newClass superclass equals: superClass.
 	self assert: (superClass subclasses includes: newClass).
-	self assert: newClass classSide superclass = superClass classSide.
+	self assert: newClass classSide superclass equals: superClass classSide.
 	self assert: (superClass classSide subclasses includes: newClass classSide).
-	self assert: subclass superclass = newClass.
+	self assert: subclass superclass equals: newClass.
 	self assert: (newClass subclasses includes: subclass).
-	self assert: subclass classSide superclass = newClass classSide.
+	self assert: subclass classSide superclass equals: newClass classSide.
 	self assert: (newClass classSide subclasses includes: subclass classSide)
 ]
 

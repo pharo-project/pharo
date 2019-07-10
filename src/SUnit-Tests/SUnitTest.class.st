@@ -76,11 +76,6 @@ SUnitTest >> expectedFailurePasses [
 	self assert: true.
 ]
 
-{ #category : #testing }
-SUnitTest >> expectedFailures [
-	^super expectedFailures "#() "
-]
-
 { #category : #private }
 SUnitTest >> failedChildProcessTest [
 	"During this test forked process should signal error.
@@ -396,7 +391,7 @@ SUnitTest >> testFileOutResult [
 	self
 		assert: fileout
 		equals:
-			'3 run, 1 passes, 0 skipped, 0 expected failures, 1 failures, 1 errors, 0 unexpected passes
+			'3 ran, 1 passed, 0 skipped, 0 expected failures, 1 failure, 1 error, 0 passed unexpected
 Failures:
 SUnitTest(TestAsserter)>>#fail
 
@@ -628,11 +623,10 @@ SUnitTest >> testSuite [
 
 { #category : #testing }
 SUnitTest >> testWatchDogProcessShouldNotBeCatchedAsForkedProcess [
-
 	| env |
 	env := CurrentExecutionEnvironment value.
-	
-	self assert: env forkedProcesses isEmpty
+
+	self assertEmpty: env forkedProcesses
 ]
 
 { #category : #testing }

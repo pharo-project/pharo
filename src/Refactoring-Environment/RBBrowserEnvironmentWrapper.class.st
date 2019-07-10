@@ -74,7 +74,7 @@ RBBrowserEnvironmentWrapper >> isSystem [
 	^false
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBrowserEnvironmentWrapper >> onEnvironment: anEnvironment [
 	environment := anEnvironment
 ]

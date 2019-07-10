@@ -116,32 +116,3 @@ TAddTest >> testTAddWithOccurences [
 	self assert: (collection includes: anElement).
 	self assert: collection size equals: (oldSize + 5)
 ]
-
-{ #category : #'tests - adding' }
-TAddTest >> testTWrite [
-
-	| added collection elem |
-	collection := self otherCollection.
-	elem := self element.
-	added := collection write: elem.
-	
-	self assert: added == elem.	"test for identiy because #add: has not reason to copy its parameter."
-	self assert: (collection includes: elem).
-	self assert: (collection includes: elem)
-	
-	
-]
-
-{ #category : #'tests - adding' }
-TAddTest >> testTWriteTwice [
-	| added oldSize collection elem |
-	collection := self collectionWithElement.
-	elem := self element.
-	oldSize := collection size.
-	added := collection 
-		write: elem;
-		write: elem.
-	self assert: added == elem .	"test for identiy because #add: has not reason to copy its parameter."
-	self assert: (collection  includes: elem ).
-	self assert: collection size equals: (oldSize + 2)
-]

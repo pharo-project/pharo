@@ -8,3 +8,8 @@ Class {
 	#superclass : #PackageManifest,
 	#category : #'FileSystem-Tests-Disk-Manifest'
 }
+
+{ #category : #'code-critics' }
+ManifestFileSystemTestsDisk class >> ruleAssertEqualSignIntoAssertEqualsV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#DiskFileSystemTest #testEqual #false)) #'2019-03-29T13:41:22.736554+01:00') )
+]

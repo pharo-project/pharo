@@ -27,7 +27,7 @@ SourceFile >> atEnd [
 	^ stream atEnd
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SourceFile >> close [
 
 	stream ifNil: [ ^ self ].
@@ -59,6 +59,34 @@ SourceFile >> flush [
 SourceFile >> fullName [
 
 	^ path asString
+]
+
+{ #category : #accessing }
+SourceFile >> getPreambleAt: startingPosition [
+	"Search backwards from byte startingPosition in my stream for a method preamble and return it.
+	A method preamble looks like: MyClass methodsFor: 'test' stamp: 'author 1/27/2019 12:27'
+	but with exclamation marks ($!) around it (the contents excluding the $!'s is returned).
+	startingPosition should be set one position before the closing $!"
+	
+	| characterReadStream binaryStream encoder position |
+	"I hold either a ZnCharacterReadStream or a ZnCharacterReadWriteStream (see #tryOpenReadOnly:)
+	Use #isReadOnly and #readOnlyCopy to access the ZnCharacterReadStream in both cases"
+	characterReadStream := self isReadOnly ifTrue: [ stream ] ifFalse: [ stream readOnlyCopy ].
+	"Access the binary read stream wrapped by the character read stream"
+	binaryStream := characterReadStream wrappedStream.
+	"Access the encoder held by the character read stream"
+	encoder := characterReadStream encoder.
+	"Search backwards for the previous occurrence of $!
+	Although the underlying encoding is UTF-8 we can still operate/move at the byte level
+	since $! code 33 cannot occur in code points encoded using 2, 3 or 4 bytes"
+	position := startingPosition.
+	[ position >= 0 
+		and: [ 
+			binaryStream position: position. 
+			binaryStream next ~= 33 "$!" ] ] 
+		whileTrue: [ position := position - 1 ].
+	"Now that we found the byte range, extract and decode it"
+	^ encoder decodeBytes: (binaryStream next: startingPosition - position)
 ]
 
 { #category : #testing }
@@ -115,8 +143,8 @@ SourceFile >> path [
 ]
 
 { #category : #accessing }
-SourceFile >> path: arg1 [
-	path := arg1
+SourceFile >> path: aPath [
+	path := aPath
 ]
 
 { #category : #accessing }

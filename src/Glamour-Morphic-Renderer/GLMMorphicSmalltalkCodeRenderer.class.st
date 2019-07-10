@@ -87,7 +87,7 @@ GLMMorphicSmalltalkCodeRenderer >> textModelFor: aPresentation [
 { #category : #rendering }
 GLMMorphicSmalltalkCodeRenderer >> textMorphForModel: aTextModel [
 	| morph  |
-	morph := GLMPluggableTextMorph new.
+	morph := RubPluggableTextMorph new.
 	morph styler workspace: aTextModel.
 	morph
 		on: aTextModel
@@ -101,7 +101,7 @@ GLMMorphicSmalltalkCodeRenderer >> textMorphForModel: aTextModel [
 		layoutFrame: (LayoutFrame identity);
 		vResizing: #spaceFill;
 		hResizing: #spaceFill;
-		color: Smalltalk ui theme backgroundColor;
+		color: self theme backgroundColor;
 		font: StandardFonts codeFont;
 		yourself.
 	^ morph

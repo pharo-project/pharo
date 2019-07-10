@@ -79,7 +79,7 @@ GTSpotterCandidatesList >> announcer [
 { #category : #accessing }
 GTSpotterCandidatesList >> candidates [
 
-	^ candidates ifNil: [ candidates := GTSpotterDoubleLinkedList new ]
+	^ candidates ifNil: [ candidates := DoubleLinkedList new ]
 ]
 
 { #category : #candidates }
@@ -290,7 +290,7 @@ GTSpotterCandidatesList >> processorLinksMap [
 { #category : #accessing }
 GTSpotterCandidatesList >> processors [
 
-	^ categories ifNil: [ categories := GTSpotterDoubleLinkedList new ].
+	^ categories ifNil: [ categories := DoubleLinkedList new ].
 ]
 
 { #category : #'adding/removing' }

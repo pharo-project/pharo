@@ -27,36 +27,60 @@ Class {
 	#name : #FTSelectionChanged,
 	#superclass : #FTAnnouncement,
 	#instVars : [
-		'oldSelectedRowIndexes',
-		'newSelectedRowIndexes'
+		'newSelectedIndexes',
+		'oldSelectedIndexes'
 	],
 	#category : #'Morphic-Widgets-FastTable-Announcement'
 }
 
 { #category : #'instance creation' }
-FTSelectionChanged class >> from: oldArray to: newArray [ 
-	^ self new 
-		oldSelectedRowIndexes: oldArray;
-		newSelectedRowIndexes: newArray;
+FTSelectionChanged class >> from: oldArray to: newArray [
+	^ self new
+		oldSelectedIndexes: oldArray;
+		newSelectedIndexes: newArray;
 		yourself
 ]
 
 { #category : #accessing }
+FTSelectionChanged >> newSelectedIndexes [
+	^ newSelectedIndexes
+]
+
+{ #category : #accessing }
+FTSelectionChanged >> newSelectedIndexes: anObject [
+	newSelectedIndexes := anObject
+]
+
+{ #category : #accessing }
 FTSelectionChanged >> newSelectedRowIndexes [
-	^ newSelectedRowIndexes
+	self deprecated: 'Use #newSelectedIndexes instead' transformWith: '`@receiver newSelectedRowIndexes' -> '`@receiver newSelectedIndexes'.
+	^ self newSelectedIndexes
 ]
 
 { #category : #accessing }
 FTSelectionChanged >> newSelectedRowIndexes: anObject [
-	newSelectedRowIndexes := anObject
+	self deprecated: 'Use #newSelectedIndexes: instead' transformWith: '`@receiver newSelectedRowIndexes: `@statements1' -> '`@receiver newSelectedIndexes: `@statements1'.
+	self newSelectedIndexes: anObject
+]
+
+{ #category : #accessing }
+FTSelectionChanged >> oldSelectedIndexes [
+	^ oldSelectedIndexes
+]
+
+{ #category : #accessing }
+FTSelectionChanged >> oldSelectedIndexes: anObject [
+	oldSelectedIndexes := anObject
 ]
 
 { #category : #accessing }
 FTSelectionChanged >> oldSelectedRowIndexes [
-	^ oldSelectedRowIndexes
+	self deprecated: 'Use #oldSelectedIndexes instead' transformWith: '`@receiver oldSelectedRowIndexes' -> '`@receiver oldSelectedIndexes'.
+	^ self oldSelectedIndexes
 ]
 
 { #category : #accessing }
 FTSelectionChanged >> oldSelectedRowIndexes: anObject [
-	oldSelectedRowIndexes := anObject
+	self deprecated: 'Use #oldSelectedIndexes: instead' transformWith: '`@receiver oldSelectedRowIndexes: `@statements1' -> '`@receiver oldSelectedIndexes: `@statements1'.
+	self oldSelectedIndexes: anObject
 ]

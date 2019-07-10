@@ -7,11 +7,6 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #accessing }
-SugsCreateInstanceVarAccessors class >> nodes [
-	^{RBInstanceVariableNode}
-]
-
 { #category : #execution }
 SugsCreateInstanceVarAccessors >> execute [
 	(NautilusRefactoring model: context) accessorsInstVarNamed: context selectedVariableName from: context selectedClass

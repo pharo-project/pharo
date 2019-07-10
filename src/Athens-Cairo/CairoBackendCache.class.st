@@ -20,7 +20,7 @@ Class {
 		'soleInstance',
 		'session'
 	],
-	#category : #'Athens-Cairo'
+	#category : #'Athens-Cairo-Caching'
 }
 
 { #category : #'session management' }
@@ -75,7 +75,7 @@ CairoBackendCache >> for: anObject at: key ifAbsentPut: aBlock [
 	^ subCache at: key ifAbsentPut: aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CairoBackendCache >> initialize [
 
 	self flush

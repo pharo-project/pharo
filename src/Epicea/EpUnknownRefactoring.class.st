@@ -29,7 +29,7 @@ EpUnknownRefactoring >> canBuildRBRefactoring [
 	^ false
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 EpUnknownRefactoring >> initializeWith: aRBRefactoring [
 	self initialize.
 	printString := aRBRefactoring printString

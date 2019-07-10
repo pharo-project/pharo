@@ -28,11 +28,6 @@ Class {
 	#category : #'NECompletion-View'
 }
 
-{ #category : #testing }
-NECController class >> allowModel: aModel [ 
-	^NECPreferences enabled and: [ aModel isCodeCompletionAllowed ]
-]
-
 { #category : #cleanup }
 NECController class >> cleanUp [
 	self reset
@@ -42,22 +37,17 @@ NECController class >> cleanUp [
 NECController class >> codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: evt [
 	"Inserts code completion if allowed in this morph"
 	
-	| editor stringHolder completionAllowed controller |
+	| editor controller |
+	self isCompletionEnabled ifFalse: [ ^aBlock value ].
+	editor := aTextMorph editor ifNil: [ ^aBlock value ].
+	editor isCompletionEnabled ifFalse: [  ^aBlock value ].
+	controller := self uniqueInstance.
+	controller setModel: editor model.
 	
-	editor := aTextMorph editor.
-	stringHolder := editor ifNotNil:[ editor model ].
-	completionAllowed := self allowModel: stringHolder.
-	completionAllowed 
-		ifTrue: [ 
-			controller := self uniqueInstance.
-			controller setModel: stringHolder.
-			(controller handleKeystrokeBefore: evt editor: editor)
-				ifTrue:  [^ self ] ].
-
+	(controller handleKeystrokeBefore: evt editor: editor) ifTrue:  [^ self ].
 	aBlock value.
-	
-	completionAllowed
-		ifTrue: [ controller handleKeystrokeAfter: evt editor: editor ]
+	controller handleKeystrokeAfter: evt editor: editor.
+
 ]
 
 { #category : #accessing }
@@ -71,20 +61,21 @@ NECController class >> contextClass: aClass [
 ]
 
 { #category : #'class initialization' }
-NECController class >> initialize [ 
+NECController class >> initialize [
+	"self initialize"
+	
 	self register
+]
+
+{ #category : #accessing }
+NECController class >> isCompletionEnabled [
+	^NECPreferences enabled
 ]
 
 { #category : #'tools registry' }
 NECController class >> register [
-	self registerToolsOn: Smalltalk tools.
-]
-
-{ #category : #'tools registry' }
-NECController class >> registerToolsOn: registry [
-	"self registerToolsOn: Smalltalk tools" 
-	registry register: self as: #codeCompletion
-
+	"just for testing: we register the subclass here to test it"
+	RubSmalltalkEditor completionEngine: TestCompletionController
 ]
 
 { #category : #'instance creation' }
@@ -154,10 +145,11 @@ NECController >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [
 { #category : #keyboard }
 NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	"I return a boolean. 
-	true when I have handled the event and no futher processing is needed by the caller."
+	true when I have handled the event and no futher processing is needed by the caller.
+	
+	This method would be cleaner if splitted."
 
 	| keyCharacter controlKeyPressed |
-	self flag: #fixme.	"this method should be split up"
 	self setEditor: anEditor.
 	self setModel: editor model.
 	keyCharacter := aKeyboardEvent keyCharacter.
@@ -207,9 +199,6 @@ NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 				ifTrue: [ 
 					menuMorph insertCommonPrefixOrSelected
 						ifTrue: [ ^ true ] ] ].
-	self flag: #todo.	"Removing for now... most of the shortcuts are broken and no time or need now to fix them"	"(keyCharacter = $h and: [ controlKeyPressed ]) ifTrue: [ 
-		menuMorph help.
-		^ true ]."
 	keyCharacter = Character backspace
 		ifTrue: [ 
 			editor isCaretBehindChar
@@ -355,7 +344,7 @@ NECController >> setEditor: anObject [
 	editor morph onAnnouncement: MorphLostFocus send: #closeMenu to: self.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NECController >> setModel: aStringHolder [ 
 	model := aStringHolder
 ]
@@ -565,8 +554,9 @@ NECController >> smartStartIndexIn: currentText for: smartCharacter  opposite: o
 
 { #category : #private }
 NECController >> stopCompletionDelay [
-	
-	completionDelay ifNotNil: [ completionDelay terminate ].
+
+    completionDelay ifNotNil: [ 
+        completionDelay isTerminating ifFalse: [ completionDelay terminate ] ]
 ]
 
 { #category : #accessing }

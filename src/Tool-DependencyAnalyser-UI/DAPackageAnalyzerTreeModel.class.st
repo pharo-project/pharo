@@ -162,8 +162,7 @@ DAPackageAnalyzerTreeModel >> actionOnSave [
 { #category : #protocol }
 DAPackageAnalyzerTreeModel >> actionWhenTextFieldChanged [
 	textPackageField
-		whenTextChanged: [ 
-			textPackageField text 
+		whenTextChangedDo: [ textPackageField text
 				ifEmpty: [ self resetFilter ]
 				ifNotEmpty: [ self filter: textPackageField text ].
 			self buildRoots ]
@@ -287,11 +286,10 @@ DAPackageAnalyzerTreeModel >> initializePresenter [
 	super initializePresenter.
 	self actionOnButtons.
 	tree
-		whenSelectedItemChanged: [ :item |
+		whenSelectedItemChangedDo: [ :item | 
 			item
 				ifNil: [ buttonBrowseCycles enabled: false ]
-				ifNotNil: [ 
-					buttonBrowseCycles enabled: true.
+				ifNotNil: [ buttonBrowseCycles enabled: true.
 					tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ].
 					self tree selectedItem selectInBrowser ] ]
 ]
@@ -299,13 +297,10 @@ DAPackageAnalyzerTreeModel >> initializePresenter [
 { #category : #initialization }
 DAPackageAnalyzerTreeModel >> initializeWidgets [
 	super initializeWidgets.
-	
 	packageLabel := self newLabel label: 'Analysis of packages'.
-	
 	textPackageField := self newTextInput
-		ghostText: 'Enter a package name';
+		placeholder: 'Enter a package name';
 		entryCompletion: self packagesEntryCompletion.
-	
 	self initializeButtons
 ]
 

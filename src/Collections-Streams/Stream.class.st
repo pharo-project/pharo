@@ -15,8 +15,11 @@ Stream class >> new [
 
 { #category : #accessing }
 Stream >> << anObject [
-	"A more readable, shorter alternative to #nextPutAll: that also
-	accepts non-Collection arguments"
+	"Write anObject to the receiver, dispatching using #putOn:
+	This is a shortcut for both nextPut: and nextPutAll: since anObject can be both
+	the element type of the receiver as well as a collection of those elements.
+	No further conversions of anObject are applied.
+	Return self to accomodate chaining."
 
  	anObject putOn: self
 ]
@@ -225,10 +228,14 @@ Stream >> upToEnd [
 	^elements
 ]
 
-{ #category : #accessing }
+{ #category : #deprecated }
 Stream >> write: anObject [
-	"Like <<, but returns the object putOn the receiver."
 
-	anObject putOn: self.
+	self
+		deprecated: 'Please use #putOn: on the argument instead'
+		transformWith: '`@receiver write: `@statements1' 
+						-> '`@statements1 putOn: `@receiver' .
+	anObject putOn: self.		
 	^ anObject.
+	
 ]

@@ -7,9 +7,7 @@ Class {
 	#instVars : [
 		'equalNotIdenticalElement',
 		'elementToCopy',
-		'identityBagNonEmptyNoDuplicate5Elements',
-		'elementAlreadyIncluded',
-		'identityBagWithoutElement'
+		'identityBagNonEmptyNoDuplicate5Elements'
 	],
 	#category : #'Collections-Tests-Unordered'
 }

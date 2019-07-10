@@ -5,7 +5,6 @@ Class {
 	#name : #StartupPreferencesHandler,
 	#superclass : #Object,
 	#instVars : [
-		'firstLink',
 		'actions'
 	],
 	#category : #StartupPreferences

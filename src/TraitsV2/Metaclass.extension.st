@@ -6,6 +6,12 @@ Metaclass >> baseLocalMethods [
 ]
 
 { #category : #'*TraitsV2' }
+Metaclass >> initializeBasicMethods [ 
+	
+	"Nothing to do in the metaclass"
+]
+
+{ #category : #'*TraitsV2' }
 Metaclass >> setTraitComposition: aTraitCompositionOrArray [
 	
 	^ self uses: aTraitCompositionOrArray slots: self slots.

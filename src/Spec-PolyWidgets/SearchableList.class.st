@@ -13,7 +13,8 @@ Class {
 	#superclass : #ComposablePresenter,
 	#instVars : [
 		'listPresenter',
-		'searchPresenter'
+		'searchPresenter',
+		'baseItems'
 	],
 	#category : #'Spec-PolyWidgets-ListAndTree'
 }
@@ -27,39 +28,28 @@ SearchableList class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
-SearchableList class >> example [
-	<sampleInstance>
-	"self example"
-
-	^ self new
-		items: #(#aaa #abc #axz #bbb #bfbg #bof #c); openWithSpec
-]
-
 { #category : #initialization }
 SearchableList >> initializePresenter [
-
-	searchPresenter whenTextChanged: [:newText || text |
-		text :=  searchPresenter getText asLowercase.
-		text isEmpty
-			ifTrue: [ listPresenter resetFilteringBlock ]
-			ifFalse: [
-				listPresenter filteringBlock: [:col | col select: [:e | e asLowercase beginsWith: searchPresenter getText asLowercase ]]]]
+	searchPresenter
+		whenTextChangedDo:
+			[ :newText |
+			searchPresenter getText asLowercase
+				ifEmpty: [ listPresenter items: baseItems ]
+				ifNotEmpty: [ :text | listPresenter items: (baseItems select: [ :element | element asLowercase beginsWith: text ]) ] ]
 ]
 
 { #category : #initialization }
 SearchableList >> initializeWidgets [
-
 	listPresenter := self newList.
 	searchPresenter := self newTextInput.
-		
-	searchPresenter 
+	searchPresenter
 		autoAccept: true;
-		ghostText: 'filter'.
+		placeholder: 'Filter'
 ]
 
 { #category : #accessing }
 SearchableList >> items: aCollection [
+	baseItems := aCollection.
 	listPresenter items: aCollection
 ]
 

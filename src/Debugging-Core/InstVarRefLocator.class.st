@@ -14,7 +14,7 @@ Class {
 	#category : #'Debugging-Core'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 InstVarRefLocator >> interpretNextInstructionUsing: aScanner [ 
 	
 	bingo := false.

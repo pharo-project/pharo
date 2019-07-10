@@ -13,7 +13,7 @@ GLMMockSimpleTransmission class >> new [
 	^super new initialize
 ]
 
-{ #category : #tests }
+{ #category : #initialization }
 GLMMockSimpleTransmission >> initialize [
 	super initialize.
 	wasTransmited := false

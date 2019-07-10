@@ -33,7 +33,7 @@ RBPragmaEnvironment >> addKeyword: aSymbol [
 	keywords add: aSymbol
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBPragmaEnvironment >> condition: aBlock [
 	condition := aBlock
 ]
@@ -86,7 +86,7 @@ RBPragmaEnvironment >> initialize [
 	condition := [ :pragma | true ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBPragmaEnvironment >> keywords: aCollection [
 	keywords addAll: aCollection
 ]

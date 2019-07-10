@@ -39,7 +39,7 @@ RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSe
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelector: newSel initializer: init [ 
 	self 
 		renameMethod: aSelector
@@ -64,15 +64,16 @@ RBAddParameterRefactoring >> checkSendersAccessTo: name [
 ]
 
 { #category : #preconditions }
-RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [ 
+RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: '`var'
-		do: 
-			[:aNode :answer | 
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: '`var'
+		do: [ :aNode :answer | 
 			| name |
 			name := aNode name.
-			(aNode whoDefines: name) isNil ifTrue: [self checkSendersAccessTo: name]].
+			(aNode whoDefines: name) isNil
+				ifTrue: [ self checkSendersAccessTo: name ] ].
 	searcher executeTree: aParseTree
 ]
 

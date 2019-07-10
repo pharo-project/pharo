@@ -69,9 +69,13 @@ Week class >> week: weekNumber [
 
 { #category : #'instance creation' }
 Week class >> year: aYear week: weekNumber [
-	"Return the ISO week for the given week number and the given year.
-	Week 1 contains the year's first Thursday (weekday = 5)"
-	^ self starting: aYear asYear firstThursday + (weekNumber * 7 - 5"adjust for firstThursday") days
+	"Return the ISO week for the given week number and the given year. ISO 8601
+	specifies that weeks start on a Monday, therefore the returned week will start
+	on a Monday no matter what Week >> startDay is set to."
+
+	"Note: we have to call starting:duration: from the superclass Timespan to make this work,
+	 because the Week class enforces weeks to start on Week >> startDay."
+	^ super starting: aYear asYear firstThursday + (weekNumber * 7 - 10) days duration: 1 week
 ]
 
 { #category : #conversion }
@@ -92,4 +96,10 @@ Week >> printOn: aStream [
 
 	aStream nextPutAll: 'a Week starting: '.
 	self start printOn: aStream. 
+]
+
+{ #category : #private }
+Week >> species [
+
+	^Timespan
 ]

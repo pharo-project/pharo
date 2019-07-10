@@ -2,7 +2,6 @@ Class {
 	#name : #GLMMorphicActionListRenderer,
 	#superclass : #GLMMorphicWidgetRenderer,
 	#instVars : [
-		'labelMorph',
 		'container'
 	],
 	#category : #'Glamour-Morphic-Renderer'

@@ -44,8 +44,7 @@ TTLCacheTests >> testRemoveStaleValues [
 	self deny: cache isEmpty.
 	1 second asDelay wait.
 	keys := cache removeStaleValues.
-	self assert: cache isEmpty.
+	self assertEmpty: cache.
 	self assert: keys asArray sorted equals: #(bar foo).
-	cache validateInvariantWith: self 
-	
+	cache validateInvariantWith: self
 ]

@@ -1,4 +1,11 @@
 "
+I am PluginBasedJPEGReadWriter.
+I am a concrete subclass of ImageReadWriter.
+
+I implement the JPEG image format.
+
+  https://en.wikipedia.org/wiki/JPEG
+
 I provide fast JPEG compression and decompression. I require the VM pluginJPEGReadWriter2Plugin, which is typically stored in same directory as the Squeak virtual machine.
 
 JPEGReadWriter2Plugin is based on LIBJPEG library. This sentence applies to the plugin:
@@ -20,13 +27,14 @@ PluginBasedJPEGReadWriter class >> primJPEGPluginIsPresent [
 ]
 
 { #category : #'image reading/writing' }
-PluginBasedJPEGReadWriter class >> putForm: aForm onFileNamed: fileName [ 
+PluginBasedJPEGReadWriter class >> putForm: aForm onFileNamed: fileName [
+	"Store (encode) the image of the Form aForm as PNG on a file of with fileName."
 
-	self 
-	putForm: aForm 
-	quality: -1 
-	progressiveJPEG: false
-	onFileNamed: fileName
+	self
+		putForm: aForm
+		quality: -1
+		progressiveJPEG: false
+		onFileNamed: fileName
 ]
 
 { #category : #'image reading/writing' }

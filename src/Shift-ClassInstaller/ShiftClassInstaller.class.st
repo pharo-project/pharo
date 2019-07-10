@@ -67,19 +67,36 @@ ShiftClassInstaller >> comment: newClass [
 	builder comment ifNotNil: [ newClass classComment: builder comment stamp: builder commentStamp ]
 ]
 
+{ #category : #building }
+ShiftClassInstaller >> copyClassSlotsFromExistingClass [
+	self builder layoutDefinition copyClassSlotsIfNeeded: oldClass class slots
+]
+
 { #category : #copying }
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
-	| newObject |
+	| newObject hiddenSlots |
 	
 	newObject := newClass isVariable
 		ifTrue: [ newClass basicNew: oldObject size ]
 		ifFalse: [ newClass basicNew ].
 
+	"first initalize all hidden slots"
+	hiddenSlots := newClass classLayout allSlots reject: [:each | each isVisible].
+	hiddenSlots do: [ :newSlot | 
+			newSlot initialize: newObject.
+			oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
+				newSlot write: (oldSlot read: oldObject) to: newObject ]  ].
+
+	"the initalize all visible slots"
 	newClass allSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
-			newSlot write: (oldSlot read: oldObject) to: newObject ] ].
+			newSlot initialize: newObject.
+		   newSlot write: (oldSlot read: oldObject) to: newObject ] ].
 
 	newClass isVariable
 		ifTrue: [ 1 to: oldObject basicSize do: [ :offset | newObject basicAt: offset put: (oldObject basicAt: offset) ] ].
+
+	"Clearing the readonly-ness in the old objects so the become is able to work"
+	oldObject setIsReadOnlyObject: false.
 
 	^ newObject
 ]
@@ -141,18 +158,15 @@ ShiftClassInstaller >> lookupOldClass [
 ]
 
 { #category : #building }
-ShiftClassInstaller >> make: aBlock [
+ShiftClassInstaller >> make [
 	| newClass |
-
-	aBlock value: builder.
 
 	self lookupOldClass.
 
 	[	
 		builder oldClass: oldClass.
+		self copyClassSlotsFromExistingClass.
 		newClass := builder build.
-
-		self validateReadOnlyInstancesOf: oldClass.
 
 		self installInEnvironment: newClass.
 
@@ -160,7 +174,7 @@ ShiftClassInstaller >> make: aBlock [
 	
 		builder builderEnhancer beforeMigratingClass: builder installer: self.
 
-		self migrateClassTo: newClass.
+		builder builderEnhancer migrateToClass: newClass installer: self.
 
 		builder builderEnhancer afterMigratingClass: builder installer: self.	
 
@@ -179,6 +193,14 @@ ShiftClassInstaller >> make: aBlock [
 	self notifyChanges.
 
 	^ newClass
+]
+
+{ #category : #building }
+ShiftClassInstaller >> make: aBlock [
+	
+	aBlock value: builder.
+
+	^self make
 ]
 
 { #category : #migrating }
@@ -200,7 +222,7 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	
 	[ 	
 		(self builder hasToMigrateInstances) 
-			ifTrue: [self migrateInstancesTo: newClass].
+			ifTrue: [ builder builderEnhancer migrateInstancesTo: newClass installer: self ].
 
 		{ oldClass. builder oldMetaclass } elementsForwardIdentityTo: { newClass. builder newMetaclass }.	
 	] valueUninterruptably.
@@ -209,11 +231,19 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 
 { #category : #migrating }
 ShiftClassInstaller >> migrateInstancesTo: newClass [
-	| oldObjects newObjects |
+	| oldObjects newObjects readOnlyOldObjectsFlags |
 	oldObjects := oldClass allInstances.
-	newObjects := oldObjects collect: [ :e | self copyObject: e to: newClass ].
+	oldObjects ifEmpty: [ ^ self ].
+	
+	readOnlyOldObjectsFlags := OrderedCollection new: oldObjects size.
 
-	oldObjects elementsForwardIdentityTo: newObjects copyHash: true
+	newObjects := oldObjects collect: [ :e | 
+		(readOnlyOldObjectsFlags add: e isReadOnlyObject).
+		self copyObject: e to: newClass ].
+
+	oldObjects elementsForwardIdentityTo: newObjects copyHash: true.
+	
+	newObjects with: readOnlyOldObjectsFlags do: [ :anObject :aFlag | anObject setIsReadOnlyObject: aFlag ] 
 ]
 
 { #category : #notifications }
@@ -261,14 +291,4 @@ ShiftClassInstaller >> remake: aClass [
 { #category : #building }
 ShiftClassInstaller >> updateBindings: aBinding of: newClass [
 	newClass methods do: [ :e | e classBinding: aBinding ]
-]
-
-{ #category : #validating }
-ShiftClassInstaller >> validateReadOnlyInstancesOf: aClass [
-	
-	builder hasToMigrateInstances ifFalse: [ ^ self ].
-	
-	(aClass allSubInstances anySatisfy: [ :anInstance | anInstance isReadOnlyObject ]) ifTrue:[
-		self error: 'There are read only instances of the class to modify. Aborting the creation of classes'
-	]
 ]

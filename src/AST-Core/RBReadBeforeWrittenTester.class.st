@@ -46,7 +46,7 @@ RBReadBeforeWrittenTester class >> variablesReadBeforeWrittenIn: aParseTree [
 		read
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBReadBeforeWrittenTester >> checkNewTemps: aBoolean [ 
 	checkNewTemps := aBoolean
 ]
@@ -84,7 +84,7 @@ RBReadBeforeWrittenTester >> initialize [
 	checkNewTemps := true
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBReadBeforeWrittenTester >> initializeVars: varNames [ 
 	varNames do: [:each | self currentScope at: each put: nil]
 ]

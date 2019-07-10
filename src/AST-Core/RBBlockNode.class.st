@@ -53,8 +53,8 @@ RBBlockNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBBlockNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitBlockNode: self
+RBBlockNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitBlockNode: self
 ]
 
 { #category : #accessing }
@@ -168,6 +168,11 @@ RBBlockNode >> hasArgumentNamed: aString [
 ]
 
 { #category : #testing }
+RBBlockNode >> hasBlockReturn [
+	^ self body lastIsReturn
+]
+
+{ #category : #testing }
 RBBlockNode >> hasTemporaryNamed: aString [	
 	^ self temporaries anySatisfy: [ :temp| temp name = aString ]
 ]
@@ -211,6 +216,11 @@ RBBlockNode >> isLast: aNode [
 	^body isLast: aNode
 ]
 
+{ #category : #testing }
+RBBlockNode >> lastIsReturn [
+	^ false
+]
+
 { #category : #'accessing-token' }
 RBBlockNode >> left [
 	^ left
@@ -229,6 +239,11 @@ RBBlockNode >> match: aNode inContext: aDictionary [
 		against: aNode arguments
 		inContext: aDictionary) 
 			and: [body match: aNode body inContext: aDictionary]
+]
+
+{ #category : #accessing }
+RBBlockNode >> methodOrBlockNode [
+	"^ self"
 ]
 
 { #category : #testing }
@@ -251,6 +266,12 @@ RBBlockNode >> precedence [
 { #category : #testing }
 RBBlockNode >> references: aVariableName [ 
 	^body references: aVariableName
+]
+
+{ #category : #'adding/removing' }
+RBBlockNode >> removeTemporaryNamed: aName [
+
+	self body removeTemporaryNamed: aName
 ]
 
 { #category : #replacing }

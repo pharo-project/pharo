@@ -72,6 +72,15 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
+{ #category : #halting }
+Halt class >> fromCount: anInteger [
+	"Always halt after a count has been reached"
+
+	<debuggerCompleteToSender>
+	^ self
+		onCountWithBehavior: [ :node | (node propertyAt: #haltCount) >= anInteger ]
+]
+
 { #category : #private }
 Halt class >> haltIfBlock: aBlock withCallingObjectFrom: haltSenderContext [
 
@@ -136,19 +145,30 @@ Halt class >> now: aString [
 ]
 
 { #category : #halting }
-Halt class >> onCount: anInteger [ 
-	"Halt on the anInteger-th time through"
-	<debuggerCompleteToSender>	
-	| callingContext node | 
+Halt class >> onCount: anInteger [
+	"Halts once when a count is reached"
+
+	<debuggerCompleteToSender>
+	^ self
+		onCountWithBehavior: [ :node | (node propertyAt: #haltCount) = anInteger ]
+]
+
+{ #category : #halting }
+Halt class >> onCountWithBehavior: behaviorBlock [
+	"Halt on the anInteger-th time through, as defined in the behavior block passed as parameter.
+	First parameter of the behaviorBlock is the AST node corresponding to the halt call."
+
+	<debuggerCompleteToSender>
+	| callingContext node |
 	"if the compiler is not loaded, we fall back on the standard halt "
-	self environment at: #OpalCompiler ifAbsent: [ ^self now ].
-	
-	callingContext := thisContext sender sender.
+	self environment at: #OpalCompiler ifAbsent: [ ^ self now ].
+	callingContext := thisContext sender sender sender.
 	node := callingContext sourceNodeExecuted.
-	(node hasProperty: #haltCount) ifFalse: [
-		node propertyAt: #haltCount put: 0].
-	 node propertyAt: #haltCount put: (node propertyAt: #haltCount) + 1.
-	((node propertyAt: #haltCount) >= anInteger) ifTrue: [ ^self signal ].
+	(node hasProperty: #haltCount)
+		ifFalse: [ node propertyAt: #haltCount put: 0 ].
+	node propertyAt: #haltCount put: (node propertyAt: #haltCount) + 1.
+	(behaviorBlock value: node)
+		ifTrue: [ ^ self signal ]
 ]
 
 { #category : #halting }
@@ -194,10 +214,25 @@ Halt class >> resetOnce [
 			sendNode removeProperty: #Once ifAbsent: [  ]]]
 ]
 
+{ #category : #private }
+Halt >> completeProcess: aProcess with: aContext [
+	^ aContext methodNode
+		pragmaNamed: #debuggerCompleteToSender
+		ifPresent: [ aProcess completeTo: aContext sender ]
+		ifAbsent: [ super completeProcess: aProcess with: aContext ]
+]
+
 { #category : #'priv handling' }
 Halt >> defaultAction [
 	"No one has handled this error, but now give them a chance to decide how to debug it.  If none handle this either then open debugger (see UnhandedError-defaultAction)"
 
 	^ UIManager default unhandledErrorDefaultAction: self
 	"^ UnhandledError signalForException: self" 
+]
+
+{ #category : #private }
+Halt >> exception [
+	"In the context management, it might happen that we get an Halt instead of an UnhandledError. The context will ask the exception. In case we have an halt, we should return self."
+
+	^ self
 ]

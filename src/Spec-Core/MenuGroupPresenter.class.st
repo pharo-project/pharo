@@ -33,14 +33,6 @@ MenuGroupPresenter class >> adapterName [
 	^ #MenuGroupAdapter
 ]
 
-{ #category : #specs }
-MenuGroupPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(MenuGroupAdapter
-		adapt: #(model))
-]
-
 { #category : #api }
 MenuGroupPresenter >> addItem: aBlock [
 	| item |
@@ -53,6 +45,7 @@ MenuGroupPresenter >> addItem: aBlock [
 { #category : #private }
 MenuGroupPresenter >> addMenuItem: aMenuItem [
 
+	aMenuItem owner: self.
 	items add: aMenuItem.
 	self autoRefresh 
 		ifNotNil: [ aMenuItem autoRefresh: self autoRefresh ]
@@ -73,8 +66,8 @@ MenuGroupPresenter >> autoRefresh: aBoolean [
 { #category : #private }
 MenuGroupPresenter >> buildWithSpecLayout: aSpecLayout [
 	"Build the widget using the spec name provided as argument"
-	| adapter widget|
-	adapter := self adapterFrom: aSpecLayout model: self.
+	| widget|
+	adapter := self basicBuildAdapterWithSpecLayout: aSpecLayout.
 	widget := adapter asWidget.
 	self announce: (WidgetBuilt model: self widget: widget).
 	^ widget
@@ -88,7 +81,9 @@ MenuGroupPresenter >> fromSpec: aSpec [
 
 { #category : #initialization }
 MenuGroupPresenter >> initialize [
+
 	super initialize.
+
 	items := OrderedCollection new asValueHolder.
 	autoRefresh := nil asValueHolder.
 	autoRefresh whenChangedDo: [ :aBoolean | self menuItems do: [ :each | each autoRefresh: aBoolean ] ]
@@ -104,4 +99,10 @@ MenuGroupPresenter >> isEmpty [
 MenuGroupPresenter >> menuItems [
 
 	^ items value
+]
+
+{ #category : #accessing }
+MenuGroupPresenter >> rootMenu [
+
+	^ self owner rootMenu
 ]

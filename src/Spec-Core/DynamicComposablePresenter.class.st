@@ -25,8 +25,7 @@ Class {
 	#name : #DynamicComposablePresenter,
 	#superclass : #ComposablePresenter,
 	#instVars : [
-		'widgets',
-		'layout'
+		'widgets'
 	],
 	#category : #'Spec-Core-Base'
 }
@@ -63,16 +62,10 @@ DynamicComposablePresenter >> initializeWidgets [
 ]
 
 { #category : #'instance creation' }
-DynamicComposablePresenter >> instantiateModels: aCollectionOfPairs [
+DynamicComposablePresenter >> instantiatePresenters: aCollectionOfPairs [
  
 	aCollectionOfPairs pairsDo: [ :k :v |
 		widgets at: k asSymbol put: (self createInstanceFor: v) ]
-]
-
-{ #category : #'instance creation' }
-DynamicComposablePresenter >> instantiatePresenters: aCollectionOfPairs [
- 
-	^ self instantiateModels: aCollectionOfPairs
 ]
 
 { #category : #accessing }
@@ -91,14 +84,25 @@ DynamicComposablePresenter >> layout: aLayout [
 DynamicComposablePresenter >> needFullRebuild: aBoolean [
 
 	self needRebuild: aBoolean.
-	self widgetsDo: [:e | e needRebuild: aBoolean ]
+	self widgetsDo: [ :w | w needRebuild: aBoolean ]
+]
+
+{ #category : #api }
+DynamicComposablePresenter >> openModalWithSpec [
+
+	self layout ifNil: [ ^ super openWithSpec ].
+	^ self application 
+		openModal: self
+		withSpecLayout: self layout
 ]
 
 { #category : #api }
 DynamicComposablePresenter >> openWithSpec [
 
 	self layout ifNil: [ ^ super openWithSpec ].
-	^ self openWithSpecLayout: self layout
+	^ self application 
+		open: self
+		withSpecLayout: self layout
 ]
 
 { #category : #api }
@@ -107,8 +111,6 @@ DynamicComposablePresenter >> retrieveSpec: aSelector [
 	self layout ifNil: [ ^ super retrieveSpec: aSelector ].
 
 	^ self layout
-		selector: aSelector;
-		yourself
 ]
 
 { #category : #accessing }

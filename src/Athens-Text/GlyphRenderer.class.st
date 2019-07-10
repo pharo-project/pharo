@@ -4,9 +4,6 @@ Renderer for font glyphs
 Class {
 	#name : #GlyphRenderer,
 	#superclass : #Object,
-	#instVars : [
-		'font'
-	],
 	#category : #'Athens-Text'
 }
 

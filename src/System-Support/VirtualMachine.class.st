@@ -74,10 +74,8 @@ VirtualMachine >> command [
 
 { #category : #accessing }
 VirtualMachine >> directory [
-	"Answer the full path name for the current virtual machine."
-
-	<primitive: 142>
-	self primitiveFailed
+	
+	^ self primVmPath asByteArray utf8Decoded
 ]
 
 { #category : #modules }
@@ -133,6 +131,17 @@ VirtualMachine >> flagInterpretedMethods: aBoolean [
 	"The Cog VM can be instructed to set the flag bit of CompiledMethods that it executes but will only interpret.  This can be used e.g. to profile startup. See CompiledMethod>>#flag & CompiledMethod>>#clearFlag. This flag persists across snapshots, stored in the image header."
 	
 	self parameterAt: 48 put: ((self parameterAt: 48) bitClear: 2) + (aBoolean ifTrue: [2] ifFalse: [0])
+]
+
+{ #category : #accessing }
+VirtualMachine >> for32bit: aBlockFor32bit for64bit: aBlockFor64bit [
+
+	"evaluates a block or returns a provided value depending on bitness of the current VM"
+
+	self is32bit ifTrue: [ ^ aBlockFor32bit value ].
+	self is64bit ifTrue: [ ^ aBlockFor64bit value ].
+
+	self error: 'Unknown VM bitness'
 ]
 
 { #category : #modules }
@@ -659,7 +668,12 @@ VirtualMachine >> path [
 	"Answer the path for the directory containing the Smalltalk virtual machine. Return the 	empty string if this primitive is not implemented."
 
 	"Smalltalk vm path"
-
+	self
+		deprecated: 'Use #directory instead'
+		on: '12 November 2018'
+		in: #Pharo7
+		transformWith: '`@receiver path' 
+						-> '`@receiver directory'.
 	^ self primVmPath
 ]
 
@@ -677,14 +691,6 @@ VirtualMachine >> platformSourceVersion [
 	<primitive: 'primitivePlatformSourceVersion'>
 	self notify: 'This virtual machine does not support the optional primitive #primitivePlatformSourceVersion' translated.
 	^''
-]
-
-{ #category : #primitives }
-VirtualMachine >> primVmDirectoryPath [
-	"Answer the full path name for the current virtual machine."
-
-	<primitive: 142>
-	self primitiveFailed
 ]
 
 { #category : #primitives }
@@ -1032,9 +1038,16 @@ VirtualMachine >> versionLabel [
 ]
 
 { #category : #accessing }
-VirtualMachine >> vmDirectory [ 
-	^ self directory
+VirtualMachine >> vmDirectory [
 
+	self
+		deprecated: 'Use #directory instead'
+		on: '12 November 2018'
+		in: #Pharo7
+		transformWith: '`@receiver vmDirectory' 
+						-> '`@receiver directory'.
+
+	^ self directory
 ]
 
 { #category : #accessing }

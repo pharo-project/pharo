@@ -6,11 +6,15 @@ Class {
 	#name : #SpecDialogWindow,
 	#superclass : #DialogWindow,
 	#instVars : [
-		'specWidget',
 		'toolbar'
 	],
 	#category : #'Spec-MorphicAdapters-Support'
 }
+
+{ #category : #actions }
+SpecDialogWindow >> addInitialPanel [
+	"Do nothing here because Spec will take care of adding the content"
+]
 
 { #category : #protocol }
 SpecDialogWindow >> cancelAction: aBlock [
@@ -25,16 +29,9 @@ SpecDialogWindow >> cancelled [
 ]
 
 { #category : #actions }
-SpecDialogWindow >> close [
-
-	super close.
-	self toolbar cancel
-]
-
-{ #category : #actions }
 SpecDialogWindow >> escapePressed [
 
-	self toolbar triggerCancelAction
+	self model triggerCancelAction
 ]
 
 { #category : #focus }
@@ -58,52 +55,16 @@ SpecDialogWindow >> initialExtent [
 						ifNil: [ super initialExtent ]]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 SpecDialogWindow >> initialize [
-
 	super initialize.
-
 	self beResizeable
-]
-
-{ #category : #accessing }
-SpecDialogWindow >> model: aModel [
-
-	super model: aModel.
-
-	aModel model focusOrder
-		addLast: toolbar.
-	toolbar focusOrder addLast: model
 ]
 
 { #category : #accessing }
 SpecDialogWindow >> newButtonRow [
 
-	^ self toolbar 
-		ifNil: [ nil ]
-		ifNotNil: [ : t | t buildWithSpec ]
-]
-
-{ #category : #accessing }
-SpecDialogWindow >> newContentMorph [
-	"Answer a new content morph."
-
-	^ self specWidget 
-			ifNil: [ nil ] 
-			ifNotNil: [:w | 
-				w
-					hResizing: #spaceFill;
-					vResizing: #spaceFill ]
-]
-
-{ #category : #actions }
-SpecDialogWindow >> newMainPanel [
-	"Answer a new main panel."
-	| panel |
-	panel := self newDialogPanel.
-	self newContentMorph ifNotNil: [:m | panel 	addMorphBack: m ].
-	self newButtonRow ifNotNil: [:m | panel 	addMorphBack: m ].
-	^ panel
+	^ self toolbar ifNotNil: [ : t | t buildWithSpec ]
 ]
 
 { #category : #protocol }
@@ -117,21 +78,9 @@ SpecDialogWindow >> setToolbarFrom: aBlock [
 	| newToolbar |
 	
 	newToolbar := aBlock value.
-	
-	toolbar := newToolbar.
-	newToolbar owner: self
-]
-
-{ #category : #accessing }
-SpecDialogWindow >> specWidget [
-
-	^ specWidget
-]
-
-{ #category : #accessing }
-SpecDialogWindow >> specWidget: anObject [
-
-	specWidget := anObject.
+	self toolbar: newToolbar.
+	self model presenter focusOrder addLast: toolbar.
+	toolbar focusOrder addLast: self model
 ]
 
 { #category : #accessing }
@@ -143,10 +92,14 @@ SpecDialogWindow >> toolbar [
 
 { #category : #accessing }
 SpecDialogWindow >> toolbar: anObject [
-
-	toolbar := anObject.
-	anObject owner: self.
+	| content |
 	
-	self removeMorph: self submorphs last.
-	self addMainPanel
+	toolbar := anObject.
+	self removeMorph: (content := self submorphs last).
+	self 
+		addMorph: (self newDialogPanel 
+			addMorphBack: content; 
+			addMorphBack: self newButtonRow; 
+			yourself) 
+		frame: (0 @ 0 corner: 1 @ 1)
 ]

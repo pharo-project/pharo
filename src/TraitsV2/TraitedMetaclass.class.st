@@ -83,7 +83,7 @@ TraitedMetaclass >> definition [
 				nextPutAll: 'uses: ';
 				print: self traitComposition ].
 		
-		(self usesSpecialSlot or: [ Slot showSlotClassDefinition ])
+		(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ])
 			ifFalse: [  
 						strm
 							crtab;
@@ -255,18 +255,6 @@ TraitedMetaclass >> localMethods [
 TraitedMetaclass >> localSelectors [
 	
 	^ localMethods keys
-]
-
-{ #category : #'initialize-release' }
-TraitedMetaclass >> obsolete [
-
-	super obsolete.
-	self canZapMethodDictionary
-		ifTrue: [
-			localMethods := self emptyMethodDictionary.
-			baseLocalMethods := self emptyMethodDictionary].
-	
-
 ]
 
 { #category : #initialization }

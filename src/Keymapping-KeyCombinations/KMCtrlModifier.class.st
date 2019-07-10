@@ -23,3 +23,8 @@ KMCtrlModifier >> initialize [
 KMCtrlModifier >> matchesEvent: aKeyboardEvent [
 	^ aKeyboardEvent controlKeyPressed
 ]
+
+{ #category : #printing }
+KMCtrlModifier >> printingPosition [
+	^3
+]

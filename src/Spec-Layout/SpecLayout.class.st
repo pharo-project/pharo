@@ -3,19 +3,17 @@ A SpecPresenter is a object used to describe a user interface
 "
 Class {
 	#name : #SpecLayout,
-	#superclass : #Object,
+	#superclass : #SpecLegacyLayout,
 	#instVars : [
 		'type',
 		'commands',
-		'selector',
-		'result',
-		'shouldCheckSplitters',
 		'currentOffset',
 		'currentProportional',
 		'numberOfProportionals',
 		'lastFractionIndex',
 		'autoFractionComputation',
-		'size'
+		'size',
+		'selector'
 	],
 	#category : #'Spec-Layout-Layouts'
 }
@@ -201,6 +199,12 @@ SpecLayout >> asArray [
 		yourself) asArray
 ]
 
+{ #category : #building }
+SpecLayout >> asSpecLayout [
+
+	^ self
+]
+
 { #category : #accessing }
 SpecLayout >> commands [
 	^ commands
@@ -244,37 +248,25 @@ SpecLayout >> computeLayoutFromTop: top bottom: bottom left: left right: right [
 ]
 
 { #category : #private }
-SpecLayout >> computeNotSplitterWidget: widget [
-	
-	self
-		setOffsetsFor: widget
-		top: widget topOffset
-		left: widget leftOffset
-		bottom: widget bottomOffset
-		right: widget rightOffset
-		borderWidth: self class windowBorderWidth.
-	
-	widget generateArguments.
-	widget asSpecElements do: [ :el | result add: el ]
+SpecLayout >> computeNonSplitterWidgetsIn: result [
+	(self commands reject: #isSplitter)
+		do: [ :widget | 
+			self
+				setOffsetsFor: widget
+				top: widget topOffset
+				left: widget leftOffset
+				bottom: widget bottomOffset
+				right: widget rightOffset
+				borderWidth: self class windowBorderWidth.
+			result addAll: widget asSpecElements ]
 ]
 
 { #category : #private }
-SpecLayout >> computeNotSplitterWidgets [
-
-	(self commands reject: [ :e | e isSplitter ]) 
-		do: [ :e | self computeNotSplitterWidget: e ]
-]
-
-{ #category : #private }
-SpecLayout >> computeSplitters [
-
-	(self commands select: [ :e | e isSplitter ])
-		do: [ :e | 
-			shouldCheckSplitters := true.
-			e generateArguments.
-			e asSpecElements do: [ :el | result add: el ] ].
-	shouldCheckSplitters
-		ifTrue: [ result add: #checkSplitters ]
+SpecLayout >> computeSplittersIn: result [
+	(self commands select: #isSplitter)
+		ifNotEmpty: [ :spliters | 
+			spliters do: [ :spliter | result addAll: spliter asSpecElements ].
+			result add: #checkSplitters ]
 ]
 
 { #category : #initialization }
@@ -286,9 +278,11 @@ SpecLayout >> initialize [
 ]
 
 { #category : #testing }
-SpecLayout >> isSpecLayout [
+SpecLayout >> isExecutable [
+	"If the spec layout is executable, the interpreter will try to execute it directly (without 
+	 interpreting it)"
 
-	^ true
+	^ false
 ]
 
 { #category : #commands }
@@ -409,19 +403,20 @@ SpecLayout >> newRow: aBlock top: top bottom: bottom [
 
 { #category : #converting }
 SpecLayout >> privateAsArray [
-
+	| result |
+	result := OrderedCollection new.
+	
 	self resetArrayComputation.
 	
-	self computeNotSplitterWidgets.
-	self computeSplitters.
+	self computeNonSplitterWidgetsIn: result.
+	self computeSplittersIn: result.
 	
 	^ result asArray
 ]
 
 { #category : #converting }
 SpecLayout >> resetArrayComputation [
-	result := OrderedCollection new.
-	shouldCheckSplitters := false
+	"Do nothing here"
 ]
 
 { #category : #accessing }
@@ -430,8 +425,8 @@ SpecLayout >> selector [
 ]
 
 { #category : #accessing }
-SpecLayout >> selector: anObject [
-	selector := anObject
+SpecLayout >> selector: aSymbol [
+	selector := aSymbol
 ]
 
 { #category : #commands }
@@ -442,11 +437,7 @@ SpecLayout >> send: aSelector [
 
 { #category : #commands }
 SpecLayout >> send: aSelector withArguments: arguments [
-
-
-	self commands add: (SpecLayoutSend
-							selector: aSelector
-							arguments: arguments).
+	self commands add: (SpecLayoutSend selector: aSelector)
 ]
 
 { #category : #initialization }

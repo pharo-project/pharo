@@ -53,14 +53,12 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'EmergencyEvaluator'.
 		spec package: 'FileSystem-Zip'.
-		spec package: 'FontInfrastructure'.
+		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
 		spec package: 'Fuel-Core'.
 		spec package: 'Fuel-Platform-Core'.
 		spec package: 'Fuel-Platform-Pharo-Core'.
 		spec package: 'Fuel-Platform-Pharo-07'.
-	
-		spec package: 'Fuel-Tools-Pharo'.
 
 		spec package: 'Fonts-Abstract'.
 
@@ -75,6 +73,8 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'Transcript-Core'.
 
+		spec package: 'Native-Browser'.
+		
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Examples'.
 		spec package: 'Morphic-Widgets-Basic'.
@@ -89,6 +89,13 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Menubar'.
 		spec package: 'Morphic-Widgets-Tree'.
 		spec package: 'Morphic-Widgets-Windows'.
+		spec package: 'Morphic-Widgets-FastTable'.
+		
+		spec package: 'Morphic-Widgets-Taskbar-Tests'.
+		
+		"Several packages depend on Rubric as a basic Morphic component"
+		spec package: 'Rubric'.
+		
 		spec package: 'Multilingual-OtherLanguages'.
 		spec package: 'Multilingual-TextConverterOtherLanguages'.
 
@@ -105,7 +112,8 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'System-Caching'.
 		spec package: 'System-History'.
 		spec package: 'System-Installers'.
-		spec package: 'System-Settings'.
+		spec package: 'System-Settings-Core'.
+		spec package: 'System-Settings-Browser'.
 		spec package: 'System-Sound'.
 		
 		spec package: 'Text-Diff'.
@@ -121,6 +129,10 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'StartupPreferences'.
 		spec package: 'System-Identification'.
+		
+		"Tool-Base extends and uses morphic, so it depends on it"
+		spec package: 'Tool-Base'.
+
 	].
 
 ]
@@ -320,10 +332,9 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	UIManager default: MorphicUIManager new.
 
 	World displayWorldSafely.
-	World assuredCanvas.
 
 	UIManager default uiProcess resume.
-	PharoLightTheme beCurrent.
+	PharoDarkTheme beCurrent.
 	(World windowsSatisfying: [:w | w model canDiscardEdits]) do: [:w | w delete].
 	self cleanUpAfterMorphicInitialization.
 
@@ -334,9 +345,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	Stdio stdout nextPutAll: 'UIManager changed:' ; nextPutAll: UIManager default class name ; lf.
 
 	TextEditor initialize.
-	SmalltalkEditor initialize.
-
-	Stdio stdout nextPutAll: 'SmalltalkEditor initialized.'; lf.
 
 	MenubarMorph initialize.	
 

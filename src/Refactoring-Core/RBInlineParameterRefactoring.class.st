@@ -76,19 +76,19 @@ RBInlineParameterRefactoring >> allExpressionsToInline [
 ]
 
 { #category : #private }
-RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [ 
+RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: '``@obj ' , (self buildSelectorString: oldSelector)
-		do: 
-			[:aNode :answer | 
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: '``@obj ' , (self buildSelectorString: oldSelector)
+		do: [ :aNode :answer | 
 			answer
 				add: (aNode arguments at: parameterIndex);
-				yourself].
-	^searcher executeTree: aTree initialAnswer: OrderedCollection new
+				yourself ].
+	^ searcher executeTree: aTree initialAnswer: OrderedCollection new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBInlineParameterRefactoring >> inlineParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self classObjectFor: aClass.

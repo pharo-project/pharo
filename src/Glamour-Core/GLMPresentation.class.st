@@ -411,7 +411,7 @@ GLMPresentation >> hasTransformation [
 	^ transformation isNotNil and: [ transformation ~= #yourself ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMPresentation >> initialize [
 	super initialize.
 	updateActions := OrderedCollection new.
@@ -428,7 +428,7 @@ GLMPresentation >> initialize: aBlock [
 	initializationBlock := aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMPresentation >> initializePresentation [
 	initializationBlock ifNotNil: [ initializationBlock value: self ]
 ]
@@ -633,14 +633,15 @@ GLMPresentation >> postCopy [
 
 { #category : #printing }
 GLMPresentation >> printOn: aStream [
+
 	super printOn: aStream.
 	aStream
 		nextPutAll: '(id=';
-		nextPutAll: self identityHash printString;
+		print: self identityHash ;
 		nextPutAll: ' title=';
-		nextPutAll: self titleValue asString;
+		print: self titleValue ;
 		nextPutAll: ' pane=';
-		nextPutAll: self pane printString;
+		print: self pane ;
 		nextPutAll: ')'
 ]
 

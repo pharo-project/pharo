@@ -22,10 +22,9 @@ AndreasSystemProfilerTest >> setUp [
 AndreasSystemProfilerTest >> testFullPrintOn [
 	| stream |
 	stream := WriteStream on: String new.
-	tally 
-		fullPrintOn: stream tallyExact: false orThreshold: 0 time: 10.
+	tally fullPrintOn: stream tallyExact: false orThreshold: 0 time: 10.
 	
-	self assert: stream contents =  '**Tree**
+	self assert: stream contents equals: '**Tree**
 
 **Leaves**
 '
@@ -35,34 +34,36 @@ AndreasSystemProfilerTest >> testFullPrintOn [
 AndreasSystemProfilerTest >> testGetNewTab [
 	| tabs |
 	
-	self assert: (tally getNewTabsFor: #()) = #().
-	self assert: (tally getNewTabsFor: #(' ')) =  #(' ').
+	self assert: (tally getNewTabsFor: #()) equals: #().
+	self assert: (tally getNewTabsFor: #(' ')) equals:  #(' ').
 	
 	tabs := OrderedCollection new.
 	tabs add: '['.
 	(tally maxTabs + 1) timesRepeat: [ tabs add: ' ' ].
-	self assert: (tally getNewTabsFor: tabs) asArray =  #('[' '[').
+	self assert: (tally getNewTabsFor: tabs) asArray equals: #('[' '[')
 ]
 
 { #category : #'tests tally' }
 AndreasSystemProfilerTest >> testPrintingTally [
 
-	self assert: tally printString =  'AndreasSystemProfilerTest>>#testPrintingTally -- 0'
+	self assert: tally printString equals: 'AndreasSystemProfilerTest>>#testPrintingTally -- 0'
 ]
 
 { #category : #'tests tally' }
 AndreasSystemProfilerTest >> testPrintingTallyUninitialized [
 	
-	self assert: QSystemTally new printString = 'nil>>nil -- nil'
+	self assert: QSystemTally new printString equals: 'nil>>nil -- nil'
 ]
 
 { #category : #'tests profiler' }
 AndreasSystemProfilerTest >> testSimple [
-	AndreasSystemProfiler new spyOn: [ 200 timesRepeat: [ 1.23 printString ] ]
+
+	AndreasSystemProfiler new spyOn: [ 200 timesRepeat: [ 1.23 printString ]]
 ]
 
 { #category : #'tests profiler' }
 AndreasSystemProfilerTest >> testSimpleReport [
+
 	AndreasSystemProfiler new report
 ]
 
@@ -80,7 +81,7 @@ AndreasSystemProfilerTest >> testTallyTreePrint [
 		orThreshold: 1.
 	
 	"Nothing is printed since there is no tab"
-	self assert: stream contents isEmpty
+	self assertEmpty: stream contents
 ]
 
 { #category : #'tests tally' }
@@ -94,9 +95,8 @@ AndreasSystemProfilerTest >> testTallyTreePrintWithTab [
 		total: 50 
 		totalTime: 100 
 		tallyExact: true 
-		orThreshold: 1.
+		orThreshold: 1.	
 	
-	
-	self assert: stream contents = ' 0 AndreasSystemProfilerTest  testPrintingTally
+	self assert: stream contents equals: ' 0 AndreasSystemProfilerTest  testPrintingTally
 '
 ]

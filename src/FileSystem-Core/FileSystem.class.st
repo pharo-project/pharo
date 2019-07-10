@@ -59,6 +59,13 @@ FileSystem >> = other [
 ]
 
 { #category : #public }
+FileSystem >> accessTimeOf: aResolvable [
+	"Returns the access date of aResolvable"
+
+	^ store accessTimeOf: (self resolve: aResolvable)
+]
+
+{ #category : #public }
 FileSystem >> binaryReadStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a read stream for reading the file."
@@ -72,6 +79,13 @@ FileSystem >> binaryWriteStreamOn: aResolvable [
 	at that path. Ask the handle to give us a binary write stream for reading the file."
 
 	^ (self open: aResolvable writable: true) binaryWriteStream.
+]
+
+{ #category : #public }
+FileSystem >> changeTimeOf: aResolvable [
+	"Returns the change time of aResolvable"
+
+	^ store changeTimeOf: (self resolve: aResolvable)
 ]
 
 { #category : #public }
@@ -92,7 +106,6 @@ FileSystem >> childNamesAt: aResolvable do: aBlock [
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
 		nodesDo: [ :entry | 
 			aBlock value: (store basenameFromEntry: entry) ]
 ]
@@ -110,7 +123,6 @@ FileSystem >> childrenAt: aResolvable do: aBlock [
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
 		nodesDo: [ :entry | 
 			aBlock value: path / (store basenameFromEntry: entry) ]
 ]
@@ -276,6 +288,13 @@ FileSystem >> delimiter [
 	^ store delimiter
 ]
 
+{ #category : #public }
+FileSystem >> deviceIdOf: aResolvable [
+	"Returns the device id of aResolvable"
+
+	^ store deviceIdOf: (self resolve: aResolvable)
+]
+
 { #category : #'public-enumerating' }
 FileSystem >> directoriesAt: aResolvable [
 	^ Array streamContents: [ :out | 
@@ -289,7 +308,6 @@ FileSystem >> directoriesAt: aResolvable do: aBlock [
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
 		directoryNodesDo: [ :entry | 
 			aBlock value: path / (store basenameFromEntry: entry) ]
 ]
@@ -307,9 +325,8 @@ FileSystem >> directoryNamesAt: aResolvable do: aBlock [
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
-		directoryNodesDo: [ :entry | 
-			aBlock value: (store basenameFromEntry: entry) ]
+		directoryNodesDo: [ :node | 
+			aBlock value: (store basenameFromEntry: node) ]
 ]
 
 { #category : #public }
@@ -330,10 +347,13 @@ FileSystem >> entriesAt: aResolvable [
 
 { #category : #'public-enumerating' }
 FileSystem >> entriesAt: aResolvable do: aBlock [
-	^ self 
-		entriesAt: aResolvable 
-		ifAbsent: [ store signalDirectoryDoesNotExist: ( self resolve: aResolvable) ]
-		do: aBlock 
+	| path entry |
+	path := self resolve: aResolvable.
+	store
+		directoryAt: path
+		nodesDo: [ :node | 
+			entry := store entryFromNode: node path: path for: self.
+			aBlock value: entry ]
 ]
 
 { #category : #'public-enumerating' }
@@ -351,12 +371,10 @@ FileSystem >> entriesAt: aResolvable ifAbsent: absentBlock do: aBlock [
 
 { #category : #public }
 FileSystem >> entryAt: aResolvable [
-	| path |
-	path := self resolve: aResolvable.
-	^ store
-		nodeAt: path
-		ifPresent: [ :node | store entryFromNode: node fileSystem: self path: path ]
-		ifAbsent: [ store signalFileDoesNotExist: path ]
+	"Answer the FileSystemDirectoryEntry for aResolvable"
+
+	^ store entryAt: (self resolve: aResolvable) fileSystem: self.
+
 ]
 
 { #category : #public }
@@ -372,6 +390,27 @@ FileSystem >> extensionDelimiter [
 	^ $.
 ]
 
+{ #category : #public }
+FileSystem >> file: aResolvable posixPermissions: anInteger [
+	"Set the mode of aResolvable to anInteger (as defined by chmod())"
+
+	^store file: (self resolve: aResolvable) posixPermissions: anInteger
+]
+
+{ #category : #public }
+FileSystem >> file: aResolvable symlinkUid: uidInteger gid: gidInteger [
+	"Set the owner and group of aResolvable by numeric id."
+
+	^store file: (self resolve: aResolvable) symlinkUid: uidInteger gid: gidInteger.
+]
+
+{ #category : #public }
+FileSystem >> file: aResolvable uid: uidInteger gid: gidInteger [
+	"Set the owner and group of aResolvable by numeric id."
+
+	^store file: (self resolve: aResolvable) uid: uidInteger gid: gidInteger.
+]
+
 { #category : #'public-enumerating' }
 FileSystem >> fileNamesAt: aResolvable [
 	^ Array streamContents: [ :out | 
@@ -385,7 +424,6 @@ FileSystem >> fileNamesAt: aResolvable do: aBlock [
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
 		fileNodesDo: [ :entry | 
 			aBlock value: (store basenameFromEntry: entry) ]
 ]
@@ -403,7 +441,6 @@ FileSystem >> filesAt: aResolvable do: aBlock [
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
 		fileNodesDo: [ :entry | 
 			aBlock value: path / (store basenameFromEntry: entry) ]
 ]
@@ -411,6 +448,13 @@ FileSystem >> filesAt: aResolvable do: aBlock [
 { #category : #printing }
 FileSystem >> forReferencePrintOn: aStream [
 	store forReferencePrintOn: aStream
+]
+
+{ #category : #public }
+FileSystem >> gidOf: aResolvable [
+	"Returns the group id of aResolvable"
+
+	^ store gidOf: (self resolve: aResolvable)
 ]
 
 { #category : #'public-testing' }
@@ -446,9 +490,23 @@ FileSystem >> hash [
 	^ store hash
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FileSystem >> initializeWithStore: aStore [
 	store := aStore
+]
+
+{ #category : #public }
+FileSystem >> inodeOf: aResolvable [
+	"Returns the inode number of aResolvable"
+
+	^ store inodeOf: (self resolve: aResolvable)
+]
+
+{ #category : #'public-testing' }
+FileSystem >> isBlock: aResolvable [
+	"Return a boolean indicating whether the File described by aPath is a block device"
+
+	^ store isBlock: (self resolve: aResolvable)
 ]
 
 { #category : #'public-testing' }
@@ -457,11 +515,33 @@ FileSystem >> isCaseSensitive [
 ]
 
 { #category : #'public-testing' }
+FileSystem >> isCharacter: aResolvable [
+	"Return a boolean indicating whether the File described by aPath is character based"
+
+	^ store isCharacter: (self resolve: aResolvable)
+]
+
+{ #category : #'public-testing' }
 FileSystem >> isDirectory: aResolvable [
 	"Resolve the argument, and answer true if the result refers
 	to a directory, false if it refers to a file or doesn't exist."
 
 	^ store isDirectory: (self resolve: aResolvable)
+]
+
+{ #category : #'public-testing' }
+FileSystem >> isExecutable: aResolvable [
+	"Resolve the argument, and answer true if the there is
+	a file or directory that can be read from."
+	
+	^ store isExecutable: (self resolve: aResolvable)
+]
+
+{ #category : #'public-testing' }
+FileSystem >> isFIFO: aResolvable [
+	"Return a boolean indicating whether the File described by aPath is FIFO"
+
+	^ store isFIFO: (self resolve: aResolvable)
 ]
 
 { #category : #'public-testing' }
@@ -477,7 +557,21 @@ FileSystem >> isReadable: aResolvable [
 	"Resolve the argument, and answer true if the there is
 	a file or directory that can be read from."
 	
-	^ (self permissions: aResolvable) isReadable
+	^ store isReadable: (self resolve: aResolvable)
+]
+
+{ #category : #'public-testing' }
+FileSystem >> isRegular: aResolvable [
+	"Return a boolean indicating whether the File described by aPath is a regular file"
+
+	^ store isRegular: (self resolve: aResolvable)
+]
+
+{ #category : #'public-testing' }
+FileSystem >> isSocket: aResolvable [
+	"Return a boolean indicating whether the File described by aPath is a regular file"
+
+	^ store isSocket: (self resolve: aResolvable)
 ]
 
 { #category : #'public-testing' }
@@ -493,20 +587,13 @@ FileSystem >> isWritable: aResolvable [
 	"Resolve the argument, and answer true if the there is
 	a file that can be written to or directory that can be changed."
 	
-	^  (self permissions: aResolvable) isWritable
+	^ store isWritable: (self resolve: aResolvable)
 ]
 
 { #category : #public }
 FileSystem >> mimeTypesAt: aResolvable [
 	"Return the possible mime types for the given path."
 	^ store mimeTypesAt: (self resolve: aResolvable)
-]
-
-{ #category : #public }
-FileSystem >> modificationTime: aResolvable [
-	"Returns the date of the last modification of aResolvable"
-
-	^ store modificationTimeOf: (self resolve: aResolvable)
 ]
 
 { #category : #public }
@@ -523,7 +610,7 @@ FileSystem >> move: sourcePath to: destination [
 	If destPath is a file, raise FileExists.
 	If destPath is a directory, move the sourcePath in to the directory"
 
-	| fullDestination |
+	| fullDestination destinationPath |
 
 	destination isFile ifTrue: [ FileExists signalWith: destination ].
 	destination isDirectory
@@ -531,14 +618,24 @@ FileSystem >> move: sourcePath to: destination [
 		ifFalse: [ fullDestination := destination ].
 	self = destination fileSystem ifTrue: 
 	[
+		destinationPath := fullDestination resolve path.
+		sourcePath = destinationPath ifTrue: [ ^fullDestination ].
 		"Ideally we would test whether the source and destination are on the same filesystem from the OSs perspective.
 		Since we can't do that, just try rename, and if that fails, copy and delete."
-		[ self rename: sourcePath to: fullDestination resolve path ]
+		[ self rename: sourcePath to: destinationPath ]
 			on: Error
 			do: [ :error | self copyAndDelete: sourcePath to: fullDestination ].
 	] ifFalse:
 		[ self copyAndDelete: sourcePath to: fullDestination ].
 	^fullDestination
+]
+
+{ #category : #'public-testing' }
+FileSystem >> numberOfHardLinks: aResolvable [
+	"Resolve the argument, and answer true if the result refers
+	to a directory, false if it refers to a file or doesn't exist."
+
+	^ store numberOfHardLinks: (self resolve: aResolvable)
 ]
 
 { #category : #public }
@@ -698,6 +795,28 @@ FileSystem >> store [
 { #category : #converting }
 FileSystem >> stringFromPath: aPath [
 	^ store stringFromPath: aPath
+]
+
+{ #category : #public }
+FileSystem >> symlinkEntryAt: aResolvable [
+	"Answer the DiskSymlinkDirectoryEntry for aResolvable"
+
+	^ store symlinkEntryAt: (self resolve: aResolvable) fileSystem: self.
+
+]
+
+{ #category : #'public-testing' }
+FileSystem >> targetPath: aResolvable [
+	"Return the target file of the File described by aPath.  For a regular file, this is itself, for a symbolic link, it is the file pointed to by the symbolic link"
+
+	^ store targetPath: (self resolve: aResolvable)
+]
+
+{ #category : #public }
+FileSystem >> uidOf: aResolvable [
+	"Returns the user id of aResolvable"
+
+	^ store uidOf: (self resolve: aResolvable)
 ]
 
 { #category : #accessing }

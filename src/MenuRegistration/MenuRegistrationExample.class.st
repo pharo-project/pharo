@@ -8,7 +8,7 @@ I'm here to show you how to use the menu registration. See class side methods an
 Class {
 	#name : #MenuRegistrationExample,
 	#superclass : #Object,
-	#category : #'MenuRegistration-example'
+	#category : #'MenuRegistration-Example'
 }
 
 { #category : #'menu declaring' }

@@ -7,7 +7,7 @@ Class {
 	#category : #'FileSystem-Tests-Disk-Base'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DiskFileSystemTest >> createFileSystem [
 	^ FileSystem store: (DiskStore activeClass createDefault)
 ]
@@ -16,7 +16,20 @@ DiskFileSystemTest >> createFileSystem [
 DiskFileSystemTest >> testDefaultWorkingDirectory [
 	| ref |
 	ref := filesystem workingDirectory.
-	self assert: (('File @ ', Smalltalk vm imagePath) beginsWith: ref asString)
+	self assert: ('File @ ' , OSPlatform current currentWorkingDirectoryPath beginsWith: ref asString)
+]
+
+{ #category : #tests }
+DiskFileSystemTest >> testEntriesHaveAttributes [
+	"Disk entries returned by FileReference>>entries should be pre-loaded with statAttributes"
+
+	| entries |
+
+	entries := FileLocator imageDirectory resolve entries.
+	"Ensure that we are actually checking entries"
+	self assert: entries isNotEmpty.
+	"We can't use the accessor method to get the statAttributes since does lazy initialisation"
+	self assert: (entries select: [ :each | (each instVarNamed: 'statAttributes') isNil ]) isEmpty.
 ]
 
 { #category : #tests }
@@ -35,6 +48,30 @@ DiskFileSystemTest >> testIsDirectory [
 DiskFileSystemTest >> testIsDiskFileSystem [
 	self assert: filesystem isDiskFileSystem.
 	
+]
+
+{ #category : #tests }
+DiskFileSystemTest >> testLongFilename [
+	"Test that long file names (in Win32 terms, i.e. < 260 characters) are working"
+
+	| dir1 dir2 file contents |
+
+	dir1 := FileLocator workingDirectory / (String new: 130 withAll: $a).
+	[ self deny: dir1 exists.
+	dir1 ensureCreateDirectory.
+
+	dir2 := dir1 / (String new: 130 withAll: $b).
+	self deny: dir2 exists.
+	dir2 ensureCreateDirectory.
+
+	file := dir2 / 'hello.txt'.
+	self deny: file exists.
+	contents := 'hello world'.
+	file writeStreamDo: [ :stream | stream << contents ].
+
+	self assert: file exists.
+	self assert: file contents equals: contents ]
+		ensure: [ dir1 ensureDeleteAll ]
 ]
 
 { #category : #tests }

@@ -40,7 +40,7 @@ RxCharSetParser >> addRangeFrom: firstChar to: lastChar [
 	elements add: (RxsRange from: firstChar to: lastChar)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxCharSetParser >> initialize: aStream [
 
 	source := aStream.

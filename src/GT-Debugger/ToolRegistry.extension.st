@@ -40,7 +40,7 @@ ToolRegistry >> registerDebugger: anObject withRank: anInteger [
 		tools at: #debuggers put: OrderedCollection new ]. 
 	(debuggers anySatisfy: [:each| each key == anObject] ) ifFalse: [ 
 		debuggers add: anObject -> anInteger ].
-	WorldState defaultWorldMenu
+	self announcer announce: (ToolRegistryToolRegistered tool: anObject name: #debuggers) 
 ]
 
 { #category : #'*GT-Debugger-Model' }

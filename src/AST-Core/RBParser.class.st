@@ -438,12 +438,15 @@ RBParser >> parseCascadeMessage [
 
 { #category : #'error handling' }
 RBParser >> parseErrorNode: aMessageString [
-	| sourceString |
-	currentToken isError 
+	| sourceString errorPosition |
+	currentToken isError
 		ifTrue: [ ^ RBParseErrorNode errorMessage: currentToken cause value: currentToken value at: currentToken start ].
-	sourceString := source copyFrom: self errorPosition to: source size.
-	^ RBParseErrorNode
-		errorMessage: aMessageString value: sourceString at: self errorPosition
+	errorPosition := self errorPosition.
+	"the error at the end means in some cases that the start of the error is before"
+	aMessageString = ''')'' expected'
+		ifTrue: [ errorPosition := source findLastOccurrenceOfString: '(' startingAt: 1 ].
+	sourceString := source copyFrom: errorPosition to: source size.
+	^ RBParseErrorNode errorMessage: aMessageString value: sourceString at: self errorPosition
 ]
 
 { #category : #accessing }
@@ -687,7 +690,7 @@ RBParser >> parsePragma [
 	self step.
 	pragma := self basicParsePragma.
 	(currentToken isBinary and: [ currentToken value == #> ]) 
-		ifFalse: [ ^ self parserError: '''>'' expected' ].
+		ifFalse: [ ^ self addPragma: (self parserError: '''>'' expected') ].
 	pragma left: start; right: currentToken start.
 	self addPragma: pragma.
 ]
@@ -699,7 +702,7 @@ RBParser >> parsePragmaLiteral [
 			[^currentToken isForByteArray 
 				ifTrue: [self parseLiteralByteArray]
 				ifFalse: [self parseLiteralArray]].
-	currentToken isLiteralToken ifFalse: [self parserError:'Literal constant expected'].
+	currentToken isLiteralToken ifFalse: [^self parserError:'Literal constant expected'].
 	^self parsePrimitiveLiteral
 ]
 
@@ -1041,7 +1044,7 @@ RBParser >> saveCommentsDuring: aBlock [
 		ensure: [ comments := comments, currentComments ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBParser >> scanner: aScanner [ 
 	scanner := aScanner.
 	pragmas := nil.
@@ -1053,11 +1056,6 @@ RBParser >> scanner: aScanner [
 { #category : #accessing }
 RBParser >> scannerClass [
 	^RBScanner
-]
-
-{ #category : #'private-classes' }
-RBParser >> selfNodeClass [
-	^ RBSelfNode
 ]
 
 { #category : #'private-classes' }
@@ -1074,16 +1072,6 @@ RBParser >> step [
 			[currentToken := nextToken.
 			nextToken := nil]
 		ifFalse: [currentToken := scanner next].
-]
-
-{ #category : #'private-classes' }
-RBParser >> superNodeClass [
-	^ RBSuperNode
-]
-
-{ #category : #'private-classes' }
-RBParser >> thisContextNodeClass [
-	^ RBThisContextNode
 ]
 
 { #category : #'private-classes' }

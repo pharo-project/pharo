@@ -959,15 +959,6 @@ MorphTreeNodeMorph >> takeHighlight [
 	container selectionChanged
 ]
 
-{ #category : #accessing }
-MorphTreeNodeMorph >> theme [
-	"Answer the ui theme that provides controls.
-	Done directly here to avoid performance hit of
-	looking up in window."
-
-	^ Smalltalk ui theme
-]
-
 { #category : #updating }
 MorphTreeNodeMorph >> themeChanged [
  
@@ -1019,7 +1010,7 @@ MorphTreeNodeMorph >> unhighlight [
 				ifTrue: [m 
 						color: (m
 								valueOfProperty: #originalColor
-								ifAbsent: [ Smalltalk ui theme textColor ])]].
+								ifAbsent: [ self theme textColor ])]].
 
 ]
 

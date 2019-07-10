@@ -44,8 +44,8 @@ RBAssignmentNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBAssignmentNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitAssignmentNode: self
+RBAssignmentNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitAssignmentNode: self
 ]
 
 { #category : #'accessing-token' }
@@ -154,6 +154,12 @@ RBAssignmentNode >> precedence [
 	^5
 ]
 
+{ #category : #'adding/removing' }
+RBAssignmentNode >> removeNode: aNode [
+
+	self replaceNode: aNode withNode: aNode receiver
+]
+
 { #category : #replacing }
 RBAssignmentNode >> replaceNode: aNode withNode: anotherNode [ 
 	value == aNode ifTrue: [self value: anotherNode].
@@ -231,7 +237,7 @@ RBAssignmentNode >> variable: varNode [
 	variable parent: self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBAssignmentNode >> variable: aVariableNode value: aValueNode position: anInteger [ 
 	self variable: aVariableNode.
 	self value: aValueNode.

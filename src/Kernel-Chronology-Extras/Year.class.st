@@ -83,9 +83,9 @@ Year >> daysInYear [
 
 { #category : #accessing }
 Year >> firstThursday [
-	"Return the years first Thursday.
-	According to the ISO 8601 definition, the first week starts with the years first Thursday (week day number 5)"
-	 ^ self start + (5 - self start dayOfWeek) days
+	"Return the year's first Thursday.
+	According to the ISO 8601 definition, the first week starts with the year's first Thursday (week day number 5)"
+	^ self start + ((5 - self start dayOfWeek + 7) rem: 7) days
 ]
 
 { #category : #changes }
@@ -102,4 +102,10 @@ Year >> printOn: aStream [
  	self start year printOn: aStream. 
 	aStream nextPutAll: ')'.
 
+]
+
+{ #category : #private }
+Year >> species [
+
+	^Timespan
 ]

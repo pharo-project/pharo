@@ -10,30 +10,6 @@ Class {
 }
 
 { #category : #visiting }
-RFSemanticAnalyzer >> analyseForLinks: aNode [
-	| generator |
-	aNode hasMetalink
-		ifFalse: [ ^ self ].
-	generator := HookGenerator node: aNode.
-
-	aNode propertyAt: #preambles put: generator preamble.
-	aNode preambles do: [:each | self visitNode: each].
-	
-	aNode hasMetalinkBefore ifTrue: [  
-		aNode propertyAt: #beforeHooks put: generator beforeHooks.
- 		aNode beforeHooks do: [:each | self visitNode: each]].
-	
-	aNode hasMetalinkAfter ifTrue: [  
-		aNode propertyAt: #afterHooks put: generator afterHooks.
-		self visitNode: aNode afterHooks].
-	
-	aNode hasMetalinkInstead ifTrue: [  
-		aNode propertyAt: #insteadHooks put: generator insteadHooks.
- 		aNode insteadHooks do: [:each | self visitNode: each]].	
-
-]
-
-{ #category : #visiting }
 RFSemanticAnalyzer >> analyseForLinks: aNode generator: aGenerator [
 
 	aNode propertyAt: #preambles put: aGenerator preamble.
@@ -43,9 +19,11 @@ RFSemanticAnalyzer >> analyseForLinks: aNode generator: aGenerator [
 		aNode propertyAt: #beforeHooks put: aGenerator beforeHooks.
  		aNode beforeHooks do: [:each | self visitNode: each]].
 	
-	aNode hasMetalinkAfter ifTrue: [  
+	aNode hasMetalinkAfter ifTrue: [    
+		aNode propertyAt: #postambles put: aGenerator postamble.
+		aNode postambles do: [:each | self visitNode: each].
 		aNode propertyAt: #afterHooks put: aGenerator afterHooks.
-		self visitNode: aNode afterHooks].
+		aNode afterHooks do: [:each | self visitNode: each]].
 	
 	aNode hasMetalinkInstead ifTrue: [  
 		aNode propertyAt: #insteadHooks put: aGenerator insteadHooks.
@@ -94,6 +72,7 @@ RFSemanticAnalyzer >> visitMethodNode: aMethodNode [
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
+	self declareVariableNode: (RBVariableNode named: #RFReifyValueVar).
 	self analyseForLinksForNodes: aMethodNode.
 	self visitNode: aMethodNode body.
 
@@ -134,7 +113,7 @@ RFSemanticAnalyzer >> visitVarWrite: aNode [
 { #category : #visiting }
 RFSemanticAnalyzer >> visitVariableNode: aVariableNode [
 	super visitVariableNode: aVariableNode.
-	self flag: #TBD. "needs to be extendend to other kinds of variables and cleaned"
+	self flag: #pharoTodo. "needs to be extendend to other kinds of variables and cleaned"
 	aVariableNode isGlobal ifTrue: [  
 		self analyseForLinksForVariables: aVariableNode ].
 	(aVariableNode isInstance) ifTrue: [  

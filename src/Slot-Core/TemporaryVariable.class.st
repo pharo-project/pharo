@@ -1,5 +1,5 @@
 "
-I model a temporary virable, similar to Slot and LiteralVariable.
+I model a temporary variable, similar to Slot and LiteralVariable.
 
 For now I am cread on need and never persisted. (this might change later
 to allow me to be annotated with properties.)
@@ -23,19 +23,10 @@ Class {
 
 { #category : #'class initialization' }
 TemporaryVariable class >> initialize [
-	Properties
-		ifNil: [ self initializeProperties ]
-		ifNotNil: [ | newDict | 
-			newDict := WeakIdentityKeyDictionary newFrom: Properties.
-			newDict rehash.
-			Properties := newDict ].
-	PersistentTemps ifNil: [ PersistentTemps := Set new]
-		
-]
-
-{ #category : #'class initialization' }
-TemporaryVariable class >> initializeProperties [
-	Properties := WeakIdentityKeyDictionary new.
+	Properties := Properties
+		ifNil: [ WeakIdentityKeyDictionary new ]
+		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash ].
+	PersistentTemps ifNil: [ PersistentTemps := Set new ]
 ]
 
 { #category : #'instance creation' }
@@ -195,7 +186,7 @@ TemporaryVariable >> startpc: anObject [
 
 { #category : #'reflecive api' }
 TemporaryVariable >> write: aValue InContext: aContext [
-	aContext tempNamed: name put: aValue
+	^aContext tempNamed: name put: aValue
 ]
 
 { #category : #'saved temps' }

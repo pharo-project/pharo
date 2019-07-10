@@ -625,7 +625,7 @@ RBBasicDummyLintRuleTest class >> modifiesCollection [
 	| detector addSearcher |
 	detector := self new.
 	detector name: 'Modifies collection while iterating over it'.
-	addSearcher := RBBasicLintRuleTest modifiesCollection.
+	addSearcher := RBBasicLintRuleTestData modifiesCollection.
 	detector methodBlock: 
 			[:context :result | 
 			addSearcher executeTree: context parseTree initialAnswer: false.
@@ -683,18 +683,26 @@ RBBasicDummyLintRuleTest class >> overridesSpecialMessage [
 ]
 
 { #category : #miscellaneous }
+RBBasicDummyLintRuleTest class >> parseTreeSearcher [
+	^ RBParseTreeSearcher new
+]
+
+{ #category : #miscellaneous }
 RBBasicDummyLintRuleTest class >> precedence [
 	| detector matcher |
 	detector := self new.
-	detector name: 'Inspect instances of "A + B * C" might be "A + (B * C)"'.
-	matcher := RBParseTreeSearcher new.
-	matcher addSearches: #('``@A + ``@B * ``@C' '``@A - ``@B * ``@C')
-				-> [:aNode :answer | answer or: [aNode receiver parentheses isEmpty]].
-	detector methodBlock: 
-			[:context :result | 
+	detector
+		name: 'Inspect instances of "A + B * C" might be "A + (B * C)"'.
+	matcher := self parseTreeSearcher.
+	matcher
+		addSearches:
+			#('``@A + ``@B * ``@C' '``@A - ``@B * ``@C')
+				-> [ :aNode :answer | answer or: [ aNode receiver parentheses isEmpty ] ].
+	detector
+		methodBlock: [ :context :result | 
 			(matcher executeTree: context parseTree initialAnswer: false)
-				ifTrue: [result addClass: context selectedClass selector: context selector]].
-	^detector
+				ifTrue: [ result addClass: context selectedClass selector: context selector ] ].
+	^ detector
 ]
 
 { #category : #accessing }
@@ -1218,7 +1226,7 @@ RBBasicDummyLintRuleTest class >> yourselfNotUsed [
 	^detector
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicDummyLintRuleTest >> anInstVar [
 	^ anInstVar
 ]
@@ -1238,12 +1246,12 @@ RBBasicDummyLintRuleTest >> checkMethod: aSmalllintContext [
 	^methodBlock value: aSmalllintContext value: result
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicDummyLintRuleTest >> classBlock [
 	^ self anInstVar + 5
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicDummyLintRuleTest >> classBlock: aBlock [
 	classBlock := aBlock testMethod1
 ]
@@ -1278,12 +1286,12 @@ RBBasicDummyLintRuleTest >> method: anObject1 with: anObject2 lots: anObject3 of
 	^ anObject5 + anObject1 > (anObject4 - anObject2 + anObject3)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicDummyLintRuleTest >> methodBlock: aBlock [
 	methodBlock := aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicDummyLintRuleTest >> newResultClass: aClass [ 
 "New one:)"
 	result := aClass new
@@ -1310,7 +1318,7 @@ RBBasicDummyLintRuleTest >> result: aResult [
 	result := aResult copyEmpty
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicDummyLintRuleTest >> resultClass: aClass [ 
 	result := aClass new
 ]

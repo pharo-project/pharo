@@ -18,12 +18,11 @@ RPackageTest >> tearDown [
 
 { #category : #tests }
 RPackageTest >> testActualClassTags [
-
 	| packageWithoutClassTags packageWithClassTags |
 	packageWithoutClassTags := RPackageOrganizer default packageOf: StartupAction.
-	self deny: packageWithoutClassTags classTags isEmpty.
-	self assert: packageWithoutClassTags actualClassTags isEmpty.
-	
+	self denyEmpty: packageWithoutClassTags classTags.
+	self assertEmpty: packageWithoutClassTags actualClassTags.
+
 	packageWithClassTags := RPackageOrganizer default packageOf: Object.
 	self assert: packageWithClassTags actualClassTags equals: packageWithClassTags classTags
 ]
@@ -243,5 +242,5 @@ RPackageTest >> testRoots [
 	| roots |
 	roots := (RPackageOrganizer default packageNamed: #'RPackage-Tests') roots.
 	roots := roots collect: [ :each | each name ].
-	#(RPackageStringExtensionTest RPackageRenameTest TestRPackagePrequisites PackageChecker RPackageTestCase RPackageWithDoTest) do: [ :each | roots includes: each ]
+	#(RPackageStringExtensionTest RPackageRenameTest TestRPackagePrequisites RPackageTestCase RPackageWithDoTest) do: [ :each | roots includes: each ]
 ]

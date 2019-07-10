@@ -316,7 +316,9 @@ GTInspector >> closeActionFor: aPresentation [
 
 { #category : #building }
 GTInspector >> compose [
+
 	self title: [:anObject | 'Inspector on ', (self printObjectAsAnItem: anObject)].
+	self titleIcon: (self iconNamed: #smallInspectIt).
 	self act: [:b | b update] icon: GLMUIThemeExtraIcons glamorousRefresh entitled: 'Update'.
 	self act: [:b | 
 		HelpBrowser open selectTopicSatisfying: [:each |

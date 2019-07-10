@@ -23,6 +23,7 @@ Class {
 		'interactive',
 		'options',
 		'environment',
+		'productionEnvironment',
 		'parserClass',
 		'semanticAnalyzerClass',
 		'astTranslatorClass',
@@ -31,7 +32,6 @@ Class {
 		'forSyntaxHighlighting',
 		'encoderClass',
 		'astTransformPlugins',
-		'usesFullBlockClosure',
 		'requestorScopeClass',
 		'bindings'
 	],
@@ -409,7 +409,7 @@ CompilationContext >> encoderClass: anObject [
 
 { #category : #accessing }
 CompilationContext >> environment [
-	^ environment ifNil: [ environment := Smalltalk globals ]
+	^ environment ifNil: [ environment := self getClass environment ]
 ]
 
 { #category : #accessing }
@@ -580,6 +580,16 @@ CompilationContext >> parserClass [
 { #category : #accessing }
 CompilationContext >> parserClass: anObject [
 	parserClass := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> productionEnvironment [
+	^productionEnvironment ifNil: [ ^self environment ]
+]
+
+{ #category : #accessing }
+CompilationContext >> productionEnvironment: aDictionary [
+	productionEnvironment := aDictionary
 ]
 
 { #category : #accessing }

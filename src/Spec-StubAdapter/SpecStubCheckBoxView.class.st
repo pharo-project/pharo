@@ -4,6 +4,6 @@ Only stub object, no real view is displayed.
 "
 Class {
 	#name : #SpecStubCheckBoxView,
-	#superclass : #SpecStubViews,
+	#superclass : #SpecStubView,
 	#category : #'Spec-StubAdapter-Views'
 }

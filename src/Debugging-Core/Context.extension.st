@@ -20,20 +20,6 @@ Context >> callPrimitive: primNumber [
 ]
 
 { #category : #'*Debugging-Core' }
-Context >> completeCallee: aContext [
-	"Simulate the execution of bytecodes until a return to the receiver."
-	| context current nextContext |
-	context := aContext.
-	[ context == current or: [ context hasSender: self ] ]
-		whileTrue: [
-			current := context.
-			nextContext := context quickStep.
-			nextContext ifNil: [ self halt ].
-			context := nextContext ].
-	^ self stepToSendOrReturn
-]
-
-{ #category : #'*Debugging-Core' }
 Context >> lookupSymbol: aSymbol [
 	| scope var |
 	scope := self sourceNodeExecuted scope.
@@ -298,8 +284,7 @@ Context >> stepToHome: aContext [
 		context := aContext insertSender: (Context
 			contextOn: UnhandledError do: [:ex |
 				error ifNil: [
-					"this is ugly but it fixes the side-effects of not sending an Unhandled error on Halt"
-					error := (ex isKindOf: Halt) ifTrue: [ ex ] ifFalse: [ ex exception ].
+					error := ex exception.
 					topContext := thisContext.
 					ex resumeUnchecked: here jump ]
 						ifNotNil: [ ex pass ]]).

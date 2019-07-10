@@ -4,6 +4,8 @@ A bottom bar to change the editing mode, switch with/without line numbers and sw
 Class {
 	#name : #RubWorkspaceBar,
 	#superclass : #RubScrolledTextSideRuler,
+	#traits : 'TRubWithWrapPolicy + TRubWithLineNumber',
+	#classTraits : 'TRubWithWrapPolicy classTrait + TRubWithLineNumber classTrait',
 	#instVars : [
 		'row',
 		'wrappingPolicyMorph',
@@ -21,24 +23,6 @@ RubWorkspaceBar class >> key [
 { #category : #accessing }
 RubWorkspaceBar >> backgroundColor [
 	^ self paragraphProvider backgroundColor darker
-]
-
-{ #category : #'managing line numbers' }
-RubWorkspaceBar >> changeLineNumbersDisplay [
-	self paragraphProvider lineNumbersRuler 
-		ifNil: [ self paragraphProvider withLineNumbers ]
-		ifNotNil: [ self paragraphProvider withoutLineNumbers ].
-	self paragraphProvider manageLayout.
-	self updateContents
-]
-
-{ #category : #'managing wrapping policy' }
-RubWorkspaceBar >> changeWrappingPolicy [
-	self paragraphProvider wrapped 
-		ifTrue: [ self paragraphProvider beNotWrapped  ]
-		ifFalse: [ self paragraphProvider beWrapped ].
-	self updateContents.
-	self paragraphProvider changed
 ]
 
 { #category : #'managing editing mode' }
@@ -69,35 +53,15 @@ RubWorkspaceBar >> editingModeLabelMorph [
 		font: self fontToUse
 ]
 
-{ #category : #accessing }
-RubWorkspaceBar >> fontToUse [
-	^ RubAbstractTextArea lineNumbersFont 
-]
-
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubWorkspaceBar >> initialize [
 	super initialize.
-	self side: #bottom.
-
+	self side: #bottom
 ]
 
 { #category : #accessing }
 RubWorkspaceBar >> level [
 	^ 1
-]
-
-{ #category : #'managing line numbers' }
-RubWorkspaceBar >> lineNumbersDisplayLabel [
-	^ self paragraphProvider lineNumbersRuler  
-		ifNil: [ '+L' ]
-		ifNotNil: [ 'L' ]
-]
-
-{ #category : #'managing line numbers' }
-RubWorkspaceBar >> lineNumbersDisplayLabelMorph [
-	^ StringMorph
-		contents: self lineNumbersDisplayLabel
-		font: self fontToUse
 ]
 
 { #category : #geometry }
@@ -176,18 +140,4 @@ RubWorkspaceBar >> updateContents [
 	editingModeMorph contents: self editingModeLabel.
 	lineNumbersDisplayMorph contents: self lineNumbersDisplayLabel.
 	row bounds: self innerBounds
-]
-
-{ #category : #'managing wrapping policy' }
-RubWorkspaceBar >> wrappingPolicyLabel [
-	^ self paragraphProvider wrapped
-				ifTrue: [ 'W' ]
-				ifFalse: [ 'NW' ]
-]
-
-{ #category : #'managing wrapping policy' }
-RubWorkspaceBar >> wrappingPolicyLabelMorph [
-	^ StringMorph
-		contents: self wrappingPolicyLabel
-		font: self fontToUse
 ]

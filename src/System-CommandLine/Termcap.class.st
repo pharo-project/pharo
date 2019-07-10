@@ -11,7 +11,7 @@ Class {
 	#category : #'System-CommandLine-Utilities'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Termcap >> flush [
 	cache removeAll
 ]
@@ -59,7 +59,7 @@ Termcap >> initialize [
 	self initializeDefaultSequences.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Termcap >> initializeDefaultSequences [
 	"Until we have decent OSProcess support we precache the most common sequences"
 	| esc |
@@ -77,7 +77,7 @@ Termcap >> initializeDefaultSequences [
 	cache at: #cr put: (esc, String cr).
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Termcap >> reset [
 	self flag: 'TODO implement once we have OSProcess'.
 	"self getent: (OSProcess thisOSProcess environmentAt: #TERM)"

@@ -10,9 +10,11 @@ Class {
 { #category : #tests }
 KMShortcutTest >> testAsString [
 	self assert: $a asShortcut asString equals: 'a'.
-	self assert: $A asShortcut asString equals: 'A'.
+	self assert: $A asShortcut asString equals: 'Shift + a'.
 	self assert: $a ctrl asString equals: 'Ctrl + a'.
-	self assert: $A ctrl asString equals: 'Ctrl + A'.
+	self assert: $A ctrl asString equals: 'Shift + Ctrl + a'.
+	self assert: $A command asString equals: 'Shift + Cmd + a'.
+	self assert: $A alt asString equals: 'Shift + Alt + a'.
 	self assert: $b command asString equals: 'Cmd + b'.
 	self assert: $c shift asString equals: 'Shift + c'.
 	self assert: $d alt asString equals: 'Alt + d'.

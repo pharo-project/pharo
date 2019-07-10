@@ -31,7 +31,7 @@ GRVariableAssignedLiteralRule >> check: aSlot of: aClass forCritiquesDo: aCritic
 
 	aClass withAllSubclassesDo: [ :class |
 		class methods do: [ :method |
-			(method writesField: aSlot index) ifTrue: [ 
+			(method writesSlot: aSlot) ifTrue: [ 
 				theMethod
 					ifNotNil: [ ^ self ]
 					ifNil: [theMethod := method ] ] ] ].
@@ -47,8 +47,8 @@ GRVariableAssignedLiteralRule >> check: aSlot of: aClass forCritiquesDo: aCritic
 
 { #category : #'running-helpers' }
 GRVariableAssignedLiteralRule >> critiqueFor: aClass about: aVarName [
-	| crit |
 
+	| crit |
 	crit := ReTrivialCritique
 		withAnchor: (ReVarSearchSourceAnchor
 			entity: aClass

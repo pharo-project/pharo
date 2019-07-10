@@ -1,6 +1,7 @@
 "
 ParseTreeRewriter walks over and transforms its RBProgramNode (tree). If the tree is modified, then answer is set to true, and the modified tree can be retrieved by the #tree method.
 
+
 Here is a little script to rewrite a self halt into self dormantHalt. 
 
 	| rewriter node |
@@ -10,7 +11,24 @@ Here is a little script to rewrite a self halt into self dormantHalt.
 	rewriter executeTree: node.
 	^ node formattedCode
 
-Note how do we get the transformed code. 
+Note how do we get the transformed code. You can access the rewritten tree as follows:
+rewriter tree.
+
+Now here is a full script showing how to compile the method back 
+
+   | rewriter ok method |
+	rewriter := RBParseTreeRewriter new.
+	rewriter replaceMethod: self searchPattern with: self targetPattern.
+	method := (BIArrayExpressionTest>>#testNoExtraSpaceAroundPeriod).
+	ok := rewriter executeTree: method parseTree.
+	ok ifFalse: [ ^ 'did not work' ].
+	Author 
+		useAuthor: 'Refactoring'
+		during: [  
+			method origin 
+				compile: rewriter tree formattedCode 
+				classified: method protocol ]
+
 
 Have a look at the users of deprecated:
 
@@ -154,8 +172,9 @@ RBParseTreeRewriter class >> variable: aVarName getter: getMethod setter: setMet
 
 { #category : #accessing }
 RBParseTreeRewriter >> executeTree: aParseTree [ 
-	"Replace the argument node based on the replace rules.
-	Return false when no transformation has been applied, and true when a transformation occured."
+	"Replace the argument node based on the replace rules. Return false when no transformation has been applied, and true when a transformation occured.
+	
+	Pay attention the method is not recompiled. Just the tree is modified. Look at class comment to see how the method can be compiled"
 	
 	"here is a little script showing a possible way to use executeTree: 
 	| rewriter node |
@@ -178,6 +197,8 @@ RBParseTreeRewriter >> executeTree: aParseTree [
 
 { #category : #private }
 RBParseTreeRewriter >> foundMatch [
+	"Set that the pattern matched is a successful"
+	
 	answer := true
 ]
 
@@ -191,12 +212,16 @@ RBParseTreeRewriter >> lookForMoreMatchesInContext: oldContext [
 
 { #category : #replacing }
 RBParseTreeRewriter >> replace: searchString with: replaceString [ 
+   "Add a new replace pattern. To get the replacement executed invoke executeTree: method."
+
 	self addRule: (RBStringReplaceRule searchFor: searchString
 				replaceWith: replaceString)
 ]
 
 { #category : #replacing }
 RBParseTreeRewriter >> replace: searchString with: replaceString when: aBlock [ 
+	"Add a new replace pattern when condition is true. To get the replacement executed invoke executeTree: method."
+	
 	self addRule: (RBStringReplaceRule 
 				searchFor: searchString
 				replaceWith: replaceString
@@ -275,12 +300,16 @@ RBParseTreeRewriter >> replaceMethod: searchString withValueFrom: replaceBlock w
 
 { #category : #replacing }
 RBParseTreeRewriter >> replaceTree: searchTree withTree: replaceTree [ 
+	"Add a replacement between a given tree and a replacement tree. To get the replacement executed invoke executeTree: method."
+	
 	self addRule: (RBStringReplaceRule searchForTree: searchTree
 				replaceWith: replaceTree)
 ]
 
 { #category : #replacing }
 RBParseTreeRewriter >> replaceTree: searchTree withTree: replaceTree when: aBlock [ 
+	"Add a replacement between a given tree and a replacement tree when a condition. To get the replacement executed invoke executeTree: method."
+	
 	self addRule: (RBStringReplaceRule 
 				searchForTree: searchTree
 				replaceWith: replaceTree
@@ -289,6 +318,8 @@ RBParseTreeRewriter >> replaceTree: searchTree withTree: replaceTree when: aBloc
 
 { #category : #accessing }
 RBParseTreeRewriter >> tree [
+	"Return the rewritten tree"
+	
 	^tree
 ]
 
@@ -334,7 +365,7 @@ RBParseTreeRewriter >> visitCascadeNode: aCascadeNode [
 						ifTrue: [newMessages addAll: newNode messages]
 						ifFalse: 
 							["Cannot replace message node inside of cascaded node with non-message node." 
-							self flag: #'Maybe we should raise a warning here and catch it in the UI layer.'.
+							self flag: #pharoFixMe. "Maybe we should raise a warning here and catch it in the UI layer."
 							newMessages add: each]]].
 	notFound size = aCascadeNode messages size 
 		ifTrue: 
@@ -378,4 +409,9 @@ RBParseTreeRewriter >> visitReturnNode: aReturnNode [
 RBParseTreeRewriter >> visitSequenceNode: aSequenceNode [
 	aSequenceNode temporaries: (self visitTemporaryNodes: aSequenceNode temporaries).
 	aSequenceNode statements: (aSequenceNode statements collect: [ :each | self visitNode: each ])
+]
+
+{ #category : #visiting }
+RBParseTreeRewriter >> visitTemporaryNodes: aNodeCollection [ 
+	^aNodeCollection collect: [:each | self visitTemporaryDeclarationNode: each]
 ]

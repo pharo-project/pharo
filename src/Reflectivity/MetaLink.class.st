@@ -40,7 +40,7 @@ Class {
 		'selector',
 		'options'
 	],
-	#category : #'Reflectivity-Links'
+	#category : #'Reflectivity-Core'
 }
 
 { #category : #options }

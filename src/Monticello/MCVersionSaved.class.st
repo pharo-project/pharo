@@ -36,7 +36,7 @@ MCVersionSaved >> hash [
 		bitXor: self repository hash
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCVersionSaved >> initializeWithVersion: aMCVersion repository: aMCRepository [
 
 	self initialize.

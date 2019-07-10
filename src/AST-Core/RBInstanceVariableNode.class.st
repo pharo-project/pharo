@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #visting }
-RBInstanceVariableNode >> acceptVisitor: aProgramNodeVisitor [ 
+RBInstanceVariableNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitInstanceVariableNode: self
 ]
 

@@ -22,11 +22,6 @@ OCVectorTempVariable >> emitValue: methodBuilder [
 	methodBuilder pushRemoteTemp: name inVector: vectorName.
 ]
 
-{ #category : #debugging }
-OCVectorTempVariable >> indexFromIR [
-	^scope methodScope node irInstruction indexForVarNamed: name
-]
-
 { #category : #testing }
 OCVectorTempVariable >> isRemote [
 	^true

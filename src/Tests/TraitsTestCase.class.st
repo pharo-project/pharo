@@ -104,7 +104,7 @@ TraitsTestCase >> createTraitNamed: aSymbol uses: aTraitComposition [
 	trait := Trait
 		named: aSymbol
 		uses: aTraitComposition
-		category: self categoryName.
+		package: self categoryName.
 	self createdClassesAndTraits add: trait.
 	^trait
 ]
@@ -191,8 +191,7 @@ TraitsTestCase >> tearDown [
 	self createdClassesAndTraits
 		do: [ :aClassOrTrait || behaviorName |
 			behaviorName := aClassOrTrait name.
-			Smalltalk globals at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem ].
-			ChangeSet current removeClassChanges: behaviorName ].
+			Smalltalk globals at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ]].
 	createdClassesAndTraits := nil.
 	SystemAnnouncer announcer: oldAnnouncer.
 	super tearDown 

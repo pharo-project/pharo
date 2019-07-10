@@ -29,7 +29,6 @@ Class {
 		'maxBalloonHelpLineLength',
 		'desktopImageLayout',
 		'menuSelectionColor',
-		'secondarySelectionColor',
 		'findReplaceSelectionColor',
 		'selectionBarColor',
 		'unfocusedSelectionColor',
@@ -241,7 +240,7 @@ ThemeSettings >> findReplaceSelectionTextColor [
 	"Answer the value of the selectionTextColor for find/replace"
 
 	^ findReplaceSelectionTextColor 
-		ifNil: [ self findReplaceSelectionColor contrastingColor ]
+		ifNil: [ self findReplaceSelectionColor contrastingBlackAndWhiteColor ]
 ]
 
 { #category : #accessing }
@@ -333,7 +332,7 @@ ThemeSettings >> menuBorderColor [
 ThemeSettings >> menuBorderWidth [
 	"Answer the value of menuColor"
 
-	^ 2 * World displayScaleFactor
+	^ 2 * self currentWorld displayScaleFactor
 ]
 
 { #category : #menu }
@@ -508,23 +507,11 @@ ThemeSettings >> scrollbarColor: anObject [
 ]
 
 { #category : #accessing }
-ThemeSettings >> secondarySelectionColor [
-	"Answer the value of selectionColor"
-
-	^ secondarySelectionColor ifNil: [secondarySelectionColor :=   (Color r: 0.351 g: 0.939 b: 0.46 alpha: 0.35)]
-]
-
-{ #category : #accessing }
-ThemeSettings >> secondarySelectionColor: anColor [
-	secondarySelectionColor := anColor
-]
-
-{ #category : #accessing }
 ThemeSettings >> secondarySelectionTextColor [
 	"Answer the value of selectionTextColor"
 
 	^ secondarySelectionTextColor 
-		ifNil: [ self secondarySelectionColor contrastingColor ]
+		ifNil: [ Smalltalk ui theme secondarySelectionColor contrastingBlackAndWhiteColor ]
 ]
 
 { #category : #accessing }

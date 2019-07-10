@@ -141,7 +141,7 @@ RBTransformation >> defaultEnvironment [
 	^ RBBrowserEnvironment new
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RBTransformation >> initialize [
 
 	preconditionChecking := false
@@ -185,6 +185,16 @@ RBTransformation >> options [
 RBTransformation >> options: aDictionary [ 
 
 	options := aDictionary
+]
+
+{ #category : #private }
+RBTransformation >> parseTreeSearcher [
+	^ RBParseTreeSearcher new
+]
+
+{ #category : #private }
+RBTransformation >> parseTreeSearcherClass [
+	^ RBParseTreeSearcher
 ]
 
 { #category : #preconditions }

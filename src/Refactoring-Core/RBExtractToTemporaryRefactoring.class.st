@@ -66,7 +66,7 @@ RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [
 	^RBAssignmentNode variable: valueNode value: aNode
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.

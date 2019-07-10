@@ -27,7 +27,7 @@ EpRenameClassRefactoring >> asRBRefactoring [
 		newName: newName
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 EpRenameClassRefactoring >> initializeFrom: anOldName to: aNewName [
 	self initialize.
 	

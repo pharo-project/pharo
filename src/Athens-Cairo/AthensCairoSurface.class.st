@@ -28,7 +28,7 @@ Class {
 		'dispatch',
 		'dispatchStruct'
 	],
-	#category : #'Athens-Cairo'
+	#category : #'Athens-Cairo-Surface'
 }
 
 { #category : #converting }
@@ -284,7 +284,7 @@ AthensCairoSurface class >> ioFindSurface: id dispatch: dispPtr handle: handlePt
 		(e.g., the surface has been found), false otherwise.
 "
 
-	self nbCall: #( bool ioFindSurface(int id, void * dispPtr, int *handlePtr) ) module: #SurfacePlugin
+	self ffiCall: #( bool ioFindSurface(int id, void * dispPtr, int *handlePtr) ) module: #SurfacePlugin
 ]
 
 { #category : #private }
@@ -296,7 +296,7 @@ AthensCairoSurface class >> ioFindSurface: id handle: handlePtr [
 		(e.g., the surface has been found), false otherwise.
 "
 
-	self nbCall: #( bool ioFindSurface(int id, 0 , int *handlePtr) ) module: #SurfacePlugin
+	self ffiCall: #( bool ioFindSurface(int id, 0 , int *handlePtr) ) module: #SurfacePlugin
 ]
 
 { #category : #private }
@@ -310,7 +310,7 @@ AthensCairoSurface class >> ioRegisterSurface: aCairoSurfaceHandle dispatch: sqS
 	otherwise.
 
 "
-	self nbCall: #(bool ioRegisterSurface(int aCairoSurfaceHandle, void *sqSurfaceDispatchPtr, void *idHolder)) module: #SurfacePlugin
+	self ffiCall: #(bool ioRegisterSurface(int aCairoSurfaceHandle, void *sqSurfaceDispatchPtr, void *idHolder)) module: #SurfacePlugin
 ]
 
 { #category : #private }
@@ -322,7 +322,7 @@ AthensCairoSurface class >> ioUnregisterSurface: aCairoSurfaceId [
 
 "
 	
-	self nbCall: #( int ioUnregisterSurface(ulong aCairoSurfaceId) ) module: #SurfacePlugin
+	self ffiCall: #( int ioUnregisterSurface(ulong aCairoSurfaceId) ) module: #SurfacePlugin
 ]
 
 { #category : #private }
@@ -596,7 +596,7 @@ AthensCairoSurface >> height [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoSurface >> initialize [
 	"the handle should be set already since we using an NB callout to create an instance"
 	handle value = 0 ifTrue: [ 
@@ -663,7 +663,7 @@ AthensCairoSurface >> privateHeight [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoSurface >> resourceData [
 	^ { handle value. id. context handle }
 ]

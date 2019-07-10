@@ -78,7 +78,7 @@ TickDialogWindow >> accept [
 { #category : #display }
 TickDialogWindow >> choose [
 
-	^ self chooseFromOwner: World
+	^ self chooseFromOwner: self currentWorld
 ]
 
 { #category : #display }

@@ -41,6 +41,13 @@ BaselineOfBasicTools >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 
+		"Load first SUnit core"
+		spec
+			baseline: 'SUnitCore' with: [
+				spec
+					loads: 'Core';
+					className: 'BaselineOfSUnit';
+					repository: repository ].
 		spec
 			baseline: 'UI' with: [spec repository: repository];
 			baseline: 'Athens' with: [ 
@@ -51,8 +58,6 @@ BaselineOfBasicTools >> baseline: spec [
 				spec
 					loads: #('UI' 'Help' 'JenkinsSupport');
 					repository: repository ].
-
-		spec package: 'Morphic-Widgets-FastTable'.
 		
 		spec package: 'Tool-ExternalBrowser'.
 		spec package: 'BlueInk-Core'. 
@@ -80,9 +85,9 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Regex-Help'.
 		spec package: 'IssueTracking'.
 		spec package: 'Monticello-OldDataStreamCompatibility'. 
-		spec package: 'MonticelloFileServices'.			
-		spec package: 'Spec-Examples'.
+		spec package: 'MonticelloFileServices'.
 		spec package: 'Spec-Help'.	
+		spec package: 'Spec2-Help'.	
 		spec package: 'Tool-Diff'.
 		spec package: 'Tool-FileList'.
 		spec package: 'Tool-Finder'.
@@ -102,7 +107,7 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	Smalltalk tools register: MCWorkingCopyBrowser as: #monticelloBrowser.
 	
 	BIConfigurableFormatter initialize.
-	
+	RBRefactoryChangeManager nuke.
 	Smalltalk garbageCollect.
 	Smalltalk cleanOutUndeclared. 
 

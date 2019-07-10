@@ -6,7 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'defaultKeymappingIndex',
-		'textArea'
+		'textArea',
+		'findReplaceService'
 	],
 	#category : #'Rubric-Editing-Core'
 }
@@ -544,9 +545,10 @@ RubTextEditor >> compareToClipboard: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #private }
-RubTextEditor >> completionAround:  aBlock keyStroke: anEvent [
-	" No code completion for simple text editor, so nothing special to do here around the block execution"
+{ #category : #'completion engine' }
+RubTextEditor >> completionAround: aBlock keyStroke: anEvent [
+	"No code completion for simple text editor, so nothing special to do here around the block execution"
+	
 	aBlock value
 ]
 
@@ -1212,7 +1214,7 @@ RubTextEditor >> findRegex [
 
 { #category : #'find-select' }
 RubTextEditor >> findReplaceService [
-	^ RubFindReplaceService default
+	^ self textArea findReplaceService
 ]
 
 { #category : #'find-select' }
@@ -1340,7 +1342,6 @@ RubTextEditor >> inOutdent: aKeyboardEvent delta: delta [
 	Derived from work by Larry Tesler back in December 1985."
 
 	| cr realStart realStop lines startLine stopLine start stop adjustStart indentation size numLines inStream newString outStream |
-	self flag: #toBeReviewed.
 	cr := Character cr.
 
 	"Operate on entire lines, but remember the real selection for re-highlighting later"
@@ -1963,8 +1964,6 @@ RubTextEditor >> saveContentsInFile [
 	"Save the receiver's contents string to a file, prompting the user for a file-name.  Suggest a reasonable file-name."
 
 	| fileName stringToSave parentWindow labelToUse suggestedName lastIndex |
-	self flag: #beurk.
-
 	stringToSave := self string. 
 	stringToSave size = 0 ifTrue: [^self inform: 'nothing to save.'].
 	parentWindow := self model dependents 
@@ -2252,24 +2251,18 @@ RubTextEditor >> setEmphasisHereFromTextForward: lookForward [
 { #category : #private }
 RubTextEditor >> setIndices: shiftPressed forward: forward [
 	"Little helper method that sets the moving and fixed indices according to some flags."
+
 	| indices |
 	indices := Dictionary new.
-	self flag: 'to be reviewed'.
-	(shiftPressed)
-		ifTrue: [
-			indices at: #moving put: self pointIndex.
-			indices at: #fixed put: self markIndex
-		] ifFalse: [
-			forward
-				ifTrue:[
-					indices at: #moving put: self stopIndex.
-					indices at: #fixed put: self startIndex.
-				] ifFalse: [
-					indices at: #moving put: self startIndex.
-					indices at: #fixed put: self stopIndex.
-				]
-		].
-	^indices
+	shiftPressed
+		ifTrue: [ indices at: #moving put: self pointIndex.
+			indices at: #fixed put: self markIndex ]
+		ifFalse: [ forward
+				ifTrue: [ indices at: #moving put: self stopIndex.
+					indices at: #fixed put: self startIndex ]
+				ifFalse: [ indices at: #moving put: self startIndex.
+					indices at: #fixed put: self stopIndex ] ].
+	^ indices
 ]
 
 { #category : #'menu messages' }
@@ -2557,15 +2550,15 @@ RubTextEditor >> zapSelectionWith: aText [
 	start := self startIndex.
 	stop := self stopIndex.
 	(aText isEmpty and: [ stop > start ])
-		ifTrue: [ 
-			"If deleting, then set emphasisHere from 1st character of the deletion"
-			self editingState emphasisHere: ((self text attributesAt: start) select: [ :att | att mayBeExtended ]) ].
-	(start = stop and: [ aText size = 0 ])
-		ifFalse: [ 
-			textArea privateReplaceFrom: start to: stop - 1 with: aText asText.
-			"We ask to editingSate directly instead to the morph "	
-			"to avoid unwanted SelectionChanged announce."	
+		ifTrue:
+			[ "If deleting, then set emphasisHere from 1st character of the deletion"
+			self editingState
+				emphasisHere: ((self text attributesAt: start) select: [ :att | att mayBeExtended ]) ].
+	(start = stop and: [ aText isEmpty ]) ifTrue: [ ^self ].
+	textArea privateReplaceFrom: start to: stop - 1 with: aText asText.
+			"We ask to editingSate directly instead to the morph "
+			"to avoid unwanted SelectionChanged announce."
 			"It will be send later while unselecting (with #unselect send)"
 			self markIndex: start pointIndex: start + aText size.
-			self editingState previousInterval: self selectionInterval ] 
+			self editingState previousInterval: self selectionInterval
 ]

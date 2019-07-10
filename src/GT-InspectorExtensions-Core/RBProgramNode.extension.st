@@ -1,6 +1,15 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*GT-InspectorExtensions-Core' }
+RBProgramNode >> gtInspectorASTDumpIn: composite [
+	<gtInspectorPresentationOrder: 50>
+	
+	^ composite pharoMethod
+		title: [ 'AST Dump' translated ];
+		display: [ (RBParser parseExpression: self dump) formattedCode ]
+]
+
+{ #category : #'*GT-InspectorExtensions-Core' }
 RBProgramNode >> gtInspectorSourceCodeIn: composite [
 	<gtInspectorPresentationOrder: 30> 
 

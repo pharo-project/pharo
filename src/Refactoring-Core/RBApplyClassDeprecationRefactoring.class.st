@@ -34,7 +34,7 @@ RBApplyClassDeprecationRefactoring class >> rename: aDeprecatedClass to: aNewNam
 	^self new className: aDeprecatedClass name newName: aNewName
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBApplyClassDeprecationRefactoring >> className: aName newName: aNewName [ 
 	className := aName asSymbol.
 	deprecatedClass := self model classNamed: className.
@@ -69,7 +69,7 @@ RBApplyClassDeprecationRefactoring >> deprecatedClass: anObject [
 	deprecatedClass := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBApplyClassDeprecationRefactoring >> initialize [
 
 	super initialize.

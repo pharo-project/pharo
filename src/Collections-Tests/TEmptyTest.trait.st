@@ -24,63 +24,50 @@ TEmptyTest >> nonEmpty [
 { #category : #'tests - fixture' }
 TEmptyTest >> test0FixtureEmptyTest [
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self empty.
-	self assert: self empty isEmpty
+	self assertEmpty: self empty
 ]
 
 { #category : #'tests - empty' }
 TEmptyTest >> testIfEmpty [
-
-	self nonEmpty ifEmpty: [ self assert: false] .
-	self empty ifEmpty: [ self assert: true] .
-	
-
-	
+	self nonEmpty ifEmpty: [ self assert: false ].
+	self empty ifEmpty: [ self assert: true ]
 ]
 
 { #category : #'tests - empty' }
 TEmptyTest >> testIfEmptyifNotEmpty [
-
-	self assert: (self empty ifEmpty: [true] ifNotEmpty: [false]).
-	self assert: (self nonEmpty ifEmpty: [false] ifNotEmpty: [true]).
-	
+	self assert: (self empty ifEmpty: [ true ] ifNotEmpty: [ false ]).
+	self assert: (self nonEmpty ifEmpty: [ false ] ifNotEmpty: [ true ])
 ]
 
 { #category : #'tests - empty' }
 TEmptyTest >> testIfNotEmpty [
-
-	self empty ifNotEmpty: [self assert: false].
-	self nonEmpty ifNotEmpty: [self assert: true].
-	self assert: (self nonEmpty ifNotEmpty: [:s | s ]) = self nonEmpty
-	
+	self empty ifNotEmpty: [ self assert: false ].
+	self nonEmpty ifNotEmpty: [ self assert: true ].
+	self assert: (self nonEmpty ifNotEmpty: [ :s | s ]) = self nonEmpty
 ]
 
 { #category : #'tests - empty' }
 TEmptyTest >> testIfNotEmptyifEmpty [
-
-	self assert: (self empty ifNotEmpty: [false] ifEmpty: [true]).
-	self assert: (self nonEmpty ifNotEmpty: [true] ifEmpty: [false]).
-	
+	self assert: (self empty ifNotEmpty: [ false ] ifEmpty: [ true ]).
+	self assert: (self nonEmpty ifNotEmpty: [ true ] ifEmpty: [ false ])
 ]
 
 { #category : #'tests - empty' }
 TEmptyTest >> testIsEmpty [
-
-	self assert: (self empty isEmpty).
-	self deny: (self nonEmpty isEmpty).
+	self assert: self empty isEmpty.
+	self deny: self nonEmpty isEmpty
 ]
 
 { #category : #'tests - empty' }
 TEmptyTest >> testIsEmptyOrNil [
-
-	self assert: (self empty isEmptyOrNil).
-	self deny: (self nonEmpty isEmptyOrNil).
+	self assert: self empty isEmptyOrNil.
+	self deny: self nonEmpty isEmptyOrNil
 ]
 
 { #category : #'tests - empty' }
 TEmptyTest >> testNotEmpty [
-
-	self assert: (self nonEmpty  notEmpty).
-	self deny: (self empty notEmpty).
+	self assert: self nonEmpty notEmpty.
+	self deny: self empty notEmpty
 ]

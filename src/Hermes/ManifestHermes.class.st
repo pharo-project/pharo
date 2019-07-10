@@ -14,7 +14,7 @@ To Export code check the comments in the Hermes-Exporter package.
 Class {
 	#name : #ManifestHermes,
 	#superclass : #PackageManifest,
-	#category : #Hermes
+	#category : #'Hermes-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }

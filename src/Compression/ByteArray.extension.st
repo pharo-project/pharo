@@ -17,21 +17,3 @@ ByteArray >> lastIndexOfPKSignature: aSignature [
 	].
 	^0
 ]
-
-{ #category : #'*Compression' }
-ByteArray >> unzipped [
-	"Decompress the receiver using GZip and return the resulting byte array.
-	This will fail when the receiver does not contain GZip compressed data."
-	
-	^ (GZipReadStream on: self) upToEnd
-]
-
-{ #category : #'*Compression' }
-ByteArray >> zipped [
-	"Compress the receiver using GZip and return the resulting byte array"
-	
-	^ self class streamContents: [ :out |
-		(GZipWriteStream on: out) 
-			nextPutAll: self; 
-			close ]
-]

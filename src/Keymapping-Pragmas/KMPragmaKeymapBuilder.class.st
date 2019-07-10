@@ -40,7 +40,8 @@ KMPragmaKeymapBuilder class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
 	SystemAnnouncer uniqueInstance 
 		unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak subscribe: MethodAdded, MethodModified, MethodRemoved 
+	SystemAnnouncer uniqueInstance weak 
+		when: MethodAdded, MethodModified, MethodRemoved 
 		send: #event: 
 		to: self.
 ]
@@ -140,7 +141,7 @@ KMPragmaKeymapBuilder >> pragmaKeywords [
 	^  self class pragmas
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KMPragmaKeymapBuilder >> release [
 	self pragmaCollector unsubscribe: self.
 	self pragmaCollector announcer initialize. "Hack because the announcer is not garbage collected."
@@ -151,7 +152,7 @@ KMPragmaKeymapBuilder >> release [
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KMPragmaKeymapBuilder >> reset [
 	pragmaCollector := nil.
 	"KeymapManager default: KeymapManager new."

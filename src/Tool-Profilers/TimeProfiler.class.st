@@ -300,13 +300,13 @@ TimeProfiler >> menu: menu shifted: b [
 
 { #category : #'UI specific' }
 TimeProfiler >> minPercentageToExpand [
-	^ minPercentageToExpand ifNil: [minPercentageToExpand := 3]
+	^ minPercentageToExpand ifNil: [minPercentageToExpand := 3.0]
 ]
 
 { #category : #'UI specific' }
 TimeProfiler >> minPercentageToExpand: aPercentage [
 	minPercentageToExpand := aPercentage.
-	self changed: #minPercentageToExpand.
+	self changed: #minPercentageToExpand
 
 ]
 
@@ -342,6 +342,7 @@ TimeProfiler >> open [
 		getText: #selectedMethodCode
 		setText: #selectedMethodCode:notifying:
 		getEnabled: nil.
+
 	codePane getMenuSelector: #codePaneMenu:shifted:.
 	codePane font: StandardFonts codeFont.
 	self withToolBar
@@ -668,10 +669,10 @@ TimeProfiler >> threshold [
 
 { #category : #accessing }
 TimeProfiler >> threshold: aTreshold [
-	(aTreshold ~= threshold and: [aTreshold between: 0 and: 1000])
-		ifTrue: [
-			threshold := aTreshold.
-			self updateList].
+	(aTreshold ~= threshold and: [ aTreshold between: 0 and: 1000 ])
+		ifFalse: [ ^ self ].
+	threshold := aTreshold.
+	self updateList.
 	self changed: #threshold
 ]
 
@@ -687,7 +688,7 @@ TimeProfiler >> toolBarOn: aWindow [
 	toolBar := toolBar := aWindow
 		newToolbar:
 			{((uiTheme
-				newButtonIn: World
+				newButtonIn: self currentWorld
 				for: self
 				getState: nil
 				action: #profileIt
@@ -697,7 +698,7 @@ TimeProfiler >> toolBarOn: aWindow [
 				help: nil)
 				label:
 					(uiTheme
-						newRowIn: World
+						newRowIn: self currentWorld
 						for:
 							{(AlphaImageMorph new
 								image: (self iconNamed: #smallDoItIcon)).
@@ -738,7 +739,7 @@ TimeProfiler >> toolBarOn: aWindow [
 			aWindow newToolSpacer.
 			aWindow newToolSpacer.
 			(uiTheme
-				newCheckboxIn: World
+				newCheckboxIn: self currentWorld
 				for: self
 				getSelected: #reportOtherProcesses
 				setSelected: #reportOtherProcesses:

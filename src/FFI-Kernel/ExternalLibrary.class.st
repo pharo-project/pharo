@@ -18,7 +18,7 @@ ExternalLibrary class >> moduleName [
 	^nil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ExternalLibrary >> forceLoading [
 	"Primitive. Force loading the given library.
 	The primitive will fail if the library is not available
@@ -32,7 +32,7 @@ ExternalLibrary >> handle [
 	^handle
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ExternalLibrary >> initialize [
 	"Initialize the receiver"
 	name := self class moduleName.

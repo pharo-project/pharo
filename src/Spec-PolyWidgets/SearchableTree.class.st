@@ -28,13 +28,6 @@ SearchableTree class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #examples }
-SearchableTree class >> example [
-	<sampleInstance>
-	^ self new
-		openWithSpec
-]
-
 { #category : #specs }
 SearchableTree class >> searchAtBottom [
 	<spec: #default>
@@ -145,43 +138,37 @@ SearchableTree >> initialize [
 
 { #category : #initialization }
 SearchableTree >> initializePresenter [
-
-	inputField whenTextChanged: [ :text | self updateRootFor: text ].
-		
-	tree whenTreeUpdated: [ inputField text: '' ].
+	inputField whenTextChangedDo: [ :text | self updateRootFor: text ].
+	tree whenTreeUpdatedDo: [ inputField text: '' ]
 ]
 
 { #category : #initialization }
 SearchableTree >> initializeWidgets [
-
 	tree := self newTree.
 	inputField := self newTextInput.
 	label := self newLabel.
 	button := self newButton.
-			
-	tree rootNodeHolder: [ :item | 
-		(tree defaultNodeFor: item)
-			matchTokenFilterBlock: [ :aFilter |
-				aFilter token
-					ifEmpty: [ true ]
-					ifNotEmpty: [ item asString asLowercase includesSubstring: aFilter token asLowercase ] ];
-			yourself ].
-			
-	button 
+	tree
+		rootNodeHolder: [ :item | 
+			(tree defaultNodeFor: item)
+				matchTokenFilterBlock: [ :aFilter | 
+					aFilter token
+						ifEmpty: [ true ]
+						ifNotEmpty: [ item asString asLowercase
+								includesSubstring: aFilter token asLowercase ] ];
+				yourself ].
+	button
 		label: '';
 		icon: (self iconNamed: #smallFindIcon);
 		state: false;
 		action: [ inputField accept ].
-			
-	label 
+	label
 		label: 'Search:';
-		color:Color black.
-	
+		color: Color black.
 	inputField
-		ghostText: 'Search';
+		placeholder: 'Search';
 		entryCompletion: nil;
 		acceptOnCR: true.
-		
 	self focusOrder
 		add: tree;
 		add: inputField

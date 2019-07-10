@@ -46,50 +46,54 @@ RBReplaceSubtreeTransformation class >> replace: oldSourceCode to: newSourceCode
 
 { #category : #preconditions }
 RBReplaceSubtreeTransformation >> preconditions [
-
-	^ ((RBCondition definesSelector: selector in: self definingClass)
-		& (RBCondition withBlock: [ 
-			| tree |
-			tree := RBParser
+	^ (RBCondition definesSelector: selector in: self definingClass)
+		&
+			(RBCondition
+				withBlock: [ | tree |
+					tree := self parserClass
 						parseExpression: oldSourceCode
-						onError: [ :string :pos | 
-							self refactoringError: 'Invalid source to extract - ', string ].
-			tree ifNil: [self refactoringError: 'Invalid source to extract - ', oldSourceCode ].
-			(tree isSequence and: [tree statements isEmpty]) 
-				ifTrue: [self refactoringError: 'Selected code to extract is empty' ].
-				
-			tree := ((self definingClass parseTreeFor: selector) extractSubtreeWith: oldSourceCode)
-				ifNil: [ self refactoringError: 'Could not extract code from method ', selector ]. 
-			true ]))
-		& (RBCondition withBlock: [
-				RBParser
-				parseExpression: newSourceCode
-				onError: [ :string :pos | 
-					self refactoringError: 'Invalid source to add - ', string ]. true ])
+						onError:
+							[ :string :pos | self refactoringError: 'Invalid source to extract - ' , string ].
+					tree
+						ifNil: [ self
+								refactoringError: 'Invalid source to extract - ' , oldSourceCode ].
+					(tree isSequence and: [ tree statements isEmpty ])
+						ifTrue: [ self refactoringError: 'Selected code to extract is empty' ].
+					tree := ((self definingClass parseTreeFor: selector)
+						extractSubtreeWith: oldSourceCode)
+						ifNil: [ self
+								refactoringError: 'Could not extract code from method ' , selector ].
+					true ])
+		&
+			(RBCondition
+				withBlock: [ self parserClass
+						parseExpression: newSourceCode
+						onError:
+							[ :string :pos | self refactoringError: 'Invalid source to add - ' , string ].
+					true ])
 ]
 
 { #category : #executing }
 RBReplaceSubtreeTransformation >> privateTransform [
-
 	| tree oldTree newTree |
 	tree := self definingClass parseTreeFor: selector.
 	tree ifNil: [ ^ self ].
-
 	oldTree := tree extractSubtreeWith: oldSourceCode.
 	oldTree ifNil: [ ^ self ].
-	
-	newTree := RBParser parseExpression: newSourceCode onError: [ :string :pos | ^ nil ].
+	newTree := self parserClass
+		parseExpression: newSourceCode
+		onError: [ :string :pos | ^ nil ].
 	newTree ifNil: [ ^ self ].
-		
-	tree := oldTree isSequence 
-		ifTrue: [ RBParseTreeRewriter 
+	tree := oldTree isSequence
+		ifTrue: [ RBParseTreeRewriter
 				replaceStatements: oldTree formattedCode
-	 			with: newSourceCode in: tree ]
-		ifFalse: [ RBParseTreeRewriter 
-					replace: oldTree formattedCode
-					with: newSourceCode in: tree
-					onInterval: tree sourceInterval ].
-
+				with: newSourceCode
+				in: tree ]
+		ifFalse: [ RBParseTreeRewriter
+				replace: oldTree formattedCode
+				with: newSourceCode
+				in: tree
+				onInterval: tree sourceInterval ].
 	self definingClass compileTree: tree
 ]
 

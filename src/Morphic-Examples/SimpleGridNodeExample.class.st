@@ -21,7 +21,7 @@ SimpleGridNodeExample >> age: anInteger [
 { #category : #'accessing - morphs' }
 SimpleGridNodeExample >> ageMorph [
 	^ ( self theme  
-				newTextEntryIn: World
+				newTextEntryIn: self currentWorld
 				for: self 
 				get: #age
 				set: #age:
@@ -44,7 +44,7 @@ SimpleGridNodeExample >> firstName: aString [
 { #category : #'accessing - morphs' }
 SimpleGridNodeExample >> firstNameMorph [
 	^ ( self theme  
-				newTextEntryIn: World
+				newTextEntryIn: self currentWorld
 				for: self 
 				get: #firstName
 				set: #firstName:
@@ -67,7 +67,7 @@ SimpleGridNodeExample >> married: aBoolean [
 { #category : #'accessing - morphs' }
 SimpleGridNodeExample >> marriedMorph [
 	^ ( self theme  
-			newCheckboxIn: World
+			newCheckboxIn: self currentWorld
 			for: self 
 			getSelected: #married
 			setSelected: #married:
@@ -90,7 +90,7 @@ SimpleGridNodeExample >> secondName: aString [
 { #category : #'accessing - morphs' }
 SimpleGridNodeExample >> secondNameMorph [
 	^ ( self theme  
-				newTextEntryIn: World
+				newTextEntryIn: self currentWorld
 				for: self 
 				get: #secondName
 				set: #secondName:

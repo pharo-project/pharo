@@ -5,9 +5,7 @@ Class {
 	#name : #StubFixedFont,
 	#superclass : #AbstractFont,
 	#instVars : [
-		'baseFont',
-		'substitutionCharacter',
-		'displaySelector'
+		'baseFont'
 	],
 	#category : #'Fonts-Abstract'
 }

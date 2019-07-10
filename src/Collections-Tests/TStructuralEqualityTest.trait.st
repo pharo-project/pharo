@@ -22,8 +22,8 @@ TStructuralEqualityTest >> nonEmpty [
 TStructuralEqualityTest >> test0TStructuralEqualityTest [
 	self empty.
 	self nonEmpty.
-	self assert: self empty isEmpty.
-	self deny: self nonEmpty isEmpty
+	self assertEmpty: self empty.
+	self denyEmpty: self nonEmpty
 ]
 
 { #category : #'tests - equality' }

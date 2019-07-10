@@ -168,6 +168,14 @@ CompiledMethodTest >> testBytecode [
 ]
 
 { #category : #'tests - accessing' }
+CompiledMethodTest >> testComments [
+	self
+		assert: (CompiledMethod >> #comments) comments first
+		equals: 'Answer a string representing the comments in the method. Return an empty collection if the method''s source code does not contain a comment.'.
+	self assert: (CompiledMethod >> #compiledMethod) comments isEmpty
+]
+
+{ #category : #'tests - accessing' }
 CompiledMethodTest >> testComparison [
 	| method1 method2 |
 	method1 := Float class >> #nan.
@@ -189,31 +197,6 @@ CompiledMethodTest >> testComparison [
 CompiledMethodTest >> testCompiledMethodAsString [
 
 	thisContext method asString
-]
-
-{ #category : #'as yet unclassified' }
-CompiledMethodTest >> testContainsHalt [
-	
-	| annonClass |
-	
-	self 
-	deny: (Object >> #halt) containsHalt;
-	deny: (Object >> #haltIfNil) containsHalt;
-	deny: (Halt class >> #once) containsHalt;
-	assert: (UndefinedObjectTest >> #testIfNil) containsHalt.
-	
-	annonClass := Object newAnonymousSubclass.
-	annonClass 
-	compile: 'm1 self halt';
-	compile: 'm2 self haltIfNil';
-	compile: 'm3 self yourself'.
-	
-	self
-	assert: (annonClass >> #m1) containsHalt;
-	assert: (annonClass >> #m2) containsHalt;
-	deny: (annonClass >> #m3) containsHalt.
-	
-	
 ]
 
 { #category : #tests }
@@ -342,7 +325,7 @@ CompiledMethodTest >> testIsInstalled [
 	method := (self class)>>#returnTrue.
 	self assert: method isInstalled.
 
-	"now make an orphaned method by just deleting the class."
+	
 
 	Smalltalk removeClassNamed: #TUTU.
 
@@ -353,9 +336,12 @@ CompiledMethodTest >> testIsInstalled [
 		category: self categoryNameForTemporaryClasses.
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
-	Smalltalk removeClassNamed: #TUTU.
 
+	"now make an orphaned method by just deleting the method."
+	cls removeSelector: #foo.
+	
 	self deny: method isInstalled. 
+	Smalltalk removeClassNamed: #TUTU.
 ]
 
 { #category : #'tests - testing' }
@@ -376,9 +362,9 @@ CompiledMethodTest >> testLiterals [
 	"#literals should not expose implementation hack that the last two literals are 
 	used for name of method and class"
 
-	self assert: (Object >> #yourself) literals isEmpty.
+	self assertEmpty: (Object >> #yourself) literals.
 	self assert: (Object >> #yourself) allLiterals size equals: 2.
-	self deny: ((Object >> #yourself) hasLiteral: #yourself).
+	self deny: (Object >> #yourself hasLiteral: #yourself)
 ]
 
 { #category : #'as yet unclassified' }

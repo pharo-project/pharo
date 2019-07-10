@@ -110,31 +110,20 @@ PharoDarkTheme >> buttonNormalFillStyleFor: aButton [
 	
 	(aButton valueOfProperty: #noFill ifAbsent: [false]) 
 		ifTrue: [ ^ SolidFillStyle color: Color transparent ].
-		
-	^ SolidFillStyle color: self buttonColor.
+	^ SolidFillStyle color: self buttonColor
 ]
 
 { #category : #'fill-styles-buttons' }
 PharoDarkTheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 	
-	^ SolidFillStyle color: self selectionColor.
-	"| top bottom |
+	^ SolidFillStyle color: self selectionColor
 	
-	top := self secondarySelectionColor.
-	bottom := self selectionColor.
-
-	^(GradientFillStyle ramp: {
-			0.0->top.
-			0.7->bottom.})
-		origin: aButton bounds origin;
-		direction: 0 @ aButton height;
-		radial: false"
 ]
 
 { #category : #'accessing colors' }
 PharoDarkTheme >> caretColor [
-	^ Color lightBlue.
+	^ Color lightBlue
 ]
 
 { #category : #'accessing colors' }
@@ -160,7 +149,7 @@ PharoDarkTheme >> configurePluggableTextMorph: textMorph [
 
 { #category : #configure }
 PharoDarkTheme >> configureScrollPane: aMorph [ 
-	"aMorph color: self backgroundColor"
+	
 ]
 
 { #category : #configure }
@@ -171,22 +160,17 @@ PharoDarkTheme >> configureSystemWindow: aWindow [
 { #category : #configure }
 PharoDarkTheme >> configureTextMorph: textMorph [ 
 	textMorph 
-		"backgroundColor: self backgroundColor;"
-		color: self textColor.
+		color: self textColor
 ]
 
 { #category : #'border-styles' }
 PharoDarkTheme >> configureWindowBorderFor: aWindow [
-"	super configureWindowBorderFor: aWindow.
-	aWindow roundedCorners: #()"
+
 	| aStyle |
-	
-	aStyle := 
-		SimpleBorder new 
-			color: self borderColor;
-			width: 1.
-			
-	aWindow borderStyle: aStyle.
+	aStyle := SimpleBorder new 
+					color: self borderColor;
+					width: 1.
+	aWindow borderStyle: aStyle
 ]
 
 { #category : #'fill-styles-buttons' }
@@ -209,30 +193,34 @@ PharoDarkTheme >> dangerTextColor [
 { #category : #'fill-styles' }
 PharoDarkTheme >> desktopColor [
 
-	^Color darkGray darker
+	^ Color darkGray darker
 ]
 
 { #category : #'basic-colors-diffs' }
 PharoDarkTheme >> diffAdditionalLineBackgroundColor [
 	"Answer the color used to highlight additional text lines in a diff view."
+	
 	^ Color r: 0.0 g: 0.76 b: 0.0 alpha: 0.2
 ]
 
 { #category : #'basic-colors-diffs' }
 PharoDarkTheme >> diffEdgeColor [
 	"Answer the color used to show the border of the changes."
+	
 	^ Color white alpha: 0.5
 ]
 
 { #category : #'basic-colors-diffs' }
 PharoDarkTheme >> diffModificatedLineBackgroundColor [
 	"Answer the color used to highlight changed text lines in a diff view."
+	
 	^ Color gray alpha: 0.2
 ]
 
 { #category : #'basic-colors-diffs' }
 PharoDarkTheme >> diffRemovedLinesBackgroundColor [
 	"Answer the color used to highlight removed text lines in a diff view."
+	
 	^ Color r: 0.84 g: 0.0 b: 0.0 alpha: 0.2
 ]
 
@@ -252,9 +240,9 @@ PharoDarkTheme >> dropListNormalFillStyleFor: aDropList [
 PharoDarkTheme >> dropListNormalListBorderStyleFor: aDropList [
 	"Return the normal borderStyle for the list of the given given drop list"
 
-	^BorderStyle inset
+	^ BorderStyle inset
 		width: 1;
-		baseColor: self buttonColor lighter.
+		baseColor: self buttonColor lighter
 ]
 
 { #category : #'fill-styles' }
@@ -274,66 +262,8 @@ PharoDarkTheme >> errorPopperBackgroundColor [
 	^ Color red muchDarker 
 ]
 
-{ #category : #private }
-PharoDarkTheme >> glamorousBaseColorFor: aButton [
-	^ self class baseColor
-	"unfortunately, it looks like paneColor does not always return the wanted color"
-	"aButton paneColorOrNil ifNil: [Color r: 200 g: 200 b: 200 range: 255]"
-]
-
-{ #category : #private }
-PharoDarkTheme >> glamorousBasePassiveBackgroundColorFor: aButton [
-	^ self class basePassiveBackgroundColor
-]
-
-{ #category : #private }
-PharoDarkTheme >> glamorousBaseSelectionColorFor: aButton [
-	^ self class baseSelectionColor
-]
-
-{ #category : #private }
-PharoDarkTheme >> glamorousDarkBaseColorFor: aButton [
-	^ self class darkBaseColor
-]
-
-{ #category : #private }
-PharoDarkTheme >> glamorousLightColorFor: aButton [
-	^ self class lightBaseColor
-]
-
-{ #category : #private }
-PharoDarkTheme >> glamorousLightSelectionColorFor: aMorph [
-	^ self class lightSelectionColor
-]
-
-{ #category : #private }
-PharoDarkTheme >> glamorousNormalFillStyleFor: aMorph height: anInteger [
-	"Return the normal button fillStyle for the given button."
-	
-"	| baseColor |
-	baseColor := self glamorousBaseColorFor: aMorph.
-	^ self glamorousNormalFillStyleWithBaseColor: baseColor for: aMorph height: anInteger
-"
-
-	^ SolidFillStyle color: (self glamorousLightColorFor: aMorph)
-]
-
-{ #category : #private }
-PharoDarkTheme >> glamorousNormalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [	
-	| top bottom |
-	top := aColor darker.
-	bottom := aColor.
-	^(GradientFillStyle ramp: {
-			0.0->top.
-			0.7->bottom.})
-		origin: aMorph bounds origin;
-		direction: 0 @ anInteger;
-		radial: false
-]
-
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 PharoDarkTheme >> initialize [
-	"self beCurrent"
 
 	super initialize.
 	self windowActiveDropShadowStyle: #diffuse.
@@ -347,7 +277,8 @@ PharoDarkTheme >> lessConspicuousColorFrom: aColor [
 ]
 
 { #category : #'accessing colors' }
-PharoDarkTheme >> lightBackgroundColor [ 
+PharoDarkTheme >> lightBackgroundColor [
+
 	^ Color r: 0.218 g: 0.217 b: 0.217
 ]
 
@@ -377,7 +308,7 @@ PharoDarkTheme >> menuBorderColor [
 
 { #category : #'accessing colors' }
 PharoDarkTheme >> menuBorderWidth [
-	^ self borderWidth * World displayScaleFactor
+	^ self borderWidth * self currentWorld displayScaleFactor
 ]
 
 { #category : #defaults }
@@ -386,7 +317,7 @@ PharoDarkTheme >> menuItemDisabledTextColorFor: aMenuItem [
 	^ Color lightGray
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 PharoDarkTheme >> newRadioMarkerForm [
 	"Answer a new checkbox marker form."
 
@@ -414,7 +345,7 @@ PharoDarkTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 
 { #category : #'accessing colors' }
 PharoDarkTheme >> secondarySelectionColor [
-	^ Color r: 0.31 g: 0.31 b: 0.36
+	^ Color r: 0.31 g: 0.31 b: 0.36 alpha: 1.0
 ]
 
 { #category : #'accessing colors' }
@@ -428,9 +359,9 @@ PharoDarkTheme >> selectionTextColor [
 ]
 
 { #category : #defaults }
-PharoDarkTheme >> shStyleTable [
+PharoDarkTheme >> shStyleTableName [
 
-	^SHRBTextStyler darkStyleTable
+	^ #darkStyleTable
 ]
 
 { #category : #'fill-styles' }
@@ -591,5 +522,5 @@ PharoDarkTheme >> windowActiveLabelFillStyleFor: aWindow [
 PharoDarkTheme >> windowLabelForText: aTextOrString [
 	^ (super windowLabelForText: aTextOrString)
 		color: self textColor;
-		yourself.
+		yourself
 ]

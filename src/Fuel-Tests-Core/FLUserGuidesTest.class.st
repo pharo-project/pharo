@@ -4,7 +4,7 @@ SUnit tests to guide users with fuel serialization
 Class {
 	#name : #FLUserGuidesTest,
 	#superclass : #FLSerializationTest,
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #running }
@@ -98,8 +98,6 @@ FLUserGuidesTest >> testFileStream [
 
 { #category : #'tests-Getting Started' }
 FLUserGuidesTest >> testGZip [
-
-	| materialization |
 	FLPlatform current
 		fileNamed: 'demo.fuel'
 		writeStreamDo: [ :aFileStream |
@@ -113,7 +111,7 @@ FLUserGuidesTest >> testGZip [
 		readStreamDo: [:aFileStream | 
 			|gzip|
 			gzip := GZipReadStream on: aFileStream.		
-			materialization := FLMaterializer newDefault 
+			FLMaterializer newDefault 
 				materializeFrom: gzip ]
 ]
 

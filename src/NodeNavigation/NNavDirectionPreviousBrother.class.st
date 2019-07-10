@@ -9,7 +9,8 @@ Class {
 
 { #category : #'step over' }
 NNavDirectionPreviousBrother class >> brotherPositionFor: nodePosition brothers: brothers [
-	^ nodePosition = 1 ifTrue:  [ brothers size ] ifFalse: [ nodePosition - 1 ].
+
+	^ nodePosition = 1 ifTrue:  [ brothers size ] ifFalse: [ nodePosition - 1 ]
 ]
 
 { #category : #builder }
@@ -28,8 +29,9 @@ NNavDirectionPreviousBrother class >> buildShortcut: aBuilder [
 
 { #category : #builder }
 NNavDirectionPreviousBrother class >> defaultKeyCombination [
-	^NNavNavigation useArrowsShortcuts 
-		ifTrue: [Character arrowLeft meta  ]
-		ifFalse: [ $u meta  ]
+
+	^ NNavNavigation useArrowsShortcuts 
+		ifTrue: [ Character arrowLeft meta ]
+		ifFalse: [ $u meta ]
 
 ]

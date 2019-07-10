@@ -59,7 +59,8 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout #'Tool-Catalog') sorted
+	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
+	#'Athens-Morphic' 'Glamour-Morphic-Widgets' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout #'Tool-Catalog' 'ParametrizedTests') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -136,10 +137,11 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownMorphicDependencies [
+	"ideally this list should be empty"
 
-	"ideally this list should be empty"	
-
-	^ #(#DebuggerActions #'Fonts-Chooser' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Rubric #Shout #'Spec-Core' #'Tool-Base' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers') sorted
+	^ #(#'Fonts-Chooser' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #Shout #'Spec-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
+	#'Athens-Morphic' 	"Rubric has a dependency on It" )
+		sorted
 ]
 
 { #category : #'known dependencies' }
@@ -158,6 +160,15 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core' #CodeImport) sorted
 ]
 
+{ #category : #'known-dependencies' }
+SystemDependenciesTest >> knownSpec2Dependencies [
+	
+	^ #(
+		'WebBrowser-Core' "Spec's Link adapter"
+		'Keymapping-Settings' "Spec's KeymapBrowser example tool"
+		) sorted
+]
+
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownUFFIDependencies [
 
@@ -171,7 +182,8 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Athens-Morphic' #MonticelloGUI #'Morphic-Widgets-FastTable' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
+	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
+	#'Athens-Morphic' #'Glamour-Morphic-Widgets' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
 ]
 
 { #category : #utilities }
@@ -194,12 +206,6 @@ SystemDependenciesTest >> metacelloPackageNames [
 	  BaselineOfMetacello allPackageNames
 ]
 
-{ #category : #accessing }
-SystemDependenciesTest >> specPackageNames [
-
-	^ #(#'Spec-Core' #'Spec-Layout' #'Keymapping-Pragmas' #'Keymapping-Core' #'Keymapping-KeyCombinations' #'MenuRegistration' #'NewValueHolder-Core') sorted
-]
-
 { #category : #tests }
 SystemDependenciesTest >> testExternalBasicToolsDependencies [
 
@@ -219,6 +225,8 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
+		{ BaselineOfCommander2 name }, BaselineOfCommander2 allPackageNames,
+		{ BaselineOfSpec2 name }, BaselineOfSpec2 allPackageNames,
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames ).
 	
 	self assertCollection: dependencies equals: self knownBasicToolsDependencies.
@@ -289,6 +297,9 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
 	BaselineOfSpec.
+	BaselineOfCommander2.
+	BaselineOfSpec2.
+	BaselineOfParametrizedTests.
 	BaselineOfSUnit.
 	BaselineOfTraits.
 	BaselineOfUI.
@@ -389,7 +400,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfTraits corePackages,		
+		BaselineOfTraits corePackages,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
@@ -434,19 +445,36 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 ]
 
 { #category : #tests }
-SystemDependenciesTest >> testExternalSpecDependencies [
+SystemDependenciesTest >> testExternalSpec2Dependencies [
 
 	| dependencies | 
 	
 	self longTestCase.
 	
 	dependencies := (self externalDependendiesOf: (
-			self metacelloPackageNames,
-			BaselineOfTraits corePackages,			
-			self specPackageNames )) 
-		copyWithoutAll: self knownMetacelloDependencies.
+		"Language"
+		self metacelloPackageNames,
+		self tonelCorePackageNames,
+		BaselineOfTraits corePackages,
+		BaselineOfUnifiedFFI allPackageNames,
+
+		"Morphic - for Morphic backend"
+		BaselineOfDisplay allPackageNames,
+		BaselineOfMorphicCore allPackageNames,
+		BaselineOfMorphic allPackageNames,
+		BaselineOfMenuRegistration allPackageNames,
+
+		BaselineOfCommander2 allPackageNames,
+		
+		BaselineOfSpec2 allPackageNames,
 	
-	self assertCollection: dependencies equals: #()
+
+		"Tests"
+		BaselineOfSUnit defaultPackageNames,
+		BaselineOfParametrizedTests allPackageNames))
+			copyWithoutAll: self knownMorphicDependencies, self knownBasicToolsDependencies, self knownUIDependencies.
+
+	self assertCollection: dependencies equals: self knownSpec2Dependencies
 ]
 
 { #category : #tests }
@@ -477,12 +505,15 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
 		BaselineOfTraits corePackages,
+		BaselineOfParametrizedTests allPackageNames,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
+		BaselineOfCommander2 allPackageNames,
+		BaselineOfSpec2 allPackageNames,
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames )).
 	

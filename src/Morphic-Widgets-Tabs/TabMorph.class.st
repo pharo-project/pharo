@@ -85,7 +85,7 @@ TabMorph class >> closeOverIconContents [
 
 { #category : #accessing }
 TabMorph class >> defaultHeight [
-	^ 22 * World displayScaleFactor 
+	^ 22 * self currentWorld displayScaleFactor 
 ]
 
 { #category : #initialize }
@@ -139,7 +139,7 @@ TabMorph class >> label: label icon: icon retrievingBlock: morph actions: aColle
 { #category : #icons }
 TabMorph class >> menuIcon [
 
-	^ Smalltalk ui theme windowMenuForm
+	^ self theme windowMenuForm
 ]
 
 { #category : #icons }
@@ -424,7 +424,7 @@ TabMorph >> blueButtonUp: anEvent [
 { #category : #'private-drawing' }
 TabMorph >> borderColor [
 	"I do not use #borderColor because I want a light border"
-	^ Smalltalk ui theme lightBackgroundColor
+	^ self theme lightBackgroundColor
 ]
 
 { #category : #'private-drawing' }

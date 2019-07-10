@@ -31,10 +31,9 @@ GTGenericStackDebugger class >> alwaysOpenFullDebugger: aBoolean [
 { #category : #'utilities api' }
 GTGenericStackDebugger class >> closeAllDebuggers [
 	"GTGenericStackDebugger closeAllDebuggers"
-	(SystemWindow allSubInstances select: [:w | 
-		 w model isKindOf: GTGenericStackDebugger])
-			do: [:w | w delete ].
-	GTSpecPreDebugWindow allInstances do: #delete.
+
+	(SystemWindow allSubInstances select: [ :w | w model isKindOf: GTGenericStackDebugger ]) do: [ :w | w delete ].
+	GTSpecPreDebugPresenter allSubInstances do: #close
 ]
 
 { #category : #'settings api' }
@@ -239,6 +238,12 @@ GTGenericStackDebugger >> debuggingActionsPragmas [
 	^ #( debuggingAction )
 ]
 
+{ #category : #opening }
+GTGenericStackDebugger >> filteredStack [
+
+	^ (self session stackOfSize: 50 ) select: [ :aContext | (aContext method hasPragmaNamed: #debuggerCompleteToSender) not ]
+]
+
 { #category : #'printing/formatting' }
 GTGenericStackDebugger >> formatStackClassColumnForContext: aContext [
 
@@ -344,9 +349,11 @@ GTGenericStackDebugger >> methodCodeWidgetIn: composite forContext: aContext [
 
 { #category : #opening }
 GTGenericStackDebugger >> openWithFullView [
-	"Create and schedule a full debugger with the given label. Do not
-	terminate the current active process."
+	"Create and schedule a full debugger with the given label. Do not terminate the current active process.
 	
+	We also select the first non filtered context, this mean that we will ignore some methods like halts or debug method to select the first interesting line in the debugger."
+
+	self setDebuggerToFirstNonFilteredContext.
 	self open
 ]
 
@@ -360,12 +367,14 @@ GTGenericStackDebugger >> openWithNotification: notificationString [
 	"NOTE: When this method returns, a new process has been scheduled to
 	run the windows, and thus this notifier, but the previous active porcess
 	has not been suspended. The sender will do this."
-	
-	GTSpecPreDebugWindow new 
-		setTitle: self title;
+
+	(notificationString
+		ifNil: [ GTSpecPreDebugStackPresenter on: self ]
+		ifNotNil: [ (GTSpecPreDebugNotificationPresenter on: self)
 		message: notificationString;
+		yourself ])
 		openWithSpec;
-		debugger: self
+		setTitle: self title
 ]
 
 { #category : #'printing/formatting' }
@@ -487,6 +496,16 @@ GTGenericStackDebugger >> send [
 
 ]
 
+{ #category : #opening }
+GTGenericStackDebugger >> setDebuggerToFirstNonFilteredContext [
+	"I set the debugger to the first non filtered stack"
+
+	| selection |
+	selection := self stackPresentation selection.
+	(selection isNil or: [ selection method hasPragmaNamed: #debuggerCompleteToSender ])
+		ifTrue: [ self stackPresentation selection: self filteredStack first ]
+]
+
 { #category : #accessing }
 GTGenericStackDebugger >> sourceCode: aString [
 
@@ -539,9 +558,14 @@ GTGenericStackDebugger >> sugsContext [
 GTGenericStackDebugger >> textAttributesForStackEntry: aContext [
 
 	(self selectedContext isNil or: self class enableStackColoring not) 
-		ifTrue: [ ^ {TextColor color: Smalltalk ui theme textColor} ].
+		ifTrue: [ ^ {TextColor color: self theme textColor} ].
 
-	^ Smalltalk ui theme styleContext: aContext from: self.
+	^ self theme styleContext: aContext from: self.
+]
+
+{ #category : #'printing/formatting' }
+GTGenericStackDebugger >> theme [ 
+	^ Smalltalk ui theme
 ]
 
 { #category : #building }

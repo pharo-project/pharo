@@ -905,12 +905,7 @@ TextMorph >> handleKeystroke: anEvent [
 	self allowsKeymapping
 		ifTrue: [ self dispatchKeystrokeForEvent: anEvent ] .
 	anEvent wasHandled
-		ifTrue: [
-			"We need to check for completion here because otherwise it will try to handle the keystroke, 
-			even if it was already processed."
-			(Smalltalk tools hasToolNamed: #codeCompletion) 
-				ifTrue: [ Smalltalk tools codeCompletion uniqueInstance closeMenu ].
-			^ self].
+		ifTrue: [ ^ self].
 	(self handlesKeyStroke: anEvent)
 		ifFalse: [^ self].
 	self keyStroke: anEvent.
@@ -1052,14 +1047,8 @@ TextMorph >> justified [
 { #category : #'event handling' }
 TextMorph >> keyStroke: evt [ 
 	"Handle a keystroke event."
-
-	(Smalltalk tools hasToolNamed: #codeCompletion) 
-		ifTrue: [ 
-			Smalltalk tools 
-				codeCompletionAround: [ self basicKeyStroke: evt ] 
-				textMorph: self 
-				keyStroke: evt ]
-		ifFalse: [  self basicKeyStroke: evt ]
+	Transcript show: 'TextMorph';cr.
+	self basicKeyStroke: evt
 ]
 
 { #category : #'event handling' }
@@ -1312,13 +1301,9 @@ TextMorph >> paragraph [
 ]
 
 { #category : #editing }
-TextMorph >> passKeyboardFocusTo: otherMorph [ 
-	| w |
-	self flag: #arNote.	"Do we need this?!"
-	(w := self world) isNil 
-		ifFalse: 
-			[w 
-				handsDo: [:h | h keyboardFocus == self ifTrue: [h newKeyboardFocus: otherMorph]]]
+TextMorph >> passKeyboardFocusTo: otherMorph [
+	self flag: #pharoFixMe. "Do we need this?!"
+	self world ifNotNil: [ :world | world handsDo: [ :h | h keyboardFocus == self ifTrue: [ h newKeyboardFocus: otherMorph ] ] ]
 ]
 
 { #category : #'linked frames' }
@@ -1357,7 +1342,7 @@ TextMorph >> predecessorChanged [
 TextMorph >> preferredKeyboardPosition [
 
 	| default rects |
-	default  := (self bounds: self bounds in: World) topLeft.
+	default  := (self bounds: self bounds in: self currentWorld) topLeft.
 	paragraph ifNil: [^ default].
 	rects := paragraph selectionRects.
 	rects size = 0 ifTrue: [^ default].

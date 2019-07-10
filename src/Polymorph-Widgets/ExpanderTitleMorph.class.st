@@ -9,7 +9,7 @@ Class {
 		'buttonMorph',
 		'expanded'
 	],
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Base'
 }
 
 { #category : #accessing }
@@ -22,7 +22,7 @@ ExpanderTitleMorph >> adoptPaneColor: paneColor [
 	self fillStyle: self normalFillStyle.
 	self borderStyle baseColor: paneColor twiceDarker.
 	self buttonMorph cornerStyle: self cornerStyle.
-	self labelMorph color: paneColor contrastingColor.
+	self labelMorph color: paneColor contrastingBlackAndWhiteColor.
 	self changed: #expandLabel
 ]
 

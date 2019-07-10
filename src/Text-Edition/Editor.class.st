@@ -7,8 +7,7 @@ Class {
 	#name : #Editor,
 	#superclass : #Object,
 	#instVars : [
-		'morph',
-		'selectionShowing'
+		'morph'
 	],
 	#classVars : [
 		'BlinkingCursor',
@@ -83,10 +82,6 @@ Editor class >> editingSettingsOn: aBuilder [
 				target: TextEditor;
 				label: 'Use the secondary selection';
 				with: [
-					(aBuilder setting: #secondarySelectionColor)
-						target: UITheme;
-						targetSelector: #currentSettings;
-						label: 'Secondary selection color'.
 					(aBuilder setting: #secondarySelectionTextColor)
 						target: UITheme;
 						targetSelector: #currentSettings;

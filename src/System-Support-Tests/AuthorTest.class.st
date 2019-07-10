@@ -4,9 +4,6 @@ SUnit tests for Author
 Class {
 	#name : #AuthorTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'author'
-	],
 	#category : #'System-Support-Tests'
 }
 

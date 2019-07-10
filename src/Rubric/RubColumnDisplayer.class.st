@@ -2,7 +2,6 @@ Class {
 	#name : #RubColumnDisplayer,
 	#superclass : #RubScrolledTextExtraSurface,
 	#instVars : [
-		'tabWidth',
 		'tabLineDashesColors',
 		'tabLineColor',
 		'tabLineDashes',

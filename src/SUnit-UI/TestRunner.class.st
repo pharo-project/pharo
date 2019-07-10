@@ -47,7 +47,8 @@ TestRunner class >> menuCommandOn: aBuilder [
 		order: 20;
 		keyText: 'o, u';
 		help: 'Let you run and debug SUnit tests.';
-		icon: self taskbarIcon
+		icon: self taskbarIcon.
+	aBuilder withSeparatorAfter	
 ]
 
 { #category : #'instance creation' }
@@ -217,7 +218,7 @@ TestRunner >> buildClassesSearch [
 	^ SearchMorph new
 		model: self;
 		updateSelector: #classSearchUpdate:;
-		ghostText: 'TestCaseA|TestCaseB';
+		ghostText: 'TestCase #1 | TestCase #2';
 		yourself
 ]
 
@@ -251,9 +252,9 @@ TestRunner >> buildFailures [
 TestRunner >> buildPackageSearch [
 
 	^ SearchMorph new
+		ghostText: 'Package #1 | Package #2';
 		model: self;
 		updateSelector: #packageSearchUpdate:;
-		ghostText: 'PackageA|PackageB';
 		yourself
 ]
 
@@ -275,12 +276,14 @@ TestRunner >> buildPackages [
 { #category : #newbuilding }
 TestRunner >> buildStatus [
 
-	^ (PluggableTextFieldMorph
+	^ (RubPluggableTextMorph
 		on: self 
 		text: #statusText 
 		accept: nil 
 		readSelection: nil 
 		menu: #statusMenu:)
+			beReadOnly;
+			beWrapped;
 			textColor: self theme textColorForNonStandardBackground;
 			getColorSelector: #statusColor ; 
 			yourself.
@@ -396,7 +399,7 @@ TestRunner >> classesSearchFrame [
 		leftFraction: 0.25;
 		rightFraction: 0.5;
 		bottomFraction: 0 ;
-		bottomOffset: (StandardFonts defaultFont height + 10)
+		bottomOffset: (StandardFonts defaultFont height + 6)
 ]
 
 { #category : #actions }
@@ -506,7 +509,7 @@ TestRunner >> excludeClassesNotUnderTestFrom: methods [
 { #category : #processing }
 TestRunner >> executeSuite: aTestSuite as: aBlock [
 " The block defines how to interact with the suite. run with a result or debug "
-	aTestSuite subscribe:TestAnnouncement do: self updateUIBlock.
+	aTestSuite when:TestAnnouncement do: self updateUIBlock.
 	[ aBlock cull: aTestSuite cull: result  ] ensure: [
 		aTestSuite unsubscribe:TestAnnouncement.
 	].
@@ -764,7 +767,7 @@ TestRunner >> packageMenu: aMenu [
 TestRunner >> packageSearchFrame [
 	^LayoutFrame new
 		rightFraction: 0.25;
-		bottomFraction: 0 offset: (Smalltalk ui theme textFont height + 10)
+		bottomFraction: 0 offset: (Smalltalk ui theme textFont height + 6)
 ]
 
 { #category : #building }
@@ -1109,12 +1112,13 @@ TestRunner >> statusFrame [
 
 { #category : #building }
 TestRunner >> statusHeight [
-	^ self theme textFont height * 4
+	^ self theme textFont height * 3
 ]
 
 { #category : #'accessing-menu' }
 TestRunner >> statusMenu: aMenu [
-	^ aMenu
+	^ aMenu 
+		defaultTarget: self;
 		add: 'History' selector: #showHistoryMenu;
 		add: 'Store result as progress reference' selector: #storeResultIntoTestCases;
 		add: 'Show progress' selector: #showProgress; 

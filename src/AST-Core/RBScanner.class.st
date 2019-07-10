@@ -79,11 +79,7 @@ RBScanner class >> initializeClassificationTable [
 		to: #alphabetic.
 	self initializeUnderscore.
 	self initializeChars: '01234567890' to: #digit.
-	self initializeChars: '!%&*+,-/<=>?@\~|' to: #binary.
-	classificationTable at: 177 put: #binary.	"plus-or-minus"
-	classificationTable at: 183 put: #binary.	"centered dot"
-	classificationTable at: 215 put: #binary.	"times"
-	classificationTable at: 247 put: #binary.	"divide"
+	self initializeChars: Character specialCharacters to: #binary.
 	self initializeChars: '().:;[]{}^' to: #special.
 	self
 		initializeChars: (Character allCharacters
@@ -241,7 +237,7 @@ RBScanner >> nextPut: anObject [
 	self shouldNotImplement
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBScanner >> on: aStream [ 
 	buffer := (String new: 60) writeStream.
 	stream := aStream.

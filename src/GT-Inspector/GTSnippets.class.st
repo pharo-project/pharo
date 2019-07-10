@@ -5,7 +5,6 @@ Class {
 	#name : #GTSnippets,
 	#superclass : #Object,
 	#instVars : [
-		'instance',
 		'snippets'
 	],
 	#classInstVars : [
@@ -57,5 +56,5 @@ GTSnippets >> snippetAtOrEmpty: anObject [
 
 { #category : #accessing }
 GTSnippets >> snippets [ 
-	^ snippets ifNil: [ snippets := IdentityDictionary new ]
+	^ snippets ifNil: [ snippets := WeakIdentityKeyDictionary new ]
 ]

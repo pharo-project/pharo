@@ -12,7 +12,7 @@ I provide the following variables and their accessors
 - acceptOnCR is a boolean representing if the key cr trigger an accept action,  it is true by default and must be set before built the widget. (if false it will print a cr).
 - encrypted is a boolean representing if the text appear like stars (it is only an appearance), beDecrypted and beEncrypted are shortcut to set it.
 - entryCompletion is the object used to suggest text while typing, removeEntryCompletion is a shortcut to set it nil.
-- ghostText is the ghost text to display in the text zone.
+- placeholder is the ghost text to display in the text zone.
 
 I provide getters of ValueHolder of my super class actionToPerformHolder and textHolder .
 
@@ -26,12 +26,13 @@ todo
 "
 Class {
 	#name : #TextInputFieldPresenter,
-	#superclass : #TextPresenter,
+	#superclass : #AbstractTextPresenter,
 	#instVars : [
-		'ghostText',
-		'acceptOnCR',
-		'entryCompletion',
-		'isEncrypted'
+		'#acceptOnCR',
+		'#entryCompletion',
+		'#isPassword => SpecObservableSlot',
+		'#placeholder => SpecObservableSlot',
+		'#maxLength => SpecObservableSlot'
 	],
 	#category : #'Spec-Core-Widgets'
 }
@@ -40,24 +41,6 @@ Class {
 TextInputFieldPresenter class >> adapterName [
 
 	^ #TextInputFieldAdapter
-]
-
-{ #category : #specs }
-TextInputFieldPresenter class >> defaultSpec [
-	<spec: #default>
-	
-	^ #(TextInputFieldAdapter
-		adapt: #(model))
-]
-
-{ #category : #example }
-TextInputFieldPresenter class >> example [
-	<sampleInstance>
-	^ self new
-	 extent: 300 @ 25;
-	 openWithSpec;
-	 ghostText: 'This is a ghost';
-	 text: 'This is a text'
 ]
 
 { #category : #morphic }
@@ -94,31 +77,20 @@ TextInputFieldPresenter >> actionToPerformHolder [
 ]
 
 { #category : #api }
-TextInputFieldPresenter >> beDecrypted [
-	"<api: #do>"
-	"Decrypt the entered text"
+TextInputFieldPresenter >> bePassword [
 	
-	self encrypted: false
+	self bePassword: true
 ]
 
 { #category : #api }
-TextInputFieldPresenter >> beEncrypted [
-"	<api: #do>"
-	"Encrypt the entered text"
+TextInputFieldPresenter >> bePassword: aBoolean [
 	
-	self encrypted: true
+	isPassword := aBoolean
 ]
 
-{ #category : #accessing }
-TextInputFieldPresenter >> encrypted [
-
-	^ isEncrypted value
-]
-
-{ #category : #accessing }
-TextInputFieldPresenter >> encrypted: aBoolean [
-
-	isEncrypted value: aBoolean 
+{ #category : #api }
+TextInputFieldPresenter >> beText [
+	self bePassword: false
 ]
 
 { #category : #api }
@@ -151,41 +123,47 @@ TextInputFieldPresenter >> eventKeyStrokesForPreviousFocus [
 	^ { Character tab shift asKeyCombination }
 ]
 
-{ #category : #api }
-TextInputFieldPresenter >> ghostText [
-	"<api: #inspect>"
-	"Return the ghost text of the text zone"
-
-	^ ghostText value
-]
-
-{ #category : #accessing }
-TextInputFieldPresenter >> ghostText: aText [
-	"<api: #string getter: #ghostText registration: #whenGhostTextChanged:>"
-	"Set the ghost text of the text zone"
-
-	ghostText value: aText.
-]
-
 { #category : #initialization }
 TextInputFieldPresenter >> initialize [
 
 	super initialize.
 	
-	ghostText := '' asValueHolder.
+	maxLength := 0.
+	placeholder := ''.
 	acceptOnCR := true asValueHolder.
 	entryCompletion := nil asValueHolder.
-	isEncrypted := false asValueHolder.
-	
-	ghostText  whenChangedDo: [ :txt | self changed: #ghostText: with: { txt } ].
-	acceptOnCR whenChangedDo: [ :bool | self changed: #acceptOnCR: with: { bool } ].
-	isEncrypted whenChangedDo: [ :bool | self changed: #encrypted: with: { bool } ].
+	isPassword := false.
+	acceptOnCR whenChangedDo: [ :bool | self changed: #acceptOnCR: with: { bool } ]
 ]
 
-{ #category : #NOCompletion }
-TextInputFieldPresenter >> isCodeCompletionAllowed [
+{ #category : #testing }
+TextInputFieldPresenter >> isPassword [
 	
-	^ false
+	^ isPassword
+]
+
+{ #category : #accessing }
+TextInputFieldPresenter >> maxLength [
+	^ maxLength
+]
+
+{ #category : #accessing }
+TextInputFieldPresenter >> maxLength: anInteger [ 
+	
+	maxLength := anInteger.
+	self updateText.
+]
+
+{ #category : #api }
+TextInputFieldPresenter >> placeholder [
+
+	^ placeholder
+]
+
+{ #category : #accessing }
+TextInputFieldPresenter >> placeholder: aText [
+
+	placeholder := aText
 ]
 
 { #category : #api }
@@ -197,28 +175,56 @@ TextInputFieldPresenter >> removeEntryCompletion [
 ]
 
 { #category : #accessing }
+TextInputFieldPresenter >> text: aText [
+
+	| truncatedText |
+	truncatedText := self maxLength = 0
+		ifTrue: [ aText ]
+		ifFalse: [ aText first: (self maxLength min: aText size) ].
+	super text: truncatedText
+]
+
+{ #category : #accessing }
 TextInputFieldPresenter >> textHolder [
 
 	^ textHolder
 ]
 
+{ #category : #accessing }
+TextInputFieldPresenter >> updateText [
+
+	"Update text but applying lenght constraints"
+	self text: self text.
+]
+
 { #category : #'api-events' }
-TextInputFieldPresenter >> whenAcceptOnCRChanged: aBlock [
+TextInputFieldPresenter >> whenAcceptOnCRChangedDo: aBlock [
 	"aBlock will be performed when acceptOnCR changed"
 	
 	acceptOnCR whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
-TextInputFieldPresenter >> whenEntryCompletionChanged: aBlock [
+TextInputFieldPresenter >> whenEntryCompletionChangedDo: aBlock [
 	"aBlock will be performed when entryCompletion changed"
 	
 	entryCompletion whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
-TextInputFieldPresenter >> whenGhostTextChanged: aBlock [
-	"aBlock will be performed when ghostText changed"
+TextInputFieldPresenter >> whenMaxLengthChangedDo: aBlockClosure [ 
 	
-	ghostText whenChangedDo: aBlock
+	self property: #maxLength whenChangedDo: aBlockClosure
+]
+
+{ #category : #'api-events' }
+TextInputFieldPresenter >> whenPasswordChangedDo: aBlockClosure [ 
+	
+	self property: #isPassword whenChangedDo: aBlockClosure
+]
+
+{ #category : #'api-events' }
+TextInputFieldPresenter >> whenPlaceholderChangedDo: aBlock [
+	
+	self property: #placeholder whenChangedDo: aBlock
 ]

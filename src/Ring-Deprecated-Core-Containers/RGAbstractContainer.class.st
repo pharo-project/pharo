@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'elements'
 	],
-	#category : #'Ring-Deprecated-Core-Containers'
+	#category : #'Ring-Deprecated-Core-Containers-Base'
 }
 
 { #category : #'adding/removing' }
@@ -76,7 +76,7 @@ RGAbstractContainer >> elementsDo: aBlock [
 	elements valuesDo: [ :collection | collection do: [ :each | aBlock value: each ] ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RGAbstractContainer >> flushElements [
 
 	elements:= IdentityDictionary new

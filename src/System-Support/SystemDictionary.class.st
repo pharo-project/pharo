@@ -24,7 +24,8 @@ Class {
 	#superclass : #IdentityDictionary,
 	#instVars : [
 		'cachedClassNames',
-		'cachedNonClassNames'
+		'cachedNonClassNames',
+		'cachedBehaviors'
 	],
 	#category : #'System-Support-Utilities'
 }
@@ -41,8 +42,14 @@ SystemDictionary class >> withOrganizer: anOrganizer [
 { #category : #'classes and traits' }
 SystemDictionary >> allBehaviors [
 	"Return all the classes and traits defined in the Smalltalk SystemDictionary"
+	^cachedBehaviors ifNil: [cachedBehaviors := self allClassesAndTraits flatCollect: [:each | {each . each classSide} ]]
+]
 
-	^ self allClassesAndTraits flatCollect: [:each | {each . each classSide} ]
+{ #category : #'classes and traits' }
+SystemDictionary >> allBehaviorsDo: aBlock [
+	"Execute a block on each class, metaclass, trait and trait class"
+
+	self allBehaviors do: aBlock
 ]
 
 { #category : #'classes and traits' }
@@ -74,6 +81,11 @@ SystemDictionary >> allClassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each class in the system."
 
 	^self classNames do: [:name | aBlock value: (self at: name)]
+]
+
+{ #category : #'classes and traits' }
+SystemDictionary >> allMethods [
+	^ self allBehaviors flatCollect: [ :behavior | behavior methods ]
 ]
 
 { #category : #'classes and traits' }
@@ -197,7 +209,7 @@ SystemDictionary >> flushClassNameCache [
 	"Smalltalk flushClassNameCache"
 	"Force recomputation of the cached list of class names and non-class names."
 
-	cachedClassNames := cachedNonClassNames := nil
+	cachedClassNames := cachedNonClassNames := cachedBehaviors := nil
 ]
 
 { #category : #'classes and traits' }

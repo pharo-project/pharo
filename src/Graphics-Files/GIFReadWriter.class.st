@@ -1,4 +1,7 @@
 "
+I am GIFReadWriter.
+I am a concrete ImageReadWriter.
+
 Updated implementation of a GIF file (byte-level) decoder.
 
 I implment a Stream-like behavior over a GIF image file, and can both read and write GIF files.
@@ -6,9 +9,10 @@ I implment a Stream-like behavior over a GIF image file, and can both read and w
 Previously, two classes distinguished between ""still"" and ""animated"" GIFs. However, the standard specifies that any GIF can have ""frames"" and be animated. This reimplementation treats this as normal.
 
 See these links for more detailed information:
-https://www.w3.org/Graphics/GIF/spec-gif89a.txt
-https://en.wikipedia.org/wiki/GIF
-http://www.matthewflickinger.com/lab/whatsinagif/bits_and_bytes.asp
+ 
+ https://www.w3.org/Graphics/GIF/spec-gif89a.txt
+ https://en.wikipedia.org/wiki/GIF
+ http://www.matthewflickinger.com/lab/whatsinagif/bits_and_bytes.asp
 
 For writing GIF files, I take a collection of AnimatedImageFrame objects and write the appropriate headers, Graphics Control Extensions, and everything else needed for writing an animated GIF.
 
@@ -38,7 +42,8 @@ Class {
 		'frames',
 		'canvasWidth',
 		'canvasHeight',
-		'backgroundColorIndex'
+		'backgroundColorIndex',
+		'comment'
 	],
 	#classVars : [
 		'Extension',
@@ -482,6 +487,17 @@ GIFReadWriter >> readColorTable: numberOfEntries [
 ]
 
 { #category : #'private-decoding' }
+GIFReadWriter >> readCommentExtension [
+	| blockTerminator |
+	blockTerminator := self next.
+	blockTerminator > 0
+		ifTrue: [ comment := self next: blockTerminator.
+			blockTerminator := self next ].
+	blockTerminator = 0
+		ifFalse: [ ^ self error: 'Invalid Block Terminator' ]
+]
+
+{ #category : #'private-decoding' }
 GIFReadWriter >> readDisposal: aPackedByte [
 	"Read the three-bit disposal flag from
 	the packed byte in the Graphic Control Extension block.
@@ -543,7 +559,10 @@ GIFReadWriter >> readExtensionBlock: aGifBlock withFrame: anImageFrame [
 			delay: (delayByte2 * 256 + delayByte1) * 10.
 		self next = 0 ifFalse: [ ^ self error: 'Corrupt GCE Block!' ].
 		^ self ].
-	
+
+	extensionType = 254 ifTrue: [ 
+		^ self readCommentExtension ].
+
 	"If you get to this point, we don't know the Extension Type"
 	^ self error: 'Unknown GIF Extension: ',(extensionType asString).
 ]

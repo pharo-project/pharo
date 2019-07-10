@@ -8,6 +8,20 @@ def isWindows(){
     return env.NODE_LABELS.toLowerCase().contains('windows')
 }
 
+// Answers if we are in a development branch (we assume is a development branch if it starts with "Pharo")
+def isDevelopmentBranch() {
+	def branchName =  env.BRANCH_NAME 
+	def baseName = branchName.substring(0, 5)
+	
+	return baseName == "Pharo"
+}
+
+// Extracts Pharo version from the development branch (if it is "Pharo7.0" it will answer "7.0")
+def getPharoVersionFromBranch() {
+	def branchName =  env.BRANCH_NAME 
+	return branchName.substring(5)
+}
+
 def shell(params){
     if(isWindows()) bat(params) 
     else sh(params)
@@ -16,10 +30,22 @@ def shell(params){
 def runTests(architecture, prefix=''){
   cleanWs()
   dir(env.STAGE_NAME) {
-    unstash "bootstrap${architecture}"
-    shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}'"
-    junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}*.xml"
-    archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}*.xml", fingerprint: true
+    try {
+        unstash "bootstrap${architecture}"
+        shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}'"
+        junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}${prefix}*.xml"
+        archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
+    }finally{
+        // I am archiving the logs to check for crashes and errors.
+        if(fileExists('PharoDebug.log')){
+            shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}${prefix}.log"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-${env.STAGE_NAME}${prefix}.log", fingerprint: true
+        }
+        if(fileExists('crash.dmp')){
+            shell "mv crash.dmp crash-${env.STAGE_NAME}${prefix}.dmp"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "crash-${env.STAGE_NAME}${prefix}.dmp", fingerprint: true
+        }
+    }
   }
 }
 
@@ -38,9 +64,9 @@ def notifyBuild(status){
   if (env.CHANGE_ID != null){
     buildKind = "PR ${env.CHANGE_ID}"
   }
-  if( env.BRANCH_NAME == "development" ) {
+  if( isDevelopmentBranch() ) {
     toMail = "pharo-dev@lists.pharo.org"
-    buildKind = "7.0-dev"
+    buildKind = getPharoVersionFromBranch()
   }
   
   //We checkout scm to have access to the log information
@@ -70,10 +96,10 @@ Pull request url: ${pullRequestUrl}
 """
       title = pullRequestTitle
       def issueNumber = pullRequestJSON['head']['ref'].split('-')[0]
-      def fogbugzUrl = "https://pharo.fogbugz.com/f/cases/${issueNumber}"
+      def issueUrl = "https://github.com/pharo-project/pharo/issues/${issueNumber}"
       
       mailMessage += """
-Issue Url: ${fogbugzUrl}"""
+Issue Url: ${issueUrl}"""
     } else {
       mailMessage += """
 No associated issue found"""
@@ -88,14 +114,6 @@ ${mailMessage}
 Build Url: ${env.BUILD_URL}
 """
 
-  // If we are building development, add information about the uploads
-  if( env.BRANCH_NAME == "development" ) {
-  """"
-Check for latest built images in http://files.pharo.org:
- - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.32bit.zip
- - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.64bit.zip
-"""
-  }
   mail to: toMail, cc: 'guillermopolito@gmail.com', subject: "[Pharo ${buildKind}] Build #${env.BUILD_NUMBER}: ${title}", body: body
   } catch (e) {
     //If there is an error during mail send, just print it and continue
@@ -136,13 +154,13 @@ def bootstrapImage(){
         stage ("Convert Image - 32->64") {
           dir("conversion") {
             shell "cp ../bootstrap-cache/*.zip ."
-            shell "bash ../bootstrap/scripts/transform_32_into_64.sh"
+            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ../bootstrap/scripts/transform_32_into_64.sh"
             shell "mv *-64bit-*.zip ../bootstrap-cache"
           }
         }
       }
   
-      if( env.BRANCH_NAME == "development" ) {
+      if( isDevelopmentBranch() ) {
         stage("Upload to files.pharo.org") {
           dir("bootstrap-cache") {
               shell "BUILD_NUMBER=${env.BUILD_ID} bash ../bootstrap/scripts/prepare_for_upload.sh"
@@ -162,6 +180,34 @@ def bootstrapImage(){
   
   }
   parallel builders 
+}
+
+def launchBenchmark(){
+    node('unix'){ 
+		stage('launchBenchmark'){
+			
+		    cleanWs()
+			
+			projectName = env.JOB_NAME
+	
+		    //We checkout scm to have access to the log information
+		    checkout scm	
+	
+		    if (env.CHANGE_ID != null){
+				//If I am in a PR the head of the repository is a merge of the base commit (the development branch) and the PR commit.
+				//I take the first parent of this commit. It is the commit in the PR 
+				commit = shellOutput('git log HEAD^1 -1 --format="%H"')
+				isPR = true
+			}else{
+				// If it is not a PR the commit to evaluate and put the status in github is the current commit
+				commit = shellOutput('git log -1 --format="%H"')
+				isPR = false
+			}
+	
+	
+			build job: 'pharo-benchmarks', parameters: [text(name: 'originProjectName', value: projectName), booleanParam(name: 'isPR', value: isPR), text(name: 'commit', value: commit)], wait: false
+		}
+	}
 }
 
 try{
@@ -197,6 +243,8 @@ try{
     parallel testers
 
   notifyBuild("SUCCESS")
+
+  launchBenchmark()
 } catch (e) {
   notifyBuild("FAILURE")
   throw e

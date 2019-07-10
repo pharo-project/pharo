@@ -20,5 +20,5 @@ AnnouncementsAPIDocumentation class >> builder [
 
 { #category : #accessing }
 AnnouncementsAPIDocumentation class >> helpPackages [
-	^#('Announcements-Core' 'Announcements-View' 'Announcements-Tests-Core')
+	^#('Announcements-Core' 'Announcements-View' 'Announcements-Core-Tests')
 ]

@@ -76,19 +76,17 @@ RBAddAssignmentTransformation >> privateTransform [
 	| methodTree assignmentNode assignments previousNode |
 	methodTree := self definingMethod.
 	assignmentNode := RBAssignmentNode
-		variable: ( RBVariableNode named: variableName )
-		value: ( RBParser parseExpression: value ).
-	
+		variable: (RBVariableNode named: variableName)
+		value: (self parserClass parseExpression: value).
+
 	"check whether there are some dependencies in the expression"
-	assignments := ( methodTree allChildren
-		select: #isAssignment )
+	assignments := (methodTree allChildren select: #isAssignment)
 		select: [ :each | each variable name asString = variableName ].
 	previousNode := assignments detectMax: #stop.
-	
 	previousNode
 		ifNil: [ methodTree body addNodeFirst: assignmentNode ]
 		ifNotNil: [ previousNode parent addNode: assignmentNode after: previousNode ].
-	class compileTree: methodTree.
+	class compileTree: methodTree
 ]
 
 { #category : #printing }

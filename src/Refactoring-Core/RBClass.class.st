@@ -182,10 +182,24 @@ RBClass >> isMeta [
 	^false
 ]
 
+{ #category : #testing }
+RBClass >> isSharedPool [
+	
+	^ (self allSuperclasses collect: #name) includes: #SharedPool
+]
+
+{ #category : #querying }
+RBClass >> methodsUsingClassVariableNamed: aClassVariableName [
+ 
+	^ (self realClass classVariableNamed: aClassVariableName) usingMethods collect: [ :aMethod | 			|modelClass|
+			modelClass := self model classNamed: aMethod methodClass name.
+			modelClass methodFor: aMethod selector
+		]
+]
+
 { #category : #accessing }
 RBClass >> poolDictionaryNames: aCollectionOfStrings [ 
-	poolDictionaryNames := (aCollectionOfStrings 
-				collect: [:each | each asSymbol]) asOrderedCollection
+	poolDictionaryNames := (aCollectionOfStrings collect: [:each | each asSymbol]) asOrderedCollection
 ]
 
 { #category : #private }
@@ -204,7 +218,7 @@ RBClass >> privatePoolDictionaryNames [
 	^poolDictionaryNames
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBClass >> realName: aSymbol [ 
 	self realClass: (self class environment at: aSymbol)
 ]

@@ -5,18 +5,16 @@ Class {
 }
 
 { #category : #private }
-NECContextTest >> checkUntypedVariablesOnly: aString [ 
+NECContextTest >> checkUntypedVariablesOnly: aString [
 	| context model |
-	context := self 
-		createContextFor: aString
-		at: aString size.
+	context := self createContextFor: aString at: aString size.
 	self assert: context isVariablesOnly.
 	model := context model.
 	model loadEntries.
 	self assert: model hasMessage not.
-	self assert: (model entriesOfType: #instVar) notEmpty.
+	self denyEmpty: (model entriesOfType: #instVar).
 	context narrowWith: 'a'.
-	self assert: (model entriesOfType: #selector) isEmpty
+	self assertEmpty: (model entriesOfType: #selector)
 ]
 
 { #category : #private }
@@ -437,16 +435,14 @@ NECContextTest >> testUntypedSelectorsOnly [
 	text := 'testIt: aRectangle
 	| ab bc bd |
 	ab '.
-	context := self 
-		createContextFor: text
-		at: text size.
+	context := self createContextFor: text at: text size.
 	model := context model.
 	self assert: model hasMessage.
 	self assert: model message = 'press key for selectors'.
 	context narrowWith: 'ab'.
-	self assert: (model entriesOfType: #selector) notEmpty.
-	self assert: (model entriesOfType: #local) isEmpty.
-	self assert: (model entriesOfType: #instance) isEmpty
+	self denyEmpty: (model entriesOfType: #selector).
+	self assertEmpty: (model entriesOfType: #local).
+	self assertEmpty: (model entriesOfType: #instance)
 ]
 
 { #category : #tests }
