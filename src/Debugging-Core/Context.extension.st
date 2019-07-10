@@ -295,7 +295,7 @@ Context >> stepToHome: aContext [
 	[ctxt := ctxt step.
 	error ifNotNil: [
 		"Error was raised, remove inserted above contexts then return signaler context"
-			"aContext terminateTo: context sender."  "remove above ensure and handler contexts"
+			aContext terminateTo: context sender.  "remove above ensure and handler contexts"
 			^ {ctxt. error}].
 	
 	home == ctxt home] whileFalse: [
