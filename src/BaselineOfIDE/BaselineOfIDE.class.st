@@ -258,7 +258,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'SmartSuggestions'.
 		
 		spec package: 'MonticelloMocks'.
-		spec package: 'NodeNavigation'.
 		spec package: 'OpalCompiler-Tools'.
 
 		spec package: 'OSWindow-Core'.
@@ -317,7 +316,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Multilingual-Tests'.
 		spec package: 'NewValueHolder-Tests'.		
 		spec package: 'NECompletion-Tests'.
-		spec package: 'NodeNavigation-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
 		spec package: 'PerformMessageCommandLineHandler'.
@@ -414,12 +412,7 @@ spec group: 'Optional-Group' with: #(
 	'System-Serial Port'	"standalone?"
 	'PerformMessageCommandLineHandler' 	"standalone"
 	'Files-Prompt'
-).	
-	
-spec group: 'NodeNavigation-Group' with: #(
-	'NodeNavigation'	"standalone?"
-	'NodeNavigation-Tests'	
-).					
+).				
 
 spec group: 'Epicea-Core-Group' with: #(
 	'Athens' "dependency of Hiedra"
@@ -815,10 +808,10 @@ spec group: 'GT&QA-Group' with: #(
 ).		
 
 spec group: 'UndefinedClasses-Group' with: #(
-		'ClassParser'
-		'ClassParser-Tests'
-		'UndefinedClasses'
-		'UndefinedClasses-Tests'
+	'ClassParser'
+	'ClassParser-Tests'
+	'UndefinedClasses'
+	'UndefinedClasses-Tests'
 ).		
 
 spec group: #default with: #(
@@ -849,7 +842,6 @@ spec group: #default with: #(
 	'Catalog-Group'
 	'Epicea-Group'
 	'Optional-Group'
-	'NodeNavigation-Group'
 	'General-Tests-Group'
 	'SortFunctions-Group'	
 	'ReferenceFinder-Group'
