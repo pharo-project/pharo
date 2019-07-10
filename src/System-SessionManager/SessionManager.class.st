@@ -179,7 +179,6 @@ SessionManager class >> initializedSessionManager [
 			inCategory: manager userCategory; 
 
 		registerToolClassNamed: #CPUWatcher; "Tools"
-		registerToolClassNamed: #NOCCompletionTable; "Tool"
 		registerToolClassNamed: #PharoCommonTools; "Tool"
 		registerToolClassNamed: #GTPlayBook; "Tools"
 

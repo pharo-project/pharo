@@ -1,5 +1,7 @@
 "
-The method overrided a deprecated method. This is a sign that an API has changed in an upstream project and most likely the method should override another one
+The method overrided a deprecated method. This is a sign that an API has changed in an upstream project and most likely the method should override another one.
+
+This rule will not activate if the method itself deprecated because it is make sens to deprecate the overriden methods of a deprecated method too.
 "
 Class {
 	#name : #OverridesDeprecatedMethodRule,
@@ -20,11 +22,10 @@ OverridesDeprecatedMethodRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-OverridesDeprecatedMethodRule >> check: aMethod forCritiquesDo: aCriticBlock [
+OverridesDeprecatedMethodRule >> basicCheck: aMethod [
+	aMethod isDeprecated ifTrue: [ ^ false ].
 
-	(aMethod overriddenMethods anySatisfy: #isDeprecated) ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aMethod) ]
-
+	^ aMethod overriddenMethods anySatisfy: #isDeprecated
 ]
 
 { #category : #accessing }

@@ -6,7 +6,7 @@ Class {
 	#superclass : #MorphicModel,
 	#traits : 'TEasilyThemed',
 	#classTraits : 'TEasilyThemed classTrait',
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Base'
 }
 
 { #category : #initialization }

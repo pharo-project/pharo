@@ -7,7 +7,7 @@ Class {
 { #category : #helpers }
 CDExistingClassSideDefinitionTest >> classDefinitionString [
 
-	^CDClassWithFullDefinitionExample class definitionForNautilus 
+	^ CDClassWithFullDefinitionExample class definition
 ]
 
 { #category : #helpers }

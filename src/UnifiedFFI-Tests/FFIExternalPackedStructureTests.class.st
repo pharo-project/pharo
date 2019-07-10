@@ -31,7 +31,7 @@ FFIExternalPackedStructureTests >> testExternallyAllocatedStructure [
 		self assert: struct2 double equals: 2.0.	
 		self flag: #pharoTodo. "This is not yet implemented"
 		"self assert: (struct2 int64 = 123456789101112)."	 ] 
-	ensure: [  struct free ]
+	ensure: [ struct free ]
 ]
 
 { #category : #tests }

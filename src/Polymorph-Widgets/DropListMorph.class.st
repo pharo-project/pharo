@@ -20,7 +20,7 @@ Class {
 		'useSelectionIndex',
 		'wrapSelector'
 	],
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Base'
 }
 
 { #category : #'instance creation' }

@@ -20,10 +20,8 @@ RBClassNotReferencedRule class >> uniqueIdentifierName [
 ]
 
 { #category : #enumerating }
-RBClassNotReferencedRule >> check: aClass forCritiquesDo: aCritiqueBlock [
-
-    aClass isUsed ifFalse: [
-        aCritiqueBlock cull: (self critiqueFor: aClass) ] 
+RBClassNotReferencedRule >> basicCheck: aClass [
+	^ aClass isUsed not
 ]
 
 { #category : #accessing }

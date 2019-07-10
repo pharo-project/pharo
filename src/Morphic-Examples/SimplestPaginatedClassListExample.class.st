@@ -33,14 +33,14 @@ SimplestPaginatedClassListExample >> itemsForTest [
 { #category : #view }
 SimplestPaginatedClassListExample >> openDialogOn: aClass [ 
 	rootClass := aClass.
-	^ self openDialogWindowIn: World title: 'All Object subclasses'
+	^ self openDialogWindowIn: self currentWorld title: 'All Object subclasses'
 
 ]
 
 { #category : #'instance creation' }
 SimplestPaginatedClassListExample >> openOn: aClass [ 
 	rootClass := aClass.
-	(self dialogWindowIn: World title: 'All Object subclasses') openInWorld
+	(self dialogWindowIn: self currentWorld title: 'All Object subclasses') openInWorld
 
 ]
 

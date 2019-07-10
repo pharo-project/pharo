@@ -129,7 +129,7 @@ WindowAnnouncementTest >> testScrolling [
 WindowAnnouncementTest >> testWindowCreation [
 	| t oldBounds newBounds |
 	t := 0.
-	World announcer when: WindowResizing do: [:ann | t := t + 1].
+	self currentWorld announcer when: WindowResizing do: [:ann | t := t + 1].
 	window := SystemWindow labelled: 'foo'.
 	window setProperty: #minimumExtent toValue: 1@1.
 	window openInWorld.
@@ -147,8 +147,8 @@ WindowAnnouncementTest >> testWindowCreationAndDeletion [
 	
 	| t newWindowCreated |
 	t := 0.
-	World announcer when: WindowOpened do: [:ann | t := t + 1. newWindowCreated := ann window].
-	World announcer when: WindowClosed do: [:ann | t := t + 10. newWindowCreated := ann window].
+	self currentWorld announcer when: WindowOpened do: [:ann | t := t + 1. newWindowCreated := ann window].
+	self currentWorld announcer when: WindowClosed do: [:ann | t := t + 10. newWindowCreated := ann window].
 	window := SystemWindow labelled: 'foo'.
 	window openInWorld.
 
@@ -167,7 +167,7 @@ WindowAnnouncementTest >> testWindowLabelling [
 	
 	| labels win |
 	labels := #().
-	World announcer when: WindowLabelled do: [:ann | win := ann window. labels := labels copyWith: ann label].
+	self currentWorld announcer when: WindowLabelled do: [:ann | win := ann window. labels := labels copyWith: ann label].
 	window := SystemWindow labelled: 'foo'.
 	window openInWorld.
 	self assert: win = window.

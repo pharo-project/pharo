@@ -1573,7 +1573,7 @@ MorphTreeMorph >> removeColumn: aTreeColumn [
 ]
 
 { #category : #'column handling' }
-MorphTreeMorph >> removeColumnAtIndex: aPosition. [
+MorphTreeMorph >> removeColumnAtIndex: aPosition [
 	"remove a column at a given position - rough implementation"
 	self columns removeAt: aPosition.
 	self columnsChanged.

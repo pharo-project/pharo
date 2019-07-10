@@ -15,12 +15,10 @@ RBYourselfNotUsedRule class >> uniqueIdentifierName [
 ]
 
 { #category : #enumerating }
-RBYourselfNotUsedRule >> check: aNode forCritiquesDo: aCriticBlock [
-	aNode isMessage ifFalse: [ ^ self ].
-	aNode selector = #yourself ifFalse: [ ^ self ].
-	aNode isUsed ifFalse: [ 
-		aCriticBlock cull: (
-			self critiqueFor: aNode) ]
+RBYourselfNotUsedRule >> basicCheck: aNode [
+	aNode isMessage ifFalse: [ ^ false ].
+	aNode selector = #yourself ifFalse: [ ^ false ].
+	^ aNode isUsed not
 ]
 
 { #category : #accessing }

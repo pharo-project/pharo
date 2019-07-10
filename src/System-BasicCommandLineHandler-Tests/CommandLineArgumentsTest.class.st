@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'commandLine'
 	],
-	#category : #'System-BasicCommandLineHandler-Tests'
+	#category : #'System-BasicCommandLineHandler-Tests-Utilities'
 }
 
 { #category : #accessing }
@@ -23,7 +23,7 @@ CommandLineArgumentsTest >> parameters [
 { #category : #running }
 CommandLineArgumentsTest >> setUp [
 	super setUp.
-	commandLine := CommandLineArguments withArguments: self parameters.
+	commandLine := CommandLineArguments withArguments: self parameters
 ]
 
 { #category : #tests }
@@ -40,7 +40,7 @@ CommandLineArgumentsTest >> testAllParameters [
 { #category : #tests }
 CommandLineArgumentsTest >> testHasFilesTyped [
 	self assert: (self commandLine hasFileWithExtension: #txt).
-	self deny: (self commandLine hasFileWithExtension: #foo).
+	self deny: (self commandLine hasFileWithExtension: #foo)
 ]
 
 { #category : #tests }
@@ -50,7 +50,7 @@ CommandLineArgumentsTest >> testHasOption [
 	self assert: (self commandLine hasOption: #option5).
 	self assert: (self commandLine hasOption: #o).
 	self deny: (self commandLine hasOption: #foo).
-	self deny: (self commandLine hasOption: #option5Value).
+	self deny: (self commandLine hasOption: #option5Value)
 ]
 
 { #category : #tests }
@@ -67,7 +67,7 @@ CommandLineArgumentsTest >> testOptionAt [
 	self should: [ self commandLine optionAt: #foo ] raise: Error.
 	
 	self assert: (self commandLine optionAt: #o) equals: 'oValue'.
-	self should: [ self commandLine optionAt: #x ] raise: Error.
+	self should: [ self commandLine optionAt: #x ] raise: Error
 ]
 
 { #category : #tests }
@@ -77,13 +77,13 @@ CommandLineArgumentsTest >> testOptionAtifAbsent [
 	self assert: (self commandLine optionAt: #option5) equals: 'option5Value'.
 	self assert: (self commandLine optionAt: #foo ifAbsent: [ nil ]) equals: nil.
 	self assert: (self commandLine optionAt: #o) equals: 'oValue'.
-	self assert: (self commandLine optionAt: #x ifAbsent: [ nil ]) equals: nil.
+	self assert: (self commandLine optionAt: #x ifAbsent: [ nil ]) equals: nil
 ]
 
 { #category : #tests }
 CommandLineArgumentsTest >> testParameterAt [
-	self assert: (self commandLine argumentAt: 1) = 'noOpt1'.
-	self assert: (self commandLine argumentAt: 4) = '--option1'.
-	self deny: (self commandLine argumentAt: 5) = 'foo'.
-	self deny: (self commandLine argumentAt: 1) isNil.
+	self assert: (self commandLine argumentAt: 1) equals: 'noOpt1'.
+	self assert: (self commandLine argumentAt: 4) equals: '--option1'.
+	self deny: (self commandLine argumentAt: 5) equals: 'foo'.
+	self deny: (self commandLine argumentAt: 1) isNil
 ]

@@ -18,7 +18,8 @@ RBAddMethodTest >> testAddMethod [
 		toClass: RBBasicLintRuleTestData
 		inProtocols: #(#accessing ).
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeFor: #printString1) = (RBParser parseMethod: 'printString1 ^super printString')
+	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeFor: #printString1) 
+		equals: (self parseMethod: 'printString1 ^super printString')
 ]
 
 { #category : #'failure tests' }
@@ -48,7 +49,7 @@ RBAddMethodTest >> testModelAddMethod [
 				inProtocols: #(#accessing).
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #printString1) 
-				= (RBParser parseMethod: 'printString1 ^super printString')
+		  equals: (self parseMethod: 'printString1 ^super printString')
 ]
 
 { #category : #'failure tests' }

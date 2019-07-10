@@ -127,7 +127,7 @@ FFICalloutAPITests >> testByteArrayToExternalAddress [
 		toExternalAddress: (dest := ExternalAddress allocate: 12) autoRelease 
 		size: 12.
 		
-	self assert: (dest copyFrom: 1 to: 12) asString = 'Hello, World'.
+	self assert: (dest copyFrom: 1 to: 12) asString equals: 'Hello, World'.
 	
 ]
 
@@ -176,7 +176,7 @@ FFICalloutAPITests >> testCallWithObjectCreation [
 	[
 		self shouldnt: [ object := FFICalloutObjectForTest primCreate: 1 ] raise: Error.
 		self assert: object notNil.
-		self assert: object class = FFICalloutObjectForTest.
+		self assert: object class equals: FFICalloutObjectForTest.
 		self assert: object handle notNil.
 		self deny: object handle isNull ]
 	ensure: [ 
@@ -201,7 +201,7 @@ FFICalloutAPITests >> testCallWithObjectParameter [
 	self 
 		shouldnt: [ FFICalloutObjectForTest primObject: object strcpy: text ] 
 		raise: Error.
-	self assert: object handle asString = (text copyWith: (Character value: 0))
+	self assert: object handle asString equals: (text copyWith: (Character value: 0))
 ]
 
 { #category : #'tests object' }
@@ -219,7 +219,7 @@ FFICalloutAPITests >> testCallWithSelfParameter [
 		shouldnt: [ object strcpy: 'Hello, World' ] 
 		raise: Error.
 	"Since is a strcpy it will answer a byte array terminated in zero"
-	self assert: object handle asString = ('Hello, World' copyWith: (Character value: 0))
+	self assert: object handle asString equals: ('Hello, World' copyWith: (Character value: 0))
 ]
 
 { #category : #'tests atomic' }
@@ -237,7 +237,7 @@ FFICalloutAPITests >> testCharCall [
 	self assert: result equals: $a.
 
 	result := self ffiToLower: true.
-	self assert: result equals: (Character value: 1).
+	self assert: result equals: (Character value: 1)
 
 ]
 
@@ -247,7 +247,8 @@ FFICalloutAPITests >> testCharPointer [
 	result := self 
 		primStr: ('Hello, ' asByteArray copyWith: 0) 
 		cat: ('World' asByteArray copyWith: 0).
-	self assert: result = 'Hello, World'.
+				
+	self assert: result equals: 'Hello, World'.
 ]
 
 { #category : #'tests atomic' }
@@ -270,7 +271,7 @@ FFICalloutAPITests >> testDoubleCall [
 	self assert: result equals: 65.0.
 
 	result := self ffiDoubleAbs: true.
-	self assert: result equals: 1.0.
+	self assert: result equals: 1.0
 
 ]
 
@@ -294,7 +295,7 @@ FFICalloutAPITests >> testFloatCall [
 	self assert: result equals: 65.0.
 
 	result := self ffiFloatAbs: true.
-	self assert: result equals: 1.0.
+	self assert: result equals: 1.0
 
 	
 
@@ -335,7 +336,7 @@ FFICalloutAPITests >> testLongLongs [
 	self assert: result equals: long1.
 	
 	result := self ffiLongLongAbs: long2.
-	self assert: result equals: long2 abs.
+	self assert: result equals: long2 abs
 ]
 
 { #category : #'tests atomic' }
@@ -346,7 +347,7 @@ FFICalloutAPITests >> testPrintString [
 	buffer := ByteArray new: 12.
 	result := self ffiCopyString: 'Hello World!' to: buffer.
 	self assert: result equals: 'Hello World!'.
-	self assert: buffer asString equals: 'Hello World!'.	
+	self assert: buffer asString equals: 'Hello World!'
 ]
 
 { #category : #'tests pointer' }
@@ -358,5 +359,6 @@ FFICalloutAPITests >> testVoidPointer [
 		to: (dest := ByteArray new: 12) 
 		size: 12.
 		
-	self assert: dest asString = 'Hello, World'
+	self deny: result isNull.	
+	self assert: dest asString equals: 'Hello, World'
 ]

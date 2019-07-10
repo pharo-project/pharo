@@ -7,7 +7,8 @@ Class {
 	#name : #AthensWorldState,
 	#superclass : #WorldState,
 	#instVars : [
-		'display'
+		'display',
+		'canvas'
 	],
 	#category : #'Athens-Morphic'
 }

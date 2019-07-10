@@ -9,19 +9,24 @@ Class {
 		'checkboxDisabled',
 		'checkboxWithColor',
 		'checkboxWithHelp',
-		'checkboxWithLabelOnLeft'
+		'checkboxWithLabelOnLeft',
+		'checkboxExample'
 	],
 	#category : #'Spec-Examples-Demo-Checkboxes'
 }
 
 { #category : #specs }
 SpecDemoCheckboxesPresenter class >> defaultSpec [
-	^ SpecBoxLayout newVertical
-		add: #checkboxNormal;
-		add: #checkboxDisabled;
-		add: #checkboxWithColor;
-		add: #checkboxWithHelp;
-		add: #checkboxWithLabelOnLeft;
+	^ SpecBoxLayout newHorizontal
+		add:
+			(SpecBoxLayout newVertical
+				add: #checkboxNormal;
+				add: #checkboxDisabled;
+				add: #checkboxWithColor;
+				add: #checkboxWithHelp;
+				add: #checkboxWithLabelOnLeft;
+				yourself);
+		add: #checkboxExample;
 		yourself
 ]
 
@@ -95,6 +100,7 @@ SpecDemoCheckboxesPresenter >> initializeWidgets [
 	checkboxWithLabelOnLeft := self newCheckBox 
 		label: 'left';
 		yourself.
+	checkboxExample := self instantiate: CheckBoxExample.
 		
 	self whenBuiltDo: [ 
 		checkboxWithLabelOnLeft labelOnLeft.].		

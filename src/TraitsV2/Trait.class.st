@@ -199,22 +199,16 @@ Trait >> definition [
 	]
 ]
 
-{ #category : #accessing }
-Trait >> definitionForNautilus [
-
-	^ self definition
-]
-
-{ #category : #accessing }
-Trait >> definitionForNautilusWithSlots [
-
-	^ self definition
-]
-
 { #category : #testing }
 Trait >> isBaseTrait [
 	
 	^ true
+]
+
+{ #category : #testing }
+Trait >> isClass [
+	
+	^ false
 ]
 
 { #category : #testing }
@@ -243,6 +237,12 @@ Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCatego
 	"When there is a recategorization of a selector, I propagate the changes to my users"
 	super notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory.
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
+]
+
+{ #category : #'filein/out' }
+Trait >> oldDefinition [
+
+	^ self definition
 ]
 
 { #category : #'accessing method dictionary' }

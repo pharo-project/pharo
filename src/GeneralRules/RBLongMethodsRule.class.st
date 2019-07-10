@@ -28,16 +28,16 @@ RBLongMethodsRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBLongMethodsRule >> check: aMethod forCritiquesDo: aCriticBlock [
+RBLongMethodsRule >> basicCheck: aMethod [
 	| numberOfStatements |
 	numberOfStatements := 0.
 
-	(aMethod ast nodesDo: [ :node |
-		node isSequence ifTrue: [ 
-			numberOfStatements := numberOfStatements + node statements size.
-			numberOfStatements >= self longMethodSize ifTrue: [
-				^ aCriticBlock cull: (self critiqueFor: aMethod) ] ] ])
-		
+	aMethod ast
+		nodesDo: [ :node | 
+			node isSequence
+				ifTrue: [ numberOfStatements := numberOfStatements + node statements size.
+					numberOfStatements >= self longMethodSize ifTrue: [ ^ true ] ] ].
+	^ false
 ]
 
 { #category : #accessing }

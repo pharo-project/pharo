@@ -8,7 +8,6 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'classFactory',
-		'navigator',
 		'oldSystemAnnouncer'
 	],
 	#category : #'System-Support-Tests'
@@ -26,30 +25,7 @@ SystemNavigationTest >> classFactory [
 
 { #category : #'setUp-tearDown' }
 SystemNavigationTest >> createClassFactory [
-	^ ClassFactoryWithOrganization newWithOrganization: self organizationToTest
-]
-
-{ #category : #utilities }
-SystemNavigationTest >> createMethodNamed: selector realParent: class [
-
-	^ RGMethodDefinition realClass: class selector: selector
-]
-
-{ #category : #'setUp-tearDown' }
-SystemNavigationTest >> createSystemNavigationToTest [
-	^SystemNavigation new
-]
-
-{ #category : #accessing }
-SystemNavigationTest >> environmentToTest [
-	^self systemNavigationToTest environment
-	
-]
-
-{ #category : #accessing }
-SystemNavigationTest >> organizationToTest [
-	^self environmentToTest organization
-	
+	^ ClassFactoryWithOrganization newWithOrganization: self systemNavigationToTest environment organization
 ]
 
 { #category : #running }
@@ -59,13 +35,12 @@ SystemNavigationTest >> setUp [
 	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
 	SystemAnnouncer announcer: nil.
 	
-	navigator := self createSystemNavigationToTest.
 	classFactory := self createClassFactory.
 ]
 
 { #category : #accessing }
 SystemNavigationTest >> systemNavigationToTest [
-	^navigator
+	^SystemNavigation new
 	
 ]
 
@@ -93,36 +68,20 @@ SystemNavigationTest >> testAllExistingProtocolsFor [
 ]
 
 { #category : #testing }
-SystemNavigationTest >> testAllReferencesToPool [
-	| result |
-	
-	result := self systemNavigationToTest allReferencesToPool: FooSharedPool.
-	self assert: result size = 1.
-]
-
-{ #category : #testing }
-SystemNavigationTest >> testAllReferencesToPoolWhenNoRefences [
-	| result |
-	
-	result := self systemNavigationToTest allReferencesToPool: UnreferencedSharedPool.
-	self assert: result size = 0.
-]
-
-{ #category : #testing }
 SystemNavigationTest >> testAllSendersOfASelector [
 	| senders selector class otherClass callers |
-	selector := ('aMethod', 'WithSenders') asSymbol.
-	
+	selector := ('aMethod' , 'WithSenders') asSymbol.
 	class := self classFactory newClass.
-	class compileSilently: selector asString, ' ^ self'.
-	class compileSilently: 'anotherMethod ^self ', selector asString.
+	class compileSilently: selector asString , ' ^ self'.
+	class compileSilently: 'anotherMethod ^self ' , selector asString.
 	otherClass := self classFactory newClass.
-	otherClass compileSilently: 'yetAnotherMethod ^self ', selector asString.
+	otherClass
+		compileSilently: 'yetAnotherMethod ^self ' , selector asString.
 	senders := self systemNavigationToTest allSendersOf: selector.
-	self assert: senders size = 2.
-	callers := senders collect: [ :methodRef | methodRef selector].
-	self assert: (callers includesAll: #(#anotherMethod #yetAnotherMethod))
-
+	self assert: senders size equals: 2.
+	callers := senders collect: [ :methodRef | methodRef selector ].
+	self
+		assert: (callers includesAll: #(#anotherMethod #yetAnotherMethod))
 ]
 
 { #category : #testing }
@@ -180,17 +139,4 @@ SystemNavigationTest >> testIsUnsentMessage [
 	class := self classFactory newClass.
 	class compileSilently: 'messageNeverSentInTheSystemXXXXThisIsForTest ^self'.
 	self assert: (self systemNavigationToTest isUnsentMessage: class selectors anyOne)
-]
-
-{ #category : #testing }
-SystemNavigationTest >> testRetrievingCategoriesInAPackage [
-	| retrievedCategories |
-	#(#CategoryForTest #'CategoryForTest-Core' #'CategoryForTest-Tests' #CategoryForTest #ForTestCategory #'ForTestCategory-Core') do: [ :catName | self classFactory newClassInCategory: catName ].
-
-	retrievedCategories := self systemNavigationToTest categoriesInPackageNamed: 'CategoryForTest'.
-	self assert: (retrievedCategories includesAll: #(#CategoryForTest #'CategoryForTest-Core' #'CategoryForTest-Tests')).
-	retrievedCategories := self systemNavigationToTest categoriesInPackageNamed: 'CategoryForTest-Core'.
-	self assert: (retrievedCategories includesAll: #(#'CategoryForTest-Core')).
-	retrievedCategories := self systemNavigationToTest categoriesInPackageNamed: 'CategoryFor'.
-	self assertEmpty: retrievedCategories
 ]

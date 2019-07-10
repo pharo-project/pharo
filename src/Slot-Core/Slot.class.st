@@ -66,6 +66,11 @@ Slot class >> initialize [
 		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
 ]
 
+{ #category : #testing }
+Slot class >> isUsed [
+	^super isUsed or: [self slotUsers isNotEmpty ]
+]
+
 { #category : #'instance creation' }
 Slot class >> named: aSymbol [
 	self checkValidName: aSymbol.
@@ -92,6 +97,13 @@ Slot class >> slotSetting: aBuilder [
 		description: 'If checked then browsers show always the slot class definition';
 		parent: #codeBrowsing; 
 		target: self
+]
+
+{ #category : #testing }
+Slot class >> slotUsers [
+	"all classes or traits that have slots of this kind"
+	^self environment allBehaviors 
+		flatCollect:  [ :class | class slots select: [ :slot | slot class == self ] ]
 ]
 
 { #category : #comparing }
@@ -151,13 +163,13 @@ Slot >> definitionString [
 Slot >> emitStore: aMethodBuilder [
 	"generate bytecode to call the reflective write method of the Slot"
 	| tempName |
-	tempName := Object new.  "we need a unique Object as a temp name"
+	tempName := '0slotTempForStackManipulation'.  
 	aMethodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
 		popTop;
 		pushReceiver;
-		pushLiteralVariable: #slot -> self;
+		pushLiteralVariable: (AdditionalBinding key: #slot value: self);
 		pushTemp: tempName;
 		send: #writeSlot:value:
 ]
@@ -165,7 +177,7 @@ Slot >> emitStore: aMethodBuilder [
 { #category : #'code generation' }
 Slot >> emitValue: aMethodBuilder [
 	aMethodBuilder
-		pushLiteralVariable: #slot -> self;
+		pushLiteralVariable: (AdditionalBinding key: #slot value: self);
 		pushReceiver;
 		send: #read:
 ]
@@ -252,6 +264,11 @@ Slot >> isLocal [
 Slot >> isReadIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableReadNodes
 		 anySatisfy: [ :node | node binding slot == self ]
+]
+
+{ #category : #testing }
+Slot >> isReferenced [
+	^self usingMethods isNotEmpty
 ]
 
 { #category : #testing }

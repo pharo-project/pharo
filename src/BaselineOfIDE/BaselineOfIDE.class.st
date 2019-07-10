@@ -99,7 +99,7 @@ BaselineOfIDE >> additionalInitialization [
 		Undeclared removeUnreferencedKeys.].
 	
 	self loadIceberg.	
-	self loadCalypso.
+	self makeCalypsoDefaultBrowser.
 ]
 
 { #category : #baseline }
@@ -164,9 +164,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Network-Tests'.
 		spec package: 'Tests'.
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
-		spec package: 'AST-Tests-Core'.
+		spec package: 'AST-Core-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'Fuel-Tests-Core'.
+		spec package: 'Fuel-Platform-Pharo-Core-Tests'.
 		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
@@ -273,7 +274,7 @@ BaselineOfIDE >> baseline: spec [
 
 		"standalone packages"
 		spec package: 'Announcements-Help'.
-		spec package: 'Announcements-Tests-Core'.
+		spec package: 'Announcements-Core-Tests'.
 		spec package: 'Balloon-Tests'.
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
@@ -302,7 +303,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GT-Tests-Spotter'.
 		spec package: 'Glamour-Morphic-Brick-Tests'.
 		spec package: 'Glamour-Tests-Rubric'.
-		spec package: 'Gofer-UI'.	
 		spec package: 'Graphics-Tests'.
 		spec package: 'HelpSystem-Tests'.
 		spec package: 'IssueTracking-Tests'.
@@ -332,7 +332,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Reflectivity-Examples'.
 		spec package: 'Reflectivity-Tools-Tests'.
 		spec package: 'Regex-Help'.
-		spec package: 'Regex-Tests-Core'.
+		spec package: 'Regex-Core-Tests'.
 		spec package: 'Renraku-Help'.
 		spec package: 'Renraku-Test'.
 		spec package: 'Ring-Deprecated-Tests-Monticello'.
@@ -382,6 +382,12 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'UndefinedClasses'.
 		spec package: 'UndefinedClasses-Tests'.
 
+		spec baseline: 'Calypso' with: [ 
+			spec
+				repository: repository;
+				loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
+
+
       self groups: spec.
 	].
 
@@ -403,7 +409,6 @@ spec group: 'Optional-Group' with: #(
 	'STON-Text support'	"standalone?"
 	'System-CommandLine-TextSupport'	"standalone?"
 	'System-Serial Port'	"standalone?"
-	'Gofer-UI'	"standalone"
 	'PerformMessageCommandLineHandler' 	"standalone"
 	'Files-Prompt'
 ).	
@@ -443,6 +448,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Monticello-Tests'	"required by MonticelloMocks"
 	'MonticelloMocks'
 	'Fuel-Tests-Core'
+	'Fuel-Platform-Pharo-Core-Tests'	
 	'Balloon-Tests'
 	'Collections-DoubleLinkedList-Tests'
 	'Collections-Arithmetic-Tests'
@@ -456,7 +462,6 @@ spec group: 'General-Tests-Group' with: #(
 	'FreeType-Tests'
 	'FreeType-Help'
 
-	'Gofer-UI'	
 	'Graphics-Tests'
 	'HelpSystem-Tests'
 	'IssueTracking-Tests'
@@ -469,7 +474,7 @@ spec group: 'General-Tests-Group' with: #(
 	'NewValueHolder-Tests'
 	'ProfStef-Tests'
 	'Reflectivity-Tools-Tests'
-	'Regex-Tests-Core'
+	'Regex-Core-Tests'
 	'Ring-Deprecated-Tests-Monticello'
 	'Rubric-Tests'
 	'ScriptingExtensions-Tests'
@@ -757,8 +762,8 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Kernel-Tests' 
 	'Kernel-Tests-Extended' 
 	'Kernel-Tests-WithCompiler'
-	'AST-Tests-Core' "requires BlueInk-Core"
-	'Announcements-Tests-Core'
+	'AST-Core-Tests' "requires BlueInk-Core"
+	'Announcements-Core-Tests'
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
@@ -858,36 +863,27 @@ spec group: #default with: #(
 	
 	'Refactoring2-Group'
 	'UndefinedClasses-Group'
+	
+	'Calypso'
 ).
 
-]
-
-{ #category : #actions }
-BaselineOfIDE >> loadCalypso [
-
-	"Load Calypso without Iceberg Metacello integration"
-	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
-
-	Metacello new
-		baseline: 'Calypso';
-		repository: 'github://pharo-ide/Calypso:v0.16.4/src';
-		onConflict: [ :err | err useIncoming ];
-		onUpgrade: [ :err | err useIncoming ];
-		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
-
-	(self class environment at: #ClyBrowserMorph) beAllDefault.
-	
-	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
 ]
 
 { #category : #actions }
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.7.0';
+		repository: 'github://pharo-vcs/iceberg:v1.7.2';
+		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 	(Smalltalk classNamed: #IcePharoPlugin) addPharoProjectToIceberg.
+]
+
+{ #category : #actions }
+BaselineOfIDE >> makeCalypsoDefaultBrowser [
+
+	(self class environment at: #ClyBrowserMorph) beAllDefault.
 ]
 
 { #category : #actions }

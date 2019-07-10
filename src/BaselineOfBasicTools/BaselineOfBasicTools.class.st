@@ -85,9 +85,9 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Regex-Help'.
 		spec package: 'IssueTracking'.
 		spec package: 'Monticello-OldDataStreamCompatibility'. 
-		spec package: 'MonticelloFileServices'.			
-		spec package: 'Spec-Examples'.
+		spec package: 'MonticelloFileServices'.
 		spec package: 'Spec-Help'.	
+		spec package: 'Spec2-Help'.	
 		spec package: 'Tool-Diff'.
 		spec package: 'Tool-FileList'.
 		spec package: 'Tool-Finder'.
@@ -107,7 +107,7 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	Smalltalk tools register: MCWorkingCopyBrowser as: #monticelloBrowser.
 	
 	BIConfigurableFormatter initialize.
-	
+	RBRefactoryChangeManager nuke.
 	Smalltalk garbageCollect.
 	Smalltalk cleanOutUndeclared. 
 

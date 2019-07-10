@@ -793,7 +793,7 @@ RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 { #category : #'completion engine' }
 RubSmalltalkEditor >> isCompletionEnabled [
 
-	^ completionEngine isNil not
+	^ completionEngine isNotNil and: [ self editingMode isCompletionEnabled ]
 ]
 
 { #category : #testing }
@@ -988,7 +988,7 @@ RubSmalltalkEditor >> referencesTo: aVariableOrClassName [
 	env := self modelCurrentSelectedClass ifNil: [ Smalltalk globals ].
 
 	env isBehavior ifTrue: [
-		(env instVarIndexFor: aVariableOrClassName) > 0 ifTrue: [
+		(env hasSlotNamed: aVariableOrClassName) ifTrue: [
 		 ^ self systemNavigation browseAllAccessesTo: aVariableOrClassName from: env]].
 
 	ref:= (env bindingOf: aVariableOrClassName) ifNil: [ ^ self ].

@@ -573,7 +573,7 @@ FileReference >> symlinkEntry [
 	^ filesystem symlinkEntryAt: path
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FileReference >> symlinkUid: uid gid: gid [
 	"Set the owner and group of the receiver by numeric id.
 	An id of nil leaves it unchanged."
@@ -593,7 +593,7 @@ FileReference >> uid [
 	^ filesystem uidOf: path
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FileReference >> uid: uid gid: gid [
 	"Set the owner and group of the receiver by numeric id.
 	An id of nil leaves it unchanged."

@@ -33,7 +33,7 @@ FTBasicTreeListDataSource class >> exampleBasicInspect: anObject [
 		yourself.
 	
 	ft := FTTableMorph new 
-		extent: 600@(World clearArea height - 80);
+		extent: 600@(self currentWorld clearArea height - 80);
 		dataSource: ds.
 	
 	ft openInWindow position: 20@10.
@@ -62,7 +62,7 @@ FTBasicTreeListDataSource class >> exampleInspect: anObject [
 	ds expand: 1.
 	
 	ft := FTTableMorph new 
-		extent: 800@(World clearArea height // 2);
+		extent: 800@(self currentWorld clearArea height // 2);
 		dataSource: ds.
 	
 	ft openInWindow position: 20@10.
@@ -128,7 +128,7 @@ FTBasicTreeListDataSource class >> exampleStateTree [
 	ds expand: 3.
 	
 	ft := FTTableMorph new 
-		extent: 600@(World clearArea height - 80);
+		extent: 600@(self currentWorld clearArea height - 80);
 		dataSource: ds.
 	
 	ft openInWindow position: 20@10
@@ -140,14 +140,14 @@ FTBasicTreeListDataSource class >> exampleWorldSubmorphTree [
 	| ds ft |
 
 	ds := FTBasicTreeListDataSource new 
-		root: World;
+		root: self currentWorld;
 		children: [ :item | item submorphs ];
 		expand: 2;
 		display: [ :item :cell | cell addMorphBack: item printString asMorph ];
 		yourself.
 
 	ft := FTTableMorph new 
-		extent: 400@(World clearArea height - 80);
+		extent: 400@(self currentWorld clearArea height - 80);
 		dataSource: ds.
 	
 	ft openInWindow position: 20@10

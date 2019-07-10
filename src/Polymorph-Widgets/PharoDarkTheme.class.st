@@ -308,7 +308,7 @@ PharoDarkTheme >> menuBorderColor [
 
 { #category : #'accessing colors' }
 PharoDarkTheme >> menuBorderWidth [
-	^ self borderWidth * World displayScaleFactor
+	^ self borderWidth * self currentWorld displayScaleFactor
 ]
 
 { #category : #defaults }

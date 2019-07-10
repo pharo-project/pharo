@@ -197,6 +197,12 @@ FTBasicItem >> expandedButton [
 		borderWidth: 0
 ]
 
+{ #category : #accessing }
+FTBasicItem >> expandedChildren [
+	self isExpanded ifFalse: [ ^ {} ].
+	^ self children flatCollect: #withExpandedChildren
+]
+
 { #category : #button }
 FTBasicItem >> generateButton [
 	^ isExpanded
@@ -255,4 +261,9 @@ FTBasicItem >> refreshTable [
 { #category : #updating }
 FTBasicItem >> updateData [
 	children := nil
+]
+
+{ #category : #accessing }
+FTBasicItem >> withExpandedChildren [
+	^ {self} , self expandedChildren
 ]

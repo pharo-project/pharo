@@ -22,15 +22,14 @@ RBEquivalentSuperclassMethodsRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBEquivalentSuperclassMethodsRule >> check: aMethod forCritiquesDo: aCritiqueBlock [
-    (self ignoredSelectors includes: aMethod selector)
-        ifTrue: [ ^ self ].
-    aMethod methodClass superclass
-        ifNotNil: [ :superclass |
-            (superclass lookupSelector: aMethod selector)
-            ifNotNil: [ :overridenMethod |
-                aMethod ast = overridenMethod ast ifTrue: [
-                     aCritiqueBlock cull: (self critiqueFor: aMethod) ] ] ]
+RBEquivalentSuperclassMethodsRule >> basicCheck: aMethod [
+	(self ignoredSelectors includes: aMethod selector) ifTrue: [ ^ false ].
+
+	^ aMethod methodClass superclass
+		ifNotNil: [ :superclass | (superclass lookupSelector: aMethod selector)
+			ifNotNil: [ :overridenMethod | aMethod ast = overridenMethod ast ]
+			ifNil: [ false ] ]
+		ifNil: [ false ]
 ]
 
 { #category : #accessing }

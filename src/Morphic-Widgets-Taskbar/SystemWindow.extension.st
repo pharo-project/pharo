@@ -160,7 +160,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		enablementSelector: true.
 	submenu
 		addToggle: 'unchanged windows' translated
-		target: World
+		target: self currentWorld
 		selector: #closeAllUnchangedWindows
 		getStateSelector: nil
 		enablementSelector: true.

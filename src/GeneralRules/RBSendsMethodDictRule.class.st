@@ -20,12 +20,9 @@ RBSendsMethodDictRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBSendsMethodDictRule >> check: aMethod forCritiquesDo: aCriticBlock [	
-	({Behavior. ClassDescription. Class. } includes: aMethod methodClass)
-		ifTrue: [ ^ self ].
-	(aMethod messages includes: #methodDict) ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aMethod) ]
-		
+RBSendsMethodDictRule >> basicCheck: aMethod [
+	({Behavior . ClassDescription . Class} includes: aMethod methodClass) ifTrue: [ ^ false ].
+	^ aMethod messages includes: #methodDict
 ]
 
 { #category : #accessing }

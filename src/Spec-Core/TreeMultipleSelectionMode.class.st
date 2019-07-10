@@ -38,9 +38,22 @@ TreeMultipleSelectionMode >> selectPath: aPath [
 	selection := selection copyWith: aPath.
 ]
 
+{ #category : #selection }
+TreeMultipleSelectionMode >> selectPaths: pathArray [
+	pathArray
+		do: [ :path | presenter itemAtPath: path ifAbsent: [ ^ self ] ].
+	selection := pathArray
+]
+
 { #category : #accessing }
 TreeMultipleSelectionMode >> selectedItem [
 	self shouldBeImplemented.
+]
+
+{ #category : #accessing }
+TreeMultipleSelectionMode >> selectedItems [
+	selection ifEmpty: [ ^ nil ].
+	^ selection collect: [ :path | presenter itemAtPath: path ]
 ]
 
 { #category : #accessing }

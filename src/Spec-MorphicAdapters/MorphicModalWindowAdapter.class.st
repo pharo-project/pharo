@@ -41,7 +41,7 @@ MorphicModalWindowAdapter >> open [
 	backdropMorph := Morph new
 		color: (Color black alpha: 0.7);
 		beSticky;
-		extent: World extent;
+		extent: self currentWorld extent;
 		openInWorld;
 		takeKeyboardFocus;
 		on: #click send: #mouseClick:onBackdrop: to: self;
@@ -50,7 +50,7 @@ MorphicModalWindowAdapter >> open [
 	self widget
 		setProperty: #morphicLayerNumber toValue: 1;
 		toggleStickiness;
-		center: World clearArea center.
+		center: self currentWorld clearArea center.
 		
 	backdropMorph openModal: self widget
 ]

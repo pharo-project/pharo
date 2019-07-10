@@ -33,7 +33,7 @@ FFICharacterType >> basicHandle: aHandle at: index put: value [
 	^ aHandle signedCharAt: index put: value
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 FFICharacterType >> defaultReturnOnError [
 
 	^ Character null

@@ -309,7 +309,7 @@ SourceFileArray >> finishedReading: aReadOnlyFileArray from: aQueue [
 SourceFileArray >> flushChangesFile [
 	
 	flushChanges ifFalse: [ ^ self ].
-	self changesFileStream ifNotNil: #flush.
+	self changesFileStream ifNotNil: [:stream | stream flush].
 ]
 
 { #category : #'public - file system operations' }
@@ -318,7 +318,8 @@ SourceFileArray >> forceChangesToDisk [
 
 	| changesFile |
 	changesFile := self changesFileStream.
-	changesFile flush.
+	changesFile isReadOnly ifFalse: [ 
+		changesFile flush ].
 	changesFile close.
 	changesFile tryOpen.
 	changesFile setToEnd

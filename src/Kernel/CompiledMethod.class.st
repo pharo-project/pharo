@@ -324,6 +324,11 @@ CompiledMethod class >> toReturnSelfTrailerBytes: trailer [
 	^self newBytes: 3 trailerBytes: trailer nArgs: 0 nTemps: 0 nStack: 0 nLits: 2 primitive: 256
 ]
 
+{ #category : #'source code management' }
+CompiledMethod >> argumentNames [
+	^ self propertyAt: #argumentNames ifAbsent: [ super argumentNames ]
+]
+
 { #category : #'accessing-backward compatible' }
 CompiledMethod >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
@@ -1069,7 +1074,8 @@ CompiledMethod >> tags [
 
 { #category : #'source code management' }
 CompiledMethod >> tempNames [
-	^self methodNode tempNames.
+	"on the level of the compiled method, tempNames includes argument names"
+	^self ast argumentNames, self ast temporaryNames
 ]
 
 { #category : #'accessing-tags' }

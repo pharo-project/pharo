@@ -4,7 +4,7 @@ Groupbox without title with a vertical layout. Appears in a lighter colour than 
 Class {
 	#name : #PlainGroupboxMorph,
 	#superclass : #PanelMorph,
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Base'
 }
 
 { #category : #accessing }

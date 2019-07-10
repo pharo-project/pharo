@@ -59,7 +59,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #('AST-Tests-Core' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
+	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
 	#'Athens-Morphic' 'Glamour-Morphic-Widgets' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout #'Tool-Catalog' 'ParametrizedTests') sorted
 ]
 
@@ -161,7 +161,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 ]
 
 { #category : #'known-dependencies' }
-SystemDependenciesTest >> knownSpecDependencies [
+SystemDependenciesTest >> knownSpec2Dependencies [
 	
 	^ #(
 		'WebBrowser-Core' "Spec's Link adapter"
@@ -182,7 +182,7 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #('AST-Tests-Core' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
+	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
 	#'Athens-Morphic' #'Glamour-Morphic-Widgets' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
 ]
 
@@ -225,6 +225,8 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
+		{ BaselineOfCommander2 name }, BaselineOfCommander2 allPackageNames,
+		{ BaselineOfSpec2 name }, BaselineOfSpec2 allPackageNames,
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames ).
 	
 	self assertCollection: dependencies equals: self knownBasicToolsDependencies.
@@ -295,6 +297,8 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
 	BaselineOfSpec.
+	BaselineOfCommander2.
+	BaselineOfSpec2.
 	BaselineOfParametrizedTests.
 	BaselineOfSUnit.
 	BaselineOfTraits.
@@ -441,7 +445,7 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 ]
 
 { #category : #tests }
-SystemDependenciesTest >> testExternalSpecDependencies [
+SystemDependenciesTest >> testExternalSpec2Dependencies [
 
 	| dependencies | 
 	
@@ -460,7 +464,9 @@ SystemDependenciesTest >> testExternalSpecDependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 
-		BaselineOfSpec allPackageNames,
+		BaselineOfCommander2 allPackageNames,
+		
+		BaselineOfSpec2 allPackageNames,
 	
 
 		"Tests"
@@ -468,7 +474,7 @@ SystemDependenciesTest >> testExternalSpecDependencies [
 		BaselineOfParametrizedTests allPackageNames))
 			copyWithoutAll: self knownMorphicDependencies, self knownBasicToolsDependencies, self knownUIDependencies.
 
-	self assertCollection: dependencies equals: self knownSpecDependencies
+	self assertCollection: dependencies equals: self knownSpec2Dependencies
 ]
 
 { #category : #tests }
@@ -506,6 +512,8 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
+		BaselineOfCommander2 allPackageNames,
+		BaselineOfSpec2 allPackageNames,
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames )).
 	

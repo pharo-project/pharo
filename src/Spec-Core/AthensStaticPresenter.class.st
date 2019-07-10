@@ -28,9 +28,7 @@ AthensStaticPresenter >> drawBlock: aBlock [
 
 { #category : #initialization }
 AthensStaticPresenter >> initialize [
-	self class initializeSlots: self.
 	super initialize.
-	
 ]
 
 { #category : #initialization }

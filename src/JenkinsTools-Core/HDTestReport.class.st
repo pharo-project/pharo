@@ -341,7 +341,7 @@ HDTestReport >> writeError: error stack: stack [
 ]
 
 { #category : #private }
-HDTestReport >> writeException: error stack: stack. [
+HDTestReport >> writeException: error stack: stack [
 
 	stream 
 		nextPutAll: (self encode: error class name); 

@@ -204,13 +204,13 @@ BISimpleFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 	statements := aSequenceNode statements.
 	statements isEmpty
 		ifTrue: [ ^ self ].
-	1 to: statements size do:
-		[ :i | 
+ 
+	statements doWithIndex: [ :el :i | 
 		self visitNode: (statements at: i).
 		i < statements size
 			ifTrue: [ codeStream nextPut: $.. 
 						self newLine].
-		self formatStatementCommentsFor: (statements at: i).
+		self formatStatementCommentsFor: el.
 		i < statements size
 			ifTrue: [  ] ]
 ]

@@ -99,7 +99,7 @@ MessageTallyTest >> testTallySends [
 	self assert: tallyForPrintStringBase receivers size equals: 1.	
 	self assert: ((tallyForPrintStringBase receivers first tally) >= 50 ).	
 
-	"We close to explicitely release reference of the process, the class and methods"
+	"We close to explicitly release reference of the process, the class and methods"
 	tally close.
 	
 	

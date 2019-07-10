@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #asserting }
-MorphicBackendForTest >> assertHasHeader: aFTTableMorph [ 
+MorphicBackendForTest >> assertHasHeader: aFTTableMorph [
 	self waitUntilUIRedrawed.
 
 	self assert: (aFTTableMorph instVarNamed: #showColumnHeaders)
@@ -35,14 +35,17 @@ MorphicBackendForTest >> assertImage: actual equals: expected [
 MorphicBackendForTest >> assertList: aFTTableMorph displayItems: aCollection [ 
 	
 	| tableContainer tableRowContents |
-	
+		
 	self waitUntilUIRedrawed.
 	
 	tableContainer := aFTTableMorph submorphs first.
+		
 	tableRowContents := tableContainer submorphs collect: [ :row | 
 		| cell |
 		cell := row submorphs first.
 		(cell submorphs detect: [:e | e isKindOf: StringMorph]) contents ].
+	
+	self assert: tableRowContents size = 3.
 	
 	self assert: tableRowContents first = aCollection first.
 	self assert: tableRowContents second = aCollection second.
@@ -103,6 +106,12 @@ MorphicBackendForTest >> doubleClickFirstRowAndColumn: aFTTableMorph [
 ]
 
 { #category : #running }
+MorphicBackendForTest >> existsUIProcess [
+
+	^ UIManager default uiProcess isNotNil
+]
+
+{ #category : #running }
 MorphicBackendForTest >> initialize [
 
 	super initialize.
@@ -142,11 +151,11 @@ MorphicBackendForTest >> waitUntilUIRedrawed [
 	If I am running in the UI process I can directly execute a doOneCycle on the World.
 	If I am in the CI the tests and the UI run in different process. So I should not do a #doOneCycle.
 	If I do it, I am in a race condition!"
-	self isRunningInUIProcess ifTrue: [ 
-		World doOneCycle.
+	(self isRunningInUIProcess) ifTrue: [ 
+		self currentWorld doOneCycle.
 		^ self.	
 	]. 
 
-	World defer: [ uiWaitingSemaphore ifNotNil: #signal ].	
+	self currentWorld defer: [ uiWaitingSemaphore ifNotNil: #signal ].	
 	uiWaitingSemaphore wait: 500 milliSecond
 ]

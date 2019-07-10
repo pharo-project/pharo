@@ -1,6 +1,6 @@
 Class {
 	#name : #GTDebugActionButton,
-	#superclass : #ButtonPresenter,
+	#superclass : #SpButtonPresenter,
 	#instVars : [
 		'debugActionHolder'
 	],

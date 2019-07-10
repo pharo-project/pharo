@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : #visiting }
-RBTemporaryNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitTemporaryNode: self
+RBTemporaryNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitTemporaryNode: self
 ]
 
 { #category : #testing }

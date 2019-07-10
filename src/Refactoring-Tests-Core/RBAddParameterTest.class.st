@@ -20,12 +20,12 @@ RBAddParameterTest >> testAddParameterForTwoArgumentMessage [
 		initializer: '#(1.0)'.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #called:bar:on:) = (RBParser parseMethod: 'called: anObject bar: aBlock on: anObject1
+	self assert: (class parseTreeFor: #called:bar:on:) equals: (self parseMethod: 'called: anObject bar: aBlock on: anObject1
 							Transcript
 								show: anObject printString;
 								cr.
 								aBlock value').
-	self assert: (class parseTreeFor: #caller) = (RBParser parseMethod: 'caller
+	self assert: (class parseTreeFor: #caller) equals: (self parseMethod: 'caller
 							| anObject |
 							anObject := 5.
 							self 
@@ -44,9 +44,9 @@ RBAddParameterTest >> testAddParameterThatReferencesGlobalAndLiteral [
 		initializer: 'OrderedCollection new: 5'.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #testFoo:bar:) = (RBParser parseMethod: 'testFoo: anObject bar: anObject1
+	self assert: (class parseTreeFor: #testFoo:bar:) equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
-	self assert: (class parseTreeFor: #callFoo) = (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (OrderedCollection new: 5)').
+	self assert: (class parseTreeFor: #callFoo) equals: (self parseMethod: 'callFoo ^self testFoo: 5 bar: (OrderedCollection new: 5)').
 	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)
 ]
 
@@ -61,9 +61,9 @@ RBAddParameterTest >> testAddParameterThatReferencesModelGlobal [
 		initializer: 'Bar new'.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #testFoo:bar:) = (RBParser parseMethod: 'testFoo: anObject bar: anObject1
+	self assert: (class parseTreeFor: #testFoo:bar:) equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
-	self assert: (class parseTreeFor: #callFoo) = (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (Bar new)').
+	self assert: (class parseTreeFor: #callFoo) equals: (self parseMethod: 'callFoo ^self testFoo: 5 bar: (Bar new)').
 	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)
 ]
 
@@ -77,9 +77,9 @@ RBAddParameterTest >> testAddParameterThatReferencesSelf [
 		initializer: 'self printString'.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #testFoo:bar:) = (RBParser parseMethod: 'testFoo: anObject bar: anObject1
+	self assert: (class parseTreeFor: #testFoo:bar:) equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
-	self assert: (class parseTreeFor: #callFoo) = (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (self printString)').
+	self assert: (class parseTreeFor: #callFoo) equals: (self parseMethod: 'callFoo ^self testFoo: 5 bar: (self printString)').
 	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)
 ]
 

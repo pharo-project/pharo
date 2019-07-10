@@ -67,7 +67,7 @@ LiteralVariable >> emitStore: aMethodBuilder [
 		addTemp: tempName;
 		storeTemp: tempName;
 		popTop;
-		pushLiteralVariable: #global -> self;
+		pushLiteralVariable: (AdditionalBinding key: #global value: self);
 		pushTemp: tempName;
 		send: #write:
 ]
@@ -75,7 +75,7 @@ LiteralVariable >> emitStore: aMethodBuilder [
 { #category : #'code generation' }
 LiteralVariable >> emitValue: aMethodBuilder [
 	aMethodBuilder
-		pushLiteralVariable: #global -> self;
+		pushLiteralVariable: (AdditionalBinding key: #global value: self);
 		send: #read
 ]
 
@@ -110,6 +110,11 @@ LiteralVariable >> isGlobalVariable [
 { #category : #testing }
 LiteralVariable >> isReadIn: aCompiledCode [
 	^aCompiledCode readsRef: self
+]
+
+{ #category : #testing }
+LiteralVariable >> isReferenced [
+	^self usingMethods isNotEmpty
 ]
 
 { #category : #testing }

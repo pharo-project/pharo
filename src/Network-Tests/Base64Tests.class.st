@@ -47,6 +47,5 @@ ZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4='.
 	self assert: (ZnNullEncoder new encodeString: in) base64Encoded equals: outAsOneLine.
 	self assert: in asByteArray base64Encoded equals: outAsOneLine.
 	self assert: (ZnNullEncoder new decodeBytes: out base64Decoded) equals: in.
-	self assert: out base64Decoded asString equals: in.
-
+	self assert: out base64Decoded asString equals: in
 ]

@@ -105,12 +105,6 @@ UIManager >> beDefault [
 	self class default: self.
 ]
 
-{ #category : #display }
-UIManager >> checkForNewDisplaySize [	
-	
-	self subclassResponsibility 
-]
-
 { #category : #'ui requests' }
 UIManager >> chooseDirectory [
 	"Let the user choose a directory"

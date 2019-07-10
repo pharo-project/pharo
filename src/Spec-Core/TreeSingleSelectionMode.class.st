@@ -25,6 +25,11 @@ TreeSingleSelectionMode >> selectPath: aPath [
 ]
 
 { #category : #accessing }
+TreeSingleSelectionMode >> selectPaths: pathArray [
+	self selectPath: pathArray last.
+]
+
+{ #category : #accessing }
 TreeSingleSelectionMode >> selectedItem [
 	
 	selection ifEmpty: [ ^ nil ].

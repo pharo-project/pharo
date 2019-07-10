@@ -205,7 +205,7 @@ RubMethodEditingExample >> textModel [
 ]
 
 { #category : #accessing }
-RubMethodEditingExample >> updateCodeWith: someText. [
+RubMethodEditingExample >> updateCodeWith: someText [
 	self textModel setText: someText.
 
 ]

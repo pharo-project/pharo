@@ -21,10 +21,11 @@ Class {
 WeakSlot >> emitStore: aMethodBuilder [
 	"generate bytecode for 'varname at: 1 put: <stackTop>'"
 	| temp |
-	temp := Object new. "we need a unique Object as a temp name"
+	temp := '0slotTempForStackManipulation'.
 	"Pop the value to store into a temp to push it back in the right order"
 	aMethodBuilder addTemp: temp.
 	aMethodBuilder storeTemp: temp.
+	aMethodBuilder popTop.
 	
 	"Push the weak array into the stack, then the arguments, then send"
 	aMethodBuilder pushInstVar: index.

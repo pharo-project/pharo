@@ -1,6 +1,6 @@
 Class {
 	#name : #LabelledInputTextDropListTest,
-	#superclass : #InputTextDropListTest,
+	#superclass : #SpecTestCase,
 	#category : #'Spec-Deprecated80'
 }
 

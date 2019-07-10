@@ -18,15 +18,6 @@ SystemNavigation class >> default [
 ]
 
 { #category : #query }
-SystemNavigation >> allAccessesTo: instVarName from: aClass [
-	| coll |
-	coll := OrderedCollection new.
-	aClass
-		withAllSubAndSuperclassesDo: [ :class | (class whichSelectorsAccess: instVarName) do: [ :sel | coll add: (self createMethodNamed: sel realParent: class) ] ].
-	^ coll
-]
-
-{ #category : #query }
 SystemNavigation >> allBehaviors [
 	^ self environment allBehaviors
 ]
@@ -35,15 +26,7 @@ SystemNavigation >> allBehaviors [
 SystemNavigation >> allBehaviorsDo: aBlock [
 	"Execute a block on each class, metaclass, trait and trait class"
 
-	self environment allClassesDo: [ :aClass | 
-		aBlock
-			value: aClass;
-			value: aClass classSide ].
-
-	self environment allTraitsDo: [ :aTrait | 
-		aBlock
-			value: aTrait;
-			value: aTrait classSide ]
+	self environment allBehaviorsDo: aBlock
 ]
 
 { #category : #query }
@@ -52,18 +35,6 @@ SystemNavigation >> allCallsOn: aSymbol [
 	"self new allCallsOn: #allCallsOn:"
 	
 	^ self allReferencesTo: aSymbol
-]
-
-{ #category : #query }
-SystemNavigation >> allCallsOn: aSymbol from: aClass [
-	"Answer a SortedCollection of all the methods that call on aSymbol."
-
-	| collection |
-	collection := OrderedCollection  new.
-	aClass withAllSubclassesDo: [ :class |
-		(class whichSelectorsReferTo: aSymbol) do: [:sel |
-				collection add: (self createMethodNamed: sel realParent: class)]].
-	^collection
 ]
 
 { #category : #query }
@@ -92,53 +63,15 @@ SystemNavigation >> allClassesDo: aBlock [
 
 { #category : #query }
 SystemNavigation >> allClassesImplementing: aSelector [  
-	"Answer an Array of all classes that implement the message aSelector."
-
-	| aCollection |
-	aCollection := ReadWriteStream on: Array new.
-	self allBehaviorsDo: [:class | (class includesSelector: aSelector) ifTrue: [aCollection nextPut: class]].
-	^ aCollection contents
-]
-
-{ #category : #packages }
-SystemNavigation >> allClassesInPackageNamed: packageName [
-	"Returns the list of classes that belongs to a Monticello package."
-	
-	"It would be probably better to delegate that query to the package itself"
-	| classes organization |
-	organization := self environment organization.
-	classes := (organization classesInCategory: packageName) asSet.
-	(organization categoriesMatching: packageName, '-*') do: [:category| 
-		classes addAll: (organization classesInCategory: category)].
-	^ classes asArray
-]
-
-{ #category : #query }
-SystemNavigation >> allClassesUsingSharedPool: aString [  
-	"Answer an Array of all classes that uses the shared pool named aString."
-
-	| aCollection |
-	aCollection := ReadWriteStream on: Array new.
-	self allClassesDo: [:class | (class includesSharedPoolNamed: aString) ifTrue: [aCollection nextPut: class]].
-	^ aCollection contents
+	"Answer all classes that implement the message aSelector."
+	^self allBehaviors collect: [:class | class includesSelector: aSelector]
 ]
 
 { #category : #query }
 SystemNavigation >> allExistingProtocolsFor: instanceSide [
 	"Answer all protocols on instance or class side"
-	
-	| allExistingProtocols |
-	allExistingProtocols := environment allClassesAndTraits
-		inject: IdentitySet new
-		into: [ :col :e | 
-			| class |
-			class := instanceSide
-				ifTrue: [ e instanceSide ]
-				ifFalse: [ e classSide ].
-			col
-				addAll: class protocols;
-				yourself ].
-	^ allExistingProtocols
+
+	^self allClasses flatCollectAsSet: [ :class | instanceSide ifTrue: [class protocols] ifFalse: [ class class protocols ] ]
 ]
 
 { #category : #private }
@@ -157,46 +90,21 @@ SystemNavigation >> allGlobalRefsOn: aSymbol [
 SystemNavigation >> allImplementedMessages [
 	"Answer a Collection of all the messages that are implemented in the system."
 	
-	| messages |
-	messages := IdentitySet new.
-	self allBehaviorsDo: [:each | messages addAll: each selectors].
-	^ messages
+	^Symbol selectorTable
 ]
 
 { #category : #query }
-SystemNavigation >> allImplementorsOf: aSelector [ 
+SystemNavigation >> allImplementorsOf: aSelector [
 	"Answer all the methods that implement the message aSelector."
-	
-	| aCollection |
-	aCollection := OrderedCollection  new.
-	self allBehaviorsDo: [:class | 
-		(class includesSelector: aSelector)
-			ifTrue: [aCollection add: (self createMethodNamed: aSelector realParent: class)]].
-	^ aCollection
-]
 
-{ #category : #query }
-SystemNavigation >> allLocalCallsOn: aSymbol ofClass: aClass [
-	"Answer a SortedCollection of all the methods that call on aSymbol, anywhere in my class hierarchy."
-	
-	| aSet cls |
-	aSet := Set new.
-	cls := aClass instanceSide.
-	cls withAllSuperAndSubclassesDo: [ :class |
-		(class whichSelectorsReferTo: aSymbol)
-			do: [:sel |
-				aSet add: (self createMethodNamed: sel realParent: class) ]].
-		
-	cls class withAllSuperAndSubclassesDo: [ :class |
-		(class whichSelectorsReferTo: aSymbol)
-			do: [:sel |
-				aSet add: (self createMethodNamed: sel realParent: class) ]].
-	^aSet
+	^ self allBehaviors
+		select: [ :class | class includesSelector: aSelector ]
+		thenCollect: [ :class | (class >> aSelector) methodReference ]
 ]
 
 { #category : #query }
 SystemNavigation >> allMethods [
-	^ self allBehaviors flatCollect: [ :behavior | behavior methods ]
+	^ self environment allMethods
 
 ]
 
@@ -208,7 +116,7 @@ SystemNavigation >> allMethodsSelect: aBlock [
 	aCollection := OrderedCollection new.
 	self allBehaviorsDo: [:class | 
 		class	selectorsAndMethodsDo: [:sel :m | 
-			(aBlock value: m) ifTrue: [aCollection add: (self createMethodNamed: sel realParent: class)]]].
+			(aBlock value: m) ifTrue: [aCollection add: (class>>sel) methodReference]]].
 	^ aCollection
 ]
 
@@ -218,7 +126,7 @@ SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive
 
 	| list addMethod addComment |
 	list := OrderedCollection new.
-	addMethod := [ :mrClass :mrSel | list add: (self createMethodNamed: mrSel realParent:  mrClass)].									
+	addMethod := [ :mrClass :mrSel | list add: (mrClass>>mrSel) methodReference].									
 	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].										
 	self allBehaviorsDo: [:each |
 		each selectorsDo: [:sel | 
@@ -255,32 +163,20 @@ SystemNavigation >> allObjectsOrNil [
 
 { #category : #query }
 SystemNavigation >> allPrimitiveMethods [
-	"Answer an OrderedCollection of all the methods that are implemented by primitives."
-	
-	| aColl |
-	aColl := OrderedCollection new: 200.
-	self allBehaviorsDo: [ :class | 
-		class selectorsAndMethodsDo: [ :sel :method | 
-			method isPrimitive
-				ifTrue: [ aColl addLast: class name , ' ' , sel , ' ' , method primitive printString ]]].
-	^ aColl
+	"Answer all the methods that are implemented by primitives."
+
+	^self allMethods
+		select: [ :method | method isPrimitive ]
+		thenCollect: [ :method | method methodClass name , ' ' , 
+			     method selector , ' ', method primitive printString ]
 ]
 
 { #category : #query }
-SystemNavigation >> allReferencesTo: aLiteral [ 
-	"Answer a Collection of all the methods that refer to aLiteral even deeply embedded in literal array."
+SystemNavigation >> allReferencesTo: aLiteral [
+	"Answer all the methods that refer to aLiteral even deeply embedded in literal array."
 
-	"self new allReferencesTo: #+"
-	"self new allReferencesTo: Point binding"
-	
-	| result |
-	result := OrderedCollection new.
-	self allBehaviorsDo: [ :class |
-		| selectors | 
-		selectors :=  class thoroughWhichSelectorsReferTo: aLiteral.
-		selectors do: [ :selector |
-			result addLast: (self createMethodNamed: selector realParent: class) ] ].
-	^ result
+	^ self allBehaviors flatCollect: [ :class | 
+			(class thoroughWhichMethodsReferTo: aLiteral) collect: [ :method | method methodReference ] ]
 ]
 
 { #category : #query }
@@ -295,61 +191,9 @@ SystemNavigation >> allReferencesTo: aLiteral do: aBlock [
 			ifTrue: [ class withThorougMethodsReferTo: aLiteral do: aBlock ] ]
 ]
 
-{ #category : #query }
-SystemNavigation >> allReferencesToPool: aPool [
-	"Answer all the references to variable aPool"
-
-	| list |
-	list := OrderedCollection new.
-	self
-		allClassesDo: [ :cls | 
-			cls
-				selectorsAndMethodsDo: [ :sel :meth | 
-					meth literals
-						detect: [ :lit | (lit isVariableBinding and: [ lit key notNil ]) 
-													and: [ aPool includesKey: lit key ] ]
-						ifFound: [ list add: (self createMethodNamed: sel realParent: cls) ] ] ].
-	^ list
-]
-
-{ #category : #query }
-SystemNavigation >> allReferencesToPool: aPool from: aClass [
-	"Answer all the references to variables from aPool"
-
-	| list |
-	list := OrderedCollection new.
-	aClass
-		withAllSubclassesDo: [ :cls | 
-			cls
-				selectorsAndMethodsDo: [ :sel :meth | 
-					meth literals
-						detect: [ :lit | lit isVariableBinding and: [ (aPool bindingOf: lit key) notNil ] ]
-						ifFound: [ list add: (self createMethodNamed: sel realParent: aClass) ] ] ].
-	^ list
-]
-
-{ #category : #query }
-SystemNavigation >> allReferencesToSubstring: aString do: aBlock [
-	"Perform aBlock on all the references to class whose name matches asString."
-	
-	| sortedClasses |
-	aString isEmptyOrNil ifTrue: [ ^ self ].
-	sortedClasses := SortedCollection new sortBlock: [ :a :b | a name size < b name size ].
-	(self allBehaviorsDo: [ :class |
-		(class name includesSubstring: aString caseSensitive: false) 
-			ifTrue: [ sortedClasses add: class ] ]).
-	sortedClasses do: [ :class |
-		self allReferencesTo: class binding do: aBlock ]
-]
-
 { #category : #'message sends' }
 SystemNavigation >> allSendersOf: selector [ 
-	|  senders |
-	senders := OrderedCollection new.
-	self allBehaviorsDo: [ :behavior | 
-		(behavior thoroughWhichSelectorsReferTo: selector) do: [ :sel| 
-			senders add: (self createMethodNamed: sel realParent: behavior) ] ].
-	^ senders
+	^self allReferencesTo: selector
 ]
 
 { #category : #query }
@@ -384,15 +228,6 @@ SystemNavigation >> allSentMessages [
 ]
 
 { #category : #query }
-SystemNavigation >> allStoresInto: instVarName of: aClass [
-    | coll |
-    coll := OrderedCollection new.
-    aClass
-        withAllSubAndSuperclassesDo: [ :class | (class whichSelectorsStoreInto: instVarName) do: [ :sel | coll add: (self createMethodNamed: sel realParent: class) ] ].
-    ^ coll
-]
-
-{ #category : #query }
 SystemNavigation >> allUnimplementedCalls [
 	"Answer an Array of each message that is sent by an expression in a  
 	method but is not implemented by any object in the system."
@@ -416,38 +251,11 @@ SystemNavigation >> allUnimplementedCalls [
 ]
 
 { #category : #query }
-SystemNavigation >> allUnreferencedClassVariablesOf: aClass [
-	"Answer a list of the names of all the receiver's unreferenced class  
-	vars, including those defined in superclasses"
-	| aList |
-	aList := OrderedCollection new.
-	aClass withAllSuperclasses
-		reverseDo: [:aSuperClass | aSuperClass classVarNames
-				do: [:var | (self allReferencesTo: (aSuperClass classPool associationAt: var)) isEmpty
-						ifTrue: [aList add: var]]].
-	^ aList
-]
-
-{ #category : #query }
 SystemNavigation >> allUnsentMessagesIn: selectorSet [ 
 	"Answer the subset of selectorSet which are not sent anywhere in the system. As allSentMessages does not recurse into nested Arrays, filter with #allCallsOn, which does"
 	
 	^ (selectorSet copyWithoutAll: self allSentMessages) 
 			select: [ :each | (self allCallsOn: each) isEmpty ]   
-]
-
-{ #category : #packages }
-SystemNavigation >> categoriesInPackageNamed: packageName [
-	^ (self environment organization categoriesMatching: packageName), (self environment organization categoriesMatching: (packageName, '-*'))
-]
-
-{ #category : #query }
-SystemNavigation >> createMethodNamed: aSelector realParent: class [
-
-	"This method has some problems."
-	"1 - It should use the object that comes from the browsed environment"
-	"2 - It does not create a method but a representation of it so be careful"
-	^ (RGMethodDefinition realClass: class selector: aSelector) package:  (class>>aSelector) package asRingDefinition; yourself .
 ]
 
 { #category : #accessing }
@@ -458,7 +266,7 @@ SystemNavigation >> environment [
 { #category : #accessing }
 SystemNavigation >> environment: aSystemDictionary [
 	
-	environment :=  aSystemDictionary
+	environment := aSystemDictionary
 ]
 
 { #category : #private }
@@ -503,18 +311,8 @@ SystemNavigation >> instanceSideMethodsWithNilKeyInLastLiteral [
 
 { #category : #'message sends' }
 SystemNavigation >> isUnsentMessage: selector [
-
-	self allBehaviorsDo: [ :behavior | 
-		(behavior thoroughHasSelectorReferringTo: selector) ifTrue: [ ^ false]].
-	^ true
-]
-
-{ #category : #'message sends' }
-SystemNavigation >> isUsedClass: aClass [
-
-	self allBehaviorsDo: [ :behavior | 
-		(behavior hasSelectorReferringTo: aClass binding) ifTrue: [ ^true ]].
-	^ false
+	^ self allBehaviors
+		noneSatisfy: [ :behavior | behavior thoroughHasSelectorReferringTo: selector ]
 ]
 
 { #category : #query }
@@ -601,60 +399,6 @@ SystemNavigation >> obsoleteMethodReferences [
 					ifTrue: [
 						(ref pointersTo) do: [ :meth | 
 							meth isCompiledMethod
-								ifTrue: [meth methodReference ifNotNil: [:mref | references nextPut: mref]]]]]].
+								ifTrue: [references nextPut: meth]]]]].
 	^ references contents
-]
-
-{ #category : #packages }
-SystemNavigation >> removeAllButPackages: packagesList [
-  "Remove all classes and methods that do not belong to some of listed packages. Skip #unload. Do not use this method if you can use Monticello! This method is used by some low-level shrinking process. Do not use it. This is quite hackish"
-
-  | keep remove oldRemove extensionCategories |
-  keep := Set new.      
-  packagesList do: [:pkg | keep addAll: (self allClassesInPackageNamed: pkg)].
-  oldRemove := Set new.
-  [ 
-    remove := self environment allClassesAndTraits reject: [:c | keep includes: c].
-    remove := remove collect: [:c | c name].
-    (remove asSortedCollection: [:a :b | a  <= b ]) do: [:className |
-      | class |
-      class := (self environment classOrTraitNamed: className).
-      class allSubclasses ifEmpty: [
-        SystemAnnouncer uniqueInstance unsubscribe: class.
-        class isTrait ifFalse: [ 
-          (class class includesSelector: #unload) ifTrue: [ class removeSelector: #unload ] ].
-        class removeFromSystem. 
-        ] ].
-
-    
-    oldRemove ifNotEmpty: [
-      oldRemove = remove ifTrue: [          
-         self error: 'Some classes still have subclasses: ', (remove collect: [:c | c -> (self environment classOrTraitNamed: c) allSubclasses]) asString ] ].
-    oldRemove := remove.
-    remove notEmpty] whileTrue.
-
-  keep do: [: class | 
-    extensionCategories := (class organization ownCategories select: [:category | 
-      category first = $*]) asOrderedCollection.
-    extensionCategories removeAllSuchThat: [:category |
-      packagesList anySatisfy: [:package |
-        ((category asLowercase allButFirst = package asLowercase) or: [package asLowercase, '-*' match: category asLowercase allButFirst])]].
-    extensionCategories do: [:category | 
-      | protocol |
-      protocol := class organization  protocolOrganizer protocolNamed: category.
-      (protocol methods intersection: class localSelectors) do: [:sel | class removeSelector: sel ].
-      "class removeProtocol: category" ]. 
-    class isTrait ifFalse: [
-      extensionCategories := (class class organization ownCategories select: [:category | 
-        category first = $*]) asOrderedCollection.
-      extensionCategories removeAllSuchThat: [:category |
-        packagesList anySatisfy: [:package |
-          ((category asLowercase allButFirst = package asLowercase) or: [package asLowercase, '-*' match: category asLowercase allButFirst])]].
-      extensionCategories do: [:category | 
-        | protocol |
-        protocol := class class organization  protocolOrganizer protocolNamed: category.
-        (protocol methods intersection: class class localSelectors) do: [:sel | class class removeSelector: sel ].
-        "class class removeProtocol: category" ]]].
-      
-
 ]

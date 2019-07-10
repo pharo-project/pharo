@@ -59,13 +59,13 @@ MorphicTextAdapter >> autoAccept: aBoolean [
 { #category : #factory }
 MorphicTextAdapter >> buildWidget [
 	| newWidget |
-	newWidget := RubPluggableTextMorph new
-		on: self
-			text: #getText
-			accept: #accept:notifying:
-			readSelection: #readSelection
-			menu: #codePaneMenu:shifted:
-			setSelection: #setSelection:;
+	self flag: #pharo7.	"When support for P7 will be dropped, remove this compatibility hack."
+	newWidget := ((self class environment at: #SpecRubScrolledTextMorph ifAbsent: [ RubScrolledTextMorph ]) on: self)
+		getTextSelector: #getText;
+		setTextSelector: #accept:notifying:;
+		getSelectionSelector: #readSelection;
+		menuProvider: self selector: #codePaneMenu:shifted:;
+		setSelectionSelector: #setSelection:;
 		beWrapped;
 		enabled: self enabled;
 		askBeforeDiscardingEdits: self askBeforeDiscardingEdits;
@@ -78,6 +78,8 @@ MorphicTextAdapter >> buildWidget [
 		registerScrollChanges: #scrollValueChanged:;
 		yourself.
 	self setEditingModeFor: newWidget.
+	self model additionalKeyBindings ifNotNil: [ :bindings | bindings keysAndValuesDo: [ :shortcut :action | newWidget bindKeyCombination: shortcut toAction: action ] ].
+	self presenter whenTextChangedDo: [ :text | newWidget setText: text ].
 	^ newWidget
 ]
 
@@ -88,7 +90,7 @@ MorphicTextAdapter >> canChangeText [
 
 { #category : #'undo-redo' }
 MorphicTextAdapter >> clearUndoManager [
-	self widget clearUndoManager
+	self widget textArea editingState clearUndoManager: nil
 ]
 
 { #category : #'widget API' }
@@ -100,8 +102,13 @@ MorphicTextAdapter >> clearUserEditFlag [
 
 { #category : #'widget API' }
 MorphicTextAdapter >> codePaneMenu: aMenu shifted: shifted [ 
+	| menuPresenter |
 
-	^ self model codePaneMenu: aMenu shifted: shifted 
+	menuPresenter := self model contextMenu.
+	menuPresenter ifNil: [ ^ nil ].
+	^ SpecBindings
+		value: self model application adapterBindings
+		during: [ menuPresenter value buildWithSpec ]
 ]
 
 { #category : #'widget API' }
@@ -125,12 +132,6 @@ MorphicTextAdapter >> hasEditingConflicts: aBoolean [
 MorphicTextAdapter >> hasUnacceptedEdits: aBoolean [
 
 	self model hasUnacceptedEdits: aBoolean
-]
-
-{ #category : #testing }
-MorphicTextAdapter >> isCodeCompletionAllowed [
-
-	^ false
 ]
 
 { #category : #'spec protocol' }

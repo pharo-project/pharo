@@ -18,8 +18,8 @@ RBAddVariableAccessorTransformationTest >> testNewClassVariableAccessors [
 
 	class := refactoring model metaclassNamed: #RBDummyLintRuleTest.
 	self denyEmpty: refactoring changes changes.
-	self assert: (class parseTreeFor: #foo1) equals: (RBParser parseMethod: 'foo1 ^Foo1').
-	self assert: (class parseTreeFor: #foo1:) equals: (RBParser parseMethod: 'foo1: anObject Foo1 := anObject')
+	self assert: (class parseTreeFor: #foo1) equals: (self parseMethod: 'foo1 ^Foo1').
+	self assert: (class parseTreeFor: #foo1:) equals: (self parseMethod: 'foo1: anObject Foo1 := anObject')
 ]
 
 { #category : #testing }
@@ -29,8 +29,8 @@ RBAddVariableAccessorTransformationTest >> testNewInstanceVariableAccessors [
 
 	class := refactoring model classNamed: #RBDummyLintRuleTest.
 	self denyEmpty: refactoring changes changes.
-	self assert: (class parseTreeFor: #foo1) = (RBParser parseMethod: 'foo1 ^foo1').
-	self assert: (class parseTreeFor: #foo1:) = (RBParser parseMethod: 'foo1: anObject foo1 := anObject')
+	self assert: (class parseTreeFor: #foo1) = (self parseMethod: 'foo1 ^foo1').
+	self assert: (class parseTreeFor: #foo1:) = (self parseMethod: 'foo1: anObject foo1 := anObject')
 ]
 
 { #category : #testing }
@@ -54,8 +54,8 @@ RBAddVariableAccessorTransformationTest >> testRefactoring [
 
 	class := refactoring model classNamed: #RBDummyLintRuleTest.
 	self denyEmpty: refactoring changes changes.
-	self assert: (class parseTreeFor: #foo1) = (RBParser parseMethod: 'foo1 ^foo1').
-	self assert: (class parseTreeFor: #foo1:) = (RBParser parseMethod: 'foo1: anObject foo1 := anObject')
+	self assert: (class parseTreeFor: #foo1) = (self parseMethod: 'foo1 ^foo1').
+	self assert: (class parseTreeFor: #foo1:) = (self parseMethod: 'foo1: anObject foo1 := anObject')
 ]
 
 { #category : #testing }
@@ -70,6 +70,6 @@ RBAddVariableAccessorTransformationTest >> testTransform [
 	self assert: transformation model changes changes size equals: 2.
 	
 	class := transformation model classNamed: self changeMock name asSymbol.
-	self assert: (class parseTreeFor: #instVar) = (RBParser parseMethod: 'instVar ^instVar').
-	self assert: (class parseTreeFor: #instVar:) = (RBParser parseMethod: 'instVar: anObject instVar := anObject')
+	self assert: (class parseTreeFor: #instVar) = (self parseMethod: 'instVar ^instVar').
+	self assert: (class parseTreeFor: #instVar:) = (self parseMethod: 'instVar: anObject instVar := anObject')
 ]

@@ -77,7 +77,8 @@ CompiledMethod >> methodReference [
 	| class selector |
 	class := self methodClass ifNil: [^nil].
 	selector := self selector ifNil: [^nil].
-	^RGMethodDefinition realClass: class selector: selector.
+	^(RGMethodDefinition realClass: class selector: selector) 
+		package: self package asRingDefinition; yourself
 	
 ]
 

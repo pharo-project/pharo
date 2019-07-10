@@ -32,7 +32,6 @@ Class {
 	#superclass : #DynamicComposablePresenter,
 	#instVars : [
 		'buttons',
-		'canDeselectByClick',
 		'currentActivated'
 	],
 	#category : #'Spec-Deprecated80'
@@ -50,7 +49,7 @@ RadioButtonGroupPresenter class >> defaultSpec [
 RadioButtonGroupPresenter class >> example [
 	<sampleInstance>
 	| example |
-	example := RadioButtonGroupPresenter new.
+	example := self new.
 	example
 		addRadioButton: (RadioButtonPresenter new label: '1');
 		addRadioButton: (RadioButtonPresenter new label: '2');
@@ -69,7 +68,6 @@ RadioButtonGroupPresenter class >> isDeprecated [
 { #category : #api }
 RadioButtonGroupPresenter >> addRadioButton: aButton [
 	self linkRadioButton: aButton.
-	aButton canDeselectByClick: self canDeselectByClick.
 	buttons add: aButton.
 	aButton privateSetState: false;
 		owner: self.
@@ -84,18 +82,13 @@ RadioButtonGroupPresenter >> buttons [
 
 { #category : #api }
 RadioButtonGroupPresenter >> canDeselectByClick [
-	<api: #inspect>
-	"Return true clicking on a selected radio button deselects it"
-
-	^ canDeselectByClick value
+	self deprecated: 'This option is removed in Spec 2'.
+	^ false
 ]
 
 { #category : #api }
 RadioButtonGroupPresenter >> canDeselectByClick: aBoolean [
-	<api: #boolean getter: #canDeselectByClick registration: #whenCanDeselectByClickChanged>
-	"Set if clicking on a selected radio button can deselect it"
-	
-	canDeselectByClick value: aBoolean
+	self deprecated: 'This option is removed in Spec 2'
 ]
 
 { #category : #accessing }
@@ -147,16 +140,8 @@ RadioButtonGroupPresenter >> dynamicLayout [
 { #category : #initialization }
 RadioButtonGroupPresenter >> initialize [
 	buttons := OrderedCollection new.
-	canDeselectByClick := false asValueHolder.
 	currentActivated := nil asValueHolder.
 	super initialize.
-]
-
-{ #category : #initialization }
-RadioButtonGroupPresenter >> initializePresenter [
-	self
-		whenCanDeselectByClickChangedDo:
-			[ :aBoolean | buttons do: [ :each | each canDeselectByClick: aBoolean ] ]
 ]
 
 { #category : #api }
@@ -184,9 +169,7 @@ RadioButtonGroupPresenter >> whenCanDeselectByClickChanged: aBlock [
 
 { #category : #'api-events' }
 RadioButtonGroupPresenter >> whenCanDeselectByClickChangedDo: aBlock [
-	"This method is triggered when `canDeselectByClick` changes"
-	
-	canDeselectByClick whenChangedDo: aBlock
+	self deprecated: 'This option is removed in Spec 2'
 ]
 
 { #category : #'as yet unclassified' }

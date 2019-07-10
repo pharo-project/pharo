@@ -15,13 +15,14 @@ MorphicBaseMenuAdapter >> icon [
 
 { #category : #protocol }
 MorphicBaseMenuAdapter >> menuGroups [
+
 	^ self model menuGroups reject: [ :e | e isEmpty ]
 ]
 
 { #category : #'spec protocol' }
 MorphicBaseMenuAdapter >> openAt: aPoint [ 
 
-	self widgetDo: [ :w | w invokeAt: (aPoint + (2@7)) in: World allowKeyboard: true ]
+	self widgetDo: [ :w | w invokeAt: (aPoint + (2@7)) in: self currentWorld allowKeyboard: true ]
 ]
 
 { #category : #protocol }

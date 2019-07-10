@@ -75,10 +75,9 @@ RBAddReturnStatementTransformation >> privateTransform [
 
 	| methodTree messageNode |
 	methodTree := self definingMethod.
-	messageNode := RBParser parseExpression: returnValue.
-	
+	messageNode := self parserClass parseExpression: returnValue.
 	methodTree body addNode: messageNode.
-	self definingClass compileTree: methodTree.
+	self definingClass compileTree: methodTree
 ]
 
 { #category : #api }

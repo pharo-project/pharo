@@ -53,7 +53,7 @@ Transcript cr; crShow: 'Benchmarking ' , Delay delaySchedulerClass printString.
 		Transcript space ;
 			show: 'EnterCount: ' , (EnterCount // (sampleSetSeeds size)) printString ; space ;
 			show: 'ExitCount: ' , (ExitCount // (sampleSetSeeds size)) printString .
-		World doOneCycle. "since we are a higher priority would prevent transcript showing"
+		self currentWorld doOneCycle. "since we are a higher priority would prevent transcript showing"
 		]. 
 		completed signal.
 ] forkAt: Processor userSchedulingPriority + 2. "To avoid UI loop influencing result"

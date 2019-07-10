@@ -15,7 +15,7 @@ Class {
 PropertySlot >> emitStore: methodBuilder [
 	"generate bytecode for 'baseSlot at: 1 put: <stackTop>'"
 	| tempName |
-	tempName := Object new.  "we need a unique Object as a temp name"
+	tempName := '0slotTempForStackManipulation'.
 	methodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
