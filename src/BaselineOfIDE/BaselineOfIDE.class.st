@@ -94,6 +94,8 @@ BaselineOfIDE >> additionalInitialization [
 	
 	SDL_Event initialize.
 	
+	HiRulerBuilderTest initialize.
+	
 	3 timesRepeat: [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
@@ -145,6 +147,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Epicea'.
 		spec package: 'Hiedra'.
 		spec package: 'EpiceaBrowsers'.
+		spec package: 'Hiedra-Examples'.
 		spec package: 'Hiedra-Tests'. 
 		spec package: 'Ombu-Tests'.
 		spec package: 'Epicea-Tests'.
@@ -423,6 +426,7 @@ spec group: 'Epicea-Core-Group' with: #(
 	'Ombu'
 	'Epicea'
 	'Hiedra'
+	'Hiedra-Examples'
 	'EpiceaBrowsers').
 spec group: 'Epicea-Tests-Group' with: #(
 	'Ombu-Tests'

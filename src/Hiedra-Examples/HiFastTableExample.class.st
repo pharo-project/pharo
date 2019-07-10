@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'hiedraColumnController'
 	],
-	#category : #'Hiedra-UI-Examples'
+	#category : #'Hiedra-Examples'
 }
 
 { #category : #examples }
