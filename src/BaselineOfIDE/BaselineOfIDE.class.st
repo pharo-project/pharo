@@ -135,6 +135,11 @@ BaselineOfIDE >> baseline: spec [
 		].
 
 		spec baseline: 'Clap' with: [ spec repository: repository ].
+	
+		spec baseline: 'SUnit' with: [
+			spec loads: 'Tests'. 
+			spec repository: repository
+		].
 		
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
@@ -340,8 +345,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Rubric-Tests'.
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
-		spec package: 'SUnit-Tests'.
-		spec package: 'SUnit-Support-UITesting-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
 		spec package: 'Spec-Help'.	
@@ -479,8 +482,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Rubric-Tests'
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
-	'SUnit-Tests'
-	'SUnit-Support-UITesting-Tests'
+	'SUnit'
 	'Spec-Tests'
 	'System-Caching-Tests'
 	'System-Hashing-Tests'
