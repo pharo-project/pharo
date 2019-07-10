@@ -90,7 +90,7 @@ DiskStore class >> readOnlyVariant [
 
 	"return a class variant for read-only store. It should be properly defined in my subclasses"
 
-	^ self
+	^ self subclassResponsibility
 ]
 
 { #category : #current }
