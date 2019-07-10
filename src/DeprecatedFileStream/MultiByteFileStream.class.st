@@ -563,7 +563,7 @@ MultiByteFileStream >> open: fileName forWrite: writeMode [
 	| result |
 
 	(writeMode and: [DiskStore wantsReadOnly]) 
-		ifTrue: [ (CannotDeleteFileException new
+		ifTrue: [ ((CannotDeleteFileException fileName: fileName)
 			messageText: 'Attempt to open file ' , fileName, ' as wrtitable on read-only filesystem') signal. ].
 
 	result := super open: fileName forWrite: writeMode.

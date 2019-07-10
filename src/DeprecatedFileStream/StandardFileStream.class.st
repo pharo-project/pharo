@@ -82,7 +82,7 @@ StandardFileStream class >> forceNewFileNamed: fileName [
 	asking before creating the new file."
 	| dir  fullName f |
 	
-	DiskStore wantsReadOnly ifTrue: [ (CannotDeleteFileException new
+	DiskStore wantsReadOnly ifTrue: [ ((CannotDeleteFileException fileName: fileName)
 		messageText: 'Could not delete the old version of file ' , fileName) signal.
 		^ NullStream new ].
 	
