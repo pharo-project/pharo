@@ -37,21 +37,20 @@ MethodNameEditorTest >> a: a b: b c: c [
 ]
 
 { #category : #running }
+MethodNameEditorTest >> methodNamedFor: aSymbol [
+	^ RBMethodName selector: (self class >> aSymbol) selector arguments: ((self class >> aSymbol) ast arguments collect: #name)
+]
+
+{ #category : #running }
 MethodNameEditorTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 
 	super setUp.
-	presenterMNEThreeSetter := SycMethodNameEditor
-		on: (RBMethodName selector: (self class >> #a:b:c:) selector
-		arguments: ((self class >> #a:b:c:) ast arguments collect: #name)).
-		
-	presenterMNEOneSetter := SycMethodNameEditor
-		on: (RBMethodName selector: (self class >> #a:) selector
-		arguments: ((self class >> #a:) ast arguments collect: #name)).
-		
-	presenterMNEOneGetter := SycMethodNameEditor on:
-		(RBMethodName selector: (self class >> #a) selector
-		arguments: ((self class >> #a) ast arguments collect: #name))
+	presenterMNEThreeSetter := SycMethodNameEditor on: (self methodNamedFor: #a:b:c:).
+
+	presenterMNEOneSetter := SycMethodNameEditor on: (self methodNamedFor: #a:).
+
+	presenterMNEOneGetter := SycMethodNameEditor on: (self methodNamedFor: #a)
 ]
 
 { #category : #running }
