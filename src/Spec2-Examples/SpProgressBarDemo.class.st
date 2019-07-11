@@ -18,21 +18,20 @@ Class {
 
 { #category : #specs }
 SpProgressBarDemo class >> defaultSpec [
-	^ SpLayout composed
-		newColumn: [ :c | 
-			c
-				newRow: #indeterminated height: 6;
-				addSpacer;
-				newRow: #fixed height: 10;
-				addSpacer;
-				newRow: #withProgressionBlock height: 20;
-				addSpacer;
-				newRow: [ :r | 
-					r
-						newColumn: #withText;
-						newColumn: #label width: 40 ]
-					height: 40;
-				newRow: [ :r |  ] ];
+	^ SpBoxLayout newVertical
+		add: #indeterminated withConstraints: [ :constraints | constraints height: 6 ];
+		add: 'Indeterminated';
+		add: #fixed withConstraints: [ :constraints | constraints height: 10 ];
+		add: 'Fixed';
+		add: #withProgressionBlock withConstraints: [ :constraints | constraints height: 20 ];
+		add: 'With progression block';
+		add:
+			(SpBoxLayout newHorizontal
+				add: #withText;
+				add: #label withConstraints: [ :constraints | constraints width: 40 ];
+				yourself)
+			withConstraints: [ :constraints | constraints height: 40 ];
+		add: 'With label';
 		yourself
 ]
 

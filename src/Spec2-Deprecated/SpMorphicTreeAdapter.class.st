@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'treeModel'
 	],
-	#category : #'Spec2-Deprecated'
+	#category : #'Spec2-Deprecated-Adapters'
 }
 
 { #category : #deprecation }

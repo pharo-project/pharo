@@ -23,10 +23,12 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : #SpProgressBarProgressing,
 	#superclass : #SpProgressBarState,
+	#traits : 'TSpObservable',
+	#classTraits : 'TSpObservable classTrait',
 	#instVars : [
-		'refreshDelay',
-		'currentValueHolder',
-		'progression'
+		'#refreshDelay',
+		'#progression',
+		'#currentValue => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Utils'
 }
@@ -41,18 +43,19 @@ SpProgressBarProgressing class >> progression: aBlock every: aDelay [
 
 { #category : #accessing }
 SpProgressBarProgressing >> currentValue [
-	^ currentValueHolder value
+	^ currentValue
 ]
 
 { #category : #accessing }
 SpProgressBarProgressing >> currentValue: aNumber [
-	currentValueHolder value: aNumber
+	currentValue := aNumber
 ]
 
 { #category : #initialization }
 SpProgressBarProgressing >> initialize [
+	self class initializeSlots: self.
 	super initialize.
-	currentValueHolder := 0 asValueHolder
+	currentValue := 0
 ]
 
 { #category : #accessing }
@@ -77,5 +80,5 @@ SpProgressBarProgressing >> refreshDelay: aDelay [
 
 { #category : #'api-events' }
 SpProgressBarProgressing >> whenValueChangedDo: aBlock [
-	currentValueHolder whenChangedDo: aBlock
+	self property: #currentValue whenChangedDo: aBlock
 ]

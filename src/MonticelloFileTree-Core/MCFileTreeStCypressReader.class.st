@@ -261,9 +261,9 @@ MCFileTreeStCypressReader >> methodSelectorFor: source [
 
 { #category : #accessing }
 MCFileTreeStCypressReader >> packageNameFromPackageDirectory [
-    | filename |
-    filename := self fileUtils directoryName: packageDirectory.
-    ^ filename copyFrom: 1 to: (filename lastIndexOf: $.) - 1
+    | filename2 |
+    filename2 := self fileUtils directoryName: packageDirectory.
+    ^ filename2 copyFrom: 1 to: (filename2 lastIndexOf: $.) - 1
 ]
 
 { #category : #validation }

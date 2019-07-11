@@ -16,27 +16,14 @@ Class {
 }
 
 { #category : #specs }
-SpListSelectionPresenter class >> bottomSpec [
-
-	^ SpLayout composed
-		newRow: [ :row |
-			row
-				add: #textModel1;
-				add: #textModel2 ];
-		yourself
-]
-
-{ #category : #specs }
 SpListSelectionPresenter class >> defaultSpec [
-
-	^ SpLayout composed
-		newColumn: [ :column |
-			column 
-				add: #listModel;
-				newRow: [ :row |
-					row
-						add: #textModel1;
-						add: #textModel2 ] ];
+	^ SpPanedLayout newVertical
+		add: #listModel;
+		add:
+			(SpPanedLayout newHorizontal
+				add: #textModel1;
+				add: #textModel2;
+				yourself);
 		yourself
 ]
 

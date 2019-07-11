@@ -1,10 +1,12 @@
 Class {
 	#name : #SpCollectionListModel,
 	#superclass : #Object,
+	#traits : 'TSpObservable',
+	#classTraits : 'TSpObservable classTrait',
 	#instVars : [
-		'announcer',
-		'collection',
-		'sortingBlockHolder'
+		'#announcer',
+		'#collection',
+		'#sorting => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Table'
 }
@@ -71,8 +73,8 @@ SpCollectionListModel >> indexOf: anIndex ifAbsent: aBlock [
 
 { #category : #initialization }
 SpCollectionListModel >> initialize [
-	super initialize.
-	sortingBlockHolder := nil asValueHolder
+	self class initializeSlots: self.
+	super initialize
 ]
 
 { #category : #accessing }
@@ -104,12 +106,12 @@ SpCollectionListModel >> size [
 
 { #category : #initialization }
 SpCollectionListModel >> sortingBlock [
-	^ sortingBlockHolder value
+	^ sorting
 ]
 
 { #category : #initialization }
 SpCollectionListModel >> sortingBlock: aBlock [
-	sortingBlockHolder value: aBlock.
+	sorting := aBlock.
 	self refreshList
 ]
 
@@ -127,5 +129,5 @@ SpCollectionListModel >> whenChangedDo: aBlock [
 
 { #category : #events }
 SpCollectionListModel >> whenSortingBlockChangedDo: aBlock [
-	sortingBlockHolder whenChangedDo: aBlock
+	self property: #sorting whenChangedDo: aBlock
 ]

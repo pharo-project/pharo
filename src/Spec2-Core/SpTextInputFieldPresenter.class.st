@@ -28,8 +28,8 @@ Class {
 	#name : #SpTextInputFieldPresenter,
 	#superclass : #SpAbstractTextPresenter,
 	#instVars : [
-		'#acceptOnCR',
-		'#entryCompletion',
+		'#acceptOnCR => SpObservableSlot',
+		'#entryCompletion => SpObservableSlot',
 		'#isPassword => SpObservableSlot',
 		'#placeholder => SpObservableSlot',
 		'#maxLength => SpObservableSlot'
@@ -46,34 +46,26 @@ SpTextInputFieldPresenter class >> adapterName [
 { #category : #morphic }
 SpTextInputFieldPresenter >> accept: aText [
 
-	textHolder value: aText.
-	actionToPerformHolder value cull: aText.
+	self text: aText.
+	self acceptBlock cull: aText.
 	
-	"Dummy changed to raise an announcement"
-	actionPerformedHolder value: aText.
+	"Raise an announcement"
+	self actionPerformed.
 	self changed: #clearUserEdits.
 ]
 
 { #category : #api }
 SpTextInputFieldPresenter >> acceptOnCR [
-	"<api: #inspect>"
 	"Return true if the text is accepted when the Enter key is stroked"
 
-	^ acceptOnCR value
+	^ acceptOnCR
 ]
 
 { #category : #api }
 SpTextInputFieldPresenter >> acceptOnCR: aBoolean [
-	"<api: #boolean getter: #acceptOnCR registration: #whenAcceptOnCRChanged:>"
 	"Set if the text is accepted when the Enter key is stroked or not"
 
-	acceptOnCR value: aBoolean
-]
-
-{ #category : #accessing }
-SpTextInputFieldPresenter >> actionToPerformHolder [
-
-	^ actionToPerformHolder
+	acceptOnCR := aBoolean
 ]
 
 { #category : #api }
@@ -95,18 +87,16 @@ SpTextInputFieldPresenter >> beText [
 
 { #category : #api }
 SpTextInputFieldPresenter >> entryCompletion [
-	"<api: #st getter: #entryCompletion registration: #whenEntryCompletionChanged:>"
 	"Return an entry completion used to suggest text while typing"
 
-	^ entryCompletion value
+	^ entryCompletion
 ]
 
 { #category : #api }
 SpTextInputFieldPresenter >> entryCompletion: anEntryCompletion [
-	"<api: #st getter: #entryCompletion registration: #whenEntryCompletionChanged:>"
 	"Set an entry completion used to suggest text while typing"
 
-	entryCompletion value: anEntryCompletion.
+	entryCompletion := anEntryCompletion
 ]
 
 { #category : #focus }
@@ -125,15 +115,13 @@ SpTextInputFieldPresenter >> eventKeyStrokesForPreviousFocus [
 
 { #category : #initialization }
 SpTextInputFieldPresenter >> initialize [
-
 	super initialize.
-	
+
 	maxLength := 0.
 	placeholder := ''.
-	acceptOnCR := true asValueHolder.
-	entryCompletion := nil asValueHolder.
+	acceptOnCR := true.
 	isPassword := false.
-	acceptOnCR whenChangedDo: [ :bool | self changed: #acceptOnCR: with: { bool } ]
+	self whenAcceptOnCRChangedDo: [ :bool | self changed: #acceptOnCR: with: {bool} ]
 ]
 
 { #category : #testing }
@@ -185,12 +173,6 @@ SpTextInputFieldPresenter >> text: aText [
 ]
 
 { #category : #accessing }
-SpTextInputFieldPresenter >> textHolder [
-
-	^ textHolder
-]
-
-{ #category : #accessing }
 SpTextInputFieldPresenter >> updateText [
 
 	"Update text but applying lenght constraints"
@@ -200,15 +182,15 @@ SpTextInputFieldPresenter >> updateText [
 { #category : #'api-events' }
 SpTextInputFieldPresenter >> whenAcceptOnCRChangedDo: aBlock [
 	"aBlock will be performed when acceptOnCR changed"
-	
-	acceptOnCR whenChangedDo: aBlock
+
+	self property: #acceptOnCR whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpTextInputFieldPresenter >> whenEntryCompletionChangedDo: aBlock [
 	"aBlock will be performed when entryCompletion changed"
-	
-	entryCompletion whenChangedDo: aBlock
+
+	self property: #entryCompletion whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

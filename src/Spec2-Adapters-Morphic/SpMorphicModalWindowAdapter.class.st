@@ -35,22 +35,15 @@ SpMorphicModalWindowAdapter >> mouseClick: evt onBackdrop: aMorph [
 
 { #category : #protocol }
 SpMorphicModalWindowAdapter >> open [
-
 	self model windowIsOpening.
 
-	backdropMorph := Morph new
+	backdropMorph := FullscreenMorph new
 		color: (Color black alpha: 0.7);
-		beSticky;
-		extent: self currentWorld extent;
-		openInWorld;
-		takeKeyboardFocus;
 		on: #click send: #mouseClick:onBackdrop: to: self;
-		setProperty: #morphicLayerNumber toValue: 2.
-	
+		openInWorld;
+		yourself.
+
 	self widget
-		setProperty: #morphicLayerNumber toValue: 1;
 		toggleStickiness;
-		center: self currentWorld clearArea center.
-		
-	backdropMorph openModal: self widget
+		openCenteredInWorld
 ]

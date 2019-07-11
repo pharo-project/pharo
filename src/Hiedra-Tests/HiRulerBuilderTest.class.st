@@ -10,6 +10,11 @@ Class {
 	#category : #'Hiedra-Tests-Model'
 }
 
+{ #category : #'initialize - event' }
+HiRulerBuilderTest class >> initialize [
+	DebugShowingRulerInWindow := false
+]
+
 { #category : #running }
 HiRulerBuilderTest >> assertRulerHasLinks: expectedLinksAndRulerPointsAsAssociations [
 
@@ -86,28 +91,26 @@ HiRulerBuilderTest >> debugShowingRulerInPresenter: valuesAndParentsAsDictionary
 	"
 
 	| hiedraColumnController values |
-	(DebugShowingRulerInWindow == true) ifFalse: [ ^self ].
-	
+	DebugShowingRulerInWindow ifFalse: [ ^ self ].
+
 	values := valuesAndParentsAsDictionary keys.
 
 	"Set up the ruler controller."
 	hiedraColumnController := HiColumnController new.
-	hiedraColumnController ruler: (HiRulerBuilder
-		newRulerValues: values
-		linksBlock: [ :key | valuesAndParentsAsDictionary at: key ]).
+	hiedraColumnController ruler: (HiRulerBuilder newRulerValues: values linksBlock: [ :key | valuesAndParentsAsDictionary at: key ]).
 	hiedraColumnController renderer
-		rowHeight: 30;
+		rowHeight: FTTableMorph defaultRowHeight floor;
 		cellWidth: 10.
 	hiedraColumnController reset.
 
 	"Show the ruler in a Spec tree."
-	TreePresenter new
-		rowInset: 0;
-		displayBlock: [ :value | 
-			(hiedraColumnController cellMorphAtValue: value)
-				addMorphFront: value asStringMorph
-			];
-		roots: values;
+	SpTablePresenter new
+		addColumn:
+			((SpStringTableColumn evaluated: #value)
+				width: 15;
+				yourself);
+		addColumn: (SpImageTableColumn evaluated: [ :item | hiedraColumnController cellMorphAtValue: item ]);
+		items: values;
 		title: testSelector asString;
 		openWithSpec
 ]
@@ -139,11 +142,10 @@ HiRulerBuilderTest >> testCycle [
 
 { #category : #tests }
 HiRulerBuilderTest >> testEmpty [
-
 	self buildRulerWith: #().
 
-	self assert: ruler nodes isEmpty.
-	self assert: ruler links isEmpty.
+	self assertEmpty: ruler nodes.
+	self assertEmpty: ruler links
 ]
 
 { #category : #tests }
@@ -152,7 +154,7 @@ HiRulerBuilderTest >> testFourMergedForks [
 	d
 	|\ \
 	| | | 
-	| c | 
+	| c | 
 	| |\| 
 	| |/\
 	| b |
@@ -203,7 +205,7 @@ HiRulerBuilderTest >> testOneNode [
 		#a -> (1@1).
 	}.
 	
-	self assert: ruler links isEmpty.
+	self assertEmpty: ruler links.
 ]
 
 { #category : #tests }

@@ -16,11 +16,9 @@ Class {
 
 { #category : #specs }
 SpDynamicWidgetChange class >> defaultSpec [
-	<spec>
-	
-	^ SpLayout composed
-		newRow: #button height: 25;
-		newRow: #bottom top: 25;
+	^ SpBoxLayout newVertical
+		add: #button withConstraints: [ :constraints | constraints height: 25 ];
+		add: #bottom;
 		yourself
 ]
 

@@ -59,6 +59,18 @@ Slot class >> checkValidName: aSymbol [
 
 ]
 
+{ #category : #ui }
+Slot class >> gtInspectorSlotUsersIn: composite [
+	<gtInspectorPresentationOrder: 30>
+	| users |
+	users := self slotUsers.
+	composite list 
+		title: 'Slot Users';
+		display: [ users  ];
+		when: [ users notEmpty ];
+		showOnly: 30
+]
+
 { #category : #'class initialization' }
 Slot class >> initialize [
 	Properties := Properties
@@ -103,7 +115,7 @@ Slot class >> slotSetting: aBuilder [
 Slot class >> slotUsers [
 	"all classes or traits that have slots of this kind"
 	^self environment allBehaviors 
-		flatCollect:  [ :class | class slots select: [ :slot | slot class == self ] ]
+		select:  [ :class | class slots anySatisfy: [ :slot | slot class == self ] ]
 ]
 
 { #category : #comparing }

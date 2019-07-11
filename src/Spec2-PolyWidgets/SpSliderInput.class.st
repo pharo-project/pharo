@@ -21,6 +21,11 @@ Class {
 }
 
 { #category : #specs }
+SpSliderInput class >> defaultSpec [
+	^ self sliderLeft
+]
+
+{ #category : #specs }
 SpSliderInput class >> sliderBottom [
 	<spec>
 	^ SpBoxLayout newVertical
@@ -31,23 +36,21 @@ SpSliderInput class >> sliderBottom [
 
 { #category : #specs }
 SpSliderInput class >> sliderLeft [
-	<spec: #default>
-	^ SpLayout composed
-		newRow: [ :row | 
-			row
-				add: #slider origin: 0 @ 0 corner: 0.85 @ 1;
-				add: #input origin: 0.85 @ 0 corner: 1 @ 1 ];
+	<spec>
+	^ SpPanedLayout newHorizontal
+		position: 85 percent;
+		add: #slider withConstraints: [ :constraints | constraints beNotResizable ];
+		add: #input;
 		yourself
 ]
 
 { #category : #specs }
 SpSliderInput class >> sliderRight [
 	<spec>
-	^ SpLayout composed
-		newRow: [ :row | 
-			row
-				add: #input origin: 0 @ 0 corner: 0.15 @ 1;
-				add: #slider origin: 0.15 @ 0 corner: 1 @ 1 ];
+	^ SpPanedLayout newHorizontal
+		position: 15 percent;
+		add: #input;
+		add: #slider;
 		yourself
 ]
 

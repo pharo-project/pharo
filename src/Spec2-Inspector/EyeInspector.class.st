@@ -24,42 +24,29 @@ EyeInspector class >> basicInspect: anObject [
 
 { #category : #spec }
 EyeInspector class >> debuggerSpec [
-	<spec:#default>
-	
-	^ SpLayout composed
-		add: #list origin: 0@0 corner: 0.33@1;
-		addVSplitter;
-		add: #description origin: 0.33@0 corner: 1@1;
-		yourself
-]
-
-{ #category : #spec }
-EyeInspector class >> debuggerSpecSlow [
-	<spec>
-	
-	^ SpLayout composed
-		newRow: [:row | 
-			row 
-				add: #list width: 135;
-				add: #description ];
+	<spec: #default>
+	^ SpPanedLayout newVertical
+		position: 70 percent;
+		add: #list;
+		add: #description;
 		yourself
 ]
 
 { #category : #inspecting }
 EyeInspector class >> explore: anObject [ 
-	InspectorNavigator openExplorer: (self inspector: anObject).
+	EyeInspectorNavigator openExplorer: (self inspector: anObject).
 	^ anObject
 ]
 
 { #category : #inspecting }
 EyeInspector class >> inspect: anObject [ 
-	InspectorNavigator openInspector: (self inspector: anObject).
+	EyeInspectorNavigator openInspector: (self inspector: anObject).
 	^ anObject
 ]
 
 { #category : #inspecting }
 EyeInspector class >> inspect: anObject label: aString [
-	(InspectorNavigator openInspector: (self inspector: anObject)) window title: aString.
+	(EyeInspectorNavigator openInspector: (self inspector: anObject)) window title: aString.
 	^ anObject
 
 ]
@@ -74,16 +61,15 @@ EyeInspector class >> inspector: anObject [
 { #category : #spec }
 EyeInspector class >> inspectorSpec [
 	<spec>
-	
-	^ SpLayout composed
-		newRow: [ :r |
-			r 
-				newColumn: #list right: 0.6;
-				addSplitter;
-				newColumn: #description left: 0.4 ]
-		bottom: 0.3;
-		addHSplitter;
-		newRow: #text top: 0.7;
+	^ SpPanedLayout newVertical
+		position: 70 percent;
+		add:
+			(SpPanedLayout newHorizontal
+				position: 40 percent;
+				add: #list;
+				add: #description;
+				yourself);
+		add: #text;
 		yourself
 ]
 
@@ -234,6 +220,7 @@ EyeInspector >> initializeShortcuts [
 
 { #category : #initialization }
 EyeInspector >> initializeWidgets [
+	super initializeWidgets.
 	description := self newText
 ]
 

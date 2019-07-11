@@ -1017,12 +1017,12 @@ SHRBTextStyler >> resolveTextLinkFor: aVariableNode [
 SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
 	| textLink global |
 	textLink := self resolveTextLinkFor: aVariableNode.
-	aVariableNode binding isGlobalVariable ifFalse: [ ^{textLink}] .
+	aVariableNode binding isGlobalVariable ifFalse: [ ^{textLink} ].
 	
-	global :=	aVariableNode binding value.
+	global :=	 aVariableNode binding value.
 	(global isClass and: [ global isDeprecated ]) ifFalse: [ ^{textLink} ].
 	
-	^{textLink. TextEmphasis struckOut}
+	^{ textLink. TextEmphasis struckOut }
 ]
 
 { #category : #private }
@@ -1031,15 +1031,15 @@ SHRBTextStyler >> style: aText ast: ast [
 	charAttr := Array new: aText size withAll: (self attributesFor: #default).
 	bracketLevel := 0.
 	parentheseLevel:=0.
-	ast acceptVisitor: self .
-	aText runs: (RunArray newFrom: charAttr).	
+	ast acceptVisitor: self.
+	aText runs: (RunArray newFrom: charAttr)	
 
 ]
 
 { #category : #private }
 SHRBTextStyler >> styleCloseBracket: aBlockNode [
 	bracketLevel := bracketLevel - 1.
-	(aBlockNode right isZero or: [  aBlockNode value isNil ]) ifTrue:[^ self].
+	(aBlockNode right isZero or: [ aBlockNode value isNil ]) ifTrue:[ ^self ].
 	self addStyle: self currentClosedBracketStyleName from: aBlockNode right to: aBlockNode right
 ]
 
@@ -1048,11 +1048,11 @@ SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 	aMessageNode parentheses
 		ifNotEmpty: [ 
 			aMessageNode parentheses
-				reverseDo: [ :interval | 
+				reverseDo: [:interval | 
 					| pos |
 					pos := interval last.
 					parentheseLevel := parentheseLevel - 1.
-					self addStyle: self currentClosedParenthesisStyleName from: pos to: pos ] ]
+					self addStyle: self currentClosedParenthesisStyleName from: pos to: pos ]]
 ]
 
 { #category : #private }
@@ -1074,7 +1074,7 @@ SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 					| pos |
 					pos := interval first.
 					self addStyle:  self currentOpenedParenthesisStyleName from: pos to: pos.
-					parentheseLevel := parentheseLevel + 1 ] ]
+					parentheseLevel := parentheseLevel + 1 ]]
 ]
 
 { #category : #private }
@@ -1089,7 +1089,7 @@ SHRBTextStyler >> styleTempBars: aSequenceNode [
 		ifNotNil: [ :pos | self addStyle: tempBarAttribute from: pos to: pos ]
 ]
 
-{ #category : #converting }
+{ #category : #styling }
 SHRBTextStyler >> unstyledTextFrom: aText [ 
 	"return a Text object without all styling attributes"
 	| answer |
@@ -1135,20 +1135,18 @@ SHRBTextStyler >> visitCascadeNode: aCascadeNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
-	"in a (valid) byte array all elements are of the same type, style the whole contents
+	"In a (valid) byte array all elements are of the same type, style the whole contents
 at once, but for ordinary literal arrays, style every node"
 
 	(aRBLiteralArrayNode isForByteArray and: [ 
 		aRBLiteralArrayNode isFaulty not and: [ 
 			aRBLiteralArrayNode contents isNotEmpty 
 		]
-	]) 
-	ifTrue: [ 
-		self addStyle: #number 
-			from: aRBLiteralArrayNode start + 2 
-			to: aRBLiteralArrayNode stop - 1
-	]
-	ifFalse: [ aRBLiteralArrayNode contents do: [ :each | self visitNode: each ] ]
+	]) ifTrue: [ 
+			self addStyle: #number 
+				from: aRBLiteralArrayNode start + 2 
+				to: aRBLiteralArrayNode stop - 1 ]
+		ifFalse: [ aRBLiteralArrayNode contents do: [ :each | self visitNode: each ]]
 ]
 
 { #category : #visiting }
@@ -1207,7 +1205,7 @@ SHRBTextStyler >> visitMethodNode: aMethodNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitNode: aNode [ 
-	aNode comments do: [ :comment|
+	aNode comments do: [:comment|
 		self 
 			addStyle: #comment
 			from: comment start
@@ -1284,7 +1282,7 @@ SHRBTextStyler >> visitVariableNode: aVariableNode [
 	self 
 		addStyle: (self resolveStyleFor: aVariableNode) 
 		attributes: (self resolveVariableAttributesFor: aVariableNode)
-		forNode: aVariableNode.
+		forNode: aVariableNode
 	
 	
 ]

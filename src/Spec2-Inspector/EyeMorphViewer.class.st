@@ -5,7 +5,7 @@ Class {
 	#name : #EyeMorphViewer,
 	#superclass : #EyeAbstractInspector,
 	#instVars : [
-		'container'
+		'morphPresenter'
 	],
 	#category : #'Spec2-Inspector-Base'
 }
@@ -13,11 +13,10 @@ Class {
 { #category : #spec }
 EyeMorphViewer class >> inspectorSpec [
 	<spec>
-	
-	^ SpLayout composed
-		newRow: #container bottom: 0.3;
-		addHSplitter;
-		newRow: #text top: 0.7;
+	^ SpPanedLayout newVertical
+		position: 70 percent;
+		add: #morphPresenter;
+		add: #text;
 		yourself
 ]
 
@@ -26,42 +25,44 @@ EyeMorphViewer class >> label [
 	^ 'Morph Viewer'
 ]
 
-{ #category : #accessing }
-EyeMorphViewer >> container [
-	^ container ifNil: [ container := (PanelMorph new 
-		changeProportionalLayout)
-		asSpAdapter
-		 vSpaceFill;
-		hSpaceFill]
-]
-
 { #category : #initialization }
 EyeMorphViewer >> initializePresenter [
 
 	self whenWindowChanged: [ self objectChanged ]
 ]
 
-{ #category : #'event-handling' }
-EyeMorphViewer >> objectChanged [
+{ #category : #initialization }
+EyeMorphViewer >> initializeWidgets [
+	super initializeWidgets.
+	morphPresenter := self newMorph.
 
-	self text doItReceiver: self object. 
-	self container morph removeAllMorphs.
-	self container morph
-		addMorph: self thumbnailMorph
-		fullFrame: SpLayoutFrame identity
+	morphPresenter
+		morph:
+			(PanelMorph new
+				changeProportionalLayout;
+				vResizing: #spaceFill;
+				hResizing: #spaceFill;
+				yourself)
 ]
 
-{ #category : #initialization }
+{ #category : #'event-handling' }
+EyeMorphViewer >> objectChanged [
+	text doItReceiver: self object.
+	morphPresenter morph removeAllMorphs.
+	morphPresenter morph addMorph: self thumbnailMorph fullFrame: LayoutFrame identity
+]
+
+{ #category : #stepping }
 EyeMorphViewer >> step [
 	self objectChanged
 ]
 
 { #category : #'event-handling' }
 EyeMorphViewer >> thumbnailMorph [
-	^self object taskThumbnailOfSize: self thumbnailSize
+	^ self object taskThumbnailOfSize: self thumbnailSize
 ]
 
 { #category : #accessing }
 EyeMorphViewer >> thumbnailSize [
-	^ self container extent
+	^ morphPresenter morph extent
 ]

@@ -2,27 +2,19 @@ Class {
 	#name : #SpSingleSelectionMode,
 	#superclass : #SpAbstractSelectionMode,
 	#instVars : [
-		'selectedIndexValueHolder'
+		'#selectedIndex => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Table'
 }
 
-{ #category : #adding }
-SpSingleSelectionMode >> addSubscription: aSubscription [
-
-	^ selectedIndexValueHolder announcer basicSubscribe: aSubscription
-]
-
 { #category : #selecting }
 SpSingleSelectionMode >> basicSelectIndex: indexToSelect [
-
-	selectedIndexValueHolder value: indexToSelect
+	selectedIndex := indexToSelect
 ]
 
 { #category : #testing }
 SpSingleSelectionMode >> includesIndex: anIndex [
-
-	^ selectedIndexValueHolder value = anIndex
+	^ self selectedIndex = anIndex
 ]
 
 { #category : #testing }
@@ -33,9 +25,8 @@ SpSingleSelectionMode >> includesItem: anItem [
 
 { #category : #initialization }
 SpSingleSelectionMode >> initialize [
-
 	super initialize.
-	selectedIndexValueHolder := 0 asValueHolder
+	selectedIndex := 0
 ]
 
 { #category : #testing }
@@ -66,8 +57,7 @@ SpSingleSelectionMode >> selectItems: aCollection [
 
 { #category : #selecting }
 SpSingleSelectionMode >> selectedIndex [
-	
-	^ selectedIndexValueHolder value
+	^ selectedIndex
 ]
 
 { #category : #selecting }
@@ -95,10 +85,9 @@ SpSingleSelectionMode >> selectedItems [
 		ifNil: [ #() ]
 ]
 
-{ #category : #accessing }
-SpSingleSelectionMode >> subscriptions [
-
-	^ selectedIndexValueHolder announcer subscriptions subscriptions
+{ #category : #private }
+SpSingleSelectionMode >> selectionHolder [
+	^ self observablePropertyNamed: #selectedIndex
 ]
 
 { #category : #selecting }
@@ -108,14 +97,11 @@ SpSingleSelectionMode >> unselectAll [
 ]
 
 { #category : #selecting }
-SpSingleSelectionMode >> unselectIndex: anInteger [ 
-
-	(selectedIndexValueHolder value = anInteger)
-		ifTrue: [ selectedIndexValueHolder value: 0 ]
+SpSingleSelectionMode >> unselectIndex: anInteger [
+	self selectedIndex = anInteger ifTrue: [ self basicSelectIndex: 0 ]
 ]
 
 { #category : #events }
-SpSingleSelectionMode >> whenChangedDo: aBlockClosure [ 
-	
-	selectedIndexValueHolder whenChangedDo: [ aBlockClosure cull: self ]
+SpSingleSelectionMode >> whenChangedDo: aBlockClosure [
+	self property: #selectedIndex whenChangedDo: [ aBlockClosure cull: self ]
 ]

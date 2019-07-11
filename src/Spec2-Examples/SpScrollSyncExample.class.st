@@ -73,10 +73,8 @@ SpScrollSyncExample >> initialize [
 { #category : #initialization }
 SpScrollSyncExample >> initializeWidgets [
 	text := self newText.
-	text
-		whenBuiltDo: [ :builtAnnouncement | 
-			text
-				whenScrollValueChangedDo: [ :newPosition | self syncMorphPosition ] ].
+
+	text whenScrollValueChangedDo: [ :newPosition | self syncMorphPosition ].
 	text text: self loremIpsum
 ]
 

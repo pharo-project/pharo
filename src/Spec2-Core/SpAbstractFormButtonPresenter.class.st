@@ -18,21 +18,20 @@ Class {
 	#name : #SpAbstractFormButtonPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'#actionWhenActivatedHolder',
 		'#state => SpObservableSlot',
-		'#labelClickableHolder',
 		'#label => SpObservableSlot',
-		'#actionWhenDeactivatedHolder'
+		'#actionWhenActivated => SpObservableSlot',
+		'#actionWhenDeactivated => SpObservableSlot',
+		'#labelClickable => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
 
 { #category : #api }
 SpAbstractFormButtonPresenter >> activationAction: aBlock [
-	"<api: #block getter: #activationAction registration: #whenActivationActionChanged:>"
 	"This method is used to set the action to perform when I am activated"
-	
-	actionWhenActivatedHolder value: aBlock
+
+	actionWhenActivated := aBlock
 ]
 
 { #category : #api }
@@ -46,10 +45,9 @@ SpAbstractFormButtonPresenter >> click [
 
 { #category : #'api-events' }
 SpAbstractFormButtonPresenter >> deactivationAction: aBlock [
-	"<api: #block getter: #desactivationAction registration: #whenDeactivationActionChanged:>"
 	"This method is used to set the action to perform when I am deactivated"
-	
-	actionWhenDeactivatedHolder value: aBlock
+
+	actionWhenDeactivated := aBlock
 ]
 
 { #category : #api }
@@ -64,16 +62,15 @@ SpAbstractFormButtonPresenter >> enabled: aBoolean [
 
 { #category : #initialization }
 SpAbstractFormButtonPresenter >> initialize [
-
 	super initialize.
 
-	actionWhenActivatedHolder := [] asValueHolder.
-	actionWhenDeactivatedHolder := [] asValueHolder.
+	actionWhenActivated := [  ].
+	actionWhenDeactivated := [  ].
 	state := false.
-	
-	labelClickableHolder := true asValueHolder. 
+
+	labelClickable := true.
 	label := ''.
-	labelClickableHolder whenChangedDo: [:aBoolean | self changed: { #labelClickable: . aBoolean } ]
+	self whenLabelClickableChangedDo: [ :aBoolean | self changed: {#labelClickable: . aBoolean} ]
 ]
 
 { #category : #api }
@@ -90,18 +87,16 @@ SpAbstractFormButtonPresenter >> label: aString [
 
 { #category : #api }
 SpAbstractFormButtonPresenter >> labelClickable [
-"	<api: #inspect>"
 	"Return true if the label can be clicked to select the checkbox"
 
-	^ labelClickableHolder value
+	^ labelClickable
 ]
 
 { #category : #api }
 SpAbstractFormButtonPresenter >> labelClickable: aBoolean [
-	"<api: #boolean getter: #labelClickable registration: #whenLabelClickableChanged:>"
 	"Set if the label can be clicked to select the checkbox"
-	
-	labelClickableHolder value: aBoolean
+
+	labelClickable := aBoolean
 ]
 
 { #category : #api }
@@ -140,7 +135,7 @@ SpAbstractFormButtonPresenter >> whenActivatedDo: aBlock [
 SpAbstractFormButtonPresenter >> whenActivationActionChangedDo: aBlock [
 	"A block performed when the activation action changed"
 
-	actionWhenActivatedHolder whenChangedDo: aBlock
+	self property: #actionWhenActivated whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
@@ -161,7 +156,7 @@ SpAbstractFormButtonPresenter >> whenDeactivatedDo: aBlock [
 SpAbstractFormButtonPresenter >> whenDeactivationActionChangedDo: aBlock [
 	"A block performed when the deactivation action changed"
 
-	actionWhenDeactivatedHolder whenChangedDo: aBlock
+	self property: #actionWhenDeactivated whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
@@ -173,6 +168,6 @@ SpAbstractFormButtonPresenter >> whenLabelChangedDo: aBlock [
 { #category : #'api-events' }
 SpAbstractFormButtonPresenter >> whenLabelClickableChangedDo: aBlock [
 	"A block performed when the label click is activated or descativated"
-	
-	labelClickableHolder whenChangedDo:  aBlock 
+
+	self property: #labelClickable whenChangedDo: aBlock
 ]

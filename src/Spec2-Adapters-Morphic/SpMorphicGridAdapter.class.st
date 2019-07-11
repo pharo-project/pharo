@@ -38,14 +38,9 @@ SpMorphicGridAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel
 SpMorphicGridAdapter >> layout: aLayout [
 	"build of widget was differed up to here (to know what is the direction)"
 
-	widget
-		ifNil: [ widget := self newPanel.
-			widget layoutPolicy
-				padding: aLayout borderWidth;
-				rowSpacing: aLayout rowSpacing;
-				columnSpacing: aLayout columnSpacing;
-				rowHomogeneous: aLayout isRowHomogeneous;
-				columnHomogeneous: aLayout isColumnHomogeneous ].
+	widget ifNil: [ 
+		widget := self newPanel.
+		widget layoutPolicy layout: aLayout ].
 
 	super layout: aLayout
 ]

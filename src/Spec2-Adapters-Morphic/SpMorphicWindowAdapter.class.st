@@ -4,9 +4,6 @@ I am the adapter used to bridge a WindowPresenter and a SystemWindow
 Class {
 	#name : #SpMorphicWindowAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
-	#instVars : [
-		'isClosedHolder'
-	],
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
@@ -144,14 +141,6 @@ SpMorphicWindowAdapter >> extent: aPoint [
 SpMorphicWindowAdapter >> initialExtent [
 
 	^ self model initialExtent
-]
-
-{ #category : #initialization }
-SpMorphicWindowAdapter >> initialize [
-
-	super initialize.
-
-	isClosedHolder := false asValueHolder.
 ]
 
 { #category : #protocol }

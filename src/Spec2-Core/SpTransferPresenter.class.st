@@ -5,8 +5,8 @@ Class {
 	#name : #SpTransferPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'passenger',
-		'source'
+		'#passenger => SpObservableSlot',
+		'#source => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Support'
 }
@@ -19,33 +19,20 @@ SpTransferPresenter class >> adapterName [
 
 { #category : #accessing }
 SpTransferPresenter >> from: aModel [
-
-	source value: aModel
-]
-
-{ #category : #initialization }
-SpTransferPresenter >> initialize [
-
-	super initialize.
-
-	passenger := nil asValueHolder.
-	source := nil asValueHolder.
+	source := aModel
 ]
 
 { #category : #accessing }
 SpTransferPresenter >> passenger [
-
-	^ passenger value
+	^ passenger
 ]
 
 { #category : #accessing }
 SpTransferPresenter >> source [
-
-	^ source value
+	^ source
 ]
 
 { #category : #accessing }
 SpTransferPresenter >> transfer: anObject [
-
-	passenger value: anObject
+	passenger := anObject
 ]

@@ -157,7 +157,7 @@ HEInstaller >> existingClass: aHEClass [
 ]
 
 { #category : #'validating existance' }
-HEInstaller >> existingTrait: aHETrait. [
+HEInstaller >> existingTrait: aHETrait [
 	(environment includesKey: aHETrait traitName) ifTrue:[ 
 		self error: (self messageExistingTrait: aHETrait)
 	].

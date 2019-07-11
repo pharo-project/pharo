@@ -20,12 +20,12 @@ SpContainerPresenter class >> adapterName [
 SpContainerPresenter >> eventKeyStrokesForNextFocus [
 	"String describing the keystroke to perform to jump to the next widget"
 
-	^ keyStrokesForNextFocusHolder value
+	^ keyStrokesForNextFocus
 ]
 
 { #category : #'api-focus' }
 SpContainerPresenter >> eventKeyStrokesForPreviousFocus [
 	"String describing the keystroke to perform to jump to the previous widget"
 
-	^ keyStrokesForPreviousFocusHolder value
+	^ keyStrokesForPreviousFocus
 ]
