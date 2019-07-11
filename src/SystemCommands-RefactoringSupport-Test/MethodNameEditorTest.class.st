@@ -21,25 +21,37 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport-Test'
 }
 
+{ #category : #accessing }
+MethodNameEditorTest >> a [ 
+	 
+]
+
+{ #category : #accessing }
+MethodNameEditorTest >> a: a [
+	 
+]
+
+{ #category : #accessing }
+MethodNameEditorTest >> a: a b: b c: c [
+	 
+]
+
 { #category : #running }
 MethodNameEditorTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
+
 	super setUp.
 	presenterMNEThreeSetter := SycMethodNameEditor
-		on:
-			(RBMethodName
-				selector: (UseOnlyForTest >> #a:b:c:) selector
-				arguments: ((UseOnlyForTest >> #a:b:c:) ast arguments collect: #name)).
+		on: (RBMethodName selector: (self class >> #a:b:c:) selector
+		arguments: ((self class >> #a:b:c:) ast arguments collect: #name)).
+		
 	presenterMNEOneSetter := SycMethodNameEditor
-		on:
-			(RBMethodName
-				selector: (UseOnlyForTest >> #a:) selector
-				arguments: ((UseOnlyForTest >> #a:) ast arguments collect: #name)).
-	presenterMNEOneGetter := SycMethodNameEditor
-		on:
-			(RBMethodName
-				selector: (UseOnlyForTest >> #a) selector
-				arguments:( (UseOnlyForTest >> #a) ast arguments collect: #name)).
+		on: (RBMethodName selector: (self class >> #a:) selector
+		arguments: ((self class >> #a:) ast arguments collect: #name)).
+		
+	presenterMNEOneGetter := SycMethodNameEditor on:
+		(RBMethodName selector: (self class >> #a) selector
+		arguments: ((self class >> #a) ast arguments collect: #name))
 ]
 
 { #category : #running }
@@ -74,7 +86,7 @@ MethodNameEditorTest >> testButtonDownClickShouldModifiedPreviewFinal [
 	presenterMNEThreeSetter downButton click.
 	self
 		assert: presenterMNEThreeSetter previewResult label
-		equals: 'a: B b: A c: C'
+		equals: 'a: b b: a c: c'
 ]
 
 { #category : #tests }
@@ -108,9 +120,7 @@ MethodNameEditorTest >> testButtonUpClickShouldModifiedArgumentsList [
 MethodNameEditorTest >> testButtonUpClickShouldModifiedPreviewFinal [
 	presenterMNEThreeSetter argumentsList selectIndex: 2.
 	presenterMNEThreeSetter upButton click.
-	self
-		assert: presenterMNEThreeSetter previewResult label
-		equals: 'a: B b: A c: C'
+	self assert: presenterMNEThreeSetter previewResult label equals: 'a: b b: a c: c'
 ]
 
 { #category : #tests }
@@ -125,7 +135,7 @@ MethodNameEditorTest >> testButtonUpClickShouldSelectionIndexBeDecremented [
 { #category : #tests }
 MethodNameEditorTest >> testChangeInInputSelectorShouldChangePreviewLabelFinal [
 	presenterMNEThreeSetter selectorInput text: 'd:e:f:'.
-	self assert: presenterMNEThreeSetter previewResult label  equals: 'd: A e: B f: C'
+	self assert: presenterMNEThreeSetter previewResult label  equals: 'd: a e: b f: c'
 ]
 
 { #category : #tests }
