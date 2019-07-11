@@ -39,18 +39,6 @@ GradientFillStyle class >> colors: colorArray [
 		[:color :index| (index-1 asFloat / (colorArray size - 1 max: 1)) -> color])
 ]
 
-{ #category : #examples }
-GradientFillStyle class >> example [
-	<script: 'self example inspect'>
-
-	^(self ramp: { 0.0 -> Color red. 0.5 -> Color green. 1.0 -> Color blue})
-		origin: 300 @ 300;
-		direction: 400@0;
-		normal: 0@400;
-		radial: true;
-	yourself
-]
-
 { #category : #'private - initialization' }
 GradientFillStyle class >> initPixelRampCache [
 	"Create an LRUCache to use for accessing pixel ramps.
@@ -82,6 +70,18 @@ GradientFillStyle class >> pixelRampCache [
 { #category : #'instance creation' }
 GradientFillStyle class >> ramp: colorRamp [
 	^self new colorRamp: colorRamp
+]
+
+{ #category : #examples }
+GradientFillStyle class >> sample [
+	<sampleInstance>
+
+	^(self ramp: { 0.0 -> Color red. 0.5 -> Color green. 1.0 -> Color blue})
+		origin: 300 @ 300;
+		direction: 400@0;
+		normal: 0@400;
+		radial: true;
+	yourself
 ]
 
 { #category : #comparing }
