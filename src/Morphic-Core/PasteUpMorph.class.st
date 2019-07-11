@@ -451,13 +451,16 @@ PasteUpMorph >> dropFiles: anEvent [
 	TODO:
 		- use a more general mechanism for figuring out what to do with the file (perhaps even offering a choice from a menu)
 		- remember the resource location or (when in browser) even the actual file handle"
-	| numFiles |	
+
+	| numFiles |
 	numFiles := anEvent contents.
-	
-	1 to: numFiles do: [:i | | aFileReference handler |
+	1 to: numFiles do: [ :i | 
+		| aFileReference handler |
 		aFileReference := FileReference requestDropReference: i.
-		handler := ExternalDropHandler lookupExternalDropHandler: aFileReference.
-		handler ifNotNil: [ aFileReference binaryWriteStreamDo: [ :stream | handler handle: stream in: self dropEvent: anEvent ] ]].
+		handler := ExternalDropHandler
+			lookupExternalDropHandler: aFileReference.
+		handler
+			ifNotNil: [ handler handle: aFileReference in: self dropEvent: anEvent ] ]
 ]
 
 { #category : #'Morphic-Base-Windows' }
