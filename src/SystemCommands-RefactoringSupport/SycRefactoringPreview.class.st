@@ -1,81 +1,48 @@
 "
-I am refactoring preview which is created on the instance of CmdCommand which provide refactorings.
-Such commands should implemetn method: 
+I am a GUI used to preview the impact of a refactoring and select the changes to apply.
 
-- asRefactorings
-It should return collection of refactorings to complete the command.
+Examples
 
-I was copied from the ChangesBrowser.
-But I add extra widget to the view to allow scope refactorings. 
-Scope instances should understand two messages: 
+	scopePackage := ClyPackageScope of: 'Stage' asPackage in: ClyNavigationEnvironment currentImage.
+	scopeClass := ClyClassScope of: 'SycRefactoringPreview' in: ClyNavigationEnvironment currentImage.
+	
+	SycRefactoringPreview2 for:  scope: { scopePackage . scopeClass } 
 
-- description to be represented in drop down list.
-- asRBEnvironment to restrict refactoring instances using RBBrowserEnvironment logic.
 
-Currently only Calypso provide such scopes. 
 
-Also in contrast to ChangesBrowser I do not allow show arbitrary changes. I should always be created on the command:
-
-	SycRefactoringPreview for: aCommand scopes: scopes.
-
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	changes:		<Object>
-	changesTree:		<Object>
-	command:		<CmdCommand>
-	scopeDropList:		<Object>
-	scopes:		<Collection>
-	textArea:		<Object>
-
-    Implementation Points
+Instance Variables
+	changes:						<ArrayOfRBRefactroring>	The collection of changes that can be applied with the refactoring.
+	scopeDropList:				<DropListPresenter>		A drop list to let the user chose the scope of the refactoring to apply. (All image, current package, current class...)				
+	selectedRefactorings:		<Dictionary>					A dictionary remembering for all refactorings if they should be applied.	
+	table:							<TablePresenter>			A table to display the possible refactorings.
+	diffPresenter				<DiffPresenter>				A diff presenter to show the users the consequences of the refactorings.
+	
 "
 Class {
 	#name : #SycRefactoringPreview,
-	#superclass : #ComposableModel,
+	#superclass : #SpPresenter,
 	#instVars : [
-		'command',
-		'scopes',
-		'textArea',
-		'changesTree',
 		'changes',
-		'scopeDropList'
+		'scopeDropList',
+		'table',
+		'command',
+		'selectedRefactorings',
+		'diffPresenter'
 	],
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #shortcuts }
-SycRefactoringPreview class >> buildShortcutsOn: aBuilder [
-	<keymap>
-
-	(aBuilder shortcut: #close)
-		category: #ChangesBrowserGlobalShortcuts
-		default: PharoShortcuts current cancelShortcut
-		do: [ :target | target cancel ]
-		description: 'Close this dialog'.
-		
-	(aBuilder shortcut: #accept)
-		category: #ChangesBrowserGlobalShortcuts
-		default: PharoShortcuts current acceptShortcut
-		do: [ :target | target accept ]
-		description: 'Accept the proposed changes'.
-]
-
 { #category : #specs }
 SycRefactoringPreview class >> defaultSpec [
-	<spec>
-	^ SpecLayout composed
-		newColumn: [ :column1 | 
-			column1
-				newRow: [ :column2 | column2 add: #changesTree ];
-				newRow: [ :column2 | column2 add: #scopeDropList ] height: 30;
-				addSplitter;
-				add: #textArea ]
+	^ SpBoxLayout newVertical
+		add: #table;
+		add: #scopeDropList withConstraints: [ :constraints | constraints height: 30 ];
+		add: #diffPresenter;
+		yourself
 ]
 
 { #category : #'instance creation' }
 SycRefactoringPreview class >> for: aCommand scopes: scopes [
-
 	^ self new
 		command: aCommand;
 		scopes: scopes
@@ -83,7 +50,6 @@ SycRefactoringPreview class >> for: aCommand scopes: scopes [
 
 { #category : #specs }
 SycRefactoringPreview class >> title [
-
 	^ 'Refactoring changes'
 ]
 
@@ -91,26 +57,28 @@ SycRefactoringPreview class >> title [
 SycRefactoringPreview >> accept [
 	self okToChange
 		ifFalse: [ ^ self ].
-	[ self pickedChanges do: [ :change | RBRefactoryChangeManager instance performChange: change ] ] asJob
+	[ self pickedChanges 
+		do: [ :change | RBRefactoryChangeManager instance performChange: change ] ]
+		asJob
 		title: 'Refactoring';
 		run.
-	self window delete
+	self window close
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 SycRefactoringPreview >> activeRBEnvironment [
-	
-	^self activeScope asRBEnvironment
+	^ self activeScope asRBEnvironment
 ]
 
 { #category : #accessing }
 SycRefactoringPreview >> activeScope [
-	^scopeDropList selectedItem
+	^ scopeDropList selectedItem
 ]
 
 { #category : #'epicea support' }
 SycRefactoringPreview >> asEpiceaEvent [
-
+	"thanks to this method epicia know that is a refactoring"
+	
 	self flag: #todo. "This is a workaround for a problem found by RewriteTool"
 	(changes allSatisfy: [ :each | each respondsTo: #asEpiceaEvent ])
 		ifFalse: [ ^ EpCompositeRefactoring withAll: #() ].
@@ -122,18 +90,14 @@ SycRefactoringPreview >> asEpiceaEvent [
 
 { #category : #private }
 SycRefactoringPreview >> buildDiffFor: aChange [
-
-	^ aChange
-		ifNil: [ '' ]
-		ifNotNil: [
-			TextDiffBuilder 
-				buildDisplayPatchFrom: aChange oldVersionTextToDisplay 
-				to: aChange textToDisplay ].
+	^ diffPresenter
+		leftText: aChange oldVersionTextToDisplay;
+		rightText: aChange textToDisplay
 ]
 
 { #category : #controlling }
 SycRefactoringPreview >> cancel [
-	self window delete
+	self window close
 ]
 
 { #category : #accessing }
@@ -147,21 +111,11 @@ SycRefactoringPreview >> changes: aCollection [
 ]
 
 { #category : #accessing }
-SycRefactoringPreview >> changesTree [
-	^ changesTree
-]
-
-{ #category : #accessing }
-SycRefactoringPreview >> command [
-	^ command
-]
-
-{ #category : #accessing }
 SycRefactoringPreview >> command: aCommand [
 	command := aCommand
 ]
 
-{ #category : #private }
+{ #category : #update }
 SycRefactoringPreview >> generateChanges [
 
 	| rbEnvironment |
@@ -173,57 +127,48 @@ SycRefactoringPreview >> generateChanges [
 ]
 
 { #category : #initialization }
-SycRefactoringPreview >> initializeChangesTree [
-	changesTree
-		beCheckList;
-		removeOnlyLastSelected: true;
-		autoMultiSelection: true;
-		rootNodeHolder: [ :item | 
-					TreeNodeModel new
-						content: item;
-						hasContentToShow: true;
-						children: [ changesTree childrenFor: item ] ];
-		displayBlock: [ :item | item nameToDisplay ].
-	self whenBuiltDo: [ changesTree selectAll ]
+SycRefactoringPreview >> initializeDialogWindow: aDialogWindowPresenter [
+	super initializeDialogWindow: aDialogWindowPresenter.
+	aDialogWindowPresenter
+		title: self title;
+		initialExtent: 500 @ 500
 ]
 
 { #category : #initialization }
 SycRefactoringPreview >> initializePresenter [
-	changesTree
-		whenHighlightedItemChangedDo:
-			[ :item | item ifNotNil: [ textArea text: (self buildDiffFor: item content) ] ]
-]
-
-{ #category : #initialization }
-SycRefactoringPreview >> initializeScopeDropList [
+	super initializePresenter.
+	table
+		whenSelectionChangedDo: [ :selection | self buildDiffFor: selection selectedItem ].
+	table
+		whenActivatedDo: [ :selectedElement | 
+			self toggleSelectionOf: selectedElement widget selection selectedItem.
+			self rebuild ].
 	scopeDropList
-		displayBlock: [ :scope | scope description capitalized ];
-		whenSelectedItemChangedDo: [ :scope | scope ifNotNil: [ self updateChanges ] ]
-]
-
-{ #category : #initialization }
-SycRefactoringPreview >> initializeTextArea [
-	textArea 
-		enabled: false;
-		"make sure we can cycle over the text field"
-		bindKeyCombination: Character tab toAction: [ self giveFocusToNextFrom: textArea ];
-		bindKeyCombination: Character tab shift toAction: [ self giveFocusToPreviousFrom: textArea ].
+		whenSelectedItemChangedDo: [ :scope | self updateChanges ]
 ]
 
 { #category : #initialization }
 SycRefactoringPreview >> initializeWidgets [
-
-	changesTree := self newTree.
-	textArea := self newCode.
+	table := self newTable.
+	diffPresenter := self newDiff.
 	scopeDropList := self newDropList.
 	
-	self initializeChangesTree.
-	self initializeTextArea.
-	self initializeScopeDropList.
-	self setFocus.
+	table
+		addColumn:
+			((SpCheckBoxTableColumn evaluated: [ :x | selectedRefactorings at: x ])
+				onActivation: [ :class | self toggleSelectionOf: class ];
+				onDesactivation: [ :class | self toggleSelectionOf: class ];
+				width: 20);
+		addColumn: (SpStringTableColumn evaluated: #name);
+		hideColumnHeaders.
+		
+	diffPresenter disable.
+	scopeDropList displayBlock: [ :scope | scope description capitalized ].
+	
 	self
-		bindKeyCombination: PharoShortcuts current acceptShortcut toAction: [ self accept ];
-		bindKeyCombination: Character escape toAction: [ self cancel ]
+		selectectAllCheckBox;
+		setShortcuts;
+		setFocus
 ]
 
 { #category : #'epicea support' }
@@ -232,19 +177,15 @@ SycRefactoringPreview >> isEpiceaInterestingJobOwner [
 	^ true
 ]
 
-{ #category : #controlling }
-SycRefactoringPreview >> open [
-	^ self openDialogWithSpec
-		okAction: [ self accept ];
-		cancelAction: [ self cancel ];
-		yourself
-]
-
 { #category : #accessing }
 SycRefactoringPreview >> pickedChanges [
-	| selectedItems |
-	selectedItems := changesTree selectedItems collect: #content.
-	^ changesTree roots select: [ :i | selectedItems includes: i ]
+	^ table items select: [ :item | selectedRefactorings at: item ]
+]
+
+{ #category : #update }
+SycRefactoringPreview >> rebuild [
+	self needRebuild: false.
+	self buildWithSpec
 ]
 
 { #category : #accessing }
@@ -253,41 +194,60 @@ SycRefactoringPreview >> scopeDropList [
 ]
 
 { #category : #accessing }
-SycRefactoringPreview >> scopes [
-	^ scopes
+SycRefactoringPreview >> scopes: aCollectionOfScopes [
+	scopeDropList items: aCollectionOfScopes "It also sets up first item as selection"
 ]
 
-{ #category : #accessing }
-SycRefactoringPreview >> scopes: anObject [
-	scopes := anObject.
-	scopeDropList items: scopes "It also sets up first item as selection"
+{ #category : #update }
+SycRefactoringPreview >> selectectAllCheckBox [
+	selectedRefactorings := Dictionary new.
+	table items
+		do: [ :refactoring | selectedRefactorings at: refactoring put: true ]
 ]
 
 { #category : #initialization }
 SycRefactoringPreview >> setFocus [
 	self focusOrder
-		add: changesTree;
-		add: textArea;
-		yourself
+		add: table;
+		add: scopeDropList;
+		add: diffPresenter
 ]
 
 { #category : #initialization }
 SycRefactoringPreview >> setShortcuts [
-	self changesTree attachKeymapCategory: #ChangesBrowserGlobalShortcuts targetting: self
+	self
+		bindKeyCombination: PharoShortcuts current acceptShortcut toAction: [ self accept ];
+		bindKeyCombination: Character escape toAction: [ self cancel ]
 ]
 
 { #category : #accessing }
-SycRefactoringPreview >> textArea [
-	^ textArea
+SycRefactoringPreview >> table [
+	^ table
+]
+
+{ #category : #accessing }
+SycRefactoringPreview >> title [
+	^ self class title
 ]
 
 { #category : #private }
+SycRefactoringPreview >> toggleSelectionOf: aRefactoring [
+	"it's normal it's impossible that anItem dosn't store in dictionary because at initialize i fill the dictionary and at each scope change"
+
+	selectedRefactorings at: aRefactoring put: (selectedRefactorings at: aRefactoring) not
+]
+
+{ #category : #update }
 SycRefactoringPreview >> updateChanges [
-	| aCompositeChange |
 	self generateChanges.
+	self updateTablePresenter.
+	self selectectAllCheckBox
+]
+
+{ #category : #update }
+SycRefactoringPreview >> updateTablePresenter [
+	| aCompositeChange |
 	aCompositeChange := RBCompositeRefactoryChange new.
-	changes do: [:each | aCompositeChange addChange: each ].
-	
-	changesTree roots: (aCompositeChange whatToDisplayIn: self).
-	changesTree selectAll
+	changes do: [ :each | aCompositeChange addChange: each ].
+	table items: (aCompositeChange whatToDisplayIn: self)
 ]
