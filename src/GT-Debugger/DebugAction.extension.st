@@ -33,12 +33,6 @@ DebugAction >> asMenuRegistrationIn: aBuilder [
 ]
 
 { #category : #'*GT-Debugger' }
-DebugAction >> specId [
-
-	^ (self id, 'SpecId') asSymbol
-]
-
-{ #category : #'*GT-Debugger' }
 DebugAction >> specPresenter [
 	^ GTDebugActionButton
 ]
