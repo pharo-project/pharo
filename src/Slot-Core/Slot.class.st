@@ -59,6 +59,18 @@ Slot class >> checkValidName: aSymbol [
 
 ]
 
+{ #category : #ui }
+Slot class >> gtInspectorSlotUsersIn: composite [
+	<gtInspectorPresentationOrder: 30>
+	| users |
+	users := self slotUsers.
+	composite list 
+		title: 'Slot Users';
+		display: [ users  ];
+		when: [ users notEmpty ];
+		showOnly: 30
+]
+
 { #category : #'class initialization' }
 Slot class >> initialize [
 	Properties := Properties
