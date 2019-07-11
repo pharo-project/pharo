@@ -1,5 +1,5 @@
 "
-My instances are 31-bit numbers, stored in twos complement form. The allowable range is approximately +- 1 billion (see SmallInteger minVal, maxVal).
+My instances are 31-bit numbers or 64-bit numbers depending on the image architecture, stored in twos complement form. The allowable range is approximately +- 1 billion (32 bits), 1 quintillion (64 bits)  (see SmallInteger minVal, maxVal).
 "
 Class {
 	#name : #SmallInteger,
