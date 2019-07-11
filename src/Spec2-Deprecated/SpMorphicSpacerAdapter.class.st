@@ -1,7 +1,7 @@
 Class {
 	#name : #SpMorphicSpacerAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
-	#category : #'Spec2-Deprecated'
+	#category : #'Spec2-Deprecated-Adapters'
 }
 
 { #category : #deprecation }

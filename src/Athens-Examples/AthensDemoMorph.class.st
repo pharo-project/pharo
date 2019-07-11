@@ -1,7 +1,7 @@
 "
 Demos for Athens, just run:
 
-	AthensDemoMorph example
+	AthensDemoPresenter open
 
 You can find an implementation of each figure in
 corresponding #figure<#>: method
@@ -18,29 +18,6 @@ Class {
 	],
 	#category : #'Athens-Examples-Demos'
 }
-
-{ #category : #examples }
-AthensDemoMorph class >> example [
-
-	| demo model window |
-	demo := self new openInWorld.
-	(model := DynamicComposablePresenter new)
-		instantiatePresenters: #(backButton ButtonPresenter forwardButton ButtonPresenter).
-	model backButton
-		label: 'Previous Figure';
-		action: [ demo prevFigure ].
-	model forwardButton
-		label: 'Next Figure';
-		action: [ demo nextFigure ].
-	window := model
-		openWithSpecLayout:
-			(SpecLayout composed
-				newColumn: [ :c | 
-					c add: #backButton.
-					c add: #forwardButton ];
-				yourself).
-	window title: 'Athens demos' translated
-]
 
 { #category : #utilities }
 AthensDemoMorph class >> roundedRectanglePathOn: aCanvas [
@@ -383,23 +360,22 @@ AthensDemoMorph >> figures [
 ]
 
 { #category : #initialization }
-AthensDemoMorph >> initialize [ 
-	| ref loadFileFailBlock|
+AthensDemoMorph >> initialize [
+	| ref loadFileFailBlock |
 	super initialize.
 	self extent: self defaultExtent.
 	self color: self backColor.
 	surface := AthensCairoSurface extent: self extent.
 	current := 1.
 	frame := 0.
-      loadFileFailBlock:= AthensCairoSurface fromForm:(Form fromDisplay: (0@0 extent:(300@150))).
+	loadFileFailBlock := AthensCairoSurface fromForm: (Form fromDisplay: (0 @ 0 extent: 300 @ 150)).
 	ref := 'Pharo.png' asFileReference.
-	pharoLogo := AthensCairoSurface createFromFile:  ref fullName ifFailed:  [ loadFileFailBlock ].
+	pharoLogo := AthensCairoSurface createFromFile: ref fullName ifFailed: [ loadFileFailBlock ].
 
 	ref := 'esug-balloon.png' asFileReference.
-	esugBallon := AthensCairoSurface createFromFile:  ref fullName ifFailed:  [ loadFileFailBlock ].
-	
+	esugBallon := AthensCairoSurface createFromFile: ref fullName ifFailed: [ loadFileFailBlock ].
+
 	self startStepping
-	
 ]
 
 { #category : #accessing }

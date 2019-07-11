@@ -59,7 +59,7 @@ SpMorphicListAdapter >> buildWidget [
 	self refreshWidgetHeaderTitle.
 	self refreshWidgetSelection.
 	self presenter whenItemFilterBlockChangedDo: [ :block | self updateItemFilterBlockWith: block ].
-	self updateItemFilterBlockWith: self itemFilterBlock.
+	self updateItemFilterBlockWith: self itemFilter.
 
 	widget bindKeyCombination: Character space toAction: [ self model clickOnSelectedItem ].
 
@@ -78,8 +78,8 @@ SpMorphicListAdapter >> isShowColumnHeaders [
 ]
 
 { #category : #'widget API' }
-SpMorphicListAdapter >> itemFilterBlock [
-	^ self model itemFilterBlock
+SpMorphicListAdapter >> itemFilter [
+	^ self model itemFilter
 ]
 
 { #category : #'widget API' }

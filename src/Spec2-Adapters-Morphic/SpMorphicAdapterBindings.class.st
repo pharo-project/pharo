@@ -11,9 +11,3 @@ Class {
 SpMorphicAdapterBindings >> abstractAdapterClass [
 	^ SpAbstractMorphicAdapter
 ]
-
-{ #category : #fonts }
-SpMorphicAdapterBindings >> defaultFont [
-
-	^ StandardFonts defaultFont
-]

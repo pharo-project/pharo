@@ -24,12 +24,9 @@ Class {
 
 { #category : #specs }
 SpRGBWidget class >> defaultSpec [
-	<spec: #default>
-	^ SpLayout composed
-		newColumn: [ :column | 
-			column
-				add: #preview;
-				add: #sliders ];
+	^ SpBoxLayout newVertical
+		add: #preview;
+		add: #sliders;
 		yourself
 ]
 

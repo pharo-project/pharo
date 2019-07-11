@@ -16,12 +16,9 @@ Class {
 
 { #category : #initialization }
 SpDemoLabelledPresenter class >> defaultSpec [
-	^ SpLayout composed
-		newColumn: [ :col | 
-			col
-				add: #email height: self labelledPresenterHeight;
-				add: #password height: self labelledPresenterHeight;
-				addSpacer ];
+	^ SpBoxLayout newVertical
+		add: #email withConstraints: [ :constraints | constraints height: self labelledPresenterHeight ];
+		add: #password withConstraints: [ :constraints | constraints height: self labelledPresenterHeight ];
 		yourself
 ]
 

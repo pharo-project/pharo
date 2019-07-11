@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'token'
 	],
-	#category : #'Spec2-Core-Widgets-Support'
+	#category : #'Spec2-Core-Support'
 }
 
 { #category : #'instance creation' }

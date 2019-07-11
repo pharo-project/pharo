@@ -21,50 +21,47 @@ Class {
 { #category : #specs }
 SpOpenOnStringExample class >> bottomLayout [
 	<spec>
-	^ SpLayout composed
-		newColumn: [ :column | 
-			column
-				newRow: [ :row | 
-					row
-						add: #input;
-						add: #button ]
-					height: 25;
-				newRow: [ :row | 
-					row
-						add: #label;
-						add: #check width: 100 ]
-					height: 25 ];
+	^ SpBoxLayout newVertical
+		add:
+			(SpBoxLayout newHorizontal
+				add: #input;
+				add: #button;
+				yourself)
+			withConstraints: [ :constraints | constraints height: 25 ];
+		add:
+			(SpBoxLayout newHorizontal
+				add: #label;
+				add: #check withConstraints: [ :constraints | constraints width: 100 ];
+				yourself)
+			withConstraints: [ :constraints | constraints height: 25 ];
 		yourself
 ]
 
 { #category : #specs }
 SpOpenOnStringExample class >> defaultSpec [
-	<spec: #default>
-	^ SpLayout composed
-		newColumn: [ :column | 
-			column
-				newRow: [ :row | 
-					row
-						add: #label;
-						add: #check width: 100 ]
-					height: 25;
-				newRow: [ :row | 
-					row
-						add: #input;
-						add: #button ]
-					height: 25 ];
+	^ SpBoxLayout newVertical
+		add:
+			(SpBoxLayout newHorizontal
+				add: #label;
+				add: #check withConstraints: [ :constraints | constraints width: 100 ];
+				yourself)
+			withConstraints: [ :constraints | constraints height: 25 ];
+		add:
+			(SpBoxLayout newHorizontal
+				add: #input;
+				add: #button;
+				yourself)
+			withConstraints: [ :constraints | constraints height: 25 ];
 		yourself
 ]
 
 { #category : #examples }
 SpOpenOnStringExample class >> example [
 	<sampleInstance>
-	| example |
-	example := self new: 'Hello world'.
-	example
+	^ (self new: 'Hello world')
 		extent: 300 @ 200;
-		openWithSpec.
-	^ example
+		openWithSpec;
+		yourself
 ]
 
 { #category : #instantiation }
@@ -111,7 +108,7 @@ SpOpenOnStringExample >> initializeWidgets [
 		action: [ input text: textToReset ].
 	check
 		label: 'Label on top';
-		state: true
+		state: false
 ]
 
 { #category : #accessing }
@@ -124,7 +121,7 @@ SpOpenOnStringExample >> label [
 	^ label
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 SpOpenOnStringExample >> openOnString [
 	| ui temp object |
 	object whenChangedDo: [ :o | ui label label: o asString ].

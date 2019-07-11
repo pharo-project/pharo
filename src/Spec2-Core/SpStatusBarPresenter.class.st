@@ -7,7 +7,7 @@ Class {
 	#name : #SpStatusBarPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'messageHolder'
+		'message'
 	],
 	#category : #'Spec2-Core-Widgets-Toolbar'
 }
@@ -18,23 +18,14 @@ SpStatusBarPresenter class >> adapterName [
 	^ #StatusBarAdapter
 ]
 
-{ #category : #initialization }
-SpStatusBarPresenter >> initialize [
-
-	super initialize.
-	messageHolder := nil asValueHolder
-]
-
 { #category : #accessing }
 SpStatusBarPresenter >> message [
-
-	^ messageHolder value
+	^ message
 ]
 
 { #category : #private }
 SpStatusBarPresenter >> message: aString [
-
-	messageHolder value: aString
+	message := aString
 ]
 
 { #category : #accessing }

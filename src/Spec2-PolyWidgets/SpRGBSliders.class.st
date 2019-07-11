@@ -21,13 +21,10 @@ Class {
 
 { #category : #specs }
 SpRGBSliders class >> defaultSpec [
-	<spec: #default>
-	^ SpLayout composed
-		newColumn: [ :column | 
-			column
-				add: #redSlider;
-				add: #greenSlider;
-				add: #blueSlider ];
+	^ SpBoxLayout newVertical
+		add: #redSlider;
+		add: #greenSlider;
+		add: #blueSlider;
 		yourself
 ]
 

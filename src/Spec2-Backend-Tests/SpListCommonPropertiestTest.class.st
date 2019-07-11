@@ -30,7 +30,7 @@ SpListCommonPropertiestTest >> testEnablingFilteringUpdateOpenedList [
 	self deny: self adapter hasFilter.
 	presenter enableItemSubstringFilter.
 	self assert: self adapter hasFilter.
-	presenter itemFilterBlock: nil.
+	presenter itemFilter: nil.
 	self deny: self adapter hasFilter
 ]
 

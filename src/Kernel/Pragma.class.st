@@ -113,7 +113,7 @@ Pragma >> = aPragma [
 { #category : #comparing }
 Pragma >> analogousCodeTo: anObject [ 
 	^self class == anObject class
-	  and: [selector == anObject selector
+	  and: [self selector == anObject selector
 	  and: [arguments = anObject arguments]]
 ]
 
@@ -138,7 +138,7 @@ Pragma >> arguments: anArray [
 
 { #category : #testing }
 Pragma >> hasLiteral: aLiteral [
-	^selector == aLiteral 
+	^self selector == aLiteral 
 	   or: [arguments hasLiteral: aLiteral]
 ]
 
@@ -146,7 +146,7 @@ Pragma >> hasLiteral: aLiteral [
 Pragma >> hasLiteralSuchThat: aBlock [
 	"Answer true if litBlock returns true for any literal in the receiver, even if embedded in further array structure.
 	 This method is only intended for private use by CompiledMethod hasLiteralSuchThat:"
-	^(aBlock value: selector)
+	^(aBlock value: self selector)
 	   or: [arguments hasLiteralSuchThat: aBlock]
 ]
 

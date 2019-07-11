@@ -1,7 +1,7 @@
 Class {
 	#name : #SpLabelledListTest,
 	#superclass : #SpAbstractListPresenterTest,
-	#category : #'Spec2-PolyWidgets-Tests'
+	#category : #'Spec2-PolyWidgets-Tests-Tests'
 }
 
 { #category : #running }

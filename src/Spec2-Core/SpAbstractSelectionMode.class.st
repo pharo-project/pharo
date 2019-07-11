@@ -1,6 +1,8 @@
 Class {
 	#name : #SpAbstractSelectionMode,
 	#superclass : #Object,
+	#traits : 'TSpObservable',
+	#classTraits : 'TSpObservable classTrait',
 	#instVars : [
 		'widget'
 	],
@@ -13,12 +15,6 @@ SpAbstractSelectionMode class >> on: aWidget [
 	^ self new
 		widget: aWidget;
 		yourself
-]
-
-{ #category : #adding }
-SpAbstractSelectionMode >> addSubscription: aSubscription [
-
-	^ self subclassResponsibility
 ]
 
 { #category : #selecting }
@@ -45,6 +41,12 @@ SpAbstractSelectionMode >> indexOfItem: anItem [
 	^ self model
 		indexOf: anItem
 		ifAbsent: [ 0 ].
+]
+
+{ #category : #initialization }
+SpAbstractSelectionMode >> initialize [
+	self class initializeSlots: self.
+	super initialize
 ]
 
 { #category : #testing }
@@ -99,15 +101,13 @@ SpAbstractSelectionMode >> selectedIndexes [
 ]
 
 { #category : #accessing }
-SpAbstractSelectionMode >> subscriptions [
-
+SpAbstractSelectionMode >> selectionHolder [
 	^ self subclassResponsibility
 ]
 
 { #category : #private }
 SpAbstractSelectionMode >> transferSubscriptionsTo: anotherSelectionMode [
-
-	self subscriptions do: [ :aSubscription | anotherSelectionMode addSubscription: aSubscription ].
+	self selectionHolder transferSubscriptionsTo: anotherSelectionMode selectionHolder
 ]
 
 { #category : #selecting }
