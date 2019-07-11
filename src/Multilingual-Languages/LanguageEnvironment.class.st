@@ -89,8 +89,7 @@ LanguageEnvironment class >> initKnownEnvironments [
 	"LanguageEnvironment initKnownEnvironments"
 
 	| known localeIdClass |
-	"A minimal (headless) image has LanguageEnvironment but not LocaleID!"
-	localeIdClass := self environment at: #LocaleID ifAbsent: [^self].
+	localeIdClass := self localeIdClass.
 	known := Dictionary new.
 	self allSubclassesDo: [:subClass | 
 		subClass supportedLanguages do: [:language | | env id | 
@@ -106,7 +105,7 @@ LanguageEnvironment class >> initialize [
 	"LanguageEnvironment initialize"
 
 	SessionManager default 
-		registerSystemClassNamed: #LanguageEnvironment "prevent subclasses ro register themselves"
+		registerSystemClassNamed: #LanguageEnvironment "prevent subclasses from registering themselves"
 ]
 
 { #category : #'rendering support' }
@@ -177,13 +176,21 @@ LanguageEnvironment class >> localeChanged [
 ]
 
 { #category : #accessing }
+LanguageEnvironment class >> localeIdClass [
+	"A minimal (headless) image has LanguageEnvironment but not LocaleID!
+	 See https://github.com/pharo-project/pharo/issues/3844"
+
+	^self environment 
+		at: #LocaleID 
+		ifAbsent: [self error: 'LocaleID is not present in this image!'].
+]
+
+{ #category : #accessing }
 LanguageEnvironment class >> localeID: localeID [
-	| localeIdClass |
-	"A minimal (headless) image has LanguageEnvironment but not LocaleID!"
-	localeIdClass := self environment at: #LocaleID ifAbsent: [^self].
+
 	self knownEnvironments
 		at: localeID ifPresent: [:value | ^ value ];
-		at: localeIdClass default ifPresent: [ :value | ^ value ].
+		at: self localeIdClass default ifPresent: [ :value | ^ value ].
 	
 	"Something is wrong"
 	self resetKnownEnvironments.
