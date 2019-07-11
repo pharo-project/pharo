@@ -36,10 +36,22 @@ GradientFillStyle class >> cleanUp [
 GradientFillStyle class >> colors: colorArray [
 	"Create a gradient fill style from an array of equally spaced colors"
 	^self ramp: (colorArray withIndexCollect:
-		[:color :index| (index-1 asFloat / (colorArray size - 1 max: 1)) -> color]).
+		[:color :index| (index-1 asFloat / (colorArray size - 1 max: 1)) -> color])
 ]
 
-{ #category : #initialization }
+{ #category : #examples }
+GradientFillStyle class >> example [
+	<script: 'self example inspect'>
+
+	^(self ramp: { 0.0 -> Color red. 0.5 -> Color green. 1.0 -> Color blue})
+		origin: 300 @ 300;
+		direction: 400@0;
+		normal: 0@400;
+		radial: true;
+	yourself
+]
+
+{ #category : #'private - initialization' }
 GradientFillStyle class >> initPixelRampCache [
 	"Create an LRUCache to use for accessing pixel ramps.
 	When a new pixel ramp is needed, a temporary GradientFillStyle
@@ -60,7 +72,7 @@ GradientFillStyle class >> initialize [
 	self initPixelRampCache 
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 GradientFillStyle class >> pixelRampCache [
 	"Allow access to my cache of pixel ramps."
 
@@ -70,17 +82,6 @@ GradientFillStyle class >> pixelRampCache [
 { #category : #'instance creation' }
 GradientFillStyle class >> ramp: colorRamp [
 	^self new colorRamp: colorRamp
-]
-
-{ #category : #'instance creation' }
-GradientFillStyle class >> sample [
-	"GradientFill sample"
-	^(self ramp: { 0.0 -> Color red. 0.5 -> Color green. 1.0 -> Color blue})
-		origin: 300 @ 300;
-		direction: 400@0;
-		normal: 0@400;
-		radial: true;
-	yourself
 ]
 
 { #category : #comparing }
