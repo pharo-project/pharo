@@ -23,8 +23,7 @@ ReadOnlyMacStore class >> writableVariant [
 ReadOnlyMacStore >> basicOpen: aPath writable: aBoolean [
 
 	aBoolean ifTrue: [ 
-		(ReadOnlyFileException new
-			messageText: 'Attempt to open file ' , aPath pathString, ' as writable on a read-only file system') signal.
+		ReadOnlyFileException signal: 'Attempt to open file ', aPath pathString, ' as writable on a read-only file system'.
 		^ self ].
 		
 	^ super basicOpen: aPath writable: aBoolean. 
@@ -33,8 +32,7 @@ ReadOnlyMacStore >> basicOpen: aPath writable: aBoolean [
 { #category : #public }
 ReadOnlyMacStore >> createDirectory: path [
 
-	(ReadOnlyFileException new
-		messageText: 'Attempt crate directory ' , path pathString, ' on a read-only file system') signal.
+	ReadOnlyFileException signal: 'Attempt crate directory ', path pathString, ' on a read-only file system'.
 	
 	^ self 
 ]
@@ -42,8 +40,7 @@ ReadOnlyMacStore >> createDirectory: path [
 { #category : #public }
 ReadOnlyMacStore >> delete: path [
 
-	(ReadOnlyFileException new
-		messageText: 'Attempt delete ' , path pathString, ' on a read-only file system') signal.
+	ReadOnlyFileException signal: 'Attempt delete ', path pathString, ' on a read-only file system'.
 	
 	^ self 
 ]
@@ -51,8 +48,7 @@ ReadOnlyMacStore >> delete: path [
 { #category : #public }
 ReadOnlyMacStore >> file: path posixPermissions: anInteger [
 
-	(ReadOnlyFileException new
-		messageText: 'Attempt to modify file ' , path pathString, ' on a read-only file system') signal.
+	ReadOnlyFileException signal: 'Attempt to modify file ', path pathString, ' on a read-only file system'.
 	
 	^ self 
 ]
@@ -60,8 +56,7 @@ ReadOnlyMacStore >> file: path posixPermissions: anInteger [
 { #category : #public }
 ReadOnlyMacStore >> file: path symlinkUid: uidInteger gid: gidInteger [
 
-	(ReadOnlyFileException new
-		messageText: 'Attempt to modify file ' , path pathString, ' on a read-only file system') signal.
+	ReadOnlyFileException signal: 'Attempt to modify file ', path pathString, ' on a read-only file system'.
 	
 	^ self 
 ]
@@ -69,8 +64,7 @@ ReadOnlyMacStore >> file: path symlinkUid: uidInteger gid: gidInteger [
 { #category : #public }
 ReadOnlyMacStore >> file: path uid: uidInteger gid: gidInteger [
 
-	(ReadOnlyFileException new
-		messageText: 'Attempt to modify file ' , path pathString, ' on a read-only file system') signal.
+	ReadOnlyFileException signal: 'Attempt to modify file ', path pathString, ' on a read-only file system'.
 	
 	^ self 
 ]
@@ -95,8 +89,7 @@ ReadOnlyMacStore >> isWritable: aPath [
 { #category : #public }
 ReadOnlyMacStore >> rename: sourcePath to: destinationPath [
 
-	(ReadOnlyFileException new
-		messageText: 'Attempt to rename file ' , sourcePath pathString, ' on a read-only file system') signal.
+	ReadOnlyFileException signal: 'Attempt to rename file ', sourcePath pathString, ' on a read-only file system'.
 	
 	^ self 
 ]

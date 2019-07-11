@@ -18,8 +18,7 @@ ReadOnlyFileHandle >> setReference: aReference writable: aBoolean [
 	reference := aReference resolve.
 
 	aBoolean ifTrue: [ 
-		(ReadOnlyFileException new
-			messageText: 'Attempt to open file ' , reference pathString, ' as writable on a read-only file system') signal ].
+		ReadOnlyFileException signal: 'Attempt to open file ', reference pathString, ' as writable on a read-only file system' ].
 
 	writable := aBoolean
 ]
@@ -27,8 +26,7 @@ ReadOnlyFileHandle >> setReference: aReference writable: aBoolean [
 { #category : #testing }
 ReadOnlyFileHandle >> truncateTo: anInteger [
 
-	(ReadOnlyFileException new
-		messageText: 'Attempt to truncate file ' , reference pathString, ' on a read-only file system') signal.
+	ReadOnlyFileException signal: 'Attempt to truncate file ', reference pathString, ' on a read-only file system'.
 
 	^ self
 ]

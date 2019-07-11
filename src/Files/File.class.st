@@ -1123,8 +1123,7 @@ File >> checkWritableFilesystem [
 	using #respondsTo:"
 
 	((FileSystem respondsTo: #disk) and: [ FileSystem disk isWritable not ]) ifTrue: [ 
-		(ReadOnlyFileException new
-			messageText: 'Attempt to open file ' , name, ' as writable on a read-only file system') signal].
+		ReadOnlyFileException signal: 'Attempt to open file ', name, ' as writable on a read-only file system'].
 
 
 ]
