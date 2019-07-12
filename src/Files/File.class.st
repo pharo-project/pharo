@@ -1119,10 +1119,13 @@ File >> checkDoesNotExist [
 File >> checkWritableFilesystem [
 
 	"We need to check if the image is in the read-only mode. While this is a responsibility of
-	the disk FileSystem that may not be installed in the image, we need to do an ugly workaround
-	using #respondsTo:"
+	the disk FileSystemStore that may not be installed in the image, we need to check the class presence"
 
-	FileSystemStore wantsReadOnly ifTrue: [ 
+	| fileSystemStore |
+	
+	fileSystemStore := self class environment at: #FileSystemStore ifAbsent: [ ^ self ].
+
+	fileSystemStore wantsReadOnly ifTrue: [ 
 		ReadOnlyFileException signal: 'Attempt to open file ', name, ' as writable on a read-only file system'].
 
 
