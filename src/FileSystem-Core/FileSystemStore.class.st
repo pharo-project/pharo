@@ -29,6 +29,25 @@ FileSystemStore class >> separator [
 	self shouldBeImplemented
 ]
 
+{ #category : #public }
+FileSystemStore class >> wantsReadOnly [
+
+	"check if the image was started in the read-only mode"
+
+	| arguments | 
+	
+	arguments := Array
+		streamContents: [ :str | 
+			| arg i |
+			i := 0.
+			[ i > 998 or: [ (arg := Smalltalk argumentAt: i) isNil ] ]
+				whileFalse: [ 
+					str nextPut: arg.
+					i := i + 1 ] ].
+
+	^ arguments anySatisfy: [ :each | each = '--readOnlyMode' ]
+]
+
 { #category : #accessing }
 FileSystemStore >> accessTimeOf: aPath [
 	"Return the date of last access of the File described by aPath"

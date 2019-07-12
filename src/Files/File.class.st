@@ -1122,7 +1122,7 @@ File >> checkWritableFilesystem [
 	the disk FileSystem that may not be installed in the image, we need to do an ugly workaround
 	using #respondsTo:"
 
-	((FileSystem respondsTo: #disk) and: [ FileSystem disk isWritable not ]) ifTrue: [ 
+	FileSystemStore wantsReadOnly ifTrue: [ 
 		ReadOnlyFileException signal: 'Attempt to open file ', name, ' as writable on a read-only file system'].
 
 

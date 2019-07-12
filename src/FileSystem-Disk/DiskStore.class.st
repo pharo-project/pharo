@@ -140,23 +140,6 @@ DiskStore class >> startUp: resuming [
 ]
 
 { #category : #public }
-DiskStore class >> wantsReadOnly [
-
-	| arguments | 
-	
-	arguments := Array
-		streamContents: [ :str | 
-			| arg i |
-			i := 0.
-			[ i > 998 or: [ (arg := Smalltalk argumentAt: i) isNil ] ]
-				whileFalse: [ 
-					str nextPut: arg.
-					i := i + 1 ] ].
-
-	^ arguments anySatisfy: [ :each | each = '--readOnlyMode' ]
-]
-
-{ #category : #public }
 DiskStore class >> writableVariant [
 
 	"return a class variant for read-only store. It should be properly defined in my subclasses"
