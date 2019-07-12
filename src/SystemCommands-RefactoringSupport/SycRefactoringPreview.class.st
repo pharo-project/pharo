@@ -55,14 +55,10 @@ SycRefactoringPreview class >> title [
 
 { #category : #controlling }
 SycRefactoringPreview >> accept [
-	self okToChange
-		ifFalse: [ ^ self ].
-	[ self pickedChanges 
-		do: [ :change | RBRefactoryChangeManager instance performChange: change ] ]
-		asJob
+	self okToChange ifFalse: [ ^ self ].
+	[ self pickedChanges do: [ :change | RBRefactoryChangeManager instance performChange: change ] ] asJob
 		title: 'Refactoring';
-		run.
-	self window close
+		run
 ]
 
 { #category : #accessing }
@@ -95,11 +91,6 @@ SycRefactoringPreview >> buildDiffFor: aChange [
 		rightText: aChange textToDisplay
 ]
 
-{ #category : #controlling }
-SycRefactoringPreview >> cancel [
-	self window close
-]
-
 { #category : #accessing }
 SycRefactoringPreview >> changes [
 	^ changes
@@ -128,10 +119,14 @@ SycRefactoringPreview >> generateChanges [
 
 { #category : #initialization }
 SycRefactoringPreview >> initializeDialogWindow: aDialogWindowPresenter [
-	super initializeDialogWindow: aDialogWindowPresenter.
 	aDialogWindowPresenter
 		title: self title;
-		initialExtent: 500 @ 500
+		initialExtent: 500 @ 500;
+		addButton: 'Apply'
+			do: [ :presenter | 
+			self accept.
+			presenter close ];
+		addButton: 'Cancel' do: [ :presenter | presenter close ]
 ]
 
 { #category : #initialization }
@@ -217,7 +212,7 @@ SycRefactoringPreview >> setFocus [
 SycRefactoringPreview >> setShortcuts [
 	self
 		bindKeyCombination: PharoShortcuts current acceptShortcut toAction: [ self accept ];
-		bindKeyCombination: Character escape toAction: [ self cancel ]
+		bindKeyCombination: Character escape toAction: [ self close ]
 ]
 
 { #category : #accessing }
@@ -249,5 +244,7 @@ SycRefactoringPreview >> updateTablePresenter [
 	| aCompositeChange |
 	aCompositeChange := RBCompositeRefactoryChange new.
 	changes do: [ :each | aCompositeChange addChange: each ].
-	table items: (aCompositeChange whatToDisplayIn: self)
+	table
+		items: (aCompositeChange whatToDisplayIn: self);
+		selectIndex: 1
 ]

@@ -6,7 +6,7 @@ CmdCommand >> confirmRefactoringInContext: aToolContext by: aCommandActivator [
 	submitDialog := SycRefactoringPreview
 		for: self
 		scopes: aToolContext refactoringScopes.
-	submitDialog openDialogWithSpec
+	submitDialog openModalWithSpec
 		okAction: [ submitDialog accept.
 			aCommandActivator applyCommandResult ];
 		cancelAction: [ submitDialog cancel ].
