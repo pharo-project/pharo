@@ -55,13 +55,14 @@ T2OverloadingOfMethodsInTraitedClassTest >> testDirectTraitSubclassing [
 
 { #category : #tests }
 T2OverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
-	| t1 t2 superclass subclass superclassInstance subclassInstance |
+	| t1 t2 superclass subclass |
 	t1 := self createT1.
 	t2 := self createT2.
 	superclass := self
 		newClass: #C2Superclass
 		with: '' asSlotCollection
 		uses: t2.
+		
 	subclass := self
 		newClass: #C1Subclass
 		superclass: superclass
