@@ -29,13 +29,13 @@ SessionAccessModeResolver class >> resolve [
 			
 	mode := #readWrite.
 
-	(arguments anySatisfy: [ :each | each = '--readWriteAccessMode' ])
+	(Smalltalk argumentsInclude: '--readWriteAccessMode')
 		ifTrue: [ mode := #readWrite ].
-	(arguments anySatisfy: [ :each | each = '--readOnlyAccessMode' ])
+	(Smalltalk argumentsInclude:  '--readOnlyAccessMode')
 		ifTrue: [ mode := #readOnly ].
-	(arguments anySatisfy: [ :each | each = '--writeOnlyAccessMode' ])
+	(Smalltalk argumentsInclude: '--writeOnlyAccessMode')
 		ifTrue: [ mode := #writeOnly ].
-	(arguments anySatisfy: [ :each | each = '--disabledAccessMode' ])
+	(Smalltalk argumentsInclude: '--disabledAccessMode')
 		ifTrue: [ mode := #disabled ].
 		
 	SessionManager default currentSession accessMode: mode.
