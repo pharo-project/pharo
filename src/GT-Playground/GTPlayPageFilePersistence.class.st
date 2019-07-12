@@ -34,6 +34,16 @@ GTPlayPageFilePersistence >> fileReference [
 	^ self fileDirectory / self fileName
 ]
 
+{ #category : #'accessing-dynamic' }
+GTPlayPageFilePersistence >> fileReferenceOrNil [
+
+	self fileDirectory ifNil: [ 
+		"the directory was not created (read-only filesystem etc.)"
+		^ nil ].
+	
+	^ self fileDirectory / self fileName
+]
+
 { #category : #actions }
 GTPlayPageFilePersistence >> save [
 	self page content isEmpty
@@ -46,7 +56,7 @@ GTPlayPageFilePersistence >> writeToFileSystem [
 
 	| aFileReference |
 	
-	aFileReference := self fileReference.
+	aFileReference := self fileReferenceOrNil.
 	(aFileReference notNil and: [ aFileReference fileSystem isWritable ]) ifTrue: [
 		aFileReference writeStreamDo: [ :stream | 
 			stream 
