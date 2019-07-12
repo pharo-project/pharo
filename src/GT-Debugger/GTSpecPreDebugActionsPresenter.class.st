@@ -25,7 +25,7 @@ GTSpecPreDebugActionsPresenter >> debugger [
 
 { #category : #initialization }
 GTSpecPreDebugActionsPresenter >> initializeWidgets [
-	self preDebuggingActions do: [ :action | self presenterAt: action specId put: (self buttonFor: action) ].
+	self preDebuggingActions do: [ :action | self presenterAt: (action id ) asSymbol put: (self buttonFor: action) ].
 
 	self presentersDo: [ :button | self focusOrder add: button ]
 ]
