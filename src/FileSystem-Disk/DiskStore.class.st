@@ -102,27 +102,13 @@ DiskStore class >> reset [
 { #category : #current }
 DiskStore class >> resetAsReadOnly [
 
-	"Reset the disk store as read-only. Change indentity of the old store to utilize it in the old users"
-
-	| old |
-	
-	old := CurrentFS.
-	CurrentFS := FileSystem store: self activeClass readOnlyVariant createDefault.
-	old becomeForward: CurrentFS.
-	^ CurrentFS
+	self currentFileSystem beReadOnly
 ]
 
 { #category : #current }
 DiskStore class >> resetAsWritable [
 
-	"Reset the disk store as writable. Change indentity of the old store to utilize it in the old users"
-
-	| old |
-	
-	old := CurrentFS.
-	CurrentFS := FileSystem store: self activeClass writableVariant createDefault.
-	old becomeForward: CurrentFS.
-	^ CurrentFS
+	self currentFileSystem beWritable
 ]
 
 { #category : #'system startup' }
@@ -157,6 +143,18 @@ DiskStore >> accessTimeOf: aPath [
 	"Return the date of last access of the File described by aPath"
 
 	^DateAndTime fromSqueakTime: (File fileAttribute: (self stringFromPath: aPath) number: 9)
+]
+
+{ #category : #public }
+DiskStore >> asReadOnlyStore [
+
+	^ self class readOnlyVariant createDefault
+]
+
+{ #category : #public }
+DiskStore >> asWritableStore [
+
+	^ self class writableVariant createDefault
 ]
 
 { #category : #private }
