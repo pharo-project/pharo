@@ -496,7 +496,7 @@ GLMPagerModel >> virtualLastVisiblePageIndex [
 ]
 
 { #category : #private }
-GLMPagerModel >> virtualLastVisiblePageIndex: anIndex. [
+GLMPagerModel >> virtualLastVisiblePageIndex: anIndex [
 
 	virtualLastVisiblePageIndex := self normalizePaneIndex: anIndex.
 ]

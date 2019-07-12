@@ -16,6 +16,15 @@ Behavior >> isAliasSelector: aSymbol [
 ]
 
 { #category : #'*TraitsV2' }
+Behavior >> isComposedBy: aTrait [
+	"Answers if this object includes trait aTrait into its composition"
+	aTrait isTrait ifFalse: [ ^false].
+	^self hasTraitComposition 
+		ifTrue: [ self traitComposition includesTrait: aTrait ]
+		ifFalse: [ false ]
+]
+
+{ #category : #'*TraitsV2' }
 Behavior >> isLocalAliasSelector: aSymbol [
 	"Return true if the selector aSymbol is an alias defined
 	in my trait composition."

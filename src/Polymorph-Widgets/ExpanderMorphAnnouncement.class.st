@@ -1,10 +1,13 @@
+"
+Common superclass for expander announcements
+"
 Class {
 	#name : #ExpanderMorphAnnouncement,
 	#superclass : #Announcement,
 	#instVars : [
 		'expanderMorph'
 	],
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Announcements'
 }
 
 { #category : #'as yet unclassified' }

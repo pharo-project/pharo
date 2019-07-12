@@ -27,13 +27,8 @@ RBSendsDifferentSuperRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBSendsDifferentSuperRule >> check: aMethod forCritiquesDo: aCriticBlock [
-
-	(aMethod superMessages anySatisfy: [ :message |
-		message ~= aMethod selector ]) ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aMethod) ]
-	
-
+RBSendsDifferentSuperRule >> basicCheck: aMethod [
+	^ aMethod superMessages anySatisfy: [ :message | message ~= aMethod selector ]
 ]
 
 { #category : #accessing }

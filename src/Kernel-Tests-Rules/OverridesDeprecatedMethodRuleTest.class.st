@@ -47,3 +47,11 @@ OverridesDeprecatedMethodRuleTest >> testBasicCheck1 [
 	testMethod := testSubclass >> (testSubclass compile: self methodName , '1').
 	self assertEmpty: (OverridesDeprecatedMethodRule new check: testMethod)
 ]
+
+{ #category : #tests }
+OverridesDeprecatedMethodRuleTest >> testDoesNotActivateForDeprecatedMethods [
+	| testMethod |
+	testMethod := testSubclass >> (testSubclass compile: self methodName , ' self deprecated: ''Add another explanation message''').
+
+	self assertEmpty: (OverridesDeprecatedMethodRule new check: testMethod)
+]

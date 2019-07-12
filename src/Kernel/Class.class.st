@@ -186,6 +186,13 @@ Class >> allClassVarNames [
 			^aSet]
 ]
 
+{ #category : #'class variables' }
+Class >> allClassVariables [
+	"Answer the meta objects of all class variables of the class and its superclass"
+
+	^self withAllSuperclasses flatCollect:  [ :each | each classVariables ]
+]
+
 { #category : #'pool variables' }
 Class >> allSharedPools [
 	"Answer an ordered collection of the pools the receiver shares, including those defined  in the superclasses of the receiver."
@@ -263,7 +270,7 @@ Class >> category [
 			ifTrue: [ ^symbol ] ].
 	result := (self environment organization categoryOfElement: self name)
 		ifNil: [ #Unclassified ]
-		ifNotNil: #yourself.
+		ifNotNil: [:value | value].
 	self basicCategory: result.
 	
 	^ result

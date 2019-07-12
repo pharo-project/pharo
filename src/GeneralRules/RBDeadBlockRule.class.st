@@ -16,9 +16,8 @@ RBDeadBlockRule class >> uniqueIdentifierName [
 ]
 
 { #category : #'as yet unclassified' }
-RBDeadBlockRule >> check: node forCritiquesDo: aCriticBlock [
-	(node isBlock and: [ node isUsed not ])
-		ifTrue: [ aCriticBlock cull: (self critiqueFor: node) ]
+RBDeadBlockRule >> basicCheck: node [
+	^ node isBlock and: [ node isUsed not ]
 ]
 
 { #category : #accessing }

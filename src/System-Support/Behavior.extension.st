@@ -2,17 +2,16 @@ Extension { #name : #Behavior }
 
 { #category : #'*System-Support' }
 Behavior >> allCallsOn [
-	"Answer a SortedCollection of all the methods that refer to me by name or as part of an association in a global dict."
+	"Answer all the methods that refer to me by name or as part of an association in a global dict."
 	self isAnonymous ifTrue: [ ^#() ].
-	^ (self allCallsOnIn: self systemNavigation)
+	^self usingMethods, self name asSymbol senders
 ]
 
 { #category : #'*System-Support' }
 Behavior >> allCallsOn: aSymbol [
 	"Answer of all the methods that call on aSymbol."
 
-	^self withAllSubclasses flatCollect: [ :cls | 
-		(cls whichSelectorsReferTo: aSymbol) collect: [:sel | cls>>sel]]
+	^self withAllSubclasses flatCollect: [ :cls | cls thoroughWhichMethodsReferTo: aSymbol]
 	
 ]
 

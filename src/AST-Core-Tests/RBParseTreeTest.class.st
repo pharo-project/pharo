@@ -1,8 +1,14 @@
 Class {
 	#name : #RBParseTreeTest,
 	#superclass : #TestCase,
-	#category : #'AST-Core-Tests'
+	#category : #'AST-Core-Tests-Parser'
 }
+
+{ #category : #testing }
+RBParseTreeTest class >> isAbstract [ 
+
+	^self name = #RBParseTreeTest
+]
 
 { #category : #helpers }
 RBParseTreeTest >> parseExpression: aString [ 

@@ -15,19 +15,16 @@ SendsDeprecatedMethodToGlobalRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-SendsDeprecatedMethodToGlobalRule >> check: aNode forCritiquesDo: aCriticBlock [
+SendsDeprecatedMethodToGlobalRule >> basicCheck: aNode [
 	| messageReceiver |
+	aNode isMessage ifFalse: [ ^ false ].
 
-	aNode isMessage ifFalse: [ ^ self ].
-	
 	messageReceiver := aNode receiver.
-	messageReceiver isVariable ifFalse: [ ^ self ].
-	messageReceiver isGlobal ifFalse: [ ^ self ].
-	(self
-		check: aNode selector
-		forDeprecationIn: messageReceiver name) ifFalse: [ ^ self ].
-		
-	aCriticBlock cull: (self critiqueFor: aNode)
+	messageReceiver isVariable ifFalse: [ ^ false ].
+	messageReceiver isGlobal ifFalse: [ ^ false ].
+	(self check: aNode selector forDeprecationIn: messageReceiver name) ifFalse: [ ^ false ].
+
+	^ true
 ]
 
 { #category : #running }

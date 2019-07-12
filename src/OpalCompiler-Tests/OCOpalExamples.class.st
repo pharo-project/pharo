@@ -346,7 +346,7 @@ OCOpalExamples >> examplePushBigArray [
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleRepeatEffect [
 	<sampleInstance>
-	<compilerOptions: #(#+ #optionInlineRepeat)>
+	<compilerOptions: #(+ #optionInlineRepeat)>
 	| i |
 	i := 1.
 	[  
@@ -358,7 +358,7 @@ OCOpalExamples >> exampleRepeatEffect [
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleRepeatValue [
 	<sampleInstance>
-	<compilerOptions: #(#+ #optionInlineRepeat)>
+	<compilerOptions: #(+ #optionInlineRepeat)>
 	| i |
 	i := 1.
 	^ [ 

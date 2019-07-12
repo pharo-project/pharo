@@ -21,12 +21,10 @@ RBRefersToClassRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
+RBRefersToClassRule >> basicCheck: aMethod [
 	| class |
 	class := aMethod methodClass instanceSide.
-	(aMethod hasLiteral: (class environment associationAt: class name ifAbsent: [ ^ self ])) ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aMethod) ]
-	
+	^ aMethod hasLiteral: (class environment associationAt: class name ifAbsent: [ ^ false ])
 ]
 
 { #category : #accessing }

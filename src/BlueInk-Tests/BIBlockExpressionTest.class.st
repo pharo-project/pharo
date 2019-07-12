@@ -32,7 +32,7 @@ BIBlockExpressionTest >> closeBracket [
 
 { #category : #configurations }
 BIBlockExpressionTest >> newLineBeforeEndBracketConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -57,7 +57,7 @@ BIBlockExpressionTest >> newLineBeforeEndBracketConfiguration [
 
 { #category : #configurations }
 BIBlockExpressionTest >> noNewLineBeforeEndBracketConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -92,7 +92,7 @@ BIBlockExpressionTest >> parser [
 
 { #category : #configurations }
 BIBlockExpressionTest >> periodAtEndConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -187,7 +187,7 @@ BIBlockExpressionTest >> testNewLineBeforeEndBrackets [
 		isFormattedAs:
 ' 3.
 4
-'  		with: #newLineBeforeEndBracketConfiguration.
+'  		with: #newLineBeforeEndBracketConfiguration
 ]
 
 { #category : #test }
@@ -219,7 +219,7 @@ BIBlockExpressionTest >> testNoNewLineBeforeEndBrackets [
 		validate: '3. 4'  
 		isFormattedAs:
 ' 3.
-4 '  with: #noNewLineBeforeEndBracketConfiguration.
+4 '  with: #noNewLineBeforeEndBracketConfiguration
 ]
 
 { #category : #test }
@@ -229,15 +229,15 @@ BIBlockExpressionTest >> testSpace [
 ]
 
 { #category : #test }
-BIBlockExpressionTest >> validate: stringInsideBlock isFormattedAs: ExpectedStringInsideBlock [
-	self validate: stringInsideBlock isFormattedAs: ExpectedStringInsideBlock with: #basicConfiguration
+BIBlockExpressionTest >> validate: stringInsideBlock isFormattedAs: expectedStringInsideBlock [
+	self validate: stringInsideBlock isFormattedAs: expectedStringInsideBlock with: #basicConfiguration
 ]
 
 { #category : #test }
-BIBlockExpressionTest >> validate: stringInsideBlock isFormattedAs: ExpectedStringInsideBlock with: aConfiguration [
+BIBlockExpressionTest >> validate: stringInsideBlock isFormattedAs: expectedStringInsideBlock with: aConfiguration [
 	| expr source |
-	expr := self parser parseExpression: self openBracket ,stringInsideBlock,self closeBracket.
+	expr := self parser parseExpression: self openBracket, stringInsideBlock, self closeBracket.
 	configurationSelector := aConfiguration.
 	source := self formatter format: expr.
-	self assert: source equals: self openBracket,ExpectedStringInsideBlock,self closeBracket
+	self assert: source equals: self openBracket, expectedStringInsideBlock, self closeBracket
 ]

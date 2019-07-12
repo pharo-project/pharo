@@ -19,7 +19,7 @@ RBInlineMethodFromComponentTest >> testInlineComponentIntoCascadedMessage [
 			setupInlineExpressionFor: refactoring
 			toReturn: false.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineComponent) = (self parseMethod: 'inlineComponent
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineComponent) equals: (self parseMethod: 'inlineComponent
 	| a aBehavior |
 	a := 5.
 	aBehavior := a class.
@@ -53,7 +53,7 @@ RBInlineMethodFromComponentTest >> testInlineComponentMethodMax [
 			setupImplementorToInlineFor: refactoring
 			toReturn: class.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineMax) = (self parseMethod: 'inlineMax
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineMax) equals: (self parseMethod: 'inlineMax
 								| x y q |
 								x := 5.
 								y := 10.
@@ -80,7 +80,7 @@ RBInlineMethodFromComponentTest >> testInlineEmptyComponentMethod [
 			setupImplementorToInlineFor: refactoring
 			toReturn: (refactoring model classNamed: #Object).
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineComponent) = (self parseMethod: 'inlineComponent
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineComponent) equals: (self parseMethod: 'inlineComponent
 	| a anObject |
 	a := 5.
 	anObject := a class.
@@ -117,7 +117,7 @@ RBInlineMethodFromComponentTest >> testModelInlineMethodWithSameVariableNames [
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self executeRefactoring: refactoring].
 	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo) 
-				= (self 
+			equals: (self 
 						parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a + b + c')
 ]
 
@@ -142,7 +142,7 @@ RBInlineMethodFromComponentTest >> testModelInlineMethodWithSameVariableNames1 [
 			self setupImplementorToInlineFor: refactoring toReturn: class.
 			self executeRefactoring: refactoring].
 	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo) 
-				= (self 
+			equals: (self 
 						parseMethod: 'foo | aRectangle temp | aRectangle := 0@0 corner: 1@1. temp := aRectangle. ^aRectangle origin extent: temp extent')
 ]
 
@@ -164,6 +164,6 @@ RBInlineMethodFromComponentTest >> testModelInlineMethodWithSameVariableNames2 [
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self executeRefactoring: refactoring].
 	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo) 
-				= (self 
+				equals: (self 
 						parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c + b + a')
 ]

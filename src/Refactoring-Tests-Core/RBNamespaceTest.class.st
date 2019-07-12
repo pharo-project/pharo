@@ -23,7 +23,7 @@ RBNamespaceTest >> testAllClassesDo [
 			each name = #Object ifTrue: [each allSubclasses].
 			classes := classes + 1].
 	RBBrowserEnvironment new classesDo: [:each | classes := classes - 1].
-	self assert: classes = 0
+	self assert: classes equals: 0
 ]
 
 { #category : #'class tests' }
@@ -210,7 +210,7 @@ RBNamespaceTest >> testReparentSuperclassChange [
 	superclass := st classFor: TestCase superclass.
 	subclasses := TestCase subclasses collect: [:each | st classFor: each].
 	st reparentClasses: subclasses to: superclass.
-	subclasses do: [:each | self assert: each superclass = superclass]
+	subclasses do: [:each | self assert: each superclass equals: superclass]
 ]
 
 { #category : #'class tests' }
@@ -220,6 +220,6 @@ RBNamespaceTest >> testRoots [
 	self 
 		assert: (model rootClasses asSortedCollection: [:a :b | a name < b name]) 
 				asArray 
-					= ((Class rootsOfTheWorld collect: [:each | model classFor: each]) 
+		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each]) 
 							asSortedCollection: [:a :b | a name < b name]) asArray
 ]

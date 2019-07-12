@@ -69,24 +69,24 @@ RBChildrenToSiblingsTest >> testModelChildrenToSibling [
 		subclasses: (Array with: subclass).
 	self executeRefactoring: refactoring.
 	superclass := refactoring model classNamed: #AbstractSuperclass.
-	self assert: class superclass = superclass.
-	self assert: class classSide superclass = superclass classSide.
-	self assert: subclass superclass = superclass.
-	self assert: subclass classSide superclass = superclass classSide.
-	self assert: (superclass parseTreeFor: #same) = (self parseMethod: 'same ^self initialize isKindOf: AbstractSuperclass').
-	self assert: (superclass parseTreeFor: #different) = (self parseMethod: 'different self subclassResponsibility').
-	self assert: (superclass parseTreeFor: #initialize) = (self parseMethod: 'initialize
+	self assert: class superclass equals: superclass.
+	self assert: class classSide superclass equals: superclass classSide.
+	self assert: subclass superclass equals: superclass.
+	self assert: subclass classSide superclass equals: superclass classSide.
+	self assert: (superclass parseTreeFor: #same) equals: (self parseMethod: 'same ^self initialize isKindOf: AbstractSuperclass').
+	self assert: (superclass parseTreeFor: #different) equals: (self parseMethod: 'different self subclassResponsibility').
+	self assert: (superclass parseTreeFor: #initialize) equals: (self parseMethod: 'initialize
 							instVarName1 := instVarName2 := ClassVarName1 := ClassVarName2 := 0').
 	self assert: (superclass directlyDefinesInstanceVariable: 'instVarName1').
 	self assert: (superclass directlyDefinesInstanceVariable: 'instVarName2').
 	self assert: (superclass directlyDefinesClassVariable: 'ClassVarName1').
 	self assert: (superclass directlyDefinesClassVariable: 'ClassVarName2').
 	self assert: (superclass classSide directlyDefinesInstanceVariable: 'classInstVarName1').
-	self assert: (superclass classSide parseTreeFor: #foo) = (self parseMethod: 'foo
+	self assert: (superclass classSide parseTreeFor: #foo) equals: (self parseMethod: 'foo
 							^classInstVarName1 + ClassVarName1 + ClassVarName2').
-	self assert: (superclass classSide parseTreeFor: #new) = (self parseMethod: 'new
+	self assert: (superclass classSide parseTreeFor: #new) equals: (self parseMethod: 'new
 							^super new initialize').
-	self assert: (superclass classSide parseTreeFor: #bar) = (self parseMethod: 'bar
+	self assert: (superclass classSide parseTreeFor: #bar) equals: (self parseMethod: 'bar
 							self subclassResponsibility').
 	self deny: (class directlyDefinesInstanceVariable: 'instVarName1').
 	self deny: (class directlyDefinesInstanceVariable: 'instVarName2').
@@ -96,7 +96,7 @@ RBChildrenToSiblingsTest >> testModelChildrenToSibling [
 	self deny: (class directlyDefinesMethod: #same).
 	self deny: (class directlyDefinesMethod: #initialize).
 	self deny: (class classSide directlyDefinesMethod: #new).
-	self assert: (class parseTreeFor: #different) = (self parseMethod: 'different
+	self assert: (class parseTreeFor: #different) equals: (self parseMethod: 'different
 							^instVarName1 + instVarName2').
 	self assert: (class classSide parseTreeFor: #bar) = (self parseMethod: 'bar
 							^self printString')

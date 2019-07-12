@@ -16,19 +16,18 @@ RBDefineBasicCheckRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
-RBDefineBasicCheckRule >> check: aClass forCritiquesDo: aCritiqueBlock [
-	((aClass inheritsFrom: RBLintRule) and: [ 
-		aClass isVisible and: [ 
-	  (aClass lookupSelector: #basicCheck:) isSubclassResponsibility ] ])
+{ #category : #running }
+RBDefineBasicCheckRule >> basicCheck: aClass [
+	^ (aClass inheritsFrom: RBLintRule) and: [ aClass isVisible and: [ (aClass lookupSelector: #basicCheck:) isSubclassResponsibility ] ]
+]
 
-		ifTrue: [ aCritiqueBlock cull: (
-			ReMissingMethodCritique
-				for: aClass
-				by: self
-				class: aClass
-				selector: #basicCheck:)
-				beShouldBeImplemented ]
+{ #category : #helpers }
+RBDefineBasicCheckRule >> critiqueFor: aClass [
+	^ (ReMissingMethodCritique
+		for: aClass
+		by: self
+		class: aClass
+		selector: #basicCheck:) beShouldBeImplemented
 ]
 
 { #category : #accessing }

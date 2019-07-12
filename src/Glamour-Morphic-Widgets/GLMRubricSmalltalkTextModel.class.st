@@ -90,11 +90,6 @@ GLMRubricSmalltalkTextModel >> highlightSmalltalkContext: aClassOrMetaclass [
 	highlightSmalltalkContext := aClassOrMetaclass
 ]
 
-{ #category : #testing }
-GLMRubricSmalltalkTextModel >> isCodeCompletionAllowed [ 
-	^true
-]
-
 { #category : #accessing }
 GLMRubricSmalltalkTextModel >> selectedBehavior [
 	

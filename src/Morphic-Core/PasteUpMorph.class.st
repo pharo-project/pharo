@@ -451,13 +451,16 @@ PasteUpMorph >> dropFiles: anEvent [
 	TODO:
 		- use a more general mechanism for figuring out what to do with the file (perhaps even offering a choice from a menu)
 		- remember the resource location or (when in browser) even the actual file handle"
-	| numFiles |	
+
+	| numFiles |
 	numFiles := anEvent contents.
-	
-	1 to: numFiles do: [:i | | aFileReference handler |
+	1 to: numFiles do: [ :i | 
+		| aFileReference handler |
 		aFileReference := FileReference requestDropReference: i.
-		handler := ExternalDropHandler lookupExternalDropHandler: aFileReference.
-		handler ifNotNil: [ aFileReference binaryWriteStreamDo: [ :stream | handler handle: stream in: self dropEvent: anEvent ] ]].
+		handler := ExternalDropHandler
+			lookupExternalDropHandler: aFileReference.
+		handler
+			ifNotNil: [ handler handle: aFileReference in: self dropEvent: anEvent ] ]
 ]
 
 { #category : #'Morphic-Base-Windows' }
@@ -930,25 +933,6 @@ PasteUpMorph >> restoreMainDockingBarDisplay [
 	"Restore the display of docking bars"
 	self dockingBars
 		do: [:each | each updateBounds]
-]
-
-{ #category : #'world state' }
-PasteUpMorph >> restoreMorphicDisplay [
-
-	DisplayScreen startUp.
-
-	self
-		extent: Display extent;
-		viewBox: Display boundingBox;
-		handsDo: [:h | h visible: true; showTemporaryCursor: nil];
-		resizeBackgroundMorph;
-		submorphsDo: [ :each | each displayExtentChanged ];
-		fullRepaintNeeded.
-		
-	self defer: [Cursor normal show].
-		
-	self layoutChanged.
-
 ]
 
 { #category : #gridding }

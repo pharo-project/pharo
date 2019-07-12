@@ -905,12 +905,7 @@ TextMorph >> handleKeystroke: anEvent [
 	self allowsKeymapping
 		ifTrue: [ self dispatchKeystrokeForEvent: anEvent ] .
 	anEvent wasHandled
-		ifTrue: [
-			"We need to check for completion here because otherwise it will try to handle the keystroke, 
-			even if it was already processed."
-			(Smalltalk tools hasToolNamed: #codeCompletion) 
-				ifTrue: [ Smalltalk tools codeCompletion uniqueInstance closeMenu ].
-			^ self].
+		ifTrue: [ ^ self].
 	(self handlesKeyStroke: anEvent)
 		ifFalse: [^ self].
 	self keyStroke: anEvent.
@@ -1053,13 +1048,7 @@ TextMorph >> justified [
 TextMorph >> keyStroke: evt [ 
 	"Handle a keystroke event."
 	Transcript show: 'TextMorph';cr.
-	(Smalltalk tools hasToolNamed: #codeCompletion) 
-		ifTrue: [ 
-			Smalltalk tools 
-				codeCompletionAround: [ self basicKeyStroke: evt ] 
-				textMorph: self 
-				keyStroke: evt ]
-		ifFalse: [  self basicKeyStroke: evt ]
+	self basicKeyStroke: evt
 ]
 
 { #category : #'event handling' }

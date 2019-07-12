@@ -63,6 +63,6 @@ MCBitbucketRepository >> normalizeTagsData: jsonObject [
 ]
 
 { #category : #private }
-MCBitbucketRepository >> projectTagsUrlFor: projectPath [
-  ^ 'https://bitbucket.org/api/1.0/repositories/' , projectPath , '/tags'
+MCBitbucketRepository >> projectTagsUrlFor: projectPath2 [
+  ^ 'https://bitbucket.org/api/1.0/repositories/' , projectPath2 , '/tags'
 ]

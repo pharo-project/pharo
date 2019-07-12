@@ -5,7 +5,9 @@ Class {
 	#name : #OSWindowWorldState,
 	#superclass : #WorldState,
 	#instVars : [
-		'display'
+		'display',
+		'canvas',
+		'viewBox'
 	],
 	#category : #'OSWindow-Core-Morphic'
 }

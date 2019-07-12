@@ -15,22 +15,14 @@ RBSendsUnknownMessageToGlobalRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBSendsUnknownMessageToGlobalRule >> check: aNode forCritiquesDo: aCriticBlock [
+RBSendsUnknownMessageToGlobalRule >> basicCheck: aNode [
 	| messageReceiver |
+	aNode isMessage ifFalse: [ ^ false ].
 
-	aNode isMessage ifFalse: [ ^ self ].
-	
 	messageReceiver := aNode receiver.
-	messageReceiver isVariable ifFalse: [ ^ self ].
-	
+	messageReceiver isVariable ifFalse: [ ^ false ].
 
-	((Smalltalk globals
-		at: messageReceiver name asSymbol
-		ifAbsent: [ ^ self ])
-			respondsTo: aNode selector)
-				ifTrue: [ ^ self ].
-		
-	aCriticBlock cull: (self critiqueFor: aNode)
+	^ ((Smalltalk globals at: messageReceiver name asSymbol ifAbsent: [ ^ false ]) respondsTo: aNode selector) not
 ]
 
 { #category : #accessing }

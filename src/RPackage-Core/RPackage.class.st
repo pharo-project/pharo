@@ -906,21 +906,6 @@ RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
 ]
 
 { #category : #'system compatibility' }
-RPackage >> includesMethod: aSymbol ofClass: aClass [
-
-	self flag: #stef. "only used by RB"
-	self flag: #cyrille. "looks like a bogus implementation because category have nothing to do with the fact that a method is in package or not."
-	"CD: Indeed, it looks strange. 
-	With RPackage we have 'includesSelector:ofClass:. I guess it should return the same result (?)'
-	"
-	aClass ifNil: [^ false].
-	^ self
-		includesMethodCategory: ((aClass organization categoryOfElement: aSymbol)
-										ifNil: [' '])
-		ofClass: aClass
-]
-
-{ #category : #'system compatibility' }
 RPackage >> includesMethodCategory: categoryName ofClass: aClass [
 	^ (self isYourClassExtension: categoryName)
 		or: [(self includesClass: aClass)
@@ -1062,12 +1047,6 @@ RPackage >> methodsForClass: aClass [
 	
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> methodsInCategory: aString ofClass: aClass do: aBlock [
-	((aClass organization listAtCategoryNamed: aString) ifNil: [^self])
-		do: [:sel | aBlock value: (self referenceForMethod: sel ofClass: aClass)]
-]
-
 { #category : #private }
 RPackage >> moveClass: aClass fromPackage: oldPackage toTag: aTag [ 
 
@@ -1177,11 +1156,6 @@ RPackage >> propertyAt: propName put: propValue [
 	^ self ensureProperties
 		at: propName
 		put: propValue
-]
-
-{ #category : #'system compatibility' }
-RPackage >> referenceForMethod: aSymbol ofClass: aClass [
-	^ (aClass >> aSymbol) asRingDefinition
 ]
 
 { #category : #register }

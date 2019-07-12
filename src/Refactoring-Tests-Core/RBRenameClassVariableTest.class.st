@@ -39,7 +39,7 @@ RBRenameClassVariableTest >> testRenameClassVar [
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class directlyDefinesClassVariable: #RSR).
 	self deny: (class directlyDefinesClassVariable: #RecursiveSelfRule).
-	self assert: (class classSide parseTreeFor: #initializeAfterLoad1) = (self parseMethod: 'initializeAfterLoad1
+	self assert: (class classSide parseTreeFor: #initializeAfterLoad1) equals: (self parseMethod: 'initializeAfterLoad1
 								RSR := RBParseTreeSearcher new.
 								RSR
 									addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
@@ -68,8 +68,8 @@ RBRenameClassVariableTest >> testRenameClassVarInSharedPool [
 	class := refactoring model classNamed: #RBSharedPoolForTestData.
 	userClass := refactoring model classNamed: #RBClassUsingSharedPoolForTestData.
 	
-	self assert: (class parseTreeFor: #msg1) = (self parseMethod: 'msg1 ^ VarOne').	
-	self assert: (class parseTreeFor: #msg2) = (self parseMethod: 'msg2 ^ VarOne').	
-	self assert: (userClass parseTreeFor: #msg3) = (self parseMethod: 'msg3 ^ VarOne').	
+	self assert: (class parseTreeFor: #msg1) equals: (self parseMethod: 'msg1 ^ VarOne').	
+	self assert: (class parseTreeFor: #msg2) equals: (self parseMethod: 'msg2 ^ VarOne').	
+	self assert: (userClass parseTreeFor: #msg3) equals: (self parseMethod: 'msg3 ^ VarOne').	
 
 ]

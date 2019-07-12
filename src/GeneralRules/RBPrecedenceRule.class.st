@@ -15,17 +15,14 @@ RBPrecedenceRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBPrecedenceRule >> check: aNode forCritiquesDo: aCriticBlock [
+RBPrecedenceRule >> basicCheck: aNode [
 	| leftOperand |
-	
-	aNode isMessage ifFalse: [ ^ self ].
-	aNode selector = #* ifFalse: [ ^ self ].
+	aNode isMessage ifFalse: [ ^ false ].
+	aNode selector = #* ifFalse: [ ^ false ].
 	leftOperand := aNode receiver.
-	leftOperand isMessage ifFalse: [ ^ self ].
-	leftOperand hasParentheses ifTrue: [ ^ self ].
-	(#(#+ #-) includes: leftOperand selector) ifFalse: [ ^ self ].
-	
-	aCriticBlock cull: (self critiqueFor: aNode)
+	leftOperand isMessage ifFalse: [ ^ false ].
+	leftOperand hasParentheses ifTrue: [ ^ false ].
+	^ #(#+ #-) includes: leftOperand selector
 ]
 
 { #category : #accessing }

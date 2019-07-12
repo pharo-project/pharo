@@ -97,7 +97,7 @@ GTMoldableDebugger class >> openOn: aDebugSession withFullView: aBool andNotific
 				"Use a custom extension"
 				aDebugger on: (aDebugger spanNewSessionFrom: aDebugSession) ].
 	
-	aBool | self alwaysOpenFullDebugger
+	aBool | aString isNil "In case the string is nil it means we should show the full debugger and not a notification"
 		ifTrue: [ debugger openWithFullView ]
 		ifFalse: [ debugger openWithNotification: aString]
 ]

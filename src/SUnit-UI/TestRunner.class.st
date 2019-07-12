@@ -94,11 +94,11 @@ TestRunner >> addMethodsUnderTestIn: listOfPackages to: methods [
 	listOfPackages
 		reject: #isNil
 		thenDo: [:package | 
-			package methodReferences
+			package methods
 				reject: [ :method | (#(#packageNamesUnderTest #classNamesNotUnderTest ) includes: method selector)
-												or: [ method compiledMethod isAbstract
-													or: [ (method compiledMethod refersToLiteral: #ignoreForCoverage)
-														or: [ method methodClass instanceSide allSuperclasses includes: TestCase ] ] ] ]
+												or: [ method  isAbstract
+													or: [ (method  refersToLiteral: #ignoreForCoverage)
+														or: [ method methodClass isTestCase ] ] ] ]
 				thenDo: [:method | methods add: method ] ]
 ]
 
@@ -502,8 +502,8 @@ TestRunner >> excludeClassesNotUnderTestFrom: methods [
 							theClass := Smalltalk globals classNamed: className.
 							theClass
 								ifNotNil: [ 
-									theClass methods do: [ :each | methods remove: each methodReference ifAbsent: [  ] ].
-									theClass class methods do: [ :each | methods remove: each methodReference ifAbsent: [  ] ] ] ] ] ]
+									theClass methods do: [ :each | methods remove: each  ifAbsent: [  ] ].
+									theClass class methods do: [ :each | methods remove: each  ifAbsent: [  ] ] ] ] ] ]
 ]
 
 { #category : #processing }

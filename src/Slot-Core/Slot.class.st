@@ -59,11 +59,28 @@ Slot class >> checkValidName: aSymbol [
 
 ]
 
+{ #category : #ui }
+Slot class >> gtInspectorSlotUsersIn: composite [
+	<gtInspectorPresentationOrder: 30>
+	| users |
+	users := self slotUsers.
+	composite list 
+		title: 'Slot Users';
+		display: [ users  ];
+		when: [ users notEmpty ];
+		showOnly: 30
+]
+
 { #category : #'class initialization' }
 Slot class >> initialize [
 	Properties := Properties
 		ifNil: [ WeakIdentityKeyDictionary new. ]
 		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
+]
+
+{ #category : #testing }
+Slot class >> isUsed [
+	^super isUsed or: [self slotUsers isNotEmpty ]
 ]
 
 { #category : #'instance creation' }
@@ -92,6 +109,13 @@ Slot class >> slotSetting: aBuilder [
 		description: 'If checked then browsers show always the slot class definition';
 		parent: #codeBrowsing; 
 		target: self
+]
+
+{ #category : #testing }
+Slot class >> slotUsers [
+	"all classes or traits that have slots of this kind"
+	^self environment allBehaviors 
+		select:  [ :class | class slots anySatisfy: [ :slot | slot class == self ] ]
 ]
 
 { #category : #comparing }
@@ -252,6 +276,11 @@ Slot >> isLocal [
 Slot >> isReadIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableReadNodes
 		 anySatisfy: [ :node | node binding slot == self ]
+]
+
+{ #category : #testing }
+Slot >> isReferenced [
+	^self usingMethods isNotEmpty
 ]
 
 { #category : #testing }

@@ -12,7 +12,7 @@ Class {
 	#category : #'Morphic-Widgets-Windows-Resizing'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 EdgeGripMorph >> adoptPaneColor: paneColor [
 	"Change our color too."
 	
@@ -20,7 +20,7 @@ EdgeGripMorph >> adoptPaneColor: paneColor [
 	self fillStyle: self normalFillStyle
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - layouts' }
 EdgeGripMorph >> bottomLayoutFrame [
 	"Answer the layout frame for a bottom edge."
 	
@@ -29,14 +29,14 @@ EdgeGripMorph >> bottomLayoutFrame [
 		rightOffset: -22
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 EdgeGripMorph >> defaultHeight [
 	"Answer the default height for the receiver."
 	
 	^ProportionalSplitterMorph splitterWidth
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 EdgeGripMorph >> defaultWidth [
 	"Answer the default width for the receiver."
 	
@@ -80,7 +80,7 @@ EdgeGripMorph >> extent: aPoint [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 EdgeGripMorph >> fitTargetBoundsInOwner: aRect [
 	"Reset the target bounds if required to
 	ensure that the owner's submorphs fit within the owner's
@@ -113,9 +113,9 @@ EdgeGripMorph >> fitTargetOwner: anObject [
 	fitTargetOwner := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - layouts' }
 EdgeGripMorph >> gripLayoutFrame [
-	"Answer the layout frame dependinbg on our edge."
+	"Answer the layout frame depending on our edge."
 	
 	self edgeName == #top ifTrue: [^self topLayoutFrame].
 	self edgeName == #bottom ifTrue: [^self bottomLayoutFrame].
@@ -136,7 +136,7 @@ EdgeGripMorph >> initialize [
 		vResizing: #spaceFill
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 EdgeGripMorph >> isHorizontal [
 	"Answer true if the receiver has a horizontal layout."
 	
@@ -144,7 +144,7 @@ EdgeGripMorph >> isHorizontal [
 		or: [self edgeName == #bottom]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - layouts' }
 EdgeGripMorph >> leftLayoutFrame [
 	"Answer the layout frame for a left edge."
 	
@@ -180,7 +180,7 @@ EdgeGripMorph >> mouseMove: anEvent [
 			self positionPoint: (lastMouse first - lastMouse second)].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event handling' }
 EdgeGripMorph >> mouseUp: anEvent [
 	"Change the cursor back to normal if necessary and change the color back to normal."
 	
@@ -189,14 +189,14 @@ EdgeGripMorph >> mouseUp: anEvent [
 	self adoptPaneColor: self paneColor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 EdgeGripMorph >> normalFillStyle [
 	"Return the normal fillStyle of the receiver."
 	
 	^self theme splitterNormalFillStyleFor: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 EdgeGripMorph >> positionPoint: aPoint [
 	"Reposition based on ptName."
 	
@@ -207,7 +207,7 @@ EdgeGripMorph >> positionPoint: aPoint [
 	^self position: aPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 EdgeGripMorph >> pressedFillStyle [
 	"Return the pressed fillStyle of the receiver."
 	
@@ -220,7 +220,7 @@ EdgeGripMorph >> resizeCursor [
 	^ Cursor resizeForEdge: self edgeName
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - layouts' }
 EdgeGripMorph >> rightLayoutFrame [
 	"Answer the layout frame for a right edge."
 	
@@ -229,7 +229,7 @@ EdgeGripMorph >> rightLayoutFrame [
 		bottomOffset: SystemWindow borderWidth - 26
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 EdgeGripMorph >> setLayoutSizingFor: aSymbol [
 	"Adjust the sizing for use within table layouts."
 
@@ -239,7 +239,7 @@ EdgeGripMorph >> setLayoutSizingFor: aSymbol [
 		ifTrue: [self hResizing: #spaceFill; vResizing: #rigid]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 EdgeGripMorph >> setTargetBounds: aRect [
 	"Set the target bounds, taking owner into account if required."
 
@@ -248,7 +248,7 @@ EdgeGripMorph >> setTargetBounds: aRect [
 		self fitTargetBoundsInOwner: aRect]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 EdgeGripMorph >> splitsTopAndBottom [
 	"Answer true if the receiver has a horizontal layout."
 	
@@ -269,14 +269,14 @@ EdgeGripMorph >> target: aMorph [
 	target := aMorph
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 EdgeGripMorph >> targetPoint [
 	"Answer the reference point of the target."
 
 	^self target bounds pointAtSideOrCorner: self edgeName
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 EdgeGripMorph >> targetPoint: aPoint [
 	"Set the reference point of the target."
 
@@ -296,7 +296,7 @@ EdgeGripMorph >> targetPoint: aPoint [
 	self setTargetBounds: rect
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #theme }
 EdgeGripMorph >> themeChanged [
 	"Update the fill style."
 
@@ -304,7 +304,7 @@ EdgeGripMorph >> themeChanged [
 	super themeChanged
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - layouts' }
 EdgeGripMorph >> topLayoutFrame [
 	"Answer the layout frame for a top edge."
 	

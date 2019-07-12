@@ -688,7 +688,7 @@ ChangeSet >> checkForSlips [
 					[method := aClass compiledMethodAt: mAssoc key ifAbsent: [nil].
 					method ifNotNil:
 						[(self hasReportableSlip: method)
-							ifTrue: [ slips add: (aClass >> mAssoc key) methodReference ]]]]].
+							ifTrue: [ slips add: (aClass >> mAssoc key) ]]]]].
 	^ slips
 ]
 

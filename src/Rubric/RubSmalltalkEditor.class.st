@@ -793,7 +793,7 @@ RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 { #category : #'completion engine' }
 RubSmalltalkEditor >> isCompletionEnabled [
 
-	^ completionEngine isNil not
+	^ completionEngine isNotNil and: [ self editingMode isCompletionEnabled ]
 ]
 
 { #category : #testing }

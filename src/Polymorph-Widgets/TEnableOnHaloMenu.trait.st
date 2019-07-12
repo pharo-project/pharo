@@ -3,7 +3,7 @@ Trait providing an ""enabled"" option on the halo menu.
 "
 Trait {
 	#name : #TEnableOnHaloMenu,
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Traits'
 }
 
 { #category : #'menu & halo' }

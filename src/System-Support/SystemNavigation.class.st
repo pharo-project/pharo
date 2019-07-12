@@ -94,39 +94,17 @@ SystemNavigation >> allImplementedMessages [
 ]
 
 { #category : #query }
-SystemNavigation >> allImplementorsOf: aSelector [ 
+SystemNavigation >> allImplementorsOf: aSelector [
 	"Answer all the methods that implement the message aSelector."
-	
-	| aCollection |
-	aCollection := OrderedCollection  new.
-	self allBehaviorsDo: [:class | 
-		(class includesSelector: aSelector)
-			ifTrue: [aCollection add: (class>>aSelector) methodReference]].
-	^ aCollection
-]
 
-{ #category : #query }
-SystemNavigation >> allLocalCallsOn: aSymbol ofClass: aClass [
-	"Answer a SortedCollection of all the methods that call on aSymbol, anywhere in my class hierarchy."
-	
-	| aSet cls |
-	aSet := Set new.
-	cls := aClass instanceSide.
-	cls withAllSuperAndSubclassesDo: [ :class |
-		(class whichSelectorsReferTo: aSymbol)
-			do: [:sel |
-				aSet add: (class>>sel) methodReference ]].
-		
-	cls class withAllSuperAndSubclassesDo: [ :class |
-		(class whichSelectorsReferTo: aSymbol)
-			do: [:sel |
-				aSet add: (class>>sel) methodReference ]].
-	^aSet
+	^ self allBehaviors
+		select: [ :class | class includesSelector: aSelector ]
+		thenCollect: [ :class | (class >> aSelector) methodReference ]
 ]
 
 { #category : #query }
 SystemNavigation >> allMethods [
-	^ self allBehaviors flatCollect: [ :behavior | behavior methods ]
+	^ self environment allMethods
 
 ]
 
@@ -185,32 +163,20 @@ SystemNavigation >> allObjectsOrNil [
 
 { #category : #query }
 SystemNavigation >> allPrimitiveMethods [
-	"Answer an OrderedCollection of all the methods that are implemented by primitives."
-	
-	| aColl |
-	aColl := OrderedCollection new: 200.
-	self allBehaviorsDo: [ :class | 
-		class selectorsAndMethodsDo: [ :sel :method | 
-			method isPrimitive
-				ifTrue: [ aColl addLast: class name , ' ' , sel , ' ' , method primitive printString ]]].
-	^ aColl
+	"Answer all the methods that are implemented by primitives."
+
+	^self allMethods
+		select: [ :method | method isPrimitive ]
+		thenCollect: [ :method | method methodClass name , ' ' , 
+			     method selector , ' ', method primitive printString ]
 ]
 
 { #category : #query }
-SystemNavigation >> allReferencesTo: aLiteral [ 
-	"Answer a Collection of all the methods that refer to aLiteral even deeply embedded in literal array."
+SystemNavigation >> allReferencesTo: aLiteral [
+	"Answer all the methods that refer to aLiteral even deeply embedded in literal array."
 
-	"self new allReferencesTo: #+"
-	"self new allReferencesTo: Point binding"
-	
-	| result |
-	result := OrderedCollection new.
-	self allBehaviorsDo: [ :class |
-		| selectors | 
-		selectors :=  class thoroughWhichSelectorsReferTo: aLiteral.
-		selectors do: [ :selector |
-			result addLast: (class>>selector) methodReference ] ].
-	^ result
+	^ self allBehaviors flatCollect: [ :class | 
+			(class thoroughWhichMethodsReferTo: aLiteral) collect: [ :method | method methodReference ] ]
 ]
 
 { #category : #query }
@@ -225,45 +191,9 @@ SystemNavigation >> allReferencesTo: aLiteral do: aBlock [
 			ifTrue: [ class withThorougMethodsReferTo: aLiteral do: aBlock ] ]
 ]
 
-{ #category : #query }
-SystemNavigation >> allReferencesToPool: aPool [
-	"Answer all the references to variable aPool"
-
-	| list |
-	list := OrderedCollection new.
-	self
-		allClassesDo: [ :cls | 
-			cls
-				selectorsAndMethodsDo: [ :sel :meth | 
-					meth literals
-						detect: [ :lit | (lit isVariableBinding and: [ lit key notNil ]) 
-													and: [ aPool includesKey: lit key ] ]
-						ifFound: [ list add: (cls>>sel) methodReference ] ] ].
-	^ list
-]
-
-{ #category : #query }
-SystemNavigation >> allReferencesToSubstring: aString do: aBlock [
-	"Perform aBlock on all the references to class whose name matches asString."
-	
-	| sortedClasses |
-	aString isEmptyOrNil ifTrue: [ ^ self ].
-	sortedClasses := SortedCollection new sortBlock: [ :a :b | a name size < b name size ].
-	(self allBehaviorsDo: [ :class |
-		(class name includesSubstring: aString caseSensitive: false) 
-			ifTrue: [ sortedClasses add: class ] ]).
-	sortedClasses do: [ :class |
-		self allReferencesTo: class binding do: aBlock ]
-]
-
 { #category : #'message sends' }
 SystemNavigation >> allSendersOf: selector [ 
-	|  senders |
-	senders := OrderedCollection new.
-	self allBehaviorsDo: [ :behavior | 
-		(behavior thoroughWhichSelectorsReferTo: selector) do: [ :sel| 
-			senders add: (behavior>>sel) methodReference ] ].
-	^ senders
+	^self allReferencesTo: selector
 ]
 
 { #category : #query }
@@ -318,19 +248,6 @@ SystemNavigation >> allUnimplementedCalls [
 					secondStream position = 0
 						ifFalse: [aStream nextPut: cl name , ' ' , sel , ' calls: ' , secondStream contents]]].
 	^ aStream contents
-]
-
-{ #category : #query }
-SystemNavigation >> allUnreferencedClassVariablesOf: aClass [
-	"Answer a list of the names of all the receiver's unreferenced class  
-	vars, including those defined in superclasses"
-	| aList |
-	aList := OrderedCollection new.
-	aClass withAllSuperclasses
-		reverseDo: [:aSuperClass | aSuperClass classVarNames
-				do: [:var | (self allReferencesTo: (aSuperClass classPool associationAt: var)) isEmpty
-						ifTrue: [aList add: var]]].
-	^ aList
 ]
 
 { #category : #query }
@@ -394,10 +311,8 @@ SystemNavigation >> instanceSideMethodsWithNilKeyInLastLiteral [
 
 { #category : #'message sends' }
 SystemNavigation >> isUnsentMessage: selector [
-
-	self allBehaviorsDo: [ :behavior | 
-		(behavior thoroughHasSelectorReferringTo: selector) ifTrue: [ ^ false]].
-	^ true
+	^ self allBehaviors
+		noneSatisfy: [ :behavior | behavior thoroughHasSelectorReferringTo: selector ]
 ]
 
 { #category : #query }
@@ -484,6 +399,6 @@ SystemNavigation >> obsoleteMethodReferences [
 					ifTrue: [
 						(ref pointersTo) do: [ :meth | 
 							meth isCompiledMethod
-								ifTrue: [meth methodReference ifNotNil: [:mref | references nextPut: mref]]]]]].
+								ifTrue: [references nextPut: meth]]]]].
 	^ references contents
 ]

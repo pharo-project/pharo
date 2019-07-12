@@ -148,7 +148,7 @@ OmFileStoreTest >> testLoadFromCorruptFile4 [
 			skip: -1;
 			nextPutAll: '**'.
 			
-		"Apparently, in Linux it can randomly fail if not explicitely flush"
+		"Apparently, in Linux it can randomly fail if not explicitly flush"
 		stream flush.
 	] ensure: [ stream close ].
 	

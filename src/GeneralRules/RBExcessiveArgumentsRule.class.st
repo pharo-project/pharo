@@ -29,10 +29,8 @@ RBExcessiveArgumentsRule >> argumentsCount [
 ]
 
 { #category : #running }
-RBExcessiveArgumentsRule >> check: aMethod forCritiquesDo: aCritiqueBlock [
-	(aMethod numArgs >= self argumentsCount) ifTrue: [
-        aCritiqueBlock cull: (self critiqueFor: aMethod) ]
-		
+RBExcessiveArgumentsRule >> basicCheck: aMethod [
+	^ aMethod numArgs >= self argumentsCount
 ]
 
 { #category : #accessing }

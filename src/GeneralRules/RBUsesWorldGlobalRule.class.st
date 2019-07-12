@@ -16,14 +16,8 @@ RBUsesWorldGlobalRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBUsesWorldGlobalRule >> check: aNode forCritiquesDo: aCriticBlock [
-
-	(aNode isVariable 
-		and: [ aNode isGlobal 
-		and: [ #(#World #ActiveWorld) includes: aNode name ] ])
-		ifFalse: [ ^ self ].
-
-	aCriticBlock cull: (self critiqueFor: aNode)
+RBUsesWorldGlobalRule >> basicCheck: aNode [
+	^ aNode isVariable and: [ aNode isGlobal and: [ #(#World #ActiveWorld) includes: aNode name ] ]
 ]
 
 { #category : #accessing }

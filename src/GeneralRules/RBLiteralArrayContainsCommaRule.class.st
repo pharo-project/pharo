@@ -15,12 +15,8 @@ RBLiteralArrayContainsCommaRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBLiteralArrayContainsCommaRule >> check: aNode forCritiquesDo: aCritiqueBlock [ 
-	aNode isLiteralArray ifFalse: [ ^ self ].
-	(aNode value includes: #,) ifFalse: [ ^ self ].
-
-
-	aCritiqueBlock cull: (self critiqueFor: aNode)
+RBLiteralArrayContainsCommaRule >> basicCheck: aNode [
+	^ aNode isLiteralArray and: [ aNode value includes: #, ]
 ]
 
 { #category : #private }
