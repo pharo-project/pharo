@@ -366,7 +366,7 @@ StringTest >> secondIndex [
 
 { #category : #running }
 StringTest >> setUp [
-	<compilerOptions: #(#- #optionReadOnlyLiterals)>
+	<compilerOptions: #(- #optionReadOnlyLiterals)>
 	super setUp.
 	string := 'Hi, I am a String'.
 	emptyString := ''.
@@ -1812,7 +1812,7 @@ StringTest >> testSubstrings [
 
 { #category : #tests }
 StringTest >> testTranslateToLowercase [
-	<compilerOptions: #(#- #optionReadOnlyLiterals)>
+	<compilerOptions: #(- #optionReadOnlyLiterals)>
 	
 	self assert: 'test this string' translateToLowercase equals: 'test this string'.
 	self assert: ' Test THIS sTRing' translateToLowercase equals: ' test this string'.
@@ -1823,7 +1823,7 @@ StringTest >> testTranslateToLowercase [
 
 { #category : #tests }
 StringTest >> testTranslateToUppercase [
-	<compilerOptions: #(#- #optionReadOnlyLiterals)>
+	<compilerOptions: #(- #optionReadOnlyLiterals)>
 
 	self assert: 'test this string' translateToUppercase equals: 'TEST THIS STRING'.
 	self assert: ' Test THIS sTRing' translateToUppercase equals: ' TEST THIS STRING'.

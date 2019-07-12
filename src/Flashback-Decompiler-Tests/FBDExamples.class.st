@@ -357,7 +357,7 @@ FBDExamples >> exampleCascadeIntoBlockWithTempIntoCascade [
 { #category : #'examples - branches' }
 FBDExamples >> exampleCascadeNested [
 	<sampleInstance>
-	<compilerOptions: #(#- #optionReadOnlyLiterals)>
+	<compilerOptions: #(- #optionReadOnlyLiterals)>
 	| tmp1 tmp2 |
 	tmp1 := 1.
 	tmp2 := #(1 2 3).
@@ -905,7 +905,7 @@ FBDExamples >> examplePushBigArray [
 { #category : #'examples - loops' }
 FBDExamples >> exampleRepeatEffect [
 	<sampleInstance>
-	<compilerOptions: #(#+ #optionInlineRepeat)>
+	<compilerOptions: #(+ #optionInlineRepeat)>
 	| i |
 	i := 1.
 	[ 
@@ -917,7 +917,7 @@ FBDExamples >> exampleRepeatEffect [
 { #category : #'examples - loops' }
 FBDExamples >> exampleRepeatValue [
 	<sampleInstance>
-	<compilerOptions: #(#+ #optionInlineRepeat)>
+	<compilerOptions: #(+ #optionInlineRepeat)>
 	| i |
 	i := 1.
 	^ [ 
