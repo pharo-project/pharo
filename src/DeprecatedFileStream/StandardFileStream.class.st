@@ -82,7 +82,7 @@ StandardFileStream class >> forceNewFileNamed: fileName [
 	asking before creating the new file."
 	| dir  fullName f |
 	
-	FileSystemStore wantsReadOnly ifTrue: [ ((CannotDeleteFileException fileName: fileName)
+	SessionManager default currentSession isReadOnlyAccessMode ifTrue: [ ((CannotDeleteFileException fileName: fileName)
 		messageText: 'Could not delete the old version of file ' , fileName) signal.
 		^ NullStream new ].
 	

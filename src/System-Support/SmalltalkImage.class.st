@@ -162,10 +162,17 @@ SmalltalkImage >> arguments [
 
 	"Smalltalk commandLine arguments"
 
+	^ self argumentsStartingAtIndex: 1
+]
+
+{ #category : #private }
+SmalltalkImage >> argumentsStartingAtIndex: anIndex [
+	"Answer an array with all the command line arguments"
+
 	^ Array
 		streamContents: [ :str | 
 			| arg i |
-			i := 1.
+			i := anIndex.
 			[ i > 998 or: [ (arg := self argumentAt: i) isNil ] ]
 				whileFalse: [ 
 					str nextPut: arg.

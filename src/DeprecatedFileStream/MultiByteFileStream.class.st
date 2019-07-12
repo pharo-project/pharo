@@ -562,7 +562,7 @@ MultiByteFileStream >> nextPutAll: aCollection [
 MultiByteFileStream >> open: fileName forWrite: writeMode [ 
 	| result |
 
-	(writeMode and: [FileSystemStore wantsReadOnly]) 
+	(writeMode and: [SessionManager default currentSession isReadOnlyAccessMode]) 
 		ifTrue: [ ((CannotDeleteFileException fileName: fileName)
 			messageText: 'Attempt to open file ' , fileName, ' as wrtitable on read-only filesystem') signal. ].
 
