@@ -480,12 +480,6 @@ String >> alike: aString [
 ]
 
 { #category : #'finding/searching' }
-String >> allRangesOfRegexMatches: rxString [
-
-	^rxString asRegex matchingRangesIn: self
-]
-
-{ #category : #'finding/searching' }
 String >> allRangesOfSubstring: aSubstring [
 	"'Ab cd ef Ab cd' allRangesOfSubstring: 'cd' >>> {(4 to: 5). (13 to: 14)}"
 	"'Ab cd ef Ab cd' allRangesOfSubstring: 'zz' >>> #()"
@@ -498,12 +492,6 @@ String >> allRangesOfSubstring: aSubstring [
 				start > 0 
 					ifTrue: [s nextPut: (start to: start + subSize - 1).
 						start := start + subSize]]]
-]
-
-{ #category : #'finding/searching' }
-String >> allRegexMatches: rxString [
-
-	^rxString asRegex matchesIn: self
 ]
 
 { #category : #converting }

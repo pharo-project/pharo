@@ -1,6 +1,18 @@
 Extension { #name : #String }
 
 { #category : #'*Regex-Core' }
+String >> allRangesOfRegexMatches: rxString [
+
+	^rxString asRegex matchingRangesIn: self
+]
+
+{ #category : #'*Regex-Core' }
+String >> allRegexMatches: rxString [
+
+	^rxString asRegex matchesIn: self
+]
+
+{ #category : #'*Regex-Core' }
 String >> asRegex [
 	"Compile the receiver as a regex matcher. May raise RxParser>>syntaxErrorSignal
 	or RxParser>>compilationErrorSignal.
