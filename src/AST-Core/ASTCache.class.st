@@ -24,6 +24,12 @@ Class {
 	#category : #'AST-Core-Parser'
 }
 
+{ #category : #'private - announcements' }
+ASTCache class >> announceCacheReset [
+
+	SystemAnnouncer uniqueInstance announce: ASTCacheReset new 
+]
+
 { #category : #accessing }
 ASTCache class >> at: aCompiledMethod [
 	^ default at: aCompiledMethod
@@ -36,7 +42,7 @@ ASTCache class >> default [
 
 { #category : #accessing }
 ASTCache class >> default: anASTCache [
-	default := anASTCache.
+	default := anASTCache
 ]
 
 { #category : #'class initialization' }
@@ -47,8 +53,9 @@ ASTCache class >> initialize [
 
 { #category : #'initialization-release' }
 ASTCache class >> reset [
-	default reset.
-	SystemAnnouncer uniqueInstance announce: ASTCacheReset new 
+	<script>
+	self default reset.
+	self announceCacheReset
 ]
 
 { #category : #'system startup' }

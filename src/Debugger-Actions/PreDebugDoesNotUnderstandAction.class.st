@@ -17,11 +17,6 @@ Class {
 	#category : #'Debugger-Actions-Actions'
 }
 
-{ #category : #registration }
-PreDebugDoesNotUnderstandAction class >> actionType [
-	<preDebuggingAction>
-]
-
 { #category : #private }
 PreDebugDoesNotUnderstandAction >> closeWindow [
 	"Safely close the pre-debugger window without destroying the debugger context and stack"
