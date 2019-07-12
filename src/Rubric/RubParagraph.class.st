@@ -267,11 +267,11 @@ RubParagraph >> enableDrawing [
 
 { #category : #geometry }
 RubParagraph >> extent [
-	^ self actualWidth
-		ifNil: [ self minimumExtent ]
-		ifNotNil: [ 
-			(self actualWidth + self margins left + self margins right)
-				@ (self lines last bottom - self lines first top + self margins top + self margins bottom) ]
+	self actualWidth ifNil: [ ^ self minimumExtent ].
+	"lines empty check as workaround: lots of crashes on the CI, see github case 3879"
+	self lines ifEmpty: [ ^ self minimumExtent ].
+	^ (self actualWidth + self margins left + self margins right) @
+			(self lines last bottom - self lines first top + self margins top + self margins bottom)
 ]
 
 { #category : #'geometry updating' }
