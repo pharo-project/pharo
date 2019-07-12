@@ -30,6 +30,12 @@ WindowsStore class >> maxFileNameLength [
 ]
 
 { #category : #accessing }
+WindowsStore class >> readOnlyVariant [
+
+	^ ReadOnlyWindowsStore
+]
+
+{ #category : #accessing }
 WindowsStore class >> separator [ 
 	^ $\
 ]

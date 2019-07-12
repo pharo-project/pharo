@@ -218,6 +218,8 @@ OmSessionStore >> resetWithStoreNamed: newName [
 	fileReference exists ifTrue: [
 		FileExists signalWith: fileReference ].
 	
+	self directory fileSystem isWritable ifFalse: [ ^ self ].
+	
 	"Then, we can proceed."
 	currentSession := Smalltalk session.
 	currentImagePathString := self imagePathString.
