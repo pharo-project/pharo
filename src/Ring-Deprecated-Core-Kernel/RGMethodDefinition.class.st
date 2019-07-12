@@ -522,6 +522,12 @@ RGMethodDefinition >> package: aRGPackage [
 	package:= aRGPackage
 ]
 
+{ #category : #printing }
+RGMethodDefinition >> printOn: aStream [ 
+
+	aStream print: self methodClass; nextPutAll: '>>'; print: self selector.
+]
+
 { #category : #accessing }
 RGMethodDefinition >> protocol [
 
