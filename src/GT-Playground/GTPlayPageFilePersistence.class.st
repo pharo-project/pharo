@@ -6,7 +6,12 @@ Class {
 
 { #category : #private }
 GTPlayPageFilePersistence >> deleteFromFileSystem [
-	self fileReference ensureDelete
+
+	| aFileReference |
+	
+	aFileReference := self fileReference.
+	(aFileReference notNil and: [ aFileReference fileSystem isWritable ]) ifTrue: [ 
+		aFileReference ensureDelete ]
 ]
 
 { #category : #accessing }
@@ -21,6 +26,21 @@ GTPlayPageFilePersistence >> fileName [
 
 { #category : #'accessing-dynamic' }
 GTPlayPageFilePersistence >> fileReference [
+
+	self fileDirectory ifNil: [ 
+		"the directory was not created (read-only filesystem etc.)"
+		^ nil ].
+	
+	^ self fileDirectory / self fileName
+]
+
+{ #category : #'accessing-dynamic' }
+GTPlayPageFilePersistence >> fileReferenceOrNil [
+
+	self fileDirectory ifNil: [ 
+		"the directory was not created (read-only filesystem etc.)"
+		^ nil ].
+	
 	^ self fileDirectory / self fileName
 ]
 
@@ -33,8 +53,13 @@ GTPlayPageFilePersistence >> save [
 
 { #category : #private }
 GTPlayPageFilePersistence >> writeToFileSystem [
-	self fileReference writeStreamDo: [ :stream | 
-		stream 
-			truncate; 
-			nextPutAll: self page contentString ]
+
+	| aFileReference |
+	
+	aFileReference := self fileReferenceOrNil.
+	(aFileReference notNil and: [ aFileReference fileSystem isWritable ]) ifTrue: [
+		aFileReference writeStreamDo: [ :stream | 
+			stream 
+				truncate; 
+				nextPutAll: self page contentString ]]
 ]

@@ -69,6 +69,10 @@ PharoFilesOpener >> changesFileOrNilReadOnly: readOnly silent: silent [
 
 	silent
 		ifTrue: [ ^ changesFile ].
+		
+	changesFile isOpen ifFalse: [ 
+		changesFile := nil.
+		^ nil ].
 
 	(changesFile isReadOnly and: [ self shouldInformAboutReadOnlyChanges ])
 		ifTrue: [ self informProblemInChanges: self cannotWriteMsg ].
