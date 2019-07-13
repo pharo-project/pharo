@@ -51,7 +51,9 @@ LanguageEnvironment class >> currentPlatform [
 
 	| localeClass |
 	"A minimal (headless) image has LanguageEnvironment but not Locale!"
-	localeClass := self environment at: #Locale ifAbsent: [^self].
+	localeClass := self environment 
+		at: #Locale 
+		ifAbsent: [self error: 'Locale is missing from the environment!'].
 	^ localeClass currentPlatform languageEnvironment.
 
 ]
