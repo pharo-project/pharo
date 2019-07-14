@@ -135,7 +135,7 @@ Class {
 	#category : #'Athens-Cairo-Pools'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> init_cairo_subpixel_order_t [
 
 "typedef enum {"
@@ -148,7 +148,7 @@ AthensCairoDefinitions class >> init_cairo_subpixel_order_t [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 AthensCairoDefinitions class >> initialize [
 
 	"
@@ -175,7 +175,7 @@ AthensCairoDefinitions class >> initialize [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_antialias_t [
 
 "typedef enum {"
@@ -194,7 +194,7 @@ AthensCairoDefinitions class >> initialize_cairo_antialias_t [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_extend_t [
 "typedef enum {"
     CAIRO_EXTEND_NONE := 0 .
@@ -205,7 +205,7 @@ AthensCairoDefinitions class >> initialize_cairo_extend_t [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_fill_rule_t [
 "	typedef enum _cairo_status {"
    CAIRO_FILL_RULE_WINDING := 0.
@@ -215,7 +215,7 @@ AthensCairoDefinitions class >> initialize_cairo_fill_rule_t [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_font_slant_t [
 
 	"typedef enum _cairo_font_slant {"
@@ -226,7 +226,7 @@ AthensCairoDefinitions class >> initialize_cairo_font_slant_t [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_font_type_t [ 
 	"typedef enum _cairo_font_type {"
     CAIRO_FONT_TYPE_TOY := 0.
@@ -237,7 +237,7 @@ AthensCairoDefinitions class >> initialize_cairo_font_type_t [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_font_weight_t [
 
 	"typedef enum _cairo_font_weight {"
@@ -246,7 +246,7 @@ AthensCairoDefinitions class >> initialize_cairo_font_weight_t [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_format_t [
 
 	"enum cairo_format_t"
@@ -258,7 +258,7 @@ AthensCairoDefinitions class >> initialize_cairo_format_t [
 	CAIRO_FORMAT_RGB16_565 := 4
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_hint_metrics_t [
 "typedef enum {"
     CAIRO_HINT_METRICS_DEFAULT := 0.
@@ -267,7 +267,7 @@ AthensCairoDefinitions class >> initialize_cairo_hint_metrics_t [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_hint_style_t [
 
 "typedef enum { "
@@ -281,7 +281,7 @@ AthensCairoDefinitions class >> initialize_cairo_hint_style_t [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_line_cap_t [ 
 	"typedef enum _cairo_line_cap { "
     CAIRO_LINE_CAP_BUTT := 0.
@@ -290,7 +290,7 @@ AthensCairoDefinitions class >> initialize_cairo_line_cap_t [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_line_join_t [
 "	typedef enum _cairo_line_join {"
     CAIRO_LINE_JOIN_MITER := 0.
@@ -300,7 +300,7 @@ AthensCairoDefinitions class >> initialize_cairo_line_join_t [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_operator_t [ 
 "	typedef enum _cairo_operator {"
     CAIRO_OPERATOR_CLEAR := 0.
@@ -339,7 +339,7 @@ AthensCairoDefinitions class >> initialize_cairo_operator_t [
 "} cairo_operator_t;"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_status_t [
 "	typedef enum _cairo_status {"
     CAIRO_STATUS_SUCCESS := 0.
@@ -384,7 +384,7 @@ AthensCairoDefinitions class >> initialize_cairo_status_t [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensCairoDefinitions class >> initialize_types [
 	
 	cairo_status_t := cairo_font_type_t :=  cairo_line_join_t  := cairo_line_cap_t := cairo_status_t := cairo_font_slant_t := cairo_font_weight_t := cairo_operator_t  := cairo_fill_rule_t := #int.

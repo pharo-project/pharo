@@ -11,17 +11,17 @@ Class {
 	#category : #'Athens-Text'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 AthensTextComposer class >> scan: aText for: scanner [
 	^ self new scan: aText for: scanner
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextComposer >> lines [
 	^ lines
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 AthensTextComposer >> renderOn: aCanvas [
 
 	| renderer |
@@ -31,11 +31,11 @@ AthensTextComposer >> renderOn: aCanvas [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - scanning' }
 AthensTextComposer >> scan: aText for: scanner [
 	" scan text from starting index,
 	answer the index of first character for potential next line"
-	| index top |	
+	| top |	
 
 	text := aText.
 	scanner text: text.
@@ -44,7 +44,6 @@ AthensTextComposer >> scan: aText for: scanner [
 	text isEmpty ifTrue: [ ^ scanner ].
 	
 	scanner newLine: 1.
-	index := 1.
 
 	text runs withStartStopAndValueDo: [:start :stop :values |
 		

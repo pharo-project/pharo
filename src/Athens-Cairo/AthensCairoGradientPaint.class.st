@@ -10,7 +10,7 @@ Class {
 	#category : #'Athens-Cairo-Paints'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #paints }
 AthensCairoGradientPaint class >> createLinearGradient: aColorRamp start: aStartPoint stop: aStopPoint [
 	| paint |
 	paint := self
@@ -47,7 +47,7 @@ AthensCairoGradientPaint class >> primCreateRadialXo: xo yo: yo radiuso: radiuso
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 AthensCairoGradientPaint class >> radialBetween: origin
 	extending: innerRadius
 	and: outerOrigin

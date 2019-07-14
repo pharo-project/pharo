@@ -7,7 +7,7 @@ Class {
 	#category : #'Athens-Morphic'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 AthensPluggableTextMorph >> textMorphClass [
 	^ AthensTextMorph
 ]

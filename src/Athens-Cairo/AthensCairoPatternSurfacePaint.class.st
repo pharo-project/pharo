@@ -15,7 +15,7 @@ Class {
 	#category : #'Athens-Cairo-Paints'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 AthensCairoPatternSurfacePaint class >> createForSurface: anAthensCairoSurface [
 	|pat|
 	pat := self primCreateForSurface: anAthensCairoSurface .
@@ -23,7 +23,7 @@ AthensCairoPatternSurfacePaint class >> createForSurface: anAthensCairoSurface [
 	^ pat
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #primitives }
 AthensCairoPatternSurfacePaint class >> primCreateForSurface: anAthensCairoSurface [
 	
 "	pattern = cairo_pattern_create_for_surface (image);"

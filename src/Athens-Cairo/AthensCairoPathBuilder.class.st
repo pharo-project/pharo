@@ -15,7 +15,7 @@ Class {
 	#category : #'Athens-Cairo-Paths'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 AthensCairoPathBuilder class >> buildPathFrom:  aPathCreatingBlock [ 
 
 	
