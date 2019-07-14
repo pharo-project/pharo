@@ -90,7 +90,7 @@ WorldMorph >> installForUIProcessReinstall [
 	worldState handsDo: [ :h | h releaseCachedState ].
 	Sensor startUp.
 	self class startUp.
-	self displayWorldSafely.
+	self displayWorldSafely
 ]
 
 { #category : #'*Morphic-Base' }
