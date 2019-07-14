@@ -114,7 +114,7 @@ LiteralVariable >> isReadIn: aCompiledCode [
 
 { #category : #testing }
 LiteralVariable >> isReferenced [
-	^self usingMethods isNotEmpty
+	^false
 ]
 
 { #category : #testing }
