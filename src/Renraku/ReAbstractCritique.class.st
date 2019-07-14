@@ -86,8 +86,7 @@ ReAbstractCritique >> actions [
 
 { #category : #actions }
 ReAbstractCritique >> ban [
-	
-	sourceAnchor sourceEntity ban: self  
+	self entity ban: self
 ]
 
 { #category : #accessing }
@@ -133,7 +132,7 @@ ReAbstractCritique >> gtInspectorSourceCodeIn: composite [
 { #category : #actions }
 ReAbstractCritique >> guidedBan [
 
-	ReCriticEngine guidedBy: sourceAnchor entity ban: self
+	ReCriticEngine guidedBy: self entity  ban: self
 ]
 
 { #category : #accessing }

@@ -18,7 +18,7 @@ Class {
 	#category : #'Athens-Balloon-Surface'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 AthensBalloonSurface class >> extent: aPoint [
 	"Create a new surface with given extent."
 	

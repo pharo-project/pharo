@@ -1,14 +1,17 @@
 "
-I am an abstract class for pre debug windows.
+I am a pre debugger showing to the user textual informations about some error.
 
-Depending on the error raised I'll open one of my subclass to display the pre informations to the user.
+I'll typically display warning messages. I'll also propose to the user to open a full debugger. 
+
+I'll be open by a debugger if it is needed.
 	
 Internal Representation and Key Implementation Points.
 --------------------
 
     Instance Variables
-	actions:		<aGTSpecPreDebugActionPresenter> 	A presenter holding the actions to execute in the pre debugger.
-	debugger:		<aDebugger> 								The debuggeur opening me.
+	actions:				<aGTSpecPreDebugActionPresenter> 	A presenter holding the actions to execute in the pre debugger.
+	debugger:				<aDebugger> 								The debuggeur opening me.
+	textPresenter:		<aTextPresenter>						A presenter to display the notification.
 
 "
 Class {
@@ -16,14 +19,18 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'debugger',
-		'actions'
+		'actions',
+		'textPresenter'
 	],
 	#category : #'GT-Debugger-UI'
 }
 
-{ #category : #testing }
-GTSpecPreDebugPresenter class >> isAbstract [
-	^ self = GTSpecPreDebugPresenter
+{ #category : #specs }
+GTSpecPreDebugPresenter class >> defaultSpec [
+	^ SpBoxLayout newVertical
+		add: #actions withConstraints: [ :constraints | constraints height: self toolbarHeight ];
+		add: #textPresenter;
+		yourself
 ]
 
 { #category : #actions }
@@ -39,8 +46,13 @@ GTSpecPreDebugPresenter >> debugger [
 { #category : #initialization }
 GTSpecPreDebugPresenter >> initializeWidgets [
 	actions := self instantiate: GTSpecPreDebugActionsPresenter.
+	textPresenter := self newText.
 
-	self focusOrder add: actions
+	textPresenter disable.
+
+	self focusOrder
+		add: actions;
+		add: textPresenter
 ]
 
 { #category : #initialization }
@@ -48,6 +60,11 @@ GTSpecPreDebugPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		whenClosedDo: [ debugger ifNotNil: #windowIsClosing ];
 		initialExtent: 700 @ 180
+]
+
+{ #category : #accessing }
+GTSpecPreDebugPresenter >> message: aString [
+	textPresenter text: aString
 ]
 
 { #category : #actions }

@@ -47,3 +47,11 @@ ClassVariable >> isReferenced [
 	^self definingClass withAllSubclasses
 		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self . behavior class hasSelectorReferringTo: self ]
 ]
+
+{ #category : #queries }
+ClassVariable >> usingMethods [
+	self definingClass isPool ifTrue: [ ^ super usingMethods ].
+	"if we are a class variable, we only need to search the sublasses and metaclasses"
+	^ self definingClass withAllSubclasses flatCollect: [ :class | 
+			(class thoroughWhichMethodsReferTo: self), (class class thoroughWhichMethodsReferTo: self) ]
+]

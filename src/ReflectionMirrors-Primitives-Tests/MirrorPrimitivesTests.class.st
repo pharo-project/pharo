@@ -71,7 +71,7 @@ MirrorPrimitivesTests >> testChangingFixedFieldOfWeakMessageSend [
 
 { #category : #'tests-fields accessing' }
 MirrorPrimitivesTests >> testChangingGeneralFieldOfArray [
-	<compilerOptions: #(#- #optionReadOnlyLiterals)>
+	<compilerOptions: #(- #optionReadOnlyLiterals)>
 	| object |
 	object := #(10 20).
 	
@@ -122,7 +122,7 @@ MirrorPrimitivesTests >> testChangingGeneralFieldOfWeakMessageSend [
 
 { #category : #'tests-fields accessing' }
 MirrorPrimitivesTests >> testChangingIndexableFieldOfArray [
-	<compilerOptions: #(#- #optionReadOnlyLiterals)>
+	<compilerOptions: #(- #optionReadOnlyLiterals)>
 	| object |
 	object := #(10 20).
 	

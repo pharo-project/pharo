@@ -1155,6 +1155,11 @@ Behavior >> isPointers [
 ]
 
 { #category : #testing }
+Behavior >> isPool [
+	^false
+]
+
+{ #category : #testing }
 Behavior >> isReferenced [
 	"returns true if the class is referenced from a method"
 	"this method should just forward to the binding, this can be done when we do not use

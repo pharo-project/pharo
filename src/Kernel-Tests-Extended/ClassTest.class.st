@@ -127,7 +127,7 @@ ClassTest >> testAllSharedPools [
 	self assertEmpty: SubclassPoolUser sharedPools
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ClassTest >> testChangingShapeDoesNotPutNilInMethodsLastLiteralKey [
 	"Test that when the shape of a class changes, the key of the last literal of the methods is not nil"
 	| tutu |
@@ -145,7 +145,7 @@ ClassTest >> testClassSide [
 	self assert: Point class classSide equals: Point class. 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ClassTest >> testCompileAll [
 	ClassTest compileAll
 ]
@@ -278,7 +278,7 @@ ClassTest >> testOrdersMetaClassAfterItsClassInstance [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - pools' }
 ClassTest >> testPoolVariableAccessibleInClassUser [
 	"This test shows that a Pool Variable is accessible from the class that declare the Pool usage: here the superclass"
  
@@ -289,7 +289,7 @@ ClassTest >> testPoolVariableAccessibleInClassUser [
 	self assert: RootClassPoolUser author = 'Ducasse'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - pools' }
 ClassTest >> testPoolVariableAccessibleInSubclassOfClassUser [
 	"This test shows that a Pool Variable is not accessible from a subclass that declare the Pool usage: here SubFlop subclass of Flop and this is a bug. "
  

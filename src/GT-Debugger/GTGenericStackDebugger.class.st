@@ -9,7 +9,6 @@ Class {
 		'cache'
 	],
 	#classVars : [
-		'AlwaysOpenFullDebugger',
 		'ErrorRecursion',
 		'FilterCommonMessageSends',
 		'LogDebuggerStackToFile',
@@ -18,22 +17,12 @@ Class {
 	#category : #'GT-Debugger-UI'
 }
 
-{ #category : #'settings api' }
-GTGenericStackDebugger class >> alwaysOpenFullDebugger [
-	^ AlwaysOpenFullDebugger ifNil: [AlwaysOpenFullDebugger := false]
-]
-
-{ #category : #'settings api' }
-GTGenericStackDebugger class >> alwaysOpenFullDebugger: aBoolean [
-	AlwaysOpenFullDebugger := aBoolean.
-]
-
 { #category : #'utilities api' }
 GTGenericStackDebugger class >> closeAllDebuggers [
 	"GTGenericStackDebugger closeAllDebuggers"
 
 	(SystemWindow allSubInstances select: [ :w | w model isKindOf: GTGenericStackDebugger ]) do: [ :w | w delete ].
-	GTSpecPreDebugPresenter allSubInstances do: #close
+	GTSpecPreDebugPresenter allInstances do: #close
 ]
 
 { #category : #'settings api' }
@@ -368,11 +357,8 @@ GTGenericStackDebugger >> openWithNotification: notificationString [
 	run the windows, and thus this notifier, but the previous active porcess
 	has not been suspended. The sender will do this."
 
-	(notificationString
-		ifNil: [ GTSpecPreDebugStackPresenter on: self ]
-		ifNotNil: [ (GTSpecPreDebugNotificationPresenter on: self)
+	(GTSpecPreDebugPresenter on: self)
 		message: notificationString;
-		yourself ])
 		openWithSpec;
 		setTitle: self title
 ]

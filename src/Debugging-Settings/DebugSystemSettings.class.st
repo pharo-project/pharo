@@ -85,13 +85,7 @@ DebugSystemSettings class >> debugSettingsOn: aBuilder [
 			"(aBuilder setting: #restartAlsoProceeds)
 				label: 'Restart also proceeds' ;
 				target: Debugger;
-				description: 'If this preference is set, the debugger''s restart button and menu item will also proceed. If the preference is not set, the selected context will just be reset to its initial condition, so you may step through it again.' ."
-				
-			(aBuilder setting: #alwaysOpenFullDebugger)
-				label: 'Directly open the full Debugger';
-				target: Smalltalk tools debugger;
-				description: 'When true, always directly open the full Debugger view when debugging instead of showing only a small popup' .
-		
+				description: 'If this preference is set, the debugger''s restart button and menu item will also proceed. If the preference is not set, the selected context will just be reset to its initial condition, so you may step through it again.' ."		
 				
 			(aBuilder setting: #logFileName)
 				label: 'Log file name' ;

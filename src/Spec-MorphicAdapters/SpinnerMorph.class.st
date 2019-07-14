@@ -1,3 +1,6 @@
+"
+A spinning wait morph similar to what is often used on webpages
+"
 Class {
 	#name : #SpinnerMorph,
 	#superclass : #Morph,
@@ -16,7 +19,7 @@ SpinnerMorph class >> example [
 	self new openInWindow 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SpinnerMorph class >> spinnerForm [
 
 	SpinnerForm ifNotNil: [ ^ SpinnerForm ].
