@@ -13,7 +13,7 @@ Class {
 	#category : #'Debugger-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 DebuggerTests >> inspectCurrentNode: aDebugSession [
 	context := aDebugSession interruptedContext.
 	(context method sourceNodeForPC: context pc) inspect.
@@ -32,7 +32,7 @@ DebuggerTests >> setUp [
 	session := nil.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 DebuggerTests >> settingUpSessionAndProcessAndContextForBlock: aBlock [
 	context := aBlock asContext.
 	process := Process 
