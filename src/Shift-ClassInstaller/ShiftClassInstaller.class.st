@@ -76,7 +76,7 @@ ShiftClassInstaller >> copyClassSlotsFromExistingClass [
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
 	| newObject hiddenSlots |
 	
-	newObject := newClass isVariable
+	(newObject := (newClass isVariable) and: [oldClass isVariable])
 		ifTrue: [ newClass basicNew: oldObject size ]
 		ifFalse: [ newClass basicNew ].
 
