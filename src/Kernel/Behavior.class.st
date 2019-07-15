@@ -1162,6 +1162,8 @@ Behavior >> isPool [
 { #category : #testing }
 Behavior >> isReferenced [
 	"returns true if the class is referenced from a method"
+	"this method should just forward to the binding, this can be done when we do not use
+ 	Association for the binding on the class side"
 
 	^ self environment allBehaviors
 		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self binding ]

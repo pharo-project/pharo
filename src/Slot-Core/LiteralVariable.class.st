@@ -114,7 +114,8 @@ LiteralVariable >> isReadIn: aCompiledCode [
 
 { #category : #testing }
 LiteralVariable >> isReferenced [
-	^self usingMethods isNotEmpty
+	"my subclasses override this if they can be referenced in code"
+	^false
 ]
 
 { #category : #testing }

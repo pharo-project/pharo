@@ -40,6 +40,14 @@ ClassVariable >> isClassVariable [
 	^true
 ]
 
+{ #category : #testing }
+ClassVariable >> isReferenced [
+ 	"A class variable can only be access in the defintionClass and it's subclasses 
+ 	(both class and instance side)"
+ 	^self definingClass withAllSubclasses
+ 		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self . behavior class hasSelectorReferringTo: self ]
+]
+
 { #category : #queries }
 ClassVariable >> usingMethods [
 	self definingClass isPool ifTrue: [ ^ super usingMethods ].
