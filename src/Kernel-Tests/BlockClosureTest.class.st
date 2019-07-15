@@ -150,11 +150,15 @@ BlockClosureTest >> testNew [
 
 { #category : #tests }
 BlockClosureTest >> testNoArguments [
+	| block1 block2 |
+	"avoid compile error in GemStone"
+	block1 := [:arg | 1 + 2].
+	block2 := [:arg1 :arg2 | 1 + 2].
 	[10
-		timesRepeat: [:arg | 1 + 2]]
+		timesRepeat: block1]
 		ifError: [:err | self deny: err = 'This block requires 1 arguments.'].
 	[10
-		timesRepeat: [:arg1 :arg2 | 1 + 2]]
+		timesRepeat: block2]
 		ifError: [:err  | self deny: err = 'This block requires 2 arguments.'] 
 ]
 
