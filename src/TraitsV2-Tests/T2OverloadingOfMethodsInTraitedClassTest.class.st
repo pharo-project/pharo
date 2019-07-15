@@ -34,7 +34,7 @@ T2OverloadingOfMethodsInTraitedClassTest >> createT2 [
 	^ self newTrait: #T2 with: '' asSlotCollection
 ]
 
-{ #category : #tests }
+{ #category : #running }
 T2OverloadingOfMethodsInTraitedClassTest >> tearDown [
 	TraitedClass
 		removeSelector: #isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest.
