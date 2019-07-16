@@ -1228,9 +1228,10 @@ Object >> isInterval [
 
 { #category : #'class membership' }
 Object >> isKindOf: aClass [
-	"Answer whether the class, aClass, is a superclass or class of the receiver."
+	"Answer whether the class, aClass, is a superclass or class of the receiver.
+	The current implemementation allows for a Trait to be used as argument"
 
-	^ self class includesBehavior: aClass
+	^ self class == aClass or: [ self class inheritsFrom: aClass ]
 ]
 
 { #category : #testing }
