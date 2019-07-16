@@ -310,19 +310,19 @@ RBAbstractClass >> hash [
 ]
 
 { #category : #testing }
-RBAbstractClass >> hierarchyDefinesClassVariable: aString [ 
-	(self definesClassVariable: aString) ifTrue: [^true].
-	^(self allSubclasses 
-		detect: [:each | each directlyDefinesClassVariable: aString]
-		ifNone: [nil]) notNil
+RBAbstractClass >> hierarchyDefinesClassVariable: aString [
+	(self definesClassVariable: aString)
+		ifTrue: [ ^ true ].
+	^ self allSubclasses
+		anySatisfy: [ :each | each directlyDefinesClassVariable: aString ]
 ]
 
 { #category : #testing }
-RBAbstractClass >> hierarchyDefinesInstanceVariable: aString [ 
-	(self definesInstanceVariable: aString) ifTrue: [^true].
-	^(self allSubclasses 
-		detect: [:each | each directlyDefinesInstanceVariable: aString]
-		ifNone: [nil]) notNil
+RBAbstractClass >> hierarchyDefinesInstanceVariable: aString [
+	(self definesInstanceVariable: aString)
+		ifTrue: [ ^ true ].
+	^ self allSubclasses
+		anySatisfy: [ :each | each directlyDefinesInstanceVariable: aString ]
 ]
 
 { #category : #testing }
@@ -332,19 +332,19 @@ RBAbstractClass >> hierarchyDefinesMethod: aSelector [
 ]
 
 { #category : #testing }
-RBAbstractClass >> hierarchyDefinesPoolDictionary: aString [ 
-	(self definesPoolDictionary: aString) ifTrue: [^true].
-	^(self allSubclasses 
-		detect: [:each | each directlyDefinesPoolDictionary: aString]
-		ifNone: [nil]) notNil
+RBAbstractClass >> hierarchyDefinesPoolDictionary: aString [
+	(self definesPoolDictionary: aString)
+		ifTrue: [ ^ true ].
+	^ self allSubclasses
+		anySatisfy: [ :each | each directlyDefinesPoolDictionary: aString ]
 ]
 
 { #category : #testing }
-RBAbstractClass >> hierarchyDefinesVariable: aString [ 
-	(self definesVariable: aString) ifTrue: [^true].
-	^(self allSubclasses 
-		detect: [:each | each directlyDefinesVariable: aString]
-		ifNone: [nil]) notNil
+RBAbstractClass >> hierarchyDefinesVariable: aString [
+	(self definesVariable: aString)
+		ifTrue: [ ^ true ].
+	^ self allSubclasses
+		anySatisfy: [ :each | each directlyDefinesVariable: aString ]
 ]
 
 { #category : #testing }

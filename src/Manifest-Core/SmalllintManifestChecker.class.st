@@ -34,11 +34,10 @@ SmalllintManifestChecker >> cleanAllManifest [
 { #category : #accessing }
 SmalllintManifestChecker >> criticsOf: aRule [
 
-	| rules |	
-	rules := rule leaves 
-		detect: [:r | r class = aRule class]
-		ifNone: [ ^ #() ].
-	^ rules critics
+	^ rule leaves
+		detect: [ :r | r class = aRule class ]
+		ifFound: [ :rules | rules critics ]
+		ifNone: [ #() ]
 ]
 
 { #category : #manifest }
