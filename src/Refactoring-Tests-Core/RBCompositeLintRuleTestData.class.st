@@ -85,7 +85,8 @@ RBCompositeLintRuleTestData >> isComposite [
 
 { #category : #testing }
 RBCompositeLintRuleTestData >> isEmpty [
-	^ (rules detect: [ :each | each isNotEmpty ] ifNone: [ nil ]) isNil
+
+	^ rules anySatisfy: [ :each | each isEmpty not ]
 ]
 
 { #category : #accessing }
