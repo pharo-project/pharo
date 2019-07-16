@@ -6,7 +6,7 @@ SharedPool class >> gtInspectorAllSharedPoolsIn: composite [
 	<gtInspectorPresentationOrder: 20>
 	composite list 
 		title: 'Shared Pools';
-		display: [ self subclasses ];
+		display: [ self subclasses sorted: #name ascending ];
 		tags: [ :each | { each package name } ];
 		when: [self == SharedPool  ].
 ]
