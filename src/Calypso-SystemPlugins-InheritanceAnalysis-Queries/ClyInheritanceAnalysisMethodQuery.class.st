@@ -11,14 +11,11 @@ Class {
 
 { #category : #testing }
 ClyInheritanceAnalysisMethodQuery >> isFromScopeWithClassKindOf: aClass [
-
-	scope classesDo: [ :each | 
-		(each == aClass or: [each inheritsFrom: aClass])
-			ifTrue: [^true]].
-	
-	^false
-
-
+	scope
+		classesDo: [ :each | 
+			(each includesBehavior: aClass)
+				ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #testing }

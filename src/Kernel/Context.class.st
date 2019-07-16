@@ -1187,15 +1187,14 @@ Context >> object: anObject perform: selector withArguments: argArray inClass: l
 	 Primitive. Essential for the debugger."
 
 	<primitive: 100 error: error>
-	(selector isSymbol) ifFalse:
-		[^self error: 'selector argument must be a Symbol'].
-	(argArray isMemberOf: Array) ifFalse:
-		[^self error: 'argArray must be an Array'].
-	(selector numArgs = argArray size)
-		ifFalse: [^self error: 'incorrect number of arguments'].
-	((self objectClass: anObject) == lookupClass
-	 or: [(self objectClass: anObject) inheritsFrom: lookupClass]) ifFalse:
-		[^self error: 'lookupClass is not in anObject''s inheritance chain'].
+	selector isSymbol
+		ifFalse: [ ^ self error: 'selector argument must be a Symbol' ].
+	(argArray isMemberOf: Array)
+		ifFalse: [ ^ self error: 'argArray must be an Array' ].
+	selector numArgs = argArray size
+		ifFalse: [ ^ self error: 'incorrect number of arguments' ].
+	((self objectClass: anObject) includesBehavior: lookupClass)
+		ifFalse: [ ^ self error: 'lookupClass is not in anObject''s inheritance chain' ].
 	self primitiveFailed
 ]
 
