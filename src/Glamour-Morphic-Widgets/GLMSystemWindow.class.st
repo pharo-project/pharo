@@ -40,11 +40,11 @@ GLMSystemWindow >> extent: aPoint [
 
 { #category : #'as yet unclassified' }
 GLMSystemWindow >> handleKeyStroke: anEvent [
-	| action |
-	action := self allKeystrokeActions detect: [:a | 
-		anEvent commandKeyPressed and: [ 
-			a shortcut = anEvent keyCharacter ]] ifNone: [nil].
-	action ifNotNil: [ self announcer announce: (GLMKeyStroke action: action) ]
+
+	self allKeystrokeActions
+		detect:
+			[ :a | anEvent commandKeyPressed and: [ a shortcut = anEvent keyCharacter ] ]
+		ifFound: [ :action | self announcer announce: (GLMKeyStroke action: action) ]
 ]
 
 { #category : #initialization }

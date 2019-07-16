@@ -2056,11 +2056,10 @@ TextEditor >> sameColumn: start newLine: lineBlock forward: isForward [
 TextEditor >> saveContentsInFile [
 	"Save the receiver's contents string to a file, prompting the user for a file-name. Suggest a reasonable file-name."
 
-	| fileName stringToSave parentWindow labelToUse suggestedName lastIndex |
+	| fileName stringToSave labelToUse suggestedName lastIndex |
 	stringToSave := self string.
 	stringToSave ifEmpty: [ ^ self inform: 'nothing to save.' ].
-	parentWindow := model dependents detect: [ :dep | dep isKindOf: SystemWindow ] ifNone: [ nil ].
-	labelToUse := parentWindow ifNil: [ 'Untitled' ] ifNotNil: [ parentWindow label ].
+	labelToUse :=  model dependents detect: [ :dep | dep isKindOf: SystemWindow ] ifFound: [:parentWindow | parentWindow label] ifNone: [ 'Untitled' ].
 	suggestedName := nil.
 	#(#('Decompressed contents of: ' '.gz'))
 		do: [ :leaderTrailer | 

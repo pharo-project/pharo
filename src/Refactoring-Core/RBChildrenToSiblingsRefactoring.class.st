@@ -214,12 +214,11 @@ RBChildrenToSiblingsRefactoring >> selectorsToPushUpFrom: aClass [
 ]
 
 { #category : #'private-methods' }
-RBChildrenToSiblingsRefactoring >> shouldPushUp: aSelector from: aClass [ 
-	^ ((aClass isMeta 
+RBChildrenToSiblingsRefactoring >> shouldPushUp: aSelector from: aClass [
+	^ (aClass isMeta
 		ifTrue: [ subclasses collect: [ :each | each classSide ] ]
-		ifFalse: [ subclasses ]) 
-		detect: [ :each | (each directlyDefinesMethod: aSelector) not ]
-		ifNone: [ nil ]) notNil
+		ifFalse: [ subclasses ])
+		anySatisfy: [ :each | (each directlyDefinesMethod: aSelector) not ]
 ]
 
 { #category : #printing }
