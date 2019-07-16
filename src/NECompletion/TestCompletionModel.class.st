@@ -79,7 +79,7 @@ TestCompletionModel >> initEntries [
 	producer := TestMatchedNodeProducer new.
 	producer completionContext: clazz.
 	temp := (producer completionListForNode: node) asOrderedCollection. 
-	^ temp collect: [ :each | CompletionEntry contents: each ]
+	^ temp collect: [ :each | TestCompletionEntry contents: each ]
 ]
 
 { #category : #accessing }
