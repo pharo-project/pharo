@@ -142,8 +142,10 @@ NumberTest >> testRaisedToIntegerWithFloats [
 { #category : #tests }
 NumberTest >> testReadFrom [
 	
-	self assert: 1.0e-14	= (Number readFrom: '1.0e-14').
-	self assert: 2r1e26	= (Number readFrom: '2r1e26').
+	self assert: 1.0e-14    = (Number readFrom: '1.0e-14').
+	"Use a literal number format that compiles in GemStone.
+	 Note that the test still checks the same value."
+	self assert: 16r4000000 = (Number readFrom: '2r1e26').
 	self should: [Number readFrom: 'foo'] raise: Error
 ]
 
