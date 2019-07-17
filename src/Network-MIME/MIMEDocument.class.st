@@ -277,7 +277,8 @@ MIMEDocument >> parts [
 	[ parseStream atEnd ] whileFalse: 
 		[ messages add: msgStream upToEnd.
 		msgStream skipThisLine ].
-	^ messages collect: [ :e | MailMessage from: e ]
+	"MailMessage is not present in a minimal image"
+	^ messages collect: [ :e | (self environment at: #MailMessage) from: e ]
 ]
 
 { #category : #printing }

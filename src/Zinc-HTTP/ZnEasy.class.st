@@ -86,7 +86,8 @@ ZnEasy class >> getImageOfType: mimeType fromUrl: urlObject [
 		enforceAcceptContentType: true;
 		get.
 	"ImageReadWriter does automatic type detection"
-	^ ImageReadWriter formFromStream: client entity readStream
+	"ImageReadWriter is not in minimal image"
+	^ (self environment at: #ImageReadWriter) formFromStream: client entity readStream
 ]
 
 { #category : #operations }

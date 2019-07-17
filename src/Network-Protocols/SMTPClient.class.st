@@ -159,7 +159,8 @@ SMTPClient >> mailFrom: fromAddress [
 	" MAIL <SP> FROM:<reverse-path> <CRLF>"
 
 	| address |
-	address := (MailAddressParser addressesIn: fromAddress) first.
+	"MailAddressParser is not in the minimal image"
+	address := ((self environment at: #MailAddressParser) addressesIn: fromAddress) first.
 
 	self sendCommand: 'MAIL FROM: <', address, '>'.
 	self checkResponse.
