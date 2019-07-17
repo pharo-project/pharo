@@ -55,10 +55,12 @@ Class {
 
 { #category : #finalization }
 FT2Face class >> finalizeResourceData: handle [
-	handle isNil ifTrue: [ ^ self ].
-	handle isNull ifTrue: [ ^ self ].
 
-	FT2Library current ffiDoneFace: handle. 
+	handle ifNil: [ ^ self ].
+	handle isNull
+		ifTrue: [ ^ self ].
+
+	FT2Library current ffiDoneFace: handle.
 	handle beNull
 ]
 
