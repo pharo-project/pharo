@@ -123,29 +123,34 @@ RBRemoveMethodTransformation >> checkSuperMethods [
 ]
 
 { #category : #preconditions }
-RBRemoveMethodTransformation >> justSendsSuper: aSelector [ 
+RBRemoveMethodTransformation >> justSendsSuper: aSelector [
 
 	| matcher parseTree superclass |
+
 	matcher := RBParseTreeSearcher justSendsSuper.
 	parseTree := self definingClass parseTreeFor: aSelector.
-	(matcher executeTree: parseTree initialAnswer: false) ifFalse: [^false].
-	parseTree lastIsReturn ifTrue: [^true].
-	
-	"Since there isn't a superclass that implements the message, we can 
+	( matcher executeTree: parseTree initialAnswer: false )
+		ifFalse: [ ^ false ].
+	parseTree lastIsReturn
+		ifTrue: [ ^ true ].	"Since there isn't a superclass that implements the message, we can 
 	 delete it since it would be an error anyway."
 	superclass := self definingClass superclass whichClassIncludesSelector: aSelector.
-	superclass isNil ifTrue: [^true].	
-		
+	superclass ifNil: [ ^ true ].
+
 	parseTree := superclass parseTreeFor: aSelector.
 	matcher := RBParseTreeSearcher new.
-	matcher matches: '^``@object'
-			  do: [ :aNode :answer | answer add: aNode value; yourself].
+	matcher
+		matches: '^``@object'
+		do: [ :aNode :answer | 
+			answer
+				add: aNode value;
+				yourself
+			].
 	matcher executeTree: parseTree initialAnswer: Set new.
-	^ matcher answer allSatisfy: [ :each | each isVariable and: [each name = 'self'] ]
-	
-	"^ (matcher answer 
+	^ matcher answer
+		allSatisfy: [ :each | "^ (matcher answer 
 		detect: [:each | (each isVariable and: [each name = 'self']) not]
-		ifNone: [nil]) isNil"
+		ifNone: [nil]) isNil" each isVariable and: [ each name = 'self' ] ]
 ]
 
 { #category : #preconditions }
@@ -183,12 +188,14 @@ RBRemoveMethodTransformation >> storeOn: aStream [
 ]
 
 { #category : #preconditions }
-RBRemoveMethodTransformation >> superclassEquivalentlyDefines: aSelector [ 
+RBRemoveMethodTransformation >> superclassEquivalentlyDefines: aSelector [
 
 	| superTree myTree |
-	self definingClass superclass isNil ifTrue: [^false].
+
+	self definingClass superclass ifNil: [ ^ false ].
 	superTree := self definingClass superclass parseTreeFor: aSelector.
 	myTree := self definingClass parseTreeFor: aSelector.
-	(superTree isNil or: [myTree isNil]) ifTrue: [^false].
+	( superTree isNil or: [ myTree isNil ] )
+		ifTrue: [ ^ false ].
 	^ superTree equalTo: myTree exceptForVariables: #()
 ]

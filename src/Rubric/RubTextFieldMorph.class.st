@@ -106,17 +106,29 @@ RubTextFieldMorph >> entryCompletion [
 
 { #category : #accessing }
 RubTextFieldMorph >> entryCompletion: anEntryCompletion [
+
 	entryCompletion := anEntryCompletion.
 	entryCompletion
 		ifNil: [ self withoutDropListButton ]
-		ifNotNil: [ 
-			self withDropListButton.
-			entryCompletion chooseBlock isNil
-			ifTrue: [entryCompletion chooseBlock: [:v | self setText: v. self acceptTextInModel ]]
-			ifFalse: [ | blk | 
-				blk := entryCompletion chooseBlock.
-				entryCompletion chooseBlock: [:v | self setText: v. self acceptTextInModel. blk value: v]]].
+		ifNotNil: [ self withDropListButton.
+			entryCompletion chooseBlock
+				ifNil: [ entryCompletion
+						chooseBlock: [ :v | 
+							self setText: v.
+							self acceptTextInModel
+							]
+					]
+				ifNotNil: [ | blk |
 
+					blk := entryCompletion chooseBlock.
+					entryCompletion
+						chooseBlock: [ :v | 
+							self setText: v.
+							self acceptTextInModel.
+							blk value: v
+							]
+					]
+			]
 ]
 
 { #category : #geometry }

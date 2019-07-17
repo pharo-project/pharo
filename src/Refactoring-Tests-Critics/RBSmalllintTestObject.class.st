@@ -208,9 +208,11 @@ RBSmalllintTestObject >> ifTrueReturns [
 
 { #category : #methods }
 RBSmalllintTestObject >> inlineTemporary [
+
 	| temp |
-	self isNil ifTrue: [temp := 4].
-	^temp
+
+	self ifNil: [ temp := 4 ].
+	^ temp
 ]
 
 { #category : #methods }
@@ -375,7 +377,8 @@ RBSmalllintTestObject >> returnsBooleanAndOther [
 
 { #category : #methods }
 RBSmalllintTestObject >> returnsIfTrue [
-	^self isNil ifTrue: [4]
+
+	^ self ifNil: [ 4 ]
 ]
 
 { #category : #methods }

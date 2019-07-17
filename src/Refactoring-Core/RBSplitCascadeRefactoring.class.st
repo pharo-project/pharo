@@ -72,13 +72,14 @@ RBSplitCascadeRefactoring >> findAncestorNode [
 
 { #category : #preconditions }
 RBSplitCascadeRefactoring >> findCascadeNode [
+
 	"Find the cascade to be split."
 
 	cascadeNode := self parseTree bestNodeFor: selectedInterval.
 	[ cascadeNode isNil or: [ cascadeNode isCascade ] ]
 		whileFalse: [ cascadeNode := cascadeNode parent ].
-	cascadeNode isNil
-		ifTrue: [ self refactoringFailure: 'The selection doesn''t appear to be within a cascade' ]
+	cascadeNode
+		ifNil: [ self refactoringFailure: 'The selection doesn''t appear to be within a cascade' ]
 ]
 
 { #category : #preconditions }
@@ -97,10 +98,11 @@ RBSplitCascadeRefactoring >> findMessageNodes [
 
 { #category : #accessing }
 RBSplitCascadeRefactoring >> parseTree [
-	parseTree isNil ifTrue: [
-		parseTree := class parseTreeFor: selector.
-		parseTree isNil
-			ifTrue: [ self refactoringFailure: 'Could not parse sources' ] ].
+
+	parseTree
+		ifNil: [ parseTree := class parseTreeFor: selector.
+			parseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ]
+			].
 	^ parseTree
 ]
 
