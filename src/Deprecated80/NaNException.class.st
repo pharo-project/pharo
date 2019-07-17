@@ -4,5 +4,11 @@ I am NaNException, an ArithmeticException signaled when Float nan was encountere
 Class {
 	#name : #NaNException,
 	#superclass : #ArithmeticError,
-	#category : #'Kernel-Exceptions'
+	#category : #Deprecated80
 }
+
+{ #category : #deprecation }
+NaNException class >> isDeprecated [
+
+	^ true
+]
