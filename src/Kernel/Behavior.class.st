@@ -451,7 +451,7 @@ Behavior >> becomeUncompact [
 
 { #category : #accessing }
 Behavior >> binding [
-	^ ClassBinding key: nil value: self
+	^ LiteralVariable key: nil value: self
 ]
 
 { #category : #'accessing instances and variables' }

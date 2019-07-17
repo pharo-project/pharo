@@ -71,7 +71,7 @@ Metaclass >> binding [
 	"return an association that can be used as the binding
 	 To share it between methods, reuse an existing one if possible"
 	^self methodDict 
-		ifEmpty: [ClassBinding key: nil value: self]
+		ifEmpty: [LiteralVariable key: nil value: self]
 		ifNotEmpty: [:dict | dict anyOne classBinding]
 ]
 

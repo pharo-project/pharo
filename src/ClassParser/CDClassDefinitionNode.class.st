@@ -23,7 +23,7 @@ CDClassDefinitionNode class >> on: aRBMessageNode [
 { #category : #accessing }
 CDClassDefinitionNode >> binding [ 
 	Transcript show: '.'.
-	^ self class environment associationAt: self className ifAbsent: [ClassBinding key: nil value: self].
+	^ self class environment associationAt: self className ifAbsent: [LiteralVariable key: nil value: self].
 ]
 
 { #category : #testing }
