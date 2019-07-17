@@ -484,14 +484,16 @@ SystemWindow >> configureForEmbedding [
 
 { #category : #'*Polymorph-Widgets' }
 SystemWindow >> configureForUnembedding [
+
 	"Set up the window so it can be unembedded and placed in the world."
 
-	labelArea owner isNil ifTrue: [
-		self
-			makeBordered;
-			initializeLabelArea;
-			themeChanged;
-			addGrips]
+	labelArea owner
+		ifNil: [ self
+				makeBordered;
+				initializeLabelArea;
+				themeChanged;
+				addGrips
+			]
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -845,11 +847,10 @@ SystemWindow >> labelHeight [
 
 { #category : #'*Polymorph-Widgets' }
 SystemWindow >> labelString [
+
 	"Answer the actual label string."
 
-	^label isNil
-		ifTrue: [labelString]
-		ifFalse: [label contents asString]
+	^ label ifNil: [ labelString ] ifNotNil: [ label contents asString ]
 ]
 
 { #category : #'*Polymorph-Widgets' }

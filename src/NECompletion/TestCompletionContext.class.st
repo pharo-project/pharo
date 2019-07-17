@@ -18,7 +18,7 @@ Class {
 		'selectors',
 		'context'
 	],
-	#category : #'NECompletion-ExperimentalCompletion'
+	#category : #'NECompletion-New'
 }
 
 { #category : #'instance creation' }
@@ -54,30 +54,7 @@ TestCompletionContext >> context: aCompletionContext [
 { #category : #accessing }
 TestCompletionContext >> createModel [
 
-	node ifNil: [ ^ NECEmptyModel new ].
-	node isLiteralNode
-		ifTrue: [ ^ NECEmptyModel new ].
-	node isSequence
-		ifTrue: [ ^ NECEmptyModel new ].
-	node isMethod
-		ifTrue: [ ^ NECEmptyModel new ].
-	self receiverClass ifNotNil: [ ^ NECTypedModel class: receiverClass ].
-	variables := false.
-	selectors := true.
-	node isMessage
-		ifFalse: [ variables := true.
-			selectors := true
-			].
-
-	^ NECUntypedModel
-		class: theClass
-		temporaries:
-			( ast isMethod
-				ifTrue: [ ast temporaryNames collect: [ :each | NECLocalEntry contents: each ] ]
-				ifFalse: [ #() ] )
-		additionals: #()
-		variables: variables
-		selectors: selectors
+  ^ (TestCompletionModel new node: node) clazz: theClass
 ]
 
 { #category : #accessing }
