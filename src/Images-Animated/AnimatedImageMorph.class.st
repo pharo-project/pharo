@@ -162,19 +162,19 @@ AnimatedImageMorph >> stepTime [
 
 { #category : #drawing }
 AnimatedImageMorph >> updateActiveForm [
+
 	"Update the activeForm of the receiver based upon the
 	disposal rules of the current and previous frames."
-	| canvas |
-	prevFrame isNil ifTrue: [ 
-		canvas := FormCanvas extent: self bounds extent.
-		canvas
-			translucentImage: currentFrame form
-			at: currentFrame offset.
-		activeForm := canvas form.
-		^ self ].
-	prevFrame disposal = #leaveCurrent
-		ifTrue: [ ^ self leaveCurrent ].
-	"Otherwise we assume a restore background"
-	^ self restoreBackground
 
+	| canvas |
+
+	prevFrame
+		ifNil: [ canvas := FormCanvas extent: self bounds extent.
+			canvas translucentImage: currentFrame form at: currentFrame offset.
+			activeForm := canvas form.
+			^ self
+			].
+	prevFrame disposal = #leaveCurrent
+		ifTrue: [ ^ self leaveCurrent ].	"Otherwise we assume a restore background"
+	^ self restoreBackground
 ]
