@@ -229,12 +229,11 @@ Metaclass >> isUsed [
 
 { #category : #accessing }
 Metaclass >> name [
+
 	"Answer a String that is the name of the receiver, either 'Metaclass' or 
 	the name of the receiver's class followed by ' class'."
 
-	^ thisClass isNil
-		ifTrue: [ 'a Metaclass' ]
-		ifFalse: [ thisClass name asString, ' class' ]
+	^ thisClass ifNil: [ 'a Metaclass' ] ifNotNil: [ thisClass name asString , ' class' ]
 ]
 
 { #category : #'instance creation' }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'typeStack'
 	],
-	#category : #'NECompletion-ExperimentalCompletion'
+	#category : #'NECompletion-New'
 }
 
 { #category : #visiting }
@@ -15,6 +15,11 @@ TestTypingVisitor >> initialize [
 
 	typeStack := Stack new.
 	typeStack push: Dictionary new.
+]
+
+{ #category : #visiting }
+TestTypingVisitor >> visitArrayNode: aLiteralNode [
+	 aLiteralNode propertyAt: #type put: Array
 ]
 
 { #category : #visiting }
@@ -51,6 +56,11 @@ TestTypingVisitor >> visitBlockNode: aBlockNode [
 { #category : #visiting }
 TestTypingVisitor >> visitGlobalNode: aGlobalNode [
 	aGlobalNode propertyAt: #type put: (Smalltalk globals at: aGlobalNode name) class.
+]
+
+{ #category : #visiting }
+TestTypingVisitor >> visitLiteralArrayNode: aLiteralNode [
+	 aLiteralNode propertyAt: #type put: Array
 ]
 
 { #category : #visiting }

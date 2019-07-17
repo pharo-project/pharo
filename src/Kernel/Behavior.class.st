@@ -1733,18 +1733,25 @@ Behavior >> superclass [
 ]
 
 { #category : #'accessing class hierarchy' }
-Behavior >> superclass: aClass [ 
+Behavior >> superclass: aClass [
+
 	"Change the receiver's superclass to be aClass."
+
 	"Note: Do not use 'aClass isKindOf: Behavior' here
 		in case we recompile from Behavior itself."
-	aClass isNil
-		ifTrue: [self basicSuperclass: aClass. Object flushCache. ^ self].
 
-	"If the class is not nil it should update the class hierarchy correctly, using the classs builder"
-	^ self classInstaller update: self to: [ :builder |
-		builder
-			fillFor: self;
-			superclass: aClass].
+	aClass
+		ifNil: [ self basicSuperclass: aClass.
+			Object flushCache.
+			^ self
+			].	"If the class is not nil it should update the class hierarchy correctly, using the classs builder"
+	^ self classInstaller
+		update: self
+		to: [ :builder | 
+			builder
+				fillFor: self;
+				superclass: aClass
+			]
 ]
 
 { #category : #initialization }
