@@ -32,10 +32,11 @@ TestCompletionContext class >> controller: aNECController class: aClass source: 
 
 { #category : #accessing }
 TestCompletionContext >> completionToken [
+
 	"here we need to return the name of the var or selector"
-	node isNil ifTrue: [ ^ '' ].
-	^completionToken
-		ifNil: [ node completionToken ]
+
+	node ifNil: [ ^ '' ].
+	^ completionToken ifNil: [ node completionToken ]
 ]
 
 { #category : #action }
@@ -52,7 +53,8 @@ TestCompletionContext >> context: aCompletionContext [
 
 { #category : #accessing }
 TestCompletionContext >> createModel [
-	^ (TestCompletionModel new node: node) clazz: theClass
+
+  ^ (TestCompletionModel new node: node) clazz: theClass
 ]
 
 { #category : #accessing }
@@ -69,10 +71,11 @@ TestCompletionContext >> narrowWith: aString [
 
 { #category : #parsing }
 TestCompletionContext >> parseSource [
-	ast := (theClass isNil)
-        ifTrue: [ (RBParser parseFaultyExpression: source) doSemanticAnalysis]
-        ifFalse: [ (RBParser parseFaultyMethod: source) doSemanticAnalysisIn: theClass]. 
-    TestTypingVisitor new visitNode: ast.
+
+	ast := theClass
+		ifNil: [ ( RBParser parseFaultyExpression: source ) doSemanticAnalysis ]
+		ifNotNil: [ ( RBParser parseFaultyMethod: source ) doSemanticAnalysisIn: theClass ].
+	TestTypingVisitor new visitNode: ast
 ]
 
 { #category : #accessing }

@@ -124,7 +124,8 @@ NECController >> editor [
 
 { #category : #'type guessing' }
 NECController >> guessTypeFor: aString [
-	^ model isNil ifFalse: [ model guessTypeForName: aString ]
+
+	^ model ifNotNil: [ model guessTypeForName: aString ]
 ]
 
 { #category : #keyboard }
