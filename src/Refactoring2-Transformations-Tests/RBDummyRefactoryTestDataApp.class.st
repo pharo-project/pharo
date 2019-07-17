@@ -304,11 +304,9 @@ RBDummyRefactoryTestDataApp >> inlineParameterMethod: aSymbol [
 
 { #category : #inline }
 RBDummyRefactoryTestDataApp >> inlineTemporary [
-
 	| temp |
-
-	self ifNil: [ temp := 4 ].
-	^ temp
+	self isNil ifTrue: [temp := 4].
+	^temp
 ]
 
 { #category : #lint }
@@ -456,7 +454,7 @@ RBDummyRefactoryTestDataApp >> returnsBooleanAndOther [
 
 { #category : #lint }
 RBDummyRefactoryTestDataApp >> returnsIfTrue [
-	^self ifNil: [4]
+	^self isNil ifTrue: [4]
 ]
 
 { #category : #lint }
