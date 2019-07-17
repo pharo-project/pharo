@@ -2,7 +2,8 @@ Extension { #name : #OrderedDictionary }
 
 { #category : #'*GT-InspectorExtensions-Core' }
 OrderedDictionary >> gtInspectorItemsIn: composite [
-	^ (composite fastTable)
+
+	^ composite fastTable
 		title: 'Items';
 		display: [ self associations ];
 		"children: [ :each | 
@@ -11,25 +12,26 @@ OrderedDictionary >> gtInspectorItemsIn: composite [
 				ifFalse: [ (each value isArray and: [ each value allSatisfy: #isDictionary ])
 						ifTrue: [ each value collectWithIndex: [:x :i | i -> x ] ]
 						ifFalse: [ #() ] ] ];"
-		column: 'Key' 
-			evaluated: [:each | GTObjectPrinter asTruncatedTextFrom: each key ];
-		column: 'Value' 
-			evaluated: [:each | GTObjectPrinter asTruncatedTextFrom: each value ];
-		selectionAct: [ :table |
+			column: 'Key' evaluated: [ :each | GTObjectPrinter asTruncatedTextFrom: each key ];
+		column: 'Value' evaluated: [ :each | GTObjectPrinter asTruncatedTextFrom: each value ];
+		selectionAct: [ :table | 
 			table rawSelection do: [ :assoc | self removeKey: assoc key ].
-			table update ]
+			table update
+			]
 			entitled: 'Remove item(s)';
-		selectionPopulate: #selection 
+		selectionPopulate: #selection
 			entitled: 'Open key'
-			with: [ :table | (table rawSelection collect: #key) gtInspectorInterestingObject ];
+			with: [ :table | ( table rawSelection collect: #key ) gtInspectorInterestingObject ];
 		beMultiple;
 		send: [ :selection | 
-				selection isNil 
-				ifTrue: [ nil ]
-				ifFalse: [ selection size = 1  
-					ifTrue: [ selection anyOne value ] 
-					ifFalse: [ selection collect: #value ] ]]
-		"withSmalltalkSearch;
+			"withSmalltalkSearch;
 		showOnly: 50;
 		helpMessage: 'Quick selection field. Given your INPUT, it executes: self select: [:each | INPUT ]'"
+			selection
+				ifNil: [ nil ]
+				ifNotNil: [ selection size = 1
+						ifTrue: [ selection anyOne value ]
+						ifFalse: [ selection collect: #value ]
+					]
+			]
 ]
