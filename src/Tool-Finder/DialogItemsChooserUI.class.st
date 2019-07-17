@@ -606,9 +606,10 @@ DialogItemsChooserUI >> selectedItemsTextArea: anObject [
 
 { #category : #accessing }
 DialogItemsChooserUI >> selectedLabel [
-	^self dialogItemsChooser isNil
-		ifTrue: ['Selected Items' translated]
-		ifFalse: [self dialogItemsChooser selectedLabel]
+
+	^ self dialogItemsChooser
+		ifNil: [ 'Selected Items' translated ]
+		ifNotNil: [ self dialogItemsChooser selectedLabel ]
 ]
 
 { #category : #selectedList }
@@ -718,9 +719,10 @@ DialogItemsChooserUI >> unselectedItemsTextArea: anObject [
 
 { #category : #accessing }
 DialogItemsChooserUI >> unselectedLabel [
-	^self dialogItemsChooser isNil
-		ifTrue: ['Unselected Items' translated]
-		ifFalse: [self dialogItemsChooser unselectedLabel]
+
+	^ self dialogItemsChooser
+		ifNil: [ 'Unselected Items' translated ]
+		ifNotNil: [ self dialogItemsChooser unselectedLabel ]
 ]
 
 { #category : #accessing }

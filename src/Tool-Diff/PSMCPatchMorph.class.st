@@ -375,16 +375,20 @@ PSMCPatchMorph >> update: aspect [
 
 { #category : #private }
 PSMCPatchMorph >> updateSource [
+
 	"Update the source difference morph."
 
-	|sel|
+	| sel |
+
 	sel := self selectedChange.
-	sel isNil
-		ifTrue: [self diffMorph
-				from: ''
-				to: '']
-		ifFalse: [self diffMorph
-					from: sel diffFromSource
-					to: sel diffToSource
-					contextClass: (sel isClassPatch ifTrue: [nil] ifFalse: [sel targetClass])]
+	sel
+		ifNil: [ self diffMorph from: '' to: '' ]
+		ifNotNil: [ self diffMorph
+				from: sel diffFromSource
+				to: sel diffToSource
+				contextClass:
+					( sel isClassPatch
+						ifTrue: [ nil ]
+						ifFalse: [ sel targetClass ] )
+			]
 ]
