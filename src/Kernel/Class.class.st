@@ -233,10 +233,10 @@ Class >> basicCategory: aSymbol [
 
 { #category : #compiling }
 Class >> binding [
-       "Answer a binding for the receiver, sharing if possible"
-      | binding |
-	binding := self environment associationAt: self name ifAbsent: [nil -> self].
-       ^binding value == self ifTrue: [binding] ifFalse: [nil -> self]
+   "Answer a binding for the receiver, sharing if possible"
+   | binding |
+	binding := self environment associationAt: self name ifAbsent: [LiteralVariable key: nil value: self].
+   ^binding value == self ifTrue: [binding] ifFalse: [LiteralVariable key: nil value: self]
 ]
 
 { #category : #compiling }
