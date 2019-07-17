@@ -30,6 +30,9 @@ TabBarMorph >> actionsChanged: aTab [
 TabBarMorph >> addActionsFor: aTab [
 	| rightOffset |
 	
+	"This check should maybe not be there but without it the CI fails a lot. Maybe it is due to a race condition?"
+	aTab ifNil: [ ^ self ].
+
 	rightOffset := self actionOffset.
 	
 	aTab hasMenu
