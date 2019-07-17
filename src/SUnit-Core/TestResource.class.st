@@ -160,8 +160,8 @@ TestResource class >> signalInitializationError [
 
 { #category : #accessing }
 TestResource >> description [
-	description isNil
-		ifTrue: [ ^ '' ].
+
+	description ifNil: [ ^ '' ].
 	^ description
 ]
 
