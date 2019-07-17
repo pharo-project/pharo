@@ -210,22 +210,26 @@ TraitedMetaclass >> isRejectedMethod: aSelector [
 	"The method is not installed in method dictionary if:
 	 - It is in the localMethods.
 	 - It is from Class (we already have them) and they are not overriden in TraitedClass.
-	 - If it is in TraitedClass and it is in my superclass.
+	 - If it is in TraitedClass and it is in my superclass (except if the trait I used defines the selector myself).
 	"
 
-	| isFromClass isFromTraitedClass isMySuperclassTraitedClass |
+	| isFromClass isFromTraitedClass isMySuperclassTraitedClass isTheTraitIUseDefinesTheSelector |
 	(self isLocalSelector: aSelector)
 		ifTrue: [ ^ true ].
 
 	isFromClass := Class canUnderstand: aSelector.
 	isFromTraitedClass := TraitedClass methodDict includesKey: aSelector.
 	isMySuperclassTraitedClass := (superclass isKindOf: TraitedMetaclass) and: [superclass isObsolete not].
-
+	
+	
 	(isFromClass and: [ isFromTraitedClass not ])
 		ifTrue: [ ^ true ].
 
 	(isFromTraitedClass and: isMySuperclassTraitedClass)
-		ifTrue: [ ^ true ].
+		ifTrue: [
+			isTheTraitIUseDefinesTheSelector := self traitComposition traits anySatisfy: [:inTrait | inTrait localMethods anySatisfy: [ :meth | meth selector = aSelector ]].
+			isTheTraitIUseDefinesTheSelector ifTrue:[ ^false ].
+			 ^ true ].
 
 	^ false
 ]
