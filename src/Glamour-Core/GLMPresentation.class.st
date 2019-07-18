@@ -334,9 +334,11 @@ GLMPresentation >> doValidate: anObject on: aPort [
 
 { #category : #accessing }
 GLMPresentation >> dynamicActions [
+
 	"These are actions that make sense for the entire presentation.
 	They are dynamic in the sense that they will be evaluated lazily by the renderer"
-	dynamicActionsBlock isNil ifTrue: [ ^ OrderedCollection new ].
+
+	dynamicActionsBlock ifNil: [ ^ OrderedCollection new ].
 	^ dynamicActionsBlock glamourValue: self
 ]
 
@@ -687,10 +689,8 @@ GLMPresentation >> requestRefresh [
 
 { #category : #copying }
 GLMPresentation >> rootPrototype [
-	^ self parentPrototype isNil 
-		ifTrue: [ self ] 
-		ifFalse: [ self parentPrototype rootPrototype ]
 
+	^ self parentPrototype ifNil: [ self ] ifNotNil: [ self parentPrototype rootPrototype ]
 ]
 
 { #category : #'accessing ports' }

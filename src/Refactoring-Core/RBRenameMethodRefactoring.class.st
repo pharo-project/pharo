@@ -38,9 +38,10 @@ RBRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 
 { #category : #testing }
 RBRenameMethodRefactoring >> hasPermutedArguments [
-	^hasPermutedArguments isNil 
-		ifTrue: [hasPermutedArguments := super hasPermutedArguments]
-		ifFalse: [hasPermutedArguments]
+
+	^ hasPermutedArguments
+		ifNil: [ hasPermutedArguments := super hasPermutedArguments ]
+		ifNotNil: [ hasPermutedArguments ]
 ]
 
 { #category : #testing }

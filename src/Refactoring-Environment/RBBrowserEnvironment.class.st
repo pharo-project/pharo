@@ -47,11 +47,13 @@ RBBrowserEnvironment >> & anEnvironment [
 ]
 
 { #category : #accessing }
-RBBrowserEnvironment >> addSearchString: aString [ 
-	searchStrings isNil ifTrue: [
-		searchStrings := SortedCollection sortBlock: [ :a :b | 
-			(a indexOf: $: ifAbsent: [ a size ]) > (b indexOf: $: ifAbsent: [ b size ]) ] ].
-	(searchStrings includes: aString)
+RBBrowserEnvironment >> addSearchString: aString [
+
+	searchStrings
+		ifNil: [ searchStrings := SortedCollection
+				sortBlock: [ :a :b | ( a indexOf: $: ifAbsent: [ a size ] ) > ( b indexOf: $: ifAbsent: [ b size ] ) ]
+			].
+	( searchStrings includes: aString )
 		ifFalse: [ searchStrings add: aString ]
 ]
 
@@ -143,13 +145,11 @@ RBBrowserEnvironment >> at: aKey [
 
 { #category : #'accessing-classes' }
 RBBrowserEnvironment >> at: aKey ifAbsent: aBlock [
+
 	| association |
-	association := self
-		associationAt: aKey 
-		ifAbsent: [ nil ].
-	^ association isNil
-		ifTrue: [ aBlock value ]
-		ifFalse: [ association value ]
+
+	association := self associationAt: aKey ifAbsent: [ nil ].
+	^ association ifNil: [ aBlock value ] ifNotNil: [ association value ]
 ]
 
 { #category : #accessing }
@@ -408,9 +408,8 @@ RBBrowserEnvironment >> keys [
 
 { #category : #private }
 RBBrowserEnvironment >> label [
-	^ label isNil
-		ifTrue: [ self defaultLabel ]
-		ifFalse: [ label ]
+
+	^ label ifNil: [ self defaultLabel ] ifNotNil: [ label ]
 ]
 
 { #category : #initialization }
@@ -540,9 +539,8 @@ RBBrowserEnvironment >> rootEnvironment [
 
 { #category : #accessing }
 RBBrowserEnvironment >> searchStrings [
-	^searchStrings isNil
-		ifTrue: [#()]
-		ifFalse: [searchStrings]
+
+	^ searchStrings ifNil: [ #() ] ifNotNil: [ searchStrings ]
 ]
 
 { #category : #accessing }

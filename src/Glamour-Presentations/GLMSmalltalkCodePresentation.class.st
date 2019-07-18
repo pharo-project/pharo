@@ -101,9 +101,10 @@ GLMSmalltalkCodePresentation >> evaluateSelectionAndDo: aBlock [
 
 { #category : #accessing }
 GLMSmalltalkCodePresentation >> highlightSmalltalkContext [
-	^ highlightSmalltalkContext isNil 
-		ifTrue: [nil] 
-		ifFalse: [highlightSmalltalkContext glamourValue: self entity]
+
+	^ highlightSmalltalkContext
+		ifNil: [ nil ]
+		ifNotNil: [ highlightSmalltalkContext glamourValue: self entity ]
 ]
 
 { #category : #rendering }

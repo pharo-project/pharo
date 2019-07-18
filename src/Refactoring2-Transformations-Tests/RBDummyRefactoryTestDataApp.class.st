@@ -454,7 +454,7 @@ RBDummyRefactoryTestDataApp >> returnsBooleanAndOther [
 
 { #category : #lint }
 RBDummyRefactoryTestDataApp >> returnsIfTrue [
-	^self ifNil: [4]
+	^self isNil ifTrue: [4]
 ]
 
 { #category : #lint }
