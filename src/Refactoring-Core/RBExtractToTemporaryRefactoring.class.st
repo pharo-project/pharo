@@ -95,11 +95,12 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 
 { #category : #'private-accessing' }
 RBExtractToTemporaryRefactoring >> parseTree [
-	parseTree isNil 
-		ifTrue: 
-			[parseTree := class parseTreeFor: selector.
-			parseTree isNil ifTrue: [self refactoringFailure: 'Could not parse method']].
-	^parseTree
+
+	parseTree
+		ifNil: [ parseTree := class parseTreeFor: selector.
+			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
+			].
+	^ parseTree
 ]
 
 { #category : #preconditions }
@@ -114,13 +115,15 @@ RBExtractToTemporaryRefactoring >> preconditions [
 
 { #category : #'private-accessing' }
 RBExtractToTemporaryRefactoring >> selectedSource [
+
 	| source |
+
 	source := class sourceCodeFor: selector.
-	source isNil ifTrue: [self refactoringFailure: 'Couldn''t find sources'].
-	((sourceInterval first between: 1 and: source size) 
-		and: [sourceInterval last between: 1 and: source size]) 
-			ifFalse: [self refactoringFailure: 'Invalid interval'].
-	^source copyFrom: sourceInterval first to: sourceInterval last
+	source ifNil: [ self refactoringFailure: 'Couldn''t find sources' ].
+	( ( sourceInterval first between: 1 and: source size )
+		and: [ sourceInterval last between: 1 and: source size ] )
+		ifFalse: [ self refactoringFailure: 'Invalid interval' ].
+	^ source copyFrom: sourceInterval first to: sourceInterval last
 ]
 
 { #category : #printing }

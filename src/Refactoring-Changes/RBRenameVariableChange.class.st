@@ -63,9 +63,9 @@ RBRenameVariableChange >> changeClassName [
 
 { #category : #accessing }
 RBRenameVariableChange >> changeClassName: aSymbol [
+
 	className := aSymbol.
-	isMeta isNil
-		ifTrue: [ isMeta := false ]
+	isMeta ifNil: [ isMeta := false ]
 ]
 
 { #category : #printing }

@@ -51,9 +51,10 @@ RBRefactoryClassChange >> changeClassName [
 ]
 
 { #category : #accessing }
-RBRefactoryClassChange >> changeClassName: aSymbol [ 
+RBRefactoryClassChange >> changeClassName: aSymbol [
+
 	className := aSymbol.
-	isMeta isNil ifTrue: [ isMeta := false ]
+	isMeta ifNil: [ isMeta := false ]
 ]
 
 { #category : #printing }

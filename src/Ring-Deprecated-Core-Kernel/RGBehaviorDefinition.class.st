@@ -190,10 +190,10 @@ RGBehaviorDefinition >> allSuperclasses: aCollection [
 
 { #category : #'accessing class hierarchy' }
 RGBehaviorDefinition >> allSuperclassesDo: aBlock [
+
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
 
-	self superclass isNil
-		ifTrue: [ ^ self ].
+	self superclass ifNil: [ ^ self ].
 	aBlock value: superclass.
 	superclass allSuperclassesDo: aBlock
 ]
