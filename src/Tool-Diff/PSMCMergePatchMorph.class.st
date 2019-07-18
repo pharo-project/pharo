@@ -220,18 +220,16 @@ PSMCMergePatchMorph >> markAsConflict [
 
 { #category : #actions }
 PSMCMergePatchMorph >> nextConflict [
+
 	"Answer the next (unresolved) conflict or, nil if none."
 
-	|coll current index|
+	| coll current index |
+
 	current := self selectedChangeWrapper.
-	index := current isNil
-		ifTrue: [0]
-		ifFalse: [self model indexOf: current item].
-	coll := (self model
-			copyFrom: index + 1
-			to: self model size),
-		(self model copyFrom: 1 to: index).
-	^coll detect: [:item | item isConflict and: [item isResolved not]] ifNone: [nil]
+	index := current ifNil: [ 0 ] ifNotNil: [ self model indexOf: current item ].
+	coll := ( self model copyFrom: index + 1 to: self model size )
+		, ( self model copyFrom: 1 to: index ).
+	^ coll detect: [ :item | item isConflict and: [ item isResolved not ] ] ifNone: [ nil ]
 ]
 
 { #category : #testing }

@@ -68,11 +68,13 @@ RGClassDefinition >> addSharedPools: aCollection [
 
 { #category : #'managing pool users' }
 RGClassDefinition >> addUser: aRGClassDefinition [
+
 	"The receiver registers the aRGClassDefinition as an user.  An reinforces its status as a shared pool."
-	
-	aRGClassDefinition isClass ifFalse:[ ^self ].
-	(aRGClassDefinition instanceSide sharedPoolNamed: self name) isNil
-		ifTrue: [ aRGClassDefinition instanceSide addSharedPoolNamed: self name ].
+
+	aRGClassDefinition isClass
+		ifFalse: [ ^ self ].
+	( aRGClassDefinition instanceSide sharedPoolNamed: self name )
+		ifNil: [ aRGClassDefinition instanceSide addSharedPoolNamed: self name ].
 	self isPool: true.
 	self users add: aRGClassDefinition instanceSide
 ]

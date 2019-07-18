@@ -62,11 +62,12 @@ RubPluggableTextFieldMorph >> checkTextWithConverter [
 
 { #category : #'model protocol' }
 RubPluggableTextFieldMorph >> convertTo: aClass [
+
 	"Set the converter object class."
 
-	self converter isNil
-		ifTrue: [self converter: (ObjectStringConverter forClass: aClass)]
-		ifFalse: [self converter objectClass: aClass]
+	self converter
+		ifNil: [ self converter: ( ObjectStringConverter forClass: aClass ) ]
+		ifNotNil: [ self converter objectClass: aClass ]
 ]
 
 { #category : #accessing }
@@ -125,13 +126,14 @@ RubPluggableTextFieldMorph >> getEnabledSelector: aSymbol [
 
 { #category : #'acessing text' }
 RubPluggableTextFieldMorph >> getTextFromModel [
+
 	| newObj |
+
 	newObj := self model perform: self getTextSelector withEnoughArguments: {self}.
-	(newObj isNil and: [ self converter isNil ])
+	( newObj isNil and: [ self converter isNil ] )
 		ifTrue: [ ^ Text new ].
-	self converter isNil
-		ifTrue: [ self convertTo: String ].
-	^ (self converter objectAsString: newObj) ifNil: [ '' ] ifNotNil: [ :s | s shallowCopy ]
+	self converter ifNil: [ self convertTo: String ].
+	^ ( self converter objectAsString: newObj ) ifNil: [ '' ] ifNotNil: [ :s | s shallowCopy ]
 ]
 
 { #category : #'model protocol' }

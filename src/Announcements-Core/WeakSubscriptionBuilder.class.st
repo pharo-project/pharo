@@ -26,15 +26,6 @@ WeakSubscriptionBuilder >> announcer: anAnnouncer [
 	announcer := anAnnouncer 
 ]
 
-{ #category : #private }
-WeakSubscriptionBuilder >> subscribe: anAnnouncementClass do: aValuable [
-	"Do not use this message on weak announcer because it does not work. The block will hold strongly the receiver and more. We need ephemerons for that"
-
-	self deprecated: 'Please use #when:send:to: instead. And do not use when:do: on weak announcer'.
-
-	^ self when: anAnnouncementClass do: aValuable
-]
-
 { #category : #'wrapped protocol' }
 WeakSubscriptionBuilder >> subscribe: anAnnouncementClass send: aSelector to: anObject [
 

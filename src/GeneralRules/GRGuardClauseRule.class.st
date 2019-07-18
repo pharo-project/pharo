@@ -19,18 +19,18 @@ foo
 ]]]
 "
 Class {
-	#name : #GRGuradGuardClauseRule,
+	#name : #GRGuardClauseRule,
 	#superclass : #ReNodeRewriteRule,
 	#category : #GeneralRules
 }
 
 { #category : #accessing }
-GRGuradGuardClauseRule >> group [
+GRGuardClauseRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
 { #category : #initialization }
-GRGuradGuardClauseRule >> initialize [
+GRGuardClauseRule >> initialize [
 	super initialize.
 	self 
 		addMatchingMethod: '`@methodName: `@args 
@@ -58,6 +58,6 @@ GRGuradGuardClauseRule >> initialize [
 ]
 
 { #category : #accessing }
-GRGuradGuardClauseRule >> name [
+GRGuardClauseRule >> name [
 	^ 'Replace single branch conditional with guard clause'
 ]

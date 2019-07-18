@@ -19,12 +19,13 @@ PluggableMorphListMorph >> extent: newExtent [
 
 { #category : #'model access' }
 PluggableMorphListMorph >> getList [
+
 	"Answer the list to be displayed.  Caches the returned list in the 'list' ivar"
 
-	getListSelector isNil ifTrue: [^#()].
+	getListSelector ifNil: [ ^ #() ].
 	list := model perform: getListSelector.
-	list isNil ifTrue: [^ #()].
-	^list
+	list ifNil: [ ^ #() ].
+	^ list
 ]
 
 { #category : #scrolling }

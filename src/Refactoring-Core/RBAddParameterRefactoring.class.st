@@ -65,15 +65,18 @@ RBAddParameterRefactoring >> checkSendersAccessTo: name [
 
 { #category : #preconditions }
 RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
+
 	| searcher |
+
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '`var'
 		do: [ :aNode :answer | 
 			| name |
+
 			name := aNode name.
-			(aNode whoDefines: name) isNil
-				ifTrue: [ self checkSendersAccessTo: name ] ].
+			( aNode whoDefines: name ) ifNil: [ self checkSendersAccessTo: name ]
+			].
 	searcher executeTree: aParseTree
 ]
 
@@ -149,12 +152,12 @@ RBAddParameterRefactoring >> safeVariableNameFor: aClass temporaries: allTempVar
 
 { #category : #private }
 RBAddParameterRefactoring >> senders [
-	senders isNil 
-		ifTrue: 
-			[senders := Set new.
-			self model allReferencesTo: oldSelector
-				do: [:each | senders add: each modelClass]].
-	^senders
+
+	senders
+		ifNil: [ senders := Set new.
+			self model allReferencesTo: oldSelector do: [ :each | senders add: each modelClass ]
+			].
+	^ senders
 ]
 
 { #category : #printing }

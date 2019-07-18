@@ -22,7 +22,8 @@ MenuCapturingMorph >> menu [
 MenuCapturingMorph >> step [
 
 	menu := self currentWorld submorphs detect: [ :m | m isKindOf: MenuMorph ] ifNone: [ menu ].
-	menu isNil ifFalse: [ 
-		menu delete.
-		self delete ].
+	menu
+		ifNotNil: [ menu delete.
+			self delete
+			]
 ]

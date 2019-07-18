@@ -40,14 +40,16 @@ RBCreateAccessorsForVariableRefactoring >> classVariable: aBoolean [
 
 { #category : #transforming }
 RBCreateAccessorsForVariableRefactoring >> createGetterAccessor [
+
 	getterMethod := self findGetterMethod.
-	getterMethod isNil ifTrue: [getterMethod := self defineGetterMethod]
+	getterMethod ifNil: [ getterMethod := self defineGetterMethod ]
 ]
 
 { #category : #transforming }
 RBCreateAccessorsForVariableRefactoring >> createSetterAccessor [
+
 	setterMethod := self findSetterMethod.
-	setterMethod isNil ifTrue: [setterMethod := self defineSetterMethod]
+	setterMethod ifNil: [ setterMethod := self defineSetterMethod ]
 ]
 
 { #category : #transforming }
@@ -125,13 +127,11 @@ RBCreateAccessorsForVariableRefactoring >> methodsReferencingVariable [
 
 { #category : #testing }
 RBCreateAccessorsForVariableRefactoring >> needsReturnForSetter [
-	needsReturn isNil 
-		ifTrue: 
-			[needsReturn := self 
-						usesAssignmentOf: variableName
-						in: class
-						classVariable: classVariable].
-	^needsReturn
+
+	needsReturn
+		ifNil:
+			[ needsReturn := self usesAssignmentOf: variableName in: class classVariable: classVariable ].
+	^ needsReturn
 ]
 
 { #category : #'private-accessing' }
