@@ -907,11 +907,7 @@ Collection >> intersection: aCollection [
 
 	"(#() intersection: #(1 2 3 4)) >>> #()"
 
-	| set outputSet |
-	set := self asSet.
-	outputSet := Set new.
-	aCollection do: [ :each | (set includes: each) ifTrue: [ outputSet add: each ] ].
-	^ self species withAll: outputSet asArray
+	^ self species withAll: (self asSet intersection: aCollection) asArray
 ]
 
 { #category : #testing }
