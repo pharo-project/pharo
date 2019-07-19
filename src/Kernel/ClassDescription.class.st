@@ -375,16 +375,6 @@ ClassDescription >> comment: aStringOrText stamp: aStamp [
 	self instanceSide classComment: aStringOrText stamp: aStamp.
 ]
 
-{ #category : #'accessing class hierarchy' }
-ClassDescription >> commentInventory [
-	"Answer a string with a count of the classes with and without comments 
-	for all the classes in the package of which this class is a member."
-
-	"Morph commentInventory"
-
-	^ self environment organization commentInventory: (self category copyUpTo: $-), '*'
-]
-
 { #category : #'filein/out' }
 ClassDescription >> commentStamp: changeStamp [
 	self organization commentStamp: changeStamp
