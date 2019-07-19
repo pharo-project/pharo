@@ -76,8 +76,10 @@ TestMatchedNodeProducer >> visitMessageNode:  aRBMessageNode [
 
 { #category : #visiting }
 TestMatchedNodeProducer >> visitMethodNode: aRBMethodNode [ 
-	(self methodNames includes: aRBMethodNode) ifFalse:  [ ^#() ].
-	^ (self select: self methodNames beginningWith: aRBMethodNode selector)
+	"there is a bug that we end up here when in temp definition, workaround turn it off for now"
+	"this turns off completion of methods and temp defitions, see issue tracker"
+	 ^#().
+	"(self select: self methodNames beginningWith: aRBMethodNode selector)"
 ]
 
 { #category : #visiting }
@@ -119,15 +121,16 @@ TestMatchedNodeProducer >> visitTemporaryNode: aNode [
 
 { #category : #visiting }
 TestMatchedNodeProducer >> visitVariableNode: aRBVariableNode [  
-    aRBVariableNode isDefinition ifTrue: [ ^#() ].
-    (aRBVariableNode isArgument ifTrue: [ ^#() ]).
+	aRBVariableNode isDefinition ifTrue: [ ^ (self select: Symbol allSymbols beginningWith: aRBVariableNode name) ].
+   (aRBVariableNode isArgument ifTrue: [ ^ (self select: Symbol allSymbols beginningWith: aRBVariableNode name) ]).
 	"using a stream to store results should be better"
 	^ (self select: Smalltalk globals keys beginningWith: aRBVariableNode name) , 
 	  (self select: (currentClass allSlots collect: [ :each | each name ]) beginningWith: aRBVariableNode name) ,
 		(self select: aRBVariableNode methodNode temporaryNames beginningWith: aRBVariableNode name),
 		(self select: aRBVariableNode methodNode argumentNames beginningWith: aRBVariableNode name),
 		(self select: currentClass allClassVarNames beginningWith: aRBVariableNode name),
-		(self select: (currentClass allSharedPools flatCollect: [ :each | each classVarNames]) beginningWith: aRBVariableNode name),
-		(self select: self methodNames beginningWith: aRBVariableNode name)
+		(self select: (currentClass allSharedPools flatCollect: [ :each | each classVarNames]) beginningWith: aRBVariableNode name)
+		",(self select: self methodNames beginningWith: aRBVariableNode name)" 
+		"this is a bit too much, we limit to variables"
 
 ]
