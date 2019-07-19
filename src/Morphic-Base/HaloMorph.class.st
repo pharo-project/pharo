@@ -706,11 +706,9 @@ HaloMorph >> createHandleAt: aPoint color: aColor iconName: iconName [
 	handle borderColor: aColor muchDarker.
 	handle wantsYellowButtonMenu: false.
 	iconName
-		ifNotNil: [ | form |
-
-			form := self iconNamed: iconName.
-			form isNil
-				ifFalse: [ | image |
+		ifNotNil: [ ( self iconNamed: iconName )
+				ifNotNil: [ :form | 
+					| image |
 
 					image := ImageMorph new.
 					image form: form.

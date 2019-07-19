@@ -14,8 +14,7 @@ Class {
 		'display',
 		'closeCallback',
 		'isResizeable',
-		'osWindow',
-		'session'
+		'osWindow'
 	],
 	#category : #'OSWindow-Core-Morphic'
 }
@@ -117,8 +116,7 @@ OSWindowWorldMorph >> osWindowRenderer [
 
 { #category : #'session management' }
 OSWindowWorldMorph >> recreateOSWindow [
-	| attributes driver |
-	session := Smalltalk session.
+	| attributes driver | 
 	attributes := OSWindowAttributes new.
 	attributes
 		extent: self extent;
@@ -155,10 +153,11 @@ OSWindowWorldMorph >> title: aTitle [
 
 { #category : #private }
 OSWindowWorldMorph >> updateDisplay [
-	display isNil ifTrue: [
-		display := Form extent: self extent depth: 32.
-		worldState display: display
-	]
+
+	display
+		ifNil: [ display := Form extent: self extent depth: 32.
+			worldState display: display
+			]
 ]
 
 { #category : #accessing }

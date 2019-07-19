@@ -213,30 +213,33 @@ NotebookMorph >> suspendAnnouncementsDuring: aBlock [
 
 { #category : #private }
 NotebookMorph >> updatePageIndex: index [
+
 	"Change to the given page index, update the toolbar and send the announcement"
-	| page oldPage |
-	
-	index = 0 ifTrue: [ ^ self ].
-	
+
+	| oldPage |
+
+	index = 0
+		ifTrue: [ ^ self ].
 	oldPage := self tabSelectorMorph selectedTab.
-	page := self pageMorph.
-	page isNil
-		ifTrue: [
-			self contentMorph addMorph: (self pageAt: index).]
-		ifFalse: [ | pageBounds |
+	self pageMorph
+		ifNil: [ self contentMorph addMorph: ( self pageAt: index ) ]
+		ifNotNil: [ :page | | pageBounds |
+
 			pageBounds := self pageMorph bounds.
-			self contentMorph replaceSubmorph: page by: (self pageAt: index).
-			self flag: 'Without setting here the bounds the pange moves a few pizels when refreshing the inspector'.
+			self contentMorph replaceSubmorph: page by: ( self pageAt: index ).
+			self
+				flag: 'Without setting here the bounds the pange moves a few pizels when refreshing the inspector'.
 			self pageMorph bounds: pageBounds.
-			self pageMorph layoutChanged ].
-		
+			self pageMorph layoutChanged
+			].
 	self headerMorph layoutChanged.
 	self pageMorph layoutChanged.
-	self adoptPaneColor: (self owner ifNil: [self]) paneColor.
-	(self tabSelectorMorph tabs at: index) font: self tabSelectorMorph font.
-	
-	self announcer announce: (NotebookPageChanged new 
-		page: (self pages at: index); 
-		oldPage: oldPage; 
-		pageIndex: index)
+	self adoptPaneColor: ( self owner ifNil: [ self ] ) paneColor.
+	( self tabSelectorMorph tabs at: index ) font: self tabSelectorMorph font.
+	self announcer
+		announce:
+			( NotebookPageChanged new
+				page: ( self pages at: index );
+				oldPage: oldPage;
+				pageIndex: index )
 ]
