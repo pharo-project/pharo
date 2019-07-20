@@ -28,9 +28,9 @@ LiteralVariable class >> checkValidName: aString [
 		ifFalse: [InvalidGlobalName signal: 'Class name does not start with a valid Global Var Initial' for: aString]"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'gt-inspector-extension' }
 LiteralVariable class >> gtInspectorAllVariablesIn: composite [
- 	"This provides a list of all defined Shared Pools"
+ 	"This provides a list of all defined Class or Global Variables"
  	<gtInspectorPresentationOrder: 20>
  	composite list 
  		title: 'All Defined Variables';
