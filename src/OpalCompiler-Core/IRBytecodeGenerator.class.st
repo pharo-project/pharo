@@ -358,7 +358,7 @@ IRBytecodeGenerator >> initialize [
 	numArgs := 0.
 	currentSeqNum := 0.
 	orderSeq := OrderedCollection new.  "reverse map of seqOrder"
-	additionalLiterals := OCLiteralSet new.
+	additionalLiterals := PluggableSet literalSet.
 	forceLongForm := false.
 	"starting label in case one is not provided by client"
 	self label: self newDummySeqId.

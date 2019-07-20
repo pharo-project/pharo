@@ -33,6 +33,5 @@ OCLiteralList >> indexOf: anElement startingAt: start ifAbsent: exceptionBlock [
 OCLiteralList >> setCollection: anArray [
 
 	super setCollection: anArray.
-	equalitySet := OCLiteralSet new: anArray size.
-
+	equalitySet := (PluggableSet new: anArray size) equalBlock: [ :a :b | a literalEqual: b]
 ]

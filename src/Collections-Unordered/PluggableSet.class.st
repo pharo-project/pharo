@@ -45,9 +45,15 @@ Class {
 	#category : #'Collections-Unordered-Sets'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 PluggableSet class >> integerSet [
 	^self new hashBlock: [:integer | integer hash \\ 1064164 * 1009]
+]
+
+{ #category : #'instance creation' }
+PluggableSet class >> literalSet [
+	"A Set using equality as defined for the Literals in CompiledMethods"
+	^self new equalBlock: [ :a :b | a literalEqual: b]
 ]
 
 { #category : #copying }
