@@ -85,7 +85,7 @@ ChangeSetClassChangesTest >> testAddInstanceVariable [
 		instanceVariableNames: 'zzz'
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: 'DeleteMe-1'.
+		package: 'DeleteMe-1'.
 	saveClassDefinition := (Smalltalk globals classNamed: #JunkClass) oldDefinition.
 	self
 		assert:
@@ -97,7 +97,7 @@ ChangeSetClassChangesTest >> testAddInstanceVariable [
 		instanceVariableNames: 'zzz aaa'
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: 'DeleteMe-1'.	"Assert that the class definition has changed"
+		package: 'DeleteMe-1'.	"Assert that the class definition has changed"
 	self deny: (self 
 		isDefinition: (Smalltalk globals classNamed: #JunkClass) oldDefinition 
 		equivalentTo: saveClassDefinition).
@@ -134,14 +134,14 @@ ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [
 		instanceVariableNames: 'zzz'
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: 'DeleteMe-1'.	"Forget about JunkClass in the change set"
+		package: 'DeleteMe-1'.	"Forget about JunkClass in the change set"
 	ChangeSet current removeClassChanges: 'JunkClass'.	"Redefine the class, adding one instance variable"
 	Object
 		subclass: #JunkClass
 		instanceVariableNames: 'zzz aaa'
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: 'DeleteMe-1'.	"A change record should now exist in the change set"
+		package: 'DeleteMe-1'.	"A change record should now exist in the change set"
 	self
 		assert:
 			(self
@@ -166,15 +166,15 @@ ChangeSetClassChangesTest >> testChangeClassCategory [
 		instanceVariableNames: 'zzz'
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: 'DeleteMe-1'.
+		package: 'DeleteMe-1'.
 	saveClassDefinition := (Smalltalk globals classNamed: #JunkClass) oldDefinition.
-	self assert: saveClassDefinition = (ChangeSet current fatDefForClass: (Smalltalk globals classNamed: #JunkClass)).	"Redefine the class, changing only the class category"
+	self assert: saveClassDefinition equals: (ChangeSet current fatDefForClass: (Smalltalk globals classNamed: #JunkClass)).	"Redefine the class, changing only the class category"
 	Object
 		subclass: #JunkClass
 		instanceVariableNames: 'zzz'
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: 'DeleteMe-2'.	"Assert that the class definition has changed"
+		package: 'DeleteMe-2'.	"Assert that the class definition has changed"
 	self deny: (self isDefinition: (Smalltalk globals classNamed: #JunkClass) definition equivalentTo: saveClassDefinition).
 	self
 		deny:
@@ -207,21 +207,21 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 	no change records pertaining to it in the change set."
 
 	self deny: (Smalltalk hasClassNamed: 'JunkClass').
-	self assert: (ChangeSet current changeRecorderFor: (Smalltalk globals classNamed: #JunkClass)) thisName = 'nil'.	"Remove bogus change records created as side effect of preceding assert"
+	self assert: (ChangeSet current changeRecorderFor: (Smalltalk globals classNamed: #JunkClass)) thisName equals: 'nil'.	"Remove bogus change records created as side effect of preceding assert"
 	ChangeSet current removeClassChanges: 'nil'.	"Define a class and save its definition"
 	Object
 		subclass: #JunkClass
 		instanceVariableNames: 'zzz'
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: 'DeleteMe-1'.	"Forget about JunkClass in the change set"
+		package: 'DeleteMe-1'.	"Forget about JunkClass in the change set"
 	ChangeSet current removeClassChanges: 'JunkClass'.	"Redefine the class, changing only the class category"
 	Object
 		subclass: #JunkClass
 		instanceVariableNames: 'zzz'
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: 'DeleteMe-2'.	"A change record should now exist in the change set"
+		package: 'DeleteMe-2'.	"A change record should now exist in the change set"
 	self
 		assert:
 			(self

@@ -1,11 +1,11 @@
 Class {
-	#name : #ObjectFinalizerTests,
+	#name : #ObjectFinalizerTest,
 	#superclass : #TestCase,
 	#category : #'Tests-Finalization'
 }
 
 { #category : #tests }
-ObjectFinalizerTests >> testFinalizationOfMultipleResources [
+ObjectFinalizerTest >> testFinalizationOfMultipleResources [
 	"Test that finalizers for multiple resources registered will be ran when
 	object is finalized"
 	| objToFinalize resource1 resource2 resourceCleanBlock |
