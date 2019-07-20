@@ -27,7 +27,7 @@ TestCompletionModel >> clazz [
 { #category : #accessing }
 TestCompletionModel >> clazz: anObject [
 	clazz := anObject.
-	clazz isNil ifTrue: [ clazz := UndefinedObject ]
+	clazz ifNil: [ clazz := UndefinedObject ]
 ]
 
 { #category : #accessing }
