@@ -1,9 +1,0 @@
-# Configuration for weekly-digest - https://github.com/apps/weekly-digest
-    publishDay: sat
-    canPublishIssues: true
-    canPublishPullRequests: true
-    canPublishContributors: true
-    canPublishStargazers: false
-    canPublishCommits: false
-    canPublishReleases: false
-    
