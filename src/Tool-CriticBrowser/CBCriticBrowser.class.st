@@ -436,9 +436,8 @@ CBCriticBrowser >> initializeCriticErrorPresenter [
 CBCriticBrowser >> initializeCriticsPresenter [
 	criticsPresenter
 		displayBlock: [ :selec | self formatCritic: selec ];
-		itemFilterBlock: [ :item :string | '*' , string , '*' match: item contents ];
-		contextMenu: [(self rootCommandsGroup / 'critic') beRoot
-				asMenuPresenter];
+		itemFilter: [ :item :string | '*' , string , '*' match: item contents ];
+		contextMenu: [ (self rootCommandsGroup / 'critic') beRoot asMenuPresenter ];
 		icons: [ :item | self iconFor: item ]
 ]
 
@@ -492,7 +491,7 @@ CBCriticBrowser >> initializeRulesPresenter [
 			aRule isComposite
 				ifTrue: [ aRule rules ]
 				ifFalse: [ #() ] ];
-		contextMenu: [ (self rootCommandsGroup / 'critic') asMenuPresenter ]
+		contextMenu: [ (self rootCommandsGroup / 'rule') beRoot asMenuPresenter ]
 ]
 
 { #category : #initialize }
