@@ -425,11 +425,11 @@ CBCriticBrowser >> initializeCriticErrorPresenter [
 	noteBookPageCriticErrorPresenter
 		acceptBlock: [ :text | 
 			| selectedItem |
-			selectedItem := self criticsPresenter selectedItem sourceAnchor
-				entity.
-			selectedItem isCompiledMethod "and: [ rule isTransformationRule not ]"
+			selectedItem := self criticsPresenter selection selectedItem
+				sourceAnchor entity.
+			selectedItem isCompiledMethod
 				ifTrue: [ selectedItem methodClass compile: text ]
-				ifFalse: [ Smalltalk compiler evaluate: text ]	 ]
+				ifFalse: [ Smalltalk compiler evaluate: text ]	"and: [ rule isTransformationRule not ]" ]
 ]
 
 { #category : #'initialize-widgets' }
