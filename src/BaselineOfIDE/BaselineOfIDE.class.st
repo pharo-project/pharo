@@ -249,6 +249,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GT-SUnitDebugger'.
 
 		spec package: 'Tool-CriticBrowser'.
+		spec package: 'Tool-CriticBrowser-Tests'with:[spec requires: #('Tool-CriticBrowser')] .
 
 		spec package: 'Renraku'.
 		spec package: 'SUnit-Rules'.	
