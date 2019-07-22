@@ -131,11 +131,6 @@ TestCompletionModel >> notEmpty [
 ]
 
 { #category : #accessing }
-TestCompletionModel >> setUp [
-	sorter := TestSorter new.
-]
-
-{ #category : #accessing }
 TestCompletionModel >> sortList: aList [
 	"this is where the sorting strategy is set"
 	^ sorter sortCompletionList: aList asOrderedCollection
