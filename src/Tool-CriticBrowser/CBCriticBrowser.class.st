@@ -45,9 +45,16 @@ BUTTON
 ======
 	go to TAG: #utilities-buttons and see the root class for more information about adding button
 
+tab
+=== 
 
+	go to TAG: #utilities-tabContent and see the root class for more information about tab content
 
+CONTEXT-MENU 
+============
 
+	go to TAG: #utilities-contextMenu for more information about contextMenu 
+	and if you want to add contextMenu with Commander2  see the official documentation
 	
 Internal Representation and Key Implementation Points.
 
