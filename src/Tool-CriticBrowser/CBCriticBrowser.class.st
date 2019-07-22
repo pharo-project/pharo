@@ -1,52 +1,68 @@
 "
-this class is a merge of CriticBrowser and SpecSingleCodeCriticResult (used by old CriticBrowser )
-so 
-			new Layout 
-        ---------------------------------------------
-        | RulesPresenter  ||                        |
-        |                 ||                        |
-        |                 || CriticsPresenter       |
-        |-----------------||------------------------|
-        |reset |update|log||browse|Tranform|marknoPB|                       |              |
-        |===========================================|
-        |SourceCodePresenter                        |
-        ---------------------------------------------
-	      now i use the filter feature of a ListPresenter (CriticsPresenter) instead of TextInputFieldPresenter
-			
+i'm the CriticBrowser 
 
-For the Class part:  State a one line summary. For example, ""I represent a paragraph of text"".
+with me you can analyse some class to see if it break some rule
 
-For the Responsibility part: Three sentences about my main responsibilities - what I do, what I know.
+HOW TO RUN
+	
+	| env rules |
+	someRules := RBCompositeLintRule allGoodRules rules.
+	env := RBBrowserEnvironment default.
+	CBCriticBrowser openOnRule: someRules onEnvironment: env
 
-For the Collaborators Part: State my main collaborators and one line about how I interact with them. 
+LAYOUT 
 
-Public API and Key Messages
+|--------------------------------------|
+|	#rulesPresenter ||#criticsPresenter |
+|--------------------------------------|
+|  all buttons in TAG button           |
+|--------------------------------------|
+|  comment rule \ | critic location \  |
+| selected tab 	                        |
+---------------------------------------- 
 
-- message one   
-- message two 
-- (for bonus points) how to create instances.
+USER PART
+---------
 
-   One simple example is simply gorgeous.
- 
+rulesPresenter 
+	in this widget there is 'someRules' 
+	+ right click open a contextMenu see TAG #menu for more information 
+	
+criticsPresenter 
+	in this widget there is all location of broken rule
+	+ right click open a contextMenu see TAG #menu for more information 
+
+noteBookPageCriticErrorPresenter ( critic location )
+	will show the error location 
+	
+noteBookPageRuleCommentPresenter ( comment rule )
+	will show you a comment about the selected rule
+	
+dev part
+--------
+
+BUTTON
+======
+	go to TAG: #utilities-buttons and see the root class for more information about adding button
+
+
+
+
+	
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	cache:		<Object>
-	checker:		<Object>
-	criticsPresenter:		<Object>
-	logButton:		<Object>
-	rbEnvironment:		<Object>
-	removeTestCase:		<Object>
-	resetButton:		<Object>
-	rule:		<Object>
-	rulesPresenter:		<Object>
-	sourceCodePresenter:		<Object>
-	thread:		<Object>
-	toolbarPresenter:		<Object>
-	updateButton:		<Object>
+	criticsPresenter: <SpListPresenter>
+	rulesPresenter: <SpTreeTablePresenter> 
+	rbEnvironment : <RBBrowserEnvironment>
+	removeTestCase : <Boolean>
+	criticsActionsPresenter: <SpActionBarPresenter> 
+	rulesActionsPresenter : <SpActionBarPresenter>
+	noteBookPresenter : <SpNotebookPresenter>
+	criticCache : <CriticsCache>
+	noteBookPageCriticErrorPresenter : <SpComposablePresenter>
+	noteBookPageRuleCommentPresenter : <SpComposablePresenter>
 
-
-    Implementation Points
 "
 Class {
 	#name : #CBCriticBrowser,
