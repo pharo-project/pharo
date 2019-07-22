@@ -480,8 +480,9 @@ BISettingPreviewer >> methodProvider [
 { #category : #customization }
 BISettingPreviewer >> methodProvider: anObject [
 	methodProvider := anObject.
-	settingsDropList items: self getSettings.
-	methodDropList items: self getMethodsToPrettyPrint
+	settingsDropList items: self getSettings asOrderedCollection.
+	methodDropList items: self getMethodsToPrettyPrint asOrderedCollection.
+	methodDropList selectedIndex: 1.
 ]
 
 { #category : #'system-Announcement' }
