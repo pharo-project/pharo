@@ -45,6 +45,36 @@ RBPullUpMethodTest >> testPullUpClassMethod [
 ]
 
 { #category : #tests }
+RBPullUpMethodTest >> testPullUpInAHighHierarchyClass [
+	| class superClass |
+	model 
+		defineClass: 'Object subclass: #SomeClass instanceVariableNames: '''' classVariableNames: ''Foo'' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	model 
+		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	model 
+		defineClass: 'Subclass subclass: #Foo1 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	model 
+		defineClass: 'Subclass subclass: #Foo2 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	class := model classNamed: #Foo1.
+	superClass := model classNamed: #SomeClass .
+	class compile: 'yourself ^1' classified: #(#accessing).
+	self executeRefactoring: (RBPullUpMethodRefactoring 
+				model: model
+				pullUp: #(#yourself)
+				from: class 
+				to: superClass ).
+	self assert: (superClass parseTreeFor: #yourself) 
+				equals: (self parseMethod: 'yourself ^1').
+	self deny: (class directlyDefinesMethod: #yourself).
+	class := model classNamed: #Foo2.
+	self deny: (class directlyDefinesMethod: #yourself).
+	class := model classNamed: #Subclass.
+	self assert: (class directlyDefinesMethod: #yourself).
+	self assert: (class parseTreeFor: #yourself) 
+				equals: ((model classNamed: #Object) parseTreeFor: #yourself)
+]
+
+{ #category : #tests }
 RBPullUpMethodTest >> testPullUpMethodWithCopyOverriddenMethodsDown [
 	| refactoring |
 	self proceedThroughWarning: 

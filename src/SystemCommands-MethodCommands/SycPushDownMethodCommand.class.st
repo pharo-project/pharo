@@ -7,13 +7,6 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
-{ #category : #execution }
-SycPushDownMethodCommand >> asRefactorings [
-
-	^methods collect: [:method | 
-		RBPushDownMethodRefactoring pushDown: {method selector} from: method origin]
-]
-
 { #category : #accessing }
 SycPushDownMethodCommand >> defaultMenuItemName [
 	^'Push down'
@@ -22,10 +15,5 @@ SycPushDownMethodCommand >> defaultMenuItemName [
 { #category : #execution }
 SycPushDownMethodCommand >> execute [
 
-	self executeRefactorings
-]
-
-{ #category : #testing }
-SycPushDownMethodCommand >> isComplexRefactoring [
-	^true
+	(RBGenericInteractLayer method: methods) executePushDown 
 ]

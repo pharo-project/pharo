@@ -7,13 +7,6 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
-{ #category : #execution }
-SycPushUpMethodCommand >> asRefactorings [
-
-	^methods collect: [:method | 
-		RBPullUpMethodRefactoring pullUp: {method selector} from: method origin]
-]
-
 { #category : #accessing }
 SycPushUpMethodCommand >> defaultMenuItemName [
 	^'Push up'
@@ -22,10 +15,5 @@ SycPushUpMethodCommand >> defaultMenuItemName [
 { #category : #execution }
 SycPushUpMethodCommand >> execute [
 
-	self executeRefactorings
-]
-
-{ #category : #testing }
-SycPushUpMethodCommand >> isComplexRefactoring [
-	^true
+	(RBGenericInteractLayer method: methods) executePushUp 
 ]

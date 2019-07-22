@@ -37,12 +37,16 @@ Class {
 		'previewResult',
 		'upButton',
 		'downButton',
-		'methodName'
+		'methodName',
+		'editParameter',
+		'okEdit',
+		'editerArgumentList',
+		'refactoring'
 	],
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #specs }
+{ #category : #'as yet unclassified' }
 SycMethodNameEditor class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add:
@@ -67,16 +71,57 @@ SycMethodNameEditor class >> defaultSpec [
 				yourself);
 		add:
 			(SpBoxLayout newHorizontal
+				add: 'Edit'
+					withConstraints: [ :aConstraints | aConstraints width: 80 ];
+				add: #editParameter; 
+				add:
+					(SpBoxLayout newVertical
+						add: #okEdit
+							withConstraints: [ :aConstraints | aConstraints height: 20 ];
+						yourself)
+					withConstraints: [ :aConstraints | aConstraints width: 30 ];
+				yourself);
+		add:
+			(SpBoxLayout newHorizontal
 				add: 'Preview'
 					withConstraints: [ :aConstraints | aConstraints width: 80 ];
 				add: #previewResult yourself);
 		yourself
 ]
 
-{ #category : #specs }
+{ #category : #'as yet unclassified' }
+SycMethodNameEditor class >> example2 [
+	<script>
+	self
+		openOn:
+			(RBMethodName
+				selector: (RBExtractMethodRefactoring >> #validateRenameOf:to:) selector
+				arguments: ((RBExtractMethodRefactoring >> #validateRenameOf:to:) ast arguments collect: #name))
+]
+
+{ #category : #'as yet unclassified' }
 SycMethodNameEditor class >> openOn: aMethod [
-	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
-	^ (self on: aMethod) openModalWithSpec
+	|temp|
+	temp := (self on: aMethod).
+	temp initializeEditerArgumentList.
+	^ temp openModalWithSpec
+]
+
+{ #category : #'as yet unclassified' }
+SycMethodNameEditor class >> openOn: aMethod withRefactoring: refactoring [
+	|temp|
+	temp := (self on: aMethod).
+	temp refactoring: refactoring.
+	temp initializeEditerArgumentList.
+	^ temp openModalWithSpec
+]
+
+{ #category : #services }
+SycMethodNameEditor >> alert: aString [
+	"Display a message for the user to read and then dismiss."
+
+	aString isEmptyOrNil
+		ifFalse: [ UIManager default alert: aString ]
 ]
 
 { #category : #accessing }
@@ -87,6 +132,33 @@ SycMethodNameEditor >> argumentsList [
 { #category : #accessing }
 SycMethodNameEditor >> downButton [
 	^ downButton
+]
+
+{ #category : #services }
+SycMethodNameEditor >> editParameter [
+	| selected newName|
+	newName := editParameter text asSymbol.
+	selected := argumentsList items at: (argumentsList selection selectedIndex).
+	newName = selected ifTrue: [ ^ self ].
+	refactoring parameterMap: editerArgumentList;
+		   		   validateRenameOf: selected to: newName.
+	editerArgumentList at: (self getKeyOf: selected) put: newName.
+	self updateItem: selected to: newName.
+	self updateLabel
+]
+
+{ #category : #services }
+SycMethodNameEditor >> getKeyOf: aValue [
+	|keyOfValue|
+	editerArgumentList keysAndValuesDo: [ :key :value | 
+		aValue = value ifTrue: [ keyOfValue := key ] ].
+	^ keyOfValue
+]
+
+{ #category : #services }
+SycMethodNameEditor >> getParametersOrder [
+	^ argumentsList items collect: [ :each | self getKeyOf: each ]
+	
 ]
 
 { #category : #initialization }
@@ -102,7 +174,14 @@ SycMethodNameEditor >> initializeDialogWindow: aModalPresenter [
 		title: 'Method name editor'
 ]
 
-{ #category : #initialization }
+{ #category : #services }
+SycMethodNameEditor >> initializeEditerArgumentList [
+	editerArgumentList := Dictionary new.
+	methodName arguments do: [ :each | 
+		editerArgumentList at: each put: each ]
+]
+
+{ #category : #services }
 SycMethodNameEditor >> initializePresenter [
 	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
 	upButton action: [ self pushUpSelectedArgument ].
@@ -115,10 +194,14 @@ SycMethodNameEditor >> initializePresenter [
 				ifEmpty: [ upButton disable.
 					downButton disable ] ].
 
-	argumentsList items: methodName arguments
+	argumentsList items: methodName arguments.
+	self updateEditTemp.
+	argumentsList whenSelectionChangedDo: [ self updateEditTemp ].
+	okEdit action: [ self validateEditParameter ]
+
 ]
 
-{ #category : #initialization }
+{ #category : #services }
 SycMethodNameEditor >> initializeWidgets [
 	selectorInput := self instantiate: SpTextInputFieldPresenter.
 	argumentsList := self newList.
@@ -130,7 +213,17 @@ SycMethodNameEditor >> initializeWidgets [
 	upButton label: 'Up'.
 	downButton label: 'Dn'.
 	selectorInput text: methodName selector.
-	previewResult label: methodName methodName
+	previewResult label: methodName methodName.
+	editParameter := (self instantiate: SpTextInputFieldPresenter) autoAccept: true.
+	okEdit := self newButton.
+	
+	okEdit label: 'Ok'
+	
+]
+
+{ #category : #services }
+SycMethodNameEditor >> okEdit [
+	^ okEdit
 ]
 
 { #category : #accessing }
@@ -160,12 +253,24 @@ SycMethodNameEditor >> pushUpSelectedArgument [
 	self updateLabel
 ]
 
-{ #category : #action }
+{ #category : #services }
+SycMethodNameEditor >> refactoring [
+	^ refactoring
+]
+
+{ #category : #services }
+SycMethodNameEditor >> refactoring: anObject [
+	refactoring := anObject 
+]
+
+{ #category : #services }
 SycMethodNameEditor >> renameMethodAndClose: presenter [
 	^ self previewResult label = '(invalid)'
 		ifTrue: [ self inform: 'Invalid method name' ]
-		ifFalse: [ methodName
-				arguments: argumentsList items;
+		ifFalse: [
+			refactoring parameterMap: editerArgumentList.
+			methodName
+				arguments: self getParametersOrder;
 				selector: selectorInput text.
 			presenter
 				beOk;
@@ -187,7 +292,21 @@ SycMethodNameEditor >> upButton [
 	^ upButton
 ]
 
-{ #category : #action }
+{ #category : #services }
+SycMethodNameEditor >> updateEditTemp [
+	| selectedIndex |
+	selectedIndex := argumentsList selection selectedIndex.
+	selectedIndex = 0 ifFalse: [ 
+	editParameter text: (argumentsList items at: selectedIndex)]
+]
+
+{ #category : #services }
+SycMethodNameEditor >> updateItem: selected to: newName [
+	argumentsList items doWithIndex: [ :each :index | 
+		each = selected ifTrue: [ argumentsList items at: index put: newName  ] ]
+]
+
+{ #category : #services }
 SycMethodNameEditor >> updateLabel [
 	"Update the new method name to display to the user when the user change its name or order of the arguments."
 
@@ -195,5 +314,15 @@ SycMethodNameEditor >> updateLabel [
 		label:
 			(RBMethodName
 				selector: self selectorInput text
-				arguments: self argumentsList items) methodName
+				arguments: argumentsList items) methodName
+]
+
+{ #category : #services }
+SycMethodNameEditor >> validateEditParameter [
+	self previewResult label = '(invalid)'
+		ifTrue: [ self alert: 'You can not rename parameters if you have an invalid method name' ]
+		ifFalse: [ [ self editParameter  ]
+ 			on: RBRefactoringError 
+			do: [:ex | self alert: ex messageText] 
+	]
 ]

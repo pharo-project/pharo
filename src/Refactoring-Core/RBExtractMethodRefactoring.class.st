@@ -15,7 +15,9 @@ Class {
 		'extractedParseTree',
 		'modifiedParseTree',
 		'parameters',
-		'needsReturn'
+		'needsReturn',
+		'selectorNewMethod',
+		'parameterMap'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -130,7 +132,7 @@ RBExtractMethodRefactoring >> createTemporariesInExtractedMethodFor: assigned [
 RBExtractMethodRefactoring >> existingSelector [
 	"Try to find an existing method instead of creating a new one"
 
-	^class allSelectors detect: [:each | self isMethodEquivalentTo: each]
+	^ class allSelectors detect: [:each | self isMethodEquivalentTo: each]
 		ifNone: [nil]
 ]
 
@@ -169,7 +171,7 @@ RBExtractMethodRefactoring >> extractMethod [
 				ifFalse: [ RBSequenceNode
 						temporaries: #()
 						statements: (OrderedCollection with: extractedParseTree) ]).
-	extractedParseTree body temporaries isEmpty not
+	extractedParseTree body temporaries isNotEmpty
 		ifTrue: [ extractedParseTree body temporaries: #() ].
 	extractedParseTree source: extractCode.
 	parseTree := class parseTreeFor: selector.
@@ -204,6 +206,11 @@ RBExtractMethodRefactoring >> extractMethod [
 				with: newCode
 				in: parseTree
 				onInterval: extractionInterval ]
+]
+
+{ #category : #accessing }
+RBExtractMethodRefactoring >> extractedParseTree [
+	^ extractedParseTree
 ]
 
 { #category : #transforming }
@@ -241,8 +248,11 @@ RBExtractMethodRefactoring >> getNewMethodName [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> isMethodEquivalentTo: aSelector [ 
+	
 	selector == aSelector ifTrue: [^false].
+	"Modificar segun la comparacion de los nodos en todo caso no deberia existir esta validacion"
 	aSelector numArgs ~~ parameters size ifTrue: [^false].
+	
 	(self isParseTreeEquivalentTo: aSelector) ifFalse: [^false].
 	self reorderParametersToMatch: aSelector.
 	^true
@@ -295,6 +305,21 @@ RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: newSend in: modifiedParseTree
 ]
 
+{ #category : #accessing }
+RBExtractMethodRefactoring >> parameterMap [
+	^ parameterMap
+]
+
+{ #category : #accessing }
+RBExtractMethodRefactoring >> parameterMap: aDictionary [
+	parameterMap := aDictionary 
+]
+
+{ #category : #transforming }
+RBExtractMethodRefactoring >> parameters: anOrderedCollection [
+	parameters := anOrderedCollection 
+]
+
 { #category : #transforming }
 RBExtractMethodRefactoring >> placeholderNode [
 	| node |
@@ -328,6 +353,25 @@ RBExtractMethodRefactoring >> remainingTemporaries [
 ]
 
 { #category : #transforming }
+RBExtractMethodRefactoring >> renameAllParameters [
+	parameterMap ifNotNil: [
+		parameterMap keysAndValuesDo: [ :key : value | 
+			key ~= value ifTrue: [ self renameParameterWith: key to: value ]]
+	]
+]
+
+{ #category : #'as yet unclassified' }
+RBExtractMethodRefactoring >> renameNode: aParseTree withOldName: oldName toWithName: newName [ 
+	(RBParseTreeRewriter rename: oldName to: newName) executeTree: aParseTree
+]
+
+{ #category : #'as yet unclassified' }
+RBExtractMethodRefactoring >> renameParameterWith: oldName to: newName [
+	self renameNode: extractedParseTree withOldName: oldName toWithName: newName.
+	
+]
+
+{ #category : #transforming }
 RBExtractMethodRefactoring >> reorderParametersToMatch: aSelector [ 
 	| tree dictionary |
 	tree := class parseTreeFor: aSelector.
@@ -339,6 +383,11 @@ RBExtractMethodRefactoring >> reorderParametersToMatch: aSelector [
 						ifAbsent: 
 							[self 
 								refactoringFailure: 'An internal error occured, please report this error.']]
+]
+
+{ #category : #accessing }
+RBExtractMethodRefactoring >> selectorNewMethod: anObject [
+	selectorNewMethod := anObject 
 ]
 
 { #category : #printing }
@@ -360,11 +409,38 @@ RBExtractMethodRefactoring >> transform [
 	| existingSelector |
 	existingSelector := self existingSelector.
 	self nameNewMethod: (existingSelector isNil 
-				ifTrue: [self getNewMethodName]
+				ifTrue: [
+	selectorNewMethod ifNil: [ self getNewMethodName]]
 				ifFalse: [existingSelector]).
 	existingSelector isNil 
 		ifTrue: 
-			[class compile: extractedParseTree newSource
+			[ self renameAllParameters.
+			class compile: extractedParseTree newSource
 				withAttributesFrom: (class methodFor: selector)].
 	class compileTree: modifiedParseTree
+]
+
+{ #category : #'as yet unclassified' }
+RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldName toWithName: newName [ 
+	|conditions block|
+	conditions := ((RBCondition isValidInstanceVariableName: newName for: class)
+		& (RBCondition definesSelector: selector in: class)
+		& (RBCondition definesInstanceVariable: newName in: class) not 
+		& (RBCondition definesClassVariable: newName in: class) not).
+	conditions check
+		ifFalse: [ block := conditions errorBlock.
+			block
+				ifNotNil: [ self refactoringError: conditions errorString with: block ]
+				ifNil: [ self refactoringError: conditions errorString ] ].
+	(parameterMap values includes: newName) ifTrue: [
+		self refactoringError: newName asString , ' is already defined as parameter' ].
+	(aParseTree whoDefines: newName)
+		ifNotNil: [ self refactoringError: newName asString , ' is already defined' ].
+	(aParseTree allDefinedVariables includes: newName)
+		ifTrue: [ self refactoringError: newName asString , ' is already defined' ]
+]
+
+{ #category : #'as yet unclassified' }
+RBExtractMethodRefactoring >> validateRenameOf: oldName to: newName [
+	self validateRenameNode: extractedParseTree withOldName: oldName toWithName: newName 
 ]
