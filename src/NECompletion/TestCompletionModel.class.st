@@ -8,7 +8,8 @@ Class {
 		'clazz',
 		'node',
 		'completionToken',
-		'entries'
+		'entries',
+		'sorter'
 	],
 	#category : #'NECompletion-New'
 }
@@ -77,8 +78,9 @@ TestCompletionModel >> hasMessage [
 TestCompletionModel >> initEntries [
 	| producer temp |
 	producer := TestMatchedNodeProducer new.
+	self sorter: TestAlphabeticSorter new.
 	producer completionContext: clazz.
-	temp := (producer completionListForNode: node) asOrderedCollection. 
+	temp := self sortList: (producer completionListForNode: node).
 	^ temp collect: [ :each | TestCompletionEntry contents: each ]
 ]
 
@@ -126,6 +128,23 @@ TestCompletionModel >> node: anObject [
 { #category : #accessing }
 TestCompletionModel >> notEmpty [
 	^ self entries isNotEmpty
+]
+
+{ #category : #accessing }
+TestCompletionModel >> setUp [
+	sorter := TestSorter new.
+]
+
+{ #category : #accessing }
+TestCompletionModel >> sortList: aList [
+	"this is where the sorting strategy is set"
+	^ sorter sortCompletionList: aList asOrderedCollection
+]
+
+{ #category : #accessing }
+TestCompletionModel >> sorter: aSorter [
+	"the functionality allowing to hook up the sorter"
+	sorter := aSorter
 ]
 
 { #category : #accessing }
