@@ -1,5 +1,10 @@
 Extension { #name : #CompiledCode }
 
+{ #category : #'*OpalCompiler-Core' }
+CompiledCode >> ast [
+	^ self subclassResponsibility
+]
+
 { #category : #'*opalcompiler-core' }
 CompiledCode >> compiler [
 	^self methodClass 

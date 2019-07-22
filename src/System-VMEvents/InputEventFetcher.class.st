@@ -99,10 +99,8 @@ InputEventFetcher class >> deinstall [
 	Default
 		ifNotNil: [
 			Default shutDown.
-			SessionManager default unregisterClassNamed: Default class name.
 			Default := nil].
 
-	SessionManager default unregisterClassNamed: self name
 ]
 
 { #category : #'class initialization' }
@@ -110,25 +108,6 @@ InputEventFetcher class >> install [
 	"InputEventFetcher install"
 	Default := self new.
 	Default startUp.
-
-	SessionManager default
-		registerSystemClassNamed: self name 
-		atPriority: 40.
-
-]
-
-{ #category : #'system startup' }
-InputEventFetcher class >> shutDown [
-	"InputEventFetcher shutDown"
-	
-	self default shutDown
-]
-
-{ #category : #'system startup' }
-InputEventFetcher class >> startUp [
-	"InputEventFetcher startUp"
-	
-	self default startUp
 ]
 
 { #category : #private }

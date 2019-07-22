@@ -32,10 +32,8 @@ ReProperMethodProtocolNameRule >> badMethodProtocolNames [
 ]
 
 { #category : #running }
-ReProperMethodProtocolNameRule >> check: aMethod forCritiquesDo: aCritiqueBlock [
-
-	(self badMethodProtocolNames includes: aMethod category)
-   		ifTrue: [ aCritiqueBlock cull: (self critiqueFor: aMethod) ]
+ReProperMethodProtocolNameRule >> basicCheck: aMethod [
+	^ self badMethodProtocolNames includes: aMethod category
 ]
 
 { #category : #'private - accessing' }

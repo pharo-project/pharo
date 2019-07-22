@@ -2,16 +2,11 @@
 A WorldMorph is a special morph that represents the world.
 It is a paste up and it holds active hand.
 
-A World, the entire Smalltalk screen, is a PasteUpMorph.  A World responds true to isWorld.
+A World, the entire Smalltalk screen, is a PasteUpMorph.  A World responds true to #isWorld.
 "
 Class {
 	#name : #WorldMorph,
 	#superclass : #PasteUpMorph,
-	#instVars : [
-		'osWindow',
-		'osWindowMutex',
-		'session'
-	],
 	#classVars : [
 		'AllowDropFiles',
 		'CursorOwnerWorld',
@@ -42,7 +37,7 @@ WorldMorph class >> allowDropFiles: anObject [
 
 { #category : #'system startup' }
 WorldMorph class >> cleanUp [
-	self currentWorld cleanseOtherworldlySteppers.
+	self currentWorld cleanseOtherworldlySteppers
 ]
 
 { #category : #'extra worlds' }
@@ -62,7 +57,7 @@ WorldMorph class >> cursorOwnerWorld: aWorld [
 { #category : #setting }
 WorldMorph class >> defaultWorldColor [
 
-	^ Color r: 0.937 g: 0.937 b: 0.937.
+	^ Color r: 0.937 g: 0.937 b: 0.937
 
 ]
 
@@ -88,7 +83,7 @@ WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 		label: 'Display scale factor';
 		description: 'Specify scale factor for UI elements. This setting does not affect defined font sizes.';
 		target: self;
-		range: (0.3 to: 8 by: 0.1).	
+		range: (0.3 to: 8 by: 0.1)
 	
 ]
 
@@ -102,9 +97,7 @@ WorldMorph class >> doOneCycle [
 	(self currentWorld isNotNil and: [(self extraWorldList includes: self currentWorld) not]) ifTrue: [
 		self currentWorld doOneCycle.
 		ActiveHand := self currentWorld activeHand
-	].
-	
-	
+	]
 ]
 
 { #category : #'extra worlds' }
@@ -113,46 +106,18 @@ WorldMorph class >> extraWorldList [
 	^ ExtraWorldList
 ]
 
-{ #category : #'initialize-release' }
-WorldMorph class >> initialize [
-	SessionManager default registerGuiClassNamed: self name.
-]
-
 { #category : #'extra worlds' }
 WorldMorph class >> removeExtraWorld: aWorld [
 	ExtraWorldList := self extraWorldList copyWithout: aWorld.
-	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil. ]
+	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ]
 	
 ]
 
-{ #category : #'system startup' }
-WorldMorph class >> shutDown [
-	self currentWorld ifNotNil: [:world | world triggerEvent: #aboutToLeaveWorld ].
-	self extraWorldList do: [:world | world triggerEvent: #aboutToLeaveWorld ].
-]
-
-{ #category : #'system startup' }
-WorldMorph class >> startUp [
-	self currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
-	self extraWorldList do: #restoreMorphicDisplay.
-]
-
-{ #category : #cursor }
-WorldMorph >> activateCursor: aCursor [
-	osWindow ifNil: [
-		aCursor beCursor
-	] ifNotNil: [
-		osWindow setMouseCursor: aCursor
-	]
-]
-
-{ #category : #cursor }
+{ #category : #operations }
 WorldMorph >> activateCursor: aCursor withMask: maskForm [
-	osWindow ifNil: [
-		aCursor beCursorWithMask: maskForm
-	] ifNotNil: [
-		osWindow setMouseCursor: aCursor mask: maskForm
-	]
+
+	worldState worldRenderer activateCursor: aCursor withMask: maskForm
+
 ]
 
 { #category : #structure }
@@ -163,20 +128,16 @@ WorldMorph >> activeHand [
 
 { #category : #'world state' }
 WorldMorph >> activeHand: aHandMorph [
-	"temporarily retained for old main event loops"
-	worldState activeHand: aHandMorph.
+	"Temporarily retained for old main event loops"
+	worldState activeHand: aHandMorph
 
 
 ]
 
 { #category : #accessing }
 WorldMorph >> actualScreenSize [
-	"Obtains the screen size from VM. Since this may change depending on which world is installed 
-	(worlds can change, yes), this needs to be delegated here allowing subclasses to redefine the way 
-	they take screen size."
-	<primitive: 106>
 
-	self primitiveFailed
+	^ self worldState worldRenderer actualScreenSize
 ]
 
 { #category : #'alarms-scheduler' }
@@ -189,7 +150,7 @@ WorldMorph >> addAlarm: aSelector withArguments: argArray for: aTarget at: sched
 WorldMorph >> addAllMorphs: array [
 
 	super addAllMorphs: array.
-	array do: [:m | self startSteppingSubmorphsOf: m].
+	array do: [:m | self startSteppingSubmorphsOf: m]
 
 ]
 
@@ -221,11 +182,6 @@ WorldMorph >> allMorphsDo: aBlock [
 WorldMorph >> announcer [
 	WorldAnnouncer ifNil: [ WorldAnnouncer := Announcer new ].
 	^ WorldAnnouncer
-]
-
-{ #category : #'world state' }
-WorldMorph >> assuredCanvas [
-	^ worldState assuredCanvas
 ]
 
 { #category : #cursor }
@@ -316,7 +272,7 @@ WorldMorph >> discoveredWorldMenu [
 { #category : #accessing }
 WorldMorph >> displayArea [
 
-	^ Display usableArea.
+	^ self worldState worldRenderer usableArea.
 ]
 
 { #category : #geometry }
@@ -327,6 +283,7 @@ WorldMorph >> displayScaleFactor [
 
 { #category : #'world state' }
 WorldMorph >> displayWorld [
+
 	worldState displayWorld: self submorphs: submorphs
 ]
 
@@ -362,8 +319,7 @@ WorldMorph >> extent: aPoint [
 	super extent: aPoint.
 	worldState viewBox
 		ifNotNil: [ 
-			worldState canvas: nil.
-			worldState viewBox: bounds ]
+			worldState canvas: nil ]
 ]
 
 { #category : #'project state' }
@@ -381,7 +337,7 @@ WorldMorph >> fullContainsPoint: pt [
 WorldMorph >> fullRepaintNeeded [
 
 	worldState doFullRepaint.
-	self  windowsSatisfying: [:w | w makeMeVisible. false].
+	self windowsSatisfying: [:w | w makeMeVisible. false]
 
 
 ]
@@ -416,7 +372,7 @@ WorldMorph >> initialize [
 	
 	"subscribe to the tools registry to update the world menu when needed"
 	Smalltalk tools whenToolRegistered: [ :tool :toolName | WorldState defaultWorldMenu ].
-	Smalltalk tools whenToolUnregistered: [ :tool :toolName | WorldState defaultWorldMenu ].
+	Smalltalk tools whenToolUnregistered: [ :tool :toolName | WorldState defaultWorldMenu ]
 ]
 
 { #category : #'change reporting' }
@@ -471,16 +427,6 @@ WorldMorph >> mouseDown: evt [
 	self currentWindow ifNotNil: [ :topWindow | SystemWindow passivateTopWindow ]
 ]
 
-{ #category : #geometry }
-WorldMorph >> position: aPoint [
-	"Prevent moving a world (e.g. via HandMorph>>specialGesture:)"
-
-	super position: aPoint.
-	self viewBox ifNotNil: [:viewBox | self viewBox: (aPoint extent:  viewBox extent)].
-
-
-]
-
 { #category : #printing }
 WorldMorph >> printOn: aStream [
 	"Reimplemented to add a tag showing that the receiver is currently functioning as a 'world', if it is"
@@ -492,7 +438,8 @@ WorldMorph >> printOn: aStream [
 { #category : #private }
 WorldMorph >> privateMoveBy: delta [
 	super privateMoveBy: delta.
-	worldState viewBox ifNotNil: [ worldState viewBox: bounds ]
+
+	
 ]
 
 { #category : #'event handling' }
@@ -526,6 +473,13 @@ WorldMorph >> resetWorldMenu [
 
 ]
 
+{ #category : #'world state' }
+WorldMorph >> restoreMorphicDisplay [
+
+	worldState worldRenderer restoreMorphicDisplay
+	
+]
+
 { #category : #stepping }
 WorldMorph >> runLocalStepMethods [
 
@@ -546,7 +500,7 @@ WorldMorph >> sleep [
 	worldState canvas ifNil: [^ self  "already called (clean this up)"].
 	Cursor normal show.	"restore the normal cursor"
 	worldState canvas: nil.		"free my canvas to save space"
-	self fullReleaseCachedState.
+	self fullReleaseCachedState
 
 ]
 
@@ -608,7 +562,7 @@ WorldMorph >> viewBox: newViewBox [
 
 	(self viewBox isNil or: [ self viewBox extent ~= newViewBox extent ])
 		ifTrue: [ worldState canvas: nil ].
-	worldState viewBox: newViewBox.
+
 	super viewBox: newViewBox.
 	worldState handsDo: [ :hand | hand releaseKeyboardFocus ].
 	self fullRepaintNeeded
@@ -648,4 +602,10 @@ WorldMorph >> world [
 WorldMorph >> worldMenu [
 	^ worldState worldMenu
 	
+]
+
+{ #category : #accessing }
+WorldMorph >> worldState [
+	
+	^ worldState 
 ]

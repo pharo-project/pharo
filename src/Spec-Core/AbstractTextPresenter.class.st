@@ -331,29 +331,6 @@ AbstractTextPresenter >> initialize [
 	self registerEvents
 ]
 
-{ #category : #NOCompletion }
-AbstractTextPresenter >> isCodeCompletionAllowed [
-	"Return if code completion is allowed"
-	
-	"self 
-		deprecated: 'The forCode functionality has moved to TextCodePresenter, please use it instead TextPresenter.' 
-		on: '2019-04-05' 
-		in: #Pharo8"
-		
-	^ false
-]
-
-{ #category : #api }
-AbstractTextPresenter >> isCodeCompletionAllowed: aBoolean [
-	"<api: #boolean getter: #isCodeCompletionAllowed registration: #whenCodeCompletionAllowedChanged:>"
-	"Set if code completion is allowed"
-	
-	"self 
-		deprecated: 'The forCode functionality has moved to TextCodePresenter, please use it instead TextPresenter.' 
-		on: '2019-04-05' 
-		in: #Pharo8"
-]
-
 { #category : #api }
 AbstractTextPresenter >> isForSmalltalkCode [
 

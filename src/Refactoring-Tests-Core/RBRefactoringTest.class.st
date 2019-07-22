@@ -435,6 +435,13 @@ RBRefactoringTest >> shouldWarn: aRefactoring [
 		raise: RBRefactoringWarning
 ]
 
+{ #category : #private }
+RBRefactoringTest >> shouldntWarn: aRefactoring [ 
+	self 
+		shouldnt: [ self executeRefactoring: aRefactoring ]
+		raise: RBRefactoringWarning
+]
+
 { #category : #tests }
 RBRefactoringTest >> testConditions [
 	| condition newCondition |

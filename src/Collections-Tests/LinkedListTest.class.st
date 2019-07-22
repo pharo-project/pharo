@@ -109,9 +109,9 @@ LinkedListTest >> collectionWithSortableElements [
 
 { #category : #requirements }
 LinkedListTest >> collectionWithoutEqualElements [
+	" return a collection not including equal elements "
 
-" return a collection not including equal elements "
-	^collectionWithoutEqualElements 
+	^ collectionWithoutEqualElements
 ]
 
 { #category : #requirements }

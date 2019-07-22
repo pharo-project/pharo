@@ -20,7 +20,7 @@ BIArrayExpressionTest >> basicConfiguration [
 
 { #category : #configurations }
 BIArrayExpressionTest >> maxLineLengthConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -37,7 +37,7 @@ BIArrayExpressionTest >> maxLineLengthConfiguration [
 
 { #category : #configurations }
 BIArrayExpressionTest >> periodAsTerminatorConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -56,7 +56,7 @@ BIArrayExpressionTest >> periodAsTerminatorConfiguration [
 
 { #category : #configurations }
 BIArrayExpressionTest >> periodAsTerminatorMessageConfiguration2 [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"

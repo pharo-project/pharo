@@ -83,47 +83,66 @@ RBNamespace >> addPool: aString to: aRBClass [
 
 { #category : #accessing }
 RBNamespace >> allBehaviorsDo: aBlock [
+
 	| seen evalBlock |
+
 	seen := Set new.
 	evalBlock := [ :each | 
-		seen add: each first name.
-		aBlock
-			value: each first;
-			value: each last ].
+	seen add: each first name.
+	aBlock
+		value: each first;
+		value: each last
+	].
 	newClasses do: evalBlock.
 	changedClasses do: evalBlock.
-	environment classesDo: [ :each | 
-		each isObsolete ifFalse: [
-			| class |
-			class := each instanceSide.
-			((seen includes: class name) or: [ self hasRemoved: (self classNameFor: class) ]) ifFalse: [
-				(class := self classFor: each) isNil ifFalse: [
-					seen add: class name.
-					aBlock
-						value: class;
-						value: class classSide ] ] ] ]
+	environment
+		classesDo: [ :each | 
+			each isObsolete
+				ifFalse: [ | class |
+
+					class := each instanceSide.
+					( ( seen includes: class name ) or: [ self hasRemoved: ( self classNameFor: class ) ] )
+						ifFalse: [ ( class := self classFor: each )
+								ifNotNil: [ seen add: class name.
+									aBlock
+										value: class;
+										value: class classSide
+									]
+							]
+					]
+			]
 ]
 
 { #category : #accessing }
 RBNamespace >> allClassesDo: aBlock [
+
 	| seen evalBlock |
+
 	seen := Set new.
 	evalBlock := [ :each | 
-		seen add: each first name.
-		aBlock
-			value: each first;
-			value: each last ].
+	seen add: each first name.
+	aBlock
+		value: each first;
+		value: each last
+	].
 	newClasses do: evalBlock.
 	changedClasses do: evalBlock.
-	environment classesDo: [ :each | 
-		each isObsolete ifFalse: [
-			| class |
-			class := each instanceSide.
-			((seen includes: class name) or: [ self hasRemoved: (self classNameFor: class) ]) ifFalse: [
-				(class := self classFor: each) isNil ifFalse: [
-					seen add: class name.
-					aBlock value: class;
-						    value: class classSide ] ] ] ]
+	environment
+		classesDo: [ :each | 
+			each isObsolete
+				ifFalse: [ | class |
+
+					class := each instanceSide.
+					( ( seen includes: class name ) or: [ self hasRemoved: ( self classNameFor: class ) ] )
+						ifFalse: [ ( class := self classFor: each )
+								ifNotNil: [ seen add: class name.
+									aBlock
+										value: class;
+										value: class classSide
+									]
+							]
+					]
+			]
 ]
 
 { #category : #accessing }
@@ -172,10 +191,10 @@ RBNamespace >> changes [
 ]
 
 { #category : #'accessing-classes' }
-RBNamespace >> classFor: aBehavior [ 
-	aBehavior isNil 
-		ifTrue: [ ^ nil ].
-	^ aBehavior isMeta 
+RBNamespace >> classFor: aBehavior [
+
+	aBehavior ifNil: [ ^ nil ].
+	^ aBehavior isMeta
 		ifTrue: [ self metaclassNamed: aBehavior instanceSide name ]
 		ifFalse: [ self classNamed: aBehavior instanceSide name ]
 ]
@@ -186,30 +205,27 @@ RBNamespace >> classNameFor: aBehavior [
 ]
 
 { #category : #'accessing-classes' }
-RBNamespace >> classNamed: aSymbol [ 
+RBNamespace >> classNamed: aSymbol [
+
 	| class classes index |
-	aSymbol isNil ifTrue: [ ^ nil ].
-	(self hasRemoved: aSymbol) ifTrue: [ ^ nil ].
-	(newClasses includesKey: aSymbol) ifTrue: [ ^ (newClasses at: aSymbol) first ].
-	(changedClasses includesKey: aSymbol) ifTrue: [ ^ (changedClasses at: aSymbol) first ].
-	class := environment 
-		at: aSymbol
-		ifAbsent: [ nil ].
-	(class isBehavior or: [ class isTrait ]) ifTrue: 
-		[ classes := self createNewClassFor: class.
-		^ class isMeta 
-			ifTrue: [ classes last ]
-			ifFalse: [ classes first ] ].
-	index := aSymbol 
-		indexOfSubCollection: ' class'
-		startingAt: 1
-		ifAbsent: [ ^ nil ].
-	class := self classNamed: (aSymbol 
-			copyFrom: 1
-			to: index - 1) asSymbol.
-	^ class isNil 
-		ifTrue: [ nil ]
-		ifFalse: [ class classSide ]
+
+	aSymbol ifNil: [ ^ nil ].
+	( self hasRemoved: aSymbol )
+		ifTrue: [ ^ nil ].
+	( newClasses includesKey: aSymbol )
+		ifTrue: [ ^ ( newClasses at: aSymbol ) first ].
+	( changedClasses includesKey: aSymbol )
+		ifTrue: [ ^ ( changedClasses at: aSymbol ) first ].
+	class := environment at: aSymbol ifAbsent: [ nil ].
+	( class isBehavior or: [ class isTrait ] )
+		ifTrue: [ classes := self createNewClassFor: class.
+			^ class isMeta
+				ifTrue: [ classes last ]
+				ifFalse: [ classes first ]
+			].
+	index := aSymbol indexOfSubCollection: ' class' startingAt: 1 ifAbsent: [ ^ nil ].
+	class := self classNamed: ( aSymbol copyFrom: 1 to: index - 1 ) asSymbol.
+	^ class ifNil: [ nil ] ifNotNil: [ class classSide ]
 ]
 
 { #category : #changes }
@@ -243,26 +259,28 @@ RBNamespace >> createNewClassFor: aBehavior [
 
 { #category : #changes }
 RBNamespace >> defineClass: aString [
+
 	| change newClass newClassName |
+
 	change := changes defineClass: aString.
 	newClassName := change changeClassName.
 	newClass := self classNamed: newClassName.
-	newClass isNil
-		ifTrue: [ | newMetaclass |
+	newClass
+		ifNil: [ | newMetaclass |
+
 			self unmarkAsRemoved: newClassName.
 			newClass := modelFactory rbClass named: newClassName.
 			newMetaclass := modelFactory rbMetaclass named: newClassName.
 			newClass model: self.
 			newMetaclass model: self.
-			newClasses
-				at: newClassName
-				put: (Array with: newClass with: newMetaclass) ].
-	newClass superclass: (self classNamed: change superclassName).
-	newClass superclass isNil
-		ifTrue: [ self rootClasses add: newClass.
-			newClass classSide
-				superclass: (self classFor: Object class superclass) ]
-		ifFalse: [ newClass classSide superclass: newClass superclass classSide ].
+			newClasses at: newClassName put: ( Array with: newClass with: newMetaclass )
+			].
+	newClass superclass: ( self classNamed: change superclassName ).
+	newClass superclass
+		ifNil: [ self rootClasses add: newClass.
+			newClass classSide superclass: ( self classFor: Object class superclass )
+			]
+		ifNotNil: [ newClass classSide superclass: newClass superclass classSide ].
 	newClass instanceVariableNames: change instanceVariableNames.
 	newClass classVariableNames: change classVariableNames.
 	newClass poolDictionaryNames: change sharedPoolNames.
@@ -343,18 +361,21 @@ RBNamespace >> markAsRemoved: aClassName [
 ]
 
 { #category : #'accessing-classes' }
-RBNamespace >> metaclassNamed: aSymbol [ 
-	| class |
-	aSymbol isNil ifTrue: [^nil].
-	(self hasRemoved: aSymbol) ifTrue: [^nil].
-	(newClasses includesKey: aSymbol) 
-		ifTrue: [^(newClasses at: aSymbol) last].
-	(changedClasses includesKey: aSymbol) 
-		ifTrue: [^(changedClasses at: aSymbol) last].
+RBNamespace >> metaclassNamed: aSymbol [
 
-	class := environment at: aSymbol ifAbsent: [nil].
-	(class isBehavior or: [class isTrait])
-		ifTrue: [^ (self createNewClassFor: class) last].
+	| class |
+
+	aSymbol ifNil: [ ^ nil ].
+	( self hasRemoved: aSymbol )
+		ifTrue: [ ^ nil ].
+	( newClasses includesKey: aSymbol )
+		ifTrue: [ ^ ( newClasses at: aSymbol ) last ].
+	( changedClasses includesKey: aSymbol )
+		ifTrue: [ ^ ( changedClasses at: aSymbol ) last ].
+
+	class := environment at: aSymbol ifAbsent: [ nil ].
+	( class isBehavior or: [ class isTrait ] )
+		ifTrue: [ ^ ( self createNewClassFor: class ) last ].
 	^ nil
 ]
 

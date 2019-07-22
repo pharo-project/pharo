@@ -121,8 +121,8 @@ RBBrowserEnvironmentTest >> setUp [
 RBBrowserEnvironmentTest >> storeStringFor: aBrowserEnvironment [
 	| newEnvironment |
 	newEnvironment := Smalltalk compiler evaluate: aBrowserEnvironment storeString.
-	self assert: newEnvironment numberSelectors = aBrowserEnvironment numberSelectors.
-	self assert: (newEnvironment not & aBrowserEnvironment) numberSelectors = 0
+	self assert: newEnvironment numberSelectors equals: aBrowserEnvironment numberSelectors.
+	self assert: (newEnvironment not & aBrowserEnvironment) numberSelectors equals: 0
 	
 ]
 
@@ -134,16 +134,16 @@ RBBrowserEnvironmentTest >> testAndEnvironment [
 				selectors: #(#fullPrintString).
 	andEnvironment := objectPrintStringEnvironment & originalEnvironment.
 	self universalTestFor: andEnvironment.
-	self assert: andEnvironment numberSelectors = 1.
-	self assert: andEnvironment classNames asArray = #(#Object).
-	self assert: (andEnvironment protocolsFor: Object) size = 1.
-	self assert: (objectPrintStringEnvironment & objectPrintStringEnvironment) packages = objectPrintStringEnvironment packages.
+	self assert: andEnvironment numberSelectors equals: 1.
+	self assert: andEnvironment classNames asArray equals: #(#Object).
+	self assert: (andEnvironment protocolsFor: Object) size equals: 1.
+	self assert: (objectPrintStringEnvironment & objectPrintStringEnvironment) packages equals: objectPrintStringEnvironment packages.
 	andEnvironment := originalEnvironment 
 				& (universalEnvironment referencesTo: #printString).
 	self assert: andEnvironment numberSelectors 
-				= (originalEnvironment referencesTo: #printString) numberSelectors.
+				equals: (originalEnvironment referencesTo: #printString) numberSelectors.
 	self assert: andEnvironment classNames asSortedCollection 
-				= (originalEnvironment referencesTo: #printString) classNames 
+				equals: (originalEnvironment referencesTo: #printString) classNames 
 						asSortedCollection
 ]
 
@@ -155,16 +155,16 @@ RBBrowserEnvironmentTest >> testAndEnvironmentWithStoreOn [
 				selectors: #(#storeString).
 	andEnvironment := objectPrintStringEnvironment & originalEnvironment.
 	self universalTestFor: andEnvironment.
-	self assert: andEnvironment numberSelectors = 1.
-	self assert: andEnvironment classNames asArray = #(#Object).
-	self assert: (andEnvironment protocolsFor: Object) size = 1.
-	self assert: (objectPrintStringEnvironment & objectPrintStringEnvironment) packages = objectPrintStringEnvironment packages.
+	self assert: andEnvironment numberSelectors equals: 1.
+	self assert: andEnvironment classNames asArray equals: #(#Object).
+	self assert: (andEnvironment protocolsFor: Object) size equals: 1.
+	self assert: (objectPrintStringEnvironment & objectPrintStringEnvironment) packages equals: objectPrintStringEnvironment packages.
 	andEnvironment := originalEnvironment 
 				& (universalEnvironment referencesTo: #printString).
 	self assert: andEnvironment numberSelectors 
-				= (originalEnvironment referencesTo: #printString) numberSelectors.
+				equals: (originalEnvironment referencesTo: #printString) numberSelectors.
 	self assert: andEnvironment classNames asSortedCollection 
-				= (originalEnvironment referencesTo: #printString) classNames 
+				equals: (originalEnvironment referencesTo: #printString) classNames 
 						asSortedCollection
 ]
 
@@ -218,12 +218,12 @@ RBBrowserEnvironmentTest >> testConstructedClassEnvironment [
 	self assert: (environment includesClass: Object).
 	self assert: (environment includesClass: OrderedCollection).
 	self deny: (environment includesClass: Collection).
-	self assert: environment numberClasses = 2.
+	self assert: environment numberClasses equals: 2.
 	environment addClass: Object class.
-	self assert: environment numberClasses = 2.
+	self assert: environment numberClasses equals: 2.
 	self assert: (environment includesClass: Object class).
 	environment removeClass: self class.
-	self assert: environment numberClasses = 2
+	self assert: environment numberClasses equals: 2
 ]
 
 { #category : #testing }
@@ -235,12 +235,12 @@ RBBrowserEnvironmentTest >> testConstructedSelectorEnvironment [
 		addClass: OrderedCollection selector: #add:;
 		addClass: Collection.
 	self assert: (environment includesClass: Object).
-	self assert: (environment selectorsForClass: Object) size = 1.
+	self assert: (environment selectorsForClass: Object) size equals: 1.
 	self assert: (environment includesClass: OrderedCollection).
-	self assert: (environment selectorsForClass: OrderedCollection) size = 1.
+	self assert: (environment selectorsForClass: OrderedCollection) size equals: 1.
 	self assert: (environment includesClass: Collection).
 	self assert: (environment selectorsForClass: Collection) size 
-				= Collection selectors size.
+				equals: Collection selectors size.
 	self deny: (environment includesClass: Object class).
 	newEnvironment := environment copy.
 	newEnvironment
@@ -251,14 +251,14 @@ RBBrowserEnvironmentTest >> testConstructedSelectorEnvironment [
 	self deny: (newEnvironment includesSelector: #printString in: Object).
 	self deny: (newEnvironment includesClass: OrderedCollection).
 	self assert: (newEnvironment includesClass: Collection).
-	self assert: newEnvironment numberClasses = 2.
+	self assert: newEnvironment numberClasses equals: 2.
 	self 
-		assert: newEnvironment numberSelectors + 1 = environment numberSelectors.
+		assert: newEnvironment numberSelectors + 1 equals: environment numberSelectors.
 	newEnvironment addClass: Object class.
-	self assert: newEnvironment numberClasses = 2.
+	self assert: newEnvironment numberClasses equals: 2.
 	self assert: (newEnvironment includesClass: Object class).
 	newEnvironment removeClass: self class.
-	self assert: newEnvironment numberClasses = 2
+	self assert: newEnvironment numberClasses equals: 2
 ]
 
 { #category : #'testing-environments' }
@@ -266,8 +266,8 @@ RBBrowserEnvironmentTest >> testEnvironmentWrapper [
 	| printString wrapper |
 	printString := RBBrowserEnvironment new referencesTo: #printString.
 	wrapper := RBBrowserEnvironmentWrapper onEnvironment: printString.
-	self assert: wrapper numberSelectors = printString numberSelectors.
-	self assert: wrapper numberClasses = printString numberClasses.
+	self assert: wrapper numberSelectors equals: printString numberSelectors.
+	self assert: wrapper numberClasses equals: printString numberClasses.
 	self assert: wrapper environment == printString
 ]
 
@@ -277,7 +277,7 @@ RBBrowserEnvironmentTest >> testImplementorsMatching [
 	print := RBBrowserEnvironment new implementorsMatching: '*print*'.
 	self universalTestFor: print.
 	self assert: (print implementorsOf: #printString) numberSelectors 
-				= (RBBrowserEnvironment new implementorsOf: #printString) numberSelectors.
+				equals: (RBBrowserEnvironment new implementorsOf: #printString) numberSelectors.
 	print 
 		classesAndSelectorsDo: [:class :sel | self assert: ('*print*' match: sel)]
 ]
@@ -289,7 +289,7 @@ RBBrowserEnvironmentTest >> testMatches [
 	environmentEnvironment := RBBrowserEnvironment new 
 				referencesTo: #environment.
 	self assert: (envEnvironment referencesTo: #environment) numberSelectors 
-				= environmentEnvironment numberSelectors
+				equals: environmentEnvironment numberSelectors
 ]
 
 { #category : #'testing-environments' }
@@ -326,17 +326,17 @@ RBBrowserEnvironmentTest >> testOrEnvironment [
 	env2 := #printOn:.
 	env2 := universalEnvironment forClass: Object selectors: #(#fullPrintString).
 	env1 := universalEnvironment forClass: Object selectors: #(#printOn:).
-	self assert: (env1 | env2) numberSelectors = 2.
-	self assert: (env2 | env1) numberSelectors = 2.
+	self assert: (env1 | env2) numberSelectors equals: 2.
+	self assert: (env2 | env1) numberSelectors equals: 2.
 	self universalTestFor: env1 | env2.
-	self assert: (env1 | env1) numberSelectors = 1.
+	self assert: (env1 | env1) numberSelectors equals: 1.
 	orEnvironment := env1 | env1 not.
-	self assert: (env2 | env1) packages size = 1.
+	self assert: (env2 | env1) packages size equals: 1.
 	self universalTestFor: orEnvironment.
 	self assert: orEnvironment numberSelectors 
-				= universalEnvironment numberSelectors.
+				equals: universalEnvironment numberSelectors.
 	self assert: orEnvironment classNames asSortedCollection 
-				= universalEnvironment classNames asSortedCollection.
+				equals: universalEnvironment classNames asSortedCollection.
 	self assert: (orEnvironment protocolsFor: Object) 
 				= ((universalEnvironment protocolsFor: Object) reject: [:each| (Object allSelectorsInProtocol: each) isEmpty ])
 
@@ -368,10 +368,10 @@ RBBrowserEnvironmentTest >> testProtocolEnvironment [
 	self universalTestFor: aProtocolEnvironment.
 	self 
 		assert: (aProtocolEnvironment implementorsOf: #printString) numberSelectors 
-				= 1.
+				equals: 1.
 	size := 0.
 	aProtocolEnvironment classesDo: [:each | size := size + 1].
-	self assert: size = 1.
+	self assert: size equals: 1.
 	aProtocolEnvironment selectorsForClass: Object
 		do: 
 			[:each | 
@@ -387,7 +387,7 @@ RBBrowserEnvironmentTest >> testRemoveSelectorByAndAndNot [
 				onEnvironment: aBrowserEnvironment.
 	objectPrintString addClass: Object selector: #printString.
 	self assert: aBrowserEnvironment numberSelectors - 1 
-				= (aBrowserEnvironment & objectPrintString not) numberSelectors.
+				equals: (aBrowserEnvironment & objectPrintString not) numberSelectors.
 	self universalTestFor: aBrowserEnvironment & objectPrintString not
 ]
 
@@ -395,11 +395,11 @@ RBBrowserEnvironmentTest >> testRemoveSelectorByAndAndNot [
 RBBrowserEnvironmentTest >> testSelectMethods [
 	| environment |
 	environment := RBBrowserEnvironment new selectMethods: [:each | false].
-	self assert: environment numberSelectors = 0.
-	self assert: environment numberClasses = 0.
+	self assert: environment numberSelectors equals: 0.
+	self assert: environment numberClasses equals: 0.
 	environment := RBBrowserEnvironment new selectMethods: [:each | true].
 	self assert: environment numberSelectors 
-				= RBBrowserEnvironment new numberSelectors.
+				equals: RBBrowserEnvironment new numberSelectors.
 	environment := RBBrowserEnvironment new 
 				selectMethods: [:each | each refersToLiteral: #environment].
 	self assert: environment numberSelectors 
@@ -413,8 +413,8 @@ RBBrowserEnvironmentTest >> testSelectorEnvironment [
 	self universalTestFor: printString.
 	self deny: universalEnvironment isSelectorEnvironment.
 	self assert: printString isSelectorEnvironment.
-	self assert: printString numberSelectors = (printString referencesTo: #printString) numberSelectors.
-	self assert: printString numberClasses = (printString referencesTo: #printString) numberClasses
+	self assert: printString numberSelectors equals: (printString referencesTo: #printString) numberSelectors.
+	self assert: printString numberClasses equals: (printString referencesTo: #printString) numberClasses
 ]
 
 { #category : #testing }
@@ -434,28 +434,28 @@ RBBrowserEnvironmentTest >> testVariableEnvironmentAddRemove [
 	refs := RBVariableEnvironment new.
 	refs addClass: self class instanceVariable: 'universalEnvironment'.
 	self assert: refs numberSelectors > 0.
-	self assert: refs numberClasses = 1.
+	self assert: refs numberClasses equals: 1.
 	refs removeClass: self class instanceVariable: 'universalEnvironment'.
-	self assert: refs numberSelectors = 0.
-	self assert: refs numberClasses = 0.
+	self assert: refs numberSelectors equals: 0.
+	self assert: refs numberClasses equals: 0.
 	refs addClass: self class instanceVariableReader: 'universalEnvironment'.
 	self assert: refs numberSelectors > 0.
-	self assert: refs numberClasses = 1.
+	self assert: refs numberClasses equals: 1.
 	refs removeClass: self class instanceVariableReader: 'universalEnvironment'.
-	self assert: refs numberSelectors = 0.
-	self assert: refs numberClasses = 0.
+	self assert: refs numberSelectors equals: 0.
+	self assert: refs numberClasses equals: 0.
 	refs addClass: self class instanceVariableWriter: 'universalEnvironment'.
 	self assert: refs numberSelectors > 0.
-	self assert: refs numberClasses = 1.
+	self assert: refs numberClasses equals: 1.
 	refs removeClass: self class instanceVariableWriter: 'universalEnvironment'.
-	self assert: refs numberSelectors = 0.
-	self assert: refs numberClasses = 0.
+	self assert: refs numberSelectors equals: 0.
+	self assert: refs numberClasses equals: 0.
 	refs addClass: self class classVariable: 'ClassVariable'.
 	self assert: refs numberSelectors > 0.
-	self assert: refs numberClasses = 1.
+	self assert: refs numberClasses equals: 1.
 	refs removeClass: self class classVariable: 'ClassVariable'.
-	self assert: refs numberSelectors = 0.
-	self assert: refs numberClasses = 0
+	self assert: refs numberSelectors equals: 0.
+	self assert: refs numberClasses equals: 0
 	
 ]
 
@@ -493,7 +493,7 @@ RBBrowserEnvironmentTest >> testVariableEnvironmentInstVars [
 	self universalTestFor: classRefs.
 	self deny: universalEnvironment isVariableEnvironment.
 	self assert: refs isVariableEnvironment.
-	self assert: refs numberSelectors = (writers | readers) numberSelectors
+	self assert: refs numberSelectors equals: (writers | readers) numberSelectors
 ]
 
 { #category : #testing }

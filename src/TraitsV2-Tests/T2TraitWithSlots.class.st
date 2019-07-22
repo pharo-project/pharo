@@ -69,6 +69,39 @@ T2TraitWithSlots >> testDefiningClass [
 ]
 
 { #category : #tests }
+T2TraitWithSlots >> testDiamonProblemIsNotConflict [
+	| t1 t2 c1 t3 t4 |
+	
+	t1 := self newTrait: #T1 with: #(anSlot) uses: {}.
+	t2 := self newTrait: #T2 with: #(s2) uses: {t1}.
+	t3 := self newTrait: #T3 with: #(s3) uses: {t1}.
+	t4 := self newTrait: #T4 with: #(s4) uses: {t1}.
+
+	t1 compile: 'm1 ^ anSlot:=42'.
+
+	c1 := self newClass: #C1 with: #(aSlot s2) uses: t2 + t3.
+	c1 traitComposition: c1 traitComposition + t4.
+		
+	self assert: (c1 new perform: #m1) equals: 42.
+
+]
+
+{ #category : #tests }
+T2TraitWithSlots >> testHavingASlotAlreadyInTheHierarchy [
+	| t1 t2 c1 |
+	
+	t1 := self newTrait: #T1 with: #(anSlot) uses: {}.
+	t2 := self newTrait: #T2 with: #(s2) uses: {t1}.
+
+	t1 compile: 'm1 ^ anSlot:=42'.
+
+	c1 := self newClass: #C1 with: #(aSlot s2) uses: t2 + t1.
+		
+	self assert: (c1 new perform: #m1) equals: 42.
+
+]
+
+{ #category : #tests }
 T2TraitWithSlots >> testOwningClass [
 
 	| t1 c1 |
@@ -101,15 +134,15 @@ T2TraitWithSlots >> testRedefiningSuperclass [
 	c1 := self newClass: #C1 with: #(c d) uses: t1.
 	c2 := self newClass: #C2 superclass: c1 with: #(e) uses: t2.
 	
-	self assert: c2 instanceVariables equals: #(e).
-	self assert: c1 instanceVariables equals: #(c d).
+	self assert: c2 instVarNames equals: #(e).
+	self assert: c1 instVarNames equals: #(c d).
 	self assertCollection: (c2 allSlots collect: #name) hasSameElements: #(c d a b e g h).
 	self assertCollection: (c1 allSlots collect: #name) hasSameElements: #(c d a b).	
 
 	c1 := self newClass: #C1 with: #(c d) uses: t1.	
 
-	self assert: c2 instanceVariables equals: #(e).
-	self assert: c1 instanceVariables equals: #(c d).
+	self assert: c2 instVarNames equals: #(e).
+	self assert: c1 instVarNames equals: #(c d).
 	self assertCollection: (c2 allSlots collect: #name) hasSameElements: #(c d a b e g h).
 	self assertCollection: (c1 allSlots collect: #name) hasSameElements: #(c d a b).	
 ]

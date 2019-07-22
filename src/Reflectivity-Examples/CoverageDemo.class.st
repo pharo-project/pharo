@@ -5,7 +5,7 @@ CoverageDemo open
 "
 Class {
 	#name : #CoverageDemo,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'installMetalinkButton',
 		'runCodeButton',
@@ -19,16 +19,15 @@ Class {
 
 { #category : #specs }
 CoverageDemo class >> defaultSpec [
-	<spec: #default>
-	
-	^ SpecLayout composed
-		newColumn: [:col|
-			col add: #codePanelMorph.
-			col newRow: [ :row|
-				row add: #installMetalinkButton.
-				row add: #runCodeButton.	
-			] height:  (self toolbarHeight)
-		]
+	^ SpBoxLayout newVertical
+		add: #codePanelMorph;
+		add:
+			(SpBoxLayout newHorizontal
+				add: #installMetalinkButton;
+				add: #runCodeButton;
+				yourself)
+			withConstraints: [ :constraints | constraints height: self toolbarHeight ];
+		yourself
 ]
 
 { #category : #open }
@@ -44,22 +43,7 @@ CoverageDemo class >> title [
 
 { #category : #adding }
 CoverageDemo >> addCards [
-
-	compiledMethods do:[:method|
-		codePanelMorph widget addMorph: 
-			(ReflectivityCodeMorph compiledMethod: method)
-	]
-	
-]
-
-{ #category : #accessing }
-CoverageDemo >> codePanelMorph [
-	^ codePanelMorph
-]
-
-{ #category : #accessing }
-CoverageDemo >> codePanelMorph: anObject [
-	codePanelMorph := anObject
+	compiledMethods do: [ :method | codePanelMorph morph addMorph: (ReflectivityCodeMorph compiledMethod: method) ]
 ]
 
 { #category : #accessing }
@@ -97,63 +81,48 @@ CoverageDemo >> exampleNotCompleteCoverage [
 	self openWithSpec.
 ]
 
-{ #category : #api }
-CoverageDemo >> initialExtent [
-	^ 700@600
-]
-
 { #category : #initialization }
 CoverageDemo >> initialize [
-
-	coverageCode := [ReflectivityExamples new exampleMethod].
+	coverageCode := [ ReflectivityExamples new exampleMethod ].
 	compiledMethods := OrderedCollection new.
-	compiledMethods add: ReflectivityExamples>>#exampleMethod.
-	
-	super initialize.
+	compiledMethods add: ReflectivityExamples >> #exampleMethod.
+
+	super initialize
 ]
 
 { #category : #initialization }
 CoverageDemo >> initializePresenter [
-
-	installMetalinkButton action: [self installMetalink].
-	runCodeButton action: [ self runCoverageCode ].
-	
-	"on close"
-	self whenWindowChanged: [  
-		self window whenClosedDo: [ self removeMetalink ]
-	].
+	installMetalinkButton action: [ self installMetalink ].
+	runCodeButton action: [ self runCoverageCode ]
 ]
 
 { #category : #initialization }
 CoverageDemo >> initializeWidgets [
-
 	installMetalinkButton := self newButton.
 	runCodeButton := self newButton.
-	codePanelMorph := ReflectivitySourceCodeAgroupation new asSpecAdapter.
-	
+	codePanelMorph := self newMorph.
+
+	codePanelMorph morph: ReflectivitySourceCodeAgroupation new.
+
 	installMetalinkButton label: 'Install Metalink'.
-	runCodeButton label: 'Run Example Code'.
+	runCodeButton label: 'Run Example Code'
+]
+
+{ #category : #initialization }
+CoverageDemo >> initializeWindow: aWindowPresenter [
+	aWindowPresenter
+		initialExtent: 700 @ 600;
+		whenClosedDo: [ self removeMetalink ]
 ]
 
 { #category : #action }
 CoverageDemo >> installMetalink [
-	|link|
-	
+	| link |
 	link := MetaLink new
 		metaObject: #node;
 		selector: #tagExecuted.
 
-	compiledMethods do:[:method| method ast nodesDo: [:node | node link: link]].
-]
-
-{ #category : #accessing }
-CoverageDemo >> installMetalinkButton [
-	^ installMetalinkButton
-]
-
-{ #category : #accessing }
-CoverageDemo >> installMetalinkButton: anObject [
-	installMetalinkButton := anObject
+	compiledMethods do: [ :method | method ast nodesDo: [ :node | node link: link ] ]
 ]
 
 { #category : #accessing }
@@ -179,16 +148,6 @@ CoverageDemo >> removeMetalink [
 	
 ]
 
-{ #category : #accessing }
-CoverageDemo >> runCodeButton [
-	^ runCodeButton
-]
-
-{ #category : #accessing }
-CoverageDemo >> runCodeButton: anObject [
-	runCodeButton := anObject
-]
-
 { #category : #action }
 CoverageDemo >> runCoverageCode [
 
@@ -198,20 +157,15 @@ CoverageDemo >> runCoverageCode [
 
 { #category : #styling }
 CoverageDemo >> updateRubricStyle [
+	codePanelMorph morph submorphs
+		do: [ :card | 
+			| conf ast |
+			"delete previous styling"
+			conf := RubConfigurationChange new.
+			conf configurationBlock: [ :text | text segments copy do: #delete ].
+			card textModel announce: conf.
 
-	codePanelMorph widget submorphs do:[:card| |conf ast|
-			
-		"delete previous styling"
-		conf := RubConfigurationChange new.
-		conf configurationBlock: 
-			[:text | text segments copy do:#delete].
-		card textModel announce: conf.
-			
-		"add new styling"
-		ast := card compiledMethod ast.
-		(ast children anySatisfy: [ :node| node hasBeenExecuted])
-			ifTrue:[
-				ast acceptVisitor: (CoverageRubricStyler new textModel: card textModel)
-			]
-	]
+			"add new styling"
+			ast := card compiledMethod ast.
+			(ast children anySatisfy: [ :node | node hasBeenExecuted ]) ifTrue: [ ast acceptVisitor: (CoverageRubricStyler new textModel: card textModel) ] ]
 ]

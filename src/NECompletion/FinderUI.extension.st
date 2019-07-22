@@ -8,12 +8,6 @@ FinderUI >> guessTypeForName: aString [
 ]
 
 { #category : #'*necompletion' }
-FinderUI >> isCodeCompletionAllowed [
-
-	^ true
-]
-
-{ #category : #'*necompletion' }
 FinderUI >> selectedClassOrMetaClass [
 
 	^ self selectedClass

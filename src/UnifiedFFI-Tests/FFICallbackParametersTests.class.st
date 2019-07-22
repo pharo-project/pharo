@@ -50,7 +50,7 @@ FFICallbackParametersTests >> testCharacterParameters [
 			$z asInteger
 		].
 
-	self assert: (self callCallback: callback withArgs: params) equals: $z asInteger.
+	self assert: (self callCallback: callback withArgs: params) equals: $z asInteger
 ]
 
 { #category : #running }
@@ -68,7 +68,7 @@ FFICallbackParametersTests >> testFloatParameters [
 			7.0
 		].
 
-	self assert: (self callCallback: callback withArgs: {1.0. 2.0. 3.0. 4.0. 5.0. 6.0}) equals: 7.0.
+	self assert: (self callCallback: callback withArgs: {1.0. 2.0. 3.0. 4.0. 5.0. 6.0}) equals: 7.0
 ]
 
 { #category : #running }
@@ -101,7 +101,7 @@ FFICallbackParametersTests >> testIdentityStruct [
 		autoRelease;
 		yourself.
 
-	self assert: (self callCallback: callback withArgs: { param }) equals: param.
+	self assert: (self callCallback: callback withArgs: { param }) equals: param
 ]
 
 { #category : #running }
@@ -119,7 +119,7 @@ FFICallbackParametersTests >> testIntegerParameters [
 			7
 		].
 
-	self assert: (self callCallback: callback withArgs: #(1 2 3 4 5 6)) equals: 7.
+	self assert: (self callCallback: callback withArgs: #(1 2 3 4 5 6)) equals: 7
 
 
 ]
@@ -141,7 +141,7 @@ FFICallbackParametersTests >> testIntegerPointerParameters [
 			self assert: f value equals: 6.
 		].
 
-	self callCallback: callback withArgs: params.
+	self callCallback: callback withArgs: params
 ]
 
 { #category : #running }
@@ -159,7 +159,7 @@ FFICallbackParametersTests >> testMixingParameters [
 			self assert: g value equals: $g.
 		].
 
-	self callCallback: callback withArgs: {1. 2.0. $c. 4. 5.0. 6. $g}.
+	self callCallback: callback withArgs: {1. 2.0. $c. 4. 5.0. 6. $g}
 ]
 
 { #category : #running }
@@ -181,7 +181,7 @@ FFICallbackParametersTests >> testPassing2DoubleStructureInTheStack [
 		autoRelease;
 		yourself.
 
-	self assert: (self callCallback: callback withArgs: { param }) equals: 99.
+	self assert: (self callCallback: callback withArgs: { param }) equals: 99
 ]
 
 { #category : #running }
@@ -203,7 +203,7 @@ FFICallbackParametersTests >> testPassing2Int64StructureInTheStack [
 		autoRelease;
 		yourself.
 
-	self assert: (self callCallback: callback withArgs: { param }) equals: 99.
+	self assert: (self callCallback: callback withArgs: { param }) equals: 99
 ]
 
 { #category : #running }
@@ -234,7 +234,7 @@ FFICallbackParametersTests >> testPassing4DoubleStructureInTheStack [
 		autoRelease;
 		yourself.
 
-	self assert: (self callCallback: callback withArgs: { param }) equals: 99.
+	self assert: (self callCallback: callback withArgs: { param }) equals: 99
 ]
 
 { #category : #running }
@@ -260,7 +260,7 @@ FFICallbackParametersTests >> testPassing4Int64StructureInTheStack [
 		autoRelease;
 		yourself.
 
-	self assert: (self callCallback: callback withArgs: { param }) equals: 99.
+	self assert: (self callCallback: callback withArgs: { param }) equals: 99
 ]
 
 { #category : #running }
@@ -286,7 +286,7 @@ FFICallbackParametersTests >> testPassing4IntStructureInTheStack [
 		autoRelease;
 		yourself.
 
-	self assert: (self callCallback: callback withArgs: { param }) equals: 99.
+	self assert: (self callCallback: callback withArgs: { param }) equals: 99
 ]
 
 { #category : #running }
@@ -317,5 +317,5 @@ FFICallbackParametersTests >> testPassingStructureInTheStack [
 		autoRelease;
 		yourself.
 		
-	self assert: (self callCallback: callback withArgs: { param }) equals: 77.
+	self assert: (self callCallback: callback withArgs: { param }) equals: 77
 ]

@@ -62,7 +62,7 @@ FFIExternalArrayTests >> testExternalAtPutFloat [
 		array := FFIExternalArray externalNewType: 'float' size: 10.
 		1 to: 10 do: [ :index | array at: index put: random next ].
 		1 to: 10 do: [ :index | self assert: (array at: index) isFloat ] ]
-	ensure: [ array free ].
+	ensure: [ array free ]
 ]
 
 { #category : #tests }
@@ -73,5 +73,5 @@ FFIExternalArrayTests >> testResolveType [
 	self assert: (FFIExternalArray resolveType: 'void *') class equals: FFIVoid.
 	self assert: (FFIExternalArray resolveType: 'void *') pointerArity equals: 1.
 	self assert: (FFIExternalArray resolveType: FFIUInt16) class equals: FFIUInt16.
-	self assert: (FFIExternalArray resolveType: String) class equals: FFIExternalString.
+	self assert: (FFIExternalArray resolveType: String) class equals: FFIExternalString
 ]

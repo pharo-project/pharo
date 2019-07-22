@@ -39,8 +39,10 @@ CompiledMethod class >> basicNew: size [
 
 { #category : #'class initialization' }
 CompiledMethod class >> checkBytecodeSetConflictsInMethodsWith: aBlock [
-	(self allSubInstances detect: aBlock ifNone: [ ])
-		ifNotNil: [ Warning signal: 'There are existing CompiledMethods with a different encoderClass.' ]
+
+	self allSubInstances
+		detect: aBlock
+		ifFound: [ Warning signal: 'There are existing CompiledMethods with a different encoderClass.' ]
 ]
 
 { #category : #'class initialization' }
@@ -322,6 +324,11 @@ CompiledMethod class >> toReturnSelfTrailerBytes: trailer [
 	"Answer an instance of me that is a quick return of the instance (^self)."
 
 	^self newBytes: 3 trailerBytes: trailer nArgs: 0 nTemps: 0 nStack: 0 nLits: 2 primitive: 256
+]
+
+{ #category : #'source code management' }
+CompiledMethod >> argumentNames [
+	^ self propertyAt: #argumentNames ifAbsent: [ super argumentNames ]
 ]
 
 { #category : #'accessing-backward compatible' }

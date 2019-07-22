@@ -1,7 +1,7 @@
 Class {
 	#name : #STCommandLineHandlerTest,
 	#superclass : #ClassTestCase,
-	#category : #'System-BasicCommandLineHandler-Tests'
+	#category : #'System-BasicCommandLineHandler-Tests-Base'
 }
 
 { #category : #coverage }
@@ -35,7 +35,7 @@ STCommandLineHandlerTest >> testInstallSourceFilesFail [
 	"Ensure file is not there"
 	(FileSystem disk workingDirectory / 'codeLoad1.st') asFileReference ensureDelete. 
 	"Trying non existing file"
-	self should: [ codeLoader installSourceFiles ] raise: Error.
+	self should: [ codeLoader installSourceFiles ] raise: Error
 ]
 
 { #category : #tests }
@@ -49,8 +49,8 @@ STCommandLineHandlerTest >> testLoadSourceFiles [
 		'/not/existing/codeLoad2.st'}.
 	
 	self assert: (codeLoader instVarNamed: 'sourceFiles') notNil.
-	self assert: (codeLoader instVarNamed: 'sourceFiles') size = 2.
-	self assert: ((codeLoader instVarNamed: 'sourceFiles') allSatisfy: [ :each | each isKindOf: File ]).
+	self assert: (codeLoader instVarNamed: 'sourceFiles') size equals: 2.
+	self assert: ((codeLoader instVarNamed: 'sourceFiles') allSatisfy: [ :each | each isKindOf: File ])
 ]
 
 { #category : #tests }
@@ -68,5 +68,5 @@ STCommandLineHandlerTest >> testSelectSourceFiles [
 	"Now verify that it doesn't try to load localhost"
 	self assert: (codeLoader instVarNamed: 'sourceFiles') notNil.
 	self assert: (codeLoader instVarNamed: 'sourceFiles') size equals: 1.
-	self assert: (codeLoader instVarNamed: 'sourceFiles') first name equals: 'does-not-exist.st'.
+	self assert: (codeLoader instVarNamed: 'sourceFiles') first name equals: 'does-not-exist.st'
 ]

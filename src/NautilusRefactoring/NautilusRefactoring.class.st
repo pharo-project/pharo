@@ -370,11 +370,12 @@ NautilusRefactoring >> handleWarning: anException [
 
 { #category : #private }
 NautilusRefactoring >> informAnExceptionFor: anException [
-	anException actionBlock isNil
-		ifTrue: [ self inform: anException messageText ]
-		ifFalse: [ 
-			(self confirm: anException messageText)
-				ifTrue: [ anException actionBlock value ] ]
+
+	anException actionBlock
+		ifNil: [ self inform: anException messageText ]
+		ifNotNil: [ ( self confirm: anException messageText )
+				ifTrue: [ anException actionBlock value ]
+			]
 ]
 
 { #category : #method }
@@ -1326,10 +1327,12 @@ NautilusRefactoring >> searchCodeText [
 
 { #category : #option }
 NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
+
 	| parseTree nameList |
+
 	parseTree := aClass parseTreeFor: aSelector.
-	parseTree isNil
-		ifTrue: [ parseTree := RBMethodNode selector: #value body: (RBSequenceNode statements: #()) ].
+	parseTree
+		ifNil: [ parseTree := RBMethodNode selector: #value body: ( RBSequenceNode statements: #() ) ].
 	nameList := OrderedCollection new.
 	nameList
 		addAll: parseTree argumentNames sorted;
@@ -1337,7 +1340,7 @@ NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
 	^ self
 		chooseFrom: nameList
 		title: 'Select variable to move method into:'
-		lines: (Array with: parseTree argumentNames size)
+		lines: ( Array with: parseTree argumentNames size )
 ]
 
 { #category : #option }

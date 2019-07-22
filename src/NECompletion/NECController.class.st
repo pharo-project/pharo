@@ -28,11 +28,6 @@ Class {
 	#category : #'NECompletion-View'
 }
 
-{ #category : #testing }
-NECController class >> allowModel: aModel [ 
-	^NECPreferences enabled and: [ aModel isCodeCompletionAllowed ]
-]
-
 { #category : #cleanup }
 NECController class >> cleanUp [
 	self reset
@@ -42,21 +37,17 @@ NECController class >> cleanUp [
 NECController class >> codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: evt [
 	"Inserts code completion if allowed in this morph"
 	
-	| editor stringHolder completionAllowed controller |
-	editor := aTextMorph editor.
-	stringHolder := editor ifNotNil:[ editor model ].
-	completionAllowed := self allowModel: stringHolder.
-	completionAllowed 
-		ifTrue: [ 
-			controller := self uniqueInstance.
-			controller setModel: stringHolder.
-			(controller handleKeystrokeBefore: evt editor: editor)
-				ifTrue:  [^ self ] ].
-
-	aBlock value.
+	| editor controller |
+	self isCompletionEnabled ifFalse: [ ^aBlock value ].
+	editor := aTextMorph editor ifNil: [ ^aBlock value ].
+	editor isCompletionEnabled ifFalse: [  ^aBlock value ].
+	controller := self uniqueInstance.
+	controller setModel: editor model.
 	
-	completionAllowed
-		ifTrue: [ controller handleKeystrokeAfter: evt editor: editor ]
+	(controller handleKeystrokeBefore: evt editor: editor) ifTrue:  [^ self ].
+	aBlock value.
+	controller handleKeystrokeAfter: evt editor: editor.
+
 ]
 
 { #category : #accessing }
@@ -76,17 +67,15 @@ NECController class >> initialize [
 	self register
 ]
 
-{ #category : #'tools registry' }
-NECController class >> register [
-
-	RubSmalltalkEditor completionEngine: self.
+{ #category : #accessing }
+NECController class >> isCompletionEnabled [
+	^NECPreferences enabled
 ]
 
 { #category : #'tools registry' }
-NECController class >> registerToolsOn: registry [
-	"self registerToolsOn: Smalltalk tools" 
-	registry remove: #codeCompletion
-
+NECController class >> register [
+	"just for testing: we register the subclass here to test it"
+	RubSmalltalkEditor completionEngine: TestCompletionController
 ]
 
 { #category : #'instance creation' }
@@ -135,7 +124,8 @@ NECController >> editor [
 
 { #category : #'type guessing' }
 NECController >> guessTypeFor: aString [
-	^ model isNil ifFalse: [ model guessTypeForName: aString ]
+
+	^ model ifNotNil: [ model guessTypeForName: aString ]
 ]
 
 { #category : #keyboard }
@@ -565,8 +555,9 @@ NECController >> smartStartIndexIn: currentText for: smartCharacter  opposite: o
 
 { #category : #private }
 NECController >> stopCompletionDelay [
-	
-	completionDelay ifNotNil: [ completionDelay terminate ].
+
+    completionDelay ifNotNil: [ 
+        completionDelay isTerminating ifFalse: [ completionDelay terminate ] ]
 ]
 
 { #category : #accessing }

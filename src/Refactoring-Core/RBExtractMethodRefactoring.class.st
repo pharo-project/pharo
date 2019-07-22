@@ -100,13 +100,15 @@ RBExtractMethodRefactoring >> checkSingleAssignment: varName [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> checkSpecialExtractions [
+
 	| node |
+
 	node := self placeholderNode parent.
-	node isNil ifTrue: [^self].
-	(node isAssignment and: [node variable = self placeholderNode]) ifTrue: 
-			[self refactoringFailure: 'Cannot extract left hand side of an assignment'].
-	node isCascade ifTrue: 
-			[self refactoringError: 'Cannot extract first message of a cascaded message']
+	node ifNil: [ ^ self ].
+	( node isAssignment and: [ node variable = self placeholderNode ] )
+		ifTrue: [ self refactoringFailure: 'Cannot extract left hand side of an assignment' ].
+	node isCascade
+		ifTrue: [ self refactoringError: 'Cannot extract first message of a cascaded message' ]
 ]
 
 { #category : #transforming }
@@ -143,67 +145,72 @@ RBExtractMethodRefactoring >> extract: anInterval from: aSelector in: aClass [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> extractMethod [
+
 	| parseTree isSequence extractCode subtree newCode errorMessage |
+
 	extractCode := self getExtractedSource.
 	extractedParseTree := RBParser
 		parseExpression: extractCode
 		onError: [ :string :pos :parser | 
 			errorMessage := string.
-			parser parseErrorNode: string ].
-	extractedParseTree isNil
-		ifTrue: [ self refactoringFailure: 'Invalid source to extract' ].
+			parser parseErrorNode: string
+			].
+	extractedParseTree ifNil: [ self refactoringFailure: 'Invalid source to extract' ].
 	extractedParseTree isFaulty
-		ifTrue: [ self
-				refactoringFailure: 'Invalid source to extract - ' , errorMessage ].
-	(extractedParseTree isSequence
-		and: [ extractedParseTree statements isEmpty ])
+		ifTrue: [ self refactoringFailure: 'Invalid source to extract - ' , errorMessage ].
+	( extractedParseTree isSequence and: [ extractedParseTree statements isEmpty ] )
 		ifTrue: [ self refactoringError: 'Select some code to extract' ].
-	isSequence := extractedParseTree isSequence
-		or: [ extractedParseTree isReturn ].
+	isSequence := extractedParseTree isSequence or: [ extractedParseTree isReturn ].
 	extractedParseTree := RBMethodNode
 		selector: #value
 		arguments: #()
 		body:
-			(extractedParseTree isSequence
+			( extractedParseTree isSequence
 				ifTrue: [ extractedParseTree ]
-				ifFalse: [ RBSequenceNode
-						temporaries: #()
-						statements: (OrderedCollection with: extractedParseTree) ]).
+				ifFalse:
+					[ RBSequenceNode temporaries: #() statements: ( OrderedCollection with: extractedParseTree ) ] ).
 	extractedParseTree body temporaries isEmpty not
 		ifTrue: [ extractedParseTree body temporaries: #() ].
 	extractedParseTree source: extractCode.
 	parseTree := class parseTreeFor: selector.
-	parseTree isNil
-		ifTrue: [ self refactoringFailure: 'Could not parse ' , selector printString ].
+	parseTree ifNil: [ self refactoringFailure: 'Could not parse ' , selector printString ].
 	subtree := isSequence
 		ifTrue: [ self parseTreeSearcherClass
 				treeMatchingStatements: extractedParseTree body formattedCode
-				in: parseTree ]
+				in: parseTree
+			]
 		ifFalse: [ self parseTreeSearcherClass treeMatching: extractCode in: parseTree ].
-	subtree isNil
-		ifTrue: [ self refactoringFailure: 'Could not extract code from method' ].
+	subtree ifNil: [ self refactoringFailure: 'Could not extract code from method' ].
 	newCode := self methodDelimiter.
 	isSequence
 		ifTrue: [ | stmts |
+
 			stmts := extractedParseTree body statements.
 			stmts isEmpty
 				ifFalse: [ stmts last isAssignment
 						ifTrue: [ | name |
+
 							name := stmts last variable name.
-							(self shouldExtractAssignmentTo: name)
+							( self shouldExtractAssignmentTo: name )
 								ifFalse: [ newCode := '<1s> := <2s>' expandMacrosWith: name with: newCode.
-									stmts at: stmts size put: stmts last value ] ] ] ].
+									stmts at: stmts size put: stmts last value
+									]
+							]
+					]
+			].
 	modifiedParseTree := isSequence
 		ifTrue: [ RBParseTreeRewriter
 				replaceStatements: subtree formattedCode
 				with: newCode
 				in: parseTree
-				onInterval: extractionInterval ]
+				onInterval: extractionInterval
+			]
 		ifFalse: [ RBParseTreeRewriter
 				replace: subtree formattedCode
 				with: newCode
 				in: parseTree
-				onInterval: extractionInterval ]
+				onInterval: extractionInterval
+			]
 ]
 
 { #category : #transforming }
@@ -218,25 +225,27 @@ RBExtractMethodRefactoring >> getExtractedSource [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> getNewMethodName [
+
 	| newSelector methodName newMethodName |
+
 	methodName := RBMethodName new.
 	methodName arguments: parameters.
-	
-	[newMethodName := self requestMethodNameFor: methodName.
-	newMethodName isNil 
-		ifTrue: [self refactoringFailure: 'Did not extract code'].
+
+	[ newMethodName := self requestMethodNameFor: methodName.
+	newMethodName ifNil: [ self refactoringFailure: 'Did not extract code' ].
 	newSelector := newMethodName selector.
-	(self checkMethodName: newSelector in: class) 
-		ifFalse: 
-			[self refactoringWarning: newSelector , ' is not a valid selector name.'.
-			newSelector := nil].
-	(class hierarchyDefinesMethod: newSelector asSymbol) 
-		ifTrue: 
-			[(self shouldOverride: newSelector in: class) ifFalse: [newSelector := nil]].
-	newSelector isNil] 
-			whileTrue: [].
+	( self checkMethodName: newSelector in: class )
+		ifFalse: [ self refactoringWarning: newSelector , ' is not a valid selector name.'.
+			newSelector := nil
+			].
+	( class hierarchyDefinesMethod: newSelector asSymbol )
+		ifTrue: [ ( self shouldOverride: newSelector in: class )
+				ifFalse: [ newSelector := nil ]
+			].
+	newSelector isNil
+	] whileTrue: [  ].
 	parameters := newMethodName arguments asOrderedCollection.
-	^newSelector asSymbol
+	^ newSelector asSymbol
 ]
 
 { #category : #transforming }
@@ -249,23 +258,29 @@ RBExtractMethodRefactoring >> isMethodEquivalentTo: aSelector [
 ]
 
 { #category : #transforming }
-RBExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [ 
+RBExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [
+
 	| tree definingClass |
+
 	definingClass := class whoDefinesMethod: aSelector.
 	tree := definingClass parseTreeFor: aSelector.
-	tree isNil ifTrue: [^false].
-	tree isPrimitive ifTrue: [^false].
-	(tree body equalTo: extractedParseTree body
-		exceptForVariables: (tree arguments collect: [:each | each name])) 
-			ifFalse: [^false].
-	(definingClass = class or: 
-			[(tree superMessages detect: 
-					[:each | 
-					(class superclass whichClassIncludesSelector: aSelector) 
-						~= (definingClass superclass whichClassIncludesSelector: each)]
-				ifNone: [nil]) isNil]) 
-		ifFalse: [^false].
-	^self shouldUseExistingMethod: aSelector
+	tree ifNil: [ ^ false ].
+	tree isPrimitive
+		ifTrue: [ ^ false ].
+	( tree body
+		equalTo: extractedParseTree body
+		exceptForVariables: ( tree arguments collect: [ :each | each name ] ) )
+		ifFalse: [ ^ false ].
+	( definingClass = class
+		or: [ ( tree superMessages
+				detect: [ :each | 
+					( class superclass whichClassIncludesSelector: aSelector )
+						~= ( definingClass superclass whichClassIncludesSelector: each )
+					]
+				ifNone: [ nil ] ) isNil
+			] )
+		ifFalse: [ ^ false ].
+	^ self shouldUseExistingMethod: aSelector
 ]
 
 { #category : #transforming }
@@ -297,12 +312,11 @@ RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> placeholderNode [
+
 	| node |
-	node := self parseTreeSearcherClass
-		treeMatching: self methodDelimiter
-		in: modifiedParseTree.
-	node isNil
-		ifTrue: [ self refactoringFailure: 'Cannot extract code' ].
+
+	node := self parseTreeSearcherClass treeMatching: self methodDelimiter in: modifiedParseTree.
+	node ifNil: [ self refactoringFailure: 'Cannot extract code' ].
 	^ node
 ]
 
@@ -357,14 +371,13 @@ RBExtractMethodRefactoring >> storeOn: aStream [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> transform [
+
 	| existingSelector |
+
 	existingSelector := self existingSelector.
-	self nameNewMethod: (existingSelector isNil 
-				ifTrue: [self getNewMethodName]
-				ifFalse: [existingSelector]).
-	existingSelector isNil 
-		ifTrue: 
-			[class compile: extractedParseTree newSource
-				withAttributesFrom: (class methodFor: selector)].
+	self
+		nameNewMethod: ( existingSelector ifNil: [ self getNewMethodName ] ifNotNil: [ existingSelector ] ).
+	existingSelector
+		ifNil: [ class compile: extractedParseTree newSource withAttributesFrom: ( class methodFor: selector ) ].
 	class compileTree: modifiedParseTree
 ]

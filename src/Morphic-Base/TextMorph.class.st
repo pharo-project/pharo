@@ -83,7 +83,9 @@ TextMorph >> acceptOnCR [
 
 { #category : #menu }
 TextMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
+
 	| outer |
+
 	super addCustomMenuItems: aCustomMenu hand: aHandMorph.
 	aCustomMenu addUpdating: #autoFitString target: self selector: #autoFitOnOff.
 	aCustomMenu addUpdating: #wrapString target: self selector: #wrapOnOff.
@@ -94,18 +96,17 @@ TextMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	aCustomMenu add: 'code pane shift menu...' selector: #shiftedYellowButtonActivity.
 
 	outer := self owner.
-	outer ifNotNil: [
-	outer isLineMorph ifTrue:
-		[container isNil
-			ifFalse: [ aCustomMenu add: 'set baseline' selector: #setCurveBaseline:]]
-		ifFalse:
-		[self fillsOwner
-			ifFalse: [aCustomMenu add: 'fill owner''s shape' selector: #fillingOnOff]
-			ifTrue: [aCustomMenu add: 'rectangular bounds' selector: #fillingOnOff].
-		self avoidsOcclusions
-			ifFalse: [aCustomMenu add: 'avoid occlusions' selector: #occlusionsOnOff]
-			ifTrue: [aCustomMenu add: 'ignore occlusions' selector: #occlusionsOnOff]]].
-	
+	outer
+		ifNotNil: [ outer isLineMorph
+				ifTrue: [ container ifNotNil: [ aCustomMenu add: 'set baseline' selector: #setCurveBaseline: ] ]
+				ifFalse: [ self fillsOwner
+						ifFalse: [ aCustomMenu add: 'fill owner''s shape' selector: #fillingOnOff ]
+						ifTrue: [ aCustomMenu add: 'rectangular bounds' selector: #fillingOnOff ].
+					self avoidsOcclusions
+						ifFalse: [ aCustomMenu add: 'avoid occlusions' selector: #occlusionsOnOff ]
+						ifTrue: [ aCustomMenu add: 'ignore occlusions' selector: #occlusionsOnOff ]
+					]
+			]
 ]
 
 { #category : #'submorphs-add/remove' }
@@ -905,12 +906,7 @@ TextMorph >> handleKeystroke: anEvent [
 	self allowsKeymapping
 		ifTrue: [ self dispatchKeystrokeForEvent: anEvent ] .
 	anEvent wasHandled
-		ifTrue: [
-			"We need to check for completion here because otherwise it will try to handle the keystroke, 
-			even if it was already processed."
-			(Smalltalk tools hasToolNamed: #codeCompletion) 
-				ifTrue: [ Smalltalk tools codeCompletion uniqueInstance closeMenu ].
-			^ self].
+		ifTrue: [ ^ self].
 	(self handlesKeyStroke: anEvent)
 		ifFalse: [^ self].
 	self keyStroke: anEvent.
@@ -1053,29 +1049,32 @@ TextMorph >> justified [
 TextMorph >> keyStroke: evt [ 
 	"Handle a keystroke event."
 	Transcript show: 'TextMorph';cr.
-	(Smalltalk tools hasToolNamed: #codeCompletion) 
-		ifTrue: [ 
-			Smalltalk tools 
-				codeCompletionAround: [ self basicKeyStroke: evt ] 
-				textMorph: self 
-				keyStroke: evt ]
-		ifFalse: [  self basicKeyStroke: evt ]
+	self basicKeyStroke: evt
 ]
 
 { #category : #'event handling' }
-TextMorph >> keyboardFocusChange: aBoolean [ 	
+TextMorph >> keyboardFocusChange: aBoolean [
+
 	super keyboardFocusChange: aBoolean.
-	paragraph isNil ifFalse:[paragraph focused: aBoolean].	
-	aBoolean 
-		ifTrue:["A hand is wanting to send us characters..."
-			self hasFocus ifFalse: [self editor	"Forces install"].
-			self showOverEditableTextCursor]
-		ifFalse:["A hand has clicked elsewhere..."		
-			self world 
-				ifNotNil:[:w | w handsDo: [:h | h keyboardFocus == self ifTrue: [^self]].
-					"Release control unless some hand is still holding on"			
-					self releaseEditor].
-			self hideOverEditableTextCursor].
+	paragraph ifNotNil: [ paragraph focused: aBoolean ].
+	aBoolean
+		ifTrue: [ "A hand is wanting to send us characters..."
+			self hasFocus
+				ifFalse: [ self editor	"Forces install" ].
+			self showOverEditableTextCursor
+			]
+		ifFalse: [ "A hand has clicked elsewhere..."
+			self world
+				ifNotNil: [ :w | 
+					w
+						handsDo: [ :h | 
+							h keyboardFocus == self
+								ifTrue: [ ^ self ]
+							].	"Release control unless some hand is still holding on"
+					self releaseEditor
+					].
+			self hideOverEditableTextCursor
+			].
 	self manageCursor.
 	self focusChanged
 ]
@@ -1265,20 +1264,24 @@ TextMorph >> openFindDialog [
 
 { #category : #'change reporting' }
 TextMorph >> ownerChanged [
+
 	| priorEditor |
+
 	super ownerChanged.
-	container ifNotNil: 
-			[editor isNil 
-				ifTrue:
-					[self releaseParagraph.
-					(container isKindOf: TextContainer) ifTrue:
-						["May need to recompose due to changes in owner"
-						self installEditorToReplace: nil.
-						self releaseParagraph]]
-				ifFalse: 
-					[priorEditor := editor.
+	container
+		ifNotNil: [ editor
+				ifNil: [ self releaseParagraph.
+					( container isKindOf: TextContainer )
+						ifTrue: [ "May need to recompose due to changes in owner"
+							self installEditorToReplace: nil.
+							self releaseParagraph
+							]
+					]
+				ifNotNil: [ priorEditor := editor.
 					self releaseParagraph.
-					self installEditorToReplace: priorEditor]]
+					self installEditorToReplace: priorEditor
+					]
+			]
 ]
 
 { #category : #private }
@@ -1332,21 +1335,20 @@ TextMorph >> predecessor: pred successor: succ [
 
 { #category : #private }
 TextMorph >> predecessorChanged [
-	| newStart oldStart |
-	(self hasProperty: #CreatingParagraph) ifTrue: [^self].
-	newStart := predecessor isNil 
-				ifTrue: [1]
-				ifFalse: [predecessor lastCharacterIndex + 1].
-	(self paragraph adjustedFirstCharacterIndex ~= newStart 
-		or: [newStart >= text size]) 
-			ifTrue: 
-				[paragraph composeAllStartingAt: newStart.
-				self fit]
-			ifFalse: 
-				["If the offset to end of text has not changed, just slide"
 
-				oldStart := self firstCharacterIndex.
-				self withSuccessorsDo: [:m | m adjustLineIndicesBy: newStart - oldStart]]
+	| newStart oldStart |
+
+	( self hasProperty: #CreatingParagraph )
+		ifTrue: [ ^ self ].
+	newStart := predecessor ifNil: [ 1 ] ifNotNil: [ predecessor lastCharacterIndex + 1 ].
+	( self paragraph adjustedFirstCharacterIndex ~= newStart or: [ newStart >= text size ] )
+		ifTrue: [ paragraph composeAllStartingAt: newStart.
+			self fit
+			]
+		ifFalse: [ "If the offset to end of text has not changed, just slide"
+			oldStart := self firstCharacterIndex.
+			self withSuccessorsDo: [ :m | m adjustLineIndicesBy: newStart - oldStart ]
+			]
 ]
 
 { #category : #editing }
@@ -1620,15 +1622,15 @@ TextMorph >> shiftedYellowButtonActivity [
 
 { #category : #'event handling' }
 TextMorph >> showOverEditableTextCursor [
-	| o |
-	owner isNil
-		ifTrue: [^ self].
-	o := owner isWorldMorph 
-		ifTrue: [self] 
-		ifFalse: [owner].
-	(o boundsInWorld containsPoint: self currentHand position)
-		ifTrue: [self currentHand showTemporaryCursor: (self theme overTextCursorFor: self)]
 
+	| o |
+
+	owner ifNil: [ ^ self ].
+	o := owner isWorldMorph
+		ifTrue: [ self ]
+		ifFalse: [ owner ].
+	( o boundsInWorld containsPoint: self currentHand position )
+		ifTrue: [ self currentHand showTemporaryCursor: ( self theme overTextCursorFor: self ) ]
 ]
 
 { #category : #blinking }
@@ -1642,9 +1644,9 @@ TextMorph >> startBlinking [
 
 { #category : #'linked frames' }
 TextMorph >> startingIndex [
-	predecessor isNil
-		ifTrue: [^ 1].
-	^ predecessor lastCharacterIndex + 1 
+
+	predecessor ifNil: [ ^ 1 ].
+	^ predecessor lastCharacterIndex + 1
 ]
 
 { #category : #blinking }

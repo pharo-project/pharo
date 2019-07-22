@@ -75,7 +75,7 @@ RBRenameTemporaryTest >> testRenameTemporary [
 		selector: #openEditor.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeFor: #openEditor) = (self parseMethod: 'openEditor
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeFor: #openEditor) equals: (self parseMethod: 'openEditor
 								| asdf |
 								asdf := self failedRules.
 								asdf isEmpty ifTrue: [^self].

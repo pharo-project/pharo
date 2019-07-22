@@ -20,11 +20,9 @@ RBNoClassCommentRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBNoClassCommentRule >> check: aClass forCritiquesDo: aCriticBlock [
-	(aClass isMeta or: [ aClass isTestCase ])
-		ifTrue: [ ^ false ].
-	(aClass hasComment not) ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aClass) ]
+RBNoClassCommentRule >> basicCheck: aClass [
+	(aClass isMeta or: [ aClass isTestCase ]) ifTrue: [ ^ false ].
+	^ aClass hasComment not
 ]
 
 { #category : #accessing }

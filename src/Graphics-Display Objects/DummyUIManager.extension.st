@@ -1,14 +1,6 @@
 Extension { #name : #DummyUIManager }
 
 { #category : #'*Graphics-Display Objects' }
-DummyUIManager >> checkForNewDisplaySize [
-
-	Display extent = DisplayScreen actualScreenSize ifTrue: [^ self].
-	DisplayScreen startUp.
-
-]
-
-{ #category : #'*Graphics-Display Objects' }
 DummyUIManager >> newDisplayDepthNoRestore: pixelSize [
 
 	"Change depths.  Check if there is enough space!  , di"

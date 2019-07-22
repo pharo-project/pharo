@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-OSSDL2WindowHandle class >> newWithHandle: handle attributes: attributes. [
+OSSDL2WindowHandle class >> newWithHandle: handle attributes: attributes [
 	^ self basicNew initWithHandle: handle attributes: attributes; yourself
 ]
 
@@ -319,11 +319,6 @@ OSSDL2WindowHandle >> setDraggableArea: aRectangle [
 		].
 	
 	^handle setHitTest: myCallback.
-]
-
-{ #category : #cursor }
-OSSDL2WindowHandle >> setMouseCursor: cursorWithMask [
-	self setMouseCursor: cursorWithMask mask: cursorWithMask maskForm
 ]
 
 { #category : #cursor }

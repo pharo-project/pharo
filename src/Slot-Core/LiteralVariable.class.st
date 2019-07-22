@@ -28,6 +28,17 @@ LiteralVariable class >> checkValidName: aString [
 		ifFalse: [InvalidGlobalName signal: 'Class name does not start with a valid Global Var Initial' for: aString]"
 ]
 
+{ #category : #'gt-inspector-extension' }
+LiteralVariable class >> gtInspectorAllVariablesIn: composite [
+ 	"This provides a list of all defined Class or Global Variables"
+ 	<gtInspectorPresentationOrder: 20>
+ 	composite list 
+ 		title: 'All Defined Variables';
+ 		display: [ self allSubclasses sorted: #name ascending ];
+ 		tags: [ :each | { each package name } ];
+ 		when: [self == LiteralVariable  ].
+]
+
 { #category : #'class initialization' }
 LiteralVariable class >> initialize [
 	Properties := Properties
@@ -110,6 +121,12 @@ LiteralVariable >> isGlobalVariable [
 { #category : #testing }
 LiteralVariable >> isReadIn: aCompiledCode [
 	^aCompiledCode readsRef: self
+]
+
+{ #category : #testing }
+LiteralVariable >> isReferenced [
+	"my subclasses override this if they can be referenced in code"
+	^false
 ]
 
 { #category : #testing }

@@ -8,32 +8,15 @@ Class {
 }
 
 { #category : #tests }
-HiRulerTest >> rulerWithTwoMergedForks [
-	"
-	c
-	|\ 
-	| | 
-	| b 
-	| | 
-	|/ 
-	a 
-	"
-	
-	| ruler |
-	^ ruler
-]
-
-{ #category : #tests }
 HiRulerTest >> testEmpty [
-	
 	| ruler |
 	ruler := HiRuler withValues: #().
-	
-	self assert: ruler nodes isEmpty.
-	self assert: ruler links isEmpty.
-	self assert: ruler elementsByRow isEmpty.
+
+	self assertEmpty: ruler nodes.
+	self assertEmpty: ruler links.
+	self assertEmpty: ruler elementsByRow.
 	self assert: ruler numberOfColumns equals: 0.
-	self assert: ruler numberOfRows equals: 0.
+	self assert: ruler numberOfRows equals: 0
 ]
 
 { #category : #tests }
@@ -60,15 +43,14 @@ HiRulerTest >> testTwoMergedForks [
 		addLinkFrom: c to: b;
 		addLinkFrom: b to: a.
 
-	self assert: ruler nodes asSet equals: {c. b. a} asSet.
+	self assertCollection: ruler nodes hasSameElements: {c . b . a}.
 	self assert: ruler links size equals: 3.
 
-	self assert: c rulerPoint equals: 1@1.
-	self assert: b rulerPoint equals: 2@2.
-	self assert: a rulerPoint equals: 1@3.
+	self assert: c rulerPoint equals: 1 @ 1.
+	self assert: b rulerPoint equals: 2 @ 2.
+	self assert: a rulerPoint equals: 1 @ 3.
 
 	self assert: c theValue equals: #c.
 	self assert: b theValue equals: #b.
-	self assert: a theValue equals: #a.
-
+	self assert: a theValue equals: #a
 ]

@@ -457,7 +457,8 @@ NECContext >> isVariablesOnly [
 
 { #category : #accessing }
 NECContext >> model [
-	model isNil ifTrue: [ model := self createModel ].
+
+	model ifNil: [ model := self createModel ].
 	^ model
 ]
 

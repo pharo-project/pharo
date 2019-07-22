@@ -35,8 +35,7 @@ RubParagraph >> actionAttributesUnder: aClickPoint event: anEvent do: aBlock [
 			range := self text rangeOf: attribute startingAt: startBlock stringIndex.
 			boxes := self selectionRectsFrom: (self characterBlockForIndex: range first) 
 						to: (self characterBlockForIndex: range last+1).
-			(boxes detect: [:each | each containsPoint: aClickPoint] ifNone: [nil])
-				ifNotNil: [ aBlock cull: attribute cull: boxes ]]
+			boxes detect: [:each | each containsPoint: aClickPoint] ifFound: [ aBlock cull: attribute cull: boxes ]]
 ]
 
 { #category : #'accessing composer' }
@@ -267,11 +266,11 @@ RubParagraph >> enableDrawing [
 
 { #category : #geometry }
 RubParagraph >> extent [
-	^ self actualWidth
-		ifNil: [ self minimumExtent ]
-		ifNotNil: [ 
-			(self actualWidth + self margins left + self margins right)
-				@ (self lines last bottom - self lines first top + self margins top + self margins bottom) ]
+	self actualWidth ifNil: [ ^ self minimumExtent ].
+	"lines empty check as workaround: lots of crashes on the CI, see github case 3879"
+	self lines ifEmpty: [ ^ self minimumExtent ].
+	^ (self actualWidth + self margins left + self margins right) @
+			(self lines last bottom - self lines first top + self margins top + self margins bottom)
 ]
 
 { #category : #'geometry updating' }

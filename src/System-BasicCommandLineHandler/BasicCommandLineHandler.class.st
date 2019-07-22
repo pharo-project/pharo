@@ -125,6 +125,12 @@ BasicCommandLineHandler >> default [
 ]
 
 { #category : #commands }
+BasicCommandLineHandler >> disabledAccessMode [
+
+	"just eat the argument because it was processed with by the SessionAccessModeResolver before"
+]
+
+{ #category : #commands }
 BasicCommandLineHandler >> error [
 	self arguments size = 1
 		ifTrue:  [
@@ -165,6 +171,18 @@ BasicCommandLineHandler >> handleArgument: aString [
 		
 	aString = '--no-quit'
 		ifTrue: [ ^ self noQuit ].
+
+	aString = '--interactive'
+		ifTrue: [ ^ self noQuit ].
+
+	aString = '--readWriteAccessMode'
+		ifTrue: [ ^ self readWriteAccessMode ].
+	aString = '--readOnlyAccessMode'
+		ifTrue: [ ^ self readOnlyAccessMode ].
+	aString = '--writeOnlyAccessMode'
+		ifTrue: [ ^ self writeOnlyAccessMode ].
+	aString = '--disabledAccessMode'
+		ifTrue: [ ^ self disabledAccessMode ].
 	
 	"none of the previous options matched hence we output an error message"
 	self error.
@@ -254,6 +272,18 @@ BasicCommandLineHandler >> noQuit [
 	"Nothing to be done, unlike the other commands the image continues running"
 ]
 
+{ #category : #commands }
+BasicCommandLineHandler >> readOnlyAccessMode [
+
+	"just eat the argument because it was processed with by the SessionAccessModeResolver before"
+]
+
+{ #category : #commands }
+BasicCommandLineHandler >> readWriteAccessMode [
+
+	"just eat the argument because it was processed with by the SessionAccessModeResolver before"
+]
+
 { #category : #password }
 BasicCommandLineHandler >> requirePasswordFor: handler [
 	"If the password hash is nil, no password is set and we can just ignore it."
@@ -288,4 +318,10 @@ BasicCommandLineHandler >> version [
 		nextPutAll: 'Image: '; print: SystemVersion current; cr;
 		nextPutAll: 'VM:    '; nextPutAll: Smalltalk vm version; cr.
 	self quit.
+]
+
+{ #category : #commands }
+BasicCommandLineHandler >> writeOnlyAccessMode [
+
+	"just eat the argument because it was processed with by the SessionAccessModeResolver before"
 ]

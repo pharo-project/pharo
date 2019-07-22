@@ -23,6 +23,7 @@ Class {
 		'interactive',
 		'options',
 		'environment',
+		'productionEnvironment',
 		'parserClass',
 		'semanticAnalyzerClass',
 		'astTranslatorClass',
@@ -579,6 +580,16 @@ CompilationContext >> parserClass [
 { #category : #accessing }
 CompilationContext >> parserClass: anObject [
 	parserClass := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> productionEnvironment [
+	^productionEnvironment ifNil: [ ^self environment ]
+]
+
+{ #category : #accessing }
+CompilationContext >> productionEnvironment: aDictionary [
+	productionEnvironment := aDictionary
 ]
 
 { #category : #accessing }

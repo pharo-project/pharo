@@ -40,7 +40,9 @@ RBExpandReferencedPoolsRefactoring class >> model: aRBNamespace forMethod: aPars
 
 { #category : #transforming }
 RBExpandReferencedPoolsRefactoring >> computePoolsToMove [
+
 	| poolVariables searcher |
+
 	poolVariables := self poolVariableNamesFor: fromClass.
 	pools := Set new.
 	searcher := self parseTreeSearcher.
@@ -48,12 +50,16 @@ RBExpandReferencedPoolsRefactoring >> computePoolsToMove [
 		matches: '`var'
 		do: [ :aNode :answer | 
 			| varName pool |
+
 			varName := aNode name.
-			(aNode whoDefines: varName) isNil
-				ifTrue: [ (poolVariables includes: varName)
+			( aNode whoDefines: varName )
+				ifNil: [ ( poolVariables includes: varName )
 						ifTrue: [ pool := self whichPoolDefines: varName.
 							pool notNil
-								ifTrue: [ pools add: pool ] ] ] ].
+								ifTrue: [ pools add: pool ]
+							]
+					]
+			].
 	searcher executeTree: parseTree
 ]
 

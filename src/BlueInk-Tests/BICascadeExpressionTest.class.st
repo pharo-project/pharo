@@ -21,7 +21,7 @@ BICascadeExpressionTest >> basicConfiguration [
 
 { #category : #configurations }
 BICascadeExpressionTest >> multilineMessageConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -48,7 +48,7 @@ BICascadeExpressionTest >> multilineMessageConfiguration [
 
 { #category : #configurations }
 BICascadeExpressionTest >> newLineAfterCascadeConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -72,7 +72,7 @@ BICascadeExpressionTest >> newLineAfterCascadeConfiguration [
 
 { #category : #configurations }
 BICascadeExpressionTest >> newLineBeforeAndAfterCascadeConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -92,7 +92,7 @@ BICascadeExpressionTest >> newLineBeforeAndAfterCascadeConfiguration [
 
 { #category : #configurations }
 BICascadeExpressionTest >> newLineBeforeCascadeConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"		
@@ -113,7 +113,7 @@ BICascadeExpressionTest >> newLineBeforeCascadeConfiguration [
 
 { #category : #configurations }
 BICascadeExpressionTest >> noNewLineAfterCascadeConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -133,7 +133,7 @@ BICascadeExpressionTest >> noNewLineAfterCascadeConfiguration [
 
 { #category : #configurations }
 BICascadeExpressionTest >> noNewLineBeforeCascadeConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"

@@ -186,6 +186,13 @@ Class >> allClassVarNames [
 			^aSet]
 ]
 
+{ #category : #'class variables' }
+Class >> allClassVariables [
+	"Answer the meta objects of all class variables of the class and its superclass"
+
+	^self withAllSuperclasses flatCollect:  [ :each | each classVariables ]
+]
+
 { #category : #'pool variables' }
 Class >> allSharedPools [
 	"Answer an ordered collection of the pools the receiver shares, including those defined  in the superclasses of the receiver."
@@ -226,10 +233,10 @@ Class >> basicCategory: aSymbol [
 
 { #category : #compiling }
 Class >> binding [
-       "Answer a binding for the receiver, sharing if possible"
-      | binding |
-	binding := self environment associationAt: self name ifAbsent: [nil -> self].
-       ^binding value == self ifTrue: [binding] ifFalse: [nil -> self]
+   "Answer a binding for the receiver, sharing if possible"
+   | binding |
+	binding := self environment associationAt: self name ifAbsent: [LiteralVariable key: nil value: self].
+   ^binding value == self ifTrue: [binding] ifFalse: [LiteralVariable key: nil value: self]
 ]
 
 { #category : #compiling }
@@ -263,7 +270,7 @@ Class >> category [
 			ifTrue: [ ^symbol ] ].
 	result := (self environment organization categoryOfElement: self name)
 		ifNil: [ #Unclassified ]
-		ifNotNil: #yourself.
+		ifNotNil: [:value | value].
 	self basicCategory: result.
 	
 	^ result
@@ -1047,17 +1054,6 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 ]
 
 { #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol layout: layoutClass slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
-	self deprecated: 'use ... package: instead'.
-	^ self
-		subclass: aSubclassSymbol
-		layout: layoutClass
-		slots: slotDefinition
-		classVariables: classVarDefinition
-		package: aCategorySymbol
-]
-
-{ #category : #'subclass creation - slots' }
 Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder |
@@ -1067,13 +1063,6 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition cl
 		slots: slotDefinition;
 		sharedVariables: classVarDefinition;
 		category: aCategorySymbol ].
-
-]
-
-{ #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
-	self deprecated: 'use ... package: instead'.
-	^ self subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol
 
 ]
 
@@ -1092,16 +1081,6 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition c
 ]
 
 { #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
-	self deprecated: 'use ... package: instead'.
-	^ self
-		subclass: aSubclassSymbol
-		slots: slotDefinition
-		classVariables: classVarDefinition
-		package: aCategorySymbol
-]
-
-{ #category : #'subclass creation - slots' }
 Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
 
 	^ self classInstaller make: [ :builder | 
@@ -1111,13 +1090,6 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 				slots: slotDefinition;
 				sharedVariables: classVarDefinition;
 				category: aCategorySymbol ]
-]
-
-{ #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
-
-	self deprecated: 'use ... package: instead'.
-	^ self subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol
 ]
 
 { #category : #'subclass creation - slots' }

@@ -1227,12 +1227,11 @@ Object >> isInterval [
 ]
 
 { #category : #'class membership' }
-Object >> isKindOf: aClass [ 
-	"Answer whether the class, aClass, is a superclass or class of the receiver."
+Object >> isKindOf: aClass [
+	"Answer whether the class, aClass, is a superclass or class of the receiver.
+	The current implemementation allows for a Trait to be used as argument"
 
-	self class == aClass
-		ifTrue: [^true]
-		ifFalse: [^self class inheritsFrom: aClass]
+	^ self class == aClass or: [ self class inheritsFrom: aClass ]
 ]
 
 { #category : #testing }
@@ -1676,15 +1675,15 @@ Object >> perform: selector withArguments: argArray inSuperclass: lookupClass [
 	but with the supplied superclass instead.  It will fail if lookupClass
 	cannot be found among the receiver's superclasses.
 	Primitive. Essential. See Object documentation whatIsAPrimitive."
-	
+
 	<reflective: #object:performMessageInSuperclass:>
 	<primitive: 100>
-	(selector isSymbol)
-		ifFalse: [^ self error: 'selector argument must be a Symbol'].
-	(selector numArgs = argArray size)
-		ifFalse: [^ self error: 'incorrect number of arguments'].
-	(self class == lookupClass or: [self class inheritsFrom: lookupClass])
-		ifFalse: [^ self error: 'lookupClass is not in my inheritance chain'].
+	selector isSymbol
+		ifFalse: [ ^ self error: 'selector argument must be a Symbol' ].
+	selector numArgs = argArray size
+		ifFalse: [ ^ self error: 'incorrect number of arguments' ].
+	(self class includesBehavior: lookupClass)
+		ifFalse: [ ^ self error: 'lookupClass is not in my inheritance chain' ].
 	self primitiveFailed
 ]
 
@@ -1884,8 +1883,9 @@ Object >> setPinned: aBoolean [
 { #category : #pinning }
 Object >> setPinnedInMemory: aBoolean [
 	"The VM's garbage collector routinely moves objects as it reclaims and compacts
-	 memory. But it can also pin an object so that it will not be moved, which can make
-	 it easier to pass objects out through the FFI.  Objects are unpinnned when created.
+	 memory. But it can also pin an object so that it will not be moved around in memory,
+    while still being reclamable by the garbage collector. This can make
+	 it easier to pass objects out through the FFI. Objects are unpinnned when created.
 	 This primitive either pins or unpins an object, and answers if it was already pinned."
 	<primitive: 184 error: ec>
 	^self primitiveFailed

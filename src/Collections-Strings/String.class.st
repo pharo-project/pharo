@@ -479,7 +479,7 @@ String >> alike: aString [
 	^ i - 1 + self size - j + bonus
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> allRangesOfSubstring: aSubstring [
 	"'Ab cd ef Ab cd' allRangesOfSubstring: 'cd' >>> {(4 to: 5). (13 to: 14)}"
 	"'Ab cd ef Ab cd' allRangesOfSubstring: 'zz' >>> #()"
@@ -1001,24 +1001,32 @@ String >> correctAgainstDictionary: wordDict continuedFrom: oldCollection [
 
 { #category : #private }
 String >> correctAgainstEnumerator: wordBlock continuedFrom: oldCollection [
+
 	"The guts of correction, instead of a wordList, there is a block that should take another block and enumerate over some list with it."
 
 	| choices results maxChoices scoreMin |
+
 	scoreMin := self size // 2 min: 3.
 	maxChoices := 10.
-	oldCollection 
+	oldCollection
 		ifNil: [ choices := SortedCollection sortBlock: [ :x :y | x value > y value ] ]
 		ifNotNil: [ choices := oldCollection ].
-	wordBlock isNil
-		ifTrue:
-			[ results := OrderedCollection new.
-			1 to: (maxChoices min: choices size) do: [ :i | results add: (choices at: i) key ] ]
-		ifFalse:
-			[ wordBlock value: [ :word | | score |
-				(score := self alike: word) >= scoreMin ifTrue:
-					[ choices add: (Association key: word value: score).
-						(choices size >= maxChoices) ifTrue: [ scoreMin := (choices at: maxChoices) value] ] ].
-			results := choices ].
+	wordBlock
+		ifNil: [ results := OrderedCollection new.
+			1 to: ( maxChoices min: choices size ) do: [ :i | results add: ( choices at: i ) key ]
+			]
+		ifNotNil: [ wordBlock
+				value: [ :word | 
+					| score |
+
+					( score := self alike: word ) >= scoreMin
+						ifTrue: [ choices add: ( Association key: word value: score ).
+							choices size >= maxChoices
+								ifTrue: [ scoreMin := ( choices at: maxChoices ) value ]
+							]
+					].
+			results := choices
+			].
 	^ results
 ]
 
@@ -1195,7 +1203,7 @@ String >> expandMacrosWithArguments: anArray [
 										ifFalse: [ char ]) ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findAnySubstring: aCollection startingAt: start [ 
 	"Answer the index where an element of aCollection begins. If none are found, answer size + 1. aCollection is an Array of Strings or Characters."
 
@@ -1207,7 +1215,7 @@ String >> findAnySubstring: aCollection startingAt: start [
 		min min: ind]
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findBetweenSubstrings: delimiters [
 	"Answer the collection of String tokens that result from parsing self.  Tokens are separated by 'delimiters', which can be a collection of Strings, or a collection of Characters.  Several delimiters in a row are considered as just one separation."
 
@@ -1222,7 +1230,7 @@ String >> findBetweenSubstrings: delimiters [
 	^tokens
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findCloseParenthesisFor: startIndex [
 	"assume (self at: startIndex) is $(.  Find the matching $), allowing parentheses to nest."
 	" '(1+(2-3))-3.14159' findCloseParenthesisFor: 1 "
@@ -1239,7 +1247,7 @@ String >> findCloseParenthesisFor: startIndex [
 	^self size + 1
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findDelimiters: delimiters startingAt: start [ 
 	"Answer the index of the character within the receiver, starting at start, that matches one of the delimiters. If the receiver does not contain any of the delimiters, answer size + 1."
 
@@ -1256,7 +1264,7 @@ String >> findIn: body startingAt: start matchTable: matchTable [
 	^ self findSubstringViaPrimitive: self in: body startingAt: start matchTable: matchTable
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findLastOccurrenceOfString: substring startingAt: start [ 
 	"Answer the index of the last occurrence of substring within the receiver, starting at start. If 
 	the receiver does not contain substring, answer 0.  Case-sensitive match used."
@@ -1309,7 +1317,7 @@ String >> findSelector [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findString: substring [
 	"Answer the index of the first substring within the receiver. If the receiver does not contain substring, answer 0."
 	"('salkjsdlkgfee' findString: 'al') >>> 2"
@@ -1318,7 +1326,7 @@ String >> findString: substring [
 	^self findString: substring startingAt: 1.
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findString: substring startingAt: start [ 
 	"Answer the index of the first substring within the receiver, starting at start. If the receiver does not contain substring, answer 0."
 	"('salkjsdlkgfee' findString: 'ee'startingAt: 3) >>> 12"
@@ -1328,7 +1336,7 @@ String >> findString: substring startingAt: start [
 	^self findString: substring startingAt: start caseSensitive: true
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findString: key startingAt: start caseSensitive: caseSensitive [ 
 	"Answer the index in this String at which the substring key first occurs,
 	at or beyond start. The match can be case-sensitive or not. If no match
@@ -1433,7 +1441,7 @@ String >> findSubstringViaPrimitive: key in: body startingAt: start matchTable: 
 "
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findTokens: delimiters [
 	"Answer the collection of tokens that result from parsing self.  Return strings between the delimiters.  Any character in the Collection delimiters marks a border.  Several delimiters in a row are considered as just one separation.  Also, allow delimiters to be a single character."
 
@@ -1452,7 +1460,7 @@ String >> findTokens: delimiters [
 	^tokens
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findTokens: delimiters escapedBy: quoteDelimiters [ 
 	"Answer a collection of Strings separated by the delimiters, where  
 	delimiters is a Character or collection of characters. Two delimiters in a  
@@ -1505,7 +1513,7 @@ String >> findTokens: delimiters escapedBy: quoteDelimiters [
 	^ tokens
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findTokens: delimiters includes: substring [
 	"Divide self into pieces using delimiters.  Return the piece that includes substring anywhere in it.  Is case sensitive (say asLowercase to everything beforehand to make insensitive)."
 
@@ -1514,7 +1522,7 @@ String >> findTokens: delimiters includes: substring [
 	ifNone: [nil]
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findTokens: delimiters keep: keepers [
 	"Answer the collection of tokens that result from parsing self.  The tokens are seperated by delimiters, any of a string of characters.  If a delimiter is also in keepers, make a token for it.  (Very useful for carriage return.  A sole return ends a line, but is also saved as a token so you can see where the line breaks were.)"
 
@@ -1532,7 +1540,7 @@ String >> findTokens: delimiters keep: keepers [
 	^tokens
 ]
 
-{ #category : #accessing }
+{ #category : #'finding/searching' }
 String >> findWordStart: key startingAt: start [
 	| ind |
 	"HyperCard style searching.  Answer the index in self of the substring key, when that key is preceeded by a separator character.  Must occur at or beyond start.  The match is case-insensitive.  If no match is found, zero will be returned."
@@ -1638,7 +1646,7 @@ String >> indexOf: aCharacter [
 
 { #category : #accessing }
 String >> indexOf: aCharacter startingAt: start [
-	"Return the index of the argument in the receiver, only elements after the start th element are considered zero if not present."
+	"Return the index of the argument in the receiver, only elements after the start of the element are considered zero if not present."
 	
 	"('abcdf abcedf' indexOf: $a startingAt: 4) >>> 7"
 	"('abddf bcdef' indexOf: $a starting ) >>> 0"
@@ -1889,14 +1897,13 @@ String >> keywords [
 
 { #category : #testing }
 String >> lastSpacePosition [
-	"Answer the character position of the final space or other separator character in the receiver, and 0 if none
+	"Answer the character position of the final space or other separator character in the receiver, and 0 if none"
+	"'fred the bear' lastSpacePosition >>> 9"
+	"'ziggie' lastSpacePosition >>> 0"
+	"'elvis ' lastSpacePosition >>> 6"
+	"'elvis  ' lastSpacePosition >>> 7"
+	"'' lastSpacePosition >>> 0"
 
-	'fred the bear' lastSpacePosition
-	'ziggie' lastSpacePosition
-	'elvis ' lastSpacePosition
-	'wimpy  ' lastSpacePosition
-	'' lastSpacePosition
-	"
 	self size to: 1 by: -1 do:
 		[:i | ((self at: i) isSeparator) ifTrue: [^ i]].
 	^ 0

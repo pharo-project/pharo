@@ -21,15 +21,18 @@ RBLocalMethodsSameThanTraitRule class >> uniqueIdentifierName [
 
 { #category : #running }
 RBLocalMethodsSameThanTraitRule >> check: aClass forCritiquesDo: aCriticBlock [
-	
 	"The comparison between methods is made using the ast, this is better than comparing source code only since it does not take into account identations, extra parenthesis, etc"
 
-	(aClass isTrait not and: [ aClass hasTraitComposition and: [  
-		aClass localMethods anySatisfy: [ :method | |traitCompositionMethod |
-			traitCompositionMethod := aClass traitComposition compiledMethodAt: method selector ifAbsent: [nil].
-			traitCompositionMethod notNil and: [
-				(traitCompositionMethod ast = method ast) ] ] ] ]) ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aClass) ]
+	aClass isTrait ifTrue: [ ^ self ].
+	aClass hasTraitComposition ifFalse: [ ^ self ].
+	aClass localMethods
+		select: [ :method | 
+			| traitCompositionMethod |
+			traitCompositionMethod := aClass traitComposition compiledMethodAt: method selector ifAbsent: [ nil ].
+			traitCompositionMethod notNil and: [ traitCompositionMethod ast = method ast ] ]
+		thenDo: [ :duplicatedMethod |
+			aCriticBlock cull:
+				(ReRemoveMethodCritique for: aClass selector: duplicatedMethod selector by: self) ]
 ]
 
 { #category : #accessing }

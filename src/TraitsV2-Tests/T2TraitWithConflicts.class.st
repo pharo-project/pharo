@@ -52,7 +52,7 @@ T2TraitWithConflicts >> testDiamonProblemIsNotConflict [
 	t1 compile: 'm1 ^42'.
 
 	c1 := self newClass: #C1 with: #(aSlot) uses: t2 + t3.
-	
+		
 	self assert: (c1 new perform: #m1) equals: 42.
 
 ]

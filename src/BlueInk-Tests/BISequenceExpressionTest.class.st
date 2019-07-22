@@ -22,7 +22,7 @@ BISequenceExpressionTest >> basicConfiguration [
 
 { #category : #configurations }
 BISequenceExpressionTest >> dontRetainBlankLinesBeforeCommentsConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -44,7 +44,7 @@ BISequenceExpressionTest >> dontRetainBlankLinesBeforeCommentsConfiguration [
 
 { #category : #configurations }
 BISequenceExpressionTest >> dontRetainBlankLinesBetweenStatementsConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -89,7 +89,7 @@ BISequenceExpressionTest >> newLineAfterTemporariesConfiguration [
 
 { #category : #configurations }
 BISequenceExpressionTest >> periodAsTerminatorConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -137,7 +137,7 @@ BISequenceExpressionTest >> periodNotAsTerminatorConfiguration [
 
 { #category : #configurations }
 BISequenceExpressionTest >> retainBlankLinesBeforeCommentsConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -157,7 +157,7 @@ BISequenceExpressionTest >> retainBlankLinesBeforeCommentsConfiguration [
 
 { #category : #configurations }
 BISequenceExpressionTest >> retainBlankLinesBetweenStatementsConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"

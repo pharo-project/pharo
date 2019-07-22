@@ -42,7 +42,7 @@ NavigationHistory >> back [
 { #category : #protocol }
 NavigationHistory >> basicAdd: anEntry [
 	
-	( storage isEmpty not and: [ storage last = anEntry ] ) ifTrue: [ ^ self ].
+	( storage isNotEmpty and: [ storage last = anEntry ] ) ifTrue: [ ^ self ].
 	anEntry = self current key ifTrue: [ ^ self ].
 	self checkSize.
 	index := index +1.

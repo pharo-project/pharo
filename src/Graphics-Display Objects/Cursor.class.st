@@ -980,11 +980,6 @@ Cursor class >> square [
 	^SquareCursor
 ]
 
-{ #category : #'system startup' }
-Cursor class >> startUp [
-	self currentCursor: self currentCursor
-]
-
 { #category : #constants }
 Cursor class >> target [
 	"Answer the instance of me that is the shape of a gunsight."

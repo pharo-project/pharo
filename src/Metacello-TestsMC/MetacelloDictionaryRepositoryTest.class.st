@@ -37,11 +37,9 @@ MetacelloDictionaryRepositoryTest >> doSilently [
 
 { #category : #utilities }
 MetacelloDictionaryRepositoryTest >> hasPackage: aString [
-	| package |
-	package := MCWorkingCopy allManagers
-		detect: [ :each | each packageName = aString ]
-		ifNone: [ nil ].
-	^ package notNil
+
+	^ MCWorkingCopy allManagers
+		anySatisfy: [ :each | each packageName = aString ]
 ]
 
 { #category : #accessing }

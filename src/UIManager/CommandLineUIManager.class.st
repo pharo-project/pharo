@@ -90,11 +90,6 @@ CommandLineUIManager >> alert: aStringOrText title: aString configure: aBlock [
 	self alert: aStringOrText title: aString.
 ]
 
-{ #category : #display }
-CommandLineUIManager >> checkForNewDisplaySize [
-	"do nothing"
-]
-
 { #category : #'ui requests' }
 CommandLineUIManager >> choose: questionsAnswerDict title: queryString [
 

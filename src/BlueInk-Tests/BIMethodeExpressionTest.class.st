@@ -6,7 +6,7 @@ Class {
 
 { #category : #configurations }
 BIMethodeExpressionTest >> basicCommentFormatConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -21,7 +21,7 @@ BIMethodeExpressionTest >> basicCommentFormatConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> basicConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -39,7 +39,7 @@ BIMethodeExpressionTest >> basicConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> bigMethodeConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -70,7 +70,7 @@ BIMethodeExpressionTest >> bigMethodeConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> cascadeConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -95,7 +95,7 @@ BIMethodeExpressionTest >> cascadeConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> newLineAfterSignatureConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -108,7 +108,7 @@ BIMethodeExpressionTest >> newLineAfterSignatureConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> newLineBetweenTopCommentsConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -126,7 +126,7 @@ BIMethodeExpressionTest >> newLineBetweenTopCommentsConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> noNewLineBetweenTopCommentsConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -141,7 +141,7 @@ BIMethodeExpressionTest >> noNewLineBetweenTopCommentsConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> noNewLinesAfterCommentConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -156,7 +156,7 @@ BIMethodeExpressionTest >> noNewLinesAfterCommentConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> notBasicCommentFormatConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -172,7 +172,7 @@ BIMethodeExpressionTest >> notBasicCommentFormatConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> oneNewLineAfterCommentConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -188,7 +188,7 @@ BIMethodeExpressionTest >> oneNewLineAfterCommentConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> oneNewLinesAfterSignatureConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -200,7 +200,7 @@ BIMethodeExpressionTest >> oneNewLinesAfterSignatureConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> signatureConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -213,7 +213,7 @@ BIMethodeExpressionTest >> signatureConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> signatureNotOnMultipleLinesConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -227,7 +227,7 @@ BIMethodeExpressionTest >> signatureNotOnMultipleLinesConfiguration [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> signatureOnMultipleLinesConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"
@@ -548,7 +548,7 @@ BIMethodeExpressionTest >> testTwoNewLinesAfterSignature [
 
 { #category : #configurations }
 BIMethodeExpressionTest >> twoNewLinesAfterSignatureConfiguration [
-	"Here we can control explicitely the configuration we want."
+	"Here we can control explicitly the configuration we want."
 
 	" String streamContents: [:s |
 			BIPrettyPrinterContext new storeOn: s]"

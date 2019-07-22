@@ -20,7 +20,7 @@ Class {
 		'useSelectionIndex',
 		'wrapSelector'
 	],
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Base'
 }
 
 { #category : #'instance creation' }
@@ -611,12 +611,12 @@ DropListMorph >> outOfWorld: aWorld [
 
 { #category : #protocol }
 DropListMorph >> popList [
+
 	"Hide / show the list."
 
-	self enabled ifFalse: [^self].
-	self listMorph owner isNil
-		ifTrue: [self showList]
-		ifFalse: [self hideList]
+	self enabled
+		ifFalse: [ ^ self ].
+	self listMorph owner ifNil: [ self showList ] ifNotNil: [ self hideList ]
 ]
 
 { #category : #private }
@@ -692,19 +692,20 @@ DropListMorph >> setIndexSelector: anObject [
 
 { #category : #protocol }
 DropListMorph >> showList [
+
 	"Show the list."
 
-	self listMorph owner isNil
-		ifTrue: [self positionList.
-				self
-					fillStyle: self fillStyleToUse;
-					listPaneColor: self paneColor.
-				self listMorph theme: self theme.
-				self world addMorphInLayer: self listMorph.
-				self listMorph wantsKeyboardFocus ifTrue: [
-					self listMorph takeKeyboardFocus].
-				self activeHand
-					newMouseFocus: self listMorph]
+	self listMorph owner
+		ifNil: [ self positionList.
+			self
+				fillStyle: self fillStyleToUse;
+				listPaneColor: self paneColor.
+			self listMorph theme: self theme.
+			self world addMorphInLayer: self listMorph.
+			self listMorph wantsKeyboardFocus
+				ifTrue: [ self listMorph takeKeyboardFocus ].
+			self activeHand newMouseFocus: self listMorph
+			]
 ]
 
 { #category : #'stepping and presenter' }
@@ -809,17 +810,20 @@ DropListMorph >> updateList [
 
 { #category : #updating }
 DropListMorph >> updateListSelectionIndex [
+
 	"Update the list selection."
 
-	|i|
+	| i |
+
 	self useSelectionIndex
-		ifTrue: [i := self getCurrentSelectionIndex.
-				listSelectionIndex = i ifTrue: [^self].
-				listSelectionIndex := i]
-		ifFalse: [i := self getCurrentSelection.
-				listSelectionIndex := i isNil
-					ifTrue: [0]
-					ifFalse: [self list indexOf: i]].
+		ifTrue: [ i := self getCurrentSelectionIndex.
+			listSelectionIndex = i
+				ifTrue: [ ^ self ].
+			listSelectionIndex := i
+			]
+		ifFalse: [ i := self getCurrentSelection.
+			listSelectionIndex := i ifNil: [ 0 ] ifNotNil: [ self list indexOf: i ]
+			].
 	self
 		changed: #listSelectionIndex;
 		updateContents;

@@ -85,3 +85,21 @@ SlotTest >> testRemoveProperty [
 		
 	self assert: ivar properties isNil.
 ]
+
+{ #category : #'tests - testing' }
+SlotTest >> testisReferenced [
+	self assert: (Point slotNamed: #x) isReferenced
+]
+
+{ #category : #'tests - misc' }
+SlotTest >> testisUsed [
+	self assert: InstanceVariableSlot isUsed.
+	self assert: IndexedSlot isUsed. "subclasses are users"
+	self assert: ProcessLocalSlot isUsed. "references count as uses, too"
+]
+
+{ #category : #'tests - misc' }
+SlotTest >> testslotUsers [
+	self assert: (ToOneRelationSlot slotUsers includes: SlotExampleMovie).
+	self deny: (ToOneRelationSlot slotUsers includes: SlotExamplePerson)
+]

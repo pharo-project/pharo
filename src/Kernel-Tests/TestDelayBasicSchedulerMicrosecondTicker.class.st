@@ -243,8 +243,8 @@ TestDelayBasicSchedulerMicrosecondTicker >> testPerformanceInlined_ifNotNil [
 { #category : #tests }
 TestDelayBasicSchedulerMicrosecondTicker >> testPerformanceInlined_ifTrue [
 	"For optimal performance, the outer conditionals of #timingPriorityHandleEvent should be inlined"
-	|codeSample|
-	codeSample := [ nil ifTrue: [ 0 ]].
+	| codeSample x |
+	codeSample := [ x ifTrue: [ 0 ]].
 	self assert: codeSample sourceNode body statements first isInlined
 ]
 

@@ -56,7 +56,7 @@ BehaviorTest >> testAllSelectorsAbove [
 BehaviorTest >> testAllSelectorsAboveUntil [
 		
 	|sels |
-	sels := Date allSelectorsAboveUntil: Object..
+	sels := Date allSelectorsAboveUntil: Object.
 	self deny: (sels includes: #mmddyyyy). 
 	self deny: (sels includes: #weekday).
 	self assert: (sels includes: #at:).
@@ -255,4 +255,18 @@ BehaviorTest >> testsourceCodeTemplateFor [
 	"check for distictive source code templates for class-side and instance-side"
 	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side message'). 
 	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side message') 
+]
+
+{ #category : #'tests - queries' }
+BehaviorTest >> testthoroughWhichMethodsReferTo [
+	| array |
+	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
+	"normal case"
+	self assert: (Point thoroughWhichMethodsReferTo: #x) notEmpty.
+	"we understand send bytecodes for special selectors"
+	self assert: (Point thoroughWhichMethodsReferTo: #+) notEmpty.
+	"we dive into literal arrays"
+	self assert: (self class thoroughWhichMethodsReferTo: array first) notEmpty.
+	"and we are false for non existing symbols"
+	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
 ]

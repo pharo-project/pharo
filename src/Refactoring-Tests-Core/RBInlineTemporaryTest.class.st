@@ -13,7 +13,7 @@ RBInlineTemporaryTest >> testInlineTemporary [
 		in: RBRefactoryTestDataApp.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineMethod) = (self parseMethod: 'inlineMethod
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineMethod) equals: (self parseMethod: 'inlineMethod
 										^self
 													foo;
 													inlineMethod;

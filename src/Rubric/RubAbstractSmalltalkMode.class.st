@@ -14,7 +14,7 @@ RubAbstractSmalltalkMode >> editorClass [
 ]
 
 { #category : #testing }
-RubAbstractSmalltalkMode >> isCodeCompletionAllowed [
+RubAbstractSmalltalkMode >> isCompletionEnabled [
 	^ true
 ]
 

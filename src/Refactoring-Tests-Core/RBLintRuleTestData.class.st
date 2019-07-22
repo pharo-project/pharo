@@ -100,10 +100,9 @@ RBLintRuleTestData >> openEditor [
 ]
 
 { #category : #printing }
-RBLintRuleTestData >> printOn: aStream [ 
-	name isNil
-		ifTrue: [super printOn: aStream]
-		ifFalse: [aStream nextPutAll: name]
+RBLintRuleTestData >> printOn: aStream [
+
+	name ifNil: [ super printOn: aStream ] ifNotNil: [ aStream nextPutAll: name ]
 ]
 
 { #category : #accessing }

@@ -112,12 +112,16 @@ MCOrganizationDefinition >> postloadOver: oldDefinition [
 
 { #category : #private }
 MCOrganizationDefinition >> reorderCategories: allCategories original: oldCategories [
-	| first |
-	first := allCategories detect: [:ea | categories includes: ea] ifNone: [^ allCategories].
-	^ 	((allCategories copyUpTo: first) copyWithoutAll: oldCategories, categories),
-		categories,
-		((allCategories copyAfter: first) copyWithoutAll: oldCategories, categories)
 
+	^ allCategories
+		detect: [ :ea | categories includes: ea ]
+		ifFound: [ :first | 
+			((allCategories copyUpTo: first)
+				copyWithoutAll: oldCategories , categories) , categories
+				,
+					((allCategories copyAfter: first)
+						copyWithoutAll: oldCategories , categories) ]
+		ifNone: [ allCategories ]
 ]
 
 { #category : #accessing }

@@ -127,7 +127,7 @@ ClassTest >> testAllSharedPools [
 	self assertEmpty: SubclassPoolUser sharedPools
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ClassTest >> testChangingShapeDoesNotPutNilInMethodsLastLiteralKey [
 	"Test that when the shape of a class changes, the key of the last literal of the methods is not nil"
 	| tutu |
@@ -145,16 +145,7 @@ ClassTest >> testClassSide [
 	self assert: Point class classSide equals: Point class. 
 ]
 
-{ #category : #'tests - class variables' }
-ClassTest >> testClassVarNames [
-
-	self assert: (Object classVarNames includes: #DependentsFields).
-	
-	"A class and it's meta-class share the class variables"
-	self assert: (Object classVarNames = Object class classVarNames).
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ClassTest >> testCompileAll [
 	ClassTest compileAll
 ]
@@ -287,7 +278,7 @@ ClassTest >> testOrdersMetaClassAfterItsClassInstance [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - pools' }
 ClassTest >> testPoolVariableAccessibleInClassUser [
 	"This test shows that a Pool Variable is accessible from the class that declare the Pool usage: here the superclass"
  
@@ -298,7 +289,7 @@ ClassTest >> testPoolVariableAccessibleInClassUser [
 	self assert: RootClassPoolUser author = 'Ducasse'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - pools' }
 ClassTest >> testPoolVariableAccessibleInSubclassOfClassUser [
 	"This test shows that a Pool Variable is not accessible from a subclass that declare the Pool usage: here SubFlop subclass of Flop and this is a bug. "
  
@@ -435,6 +426,30 @@ ClassTest >> testUsesPoolVarNamed [
 	self assert: (RootClassPoolUser usesPoolVarNamed: 'Author').
 	"a subclass  has  the one of its superclass"
 	self assert: (SubclassPoolUser usesPoolVarNamed: 'Author').
+]
+
+{ #category : #'tests - class variables' }
+ClassTest >> testallClassVariables [
+
+	self assert: SmalltalkImage allClassVariables last name equals: #DependentsFields
+]
+
+{ #category : #'tests - class variables' }
+ClassTest >> testclassVarNames [
+
+	self assert: (Object classVarNames includes: #DependentsFields).
+	
+	"A class and it's meta-class share the class variables"
+	self assert: (Object classVarNames = Object class classVarNames).
+]
+
+{ #category : #'tests - class variables' }
+ClassTest >> testclassVariables [
+
+	self assert: Object classVariables first name equals: #DependentsFields.
+	
+	"A class and it's meta-class share the class variables"
+	self assert: (Object classVariables = Object class classVariables).
 ]
 
 { #category : #'tests - class creation' }

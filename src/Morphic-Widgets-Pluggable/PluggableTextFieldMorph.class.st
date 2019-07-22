@@ -75,11 +75,12 @@ PluggableTextFieldMorph >> closeChooser [
 
 { #category : #'model access' }
 PluggableTextFieldMorph >> convertTo: aClass [
+
 	"Set the converter object class."
 
-	self converter isNil
-		ifTrue: [self converter: (ObjectStringConverter forClass: aClass)]
-		ifFalse: [self converter objectClass: aClass]
+	self converter
+		ifNil: [ self converter: ( ObjectStringConverter forClass: aClass ) ]
+		ifNotNil: [ self converter objectClass: aClass ]
 ]
 
 { #category : #accessing }
@@ -136,14 +137,27 @@ PluggableTextFieldMorph >> encrypted: aBoolean [
 
 { #category : #accessing }
 PluggableTextFieldMorph >> entryCompletion: anEntryCompletion [
-	entryCompletion := anEntryCompletion.
-	entryCompletion 
-		ifNotNil: [ entryCompletion chooseBlock isNil
-			ifTrue: [entryCompletion chooseBlock: [:v | self setText: v. self acceptTextInModel ]]
-			ifFalse: [ | blk | 
-				blk := entryCompletion chooseBlock.
-				entryCompletion chooseBlock: [:v | self setText: v. self acceptTextInModel. blk value: v]]].
 
+	entryCompletion := anEntryCompletion.
+	entryCompletion
+		ifNotNil: [ entryCompletion chooseBlock
+				ifNil: [ entryCompletion
+						chooseBlock: [ :v | 
+							self setText: v.
+							self acceptTextInModel
+							]
+					]
+				ifNotNil: [ | blk |
+
+					blk := entryCompletion chooseBlock.
+					entryCompletion
+						chooseBlock: [ :v | 
+							self setText: v.
+							self acceptTextInModel.
+							blk value: v
+							]
+					]
+			]
 ]
 
 { #category : #accessing }
@@ -165,27 +179,28 @@ PluggableTextFieldMorph >> focusChanged [
 
 { #category : #'model access' }
 PluggableTextFieldMorph >> getSelection [
+
 	"Answer the model's selection interval.
 	If not available keep the current selection."
 
-	getSelectionSelector isNil ifFalse: [^super getSelection].
-	^selectionInterval ifNil: [super getSelection]
+	getSelectionSelector ifNotNil: [ ^ super getSelection ].
+	^ selectionInterval ifNil: [ super getSelection ]
 ]
 
 { #category : #'model access' }
 PluggableTextFieldMorph >> getText [
+
 	"Retrieve the current model text. Set the converter to
 	convert between the class of the returned object and string form."
 
 	| newObj |
-	getTextSelector isNil ifTrue: [^super getText].
+
+	getTextSelector ifNil: [ ^ super getText ].
 	newObj := model perform: getTextSelector.
-	(newObj isNil and: [self converter isNil]) ifTrue: [^Text new].
-	self converter isNil
-		ifTrue: [self convertTo: newObj class].
-	^(self converter objectAsString: newObj)
-		ifNil: ['']
-		ifNotNil: [:s | s shallowCopy]
+	( newObj isNil and: [ self converter isNil ] )
+		ifTrue: [ ^ Text new ].
+	self converter ifNil: [ self convertTo: newObj class ].
+	^ ( self converter objectAsString: newObj ) ifNil: [ '' ] ifNotNil: [ :s | s shallowCopy ]
 ]
 
 { #category : #accessing }

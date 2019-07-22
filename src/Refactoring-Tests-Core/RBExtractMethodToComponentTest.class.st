@@ -56,11 +56,11 @@ RBExtractMethodToComponentTest >> testExtractMethodAtEndOfMethodThatNeedsReturn 
 	selectorsSize := class selectors size.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 
-	self assert: (class parseTreeFor: #openEditor) = (self parseMethod: 'openEditor
+	self assert: (class parseTreeFor: #openEditor) equals: (self parseMethod: 'openEditor
 								| rules |
 								rules := self failedRules.
 								^rules foo: self').
-	self assert: ((refactoring model classNamed: #Collection) parseTreeFor: #foo:) = (self parseMethod: 'foo: asdf
+	self assert: ((refactoring model classNamed: #Collection) parseTreeFor: #foo:) equals: (self parseMethod: 'foo: asdf
 								self isEmpty ifTrue: [^asdf].
 								self size == 1 ifTrue: [^self first viewResults].
 								^asdf').
@@ -84,11 +84,11 @@ RBExtractMethodToComponentTest >> testMoveWithoutSelfReference [
 	self executeRefactoring: refactoring.
 
 	self 
-		assert: (class parseTreeFor: #copyDictionary:) = (self 
+		assert: (class parseTreeFor: #copyDictionary:) equals: (self 
 						parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
 	self 
 		assert: ((refactoring model classNamed: #Dictionary) 
-				parseTreeFor: #copyWithAssociations) = (self 
+				parseTreeFor: #copyWithAssociations) equals: (self 
 							parseMethod: 'copyWithAssociations 
 							| newDictionary |
 							newDictionary := Dictionary new: self size.

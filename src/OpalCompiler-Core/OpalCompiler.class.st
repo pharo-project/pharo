@@ -708,6 +708,11 @@ OpalCompiler >> parserClass [
 ]
 
 { #category : #accessing }
+OpalCompiler >> productionEnvironment: anObject [
+	compilationContext productionEnvironment: anObject
+]
+
+{ #category : #accessing }
 OpalCompiler >> receiver: anObject [
 	receiver := anObject.
 ]

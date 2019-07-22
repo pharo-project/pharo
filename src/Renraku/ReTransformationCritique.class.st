@@ -24,7 +24,7 @@ ReTransformationCritique class >> for: anEntity by: aRule tree: newAST [
 ReTransformationCritique >> change [
 	"re-add the method compiled from the new AST"
 	
-	^ RBAddMethodChange compile: newTree newSource in: sourceAnchor entity methodClass
+	^ RBAddMethodChange compile: newTree newSource in: self entity methodClass
 ]
 
 { #category : #initialization }

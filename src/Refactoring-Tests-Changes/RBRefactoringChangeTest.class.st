@@ -142,24 +142,29 @@ RBRefactoringChangeTest >> testAddClassInteractively [
 
 { #category : #'tests-pattern' }
 RBRefactoringChangeTest >> testAddClassPattern [
+
 	"Make sure that all class definitions can be parsed."
 
-	self exampleClasses do: [ :class |
-		(class isObsolete or: [ class superclass notNil and: [ class superclass isObsolete ] ]) ifFalse: [
-			| change |
-			change := changes defineClass: class oldDefinition.
-			self assert: (change isKindOf: RBAddClassChange).
-			self assert: change changeClassName equals: class name.
+	self exampleClasses
+		do: [ :class | 
+			( class isObsolete or: [ class superclass notNil and: [ class superclass isObsolete ] ] )
+				ifFalse: [ | change |
 
-			class superclass isNil
-				ifTrue: [ self assert: change definitionClass equals: ProtoObject ]
-				ifFalse: [ self assert: change definitionClass equals: class superclass ].
+					change := changes defineClass: class oldDefinition.
+					self assert: ( change isKindOf: RBAddClassChange ).
+					self assert: change changeClassName equals: class name.
 
-			self assert: change instanceVariableNames equals: class instVarNames asArray.
-			self assert: change classVariableNames equals: class classVarNames asArray.
-			self assert: change sharedPoolNames equals: class sharedPoolNames asArray.
-			self assert: change category equals: class category.
-			self universalTestFor: change ] ]
+					class superclass
+						ifNil: [ self assert: change definitionClass equals: ProtoObject ]
+						ifNotNil: [ self assert: change definitionClass equals: class superclass ].
+
+					self assert: change instanceVariableNames equals: class instVarNames asArray.
+					self assert: change classVariableNames equals: class classVarNames asArray.
+					self assert: change sharedPoolNames equals: class sharedPoolNames asArray.
+					self assert: change category equals: class category.
+					self universalTestFor: change
+					]
+			]
 ]
 
 { #category : #'tests-pattern' }

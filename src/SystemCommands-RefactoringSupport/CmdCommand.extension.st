@@ -2,13 +2,13 @@ Extension { #name : #CmdCommand }
 
 { #category : #'*SystemCommands-RefactoringSupport' }
 CmdCommand >> confirmRefactoringInContext: aToolContext by: aCommandActivator [
-	
 	| submitDialog |
-	
-	submitDialog := SycRefactoringPreview for: self scopes: aToolContext refactoringScopes.
-	submitDialog openDialogWithSpec
-		okAction: [ submitDialog accept. 
-			aCommandActivator applyCommandResult];
+	submitDialog := SycRefactoringPreview
+		for: self
+		scopes: aToolContext refactoringScopes.
+	submitDialog openModalWithSpec
+		okAction: [ submitDialog accept.
+			aCommandActivator applyCommandResult ];
 		cancelAction: [ submitDialog cancel ].
 	CmdCommandAborted signal
 ]

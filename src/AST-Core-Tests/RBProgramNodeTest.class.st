@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'node'
 	],
-	#category : #'AST-Core-Tests'
+	#category : #'AST-Core-Tests-Nodes'
 }
 
 { #category : #accessing }
