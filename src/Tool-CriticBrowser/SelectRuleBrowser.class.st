@@ -48,13 +48,13 @@ SelectRuleBrowser class >> title [
 { #category : #private }
 SelectRuleBrowser >> addAllItems [
 	
-	toSelectModel roots do: [ :group | selectedRules addAll: group rules].
+	toSelectPresenter roots do: [ :group | selectedRules addAll: group rules].
 	self updateTree  	  
 ]
 
 { #category : #private }
 SelectRuleBrowser >> addItems [
-	toSelectModel selectedItem
+	toSelectPresenter selectedItem
 		ifNotNil:
 			[ :item |
 			item content isComposite
@@ -75,26 +75,27 @@ SelectRuleBrowser >> environment: aEnv [
 
 { #category : #initialization }
 SelectRuleBrowser >> initialize [
-	| wrappingBlock selectedRulesChildrenBlock rulesToSelectChildrenBlock |
+	| selectedRulesChildrenBlock rulesToSelectChildrenBlock |
 	super initialize.
-	toSelectModel := self instantiate: TreePresenter.
-	selectedModel := self instantiate: TreePresenter.
+	toSelectPresenter := self newTreeTable.
+	selectedPresenter := self newTreeTable.
+	toSelectPresenter
+		addColumn: (SpStringTableColumn evaluated: [ :eachItem | eachItem name ]).
+	selectedPresenter
+		addColumn: (SpStringTableColumn evaluated: [ :eachItem | eachItem name ]).
 	selectedRules := Set new.
 	selectedRulesChildrenBlock := [ :rule | 
-		rule isComposite
-			ifTrue: [ rule rules
-				select: [:r | (self isSelected: r) or: [ r isComposite ]]]
-			ifFalse: [ #() ]].
+	rule isComposite
+		ifTrue: [ rule rules
+				select: [ :r | (self isSelected: r) or: [ r isComposite ] ] ]
+		ifFalse: [ #() ] ].
 	rulesToSelectChildrenBlock := [ :rule | 
-		rule isComposite
-			ifTrue: [ rule rules
-				select: [:r | (self isSelected: r) not or: [ r isComposite ]]]
-			ifFalse: [ #() ]].
-	toSelectModel childrenBlock: rulesToSelectChildrenBlock.
-	selectedModel childrenBlock: selectedRulesChildrenBlock.
-	wrappingBlock := [:rule | rule name ].
-	toSelectModel displayBlock: wrappingBlock.
-	selectedModel displayBlock: wrappingBlock
+	rule isComposite
+		ifTrue: [ rule rules
+				select: [ :r | (self isSelected: r) not or: [ r isComposite ] ] ]
+		ifFalse: [ #() ] ].
+	toSelectPresenter children: rulesToSelectChildrenBlock.
+	selectedPresenter children: selectedRulesChildrenBlock
 ]
 
 { #category : #private }
@@ -108,8 +109,8 @@ SelectRuleBrowser >> isSelected: aRule [
 { #category : #accessing }
 SelectRuleBrowser >> items: aCollection [
 	
-	toSelectModel roots: aCollection.
-	selectedModel roots: aCollection
+	toSelectPresenter roots: aCollection.
+	selectedPresenter roots: aCollection
 
 ]
 
@@ -128,7 +129,7 @@ SelectRuleBrowser >> nextAction [
 { #category : #api }
 SelectRuleBrowser >> removeAllItems [
 	
-	selectedModel roots do: [ :item |  
+	selectedPresenter roots do: [ :item |  
 		selectedRules removeAllFoundIn: item value ].
 	self updateTree 	  
 ]
@@ -136,7 +137,7 @@ SelectRuleBrowser >> removeAllItems [
 { #category : #api }
 SelectRuleBrowser >> removeItems [
 	
-	selectedModel selectedItem
+	selectedPresenter selectedItem
 		ifNotNil: [ :item | selectedRules removeAllFoundIn: item content leaves ].
 	self updateTree  	  
 ]
@@ -149,6 +150,8 @@ SelectRuleBrowser >> removeTestCase: aBoolean [
 { #category : #api }
 SelectRuleBrowser >> updateTree [
 
-	toSelectModel updateTree.
-	selectedModel updateTree
+	toSelectPresenter needRebuild: false.
+	toSelectPresenter buildWithSpec.
+	selectedPresenter needRebuild: false.
+	selectedPresenter buildWithSpec
 ]

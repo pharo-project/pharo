@@ -5,43 +5,43 @@ Class {
 	#name : #SelectPackageBrowser,
 	#superclass : #SelectBrowser,
 	#instVars : [
-		'addTestCaseClassesModel',
-		'removeTestPackageModel',
-		'testPackage'
+		'testPackage',
+		'addTestCaseClassesCheckBox',
+		'removeTestPackageButton'
 	],
 	#category : #'Tool-CriticBrowser-Parts'
 }
 
 { #category : #specs }
 SelectPackageBrowser class >> defaultSpec [
-
-		<spec>
-	
-	^ SpecLayout composed
-		newColumn: [:c |
-			c
-			newRow: [:r |
-				r 
-					add: #toSelectModel; 
-					addSplitter;
-					add:  #selectedModel];
-			newRow: [:r |
-				r
-					add: #removeTestPackageModel; 
-					add: #addTestCaseClasses]  height: 25;
-			newRow: [:r |
-				r 
-					add:#addButtonModel;
-					add:#addAllButtonModel;
-					add:#removeButtonModel;
-					add:#removeAllButtonModel;
-					add: #nextButtonModel ] height: 25]	
+	<spec>
+	^ SpBoxLayout newVertical
+		add:
+			(SpPanedLayout newHorizontal
+				add: #toSelectPresenter;
+				add: #selectedPresenter;
+				yourself);
+		add:
+			(SpBoxLayout newHorizontal
+				add: #removeTestPackageButton;
+				add: #addTestCaseClassesCheckBox;
+				yourself)
+			withConstraints: [ :contraint | contraint height: 25 ];
+		add:
+			(SpBoxLayout newHorizontal
+				add: #addButtonPresenter;
+				add: #addAllButtonPresenter;
+				add: #removeButtonPresenter;
+				add: #removeAllButtonPresenter;
+				add: #nextButtonPresenter;
+				yourself)
+			withConstraints: [ :contraint | contraint height: 25 ];
+		yourself
 ]
 
 { #category : #'instance creation' }
 SelectPackageBrowser class >> open [
 	<script>
-	
 	self new items: RPackageOrganizer default packages;
 		openWithSpec 
 ]
@@ -54,91 +54,90 @@ SelectPackageBrowser class >> title [
 { #category : #private }
 SelectPackageBrowser >> addAllItems [
 	| tmp |
-	tmp := self 
-		sort: selectedModel listItems
-		withAll: toSelectModel listItems.
-	selectedModel items: tmp.
-	toSelectModel items: #().
-	toSelectModel updateList.
-	selectedModel updateList 	  
+	tmp := self
+		sort: selectedPresenter model items
+		withAll: toSelectPresenter model items.
+	selectedPresenter items: tmp.
+	toSelectPresenter items: #().
+	toSelectPresenter updateList.
+	selectedPresenter updateList
 ]
 
 { #category : #private }
 SelectPackageBrowser >> addItems [
-	toSelectModel selectedItems
-		ifNotNil: [ :items |  
-			selectedModel items: (self sort: selectedModel listItems withAll: items).
-			toSelectModel items: (self sort: toSelectModel listItems withoutAll: items) ].
-	toSelectModel updateList.
-	selectedModel updateList  	  
+	toSelectPresenter selectedItems
+		ifNotNil: [ :items | 
+			selectedPresenter
+				items: (self sort: selectedPresenter model items withAll: items).
+			toSelectPresenter
+				items: (self sort: toSelectPresenter model items withoutAll: items) ].
+	toSelectPresenter updateList.
+	selectedPresenter updateList
 ]
 
 { #category : #accessing }
 SelectPackageBrowser >> addTestCaseClasses [
-	^ addTestCaseClassesModel
+	^ addTestCaseClassesCheckBox
 
 ]
 
 { #category : #initialization }
 SelectPackageBrowser >> initialize [
 
-	| wrappingBlock |
 	super initialize.	
-	toSelectModel := self instantiate: ListPresenter.
-	selectedModel := self instantiate: ListPresenter.
-	selectedModel beMultipleSelection.
-	toSelectModel beMultipleSelection.
 	testPackage := OrderedCollection new.
-	wrappingBlock := [ :package | package packageName ].
-	toSelectModel displayBlock: wrappingBlock.
-	selectedModel displayBlock: wrappingBlock
+
 ]
 
 { #category : #initialization }
 SelectPackageBrowser >> initializeWidgets [
-
-	super initializeWidgets.	
-	addTestCaseClassesModel := self newCheckBox.
-	removeTestPackageModel := self newButton.
-	self setRemoveTestPackageModel.		
-	addTestCaseClassesModel label: 'remove all TestCase Classes'.
-	addTestCaseClassesModel state: true
+	super initializeWidgets.
+	addTestCaseClassesCheckBox := self newCheckBox.
+	removeTestPackageButton := self newButton.
+	toSelectPresenter := self newList.
+	selectedPresenter := self newList.
+	toSelectPresenter displayBlock: [ :package | package packageName ].
+	selectedPresenter displayBlock: [ :package | package packageName ].
+	selectedPresenter beMultipleSelection.
+	toSelectPresenter beMultipleSelection.
+	self setRemoveTestPackageButton.
+	addTestCaseClassesCheckBox label: 'remove all TestCase Classes'.
+	addTestCaseClassesCheckBox state: true
 ]
 
 { #category : #api }
 SelectPackageBrowser >> nextAction [
-
-	| env packages |	
-		
-	packages := selectedModel listItems.
+	| env packages |
+	packages := selectedPresenter model items.
 	env := RBPackageEnvironment new packages: packages.
-	SelectRuleBrowser openWithEnvironment: env removeTestCase: self addTestCaseClasses state.
+	SelectRuleBrowser
+		openWithEnvironment: env
+		removeTestCase: self addTestCaseClasses state.
 	self delete
-	
-		
-
 ]
 
 { #category : #private }
 SelectPackageBrowser >> removeAllItems [
 	| tmp |
-	tmp := self 
-		sort: toSelectModel listItems
-		withAll: selectedModel listItems.
-	toSelectModel items: tmp.
-	selectedModel items: #().
-	toSelectModel updateList.
-	selectedModel updateList  	  
+	tmp := self
+		sort: toSelectPresenter model items
+		withAll: selectedPresenter model items.
+	toSelectPresenter items: tmp.
+	selectedPresenter items: #().
+	toSelectPresenter updateList.
+	selectedPresenter updateList
 ]
 
 { #category : #private }
 SelectPackageBrowser >> removeItems [
-	selectedModel selectedItems
-		ifNotNil: [:items | 
-			toSelectModel items: (self sort: toSelectModel listItems withAll: items).
-			selectedModel items: (self sort: selectedModel listItems withoutAll: items) ].
-	toSelectModel updateList.
-	selectedModel updateList 	  
+	selectedPresenter selectedItems
+		ifNotNil: [ :items | 
+			toSelectPresenter
+				items: (self sort: toSelectPresenter model items withAll: items).
+			selectedPresenter
+				items: (self sort: selectedPresenter model items withoutAll: items) ].
+	toSelectPresenter updateList.
+	selectedPresenter updateList
 ]
 
 { #category : #initialization }
@@ -147,31 +146,31 @@ SelectPackageBrowser >> removeTestPackage [
 	| matchText  |
 	testPackage isEmpty
 		ifTrue: [
-			removeTestPackageModel label: 'Add All Packages Tests'.
+			removeTestPackageButton label: 'Add All Packages Tests'.
 			matchText := '*Test*'.
 			testPackage :=MCWorkingCopy allManagers select: [ :package | matchText match:  package packageName ].
-			selectedModel items: (self sort:(selectedModel listItems \ testPackage)).
-			toSelectModel items: (self sort:(toSelectModel  listItems \ testPackage)) ]
+			selectedPresenter items: (self sort:(selectedPresenter listItems \ testPackage)).
+			toSelectPresenter items: (self sort:(toSelectPresenter  listItems \ testPackage)) ]
 		ifFalse: [
-			removeTestPackageModel label: 'Remove All Packages Tests'.		
-			toSelectModel items: (self sort: (toSelectModel listItems asOrderedCollection addAll: testPackage; yourself)).
+			removeTestPackageButton label: 'Remove All Packages Tests'.		
+			toSelectPresenter items: (self sort: (toSelectPresenter listItems asOrderedCollection addAll: testPackage; yourself)).
 			testPackage := OrderedCollection new ]. 
-	toSelectModel updateList.
-	selectedModel updateList  	
+	toSelectPresenter updateList.
+	selectedPresenter updateList  	
 ]
 
 { #category : #initialization }
-SelectPackageBrowser >> removeTestPackageModel [
+SelectPackageBrowser >> removeTestPackageButton [
 
-	^ removeTestPackageModel
+	^ removeTestPackageButton
 	
 	
 ]
 
 { #category : #initialization }
-SelectPackageBrowser >> setRemoveTestPackageModel [
+SelectPackageBrowser >> setRemoveTestPackageButton [
 
-	removeTestPackageModel
+	removeTestPackageButton
 		state: false;
 		label: 'Remove All Packages Tests';
 		action: [ self  removeTestPackage ]

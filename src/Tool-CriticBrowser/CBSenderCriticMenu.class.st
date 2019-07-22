@@ -1,6 +1,3 @@
-"
-test
-"
 Class {
 	#name : #CBSenderCriticMenu,
 	#superclass : #CmCommand,
