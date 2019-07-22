@@ -40,6 +40,11 @@ TestMatchedNodeProducer >> visitArgumentNode: anArgumentNode [
 ]
 
 { #category : #visiting }
+TestMatchedNodeProducer >> visitBlockNode: aRBBlockNode [ 
+	^ #()
+]
+
+{ #category : #visiting }
 TestMatchedNodeProducer >> visitGlobalNode: aRBGlobalNode [ 
 	^ self visitVariableNode: aRBGlobalNode 
 ]
@@ -122,7 +127,7 @@ TestMatchedNodeProducer >> visitTemporaryNode: aNode [
 { #category : #visiting }
 TestMatchedNodeProducer >> visitVariableNode: aRBVariableNode [  
 	aRBVariableNode isDefinition ifTrue: [ ^ (self select: Symbol allSymbols beginningWith: aRBVariableNode name) ].
-   (aRBVariableNode isArgument ifTrue: [ ^ (self select: Symbol allSymbols beginningWith: aRBVariableNode name) ]).
+   (aRBVariableNode isArgument ifTrue: [ ^ (self select: Symbol allSymbols beginningWith: aRBVariableNode name) select: [ :each | each numArgs = 0 ] ]).
 	"using a stream to store results should be better"
 	^ (self select: Smalltalk globals keys beginningWith: aRBVariableNode name) , 
 	  (self select: (currentClass allSlots collect: [ :each | each name ]) beginningWith: aRBVariableNode name) ,
