@@ -268,7 +268,7 @@ SycMethodNameEditor >> renameMethodAndClose: presenter [
 	^ self previewResult label = '(invalid)'
 		ifTrue: [ self inform: 'Invalid method name' ]
 		ifFalse: [
-			refactoring parameterMap: editerArgumentList.
+			refactoring ifNotNil: [ refactoring parameterMap: editerArgumentList].
 			methodName
 				arguments: self getParametersOrder;
 				selector: selectorInput text.
