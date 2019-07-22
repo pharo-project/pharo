@@ -61,7 +61,7 @@ ResetWindow >> setCurrentConfigurationModel [
 	currentConfigurationModel  
 		state: false;
 		label: 'Uses Current Configuration';
-		action: [ CriticBrowser openOnWorkingConfiguration: CriticWorkingConfiguration current. 
+		action: [ CBCriticBrowser openOnWorkingConfiguration: CriticWorkingConfiguration current. 
 				self delete ]
 ]
 

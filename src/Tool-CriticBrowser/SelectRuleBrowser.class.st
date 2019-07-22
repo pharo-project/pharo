@@ -122,7 +122,7 @@ SelectRuleBrowser >> nextAction [
 		rule: selectedRules;
 		environment: environment;
 		removeTestCase: removeTestCase.
-	CriticBrowser openOnWorkingConfiguration: CriticWorkingConfiguration current
+	CBCriticBrowser openOnWorkingConfiguration: CriticWorkingConfiguration current
 ]
 
 { #category : #api }
