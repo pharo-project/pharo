@@ -34,23 +34,6 @@ NECController class >> cleanUp [
 ]
 
 { #category : #accessing }
-NECController class >> codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: evt [
-	"Inserts code completion if allowed in this morph"
-	
-	| editor controller |
-	self isCompletionEnabled ifFalse: [ ^aBlock value ].
-	editor := aTextMorph editor ifNil: [ ^aBlock value ].
-	editor isCompletionEnabled ifFalse: [  ^aBlock value ].
-	controller := self uniqueInstance.
-	controller setModel: editor model.
-	
-	(controller handleKeystrokeBefore: evt editor: editor) ifTrue:  [^ self ].
-	aBlock value.
-	controller handleKeystrokeAfter: evt editor: editor.
-
-]
-
-{ #category : #accessing }
 NECController class >> contextClass [
 	^ContextClass ifNil: [ ^NECContext ] 
 ]

@@ -54,7 +54,7 @@ TestTypingVisitor >> visitBlockNode: aBlockNode [
 ]
 
 { #category : #visiting }
-TestTypingVisitor >> visitGlobalNode: aGlobalNode [
+TestTypingVisitor >> visitGlobalNode: aGlobalNode [ 
 	aGlobalNode propertyAt: #type put: (Smalltalk globals at: aGlobalNode name) class.
 ]
 
