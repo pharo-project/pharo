@@ -57,10 +57,10 @@ RBGenericInteractLayer >> executeExtractMethod [
 
 { #category : #execution }
 RBGenericInteractLayer >> executeFindAndReplace [
-	self
+	"self
 		executeThis: [ 
 			self findAndReplaceMethod.
-			self executeRefactoringWith: #primitiveExecute ]
+			self executeRefactoringWith: #primitiveExecute ]"
 ]
 
 { #category : #execution }
@@ -147,14 +147,14 @@ RBGenericInteractLayer >> extractTempWithName: newTempName [
 
 { #category : #refactoring }
 RBGenericInteractLayer >> findAndReplaceMethod [
-	|dialog|
+	"|dialog|
 	refactoring :=  RBFindAndReplaceMethodRefactoring 
 		find: method .
 	refactoring setOption: #listToSearch toUse: [ :met :ref |
 		dialog := RBFindAndReplacePreview method: met refactoring: ref.
 		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 		ref].
-	^ refactoring 
+	^ refactoring "
 ]
 
 { #category : #test }
