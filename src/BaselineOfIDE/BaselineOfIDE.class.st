@@ -614,7 +614,7 @@ spec group: 'Refactoring-Tests-Group' with: #(
 ).
 spec group: 'Refactoring-Help-Group' with: #(
 	'Refactoring-Help'
-
+	'Refactoring-Missing'
 ).
 spec group: 'Refactoring-Group' with: #(
 	'Refactoring-Rules-Group'
