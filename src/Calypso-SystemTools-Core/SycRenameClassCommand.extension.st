@@ -4,7 +4,10 @@ Extension { #name : #SycRenameClassCommand }
 SycRenameClassCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyClass asCalypsoItemContext  
+	^ CmdContextMenuActivation  
+		byItemOf: CmdRefactorMenuGroup  
+		order: 1  
+		for: ClyClass asCalypsoItemContext 
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
