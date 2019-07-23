@@ -5,7 +5,7 @@ MetaclassForTraits >> baseTrait [
 	
 	self
 		deprecated: 'Please use #instanceSide instead'
-		transformWith: '`@receiver instanceSide' -> '`@receiver instanceSide'.
+		transformWith: '`@receiver baseTrait' -> '`@receiver instanceSide'.
 
 	^ self instanceSide 
 ]
