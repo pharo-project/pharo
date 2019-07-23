@@ -697,6 +697,6 @@ CBCriticBrowser >> unregisterFromAnnouncements [
 
 { #category : #utilities }
 CBCriticBrowser >> updateTree [
-	self needRebuild: false.
-	self buildWithSpec
+"	self needRebuild: false.
+	self buildWithSpec"
 ]

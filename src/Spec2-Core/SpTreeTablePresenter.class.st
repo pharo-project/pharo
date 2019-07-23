@@ -183,6 +183,13 @@ SpTreeTablePresenter >> itemAtPath: anArray ifAbsent: aBlock [
 		do: [ aBlock value ]
 ]
 
+{ #category : #api }
+SpTreeTablePresenter >> refreshTree [
+	"I refresh the content of the tree. I can be useful for example if the children of the tree changed."
+
+	self withAdapterDo: [ :adptr | adptr refreshTree ]
+]
+
 { #category : #initialization }
 SpTreeTablePresenter >> registerEvents [
 	self whenMenuChangedDo: [ self withAdapterDo: #updateMenu ]
