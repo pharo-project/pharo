@@ -154,18 +154,6 @@ SMTPClient >> login [
 	self checkResponse
 ]
 
-{ #category : #'private protocol' }
-SMTPClient >> mailFrom: fromAddress [
-	" MAIL <SP> FROM:<reverse-path> <CRLF>"
-
-	| address |
-	"MailAddressParser is not in the minimal image"
-	address := ((self environment at: #MailAddressParser) addressesIn: fromAddress) first.
-
-	self sendCommand: 'MAIL FROM: <', address, '>'.
-	self checkResponse.
-]
-
 { #category : #'public protocol' }
 SMTPClient >> mailFrom: sender to: recipientList text: messageText [
 	"deliver this mail to a list of users.  NOTE: the recipient list should be a collection of simple internet style addresses -- no '<>' or '()' stuff"

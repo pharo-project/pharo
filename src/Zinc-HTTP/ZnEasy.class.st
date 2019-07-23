@@ -76,20 +76,6 @@ ZnEasy class >> getGif: urlObject [
 		fromUrl: urlObject	
 ]
 
-{ #category : #private }
-ZnEasy class >> getImageOfType: mimeType fromUrl: urlObject [
-	| client |
-	(client := self client)
-		url: urlObject;
-		accept: mimeType;
-		enforceHttpSuccess: true;
-		enforceAcceptContentType: true;
-		get.
-	"ImageReadWriter does automatic type detection"
-	"ImageReadWriter is not in minimal image"
-	^ (self environment at: #ImageReadWriter) formFromStream: client entity readStream
-]
-
 { #category : #operations }
 ZnEasy class >> getJpeg: urlObject [
 	"self getJpeg: 'http://stfx.eu/sun-fire-x2100.jpg'."
