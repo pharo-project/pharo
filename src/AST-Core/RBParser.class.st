@@ -446,7 +446,7 @@ RBParser >> parseErrorNode: aMessageString [
 	aMessageString = ''')'' expected'
 		ifTrue: [ errorPosition := source findLastOccurrenceOfString: '(' startingAt: 1 ].
 	sourceString := source copyFrom: errorPosition to: source size.
-	^ RBParseErrorNode errorMessage: aMessageString value: sourceString at: self errorPosition
+	^ RBParseErrorNode errorMessage: aMessageString value: sourceString at: self errorPosition - sourceString size
 ]
 
 { #category : #accessing }

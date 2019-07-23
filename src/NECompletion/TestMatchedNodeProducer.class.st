@@ -105,6 +105,12 @@ TestMatchedNodeProducer >> visitPragmaNode: aPragmaNode [
 ]
 
 { #category : #visiting }
+TestMatchedNodeProducer >> visitReturnNode: aNode [
+	
+	^ #()
+]
+
+{ #category : #visiting }
 TestMatchedNodeProducer >> visitSelfNode: aRBSelfNode [ 
 	^ self visitVariableNode: aRBSelfNode 
 ]
