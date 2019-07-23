@@ -7,7 +7,8 @@ Class {
 	#name : #SystemAnnouncement,
 	#superclass : #Announcement,
 	#instVars : [
-		'timeStamp'
+		'timeStamp',
+		'properties'
 	],
 	#category : #'System-Announcements-System-Base'
 }
