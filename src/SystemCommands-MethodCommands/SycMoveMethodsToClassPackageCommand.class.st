@@ -22,16 +22,6 @@ SycMoveMethodsToClassPackageCommand class >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
-{ #category : #activation }
-SycMoveMethodsToClassPackageCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ CmdContextMenuActivation  
-		byItemOf: CmdOtherOptionsMenuGroup  
-		order: 18  
-		for: ClyMethod asCalypsoItemContext  
-]
-
 { #category : #accessing }
 SycMoveMethodsToClassPackageCommand >> defaultMenuItemName [
 	^'Move to class package'

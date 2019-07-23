@@ -46,7 +46,7 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #specs }
 SycMethodNameEditor class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add:
@@ -89,7 +89,7 @@ SycMethodNameEditor class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #example }
 SycMethodNameEditor class >> example2 [
 	<script>
 	self
@@ -99,7 +99,7 @@ SycMethodNameEditor class >> example2 [
 				arguments: ((RBExtractMethodRefactoring >> #validateRenameOf:to:) ast arguments collect: #name))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 SycMethodNameEditor class >> openOn: aMethod [
 	|temp|
 	temp := (self on: aMethod).
@@ -107,7 +107,7 @@ SycMethodNameEditor class >> openOn: aMethod [
 	^ temp openModalWithSpec
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 SycMethodNameEditor class >> openOn: aMethod withRefactoring: refactoring [
 	|temp|
 	temp := (self on: aMethod).

@@ -55,7 +55,7 @@ RBGenericInteractLayer >> executeExtractMethod [
 			self executeRefactoringWith: #primitiveExecute ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #execution }
 RBGenericInteractLayer >> executeFindAndReplace [
 	self
 		executeThis: [ 
@@ -145,7 +145,7 @@ RBGenericInteractLayer >> extractTempWithName: newTempName [
 		in: method origin
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #refactoring }
 RBGenericInteractLayer >> findAndReplaceMethod [
 	|dialog|
 	refactoring :=  RBFindAndReplaceMethodRefactoring 

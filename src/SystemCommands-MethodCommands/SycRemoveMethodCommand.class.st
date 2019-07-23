@@ -21,16 +21,6 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
-{ #category : #activation }
-SycRemoveMethodCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ CmdContextMenuActivation  
-		byItemOf: CmdOtherOptionsMenuGroup  
-		order: 20  
-		for: ClyMethod asCalypsoItemContext  
-]
-
 { #category : #accessing }
 SycRemoveMethodCommand >> defaultMenuIconName [
 	^#removeIcon

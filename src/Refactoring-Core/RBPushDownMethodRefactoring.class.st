@@ -67,7 +67,7 @@ RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass [
 	selectors := selectorCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBPushDownMethodRefactoring >> requestSelectors [
 	^(self options at: #selectorsFromView) value: self
 ]

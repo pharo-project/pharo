@@ -13,16 +13,6 @@ SycPushDownMethodCommand class >> defaultMenuIconName [
 ]
 
 { #category : #activation }
-SycPushDownMethodCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^CmdContextMenuActivation 
-		byItemOf: CmdRefactorMenuGroup 
-		order: 31 
-		for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : #activation }
 SycPushDownMethodCommand class >> methodShortcutActivation [
 	<classAnnotation>
 	

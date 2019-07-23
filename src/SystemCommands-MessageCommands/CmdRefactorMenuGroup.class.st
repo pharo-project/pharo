@@ -8,7 +8,7 @@ Class {
 	#category : #'SystemCommands-MessageCommands-Groups'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'build ui' }
 CmdRefactorMenuGroup >> buildContextMenu: aMenu [
 	aMenu addLine.
 	

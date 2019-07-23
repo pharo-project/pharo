@@ -360,12 +360,12 @@ RBExtractMethodRefactoring >> renameAllParameters [
 	]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #renaming }
 RBExtractMethodRefactoring >> renameNode: aParseTree withOldName: oldName toWithName: newName [ 
 	(RBParseTreeRewriter rename: oldName to: newName) executeTree: aParseTree
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #renaming }
 RBExtractMethodRefactoring >> renameParameterWith: oldName to: newName [
 	self renameNode: extractedParseTree withOldName: oldName toWithName: newName.
 	
@@ -420,7 +420,7 @@ RBExtractMethodRefactoring >> transform [
 	class compileTree: modifiedParseTree
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #renaming }
 RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldName toWithName: newName [ 
 	|conditions block|
 	conditions := ((RBCondition isValidInstanceVariableName: newName for: class)
@@ -440,7 +440,7 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 		ifTrue: [ self refactoringError: newName asString , ' is already defined' ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #renaming }
 RBExtractMethodRefactoring >> validateRenameOf: oldName to: newName [
 	self validateRenameNode: extractedParseTree withOldName: oldName toWithName: newName 
 ]

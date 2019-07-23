@@ -18,16 +18,6 @@ SycMoveMethodsToInstanceSideCommand class >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
-{ #category : #activation }
-SycMoveMethodsToInstanceSideCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ CmdContextMenuActivation  
-		byItemOf: CmdOtherOptionsMenuGroup  
-		order: 17  
-		for: ClyMethod asCalypsoItemContext  
-]
-
 { #category : #accessing }
 SycMoveMethodsToInstanceSideCommand >> defaultMenuItemName [
 	^'Move to instance side'
