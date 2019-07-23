@@ -21,7 +21,8 @@ Class {
 		'category',
 		'selector',
 		'className',
-		'timeStamp'
+		'timeStamp',
+		'sortKey'
 	],
 	#classVars : [
 		'Definitions',
@@ -367,7 +368,12 @@ MCMethodDefinition >> shortSummaryPrefix [
 
 { #category : #comparing }
 MCMethodDefinition >> sortKey [
-	^ self className, '.', (self classIsMeta ifTrue: ['meta'] ifFalse: ['nonmeta']), '.', self selector
+	^ sortKey
+		ifNil: [ sortKey := self className , '.'
+				,
+					(self classIsMeta
+						ifTrue: [ 'meta' ]
+						ifFalse: [ 'nonmeta' ]) , '.' , self selector ]
 ]
 
 { #category : #accessing }
