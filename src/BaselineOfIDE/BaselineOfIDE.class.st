@@ -249,7 +249,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GT-SUnitDebugger'.
 
 		spec package: 'Tool-CriticBrowser'.
-		spec package: 'Tool-CriticBrowser-Tests'with:[spec requires: #('Tool-CriticBrowser')] .
+		spec package: 'Tool-CriticBrowser-Tests'.
 
 		spec package: 'Renraku'.
 		spec package: 'SUnit-Rules'.	
@@ -649,6 +649,7 @@ spec group: 'QualityAssistant-Core-Group' with: #(
 	'GT-Core-Group'	"dependency"
 	'Renraku'		
 	'Tool-CriticBrowser'
+	'Tool-CriticBrowser-Tests'
 ).
 spec group: 'QualityAssistant-Tests-Group' with: #(
 	'Renraku-Test'
