@@ -1,3 +1,6 @@
+"
+A custom help to provide a help tutorial on how to extend the GT inspector
+"
 Class {
 	#name : #GTInspectorHelp,
 	#superclass : #CustomHelp,

@@ -824,12 +824,6 @@ TextEditor >> closeTypeIn [
 			self doneTyping]
 ]
 
-{ #category : #private }
-TextEditor >> codeCompletionAround:  aBlock textMorph:  aTextMorph keyStroke: anEvent [
-	" No code completion for simple text editor, so nothing special to do here around the block execution"
-	aBlock value
-]
-
 { #category : #'menu messages' }
 TextEditor >> compareToClipboard [
 	"Check to see if whether the receiver's text is the same as the text currently on the clipboard, and inform the user."
@@ -1610,8 +1604,7 @@ TextEditor >> isTextEditor [
 
 { #category : #'typing support' }
 TextEditor >> keystroke: aKeyboardEvent [
-	self handleEditionAction: [ self dispatchOn: aKeyboardEvent ] 
-		fromKeyboardEvent: aKeyboardEvent.
+	self handleEditionAction: [ self dispatchOn: aKeyboardEvent ] fromKeyboardEvent: aKeyboardEvent
 ]
 
 { #category : #accessing }

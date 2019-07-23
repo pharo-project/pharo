@@ -1,6 +1,11 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*NECompletion' }
+RBProgramNode >> completionToken [
+	^ String empty
+]
+
+{ #category : #'*NECompletion' }
 RBProgramNode >> narrowWith: aString [
 
  	"Do nothing"
