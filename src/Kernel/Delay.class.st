@@ -34,13 +34,13 @@ Class {
 { #category : #testing }
 Delay class >> anyActive [
 	"Return true if there is any delay currently active"
-		^Scheduler anyActive
+		^self scheduler anyActive
 
 ]
 
 { #category : #settings }
 Delay class >> delaySchedulerClass [
-	^Scheduler class
+	^self scheduler class
 ]
 
 { #category : #settings }
@@ -53,8 +53,8 @@ Delay class >> delaySchedulerClass: aSchedulerClass [
 	newScheduler startTimerEventLoop.
 	"To avoid lockup if a higher priority process preempts this method to schedule a delay,
 	the newScheduler needs to be in place before oldScheduler is stopped"
-	oldScheduler := Scheduler.
-	Scheduler := newScheduler.
+	oldScheduler := self scheduler.
+	self scheduler: newScheduler.
 	oldScheduler stopTimerEventLoop.
 	self inform: 'Delay scheduler set to ' , aSchedulerClass printString.
 	
@@ -88,9 +88,9 @@ Delay class >> forSeconds: aNumber [
 { #category : #'initialize-release' }
 Delay class >> initialize [
 	"Delay initialize"
-	Scheduler ifNotNil: [ Scheduler stopTimerEventLoop ].
-	Scheduler := DelaySemaphoreScheduler new.
-	Scheduler startTimerEventLoop. 
+	self scheduler ifNotNil: [ self scheduler stopTimerEventLoop ].
+	self scheduler: DelaySemaphoreScheduler new.
+	self scheduler startTimerEventLoop. 
 	SessionManager default 
 		registerSystemClassNamed: self name 
 		atPriority: 20.
@@ -100,7 +100,7 @@ Delay class >> initialize [
 { #category : #testing }
 Delay class >> nextWakeUpTime [
 
-	^ Scheduler nextWakeUpTime.
+	^ self scheduler nextWakeUpTime.
 
 
 
@@ -112,24 +112,38 @@ Delay class >> restartTimerEventLoop [
 	self startTimerEventLoop.
 ]
 
+{ #category : #'scheduler' }
+Delay class >> scheduler [
+
+	^ Scheduler.
+
+]
+
+{ #category : #'scheduler' }
+Delay class >> scheduler: anObject [
+
+	Scheduler := anObject.
+
+]
+
 { #category : #'timer process' }
 Delay class >> schedulingProcess [
 
-	^ Scheduler schedulingProcess.
+	^ self scheduler schedulingProcess.
 
 ]
 
 { #category : #snapshotting }
 Delay class >> shutDown [
 
-	Scheduler shutDown.
+	self scheduler shutDown.
 
 ]
 
 { #category : #'timer process' }
 Delay class >> startTimerEventLoop [
 
-	Scheduler startTimerEventLoop.
+	self scheduler startTimerEventLoop.
 
 ]
 
@@ -137,7 +151,7 @@ Delay class >> startTimerEventLoop [
 Delay class >> startUp [
 	"Restart active delay, if any, when resuming a snapshot."
 
-	Scheduler startUp.
+	self scheduler startUp.
 
 
 ]
@@ -145,7 +159,7 @@ Delay class >> startUp [
 { #category : #'timer process' }
 Delay class >> stopTimerEventLoop [
 
-	^ Scheduler stopTimerEventLoop.
+	^ self scheduler stopTimerEventLoop.
 
 ]
 
@@ -235,7 +249,7 @@ Delay >> resumptionTickAdjustFrom: oldBaseTick to: newBaseTick [
 Delay >> schedule [
 	"Schedule this delay."
 	
-	Scheduler schedule: self.
+	self class scheduler schedule: self.
 
 ]
 
@@ -288,7 +302,7 @@ Delay >> timingPriorityUnschedule [
 
 { #category : #private }
 Delay >> unschedule [
-	Scheduler unschedule: self.
+	self class scheduler unschedule: self.
 
 ]
 
