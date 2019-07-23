@@ -79,12 +79,12 @@ Class {
 		'rulesPresenter',
 		'rbEnvironment',
 		'removeTestCase',
-		'criticsActionsPresenter',
-		'rulesActionsPresenter',
 		'noteBookPresenter',
 		'criticCache',
 		'noteBookPageCriticErrorPresenter',
-		'noteBookPageRuleCommentPresenter'
+		'noteBookPageRuleCommentPresenter',
+		'criticActionBar',
+		'ruleActionBar'
 	],
 	#category : #'Tool-CriticBrowser-Base'
 }
@@ -94,18 +94,18 @@ CBCriticBrowser class >> buildCommandsGroupWith: presenter forRoot: rootCommandG
 	rootCommandGroup
 		register:
 			((CmCommandGroup named: 'critic') asSpecGroup
-				register: (CBBrowseCriticMenu forSpec context: presenter);
-				register: (CBImplementorCriticMenu forSpec context: presenter);
-				register: (CBMarkAsTODOCriticMenu forSpec context: presenter);
-				register: (CBMarkAsWrongCriticMenu forSpec context: presenter);
-				register: (CBSenderCriticMenu forSpec context: presenter);
+				register: (CBBrowseCriticCommand forSpec context: presenter);
+				register: (CBImplementorsCriticCommand forSpec context: presenter);
+				register: (CBMarkAsTODOCriticCommand forSpec context: presenter);
+				register: (CBMarkAsWrongCriticCommand forSpec context: presenter);
+				register: (CBSenderCriticCommand forSpec context: presenter);
 				yourself);
 		register:
 			((CmCommandGroup named: 'rule') asSpecGroup
-				register: (CBBanRuleMenu forSpec context: presenter);
-				register: (CBBrowseRuleMenu forSpec context: presenter);
-				register: (CBReapplyRuleMenu forSpec context: presenter);
-				register: (CBUnBanRuleMenu forSpec context: presenter);
+				register: (CBBrowseRuleCommand forSpec context: presenter);
+				register: (CBBanRuleCommand forSpec context: presenter);
+				register: (CBReapplyRuleCommand forSpec context: presenter);
+				register: (CBUnBanRuleCommand forSpec context: presenter);
 				yourself)
 ]
 
@@ -128,13 +128,13 @@ CBCriticBrowser class >> defaultSpec [
 				add:
 					(SpBoxLayout newVertical
 						add: #rulesPresenter;
-						add: #rulesActionsPresenter
+						add: #ruleActionBar
 							withConstraints: [ :element | element height: self buttonHeight ];
 						yourself);
 				add:
 					(SpBoxLayout newVertical
 						add: #criticsPresenter;
-						add: #criticsActionsPresenter
+						add: #criticActionBar
 							withConstraints: [ :element | element height: self buttonHeight ];
 						yourself);
 				yourself)
@@ -187,39 +187,39 @@ CBCriticBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
 	^ self openOnRules: aWorkingConfiguration rules environment: aWorkingConfiguration environment removingTestCase: aWorkingConfiguration removeTestCase
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> addCriticToToDo [
 	criticsPresenter selectedItems
 		ifNotNil:
 			[ :items | items do: [ :item | criticCache addToDo: item forRule: self rule ] ]
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> addFalsePositive: aCritic forRule: aRule [
 	criticCache addFalsePositive: aCritic forRule: aRule
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> addFalsePositiveRule: aRule forPackage: aPackage [
 	criticCache addFalsePositiveRule: aRule forPackage: aPackage
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> addToDo: aCritic forRule: aRule [
 	criticCache addToDo: aCritic forRule: aRule
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> allPackages [ 
 	^ rbEnvironment packages
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> allRules [
 	^ rulesPresenter roots flatCollect: #rules
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> applyRules [
 	| rules checker |
 	rules := self allRules.
@@ -277,7 +277,7 @@ CBCriticBrowser >> classRemoved: aClass [
 	criticCache updateBrowser
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> computeToSort: aRules [
 	| total falsePositives toDos |
 	falsePositives := (criticCache falsePositiveOf: aRules) size.
@@ -291,9 +291,14 @@ CBCriticBrowser >> criticCache [
 	^ criticCache
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> criticsOf: aRule [
 	^ criticCache criticsOf: aRule
+]
+
+{ #category : #accessing }
+CBCriticBrowser >> criticsOfSelectedRule: aRule [
+	^ (aRule isNil or: [ aRule isComposite ]) ifTrue: [ #() ] ifFalse: [ (self criticsOf: aRule) sorted: #printString ascending ]
 ]
 
 { #category : #accessing }
@@ -303,21 +308,20 @@ CBCriticBrowser >> criticsPresenter [
 
 { #category : #'initialize-actions' }
 CBCriticBrowser >> criticsPresenterAction [
-	criticsPresenter
-		whenActivatedDo:
-			[ :singleSelection | self doubleClickActionOnCritic: singleSelection ].
-	criticsPresenter
-		whenSelectionChangedDo: [ :singleSelection | 
-			self doubleClickActionOnCritic: singleSelection.
-			self send: criticsPresenter to: noteBookPageCriticErrorPresenter ]
+	(criticsPresenter
+		transmitTo: noteBookPageCriticErrorPresenter
+		transform:
+			[ :selectedCritic | selectedCritic ifNotNil: [ selectedCritic providesChange ifTrue: [ self diffTextForChange: selectedCritic change ] ifFalse: [ selectedCritic entity definitionForCriticBrowser ] ] ifNil: [ '' ] ])
+		postTransmission: [ :notebookPage :critics :selectedCritic | 
+			noteBookPresenter selectPageIndex: 2.
+			selectedCritic
+				ifNotNil: [ :critic | 
+					critic providesChange ifFalse: [ notebookPage behavior: (critic entity isCompiledMethod ifTrue: [ critic entity methodClass ] ifFalse: [ nil ]) ].
+					critic sourceAnchor providesInterval ifTrue: [ notebookPage setSelection: critic sourceAnchor interval ] ] ];
+		preTransmission: [ :notebookPage :critics :selectedCritic | notebookPage syntaxHighlight: (selectedCritic isNotNil and: [ selectedCritic providesChange not ]) ]
 ]
 
-{ #category : #utils }
-CBCriticBrowser >> defaultColor [
-	^ Color red
-]
-
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> diffSeparator [
 
 	^ '——————————————————
@@ -325,7 +329,7 @@ CBCriticBrowser >> diffSeparator [
 '
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> diffTextForChange: aRefactoryChange [
 	| text builder |
 
@@ -342,30 +346,13 @@ CBCriticBrowser >> diffTextForChange: aRefactoryChange [
 	^ text
 ]
 
-{ #category : #'initialize-actions' }
-CBCriticBrowser >> doubleClickActionOnCritic: singleSelection [
-	| selectedCritic |
-	selectedCritic := singleSelection selectedItem.
-	selectedCritic
-		ifNotNil: [ selectedCritic providesChange
-				ifTrue: [ noteBookPageCriticErrorPresenter 
-						text: (self diffTextForChange: selectedCritic change) ]
-				ifFalse: [ | entity |
-					entity := selectedCritic sourceAnchor entity.
-					(entity respondsTo: #definition)
-						ifTrue: [ noteBookPageCriticErrorPresenter text: entity definition ]
-						ifFalse: [ noteBookPageCriticErrorPresenter text: entity asString ] ].
-			noteBookPresenter selectPageIndex: 2 ]
-		ifNil: [ '' ]
-]
-
 { #category : #accessing }
 CBCriticBrowser >> environment: aEnvironment [
 	rbEnvironment := aEnvironment
  
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> formatCritic: aCritic [
 	
 	^  String streamContents: [:s | aCritic sourceAnchor entity criticNameOn: s ]
@@ -406,7 +393,7 @@ CBCriticBrowser >> handleMethodRemoved: anAnnouncement [
 	self methodRemoved: anAnnouncement methodRemoved
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> iconFor: anItem [
 	"It is weird than in a branch of the condition there is no icon returned"
 	^ (criticCache isFalsePositive: anItem forRule: self rule)
@@ -418,7 +405,7 @@ CBCriticBrowser >> iconFor: anItem [
 		ifTrue: [ self iconNamed:  #changeRemove ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CBCriticBrowser >> initialize [
 	super initialize.
 	criticCache := ReCriticsCache new.
@@ -451,16 +438,11 @@ CBCriticBrowser >> initializeCriticsPresenter [
 { #category : #'initialize-widgets' }
 CBCriticBrowser >> initializeNoteBookPresenter [
 	noteBookPresenter
-		addPage:
-			(NotebookPage title: 'Rule comment' provider: [ noteBookPageRuleCommentPresenter ]).
-	noteBookPresenter
-		addPage:
-			(NotebookPage
-				title: 'Critic location'
-				provider: [ noteBookPageCriticErrorPresenter ])
+		addPage: (SpNotebookPage title: 'Rule comment' provider: [ noteBookPageRuleCommentPresenter ]);
+		addPage: (SpNotebookPage title: 'Critic location' provider: [ noteBookPageCriticErrorPresenter ])
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CBCriticBrowser >> initializePresenter [
 	self criticsPresenterAction.
 	self rulesPresenterActions.
@@ -469,82 +451,72 @@ CBCriticBrowser >> initializePresenter [
 { #category : #'initialize-widgets' }
 CBCriticBrowser >> initializeRulesPresenter [
 	rulesPresenter
+		addColumn: (SpStringTableColumn title: 'Rule' evaluated: #name);
 		addColumn:
-			(StringTableColumn new
-				title: 'Rule';
-				evaluated: #name;
+			((SpStringTableColumn title: 'To sort' evaluated: [ :aRules | self computeToSort: aRules ])
+				width: 60;
 				yourself);
 		addColumn:
-			(StringTableColumn new
-				width: 60;
-				title: 'To sort';
-				evaluated: [ :aRules | self computeToSort: aRules ];
-				yourself);
-		addColumn:
-			(StringTableColumn new
-				width: 60;
+			((SpStringTableColumn
 				title: 'To do';
-				evaluated: [ :aRules | (criticCache toDosOf: aRules) size ];
+				evaluated: [ :aRules | (criticCache toDosOf: aRules) size ])
+				width: 60;
 				yourself);
 		addColumn:
-			(StringTableColumn new
+			((SpStringTableColumn title: 'False positive' evaluated: [ :aRules | (criticCache falsePositiveOf: aRules) size ])
 				width: 60;
-				title: 'False positive';
-				evaluated: [ :aRules | (criticCache falsePositiveOf: aRules) size ];
 				yourself);
 		yourself.
 	rulesPresenter
-		children: [ :aRule | 
-			aRule isComposite
-				ifTrue: [ aRule rules ]
-				ifFalse: [ #() ] ];
+		children: [ :aRule | aRule isComposite ifTrue: [ aRule rules ] ifFalse: [ #() ] ];
 		contextMenu: [ (self rootCommandsGroup / 'rule') beRoot asMenuPresenter ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CBCriticBrowser >> initializeWidgets [
 	criticsPresenter := self newList.
 	noteBookPresenter := self newNotebook.
-	criticsActionsPresenter := self newActionBar.
-	rulesActionsPresenter := self newActionBar.
+	criticActionBar := self newActionBar.
+	ruleActionBar := self newActionBar.
 	rulesPresenter := self newTreeTable.
 	noteBookPageRuleCommentPresenter := self newText.
 	noteBookPageCriticErrorPresenter := self newCode.
-	CBAbstractRuleAction actions
-		do: [ :class | rulesActionsPresenter add: (self newButtonFor: class) ].
-	CBAbstractCriticAction actions
-		do: [ :class | criticsActionsPresenter add: (self newButtonFor: class) ].
+
+	ruleActionBar addAll: (CBAbstractRuleAction actions collect: [ :class | self newButtonFor: class ]).
+	criticActionBar addAll: (CBAbstractCriticAction actions collect: [ :class | self newButtonFor: class ]).
+
 	self initializeNoteBookPresenter.
-	self initializeCriticErrorPresenter.	"and: [ rule isTransformationRule not ]"
+	self initializeCriticErrorPresenter.
 	self initializeRulesPresenter.
 	self initializeCriticsPresenter
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CBCriticBrowser >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		initialExtent: 900 @ 700;
-		title: 'Critic Browser'
+		title: 'Critic Browser';
+		whenClosedDo: [ self unregisterFromAnnouncements ]
 ]
 
-{ #category : #tests }
+{ #category : #testing }
 CBCriticBrowser >> isSelectedCriticIsToDo [
 	^ criticCache isToDo: self selectedCritic forRule: self selectedRule
 ]
 
-{ #category : #tests }
+{ #category : #testing }
 CBCriticBrowser >> isSelectedRuleIsFalsePositive [
 	^ criticCache
 		isFalsePositive: self selectedCritic
 		forRule: self selectedRule
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> logInManifest [
 	criticCache logInManifest 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> markAsFalsePositiveForCurrentRule: aCritic [
 	criticCache addFalsePositive: aCritic forRule: self rule
 ]
@@ -611,13 +583,13 @@ before closing the Critics Browser ?')
 				ifTrue: [ criticCache logInManifest ] ]
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> reapplyAllRules [
 	criticCache initialize.
 	self applyRules
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> reapplyRule: aRule [
 	criticCache removeRule: aRule.
 	criticCache checker resetResult.
@@ -650,12 +622,12 @@ CBCriticBrowser >> registerToAnnouncements [
 	self announcer when: WindowClosed send: #onWindowClosed to: self" Unmatched " "in comment".
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> removeFalsePositive: aCritic forRule: aRule [
 	criticCache removeFalsePositive: self selectedCritic forRule: self selectedRule. 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> removeFalsePositiveRule: aRule forPackage: aPackage [
 	criticCache removeFalsePositiveRule: aRule forPackage: aPackage
 ]
@@ -665,12 +637,12 @@ CBCriticBrowser >> removeTestCase: aBoolean [
 	removeTestCase := aBoolean 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> removeToDo: aCritic forRule: aRule [
 	criticCache removeToDo: aCritic forRule: aRule
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> rule [
 	^ self rulesPresenter selection selectedItem
 ]
@@ -694,18 +666,12 @@ CBCriticBrowser >> rulesPresenter [
 CBCriticBrowser >> rulesPresenterActions [
 	rulesPresenter
 		transmitTo: criticsPresenter
-		transform: [ :aRule | 
-			(aRule isNil or: [ aRule isComposite ])
-				ifTrue: [ #() ]
-				ifFalse: [ (criticCache criticsOf: aRule) sorted: #printString ascending ] ].
+		transform: [ :aRule | self criticsOfSelectedRule: aRule ]
+		postTransmission: [ :destination | destination selectIndex: 1 ].
+	
 	rulesPresenter
-		whenSelectionChangedDo: [ :singleSelection | 
-			| selectedRule |
-			selectedRule := singleSelection selectedItem.
-			(selectedRule isNil or: [ selectedRule isComposite ])
-				ifTrue: [ noteBookPageRuleCommentPresenter text: '' ]
-				ifFalse: [ noteBookPageRuleCommentPresenter text: selectedRule rationale ].
-			noteBookPresenter selectPageIndex: 1 ]
+		transmitTo: noteBookPageRuleCommentPresenter
+		transform: [ :aRule | (aRule isNil or: [ aRule isComposite ]) ifTrue: [ '' ] ifFalse: [ aRule rationale ] ]
 ]
 
 { #category : #accessing }
@@ -713,34 +679,14 @@ CBCriticBrowser >> selectedCritic [
 	^ criticsPresenter selection selectedItem
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> selectedRule [
 	^ rulesPresenter selectedItem
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> selectionIntervalFor: aString [
 	^ self rule result selectionIntervalFor: aString
-]
-
-{ #category : #utils }
-CBCriticBrowser >> send: origin to: dest [
-	^ origin selection selectedItem
-		ifNotNil: [ :critic | 
-			critic providesChange
-				ifTrue: [ dest behavior: nil ]
-				ifFalse: [ | entity |
-					entity := critic sourceAnchor entity.
-					self
-						flag:
-							'Another hack. We need a better way to display entities (because now we may get not only classes and methods. Maybe something like GTInspector presentations could work)'.
-					dest
-						behavior:
-							(entity isCompiledMethod
-								ifTrue: [ entity methodClass ]
-								ifFalse: [ nil ]).
-					critic sourceAnchor providesInterval
-						ifTrue: [ dest setSelection: critic sourceAnchor interval ] ] ]
 ]
 
 { #category : #'system annoucements' }
@@ -749,7 +695,7 @@ CBCriticBrowser >> unregisterFromAnnouncements [
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 CBCriticBrowser >> updateTree [
 	self needRebuild: false.
 	self buildWithSpec

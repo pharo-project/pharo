@@ -58,11 +58,6 @@ SelectBrowser >> addItems [
 	^ self subclassResponsibility
 ]
 
-{ #category : #api }
-SelectBrowser >> initialExtent [
-	^   450@360
-]
-
 { #category : #initialization }
 SelectBrowser >> initializeWidgets [
 
@@ -79,6 +74,11 @@ SelectBrowser >> initializeWidgets [
 	self setRemoveButtonModel. 
 	self setRemoveAllButtonModel. 
 	self setNextButtonModel. 
+]
+
+{ #category : #initialization }
+SelectBrowser >> initializeWindow: aWindowPresenter [
+	aWindowPresenter initialExtent: 450 @ 360
 ]
 
 { #category : #accessing }

@@ -15,11 +15,12 @@ SpActionBarPresenter class >> adapterName [
 
 { #category : #adding }
 SpActionBarPresenter >> add: aButtonPresenter [
-	
-	(items 
-		at: #start
-		ifAbsentPut: [ OrderedCollection new ] ) 
-		add: aButtonPresenter
+	self startItems add: aButtonPresenter
+]
+
+{ #category : #adding }
+SpActionBarPresenter >> addAll: aCollection [
+	self startItems addAll: aCollection
 ]
 
 { #category : #adding }
@@ -42,4 +43,9 @@ SpActionBarPresenter >> initialize [
 SpActionBarPresenter >> items [
 
 	^ items value
+]
+
+{ #category : #adding }
+SpActionBarPresenter >> startItems [
+	^ items at: #start ifAbsentPut: [ OrderedCollection new ]
 ]

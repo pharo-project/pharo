@@ -64,17 +64,10 @@ CriticsCache >> addFalsePositive: aCritic forRule: aRule [
 ]
 
 { #category : #'add/remove' }
-CriticsCache >> addFalsePositiveClass: aClass [ 
-	 
-	| fp |
-	self flag: #testIt.
-	"this method isn't test i only test method use"
-	falsePositiveClasses add: aClass instanceSide. 
-	critics keysAndValuesDo: [ :rule :criticss |
-		fp := criticss select: [ :critic | aClass = critic criticTheNonMetaclassClass ].
-		fp do: [ :each | self addFalsePositive: each forRule: rule] ].
-	self updateBrowser	
-
+CriticsCache >> addFalsePositiveClass: aClass [
+	falsePositiveClasses add: aClass instanceSide.
+	critics keysAndValuesDo: [ :rule :criticss | criticss select: [ :critic | aClass = critic criticTheNonMetaclassClass ] thenDo: [ :each | self addFalsePositive: each forRule: rule ] ].
+	self updateBrowser
 ]
 
 { #category : #'add/remove' }

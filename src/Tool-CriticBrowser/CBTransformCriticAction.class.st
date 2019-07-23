@@ -7,7 +7,7 @@ see superClass 's documentation
 Class {
 	#name : #CBTransformCriticAction,
 	#superclass : #CBAbstractCriticAction,
-	#category : #'Tool-CriticBrowser-utilities-buttons'
+	#category : #'Tool-CriticBrowser-Actions'
 }
 
 { #category : #accessing }
@@ -15,7 +15,7 @@ CBTransformCriticAction class >> groupPriority [
 	^ 10
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 CBTransformCriticAction class >> runOn: aCriticBrowser [
 	aCriticBrowser selectedCritic 
 		ifNotNil: [ :itemCritic | itemCritic change execute ]

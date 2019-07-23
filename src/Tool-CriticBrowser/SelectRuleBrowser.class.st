@@ -126,7 +126,7 @@ SelectRuleBrowser >> nextAction [
 	CBCriticBrowser openOnWorkingConfiguration: CriticWorkingConfiguration current
 ]
 
-{ #category : #api }
+{ #category : #private }
 SelectRuleBrowser >> removeAllItems [
 	
 	selectedPresenter roots do: [ :item |  
@@ -134,7 +134,7 @@ SelectRuleBrowser >> removeAllItems [
 	self updateTree 	  
 ]
 
-{ #category : #api }
+{ #category : #private }
 SelectRuleBrowser >> removeItems [
 	
 	selectedPresenter selectedItem

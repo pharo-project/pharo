@@ -6,7 +6,7 @@ my action is :
 Class {
 	#name : #CBLogRuleAction,
 	#superclass : #CBAbstractRuleAction,
-	#category : #'Tool-CriticBrowser-utilities-buttons'
+	#category : #'Tool-CriticBrowser-Actions'
 }
 
 { #category : #accessing }
@@ -16,12 +16,11 @@ CBLogRuleAction class >> groupPriority [
 
 { #category : #testing }
 CBLogRuleAction class >> runOn: aCriticBrowser [
-self flag: #mustDie.
+	self flag: #pharoFixMe.	"In the long term the UI manager should not be used in Spec application."
 	(UIManager default
 		confirm:
 			'Do you want to save all false positive and toDo in the Manifests ?
-(this action may generate new manifest classes and make dirty your package)')
-		ifTrue: [ aCriticBrowser  logInManifest ]
+(this action may generate new manifest classes and make dirty your package)') ifTrue: [ aCriticBrowser logInManifest ]
 ]
 
 { #category : #accessing }
