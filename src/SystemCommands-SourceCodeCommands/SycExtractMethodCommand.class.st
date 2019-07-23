@@ -24,5 +24,5 @@ SycExtractMethodCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycExtractMethodCommand >> execute [
-	(RBGenericInteractLayer sourceNode: sourceNode method: method) executeExtractMethod
+	(RBInteractiveRefactoring sourceNode: sourceNode method: method) executeExtractMethod
 ]

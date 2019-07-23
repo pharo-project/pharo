@@ -1,6 +1,6 @@
 Class {
 	#name : #RBInteractiveExtractTemp,
-	#superclass : #RBGenericInteractLayer,
+	#superclass : #RBInteractiveRefactoring,
 	#instVars : [
 		'tempName'
 	],

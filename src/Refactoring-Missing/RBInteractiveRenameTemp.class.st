@@ -1,6 +1,6 @@
 Class {
 	#name : #RBInteractiveRenameTemp,
-	#superclass : #RBGenericInteractLayer,
+	#superclass : #RBInteractiveRefactoring,
 	#instVars : [
 		'newName'
 	],

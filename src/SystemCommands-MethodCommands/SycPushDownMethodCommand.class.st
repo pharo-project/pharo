@@ -27,5 +27,5 @@ SycPushDownMethodCommand >> defaultMenuItemName [
 { #category : #execution }
 SycPushDownMethodCommand >> execute [
 
-	(RBGenericInteractLayer method: methods) executePushDown 
+	(RBInteractiveRefactoring method: methods) executePushDown 
 ]

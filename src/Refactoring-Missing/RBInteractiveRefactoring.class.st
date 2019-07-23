@@ -1,5 +1,5 @@
 Class {
-	#name : #RBGenericInteractLayer,
+	#name : #RBInteractiveRefactoring,
 	#superclass : #Object,
 	#instVars : [
 		'refactoring',
@@ -10,13 +10,13 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBGenericInteractLayer class >> method: method [
+RBInteractiveRefactoring class >> method: method [
 	^ self new 
 		method: method .
 ]
 
 { #category : #'instance creation' }
-RBGenericInteractLayer class >> method: aMethod class: aClass interval: anInterval [
+RBInteractiveRefactoring class >> method: aMethod class: aClass interval: anInterval [
 	"Initialize method and node of this class given:
 	aMethod: a string of method name
 	aClass: class that owns the given method"
@@ -30,14 +30,14 @@ RBGenericInteractLayer class >> method: aMethod class: aClass interval: anInterv
 ]
 
 { #category : #'instance creation' }
-RBGenericInteractLayer class >> sourceNode: source method: method [
+RBInteractiveRefactoring class >> sourceNode: source method: method [
 	^ self new 
 		sourceNode: source; 
 		method: method .
 ]
 
 { #category : #accessing }
-RBGenericInteractLayer >> compiledMethodOf: aMethod from: aClass [
+RBInteractiveRefactoring >> compiledMethodOf: aMethod from: aClass [
 	"Return compiled method given a method name (string) and a class"
 	
 	| index |
@@ -49,14 +49,14 @@ RBGenericInteractLayer >> compiledMethodOf: aMethod from: aClass [
 ]
 
 { #category : #execution }
-RBGenericInteractLayer >> executeExtractMethod [
+RBInteractiveRefactoring >> executeExtractMethod [
 	self
 		executeThis: [ self extractMethod.
 			self executeRefactoringWith: #primitiveExecute ]
 ]
 
 { #category : #execution }
-RBGenericInteractLayer >> executeFindAndReplace [
+RBInteractiveRefactoring >> executeFindAndReplace [
 	"self
 		executeThis: [ 
 			self findAndReplaceMethod.
@@ -64,21 +64,21 @@ RBGenericInteractLayer >> executeFindAndReplace [
 ]
 
 { #category : #execution }
-RBGenericInteractLayer >> executeInlineMethod [
+RBInteractiveRefactoring >> executeInlineMethod [
 	self
 		executeThis: [self inlineMethod.
 			self executeRefactoringWith: #primitiveExecute ]
 ]
 
 { #category : #execution }
-RBGenericInteractLayer >> executeInlineTemp [
+RBInteractiveRefactoring >> executeInlineTemp [
 	self
 		executeThis: [ self inlineTemp.
 			self executeRefactoringWith: #primitiveExecute ]
 ]
 
 { #category : #execution }
-RBGenericInteractLayer >> executePushDown [
+RBInteractiveRefactoring >> executePushDown [
 	self
 		executeThis: [ 
 			self pushDownMethod.
@@ -86,7 +86,7 @@ RBGenericInteractLayer >> executePushDown [
 ]
 
 { #category : #execution }
-RBGenericInteractLayer >> executePushUp [
+RBInteractiveRefactoring >> executePushUp [
 	self
 		executeThis: [ 
 			self pushUpMethod.
@@ -94,7 +94,7 @@ RBGenericInteractLayer >> executePushUp [
 ]
 
 { #category : #execution }
-RBGenericInteractLayer >> executeRefactoringWith: aSymbol [
+RBInteractiveRefactoring >> executeRefactoringWith: aSymbol [
 	"Execute aSymbol refactoring method"
 	
 	[refactoring perform: aSymbol.
@@ -102,7 +102,7 @@ RBGenericInteractLayer >> executeRefactoringWith: aSymbol [
 ]
 
 { #category : #execution }
-RBGenericInteractLayer >> executeThis: aBlock [
+RBInteractiveRefactoring >> executeThis: aBlock [
 	[
 		self executionOfRequirements.
 		aBlock value.
@@ -113,13 +113,13 @@ RBGenericInteractLayer >> executeThis: aBlock [
 ]
 
 { #category : #execution }
-RBGenericInteractLayer >> executionOfRequirements [
+RBInteractiveRefactoring >> executionOfRequirements [
 	"If the refactoring needs some requirement like newName or other thing you must
 	 do this here"
 ]
 
 { #category : #refactoring }
-RBGenericInteractLayer >> extractMethod [
+RBInteractiveRefactoring >> extractMethod [
 	"Return extract method refactoring"
 	
 	| selectedInterval dialog|
@@ -135,7 +135,7 @@ RBGenericInteractLayer >> extractMethod [
 ]
 
 { #category : #refactoring }
-RBGenericInteractLayer >> extractTempWithName: newTempName [
+RBInteractiveRefactoring >> extractTempWithName: newTempName [
 	"Return extract temporary refactoring using method, node and newTempName"
 	
 	^ RBExtractToTemporaryRefactoring	
@@ -146,7 +146,7 @@ RBGenericInteractLayer >> extractTempWithName: newTempName [
 ]
 
 { #category : #refactoring }
-RBGenericInteractLayer >> findAndReplaceMethod [
+RBInteractiveRefactoring >> findAndReplaceMethod [
 	"|dialog|
 	refactoring :=  RBFindAndReplaceMethodRefactoring 
 		find: method .
@@ -158,7 +158,7 @@ RBGenericInteractLayer >> findAndReplaceMethod [
 ]
 
 { #category : #test }
-RBGenericInteractLayer >> inlineMethod [
+RBInteractiveRefactoring >> inlineMethod [
 	"Return inline method refactoring using method and node"
 	
 	refactoring := RBInlineMethodRefactoring	
@@ -170,7 +170,7 @@ RBGenericInteractLayer >> inlineMethod [
 ]
 
 { #category : #refactoring }
-RBGenericInteractLayer >> inlineTemp [
+RBInteractiveRefactoring >> inlineTemp [
 	"Return inline temporary refactoring using method and node"
 	
 	| assignment |
@@ -185,17 +185,17 @@ RBGenericInteractLayer >> inlineTemp [
 ]
 
 { #category : #accessing }
-RBGenericInteractLayer >> method [
+RBInteractiveRefactoring >> method [
 	^ method
 ]
 
 { #category : #accessing }
-RBGenericInteractLayer >> method: anObject [
+RBInteractiveRefactoring >> method: anObject [
 	method := anObject
 ]
 
 { #category : #refactoring }
-RBGenericInteractLayer >> pushDownMethod [
+RBInteractiveRefactoring >> pushDownMethod [
 	"Return push down method refactoring using method"
 	|dialog|
 	refactoring :=  RBPushDownMethodRefactoring 
@@ -209,7 +209,7 @@ RBGenericInteractLayer >> pushDownMethod [
 ]
 
 { #category : #refactoring }
-RBGenericInteractLayer >> pushUpMethod [
+RBInteractiveRefactoring >> pushUpMethod [
 	"Return push up method refactoring using method"
 	|dialog|
 	refactoring :=  RBPullUpMethodRefactoring 
@@ -223,17 +223,17 @@ RBGenericInteractLayer >> pushUpMethod [
 ]
 
 { #category : #accessing }
-RBGenericInteractLayer >> refactoring [
+RBInteractiveRefactoring >> refactoring [
 	^ refactoring
 ]
 
 { #category : #accessing }
-RBGenericInteractLayer >> refactoring: anObject [
+RBInteractiveRefactoring >> refactoring: anObject [
 	refactoring := anObject
 ]
 
 { #category : #refactoring }
-RBGenericInteractLayer >> renameTempWithName: newTempName [
+RBInteractiveRefactoring >> renameTempWithName: newTempName [
 	"Return rename temporary refactoring using method, node and newTempName"
 	
 	 ^ RBRenameTemporaryRefactoring	
@@ -244,14 +244,14 @@ RBGenericInteractLayer >> renameTempWithName: newTempName [
 ]
 
 { #category : #initialization }
-RBGenericInteractLayer >> setUpOptionToOverrideExistingMethodDuring: aRefactoring [
+RBInteractiveRefactoring >> setUpOptionToOverrideExistingMethodDuring: aRefactoring [
 
 	aRefactoring setOption: #alreadyDefined toUse:  [ :ref :aClass :selector | 
 		ref refactoringWarning: 'Method ', selector printString, ' will override method in ', aClass name]. 
 ]
 
 { #category : #initialization }
-RBGenericInteractLayer >> setUpOptionToUseExistingMethodDuring: aRefactoring [
+RBInteractiveRefactoring >> setUpOptionToUseExistingMethodDuring: aRefactoring [
 
 	aRefactoring setOption: #useExistingMethod toUse:  [ :ref :selector | 
 		UIManager default 
@@ -261,7 +261,7 @@ RBGenericInteractLayer >> setUpOptionToUseExistingMethodDuring: aRefactoring [
 ]
 
 { #category : #initialization }
-RBGenericInteractLayer >> setupMethodNameFor: aRefactoring toReturn: aSelector [ 
+RBInteractiveRefactoring >> setupMethodNameFor: aRefactoring toReturn: aSelector [ 
 	| options |
 	options := aRefactoring options copy.
 	options at: #methodName
@@ -274,16 +274,16 @@ RBGenericInteractLayer >> setupMethodNameFor: aRefactoring toReturn: aSelector [
 ]
 
 { #category : #preview }
-RBGenericInteractLayer >> showChanges [
+RBInteractiveRefactoring >> showChanges [
 	(ChangesBrowserPresenter changes: {refactoring}) open
 ]
 
 { #category : #accessing }
-RBGenericInteractLayer >> sourceNode [
+RBInteractiveRefactoring >> sourceNode [
 	^ sourceNode
 ]
 
 { #category : #accessing }
-RBGenericInteractLayer >> sourceNode: anObject [
+RBInteractiveRefactoring >> sourceNode: anObject [
 	sourceNode := anObject
 ]

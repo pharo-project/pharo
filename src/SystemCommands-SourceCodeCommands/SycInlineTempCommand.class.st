@@ -21,5 +21,5 @@ SycInlineTempCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycInlineTempCommand >> execute [
-	(RBGenericInteractLayer sourceNode: sourceNode method: method) executeInlineTemp
+	(RBInteractiveRefactoring sourceNode: sourceNode method: method) executeInlineTemp
 ]
