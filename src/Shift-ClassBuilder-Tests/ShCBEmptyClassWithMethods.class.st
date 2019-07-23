@@ -14,5 +14,5 @@ ShCBEmptyClassWithMethods >> aMethod [
 
 { #category : #'test methods' }
 ShCBEmptyClassWithMethods >> anotherMethod: aValue [
-	^ aValue.
+	^ aValue
 ]
