@@ -7,7 +7,7 @@ Class {
 	#category : #'UnifiedFFI-Tests-Test-Data'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'field definition' }
 FFITestUnion class >> fieldsDesc [
 	"
 	self rebuildFieldAccessors

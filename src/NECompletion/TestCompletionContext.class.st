@@ -10,13 +10,8 @@ Class {
 		'theClass',
 		'completionToken',
 		'model',
-		'receiverClass',
-		'controller',
 		'ast',
-		'node',
-		'variables',
-		'selectors',
-		'context'
+		'node'
 	],
 	#category : #'NECompletion-New'
 }
@@ -39,21 +34,10 @@ TestCompletionContext >> completionToken [
 	^ completionToken ifNil: [ node completionToken ]
 ]
 
-{ #category : #action }
-TestCompletionContext >> configureSelectorsAndVariables [
-	variables := true.
-	selectors := true.
-	^true
-]
-
-{ #category : #accessing }
-TestCompletionContext >> context: aCompletionContext [
-	context := aCompletionContext.
-]
-
 { #category : #accessing }
 TestCompletionContext >> createModel [
-
+	self parseSource.
+	node := ast bestNodeFor: (position to: position).
   ^ (TestCompletionModel new node: node) clazz: theClass
 ]
 
@@ -66,7 +50,8 @@ TestCompletionContext >> model [
 TestCompletionContext >> narrowWith: aString [
 	"method borrowed from NECContext to make the completion plugging work"
 	completionToken := aString.
-	model ifNotNil: [ model narrowWith: aString].
+	model := self createModel.
+	model narrowWith: aString.
 ]
 
 { #category : #parsing }
@@ -81,17 +66,13 @@ TestCompletionContext >> parseSource [
 { #category : #accessing }
 TestCompletionContext >> receiverClass [
 	node isMessage ifFalse: [ ^nil ].
-	receiverClass := node receiver propertyAt: #type ifAbsent: [ nil ] .
-	^ receiverClass
+	^node receiver propertyAt: #type ifAbsent: [ nil ] .
+
 ]
 
 { #category : #'initialize-release' }
 TestCompletionContext >> setController: aECController class: aClass source: aString position: anInteger [ 
-	controller := aECController.
-	theClass := aClass.
+	theClass := aClass. 
 	source := aString.
-	position := anInteger. 
-	self parseSource.
-	node := ast bestNodeFor: (position to: position).
-	
+	position := anInteger
 ]

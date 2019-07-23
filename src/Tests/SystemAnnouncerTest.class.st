@@ -79,30 +79,27 @@ SystemAnnouncerTest >> testSuspendAllWhile [
 			when: ClassAdded do: [ value := value + 1 ];
 			announce: ClassAdded ].
 		
-	self assert: value = 42. "The answer is always 42 :)"
+	self assert: value equals: 42. "The answer is always 42 :)"
 	
 	SystemAnnouncer uniqueInstance announce: ClassAdded.
 	
-	self assert: value = 43.
+	self assert: value equals: 43.
 ]
 
 { #category : #tests }
 SystemAnnouncerTest >> testSuspendAllWhileStoring [
-	| value stored |
-	
-	value := 42.	
-	
+
+	| stored |
+
 	stored := SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ SystemAnnouncer uniqueInstance announce: ClassAdded ].
-		
+
 	self assert: stored size equals: 1.
-	self assert: (stored at:1) equals: ClassAdded. 
+	self assert: ( stored at: 1 ) equals: ClassAdded
 ]
 
 { #category : #tests }
 SystemAnnouncerTest >> testSuspendAllWhileStoringNested [
-	| value stored |
-	
-	value := 42.	
+	|  stored |
 	
 	stored := SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ 
 		SystemAnnouncer uniqueInstance suspendAllWhileStoring:[SystemAnnouncer uniqueInstance announce: ClassAdded ]

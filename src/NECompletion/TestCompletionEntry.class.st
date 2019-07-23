@@ -33,5 +33,7 @@ TestCompletionEntry >> setContents: aString [
 
 { #category : #initialization }
 TestCompletionEntry >> type [
+	"Here we should later return the symbol (see the other implementors of type in the old system
+	this will be easy to get form the node"
 	^ type
 ]

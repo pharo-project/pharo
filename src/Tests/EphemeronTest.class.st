@@ -1,11 +1,11 @@
 Class {
-	#name : #EphemeronTests,
+	#name : #EphemeronTest,
 	#superclass : #TestCase,
 	#category : #'Tests-Finalization'
 }
 
 { #category : #tests }
-EphemeronTests >> testEphemeronAreNotFinalizedIfCollected [
+EphemeronTest >> testEphemeronAreNotFinalizedIfCollected [
 
 	| finalized theKey ephemeron |
 	Smalltalk supportsQueueingFinalization ifFalse: [ ^ self skip ].
@@ -23,43 +23,47 @@ EphemeronTests >> testEphemeronAreNotFinalizedIfCollected [
 ]
 
 { #category : #tests }
-EphemeronTests >> testEphemeronIsNotRemovedFromRegistryUponFinalizationIfKeyIsReferenced [
+EphemeronTest >> testEphemeronIsNotRemovedFromRegistryUponFinalizationIfKeyIsReferenced [
 
 	| finalized theKey registry |
+
 	Smalltalk supportsQueueingFinalization ifFalse: [ ^ self skip ].
 
 	finalized := false.
 	theKey := ObjectFinalizer receiver: [ finalized := true ] selector: #value.
-	
+
 	registry := EphemeronRegistry new.
-	registry at: theKey put: nil.
-		
+	registry at: theKey put: nil.	
 	"Nil theKey to remove all strong references to it. Then Garbage collect to force mourning"
 	Smalltalk garbageCollect.
-	
-	self assert: registry size equals: 1.
+
+	self
+		assert: registry size equals: 1;
+		assert: finalized
 ]
 
 { #category : #tests }
-EphemeronTests >> testEphemeronIsRemovedFromRegistryUponFinalization [
+EphemeronTest >> testEphemeronIsRemovedFromRegistryUponFinalization [
+
 	| finalized theKey registry |
+
 	Smalltalk supportsQueueingFinalization ifFalse: [ ^ self skip ].
 
 	finalized := false.
 	theKey := ObjectFinalizer receiver: [ finalized := true ] selector: #value.
 
 	registry := EphemeronRegistry new.
-	registry at: theKey put: nil.
-
-	"Nil theKey to remove all strong references to it. Then Garbage collect to force mourning"
+	registry at: theKey put: nil.	"Nil theKey to remove all strong references to it. Then Garbage collect to force mourning"
 	theKey := nil.
 	Smalltalk garbageCollect.
 
-	self assertEmpty: registry
+	self
+		assertEmpty: registry;
+		assert: finalized
 ]
 
 { #category : #tests }
-EphemeronTests >> testEphemeronKeyIsFinalizedWhenKeyIsNotHoldStrongly [
+EphemeronTest >> testEphemeronKeyIsFinalizedWhenKeyIsNotHoldStrongly [
 
 	| finalized theKey ephemeron |
 	Smalltalk supportsQueueingFinalization ifFalse: [ ^ self skip ].
@@ -77,7 +81,7 @@ EphemeronTests >> testEphemeronKeyIsFinalizedWhenKeyIsNotHoldStrongly [
 ]
 
 { #category : #tests }
-EphemeronTests >> testEphemeronKeyIsNotFinalizedWhenKeyIsHoldStrongly [
+EphemeronTest >> testEphemeronKeyIsNotFinalizedWhenKeyIsHoldStrongly [
 
 	| finalized theKey ephemeron |
 	Smalltalk supportsQueueingFinalization ifFalse: [ ^ self skip ].
@@ -94,7 +98,7 @@ EphemeronTests >> testEphemeronKeyIsNotFinalizedWhenKeyIsHoldStrongly [
 ]
 
 { #category : #tests }
-EphemeronTests >> testInterconnectedEphemeronsAreCollectedIfKeysAreNotReferencedFromTheOutside [
+EphemeronTest >> testInterconnectedEphemeronsAreCollectedIfKeysAreNotReferencedFromTheOutside [
 
 	| finalized1 finalized2 theKey theValue ephemeron1 ephemeron2 |
 	Smalltalk supportsQueueingFinalization ifFalse: [ ^ self skip ].
@@ -114,7 +118,7 @@ EphemeronTests >> testInterconnectedEphemeronsAreCollectedIfKeysAreNotReferenced
 ]
 
 { #category : #tests }
-EphemeronTests >> testInterconnectedEphemeronsAreNotCollectedIfAKeyIsReferencedFromTheOutside [
+EphemeronTest >> testInterconnectedEphemeronsAreNotCollectedIfAKeyIsReferencedFromTheOutside [
 
 	| finalized1 finalized2 theKey theValue ephemeron1 ephemeron2 |
 	Smalltalk supportsQueueingFinalization ifFalse: [ ^ self skip ].
@@ -135,7 +139,7 @@ EphemeronTests >> testInterconnectedEphemeronsAreNotCollectedIfAKeyIsReferencedF
 ]
 
 { #category : #tests }
-EphemeronTests >> testInterconnectedEphemeronsAreNotCollectedIfTheOtherKeyIsReferencedFromTheOutside [
+EphemeronTest >> testInterconnectedEphemeronsAreNotCollectedIfTheOtherKeyIsReferencedFromTheOutside [
 
 	| finalized1 finalized2 theKey theValue ephemeron1 ephemeron2 |
 	Smalltalk supportsQueueingFinalization ifFalse: [ ^ self skip ].

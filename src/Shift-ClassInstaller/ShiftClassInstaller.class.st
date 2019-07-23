@@ -124,6 +124,10 @@ ShiftClassInstaller >> initialize [
 
 { #category : #building }
 ShiftClassInstaller >> installInEnvironment: newClass [
+
+	"I only install if there is a name / non anonymous"
+	builder name ifNil: [ ^ self ].
+
 	"I only install in the environment if there is not oldClass installed."
 	(self installingEnvironment hasClassNamed: builder name) ifFalse:[
 		self installingEnvironment installClass: newClass withName: builder name.
@@ -136,6 +140,10 @@ ShiftClassInstaller >> installInEnvironment: newClass [
 
 { #category : #building }
 ShiftClassInstaller >> installSubclassInSuperclass: newClass [
+
+	"I only install if there is a name / non anonymous"
+	builder name ifNil: [ ^ self ].
+
 	newClass superclass addSubclass: newClass
 ]
 
