@@ -7,6 +7,12 @@ Class {
 	#category : #'SystemCommands-VariableCommands'
 }
 
+{ #category : #accessing }
+SycGenerateVariableAccessorCommand class >> defaultMenuIconName [
+
+	^ #add
+]
+
 { #category : #execution }
 SycGenerateVariableAccessorCommand >> asRefactorings [
 

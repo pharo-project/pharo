@@ -17,10 +17,25 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
+{ #category : #accessing }
+SycMoveMethodsToPackageCommand class >> defaultMenuIconName [
+	^ #smallRedo
+]
+
 { #category : #'instance creation' }
 SycMoveMethodsToPackageCommand class >> for: methods to: aPackage [
 	^(self for: methods) 
 		package: aPackage
+]
+
+{ #category : #activation }
+SycMoveMethodsToPackageCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^ CmdContextMenuActivation  
+		byItemOf: CmdOtherOptionsMenuGroup  
+		order: 19  
+		for: ClyMethod asCalypsoItemContext  
 ]
 
 { #category : #accessing }

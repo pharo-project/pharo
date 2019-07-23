@@ -22,13 +22,6 @@ SycRenameTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 	^aSourceCodeContext isTempVariableSelected 
 ]
 
-{ #category : #execution }
-SycRenameTempCommand >> applyResultInContext: aSourceCodeContext [
-	super applyResultInContext: aSourceCodeContext.
-	
-	aSourceCodeContext showVariableNamed: newName
-]
-
 { #category : #accessing }
 SycRenameTempCommand >> defaultMenuItemName [
 	^'Rename temp'
@@ -36,23 +29,5 @@ SycRenameTempCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycRenameTempCommand >> execute [
-	| refactoring |
-	refactoring := RBRenameTemporaryRefactoring	
-		renameTemporaryFrom: sourceNode sourceInterval
-		to: newName
-		in: method origin
-		selector: method selector.
-	
-	self executeRefactoring: refactoring.
-]
-
-{ #category : #execution }
-SycRenameTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
-	super prepareFullExecutionInContext: aSourceCodeContext.
-	
-	newName := UIManager default 
-		request: 'New name of the variable' 
-		initialAnswer: sourceNode name
-		title: 'Rename a temp variable'.
-	newName isEmptyOrNil | (newName = sourceNode name) ifTrue: [ CmdCommandAborted signal ]
+	(RBInteractiveRenameTemp sourceNode: sourceNode method: method) executeRenameTemp
 ]

@@ -7,6 +7,12 @@ Class {
 	#category : #'SystemCommands-VariableCommands'
 }
 
+{ #category : #accessing }
+SycPushDownVariableCommand class >> defaultMenuIconName [
+
+	^ #down
+]
+
 { #category : #execution }
 SycPushDownVariableCommand >> asRefactorings [
 

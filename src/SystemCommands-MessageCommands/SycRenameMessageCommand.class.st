@@ -16,6 +16,22 @@ Class {
 	#category : #'SystemCommands-MessageCommands'
 }
 
+{ #category : #accessing }
+SycRenameMessageCommand class >> defaultMenuIconName [
+
+	^ #edit
+]
+
+{ #category : #activation }
+SycRenameMessageCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^ CmdContextMenuActivation  
+		byItemOf: CmdRefactorMenuGroup  
+		order: 1  
+		for: ClyMethod asCalypsoItemContext  
+]
+
 { #category : #execution }
 SycRenameMessageCommand >> createRefactoring [
 

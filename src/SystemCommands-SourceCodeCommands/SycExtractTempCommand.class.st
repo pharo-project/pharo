@@ -23,13 +23,6 @@ SycExtractTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 	^aSourceCodeContext isMethodSelected not 
 ]
 
-{ #category : #execution }
-SycExtractTempCommand >> applyResultInContext: aSourceCodeContext [
-	super applyResultInContext: aSourceCodeContext.
-	
-	aSourceCodeContext showVariableNamed: tempName
-]
-
 { #category : #accessing }
 SycExtractTempCommand >> defaultMenuItemName [
 	^ 'Extract temp'
@@ -37,23 +30,5 @@ SycExtractTempCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycExtractTempCommand >> execute [
-	| refactoring |
-	refactoring := RBExtractToTemporaryRefactoring	
-		extract: sourceNode sourceInterval
-		to: tempName
-		from: method selector
-		in: method origin.
-	
-	self executeRefactoring: refactoring.
-]
-
-{ #category : #execution }
-SycExtractTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
-	super prepareFullExecutionInContext: aSourceCodeContext.
-	
-	tempName := UIManager default 
-		request: 'New temp name' 
-		initialAnswer: ''
-		title: 'Extract code to temp variable'.
-	tempName isEmptyOrNil ifTrue: [ CmdCommandAborted signal ]
+	(RBInteractiveExtractTemp sourceNode: sourceNode method: method) executeExtractTemp
 ]

@@ -18,6 +18,11 @@ Class {
 }
 
 { #category : #activation }
+ClyMoveClassToGroupCommand class >> defaultMenuIconName [
+	^ #smallRedo
+]
+
+{ #category : #activation }
 ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
 	
@@ -48,7 +53,10 @@ ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation3 [
 ClyMoveClassToGroupCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyClassContextOfFullBrowser 
+	^ CmdContextMenuActivation  
+		byItemOf: CmdRefactorMenuGroup  
+		order: 4  
+		for: ClyClass asCalypsoItemContext 
 ]
 
 { #category : #activation }

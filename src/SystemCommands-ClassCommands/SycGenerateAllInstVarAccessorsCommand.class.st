@@ -7,6 +7,18 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
+{ #category : #activation }
+SycGenerateAllInstVarAccessorsCommand class >> browserShortcutActivation [
+	<classAnnotation>
+	
+	^CmdShortcutActivation generateAccesors: ClyClass asCalypsoItemContext 
+]
+
+{ #category : #accessing }
+SycGenerateAllInstVarAccessorsCommand class >> defaultMenuIconName [
+	^#smallAdd
+]
+
 { #category : #execution }
 SycGenerateAllInstVarAccessorsCommand >> asRefactorings [
 

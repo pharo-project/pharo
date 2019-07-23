@@ -161,10 +161,12 @@ RBGenericInteractLayer >> findAndReplaceMethod [
 RBGenericInteractLayer >> inlineMethod [
 	"Return inline method refactoring using method and node"
 	
-	^ RBInlineMethodRefactoring	
+	refactoring := RBInlineMethodRefactoring	
 		inline: sourceNode sourceInterval
 		inMethod: method selector
 		forClass: method origin.
+		
+	^ refactoring
 ]
 
 { #category : #refactoring }
@@ -174,10 +176,12 @@ RBGenericInteractLayer >> inlineTemp [
 	| assignment |
 	assignment := sourceNode methodNode assignmentNodes
 		detect: [ :each | each variable = sourceNode ].
-	^ RBInlineTemporaryRefactoring
+	refactoring := RBInlineTemporaryRefactoring
 		inline: assignment sourceInterval
 		from: method selector
-		in: method origin
+		in: method origin.
+		
+	^ refactoring
 ]
 
 { #category : #accessing }

@@ -4,5 +4,8 @@ Extension { #name : #SycGenerateAllInstVarAccessorsCommand }
 SycGenerateAllInstVarAccessorsCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 2.1 for: ClyClassContextOfFullBrowser 
+	^ CmdContextMenuActivation  
+		byItemOf: CmdRefactorMenuGroup  
+		order: 2  
+		for: ClyClass asCalypsoItemContext 
 ]

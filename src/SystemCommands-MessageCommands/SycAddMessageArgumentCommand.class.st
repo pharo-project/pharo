@@ -18,6 +18,21 @@ Class {
 }
 
 { #category : #accessing }
+SycAddMessageArgumentCommand class >> defaultMenuIconName [
+	^#smallAdd
+]
+
+{ #category : #activation }
+SycAddMessageArgumentCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^ CmdContextMenuActivation 
+		byItemOf: CmdRefactorMenuGroup 
+		order: 3
+		for: ClyMethod asCalypsoItemContext
+]
+
+{ #category : #accessing }
 SycAddMessageArgumentCommand >> argumentDefaultValue [
 	^ argumentDefaultValue
 ]

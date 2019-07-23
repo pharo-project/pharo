@@ -21,11 +21,5 @@ SycInlineMethodCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycInlineMethodCommand >> execute [
-	| refactoring |
-	refactoring := RBInlineMethodRefactoring	
-		inline: sourceNode sourceInterval
-		inMethod: method selector
-		forClass: method origin.
-	
-	self executeRefactoring: refactoring.
+	(RBGenericInteractLayer sourceNode: sourceNode method: method) executeInlineMethod
 ]

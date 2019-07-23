@@ -13,6 +13,16 @@ SycMoveMethodsToClassSideCommand class >> canBeExecutedInContext: aToolContext [
 		and: [ aToolContext isInstanceSideMethodSelected ]
 ]
 
+{ #category : #activation }
+SycMoveMethodsToClassSideCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^ CmdContextMenuActivation  
+		byItemOf: CmdOtherOptionsMenuGroup  
+		order: 16 
+		for: ClyMethod asCalypsoItemContext  
+]
+
 { #category : #accessing }
 SycMoveMethodsToClassSideCommand >> defaultMenuItemName [
 	^'Move to class side'

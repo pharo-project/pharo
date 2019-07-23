@@ -15,11 +15,26 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
+{ #category : #activation }
+SycTagMethodCommand class >> defaultMenuIconName [
+	^#glamorousBrowse
+]
+
 { #category : #'instance creation' }
 SycTagMethodCommand class >> for: methods tag: aString [
 
 	^(self for: methods)
 		targetTag: aString
+]
+
+{ #category : #activation }
+SycTagMethodCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^ CmdContextMenuActivation 
+		byItemOf: CmdRefactorMenuGroup 
+		order: 2 
+		for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #execution }

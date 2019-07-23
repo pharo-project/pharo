@@ -60,6 +60,27 @@ CmdShortcutActivation class >> by: aKeyCombination for: anAnnotationUser [
 ]
 
 { #category : #'well known shortcuts' }
+CmdShortcutActivation class >> generateAccesors: anAnnotationUser [  
+	<classAnnotationDependency>
+	
+	^self by: $g meta, $a meta for: anAnnotationUser  
+]
+
+{ #category : #'well known shortcuts' }
+CmdShortcutActivation class >> pullUpFor: anAnnotationUser [  
+	<classAnnotationDependency>
+	
+	^self by: $p meta, $u meta for: anAnnotationUser  
+]
+
+{ #category : #'well known shortcuts' }
+CmdShortcutActivation class >> pushDownFor: anAnnotationUser [  
+	<classAnnotationDependency>
+	
+	^self by: $p meta, $d meta for: anAnnotationUser  
+]
+
+{ #category : #'well known shortcuts' }
 CmdShortcutActivation class >> removalFor: anAnnotationUser [  
 	<classAnnotationDependency>
 	

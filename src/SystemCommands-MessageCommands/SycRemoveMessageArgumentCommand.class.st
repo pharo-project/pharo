@@ -16,9 +16,22 @@ Class {
 }
 
 { #category : #testing }
+SycRemoveMessageArgumentCommand class >> browserMenuOrder [
+	^2.2
+]
+
+{ #category : #testing }
 SycRemoveMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 	^(super canBeExecutedInContext: aToolContext)
 		and: [ aToolContext lastSelectedMessage argumentNames notEmpty]
+]
+
+{ #category : #activation }
+SycRemoveMessageArgumentCommand class >> methodMenuActivation [
+	<classAnnotation>
+
+	^CmdContextMenuActivation 
+		byRootGroupItemOrder: self browserMenuOrder for: ClyMethod asCalypsoItemContext 
 ]
 
 { #category : #accessing }

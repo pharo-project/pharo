@@ -16,6 +16,12 @@ Class {
 }
 
 { #category : #accessing }
+SycRenameClassCommand class >> defaultMenuIconName [
+
+	^ #edit
+]
+
+{ #category : #accessing }
 SycRenameClassCommand >> defaultMenuItemName [
 	^'Rename'
 ]
