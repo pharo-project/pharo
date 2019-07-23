@@ -28,7 +28,7 @@ MemoryHandle >> at: index read: aCollection startingAt: start count: count [
 { #category : #public }
 MemoryHandle >> at: first write: aCollection startingAt: start count: count [ 
 	writable ifFalse: [ self primitiveFailed ].
-	entry at: first write: aCollection startingAt: start count: count.
+	entry at: first write: aCollection startingAt: start count: count
 ]
 
 { #category : #streams }
@@ -47,7 +47,7 @@ MemoryHandle >> binaryWriteStream [
 MemoryHandle >> close [
 	self isOpen ifFalse: [ ^ self ].
 	self truncate.
-	entry := nil.
+	entry := nil
 ]
 
 { #category : #'stream-protocol' }
@@ -77,12 +77,12 @@ MemoryHandle >> isOpen [
 
 { #category : #public }
 MemoryHandle >> open [
-	entry := self basicOpen.
+	entry := self basicOpen
 ]
 
 { #category : #accessing }
 MemoryHandle >> size [
-	"return the size for the interna"
+	"Return the size for the internal entry"
 	^ entry internalSize
 ]
 
