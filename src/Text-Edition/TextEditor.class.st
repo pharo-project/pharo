@@ -1604,8 +1604,7 @@ TextEditor >> isTextEditor [
 
 { #category : #'typing support' }
 TextEditor >> keystroke: aKeyboardEvent [
-	self handleEditionAction: [ self dispatchOn: aKeyboardEvent ] 
-		fromKeyboardEvent: aKeyboardEvent.
+	self handleEditionAction: [ self dispatchOn: aKeyboardEvent ] fromKeyboardEvent: aKeyboardEvent
 ]
 
 { #category : #accessing }
