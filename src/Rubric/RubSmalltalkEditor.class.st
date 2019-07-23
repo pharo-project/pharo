@@ -352,7 +352,9 @@ RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
 	controller setModel: self model.
 	
 	(controller handleKeystrokeBefore: anEvent editor: self) ifTrue:  [^ self ].
-	aBlock value.
+	(self selectorChooserHandlesKeyboard: anEvent)
+				ifFalse: [ aBlock value ].
+	self selectorChooserKeystroke: anEvent.
 	controller handleKeystrokeAfter: anEvent editor: self.
 
 ]
@@ -797,6 +799,7 @@ RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 
 { #category : #'completion engine' }
 RubSmalltalkEditor >> isCompletionEnabled [
+	CompletionEngine ifNil: [ ^false ].
 	CompletionEngine isCompletionEnabled ifFalse: [ ^false ].
 	^ completionEngine isNotNil and: [ self editingMode isCompletionEnabled ]
 ]
@@ -827,14 +830,7 @@ RubSmalltalkEditor >> jumpToNextKeywordOfIt: isForwardJump [
 { #category : #'typing support' }
 RubSmalltalkEditor >> keystroke: aKeyboardEvent [
 
-	self isCompletionEnabled 
-		ifFalse: [ ^ super keystroke: aKeyboardEvent ].
-	self
-		completionAround: [ 
-			(self selectorChooserHandlesKeyboard: aKeyboardEvent)
-				ifFalse: [ super keystroke: aKeyboardEvent ].
-			self selectorChooserKeystroke: aKeyboardEvent ]
-		keyStroke: aKeyboardEvent
+	self completionAround: [super keystroke: aKeyboardEvent ] keyStroke: aKeyboardEvent
 	
 ]
 
