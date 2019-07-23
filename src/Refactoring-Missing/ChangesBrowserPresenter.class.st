@@ -1,3 +1,7 @@
+"
+I am a GUI used to preview the impact of a refactoring and select the changes to apply.
+
+"
 Class {
 	#name : #ChangesBrowserPresenter,
 	#superclass : #ComposablePresenter,

@@ -1,3 +1,10 @@
+"
+I am a interactive layer to  use extract temp refactoring
+
+Instance Variables
+-----------------------------------------------------------------
+tempName: aString
+"
 Class {
 	#name : #RBInteractiveExtractTemp,
 	#superclass : #RBInteractiveRefactoring,

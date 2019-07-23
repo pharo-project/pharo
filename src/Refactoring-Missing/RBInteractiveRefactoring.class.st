@@ -1,3 +1,43 @@
+"
+I am a interactive layer to  use refactoring without use explicity from commands.
+
+Instance Variables
+-----------------------------------------------------------------
+method: CompiledMethod
+interval: Interval
+node:	RBNode
+	
+Example
+-----------------------------------------------------------------
+I can be used in playground, for example:
+
+GIVEN:
+======
+Object subclass: #Example
+	instanceVariableNames: ''
+	classVariableNames: ''
+	package: 'Refactoring-InteractiveLayer'
+	
+Example >> extracted
+	|a|
+	a := 5 + 5.
+   a := 'sdaf' , a.
+	^ a
+	
+THEN EXECUTE: 
+=============
+
+|interactive|
+
+interactive := RBInteractiveRefactoring method: #extracted class: Example interval: (17 to: 26).
+interactive executeExtractMethod 
+
+RESULT: 
+=======
+
+Yoou can access to  preview of extract method
+
+"
 Class {
 	#name : #RBInteractiveRefactoring,
 	#superclass : #Object,
@@ -38,14 +78,9 @@ RBInteractiveRefactoring class >> sourceNode: source method: method [
 
 { #category : #accessing }
 RBInteractiveRefactoring >> compiledMethodOf: aMethod from: aClass [
-	"Return compiled method given a method name (string) and a class"
+	"Return compiled method given a method name (sylbol) and a class"
 	
-	| index |
-	(aClass methods collect: #selector)
-		withIndexDo: [ :each :i | 
-			each = aMethod asSymbol
-				ifTrue: [ index := i ] ].
-	^ aClass methods at: index
+	^ aClass >> aMethod
 ]
 
 { #category : #execution }
@@ -137,7 +172,6 @@ RBInteractiveRefactoring >> extractMethod [
 { #category : #refactoring }
 RBInteractiveRefactoring >> extractTempWithName: newTempName [
 	"Return extract temporary refactoring using method, node and newTempName"
-	
 	^ RBExtractToTemporaryRefactoring	
 		extract: sourceNode sourceInterval
 		to: newTempName

@@ -1,3 +1,10 @@
+"
+I am a interactive layer to  use rename temp refactoring
+
+Instance Variables
+-----------------------------------------------------------------
+newName: aString
+"
 Class {
 	#name : #RBInteractiveRenameTemp,
 	#superclass : #RBInteractiveRefactoring,
