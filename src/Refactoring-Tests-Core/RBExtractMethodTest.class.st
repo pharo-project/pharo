@@ -131,6 +131,30 @@ RBExtractMethodTest >> testExtractMethodThatNeedsTemporaryVariable [
 ]
 
 { #category : #tests }
+RBExtractMethodTest >> testExtractWithRenamingOfParameters [
+	| refactoring class|
+	refactoring := RBExtractMethodRefactoring
+		extract: (78 to: 197)
+		from: #displayName
+		in: RBLintRuleTestData.
+	self setupMethodNameFor: refactoring toReturn: #foo:.
+	refactoring parameterMap: (Dictionary new at: #nameStream put: #newParameter; yourself ).
+	self executeRefactoring: refactoring.
+	class := refactoring model classNamed: #RBLintRuleTestData.
+
+ 	self assert: (class parseTreeFor: #displayName) = (self parseMethod: 'displayName
+	| nameStream |
+	nameStream := WriteStream on: (String new: 64).
+	self foo: nameStream.
+	^nameStream contents').
+	"Extracted method with renamed parameters"
+	self assert: (class parseTreeFor: #foo:) = (self parseMethod: 'foo: newParameter 	newParameter nextPutAll: self name;
+		nextPutAll: '' (''.
+	self problemCount printOn: newParameter.
+	newParameter nextPut: $).')
+]
+
+{ #category : #tests }
 RBExtractMethodTest >> testModelExtractMethodWithTemporariesSelected [
 	| class refactoring |
 	model := RBClassModelFactory rbNamespace new.
@@ -180,4 +204,21 @@ RBExtractMethodTest >> testNonExistantSelector [
 			extract: (10 to: 20)
 			from: #checkClass1:
 			in: RBBasicLintRuleTestData)
+]
+
+{ #category : #tests }
+RBExtractMethodTest >> testValidateRenameParameters [
+	| refactoring |
+	refactoring := RBExtractMethodRefactoring
+		extract: (78 to: 197)
+		from: #displayName
+		in: RBLintRuleTestData.
+	self setupMethodNameFor: refactoring toReturn: #foo:.
+	refactoring parameterMap: (Dictionary new at: #nameStream put: #nameStream; yourself ).
+	"Fail when use instance variables as new parameters"
+	self should: [ refactoring validateRenameOf: #nameStream to: #name ] raise: RBRefactoringError.	
+	self should: [refactoring validateRenameOf: #nameStream to: #foo1] raise: RBRefactoringError.
+	"Fail when use class variables as new parameters"
+	self should: [refactoring validateRenameOf: #nameStream to: #Foo1] raise: RBRefactoringError.
+	"Fail when use temporary variables as new parameters"
 ]
