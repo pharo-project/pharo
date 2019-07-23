@@ -89,7 +89,7 @@ Class {
 	#category : #'Tool-CriticBrowser-Base'
 }
 
-{ #category : #commander2 }
+{ #category : #commands }
 CBCriticBrowser class >> buildCommandsGroupWith: presenter forRoot: rootCommandGroup [
 	rootCommandGroup
 		register:
@@ -107,6 +107,17 @@ CBCriticBrowser class >> buildCommandsGroupWith: presenter forRoot: rootCommandG
 				register: (CBReapplyRuleMenu forSpec context: presenter);
 				register: (CBUnBanRuleMenu forSpec context: presenter);
 				yourself)
+]
+
+{ #category : #'world menu' }
+CBCriticBrowser class >> criticsBrowserMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: 'Critic Browser')
+		action: [ self openOnCurrentWorkingConfiguration ];
+		order: 310;
+		parent: #Tools;
+		help: 'To manage rule checks.';
+		icon: self icon
 ]
 
 { #category : #specs }
@@ -136,49 +147,44 @@ CBCriticBrowser class >> defaultSpec [
 ]
 
 { #category : #example }
-CBCriticBrowser class >> open [
+CBCriticBrowser class >> example [
 	<example>
-	| env rules |
-	rules := RBCompositeLintRule allGoodRules rules.
-	env := RBBrowserEnvironment default.
-	self openOnRule: rules onEnvironment: env
+	self openOnRules: RBCompositeLintRule allGoodRules rules environment: RBBrowserEnvironment default
+]
+
+{ #category : #accessing }
+CBCriticBrowser class >> icon [
+	"Answer an icon for the receiver."
+
+	^ self iconNamed: #smallWarningIcon
 ]
 
 { #category : #'instance creation' }
-CBCriticBrowser class >> open: aWindowPresenter withExtent: aPoint [ 
-	aWindowPresenter extent: aPoint.
+CBCriticBrowser class >> openOnCurrentWorkingConfiguration [
+	CriticWorkingConfiguration exists ifTrue: [ ResetWindow new openModalWithSpec ] ifFalse: [ SelectPackageBrowser open ]
 ]
 
 { #category : #'instance creation' }
-CBCriticBrowser class >> openOnRule: aRules onEnvironment: aEnv [
+CBCriticBrowser class >> openOnRules: aCollectionOfRules environment: anEnvironment [
+	^ self openOnRules: aCollectionOfRules environment: anEnvironment removingTestCase: false
+]
+
+{ #category : #'instance creation' }
+CBCriticBrowser class >> openOnRules: aRules environment: anEnvironment removingTestCase: aBoolean [
 	| cbr |
 	cbr := self new
 		rules: aRules;
-		environment: aEnv;
-		removeTestCase: false;
+		environment: anEnvironment;
+		removeTestCase: aBoolean;
 		yourself.
 	cbr applyRules.
-	self open: cbr openWithSpec withExtent: 700 @ 700.
+	cbr openWithSpec.
 	^ cbr
 ]
 
 { #category : #'instance creation' }
 CBCriticBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
-	| cbr |
-	cbr := self new
-		rules: aWorkingConfiguration rule;
-		environment: aWorkingConfiguration environment;
-		removeTestCase: aWorkingConfiguration removeTestCase;
-		yourself.
-	cbr openWithSpec.
-	cbr applyRules.
-	cbr rulesModel changed: #listElementAt:
-]
-
-{ #category : #specs }
-CBCriticBrowser class >> title [
-
-	^ 'Critic Browser'
+	^ self openOnRules: aWorkingConfiguration rule environment: aWorkingConfiguration environment removingTestCase: aWorkingConfiguration removeTestCase
 ]
 
 { #category : #'initialize-actions' }
@@ -464,25 +470,25 @@ CBCriticBrowser >> initializeRulesPresenter [
 	rulesPresenter
 		addColumn:
 			(StringTableColumn new
-				title: 'rules';
+				title: 'Rule';
 				evaluated: #name;
 				yourself);
 		addColumn:
 			(StringTableColumn new
-				width: 40;
-				title: 'toSort';
+				width: 60;
+				title: 'To sort';
 				evaluated: [ :aRules | self computeToSort: aRules ];
 				yourself);
 		addColumn:
 			(StringTableColumn new
-				width: 40;
-				title: 'toDo';
+				width: 60;
+				title: 'To do';
 				evaluated: [ :aRules | (criticCache toDosOf: aRules) size ];
 				yourself);
 		addColumn:
 			(StringTableColumn new
-				width: 40;
-				title: 'Wrong';
+				width: 60;
+				title: 'False positive';
 				evaluated: [ :aRules | (criticCache falsePositiveOf: aRules) size ];
 				yourself);
 		yourself.
@@ -511,6 +517,13 @@ CBCriticBrowser >> initializeWidgets [
 	self initializeCriticErrorPresenter.	"and: [ rule isTransformationRule not ]"
 	self initializeRulesPresenter.
 	self initializeCriticsPresenter
+]
+
+{ #category : #initialize }
+CBCriticBrowser >> initializeWindow: aWindowPresenter [
+	aWindowPresenter
+		initialExtent: 900 @ 700;
+		title: 'Critic Browser'
 ]
 
 { #category : #tests }
