@@ -7,10 +7,10 @@ Class {
 	#name : #CriticWorkingConfiguration,
 	#superclass : #Object,
 	#instVars : [
-		'rule',
 		'environment',
 		'removeTestCase',
-		'logInManifest'
+		'logInManifest',
+		'rules'
 	],
 	#classVars : [
 		'Current'
@@ -73,11 +73,11 @@ CriticWorkingConfiguration >> removeTestCase: aBoolean [
 ]
 
 { #category : #accessing }
-CriticWorkingConfiguration >> rule [
-	^ rule
+CriticWorkingConfiguration >> rules [
+	^ rules
 ]
 
 { #category : #accessing }
-CriticWorkingConfiguration >> rule: anObject [
-	rule := anObject
+CriticWorkingConfiguration >> rules: anObject [
+	rules := anObject
 ]

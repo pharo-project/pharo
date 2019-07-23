@@ -184,24 +184,7 @@ CBCriticBrowser class >> openOnRules: aRules environment: anEnvironment removing
 
 { #category : #'instance creation' }
 CBCriticBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
-	^ self openOnRules: aWorkingConfiguration rule environment: aWorkingConfiguration environment removingTestCase: aWorkingConfiguration removeTestCase
-]
-
-{ #category : #'initialize-actions' }
-CBCriticBrowser >> DoubleClickActionOnCritic: singleSelection [
-	| selectedCritic |
-	selectedCritic := singleSelection selectedItem.
-	selectedCritic
-		ifNotNil: [ selectedCritic providesChange
-				ifTrue: [ noteBookPageCriticErrorPresenter 
-						text: (self diffTextForChange: selectedCritic change) ]
-				ifFalse: [ | entity |
-					entity := selectedCritic sourceAnchor entity.
-					(entity respondsTo: #definition)
-						ifTrue: [ noteBookPageCriticErrorPresenter text: entity definition ]
-						ifFalse: [ noteBookPageCriticErrorPresenter text: entity asString ] ].
-			noteBookPresenter selectPageIndex: 2 ]
-		ifNil: [ '' ]
+	^ self openOnRules: aWorkingConfiguration rules environment: aWorkingConfiguration environment removingTestCase: aWorkingConfiguration removeTestCase
 ]
 
 { #category : #utils }
@@ -322,10 +305,10 @@ CBCriticBrowser >> criticsPresenter [
 CBCriticBrowser >> criticsPresenterAction [
 	criticsPresenter
 		whenActivatedDo:
-			[ :singleSelection | self DoubleClickActionOnCritic: singleSelection ].
+			[ :singleSelection | self doubleClickActionOnCritic: singleSelection ].
 	criticsPresenter
 		whenSelectionChangedDo: [ :singleSelection | 
-			self DoubleClickActionOnCritic: singleSelection.
+			self doubleClickActionOnCritic: singleSelection.
 			self send: criticsPresenter to: noteBookPageCriticErrorPresenter ]
 ]
 
@@ -357,6 +340,23 @@ CBCriticBrowser >> diffTextForChange: aRefactoryChange [
 		separatedBy: [ text append: self diffSeparator ].
 	
 	^ text
+]
+
+{ #category : #'initialize-actions' }
+CBCriticBrowser >> doubleClickActionOnCritic: singleSelection [
+	| selectedCritic |
+	selectedCritic := singleSelection selectedItem.
+	selectedCritic
+		ifNotNil: [ selectedCritic providesChange
+				ifTrue: [ noteBookPageCriticErrorPresenter 
+						text: (self diffTextForChange: selectedCritic change) ]
+				ifFalse: [ | entity |
+					entity := selectedCritic sourceAnchor entity.
+					(entity respondsTo: #definition)
+						ifTrue: [ noteBookPageCriticErrorPresenter text: entity definition ]
+						ifFalse: [ noteBookPageCriticErrorPresenter text: entity asString ] ].
+			noteBookPresenter selectPageIndex: 2 ]
+		ifNil: [ '' ]
 ]
 
 { #category : #accessing }
@@ -422,8 +422,9 @@ CBCriticBrowser >> iconFor: anItem [
 CBCriticBrowser >> initialize [
 	super initialize.
 	criticCache := ReCriticsCache new.
-	criticCache checker: ReSmalllintChecker new.
-	criticCache browser: self
+	criticCache
+		checker: ReSmalllintChecker new;
+		browser: self
 ]
 
 { #category : #'initialize-widgets' }
