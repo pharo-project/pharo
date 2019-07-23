@@ -82,10 +82,8 @@ TestMatchedNodeProducer >> visitMessageNode:  aRBMessageNode [
 
 { #category : #visiting }
 TestMatchedNodeProducer >> visitMethodNode: aRBMethodNode [ 
-	"there is a bug that we end up here when in temp definition, workaround turn it off for now"
-	"this turns off completion of methods and temp defitions, see issue tracker"
-	 ^#().
-	"(self select: self methodNames beginningWith: aRBMethodNode selector)"
+		
+	^(self select: self methodNames beginningWith: aRBMethodNode selector)
 ]
 
 { #category : #visiting }
