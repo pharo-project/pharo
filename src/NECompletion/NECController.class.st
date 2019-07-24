@@ -38,6 +38,11 @@ NECController class >> contextClass: aClass [
 	ContextClass := aClass
 ]
 
+{ #category : #'class initialization' }
+NECController class >> initialize [ 
+  	self register
+]
+
 { #category : #accessing }
 NECController class >> isCompletionEnabled [
 	^NECPreferences enabled
