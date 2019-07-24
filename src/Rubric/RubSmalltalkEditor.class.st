@@ -344,16 +344,15 @@ RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
 
 { #category : #'completion engine' }
 RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
-	"I'm a editor for Smalltalk, so, ok do completion around"
+	"I'm a editor for Smalltalk, so, doo completion around"
 	
 	self isCompletionEnabled ifFalse: [  ^aBlock value ].
-	completionEngine setModel: self model.
 	
 	(completionEngine handleKeystrokeBefore: anEvent editor: self) ifTrue:  [^ self ].
 	(self selectorChooserHandlesKeyboard: anEvent)
 				ifFalse: [ aBlock value ].
 	self selectorChooserKeystroke: anEvent.
-	completionEngine handleKeystrokeAfter: anEvent editor: self.
+	completionEngine handleKeystrokeAfter: anEvent editor: self
 
 ]
 
@@ -1293,8 +1292,8 @@ RubSmalltalkEditor >> tallySelection [
 RubSmalltalkEditor >> textArea: atextArea [
 
 	atextArea setCompletionEngine: self completionEngine.
-	"Right now RubTextEditor does not support completion"
-	super textArea: atextArea
+	super textArea: atextArea.
+	completionEngine setModel: self model
 ]
 
 { #category : #'menu messages' }

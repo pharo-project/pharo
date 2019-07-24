@@ -30,7 +30,7 @@ Class {
 
 { #category : #accessing }
 NECController class >> contextClass [
-	^ContextClass ifNil: [ ^NECContext ] 
+	^ContextClass ifNil: [ NECContext ] 
 ]
 
 { #category : #accessing }
