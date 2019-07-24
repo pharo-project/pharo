@@ -11,7 +11,7 @@ Class {
 CBMarkAsWrongCriticCommand >> execute [
 	| aCriticBrowser |
 	aCriticBrowser := self context.
-	aCriticBrowser isSelectedRuleIsFalsePositive
+	aCriticBrowser isSelectedCriticFalsePositive
 		ifTrue: [ aCriticBrowser removeFalsePositive: aCriticBrowser selectedCritic forRule: aCriticBrowser selectedRule ]
 		ifFalse: [ aCriticBrowser addFalsePositive: aCriticBrowser selectedCritic forRule: aCriticBrowser selectedRule ].
 	aCriticBrowser updateTree

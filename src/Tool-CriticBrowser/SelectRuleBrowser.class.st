@@ -100,7 +100,7 @@ SelectRuleBrowser >> nextAction [
 	self withWindowDo: #close.
 
 	CriticWorkingConfiguration current
-		rule: selectedRules;
+		rules: selectedRules;
 		environment: environment;
 		removeTestCase: removeTestCase.
 

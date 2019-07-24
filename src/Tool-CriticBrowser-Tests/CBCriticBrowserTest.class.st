@@ -4,30 +4,13 @@ Class {
 	#category : #'Tool-CriticBrowser-Tests-Test-CriticBrowser'
 }
 
-{ #category : #setup }
-CBCriticBrowserTest >> environement [
-	^ RBPackageEnvironment
-		packageName: 'Migrate-Tool-CriticBrowser-environementTest'
-]
-
-{ #category : #setup }
-CBCriticBrowserTest >> instanceOfCriticBrowser [
-	^ CBCriticBrowser
-]
-
-{ #category : #setup }
-CBCriticBrowserTest >> rulesToTest [
-	^ (ReRuleManager uniqueInstance allRules groupedBy: #group) at: #Style
-]
-
 { #category : #'action-CriticsPresenter' }
 CBCriticBrowserTest >> testCriticsPresenterClickACriticsShouldTransmitLocationCriticsToSourceCodePresenter [
 	"this test check if he transmit the location of the critics and the range "
 
-	self setupCriticBrowser: criticBrowser.
-	self
-		assert: criticBrowser noteBookPresenter selectedPageIndex
-		equals: 2.
+	self selectInstanceVariableCapitalizationRule.
+	criticBrowser criticsPresenter selectIndex: 1.
+	self assert: criticBrowser noteBookPresenter selectedPageIndex equals: 2.
 	self
 		assert: criticBrowser noteBookPageCriticErrorPresenter text
 		equals:
@@ -45,12 +28,12 @@ CBCriticBrowserTest >> testCriticsPresenterEmpty [
 { #category : #'as yet unclassified' }
 CBCriticBrowserTest >> testDoubleOnCriticShouldSendSourceCodeToSourceCodePresenter [
 	| textBefore |
-	self setupSelectRBUnclassifiedMethodRule.
+	self selectUnclassifiedMethodRule.
 	criticBrowser criticsPresenter selectIndex: 1.
 	textBefore := criticBrowser noteBookPageCriticErrorPresenter text.
-	self setupSelectionRulesPresenter: criticBrowser.
+	self selectInstanceVariableCapitalizationRule.
 	criticBrowser criticsPresenter selectIndex: 2.
-	self setupSelectRBUnclassifiedMethodRule.
+	self selectUnclassifiedMethodRule.
 	"simulate double click"
 	criticBrowser criticsPresenter selectIndex: 1.
 	criticBrowser criticsPresenter selectIndex: 1.
@@ -77,14 +60,14 @@ CBCriticBrowserTest >> testRulesPresenterAnySelectedItem [
 { #category : #'action-RulesPresenter' }
 CBCriticBrowserTest >> testRulesPresenterClickaCompositeNodeShouldRuleCommentPresenterShouldEmpty [
 	criticBrowser rulesPresenter selectPath: #(1).
-	self assert: criticBrowser rule isComposite.
+	self assert: criticBrowser selectedRule isComposite.
 	self assert: criticBrowser noteBookPageRuleCommentPresenter text equals: ''
 ]
 
 { #category : #'action-RulesPresenter' }
 CBCriticBrowserTest >> testRulesPresenterClickaCompositeNodeShouldTransmitNothingToCriticsPresenter [
 	criticBrowser rulesPresenter selectPath: #(1).
-	self assert: criticBrowser rule isComposite.
+	self assert: criticBrowser selectedRule isComposite.
 	self assert: criticBrowser criticsPresenter items isEmpty
 ]
 
@@ -92,19 +75,16 @@ CBCriticBrowserTest >> testRulesPresenterClickaCompositeNodeShouldTransmitNothin
 CBCriticBrowserTest >> testRulesPresenterClickaNotCompositeShouldTransmitCriticsToCriticsPresenter [
 	"hasSameElements: (criticBrowserPresenter criticsOf: criticBrowserPresenter rule)"
 
-	self setupSelectionRulesPresenter: criticBrowser.
-	self deny: criticBrowser rule isComposite.
+	self selectInstanceVariableCapitalizationRule.
+	self deny: criticBrowser selectedRule isComposite.
 	self assert: criticBrowser criticsPresenter items size equals: 3
 ]
 
 { #category : #'action-RulesPresenter' }
 CBCriticBrowserTest >> testRulesPresenterClickaNotCompositeShouldTransmitDescriptionToSourceCodePresenter [
-	self setupSelectionRulesPresenter: criticBrowser.
-	self deny: criticBrowser rule isComposite.
-	self
-		assert: criticBrowser noteBookPageRuleCommentPresenter text
-		equals:
-			'Instance variable names on the instance- and class-side should start with a lowercase letter.'
+	self selectInstanceVariableCapitalizationRule.
+	self deny: criticBrowser selectedRule isComposite.
+	self assert: criticBrowser noteBookPageRuleCommentPresenter text equals: 'Instance variable names on the instance- and class-side should start with a lowercase letter.'
 ]
 
 { #category : #initialize }
@@ -116,7 +96,7 @@ CBCriticBrowserTest >> testSelectedRuleIsNilShouldRuleCommentPresenterIsEmpty [
 CBCriticBrowserTest >> testSourceCodePresenterChangeTextAndAcceptShouldSameAsCompiledMethod [
 	| beforeModif |
 	"n'enregistre pas les modification"
-	self setupSelectRBUnclassifiedMethodRule.
+	self selectUnclassifiedMethodRule.
 	beforeModif := criticBrowser noteBookPageCriticErrorPresenter text.
 	criticBrowser noteBookPageCriticErrorPresenter text: beforeModif , '"klm"'.
 	criticBrowser noteBookPageCriticErrorPresenter accept.
@@ -133,7 +113,7 @@ CBCriticBrowserTest >> testSourceCodePresenterChangeTextAndAcceptShouldSameAsCom
 CBCriticBrowserTest >> testWhenAddInstanceVariableCapitalisedShouldAddItToTheToSortColumn [
 	self timeLimit: 1 minute.
 	[ | nbOfToSort rule |
-	self setupSelectionRulesPresenter: criticBrowser.
+	self selectInstanceVariableCapitalizationRule.
 	rule := ((criticBrowser rulesPresenter roots at: 1) rules
 		select: [ :aRule | aRule isKindOf: GRInstanceVariableCapitalizationRule ])
 		at: 1.	"ugly sorry"

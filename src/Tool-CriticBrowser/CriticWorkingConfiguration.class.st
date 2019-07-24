@@ -38,7 +38,7 @@ CriticWorkingConfiguration class >> new [
 
 { #category : #'instance creation' }
 CriticWorkingConfiguration class >> reset [
-
+	<script>
 	Current := nil
 ]
 
