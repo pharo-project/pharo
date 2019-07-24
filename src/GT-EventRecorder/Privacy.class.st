@@ -51,7 +51,7 @@ Privacy class >> sendDiagnosticsAndUsageData [
 Privacy class >> sendDiagnosticsAndUsageData: aBoolean [
 	sendDiagnosticsAndUsageData = aBoolean ifTrue: [ ^ self ].
 	sendDiagnosticsAndUsageData := aBoolean.
-	SystemAnnouncer uniqueInstance announce: PrivacyChangedAnnoucement.
+	SystemAnnouncer uniqueInstance announce: PrivacyChangedAnnouncement.
 ]
 
 { #category : #settings }
