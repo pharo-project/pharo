@@ -9,12 +9,12 @@ Class {
 
 { #category : #hooks }
 CBSenderCriticCommand >> canBeRun [
-	^ super canBeRun and: [ self selectedCritic entity isCompiledMethod ]
+	^ super canBeRun and: [ self criticEntity isCompiledMethod ]
 ]
 
 { #category : #hooks }
 CBSenderCriticCommand >> execute [
-	ClyQueryBrowser browseSendersOf: self selectedCritic entity selector
+	self systemNavigation browseAllSendersOf: self criticEntity selector
 ]
 
 { #category : #initialization }

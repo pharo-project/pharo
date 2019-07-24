@@ -21,7 +21,12 @@ CBCriticCommand >> canBeRun [
 	^ self selectedCritic isNotNil
 ]
 
-{ #category : #hooks }
+{ #category : #accessing }
+CBCriticCommand >> criticEntity [
+	^ self selectedCritic entity
+]
+
+{ #category : #accessing }
 CBCriticCommand >> selectedCritic [
 	^ self context selectedCritic
 ]

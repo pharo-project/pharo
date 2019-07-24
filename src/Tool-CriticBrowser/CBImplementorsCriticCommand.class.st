@@ -9,12 +9,12 @@ Class {
 
 { #category : #hooks }
 CBImplementorsCriticCommand >> canBeRun [
-	^ super canBeRun and: [ self selectedCritic entity isCompiledMethod ]
+	^ super canBeRun and: [ self criticEntity isCompiledMethod ]
 ]
 
 { #category : #hooks }
 CBImplementorsCriticCommand >> execute [
-	ClyQueryBrowser browseImplementorsOf: self selectedCritic entity selector
+	self systemNavigation browseAllImplementorsOf: self criticEntity selector
 ]
 
 { #category : #initialization }
