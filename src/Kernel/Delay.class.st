@@ -112,14 +112,14 @@ Delay class >> restartTimerEventLoop [
 	self startTimerEventLoop.
 ]
 
-{ #category : #'scheduler' }
+{ #category : #scheduler }
 Delay class >> scheduler [
 
 	^ Scheduler.
 
 ]
 
-{ #category : #'scheduler' }
+{ #category : #scheduler }
 Delay class >> scheduler: anObject [
 
 	Scheduler := anObject.
