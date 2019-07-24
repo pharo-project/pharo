@@ -19,11 +19,10 @@ MCClassTraitDefinition class >> baseTraitName: aString classTraitComposition: cl
 
 { #category : #'instance creation' }
 MCClassTraitDefinition class >> baseTraitName: aString classTraitComposition: classTraitCompositionString category: aCategoryString [
-	^self instanceLike: (
-		self new
-			initializeWithBaseTraitName: aString
-			classTraitComposition: classTraitCompositionString
-			category: aCategoryString).
+	^ self new
+		initializeWithBaseTraitName: aString
+		classTraitComposition: classTraitCompositionString
+		category: aCategoryString
 ]
 
 { #category : #comparing }

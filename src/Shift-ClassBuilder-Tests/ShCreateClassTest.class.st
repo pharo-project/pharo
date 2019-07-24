@@ -65,7 +65,7 @@ ShCreateClassTest >> testEmptyClass [
 	result := builder build.
 	
 	self validateResult.
-	self validateSuperclass: Object.
+	self validateSuperclass: Object
 
 ]
 
@@ -120,7 +120,7 @@ ShCreateClassTest >> testSharedVariablesAsString [
 { #category : #tests }
 ShCreateClassTest >> testSharedVariablesWithSlot [
 	builder name: #SHClassWithSharedVariable.
-	self should: [ builder sharedVariablesFromString: {#aSharedVariable asSlot} ] raise: Error.
+	self should: [ builder sharedVariablesFromString: {#aSharedVariable asSlot} ] raise: Error
 ]
 
 { #category : #tests }

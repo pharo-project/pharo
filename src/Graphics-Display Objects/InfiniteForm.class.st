@@ -14,10 +14,12 @@ Class {
 InfiniteForm class >> with: aForm [ 
 	"Answer an instance of me whose pattern form is the argument, aForm."
 
-	^self new form: aForm
+	^self new 
+		form: aForm;
+		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 InfiniteForm >> addFillStyleMenuItems: aMenu hand: aHand from: aMorph [
 	"Add the items for changing the current fill style of the receiver"
 

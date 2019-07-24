@@ -10,11 +10,11 @@ Class {
 
 { #category : #accessing }
 ShSmalltalkGlobalsEnvironment >> classNamed: aName [
-	^ environment at: aName asSymbol ifAbsent:[nil].
+	^ environment at: aName asSymbol ifAbsent: [ nil ]
 ]
 
 { #category : #initialization }
 ShSmalltalkGlobalsEnvironment >> initialize [
 	super initialize.
-	self environment: Smalltalk globals.
+	self environment: Smalltalk globals
 ]

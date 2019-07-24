@@ -46,6 +46,24 @@ ProtoObject >> become: otherObject [
 ]
 
 { #category : #'reflective operations' }
+ProtoObject >> becomeForward: otherObject [ 
+	"Primitive. All variables in the entire system that used to point
+	to the receiver now point to the argument.
+	Fails if either argument is a SmallInteger."
+
+	{self} elementsForwardIdentityTo: {otherObject}
+]
+
+{ #category : #'reflective operations' }
+ProtoObject >> becomeForward: otherObject copyHash: copyHash [
+	"Primitive. All variables in the entire system that used to point to the receiver now point to the argument.
+	If copyHash is true, the argument's identity hash bits will be set to those of the receiver.
+	Fails if either argument is a SmallInteger."
+
+	{self} elementsForwardIdentityTo: {otherObject} copyHash: copyHash
+]
+
+{ #category : #'reflective operations' }
 ProtoObject >> cannotInterpret: aMessage [ 
 	 "Handle the fact that there was an attempt to send the given message to the receiver but a null methodDictionary was encountered while looking up the message selector.  Hopefully this is the result of encountering a stub for a swapped out class which induces this exception on purpose."
 

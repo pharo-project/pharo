@@ -12,7 +12,7 @@ Class {
 
 { #category : #'instance creation' }
 MCOrganizationDefinition class >> categories: anArray [
-	^ self instanceLike: (self new categories: anArray)
+	^ self new categories: anArray
 ]
 
 { #category : #comparing }
