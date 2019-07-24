@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'title'
 	],
-	#category : #'Tool-CriticBrowser-Tests-MockRule'
+	#category : #'Tool-CriticBrowser-Tests-Mocks'
 }
 
 { #category : #accessing }

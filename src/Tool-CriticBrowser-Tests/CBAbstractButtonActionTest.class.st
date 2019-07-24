@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'criticBrowserPresenter'
 	],
-	#category : #'Tool-CriticBrowser-Tests-Test-Button'
+	#category : #'Tool-CriticBrowser-Tests-Tests'
 }
 
 { #category : #testing }

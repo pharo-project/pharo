@@ -4,12 +4,12 @@ Class {
 	#instVars : [
 		'criticCache'
 	],
-	#category : #'Tool-CriticBrowser-Tests-Test-cache'
+	#category : #'Tool-CriticBrowser-Tests-Tests'
 }
 
 { #category : #running }
 CBCriticCacheTest >> setUp [
-	criticCache := MockCriticsCache new.
+	criticCache := MockCriticsCache new
 ]
 
 { #category : #adding }

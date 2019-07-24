@@ -15,7 +15,7 @@ Class {
 	#instVars : [
 		'criticBrowser'
 	],
-	#category : #'Tool-CriticBrowser-Tests-Test-Button'
+	#category : #'Tool-CriticBrowser-Tests-Tests'
 }
 
 { #category : #testing }
@@ -35,12 +35,10 @@ CBAbstractTest >> selectInstanceVariableCapitalizationRule [
 
 { #category : #setUp }
 CBAbstractTest >> selectRuleNamed: aSymbol [
-	| indexOfSelectedRule styleRules |
-	styleRules := (criticBrowser rulesPresenter roots at: 1) rules.
-
-	styleRules
+	| indexOfSelectedRule |
+	self styleRules
 		detect: [ :rule | rule class uniqueIdentifierName = aSymbol ]
-		ifFound: [ :ruleToSelect | indexOfSelectedRule := styleRules indexOf: ruleToSelect ].
+		ifFound: [ :ruleToSelect | indexOfSelectedRule := self styleRules indexOf: ruleToSelect ].
 
 	criticBrowser rulesPresenter selectPath: {1 . indexOfSelectedRule}
 ]
@@ -59,6 +57,11 @@ CBAbstractTest >> setUp [
 	rulesToTest := (ReRuleManager uniqueInstance allRules groupedBy: #group) at: #Style.
 	environment := RBPackageEnvironment packageName: 'Tool-CriticBrowser-TestEnvironment'.
 	criticBrowser := self criticBrowserClass openOnRules: rulesToTest environment: environment
+]
+
+{ #category : #setUp }
+CBAbstractTest >> styleRules [
+	^ (criticBrowser rulesPresenter roots at: 1) rules
 ]
 
 { #category : #running }

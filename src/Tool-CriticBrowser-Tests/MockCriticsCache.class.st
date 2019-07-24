@@ -1,7 +1,7 @@
 Class {
 	#name : #MockCriticsCache,
 	#superclass : #CriticsCache,
-	#category : #'Tool-CriticBrowser-Tests-MockCriticCache'
+	#category : #'Tool-CriticBrowser-Tests-Mocks'
 }
 
 { #category : #accessing }
