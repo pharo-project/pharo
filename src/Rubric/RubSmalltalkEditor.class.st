@@ -344,7 +344,7 @@ RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
 
 { #category : #'completion engine' }
 RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
-	"I'm a editor for Smalltalk, so, doo completion around"
+	"I'm a editor for Smalltalk, so, do completion around"
 	
 	self isCompletionEnabled ifFalse: [  ^aBlock value ].
 	
