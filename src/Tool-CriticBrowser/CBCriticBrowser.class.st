@@ -109,6 +109,8 @@ CBCriticBrowser class >> buildCommandsGroupWith: presenter forRoot: rootCommandG
 				register: (CBMarkAsTODOCriticCommand forSpec context: presenter);
 				register: (CBMarkAsWrongCriticCommand forSpec context: presenter);
 				register: (CBSenderCriticCommand forSpec context: presenter);
+				register: (CBUserOfTraitCommand forSpec context: presenter);
+				register: (CBReferenceToBehaviorCommand forSpec context: presenter);
 				yourself);
 		register:
 			((CmCommandGroup named: 'rule') asSpecGroup
