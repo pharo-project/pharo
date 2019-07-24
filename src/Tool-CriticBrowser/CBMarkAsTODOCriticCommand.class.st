@@ -11,7 +11,7 @@ Class {
 CBMarkAsTODOCriticCommand >> execute [
 	| aCriticBrowser |
 	aCriticBrowser := self context.
-	aCriticBrowser isSelectedCriticIsToDo
+	aCriticBrowser isSelectedCriticToDo
 		ifTrue: [ aCriticBrowser removeToDo: aCriticBrowser selectedCritic forRule: aCriticBrowser selectedRule ]
 		ifFalse: [ aCriticBrowser addToDo: aCriticBrowser selectedCritic forRule: aCriticBrowser selectedRule ].
 	aCriticBrowser updateTree

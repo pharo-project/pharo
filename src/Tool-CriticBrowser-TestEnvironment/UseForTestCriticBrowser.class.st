@@ -8,7 +8,7 @@ Class {
 	#classInstVars : [
 		'Test'
 	],
-	#category : #'Tool-CriticBrowser-Tests'
+	#category : #'Tool-CriticBrowser-TestEnvironment'
 }
 
 { #category : #accessing }

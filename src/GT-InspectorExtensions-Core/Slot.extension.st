@@ -1,8 +1,8 @@
 Extension { #name : #Slot }
 
 { #category : #'*GT-InspectorExtensions-Core' }
-Slot class >> gtInspectorAllSlotsn: composite [
- 	"This provides a list of all defined Shared Pools"
+Slot class >> gtInspectorAllSlotsIn: composite [
+ 	"This provides a list of all defined Slots"
  	<gtInspectorPresentationOrder: 20>
  	composite list 
  		title: 'All Defined Slots';

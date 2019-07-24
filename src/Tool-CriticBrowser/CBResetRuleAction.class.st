@@ -23,7 +23,7 @@ CBResetRuleAction class >> runOn: aCriticBrowser [
  and create a new configuration ?') ifFalse: [ ^ self ].
 
 	aCriticBrowser delete.
-	SelectPackageBrowser open
+	CBSelectPackageBrowser open
 ]
 
 { #category : #accessing }

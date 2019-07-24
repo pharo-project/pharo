@@ -23,7 +23,7 @@ I define
 			those 2 instance Variable will 
 "
 Class {
-	#name : #SelectBrowser,
+	#name : #CBSelectBrowser,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'selectedPresenter',
@@ -38,7 +38,7 @@ Class {
 }
 
 { #category : #specs }
-SelectBrowser class >> defaultSpec [
+CBSelectBrowser class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add:
 			(SpPanedLayout newHorizontal
@@ -58,18 +58,18 @@ SelectBrowser class >> defaultSpec [
 ]
 
 { #category : #actions }
-SelectBrowser >> addAllItems [
+CBSelectBrowser >> addAllItems [
 
 	self subclassResponsibility 
 ]
 
 { #category : #actions }
-SelectBrowser >> addItems [
+CBSelectBrowser >> addItems [
 	self subclassResponsibility
 ]
 
 { #category : #initialization }
-SelectBrowser >> initializeWidgets [
+CBSelectBrowser >> initializeWidgets [
 	addButton := self newButton.
 	addAllButton := self newButton.
 	removeButton := self newButton.
@@ -100,12 +100,12 @@ SelectBrowser >> initializeWidgets [
 ]
 
 { #category : #initialization }
-SelectBrowser >> initializeWindow: aWindowPresenter [
+CBSelectBrowser >> initializeWindow: aWindowPresenter [
 	aWindowPresenter initialExtent: 450 @ 360
 ]
 
 { #category : #accessing }
-SelectBrowser >> items: aCollection [
+CBSelectBrowser >> items: aCollection [
 	"Set the elements to be analysed"
 	
 	toSelectPresenter items: (self sort: aCollection)
@@ -113,22 +113,22 @@ SelectBrowser >> items: aCollection [
 ]
 
 { #category : #actions }
-SelectBrowser >> nextAction [
+CBSelectBrowser >> nextAction [
 	self subclassResponsibility
 
 ]
 
 { #category : #actions }
-SelectBrowser >> removeAllItems [
+CBSelectBrowser >> removeAllItems [
 	self subclassResponsibility
 ]
 
 { #category : #actions }
-SelectBrowser >> removeItems [
+CBSelectBrowser >> removeItems [
 	self subclassResponsibility
 ]
 
 { #category : #private }
-SelectBrowser >> sort: aCollection [
+CBSelectBrowser >> sort: aCollection [
 	^ aCollection sorted: #asString ascending
 ]

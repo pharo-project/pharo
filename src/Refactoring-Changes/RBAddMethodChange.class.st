@@ -142,7 +142,7 @@ RBAddMethodChange >> oldVersionTextToDisplay [
 
 { #category : #private }
 RBAddMethodChange >> parseTree [
-	^ RBParser parseMethod: source onError: [ :str :pos | ^ nil ]
+	^ RBParser parseMethod: self source onError: [ :str :pos | ^ nil ]
 ]
 
 { #category : #private }

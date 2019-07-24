@@ -149,8 +149,7 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	World cleanseOtherworldlySteppers.
 	Smalltalk organization removeEmptyCategories.
 	MCFileBasedRepository flushAllCaches.
-	MCMethodDefinition shutDown. 
-	MCDefinition clearInstances.
+	MCMethodDefinition shutDown.
 	ExternalDropHandler resetRegisteredHandlers.
 	Undeclared removeUnreferencedKeys.
 	Smalltalk globals flushClassNameCache.

@@ -10,8 +10,8 @@ I'm using to selectPakage to analyse
 
 "
 Class {
-	#name : #SelectPackageBrowser,
-	#superclass : #SelectBrowser,
+	#name : #CBSelectPackageBrowser,
+	#superclass : #CBSelectBrowser,
 	#instVars : [
 		'addTestCaseClassesCheckBox',
 		'removeTestPackageButton',
@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #specs }
-SelectPackageBrowser class >> defaultSpec [
+CBSelectPackageBrowser class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add:
 			(SpPanedLayout newHorizontal
@@ -47,7 +47,7 @@ SelectPackageBrowser class >> defaultSpec [
 ]
 
 { #category : #'instance creation' }
-SelectPackageBrowser class >> open [
+CBSelectPackageBrowser class >> open [
 	<script>
 	self new
 		items: RPackageOrganizer default packages;
@@ -55,13 +55,13 @@ SelectPackageBrowser class >> open [
 ]
 
 { #category : #private }
-SelectPackageBrowser >> addAllItems [
+CBSelectPackageBrowser >> addAllItems [
 	selectedPresenter items: (self sort: selectedPresenter items withAll: toSelectPresenter items).
 	toSelectPresenter items: #()
 ]
 
 { #category : #private }
-SelectPackageBrowser >> addItems [
+CBSelectPackageBrowser >> addItems [
 	toSelectPresenter selectedItems
 		ifNotNil: [ :items | 
 			selectedPresenter items: (self sort: selectedPresenter items withAll: items).
@@ -70,19 +70,19 @@ SelectPackageBrowser >> addItems [
 ]
 
 { #category : #accessing }
-SelectPackageBrowser >> addTestCaseClasses [
+CBSelectPackageBrowser >> addTestCaseClasses [
 	^ addTestCaseClassesCheckBox
 
 ]
 
 { #category : #initialization }
-SelectPackageBrowser >> initialize [
+CBSelectPackageBrowser >> initialize [
 	super initialize.
 	testPackagesToRemove := OrderedCollection new
 ]
 
 { #category : #initialization }
-SelectPackageBrowser >> initializeWidgets [
+CBSelectPackageBrowser >> initializeWidgets [
 	super initializeWidgets.
 	addTestCaseClassesCheckBox := self newCheckBox.
 	removeTestPackageButton := self newButton.
@@ -100,25 +100,25 @@ SelectPackageBrowser >> initializeWidgets [
 ]
 
 { #category : #initialization }
-SelectPackageBrowser >> initializeWindow: aWindowPresenter [
+CBSelectPackageBrowser >> initializeWindow: aWindowPresenter [
 	super initializeWindow: aWindowPresenter.
 	aWindowPresenter title: 'Select packages'
 ]
 
 { #category : #api }
-SelectPackageBrowser >> nextAction [
-	SelectRuleBrowser openWithEnvironment: (RBPackageEnvironment new packages: selectedPresenter items) removeTestCase: self addTestCaseClasses state.
+CBSelectPackageBrowser >> nextAction [
+	CBSelectRuleBrowser openWithEnvironment: (RBPackageEnvironment new packages: selectedPresenter items) removeTestCase: self addTestCaseClasses state.
 	self withWindowDo: #close
 ]
 
 { #category : #private }
-SelectPackageBrowser >> removeAllItems [
+CBSelectPackageBrowser >> removeAllItems [
 	toSelectPresenter items: (self sort: toSelectPresenter items withAll: selectedPresenter items).
 	selectedPresenter items: #()
 ]
 
 { #category : #private }
-SelectPackageBrowser >> removeItems [
+CBSelectPackageBrowser >> removeItems [
 	selectedPresenter selectedItems
 		ifNotNil: [ :items | 
 			toSelectPresenter items: (self sort: toSelectPresenter items withAll: items).
@@ -126,7 +126,7 @@ SelectPackageBrowser >> removeItems [
 ]
 
 { #category : #initialization }
-SelectPackageBrowser >> removeTestPackageButton [
+CBSelectPackageBrowser >> removeTestPackageButton [
 
 	^ removeTestPackageButton
 	
@@ -134,7 +134,7 @@ SelectPackageBrowser >> removeTestPackageButton [
 ]
 
 { #category : #initialization }
-SelectPackageBrowser >> removeTestPackages [
+CBSelectPackageBrowser >> removeTestPackages [
 	testPackagesToRemove
 		ifEmpty: [ removeTestPackageButton label: 'Add All Packages Tests'.
 			testPackagesToRemove := RPackageOrganizer default packages select: [ :package | '*Test*' match: package packageName ].
@@ -146,7 +146,7 @@ SelectPackageBrowser >> removeTestPackages [
 ]
 
 { #category : #initialization }
-SelectPackageBrowser >> setRemoveTestPackageButton [
+CBSelectPackageBrowser >> setRemoveTestPackageButton [
 
 	removeTestPackageButton
 		state: false;
@@ -156,7 +156,7 @@ SelectPackageBrowser >> setRemoveTestPackageButton [
 ]
 
 { #category : #private }
-SelectPackageBrowser >> sort: aCollection withAll: anotherCollection [
+CBSelectPackageBrowser >> sort: aCollection withAll: anotherCollection [
 	^ self
 		sort:
 			(aCollection asOrderedCollection
@@ -165,7 +165,7 @@ SelectPackageBrowser >> sort: aCollection withAll: anotherCollection [
 ]
 
 { #category : #private }
-SelectPackageBrowser >> sort: aCollection withoutAll: anotherCollection [
+CBSelectPackageBrowser >> sort: aCollection withoutAll: anotherCollection [
 	^ self
 		sort:
 			(aCollection asOrderedCollection

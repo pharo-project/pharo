@@ -549,7 +549,7 @@ RubAbstractTextArea >> completionEngine [
 RubAbstractTextArea >> completionPostAction [
 	
 	self hasCompletionEngine 
-		ifTrue: [ completionEngine uniqueInstance closeMenu ]
+		ifTrue: [ completionEngine closeMenu ]
 
 ]
 

@@ -9,8 +9,8 @@ I'm using to select rule for the criticBrowser*
 
 "
 Class {
-	#name : #SelectRuleBrowser,
-	#superclass : #SelectBrowser,
+	#name : #CBSelectRuleBrowser,
+	#superclass : #CBSelectBrowser,
 	#instVars : [
 		'environment',
 		'removeTestCase',
@@ -20,17 +20,17 @@ Class {
 }
 
 { #category : #accessing }
-SelectRuleBrowser class >> items [
+CBSelectRuleBrowser class >> items [
 	| rules rulesByGroup integrationRules |
 	rules := (ReRuleManager visibleRuleClasses collect: #new) sorted: #name ascending.
 	integrationRules := rules select: [ :r | PharoCriticRules pharoHardLintRules includes: r class ].
-	rulesByGroup := (rules groupedBy: #group) associations collect: [ :as | CriticBrowserRulesGroup named: as key rules: as value ].
+	rulesByGroup := (rules groupedBy: #group) associations collect: [ :as | CBRulesGroup named: as key rules: as value ].
 	rulesByGroup sort: #name ascending.
-	^ rulesByGroup copyWithFirst: (CriticBrowserRulesGroup named: 'Pharo integration rules' rules: integrationRules)
+	^ rulesByGroup copyWithFirst: (CBRulesGroup named: 'Pharo integration rules' rules: integrationRules)
 ]
 
 { #category : #'instance creation' }
-SelectRuleBrowser class >> openWithEnvironment: anEnvironment removeTestCase: aBoolean [
+CBSelectRuleBrowser class >> openWithEnvironment: anEnvironment removeTestCase: aBoolean [
 	self new
 		items: self items;
 		environment: anEnvironment;
@@ -39,30 +39,30 @@ SelectRuleBrowser class >> openWithEnvironment: anEnvironment removeTestCase: aB
 ]
 
 { #category : #private }
-SelectRuleBrowser >> addAllItems [
+CBSelectRuleBrowser >> addAllItems [
 	toSelectPresenter roots do: [ :group | selectedRules addAll: group rules ].
 	self updateTrees
 ]
 
 { #category : #private }
-SelectRuleBrowser >> addItems [
+CBSelectRuleBrowser >> addItems [
 	toSelectPresenter selectedItem ifNotNil: [ :item | item isComposite ifFalse: [ selectedRules add: item ] ifTrue: [ selectedRules addAll: item rules ] ].
 	self updateTrees
 ]
 
 { #category : #accessing }
-SelectRuleBrowser >> environment: anEnvironment [
+CBSelectRuleBrowser >> environment: anEnvironment [
 	environment := anEnvironment
 ]
 
 { #category : #initialization }
-SelectRuleBrowser >> initialize [
+CBSelectRuleBrowser >> initialize [
 	super initialize.
 	selectedRules := Set new
 ]
 
 { #category : #initialization }
-SelectRuleBrowser >> initializeWidgets [
+CBSelectRuleBrowser >> initializeWidgets [
 	super initializeWidgets.
 	toSelectPresenter := self newTreeTable.
 	selectedPresenter := self newTreeTable.
@@ -77,49 +77,49 @@ SelectRuleBrowser >> initializeWidgets [
 ]
 
 { #category : #initialization }
-SelectRuleBrowser >> initializeWindow: aWindowPresenter [
+CBSelectRuleBrowser >> initializeWindow: aWindowPresenter [
 	super initializeWindow: aWindowPresenter.
 	aWindowPresenter title: 'Select rules'
 ]
 
 { #category : #private }
-SelectRuleBrowser >> isSelected: aRule [
+CBSelectRuleBrowser >> isSelected: aRule [
 	"Check the rule identifier to not run twice the same rule"
 
 	^ selectedRules anySatisfy: [ :rule | rule class uniqueIdentifierName = aRule class uniqueIdentifierName ]
 ]
 
 { #category : #accessing }
-SelectRuleBrowser >> items: aCollection [
+CBSelectRuleBrowser >> items: aCollection [
 	toSelectPresenter roots: aCollection.
 	selectedPresenter roots: aCollection
 ]
 
 { #category : #api }
-SelectRuleBrowser >> nextAction [
+CBSelectRuleBrowser >> nextAction [
 	self withWindowDo: #close.
 
-	CriticWorkingConfiguration current
-		rule: selectedRules;
+	CBCriticWorkingConfiguration current
+		rules: selectedRules;
 		environment: environment;
 		removeTestCase: removeTestCase.
 
-	CBCriticBrowser openOnWorkingConfiguration: CriticWorkingConfiguration current
+	CBCriticBrowser openOnWorkingConfiguration: CBCriticWorkingConfiguration current
 ]
 
 { #category : #private }
-SelectRuleBrowser >> removeAllItems [
+CBSelectRuleBrowser >> removeAllItems [
 	selectedPresenter roots do: [ :item | selectedRules removeAllFoundIn: item ].
 	self updateTrees
 ]
 
 { #category : #private }
-SelectRuleBrowser >> removeItems [
+CBSelectRuleBrowser >> removeItems [
 	selectedPresenter selectedItem ifNotNil: [ :item | selectedRules removeAllFoundIn: (item isComposite ifFalse: [ {item} ] ifTrue: [ item rules ]) ].
 	self updateTrees
 ]
 
 { #category : #accessing }
-SelectRuleBrowser >> removeTestCase: aBoolean [
+CBSelectRuleBrowser >> removeTestCase: aBoolean [
 	removeTestCase := aBoolean
 ]

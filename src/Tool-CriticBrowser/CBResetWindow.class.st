@@ -2,7 +2,7 @@
 A ResetWindow is simple UI to reset the currently analysed model.
 "
 Class {
-	#name : #ResetWindow,
+	#name : #CBResetWindow,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'explanationPresenter'
@@ -11,28 +11,28 @@ Class {
 }
 
 { #category : #specs }
-ResetWindow class >> defaultSpec [
+CBResetWindow class >> defaultSpec [
 	^ SpBoxLayout newHorizontal
 		add: #explanationPresenter;
 		yourself
 ]
 
 { #category : #initialization }
-ResetWindow >> initializeDialogWindow: aDialogPresenter [
+CBResetWindow >> initializeDialogWindow: aDialogPresenter [
 	aDialogPresenter
 		addButton: 'Reset'
 			do: [ :presenter | 
-			SelectPackageBrowser open.
+			CBSelectPackageBrowser open.
 			presenter close ];
 		addButton: 'Use current'
 			do: [ :presenter | 
-			CBCriticBrowser openOnWorkingConfiguration: CriticWorkingConfiguration current.
+			CBCriticBrowser openOnWorkingConfiguration: CBCriticWorkingConfiguration current.
 			presenter close ];
 		addButton: 'Cancel' do: [ :presenter | presenter close ]
 ]
 
 { #category : #initialization }
-ResetWindow >> initializeWidgets [
+CBResetWindow >> initializeWidgets [
 	explanationPresenter := self newText.
 
 	explanationPresenter
@@ -42,6 +42,6 @@ Do you want to reset it or use the current configuration?';
 ]
 
 { #category : #initialization }
-ResetWindow >> initializeWindow: aWindowPresenter [
+CBResetWindow >> initializeWindow: aWindowPresenter [
 	aWindowPresenter title: 'Critic Browser'
 ]

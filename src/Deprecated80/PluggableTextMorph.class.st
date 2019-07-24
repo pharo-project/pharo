@@ -32,8 +32,13 @@ Class {
 		'ShowTextEditingState',
 		'StylingClass'
 	],
-	#category : #'Morphic-Widgets-Pluggable-Text'
+	#category : #Deprecated80
 }
+
+{ #category : #deprecation }
+PluggableTextMorph class >> isDeprecated [
+	^ true
+]
 
 { #category : #'instance creation' }
 PluggableTextMorph class >> on: anObject text: getTextSel accept: setTextSel [
@@ -218,6 +223,18 @@ PluggableTextMorph >> acceptTextInModelBasic [
 
 ]
 
+{ #category : #polymorph }
+PluggableTextMorph >> adoptPaneColor: paneColor [
+	"Pass on to the border too."
+	
+	super adoptPaneColor: paneColor.
+	paneColor ifNil: [^self].
+	self borderStyle baseColor: (self enabled ifTrue: [paneColor twiceDarker] ifFalse: [paneColor darker]).
+	self fillStyle: self fillStyleToUse.
+	self borderWidth > 0 
+		ifTrue: [self borderStyle: self borderStyleToUse]
+]
+
 { #category : #accessing }
 PluggableTextMorph >> alwaysAccept [
 	^ alwaysAccept ifNil: [false]
@@ -244,6 +261,20 @@ PluggableTextMorph >> appendEntry [
 	self selectInvisiblyFrom: textMorph asText size + 1 to: textMorph asText size.
 	self replaceSelectionWith: model contents asText.
 	self selectInvisiblyFrom: textMorph asText size + 1 to: textMorph asText size
+]
+
+{ #category : #polymorph }
+PluggableTextMorph >> appendText: aTextOrString [
+	"Append the given text to the receiver."
+
+	self handleEdit: [
+		self 
+			selectInvisiblyFrom: textMorph asText size + 1 to: textMorph asText size;
+			replaceSelectionWith: aTextOrString;
+			selectFrom: textMorph asText size + 1 to: textMorph asText size;
+			hasUnacceptedEdits: false;
+			scrollSelectionIntoView;
+			changed]
 ]
 
 { #category : #styling }
@@ -493,6 +524,16 @@ PluggableTextMorph >> drawOn: aCanvas [
 	self drawHighlightsOn: aCanvas
 ]
 
+{ #category : #drawing }
+PluggableTextMorph >> drawOnAthensCanvas: anAthensCanvas [
+	"Indicate unaccepted edits, conflicts etc."
+
+	super drawOnAthensCanvas: anAthensCanvas. 
+	self wantsFrameAdornments ifTrue: [
+		self theme drawTextAdornmentsFor: self on: anAthensCanvas asCanvasWrapper].
+	self drawHighlightsOn: anAthensCanvas asCanvasWrapper
+]
+
 { #category : #initialization }
 PluggableTextMorph >> editString: aString [ 
 	"Jam some text in.  This is treated as clean text by default."
@@ -573,6 +614,14 @@ PluggableTextMorph >> find [
 { #category : #'menu commands' }
 PluggableTextMorph >> findAgain [
 	self handleEdit: [textMorph editor findAgain]
+]
+
+{ #category : #polymorph }
+PluggableTextMorph >> focusBounds [
+	"Answer the bounds for drawing the focus indication
+	(when externalFocusForPluggableText is enabled)."
+
+	^self theme textFocusBoundsFor: self
 ]
 
 { #category : #accessing }
@@ -713,6 +762,13 @@ PluggableTextMorph >> hasEditingConflicts: aBoolean [
 	self changed
 ]
 
+{ #category : #polymorph }
+PluggableTextMorph >> hasKeyboardFocus [
+	"Answer whether the receiver has keyboard focus."
+
+	^super hasKeyboardFocus or: [(self textMorph ifNil: [^false]) hasKeyboardFocus]
+]
+
 { #category : #'dependents access' }
 PluggableTextMorph >> hasUnacceptedEdits [
 	"Return true if this view has unaccepted edits."
@@ -727,6 +783,13 @@ PluggableTextMorph >> hasUnacceptedEdits: aBoolean [
 	(model respondsTo: #hasUnacceptedEdits:)
 		ifTrue: [ model hasUnacceptedEdits: aBoolean ]
 		ifFalse: [ self basicHasUnacceptedEdits: aBoolean ]
+]
+
+{ #category : #polymorph }
+PluggableTextMorph >> hasValidText [
+	"Return true if the text is valid for acceptance."
+
+	^true
 ]
 
 { #category : #actions }
@@ -785,11 +848,30 @@ PluggableTextMorph >> keyStroke: evt [
 
 ]
 
+{ #category : #polymorph }
+PluggableTextMorph >> keyboardFocusChange: aBoolean [
+	"Pass on to text morph."
+	super keyboardFocusChange: aBoolean.
+	aBoolean ifTrue: [self textMorph takeKeyboardFocus]
+]
+
 { #category : #'event handling' }
 PluggableTextMorph >> keystrokeFromTextMorph: anEvent [
 	self eventHandler ifNotNil:
 		[^ self eventHandler keyStroke: anEvent fromMorph: self].
 	^ false
+]
+
+{ #category : #polymorph }
+PluggableTextMorph >> layoutBounds: aRectangle [
+	"Set the bounds for laying out children of the receiver.
+	Note: written so that #layoutBounds can be changed without touching this method"
+	
+	super layoutBounds: aRectangle.
+	textMorph ifNotNil:
+		[textMorph extent: (self innerExtent x)@self height].
+	self setScrollDeltas
+
 ]
 
 { #category : #'menu commands' }
@@ -805,6 +887,20 @@ PluggableTextMorph >> methodSourceContainingIt [
 { #category : #'menu commands' }
 PluggableTextMorph >> methodStringsContainingit [
 	self handleEdit: [textMorph editor methodStringsContainingit]
+]
+
+{ #category : #polymorph }
+PluggableTextMorph >> minHeight [
+	"Implemented here since extent: overriden."
+
+	^super minHeight max: 16
+]
+
+{ #category : #polymorph }
+PluggableTextMorph >> minWidth [
+	"Implemented here since extent: overriden."
+
+	^super minWidth max: 36
 ]
 
 { #category : #initialization }
@@ -841,6 +937,17 @@ PluggableTextMorph >> mouseLeave: event [
 	super mouseLeave: event.
 	self mouseOverForKeyboardFocus 
 		ifTrue:	[event hand releaseKeyboardFocus: textMorph]
+]
+
+{ #category : #polymorph }
+PluggableTextMorph >> navigationKey: event [
+	"Check for tab key activity and change focus as appropriate.
+	Must override here rather than in #tabKey: otherwise
+	the tab will get passed to the window and change the focus."
+
+	(event keyCharacter = Character tab and: [
+		(event anyModifierKeyPressed or: [event shiftPressed]) not]) ifTrue: [^false].
+	^super navigationKey: event
 ]
 
 { #category : #'interactive error protocol' }
@@ -968,6 +1075,15 @@ PluggableTextMorph >> redo [
 { #category : #'menu commands' }
 PluggableTextMorph >> referencesToIt [
 	self handleEdit: [textMorph editor referencesToIt]
+]
+
+{ #category : #scrolling }
+PluggableTextMorph >> registerScrollChanges: aSelector [
+
+	self announcer 
+		when: PaneScrolling 
+		send: aSelector
+		to: self model
 ]
 
 { #category : #settings }
@@ -1133,6 +1249,12 @@ PluggableTextMorph >> sendersOfIt [
 	self handleEdit: [textMorph editor sendersOfIt]
 ]
 
+{ #category : #actions }
+PluggableTextMorph >> setOptimalResizing [
+	self hResizing: #rigid.
+	self vResizing: #rigid
+]
+
 { #category : #'menu commands' }
 PluggableTextMorph >> setSearchString [
 	self handleEdit: [textMorph editor setSearchString]
@@ -1212,6 +1334,11 @@ PluggableTextMorph >> showTextEditingState [
 	^ self class showTextEditingState
 ]
 
+{ #category : #accessing }
+PluggableTextMorph >> smartSuggestions [
+	self handleEdit: [textMorph editor smartSuggestions]
+]
+
 { #category : #'drag and drop' }
 PluggableTextMorph >> startDrag: event [
 	| aTransferMorph itemMorph passenger |
@@ -1254,6 +1381,32 @@ PluggableTextMorph >> styler: aStyler [
 { #category : #accessing }
 PluggableTextMorph >> stylerClass [
 	^ self class stylingClass ifNil: [NullTextStyler]
+]
+
+{ #category : #accessing }
+PluggableTextMorph >> stylerStyled: styledCopyOfText [ 
+
+	textMorph contents runs: styledCopyOfText runs.
+	textMorph updateFromParagraph.
+	selectionInterval
+		ifNotNil: [textMorph editor selectInvisiblyFrom: selectionInterval first to: selectionInterval last;
+				 storeSelectionInParagraph;
+				 setEmphasisHere].
+	textMorph editor blinkParen.
+	self scrollSelectionIntoView
+]
+
+{ #category : #accessing }
+PluggableTextMorph >> stylerStyledInBackground: styledCopyOfText [ 
+	textMorph contents string = styledCopyOfText string
+		ifTrue: [self stylerStyled: styledCopyOfText]
+]
+
+{ #category : #polymorph }
+PluggableTextMorph >> takesKeyboardFocus [
+	"Answer whether the receiver can normally take keyboard focus."
+
+	^true
 ]
 
 { #category : #'menu commands' }
@@ -1315,6 +1468,12 @@ PluggableTextMorph >> textMorphClass [
 	"Answer the class used to create the receiver's textMorph"
 	
 	^TextMorphForEditView 
+]
+
+{ #category : #polymorph }
+PluggableTextMorph >> themeChanged [
+	self color: self defaultColor.
+	super themeChanged
 ]
 
 { #category : #'editor access' }
@@ -1407,6 +1566,18 @@ PluggableTextMorph >> wantsFrameAdornments [
 { #category : #drawing }
 PluggableTextMorph >> wantsFrameAdornments: aBoolean [ 
 	self setProperty: #wantsFrameAdornments toValue: aBoolean
+]
+
+{ #category : #polymorph }
+PluggableTextMorph >> wantsKeyboardFocus [
+	"Answer whether the receiver would like keyboard focus
+	in the general case (mouse action normally). Even if disabled
+	we allow for text morphs since can potentially copy text."
+
+	^self takesKeyboardFocus and: [
+		self visible and: [
+			self enabled or: [self valueOfProperty: #wantsKeyboardFocusWhenDisabled ifAbsent: [true]]]]
+
 ]
 
 { #category : #actions }

@@ -3,7 +3,7 @@ Same as CriticsCache but with tweaks for Renraku model
 "
 Class {
 	#name : #ReCriticsCache,
-	#superclass : #CriticsCache,
+	#superclass : #CBCriticsCache,
 	#category : #'Renraku-CriticBrowser'
 }
 

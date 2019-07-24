@@ -171,7 +171,7 @@ CBCriticBrowser class >> icon [
 
 { #category : #'instance creation' }
 CBCriticBrowser class >> openOnCurrentWorkingConfiguration [
-	CriticWorkingConfiguration exists ifTrue: [ ResetWindow new openModalWithSpec ] ifFalse: [ SelectPackageBrowser open ]
+	CBCriticWorkingConfiguration exists ifTrue: [ CBResetWindow new openModalWithSpec ] ifFalse: [ CBSelectPackageBrowser open ]
 ]
 
 { #category : #'instance creation' }
@@ -183,7 +183,7 @@ CBCriticBrowser class >> openOnRules: aCollectionOfRules environment: anEnvironm
 CBCriticBrowser class >> openOnRules: aRules environment: anEnvironment removingTestCase: aBoolean [
 	| cbr |
 	cbr := self new
-		rules: aRules;
+		rules: aRules asArray;
 		environment: anEnvironment;
 		removeTestCase: aBoolean;
 		yourself.
@@ -406,13 +406,10 @@ CBCriticBrowser >> handleMethodRemoved: anAnnouncement [
 { #category : #utilities }
 CBCriticBrowser >> iconFor: anItem [
 	"It is weird than in a branch of the condition there is no icon returned"
-	^ (criticCache isFalsePositive: anItem forRule: self rule)
-		ifFalse: [ self
-				iconNamed:
-					((criticCache isToDo: anItem forRule: self rule)
-						ifTrue: [ #repair ]
-						ifFalse: [ #error ]) ]
-		ifTrue: [ self iconNamed:  #changeRemove ]
+
+	^ self
+		iconNamed:
+			((criticCache isFalsePositive: anItem forRule: self selectedRule) ifFalse: [ (criticCache isToDo: anItem forRule: self selectedRule) ifTrue: [ #repair ] ifFalse: [ #error ] ] ifTrue: [ #changeRemove ])
 ]
 
 { #category : #initialization }
@@ -429,11 +426,8 @@ CBCriticBrowser >> initializeCriticErrorPresenter [
 	noteBookPageCriticErrorPresenter
 		acceptBlock: [ :text | 
 			| selectedItem |
-			selectedItem := self criticsPresenter selection selectedItem
-				sourceAnchor entity.
-			selectedItem isCompiledMethod
-				ifTrue: [ selectedItem methodClass compile: text ]
-				ifFalse: [ Smalltalk compiler evaluate: text ]	"and: [ rule isTransformationRule not ]" ]
+			selectedItem := self selectedCritic entity.
+			selectedItem isCompiledMethod ifTrue: [ selectedItem methodClass compile: text ] ifFalse: [ self class compiler evaluate: text ] ]
 ]
 
 { #category : #'initialize-widgets' }
@@ -510,15 +504,15 @@ CBCriticBrowser >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : #testing }
-CBCriticBrowser >> isSelectedCriticIsToDo [
-	^ criticCache isToDo: self selectedCritic forRule: self selectedRule
-]
-
-{ #category : #testing }
-CBCriticBrowser >> isSelectedRuleIsFalsePositive [
+CBCriticBrowser >> isSelectedCriticFalsePositive [
 	^ criticCache
 		isFalsePositive: self selectedCritic
 		forRule: self selectedRule
+]
+
+{ #category : #testing }
+CBCriticBrowser >> isSelectedCriticToDo [
+	^ criticCache isToDo: self selectedCritic forRule: self selectedRule
 ]
 
 { #category : #utilities }
@@ -528,7 +522,7 @@ CBCriticBrowser >> logInManifest [
 
 { #category : #utilities }
 CBCriticBrowser >> markAsFalsePositiveForCurrentRule: aCritic [
-	criticCache addFalsePositive: aCritic forRule: self rule
+	criticCache addFalsePositive: aCritic forRule: self selectedRule
 ]
 
 { #category : #'system annoucements-Action' }
@@ -652,19 +646,9 @@ CBCriticBrowser >> removeToDo: aCritic forRule: aRule [
 	criticCache removeToDo: aCritic forRule: aRule
 ]
 
-{ #category : #utilities }
-CBCriticBrowser >> rule [
-	^ self rulesPresenter selection selectedItem
-]
-
 { #category : #accessing }
 CBCriticBrowser >> rules: rulesCollection [
-	self rulesPresenter roots: ((
-		(rulesCollection groupedBy: #group) associations collect: [ :as |
-			CriticBrowserRulesGroup
-				named: as key
-				rules: as value ])
-					sorted: [ :a :b | a name < b name ])
+	self rulesPresenter roots: (((rulesCollection groupedBy: #group) associations collect: [ :as | CBRulesGroup named: as key rules: as value ]) sorted: #name ascending)
 ]
 
 { #category : #accessing }
