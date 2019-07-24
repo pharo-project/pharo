@@ -7,7 +7,8 @@ Class {
 	#name : #SystemAnnouncement,
 	#superclass : #Announcement,
 	#instVars : [
-		'timeStamp'
+		'timeStamp',
+		'properties'
 	],
 	#category : #'System-Announcements-System-Base'
 }
@@ -16,6 +17,25 @@ Class {
 SystemAnnouncement >> initialize [
 	super initialize.
 	self setTimeStamp.
+]
+
+{ #category : #properties }
+SystemAnnouncement >> properties [
+
+	^ properties ifNil: [ properties := Dictionary new ]
+]
+
+{ #category : #properties }
+SystemAnnouncement >> propertyAt: aString ifPresent: aBlockClosure [ 
+	
+	properties ifNil: [ ^ self ].
+	^ properties at: aString ifPresent: aBlockClosure
+]
+
+{ #category : #properties }
+SystemAnnouncement >> propertyAt: aKey put: aValue [ 
+	
+	self properties at: aKey put: aValue
 ]
 
 { #category : #private }
