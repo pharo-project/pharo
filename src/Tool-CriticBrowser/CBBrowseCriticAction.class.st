@@ -6,7 +6,7 @@ my action is to browse the selectedItem in CriticsPresenter
 Class {
 	#name : #CBBrowseCriticAction,
 	#superclass : #CBAbstractCriticAction,
-	#category : #'Tool-CriticBrowser-utilities-buttons'
+	#category : #'Tool-CriticBrowser-Actions'
 }
 
 { #category : #accessing }
@@ -14,16 +14,9 @@ CBBrowseCriticAction class >> groupPriority [
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 CBBrowseCriticAction class >> runOn: aCriticBrowser [
-	aCriticBrowser selectedCritic
-		ifNotNil: [ :element | 
-			| entity |
-			entity := element sourceAnchor entity.
-			entity isBehavior
-				ifTrue: [ entity instanceSide browse ]
-				ifFalse: [ entity browse ] ]
-		ifNil: [ self inform: 'No critic selected' ]
+	aCriticBrowser selectedCritic ifNotNil: [ :element | element entity browse ] ifNil: [ self inform: 'No critic selected' ]
 ]
 
 { #category : #accessing }

@@ -24,6 +24,6 @@ ClyOpenCriticBrowserCommand >> defaultMenuItemName [
 ClyOpenCriticBrowserCommand >> execute [
 
 	CBCriticBrowser
-		openOnRule: (ReRuleManager uniqueInstance allRules) 
-		onEnvironment: (RBPackageEnvironment packages: packages)
+		openOnRules: (ReRuleManager uniqueInstance allRules) 
+		environment: (RBPackageEnvironment packages: packages)
 ]

@@ -132,6 +132,11 @@ SpMorphicTreeTableAdapter >> newDataSource [
 		yourself
 ]
 
+{ #category : #update }
+SpMorphicTreeTableAdapter >> refreshTree [
+	self widget dataSource: self newDataSource
+]
+
 { #category : #emulating }
 SpMorphicTreeTableAdapter >> rightClicked [
 	| evt |

@@ -1,24 +1,20 @@
-"
-A simple selection browser.
-"
 Class {
 	#name : #SelectBrowser,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'addAllButtonPresenter',
-		'addButtonPresenter',
-		'nextButtonPresenter',
-		'removeAllButtonPresenter',
-		'removeButtonPresenter',
 		'selectedPresenter',
-		'toSelectPresenter'
+		'toSelectPresenter',
+		'addAllButton',
+		'addButton',
+		'nextButton',
+		'removeAllButton',
+		'removeButton'
 	],
 	#category : #'Tool-CriticBrowser-Parts'
 }
 
 { #category : #specs }
 SelectBrowser class >> defaultSpec [
-	<spec>
 	^ SpBoxLayout newVertical
 		add:
 			(SpPanedLayout newHorizontal
@@ -27,58 +23,61 @@ SelectBrowser class >> defaultSpec [
 				yourself);
 		add:
 			(SpBoxLayout newHorizontal
-				add: #addButtonPresenter;
-				add: #addAllButtonPresenter;
-				add: #removeButtonPresenter;
-				add: #removeAllButtonPresenter;
-				add: #nextButtonPresenter;
+				add: #addButton;
+				add: #addAllButton;
+				add: #removeButton;
+				add: #removeAllButton;
+				add: #nextButton;
 				yourself)
-			withConstraints: [ :contraint | contraint height: 25 ] ;
+			withConstraints: [ :contraint | contraint height: 25 ];
 		yourself
 ]
 
-{ #category : #accessing }
-SelectBrowser >> addAllButtonModel [
-	^ addAllButtonPresenter
-]
-
-{ #category : #private }
+{ #category : #actions }
 SelectBrowser >> addAllItems [
 
 	self subclassResponsibility 
 ]
 
-{ #category : #accessing }
-SelectBrowser >> addButtonModel [
-	^ addButtonPresenter
-]
-
-{ #category : #private }
+{ #category : #actions }
 SelectBrowser >> addItems [
-	^ self subclassResponsibility
-]
-
-{ #category : #api }
-SelectBrowser >> initialExtent [
-	^   450@360
+	self subclassResponsibility
 ]
 
 { #category : #initialization }
 SelectBrowser >> initializeWidgets [
+	addButton := self newButton.
+	addAllButton := self newButton.
+	removeButton := self newButton.
+	removeAllButton := self newButton.
+	nextButton := self newButton.
 
-	addButtonPresenter := self newButton.
-	addAllButtonPresenter := self newButton. 
-	removeButtonPresenter := self newButton.
-	removeAllButtonPresenter := self newButton.
-	nextButtonPresenter := self newButton.
-		
-	self setFocusOrder.
+	addButton
+		label: 'Add';
+		action: [ self addItems ].
+	addAllButton
+		label: 'Add all';
+		action: [ self addAllItems ].
+	removeButton
+		label: 'Remove';
+		action: [ self removeItems ].
+	removeAllButton
+		label: 'Remove all';
+		action: [ self removeAllItems ].
+	nextButton
+		label: 'Next';
+		action: [ self nextAction ].
 
-	self setAddButtonModel. 
-	self setAddAllButtonModel. 
-	self setRemoveButtonModel. 
-	self setRemoveAllButtonModel. 
-	self setNextButtonModel. 
+	self focusOrder
+		add: addButton;
+		add: addAllButton;
+		add: removeButton;
+		add: removeAllButton
+]
+
+{ #category : #initialization }
+SelectBrowser >> initializeWindow: aWindowPresenter [
+	aWindowPresenter initialExtent: 450 @ 360
 ]
 
 { #category : #accessing }
@@ -89,114 +88,23 @@ SelectBrowser >> items: aCollection [
 
 ]
 
-{ #category : #api }
+{ #category : #actions }
 SelectBrowser >> nextAction [
 	self subclassResponsibility
 
 ]
 
-{ #category : #accessing }
-SelectBrowser >> nextButtonModel [
-	^ nextButtonPresenter
-]
-
-{ #category : #accessing }
-SelectBrowser >> removeAllButtonModel [
-	^ removeAllButtonPresenter
-]
-
-{ #category : #private }
+{ #category : #actions }
 SelectBrowser >> removeAllItems [
-	^ self subclassResponsibility
+	self subclassResponsibility
 ]
 
-{ #category : #accessing }
-SelectBrowser >> removeButtonModel [
-	^ removeButtonPresenter
-]
-
-{ #category : #private }
+{ #category : #actions }
 SelectBrowser >> removeItems [
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-SelectBrowser >> selectedModel [
-	^ selectedPresenter
-]
-
-{ #category : #initialization }
-SelectBrowser >> setAddAllButtonModel [
-	
-	addAllButtonPresenter
-		state: false;
-		label: 'Add All';
-		action: [ self addAllItems]
-	
-
-]
-
-{ #category : #initialization }
-SelectBrowser >> setAddButtonModel [
-	
-	addButtonPresenter
-		state: false;
-		label: 'Add';
-		action: [ self addItems ].
-	
-
-]
-
-{ #category : #initialization }
-SelectBrowser >> setFocusOrder [
-
-	self focusOrder
-		add: addButtonPresenter;
-		add: addAllButtonPresenter;
-		add: removeButtonPresenter;
-		add: removeAllButtonPresenter.
-		
-]
-
-{ #category : #initialization }
-SelectBrowser >> setNextButtonModel [
-	
-	nextButtonPresenter
-		state: false;
-		label: 'Next';
-		action: [ self  nextAction ].
-	
-
-]
-
-{ #category : #initialization }
-SelectBrowser >> setRemoveAllButtonModel [
-	
-	removeAllButtonPresenter
-		state: false;
-		label: 'Remove All';
-		action: [ self  removeAllItems ].
-	
-
-]
-
-{ #category : #initialization }
-SelectBrowser >> setRemoveButtonModel [
-	
-	removeButtonPresenter
-		state: false;
-		label: 'Remove';
-		action: [ self removeItems ].
-	
-
+	self subclassResponsibility
 ]
 
 { #category : #private }
 SelectBrowser >> sort: aCollection [
-	^ aCollection asOrderedCollection sort: [:e1 :e2 | (e1 asString) < (e2 asString)].
-]
-
-{ #category : #accessing }
-SelectBrowser >> toSelectModel [
-	^ toSelectPresenter
+	^ aCollection sorted: #asString ascending
 ]

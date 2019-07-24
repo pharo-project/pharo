@@ -20,7 +20,7 @@ SpAbstractTreeSingleSelectionMode class >> on: aPresenter [
 
 { #category : #selection }
 SpAbstractTreeSingleSelectionMode >> clearSelection [
-
+	selection ifEmpty: [ ^ self ].
 	selection := #()
 ]
 

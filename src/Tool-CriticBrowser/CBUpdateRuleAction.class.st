@@ -6,7 +6,7 @@ my action is :
 Class {
 	#name : #CBUpdateRuleAction,
 	#superclass : #CBAbstractRuleAction,
-	#category : #'Tool-CriticBrowser-utilities-buttons'
+	#category : #'Tool-CriticBrowser-Actions'
 }
 
 { #category : #accessing }

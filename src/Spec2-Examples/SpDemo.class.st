@@ -131,7 +131,7 @@ SpDemo >> initializeWidgets [
 					item
 						name: 'Browse presenter';
 						icon: (self iconNamed: #smallHelp);
-						action: [ list selectedItem new pageClass browse ] ];
+						action: [ list selection selectedItem new pageClass browse ] ];
 				yourself).
 
 	self focusOrder

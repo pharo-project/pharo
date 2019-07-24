@@ -1,20 +1,16 @@
-"
-To select packages.
-"
 Class {
 	#name : #SelectPackageBrowser,
 	#superclass : #SelectBrowser,
 	#instVars : [
-		'testPackage',
 		'addTestCaseClassesCheckBox',
-		'removeTestPackageButton'
+		'removeTestPackageButton',
+		'testPackagesToRemove'
 	],
 	#category : #'Tool-CriticBrowser-Parts'
 }
 
 { #category : #specs }
 SelectPackageBrowser class >> defaultSpec [
-	<spec>
 	^ SpBoxLayout newVertical
 		add:
 			(SpPanedLayout newHorizontal
@@ -29,11 +25,11 @@ SelectPackageBrowser class >> defaultSpec [
 			withConstraints: [ :contraint | contraint height: 25 ];
 		add:
 			(SpBoxLayout newHorizontal
-				add: #addButtonPresenter;
-				add: #addAllButtonPresenter;
-				add: #removeButtonPresenter;
-				add: #removeAllButtonPresenter;
-				add: #nextButtonPresenter;
+				add: #addButton;
+				add: #addAllButton;
+				add: #removeButton;
+				add: #removeAllButton;
+				add: #nextButton;
 				yourself)
 			withConstraints: [ :contraint | contraint height: 25 ];
 		yourself
@@ -42,37 +38,24 @@ SelectPackageBrowser class >> defaultSpec [
 { #category : #'instance creation' }
 SelectPackageBrowser class >> open [
 	<script>
-	self new items: RPackageOrganizer default packages;
-		openWithSpec 
-]
-
-{ #category : #specs }
-SelectPackageBrowser class >> title [
-	^ 'Select packages'
+	self new
+		items: RPackageOrganizer default packages;
+		openWithSpec
 ]
 
 { #category : #private }
 SelectPackageBrowser >> addAllItems [
-	| tmp |
-	tmp := self
-		sort: selectedPresenter model items
-		withAll: toSelectPresenter model items.
-	selectedPresenter items: tmp.
-	toSelectPresenter items: #().
-	toSelectPresenter updateList.
-	selectedPresenter updateList
+	selectedPresenter items: (self sort: selectedPresenter items withAll: toSelectPresenter items).
+	toSelectPresenter items: #()
 ]
 
 { #category : #private }
 SelectPackageBrowser >> addItems [
 	toSelectPresenter selectedItems
 		ifNotNil: [ :items | 
-			selectedPresenter
-				items: (self sort: selectedPresenter model items withAll: items).
-			toSelectPresenter
-				items: (self sort: toSelectPresenter model items withoutAll: items) ].
-	toSelectPresenter updateList.
-	selectedPresenter updateList
+			selectedPresenter items: (self sort: selectedPresenter items withAll: items).
+			toSelectPresenter items: (self sort: toSelectPresenter items withoutAll: items) ].
+	toSelectPresenter unselectAll
 ]
 
 { #category : #accessing }
@@ -83,10 +66,8 @@ SelectPackageBrowser >> addTestCaseClasses [
 
 { #category : #initialization }
 SelectPackageBrowser >> initialize [
-
-	super initialize.	
-	testPackage := OrderedCollection new.
-
+	super initialize.
+	testPackagesToRemove := OrderedCollection new
 ]
 
 { #category : #initialization }
@@ -96,67 +77,41 @@ SelectPackageBrowser >> initializeWidgets [
 	removeTestPackageButton := self newButton.
 	toSelectPresenter := self newList.
 	selectedPresenter := self newList.
+	
 	toSelectPresenter displayBlock: [ :package | package packageName ].
 	selectedPresenter displayBlock: [ :package | package packageName ].
 	selectedPresenter beMultipleSelection.
 	toSelectPresenter beMultipleSelection.
 	self setRemoveTestPackageButton.
-	addTestCaseClassesCheckBox label: 'remove all TestCase Classes'.
-	addTestCaseClassesCheckBox state: true
+	addTestCaseClassesCheckBox
+		label: 'Remove TestCases';
+		state: true
+]
+
+{ #category : #initialization }
+SelectPackageBrowser >> initializeWindow: aWindowPresenter [
+	super initializeWindow: aWindowPresenter.
+	aWindowPresenter title: 'Select packages'
 ]
 
 { #category : #api }
 SelectPackageBrowser >> nextAction [
-	| env packages |
-	packages := selectedPresenter model items.
-	env := RBPackageEnvironment new packages: packages.
-	SelectRuleBrowser
-		openWithEnvironment: env
-		removeTestCase: self addTestCaseClasses state.
-	self delete
+	SelectRuleBrowser openWithEnvironment: (RBPackageEnvironment new packages: selectedPresenter items) removeTestCase: self addTestCaseClasses state.
+	self withWindowDo: #close
 ]
 
 { #category : #private }
 SelectPackageBrowser >> removeAllItems [
-	| tmp |
-	tmp := self
-		sort: toSelectPresenter model items
-		withAll: selectedPresenter model items.
-	toSelectPresenter items: tmp.
-	selectedPresenter items: #().
-	toSelectPresenter updateList.
-	selectedPresenter updateList
+	toSelectPresenter items: (self sort: toSelectPresenter items withAll: selectedPresenter items).
+	selectedPresenter items: #()
 ]
 
 { #category : #private }
 SelectPackageBrowser >> removeItems [
 	selectedPresenter selectedItems
 		ifNotNil: [ :items | 
-			toSelectPresenter
-				items: (self sort: toSelectPresenter model items withAll: items).
-			selectedPresenter
-				items: (self sort: selectedPresenter model items withoutAll: items) ].
-	toSelectPresenter updateList.
-	selectedPresenter updateList
-]
-
-{ #category : #initialization }
-SelectPackageBrowser >> removeTestPackage [
-
-	| matchText  |
-	testPackage isEmpty
-		ifTrue: [
-			removeTestPackageButton label: 'Add All Packages Tests'.
-			matchText := '*Test*'.
-			testPackage :=MCWorkingCopy allManagers select: [ :package | matchText match:  package packageName ].
-			selectedPresenter items: (self sort:(selectedPresenter listItems \ testPackage)).
-			toSelectPresenter items: (self sort:(toSelectPresenter  listItems \ testPackage)) ]
-		ifFalse: [
-			removeTestPackageButton label: 'Remove All Packages Tests'.		
-			toSelectPresenter items: (self sort: (toSelectPresenter listItems asOrderedCollection addAll: testPackage; yourself)).
-			testPackage := OrderedCollection new ]. 
-	toSelectPresenter updateList.
-	selectedPresenter updateList  	
+			toSelectPresenter items: (self sort: toSelectPresenter items withAll: items).
+			selectedPresenter items: (self sort: selectedPresenter items withoutAll: items) ]
 ]
 
 { #category : #initialization }
@@ -168,27 +123,41 @@ SelectPackageBrowser >> removeTestPackageButton [
 ]
 
 { #category : #initialization }
+SelectPackageBrowser >> removeTestPackages [
+	testPackagesToRemove
+		ifEmpty: [ removeTestPackageButton label: 'Add All Packages Tests'.
+			testPackagesToRemove := RPackageOrganizer default packages select: [ :package | '*Test*' match: package packageName ].
+			selectedPresenter items: (self sort: selectedPresenter items withoutAll: testPackagesToRemove).
+			toSelectPresenter items: (self sort: toSelectPresenter items withoutAll: testPackagesToRemove) ]
+		ifNotEmpty: [ removeTestPackageButton label: 'Remove All Packages Tests'.
+			toSelectPresenter items: (self sort: toSelectPresenter items withAll: testPackagesToRemove).
+			testPackagesToRemove := OrderedCollection new ]
+]
+
+{ #category : #initialization }
 SelectPackageBrowser >> setRemoveTestPackageButton [
 
 	removeTestPackageButton
 		state: false;
 		label: 'Remove All Packages Tests';
-		action: [ self  removeTestPackage ]
+		action: [ self  removeTestPackages ]
 	
 ]
 
 { #category : #private }
 SelectPackageBrowser >> sort: aCollection withAll: anotherCollection [
-	^ self sort: 
-		(aCollection asOrderedCollection 
-			addAll: (anotherCollection);
-			yourself)
+	^ self
+		sort:
+			(aCollection asOrderedCollection
+				addAll: anotherCollection;
+				yourself)
 ]
 
 { #category : #private }
 SelectPackageBrowser >> sort: aCollection withoutAll: anotherCollection [
-	^ self sort: 
-		(aCollection asOrderedCollection 
-			removeAll: (anotherCollection);
-			yourself)
+	^ self
+		sort:
+			(aCollection asOrderedCollection
+				removeAllFoundIn: anotherCollection;
+				yourself)
 ]

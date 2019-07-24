@@ -6,7 +6,7 @@ my action is :
 Class {
 	#name : #CBFalsePositiveCriticAction,
 	#superclass : #CBAbstractCriticAction,
-	#category : #'Tool-CriticBrowser-utilities-buttons'
+	#category : #'Tool-CriticBrowser-Actions'
 }
 
 { #category : #accessing }
@@ -14,7 +14,7 @@ CBFalsePositiveCriticAction class >> groupPriority [
 	^ 20
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 CBFalsePositiveCriticAction class >> runOn: aCriticBrowser [
 	aCriticBrowser selectedCritic
 		ifNotNil: [ :item | 

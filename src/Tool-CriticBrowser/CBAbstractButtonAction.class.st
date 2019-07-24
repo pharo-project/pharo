@@ -11,7 +11,7 @@ if you want to creat a new button just creat a class inherits from CBAbstractCri
 Class {
 	#name : #CBAbstractButtonAction,
 	#superclass : #Object,
-	#category : #'Tool-CriticBrowser-utilities-buttons'
+	#category : #'Tool-CriticBrowser-Actions'
 }
 
 { #category : #actions }

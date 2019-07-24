@@ -14,7 +14,7 @@ my subclass define:
 Class {
 	#name : #CBAbstractRuleAction,
 	#superclass : #CBAbstractButtonAction,
-	#category : #'Tool-CriticBrowser-utilities-buttons'
+	#category : #'Tool-CriticBrowser-Actions'
 }
 
 { #category : #actions }

@@ -14,7 +14,7 @@ my subclass define:
 Class {
 	#name : #CBAbstractCriticAction,
 	#superclass : #CBAbstractButtonAction,
-	#category : #'Tool-CriticBrowser-utilities-buttons'
+	#category : #'Tool-CriticBrowser-Actions'
 }
 
 { #category : #actions }
@@ -22,17 +22,7 @@ CBAbstractCriticAction class >> actions [
 	^ self allSubclasses sorted: #groupPriority ascending 
 ]
 
-{ #category : #accessing }
-CBAbstractCriticAction class >> groupPriority [
-	^ self subclassResponsibility 
-]
-
 { #category : #testing }
 CBAbstractCriticAction class >> isAbstract [
 	^ self = CBAbstractCriticAction
-]
-
-{ #category : #accessing }
-CBAbstractCriticAction class >> runOn: aCriticBrowser [
-	^ self subclassResponsibility
 ]

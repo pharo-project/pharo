@@ -6,7 +6,7 @@ my actions is to:
 Class {
 	#name : #CBResetRuleAction,
 	#superclass : #CBAbstractRuleAction,
-	#category : #'Tool-CriticBrowser-utilities-buttons'
+	#category : #'Tool-CriticBrowser-Actions'
 }
 
 { #category : #accessing }
@@ -16,7 +16,7 @@ CBResetRuleAction class >> groupPriority [
 
 { #category : #testing }
 CBResetRuleAction class >> runOn: aCriticBrowser [
-	self flag: #mustDie.
+	self flag: #pharoFixMe.	"In the long term the UI manager should not be used in Spec application."
 	(UIManager default
 		confirm:
 			'Do you want to delete the current configuration
