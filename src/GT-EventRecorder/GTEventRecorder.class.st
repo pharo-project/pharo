@@ -66,7 +66,7 @@ GTEventRecorder class >> registerInterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance
 		unsubscribe: uniqueInstance.
 	SystemAnnouncer uniqueInstance weak 
-			when: PrivacyChangedAnnoucement
+			when: PrivacyChangedAnnouncement
 			send: #privacyChanged 
 			to: uniqueInstance
 ]

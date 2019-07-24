@@ -445,8 +445,11 @@ RBParser >> parseErrorNode: aMessageString [
 	"the error at the end means in some cases that the start of the error is before"
 	aMessageString = ''')'' expected'
 		ifTrue: [ errorPosition := source findLastOccurrenceOfString: '(' startingAt: 1 ].
+	aMessageString = '''|'' expected'
+		ifTrue: [ errorPosition := source findLastOccurrenceOfString: '|' startingAt: 1 ].
+	(errorPosition = 0) ifTrue: [ errorPosition := self errorPosition].
 	sourceString := source copyFrom: errorPosition to: source size.
-	^ RBParseErrorNode errorMessage: aMessageString value: sourceString at: self errorPosition
+	^ RBParseErrorNode errorMessage: aMessageString value: sourceString at: errorPosition
 ]
 
 { #category : #accessing }

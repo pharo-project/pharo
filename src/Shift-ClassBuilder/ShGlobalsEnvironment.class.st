@@ -19,10 +19,10 @@ ShGlobalsEnvironment >> bindingAt: aString [
 
 { #category : #accessing }
 ShGlobalsEnvironment >> classNamed: aName [
-	^ environment classNamed:aName.
+	^ environment classNamed:aName
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ShGlobalsEnvironment >> classNamed: aString ifAbsent: aBlockClosure [ 
 	
 	^ environment at: aString ifAbsent: aBlockClosure
