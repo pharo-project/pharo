@@ -39,6 +39,33 @@ ReleaseTest >> actualProcesses [
 	^ self class actualProcesses
 ]
 
+{ #category : #helpers }
+ReleaseTest >> assertValidLintRule: aLintRule [ 
+	self assertValidLintRule: aLintRule withExceptions: {  }
+]
+
+{ #category : #helpers }
+ReleaseTest >> assertValidLintRule: aLintRule withExceptions: someNames [
+	| runner results |
+	runner := ReSmalllintChecker new.
+	runner
+		rule: {aLintRule};
+		environment: RBBrowserEnvironment default;
+		run.
+
+	results := (runner criticsOf: aLintRule) reject: [ :critique | someNames includes: critique entity name ].
+
+	self
+		assert: results isEmpty
+		description: [ String
+				streamContents: [ :s | 
+					s
+						<< aLintRule rationale;
+						cr;
+						<< ' Violations: ';
+						print: results ] ]
+]
+
 { #category : #testing }
 ReleaseTest >> hasStartUpOrShutDownMethod: aClass [
 	| keySelectors |
@@ -65,6 +92,14 @@ ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 	| wrong |
 	wrong := Smalltalk globals associations reject: [ :each | each isKindOf: GlobalVariable ].
 	self assertEmpty: wrong
+]
+
+{ #category : #'testing - lint violations' }
+ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
+	"If a class is using a trait with an explicit requirement method, this class should implement the method"
+	
+	self assertValidLintRule: RBExplicitRequirementMethodsRule new
+	
 ]
 
 { #category : #testing }
@@ -97,6 +132,11 @@ ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 	
 ]
 
+{ #category : #'testing - lint violations' }
+ReleaseTest >> testInstanceVariableShouldNotBeCApitalized [
+	self assertValidLintRule: GRInstanceVariableCapitalizationRule new withExceptions: #(#UseForTestCriticBrowser #'UseForTestCriticBrowser class')
+]
+
 { #category : #testing }
 ReleaseTest >> testKeyClassesArePresentInStartupList [
 	| keyClasses registeredHandlers |
@@ -116,6 +156,13 @@ ReleaseTest >> testLayoutIntegrity [
 	SystemNavigation default allClassesDo: [ :class |
 		class instanceSide classLayout checkIntegrity.
 		class classSide classLayout checkIntegrity ]
+]
+
+{ #category : #'testing - lint violations' }
+ReleaseTest >> testLocalMethodsOfTheClassShouldNotBeRepeatedInItsTraits [
+	"If a class is using a trait with an explicit requirement method, this class should implement the method"
+	
+	self assertValidLintRule: RBLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject).
 ]
 
 { #category : #testing }
