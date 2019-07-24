@@ -346,16 +346,14 @@ RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
 RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
 	"I'm a editor for Smalltalk, so, ok do completion around"
 	
-	| controller |
 	self isCompletionEnabled ifFalse: [  ^aBlock value ].
-	controller := CompletionEngine uniqueInstance.
-	controller setModel: self model.
+	completionEngine setModel: self model.
 	
-	(controller handleKeystrokeBefore: anEvent editor: self) ifTrue:  [^ self ].
+	(completionEngine handleKeystrokeBefore: anEvent editor: self) ifTrue:  [^ self ].
 	(self selectorChooserHandlesKeyboard: anEvent)
 				ifFalse: [ aBlock value ].
 	self selectorChooserKeystroke: anEvent.
-	controller handleKeystrokeAfter: anEvent editor: self.
+	completionEngine handleKeystrokeAfter: anEvent editor: self.
 
 ]
 
@@ -368,7 +366,7 @@ RubSmalltalkEditor >> completionEngine [
 RubSmalltalkEditor >> completionEngine: aCompletionEngine [
 
 	completionEngine := aCompletionEngine.
-	self textArea setCompletionEngine: aCompletionEngine. 
+	self textArea ifNotNil: [:txtArea | txtArea setCompletionEngine: aCompletionEngine] 
 ]
 
 { #category : #'new selection' }
@@ -750,9 +748,7 @@ RubSmalltalkEditor >> implementorsOfIt: aKeyboardEvent [
 RubSmalltalkEditor >> initialize [
 	super initialize.
 	notificationStrategy := RubTextInsertionStrategy new editor: self.
-	completionEngine := CompletionEngine. 
-	"this way we can instance-based and shared completion between all the instances
-	of editor instances."
+	CompletionEngine ifNotNil: [self completionEngine: CompletionEngine new]
 ]
 
 { #category : #keymapping }
@@ -801,7 +797,7 @@ RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 RubSmalltalkEditor >> isCompletionEnabled [
 	CompletionEngine ifNil: [ ^false ].
 	CompletionEngine isCompletionEnabled ifFalse: [ ^false ].
-	^ completionEngine isNotNil and: [ self editingMode isCompletionEnabled ]
+	^ self editingMode isCompletionEnabled
 ]
 
 { #category : #testing }

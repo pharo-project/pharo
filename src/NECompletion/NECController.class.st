@@ -28,11 +28,6 @@ Class {
 	#category : #'NECompletion-View'
 }
 
-{ #category : #cleanup }
-NECController class >> cleanUp [
-	self reset
-]
-
 { #category : #accessing }
 NECController class >> contextClass [
 	^ContextClass ifNil: [ ^NECContext ] 
@@ -44,10 +39,8 @@ NECController class >> contextClass: aClass [
 ]
 
 { #category : #'class initialization' }
-NECController class >> initialize [
-	"self initialize"
-	
-	self register
+NECController class >> initialize [ 
+  	self register
 ]
 
 { #category : #accessing }
@@ -59,17 +52,6 @@ NECController class >> isCompletionEnabled [
 NECController class >> register [
 	"just for testing: we register the subclass here to test it"
 	RubSmalltalkEditor completionEngine: TestCompletionController
-]
-
-{ #category : #'instance creation' }
-NECController class >> reset [
-	uniqueInstance := nil
-	
-]
-
-{ #category : #'instance creation' }
-NECController class >> uniqueInstance [
-	^uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
 { #category : #accessing }
