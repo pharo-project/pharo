@@ -1,3 +1,6 @@
+"
+I'm a command use to mark as 'Wrong' the selected critic.
+"
 Class {
 	#name : #CBMarkAsWrongCriticCommand,
 	#superclass : #CmCommand,

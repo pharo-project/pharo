@@ -1,3 +1,6 @@
+"
+I'm a command use to ban the selected rule (it's like mark as false positive all his critics)
+"
 Class {
 	#name : #CBBanRuleCommand,
 	#superclass : #CBRuleCommand,

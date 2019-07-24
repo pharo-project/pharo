@@ -1,3 +1,7 @@
+"
+i'm an abstract command use on rule
+
+"
 Class {
 	#name : #CBRuleCommand,
 	#superclass : #CmCommand,

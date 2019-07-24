@@ -1,3 +1,27 @@
+"
+I'm an abstract SpPresenter
+
+my subclass have to define 
+	addAllItems
+	addItems 
+	nextAction
+	removeAllItems
+	removeItems 
+
+I define 
+	label of button
+	 
+    Instance Variables
+	addAllButton:		<SPButtonPresenter>
+	addButton:		<SPButtonPresenter>
+	nextButton:		<SPButtonPresenter>
+	removeAllButton:		<SPButtonPresenter>
+	removeButton:		<SPButtonPresenter>
+	
+	selectedPresenter:		<Object>
+	toSelectPresenter:		<Object>
+			those 2 instance Variable will 
+"
 Class {
 	#name : #SelectBrowser,
 	#superclass : #SpPresenter,

@@ -1,3 +1,6 @@
+"
+I'm a command use to reapply all rule (it's reset the cache and reload all)
+"
 Class {
 	#name : #CBReapplyRuleCommand,
 	#superclass : #CBRuleCommand,
@@ -6,7 +9,10 @@ Class {
 
 { #category : #hooks }
 CBReapplyRuleCommand >> execute [
-	self selectedRule isComposite ifTrue: [ self selectedRule rules do: [ :each | self context reapplyRule: each ] ] ifFalse: [ self context reapplyRule: self selectedRule ]
+	self selectedRule isComposite
+		ifTrue: [ self selectedRule rules
+				do: [ :each | self context reapplyRule: each ] ]
+		ifFalse: [ self context reapplyRule: self selectedRule ]
 ]
 
 { #category : #initialization }

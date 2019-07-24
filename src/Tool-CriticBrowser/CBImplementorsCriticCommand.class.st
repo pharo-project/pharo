@@ -1,3 +1,6 @@
+"
+i'm a command use to ask implementor of selected critic 
+"
 Class {
 	#name : #CBImplementorsCriticCommand,
 	#superclass : #CBCriticCommand,

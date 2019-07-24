@@ -1,3 +1,10 @@
+"
+I'm an abstract command using on critic. 
+
+I define 
+	canBeRun : returning a Boolean
+	selectedCritic
+"
 Class {
 	#name : #CBCriticCommand,
 	#superclass : #CmCommand,

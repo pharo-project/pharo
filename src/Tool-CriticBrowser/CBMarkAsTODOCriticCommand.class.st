@@ -1,3 +1,6 @@
+"
+I'm a command use to mark as 'To do' the selected critic 
+"
 Class {
 	#name : #CBMarkAsTODOCriticCommand,
 	#superclass : #CmCommand,

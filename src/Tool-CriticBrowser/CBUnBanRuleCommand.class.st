@@ -1,3 +1,6 @@
+"
+I'm a command use to un ban a rule (it's like un mark asFalsePositive all his critics)
+"
 Class {
 	#name : #CBUnBanRuleCommand,
 	#superclass : #CBRuleCommand,

@@ -63,12 +63,22 @@ Internal Representation and Key Implementation Points.
 	rulesPresenter: <SpTreeTablePresenter> 
 	rbEnvironment : <RBBrowserEnvironment>
 	removeTestCase : <Boolean>
-	criticsActionsPresenter: <SpActionBarPresenter> 
-	rulesActionsPresenter : <SpActionBarPresenter>
-	noteBookPresenter : <SpNotebookPresenter>
+		it's use to 
+		
+	criticActionBar : <SpActionBarPresenter> 	
+	ruleActionBar : <SpActionBarPresenter>
+		those 2 bar is use to show collection of button
+	
 	criticCache : <CriticsCache>
+		it's a cache use to improve loading 
+		
+	noteBookPresenter : <SpNotebookPresenter>
+	
 	noteBookPageCriticErrorPresenter : <SpComposablePresenter>
+		i'm a tab use to show where is the critic selected with SpCodePresenter
 	noteBookPageRuleCommentPresenter : <SpComposablePresenter>
+		i'm a tab use to show a comment about the selected rule with a SpTextPresenter
+		
 
 "
 Class {

@@ -1,3 +1,13 @@
+"
+I'm using to select rule for the criticBrowser*
+
+    Instance Variables
+	environment:		<Object>
+	removeTestCase:		<Boolean>
+	selectedRules:		<Set>
+			use to store the selected rule
+
+"
 Class {
 	#name : #SelectRuleBrowser,
 	#superclass : #SelectBrowser,

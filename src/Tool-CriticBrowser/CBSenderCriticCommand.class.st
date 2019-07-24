@@ -1,3 +1,6 @@
+"
+I'm a command use to ask sender of selected critic 
+"
 Class {
 	#name : #CBSenderCriticCommand,
 	#superclass : #CBCriticCommand,

@@ -1,5 +1,5 @@
 "
-ts
+I'm a command use to browse rule
 "
 Class {
 	#name : #CBBrowseRuleCommand,

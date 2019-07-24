@@ -1,3 +1,14 @@
+"
+I'm using to selectPakage to analyse
+
+    Instance Variables
+	addTestCaseClassesCheckBox:		<SpCheckBoxPresenter>
+	removeTestPackageButton:		<SpButtonPresenter>
+		
+	testPackagesToRemove:		<OrderedCollection>
+			that contains all selected package
+
+"
 Class {
 	#name : #SelectPackageBrowser,
 	#superclass : #SelectBrowser,

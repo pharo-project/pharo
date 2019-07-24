@@ -1,3 +1,6 @@
+"
+I'm a command to browser the selected critic.
+"
 Class {
 	#name : #CBBrowseCriticCommand,
 	#superclass : #CmCommand,
