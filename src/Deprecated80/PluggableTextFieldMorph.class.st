@@ -13,8 +13,13 @@ Class {
 		'textMorphClass',
 		'textFont'
 	],
-	#category : #'Morphic-Widgets-Pluggable-Text'
+	#category : #Deprecated80
 }
+
+{ #category : #deprecation }
+PluggableTextFieldMorph class >> isDeprecated [
+	^ true
+]
 
 { #category : #'model access' }
 PluggableTextFieldMorph >> acceptTextInModel [
@@ -123,6 +128,26 @@ PluggableTextFieldMorph >> drawOn: aCanvas [
 						in: ghostBounds
 						font: self theme textFont
 						color: self theme ghostTextColor]].
+	entryCompletion 
+		ifNotNil: [entryCompletion closeIfNotNeeded: self].
+]
+
+{ #category : #drawing }
+PluggableTextFieldMorph >> drawOnAthensCanvas: anAthensCanvas [
+	"Eventually draw the helpText"
+	super drawOnAthensCanvas: anAthensCanvas.
+	self ghostText
+		ifNotEmpty: [
+			self text isEmpty
+				ifTrue: [| ghostBounds |
+					ghostBounds := ((self scroller submorphBounds topLeft corner: self innerBounds bottomRight)
+						translateBy: 0 @ (self scroller height - self theme textFont height / 2) rounded)
+						insetBy: self textMarginsWidth @ 0.
+					anAthensCanvas 
+						morphicDrawString: self ghostText
+						in: ghostBounds
+						font: self theme textFont
+						color: Color lightGray]].
 	entryCompletion 
 		ifNotNil: [entryCompletion closeIfNotNeeded: self].
 ]
@@ -361,6 +386,14 @@ PluggableTextFieldMorph >> scrollSelectionIntoView: event [
 		self scrollBy: delta truncated.
 		^ true].
 	^ false
+]
+
+{ #category : #'editor access' }
+PluggableTextFieldMorph >> setTextAndAccept: aText [
+	self
+		setText: aText;
+		hasUnacceptedEdits: true;
+		accept
 ]
 
 { #category : #'event handling' }
