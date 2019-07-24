@@ -38,6 +38,11 @@ ManifestKernel class >> ruleRBClassNameInSelectorRuleV1FalsePositive [
 ]
 
 { #category : #'code-critics' }
+ManifestKernel class >> ruleRBEqualNilRuleV1FalsePositive [
+	^ #(#(#(#RGClassDefinition #(#DelayBasicScheduler)) #'2019-07-24T17:00:02.461271+02:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestKernel class >> ruleRBRefersToClassRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#'Character class' #allByteCharacters #true)) #'2019-01-28T20:55:28.683846+01:00') )
 ]

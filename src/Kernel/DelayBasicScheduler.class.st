@@ -174,16 +174,13 @@ DelayBasicScheduler >> runBackendLoopAtTimingPriority [
 
 	"Unit tests may run this at a lower priority" 
 
-	"Debug lines to help code review. Could be removed after a settling in period"
-	<haltOrBreakpointForTesting>
-
 	[  [runTimerEventLoop] whileTrue: 
 		[	|nowTick|
 			"Warning! Stepping <Over> the following line may lock the Image. Use <Into> or <Proceed>."
 		 	ticker waitForUserSignalled: timingSemaphore orExpired: activeDelay. 
 
 			"When two debuggers appear, step/proceed through this higher priority one first."
-			debug ifTrue: [ self halt ].		
+			"debug ifTrue: [ self halt ]."
 
 			"Invoke the api back-ends, which set the transfer-variable to nil" 		
 			suspendSemaphore ifNotNil: [ self suspendAtTimingPriority    ].
@@ -192,14 +189,15 @@ DelayBasicScheduler >> runBackendLoopAtTimingPriority [
 
 			"Signal any expired delays"
 			nowTick := ticker nowTick.
-			[ 	activeDelay notNil and: [nowTick >= activeDelay resumptionTick] ] 
+			"do not use notNil here as an optimizaton"
+			[ 	(activeDelay ~= nil) and: [nowTick >= activeDelay resumptionTick] ] 
 					whileTrue: [
 						activeDelay timingPrioritySignalExpired.
 						activeDelay := suspendedDelays removeFirstOrNil ].
 		]
 	] ensure: [ "When timer event loop exits, expire remaining delays."
-		debug ifTrue: [ self halt ].
-		[activeDelay notNil] whileTrue: [
+		"debug ifTrue: [ self halt ]."
+		[activeDelay ~=  nil] whileTrue: [
 				activeDelay timingPrioritySignalExpired.
 				activeDelay := suspendedDelays removeFirstOrNil ]].
 ]
