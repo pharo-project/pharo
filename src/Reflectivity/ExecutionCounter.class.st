@@ -97,7 +97,7 @@ ExecutionCounter >> node: anObject [
 	node := anObject
 ]
 
-{ #category : #counter }
+{ #category : #initialization }
 ExecutionCounter >> reset [
 	count := 0
 ]

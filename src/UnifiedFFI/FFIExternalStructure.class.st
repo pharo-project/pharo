@@ -229,7 +229,7 @@ FFIExternalStructure class >> removeAllOffsetVariables [
 		thenDo: [ :each | self removeClassVarNamed: each ]
 ]
 
-{ #category : #'class management' }
+{ #category : #initialization }
 FFIExternalStructure class >> reset [
 	"Reset this structure and all its nested structures"
 	self resetStructureIfNotIn: Set new

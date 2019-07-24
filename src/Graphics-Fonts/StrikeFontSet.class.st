@@ -796,7 +796,7 @@ StrikeFontSet >> questionGlyphInfoInto: glyphInfoArray [
 
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #initialization }
 StrikeFontSet >> reset [
 	"Reset the cache of derivative emphasized fonts"
 

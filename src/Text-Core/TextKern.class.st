@@ -59,7 +59,7 @@ TextKern >> kern: kernValue [
 	self reset.
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TextKern >> reset [
 	active := true
 ]

@@ -674,7 +674,7 @@ InflateStream >> readInto: buffer startingAt: startIndex count: n [
 	^n
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 InflateStream >> reset [
 	"Position zero - nothing decoded yet"
 	position := readLimit := 0.

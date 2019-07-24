@@ -187,7 +187,7 @@ NECVarTypeGuesser >> pushTemporaryVariable: offset [
 	types add: info
 ]
 
-{ #category : #private }
+{ #category : #initialization }
 NECVarTypeGuesser >> reset [
 	contextCount > 0 ifTrue:[^self].
 	types reset.

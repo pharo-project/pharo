@@ -111,7 +111,7 @@ GTPlayBook class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #private }
+{ #category : #initialization }
 GTPlayBook class >> reset [
 	
 	instance := nil.

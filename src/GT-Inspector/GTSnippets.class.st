@@ -18,7 +18,7 @@ GTSnippets class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GTSnippets class >> reset [
 	instance := nil
 ]
