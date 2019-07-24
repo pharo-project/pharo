@@ -1,7 +1,7 @@
 Class {
 	#name : #CBCriticBrowserTest,
 	#superclass : #CBAbstractTest,
-	#category : #'Tool-CriticBrowser-Tests-Tests'
+	#category : #'Tool-CriticBrowser-Tests'
 }
 
 { #category : #tests }

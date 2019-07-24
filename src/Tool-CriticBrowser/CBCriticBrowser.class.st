@@ -171,7 +171,7 @@ CBCriticBrowser class >> icon [
 
 { #category : #'instance creation' }
 CBCriticBrowser class >> openOnCurrentWorkingConfiguration [
-	CriticWorkingConfiguration exists ifTrue: [ ResetWindow new openModalWithSpec ] ifFalse: [ SelectPackageBrowser open ]
+	CBCriticWorkingConfiguration exists ifTrue: [ CBResetWindow new openModalWithSpec ] ifFalse: [ CBSelectPackageBrowser open ]
 ]
 
 { #category : #'instance creation' }
@@ -426,11 +426,8 @@ CBCriticBrowser >> initializeCriticErrorPresenter [
 	noteBookPageCriticErrorPresenter
 		acceptBlock: [ :text | 
 			| selectedItem |
-			selectedItem := self criticsPresenter selection selectedItem
-				sourceAnchor entity.
-			selectedItem isCompiledMethod
-				ifTrue: [ selectedItem methodClass compile: text ]
-				ifFalse: [ Smalltalk compiler evaluate: text ]	"and: [ rule isTransformationRule not ]" ]
+			selectedItem := self selectedCritic entity.
+			selectedItem isCompiledMethod ifTrue: [ selectedItem methodClass compile: text ] ifFalse: [ self class compiler evaluate: text ] ]
 ]
 
 { #category : #'initialize-widgets' }
@@ -651,7 +648,7 @@ CBCriticBrowser >> removeToDo: aCritic forRule: aRule [
 
 { #category : #accessing }
 CBCriticBrowser >> rules: rulesCollection [
-	self rulesPresenter roots: (((rulesCollection groupedBy: #group) associations collect: [ :as | CriticBrowserRulesGroup named: as key rules: as value ]) sorted: #name ascending)
+	self rulesPresenter roots: (((rulesCollection groupedBy: #group) associations collect: [ :as | CBRulesGroup named: as key rules: as value ]) sorted: #name ascending)
 ]
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ A CBFalsePositiveCriticActionTest is a test class for testing the behavior of CB
 Class {
 	#name : #CBFalsePositiveCriticActionTest,
 	#superclass : #CBAbstractButtonActionTest,
-	#category : #'Tool-CriticBrowser-Tests-Tests'
+	#category : #'Tool-CriticBrowser-Tests'
 }
 
 { #category : #tests }

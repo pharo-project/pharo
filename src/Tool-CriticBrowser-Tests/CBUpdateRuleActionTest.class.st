@@ -1,7 +1,7 @@
 Class {
 	#name : #CBUpdateRuleActionTest,
 	#superclass : #CBAbstractButtonActionTest,
-	#category : #'Tool-CriticBrowser-Tests-Tests'
+	#category : #'Tool-CriticBrowser-Tests'
 }
 
 { #category : #tests }

@@ -4,7 +4,7 @@ A CriticWorkspace holds the current worspace for the CriticBrowser.
 It's composed of the set of rules to check (as a composite rule) and the environment to work in.
 "
 Class {
-	#name : #CriticWorkingConfiguration,
+	#name : #CBCriticWorkingConfiguration,
 	#superclass : #Object,
 	#instVars : [
 		'environment',
@@ -19,65 +19,65 @@ Class {
 }
 
 { #category : #'instance creation' }
-CriticWorkingConfiguration class >> current [
+CBCriticWorkingConfiguration class >> current [
 
 	^ Current ifNil: [ Current  := self basicNew initialize ].
 ]
 
 { #category : #testing }
-CriticWorkingConfiguration class >> exists [
+CBCriticWorkingConfiguration class >> exists [
 
 	^ Current notNil
 ]
 
 { #category : #'instance creation' }
-CriticWorkingConfiguration class >> new [
+CBCriticWorkingConfiguration class >> new [
 
 	^ self shouldNotImplement
 ]
 
 { #category : #'instance creation' }
-CriticWorkingConfiguration class >> reset [
+CBCriticWorkingConfiguration class >> reset [
 	<script>
 	Current := nil
 ]
 
 { #category : #accessing }
-CriticWorkingConfiguration >> environment [
+CBCriticWorkingConfiguration >> environment [
 	^ environment
 ]
 
 { #category : #accessing }
-CriticWorkingConfiguration >> environment: anObject [
+CBCriticWorkingConfiguration >> environment: anObject [
 	environment := anObject
 ]
 
 { #category : #accessing }
-CriticWorkingConfiguration >> logInManifest [
+CBCriticWorkingConfiguration >> logInManifest [
 	^ logInManifest
 ]
 
 { #category : #accessing }
-CriticWorkingConfiguration >> logInManifest: anObject [
+CBCriticWorkingConfiguration >> logInManifest: anObject [
 	logInManifest := anObject
 ]
 
 { #category : #accessing }
-CriticWorkingConfiguration >> removeTestCase [
+CBCriticWorkingConfiguration >> removeTestCase [
 	^ removeTestCase
 ]
 
 { #category : #accessing }
-CriticWorkingConfiguration >> removeTestCase: aBoolean [
+CBCriticWorkingConfiguration >> removeTestCase: aBoolean [
 	removeTestCase := aBoolean
 ]
 
 { #category : #accessing }
-CriticWorkingConfiguration >> rules [
+CBCriticWorkingConfiguration >> rules [
 	^ rules
 ]
 
 { #category : #accessing }
-CriticWorkingConfiguration >> rules: anObject [
+CBCriticWorkingConfiguration >> rules: anObject [
 	rules := anObject
 ]

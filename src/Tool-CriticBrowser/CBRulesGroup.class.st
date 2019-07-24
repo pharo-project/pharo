@@ -2,7 +2,7 @@
 I represent a group of rules in CriticBrowser tree view
 "
 Class {
-	#name : #CriticBrowserRulesGroup,
+	#name : #CBRulesGroup,
 	#superclass : #Object,
 	#instVars : [
 		'name',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-CriticBrowserRulesGroup class >> named: aString rules: aCollection [
+CBRulesGroup class >> named: aString rules: aCollection [
 
 	^ self new
 		name: aString;
@@ -21,33 +21,33 @@ CriticBrowserRulesGroup class >> named: aString rules: aCollection [
 ]
 
 { #category : #enumerating }
-CriticBrowserRulesGroup >> do: aBlock [
+CBRulesGroup >> do: aBlock [
 
 	rules do: aBlock
 ]
 
 { #category : #testing }
-CriticBrowserRulesGroup >> isComposite [
+CBRulesGroup >> isComposite [
 
 	^ true
 ]
 
 { #category : #accessing }
-CriticBrowserRulesGroup >> name [
+CBRulesGroup >> name [
 	^ name
 ]
 
 { #category : #accessing }
-CriticBrowserRulesGroup >> name: anObject [
+CBRulesGroup >> name: anObject [
 	name := anObject
 ]
 
 { #category : #accessing }
-CriticBrowserRulesGroup >> rules [
+CBRulesGroup >> rules [
 	^ rules
 ]
 
 { #category : #accessing }
-CriticBrowserRulesGroup >> rules: anObject [
+CBRulesGroup >> rules: anObject [
 	rules := anObject
 ]
