@@ -160,9 +160,7 @@ TestResource class >> signalInitializationError [
 
 { #category : #accessing }
 TestResource >> description [
-
-	description ifNil: [ ^ '' ].
-	^ description
+	^ description ifNil: [ String empty ]
 ]
 
 { #category : #accessing }

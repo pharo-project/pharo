@@ -100,8 +100,7 @@ FormCanvas class >> on: aForm [
 { #category : #caching }
 FormCanvas class >> translucentPatterns [
 
-	TranslucentPatterns ifNil: [ self initializeTranslucentPatterns ].
-	^ TranslucentPatterns
+	^ TranslucentPatterns ifNil: [ self initializeTranslucentPatterns ]
 ]
 
 { #category : #accessing }

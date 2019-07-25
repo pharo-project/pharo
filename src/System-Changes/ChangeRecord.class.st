@@ -94,8 +94,7 @@ ChangeRecord >> fileIn [
 
 { #category : #access }
 ChangeRecord >> fileName [
-	^(file ifNotNil: [ file name ]) 
-			ifNil: [ '<no file>' ]
+	^file ifNotNil: [ file name ] ifNil: [ '<no file>' ]
 ]
 
 { #category : #access }
