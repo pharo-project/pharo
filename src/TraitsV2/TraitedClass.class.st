@@ -344,5 +344,5 @@ TraitedClass >> traitUsers [
 
 { #category : #accessing }
 TraitedClass >> traits [
-	^ self traitComposition traits.
+	^ self traitComposition traits
 ]
