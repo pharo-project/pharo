@@ -9,12 +9,12 @@ Class {
 
 { #category : #hooks }
 CBReferenceToBehaviorCommand >> canBeRun [
-	^ super canBeRun and: [ self selectedCritic isBehavior ]
+	^ super canBeRun and: [ self criticEntity isBehavior ]
 ]
 
 { #category : #hooks }
 CBReferenceToBehaviorCommand >> execute [
-	SystemNavigation new browseAllCallsOnClass: self selectedCritic
+	self systemNavigation browseAllCallsOnClass: self criticEntity
 ]
 
 { #category : #initialization }

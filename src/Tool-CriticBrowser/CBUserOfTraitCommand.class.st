@@ -9,18 +9,18 @@ Class {
 
 { #category : #hooks }
 CBUserOfTraitCommand >> canBeRun [
-	^ super canBeRun and: [ self selectedCritic isTrait ]
+	^ super canBeRun and: [ self criticEntity isTrait ]
 ]
 
 { #category : #hooks }
 CBUserOfTraitCommand >> execute [
-	SystemNavigation new browseAllUsersOfTrait: self selectedCritic
+	self systemNavigation browseAllUsersOfTrait: self criticEntity
 ]
 
 { #category : #initialization }
 CBUserOfTraitCommand >> initialize [
 	super initialize.
 	self
-		basicName: 'usersOf...';
+		basicName: 'Users of...';
 		basicDescription: 'Browse the user of the selected trait.'
 ]
