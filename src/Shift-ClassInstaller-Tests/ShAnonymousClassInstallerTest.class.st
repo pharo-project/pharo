@@ -16,5 +16,5 @@ ShAnonymousClassInstallerTest >> testSubclasses [
 	self assert: aSubClass superclass equals: Point.
 	self deny: (Smalltalk hasClassNamed: #AnotherPoint).
 	
-	self assert: (RPackageOrganizer default packageOfClassNamed: #AnotherPoint) equals: nil. 
+	self assert: (RPackageOrganizer default packageOfClassNamed: #AnotherPoint) equals: nil
 ]

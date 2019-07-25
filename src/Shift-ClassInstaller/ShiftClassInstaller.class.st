@@ -117,7 +117,7 @@ ShiftClassInstaller >> fixSlotScope: newClass [
 ShiftClassInstaller >> initialize [
 	super initialize.
 	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new.	
+	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new	
 	
 	
 ]
@@ -233,7 +233,7 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 			ifTrue: [ builder builderEnhancer migrateInstancesTo: newClass installer: self ].
 
 		{ oldClass. builder oldMetaclass } elementsForwardIdentityTo: { newClass. builder newMetaclass }.	
-	] valueUninterruptably.
+	] valueUninterruptably
 
 ]
 

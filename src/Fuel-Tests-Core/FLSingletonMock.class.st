@@ -23,7 +23,7 @@ FLSingletonMock class >> new [
 	self error: 'I''m a singleton!'
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 FLSingletonMock class >> reset [
 	Instance := nil
 ]

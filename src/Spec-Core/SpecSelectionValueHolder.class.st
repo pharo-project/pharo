@@ -47,7 +47,7 @@ SpecSelectionValueHolder >> initialize [
 	selection whenChangedSend: #valueChanged to: self.
 ]
 
-{ #category : #protocol }
+{ #category : #initialization }
 SpecSelectionValueHolder >> reset [
 
 	self index value: 0.

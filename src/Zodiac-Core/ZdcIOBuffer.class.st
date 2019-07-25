@@ -279,7 +279,7 @@ ZdcIOBuffer >> readInto: collection startingAt: offset count: requestedCount [
 	^ toRead
 ]
 
-{ #category : #operations }
+{ #category : #initialization }
 ZdcIOBuffer >> reset [
 	"Do a hard reset"
 	

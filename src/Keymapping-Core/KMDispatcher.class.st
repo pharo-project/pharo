@@ -209,7 +209,7 @@ KMDispatcher >> removeKeyCombination: aShortcut [
 	removalTarget removeKeymapEntry: keymap
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 KMDispatcher >> reset [
 	self resetTargets.
 	self resetPerInstanceTarget

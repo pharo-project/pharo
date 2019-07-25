@@ -105,8 +105,7 @@ DisplayScanner >> crossedX [
 
 { #category : #private }
 DisplayScanner >> defaultTextColor [
-	defaultTextColor ifNil:[ defaultTextColor := Smalltalk ui theme textColor ].
-	^defaultTextColor
+	^ defaultTextColor ifNil:[ defaultTextColor := Smalltalk ui theme textColor ]
 ]
 
 { #category : #private }

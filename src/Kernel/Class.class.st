@@ -311,9 +311,7 @@ Class >> classInstaller [
 Class >> classPool [
 	"Answer the dictionary of class variables."
 
-	classPool ifNil: [ classPool := Dictionary new ].
-		
-	^ classPool
+	^classPool ifNil: [ classPool := Dictionary new ]
 ]
 
 { #category : #accessing }

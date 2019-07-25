@@ -898,7 +898,7 @@ StandardFileStream >> requestDropStream: dropIndex [
 	self enableReadBuffering
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 StandardFileStream >> reset [
 	self ensureOpen.
 	self position: 0.

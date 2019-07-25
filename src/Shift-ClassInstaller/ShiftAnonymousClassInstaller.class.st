@@ -26,7 +26,7 @@ ShiftAnonymousClassInstaller >> installSubclassInSuperclass: newClass [
 
 { #category : #building }
 ShiftAnonymousClassInstaller >> lookupOldClass [
-	^ self.
+	^ self
 ]
 
 { #category : #notifications }

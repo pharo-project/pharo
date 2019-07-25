@@ -201,7 +201,7 @@ SpSliderPresenter >> quantum: aNumber [
 	quantum := aNumber
 ]
 
-{ #category : #api }
+{ #category : #initialization }
 SpSliderPresenter >> reset [
 	"<api:#do>"
 	"Reset the cursor to the minimum value"

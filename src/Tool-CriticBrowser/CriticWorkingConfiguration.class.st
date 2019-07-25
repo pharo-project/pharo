@@ -36,7 +36,7 @@ CriticWorkingConfiguration class >> new [
 	^ self shouldNotImplement
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 CriticWorkingConfiguration class >> reset [
 
 	Current := nil

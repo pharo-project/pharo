@@ -37,7 +37,7 @@ TestCompletionContext >> completionToken [
 { #category : #accessing }
 TestCompletionContext >> createModel [
 	self parseSource.
-	node := ast bestNodeFor: (position to: position).
+	node := ast nodeForOffset: position.
   ^ (TestCompletionModel new node: node) clazz: theClass
 ]
 

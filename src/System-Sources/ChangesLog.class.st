@@ -34,7 +34,7 @@ ChangesLog class >> registerInterestToSystemAnnouncement [
 
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ChangesLog class >> reset [
 	SystemAnnouncer uniqueInstance unsubscribe: DefaultInstance.
 	DefaultInstance := nil.

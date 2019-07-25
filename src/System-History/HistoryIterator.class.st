@@ -223,7 +223,7 @@ HistoryIterator >> removeFirst [
 	self recorder removeFirst
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 HistoryIterator >> reset [
 	self recorder reset.
 	index := nil.

@@ -171,7 +171,7 @@ KMKeymap >> printOn: aStream [
 		cr.    
 ]
 
-{ #category : #'enabling/disabling' }
+{ #category : #initialization }
 KMKeymap >> reset [
 
 	self shortcut: self defaultShortcut.

@@ -628,7 +628,7 @@ MultiByteFileStream >> requestDropStream: dropIndex [
 	^result
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 MultiByteFileStream >> reset [
 
 	super reset.

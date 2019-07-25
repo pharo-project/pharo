@@ -18,7 +18,7 @@ PharoFilesOpener class >> default [
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #singleton }
+{ #category : #initialization }
 PharoFilesOpener class >> reset [
 	Default := nil
 ]
