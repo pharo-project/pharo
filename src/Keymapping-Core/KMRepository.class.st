@@ -33,7 +33,7 @@ KMRepository class >> default: aDefault [
 	^ Singleton := aDefault
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 KMRepository class >> reset [
 	"Do not reset KMDispatchers instances, it may make the image unusable or force the user to close all the windows."
 	

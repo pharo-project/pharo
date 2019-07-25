@@ -260,7 +260,7 @@ WriteStream >> position: anInteger [
 	super position: anInteger
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 WriteStream >> reset [ 
 	"Refer to the comment in PositionableStream|reset."
 

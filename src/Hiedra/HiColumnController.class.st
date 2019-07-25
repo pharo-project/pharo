@@ -125,7 +125,7 @@ HiColumnController >> renderer: aHiRulerRenderer [
 	renderer := aHiRulerRenderer
 ]
 
-{ #category : #API }
+{ #category : #initialization }
 HiColumnController >> reset [
 	"Reset the internal state with the purpose to regenerate the visualization the next time #cellMorphFor: is executed."
 

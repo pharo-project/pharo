@@ -290,7 +290,7 @@ CollectionValueHolder >> replaceAll: oldObject with: newObject [
 	self valueChanged: oldObject
 ]
 
-{ #category : #protocol }
+{ #category : #initialization }
 CollectionValueHolder >> reset [
 
 	value reset.

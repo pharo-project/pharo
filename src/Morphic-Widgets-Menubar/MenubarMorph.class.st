@@ -79,7 +79,7 @@ MenubarMorph class >> open [
 		open.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 MenubarMorph class >> reset [
 
 	<script>

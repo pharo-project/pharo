@@ -534,7 +534,7 @@ MCDataStream >> readTrue [
     ^ true
 ]
 
-{ #category : #other }
+{ #category : #initialization }
 MCDataStream >> reset [
     "Reset the stream."
 

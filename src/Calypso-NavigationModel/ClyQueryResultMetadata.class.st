@@ -79,7 +79,7 @@ ClyQueryResultMetadata >> removeProperty: aProperty [
 	properties remove: aProperty ifAbsent: [  ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ClyQueryResultMetadata >> reset [
 	properties removeAll
 ]

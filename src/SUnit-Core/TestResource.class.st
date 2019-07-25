@@ -113,7 +113,7 @@ TestResource class >> new [
 	^super new initialize.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 TestResource class >> reset [
 	[self isAlreadyAvailable ifTrue: [current tearDown]]
 		ensure: [current := nil]

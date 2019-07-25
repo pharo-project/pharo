@@ -116,7 +116,7 @@ ChunkReadStream >> readUpToEndOfStyleChunk [
 	^decoratedStream upTo: $[
 ]
 
-{ #category : #decorated }
+{ #category : #initialization }
 ChunkReadStream >> reset [
 	nextChar := nil.
 	decoratedStream reset.

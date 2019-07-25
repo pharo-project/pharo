@@ -30,7 +30,7 @@ GLMWatcherWindow class >> buildKeymapsOn: aBuilder [
 	aBuilder attachShortcutCategory: #Glamour to: Morph.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 GLMWatcherWindow class >> reset [ 
 	"self reset"
 	uniqueInstance := nil

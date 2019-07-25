@@ -290,7 +290,7 @@ MultiByteBinaryOrTextStream >> peekFor: item [
 
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 MultiByteBinaryOrTextStream >> reset [
 
 	super reset.
