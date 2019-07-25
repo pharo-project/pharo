@@ -76,7 +76,7 @@ SystemDependenciesTest >> knownDisplayDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Canvas' #'Graphics-Files' #'Network-Mail' #'Polymorph-Widgets' #'SUnit-Core' #'System-Localization' #'Transcript-Core')
+	^ #(#'Fonts-Abstract' #'Graphics-Canvas' #'Graphics-Files' #'Polymorph-Widgets' #'SUnit-Core' #'System-Localization' #'Transcript-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -116,7 +116,7 @@ SystemDependenciesTest >> knownMetacelloDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'SUnit-Core' #'System-Localization' #'Transcript-Core')
+	^ #(#'Fonts-Abstract' #'SUnit-Core' #'System-Localization' #'Transcript-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -124,7 +124,7 @@ SystemDependenciesTest >> knownMonticelloDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Graphics-Files' #'Network-Mail' #'System-Localization' #'Transcript-Core')
+	^ #(#'System-Localization' #'Transcript-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -132,14 +132,14 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Network-Mail' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard' #'System-Localization' #'Transcript-Core')
+	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard' #'System-Localization' #'Transcript-Core')
 ]
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Fonts-Chooser' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #Shout #'Spec-Core' "Spec-Core should be removed later." #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
+	^ #(#'Fonts-Chooser' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #Shout #'Spec-Core' "Spec-Core should be removed later." #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
 	#'Athens-Morphic' 	"Rubric has a dependency on It" )
 ]
 
@@ -148,7 +148,7 @@ SystemDependenciesTest >> knownSUnitDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
+	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -159,7 +159,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core' #CodeImport)
 ]
 
-{ #category : #'known-dependencies' }
+{ #category : #'known dependencies' }
 SystemDependenciesTest >> knownSpec2Dependencies [
 	
 	^ #(
@@ -173,7 +173,7 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
+	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -182,7 +182,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"	
 
 	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
-	#'Athens-Morphic' #'Glamour-Morphic-Widgets' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers')
+	#'Athens-Morphic' #'Glamour-Morphic-Widgets' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers')
 ]
 
 { #category : #utilities }
