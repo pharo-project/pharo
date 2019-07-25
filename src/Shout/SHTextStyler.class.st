@@ -54,8 +54,7 @@ SHTextStyler >> initialize [
 { #category : #private }
 SHTextStyler >> monitor [
 
-	monitor ifNil: [ monitor := Monitor new ].
-	^ monitor
+	^ monitor ifNil: [ monitor := Monitor new ]
 ]
 
 { #category : #private }
