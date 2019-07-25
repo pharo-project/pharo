@@ -197,7 +197,7 @@ SystemAnnouncer >> isSuspended [
 SystemAnnouncer >> methodAdded: aMethod [ 
 	"A method with the given selector was added to aClass, but not put in a protocol."
 
-	^ self methodAdded: aMethod configuredWith: [ :method ]
+	^ self methodAdded: aMethod configuredWith: [ :method | ]
 ]
 
 { #category : #triggering }
