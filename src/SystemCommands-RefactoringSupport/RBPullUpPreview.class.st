@@ -65,7 +65,7 @@ RBPullUpPreview >> initializeDropList [
 { #category : #initialization }
 RBPullUpPreview >> initializeWidgets [
 	super initializeWidgets .
-	label2 := (self newLabel).
+	label2 := self newLabel.
 	self initializeDropList.
 ]
 
