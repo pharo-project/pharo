@@ -209,12 +209,15 @@ safety violation.
 { #category : #tests }
 AthensTextRenderManualTests class >> testWindow [
 	<example>
+	| presenter window |
+	presenter := SpTextPresenter new
+		text: self testText;
+		yourself.
+	window := presenter openWithSpec.
 
-	^ ((PluggableTextMorph
-		on: self
-		text: #testText
-		accept: nil) embeddedInMorphicWindowLabeled: 'A fancy looking title text') openInWorld
+	presenter withWindowDo: [ :w | w title: 'A fancy looking title text' ].
 
+	^ window window
 ]
 
 { #category : #tests }

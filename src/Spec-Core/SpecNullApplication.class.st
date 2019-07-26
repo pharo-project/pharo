@@ -8,7 +8,7 @@ Class {
 	#category : #'Spec-Core-Base'
 }
 
-{ #category : #accessing }
+{ #category : #initialization }
 SpecNullApplication class >> reset [
 	<script>
 	

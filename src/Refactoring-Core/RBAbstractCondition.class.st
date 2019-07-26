@@ -42,9 +42,8 @@ RBAbstractCondition >> errorBlockFor: aBoolean [
 
 { #category : #private }
 RBAbstractCondition >> errorMacro [
-	^errorMacro isNil
-		ifTrue: ['unknown']
-		ifFalse: [errorMacro]
+
+	^ errorMacro ifNil: [ 'unknown' ] ifNotNil: [ errorMacro ]
 ]
 
 { #category : #private }

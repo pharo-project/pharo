@@ -18,7 +18,8 @@ GLMTestPane class >> portClass [
 
 { #category : #accessing }
 GLMTestPane >> browser [
-	browser isNil ifTrue: [ ^ GLMNoBrowser new ].
+
+	browser ifNil: [ ^ GLMNoBrowser new ].
 	^ browser
 ]
 

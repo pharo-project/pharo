@@ -19,6 +19,11 @@ BIConfigurableFormatterFormattingTest >> formatterClass [
 ]
 
 { #category : #tests }
+BIConfigurableFormatterFormattingTest >> testIsPrettyPrinter [
+	self assert: BIConfigurableFormatter isPrettyPrinter 
+]
+
+{ #category : #tests }
 BIConfigurableFormatterFormattingTest >> testShouldReinitializeCodeStreamBetweenFormating [
 	|astNode formater context|
 	context := BIPrettyPrinterContext new.

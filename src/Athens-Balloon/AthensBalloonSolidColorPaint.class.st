@@ -66,7 +66,7 @@ AthensBalloonSolidColorPaint >> strokeRect: rect on: canvas stroke: strokePaint 
 	^ canvas surface strokeRectangle: rect color: color width: strokePaint width
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 AthensBalloonSolidColorPaint >> strokeRect: rect on: canvas strokeWidth: strokeWidth [
 
 	^ canvas surface strokeRectangle: rect color: color width: strokeWidth

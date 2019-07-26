@@ -170,7 +170,7 @@ Generator >> printOn: aStream [
 	aStream nextPutAll: self class name; nextPutAll: ' on: '; print: block
 ]
 
-{ #category : #public }
+{ #category : #initialization }
 Generator >> reset [
 	"Reset the generator, i.e., start it over"
 	continue ifNotNil:[continue unwindTo: home].

@@ -18,7 +18,7 @@ MCScriptDefinition class >> from: aPackageInfo [
 
 { #category : #'instance creation' }
 MCScriptDefinition class >> script: aString packageName: packageString [
-	^ self instanceLike: (self new initializeWithScript: aString packageName: packageString)
+	^ self new initializeWithScript: aString packageName: packageString
 ]
 
 { #category : #accessing }

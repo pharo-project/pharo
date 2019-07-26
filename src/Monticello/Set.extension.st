@@ -4,7 +4,8 @@ Extension { #name : #Set }
 Set >> comeFullyUpOnReload: smartRefStream [
 	"Symbols have new hashes in this image."
 
-	self rehash.
-	"^ self"
+	^self 
+		rehash; 
+		yourself
 
 ]

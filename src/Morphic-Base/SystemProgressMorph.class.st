@@ -118,7 +118,7 @@ SystemProgressMorph class >> initialize [
 	self reset.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 SystemProgressMorph class >> reset [
 	"SystemProgressMorph reset"
 	UniqueInstance ifNotNil: [ UniqueInstance delete ].

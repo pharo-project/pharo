@@ -159,17 +159,23 @@ RBScanner >> atEnd [
 ]
 
 { #category : #private }
-RBScanner >> classify: aCharacter [ 
+RBScanner >> classify: aCharacter [
+
 	| index |
-	aCharacter isNil ifTrue: [^nil].
+
+	aCharacter ifNil: [ ^ nil ].
 	index := aCharacter asInteger.
-	index == 0 ifTrue: [^#separator].
-	index > 255 
-		ifTrue: 
-			[^aCharacter isLetter 
-				ifTrue: [#alphabetic]
-				ifFalse: [aCharacter isSeparator ifTrue: [#separator] ifFalse: [nil]]].
-	^classificationTable at: index
+	index == 0
+		ifTrue: [ ^ #separator ].
+	index > 255
+		ifTrue: [ ^ aCharacter isLetter
+				ifTrue: [ #alphabetic ]
+				ifFalse: [ aCharacter isSeparator
+						ifTrue: [ #separator ]
+						ifFalse: [ nil ]
+					]
+			].
+	^ classificationTable at: index
 ]
 
 { #category : #accessing }
@@ -394,18 +400,16 @@ RBScanner >> scanLiteralCharacter [
 
 { #category : #'private-scanning' }
 RBScanner >> scanLiteralString [
+
 	self step.
-	
-	[currentCharacter isNil 
-		ifTrue: [^self scanError: 'Unmatched '' in string literal.' ].
-	currentCharacter = $' and: [self step ~= $']] 
-			whileFalse: 
-				[buffer nextPut: currentCharacter.
-				self step].
-	^RBLiteralToken 
-		value: buffer contents
-		start: tokenStart
-		stop: self previousStepPosition
+
+	[ currentCharacter ifNil: [ ^ self scanError: 'Unmatched '' in string literal.' ].
+	currentCharacter = $' and: [ self step ~= $' ]
+	]
+		whileFalse: [ buffer nextPut: currentCharacter.
+			self step
+			].
+	^ RBLiteralToken value: buffer contents start: tokenStart stop: self previousStepPosition
 ]
 
 { #category : #'private-scanning' }

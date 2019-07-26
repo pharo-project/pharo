@@ -17,7 +17,7 @@ AthensPathBuilder class >> createPath: aBlock [
 	^ self new createPath: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 AthensPathBuilder class >> initialize [
 	ZeroPoint := 0@0
 ]

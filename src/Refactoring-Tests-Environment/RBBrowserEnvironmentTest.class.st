@@ -121,8 +121,8 @@ RBBrowserEnvironmentTest >> setUp [
 RBBrowserEnvironmentTest >> storeStringFor: aBrowserEnvironment [
 	| newEnvironment |
 	newEnvironment := Smalltalk compiler evaluate: aBrowserEnvironment storeString.
-	self assert: newEnvironment numberSelectors = aBrowserEnvironment numberSelectors.
-	self assert: (newEnvironment not & aBrowserEnvironment) numberSelectors = 0
+	self assert: newEnvironment numberSelectors equals: aBrowserEnvironment numberSelectors.
+	self assert: (newEnvironment not & aBrowserEnvironment) numberSelectors equals: 0
 	
 ]
 

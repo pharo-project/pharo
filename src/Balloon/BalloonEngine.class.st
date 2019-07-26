@@ -907,7 +907,7 @@ BalloonEngine >> release [
 	super release.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 BalloonEngine >> reset [
 	workBuffer ifNil:[workBuffer := self class allocateOrRecycleBuffer: 10000].
 	self primInitializeBuffer: workBuffer.

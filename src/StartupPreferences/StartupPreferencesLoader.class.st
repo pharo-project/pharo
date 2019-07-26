@@ -163,7 +163,7 @@ StartupPreferencesLoader class >> preferencesVersionFolder [
 		ifNotNil: [ :folder | folder / SystemVersion current dottedMajorMinor ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 StartupPreferencesLoader class >> reset [
 
 	UniqueInstance := nil

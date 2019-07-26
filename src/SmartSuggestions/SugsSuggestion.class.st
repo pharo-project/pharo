@@ -35,8 +35,11 @@ SugsSuggestion class >> nodes [
 SugsSuggestion class >> subclassesForNode: aClass [
 	"all menu defitions define in which ast nodes they are interested by defining #nodes.
 	Subclass relationship is taken into account"
-	^self allSubclasses select: [:suggestionClass |  
-		suggestionClass nodes anySatisfy: [:class | aClass == class or: [aClass inheritsFrom: class]]]
+
+	^ self allSubclasses
+		select: [ :suggestionClass | 
+			suggestionClass nodes
+				anySatisfy: [ :class | aClass includesBehavior: class ] ]
 ]
 
 { #category : #comparing }

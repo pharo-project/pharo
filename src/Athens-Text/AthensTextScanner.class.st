@@ -18,7 +18,7 @@ Class {
 	#category : #'Athens-Text'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextScanner >> addCharacter: position [
 	| charWidth fnt |
 
@@ -41,11 +41,11 @@ AthensTextScanner >> addCharacter: position [
 	currentBackground ifNotNil: [
 		currentBackground addWidth: charWidth ].
 	
-	currentStrip stop: position.
+	currentStrip stop: position
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextScanner >> addCommand: aCommand [
 	currentLine addCommand: aCommand
 ]
@@ -59,37 +59,37 @@ AthensTextScanner >> addEmphasis: emphasis [
 	self setActualFont: (fnt emphasized: emphasis)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextScanner >> applyAttributes [
 	currentAttributes do: [:attr |
 		attr emphasizeScanner: self ]. 
 	
 	currentFont ifNil: [ self setActualFont: self defaultFont ].
-	currentColor ifNil: [ self textColor: self defaultColor ].
+	currentColor ifNil: [ self textColor: self defaultColor ]
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 AthensTextScanner >> defaultColor [
 	^ Color black
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 AthensTextScanner >> defaultFont [
 
 	^ self textStyle defaultFont
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 AthensTextScanner >> defaultTextStyle [
 
 	^ TextStyle default
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextScanner >> endLine: index [
 
-	currentLine  endIndex: index
+	currentLine endIndex: index
 ]
 
 { #category : #initialization }
@@ -98,12 +98,12 @@ AthensTextScanner >> initialize [
 	currentAttributes := #().
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextScanner >> lines [
 	^ lines
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextScanner >> newLine: startingIndex [ 
 
 	currentLine := lines add: (AthensTextLine new text: text;
@@ -124,9 +124,9 @@ AthensTextScanner >> newLine: startingIndex [
 	currentColor := currentBackground := currentFont := currentStrip := nil.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextScanner >> resetBackground [
-	self textBackground: Color transparent.
+	self textBackground: Color transparent
 ]
 
 { #category : #'text attributes' }
@@ -146,13 +146,13 @@ AthensTextScanner >> setActualFont: aFont [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextScanner >> setAttributes: anArray [ 
 	currentBackground := nil.
 	currentAttributes := anArray.
 	
 	"we should reset character string here"
-	currentStrip := nil.
+	currentStrip := nil
 
 ]
 
@@ -164,7 +164,7 @@ AthensTextScanner >> setFont: fontNumber [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextScanner >> text: aText [ 
 	text := aText
 ]
@@ -200,7 +200,7 @@ AthensTextScanner >> textColor: aColor [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextScanner >> textStyle [
 	^ textStyle ifNil: [ textStyle := self defaultTextStyle ]
 ]

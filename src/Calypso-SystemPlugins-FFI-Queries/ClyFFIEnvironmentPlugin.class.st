@@ -16,6 +16,6 @@ ClyFFIEnvironmentPlugin >> collectMethodGroupProviders [
 { #category : #'item decoration' }
 ClyFFIEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
-	aMethod isFFICall ifTrue: [ 
+	aMethod isFFIMethod ifTrue: [ 
 		anItem markWith: ClyFFIMethodTag]
 ]

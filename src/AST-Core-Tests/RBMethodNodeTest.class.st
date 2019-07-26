@@ -58,6 +58,54 @@ RBMethodNodeTest >> testCommentedMethodHasComments [
 ]
 
 { #category : #tests }
+RBMethodNodeTest >> testNodeForOffsetAssignment [
+	"test the case of a Assignment"
+	| source ast foundNode |
+	source := 'method Object := Class'.
+	ast := RBParser parseMethod: source.
+	foundNode := ast nodeForOffset: 9.
+	self assert: (foundNode class == RBVariableNode).
+	foundNode := ast nodeForOffset: 14.
+	self assert: (foundNode class == RBAssignmentNode).
+	foundNode := ast nodeForOffset: 19.
+	self assert: (foundNode class == RBVariableNode)
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testNodeForOffsetMessage [
+	"test the case of Messages"
+	| source ast foundNode |
+	source := 'method Object doit: Class'.
+	ast := RBParser parseMethod: source.
+	foundNode := ast nodeForOffset: 9.
+	self assert: (foundNode class == RBVariableNode).
+	foundNode := ast nodeForOffset: 14.
+	self assert: (foundNode class == RBMessageNode).
+	foundNode := ast nodeForOffset: 22.
+	self assert: (foundNode class == RBVariableNode)
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testNodeForOffsetTempDefinition [
+	"test the case of Messages"
+	| source ast foundNode |
+	source := 'method | temp |'.
+	ast := RBParser parseFaultyMethod: source.
+	foundNode := ast nodeForOffset: 12.
+	self assert: (foundNode class == RBVariableNode).
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testNodeForOffsetVar [
+	"test the case of a variable"
+	| source ast foundNode |
+	source := 'method Object'.
+	ast := RBParser parseMethod: source.
+	foundNode := ast nodeForOffset: 9.
+	self assert: (foundNode class == RBVariableNode)
+]
+
+{ #category : #tests }
 RBMethodNodeTest >> testSelectorAndArgumentNames [
 
 	self assert: (self parseMethod: 'one ^ self') selectorAndArgumentNames equals: 'one'.

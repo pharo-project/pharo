@@ -21,7 +21,8 @@ Class {
 		'category',
 		'selector',
 		'className',
-		'timeStamp'
+		'timeStamp',
+		'sortKey'
 	],
 	#classVars : [
 		'Definitions',
@@ -37,19 +38,14 @@ MCMethodDefinition class >> cachedDefinitions [
 ]
 
 { #category : #'instance creation' }
-MCMethodDefinition class >> className: classString
-classIsMeta: metaBoolean
-selector: selectorString
-category: catString
-timeStamp: timeString
-source: sourceString [
-	^ self instanceLike:
-		(self new initializeWithClassName: classString
-					classIsMeta: metaBoolean
-					selector: selectorString
-					category: catString
-					timeStamp: timeString
-					source: sourceString)
+MCMethodDefinition class >> className: classString classIsMeta: metaBoolean selector: selectorString category: catString timeStamp: timeString source: sourceString [
+	^ self new
+		initializeWithClassName: classString
+		classIsMeta: metaBoolean
+		selector: selectorString
+		category: catString
+		timeStamp: timeString
+		source: sourceString
 ]
 
 { #category : #'instance creation' }
@@ -95,17 +91,6 @@ MCMethodDefinition class >> initializersEnabled [
 MCMethodDefinition class >> initializersEnabled: aBoolean [
 
 	InitializersEnabled := aBoolean
-]
-
-{ #category : #'instance creation' }
-MCMethodDefinition class >> instanceLike: aDefinition [
-	"The cache is playing havoc with the equality between methods. Methods of the same code but with different timestamps are considered equal. This breaks havoc with some filetree testing code which looks at timestamps."
-
-	| aMCMethodDefinition |
-	aMCMethodDefinition := super instanceLike: aDefinition.
-	^ aMCMethodDefinition timeStamp ~= aDefinition timeStamp
-		ifTrue: [ Instances add: aDefinition ]
-		ifFalse: [ aMCMethodDefinition ]
 ]
 
 { #category : #'system startup' }
@@ -367,7 +352,12 @@ MCMethodDefinition >> shortSummaryPrefix [
 
 { #category : #comparing }
 MCMethodDefinition >> sortKey [
-	^ self className, '.', (self classIsMeta ifTrue: ['meta'] ifFalse: ['nonmeta']), '.', self selector
+	^ sortKey
+		ifNil: [ sortKey := self className , '.'
+				,
+					(self classIsMeta
+						ifTrue: [ 'meta' ]
+						ifFalse: [ 'nonmeta' ]) , '.' , self selector ]
 ]
 
 { #category : #accessing }

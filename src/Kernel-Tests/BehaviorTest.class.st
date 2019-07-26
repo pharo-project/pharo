@@ -56,7 +56,7 @@ BehaviorTest >> testAllSelectorsAbove [
 BehaviorTest >> testAllSelectorsAboveUntil [
 		
 	|sels |
-	sels := Date allSelectorsAboveUntil: Object..
+	sels := Date allSelectorsAboveUntil: Object.
 	self deny: (sels includes: #mmddyyyy). 
 	self deny: (sels includes: #weekday).
 	self assert: (sels includes: #at:).

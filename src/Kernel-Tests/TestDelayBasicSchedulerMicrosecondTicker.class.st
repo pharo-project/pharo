@@ -52,7 +52,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> setUp [
 	ticker := self classForTicker new.
 	suspendedDelaysHeap := self classForScheduler defaultSuspendedDelaysHeap.
 	scheduler := self classForScheduler onTicker: ticker suspendedDelaysHeap: suspendedDelaysHeap.
-	scheduler startTimerEventLoopPriority: 45. "So its slightly above normal priority of tests"
+	scheduler startTimerEventLoopPriority: Processor activePriority + 1. "So its slightly above normal priority of tests"
 	DebugMe ifNil: [ DebugMe := false ]. 
 	scheduler debug: DebugMe.
 
@@ -243,8 +243,8 @@ TestDelayBasicSchedulerMicrosecondTicker >> testPerformanceInlined_ifNotNil [
 { #category : #tests }
 TestDelayBasicSchedulerMicrosecondTicker >> testPerformanceInlined_ifTrue [
 	"For optimal performance, the outer conditionals of #timingPriorityHandleEvent should be inlined"
-	|codeSample|
-	codeSample := [ nil ifTrue: [ 0 ]].
+	| codeSample x |
+	codeSample := [ x ifTrue: [ 0 ]].
 	self assert: codeSample sourceNode body statements first isInlined
 ]
 

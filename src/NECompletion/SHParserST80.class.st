@@ -310,27 +310,27 @@ SHParserST80 >> parse [
 ]
 
 { #category : #parse }
-SHParserST80 >> parse: aBoolean [ 
+SHParserST80 >> parse: aBoolean [
+
 	self initializeInstanceVariables.
 	sourcePosition := 1.
 	arguments := Dictionary new.
 	temporaries := Dictionary new.
 	blockDepth := bracketDepth := 0.
-	ranges isNil
-		ifTrue: [ranges := OrderedCollection new: 100]
-		ifFalse: [ranges reset].
-	errorBlock := [^ false].
-	[self scanNext.
+	ranges ifNil: [ ranges := OrderedCollection new: 100 ] ifNotNil: [ ranges reset ].
+	errorBlock := [ ^ false ].
+	[ self scanNext.
 	aBoolean
-		ifTrue: [self parseMessagePattern.
-			self parsePragmaSequence].
+		ifTrue: [ self parseMessagePattern.
+			self parsePragmaSequence
+			].
 	self parseMethodTemporaries.
 	aBoolean
-		ifTrue: [self parsePragmaSequence].
+		ifTrue: [ self parsePragmaSequence ].
 	self parseStatementList.
-	currentToken
-		ifNotNil: [self error]]
-		ensure: [errorBlock := nil].
+	currentToken ifNotNil: [ self error ]
+	]
+		ensure: [ errorBlock := nil ].
 	^ true
 ]
 
@@ -343,21 +343,22 @@ SHParserST80 >> parseArray [
 
 { #category : #parse }
 SHParserST80 >> parseBinary [
+
 	| binary type |
+
 	self parseUnary.
-	[self isBinary]
-		whileTrue: [binary := currentToken.
+	[ self isBinary ]
+		whileTrue: [ binary := currentToken.
 			type := #binary.
-			(binary isEmpty
-					or: [Symbol
-							hasInterned: binary
-							ifTrue: [:sym | nil]])
-				ifFalse: [type := (Symbol thatStartsCaseSensitive: binary skipping: nil) isNil
-								ifTrue: [#undefinedBinary]
-								ifFalse: [#incompleteBinary]].
+			( binary isEmpty or: [ Symbol hasInterned: binary ifTrue: [ :sym | nil ] ] )
+				ifFalse: [ type := ( Symbol thatStartsCaseSensitive: binary skipping: nil )
+						ifNil: [ #undefinedBinary ]
+						ifNotNil: [ #incompleteBinary ]
+					].
 			self scanPast: type.
 			self parseTerm.
-			self parseUnary]
+			self parseUnary
+			]
 ]
 
 { #category : #parse }
@@ -479,28 +480,31 @@ SHParserST80 >> parseExternalCall [
 
 { #category : #parse }
 SHParserST80 >> parseKeyword [
+
 	| keyword rangeIndices |
+
 	self parseBinary.
 	keyword := ''.
 	rangeIndices := #().
-	[[self isKeyword]
-		whileTrue: [keyword := keyword , currentToken.
+	[ [ self isKeyword ]
+		whileTrue: [ keyword := keyword , currentToken.
 			self rangeType: #keyword.
 			rangeIndices := rangeIndices copyWith: ranges size.
 			self scanNext.
 			self parseTerm.
-			self parseBinary].
-	nil]
-		ensure: [| type | (keyword isEmpty
-					or: [Symbol
-							hasInterned: keyword
-							ifTrue: [:sym | nil]])
-				ifFalse: [type := (Symbol thatStartsCaseSensitive: keyword skipping: nil) isNil
-								ifTrue: [#undefinedKeyword]
-								ifFalse: [#incompleteKeyword].
-					rangeIndices
-						do: [:i | (ranges at: i)
-								type: type]]]
+			self parseBinary
+			].
+	nil
+	]
+		ensure: [ | type |
+
+			( keyword isEmpty or: [ Symbol hasInterned: keyword ifTrue: [ :sym | nil ] ] )
+				ifFalse: [ type := ( Symbol thatStartsCaseSensitive: keyword skipping: nil )
+						ifNil: [ #undefinedKeyword ]
+						ifNotNil: [ #incompleteKeyword ].
+					rangeIndices do: [ :i | ( ranges at: i ) type: type ]
+					]
+			]
 ]
 
 { #category : #parse }
@@ -681,29 +685,29 @@ SHParserST80 >> parseStatementListForBraceArray [
 
 { #category : #parse }
 SHParserST80 >> parseString [
+
 	| first c answer last |
+
 	first := sourcePosition.
 	answer := ''.
-	[(c := self currentChar) isNil
-		ifTrue: [self
-				rangeType: #unfinishedString
-				start: first - 1
-				end: source size.
-			self error].
-	(c ~~ $'
-			and: [answer := answer copyWith: c.
-				true])
-		or: [self peekChar == $'
-				and: [sourcePosition := sourcePosition + 1.
+	[ ( c := self currentChar )
+		ifNil: [ self rangeType: #unfinishedString start: first - 1 end: source size.
+			self error
+			].
+	( c ~~ $'
+		and: [ answer := answer copyWith: c.
+			true
+			] )
+		or: [ self peekChar == $'
+				and: [ sourcePosition := sourcePosition + 1.
 					answer := answer copyWith: $'.
-					true]]]
-		whileTrue: [sourcePosition := sourcePosition + 1].
+					true
+					]
+			]
+	] whileTrue: [ sourcePosition := sourcePosition + 1 ].
 	last := sourcePosition.
 	self nextChar.
-	self
-		scanPast: #string
-		start: first - 1
-		end: last.
+	self scanPast: #string start: first - 1 end: last.
 	^ answer
 ]
 
@@ -788,26 +792,25 @@ SHParserST80 >> parseSymbolSelector [
 
 { #category : #parse }
 SHParserST80 >> parseSymbolString [
+
 	| first c last |
+
 	first := sourcePosition.
 	self nextChar.
-	[(c := self currentChar) isNil
-		ifTrue: [self
-				rangeType: #unfinishedString
-				start: first
-				end: source size.
-			self error].
+	[ ( c := self currentChar )
+		ifNil: [ self rangeType: #unfinishedString start: first end: source size.
+			self error
+			].
 	c ~~ $'
-		or: [self peekChar == $'
-				and: [sourcePosition := sourcePosition + 1.
-					true]]]
-		whileTrue: [sourcePosition := sourcePosition + 1].
+		or: [ self peekChar == $'
+				and: [ sourcePosition := sourcePosition + 1.
+					true
+					]
+			]
+	] whileTrue: [ sourcePosition := sourcePosition + 1 ].
 	last := sourcePosition.
 	self nextChar.
-	self
-		scanPast: #stringSymbol
-		start: first - 1
-		end: last
+	self scanPast: #stringSymbol start: first - 1 end: last
 ]
 
 { #category : #parse }
@@ -833,18 +836,19 @@ SHParserST80 >> parseTerm [
 
 { #category : #parse }
 SHParserST80 >> parseUnary [
+
 	| unary type |
-	[self isName]
-		whileTrue: [unary := currentToken.
+
+	[ self isName ]
+		whileTrue: [ unary := currentToken.
 			type := #unary.
-			(unary isEmpty
-					or: [Symbol
-							hasInterned: unary
-							ifTrue: [:sym | nil]])
-				ifFalse: [type := (Symbol thatStartsCaseSensitive: unary skipping: nil) isNil
-								ifTrue: [#undefinedUnary]
-								ifFalse: [#incompleteUnary]].
-			self scanPast: type]
+			( unary isEmpty or: [ Symbol hasInterned: unary ifTrue: [ :sym | nil ] ] )
+				ifFalse: [ type := ( Symbol thatStartsCaseSensitive: unary skipping: nil )
+						ifNil: [ #undefinedUnary ]
+						ifNotNil: [ #incompleteUnary ]
+					].
+			self scanPast: type
+			]
 ]
 
 { #category : #parse }
@@ -1073,18 +1077,19 @@ SHParserST80 >> scanIdentifier [
 
 { #category : #scan }
 SHParserST80 >> scanNext [
+
 	self scanWhitespace.
 	currentTokenFirst := self currentChar.
-	currentTokenFirst isNil
-		ifTrue: [currentTokenFirst := Character space.
+	currentTokenFirst
+		ifNil: [ currentTokenFirst := Character space.
 			currentTokenSourcePosition := nil.
 			currentToken := nil.
-			^ nil].
+			^ nil
+			].
 	currentTokenFirst isDigit
-		ifTrue: [^ self scanNumber].
-	(currentTokenFirst isLetter
-			or: [currentTokenFirst == $_])
-		ifTrue: [^ self scanIdentifier].
+		ifTrue: [ ^ self scanNumber ].
+	( currentTokenFirst isLetter or: [ currentTokenFirst == $_ ] )
+		ifTrue: [ ^ self scanIdentifier ].
 	^ self scanBinary
 ]
 

@@ -153,7 +153,7 @@ NECModel >> printOn: aStream [
 				aStream nextPutAll: ')' ]
 ]
 
-{ #category : #private }
+{ #category : #initialization }
 NECModel >> reset [
 	self resetSelectors.
 	self resetEntries.

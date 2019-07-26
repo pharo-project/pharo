@@ -342,7 +342,7 @@ AthensSceneView >> stepTime [
 	^ 0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'stepping and presenter' }
 AthensSceneView >> stopStepping [
 	keepRefreshing ifFalse: [
 			^ super stopStepping ]

@@ -19,7 +19,7 @@ Class {
 ShLayoutDefinition >> allSlots [
 	| superclass | 
 	superclass := builder superclass.
-	^ (superclass ifNil: [ #() ] ifNotNil: [ superclass allSlots ]) , slots.
+	^ (superclass ifNil: [ #() ] ifNotNil: [ superclass allSlots ]) , slots
 ]
 
 { #category : #accessing }
@@ -34,7 +34,7 @@ ShLayoutDefinition >> classSlots [
 
 { #category : #accessing }
 ShLayoutDefinition >> classSlots: anObject [
-	classSlots := anObject collect: [ :e | e asSlot ].
+	classSlots := anObject collect: [ :e | e asSlot ]
 ]
 
 { #category : #accessing }
@@ -69,7 +69,7 @@ ShLayoutDefinition >> copySlotsIfUsedIn: oldClass [
 	oldClass ifNil: [ ^ self ].
 	
 	slots := self copy: slots ifUsedIn: oldClass.
-	classSlots := self copy: self classSlots ifUsedIn: oldClass class.
+	classSlots := self copy: self classSlots ifUsedIn: oldClass class
 
 ]
 
@@ -79,13 +79,13 @@ ShLayoutDefinition >> initialize [
 
 	slots := #().
 	sharedPools := #().
-	sharedVariables := #().
+	sharedVariables := #()
 
 ]
 
 { #category : #testing }
 ShLayoutDefinition >> isBits [
-	^ self layoutClass new isBits.
+	^ self layoutClass new isBits
 ]
 
 { #category : #accessing }
@@ -110,7 +110,7 @@ ShLayoutDefinition >> sharedPools: anObject [
 
 { #category : #printing }
 ShLayoutDefinition >> sharedPoolsString [
-	^ self sharedPools joinUsing: Character space.
+	^ self sharedPools joinUsing: Character space
 ]
 
 { #category : #accessing }
@@ -125,7 +125,7 @@ ShLayoutDefinition >> sharedVariables: anObject [
 
 { #category : #accessing }
 ShLayoutDefinition >> sharedVariablesString [
-	^ (sharedVariables collect:[:e | e key]) joinUsing: ' '.
+	^ (sharedVariables collect:[:e | e key]) joinUsing: ' '
 ]
 
 { #category : #accessing }
@@ -135,5 +135,5 @@ ShLayoutDefinition >> slots [
 
 { #category : #accessing }
 ShLayoutDefinition >> slots: anObject [
-	slots := anObject collect: [ :e | e asSlot ].
+	slots := anObject collect: [ :e | e asSlot ]
 ]

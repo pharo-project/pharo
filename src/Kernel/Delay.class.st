@@ -1,16 +1,18 @@
 "
-I am the main way that a process may pause for some amount of time.  The simplest usage is like this:
-
-	(Delay forSeconds: 5) wait.   ""or...""
+I am the main way that a process may pause for some amount of time.  
+The simplest usage is like...
+	(Delay forSeconds: 5) wait.   
+or...
 	5 seconds asDelay wait.
 
 An instance of Delay responds to the message 'wait' by suspending the caller's process for a certain amount of time. The duration of the pause is specified when the Delay is created with the message forMilliseconds: or forSeconds:. A Delay can be used again when the current wait has finished. For example, a clock process might repeatedly wait on a one-second Delay.  Delays work across  clock roll-overs.
 
-The maximum possible delay depends on which DelayScheduler is used:
-  * DelayMillisecondScheduler uses a 32-bit value that rolls over about every six days, or SmallInteger maxVal // 2 milliseconds.
-  * DelayMicrosecondScheduler is 64-bit and rolls over every 50,000 years. 
+The maximum possible delay depends on which delay ticker is used:
+  * DelayMillisecondTicker uses a 32-bit value that rolls over about every six days, or SmallInteger maxVal // 2 milliseconds.
+  * DelayMicrosecondTicker is 64-bit and rolls over every 50,000 years. 
 
-A delay in progress when an image snapshot is saved and resumed when the snapshot is re-started. 
+A delay in progress when an image snapshot is suspended and resumed when the snapshot is re-started. 
+i.e. from the image perspective of timing, the image snapshot never happened.
 
 "
 Class {
@@ -20,8 +22,6 @@ Class {
 		'delaySemaphore',
 		'beingWaitedOn',
 		'millisecondDelayDuration',
-		'scheduler',
-		'schedulerResumptionTime',
 		'ticker',
 		'resumptionTick'
 	],
@@ -34,13 +34,13 @@ Class {
 { #category : #testing }
 Delay class >> anyActive [
 	"Return true if there is any delay currently active"
-		^Scheduler anyActive
+		^self scheduler anyActive
 
 ]
 
 { #category : #settings }
 Delay class >> delaySchedulerClass [
-	^Scheduler class
+	^self scheduler class
 ]
 
 { #category : #settings }
@@ -53,8 +53,8 @@ Delay class >> delaySchedulerClass: aSchedulerClass [
 	newScheduler startTimerEventLoop.
 	"To avoid lockup if a higher priority process preempts this method to schedule a delay,
 	the newScheduler needs to be in place before oldScheduler is stopped"
-	oldScheduler := Scheduler.
-	Scheduler := newScheduler.
+	oldScheduler := self scheduler.
+	self scheduler: newScheduler.
 	oldScheduler stopTimerEventLoop.
 	self inform: 'Delay scheduler set to ' , aSchedulerClass printString.
 	
@@ -88,9 +88,9 @@ Delay class >> forSeconds: aNumber [
 { #category : #'initialize-release' }
 Delay class >> initialize [
 	"Delay initialize"
-	Scheduler ifNotNil: [ Scheduler stopTimerEventLoop ].
-	Scheduler := DelaySemaphoreScheduler new.
-	Scheduler startTimerEventLoop. 
+	self scheduler ifNotNil: [ self scheduler stopTimerEventLoop ].
+	self scheduler: DelaySemaphoreScheduler new.
+	self scheduler startTimerEventLoop. 
 	SessionManager default 
 		registerSystemClassNamed: self name 
 		atPriority: 20.
@@ -100,7 +100,7 @@ Delay class >> initialize [
 { #category : #testing }
 Delay class >> nextWakeUpTime [
 
-	^ Scheduler nextWakeUpTime.
+	^ self scheduler nextWakeUpTime.
 
 
 
@@ -112,24 +112,38 @@ Delay class >> restartTimerEventLoop [
 	self startTimerEventLoop.
 ]
 
+{ #category : #scheduler }
+Delay class >> scheduler [
+
+	^ Scheduler.
+
+]
+
+{ #category : #scheduler }
+Delay class >> scheduler: anObject [
+
+	Scheduler := anObject.
+
+]
+
 { #category : #'timer process' }
 Delay class >> schedulingProcess [
 
-	^ Scheduler schedulingProcess.
+	^ self scheduler schedulingProcess.
 
 ]
 
 { #category : #snapshotting }
 Delay class >> shutDown [
 
-	Scheduler shutDown.
+	self scheduler shutDown.
 
 ]
 
 { #category : #'timer process' }
 Delay class >> startTimerEventLoop [
 
-	Scheduler startTimerEventLoop.
+	self scheduler startTimerEventLoop.
 
 ]
 
@@ -137,7 +151,7 @@ Delay class >> startTimerEventLoop [
 Delay class >> startUp [
 	"Restart active delay, if any, when resuming a snapshot."
 
-	Scheduler startUp.
+	self scheduler startUp.
 
 
 ]
@@ -145,7 +159,7 @@ Delay class >> startUp [
 { #category : #'timer process' }
 Delay class >> stopTimerEventLoop [
 
-	^ Scheduler stopTimerEventLoop.
+	^ self scheduler stopTimerEventLoop.
 
 ]
 
@@ -161,13 +175,6 @@ Delay class >> systemSettingOn: aBuilder [
 		description: 'Choose the class to use for Delay scheduling.' , 
 			String crlf, 'You can observe which is running from Tools > Process Browser.'
 	
-]
-
-{ #category : #deprecated }
-Delay class >> testCaseSupportTimingSemaphore [
-
-	^ Scheduler testCaseSupportTimingSemaphore.
-
 ]
 
 { #category : #'instance creation' }
@@ -205,13 +212,7 @@ Delay >> millisecondDelayDuration [
 
 { #category : #public }
 Delay >> millisecondsToGo [
-	^ ticker 
-		ifNotNil: [ "New code for Pharo 7"
-			ticker millisecondsUntilTick: resumptionTick ]
-		ifNil: [ "Deprecated code required during transition" 
-			scheduler 
-				ifNotNil: [ scheduler millisecondsUntilResumptionTime: schedulerResumptionTime ]
-				ifNil: [ 0 ] ]
+	^ ticker millisecondsUntilTick: resumptionTick
 ]
 
 { #category : #printing }
@@ -248,65 +249,8 @@ Delay >> resumptionTickAdjustFrom: oldBaseTick to: newBaseTick [
 Delay >> schedule [
 	"Schedule this delay."
 	
-	Scheduler schedule: self.
+	self class scheduler schedule: self.
 
-]
-
-{ #category : #deprecated }
-Delay >> scheduler: aDelayScheduler resumptionTime: milliOrMicroResumptionTime [
-	"The milli/micro semantics of schedulerResumptionTime varies depending on which 
-	scheduler is running, so we record it such that later printOn: can interpret it
-	using #millisecondsToGo"
-	scheduler := aDelayScheduler.
-	schedulerResumptionTime := milliOrMicroResumptionTime.
-]
-
-{ #category : #deprecated }
-Delay >> schedulerBeingWaitedOn [
-	"Answer whether this delay is currently scheduled, e.g., being waited on"
-	^beingWaitedOn
-]
-
-{ #category : #deprecated }
-Delay >> schedulerBeingWaitedOn: aBoolean [
-	"Indicate whether this delay is currently scheduled, i.e. being waited on"
-	
-	beingWaitedOn := aBoolean
-
-	"Important! Must only be called from the single timing priority process, e.g...
-		DelayScheduler>>scheduleDelay: 
-		DelayScheduler>>unscheduleDelay: "
-
-]
-
-{ #category : #deprecated }
-Delay >> schedulerResumptionTime [
-	"Answer the value of the system clock at which the receiver's suspended Process will resume.
-	The semantics of whether this is a millisecond or microsecond value depends on which scheduler is in use."
-	
-	^ schedulerResumptionTime 
-
-]
-
-{ #category : #deprecated }
-Delay >> schedulerResumptionTime: anInteger [
-	"Private! Should only be called by a subclass of DelayScheduler.
-	Set the value of the system's clock at which the receiver's suspended Process will resumed.  The clock semantics depends on the scheduler used e.g. millisecond/microsecond."
-	
-	schedulerResumptionTime := anInteger
-	
-
-]
-
-{ #category : #deprecated }
-Delay >> schedulerSignalWaitingProcess [
-	"The delay time has elapsed; signal the waiting process."
-
-	beingWaitedOn := false.
-	delaySemaphore signal.
-
-	"Important! Must only be called from the single timing priority process e.g...
-		DelayScheduler>>handleEventTimer."
 ]
 
 { #category : #private }
@@ -358,7 +302,7 @@ Delay >> timingPriorityUnschedule [
 
 { #category : #private }
 Delay >> unschedule [
-	Scheduler unschedule: self.
+	self class scheduler unschedule: self.
 
 ]
 

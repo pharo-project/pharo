@@ -20,7 +20,7 @@ Class {
 
 { #category : #'instance creation' }
 TabExample class >> open [
-
+	<script>
 	^ self new open
 ]
 
@@ -62,7 +62,7 @@ TabExample >> freshListTab [
 		label: 'Fresh List'
 		icon: nil
 		retrievingBlock: [ 1 second asDelay wait.
-			ListPresenter new
+			SpListPresenter new
 				items: (1 to: 50) asOrderedCollection;
 				buildWithSpec ]
 		actions:
@@ -82,18 +82,16 @@ TabExample >> initialize [
 	manager := TabManagerMorph new.
 	manager
 		when: #tabManagerDeleted send: #delete to: self.
-	listModel := ListPresenter new.
+	listModel := SpListPresenter new.
 	listModel items: ((1 to: 1000) asOrderedCollection)
 ]
 
 { #category : #'instance creation' }
 TabExample >> open [
-	
 	window := manager openInWindow.
-	window extent: 400@300.
-	
-	self addTabs.
-"	listModel openWithSpec"
+	window extent: 400 @ 300.
+
+	self addTabs
 ]
 
 { #category : #'tabs creation' }

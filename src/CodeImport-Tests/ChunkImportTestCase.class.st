@@ -250,7 +250,7 @@ ChunkImportTestCase >> testImportAMethodWithLangTag [
     พูดจาให้จ๊ะ ๆ จ๋า ๆ น่าฟังเอยฯ'';
 		add: ''Turkish'' -> ''Pijamalı hasta, yağız şoföre çabucak güvendi'';
 		yourself!]lang[(2798)0! !' format: {(class name asString)}).
-			self assert: class new pangrams first value = 'the quick brown fox jumps over the lazy dog']
+			self assert: class new pangrams first value equals: 'the quick brown fox jumps over the lazy dog']
 				ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 

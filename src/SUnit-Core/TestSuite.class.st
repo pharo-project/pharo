@@ -100,8 +100,8 @@ TestSuite >> resourceClass [
 
 { #category : #accessing }
 TestSuite >> resources [
-	resources isNil ifTrue: [resources := self defaultResources].
-	^resources
+
+	^ resources ifNil: [ resources := self defaultResources ]
 ]
 
 { #category : #accessing }
@@ -170,8 +170,8 @@ TestSuite >> testSuiteAnnouncer [
 
 { #category : #accessing }
 TestSuite >> tests [
-	tests isNil ifTrue: [tests := OrderedCollection new].
-	^tests
+
+	^ tests ifNil: [ tests := OrderedCollection new ]
 ]
 
 { #category : #announcements }

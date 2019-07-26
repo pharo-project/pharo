@@ -76,7 +76,7 @@ ShiftClassInstaller >> copyClassSlotsFromExistingClass [
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
 	| newObject hiddenSlots |
 	
-	newObject := newClass isVariable
+	newObject := (newClass isVariable and: [oldClass isVariable])
 		ifTrue: [ newClass basicNew: oldObject size ]
 		ifFalse: [ newClass basicNew ].
 
@@ -117,13 +117,17 @@ ShiftClassInstaller >> fixSlotScope: newClass [
 ShiftClassInstaller >> initialize [
 	super initialize.
 	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new.	
+	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new	
 	
 	
 ]
 
 { #category : #building }
 ShiftClassInstaller >> installInEnvironment: newClass [
+
+	"I only install if there is a name / non anonymous"
+	builder name ifNil: [ ^ self ].
+
 	"I only install in the environment if there is not oldClass installed."
 	(self installingEnvironment hasClassNamed: builder name) ifFalse:[
 		self installingEnvironment installClass: newClass withName: builder name.
@@ -136,6 +140,10 @@ ShiftClassInstaller >> installInEnvironment: newClass [
 
 { #category : #building }
 ShiftClassInstaller >> installSubclassInSuperclass: newClass [
+
+	"I only install if there is a name / non anonymous"
+	builder name ifNil: [ ^ self ].
+
 	newClass superclass addSubclass: newClass
 ]
 
@@ -225,7 +233,7 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 			ifTrue: [ builder builderEnhancer migrateInstancesTo: newClass installer: self ].
 
 		{ oldClass. builder oldMetaclass } elementsForwardIdentityTo: { newClass. builder newMetaclass }.	
-	] valueUninterruptably.
+	] valueUninterruptably
 
 ]
 

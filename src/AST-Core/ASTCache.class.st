@@ -51,7 +51,7 @@ ASTCache class >> initialize [
 	SessionManager default registerSystemClassNamed: self name
 ]
 
-{ #category : #'initialization-release' }
+{ #category : #initialization }
 ASTCache class >> reset [
 	<script>
 	self default reset.
@@ -71,7 +71,7 @@ ASTCache >> at: aCompiledMethod [
 			aCompiledMethod parseTree doSemanticAnalysisIn: aCompiledMethod methodClass ]
 ]
 
-{ #category : #'initialization-release' }
+{ #category : #initialization }
 ASTCache >> reset [
 	self removeAll
 ]

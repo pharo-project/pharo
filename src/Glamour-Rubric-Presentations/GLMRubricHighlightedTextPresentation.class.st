@@ -30,9 +30,8 @@ Class {
 
 { #category : #accessing }
 GLMRubricHighlightedTextPresentation >> editingMode [
-	^ editingMode isNil 
-		ifTrue: [nil] 
-		ifFalse: [editingMode glamourValue: self]
+
+	^ editingMode ifNil: [ nil ] ifNotNil: [ editingMode glamourValue: self ]
 ]
 
 { #category : #accessing }

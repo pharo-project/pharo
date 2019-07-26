@@ -744,23 +744,25 @@ RPackageOrganizer >> register [
 ]
 
 { #category : #'private registration' }
-RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [ 
+RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [
 
 	| cur |
-	cur := classExtendingPackagesMapping at: aClass instanceSide name ifAbsent: [nil].
-	cur isNil
-		ifTrue: [classExtendingPackagesMapping at: aClass instanceSide name put: (Set with: aPackage)]
-		ifFalse: [cur add: aPackage]
+
+	cur := classExtendingPackagesMapping at: aClass instanceSide name ifAbsent: [ nil ].
+	cur
+		ifNil: [ classExtendingPackagesMapping at: aClass instanceSide name put: ( Set with: aPackage ) ]
+		ifNotNil: [ cur add: aPackage ]
 ]
 
 { #category : #'private registration' }
-RPackageOrganizer >> registerExtendingPackage: aPackage forClassName: aClassName [ 
+RPackageOrganizer >> registerExtendingPackage: aPackage forClassName: aClassName [
 
 	| cur |
-	cur := classExtendingPackagesMapping at: aClassName asSymbol ifAbsent: [nil].
-	cur isNil
-		ifTrue: [classExtendingPackagesMapping at: aClassName asSymbol put: (Set with: aPackage)]
-		ifFalse: [cur add: aPackage]
+
+	cur := classExtendingPackagesMapping at: aClassName asSymbol ifAbsent: [ nil ].
+	cur
+		ifNil: [ classExtendingPackagesMapping at: aClassName asSymbol put: ( Set with: aPackage ) ]
+		ifNotNil: [ cur add: aPackage ]
 ]
 
 { #category : #'system integration' }
@@ -1059,7 +1061,7 @@ RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 { #category : #'system integration' }
 RPackageOrganizer >> systemMethodModifiedActionFrom: ann [
 
-	"this annoucement can correspond to several kind of modifications:
+	"this announcement can correspond to several kind of modifications:
 		=> a method has been renamed
 		=> a method has been move to another category // SHOULD BE TREATED WITH SystemMethodRecategorizedEvent
 		(
@@ -1198,11 +1200,11 @@ RPackageOrganizer >> unregisterExtendingPackage: aPackage forClass: aClass [
 
 { #category : #'private registration' }
 RPackageOrganizer >> unregisterExtendingPackage: aPackage forClassName: aClassName [
-	
+
 	| cur |
-	cur := classExtendingPackagesMapping at: aClassName asSymbol ifAbsent: [nil].
-	cur isNil
-		ifFalse: [cur remove: aPackage ifAbsent: [] "not happy with this one"]
+
+	cur := classExtendingPackagesMapping at: aClassName asSymbol ifAbsent: [ nil ].
+	cur ifNotNil: [ cur remove: aPackage ifAbsent: [ "not happy with this one" ] ]
 ]
 
 { #category : #'system integration' }
@@ -1257,17 +1259,16 @@ RPackageOrganizer >> unregisterPackageNamed: symbol [
 ]
 
 { #category : #private }
-RPackageOrganizer >> validateCanBeAddedPackage: aPackage [ 	
-	self 
-		validateCanBeAddedPackageName: aPackage categoryName 
-		tagName: nil
+RPackageOrganizer >> validateCanBeAddedPackage: aPackage [
+	self validateCanBeAddedPackageName: aPackage name tagName: nil
 ]
 
 { #category : #private }
 RPackageOrganizer >> validateCanBeAddedPackage: aPackage tagName: aSymbol [
-	aPackage name = aSymbol ifTrue: [ ^ self ].
-	self 
-		validateCanBeAddedPackageName: aPackage categoryName, '-', aSymbol
+	aPackage name = aSymbol
+		ifTrue: [ ^ self ].
+	self
+		validateCanBeAddedPackageName: aPackage name , '-' , aSymbol
 		tagName: nil
 ]
 

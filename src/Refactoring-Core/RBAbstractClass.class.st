@@ -73,11 +73,13 @@ RBAbstractClass >> allClassVariableNames [
 
 { #category : #accessing }
 RBAbstractClass >> allInstanceVariableNames [
+
 	| sprClass |
+
 	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [self instanceVariableNames]
-		ifFalse: [sprClass allInstanceVariableNames , self instanceVariableNames]
+	^ sprClass
+		ifNil: [ self instanceVariableNames ]
+		ifNotNil: [ sprClass allInstanceVariableNames , self instanceVariableNames ]
 ]
 
 { #category : #accessing }
@@ -310,19 +312,19 @@ RBAbstractClass >> hash [
 ]
 
 { #category : #testing }
-RBAbstractClass >> hierarchyDefinesClassVariable: aString [ 
-	(self definesClassVariable: aString) ifTrue: [^true].
-	^(self allSubclasses 
-		detect: [:each | each directlyDefinesClassVariable: aString]
-		ifNone: [nil]) notNil
+RBAbstractClass >> hierarchyDefinesClassVariable: aString [
+	(self definesClassVariable: aString)
+		ifTrue: [ ^ true ].
+	^ self allSubclasses
+		anySatisfy: [ :each | each directlyDefinesClassVariable: aString ]
 ]
 
 { #category : #testing }
-RBAbstractClass >> hierarchyDefinesInstanceVariable: aString [ 
-	(self definesInstanceVariable: aString) ifTrue: [^true].
-	^(self allSubclasses 
-		detect: [:each | each directlyDefinesInstanceVariable: aString]
-		ifNone: [nil]) notNil
+RBAbstractClass >> hierarchyDefinesInstanceVariable: aString [
+	(self definesInstanceVariable: aString)
+		ifTrue: [ ^ true ].
+	^ self allSubclasses
+		anySatisfy: [ :each | each directlyDefinesInstanceVariable: aString ]
 ]
 
 { #category : #testing }
@@ -332,19 +334,19 @@ RBAbstractClass >> hierarchyDefinesMethod: aSelector [
 ]
 
 { #category : #testing }
-RBAbstractClass >> hierarchyDefinesPoolDictionary: aString [ 
-	(self definesPoolDictionary: aString) ifTrue: [^true].
-	^(self allSubclasses 
-		detect: [:each | each directlyDefinesPoolDictionary: aString]
-		ifNone: [nil]) notNil
+RBAbstractClass >> hierarchyDefinesPoolDictionary: aString [
+	(self definesPoolDictionary: aString)
+		ifTrue: [ ^ true ].
+	^ self allSubclasses
+		anySatisfy: [ :each | each directlyDefinesPoolDictionary: aString ]
 ]
 
 { #category : #testing }
-RBAbstractClass >> hierarchyDefinesVariable: aString [ 
-	(self definesVariable: aString) ifTrue: [^true].
-	^(self allSubclasses 
-		detect: [:each | each directlyDefinesVariable: aString]
-		ifNone: [nil]) notNil
+RBAbstractClass >> hierarchyDefinesVariable: aString [
+	(self definesVariable: aString)
+		ifTrue: [ ^ true ].
+	^ self allSubclasses
+		anySatisfy: [ :each | each directlyDefinesVariable: aString ]
 ]
 
 { #category : #testing }
@@ -403,21 +405,22 @@ RBAbstractClass >> isMeta [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> methodFor: aSelector [ 
-	^self newMethods at: aSelector
-		ifAbsent: 
-			[| compiledMethod class |
-			(self hasRemoved: aSelector) ifTrue: [^nil].
+RBAbstractClass >> methodFor: aSelector [
+
+	^ self newMethods
+		at: aSelector
+		ifAbsent: [ | compiledMethod class |
+
+			( self hasRemoved: aSelector )
+				ifTrue: [ ^ nil ].
 			class := self realClass.
-			class isNil ifTrue: [^nil].
-			compiledMethod := class compiledMethodAt: aSelector ifAbsent: [nil].
-			compiledMethod isNil 
-				ifTrue: [nil]
-				ifFalse: 
-					[modelFactory rbMethod 
-						for: self
-						fromMethod: compiledMethod
-						andSelector: aSelector]]
+			class ifNil: [ ^ nil ].
+			compiledMethod := class compiledMethodAt: aSelector ifAbsent: [ nil ].
+			compiledMethod
+				ifNil: [ nil ]
+				ifNotNil:
+					[ modelFactory rbMethod for: self fromMethod: compiledMethod andSelector: aSelector ]
+			]
 ]
 
 { #category : #accessing }
@@ -442,17 +445,18 @@ RBAbstractClass >> name: aSymbol [
 
 { #category : #accessing }
 RBAbstractClass >> newMethods [
-	^newMethods isNil 
-		ifTrue: [newMethods := IdentityDictionary new]
-		ifFalse: [newMethods]
+
+	^ newMethods ifNil: [ newMethods := IdentityDictionary new ] ifNotNil: [ newMethods ]
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> parseTreeFor: aSelector [ 
+RBAbstractClass >> parseTreeFor: aSelector [
+
 	| class |
+
 	class := self whoDefinesMethod: aSelector.
-	class isNil ifTrue: [^nil].
-	^(class methodFor: aSelector) parseTree
+	class ifNil: [ ^ nil ].
+	^ ( class methodFor: aSelector ) parseTree
 ]
 
 { #category : #printing }
@@ -462,27 +466,29 @@ RBAbstractClass >> printOn: aStream [
 
 { #category : #private }
 RBAbstractClass >> privateInstanceVariableNames [
-	instanceVariableNames isNil 
-		ifTrue: 
-			[self isDefined 
-				ifTrue: [self instanceVariableNames: self realClass instVarNames]
-				ifFalse: [instanceVariableNames := OrderedCollection new]].
-	^instanceVariableNames
+
+	instanceVariableNames
+		ifNil: [ self isDefined
+				ifTrue: [ self instanceVariableNames: self realClass instVarNames ]
+				ifFalse: [ instanceVariableNames := OrderedCollection new ]
+			].
+	^ instanceVariableNames
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> protocolsFor: aSelector [ 
+RBAbstractClass >> protocolsFor: aSelector [
+
 	| change |
-	change := self isMeta 
-				ifTrue: [model changes changeForMetaclass: name selector: aSelector]
-				ifFalse: [model changes changeForClass: name selector: aSelector].
-	^change isNil 
-		ifTrue: 
-			[self isDefined 
-				ifTrue: 
-					[Array with: (RBBrowserEnvironment new whichProtocolIncludes: aSelector in: self realClass)]
-				ifFalse: [#(#accessing)]]
-		ifFalse: [change protocols]
+
+	change := self isMeta
+		ifTrue: [ model changes changeForMetaclass: name selector: aSelector ]
+		ifFalse: [ model changes changeForClass: name selector: aSelector ].
+	^ change
+		ifNil: [ self isDefined
+				ifTrue: [ Array with: ( RBBrowserEnvironment new whichProtocolIncludes: aSelector in: self realClass ) ]
+				ifFalse: [ #(#accessing) ]
+			]
+		ifNotNil: [ change protocols ]
 ]
 
 { #category : #accessing }
@@ -491,9 +497,10 @@ RBAbstractClass >> realClass [
 ]
 
 { #category : #accessing }
-RBAbstractClass >> realClass: aClass [ 
+RBAbstractClass >> realClass: aClass [
+
 	realClass := aClass.
-	superclass isNil ifTrue: [superclass := LookupSuperclass]
+	superclass ifNil: [ superclass := LookupSuperclass ]
 ]
 
 { #category : #'variable accessing' }
@@ -516,9 +523,8 @@ RBAbstractClass >> removeSubclass: aRBClass [
 
 { #category : #accessing }
 RBAbstractClass >> removedMethods [
-	^removedMethods isNil 
-		ifTrue: [removedMethods := Set new]
-		ifFalse: [removedMethods]
+
+	^ removedMethods ifNil: [ removedMethods := Set new ] ifNotNil: [ removedMethods ]
 ]
 
 { #category : #'variable accessing' }
@@ -552,11 +558,13 @@ RBAbstractClass >> soleInstance [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> sourceCodeFor: aSelector [ 
+RBAbstractClass >> sourceCodeFor: aSelector [
+
 	| class |
+
 	class := self whoDefinesMethod: aSelector.
-	class isNil ifTrue: [^nil].
-	^(class methodFor: aSelector) source
+	class ifNil: [ ^ nil ].
+	^ ( class methodFor: aSelector ) source
 ]
 
 { #category : #printing }
@@ -573,15 +581,15 @@ RBAbstractClass >> subclassRedefines: aSelector [
 
 { #category : #accessing }
 RBAbstractClass >> subclasses [
-	^subclasses isNil 
-		ifTrue: 
-			[subclasses := self isDefined 
-						ifTrue: 
-							[((self realClass subclasses collect: [:each | model classFor: each]) 
-								reject: [ :each | each isNil ])
-								asOrderedCollection]
-						ifFalse: [OrderedCollection new]]
-		ifFalse: [subclasses]
+
+	^ subclasses
+		ifNil: [ subclasses := self isDefined
+				ifTrue: [ ( ( self realClass subclasses collect: [ :each | model classFor: each ] )
+						reject: [ :each | each isNil ] ) asOrderedCollection
+					]
+				ifFalse: [ OrderedCollection new ]
+			]
+		ifNotNil: [ subclasses ]
 ]
 
 { #category : #enumerating }
@@ -619,86 +627,110 @@ RBAbstractClass >> typeOfClassVariable: aSymbol [
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> whichSelectorsReferToClass: aRBClass [ 
+RBAbstractClass >> whichSelectorsReferToClass: aRBClass [
+
 	| selectors |
+
 	selectors := Set new.
-	newMethods isNil ifFalse: [
-		newMethods do: [ :each | 
-			(each refersToClassNamed: aRBClass name) 
-				ifTrue: [ selectors add: each selector ] ] ].
-	(self isDefined and: [ aRBClass isDefined ]) ifTrue: [
-		selectors addAll: (self existingMethodsThatReferTo: aRBClass classBinding).
-		selectors addAll: (self existingMethodsThatReferTo: aRBClass name) ].
+	newMethods
+		ifNotNil: [ newMethods
+				do: [ :each | 
+					( each refersToClassNamed: aRBClass name )
+						ifTrue: [ selectors add: each selector ]
+					]
+			].
+	( self isDefined and: [ aRBClass isDefined ] )
+		ifTrue: [ selectors addAll: ( self existingMethodsThatReferTo: aRBClass classBinding ).
+			selectors addAll: ( self existingMethodsThatReferTo: aRBClass name )
+			].
 	^ selectors
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> whichSelectorsReferToClassVariable: aString [ 
+RBAbstractClass >> whichSelectorsReferToClassVariable: aString [
+
 	| selectors |
+
 	selectors := Set new.
-	newMethods isNil ifFalse: [
-		newMethods do: [ :each | 
-			(each refersToVariable: aString)
-				ifTrue: [ selectors add: each selector ] ] ].
-	self isDefined 
-		ifTrue: [ selectors addAll: (self existingMethodsThatReferToClassVariable: aString) ].
+	newMethods
+		ifNotNil: [ newMethods
+				do: [ :each | 
+					( each refersToVariable: aString )
+						ifTrue: [ selectors add: each selector ]
+					]
+			].
+	self isDefined
+		ifTrue: [ selectors addAll: ( self existingMethodsThatReferToClassVariable: aString ) ].
 	^ selectors
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> whichSelectorsReferToInstanceVariable: aString [ 
+RBAbstractClass >> whichSelectorsReferToInstanceVariable: aString [
+
 	| selectors |
+
 	selectors := Set new.
-	newMethods isNil ifFalse: [
-		newMethods do: [ :each | 
-			(each refersToVariable: aString)
-				ifTrue: [ selectors add: each selector ] ] ].
-	self isDefined 
-		ifTrue: [ selectors addAll: (self existingMethodsThatReferToInstanceVariable: aString) ].
+	newMethods
+		ifNotNil: [ newMethods
+				do: [ :each | 
+					( each refersToVariable: aString )
+						ifTrue: [ selectors add: each selector ]
+					]
+			].
+	self isDefined
+		ifTrue: [ selectors addAll: ( self existingMethodsThatReferToInstanceVariable: aString ) ].
 	^ selectors
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> whichSelectorsReferToSymbol: aSymbol [ 
+RBAbstractClass >> whichSelectorsReferToSymbol: aSymbol [
+
 	| selectors |
+
 	selectors := Set new.
-	newMethods isNil ifFalse: [
-		newMethods do: [ :each | 
-			(each refersToSymbol: aSymbol)
-				ifTrue: [ selectors add: each selector ] ] ].
-	self isDefined 
-		ifTrue: [ selectors addAll: (self existingMethodsThatReferTo: aSymbol) ].
+	newMethods
+		ifNotNil: [ newMethods
+				do: [ :each | 
+					( each refersToSymbol: aSymbol )
+						ifTrue: [ selectors add: each selector ]
+					]
+			].
+	self isDefined
+		ifTrue: [ selectors addAll: ( self existingMethodsThatReferTo: aSymbol ) ].
 	^ selectors
 ]
 
 { #category : #'variable accessing' }
-RBAbstractClass >> whoDefinesClassVariable: aString [ 
+RBAbstractClass >> whoDefinesClassVariable: aString [
+
 	| sprClass |
-	(self directlyDefinesClassVariable: aString) ifTrue: [^self].
+
+	( self directlyDefinesClassVariable: aString )
+		ifTrue: [ ^ self ].
 	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [nil]
-		ifFalse: [sprClass whoDefinesClassVariable: aString]
+	^ sprClass ifNil: [ nil ] ifNotNil: [ sprClass whoDefinesClassVariable: aString ]
 ]
 
 { #category : #'variable accessing' }
-RBAbstractClass >> whoDefinesInstanceVariable: aString [ 
+RBAbstractClass >> whoDefinesInstanceVariable: aString [
+
 	| sprClass |
-	(self directlyDefinesInstanceVariable: aString) ifTrue: [^self].
+
+	( self directlyDefinesInstanceVariable: aString )
+		ifTrue: [ ^ self ].
 	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [nil]
-		ifFalse: [sprClass whoDefinesInstanceVariable: aString]
+	^ sprClass ifNil: [ nil ] ifNotNil: [ sprClass whoDefinesInstanceVariable: aString ]
 ]
 
 { #category : #'method accessing' }
-RBAbstractClass >> whoDefinesMethod: aSelector [ 
+RBAbstractClass >> whoDefinesMethod: aSelector [
+
 	| sprClass |
-	(self directlyDefinesMethod: aSelector) ifTrue: [^self].
+
+	( self directlyDefinesMethod: aSelector )
+		ifTrue: [ ^ self ].
 	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [nil]
-		ifFalse: [sprClass whoDefinesMethod: aSelector]
+	^ sprClass ifNil: [ nil ] ifNotNil: [ sprClass whoDefinesMethod: aSelector ]
 ]
 
 { #category : #accessing }

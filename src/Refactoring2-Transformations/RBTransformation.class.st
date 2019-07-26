@@ -111,15 +111,17 @@ RBTransformation >> checksPreconditions [
 ]
 
 { #category : #private }
-RBTransformation >> convertMethod: selector for: aClass using: searchReplacer [ 
+RBTransformation >> convertMethod: selector for: aClass using: searchReplacer [
+
 	"Convert the parse tree for selector using the searchReplacer. If a
 	change is made then compile it into the changeBuilder."
 
 	| parseTree |
+
 	parseTree := aClass parseTreeFor: selector.
-	parseTree isNil ifTrue: [^self].
-	(searchReplacer executeTree: parseTree) 
-		ifTrue: [aClass compileTree: searchReplacer tree]
+	parseTree ifNil: [ ^ self ].
+	( searchReplacer executeTree: parseTree )
+		ifTrue: [ aClass compileTree: searchReplacer tree ]
 ]
 
 { #category : #accessing }

@@ -228,6 +228,11 @@ RBMethodNode >> compilationContext: aCompilationContext [
 	compilationContext := aCompilationContext.
 ]
 
+{ #category : #completion }
+RBMethodNode >> completionToken [
+	^ self selector
+]
+
 { #category : #'accessing - conceptual' }
 RBMethodNode >> conceptualArgumentSize [
 	"Return the cumulted length of the parameters (yes parameters are called arguments in Pharo - not good!). It does not count spaces and the selectors.
@@ -474,6 +479,12 @@ RBMethodNode >> methodNode [
 { #category : #accessing }
 RBMethodNode >> methodOrBlockNode [
 	"^ self"
+]
+
+{ #category : #completion }
+RBMethodNode >> narrowWith: aString [
+
+	self selector: aString asSymbol
 ]
 
 { #category : #accessing }
