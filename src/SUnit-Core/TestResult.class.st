@@ -198,6 +198,11 @@ TestResult >> errors [
 ]
 
 { #category : #accessing }
+TestResult >> errors: anOrderedCollection [
+	errors := anOrderedCollection
+]
+
+{ #category : #accessing }
 TestResult >> expectedDefectCount [
 	^ self expectedDefects size
 ]
@@ -226,6 +231,11 @@ TestResult >> failureCount [
 { #category : #compatibility }
 TestResult >> failures [
 	^ self unexpectedFailures, self unexpectedPasses 
+]
+
+{ #category : #accessing }
+TestResult >> failures: aSet [
+	failures := aSet
 ]
 
 { #category : #'filein/out' }
@@ -311,6 +321,11 @@ TestResult >> isPassedFor: class selector: selector [
 { #category : #compatibility }
 TestResult >> passed [
 	^ self expectedPasses, self expectedDefects
+]
+
+{ #category : #accessing }
+TestResult >> passed: anOrderedCollection [
+	passed := anOrderedCollection
 ]
 
 { #category : #accessing }

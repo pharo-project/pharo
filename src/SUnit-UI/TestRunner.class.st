@@ -867,14 +867,14 @@ TestRunner >> runCoverage [
 
 { #category : #actions }
 TestRunner >> runErrors [
-	self result instVarNamed: 'errors' put: OrderedCollection new.
+	self result errors: OrderedCollection new.
 	self runTestSuites: self errorTestSuites.
 ]
 
 { #category : #actions }
 TestRunner >> runFailures [
-	self result instVarNamed: 'failures' put: Set new.
-	self runTestSuites: self failureTestSuites.
+	self result failures: Set new.
+	self runTestSuites: self failureTestSuites
 ]
 
 { #category : #actions }
