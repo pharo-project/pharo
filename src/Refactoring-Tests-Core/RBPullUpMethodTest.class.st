@@ -53,25 +53,21 @@ RBPullUpMethodTest >> testPullUpInAHighHierarchyClass [
 		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
 	model 
 		defineClass: 'Subclass subclass: #Foo1 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
-	model 
-		defineClass: 'Subclass subclass: #Foo2 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
 	class := model classNamed: #Foo1.
 	superClass := model classNamed: #SomeClass .
-	class compile: 'yourself ^1' classified: #(#accessing).
+	class compile: 'example ^1' classified: #(#accessing).
 	self executeRefactoring: (RBPullUpMethodRefactoring 
 				model: model
-				pullUp: #(#yourself)
+				pullUp: #(#example)
 				from: class 
 				to: superClass ).
-	self assert: (superClass parseTreeFor: #yourself) 
-				equals: (self parseMethod: 'yourself ^1').
-	self deny: (class directlyDefinesMethod: #yourself).
-	class := model classNamed: #Foo2.
-	self deny: (class directlyDefinesMethod: #yourself).
+	self assert: (superClass parseTreeFor: #example) 
+				equals: (self parseMethod: 'example ^1').
+	self deny: (class directlyDefinesMethod: #example).
 	class := model classNamed: #Subclass.
-	self assert: (class directlyDefinesMethod: #yourself).
-	self assert: (class parseTreeFor: #yourself) 
-				equals: ((model classNamed: #Object) parseTreeFor: #yourself)
+	self assert: (class definesMethod: #example).
+	self assert: (class parseTreeFor: #example) 
+				equals: ((model classNamed: #SomeClass) parseTreeFor: #example)
 ]
 
 { #category : #tests }
