@@ -31,7 +31,7 @@ SystemAnnouncer class >> reset [
 		thenDo: [:each | each weakRegistry remove: each subscriber ifAbsent: []]. 
 	Smalltalk garbageCollect.
 		
-	announcer := nil.
+	self announcer: nil.
 ]
 
 { #category : #initialization }
