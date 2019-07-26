@@ -98,6 +98,11 @@ BIConfigurableFormatter class >> initialize [
 ]
 
 { #category : #accessing }
+BIConfigurableFormatter class >> isPrettyPrinter [
+	^ true
+]
+
+{ #category : #accessing }
 BIConfigurableFormatter class >> keepBlockInMessage [
 	^ DefaultPrettyPrintContext keepBlockInMessage
 ]
