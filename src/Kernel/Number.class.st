@@ -38,7 +38,7 @@ Class {
 	#category : #'Kernel-Numbers'
 }
 
-{ #category : #instance creation }
+{ #category : #'instance creation' }
 Number class >> new [
 
 	self == Number ifTrue: [
