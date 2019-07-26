@@ -1718,12 +1718,6 @@ Behavior >> subclassDefinerClass [
 	^Smalltalk compilerClass
 ]
 
-{ #category : #'accessing instances and variables' }
-Behavior >> subclassInstVarNames [
-	"Answer a Set of the names of the receiver's subclasses' instance variables."
-	^self allSubclasses flatCollectAsSet: [:aSubclass | aSubclass instVarNames]
-]
-
 { #category : #'accessing class hierarchy' }
 Behavior >> superclass [
 	"Answer the receiver's superclass, a Class."
