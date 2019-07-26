@@ -70,7 +70,7 @@ RBPushDownPreview >> initializeChangesTree [
 				onDesactivation: [ :aClass | selectedMethods remove: aClass ];
 				width: 20;
 				yourself);
-			addColumn:  (StringTableColumn title: 'Members' evaluated: #selector );
+			addColumn:  (SpStringTableColumn title: 'Members' evaluated: #selector );
 			beResizable.
 ]
 
