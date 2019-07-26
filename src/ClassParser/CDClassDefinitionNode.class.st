@@ -23,7 +23,7 @@ CDClassDefinitionNode class >> on: aRBMessageNode [
 { #category : #accessing }
 CDClassDefinitionNode >> binding [ 
 	Transcript show: '.'.
-	^ self class environment associationAt: self className ifAbsent: [nil -> self].
+	^ self class environment associationAt: self className ifAbsent: [LiteralVariable key: nil value: self].
 ]
 
 { #category : #testing }
@@ -71,10 +71,8 @@ CDClassDefinitionNode >> sharedSlotNodes [
 
 { #category : #accessing }
 CDClassDefinitionNode >> sharedSlots [
-	sharedSlotNodes ifNil:[
-		sharedSlotNodes := Array new.
-		].
-	^ sharedSlotNodes
+	^ sharedSlotNodes ifNil:[ sharedSlotNodes := Array new ]
+	
 ]
 
 { #category : #accessing }

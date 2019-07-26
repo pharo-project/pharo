@@ -549,7 +549,7 @@ RubAbstractTextArea >> completionEngine [
 RubAbstractTextArea >> completionPostAction [
 	
 	self hasCompletionEngine 
-		ifTrue: [ completionEngine uniqueInstance closeMenu ]
+		ifTrue: [ completionEngine closeMenu ]
 
 ]
 
@@ -1781,15 +1781,15 @@ RubAbstractTextArea >> sharesFindReplace [
 
 { #category : #'event handling' }
 RubAbstractTextArea >> showOverEditableTextCursor [
-	| o |
-	owner isNil
-		ifTrue: [^ self].
-	o := owner isWorldMorph 
-		ifTrue: [self] 
-		ifFalse: [owner].
-	(o boundsInWorld containsPoint: self currentHand position)
-		ifTrue: [self currentHand showTemporaryCursor: (self theme overTextCursorFor: self)]
 
+	| o |
+
+	owner ifNil: [ ^ self ].
+	o := owner isWorldMorph
+		ifTrue: [ self ]
+		ifFalse: [ owner ].
+	( o boundsInWorld containsPoint: self currentHand position )
+		ifTrue: [ self currentHand showTemporaryCursor: ( self theme overTextCursorFor: self ) ]
 ]
 
 { #category : #'accessing selection' }

@@ -47,7 +47,8 @@ RBRefactoryChange >> changesSize [
 
 { #category : #printing }
 RBRefactoryChange >> displayString [
-	^name isNil ifTrue: [self changeString] ifFalse: [name]
+
+	^ name ifNil: [ self changeString ] ifNotNil: [ name ]
 ]
 
 { #category : #'performing-changes' }
@@ -69,7 +70,8 @@ RBRefactoryChange >> initialize [
 
 { #category : #accessing }
 RBRefactoryChange >> name [
-	^name isNil ifTrue: [self changeString] ifFalse: [name]
+
+	^ name ifNil: [ self changeString ] ifNotNil: [ name ]
 ]
 
 { #category : #initialization }

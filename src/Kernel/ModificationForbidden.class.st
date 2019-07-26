@@ -114,7 +114,6 @@ ModificationForbidden >> retrySelector: anObject [
 
 { #category : #printing }
 ModificationForbidden >> standardMessageText [
-	^ fieldIndex isNil
-		ifTrue: [ self nonIndexedMessageText ]
-		ifFalse: [ self indexedMessageText  ]
+
+	^ fieldIndex ifNil: [ self nonIndexedMessageText ] ifNotNil: [ self indexedMessageText ]
 ]

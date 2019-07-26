@@ -232,7 +232,7 @@ ZnLimitedReadStream >> readInto: collection startingAt: offset count: count [
 	^ actual
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ZnLimitedReadStream >> reset [
 	"We don't allow it"
 ]

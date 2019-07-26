@@ -196,7 +196,7 @@ HistoryNode >> removeLast: count [
 	self history removeLast: count
 ]
 
-{ #category : #'opening-closing' }
+{ #category : #initialization }
 HistoryNode >> reset [
 	history := nil.
 	opened := true

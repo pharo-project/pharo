@@ -18,7 +18,7 @@ Class {
 	#category : #'Athens-Core-Paths'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 AthensBezierConverter class >> initialize [
 
 	CollinearityEps := 1e-30.

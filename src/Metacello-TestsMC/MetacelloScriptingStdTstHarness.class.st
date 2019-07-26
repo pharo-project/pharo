@@ -29,11 +29,9 @@ MetacelloScriptingStdTstHarness >> doSilently [
 
 { #category : #utilities }
 MetacelloScriptingStdTstHarness >> hasPackage: aString [
-	| package |
-	package := MCWorkingCopy allManagers
-		detect: [ :each | each packageName = aString ]
-		ifNone: [ nil ].
-	^ package notNil
+
+	^ MCWorkingCopy allManagers
+		anySatisfy: [ :each | each packageName = aString ]
 ]
 
 { #category : #running }

@@ -491,6 +491,12 @@ RGMethodDefinition >> methodClass [
 ]
 
 { #category : #accessing }
+RGMethodDefinition >> name [
+	"name ivar is used for selector, but the name of a method is Class>>selector"
+	^self printString
+]
+
+{ #category : #accessing }
 RGMethodDefinition >> numArgs [
 	^ self selector asString numArgs
 ]

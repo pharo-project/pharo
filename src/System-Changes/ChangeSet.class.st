@@ -1096,9 +1096,7 @@ ChangeSet >> initialize [
 { #category : #testing }
 ChangeSet >> isEmpty [
 	"Answer whether the receiver contains any elements."
-	
-	changeRecords ifNil: [^true].
-	^ changeRecords isEmpty 
+	^ changeRecords isEmptyOrNil 
 ]
 
 { #category : #initialization }

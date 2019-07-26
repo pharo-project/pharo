@@ -187,6 +187,11 @@ MCPackageManager class >> managersForPackage: aPackage do: aBlock [
 { #category : #'system changes' }
 MCPackageManager class >> methodModified: anEvent [
 
+	"If the method has just been loaded by monticello itself, do not mark it as dirty"
+	anEvent propertyAt: #eventSource ifPresent: [ :source |
+		source == self class package name
+			ifTrue: [ ^ self ]].
+
    "trait methods aren't handled here"
 	anEvent isProvidedByATrait
 		ifTrue: [ ^ self ].

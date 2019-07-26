@@ -23,9 +23,10 @@ PickOneSettingDeclaration >> chooseValue [
 
 { #category : #'user interface' }
 PickOneSettingDeclaration >> content [
-	^ (self domainValues
-		detect: [:v | v realValue = self realValue]
-		ifNone: [^ 'nil']) name
+	^ self domainValues
+		detect: [ :setting | setting realValue = self realValue ]
+		ifFound: [ :setting | setting name ]
+		ifNone: [ 'nil' ]
 ]
 
 { #category : #'user interface' }

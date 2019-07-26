@@ -20,8 +20,10 @@ FreeTypeExternalMemory class >> bytes: aByteArray [
 
 { #category : #finalization }
 FreeTypeExternalMemory class >> finalizeResourceData: handle [
-	handle isNil ifTrue: [ ^ self ].
-	handle isNull ifTrue: [ ^ self ].
+
+	handle ifNil: [ ^ self ].
+	handle isNull
+		ifTrue: [ ^ self ].
 	handle free.
 	handle beNull
 ]

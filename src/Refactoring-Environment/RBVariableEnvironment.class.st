@@ -289,12 +289,15 @@ RBVariableEnvironment >> environmentForInstanceVariable: aString in: aClass [
 ]
 
 { #category : #private }
-RBVariableEnvironment >> flushCachesFor: aClass [ 
-	selectorCache isNil ifTrue: [ ^ self] .
-	aClass instanceSide withAllSubclasses do: [ :each | 
-		selectorCache
-			removeKey: each name ifAbsent: [];
-			removeKey: each classSide name ifAbsent: [] ]
+RBVariableEnvironment >> flushCachesFor: aClass [
+
+	selectorCache ifNil: [ ^ self ].
+	aClass instanceSide withAllSubclasses
+		do: [ :each | 
+			selectorCache
+				removeKey: each name ifAbsent: [  ];
+				removeKey: each classSide name ifAbsent: [  ]
+			]
 ]
 
 { #category : #testing }
@@ -470,9 +473,8 @@ RBVariableEnvironment >> removeClass: aClass instanceVariableWriter: aString [
 
 { #category : #private }
 RBVariableEnvironment >> selectorCache [
-	^selectorCache isNil 
-		ifTrue: [selectorCache := Dictionary new]
-		ifFalse: [selectorCache]
+
+	^ selectorCache ifNil: [ selectorCache := Dictionary new ] ifNotNil: [ selectorCache ]
 ]
 
 { #category : #private }

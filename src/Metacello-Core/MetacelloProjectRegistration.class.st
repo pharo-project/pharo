@@ -47,25 +47,25 @@ MetacelloProjectRegistration class >> classRemoved: aClassRemovalAnnouncement [
 
 { #category : #accessing }
 MetacelloProjectRegistration class >> configurationClasses [
-    "Return a set of the Metacello configuration classes that have been loaded into the image."
+	"Return a set of the Metacello configuration classes that have been loaded into the image."
 
-    "self configurationClasses"
+	"self configurationClasses"
 
-    | answer |
-    answer := IdentitySet new.
-    ConfigurationOf allSubclasses
-        do: [ :cl | 
-            (cl == BaselineOf or: [ cl inheritsFrom: BaselineOf ])
-                ifFalse: [ answer add: cl ] ].
-    Object allSubclasses
-        do: [ :cl | 
-            (answer includes: cl)
-                ifFalse: [ 
-                    (([ cl isMetacelloConfig ]
-                        on: Error
-                        do: [ :ex | ex return: false ]) and: [ cl name asString beginsWith: 'ConfigurationOf' ])
-                        ifTrue: [ answer add: cl ] ] ].
-    ^ answer
+	| answer |
+	answer := IdentitySet new.
+	ConfigurationOf allSubclasses
+		do: [ :cl | 
+			(cl includesBehavior: BaselineOf)
+				ifFalse: [ answer add: cl ] ].
+	Object allSubclasses
+		do: [ :cl | 
+			(answer includes: cl)
+				ifFalse: [ (([ cl isMetacelloConfig ]
+						on: Error
+						do: [ :ex | ex return: false ])
+						and: [ cl name asString beginsWith: 'ConfigurationOf' ])
+						ifTrue: [ answer add: cl ] ] ].
+	^ answer
 ]
 
 { #category : #accessing }
@@ -380,12 +380,12 @@ MetacelloProjectRegistration >> isMutable [
 
 { #category : #testing }
 MetacelloProjectRegistration >> isValid [
-  " has a name and one or the other of the projectSpecs is non-nil, but not both ... this is CRITICAL"
 
-  projectName ifNil: [ ^ false ].
-  configurationProjectSpec isNil
-    ifTrue: [ ^ baselineProjectSpec notNil ].
-  ^ baselineProjectSpec isNil
+	" has a name and one or the other of the projectSpecs is non-nil, but not both ... this is CRITICAL"
+
+	projectName ifNil: [ ^ false ].
+	configurationProjectSpec ifNil: [ ^ baselineProjectSpec notNil ].
+	^ baselineProjectSpec isNil
 ]
 
 { #category : #accessing }

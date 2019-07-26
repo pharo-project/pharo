@@ -217,7 +217,7 @@ GLMAnimation >> onStepped: aBlock [
 	steppedLogic := aBlock
 ]
 
-{ #category : #actions }
+{ #category : #initialization }
 GLMAnimation >> reset [
 
 	isCompleted := false.

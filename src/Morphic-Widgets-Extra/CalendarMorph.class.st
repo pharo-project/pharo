@@ -294,21 +294,17 @@ CalendarMorph >> extent: aPoint [
 CalendarMorph >> handleMonthNameTouched [
 
 	| newMonthName dayCount |
-	newMonthName := UIManager default 
+
+	newMonthName := UIManager default
 		chooseDropList: 'Choose a month:'
-		list: #('January' 'February' 'March' 'April' 'May' 'June' 'July'
-			'August' 'September' 'October' 'November' 'December').
+		list:
+			#('January' 'February' 'March' 'April' 'May' 'June' 'July' 'August' 'September' 'October' 'November' 'December').
 
-	newMonthName isNil
-		ifTrue: [^self].
+	newMonthName ifNil: [ ^ self ].
 
-	dayCount := (Month year: date year month: newMonthName) daysInMonth.
-	self date: (Date 
-		year: date year
-		month: newMonthName
-		day: (date dayOfMonth min: dayCount)).
-	self changed.
-
+	dayCount := ( Month year: date year month: newMonthName ) daysInMonth.
+	self date: ( Date year: date year month: newMonthName day: ( date dayOfMonth min: dayCount ) ).
+	self changed
 ]
 
 { #category : #'event handling' }
@@ -339,21 +335,18 @@ CalendarMorph >> handleTodayTouched [
 CalendarMorph >> handleYearTouched [
 
 	| newYear dayCount |
-	newYear := UIManager default 
-		chooseOrRequestFrom: (2000 to: 2020)
+
+	newYear := UIManager default
+		chooseOrRequestFrom: ( 2000 to: 2020 )
 		lines: #()
 		title: 'Choose a year:'.
 
-	newYear isNil
-		ifTrue: [^self].
+	newYear ifNil: [ ^ self ].
 
 	newYear := newYear asNumber.
-	dayCount := (Month year: newYear month: date monthIndex) daysInMonth.
-	self date: (Date 
-			year: newYear
-			month: date monthIndex 
-			day: (date dayOfMonth min: dayCount)).
-	self changed.
+	dayCount := ( Month year: newYear month: date monthIndex ) daysInMonth.
+	self date: ( Date year: newYear month: date monthIndex day: ( date dayOfMonth min: dayCount ) ).
+	self changed
 ]
 
 { #category : #'event handling' }

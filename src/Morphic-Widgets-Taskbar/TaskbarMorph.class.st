@@ -40,7 +40,7 @@ TaskbarMorph class >> maximumButtonsDefault [
 	^100
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 TaskbarMorph class >> reset [
 	<script>
 	"Remove the taskbar and add a new one." 

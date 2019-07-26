@@ -12,7 +12,7 @@ Class {
 		'testBlock',
 		'foundBlock'
 	],
-	#category : #'ReferenceFinder-Core'
+	#category : #'ReferenceFinder-Core-Base'
 }
 
 { #category : #accessing }

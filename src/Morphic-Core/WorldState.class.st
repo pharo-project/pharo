@@ -199,9 +199,15 @@ WorldState class >> pharoItemsOn: aBuilder [
 
 { #category : #'world menu items' }
 WorldState class >> quitSession [
-	| save |
-	save := UIManager default confirm: 'Save changes before quitting?' translated orCancel: [ ^ self ].
-	save 
+	| response |
+	response := UIManager default 
+						confirm: 'Save changes before quitting?' 
+						trueChoice: 'Save' 
+						falseChoice: 'Discard' 
+						cancelChoice: 'Cancel'
+						default: nil. 
+	response ifNil: [ ^self ].
+	response 
 		ifTrue: [Smalltalk snapshot: true andQuit: true] 
 		ifFalse: [Smalltalk snapshot: false andQuit: true]
  

@@ -49,11 +49,11 @@ MetacelloMemberListSpec >> copy: specNamed to: aSpec [
 
 { #category : #'toolbox support' }
 MetacelloMemberListSpec >> deleteSpec: aSpec [
-    "remove the spec from list"
+	"remove the spec from list"
 
-    | member |
-    member := self list detect: [ :aMember | aMember spec = aSpec ] ifNone: [ ^ self ].
-    self list remove: member
+	self list
+		detect: [ :aMember | aMember spec = aSpec ]
+		ifFound: [ :member | self list remove: member ]
 ]
 
 { #category : #enumeration }

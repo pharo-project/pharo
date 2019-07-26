@@ -39,8 +39,10 @@ CompiledMethod class >> basicNew: size [
 
 { #category : #'class initialization' }
 CompiledMethod class >> checkBytecodeSetConflictsInMethodsWith: aBlock [
-	(self allSubInstances detect: aBlock ifNone: [ ])
-		ifNotNil: [ Warning signal: 'There are existing CompiledMethods with a different encoderClass.' ]
+
+	self allSubInstances
+		detect: aBlock
+		ifFound: [ Warning signal: 'There are existing CompiledMethods with a different encoderClass.' ]
 ]
 
 { #category : #'class initialization' }

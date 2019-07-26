@@ -10,7 +10,7 @@ Class {
 	#category : #'Athens-Text'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 AthensFontChange class >> font: aFont [ 
 	^ self new font: aFont
 ]

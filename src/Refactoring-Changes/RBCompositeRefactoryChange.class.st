@@ -134,9 +134,9 @@ RBCompositeRefactoryChange >> postCopy [
 ]
 
 { #category : #printing }
-RBCompositeRefactoryChange >> printOn: aStream [ 
-	name isNil
-		ifTrue: [ ^ super printOn: aStream ].
+RBCompositeRefactoryChange >> printOn: aStream [
+
+	name ifNil: [ ^ super printOn: aStream ].
 	aStream nextPutAll: name
 ]
 

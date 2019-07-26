@@ -28,10 +28,9 @@ MCWorkingCopy class >> ancestorsFromArray: anArray cache: aDictionary [
 { #category : #querying }
 MCWorkingCopy class >> hasPackageNamed: aName [
 	" self hasPackageNamed: 'ConfigurationOfFuel' "
-	
+
 	^ MCWorkingCopy allManagers
-		detect: [ :each | each packageName = aName ]
-		ifNone: [ false ].
+		anySatisfy: [ :each | each packageName = aName ]
 ]
 
 { #category : #private }

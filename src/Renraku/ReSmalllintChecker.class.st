@@ -63,19 +63,20 @@ ReSmalllintChecker >> criticsOf: aRule [
 
 { #category : #manifest }
 ReSmalllintChecker >> falsePositiveOf: aRule [
-	
-	| ruleCritiques rId rV  mb |
-	ruleCritiques := self criticsOf: aRule. 
+
+	| ruleCritiques rId rV mb |
+
+	ruleCritiques := self criticsOf: aRule.
 	rId := aRule class uniqueIdentifierName.
 	rV := aRule class identifierMinorVersionNumber.
-	^ ruleCritiques select: [ :critique |
-		| entity |
-		entity := critique sourceAnchor entity.		
-		mb := self manifestBuilderOf: entity.
-		mb isNil 
-			ifTrue: [ false ] 
-			ifFalse: [ mb isFalsePositive: entity onRule:  rId version: rV ]]
-	
+	^ ruleCritiques
+		select: [ :critique | 
+			| entity |
+
+			entity := critique sourceAnchor entity.
+			mb := self manifestBuilderOf: entity.
+			mb ifNil: [ false ] ifNotNil: [ mb isFalsePositive: entity onRule: rId version: rV ]
+			]
 ]
 
 { #category : #private }
@@ -134,16 +135,18 @@ ReSmalllintChecker >> run [
 
 { #category : #manifest }
 ReSmalllintChecker >> toDoOf: aRule [
-	
+
 	| ruleCritiques rId rV mb |
-	ruleCritiques := self criticsOf: aRule. 
+
+	ruleCritiques := self criticsOf: aRule.
 	rId := aRule class uniqueIdentifierName.
 	rV := aRule class identifierMinorVersionNumber.
-	^ ruleCritiques select: [:critique |
-		| entity |
-		entity := critique sourceAnchor entity.
-		mb := (self manifestBuilderOf: entity).
-		mb isNil 
-			ifTrue: [ false ] 
-			ifFalse: [ mb containsToDo: entity onRule:  rId version: rV ]]
+	^ ruleCritiques
+		select: [ :critique | 
+			| entity |
+
+			entity := critique sourceAnchor entity.
+			mb := self manifestBuilderOf: entity.
+			mb ifNil: [ false ] ifNotNil: [ mb containsToDo: entity onRule: rId version: rV ]
+			]
 ]

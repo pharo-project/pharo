@@ -923,6 +923,7 @@ SHRBTextStyler >> isForWorkspace: aBoolean [
 
 { #category : #formatting }
 SHRBTextStyler >> literalStyleSymbol: aValue [
+
 	aValue isSymbol
 		ifTrue: [ ^ #symbol ].
 	aValue isString
@@ -935,8 +936,7 @@ SHRBTextStyler >> literalStyleSymbol: aValue [
 		ifTrue: [ ^ #true ].
 	aValue == false
 		ifTrue: [ ^ #false ].
-	aValue isNil
-		ifTrue: [ ^ #nil ].
+	aValue ifNil: [ ^ #nil ].
 	^ #default
 ]
 
@@ -1161,13 +1161,15 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
+
 	| style link |
+
 	style := #keyword.
-	(Symbol findInternedSelector: aMessageNode selector asString)
-		ifNil: [ 
-			style := (Symbol selectorThatStartsCaseSensitive: aMessageNode selector asString skipping: nil) isNil
-				ifTrue: [ #undefinedKeyword ]
-				ifFalse: [ #incompleteKeyword ] ].
+	( Symbol findInternedSelector: aMessageNode selector asString )
+		ifNil: [ style := ( Symbol selectorThatStartsCaseSensitive: aMessageNode selector asString skipping: nil )
+				ifNil: [ #undefinedKeyword ]
+				ifNotNil: [ #incompleteKeyword ]
+			].
 	link := TextMethodLink sourceNode: aMessageNode.
 	self styleOpenParenthese: aMessageNode.
 	aMessageNode selectorParts
@@ -1177,8 +1179,9 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 				addStyle: style
 				attribute: link
 				from: position
-				to: position + keyword size - 1 ].
-	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ])
+				to: position + keyword size - 1
+			].
+	( aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ] )
 		ifTrue: [ self visitNode: aMessageNode receiver ].
 	aMessageNode arguments do: [ :each | self visitNode: each ].
 	self styleCloseParenthese: aMessageNode

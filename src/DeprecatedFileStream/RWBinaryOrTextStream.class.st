@@ -140,7 +140,7 @@ RWBinaryOrTextStream >> readInto: aCollection startingAt: startIndex count: n [
 	^ max
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 RWBinaryOrTextStream >> reset [
 	"Set the receiver's position to the beginning of the sequence of objects."
 

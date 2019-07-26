@@ -855,7 +855,7 @@ File class >> rename: oldFileFullName to: newFileFullName [
 	^nil
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 File class >> reset [
 	"Initialise the receiver for the current platform"
 
@@ -1092,6 +1092,9 @@ File >> basename [
 { #category : #'open/close' }
 File >> basicOpenForWrite: writeMode [ 
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
+	
+	writeMode ifTrue: [ self checkWritableFilesystem ].
+
 	^ self class
 		retryWithGC: [ self class open: name utf8Encoded writable: writeMode ]
 		until:[ :id | id notNil ] 
@@ -1110,6 +1113,17 @@ File >> checkDoesNotExist [
 	"
 	self exists ifTrue: [
 		^ FileAlreadyExistsException signalOnFile: self ]
+]
+
+{ #category : #private }
+File >> checkWritableFilesystem [
+
+	"We need to check if the image is in the read-only mode"
+
+	SessionManager default currentSession isReadOnlyAccessMode ifTrue: [ 
+		ReadOnlyFileException signal: 'Attempt to open file ', name, ' as writable on a read-only file system'].
+
+
 ]
 
 { #category : #'open/close' }

@@ -84,7 +84,7 @@ TextAttribute >> oldEmphasisCode: default [
 	^ default
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TextAttribute >> reset [
 	"Allow subclasses to prepare themselves for merging attributes"
 ]

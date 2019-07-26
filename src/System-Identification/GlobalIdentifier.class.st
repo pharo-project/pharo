@@ -50,7 +50,7 @@ GlobalIdentifier class >> initialize [
 	SessionManager default
 		register: (ClassSessionHandler forClassNamed: self name)
 		inCategory: SessionManager default systemCategory  
-		atPriority: SessionManager default defaultPriority - 100.
+		atPriority: SessionManager default defaultPriority - 80.
 ]
 
 { #category : #initialization }
@@ -66,7 +66,7 @@ GlobalIdentifier class >> new [
 	self shouldNotImplement
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlobalIdentifier class >> reset [
 	"self reset"
 	uniqueInstance := nil

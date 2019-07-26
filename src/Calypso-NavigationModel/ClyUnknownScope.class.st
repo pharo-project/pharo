@@ -20,7 +20,7 @@ ClyUnknownScope class >> instance [
 	^instance ifNil: [ instance := ClyUnknownScope new ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ClyUnknownScope class >> reset [
 	instance := nil
 ]

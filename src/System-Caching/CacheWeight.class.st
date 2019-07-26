@@ -66,7 +66,7 @@ CacheWeight >> remove: value [
 	total := total - weight
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CacheWeight >> reset [
 	total := 0
 ]

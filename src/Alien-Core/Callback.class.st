@@ -120,26 +120,32 @@ Callback class >> ensureNotifiedAtStartup [
 ]
 
 { #category : #evaluation }
-Callback class >> evaluateCallbackForContext: callbackContext [ "<VMCallbackContext32|VMCallbackContext64> ^<FFICallbackReturnValue>"
-	(ThunkToCallbackMap
+Callback class >> evaluateCallbackForContext: callbackContext [
+
+	"<VMCallbackContext32|VMCallbackContext64> ^<FFICallbackReturnValue>"
+
+	( ThunkToCallbackMap
 		at: callbackContext thunkp
-		ifAbsent: [^self error: 'could not locate Callback instance corresponding to thunk address'])
-		ifNil: [self error: 'Callback instance for this thunk address has been garbage collected']
-		ifNotNil:
-			[:callback|
-			^callback valueInContext: callbackContext]
+		ifAbsent: [ ^ self error: 'could not locate Callback instance corresponding to thunk address' ] )
+		ifNil: [ self error: 'Callback instance for this thunk address has been garbage collected' ]
+		ifNotNil: [ :callback | ^ callback valueInContext: callbackContext ]
 ]
 
 { #category : #evaluation }
-Callback class >> evaluateCallbackForThunk: thunkPtr "<Integer>" stack: stackPtr [ "<Integer>" "^<FFICallbackReturnValue>"
+Callback class >> evaluateCallbackForThunk: thunkPtr stack: stackPtr [
+
+	"<Integer>"
+	"^<FFICallbackReturnValue>"
+
 	<legacy>
 	| callback |
+
 	callback := ThunkToCallbackMap
 		at: thunkPtr
-		ifAbsent: [^self error: 'could not locate Callback instance corresponding to thunk address'].
-	callback isNil
-		ifTrue: [self error: 'Callback instance for this thunk address has been garbage collected']
-		ifFalse: [^callback valueWithStackPointer: stackPtr]
+		ifAbsent: [ ^ self error: 'could not locate Callback instance corresponding to thunk address' ].
+	callback
+		ifNil: [ self error: 'Callback instance for this thunk address has been garbage collected' ]
+		ifNotNil: [ ^ callback valueWithStackPointer: stackPtr ]
 ]
 
 { #category : #finalization }
