@@ -64,7 +64,7 @@ RBPushDownPreview >> accept: presenter [
 { #category : #initialization }
 RBPushDownPreview >> initializeChangesTree [
 	table addColumn:
-		((CheckBoxTableColumn title: ' ' evaluated: [ :aClass | 
+		((SpCheckBoxTableColumn title: ' ' evaluated: [ :aClass | 
 	selectedMethods includes: aClass ])
 				onActivation: [ :aClass | selectedMethods add: aClass ];
 				onDesactivation: [ :aClass | selectedMethods remove: aClass ];
