@@ -28,7 +28,7 @@ RBPullUpMethodRefactoring class >> model: aRBSmalltalk pullUp: selectorCollectio
 
 { #category : #'instance creation' }
 RBPullUpMethodRefactoring class >> model: aRBSmalltalk pullUp: selectorCollection from: aClass to: aSuperClass [
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		pullUp: selectorCollection from: aClass to: aSuperClass;
 		yourself
