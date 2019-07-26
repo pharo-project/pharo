@@ -87,7 +87,7 @@ RBPushDownPreview >> initializeDialogWindow: aModalPresenter [
 { #category : #initialization }
 RBPushDownPreview >> initializeWidgets [
 	table := self newTable.
-	label := (self newLabel) .
+	label := self newLabel.
 	
 	self initializeChangesTree.
 	
