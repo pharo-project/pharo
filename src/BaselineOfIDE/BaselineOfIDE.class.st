@@ -331,6 +331,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ProfStef-Tests'.
 		spec package: 'Random-Tests'.
 		spec package: 'Refactoring-Help'.
+		spec package: 'Refactoring-Missing'.
 		spec package: 'Refactoring-Tests-Changes'.
 		spec package: 'Refactoring-Tests-Critics'.
 		spec package: 'Refactoring-Tests-Environment'.
