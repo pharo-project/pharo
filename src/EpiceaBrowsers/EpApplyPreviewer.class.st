@@ -156,21 +156,20 @@ EpApplyPreviewer >> visitEvent: aChange [
 EpApplyPreviewer >> visitMethodChange: aChange [
 	"Addition and Modification come here"
 
-	self 
+	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :behavior | 
-			^behavior 
+			^ behavior
 				compiledMethodAt: aChange methodAffectedSelector
-				ifPresent: [ :method |
-					(method protocol ~= aChange methodAffectedProtocol or: [
-					method sourceCode ~= aChange methodAffectedSourceCode ]) 
-						ifTrue: [ { EpMethodModification oldMethod: method newMethod: aChange methodAffected } ]
+				ifPresent: [ :method | 
+					(method protocol ~= aChange methodAffectedProtocol
+						or: [ method sourceCode ~= aChange methodAffectedSourceCode ])
+						ifTrue: [ {(EpMethodModification
+								oldMethod: method
+								newMethod: aChange methodAffected)} ]
 						ifFalse: [ #() ] ]
-				ifAbsent: [ 
-					{ EpMethodAddition method: aChange methodAffected } ] ].
-	
-	^ { aChange }
-
+				ifAbsent: [ {(EpMethodAddition method: aChange methodAffected)} ] ].
+	^ {aChange}
 ]
 
 { #category : #visitor }
