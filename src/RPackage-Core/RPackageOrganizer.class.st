@@ -1259,17 +1259,16 @@ RPackageOrganizer >> unregisterPackageNamed: symbol [
 ]
 
 { #category : #private }
-RPackageOrganizer >> validateCanBeAddedPackage: aPackage [ 	
-	self 
-		validateCanBeAddedPackageName: aPackage categoryName 
-		tagName: nil
+RPackageOrganizer >> validateCanBeAddedPackage: aPackage [
+	self validateCanBeAddedPackageName: aPackage name tagName: nil
 ]
 
 { #category : #private }
 RPackageOrganizer >> validateCanBeAddedPackage: aPackage tagName: aSymbol [
-	aPackage name = aSymbol ifTrue: [ ^ self ].
-	self 
-		validateCanBeAddedPackageName: aPackage categoryName, '-', aSymbol
+	aPackage name = aSymbol
+		ifTrue: [ ^ self ].
+	self
+		validateCanBeAddedPackageName: aPackage name , '-' , aSymbol
 		tagName: nil
 ]
 
