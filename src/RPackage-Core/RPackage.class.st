@@ -389,11 +389,6 @@ RPackage >> category: categoryName matches: prefix [
 	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
 ]
 
-{ #category : #'under deprecation' }
-RPackage >> categoryName [
-	^ self name
-]
-
 { #category : #'system compatibility' }
 RPackage >> changeRecordForOverriddenMethod: aMethodDefinition [
 	^ SourceFiles
