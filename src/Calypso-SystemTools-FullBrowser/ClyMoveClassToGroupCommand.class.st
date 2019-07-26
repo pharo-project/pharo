@@ -69,6 +69,11 @@ ClyMoveClassToGroupCommand >> classGroup: anObject [
 ]
 
 { #category : #accessing }
+ClyMoveClassToGroupCommand >> defaultMenuIconName [ 
+	^ #smallRedo
+]
+
+{ #category : #accessing }
 ClyMoveClassToGroupCommand >> defaultMenuItemName [ 
 	^'Move to package'
 ]

@@ -9,6 +9,11 @@ Class {
 }
 
 { #category : #accessing }
+SycInsertSuperclassCommand >> defaultMenuIconName [
+	^#smallLoadProject
+]
+
+{ #category : #accessing }
 SycInsertSuperclassCommand >> defaultMenuItemName [
 	^'Insert superclass'
 ]

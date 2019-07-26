@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+SycRemoveEmptyMethodTagsCommand >> defaultMenuIconName [
+	^#delete
+]
+
+{ #category : #accessing }
 SycRemoveEmptyMethodTagsCommand >> defaultMenuItemName [
 	^'Remove empty protocols'
 ]

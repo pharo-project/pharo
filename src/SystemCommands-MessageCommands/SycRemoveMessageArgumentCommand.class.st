@@ -41,6 +41,12 @@ SycRemoveMessageArgumentCommand >> createRefactoring [
 ]
 
 { #category : #accessing }
+SycRemoveMessageArgumentCommand >> defaultMenuIconName [ 
+	^#remove
+
+]
+
+{ #category : #accessing }
 SycRemoveMessageArgumentCommand >> defaultMenuItemName [
 	^'Remove argument'
 ]

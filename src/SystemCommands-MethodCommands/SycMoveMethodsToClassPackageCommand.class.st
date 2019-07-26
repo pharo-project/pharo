@@ -18,6 +18,11 @@ SycMoveMethodsToClassPackageCommand class >> canBeExecutedInContext: aToolContex
 ]
 
 { #category : #accessing }
+SycMoveMethodsToClassPackageCommand >> defaultMenuIconName [ 
+	^ #smallRedo
+]
+
+{ #category : #accessing }
 SycMoveMethodsToClassPackageCommand >> defaultMenuItemName [
 	^'Move to class package'
 ]

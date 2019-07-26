@@ -15,6 +15,11 @@ SycPushDownMethodCommand >> asRefactorings [
 ]
 
 { #category : #accessing }
+SycPushDownMethodCommand >> defaultMenuIconName [ 
+	^ #down
+]
+
+{ #category : #accessing }
 SycPushDownMethodCommand >> defaultMenuItemName [
 	^'Push down'
 ]

@@ -24,6 +24,11 @@ SycMoveMethodsToPackageCommand class >> for: methods to: aPackage [
 ]
 
 { #category : #accessing }
+SycMoveMethodsToPackageCommand >> defaultMenuIconName [ 
+	^ #smallRedo
+]
+
+{ #category : #accessing }
 SycMoveMethodsToPackageCommand >> defaultMenuItemName [
 	^'Move to package'
 ]
