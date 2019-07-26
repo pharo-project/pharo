@@ -375,16 +375,6 @@ ClassDescription >> comment: aStringOrText stamp: aStamp [
 	self instanceSide classComment: aStringOrText stamp: aStamp.
 ]
 
-{ #category : #'accessing class hierarchy' }
-ClassDescription >> commentInventory [
-	"Answer a string with a count of the classes with and without comments 
-	for all the classes in the package of which this class is a member."
-
-	"Morph commentInventory"
-
-	^ self environment organization commentInventory: (self category copyUpTo: $-), '*'
-]
-
 { #category : #'filein/out' }
 ClassDescription >> commentStamp: changeStamp [
 	self organization commentStamp: changeStamp
@@ -779,18 +769,6 @@ ClassDescription >> instVarMappingFrom: oldClass [
 	oldInstVarNames := oldClass allInstVarNames.
 	^self allInstVarNames 
 			collect: [:instVarName | oldInstVarNames indexOf: instVarName].
-]
-
-{ #category : #'instance variables' }
-ClassDescription >> instVarNameForIndex: index [
-	"Answer the named instance variable with index index or nil if none."
-	"we deprecate this as it is not useful know that we have meta objects for variables"
-
-	| slot |
-	self deprecated: 'Please use the slot API directly'.
-	slot := self classLayout allSlots 
-		detect: [ :each | each isVirtual not and: [ each index = index ] ] ifNone: [^nil].
-	^slot name
 ]
 
 { #category : #'instance variables' }

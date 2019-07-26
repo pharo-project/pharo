@@ -34,7 +34,7 @@ AthensTreeView class >> openOn: root extentBlock: extBlock childsBlock: childsBl
 		openInWindow.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 AthensTreeView >> buildSubtreeFor: aNodeObject level: aLevel [
 	| node childs |
 	
@@ -52,7 +52,7 @@ AthensTreeView >> buildSubtreeFor: aNodeObject level: aLevel [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 AthensTreeView >> layOutGeometry [
 
 	"first do a vertical layout"
@@ -81,13 +81,13 @@ AthensTreeView >> layOutGeometry [
 	root layoutHorizontally: 0.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 AthensTreeView >> renderOn: aCanvas [
 	aCanvas surface clear: Color white.
 	root renderOn: aCanvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTreeView >> root: aRootObject [
 
 	root := self buildSubtreeFor: aRootObject level: 1.
@@ -95,7 +95,7 @@ AthensTreeView >> root: aRootObject [
 	self layOutGeometry
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - initialization' }
 AthensTreeView >> root: aRootObject extentBlock: extBlock childsBlock: childsBlock [
 
 	nodeExtentBlock := extBlock.
@@ -106,7 +106,7 @@ AthensTreeView >> root: aRootObject extentBlock: extBlock childsBlock: childsBlo
 	self layOutGeometry
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTreeView >> rowAt: aLevel [
 	rows ifNil: [  rows := OrderedCollection new ].
 	
@@ -115,7 +115,7 @@ AthensTreeView >> rowAt: aLevel [
 	^ rows at: aLevel
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTreeView >> spacingBetweenRows [
 	^ 30
 ]

@@ -212,7 +212,7 @@ AthensBalloonEngine >> registerRadialGradient: colorRamp center: aCenter radius:
 			radial:  true.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 AthensBalloonEngine >> reset [
 	workBuffer ifNil:[workBuffer := self class allocateOrRecycleBuffer: 10000].
 	self primInitializeBuffer: workBuffer.

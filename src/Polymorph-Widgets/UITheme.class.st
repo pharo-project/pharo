@@ -2222,46 +2222,6 @@ UITheme >> fadeCheckboxWhenDisabled [
 	^true
 ]
 
-{ #category : #services }
-UITheme >> fileOpenIn: aThemedMorph title: title extensions: exts path: path preview: preview [
-	"Answer the result of a file open dialog with the given title, extensions path and preview type."
-
-	| fd |
-	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
-	fd := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerOpenFile.
-	exts ifNotNil: [ fd validExtensions: exts ].
-	path ifNotNil: [ fd selectPath: path ].
-	^ (aThemedMorph openModal: fd) answer
-]
-
-{ #category : #services }
-UITheme >> fileSaveIn: aThemedMorph title: title extensions: exts path: path [
-	"Answer the result of a file save dialog with the given title, extensions and path."
-
-	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
-	^self fileSaveIn: aThemedMorph title: title initialAnswer: '' extensions: exts path: path
-]
-
-{ #category : #services }
-UITheme >> fileSaveIn: aThemedMorph title: title initialAnswer: aFileName extensions: exts path: path [
-	"Answer the result of a file save dialog with the given title, extensions and path."
-
-	| fd |
-	self deprecated: 'Use UIManager default chooseForSaveFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
-	fd := (FileDialogWindow newWithTheme: aThemedMorph theme)
-		title: title;
-		fileNameText: aFileName;
-		answerSaveFile.
-	exts ifNotNil: [ fd validExtensions: exts ].
-	path ifNotNil: [ fd selectPath: path ].
-	^ (aThemedMorph openModal: fd) answer
-]
-
 { #category : #accessing }
 UITheme >> flatMenu [
 	^ self settings flatMenu
@@ -2577,17 +2537,20 @@ UITheme >> menuColor [
 
 { #category : #'fill-styles' }
 UITheme >> menuColorFor: aThemedMorph [
+
 	"Answer the menu color to use."
 
-	|w|
-	^self menuColor ifNil: [
-		aThemedMorph ifNil: [^self defaultMenuColor].
-		w := aThemedMorph isSystemWindow
-			ifTrue: [aThemedMorph]
-			ifFalse: [aThemedMorph ownerThatIsA: SystemWindow].
-		w isNil
-			ifTrue: [self defaultMenuColor]
-			ifFalse: [(w valueOfProperty: #paneColor) ifNil: [self defaultMenuColor]]]
+	| w |
+
+	^ self menuColor
+		ifNil: [ aThemedMorph ifNil: [ ^ self defaultMenuColor ].
+			w := aThemedMorph isSystemWindow
+				ifTrue: [ aThemedMorph ]
+				ifFalse: [ aThemedMorph ownerThatIsA: SystemWindow ].
+			w
+				ifNil: [ self defaultMenuColor ]
+				ifNotNil: [ ( w valueOfProperty: #paneColor ) ifNil: [ self defaultMenuColor ] ]
+			]
 ]
 
 { #category : #'fill-styles' }
@@ -2652,20 +2615,24 @@ UITheme >> menuItemSelectedBorderStyleFor: aMenuItem [
 
 { #category : #'fill-styles-buttons' }
 UITheme >> menuItemSelectedFillStyleFor: aMenuItem [
+
 	"Answer the selected fill style to use for the given menu item."
-	
+
 	| fill baseColor preferenced |
-	Display depth <= 2 ifTrue: [^ Color gray].
+
+	Display depth <= 2
+		ifTrue: [ ^ Color gray ].
 	preferenced := self settings menuSelectionColor.
-	baseColor := preferenced isNil
-		ifTrue: [aMenuItem owner color negated]
-		ifFalse: [preferenced].
+	baseColor := preferenced ifNil: [ aMenuItem owner color negated ] ifNotNil: [ preferenced ].
 	self preferGradientFill
-		ifFalse: [^baseColor].
-	fill := GradientFillStyle ramp: {0.0 -> baseColor twiceLighter . 1 -> baseColor twiceDarker}.
+		ifFalse: [ ^ baseColor ].
+	fill := GradientFillStyle
+		ramp:
+			{( 0.0 -> baseColor twiceLighter ).
+			( 1 -> baseColor twiceDarker )}.
 	fill
 		origin: aMenuItem topLeft;
-		direction: 0@aMenuItem height.
+		direction: 0 @ aMenuItem height.
 	^ fill
 ]
 
@@ -2701,17 +2668,20 @@ UITheme >> menuTitleColor [
 
 { #category : #'fill-styles' }
 UITheme >> menuTitleColorFor: aThemedMorph [
+
 	"Answer the menu titlecolor to use."
 
-	|w|
-	^self menuTitleColor ifNil: [
-		aThemedMorph ifNil: [^self defaultMenuTitleColor].
-		w := aThemedMorph isSystemWindow
-			ifTrue: [aThemedMorph]
-			ifFalse: [aThemedMorph ownerThatIsA: SystemWindow].
-		w isNil
-			ifTrue: [self defaultMenuTitleColor]
-			ifFalse: [(w valueOfProperty: #paneColor) darker ifNil: [self defaultMenuTitleColor]]]
+	| w |
+
+	^ self menuTitleColor
+		ifNil: [ aThemedMorph ifNil: [ ^ self defaultMenuTitleColor ].
+			w := aThemedMorph isSystemWindow
+				ifTrue: [ aThemedMorph ]
+				ifFalse: [ aThemedMorph ownerThatIsA: SystemWindow ].
+			w
+				ifNil: [ self defaultMenuTitleColor ]
+				ifNotNil: [ ( w valueOfProperty: #paneColor ) darker ifNil: [ self defaultMenuTitleColor ] ]
+			]
 ]
 
 { #category : #'fill-styles' }
@@ -5914,11 +5884,12 @@ UITheme >> unfocusedSelectionColor [
 ]
 
 { #category : #scrollbars }
-UITheme >> updateScrollBarButtonAspect: aMorph color: aColor [ 
-	"update aMorph with aColor"
-	aMorph isNil ifTrue: [^ self].
-	aMorph color: aColor.
+UITheme >> updateScrollBarButtonAspect: aMorph color: aColor [
 
+	"update aMorph with aColor"
+
+	aMorph ifNil: [ ^ self ].
+	aMorph color: aColor
 ]
 
 { #category : #scrollbars }

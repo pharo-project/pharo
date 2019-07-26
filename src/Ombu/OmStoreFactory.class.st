@@ -28,7 +28,7 @@ OmStoreFactory class >> initialize [
 	SessionManager default registerSystemClassNamed: self name
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 OmStoreFactory class >> reset [
 	"
 	self reset

@@ -14,5 +14,5 @@ ClyFFIMethodQuery >> description [
 
 { #category : #testing }
 ClyFFIMethodQuery >> selectsMethod: aMethod [
-	^aMethod isFFICall
+	^ aMethod isFFIMethod
 ]

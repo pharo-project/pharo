@@ -21,7 +21,7 @@ Class {
 	#category : #'Athens-Core-PathsGeometry'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 AthensCurveFlattener class >> initialize [
 	CurveCollinearityEpsilon := 1e-30 asFloat.
 	CurveDistanceEpsilon := 1e-30 asFloat.

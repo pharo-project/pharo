@@ -199,10 +199,10 @@ SystemNavigation >> browseHierarchy: aBehavior [
 
 { #category : #'*Tool-Base' }
 SystemNavigation >> browseHierarchy: aClass selector: aSelector [
+
 	"Open a browser"
 
-	aClass isNil
-		ifTrue: [ ^ self ].
+	aClass ifNil: [ ^ self ].
 	^ Smalltalk tools browser new
 		spawnHierarchyForClass: aClass selector: aSelector;
 		yourself

@@ -66,6 +66,18 @@ FileSystem >> accessTimeOf: aResolvable [
 ]
 
 { #category : #public }
+FileSystem >> beReadOnly [
+
+	store := store asReadOnlyStore
+]
+
+{ #category : #public }
+FileSystem >> beWritable [
+
+	store := store asWritableStore
+]
+
+{ #category : #public }
 FileSystem >> binaryReadStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a read stream for reading the file."
@@ -583,6 +595,12 @@ FileSystem >> isSymlink: aResolvable [
 ]
 
 { #category : #'public-testing' }
+FileSystem >> isWritable [ 
+
+	^ self store isWritable
+]
+
+{ #category : #'public-testing' }
 FileSystem >> isWritable: aResolvable [
 	"Resolve the argument, and answer true if the there is
 	a file that can be written to or directory that can be changed."
@@ -790,6 +808,11 @@ FileSystem >> sizeOf: aResolvable [
 { #category : #accessing }
 FileSystem >> store [
 	^ store
+]
+
+{ #category : #accessing }
+FileSystem >> store: aFileSystemStore [
+	store := aFileSystemStore
 ]
 
 { #category : #converting }

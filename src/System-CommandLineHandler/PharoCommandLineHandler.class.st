@@ -5,7 +5,9 @@ Usage: [<subcommand>] [--help] [--copyright] [--version] [--list] [ --no-quit ]
 	--version    print the version for the image and the vm
 	--list       list a description of all active command line handlers
 	--no-quit    keep the image running without activating any other command line handler
-	--deploymentPassword if a password needs to be used by the user to launch the command
+	--deploymentPassword   if a password needs to be used by the user to launch the command
+	--readWriteAccessMode, --readOnlyAccessMode, --writeOnlyAccessMode, --disabledAccessMode
+	             specify disk access mode, read-write mode as default
 	<subcommand> a valid subcommand in --list
 	
 	Preference File Modification:

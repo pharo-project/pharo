@@ -52,14 +52,6 @@ RBMethodProtocolChange >> oldVersionTextToDisplay [
 		nextPutAll: super oldVersionTextToDisplay ]
 ]
 
-{ #category : #private }
-RBMethodProtocolChange >> parseTree [
-
-	^ RBParser
-		parseMethod: self source
-		onError: [ :str :pos | ^ nil ]
-]
-
 { #category : #initialization }
 RBMethodProtocolChange >> selector: aSelector in: aClass classified: aProtocol [
 

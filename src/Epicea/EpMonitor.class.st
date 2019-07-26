@@ -152,12 +152,11 @@ EpMonitor >> basicLog [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> behaviorAdded: aClassAddedAnnoucement [
-
-	self handleAnyErrorDuring: [
-		aClassAddedAnnoucement classAdded isTrait
-			ifTrue: [ self traitAdded: aClassAddedAnnoucement ]
-			ifFalse: [ self classAdded: aClassAddedAnnoucement ] ]
+EpMonitor >> behaviorAdded: aClassAddedAnnouncement [
+	self
+		handleAnyErrorDuring: [ aClassAddedAnnouncement classAdded isTrait
+				ifTrue: [ self traitAdded: aClassAddedAnnouncement ]
+				ifFalse: [ self classAdded: aClassAddedAnnouncement ] ]
 ]
 
 { #category : #'announcement handling' }
@@ -170,38 +169,38 @@ EpMonitor >> behaviorModified: aClassModifiedClassDefinitionAnnouncement [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> behaviorRemoved: aClassRemovedAnnoucement [
+EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 
 	self handleAnyErrorDuring: [
 		"Workaround: the announcement occurs after class is renamed to AnObsolete 
 		and removed from package."
 		
 		| classRemoved |
-		classRemoved := aClassRemovedAnnoucement classRemoved asEpiceaRingDefinition.
+		classRemoved := aClassRemovedAnnouncement classRemoved asEpiceaRingDefinition.
 
 		"Fix class name (remove AnObsolete prefix)"
 		classRemoved definitionSource: 
 			(classRemoved definitionSource
-				copyReplaceAll: aClassRemovedAnnoucement classRemoved name printString
-				with: aClassRemovedAnnoucement classRemoved originalName printString).
+				copyReplaceAll: aClassRemovedAnnouncement classRemoved name printString
+				with: aClassRemovedAnnouncement classRemoved originalName printString).
 
 		"Fix class name in the metaclass"
 		classRemoved classSide definitionSource: 
 			(classRemoved classSide definitionSource
-				copyReplaceAll: aClassRemovedAnnoucement classRemoved name
-				with: aClassRemovedAnnoucement classRemoved originalName).
+				copyReplaceAll: aClassRemovedAnnouncement classRemoved name
+				with: aClassRemovedAnnouncement classRemoved originalName).
 
 		"Fix category"
 		classRemoved definitionSource: 
 			(classRemoved definitionSource
 				copyReplaceAll: 'category: ', 'Unclassified' printString
-				with: 'category: ', aClassRemovedAnnoucement categoryName printString).
+				with: 'category: ', aClassRemovedAnnouncement categoryName printString).
 
-		classRemoved name: aClassRemovedAnnoucement classRemoved originalName.
-		classRemoved category: aClassRemovedAnnoucement categoryName.
-		classRemoved package: aClassRemovedAnnoucement packageAffected name.
+		classRemoved name: aClassRemovedAnnouncement classRemoved originalName.
+		classRemoved category: aClassRemovedAnnouncement categoryName.
+		classRemoved package: aClassRemovedAnnouncement packageAffected name.
 
-		aClassRemovedAnnoucement classAffected isTrait
+		aClassRemovedAnnouncement classAffected isTrait
 			ifTrue:  [ self traitRemoved: classRemoved ]
 			ifFalse: [ self classRemoved: classRemoved ] ]
 ]
@@ -230,9 +229,9 @@ EpMonitor >> categoryRenamed: aCategoryRenamed [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> classAdded: aClassAddedAnnoucement [
+EpMonitor >> classAdded: aClassAddedAnnouncement [
 
-	self addEvent: (EpClassAddition class: aClassAddedAnnoucement classAdded)
+	self addEvent: (EpClassAddition class: aClassAddedAnnouncement classAdded)
 ]
 
 { #category : #'announcement handling' }
@@ -251,16 +250,16 @@ EpMonitor >> classModified: aClassModifiedAnnouncement [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> classRecategorized: aClassRecategorizedAnnoucement [
+EpMonitor >> classRecategorized: aClassRecategorizedAnnouncement [
 
 	self handleAnyErrorDuring: [
-		aClassRecategorizedAnnoucement newCategory = aClassRecategorizedAnnoucement oldCategory
+		aClassRecategorizedAnnouncement newCategory = aClassRecategorizedAnnouncement oldCategory
 			ifTrue: [ ^ self ].
 			
 		self addEvent: (EpBehaviorCategoryChange
-			oldCategory: aClassRecategorizedAnnoucement oldCategory
-			newCategory: aClassRecategorizedAnnoucement newCategory
-			class: aClassRecategorizedAnnoucement classAffected)]
+			oldCategory: aClassRecategorizedAnnouncement oldCategory
+			newCategory: aClassRecategorizedAnnouncement newCategory
+			class: aClassRecategorizedAnnouncement classAffected)]
 ]
 
 { #category : #'announcement handling' }
@@ -426,10 +425,10 @@ EpMonitor >> logEntryCommented: aCommentModification [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> methodAdded: aMethodAddedAnnoucement [
+EpMonitor >> methodAdded: aMethodAddedAnnouncement [
 
 	self handleAnyErrorDuring: [
-		self addEvent: (EpMethodAddition method: aMethodAddedAnnoucement methodAffected) ]
+		self addEvent: (EpMethodAddition method: aMethodAddedAnnouncement methodAffected) ]
 ]
 
 { #category : #'announcement handling' }
@@ -466,17 +465,17 @@ EpMonitor >> methodRecategorized: aMethodRecategorized [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> methodRemoved: aMethodRemovedAnnoucement [
+EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 	"RPackage already unregistered the method so we have to workaround protocol and package."
 
 	self handleAnyErrorDuring: [
 		self addEvent: 
 			(EpMethodRemoval method: 
-				(aMethodRemovedAnnoucement methodAffected asEpiceaRingDefinition
-					protocol: aMethodRemovedAnnoucement protocol;
+				(aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
+					protocol: aMethodRemovedAnnouncement protocol;
 					package: (RPackageOrganizer default 
-						packageForProtocol: aMethodRemovedAnnoucement protocol 
-						inClass: aMethodRemovedAnnoucement methodAffected methodClass) name;
+						packageForProtocol: aMethodRemovedAnnouncement protocol 
+						inClass: aMethodRemovedAnnouncement methodAffected methodClass) name;
 					yourself))]
 ]
 
@@ -599,9 +598,9 @@ EpMonitor >> time [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> traitAdded: aClassAddedAnnoucement [
+EpMonitor >> traitAdded: aClassAddedAnnouncement [
 
-	self addEvent: (EpTraitAddition trait: aClassAddedAnnoucement classAdded)
+	self addEvent: (EpTraitAddition trait: aClassAddedAnnouncement classAdded)
 ]
 
 { #category : #'announcement handling' }

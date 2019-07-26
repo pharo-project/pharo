@@ -1,6 +1,11 @@
 Extension { #name : #Behavior }
 
 { #category : #'*TraitsV2' }
+Behavior >> allTraits [
+	^ #()
+]
+
+{ #category : #'*TraitsV2' }
 Behavior >> hasTraitComposition [
 	
 	^ false 

@@ -10,15 +10,10 @@ Class {
 		'theClass',
 		'completionToken',
 		'model',
-		'receiverClass',
-		'controller',
 		'ast',
-		'node',
-		'variables',
-		'selectors',
-		'context'
+		'node'
 	],
-	#category : #'NECompletion-ExperimentalCompletion'
+	#category : #'NECompletion-New'
 }
 
 { #category : #'instance creation' }
@@ -32,41 +27,18 @@ TestCompletionContext class >> controller: aNECController class: aClass source: 
 
 { #category : #accessing }
 TestCompletionContext >> completionToken [
+
 	"here we need to return the name of the var or selector"
-	node isNil ifTrue: [ ^ '' ].
-	^completionToken
-		ifNil: [ node completionToken ]
-]
 
-{ #category : #action }
-TestCompletionContext >> configureSelectorsAndVariables [
-	variables := true.
-	selectors := true.
-	^true
-]
-
-{ #category : #accessing }
-TestCompletionContext >> context: aCompletionContext [
-	context := aCompletionContext.
+	node ifNil: [ ^ '' ].
+	^ completionToken ifNil: [ node completionToken ]
 ]
 
 { #category : #accessing }
 TestCompletionContext >> createModel [
-	node isNil ifTrue: [ ^NECEmptyModel new ].
-	node isLiteralNode ifTrue: [ ^NECEmptyModel new ].
-	node isSequence ifTrue: [ ^NECEmptyModel new ].
-	node isMethod ifTrue: [ ^NECEmptyModel new ].
-	self receiverClass
-		ifNotNil: [^ NECTypedModel class: receiverClass].
-	variables := false. selectors  := true.
-	node isMessage ifFalse: [  variables := true. selectors  := true ].
-
-	^ NECUntypedModel
-		class: theClass
-		temporaries: (ast isMethod ifTrue: [ ast temporaryNames collect: [:each | NECLocalEntry  contents: each] ] ifFalse: [ #() ])
-		additionals: #()
-		variables: variables
-		selectors: selectors
+	self parseSource.
+	node := ast nodeForOffset: position.
+  ^ (TestCompletionModel new node: node) clazz: theClass
 ]
 
 { #category : #accessing }
@@ -78,31 +50,29 @@ TestCompletionContext >> model [
 TestCompletionContext >> narrowWith: aString [
 	"method borrowed from NECContext to make the completion plugging work"
 	completionToken := aString.
-	model ifNotNil: [ model narrowWith: aString].
+	model := self createModel.
+	model narrowWith: aString.
 ]
 
 { #category : #parsing }
 TestCompletionContext >> parseSource [
-	ast := (theClass isNil)
-        ifTrue: [ (RBParser parseFaultyExpression: source) doSemanticAnalysis]
-        ifFalse: [ (RBParser parseFaultyMethod: source) doSemanticAnalysisIn: theClass]. 
-    TestTypingVisitor new visitNode: ast.
+
+	ast := theClass
+		ifNil: [ ( RBParser parseFaultyExpression: source ) doSemanticAnalysis ]
+		ifNotNil: [ ( RBParser parseFaultyMethod: source ) doSemanticAnalysisIn: theClass ].
+	TestTypingVisitor new visitNode: ast
 ]
 
 { #category : #accessing }
 TestCompletionContext >> receiverClass [
 	node isMessage ifFalse: [ ^nil ].
-	receiverClass := node receiver propertyAt: #type ifAbsent: [ nil ] .
-	^ receiverClass
+	^node receiver propertyAt: #type ifAbsent: [ nil ] .
+
 ]
 
 { #category : #'initialize-release' }
 TestCompletionContext >> setController: aECController class: aClass source: aString position: anInteger [ 
-	controller := aECController.
-	theClass := aClass.
+	theClass := aClass. 
 	source := aString.
-	position := anInteger. 
-	self parseSource.
-	node := ast bestNodeFor: (position to: position).
-	
+	position := anInteger
 ]

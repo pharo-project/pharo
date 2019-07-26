@@ -824,12 +824,6 @@ TextEditor >> closeTypeIn [
 			self doneTyping]
 ]
 
-{ #category : #private }
-TextEditor >> codeCompletionAround:  aBlock textMorph:  aTextMorph keyStroke: anEvent [
-	" No code completion for simple text editor, so nothing special to do here around the block execution"
-	aBlock value
-]
-
 { #category : #'menu messages' }
 TextEditor >> compareToClipboard [
 	"Check to see if whether the receiver's text is the same as the text currently on the clipboard, and inform the user."
@@ -1234,14 +1228,16 @@ TextEditor >> find: aKeyboardEvent [
 
 { #category : #'menu messages' }
 TextEditor >> findAgain [
-	"Find the text-to-find again."
-	| where |
-	where := self findReplaceService findNextSubstring: self findReplaceService findString inTextMorph: self morph.
-	where isNil
-		ifTrue: [self flash]
-		ifFalse: [ self selectInterval: where].
-	^ where
 
+	"Find the text-to-find again."
+
+	| where |
+
+	where := self findReplaceService
+		findNextSubstring: self findReplaceService findString
+		inTextMorph: self morph.
+	where ifNil: [ self flash ] ifNotNil: [ self selectInterval: where ].
+	^ where
 ]
 
 { #category : #'typing/selecting keys' }
@@ -1254,13 +1250,14 @@ TextEditor >> findAgain: aKeyboardEvent [
 
 { #category : #'menu messages' }
 TextEditor >> findAgainAndReplace [
-	"Find the text-to-find again and eventually replace it with the current replace text."
-	| where |
-	where := self findAgain.
-	where isNil
-		ifFalse: [self findReplaceService replaceText 
-				ifNotEmpty: [:rt | self replaceSelectionWith: rt]]
 
+	"Find the text-to-find again and eventually replace it with the current replace text."
+
+	| where |
+
+	where := self findAgain.
+	where
+		ifNotNil: [ self findReplaceService replaceText ifNotEmpty: [ :rt | self replaceSelectionWith: rt ] ]
 ]
 
 { #category : #'find-select' }
@@ -1303,10 +1300,13 @@ TextEditor >> findAndSelectNextOccurenceOf: aRegex [
 
 { #category : #'find-select' }
 TextEditor >> findAndSelectPreviousOccurenceOf: aRegex [
+
 	| where |
+
 	where := self findPrevious: aRegex startingAt: self startIndex.
-	where isNil ifFalse: [self selectInterval: where].
-	(morph respondsTo: #editView) ifTrue: [morph editView selectionInterval: self selectionInterval].
+	where ifNotNil: [ self selectInterval: where ].
+	( morph respondsTo: #editView )
+		ifTrue: [ morph editView selectionInterval: self selectionInterval ].
 	^ where
 ]
 
@@ -1604,8 +1604,7 @@ TextEditor >> isTextEditor [
 
 { #category : #'typing support' }
 TextEditor >> keystroke: aKeyboardEvent [
-	self handleEditionAction: [ self dispatchOn: aKeyboardEvent ] 
-		fromKeyboardEvent: aKeyboardEvent.
+	self handleEditionAction: [ self dispatchOn: aKeyboardEvent ] fromKeyboardEvent: aKeyboardEvent
 ]
 
 { #category : #accessing }
@@ -2056,11 +2055,10 @@ TextEditor >> sameColumn: start newLine: lineBlock forward: isForward [
 TextEditor >> saveContentsInFile [
 	"Save the receiver's contents string to a file, prompting the user for a file-name. Suggest a reasonable file-name."
 
-	| fileName stringToSave parentWindow labelToUse suggestedName lastIndex |
+	| fileName stringToSave labelToUse suggestedName lastIndex |
 	stringToSave := self string.
 	stringToSave ifEmpty: [ ^ self inform: 'nothing to save.' ].
-	parentWindow := model dependents detect: [ :dep | dep isKindOf: SystemWindow ] ifNone: [ nil ].
-	labelToUse := parentWindow ifNil: [ 'Untitled' ] ifNotNil: [ parentWindow label ].
+	labelToUse :=  model dependents detect: [ :dep | dep isKindOf: SystemWindow ] ifFound: [:parentWindow | parentWindow label] ifNone: [ 'Untitled' ].
 	suggestedName := nil.
 	#(#('Decompressed contents of: ' '.gz'))
 		do: [ :leaderTrailer | 

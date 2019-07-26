@@ -145,14 +145,19 @@ ProfStef class >> next [
 
 { #category : #zen }
 ProfStef class >> openPharoZenWorkspace [
-	"Open a Workspace showing the Pharo Zen values in random order"
-	<script>
+    "Open a Workspace showing the Pharo Zen values in random order"
 
-	TextPresenter new
-		text: self pharoZenValuesContents;
-		title: 'Pharo Zen' translated;
-		aboutText: self aboutPharoZen;
-		openWithSpec
+    <script>
+    | presenter |
+    presenter := SpTextPresenter new
+        text: self pharoZenValuesContents;
+        openWithSpec.
+
+    presenter
+        withWindowDo: [ :w | 
+            w
+                title: 'Pharo Zen' translated;
+                aboutText: self aboutPharoZen ]
 ]
 
 { #category : #zen }
@@ -201,7 +206,7 @@ ProfStef class >> previous [
 	^ self default previous
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 ProfStef class >> reset [
 	<script>
 		

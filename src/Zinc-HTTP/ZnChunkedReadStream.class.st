@@ -249,7 +249,7 @@ ZnChunkedReadStream >> readInto: collection startingAt: offset count: requestedC
 	^ read
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ZnChunkedReadStream >> reset [
 	"We don't allow it"
 ]

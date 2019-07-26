@@ -100,5 +100,6 @@ SlotTest >> testisUsed [
 
 { #category : #'tests - misc' }
 SlotTest >> testslotUsers [
-	self assert: ToOneRelationSlot slotUsers first equals: SlotExampleMovie
+	self assert: (ToOneRelationSlot slotUsers includes: SlotExampleMovie).
+	self deny: (ToOneRelationSlot slotUsers includes: SlotExamplePerson)
 ]

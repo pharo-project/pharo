@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'Fuel-Platform-Core'
+	#category : #'Fuel-Platform-Core'
 }
 
 { #category : #'private-extensions' }
@@ -105,7 +105,7 @@ FLPlatform class >> removeModifications [
 	SystemOrganizer default removeCategory: self hacksCategoryName
 ]
 
-{ #category : #'private-convenience' }
+{ #category : #initialization }
 FLPlatform class >> reset [
 	Current := nil
 ]

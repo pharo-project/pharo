@@ -632,7 +632,7 @@ VTermOutputDriver2 >> redFont: aString [
 	self write: aString withColor: Color red
 ]
 
-{ #category : #deprecated }
+{ #category : #initialization }
 VTermOutputDriver2 >> reset [
 	^self resetStyle
 ]

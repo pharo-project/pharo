@@ -1,7 +1,6 @@
 "
 This is a thread-safe implementation of a queue with wait-free operations. 
-It is guaranteed that any message sent to my instance (like adding new item, or fetching item) will not block sender,
-nor enter a waiting loop.
+It is guaranteed that any message sent to my instance (like adding new item, or fetching item) will not block sender, nor enter a waiting loop.
 
 The implementation is based on atomicity of simple assignment operations, which can't be interrupted in a middle,
 i.e. two assignment statements in a row, like:
@@ -18,6 +17,26 @@ In given implementation, inserting new items into queue can't block the sender a
 For reading/polling operations queue using a lock mechanism, which indicating that queue currently in the middle of extraction, and therefore, if some thread obtained a lock upon the queue, other threads must wait till one that obtained the lock will finish its operation(s) and release the lock.
 All operations which may block the sender will answer the default value(s) instead. 
 
+
+
+Implementation Notes
+
+As mentioned above WaitfreeQueue relies on the VM treating simple assignment operations as uninterruptable.  It also ensures that reader and writer processes can't modify the same variables at the same time.
+
+The queue consists of a linked list of AtomicQueueItems.  Each item contains a pointer to the next item and the object which is the queue entry.
+
+An item can be:
+
+- ""circular"", meaning that the next item is itself.
+- a ""zombie"", meaning that the object points back to the queue's dummy object (more below).
+
+Writing processes create a new item and then use atomic access to get the old tail entry and update the queue's tail variable.  They then own the old tail entry and can update its next variable at any time.  Because the queue's tail variable is updated atomically, any number of writer processes can be adding items to the queue.
+
+A reader process uses atomic access to the get first item and make the dummy item circular.  At this point the reader process owns the linked list and can modify any item except the last one (which will be circular).  Any other process attempting to read the queue will find the dummy object is circular and return nil - meaning the queue is either empty or locked.
+
+If the reader process wants to return the object from the last item in the linked list (which may be owned by a writer process), it will retrieve the object and then mark the item as a zombie, i.e. set the item's object to the queue's dummy item.  The zombie item will then be removed by a later reader process when it is no longer last in the linked list.
+
+Once the reader process has retrieved the object it sets the dummy item's next variable to the first item in the linked list, making the queue avilable again to other processes.
 "
 Class {
 	#name : #WaitfreeQueue,
@@ -33,6 +52,21 @@ Class {
 WaitfreeQueue class >> new: anInteger [ 
 	"Just to match SharedQueue protocol"
 	^self new
+]
+
+{ #category : #'instance creation' }
+WaitfreeQueue class >> withAll: aCollection [
+	"Answer an instance of the receiver initialised with the supplied collection of items"
+
+	^self new initializeWithAll: aCollection
+]
+
+{ #category : #'private - accessing' }
+WaitfreeQueue >> dummy [
+	"Answer the dummy entry of the receiver.
+	This is internal state and is only for automated unit testing"
+
+	^dummy
 ]
 
 { #category : #accessing }
@@ -116,6 +150,17 @@ WaitfreeQueue >> initialize [
 
 ]
 
+{ #category : #initialization }
+WaitfreeQueue >> initializeWithAll: aCollection [
+	"Initialise the receiver with the supplied items (AtomicQueueItem).
+	This method is not thread safe and should only be used for initialising the queue prior to normal operation (and is normally used only for testing)."
+
+	dummy next: aCollection first.
+	1 to: aCollection size - 1 do: [ :i |
+		(aCollection at: i) next: (aCollection at: i+1) ].
+	tail := aCollection last.
+]
+
 { #category : #accessing }
 WaitfreeQueue >> isEmpty [
 	"Answer true if queue contains at least one element.
@@ -137,6 +182,29 @@ WaitfreeQueue >> isEmpty [
 	].
 	
 	^ false
+]
+
+{ #category : #accessing }
+WaitfreeQueue >> itemCount [
+	"Answer the number of items in the queue including zombies. 
+	If queue is currently in the middle of extraction by other process, give a (very) approximate answer.
+	
+	This method has a non-deterministic result due to the design of the concurrent shared queue. 
+	"
+	
+	| item count |
+
+	item := dummy.
+
+	count := 0.
+	[ item := item next. item == dummy ifFalse: [ count := count + 1 ]. item isCircular ] whileFalse.
+
+	count = 0 ifTrue: [
+		"if queue is locked by other process, check the tail and give a (very) approximate answer."
+		^ tail object == dummy ifTrue: [ 0 ] ifFalse: [ 1 ]
+		].	
+
+	^ count
 ]
 
 { #category : #accessing }
@@ -177,32 +245,53 @@ WaitfreeQueue >> nextOrNilSuchThat: aBlock [
 	If no object has been found, answer <nil> and leave me intact.
 	
 	NOTA BENE:  aBlock can contain a non-local return (^).
-	Found item is removed from queue	.
-	
+	Found item is removed from queue.
+
 	If queue currently in the middle of extraction by other process, don't wait and return <nil> immediately"
 	
-	| item first |
+	| item first previous object |
 
-	(item := dummy makeCircular) == dummy  ifTrue: [ ^ nil ]. 
-	first := item.
-	
-	[ | object |
+	(first := dummy makeCircular) == dummy  ifTrue: [ ^ nil ]. 
+
+	"Remove any zombie objects from the start of the list"
+	[ (object := first object) == dummy ] whileTrue: [
+		first isCircular ifTrue: [ 
+			self signalNoMoreItems. 
+			dummy next: first. ^ nil ].
+		first := first next.
+	].
+
+	previous := nil.
+	item := first.
+	"Iterate over the list searching for the requested entry and removing zombies"
+	[
 		object := item object.
-		object == dummy ifFalse: [
+		object == dummy ifTrue: [ 
+			"Remove the object unless it is the last.
+			This can't happen on the first iteration, so no need to check previous"
+			item isCircular ifFalse: [ 
+				previous next: item next ] ]
+		ifFalse: [
 			( [ aBlock value: object ] ifCurtailed: [ dummy next: first ] ) ifTrue: [
 				item object: dummy.
-				dummy next: first.
-				^ object
-			] ].
+				previous ifNotNil: [ 
+					previous next: item next.
+					dummy next: first ]
+				ifNil: 
+					[ dummy next: item next ].
+				^ object ]
+			ifFalse:
+				[ previous := item ] ].
 	
 		item isCircular ifTrue: [
 			"this was the last one"
 			dummy next: first.
 			^ nil
 			].
+
 		item := item next.
 	] repeat.
-	
+
 ]
 
 { #category : #accessing }
@@ -294,4 +383,12 @@ WaitfreeQueue >> size [
 		].	
 
 	^ count
+]
+
+{ #category : #'private - accessing' }
+WaitfreeQueue >> tail [
+	"Answer the tail entry of the receiver.
+	This is internal state and is only for automated unit testing"
+
+	^tail
 ]

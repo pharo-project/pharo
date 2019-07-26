@@ -45,29 +45,34 @@ RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass to: a
 ]
 
 { #category : #preconditions }
-RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [ 
+RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
+
 	| definingClass pushUpParseTree |
 	definingClass := superClass whoDefinesMethod: aSelector.
-	definingClass isNil ifTrue: [^self].
+	definingClass ifNil: [^self].
 	pushUpParseTree := class parseTreeFor: aSelector.
 	superClass allSubclasses do: 
 			[:each | 
 			each selectors do: 
 					[:sel | 
 					| parseTree |
+
 					parseTree := each parseTreeFor: sel.
-					(parseTree notNil and: 
-							[(parseTree superMessages includes: aSelector) 
-								and: [definingClass == (each whoDefinesMethod: aSelector)]]) 
-						ifTrue: 
-							[removeDuplicates := true.
-							(aSelector == sel 
-								and: [parseTree equalTo: pushUpParseTree exceptForVariables: #()]) 
-									ifFalse: 
-										[self 
-											refactoringError: ('Cannot pull up <1s> since it would override the method defined in <2p>' 
-													expandMacrosWith: aSelector
-													with: definingClass)]]]]
+					( parseTree notNil
+						and: [ ( parseTree superMessages includes: aSelector )
+								and: [ definingClass == ( each whoDefinesMethod: aSelector ) ]
+							] )
+						ifTrue: [ removeDuplicates := true.
+							( aSelector == sel and: [ parseTree equalTo: pushUpParseTree exceptForVariables: #() ] )
+								ifFalse: [ self
+										refactoringError:
+											( 'Cannot pull up <1s> since it would override the method defined in <2p>'
+												expandMacrosWith: aSelector
+												with: definingClass )
+									]
+							]
+					]
+			]
 ]
 
 { #category : #preconditions }
@@ -182,13 +187,14 @@ RBPullUpMethodRefactoring >> class1 [
 ]
 
 { #category : #private }
-RBPullUpMethodRefactoring >> copyDownMethod: aSelector [ 
+RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
+
 	| oldProtocol oldSource superclassDefiner subclasses refactoring |
+
 	superclassDefiner := superClass whoDefinesMethod: aSelector.
-	superclassDefiner isNil ifTrue: [^ self ].
+	superclassDefiner ifNil: [^ self ].
 	oldSource := superclassDefiner sourceCodeFor: aSelector.
-	oldSource isNil 
-		ifTrue: 
+	oldSource ifNil: 
 			[ self 
 				refactoringFailure: ('Source code for <1s> superclass method not available' 
 						expandMacrosWith: aSelector)].
@@ -203,17 +209,17 @@ RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
 			[self 
 				refactoringError: ('Cannot pull up <1s> since we must copy down the superclass method in <2p><n>to the other subclasses, and the superclass method sends a super message which is overriden.' 
 						expandMacrosWith: aSelector
-						with: superclassDefiner)].
-	self 
-		refactoringWarning: 'Do you want to copy down the superclass method to the classes that don''t define ' 
-				, aSelector.
-	refactoring := RBExpandReferencedPoolsRefactoring 
-				model: self model
-				forMethod: (superclassDefiner parseTreeFor: aSelector)
-				fromClass: superclassDefiner
-				toClasses: subclasses.
+						with: superclassDefiner )
+			].
+	self
+		refactoringWarning: 'Do you want to copy down the superclass method to the classes that don''t define ' , aSelector.
+	refactoring := RBExpandReferencedPoolsRefactoring
+		model: self model
+		forMethod: ( superclassDefiner parseTreeFor: aSelector )
+		fromClass: superclassDefiner
+		toClasses: subclasses.
 	self performComponentRefactoring: refactoring.
-	subclasses do: [:each | each compile: oldSource classified: oldProtocol]
+	subclasses do: [ :each | each compile: oldSource classified: oldProtocol ]
 ]
 
 { #category : #transforming }
@@ -235,11 +241,12 @@ RBPullUpMethodRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBPullUpMethodRefactoring >> pullUp: aSelector [ 
+RBPullUpMethodRefactoring >> pullUp: aSelector [
+
 	| source refactoring |
+
 	source := class sourceCodeFor: aSelector.
-	source isNil 
-		ifTrue: [self refactoringFailure: 'Source for method not available'].
+	source ifNil: [self refactoringFailure: 'Source for method not available'].
 	refactoring := RBExpandReferencedPoolsRefactoring 
 				model: self model
 				forMethod: (class parseTreeFor: aSelector)

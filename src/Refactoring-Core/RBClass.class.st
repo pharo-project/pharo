@@ -54,31 +54,35 @@ RBClass >> addPoolDictionary: aString [
 
 { #category : #accessing }
 RBClass >> allClassVariableNames [
+
 	| sprClass |
+
 	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [self classVariableNames]
-		ifFalse: [sprClass allClassVariableNames , self classVariableNames]
+	^ sprClass
+		ifNil: [ self classVariableNames ]
+		ifNotNil: [ sprClass allClassVariableNames , self classVariableNames ]
 ]
 
 { #category : #accessing }
 RBClass >> allPoolDictionaryNames [
+
 	| sprClass |
+
 	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [self sharedPoolNames]
-		ifFalse: [sprClass allPoolDictionaryNames , self sharedPoolNames]
+	^ sprClass
+		ifNil: [ self sharedPoolNames ]
+		ifNotNil: [ sprClass allPoolDictionaryNames , self sharedPoolNames ]
 ]
 
 { #category : #accessing }
 RBClass >> category [
-	^category isNil 
-		ifTrue: 
-			[self isDefined
-				ifTrue: [category := self realClass category]
-				ifFalse: [model environment whichCategoryIncludes: self name]]
-		ifFalse: [category]
 
+	^ category
+		ifNil: [ self isDefined
+				ifTrue: [ category := self realClass category ]
+				ifFalse: [ model environment whichCategoryIncludes: self name ]
+			]
+		ifNotNil: [ category ]
 ]
 
 { #category : #accessing }

@@ -39,7 +39,7 @@ Class {
 	#category : #'Shift-ClassBuilder'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 ShiftClassBuilder class >> defaultBuildEnhancer [
 	^ BuilderEnhancer ifNil: [ ShDefaultBuilderEnhancer ]
 ]
@@ -439,17 +439,17 @@ ShiftClassBuilder >> sharedVariablesFromString: aStringOrArray [
 
 { #category : #accessing }
 ShiftClassBuilder >> slots: aCollection [
-	self layoutDefinition slots: aCollection.
+	self layoutDefinition slots: aCollection
 ]
 
 { #category : #accessing }
 ShiftClassBuilder >> superclass [
-	^ superclass ifNil:[ superclassName ifNotNil: [buildEnvironment classNamed: (self superclassName)]]
+	^ superclass ifNil: [ superclassName ifNotNil: [buildEnvironment classNamed: (self superclassName) ]]
 ]
 
 { #category : #accessing }
 ShiftClassBuilder >> superclass: aSuperclass [
-	aSuperclass ifNil:[superclassName := nil].
+	aSuperclass ifNil: [ superclassName := nil ].
 	superclass := aSuperclass
 ]
 
@@ -465,7 +465,7 @@ ShiftClassBuilder >> superclassName: anObject [
 
 { #category : #accessing }
 ShiftClassBuilder >> superclassResolver: asuperclassResolver [
-	superclassResolver:= asuperclassResolver.
+	superclassResolver:= asuperclassResolver
 ]
 
 { #category : #accessing }
@@ -475,7 +475,7 @@ ShiftClassBuilder >> traitComposition [
 
 { #category : #accessing }
 ShiftClassBuilder >> traitComposition: aValue [
-	^ extensibleProperties at: #traitComposition put: aValue.
+	^ extensibleProperties at: #traitComposition put: aValue
 ]
 
 { #category : #building }
@@ -487,8 +487,8 @@ ShiftClassBuilder >> tryToFillOldClass [
 
 { #category : #building }
 ShiftClassBuilder >> useStrictSuperclass [
-"default behavior"
-"If i am use, the superResolver will resolve unknown superclass by raising an error"
+	"default behavior"
+	"If I am use, the superResolver will resolve unknown superclass by raising an error"
 	self superclassResolver: ClassResolverStrictResolve new.
 ]
 
@@ -497,15 +497,14 @@ ShiftClassBuilder >> validateClassName [
 	name ifNil: [ ^self ].
 	
 	"I try to convert to symbol, if there is an error the next guard will catch it"
-	[name := name asSymbol ] on:Error do: [  ].
+	[ name := name asSymbol ] on: Error do: [  ].
 	
 	name isSymbol ifFalse:[InvalidGlobalName 
 				signal: 'Global names should be symbols' 
 				for: name].
 
 	name isValidGlobalName ifFalse: [ 
-		InvalidGlobalName signal: 'Class name is not a valid global name. It must start with uppercase letter and continue with alphanumeric characters or underscore. Default names used in class or trait templates are not allowed.' for: name  ].
-	
+		InvalidGlobalName signal: 'Class name is not a valid global name. It must start with uppercase letter and continue with alphanumeric characters or underscore. Default names used in class or trait templates are not allowed.' for: name ].
 		
 	DangerousClassNotifier check: name 
 ]
@@ -517,8 +516,6 @@ ShiftClassBuilder >> validateSuperclass [
 	
 	self superclass withAllSuperclassesDo: [ :aSuperclass |
 		aSuperclass = oldClass ifTrue:[
-			CircularHierarchyError signalFor: oldClass. 
-		]
-	].	
+			CircularHierarchyError signalFor: oldClass ]]
 
 ]

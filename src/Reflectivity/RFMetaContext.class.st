@@ -16,7 +16,7 @@ RFMetaContext class >> current [
 	^ActiveMetaContext value
 ]
 
-{ #category : #reset }
+{ #category : #initialization }
 RFMetaContext class >> reset [
 	ActiveMetaContext value: self new.
 ]

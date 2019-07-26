@@ -140,6 +140,12 @@ Trait >> - anArray [
 ]
 
 { #category : #accessing }
+Trait >> -- aSlotName [
+
+	^ self asTraitComposition -- aSlotName
+]
+
+{ #category : #accessing }
 Trait >> @ anArray [
 	"I return myself with an aliased method. Check TaAbstractComposition >> #@ for more details"
 	^ self asTraitComposition @ anArray

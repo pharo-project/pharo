@@ -63,29 +63,20 @@ comment: commentString [
 ]
 
 { #category : #'instance creation' }
-MCClassDefinition class >> name: nameString
-superclassName: superclassString
-category: categoryString 
-instVarNames: ivarArray
-classVarNames: cvarArray
-poolDictionaryNames: poolArray
-classInstVarNames: civarArray
-type: typeSymbol
-comment: commentString
-commentStamp: stampString [
-	^ self instanceLike:
-		(self new initializeWithName: nameString
-					superclassName: superclassString
-					traitComposition: '{}'
-					classTraitComposition: '{}'
-					category: categoryString 
-					instVarNames: ivarArray
-					classVarNames: cvarArray
-					poolDictionaryNames: poolArray
-					classInstVarNames: civarArray
-					type: typeSymbol
-					comment: commentString
-					commentStamp: stampString)
+MCClassDefinition class >> name: nameString superclassName: superclassString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
+	^ self new
+		initializeWithName: nameString
+		superclassName: superclassString
+		traitComposition: '{}'
+		classTraitComposition: '{}'
+		category: categoryString
+		instVarNames: ivarArray
+		classVarNames: cvarArray
+		poolDictionaryNames: poolArray
+		classInstVarNames: civarArray
+		type: typeSymbol
+		comment: commentString
+		commentStamp: stampString
 ]
 
 { #category : #obsolete }
@@ -106,32 +97,20 @@ comment: commentString [
 ]
 
 { #category : #'instance creation' }
-MCClassDefinition class >> name: nameString
-superclassName: superclassString
-traitComposition: traitCompositionString
-classTraitComposition: classTraitCompositionString
-category: categoryString 
-instVarNames: ivarArray
-classVarNames: cvarArray
-poolDictionaryNames: poolArray
-classInstVarNames: civarArray
-type: typeSymbol
-comment: commentString
-commentStamp: stampString [
-	
-	^ self instanceLike:
-		(self new initializeWithName: nameString
-					superclassName: superclassString
-					traitComposition: traitCompositionString
-					classTraitComposition: classTraitCompositionString
-					category: categoryString 
-					instVarNames: ivarArray
-					classVarNames: cvarArray
-					poolDictionaryNames: poolArray
-					classInstVarNames: civarArray
-					type: typeSymbol
-					comment: commentString
-					commentStamp: stampString)
+MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
+	^ self new
+		initializeWithName: nameString
+		superclassName: superclassString
+		traitComposition: traitCompositionString
+		classTraitComposition: classTraitCompositionString
+		category: categoryString
+		instVarNames: ivarArray
+		classVarNames: cvarArray
+		poolDictionaryNames: poolArray
+		classInstVarNames: civarArray
+		type: typeSymbol
+		comment: commentString
+		commentStamp: stampString
 ]
 
 { #category : #comparing }

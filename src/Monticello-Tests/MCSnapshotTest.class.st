@@ -22,18 +22,3 @@ MCSnapshotTest >> testCreation [
 	self assert: (d allSatisfy: [:ea | ea isClassDefinition not or: [ea category endsWith: 'Mocks']]).
 	
 ]
-
-{ #category : #tests }
-MCSnapshotTest >> testInstanceReuse [
-	| x m n y |
-	
-	self timeLimit: 300 seconds.
-	
-	x := (MCPackage new name: self mockCategoryName) snapshot.
-	Smalltalk garbageCollect.
-	n := MCDefinition allSubInstances size.
-	y := (MCPackage new name: self mockCategoryName) snapshot.
-	Smalltalk garbageCollect.
-	m := MCDefinition allSubInstances size.
-	self assert: m = n
-]
