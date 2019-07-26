@@ -34,6 +34,12 @@ NumberTest >> testIntegerPart [
 ]
 
 { #category : #tests }
+NumberTest >> testNew [
+
+	self should: [Number new] raise: self defaultTestError. 
+]
+
+{ #category : #tests }
 NumberTest >> testOne [
 
 	self 
