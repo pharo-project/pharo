@@ -5,8 +5,8 @@ Class {
 	#name : #RBPullUpPreview,
 	#superclass : #RBPushDownPreview,
 	#instVars : [
-		'dropList',
-		'label2'
+		'label2',
+		'classDropList'
 	],
 	#category : #'SystemCommands-RefactoringSupport'
 }
@@ -17,7 +17,7 @@ RBPullUpPreview class >> defaultSpec [
 		add: #label2 withConstraints: [ :c | c height: self labelHeight ];
 		add:
 			(SpBoxLayout newHorizontal
-				add: #dropList ;
+				add: #classDropList ;
 				yourself) withConstraints: [ :c | c height: self toolbarHeight  ];
 		add: #label withConstraints: [ :c | c height: self buttonHeight ];
 		add:
@@ -36,7 +36,7 @@ RBPullUpPreview class >> example [
 { #category : #specs }
 RBPullUpPreview class >> title [
 
-	^ 'Pull members up to'
+	^ 'Pull methods up to'
 ]
 
 { #category : #'instance creation' }
@@ -47,7 +47,7 @@ RBPullUpPreview >> accept [
 
 { #category : #updating }
 RBPullUpPreview >> activeClass [
-	^dropList selectedItem
+	^classDropList selectedItem
 ]
 
 { #category : #initialization }
@@ -57,8 +57,8 @@ RBPullUpPreview >> classes [
 
 { #category : #initialization }
 RBPullUpPreview >> initializeDropList [
-	dropList := self newDropList.
-	dropList displayBlock: [ :scope | scope name ];
+	classDropList := self newDropList.
+	classDropList displayBlock: [ :scope | scope name ];
 		iconBlock: [ :e | e systemIcon ]
 ]
 
@@ -74,17 +74,17 @@ RBPullUpPreview >> on: aClass withSelectors: selectors [
 	|classes|
 	super on: aClass withSelectors: selectors.
 	classes := self classes.
-	dropList items: classes.
+	classDropList items: classes.
 	
 	label2 label: self textLabel2
 ]
 
 { #category : #'acessing text' }
 RBPullUpPreview >> textLabel [
-	^ 'Members to be pulled up'
+	^ 'Methods to be pulled up'
 ]
 
 { #category : #'acessing text' }
 RBPullUpPreview >> textLabel2 [ 
-	^ 'Pull up members of ', class name,' to:' .
+	^ 'Pull up methods of ', class name,' to:' .
 ]

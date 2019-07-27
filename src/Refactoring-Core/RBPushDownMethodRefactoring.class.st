@@ -28,11 +28,6 @@ RBPushDownMethodRefactoring class >> pushDown: selectorCollection from: aClass [
 ]
 
 { #category : #preconditions }
-RBPushDownMethodRefactoring >> class1 [
-	^ class
-]
-
-{ #category : #preconditions }
 RBPushDownMethodRefactoring >> preconditions [
 	| condition |
 	self requestSelectors.
@@ -63,6 +58,7 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 
 { #category : #initialization }
 RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass [ 
+	self setOption: #selectorsFromView toUse: [ :ref | ].
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection
 ]
@@ -91,6 +87,11 @@ RBPushDownMethodRefactoring >> storeOn: aStream [
 	aStream nextPutAll: ' from: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
+]
+
+{ #category : #preconditions }
+RBPushDownMethodRefactoring >> targetClass [
+	^ class
 ]
 
 { #category : #transforming }

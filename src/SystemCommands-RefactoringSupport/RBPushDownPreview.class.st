@@ -45,7 +45,7 @@ RBPushDownPreview class >> on: aClass withSelectors: selectors [
 { #category : #specs }
 RBPushDownPreview class >> title [
 
-	^ 'Pull members down'
+	^ 'Pull methods down'
 ]
 
 { #category : #subclassresponsibility }
@@ -70,7 +70,7 @@ RBPushDownPreview >> initializeChangesTree [
 				onDesactivation: [ :aClass | selectedMethods remove: aClass ];
 				width: 20;
 				yourself);
-			addColumn:  (SpStringTableColumn title: 'Members' evaluated: #selector );
+			addColumn:  (SpStringTableColumn title: 'Methods' evaluated: #selector );
 			beResizable.
 ]
 
@@ -101,7 +101,7 @@ RBPushDownPreview >> methods [
 { #category : #initialization }
 RBPushDownPreview >> on: aRefactoring [
 	refactoring := aRefactoring.
-	self on: refactoring class1 realClass 
+	self on: refactoring targetClass realClass 
 		withSelectors: refactoring selectors asOrderedCollection.
 
 ]
@@ -117,5 +117,5 @@ RBPushDownPreview >> on: aClass withSelectors: selectors [
 
 { #category : #subclassresponsibility }
 RBPushDownPreview >> textLabel [
-	^ 'Push members from ', class name,' down' .
+	^ 'Push methods from ', class name,' down' .
 ]
