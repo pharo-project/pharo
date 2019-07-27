@@ -86,3 +86,19 @@ TDictionaryAssociationAccessTest >> testAssociationAtIfPresent [
 	result := collection associationAt: self keyNotIn ifPresent: [:assoc | {#present. assoc}].
 	self assert: result isNil.
 ]
+
+{ #category : #'tests - dictionary assocition access' }
+TDictionaryAssociationAccessTest >> testAssociationAtIfPresentifAbsent [
+
+	| collection keyIn result found |
+	found := false.
+	collection := self nonEmpty.
+	keyIn := collection keys anyOne.
+
+	result := collection associationAt: keyIn ifPresent: [found := true ] ifAbsent: [888].
+	self assert: found.
+
+	self assert: (collection associationAt: self keyNotIn  ifAbsent: [888] ) = 888.
+	
+	self assert: (collection associationAt: self keyNotIn  ifPresent: [666] ifAbsent: [888] ) = 888
+]

@@ -150,6 +150,11 @@ OrderedDictionary >> associationAt: aKey ifPresent: aBlock [
 ]
 
 { #category : #accessing }
+OrderedDictionary >> associationAt: key ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
+	^ dictionary associationAt: key ifPresent: aPresentBlock ifAbsent: anAbsentBlock
+]
+
+{ #category : #accessing }
 OrderedDictionary >> associations [
 	| associations i |
 
