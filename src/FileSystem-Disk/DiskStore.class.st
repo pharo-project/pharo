@@ -20,11 +20,11 @@ DiskStore class >> activeClass [
 
 	| writableClass |
 	
-	writableClass := writableClass := self allSubclasses detect: [:each | 
+	writableClass := self allSubclasses detect: [:each | 
 		each isActiveClass ] ifNone: [ ^ self ].
 	
 	^ SessionManager default currentSession isReadOnlyAccessMode
-		ifFalse: [ writableClass]
+		ifFalse: [ writableClass ]
 		ifTrue: [ writableClass readOnlyVariant ].
 ]
 
