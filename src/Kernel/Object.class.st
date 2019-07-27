@@ -900,21 +900,20 @@ Object >> explicitRequirement [
 	originalMethod := callingContext method.
 	originalMethod isFromTrait
 		ifFalse: errorBlock.
-		
 	originalReceiver := callingContext receiver.
 	originalSelector := originalMethod selector.
 	originalArguments := callingContext arguments.
-	
 	originalReceiver class superclass
 		withAllSuperclassesDo: [ :superClass | 
 			superClass
 				compiledMethodAt: originalSelector
 				ifPresent: [ :method | 
 					(method isProvided or: [ method isFromTrait not ])
-						ifTrue: [ 
-							callingContext return: (method valueWithReceiver: originalReceiver arguments: originalArguments) ] ]
-				ifAbsent: [  ] ].
-
+						ifTrue: [ callingContext
+								return:
+									(method
+										valueWithReceiver: originalReceiver
+										arguments: originalArguments) ] ] ].
 	errorBlock value
 ]
 
