@@ -1,13 +1,9 @@
 "
-I represent a sequential binary File. I provide the minimum operations to:
-
-- move the cursor fo the file
-- reading
-- writing
+I represent a sequential binary File and provide primitives for various file operations.
 
 I am also the entry point of the FilePlugin primitives.
 
-!Examples of usage
+Examples of usage:
 
 ""Creating a file""
 file := File named: 'asd.txt' asFileReference fullName.
