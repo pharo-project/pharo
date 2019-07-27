@@ -1,3 +1,8 @@
+"
+I am a test case ensuring that some protocols that were removed from the system are not introduced again. 
+
+The goal is to keep some conventions around protocols. For example we should use #removing and not #remove or #removal. The goal is to keep the number of protocols in the default image resonable to be able to give better propositions to the users.
+"
 Class {
 	#name : #ProtocolConventionsTest,
 	#superclass : #TestCase,
