@@ -9,35 +9,36 @@ Class {
 
 { #category : #tests }
 SimulateKeystrokesTest >> testSimulateCmdKeystroke [
-
 	| ws |
 	ws := Smalltalk tools workspace open.
-	self simulateKeyStrokes: 'var := 3.'.
-	self simulateKeyStroke: $s meta.
-	self assert: ws hasUnacceptedEdits equals:false.
-	ws delete.
+	ActiveHand simulateKeyStrokes: 'var := 3.'.
+	ActiveHand simulateKeyStroke: $s meta.
+	self assert: ws hasUnacceptedEdits equals: false.
+	ws delete
 ]
 
 { #category : #tests }
 SimulateKeystrokesTest >> testSimulateKeystroke [
-
 	| textMorph |
-	textMorph := TextMorph new contents: ''; openInWorld.
+	textMorph := TextMorph new
+		contents: '';
+		openInWorld.
 	self assert: textMorph canChangeText.
 	textMorph takeKeyboardFocus.
-	self simulateKeyStroke: $s.
+	ActiveHand simulateKeyStroke: $s.
 	self assert: textMorph contents asString equals: 's'.
-	textMorph delete.
+	textMorph delete
 ]
 
 { #category : #tests }
 SimulateKeystrokesTest >> testSimulateKeystrokes [
-
 	| textMorph |
-	textMorph := TextMorph new contents: ''; openInWorld.
+	textMorph := TextMorph new
+		contents: '';
+		openInWorld.
 	self assert: textMorph canChangeText.
 	textMorph takeKeyboardFocus.
-	self simulateKeyStrokes: 'hello'.
+	ActiveHand simulateKeyStrokes: 'hello'.
 	self assert: textMorph contents asString equals: 'hello'.
-	textMorph delete.
+	textMorph delete
 ]

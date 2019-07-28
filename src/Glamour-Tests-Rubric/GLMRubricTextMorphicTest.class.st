@@ -56,26 +56,34 @@ GLMRubricTextMorphicTest >> noTestAcceptKeyCanBeOverriden [
 { #category : #tests }
 GLMRubricTextMorphicTest >> noTestEnteringTextInPort [
 	| composite textMorph |
-	composite := GLMCompositePresentation new with: [ :a | a text display: '' ].
+	composite := GLMCompositePresentation new
+		with: [ :a | a text display: '' ].
 	window := composite openOn: 4.
 	textMorph := self find: RubScrolledTextMorph in: window.
 	self simulateOnlyOneClickOn: textMorph.
-	self simulateKeyStrokes: 'hello'.
-	self assert: (composite pane port: #text) value asString equals: 'hello'
+	ActiveHand simulateKeyStrokes: 'hello'.
+	self
+		assert: (composite pane port: #text) value asString
+		equals: 'hello'
 ]
 
 { #category : #tests }
 GLMRubricTextMorphicTest >> noTestExplicitAcceptDoesNotAffectTextPort [
 	| composite textMorph |
-	composite := GLMCompositePresentation new with: [ :a | a text display: '123' ].
+	composite := GLMCompositePresentation new
+		with: [ :a | a text display: '123' ].
 	window := composite openOn: 4.
 	textMorph := self find: RubScrolledTextMorph in: window.
 	self simulateOnlyOneClickOn: textMorph.
-	self simulateKeyStrokes: '4'.
-	self assert: (composite pane port: #text) value asString equals: '1234'.
-	self simulateKeyStroke: $s meta.
-	self simulateKeyStrokes: '56'.
-	self assert: (composite pane port: #text) value asString equals: '123456'
+	ActiveHand simulateKeyStrokes: '4'.
+	self
+		assert: (composite pane port: #text) value asString
+		equals: '1234'.
+	ActiveHand simulateKeyStroke: $s meta.
+	ActiveHand simulateKeyStrokes: '56'.
+	self
+		assert: (composite pane port: #text) value asString
+		equals: '123456'
 ]
 
 { #category : #tests }
