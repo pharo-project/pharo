@@ -46,7 +46,7 @@ ClassRenameFixTest >> renameClassUsing: aBlock [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: 'ClassRenameFix-GeneradClass'.
+		package: 'ClassRenameFix-GeneradClass'.
 	newClassName := self newUniqueClassName.
 	aBlock value: createdClass value: newClassName.
 	self assert: (Smalltalk globals classNamed: originalName) isNil.

@@ -410,19 +410,19 @@ RBSmalllintTest >> testRBMissingSubclassResponsibilityRule [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self class category.
+		package: self class category.
 	sub1 := sup
 		subclass: 'MySubclass1'
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self class category.
+		package: self class category.
 	sub2 := sup
 		subclass: 'MySubclass2'
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self class category.
+		package: self class category.
 
 	sub1 compile: 'method ^ 3'.
 	sub2 compile: 'method ^ 5'.

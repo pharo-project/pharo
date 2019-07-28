@@ -20,7 +20,7 @@ ReCodeBasedTestCase >> setUp [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: testPackage name.
+		package: testPackage name.
 	testMethod := testClass >> (testClass compile: 'nuclearSiteTestingMethod ^ self').
 	
 	testClass2 := Object
@@ -28,7 +28,7 @@ ReCodeBasedTestCase >> setUp [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: testPackage name.
+		package: testPackage name.
 ]
 
 { #category : #running }

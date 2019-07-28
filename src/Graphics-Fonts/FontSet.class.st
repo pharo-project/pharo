@@ -74,7 +74,7 @@ FontSet class >> fontSetClass: aString [
 				instanceVariableNames: ''
 				classVariableNames: ''
 				poolDictionaries: ''
-				category: self fontCategory ].
+				package: self fontCategory ].
 	(fontSet inheritsFrom: self) ifFalse: [ ^ self error: 'The name ' , className , ' is already in use' ].
 	^ fontSet
 ]

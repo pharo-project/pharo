@@ -133,7 +133,7 @@ RPackageMCSynchronisationTest >> createNewClassNamed: aName [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: 'RPackageTest'.
+		package: 'RPackageTest'.
 	^ cls
 ]
 
@@ -145,7 +145,7 @@ RPackageMCSynchronisationTest >> createNewClassNamed: aName inCategory: aCategor
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: aCategoryName.
+		package: aCategoryName.
 	^ cls
 ]
 

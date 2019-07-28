@@ -447,20 +447,6 @@ Class >> definesClassVariableNamed: aString [
 	^ self classVarNames includes: aString
 ]
 
-{ #category : #accessing }
-Class >> definitionForNautilus [
-	"Answer a String that defines the receiver."
-
-	self 
-		deprecated: 'Use #definition instead.' 
-		on: '2019-05-14'
-		in: #Pharo8
-		transformWith: '`@receiver definitionForNautilus' 
-						-> '`@receiver definition'.
-						
-	^ self definition
-]
-
 { #category : #deprecation }
 Class >> deprecationRefactorings [
 
@@ -1001,18 +987,6 @@ Class >> subclass: t instanceVariableNames: ins [
 		package: 'Unclassified'
 ]
 
-{ #category : #'subclass creation - deprecated' }
-Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNames classVariableNames: classVarNames category: aCategorySymbol [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self
-		subclass: aSubclassSymbol
-		instanceVariableNames: instVarNames
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: aCategorySymbol
-]
-
 { #category : #'subclass creation' }
 Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNames classVariableNames: classVarNames package: aPackageSymbol [
 	"Added to allow for a simplified subclass creation experience. "
@@ -1023,16 +997,6 @@ Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNames classVari
 		classVariableNames: classVarNames
 		poolDictionaries: ''
 		package: aPackageSymbol
-]
-
-{ #category : #'subclass creation - deprecated' }
-Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-	^ self
-		subclass: t
-		instanceVariableNames: f
-		classVariableNames: d
-		poolDictionaries: s
-		package: cat
 ]
 
 { #category : #'subclass creation' }

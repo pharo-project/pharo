@@ -1534,7 +1534,7 @@ MetacelloToolBox >> baselineNamed: baseName [
         instanceVariableNames: ''
         classVariableNames: ''
         poolDictionaries: ''
-        category: baselineName.
+        package: baselineName.
       MetacelloPlatform current registerPackageNamed: baselineName.
       (MetacelloPlatform current globalNamed: baselineName asSymbol)
         compile: 'baseline: spec <baseline>'

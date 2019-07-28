@@ -61,7 +61,7 @@ ChangeSetClassChangesTest >> setUp [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self categoryNameForTemporaryClasses
+		package: self categoryNameForTemporaryClasses
 ]
 
 { #category : #running }

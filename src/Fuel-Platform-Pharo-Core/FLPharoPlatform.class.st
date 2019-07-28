@@ -26,7 +26,7 @@ FLPharoPlatform class >> addPackageManifest [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self hacksCategoryName
+		package: self hacksCategoryName
 ]
 
 { #category : #'private-hacks' }

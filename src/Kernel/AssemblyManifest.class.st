@@ -29,7 +29,7 @@ AssemblyManifest class >> newNamed: aString category: aCategoryName [
 			instanceVariableNames: ''
 			classVariableNames: ''
 			poolDictionaries: ''
-			category: aCategoryName.
+			package: aCategoryName.
 	assemblyClass comment: self manifestClassComment.
 	^ assemblyClass
 ]

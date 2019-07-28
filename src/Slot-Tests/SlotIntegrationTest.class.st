@@ -279,7 +279,7 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self aCategory.
+		package: self aCategory.
 
 	self assertEmpty: aClass subclasses.
 	aClass classLayout checkIntegrity.
@@ -290,7 +290,7 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self aCategory.
+		package: self aCategory.
 
 	self assert: aClass subclasses equals: {anotherClass}.
 	self assertEmpty: anotherClass subclasses.
@@ -303,7 +303,7 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self aCategory.
+		package: self aCategory.
 
 	self assert: aClass subclasses equals: {anotherClass}.
 	self assert: anotherClass subclasses equals: {yetAnotherClass}.
@@ -318,7 +318,7 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self aCategory.
+		package: self aCategory.
 
 	self assert: aClass subclasses equals: {anotherClass}.
 	self assert: anotherClass subclasses equals: {yetAnotherClass}.
@@ -335,7 +335,7 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 		instanceVariableNames: 'x'
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self aCategory.
+		package: self aCategory.
 
 	self assert: aClass instVarNames equals: #(x).
 	aClass classLayout checkIntegrity.
@@ -346,28 +346,24 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 
 { #category : #tests }
 SlotIntegrationTest >> testReshapeClassWithClassSlot [
-	
-	aClass := 
-		Object 
-			subclass: self aClassName 
-			instanceVariableNames: '' 
-			classVariableNames: '' 
-			poolDictionaries: ''
-			category: self aCategory.	
-	aClass class 
-		instanceVariableNames: #x.
-	
-	self assert: aClass class instVarNames equals: #(x).
-	
-	aClass := 
-		Object 
-			subclass: self aClassName 
-			instanceVariableNames: 'a' 
-			classVariableNames: '' 
-			poolDictionaries: ''
-			category: self aCategory.	
+	aClass := Object
+		subclass: self aClassName
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		package: self aCategory.
+	aClass class instanceVariableNames: #x.
 
 	self assert: aClass class instVarNames equals: #(x).
+
+	aClass := Object
+		subclass: self aClassName
+		instanceVariableNames: 'a'
+		classVariableNames: ''
+		poolDictionaries: ''
+		package: self aCategory.
+
+	self assert: aClass class instVarNames equals: #(x)
 ]
 
 { #category : #tests }

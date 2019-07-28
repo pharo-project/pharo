@@ -36,33 +36,35 @@ MCPackageManagerTest >> tearDown [
 
 { #category : #tests }
 MCPackageManagerTest >> testClassAdded [
-
 	self assert: package1 mcWorkingCopy modified not.
 	self assert: package2 mcWorkingCopy modified not.
-	
-	Object subclass: 'A', UUID new asString36 instanceVariableNames: '' classVariableNames: '' category: package2 name.
-	
+
+	Object
+		subclass: 'A' , UUID new asString36
+		instanceVariableNames: ''
+		classVariableNames: ''
+		package: package2 name.
+
 	self assert: package1 mcWorkingCopy modified not.
 	self assert: package2 mcWorkingCopy modified
 ]
 
 { #category : #tests }
 MCPackageManagerTest >> testClassRemoved [
-	
 	| class |
+	class := Object
+		subclass: 'A' , UUID new asString36
+		instanceVariableNames: ''
+		classVariableNames: ''
+		package: package2 name.
 
-	class := Object subclass: 'A', UUID new asString36 instanceVariableNames: '' classVariableNames: '' category: package2 name.
-	
 	package1 mcWorkingCopy modified: false.
 	package2 mcWorkingCopy modified: false.
-	
+
 	class removeFromSystem.
-	
+
 	self assert: package1 mcWorkingCopy modified not.
-	self assert: package2 mcWorkingCopy modified.
-	
-	
-	
+	self assert: package2 mcWorkingCopy modified
 ]
 
 { #category : #tests }

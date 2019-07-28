@@ -33,7 +33,7 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: cat.
+		package: cat.
 	createdClasses add: cls.
 	createdCategories add: cat.
 	^ cls

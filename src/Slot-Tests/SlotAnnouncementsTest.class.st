@@ -139,21 +139,20 @@ SlotAnnouncementsTest >> testChangeInSuperclassShouldNotAnnounceSubclassModified
 
 { #category : #'tests-integration' }
 SlotAnnouncementsTest >> testClassAddedToNewCategoryShouldAnnounceCategoryAdded [
-
-	self subscribeOn: CategoryAdded.	
+	self subscribeOn: CategoryAdded.
 
 	self deny: (self class environment organization includesCategory: self aCategory).
-	
-	Object 
+
+	Object
 		subclass: self aClassName
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self aCategory.
+		package: self aCategory.
 
 	self assert: (self class environment organization includesCategory: self aCategory).
 
-	self assert: self collectedAnnouncements size equals: 1.
+	self assert: self collectedAnnouncements size equals: 1
 ]
 
 { #category : #tests }

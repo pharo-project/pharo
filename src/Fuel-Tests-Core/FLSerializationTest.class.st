@@ -115,7 +115,7 @@ FLSerializationTest >> newSubclassNamed: nameString of: aClass  instanceVariable
 			subclass: nameString asSymbol
 			instanceVariableNames: ivNamesString
 			classVariableNames:  classVarsString
-			category: self classFactory defaultCategory
+			package: self classFactory defaultCategory
 	].
 	self classFactory createdClasses add: class.
 	^ class

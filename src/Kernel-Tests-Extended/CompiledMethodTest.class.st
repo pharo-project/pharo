@@ -320,28 +320,28 @@ CompiledMethodTest >> testIsDeprecated [
 
 { #category : #'as yet unclassified' }
 CompiledMethodTest >> testIsInstalled [
-|  method cls |
-
-	method := (self class)>>#returnTrue.
+	| method cls |
+	method := self class >> #returnTrue.
 	self assert: method isInstalled.
 
-	
+
 
 	Smalltalk removeClassNamed: #TUTU.
 
-	cls := Object subclass: #TUTU
+	cls := Object
+		subclass: #TUTU
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self categoryNameForTemporaryClasses.
+		package: self categoryNameForTemporaryClasses.
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
 
 	"now make an orphaned method by just deleting the method."
 	cls removeSelector: #foo.
-	
-	self deny: method isInstalled. 
-	Smalltalk removeClassNamed: #TUTU.
+
+	self deny: method isInstalled.
+	Smalltalk removeClassNamed: #TUTU
 ]
 
 { #category : #'tests - testing' }
@@ -377,11 +377,11 @@ CompiledMethodTest >> testMethodClass [
 	new semantics: return Absolete class"
 	Smalltalk removeClassNamed: #TUTU.
 	cls := Object
-				subclass: #TUTU
-				instanceVariableNames: ''
-				classVariableNames: ''
-				poolDictionaries: ''
-				category: self categoryNameForTemporaryClasses.
+		subclass: #TUTU
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		package: self categoryNameForTemporaryClasses.
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
 	Smalltalk removeClassNamed: #TUTU.
@@ -464,35 +464,29 @@ CompiledMethodTest >> testReadsSlot [
 
 { #category : #'as yet unclassified' }
 CompiledMethodTest >> testSelector [
+	Author
+		useAuthor: 'TUTU_TEST'
+		during: [ | method cls |
+			method := self class >> #returnTrue.
+			self assert: method selector equals: #returnTrue.
 
-	Author useAuthor: 'TUTU_TEST' during: [ 
-		
-		|  method cls |
-		
-		method := (self class)>>#returnTrue.
-		self assert: method selector equals: #returnTrue.
-		
-		"now make an orphaned method. new semantics: return corrent name"	
-		Smalltalk removeClassNamed: #TUTU.
+			"now make an orphaned method. new semantics: return corrent name"
+			Smalltalk removeClassNamed: #TUTU.
 
-		cls := Object subclass: #TUTU
-			instanceVariableNames: ''
-			classVariableNames: ''
-			poolDictionaries: ''
-			category: self categoryNameForTemporaryClasses.
-		
-		cls compile: 'foo ^ 10'.
-		
-		method := cls >> #foo.
-		
-		Smalltalk removeClassNamed: #TUTU.
+			cls := Object
+				subclass: #TUTU
+				instanceVariableNames: ''
+				classVariableNames: ''
+				poolDictionaries: ''
+				package: self categoryNameForTemporaryClasses.
 
-		self assert: method selector = #foo. 
-		
-	].
-	
+			cls compile: 'foo ^ 10'.
 
+			method := cls >> #foo.
 
+			Smalltalk removeClassNamed: #TUTU.
+
+			self assert: method selector = #foo ]
 ]
 
 { #category : #'tests - testing' }

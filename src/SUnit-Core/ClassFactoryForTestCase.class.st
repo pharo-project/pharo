@@ -317,7 +317,7 @@ ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: 
 			instanceVariableNames: ivNamesString 
 			classVariableNames: classVarsString 
 			poolDictionaries: '' 
-			category: (self packageName, '-', category) asSymbol.
+			package: (self packageName, '-', category) asSymbol.
 	].
 
 	self createdClasses add: newClass.
@@ -336,7 +336,7 @@ ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: 
 			instanceVariableNames: ivNamesString 
 			classVariableNames: classVarsString 
 			poolDictionaries: '' 
-			category: packageName asSymbol.
+			package: packageName asSymbol.
 	].
 
 	self createdClasses add: newClass.
