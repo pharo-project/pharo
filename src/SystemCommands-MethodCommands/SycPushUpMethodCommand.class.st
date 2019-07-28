@@ -9,9 +9,14 @@ Class {
 
 { #category : #execution }
 SycPushUpMethodCommand >> asRefactorings [
-
-	^methods collect: [:method | 
-		RBPullUpMethodRefactoring pullUp: {method selector} from: method origin]
+	|dialog refactoring|
+	refactoring :=  RBPullUpMethodRefactoring 
+		pullUp: methods  
+		from: methods first origin.
+	refactoring setOption: #superClass toUse: [ :ref |
+		dialog := RBPullUpPreview on: ref.
+		dialog cancelled ifTrue: [ CmdCommandAborted signal ]].
+	^ OrderedCollection with: refactoring 
 ]
 
 { #category : #accessing }

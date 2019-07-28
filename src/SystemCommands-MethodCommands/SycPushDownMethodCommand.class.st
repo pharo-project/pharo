@@ -9,9 +9,15 @@ Class {
 
 { #category : #execution }
 SycPushDownMethodCommand >> asRefactorings [
-
-	^methods collect: [:method | 
-		RBPushDownMethodRefactoring pushDown: {method selector} from: method origin]
+	"Return push down method refactoring using method"
+	|dialog refactoring|
+	refactoring :=  RBPushDownMethodRefactoring 
+		pushDown: methods  
+		from: methods first origin.
+	refactoring setOption: #selectorsFromView toUse: [ :ref |
+		dialog := RBPushDownPreview on: ref.
+		dialog cancelled ifTrue: [ CmdCommandAborted signal ]].
+	^ OrderedCollection with: refactoring 
 ]
 
 { #category : #accessing }
