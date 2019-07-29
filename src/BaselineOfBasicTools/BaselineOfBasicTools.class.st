@@ -71,7 +71,7 @@ BaselineOfBasicTools >> baseline: spec [
 			spec package: 'MonticelloGUI'.
 			spec package: 'MonticelloGUI-Tests'.
 			spec package: 'Network-Mail'.
-			spec package: 'Network-Tests-Mail'.
+			spec package: 'Network-Mail-Tests'.
 			spec package: 'Pharo-Help'.
 			spec package: 'ProfStef-Core'.
 			spec package: 'ProfStef-Help'.
