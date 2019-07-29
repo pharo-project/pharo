@@ -170,6 +170,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Collections-Tests'.
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
+		spec package: 'Network-Tests-Mail'.
 		spec package: 'Tests'.
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'AST-Core-Tests'.
