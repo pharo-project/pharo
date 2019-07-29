@@ -156,7 +156,7 @@ ClassAnnotationRegistry class >> handleOldMethodChange: aMethodModified [
 	self resetIf: [ self doesMethodAffectAnnotations: aMethodModified oldMethod]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ClassAnnotationRegistry class >> reset [
 	<script>
 	

@@ -855,7 +855,7 @@ File class >> rename: oldFileFullName to: newFileFullName [
 	^nil
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 File class >> reset [
 	"Initialise the receiver for the current platform"
 

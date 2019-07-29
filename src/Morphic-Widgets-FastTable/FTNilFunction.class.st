@@ -36,7 +36,7 @@ FTNilFunction >> keyStroke: anEvent [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 FTNilFunction >> reset [
 ]
 

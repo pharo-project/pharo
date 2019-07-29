@@ -13,7 +13,7 @@ GLMVerticalLinearLayout class >> cleanUp [
 	self reset
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GLMVerticalLinearLayout class >> reset [
 	"
 	self reset

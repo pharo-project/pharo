@@ -1061,7 +1061,7 @@ RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 { #category : #'system integration' }
 RPackageOrganizer >> systemMethodModifiedActionFrom: ann [
 
-	"this annoucement can correspond to several kind of modifications:
+	"this announcement can correspond to several kind of modifications:
 		=> a method has been renamed
 		=> a method has been move to another category // SHOULD BE TREATED WITH SystemMethodRecategorizedEvent
 		(

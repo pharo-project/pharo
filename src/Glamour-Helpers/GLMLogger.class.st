@@ -28,7 +28,7 @@ GLMLogger class >> nullInstance [
 		nullInstance := GLMNullLogger new ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GLMLogger class >> reset [
 	instance := nil
 ]

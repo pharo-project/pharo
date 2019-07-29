@@ -13,7 +13,7 @@ Class {
 
 { #category : #'instance creation' }
 ShClassInstallerTest >> newClass: className slots: slots [
-	^ self newClass: className superclass: Object slots: slots.
+	^ self newClass: className superclass: Object slots: slots
 ]
 
 { #category : #'instance creation' }
@@ -38,12 +38,11 @@ ShClassInstallerTest >> tearDown [
 	superClass ifNotNil: #removeFromSystem.
 	superClass2 ifNotNil: #removeFromSystem.
 	
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
 ShClassInstallerTest >> testChangingHierarchy [
-
 	"Testing that the changes in the superclasses are propagated to the subclasses"
 
 	superClass := self newClass:#ShCITestClass1 slots:#().
@@ -89,7 +88,7 @@ ShClassInstallerTest >> testChangingSuperclassInTheHierarchy [
 	self assertCollection: superClass2 subclasses equals: { subClass }. 
 	self assertCollection: superClass subclasses equals: { superClass2 }. 
 	self assert: subClass superclass equals: superClass2.
-	self assert: superClass2 superclass equals: superClass.
+	self assert: superClass2 superclass equals: superClass
 
 ]
 
@@ -125,7 +124,7 @@ ShClassInstallerTest >> testClassWithComment [
 				commentStamp: 'anStamp' ].
 	
 	self assert: newClass comment equals: 'I have a comment'.
-	self assert: newClass organization commentStamp equals: 'anStamp'.
+	self assert: newClass organization commentStamp equals: 'anStamp'
 ]
 
 { #category : #tests }
@@ -149,7 +148,7 @@ ShClassInstallerTest >> testClassWithSlotHasInitializeMethodWithInitializeSlots 
 	newClass := self newClass: className slots: { #someSlot => ShTestSlot }.
 	
 	self assert: ((newClass >> #initialize) ast statements
-		includes: (RBParser parseExpression: 'self class initializeSlots: self')).
+		includes: (RBParser parseExpression: 'self class initializeSlots: self'))
 ]
 
 { #category : #tests }
@@ -166,7 +165,7 @@ ShClassInstallerTest >> testDuplicateClassPreserveClassSlots [
 	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
 	
 	self assert: (newClass2 class hasSlotNamed: #aClassInstanceVariable).
-	self assert: (newClass2 class slotNamed: #aClassInstanceVariable) class equals: InstanceVariableSlot.
+	self assert: (newClass2 class slotNamed: #aClassInstanceVariable) class equals: InstanceVariableSlot
 	
 ]
 
@@ -190,7 +189,7 @@ ShClassInstallerTest >> testDuplicateClassPreserveSlots [
 	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
 	
 	self assert: (newClass2 hasSlotNamed: #anInstanceVariable).
-	self assert: (newClass2 slotNamed: #anInstanceVariable) class equals: BooleanSlot.
+	self assert: (newClass2 slotNamed: #anInstanceVariable) class equals: BooleanSlot
 	
 ]
 
@@ -220,7 +219,7 @@ ShClassInstallerTest >> testModifyingClassKeepsOrganizationOfMethods [
 	newClass := self newClass: #ShCITestClass superclass: subClass slots: #(aSlot).
 
 	self assert: (newClass >> #aMethod) protocol equals: #'useful-message'.
-	self assert: (newClass class >> #aClassMethod) protocol equals: #'useful-message'.	
+	self assert: (newClass class >> #aClassMethod) protocol equals: #'useful-message'
 
 ]
 
@@ -243,12 +242,12 @@ ShClassInstallerTest >> testModifyingSuperclass [
 	superClass new instVarNamed: #anInstanceVariable.
 	newClass new instVarNamed: #anInstanceVariable.	
 	
-	superClass := self newClass:#ShCITestClass slots:#(anInstanceVariable otherVariable).
+	superClass := self newClass:#ShCITestClass slots: #(anInstanceVariable otherVariable).
 
 	superClass new instVarNamed: #anInstanceVariable.
 	newClass new instVarNamed: #anInstanceVariable.	
 	superClass new instVarNamed: #otherVariable.
-	newClass new instVarNamed: #otherVariable.	
+	newClass new instVarNamed: #otherVariable
 
 ]
 
@@ -287,7 +286,7 @@ ShClassInstallerTest >> testTryingToModifyReadOnlyInstances [
 
 	self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable).
 
-	self assert: obj isReadOnlyObject.	
+	self assert: obj isReadOnlyObject	
 
 ]
 
@@ -308,6 +307,6 @@ ShClassInstallerTest >> testTryingToModifyReadOnlySubInstances [
 
 	self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable).
 	
-	self assert: obj isReadOnlyObject.	
+	self assert: obj isReadOnlyObject	
 
 ]

@@ -48,7 +48,7 @@ ClySystemEnvironment class >> currentImage [
 			changesAnnouncer: SystemAnnouncer uniqueInstance]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ClySystemEnvironment class >> reset [
 	<script>
 	currentImage := nil

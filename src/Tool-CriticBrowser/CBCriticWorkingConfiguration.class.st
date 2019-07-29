@@ -36,9 +36,9 @@ CBCriticWorkingConfiguration class >> new [
 	^ self shouldNotImplement
 ]
 
-{ #category : #'instance creation' }
-CBCriticWorkingConfiguration class >> reset [
-	<script>
+{ #category : #initialization }
+CriticWorkingConfiguration class >> reset [
+
 	Current := nil
 ]
 

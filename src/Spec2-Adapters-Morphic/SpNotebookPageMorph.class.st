@@ -68,7 +68,7 @@ SpNotebookPageMorph >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 SpNotebookPageMorph >> reset [
 
 	self actualPageMorph: nil

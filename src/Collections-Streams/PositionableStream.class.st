@@ -588,7 +588,7 @@ PositionableStream >> readInto: aCollection startingAt: startIndex count: n [
 	^ n
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 PositionableStream >> reset [
 	"Set the receiver's position to the beginning of the sequence of objects."
 

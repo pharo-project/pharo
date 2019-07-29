@@ -73,7 +73,7 @@ MalDijkstra >> pathWeight [
 	^ self end pathWeight
 ]
 
-{ #category : #running }
+{ #category : #initialization }
 MalDijkstra >> reset [
 
 	self nodes do: [:n|

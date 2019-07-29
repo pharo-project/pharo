@@ -47,7 +47,7 @@ SpMorphicStyleSheet class >> newDefault [
 	^ SpMorphicDefaultStyleSheet new
 ]
 
-{ #category : #utils }
+{ #category : #initialization }
 SpMorphicStyleSheet class >> reset [ 
 	<script>
 	

@@ -782,7 +782,7 @@ FileStream >> reopen [
 
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 FileStream >> reset [
 	"Set the current character position to the beginning of the file."
 

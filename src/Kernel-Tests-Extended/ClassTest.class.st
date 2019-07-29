@@ -330,17 +330,17 @@ ClassTest >> testRemoveClassSlot [
 { #category : #'tests - access' }
 ClassTest >> testSharedPoolOfVarNamed [	
 
-	self assert: (Date sharedPoolOfVarNamed: 'DayNames') = ChronologyConstants.
+	self assert: (Date sharedPoolOfVarNamed: 'DayNames') equals: ChronologyConstants.
 	"a metaclass does not have shared pools since only classes have shared pools"
 	self assert: (Date class sharedPoolOfVarNamed: 'DayNames') isNil.
 	
-	self assert: (RootClassPoolUser sharedPoolOfVarNamed: 'Author') = PoolDefiner.
-	self assert: (RootClassPoolUser sharedPoolOfVarNamed: 'Gloups') = PoolDefiner.
-	self assert: (SubclassPoolUser sharedPoolOfVarNamed: 'Author') = PoolDefiner.
+	self assert: (RootClassPoolUser sharedPoolOfVarNamed: 'Author') equals: PoolDefiner.
+	self assert: (RootClassPoolUser sharedPoolOfVarNamed: 'Gloups') equals: PoolDefiner.
+	self assert: (SubclassPoolUser sharedPoolOfVarNamed: 'Author') equals: PoolDefiner.
 	
-	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'Author') = PoolDefiner.
-	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'VariableInPoolDefiner2') = PoolDefiner2.
-	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'Gloups') = PoolDefiner.
+	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'Author') equals: PoolDefiner.
+	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'VariableInPoolDefiner2') equals: PoolDefiner2.
+	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'Gloups') equals: PoolDefiner
 ]
 
 { #category : #'tests - access' }
@@ -365,8 +365,8 @@ ClassTest >> testSubclass [
 	self assert: (Smalltalk globals includesKey: #SubclassExample).
 
 	self assert: (Smalltalk globals at: #SubclassExample) == cls.
-	self assert: cls category = #Unclassified.
-	self assert: cls instVarNames = #().
+	self assert: cls category equals: self unclassifiedCategory.
+	self assert: cls instVarNames equals: #().
 	
 	cls removeFromSystem
 ]
@@ -382,8 +382,8 @@ ClassTest >> testSubclassInstanceVariableNames [
 	self assert: (Smalltalk globals includesKey: #SubclassExample).
 
 	self assert: (Smalltalk at: #SubclassExample) == cls.
-	self assert: cls category = #Unclassified.
-	self assert: cls instVarNames = #('x' 'y').
+	self assert: cls category equals: self unclassifiedCategory.
+	self assert: cls instVarNames equals: #('x' 'y').
 	
 	cls removeFromSystem
 ]
@@ -399,7 +399,7 @@ ClassTest >> testSuperclassOrder [
 	ordered := Class superclassOrder: shuffledSuperclasses.
 	
 	"should not affect the order as there is no dependencies"
-	self assert: ordered = orderedSuperclasses asOrderedCollection.
+	self assert: ordered equals: orderedSuperclasses asOrderedCollection
 ]
 
 { #category : #'tests - file in/out' }
@@ -411,7 +411,7 @@ ClassTest >> testSuperclassOrderPreservingOrder [
 	ordered := Class superclassOrder: noHierarchicalRelationship.
 	
 	"should not affect the order as there is no dependencies"
-	self assert: ordered = noHierarchicalRelationship asOrderedCollection.
+	self assert: ordered equals: noHierarchicalRelationship asOrderedCollection
 	
 	
 ]
@@ -425,7 +425,7 @@ ClassTest >> testUsesPoolVarNamed [
 	
 	self assert: (RootClassPoolUser usesPoolVarNamed: 'Author').
 	"a subclass  has  the one of its superclass"
-	self assert: (SubclassPoolUser usesPoolVarNamed: 'Author').
+	self assert: (SubclassPoolUser usesPoolVarNamed: 'Author')
 ]
 
 { #category : #'tests - class variables' }
@@ -440,7 +440,7 @@ ClassTest >> testclassVarNames [
 	self assert: (Object classVarNames includes: #DependentsFields).
 	
 	"A class and it's meta-class share the class variables"
-	self assert: (Object classVarNames = Object class classVarNames).
+	self assert: Object classVarNames equals: Object class classVarNames
 ]
 
 { #category : #'tests - class variables' }
@@ -449,7 +449,7 @@ ClassTest >> testclassVariables [
 	self assert: Object classVariables first name equals: #DependentsFields.
 	
 	"A class and it's meta-class share the class variables"
-	self assert: (Object classVariables = Object class classVariables).
+	self assert: Object classVariables equals: Object class classVariables
 ]
 
 { #category : #'tests - class creation' }

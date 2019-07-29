@@ -2,7 +2,7 @@
 I announce  changes on Privacy settings in SystemAnnouncer uniqueInstance.
 "
 Class {
-	#name : #PrivacyChangedAnnoucement,
+	#name : #PrivacyChangedAnnouncement,
 	#superclass : #Announcement,
 	#category : #'GT-EventRecorder-Privacy'
 }

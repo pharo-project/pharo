@@ -85,7 +85,7 @@ Stopwatch >> reActivate [
 
 ]
 
-{ #category : #actions }
+{ #category : #initialization }
 Stopwatch >> reset [
 
 	self suspend.

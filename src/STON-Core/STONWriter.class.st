@@ -353,7 +353,7 @@ STONWriter >> referencePolicy: policy [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONWriter >> reset [
 	objects removeAll
 ]

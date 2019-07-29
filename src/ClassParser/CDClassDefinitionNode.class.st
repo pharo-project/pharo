@@ -71,10 +71,8 @@ CDClassDefinitionNode >> sharedSlotNodes [
 
 { #category : #accessing }
 CDClassDefinitionNode >> sharedSlots [
-	sharedSlotNodes ifNil:[
-		sharedSlotNodes := Array new.
-		].
-	^ sharedSlotNodes
+	^ sharedSlotNodes ifNil:[ sharedSlotNodes := Array new ]
+	
 ]
 
 { #category : #accessing }
