@@ -245,11 +245,12 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tool-Catalog'.	"standalone"
 
 		spec package: 'GT-Debugger'.
-		spec package: 'GT-BytecodeDebugger'.
-		
 		spec package: 'Tool-CriticBrowser'.
 		spec package: 'Tool-CriticBrowser-TestEnvironment'.
 		spec package: 'Tool-CriticBrowser-Tests'.
+		spec package: 'GT-BytecodeDebugger'.
+		
+		
 		
 		spec package: 'GT-SUnitDebugger'.
 
