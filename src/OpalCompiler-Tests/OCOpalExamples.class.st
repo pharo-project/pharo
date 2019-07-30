@@ -222,6 +222,45 @@ OCOpalExamples >> exampleForInlinedBlockArgument [
 ]
 
 { #category : #'examples-blocks-optimized' }
+OCOpalExamples >> exampleIfFalse [
+	<sampleInstance>
+	true
+		ifTrue: [  ]
+		ifFalse: [ ^ 1 ].
+	^ 2
+]
+
+{ #category : #'examples-blocks-optimized' }
+OCOpalExamples >> exampleIfFalseIfTrue [
+	<sampleInstance>
+	true ifFalse: [^1] ifTrue: [^2].
+]
+
+{ #category : #'examples-blocks-optimized' }
+OCOpalExamples >> exampleIfNotNilArg [
+	<sampleInstance>
+	^1 even ifNotNil: [ :arg | arg not ]
+]
+
+{ #category : #'examples-blocks-optimized' }
+OCOpalExamples >> exampleIfNotNilReturnNil [
+	<sampleInstance>
+	^nil ifNotNil: [ :arg | arg not ]
+]
+
+{ #category : #'examples-blocks-optimized' }
+OCOpalExamples >> exampleIfTrue [
+	[ 1 < 2
+		ifTrue: [ ^ 'result' ]] value
+]
+
+{ #category : #'examples-blocks-optimized' }
+OCOpalExamples >> exampleIfTrueIfFalse [
+	<sampleInstance>
+	 1 <2 ifTrue: [^'result'] ifFalse: [2].
+]
+
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleInlineBlockCollectionLR3 [
 	<sampleInstance>
 	| col |
@@ -320,6 +359,19 @@ OCOpalExamples >> exampleMethodTempInNestedBlock [
 	^block value.
 ]
 
+{ #category : #'examples-blocks-optimized' }
+OCOpalExamples >> exampleMethodWithOptimizedBlocksA [
+	<sampleInstance>
+	| s c |
+	s := self isNil
+			ifTrue: [| a | a := 'isNil'. a]
+			ifFalse: [| a | a := 'notNil'. a].
+	c := String new: s size.
+	1 to: s size do:
+		[:i| c at: i put: (s at: i)].
+	^c. "notNil"
+]
+
 { #category : #'examples-blocks' }
 OCOpalExamples >> exampleNestedBlockScoping [
 	<sampleInstance>
@@ -331,6 +383,16 @@ OCOpalExamples >> exampleNestedBlockScoping [
 	c := [:a |
 			z + a].
 	^ (b value: 2) + (c value: 1)
+]
+
+{ #category : #'examples-blocks-optimized' }
+OCOpalExamples >> exampleNewArray [
+	<sampleInstance>
+
+	| temp |
+	
+	temp := Array new: 3.
+	^temp
 ]
 
 { #category : #'examples-conditionals' }
@@ -430,6 +492,15 @@ OCOpalExamples >> examplePushArgumentVariable: argument [
 	<sampleInstance>
 	
 	self message: argument
+]
+
+{ #category : #'examples-blocks-optimized' }
+OCOpalExamples >> examplePushArray [
+	<sampleInstance>
+	| t |
+
+	{1 .t:=1}.
+	^t
 ]
 
 { #category : #'examples-misc' }
@@ -884,6 +955,13 @@ OCOpalExamples >> exampleWhileWithTempNotInlined [
 OCOpalExamples >> exampleWithArgument: anArg [
 	<sampleInstance>
 	^ anArg
+]
+
+{ #category : #'examples-blocks-optimized' }
+OCOpalExamples >> exampleiVar [
+	<sampleInstance>
+	iVar := 1.
+	^iVar.
 ]
 
 { #category : #accessing }
