@@ -8,6 +8,16 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
+{ #category : #activation }
+SycInsertSuperclassCommand class >> browserContextMenuActivation [
+	<classAnnotation>
+	
+	^ CmdContextMenuActivation  
+		byItemOf: SycMoreRefactorsMenuGroup  
+		order: 30 
+		for: ClyClass asCalypsoItemContext 
+]
+
 { #category : #accessing }
 SycInsertSuperclassCommand >> defaultMenuItemName [
 	^'Insert superclass'

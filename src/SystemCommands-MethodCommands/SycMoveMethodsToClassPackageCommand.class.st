@@ -17,6 +17,16 @@ SycMoveMethodsToClassPackageCommand class >> canBeExecutedInContext: aToolContex
 	^aToolContext isExtensionMethodSelected
 ]
 
+{ #category : #activation }
+SycMoveMethodsToClassPackageCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^CmdContextMenuActivation 
+		byItemOf: SycMoreRefactorsMenuGroup 
+		order: 80 
+		for: ClyMethod asCalypsoItemContext
+]
+
 { #category : #accessing }
 SycMoveMethodsToClassPackageCommand >> defaultMenuItemName [
 	^'Move to class package'

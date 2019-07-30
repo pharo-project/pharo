@@ -8,6 +8,16 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
+{ #category : #activation }
+SycInsertSubclassCommand class >> browserContextMenuActivation [
+	<classAnnotation>
+	
+	^ CmdContextMenuActivation  
+		byItemOf: SycMoreRefactorsMenuGroup  
+		order: 20
+		for: ClyClass asCalypsoItemContext 
+]
+
 { #category : #accessing }
 SycInsertSubclassCommand >> defaultMenuItemName [
 	^'Insert subclass'

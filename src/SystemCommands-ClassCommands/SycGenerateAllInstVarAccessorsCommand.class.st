@@ -7,6 +7,13 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
+{ #category : #activation }
+SycGenerateAllInstVarAccessorsCommand class >> browserShortcutActivation [
+	<classAnnotation>
+	
+	^CmdShortcutActivation  by: $g meta, $a meta for: ClyClass asCalypsoItemContext 
+]
+
 { #category : #execution }
 SycGenerateAllInstVarAccessorsCommand >> asRefactorings [
 
