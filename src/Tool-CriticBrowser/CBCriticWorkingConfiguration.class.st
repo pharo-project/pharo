@@ -36,12 +36,6 @@ CBCriticWorkingConfiguration class >> new [
 	^ self shouldNotImplement
 ]
 
-{ #category : #initialization }
-CriticWorkingConfiguration class >> reset [
-
-	Current := nil
-]
-
 { #category : #accessing }
 CBCriticWorkingConfiguration >> environment [
 	^ environment
