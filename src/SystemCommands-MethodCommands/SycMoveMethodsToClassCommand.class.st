@@ -23,6 +23,11 @@ SycMoveMethodsToClassCommand class >> methods: methods class: targetClass [
 ]
 
 { #category : #accessing }
+SycMoveMethodsToClassCommand >> defaultMenuIconName [ 
+	^ #smallRedo
+]
+
+{ #category : #accessing }
 SycMoveMethodsToClassCommand >> defaultMenuItemName [
 	^'Move to another class'
 ]

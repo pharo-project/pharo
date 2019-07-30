@@ -18,6 +18,11 @@ SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 ]
 
 { #category : #accessing }
+SycExtractMethodCommand >> defaultMenuIconName [ 
+	^ #glamorousRestart
+]
+
+{ #category : #accessing }
 SycExtractMethodCommand >> defaultMenuItemName [
 	^ 'Extract method'
 ]

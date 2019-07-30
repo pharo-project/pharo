@@ -20,6 +20,11 @@ SycGenerateAllInstVarAccessorsCommand >> asRefactorings [
 ]
 
 { #category : #accessing }
+SycGenerateAllInstVarAccessorsCommand >> defaultMenuIconName [ 
+	^ #smallAdd
+]
+
+{ #category : #accessing }
 SycGenerateAllInstVarAccessorsCommand >> defaultMenuItemName [
 	^'Generate accessors'
 ]

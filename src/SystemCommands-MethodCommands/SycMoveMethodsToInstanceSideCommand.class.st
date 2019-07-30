@@ -14,6 +14,11 @@ SycMoveMethodsToInstanceSideCommand class >> canBeExecutedInContext: aToolContex
 ]
 
 { #category : #accessing }
+SycMoveMethodsToInstanceSideCommand >> defaultMenuIconName [ 
+	^ #smallRedo
+]
+
+{ #category : #accessing }
 SycMoveMethodsToInstanceSideCommand >> defaultMenuItemName [
 	^'Move to instance side'
 ]

@@ -15,6 +15,11 @@ SycInlineMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 ]
 
 { #category : #accessing }
+SycInlineMethodCommand >> defaultMenuIconName [ 
+	^ #smallRightFlushIcon
+]
+
+{ #category : #accessing }
 SycInlineMethodCommand >> defaultMenuItemName [
 	^ 'Inline method'
 ]

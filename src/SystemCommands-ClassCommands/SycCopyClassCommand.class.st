@@ -32,6 +32,11 @@ SycCopyClassCommand >> applyResultInContext: aToolContext [
 ]
 
 { #category : #accessing }
+SycCopyClassCommand >> defaultMenuIconName [
+	^#smallCopy
+]
+
+{ #category : #accessing }
 SycCopyClassCommand >> defaultMenuItemName [
 	^'Copy'
 ]
