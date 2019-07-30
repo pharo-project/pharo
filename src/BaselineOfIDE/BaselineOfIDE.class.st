@@ -648,11 +648,13 @@ spec group: 'QualityAssistant-Core-Group' with: #(
 	'Manifest-Core-Group' "dependency"
 	'Glamour-Core-Group'	"dependency"
 	'DependencyAnalyser-Core-Group' "dependency"
-	'GT-Core-Group'	"dependency"
-	'Renraku'		
+	'Renraku'	
 	'Tool-CriticBrowser'
 	'Tool-CriticBrowser-TestEnvironment'
 	'Tool-CriticBrowser-Tests'
+	'GT-Core-Group'	"dependency"
+		
+	
 ).
 spec group: 'QualityAssistant-Tests-Group' with: #(
 	'Renraku-Test'
