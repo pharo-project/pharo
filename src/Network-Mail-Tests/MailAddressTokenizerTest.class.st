@@ -1,7 +1,7 @@
 Class {
 	#name : #MailAddressTokenizerTest,
 	#superclass : #TestCase,
-	#category : #'Network-Tests-Mail'
+	#category : #'Network-Mail-Tests'
 }
 
 { #category : #tests }
