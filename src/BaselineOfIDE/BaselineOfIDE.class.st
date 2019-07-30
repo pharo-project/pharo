@@ -231,6 +231,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Glamour-FastTable'.
 		spec package: 'Glamour-SpecIntegration'.
 	
+		spec package: 'Tool-CriticBrowser'.
+		spec package: 'Tool-CriticBrowser-TestEnvironment'.
+		spec package: 'Tool-CriticBrowser-Tests'.
+		
 		spec package: 'GT-Inspector'.
 		spec package: 'GT-InspectorExtensions-Core'.
 
@@ -245,9 +249,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tool-Catalog'.	"standalone"
 
 		spec package: 'GT-Debugger'.
-		spec package: 'Tool-CriticBrowser'.
-		spec package: 'Tool-CriticBrowser-TestEnvironment'.
-		spec package: 'Tool-CriticBrowser-Tests'.
 		spec package: 'GT-BytecodeDebugger'.
 		
 		
