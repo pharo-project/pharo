@@ -7,14 +7,14 @@ Class {
 	#category : #'Ring-Deprecated-Core-Containers-Base'
 }
 
-{ #category : #'adding elements' }
+{ #category : #adding }
 RGNamespace >> addElement: anObject in: aCollection [
 
 	anObject environment: self.
 	super addElement: anObject in: aCollection
 ]
 
-{ #category : #'adding elements' }
+{ #category : #adding }
 RGNamespace >> addGlobalVariable: anORGlobalVariableDefinition [
 	"adds anORGlobalVariableDefinition to the globals dictionary if satisfies it #isGlobalVariable"
 
@@ -22,7 +22,7 @@ RGNamespace >> addGlobalVariable: anORGlobalVariableDefinition [
 	self addElement: anORGlobalVariableDefinition in: self globalVariables
 ]
 
-{ #category : #'adding elements' }
+{ #category : #adding }
 RGNamespace >> addGlobalVariableNamed: globalVariableName [
 	"creates a RGGlobalVariableDefinition with the given name.
 	It's verified that a pool with that name does not exist"
@@ -31,7 +31,7 @@ RGNamespace >> addGlobalVariableNamed: globalVariableName [
 	self addGlobalVariable: (RGGlobalVariableDefinition named: globalVariableName).
 ]
 
-{ #category : #'adding elements' }
+{ #category : #adding }
 RGNamespace >> addPool: anORPoolDefinition [
 	"adds anORPoolDefinition to the pools dictionary if satisfies it #isPool"
 
@@ -39,7 +39,7 @@ RGNamespace >> addPool: anORPoolDefinition [
 	self addElement: anORPoolDefinition in: self pools
 ]
 
-{ #category : #'adding elements' }
+{ #category : #adding }
 RGNamespace >> addPoolNamed: poolName [
 	"creates a RGPoolDefinition with the given name.
 	It's verified that a pool with that name does not exist"
@@ -130,7 +130,7 @@ RGNamespace >> pools: aCollection [
 	self elementsCategorized: #pools with: aCollection
 ]
 
-{ #category : #'removing elements' }
+{ #category : #removing }
 RGNamespace >> removeGlobalVariable: anORGlobalVariableDefinition [
 	"removes anORGlobalVariableDefinition from the globals dictionary if satisfies it #isGlobalVariable"
 
@@ -138,7 +138,7 @@ RGNamespace >> removeGlobalVariable: anORGlobalVariableDefinition [
 	self removeElement: anORGlobalVariableDefinition from: self globalVariables
 ]
 
-{ #category : #'removing elements' }
+{ #category : #removing }
 RGNamespace >> removePool: anORPoolDefinition [
 	"removes anORPoolDefinition from the pools dictionary if satisfies it #isPool"
 
@@ -146,13 +146,13 @@ RGNamespace >> removePool: anORPoolDefinition [
 	self removeElement: anORPoolDefinition from: self pools
 ]
 
-{ #category : #'removing elements' }
+{ #category : #removing }
 RGNamespace >> withoutGlobalVariables [
 
 	self removeElementsCategorized: #globalVariables
 ]
 
-{ #category : #'removing elements' }
+{ #category : #removing }
 RGNamespace >> withoutPools [
 
 	self removeElementsCategorized: #pools
