@@ -16,19 +16,19 @@ Class {
 ReCodeBasedTestCase >> setUp [
 	super setUp.
 	testClass := Object
-		subclass: 'NuclearSiteTestingClass'
+		subclass: 'RenrakuProgramaticallyCreatedClassTestClass'
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: testPackage name.
-	testMethod := testClass >> (testClass compile: 'nuclearSiteTestingMethod ^ self').
-	
+		package: testPackage name.
+	testMethod := testClass
+		>> (testClass compile: 'testingMethod ^ self').
 	testClass2 := Object
-		subclass: 'NuclearSiteTestingClass2'
+		subclass: 'RenrakuProgramaticallyCreatedClassTestClass2'
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: testPackage name.
+		package: testPackage name
 ]
 
 { #category : #running }
