@@ -246,11 +246,12 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'GT-Debugger'.
 		spec package: 'GT-BytecodeDebugger'.
-		spec package: 'GT-SUnitDebugger'.
-
+		
 		spec package: 'Tool-CriticBrowser'.
 		spec package: 'Tool-CriticBrowser-TestEnvironment'.
 		spec package: 'Tool-CriticBrowser-Tests'.
+		
+		spec package: 'GT-SUnitDebugger'.
 
 		spec package: 'Renraku'.
 		spec package: 'SUnit-Rules'.	
