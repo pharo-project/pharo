@@ -40,14 +40,6 @@ Class {
 }
 
 { #category : #'process specific' }
-Process class >> psKeysSema [
-	"Isolate handling of class variable"
-
-	PSKeysSema ifNil: [ PSKeysSema := Semaphore forMutualExclusion ].
-	^PSKeysSema
-]
-
-{ #category : #'process specific' }
 Process class >> allocatePSKey: aPSVariable [
 
 	"Add a new process-specific key. 
@@ -98,6 +90,14 @@ Process class >> forContext: aContext priority: anInteger [
 	newProcess priority: anInteger.
 	Processor activeProcess installEnvIntoForked: newProcess.
 	^newProcess
+]
+
+{ #category : #'process specific' }
+Process class >> psKeysSema [
+	"Isolate handling of class variable"
+
+	PSKeysSema ifNil: [ PSKeysSema := Semaphore forMutualExclusion ].
+	^PSKeysSema
 ]
 
 { #category : #'process specific' }

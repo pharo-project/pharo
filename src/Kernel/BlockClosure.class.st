@@ -969,7 +969,8 @@ BlockClosure >> whileFalse: aBlock [
 	This is in case the message is sent to other than a literal block.
 	Evaluate the argument, aBlock, as long as the value of the receiver is false."
 
-	self value ifFalse: [ aBlock value. self whileFalse: aBlock ]
+	self value ifFalse: [ aBlock value. self whileFalse: aBlock ].
+	^ nil
 ]
 
 { #category : #controlling }
@@ -1001,5 +1002,6 @@ BlockClosure >> whileTrue: aBlock [
 	This is in case the message is sent to other than a literal block.
 	Evaluate the argument, aBlock, as long as the value of the receiver is true."
 
-	self value ifTrue: [ aBlock value. self whileTrue: aBlock ]
+	self value ifTrue: [ aBlock value. self whileTrue: aBlock ].
+	^ nil
 ]
