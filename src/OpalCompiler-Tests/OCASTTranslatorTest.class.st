@@ -105,7 +105,7 @@ OCASTTranslatorTest >> globals: anObject [
 	globals := anObject
 ]
 
-{ #category : #setup }
+{ #category : #initialization }
 OCASTTranslatorTest >> initialize [
 
 	super initialize.
@@ -148,7 +148,7 @@ OCASTTranslatorTest >> optimization: anObject [
 	optimization := anObject
 ]
 
-{ #category : #setup }
+{ #category : #running }
 OCASTTranslatorTest >> setUp [
 
 	super setUp.
@@ -156,7 +156,7 @@ OCASTTranslatorTest >> setUp [
 	globals := Dictionary new.
 ]
 
-{ #category : #setup }
+{ #category : #running }
 OCASTTranslatorTest >> tearDown [
 
 	OCOpalExamples reset.

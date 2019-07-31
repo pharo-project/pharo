@@ -25,7 +25,7 @@ ParametrizedTestMatrix >> * aParametrizedTestMatrix [
 	^ newMatrix
 ]
 
-{ #category : #combination }
+{ #category : #comparing }
 ParametrizedTestMatrix >> = aMatrix [
 
 	^ self expandMatrix = aMatrix expandMatrix
@@ -81,7 +81,7 @@ ParametrizedTestMatrix >> forSelector: aSelector addOptions: someOptions [
 				yourself)
 ]
 
-{ #category : #combination }
+{ #category : #comparing }
 ParametrizedTestMatrix >> hash [
 
 	^ self expandMatrix hash

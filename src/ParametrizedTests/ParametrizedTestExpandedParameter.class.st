@@ -13,7 +13,7 @@ Class {
 	#category : #'ParametrizedTests-Core'
 }
 
-{ #category : #accessing }
+{ #category : #comparing }
 ParametrizedTestExpandedParameter >> = anOption [
 
 	^ self selector = anOption selector
@@ -37,7 +37,7 @@ ParametrizedTestExpandedParameter >> asTestParameter [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 ParametrizedTestExpandedParameter >> hash [
 
 	^ self selector hash + self valuable hash
