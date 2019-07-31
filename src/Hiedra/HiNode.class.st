@@ -33,9 +33,20 @@ HiNode >> addOutgoingLink: aHiLink [
 	outgoingLinks add: aHiLink 
 ]
 
+{ #category : #accessing }
+HiNode >> anyLink [
+	"Answer a link (assuming it has at least one either outgoing or incoming link)."
+
+	^ (outgoingLinks ifEmpty: [ incomingLinks ]) first
+]
+
 { #category : #testing }
-HiNode >> hasLinkTo: aHiNode [ 
-	
+HiNode >> hasAnyLink [
+	^ outgoingLinks isEmpty and: [ incomingLinks isEmpty ]
+]
+
+{ #category : #testing }
+HiNode >> hasLinkTo: aHiNode [
 	^ outgoingLinks anySatisfy: [ :each | each target = aHiNode ]
 ]
 
