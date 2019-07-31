@@ -9,9 +9,7 @@ Class {
 
 { #category : #hooks }
 CBUnBanRuleCommand >> execute [
-	self selectedRule isComposite
-		ifTrue: [ self selectedRule rules do: [ :r | self context allPackages do: [ :package | self context removeFalsePositiveRule: r forPackage: package ] ] ]
-		ifFalse: [ self context allPackages do: [ :package | self context removeFalsePositiveRule: self selectedRule forPackage: package ] ]
+	self selectedRule CBCommandExecuteUnBanRule: self
 ]
 
 { #category : #initialization }

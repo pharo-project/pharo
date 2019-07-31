@@ -119,13 +119,19 @@ CBSelectPackageBrowser >> removeAllItems [
 
 { #category : #private }
 CBSelectPackageBrowser >> removeItems [
-	selectedPresenter selectedItems
-		ifNotNil: [ :items | 
-			toSelectPresenter items: (self sort: toSelectPresenter items withAll: items).
-			selectedPresenter items: (self sort: selectedPresenter items withoutAll: items) ]
+	toSelectPresenter
+		items:
+			(self
+				sort: toSelectPresenter items
+				withAll: selectedPresenter selectedItems).
+	selectedPresenter
+		items:
+			(self
+				sort: selectedPresenter items
+				withoutAll: selectedPresenter selectedItems)
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 CBSelectPackageBrowser >> removeTestPackageButton [
 
 	^ removeTestPackageButton
@@ -133,15 +139,19 @@ CBSelectPackageBrowser >> removeTestPackageButton [
 	
 ]
 
-{ #category : #initialization }
+{ #category : #private }
 CBSelectPackageBrowser >> removeTestPackages [
 	testPackagesToRemove
 		ifEmpty: [ removeTestPackageButton label: 'Add All Packages Tests'.
-			testPackagesToRemove := RPackageOrganizer default packages select: [ :package | '*Test*' match: package packageName ].
-			selectedPresenter items: (self sort: selectedPresenter items withoutAll: testPackagesToRemove).
-			toSelectPresenter items: (self sort: toSelectPresenter items withoutAll: testPackagesToRemove) ]
+			testPackagesToRemove := RPackageOrganizer default packages
+				select: [ :package | '*Test*' match: package packageName ].
+			selectedPresenter
+				items: (self sort: selectedPresenter items withoutAll: testPackagesToRemove).
+			toSelectPresenter
+				items: (self sort: toSelectPresenter items withoutAll: testPackagesToRemove) ]
 		ifNotEmpty: [ removeTestPackageButton label: 'Remove All Packages Tests'.
-			toSelectPresenter items: (self sort: toSelectPresenter items withAll: testPackagesToRemove).
+			toSelectPresenter
+				items: (self sort: toSelectPresenter items withAll: testPackagesToRemove).
 			testPackagesToRemove := OrderedCollection new ]
 ]
 
@@ -151,8 +161,7 @@ CBSelectPackageBrowser >> setRemoveTestPackageButton [
 	removeTestPackageButton
 		state: false;
 		label: 'Remove All Packages Tests';
-		action: [ self  removeTestPackages ]
-	
+		action: [ self removeTestPackages ]
 ]
 
 { #category : #private }

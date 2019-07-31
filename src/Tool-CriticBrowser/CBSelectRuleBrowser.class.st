@@ -41,13 +41,11 @@ CBSelectRuleBrowser class >> openWithEnvironment: anEnvironment removeTestCase: 
 { #category : #private }
 CBSelectRuleBrowser >> addAllItems [
 	toSelectPresenter roots do: [ :group | selectedRules addAll: group rules ].
-	self updateTrees
 ]
 
 { #category : #private }
 CBSelectRuleBrowser >> addItems [
 	toSelectPresenter selectedItem ifNotNil: [ :item | item isComposite ifFalse: [ selectedRules add: item ] ifTrue: [ selectedRules addAll: item rules ] ].
-	self updateTrees
 ]
 
 { #category : #accessing }
