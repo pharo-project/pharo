@@ -88,5 +88,10 @@ HiFastTableExample >> elements: commits [
 { #category : #initialization }
 HiFastTableExample >> initialize [
 	super initialize.
-	hiedraColumnController := HiColumnController new
+	hiedraColumnController := HiColumnController new.
+	hiedraColumnController renderer
+		arrowSize: 2;
+		nodeConnectionOffset: 2;
+		cellWidth: 7.
+
 ]

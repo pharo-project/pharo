@@ -41,9 +41,12 @@ HiSpecExample class >> openExample: selector [
 
 	self new
 		commits: commits;
-		title: ('Hiedra in Spec - {1} - {2} elements' format: {selector. commits size});
-		extent: 500 @ 700;
-		openWithSpec
+		openWithSpec;
+		withWindowDo: [ :window |
+			window
+				extent: 600 @ 800;
+				title: ('Hiedra in Spec2 with Roassal3 - {1} - {2} elements' format: {selector. commits size}) ].
+
 ]
 
 { #category : #accessing }
@@ -76,7 +79,7 @@ HiSpecExample >> initializeWidgets [
 		arrowSize: 0;
 		nodeConnectionOffset: 3;
 		cellWidth: 8;
-		nodeColor: Smalltalk ui theme textColor.
+		useUniformColorStrategy.
 
 	"Adjust the ruler rendering settings with table's row height."
 	hiedraColumnController renderer rowHeight: FTTableMorph defaultRowHeight floor.
