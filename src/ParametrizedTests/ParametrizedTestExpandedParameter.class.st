@@ -13,6 +13,13 @@ Class {
 	#category : #'ParametrizedTests-Core'
 }
 
+{ #category : #comparing }
+ParametrizedTestExpandedParameter >> = anOption [
+
+	^ self selector = anOption selector
+		and: [ self valuable = anOption valuable ]
+]
+
 { #category : #applying }
 ParametrizedTestExpandedParameter >> applyTo: aTest [
 
@@ -22,6 +29,23 @@ ParametrizedTestExpandedParameter >> applyTo: aTest [
 		ifFalse: [ self valuable ].
 
 	aTest perform: selector asMutator with: anObject
+]
+
+{ #category : #converting }
+ParametrizedTestExpandedParameter >> asTestParameter [
+
+	^ self
+]
+
+{ #category : #comparing }
+ParametrizedTestExpandedParameter >> hash [
+
+	^ self selector hash + self valuable hash
+]
+
+{ #category : #accessing }
+ParametrizedTestExpandedParameter >> key [
+	self shouldBeImplemented.
 ]
 
 { #category : #printing }

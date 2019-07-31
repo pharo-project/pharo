@@ -110,3 +110,66 @@ PaSuiteTest >> testMatrixExampleHasTheCorrectTests [
 			{ 'c'. 1}. { 'c'. 2}. { 'c'. 3}.}
 	
 ]
+
+{ #category : #tests }
+PaSuiteTest >> testMultiplyMatrixWithCasesMultiplyCases [
+
+	| m1 m2 m3 |
+	m1 := ParametrizedTestMatrix new.
+	m1 addCase: { #option1 -> #a . #option2 -> #a }.
+	m1 addCase: { #option1 -> #b . #option2 -> #c }.
+	
+	m2 := ParametrizedTestMatrix new.
+	m2 addCase: { #option3 -> #a . #option4 -> #a }.
+	m2 addCase: { #option3 -> #b . #option4 -> #c }.
+	
+	m3 := m1 * m2.
+	
+	self assert: m3 equals: {
+		{ #option1 -> #a. #option2 -> #a. #option3 -> #a. #option4 -> #a  }.
+		{ #option1 -> #a. #option2 -> #a. #option3 -> #b. #option4 -> #c  }.
+		{ #option1 -> #b. #option2 -> #c. #option3 -> #a. #option4 -> #a  }.
+		{ #option1 -> #b. #option2 -> #c. #option3 -> #b. #option4 -> #c  }.
+	} asTestMatrix.
+]
+
+{ #category : #tests }
+PaSuiteTest >> testMultiplyMatrixWithOptionsAndCasesMultiplyCases [
+
+	| m1 m2 m3 |
+	m1 := ParametrizedTestMatrix new.
+	m1 forSelector: #option1 addOptions: #(a b).
+	
+	m2 := ParametrizedTestMatrix new.
+	m2 addCase: { #option3 -> #a . #option4 -> #a }.
+	m2 addCase: { #option3 -> #b . #option4 -> #c }.
+	
+	m3 := m1 * m2.
+	
+	self assert: m3 equals: {
+		{ #option1 -> #a. #option3 -> #a. #option4 -> #a  }.
+		{ #option1 -> #a. #option3 -> #b. #option4 -> #c  }.
+		{ #option1 -> #b. #option3 -> #a. #option4 -> #a  }.
+		{ #option1 -> #b. #option3 -> #b. #option4 -> #c  }.
+	} asTestMatrix.
+]
+
+{ #category : #tests }
+PaSuiteTest >> testMultiplyMatrixWithOptionsMultiplyCases [
+
+	| m1 m2 m3 |
+	m1 := ParametrizedTestMatrix new.
+	m1 forSelector: #option1 addOptions: #(a b).
+	
+	m2 := ParametrizedTestMatrix new.
+	m2 forSelector: #option2 addOptions: #(a b).
+	
+	m3 := m1 * m2.
+	
+	self assert: m3 equals: {
+		{ #option1 -> #a. #option2 -> #a }.
+		{ #option1 -> #a. #option2 -> #b }.
+		{ #option1 -> #b. #option2 -> #a }.
+		{ #option1 -> #b. #option2 -> #b }.
+	} asTestMatrix.
+]
