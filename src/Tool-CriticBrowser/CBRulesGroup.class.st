@@ -20,9 +20,20 @@ CBRulesGroup class >> named: aString rules: aCollection [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
-CBRulesGroup >> CBCommandExecuteOn: aCBCommand [
+{ #category : #commands }
+CBRulesGroup >> CBCommandExecuteReapplyRuleOn: aCBCommand [
 	self rules do: [ :each | aCBCommand context reapplyRule: each ]
+]
+
+{ #category : #commands }
+CBRulesGroup >> CBCommandExecuteUnBanRule: anInstanceOfCBCommandUnBanRule [
+	self rules
+		do: [ :r | 
+			anInstanceOfCBCommandUnBanRule context allPackages
+				do: [ :package | 
+					anInstanceOfCBCommandUnBanRule context
+						removeFalsePositiveRule: r
+						forPackage: package ] ]
 ]
 
 { #category : #enumerating }

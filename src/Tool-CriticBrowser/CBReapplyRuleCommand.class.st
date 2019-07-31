@@ -9,7 +9,7 @@ Class {
 
 { #category : #hooks }
 CBReapplyRuleCommand >> execute [
-	self selectedRule CBCommandExecuteOn: self.
+	self selectedRule CBCommandExecuteReapplyRuleOn: self.
 ]
 
 { #category : #initialization }
