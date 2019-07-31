@@ -11,11 +11,11 @@ Class {
 ReTestBasedTestCase >> setUp [
 	super setUp.
 	validTestPackage := (RPackage
-		named: #'Renraku-Programatically-Created-Class-Tests') register.
+		named: #'Renraku-Programmatically-Created-Class-Tests') register.
 
 	"create tests in wrong package"
 	testClass := TestCase
-		subclass: 'RenrakuProgramaticallyCreatedClassTest'
+		subclass: 'RenrakuProgrammaticallyCreatedClassTest'
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''

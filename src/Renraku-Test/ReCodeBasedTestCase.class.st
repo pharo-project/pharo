@@ -16,7 +16,7 @@ Class {
 ReCodeBasedTestCase >> setUp [
 	super setUp.
 	testClass := Object
-		subclass: 'RenrakuProgramaticallyCreatedClassTestClass'
+		subclass: 'RenrakuProgrammaticallyCreatedClassTestClass'
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
@@ -24,7 +24,7 @@ ReCodeBasedTestCase >> setUp [
 	testMethod := testClass
 		>> (testClass compile: 'testingMethod ^ self').
 	testClass2 := Object
-		subclass: 'RenrakuProgramaticallyCreatedClassTestClass2'
+		subclass: 'RenrakuProgrammaticallyCreatedClassTestClass2'
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
