@@ -34,7 +34,7 @@ Announcer >> gtInspectorSubscriptionsIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	composite table
 		title: [ 'Subscriptions' translated ];
-		display: [ self subscriptions glmSubscriptions ];
+		display: [ self subscriptions subscriptions ];
 		when: [ self numberOfSubscriptions isZero not ];
 		beMultiple;
 		column: 'Subscriber' evaluated: [ :each | each subscriber asString ];
