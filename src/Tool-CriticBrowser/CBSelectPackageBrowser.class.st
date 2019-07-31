@@ -119,10 +119,16 @@ CBSelectPackageBrowser >> removeAllItems [
 
 { #category : #private }
 CBSelectPackageBrowser >> removeItems [
-	selectedPresenter selectedItems
-		ifNotNil: [ :items | 
-			toSelectPresenter items: (self sort: toSelectPresenter items withAll: items).
-			selectedPresenter items: (self sort: selectedPresenter items withoutAll: items) ]
+	toSelectPresenter
+		items:
+			(self
+				sort: toSelectPresenter items
+				withAll: selectedPresenter selectedItems).
+	selectedPresenter
+		items:
+			(self
+				sort: selectedPresenter items
+				withoutAll: selectedPresenter selectedItems)
 ]
 
 { #category : #initialization }
