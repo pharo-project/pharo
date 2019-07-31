@@ -24,8 +24,11 @@ CBAbstractTest class >> isAbstract [
 ]
 
 { #category : #setUp }
-CBAbstractTest >> criticBrowserClass [
-	^ CBCriticBrowser
+CBAbstractTest >> newCriticBrowser [
+	| rulesToTest environment |
+	rulesToTest := (ReRuleManager uniqueInstance allRules groupedBy: #group) at: #Style.
+	environment := RBPackageEnvironment packageName: 'Tool-CriticBrowser-TestEnvironment'.
+	^ CBCriticBrowser openOnRules: rulesToTest environment: environment
 ]
 
 { #category : #setUp }
@@ -50,13 +53,8 @@ CBAbstractTest >> selectUnclassifiedMethodRule [
 
 { #category : #running }
 CBAbstractTest >> setUp [
-	"Hooks that subclasses may override to define the fixture of test."
-
-	| rulesToTest environment |
 	super setUp.
-	rulesToTest := (ReRuleManager uniqueInstance allRules groupedBy: #group) at: #Style.
-	environment := RBPackageEnvironment packageName: 'Tool-CriticBrowser-TestEnvironment'.
-	criticBrowser := self criticBrowserClass openOnRules: rulesToTest environment: environment
+	criticBrowser := self newCriticBrowser 
 ]
 
 { #category : #setUp }
