@@ -231,9 +231,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Glamour-FastTable'.
 		spec package: 'Glamour-SpecIntegration'.
 	
-		spec package: 'Tool-CriticBrowser'.
-		spec package: 'Tool-CriticBrowser-TestEnvironment'.
-		spec package: 'Tool-CriticBrowser-Tests'.
+		spec baseline: 'CBCriticBrowser' with: [ spec repository: repository ].
 		
 		spec package: 'GT-Inspector'.
 		spec package: 'GT-InspectorExtensions-Core'.
@@ -651,9 +649,7 @@ spec group: 'QualityAssistant-Core-Group' with: #(
 	'Glamour-Core-Group'	"dependency"
 	'DependencyAnalyser-Core-Group' "dependency"
 	'Renraku'	
-	'Tool-CriticBrowser'
-	'Tool-CriticBrowser-TestEnvironment'
-	'Tool-CriticBrowser-Tests'
+	'CBCriticBrowser'
 	'GT-Core-Group'	"dependency"
 		
 	
