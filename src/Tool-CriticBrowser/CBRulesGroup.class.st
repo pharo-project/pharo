@@ -20,6 +20,11 @@ CBRulesGroup class >> named: aString rules: aCollection [
 		yourself
 ]
 
+{ #category : #'as yet unclassified' }
+CBRulesGroup >> CBCommandExecuteOn: aCBCommand [
+	self rules do: [ :each | aCBCommand context reapplyRule: each ]
+]
+
 { #category : #enumerating }
 CBRulesGroup >> do: aBlock [
 

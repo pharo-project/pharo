@@ -9,10 +9,7 @@ Class {
 
 { #category : #hooks }
 CBReapplyRuleCommand >> execute [
-	self selectedRule isComposite
-		ifTrue: [ self selectedRule rules
-				do: [ :each | self context reapplyRule: each ] ]
-		ifFalse: [ self context reapplyRule: self selectedRule ]
+	self selectedRule CBCommandExecuteOn: self.
 ]
 
 { #category : #initialization }
