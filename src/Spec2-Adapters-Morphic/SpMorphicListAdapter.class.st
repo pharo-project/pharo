@@ -3,7 +3,7 @@ I am the adapter used to bridge a ListPresenter and a PluggableListMorph
 "
 Class {
 	#name : #SpMorphicListAdapter,
-	#superclass : #SpAbstractMorphicAdapter,
+	#superclass : #SpAbstractMorphicListAdapter,
 	#category : #'Spec2-Adapters-Morphic-List'
 }
 
@@ -62,12 +62,7 @@ SpMorphicListAdapter >> buildWidget [
 	self presenter whenItemFilterBlockChangedDo: [ :block | self updateItemFilterBlockWith: block ].
 	self updateItemFilterBlockWith: self itemFilter.
 	
-	self presenter verticalAlignment whenChangedDo: [ 
-		widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow ].
-	self presenter whenDisplayDo: [ 
-		widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow.
-		self scrollingChanged ].
-	widget onAnnouncement: FTScrollingChanged send: #scrollingChanged to: self.
+	self configureScrolling.
 	widget bindKeyCombination: Character space toAction: [ self model clickOnSelectedItem ].
 
 	^ widget
@@ -171,15 +166,6 @@ SpMorphicListAdapter >> rightClicked [
 		stamp: nil.
 	
 	self widget click: evt
-]
-
-{ #category : #scrolling }
-SpMorphicListAdapter >> scrollingChanged [
-
-	widget container updateAllRows.
-	self presenter verticalAlignment
-		firstVisibleRowIndex: widget firstVisibleRowIndex;
-		lastVisibleRowIndex: widget lastVisibleRowIndex
 ]
 
 { #category : #selecting }
