@@ -127,6 +127,17 @@ FTTableMorph >> allowsDeselection: aBoolean [
 	allowsDeselection := aBoolean
 ]
 
+{ #category : #private }
+FTTableMorph >> announceScrollChangedFrom: oldIndex to: newIndex [
+	"If the index did not change, do nothing"
+	oldIndex = newIndex ifTrue: [ ^ self ].
+	self
+		doAnnounce:
+			((FTScrollingChanged from: oldIndex to: newIndex)
+				fastTable: self;
+				yourself)
+]
+
 { #category : #updating }
 FTTableMorph >> autoScrollHeightLimit [
 
@@ -146,8 +157,8 @@ FTTableMorph >> basicHighlightRowIndexes: anArray [
 
 { #category : #private }
 FTTableMorph >> basicMoveShowIndexTo: aNumber [
-	showIndex := aNumber.
 
+	showIndex := aNumber
 ]
 
 { #category : #private }
@@ -347,6 +358,12 @@ FTTableMorph >> extent: aPoint [
 	super extent: aPoint.
 	container extent: aPoint.
 	self resizeAllSubviews
+]
+
+{ #category : #accessing }
+FTTableMorph >> firstVisibleRowIndex [
+	
+	^ self container firstVisibleRowIndex
 ]
 
 { #category : #'event handling' }
@@ -694,6 +711,12 @@ FTTableMorph >> keyboardFocusChange: aBoolean [
 	self focusChanged
 ]
 
+{ #category : #accessing }
+FTTableMorph >> lastVisibleRowIndex [
+
+	^ self container lastVisibleRowIndex
+]
+
 { #category : #layout }
 FTTableMorph >> minHeight [ 
 	"Ceiling is required because there is strange behavior when this method return float.
@@ -795,11 +818,14 @@ FTTableMorph >> moveShowIndexTo: arg [
 	 showing pointer should do it directly. 
 	 Use me just in case you need to force a refresh after settign the index"
 
-	| index |
+	| index oldIndex |
 	index := self selectionModeStrategy rowIndexFrom: arg.
+	oldIndex := showIndex.
 	self basicMoveShowIndexTo: index.
 	self verticalScrollBar value: (self rowIndexToVerticalScrollBarValue: index).
-	self refresh
+	self refresh.
+	
+	self announceScrollChangedFrom: oldIndex to: index.
 ]
 
 { #category : #accessing }
@@ -949,6 +975,15 @@ FTTableMorph >> rowIndexToVerticalScrollBarValue: aNumber [
 { #category : #private }
 FTTableMorph >> scrollBarThickness [
 	^ self theme scrollbarThickness
+]
+
+{ #category : #private }
+FTTableMorph >> scrollToIndex: anIndex [
+	(self container isRowIndexFullyVisible: anIndex) ifTrue: [ ^ self ].
+
+	anIndex <= self showIndex
+		ifTrue: [ self moveShowIndexTo: anIndex ]
+		ifFalse: [ self moveShowIndexTo: (self selectionModeStrategy indexForRow: anIndex - self container calculateMinVisibleRows + 1) ]
 ]
 
 { #category : #'accessing colors' }

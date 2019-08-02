@@ -339,6 +339,9 @@ SpWindowPresenter >> openWithSpecLayout: aSpec [
 
 	self buildWithSpecLayout: aSpec.
 	self changed: #open with: #().
+	
+	self allPresenters do: [ :each | each announceDisplayed ].
+
 	self updateTitle.
 ]
 
@@ -406,6 +409,13 @@ SpWindowPresenter >> toolBar [
 SpWindowPresenter >> toolBar: aToolbarPresenter [
 	aToolbarPresenter ifNotNil: [ aToolbarPresenter owner: self ].
 	^ toolBar := aToolbarPresenter
+]
+
+{ #category : #'private-traversing' }
+SpWindowPresenter >> traversePresentersDo: aBlock excluding: excludes [
+
+	super traversePresentersDo: aBlock excluding: excludes.
+	presenter traversePresentersDo: aBlock excluding: excludes.
 ]
 
 { #category : #api }

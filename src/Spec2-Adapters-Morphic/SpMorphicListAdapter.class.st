@@ -56,11 +56,18 @@ SpMorphicListAdapter >> buildWidget [
 	self presenter whenModelChangedDo: [ widget refresh ].
 	self presenter whenSelectionChangedDo: [ self refreshWidgetSelection ].
 	self presenter selection whenChangedDo: [ self refreshWidgetSelection ].
+	
 	self refreshWidgetHeaderTitle.
 	self refreshWidgetSelection.
 	self presenter whenItemFilterBlockChangedDo: [ :block | self updateItemFilterBlockWith: block ].
 	self updateItemFilterBlockWith: self itemFilter.
-
+	
+	self presenter verticalAlignment whenChangedDo: [ 
+		widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow ].
+	self presenter whenDisplayDo: [ 
+		widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow.
+		self scrollingChanged ].
+	widget onAnnouncement: FTScrollingChanged send: #scrollingChanged to: self.
 	widget bindKeyCombination: Character space toAction: [ self model clickOnSelectedItem ].
 
 	^ widget
@@ -164,6 +171,15 @@ SpMorphicListAdapter >> rightClicked [
 		stamp: nil.
 	
 	self widget click: evt
+]
+
+{ #category : #scrolling }
+SpMorphicListAdapter >> scrollingChanged [
+
+	widget container updateAllRows.
+	self presenter verticalAlignment
+		firstVisibleRowIndex: widget firstVisibleRowIndex;
+		lastVisibleRowIndex: widget lastVisibleRowIndex
 ]
 
 { #category : #selecting }
