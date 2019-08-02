@@ -55,6 +55,19 @@ SpAbstractListCommonPropertiestTest >> testRightClickShowsMenu [
 ]
 
 { #category : #'tests-scrolling' }
+SpAbstractListCommonPropertiestTest >> testScrollDownToNonExistingIndexScrollsBottomToLastIndex [
+
+	presenter items: (1 to: 500).
+	presenter verticalAlignment desiredVisibleRow: 600.
+
+	"Force opening the spec instance here.
+	We want to test that once open we can change the state"
+	self openInstance.
+
+	self assert: presenter verticalAlignment lastVisibleRowIndex equals: 500
+]
+
+{ #category : #'tests-scrolling' }
 SpAbstractListCommonPropertiestTest >> testScrollDownToPosteriorIndexScrollsBottomToIndex [
 
 	presenter items: (1 to: 500).
@@ -66,6 +79,18 @@ SpAbstractListCommonPropertiestTest >> testScrollDownToPosteriorIndexScrollsBott
 	
 	"Some backends will show entirely row 100 and a part of the next row, so row 101 is also a valid answer"
 	self assert: (presenter verticalAlignment lastVisibleRowIndex between: 100 and: 101).
+]
+
+{ #category : #'tests-scrolling' }
+SpAbstractListCommonPropertiestTest >> testScrollUpToNegativeIndexScrollsTopToFirstIndex [
+
+	presenter items: (1 to: 500).
+	presenter verticalAlignment desiredVisibleRow: 100.
+	self openInstance.
+
+	presenter verticalAlignment desiredVisibleRow: -1.
+	
+	self assert: presenter verticalAlignment firstVisibleRowIndex equals: 1.
 ]
 
 { #category : #'tests-scrolling' }
