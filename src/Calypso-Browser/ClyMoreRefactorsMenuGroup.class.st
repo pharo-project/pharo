@@ -17,7 +17,7 @@ ClyMoreRefactorsMenuGroup >> buildContextMenu: aMenu [
 
 { #category : #accessing }
 ClyMoreRefactorsMenuGroup >> name [
-	^ 'More refactorings'
+	^ 'Refactorings'
 ]
 
 { #category : #accessing }
