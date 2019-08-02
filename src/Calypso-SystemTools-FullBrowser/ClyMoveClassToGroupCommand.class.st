@@ -22,7 +22,7 @@ ClyMoveClassToGroupCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 	
 	^ CmdContextMenuActivation  
-		byItemOf: SycMoreRefactorsMenuGroup  
+		byItemOf: ClyMoreRefactorsMenuGroup  
 		order: 1000
 		for: ClyClass asCalypsoItemContext 
 ]

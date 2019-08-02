@@ -12,7 +12,7 @@ SycPushUpMethodCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
 	^CmdContextMenuActivation 
-		byItemOf: SycMoreRefactorsMenuGroup 
+		byItemOf: ClyMoreRefactorsMenuGroup 
 		order: 10 
 		for: ClyMethod asCalypsoItemContext
 ]

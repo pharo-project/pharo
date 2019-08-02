@@ -22,7 +22,7 @@ SycAddMessageArgumentCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
 	^CmdContextMenuActivation 
-		byItemOf: SycMoreRefactorsMenuGroup 
+		byItemOf: ClyMoreRefactorsMenuGroup 
 		order: 30 
 		for: ClyMethod asCalypsoItemContext
 ]

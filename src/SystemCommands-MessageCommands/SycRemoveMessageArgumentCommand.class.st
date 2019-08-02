@@ -26,7 +26,7 @@ SycRemoveMessageArgumentCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
 	^CmdContextMenuActivation 
-		byItemOf: SycMoreRefactorsMenuGroup 
+		byItemOf: ClyMoreRefactorsMenuGroup 
 		order: 40
 		for: ClyMethod asCalypsoItemContext
 ]
