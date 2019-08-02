@@ -29,15 +29,15 @@ SycExtractMethodCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycExtractMethodCommand >> execute [
-	| refactoring dialog selectedInterval |
+
+	| selectedInterval dialog refactoring|
 	selectedInterval := selectedTextInterval ifEmpty: [ sourceNode sourceInterval ].
-	
 	refactoring := RBExtractMethodRefactoring	
 		extract: selectedInterval from: method selector in: method origin.
 	self setUpOptionToUseExistingMethodDuring: refactoring.
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
-	refactoring setOption: #methodName toUse:  [ :ref :methodName |
-		dialog := SycMethodNameEditor openOn: methodName.
+	refactoring setOption: #methodName toUse: [ :ref :methodName |
+		dialog := SycMethodNameEditor openOn: methodName withRefactoring: ref.
 		dialog cancelled ifTrue: [  CmdCommandAborted signal ].
 		methodName].
 	
