@@ -65,3 +65,9 @@ TaPrecedenceComposition >> preferedTrait [
 TaPrecedenceComposition >> preferedTrait: anObject [
 	preferedTrait := anObject
 ]
+
+{ #category : #accessing }
+TaPrecedenceComposition >> traitCompositionExpression [
+		
+	^  '(' , (super traitCompositionExpression) , ' withPrecedenceOf: ' , preferedTrait traitCompositionExpression , ')'
+]
