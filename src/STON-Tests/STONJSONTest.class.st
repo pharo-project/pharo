@@ -2,13 +2,13 @@
 STONJSONTests contains unit tests for the JSON functionality available in STON.
 "
 Class {
-	#name : #STONJSONTests,
+	#name : #STONJSONTest,
 	#superclass : #TestCase,
 	#category : #'STON-Tests-Base'
 }
 
 { #category : #tests }
-STONJSONTests >> testBooleans [
+STONJSONTest >> testBooleans [
 	self assert: (STONJSON toString: true) equals: 'true'.
 	self assert: (STONJSON toString: false) equals: 'false'.
 	self assert: (STONJSON fromString: 'true') equals: true.
@@ -16,7 +16,7 @@ STONJSONTests >> testBooleans [
 ]
 
 { #category : #tests }
-STONJSONTests >> testCircular [
+STONJSONTest >> testCircular [
 	"Circular datastructures cannot be encoded using JSON"
 	self
 		should: [ | foo |
@@ -27,7 +27,7 @@ STONJSONTests >> testCircular [
 ]
 
 { #category : #tests }
-STONJSONTests >> testFloats [
+STONJSONTest >> testFloats [
 	self assert: (STONJSON toString: 1.0) equals: '1.0'.
 	self assert: (STONJSON toString: 0.0) equals: '0.0'.
 	self assert: (STONJSON toString: -1.0) equals: '-1.0'.
@@ -39,7 +39,7 @@ STONJSONTests >> testFloats [
 ]
 
 { #category : #tests }
-STONJSONTests >> testIntegers [
+STONJSONTest >> testIntegers [
 	self assert: (STONJSON toString: 1) equals: '1'.
 	self assert: (STONJSON toString: 0) equals: '0'.
 	self assert: (STONJSON toString: -1) equals: '-1'.
@@ -51,7 +51,7 @@ STONJSONTests >> testIntegers [
 ]
 
 { #category : #tests }
-STONJSONTests >> testLists [
+STONJSONTest >> testLists [
 	self assert: (STONJSON toString: #(1 2 3)) equals: '[1,2,3]'.
 	self assert: (STONJSON toString: #(1 -2 true 3 nil)) equals: '[1,-2,true,3,null]'.
 	self assert: (STONJSON toString: #(1 (2) 3)) equals: '[1,[2],3]'.
@@ -63,7 +63,7 @@ STONJSONTests >> testLists [
 ]
 
 { #category : #tests }
-STONJSONTests >> testMaps [
+STONJSONTest >> testMaps [
 	self assert: (STONJSON toString: { 'temperature'->37 } asDictionary) equals: '{"temperature":37}'.
 	self assert: (STONJSON toString: Dictionary new) equals: '{}'.
 	self assert: (STONJSON fromString: '{"temperature":37}') equals: { 'temperature'->37 } asDictionary.
@@ -71,13 +71,13 @@ STONJSONTests >> testMaps [
 ]
 
 { #category : #tests }
-STONJSONTests >> testNull [
+STONJSONTest >> testNull [
 	self assert: (STONJSON toString: nil) equals: 'null'.
 	self assert: (STONJSON fromString: 'null') equals: nil.
 ]
 
 { #category : #tests }
-STONJSONTests >> testShared [
+STONJSONTest >> testShared [
 	"Structure sharing cannot be encoded using JSON"
 	self
 		should: [ | foo |
@@ -87,7 +87,7 @@ STONJSONTests >> testShared [
 ]
 
 { #category : #tests }
-STONJSONTests >> testStrings [
+STONJSONTest >> testStrings [
 	self assert: (STONJSON toString: 'string') equals: '"string"'.
 	self assert: (STONJSON toString: '') equals: '""'.
 	self assert: (STONJSON toString: 'élèves français') equals: '"élèves français"'.
@@ -101,7 +101,7 @@ STONJSONTests >> testStrings [
 ]
 
 { #category : #tests }
-STONJSONTests >> testUnknown [
+STONJSONTest >> testUnknown [
 	"Only Array for lists and Dictionary for maps are allowed for JSON encoding,
 	any other Smalltalk object cannot be encoded (following the specs).
 	Even considering all collections to be lists won't work because the type 

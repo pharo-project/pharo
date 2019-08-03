@@ -2,20 +2,20 @@
 STONWriteReadTests test serialization followed by materialization.
 "
 Class {
-	#name : #STONWriteReadTests,
+	#name : #STONWriteReadTest,
 	#superclass : #TestCase,
 	#category : #'STON-Tests-Writer'
 }
 
 { #category : #private }
-STONWriteReadTests >> materialize: string [
+STONWriteReadTest >> materialize: string [
 	^ STON reader 
 		on: string readStream;
 		next
 ]
 
 { #category : #private }
-STONWriteReadTests >> serialize: anObject [
+STONWriteReadTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
 		STON writer 
 			on: stream;
@@ -23,7 +23,7 @@ STONWriteReadTests >> serialize: anObject [
 ]
 
 { #category : #private }
-STONWriteReadTests >> serializeAndMaterialize: object [
+STONWriteReadTest >> serializeAndMaterialize: object [
 	| serialization materialization |
 	serialization := self serialize: object.
 	materialization := self materialize: serialization.
@@ -32,7 +32,7 @@ STONWriteReadTests >> serializeAndMaterialize: object [
 ]
 
 { #category : #private }
-STONWriteReadTests >> serializeAndMaterializeJsonMode: object [
+STONWriteReadTest >> serializeAndMaterializeJsonMode: object [
 	| serialization materialization |
 	serialization := self serializeJson: object.
 	materialization := self materialize: serialization.
@@ -41,7 +41,7 @@ STONWriteReadTests >> serializeAndMaterializeJsonMode: object [
 ]
 
 { #category : #private }
-STONWriteReadTests >> serializeJson: anObject [
+STONWriteReadTest >> serializeJson: anObject [
 	^ String streamContents: [ :stream |
 		STON jsonWriter 
 			on: stream;
@@ -49,7 +49,7 @@ STONWriteReadTests >> serializeJson: anObject [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testAssociations [
+STONWriteReadTest >> testAssociations [
 	| associations |
 	associations := OrderedCollection new.
 	1 to: 10 do: [ :each |
@@ -58,14 +58,14 @@ STONWriteReadTests >> testAssociations [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testCharacters [
+STONWriteReadTest >> testCharacters [
 	| characters |
 	characters := STON listClass withAll: ($a to: $z), ($A to: $Z).
 	self serializeAndMaterialize: characters
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testClasses [
+STONWriteReadTest >> testClasses [
 	| classes |
 	classes := STON listClass withAll: { Point. Integer. Object }.
 	self serializeAndMaterialize: classes.
@@ -76,7 +76,7 @@ STONWriteReadTests >> testClasses [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testCollections [
+STONWriteReadTest >> testCollections [
 	| collections |
 	collections := STON listClass withAll: {
 		#(1 2 3).
@@ -93,7 +93,7 @@ STONWriteReadTests >> testCollections [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testCustomAssociations [
+STONWriteReadTest >> testCustomAssociations [
 	| associations |
 	associations := OrderedCollection new.
 	associations add: #foo->100.
@@ -102,7 +102,7 @@ STONWriteReadTests >> testCustomAssociations [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testDatesAndTimes [
+STONWriteReadTest >> testDatesAndTimes [
 	| datesAndTimes |
 	datesAndTimes := STON listClass withAll: { 
 		Time now. 
@@ -113,7 +113,7 @@ STONWriteReadTests >> testDatesAndTimes [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testDomainObject [
+STONWriteReadTest >> testDomainObject [
 	| object objects |
 	object := STONTestDomainObject dummy.
 	self serializeAndMaterialize: object.
@@ -128,7 +128,7 @@ STONWriteReadTests >> testDomainObject [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testEmpty [
+STONWriteReadTest >> testEmpty [
 	| empty |
 	empty := STON listClass new.
 	self serializeAndMaterialize: empty.
@@ -137,7 +137,7 @@ STONWriteReadTests >> testEmpty [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testFileSystemSupport [
+STONWriteReadTest >> testFileSystemSupport [
 	| fileReferences fileLocators |
 	fileReferences := STON listClass withAll: { 
 		FileLocator image asFileReference.
@@ -152,7 +152,7 @@ STONWriteReadTests >> testFileSystemSupport [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testFloats [
+STONWriteReadTest >> testFloats [
 	| floats serialization materialization |
 	floats := STON listClass withAll: ((-10 to: 10) collect: [ :each | each * Float pi ]).
 	serialization := self serialize: floats.
@@ -165,7 +165,7 @@ STONWriteReadTests >> testFloats [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testIntervals [
+STONWriteReadTest >> testIntervals [
 	| intervals |
 	intervals := STON listClass withAll: { 
 		1 to: 10.
@@ -175,7 +175,7 @@ STONWriteReadTests >> testIntervals [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testJsonMode [
+STONWriteReadTest >> testJsonMode [
 	| object |
 	object := STON listClass withAll: {
 		Float pi.
@@ -193,7 +193,7 @@ STONWriteReadTests >> testJsonMode [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testOrderedDictionary [
+STONWriteReadTest >> testOrderedDictionary [
 	"OrderedDictionary is special because it does not inherit from Dictionary.
 	It might also not exist in some dialects, where this test could be skipped."
 	
@@ -211,14 +211,14 @@ STONWriteReadTests >> testOrderedDictionary [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testPrimitives [
+STONWriteReadTest >> testPrimitives [
 	| primitives |
 	primitives := STON listClass withAll: { true. false. nil }.
 	self serializeAndMaterialize: primitives
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testSmallDictionary [
+STONWriteReadTest >> testSmallDictionary [
 	"SmallDictionary is special because it does not inherit from Dictionary.
 	It might also not exist in some dialects, where this test could be skipped."
 	
@@ -232,14 +232,14 @@ STONWriteReadTests >> testSmallDictionary [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testSmallIntegers [
+STONWriteReadTest >> testSmallIntegers [
 	| integers |
 	integers := STON listClass withAll: (-10 to: 10).
 	self serializeAndMaterialize: integers
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testSpecialCharacters [
+STONWriteReadTest >> testSpecialCharacters [
 	| primitives |
 	primitives := STON listClass withAll: { 
 		String withAll: { Character tab. Character lf. Character cr }.
@@ -251,7 +251,7 @@ STONWriteReadTests >> testSpecialCharacters [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testStrings [
+STONWriteReadTest >> testStrings [
 	| strings |
 	strings := Collection allSubclasses 
 		collect: [ :each | each name asString ].
@@ -264,7 +264,7 @@ STONWriteReadTests >> testStrings [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testSymbols [
+STONWriteReadTest >> testSymbols [
 	| symbols |
 	self serializeAndMaterialize: #( #bytes #'' ).
 	symbols := Collection allSubclasses collect: [ :each | each name ].
@@ -273,7 +273,7 @@ STONWriteReadTests >> testSymbols [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testTextAndRunArray [
+STONWriteReadTest >> testTextAndRunArray [
 	| texts |
 	texts := { 
 		'Text!' asText. 
@@ -283,7 +283,7 @@ STONWriteReadTests >> testTextAndRunArray [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testUUIDs [
+STONWriteReadTest >> testUUIDs [
 	| uuids |
 	uuids := STON listClass withAll: { 
 		UUID new.
@@ -293,7 +293,7 @@ STONWriteReadTests >> testUUIDs [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testUser [
+STONWriteReadTest >> testUser [
 	| user users |
 	user := STONTestUser dummy.
 	self serializeAndMaterialize: user.
@@ -308,7 +308,7 @@ STONWriteReadTests >> testUser [
 ]
 
 { #category : #tests }
-STONWriteReadTests >> testUser2 [
+STONWriteReadTest >> testUser2 [
 	| user users |
 	user := STONTestUser2 dummy.
 	self serializeAndMaterialize: user.
