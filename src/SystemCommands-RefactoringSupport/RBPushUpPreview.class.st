@@ -1,8 +1,21 @@
 "
-I am a preview of Pull up refactoring, I can select the superClass of pull up methos, and select the methods of class to pull up
+I am a preview of Pull up refactoring, I can select the superClass of pull up methos and select the methods of class to pull up.
+
+
+EXAMPLES
+-------------------------------------------------
+
+RBPushUpPreview on: RBPushDownPreview withSelectors: Array new.
+
+Instance Variables
+-------------------------------------------------
+
+label:         <LabelPresenter> A label of droplist
+label2:        <LabelPresenter> A  label of table
+classDropList: <DropListPresenter> A drop list to select the superclass to push up the selected methods
 "
 Class {
-	#name : #RBPullUpPreview,
+	#name : #RBPushUpPreview,
 	#superclass : #RBPushDownPreview,
 	#instVars : [
 		'label2',
@@ -12,7 +25,7 @@ Class {
 }
 
 { #category : #specs }
-RBPullUpPreview class >> defaultSpec [
+RBPushUpPreview class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add: #label2 withConstraints: [ :c | c height: self labelHeight ];
 		add:
@@ -28,49 +41,49 @@ RBPullUpPreview class >> defaultSpec [
 ]
 
 { #category : #examples }
-RBPullUpPreview class >> example [
+RBPushUpPreview class >> example [
 	<script>
-	^ (self on: RBPullUpPreview withSelectors: Array new)
+	^ (self on: RBPushUpPreview withSelectors: Array new)
 ]
 
 { #category : #specs }
-RBPullUpPreview class >> title [
+RBPushUpPreview class >> title [
 
 	^ 'Pull methods up to'
 ]
 
 { #category : #'instance creation' }
-RBPullUpPreview >> accept [
+RBPushUpPreview >> accept [
 	refactoring superClass: self activeClass .
 	refactoring selectors: (selectedMethods collect: #selector).
 ]
 
 { #category : #updating }
-RBPullUpPreview >> activeClass [
+RBPushUpPreview >> activeClass [
 	^classDropList selectedItem
 ]
 
 { #category : #initialization }
-RBPullUpPreview >> classes [
+RBPushUpPreview >> classes [
 	^ class allSuperclasses removeAllSuchThat: [ :each | each == Object or: [ each == ProtoObject ] ].
 ]
 
 { #category : #initialization }
-RBPullUpPreview >> initializeDropList [
+RBPushUpPreview >> initializeDropList [
 	classDropList := self newDropList.
 	classDropList displayBlock: [ :scope | scope name ];
 		iconBlock: [ :e | e systemIcon ]
 ]
 
 { #category : #initialization }
-RBPullUpPreview >> initializeWidgets [
+RBPushUpPreview >> initializeWidgets [
 	super initializeWidgets .
 	label2 := self newLabel.
 	self initializeDropList.
 ]
 
 { #category : #initialization }
-RBPullUpPreview >> on: aClass withSelectors: selectors [
+RBPushUpPreview >> on: aClass withSelectors: selectors [
 	|classes|
 	super on: aClass withSelectors: selectors.
 	classes := self classes.
@@ -80,11 +93,11 @@ RBPullUpPreview >> on: aClass withSelectors: selectors [
 ]
 
 { #category : #'acessing text' }
-RBPullUpPreview >> textLabel [
+RBPushUpPreview >> textLabel [
 	^ 'Methods to be pulled up'
 ]
 
 { #category : #'acessing text' }
-RBPullUpPreview >> textLabel2 [ 
+RBPushUpPreview >> textLabel2 [ 
 	^ 'Pull up methods of ', class name,' to:' .
 ]

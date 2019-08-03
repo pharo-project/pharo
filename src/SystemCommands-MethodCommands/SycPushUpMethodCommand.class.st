@@ -31,7 +31,7 @@ SycPushUpMethodCommand >> asRefactorings [
 		pullUp: methods  
 		from: methods first origin.
 	refactoring setOption: #superClass toUse: [ :ref |
-		dialog := RBPullUpPreview on: ref.
+		dialog := RBPushUpPreview on: ref.
 		dialog cancelled ifTrue: [ CmdCommandAborted signal ]].
 	^ OrderedCollection with: refactoring 
 ]
