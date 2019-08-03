@@ -1,11 +1,11 @@
 Class {
-	#name : #OpalCompilerTests,
+	#name : #OpalCompilerTest,
 	#superclass : #TestCase,
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
 { #category : #'tests - bindings' }
-OpalCompilerTests >> testArrayBindingsWithUppercaseNameDoOverwriteGlobals [
+OpalCompilerTest >> testArrayBindingsWithUppercaseNameDoOverwriteGlobals [
 	| result |
 	result := Smalltalk compiler
 		bindings: {(#UndefinedObject -> Object)};
@@ -14,7 +14,7 @@ OpalCompilerTests >> testArrayBindingsWithUppercaseNameDoOverwriteGlobals [
 ]
 
 { #category : #'tests - bindings' }
-OpalCompilerTests >> testArrayBindingsWriteGlobals [
+OpalCompilerTest >> testArrayBindingsWriteGlobals [
 	| result |
 	result := Smalltalk compiler
 		 bindings: {(#Object -> Point)};
@@ -23,7 +23,7 @@ OpalCompilerTests >> testArrayBindingsWriteGlobals [
 ]
 
 { #category : #'tests - bindings' }
-OpalCompilerTests >> testArrayEvaluateWithBindings [
+OpalCompilerTest >> testArrayEvaluateWithBindings [
 	| result |
 	result := Smalltalk compiler
 		bindings: {(#a -> 3)};
@@ -32,7 +32,7 @@ OpalCompilerTests >> testArrayEvaluateWithBindings [
 ]
 
 { #category : #'tests - bindings' }
-OpalCompilerTests >> testArrayEvaluateWithBindingsWithUppercaseName [
+OpalCompilerTest >> testArrayEvaluateWithBindingsWithUppercaseName [
 	| result |
 	result := Smalltalk compiler
 		bindings: {(#MyVar -> 3)};
@@ -41,7 +41,7 @@ OpalCompilerTests >> testArrayEvaluateWithBindingsWithUppercaseName [
 ]
 
 { #category : #'tests - bindings' }
-OpalCompilerTests >> testBindingsWithUppercaseNameDoOverwriteGlobals [
+OpalCompilerTest >> testBindingsWithUppercaseNameDoOverwriteGlobals [
 	| result |
 	result := Smalltalk compiler
 		bindings: {(#UndefinedObject -> Object)} asDictionary;
@@ -50,7 +50,7 @@ OpalCompilerTests >> testBindingsWithUppercaseNameDoOverwriteGlobals [
 ]
 
 { #category : #'tests - bindings' }
-OpalCompilerTests >> testBindingsWriteGlobals [
+OpalCompilerTest >> testBindingsWriteGlobals [
 	| result |
 	result := Smalltalk compiler
 		 bindings: {(#Object -> Point)} asDictionary;
@@ -59,7 +59,7 @@ OpalCompilerTests >> testBindingsWriteGlobals [
 ]
 
 { #category : #tests }
-OpalCompilerTests >> testCompileEmbeddsSource [
+OpalCompilerTest >> testCompileEmbeddsSource [
 	| result |
 	result := Smalltalk compiler
 		class: UndefinedObject;
@@ -79,7 +79,7 @@ OpalCompilerTests >> testCompileEmbeddsSource [
 ]
 
 { #category : #tests }
-OpalCompilerTests >> testCompileWithNilClass [
+OpalCompilerTest >> testCompileWithNilClass [
 	"we shoud use UndefinedObject if the class is nil"
 	| method |
 	method := Smalltalk compiler compile: 'tst 1+2'.
@@ -87,7 +87,7 @@ OpalCompilerTests >> testCompileWithNilClass [
 ]
 
 { #category : #'tests - bindings' }
-OpalCompilerTests >> testEvaluateWithBindings [
+OpalCompilerTest >> testEvaluateWithBindings [
 	| result |
 	result := Smalltalk compiler
 		bindings: {(#a -> 3)} asDictionary;
@@ -96,7 +96,7 @@ OpalCompilerTests >> testEvaluateWithBindings [
 ]
 
 { #category : #'tests - bindings' }
-OpalCompilerTests >> testEvaluateWithBindingsWithUppercaseName [
+OpalCompilerTest >> testEvaluateWithBindingsWithUppercaseName [
 	| result |
 	result := Smalltalk compiler
 		bindings: {(#MyVar -> 3)} asDictionary;

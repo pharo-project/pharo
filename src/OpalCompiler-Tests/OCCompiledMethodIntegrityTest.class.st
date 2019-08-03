@@ -1,11 +1,11 @@
 Class {
-	#name : #OCCompiledMethodIntegrityTests,
+	#name : #OCCompiledMethodIntegrityTest,
 	#superclass : #TestCase,
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
 { #category : #test }
-OCCompiledMethodIntegrityTests >> testBlockTemps [
+OCCompiledMethodIntegrityTest >> testBlockTemps [
 
 	| newCompiledMethod |
 	newCompiledMethod := OpalCompiler new 
@@ -21,7 +21,7 @@ OCCompiledMethodIntegrityTests >> testBlockTemps [
 ]
 
 { #category : #test }
-OCCompiledMethodIntegrityTests >> testNotUsedArgument [
+OCCompiledMethodIntegrityTest >> testNotUsedArgument [
 
 	| newCompiledMethod |
 	
@@ -38,7 +38,7 @@ OCCompiledMethodIntegrityTests >> testNotUsedArgument [
 ]
 
 { #category : #test }
-OCCompiledMethodIntegrityTests >> testPragmas [
+OCCompiledMethodIntegrityTest >> testPragmas [
 
 	| newCompiledMethod |
 	
@@ -60,7 +60,7 @@ OCCompiledMethodIntegrityTests >> testPragmas [
 ]
 
 { #category : #test }
-OCCompiledMethodIntegrityTests >> testPrimitive [
+OCCompiledMethodIntegrityTest >> testPrimitive [
 
 	| newCompiledMethod |
 	
@@ -78,7 +78,7 @@ OCCompiledMethodIntegrityTests >> testPrimitive [
 ]
 
 { #category : #test }
-OCCompiledMethodIntegrityTests >> testRemoteTempInVector [
+OCCompiledMethodIntegrityTest >> testRemoteTempInVector [
 
 	| newCompiledMethod |
 
@@ -103,7 +103,7 @@ OCCompiledMethodIntegrityTests >> testRemoteTempInVector [
 ]
 
 { #category : #test }
-OCCompiledMethodIntegrityTests >> testUndeclaredVariable [
+OCCompiledMethodIntegrityTest >> testUndeclaredVariable [
 
 	| newCompiledMethod undeclaredBinding |
 	
