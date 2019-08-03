@@ -13,7 +13,7 @@ ReTestClassNameShouldNotEndWithTestsTest >> testBasicCheck [
 
 
 	"test class name endind with 'Tests'"
-	testClass rename: 'RenrakuProgramaticallyCreatedClassTests'.
+	testClass rename: 'RenrakuProgrammaticallyCreatedClassTests'.
 	self
 		assert:
 			(testClass critiques
