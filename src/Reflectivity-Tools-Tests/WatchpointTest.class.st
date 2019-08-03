@@ -1,11 +1,11 @@
 Class {
-	#name : #WatchpointTests,
+	#name : #WatchpointTest,
 	#superclass : #TestCase,
 	#category : #'Reflectivity-Tools-Tests'
 }
 
 { #category : #adding }
-WatchpointTests >> testAddSameWatchpointSameNode [
+WatchpointTest >> testAddSameWatchpointSameNode [
 	|node watchpoint watchpoint2|
 	
 	node := (ReflectivityExamples>>#exampleAssignment) ast body children first.
@@ -21,7 +21,7 @@ WatchpointTests >> testAddSameWatchpointSameNode [
 ]
 
 { #category : #adding }
-WatchpointTests >> testAddWatchpoint [
+WatchpointTest >> testAddWatchpoint [
 	|node watchpoint|
 	
 	node := (ReflectivityExamples>>#exampleAssignment) ast body children first.
@@ -37,7 +37,7 @@ WatchpointTests >> testAddWatchpoint [
 ]
 
 { #category : #adding }
-WatchpointTests >> testAddWatchpointsSameNode [
+WatchpointTest >> testAddWatchpointsSameNode [
 	|node watchpoint watchpoint2|
 	
 	node := (ReflectivityExamples>>#exampleAssignment) ast body children first.
@@ -53,7 +53,7 @@ WatchpointTests >> testAddWatchpointsSameNode [
 ]
 
 { #category : #'deleting history' }
-WatchpointTests >> testDeleteAllHistory [
+WatchpointTest >> testDeleteAllHistory [
 	| node1 node2 watchpoint1 watchpoint2 |
 	node1 := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body statements first.
 	watchpoint1 := Watchpoint in: node1.
@@ -76,7 +76,7 @@ WatchpointTests >> testDeleteAllHistory [
 ]
 
 { #category : #'deleting history' }
-WatchpointTests >> testDeleteHistory [
+WatchpointTest >> testDeleteHistory [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body children first.
 	watchpoint := Watchpoint in: node.
@@ -93,7 +93,7 @@ WatchpointTests >> testDeleteHistory [
 ]
 
 { #category : #'deleting history' }
-WatchpointTests >> testDeleteHistoryFromNode [
+WatchpointTest >> testDeleteHistoryFromNode [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body children first.
 	watchpoint := Watchpoint in: node.
@@ -110,7 +110,7 @@ WatchpointTests >> testDeleteHistoryFromNode [
 ]
 
 { #category : #values }
-WatchpointTests >> testSaveOneValue [
+WatchpointTest >> testSaveOneValue [
 	|node watchpoint|
 	
 	node := (ReflectivityExamples>>#exampleAssignmentIvar) ast body children first.
@@ -124,7 +124,7 @@ WatchpointTests >> testSaveOneValue [
 ]
 
 { #category : #values }
-WatchpointTests >> testSaveValues [
+WatchpointTest >> testSaveValues [
 	|node watchpoint|
 	
 	node := (ReflectivityExamples>>#exampleAssignmentIvar:) ast body children first.
@@ -140,7 +140,7 @@ WatchpointTests >> testSaveValues [
 ]
 
 { #category : #values }
-WatchpointTests >> testSendMessage [
+WatchpointTest >> testSendMessage [
 	|node watchpoint|
 	
 	node := (ReflectivityExamples>>#exampleMessageSend) ast body children first.
@@ -154,7 +154,7 @@ WatchpointTests >> testSendMessage [
 ]
 
 { #category : #recording }
-WatchpointTests >> testStopRecording [
+WatchpointTest >> testStopRecording [
 	|node watchpoint dummy|
 	
 	node := (ReflectivityExamples>>#exampleAssignmentIvar:) ast body children first.
@@ -182,7 +182,7 @@ WatchpointTests >> testStopRecording [
 ]
 
 { #category : #values }
-WatchpointTests >> testTimestamp [
+WatchpointTest >> testTimestamp [
 	|node watchpoint|
 	
 	node := (ReflectivityExamples>>#exampleAssignmentIvar:) ast body children first.
@@ -201,7 +201,7 @@ WatchpointTests >> testTimestamp [
 ]
 
 { #category : #adding }
-WatchpointTests >> testWatchpointTwice [
+WatchpointTest >> testWatchpointTwice [
 	|node watchpoint|
 	
 	node := (ReflectivityExamples>>#exampleAssignment) ast body statements first.

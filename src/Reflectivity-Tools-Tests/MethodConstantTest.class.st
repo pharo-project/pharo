@@ -1,31 +1,31 @@
 Class {
-	#name : #MethodConstantTests,
+	#name : #MethodConstantTest,
 	#superclass : #TestCase,
 	#category : #'Reflectivity-Tools-Tests'
 }
 
 { #category : #tests }
-MethodConstantTests >> constFromBlock: aBlock [
+MethodConstantTest >> constFromBlock: aBlock [
 
 	^aBlock asMethodConstant 
 
 ]
 
 { #category : #tests }
-MethodConstantTests >> constFromReceiverExpression [
+MethodConstantTest >> constFromReceiverExpression [
 
 	^DateAndTime now asMethodConstant 
 
 ]
 
 { #category : #tests }
-MethodConstantTests >> sumOfTwoConsts: firstBlock and: secondBlock [
+MethodConstantTest >> sumOfTwoConsts: firstBlock and: secondBlock [
 
 	^firstBlock asMethodConstant + secondBlock asMethodConstant
 ]
 
 { #category : #tests }
-MethodConstantTests >> testAPIFromBlock [
+MethodConstantTest >> testAPIFromBlock [
 
 	| constInitialResult constSecondResult |
 	constInitialResult := self constFromBlock: [DateAndTime now].
@@ -35,7 +35,7 @@ MethodConstantTests >> testAPIFromBlock [
 ]
 
 { #category : #tests }
-MethodConstantTests >> testAPIFromMessageSendReceiver [
+MethodConstantTest >> testAPIFromMessageSendReceiver [
 
 	| constInitialResult constSecondResult |
 	constInitialResult := self constFromReceiverExpression.
@@ -45,7 +45,7 @@ MethodConstantTests >> testAPIFromMessageSendReceiver [
 ]
 
 { #category : #tests }
-MethodConstantTests >> testConstPlaceInTransformedMethod [
+MethodConstantTest >> testConstPlaceInTransformedMethod [
 
 	| transformedMethod const constLiteral |
 	const := self constFromReceiverExpression. 
@@ -57,7 +57,7 @@ MethodConstantTests >> testConstPlaceInTransformedMethod [
 ]
 
 { #category : #tests }
-MethodConstantTests >> testTwoConstsInSameMethod [
+MethodConstantTest >> testTwoConstsInSameMethod [
 
 	| result1 result2 |
 	result1 := self sumOfTwoConsts: [ 1 ] and: [ 2 ].
@@ -67,7 +67,7 @@ MethodConstantTests >> testTwoConstsInSameMethod [
 ]
 
 { #category : #tests }
-MethodConstantTests >> testUsingConstJustInSameMethod [
+MethodConstantTest >> testUsingConstJustInSameMethod [
 
 	| values |
 	self skip. "not working for the first call: would need on stack replacement"

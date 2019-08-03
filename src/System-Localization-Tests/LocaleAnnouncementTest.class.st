@@ -2,7 +2,7 @@
 Unit test locale announcements
 "
 Class {
-	#name : #LocaleAnnouncementTests,
+	#name : #LocaleAnnouncementTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'saveCurrent',
@@ -12,19 +12,19 @@ Class {
 }
 
 { #category : #'private accessing' }
-LocaleAnnouncementTests >> frenchLocale [
+LocaleAnnouncementTest >> frenchLocale [
 
 	^ Locale isoLanguage: 'fr'
 ]
 
 { #category : #events }
-LocaleAnnouncementTests >> localeWasChanged: anAnnouncement [
+LocaleAnnouncementTest >> localeWasChanged: anAnnouncement [
 
 	catchedAnnouncement := anAnnouncement 
 ]
 
 { #category : #running }
-LocaleAnnouncementTests >> setUp [
+LocaleAnnouncementTest >> setUp [
 
 	super setUp.
 	saveCurrent := Locale current.
@@ -32,7 +32,7 @@ LocaleAnnouncementTests >> setUp [
 ]
 
 { #category : #running }
-LocaleAnnouncementTests >> tearDown [
+LocaleAnnouncementTest >> tearDown [
 
 	Locale localeAnnouncer unsubscribe: self.
 	Locale classVarNamed: 'Current' put: saveCurrent.

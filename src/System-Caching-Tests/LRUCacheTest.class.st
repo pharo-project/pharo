@@ -3,18 +3,18 @@ I am NeoLRUCacheTests.
 
 "
 Class {
-	#name : #LRUCacheTests,
+	#name : #LRUCacheTest,
 	#superclass : #TestCase,
 	#category : #'System-Caching-Tests'
 }
 
 { #category : #accessing }
-LRUCacheTests >> newCache [
+LRUCacheTest >> newCache [
 	^ LRUCache new
 ]
 
 { #category : #testing }
-LRUCacheTests >> test5kClasses [
+LRUCacheTest >> test5kClasses [
 	| cache data |
 	(cache := self newCache)
 		maximumWeight: 1024.
@@ -35,7 +35,7 @@ LRUCacheTests >> test5kClasses [
 ]
 
 { #category : #testing }
-LRUCacheTests >> test6k [
+LRUCacheTest >> test6k [
 	| cache |
 	(cache := self newCache)
 		maximumWeight: 600.
@@ -48,7 +48,7 @@ LRUCacheTests >> test6k [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testAdditionInIfAbsentPut [
+LRUCacheTest >> testAdditionInIfAbsentPut [
 	| cache |
 	cache := self newCache.
 	cache at: #foo ifAbsentPut: [ 100 ].
@@ -60,7 +60,7 @@ LRUCacheTests >> testAdditionInIfAbsentPut [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testAt [
+LRUCacheTest >> testAt [
 	| cache |
 	cache := self newCache.
 	self should: [ cache at: #foo ] raise: KeyNotFound.
@@ -71,7 +71,7 @@ LRUCacheTests >> testAt [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testCustomWeight [
+LRUCacheTest >> testCustomWeight [
 	| cache |
 	(cache := self newCache)
 		computeWeight: #sizeInMemory;
@@ -89,7 +89,7 @@ LRUCacheTests >> testCustomWeight [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testEmpty [
+LRUCacheTest >> testEmpty [
 	| emptyCache |
 	emptyCache := self newCache.
 	self assertEmpty: emptyCache.
@@ -103,7 +103,7 @@ LRUCacheTests >> testEmpty [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testEnumeration [
+LRUCacheTest >> testEnumeration [
 	| cache data keys values |
 	cache := self newCache.
 	data := Dictionary new.
@@ -122,7 +122,7 @@ LRUCacheTests >> testEnumeration [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testEviction [
+LRUCacheTest >> testEviction [
 	| cache |
 	cache := self newCache.
 	cache maximumWeight: 16.
@@ -139,7 +139,7 @@ LRUCacheTests >> testEviction [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testFactory [
+LRUCacheTest >> testFactory [
 	| cache |
 	cache := self newCache.
 	cache maximumWeight: 5.
@@ -152,7 +152,7 @@ LRUCacheTests >> testFactory [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testFactoryStyle [
+LRUCacheTest >> testFactoryStyle [
 	| cache factory |
 	cache := self newCache.
 	cache maximumWeight: 5.
@@ -165,7 +165,7 @@ LRUCacheTests >> testFactoryStyle [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testFibonacci [
+LRUCacheTest >> testFibonacci [
 	"After an idea by Jan Vrany.
 	Recursively enter the cache and its access protection"
 	
@@ -182,7 +182,7 @@ LRUCacheTests >> testFibonacci [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testFixedAccess [
+LRUCacheTest >> testFixedAccess [
 	| cache data keys |
 	(cache := self newCache)
 		maximumWeight: 4.
@@ -202,7 +202,7 @@ LRUCacheTests >> testFixedAccess [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testOne [
+LRUCacheTest >> testOne [
 	| cache |
 	cache := self newCache.
 	cache at: #foo ifAbsentPut: [ 100 ].
@@ -218,7 +218,7 @@ LRUCacheTests >> testOne [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testOneHit [
+LRUCacheTest >> testOneHit [
 	| cache value |
 	cache := self newCache.
 	cache at: #foo ifAbsentPut: [ 100 ].
@@ -234,7 +234,7 @@ LRUCacheTests >> testOneHit [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testOneHitTwice [
+LRUCacheTest >> testOneHitTwice [
 	| cache value |
 	cache := self newCache.
 	cache at: #foo ifAbsentPut: [ 100 ].
@@ -247,7 +247,7 @@ LRUCacheTests >> testOneHitTwice [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testPopulate [
+LRUCacheTest >> testPopulate [
 	| cache data |
 	cache := self newCache.
 	cache at: #foo put: 1.
@@ -269,7 +269,7 @@ LRUCacheTests >> testPopulate [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testPrimeFactors [
+LRUCacheTest >> testPrimeFactors [
 
 	| cache data |
 	cache := self newCache.
@@ -287,7 +287,7 @@ LRUCacheTests >> testPrimeFactors [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testRandomAccess [
+LRUCacheTest >> testRandomAccess [
 	| cache data random keys |
 	(cache := self newCache)
 		maximumWeight: 4.
@@ -308,7 +308,7 @@ LRUCacheTests >> testRandomAccess [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testRemoveAll [
+LRUCacheTest >> testRemoveAll [
 	| cache |
 	cache := self newCache.
 	1 to: 10 do: [ :each | cache at: each ifAbsentPut: [ each ] ].
@@ -324,7 +324,7 @@ LRUCacheTests >> testRemoveAll [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testRemoveOne [
+LRUCacheTest >> testRemoveOne [
 	| cache |
 	cache := self newCache.
 	cache at: #foo ifAbsentPut: [ 100 ].
@@ -337,7 +337,7 @@ LRUCacheTests >> testRemoveOne [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testRemoveOneOfThree [
+LRUCacheTest >> testRemoveOneOfThree [
 	| cache |
 	cache := self newCache.
 	cache at: #x ifAbsentPut: [ 100 ].
@@ -353,7 +353,7 @@ LRUCacheTests >> testRemoveOneOfThree [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testTen [
+LRUCacheTest >> testTen [
 	| cache |
 	cache := self newCache.
 	1 to: 10 do: [ :each |
@@ -370,7 +370,7 @@ LRUCacheTests >> testTen [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testTenThreadSafe [
+LRUCacheTest >> testTenThreadSafe [
 	| cache |
 	cache := self newCache.
 	cache beThreadSafe.
@@ -386,7 +386,7 @@ LRUCacheTests >> testTenThreadSafe [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testThree [
+LRUCacheTest >> testThree [
 	| cache |
 	cache := self newCache.
 	cache at: #x ifAbsentPut: [ 100 ].
@@ -404,7 +404,7 @@ LRUCacheTests >> testThree [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testThreeHitSameOne [
+LRUCacheTest >> testThreeHitSameOne [
 	| cache |
 	cache := self newCache.
 	cache at: #x ifAbsentPut: [ 100 ].
@@ -420,7 +420,7 @@ LRUCacheTests >> testThreeHitSameOne [
 ]
 
 { #category : #testing }
-LRUCacheTests >> testTwo [
+LRUCacheTest >> testTwo [
 	| cache |
 	cache := self newCache.
 	cache at: #foo ifAbsentPut: [ 100 ].

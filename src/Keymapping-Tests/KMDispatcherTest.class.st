@@ -2,18 +2,18 @@
 SUnit tests for the key mapping dispatcher
 "
 Class {
-	#name : #KMDispatcherTestCase,
+	#name : #KMDispatcherTest,
 	#superclass : #AbstractKeymappingTest,
 	#category : #'Keymapping-Tests'
 }
 
 { #category : #tests }
-KMDispatcherTestCase >> keymapContainer [
+KMDispatcherTest >> keymapContainer [
 	^ KMRepository default
 ]
 
 { #category : #tests }
-KMDispatcherTestCase >> testBuffering [
+KMDispatcherTest >> testBuffering [
 	| morph flag category event1 event2 event3|
 	category := KMCategory named: #TestBlah.
 	KMRepository default addCategory: category.
@@ -48,7 +48,7 @@ KMDispatcherTestCase >> testBuffering [
 ]
 
 { #category : #tests }
-KMDispatcherTestCase >> testDetach [
+KMDispatcherTest >> testDetach [
 
 	| category1 category2 morph attachedCategories |
 	category1 := KMCategory named: #TestBlah.
@@ -69,7 +69,7 @@ KMDispatcherTestCase >> testDetach [
 ]
 
 { #category : #tests }
-KMDispatcherTestCase >> testNoMultiTrigger [
+KMDispatcherTest >> testNoMultiTrigger [
 	| bm1 bm2 flag1 flag2 category otherCategory |
 	category := KMCategory named: #TestBlah.
 	otherCategory := KMCategory named: #TestFoo.
@@ -96,7 +96,7 @@ KMDispatcherTestCase >> testNoMultiTrigger [
 ]
 
 { #category : #tests }
-KMDispatcherTestCase >> testNoStaggeredTrigger [
+KMDispatcherTest >> testNoStaggeredTrigger [
 	"Once a key sequence is recognized by a keymapper, all other  
 	keymappers should clear their buffers"
 	| bm1 bm2 flag1 flag2 category otherCategory bufferBefore |

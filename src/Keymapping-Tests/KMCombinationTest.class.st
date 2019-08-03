@@ -2,13 +2,13 @@
 SUnit tests for key combinations
 "
 Class {
-	#name : #KMCombinationTests,
+	#name : #KMCombinationTest,
 	#superclass : #AbstractKeymappingTest,
 	#category : #'Keymapping-Tests'
 }
 
 { #category : #tests }
-KMCombinationTests >> testCombinationOfSimpleShortcuts [
+KMCombinationTest >> testCombinationOfSimpleShortcuts [
 	| shortcut otherShortcut combination |
 	shortcut := $a command.
 	otherShortcut := $b ctrl.
@@ -22,7 +22,7 @@ KMCombinationTests >> testCombinationOfSimpleShortcuts [
 ]
 
 { #category : #tests }
-KMCombinationTests >> testCombinationSeveralShortcuts [
+KMCombinationTest >> testCombinationSeveralShortcuts [
 	| shortcut platforms |
 	platforms := Set new.
 	
@@ -35,7 +35,7 @@ KMCombinationTests >> testCombinationSeveralShortcuts [
 ]
 
 { #category : #tests }
-KMCombinationTests >> testMacDependentShortcut [
+KMCombinationTest >> testMacDependentShortcut [
 	| shortcut |
 	shortcut := $a ctrl mac.
 	
@@ -45,7 +45,7 @@ KMCombinationTests >> testMacDependentShortcut [
 ]
 
 { #category : #tests }
-KMCombinationTests >> testMacMetaShouldBeCmd [
+KMCombinationTest >> testMacMetaShouldBeCmd [
 	OSPlatform current isMacOS ifFalse: [ ^ self skip ].
 	self assert: $n meta equals: $n command.
 	self assert: $n command equals: $n meta.
@@ -54,7 +54,7 @@ KMCombinationTests >> testMacMetaShouldBeCmd [
 ]
 
 { #category : #tests }
-KMCombinationTests >> testPlatformDependentShortcut [
+KMCombinationTest >> testPlatformDependentShortcut [
 	| shortcut |
 	shortcut := $a ctrl win.
 	
@@ -64,7 +64,7 @@ KMCombinationTests >> testPlatformDependentShortcut [
 ]
 
 { #category : #tests }
-KMCombinationTests >> testShortcutIsSimpleCombination [
+KMCombinationTest >> testShortcutIsSimpleCombination [
 	| shortcut |
 	shortcut := $a command.
 	self assert: (shortcut includes: shortcut).
@@ -72,7 +72,7 @@ KMCombinationTests >> testShortcutIsSimpleCombination [
 ]
 
 { #category : #tests }
-KMCombinationTests >> testUnixDependentShortcut [
+KMCombinationTest >> testUnixDependentShortcut [
 	| shortcut |
 	shortcut := $a ctrl unix.
 	
@@ -82,7 +82,7 @@ KMCombinationTests >> testUnixDependentShortcut [
 ]
 
 { #category : #tests }
-KMCombinationTests >> testWindowsAndUnixMetaShouldBeCtrl [
+KMCombinationTest >> testWindowsAndUnixMetaShouldBeCtrl [
 	OSPlatform current isMacOS ifTrue: [ ^ self skip ].
 	self assert: $n meta equals: $n ctrl.
 	self assert: $n ctrl equals: $n meta.
@@ -91,7 +91,7 @@ KMCombinationTests >> testWindowsAndUnixMetaShouldBeCtrl [
 ]
 
 { #category : #tests }
-KMCombinationTests >> testWindowsDependentShortcut [
+KMCombinationTest >> testWindowsDependentShortcut [
 	| shortcut |
 	shortcut := $a ctrl win.
 	

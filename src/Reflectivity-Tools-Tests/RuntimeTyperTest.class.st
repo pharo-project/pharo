@@ -39,13 +39,13 @@ So in addition, one would need some AST visitor to gather all these infos (and m
 e.g. “a := 1” we know the type of a) and add these annotations to al the vars that are actually the same variable.
 "
 Class {
-	#name : #RuntimeTyperTests,
+	#name : #RuntimeTyperTest,
 	#superclass : #TestCase,
 	#category : #'Reflectivity-Tools-Tests'
 }
 
 { #category : #example }
-RuntimeTyperTests >> examplePlus: arg [
+RuntimeTyperTest >> examplePlus: arg [
 	<sampleInstance>
 	| result |
 	result := arg + 1.
@@ -53,7 +53,7 @@ RuntimeTyperTests >> examplePlus: arg [
 ]
 
 { #category : #tests }
-RuntimeTyperTests >> testPlus [
+RuntimeTyperTest >> testPlus [
 	| link variable |
 	
 	link := MetaLink new

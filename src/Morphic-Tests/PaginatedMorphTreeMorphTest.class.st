@@ -1,11 +1,11 @@
 Class {
-	#name : #PaginatedMorphTreeMorphTests,
+	#name : #PaginatedMorphTreeMorphTest,
 	#superclass : #TestCase,
 	#category : #'Morphic-Tests-Widgets'
 }
 
 { #category : #tests }
-PaginatedMorphTreeMorphTests >> testPager [
+PaginatedMorphTreeMorphTest >> testPager [
 	"This test demonstrate a paginating morphTreeMorph in action."
 
 	| treeMorph aWindow aModel |

@@ -3,13 +3,13 @@ A MorphTreeMorphTests tests aspects of a MorphTreeMorph
 
 "
 Class {
-	#name : #MorphTreeMorphTests,
+	#name : #MorphTreeMorphTest,
 	#superclass : #TestCase,
 	#category : #'Morphic-Tests-Widgets'
 }
 
 { #category : #tests }
-MorphTreeMorphTests >> testLastClickedMorphSetUponUpdateList [
+MorphTreeMorphTest >> testLastClickedMorphSetUponUpdateList [
 	"Test that lastClickedMorph isn't set to nil after an update list."
 
 	| c w t |
@@ -31,7 +31,7 @@ MorphTreeMorphTests >> testLastClickedMorphSetUponUpdateList [
 ]
 
 { #category : #tests }
-MorphTreeMorphTests >> testLeakingSelectionsOnUpdate [
+MorphTreeMorphTest >> testLeakingSelectionsOnUpdate [
 	"Test that selected morphs are forgotten on update."
 
 	| c w t |
@@ -47,7 +47,7 @@ MorphTreeMorphTests >> testLeakingSelectionsOnUpdate [
 ]
 
 { #category : #tests }
-MorphTreeMorphTests >> testMaintainingSelectionsOnUpdate [
+MorphTreeMorphTest >> testMaintainingSelectionsOnUpdate [
 	"Test that the selection is well maintained on list update."
 
 	| c w t |
@@ -77,7 +77,7 @@ MorphTreeMorphTests >> testMaintainingSelectionsOnUpdate [
 ]
 
 { #category : #tests }
-MorphTreeMorphTests >> testUpdatingSelectionsOnUpdate [
+MorphTreeMorphTest >> testUpdatingSelectionsOnUpdate [
 	"Test that the selection does not refer to non-existing nodes after updates."
 
 	| c w t |
@@ -98,7 +98,7 @@ MorphTreeMorphTests >> testUpdatingSelectionsOnUpdate [
 ]
 
 { #category : #tests }
-MorphTreeMorphTests >> testUpdatingSelectionsOnUpdateWithRemoval [
+MorphTreeMorphTest >> testUpdatingSelectionsOnUpdateWithRemoval [
 	"Test that the selection does not refer to non-existing nodes after updates, including if the update removes nodes."
 
 	| c w t |
