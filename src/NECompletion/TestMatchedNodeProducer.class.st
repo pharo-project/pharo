@@ -40,6 +40,12 @@ TestMatchedNodeProducer >> visitArgumentNode: anArgumentNode [
 ]
 
 { #category : #visiting }
+TestMatchedNodeProducer >> visitArrayNode: aRBArrayNode [
+	
+	^ #()
+]
+
+{ #category : #visiting }
 TestMatchedNodeProducer >> visitBlockNode: aRBBlockNode [
 	
 	^ #()
