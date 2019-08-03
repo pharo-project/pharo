@@ -135,17 +135,18 @@ TestMatchedNodeProducer >> visitTemporaryNode: aNode [
 ]
 
 { #category : #visiting }
-TestMatchedNodeProducer >> visitVariableNode: aRBVariableNode [  
+TestMatchedNodeProducer >> visitVariableNode: aRBVariableNode [
+	| lookupClass |
+	lookupClass := currentClass ifNil: [ UndefinedObject ].
 	aRBVariableNode isDefinition ifTrue: [ ^ (self select: Symbol allSymbols beginningWith: aRBVariableNode name) select: [ :each | each numArgs = 0 ] ].
    aRBVariableNode isArgument ifTrue: [ ^ (self select: Symbol allSymbols beginningWith: aRBVariableNode name) select: [ :each | each numArgs = 0 ] ].
 	"using a stream to store results should be better"
 	^ (self select: Smalltalk globals keys beginningWith: aRBVariableNode name) , 
-	  (self select: (currentClass allSlots collect: [ :each | each name ]) beginningWith: aRBVariableNode name) ,
+	  (self select: (lookupClass allSlots collect: [ :each | each name ]) beginningWith: aRBVariableNode name) ,
 		(self select: aRBVariableNode methodNode temporaryNames beginningWith: aRBVariableNode name),
 		(self select: aRBVariableNode methodNode argumentNames beginningWith: aRBVariableNode name),
-		(self select: currentClass allClassVarNames beginningWith: aRBVariableNode name),
-		(self select: (currentClass allSharedPools flatCollect: [ :each | each classVarNames]) beginningWith: aRBVariableNode name)
-		",(self select: self methodNames beginningWith: aRBVariableNode name)" 
-		"this is a bit too much, we limit to variables"
+		(self select: lookupClass allClassVarNames beginningWith: aRBVariableNode name),
+		(self select: (lookupClass allSharedPools flatCollect: [ :each | each classVarNames]) beginningWith: aRBVariableNode name)
+		",(self select: self methodNames beginningWith: aRBVariableNode name)"
 
 ]

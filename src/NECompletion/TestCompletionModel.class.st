@@ -27,8 +27,7 @@ TestCompletionModel >> clazz [
 
 { #category : #accessing }
 TestCompletionModel >> clazz: anObject [
-	clazz := anObject.
-	clazz ifNil: [ clazz := UndefinedObject ]
+	clazz := anObject
 ]
 
 { #category : #accessing }
@@ -86,8 +85,7 @@ TestCompletionModel >> initEntries [
 
 { #category : #accessing }
 TestCompletionModel >> initialize [ 
-	completionToken := ''.
-	clazz := UndefinedObject
+	completionToken := ''
 ]
 
 { #category : #accessing }
