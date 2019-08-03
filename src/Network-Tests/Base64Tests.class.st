@@ -2,13 +2,13 @@
 Test for user level Base64 access
 "
 Class {
-	#name : #Base64Tests,
+	#name : #Base64Test,
 	#superclass : #TestCase,
 	#category : #'Network-Tests-Kernel'
 }
 
 { #category : #tests }
-Base64Tests >> testHelloWorldEncoding [
+Base64Test >> testHelloWorldEncoding [
 	| bytes base64Encoded |
 	bytes := 'Hello World!' utf8Encoded.
 	base64Encoded := bytes base64Encoded.
@@ -17,7 +17,7 @@ Base64Tests >> testHelloWorldEncoding [
 ]
 
 { #category : #tests }
-Base64Tests >> testPrimesEncoding [
+Base64Test >> testPrimesEncoding [
 	| bytes base64Encoded |
 	bytes := (Integer primesUpTo: 255) asByteArray.
 	base64Encoded := bytes base64Encoded.
@@ -25,7 +25,7 @@ Base64Tests >> testPrimesEncoding [
 ]
 
 { #category : #tests }
-Base64Tests >> testRangeEncoding [
+Base64Test >> testRangeEncoding [
 	| bytes base64Encoded |
 	bytes := (0 to: 255) asByteArray.
 	base64Encoded := bytes base64Encoded.
@@ -33,7 +33,7 @@ Base64Tests >> testRangeEncoding [
 ]
 
 { #category : #tests }
-Base64Tests >> testWikipediaExampleQoute [
+Base64Test >> testWikipediaExampleQuote [
 	"https://en.wikipedia.org/wiki/Base64#Examples"
 	
 	| in out outAsOneLine |
