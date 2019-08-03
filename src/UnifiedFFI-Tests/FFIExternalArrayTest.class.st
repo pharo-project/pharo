@@ -2,13 +2,13 @@
 Tests for FFIExternalArray
 "
 Class {
-	#name : #FFIExternalArrayTests,
+	#name : #FFIExternalArrayTest,
 	#superclass : #TestCase,
 	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #tests }
-FFIExternalArrayTests >> testAt [
+FFIExternalArrayTest >> testAt [
 	| externalArray |
 	
 	externalArray := FFIExternalArray newType: 'int' size: 10.
@@ -18,7 +18,7 @@ FFIExternalArrayTests >> testAt [
 ]
 
 { #category : #tests }
-FFIExternalArrayTests >> testAtPut [
+FFIExternalArrayTest >> testAtPut [
 	| externalArray |
 	
 	externalArray := FFIExternalArray newType: 'int' size: 1.
@@ -27,7 +27,7 @@ FFIExternalArrayTests >> testAtPut [
 ]
 
 { #category : #tests }
-FFIExternalArrayTests >> testExternalAt [
+FFIExternalArrayTest >> testExternalAt [
 	| externalArray |
 	
 	[
@@ -43,7 +43,7 @@ FFIExternalArrayTests >> testExternalAt [
 ]
 
 { #category : #tests }
-FFIExternalArrayTests >> testExternalAtPut [
+FFIExternalArrayTest >> testExternalAtPut [
 	| externalArray |
 	
 	[	
@@ -55,7 +55,7 @@ FFIExternalArrayTests >> testExternalAtPut [
 ]
 
 { #category : #tests }
-FFIExternalArrayTests >> testExternalAtPutFloat [
+FFIExternalArrayTest >> testExternalAtPutFloat [
 	| random array |
 	random := Random new.
 	[
@@ -66,7 +66,7 @@ FFIExternalArrayTests >> testExternalAtPutFloat [
 ]
 
 { #category : #tests }
-FFIExternalArrayTests >> testResolveType [
+FFIExternalArrayTest >> testResolveType [
 	self assert: (FFIExternalArray resolveType: 'int') class equals: FFIInt32.
 	self assert: (FFIExternalArray resolveType: 'String') class equals: FFIExternalString.
 	self assert: (FFIExternalArray resolveType: 'char') class equals: FFICharacterType.

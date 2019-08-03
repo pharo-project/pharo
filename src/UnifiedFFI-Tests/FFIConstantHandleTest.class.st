@@ -2,7 +2,7 @@
 Tests for FFIConstantHandle
 "
 Class {
-	#name : #FFIConstantHandleTests,
+	#name : #FFIConstantHandleTest,
 	#superclass : #TestCase,
 	#classVars : [
 		'TIME_T_PTR'
@@ -11,17 +11,17 @@ Class {
 }
 
 { #category : #primitives }
-FFIConstantHandleTests >> getTime: t [
+FFIConstantHandleTest >> getTime: t [
      ^self ffiCall: #(long time(FFIConstantHandle *t) ) module: LibC
 ]
 
 { #category : #primitives }
-FFIConstantHandleTests >> getTimeReturnConstantHandle: t [
+FFIConstantHandleTest >> getTimeReturnConstantHandle: t [
      ^self ffiCall: #(FFIConstantHandle time(TIME_T_PTR t)) module: LibC
 ]
 
 { #category : #tests }
-FFIConstantHandleTests >> testCall [
+FFIConstantHandleTest >> testCall [
 	| object time |
 	
 	object := FFIConstantHandle new.
@@ -30,7 +30,7 @@ FFIConstantHandleTests >> testCall [
 ]
 
 { #category : #tests }
-FFIConstantHandleTests >> testReturn [
+FFIConstantHandleTest >> testReturn [
 	| object time |
 	
 	TIME_T_PTR := FFIExternalValueHolder ofType: 'long'.

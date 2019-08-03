@@ -2,13 +2,13 @@
 Tests for FFIExternalPackedStructure
 "
 Class {
-	#name : #FFIExternalPackedStructureTests,
+	#name : #FFIExternalPackedStructureTest,
 	#superclass : #TestCase,
 	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #tests }
-FFIExternalPackedStructureTests >> testExternallyAllocatedStructure [
+FFIExternalPackedStructureTest >> testExternallyAllocatedStructure [
 	| struct struct2 |
 	
 	struct := FFITestPackedStructure externalNew.
@@ -35,7 +35,7 @@ FFIExternalPackedStructureTests >> testExternallyAllocatedStructure [
 ]
 
 { #category : #tests }
-FFIExternalPackedStructureTests >> testStructAccess [
+FFIExternalPackedStructureTest >> testStructAccess [
 
 	| struct |
 	

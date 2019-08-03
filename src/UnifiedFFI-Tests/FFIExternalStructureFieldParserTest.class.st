@@ -2,7 +2,7 @@
 Tests for FFIExternalStructureFieldParser
 "
 Class {
-	#name : #FFIExternalStructureFieldParserTests,
+	#name : #FFIExternalStructureFieldParserTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'architecture'
@@ -11,18 +11,18 @@ Class {
 }
 
 { #category : #factory }
-FFIExternalStructureFieldParserTests >> newParser [   
+FFIExternalStructureFieldParserTest >> newParser [   
 	^ FFIExternalStructureFieldParser new
 ]
 
 { #category : #running }
-FFIExternalStructureFieldParserTests >> setUp [
+FFIExternalStructureFieldParserTest >> setUp [
 	super setUp.
 	architecture := FFIArchitecture forCurrentArchitecture
 ]
 
 { #category : #tests }
-FFIExternalStructureFieldParserTests >> testParseFieldsStructure [
+FFIExternalStructureFieldParserTest >> testParseFieldsStructure [
 	| fieldSpec |
 	
 	fieldSpec := self newParser   

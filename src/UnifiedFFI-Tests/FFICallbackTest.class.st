@@ -2,7 +2,7 @@
 Tests for callbacks
 "
 Class {
-	#name : #FFICallbackTests,
+	#name : #FFICallbackTest,
 	#superclass : #TestCase,
 	#pools : [
 		'FFITestEnumeration'
@@ -11,22 +11,22 @@ Class {
 }
 
 { #category : #accessing }
-FFICallbackTests >> floatregargsp [
+FFICallbackTest >> floatregargsp [
 	^ nil
 ]
 
 { #category : #accessing }
-FFICallbackTests >> intregargsp [
+FFICallbackTest >> intregargsp [
 	^ nil
 ]
 
 { #category : #running }
-FFICallbackTests >> runCaseManaged [
+FFICallbackTest >> runCaseManaged [
 	^ self runCase
 ]
 
 { #category : #tests }
-FFICallbackTests >> testCqsort [
+FFICallbackTest >> testCqsort [
 	| unsorted expected values callback results |
 	
 	self flag: #TODO. "TEMPORAL... I need to see why this is crashing on windows (but callbacks are 
@@ -55,7 +55,7 @@ FFICallbackTests >> testCqsort [
 ]
 
 { #category : #tests }
-FFICallbackTests >> testCqsortWithByteArray [
+FFICallbackTest >> testCqsortWithByteArray [
 	| unsorted expected values callback results |
 	
 	self flag: #TODO. "TEMPORAL... I need to see why this is crashing on windows (but callbacks are 
@@ -85,7 +85,7 @@ FFICallbackTests >> testCqsortWithByteArray [
 ]
 
 { #category : #tests }
-FFICallbackTests >> testEnumerationReturnValue [
+FFICallbackTest >> testEnumerationReturnValue [
 	| cb returnValue |
 	"Issue 19145 - change semantics so that enumerations can be returned
 	from callback without sending #value to it."
@@ -107,7 +107,7 @@ FFICallbackTests >> testEnumerationReturnValue [
 ]
 
 { #category : #support }
-FFICallbackTests >> wordResult: anInteger [
+FFICallbackTest >> wordResult: anInteger [
 	"For testEnumerationReturnValue, simulate a method invoked 
 	from FFICallback>>valueInContext, so that I can be passed as a fake context."
 	^anInteger
