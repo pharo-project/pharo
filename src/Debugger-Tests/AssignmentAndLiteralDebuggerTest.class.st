@@ -1,17 +1,17 @@
 Class {
-	#name : #AssignmentAndLiteralDebuggerTests,
-	#superclass : #DebuggerTests,
+	#name : #AssignmentAndLiteralDebuggerTest,
+	#superclass : #DebuggerTest,
 	#category : #'Debugger-Tests'
 }
 
 { #category : #running }
-AssignmentAndLiteralDebuggerTests >> setUp [
+AssignmentAndLiteralDebuggerTest >> setUp [
 	super setUp.
 	self settingUpSessionAndProcessAndContextForBlock: [ |var| var:=4].
 ]
 
 { #category : #tests }
-AssignmentAndLiteralDebuggerTests >> testInterruptedContextEqualsSuspendedContextOfInterruptedProcess [
+AssignmentAndLiteralDebuggerTest >> testInterruptedContextEqualsSuspendedContextOfInterruptedProcess [
 	self assert: session interruptedContext equals: session interruptedProcess suspendedContext.
 	session stepInto.
 	session stepInto.
@@ -19,33 +19,33 @@ AssignmentAndLiteralDebuggerTests >> testInterruptedContextEqualsSuspendedContex
 ]
 
 { #category : #tests }
-AssignmentAndLiteralDebuggerTests >> testNewDebugSession [
+AssignmentAndLiteralDebuggerTest >> testNewDebugSession [
 	self assert: context size equals: 0.
 	self assert: session interruptedContext equals: context.
 ]
 
 { #category : #tests }
-AssignmentAndLiteralDebuggerTests >> testStepIntoAssignment [
+AssignmentAndLiteralDebuggerTest >> testStepIntoAssignment [
 	session stepInto.
 	session stepInto.
 	self assert: (context tempNamed: 'var') equals: 4.
 ]
 
 { #category : #tests }
-AssignmentAndLiteralDebuggerTests >> testStepIntoLiteral [
+AssignmentAndLiteralDebuggerTest >> testStepIntoLiteral [
 	session stepInto.
 	self assert: context top equals: 4.
 ]
 
 { #category : #tests }
-AssignmentAndLiteralDebuggerTests >> testStepOverAssignment [
+AssignmentAndLiteralDebuggerTest >> testStepOverAssignment [
 	session stepOver.
 	session stepOver.
 	self assert: (context tempNamed: 'var') equals: 4.
 ]
 
 { #category : #tests }
-AssignmentAndLiteralDebuggerTests >> testStepOverLiteral [
+AssignmentAndLiteralDebuggerTest >> testStepOverLiteral [
 	session stepOver.
 	self assert: context top equals: 4.
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : #StepThroughTests,
-	#superclass : #DebuggerTests,
+	#name : #StepThroughTest,
+	#superclass : #DebuggerTest,
 	#instVars : [
 		'assistant'
 	],
@@ -8,39 +8,39 @@ Class {
 }
 
 { #category : #helper }
-StepThroughTests >> evalBlockThenReturnOne: aBlock [
+StepThroughTest >> evalBlockThenReturnOne: aBlock [
 	aBlock value.
 	^1.
 ]
 
 { #category : #helper }
-StepThroughTests >> stepA1 [
+StepThroughTest >> stepA1 [
 	self evalBlockThenReturnOne: [ self stepA2 ].
 ]
 
 { #category : #helper }
-StepThroughTests >> stepA2 [
+StepThroughTest >> stepA2 [
 	^ 2+2
 ]
 
 { #category : #helper }
-StepThroughTests >> stepB1 [
+StepThroughTest >> stepB1 [
 	self stepB2.
 	self stepB3.
 ]
 
 { #category : #helper }
-StepThroughTests >> stepB2 [
+StepThroughTest >> stepB2 [
 	^ 42
 ]
 
 { #category : #helper }
-StepThroughTests >> stepB3 [
+StepThroughTest >> stepB3 [
 	^ 43
 ]
 
 { #category : #tests }
-StepThroughTests >> testStepThrough [
+StepThroughTest >> testStepThrough [
 	"In a context c, define a block b, send a message to another method to get b evaluated.
 	Testing that a step through on this message send moves the execution to the point where the block b is about to be evaluated."
 	| node |
@@ -66,7 +66,7 @@ StepThroughTests >> testStepThrough [
 ]
 
 { #category : #tests }
-StepThroughTests >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolved [
+StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolved [
 	"Testing that when no block is involved, a step through moves the execution to the same point a step over would"
 	| node |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepB1 ].

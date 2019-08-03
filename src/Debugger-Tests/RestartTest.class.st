@@ -1,16 +1,16 @@
 Class {
-	#name : #RestartTests,
-	#superclass : #DebuggerTests,
+	#name : #RestartTest,
+	#superclass : #DebuggerTest,
 	#category : #'Debugger-Tests'
 }
 
 { #category : #tests }
-RestartTests >> stepA1 [
+RestartTest >> stepA1 [
 	self stepA2.
 ]
 
 { #category : #tests }
-RestartTests >> stepA2 [
+RestartTest >> stepA2 [
 	| a |
 	a := 1.
 	1+1.
@@ -18,7 +18,7 @@ RestartTests >> stepA2 [
 ]
 
 { #category : #tests }
-RestartTests >> testStepRestartAndRestepTopContext [
+RestartTest >> testStepRestartAndRestepTopContext [
 	"Get the execution to a context on method stepA2.
 	Step over in it to reach the end (and check that the temporary variable assignement works)
 	Restart the context.

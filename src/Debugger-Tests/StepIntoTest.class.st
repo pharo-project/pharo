@@ -1,31 +1,31 @@
 Class {
-	#name : #StepIntoTests,
-	#superclass : #DebuggerTests,
+	#name : #StepIntoTest,
+	#superclass : #DebuggerTest,
 	#category : #'Debugger-Tests'
 }
 
 { #category : #helper }
-StepIntoTests >> callQuickMethodWithoutReturningItsResult [
+StepIntoTest >> callQuickMethodWithoutReturningItsResult [
 	self quickMethod.
 ]
 
 { #category : #helper }
-StepIntoTests >> quickMethod [
+StepIntoTest >> quickMethod [
 	^1.
 ]
 
 { #category : #helper }
-StepIntoTests >> returnQuickMethodResult [
+StepIntoTest >> returnQuickMethodResult [
 	^ self quickMethod.
 ]
 
 { #category : #helper }
-StepIntoTests >> stepA1 [
+StepIntoTest >> stepA1 [
 	^42
 ]
 
 { #category : #tests }
-StepIntoTests >> testDetectionOfExecutionEnd [
+StepIntoTest >> testDetectionOfExecutionEnd [
 	self settingUpSessionAndProcessAndContextForBlock: [  ].
 	session stepInto.
 	"These ways do not detect that the execution ended"
@@ -39,7 +39,7 @@ StepIntoTests >> testDetectionOfExecutionEnd [
 ]
 
 { #category : #tests }
-StepIntoTests >> testStepIntoDeadContextShouldRaiseException [
+StepIntoTest >> testStepIntoDeadContextShouldRaiseException [
 	self settingUpSessionAndProcessAndContextForBlock: [  ].
 	session stepInto. "The first step into executes the (empty) body of the block and returns from it. From this point on, the context is dead since it returned."
 	
@@ -55,7 +55,7 @@ StepIntoTests >> testStepIntoDeadContextShouldRaiseException [
 ]
 
 { #category : #tests }
-StepIntoTests >> testStepIntoMethodCallShouldActivateIt [
+StepIntoTest >> testStepIntoMethodCallShouldActivateIt [
 	"Stepping into a method call should create a context for it at the top of the context stack"
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1].
 	session stepInto.
@@ -66,7 +66,7 @@ StepIntoTests >> testStepIntoMethodCallShouldActivateIt [
 ]
 
 { #category : #tests }
-StepIntoTests >> testStepIntoQuickMethodCallNotReturnedShouldLeaveTheValueStackEmpty [
+StepIntoTest >> testStepIntoQuickMethodCallNotReturnedShouldLeaveTheValueStackEmpty [
 	"Stepping into a quick method whose result is not used should leave the value stack empty"
 	self settingUpSessionAndProcessAndContextForBlock: [ self callQuickMethodWithoutReturningItsResult].
 	session stepInto.
@@ -81,7 +81,7 @@ StepIntoTests >> testStepIntoQuickMethodCallNotReturnedShouldLeaveTheValueStackE
 ]
 
 { #category : #tests }
-StepIntoTests >> testStepIntoQuickMethodCallReturnedShouldPushReturnValueToTheStack [
+StepIntoTest >> testStepIntoQuickMethodCallReturnedShouldPushReturnValueToTheStack [
 	"Stepping into a call to a quick method whose result is used should push its return value to the stack"
 	self settingUpSessionAndProcessAndContextForBlock: [ self returnQuickMethodResult].
 	session stepInto.

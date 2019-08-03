@@ -1,18 +1,18 @@
 Class {
-	#name : #ErrorWasInUIProcessTests,
-	#superclass : #DebuggerTests,
+	#name : #ErrorWasInUIProcessTest,
+	#superclass : #DebuggerTest,
 	#category : #'Debugger-Tests'
 }
 
 { #category : #tests }
-ErrorWasInUIProcessTests >> testErrorWasInUIProcessIsFalseWhenDebugSessionWasCreatedByANewProcess [
+ErrorWasInUIProcessTest >> testErrorWasInUIProcessIsFalseWhenDebugSessionWasCreatedByANewProcess [
 	"Test that errorWasInUIProcess is false if the DebugSession was created by a new process"
 	self settingUpSessionAndProcessAndContextForBlock: [ 1+1].
 	self assert: (session errorWasInUIProcess not)
 ]
 
 { #category : #tests }
-ErrorWasInUIProcessTests >> testErrorWasInUIProcessIsTrueWhenDebugSessionWasCreatedByTheUIProcess [
+ErrorWasInUIProcessTest >> testErrorWasInUIProcessIsTrueWhenDebugSessionWasCreatedByTheUIProcess [
 	"Test that errorWasInUIProcess is true when the DebugSession was created by the UI process"
 	
 	self skipOnPharoCITestingEnvironment.

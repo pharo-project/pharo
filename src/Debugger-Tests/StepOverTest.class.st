@@ -1,77 +1,77 @@
 Class {
-	#name : #StepOverTests,
-	#superclass : #DebuggerTests,
+	#name : #StepOverTest,
+	#superclass : #DebuggerTest,
 	#category : #'Debugger-Tests'
 }
 
 { #category : #helper }
-StepOverTests >> step1 [
+StepOverTest >> step1 [
 	self step2.
 ]
 
 { #category : #helper }
-StepOverTests >> step2 [
+StepOverTest >> step2 [
 	[ self step3 ] on: Notification do: [ ^2 ].
 ]
 
 { #category : #helper }
-StepOverTests >> step3 [
+StepOverTest >> step3 [
 	self step4.
 	^4
 ]
 
 { #category : #helper }
-StepOverTests >> step4 [
+StepOverTest >> step4 [
 	self notify: 'hey'
 ]
 
 { #category : #helper }
-StepOverTests >> stepA1 [
+StepOverTest >> stepA1 [
 	self stepA2.
 	^ 42.
 ]
 
 { #category : #helper }
-StepOverTests >> stepA2 [
+StepOverTest >> stepA2 [
 	^ True
 ]
 
 { #category : #helper }
-StepOverTests >> stepB1 [
+StepOverTest >> stepB1 [
 	self stepB2.
 	^42.
 ]
 
 { #category : #helper }
-StepOverTests >> stepB2 [
+StepOverTest >> stepB2 [
 	self stepB3
 ]
 
 { #category : #helper }
-StepOverTests >> stepB3 [
+StepOverTest >> stepB3 [
 	^ 42
 ]
 
 { #category : #tests }
-StepOverTests >> stepC1 [
+StepOverTest >> stepC1 [
 	self stepC2.
 ]
 
 { #category : #tests }
-StepOverTests >> stepC2 [
+StepOverTest >> stepC2 [
 	1+1.
 	^ 2
 ]
 
 { #category : #tests }
-StepOverTests >> testErrorSignalledDuringStepOverShouldBeCaught [
+StepOverTest >> testErrorSignalledDuringStepOverShouldBeCaught [
 	"An Error signaled while being steppedOver should not be unhandled"
 	self settingUpSessionAndProcessAndContextForBlock: [ Error signal: 'hey'. ].
 	self shouldnt: [[ session interruptedProcess isTerminated ] whileFalse: [ session stepOver. ]] raise: Error.
 ]
 
 { #category : #tests }
-StepOverTests >> testStepOver [
+StepOverTest >> testStepOver [
 	"Stepping over a message node brings the execution to the next node in the same method."
 	| node |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
@@ -90,7 +90,7 @@ StepOverTests >> testStepOver [
 ]
 
 { #category : #tests }
-StepOverTests >> testStepOverComputedReturn [
+StepOverTest >> testStepOverComputedReturn [
 	"When doing a stepOver on a return node whose return value is already computed, the current context returns and the session goes to the message node responsible for the context that just returned" 
 	"<-> indicates the node being executed
 	Initial situation:
@@ -124,21 +124,21 @@ StepOverTests >> testStepOverComputedReturn [
 ]
 
 { #category : #tests }
-StepOverTests >> testStepOverDoesNotUnderstand [
+StepOverTest >> testStepOverDoesNotUnderstand [
 	"Stepping over a message not understood should not raise an unhandled exception"
 	self settingUpSessionAndProcessAndContextForBlock: [ self messageNotUnderstood].
 	self shouldnt: [[ session interruptedProcess isTerminated ] whileFalse: [ session stepOver. ]] raise: Exception.
 ]
 
 { #category : #tests }
-StepOverTests >> testStepOverHalt [
+StepOverTest >> testStepOverHalt [
 	"Stepping over a self halt should not raise an unhandled exception"
 	self settingUpSessionAndProcessAndContextForBlock: [ self halt. ].
 	self shouldnt: [[ session interruptedProcess isTerminated ] whileFalse: [ session stepOver. ]] raise: Exception.
 ]
 
 { #category : #tests }
-StepOverTests >> testStepOverLastNodeOfContext [
+StepOverTest >> testStepOverLastNodeOfContext [
 	"Stepping over the last node of a method brings the execution to the method node of that method."
 	| node |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepB1 ].
@@ -160,7 +160,7 @@ StepOverTests >> testStepOverLastNodeOfContext [
 ]
 
 { #category : #tests }
-StepOverTests >> testStepOverNonErrorExceptionSignalWithHandlerDeeperInTheContextStack [
+StepOverTest >> testStepOverNonErrorExceptionSignalWithHandlerDeeperInTheContextStack [
 	"Context stack (from top to bottom) of the execution:
 	self step4 | signal a Notification exception
 	self step3 | just calls step 4. Point at which this test performs the stepOver
