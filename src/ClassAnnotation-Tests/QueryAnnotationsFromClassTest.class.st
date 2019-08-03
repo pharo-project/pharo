@@ -1,11 +1,11 @@
 Class {
-	#name : #QueryAnnotationsFromClassTests,
+	#name : #QueryAnnotationsFromClassTest,
 	#superclass : #ClassAnnotationTestCase,
 	#category : #'ClassAnnotation-Tests'
 }
 
 { #category : #tests }
-QueryAnnotationsFromClassTests >> testAllowDebugBrokenAnnotations [
+QueryAnnotationsFromClassTest >> testAllowDebugBrokenAnnotations [
 
 	| annotations ann |
 	annotations := ClassWithBrokenAnnotatingMethod classAnnotations.	
@@ -21,7 +21,7 @@ QueryAnnotationsFromClassTests >> testAllowDebugBrokenAnnotations [
 ]
 
 { #category : #tests }
-QueryAnnotationsFromClassTests >> testAllowDebugForbiddenBrokenAnnotations [
+QueryAnnotationsFromClassTest >> testAllowDebugForbiddenBrokenAnnotations [
 
 	| annotations ann |
 	annotations := ClassWithForbiddenAnnotationExample classAnnotations.	
@@ -36,7 +36,7 @@ QueryAnnotationsFromClassTests >> testAllowDebugForbiddenBrokenAnnotations [
 ]
 
 { #category : #tests }
-QueryAnnotationsFromClassTests >> testCanBeEnumerated [
+QueryAnnotationsFromClassTest >> testCanBeEnumerated [
 
 	| enumerated |
 	enumerated := OrderedCollection new.
@@ -46,7 +46,7 @@ QueryAnnotationsFromClassTests >> testCanBeEnumerated [
 ]
 
 { #category : #tests }
-QueryAnnotationsFromClassTests >> testReturnsInstancesFromAllAnnotatingMethods [
+QueryAnnotationsFromClassTest >> testReturnsInstancesFromAllAnnotatingMethods [
 
 	| annotations |
 	annotations := ClassWithThreeAnnotations classAnnotations.
@@ -57,7 +57,7 @@ QueryAnnotationsFromClassTests >> testReturnsInstancesFromAllAnnotatingMethods [
 ]
 
 { #category : #tests }
-QueryAnnotationsFromClassTests >> testWhenAnnotationFailsCheckForForbiddenProperty [
+QueryAnnotationsFromClassTest >> testWhenAnnotationFailsCheckForForbiddenProperty [
 
 	| annotations ann |
 	[ ClassAnnotationExampleWithFailedForbiddenCheck new isForbidden.
@@ -75,7 +75,7 @@ QueryAnnotationsFromClassTests >> testWhenAnnotationFailsCheckForForbiddenProper
 ]
 
 { #category : #tests }
-QueryAnnotationsFromClassTests >> testWhenClassHasNoAnnotations [
+QueryAnnotationsFromClassTest >> testWhenClassHasNoAnnotations [
 
 	| annotations |
 	annotations := ClassWithoutAnnotations classAnnotations.
@@ -84,7 +84,7 @@ QueryAnnotationsFromClassTests >> testWhenClassHasNoAnnotations [
 ]
 
 { #category : #tests }
-QueryAnnotationsFromClassTests >> testWhenDeclaringMethodIsBroken [
+QueryAnnotationsFromClassTest >> testWhenDeclaringMethodIsBroken [
 
 	| annotations ann |
 	annotations := ClassWithBrokenAnnotatingMethod classAnnotations.	
@@ -99,7 +99,7 @@ QueryAnnotationsFromClassTests >> testWhenDeclaringMethodIsBroken [
 ]
 
 { #category : #tests }
-QueryAnnotationsFromClassTests >> testWhenDeclaringMethodNotReturnAnnotation [
+QueryAnnotationsFromClassTest >> testWhenDeclaringMethodNotReturnAnnotation [
 
 	| annotations ann |
 	annotations := ClassWithBadAnnotatingMethod classAnnotations.	
@@ -113,7 +113,7 @@ QueryAnnotationsFromClassTests >> testWhenDeclaringMethodNotReturnAnnotation [
 ]
 
 { #category : #tests }
-QueryAnnotationsFromClassTests >> testWhenItOverridesSuperclassAnnotations [
+QueryAnnotationsFromClassTest >> testWhenItOverridesSuperclassAnnotations [
 
 	| annotations |
 	annotations := SubclassWithOverridenAnnotation classAnnotations.
@@ -124,7 +124,7 @@ QueryAnnotationsFromClassTests >> testWhenItOverridesSuperclassAnnotations [
 ]
 
 { #category : #tests }
-QueryAnnotationsFromClassTests >> testWhenSuperclassIsAnnotatedToo [
+QueryAnnotationsFromClassTest >> testWhenSuperclassIsAnnotatedToo [
 
 	| annotations |
 	annotations := SubclassWithOnlyInheritedAnnotation classAnnotations.

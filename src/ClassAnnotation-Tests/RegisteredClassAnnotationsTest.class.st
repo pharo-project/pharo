@@ -1,18 +1,18 @@
 Class {
-	#name : #RegisteredClassAnnotationsTests,
+	#name : #RegisteredClassAnnotationsTest,
 	#superclass : #ClassAnnotationTestCase,
 	#category : #'ClassAnnotation-Tests'
 }
 
 { #category : #running }
-RegisteredClassAnnotationsTests >> setUp [
+RegisteredClassAnnotationsTest >> setUp [
 	super setUp.
 	
 	ClassAnnotation resetCache
 ]
 
 { #category : #running }
-RegisteredClassAnnotationsTests >> tearDown [
+RegisteredClassAnnotationsTest >> tearDown [
 		
 	ClassAnnotation resetCache.
 	
@@ -20,7 +20,7 @@ RegisteredClassAnnotationsTests >> tearDown [
 ]
 
 { #category : #tests }
-RegisteredClassAnnotationsTests >> testAreCached [
+RegisteredClassAnnotationsTest >> testAreCached [
 
 	| annotations |
 	annotations := ClassAnnotationExample1 registeredInstances.
@@ -29,7 +29,7 @@ RegisteredClassAnnotationsTests >> testAreCached [
 ]
 
 { #category : #tests }
-RegisteredClassAnnotationsTests >> testAreDifferentForDifferentAnnotationClasses [
+RegisteredClassAnnotationsTest >> testAreDifferentForDifferentAnnotationClasses [
 
 	| annotations1 annotations2 |
 	annotations1 := ClassAnnotationExample1 registeredInstances.
@@ -39,7 +39,7 @@ RegisteredClassAnnotationsTests >> testAreDifferentForDifferentAnnotationClasses
 ]
 
 { #category : #tests }
-RegisteredClassAnnotationsTests >> testAreEmptyForUnusedAnnotation [
+RegisteredClassAnnotationsTest >> testAreEmptyForUnusedAnnotation [
 
 	| actual |
 	actual := ClassAnnotationUnusedExample registeredInstances.
@@ -48,7 +48,7 @@ RegisteredClassAnnotationsTests >> testAreEmptyForUnusedAnnotation [
 ]
 
 { #category : #tests }
-RegisteredClassAnnotationsTests >> testAreSortedByPriority [
+RegisteredClassAnnotationsTest >> testAreSortedByPriority [
 
 	| annotations expected |
 	annotations := ClassAnnotationExampleWithPriority registeredInstances.
@@ -60,7 +60,7 @@ RegisteredClassAnnotationsTests >> testAreSortedByPriority [
 ]
 
 { #category : #tests }
-RegisteredClassAnnotationsTests >> testCanBeEnumerated [
+RegisteredClassAnnotationsTest >> testCanBeEnumerated [
 
 	| enumerated |
 	enumerated := OrderedCollection new.
@@ -70,7 +70,7 @@ RegisteredClassAnnotationsTests >> testCanBeEnumerated [
 ]
 
 { #category : #tests }
-RegisteredClassAnnotationsTests >> testCanBeQueriedForConcreteClass [
+RegisteredClassAnnotationsTest >> testCanBeQueriedForConcreteClass [
 
 	| annotations |
 	annotations := ClassAnnotationExample1 registeredInstancesFor: ClassWithThreeAnnotations.
@@ -80,7 +80,7 @@ RegisteredClassAnnotationsTests >> testCanBeQueriedForConcreteClass [
 ]
 
 { #category : #tests }
-RegisteredClassAnnotationsTests >> testIncludeCopiesForEachSubclassOfOriginDeclaration [
+RegisteredClassAnnotationsTest >> testIncludeCopiesForEachSubclassOfOriginDeclaration [
 
 	| annotations |
 	annotations := ClassAnnotationExample3 registeredInstances.
@@ -89,7 +89,7 @@ RegisteredClassAnnotationsTests >> testIncludeCopiesForEachSubclassOfOriginDecla
 ]
 
 { #category : #tests }
-RegisteredClassAnnotationsTests >> testIncludeForbiddenClassesAsSpecialForbiddenAnnotations [
+RegisteredClassAnnotationsTest >> testIncludeForbiddenClassesAsSpecialForbiddenAnnotations [
 	| allForbidden forbidden actualAnnotation |
 	
 	allForbidden := ForbiddenClassAnnotation registeredInstancesFor: ClassWithForbiddenAnnotationExample.
@@ -99,7 +99,7 @@ RegisteredClassAnnotationsTests >> testIncludeForbiddenClassesAsSpecialForbidden
 ]
 
 { #category : #tests }
-RegisteredClassAnnotationsTests >> testIncludeInstancesFromAllAnnotatingMethodsOfAnyClassInSystem [
+RegisteredClassAnnotationsTest >> testIncludeInstancesFromAllAnnotatingMethodsOfAnyClassInSystem [
 
 	| annotations |
 	annotations := ClassAnnotationExample1 registeredInstances.
@@ -109,7 +109,7 @@ RegisteredClassAnnotationsTests >> testIncludeInstancesFromAllAnnotatingMethodsO
 ]
 
 { #category : #tests }
-RegisteredClassAnnotationsTests >> testNotIncludeForbiddenClassesAsBrokenAnnotations [
+RegisteredClassAnnotationsTest >> testNotIncludeForbiddenClassesAsBrokenAnnotations [
 	| broken |
 	
 	broken := BrokenClassAnnotation registeredInstancesFor: ClassWithForbiddenAnnotationExample.
@@ -119,7 +119,7 @@ RegisteredClassAnnotationsTests >> testNotIncludeForbiddenClassesAsBrokenAnnotat
 ]
 
 { #category : #tests }
-RegisteredClassAnnotationsTests >> testNotIncludeInstancesAnnotatingForbiddenClasses [
+RegisteredClassAnnotationsTest >> testNotIncludeInstancesAnnotatingForbiddenClasses [
 	"In that test the annotation define canAnnotateClass: with constant false answer.
 	So any annotating methods which define it should never register their instances"
 	| annotations |

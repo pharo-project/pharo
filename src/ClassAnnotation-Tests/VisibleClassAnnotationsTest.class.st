@@ -1,11 +1,11 @@
 Class {
-	#name : #VisibleClassAnnotationsTests,
+	#name : #VisibleClassAnnotationsTest,
 	#superclass : #ClassAnnotationTestCase,
 	#category : #'ClassAnnotation-Tests'
 }
 
 { #category : #tests }
-VisibleClassAnnotationsTests >> testCanBeEnumeratedForGivenClassAndUser [
+VisibleClassAnnotationsTest >> testCanBeEnumeratedForGivenClassAndUser [
 
 	| annotationUser actual expected |
 	annotationUser := AnnotationUserExample new.
@@ -19,7 +19,7 @@ VisibleClassAnnotationsTests >> testCanBeEnumeratedForGivenClassAndUser [
 ]
 
 { #category : #tests }
-VisibleClassAnnotationsTests >> testCanBeEnumeratedForGivenUser [
+VisibleClassAnnotationsTest >> testCanBeEnumeratedForGivenUser [
 
 	| annotationUser actual expected |
 	annotationUser := AnnotationUserExample new.
@@ -33,7 +33,7 @@ VisibleClassAnnotationsTests >> testCanBeEnumeratedForGivenUser [
 ]
 
 { #category : #tests }
-VisibleClassAnnotationsTests >> testIncludeInstancesDeclaredForSuperclassOfGivenUser [
+VisibleClassAnnotationsTest >> testIncludeInstancesDeclaredForSuperclassOfGivenUser [
 
 	| annotations annotationUser declaredContext |
 	annotationUser := AnnotationUserExample new.
@@ -45,7 +45,7 @@ VisibleClassAnnotationsTests >> testIncludeInstancesDeclaredForSuperclassOfGiven
 ]
 
 { #category : #tests }
-VisibleClassAnnotationsTests >> testIncludeOnlyInstancesCreatedForGivenUser [
+VisibleClassAnnotationsTest >> testIncludeOnlyInstancesCreatedForGivenUser [
 
 	| annotations annotationUser declaredContexts |
 	annotationUser := AnnotationUserExample new.
@@ -57,7 +57,7 @@ VisibleClassAnnotationsTests >> testIncludeOnlyInstancesCreatedForGivenUser [
 ]
 
 { #category : #tests }
-VisibleClassAnnotationsTests >> testNotIncludeInstancesWithoutContext [
+VisibleClassAnnotationsTest >> testNotIncludeInstancesWithoutContext [
 
 	| annotations annotationUser |
 	annotationUser := AnnotationUserExample new.
@@ -67,7 +67,7 @@ VisibleClassAnnotationsTests >> testNotIncludeInstancesWithoutContext [
 ]
 
 { #category : #tests }
-VisibleClassAnnotationsTests >> testWhenThereIsNoOne [
+VisibleClassAnnotationsTest >> testWhenThereIsNoOne [
 
 	| annotations annotationUser |
 	annotationUser := Object new. "context can be anything"

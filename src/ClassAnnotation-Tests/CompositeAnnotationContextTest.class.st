@@ -1,11 +1,11 @@
 Class {
-	#name : #CompositeAnnotationContextTests,
+	#name : #CompositeAnnotationContextTest,
 	#superclass : #TestCase,
 	#category : #'ClassAnnotation-Tests'
 }
 
 { #category : #tests }
-CompositeAnnotationContextTests >> testComparison [
+CompositeAnnotationContextTest >> testComparison [
 	
 	self 
 		assert: Object asAnnotationContext, Array asAnnotationContext 
@@ -19,7 +19,7 @@ CompositeAnnotationContextTests >> testComparison [
 ]
 
 { #category : #tests }
-CompositeAnnotationContextTests >> testCreationByComma [
+CompositeAnnotationContextTest >> testCreationByComma [
 	
 	| context1 context2 context |
 	context1 := Object asAnnotationContext.
@@ -32,7 +32,7 @@ CompositeAnnotationContextTests >> testCreationByComma [
 ]
 
 { #category : #tests }
-CompositeAnnotationContextTests >> testCreationByCommaWithCompatibleArgument [
+CompositeAnnotationContextTest >> testCreationByCommaWithCompatibleArgument [
 	
 	| context1 context |
 	context1 := Object asAnnotationContext.
@@ -44,7 +44,7 @@ CompositeAnnotationContextTests >> testCreationByCommaWithCompatibleArgument [
 ]
 
 { #category : #tests }
-CompositeAnnotationContextTests >> testCreationByCommaWithMultipleCompatipleContexts [
+CompositeAnnotationContextTest >> testCreationByCommaWithMultipleCompatipleContexts [
 	
 	| context1 context |
 	context1 := Object asAnnotationContext.
@@ -58,7 +58,7 @@ CompositeAnnotationContextTests >> testCreationByCommaWithMultipleCompatipleCont
 ]
 
 { #category : #tests }
-CompositeAnnotationContextTests >> testCreationByCommaWithMultipleContexts [
+CompositeAnnotationContextTest >> testCreationByCommaWithMultipleContexts [
 	
 	| context1 context2 context context3 |
 	context1 := Object asAnnotationContext.
