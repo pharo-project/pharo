@@ -2,13 +2,13 @@
 Tests for correct CRC handling in ZipWriteStream
 "
 Class {
-	#name : #ZipCrcTests,
+	#name : #ZipCrcTest,
 	#superclass : #TestCase,
 	#category : #'Compression-Tests-Streams'
 }
 
 { #category : #tests }
-ZipCrcTests >> testInvalidGZipCrc [
+ZipCrcTest >> testInvalidGZipCrc [
 	"See that a wrong CRC raises an appropriate error"
 	| reader writer bytes crcByte |
 	writer := GZipWriteStream on: String new.
@@ -31,7 +31,7 @@ ZipCrcTests >> testInvalidGZipCrc [
 ]
 
 { #category : #tests }
-ZipCrcTests >> testInvalidZLibCrc [
+ZipCrcTest >> testInvalidZLibCrc [
 	"See that a wrong CRC raises an appropriate error"
 	| reader writer bytes crcByte |
 	writer := ZLibWriteStream on: String new.
@@ -54,7 +54,7 @@ ZipCrcTests >> testInvalidZLibCrc [
 ]
 
 { #category : #tests }
-ZipCrcTests >> testInvalidZipCrc [
+ZipCrcTest >> testInvalidZipCrc [
 	"See that a wrong CRC raises an appropriate error"
 	| reader writer bytes |
 	writer := ZipWriteStream on: String new.
@@ -78,7 +78,7 @@ ZipCrcTests >> testInvalidZipCrc [
 ]
 
 { #category : #tests }
-ZipCrcTests >> testMissingGZipCrc [
+ZipCrcTest >> testMissingGZipCrc [
 	"See that the lack of a CRC raises an appropriate error"
 	| reader writer bytes |
 	writer := GZipWriteStream on: String new.
@@ -100,7 +100,7 @@ ZipCrcTests >> testMissingGZipCrc [
 ]
 
 { #category : #tests }
-ZipCrcTests >> testMissingZLibCrc [
+ZipCrcTest >> testMissingZLibCrc [
 	"See that the lack of a CRC raises an appropriate error"
 	| reader writer bytes |
 	writer := ZLibWriteStream on: String new.
@@ -122,7 +122,7 @@ ZipCrcTests >> testMissingZLibCrc [
 ]
 
 { #category : #tests }
-ZipCrcTests >> testMissingZipCrc [
+ZipCrcTest >> testMissingZipCrc [
 	"See that the lack of a CRC does not raise an error"
 
 	| reader writer bytes readBytes |
@@ -140,7 +140,7 @@ ZipCrcTests >> testMissingZipCrc [
 ]
 
 { #category : #tests }
-ZipCrcTests >> testValidGZipCrc [
+ZipCrcTest >> testValidGZipCrc [
 	| reader writer bytes |
 	writer := GZipWriteStream on: String new.
 	writer nextPutAll: 'Hello World'.
@@ -152,7 +152,7 @@ ZipCrcTests >> testValidGZipCrc [
 ]
 
 { #category : #tests }
-ZipCrcTests >> testValidZLibCrc [
+ZipCrcTest >> testValidZLibCrc [
 	| reader writer bytes |
 	writer := ZLibWriteStream on: String new.
 	writer nextPutAll: 'Hello World'.
@@ -168,7 +168,7 @@ ZipCrcTests >> testValidZLibCrc [
 ]
 
 { #category : #tests }
-ZipCrcTests >> testValidZipCrc [
+ZipCrcTest >> testValidZipCrc [
 	"See that a correct CRC does not raise an error and that we can read what we wrote."
 
 	| reader writer bytes readBytes |

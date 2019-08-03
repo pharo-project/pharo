@@ -2,13 +2,13 @@
 Unit tests for ZipWriteStream
 "
 Class {
-	#name : #ZipWriteStreamTests,
+	#name : #ZipWriteStreamTest,
 	#superclass : #TestCase,
 	#category : #'Compression-Tests-Streams'
 }
 
 { #category : #tests }
-ZipWriteStreamTests >> testEmptyStrings [
+ZipWriteStreamTest >> testEmptyStrings [
 	| aStream zipStream |
 	aStream := ByteArray new writeStream binary.
 	zipStream := ZipWriteStream on: aStream.
@@ -25,7 +25,7 @@ ZipWriteStreamTests >> testEmptyStrings [
 ]
 
 { #category : #tests }
-ZipWriteStreamTests >> testZipped [
+ZipWriteStreamTest >> testZipped [
 	| compressed |
 	
 	compressed := 'hello' zipped.
