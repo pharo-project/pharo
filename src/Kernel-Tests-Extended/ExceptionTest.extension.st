@@ -1,11 +1,11 @@
-Extension { #name : #ExceptionTests }
+Extension { #name : #ExceptionTest }
 
 { #category : #'*Kernel-Tests-Extended' }
-ExceptionTests >> testSimpleRetry [
+ExceptionTest >> testSimpleRetry [
 	self assertSuccess: (ExceptionTester new runTest: #simpleRetryTest ) 
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
-ExceptionTests >> testSimpleRetryUsing [
+ExceptionTest >> testSimpleRetryUsing [
 	self assertSuccess: (ExceptionTester new runTest: #simpleRetryUsingTest ) 
 ]

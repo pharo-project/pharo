@@ -20,33 +20,33 @@ Here is how these tests are performed:
 
 "
 Class {
-	#name : #ExceptionTests,
+	#name : #ExceptionTest,
 	#superclass : #TestCase,
 	#category : #'Kernel-Tests-Exception'
 }
 
 { #category : #private }
-ExceptionTests >> assertSuccess: anExceptionTester [
+ExceptionTest >> assertSuccess: anExceptionTester [
 	self should: [ ( anExceptionTester suiteLog first) endsWith:  'succeeded'].
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testDoubleOuterPass [
+ExceptionTest >> testDoubleOuterPass [
 	self assertSuccess: (ExceptionTester new runTest: #doubleOuterPassTest ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testDoublePassOuter [
+ExceptionTest >> testDoublePassOuter [
 	self assertSuccess: (ExceptionTester new runTest: #doublePassOuterTest ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testDoubleResume [
+ExceptionTest >> testDoubleResume [
 	self assertSuccess: (ExceptionTester new runTest: #doubleResumeTest ) 
 ]
 
 { #category : #'tests - handling' }
-ExceptionTests >> testHandlerContext [
+ExceptionTest >> testHandlerContext [
 	"A test ensuring that when evaluating the action block the exception environment is set to the handler context."
 
 	| result |
@@ -63,7 +63,7 @@ ExceptionTests >> testHandlerContext [
 ]
 
 { #category : #'tests - handling' }
-ExceptionTests >> testHandlerFromAction [
+ExceptionTest >> testHandlerFromAction [
 	"A test ensuring that nested exceptions work as expected."
 
 	| result |
@@ -80,7 +80,7 @@ ExceptionTests >> testHandlerFromAction [
 ]
 
 { #category : #'tests - handling' }
-ExceptionTests >> testHandlingExceptionSetWithExclusion [
+ExceptionTest >> testHandlingExceptionSetWithExclusion [
 
 	| wasHandled  |
 
@@ -99,7 +99,7 @@ ExceptionTests >> testHandlingExceptionSetWithExclusion [
 ]
 
 { #category : #'tests - handling' }
-ExceptionTests >> testHandlingWhenThereIsSomeExclusionButDontApplies [
+ExceptionTest >> testHandlingWhenThereIsSomeExclusionButDontApplies [
 
 	| wasHandled result |
 
@@ -119,7 +119,7 @@ ExceptionTests >> testHandlingWhenThereIsSomeExclusionButDontApplies [
 ]
 
 { #category : #'tests - handling' }
-ExceptionTests >> testHandlingWithExclusion [
+ExceptionTest >> testHandlingWithExclusion [
 
 	| wasHandled  |
 
@@ -138,7 +138,7 @@ ExceptionTests >> testHandlingWithExclusion [
 ]
 
 { #category : #'tests - handling' }
-ExceptionTests >> testHandlingWithSeveralExclusions [
+ExceptionTest >> testHandlingWithSeveralExclusions [
 	| wasHandled |
 	wasHandled := false.
 	self
@@ -163,7 +163,7 @@ ExceptionTests >> testHandlingWithSeveralExclusions [
 ]
 
 { #category : #'tests - handling' }
-ExceptionTests >> testHandlingWithSeveralExclusionsAndExceptionSetsHandling [
+ExceptionTest >> testHandlingWithSeveralExclusionsAndExceptionSetsHandling [
 
 	| wasHandled result |
 
@@ -197,17 +197,17 @@ ExceptionTests >> testHandlingWithSeveralExclusionsAndExceptionSetsHandling [
 ]
 
 { #category : #tests }
-ExceptionTests >> testNoTimeout [
+ExceptionTest >> testNoTimeout [
 	self assertSuccess: (ExceptionTester new runTest: #simpleNoTimeoutTest ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testNonResumableFallOffTheEndHandler [
+ExceptionTest >> testNonResumableFallOffTheEndHandler [
 	self assertSuccess: (ExceptionTester new runTest: #nonResumableFallOffTheEndHandler ) 
 ]
 
 { #category : #'tests - outer' }
-ExceptionTests >> testNonResumableOuter [
+ExceptionTest >> testNonResumableOuter [
 
 	self should: [
 		[Error signal. 4] 
@@ -218,7 +218,7 @@ ExceptionTests >> testNonResumableOuter [
 ]
 
 { #category : #'tests - outer' }
-ExceptionTests >> testNonResumablePass [
+ExceptionTest >> testNonResumablePass [
 
 	self should: [
 		[Error signal. 4] 
@@ -229,12 +229,12 @@ ExceptionTests >> testNonResumablePass [
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testResumableFallOffTheEndHandler [
+ExceptionTest >> testResumableFallOffTheEndHandler [
 	self assertSuccess: (ExceptionTester new runTest: #resumableFallOffTheEndHandler ) 
 ]
 
 { #category : #'tests - outer' }
-ExceptionTests >> testResumableOuter [
+ExceptionTest >> testResumableOuter [
 
 	| result |
 	result := [Notification signal. 4] 
@@ -245,7 +245,7 @@ ExceptionTests >> testResumableOuter [
 ]
 
 { #category : #'tests - outer' }
-ExceptionTests >> testResumablePass [
+ExceptionTest >> testResumablePass [
 
 	| result |
 	result := [Notification signal. 4] 
@@ -256,12 +256,12 @@ ExceptionTests >> testResumablePass [
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testSignalFromHandlerActionTest [
+ExceptionTest >> testSignalFromHandlerActionTest [
 	self assertSuccess: (ExceptionTester new runTest: #signalFromHandlerActionTest ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testSignalWithTag [
+ExceptionTest >> testSignalWithTag [
 	| aTag |
 	aTag := Object new.
 	
@@ -275,56 +275,56 @@ ExceptionTests >> testSignalWithTag [
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testSimpleEnsure [
+ExceptionTest >> testSimpleEnsure [
 	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTest ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testSimpleEnsureTestWithError [
+ExceptionTest >> testSimpleEnsureTestWithError [
 	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTestWithError ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testSimpleEnsureTestWithNotification [
+ExceptionTest >> testSimpleEnsureTestWithNotification [
 	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTestWithNotification ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testSimpleEnsureTestWithUparrow [
+ExceptionTest >> testSimpleEnsureTestWithUparrow [
 	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTestWithUparrow ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testSimpleIsNested [
+ExceptionTest >> testSimpleIsNested [
 	self assertSuccess: (ExceptionTester new runTest: #simpleIsNestedTest ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testSimpleOuter [
+ExceptionTest >> testSimpleOuter [
 	self assertSuccess: (ExceptionTester new runTest: #simpleOuterTest ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testSimplePass [
+ExceptionTest >> testSimplePass [
 	self assertSuccess: (ExceptionTester new runTest: #simplePassTest ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testSimpleResignalAs [
+ExceptionTest >> testSimpleResignalAs [
 	self assertSuccess: (ExceptionTester new runTest: #simpleResignalAsTest ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testSimpleResume [
+ExceptionTest >> testSimpleResume [
 	self assertSuccess: (ExceptionTester new runTest: #simpleResumeTest ) 
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTests >> testSimpleReturn [
+ExceptionTest >> testSimpleReturn [
 	self assertSuccess: (ExceptionTester new runTest: #simpleReturnTest ) 
 ]
 
 { #category : #tests }
-ExceptionTests >> testTimeoutWithZeroDuration [
+ExceptionTest >> testTimeoutWithZeroDuration [
 	self assertSuccess: (ExceptionTester new runTest: #simpleTimeoutWithZeroDurationTest ) 
 ]

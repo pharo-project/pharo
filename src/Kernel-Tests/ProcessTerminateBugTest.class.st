@@ -2,13 +2,13 @@
 SUnit tests for Process termination
 "
 Class {
-	#name : #ProcessTerminateBug,
+	#name : #ProcessTerminateBugTest,
 	#superclass : #TestCase,
 	#category : #'Kernel-Tests-Processes'
 }
 
 { #category : #tests }
-ProcessTerminateBug >> testSchedulerTermination [	
+ProcessTerminateBugTest >> testSchedulerTermination [	
 	| process sema gotHere sema2 |
 	gotHere := false.
 	sema := Semaphore new.
@@ -28,7 +28,7 @@ horribly screw up"
 ]
 
 { #category : #tests }
-ProcessTerminateBug >> testTerminationDuringUnwind [
+ProcessTerminateBugTest >> testTerminationDuringUnwind [
 	"An illustration of the issue of process termination during unwind.
 	This uses a well-behaved unwind block that we should allow to complete
 	if at all possible."		
@@ -47,7 +47,7 @@ ProcessTerminateBug >> testTerminationDuringUnwind [
 ]
 
 { #category : #tests }
-ProcessTerminateBug >> testUnwindFromActiveProcess [		
+ProcessTerminateBugTest >> testUnwindFromActiveProcess [		
 	| sema process |
 	sema := Semaphore forMutualExclusion.
 	self assert: (sema isSignaled).
@@ -58,7 +58,7 @@ ProcessTerminateBug >> testUnwindFromActiveProcess [
 ]
 
 { #category : #tests }
-ProcessTerminateBug >> testUnwindFromForeignProcess [
+ProcessTerminateBugTest >> testUnwindFromForeignProcess [
 
 	| sema process |
 	sema := Semaphore forMutualExclusion.
