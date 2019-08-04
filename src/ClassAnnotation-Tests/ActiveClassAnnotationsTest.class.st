@@ -1,11 +1,11 @@
 Class {
-	#name : #ActiveClassAnnotationsTests,
+	#name : #ActiveClassAnnotationsTest,
 	#superclass : #ClassAnnotationTestCase,
 	#category : #'ClassAnnotation-Tests'
 }
 
 { #category : #tests }
-ActiveClassAnnotationsTests >> testCanBeEnumeratedForGivenClassAndUser [
+ActiveClassAnnotationsTest >> testCanBeEnumeratedForGivenClassAndUser [
 
 	| annotationUser actual expected |
 	annotationUser := AnnotationUserExample new.
@@ -19,7 +19,7 @@ ActiveClassAnnotationsTests >> testCanBeEnumeratedForGivenClassAndUser [
 ]
 
 { #category : #tests }
-ActiveClassAnnotationsTests >> testCanBeEnumeratedForGivenUser [
+ActiveClassAnnotationsTest >> testCanBeEnumeratedForGivenUser [
 
 	| annotationUser actual expected |
 	annotationUser := AnnotationUserExample new.
@@ -33,7 +33,7 @@ ActiveClassAnnotationsTests >> testCanBeEnumeratedForGivenUser [
 ]
 
 { #category : #tests }
-ActiveClassAnnotationsTests >> testIncludeOnlyInstancesWhichAreActiveForGivenUser [
+ActiveClassAnnotationsTest >> testIncludeOnlyInstancesWhichAreActiveForGivenUser [
 
 	| actual annotationUser expected |
 	annotationUser := AnnotationUserExample new.
@@ -46,7 +46,7 @@ ActiveClassAnnotationsTests >> testIncludeOnlyInstancesWhichAreActiveForGivenUse
 ]
 
 { #category : #tests }
-ActiveClassAnnotationsTests >> testNotIncludeInstancesWhichAreNotActiveForGivenUser [
+ActiveClassAnnotationsTest >> testNotIncludeInstancesWhichAreNotActiveForGivenUser [
 
 	| actual annotationUser |
 	annotationUser := AnnotationUserExample new.
@@ -58,7 +58,7 @@ ActiveClassAnnotationsTests >> testNotIncludeInstancesWhichAreNotActiveForGivenU
 ]
 
 { #category : #tests }
-ActiveClassAnnotationsTests >> testNotIncludeInstancesWithoutContext [
+ActiveClassAnnotationsTest >> testNotIncludeInstancesWithoutContext [
 
 	| annotations annotationUser |
 	annotationUser := AnnotationUserExample new.

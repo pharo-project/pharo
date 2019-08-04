@@ -1,11 +1,11 @@
 Class {
-	#name : #SimpleAnnotationContextTests,
+	#name : #SimpleAnnotationContextTest,
 	#superclass : #TestCase,
 	#category : #'ClassAnnotation-Tests'
 }
 
 { #category : #tests }
-SimpleAnnotationContextTests >> testComparison [
+SimpleAnnotationContextTest >> testComparison [
 	
 	self assert: Object asAnnotationContext equals: Object asAnnotationContext. 
 	self assert: Object asAnnotationContext hash equals: Object asAnnotationContext hash.
