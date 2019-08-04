@@ -1,18 +1,18 @@
 Class {
-	#name : #OCIfNotNilTests,
+	#name : #OCIfNotNilTest,
 	#superclass : #TestCase,
 	#category : #'OpalCompiler-Tests-FromOld'
 }
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNilIfNotNil0Arg [
+OCIfNotNilTest >> testIfNilIfNotNil0Arg [
 
 	self assert: (5 ifNil: [#foo] ifNotNil: [#bar]) = #bar.
 	self assert: (nil ifNil: [#foo] ifNotNil: [#bar]) = #foo
 ]
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNilIfNotNil0ArgAsVar [
+OCIfNotNilTest >> testIfNilIfNotNil0ArgAsVar [
 
 	| block1 block2 |
 	block1 := [#foo].
@@ -22,14 +22,14 @@ OCIfNotNilTests >> testIfNilIfNotNil0ArgAsVar [
 ]
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNilIfNotNil1Arg [
+OCIfNotNilTest >> testIfNilIfNotNil1Arg [
 
 	self assert: (5 ifNil: [#foo] ifNotNil: [:a | a printString]) = '5'.
 	self assert: (nil ifNil: [#foo] ifNotNil: [:a | a printString]) = #foo
 ]
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNilIfNotNil1ArgAsVar [
+OCIfNotNilTest >> testIfNilIfNotNil1ArgAsVar [
 
 	| block1 block2 |
 	block1 := [#foo].
@@ -39,13 +39,13 @@ OCIfNotNilTests >> testIfNilIfNotNil1ArgAsVar [
 ]
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNotNil0Arg [
+OCIfNotNilTest >> testIfNotNil0Arg [
 	self assert: (5 ifNotNil: [ #foo ]) = #foo.
 	self assert: (nil ifNotNil: [ #foo ]) isNil
 ]
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNotNil0ArgAsVar [
+OCIfNotNilTest >> testIfNotNil0ArgAsVar [
 	| block |
 	block := [ #foo ].
 	self assert: (5 ifNotNil: block) = #foo.
@@ -53,13 +53,13 @@ OCIfNotNilTests >> testIfNotNil0ArgAsVar [
 ]
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNotNil1Arg [
+OCIfNotNilTest >> testIfNotNil1Arg [
 	self assert: (5 ifNotNil: [ :a | a printString ]) = '5'.
 	self assert: (nil ifNotNil: [ :a | a printString ]) isNil
 ]
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNotNil1ArgAsVar [
+OCIfNotNilTest >> testIfNotNil1ArgAsVar [
 	| block |
 	block := [ :a | a printString ].
 	self assert: (5 ifNotNil: block) = '5'.
@@ -67,20 +67,20 @@ OCIfNotNilTests >> testIfNotNil1ArgAsVar [
 ]
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNotNil1ArgWithStatement [
+OCIfNotNilTest >> testIfNotNil1ArgWithStatement [
 	self assert: (5 ifNotNil: [ :a | 3. a ]) = 5.
 	self assert: (5 ifNotNil: [ :a | a. 3 ]) = 3.
 ]
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNotNilIfNil0Arg [
+OCIfNotNilTest >> testIfNotNilIfNil0Arg [
 
 	self assert: (5 ifNotNil: [#foo] ifNil: [#bar]) = #foo.
 	self assert: (nil ifNotNil: [#foo] ifNil: [#bar]) = #bar
 ]
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNotNilIfNil0ArgAsVar [
+OCIfNotNilTest >> testIfNotNilIfNil0ArgAsVar [
 
 	| block1 block2 |
 	block1 := [#foo].
@@ -90,14 +90,14 @@ OCIfNotNilTests >> testIfNotNilIfNil0ArgAsVar [
 ]
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNotNilIfNil1Arg [
+OCIfNotNilTest >> testIfNotNilIfNil1Arg [
 
 	self assert: (5 ifNotNil: [:a | a printString] ifNil: [#foo]) = '5'.
 	self assert: (nil ifNotNil: [:a | a printString] ifNil: [#foo]) = #foo
 ]
 
 { #category : #tests }
-OCIfNotNilTests >> testIfNotNilIfNil1ArgAsVar [
+OCIfNotNilTest >> testIfNotNilIfNil1ArgAsVar [
 
 	| block1 block2 |
 	block1 := [#foo].

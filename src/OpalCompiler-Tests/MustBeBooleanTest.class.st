@@ -1,11 +1,11 @@
 Class {
-	#name : #MustBeBooleanTests,
+	#name : #MustBeBooleanTest,
 	#superclass : #TestCase,
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
 { #category : #tests }
-MustBeBooleanTests >> testAnd [
+MustBeBooleanTest >> testAnd [
 	| myBooleanObject |
 	
 	myBooleanObject := MyBooleanObject new.
@@ -13,7 +13,7 @@ MustBeBooleanTests >> testAnd [
 ]
 
 { #category : #tests }
-MustBeBooleanTests >> testDNU [
+MustBeBooleanTest >> testDNU [
 	| code |
 	code := [ (true ifFalse:[]) ifTrue:[] ].
 	self should: code raise: MessageNotUnderstood .
@@ -22,7 +22,7 @@ MustBeBooleanTests >> testDNU [
 ]
 
 { #category : #tests }
-MustBeBooleanTests >> testIfTrueEffect [
+MustBeBooleanTest >> testIfTrueEffect [
 	| temp fakeBool |
 	
 	fakeBool := MyBooleanObject new.
@@ -35,7 +35,7 @@ MustBeBooleanTests >> testIfTrueEffect [
 ]
 
 { #category : #tests }
-MustBeBooleanTests >> testIfTrueValue [
+MustBeBooleanTest >> testIfTrueValue [
 	| myBooleanObject |
 	
 	self assert: (MyBooleanObject new ifTrue: [ 1 + 2 ]) equals: '3 sent from my boolean object'.
@@ -44,7 +44,7 @@ MustBeBooleanTests >> testIfTrueValue [
 ]
 
 { #category : #tests }
-MustBeBooleanTests >> testIfTrueWithClosureAfterJump [
+MustBeBooleanTest >> testIfTrueWithClosureAfterJump [
 	"A closure is a multibyte instruction, that should not be
 	1) confused for an ending jump in ifTrue/ifFalse structure
 	2) set as jumptarget, or have PC manually set to, none but its first byte."
@@ -57,7 +57,7 @@ MustBeBooleanTests >> testIfTrueWithClosureAfterJump [
 ]
 
 { #category : #tests }
-MustBeBooleanTests >> testOr [
+MustBeBooleanTest >> testOr [
 	| myBooleanObject |
 	
 	myBooleanObject := MyBooleanObject new.
@@ -65,7 +65,7 @@ MustBeBooleanTests >> testOr [
 ]
 
 { #category : #tests }
-MustBeBooleanTests >> testSemanticAnalysisCleaned [
+MustBeBooleanTest >> testSemanticAnalysisCleaned [
 	"this used to fail as we did not clean semantic analysis data before recompiling"
 	
 	self should: [self shouldnt: [1 ifTrue:  [[:dir :path|
@@ -73,7 +73,7 @@ MustBeBooleanTests >> testSemanticAnalysisCleaned [
 ]
 
 { #category : #tests }
-MustBeBooleanTests >> testWhile [
+MustBeBooleanTest >> testWhile [
 	| myFlag |
 	self should: [[ nil ] whileFalse: [myFlag := true ]] raise: MessageNotUnderstood.
 ]
