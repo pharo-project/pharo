@@ -1,21 +1,21 @@
 Class {
-	#name : #IsContextPostMortemTests,
-	#superclass : #DebuggerTests,
+	#name : #IsContextPostMortemTest,
+	#superclass : #DebuggerTest,
 	#category : #'Debugger-Tests'
 }
 
 { #category : #helper }
-IsContextPostMortemTests >> stepA1 [
+IsContextPostMortemTest >> stepA1 [
 	^ self stepA2
 ]
 
 { #category : #helper }
-IsContextPostMortemTests >> stepA2 [
+IsContextPostMortemTest >> stepA2 [
 	^ 42
 ]
 
 { #category : #tests }
-IsContextPostMortemTests >> testIsContextPostMortem [
+IsContextPostMortemTest >> testIsContextPostMortem [
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
 	session stepInto.
 	"The top context of the context chain is not post mortem"

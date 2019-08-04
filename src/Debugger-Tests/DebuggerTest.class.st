@@ -3,7 +3,7 @@ Superclass for classes containing debugger tests.
 Provides the ability to send #debuggerOnSetUpSession to a debugger test class to obtain a debugger opened on the debug session set up by that class for its tests.
 "
 Class {
-	#name : #DebuggerTests,
+	#name : #DebuggerTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'context',
@@ -14,18 +14,18 @@ Class {
 }
 
 { #category : #utilities }
-DebuggerTests >> inspectCurrentNode: aDebugSession [
+DebuggerTest >> inspectCurrentNode: aDebugSession [
 	context := aDebugSession interruptedContext.
 	(context method sourceNodeForPC: context pc) inspect.
 ]
 
 { #category : #accessing }
-DebuggerTests >> session [
+DebuggerTest >> session [
 	^ session
 ]
 
 { #category : #running }
-DebuggerTests >> setUp [
+DebuggerTest >> setUp [
 	super setUp.
 	context := nil.
 	process := nil.
@@ -33,7 +33,7 @@ DebuggerTests >> setUp [
 ]
 
 { #category : #utilities }
-DebuggerTests >> settingUpSessionAndProcessAndContextForBlock: aBlock [
+DebuggerTest >> settingUpSessionAndProcessAndContextForBlock: aBlock [
 	context := aBlock asContext.
 	process := Process 
 	    forContext: context 

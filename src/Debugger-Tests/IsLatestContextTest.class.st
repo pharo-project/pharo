@@ -2,22 +2,22 @@
 Testing the DebugSession>isLatestContext: method
 "
 Class {
-	#name : #IsLatestContextTests,
-	#superclass : #DebuggerTests,
+	#name : #IsLatestContextTest,
+	#superclass : #DebuggerTest,
 	#category : #'Debugger-Tests'
 }
 
 { #category : #helper }
-IsLatestContextTests >> stepA1 [
+IsLatestContextTest >> stepA1 [
 	self stepA2
 ]
 
 { #category : #helper }
-IsLatestContextTests >> stepA2 [
+IsLatestContextTest >> stepA2 [
 ]
 
 { #category : #tests }
-IsLatestContextTests >> testIsLatestContextTest [
+IsLatestContextTest >> testIsLatestContextTest [
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
 	"Checking that a Context that has nothing to do with the debugged execution is not LatestContext"
 	self assert: (session isLatestContext: [] asContext) not.
