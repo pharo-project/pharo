@@ -1,11 +1,11 @@
 Class {
-	#name : #SpAthensStaticPresenterTests,
-	#superclass : #SpAbstractWidgetAdapterTestCase,
-	#category : #'Spec2-Backend-Tests'
+	#name : #AthensStaticPresenterTest,
+	#superclass : #AbstractWidgetAdapterTestCase,
+	#category : #'Spec-BackendTests'
 }
 
 { #category : #accessing }
-SpAthensStaticPresenterTests >> circle: aSurface [
+AthensStaticPresenterTest >> circle: aSurface [
 	^ aSurface
 		createPath: [ :builder | 
 			builder
@@ -18,18 +18,18 @@ SpAthensStaticPresenterTests >> circle: aSurface [
 ]
 
 { #category : #accessing }
-SpAthensStaticPresenterTests >> classToTest [
-	^ SpAthensStaticPresenter
+AthensStaticPresenterTest >> classToTest [
+	^ AthensStaticPresenter
 ]
 
 { #category : #accessing }
-SpAthensStaticPresenterTests >> initializeTestedInstance [
+AthensStaticPresenterTest >> initializeTestedInstance [
 	presenter drawBlock: [ "nothing to do" ].
 	presenter surfaceExtent: 800@600
 ]
 
 { #category : #accessing }
-SpAthensStaticPresenterTests >> testPresentersBlockReceivesAthensCanvas [
+AthensStaticPresenterTest >> testPresentersBlockReceivesAthensCanvas [
 	| receivedCanvas |
 	self presenter drawBlock: [ :canvas | receivedCanvas := canvas ].
 	self adapter redraw.
@@ -41,7 +41,7 @@ SpAthensStaticPresenterTests >> testPresentersBlockReceivesAthensCanvas [
 ]
 
 { #category : #accessing }
-SpAthensStaticPresenterTests >> testSmokeCreates [
+AthensStaticPresenterTest >> testSmokeCreates [
 	self presenter .
 	
 ]
