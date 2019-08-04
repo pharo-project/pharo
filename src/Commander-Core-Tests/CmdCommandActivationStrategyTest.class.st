@@ -1,11 +1,11 @@
 Class {
-	#name : #CmdCommandActivationStrategyTests,
+	#name : #CmdCommandActivationStrategyTest,
 	#superclass : #TestCase,
 	#category : #'Commander-Core-Tests'
 }
 
 { #category : #tests }
-CmdCommandActivationStrategyTests >> testCreationNewActivatorForGivenContext [
+CmdCommandActivationStrategyTest >> testCreationNewActivatorForGivenContext [
 	| activation context actual |
 	activation := CmdCommandActivationExample withAnnotatedClass: CmdCommandExampleInheritedFromAbstract.
 	context := CmdToolContextStub new.
@@ -20,7 +20,7 @@ CmdCommandActivationStrategyTests >> testCreationNewActivatorForGivenContext [
 ]
 
 { #category : #tests }
-CmdCommandActivationStrategyTests >> testIteratingInstancesShouldSkipAbstractCommands [
+CmdCommandActivationStrategyTest >> testIteratingInstancesShouldSkipAbstractCommands [
 
 	| activators context |
 	context := CmdToolContextStub1 new.

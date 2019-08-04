@@ -1,11 +1,11 @@
 Class {
-	#name : #CmdCommandActivatorTests,
+	#name : #CmdCommandActivatorTest,
 	#superclass : #TestCase,
 	#category : #'Commander-Core-Tests'
 }
 
 { #category : #tests }
-CmdCommandActivatorTests >> testConvertingCommandToActivator [
+CmdCommandActivatorTest >> testConvertingCommandToActivator [
 
 	| activator command |
 	command := CmdCommandExampleInRootMenu new.
@@ -20,7 +20,7 @@ CmdCommandActivatorTests >> testConvertingCommandToActivator [
 ]
 
 { #category : #tests }
-CmdCommandActivatorTests >> testConvertingToActivator [
+CmdCommandActivatorTest >> testConvertingToActivator [
 
 	| activator |
 	activator := CmdCommandActivator new.
@@ -29,7 +29,7 @@ CmdCommandActivatorTests >> testConvertingToActivator [
 ]
 
 { #category : #tests }
-CmdCommandActivatorTests >> testCreationNewForNewCommand [
+CmdCommandActivatorTest >> testCreationNewForNewCommand [
 
 	| activator newActivator |
 	activator := CmdCommandActivator new.

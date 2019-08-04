@@ -1,11 +1,11 @@
 Class {
-	#name : #CmdMenuTests,
+	#name : #CmdMenuTest,
 	#superclass : #TestCase,
 	#category : #'Commander-Core-Tests'
 }
 
 { #category : #tests }
-CmdMenuTests >> buildMenuInContext: aToolContext [
+CmdMenuTest >> buildMenuInContext: aToolContext [
 	| menu |
 	menu := CmdMenu  
 		activatedBy: CmdMenuCommandActivationExample.
@@ -16,7 +16,7 @@ CmdMenuTests >> buildMenuInContext: aToolContext [
 ]
 
 { #category : #tests }
-CmdMenuTests >> testCommandItemShouldContainPreparedCommandInstance [
+CmdMenuTest >> testCommandItemShouldContainPreparedCommandInstance [
 	| menu command context containingItems |
 	context := CmdToolContextStub1 new.
 	menu := self buildMenuInContext: context.
@@ -29,7 +29,7 @@ CmdMenuTests >> testCommandItemShouldContainPreparedCommandInstance [
 ]
 
 { #category : #tests }
-CmdMenuTests >> testWhenCommandShouldBeInDeepChildGroup [
+CmdMenuTest >> testWhenCommandShouldBeInDeepChildGroup [
 	| menu containingItems parents |
 	menu := self buildMenuInContext: CmdToolContextStub2 new.
 	
@@ -42,7 +42,7 @@ CmdMenuTests >> testWhenCommandShouldBeInDeepChildGroup [
 ]
 
 { #category : #tests }
-CmdMenuTests >> testWhenCommandShouldBeInMultipleGroups [
+CmdMenuTest >> testWhenCommandShouldBeInMultipleGroups [
 	| menu containingGroups |
 	menu := self buildMenuInContext: CmdToolContextStub1 new.
 	
@@ -53,7 +53,7 @@ CmdMenuTests >> testWhenCommandShouldBeInMultipleGroups [
 ]
 
 { #category : #tests }
-CmdMenuTests >> testWhenCommandShouldBeInRootMenu [
+CmdMenuTest >> testWhenCommandShouldBeInRootMenu [
 	| menu containingItems |
 	menu := self buildMenuInContext: CmdToolContextStub1 new.
 	
@@ -63,7 +63,7 @@ CmdMenuTests >> testWhenCommandShouldBeInRootMenu [
 ]
 
 { #category : #tests }
-CmdMenuTests >> testWhenGivenContextIsUnused [
+CmdMenuTest >> testWhenGivenContextIsUnused [
 	| menu |
 	menu := self buildMenuInContext: CmdUnusedToolContextStub new.
 	
