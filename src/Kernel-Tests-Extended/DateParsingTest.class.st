@@ -2,18 +2,18 @@
 SUnit tests for date parsing
 "
 Class {
-	#name : #DateParsingTests,
+	#name : #DateParsingTest,
 	#superclass : #TestCase,
 	#category : #'Kernel-Tests-Extended-Chronology'
 }
 
 { #category : #asserting }
-DateParsingTests >> assertReading: aString as: aPattern equals: aDate [
+DateParsingTest >> assertReading: aString as: aPattern equals: aDate [
 	self assert: (self reading: aPattern pattern: aString) equals: aDate
 ]
 
 { #category : #asserting }
-DateParsingTests >> assertReading: aString as: aPattern raise: anErrorClass [
+DateParsingTest >> assertReading: aString as: aPattern raise: anErrorClass [
 
 	self
 		should: [ self reading: aPattern pattern: aString ]
@@ -22,17 +22,17 @@ DateParsingTests >> assertReading: aString as: aPattern raise: anErrorClass [
 ]
 
 { #category : #accessing }
-DateParsingTests >> dateParserClass [
+DateParsingTest >> dateParserClass [
 	^ DateParser
 ]
 
 { #category : #asserting }
-DateParsingTests >> reading: aPattern pattern: aString [
+DateParsingTest >> reading: aPattern pattern: aString [
 	^ (self dateParserClass readingFrom: aString readStream pattern: aPattern) parse
 ]
 
 { #category : #tests }
-DateParsingTests >> testCanEscapeSpecialCharacters [
+DateParsingTest >> testCanEscapeSpecialCharacters [
 	"Checks that reserved pattern characters $d $m and $y can be escaped in patterns"
 	self assertReading: '4d\2m\2345y' as: 'd\d\\m\m\\y\y' equals: (Date year: 2345 month: 2 day: 4)
 		
@@ -40,7 +40,7 @@ DateParsingTests >> testCanEscapeSpecialCharacters [
 ]
 
 { #category : #tests }
-DateParsingTests >> testDefaultParsingSucceeds [ 
+DateParsingTest >> testDefaultParsingSucceeds [ 
 	| date |
 	date := Date year: 2013 month: 11 day: 29.
 	self assertReading: '29.11.2013' as: 'dd.mm.yyyy' equals: date.
@@ -49,52 +49,52 @@ DateParsingTests >> testDefaultParsingSucceeds [
 ]
 
 { #category : #'tests - dd pattern' }
-DateParsingTests >> testParsingDDPatternWithIncorrectDaysFails [ 
+DateParsingTest >> testParsingDDPatternWithIncorrectDaysFails [ 
 	self assertReading: '02.00.2013' as: 'dd.mm.yyyy' raise: DateError.
 	self assertReading: '02.13.2013' as: 'dd.mm.yyyy' raise: DateError.
 	
 ]
 
 { #category : #'tests - dd pattern' }
-DateParsingTests >> testParsingDDPatternWithSingleDigitFails [
+DateParsingTest >> testParsingDDPatternWithSingleDigitFails [
 	self assertReading: '4.02.2345' as: 'dd.mm.yyyy' raise: DateError
 ]
 
 { #category : #'tests - d pattern' }
-DateParsingTests >> testParsingDPatternWithIncorrectDayFails [ 
+DateParsingTest >> testParsingDPatternWithIncorrectDayFails [ 
 	self assertReading: '0.11.2013' as: 'd.mm.yyyy' raise: DateError.
 	self assertReading: '32.2013.29' as: 'd.mm.yyyy' raise: DateError.
 ]
 
 { #category : #'tests - d pattern' }
-DateParsingTests >> testParsingDPatternWithSingleDigitSucceeds [
+DateParsingTest >> testParsingDPatternWithSingleDigitSucceeds [
 	self assertReading: '2.11.2013' as: 'd.mm.yyyy' equals: (Date year: 2013 month: 11 day: 2)
 ]
 
 { #category : #'tests - d pattern' }
-DateParsingTests >> testParsingDPatternWithTwoDigitSucceeds [ 
+DateParsingTest >> testParsingDPatternWithTwoDigitSucceeds [ 
 	self assertReading: '29.11.2013' as: 'd.mm.yyyy' equals: (Date year: 2013 month: 11 day: 29).
 ]
 
 { #category : #'tests - mm pattern' }
-DateParsingTests >> testParsingMMPatternWithIncorrectMonthFails [ 
+DateParsingTest >> testParsingMMPatternWithIncorrectMonthFails [ 
 	self assertReading: '02.00.2013' as: 'dd.mm.yyyy' raise: DateError.
 	self assertReading: '02.13.2013' as: 'dd.mm.yyyy' raise: DateError
 ]
 
 { #category : #'tests - mm pattern' }
-DateParsingTests >> testParsingMMPatternWithSingleDigitFails [
+DateParsingTest >> testParsingMMPatternWithSingleDigitFails [
 	self assertReading: '04.2.2345' as: 'dd.mm.yyyy' raise: DateError
 ]
 
 { #category : #'tests - m pattern' }
-DateParsingTests >> testParsingMPatternWithIncorrectMonthFails [ 
+DateParsingTest >> testParsingMPatternWithIncorrectMonthFails [ 
 	self assertReading: '1.0.2013' as: 'dd.m.yyyy' raise: DateError.
 	self assertReading: '22.13.2013' as: 'dd.m.yyyy' raise: DateError.
 ]
 
 { #category : #'tests - m pattern' }
-DateParsingTests >> testParsingMPatternWithSingleDigitSucceeds [ 
+DateParsingTest >> testParsingMPatternWithSingleDigitSucceeds [ 
 	| date |
 	date := Date year: 2013 month: 2 day: 11.
 	self assertReading: '11.2.2013' as: 'dd.m.yyyy' equals: date.
@@ -103,7 +103,7 @@ DateParsingTests >> testParsingMPatternWithSingleDigitSucceeds [
 ]
 
 { #category : #'tests - m pattern' }
-DateParsingTests >> testParsingMPatternWithTwoDigitSucceeds [ 
+DateParsingTest >> testParsingMPatternWithTwoDigitSucceeds [ 
 	| date |
 	date := Date year: 2013 month: 11 day: 29.
 	self assertReading: '29.11.2013' as: 'dd.m.yyyy' equals: date.
@@ -112,7 +112,7 @@ DateParsingTests >> testParsingMPatternWithTwoDigitSucceeds [
 ]
 
 { #category : #tests }
-DateParsingTests >> testParsingPatternWithExtraCharacter [
+DateParsingTest >> testParsingPatternWithExtraCharacter [
 
 	self assertReading: 'a4.2.2345' as: 'ad.m.y' equals: (Date year: 2345 month: 2 day: 4). 
 	self assertReading: '4.2.2345' as: 'ad.m.y' raise: DateError.
@@ -120,39 +120,39 @@ DateParsingTests >> testParsingPatternWithExtraCharacter [
 ]
 
 { #category : #tests }
-DateParsingTests >> testParsingPatternWithTrailingCharacterFails [
+DateParsingTest >> testParsingPatternWithTrailingCharacterFails [
 
 	self assertReading: '04.02.2013trailing' as: 'd.m.y' raise: DateError
 ]
 
 { #category : #'tests - y pattern' }
-DateParsingTests >> testParsingYPatternWithFiveDigits [
+DateParsingTest >> testParsingYPatternWithFiveDigits [
 	self assertReading: '2.11.10000' as: 'd.mm.y' equals: (Date year: 10000 month: 11 day: 2)
 ]
 
 { #category : #'tests - y pattern' }
-DateParsingTests >> testParsingYPatternWithSingleDigitReturnsASecondMillenaryYear [
+DateParsingTest >> testParsingYPatternWithSingleDigitReturnsASecondMillenaryYear [
 	self assertReading: '2.11.3' as: 'd.mm.y' equals: (Date year: 2003 month: 11 day: 2)
 ]
 
 { #category : #'tests - y pattern' }
-DateParsingTests >> testParsingYPatternWithTwoDigitsReturnsASecondMillenaryYear [
+DateParsingTest >> testParsingYPatternWithTwoDigitsReturnsASecondMillenaryYear [
 	self assertReading: '2.11.13' as: 'd.mm.y' equals: (Date year: 2013 month: 11 day: 2)
 ]
 
 { #category : #'tests - yy pattern' }
-DateParsingTests >> testParsingYYPatternReturnsASecondMillenaryYear [
+DateParsingTest >> testParsingYYPatternReturnsASecondMillenaryYear [
 	self assertReading: '2.11.13' as: 'd.mm.yy' equals: (Date year: 2013 month: 11 day: 2)
 ]
 
 { #category : #'tests - yy pattern' }
-DateParsingTests >> testParsingYYPatternWithWrongNumberOrDigitsShouldFails [
+DateParsingTest >> testParsingYYPatternWithWrongNumberOrDigitsShouldFails [
 	self assertReading: '02.11.3' as: 'dd.mm.yy' raise: DateError.
 	self assertReading: '02.11.113' as: 'dd.mm.yy' raise: DateError
 ]
 
 { #category : #'tests - yyyy pattern' }
-DateParsingTests >> testParsingYYYYPatternWithWrongNumberOrDigitsShouldFails [
+DateParsingTest >> testParsingYYYYPatternWithWrongNumberOrDigitsShouldFails [
 	self assertReading: '02.11.3' as: 'dd.mm.yyyy' raise: DateError.
 	self assertReading: '02.11.13' as: 'dd.mm.yyyy' raise: DateError.
 	self assertReading: '02.11.113' as: 'dd.mm.yyyy' raise: DateError.
