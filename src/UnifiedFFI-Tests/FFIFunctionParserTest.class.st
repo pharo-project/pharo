@@ -2,18 +2,18 @@
 Tests for FFIFunctionParser
 "
 Class {
-	#name : #FFIFunctionParserTests,
+	#name : #FFIFunctionParserTest,
 	#superclass : #TestCase,
 	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #factory }
-FFIFunctionParserTests >> newParser [
+FFIFunctionParserTest >> newParser [
 	^ FFIFunctionParser new
 ]
 
 { #category : #tests }
-FFIFunctionParserTests >> testParseAnonymousFunction [
+FFIFunctionParserTest >> testParseAnonymousFunction [
 	 | parser args |
 	
 	#((int * * ( 0, nil, -10, FOO_BAR , int a, int* _b, char** c, void* * * d_))
@@ -39,7 +39,7 @@ FFIFunctionParserTests >> testParseAnonymousFunction [
 ]
 
 { #category : #tests }
-FFIFunctionParserTests >> testParseAnonymousFunctionNoArguments [
+FFIFunctionParserTest >> testParseAnonymousFunctionNoArguments [
 	| parser args |
 	
 	#((int * * ( void ) )
@@ -56,7 +56,7 @@ FFIFunctionParserTests >> testParseAnonymousFunctionNoArguments [
 ]
 
 { #category : #tests }
-FFIFunctionParserTests >> testParseFunction [
+FFIFunctionParserTest >> testParseFunction [
 	 | parser args |
 	
 	#((int * * #'function_n$a$m$e' ( 0, nil, -10, FOO_BAR , int a, int* _b, char** c, void* * * d_))
@@ -83,7 +83,7 @@ FFIFunctionParserTests >> testParseFunction [
 ]
 
 { #category : #tests }
-FFIFunctionParserTests >> testParseFunctionNoArguments [
+FFIFunctionParserTest >> testParseFunctionNoArguments [
 	| parser args |
 	
 	#((int * * function_name ( void ) )

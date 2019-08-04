@@ -2,32 +2,32 @@
 Tests for external enumerations
 "
 Class {
-	#name : #FFIExternalEnumerationTests,
+	#name : #FFIExternalEnumerationTest,
 	#superclass : #TestCase,
 	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #accessing }
-FFIExternalEnumerationTests >> enumClass [
+FFIExternalEnumerationTest >> enumClass [
 	^ FFITestEnumeration
 ]
 
 { #category : #primitives }
-FFIExternalEnumerationTests >> ffiTestCall: enumValue format: format to: buffer [
+FFIExternalEnumerationTest >> ffiTestCall: enumValue format: format to: buffer [
 	^ self 
 		ffiCall: #( int sprintf ( ByteArray buffer, String format, FFITestEnumeration enumValue ) )
 		module: LibC
 ]
 
 { #category : #primitives }
-FFIExternalEnumerationTests >> ffiTestReturn: aNumber format: format to: buffer [
+FFIExternalEnumerationTest >> ffiTestReturn: aNumber format: format to: buffer [
 	^ self 
 		ffiCall: #( FFITestEnumeration sprintf ( ByteArray buffer, String format, int aNumber ) )
 		module: LibC
 ]
 
 { #category : #tests }
-FFIExternalEnumerationTests >> testCall [
+FFIExternalEnumerationTest >> testCall [
 	| result buffer |
 
 	buffer := ByteArray new: 100. 
@@ -37,19 +37,19 @@ FFIExternalEnumerationTests >> testCall [
 ]
 
 { #category : #tests }
-FFIExternalEnumerationTests >> testEnumIdents [
+FFIExternalEnumerationTest >> testEnumIdents [
 	self assert: self enumClass AAA value equals: 1.
 	self assert: self enumClass DDD value equals: 2400
 ]
 
 { #category : #tests }
-FFIExternalEnumerationTests >> testEnumIncludes [
+FFIExternalEnumerationTest >> testEnumIncludes [
 	self assert: (self enumClass includes: #DDD).
 	self deny: (self enumClass includes: #EEE)
 ]
 
 { #category : #tests }
-FFIExternalEnumerationTests >> testFromInteger [
+FFIExternalEnumerationTest >> testFromInteger [
 	self assert: (self enumClass fromInteger: 1) value equals: 1.
 	self assert: (self enumClass fromInteger: 2) value equals: 2.
 	self assert: (self enumClass fromInteger: 3) value equals: 3.
@@ -58,12 +58,12 @@ FFIExternalEnumerationTests >> testFromInteger [
 ]
 
 { #category : #tests }
-FFIExternalEnumerationTests >> testNewError [
+FFIExternalEnumerationTest >> testNewError [
 	self should: [ self enumClass new ] raise: ShouldNotImplement
 ]
 
 { #category : #tests }
-FFIExternalEnumerationTests >> testReturn [
+FFIExternalEnumerationTest >> testReturn [
 	| result buffer |
 
 	buffer := ByteArray new: 100. 

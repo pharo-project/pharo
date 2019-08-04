@@ -2,7 +2,7 @@
 Tests for FFICallout
 "
 Class {
-	#name : #FFICalloutTests,
+	#name : #FFICalloutTest,
 	#superclass : #TestCase,
 	#classVars : [
 		'CLASSVAR',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #private }
-FFICalloutTests >> checkType: type class: typeClass arity: ptrArity argument: arg [ 
+FFICalloutTest >> checkType: type class: typeClass arity: ptrArity argument: arg [ 
 
 	self assert: type class equals: typeClass.
 	self assert: type pointerArity equals: ptrArity.
@@ -21,7 +21,7 @@ FFICalloutTests >> checkType: type class: typeClass arity: ptrArity argument: ar
 ]
 
 { #category : #private }
-FFICalloutTests >> checkType: type class: typeClass arity: ptrArity value: anObject [ 
+FFICalloutTest >> checkType: type class: typeClass arity: ptrArity value: anObject [ 
 
 	self assert: type class equals: typeClass.
 	self assert: type pointerArity equals: ptrArity.
@@ -30,13 +30,13 @@ FFICalloutTests >> checkType: type class: typeClass arity: ptrArity value: anObj
 ]
 
 { #category : #private }
-FFICalloutTests >> checkType: type class: typeClass value: const [
+FFICalloutTest >> checkType: type class: typeClass value: const [
 	self assert: type class equals: typeClass.
 	self assert: type value equals: const
 ]
 
 { #category : #private }
-FFICalloutTests >> checkTypeSelf: type class: typeClass arity: ptrArity [ 
+FFICalloutTest >> checkTypeSelf: type class: typeClass arity: ptrArity [ 
 
 	self assert: type class equals: typeClass.
 	self assert: type pointerArity equals: ptrArity.
@@ -44,12 +44,12 @@ FFICalloutTests >> checkTypeSelf: type class: typeClass arity: ptrArity [
 ]
 
 { #category : #binding }
-FFICalloutTests >> ffiBindingOf: aName [
+FFICalloutTest >> ffiBindingOf: aName [
 	^ self class ffiBindingOf: aName
 ]
 
 { #category : #tests }
-FFICalloutTests >> testBuildingFnSpec [
+FFICalloutTest >> testBuildingFnSpec [
 	| generator type s |
 
 	generator := FFICallout new.
@@ -87,7 +87,7 @@ FFICalloutTests >> testBuildingFnSpec [
 ]
 
 { #category : #tests }
-FFICalloutTests >> testParseOptions [
+FFICalloutTest >> testParseOptions [
 	|generator|
 	generator := FFICallout new.
 	

@@ -2,13 +2,13 @@
 Tests for external structures
 "
 Class {
-	#name : #FFIExternalStructureTests,
+	#name : #FFIExternalStructureTest,
 	#superclass : #TestCase,
 	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #tests }
-FFIExternalStructureTests >> testExternalStructWithArray [
+FFIExternalStructureTest >> testExternalStructWithArray [
 	| structWithArrays structureSize |	
 
 	structureSize := FFITestArrayStructure structureSize.
@@ -28,7 +28,7 @@ FFIExternalStructureTests >> testExternalStructWithArray [
 ]
 
 { #category : #tests }
-FFIExternalStructureTests >> testExternallyAllocatedNestedStructure [
+FFIExternalStructureTest >> testExternallyAllocatedNestedStructure [
 	| s1 |
 	
 	s1 := FFITestNestingStructure externalNew.
@@ -38,7 +38,7 @@ FFIExternalStructureTests >> testExternallyAllocatedNestedStructure [
 ]
 
 { #category : #tests }
-FFIExternalStructureTests >> testExternallyAllocatedStructure [
+FFIExternalStructureTest >> testExternallyAllocatedStructure [
 	| struct struct2 |
 	
 	struct := FFITestStructure externalNew.
@@ -65,7 +65,7 @@ FFIExternalStructureTests >> testExternallyAllocatedStructure [
 ]
 
 { #category : #tests }
-FFIExternalStructureTests >> testFlatStructureLayout [
+FFIExternalStructureTest >> testFlatStructureLayout [
 	| flatLayout |
 	flatLayout := FFITestStructureSmallFloatStructure flatStructureLayout.
 	self assert: flatLayout size equals: 16.
@@ -79,7 +79,7 @@ FFIExternalStructureTests >> testFlatStructureLayout [
 ]
 
 { #category : #tests }
-FFIExternalStructureTests >> testFlatStructureLayout2 [
+FFIExternalStructureTest >> testFlatStructureLayout2 [
 	| flatLayout |
 	flatLayout := FFITestStructureSmallIntFloatStructure flatStructureLayout.
 	self assert: flatLayout size equals: 16.
@@ -93,7 +93,7 @@ FFIExternalStructureTests >> testFlatStructureLayout2 [
 ]
 
 { #category : #tests }
-FFIExternalStructureTests >> testFlatStructureLayoutSysVAMD64PostProcess [
+FFIExternalStructureTest >> testFlatStructureLayoutSysVAMD64PostProcess [
 	| flatLayout |
 	flatLayout := FFITestStructureSmallFloatStructure flatStructureLayout sysVAMD64PostProcess.
 	self assert: flatLayout size equals: 16.
@@ -106,7 +106,7 @@ FFIExternalStructureTests >> testFlatStructureLayoutSysVAMD64PostProcess [
 ]
 
 { #category : #tests }
-FFIExternalStructureTests >> testFlatStructureLayoutSysVAMD64PostProcess2 [
+FFIExternalStructureTest >> testFlatStructureLayoutSysVAMD64PostProcess2 [
 	| flatLayout |
 	flatLayout := FFITestStructureSmallIntFloatStructure flatStructureLayout sysVAMD64PostProcess.
 	self assert: flatLayout size equals: 16.
@@ -120,7 +120,7 @@ FFIExternalStructureTests >> testFlatStructureLayoutSysVAMD64PostProcess2 [
 ]
 
 { #category : #tests }
-FFIExternalStructureTests >> testNestedStructure [
+FFIExternalStructureTest >> testNestedStructure [
 	| s1 |
 
 	s1 := FFITestNestingStructure new.
@@ -142,7 +142,7 @@ FFIExternalStructureTests >> testNestedStructure [
 ]
 
 { #category : #tests }
-FFIExternalStructureTests >> testNestedStructureWithArray [
+FFIExternalStructureTest >> testNestedStructureWithArray [
 	| nestedStruct |	
 
 	nestedStruct := FFITestNestingStructureWithArray new.
@@ -165,7 +165,7 @@ FFIExternalStructureTests >> testNestedStructureWithArray [
 ]
 
 { #category : #tests }
-FFIExternalStructureTests >> testStructAccess [
+FFIExternalStructureTest >> testStructAccess [
 
 	| struct |
 	
@@ -191,7 +191,7 @@ FFIExternalStructureTests >> testStructAccess [
 ]
 
 { #category : #tests }
-FFIExternalStructureTests >> testStructWithArray [
+FFIExternalStructureTest >> testStructWithArray [
 	| structWithArrays |	
 
 	structWithArrays := FFITestArrayStructure new.
@@ -217,7 +217,7 @@ FFIExternalStructureTests >> testStructWithArray [
 ]
 
 { #category : #tests }
-FFIExternalStructureTests >> testStructWithPointerAccess [
+FFIExternalStructureTest >> testStructWithPointerAccess [
 	| s1 s2 |	
 
 	s1 := FFITestPointerStructure new.

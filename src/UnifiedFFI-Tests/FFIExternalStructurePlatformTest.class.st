@@ -2,24 +2,24 @@
 Tests for external structures on platform
 "
 Class {
-	#name : #FFIExternalStructurePlatformTests,
+	#name : #FFIExternalStructurePlatformTest,
 	#superclass : #TestCase,
 	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #'private - testing' }
-FFIExternalStructurePlatformTests >> is32bit [
+FFIExternalStructurePlatformTest >> is32bit [
 	^ Smalltalk vm is32bit 
 		
 ]
 
 { #category : #'private - testing' }
-FFIExternalStructurePlatformTests >> is64bit [
+FFIExternalStructurePlatformTest >> is64bit [
 	^ Smalltalk vm is64bit 
 ]
 
 { #category : #tests }
-FFIExternalStructurePlatformTests >> testStructureHasCorrectOffsets32bits [
+FFIExternalStructurePlatformTest >> testStructureHasCorrectOffsets32bits [
 	self is32bit ifFalse: [ ^ self skip ].
 	
 	FFITestStructureByPlatform compiledSpec. "Ensure fields are initialized"
@@ -28,7 +28,7 @@ FFIExternalStructurePlatformTests >> testStructureHasCorrectOffsets32bits [
 ]
 
 { #category : #tests }
-FFIExternalStructurePlatformTests >> testStructureHasCorrectOffsets64bits [
+FFIExternalStructurePlatformTest >> testStructureHasCorrectOffsets64bits [
 	self is64bit ifFalse: [ ^ self skip ].
 	
 	FFITestStructureByPlatform compiledSpec. "Ensure fields are initialized"
@@ -37,7 +37,7 @@ FFIExternalStructurePlatformTests >> testStructureHasCorrectOffsets64bits [
 ]
 
 { #category : #tests }
-FFIExternalStructurePlatformTests >> testStructureHasCorrectSize32bits [
+FFIExternalStructurePlatformTest >> testStructureHasCorrectSize32bits [
 	self is32bit ifFalse: [ ^ self skip ].
 	
 	self 
@@ -46,7 +46,7 @@ FFIExternalStructurePlatformTests >> testStructureHasCorrectSize32bits [
 ]
 
 { #category : #tests }
-FFIExternalStructurePlatformTests >> testStructureHasCorrectSize64bits [
+FFIExternalStructurePlatformTest >> testStructureHasCorrectSize64bits [
 	self is64bit ifFalse: [ ^ self skip ].
 	
 	self 

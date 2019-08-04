@@ -2,7 +2,7 @@
 This TestSuite evaluates the correct implementation of the callback parameter extraction.
 "
 Class {
-	#name : #FFICallbackParametersTests,
+	#name : #FFICallbackParametersTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'callback'
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #executing }
-FFICallbackParametersTests >> callCallback: aFFICallback withArgs: aCollection [ 
+FFICallbackParametersTest >> callCallback: aFFICallback withArgs: aCollection [ 
 
 	^ (ExternalLibraryFunction 
 			name: nil
@@ -33,7 +33,7 @@ FFICallbackParametersTests >> callCallback: aFFICallback withArgs: aCollection [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testCharacterParameters [
+FFICallbackParametersTest >> testCharacterParameters [
 	
 	| params |
 	params := (1 to: 6) collect: [ :i | i asCharacter ].	
@@ -54,7 +54,7 @@ FFICallbackParametersTests >> testCharacterParameters [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testFloatParameters [ 
+FFICallbackParametersTest >> testFloatParameters [ 
 	
 	callback := FFICallback 
 		signature: #(double (double a, double b, float c, float d, double e, float f))
@@ -72,7 +72,7 @@ FFICallbackParametersTests >> testFloatParameters [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testIdentityStruct [ 
+FFICallbackParametersTest >> testIdentityStruct [ 
 	
 	<expectedFailure>		
 	
@@ -105,7 +105,7 @@ FFICallbackParametersTests >> testIdentityStruct [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testIntegerParameters [ 
+FFICallbackParametersTest >> testIntegerParameters [ 
 	
 	callback := FFICallback 
 		signature: #(int (int, int, int, int, int, int))
@@ -125,7 +125,7 @@ FFICallbackParametersTests >> testIntegerParameters [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testIntegerPointerParameters [ 
+FFICallbackParametersTest >> testIntegerPointerParameters [ 
 	
 	| params |
 	params := (1 to: 6) collect: [ :i | ExternalAddress fromAddress: i ].	
@@ -145,7 +145,7 @@ FFICallbackParametersTests >> testIntegerPointerParameters [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testMixingParameters [ 
+FFICallbackParametersTest >> testMixingParameters [ 
 	
 	callback := FFICallback 
 		signature: #(void (int a, float b, char c, int d, double e, int f, char g))
@@ -163,7 +163,7 @@ FFICallbackParametersTests >> testMixingParameters [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testPassing2DoubleStructureInTheStack [ 
+FFICallbackParametersTest >> testPassing2DoubleStructureInTheStack [ 
 			
 	| param |
 	callback := FFICallback 
@@ -185,7 +185,7 @@ FFICallbackParametersTests >> testPassing2DoubleStructureInTheStack [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testPassing2Int64StructureInTheStack [ 
+FFICallbackParametersTest >> testPassing2Int64StructureInTheStack [ 
 			
 	| param |
 	callback := FFICallback 
@@ -207,7 +207,7 @@ FFICallbackParametersTests >> testPassing2Int64StructureInTheStack [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testPassing4DoubleStructureInTheStack [ 
+FFICallbackParametersTest >> testPassing4DoubleStructureInTheStack [ 
 			
 	| param |
 	callback := FFICallback 
@@ -238,7 +238,7 @@ FFICallbackParametersTests >> testPassing4DoubleStructureInTheStack [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testPassing4Int64StructureInTheStack [ 
+FFICallbackParametersTest >> testPassing4Int64StructureInTheStack [ 
 			
 	| param |
 	callback := FFICallback 
@@ -264,7 +264,7 @@ FFICallbackParametersTests >> testPassing4Int64StructureInTheStack [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testPassing4IntStructureInTheStack [ 
+FFICallbackParametersTest >> testPassing4IntStructureInTheStack [ 
 			
 	| param |
 	callback := FFICallback 
@@ -290,7 +290,7 @@ FFICallbackParametersTests >> testPassing4IntStructureInTheStack [
 ]
 
 { #category : #running }
-FFICallbackParametersTests >> testPassingStructureInTheStack [ 
+FFICallbackParametersTest >> testPassingStructureInTheStack [ 
 	
 	| param |
 	callback := FFICallback 

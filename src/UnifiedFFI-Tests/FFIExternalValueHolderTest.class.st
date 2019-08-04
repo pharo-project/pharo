@@ -2,7 +2,7 @@
 Tests for FFIExternalValueHolder
 "
 Class {
-	#name : #FFIExternalValueHolderTests,
+	#name : #FFIExternalValueHolderTest,
 	#superclass : #TestCase,
 	#classVars : [
 		'TIME_T_PTR'
@@ -11,13 +11,13 @@ Class {
 }
 
 { #category : #primitives }
-FFIExternalValueHolderTests >> getTime: t [
+FFIExternalValueHolderTest >> getTime: t [
      ^self ffiCall: #(long time(TIME_T_PTR t)) module: LibC
              
 ]
 
 { #category : #tests }
-FFIExternalValueHolderTests >> testCall [
+FFIExternalValueHolderTest >> testCall [
 	| object time |
 	
 	TIME_T_PTR := FFIExternalValueHolder ofType: 'uint32'.
@@ -28,7 +28,7 @@ FFIExternalValueHolderTests >> testCall [
 ]
 
 { #category : #tests }
-FFIExternalValueHolderTests >> testCreateValueHolder [
+FFIExternalValueHolderTest >> testCreateValueHolder [
 	| valueHolderClass object |
 	
 	valueHolderClass := FFIExternalValueHolder ofType: 'int'.

@@ -2,13 +2,13 @@
 Tests for different FFI types
 "
 Class {
-	#name : #FFITypesTests,
+	#name : #FFITypesTest,
 	#superclass : #TestCase,
 	#category : #'UnifiedFFI-Tests-Tests'
 }
 
 { #category : #ranges }
-FFITypesTests >> signed1ByteNumbers [
+FFITypesTest >> signed1ByteNumbers [
 	^ { 
 		-128.
 		-127.
@@ -19,7 +19,7 @@ FFITypesTests >> signed1ByteNumbers [
 ]
 
 { #category : #ranges }
-FFITypesTests >> signed2ByteNumbers [
+FFITypesTest >> signed2ByteNumbers [
 	^ { 
 		-32768.
 		-32767.
@@ -39,7 +39,7 @@ FFITypesTests >> signed2ByteNumbers [
 ]
 
 { #category : #ranges }
-FFITypesTests >> signed4ByteNumbers [
+FFITypesTest >> signed4ByteNumbers [
 	^ { 
 		-2147483648.
 		-2147483647.
@@ -68,7 +68,7 @@ FFITypesTests >> signed4ByteNumbers [
 ]
 
 { #category : #ranges }
-FFITypesTests >> signed8ByteNumbers [
+FFITypesTest >> signed8ByteNumbers [
 	^ {
 		-9223372036854775808.
 		-9223372036854775807.
@@ -103,7 +103,7 @@ FFITypesTests >> signed8ByteNumbers [
 ]
 
 { #category : #tests }
-FFITypesTests >> testSigned1ByteIntegers [
+FFITypesTest >> testSigned1ByteIntegers [
 	self signed1ByteNumbers do: [ :int |
 		|ref|
 		ref := ByteArray new: 1.
@@ -112,7 +112,7 @@ FFITypesTests >> testSigned1ByteIntegers [
 ]
 
 { #category : #tests }
-FFITypesTests >> testSigned2ByteIntegers [
+FFITypesTest >> testSigned2ByteIntegers [
 	self signed2ByteNumbers do: [ :int |
 		|ref|
 		ref := ByteArray new: 2.
@@ -121,7 +121,7 @@ FFITypesTests >> testSigned2ByteIntegers [
 ]
 
 { #category : #tests }
-FFITypesTests >> testSigned4ByteIntegers [
+FFITypesTest >> testSigned4ByteIntegers [
 	self signed4ByteNumbers do: [ :int |
 		|ref|
 		ref := ByteArray new: 4.
@@ -130,7 +130,7 @@ FFITypesTests >> testSigned4ByteIntegers [
 ]
 
 { #category : #tests }
-FFITypesTests >> testSignedAtWithDiferentSizes [
+FFITypesTest >> testSignedAtWithDiferentSizes [
 	"This is tests for issue 17757" 
 	| ref|
 	
@@ -148,7 +148,7 @@ FFITypesTests >> testSignedAtWithDiferentSizes [
 ]
 
 { #category : #tests }
-FFITypesTests >> testSignedLong [
+FFITypesTest >> testSignedLong [
 	self signed4ByteNumbers do: [ :int |
 		|ref|
 		ref := ByteArray new: FFIInt32 externalTypeSize.
@@ -157,7 +157,7 @@ FFITypesTests >> testSignedLong [
 ]
 
 { #category : #tests }
-FFITypesTests >> testSignedLongLong [
+FFITypesTest >> testSignedLongLong [
 	self signed8ByteNumbers do: [ :int |
 		|ref|
 		ref := ByteArray new: FFIInt64 externalTypeSize.
@@ -166,7 +166,7 @@ FFITypesTests >> testSignedLongLong [
 ]
 
 { #category : #tests }
-FFITypesTests >> testUnsigned1ByteIntegers [
+FFITypesTest >> testUnsigned1ByteIntegers [
 	self unsigned1ByteNumbers do: [ :int |
 		|ref|
 		ref := ByteArray new: 1.
@@ -175,7 +175,7 @@ FFITypesTests >> testUnsigned1ByteIntegers [
 ]
 
 { #category : #tests }
-FFITypesTests >> testUnsigned2ByteIntegers [
+FFITypesTest >> testUnsigned2ByteIntegers [
 	self unsigned2ByteNumbers do: [ :int |
 		|ref|
 		ref := ByteArray new: 2.
@@ -184,7 +184,7 @@ FFITypesTests >> testUnsigned2ByteIntegers [
 ]
 
 { #category : #tests }
-FFITypesTests >> testUnsigned4ByteIntegers [
+FFITypesTest >> testUnsigned4ByteIntegers [
 	self unsigned4ByteNumbers do: [ :int |
 		|ref|
 		ref := ByteArray new: 4.
@@ -193,7 +193,7 @@ FFITypesTests >> testUnsigned4ByteIntegers [
 ]
 
 { #category : #tests }
-FFITypesTests >> testUnsignedLong [
+FFITypesTest >> testUnsignedLong [
 	self unsigned4ByteNumbers do: [ :int |
 		|ref|
 		ref := ByteArray new: FFIUInt32 externalTypeSize.
@@ -202,7 +202,7 @@ FFITypesTests >> testUnsignedLong [
 ]
 
 { #category : #tests }
-FFITypesTests >> testUnsignedLongLong [
+FFITypesTest >> testUnsignedLongLong [
 	self unsigned8ByteNumbers do: [ :int |
 		|ref|
 		ref := ByteArray new: FFIUInt64 externalTypeSize.
@@ -211,7 +211,7 @@ FFITypesTests >> testUnsignedLongLong [
 ]
 
 { #category : #ranges }
-FFITypesTests >> unsigned1ByteNumbers [
+FFITypesTest >> unsigned1ByteNumbers [
 	^ { 
 		0.
 		126.
@@ -223,7 +223,7 @@ FFITypesTests >> unsigned1ByteNumbers [
 ]
 
 { #category : #ranges }
-FFITypesTests >> unsigned2ByteNumbers [
+FFITypesTest >> unsigned2ByteNumbers [
 	^ { 
 		0.
 		126.
@@ -241,7 +241,7 @@ FFITypesTests >> unsigned2ByteNumbers [
 ]
 
 { #category : #ranges }
-FFITypesTests >> unsigned4ByteNumbers [
+FFITypesTest >> unsigned4ByteNumbers [
 	^ { 
 		0.
 		126.
@@ -265,7 +265,7 @@ FFITypesTests >> unsigned4ByteNumbers [
 ]
 
 { #category : #ranges }
-FFITypesTests >> unsigned8ByteNumbers [
+FFITypesTest >> unsigned8ByteNumbers [
 	^ { 
 		0.
 		126.
