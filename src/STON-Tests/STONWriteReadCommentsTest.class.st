@@ -2,13 +2,13 @@
 Unit test writing and reading of comments
 "
 Class {
-	#name : #STONWriteReadCommentsTests,
-	#superclass : #STONWriteReadTests,
+	#name : #STONWriteReadCommentsTest,
+	#superclass : #STONWriteReadTest,
 	#category : #'STON-Tests-Writer'
 }
 
 { #category : #private }
-STONWriteReadCommentsTests >> materialize: string [
+STONWriteReadCommentsTest >> materialize: string [
 	^ STON reader
 		on: (STONCStyleCommentsSkipStream on: string readStream);
 		optimizeForLargeStructures;
@@ -16,7 +16,7 @@ STONWriteReadCommentsTests >> materialize: string [
 ]
 
 { #category : #private }
-STONWriteReadCommentsTests >> serialize: anObject [
+STONWriteReadCommentsTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
 		stream << '/* initial comment */'.
 		STON writer 

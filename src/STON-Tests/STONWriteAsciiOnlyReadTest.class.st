@@ -2,13 +2,13 @@
 Unit tests for writing ASCII only
 "
 Class {
-	#name : #STONWriteAsciiOnlyReadTests,
-	#superclass : #STONWriteReadTests,
+	#name : #STONWriteAsciiOnlyReadTest,
+	#superclass : #STONWriteReadTest,
 	#category : #'STON-Tests-Writer'
 }
 
 { #category : #private }
-STONWriteAsciiOnlyReadTests >> serialize: anObject [
+STONWriteAsciiOnlyReadTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
 		STON writer 
 			on: stream; 
@@ -17,7 +17,7 @@ STONWriteAsciiOnlyReadTests >> serialize: anObject [
 ]
 
 { #category : #private }
-STONWriteAsciiOnlyReadTests >> serializeJson: anObject [
+STONWriteAsciiOnlyReadTest >> serializeJson: anObject [
 	^ String streamContents: [ :stream |
 		STON jsonWriter 
 			on: stream; 

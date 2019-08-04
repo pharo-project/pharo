@@ -1,11 +1,11 @@
 Class {
-	#name : #STONCStyleCommentsSkipStreamTests,
+	#name : #STONCStyleCommentsSkipStreamTest,
 	#superclass : #TestCase,
 	#category : #'STON-Tests-Utilities'
 }
 
 { #category : #testing }
-STONCStyleCommentsSkipStreamTests >> testCommentInString [
+STONCStyleCommentsSkipStreamTest >> testCommentInString [
 	self 
 		assert: (STONCStyleCommentsSkipStream on: '''/*comment*/''' readStream) upToEnd 
 		equals: '''/*comment*/'''.
@@ -24,7 +24,7 @@ STONCStyleCommentsSkipStreamTests >> testCommentInString [
 ]
 
 { #category : #testing }
-STONCStyleCommentsSkipStreamTests >> testMultiLineComment [
+STONCStyleCommentsSkipStreamTest >> testMultiLineComment [
 	self 
 		assert: (STONCStyleCommentsSkipStream on: 'foo\//comment\bar' withCRs readStream) upToEnd 
 		equals: 'foo\bar' withCRs.
@@ -38,7 +38,7 @@ STONCStyleCommentsSkipStreamTests >> testMultiLineComment [
 ]
 
 { #category : #testing }
-STONCStyleCommentsSkipStreamTests >> testNonComment [
+STONCStyleCommentsSkipStreamTest >> testNonComment [
 	self assert: (STONCStyleCommentsSkipStream on: 'foo' readStream) upToEnd equals: 'foo'.
 	self assert: (STONCStyleCommentsSkipStream on: 'foo' readStream) nextLine equals: 'foo'.
 	self deny: (STONCStyleCommentsSkipStream on: 'foo' readStream) atEnd.
@@ -46,7 +46,7 @@ STONCStyleCommentsSkipStreamTests >> testNonComment [
 ]
 
 { #category : #testing }
-STONCStyleCommentsSkipStreamTests >> testSTON [
+STONCStyleCommentsSkipStreamTest >> testSTON [
 	"Comments are processed first and totally removed.
 	They are not even whitespace (not that whitespace is relevant in STON)."
 	
@@ -66,7 +66,7 @@ STONCStyleCommentsSkipStreamTests >> testSTON [
 ]
 
 { #category : #testing }
-STONCStyleCommentsSkipStreamTests >> testSingleLineComment [
+STONCStyleCommentsSkipStreamTest >> testSingleLineComment [
 	self assert: (STONCStyleCommentsSkipStream on: 'foo/*comment*/bar' readStream) upToEnd equals: 'foobar'.
 	self assert: (STONCStyleCommentsSkipStream on: 'foo/*comment*/bar' readStream) nextLine equals: 'foobar'.
 	self deny: (STONCStyleCommentsSkipStream on: 'foo/*comment*/bar' readStream) atEnd.

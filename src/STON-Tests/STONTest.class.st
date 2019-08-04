@@ -3,13 +3,13 @@ STONTests tests the API offered by STON.
 
 "
 Class {
-	#name : #STONTests,
+	#name : #STONTest,
 	#superclass : #TestCase,
 	#category : #'STON-Tests-Base'
 }
 
 { #category : #utilities }
-STONTests class >> fastReadFromFileNamed: path [
+STONTest class >> fastReadFromFileNamed: path [
 	^ path asFileReference
 		readStreamDo: [ :stream | 
 			STON reader
@@ -19,7 +19,7 @@ STONTests class >> fastReadFromFileNamed: path [
 ]
 
 { #category : #utilities }
-STONTests class >> fastWrite: object toFileNamed: path [
+STONTest class >> fastWrite: object toFileNamed: path [
 	^ path asFileReference
 		writeStreamDo: [ :fileStream | 
 			ZnBufferedWriteStream
@@ -32,7 +32,7 @@ STONTests class >> fastWrite: object toFileNamed: path [
 ]
 
 { #category : #utilities }
-STONTests class >> readFromFileNamed: path [
+STONTest class >> readFromFileNamed: path [
 	^ path asFileReference
 		readStreamDo: [ :stream | 
 			STON reader
@@ -41,7 +41,7 @@ STONTests class >> readFromFileNamed: path [
 ]
 
 { #category : #utilities }
-STONTests class >> write: object toFileNamed: path [
+STONTest class >> write: object toFileNamed: path [
 	^ path asFileReference
 		writeStreamDo: [ :stream | 
 			STON writer
@@ -50,14 +50,14 @@ STONTests class >> write: object toFileNamed: path [
 ]
 
 { #category : #tests }
-STONTests >> testFromString [
+STONTest >> testFromString [
 	| object |
 	object := STON listClass withAll: { 1. 0. -1. true. false. nil }.
 	self assert: (STON fromString: '[1,0,-1,true,false,nil]') = object
 ]
 
 { #category : #tests }
-STONTests >> testFromStringWithComments [
+STONTest >> testFromStringWithComments [
 	| object |
 	object := STON listClass withAll: { 1. 0. -1. true. false. nil }.
 	self 
@@ -66,7 +66,7 @@ STONTests >> testFromStringWithComments [
 ]
 
 { #category : #tests }
-STONTests >> testPrettyPrinting [
+STONTest >> testPrettyPrinting [
 	| object |
 	object := STONTestUser dummy.
 	self assert: (STON fromString: (STON toStringPretty: object)) = object.
@@ -75,7 +75,7 @@ STONTests >> testPrettyPrinting [
 ]
 
 { #category : #tests }
-STONTests >> testRoomExitCycles [
+STONTest >> testRoomExitCycles [
 	| model room1 room2 exit1 exit2 ston object |
 	(room1 := STONTestMap new) at: #name put: 'Room 1'.
 	(room2 := STONTestMap new) at: #name put: 'Room 2'.
@@ -106,7 +106,7 @@ STONTests >> testRoomExitCycles [
 ]
 
 { #category : #tests }
-STONTests >> testToString [
+STONTest >> testToString [
 	| object |
 	object := STON listClass withAll: { 1. 0. -1. true. false. nil }.
 	self assert: (STON toString: object) = '[1,0,-1,true,false,nil]'

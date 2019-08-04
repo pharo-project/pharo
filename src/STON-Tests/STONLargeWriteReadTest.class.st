@@ -2,13 +2,13 @@
 STONLargeWriteReadTests test the optimalizations for large structures.
 "
 Class {
-	#name : #STONLargeWriteReadTests,
-	#superclass : #STONWriteReadTests,
+	#name : #STONLargeWriteReadTest,
+	#superclass : #STONWriteReadTest,
 	#category : #'STON-Tests-Writer'
 }
 
 { #category : #private }
-STONLargeWriteReadTests >> materialize: string [
+STONLargeWriteReadTest >> materialize: string [
 	^ STON reader
 		on: string readStream;
 		optimizeForLargeStructures;
@@ -16,7 +16,7 @@ STONLargeWriteReadTests >> materialize: string [
 ]
 
 { #category : #private }
-STONLargeWriteReadTests >> serialize: anObject [
+STONLargeWriteReadTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
 		STON writer 
 			on: stream; 
@@ -25,7 +25,7 @@ STONLargeWriteReadTests >> serialize: anObject [
 ]
 
 { #category : #private }
-STONLargeWriteReadTests >> serializeJson: anObject [
+STONLargeWriteReadTest >> serializeJson: anObject [
 	^ String streamContents: [ :stream |
 		STON jsonWriter 
 			on: stream; 
