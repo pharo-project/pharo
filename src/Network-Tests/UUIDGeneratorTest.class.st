@@ -2,7 +2,7 @@
 I test the UUID Generator
 "
 Class {
-	#name : #UUIDGeneratorTests,
+	#name : #UUIDGeneratorTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'generator'
@@ -11,13 +11,13 @@ Class {
 }
 
 { #category : #running }
-UUIDGeneratorTests >> setUp [
+UUIDGeneratorTest >> setUp [
 	super setUp.
 	generator := UUIDGenerator new
 ]
 
 { #category : #testing }
-UUIDGeneratorTests >> testCounterRollover [
+UUIDGeneratorTest >> testCounterRollover [
 	| previousUuid uuid |
 	previousUuid := generator next.
 	"the internal counter inside generator will rollover at 16r10000,
@@ -31,13 +31,13 @@ UUIDGeneratorTests >> testCounterRollover [
 ]
 
 { #category : #testing }
-UUIDGeneratorTests >> testDefault [
+UUIDGeneratorTest >> testDefault [
 	self assert: UUIDGenerator default equals: UUIDGenerator default.
 	self deny: UUIDGenerator next isNilUUID 
 ]
 
 { #category : #testing }
-UUIDGeneratorTests >> testOne [
+UUIDGeneratorTest >> testOne [
 	| uuid |
 	uuid := generator next.
 	self assert: (uuid isKindOf: UUID).
@@ -45,14 +45,14 @@ UUIDGeneratorTests >> testOne [
 ]
 
 { #category : #testing }
-UUIDGeneratorTests >> testSpeed [
+UUIDGeneratorTest >> testSpeed [
 	self 
 		should: [ 100000 timesRepeat: [ generator next ] ] 
 		notTakeMoreThan: 1 second
 ]
 
 { #category : #testing }
-UUIDGeneratorTests >> testTwoDifferentGenerator [
+UUIDGeneratorTest >> testTwoDifferentGenerator [
 	| generator1 generator2 uuid1 uuid2 time1 time2 |
 	generator1 := UUIDGenerator new.
 	generator2 := UUIDGenerator new.
@@ -69,7 +69,7 @@ UUIDGeneratorTests >> testTwoDifferentGenerator [
 ]
 
 { #category : #testing }
-UUIDGeneratorTests >> testTwoSameGenerator [
+UUIDGeneratorTest >> testTwoSameGenerator [
 	| uuid1 uuid2 time1 time2 |
 	uuid1 := generator next.
 	uuid2 := generator next.
@@ -86,7 +86,7 @@ UUIDGeneratorTests >> testTwoSameGenerator [
 ]
 
 { #category : #testing }
-UUIDGeneratorTests >> testUniqueness [
+UUIDGeneratorTest >> testUniqueness [
 	| uuids count |
 	count := 100000.
 	uuids := Set new: count.
@@ -95,7 +95,7 @@ UUIDGeneratorTests >> testUniqueness [
 ]
 
 { #category : #private }
-UUIDGeneratorTests >> timeFromUUID: uuid [
+UUIDGeneratorTest >> timeFromUUID: uuid [
 	| bytes in |
 	in := uuid readStream.
 	bytes := ByteArray streamContents: [ :out |

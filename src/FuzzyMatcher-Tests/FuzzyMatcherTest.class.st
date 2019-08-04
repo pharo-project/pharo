@@ -2,13 +2,13 @@
 Tests for FuzzyMatcher. 
 "
 Class {
-	#name : #FuzzyMatcherTests,
+	#name : #FuzzyMatcherTest,
 	#superclass : #TestCase,
 	#category : #'FuzzyMatcher-Tests-Tests'
 }
 
 { #category : #asserting }
-FuzzyMatcherTests >> assert: matcher scoreFor: aString equals: aBlockOrNumber [
+FuzzyMatcherTest >> assert: matcher scoreFor: aString equals: aBlockOrNumber [
 
 	matcher match: aString ifScored: [ :score |
 		self assert: score equals: aBlockOrNumber value.
@@ -19,13 +19,13 @@ FuzzyMatcherTests >> assert: matcher scoreFor: aString equals: aBlockOrNumber [
 ]
 
 { #category : #running }
-FuzzyMatcherTests >> newMatcher [
+FuzzyMatcherTest >> newMatcher [
 
 	^ FuzzyMatcher new
 ]
 
 { #category : #tests }
-FuzzyMatcherTests >> testAllMatchingIn [
+FuzzyMatcherTest >> testAllMatchingIn [
 
 	| input output |
 	
@@ -36,7 +36,7 @@ FuzzyMatcherTests >> testAllMatchingIn [
 ]
 
 { #category : #tests }
-FuzzyMatcherTests >> testAssumptions [
+FuzzyMatcherTest >> testAssumptions [
 
 	self
 	 	
@@ -47,7 +47,7 @@ FuzzyMatcherTests >> testAssumptions [
 ]
 
 { #category : #tests }
-FuzzyMatcherTests >> testChangePattern [
+FuzzyMatcherTest >> testChangePattern [
 
 	| matcher |
 	
@@ -67,7 +67,7 @@ FuzzyMatcherTests >> testChangePattern [
 ]
 
 { #category : #tests }
-FuzzyMatcherTests >> testClassSideAPI [
+FuzzyMatcherTest >> testClassSideAPI [
 
 	"if the protocol is changed, so should the class comment"
 	FuzzyMatcher class protocols detect: [ :p | p = #'utilities api' ].
@@ -86,7 +86,7 @@ FuzzyMatcherTests >> testClassSideAPI [
 ]
 
 { #category : #tests }
-FuzzyMatcherTests >> testEmptyPattern [
+FuzzyMatcherTest >> testEmptyPattern [
 	| matcher |
 	matcher := self newMatcher.
 
@@ -98,7 +98,7 @@ FuzzyMatcherTests >> testEmptyPattern [
 ]
 
 { #category : #tests }
-FuzzyMatcherTests >> testIsSeperator [
+FuzzyMatcherTest >> testIsSeperator [
 
 	| matcher |
 	
@@ -113,7 +113,7 @@ FuzzyMatcherTests >> testIsSeperator [
 ]
 
 { #category : #tests }
-FuzzyMatcherTests >> testMatching [
+FuzzyMatcherTest >> testMatching [
 
 	| matcher |
 	
@@ -128,7 +128,7 @@ FuzzyMatcherTests >> testMatching [
 ]
 
 { #category : #tests }
-FuzzyMatcherTests >> testScoreValues [
+FuzzyMatcherTest >> testScoreValues [
 
 	| matcher |
 	
@@ -193,7 +193,7 @@ FuzzyMatcherTests >> testScoreValues [
 ]
 
 { #category : #tests }
-FuzzyMatcherTests >> testSortedByScore [
+FuzzyMatcherTest >> testSortedByScore [
 
 	| input output |
 	

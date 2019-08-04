@@ -2,30 +2,30 @@
 Functional tests for image IO to binary streams and files for the major formats (JPEG,PNG,GIF,BMP)
 "
 Class {
-	#name : #ImageReadWriterTests,
+	#name : #ImageReadWriterTest,
 	#superclass : #TestCase,
 	#category : #'Graphics-Tests-Files'
 }
 
 { #category : #accessing }
-ImageReadWriterTests >> pharoLogoForm [
+ImageReadWriterTest >> pharoLogoForm [
 	^ (PNGReadWriter on: (ZnBase64Encoder new decode: PolymorphSystemSettings pharoLogoContents) readStream) nextImage
 ]
 
 { #category : #accessing }
-ImageReadWriterTests >> pharoLogoFormDepth8 [
+ImageReadWriterTest >> pharoLogoFormDepth8 [
 	^ self pharoLogoFormNonTransparent asFormOfDepth: 8
 ]
 
 { #category : #accessing }
-ImageReadWriterTests >> pharoLogoFormNonTransparent [
+ImageReadWriterTest >> pharoLogoFormNonTransparent [
 	^ self pharoLogoForm 
 		mapColor: Color transparent to: Color white;
 		yourself
 ]
 
 { #category : #tests }
-ImageReadWriterTests >> testBmpWriteReadInMemory [
+ImageReadWriterTest >> testBmpWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormNonTransparent.
 	bytes := ByteArray streamContents: [ :out | BMPReadWriter putForm: form onStream: out ].
@@ -38,7 +38,7 @@ ImageReadWriterTests >> testBmpWriteReadInMemory [
 ]
 
 { #category : #tests }
-ImageReadWriterTests >> testBmpWriteReadUsingFiles [
+ImageReadWriterTest >> testBmpWriteReadUsingFiles [
 	| form file result |
 	form := self pharoLogoFormNonTransparent.
 	file := (self class name asString , '-pharo-logo.bmp') asFileReference.
@@ -55,7 +55,7 @@ ImageReadWriterTests >> testBmpWriteReadUsingFiles [
 ]
 
 { #category : #tests }
-ImageReadWriterTests >> testGifWriteReadInMemory [
+ImageReadWriterTest >> testGifWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormDepth8.
 	bytes := ByteArray streamContents: [ :out | GIFReadWriter putForm: form onStream: out ].
@@ -68,7 +68,7 @@ ImageReadWriterTests >> testGifWriteReadInMemory [
 ]
 
 { #category : #tests }
-ImageReadWriterTests >> testGifWriteReadUsingFiles [
+ImageReadWriterTest >> testGifWriteReadUsingFiles [
 	| form file result |
 	form := self pharoLogoFormDepth8.
 	file := (self class name asString , '-pharo-logo.gif') asFileReference.
@@ -84,7 +84,7 @@ ImageReadWriterTests >> testGifWriteReadUsingFiles [
 ]
 
 { #category : #tests }
-ImageReadWriterTests >> testHasMagicNumber [
+ImageReadWriterTest >> testHasMagicNumber [
 	"Tests now account for the new Streams, for which we cannot
 	 assume we will be able to know the whole size"
 	| exampleNumber writerStream failStream failTooShortStream reader |
@@ -108,7 +108,7 @@ ImageReadWriterTests >> testHasMagicNumber [
 ]
 
 { #category : #tests }
-ImageReadWriterTests >> testJpegWriteReadInMemory [
+ImageReadWriterTest >> testJpegWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormNonTransparent.
 	bytes := ByteArray streamContents: [ :out | PluginBasedJPEGReadWriter putForm: form onStream: out ].
@@ -121,7 +121,7 @@ ImageReadWriterTests >> testJpegWriteReadInMemory [
 ]
 
 { #category : #tests }
-ImageReadWriterTests >> testJpegWriteReadUsingFiles [
+ImageReadWriterTest >> testJpegWriteReadUsingFiles [
 	| form file result |
 	form := self pharoLogoFormNonTransparent.
 	file := (self class name asString , '-pharo-logo.jpeg') asFileReference.
@@ -137,7 +137,7 @@ ImageReadWriterTests >> testJpegWriteReadUsingFiles [
 ]
 
 { #category : #tests }
-ImageReadWriterTests >> testPluginBasedJpegWriteReadInMemory [
+ImageReadWriterTest >> testPluginBasedJpegWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormNonTransparent.
 	bytes := ByteArray streamContents: [ :out | PluginBasedJPEGReadWriter putForm: form onStream: out ].
@@ -150,7 +150,7 @@ ImageReadWriterTests >> testPluginBasedJpegWriteReadInMemory [
 ]
 
 { #category : #tests }
-ImageReadWriterTests >> testPluginBasedJpegWriteReadUsingFiles [
+ImageReadWriterTest >> testPluginBasedJpegWriteReadUsingFiles [
 	| form file result |
 	form := self pharoLogoFormNonTransparent.
 	file := (self class name asString , '-pharo-logo.jpeg') asFileReference.
@@ -166,7 +166,7 @@ ImageReadWriterTests >> testPluginBasedJpegWriteReadUsingFiles [
 ]
 
 { #category : #tests }
-ImageReadWriterTests >> testPngWriteReadInMemory [
+ImageReadWriterTest >> testPngWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoForm.
 	bytes := ByteArray streamContents: [ :out | PNGReadWriter putForm: form onStream: out ].
@@ -179,7 +179,7 @@ ImageReadWriterTests >> testPngWriteReadInMemory [
 ]
 
 { #category : #tests }
-ImageReadWriterTests >> testPngWriteReadUsingFiles [
+ImageReadWriterTest >> testPngWriteReadUsingFiles [
 	| form file result |
 	form := self pharoLogoForm.
 	file := (self class name asString , '-pharo-logo.png') asFileReference.

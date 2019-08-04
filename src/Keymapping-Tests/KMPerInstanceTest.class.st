@@ -2,13 +2,13 @@
 SUnit tests for key mapping per instance
 "
 Class {
-	#name : #KMPerInstanceTests,
+	#name : #KMPerInstanceTest,
 	#superclass : #AbstractKeymappingTest,
 	#category : #'Keymapping-Tests'
 }
 
 { #category : #tests }
-KMPerInstanceTests >> testAddMoreThanOneHandler [
+KMPerInstanceTest >> testAddMoreThanOneHandler [
 	| flag morph |
 	flag := 0.
 	morph := Morph new.
