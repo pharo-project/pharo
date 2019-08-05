@@ -145,28 +145,6 @@ ReleaseTest >> testNoEmptyPackages [
 ]
 
 { #category : #testing }
-ReleaseTest >> testNoShadowVariablePresentInTheImage [
-	| variables |
-	self
-		assertEmpty:
-			(SystemNavigation default allClasses
-				select: [ :class | 
-					variables := Set new.
-					class methods
-						do: [ :method | 
-							| methodVariables |
-							methodVariables := Set new.
-							methodVariables addAll: method tempNames.
-							method blockNodes
-								do: [ :block | 
-									methodVariables
-										addAll: block temporaryNames;
-										addAll: block argumentNames ].
-							variables addAll: (methodVariables difference: (method pragmas select: [ :p | p selector = #intentionalShadowedVariable: ] thenCollect: [ :p | p argumentAt: 1 ])) ].
-					(variables intersection: class allInstVarNames) isNotEmpty ])
-]
-
-{ #category : #testing }
 ReleaseTest >> testObsoleteClasses [
 	| obsoleteClasses |
 	
