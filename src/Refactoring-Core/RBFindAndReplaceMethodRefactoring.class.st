@@ -1,0 +1,271 @@
+"
+I am a tool to find occurrences of a method in other methods.
+
+You can select a method and find the occurrences in a search range of your choice, in case of finding occurrences you can change the block containing the occurrence with a call to the selected method.
+
+This refactoring goes hand in hand with RBExtractMethodRefactoring when replacing the code.
+"
+Class {
+	#name : #RBFindAndReplaceMethodRefactoring,
+	#superclass : #RBRefactoring,
+	#instVars : [
+		'method',
+		'listToFindMatches',
+		'class',
+		'sourceSelector',
+		'matchNodes',
+		'positionIndex',
+		'replaceAll'
+	],
+	#category : #'Refactoring-Core-Refactorings'
+}
+
+{ #category : #'as yet unclassified' }
+RBFindAndReplaceMethodRefactoring class >> find: aMethod [ 
+	^ self new 
+		method: aMethod; 
+		yourself 
+]
+
+{ #category : #'as yet unclassified' }
+RBFindAndReplaceMethodRefactoring class >> find: aMethod andReplaceIn: selectorCollection [
+	^ self new 
+		method: aMethod; 
+		listToFindMatches: selectorCollection;
+		yourself 
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> argumentsOf: aDictionary [
+	|args limit|
+	limit := method argumentNames size - 1.
+	args := OrderedCollection new.
+	0 to: limit do: [ :each |
+		args add: 
+			(aDictionary at: (aDictionary keys detect: 
+				[ :e | (e name asString) =  ('`@argMatch', each asString)])) sourceCode
+	 ].
+	^ args
+]
+
+{ #category : #preconditions }
+RBFindAndReplaceMethodRefactoring >> checkIsAbstractMethod [
+	method isAbstract ifTrue: [ self refactoringError: ('<1p> method is abstract' expandMacrosWith: sourceSelector ) ]
+]
+
+{ #category : #preconditions }
+RBFindAndReplaceMethodRefactoring >> checkIsSubclass: aClass [
+	aClass ~= class ifTrue: [ 
+		(class subclasses includes: aClass) 
+			ifFalse: [ self refactoringError: 
+			('<1p> is not subclass of <2s>'
+			expandMacrosWith: aClass name
+						with: class name) ] ]
+]
+
+{ #category : #preconditions }
+RBFindAndReplaceMethodRefactoring >> checkOverridesSelectorAnyOf: aList [
+	aList do: [ :each | each origin ~= method origin ifTrue:
+		[( (self model classNamed: each origin name asSymbol) directlyDefinesMethod: method selector)
+		ifTrue: [ self refactoringError: 
+			('<1p> overrides the method <2s>'
+			expandMacrosWith: each name
+						with: method selector) ]] ]
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> combinationsOfNodes: coll [
+	^ Set newFrom: (Array
+        streamContents:
+            [ :stream | coll combinations: 2 atATimeDo: [ :each | stream nextPut: each copy ] ])
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> extract: ocurrence of: aMethod [ 
+	|refactoring association |
+	refactoring := self extractMethodRefactoring. 
+	association := ocurrence asOrderedCollection at: positionIndex.
+	refactoring 	extract: association key from: aMethod selector in: aMethod origin.
+	refactoring setOption: #existingSelector toUse:  [ :ref | 
+			ref parameters: (self argumentsOf: association value).
+			method selector].
+	refactoring primitiveExecute.
+	^ refactoring 
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> extract: ocurrence of: aMethod executing: aSymbol [
+	|refactoring association |
+	refactoring := self extractMethodRefactoring. 
+	association := ocurrence asOrderedCollection at: positionIndex.
+	refactoring 	extract: association key from: aMethod selector in: aMethod origin.
+	refactoring setOption: #existingSelector toUse:  [ :ref | 
+			ref parameters: (self argumentsOf: association value).
+			method selector].
+	refactoring perform: aSymbol.
+	^ refactoring 
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> extractMethodRefactoring [
+	^ RBExtractMethodRefactoring new
+			setOption: #useExistingMethod 
+			toUse:  [ :ref :selector | 
+				UIManager default 
+					confirm: 'Do you want use existing method ', selector printString, '?'
+					label: 'Warninig'];
+			yourself 
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> findAndReplaceOcurrencesIn: aMethod [ 
+	|ocurrences|
+	ocurrences := self findOcurrencesIn: aMethod selector of: aMethod origin.
+	self replaceOcurrences: ocurrences on: aMethod
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> findOcurrences [
+	replaceAll := false.
+	listToFindMatches 
+		do: [ :aMethod | positionIndex := 1.
+			 self findAndReplaceOcurrencesIn: aMethod ]
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> findOcurrencesIn: aMethod of: aClass [
+	|methodNode matches sourceCode|
+	methodNode := (aClass >> aMethod) sourceNode.
+	sourceCode := methodNode sourceCode.
+	matches := Set new.
+	(self nodesOf: methodNode) do: [ :each | 
+            each first < each last
+                ifTrue: [ self match: (RBPatternParser parseExpression: (sourceCode copyFrom: each first to: each last )) 
+										with: each first 
+										and: each last 
+										in: matches]].
+	methodNode body nodesDo: [ :node | self match: node with: node start and: node stop in: matches ].
+	
+    ^ matches
+]
+
+{ #category : #initialization }
+RBFindAndReplaceMethodRefactoring >> initializeMatchNode [
+	|visitor node sourceCode|
+
+	visitor := RBMatchVisitor new.
+	node := method sourceNode copy .
+	node acceptVisitor: visitor.
+	sourceCode := self replaceArgumentsByPattern: node newSource .
+	sourceCode := sourceCode copyFrom: (method sourceNode body statements first start + visitor difference) 
+									to: sourceCode size.
+	matchNodes := OrderedCollection new.
+	matchNodes add: (RBPatternParser parseExpression: sourceCode).
+	node lastIsReturn ifTrue: [  node hasMultipleReturns 
+	ifFalse: [ sourceCode := sourceCode copyReplaceAll: '^' with:  ''.
+		matchNodes add: (RBPatternParser parseExpression: sourceCode) ] ].
+	
+]
+
+{ #category : #accessing }
+RBFindAndReplaceMethodRefactoring >> listToFindMatches: aCollection [
+	listToFindMatches := aCollection 
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> match: node with: first and: last in: matches [  
+	matchNodes do: [ :matchNode | [ matchNode
+                      match: node
+                      onSuccess: [ :map | matches add: (first to: last) -> map ]
+                      onFailure: [  ] ]
+						on: Exception 
+						do: [ :e | e ]]
+]
+
+{ #category : #accessing }
+RBFindAndReplaceMethodRefactoring >> method: aMethod [
+	method := aMethod .
+	class := method origin
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> nodesOf: methodNode [ 
+	|starts ends combinations |
+	starts := methodNode body statements collect: [ :node | node start ].
+	ends := methodNode body statements collect: [ :node | node stop ].
+	combinations := OrderedCollection new.
+	starts do: [ :start | ends do: [ :end | start < end ifTrue: [
+		combinations add: (Array with: start with: end) ] ] ].
+	^ combinations 
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> orderOcurrences: ocurrences [
+	^ ocurrences asOrderedCollection sort: [ :first :second | first key first < second key first ]
+]
+
+{ #category : #preconditions }
+RBFindAndReplaceMethodRefactoring >> positionIndex [
+	^positionIndex 
+]
+
+{ #category : #preconditions }
+RBFindAndReplaceMethodRefactoring >> positionIndex: aNumber [
+	positionIndex := aNumber 
+]
+
+{ #category : #preconditions }
+RBFindAndReplaceMethodRefactoring >> preconditions [
+	"Verificar si las clases donde se buscaran ocurrencias son subclases de la clase del metodo"
+	"Verificar si esas subclases no sobreescriben el metodo"
+	"Verificar que el metodo no sea abstracto"
+	""
+	listToFindMatches ifNil: [ (self options at: #listToSearch) value: method value: self  ].
+	^ (listToFindMatches
+		inject: RBCondition empty 
+		into: [ :condition :variable | condition & (RBCondition withBlock: [self checkIsSubclass: variable origin. true]) ])
+		& (RBCondition withBlock: [self checkIsAbstractMethod. true])
+		& (RBCondition withBlock: [self checkOverridesSelectorAnyOf: listToFindMatches . true ])
+]
+
+{ #category : #preconditions }
+RBFindAndReplaceMethodRefactoring >> replaceAll: aBoolean [
+	replaceAll := aBoolean 
+]
+
+{ #category : #initialization }
+RBFindAndReplaceMethodRefactoring >> replaceArgumentsByPattern: sourceCode [ 
+	|newSource|
+	
+	newSource := sourceCode copyWithRegex: 'tempMatch*' matchesReplacedWith: '`@tempMatch' .
+	newSource := newSource copyWithRegex: 'argMatch*' matchesReplacedWith: '`@argMatch'.
+	
+	^ newSource 
+	
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> replaceOcurrences: ocurrences on: aMethod [
+	
+	ocurrences ifNotEmpty: [
+		| refactoring dialog ocurrencesSize |
+		ocurrencesSize := ocurrences size.
+		replaceAll ifTrue: [ self extract: ( self orderOcurrences: ocurrences ) of: aMethod executing: #execute.
+			ocurrencesSize := ocurrencesSize - 1 ]
+		ifFalse: [ 
+			refactoring := self extract: ( self orderOcurrences: ocurrences ) of: aMethod executing: #primitiveExecute.
+			dialog := (RBReplacePreview change: refactoring) 
+			skipAction: [ :presenter | positionIndex := positionIndex + 1.
+				ocurrencesSize := ocurrencesSize + 1. presenter beOk; close ];
+			replaceAllAction: [ :presenter | replaceAll := true. presenter beOk; close ]; open.
+			dialog cancelled ifTrue: [ CmdCommandAborted signal]
+			ifFalse: [ ocurrencesSize := ocurrencesSize - 1 ].
+		 ].
+	ocurrencesSize >= positionIndex ifTrue: [ self findAndReplaceOcurrencesIn: aMethod ] ]
+]
+
+{ #category : #transforming }
+RBFindAndReplaceMethodRefactoring >> transform [
+	self initializeMatchNode.
+	self findOcurrences.
+]

@@ -17,7 +17,8 @@ Class {
 		'parameters',
 		'needsReturn',
 		'selectorNewMethod',
-		'parameterMap'
+		'parameterMap',
+		'newExtractedSelector'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -122,6 +123,11 @@ RBExtractMethodRefactoring >> checkTemporaries [
 ]
 
 { #category : #transforming }
+RBExtractMethodRefactoring >> compiledMethod [
+	^ class realClass >> selector
+]
+
+{ #category : #transforming }
 RBExtractMethodRefactoring >> createTemporariesInExtractedMethodFor: assigned [ 
 	assigned do: [:each | extractedParseTree body addTemporaryNamed: each]
 ]
@@ -129,9 +135,11 @@ RBExtractMethodRefactoring >> createTemporariesInExtractedMethodFor: assigned [
 { #category : #transforming }
 RBExtractMethodRefactoring >> existingSelector [
 	"Try to find an existing method instead of creating a new one"
-
-	^class allSelectors detect: [:each | self isMethodEquivalentTo: each]
-		ifNone: [nil]
+	|existSelector |
+	existSelector := self requestExistingSelector.
+	existSelector ifNotNil: [ ^ existSelector ] ifNil: [
+		^ class allSelectors detect: [:each | self isMethodEquivalentTo: each]
+			ifNone: [nil]]
 ]
 
 { #category : #initialization }
