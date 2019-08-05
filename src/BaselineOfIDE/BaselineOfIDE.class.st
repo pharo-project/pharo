@@ -173,6 +173,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Tests'.
 		spec package: 'System-Object Events-Tests'.
+		spec package: 'System-Installers-Tests' 
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'AST-Core-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
@@ -449,6 +450,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Kernel-Tests-Group' "dependency"
 	'Debugging-Utils-Tests'
 	'Monticello-Tests'	"required by MonticelloMocks"
+	'System-Installers-Tests' 
 	'MonticelloMocks'
 	'Fuel-Tests-Core'
 	'Fuel-Platform-Pharo-Core-Tests'	

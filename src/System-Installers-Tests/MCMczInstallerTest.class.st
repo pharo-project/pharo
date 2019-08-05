@@ -5,7 +5,7 @@ Class {
 		'expected',
 		'diff'
 	],
-	#category : #'Monticello-Tests-IO'
+	#category : #'System-Installers-Tests'
 }
 
 { #category : #testing }
