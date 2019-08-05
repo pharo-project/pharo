@@ -35,13 +35,7 @@ CBSelectPackageBrowser class >> defaultSpec [
 				yourself)
 			withConstraints: [ :contraint | contraint height: 25 ];
 		add:
-			(SpBoxLayout newHorizontal
-				add: #addButton;
-				add: #addAllButton;
-				add: #removeButton;
-				add: #removeAllButton;
-				add: #nextButton;
-				yourself)
+			#buttonBarPresenter
 			withConstraints: [ :contraint | contraint height: 25 ];
 		yourself
 ]

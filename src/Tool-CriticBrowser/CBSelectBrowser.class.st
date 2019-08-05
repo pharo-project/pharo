@@ -28,11 +28,7 @@ Class {
 	#instVars : [
 		'selectedPresenter',
 		'toSelectPresenter',
-		'addAllButton',
-		'addButton',
-		'nextButton',
-		'removeAllButton',
-		'removeButton'
+		'buttonBarPresenter'
 	],
 	#category : #'Tool-CriticBrowser-Parts'
 }
@@ -45,14 +41,7 @@ CBSelectBrowser class >> defaultSpec [
 				add: #toSelectPresenter;
 				add: #selectedPresenter;
 				yourself);
-		add:
-			(SpBoxLayout newHorizontal
-				add: #addButton;
-				add: #addAllButton;
-				add: #removeButton;
-				add: #removeAllButton;
-				add: #nextButton;
-				yourself)
+		add: #buttonBarPresenter
 			withConstraints: [ :contraint | contraint height: 25 ];
 		yourself
 ]
@@ -70,33 +59,44 @@ CBSelectBrowser >> addItems [
 
 { #category : #initialization }
 CBSelectBrowser >> initializeWidgets [
-	addButton := self newButton.
-	addAllButton := self newButton.
-	removeButton := self newButton.
-	removeAllButton := self newButton.
-	nextButton := self newButton.
-
-	addButton
-		label: 'Add';
-		action: [ self addItems ].
-	addAllButton
-		label: 'Add all';
-		action: [ self addAllItems ].
-	removeButton
-		label: 'Remove';
-		action: [ self removeItems ].
-	removeAllButton
-		label: 'Remove all';
-		action: [ self removeAllItems ].
-	nextButton
-		label: 'Next';
-		action: [ self nextAction ].
-
+	buttonBarPresenter := self newActionBar.
+	
+	buttonBarPresenter
+		add:
+			(self newButton
+				label: 'Add';
+				help: 'Add an item to the selectedItem';
+				action: [ self addItems ];
+				yourself);
+		add:
+			(self newButton
+				label: 'Add all';
+				help: 'Add all items to SelectedItem';
+				action: [ self addAllItems ];
+				yourself);
+		add:
+			(self newButton
+				label: 'Remove';
+				help: 'remove the selected item from selectedItem';
+				action: [ self removeItems ];
+				yourself);
+		add:
+			(self newButton
+				label: 'Remove all';
+				help: 'remove all items from selectedItem';
+				action: [ self removeAllItems ];
+				yourself);
+		add:
+			(self newButton
+				label: 'Next';
+				help: 'Next step';
+				action: [ self removeAllItems ];
+				yourself).
+				
 	self focusOrder
-		add: addButton;
-		add: addAllButton;
-		add: removeButton;
-		add: removeAllButton
+		add: toSelectPresenter;
+		add: selectedPresenter;
+		add: buttonBarPresenter
 ]
 
 { #category : #initialization }
