@@ -214,7 +214,9 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Metacello-Gitlab-Tests'.
 
 		spec package: 'RPackage-Tests'.
+		spec package: 'Tests'.
 		spec package: 'Monticello-Tests'.
+		spec package: 'MonticelloGUI-Tests'.
 
 		spec package: 'Glamour-Announcements'.
 		spec package: 'Glamour-Helpers'.
@@ -450,6 +452,8 @@ spec group: 'General-Help-Group' with: #(
 spec group: 'General-Tests-Group' with: #(
 	'Kernel-Tests-Group' "dependency"
 	'Debugging-Utils-Tests'
+	'Tests'
+	'RPackage-Tests'
 	'Monticello-Tests'	"required by MonticelloMocks"
 	'System-Installers-Tests' 
 	'MonticelloMocks'
