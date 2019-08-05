@@ -172,8 +172,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Tests'.
+		spec package: 'System-Installers-Tests'.
 		spec package: 'System-Object Events-Tests'.
-		spec package: 'System-Installers-Tests' 
 		spec package: 'System-OSEnvironments-Tests'.
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'AST-Core-Tests'.
