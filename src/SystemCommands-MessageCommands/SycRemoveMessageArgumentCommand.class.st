@@ -21,6 +21,16 @@ SycRemoveMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 		and: [ aToolContext lastSelectedMessage argumentNames notEmpty]
 ]
 
+{ #category : #activation }
+SycRemoveMessageArgumentCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^CmdContextMenuActivation 
+		byItemOf: ClyMoreRefactorsMenuGroup 
+		order: 40
+		for: ClyMethod asCalypsoItemContext
+]
+
 { #category : #accessing }
 SycRemoveMessageArgumentCommand >> argumentName [
 	^ argumentName
@@ -38,6 +48,12 @@ SycRemoveMessageArgumentCommand >> createRefactoring [
 		removeParameter: argumentName
 		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
 		selector: originalMessage selector
+]
+
+{ #category : #accessing }
+SycRemoveMessageArgumentCommand >> defaultMenuIconName [ 
+	^#remove
+
 ]
 
 { #category : #accessing }

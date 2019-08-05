@@ -690,6 +690,12 @@ CompiledMethod >> name [
 ]
 
 { #category : #accessing }
+CompiledMethod >> numberOfReservedLiterals [
+
+	^ 2
+]
+
+{ #category : #accessing }
 CompiledMethod >> origin [
 	^ self methodClass findOriginClassOf: self
 ]

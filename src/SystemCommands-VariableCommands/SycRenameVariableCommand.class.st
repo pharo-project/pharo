@@ -25,6 +25,11 @@ SycRenameVariableCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isVariableSelected and: [ aToolContext isGlobalVariableSelected not ]
 ]
 
+{ #category : #accessing }
+SycRenameVariableCommand class >> defaultMenuIconName [ 
+	^ #edit
+]
+
 { #category : #execution }
 SycRenameVariableCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.

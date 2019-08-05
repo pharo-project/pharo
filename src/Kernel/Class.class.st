@@ -493,12 +493,12 @@ Class >> environment: anEnvironment [
 ]
 
 { #category : #'subclass creation - weak' }
-Class >> ephemeronSubclass: className instanceVariableNames: instVarNames 
+Class >> ephemeronSubclass: className instanceVariableNames: instVarNameList 
 	classVariableNames: classVarNames package: cat [
 	"Added to allow for a simplified subclass creation experience. "
 	
 	^ self ephemeronSubclass: className 
-		instanceVariableNames: instVarNames 
+		instanceVariableNames: instVarNameList 
 		classVariableNames: classVarNames 
 		poolDictionaries: ''
 		category: cat
@@ -988,12 +988,12 @@ Class >> subclass: t instanceVariableNames: ins [
 ]
 
 { #category : #'subclass creation' }
-Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNames classVariableNames: classVarNames package: aPackageSymbol [
+Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames package: aPackageSymbol [
 	"Added to allow for a simplified subclass creation experience. "
 
 	^ self
 		subclass: aSubclassSymbol
-		instanceVariableNames: instVarNames
+		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
 		poolDictionaries: ''
 		package: aPackageSymbol
@@ -1169,11 +1169,11 @@ Class >> variableByteSubclass: t instanceVariableNames: f
 ]
 
 { #category : #'subclass creation - variable' }
-Class >> variableSubclass: className instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
+Class >> variableSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
 	"Added to allow for a simplified subclass creation experience. "
 
 	^ self variableSubclass: className
-		instanceVariableNames: instVarNames 
+		instanceVariableNames: instVarNameList 
 		classVariableNames: classVarNames 
 		poolDictionaries: ''
 		category: cat
@@ -1181,8 +1181,8 @@ Class >> variableSubclass: className instanceVariableNames: instVarNames classVa
 ]
 
 { #category : #'subclass creation - variable' }
-Class >> variableSubclass: className instanceVariableNames: instVarNames classVariableNames: classVarNames package: cat [
-	^self variableSubclass: className instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat
+Class >> variableSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
+	^self variableSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat
 ]
 
 { #category : #'subclass creation - variable' }
@@ -1209,19 +1209,19 @@ Class >> variableSubclass: t instanceVariableNames: f classVariableNames: d pool
 ]
 
 { #category : #'subclass creation - variableWord' }
-Class >> variableWordSubclass: className instanceVariableNames: instVarNames
+Class >> variableWordSubclass: className instanceVariableNames: instVarNameList
 	classVariableNames: classVarNames category: cat [
 	"Added to allow for a simplified subclass creation experience. "
 	 
 	^ self variableWordSubclass: className
-		instanceVariableNames: instVarNames  
+		instanceVariableNames: instVarNameList  
 		classVariableNames: classVarNames 
 		poolDictionaries: ''
 		package: cat
 ]
 
 { #category : #'subclass creation - variableWord' }
-Class >> variableWordSubclass: className instanceVariableNames: instVarNames
+Class >> variableWordSubclass: className instanceVariableNames: instVarNameList
 	classVariableNames: classVarNames package: cat [
 	"
 	Variable word is like variable byte (ByteArray), variable size, with indices instead of named instance variables, but each index points to a full word (32 bits).
@@ -1230,7 +1230,7 @@ Class >> variableWordSubclass: className instanceVariableNames: instVarNames
 	"
 	 
 	^ self variableWordSubclass: className
-		instanceVariableNames: instVarNames  
+		instanceVariableNames: instVarNameList  
 		classVariableNames: classVarNames 
 		poolDictionaries: ''
 		package: cat
@@ -1265,24 +1265,24 @@ Class >> variableWordSubclass: t instanceVariableNames: f
 ]
 
 { #category : #'subclass creation - weak' }
-Class >> weakSubclass: className instanceVariableNames: instVarNames 
+Class >> weakSubclass: className instanceVariableNames: instVarNameList 
 	classVariableNames: classVarNames category: cat [
 	"Added to allow for a simplified subclass creation experience. "
 	
 	^ self weakSubclass: className 
-		instanceVariableNames: instVarNames 
+		instanceVariableNames: instVarNameList 
 		classVariableNames: classVarNames 
 		poolDictionaries: ''
 		category: cat
 ]
 
 { #category : #'subclass creation - weak' }
-Class >> weakSubclass: className instanceVariableNames: instVarNames 
+Class >> weakSubclass: className instanceVariableNames: instVarNameList 
 	classVariableNames: classVarNames package: cat [
 	"Added to allow for a simplified subclass creation experience. "
 	
 	^ self weakSubclass: className 
-		instanceVariableNames: instVarNames 
+		instanceVariableNames: instVarNameList 
 		classVariableNames: classVarNames 
 		poolDictionaries: ''
 		category: cat

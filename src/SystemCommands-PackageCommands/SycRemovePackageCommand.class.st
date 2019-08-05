@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+SycRemovePackageCommand class >> defaultMenuIconName [ 
+	^ #delete
+]
+
+{ #category : #accessing }
 SycRemovePackageCommand >> defaultMenuIconName [
 	^#removeIcon
 ]

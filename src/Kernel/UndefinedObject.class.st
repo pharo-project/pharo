@@ -238,7 +238,7 @@ UndefinedObject >> subclass: nameOfClass instanceVariableNames: instVarNames cla
 	self traceCr: 'Attempt to create ' , nameOfClass , ' as a subclass of nil.  Possibly a class is being loaded before its superclass.'.
 	^ Object
 		subclass: nameOfClass
-		instanceVariableNames: instVarNames
+		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
 		poolDictionaries: poolDictnames
 		package: category

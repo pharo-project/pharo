@@ -17,6 +17,11 @@ SycPushUpVariableCommand >> asRefactorings [
 ]
 
 { #category : #accessing }
+SycPushUpVariableCommand >> defaultMenuIconName [ 
+	^ #up
+]
+
+{ #category : #accessing }
 SycPushUpVariableCommand >> defaultMenuItemName [
 	^'Push up'
 ]

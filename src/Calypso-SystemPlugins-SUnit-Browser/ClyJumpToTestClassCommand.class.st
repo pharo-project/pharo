@@ -39,6 +39,11 @@ ClyJumpToTestClassCommand class >> fullBrowserShortcutActivation [
 ]
 
 { #category : #accessing }
+ClyJumpToTestClassCommand >> defaultMenuIconName [
+	^#jump
+]
+
+{ #category : #accessing }
 ClyJumpToTestClassCommand >> defaultMenuItemName [
 	^ 'Jump to test class'
 ]

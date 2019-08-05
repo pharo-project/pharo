@@ -1,5 +1,19 @@
 "
-I am a preview of push down method refactoring, I can select the methods of class to push down
+I am a preview of push down method refactoring. I can select the methods of class to push down
+
+EXAMPLES
+-------------------------------------------------
+
+RBPushDownPreview on: RBPushDownPreview withSelectors: Array new.
+
+Instance Variables
+-------------------------------------------------
+
+table:                   <TablePresenter> A table to display the possible methods to push down
+label:                   <LabelPresenter> Title of table
+class:                   <Class> class of selected methods
+selectedMethods:         <OrderedCollection> A list with selected methods
+refactoring:             <RBRefactoring> A subclass of RBRefactoring (RBPushUpRefactoring, RBPushDownRefactoring) to update according to the view modifications
 "
 Class {
 	#name : #RBPushDownPreview,
@@ -9,7 +23,6 @@ Class {
 		'label',
 		'class',
 		'selectedMethods',
-		'selectedAbstractMethods',
 		'refactoring'
 	],
 	#category : #'SystemCommands-RefactoringSupport'
@@ -27,19 +40,23 @@ RBPushDownPreview class >> defaultSpec [
 ]
 
 { #category : #examples }
+RBPushDownPreview class >> example [
+	<script>
+	^ (self on: RBPushUpPreview withSelectors: Array new)
+]
+
+{ #category : #examples }
 RBPushDownPreview class >> on: aRefactoring [
-	|temp|
-	temp := self new on: aRefactoring .
-	^ temp openModalWithSpec
+	^ self new on: aRefactoring;
+		openModalWithSpec
 ]
 
 { #category : #examples }
 RBPushDownPreview class >> on: aClass withSelectors: selectors [
-	|temp|
-	temp := self new 
+	^ self new 
 		on: aClass 
-		withSelectors: selectors asOrderedCollection.
-	^ temp openModalWithSpec
+		withSelectors: selectors asOrderedCollection;
+		openModalWithSpec
 ]
 
 { #category : #specs }

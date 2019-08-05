@@ -7,10 +7,3 @@ SycMoveMethodsToClassCommand class >> methodBrowserDragAndDropActivation [
 	^CmdDragAndDropActivation 
 		for: ClyMethod asCalypsoItemContext toDropIn: ClyClass asCalypsoItemContext
 ]
-
-{ #category : #'*Calypso-SystemTools-Core' }
-SycMoveMethodsToClassCommand class >> methodMenuActivation [
-	<classAnnotation>
-	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyMethod asCalypsoItemContext 
-]

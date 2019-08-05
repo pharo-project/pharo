@@ -89,7 +89,7 @@ SystemOrganizer >> orderedTraitsIn: category [
 	^ traits asArray
 ]
 
-{ #category : #remove }
+{ #category : #removing }
 SystemOrganizer >> removeCategoriesMatching: matchString [
 	"Remove all matching categories with their classes"
 	(self categoriesMatching: matchString) do:
@@ -121,7 +121,7 @@ SystemOrganizer >> removeMissingClasses [
 				ifFalse: [ self removeElement: el ] ]
 ]
 
-{ #category : #remove }
+{ #category : #removing }
 SystemOrganizer >> removeSystemCategory: category [
 	"remove all the classes and traits associated with the category"
 

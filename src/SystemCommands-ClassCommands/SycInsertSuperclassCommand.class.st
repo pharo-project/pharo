@@ -8,6 +8,21 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
+{ #category : #activation }
+SycInsertSuperclassCommand class >> browserContextMenuActivation [
+	<classAnnotation>
+	
+	^ CmdContextMenuActivation  
+		byItemOf: ClyMoreRefactorsMenuGroup  
+		order: 30 
+		for: ClyClass asCalypsoItemContext 
+]
+
+{ #category : #accessing }
+SycInsertSuperclassCommand >> defaultMenuIconName [
+	^#smallLoadProject
+]
+
 { #category : #accessing }
 SycInsertSuperclassCommand >> defaultMenuItemName [
 	^'Insert superclass'

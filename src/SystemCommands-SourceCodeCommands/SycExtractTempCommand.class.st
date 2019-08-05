@@ -31,6 +31,11 @@ SycExtractTempCommand >> applyResultInContext: aSourceCodeContext [
 ]
 
 { #category : #accessing }
+SycExtractTempCommand >> defaultMenuIconName [ 
+	^ ##smallUpdateIcon
+]
+
+{ #category : #accessing }
 SycExtractTempCommand >> defaultMenuItemName [
 	^ 'Extract temp'
 ]

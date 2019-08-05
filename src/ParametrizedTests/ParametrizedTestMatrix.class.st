@@ -14,18 +14,37 @@ Class {
 	#category : #'ParametrizedTests-Core'
 }
 
+{ #category : #combination }
+ParametrizedTestMatrix >> * aParametrizedTestMatrix [ 
+
+	| newMatrix |
+	newMatrix := ParametrizedTestMatrix new.
+	self expandMatrix do: [ :subcase1 |
+		aParametrizedTestMatrix asTestMatrix expandMatrix do: [ :subcase2 |
+			newMatrix addCase: subcase1, subcase2  ] ].
+	^ newMatrix
+]
+
+{ #category : #comparing }
+ParametrizedTestMatrix >> = aMatrix [
+
+	^ self expandMatrix = aMatrix expandMatrix
+]
+
 { #category : #cases }
 ParametrizedTestMatrix >> addCase: aCollection [
 
-	cases add: (aCollection asDictionary associations
-		collect: [ :assoc | 
-			ParametrizedTestExpandedParameter new
-				selector: assoc key;
-				valuable: assoc value;
-				yourself ]
+	cases add: (aCollection
+		collect: [ :assoc | assoc asTestParameter ]
 		as: Array).
 		
 	^ self 
+]
+
+{ #category : #converting }
+ParametrizedTestMatrix >> asTestMatrix [
+
+	^ self
 ]
 
 { #category : #generating }
@@ -60,6 +79,12 @@ ParametrizedTestMatrix >> forSelector: aSelector addOptions: someOptions [
 				selector: aSelector;
 				values: someOptions;
 				yourself)
+]
+
+{ #category : #comparing }
+ParametrizedTestMatrix >> hash [
+
+	^ self expandMatrix hash
 ]
 
 { #category : #initialization }

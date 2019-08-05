@@ -17,14 +17,21 @@ HiAbstractRenderer >> cellWidth [
 	^ self subclassResponsibility
 ]
 
-{ #category : #API }
+{ #category : #accessing }
+HiAbstractRenderer >> formExtent [
+	"Answer the pixel extent for the form to be rendered (as a Point)."
+
+	^ self formWidth @ self formHeight
+]
+
+{ #category : #accessing }
 HiAbstractRenderer >> formHeight [
 	"Answer the height in pixels for the form to be rendered."
 
 	^ rowsInterval size * self rowHeight
 ]
 
-{ #category : #API }
+{ #category : #accessing }
 HiAbstractRenderer >> formWidth [
 	"Answer the width in pixels for the form to be rendered."
 
@@ -32,50 +39,11 @@ HiAbstractRenderer >> formWidth [
 	^ (ruler numberOfColumns + 2) * self cellWidth
 ]
 
-{ #category : #rendering }
-HiAbstractRenderer >> initialTranslationInAthensCanvas [
-	"Apply left margin + rowsInterval offset."
-
-	^ self cellWidth @ (-1 * (rowsInterval first - 1) * self rowHeight)
-]
-
 { #category : #API }
 HiAbstractRenderer >> newForm [
 	"Answer a new form, rendered with the current ruler and rowInterval."
 	
-	| athensSurface |
-	athensSurface := AthensCairoSurface extent: self formWidth @ self formHeight.
-	
-	athensSurface drawDuring: [ :athensCanvas |
-		athensCanvas pathTransform translateBy: self initialTranslationInAthensCanvas.
-
-		self renderOn: athensCanvas ].
-
-	^ athensSurface asForm
-]
-
-{ #category : #rendering }
-HiAbstractRenderer >> renderLinks: links on: athensCanvas [ 
-
 	self subclassResponsibility
-]
-
-{ #category : #rendering }
-HiAbstractRenderer >> renderNodes: nodes on: athensCanvas [
-
-	self subclassResponsibility
-]
-
-{ #category : #rendering }
-HiAbstractRenderer >> renderOn: athensCanvas [
-	"Render all nodes and links that correspond to the previously selected rowsInterval in the athensCanvas."
-	
-	| links nodes |
-	nodes := rowsInterval collect: [:row | ruler nodeAtRow: row ].
-	links := rowsInterval flatCollect: [:row | ruler linksAtRow: row ] as: Set.
-
-	self renderLinks: links on: athensCanvas.
-	self renderNodes: nodes on: athensCanvas.
 ]
 
 { #category : #accessing }
@@ -99,6 +67,7 @@ HiAbstractRenderer >> ruler [
 ]
 
 { #category : #accessing }
-HiAbstractRenderer >> ruler: anObject [
-	ruler := anObject
+HiAbstractRenderer >> ruler: aHiRuler [
+	ruler := aHiRuler
+
 ]

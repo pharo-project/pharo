@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+SycCategorizeAllUnclassifiedMethodsCommand >> defaultMenuIconName [
+	^#glamorousBrowse
+]
+
+{ #category : #accessing }
 SycCategorizeAllUnclassifiedMethodsCommand >> defaultMenuItemName [
 	^'Categorize all uncategorized'
 ]

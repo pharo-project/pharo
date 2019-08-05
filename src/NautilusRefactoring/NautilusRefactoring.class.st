@@ -346,6 +346,14 @@ NautilusRefactoring >> handleMethodNameRequest: aMethodName [
 ]
 
 { #category : #display }
+NautilusRefactoring >> handleMethodNameRequest: aMethodName in: ref [
+	|dialog|
+	dialog := SycMethodNameEditor openOn: aMethodName withRefactoring: ref.
+	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
+	^ aMethodName
+]
+
+{ #category : #display }
 NautilusRefactoring >> handleWarning: anException [
 	self inform: anException messageText.
 	anException resume
@@ -1063,7 +1071,7 @@ NautilusRefactoring >> refactoringOptions: aRefactoring [
 		setOption: #implementorToInline
 		toUse: [ :ref :imps | self requestImplementorToInline: imps ];
 		setOption: #methodName
-		toUse: [ :ref :name | self requestMethodNameFor: name ];
+		toUse: [ :ref :name | self requestMethodNameFor: name in: ref ];
 		setOption: #selfArgumentName
 		toUse: [ :ref | self requestSelfArgumentName ];
 		setOption: #selectVariableToMoveTo
@@ -1230,6 +1238,11 @@ NautilusRefactoring >> requestImplementorToInline: imps [
 { #category : #display }
 NautilusRefactoring >> requestMethodNameFor: aMethodName [
 	^ self handleMethodNameRequest: aMethodName
+]
+
+{ #category : #requests }
+NautilusRefactoring >> requestMethodNameFor: aMethodName in: ref [
+	^ self handleMethodNameRequest: aMethodName in: ref
 ]
 
 { #category : #option }
