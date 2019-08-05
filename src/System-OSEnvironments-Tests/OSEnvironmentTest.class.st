@@ -4,7 +4,7 @@ This tests the OSEnvironment. The tests assume that there is at least 1 environm
 Class {
 	#name : #OSEnvironmentTest,
 	#superclass : #TestCase,
-	#category : #'Tests-System'
+	#category : #'System-OSEnvironments-Tests'
 }
 
 { #category : #helper }
