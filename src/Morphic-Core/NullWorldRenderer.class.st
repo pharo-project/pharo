@@ -21,10 +21,6 @@ NullWorldRenderer class >> priority [
 	^ 0
 ]
 
-{ #category : #activation }
-NullWorldRenderer >> activate [
-]
-
 { #category : #operations }
 NullWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
@@ -84,6 +80,10 @@ NullWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld submorphs: s
  
 	canvas.
 
+]
+
+{ #category : #activation }
+NullWorldRenderer >> doActivate [
 ]
 
 { #category : #operations }

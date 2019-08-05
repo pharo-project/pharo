@@ -870,7 +870,6 @@ WorldState >> worldRenderer [
 { #category : #accessing }
 WorldState >> worldRenderer: anObject [
 
-	worldRenderer deactivate.
 	worldRenderer := anObject.
 	worldRenderer activate
 ]
