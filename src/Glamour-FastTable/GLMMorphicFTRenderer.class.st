@@ -87,14 +87,6 @@ GLMMorphicFTRenderer >> dataSourceUpdated: announcement [
 ]
 
 { #category : #private }
-GLMMorphicFTRenderer >> initializeAnnoucementForPresentation: aPresentation [
-	aPresentation when: GLMDataSourceUpdated send: #dataSourceUpdated: to: self.
-	aPresentation when: GLMContextChanged send: #actOnContextChanged: to: self.
-	aPresentation when: GLMPresentationUpdated send: #actOnUpdatedPresentation: to: self.
-	aPresentation when: GLMPresentationRefreshRequest send: #actOnPresentationRefreshRequest: to: self
-]
-
-{ #category : #private }
 GLMMorphicFTRenderer >> initializeAnnouncementForDataSource [
 	tableModel announcer
 		when: GLMTreeMorphSelectionChanged
@@ -112,6 +104,14 @@ GLMMorphicFTRenderer >> initializeAnnouncementForDataSource [
 	self installActionsOnModel: tableModel fromPresentation: tableModel glamourPresentation.
 	self installKeystrokeActionsOnMorph: tableMorph fromPresentation: tableModel glamourPresentation.
 
+]
+
+{ #category : #private }
+GLMMorphicFTRenderer >> initializeAnnouncementForPresentation: aPresentation [
+	aPresentation when: GLMDataSourceUpdated send: #dataSourceUpdated: to: self.
+	aPresentation when: GLMContextChanged send: #actOnContextChanged: to: self.
+	aPresentation when: GLMPresentationUpdated send: #actOnUpdatedPresentation: to: self.
+	aPresentation when: GLMPresentationRefreshRequest send: #actOnPresentationRefreshRequest: to: self
 ]
 
 { #category : #initialization }
@@ -147,7 +147,7 @@ GLMMorphicFTRenderer >> initializeTableMorph [
 GLMMorphicFTRenderer >> render: aPresentation [
 	| container |
 	container := GLMMorphic containerMorph.
-	self initializeAnnoucementForPresentation: aPresentation.
+	self initializeAnnouncementForPresentation: aPresentation.
 	self initializeTableModel: aPresentation.
 	self initializeTableMorph.
 	self addFastTableIn: container.

@@ -29,7 +29,7 @@ Class {
 	#category : #'Reflectivity-Breakpoints'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #all }
 Breakpoint class >> all [ 
 	^ AllBreakpoints ifNil: [ AllBreakpoints := OrderedCollection new ]
 ]
@@ -50,7 +50,7 @@ Breakpoint class >> checkBreakConditionValue: aValue [
 
 { #category : #cleanup }
 Breakpoint class >> cleanUp [
-	self removeAll.
+	self removeAll
 ]
 
 { #category : #all }
@@ -105,13 +105,13 @@ Breakpoint class >> registerInsterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	SystemAnnouncer uniqueInstance weak when: MethodRemoved send: #handleMethodRemoved: to: self.
 	SystemAnnouncer uniqueInstance weak when: MethodModified send: #handleMethodModified: to: self.
-	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self.
+	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self
 ]
 
 { #category : #cleanup }
 Breakpoint class >> removeAll [ 
 	<script>
-	self all copy do: #remove.
+	self all copy do: #remove
 ]
 
 { #category : #removing }
@@ -127,12 +127,12 @@ Breakpoint class >> removeFrom: aNode [
 	| links breakpointsToRemove |
 	links := aNode beforeLinks select: [ :link | link metaObject = Break].
 	breakpointsToRemove := self all select: [ :br | links includes: br link].
-	breakpointsToRemove do: #remove.
+	breakpointsToRemove do: #remove
 ]
 
 { #category : #api }
 Breakpoint >> always [
-	self link: self breakLink.	
+	self link: self breakLink
 
 
 ]
@@ -153,13 +153,13 @@ Breakpoint >> breakLinkConditional [
 
 { #category : #links }
 Breakpoint >> breakLinkOneShot [
-	^ self breakLink optionOneShot: true. 
+	^ self breakLink optionOneShot: true
 ]
 
 { #category : #api }
 Breakpoint >> condition: aCondition [
 	condition := aCondition.
-	self link: self breakLinkConditional.
+	self link: self breakLinkConditional
 ]
 
 { #category : #initialization }
@@ -185,7 +185,7 @@ Breakpoint >> level: aLevel [
 
 { #category : #accessing }
 Breakpoint >> link [
-	^link ifNil: [ link := self breakLink]
+	^link ifNil: [ link := self breakLink ]
 ]
 
 { #category : #accessing }
@@ -205,7 +205,7 @@ Breakpoint >> node: aNode [
 
 { #category : #api }
 Breakpoint >> once [
-	self link: self breakLinkOneShot.	
+	self link: self breakLinkOneShot
 	
 ]
 

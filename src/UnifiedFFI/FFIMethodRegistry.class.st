@@ -92,7 +92,7 @@ FFIMethodRegistry >> removeMethod: aMethod [
 		put: (aMethod propertyValueAt: #ffiNonCompiledMethod)
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 FFIMethodRegistry >> reset [
 	"FFI compiled methods will keep the old method as a property, making easy to replace it 
 	 when changing platforms."

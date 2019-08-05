@@ -103,16 +103,6 @@ TraitedClass >> addSelector: selector withMethod: compiledMethod [
 	TraitChange addSelector: selector on: self
 ]
 
-{ #category : #'accessing method dictionary' }
-TraitedClass >> addSelector: selector withMethod: compiledMethod notifying: requestor [
-	self
-		deprecated: 'Please use #addSelector:withMethod: instead'
-		transformWith:
-			'`@receiver addSelector: `@statements1 withMethod: `@statements2 notifying: `@statements3'
-		   -> '`@receiver addSelector: `@statements1 withMethod: `@statements2'.
-	^self addSelector: selector withMethod: compiledMethod
-]
-
 { #category : #querying }
 TraitedClass >> allTraits [
 	^ self traitComposition allTraits
@@ -354,5 +344,5 @@ TraitedClass >> traitUsers [
 
 { #category : #accessing }
 TraitedClass >> traits [
-	^ self traitComposition traits.
+	^ self traitComposition traits
 ]

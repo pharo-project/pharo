@@ -41,9 +41,7 @@ MultiCanvas >> apply: aCommand [
 { #category : #accessing }
 MultiCanvas >> clipRect [
 	
-	^super clipRect ifNil: [
-		0@0 extent: 5000@5000
-	].
+	^super clipRect ifNil: [0@0 extent: 5000@5000]
 ]
 
 { #category : #accessing }

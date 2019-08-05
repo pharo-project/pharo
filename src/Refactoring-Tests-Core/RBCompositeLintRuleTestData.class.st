@@ -75,7 +75,7 @@ RBCompositeLintRuleTestData >> failedRules [
 
 { #category : #testing }
 RBCompositeLintRuleTestData >> hasConflicts [
-	^(rules detect: [:each | each hasConflicts] ifNone: [nil]) notNil
+	^ rules anySatisfy: [ :each | each hasConflicts ]
 ]
 
 { #category : #testing }
@@ -85,7 +85,7 @@ RBCompositeLintRuleTestData >> isComposite [
 
 { #category : #testing }
 RBCompositeLintRuleTestData >> isEmpty [
-	^(rules detect: [:each | each isEmpty not] ifNone: [nil]) isNil
+	^ rules allSatisfy: [ :each | each isEmpty ]
 ]
 
 { #category : #accessing }

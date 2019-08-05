@@ -491,6 +491,12 @@ RGMethodDefinition >> methodClass [
 ]
 
 { #category : #accessing }
+RGMethodDefinition >> name [
+	"name ivar is used for selector, but the name of a method is Class>>selector"
+	^self printString
+]
+
+{ #category : #accessing }
 RGMethodDefinition >> numArgs [
 	^ self selector asString numArgs
 ]
@@ -520,6 +526,12 @@ RGMethodDefinition >> package [
 RGMethodDefinition >> package: aRGPackage [
 
 	package:= aRGPackage
+]
+
+{ #category : #printing }
+RGMethodDefinition >> printOn: aStream [ 
+
+	aStream print: self methodClass; nextPutAll: '>>'; print: self selector.
 ]
 
 { #category : #accessing }

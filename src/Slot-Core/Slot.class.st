@@ -103,7 +103,7 @@ Slot class >> slotSetting: aBuilder [
 Slot class >> slotUsers [
 	"all classes or traits that have slots of this kind"
 	^self environment allBehaviors 
-		flatCollect:  [ :class | class slots select: [ :slot | slot class == self ] ]
+		select:  [ :class | class slots anySatisfy: [ :slot | slot class == self ] ]
 ]
 
 { #category : #comparing }

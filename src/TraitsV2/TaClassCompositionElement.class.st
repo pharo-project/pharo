@@ -19,9 +19,13 @@ TaClassCompositionElement >> methods [
 { #category : #accessing }
 TaClassCompositionElement >> selectors [
 	"As I am representing a ClassTrait I have to filter the methods that are in all the class traits"
+
 	| innerClassLocalMethods |
 	innerClassLocalMethods := innerClass localMethods collect: #selector.
-	^ super selectors reject: [ :e |  (innerClassLocalMethods includes: e ) not and: [TraitedClass selectors includes: e] ]
+	^ super selectors
+		reject: [ :e | 
+			(innerClassLocalMethods includes: e) not
+				and: [ TraitedClass selectors includes: e ] ]
 ]
 
 { #category : #accessing }

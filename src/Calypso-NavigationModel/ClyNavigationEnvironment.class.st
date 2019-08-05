@@ -153,7 +153,7 @@ ClyNavigationEnvironment class >> over: aSystem [
 		system: aSystem
 ]
 
-{ #category : #default }
+{ #category : #initialization }
 ClyNavigationEnvironment class >> reset [
 	"It will reset all caches and unsubscribe from system environment"
 	<script>

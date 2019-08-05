@@ -6,7 +6,11 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'iVar',
-		'collection'
+		'collection',
+		'result'
+	],
+	#classVars : [
+		'ClassVariable'
 	],
 	#category : #'OpalCompiler-Tests-AST'
 }
@@ -14,6 +18,24 @@ Class {
 { #category : #compiler }
 OCOpalExamples class >> compilerClass [
 	^OpalCompiler
+]
+
+{ #category : #compiler }
+OCOpalExamples class >> reset [
+
+	ClassVariable := nil
+]
+
+{ #category : #accessing }
+OCOpalExamples >> classVariable [
+
+	^ ClassVariable
+]
+
+{ #category : #accessing }
+OCOpalExamples >> classVariable: anInteger [ 
+
+	ClassVariable := anInteger
 ]
 
 { #category : #examples }
@@ -33,56 +55,16 @@ OCOpalExamples >> doubleRemoteAnidatedBlocks [
 
 ]
 
-{ #category : #'examples-blocks-optimized' }
-OCOpalExamples >> exampleAndOr [
-	| t1 t2 |
-	t1 := true.
-	t2 := false.
-	t1 and: [ t2. '1' logCr ]. "effect"   
+{ #category : #'examples-andor' }
+OCOpalExamples >> exampleAndValueWithEffect [
+	
+	true and: [ result := 17 ]
 ]
 
-{ #category : #'examples-blocks-optimized' }
-OCOpalExamples >> exampleAndOr2 [
-	| t1 t2 |
-	t1 := true.
-	t2 := false.  
-	t2 or: [ t1. '2' logCr ]. "effect" 
-]
-
-{ #category : #'examples-blocks-optimized' }
-OCOpalExamples >> exampleAndOr3 [
-	<sampleInstance>
-	| t1 t2 |
-	t1 := true.
-	t2 := false.  
-	^ t1 and: [ t2 ] "value" 
-]
-
-{ #category : #'examples-blocks-optimized' }
-OCOpalExamples >> exampleAndOr4 [
-	<sampleInstance>
-	| t1 t2 |
-	t1 := true.
-	t2 := false.  
-	^ t2 or: [ t1 ] "value"  
-]
-
-{ #category : #'examples-blocks-optimized' }
-OCOpalExamples >> exampleAndOr5 [
-	<sampleInstance>
-	| t1 t2 |
-	t1 := true.
-	t2 := false.  
-	^ t2 or: [ t1 and: [ t2 ] ]
-]
-
-{ #category : #'examples-blocks-optimized' }
-OCOpalExamples >> exampleAndOr6 [
-	<sampleInstance>
-	| t1 t2 |
-	t1 := true.
-	t2 := false.  
-	^ t1 and: [ t2 or: [ t1 ] ]
+{ #category : #'examples-andor' }
+OCOpalExamples >> exampleAndValueWithShortcircuitEffect [
+	
+	false and: [ result := 17 ]
 ]
 
 { #category : #'examples-blocks' }
@@ -152,6 +134,12 @@ OCOpalExamples >> exampleBlockNested [
 	^[ [1] value] value
 ]
 
+{ #category : #'examples-variables' }
+OCOpalExamples >> exampleClassVariableAssignment [
+	<sampleInstance>
+	ClassVariable := 1
+]
+
 { #category : #'examples-pragmas' }
 OCOpalExamples >> exampleDoublePrimitive [
 	<primitive: 1>
@@ -167,6 +155,54 @@ OCOpalExamples >> exampleEffectValues [
 
 { #category : #'examples-simple' }
 OCOpalExamples >> exampleEmptyMethod [
+]
+
+{ #category : #'examples-andor' }
+OCOpalExamples >> exampleFalseAndAnything: anything [
+	<sampleInstance>
+	^ false and: [ anything ]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleFalseIfFalse [
+	<sampleInstance>
+	^false ifFalse: [1]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleFalseIfFalseIfTrue [
+	<sampleInstance>
+	^false ifFalse: [iVar := 'false'] ifTrue: [ self error ]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleFalseIfFalseWithEffect [
+	<sampleInstance>
+	^false ifFalse: [iVar := 17]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleFalseIfTrue [
+	<sampleInstance>
+	^false ifTrue: [1]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleFalseIfTrueIfFalse [
+	<sampleInstance>
+	^false ifTrue: [ self error ] ifFalse: [iVar := 'false'] 
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleFalseIfTrueWithEffect [
+	<sampleInstance>
+	^false ifTrue: [iVar := 17]
+]
+
+{ #category : #'examples-andor' }
+OCOpalExamples >> exampleFalseOrAnything: anything [
+	<sampleInstance>
+	^ false or: [ anything ]
 ]
 
 { #category : #'examples-variables' }
@@ -188,12 +224,15 @@ OCOpalExamples >> exampleForInlinedBlockArgument [
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfFalse [
 	<sampleInstance>
-	true ifFalse: [^1].
-	^2
+	true
+		ifTrue: [  ]
+		ifFalse: [ ^ 1 ].
+	^ 2
 ]
 
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfFalseIfTrue [
+	<sampleInstance>
 	true ifFalse: [^1] ifTrue: [^2].
 ]
 
@@ -211,23 +250,14 @@ OCOpalExamples >> exampleIfNotNilReturnNil [
 
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfTrue [
-	<sampleInstance>
-	 1  < 2 ifTrue: [^'result']. 
-]
-
-{ #category : #'examples-blocks-optimized' }
-OCOpalExamples >> exampleIfTrueAssign [
-	<sampleInstance>
-	| a |
-	a := 1 <2 ifTrue: [1] ifFalse: [2].
-	^a 
+	[ 1 < 2
+		ifTrue: [ ^ 'result' ]] value
 ]
 
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfTrueIfFalse [
 	<sampleInstance>
 	 1 <2 ifTrue: [^'result'] ifFalse: [2].
-	
 ]
 
 { #category : #'examples-blocks-optimized' }
@@ -238,6 +268,82 @@ OCOpalExamples >> exampleInlineBlockCollectionLR3 [
 	1 to: 11 do: [ :each | | i | i := each. col add: [ i ]. i := i + 1 ].
 	^ (col collect: [ :each | each value ]) asArray "= (2 to: 12) asArray"
 
+]
+
+{ #category : #'examples-variables' }
+OCOpalExamples >> exampleInstanceVariableAssignment [
+	<sampleInstance>
+	iVar := 1
+]
+
+{ #category : #'examples-literals' }
+OCOpalExamples >> exampleLiteralArray [
+	<sampleInstance>
+
+	^ #( 1 2 3)
+]
+
+{ #category : #'examples-literals' }
+OCOpalExamples >> exampleLiteralBoxedFloat [
+	<sampleInstance>
+
+	^ 9.999999999999996e157
+]
+
+{ #category : #'examples-literals' }
+OCOpalExamples >> exampleLiteralByteArray [
+	<sampleInstance>
+
+	^ #[ 1 2 3 ]
+]
+
+{ #category : #'examples-literals' }
+OCOpalExamples >> exampleLiteralByteString [
+	<sampleInstance>
+
+	^ 'bytestring'
+]
+
+{ #category : #'examples-literals' }
+OCOpalExamples >> exampleLiteralByteSymbol [
+	<sampleInstance>
+
+	^ #bytesymbol
+]
+
+{ #category : #'examples-literals' }
+OCOpalExamples >> exampleLiteralCharacter [
+	<sampleInstance>
+
+	^ $H
+]
+
+{ #category : #'examples-literals' }
+OCOpalExamples >> exampleLiteralFloat [
+	<sampleInstance>
+
+	^ 1.2
+]
+
+{ #category : #'examples-literals' }
+OCOpalExamples >> exampleLiteralLargeInteger [
+	<sampleInstance>
+
+	^ 16rFFFFFFFFFFFFFFFF
+]
+
+{ #category : #'examples-literals' }
+OCOpalExamples >> exampleLiteralWideString [
+	<sampleInstance>
+
+	^ 'áèîöÑü'
+]
+
+{ #category : #'examples-literals' }
+OCOpalExamples >> exampleLiteralWideSymbol [
+	<sampleInstance>
+
+	^ #'áèîöÑü'
 ]
 
 { #category : #'examples-blocks' }
@@ -279,7 +385,7 @@ OCOpalExamples >> exampleNestedBlockScoping [
 	^ (b value: 2) + (c value: 1)
 ]
 
-{ #category : #'examples-simple' }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleNewArray [
 	<sampleInstance>
 
@@ -287,6 +393,61 @@ OCOpalExamples >> exampleNewArray [
 	
 	temp := Array new: 3.
 	^temp
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleNilIfNil [
+	<sampleInstance>
+	^nil ifNil: [ iVar := 17 ]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleNilIfNotNil [
+	<sampleInstance>
+	^nil ifNotNil: [ self error ]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleNilIfNotNilWithArgument [
+	<sampleInstance>
+	^nil ifNotNil: [ :arg | self error ]
+]
+
+{ #category : #'examples-literals' }
+OCOpalExamples >> exampleNonSpecialLiteralInteger [
+	<sampleInstance>
+
+	^ 10
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleNotNilIfNil [
+	<sampleInstance>
+	^1 ifNil: [ self error ]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleNotNilIfNotNil [
+	<sampleInstance>
+	^1 ifNotNil: [ iVar := 17 ]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleNotNilIfNotNilWithArgument [
+	<sampleInstance>
+	^1 ifNotNil: [ :arg | iVar := arg ]
+]
+
+{ #category : #'examples-andor' }
+OCOpalExamples >> exampleOrValueWithEffect [
+	
+	false or: [ result := 17 ]
+]
+
+{ #category : #'examples-andor' }
+OCOpalExamples >> exampleOrValueWithShortcircuitEffect [
+	
+	true or: [ result := 17 ]
 ]
 
 { #category : #'examples-pragmas' }
@@ -326,7 +487,14 @@ OCOpalExamples >> examplePrimitiveModuleError [
 	^ errorCode
 ]
 
-{ #category : #'examples-misc' }
+{ #category : #'examples-variables' }
+OCOpalExamples >> examplePushArgumentVariable: argument [
+	<sampleInstance>
+	
+	self message: argument
+]
+
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> examplePushArray [
 	<sampleInstance>
 	| t |
@@ -336,17 +504,51 @@ OCOpalExamples >> examplePushArray [
 ]
 
 { #category : #'examples-misc' }
-OCOpalExamples >> examplePushBigArray [
+OCOpalExamples >> examplePushBigDynamicLiteralArray [
 	<sampleInstance>
 	"This array should have a size more than 127 elements"
-	{ 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 .  255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 }.
-	^ 1
+	self message: { 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 .  255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 }
+]
+
+{ #category : #'examples-variables' }
+OCOpalExamples >> examplePushClassVariable [
+	<sampleInstance>
+	
+	self result: ClassVariable
+]
+
+{ #category : #'examples-misc' }
+OCOpalExamples >> examplePushDynamicLiteralArray [
+	<sampleInstance>
+	^  { 1 . 1+2 }
+]
+
+{ #category : #'examples-variables' }
+OCOpalExamples >> examplePushInstanceVariable [
+	<sampleInstance>
+	
+	self result: iVar
+]
+
+{ #category : #'examples-literals' }
+OCOpalExamples >> examplePushNonSpecialSmallInteger [
+	<sampleInstance>
+	self result: 10
+]
+
+{ #category : #'examples-variables' }
+OCOpalExamples >> examplePushTemporaryVariable [
+	<sampleInstance>
+	
+	| temporary |
+	temporary := iVar.
+	self result: temporary
 ]
 
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleRepeatEffect [
 	<sampleInstance>
-	<compilerOptions: #(#+ #optionInlineRepeat)>
+	<compilerOptions: #(+ #optionInlineRepeat)>
 	| i |
 	i := 1.
 	[  
@@ -358,19 +560,13 @@ OCOpalExamples >> exampleRepeatEffect [
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleRepeatValue [
 	<sampleInstance>
-	<compilerOptions: #(#+ #optionInlineRepeat)>
+	<compilerOptions: #(+ #optionInlineRepeat)>
 	| i |
 	i := 1.
 	^ [ 
 	i := i + 1.
 	i = 10
 		ifTrue: [ ^ true ] ] repeat 
-]
-
-{ #category : #'examples-simple' }
-OCOpalExamples >> exampleReturn1 [
-	<sampleInstance>
-	^1
 ]
 
 { #category : #'examples-simple' }
@@ -387,10 +583,8 @@ OCOpalExamples >> exampleReturn42 [
 
 { #category : #'examples-variables' }
 OCOpalExamples >> exampleSelf [
-	<sampleInstance>
-	| t |
-	t := self.
-	^self.
+	
+	self result: self
 ]
 
 { #category : #'examples-blocks' }
@@ -498,9 +692,8 @@ OCOpalExamples >> exampleSimpleBlockiVar [
 { #category : #'examples-variables' }
 OCOpalExamples >> exampleSuper [
 	<sampleInstance>
-	| t |
-	t := super.
-	^super.
+	
+	self result: super
 ]
 
 { #category : #'examples-blocks' }
@@ -510,11 +703,19 @@ OCOpalExamples >> exampleSuperReceiver [
 ]
 
 { #category : #'examples-variables' }
+OCOpalExamples >> exampleTemporaryVariableAssignment [
+	<sampleInstance>
+	
+	| temporary |
+	temporary := 17.
+	self message: temporary
+]
+
+{ #category : #'examples-variables' }
 OCOpalExamples >> exampleThisContext [
 	<sampleInstance>
-	| t |
-	t := thisContext.
-	^thisContext.
+	
+	self result: thisContext
 ]
 
 { #category : #'examples-blocks-optimized' }
@@ -623,6 +824,54 @@ OCOpalExamples >> exampleToDoValueLimitExpression [
 
 ]
 
+{ #category : #'examples-andor' }
+OCOpalExamples >> exampleTrueAndAnything: argument [
+	<sampleInstance>
+	^ true and: [ argument ]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleTrueIfFalse [
+	<sampleInstance>
+	^true ifFalse: [1]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleTrueIfFalseIfTrue [
+	<sampleInstance>
+	^true ifFalse: [ self error ] ifTrue: [iVar := 'true']
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleTrueIfFalseWithEffect [
+	<sampleInstance>
+	^true ifFalse: [iVar := 17]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleTrueIfTrue [
+	<sampleInstance>
+	^true ifTrue: [1]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleTrueIfTrueIfFalse [
+	<sampleInstance>
+	^true ifTrue: [iVar := 'true'] ifFalse: [ self error ]
+]
+
+{ #category : #'examples-conditionals' }
+OCOpalExamples >> exampleTrueIfTrueWithEffect [
+	<sampleInstance>
+	^true ifTrue: [iVar := 17]
+]
+
+{ #category : #'examples-andor' }
+OCOpalExamples >> exampleTrueOrAnything: anything [
+	<sampleInstance>
+	^ true or: [ anything ]
+]
+
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleWhileModificationAfterNotInlined [
 	<sampleInstance>
@@ -708,16 +957,32 @@ OCOpalExamples >> exampleWithArgument: anArg [
 	^ anArg
 ]
 
-{ #category : #'examples-variables' }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleiVar [
 	<sampleInstance>
 	iVar := 1.
 	^iVar.
 ]
 
+{ #category : #accessing }
+OCOpalExamples >> iVar [
+	^ iVar
+]
+
+{ #category : #accessing }
+OCOpalExamples >> iVar: anInteger [ 
+	iVar := anInteger
+]
+
 { #category : #initialization }
 OCOpalExamples >> initialize [
 	collection := OrderedCollection new
+]
+
+{ #category : #accessing }
+OCOpalExamples >> message: anObject [
+
+	result := anObject
 ]
 
 { #category : #examples }
@@ -880,6 +1145,17 @@ OCOpalExamples >> optimizedBlocksAndSameNameTemps [
 	1 to: s size do:
 		[:i| c at: i put: (s at: i)].
 	^c
+]
+
+{ #category : #accessing }
+OCOpalExamples >> result [
+
+	^ result
+]
+
+{ #category : #accessing }
+OCOpalExamples >> result: anObject [
+	result := anObject
 ]
 
 { #category : #examples }

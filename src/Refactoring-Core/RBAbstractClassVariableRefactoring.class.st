@@ -47,14 +47,15 @@ RBAbstractClassVariableRefactoring >> abstractInstanceReferences [
 
 { #category : #'private-accessing' }
 RBAbstractClassVariableRefactoring >> accessorsRefactoring [
-	^accessorsRefactoring isNil 
-		ifTrue: 
-			[accessorsRefactoring := RBCreateAccessorsForVariableRefactoring 
-						model: self model
-						variable: variableName asString
-						class: class
-						classVariable: true]
-		ifFalse: [accessorsRefactoring]
+
+	^ accessorsRefactoring
+		ifNil: [ accessorsRefactoring := RBCreateAccessorsForVariableRefactoring
+				model: self model
+				variable: variableName asString
+				class: class
+				classVariable: true
+			]
+		ifNotNil: [ accessorsRefactoring ]
 ]
 
 { #category : #transforming }

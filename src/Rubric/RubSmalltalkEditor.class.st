@@ -256,19 +256,21 @@ RubSmalltalkEditor >> bindingOf: aString [
 
 { #category : #'menu messages' }
 RubSmalltalkEditor >> browseClassFrom: aClassString [
+
 	"Launch a hierarchy browser for the class indicated by the current selection.  If multiple classes matching the selection exist, let the user choose among them."
 
 	| selectedClass |
+
 	"self lineSelectAndEmptyCheck: [ ^ self ]."
-	(aClassString isNil or: [ aClassString isEmpty]) ifTrue: [ 
-		textArea flash.
-		^self ]. 
-	
-	selectedClass := self model systemNavigation 
-		classFromPattern: aClassString 
+	( aClassString isNil or: [ aClassString isEmpty ] )
+		ifTrue: [ textArea flash.
+			^ self
+			].
+
+	selectedClass := self model systemNavigation
+		classFromPattern: aClassString
 		withCaption: 'choose a class to browse...'.
-	selectedClass isNil
-		ifTrue: [ ^ self internalCallToImplementorsOf: aClassString ].
+	selectedClass ifNil: [ ^ self internalCallToImplementorsOf: aClassString ].
 	Smalltalk tools browser openOnClass: selectedClass
 ]
 
@@ -341,15 +343,17 @@ RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
 ]
 
 { #category : #'completion engine' }
-RubSmalltalkEditor >> completionAround:  aBlock  keyStroke: anEvent [
-	"I'm a editor for Smalltalk, so, ok do completion around"
+RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
+	"I'm a editor for Smalltalk, so, do completion around"
 	
-	self isCompletionEnabled 
-		ifTrue: [ self completionEngine 
-						codeCompletionAround: aBlock 
-						textMorph: textArea 
-						keyStroke: anEvent
-					]
+	self isCompletionEnabled ifFalse: [  ^aBlock value ].
+	
+	(completionEngine handleKeystrokeBefore: anEvent editor: self) ifTrue:  [^ self ].
+	(self selectorChooserHandlesKeyboard: anEvent)
+				ifFalse: [ aBlock value ].
+	self selectorChooserKeystroke: anEvent.
+	completionEngine handleKeystrokeAfter: anEvent editor: self
+
 ]
 
 { #category : #'completion engine' }
@@ -361,7 +365,7 @@ RubSmalltalkEditor >> completionEngine [
 RubSmalltalkEditor >> completionEngine: aCompletionEngine [
 
 	completionEngine := aCompletionEngine.
-	self textArea setCompletionEngine: aCompletionEngine. 
+	self textArea ifNotNil: [:txtArea | txtArea setCompletionEngine: aCompletionEngine] 
 ]
 
 { #category : #'new selection' }
@@ -743,9 +747,7 @@ RubSmalltalkEditor >> implementorsOfIt: aKeyboardEvent [
 RubSmalltalkEditor >> initialize [
 	super initialize.
 	notificationStrategy := RubTextInsertionStrategy new editor: self.
-	completionEngine := CompletionEngine. 
-	"this way we can instance-based and shared completion between all the instances
-	of editor instances."
+	CompletionEngine ifNotNil: [self completionEngine: CompletionEngine new]
 ]
 
 { #category : #keymapping }
@@ -792,8 +794,9 @@ RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 
 { #category : #'completion engine' }
 RubSmalltalkEditor >> isCompletionEnabled [
-
-	^ completionEngine isNotNil and: [ self editingMode isCompletionEnabled ]
+	CompletionEngine ifNil: [ ^false ].
+	CompletionEngine isCompletionEnabled ifFalse: [ ^false ].
+	^ self editingMode isCompletionEnabled
 ]
 
 { #category : #testing }
@@ -822,14 +825,7 @@ RubSmalltalkEditor >> jumpToNextKeywordOfIt: isForwardJump [
 { #category : #'typing support' }
 RubSmalltalkEditor >> keystroke: aKeyboardEvent [
 
-	self isCompletionEnabled 
-		ifFalse: [ ^ super keystroke: aKeyboardEvent ].
-	self
-		completionAround: [ 
-			(self selectorChooserHandlesKeyboard: aKeyboardEvent)
-				ifFalse: [ super keystroke: aKeyboardEvent ].
-			self selectorChooserKeystroke: aKeyboardEvent ]
-		keyStroke: aKeyboardEvent
+	self completionAround: [super keystroke: aKeyboardEvent ] keyStroke: aKeyboardEvent
 	
 ]
 
@@ -1296,8 +1292,8 @@ RubSmalltalkEditor >> tallySelection [
 RubSmalltalkEditor >> textArea: atextArea [
 
 	atextArea setCompletionEngine: self completionEngine.
-	"Right now RubTextEditor does not support completion"
-	super textArea: atextArea
+	super textArea: atextArea.
+	completionEngine setModel: self model
 ]
 
 { #category : #'menu messages' }

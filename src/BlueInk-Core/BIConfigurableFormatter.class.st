@@ -98,6 +98,11 @@ BIConfigurableFormatter class >> initialize [
 ]
 
 { #category : #accessing }
+BIConfigurableFormatter class >> isPrettyPrinter [
+	^ true
+]
+
+{ #category : #accessing }
 BIConfigurableFormatter class >> keepBlockInMessage [
 	^ DefaultPrettyPrintContext keepBlockInMessage
 ]
@@ -550,16 +555,16 @@ BIConfigurableFormatter >> formatBlockArgumentsFor: aBlockNode [
 
 { #category : #'private-formatting' }
 BIConfigurableFormatter >> formatBlockCommentFor: aBlockNode [
-	originalSource isNil
-		ifTrue: [  ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	aBlockNode comments
 		do: [ :each | 
-			
 			self basicFormatCommentFor: each.
-			(self isNonEmptySingleLineBlock: aBlockNode)
-				ifTrue: [  self space ].
-			(self willBeMultiline: aBlockNode body)
-				ifTrue: [  self newLine ] ]
+			( self isNonEmptySingleLineBlock: aBlockNode )
+				ifTrue: [ self space ].
+			( self willBeMultiline: aBlockNode body )
+				ifTrue: [ self newLine ]
+			]
 ]
 
 { #category : #accessing }
@@ -574,13 +579,13 @@ BIConfigurableFormatter >> formatCommentWithStatements: aBoolean [
 
 { #category : #'private-formatting' }
 BIConfigurableFormatter >> formatCommentsFor: aNode [
-	originalSource isNil
-		ifTrue: [ ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	aNode comments
-		do:
-			[ :each | 
+		do: [ :each | 
 			self basicFormatCommentFor: each.
-			self newLine ]
+			self newLine
+			]
 ]
 
 { #category : #private }
@@ -612,17 +617,15 @@ BIConfigurableFormatter >> formatMethodBodyFor: aMethodNode [
 
 { #category : #'private-formatting' }
 BIConfigurableFormatter >> formatMethodCommentFor: aMethodNode [
-	originalSource isNil
-		ifTrue: [ ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	aMethodNode comments
-		do:
-			[ :each | 
-			
-			self useBasicCommentFormat 
-			ifTrue: [ self basicFormatCommentFor: each ]
-			ifFalse: [ 
-			self resizeCommentFor: each startingAt: 0].
-			self newLines: self newLinesAfterMethodComment ]
+		do: [ :each | 
+			self useBasicCommentFormat
+				ifTrue: [ self basicFormatCommentFor: each ]
+				ifFalse: [ self resizeCommentFor: each startingAt: 0 ].
+			self newLines: self newLinesAfterMethodComment
+			]
 ]
 
 { #category : #'private-formatting' }
@@ -708,22 +711,22 @@ BIConfigurableFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 
 { #category : #'private-formatting' }
 BIConfigurableFormatter >> formatStatementCommentsFor: aStatementNode [
-	originalSource isNil
-		ifTrue: [ ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	self formatCommentWithStatements
 		ifFalse: [ ^ self ].
 	aStatementNode statementComments
-		do:
-			[ :each | 
+		do: [ :each | 
 			| count |
+
 			count := self newLinesBeforeStartingAt: each start.
-			self retainBlankLinesBeforeComments & (count > 0)
+			self retainBlankLinesBeforeComments & ( count > 0 )
 				ifTrue: [ self newLines: count ]
 				ifFalse: [ codeStream tab ].
 			self useBasicCommentFormat
 				ifTrue: [ self basicFormatCommentFor: each ]
-				ifFalse: [ 
-			self resizeCommentFor: each startingAt: self currentLineLength ]]
+				ifFalse: [ self resizeCommentFor: each startingAt: self currentLineLength ]
+			]
 ]
 
 { #category : #private }

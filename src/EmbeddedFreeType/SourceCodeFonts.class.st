@@ -66,14 +66,9 @@ SourceCodeFonts class >> registerFonts: freeTypeFontManager [
 { #category : #settings }
 SourceCodeFonts class >> setFontsToStyleNamed: aSymbol [
 
-	| pragma |
-
-	pragma := (Pragma allNamed: #styleName: in: SourceCodeFonts class) detect: [ :each  | each arguments first = aSymbol ] ifNone: [ ^ self ].
-	
-	self setSourceCodeFonts: (self perform: pragma method selector).
-	
-	
-	
+	(Pragma allNamed: #styleName: in: SourceCodeFonts class)
+		detect: [ :each | each arguments first = aSymbol ]
+		ifFound: [ :pragma | self setSourceCodeFonts: (self perform: pragma method selector) ]
 ]
 
 { #category : #accessing }

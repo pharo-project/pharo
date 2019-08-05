@@ -7,6 +7,16 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
+{ #category : #activation }
+SycAddSubclassCommand class >> browserContextMenuActivation [
+	<classAnnotation>
+	
+	^ CmdContextMenuActivation  
+		byItemOf: ClyMoreRefactorsMenuGroup  
+		order: 10  
+		for: ClyClass asCalypsoItemContext 
+]
+
 { #category : #accessing }
 SycAddSubclassCommand >> defaultMenuIconName [
 	^#add

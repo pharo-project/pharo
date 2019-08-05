@@ -15,11 +15,26 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
+{ #category : #activation }
+SycMoveMethodsToClassCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^CmdContextMenuActivation 
+		byItemOf: ClyMoreRefactorsMenuGroup 
+		order: 60 
+		for: ClyMethod asCalypsoItemContext
+]
+
 { #category : #'instance creation' }
 SycMoveMethodsToClassCommand class >> methods: methods class: targetClass [
 	^(self for: methods)
 		targetClass: targetClass
 		
+]
+
+{ #category : #accessing }
+SycMoveMethodsToClassCommand >> defaultMenuIconName [ 
+	^ #smallRedo
 ]
 
 { #category : #accessing }

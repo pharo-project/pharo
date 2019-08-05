@@ -44,14 +44,16 @@ GLMPortIdentifier class >> pane: aPaneName port: aPortName [
 
 { #category : #accessing }
 GLMPortIdentifier >> asGlamourOriginIdentifier [
-	self portName isNil ifTrue: [self portName: self class defaultOriginPortName].
-	^ self 
+
+	self portName ifNil: [ self portName: self class defaultOriginPortName ].
+	^ self
 ]
 
 { #category : #accessing }
 GLMPortIdentifier >> asGlamourTargetIdentifier [
-	self portName isNil ifTrue: [self portName: self class defaultTargetPortName].
-	^ self 
+
+	self portName ifNil: [ self portName: self class defaultTargetPortName ].
+	^ self
 ]
 
 { #category : #accessing }

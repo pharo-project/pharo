@@ -13,6 +13,28 @@ SycMoveMethodsToInstanceSideCommand class >> canBeExecutedInContext: aToolContex
 		and: [ aToolContext isClassSideMethodSelected ]
 ]
 
+{ #category : #activation }
+SycMoveMethodsToInstanceSideCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^CmdContextMenuActivation 
+		byItemOf: ClyMoreRefactorsMenuGroup 
+		order: 50
+		for: ClyMethod asCalypsoItemContext
+]
+
+{ #category : #activation }
+SycMoveMethodsToInstanceSideCommand class >> methodShortcutActivation [
+	<classAnnotation>
+	
+	^CmdShortcutActivation by: $t meta, $i meta for: ClyMethod asCalypsoItemContext
+]
+
+{ #category : #accessing }
+SycMoveMethodsToInstanceSideCommand >> defaultMenuIconName [ 
+	^ #smallRedo
+]
+
 { #category : #accessing }
 SycMoveMethodsToInstanceSideCommand >> defaultMenuItemName [
 	^'Move to instance side'

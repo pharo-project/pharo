@@ -63,14 +63,14 @@ BalloonEngine class >> doProfileStats: aBool [
 
 { #category : #initialization }
 BalloonEngine class >> initialize [
-	"BalloonEngine initialize"
+ 
 	BufferCache := WeakArray new: 1.
 	Smalltalk garbageCollect. "Make the cache old"
 	CacheProtect := Semaphore forMutualExclusion.
 	Times := WordArray new: 10.
 	Counts := WordArray new: 10.
 	BezierStats := WordArray new: 4.
-	Debug ifNil:[Debug := false].
+	Debug ifNil: [Debug := false] 
 ]
 
 { #category : #private }
@@ -907,7 +907,7 @@ BalloonEngine >> release [
 	super release.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 BalloonEngine >> reset [
 	workBuffer ifNil:[workBuffer := self class allocateOrRecycleBuffer: 10000].
 	self primInitializeBuffer: workBuffer.

@@ -21,7 +21,7 @@ ShortIntegerArrayTest >> setUp [
 { #category : #tests }
 ShortIntegerArrayTest >> testAt [
 
-	self assert: 2  equals: (shortIntegerArray at: 3)
+	self assert: 2 equals: (shortIntegerArray at: 3)
 	
 ]
 
@@ -29,7 +29,7 @@ ShortIntegerArrayTest >> testAt [
 ShortIntegerArrayTest >> testAtPut [
 
 	shortIntegerArray at: 3 put: 100.
-	self assert: 100  equals: (shortIntegerArray at: 3)
+	self assert: 100 equals: (shortIntegerArray at: 3)
 	
 ]
 
@@ -59,7 +59,7 @@ ShortIntegerArrayTest >> testWriteBigEndianOn [
 
 	|stream|
 	stream := WriteStream on: Array new.
-	shortIntegerArray write: (12 bitShift: 24)+(34 bitShift: 16)+(56 bitShift: 8)+78 bigEndianOn: stream.
+	shortIntegerArray write: (12 bitShift: 24) + (34 bitShift: 16) + (56 bitShift: 8) + 78 bigEndianOn: stream.
 	self assert: #(12 34 56 78) equals: stream contents
 ]
 
@@ -68,6 +68,6 @@ ShortIntegerArrayTest >> testWriteLittleEndianOn [
 
 	|stream|
 	stream := WriteStream on: Array new.
-	shortIntegerArray write: (12 bitShift: 24) +(34 bitShift: 16)+(56 bitShift: 8)+78 littleEndianOn: stream.
+	shortIntegerArray write: (12 bitShift: 24) + (34 bitShift: 16) + (56 bitShift: 8) + 78 littleEndianOn: stream.
 	self assert: #(56 78 12 34) equals: stream contents
 ]

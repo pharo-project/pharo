@@ -104,7 +104,7 @@ FTFilterFunction >> reinitializeTable [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 FTFilterFunction >> reset [
 	"self filter"
 ]

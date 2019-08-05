@@ -97,3 +97,9 @@ SlotTest >> testisUsed [
 	self assert: IndexedSlot isUsed. "subclasses are users"
 	self assert: ProcessLocalSlot isUsed. "references count as uses, too"
 ]
+
+{ #category : #'tests - misc' }
+SlotTest >> testslotUsers [
+	self assert: (ToOneRelationSlot slotUsers includes: SlotExampleMovie).
+	self deny: (ToOneRelationSlot slotUsers includes: SlotExamplePerson)
+]

@@ -201,7 +201,7 @@ DateAndTime class >> now [
 	[ 10000 timesRepeat: [ self now. ] ] timeToRun / 10000.0 . "
 
 	| nanoTicks |
-	nanoTicks := self clock microsecondClockValue * 1e3.
+	nanoTicks := self clock microsecondClockValue * 1000.
 	^ self basicNew
 		setJdn: SqueakEpoch 
 		seconds: 0

@@ -47,7 +47,7 @@ MorphicStyleSheet class >> newDefault [
 	^ MorphicDefaultStyleSheet new
 ]
 
-{ #category : #utils }
+{ #category : #initialization }
 MorphicStyleSheet class >> reset [ 
 	<script>
 	

@@ -49,5 +49,8 @@ GLMOriginPortReference >> transformation: anObject [
 
 { #category : #'accessing-convenience' }
 GLMOriginPortReference >> value [
-	^ self transformation isNil ifTrue: [self port value] ifFalse: [self transformation value: self port value]
+
+	^ self transformation
+		ifNil: [ self port value ]
+		ifNotNil: [ self transformation value: self port value ]
 ]

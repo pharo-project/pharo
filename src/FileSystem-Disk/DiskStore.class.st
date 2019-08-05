@@ -17,9 +17,15 @@ Class {
 
 { #category : #current }
 DiskStore class >> activeClass [
-	self allSubclassesDo: [:ea | 
-		ea isActiveClass ifTrue: [^ ea]].
-	^ self
+
+	| writableClass |
+	
+	writableClass := self allSubclasses detect: [:each | 
+		each isActiveClass ] ifNone: [ ^ self ].
+	
+	^ SessionManager default currentSession isReadOnlyAccessMode
+		ifFalse: [ writableClass ]
+		ifTrue: [ writableClass readOnlyVariant ].
 ]
 
 { #category : #'system startup' }
@@ -79,10 +85,30 @@ DiskStore class >> maxFileNameLength [
 	self subclassResponsibility 
 ]
 
-{ #category : #current }
+{ #category : #public }
+DiskStore class >> readOnlyVariant [
+
+	"return a class variant for read-only store. It should be properly defined in my subclasses"
+
+	^ self subclassResponsibility
+]
+
+{ #category : #initialization }
 DiskStore class >> reset [
 	DefaultWorkingDirectory := nil.
 	CurrentFS := nil
+]
+
+{ #category : #current }
+DiskStore class >> resetAsReadOnly [
+
+	self currentFileSystem beReadOnly
+]
+
+{ #category : #current }
+DiskStore class >> resetAsWritable [
+
+	self currentFileSystem beWritable
 ]
 
 { #category : #'system startup' }
@@ -99,6 +125,14 @@ DiskStore class >> startUp: resuming [
 	DefaultWorkingDirectory := self defaultWorkingDirectory.
 ]
 
+{ #category : #public }
+DiskStore class >> writableVariant [
+
+	"return a class variant for read-only store. It should be properly defined in my subclasses"
+
+	^ self
+]
+
 { #category : #comparing }
 DiskStore >> = other [
 	^ self species = other species
@@ -109,6 +143,18 @@ DiskStore >> accessTimeOf: aPath [
 	"Return the date of last access of the File described by aPath"
 
 	^DateAndTime fromSqueakTime: (File fileAttribute: (self stringFromPath: aPath) number: 9)
+]
+
+{ #category : #public }
+DiskStore >> asReadOnlyStore [
+
+	^ self class readOnlyVariant createDefault
+]
+
+{ #category : #public }
+DiskStore >> asWritableStore [
+
+	^ self class writableVariant createDefault
 ]
 
 { #category : #private }
@@ -487,6 +533,12 @@ DiskStore >> isSymlink: aPath [
 
 	aPath isRoot ifTrue: [ ^false ].
 	^File isSymlink: (self stringFromPath: aPath)
+]
+
+{ #category : #testing }
+DiskStore >> isWritable [
+
+	^ true
 ]
 
 { #category : #testing }

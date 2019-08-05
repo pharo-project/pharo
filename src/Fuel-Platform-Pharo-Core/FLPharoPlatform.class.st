@@ -75,11 +75,8 @@ FLPharoPlatform >> absolutePathOf: aString [
 
 { #category : #'accessing-compiler' }
 FLPharoPlatform >> addAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
-	aClass
-		addAndClassifySelector: aSymbol
-		withMethod: aCompiledMethod
-		inProtocol: aString
-		notifying: nil
+
+	aClass addAndClassifySelector: aSymbol withMethod: aCompiledMethod inProtocol: aString
 ]
 
 { #category : #'accessing-system' }

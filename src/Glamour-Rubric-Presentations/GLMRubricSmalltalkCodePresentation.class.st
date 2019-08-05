@@ -163,9 +163,10 @@ GLMRubricSmalltalkCodePresentation >> highlightEvaluateAndDo: aBlock [
 
 { #category : #accessing }
 GLMRubricSmalltalkCodePresentation >> highlightSmalltalkContext [
-	^ highlightSmalltalkContext isNil 
-		ifTrue: [nil] 
-		ifFalse: [highlightSmalltalkContext glamourValue: self entity]
+
+	^ highlightSmalltalkContext
+		ifNil: [ nil ]
+		ifNotNil: [ highlightSmalltalkContext glamourValue: self entity ]
 ]
 
 { #category : #'actions browsing' }

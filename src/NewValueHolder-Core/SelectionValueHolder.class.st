@@ -44,7 +44,7 @@ SelectionValueHolder >> initialize [
 	selection whenChangedSend: #valueChanged to: self.
 ]
 
-{ #category : #protocol }
+{ #category : #initialization }
 SelectionValueHolder >> reset [
 
 	self index value: 0.

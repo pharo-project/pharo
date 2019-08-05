@@ -157,9 +157,12 @@ MCSnapshotBrowser >> loadCategorySelection [
 
 { #category : #menus }
 MCSnapshotBrowser >> loadClassSelection [
-	classSelection ifNil: [ ^self ].
-	(self packageClasses detect: [ :ea | ea className = classSelection ] ifNone: [ ^self ]) load.
-	self methodsForSelectedClass do: [ :m | m load ].
+	classSelection ifNil: [ ^ self ].
+	self packageClasses
+		detect: [ :ea | ea className = classSelection ]
+		ifFound: [ :packageClass | 
+			packageClass load.
+			self methodsForSelectedClass do: [ :m | m load ] ]
 ]
 
 { #category : #menus }

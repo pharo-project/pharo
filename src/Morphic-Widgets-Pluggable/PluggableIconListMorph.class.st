@@ -34,13 +34,14 @@ PluggableIconListMorph >> getIconSelector: anObject [
 
 { #category : #'model access' }
 PluggableIconListMorph >> getList [
+
 	"Answer the list to be displayed.  Caches the returned list in the 'list' ivar"
 
-	getListSelector isNil ifTrue: [^#()].
+	getListSelector ifNil: [ ^ #() ].
 	list := model perform: getListSelector.
-	list isNil ifTrue: [^ #()].
+	list ifNil: [ ^ #() ].
 	list := list collectWithIndex: [ :item :index | self itemMorphFor: item index: index ].
-	^list
+	^ list
 ]
 
 { #category : #'model access' }

@@ -23,6 +23,21 @@ SycMoveMethodsToPackageCommand class >> for: methods to: aPackage [
 		package: aPackage
 ]
 
+{ #category : #activation }
+SycMoveMethodsToPackageCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^CmdContextMenuActivation 
+		byItemOf: ClyMoreRefactorsMenuGroup 
+		order: 70 
+		for: ClyMethod asCalypsoItemContext
+]
+
+{ #category : #accessing }
+SycMoveMethodsToPackageCommand >> defaultMenuIconName [ 
+	^ #smallRedo
+]
+
 { #category : #accessing }
 SycMoveMethodsToPackageCommand >> defaultMenuItemName [
 	^'Move to package'

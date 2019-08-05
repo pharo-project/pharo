@@ -21,7 +21,7 @@ GTSpotterExceptionsTest class >> fatals [
 	^ fatals ifNil: [ fatals := OrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GTSpotterExceptionsTest class >> reset [
 	exceptions := nil.
 	fatals := nil.

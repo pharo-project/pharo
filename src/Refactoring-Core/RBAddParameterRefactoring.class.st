@@ -50,30 +50,33 @@ RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelec
 ]
 
 { #category : #preconditions }
-RBAddParameterRefactoring >> checkSendersAccessTo: name [ 
-	| violatorClass |
-	(#('self' 'super') includes: name) ifTrue: [^self].
-	violatorClass := self senders 
-				detect: [:each | (self canReferenceVariable: name in: each) not]
-				ifNone: [nil].
-	violatorClass notNil 
-		ifTrue: 
-			[self refactoringError: ('<1s> doesn''t appear to be defined in <2p>' 
+RBAddParameterRefactoring >> checkSendersAccessTo: name [
+
+	(#('self' 'super') includes: name) ifTrue: [ ^ self ].
+	self senders
+		detect: [ :each | (self canReferenceVariable: name in: each) not ]
+		ifFound: [ :violatorClass | 
+			self
+				refactoringError:
+					('<1s> doesn''t appear to be defined in <2p>'
 						expandMacrosWith: name
-						with: violatorClass)]
+						with: violatorClass) ]
 ]
 
 { #category : #preconditions }
 RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
+
 	| searcher |
+
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '`var'
 		do: [ :aNode :answer | 
 			| name |
+
 			name := aNode name.
-			(aNode whoDefines: name) isNil
-				ifTrue: [ self checkSendersAccessTo: name ] ].
+			( aNode whoDefines: name ) ifNil: [ self checkSendersAccessTo: name ]
+			].
 	searcher executeTree: aParseTree
 ]
 
@@ -149,12 +152,12 @@ RBAddParameterRefactoring >> safeVariableNameFor: aClass temporaries: allTempVar
 
 { #category : #private }
 RBAddParameterRefactoring >> senders [
-	senders isNil 
-		ifTrue: 
-			[senders := Set new.
-			self model allReferencesTo: oldSelector
-				do: [:each | senders add: each modelClass]].
-	^senders
+
+	senders
+		ifNil: [ senders := Set new.
+			self model allReferencesTo: oldSelector do: [ :each | senders add: each modelClass ]
+			].
+	^ senders
 ]
 
 { #category : #printing }

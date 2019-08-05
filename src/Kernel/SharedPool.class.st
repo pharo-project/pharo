@@ -47,6 +47,11 @@ SharedPool class >> includesKey: aName [
 ]
 
 { #category : #testing }
+SharedPool class >> isPool [
+	^true
+]
+
+{ #category : #testing }
 SharedPool class >> isUsed [
 	^super isUsed or: [self poolUsers isNotEmpty]
 ]

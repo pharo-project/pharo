@@ -27,6 +27,12 @@ SycRenameMessageCommand >> createRefactoring [
 ]
 
 { #category : #accessing }
+SycRenameMessageCommand >> defaultMenuIconName [
+	^#edit
+
+]
+
+{ #category : #accessing }
 SycRenameMessageCommand >> defaultMenuItemName [
 	^'Rename'
 ]

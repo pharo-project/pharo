@@ -34,7 +34,7 @@ SpContactBook class >> family [
 			yourself]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 SpContactBook class >> reset [
 	<script>
 	coworkers := nil.

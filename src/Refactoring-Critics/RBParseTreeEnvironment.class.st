@@ -13,15 +13,16 @@ RBParseTreeEnvironment >> matcher: aParseTreeSearcher [
 ]
 
 { #category : #accessing }
-RBParseTreeEnvironment >> selectionIntervalFor: aString [ 
+RBParseTreeEnvironment >> selectionIntervalFor: aString [
+
 	| parseTree node |
-	matcher isNil 
-		ifTrue: [ ^ super selectionIntervalFor: aString ].
+
+	matcher ifNil: [ ^ super selectionIntervalFor: aString ].
 	parseTree := RBParser
 		parseMethod: aString
 		onError: [ :error :position | ^ super selectionIntervalFor: aString ].
 	node := matcher executeTree: parseTree initialAnswer: nil.
-	^ (node isKindOf: RBProgramNode)
+	^ ( node isKindOf: RBProgramNode )
 		ifTrue: [ node sourceInterval ]
 		ifFalse: [ super selectionIntervalFor: aString ]
 ]

@@ -17,6 +17,16 @@ Class {
 	#category : #'SystemCommands-MessageCommands'
 }
 
+{ #category : #activation }
+SycAddMessageArgumentCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^CmdContextMenuActivation 
+		byItemOf: ClyMoreRefactorsMenuGroup 
+		order: 30 
+		for: ClyMethod asCalypsoItemContext
+]
+
 { #category : #accessing }
 SycAddMessageArgumentCommand >> argumentDefaultValue [
 	^ argumentDefaultValue
@@ -35,6 +45,12 @@ SycAddMessageArgumentCommand >> createRefactoring [
 		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
 		newSelector: newSelector
 		initializer: argumentDefaultValue
+]
+
+{ #category : #accessing }
+SycAddMessageArgumentCommand >> defaultMenuIconName [
+	^#smallAdd
+
 ]
 
 { #category : #accessing }

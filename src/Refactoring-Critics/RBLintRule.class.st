@@ -156,10 +156,14 @@ RBLintRule >> name [
 ]
 
 { #category : #printing }
-RBLintRule >> printOn: aStream [ 
+RBLintRule >> printOn: aStream [
+
 	super printOn: aStream.
-	self name isNil 
-		ifFalse: [ aStream nextPutAll: ' name: '; print: self name ]
+	self name
+		ifNotNil: [ aStream
+				nextPutAll: ' name: ';
+				print: self name
+			]
 ]
 
 { #category : #accessing }

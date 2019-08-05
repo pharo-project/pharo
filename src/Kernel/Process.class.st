@@ -47,8 +47,7 @@ Process class >> allocatePSKey: aPSVariable [
 	if object is not registered, first search for an empty slot for insertion and if not found, grow an array to add new object"
 
 	| index |
-	PSKeysSema ifNil: [ PSKeysSema := Semaphore forMutualExclusion ].
-	PSKeysSema critical: [
+	self psKeysSema critical: [
 		PSKeys 
 			ifNil: [ PSKeys := WeakArray with: aPSVariable. index := 1 ]
 			ifNotNil: [ 
@@ -91,6 +90,14 @@ Process class >> forContext: aContext priority: anInteger [
 	newProcess priority: anInteger.
 	Processor activeProcess installEnvIntoForked: newProcess.
 	^newProcess
+]
+
+{ #category : #'process specific' }
+Process class >> psKeysSema [
+	"Isolate handling of class variable"
+
+	PSKeysSema ifNil: [ PSKeysSema := Semaphore forMutualExclusion ].
+	^PSKeysSema
 ]
 
 { #category : #'process specific' }

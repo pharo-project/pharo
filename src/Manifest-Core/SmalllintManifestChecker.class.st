@@ -34,25 +34,25 @@ SmalllintManifestChecker >> cleanAllManifest [
 { #category : #accessing }
 SmalllintManifestChecker >> criticsOf: aRule [
 
-	| rules |	
-	rules := rule leaves 
-		detect: [:r | r class = aRule class]
-		ifNone: [ ^ #() ].
-	^ rules critics
+	^ rule leaves
+		detect: [ :r | r class = aRule class ]
+		ifFound: [ :rules | rules critics ]
+		ifNone: [ #() ]
 ]
 
 { #category : #manifest }
 SmalllintManifestChecker >> falsePositiveOf: aRule [
-	
-	|critics rId rV  mb |
-	critics := self criticsOf: aRule. 
+
+	| critics rId rV mb |
+
+	critics := self criticsOf: aRule.
 	rId := aRule class uniqueIdentifierName.
 	rV := aRule class identifierMinorVersionNumber.
-	^ critics select: [ :critic | mb := self manifestBuilderOf: critic.
-						mb isNil 
-							ifTrue: [ false ] 
-							ifFalse: [ mb isFalsePositive: critic onRule:  rId version: rV ]]
-	
+	^ critics
+		select: [ :critic | 
+			mb := self manifestBuilderOf: critic.
+			mb ifNil: [ false ] ifNotNil: [ mb isFalsePositive: critic onRule: rId version: rV ]
+			]
 ]
 
 { #category : #initialization }
@@ -65,23 +65,20 @@ SmalllintManifestChecker >> initialize [
 
 { #category : #manifest }
 SmalllintManifestChecker >> isFalsePositive: aCritic forRuleId: ruleId versionId: versionId [
-	| mb |
-	mb := self manifestBuilderOf: aCritic.
-	^  mb isNil 
-		ifTrue: [ false ] 
-		ifFalse: [ mb isFalsePositive: aCritic onRule: ruleId version: versionId ]
 
+	| mb |
+
+	mb := self manifestBuilderOf: aCritic.
+	^ mb ifNil: [ false ] ifNotNil: [ mb isFalsePositive: aCritic onRule: ruleId version: versionId ]
 ]
 
 { #category : #manifest }
-SmalllintManifestChecker >> isToDo: aCritic forRuleId: ruleId versionId: versionId [ 
-	
-	| mb |
-	mb := self manifestBuilderOf: aCritic.
-	^  mb isNil 
-		ifTrue: [ false ] 
-		ifFalse: [ mb containsToDo: aCritic onRule:  ruleId version: versionId ]
+SmalllintManifestChecker >> isToDo: aCritic forRuleId: ruleId versionId: versionId [
 
+	| mb |
+
+	mb := self manifestBuilderOf: aCritic.
+	^ mb ifNil: [ false ] ifNotNil: [ mb containsToDo: aCritic onRule: ruleId version: versionId ]
 ]
 
 { #category : #manifest }
@@ -138,24 +135,20 @@ SmalllintManifestChecker >> manifestBuilderOfPackage: aPackage [
 
 { #category : #manifest }
 SmalllintManifestChecker >> rejectClassesOf: aPackage [
-		
-	| mb |
-	mb := self manifestBuilderOf: aPackage.
-	^  mb isNil 
-		ifTrue: [{}] 
-		ifFalse: [ mb rejectClasses ]
 
+	| mb |
+
+	mb := self manifestBuilderOf: aPackage.
+	^ mb ifNil: [ {} ] ifNotNil: [ mb rejectClasses ]
 ]
 
 { #category : #manifest }
 SmalllintManifestChecker >> rejectRulesOf: aPackage [
-		
+
 	| mb |
+
 	mb := self manifestBuilderOf: aPackage.
-	^  mb isNil 
-		ifTrue: [{}] 
-		ifFalse: [ mb rejectRules]
-	
+	^ mb ifNil: [ {} ] ifNotNil: [ mb rejectRules ]
 ]
 
 { #category : #accessing }
@@ -184,16 +177,15 @@ SmalllintManifestChecker >> runRules: aCompositeRule onPackage: aPackage without
 
 { #category : #manifest }
 SmalllintManifestChecker >> toDoOf: aRule [
-	
-	|critics rId rV mb |
-	critics := self criticsOf: aRule. 
+
+	| critics rId rV mb |
+
+	critics := self criticsOf: aRule.
 	rId := aRule class uniqueIdentifierName.
 	rV := aRule class identifierMinorVersionNumber.
-	^ critics select: [:critic |
-		mb := (self manifestBuilderOf: critic).
-		mb isNil 
-			ifTrue: [ false ] 
-			ifFalse: [ mb containsToDo: critic onRule:  rId version: rV ]]
-	
-	
+	^ critics
+		select: [ :critic | 
+			mb := self manifestBuilderOf: critic.
+			mb ifNil: [ false ] ifNotNil: [ mb containsToDo: critic onRule: rId version: rV ]
+			]
 ]

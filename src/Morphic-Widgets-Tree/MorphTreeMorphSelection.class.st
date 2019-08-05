@@ -40,9 +40,8 @@ MorphTreeMorphSelection >> removeNode: aNode [
 
 { #category : #accessing }
 MorphTreeMorphSelection >> selectedItemOrItemsOrNil [
-	^ self lastSelectedNode isNil 
-		ifTrue: [ nil ]
-		ifFalse: [ self lastSelectedNode item ]
+
+	^ self lastSelectedNode ifNil: [ nil ] ifNotNil: [ self lastSelectedNode item ]
 ]
 
 { #category : #accessing }

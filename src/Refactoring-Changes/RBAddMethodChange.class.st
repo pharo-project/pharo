@@ -48,13 +48,17 @@ RBAddMethodChange >> = anAddMethodChange [
 
 { #category : #converting }
 RBAddMethodChange >> asUndoOperation [
-	^ (self changeClass includesSelector: self selector)
-		ifTrue: [ 
-			| oldProtocol |
+
+	^ ( self changeClass includesSelector: self selector )
+		ifTrue: [ | oldProtocol |
+
 			oldProtocol := RBBrowserEnvironment new whichProtocolIncludes: self selector in: self changeClass.
-			oldProtocol isNil
-				ifTrue: [ oldProtocol := #accessing ].
-			changeFactory addMethodSource: (self methodSourceFor: self selector) in: self changeClass classified: oldProtocol ]
+			oldProtocol ifNil: [ oldProtocol := #accessing ].
+			changeFactory
+				addMethodSource: ( self methodSourceFor: self selector )
+				in: self changeClass
+				classified: oldProtocol
+			]
 		ifFalse: [ changeFactory removeMethod: selector from: self changeClass ]
 ]
 
@@ -138,7 +142,7 @@ RBAddMethodChange >> oldVersionTextToDisplay [
 
 { #category : #private }
 RBAddMethodChange >> parseTree [
-	^ RBParser parseMethod: source onError: [ :str :pos | ^ nil ]
+	^ RBParser parseMethod: self source onError: [ :str :pos | ^ nil ]
 ]
 
 { #category : #private }
@@ -188,10 +192,11 @@ RBAddMethodChange >> protocols: aCollectionOrString [
 
 { #category : #accessing }
 RBAddMethodChange >> selector [
-	selector isNil ifTrue: [ 
-		selector := RBParser parseMethodPattern: source.
-		selector isNil
-			ifTrue: [ selector := #unknown ] ].
+
+	selector
+		ifNil: [ selector := RBParser parseMethodPattern: source.
+			selector ifNil: [ selector := #unknown ]
+			].
 	^ selector
 ]
 

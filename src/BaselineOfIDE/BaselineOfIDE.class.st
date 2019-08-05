@@ -94,6 +94,8 @@ BaselineOfIDE >> additionalInitialization [
 	
 	SDL_Event initialize.
 	
+	HiRulerBuilderTest initialize.
+	
 	3 timesRepeat: [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
@@ -135,6 +137,11 @@ BaselineOfIDE >> baseline: spec [
 		].
 
 		spec baseline: 'Clap' with: [ spec repository: repository ].
+	
+		spec baseline: 'SUnit' with: [
+			spec loads: 'Tests'. 
+			spec repository: repository
+		].
 		
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
@@ -145,6 +152,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Epicea'.
 		spec package: 'Hiedra'.
 		spec package: 'EpiceaBrowsers'.
+		spec package: 'Hiedra-Examples'.
 		spec package: 'Hiedra-Tests'. 
 		spec package: 'Ombu-Tests'.
 		spec package: 'Epicea-Tests'.
@@ -162,6 +170,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Collections-Tests'.
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
+		spec package: 'Network-Mail-Tests'.
 		spec package: 'Tests'.
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'AST-Core-Tests'.
@@ -255,7 +264,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'SmartSuggestions'.
 		
 		spec package: 'MonticelloMocks'.
-		spec package: 'NodeNavigation'.
 		spec package: 'OpalCompiler-Tools'.
 
 		spec package: 'OSWindow-Core'.
@@ -314,7 +322,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Multilingual-Tests'.
 		spec package: 'NewValueHolder-Tests'.		
 		spec package: 'NECompletion-Tests'.
-		spec package: 'NodeNavigation-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
 		spec package: 'PerformMessageCommandLineHandler'.
@@ -340,8 +347,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Rubric-Tests'.
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
-		spec package: 'SUnit-Tests'.
-		spec package: 'SUnit-Support-UITesting-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
 		spec package: 'Spec-Help'.	
@@ -399,6 +404,7 @@ BaselineOfIDE >> groups: spec [
 spec group: 'Mandatory-Group' with: #(
 	'Fuel-Tools-Pharo'	"required by GT-Debugger HudsonBuildTools20"
 	'Network-Tests'		"required by Multilingual-Tests"
+	'Network-Mail-Tests'	"previously part of Network-Tests"
 	'Gofer-Tests'		"required by EpiceaTests Metacello-TestsMC, depends on 'Metacello-Tests-Group', cleanup needed?"
 ). 
 
@@ -411,18 +417,14 @@ spec group: 'Optional-Group' with: #(
 	'System-Serial Port'	"standalone?"
 	'PerformMessageCommandLineHandler' 	"standalone"
 	'Files-Prompt'
-).	
-	
-spec group: 'NodeNavigation-Group' with: #(
-	'NodeNavigation'	"standalone?"
-	'NodeNavigation-Tests'	
-).					
+).				
 
 spec group: 'Epicea-Core-Group' with: #(
 	'Athens' "dependency of Hiedra"
 	'Ombu'
 	'Epicea'
 	'Hiedra'
+	'Hiedra-Examples'
 	'EpiceaBrowsers').
 spec group: 'Epicea-Tests-Group' with: #(
 	'Ombu-Tests'
@@ -479,8 +481,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Rubric-Tests'
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
-	'SUnit-Tests'
-	'SUnit-Support-UITesting-Tests'
+	'SUnit'
 	'Spec-Tests'
 	'System-Caching-Tests'
 	'System-Hashing-Tests'
@@ -811,10 +812,10 @@ spec group: 'GT&QA-Group' with: #(
 ).		
 
 spec group: 'UndefinedClasses-Group' with: #(
-		'ClassParser'
-		'ClassParser-Tests'
-		'UndefinedClasses'
-		'UndefinedClasses-Tests'
+	'ClassParser'
+	'ClassParser-Tests'
+	'UndefinedClasses'
+	'UndefinedClasses-Tests'
 ).		
 
 spec group: #default with: #(
@@ -845,7 +846,6 @@ spec group: #default with: #(
 	'Catalog-Group'
 	'Epicea-Group'
 	'Optional-Group'
-	'NodeNavigation-Group'
 	'General-Tests-Group'
 	'SortFunctions-Group'	
 	'ReferenceFinder-Group'

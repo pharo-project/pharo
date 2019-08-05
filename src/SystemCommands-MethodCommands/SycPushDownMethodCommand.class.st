@@ -7,11 +7,44 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
+{ #category : #activation }
+SycPushDownMethodCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^CmdContextMenuActivation 
+		byItemOf: ClyMoreRefactorsMenuGroup 
+		order: 20 
+		for: ClyMethod asCalypsoItemContext
+]
+
+{ #category : #activation }
+SycPushDownMethodCommand class >> methodShortcutActivation [
+	<classAnnotation>
+	
+	^CmdShortcutActivation by: $p meta, $d meta for: ClyMethod asCalypsoItemContext
+]
+
 { #category : #execution }
 SycPushDownMethodCommand >> asRefactorings [
+	"Return push down method refactoring using method"
+	|dialog refactoring|
+	refactoring :=  RBPushDownMethodRefactoring 
+		pushDown: methods  
+		from: methods first origin.
+	refactoring setOption: #selectorsFromView toUse: [ :ref |
+		dialog := RBPushDownPreview on: ref.
+		dialog cancelled ifTrue: [ CmdCommandAborted signal ]].
+	^ OrderedCollection with: refactoring 
+]
 
-	^methods collect: [:method | 
-		RBPushDownMethodRefactoring pushDown: {method selector} from: method origin]
+{ #category : #accessing }
+SycPushDownMethodCommand >> defaultMenuIconName [ 
+	^ #down
+]
+
+{ #category : #accessing }
+SycPushDownMethodCommand >> defaultMenuIconName [ 
+	^ #down
 ]
 
 { #category : #accessing }

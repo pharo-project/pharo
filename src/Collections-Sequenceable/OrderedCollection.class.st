@@ -754,7 +754,7 @@ OrderedCollection >> removeLast: n [
 	^ list
 ]
 
-{ #category : #removing }
+{ #category : #initialization }
 OrderedCollection >> reset [
 	"Quickly remove all elements. The objects will be still referenced, but will not be 	accessible."
 	

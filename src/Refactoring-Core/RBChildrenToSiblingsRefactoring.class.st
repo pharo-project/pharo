@@ -85,13 +85,15 @@ RBChildrenToSiblingsRefactoring >> computeSubclassSupersOf: aClass [
 ]
 
 { #category : #'private-methods' }
-RBChildrenToSiblingsRefactoring >> createSubclassResponsibilityFor: aSelector in: aClass [ 
+RBChildrenToSiblingsRefactoring >> createSubclassResponsibilityFor: aSelector in: aClass [
+
 	| source |
-	(aClass superclass definesMethod: aSelector) ifTrue: [^self].
+
+	( aClass superclass definesMethod: aSelector )
+		ifTrue: [ ^ self ].
 	source := self subclassResponsibilityFor: aSelector in: aClass.
-	source isNil ifTrue: [^self].
-	aClass superclass compile: source
-		classified: (aClass protocolsFor: aSelector)
+	source ifNil: [ ^ self ].
+	aClass superclass compile: source classified: ( aClass protocolsFor: aSelector )
 ]
 
 { #category : #initialization }
@@ -170,13 +172,13 @@ RBChildrenToSiblingsRefactoring >> pullUpPoolVariables [
 ]
 
 { #category : #'private-methods' }
-RBChildrenToSiblingsRefactoring >> pushUp: aSelector in: aClass [ 
+RBChildrenToSiblingsRefactoring >> pushUp: aSelector in: aClass [
+
 	| source |
+
 	source := aClass sourceCodeFor: aSelector.
-	source isNil 
-		ifFalse: 
-			[aClass superclass compile: source
-				classified: (aClass protocolsFor: aSelector)]
+	source
+		ifNotNil: [ aClass superclass compile: source classified: ( aClass protocolsFor: aSelector ) ]
 ]
 
 { #category : #'private-methods' }
@@ -214,12 +216,11 @@ RBChildrenToSiblingsRefactoring >> selectorsToPushUpFrom: aClass [
 ]
 
 { #category : #'private-methods' }
-RBChildrenToSiblingsRefactoring >> shouldPushUp: aSelector from: aClass [ 
-	^ ((aClass isMeta 
+RBChildrenToSiblingsRefactoring >> shouldPushUp: aSelector from: aClass [
+	^ (aClass isMeta
 		ifTrue: [ subclasses collect: [ :each | each classSide ] ]
-		ifFalse: [ subclasses ]) 
-		detect: [ :each | (each directlyDefinesMethod: aSelector) not ]
-		ifNone: [ nil ]) notNil
+		ifFalse: [ subclasses ])
+		anySatisfy: [ :each | (each directlyDefinesMethod: aSelector) not ]
 ]
 
 { #category : #printing }

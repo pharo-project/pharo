@@ -15,6 +15,11 @@ SycInlineTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 ]
 
 { #category : #accessing }
+SycInlineTempCommand >> defaultMenuIconName [ 
+	^ ##smallRightFlushIcon
+]
+
+{ #category : #accessing }
 SycInlineTempCommand >> defaultMenuItemName [
 	^'Inline temp'
 ]

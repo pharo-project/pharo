@@ -65,7 +65,12 @@ MethodAddition >> notifyObservers [
 	SystemAnnouncer uniqueInstance 
 		suspendAllWhile: [myClass organization classify: selector under: category].
 	priorMethodOrNil 
-		ifNil: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
+		ifNil: [ SystemAnnouncer uniqueInstance
+				methodAdded: compiledMethod
+				configuredWith: [ :event | 
+					event
+						propertyAt: #eventSource
+						put: #Monticello ] ]
 		ifNotNil: [
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: priorCategoryOrNil.
 			priorCategoryOrNil = category ifFalse: [

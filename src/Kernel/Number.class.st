@@ -38,6 +38,14 @@ Class {
 	#category : #'Kernel-Numbers'
 }
 
+{ #category : #'instance creation' }
+Number class >> new [
+
+	self == Number ifTrue: [
+		^ self error: 'Number is an abstract class.  Make a concrete subclass.'].
+	^ super new
+]
+
 { #category : #constants }
 Number class >> one [
 

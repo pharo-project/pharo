@@ -42,8 +42,7 @@ GTGoAndInspectBytecodeDebugAction >> help [
 
 { #category : #accessing }
 GTGoAndInspectBytecodeDebugAction >> id [
-
-	^ GTGoAndInspectBytecodeDebugAction name
+	^ self class name
 ]
 
 { #category : #initialization }

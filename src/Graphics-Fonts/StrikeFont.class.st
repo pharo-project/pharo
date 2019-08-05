@@ -1932,7 +1932,7 @@ StrikeFont >> releaseCachedState [
 	self reset.
 ]
 
-{ #category : #emphasis }
+{ #category : #initialization }
 StrikeFont >> reset [
 	"Reset the cache of derivative emphasized fonts"
 	fallbackFont class = FixedFaceFont ifTrue: [ fallbackFont := nil ].
