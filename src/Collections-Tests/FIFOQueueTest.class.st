@@ -2,7 +2,7 @@
 SUnit tests for FIFO queues
 "
 Class {
-	#name : #FIFOQueueTests,
+	#name : #FIFOQueueTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'count'
@@ -11,13 +11,13 @@ Class {
 }
 
 { #category : #'instance creation' }
-FIFOQueueTests >> newQueue [
+FIFOQueueTest >> newQueue [
 
 	^ WaitfreeQueue new
 ]
 
 { #category : #running }
-FIFOQueueTests >> runValidationTest [
+FIFOQueueTest >> runValidationTest [
 	| q sema prio pusher feeder
 		feeders r crit done |
 
@@ -56,7 +56,7 @@ FIFOQueueTests >> runValidationTest [
 ]
 
 { #category : #running }
-FIFOQueueTests >> runValidationTest2 [
+FIFOQueueTest >> runValidationTest2 [
 	| q sema prio pusher r cnt |
 
 	r := Random new.
@@ -91,7 +91,7 @@ FIFOQueueTests >> runValidationTest2 [
 ]
 
 { #category : #tests }
-FIFOQueueTests >> testBasics [
+FIFOQueueTest >> testBasics [
 	| q |
 	q := self newQueue.
 	
@@ -111,7 +111,7 @@ FIFOQueueTests >> testBasics [
 ]
 
 { #category : #tests }
-FIFOQueueTests >> testContention1 [
+FIFOQueueTest >> testContention1 [
 	"here is a test case that breaks the standard SharedQueue from Squeak 3.8"
 
 	| q r1 r2 |
@@ -135,7 +135,7 @@ FIFOQueueTests >> testContention1 [
 ]
 
 { #category : #tests }
-FIFOQueueTests >> testFlush [
+FIFOQueueTest >> testFlush [
 	| q v sema |
 	q := self newQueue.
 	sema := Semaphore new.
@@ -152,7 +152,7 @@ FIFOQueueTests >> testFlush [
 ]
 
 { #category : #tests }
-FIFOQueueTests >> testFlushAllSuchThat [
+FIFOQueueTest >> testFlushAllSuchThat [
 	| q |
 	q := self newQueue.
 
@@ -167,7 +167,7 @@ FIFOQueueTests >> testFlushAllSuchThat [
 ]
 
 { #category : #tests }
-FIFOQueueTests >> testHeavyContention [
+FIFOQueueTest >> testHeavyContention [
 	"run 10 threads, pushing new values to queue,
 	and 10 threads pullung values from queue,
 	at random priorities"
@@ -210,7 +210,7 @@ FIFOQueueTests >> testHeavyContention [
 ]
 
 { #category : #tests }
-FIFOQueueTests >> testHeavyContention2 [
+FIFOQueueTest >> testHeavyContention2 [
 	"run 10 threads, pushing new values to queue,
 	and 10 threads pullung values from queue,
 	at random priorities"
@@ -253,7 +253,7 @@ FIFOQueueTests >> testHeavyContention2 [
 ]
 
 { #category : #tests }
-FIFOQueueTests >> testNextOrNilSuchThat [
+FIFOQueueTest >> testNextOrNilSuchThat [
 	| q item |
 	q := self newQueue.
 	q nextPut: 5.
@@ -268,7 +268,7 @@ FIFOQueueTests >> testNextOrNilSuchThat [
 ]
 
 { #category : #tests }
-FIFOQueueTests >> testSize [
+FIFOQueueTest >> testSize [
 	| q |
 	q := self newQueue.
 	
@@ -279,7 +279,7 @@ FIFOQueueTests >> testSize [
 ]
 
 { #category : #tests }
-FIFOQueueTests >> testSuchThat [
+FIFOQueueTest >> testSuchThat [
 	| q |
 	q := self newQueue.
 	
