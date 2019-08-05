@@ -12,7 +12,7 @@ MCWorkingCopyForExtensionsTest >> tearDown [
 		compiledMethodAt: #testingMethod
 		ifPresent: [ Object removeSelector: #testingMethod ].
 	('Atestpackage-something-else' asPackageIfAbsent: [ nil ])
-		ifNotNil: #removeFromSystem.
+		ifNotNil: [ :package | package removeFromSystem ].
 	MCWorkingCopy registry
 		at: (MCPackage named: 'atestpackage-something-else')
 		ifPresent: [ :aWC | aWC unload ].
