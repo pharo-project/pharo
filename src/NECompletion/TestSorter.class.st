@@ -14,8 +14,13 @@ TestSorter class >> kind [
 	^ ''
 ]
 
-{ #category : #sorting }
-TestSorter >> sortCompletionList: aList [
+{ #category : #'tools registry' }
+TestSorter class >> register [
+	TestCompletionModel sorter: TestAlphabeticSorter
+]
+
+{ #category : #description }
+TestSorter class >> sortCompletionList: aList [
 
 	self shouldBeImplemented.
 ]

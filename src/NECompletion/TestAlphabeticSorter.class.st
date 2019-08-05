@@ -1,5 +1,5 @@
 "
-Aplhabetical sorting.
+Aplhabetical sorting
 "
 Class {
 	#name : #TestAlphabeticSorter,
@@ -13,8 +13,8 @@ TestAlphabeticSorter class >> kind [
 	^ 'alphabetical'
 ]
 
-{ #category : #sorting }
-TestAlphabeticSorter >> sortCompletionList: aList [
+{ #category : #description }
+TestAlphabeticSorter class >> sortCompletionList: aList [
 
 	^ aList sorted.
 ]
