@@ -25,30 +25,6 @@ OSWorldRenderer class >> priority [
 ]
 
 { #category : #initialization }
-OSWorldRenderer >> activate [
-
-	| attributes |
-
-	attributes := OSWindowAttributes new.
-	attributes
-		extent: 1000@1000;
-		title: Smalltalk shortImageName;
-		icon: (self iconNamed: #pharoIcon).
-
-	display := Form extent: 1000@1000 depth: 32.
-	world extent: 1000@1000.
-
-	driver := self pickMostSuitableWindowDriver.
-	attributes preferableDriver: driver.
-	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
-	
-	world worldState doFullRepaint.
-	world displayWorld.
-	
-	OSWindowClipboard new beDefault.
-]
-
-{ #category : #initialization }
 OSWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
 	osWindow ifNotNil: [ osWindow setMouseCursor: aCursor mask: maskForm ]
@@ -145,6 +121,30 @@ OSWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld submorphs: sub
 	].
 "	self osWindowRenderer forceDisplayUpdate."
 	
+]
+
+{ #category : #initialization }
+OSWorldRenderer >> doActivate [
+
+	| attributes |
+
+	attributes := OSWindowAttributes new.
+	attributes
+		extent: 1000@1000;
+		title: Smalltalk shortImageName;
+		icon: (self iconNamed: #pharoBig).
+
+	display := Form extent: 1000@1000 depth: 32.
+	world extent: 1000@1000.
+
+	driver := self pickMostSuitableWindowDriver.
+	attributes preferableDriver: driver.
+	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
+	
+	world worldState doFullRepaint.
+	world displayWorld.
+	
+	OSWindowClipboard new beDefault.
 ]
 
 { #category : #initialization }
