@@ -451,6 +451,7 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 			withVars: (aBlockNode scope tempVector collect: [:each| each name]) asArray.
 	].
 	valueTranslator visitNode: aBlockNode body.
+	methodBuilder mapToNode: aBlockNode body.
 	methodBuilder addBlockReturnTopIfRequired.
 	aBlockNode ir: self ir.
 	^ aBlockNode ir compiledBlock: aBlockNode scope
