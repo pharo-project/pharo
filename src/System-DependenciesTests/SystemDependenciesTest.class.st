@@ -321,6 +321,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfSystemCommands } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
+	packages := packages , { BaselineOfIceberg name. BaselineOfLibGit name. BaselineOfCalypso name}.
 
 	packages := packages ,  (self packagesOfGroupNamed: 'FullEnvironment' on: BaselineOfCalypso ).
 	packages := packages ,  (self packagesOfGroupNamed: 'SystemBrowser' on: BaselineOfCalypso ).
