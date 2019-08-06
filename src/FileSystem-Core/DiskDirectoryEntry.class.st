@@ -283,6 +283,13 @@ DiskDirectoryEntry >> isFile [
 ]
 
 { #category : #testing }
+DiskDirectoryEntry >> isHidden [
+	"Answer a boolean indicating whether the receiver is hidden"
+
+	^reference fileSystem isHidden: reference attributes: self statAttributes
+]
+
+{ #category : #testing }
 DiskDirectoryEntry >> isReadable [
 	"Answer a boolean indicating whether the VM can read the receivers file"
 
