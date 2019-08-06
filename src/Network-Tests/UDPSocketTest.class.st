@@ -9,6 +9,22 @@ Class {
 	#category : #'Network-Tests-Kernel'
 }
 
+{ #category : #support }
+UDPSocketTest >> faultyUDPSocket [
+
+	| cls |
+	
+	cls := Socket newAnonymousSubclass .
+	
+	"the mock socket is not sending anything, so there is nothing to wait for"
+	cls compile: 'waitForSendDoneFor: aNumber ^ true'.
+	
+	"compile the primitive to not send, but return a 0 count for any send"
+	cls compile: 'primSocket: socketID sendUDPData: aStringOrByteArray toHost: hostAddress port: portNumber startIndex: startIndex count: count ^ 0'.
+	
+	^ cls newUDP
+]
+
 { #category : #tests }
 UDPSocketTest >> testUDPBroadcastError [
 	"Test that we get a specific error when failure is due to sending to a broadcast address without SO_BROADCAST set"
