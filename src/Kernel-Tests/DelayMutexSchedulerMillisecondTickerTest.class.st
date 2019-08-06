@@ -1,18 +1,18 @@
 "
 I inherit delay scheduler system tests 
 and run them for the specific combination of...
-  scheduler DelaySemaphoreScheduler
+  scheduler DelayMutexScheduler
   ticker DelayMillisecondTicker.
 
 
 "
 Class {
-	#name : #TestDelaySemaphoreSchedulerMillisecondTicker,
-	#superclass : #TestDelaySemaphoreSchedulerMicrosecondTicker,
+	#name : #DelayMutexSchedulerMillisecondTickerTest,
+	#superclass : #DelayMutexSchedulerMicrosecondTickerTest,
 	#category : #'Kernel-Tests-Delays'
 }
 
 { #category : #tests }
-TestDelaySemaphoreSchedulerMillisecondTicker >> classForTicker [
+DelayMutexSchedulerMillisecondTickerTest >> classForTicker [
 	^DelayMillisecondTickerSimulation 
 ]

@@ -15,7 +15,7 @@ running at timingPriority will normally preempt all other processes.  This is pr
 to tests in the /scheduler/ variable.
 "
 Class {
-	#name : #TestDelayBasicSchedulerMicrosecondTicker,
+	#name : #DelayBasicSchedulerMicrosecondTickerTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'ticker',
@@ -29,24 +29,24 @@ Class {
 }
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> classForScheduler [
+DelayBasicSchedulerMicrosecondTickerTest >> classForScheduler [
 	^ DelayBasicScheduler
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> classForTicker [
+DelayBasicSchedulerMicrosecondTickerTest >> classForTicker [
 	^ DelayMicrosecondTickerSimulation
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> setDebugOnOff [
+DelayBasicSchedulerMicrosecondTickerTest >> setDebugOnOff [
 	"highlight and evaluate either of the following lines as needed" 
 		DebugMe := true.
 		DebugMe := false.
 ]
 
 { #category : #running }
-TestDelayBasicSchedulerMicrosecondTicker >> setUp [
+DelayBasicSchedulerMicrosecondTickerTest >> setUp [
 	"Event loop priority takes So it takes priority over following code"
 	super setUp.
 	ticker := self classForTicker new.
@@ -59,7 +59,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> setUp [
 ]
 
 { #category : #running }
-TestDelayBasicSchedulerMicrosecondTicker >> tearDown [
+DelayBasicSchedulerMicrosecondTickerTest >> tearDown [
 "	scheduler debug: false."
 	scheduler debug: false.
 	super tearDown.
@@ -68,7 +68,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> tearDown [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testDelayWaitTimeoutCompleted [
+DelayBasicSchedulerMicrosecondTickerTest >> testDelayWaitTimeoutCompleted [
 	| completed delay status |
 	completed := Semaphore new.
 	delay := DelayWaitTimeout new setDelay: 100 forSemaphore: completed.
@@ -79,7 +79,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testDelayWaitTimeoutCompleted [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testDelayWaitTimeoutTimedOut [
+DelayBasicSchedulerMicrosecondTickerTest >> testDelayWaitTimeoutTimedOut [
 	| completed delay status |
 	completed := Semaphore new.
 	delay := DelayWaitTimeout new setDelay: 100 forSemaphore: completed.
@@ -89,7 +89,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testDelayWaitTimeoutTimedOut [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testDurationLessThanMaxTicks [
+DelayBasicSchedulerMicrosecondTickerTest >> testDurationLessThanMaxTicks [
 	"In #timingPriorityHandleEvent the maximum tick is hardcoded as 1000 milliseconds.
 	 Test when delay duration is less than this.
 		- duration is in milliseconds.
@@ -106,7 +106,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testDurationLessThanMaxTicks [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testDurationMoreThanMaxTicks [
+DelayBasicSchedulerMicrosecondTickerTest >> testDurationMoreThanMaxTicks [
 	"In #handleTimerEvent the maximum tick is hardcoded as 1000 milliseconds.
 	 Test when delay duration is less than this.
 		- duration is in milliseconds.
@@ -120,7 +120,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testDurationMoreThanMaxTicks [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testForMilliseconds [
+DelayBasicSchedulerMicrosecondTickerTest >> testForMilliseconds [
 	| delay |
 	delay := Delay forMilliseconds: 1000.
 	
@@ -135,7 +135,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testForMilliseconds [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testForSeconds [
+DelayBasicSchedulerMicrosecondTickerTest >> testForSeconds [
 	| delay |
 	delay := Delay forSeconds: 1.
 	
@@ -150,7 +150,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testForSeconds [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testHeapBackwards [
+DelayBasicSchedulerMicrosecondTickerTest >> testHeapBackwards [
 	|delay1 delay2 delay3 delay4|
 	delay1 := Delay forMilliseconds: 1.
 	delay2 := Delay forMilliseconds: 2.
@@ -170,7 +170,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testHeapBackwards [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testHeapForwards [
+DelayBasicSchedulerMicrosecondTickerTest >> testHeapForwards [
 	|delay1 delay2 delay3 delay4|
 	delay1 := Delay forMilliseconds: 1.
 	delay2 := Delay forMilliseconds: 2.
@@ -190,7 +190,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testHeapForwards [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testMillisecondsToGo [
+DelayBasicSchedulerMicrosecondTickerTest >> testMillisecondsToGo [
 	| delay |
 	delay := Delay forMilliseconds: 100.
 	
@@ -203,7 +203,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testMillisecondsToGo [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testMillisecondsToGoExpired [
+DelayBasicSchedulerMicrosecondTickerTest >> testMillisecondsToGoExpired [
 	| delay |
 	delay := Delay forMilliseconds: 100.
 	
@@ -215,7 +215,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testMillisecondsToGoExpired [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testMultiSchedule [
+DelayBasicSchedulerMicrosecondTickerTest >> testMultiSchedule [
 	| delay anotherDelay |
 	"Ensure that scheduling the same delay twice raises an error"
 	delay := Delay forSeconds: 1000.
@@ -233,7 +233,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testMultiSchedule [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testPerformanceInlined_ifNotNil [
+DelayBasicSchedulerMicrosecondTickerTest >> testPerformanceInlined_ifNotNil [
 	"For optimal performance, the outer conditionals of #timingPriorityHandleEvent should be inlined"
 	|codeSample|
 	codeSample := [ nil ifNotNil: [ 0 ]].
@@ -241,7 +241,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testPerformanceInlined_ifNotNil [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testPerformanceInlined_ifTrue [
+DelayBasicSchedulerMicrosecondTickerTest >> testPerformanceInlined_ifTrue [
 	"For optimal performance, the outer conditionals of #timingPriorityHandleEvent should be inlined"
 	| codeSample x |
 	codeSample := [ x ifTrue: [ 0 ]].
@@ -249,7 +249,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testPerformanceInlined_ifTrue [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testSimpleOneDelay [
+DelayBasicSchedulerMicrosecondTickerTest >> testSimpleOneDelay [
 	"
 	Event loop priority takes So it takes priority over following code"
 	|delay|
@@ -269,7 +269,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testSimpleOneDelay [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testSimpleTwoDelays [
+DelayBasicSchedulerMicrosecondTickerTest >> testSimpleTwoDelays [
 	"Event loop priority takes so it takes priority over following code"
 	|delay1 delay2|
 	delay1 := Delay new setDelay: 2"ms" forSemaphore: Semaphore new.
@@ -301,7 +301,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testSimpleTwoDelays [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testStartStop [
+DelayBasicSchedulerMicrosecondTickerTest >> testStartStop [
 	|error|
 	error := false.
 	"scheduler previously started in #setUp"
@@ -310,7 +310,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testStartStop [
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testStoppedSchedulerExpiresRemainingDelays [
+DelayBasicSchedulerMicrosecondTickerTest >> testStoppedSchedulerExpiresRemainingDelays [
 	"Event loop priority takes So it takes priority over following code"
 	|delay1 delay2 delay3|
 
@@ -338,7 +338,7 @@ TestDelayBasicSchedulerMicrosecondTicker >> testStoppedSchedulerExpiresRemaining
 ]
 
 { #category : #tests }
-TestDelayBasicSchedulerMicrosecondTicker >> testSuspendForSnapshot [
+DelayBasicSchedulerMicrosecondTickerTest >> testSuspendForSnapshot [
 	"
 	Event loop priority takes So it takes priority over following code"
 	|delay|
