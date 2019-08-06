@@ -36,6 +36,7 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> compileSourceToMethod: source 
 
 { #category : #running }
 OCASTTranslatorMappingForFullBlockClosuresTest >> setUp [
+	super setUp.
 	ctx := CompilationContext new
 		encoderClass: EncoderForSistaV1;
 		setOptions: {#optionFullBlockClosure . #optionEmbeddSources} asSet.
@@ -46,7 +47,7 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> setUp [
 
 { #category : #running }
 OCASTTranslatorMappingForFullBlockClosuresTest >> tearDown [
-	
+	super tearDown 
 ]
 
 { #category : #testing }
