@@ -61,7 +61,7 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> testBlockWithParametersASTMapp
 { #category : #testing }
 OCASTTranslatorMappingForFullBlockClosuresTest >> testSimpleBlockASTMapping [
 	|method blockNode|
-	method := self compileSourceToMethod: 'm ^[1 + 2] value'.
+	method := self compileSourceToMethod: 'm ^[40 + 2] value'.
 	blockNode := method ast statements first value receiver.
 	self assertBlockNodeHasCorrectIR: blockNode.
 	self assertMethodReturnValue: method
