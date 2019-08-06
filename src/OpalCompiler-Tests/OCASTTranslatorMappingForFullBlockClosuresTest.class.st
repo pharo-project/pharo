@@ -44,6 +44,11 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> setUp [
 		yourself
 ]
 
+{ #category : #running }
+OCASTTranslatorMappingForFullBlockClosuresTest >> tearDown [
+	
+]
+
 { #category : #testing }
 OCASTTranslatorMappingForFullBlockClosuresTest >> testBlockWithParametersASTMapping [
 	|method blockNode|
