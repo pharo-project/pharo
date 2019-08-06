@@ -12,9 +12,9 @@ Class {
 OCASTTranslatorMappingForFullBlockClosuresTest >> assertBlockNodeHasCorrectIR: blockNode [
 	| sequence |
 	blockNode methodNode ir.
-	sequence := blockNode ir startSequence.
+	sequence := blockNode ir startSequence sequence.
 	self assert: (sequence allSatisfy: [ :ir | ir sourceNode notNil ]).
-	self assert: sequence last equals: blockNode body
+	self assert: sequence last sourceNode equals: blockNode body
 ]
 
 { #category : #support }
@@ -40,7 +40,7 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> setUp [
 { #category : #testing }
 OCASTTranslatorMappingForFullBlockClosuresTest >> testSimpleBlockASTMapping [
 	|method blockNode|
-	method := self compileSourceToMethod: 'm [1 + 2]'.
-	blockNode := method ast statements first.
+	method := self compileSourceToMethod: 'm [1 + 2] value'.
+	blockNode := method ast statements first receiver.
 	self assertBlockNodeHasCorrectIR: blockNode
 ]
