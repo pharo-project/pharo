@@ -24,7 +24,7 @@ UIManager class >> default [
 { #category : #initialization }
 UIManager class >> default: aUIManager [
 
-	Default deactivate.
+	Default ifNotNil: [ :mgr | mgr deactivate ].
 	Default := aUIManager.
 	Default activate
 ]
