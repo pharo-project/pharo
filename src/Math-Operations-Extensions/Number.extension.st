@@ -56,7 +56,7 @@ Number >> arcTan: denominator [
 	"The receiver is the tangent of an angle. Answer the angle measured in 
 	radians."
 
-	^(self asFloat) arcTan: denominator.
+	^ self asFloat arcTan: denominator
 ]
 
 { #category : #'*Math-Operations-Extensions' }
