@@ -325,11 +325,11 @@ SystemDictionary >> removeClassNamed: aName [
 ]
 
 { #category : #removing }
-SystemDictionary >> removeFromCaches: aClassName [
+SystemDictionary >> removeFromCaches: aKey [
 	"In case we remove a key from the system dictionary, we do not need to flush all the caches. We can just remove it from the class name and non class name caches."
 
-	cachedClassNames ifNotNil: [ :cache | cache remove: aClassName ifAbsent: [  ] ].
-	cachedNonClassNames ifNotNil: [ :cache | cache remove: aClassName ifAbsent: [  ] ].
+	cachedClassNames ifNotNil: [ :cache | cache remove: aKey ifAbsent: [  ] ].
+	cachedNonClassNames ifNotNil: [ :cache | cache remove: aKey ifAbsent: [  ] ].
 	cachedBehaviors := nil
 ]
 
