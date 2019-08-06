@@ -1,11 +1,11 @@
 Class {
-	#name : #DoubleLinkedListTests,
+	#name : #DoubleLinkedListTest,
 	#superclass : #TestCase,
 	#category : #'Collections-DoubleLinkedList-Tests'
 }
 
 { #category : #testing }
-DoubleLinkedListTests >> testAddAfterLink [
+DoubleLinkedListTest >> testAddAfterLink [
 	| list link |
 	list := DoubleLinkedList new.
 	list add: 1.
@@ -16,7 +16,7 @@ DoubleLinkedListTests >> testAddAfterLink [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testAddBeforeLink [
+DoubleLinkedListTest >> testAddBeforeLink [
 	| list link |
 	list := DoubleLinkedList new.
 	list add: 1.
@@ -27,7 +27,7 @@ DoubleLinkedListTests >> testAddBeforeLink [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testAddFirst [
+DoubleLinkedListTest >> testAddFirst [
 	| list |
 	list := DoubleLinkedList new.
 	1 to: 3 do: [ :each | list add: each ].
@@ -39,7 +39,7 @@ DoubleLinkedListTests >> testAddFirst [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testAddLast [
+DoubleLinkedListTest >> testAddLast [
 	| list |
 	list := DoubleLinkedList new.
 	1 to: 3 do: [ :each | list add: each ].
@@ -51,7 +51,7 @@ DoubleLinkedListTests >> testAddLast [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testCollect [
+DoubleLinkedListTest >> testCollect [
 	| list doubles |
 	list := DoubleLinkedList new.
 	list addAll: #(1 2 3).
@@ -60,7 +60,7 @@ DoubleLinkedListTests >> testCollect [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testDo [
+DoubleLinkedListTest >> testDo [
 	| list value |
 	list := DoubleLinkedList new.
 	list addAll: (1 to: 10).
@@ -71,7 +71,7 @@ DoubleLinkedListTests >> testDo [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testEmpty [
+DoubleLinkedListTest >> testEmpty [
 	| list |
 	list := DoubleLinkedList new.
 	self assertEmpty: list.
@@ -81,7 +81,7 @@ DoubleLinkedListTests >> testEmpty [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testFirstAndLastLink [
+DoubleLinkedListTest >> testFirstAndLastLink [
 	| list firstLink secondLink |
 	list := DoubleLinkedList new.
 	self should: [ list firstLink ] raise: CollectionIsEmpty. 
@@ -105,7 +105,7 @@ DoubleLinkedListTests >> testFirstAndLastLink [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testIncludes [
+DoubleLinkedListTest >> testIncludes [
 	| list |
 	list := DoubleLinkedList new.
 	list addAll: (1 to: 10).
@@ -114,7 +114,7 @@ DoubleLinkedListTests >> testIncludes [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testLinksDo [
+DoubleLinkedListTest >> testLinksDo [
 	| list links index |
 	list := DoubleLinkedList new.
 	links := OrderedCollection new.
@@ -128,7 +128,7 @@ DoubleLinkedListTests >> testLinksDo [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testOne [
+DoubleLinkedListTest >> testOne [
 	| list |
 	list := DoubleLinkedList new.
 	list add: #one.
@@ -139,7 +139,7 @@ DoubleLinkedListTests >> testOne [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testOneRemoveFirst [
+DoubleLinkedListTest >> testOneRemoveFirst [
 	| list |
 	list := DoubleLinkedList new.
 	list add: #one.
@@ -151,7 +151,7 @@ DoubleLinkedListTests >> testOneRemoveFirst [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testOneRemoveLast [
+DoubleLinkedListTest >> testOneRemoveLast [
 	| list |
 	list := DoubleLinkedList new.
 	list add: #one.
@@ -163,7 +163,7 @@ DoubleLinkedListTests >> testOneRemoveLast [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testReject [
+DoubleLinkedListTest >> testReject [
 	| list even |
 	list := DoubleLinkedList new.
 	list addAll: (1 to: 10).
@@ -172,7 +172,7 @@ DoubleLinkedListTests >> testReject [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testReverseDo [
+DoubleLinkedListTest >> testReverseDo [
 	| list value |
 	list := DoubleLinkedList new.
 	list addAll: (1 to: 10).
@@ -183,7 +183,7 @@ DoubleLinkedListTests >> testReverseDo [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testReverseLinksDo [
+DoubleLinkedListTest >> testReverseLinksDo [
 	| list links index |
 	list := DoubleLinkedList new.
 	links := OrderedCollection new.
@@ -197,7 +197,7 @@ DoubleLinkedListTests >> testReverseLinksDo [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testSelect [
+DoubleLinkedListTest >> testSelect [
 	| list even |
 	list := DoubleLinkedList new.
 	list addAll: (1 to: 10).
@@ -206,7 +206,7 @@ DoubleLinkedListTests >> testSelect [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testThree [
+DoubleLinkedListTest >> testThree [
 	| list |
 	list := DoubleLinkedList new.
 	1 to: 3 do: [ :each | list add: each ].
@@ -217,7 +217,7 @@ DoubleLinkedListTests >> testThree [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testThreeRemoveFirst [
+DoubleLinkedListTest >> testThreeRemoveFirst [
 	| list link |
 	list := DoubleLinkedList new.
 	1 to: 3 do: [ :each | list add: each ].
@@ -229,7 +229,7 @@ DoubleLinkedListTests >> testThreeRemoveFirst [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testThreeRemoveLast [
+DoubleLinkedListTest >> testThreeRemoveLast [
 	| list link |
 	list := DoubleLinkedList new.
 	1 to: 3 do: [ :each | list add: each ].
@@ -241,7 +241,7 @@ DoubleLinkedListTests >> testThreeRemoveLast [
 ]
 
 { #category : #testing }
-DoubleLinkedListTests >> testThreeRemoveLink [
+DoubleLinkedListTest >> testThreeRemoveLink [
 	| list link |
 	list := DoubleLinkedList new.
 	list add: 1.

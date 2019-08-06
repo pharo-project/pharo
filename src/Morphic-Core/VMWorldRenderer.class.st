@@ -23,25 +23,6 @@ VMWorldRenderer class >> priority [
 	^ 1
 ]
 
-{ #category : #activation }
-VMWorldRenderer >> activate [
-
-    InputEventFetcher default startUp.
-    InputEventSensor installMouseDecodeTable.
-    InputEventSensor default startUp.
-    
-    Display setExtent: self actualScreenSize depth: 32.
-    Display beDisplay.
-
-    canvas := nil.
-    display := nil.
-
-    self assuredCanvas.
-    DisplayScreen refreshHostWindowTitle.
-    Display forceDisplayUpdate.
-    world displayWorld.
-]
-
 { #category : #operations }
 VMWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
@@ -95,9 +76,6 @@ VMWorldRenderer >> checkForNewScreenSize [
 
 { #category : #activation }
 VMWorldRenderer >> deactivate [
-
-	WorldMorph currentWorld ifNotNil: [:theWorld | theWorld triggerEvent: #aboutToLeaveWorld ].
-	WorldMorph extraWorldList do: [:theWorld | theWorld triggerEvent: #aboutToLeaveWorld ].
 
 	InputEventSensor default shutDown.
 	
@@ -156,6 +134,25 @@ VMWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld submorphs: sub
 	self
 		deferUpdates: false;
 		forceDisplayUpdate
+]
+
+{ #category : #activation }
+VMWorldRenderer >> doActivate [
+
+    InputEventFetcher default startUp.
+    InputEventSensor installMouseDecodeTable.
+    InputEventSensor default startUp.
+    
+    Display setExtent: self actualScreenSize depth: 32.
+    Display beDisplay.
+
+    canvas := nil.
+    display := nil.
+
+    self assuredCanvas.
+    DisplayScreen refreshHostWindowTitle.
+    Display forceDisplayUpdate.
+    world displayWorld.
 ]
 
 { #category : #operations }

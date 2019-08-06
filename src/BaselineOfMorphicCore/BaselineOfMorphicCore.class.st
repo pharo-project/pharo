@@ -60,6 +60,8 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	WorldState initialize.
 	Morph initialize.
 	HandMorph initialize.
+	
+	AbstractWorldRenderer initialize.	
 
 	Cursor initTarget.
 	EventManager initialize.

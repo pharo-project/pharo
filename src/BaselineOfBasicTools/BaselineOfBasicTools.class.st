@@ -69,6 +69,9 @@ BaselineOfBasicTools >> baseline: spec [
 			spec package: 'Metacello-Reference'.
 			spec package: 'Metacello-Tutorial'.
 			spec package: 'MonticelloGUI'.
+			spec package: 'Tests'.
+			spec package: 'RPackage-Tests'.
+			spec package: 'Monticello-Tests'.
 			spec package: 'MonticelloGUI-Tests'.
 			spec package: 'Network-Mail'.
 			spec package: 'Network-Mail-Tests'.

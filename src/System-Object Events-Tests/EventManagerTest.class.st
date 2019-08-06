@@ -6,7 +6,7 @@ Class {
 		'eventListener',
 		'succeeded'
 	],
-	#category : #'Tests-Object Events'
+	#category : #'System-Object Events-Tests'
 }
 
 { #category : #private }
