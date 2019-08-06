@@ -17,6 +17,13 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> assertBlockNodeHasCorrectIR: b
 	self assert: sequence last sourceNode equals: blockNode body
 ]
 
+{ #category : #testing }
+OCASTTranslatorMappingForFullBlockClosuresTest >> assertMethodReturnValue: method [
+	self
+		assert: (method valueWithReceiver: nil arguments: #())
+		equals: 42
+]
+
 { #category : #support }
 OCASTTranslatorMappingForFullBlockClosuresTest >> compileSourceToMethod: source [
 	| method |
@@ -38,9 +45,19 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> setUp [
 ]
 
 { #category : #testing }
+OCASTTranslatorMappingForFullBlockClosuresTest >> testBlockWithParametersASTMapping [
+	|method blockNode|
+	method := self compileSourceToMethod: 'm ^[:i :j|i+j] value: 41 value: 1'.
+	blockNode := method ast statements first value receiver.
+	self assertBlockNodeHasCorrectIR: blockNode.
+	self assertMethodReturnValue: method
+]
+
+{ #category : #testing }
 OCASTTranslatorMappingForFullBlockClosuresTest >> testSimpleBlockASTMapping [
 	|method blockNode|
-	method := self compileSourceToMethod: 'm [1 + 2] value'.
-	blockNode := method ast statements first receiver.
-	self assertBlockNodeHasCorrectIR: blockNode
+	method := self compileSourceToMethod: 'm ^[1 + 2] value'.
+	blockNode := method ast statements first value receiver.
+	self assertBlockNodeHasCorrectIR: blockNode.
+	self assertMethodReturnValue: method
 ]
