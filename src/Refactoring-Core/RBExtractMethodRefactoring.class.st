@@ -306,6 +306,11 @@ RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: newSend in: modifiedParseTree
 ]
 
+{ #category : #transforming }
+RBExtractMethodRefactoring >> newExtractedSelector [
+	^ newExtractedSelector
+]
+
 { #category : #accessing }
 RBExtractMethodRefactoring >> parameterMap [
 	^ parameterMap
