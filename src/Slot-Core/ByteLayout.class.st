@@ -14,6 +14,12 @@ ByteLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
+{ #category : #accessing }
+ByteLayout >> bytesPerSlot [
+	
+	^ 1
+]
+
 { #category : #extending }
 ByteLayout >> extendByte [
 	^ ByteLayout new
