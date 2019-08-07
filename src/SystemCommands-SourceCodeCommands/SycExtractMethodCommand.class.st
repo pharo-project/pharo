@@ -44,6 +44,23 @@ SycExtractMethodCommand >> execute [
 	self executeRefactoring: refactoring.
 ]
 
+{ #category : #private }
+SycExtractMethodCommand >> executeRefactoring: refactoring [
+
+	NautilusRefactoring new refactoringOptions: refactoring.
+	[ refactoring execute ] on: RBRefactoringError do: [ :e | UIManager default alert: e messageText ].
+	self findOcurrences: refactoring
+]
+
+{ #category : #execution }
+SycExtractMethodCommand >> findOcurrences: refactoring [ 	
+	|findAndReplaceRef|
+	findAndReplaceRef := RBFindAndReplaceMethodRefactoring 
+		find: refactoring compiledMethod
+		andReplaceIn: { refactoring method } .
+	findAndReplaceRef primitiveExecute
+]
+
 { #category : #execution }
 SycExtractMethodCommand >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
