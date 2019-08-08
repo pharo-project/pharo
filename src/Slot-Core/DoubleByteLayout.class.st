@@ -7,16 +7,22 @@ Class {
 	#category : #'Slot-Core-Layout'
 }
 
-{ #category : #extending }
-DoubleByteLayout >> extendDoubleByte [
-	^ DoubleByteLayout new
-]
-
 { #category : #'methodsFor:' }
-DoubleByteLayout >> extending: superLayout scope: aScope host: aClass [
+DoubleByteLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ superLayout extendDoubleByte
 		host: aClass;
 		yourself
+]
+
+{ #category : #accessing }
+DoubleByteLayout >> bytesPerSlot [
+
+	^ 2
+]
+
+{ #category : #extending }
+DoubleByteLayout >> extendDoubleByte [
+	^ DoubleByteLayout new
 ]
 
 { #category : #format }

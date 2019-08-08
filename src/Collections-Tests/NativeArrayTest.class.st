@@ -64,6 +64,34 @@ NativeArrayTest >> testAtAllPutFail [
 ]
 
 { #category : #tests }
+NativeArrayTest >> testAtPutBiggerNumberThrowsException [
+	"Make sure native arrays can contain elements of their slot size"
+
+	self guineaPigClasses do: [ :guineaPig | | nativeArray smallerNumber bytesToShift |
+		nativeArray := guineaPig new: 1.
+		bytesToShift := guineaPig classLayout bytesPerSlot * 8 "bits per byte".
+		smallerNumber := 1 << bytesToShift.
+
+		self
+			should: [ nativeArray at: 1 put: smallerNumber ]
+			raise: Error ]
+]
+
+{ #category : #tests }
+NativeArrayTest >> testAtPutExactSizeNumber [
+	"Make sure native arrays can contain elements of their slot size"
+
+	self guineaPigClasses do: [ :guineaPig | | nativeArray smallerNumber bytesToShift |
+		nativeArray := guineaPig new: 1.
+		bytesToShift := guineaPig classLayout bytesPerSlot * 8 "bits per byte" - 1.
+		smallerNumber := 1 << bytesToShift.
+
+		nativeArray at: 1 put: smallerNumber.
+		self assert: (nativeArray at: 1) equals: smallerNumber
+	]
+]
+
+{ #category : #tests }
 NativeArrayTest >> testReplaceFromToWithStartingAt [
 	"Makes sure the primitive works correctly with different data structures"
 	self guineaPigHerd do: [ :guineaPig |
