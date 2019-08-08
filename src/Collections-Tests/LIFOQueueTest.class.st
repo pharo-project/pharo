@@ -2,19 +2,19 @@
 SUnit tests for LIFO queues
 "
 Class {
-	#name : #LIFOQueueTests,
+	#name : #LIFOQueueTest,
 	#superclass : #TestCase,
 	#category : #'Collections-Tests-Atomic'
 }
 
 { #category : #'instance creation' }
-LIFOQueueTests >> newQueue [
+LIFOQueueTest >> newQueue [
 
 	^ LIFOQueue new
 ]
 
 { #category : #tests }
-LIFOQueueTests >> testBasics [
+LIFOQueueTest >> testBasics [
 	| q |
 	q := self newQueue.
 	
@@ -30,7 +30,7 @@ LIFOQueueTests >> testBasics [
 ]
 
 { #category : #tests }
-LIFOQueueTests >> testContention1 [
+LIFOQueueTest >> testContention1 [
 	"here is a test case that breaks the standard SharedQueue from Squeak 3.8"
 
 	| q r1 r2 |
@@ -54,7 +54,7 @@ LIFOQueueTests >> testContention1 [
 ]
 
 { #category : #tests }
-LIFOQueueTests >> testHeavyContention [
+LIFOQueueTest >> testHeavyContention [
 	"run 10 threads, pushing new values to queue,
 	and 10 threads pullung values from queue,
 	at random priorities"

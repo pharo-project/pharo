@@ -205,6 +205,20 @@ SystemDependenciesTest >> metacelloPackageNames [
 	  BaselineOfMetacello allPackageNames
 ]
 
+{ #category : #accessing }
+SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [ 
+
+	| allMembers allPackagesInBaseline packages groups |
+	allMembers := aBaseline version groups detect: [ :g | g name = aGroupName ].
+	allPackagesInBaseline := aBaseline version packages collect: #name.
+	
+	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
+	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].
+		
+	^ packages , (groups flatCollect: [:aInnerGroupName | self packagesOfGroupNamed: aInnerGroupName on: aBaseline ]).
+
+]
+
 { #category : #tests }
 SystemDependenciesTest >> testExternalBasicToolsDependencies [
 
@@ -302,7 +316,21 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfSUnit.
 	BaselineOfTraits.
 	BaselineOfUI.
-	BaselineOfUnifiedFFI} do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
+	BaselineOfUnifiedFFI.
+	BaselineOfClassAnnotation.
+	BaselineOfSystemCommands } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
+
+	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
+	packages := packages , { BaselineOfIceberg name. BaselineOfLibGit name. BaselineOfCalypso name}.
+
+	packages := packages ,  (self packagesOfGroupNamed: 'FullEnvironment' on: BaselineOfCalypso ).
+	packages := packages ,  (self packagesOfGroupNamed: 'SystemBrowser' on: BaselineOfCalypso ).
+	packages := packages ,  (self packagesOfGroupNamed: 'CoreBrowser' on: BaselineOfCalypso ).
+	packages := packages ,  (self packagesOfGroupNamed: 'CoreEnvironment' on: BaselineOfCalypso ).
+	packages := packages ,  #('Calypso-SystemTools-Core').
+
+	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfIceberg ).
+	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfLibGit ).
 
 	dependencies := self externalDependendiesOf: packages.
 	self assertCollection: dependencies hasSameElements: self knownIDEDependencies

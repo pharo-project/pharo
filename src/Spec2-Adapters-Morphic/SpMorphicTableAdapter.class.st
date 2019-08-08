@@ -1,6 +1,6 @@
 Class {
 	#name : #SpMorphicTableAdapter,
-	#superclass : #SpAbstractMorphicAdapter,
+	#superclass : #SpAbstractMorphicListAdapter,
 	#category : #'Spec2-Adapters-Morphic-Table'
 }
 
@@ -27,6 +27,8 @@ SpMorphicTableAdapter >> addModelTo: tableMorph [
 	self presenter whenColumnsChangedDo: [ self refreshColumnsInWidget ].
 	
 	tableMorph setBalloonText: self help.
+
+	self configureScrolling.
 
 	tableMorph
 		onAnnouncement: FTSelectionChanged

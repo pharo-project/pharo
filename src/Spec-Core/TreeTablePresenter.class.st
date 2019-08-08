@@ -275,13 +275,13 @@ TreeTablePresenter >> whenRootsChangedDo: aBlockClosure [
 { #category : #'api-events' }
 TreeTablePresenter >> whenSelectedIndexChangedDo: aBlockClosure [ 
 	
-	self whenSelectionChangedDo: [ :selection | aBlockClosure cull: selection first ]
+	self whenSelectionChangedDo: [ :aSelection | aBlockClosure cull: aSelection first ]
 ]
 
 { #category : #'api-events' }
 TreeTablePresenter >> whenSelectedItemChangedDo: aBlockClosure [ 
 	
-	self whenSelectionChangedDo: [ :selection | aBlockClosure cull: selection second ]
+	self whenSelectionChangedDo: [ :aSelection | aBlockClosure cull: aSelection second ]
 ]
 
 { #category : #'api-events' }
