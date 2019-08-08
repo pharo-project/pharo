@@ -7,6 +7,12 @@ Class {
 	#category : #'Slot-Core-Layout'
 }
 
+{ #category : #accessing }
+BitsLayout >> bytesPerSlot [
+
+	^ 8
+]
+
 { #category : #extending }
 BitsLayout >> extend [
 	"Answer a default extension of me."
