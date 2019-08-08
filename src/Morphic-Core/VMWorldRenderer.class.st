@@ -70,7 +70,7 @@ VMWorldRenderer >> checkForNewScreenSize [
    Display setExtent: self actualScreenSize depth: 32.
    Display beDisplay.
 
-	world worldState storedExtent: self actualScreenSize.
+	world worldState realWindowExtent: self actualScreenSize.
 
 	world restoreMorphicDisplay.
 

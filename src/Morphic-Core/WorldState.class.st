@@ -20,7 +20,7 @@ Class {
 		'activeHand',
 		'currentCursor',
 		'worldRenderer',
-		'storedExtent'
+		'realWindowExtent'
 	],
 	#classVars : [
 		'CanSurrenderToOS',
@@ -708,6 +708,18 @@ WorldState >> listOfSteppingMorphs [
 
 ]
 
+{ #category : #hands }
+WorldState >> realWindowExtent [
+
+	^ realWindowExtent
+]
+
+{ #category : #hands }
+WorldState >> realWindowExtent: aValue [
+
+	realWindowExtent := aValue
+]
+
 { #category : #canvas }
 WorldState >> recordDamagedRect: damageRect [
 
@@ -836,18 +848,6 @@ WorldState >> stopStepping: aMorph selector: aSelector [
 		(lastStepMessage receiver == aMorph and:[lastStepMessage selector == aSelector])
 			ifTrue:[lastStepMessage := nil]].
 	stepList removeAll: (stepList select:[:stepMsg| stepMsg receiver == aMorph and:[stepMsg selector == aSelector]]).
-]
-
-{ #category : #hands }
-WorldState >> storedExtent [
-
-	^ storedExtent
-]
-
-{ #category : #hands }
-WorldState >> storedExtent: aValue [
-
-	storedExtent := aValue
 ]
 
 { #category : #alarms }

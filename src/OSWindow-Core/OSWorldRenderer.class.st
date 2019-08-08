@@ -57,7 +57,7 @@ OSWorldRenderer >> checkForNewScreenSize [
 	display := Form extent: self actualScreenSize depth: 32.
 	self osWindowRenderer form: display.
 
-	world worldState storedExtent: self actualScreenSize.
+	world worldState realWindowExtent: self actualScreenSize.
 
 	world restoreMorphicDisplay.
 
@@ -130,7 +130,7 @@ OSWorldRenderer >> doActivate [
 
 	| attributes initialExtent |
 	
-	initialExtent := world worldState storedExtent ifNil: [1500@1000].
+	initialExtent := world worldState realWindowExtent ifNil: [1500@1000].
 
 	attributes := OSWindowAttributes new.
 	attributes
