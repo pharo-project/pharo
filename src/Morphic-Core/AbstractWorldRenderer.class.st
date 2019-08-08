@@ -91,6 +91,12 @@ AbstractWorldRenderer >> doActivate [
 	self subclassResponsibility 
 ]
 
+{ #category : #accessing }
+AbstractWorldRenderer >> icon: aForm [ 
+
+	self subclassResponsibility
+]
+
 { #category : #activation }
 AbstractWorldRenderer >> initialize [
 

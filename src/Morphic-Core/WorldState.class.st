@@ -634,6 +634,12 @@ WorldState >> handsReverseDo: aBlock [
 	^ hands reverseDo: aBlock
 ]
 
+{ #category : #accessing }
+WorldState >> icon: aForm [ 
+
+	worldRenderer icon: aForm
+]
+
 { #category : #initialization }
 WorldState >> initialize [
 

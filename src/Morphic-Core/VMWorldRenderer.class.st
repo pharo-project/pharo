@@ -188,6 +188,20 @@ VMWorldRenderer >> fullscreenMode: aValue [
 	self checkForNewScreenSize.
 ]
 
+{ #category : #accessing }
+VMWorldRenderer >> icon: aForm [ 
+
+	"Do nothing.
+	This is not supported anymore with the old VM world renderers.
+	Use the new headless + SDL instead.
+	
+	Alternatively, if you're on windows you can try to use the following primitive from DisplayScreen that receives a path to a .ico file.
+	This primitive only works on Windows.
+	
+	DisplayScreen hostWindowIcon: path.
+	"
+]
+
 { #category : #'display box access' }
 VMWorldRenderer >> usableArea [
 
