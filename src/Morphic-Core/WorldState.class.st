@@ -19,7 +19,8 @@ Class {
 		'menuBuilder',
 		'activeHand',
 		'currentCursor',
-		'worldRenderer'
+		'worldRenderer',
+		'storedExtent'
 	],
 	#classVars : [
 		'CanSurrenderToOS',
@@ -835,6 +836,18 @@ WorldState >> stopStepping: aMorph selector: aSelector [
 		(lastStepMessage receiver == aMorph and:[lastStepMessage selector == aSelector])
 			ifTrue:[lastStepMessage := nil]].
 	stepList removeAll: (stepList select:[:stepMsg| stepMsg receiver == aMorph and:[stepMsg selector == aSelector]]).
+]
+
+{ #category : #hands }
+WorldState >> storedExtent [
+
+	^ storedExtent
+]
+
+{ #category : #hands }
+WorldState >> storedExtent: aValue [
+
+	storedExtent := aValue
 ]
 
 { #category : #alarms }
