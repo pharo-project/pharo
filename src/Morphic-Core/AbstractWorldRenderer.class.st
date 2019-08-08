@@ -56,12 +56,18 @@ AbstractWorldRenderer class >> priority [
 
 { #category : #accessing }
 AbstractWorldRenderer class >> shutDown: quitting [
+	quitting
+		ifFalse: [ ^ self ].
 
-	quitting ifFalse: [ ^ self ].
-	
-	MainWorldRenderer ifNotNil: [ :e | 
-		e deactivate. 
-		MainWorldRenderer := nil ]
+	[ MainWorldRenderer ifNotNil: [ :e | e deactivate ] ]
+		ensure: [ MainWorldRenderer := nil ]
+]
+
+{ #category : #accessing }
+AbstractWorldRenderer class >> startUp: isANewSession [
+
+	isANewSession
+		ifTrue: [ MainWorldRenderer := nil ]
 ]
 
 { #category : #activation }

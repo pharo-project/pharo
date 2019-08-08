@@ -194,8 +194,8 @@ ClapContext >> initialize [
 { #category : #activation }
 ClapContext >> interpret: argumentsSequence [
 	^ self arguments: argumentsSequence;
-		ifMatch: [ :match |
-			match value: self.
+		ifMatch: [ :matched |
+			matched value: self.
 			self exitSuccess ]
 		ifMismatch: [ self noneMatched ]
 ]

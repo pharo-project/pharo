@@ -20,9 +20,11 @@ Float >> arcSin [
 { #category : #'*Math-Operations-Extensions' }
 Float >> arcTan: denominator [
 	"Answer the angle in radians.
-	 Optional. See Object documentation whatIsAPrimitive.
 	Implementation note: use sign in order to catch cases of negativeZero"
-
+	
+	"-0.5 arcTan: -0.5 >>> -2.356194490192345"
+	"1.2 arcTan: 1.5 >>>  0.6747409422235526"
+	"1.2 arcTan: -1.5 >>> 2.4668517113662407"
 	^self = 0.0
 		ifTrue: [denominator signBit = 0
 			ifTrue: [ 0 ]

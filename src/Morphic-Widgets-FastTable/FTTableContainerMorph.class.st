@@ -116,12 +116,14 @@ FTTableContainerMorph >> calculateStartIndexWhenShowing: visibleRows [
 	"Answer the first row to show when showing visibleRows rows. 
 	 This works in case we are exceeding the available rows to show"
 
-	| currentIndex startIndex |
+	| currentIndex startIndex oldIndex |
 	currentIndex := self table showIndex.
 	currentIndex + visibleRows - 1 > self table numberOfRows ifTrue: [ 
 		currentIndex := self table numberOfRows - visibleRows + 2].
 	startIndex := currentIndex max: 1.
+	oldIndex := self table showIndex.
 	self table basicMoveShowIndexTo: startIndex.
+	self table announceScrollChangedFrom: oldIndex to: self table showIndex.
 	^startIndex
 	
 ]
@@ -245,6 +247,14 @@ FTTableContainerMorph >> exposedRows [
 ]
 
 { #category : #accessing }
+FTTableContainerMorph >> firstVisibleRowIndex [
+
+	^ self exposedRows
+		ifNotEmpty: [ :rows | rows keys first ]
+		ifEmpty: [ 0 ]
+]
+
+{ #category : #accessing }
 FTTableContainerMorph >> headerRow [
 
 	^ headerRow
@@ -279,6 +289,14 @@ FTTableContainerMorph >> isRowIndexFullyVisible: rowIndex [
 FTTableContainerMorph >> isRowIndexVisible: rowIndex [
 	self exposedRows ifNil: [ ^ false ].
 	^ self exposedRows includesKey: rowIndex
+]
+
+{ #category : #accessing }
+FTTableContainerMorph >> lastVisibleRowIndex [
+
+	^ self exposedRows
+		ifNotEmpty: [ :rows | rows keys last ]
+		ifEmpty: [ 0 ]
 ]
 
 { #category : #private }

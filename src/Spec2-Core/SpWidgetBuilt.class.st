@@ -1,5 +1,5 @@
 "
-I am raised when a widget has been built
+I am raised when a widget has been built with all its children, but not yet shown
 "
 Class {
 	#name : #SpWidgetBuilt,
