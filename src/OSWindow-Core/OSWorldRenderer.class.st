@@ -145,6 +145,8 @@ OSWorldRenderer >> doActivate [
 	attributes preferableDriver: driver.
 	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
 	
+	osWindow focus. 
+	
 	world worldState doFullRepaint.
 	world displayWorld.
 	
