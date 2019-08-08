@@ -848,7 +848,10 @@ Class >> removeFromSystem: logged [
 		self superclass addObsoleteSubclass: self].
 
 	myCategory := self category.
-	self isReferenced ifTrue: [Undeclared declare: self name asSymbol from: Smalltalk globals].
+	
+	"Since Undecraled is a WeakValueDictionary we can just add all classes to Undeclared and let the GC removed unreferenced classes. This is done like this because Class>>#isReferenced is too long."
+	Undeclared declare: self name asSymbol from: Smalltalk globals.
+	
 	self environment forgetClass: self logged: logged.
 	self obsolete.
 	logged ifTrue: [SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory].
