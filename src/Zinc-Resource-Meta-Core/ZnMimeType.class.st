@@ -135,7 +135,7 @@ ZnMimeType class >> fromString: aString [
 	sub := aString copyFrom: main size + 2 to: endOfSub.
 	endOfSub = aString size ifTrue: [ ^ self main: main sub: sub ].
 	parts := (aString copyFrom: endOfSub + 1 to: aString size) substrings: ';'.
-	parameters := Dictionary new.
+	parameters := SmallDictionary new.
 	parts do: [ :each | 
 		parameters
 			at: (each copyUpTo: $=) trimBoth 

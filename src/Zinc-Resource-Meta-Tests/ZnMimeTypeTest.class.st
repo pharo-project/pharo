@@ -27,42 +27,61 @@ ZnMimeTypeTest >> testAsMimeType [
 
 { #category : #testing }
 ZnMimeTypeTest >> testCharset [
+
 	| mimeType |
+
 	mimeType := ZnMimeType textPlain.
-	self assert: mimeType charSet = 'utf-8'.
+	self assert: mimeType charSet equals: 'utf-8'.
 	mimeType charSet: 'ascii'.
-	self assert: mimeType charSet = 'ascii'.
+	self assert: mimeType charSet equals: 'ascii'.
 	mimeType clearCharSet.
 	self assert: mimeType charSet isNil.
 	mimeType setCharSetUTF8.
-	self assert: mimeType charSet = 'utf-8'
+	self assert: mimeType charSet equals: 'utf-8'
+]
+
+{ #category : #testing }
+ZnMimeTypeTest >> testComparingWithParameters [
+
+	| mimeType equalMimeType |
+
+	mimeType := ZnMimeType fromString: 'application/json;q=1'.
+	equalMimeType := ZnMimeType applicationJson parameterAt: 'q' put: '1'.
+
+	self
+		assert: mimeType equals: equalMimeType;
+		assert: mimeType hash equals: equalMimeType hash;
+		deny: mimeType equals: ZnMimeType applicationJson
 ]
 
 { #category : #testing }
 ZnMimeTypeTest >> testCopying [
+
 	| mimeType1 mimeType2 |
+
 	mimeType1 := ZnMimeType textPlain.
 	mimeType2 := ZnMimeType textPlain.
-	self assert: mimeType1 = mimeType2.
-	self assert: mimeType1 parameters = mimeType2 parameters.
+	self assert: mimeType1 equals: mimeType2.
+	self assert: mimeType1 parameters equals: mimeType2 parameters.
 	mimeType1 charSet: 'utf-8'.
-	self assert: mimeType1 charSet = 'utf-8'.
+	self assert: mimeType1 charSet equals: 'utf-8'.
 	mimeType2 charSet: 'latin1'.
-	self assert: mimeType2 charSet = 'latin1'.
-	self assert: (mimeType1 matches: mimeType2).
+	self assert: mimeType2 charSet equals: 'latin1'.
+	self assert: ( mimeType1 matches: mimeType2 ).
 	self deny: mimeType1 parameters = mimeType2 parameters.
-	self deny: mimeType1 charSet = mimeType2 charSet.
-	
+	self deny: mimeType1 charSet = mimeType2 charSet
 ]
 
 { #category : #testing }
 ZnMimeTypeTest >> testDefault [
-	self assert: ZnMimeType default = ZnMimeType applicationOctetStream
+
+	self assert: ZnMimeType default equals: ZnMimeType applicationOctetStream
 ]
 
 { #category : #testing }
 ZnMimeTypeTest >> testIdentity [
-	self assert: ZnMimeType textPlain = ZnMimeType textPlain
+
+	self assert: ZnMimeType textPlain equals: ZnMimeType textPlain
 ]
 
 { #category : #testing }
@@ -92,36 +111,41 @@ ZnMimeTypeTest >> testMatches [
 
 { #category : #testing }
 ZnMimeTypeTest >> testParameters [
+
 	| mimeType |
+
 	mimeType := ZnMimeType main: 'text' sub: 'plain'.
 	self should: [ mimeType parameterAt: 'foo' ] raise: KeyNotFound.
-	self assert: (mimeType parameterAt: 'foo' ifAbsent: [ #none ]) = #none.
+	self assert: ( mimeType parameterAt: 'foo' ifAbsent: [ #none ] ) equals: #none.
 	mimeType parameterAt: 'foo' put: '1'.
-	self assert: (mimeType parameterAt: 'foo') = '1'.
-	self assert: (mimeType parameterAt: 'foo' ifAbsent: [ #none ]) = '1'.
+	self assert: ( mimeType parameterAt: 'foo' ) equals: '1'.
+	self assert: ( mimeType parameterAt: 'foo' ifAbsent: [ #none ] ) equals: '1'.
 	mimeType removeParameter: 'foo'.
 	mimeType removeParameter: 'bar'.
 	self should: [ mimeType parameterAt: 'foo' ] raise: KeyNotFound.
-	self assert: (mimeType parameterAt: 'foo' ifAbsent: [ #none ]) = #none	
+	self assert: ( mimeType parameterAt: 'foo' ifAbsent: [ #none ] ) equals: #none
 ]
 
 { #category : #testing }
 ZnMimeTypeTest >> testReading [
+
 	| mimeType |
+
 	mimeType := ZnMimeType fromString: 'text/plain; charset=utf-8'.
-	self assert: (mimeType main = 'text').
-	self assert: (mimeType sub = 'plain').
-	self assert: (mimeType charSet = 'utf-8').
+	self assert: mimeType main equals: 'text'.
+	self assert: mimeType sub equals: 'plain'.
+	self assert: mimeType charSet equals: 'utf-8'.
 	self assert: mimeType isCharSetUTF8.
 	self assert: mimeType isBinary not
 ]
 
 { #category : #testing }
 ZnMimeTypeTest >> testWriting [
+
 	| mimeType |
-	(mimeType := ZnMimeType main: 'text' sub: 'plain')
-		charSet: 'utf-8'.
-	self assert: mimeType printString = 'text/plain;charset=utf-8'.
+
+	( mimeType := ZnMimeType main: 'text' sub: 'plain' ) charSet: 'utf-8'.
+	self assert: mimeType printString equals: 'text/plain;charset=utf-8'.
 	self assert: mimeType isCharSetUTF8.
 	self assert: mimeType isBinary not
 ]
