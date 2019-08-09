@@ -24,6 +24,7 @@ Class {
 RBFindAndReplaceMethodRefactoring class >> find: aMethod [ 
 	^ self new 
 		method: aMethod; 
+		initializeMatchNode;
 		yourself 
 ]
 
@@ -121,9 +122,10 @@ RBFindAndReplaceMethodRefactoring >> extractMethodRefactoring [
 RBFindAndReplaceMethodRefactoring >> findAndReplaceOcurrencesIn: aMethod [ 
 	|ocurrences|
 	
-	self halt.
-	ocurrences := self findOcurrencesIn: aMethod selector of: aMethod origin.
-	ocurrences ifNotEmpty: [ self replaceOcurrences: ocurrences on: aMethod ]
+	ocurrences := self findOcurrencesIn: aMethod selector of: aMethod origin. 
+	ocurrences ifNotEmpty: [ 
+		self replaceOcurrences: ocurrences on: aMethod
+	]
 	
 ]
 

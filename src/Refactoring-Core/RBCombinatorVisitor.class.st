@@ -22,12 +22,12 @@ RBCombinatorVisitor >> initialize [
 
 { #category : #visiting }
 RBCombinatorVisitor >> visitSequenceNode: aSequenceNode [
-	|starts ends |
+	| starts ends |
 	starts := aSequenceNode statements collect: [ :node | node start ].
 	ends := aSequenceNode statements collect: [ :node | node stop ].
 	starts do: [ :start | ends do: [ :end | start < end ifTrue: [
 		combinations add: (Array with: start with: end) ] ] ].
-	super visitSequenceNode: aSequenceNode.
+	super visitSequenceNode: aSequenceNode
 	
 	
 ]
