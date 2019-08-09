@@ -99,6 +99,22 @@ DAPackageRelationGraph >> addPackages: aCollection [
 ]
 
 { #category : #adding }
+DAPackageRelationGraph >> addPoolDictionaryDependencies: aPackage [
+	"Iterate all classes in the package.
+	Add a pool dictionary dependency for each pool dictionary used in the package."
+
+	self package: aPackage
+		classesDo: [ :class | 
+			class sharedPoolsDo: [ :each | | targetPackage |
+				targetPackage := self packageForBehavior: each.
+				aPackage
+					add: ((DAPoolDictionaryDependency from: aPackage to: targetPackage)
+						theClass: class;
+						poolDictionary: each).
+				self addPackage: targetPackage ] ]
+]
+
+{ #category : #adding }
 DAPackageRelationGraph >> addReferenceDependencies: aPackage [
 	(self methodsFor: aPackage) 
 		do: [ :method | self findReferencesIn: method for: aPackage ]
@@ -237,6 +253,7 @@ DAPackageRelationGraph >> computeStaticDependencies: aPackage [
 	self addInheritanceDependencies: aPackage.
 	self addExtensionDependencies: aPackage.
 	self addReferenceDependencies: aPackage.
+	self addPoolDictionaryDependencies: aPackage.
 	self addTraitDependencies: aPackage.
 	self addMessageSendDependencies: aPackage
 ]
