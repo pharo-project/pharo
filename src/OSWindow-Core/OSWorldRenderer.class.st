@@ -160,6 +160,12 @@ OSWorldRenderer >> fullscreenMode: aValue [
 	self checkForNewScreenSize.
 ]
 
+{ #category : #accessing }
+OSWorldRenderer >> icon: aForm [ 
+
+	osWindow icon: aForm
+]
+
 { #category : #initialization }
 OSWorldRenderer >> osWindowRenderer [
 		
