@@ -27,7 +27,8 @@ Class {
 		'table',
 		'command',
 		'selectedRefactorings',
-		'diffPresenter'
+		'diffPresenter',
+		'existsChanges'
 	],
 	#category : #'SystemCommands-RefactoringSupport'
 }
@@ -71,6 +72,14 @@ SycRefactoringPreview >> activeScope [
 	^ scopeDropList selectedItem
 ]
 
+{ #category : #services }
+SycRefactoringPreview >> alert: aString [
+	"Display a message for the user to read and then dismiss."
+
+	aString isEmptyOrNil
+		ifFalse: [ UIManager default alert: aString ]
+]
+
 { #category : #'epicea support' }
 SycRefactoringPreview >> asEpiceaEvent [
 	"thanks to this method epicia know that is a refactoring"
@@ -98,12 +107,18 @@ SycRefactoringPreview >> changes [
 
 { #category : #accessing }
 SycRefactoringPreview >> changes: aCollection [
-	changes := aCollection
+	changes := aCollection.
+	self generateChanges 
 ]
 
 { #category : #accessing }
 SycRefactoringPreview >> command: aCommand [
 	command := aCommand
+]
+
+{ #category : #accessing }
+SycRefactoringPreview >> existChanges [
+	^ existsChanges ifNil: [ existsChanges := false ]
 ]
 
 { #category : #update }
@@ -196,8 +211,7 @@ SycRefactoringPreview >> scopes: aCollectionOfScopes [
 { #category : #update }
 SycRefactoringPreview >> selectectAllCheckBox [
 	selectedRefactorings := Dictionary new.
-	table items
-		do: [ :refactoring | selectedRefactorings at: refactoring put: true ]
+	table items do: [ :refactoring | selectedRefactorings at: refactoring put: true ]
 ]
 
 { #category : #initialization }
@@ -245,6 +259,7 @@ SycRefactoringPreview >> updateTablePresenter [
 	aCompositeChange := RBCompositeRefactoryChange new.
 	changes do: [ :each | aCompositeChange addChange: each ].
 	table
-		items: (aCompositeChange whatToDisplayIn: self);
-		selectIndex: 1
+		items: (aCompositeChange whatToDisplayIn: self).
+	table items ifNotEmpty: [ table selectIndex: 1.
+		existsChanges := true ]
 ]
