@@ -19,7 +19,8 @@ Class {
 		'menuBuilder',
 		'activeHand',
 		'currentCursor',
-		'worldRenderer'
+		'worldRenderer',
+		'realWindowExtent'
 	],
 	#classVars : [
 		'CanSurrenderToOS',
@@ -711,6 +712,18 @@ WorldState >> isStepping: aMorph selector: aSelector [
 WorldState >> listOfSteppingMorphs [
 	^stepList collect:[:entry| entry receiver].
 
+]
+
+{ #category : #hands }
+WorldState >> realWindowExtent [
+
+	^ realWindowExtent
+]
+
+{ #category : #hands }
+WorldState >> realWindowExtent: aValue [
+
+	realWindowExtent := aValue
 ]
 
 { #category : #canvas }
