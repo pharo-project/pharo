@@ -6,5 +6,5 @@ Class {
 
 { #category : #running }
 SpLabelledDropListTest >> classToTest [
-	^ SpLabelledDropList
+	^ SpLabelledDropListPresenter
 ]

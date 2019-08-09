@@ -57,6 +57,8 @@ OSWorldRenderer >> checkForNewScreenSize [
 	display := Form extent: self actualScreenSize depth: 32.
 	self osWindowRenderer form: display.
 
+	world worldState realWindowExtent: self actualScreenSize.
+
 	world restoreMorphicDisplay.
 
 ]
@@ -126,20 +128,24 @@ OSWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld submorphs: sub
 { #category : #initialization }
 OSWorldRenderer >> doActivate [
 
-	| attributes |
+	| attributes initialExtent |
+	
+	initialExtent := world worldState realWindowExtent ifNil: [1500@1000].
 
 	attributes := OSWindowAttributes new.
 	attributes
-		extent: 1000@1000;
+		extent: initialExtent;
 		title: Smalltalk shortImageName;
 		icon: (self iconNamed: #pharoBig).
 
-	display := Form extent: 1000@1000 depth: 32.
-	world extent: 1000@1000.
+	display := Form extent: initialExtent depth: 32.
+	world extent: initialExtent.
 
 	driver := self pickMostSuitableWindowDriver.
 	attributes preferableDriver: driver.
 	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
+	
+	osWindow focus. 
 	
 	world worldState doFullRepaint.
 	world displayWorld.
@@ -158,6 +164,12 @@ OSWorldRenderer >> fullscreenMode: aValue [
 
 	osWindow fullscreen: aValue.
 	self checkForNewScreenSize.
+]
+
+{ #category : #accessing }
+OSWorldRenderer >> icon: aForm [ 
+
+	osWindow icon: aForm
 ]
 
 { #category : #initialization }

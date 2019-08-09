@@ -305,20 +305,6 @@ TraitedClass >> removeSelector: aSelector [
 	TraitChange removeSelector: aSelector on: self.
 ]
 
-{ #category : #'accessing tags' }
-TraitedClass >> tagsForMethods [
-	"Any method could be tagged with multiple symbols for user purpose. 
-	And class contains all method tags which used or not used yet by methods.
-	For now we could only implemented it on top of Protocol. 
-	It supposed to not include any method tags inherited from Traits 
-	which is opposite to current Protocol implementation.
-	And extension protocol is not treated as tag"
-	| allProtocols |
-	allProtocols := self organization protocols reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
-		
-	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
-]
-
 { #category : #accessing }
 TraitedClass >> traitComposition [
 	"My trait composition is in my class. So I do not need to recompile the methods when installing them during bootstrap"

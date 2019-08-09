@@ -1,5 +1,5 @@
 "
-Check if a subclass of TestCase ends with 'Test'
+Check if a subclass of TestCase ends with 'Test' or 'TestCase'.
 "
 Class {
 	#name : #ReTestClassNameShouldEndWithTest,
@@ -15,9 +15,9 @@ ReTestClassNameShouldEndWithTest class >> checksClass [
 
 { #category : #running }
 ReTestClassNameShouldEndWithTest >> basicCheck: aClass [
-
-
-	^ (aClass inheritsFrom: TestCase) and: [(aClass name asString endsWith: 'Test') not].
+	| suffixes |
+	suffixes := #('Test' 'TestCase').
+	^ (aClass inheritsFrom: TestCase) and: [ suffixes noneSatisfy: [ :suffix | aClass name asString endsWith: suffix ] ]
 ]
 
 { #category : #running }
@@ -32,7 +32,7 @@ ReTestClassNameShouldEndWithTest >> name [
 
 { #category : #accessing }
 ReTestClassNameShouldEndWithTest >> rationale [
-	^ 'A test class (subclass of TestCase) should have it''s name ending with ''Test'''
+	^ 'A test class (subclass of TestCase) should have it''s name ending with ''Test'' or ''TestCase'''
 ]
 
 { #category : #running }

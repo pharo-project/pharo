@@ -10,12 +10,12 @@ Class {
 	#category : #'Reflectivity-Tests'
 }
 
-{ #category : #'test material' }
+{ #category : #'tests - material' }
 ASTCacheResetTest >> annotatedMethod [
 	^ 42
 ]
 
-{ #category : #'test material' }
+{ #category : #'tests - material' }
 ASTCacheResetTest >> increment [
 	counter := counter + 1
 ]
