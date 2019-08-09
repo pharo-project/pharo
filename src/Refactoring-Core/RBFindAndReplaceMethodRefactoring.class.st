@@ -120,8 +120,11 @@ RBFindAndReplaceMethodRefactoring >> extractMethodRefactoring [
 { #category : #'find-replace' }
 RBFindAndReplaceMethodRefactoring >> findAndReplaceOcurrencesIn: aMethod [ 
 	|ocurrences|
+	
+	self halt.
 	ocurrences := self findOcurrencesIn: aMethod selector of: aMethod origin.
-	self replaceOcurrences: ocurrences on: aMethod
+	ocurrences ifNotEmpty: [ self replaceOcurrences: ocurrences on: aMethod ]
+	
 ]
 
 { #category : #'find-replace' }
@@ -190,13 +193,11 @@ RBFindAndReplaceMethodRefactoring >> method: aMethod [
 
 { #category : #'find-replace' }
 RBFindAndReplaceMethodRefactoring >> nodesOf: methodNode [ 
-	|starts ends combinations |
-	starts := methodNode body statements collect: [ :node | node start ].
-	ends := methodNode body statements collect: [ :node | node stop ].
-	combinations := OrderedCollection new.
-	starts do: [ :start | ends do: [ :end | start < end ifTrue: [
-		combinations add: (Array with: start with: end) ] ] ].
-	^ combinations 
+	|visitor node|
+	visitor := RBCombinatorVisitor new.
+	node := methodNode copy .
+	node acceptVisitor: visitor.
+	^ visitor combinations 
 ]
 
 { #category : #'find-replace' }
@@ -216,10 +217,6 @@ RBFindAndReplaceMethodRefactoring >> positionIndex: aNumber [
 
 { #category : #preconditions }
 RBFindAndReplaceMethodRefactoring >> preconditions [
-	"Verificar si las clases donde se buscaran ocurrencias son subclases de la clase del metodo"
-	"Verificar si esas subclases no sobreescriben el metodo"
-	"Verificar que el metodo no sea abstracto"
-	""
 	listToFindMatches ifNil: [ (self options at: #listToSearch) value: method value: self  ].
 	^ (listToFindMatches
 		inject: RBCondition empty 

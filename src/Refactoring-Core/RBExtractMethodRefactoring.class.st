@@ -16,7 +16,6 @@ Class {
 		'modifiedParseTree',
 		'parameters',
 		'needsReturn',
-		'selectorNewMethod',
 		'parameterMap',
 		'newExtractedSelector'
 	],

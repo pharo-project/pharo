@@ -89,7 +89,8 @@ RBFindAndReplacePreview >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		addButton: 'Find' do: [ :presenter | 
 			selectedRefactorings := selectedRefactorings first isClass ifTrue: [ 
-				selectedRefactorings collectAll: [:each | each methods ]].
+				selectedRefactorings collectAll: [:each | each methods ]]
+			ifFalse: [selectedRefactorings ].
 			refactoring listToFindMatches: selectedRefactorings .
 			presenter
 				beOk;
