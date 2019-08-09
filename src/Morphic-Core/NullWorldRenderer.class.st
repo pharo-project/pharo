@@ -98,3 +98,9 @@ NullWorldRenderer >> forceDisplayUpdate [
 
 	" Do Nothing "
 ]
+
+{ #category : #accessing }
+NullWorldRenderer >> icon: aForm [ 
+
+	"Do nothing, a null world rendered has no window, so no icon either"
+]

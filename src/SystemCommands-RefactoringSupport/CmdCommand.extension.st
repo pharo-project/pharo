@@ -6,10 +6,12 @@ CmdCommand >> confirmRefactoringInContext: aToolContext by: aCommandActivator [
 	submitDialog := SycRefactoringPreview
 		for: self
 		scopes: aToolContext refactoringScopes.
+	submitDialog existChanges ifTrue:[
 	submitDialog openModalWithSpec
 		okAction: [ submitDialog accept.
 			aCommandActivator applyCommandResult ];
-		cancelAction: [ submitDialog cancel ].
+		cancelAction: [ submitDialog cancel ]]
+	ifFalse: [ submitDialog alert: 'There is no change produced by this refactoring' ].
 	CmdCommandAborted signal
 ]
 

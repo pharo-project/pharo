@@ -7,12 +7,12 @@ and run them for the specific combination of...
 
 "
 Class {
-	#name : #TestDelayMutexSchedulerMicrosecondTicker,
-	#superclass : #TestDelayBasicSchedulerMicrosecondTicker,
+	#name : #DelayMutexSchedulerMicrosecondTickerTest,
+	#superclass : #DelayBasicSchedulerMicrosecondTickerTest,
 	#category : #'Kernel-Tests-Delays'
 }
 
 { #category : #tests }
-TestDelayMutexSchedulerMicrosecondTicker >> classForScheduler [ 
+DelayMutexSchedulerMicrosecondTickerTest >> classForScheduler [ 
 	^ DelayMutexScheduler
 ]
