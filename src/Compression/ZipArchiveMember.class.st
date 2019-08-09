@@ -822,13 +822,14 @@ ZipArchiveMember >> writeTo: aStream [
 	 that we do not know yet! So we leave room for the header, write the data, and go
 	 back to write the header after we have the needed information."
 
-	| headerEndPosition dataEndPosition |
+	| headerSize headerEndPosition dataEndPosition |
 	self rewindData.
 	headerStartPosition := aStream position.
-	headerEndPosition := headerStartPosition + 30
+	headerSize := 30
 		+ fileName asVmPathName asByteArray size 
 		+ localExtraField asByteArray size.
-	aStream position: headerEndPosition.
+	headerEndPosition := headerStartPosition + headerSize.
+	aStream nextPutAll: (ByteArray new: headerSize).
 	self writeDataTo: aStream.
 	dataEndPosition := aStream position.
 	aStream position: headerStartPosition.
@@ -836,5 +837,4 @@ ZipArchiveMember >> writeTo: aStream [
 	"Verify that our calculation of the header size was correct!"
 	aStream position == headerEndPosition ifFalse: [ self error: 'Incorrect header size!' ].
 	aStream position: dataEndPosition.
-	
 ]
