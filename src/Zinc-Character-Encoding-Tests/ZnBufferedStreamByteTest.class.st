@@ -9,13 +9,13 @@ https://en.wikipedia.org/wiki/Endianness
 https://en.wikipedia.org/wiki/Two%27s_complement
 "
 Class {
-	#name : #ZnBufferedStreamByteTests,
+	#name : #ZnBufferedStreamByteTest,
 	#superclass : #TestCase,
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
 { #category : #accessing }
-ZnBufferedStreamByteTests >> integerEncodingSpec [
+ZnBufferedStreamByteTest >> integerEncodingSpec [
 	^ #(
 "<hex-bytes> <integer> <u|s> <be|le> unsigned|signed big-endian|little-endian"
 ('00' 0 u be)
@@ -76,7 +76,7 @@ ZnBufferedStreamByteTests >> integerEncodingSpec [
 ]
 
 { #category : #testing }
-ZnBufferedStreamByteTests >> testInt16Aliases [
+ZnBufferedStreamByteTest >> testInt16Aliases [
 	| input writer |
 	writer := [ :block | 
 		ByteArray streamContents: [ :out | 
@@ -98,7 +98,7 @@ ZnBufferedStreamByteTests >> testInt16Aliases [
 ]
 
 { #category : #testing }
-ZnBufferedStreamByteTests >> testInt32Aliases [
+ZnBufferedStreamByteTest >> testInt32Aliases [
 	| input writer |
 	writer := [ :block | 
 		ByteArray streamContents: [ :out | 
@@ -122,7 +122,7 @@ ZnBufferedStreamByteTests >> testInt32Aliases [
 ]
 
 { #category : #testing }
-ZnBufferedStreamByteTests >> testInt8 [
+ZnBufferedStreamByteTest >> testInt8 [
 	| bytes readStream |
 	bytes := ByteArray streamContents: [ :out |
 		ZnBufferedWriteStream on: out do: [ :bout |
@@ -138,7 +138,7 @@ ZnBufferedStreamByteTests >> testInt8 [
 ]
 
 { #category : #testing }
-ZnBufferedStreamByteTests >> testNextIntegerOfSizeSignedBigEndian [
+ZnBufferedStreamByteTest >> testNextIntegerOfSizeSignedBigEndian [
 	self integerEncodingSpec do: [ :spec |
 		| input integer |
 		input := ByteArray readHexFrom: spec first.
@@ -150,7 +150,7 @@ ZnBufferedStreamByteTests >> testNextIntegerOfSizeSignedBigEndian [
 ]
 
 { #category : #testing }
-ZnBufferedStreamByteTests >> testNextIntegerOfSizeSignedBigEndianPut [
+ZnBufferedStreamByteTest >> testNextIntegerOfSizeSignedBigEndianPut [
 	self integerEncodingSpec do: [ :spec |
 		| input output |
 		input := ByteArray readHexFrom: spec first.

@@ -1,11 +1,11 @@
 Class {
-	#name : #ZnBufferedWriteStreamTests,
+	#name : #ZnBufferedWriteStreamTest,
 	#superclass : #TestCase,
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
 { #category : #testing }
-ZnBufferedWriteStreamTests >> testNextPutAllStartingAt [
+ZnBufferedWriteStreamTest >> testNextPutAllStartingAt [
 	| string |
 	string := String streamContents: [ :stringStream | 
 		ZnBufferedWriteStream on: stringStream do: [ : bufferedStream |
@@ -18,7 +18,7 @@ ZnBufferedWriteStreamTests >> testNextPutAllStartingAt [
 ]
 
 { #category : #testing }
-ZnBufferedWriteStreamTests >> testWriting [
+ZnBufferedWriteStreamTest >> testWriting [
 	| string |
 	string := String streamContents: [ :stringStream | | bufferedStream |
 		bufferedStream := ZnBufferedWriteStream on: stringStream.
@@ -28,7 +28,7 @@ ZnBufferedWriteStreamTests >> testWriting [
 ]
 
 { #category : #testing }
-ZnBufferedWriteStreamTests >> testWritingOverflow [
+ZnBufferedWriteStreamTest >> testWritingOverflow [
 	| string |
 	string := String streamContents: [ :stringStream | | bufferedStream |
 		bufferedStream := ZnBufferedWriteStream on: stringStream.
