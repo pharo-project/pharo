@@ -286,6 +286,12 @@ OSSDL2WindowHandle >> prepareExternalResourceForAutoRelease [
 	handle autoRelease
 ]
 
+{ #category : #accessing }
+OSSDL2WindowHandle >> raise [
+
+	handle raise
+]
+
 { #category : #'mouse capture' }
 OSSDL2WindowHandle >> releaseMouse [
 	SDL2 setRelativeMouseMode: false

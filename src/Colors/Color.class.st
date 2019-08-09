@@ -1334,7 +1334,9 @@ Color >> flushCache [
 { #category : #accessing }
 Color >> green [
 	"Return the green component of this color, a float in the range [0.0..1.0]."
-
+	"Color red green >>> 0.0"
+	"(Color r: 0.5 g: 0.5 b: 1) green >>>  0.5004887585532747"
+	
 	^ self privateGreen asFloat / ComponentMax
 ]
 
@@ -1347,7 +1349,8 @@ Color >> hash [
 { #category : #accessing }
 Color >> hslSaturation [
 	"Return the HSL saturation of this color, a value between 0.0 and 1.0."
-
+	"Color red hslSaturation >>> 1.0"
+	"(Color r: 0.5 g: 0.5 b: 1) hslSaturation >>> 1.0"
 	| chroma |
 	chroma := self chroma.
 	"Chroma is zero for black and white, which are the two cases of division by zero below."
@@ -1359,7 +1362,9 @@ Color >> hslSaturation [
 { #category : #accessing }
 Color >> hsvSaturation [
 	"Return the HSV saturation of this color, a value between 0.0 and 1.0."
-
+	"Color red hsvSaturation >>> 1.0"
+	"(Color r: 0.5 g: 0.5 b: 1) hsvSaturation >>> 0.4995112414467253"
+	
 	| max |
 	max := self privateMaxComponent.
 	max isZero
@@ -1370,6 +1375,9 @@ Color >> hsvSaturation [
 { #category : #accessing }
 Color >> hue [
 	"Return the hue of this color, an angle in the range [0.0..360.0]."
+	"Color red hue >>> 0.0"
+	"(Color r: 0.5 g: 0.5 b: 1) hue >>> 240.0"
+	
 	| r g b max min span h |
 	r := self privateRed.
 	g := self privateGreen.
@@ -1863,8 +1871,10 @@ Color >> red [
 
 { #category : #other }
 Color >> rgbTriplet [
-	"Color fromUser rgbTriplet"
-
+	"Returns an array composed of the three color float components."
+	
+	"Color black rgbTriplet >>> #(0.0 0.0 0.0)"
+	"Color red rgbTriplet >>> #(1.0 0.0 0.0)"
 	^ Array
 		with: (self red roundTo: 0.01)
 		with: (self green roundTo: 0.01)

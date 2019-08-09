@@ -198,6 +198,12 @@ OSWindow >> extent: newExtent [
 	self validHandle extent: newExtent
 ]
 
+{ #category : #'window management' }
+OSWindow >> focus [
+
+	self validHandle raise.
+]
+
 { #category : #accessing }
 OSWindow >> fullscreen: aBoolean [
 	self validHandle fullscreen: aBoolean

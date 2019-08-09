@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 SpLabelledContainerTest >> classToTest [
-	^ SpLabelledContainer
+	^ SpLabelledContainerPrestenter
 ]
 
 { #category : #running }
