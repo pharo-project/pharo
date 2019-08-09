@@ -1,11 +1,7 @@
 "
-Abstract superclass for item positioning. Each subclass should only have one instance.
+I'm a class responsible for item positioning. My subclass have only have one instance responsible for the different behavior depending on direction. My users should not refer to my subclasses but to myself e.g, 
 
-The default item positioning is left.
-
-  	ITItemPosition default
-	ITItemPosition right
-	ITItemPosition left
+SpToolBarItemPosition left or SpToolBarItemPosition right
 "
 Class {
 	#name : #SpToolBarItemPosition,

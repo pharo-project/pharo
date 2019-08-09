@@ -6,5 +6,5 @@ Class {
 
 { #category : #running }
 SpInputTextDropListTest >> classToTest [
-	^ SpInputTextDropList
+	^ SpInputTextDropListPresenter
 ]
