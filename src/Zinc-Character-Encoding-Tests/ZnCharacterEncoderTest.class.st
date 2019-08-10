@@ -1,21 +1,21 @@
 Class {
-	#name : #ZnCharacterEncoderTests,
+	#name : #ZnCharacterEncoderTest,
 	#superclass : #TestCase,
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
 { #category : #accessing }
-ZnCharacterEncoderTests class >> asciiCharacterSource [
+ZnCharacterEncoderTest class >> asciiCharacterSource [
 	^ ($A to: $Z), ($a to: $z), ($0 to: $9), '.-_/*+=|,;?!$&<>^%#', '    '
 ]
 
 { #category : #accessing }
-ZnCharacterEncoderTests class >> latin1CharacterSource [
+ZnCharacterEncoderTest class >> latin1CharacterSource [
 	^ ($A to: $Z), ($a to: $z), ($0 to: $9), '.-_/*+=|,;?!$&<>^%#', '       ', 'éèçüäßñ'
 ]
 
 { #category : #accessing }
-ZnCharacterEncoderTests class >> stringOfSize: size fromSource: source [
+ZnCharacterEncoderTest class >> stringOfSize: size fromSource: source [
 	"self stringOfSize: 1024 fromSource: self unicodeCharacterSource"
 	
 	^ String new: size streamContents: [ :out | 
@@ -23,12 +23,12 @@ ZnCharacterEncoderTests class >> stringOfSize: size fromSource: source [
 ]
 
 { #category : #accessing }
-ZnCharacterEncoderTests class >> unicodeCharacterSource [
+ZnCharacterEncoderTest class >> unicodeCharacterSource [
 	^ ($A to: $Z), ($a to: $z), ($0 to: $9), '.-_/*+=|,;?!$&<>^%#', '         ', 'éèçüäßñα', '€∏'
 ]
 
 { #category : #private }
-ZnCharacterEncoderTests >> decodeBytes: bytes with: encoder [
+ZnCharacterEncoderTest >> decodeBytes: bytes with: encoder [
 	| input |
 	input := bytes readStream.
 	^ String streamContents: [ :stream |
@@ -37,14 +37,14 @@ ZnCharacterEncoderTests >> decodeBytes: bytes with: encoder [
 ]
 
 { #category : #private }
-ZnCharacterEncoderTests >> encodeString: string with: encoder [
+ZnCharacterEncoderTest >> encodeString: string with: encoder [
 	^ ByteArray streamContents: [ :stream |
 		string do: [ :each |
 			encoder nextPut: each toStream: stream ] ]
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testAllByteEncoderDomains [
+ZnCharacterEncoderTest >> testAllByteEncoderDomains [
 	| encoder characterDomain byteDomain encoded |
 	ZnByteEncoder knownEncodingIdentifiers do: [ :identifier |
 		encoder := ZnCharacterEncoder newForEncoding: identifier.
@@ -65,7 +65,7 @@ ZnCharacterEncoderTests >> testAllByteEncoderDomains [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testBeLenient [
+ZnCharacterEncoderTest >> testBeLenient [
 	| encoder unmapped |
 	encoder := ZnCharacterEncoder newForEncoding: 'iso-8859-1'.
 	unmapped := (128 to: 159) asByteArray.
@@ -77,7 +77,7 @@ ZnCharacterEncoderTests >> testBeLenient [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testByteDecoding [
+ZnCharacterEncoderTest >> testByteDecoding [
 	| encoder bytes |
 	encoder := ZnUTF8Encoder new.
 	bytes := encoder encodeString: 'élève en Français'.
@@ -87,7 +87,7 @@ ZnCharacterEncoderTests >> testByteDecoding [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testByteEncoderFromUrl [
+ZnCharacterEncoderTest >> testByteEncoderFromUrl [
 	| encoderFromUrl iso88592 bytes characters |
 	encoderFromUrl := ZnByteEncoder newFromUrl: 'http://files.pharo.org/extra/unicode/8859-2.TXT'.
 	iso88592 := ZnCharacterEncoder newForEncoding: #iso88592.
@@ -105,7 +105,7 @@ ZnCharacterEncoderTests >> testByteEncoderFromUrl [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testCodePointEncodingDecoding [
+ZnCharacterEncoderTest >> testCodePointEncodingDecoding [
 	| encoder input output |
 	input := 'Düsseldorf Königsallee' collect: #codePoint as: Array.
 	self assert: input isCollection.
@@ -120,7 +120,7 @@ ZnCharacterEncoderTests >> testCodePointEncodingDecoding [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testCodePointStreams [
+ZnCharacterEncoderTest >> testCodePointStreams [
 	| string codePoints bytes result |
 	string := 'Düsseldorf Königsallee'.
 	codePoints := string collect: #codePoint as: Array.
@@ -137,7 +137,7 @@ ZnCharacterEncoderTests >> testCodePointStreams [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testConvencienceMethods [
+ZnCharacterEncoderTest >> testConvencienceMethods [
 	| encoder string |
 	encoder := ZnUTF8Encoder new.
 	string := 'élève en Français'.
@@ -149,7 +149,7 @@ ZnCharacterEncoderTests >> testConvencienceMethods [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testDefault [
+ZnCharacterEncoderTest >> testDefault [
 	| string bytes |
 	self assert: ZnCharacterEncoder default equals: ZnUTF8Encoder new.
 	string := 'Der Weg zur Hölle ist mit guten Vorsätzen gepflastert.'.
@@ -169,7 +169,7 @@ ZnCharacterEncoderTests >> testDefault [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testDetectEncoding [
+ZnCharacterEncoderTest >> testDetectEncoding [
 	| bytes |
 	bytes := 'abc' asByteArray.
 	self assert: (ZnCharacterEncoder detectEncoding: bytes) equals: ZnCharacterEncoder ascii.
@@ -181,7 +181,7 @@ ZnCharacterEncoderTests >> testDetectEncoding [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testKnownEncodingIdentifiers [
+ZnCharacterEncoderTest >> testKnownEncodingIdentifiers [
 	| all minimal asciiString |
 	all := ZnCharacterEncoder knownEncodingIdentifiers asSet.
 	minimal := #(utf8 latin1 null ascii iso88591) asSet.
@@ -198,7 +198,7 @@ ZnCharacterEncoderTests >> testKnownEncodingIdentifiers [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testLatin1Encoder [
+ZnCharacterEncoderTest >> testLatin1Encoder [
 	| encoder string bytes |
 	encoder := ZnCharacterEncoder newForEncoding: 'latin1'.
 	string := 'élève en Français'.
@@ -208,7 +208,7 @@ ZnCharacterEncoderTests >> testLatin1Encoder [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testLatin2Encoder [
+ZnCharacterEncoderTest >> testLatin2Encoder [
 	"Example characters taken from http://en.wikipedia.org/wiki/Latin2"
 	
 	| encoder inputBytes outputBytes inputString outputString |
@@ -224,7 +224,7 @@ ZnCharacterEncoderTests >> testLatin2Encoder [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testNextPutAllStartingAtToStream [
+ZnCharacterEncoderTest >> testNextPutAllStartingAtToStream [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
 	#( 'ccc' 'ççç' 'c' 'ç' 'çc' 'cç' 'çç' ) do: [ :each |
@@ -242,7 +242,7 @@ ZnCharacterEncoderTests >> testNextPutAllStartingAtToStream [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testNullEncoder [
+ZnCharacterEncoderTest >> testNullEncoder [
 	| encoder bytes string |
 	encoder := ZnNullEncoder new.
 	bytes := self encodeString: 'abc' with: encoder.
@@ -252,7 +252,7 @@ ZnCharacterEncoderTests >> testNullEncoder [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStream [
+ZnCharacterEncoderTest >> testReadIntoStartingAtCountFromStream [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
 	#( 'ccc' 'ççç' 'c' 'ç' 'çc' 'cç' 'çç' ) do: [ :each |
@@ -272,7 +272,7 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStream [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamAtEnd [
+ZnCharacterEncoderTest >> testReadIntoStartingAtCountFromStreamAtEnd [
 	| input encoder bytes readStream string read |
 	encoder := ZnUTF8Encoder new.
 	input := 'élève'.
@@ -285,7 +285,7 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamAtEnd [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamWide [
+ZnCharacterEncoderTest >> testReadIntoStartingAtCountFromStreamWide [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
 	{ 'abc', (WideString withAll: { 300 asCharacter. 400 asCharacter. 500 asCharacter}), 'xyz' } do: [ :each |
@@ -306,7 +306,7 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamWide [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamWithOffset [
+ZnCharacterEncoderTest >> testReadIntoStartingAtCountFromStreamWithOffset [
 	| input encoder bytes readStream string read |
 	encoder := ZnUTF8Encoder new.
 	input := '_élève_'.
@@ -328,7 +328,7 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamWithOffset [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testStringEncoding [
+ZnCharacterEncoderTest >> testStringEncoding [
 	| encoder string |
 	encoder := ZnUTF8Encoder new.
 	string := 'élève en Français'.
@@ -339,7 +339,7 @@ ZnCharacterEncoderTests >> testStringEncoding [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF16Back [
+ZnCharacterEncoderTest >> testUTF16Back [
 	| encoder stream |
 	encoder := ZnUTF16Encoder new.
 	stream := (encoder encodeString: 'Les élèves Françaises') readStream.
@@ -354,7 +354,7 @@ ZnCharacterEncoderTests >> testUTF16Back [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF16EncoderBigEndian [
+ZnCharacterEncoderTest >> testUTF16EncoderBigEndian [
 	| string bytes encoder |
 	string := 'élève en Français'.
 	bytes := ByteArray readHexFrom:
@@ -366,7 +366,7 @@ ZnCharacterEncoderTests >> testUTF16EncoderBigEndian [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF16EncoderByteOrderMark [
+ZnCharacterEncoderTest >> testUTF16EncoderByteOrderMark [
 	| string bytes encoder encoded |
 	string := 'foo'.
 	bytes := ByteArray readHexFrom: 'FEFF0066006f006f'.
@@ -388,7 +388,7 @@ ZnCharacterEncoderTests >> testUTF16EncoderByteOrderMark [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF16EncoderLittleEndian [
+ZnCharacterEncoderTest >> testUTF16EncoderLittleEndian [
 	| string bytes encoder |
 	string := 'élève en Français'.
 	bytes := ByteArray readHexFrom:
@@ -401,7 +401,7 @@ ZnCharacterEncoderTests >> testUTF16EncoderLittleEndian [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF16EncoderWide1 [
+ZnCharacterEncoderTest >> testUTF16EncoderWide1 [
 	| string bytes encoder |
 	string := (Character codePoint: 16r1d11e) asString. "MUSICAL SYMBOL G CLEF"
 	bytes := ByteArray readHexFrom: 'D834DD1E'.
@@ -412,7 +412,7 @@ ZnCharacterEncoderTests >> testUTF16EncoderWide1 [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF32EncoderExampleFromD100 [
+ZnCharacterEncoderTest >> testUTF32EncoderExampleFromD100 [
 	| string bytes encoder |
 	string := #(16r0000004D 16r00000430 16r00004E8C 16r00010302) collect: #asCharacter as: String.
 	bytes := ByteArray readHexFrom: '4D000000300400008C4E000002030100'.
@@ -424,7 +424,7 @@ ZnCharacterEncoderTests >> testUTF32EncoderExampleFromD100 [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF32EncoderExampleFromD101 [
+ZnCharacterEncoderTest >> testUTF32EncoderExampleFromD101 [
 	| string encoder bytesBigEndianWithBom bytesLittleEndianWithBom |
 	string := #(16r0000004D 16r00000430 16r00004E8C 16r00010302) collect: #asCharacter as: String.
 	encoder := #utf32 asZnCharacterEncoder.
@@ -443,7 +443,7 @@ ZnCharacterEncoderTests >> testUTF32EncoderExampleFromD101 [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF32EncoderExampleFromD99 [
+ZnCharacterEncoderTest >> testUTF32EncoderExampleFromD99 [
 	| string bytes encoder |
 	string := #(16r0000004D 16r00000430 16r00004E8C 16r00010302) collect: #asCharacter as: String.
 	bytes := ByteArray readHexFrom: '0000004D0000043000004E8C00010302'.
@@ -455,7 +455,7 @@ ZnCharacterEncoderTests >> testUTF32EncoderExampleFromD99 [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF32EncoderSimple [
+ZnCharacterEncoderTest >> testUTF32EncoderSimple [
 	| string bytes encoder |
 	string := 'élève en Français'.
 	bytes := ByteArray readHexFrom: '000000e90000006c000000e8000000760000006500000020000000650000006e000000200000004600000072000000610000006e000000e7000000610000006900000073'.
@@ -467,7 +467,7 @@ ZnCharacterEncoderTests >> testUTF32EncoderSimple [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF32EncoderWide [
+ZnCharacterEncoderTest >> testUTF32EncoderWide [
 	| encoder |
 	encoder := ZnUTF32Encoder new.
 	{ 
@@ -482,7 +482,7 @@ ZnCharacterEncoderTests >> testUTF32EncoderWide [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF8Back [
+ZnCharacterEncoderTest >> testUTF8Back [
 	| encoder stream |
 	encoder := ZnUTF8Encoder new.
 	stream := (encoder encodeString: 'Les élèves Françaises') readStream.
@@ -497,7 +497,7 @@ ZnCharacterEncoderTests >> testUTF8Back [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF8Boundaries [
+ZnCharacterEncoderTest >> testUTF8Boundaries [
 	"Test encoding and decoding of the characters at the boundaries between 1, 2, 3, and 4 multi-byte sequences.
 	Values taken from http://en.wikipedia.org/wiki/Utf8#Description with the new RFC 3629 limit"
 	
@@ -516,7 +516,7 @@ ZnCharacterEncoderTests >> testUTF8Boundaries [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF8ByteOrderMark [
+ZnCharacterEncoderTest >> testUTF8ByteOrderMark [
 	"The Unicode Byte Order Mark (BOM) should be skipped."
 	
 	| bom string bytes encoder decodedString |
@@ -537,7 +537,7 @@ ZnCharacterEncoderTests >> testUTF8ByteOrderMark [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF8Encoder [
+ZnCharacterEncoderTest >> testUTF8Encoder [
 	"The examples are taken from http://en.wikipedia.org/wiki/UTF-8#Description"
 	
 	| encoder inputBytes outputBytes inputString outputString |
@@ -551,7 +551,7 @@ ZnCharacterEncoderTests >> testUTF8Encoder [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF8EncoderAuto [
+ZnCharacterEncoderTest >> testUTF8EncoderAuto [
 	| encoder inputString bytes outputString |
 	encoder := ZnUTF8Encoder new.
 	inputString := String withAll: ((1 to: 3072) collect: [ :each | Character value: each ]).
@@ -561,7 +561,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderAuto [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF8EncoderByteCount [	
+ZnCharacterEncoderTest >> testUTF8EncoderByteCount [	
 	| encoder |
 	encoder := ZnUTF8Encoder new.
 	self assert: (encoder encodedByteCountFor: $$) = 1.
@@ -571,7 +571,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderByteCount [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF8EncoderIncomplete [
+ZnCharacterEncoderTest >> testUTF8EncoderIncomplete [
 	"The examples are taken from http://en.wikipedia.org/wiki/UTF-8#Description"
 	
 	| encoder |
@@ -584,7 +584,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderIncomplete [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF8EncoderRandom [
+ZnCharacterEncoderTest >> testUTF8EncoderRandom [
 	#(unicodeCharacterSource latin1CharacterSource asciiCharacterSource) do: [ :source |
 		| string bytes result |
 		string := self class stringOfSize: 256 fromSource: source.
@@ -594,7 +594,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderRandom [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF8EncoderWide [
+ZnCharacterEncoderTest >> testUTF8EncoderWide [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
 	{ 'abc'. 'élève en Français'. 'Pra-ská' copy at: 4 put: (Character value: 382); yourself. '' }
@@ -604,7 +604,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderWide [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF8Overlong [
+ZnCharacterEncoderTest >> testUTF8Overlong [
 	"Overlong encoding, aka Non shortest form characters should be rejected.
 	See http://en.wikipedia.org/wiki/UTF-8#Overlong_encodings"
 	
@@ -619,7 +619,7 @@ ZnCharacterEncoderTests >> testUTF8Overlong [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF8ReadFaultyInput [
+ZnCharacterEncoderTest >> testUTF8ReadFaultyInput [
 	"Although not recommended, it is possible to read faulty UTF-8 encoded input by resuming ZnInvalidUTF8"
 	
 	"illegal leading byte"
@@ -651,7 +651,7 @@ ZnCharacterEncoderTests >> testUTF8ReadFaultyInput [
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTests >> testUTF8SurrogateCodePointsShouldFail [
+ZnCharacterEncoderTest >> testUTF8SurrogateCodePointsShouldFail [
 	| encoder surrogateCodePoint |
 	encoder := #utf8 asZnCharacterEncoder.
 	surrogateCodePoint := 16rD801.

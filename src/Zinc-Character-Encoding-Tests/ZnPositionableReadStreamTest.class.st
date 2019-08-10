@@ -1,11 +1,11 @@
 Class {
-	#name : #ZnPositionableReadStreamTests,
+	#name : #ZnPositionableReadStreamTest,
 	#superclass : #TestCase,
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testBulkReading [
+ZnPositionableReadStreamTest >> testBulkReading [
 	| stream buffer |
 	stream := ZnPositionableReadStream on: #(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15) readStream.
 	buffer := Array new: 6.
@@ -20,7 +20,7 @@ ZnPositionableReadStreamTests >> testBulkReading [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testEmpty [
+ZnPositionableReadStreamTest >> testEmpty [
 	| stream |
 	stream := ZnPositionableReadStream on: '' readStream.
 	self assert: stream atEnd.
@@ -31,7 +31,7 @@ ZnPositionableReadStreamTests >> testEmpty [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testNestedExcursion [
+ZnPositionableReadStreamTest >> testNestedExcursion [
 	| stream |
 	stream := ZnPositionableReadStream on: 'abcdef---XYZ!1--------' readStream.
 	self assert: (stream next: 3) equals: 'abc'.
@@ -47,7 +47,7 @@ ZnPositionableReadStreamTests >> testNestedExcursion [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testNew [
+ZnPositionableReadStreamTest >> testNew [
 	| stream |
 	stream := ZnPositionableReadStream on: 'abc' readStream.
 	self assert: stream position isZero.
@@ -58,7 +58,7 @@ ZnPositionableReadStreamTests >> testNew [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testPlainExcursion [
+ZnPositionableReadStreamTest >> testPlainExcursion [
 	| stream |
 	stream := ZnPositionableReadStream on: 'abcdef-----------' readStream.
 	self assert: (stream next: 3) equals: 'abc'.
@@ -68,7 +68,7 @@ ZnPositionableReadStreamTests >> testPlainExcursion [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testPlainNext [
+ZnPositionableReadStreamTest >> testPlainNext [
 	| stream |
 	stream := ZnPositionableReadStream on: 'abc' readStream.
 	self assert: stream next equals: $a.
@@ -82,7 +82,7 @@ ZnPositionableReadStreamTests >> testPlainNext [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testPlainPeek [
+ZnPositionableReadStreamTest >> testPlainPeek [
 	| stream |
 	stream := ZnPositionableReadStream on: 'abc' readStream.
 	self assert: stream next equals: $a.
@@ -97,7 +97,7 @@ ZnPositionableReadStreamTests >> testPlainPeek [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testPositionErrors [
+ZnPositionableReadStreamTest >> testPositionErrors [
 	| data stream |
 	data := ByteArray new: 1000 streamContents: [ :out | 
 		100 timesRepeat: [ out nextPutAll: #[ 0 1 2 3 4 5 6 7 8 9 ] ] ].
@@ -116,7 +116,7 @@ ZnPositionableReadStreamTests >> testPositionErrors [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testReadAll [
+ZnPositionableReadStreamTest >> testReadAll [
 	| data stream |
 	data := String new: 200 streamContents: [ :out | 
 		200 timesRepeat: [ out nextPut: 'abc' atRandom ] ].
@@ -135,7 +135,7 @@ ZnPositionableReadStreamTests >> testReadAll [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testReadAllLargerBuffer [
+ZnPositionableReadStreamTest >> testReadAllLargerBuffer [
 	| data stream |
 	data := String new: 500 streamContents: [ :out | 
 		500 timesRepeat: [ out nextPut: 'abc' atRandom ] ].
@@ -155,7 +155,7 @@ ZnPositionableReadStreamTests >> testReadAllLargerBuffer [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testSearch [
+ZnPositionableReadStreamTest >> testSearch [
 	| data stream found |
 	data := String new: 2000 streamContents: [ :out | 
 		2000 timesRepeat: [ out nextPut: 'abc' atRandom ] ].
@@ -173,7 +173,7 @@ ZnPositionableReadStreamTests >> testSearch [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testSearchBinary [
+ZnPositionableReadStreamTest >> testSearchBinary [
 	| data stream pattern found |
 	data := ByteArray new: 2000 streamContents: [ :out | 
 		2000 timesRepeat: [ out nextPut: 256 atRandom - 1 ] ].
@@ -192,7 +192,7 @@ ZnPositionableReadStreamTests >> testSearchBinary [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testSkipAndBack [
+ZnPositionableReadStreamTest >> testSkipAndBack [
 	| stream |
 	stream := ZnPositionableReadStream on: 'abcdef' readStream.
 	stream skip: 2.
@@ -208,7 +208,7 @@ ZnPositionableReadStreamTests >> testSkipAndBack [
 ]
 
 { #category : #testing }
-ZnPositionableReadStreamTests >> testUTF8 [
+ZnPositionableReadStreamTest >> testUTF8 [
 	| data stream |
 	data := 'Les élèves Françaises ont 100 €'.
 	stream := ZnPositionableReadStream on: (ZnCharacterReadStream on: data utf8Encoded readStream).

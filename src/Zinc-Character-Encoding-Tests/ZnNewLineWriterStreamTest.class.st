@@ -1,11 +1,11 @@
 Class {
-	#name : #ZnNewLineWriterStreamTests,
+	#name : #ZnNewLineWriterStreamTest,
 	#superclass : #TestCase,
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
 { #category : #tests }
-ZnNewLineWriterStreamTests >> testClose [ 
+ZnNewLineWriterStreamTest >> testClose [ 
 
 	| string fs fileReference znstream |
 
@@ -24,7 +24,7 @@ ZnNewLineWriterStreamTests >> testClose [
 ]
 
 { #category : #tests }
-ZnNewLineWriterStreamTests >> testNextPut [
+ZnNewLineWriterStreamTest >> testNextPut [
 	"Ensure that the line ends are written correctly"
 
 	| expectedString stream crStream |
