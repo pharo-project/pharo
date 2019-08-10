@@ -1,11 +1,11 @@
 Class {
-	#name : #ZnBase64EncoderTests,
+	#name : #ZnBase64EncoderTest,
 	#superclass : #TestCase,
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
 { #category : #benchmarks }
-ZnBase64EncoderTests class >> bench10kDecode [
+ZnBase64EncoderTest class >> bench10kDecode [
 	"self bench10kDecode"
 	
 	| string alphabet |
@@ -16,7 +16,7 @@ ZnBase64EncoderTests class >> bench10kDecode [
 ]
 
 { #category : #benchmarks }
-ZnBase64EncoderTests class >> bench10kEncode [
+ZnBase64EncoderTest class >> bench10kEncode [
 	"self bench10kEncode"
 	
 	| bytes |
@@ -26,7 +26,7 @@ ZnBase64EncoderTests class >> bench10kEncode [
 ]
 
 { #category : #benchmarks }
-ZnBase64EncoderTests class >> bench1kDecode [
+ZnBase64EncoderTest class >> bench1kDecode [
 	"self bench1kDecode"
 	
 	| string alphabet |
@@ -37,7 +37,7 @@ ZnBase64EncoderTests class >> bench1kDecode [
 ]
 
 { #category : #benchmarks }
-ZnBase64EncoderTests class >> bench1kEncode [
+ZnBase64EncoderTest class >> bench1kEncode [
 	"self bench1kEncode"
 	
 	| bytes |
@@ -47,7 +47,7 @@ ZnBase64EncoderTests class >> bench1kEncode [
 ]
 
 { #category : #benchmarks }
-ZnBase64EncoderTests class >> benchmarks [
+ZnBase64EncoderTest class >> benchmarks [
 	"self benchmarks"
 	
 	^ (#( bench1kEncode bench1kDecode bench10kEncode bench10kDecode )
@@ -55,7 +55,7 @@ ZnBase64EncoderTests class >> benchmarks [
 ]
 
 { #category : #testing }
-ZnBase64EncoderTests >> testCustomLineBreaking [
+ZnBase64EncoderTest >> testCustomLineBreaking [
 	| encoder input output charCount |
 	encoder := ZnBase64Encoder new.
 	encoder breakLinesAt: 16.
@@ -67,7 +67,7 @@ ZnBase64EncoderTests >> testCustomLineBreaking [
 ]
 
 { #category : #testing }
-ZnBase64EncoderTests >> testDecodingErrors [
+ZnBase64EncoderTest >> testDecodingErrors [
 	| encoder |
 	encoder := ZnBase64Encoder new.
 	self should: [ encoder decode: 'A' ] raise: ZnCharacterEncodingError.
@@ -86,7 +86,7 @@ ZnBase64EncoderTests >> testDecodingErrors [
 ]
 
 { #category : #testing }
-ZnBase64EncoderTests >> testEmpty [
+ZnBase64EncoderTest >> testEmpty [
 	| encoder |
 	encoder := ZnBase64Encoder new.
 	self 
@@ -98,7 +98,7 @@ ZnBase64EncoderTests >> testEmpty [
 ]
 
 { #category : #testing }
-ZnBase64EncoderTests >> testFullAlphabet [
+ZnBase64EncoderTest >> testFullAlphabet [
 	| encoder input output |
 	encoder := ZnBase64Encoder new.
 	input := encoder alphabet.
@@ -110,7 +110,7 @@ ZnBase64EncoderTests >> testFullAlphabet [
 ]
 
 { #category : #testing }
-ZnBase64EncoderTests >> testFullSpectrum [
+ZnBase64EncoderTest >> testFullSpectrum [
 	| encoder input output |
 	encoder := ZnBase64Encoder new.
 	input := (0 to: 255) asByteArray , (255 to: 0) asByteArray.
@@ -123,7 +123,7 @@ ZnBase64EncoderTests >> testFullSpectrum [
 ]
 
 { #category : #testing }
-ZnBase64EncoderTests >> testPadding [
+ZnBase64EncoderTest >> testPadding [
 	| encoder |
 	encoder := ZnBase64Encoder new.
 	self assert: (encoder encode: 'M' asByteArray) equals: 'TQ=='.
@@ -133,7 +133,7 @@ ZnBase64EncoderTests >> testPadding [
 ]
 
 { #category : #testing }
-ZnBase64EncoderTests >> testQuote [
+ZnBase64EncoderTest >> testQuote [
 	| input output encoder break |
 	encoder := ZnBase64Encoder new lineEndConvention: #cr; breakLines; yourself.
 	input := 'Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.'.
@@ -152,7 +152,7 @@ ZnBase64EncoderTests >> testQuote [
 ]
 
 { #category : #testing }
-ZnBase64EncoderTests >> testSimple [
+ZnBase64EncoderTest >> testSimple [
 	| encoder |
 	encoder := ZnBase64Encoder new.
 	self 
@@ -164,7 +164,7 @@ ZnBase64EncoderTests >> testSimple [
 ]
 
 { #category : #testing }
-ZnBase64EncoderTests >> testWhitespaceAtEnd [
+ZnBase64EncoderTest >> testWhitespaceAtEnd [
 	| encoder |
 	encoder := ZnBase64Encoder new.
 	"whitespace is #any non-alphabet character"

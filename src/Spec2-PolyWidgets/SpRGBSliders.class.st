@@ -3,7 +3,7 @@ I am an elementary Spec widget allowing a user to choose a Color by its RGB valu
 
 self example
 
-I manage three SliderInput.
+I manage three SliderInputs.
 I set their min at 0 and their max at 255.
 
 I provide the methods color that calculate the Color obtains with the current value of the sliders.
@@ -36,10 +36,10 @@ SpRGBSliders >> blueSlider [
 { #category : #accessing }
 SpRGBSliders >> color [
 	^ (Color
-				r: redSlider value
-				g: greenSlider value
-				b: blueSlider value
-				range: 255)
+			r: redSlider value
+			g: greenSlider value
+			b: blueSlider value
+			range: 255)
 ]
 
 { #category : #accessing }
@@ -49,9 +49,9 @@ SpRGBSliders >> greenSlider [
 
 { #category : #initialization }
 SpRGBSliders >> initializeWidgets [
-	redSlider := self instantiate: SpSliderInput.
-	greenSlider := self instantiate: SpSliderInput.
-	blueSlider := self instantiate: SpSliderInput.
+	redSlider := self instantiate: SpSliderInputPresenter.
+	greenSlider := self instantiate: SpSliderInputPresenter.
+	blueSlider := self instantiate: SpSliderInputPresenter.
 	redSlider
 		min: 0;
 		max: 255; label: 'Red' translated.

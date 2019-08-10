@@ -32,7 +32,7 @@ SpRGBWidget class >> defaultSpec [
 
 { #category : #api }
 SpRGBWidget >> color [
- ^ sliders color
+	^ sliders color
 ]
 
 { #category : #initialization }
@@ -66,5 +66,5 @@ SpRGBWidget >> sliders [
 
 { #category : #'api-events' }
 SpRGBWidget >> whenExtentForPreviewChanged: aBlock [
- extentForPreview whenChangedDo: aBlock 
+	extentForPreview whenChangedDo: aBlock 
 ]

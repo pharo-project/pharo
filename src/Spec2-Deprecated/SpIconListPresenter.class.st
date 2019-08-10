@@ -1,15 +1,16 @@
 "
-An IconListPresenter is a spec presenter for icon list.
-See AbstractWidgetPresenter
+Better use 
 
-self example
+| iconList |
+	iconList := SpListPresenter new.
+	iconList
+		items: Smalltalk ui icons icons associations;
+		displayBlock: [ :assoc | assoc key ];
+		sortingBlock: [ :assocA :assocB | assocA key < assocB key ];
+		icons: [ :elem | elem value ].
+ iconList openWithSpec
 
-You can also have a look at ExampleListPresenter >> exampleIconList for another example.
 
-I provide the following variables icons and its accessors, it is a block that convert an item in the icon to display near the item.
-
-todo
-- getIconFor:
 "
 Class {
 	#name : #SpIconListPresenter,
