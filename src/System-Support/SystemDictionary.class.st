@@ -197,9 +197,8 @@ SystemDictionary >> fillCaches [
 		When bootstrapping we want the class Class of the current kernel defined in the current namespace.
 		Since the current namespace should contains the class that describes itself as well as a new Class class.
 		we are done :)."
-		
-	classNames sort.
-	cachedNonClassNames := nonClassNames sort.
+	
+	cachedNonClassNames := nonClassNames.
 	cachedClassNames := classNames.
 	^{ classNames. nonClassNames }
 ]
