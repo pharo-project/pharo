@@ -1,6 +1,6 @@
 Class {
 	#name : #LabelledTextInputTest,
-	#superclass : #AnObsoleteTextInputFieldPresenterTest,
+	#superclass : #TextInputFieldPresenterTest,
 	#category : #'Spec-Tests-PolyWidgets-Labelled'
 }
 
