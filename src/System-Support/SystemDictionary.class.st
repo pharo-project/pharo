@@ -139,7 +139,7 @@ SystemDictionary >> classNamed: className [
 
 { #category : #'class and trait names' }
 SystemDictionary >> classNames [
-	"Answer a sorted collection of all class names. Use the return value of #fillCaches to avoid concurrency issues."
+	"Answer a collection of all class names. Use the return value of #fillCaches to avoid concurrency issues."
 	
 	^cachedClassNames ifNil: [ self fillCaches at: 1 ]
 ]
@@ -263,7 +263,7 @@ SystemDictionary >> maxIdentityHash [
 
 { #category : #'class and trait names' }
 SystemDictionary >> nonClassNames [
-	"Answer a sorted collection of all non-class names. Use the return value of #fillCaches to avoid concurrency issues."
+	"Answer a collection of all non-class names. Use the return value of #fillCaches to avoid concurrency issues."
 	
 	^cachedNonClassNames ifNil: [ self fillCaches at: 2 ]
 ]
