@@ -1077,6 +1077,15 @@ PluggableTextMorph >> referencesToIt [
 	self handleEdit: [textMorph editor referencesToIt]
 ]
 
+{ #category : #actions }
+PluggableTextMorph >> registerScrollChanges: aSelector [
+
+	self announcer 
+		when: PaneScrolling 
+		send: aSelector
+		to: self model
+]
+
 { #category : #settings }
 PluggableTextMorph >> replaceSelectionWith: aText [
 	^ textMorph editor replaceSelectionWith: aText
