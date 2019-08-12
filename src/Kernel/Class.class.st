@@ -957,6 +957,15 @@ Class >> sharedPools: aCollection [
 	sharedPools := aCollection
 ]
 
+{ #category : #'pool variables' }
+Class >> sharedPoolsDo: aBlockClosure [ 
+	"Iterate shared pools.
+	The shared pool collection is lazily created on access.
+	This method avoids creating the collection for a simple iteration"
+	self hasSharedPools ifFalse: [ ^ self ].
+	self sharedPools do: aBlockClosure
+]
+
 { #category : #'initialize-release' }
 Class >> sharing: poolString [ 
 	"Set up sharedPools. Answer whether recompilation is advisable."
