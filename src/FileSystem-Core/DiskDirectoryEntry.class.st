@@ -192,7 +192,7 @@ DiskDirectoryEntry >> getStatAttributes [
 
 { #category : #accessing }
 DiskDirectoryEntry >> gid [
-	"Answer the UID of the owner of the receiver"
+	"Answer the GID of the owner of the receiver"
 	
 	^self statAttributes at: 7
 ]
