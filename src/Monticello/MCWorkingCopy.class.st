@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #private }
-MCWorkingCopy class >> ancestorsFromArray: anArray cache: aDictionary [
+MCWorkingCopy class >> ancestorsFromArray: anArray cache: cacheDictionary [
 	"While using recursion is simpler, it runs a risk of stack overflow for packages with many ancestors,
 	 so we use a local stack to pre-load the cache in reverse order. 
 	 The original code remains on the last line, so the intermediate code 
