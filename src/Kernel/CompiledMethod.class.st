@@ -518,6 +518,8 @@ CompiledMethod >> isConflict [
 { #category : #testing }
 CompiledMethod >> isDeprecated [
 	"Object selectorsInProtocol: #deprecation"
+	self methodClass instanceSide isDeprecated ifTrue: [ ^ true ].
+
 	(self
 		sendsAnySelectorOf:
 			#(#deprecated: #deprecated:on:in: #deprecated:on:in:transformWith: #deprecated:transformWith:))
