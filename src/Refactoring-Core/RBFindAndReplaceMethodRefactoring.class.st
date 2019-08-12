@@ -15,7 +15,8 @@ Class {
 		'sourceSelector',
 		'matchNodes',
 		'positionIndex',
-		'replaceAll'
+		'replaceAll',
+		'isCalledByExtractMethod'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -33,6 +34,7 @@ RBFindAndReplaceMethodRefactoring class >> find: aMethod andReplaceIn: selectorC
 	^ self new 
 		method: aMethod; 
 		listToFindMatches: selectorCollection;
+		isCalledByExtractMethod: true;
 		yourself 
 ]
 
@@ -75,26 +77,6 @@ RBFindAndReplaceMethodRefactoring >> checkOverridesSelectorInClass: each [
 ]
 
 { #category : #'find-replace' }
-RBFindAndReplaceMethodRefactoring >> combinationsOfNodes: coll [
-	^ Set newFrom: (Array
-        streamContents:
-            [ :stream | coll combinations: 2 atATimeDo: [ :each | stream nextPut: each copy ] ])
-]
-
-{ #category : #'find-replace' }
-RBFindAndReplaceMethodRefactoring >> extract: ocurrence of: aMethod [ 
-	|refactoring association |
-	refactoring := self extractMethodRefactoring. 
-	association := ocurrence asOrderedCollection at: positionIndex.
-	refactoring 	extract: association key from: aMethod selector in: aMethod origin.
-	refactoring setOption: #existingSelector toUse:  [ :ref | 
-			ref parameters: (self argumentsOf: association value).
-			method selector].
-	refactoring primitiveExecute.
-	^ refactoring 
-]
-
-{ #category : #'find-replace' }
 RBFindAndReplaceMethodRefactoring >> extract: ocurrence of: aMethod executing: aSymbol [
 	|refactoring association |
 	refactoring := self extractMethodRefactoring. 
@@ -121,17 +103,18 @@ RBFindAndReplaceMethodRefactoring >> extractMethodRefactoring [
 { #category : #'find-replace' }
 RBFindAndReplaceMethodRefactoring >> findAndReplaceOcurrencesIn: aMethod [ 
 	|ocurrences|
-	
+	"Agregar una pregunta si quieres buscar ocurrencias en el metodo extraido"
 	ocurrences := self findOcurrencesIn: aMethod selector of: aMethod origin. 
 	ocurrences ifNotEmpty: [ 
-		self replaceOcurrences: ocurrences on: aMethod
+		isCalledByExtractMethod ifTrue: [(self confirm: ('We find <1s> ocurrence(s) of extracted method. Would you like review and replace them?' expandMacrosWith: ocurrences size)) 
+			ifTrue: [ self replaceOcurrences: ocurrences on: aMethod ]]
+		ifFalse: [ self replaceOcurrences: ocurrences on: aMethod ]
 	]
 	
 ]
 
 { #category : #'find-replace' }
 RBFindAndReplaceMethodRefactoring >> findOcurrencesIn: aList [
-	replaceAll := false.
 	aList do: [ :aMethod | positionIndex := 1.
 			 			[ self findAndReplaceOcurrencesIn: aMethod]
 						on: Exception 
@@ -159,7 +142,6 @@ RBFindAndReplaceMethodRefactoring >> findOcurrencesIn: aMethod of: aClass [
 
 { #category : #'find-replace' }
 RBFindAndReplaceMethodRefactoring >> findOcurrencesInClasses [
-	replaceAll := false.
 	listToFindMatches do: [ :aClass | 
 		[(self preconditionsOf: aClass) check.
 		  self findOcurrencesIn: aClass methods ]
@@ -184,6 +166,11 @@ RBFindAndReplaceMethodRefactoring >> initializeMatchNode [
 	ifFalse: [ sourceCode := sourceCode copyReplaceAll: '^' with:  ''.
 		matchNodes add: (RBPatternParser parseExpression: sourceCode) ] ].
 	
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> isCalledByExtractMethod: aBoolean [
+	isCalledByExtractMethod := aBoolean 
 ]
 
 { #category : #accessing }
@@ -222,20 +209,10 @@ RBFindAndReplaceMethodRefactoring >> orderOcurrences: ocurrences [
 ]
 
 { #category : #preconditions }
-RBFindAndReplaceMethodRefactoring >> positionIndex: aNumber [
-	positionIndex := aNumber 
-]
-
-{ #category : #preconditions }
 RBFindAndReplaceMethodRefactoring >> preconditionsOf: aClass [
 	^ (RBCondition withBlock: [self checkIsSubclass: aClass. true])
 		& (RBCondition withBlock: [self checkIsAbstractMethod. true])
 		& (RBCondition withBlock: [self checkOverridesSelectorInClass: aClass . true ])
-]
-
-{ #category : #preconditions }
-RBFindAndReplaceMethodRefactoring >> replaceAll: aBoolean [
-	replaceAll := aBoolean 
 ]
 
 { #category : #initialization }
@@ -260,17 +237,19 @@ RBFindAndReplaceMethodRefactoring >> replaceOcurrences: ocurrences on: aMethod [
 		ifFalse: [ 
 			refactoring := self extract: ( self orderOcurrences: ocurrences ) of: aMethod executing: #primitiveExecute.
 			dialog := (RBReplacePreview change: refactoring) 
+			cancelAction: [ :presenter | listToFindMatches := Array new. ocurrencesSize := -1.
+				presenter beCancel; close ];
 			skipAction: [ :presenter | positionIndex := positionIndex + 1.
 				ocurrencesSize := ocurrencesSize + 1. presenter beOk; close ];
 			replaceAllAction: [ :presenter | replaceAll := true. presenter beOk; close ]; open.
-			dialog cancelled ifTrue: [ CmdCommandAborted signal]
-			ifFalse: [ ocurrencesSize := ocurrencesSize - 1 ].
+			dialog cancelled ifFalse: [ ocurrencesSize := ocurrencesSize - 1 ].
 		 ].
 	ocurrencesSize >= positionIndex ifTrue: [ self findAndReplaceOcurrencesIn: aMethod ] ]
 ]
 
 { #category : #transforming }
 RBFindAndReplaceMethodRefactoring >> transform [
+	replaceAll := false.
 	self initializeMatchNode.
 	listToFindMatches ifNil: [ (self options at: #listToSearch) value: method value: self  ].
 	listToFindMatches first isClass ifTrue: [ self findOcurrencesInClasses ]

@@ -16,7 +16,8 @@ Class {
 		'diffPresenter',
 		'change',
 		'skipAction',
-		'replaceAllAction'
+		'replaceAllAction',
+		'cancelAction'
 	],
 	#category : #'Refactoring-Help'
 }
@@ -66,6 +67,11 @@ RBReplacePreview >> buildDiffFor: aChange [
 ]
 
 { #category : #initialization }
+RBReplacePreview >> cancelAction: aBlock [ 
+	cancelAction := aBlock
+]
+
+{ #category : #initialization }
 RBReplacePreview >> change: anObject [
 	|aCompositeChange |
 	aCompositeChange := RBRefactoryChangeManager changeFactory compositeRefactoryChange .
@@ -79,7 +85,7 @@ RBReplacePreview >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		initialExtent: 700 @ 500;
 		
-		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
+		addButton: 'Cancel' do: cancelAction;
 		addButton: 'Replace' do: [ :presenter | self accept: presenter ];
 		addButton: 'Skip' do: skipAction;
 		addButton: 'Replace all' do: replaceAllAction 
@@ -93,7 +99,7 @@ RBReplacePreview >> initializeWidgets [
 
 { #category : #'instance creation' }
 RBReplacePreview >> open [
-	^ self openModalWithSpec 
+	^ self "openDialogWithSpec"openModalWithSpec 
 ]
 
 { #category : #initialization }
