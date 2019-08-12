@@ -15,5 +15,7 @@ BaselineOfSpec >> baseline: spec [
 			spec package: 'Spec-MorphicAdapters'.
 			spec package: 'Spec-PolyWidgets'.
 			spec package: 'Spec-StubAdapter'.
+			spec package: 'Spec-Examples'.
+			spec package: 'Spec-Tests'.
 			spec package: 'Spec-Deprecated' ]
 ]

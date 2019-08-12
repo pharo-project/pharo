@@ -354,7 +354,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'STON-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
-		spec package: 'Spec-Help'.	
+		spec package: 'Spec-Help'.
 		spec package: 'Spec-Tests'.
 		spec package: 'System-BasicCommandLineHandler-Tests'.
 		spec package: 'System-Caching-Tests'.
