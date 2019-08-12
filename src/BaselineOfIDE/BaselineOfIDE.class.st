@@ -192,8 +192,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
 		spec package: 'ReleaseTests'.
-		spec package: 'Ring-Deprecated-Tests-Containers'.
-		spec package: 'Ring-Deprecated-Tests-Kernel'.
+		spec package: 'Ring-Definitions-Tests-Containers'.
+		spec package: 'Ring-Definitions-Tests-Core'.
 		spec package: 'System-DependenciesTests'.
 		
 		spec package: 'System-Serial Port'.
