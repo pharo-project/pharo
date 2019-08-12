@@ -58,7 +58,7 @@ SycExtractMethodCommand >> findOcurrences: refactoring [
 	findAndReplaceRef := RBFindAndReplaceMethodRefactoring 
 		find: refactoring compiledMethod
 		andReplaceIn: { refactoring method }.
-	findAndReplaceRef primitiveExecute
+	findAndReplaceRef transform
 ]
 
 { #category : #execution }

@@ -40,7 +40,7 @@ SycFindAndReplaceMethodCommand >> execute [
 		dialog := RBFindAndReplacePreview method: met refactoring: ref.
 		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 		ref].
-	refactoring primitiveExecute 
+	refactoring transform
 ]
 
 { #category : #testing }

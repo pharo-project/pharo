@@ -65,13 +65,13 @@ RBFindAndReplaceMethodRefactoring >> checkIsSubclass: aClass [
 ]
 
 { #category : #preconditions }
-RBFindAndReplaceMethodRefactoring >> checkOverridesSelectorAnyOf: aList [
-	aList do: [ :each | each origin ~= method origin ifTrue:
-		[( (self model classNamed: each origin name asSymbol) directlyDefinesMethod: method selector)
+RBFindAndReplaceMethodRefactoring >> checkOverridesSelectorInClass: each [
+	each ~= method origin ifTrue:
+		[((self model classNamed: each name asSymbol) directlyDefinesMethod: method selector)
 		ifTrue: [ self refactoringError: 
 			('<1p> overrides the method <2s>'
 			expandMacrosWith: each name
-						with: method selector) ]] ]
+			with: method selector) ]]
 ]
 
 { #category : #'find-replace' }
@@ -130,11 +130,14 @@ RBFindAndReplaceMethodRefactoring >> findAndReplaceOcurrencesIn: aMethod [
 ]
 
 { #category : #'find-replace' }
-RBFindAndReplaceMethodRefactoring >> findOcurrences [
+RBFindAndReplaceMethodRefactoring >> findOcurrencesIn: aList [
 	replaceAll := false.
-	listToFindMatches 
-		do: [ :aMethod | positionIndex := 1.
-			 self findAndReplaceOcurrencesIn: aMethod ]
+	aList do: [ :aMethod | positionIndex := 1.
+			 			[ self findAndReplaceOcurrencesIn: aMethod]
+						on: Exception 
+						do: [ :e | e messageText isEmptyOrNil
+							ifFalse: [ UIManager default alert: e messageText ] ] 
+				  ]
 ]
 
 { #category : #'find-replace' }
@@ -152,6 +155,17 @@ RBFindAndReplaceMethodRefactoring >> findOcurrencesIn: aMethod of: aClass [
 	methodNode body nodesDo: [ :node | self match: node with: node start and: node stop in: matches ].
 	
     ^ matches
+]
+
+{ #category : #'find-replace' }
+RBFindAndReplaceMethodRefactoring >> findOcurrencesInClasses [
+	replaceAll := false.
+	listToFindMatches do: [ :aClass | 
+		[(self preconditionsOf: aClass) check.
+		  self findOcurrencesIn: aClass methods ]
+						on: Exception 
+						do: [ :e | e messageText isEmptyOrNil
+							ifFalse: [ UIManager default alert: e messageText ] ] ]
 ]
 
 { #category : #initialization }
@@ -208,23 +222,15 @@ RBFindAndReplaceMethodRefactoring >> orderOcurrences: ocurrences [
 ]
 
 { #category : #preconditions }
-RBFindAndReplaceMethodRefactoring >> positionIndex [
-	^positionIndex 
-]
-
-{ #category : #preconditions }
 RBFindAndReplaceMethodRefactoring >> positionIndex: aNumber [
 	positionIndex := aNumber 
 ]
 
 { #category : #preconditions }
-RBFindAndReplaceMethodRefactoring >> preconditions [
-	listToFindMatches ifNil: [ (self options at: #listToSearch) value: method value: self  ].
-	^ (listToFindMatches
-		inject: RBCondition empty 
-		into: [ :condition :variable | condition & (RBCondition withBlock: [self checkIsSubclass: variable origin. true]) ])
+RBFindAndReplaceMethodRefactoring >> preconditionsOf: aClass [
+	^ (RBCondition withBlock: [self checkIsSubclass: aClass. true])
 		& (RBCondition withBlock: [self checkIsAbstractMethod. true])
-		& (RBCondition withBlock: [self checkOverridesSelectorAnyOf: listToFindMatches . true ])
+		& (RBCondition withBlock: [self checkOverridesSelectorInClass: aClass . true ])
 ]
 
 { #category : #preconditions }
@@ -266,5 +272,7 @@ RBFindAndReplaceMethodRefactoring >> replaceOcurrences: ocurrences on: aMethod [
 { #category : #transforming }
 RBFindAndReplaceMethodRefactoring >> transform [
 	self initializeMatchNode.
-	self findOcurrences.
+	listToFindMatches ifNil: [ (self options at: #listToSearch) value: method value: self  ].
+	listToFindMatches first isClass ifTrue: [ self findOcurrencesInClasses ]
+	ifFalse: [ self findOcurrencesIn: listToFindMatches ]
 ]
