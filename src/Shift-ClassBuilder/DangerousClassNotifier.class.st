@@ -93,5 +93,7 @@ DangerousClassNotifier class >> tooDangerousClasses [
 		#ProtoObject #Object
 		"Contexts and their superclasses"
 		#InstructionStream #Context #BlockClosure #CompiledMethod #CompiledCode #CompiledBlock
+		"UndefinedObject crashes the VM"
+		#UndefinedObject
 	)
 ]
