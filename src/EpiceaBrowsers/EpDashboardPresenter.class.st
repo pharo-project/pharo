@@ -6,7 +6,7 @@ self open
 "
 Class {
 	#name : #EpDashboardPresenter,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'monitor',
 		'createLogButtonPresenter',
@@ -17,6 +17,20 @@ Class {
 	#category : #'EpiceaBrowsers-UI-Dashboard'
 }
 
+{ #category : #specs }
+EpDashboardPresenter class >> defaultSpec [
+	^ SpBoxLayout newVertical
+		add: #currentSessionInfoPresenter;
+		add:
+			(SpBoxLayout newHorizontal
+				add: #enableMonitorButtonPresenter;
+				add: #createLogButtonPresenter;
+				add: #openSettingsButtonPresenter;
+				yourself)
+			withConstraints: [ :constraints | constraints height: self buttonHeight ];
+		yourself
+]
+
 { #category : #'instance creation' }
 EpDashboardPresenter class >> open [
 
@@ -24,24 +38,6 @@ EpDashboardPresenter class >> open [
 		refresh;
 		openWithSpec;
 		yourself
-]
-
-{ #category : #specs }
-EpDashboardPresenter class >> spec [
-	<spec: #default>
-
-	^SpecLayout composed newColumn: [:column |
-		column add: #currentSessionInfoPresenter.
-		
-		column
-			newRow: [ :row |
-				row
-					add: #enableMonitorButtonPresenter;
-					add: #createLogButtonPresenter;
-					add: #openSettingsButtonPresenter;
-					yourself ]
-			height: self buttonHeight. 
-		]
 ]
 
 { #category : #icons }
@@ -159,13 +155,10 @@ EpDashboardPresenter >> initializeRefreshEnableMonitorButtonModelOnMonitorUpdate
 
 { #category : #initialization }
 EpDashboardPresenter >> initializeWidgets [
-
-	self instantiatePresenters: {
-		#currentSessionInfoPresenter -> #TextPresenter.
-		#enableMonitorButtonPresenter -> #ButtonPresenter.
-		#openSettingsButtonPresenter -> #ButtonPresenter.
-		#createLogButtonPresenter -> #ButtonPresenter.
-		}
+	currentSessionInfoPresenter := self newText.
+	enableMonitorButtonPresenter := self newButton.
+	openSettingsButtonPresenter := self newButton.
+	createLogButtonPresenter := self newButton
 ]
 
 { #category : #accessing }
