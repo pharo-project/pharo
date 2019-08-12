@@ -130,11 +130,9 @@ Behavior >> allInstVarNames [
 	Array ordering is the order in which the variables are stored and 
 	accessed by the interpreter."
 
-	| vars |
-	vars := self superclass 
-		ifNil: [ self slots collect: #name ]	"Guarantee a copy is answered."
-		ifNotNil: [ self superclass allInstVarNames , (self slots collect: #name) ].
-	^vars
+	^ self superclass
+		ifNil: [ self instVarNames ]
+		ifNotNil: [ self superclass allInstVarNames , self instVarNames ]
 ]
 
 { #category : #'accessing instances and variables' }
