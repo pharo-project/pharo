@@ -30,7 +30,7 @@ RGMCClassTest >> testNormalKernelClasses [
 	
 	"classes without special slots"
 	
-	(#Kernel asPackage definedClasses select: [:each | each isClass and: [each usesSpecialVariables not]]) do: [ :each |
+	(#Kernel asPackage definedClasses select: [:each | each isClass and: [each needsSlotClassDefinition  not]]) do: [ :each |
 		self testClass: each].
 ]
 
@@ -39,6 +39,6 @@ RGMCClassTest >> testSpecialClasses [
 	
 	"classes without special slots"
 	
-	(#Kernel asPackage definedClasses select: [:each | each isClass and: [each usesSpecialVariables]]) do: [ :each |
+	(#Kernel asPackage definedClasses select: [:each | each isClass and: [each needsSlotClassDefinition]]) do: [ :each |
 		self testClass: each].
 ]

@@ -15,7 +15,7 @@ RGMethodDefinitionTest >> testAsFullMethodDefinition [
 	self assert: rgMethod parent methods size = 1.
 	self assert: rgMethod parent package name equals: #Kernel.	
 	self assert: rgMethod package notNil.
-	self assert: rgMethod package name = #'Ring-Deprecated-Core-Kernel'.
+	self assert: rgMethod package name = #'Ring-Definitions-Core'.
 
 	"retrieves package information from class package name "
 	rgMethod := (Class >> #name) asFullRingDefinition.

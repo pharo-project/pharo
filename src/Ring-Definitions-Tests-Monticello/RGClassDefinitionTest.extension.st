@@ -26,8 +26,8 @@ RGClassDefinitionTest >> testAsClassDefinition3 [
 
 	newClass:= RGBehaviorDefinition asRingDefinitionWithMethods: false withSuperclasses: false withSubclasses: false withPackages: true.
 	newSlice := newClass environment.
-	self assert: (newClass package name = #'Ring-Deprecated-Core-Kernel').
-	self assert: (newSlice packageNamed: #'Ring-Deprecated-Core-Kernel') = newClass package.
+	self assert: (newClass package name = #'Ring-Definitions-Core').
+	self assert: (newSlice packageNamed: #'Ring-Definitions-Core') = newClass package.
 	self assert: (newClass package classes size = 1).
 	self assert: (newClass package classes values first = newClass).
 
@@ -36,7 +36,7 @@ RGClassDefinitionTest >> testAsClassDefinition3 [
 	self assert: (newClass package name = #Kernel).
 	self assert: (newClass extensionMethods notEmpty).
 	self assert: (newSlice methods size = (newClass methods size + newClass classSide methods size)).
-	self assert: (newSlice packageNamed: #'Ring-Deprecated-Core-Kernel') methods size > 1.
+	self assert: (newSlice packageNamed: #'Ring-Definitions-Core') methods size > 1.
 
 ]
 
@@ -51,7 +51,7 @@ RGClassDefinitionTest >> testAsFullClassDefinition [
 
 	rgClass := Class asFullRingDefinition.
 	self denyEmpty: rgClass methods.
-	self assert: (rgClass methodNamed: #asRingDefinition) package name = #'Ring-Deprecated-Core-Kernel'.
+	self assert: (rgClass methodNamed: #asRingDefinition) package name = #'Ring-Definitions-Core'.
 	self assert: rgClass superclass notNil.
 	self assert: rgClass superclass name = #ClassDescription.
 	self denyEmpty: rgClass subclasses.

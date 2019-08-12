@@ -11,7 +11,7 @@ RGContainerTest >> testRetrievingPackages [
 	rgMethod := (RGMethodDefinition realClass: Class selector: #asRingDefinition).
 	rgMethod package: (RGContainer packageOfMethod: rgMethod).
 	self assert: rgMethod parent isNil.
-	self assert: rgMethod package name = #'Ring-Deprecated-Core-Kernel'.
+	self assert: rgMethod package name = #'Ring-Definitions-Core'.
 
 	rgMethod := (RGMethodDefinition realClass: OrderedCollection selector: #size).
 	rgMethod package: (RGContainer packageOfMethod: rgMethod).

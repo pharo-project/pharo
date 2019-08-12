@@ -250,8 +250,8 @@ RGReadOnlyImageBackend >> metaclassFor: anRGBehavior [
 
 { #category : #'metaclass trait' }
 RGReadOnlyImageBackend >> metaclassTraitBaseTraitFor: anRGMetaclassTrait [
-
-	^ (self realBehaviorFor: anRGMetaclassTrait) baseTrait asRingMinimalDefinitionIn: anRGMetaclassTrait environment.
+	^ (self realBehaviorFor: anRGMetaclassTrait) instanceSide
+		asRingMinimalDefinitionIn: anRGMetaclassTrait environment
 ]
 
 { #category : #method }
