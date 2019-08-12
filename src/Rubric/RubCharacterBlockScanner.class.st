@@ -91,7 +91,7 @@ RubCharacterBlockScanner >> cr [
 	CharacterBlocks, sometimes including the carriage return (cursor is at 
 	the end) and sometimes not (cursor is in the middle of the text)."
 
-	((characterIndex ~= nil
+	((characterIndex notNil
 		and: [characterIndex > text size])
 			or: [(line last = text size)
 				and: [(destY + line lineHeight) < characterPoint y]])
@@ -100,9 +100,9 @@ RubCharacterBlockScanner >> cr [
 				baselineY := line lineHeight.
 				lastCharacter := nil.
 				characterPoint := (nextLeftMargin ifNil: [leftMargin]) @ destY.
-				(lastIndex < text size and: [(text at: lastIndex) = Character cr and: [(text at: lastIndex+1) = Character lf]])
-					ifTrue: [lastIndex := lastIndex + 2]
-					ifFalse: [lastIndex := lastIndex + 1].
+				lastIndex := (lastIndex < text size and: [(text at: lastIndex) = Character cr and: [(text at: lastIndex+1) = Character lf]])
+					ifTrue: [ lastIndex + 2 ]
+					ifFalse: [ lastIndex + 1 ].
 				self lastCharacterExtentSetX: 0.
 				^ true].
 		lastCharacter := Character cr.
