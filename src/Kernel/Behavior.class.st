@@ -132,7 +132,7 @@ Behavior >> allInstVarNames [
 
 	^ self superclass
 		ifNil: [ self instVarNames ]
-		ifNotNil: [ self superclass allInstVarNames , self instVarNames ]
+		ifNotNil: [ :sup | sup allInstVarNames , self instVarNames ]
 ]
 
 { #category : #'accessing instances and variables' }
