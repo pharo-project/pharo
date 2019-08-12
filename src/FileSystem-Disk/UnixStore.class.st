@@ -53,3 +53,11 @@ UnixStore >> checkName: aFileName fixErrors: fixing [
 	
 	^ fName copyReplaceAll: self delimiter asString with: '#'
 ]
+
+{ #category : #testing }
+UnixStore >> isHidden: aResolvable attributes: statAttributesArray [
+	"Answer a boolean indicating whether the file is hidden or not.
+	On Unix, use the file naming convention that file names beginning with a dot are not displayed"
+
+	^aResolvable basename first = $.
+]
