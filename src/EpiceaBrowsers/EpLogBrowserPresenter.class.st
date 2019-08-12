@@ -8,7 +8,7 @@ self open
 "
 Class {
 	#name : #EpLogBrowserPresenter,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'log',
 		'andFilter',
@@ -29,6 +29,19 @@ Class {
 EpLogBrowserPresenter class >> defaultLog [
 
 	^ EpMonitor current log
+]
+
+{ #category : #specs }
+EpLogBrowserPresenter class >> defaultSpec [
+	^ SpPanedLayout newVertical
+		position: 60 percent;
+		add: #itemsPresenter;
+		add:
+			(SpBoxLayout newVertical
+				add: #toolbarPresenter withConstraints: [ :constraints | constraints height: self toolbarHeight ];
+				add: #entryContentPresenter;
+				yourself);
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -52,19 +65,6 @@ EpLogBrowserPresenter class >> openWithLog: aLog [
 		refresh;
 		openWithSpec;
 		yourself
-]
-
-{ #category : #specs }
-EpLogBrowserPresenter class >> spec [
-	<spec: #default>
-
-	^ SpecLayout composed newColumn: [:column |
-		column 
-			add: #itemsModel origin: 0@0 corner: 1@0.6;
-			addSplitter;
-			add: #toolbarModel height: self toolbarHeight;
-			add: #entryContentModel origin: 0@0.6 corner: 1@1;
-			yourself ].
 ]
 
 { #category : #private }
@@ -174,7 +174,7 @@ EpLogBrowserPresenter >> beApplyMode [
 
 { #category : #modes }
 EpLogBrowserPresenter >> beHistoryMode [
-	self title: 'Epicea - Log Browser'.
+	self withWindowDo: [ :window | window title: 'Epicea - Log Browser' ].
 	self toolbarPresenter beHistoryMode.
 	showEntryItemMenu := true
 ]
@@ -452,7 +452,7 @@ EpLogBrowserPresenter >> filters [
 EpLogBrowserPresenter >> filtersSubMenu [
 	
 	| aMenu |
-	aMenu := MenuPresenter new.
+	aMenu := SpMenuPresenter new.
 	
 	aMenu addGroup: [ :aGroup |
 		aGroup addItem: [ :anItem |
@@ -593,13 +593,9 @@ EpLogBrowserPresenter >> initializeToolbarPresenter [
 
 { #category : #initialization }
 EpLogBrowserPresenter >> initializeWidgets [
-
-	self instantiatePresenters: {
-		#itemsPresenter -> #ListPresenter.
-		#toolbarPresenter -> #EpLogBrowserToolbarPresenter.
-		#entryContentPresenter -> #DiffPresenter. 
-		}.
-
+	itemsPresenter := self newList.
+	toolbarPresenter := self instantiate: EpLogBrowserToolbarPresenter.
+	entryContentPresenter := self newDiff
 ]
 
 { #category : #'menu - operations' }
@@ -663,7 +659,7 @@ EpLogBrowserPresenter >> menuActionsForSelectedItems [
 EpLogBrowserPresenter >> menuMorphForSelectedItems [
 
 	| aMenu |
-	aMenu := MenuPresenter new.
+	aMenu := SpMenuPresenter new.
 
 	showEntryItemMenu ifTrue: [ self addMenuItemsForSelectedItemsIn:	aMenu ].
 

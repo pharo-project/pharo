@@ -3,7 +3,7 @@ I am a toolbar to be used in the EpLogBrowserModel.
 "
 Class {
 	#name : #EpLogBrowserToolbarPresenter,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'filtersButtonPresenter',
 		'logBrowserPresenter',
@@ -13,14 +13,11 @@ Class {
 }
 
 { #category : #specs }
-EpLogBrowserToolbarPresenter class >> spec [
-	<spec: #default>
-
-	^ SpecLayout composed newRow: [:row |
-		row
-			add: #statusLabelPresenter;
-			add: #filtersButtonPresenter width: 150;
-			yourself ].
+EpLogBrowserToolbarPresenter class >> defaultSpec [
+	^ SpBoxLayout newHorizontal
+		add: #statusLabelPresenter;
+		add: #filtersButtonPresenter withConstraints: [ :constraints | constraints width: 150 ];
+		yourself
 ]
 
 { #category : #private }
@@ -80,12 +77,8 @@ EpLogBrowserToolbarPresenter >> initializePresenter [
 
 { #category : #initialization }
 EpLogBrowserToolbarPresenter >> initializeWidgets [
-
-	self instantiatePresenters: {
-		#filtersButtonPresenter -> #ButtonPresenter.
-		#statusLabelPresenter -> #LabelPresenter.
-		}.
-
+	filtersButtonPresenter := self newButton.
+	statusLabelPresenter := self newLabel
 ]
 
 { #category : #accessing }
