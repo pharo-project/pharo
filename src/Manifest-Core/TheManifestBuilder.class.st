@@ -399,7 +399,7 @@ TheManifestBuilder >> definitionClassFor: aName [
 	
 	| finalName |
 	
-	finalName = #RGPackage
+	finalName := (aName = #RGPackage)
 		ifTrue: [ #RGPackageDefinition ]
 		ifFalse: [ aName ].
 
