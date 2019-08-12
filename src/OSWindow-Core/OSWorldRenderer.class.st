@@ -136,6 +136,7 @@ OSWorldRenderer >> doActivate [
 	attributes
 		extent: initialExtent;
 		title: Smalltalk shortImageName;
+		windowCentered:true;
 		icon: (self iconNamed: #pharoBig).
 
 	display := Form extent: initialExtent depth: 32.
