@@ -7,6 +7,13 @@ Class {
 	#category : #'Spec-Core-Manifest'
 }
 
+{ #category : #deprecation }
+ManifestSpecCore class >> isDeprecated [
+	"Spec should be replaced by Spec 2"
+
+	^ true
+]
+
 { #category : #'code-critics' }
 ManifestSpecCore class >> ruleEqualsTrueRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#ListPresenter #getSelectionStateFor: #false)) #'2016-07-01T15:56:13.455728+02:00') )
