@@ -1,11 +1,11 @@
 Class {
-	#name : #ZnPercentEncoderTests,
+	#name : #ZnPercentEncoderTest,
 	#superclass : #TestCase,
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
 { #category : #testing }
-ZnPercentEncoderTests >> testDecodePlusAsSpace [
+ZnPercentEncoderTest >> testDecodePlusAsSpace [
 	| encoder |
 	encoder := ZnPercentEncoder new.
 	self assert: (encoder decode: '+') equals: ' '.
@@ -16,7 +16,7 @@ ZnPercentEncoderTests >> testDecodePlusAsSpace [
 ]
 
 { #category : #testing }
-ZnPercentEncoderTests >> testDecodingErrors [
+ZnPercentEncoderTest >> testDecodingErrors [
 	| encoder |
 	encoder := ZnPercentEncoder new.
 	self should: [ encoder decode: 'foo%%bar' ] raise: ZnCharacterEncodingError.
@@ -27,7 +27,7 @@ ZnPercentEncoderTests >> testDecodingErrors [
 ]
 
 { #category : #testing }
-ZnPercentEncoderTests >> testLeadingZero [
+ZnPercentEncoderTest >> testLeadingZero [
 	| encoder |
 	encoder := ZnPercentEncoder new.
 	self assert: (encoder encode: 'foo', Character tab asString, 'bar') equals: 'foo%09bar'.
@@ -37,7 +37,7 @@ ZnPercentEncoderTests >> testLeadingZero [
 ]
 
 { #category : #testing }
-ZnPercentEncoderTests >> testNonAscii [
+ZnPercentEncoderTest >> testNonAscii [
 	| encoder |
 	encoder := ZnPercentEncoder new.
 	self 
@@ -52,7 +52,7 @@ ZnPercentEncoderTests >> testNonAscii [
 ]
 
 { #category : #testing }
-ZnPercentEncoderTests >> testSimple [
+ZnPercentEncoderTest >> testSimple [
 	| encoder |
 	encoder := ZnPercentEncoder new.
 	self assert: (encoder encode: 'foo bar') equals: 'foo%20bar'.
@@ -64,11 +64,11 @@ ZnPercentEncoderTests >> testSimple [
 ]
 
 { #category : #testing }
-ZnPercentEncoderTests >> testStringUrlDecoded [
+ZnPercentEncoderTest >> testStringUrlDecoded [
 	self assert: ('foo%20bar' urlDecoded) equals: 'foo bar' 
 ]
 
 { #category : #testing }
-ZnPercentEncoderTests >> testStringUrlEncoded [
+ZnPercentEncoderTest >> testStringUrlEncoded [
 	self assert: ('foo bar' urlEncoded) equals: 'foo%20bar'
 ]

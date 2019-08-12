@@ -12,16 +12,15 @@ Class {
 
 { #category : #'building groups' }
 ClyTaggedMethodGroupProvider >> buildGroupsFrom: aClassScope [
-	
 	| groups |
 	groups := IdentityDictionary new.
 	
 	aClassScope classesDo: [ :eachClass |
-		eachClass tagsForMethods do: [:eachTag | 
+		eachClass tagsForAllMethods do: [ :eachTag | 
 			groups at: eachTag ifAbsentPut: [ 
-				ClyTaggedMethodGroup withMethodsFrom: aClassScope taggedBy: eachTag]]].
+				ClyTaggedMethodGroup withMethodsFrom: aClassScope taggedBy: eachTag ] ] ].
 
-	^groups values
+	^ groups values
 ]
 
 { #category : #'system changes' }

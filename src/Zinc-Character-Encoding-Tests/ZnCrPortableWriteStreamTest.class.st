@@ -1,11 +1,11 @@
 Class {
-	#name : #ZnCrPortableWriteStreamTests,
+	#name : #ZnCrPortableWriteStreamTest,
 	#superclass : #TestCase,
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
 { #category : #tests }
-ZnCrPortableWriteStreamTests >> testNextPut [
+ZnCrPortableWriteStreamTest >> testNextPut [
 	"Ensure that the line ends are written correctly"
 
 	| expectedString stream crStream |

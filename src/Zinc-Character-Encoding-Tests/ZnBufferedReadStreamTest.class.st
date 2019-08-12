@@ -2,13 +2,13 @@
 I am ZnBufferedReadStreamTests.
 "
 Class {
-	#name : #ZnBufferedReadStreamTests,
+	#name : #ZnBufferedReadStreamTest,
 	#superclass : #TestCase,
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
 { #category : #testing }
-ZnBufferedReadStreamTests >> testBuffering [
+ZnBufferedReadStreamTest >> testBuffering [
 	| stream |
 	stream := ZnBufferedReadStream on: '01234567890123456789' readStream.
 	stream sizeBuffer: 8.
@@ -20,7 +20,7 @@ ZnBufferedReadStreamTests >> testBuffering [
 ]
 
 { #category : #testing }
-ZnBufferedReadStreamTests >> testPeek [
+ZnBufferedReadStreamTest >> testPeek [
 	| stream |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
 	stream sizeBuffer: 8.
@@ -34,7 +34,7 @@ ZnBufferedReadStreamTests >> testPeek [
 ]
 
 { #category : #testing }
-ZnBufferedReadStreamTests >> testReadInto [
+ZnBufferedReadStreamTest >> testReadInto [
 	| stream buffer count |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
 	stream sizeBuffer: 8.
@@ -50,7 +50,7 @@ ZnBufferedReadStreamTests >> testReadInto [
 ]
 
 { #category : #testing }
-ZnBufferedReadStreamTests >> testReadIntoLarger [
+ZnBufferedReadStreamTest >> testReadIntoLarger [
 	| stream buffer count |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
 	stream sizeBuffer: 4.
@@ -61,7 +61,7 @@ ZnBufferedReadStreamTests >> testReadIntoLarger [
 ]
 
 { #category : #testing }
-ZnBufferedReadStreamTests >> testReadUpTo [
+ZnBufferedReadStreamTest >> testReadUpTo [
 	| stream |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
 	stream sizeBuffer: 8.
@@ -71,7 +71,7 @@ ZnBufferedReadStreamTests >> testReadUpTo [
 ]
 
 { #category : #testing }
-ZnBufferedReadStreamTests >> testReadUpToEnd [
+ZnBufferedReadStreamTest >> testReadUpToEnd [
 	| stream |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
 	stream sizeBuffer: 4.

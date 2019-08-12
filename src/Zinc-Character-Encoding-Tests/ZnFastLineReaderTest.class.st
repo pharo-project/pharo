@@ -1,11 +1,11 @@
 Class {
-	#name : #ZnFastLineReaderTests,
+	#name : #ZnFastLineReaderTest,
 	#superclass : #TestCase,
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
 { #category : #testing }
-ZnFastLineReaderTests >> testLinesDo [
+ZnFastLineReaderTest >> testLinesDo [
 	| lines reader |
 	lines := #( 'foo' 'bar' 'last').
 	reader := ZnFastLineReader on: (Character lf join: lines) readStream.
@@ -16,7 +16,7 @@ ZnFastLineReaderTests >> testLinesDo [
 ]
 
 { #category : #testing }
-ZnFastLineReaderTests >> testNextLine [
+ZnFastLineReaderTest >> testNextLine [
 	| reader |
 	reader := ZnFastLineReader on: 'abc' readStream.
 	self assert: reader nextLine equals: 'abc'.

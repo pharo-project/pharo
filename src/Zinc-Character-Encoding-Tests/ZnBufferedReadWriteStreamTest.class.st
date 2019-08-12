@@ -1,11 +1,11 @@
 Class {
-	#name : #ZnBufferedReadWriteStreamTests,
+	#name : #ZnBufferedReadWriteStreamTest,
 	#superclass : #TestCase,
 	#category : #'Zinc-Character-Encoding-Tests'
 }
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTests >> testBuffering [
+ZnBufferedReadWriteStreamTest >> testBuffering [
 	| stream |
 	stream := ZnBufferedReadWriteStream on: '01234567890123456789' readStream.
 	stream sizeBuffer: 8.
@@ -17,7 +17,7 @@ ZnBufferedReadWriteStreamTests >> testBuffering [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTests >> testNextPutAllStartingAt [
+ZnBufferedReadWriteStreamTest >> testNextPutAllStartingAt [
 	| string |
 	string := String streamContents: [ :stringStream | 
 		ZnBufferedReadWriteStream on: stringStream do: [ : bufferedStream |
@@ -30,7 +30,7 @@ ZnBufferedReadWriteStreamTests >> testNextPutAllStartingAt [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTests >> testPeek [
+ZnBufferedReadWriteStreamTest >> testPeek [
 	| stream |
 	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
 	stream sizeBuffer: 8.
@@ -44,7 +44,7 @@ ZnBufferedReadWriteStreamTests >> testPeek [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTests >> testReadInto [
+ZnBufferedReadWriteStreamTest >> testReadInto [
 	| stream buffer count |
 	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
 	stream sizeBuffer: 8.
@@ -60,7 +60,7 @@ ZnBufferedReadWriteStreamTests >> testReadInto [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTests >> testReadIntoLarger [
+ZnBufferedReadWriteStreamTest >> testReadIntoLarger [
 	| stream buffer count |
 	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
 	stream sizeBuffer: 4.
@@ -71,7 +71,7 @@ ZnBufferedReadWriteStreamTests >> testReadIntoLarger [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTests >> testReadThenWrite [
+ZnBufferedReadWriteStreamTest >> testReadThenWrite [
 	| stream stringStream |
 	
 	((SystemVersion current major < 7) or: [ SystemVersion current build < 690 ])
@@ -96,7 +96,7 @@ ZnBufferedReadWriteStreamTests >> testReadThenWrite [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTests >> testReadUpTo [
+ZnBufferedReadWriteStreamTest >> testReadUpTo [
 	| stream |
 	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
 	stream sizeBuffer: 8.
@@ -106,7 +106,7 @@ ZnBufferedReadWriteStreamTests >> testReadUpTo [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTests >> testReadUpToEnd [
+ZnBufferedReadWriteStreamTest >> testReadUpToEnd [
 	| stream |
 	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
 	stream sizeBuffer: 4.
@@ -116,7 +116,7 @@ ZnBufferedReadWriteStreamTests >> testReadUpToEnd [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTests >> testWriteThenRead [
+ZnBufferedReadWriteStreamTest >> testWriteThenRead [
 	| stream stringStream |
 	
 	((SystemVersion current major < 7) or: [ SystemVersion current build < 690 ])
@@ -139,7 +139,7 @@ ZnBufferedReadWriteStreamTests >> testWriteThenRead [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTests >> testWriting [
+ZnBufferedReadWriteStreamTest >> testWriting [
 	| string |
 	string := String streamContents: [ :stringStream | | bufferedStream |
 		bufferedStream := ZnBufferedReadWriteStream on: stringStream.
@@ -149,7 +149,7 @@ ZnBufferedReadWriteStreamTests >> testWriting [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTests >> testWritingOverflow [
+ZnBufferedReadWriteStreamTest >> testWritingOverflow [
 	| string |
 	string := String streamContents: [ :stringStream | | bufferedStream |
 		bufferedStream := ZnBufferedReadWriteStream on: stringStream.

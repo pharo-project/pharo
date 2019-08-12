@@ -12,7 +12,10 @@ Class {
 		'packageA',
 		'packageB',
 		'packageC',
-		'packageD'
+		'packageD',
+		'packageKernelTests',
+		'packageMorphicBase',
+		'packageTextCore'
 	],
 	#category : #'Tool-DependencyAnalyser-Tests-Packages'
 }
@@ -29,6 +32,8 @@ DAPackageRelationGraphTest >> setUp [
 	packageCollectionAbstract := DAPackage on: (RPackageSet named: 'Collections-Abstract').
 	packageStrings := DAPackage on:(RPackageSet named: 'Collections-Strings').
 	packageKernel := DAPackage on:(RPackageSet named: 'Kernel').
+	packageMorphicBase := DAPackage on: (RPackageSet named: 'Morphic-Base').
+	packageTextCore := DAPackage on: (RPackageSet named: 'Text-Core').
 	packageRegexCore := DAPackage on:(RPackageSet named: 'Regex-Core').
 	packageCollectionsSequenceable := DAPackage on: (RPackageSet named: 'Collections-Sequenceable').
 	packagePackageDependencies := DAPackage on: (RPackageSet named:  #'Tool-DependencyAnalyser').
@@ -73,6 +78,13 @@ DAPackageRelationGraphTest >> testAddPackages [
 	array := Array with: packageCollectionAbstract with: packageCollectionsSequenceable with: packageKernel.
 	aPackageRelationGraph addPackages: array.
 	self assert: aPackageRelationGraph packages size equals: 3
+]
+
+{ #category : #tests }
+DAPackageRelationGraphTest >> testAddPoolDictionaryDependencies [
+	aPackageRelationGraph addPoolDictionaryDependencies: packageMorphicBase.
+ 
+	self assert: (packageMorphicBase dependentPackages includes: packageTextCore).
 ]
 
 { #category : #tests }

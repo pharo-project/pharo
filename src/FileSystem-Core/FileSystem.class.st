@@ -565,6 +565,14 @@ FileSystem >> isFile: aResolvable [
 ]
 
 { #category : #'public-testing' }
+FileSystem >> isHidden: aResolvable attributes: statAttributesArray [
+	"Resolve the argument, and answer a boolean indicating whether the file is hidden or not.
+	statAttributesArray is optional and may be supplied for performance.  It is the result of File>>fileAttributes:mask: or nil"
+
+	^ store isHidden: (self resolve: aResolvable) attributes: statAttributesArray 
+]
+
+{ #category : #'public-testing' }
 FileSystem >> isReadable: aResolvable [
 	"Resolve the argument, and answer true if the there is
 	a file or directory that can be read from."
