@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #'code-critics' }
+ManifestSpecCore class >> ruleEqualsTrueRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#ListPresenter #getSelectionStateFor: #false)) #'2016-07-01T15:56:13.455728+02:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestSpecCore class >> ruleExcessiveMethodsRuleV1FalsePositive [
 	^ #(#(#(#RGClassDefinition #(#ComposablePresenter)) #'2016-07-01T15:56:13.465539+02:00') )
 ]
@@ -34,7 +39,7 @@ ManifestSpecCore class >> ruleLongMethodsRuleV1FalsePositive [
 
 { #category : #'code-critics' }
 ManifestSpecCore class >> ruleRBEquivalentSuperclassMethodsRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#'ComposablePresenter class' #iconNamed: #true)) #'2018-11-07T10:48:10.451257+01:00') )
+	^ #(#(#(#RGMethodDefinition #(#'ComposablePresenter class' #iconNamed: #true)) #'2018-11-07T14:51:01.186582+01:00') )
 ]
 
 { #category : #'code-critics' }
@@ -45,6 +50,11 @@ ManifestSpecCore class >> ruleRBOverridesDeprecatedMethodRuleV1FalsePositive [
 { #category : #'code-critics' }
 ManifestSpecCore class >> ruleSubclassResponsibilityNotDefinedRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#'ComposablePresenter class' #defaultSpec #true)) #'2016-07-01T15:56:13.461086+02:00') )
+]
+
+{ #category : #'code-critics' }
+ManifestSpecCore class >> ruleUnwindBlocksRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#'SpecInterpreter class' #interpretASpec:model:selector: #true)) #'2016-07-01T15:56:13.479538+02:00') )
 ]
 
 { #category : #'code-critics' }

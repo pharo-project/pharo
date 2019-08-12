@@ -1,6 +1,6 @@
 Class {
 	#name : #TextFieldExampleTest,
-	#superclass : #SpecSmokeTestCase,
+	#superclass : #SpecTestCase,
 	#category : #'Spec-Tests-Examples'
 }
 

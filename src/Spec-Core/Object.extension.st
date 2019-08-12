@@ -13,6 +13,12 @@ Object >> isAnnouncingObject [
 ]
 
 { #category : #'*Spec-Core' }
+Object >> isSpecAdapter [
+
+	^ false
+]
+
+{ #category : #'*Spec-Core' }
 Object >> isSpecContainer [
 	^ false
 ]

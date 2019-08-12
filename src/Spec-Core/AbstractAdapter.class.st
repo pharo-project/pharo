@@ -13,8 +13,7 @@ Class {
 	#instVars : [
 		'model',
 		'widget',
-		'selector',
-		'owner'
+		'selector'
 	],
 	#category : #'Spec-Core-Base'
 }
@@ -25,33 +24,6 @@ AbstractAdapter class >> adapt: aComposablePresenter [
 	^ self new
 		adapt: aComposablePresenter;
 		yourself
-]
-
-{ #category : #accessing }
-AbstractAdapter class >> adaptingAliases [
-	"Answers an array of aliases my class can adapt."
-
-	^ #()
-]
-
-{ #category : #accessing }
-AbstractAdapter class >> adaptingName [
-	"Answers the name this component adapts."
-
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-AbstractAdapter class >> allAdapters [
-	"The abstract adapters should be able to return all the adapters for a framework"
-	
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-AbstractAdapter class >> owner: anOwner [
-
-	^ self new owner: anOwner; yourself
 ]
 
 { #category : #initialization }
@@ -99,12 +71,6 @@ AbstractAdapter >> hSpaceFill [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
-AbstractAdapter >> hasWidget: aMorphicButtonAdapter [ 
-	
-	^ self widget hasWidget: aMorphicButtonAdapter widget
-]
-
 { #category : #protocol }
 AbstractAdapter >> isRedrawable [
 	"This must be overriden in the adapter representing your container"
@@ -112,10 +78,10 @@ AbstractAdapter >> isRedrawable [
 	^ false
 ]
 
-{ #category : #visibility }
-AbstractAdapter >> isVisible [
-	
-	self subclassResponsibility
+{ #category : #testing }
+AbstractAdapter >> isSpecAdapter [
+
+	^ true
 ]
 
 { #category : #protocol }
@@ -129,31 +95,8 @@ AbstractAdapter >> model [
 	^ model
 ]
 
-{ #category : #accessing }
-AbstractAdapter >> owner [
-
-	"Every object instantiated by the SpecInerpreter should have an owner that will assign it to a particular presenter"
-	^ owner
-]
-
-{ #category : #accessing }
-AbstractAdapter >> owner: anObject [
-	owner := anObject
-]
-
-{ #category : #accessing }
-AbstractAdapter >> presenter [
-	^ model
-]
-
 { #category : #protocol }
 AbstractAdapter >> removeSubWidgets [
-
-	self subclassResponsibility
-]
-
-{ #category : #'as yet unclassified' }
-AbstractAdapter >> rightClicked [
 
 	self subclassResponsibility
 ]

@@ -184,8 +184,8 @@ ComposablePresenterWithModelTest >> testUpdateModel [
 	
 	"the point itself is not subscribed to the presenter"
 
-	self assert: presenter x text equals: aPoint x asString.
-	self assert: presenter y text equals: aPoint y asString.
+	self assert: (presenter x text = aPoint x asString).
+	self assert: (presenter y text = aPoint y asString).
 	
 	
 	

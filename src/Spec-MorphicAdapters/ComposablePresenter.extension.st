@@ -4,7 +4,7 @@ Extension { #name : #ComposablePresenter }
 ComposablePresenter >> beginsWith: aString fromList: aMorph [
 	"This method is used bu the list for the search of elements when you are typing directly in the list"
 	
-	^ self ensureMorphicAdapterDo: [ :adpt | adpt beginsWith: aString fromList: aMorph ]
+	^ self ensureMorphicAdapterDo: [ :adapter | adapter beginsWith: aString fromList: aMorph ]
 ]
 
 { #category : #'*Spec-MorphicAdapters' }
@@ -42,21 +42,21 @@ ComposablePresenter >> ensureMorphicAdapterDo: aBlock [
 ComposablePresenter >> heightToDisplayInList: aList [
 	"Return the width of my representation as a list item"
 	
-	^ self ensureMorphicAdapterDo: [ :adpt | adpt heightToDisplayInList: aList ]
+	^ self ensureMorphicAdapterDo: [ :adapter | adapter heightToDisplayInList: aList ]
 ]
 
 { #category : #'*Spec-MorphicAdapters' }
 ComposablePresenter >> heightToDisplayInTree: aTree [
 	"Return the width of my representation as a list item"
 	
-	^ self ensureMorphicAdapterDo: [ :adpt | adpt heightToDisplayInTree: aTree ]
+	^ self ensureMorphicAdapterDo: [ :adapter | adapter heightToDisplayInTree: aTree ]
 ]
 
 { #category : #'*Spec-MorphicAdapters' }
 ComposablePresenter >> listRenderOn: aCanvas atRow: aRow bounds: drawBounds color: drawColor backgroundColor: backgroundColor from: aMorph [
 	"Specify how this object as a list item should be drawn"
 
-	^ self ensureMorphicAdapterDo: [ :adpt | adpt
+	^ self ensureMorphicAdapterDo: [ :adapter | adapter
 		listRenderOn: aCanvas
 		atRow: aRow
 		bounds: drawBounds
@@ -83,15 +83,22 @@ ComposablePresenter >> openWorldWithSpec: aSpec [
 ComposablePresenter >> openWorldWithSpecLayout: aSpec [
 	"Build the widget using the spec name provided as argument and display it into the world"
 
-	self flag: #TODO. "Fix this"
-	"^ self openWithSpecLayout: aSpec in: WorldPresenter"
+	(window value notNil and: [ self needRebuild not ])
+		ifTrue: [
+			window value rebuildWithSpecLayout: aSpec ]
+		ifFalse: [ 
+			window value: (WorldPresenter new model: self).
+			window value openWithSpecLayout: aSpec.
+			self takeKeyboardFocus ].
+		
+	^ window value
 ]
 
 { #category : #'*Spec-MorphicAdapters' }
 ComposablePresenter >> treeRenderOn: aCanvas bounds: drawBounds color: drawColor font: aFont from: aMorph [
 	"Specify how this object as a list item should be drawn"
 
-	^ self ensureMorphicAdapterDo: [ :adpt | adpt 
+	^ self ensureMorphicAdapterDo: [ :adapter | adapter 
 		treeRenderOn: aCanvas 
 		bounds: drawBounds 
 		color: drawColor 
@@ -103,12 +110,12 @@ ComposablePresenter >> treeRenderOn: aCanvas bounds: drawBounds color: drawColor
 ComposablePresenter >> widthToDisplayInList: aList [
 	"Return the width of my representation as a list item"
 	
-	^ self ensureMorphicAdapterDo: [ :adpt | adpt widthToDisplayInList: aList ]
+	^ self ensureMorphicAdapterDo: [ :adapter | adapter widthToDisplayInList: aList ]
 ]
 
 { #category : #'*Spec-MorphicAdapters' }
 ComposablePresenter >> widthToDisplayInTree: aTree [
 	"Return the width of my representation as a list item"
 	
-	^ self ensureMorphicAdapterDo: [ :adpt | adpt widthToDisplayInTree: aTree ]
+	^ self ensureMorphicAdapterDo: [ :adapter | adapter widthToDisplayInTree: aTree ]
 ]
