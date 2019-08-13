@@ -68,6 +68,12 @@ TestMatchedNodeProducer >> visitInstanceVariableNode: aSelfNode [
 ]
 
 { #category : #visiting }
+TestMatchedNodeProducer >> visitLiteralArrayNode: aRBLiteralArrayNode [
+	
+	^ #()
+]
+
+{ #category : #visiting }
 TestMatchedNodeProducer >> visitLiteralNode: aRBLiteralValueNode [
 	| results |
 	(aRBLiteralValueNode value isKindOf: Symbol) ifFalse: [ ^#() ].
