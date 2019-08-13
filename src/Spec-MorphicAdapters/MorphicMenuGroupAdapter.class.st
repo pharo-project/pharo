@@ -9,14 +9,9 @@ Class {
 }
 
 { #category : #private }
-MorphicMenuGroupAdapter >> applyVisibility [
-
-	"Do nothing. Morphs implement visible but the widget of this adapter is an ordered collection."
-]
-
-{ #category : #private }
 MorphicMenuGroupAdapter >> buildWidget [
-	^ self menuItems select: #isVisible thenCollect: #buildWithSpec
+
+	^ self menuItems collect: [ :each | each buildWithSpec ]
 ]
 
 { #category : #protocol }

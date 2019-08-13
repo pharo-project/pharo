@@ -9,10 +9,11 @@ Class {
 		'fieldNormal',
 		'labelDisabled',
 		'fieldDisabled',
+		'labelGhostText',
+		'filedGhostText',
+		'fieldGhostText',
 		'labelEncrypted',
-		'fieldEncrypted',
-		'fieldPlaceholderText',
-		'labelPlaceholderText'
+		'fieldEncrypted'
 	],
 	#category : #'Spec-Examples-Demo-TextInput'
 }
@@ -41,8 +42,8 @@ SpecDemoTextInputPresenter class >> defaultSpec [
 			height: rowHeight.
 
 			col newRow: [ :row | 
-				row add: #labelPlaceholderText right: labelsWidth.
-				row add: #fieldPlaceholderText ]
+				row add: #labelGhostText right: labelsWidth.
+				row add: #fieldGhostText ]
 			height: rowHeight.
 
 			col newRow: [ :row | 
@@ -77,6 +78,16 @@ SpecDemoTextInputPresenter >> fieldEncrypted: anObject [
 ]
 
 { #category : #accessing }
+SpecDemoTextInputPresenter >> fieldGhostText [
+	^ fieldGhostText
+]
+
+{ #category : #accessing }
+SpecDemoTextInputPresenter >> fieldGhostText: anObject [
+	fieldGhostText := anObject
+]
+
+{ #category : #accessing }
 SpecDemoTextInputPresenter >> fieldNormal [
 	^ fieldNormal
 ]
@@ -87,30 +98,30 @@ SpecDemoTextInputPresenter >> fieldNormal: anObject [
 ]
 
 { #category : #accessing }
-SpecDemoTextInputPresenter >> fieldPlaceholderText [
-	^ fieldPlaceholderText
+SpecDemoTextInputPresenter >> filedGhostText [
+	^ filedGhostText
 ]
 
 { #category : #accessing }
-SpecDemoTextInputPresenter >> fieldPlaceholderText: anObject [
-	fieldPlaceholderText := anObject
+SpecDemoTextInputPresenter >> filedGhostText: anObject [
+	filedGhostText := anObject
 ]
 
 { #category : #initialization }
 SpecDemoTextInputPresenter >> initializeWidgets [
-	labelNormal := self newLabel label: 'Normal:'.
+
+	labelNormal := self newLabel label: 'normal:'.
 	fieldNormal := self newTextInput.
-	
-	labelDisabled := self newLabel label: 'Disabled:'.
+
+	labelDisabled := self newLabel label: 'disabled:'.
 	fieldDisabled := self newTextInput enabled: false.
+
+	labelGhostText := self newLabel label: 'ghost text:'.
+	fieldGhostText := self newTextInput ghostText: 'ghost text'.
 	
-	labelPlaceholderText := self newLabel label: 'Placeholder:'.
-	fieldPlaceholderText := self newTextInput placeholder: 'Placeholder text'.
-	
-	labelEncrypted := self newLabel label: 'Password:'.
-	fieldEncrypted := self newTextInput
-		text: 'Password';
-		bePassword
+	labelEncrypted := self newLabel label: 'encrypted:'.
+	fieldEncrypted := self newTextInput text: 'password'; encrypted: true.
+
 ]
 
 { #category : #accessing }
@@ -134,6 +145,16 @@ SpecDemoTextInputPresenter >> labelEncrypted: anObject [
 ]
 
 { #category : #accessing }
+SpecDemoTextInputPresenter >> labelGhostText [
+	^ labelGhostText
+]
+
+{ #category : #accessing }
+SpecDemoTextInputPresenter >> labelGhostText: anObject [
+	labelGhostText := anObject
+]
+
+{ #category : #accessing }
 SpecDemoTextInputPresenter >> labelNormal [
 	^ labelNormal
 ]
@@ -141,14 +162,4 @@ SpecDemoTextInputPresenter >> labelNormal [
 { #category : #accessing }
 SpecDemoTextInputPresenter >> labelNormal: anObject [
 	labelNormal := anObject
-]
-
-{ #category : #accessing }
-SpecDemoTextInputPresenter >> labelPlaceholderText [
-	^ labelPlaceholderText
-]
-
-{ #category : #accessing }
-SpecDemoTextInputPresenter >> labelPlaceholderText: anObject [
-	labelPlaceholderText := anObject
 ]

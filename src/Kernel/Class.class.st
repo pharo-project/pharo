@@ -671,12 +671,6 @@ Class >> isClassOrTrait [
 	^true
 ]
 
-{ #category : #deprecation }
-Class >> isDeprecated [
-
-	^ false
-]
-
 { #category : #testing }
 Class >> isObsolete [
 	"Return true if the receiver is obsolete."

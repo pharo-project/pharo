@@ -7,30 +7,69 @@ Class {
 	#category : #'Spec-MorphicAdapters-Base'
 }
 
-{ #category : #private }
-MorphicDialogWindowAdapter >> addPresenterIn: widgetToBuild withSpecLayout: aSpec [
-	"I replace the mainPanel (which contains contents and button bar) because like that I get the 
-	 status bar at the end (where it belongs)"
-
-	super addPresenterIn: widgetToBuild withSpecLayout: aSpec.
-	self model buttons ifNotEmpty: [ 	
-		widgetToBuild setToolbarFrom: [ self buildButtonBar ] ]
-]
-
-{ #category : #factory }
-MorphicDialogWindowAdapter >> buildButtonBar [
-	| buttonBar |
-	
-	buttonBar := (ButtonBarPresenter owner: self model) placeAtEnd.
-	self model buttons do: [ :buttonPresenter | 
-		buttonBar add: buttonPresenter ].
-	
-	^ buttonBar
-]
-
 { #category : #factory }
 MorphicDialogWindowAdapter >> buildWidget [
+
 	^ SpecDialogWindow new
-		model: self model;
-		yourself
+			specWidget: self contentMorph;
+			setToolbarFrom: self toolbarBlock;
+			model: self model;
+			initialize;
+			yourself
+]
+
+{ #category : #'spec protocol' }
+MorphicDialogWindowAdapter >> cancelAction: aBlock [
+
+	^ self widget
+		ifNotNil: [:w | w cancelAction: aBlock ]
+]
+
+{ #category : #'widget API' }
+MorphicDialogWindowAdapter >> contentMorph [
+
+	^ self model contents
+]
+
+{ #category : #'spec protocol' }
+MorphicDialogWindowAdapter >> okAction: aBlock [
+
+	^ self widget
+		ifNotNil: [:w | w okAction: aBlock ]
+]
+
+{ #category : #'spec protocol' }
+MorphicDialogWindowAdapter >> okButtonEnabled: aBoolean [
+
+	self widget ifNotNil: [ :w | w toolbar okButton enabled: aBoolean ]
+]
+
+{ #category : #protocol }
+MorphicDialogWindowAdapter >> open [
+
+	self widget openInWorld
+]
+
+{ #category : #'spec protocol' }
+MorphicDialogWindowAdapter >> toolbar: aToolbar [ 
+
+	self widgetDo: [ :w | w toolbar: aToolbar ]
+]
+
+{ #category : #'widget API' }
+MorphicDialogWindowAdapter >> toolbarBlock [
+
+	^ [ self model toolbar ]
+]
+
+{ #category : #'spec protocol' }
+MorphicDialogWindowAdapter >> triggerCancelAction [
+
+	self widget ifNotNil: [:w | w toolbar triggerCancelAction ]
+]
+
+{ #category : #'spec protocol' }
+MorphicDialogWindowAdapter >> triggerOkAction [
+
+	self widget ifNotNil: [:w | w toolbar triggerOkAction ]
 ]
