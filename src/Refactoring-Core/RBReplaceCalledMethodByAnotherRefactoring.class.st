@@ -20,10 +20,22 @@ RBReplaceCalledMethodByAnotherRefactoring class >> replaceCallMethod: aSelector 
 ]
 
 { #category : #transforming }
+RBReplaceCalledMethodByAnotherRefactoring >> haveSameNumberOfArgs [
+	(self numberOfArgs: oldSelector) = (self numberOfArgs: newSelector) 
+		ifFalse: [ self refactoringError: 'The new selector does not have the same number of parameters.']
+]
+
+{ #category : #'as yet unclassified' }
+RBReplaceCalledMethodByAnotherRefactoring >> numberOfArgs: aSymbol [
+	^ (aSymbol asString splitOn: ':' ) size
+]
+
+{ #category : #transforming }
 RBReplaceCalledMethodByAnotherRefactoring >> preconditions [ 
 	|conditions|
-	conditions := (RBCondition definesSelector: oldSelector in: class )
-						& (RBCondition canUnderstand: newSelector in: class ) .
+	conditions := (RBCondition withBlock: [ self haveSameNumberOfArgs. true])
+						&(RBCondition definesSelector: oldSelector in: class )
+						& (RBCondition definesSelector: newSelector in: class ).
 	
 	^ conditions & (RBCondition withBlock: 
 		[ |senders|
@@ -33,13 +45,6 @@ RBReplaceCalledMethodByAnotherRefactoring >> preconditions [
 				[self refactoringWarning: ('This will modify all <1p> senders.' 
 							expandMacrosWith: senders size)].
 		true])
-]
-
-{ #category : #'as yet unclassified' }
-RBReplaceCalledMethodByAnotherRefactoring >> replaceCallMethod: aSelector in: aClass to: newSel [
-	oldSelector := aSelector asSymbol.
-	newSelector := newSel asSymbol.
-	class := self classObjectFor: aClass
 ]
 
 { #category : #'as yet unclassified' }
