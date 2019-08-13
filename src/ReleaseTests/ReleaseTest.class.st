@@ -264,6 +264,12 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]
 
+{ #category : #tests }
+ReleaseTest >> testTestCasesEndsWithTestOrTestCase [
+	self assertValidLintRule: ReTestClassNameShouldEndWithTest new
+	
+]
+
 { #category : #'tests - rpackage' }
 ReleaseTest >> testThatAllMethodsArePackaged [
 	| classes instanceMethods classMethods allMethods methodsWithoutPackageInfo |
